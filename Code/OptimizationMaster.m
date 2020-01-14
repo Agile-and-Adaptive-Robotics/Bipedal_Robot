@@ -1,3 +1,12 @@
+% Optimization Master
+% Author: Connor Morrow
+% Date: 1/14/2020
+% Description: This master script will call subscripts in order to 
+% optimize muscle attachment locations for the bipedal robot. It first 
+% grabs the human torque data and initial robot torque data. Once this is 
+% complete, it begin perturbing robot muscle locations until it finds a
+% solution that matches human torque data. 
+
 clear
 close all
 clc
