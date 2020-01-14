@@ -1,7 +1,7 @@
 # Bipedal Robot
 The bipedal robot is a cross disciplinary project being worked on in the Agile and Adaptive Robotics lab by PhD, Masters, and Undergraduate Students. The aim is to develop a robot, actuated by pneumatic artificial muscles, that is able to walk.
 
-![Bipedal_Robot](/Pictures/OpenSimHumanModel.jpg)
+![Bipedal_Robot](/Pictures/OpenSimHumanModel.JPG)
 
 ## Current Objectives
 1. Create a Matlab script to optimize PAM placement to replicate human torque profile about joints.
