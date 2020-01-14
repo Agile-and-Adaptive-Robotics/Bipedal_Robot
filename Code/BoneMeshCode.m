@@ -1,4 +1,10 @@
-%Script that generates points 
+% Bone Mesh Code
+% Author: Connor Morrow
+% Date: 1/14/2020
+% Description: This script pulls all of the data captured from OpenSim bone 
+% geometries to create plots of the bone points. These points will be used
+% in the muscle placement optimization code.
+
 clc
 clear 
 close all

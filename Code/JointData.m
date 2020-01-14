@@ -1,3 +1,10 @@
+% Joint Data
+% Author: Connor Morrow
+% Date: 1/14/2020
+% Description: This script allows for creating reusable classes, which 
+% categorize and calculates joint information. This will be used in 
+% determining muscle placement, optimization, and torque verification
+
 classdef JointData
     
     properties
