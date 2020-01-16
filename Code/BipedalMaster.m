@@ -22,6 +22,11 @@ ChooseJoint = 'Back';
 % %Choose the number of divisions for the angles of rotation
 divisions = 100;
 
+%% ----------------- Setup -------------------------------
+%Include relevant folders
+addpath('Open_Sim_Bone_Geometry')
+addpath('Functions')
+addpath('Human_Data')
 
 %% ------------- Humanoid Model --------------
 %Runs the humanoid model. Only run if you need to update the data

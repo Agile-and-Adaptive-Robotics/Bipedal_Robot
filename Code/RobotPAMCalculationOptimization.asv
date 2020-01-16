@@ -141,8 +141,7 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
     BFCrossPoints = [2 2];
     BFMIF = 896;  %max isometric force
 %     Axis1 = [10 30];                           %The axis of interest when calculating the moment arm about each joint
-    Axis1 = [10 20 30;
-            30 0 0];                           %The axis of interest when calculating the moment arm about each joint. Looking at x, y, z for hip, and only z for knee
+    Axis1 = [10 20 30];                           %The axis of interest when calculating the moment arm about each joint
     Muscle1 = PamData('Bicep Femoris X', BFLocation, BFCrossPoints, BFMIF, T, Axis1);
     
 %     Axis2 = [20 30];                           %The axis of interest when calculating the moment arm about each joint

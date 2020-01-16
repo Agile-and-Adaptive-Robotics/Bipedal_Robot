@@ -54,17 +54,9 @@ if isequal(ChooseJoint, 'Back')
                 0.078, 0.041, 0.031, 0.029, 0.047, 0.048, 0.048, 0.045, 0.059];
     ESCrossPoints = 3;                    %Via points are the points where a transformation matrix is needed. Typically wrap point + 1
     ESMIF = 2500;
-    Axis1 = 10;                           %The axis of interest when calculating the moment arm about each joint. The axis is 1, but is listed as 10 so that the cross product doesn't rotate the resulting vector. See PamData > CrossProd
+    Axis1 = [10, 20, 30];                           %The axis of interest when calculating the moment arm about each joint. The axis is 1, but is listed as 10 so that the cross product doesn't rotate the resulting vector. See PamData > CrossProd
     Muscle1 = PamData('Erector Spinae', ESLocation, ESCrossPoints, ESMIF, T, Axis1);
     
-    %Replicating the Erector spinae two more times to observe all the axes.
-    %Currently, since there is only one crossing point, the pam data class
-    %only calculates torque about one axis
-    Axis2 = 20;                           %Interested in the 2nd axis, listed as 20 so that the cross product doesn't rotate the resulting vector
-    Muscle2 = PamData('Erector Spinae', ESLocation, ESCrossPoints, ESMIF, T, Axis2);
-    
-    Axis3 = 30;                           %Interested in the 3rd axis, listed as 30 so that the cross product doesn't rotate the resulting vector
-    Muscle3 = PamData('Erector Spinae', ESLocation, ESCrossPoints, ESMIF, T, Axis3);
 
     TorqueX = Muscle1.Torque(1, :, :);
     TorqueY = Muscle2.Torque(1, :, :);
@@ -147,6 +139,7 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
                     0.069, 0.029, 0.034, 0.035];
     BFCrossPoints = [2 2];
     BFMIF = 896;  %max isometric force
+    
     Axis1 = [10 30];                           %The axis of interest when calculating the moment arm about each joint
     Muscle1 = PamData('Bicep Femoris X', BFLocation, BFCrossPoints, BFMIF, T, Axis1);
     

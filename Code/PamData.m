@@ -135,7 +135,7 @@ classdef PamData
         %% ---------------------- Torque --------------
         function tor = computeTorque(obj)
             tor = zeros(length(obj.CrossPoints), size(obj.TransformationMat, 4), size(obj.Axis, 2));
-            for i = 1:size(obj.TransformationMat, 4)
+            for i = 1:size(obj.TransformationMat, 4)                            %Repeat Calculation for every axis
                 for ii = 1:length(obj.Axis)
                     tor(:, i, ii) = obj.MomentArm(:, i, ii)*obj.Force(i);
                 end
