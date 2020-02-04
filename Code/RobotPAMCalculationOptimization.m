@@ -50,16 +50,16 @@ if isequal(ChooseJoint, 'Back')
     T(:, :, 3, :) = T(:, :, 1, :);
     
     %Erector Spinae p7 -> b2    
-    %     ESLocation = [-0.122, -0.158, -0.072, -0.039, 0.005, -0.032, -0.072, -0.04, -0.019;
-    %                 -0.051, 0.054, 0.172, 0.179, 0.027, 0.027, 0.175, 0.182, 0.048;
-    %                 0.078, 0.041, 0.031, 0.029, 0.047, 0.048, 0.048, 0.045, 0.059];
+        ESLocation = [-0.122, -0.158, -0.072, -0.039, 0.005, -0.032, -0.072, -0.04, -0.019;
+                    -0.051, 0.054, 0.172, 0.179, 0.027, 0.027, 0.175, 0.182, 0.048;
+                    0.078, 0.041, 0.031, 0.029, 0.047, 0.048, 0.048, 0.045, 0.059];
 
     %The following Location is a reduction in points to simplify the
     %optimization code. Return to the above location when running it for real
 
-    ESLocation = [-0.122, -0.158, -0.072;
-                -0.051, 0.054, 0.172;
-                0.078, 0.041, 0.031];
+%     ESLocation = [-0.122, -0.158, -0.072;
+%                 -0.051, 0.054, 0.172;
+%                 0.078, 0.041, 0.031];
     ESCrossPoints = 3;                    %Via points are the points where a transformation matrix is needed. Typically wrap point + 1
     ESMIF = 2500;
     Axis1 = [10, 20, 30];                           %The axis of interest when calculating the moment arm about each joint. The axis is 1, but is listed as 10 so that the cross product doesn't rotate the resulting vector. See PamData > CrossProd
@@ -67,6 +67,7 @@ if isequal(ChooseJoint, 'Back')
     
     Torque1 = Muscle1.Torque;
     
+    %Reorganize the torque calculations into a matrix for 3D plotting
     for i = 1:divisions
         Torque1M(:, i, :) = Torque1(:, ((i-1)*divisions)+1:i*divisions, :);
     end
@@ -88,7 +89,7 @@ if isequal(ChooseJoint, 'Back')
     RobotTorque3 = Torque1M(:, :, 3);
     RobotTitle1 = 'Robot Back Torque, Erector Spinae, X Axis';
     RobotTitle2 = 'Robot Back Torque, Erector Spinae, Y Axis';
-    RobotTitle3 = 'Back Torque, Erector Spinae, Z Axis';
+    RobotTitle3 = 'Robot Back Torque, Erector Spinae, Z Axis';
     
     %Store all necessary variables into a cell array for the optimization
     %script
@@ -143,7 +144,7 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
 %     Axis1 = [10 30];                           %The axis of interest when calculating the moment arm about each joint
     Axis1 = [10 20 30;
             30 0 0];                           %The axis of interest when calculating the moment arm about each joint. Looking at x, y, z for hip, and only z for knee
-    Muscle1 = PamData('Bicep Femoris X', BFLocation, BFCrossPoints, BFMIF, T, Axis1);
+    Muscle1 = PamData('Bicep Femoris', BFLocation, BFCrossPoints, BFMIF, T, Axis1);
     
 %     Axis2 = [20 30];                           %The axis of interest when calculating the moment arm about each joint
 %     Muscle1b = PamData('Bicep Femoris Y', BFLocation, BFCrossPoints, BFMIF, T, Axis2);
@@ -151,17 +152,17 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
 %     Axis3 = [30 30];                           %The axis of interest when calculating the moment arm about each joint
 %     Muscle1c = PamData('Bicep Femoris Z', BFLocation, BFCrossPoints, BFMIF, T, Axis3);
     
-    Torque1a = Muscle1a.Torque(1, :, :);
-    Torque1b = Muscle1b.Torque(1, :, :);
-    Torque1c = Muscle1c.Torque(1, :, :);
-    Torque2 = Muscle1a.Torque(2, :, :);
+    Torque1x = Muscle1.Torque(1, :, 1);
+    Torque1y = Muscle1.Torque(1, :, 2);
+    Torque1z = Muscle1.Torque(1, :, 3);
+    Torque2 = Muscle1.Torque(2, :, 1);
     
     %Create the Mesh of Torques to corespond with the joint angles
-    Torque1aM = zeros(divisions, divisions); Torque1bM = zeros(divisions, divisions); Torque1cM = zeros(divisions, divisions); KneeTorqueMR = zeros(divisions, divisions); 
+    Torque1xM = zeros(divisions, divisions); Torque1yM = zeros(divisions, divisions); Torque1zM = zeros(divisions, divisions); KneeTorqueMR = zeros(divisions, divisions); 
     for i = 1:divisions
-        Torque1aM(:, i) = Torque1a(((i-1)*divisions)+1:i*divisions);
-        Torque1bM(:, i) = Torque1b(((i-1)*divisions)+1:i*divisions);
-        Torque1cM(:, i) = Torque1c(((i-1)*divisions)+1:i*divisions);
+        Torque1xM(:, i) = Torque1x(((i-1)*divisions)+1:i*divisions);
+        Torque1yM(:, i) = Torque1y(((i-1)*divisions)+1:i*divisions);
+        Torque1zM(:, i) = Torque1z(((i-1)*divisions)+1:i*divisions);
         Torque2M(:, i) = Torque2(((i-1)*divisions)+1:i*divisions);
     end
     
@@ -170,9 +171,9 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
     RobotAxis1Label = 'Hip Flexion, Degrees';
     RobotAxis2 = Joint2.Theta;
     RobotAxis2Label = 'Knee Flexion, Degrees';
-    RobotTorque1 = Torque1aM;
-    RobotTorque2 = Torque1bM;
-    RobotTorque3 = Torque1cM;
+    RobotTorque1 = Torque1xM;
+    RobotTorque2 = Torque1yM;
+    RobotTorque3 = Torque1zM;
     RobotTorque4 = Torque2M;
     RobotTitle1 = 'Robot Hip Torque, bifemlh, X axis';
     RobotTitle2 = 'Robot Hip Torque, bifemlh, Y axis';
@@ -241,7 +242,7 @@ elseif isequal(ChooseJoint, 'Calves')
                 -0.002, -0.005];
     SCrossPoints = [2 2];
     SMIF = 3549;  %max isometric force
-    Axis3 = [3 1];                           %The axis of interest when calculating the moment arm about each joint
+    Axis3 = [3; 1];                           %The axis of interest when calculating the moment arm about each joint
     Muscle3 = PamData('Soleus', SLocation, SCrossPoints, SMIF, T, Axis3);
     
     T(:, :, 2:3, :) = T(:, :, 1:2, :);
@@ -260,7 +261,7 @@ elseif isequal(ChooseJoint, 'Calves')
         
     MGCrossPoints = [3 3 3];
     MGMIF = 1558;  %max isometric force
-    Axis1 = [3 3 1];                           %The axis of interest when calculating the moment arm about each joint
+    Axis1 = [3; 3; 1];                           %The axis of interest when calculating the moment arm about each joint
     Muscle1 = PamData('Medial Gastroocnemius', MGLocation, MGCrossPoints, MGMIF, T, Axis1);
     
     %Lateral Gastrocenemius a1 -> f5
@@ -270,7 +271,7 @@ elseif isequal(ChooseJoint, 'Calves')
                 
     LGCrossPoints = [3 3 3];
     LGMIF = 683;  %max isometric force
-    Axis2 = [3 3 1];                           %The axis of interest when calculating the moment arm about each joint
+    Axis2 = [3; 3; 1];                           %The axis of interest when calculating the moment arm about each joint
     Muscle2 = PamData('Lateral Gastrocenemius', LGLocation, LGCrossPoints, LGMIF, T, Axis2);
     
     %Torque Calcs, "R" for robot
@@ -295,9 +296,9 @@ elseif isequal(ChooseJoint, 'Calves')
     RobotTorque1 = Torque2M;
     RobotTorque2 = Torque1M;
     RobotTorque3 = Torque3M;
-    RobotTitle1 = 'Knee Torque, Gastrocnemius, Z axis';
-    RobotTitle2 = 'Ankle Torque, Gastrocnemius, Z` axis';
-    RobotTitle3 = 'Ankle Torque, Soleus, Z` axis';
+    RobotTitle1 = 'Robot Knee Torque, Gastrocnemius, Z axis';
+    RobotTitle2 = 'Robot Ankle Torque, Gastrocnemius, Z` axis';
+    RobotTitle3 = 'Robot Ankle Torque, Soleus, Z` axis';
     
 elseif isequal(ChooseJoint, 'Foot')
     Raxis = [-0.10501355; -0.17402245; 0.97912632];
@@ -337,7 +338,7 @@ elseif isequal(ChooseJoint, 'Foot')
         
     TPCrossPoints = [3 3];
     TPMIF = 3549;  %max isometric force
-    Axis1 = [3 1];                           %The axis of interest when calculating the moment arm about each joint
+    Axis1 = [3; 1];                           %The axis of interest when calculating the moment arm about each joint
     Muscle1 = PamData('Tibialis Posterior', TPLocation, TPCrossPoints, TPMIF, T, Axis1);
     
     %Tibialis Anterior t2 -> a3
@@ -346,7 +347,7 @@ elseif isequal(ChooseJoint, 'Foot')
                 0.047, 0.007, -0.036];
     TACrossPoints = [3 3];
     TAMIF = 905;  %max isometric force
-    Axis2 = [3 1];                           %The axis of interest when calculating the moment arm about each joint
+    Axis2 = [3; 1];                           %The axis of interest when calculating the moment arm about each joint
     Muscle2 = PamData('Tibialis Posterior', TALocation, TACrossPoints, TAMIF, T, Axis2);
     
     %Peroneus Brevis t2 -> a2
@@ -355,7 +356,7 @@ elseif isequal(ChooseJoint, 'Foot')
                 0.047, 0.028, 0.029, 0.023, 0.034];
     PBCrossPoints = [4 4];
     PBMIF = 435;  %max isometric force
-    Axis3 = [3 1];                           %The axis of interest when calculating the moment arm about each joint
+    Axis3 = [3; 1];                           %The axis of interest when calculating the moment arm about each joint
     Muscle3 = PamData('Peroneus Brevis', PBLocation, PBCrossPoints, PBMIF, T, Axis3);
     
     %Peroneus Longus t2 -> a3
@@ -364,7 +365,7 @@ elseif isequal(ChooseJoint, 'Foot')
                 0.047, 0.029, 0.029, 0.022, 0.028, 0.012, -0.036];
     PLCrossPoints = [4 4];
     PLMIF = 943;  %max isometric force
-    Axis4 = [3 1];                           %The axis of interest when calculating the moment arm about each joint
+    Axis4 = [3; 1];                           %The axis of interest when calculating the moment arm about each joint
     Muscle4 = PamData('Peroneus Longus', PLLocation, PLCrossPoints, PLMIF, T, Axis4);
     
     %Peroneus Tertius t2 -> a2
@@ -374,7 +375,7 @@ elseif isequal(ChooseJoint, 'Foot')
             
     PTCrossPoints = [3 3];
     PTMIF = 180;  %max isometric force
-    Axis5 = [3 1];                           %The axis of interest when calculating the moment arm about each joint
+    Axis5 = [3; 1];                           %The axis of interest when calculating the moment arm about each joint
     Muscle5 = PamData('Peroneus Tertius', PTLocation, PTCrossPoints, PTMIF, T, Axis5);
     
     %Torque Calcs, "R" for robot
@@ -448,7 +449,7 @@ elseif isequal(ChooseJoint, 'Toe')
     %point (in this case, t4) and a global insertion point (in this case,
     %a7).
 
-    Axis1 = [3 1 3];                           %The axis of interest when calculating the moment arm about each joint
+    Axis1 = [3; 1; 3];                           %The axis of interest when calculating the moment arm about each joint
 
     %FDL Insertion points, found from AttachPoints_Robot. The first column is
     %the insertion point that shares a point with the tibia (t4). The last
@@ -459,7 +460,7 @@ elseif isequal(ChooseJoint, 'Toe')
     FDLCrossPoints = [3, 3, 6];
     FDLMIF = 310;  %max isometric force
     Muscle1 = PamData('Flexor Digitorum Longus', FDLLocation, FDLCrossPoints, FDLMIF, T, Axis1);
-    Axis2 = [3 1 3];                           %The axis of interest when calculating the moment arm about each joint
+    Axis2 = [3; 1; 3];                           %The axis of interest when calculating the moment arm about each joint
 
     %FHL t4 to a8
     FHLLocation = [-0.02, -0.019, 0.037, 0.104, 0.173, 0.016, 0.056;
@@ -487,9 +488,9 @@ elseif isequal(ChooseJoint, 'Toe')
     Muscle4 = PamData('Extensor Hallucis Longus', EHLLocation, EHLViaPoints, EHLMIF, T, Axis1);
 
     %Torque Calcs, "R" for robot
-    Torque1 = FDL.Torque(1, :, :) + FHL.Torque(1, :, :) + EDL.Torque(1, :, :) + EHL.Torque(1, :, :);
-    Torque2 = FDL.Torque(2, :, :) + FHL.Torque(2, :, :) + EDL.Torque(2, :, :) + EHL.Torque(2, :, :);
-    Torque3 = FDL.Torque(3, :, :) + FHL.Torque(3, :, :) + EDL.Torque(3, :, :) + EHL.Torque(3, :, :);
+    Torque1 = Muscle1.Torque(1, :, :) + Muscle2.Torque(1, :, :) + Muscle3.Torque(1, :, :) + Muscle4.Torque(1, :, :);
+    Torque2 = Muscle1.Torque(2, :, :) + Muscle2.Torque(2, :, :) + Muscle3.Torque(2, :, :) + Muscle4.Torque(2, :, :);
+    Torque3 = Muscle1.Torque(3, :, :) + Muscle2.Torque(3, :, :) + Muscle3.Torque(3, :, :) + Muscle4.Torque(3, :, :);
 
     %Create the Mesh of Torques to corespond with the joint angles
     Torque1M = zeros(divisions, divisions); Torque2M = zeros(divisions, divisions); Torque3M = zeros(divisions, divisions);

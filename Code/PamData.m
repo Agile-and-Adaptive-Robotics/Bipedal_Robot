@@ -92,6 +92,11 @@ classdef PamData
         %Calculate the moment arm about a joint
         %For every CrossPoint, calculate the moment arm of the muscle about
         %the joint it crosses over
+        
+        %Useful information
+        % i -> Index for Crossing Points/Joints
+        % ii -> Index for every degree of motion
+        % iii -> Index for axes of interest to observe Torque about
         function mA = computeMomentArm(obj)
             mA = zeros(length(obj.CrossPoints), size(obj.TransformationMat, 4), size(obj.Axis, 2));
             for ii = 1:size(obj.TransformationMat, 4)       %Repeat calculation for every degree of motion we are observing
@@ -124,7 +129,7 @@ classdef PamData
                     unitDirection = direction/norm(direction);                                          %Calculate the unit direction of the direciton vector
                     for iii = 1:size(obj.Axis, 2)       %Repeat the moment arm calculation for every axis of interest 
                         if obj.Axis(i, iii) > 0         %Do not calculate the moment arm if the axis is listed as 0, which can happen if we are interested in multiple axes for one joint, but only one axis for the next joint that the muscles crosses
-                            mA(i, ii, iii) = CrossProd(VecTrans(t2, L(:, cross(i))), unitDirection, obj.Axis(iii), T(1:3, 1:3, i)); %Cross the distance vector to the
+                            mA(i, ii, iii) = CrossProd(VecTrans(t2, L(:, cross(i))), unitDirection, obj.Axis(i, iii), T(1:3, 1:3, i)); %Cross the distance vector to the
                         end
                     end
                                     
@@ -135,8 +140,8 @@ classdef PamData
         %% ---------------------- Torque --------------
         function tor = computeTorque(obj)
             tor = zeros(length(obj.CrossPoints), size(obj.TransformationMat, 4), size(obj.Axis, 2));
-            for i = 1:size(obj.TransformationMat, 4)                            %Repeat Calculation for every axis
-                for ii = 1:length(obj.Axis)
+            for i = 1:size(obj.TransformationMat, 4)                            %Repeat Calculation for every degree of motion
+                for ii = 1:size(obj.Axis, 2)                                    %Repeat Calculation for every axis of interest to observe torque about
                     tor(:, i, ii) = obj.MomentArm(:, i, ii)*obj.Force(i);
                 end
             end
