@@ -500,35 +500,35 @@ elseif isequal(ChooseJoint, 'Toe')
 
     %FHL t4 to a8
     if beginOptimization == 0
-        Location2 = [-0.02, -0.019, 0.037, 0.104, 0.173, 0.016, 0.056;
+        Locait = [-0.02, -0.019, 0.037, 0.104, 0.173, 0.016, 0.056;
                         -0.085, -.408, 0.028, 0.007, -0.005, -0.006, -0.01;
                         0.002, -0.017, -0.024, -0.026, -0.027, -0.026, -0.018];
         FHLCrossPoints = [3, 3, 6];
         FHLMIF = 322;  %max isometric force
         Axis2 = [3; 1; 3];                           %The axis of interest when calculating the moment arm about each joint
     end
-    Muscle2 = PamData('Flexor Hallucis Longus', Location2, FHLCrossPoints, FHLMIF, T, Axis1);
+    Muscle2 = PamData('Flexor Hallucis Longus', FHLLocation, FHLCrossPoints, FHLMIF, T, Axis1);
 
     %EDL, t2 to a5
     if beginOptimization == 0
-        Location3 = [0.006, 0.029, 0.092, 0.162, 0.005, 0.044;
+        EDLLocation = [0.006, 0.029, 0.092, 0.162, 0.005, 0.044;
             -0.062, -0.401, 0.039, 0.006, 0.005, 0.0;
             0.047, 0.007, 0.0, 0.013, 0.015, 0.025];
         EDLCrossPoints = [3, 3, 5];
         EDLMIF = 512;  %max isometric force
     end
-    Muscle3 = PamData('Extensor Digitorum Longus', Location3, EDLCrossPoints, EDLMIF, T, Axis1);
+    Muscle3 = PamData('Extensor Digitorum Longus', EDLLocation, EDLCrossPoints, EDLMIF, T, Axis1);
 
 
     %EHL t2 to a6
     if beginOptimization == 0
-        Location4 = [0.006, 0.033, 0.097, 0.129, 0.173, 0.03, 0.056;
+        EHLLocation = [0.006, 0.033, 0.097, 0.129, 0.173, 0.03, 0.056;
                     -0.062, -0.398, 0.039, 0.031, 0.014, 0.004, 0.003;
                     0.047, -0.008, -0.021, -0.026, -0.028, -0.024, -0.019];
         EHLViaPoints = [3, 3, 6];
         EHLMIF = 162;  %max isometric force
     end
-    Muscle4 = PamData('Extensor Hallucis Longus', Location4, EHLViaPoints, EHLMIF, T, Axis1);
+    Muscle4 = PamData('Extensor Hallucis Longus', EHLLocation, EHLViaPoints, EHLMIF, T, Axis1);
 
     %Torque Calcs, "R" for robot
     Torque1 = Muscle1.Torque(1, :, :) + Muscle2.Torque(1, :, :) + Muscle3.Torque(1, :, :) + Muscle4.Torque(1, :, :);
@@ -592,36 +592,36 @@ elseif isequal(ChooseJoint, 'Uni_Hip')
     
     %Gluteus Maximus p6 -> f3
     if beginOptimization == 0
-        Location1 = [-0.162, -0.174, -0.069, -0.046, 0.005;
+        GMLocation = [-0.162, -0.174, -0.069, -0.046, 0.005;
                       0.04, -0.033, -0.042, -0.116, -0.339;
                       0.023, 0.101, 0.067, 0.06, 0.022];
         GMCrossPoints = 3;
         GMMIF = 5047;  
         Axis1 = [10, 20, 30];
     end
-    Muscle1 = PamData('Gluteus Maximus', Location1, GMCrossPoints, GMMIF, T, Axis1);
+    Muscle1 = PamData('Gluteus Maximus', GMLocation, GMCrossPoints, GMMIF, T, Axis1);
      
     %Adductor Magnus p9 -> f4
     if beginOptimization == 0
-        Location2 = [-0.163, -0.059, -0.059, 0.015;
+        AMLocation = [-0.163, -0.059, -0.059, 0.015;
                       -0.013, -0.108, -0.108, -0.374;
                       0.005, -0.03, -0.03, -0.025];
         AMCrossPoints = 3;
         AMMIF = 2268;  
         Axis1 = [10, 20, 30];
     end
-    Muscle2 = PamData('Adductor Magnus', Location2, AMCrossPoints, AMMIF, T, Axis1);
+    Muscle2 = PamData('Adductor Magnus', AMLocation, AMCrossPoints, AMMIF, T, Axis1);
     
     %Iliacus p1 -> f4
     if beginOptimization == 0
-        Location3 = [-0.055, -0.024, 0.015;
+        ILocation = [-0.055, -0.024, 0.015;
                     0.091, -0.057, -0.374;
                     0.085, 0.076, -0.025];         
         ICrossPoints = 3;
         IMIF = 1073;  
         Axis1 = [10, 20, 30];
     end
-    Muscle3 = PamData('Iliacus', Location3, ICrossPoints, IMIF, T, Axis1);
+    Muscle3 = PamData('Iliacus', ILocation, ICrossPoints, IMIF, T, Axis1);
     
     %Include the back to the transformtion matrix for the Psoas
     if beginOptimization == 0
@@ -637,7 +637,7 @@ elseif isequal(ChooseJoint, 'Uni_Hip')
     
     %Psoas b1 -> f4
     if beginOptimization == 0
-        Location4 = [0.036, -0.024, 0.015;
+        PLocation = [0.036, -0.024, 0.015;
                       0.007, -0.057, -0.374;
                       0.029, 0.076, -0.025];
         PCrossPoints = [2 3];

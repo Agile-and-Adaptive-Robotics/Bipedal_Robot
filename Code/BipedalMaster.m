@@ -16,7 +16,7 @@ end
 
 %Choose the Joint that you will to observe
 %Options are: Back, Bi_Hip, Calves, Foot, Toe, Uni_Hip
-ChooseJoint = 'Uni_Hip';
+ChooseJoint = 'Back';
 
 % %Choose the number of divisions for the angles of rotation
 divisions = 100;
@@ -38,7 +38,8 @@ load(strcat('Human_', ChooseJoint, '_Data.mat'));
 
 %% ------------- Robot Model -----------------
 %Runs the bipedal model
-run("RobotPAMCalculation.m")    
+run("RobotPAMCalculationOptimization.m")    
+% run("RobotPAMCalculation.m")    
 
 %% ------------- Error Caclulation ------------
 %After running both scripts, this portion checks to see the error between
