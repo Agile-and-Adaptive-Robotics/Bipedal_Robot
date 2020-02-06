@@ -551,29 +551,29 @@ elseif isequal(ChooseJoint, 'Uni_Hip')
                   0.023, 0.101, 0.067, 0.06, 0.022];
     GMCrossPoints = 3;
     GMMIF = 5047;  
-    Axis1 = 10;
+    Axis1 = [10, 20, 30];
     Muscle1a = PamData('Gluteus Maximus', GMLocation, GMCrossPoints, GMMIF, T, Axis1);
     
-    Axis1 = 20;
-    Muscle1b = PamData('Gluteus Maximus', GMLocation, GMCrossPoints, GMMIF, T, Axis1);
-    
-    Axis1 = 30;
-    Muscle1c = PamData('Gluteus Maximus', GMLocation, GMCrossPoints, GMMIF, T, Axis1);
-    
+%     Axis1 = 20;
+%     Muscle1b = PamData('Gluteus Maximus', GMLocation, GMCrossPoints, GMMIF, T, Axis1);
+%     
+%     Axis1 = 30;
+%     Muscle1c = PamData('Gluteus Maximus', GMLocation, GMCrossPoints, GMMIF, T, Axis1);
+%     
     %Adductor Magnus p9 -> f4
     AMLocation = [-0.163, -0.059, -0.059, 0.015;
                   -0.013, -0.108, -0.108, -0.374;
                   0.005, -0.03, -0.03, -0.025];
     AMCrossPoints = 3;
     AMMIF = 2268;  
-    Axis1 = 10;
+    Axis1 = [10, 20, 30];
     Muscle2a = PamData('Adductor Magnus', AMLocation, AMCrossPoints, AMMIF, T, Axis1);
     
-    Axis1 = 20;
-    Muscle2b = PamData('Adductor Magnus', AMLocation, AMCrossPoints, AMMIF, T, Axis1);
-    
-    Axis1 = 30;
-    Muscle2c = PamData('Adductor Magnus', AMLocation, AMCrossPoints, AMMIF, T, Axis1);
+%     Axis1 = 20;
+%     Muscle2b = PamData('Adductor Magnus', AMLocation, AMCrossPoints, AMMIF, T, Axis1);
+%     
+%     Axis1 = 30;
+%     Muscle2c = PamData('Adductor Magnus', AMLocation, AMCrossPoints, AMMIF, T, Axis1);
     
     %Iliacus p1 -> f4
     ILocation = [-0.055, -0.024, 0.015;
@@ -582,14 +582,14 @@ elseif isequal(ChooseJoint, 'Uni_Hip')
             
     ICrossPoints = 3;
     IMIF = 1073;  
-    Axis1 = 10;
+    Axis1 = [10, 20, 30];
     Muscle3a = PamData('Iliacus', ILocation, ICrossPoints, IMIF, T, Axis1);
-    
-    Axis1 = 20;
-    Muscle3b = PamData('Iliacus', ILocation, ICrossPoints, IMIF, T, Axis1);
-    
-    Axis1 = 30;
-    Muscle3c = PamData('Iliacus', ILocation, ICrossPoints, IMIF, T, Axis1);
+%     
+%     Axis1 = 20;
+%     Muscle3b = PamData('Iliacus', ILocation, ICrossPoints, IMIF, T, Axis1);
+%     
+%     Axis1 = 30;
+%     Muscle3c = PamData('Iliacus', ILocation, ICrossPoints, IMIF, T, Axis1);
     
     %Include the back to the transformtion matrix for the Psoas
     T(:, :, 2, :) = T(:, :, 1, :);
@@ -607,26 +607,31 @@ elseif isequal(ChooseJoint, 'Uni_Hip')
                   0.029, 0.076, -0.025];
     PCrossPoints = [2 3];
     PMIF = 1113;
-    Axis1 = [10 10];
+    Axis1 = [10 , 20, 30;
+            10, 20, 30];
     Muscle4a = PamData('Psoas X', PLocation, PCrossPoints, PMIF, T, Axis1);
-    
-    Axis1 = [20 20];
-    Muscle4b = PamData('Psoas Y', PLocation, PCrossPoints, PMIF, T, Axis1);
-    
-    Axis1 = [30 30];
-    Muscle4c = PamData('Psoas Z', PLocation, PCrossPoints, PMIF, T, Axis1);
+%     
+%     Axis1 = [20 20];
+%     Muscle4b = PamData('Psoas Y', PLocation, PCrossPoints, PMIF, T, Axis1);
+%     
+%     Axis1 = [30 30];
+%     Muscle4c = PamData('Psoas Z', PLocation, PCrossPoints, PMIF, T, Axis1);
     
     %Torque Calcs, "R" for robot
-    Torque1a = Muscle1a.Torque(1, :) + Muscle2a.Torque(1, :) + Muscle3a.Torque(1, :) + Muscle4a.Torque(2, :);
-    Torque1b = Muscle1b.Torque(1, :) + Muscle2b.Torque(1, :) + Muscle3b.Torque(1, :) + Muscle4b.Torque(2, :);
-    Torque1c = Muscle1c.Torque(1, :) + Muscle2c.Torque(1, :) + Muscle3c.Torque(1, :) + Muscle4c.Torque(2, :);
+%     Torque1a = Muscle1a.Torque(1, :) + Muscle2a.Torque(1, :) + Muscle3a.Torque(1, :) + Muscle4a.Torque(2, :);
+%     Torque1b = Muscle1b.Torque(1, :) + Muscle2b.Torque(1, :) + Muscle3b.Torque(1, :) + Muscle4b.Torque(2, :);
+%     Torque1c = Muscle1c.Torque(1, :) + Muscle2c.Torque(1, :) + Muscle3c.Torque(1, :) + Muscle4c.Torque(2, :);
+    
+    HipXTorque = Muscle1a.Torque(1, :, 1) + Muscle2a.Torque(1, :, 1) + Muscle3a.Torque(1, :, 1) + Muscle4a.Torque(2, :, 1);
+    HipYTorque = Muscle1a.Torque(1, :, 2) + Muscle2a.Torque(1, :, 2) + Muscle3a.Torque(1, :, 2) + Muscle4a.Torque(2, :, 2);
+    HipZTorque = Muscle1a.Torque(1, :, 3) + Muscle2a.Torque(1, :, 3) + Muscle3a.Torque(1, :, 3) + Muscle4a.Torque(2, :, 3);
 
     %Create the Mesh of Torques to corespond with the joint angles
-    Torque1aM = zeros(divisions, divisions); Torque1bM = zeros(divisions, divisions); Torque1cM = zeros(divisions, divisions);
+    HipXTorqueMR = zeros(divisions, divisions); HipYTorqueMR = zeros(divisions, divisions); HipZTorqueMR = zeros(divisions, divisions);
     for i = 1:divisions
-        Torque1aM(:, i) = Torque1a(((i-1)*divisions)+1:i*divisions);
-        Torque1bM(:, i) = Torque1b(((i-1)*divisions)+1:i*divisions);
-        Torque1cM(:, i) = Torque1c(((i-1)*divisions)+1:i*divisions);
+        HipXTorqueMR(:, i) = HipXTorque(((i-1)*divisions)+1:i*divisions);
+        HipYTorqueMR(:, i) = HipYTorque(((i-1)*divisions)+1:i*divisions);
+        HipZTorqueMR(:, i) = HipZTorque(((i-1)*divisions)+1:i*divisions);
     end
     
     %Including Generic variable name for plotting
@@ -634,9 +639,9 @@ elseif isequal(ChooseJoint, 'Uni_Hip')
     RobotAxis1Label = 'Hip Flexion, Degrees';
     RobotAxis2 = Joint1a.Theta;
     RobotAxis2Label = 'Adduction/Abduction, Degrees';
-    RobotTorque1 = Torque1cM;
-    RobotTorque2 = Torque1bM;
-    RobotTorque3 = Torque1aM;
+    RobotTorque1 = HipZTorqueMR;
+    RobotTorque2 = HipYTorqueMR;
+    RobotTorque3 = HipXTorqueMR;
     RobotTitle1 = 'Robot Hip Torque, uniarticular, Z axis';
     RobotTitle2 = 'Robot Hip Torque, uniarticular, Y axis';
     RobotTitle3 = 'Robot Hip Torque, uniarticular, X axis';
