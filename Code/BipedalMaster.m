@@ -1,9 +1,8 @@
 % Bipedal Master
 % Author: Connor Morrow
 % Date: 1/14/2020
-% Description: This script pulls all of the data captured from OpenSim bone 
-% geometries to create plots of the bone points. These points will be used
-% in the muscle placement optimization code.
+% Description: This script runs calculations to generate the human torque
+% plots adn robot torque plots.
 
 if exist('Optimize', 'var') == 0
     clear
@@ -17,7 +16,7 @@ end
 
 %Choose the Joint that you will to observe
 %Options are: Back, Bi_Hip, Calves, Foot, Toe, Uni_Hip
-ChooseJoint = 'Back';
+ChooseJoint = 'Bi_Hip';
 
 % %Choose the number of divisions for the angles of rotation
 divisions = 100;
@@ -40,6 +39,7 @@ load(strcat('Human_', ChooseJoint, '_Data.mat'));
 %% ------------- Robot Model -----------------
 %Runs the bipedal model
 run("RobotPAMCalculationOptimization.m")    
+% run("RobotPAMCalculation.m")    
 
 %% ------------- Error Caclulation ------------
 %After running both scripts, this portion checks to see the error between
