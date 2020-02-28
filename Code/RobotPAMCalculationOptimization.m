@@ -167,7 +167,7 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
         BFCrossPoints = [2 2];
         BFMIF = 896;  %max isometric force
         Axis1 = [10 20 30;
-                30 0 0];                           %The axis of interest when calculating the moment arm about each joint. Looking at x, y, z for hip, and only z for knee
+                0, 0, 30];                           %The axis of interest when calculating the moment arm about each joint. Looking at x, y, z for hip, and only z for knee
             
        %For Semimem, p5 -> semwr1 -> semwr2 -> twr1 -> t1 -> t6
        LocationSem = [-0.126, -0.041, -0.006, 0.022, 0.047, 0.038; 
@@ -176,7 +176,7 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
        SemCrossPoints = [2, 4];
        SemMIF = 1288+410;
        SemAxis = [10, 20, 30;
-                  30, 0, 0];
+                  0, 0, 30];
            
        %For Sar, p3 -> sarwr1 -> sarwr3 -> twr1 -> t1
        LocationSar = [-0.026, 0.091, 0.098, 0.038, 0.022, 0.047;
@@ -185,7 +185,7 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
        SarCrossPoints = [2, 5];
        SarMIF = 156;
        SarAxis = [10, 20, 30;
-                  30, 0, 0];
+                  0, 0, 30];
        
       %For tfl, p3 -> tflwr1 -> tf1wr2 -> t2 -> t5
        LocationTfl = [-0.026, 0.037, 0.005, 0.006, 0.005;
@@ -194,7 +194,7 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
        TflCrossPoints = [2, 4];
        TflMIF = 233;
        TflAxis = [10, 20, 30;
-                  30, 0, 0];
+                  0, 0, 30];
        
       %------------- going to try to make Rectus Femoris into a function
       %------------- god have mercy on us all.
@@ -220,7 +220,7 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
        RecCrossPoints = [2, 5];
        RecMIF = 1169;
        RecAxis = [10, 20, 30;
-                  30, 0, 0];
+                  0, 0, 30];
        
       %For Grac tqKZ, p8 -> gracwr1 -> gracwr2 -> twr1 -> t1 -> t6
        LocationGrac = [-0.074, -0.001, 0.018, 0.022, 0.047, 0.038;
@@ -229,7 +229,7 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
        GracCrossPoints = [2, 4];
        GracMIF = 162;
        GracAxis = [10, 20, 30;
-                   30, 0, 0];
+                   0, 0, 30];
        
                 
        %For bifemsh, f2 -> twr2 -> twr3
@@ -239,7 +239,7 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
        BifCrossPoints = [0, 2];
        BifMIF = 804;
        BifAxis = [0 0 0;
-                  30, 0, 0];
+                  0, 0, 30];
        
        %Another function trial
        %For Vas_int, f1 -> vasintwr1 -> vasintwr2 -> pa2 (function [fcn7,
@@ -259,7 +259,7 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
        VasCrossPoints = [0, 4];
        VasMIF = 1365+1294+1871;
        VasAxis = [0 0 0;
-                  30, 0, 0];
+                  0, 0, 30];
     end
     Muscle1 = PamData('Bicep Femoris, Long Head', Location1, BFCrossPoints, BFMIF, T, Axis1);
     Muscle2 = PamData('Semimembranosus', LocationSem, SemCrossPoints, SemMIF, T, SemAxis);
