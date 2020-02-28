@@ -280,20 +280,18 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
     T7 = Muscle7.Torque;
     T8 = Muscle8.Torque;
     
-    Torque1x = T1(1, :, 1)+T2(1, :, 1)+T3(1, :, 1)+T4(1, :, 1)+T5(1, :, 1)+T6(1, :, 1);
-    Torque1y = T1(1, :, 2)+T2(1, :, 2)+T3(1, :, 2)+T4(1, :, 2)+T5(1, :, 2)+T6(1, :, 2);
-    Torque1z = T1(1, :, 3)+T2(1, :, 3)+T3(1, :, 3)+T4(1, :, 3)+T5(1, :, 3)+T6(1, :, 3);
-    Torque2a = T1(2, :, 1)+T2(2, :, 3)+T3(2, :, 3)+T4(2, :, 3)+T5(2, :, 3)+T6(2, :, 3);
-    Torque2b = T7(2, :, 3)+T8(2, :, 3);
+    Torque1x = Muscle1.Torque(1, :, 1);
+    Torque1y = Muscle1.Torque(1, :, 2);
+    Torque1z = Muscle1.Torque(1, :, 3);
+    Torque2 = Muscle1.Torque(2, :, 1);
     
     %Create the Mesh of Torques to corespond with the joint angles
-    Torque1xM = zeros(divisions, divisions); Torque1yM = zeros(divisions, divisions); Torque1zM = zeros(divisions, divisions); Torque2aM = zeros(divisions, divisions); Torque2bM = zeros(divisions, divisions); 
+    Torque1xM = zeros(divisions, divisions); Torque1yM = zeros(divisions, divisions); Torque1zM = zeros(divisions, divisions); Torque2M = zeros(divisions, divisions); 
     for i = 1:divisions
         Torque1xM(:, i) = Torque1x(((i-1)*divisions)+1:i*divisions);
         Torque1yM(:, i) = Torque1y(((i-1)*divisions)+1:i*divisions);
         Torque1zM(:, i) = Torque1z(((i-1)*divisions)+1:i*divisions);
-        Torque2aM(:, i) = Torque2a(((i-1)*divisions)+1:i*divisions);
-        Torque2bM(:, i) = Torque2b(((i-1)*divisions)+1:i*divisions);
+        Torque2M(:, i) = Torque2(((i-1)*divisions)+1:i*divisions);
     end
     
     %Including Generic variable name for plotting
@@ -304,13 +302,11 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
     RobotTorque1 = Torque1xM;
     RobotTorque2 = Torque1yM;
     RobotTorque3 = Torque1zM;
-    RobotTorque4 = Torque2aM;
-    RobotTorque5 = Torque2bM;
-    RobotTitle1 = 'Robot Hip Torque, Biarticulate Muscles, X axis';
-    RobotTitle2 = 'Robot Hip Torque, Biarticulate Muscles, Y axis';
-    RobotTitle3 = 'Robot Hip Torque, Biarticulate Muscles, Z axis';
-    RobotTitle4 = 'Robot Knee Torque, Biarticulate Muscles, Z axis';
-    RobotTitle5 = 'Robot Knee Torque, Uniarticulate Muscles, Z axis';
+    RobotTorque4 = Torque2M;
+    RobotTitle1 = 'Robot Hip Torque, bifemlh, X axis';
+    RobotTitle2 = 'Robot Hip Torque, bifemlh, Y axis';
+    RobotTitle3 = 'Robot Hip Torque, bifemlh, Z axis';
+    RobotTitle4 = 'Robot Knee Torque, bifemlh, Z axis';
     
 elseif isequal(ChooseJoint, 'Calves')
     %Create a Joint object that calculates things like transformation
