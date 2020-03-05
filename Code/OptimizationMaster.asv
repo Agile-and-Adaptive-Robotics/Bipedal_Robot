@@ -125,10 +125,10 @@ end
 %For this part of the cost function, we must sum across all muscles
 for i = 1:MuscleNum
     Diameter = Muscles{i}.Diameter;
-    MLength = Muscles{i}.MuscleLength;
+    Length = Muscle{i}.MuscleLength;
     %Increase the cost based on length of muscle
-    for ii = 1:length(MLength)
-        C(k) = C(k) + GLength*MLength(ii);
+    for ii = 1:length(Muscle1.MuscleLength)
+        C(k) = C(k) + GLength*Muscle1.MuscleLength(ii);
     end
 
     %Increase the cost based on the diameter of the muscle
@@ -137,7 +137,6 @@ for i = 1:MuscleNum
     elseif Diameter == 20
         C(k) = C(k) + GDiameter20;
     end
-    MLength = [];
 end
 
 beginOptimization = 1;          %Flags that optimization has begun for the optimization pam calculations

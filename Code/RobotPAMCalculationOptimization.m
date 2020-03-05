@@ -129,7 +129,7 @@ if isequal(ChooseJoint, 'Back')
     
     %Store all necessary variables into a cell array for the optimization
     %script
-    Muscles = {Muscle1};
+    Muscles = {Muscle1, Muscle2, Muscle3};
     
     
 elseif isequal(ChooseJoint, 'Bi_Hip')
@@ -327,6 +327,11 @@ elseif isequal(ChooseJoint, 'Bi_Hip')
     RobotTitle4 = 'Robot Knee Torque, Biarticulate Muscles, Z axis';
     RobotTitle5 = 'Robot Knee Torque, Uniarticulate Muscles, Z axis';
     
+    
+    %Store all necessary variables into a cell array for the optimization
+    %script
+    Muscles = {Muscle1, Muscle2, Muscle3, Muscle4, Muscle5, Muscle6, Muscle7, Muscle8};
+    
 elseif isequal(ChooseJoint, 'Calves')
     %Create a Joint object that calculates things like transformation
     %matrix
@@ -456,6 +461,11 @@ elseif isequal(ChooseJoint, 'Calves')
     RobotTitle2 = 'Robot Ankle Torque, Gastrocnemius, Z` axis';
     RobotTitle3 = 'Robot Ankle Torque, Soleus, Z` axis';
     
+    
+    %Store all necessary variables into a cell array for the optimization
+    %script
+    Muscles = {Muscle1, Muscle2, Muscle3};
+    
 elseif isequal(ChooseJoint, 'Foot')
     if beginOptimization == 0
         Raxis = [-0.10501355; -0.17402245; 0.97912632];
@@ -564,6 +574,11 @@ elseif isequal(ChooseJoint, 'Foot')
     RobotTorque2 = Torque2M;
     RobotTitle1 = 'Robot Ankle Torque, Z Axis';
     RobotTitle2 = 'Robot Subtalar Torque, X Axis';
+    
+    
+    %Store all necessary variables into a cell array for the optimization
+    %script
+    Muscles = {Muscle1, Muscle2, Muscle3, Muscle4, Muscle5};
     
 elseif isequal(ChooseJoint, 'Toe')
     if beginOptimization == 0
@@ -690,6 +705,11 @@ elseif isequal(ChooseJoint, 'Toe')
     RobotTitle2 = 'Robot Subtalar Torque, X Axis';
     RobotTitle3 = 'Robot MTP Torque, Z Axis';
     
+    
+    %Store all necessary variables into a cell array for the optimization
+    %script
+    Muscles = {Muscle1, Muscle2, Muscle3, Muscle4};
+    
 elseif isequal(ChooseJoint, 'Uni_Hip')
     if beginOptimization == 0
         %Hip Joint x rotation
@@ -805,5 +825,10 @@ elseif isequal(ChooseJoint, 'Uni_Hip')
     RobotTitle1 = 'Robot Hip Torque, uniarticular, Z axis';
     RobotTitle2 = 'Robot Hip Torque, uniarticular, Y axis';
     RobotTitle3 = 'Robot Hip Torque, uniarticular, X axis';
+    
+    
+    %Store all necessary variables into a cell array for the optimization
+    %script
+    Muscles = {Muscle1, Muscle2, Muscle3, Muscle4};
 
 end
