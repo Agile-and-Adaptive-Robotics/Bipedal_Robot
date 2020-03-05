@@ -16,7 +16,7 @@ end
 
 %Choose the Joint that you will to observe
 %Options are: Back, Bi_Hip, Calves, Foot, Toe, Uni_Hip
-ChooseJoint = 'Bi_Hip';
+ChooseJoint = 'Back';
 
 % %Choose the number of divisions for the angles of rotation
 divisions = 100;

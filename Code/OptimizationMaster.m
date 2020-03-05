@@ -81,6 +81,17 @@ if isequal(ChooseJoint, 'Back')
     Sacrum = xlsread(PointsFile)';
 end
 
+%Determine how many muscles are included in the algorithm
+test = 0;
+MuscleNum = 0;
+while test == 0
+    MuscleNum = MuscleNum+1;
+    if exist(strcat('Muscle', num2str(MuscleNum))) == 0
+        test = 1;
+        MuscleNum = MuscleNum-1;
+    end
+end
+
 %Calculate the distance from the attachment point to the nearest point on
 %the robot body
 %The first step is to get all the attachment points into the same

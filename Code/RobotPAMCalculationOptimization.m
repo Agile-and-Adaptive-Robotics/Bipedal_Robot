@@ -56,7 +56,9 @@ if isequal(ChooseJoint, 'Back')
         T(:, :, 2, :) = T(:, :, 1, :);
         T(:, :, 3, :) = T(:, :, 1, :);
     end
-        
+    
+    
+    if beginOptimization == 0
 %     %Erector Spinae p7 -> b2    
 %         ESLocation = [-0.122, -0.158, -0.072, -0.039, 0.005, -0.032, -0.072, -0.04, -0.019;
 %                     -0.051, 0.054, 0.172, 0.179, 0.027, 0.027, 0.175, 0.182, 0.048;
@@ -69,7 +71,7 @@ if isequal(ChooseJoint, 'Back')
     %USABLE STATE
     %------------------------------------------------------------------------------------------------------------------------------------
     
-    if beginOptimization == 0
+
         %For Erector Spinae
         Location1 = [-0.122, -0.158, -0.072;
                     -0.051, 0.054, 0.172;
@@ -78,15 +80,28 @@ if isequal(ChooseJoint, 'Back')
         ESMIF = 2500;
         Axis1 = [10, 20, 30];                           %The axis of interest when calculating the moment arm about each joint. The axis is 1, but is listed as 10 so that the cross product doesn't rotate the resulting vector. See PamData > CrossProd
     
-        %For 
+        %For Internal Oblique  p2 -> b3
+        Location2 = [-0.04, 0.07;
+                     0.07, 0.16;
+                     0.116, 0.015];
+        IOCrossPoints = 2;                    %Via points are the points where a transformation matrix is needed. Typically wrap point + 1
+        IOMIF = 900;
+        AxisIO = [10, 20, 30];            
+        
+        %For External Oblique p4 -> b4
+        Location3 = [-0.03, 0.065;
+                     -0.064, 0.11;
+                     0.01, 0.11];
+        EOCrossPoints = 2;                    %Via points are the points where a transformation matrix is needed. Typically wrap point + 1
+        EOMIF = 900;
+        AxisEO = [10, 20, 30];            
     end
 
     Muscle1 = PamData('Erector Spinae', Location1, ESCrossPoints, ESMIF, T, Axis1);
+    Muscle2 = PamData('Internal Oblique', Location2, IOCrossPoints, IOMIF, T, AxisIO);
+    Muscle3 = PamData('External Oblique', Location3, EOCrossPoints, EOMIF, T, AxisEO);
     
-    Torque1 = Muscle1.Torque;
-    
-    
-    
+    Torque1 = Muscle1.Torque+Muscle2.Torque+Muscle3.Torque;
     
     %Reorganize the torque calculations into a matrix for 3D plotting
     for i = 1:divisions
@@ -102,9 +117,9 @@ if isequal(ChooseJoint, 'Back')
     %plotted in one location instead of spread out through all of the
     %different sections
     RobotAxis1 = Joint1c.Theta;
-    RobotAxis1Label = 'Back Flexion, Degrees';
+    RobotAxis1Label = 'Lumbar Bending, Degrees';
     RobotAxis2 = Joint1a.Theta;
-    RobotAxis2Label = 'Lumbar Bending, Degrees';
+    RobotAxis2Label = 'Back Flexion, Degrees';
     RobotTorque1 = Torque1M(:, :, 1);
     RobotTorque2 = Torque1M(:, :, 2);
     RobotTorque3 = Torque1M(:, :, 3);
