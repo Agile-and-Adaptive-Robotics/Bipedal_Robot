@@ -20,7 +20,7 @@ ChooseJoint = 'Back';
 divisions = 100;
 
 %Choose the number of iterations for the optimization code
-iterations = 200;
+iterations = 2;
 
 %Choose the minimum change for the value of the location
 epsilon = 0.01;
@@ -151,92 +151,105 @@ ep1 = zeros(3, 1);              %Change in the first cross point for the Muscle
 ep2 = zeros(3, 1);              %Change in the second cross point for the muscle
 neg = [1, -1];
 k = 2;                  %index for the cost function. Start at 2, since 1 was the original point
+shrinkEp = 0;                   %Flag. Once it reaches the number of muscles, it will scale epsilon down to refine the search
 
 %We begin with the point before the crossing point
-Cross = Muscle1.CrossPoints(1);
-StartingLocation1 = Muscle1.Location(:, Cross - 1);
-StartingLocation2 = Muscle1.Location(:, Cross);
-LocationTracker1 = StartingLocation1;
-LocationTracker2 = StartingLocation2;
+for m = 1:MuscleNum
+    Cross(m) = Muscles{m}.CrossPoints(1);  %Will need to change this indexing for muscles that have multiple crossing points
+    StartingLocation1{m} = Muscles{m}.Location(:, Cross(m) - 1);
+    StartingLocation2{m} = Muscles{m}.Location(:, Cross(m));
+    LocationTracker1{m} = StartingLocation1{m};
+    LocationTracker2{m} = StartingLocation2{m};
+end
 
 disp('Beginning Optimization');
-tic
 for iiii = 1:iterations
-    for k1 = 1:2
-        ep1(1) = epsilon*neg(k1);
-        for k2 = 1:2
-            ep1(2) = epsilon*neg(k2);
-            for k3 = 1:2
-                ep1(3) = epsilon*neg(k3);
-                for k4 = 1:2
-                    ep2(1) = epsilon*neg(k4);
-                    for k5 = 1:2
-                        ep2(2) = epsilon*neg(k5);
-                        for k6 = 1:2
-                            eq2(3) = epsilon*neg(k6);
-                            
-                            %Change Location of first crossing point
-                            Location1 = Muscle1.Location;
-                            Location1(:, Cross - 1) = StartingLocation1 + ep1;
-                %             Location1(:, Cross - 1:Cross) = Muscle1.Location(:, Cross-1:Cross) + ep;
-                            LocationTracker1(:, k) = Location1(:, Cross - 1);
-                            
-                            %Change Location of the second crossing point
-                            Location1(:, Cross) = StartingLocation2 + ep2;
-                            LocationTracker2(:, k) = Location1(:, Cross);
+    for m = 1:MuscleNum
+        for k1 = 1:2
+            ep1(1) = epsilon*neg(k1);
+            for k2 = 1:2
+                ep1(2) = epsilon*neg(k2);
+                for k3 = 1:2
+                    ep1(3) = epsilon*neg(k3);
+                    for k4 = 1:2
+                        ep2(1) = epsilon*neg(k4);
+                        for k5 = 1:2
+                            ep2(2) = epsilon*neg(k5);
+                            for k6 = 1:2
+                                ep2(3) = epsilon*neg(k6);
 
-                            run('RobotPAMCalculationOptimization.m')
+                                %Change the Locaiton of the first and
+                                %second crossing point
+                                Location{m}(:, Cross(m) - 1) = StartingLocation1{m} + ep1;
+                                Location{m}(:, Cross(m)) = StartingLocation2{m} + ep2;
+                                
+                                %Update all of the Location Tracker
+                                %variables to identify current
+                                %configuration
+                                for config = 1:MuscleNum
+                                    LocationTracker1{config}(:, k) = Location{config}(:, Cross(config) - 1);
+                                    LocationTracker2{config}(:, k) = Location{config}(:, Cross(config));
+                                end
+                                
+                                run('RobotPAMCalculationOptimization.m')
 
-                            %Evaluate cost function for the new set of attachment points
-                            C(k) = 0;
+                                %Evaluate cost function for the new set of attachment points
+                                C(k) = 0;
 
-                            for ii = 1:100
-                                for iii = 1:100
-                                    C(k) = C(k) + abs(HumanTorque1(ii, iii) - RobotTorque1(ii, iii));
-                                    C(k) = C(k) + abs(HumanTorque2(ii, iii) - RobotTorque2(ii, iii));
-                                    if exist('RobotTorque3', 'var') == 1
-                                        C(k) = C(k) + abs(HumanTorque3(ii, iii) - RobotTorque3(ii, iii));
-                                        if exist('RobotTorque4', 'var') == 1
-                                            C(k) = C(k) + abs(HumanTorque4(ii, iii) - RobotTorque4(ii, iii));
+                                for ii = 1:100
+                                    for iii = 1:100
+                                        C(k) = C(k) + abs(HumanTorque1(ii, iii) - RobotTorque1(ii, iii));
+                                        C(k) = C(k) + abs(HumanTorque2(ii, iii) - RobotTorque2(ii, iii));
+                                        if exist('RobotTorque3', 'var') == 1
+                                            C(k) = C(k) + abs(HumanTorque3(ii, iii) - RobotTorque3(ii, iii));
+                                            if exist('RobotTorque4', 'var') == 1
+                                                C(k) = C(k) + abs(HumanTorque4(ii, iii) - RobotTorque4(ii, iii));
+                                            end
                                         end
                                     end
                                 end
-                            end
 
-                            %Increase the cost based on length of muscle
-                            for ii = 1:length(Muscle1.MuscleLength)
-                                C(k) = C(k) + GLength*Muscle1.MuscleLength(ii);
-                            end
+                                %Increase the cost based on length of muscle
+                                for ii = 1:length(Muscles{m}.MuscleLength)
+                                    C(k) = C(k) + GLength*Muscles{m}.MuscleLength(ii);
+                                end
 
-                            %Increase the cost based on the diameter of the muscle
-                            if Muscle1.Diameter == 40
-                                C(k) = C(k) + GDiameter40;
-                            elseif Muscle1.Diameter == 20
-                                C(k) = C(k) + GDiameter20;
+                                %Increase the cost based on the diameter of the muscle
+                                if Muscles{m}.Diameter == 40
+                                    C(k) = C(k) + GDiameter40;
+                                elseif Muscles{m}.Diameter == 20
+                                    C(k) = C(k) + GDiameter20;
+                                end
+
+                                disp(['Iteration number ', num2str(k-1), ' out of of ', num2str(2^6*iterations*MuscleNum), '.']);
+                                k = k+1;            %Increment k for the next point of the cost function
                             end
-                            
-                            disp(['Iteration number ', num2str(k), ' out of of ', num2str(2^6*iterations), '.']);
-                            k = k+1;            %Increment k for the next point of the cost function
                         end
                     end
                 end
             end
         end
-    end
-    [a, b] = min(C);
-    
-    %If the previous starting location is still the location with the
-    %minimum cost, change the step size of epsilon.
-    if StartingLocation1 == LocationTracker1(:, b)
-        if StartingLocation2 == LocationTracker2(:, b)
-            epsilon = 0.1*epsilon;
+%         [a, b] = min(C(end-2^6:end));
+        [a, b] = min(C);
+
+        %If the previous starting location is still the location with the
+        %minimum cost, change the step size of epsilon.
+        if StartingLocation1{m} == LocationTracker1{m}(:, b)
+            if StartingLocation2{m} == LocationTracker2{m}(:, b)
+                shrinkEp = shrinkEp+1;
+                if shrinkEp == MuscleNum
+                    shrinkEp = 0;
+                    epsilon = 0.1*epsilon;
+                    if epsilon < 10^-6
+                        break
+                    end
+                end
+            end
         end
+        StartingLocation1{m} = LocationTracker1{m}(:, b);               %Update the next round of optimization with the location with minimum cost
+        StartingLocation2{m} = LocationTracker2{m}(:, b);
     end
-    StartingLocation1 = LocationTracker1(:, b);               %Update the next round of optimization with the location with minimum cost
-    StartingLocation2 = LocationTracker2(:, b);
-        
 end
-toc
 
 %%------------------ Plotting ----------------------
 % run('OptimizationPlotting.m')

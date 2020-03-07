@@ -127,9 +127,8 @@ else
 end
 
 %Original Location
-clear L
 for m = 1:MuscleNum
-    L{m} = Muscles{m}.Location;
+    L{m}(:, :) = Muscles{m}.Location;
     L{m}(:, Muscles{m}.CrossPoints - 1) = LocationTracker1{m}(:, 1);
     L{m}(:, Muscles{m}.CrossPoints) = LocationTracker2{m}(:, 1);
 end
@@ -149,10 +148,14 @@ title('Original Muscle Location')
 hold off
 
 %New best location
+L2 = Muscle1.Location;
+L2(:, Cross - 1) = StartingLocation1;
+L2(:, Cross) = StartingLocation2;
+
 for m = 1:MuscleNum
     Lb{m}(:, :) = Muscles{m}.Location;
-    Lb{m}(:, Muscles{m}.CrossPoints - 1) = LocationTracker1{m}(:, b);
-    Lb{m}(:, Muscles{m}.CrossPoints) = LocationTracker2{m}(:, b);
+    Lb{m}(:, Muscles{m}.CrossPoints - 1) = LocationTracker1{m}(:, 1);
+    Lb{m}(:, Muscles{m}.CrossPoints) = LocationTracker2{m}(:, 1);
 end
 figure
 hold on
@@ -162,7 +165,7 @@ plot3(Spine(1, :), -Spine(3, :), Spine(2, :), '.', 'color', 'b')
 plot3(Sacrum(1, :), -Sacrum(3, :), Sacrum(2, :), '.', 'color', 'b')
 plot3(Pelvis(1, :), -Pelvis(3, :), Pelvis(2, :), '.', 'color', 'b')
 for m = 1:MuscleNum
-    plot3(Lb{m}(1, :), -Lb{m}(3, :), Lb{m}(2, :), 'color', 'r', 'LineWidth', LW)
+    plot3(L{m}(1, :), -L{m}(3, :), L{m}(2, :), 'color', 'r', 'LineWidth', LW)
 end
 axis(axisLimits)
 title('Current Optimization Solution for Muscle Location')

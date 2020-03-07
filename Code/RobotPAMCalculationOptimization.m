@@ -94,12 +94,14 @@ if isequal(ChooseJoint, 'Back')
                      0.01, 0.11];
         EOCrossPoints = 2;                    %Via points are the points where a transformation matrix is needed. Typically wrap point + 1
         EOMIF = 900;
-        AxisEO = [10, 20, 30];            
+        AxisEO = [10, 20, 30];        
+        
+        Location = {Location1, Location2, Location3};
     end
 
-    Muscle1 = PamData('Erector Spinae', Location1, ESCrossPoints, ESMIF, T, Axis1);
-    Muscle2 = PamData('Internal Oblique', Location2, IOCrossPoints, IOMIF, T, AxisIO);
-    Muscle3 = PamData('External Oblique', Location3, EOCrossPoints, EOMIF, T, AxisEO);
+    Muscle1 = PamData('Erector Spinae', Location{1}, ESCrossPoints, ESMIF, T, Axis1);
+    Muscle2 = PamData('Internal Oblique', Location{2}, IOCrossPoints, IOMIF, T, AxisIO);
+    Muscle3 = PamData('External Oblique', Location{3}, EOCrossPoints, EOMIF, T, AxisEO);
     
     Torque1 = Muscle1.Torque+Muscle2.Torque+Muscle3.Torque;
     
