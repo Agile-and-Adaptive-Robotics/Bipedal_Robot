@@ -20,10 +20,15 @@ ChooseJoint = 'Back';
 divisions = 100;
 
 %Choose the number of iterations for the optimization code
-iterations = 2;
+iterations = 100;
+
+    %Note: Time calculation equation (estimates how long this will take)
+%     totalTimeSeconds = 3*iterations*2^6*3
+%     totalTimeMinutes = totalTimeSeconds/60
+%     totalTimeHours = totalTimeMinutes/60
 
 %Choose the minimum change for the value of the location
-epsilon = 0.01;
+epsilon = 1;
 
 %Choose the scaling factor for the cost function, which weights the
 %importance of distance from the attachment point to the nearest point on
@@ -106,6 +111,9 @@ bone{2} = Sacrum;
 bone{3} = Pelvis;
 
 %Evaluate cost function for the initial set of attachment points
+% C = zeros(1, MuscleNum*2^6*iterations);   %Don't do this. Need to look at
+% the min later on, and initializing with zeros fucks it up. Maybe init
+% with 1's and then multiply by a lot
 C(1) = 0;
 k = 1;
 
@@ -152,6 +160,18 @@ ep2 = zeros(3, 1);              %Change in the second cross point for the muscle
 neg = [1, -1];
 k = 2;                  %index for the cost function. Start at 2, since 1 was the original point
 shrinkEp = 0;                   %Flag. Once it reaches the number of muscles, it will scale epsilon down to refine the search
+myBreak = 0;                    %Flag for if epsilon becomes extremely small, in which case the optimization should end
+previousBestC = C(1);           %Variable that stores the best value from the previous series of calculations. Compares to newest best ot determine if actions need to be takne
+previousBestIteration = 1;      %Variable that stores the iteration number of the lowest cost value
+
+%some initialization
+for m = 1:MuscleNum
+    LocationTracker1{m} = zeros(3, MuscleNum*2^6*iterations);
+    LocationTracker2{m} = zeros(3, MuscleNum*2^6*iterations);
+    StartingLocation1{m} = zeros(3, 1);
+    StartingLocation2{m} = zeros(3, 1);
+end
+Cross = zeros(1, 3);
 
 %We begin with the point before the crossing point
 for m = 1:MuscleNum
@@ -229,25 +249,49 @@ for iiii = 1:iterations
                 end
             end
         end
+% %         [a, b] = min(C(end-2^6:end));
+%         [a, b] = min(C);
+% 
+%         %If the previous starting location is still the location with the
+%         %minimum cost, change the step size of epsilon.
+%         if same(StartingLocation1{m}, LocationTracker1{m}(:, b))
+%             if same(StartingLocation2{m}, LocationTracker2{m}(:, b))
+%                 shrinkEp = shrinkEp+1;
+%                 if shrinkEp == MuscleNum
+%                     shrinkEp = 0;
+%                     epsilon = 0.1*epsilon;
+%                     if epsilon < 10^-6
+%                         myBreak = 1;
+%                         break
+%                     end
+%                 end
+%             end
+%         end
+%         StartingLocation1{m} = LocationTracker1{m}(:, b);               %Update the next round of optimization with the location with minimum cost
+%         StartingLocation2{m} = LocationTracker2{m}(:, b);
+%         if myBreak == 1             %Likely should change the loop to be a while loop for the iterations. Can tackle that in another branch soon
+%             break
+%         end
+    end
 %         [a, b] = min(C(end-2^6:end));
-        [a, b] = min(C);
-
-        %If the previous starting location is still the location with the
-        %minimum cost, change the step size of epsilon.
-        if StartingLocation1{m} == LocationTracker1{m}(:, b)
-            if StartingLocation2{m} == LocationTracker2{m}(:, b)
-                shrinkEp = shrinkEp+1;
-                if shrinkEp == MuscleNum
-                    shrinkEp = 0;
-                    epsilon = 0.1*epsilon;
-                    if epsilon < 10^-6
-                        break
-                    end
-                end
-            end
+    [currentBestC, currentBestIteration] = min(C);
+    if currentBestIteration == previousBestIteration
+        epsilon = epsilon*0.1;
+        if epsilon < 10^-6
+            myBreak = 1;
         end
-        StartingLocation1{m} = LocationTracker1{m}(:, b);               %Update the next round of optimization with the location with minimum cost
-        StartingLocation2{m} = LocationTracker2{m}(:, b);
+    end
+
+    for n = 1:MuscleNum
+        StartingLocation1{n} = LocationTracker1{n}(:, currentBestIteration);               %Update the next round of optimization with the location with minimum cost
+        StartingLocation2{n} = LocationTracker2{n}(:, currentBestIteration);
+    end
+ 
+    previousBestIteration = currentBestIteration;
+    previousBestC = currentBestC;
+    
+    if myBreak == 1             %Likely should change the loop to be a while loop for the iterations. Can tackle that in another branch soon
+        break
     end
 end
 
@@ -256,5 +300,21 @@ end
 
 figure
 plot(C)
+xlabel('Iterations')
+ylabel('Cost Value')
+
+%Create an average of the iterationst to create viewable epochs
+for i = 1:iterations
+    startP = (i-1)*MuscleNum*2^6+1;             %Starting Point for summation of the epoch
+    endP = i*MuscleNum*2^6;                     %Ending poster for summation of the epoch
+    if i*MuscleNum*2^6 < length(C)
+        averageC(i) = sum(C(startP:endP));
+    else
+        averageC(i) = sum(C(startP:end));
+    end
+end
+
+figure
+plot(averageC)
 xlabel('Epochs')
 ylabel('Cost Value')
