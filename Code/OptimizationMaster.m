@@ -35,9 +35,9 @@ epsilon = 1;
 %the model body
 %Scaling Values
 GTorque = 0.0001;           %Cost weight for the difference between human and robot torque      
-GDiameter40 = 1e6;              %Cost Weight for the diameter of the festo muscle
+GDiameter40 = 1e7;              %Cost Weight for the diameter of the festo muscle
 GDiameter20 = 1e3;
-G = 1000;                   %Cost weight for the distance from the attacment point to the model body
+G = 1000;                   %Cost weight for the distance from the attachment point to the model body
 GLength = 100;
 
 %Adjust the axis range for the Torque plots
@@ -198,6 +198,7 @@ for m = 1:MuscleNum
     LocationTracker2{m} = StartingLocation2{m};
 end
 
+tic
 disp('Beginning Optimization');
 for iiii = 1:iterations
     for m = 1:MuscleNum
@@ -315,7 +316,7 @@ for iiii = 1:iterations
         break
     end
 end
-
+timeElapsed = toc;
 %%------------------ Plotting ----------------------
 % run('OptimizationPlotting.m')
 
