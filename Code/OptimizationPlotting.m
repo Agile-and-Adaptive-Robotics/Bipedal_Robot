@@ -6,20 +6,20 @@
 
 %Plots for the new robot configuration
 figure
-surf(RobotAxis1*180/pi, RobotAxis2*180/pi, NewRobotTorque1, 'EdgeColor', 'none')
+surf(RobotAxis1*180/pi, RobotAxis2*180/pi, RobotTorque1, 'EdgeColor', 'none')
 title(RobotTitle1); xlabel(RobotAxis1Label); ylabel(RobotAxis2Label)
 zlabel('Torque, N*m')
 colorbar; caxis(caxisRange)
 
 figure
-surf(RobotAxis1*180/pi, RobotAxis2*180/pi, NewRobotTorque2, 'EdgeColor', 'none')
+surf(RobotAxis1*180/pi, RobotAxis2*180/pi, RobotTorque2, 'EdgeColor', 'none')
 title(RobotTitle2); xlabel(RobotAxis1Label); ylabel(RobotAxis2Label)
 zlabel('Torque, N*m')
 colorbar; caxis(caxisRange)
 
 if exist('RobotTorque3', 'var') == 1
     figure
-    surf(RobotAxis1*180/pi, RobotAxis2*180/pi, NewRobotTorque3, 'EdgeColor', 'none')
+    surf(RobotAxis1*180/pi, RobotAxis2*180/pi, RobotTorque3, 'EdgeColor', 'none')
     title(RobotTitle3); xlabel(RobotAxis1Label); ylabel(RobotAxis2Label)
     zlabel('Torque, N*m')
     colorbar; caxis(caxisRange)
@@ -27,7 +27,7 @@ end
 
 if exist('RobotTorque4', 'var') == 1
     figure
-    surf(RobotAxis1*180/pi, RobotAxis2*180/pi, NewRobotTorque4, 'EdgeColor', 'none')
+    surf(RobotAxis1*180/pi, RobotAxis2*180/pi, RobotTorque4, 'EdgeColor', 'none')
     title(RobotTitle4); xlabel(RobotAxis1Label); ylabel(RobotAxis2Label)
     zlabel('Torque, N*m')
     colorbar; caxis(caxisRange)
