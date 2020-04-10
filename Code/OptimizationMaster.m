@@ -35,10 +35,10 @@ epsilon = 1;
 %the model body
 %Scaling Values
 GTorque = 0.0001;           %Cost weight for the difference between human and robot torque      
-GDiameter40 = 1e4;              %Cost Weight for the diameter of the festo muscle
-GDiameter20 = 1e2;
+GDiameter40 = 1e6;              %Cost Weight for the diameter of the festo muscle
+GDiameter20 = 1e3;
 G = 1000;                   %Cost weight for the distance from the attacment point to the model body
-GLength = 1000;
+GLength = 100;
 
 %Adjust the axis range for the Torque plots
 caxisRange = [-40 150];
@@ -276,7 +276,7 @@ for iiii = 1:iterations
 %         [a, b] = min(C(end-2^6:end));
     [currentBestC, currentBestIteration] = min(C);
     if currentBestIteration == previousBestIteration
-        epsilon = epsilon*0.1;
+        epsilon = epsilon*0.5;
         if epsilon < 10^-6
             myBreak = 1;
         end

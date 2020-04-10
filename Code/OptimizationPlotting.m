@@ -148,6 +148,8 @@ axis(axisLimits)
 title('Original Muscle Location')
 hold off
 
+[a, b] = min(C);
+
 %New best location
 for m = 1:MuscleNum
     Lb{m}(:, :) = Muscles{m}.Location;
@@ -163,6 +165,23 @@ plot3(Sacrum(1, :), -Sacrum(3, :), Sacrum(2, :), '.', 'color', 'b')
 plot3(Pelvis(1, :), -Pelvis(3, :), Pelvis(2, :), '.', 'color', 'b')
 for m = 1:MuscleNum
     plot3(Lb{m}(1, :), -Lb{m}(3, :), Lb{m}(2, :), 'color', 'r', 'LineWidth', LW)
+end
+axis(axisLimits)
+title('Current Optimization Solution for Muscle Location')
+hold off
+
+figure
+hold on
+plot3(0, 0, 0, 'o', 'color', 'r')
+plot3(Joint1a.Home(1), -Joint1a.Home(2), Joint1a.Home(3), 'o', 'color', 'r')
+plot3(Spine(1, :), -Spine(3, :), Spine(2, :), '.', 'color', 'b')
+plot3(Sacrum(1, :), -Sacrum(3, :), Sacrum(2, :), '.', 'color', 'b')
+plot3(Pelvis(1, :), -Pelvis(3, :), Pelvis(2, :), '.', 'color', 'b')
+for m = 1:MuscleNum
+    plot3(L{m}(1, :), -L{m}(3, :), L{m}(2, :), 'color', 'r', 'LineWidth', LW)
+end
+for m = 1:MuscleNum
+    plot3(Lb{m}(1, :), -Lb{m}(3, :), Lb{m}(2, :), 'color', 'g', 'LineWidth', LW)
 end
 axis(axisLimits)
 title('Current Optimization Solution for Muscle Location')
