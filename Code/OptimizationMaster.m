@@ -28,7 +28,8 @@ iterations = 100;
 %     totalTimeHours = totalTimeMinutes/60
 
 %Choose the minimum change for the value of the location
-epsilon = 1;
+epsilon = 0.1;
+refinementRate = 0.9;       %The gain on epsilon once a local minima has been found
 
 %Choose the scaling factor for the cost function, which weights the
 %importance of distance from the attachment point to the nearest point on
@@ -46,7 +47,7 @@ GDiameter40 = 5e0;
 GDiameter20 = 1e0;
 G = 1e-5;
 GLength = 1e-3;
-disG = 1;                   %Cost weight for the distance away from the starting point
+disG = 10;                   %Cost weight for the distance away from the starting point
 
 %Adjust the axis range for the Torque plots
 caxisRange = [-40 150];
@@ -305,35 +306,12 @@ for iiii = 1:iterations
                 end
             end
         end
-% %         [a, b] = min(C(end-2^6:end));
 %         [a, b] = min(C);
-% 
-%         %If the previous starting location is still the location with the
-%         %minimum cost, change the step size of epsilon.
-%         if same(StartingLocation1{m}, LocationTracker1{m}(:, b))
-%             if same(StartingLocation2{m}, LocationTracker2{m}(:, b))
-%                 shrinkEp = shrinkEp+1;
-%                 if shrinkEp == MuscleNum
-%                     shrinkEp = 0;
-%                     epsilon = 0.1*epsilon;
-%                     if epsilon < 10^-6
-%                         myBreak = 1;
-%                         break
-%                     end
-%                 end
-%             end
-%         end
-%         StartingLocation1{m} = LocationTracker1{m}(:, b);               %Update the next round of optimization with the location with minimum cost
-%         StartingLocation2{m} = LocationTracker2{m}(:, b);
-%         if myBreak == 1             %Likely should change the loop to be a while loop for the iterations. Can tackle that in another branch soon
-%             break
-%         end
     end
-%         [a, b] = min(C(end-2^6:end));
     [currentBestC, currentBestIteration] = min(C);
     if currentBestIteration == previousBestIteration
-        epsilon = epsilon*0.5;
-        if epsilon < 10^-6
+        epsilon = epsilon*refinementRate;
+        if epsilon < 10^-3
             myBreak = 1;
         end
     end
@@ -388,17 +366,18 @@ ylabel('Cost Value')
 title('Average C')
 
 figure
+subplot(2, 2, 1)
 plot(eC)
 title('Error Component')
 
-figure
+subplot(2, 2, 2)
 plot(dC)
 title('Diameter Component')
 
-figure
+subplot(2, 2, 3)
 plot(mC)
 title('Muscle Length Component')
 
-figure
+subplot(2, 2, 4)
 plot(disC)
-title('Distance From Origin')
+title('Distance Component')
