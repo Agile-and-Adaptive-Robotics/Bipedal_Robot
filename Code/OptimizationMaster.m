@@ -283,7 +283,7 @@ for iiii = 1:iterations
                                     disC(k) = disC(k) + disG*norm(LocationTracker2{ii}(:, k) - LocationTracker2{ii}(:, 1));
                                 end
                                 
-                                C(k) = eC(k) + mC(k) + dC(k);
+                                C(k) = eC(k) + mC(k) + dC(k)+disC(k);
 
                                 %Keep track of robot torque for error plots
                                 %later
@@ -306,7 +306,6 @@ for iiii = 1:iterations
                 end
             end
         end
-%         [a, b] = min(C);
     end
     [currentBestC, currentBestIteration] = min(C);
     if currentBestIteration == previousBestIteration
