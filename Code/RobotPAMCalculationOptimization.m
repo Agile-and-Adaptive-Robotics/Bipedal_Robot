@@ -59,19 +59,6 @@ if isequal(ChooseJoint, 'Back')
     
     
     if beginOptimization == 0
-%     %Erector Spinae p7 -> b2    
-%         ESLocation = [-0.122, -0.158, -0.072, -0.039, 0.005, -0.032, -0.072, -0.04, -0.019;
-%                     -0.051, 0.054, 0.172, 0.179, 0.027, 0.027, 0.175, 0.182, 0.048;
-%                     0.078, 0.041, 0.031, 0.029, 0.047, 0.048, 0.048, 0.045, 0.059];
-
-    %The following Location is a reduction in points to simplify the
-    %optimization code. Return to the above location when running it for real
-    
-    %PLEASE TO DO NOT FORGET TO COMMENT OUT WHEN THE OPTIMIZATION IS IN A
-    %USABLE STATE
-    %------------------------------------------------------------------------------------------------------------------------------------
-    
-
         %For Erector Spinae
         Location1 = [-0.122, -0.158, -0.072;
                     -0.051, 0.054, 0.172;

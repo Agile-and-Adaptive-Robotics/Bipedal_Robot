@@ -5,6 +5,10 @@
 %Plot how the cost function changes over the iterations
 
 %Plots for the new robot configuration
+
+
+
+
 figure
 surf(RobotAxis1*180/pi, RobotAxis2*180/pi, OriginalRobotTorque1, 'EdgeColor', 'none')
 title(RobotTitle1); xlabel(RobotAxis1Label); ylabel(RobotAxis2Label)
