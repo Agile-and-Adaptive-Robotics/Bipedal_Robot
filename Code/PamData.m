@@ -68,6 +68,10 @@ classdef PamData
                 ii = 1;                             %Index for the wrapping points
                 t1 = eye(4);                        %Create an identity transformation matrix
                 t2 = eye(4);                        %Create an identity transformation matrix
+                if cross == 0                       %If the muscle starts AFTER the first joint, let's make some corrections
+                    cross = obj.CrossPoints(2);     %Consider the second crossing point, as the first one (=0) only indicates the above sentence
+                    ii = 2;                         %Increment the joint index
+                end
                 for i = 1:j-1
                     while i + 1 == cross                %Begin changing the transformation matrices if we've reached a crossing point
                         t2 = t2*T(:, :, ii);           %Store the first Transformation matrix in t2
@@ -81,7 +85,12 @@ classdef PamData
 
                     %Calculate the euclidean distance between the two via
                     %points, including the transformation matrix if necessary
-                    mL(iii) = mL(iii) + norm(VecTrans(t1, L(:, i))-VecTrans(t2, L(:, i+1)));
+                    dim = size(L);              %Used in case one of the locations is function of angle
+                    if length(dim) > 2
+                        mL(iii) = mL(iii) + norm(VecTrans(t1, L(:, i, iii))-VecTrans(t2, L(:, i+1, iii)));
+                    else
+                        mL(iii) = mL(iii) + norm(VecTrans(t1, L(:, i))-VecTrans(t2, L(:, i+1)));
+                    end
     %                 t1 = t2;                        %If the forward point was transformed, store the transformation for the next iteration
                     t2 = t1;                        %Replace the transformtaion matrix with an identity matrix
                 end         
@@ -92,6 +101,11 @@ classdef PamData
         %Calculate the moment arm about a joint
         %For every CrossPoint, calculate the moment arm of the muscle about
         %the joint it crosses over
+        
+        %Useful information
+        % i -> Index for Crossing Points/Joints
+        % ii -> Index for every degree of motion
+        % iii -> Index for axes of interest to observe Torque about
         function mA = computeMomentArm(obj)
             mA = zeros(length(obj.CrossPoints), size(obj.TransformationMat, 4), size(obj.Axis, 2));
             for ii = 1:size(obj.TransformationMat, 4)       %Repeat calculation for every degree of motion we are observing
@@ -99,6 +113,9 @@ classdef PamData
                     T = obj.TransformationMat(:, :, :, ii);
                     L = obj.Location;
                     cross = obj.CrossPoints;
+                    if cross(i) == 0                       %If the muscle starts AFTER the first joint, let's make some corrections
+                        i = i+1;                         %Increment the joint index
+                    end
 
                     %Setting up transformation matrix for the point before
                     %the cross over
@@ -122,9 +139,14 @@ classdef PamData
 
                     direction = VecTrans(t1\eye(4), L(:, cross(i)-1))-VecTrans(t2, L(:, cross(i)));     %Calculate the direction from the previous crossing point to the next
                     unitDirection = direction/norm(direction);                                          %Calculate the unit direction of the direciton vector
+                    dim = size(L);
                     for iii = 1:size(obj.Axis, 2)       %Repeat the moment arm calculation for every axis of interest 
                         if obj.Axis(i, iii) > 0         %Do not calculate the moment arm if the axis is listed as 0, which can happen if we are interested in multiple axes for one joint, but only one axis for the next joint that the muscles crosses
-                            mA(i, ii, iii) = CrossProd(VecTrans(t2, L(:, cross(i))), unitDirection, obj.Axis(iii), T(1:3, 1:3, i)); %Cross the distance vector to the
+                            if length(dim) > 2
+                                mA(i, ii, iii) = CrossProd(VecTrans(t2, L(:, cross(i), ii)), unitDirection, obj.Axis(i, iii), T(1:3, 1:3, i)); %Cross the distance vector to the
+                            else
+                                mA(i, ii, iii) = CrossProd(VecTrans(t2, L(:, cross(i))), unitDirection, obj.Axis(i, iii), T(1:3, 1:3, i)); %Cross the distance vector to the
+                            end
                         end
                     end
                                     
@@ -133,11 +155,16 @@ classdef PamData
         end
         
         %% ---------------------- Torque --------------
+        %Calculate torque by multiplying the the force along the 
+        %Useful information
+        % i -> Index for Crossing Points/Joints
+        % ii -> Index for every degree of motion
+        % iii -> Index for axes of interest to observe Torque about
         function tor = computeTorque(obj)
             tor = zeros(length(obj.CrossPoints), size(obj.TransformationMat, 4), size(obj.Axis, 2));
-            for i = 1:size(obj.TransformationMat, 4)
-                for ii = 1:length(obj.Axis)
-                    tor(:, i, ii) = obj.MomentArm(:, i, ii)*obj.Force(i);
+            for ii = 1:size(obj.TransformationMat, 4)                            %Repeat Calculation for every degree of motion
+                for iii = 1:size(obj.Axis, 2)                                    %Repeat Calculation for every axis of interest to observe torque about
+                    tor(:, ii, iii) = obj.MomentArm(:, ii, iii)*obj.Force(ii);
                 end
             end
         end    

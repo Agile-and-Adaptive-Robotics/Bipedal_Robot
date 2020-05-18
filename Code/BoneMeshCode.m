@@ -139,6 +139,10 @@ ToesM = Toes+Hip+Knee+Ankle+Subtalar+MTP;
 BifemlhM = Bifemlh;
 BifemlhM(2:3, :) = Bifemlh(2:3, :)+Hip+Knee;
 
+Connection1 = [Back; Hip];
+Connection2 = [Hip; Knee+Hip];
+Connection3 = [Knee+Hip; Ankle+Knee+Hip];
+
 figure
 hold on
 plot3(0, 0, 0, 'o', 'color', 'r')
@@ -150,6 +154,9 @@ plot3(TibiaM(:, 1), -TibiaM(:, 3), TibiaM(:, 2), '.', 'color', 'b')
 plot3(TalusM(:, 1), -TalusM(:, 3), TalusM(:, 2), '.', 'color', 'b')
 plot3(CalcaneusM(:, 1), -CalcaneusM(:, 3), CalcaneusM(:, 2), '.', 'color', 'b')
 plot3(ToesM(:, 1), -ToesM(:, 3), ToesM(:, 2), '.', 'color', 'b')
-plot3(BifemlhM(:, 1), -BifemlhM(:, 3), BifemlhM(:, 2), 'color', 'r', 'LineWidth', 3)
+% plot3(BifemlhM(:, 1), -BifemlhM(:, 3), BifemlhM(:, 2), 'color', 'r', 'LineWidth', 3)
+plot3(Connection1(:, 1), -Connection1(:, 3), Connection1(:, 2), 'color', 'g', 'LineWidth', 2)
+plot3(Connection2(:, 1), -Connection2(:, 3), Connection2(:, 2), 'color', 'g', 'LineWidth', 2)
+plot3(Connection3(:, 1), -Connection3(:, 3), Connection3(:, 2), 'color', 'g', 'LineWidth', 2)
 axis(axisLimits)
 hold off
