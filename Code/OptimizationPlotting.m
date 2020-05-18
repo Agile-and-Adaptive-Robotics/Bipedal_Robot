@@ -5,21 +5,25 @@
 %Plot how the cost function changes over the iterations
 
 %Plots for the new robot configuration
+
+
+
+
 figure
-surf(RobotAxis1*180/pi, RobotAxis2*180/pi, RobotTorque1, 'EdgeColor', 'none')
+surf(RobotAxis1*180/pi, RobotAxis2*180/pi, OriginalRobotTorque1, 'EdgeColor', 'none')
 title(RobotTitle1); xlabel(RobotAxis1Label); ylabel(RobotAxis2Label)
 zlabel('Torque, N*m')
 colorbar; caxis(caxisRange)
 
 figure
-surf(RobotAxis1*180/pi, RobotAxis2*180/pi, RobotTorque2, 'EdgeColor', 'none')
+surf(RobotAxis1*180/pi, RobotAxis2*180/pi, OriginalRobotTorque2, 'EdgeColor', 'none')
 title(RobotTitle2); xlabel(RobotAxis1Label); ylabel(RobotAxis2Label)
 zlabel('Torque, N*m')
 colorbar; caxis(caxisRange)
 
 if exist('RobotTorque3', 'var') == 1
     figure
-    surf(RobotAxis1*180/pi, RobotAxis2*180/pi, RobotTorque3, 'EdgeColor', 'none')
+    surf(RobotAxis1*180/pi, RobotAxis2*180/pi, OriginalRobotTorque3, 'EdgeColor', 'none')
     title(RobotTitle3); xlabel(RobotAxis1Label); ylabel(RobotAxis2Label)
     zlabel('Torque, N*m')
     colorbar; caxis(caxisRange)
@@ -27,7 +31,7 @@ end
 
 if exist('RobotTorque4', 'var') == 1
     figure
-    surf(RobotAxis1*180/pi, RobotAxis2*180/pi, RobotTorque4, 'EdgeColor', 'none')
+    surf(RobotAxis1*180/pi, RobotAxis2*180/pi, OriginalRobotTorque4, 'EdgeColor', 'none')
     title(RobotTitle4); xlabel(RobotAxis1Label); ylabel(RobotAxis2Label)
     zlabel('Torque, N*m')
     colorbar; caxis(caxisRange)
@@ -35,13 +39,13 @@ end
 
 %Plots for the error from the first robot configuration to the new robot
 %configuration
-Error1 = HumanTorque1 - RobotTorque1;
-Error2 = HumanTorque2 - RobotTorque2;
+Error1 = HumanTorque1 - OriginalRobotTorque1;
+Error2 = HumanTorque2 - OriginalRobotTorque2;
 
 if exist('HumanTorque3', 'var') == 1
-    Error3 = HumanTorque3 - RobotTorque3;
+    Error3 = HumanTorque3 - OriginalRobotTorque3;
     if exist('HumanTorque4', 'var') == 1
-        Error4 = HumanTorque4 - RobotTorque4;
+        Error4 = HumanTorque4 - OriginalRobotTorque4;
     end
 end
 

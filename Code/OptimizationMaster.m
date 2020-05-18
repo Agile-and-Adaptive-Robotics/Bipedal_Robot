@@ -28,17 +28,26 @@ iterations = 100;
 %     totalTimeHours = totalTimeMinutes/60
 
 %Choose the minimum change for the value of the location
-epsilon = 1;
+epsilon = 0.1;
+refinementRate = 0.5;       %The gain on epsilon once a local minima has been found
 
 %Choose the scaling factor for the cost function, which weights the
 %importance of distance from the attachment point to the nearest point on
 %the model body
 %Scaling Values
-GTorque = 0.0001;           %Cost weight for the difference between human and robot torque      
-GDiameter40 = 1e7;              %Cost Weight for the diameter of the festo muscle
-GDiameter20 = 1e3;
-G = 1000;                   %Cost weight for the distance from the attachment point to the model body
-GLength = 100;
+% GTorque = 1e-4;           %Cost weight for the difference between human and robot torque      
+% GDiameter40 = 1e7;              %Cost Weight for the diameter of the festo muscle
+% GDiameter20 = 1e3;
+% G = 1000;                   %Cost weight for the distance from the attachment point to the model body
+% GLength = 100;
+
+%New approach to setting gains. Going to try to have all of them sum to 1.
+GTorque = 1e-4;
+GDiameter40 = 5e0;
+GDiameter20 = 1e0;
+G = 1e-5;
+GLength = 1e-2;
+disG = 500;               %Cost weight for the distance away from the starting point
 
 %Adjust the axis range for the Torque plots
 caxisRange = [-40 150];
@@ -134,12 +143,12 @@ k = 1;
 
 for ii = 1:100
     for iii = 1:100
-        eC(1) = eC(1) + abs(HumanTorque1(ii, iii) - RobotTorque1(ii, iii));
-        eC(1) = eC(1) + abs(HumanTorque2(ii, iii) - RobotTorque2(ii, iii));
+        eC(1) = eC(1) + GTorque*abs(HumanTorque1(ii, iii) - RobotTorque1(ii, iii));
+        eC(1) = eC(1) + GTorque*abs(HumanTorque2(ii, iii) - RobotTorque2(ii, iii));
         if exist('RobotTorque3', 'var') == 1
-            eC(1) = eC(1) + abs(HumanTorque3(ii, iii) - RobotTorque3(ii, iii));
+            eC(1) = eC(1) + GTorque*abs(HumanTorque3(ii, iii) - RobotTorque3(ii, iii));
             if exist('RobotTorque4', 'var') == 1
-                eC(1) = eC(1) + abs(HumanTorque4(ii, iii) - RobotTorque4(ii, iii));
+                eC(1) = eC(1) + GTorque*abs(HumanTorque4(ii, iii) - RobotTorque4(ii, iii));
             end
         end
     end
@@ -160,6 +169,7 @@ for i = 1:MuscleNum
     elseif Diameter == 20
         dC(k) = dC(k) + GDiameter20;
     end
+   
     MLength = [];
 end
 C(1) = eC(1) + mC(1) + dC(1);
@@ -234,72 +244,94 @@ for iiii = 1:iterations
                                 eC(k) = 0;
                                 mC(k) = 0;
                                 dC(k) = 0;
+                                disC(k) = 0;
                                 C(k) = 0;
+
+%                                 for ii = 1:100
+%                                     for iii = 1:100
+%                                         eC(k) = eC(k) + GTorque*abs(HumanTorque1(ii, iii) - RobotTorque1(ii, iii));
+%                                         eC(k) = eC(k) + GTorque*abs(HumanTorque2(ii, iii) - RobotTorque2(ii, iii));
+%                                         if exist('RobotTorque3', 'var') == 1
+%                                             eC(k) = eC(k) + GTorque*abs(HumanTorque3(ii, iii) - RobotTorque3(ii, iii));
+%                                             if exist('RobotTorque4', 'var') == 1
+%                                                 eC(k) = eC(k) + GTorque*abs(HumanTorque4(ii, iii) - RobotTorque4(ii, iii));
+%                                             end
+%                                         end
+%                                     end
+%                                 end
 
                                 for ii = 1:100
                                     for iii = 1:100
-                                        eC(k) = eC(k) + abs(HumanTorque1(ii, iii) - RobotTorque1(ii, iii));
-                                        eC(k) = eC(k) + abs(HumanTorque2(ii, iii) - RobotTorque2(ii, iii));
+                                        if(HumanTorque1(ii, iii) > RobotTorque1(ii, iii))
+                                            eC(k) = eC(k) + GTorque*abs(HumanTorque1(ii, iii) - RobotTorque1(ii, iii));
+                                        end
+                                        if(HumanTorque2(ii, iii) > RobotTorque2(ii, iii))
+                                            eC(k) = eC(k) + GTorque*abs(HumanTorque2(ii, iii) - RobotTorque2(ii, iii));
+                                        end
                                         if exist('RobotTorque3', 'var') == 1
-                                            eC(k) = eC(k) + abs(HumanTorque3(ii, iii) - RobotTorque3(ii, iii));
+                                            if(HumanTorque3(ii, iii) > RobotTorque3(ii, iii))
+                                                eC(k) = eC(k) + GTorque*abs(HumanTorque3(ii, iii) - RobotTorque3(ii, iii));
+                                            end
                                             if exist('RobotTorque4', 'var') == 1
-                                                eC(k) = eC(k) + abs(HumanTorque4(ii, iii) - RobotTorque4(ii, iii));
+                                                if(HumanTorque4(ii, iii) > RobotTorque4(ii, iii))
+                                                    eC(k) = eC(k) + GTorque*abs(HumanTorque4(ii, iii) - RobotTorque4(ii, iii));
+                                                end
                                             end
                                         end
                                     end
                                 end
 
-                                %Increase the cost based on length of muscle
-                                for ii = 1:length(Muscles{m}.MuscleLength)
-                                    mC(k) = mC(k) + GLength*Muscles{m}.MuscleLength(ii);
+                                %Increase the cost based on length of each muscle
+                                for ii = 1:MuscleNum
+                                    for iii = 1:length(Muscles{ii}.MuscleLength)
+                                        mC(k) = mC(k) + GLength*Muscles{ii}.MuscleLength(iii);
+                                    end
                                 end
 
                                 %Increase the cost based on the diameter of the muscle
-                                if Muscles{m}.Diameter == 40
-                                    dC(k) = dC(k) + GDiameter40;
-                                elseif Muscles{m}.Diameter == 20
-                                    dC(k) = dC(k) + GDiameter20;
+                                for ii = 1:MuscleNum
+                                    if Muscles{ii}.Diameter == 40
+                                        dC(k) = dC(k) + GDiameter40;
+                                    elseif Muscles{ii}.Diameter == 20
+                                        dC(k) = dC(k) + GDiameter20;
+                                    end
                                 end
                                 
-                                C(k) = eC(k) + mC(k) + dC(k);
+                                %Increase the cost based on how far way the
+                                %new placement is from the original
+                                for ii = 1:MuscleNum
+                                    disC(k) = disC(k) + disG*norm(LocationTracker1{ii}(:, k) - LocationTracker1{ii}(:, 1))^2;
+                                    disC(k) = disC(k) + disG*norm(LocationTracker2{ii}(:, k) - LocationTracker2{ii}(:, 1))^2;
+                                end
+                                
+                                C(k) = eC(k) + mC(k) + dC(k)+disC(k);
 
+                                %Keep track of robot torque for error plots
+                                %later
+                                RTorqueTracker1(:, :, k) = RobotTorque1(:, :);
+                                RTorqueTracker2(:, :, k) = RobotTorque2(:, :);
+                                if exist('RobotTorque3', 'var') == 1
+                                    RTorqueTracker3(:, :, k) = RobotTorque3(:, :);
+                                    if exist('RobotTorque4', 'var') == 1
+                                        RTorqueTracker4(:, :, k) = RobotTorque4(:, :);
+                                    end
+                                end
+                                
                                 disp(['Iteration number ', num2str(k-1), ' out of of ', num2str(2^6*iterations*MuscleNum), '.']);
                                 k = k+1;            %Increment k for the next point of the cost function
+                                
+
                             end
                         end
                     end
                 end
             end
         end
-% %         [a, b] = min(C(end-2^6:end));
-%         [a, b] = min(C);
-% 
-%         %If the previous starting location is still the location with the
-%         %minimum cost, change the step size of epsilon.
-%         if same(StartingLocation1{m}, LocationTracker1{m}(:, b))
-%             if same(StartingLocation2{m}, LocationTracker2{m}(:, b))
-%                 shrinkEp = shrinkEp+1;
-%                 if shrinkEp == MuscleNum
-%                     shrinkEp = 0;
-%                     epsilon = 0.1*epsilon;
-%                     if epsilon < 10^-6
-%                         myBreak = 1;
-%                         break
-%                     end
-%                 end
-%             end
-%         end
-%         StartingLocation1{m} = LocationTracker1{m}(:, b);               %Update the next round of optimization with the location with minimum cost
-%         StartingLocation2{m} = LocationTracker2{m}(:, b);
-%         if myBreak == 1             %Likely should change the loop to be a while loop for the iterations. Can tackle that in another branch soon
-%             break
-%         end
     end
-%         [a, b] = min(C(end-2^6:end));
     [currentBestC, currentBestIteration] = min(C);
     if currentBestIteration == previousBestIteration
-        epsilon = epsilon*0.5;
-        if epsilon < 10^-6
+        epsilon = epsilon*refinementRate;
+        if epsilon < 10^-3
             myBreak = 1;
         end
     end
@@ -317,13 +349,29 @@ for iiii = 1:iterations
     end
 end
 timeElapsed = toc;
+
+NewRobotTorque1 = RTorqueTracker1(:, :, currentBestIteration);
+NewRobotTorque2 = RTorqueTracker2(:, :, currentBestIteration);
+if exist('RobotTorque3', 'var') == 1
+    NewRobotTorque3 = RTorqueTracker3(:, :, currentBestIteration);
+    if exist('RobotTorque4', 'var') == 1
+        NewRobotTorque4 = RTorqueTracker4(:, :, currentBestIteration);
+    end
+end
+
+
 %%------------------ Plotting ----------------------
 % run('OptimizationPlotting.m')
 
 figure
-plot(C)
-xlabel('Iterations')
-ylabel('Cost Value')
+hold on
+plot(C, 'k')
+xlabel('Iterations', 'FontWeight', 'Bold')
+ylabel('Cost Value', 'FontWeight', 'Bold')
+xlim([0, length(C)])
+ylim([0, 800])
+set(gca, 'FontSize', 12)
+hold off
 
 %Create an average of the iterationst to create viewable epochs
 for i = 1:iterations
@@ -340,3 +388,57 @@ figure
 plot(averageC)
 xlabel('Epochs')
 ylabel('Cost Value')
+<<<<<<< HEAD
+xlim([0 15])
+=======
+title('Average C')
+
+figure
+subplot(2, 2, 1)
+plot(eC)
+title('Error Component')
+
+subplot(2, 2, 2)
+plot(dC)
+title('Diameter Component')
+
+subplot(2, 2, 3)
+plot(mC)
+title('Muscle Length Component')
+
+subplot(2, 2, 4)
+plot(disC)
+title('Distance Component')
+
+%Mean Squared Error for original robot placement
+oMSE = 0; 
+for ii = 1:100
+    for iii = 1:100
+        oMSE = oMSE + (HumanTorque1(ii, iii) - OriginalRobotTorque1(ii, iii))^2;
+        oMSE = oMSE + (HumanTorque2(ii, iii) - OriginalRobotTorque2(ii, iii))^2;
+        if exist('RobotTorque3', 'var') == 1
+            oMSE = oMSE + (HumanTorque3(ii, iii) - OriginalRobotTorque3(ii, iii))^2;
+        end
+        if exist('RobotTorque4', 'var') == 1
+            oMSE = oMSE + (HumanTorque4(ii, iii) - OriginalRobotTorque4(ii, iii))^2;
+        end
+    end
+end
+oMSE = oMSE/divisions^2;
+
+%Mean squared error for new placements
+MSE = 0; 
+for ii = 1:100
+    for iii = 1:100
+        MSE = MSE + (HumanTorque1(ii, iii) - NewRobotTorque1(ii, iii))^2;
+        MSE = MSE + (HumanTorque2(ii, iii) - NewRobotTorque2(ii, iii))^2;
+        if exist('RobotTorque3', 'var') == 1
+            MSE = MSE + (HumanTorque3(ii, iii) - NewRobotTorque3(ii, iii))^2;
+        end
+        if exist('RobotTorque4', 'var') == 1
+            MSE = MSE + (HumanTorque4(ii, iii) - NewRobotTorque4(ii, iii))^2;
+        end
+    end
+end
+MSE = MSE/divisions^2;
+>>>>>>> 6bc9ba6699a00a8adb68bb672884ee8edc838d8d
