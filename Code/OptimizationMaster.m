@@ -389,8 +389,11 @@ plot(averageC)
 xlabel('Epochs')
 ylabel('Cost Value')
 <<<<<<< HEAD
+<<<<<<< HEAD
 xlim([0 15])
 =======
+=======
+>>>>>>> 6bc9ba6699a00a8adb68bb672884ee8edc838d8d
 title('Average C')
 
 figure
@@ -440,5 +443,9 @@ for ii = 1:100
         end
     end
 end
+<<<<<<< HEAD
+MSE = MSE/divisions^2;
+>>>>>>> 6bc9ba6699a00a8adb68bb672884ee8edc838d8d
+=======
 MSE = MSE/divisions^2;
 >>>>>>> 6bc9ba6699a00a8adb68bb672884ee8edc838d8d
