@@ -16,21 +16,65 @@
 <Axis>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>Bottom Layer</Name>
+<Name>IN Neuron Layer</Name>
+<WorkingAxis>0</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>L RG ext IN</Name>
+<ID>2d49a1fa-f988-401b-afab-0269c71651ca</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
+<DataItemID>6e188aac-b074-4541-92ab-7ce4a38f83cc</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>0</DataSubSet>
+<PrevDataSubset>-1</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-16776961</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>L RG flx IN</Name>
+<ID>c66339de-9be8-4621-8022-2d7900933b13</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
+<DataItemID>136ad874-087e-448a-a97c-a0544690f7c3</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>1</DataSubSet>
+<PrevDataSubset>-1</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-256</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>RG Neuron Layer</Name>
 <WorkingAxis>1</WorkingAxis>
 <DataColumns>
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>L RG EXT</Name>
-<ID>525d3cd8-5938-4893-86c6-0ce33d5d38f9</ID>
+<Name>L RG ext</Name>
+<ID>acb05ef5-163d-4c8c-a41e-11fe12ed3149</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
 <StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
 <DataItemID>17fdb1f6-d678-48b0-b90c-d604cb2b3115</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
 <DataSubSet>2</DataSubSet>
-<PrevDataSubset>2</PrevDataSubset>
+<PrevDataSubset>-1</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -41,14 +85,14 @@
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
 <Name>L RG flx</Name>
-<ID>fee9b822-3bbf-40e7-8194-0e35790387a5</ID>
+<ID>d21613a6-fca3-4d3c-a8c1-9f57b8427975</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
 <StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
-<DataItemID>946fc433-6e99-42f1-9879-43573a39da16</DataItemID>
+<DataItemID>7bd02f2b-2d71-42cf-b856-e7fef1ee05e6</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
 <DataSubSet>3</DataSubSet>
-<PrevDataSubset>3</PrevDataSubset>
+<PrevDataSubset>-1</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -57,55 +101,11 @@
 </DataColumn>
 </DataColumns>
 </Axis>
-<Axis>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>Top Layer</Name>
-<WorkingAxis>0</WorkingAxis>
-<DataColumns>
-<DataColumn>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>L RG flx</Name>
-<ID>62667e7e-7786-4c49-ac34-f1238f12ea3e</ID>
-<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
-<StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
-<DataItemID>cda4b90e-d074-4388-a057-6a8436fce6f3</DataItemID>
-<SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>0</DataSubSet>
-<PrevDataSubset>0</PrevDataSubset>
-<UseIncomingDataType>False</UseIncomingDataType>
-<LineType>MediumSolid</LineType>
-<PointType>Plus</PointType>
-<PlotMethodType>Line</PlotMethodType>
-<LineColor>-256</LineColor>
-</DataColumn>
-<DataColumn>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>L RG EXT</Name>
-<ID>7007911e-263e-45b7-913f-0e7d8946c78a</ID>
-<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
-<StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
-<DataItemID>6e188aac-b074-4541-92ab-7ce4a38f83cc</DataItemID>
-<SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>1</DataSubSet>
-<PrevDataSubset>1</PrevDataSubset>
-<UseIncomingDataType>False</UseIncomingDataType>
-<LineType>MediumSolid</LineType>
-<PointType>Plus</PointType>
-<PlotMethodType>Line</PlotMethodType>
-<LineColor>-16776961</LineColor>
-</DataColumn>
-</DataColumns>
-</Axis>
 </AxisList>
 <SaveDataWhenClosed>False</SaveDataWhenClosed>
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>30000</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="8974"/>
+<GraphConfig ByteCount="8989"/>
 </Form>
 </Form>
