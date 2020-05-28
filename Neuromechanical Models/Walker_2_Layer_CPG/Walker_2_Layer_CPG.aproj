@@ -158,7 +158,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,-34.54,9.92978,0,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,-34.54,9.9298,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Basic</Type>
 <RigidBody>
@@ -188,7 +188,7 @@
 <Y Value="0" Scale="None" Actual="0"/>
 <Z Value="0" Scale="None" Actual="0"/>
 </Rotation>
-<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,-34.54,9.92978,0,1</LocalMatrix>
+<LocalMatrix>1,0,0,0,-0,1,0,0,0,-0,1,0,-34.54,9.9298,0,1</LocalMatrix>
 <DraggerSize Value="-1" Scale="None" Actual="-1"/>
 <Type>Box</Type>
 <PartType>AnimatGUI.DataObjects.Physical.Bodies.Box</PartType>
@@ -224,7 +224,7 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </COM>
 <MaterialTypeID>09bccf17-3f71-4b1b-b397-53550cb1bd6b</MaterialTypeID>
-<Freeze>True</Freeze>
+<Freeze>False</Freeze>
 <ChildBodies>
 <RigidBody>
 <Name>hip_L_flx_rec</Name>
@@ -5419,7 +5419,7 @@
 <AHPEquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
 <SpikePeak Value="0" Scale="milli" Actual="0"/>
 <SpikeStrength>1</SpikeStrength>
-<CaEquilibriumPotential Value="50" Scale="milli" Actual="0.05"/>
+<CaEquilibriumPotential Value="60" Scale="milli" Actual="0.06"/>
 <RefractoryPeriod Value="2" Scale="milli" Actual="0.002"/>
 <UseCriticalPeriod>False</UseCriticalPeriod>
 <StartCriticalPeriod Value="0" Scale="None" Actual="0"/>
@@ -5669,54 +5669,6 @@
 <MaxSynapticConductance Value="5" Scale="micro" Actual="5e-006"/>
 <PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
 <PreSynapticSaturationLevel Value="-50" Scale="milli" Actual="-0.05"/>
-</Link>
-<Link>
-<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
-<ClassName>IntegrateFireGUI.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
-<ID>1e92267a-5690-43fd-ab9b-a155d73ebdba</ID>
-<AdjustDst>False</AdjustDst>
-<AdjustOrg>False</AdjustOrg>
-<ArrowDestination>
-<Style>Circle</Style>
-<Size>Medium</Size>
-<Angle>deg30</Angle>
-<Filled>True</Filled>
-</ArrowDestination>
-<ArrowMiddle>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowMiddle>
-<ArrowOrigin>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowOrigin>
-<BackMode>Transparent</BackMode>
-<DashStyle>Solid</DashStyle>
-<DrawColor>-16777216</DrawColor>
-<DrawWidth>1</DrawWidth>
-<DestinationID/>
-<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
-<Hidden>False</Hidden>
-<Jump>Arc</Jump>
-<LineStyle>Polyline</LineStyle>
-<OrthogonalDynamic>True</OrthogonalDynamic>
-<OriginID/>
-<OrientedText>True</OrientedText>
-<Selectable>True</Selectable>
-<Stretchable>True</Stretchable>
-<Text/>
-<ToolTip/>
-<Url/>
-<ZOrder>0</ZOrder>
-<Name>Hip_Ia_ext_Inhibit</Name>
-<EquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
-<MaxSynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
-<PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
-<PreSynapticSaturationLevel Value="-40" Scale="milli" Actual="-0.04"/>
 </Link>
 <Link>
 <AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
@@ -6029,54 +5981,6 @@
 <MaxSynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
 <PreSynapticSaturationLevel Value="-55" Scale="milli" Actual="-0.055"/>
-</Link>
-<Link>
-<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
-<ClassName>IntegrateFireGUI.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
-<ID>3d60e834-cf2a-4a6e-9646-e4bd81295bf7</ID>
-<AdjustDst>False</AdjustDst>
-<AdjustOrg>False</AdjustOrg>
-<ArrowDestination>
-<Style>Circle</Style>
-<Size>Medium</Size>
-<Angle>deg30</Angle>
-<Filled>True</Filled>
-</ArrowDestination>
-<ArrowMiddle>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowMiddle>
-<ArrowOrigin>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowOrigin>
-<BackMode>Transparent</BackMode>
-<DashStyle>Solid</DashStyle>
-<DrawColor>-16777216</DrawColor>
-<DrawWidth>1</DrawWidth>
-<DestinationID/>
-<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
-<Hidden>False</Hidden>
-<Jump>Arc</Jump>
-<LineStyle>Polyline</LineStyle>
-<OrthogonalDynamic>True</OrthogonalDynamic>
-<OriginID/>
-<OrientedText>True</OrientedText>
-<Selectable>True</Selectable>
-<Stretchable>True</Stretchable>
-<Text/>
-<ToolTip/>
-<Url/>
-<ZOrder>0</ZOrder>
-<Name>Hip_RF_Inhibit</Name>
-<EquilibriumPotential Value="-100" Scale="milli" Actual="-0.1"/>
-<MaxSynapticConductance Value="0.4232" Scale="micro" Actual="4.232e-007"/>
-<PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
-<PreSynapticSaturationLevel Value="-40" Scale="milli" Actual="-0.04"/>
 </Link>
 <Link>
 <AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
@@ -6501,54 +6405,6 @@
 <Link>
 <AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
 <ClassName>IntegrateFireGUI.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
-<ID>9d61a511-dd52-4a20-b14e-25137aa2e6b9</ID>
-<AdjustDst>False</AdjustDst>
-<AdjustOrg>False</AdjustOrg>
-<ArrowDestination>
-<Style>Circle</Style>
-<Size>Medium</Size>
-<Angle>deg30</Angle>
-<Filled>True</Filled>
-</ArrowDestination>
-<ArrowMiddle>
-<Style>One</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowMiddle>
-<ArrowOrigin>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowOrigin>
-<BackMode>Transparent</BackMode>
-<DashStyle>Solid</DashStyle>
-<DrawColor>-16777216</DrawColor>
-<DrawWidth>1</DrawWidth>
-<DestinationID/>
-<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
-<Hidden>False</Hidden>
-<Jump>Arc</Jump>
-<LineStyle>Polyline</LineStyle>
-<OrthogonalDynamic>True</OrthogonalDynamic>
-<OriginID/>
-<OrientedText>True</OrientedText>
-<Selectable>True</Selectable>
-<Stretchable>True</Stretchable>
-<Text/>
-<ToolTip/>
-<Url/>
-<ZOrder>0</ZOrder>
-<Name>Hyperpolarising IPSP</Name>
-<EquilibriumPotential Value="-70" Scale="milli" Actual="-0.07"/>
-<MaxSynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
-<PreSynapticThreshold Value="-55" Scale="milli" Actual="-0.055"/>
-<PreSynapticSaturationLevel Value="-40" Scale="milli" Actual="-0.04"/>
-</Link>
-<Link>
-<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
-<ClassName>IntegrateFireGUI.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
 <ID>bdb7ece4-859e-47cb-9d47-2e8156015e08</ID>
 <AdjustDst>False</AdjustDst>
 <AdjustOrg>False</AdjustOrg>
@@ -6761,102 +6617,6 @@
 <AllowForgetting>True</AllowForgetting>
 <ForgettingTimeWindow Value="10000" Scale="milli" Actual="10"/>
 <ConsolidationFactor>1</ConsolidationFactor>
-</Link>
-<Link>
-<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
-<ClassName>IntegrateFireGUI.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
-<ID>e473b031-952c-4703-93b8-60e4c675a97a</ID>
-<AdjustDst>False</AdjustDst>
-<AdjustOrg>False</AdjustOrg>
-<ArrowDestination>
-<Style>Circle</Style>
-<Size>Medium</Size>
-<Angle>deg30</Angle>
-<Filled>True</Filled>
-</ArrowDestination>
-<ArrowMiddle>
-<Style>One</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowMiddle>
-<ArrowOrigin>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowOrigin>
-<BackMode>Transparent</BackMode>
-<DashStyle>Solid</DashStyle>
-<DrawColor>-16777216</DrawColor>
-<DrawWidth>1</DrawWidth>
-<DestinationID/>
-<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
-<Hidden>False</Hidden>
-<Jump>Arc</Jump>
-<LineStyle>Polyline</LineStyle>
-<OrthogonalDynamic>True</OrthogonalDynamic>
-<OriginID/>
-<OrientedText>True</OrientedText>
-<Selectable>True</Selectable>
-<Stretchable>True</Stretchable>
-<Text/>
-<ToolTip/>
-<Url/>
-<ZOrder>0</ZOrder>
-<Name>Depolarising IPSP</Name>
-<EquilibriumPotential Value="-55" Scale="milli" Actual="-0.055"/>
-<MaxSynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
-<PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
-<PreSynapticSaturationLevel Value="-40" Scale="milli" Actual="-0.04"/>
-</Link>
-<Link>
-<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
-<ClassName>IntegrateFireGUI.DataObjects.Behavior.SynapseTypes.NonSpikingChemical</ClassName>
-<ID>e6823efe-64c7-41a4-8b20-8a662d7724b6</ID>
-<AdjustDst>False</AdjustDst>
-<AdjustOrg>False</AdjustOrg>
-<ArrowDestination>
-<Style>Fork</Style>
-<Size>Medium</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowDestination>
-<ArrowMiddle>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowMiddle>
-<ArrowOrigin>
-<Style>None</Style>
-<Size>Small</Size>
-<Angle>deg30</Angle>
-<Filled>False</Filled>
-</ArrowOrigin>
-<BackMode>Transparent</BackMode>
-<DashStyle>Solid</DashStyle>
-<DrawColor>-16777216</DrawColor>
-<DrawWidth>1</DrawWidth>
-<DestinationID/>
-<Font Family="Arial" Size="12" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
-<Hidden>False</Hidden>
-<Jump>Arc</Jump>
-<LineStyle>Polyline</LineStyle>
-<OrthogonalDynamic>True</OrthogonalDynamic>
-<OriginID/>
-<OrientedText>True</OrientedText>
-<Selectable>True</Selectable>
-<Stretchable>True</Stretchable>
-<Text/>
-<ToolTip/>
-<Url/>
-<ZOrder>0</ZOrder>
-<Name>Hip</Name>
-<EquilibriumPotential Value="-10" Scale="milli" Actual="-0.01"/>
-<MaxSynapticConductance Value="0.59" Scale="micro" Actual="5.9e-007"/>
-<PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
-<PreSynapticSaturationLevel Value="-40" Scale="milli" Actual="-0.04"/>
 </Link>
 <Link>
 <AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
@@ -7317,7 +7077,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="134.182" y="587.591"/>
+<Location x="11.4547" y="578.727"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -8685,7 +8445,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="467.531" y="763.341"/>
+<Location x="441.622" y="718.341"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -8731,7 +8491,7 @@
 <UpperLimitScale Value="100" Scale="milli" Actual="0.1"/>
 <LowerOutputScale Value="0" Scale="None" Actual="0"/>
 <UpperOutputScale Value="1" Scale="None" Actual="1"/>
-<IndependentUnits>Input Variable</IndependentUnits>
+<IndependentUnits/>
 <DependentUnits>Output Variable</DependentUnits>
 <A Value="0" Scale="None" Actual="0"/>
 <B Value="0" Scale="None" Actual="0"/>
@@ -9217,7 +8977,7 @@
 <ImagePosition>RelativeToText</ImagePosition>
 <InLinkable>True</InLinkable>
 <LabelEdit>True</LabelEdit>
-<Location x="49.6363" y="587.182"/>
+<Location x="13.5" y="654"/>
 <OutLinkable>True</OutLinkable>
 <ShadowStyle>None</ShadowStyle>
 <ShadowColor>-16777216</ShadowColor>
@@ -9679,7 +9439,7 @@
 <UpperLimitScale Value="100" Scale="milli" Actual="0.1"/>
 <LowerOutputScale Value="0" Scale="None" Actual="0"/>
 <UpperOutputScale Value="1" Scale="None" Actual="1"/>
-<IndependentUnits>Input Variable</IndependentUnits>
+<IndependentUnits/>
 <DependentUnits>Output Variable</DependentUnits>
 <A Value="0" Scale="None" Actual="0"/>
 <B Value="0" Scale="None" Actual="0"/>
@@ -10101,7 +9861,7 @@
 <UpperLimitScale Value="1000" Scale="None" Actual="1000"/>
 <LowerOutputScale Value="0" Scale="None" Actual="0"/>
 <UpperOutputScale Value="1" Scale="None" Actual="1"/>
-<IndependentUnits>Input Variable</IndependentUnits>
+<IndependentUnits/>
 <DependentUnits>Output Variable</DependentUnits>
 <A Value="0" Scale="None" Actual="0"/>
 <B Value="0" Scale="None" Actual="0"/>
@@ -10162,8 +9922,8 @@
 <TemplateNodeCount>1</TemplateNodeCount>
 <TemplateChangeScript/>
 <InLinks>
-<ID>5e1b390e-0362-4c3f-95ef-e0ca5579aa21</ID>
 <ID>907dcf1a-0765-4b9d-b562-132644834ba6</ID>
+<ID>5e1b390e-0362-4c3f-95ef-e0ca5579aa21</ID>
 </InLinks>
 <OutLinks>
 <ID>23462955-b524-487a-bf93-ea7c50d20f5e</ID>
@@ -10265,7 +10025,7 @@
 <UpperLimitScale Value="1000" Scale="None" Actual="1000"/>
 <LowerOutputScale Value="0" Scale="None" Actual="0"/>
 <UpperOutputScale Value="1" Scale="None" Actual="1"/>
-<IndependentUnits>Input Variable</IndependentUnits>
+<IndependentUnits/>
 <DependentUnits>Output Variable</DependentUnits>
 <A Value="0" Scale="None" Actual="0"/>
 <B Value="0" Scale="None" Actual="0"/>
@@ -15485,7 +15245,7 @@
     <GradientColor>0</GradientColor>
     <Text>R Hip ext Ia</Text>
     <Font Name="Arial" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>1</ImageIndex>
+    <ImageIndex>0</ImageIndex>
     <Tag>9a34dd20-79b8-464f-a07a-e9788b1a5204</Tag>
   </Node>
   <Node Left="201.170471" Top="993.909058" Width="40" Height="40">
@@ -15594,7 +15354,7 @@
     <GradientColor>0</GradientColor>
     <Text>R Hip flx Ia</Text>
     <Font Name="Arial" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>1</ImageIndex>
+    <ImageIndex>0</ImageIndex>
     <Tag>31e8c206-ad65-4aa0-9d92-773133a1be5a</Tag>
   </Node>
   <Node Left="501.4775" Top="993.125" Width="40" Height="40">
@@ -15992,7 +15752,7 @@
     <GradientColor>0</GradientColor>
     <Text>R_ankle plantarflexion </Text>
     <Font Name="Microsoft Sans Serif" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>0</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>12691007-738e-4429-a927-9aa8cfd371cf</Tag>
   </Node>
   <Node Left="660.630737" Top="640.7725" Width="40.25" Height="104">
@@ -16004,7 +15764,7 @@
     <GradientColor>0</GradientColor>
     <Text>R_knee extension</Text>
     <Font Name="Microsoft Sans Serif" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>0</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>a44fe174-a9f1-4911-a987-40e241f1b162</Tag>
   </Node>
   <Node Left="963.630737" Top="646.556641" Width="39.75" Height="94.25">
@@ -16016,7 +15776,7 @@
     <GradientColor>0</GradientColor>
     <Text>R_knee  flexion </Text>
     <Font Name="Microsoft Sans Serif" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>0</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>4b0cdf87-2c07-4473-b5a7-1006f0225fa3</Tag>
   </Node>
   <Node Left="1424.56177" Top="654.4772" Width="37.25" Height="92.5">
@@ -16028,7 +15788,7 @@
     <GradientColor>0</GradientColor>
     <Text>R_ankle dorsiflexion</Text>
     <Font Name="Microsoft Sans Serif" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>0</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>7434c581-a101-4f32-b623-347c636d7814</Tag>
   </Node>
   <Node Left="203.21019" Top="650.8864" Width="30.75" Height="91.5">
@@ -16040,7 +15800,7 @@
     <GradientColor>0</GradientColor>
     <Text>R Hip ext</Text>
     <Font Name="Microsoft Sans Serif" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>0</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>0835e5e1-b34c-4d95-b019-26da2424b559</Tag>
   </Node>
   <Node Left="513.062439" Top="660.593933" Width="32.5" Height="82.31238">
@@ -16052,7 +15812,7 @@
     <GradientColor>0</GradientColor>
     <Text>R Hip flx</Text>
     <Font Name="Microsoft Sans Serif" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>0</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>51569df3-a8c4-4fd4-996a-691a5a0eb870</Tag>
   </Node>
   <Node Left="670.0682" Top="543.5228" Width="39.75" Height="92.81253">
@@ -16064,7 +15824,7 @@
     <GradientColor>0</GradientColor>
     <Text>L_knee extension</Text>
     <Font Name="Microsoft Sans Serif" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>0</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>5b4fe4db-abba-438f-bf71-8b4887accacd</Tag>
   </Node>
   <Node Left="964.389648" Top="540.1462" Width="37.75" Height="92.25">
@@ -16076,7 +15836,7 @@
     <GradientColor>0</GradientColor>
     <Text>L_knee  flexion </Text>
     <Font Name="Microsoft Sans Serif" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>0</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>2b5c58ce-40fe-4f2a-9a45-74952e00d883</Tag>
   </Node>
   <Node Left="1146.99988" Top="533.899353" Width="35.75" Height="94.75">
@@ -16088,7 +15848,7 @@
     <GradientColor>0</GradientColor>
     <Text>L_ankle plantarflexion </Text>
     <Font Name="Microsoft Sans Serif" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>0</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>3c7d0a82-a0a4-4f8e-aed5-b40165b8c0bc</Tag>
   </Node>
   <Node Left="1420.81177" Top="532.263" Width="38.4375" Height="87.56253">
@@ -16100,7 +15860,7 @@
     <GradientColor>0</GradientColor>
     <Text>L_ankle dorsiflexion</Text>
     <Font Name="Microsoft Sans Serif" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>0</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>79351546-b548-492e-8d09-3ad9c65baf39</Tag>
   </Node>
   <Node Left="211.92366" Top="539.3613" Width="30.75" Height="91.5">
@@ -16112,7 +15872,7 @@
     <GradientColor>0</GradientColor>
     <Text>L Hip ext</Text>
     <Font Name="Microsoft Sans Serif" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>0</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>f3825461-eea7-4f03-9c39-b0acf8cc8c8a</Tag>
   </Node>
   <Node Left="515.0146" Top="538.6373" Width="32.5" Height="86.5">
@@ -16124,7 +15884,7 @@
     <GradientColor>0</GradientColor>
     <Text>L Hip flx</Text>
     <Font Name="Microsoft Sans Serif" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>0</ImageIndex>
+    <ImageIndex>1</ImageIndex>
     <Tag>52f07ede-884c-4aa4-bae0-7623d6f91a0b</Tag>
   </Node>
   <Node Left="290.272675" Top="402.772858" Width="40" Height="40">
@@ -16293,7 +16053,7 @@
     <GradientColor>0</GradientColor>
     <Text>L Hip ext Ia</Text>
     <Font Name="Arial" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>1</ImageIndex>
+    <ImageIndex>0</ImageIndex>
     <Tag>1b9f5ea4-f6b5-4a06-a3a0-f431b082a58b</Tag>
   </Node>
   <Node Left="212.852234" Top="291.681824" Width="40" Height="40">
@@ -16470,7 +16230,7 @@
     <GradientColor>0</GradientColor>
     <Text>L Hip flx Ia</Text>
     <Font Name="Arial" Size="9.75" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <ImageIndex>1</ImageIndex>
+    <ImageIndex>0</ImageIndex>
     <Tag>34cece3a-dba9-4906-bd4b-466071390be7</Tag>
   </Node>
   <Node Left="513.159" Top="290.897766" Width="40" Height="40">
@@ -17237,18 +16997,18 @@
 </Environment>
 <ToolViewers>
 <ToolHolder>
-<ID>b26c09f5-1c71-469e-8c19-65d416ae7eef</ID>
-<Name>L Hip PF</Name>
-<BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
-<BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
-<ToolFormID>ad8b63f3-ac30-45f9-9264-43d7c6f8185a</ToolFormID>
-</ToolHolder>
-<ToolHolder>
 <ID>f4ddaac2-d760-47f2-9367-756c40f8a6de</ID>
 <Name>R Hip Sensory Motor</Name>
 <BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
 <ToolFormID>88453fb2-4b4c-4c0d-a57a-e51b4e895928</ToolFormID>
+</ToolHolder>
+<ToolHolder>
+<ID>b26c09f5-1c71-469e-8c19-65d416ae7eef</ID>
+<Name>L Hip PF</Name>
+<BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
+<ToolFormID>ad8b63f3-ac30-45f9-9264-43d7c6f8185a</ToolFormID>
 </ToolHolder>
 <ToolHolder>
 <ID>142b2421-d466-43bc-8f10-0e98aa9e8826</ID>
@@ -17305,8 +17065,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>88dcfb01-c7e1-4693-83c7-cfa3db5c6043</Name>
-<ID>88dcfb01-c7e1-4693-83c7-cfa3db5c6043</ID>
+<Name>ec4a32b7-f06c-47a2-bf2e-f14aa1fe6891</Name>
+<ID>ec4a32b7-f06c-47a2-bf2e-f14aa1fe6891</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -17419,7 +17179,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/28/2020 13:42:23"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="05/28/2020 15:20:48"&gt;
   &lt;Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Toolbox" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Toolbox" UniqueName="" /&gt;
@@ -17956,7 +17716,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Organism_1 Body" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;10acd57f-9c6e-4c22-b4e6-30c2a00703d1&lt;/ID&gt;
@@ -17971,7 +17731,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;9f6f0bf9-4697-4872-8d8a-0729c2d9f528&lt;/ID&gt;
