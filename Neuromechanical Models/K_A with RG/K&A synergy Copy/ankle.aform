@@ -1,0 +1,155 @@
+<Form>
+<Form>
+<ID>c62bdfca-9f23-4297-8106-c1a2f8276987</ID>
+<Title>ankle</Title>
+<TabPageName>ankle</TabPageName>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.Forms.Charts.LineChart</ClassName>
+<AutoCollectInterval>True</AutoCollectInterval>
+<CollectDataInterval Value="0.2" Scale="milli" Actual="0.0002"/>
+<CollectTimeWindow Value="11" Scale="None" Actual="11"/>
+<UpdateDataInterval Value="200" Scale="milli" Actual="0.2"/>
+<SetStartEndTime>True</SetStartEndTime>
+<CollectStartTime Value="0" Scale="None" Actual="0"/>
+<CollectEndTime Value="10" Scale="None" Actual="10"/>
+<AxisList>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>IB</Name>
+<WorkingAxis>0</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>RH_AnkleZ- Ext Ib</Name>
+<ID>65b9bf57-1230-4d47-9a00-9193fe67fb5f</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>0cd2fcfe-1ac1-4086-916c-c28cfd306121</StructureID>
+<DataItemID>29c7de10-cbc3-46e5-8d1a-f52d108c5b91</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>0</DataSubSet>
+<PrevDataSubset>0</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-16776961</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>LH_AnkleZ- Ext Ib</Name>
+<ID>e85e39a4-8d89-465c-b4f6-37593a9ceef8</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>0cd2fcfe-1ac1-4086-916c-c28cfd306121</StructureID>
+<DataItemID>a427db21-90c8-4c5d-8cc9-4ca0b3e7e1bd</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>1</DataSubSet>
+<PrevDataSubset>1</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-65536</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>LH_Ankle MN</Name>
+<WorkingAxis>1</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>LH_AnkleZ MN F</Name>
+<ID>1fda9fd8-18a4-4416-a0ad-768151ed3547</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>0cd2fcfe-1ac1-4086-916c-c28cfd306121</StructureID>
+<DataItemID>9003674d-41ec-4fc5-abee-97be95179963</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>2</DataSubSet>
+<PrevDataSubset>2</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-16776961</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>LH_AnkleZ MN E</Name>
+<ID>473d878b-7cf7-49ad-b679-ce257ecdffa0</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>0cd2fcfe-1ac1-4086-916c-c28cfd306121</StructureID>
+<DataItemID>b7cca654-dd34-4636-878d-95e134f12d6d</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>3</DataSubSet>
+<PrevDataSubset>3</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-65536</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>RH_ankle MN</Name>
+<WorkingAxis>2</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>RH_AnkleZ MN F</Name>
+<ID>4c27636e-7097-4b9b-919e-16b727e5674f</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>0cd2fcfe-1ac1-4086-916c-c28cfd306121</StructureID>
+<DataItemID>abb45b7d-acce-42c4-802f-e64a0efea0db</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>4</DataSubSet>
+<PrevDataSubset>4</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-16776961</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>RH_AnkleZ MN E</Name>
+<ID>a3c9e14c-3a63-4d82-9a50-5b8a63aa5de7</ID>
+<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<StructureID>0cd2fcfe-1ac1-4086-916c-c28cfd306121</StructureID>
+<DataItemID>6922e869-4467-4072-903e-af4c195172c6</DataItemID>
+<SelectedDataType>MembraneVoltage</SelectedDataType>
+<DataSubSet>5</DataSubSet>
+<PrevDataSubset>5</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-65536</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
+</AxisList>
+<SaveDataWhenClosed>False</SaveDataWhenClosed>
+<UpdateChartAtEnd>True</UpdateChartAtEnd>
+<PointsToKeep>55000</PointsToKeep>
+<YAxisOffset>0</YAxisOffset>
+<GraphConfig ByteCount="8971"/>
+</Form>
+</Form>
