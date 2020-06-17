@@ -1,8 +1,8 @@
 <Form>
 <Form>
 <ID>2fd83016-b642-485b-8586-2800e8ebde3d</ID>
-<Title>L Hip Neural</Title>
-<TabPageName>L Hip Neural</TabPageName>
+<Title>L Hip</Title>
+<TabPageName>L Hip</TabPageName>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.Forms.Charts.LineChart</ClassName>
 <AutoCollectInterval>True</AutoCollectInterval>
@@ -22,74 +22,12 @@
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>L Hip flx Ia</Name>
-<ID>869e26de-671f-46eb-9184-5e07f1fef1fd</ID>
-<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
-<StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
-<DataItemID>c92518bf-f0d8-4b43-b154-4fee1f469002</DataItemID>
-<SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>8</DataSubSet>
-<PrevDataSubset>8</PrevDataSubset>
-<UseIncomingDataType>False</UseIncomingDataType>
-<LineType>MediumSolid</LineType>
-<PointType>Plus</PointType>
-<PlotMethodType>Line</PlotMethodType>
-<LineColor>-256</LineColor>
-</DataColumn>
-<DataColumn>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
 <Name>L Hip ext Ia</Name>
-<ID>fcefb5a7-d308-44df-880b-af0fa934cc0b</ID>
-<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
-<StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
-<DataItemID>24a2c9e1-b182-4708-835d-dcf9c075ab32</DataItemID>
-<SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>9</DataSubSet>
-<PrevDataSubset>9</PrevDataSubset>
-<UseIncomingDataType>False</UseIncomingDataType>
-<LineType>MediumSolid</LineType>
-<PointType>Plus</PointType>
-<PlotMethodType>Line</PlotMethodType>
-<LineColor>-16776961</LineColor>
-</DataColumn>
-</DataColumns>
-</Axis>
-<Axis>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>Ia Interneuron</Name>
-<WorkingAxis>3</WorkingAxis>
-<DataColumns>
-<DataColumn>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>L Hip ext Ia IN</Name>
-<ID>7570763e-d8b3-488f-aef5-cb96eb7b0f36</ID>
+<ID>fe3606f9-e2f7-4c4b-9795-2ed9e9a87682</ID>
 <DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
 <DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
 <StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
 <DataItemID>8be8703b-e33e-4916-8be3-c2ef3b8179be</DataItemID>
-<SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>6</DataSubSet>
-<PrevDataSubset>6</PrevDataSubset>
-<UseIncomingDataType>False</UseIncomingDataType>
-<LineType>MediumSolid</LineType>
-<PointType>Plus</PointType>
-<PlotMethodType>Line</PlotMethodType>
-<LineColor>-65536</LineColor>
-</DataColumn>
-<DataColumn>
-<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
-<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>L Hip flx Ia IN</Name>
-<ID>d4626cbd-e6e6-41c4-9106-24efa13d5843</ID>
-<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
-<StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
-<DataItemID>20dad3ca-1205-4dc7-aad4-e9759c6c698f</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
 <DataSubSet>7</DataSubSet>
 <PrevDataSubset>7</PrevDataSubset>
@@ -104,44 +42,52 @@
 <Axis>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>Ib</Name>
-<WorkingAxis>2</WorkingAxis>
+<Name>Ia Discharge Rate</Name>
+<WorkingAxis>5</WorkingAxis>
 <DataColumns>
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>L Hip flx Ib</Name>
-<ID>a04be747-9c09-4830-88c6-969b2bcce886</ID>
-<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<Name>hip_L_ext_rec</Name>
+<ID>1318c423-c3aa-4313-a3d8-0d3bde21dfbb</ID>
+<DataItemAssemblyFile>AnimatGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>AnimatGUI.DataObjects.Physical.Bodies.LinearHillStretchReceptor</DataItemClassName>
 <StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
-<DataItemID>5bbd1761-3a41-4beb-8c6d-6a9beb362784</DataItemID>
-<SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>4</DataSubSet>
-<PrevDataSubset>4</PrevDataSubset>
+<DataItemID>ac26380c-2fdd-484b-ba5e-a09ce5bf2d3e</DataItemID>
+<SelectedDataType>Ia</SelectedDataType>
+<DataSubSet>8</DataSubSet>
+<PrevDataSubset>8</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
 <PlotMethodType>Line</PlotMethodType>
 <LineColor>-16776961</LineColor>
 </DataColumn>
+</DataColumns>
+</Axis>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>L Hip Rotation</Name>
+<WorkingAxis>3</WorkingAxis>
+<DataColumns>
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
-<Name>L Hip ext Ib</Name>
-<ID>d708f445-ecfa-499c-8698-47c6051efa14</ID>
-<DataItemAssemblyFile>IntegrateFireGUI.dll</DataItemAssemblyFile>
-<DataItemClassName>IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking</DataItemClassName>
+<Name>hip_L</Name>
+<ID>e0d15428-56ae-43bd-8b7b-f8ff51815646</ID>
+<DataItemAssemblyFile>AnimatGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>AnimatGUI.DataObjects.Physical.Joints.Hinge</DataItemClassName>
 <StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
-<DataItemID>cae540f6-5a83-4e7c-9cb3-1ceefaea56ae</DataItemID>
-<SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>5</DataSubSet>
-<PrevDataSubset>5</PrevDataSubset>
+<DataItemID>971e98a5-7bf3-4088-ad43-787fd141daed</DataItemID>
+<SelectedDataType>JointRotation</SelectedDataType>
+<DataSubSet>6</DataSubSet>
+<PrevDataSubset>6</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
 <PlotMethodType>Line</PlotMethodType>
-<LineColor>-16711936</LineColor>
+<LineColor>-65536</LineColor>
 </DataColumn>
 </DataColumns>
 </Axis>
@@ -149,7 +95,7 @@
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
 <Name>MN Activity</Name>
-<WorkingAxis>0</WorkingAxis>
+<WorkingAxis>1</WorkingAxis>
 <DataColumns>
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
@@ -161,8 +107,8 @@
 <StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
 <DataItemID>f6b42566-ef31-4b3d-95d6-90c2f7c1202b</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>0</DataSubSet>
-<PrevDataSubset>0</PrevDataSubset>
+<DataSubSet>2</DataSubSet>
+<PrevDataSubset>2</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -179,8 +125,8 @@
 <StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
 <DataItemID>64083a38-fde0-4930-927d-cef8ef09f6d0</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>1</DataSubSet>
-<PrevDataSubset>1</PrevDataSubset>
+<DataSubSet>3</DataSubSet>
+<PrevDataSubset>3</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -192,8 +138,8 @@
 <Axis>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
-<Name>RE Activity</Name>
-<WorkingAxis>1</WorkingAxis>
+<Name>RF Activity</Name>
+<WorkingAxis>2</WorkingAxis>
 <DataColumns>
 <DataColumn>
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
@@ -205,8 +151,8 @@
 <StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
 <DataItemID>2846ef38-5513-40e9-96d2-ee932fb217ed</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>2</DataSubSet>
-<PrevDataSubset>2</PrevDataSubset>
+<DataSubSet>4</DataSubSet>
+<PrevDataSubset>4</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -223,8 +169,8 @@
 <StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
 <DataItemID>9dd0be60-2130-4fab-8609-cd6cdbec9ce3</DataItemID>
 <SelectedDataType>MembraneVoltage</SelectedDataType>
-<DataSubSet>3</DataSubSet>
-<PrevDataSubset>3</PrevDataSubset>
+<DataSubSet>5</DataSubSet>
+<PrevDataSubset>5</PrevDataSubset>
 <UseIncomingDataType>False</UseIncomingDataType>
 <LineType>MediumSolid</LineType>
 <PointType>Plus</PointType>
@@ -233,11 +179,55 @@
 </DataColumn>
 </DataColumns>
 </Axis>
+<Axis>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DAxis</ClassName>
+<Name>Tension</Name>
+<WorkingAxis>0</WorkingAxis>
+<DataColumns>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>hip_L_flx</Name>
+<ID>420dc81e-78ba-4ca8-8949-91bcb8d3bd6c</ID>
+<DataItemAssemblyFile>AnimatGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>AnimatGUI.DataObjects.Physical.Bodies.LinearHillMuscle</DataItemClassName>
+<StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
+<DataItemID>13a0bcbd-6837-47d0-8a30-f9627b50be9b</DataItemID>
+<SelectedDataType>Tension</SelectedDataType>
+<DataSubSet>0</DataSubSet>
+<PrevDataSubset>0</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-23296</LineColor>
+</DataColumn>
+<DataColumn>
+<AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
+<ClassName>LicensedAnimatGUI.DataObjects.Charting.Pro2DColumn</ClassName>
+<Name>hip_L_ext</Name>
+<ID>bfd770dd-5893-462f-abba-86c3f2ec914f</ID>
+<DataItemAssemblyFile>AnimatGUI.dll</DataItemAssemblyFile>
+<DataItemClassName>AnimatGUI.DataObjects.Physical.Bodies.LinearHillMuscle</DataItemClassName>
+<StructureID>82788b42-12c0-4ded-bb32-3a44eeab49a0</StructureID>
+<DataItemID>aca81da1-fab7-4dfa-be37-01858f75012b</DataItemID>
+<SelectedDataType>Tension</SelectedDataType>
+<DataSubSet>1</DataSubSet>
+<PrevDataSubset>1</PrevDataSubset>
+<UseIncomingDataType>False</UseIncomingDataType>
+<LineType>MediumSolid</LineType>
+<PointType>Plus</PointType>
+<PlotMethodType>Line</PlotMethodType>
+<LineColor>-256</LineColor>
+</DataColumn>
+</DataColumns>
+</Axis>
 </AxisList>
 <SaveDataWhenClosed>False</SaveDataWhenClosed>
 <UpdateChartAtEnd>True</UpdateChartAtEnd>
 <PointsToKeep>30000</PointsToKeep>
 <YAxisOffset>0</YAxisOffset>
-<GraphConfig ByteCount="9094"/>
+<GraphConfig ByteCount="9084"/>
 </Form>
 </Form>
