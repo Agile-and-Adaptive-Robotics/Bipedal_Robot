@@ -20,16 +20,22 @@ OpenSim - Used to display biologically realistic muscle placements on human.
 
 Matlab - For creating scripts for torque calculation and muscle placement optimization.
 
+Animatlab - Neural network simulations for a bipedal walker.
+
 ## Contributors
 Ben Bolen - Project Co-Lead, PhD Student
 
 Connor Morrow - Project Co-Lead, PhD Student
 
-Ty Fitzgerald - Ankle and Foot Design, Undergraduate Researcher 
-
-David Pleshakov - Lower Body Design, Undergraduate Researcher
-
 Harold Omotoy - Muscle Placement and PAM Testing, Undergraduate Researcher
 
 ## Previous Contributors
 Alex Steele - Knee Joint Designer, Past Master's Student
+
+Ty Fitzgerald - Ankle and Foot Design, Undergraduate Researcher 
+
+David Pleshakov - Lower Body Design, Undergraduate Researcher
+
+Mick Leungpathomaram - Various SolidWorks components and assemblies, High School Research Intern
+
+Alaina Clar - Various SolidWorks components and naming convention creator, High School Research Intern
