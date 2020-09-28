@@ -286,7 +286,7 @@ function [ID, size, longest]= Size(length, mif)
 end
 
 %Function that generates the force of the Festo Muscle
-    function F = festo(obj)
+function F = festo(obj)
     %Inputs:
     %Lmt == muscle-tendon length, scalar
     %rest == resting length of artificial muscle, "size" from Size function
@@ -336,4 +336,4 @@ end
     %Hunt, Alexander J., Alexander Graber-Tilton, and Roger D. Quinn. "Modeling length effects of braided pneumatic actuators."
     %In ASME 2017 International Design Engineering Technical Conferences and Computers and Information in Engineering Conference, pp. V05AT08A008-V05AT08A008.
     %American Society of Mechanical Engineers, 2017.
-    end
+end

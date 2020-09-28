@@ -2,7 +2,9 @@
 % Author: Connor Morrow
 % Date: 1/14/2020
 % Description: This script runs calculations to generate the human torque
-% plots adn robot torque plots.
+% plots and robot torque plots. This compares the original Robot that Ben
+% created to the human torque data. This code is not a part of the
+% optimization process
 
 if exist('Optimize', 'var') == 0
     clear
@@ -39,7 +41,6 @@ load(strcat('Human_', ChooseJoint, '_Data.mat'));
 %% ------------- Robot Model -----------------
 %Runs the bipedal model
 run("RobotPAMCalculationOptimization.m")    
-% run("RobotPAMCalculation.m")    
 
 %% ------------- Error Caclulation ------------
 %After running both scripts, this portion checks to see the error between
