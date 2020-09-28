@@ -16,8 +16,8 @@ clc
 %Options are: Back, Bi_Hip, Calves, Foot, Toe, Uni_Hip
 ChooseJoint = 'Back';
 
-%Choose the number of divisions for the angles of rotation
-divisions = 100;
+%Choose the number of positions for the angles of rotation
+positions = 100;
 
 %Choose the number of iterations for the optimization code
 iterations = 100;
@@ -50,7 +50,6 @@ disG = 500;               %Cost weight for the distance away from the starting p
 GDiameter20 = 1e0;
 GDiameter40 = 5e0;
 G = 1e-5;
-disG = 500;               %Cost weight for the distance away from the starting point
 
 %Adjust the axis range for the Torque plots
 caxisRange = [-40 150];
@@ -65,9 +64,6 @@ addpath('Functions')
 addpath('Human_Data')
 
 %% ------------- Humanoid Model --------------
-%Runs the humanoid model. Only run if you need to update the data
-%run("HumanoidMuscleCalculation.m")
-
 %Loads important data for the human model. Data was previously created and
 %then stored, for quicker load time.
 %Data saved: Back, Bi_Hip, Calves, Foot, Toe, Uni_Hip
@@ -94,45 +90,6 @@ end
 %torques. We will now begin to move around the attachment points to see if
 %we can generate better torques
 
-%Load in points that construct the relevant bone models to the muscles.
-%This will be used as a part of our cost function, to evaluate how far away
-%our new muscle attachments are. 
-if isequal(ChooseJoint, 'Back')
-    PointsFile = 'Pelvis_R_Mesh_Points.xlsx';
-    Pelvis = xlsread(PointsFile)';
-    
-    PointsFile = 'Spine_Mesh_Points.xlsx';
-    Home = Joint1a.Home;
-    Spine = xlsread(PointsFile)'+Home;
-    
-    PointsFile = 'Sacrum_Mesh_Points.xlsx';
-    Sacrum = xlsread(PointsFile)';
-end
-
-%Determine how many muscles are included in the algorithm
-MuscleNum = size(Muscles, 2);
-
-%Calculate the distance from the attachment point to the nearest point on
-%the robot body
-%The first step is to get all the attachment points into the same
-%reference frame. 
-
-L = Muscle1.Location;
-iii = 0;                %variable that remembers which joint we are looking at. Will update to 1 for the first joint, 2 for the second cross over joint, and so on.
-for k = 1:size(Muscle1.Location, 2)
-    for ii = 1:size(Muscle1.CrossPoints, 2)
-        iii = iii+1;
-        if k == Muscle1.CrossPoints(ii)
-            L(:, k) = L(:, k)+Muscle1.TransformationMat(1:3, 4, iii);
-        end
-    end
-end
-
-%Create a tensor to store all the points that describe the bone mesh
-bone{1} = Spine;
-bone{2} = Sacrum;
-bone{3} = Pelvis;
-
 %Evaluate cost function for the initial set of attachment points
 % C = zeros(1, MuscleNum*2^6*iterations);   %Don't do this. Need to look at
 % the min later on, and initializing with zeros fucks it up. Maybe init
@@ -142,8 +99,7 @@ mC(1) = 0;              %Muscle length component of the cost function
 dC(1) = 0;              %Muscle diameter component of the cost function
 C(1) = 0;               %Cost function value
 
-k = 1;
-
+%Calculate error for original robot and the human model
 for ii = 1:100
     for iii = 1:100
         eC(1) = eC(1) + GTorque*abs(HumanTorque1(ii, iii) - RobotTorque1(ii, iii));
@@ -157,7 +113,9 @@ for ii = 1:100
     end
 end
 
-%For this part of the cost function, we must sum across all muscles
+%Calculate the length and diameter components of the cost function
+MuscleNum = size(Muscles, 2);       %Keep track of how many muscles are involved in this joint.
+k = 1;                              %Indexing variable for each iteration of the optimization. The original robot sets the starting point
 for i = 1:MuscleNum
     Diameter = Muscles{i}.Diameter;
     MLength = Muscles{i}.MuscleLength;
@@ -182,21 +140,22 @@ beginOptimization = 1;          %Flags that optimization has begun for the optim
 %Will then move to creating an algorith that will add and subtract to
 %different axes
 
-%Start the optimization as a for loop to create all the points of a cube.
-%later, automate this to be in a while loop that go until a threshold
+%Start the optimization process. Continues to calculate cost function for a
+%given amount of iterations or until epsilon becomes a negligible value
+
 ep1 = zeros(3, 1);              %Change in the first cross point for the Muscle
 ep2 = zeros(3, 1);              %Change in the second cross point for the muscle
 neg = [1, -1];
-k = 2;                  %index for the cost function. Start at 2, since 1 was the original point
-shrinkEp = 0;                   %Flag. Once it reaches the number of muscles, it will scale epsilon down to refine the search
+k = 2;                          %index for the cost function. Start at 2, since 1 was the original point
 myBreak = 0;                    %Flag for if epsilon becomes extremely small, in which case the optimization should end
 previousBestC = C(1);           %Variable that stores the best value from the previous series of calculations. Compares to newest best ot determine if actions need to be takne
 previousBestIteration = 1;      %Variable that stores the iteration number of the lowest cost value
 
-%some initialization
+%Initializing a location tracker and starting locations in order to observe
+%changes once the optimization process has completed.
 for m = 1:MuscleNum
-    LocationTracker1{m} = zeros(3, MuscleNum*2^6*iterations);
-    LocationTracker2{m} = zeros(3, MuscleNum*2^6*iterations);
+    LocationTracker1{m} = zeros(3, MuscleNum*2^6*iterations);   %Tracks location of point prior to a joint
+    LocationTracker2{m} = zeros(3, MuscleNum*2^6*iterations);   %Tracks location of point after a joint
     StartingLocation1{m} = zeros(3, 1);
     StartingLocation2{m} = zeros(3, 1);
 end
@@ -215,121 +174,116 @@ tic
 disp('Beginning Optimization');
 for iiii = 1:iterations
     for m = 1:MuscleNum
+        %Repeat 8 iterations for a single muscle looking at different
+        %locations for the muscle cross points
         for k1 = 1:2
             ep1(1) = epsilon*neg(k1);
-            for k2 = 1:2
-                ep1(2) = epsilon*neg(k2);
-                for k3 = 1:2
-                    ep1(3) = epsilon*neg(k3);
-                    for k4 = 1:2
-                        ep2(1) = epsilon*neg(k4);
-                        for k5 = 1:2
-                            ep2(2) = epsilon*neg(k5);
-                            for k6 = 1:2
-                                ep2(3) = epsilon*neg(k6);
+        for k2 = 1:2
+            ep1(2) = epsilon*neg(k2);
+        for k3 = 1:2
+            ep1(3) = epsilon*neg(k3);
+        for k4 = 1:2
+            ep2(1) = epsilon*neg(k4);
+        for k5 = 1:2
+            ep2(2) = epsilon*neg(k5);
+        for k6 = 1:2
+            ep2(3) = epsilon*neg(k6);
 
-                                %Change the Locaiton of the first and
-                                %second crossing point
-                                Location{m}(:, Cross(m) - 1) = StartingLocation1{m} + ep1;
-                                Location{m}(:, Cross(m)) = StartingLocation2{m} + ep2;
-                                
-                                %Update all of the Location Tracker
-                                %variables to identify current
-                                %configuration
-                                for config = 1:MuscleNum
-                                    LocationTracker1{config}(:, k) = Location{config}(:, Cross(config) - 1);
-                                    LocationTracker2{config}(:, k) = Location{config}(:, Cross(config));
-                                end
-                                
-                                run('RobotPAMCalculationOptimization.m')
+            %Change the Location of the first and
+            %second crossing point
+            Location{m}(:, Cross(m) - 1) = StartingLocation1{m} + ep1;
+            Location{m}(:, Cross(m)) = StartingLocation2{m} + ep2;
 
-                                %Evaluate cost function for the new set of attachment points
-                                eC(k) = 0;
-                                mC(k) = 0;
-                                dC(k) = 0;
-                                disC(k) = 0;
-                                C(k) = 0;
+            %Update all of the Location Tracker
+            %variables to identify current
+            %configuration
+            for config = 1:MuscleNum
+                LocationTracker1{config}(:, k) = Location{config}(:, Cross(config) - 1);
+                LocationTracker2{config}(:, k) = Location{config}(:, Cross(config));
+            end
 
-%                                 for ii = 1:100
-%                                     for iii = 1:100
-%                                         eC(k) = eC(k) + GTorque*abs(HumanTorque1(ii, iii) - RobotTorque1(ii, iii));
-%                                         eC(k) = eC(k) + GTorque*abs(HumanTorque2(ii, iii) - RobotTorque2(ii, iii));
-%                                         if exist('RobotTorque3', 'var') == 1
-%                                             eC(k) = eC(k) + GTorque*abs(HumanTorque3(ii, iii) - RobotTorque3(ii, iii));
-%                                             if exist('RobotTorque4', 'var') == 1
-%                                                 eC(k) = eC(k) + GTorque*abs(HumanTorque4(ii, iii) - RobotTorque4(ii, iii));
-%                                             end
-%                                         end
-%                                     end
-%                                 end
+            run('RobotPAMCalculationOptimization.m')
 
-                                for ii = 1:100
-                                    for iii = 1:100
-                                        if(HumanTorque1(ii, iii) > RobotTorque1(ii, iii))
-                                            eC(k) = eC(k) + GTorque*abs(HumanTorque1(ii, iii) - RobotTorque1(ii, iii));
-                                        end
-                                        if(HumanTorque2(ii, iii) > RobotTorque2(ii, iii))
-                                            eC(k) = eC(k) + GTorque*abs(HumanTorque2(ii, iii) - RobotTorque2(ii, iii));
-                                        end
-                                        if exist('RobotTorque3', 'var') == 1
-                                            if(HumanTorque3(ii, iii) > RobotTorque3(ii, iii))
-                                                eC(k) = eC(k) + GTorque*abs(HumanTorque3(ii, iii) - RobotTorque3(ii, iii));
-                                            end
-                                            if exist('RobotTorque4', 'var') == 1
-                                                if(HumanTorque4(ii, iii) > RobotTorque4(ii, iii))
-                                                    eC(k) = eC(k) + GTorque*abs(HumanTorque4(ii, iii) - RobotTorque4(ii, iii));
-                                                end
-                                            end
-                                        end
-                                    end
-                                end
+            %Evaluate cost function for the new set of attachment points
+            eC(k) = 0;
+            mC(k) = 0;
+            dC(k) = 0;
+            disC(k) = 0;
+            C(k) = 0;
 
-                                %Increase the cost based on length of each muscle
-                                for ii = 1:MuscleNum
-                                    for iii = 1:length(Muscles{ii}.MuscleLength)
-                                        mC(k) = mC(k) + GLength*Muscles{ii}.MuscleLength(iii);
-                                    end
-                                end
-
-                                %Increase the cost based on the diameter of the muscle
-                                for ii = 1:MuscleNum
-                                    if Muscles{ii}.Diameter == 40
-                                        dC(k) = dC(k) + GDiameter40;
-                                    elseif Muscles{ii}.Diameter == 20
-                                        dC(k) = dC(k) + GDiameter20;
-                                    end
-                                end
-                                
-                                %Increase the cost based on how far way the
-                                %new placement is from the original
-                                for ii = 1:MuscleNum
-                                    disC(k) = disC(k) + disG*norm(LocationTracker1{ii}(:, k) - LocationTracker1{ii}(:, 1))^2;
-                                    disC(k) = disC(k) + disG*norm(LocationTracker2{ii}(:, k) - LocationTracker2{ii}(:, 1))^2;
-                                end
-                                
-                                C(k) = eC(k) + mC(k) + dC(k)+disC(k);
-
-                                %Keep track of robot torque for error plots
-                                %later
-                                RTorqueTracker1(:, :, k) = RobotTorque1(:, :);
-                                RTorqueTracker2(:, :, k) = RobotTorque2(:, :);
-                                if exist('RobotTorque3', 'var') == 1
-                                    RTorqueTracker3(:, :, k) = RobotTorque3(:, :);
-                                    if exist('RobotTorque4', 'var') == 1
-                                        RTorqueTracker4(:, :, k) = RobotTorque4(:, :);
-                                    end
-                                end
-                                
-                                disp(['Iteration number ', num2str(k-1), ' out of of ', num2str(2^6*iterations*MuscleNum), '.']);
-                                k = k+1;            %Increment k for the next point of the cost function
-                                
-
+            for ii = 1:positions
+                for iii = 1:positions
+                    if(HumanTorque1(ii, iii) > RobotTorque1(ii, iii))
+                        eC(k) = eC(k) + GTorque*abs(HumanTorque1(ii, iii) - RobotTorque1(ii, iii));
+                    end
+                    if(HumanTorque2(ii, iii) > RobotTorque2(ii, iii))
+                        eC(k) = eC(k) + GTorque*abs(HumanTorque2(ii, iii) - RobotTorque2(ii, iii));
+                    end
+                    if exist('RobotTorque3', 'var') == 1
+                        if(HumanTorque3(ii, iii) > RobotTorque3(ii, iii))
+                            eC(k) = eC(k) + GTorque*abs(HumanTorque3(ii, iii) - RobotTorque3(ii, iii));
+                        end
+                        if exist('RobotTorque4', 'var') == 1
+                            if(HumanTorque4(ii, iii) > RobotTorque4(ii, iii))
+                                eC(k) = eC(k) + GTorque*abs(HumanTorque4(ii, iii) - RobotTorque4(ii, iii));
                             end
                         end
                     end
                 end
             end
+
+            %Increase the cost based on length of each muscle
+            for ii = 1:MuscleNum
+                for iii = 1:length(Muscles{ii}.MuscleLength)
+                    mC(k) = mC(k) + GLength*Muscles{ii}.MuscleLength(iii);
+                end
+            end
+
+            %Increase the cost based on the diameter of the muscle
+            for ii = 1:MuscleNum
+                if Muscles{ii}.Diameter == 40
+                    dC(k) = dC(k) + GDiameter40;
+                elseif Muscles{ii}.Diameter == 20
+                    dC(k) = dC(k) + GDiameter20;
+                end
+            end
+
+            %Increase the cost based on how far way the
+            %new placement is from the original
+            for ii = 1:MuscleNum
+                disC(k) = disC(k) + disG*norm(LocationTracker1{ii}(:, k) - LocationTracker1{ii}(:, 1))^2;
+                disC(k) = disC(k) + disG*norm(LocationTracker2{ii}(:, k) - LocationTracker2{ii}(:, 1))^2;
+            end
+
+            C(k) = eC(k) + mC(k) + dC(k)+disC(k);
+
+            %Keep track of robot torque for error plots
+            %later
+            RTorqueTracker1(:, :, k) = RobotTorque1(:, :);
+            RTorqueTracker2(:, :, k) = RobotTorque2(:, :);
+            if exist('RobotTorque3', 'var') == 1
+                RTorqueTracker3(:, :, k) = RobotTorque3(:, :);
+                if exist('RobotTorque4', 'var') == 1
+                    RTorqueTracker4(:, :, k) = RobotTorque4(:, :);
+                end
+            end
+
+            disp(['Iteration number ', num2str(k-1), ' out of of ', num2str(2^6*iterations*MuscleNum), '.']);
+            
+            k = k+1;            %Increment k for the next point of the cost function
+
         end
+        end
+        end
+        end
+        end
+        end
+        %Once the best position is chosen for one muscles, should update
+        %its location to the current best when starting on the other
+        %muscles
+        [bestMuscleC, bestMuscleIteration] = min(C(end-63:end));                        %Check for the best iteration of the previous cycle for one muscle
+        Location{m}(:, Cross(m) - 1) = LocationTracker1{m}(:, bestMuscleIteration);     %For the following muscles, use the best version of the previous calculations
+        Location{m}(:, Cross(m)) = LocationTracker2{m}(:, bestMuscleIteration);
     end
     [currentBestC, currentBestIteration] = min(C);
     if currentBestIteration == previousBestIteration

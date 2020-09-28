@@ -5,6 +5,11 @@
 % the PAMs that cross over them. It is intended to be used by the 
 % optimization script.
 
+%I want to break this script up into separate scripts, contained within a
+%folder, that the master function can call instead of calling this one. The
+%reasoning for that is so that each of those scripts becomes much smaller
+%and manageable.
+
 if exist('divisions', 'var') == 0
     divisions = 100;
 end
