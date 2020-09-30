@@ -14,7 +14,7 @@ clc
 %% ------------- User Entered Parameters -------------
 %Choose the Joint that you will to observe
 %Options are: Back, Bi_Hip, Calves, Foot, Toe, Uni_Hip
-ChooseJoint = 'Back';
+ChooseJoint = 'Bi_Hip';
 
 %Choose the number of positions for the angles of rotation
 positions = 100;
@@ -62,6 +62,7 @@ axisLimits = [-1 1 -1 1 -1.25 0.75];
 addpath('Open_Sim_Bone_Geometry')
 addpath('Functions')
 addpath('Human_Data')
+addpath('Joint_Optimization_Scripts')
 
 %% ------------- Humanoid Model --------------
 %Loads important data for the human model. Data was previously created and
@@ -72,7 +73,9 @@ load(strcat('Human_', ChooseJoint, '_Data.mat'));
 %% ------------- Robot Model -----------------
 %Runs the bipedal model for initial calculations and creating the proper
 %classes
-run("RobotPAMCalculationOptimization.m")    
+% run("RobotPAMCalculationOptimization.m") 
+JointOptimizationScript = strcat('RobotPAMCalculationOptimization_', ChooseJoint);
+run(JointOptimizationScript)
 
 %Set up the original robot torque if I want to see if the error is better
 OriginalRobotTorque1 = RobotTorque1;
@@ -153,21 +156,31 @@ previousBestIteration = 1;      %Variable that stores the iteration number of th
 
 %Initializing a location tracker and starting locations in order to observe
 %changes once the optimization process has completed.
+
+LocationTracker1 = cell(MuscleNum, 1);
+LocationTracker2 = cell(MuscleNum, 1);
+StartingLocation1 = cell(MuscleNum, 1);
+StartingLocation2 = cell(MuscleNum, 1);
 for m = 1:MuscleNum
-    LocationTracker1{m} = zeros(3, MuscleNum*2^6*iterations);   %Tracks location of point prior to a joint
-    LocationTracker2{m} = zeros(3, MuscleNum*2^6*iterations);   %Tracks location of point after a joint
-    StartingLocation1{m} = zeros(3, 1);
-    StartingLocation2{m} = zeros(3, 1);
+    LocationTracker1{m} = zeros(3, MuscleNum*2^6*iterations, size(Muscles{1}.CrossPoints, 2));   %Tracks location of point prior to a joint
+    LocationTracker2{m} = zeros(3, MuscleNum*2^6*iterations, size(Muscles{1}.CrossPoints, 2));   %Tracks location of point after a joint
+    StartingLocation1{m} = zeros(3, size(Muscles{1}.CrossPoints, 2));           %Updates with the optimization starting location for the attachment point BEFORE a joint
+    StartingLocation2{m} = zeros(3, size(Muscles{1}.CrossPoints, 2));           %Updates with the optimization starting location for the attachment point AFTER a joint
 end
-Cross = zeros(1, 3);
+Cross = zeros(MuscleNum, size(Muscles{1}.CrossPoints, 2));            %Create a variable that tracks all of the crossing points for the muscles
 
 %We begin with the point before the crossing point
 for m = 1:MuscleNum
-    Cross(m) = Muscles{m}.CrossPoints(1);  %Will need to change this indexing for muscles that have multiple crossing points
-    StartingLocation1{m} = Muscles{m}.Location(:, Cross(m) - 1);
-    StartingLocation2{m} = Muscles{m}.Location(:, Cross(m));
-    LocationTracker1{m} = StartingLocation1{m};
-    LocationTracker2{m} = StartingLocation2{m};
+    Cross(m, :) = Muscles{m}.CrossPoints;  
+    for i = 1:size(Cross, 2)
+        if Cross(m, i) == 0
+            i = i + 1;
+        end
+        StartingLocation1{m}(:, i) = Muscles{m}.Location(:, Cross(m, i) - 1);
+        StartingLocation2{m}(:, i) = Muscles{m}.Location(:, Cross(m, i));
+        LocationTracker1{m}(:, 1, i) = StartingLocation1{m}(:, i);
+        LocationTracker2{m}(:, 1, i) = StartingLocation2{m}(:, i);
+    end
 end
 
 tic
@@ -191,18 +204,28 @@ for iiii = 1:iterations
 
             %Change the Location of the first and
             %second crossing point
-            Location{m}(:, Cross(m) - 1) = StartingLocation1{m} + ep1;
-            Location{m}(:, Cross(m)) = StartingLocation2{m} + ep2;
-
+            for i = 1:size(Cross, 2)
+                if Cross(m, i) == 0
+                    i = i+1;
+                end
+                Location{m}(:, Cross(m, i) - 1) = StartingLocation1{m}(:, i) + ep1;
+                Location{m}(:, Cross(m, i)) = StartingLocation2{m}(:, i) + ep2;
+            end
             %Update all of the Location Tracker
             %variables to identify current
             %configuration
             for config = 1:MuscleNum
-                LocationTracker1{config}(:, k) = Location{config}(:, Cross(config) - 1);
-                LocationTracker2{config}(:, k) = Location{config}(:, Cross(config));
+                for i = 1:size(Cross, 2)
+                    if Cross(i) == 0
+                        i = i+1;
+                    end
+                    LocationTracker1{config}(:, k, i) = Location{config}(:, Cross(config) - 1);
+                    LocationTracker2{config}(:, k, i) = Location{config}(:, Cross(config));
+                end
             end
 
-            run('RobotPAMCalculationOptimization.m')
+%             run('RobotPAMCalculationOptimization.m')
+            run(JointOptimizationScript)
 
             %Evaluate cost function for the new set of attachment points
             eC(k) = 0;
@@ -248,6 +271,8 @@ for iiii = 1:iterations
                 end
             end
 
+                    %---------------------- edit location tracker below
+                    %---------------
             %Increase the cost based on how far way the
             %new placement is from the original
             for ii = 1:MuscleNum
@@ -282,8 +307,13 @@ for iiii = 1:iterations
         %its location to the current best when starting on the other
         %muscles
         [bestMuscleC, bestMuscleIteration] = min(C(end-63:end));                        %Check for the best iteration of the previous cycle for one muscle
-        Location{m}(:, Cross(m) - 1) = LocationTracker1{m}(:, bestMuscleIteration);     %For the following muscles, use the best version of the previous calculations
-        Location{m}(:, Cross(m)) = LocationTracker2{m}(:, bestMuscleIteration);
+        for i = 1:size(Cross, 2)
+            if Cross(m, i) == 0
+                i = i+1;
+            end
+            Location{m}(:, Cross(m, i) - 1) = LocationTracker1{m}(:, bestMuscleIteration, i);     %For the following muscles, use the best version of the previous calculations
+            Location{m}(:, Cross(m, i)) = LocationTracker2{m}(:, bestMuscleIteration, i);
+        end
     end
     [currentBestC, currentBestIteration] = min(C);
     if currentBestIteration == previousBestIteration
