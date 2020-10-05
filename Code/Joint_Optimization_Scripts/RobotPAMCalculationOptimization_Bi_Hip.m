@@ -161,18 +161,18 @@ if beginOptimization == 0
     VasMIF = 1365+1294+1871;
     VasAxis = [0 0 0;
               0, 0, 30];
+          
+    Location = {Location1, LocationSem, LocationSar, LocationTfl, LocationRec, LocationGrac, LocationBif, LocationVas};
 end
 
-Location = {Location1, LocationSem, LocationSar, LocationTfl, LocationRec, LocationGrac, LocationBif, LocationVas};
-
-Muscle1 = PamData('Bicep Femoris, Long Head', Location1, BFCrossPoints, BFMIF, T, Axis1);
-Muscle2 = PamData('Semimembranosus', LocationSem, SemCrossPoints, SemMIF, T, SemAxis);
-Muscle3 = PamData('Sartorius', LocationSar, SarCrossPoints, SarMIF, T, SarAxis);
-Muscle4 = PamData('Tensor Fasciae Latae', LocationTfl, TflCrossPoints, TflMIF, T, TflAxis);
-Muscle5 = PamData('Rectus Femoris', LocationRec, RecCrossPoints, RecMIF, T, RecAxis);
-Muscle6 = PamData('Gracilis', LocationGrac, GracCrossPoints, GracMIF, T, GracAxis);
-Muscle7 = PamData('Bicep Femoris, Short Head', LocationBif, BifCrossPoints, BifMIF, T, BifAxis);
-Muscle8 = PamData('Vastus Intermedius', LocationVas, VasCrossPoints, VasMIF, T, VasAxis);
+Muscle1 = PamData('Bicep Femoris, Long Head', Location{1}, BFCrossPoints, BFMIF, T, Axis1);
+Muscle2 = PamData('Semimembranosus', Location{2}, SemCrossPoints, SemMIF, T, SemAxis);
+Muscle3 = PamData('Sartorius', Location{3}, SarCrossPoints, SarMIF, T, SarAxis);
+Muscle4 = PamData('Tensor Fasciae Latae', Location{4}, TflCrossPoints, TflMIF, T, TflAxis);
+Muscle5 = PamData('Rectus Femoris', Location{5}, RecCrossPoints, RecMIF, T, RecAxis);
+Muscle6 = PamData('Gracilis', Location{6}, GracCrossPoints, GracMIF, T, GracAxis);
+Muscle7 = PamData('Bicep Femoris, Short Head', Location{7}, BifCrossPoints, BifMIF, T, BifAxis);
+Muscle8 = PamData('Vastus Intermedius', Location{8}, VasCrossPoints, VasMIF, T, VasAxis);
 
 %Sort Torques, to make equation management easier
 T1 = Muscle1.Torque;
