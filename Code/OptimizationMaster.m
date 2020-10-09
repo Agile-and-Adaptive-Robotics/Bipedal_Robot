@@ -215,7 +215,7 @@ for iiii = 1:iterations
             %configuration
             for config = 1:MuscleNum
                 for i = 1:size(Cross, 2)
-                    if Cross(i) == 0
+                    if Cross(config, i) == 0
                         i = i+1;
                     end
                     LocationTracker1{config}(:, k, i) = Location{config}(:, Cross(config, i) - 1);
@@ -274,7 +274,7 @@ for iiii = 1:iterations
             %Want to change this to be distance from the bone surface
             for ii = 1:MuscleNum
                 for i = 1:size(Cross, 2)
-                    if Cross(i) == 0
+                    if Cross(ii, i) == 0
                         i = i+1;
                     end
                     disC(k) = disC(k) + disG*norm(LocationTracker1{ii}(:, k, i) - LocationTracker1{ii}(:, 1, i))^2;
