@@ -20,7 +20,7 @@ ChooseJoint = 'Bi_Hip';
 positions = 100;
 
 %Choose the number of iterations for the optimization code 
-iterations = 1;
+iterations = 100;
 
     %Note: Time calculation equation (estimates how long this will take)
 %     totalTimeSeconds = 3*iterations*2^6*3
@@ -377,6 +377,11 @@ for i = 1:iterations
         averageC(i) = sum(C(startP:end));
     end
 end
+
+%% Save the Workspace
+path = 'Trial Results\';
+filename = strcat(path, ChooseJoint, '_', date, '.mat');
+save(filename)
 
 %Possible GitHub bug. Weird artifacting in my code
 
