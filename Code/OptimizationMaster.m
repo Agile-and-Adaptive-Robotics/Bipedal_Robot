@@ -14,13 +14,13 @@ clc
 %% ------------- User Entered Parameters -------------
 %Choose the Joint that you will to observe
 %Options are: Back, Bi_Hip, Calves, Foot, Toe, Uni_Hip
-ChooseJoint = 'Bi_Hip';
+ChooseJoint = 'Back';
 
 %Choose the number of positions for the angles of rotation
 positions = 100;
 
 %Choose the number of iterations for the optimization code 
-iterations = 100;
+iterations = 2;
 
     %Note: Time calculation equation (estimates how long this will take)
 %     totalTimeSeconds = 3*iterations*2^6*3
@@ -292,6 +292,9 @@ for iiii = 1:iterations
                 RTorqueTracker3(:, :, k) = RobotTorque3(:, :);
                 if exist('RobotTorque4', 'var') == 1
                     RTorqueTracker4(:, :, k) = RobotTorque4(:, :);
+                    if exist('RobotTorque5', 'var') == 1
+                        RTorqueTracker5(:, :, k) = RobotTorque4(:, :);
+                    end
                 end
             end
 
@@ -344,15 +347,25 @@ for iiii = 1:iterations
 end
 timeElapsed = toc;
 
+% Reconfiguring the muscles that had the best optimization results
 NewRobotTorque1 = RTorqueTracker1(:, :, currentBestIteration);
 NewRobotTorque2 = RTorqueTracker2(:, :, currentBestIteration);
 if exist('RobotTorque3', 'var') == 1
     NewRobotTorque3 = RTorqueTracker3(:, :, currentBestIteration);
     if exist('RobotTorque4', 'var') == 1
         NewRobotTorque4 = RTorqueTracker4(:, :, currentBestIteration);
+        if exist('RobotTorque5', 'var') == 1
+            NewRobotTorque5 = RTorqueTracker5(:, :, currentBestIteration);
+        end
     end
 end
 
+for i = 1:size(Cross, 2)
+    for m = 1:MuscleNum
+        Location{m}(:, Cross(m, i) - 1) = LocationTracker1{m}(:, currentBestIteration, i);
+        Location{m}(:, Cross(m, i)) = LocationTracker2{m}(:, currentBestIteration, i);
+    end
+end
 
 %%------------------ Plotting ----------------------
 % run('OptimizationPlotting.m')
@@ -367,7 +380,8 @@ ylim([0, 800])
 set(gca, 'FontSize', 12)
 hold off
 
-%Create an average of the iterationst to create viewable epochs
+%Create an average of the epochs to see a less jumpy plot
+%------------ incomplete -----------------
 for i = 1:iterations
     startP = (i-1)*MuscleNum*2^6+1;             %Starting Point for summation of the epoch
     endP = i*MuscleNum*2^6;                     %Ending poster for summation of the epoch
@@ -377,6 +391,9 @@ for i = 1:iterations
         averageC(i) = sum(C(startP:end));
     end
 end
+
+%Plot the results from the best result on a simulated skeleton
+
 
 %% Save the Workspace
 path = 'Trial Results\';

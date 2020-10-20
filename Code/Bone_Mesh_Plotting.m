@@ -7,7 +7,7 @@
 
 addpath('Open_Sim_Bone_Geometry')
 
-%Retrieve the datasets
+%% Retrieve the datasets
 Spine = xlsread('Spine_Mesh_Points.xlsx');
 Sacrum = xlsread('Sacrum_Mesh_Points.xlsx');
 Pelvis = xlsread('Pelvis_R_Mesh_Points.xlsx');
@@ -17,7 +17,7 @@ Talus = xlsread('Talus_Mesh_Points.xlsx');
 Calcaneus = xlsread('Calcaneus_Mesh_Points.xlsx');
 Toes = xlsread('Toes_Mesh_Points.xlsx');
 
-%Add joint offsets to each of the datasets (Sacrum and Pelvis are already
+%% Add joint offsets to each of the datasets (Sacrum and Pelvis are already
 %in the correct frame)
 Back = [-0.1007, 0.0815, 0];
 Spine = Spine + Back;
@@ -50,7 +50,7 @@ Talus = Talus*RotationM;
 Calcaneus = Calcaneus*RotationM;
 Toes = Toes*RotationM;
 
-%Take the data from the optimization and put it into the correct frame
+%% Take the data from the optimization and put it into the correct frame
 %---------- In Progress ------------
 Bifemlh = [-0.126, -0.03, -0.023;
             -0.103, -0.036, -0.056;
@@ -61,7 +61,31 @@ Bifemlh(2:3, :) = Bifemlh(2:3, :) + Hip + Knee; %2 is probably a cross point
 
 Bifemlh = Bifemlh*RotationM;
 
-%Plot everything
+%Pull the best locations for the optimized muscles and prepare them for
+%plotting.
+plottingLocation = Location;
+
+for m = 1:size(plottingLocation, 2)
+    plottingLocation{m} = plottingLocation{m}';
+end
+
+%If the joint includes an offset, include them here
+if strcmp(ChooseJoint, 'Bi_Hip') == 1
+    offset{1} = Hip;
+    offset{2} = Knee;
+elseif strcmp(ChooseJoint, 'Calves') == 1
+    offset{1} = 
+
+    for m = 1:size(plottingLocation, 2)    
+        for i = 1:size(Cross, 2)
+            plottingLocation{m}(Cross(m, i):end, :) = plottingLocation{m}(Cross(m, i):end, :) + Hip
+        
+
+for m = 1:size(plottingLocation, 2)
+    plottingLocation{m} = plottingLocation{m}*RotationM;
+end
+
+%% Plot everything
 axisLimits = [-1 1 -1 1 -1.25 0.75];
 
 figure
@@ -75,7 +99,9 @@ plot3(Talus(:, 1), Talus(:, 2), Talus(:, 3), '.', 'color', 'b');
 plot3(Calcaneus(:, 1), Calcaneus(:, 2), Calcaneus(:, 3), '.', 'color', 'b');
 plot3(Toes(:, 1), Toes(:, 2), Toes(:, 3), '.', 'color', 'b');
 % plot3(BifemlhM(:, 1), -BifemlhM(:, 3), BifemlhM(:, 2), 'color', 'r', 'LineWidth', 3)
-
-plot3(Bifemlh(:, 1), Bifemlh(:, 2), Bifemlh(:, 3), 'color', 'r', 'LineWidth', 3)
+for m = 1:size(plottingLocation, 2)
+    plot3(plottingLocation{m}(:, 1), plottingLocation{m}(:, 2), plottingLocation{m}(:, 3), 'color', 'r', 'LineWidth', 3)
+end
+% plot3(Bifemlh(:, 1), Bifemlh(:, 2), Bifemlh(:, 3), 'color', 'r', 'LineWidth', 3)
 axis(axisLimits)
 hold off
