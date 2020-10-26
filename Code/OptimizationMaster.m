@@ -14,7 +14,7 @@ clc
 %% ------------- User Entered Parameters -------------
 %Choose the Joint that you will to observe
 %Options are: Back, Bi_Hip, Calves, Foot, Toe, Uni_Hip
-ChooseJoint = 'Back';
+ChooseJoint = 'Bi_Hip';
 
 %Choose the number of positions for the angles of rotation
 positions = 100;
