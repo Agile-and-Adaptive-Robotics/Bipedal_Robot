@@ -347,7 +347,7 @@ for iiii = 1:iterations
 end
 timeElapsed = toc;
 
-% Reconfiguring the muscles that had the best optimization results
+%% Reconfiguring the muscles that had the best optimization results
 NewRobotTorque1 = RTorqueTracker1(:, :, currentBestIteration);
 NewRobotTorque2 = RTorqueTracker2(:, :, currentBestIteration);
 if exist('RobotTorque3', 'var') == 1
@@ -367,7 +367,7 @@ for i = 1:size(Cross, 2)
     end
 end
 
-%%------------------ Plotting ----------------------
+%% ------------------ Plotting ----------------------
 % run('OptimizationPlotting.m')
 
 figure
@@ -399,6 +399,14 @@ end
 path = 'Trial Results\';
 filename = strcat(path, ChooseJoint, '_', date, '.mat');
 save(filename)
+
+%% Begin the plots
+
+figure
+plot(averageC)
+xlabel('Epochs')
+ylabel('Cost Value')
+xlim([0 size(averageC, 2)])
 
 %Possible GitHub bug. Weird artifacting in my code
 
