@@ -5,6 +5,6 @@ function v = RowVecTrans(T,p)
 % Returns 3x1 column taking first three rows of vector s
 
 r = [p, 1];
-s = r*T;
+s = T*r';
 v = [s(1), s(2), s(3)];
 end
