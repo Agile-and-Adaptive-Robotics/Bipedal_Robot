@@ -104,7 +104,7 @@ classdef MuscleData
                 for i = 1:size(T, 3)
                     pointA = L(C(ii)-1, :);
                     pointB = L(C(ii), :);
-                    direction(i, :, ii) = pointA - RowVecTrans(T(:, :, i, ii), pointB);
+                    direction(i, :, ii) = RowVecTrans(T(:, :, i, ii)\eye(4), pointA) - pointB;
                     unitD(i, :, ii) = direction(i, :, ii)/norm(direction(i, :, ii));
                 end
             end
@@ -118,12 +118,14 @@ classdef MuscleData
             T = obj.TransformationMat;
             L = obj.Location;
             C = obj.Cross;
-            pointB = L(C, :);
             unitD = obj.UnitDirection;
             mA = zeros(size(T, 3), 3);
             
-            for i = 1:size(T, 3)
-                mA(i, :) = cross(RowVecTrans(T(:, :, i), pointB), unitD(i, :));
+            for ii = 1:size(C, 2)
+                for i = 1:size(T, 3)
+                    pointB = L(C(ii), :);
+                    mA(i, :, ii) = pointB - unitD(i, :, ii)*dot(unitD(i, :, ii), pointB);
+                end
             end
         end
         
