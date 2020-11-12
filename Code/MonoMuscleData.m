@@ -12,7 +12,7 @@
 
 
 
-classdef MuscleData
+classdef MonoMuscleData
     
     %% ------------Public Properties---------------------------
     %List of explicit properties for the muscles
@@ -64,31 +64,9 @@ classdef MuscleData
             j = size(L, 2);
             C = obj.Cross;
             T = obj.TransformationMat;
+            mL = zeros(size(T, 3), 1);
             
-            if size(C, 2) == 1
-                mL = zeros(size(T, 3), 1);
-            elseif size(C, 2) == 2
-                mL = zeros(size(T, 3), size(T, 3));
-            end
-            
-            for iii = 1:size(mL, 2)                         %Repeat for all iterations of the second joint
-                for ii = 1:size(mL, 1)                      %Repeat for all iterations of the first joint
-                currentCross = 1;                           %Flags what the current crossing point is
-                
-                %Check to see if the muscle is biarticular with crossing
-                %points all after the second joint. 
-                if size(C) > 1
-                    currentCross = 1;
-                    for i = 1:size(C, 2)-1
-                        if C(currentCross) == C(currentCross + 1)
-                            C(currentCross) = [];
-                            T(:, :, ii, currentCross) = T(:, :, ii, currentCross)*T(:, :, ii, i+1);
-                            currentCross = currentCross - 1;
-                        end
-                        currentCross = currentCross + 1;
-                    end
-                end
-                
+            for ii = 1:size(mL, 1)
                 for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
                     pointA = L(i, :);
                     pointB = L(i+1, :);
@@ -99,9 +77,7 @@ classdef MuscleData
                         end
                     end
 
-                    mL(ii, iii) = mL(ii, iii) + norm(pointA - pointB);
-                end
-                
+                    mL(ii, 1) = mL(ii, 1) + norm(pointA - pointB);
                 end
             end
         end

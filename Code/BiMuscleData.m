@@ -1,9 +1,10 @@
 % Muscle Data
 % Author: Connor Morrow
-% Date: 1/14/2020
+% Date: 11/12/2020
 % Description: This script allows for creating reusable classes, which 
 % categorize and calculates muscle information. This will be used in 
-% determining muscle placement, optimization, and torque verification
+% determining muscle placement, optimization, and torque verification.
+% Specifically for Biarticular Muscles
 
 %Creation of a reusable class for categorizing muscle information and
 %calculating parameters.
@@ -12,7 +13,7 @@
 
 
 
-classdef MuscleData
+classdef BiMuscleData
     
     %% ------------Public Properties---------------------------
     %List of explicit properties for the muscles

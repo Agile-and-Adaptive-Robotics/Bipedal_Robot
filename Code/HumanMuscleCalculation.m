@@ -2,22 +2,26 @@
 % This script is a collection of all of the human muscles and ways of
 % generating torque information for each of those muscles, based on the
 % type of actuation they create
+clear
+clc
+close all
+
 
 addpath Functions
 
 %% ------------- Test Case ----------------
-% Test
+% Test Monoarticulate Muscle
 iteration = 100;
 R = zeros(3, 3, iteration);
 T = zeros(4, 4, iteration);
-adducMax = 90*pi/180;
+adducMax = -90*pi/180;
 adducMin = 0;
 theta = linspace(adducMin, adducMax, iteration);
 testShiftAxis = [1, 0.5, 0];
 
 for i = 1:iteration
-    R(:, :, i) = [cos(theta(i)), sin(theta(i)), 0;
-                    -sin(theta(i)), cos(theta(i)), 0;
+    R(:, :, i) = [cos(theta(i)), -sin(theta(i)), 0;
+                    sin(theta(i)), cos(theta(i)), 0;
                     0, 0, 1];
     
     T(:, :, i) = RpToTrans(R(:, :, i), testShiftAxis');
@@ -29,7 +33,16 @@ Location = [0.1, 0.2, 0;
             0.4, 0.5, 0;
             0.6, -0.7, 0];
 CrossPoint = 2;
-TestM = MuscleData(Name, Location, CrossPoint, MIF, T); 
+TestM = MonoMuscleData(Name, Location, CrossPoint, MIF, T); 
+
+% Test Biarticulate Muscle with attachment point after the middle joint
+T(:, :, :, 2) = T(:, :, :, 1);
+Name = 'Test Biarticular Muscle';
+MIF = 20;
+Location = [0.8, 0.7, 0;
+            0.5, 0.4, 0];
+CrossPoint = [2, 2];
+TestBM = BiMuscleData(Name, Location, CrossPoint, MIF, T);
 
 %% ------------- Hip Muscles ----------------
 
@@ -46,8 +59,8 @@ pelvisToHip = [-0.0707, -0.0661, 0.0835];
 
 
 for i = 1:iteration
-    R(:, :, i) = [cos(theta(i)), sin(theta(i)), 0;
-                    -sin(theta(i)), cos(theta(i)), 0;
+    R(:, :, i) = [cos(theta(i)), -sin(theta(i)), 0;
+                    sin(theta(i)), cos(theta(i)), 0;
                     0, 0, 1];
     
     T(:, :, i) = RpToTrans(R(:, :, i), pelvisToHip');
@@ -61,49 +74,49 @@ Location = [-0.119, 0.061, 0.07;
             -0.046, -0.025, 0.039;
             -0.028, -0.057, 0.047];
 CrossPoint = 3;
-Glut_Max1 = MuscleData(Name, Location, CrossPoint, MIF, T); 
+Glut_Max1 = MonoMuscleData(Name, Location, CrossPoint, MIF, T); 
 
 Name = 'Gluteus Medius 1';
 MIF = 819;
 Location = [-0.041, 0.03, 0.121;
             -0.022, -0.012, 0.056];
 CrossPoint = 2;
-Glut_Med1 = MuscleData(Name, Location, CrossPoint, MIF, T);
+Glut_Med1 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Gluteus Medius 2';
 MIF = 573;
 Location = [-0.086, 0.044, 0.077;
             -0.026, -0.006, 0.053];
 CrossPoint = 2;
-Glut_Med2 = MuscleData(Name, Location, CrossPoint, MIF, T);
+Glut_Med2 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Gluteus Medius 3';
 MIF = 653;
 Location = [-0.122, 0.011, 0.065;
             -0.031, -0.005, 0.052];
 CrossPoint = 2;
-Glut_Med3 = MuscleData(Name, Location, CrossPoint, MIF, T);
+Glut_Med3 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Gluteus Minimus 1';
 MIF = 270;
 Location = [-0.047, -0.008, 0.106;
             -0.007, -0.01, 0.056];
 CrossPoint = 2;
-Glut_Min1 = MuscleData(Name, Location, CrossPoint, MIF, T);
+Glut_Min1 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Gluteus Minimus 2';
 MIF = 285;
 Location = [-0.063, -0.006, 0.099;
             -0.01, -0.01, 0.056];
 CrossPoint = 2;
-Glut_Min2 = MuscleData(Name, Location, CrossPoint, MIF, T);
+Glut_Min2 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Gluteus Minimus 3';
 MIF = 323;
 Location = [-0.083, -0.006, 0.086;
             -0.013, -0.008, 0.055];
 CrossPoint = 2;
-Glut_Min3 = MuscleData(Name, Location, CrossPoint, MIF, T);
+Glut_Min3 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Piriformis';
 MIF = 444;
@@ -111,28 +124,28 @@ Location = [-0.14, 0, 0.024;
             -0.119, -0.028, 0.066;
             -0.015, -0.004, 0.44];
 CrossPoint = 3;
-Peri = MuscleData(Name, Location, CrossPoint, MIF, T);
+Peri = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Adductor Brevis';
 MIF = 429;
 Location = [-0.059, -0.091, 0.016;
             0.001, -0.12, 0.029];
 CrossPoint = 2;
-Add_Brev = MuscleData(Name, Location, CrossPoint, MIF, T);
+Add_Brev = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Adductor Longus';
 MIF = 627;
 Location = [-0.032, -0.084, 0.017;
             0.005, -0.211, 0.023];
 CrossPoint = 2;
-Add_Long = MuscleData(Name, Location, CrossPoint, MIF, T);
+Add_Long = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Pectineus';
 MIF = 266;
 Location = [-0.043, -0.077, 0.045;
             -0.012, -0.082, 0.025];
 CrossPoint = 2;
-Pect = MuscleData(Name, Location, CrossPoint, MIF, T);
+Pect = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 %Knee Extension and Flexion
 knee_angle_x = [-2.0944; -1.74533; -1.39626; -1.0472; -0.698132; -0.349066; -0.174533;  0.197344;  0.337395;  0.490178;   1.52146;   2.0944];
@@ -148,8 +161,8 @@ phi = linspace(kneeMin, kneeMax, iteration);
 
 for i = 1:iteration
     hipToKnee = [fcn1(phi(i)), fcn2(phi(i)), 0];
-    R(:, :, i, 2) = [cos(theta(i)), sin(theta(i)), 0;
-                    -sin(theta(i)), cos(theta(i)), 0;
+    R(:, :, i, 2) = [cos(theta(i)), -sin(theta(i)), 0;
+                    sin(theta(i)), cos(theta(i)), 0;
                     0, 0, 1];
     
     T(:, :, i, 2) = RpToTrans(R(:, :, i, 2), testShiftAxis');
@@ -175,7 +188,7 @@ Location = [-0.067, 0.036, 0.085;
             0.002, -0.054, 0.006;
             -0.019, -0.062, 0.013];
 CrossPoint = 4;
-Iliacus = MuscleData(Name, Location, CrossPoint, MIF, T);
+Iliacus = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Psoas';
 MIF = 1113;
@@ -185,7 +198,7 @@ Location = [-0.065, 0.089, 0.029;
             0.002, -0.051, 0.004;
             -0.019, -0.06, 0.01];
 CrossPoint = 4;
-Psoas = MuscleData(Name, Location, CrossPoint, MIF, T);
+Psoas = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 % Name = 'Tensory Fascia Latae';
 % mif = 233;
@@ -218,21 +231,21 @@ MIF = 381;
 Location = [-0.073, -0.117, 0.025;
             -0.004, -0.121, 0.034];
 CrossPoint = 2;
-Add_Mag1 = MuscleData(Name, Location, CrossPoint, MIF, T);
+Add_Mag1 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Adductor Magnus 2';
 MIF = 343;
 Location = [-0.083, -0.119, 0.031;
             0.005, -0.229, 0.023];
 CrossPoint = 2;
-Add_Mag2 = MuscleData(Name, Location, CrossPoint, MIF, T);
+Add_Mag2 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Adductor Magnus 3';
 MIF = 488;
 Location = [-0.111, -0.114, 0.049;
             0.007, -0.384, -0.027];
 CrossPoint = 2;
-Add_Mag3 = MuscleData(Name, Location, CrossPoint, MIF, T);
+Add_Mag3 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Bicep Femoris (Long Head)';
 MIF = 896;
@@ -240,7 +253,7 @@ Location = [-0.126, -0.103, 0.069;
             -0.03, -0.036, 0.029;
             -0.023, -0.056, 0.034];
 CrossPoint = [2, 2];
-Bifemlh = MuscleData(Name, Location, CrossPoint, MIF, T);
+Bifemlh = BiMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Semimembranosus';
 MIF = 1288;
@@ -248,7 +261,7 @@ Location = [-0.119, -0.097, 0.072;
             -0.035, -0.035, -0.019;
             -0.027, -0.048, -0.02];
 CrossPoint = [2, 2];
-Semimem = MuscleData(Name, Location, CrossPoint, MIF, T);
+Semimem = BiMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Semitendinosus';
 MIF = 410;
@@ -258,7 +271,7 @@ Location = [-0.126, -0.11, 0.06;
             -0.011, -0.075, -0.025;
             0.003, -0.096, -0.019];
 CrossPoint = [2, 2];
-Semiten = MuscleData(Name, Location, CrossPoint, MIF, T);
+Semiten = BiMuscleData(Name, Location, CrossPoint, MIF, T);
 
 %% Hip Internal and External Rotation
 Name = 'Gemellus';
@@ -266,14 +279,14 @@ MIF = 164;
 Location = [-0.113, -0.082, 0.071;
             -0.014, -0.003, 0.044];
 CrossPoint = 2;
-Gem = MuscleData(Name, Location, CrossPoint, MIF, T);
+Gem = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Quadricep Femoris';             %I don't think thats the actual name for this muscle
 MIF = 381;
 Location = [-0.114, -0.115, 0.052;
             -0.038, -0.036, 0.037];
 CrossPoint = 2;
-Quad_Fem = MuscleData(Name, Location, CrossPoint, MIF, T);
+Quad_Fem = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 
 %% Knee Muscles Specifically
@@ -283,7 +296,7 @@ Location = [0.005, -0.211, 0.023;
             -0.03, -0.036, 0.029;
             -0.023, -0.056, 0.034];
 CrossPoint = 2;
-Bifemsh = MuscleData(Name, Location, CrossPoint, MIF, T);
+Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Vastus Intermedius';
 MIF = 1365;
@@ -292,7 +305,7 @@ Location = [0.029, -0.192, 0.031;
             0.034, -0.403, 0.005;
             0.0555, 0.025, 0.0018];
 CrossPoint = 4;
-Vas_Int = MuscleData(Name, Location, CrossPoint, MIF, T);
+Vas_Int = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Vastus Lateralis';
 MIF = 1871;
@@ -302,7 +315,7 @@ Location = [0.005, -0.185, 0.035;
             0.025, -0.424, 0.018;
             0.06, 0.02, 0.0165];
 CrossPoint = 5;
-Vas_Lat = MuscleData(Name, Location, CrossPoint, MIF, T);
+Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Vastus Medialis';
 MIF = 1294;
@@ -312,24 +325,24 @@ Location = [0.014, -0.21, 0.019;
             0.027, -0.425, -0.013;
             0.05625, 0.022, -0.0146];
 CrossPoint = 5;
-Vas_Med = MuscleData(Name, Location, CrossPoint, MIF, T);
+Vas_Med = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
 %Biarticular with Femur to Ankle
-Name = 'Lateral Gastrocnemius';
-MIF = 683;
-Location = [-0.022, -0.395, 0.027;
-            -0.03, -0.402, 0.027;
-            0, 0.031, -0.005];
-CrossPoint = [3, 3];
-Lat_Gas = MuscleData(Name, Location, CrossPoint, MIF, T);
-
-Name = 'Medial Gastrocnemius';
-MIF = 1558;
-Location = [-0.019, -0.393, -0.024;
-            -0.03, -0.402, -0.026;
-            0, 0.031, -0.005];
-CrossPoint = [3, 3];
-Med_Gas = MuscleData(Name, Location, CrossPoint, MIF, T);
+% Name = 'Lateral Gastrocnemius';
+% MIF = 683;
+% Location = [-0.022, -0.395, 0.027;
+%             -0.03, -0.402, 0.027;
+%             0, 0.031, -0.005];
+% CrossPoint = [3, 3, 3];
+% Lat_Gas = MuscleData(Name, Location, CrossPoint, MIF, T);
+% 
+% Name = 'Medial Gastrocnemius';
+% MIF = 1558;
+% Location = [-0.019, -0.393, -0.024;
+%             -0.03, -0.402, -0.026;
+%             0, 0.031, -0.005];
+% CrossPoint = [3, 3, 3];
+% Med_Gas = MuscleData(Name, Location, CrossPoint, MIF, T);
 
 
 
