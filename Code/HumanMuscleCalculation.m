@@ -11,27 +11,44 @@ addpath Functions
 
 %% ------------- Test Case ----------------
 % Test Monoarticulate Muscle
-iteration = 100;
-R = zeros(3, 3, iteration);
-T = zeros(4, 4, iteration);
+iteration = 20;
+
+
 adducMax = -90*pi/180;
 adducMin = 0;
 theta = linspace(adducMin, adducMax, iteration);
+
+flexMax = 180*pi/180;
+extMax = 0;
+phi = linspace(extMax, flexMax, iteration);
+
 testShiftAxis = [1, 0.5, 0];
 
-for i = 1:iteration
-    R(:, :, i) = [cos(theta(i)), -sin(theta(i)), 0;
-                    sin(theta(i)), cos(theta(i)), 0;
-                    0, 0, 1];
-    
-    T(:, :, i) = RpToTrans(R(:, :, i), testShiftAxis');
+R = zeros(3, 3, iteration);
+T = zeros(4, 4, iteration);
+
+pos = 1;
+for ii = 1:size(theta, 2)
+    for i = 1:size(phi, 2)
+        Rz(:, :, i) = [cos(theta(i)), -sin(theta(i)), 0;
+                        sin(theta(i)), cos(theta(i)), 0;
+                        0, 0, 1];
+                    
+        Rx(:, :, ii) = [1 0 0;
+                        0 cos(phi(ii)), -sin(phi(ii));
+                        0 sin(phi(ii)), cos(phi(ii))];
+        
+        R(:, :, pos) = Rz(:, :, i)*Rx(:, :, ii);            
+                    
+        T(:, :, pos) = RpToTrans(R(:, :, pos), testShiftAxis');
+        pos = pos + 1;
+    end
 end
 
 Name = 'Test Muscle';
 MIF = 20;
 Location = [0.1, 0.2, 0;
-            0.4, 0.5, 0;
-            0.6, -0.7, 0];
+            0.4, 0.5, 0];
 CrossPoint = 2;
 TestM = MonoMuscleData(Name, Location, CrossPoint, MIF, T); 
 
@@ -42,7 +59,7 @@ MIF = 20;
 Location = [0.8, 0.7, 0;
             0.5, 0.4, 0];
 CrossPoint = [2, 2];
-TestBM = BiMuscleData(Name, Location, CrossPoint, MIF, T);
+% TestBM = BiMuscleData(Name, Location, CrossPoint, MIF, T);
 
 %% ------------- Hip Muscles ----------------
 
@@ -177,7 +194,7 @@ end
 %             0.006, -0.059, -0.038;
 %             0.024, -0.084, -0.0235];
 % CrossPoint = [2, 3];
-% Sar = MuscleData(Name, Location, CrossPoint, MIF, T);
+% Sar = BiMuscleData(Name, Location, CrossPoint, MIF, T);
 
 %% Hip Flexion and Extension
 Name = 'Iliacus';
@@ -247,31 +264,31 @@ Location = [-0.111, -0.114, 0.049;
 CrossPoint = 2;
 Add_Mag3 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
-Name = 'Bicep Femoris (Long Head)';
-MIF = 896;
-Location = [-0.126, -0.103, 0.069;
-            -0.03, -0.036, 0.029;
-            -0.023, -0.056, 0.034];
-CrossPoint = [2, 2];
-Bifemlh = BiMuscleData(Name, Location, CrossPoint, MIF, T);
-
-Name = 'Semimembranosus';
-MIF = 1288;
-Location = [-0.119, -0.097, 0.072;
-            -0.035, -0.035, -0.019;
-            -0.027, -0.048, -0.02];
-CrossPoint = [2, 2];
-Semimem = BiMuscleData(Name, Location, CrossPoint, MIF, T);
-
-Name = 'Semitendinosus';
-MIF = 410;
-Location = [-0.126, -0.11, 0.06;
-            -0.042, -0.029, -0.023;
-            -0.033, -0.053, -0.023;
-            -0.011, -0.075, -0.025;
-            0.003, -0.096, -0.019];
-CrossPoint = [2, 2];
-Semiten = BiMuscleData(Name, Location, CrossPoint, MIF, T);
+% Name = 'Bicep Femoris (Long Head)';
+% MIF = 896;
+% Location = [-0.126, -0.103, 0.069;
+%             -0.03, -0.036, 0.029;
+%             -0.023, -0.056, 0.034];
+% CrossPoint = [2, 2];
+% Bifemlh = BiMuscleData(Name, Location, CrossPoint, MIF, T);
+% 
+% Name = 'Semimembranosus';
+% MIF = 1288;
+% Location = [-0.119, -0.097, 0.072;
+%             -0.035, -0.035, -0.019;
+%             -0.027, -0.048, -0.02];
+% CrossPoint = [2, 2];
+% Semimem = BiMuscleData(Name, Location, CrossPoint, MIF, T);
+% 
+% Name = 'Semitendinosus';
+% MIF = 410;
+% Location = [-0.126, -0.11, 0.06;
+%             -0.042, -0.029, -0.023;
+%             -0.033, -0.053, -0.023;
+%             -0.011, -0.075, -0.025;
+%             0.003, -0.096, -0.019];
+% CrossPoint = [2, 2];
+% Semiten = BiMuscleData(Name, Location, CrossPoint, MIF, T);
 
 %% Hip Internal and External Rotation
 Name = 'Gemellus';

@@ -40,7 +40,7 @@ classdef MonoMuscleData
         %% ------------- Muscle Data Constructor -----------------
         %Constructor Function. By calling 'MuscleData' and entering the
         %muscle information, we construct an object for that muscle.
-        function MD = MuscleData(name, location, cross, mif, t)
+        function MD = MonoMuscleData(name, location, cross, mif, t)
             if nargin > 0
                 MD.Name = name;
                 MD.Location = location;
@@ -70,11 +70,8 @@ classdef MonoMuscleData
                 for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
                     pointA = L(i, :);
                     pointB = L(i+1, :);
-                    if i+1 == C(currentCross)
-                        pointB = RowVecTrans(T(:, :, ii, currentCross), pointB);
-                        if currentCross < size(C, 2)
-                            currentCross = currentCross + 1;
-                        end
+                    if i+1 == C
+                        pointB = RowVecTrans(T(:, :, ii), pointB);
                     end
 
                     mL(ii, 1) = mL(ii, 1) + norm(pointA - pointB);
@@ -91,13 +88,11 @@ classdef MonoMuscleData
             direction = zeros(size(T, 3), 3);
             unitD = zeros(size(direction));
             
-            for ii = 1:size(C, 2)
-                for i = 1:size(T, 3)
-                    pointA = L(C(ii)-1, :);
-                    pointB = L(C(ii), :);
-                    direction(i, :, ii) = RowVecTrans(T(:, :, i, ii)\eye(4), pointA) - pointB;
-                    unitD(i, :, ii) = direction(i, :, ii)/norm(direction(i, :, ii));
-                end
+            for i = 1:size(T, 3)
+                pointA = L(C-1, :);
+                pointB = L(C, :);
+                direction(i, :) = RowVecTrans(T(:, :, i)\eye(4), pointA) - pointB;
+                unitD(i, :) = direction(i, :)/norm(direction(i, :));
             end
         end
         
@@ -112,11 +107,9 @@ classdef MonoMuscleData
             unitD = obj.UnitDirection;
             mA = zeros(size(T, 3), 3);
             
-            for ii = 1:size(C, 2)
-                for i = 1:size(T, 3)
-                    pointB = L(C(ii), :);
-                    mA(i, :, ii) = pointB - unitD(i, :, ii)*dot(unitD(i, :, ii), pointB);
-                end
+            for i = 1:size(T, 3)
+                pointB = L(C, :);
+                mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
             end
         end
         
