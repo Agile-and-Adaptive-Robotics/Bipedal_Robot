@@ -135,25 +135,27 @@ classdef BiMuscleData
             L = obj.Location;
             C = obj.Cross;
             unitD = obj.UnitDirection;
-            mA = zeros(size(T, 3), 3, size(T, 4), 2);
+            mA = zeros(size(T, 3), 3);
             
             for iii = 1:size(T, 3)
                 for ii = 1:size(T, 3)
                     for i = 1:size(C, 2)
+                        pointA = L(C(i)-1, :);
                         pointB = L(C(i), :);
-                        u = unitD(ii, :, iii, i);
-                        
                         if i > 1
-                            mA(ii, :, iii, i) = pointB - u*dot(u, pointB);
+                            if C(i - 1) == C(i)
+                                mA(ii, :, iii, i) = pointB - unitD(ii, :, iii, i);
+                            else
+                                mA(ii, :, iii, i) = 
+                            end
                         else
                             if C(i + 1) == C(i)
-                                pointBp = RowVecTrans(T(:, :, iii, i+1), pointB);
-                                mA(ii, :, iii, i) = pointBp - u*dot(u, pointBp);
-                            else
-                                mA(ii, :, iii, i) = pointB - u*dot(u, pointB);
-                            end
-                        end
-                    end
+                                mA(ii, :, iii, i) = RowVecTrans(T(:, :, iii, 
+            
+            for ii = 1:size(C, 2)
+                for i = 1:size(T, 3)
+                    pointB = L(C(ii), :);
+                    mA(i, :, ii) = pointB - unitD(i, :, ii)*dot(unitD(i, :, ii), pointB);
                 end
             end
         end

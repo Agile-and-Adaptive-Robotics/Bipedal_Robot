@@ -7,59 +7,7 @@ clc
 close all
 
 
-addpath Functions
-
-%% ------------- Test Case ----------------
-% Test Monoarticulate Muscle
-iteration = 20;
-
-
-adducMax = -90*pi/180;
-adducMin = 0;
-theta = linspace(adducMin, adducMax, iteration);
-
-flexMax = 180*pi/180;
-extMax = 0;
-phi = linspace(extMax, flexMax, iteration);
-
-testShiftAxis = [1, 0.5, 0];
-
-R = zeros(3, 3, iteration);
-T = zeros(4, 4, iteration);
-
-pos = 1;
-for ii = 1:size(theta, 2)
-    for i = 1:size(phi, 2)
-        Rz(:, :, i) = [cos(theta(i)), -sin(theta(i)), 0;
-                        sin(theta(i)), cos(theta(i)), 0;
-                        0, 0, 1];
-                    
-        Rx(:, :, ii) = [1 0 0;
-                        0 cos(phi(ii)), -sin(phi(ii));
-                        0 sin(phi(ii)), cos(phi(ii))];
-        
-        R(:, :, pos) = Rz(:, :, i)*Rx(:, :, ii);            
-                    
-        T(:, :, pos) = RpToTrans(R(:, :, pos), testShiftAxis');
-        pos = pos + 1;
-    end
-end
-
-Name = 'Test Muscle';
-MIF = 20;
-Location = [0.1, 0.2, 0;
-            0.4, 0.5, 0];
-CrossPoint = 2;
-TestM = MonoMuscleData(Name, Location, CrossPoint, MIF, T); 
-
-% Test Biarticulate Muscle with attachment point after the middle joint
-T(:, :, :, 2) = T(:, :, :, 1);
-Name = 'Test Biarticular Muscle';
-MIF = 20;
-Location = [0.8, 0.7, 0;
-            0.5, 0.4, 0];
-CrossPoint = [2, 2];
-% TestBM = BiMuscleData(Name, Location, CrossPoint, MIF, T);
+addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
 
 %% ------------- Hip Muscles ----------------
 
