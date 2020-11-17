@@ -91,8 +91,8 @@ TestBM = BiMuscleData(Name, Location, CrossPoint, MIF, T);
 v1 = Location(1, :);
 v2 = Location(2, :);
 v1p = RowVecTrans(T(:, :, 1, 1)\eye(4), v1);
-v1pp = RowVecTrans((T(:, :, 1, 2)*T(:, :, 1, 1))\eye(4), v1);
-v2p = RowVecTrans(T(:, :, 1, 2), v2);
+v1pp = RowVecTrans((T(:, :, 1, 1)*T(:, :, 2, 2))\eye(4), v1);
+v2p = RowVecTrans(T(:, :, 2, 2), v2);
 
 TestBM.UnitDirection
 
@@ -103,3 +103,37 @@ TestBM.MomentArm
 
 mA1 = v2p - unitD1*dot(unitD1, v2p)
 mA2 = v2 - unitD2*dot(unitD2, v2)
+
+%% Test Biarticulate, with points on the first and second joint
+% Name = 'Second Test Biarticular Muscle';
+% MIF = 20;
+% Location = [0.8, 0.7, 0;
+%             0.5, 0.4, 0;
+%             0.9, 0.6, 0];
+% CrossPoint = [2, 3];
+% TestBM2 = BiMuscleData(Name, Location, CrossPoint, MIF, T);     
+% 
+% %Verification Calculation
+% v1 = Location(1, :);
+% v2 = Location(2, :);
+% v3 = Location(3, :);
+% 
+% TestBM2.MuscleLength
+% 
+% mL1 = norm(v1 - RowVecTrans(T(:, :, 2, 1), v2))
+% mL2 = norm(v2 - RowVecTrans(T(:, :, 2, 2), v3))
+% 
+% mL = mL1 + mL2
+% 
+% v1p = RowVecTrans(T(:, :, 2, 1)\eye(4), v1);
+% v2p = RowVecTrans(T(:, :, 2, 2)\eye(4), v2);
+% 
+% TestBM2.UnitDirection
+% 
+% unitD1 = (v1p - v2)/norm(v1p - v2)
+% unitD2 = (v2p - v3)/norm(v2p - v3)
+% 
+% TestBM2.MomentArm
+% 
+% mA1 = v2 - unitD1*dot(unitD1, v2)
+% mA2 = v3 - unitD2*dot(unitD2, v3)

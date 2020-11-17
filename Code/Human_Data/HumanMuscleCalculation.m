@@ -22,7 +22,6 @@ pelvisToHip = [-0.0707, -0.0661, 0.0835];
 
 % tibiaToPelvis = [
 
-
 for i = 1:iteration
     R(:, :, i) = [cos(theta(i)), -sin(theta(i)), 0;
                     sin(theta(i)), cos(theta(i)), 0;
@@ -30,7 +29,6 @@ for i = 1:iteration
     
     T(:, :, i) = RpToTrans(R(:, :, i), pelvisToHip');
 end
-
 
 Name = 'Gluteus Maximus 1';
 MIF = 573;
@@ -130,19 +128,18 @@ for i = 1:iteration
                     sin(theta(i)), cos(theta(i)), 0;
                     0, 0, 1];
     
-    T(:, :, i, 2) = RpToTrans(R(:, :, i, 2), testShiftAxis');
+    T(:, :, i, 2) = RpToTrans(R(:, :, i, 2), hipToKnee');
 end
 
-
-% Name = 'Sartorius';
-% MIF = 156;
-% Location = [-0.015, -0.001, 0.124;
-%             -0.003, -0.357, -0.042;
-%             -0.006, -0.042, -0.04;
-%             0.006, -0.059, -0.038;
-%             0.024, -0.084, -0.0235];
-% CrossPoint = [2, 3];
-% Sar = BiMuscleData(Name, Location, CrossPoint, MIF, T);
+Name = 'Sartorius';
+MIF = 156;
+Location = [-0.015, -0.001, 0.124;
+            -0.003, -0.357, -0.042;
+            -0.006, -0.042, -0.04;
+            0.006, -0.059, -0.038;
+            0.024, -0.084, -0.0235];
+CrossPoint = [2, 3];
+Sar = BiMuscleData(Name, Location, CrossPoint, MIF, T);
 
 %% Hip Flexion and Extension
 Name = 'Iliacus';
@@ -165,31 +162,31 @@ Location = [-0.065, 0.089, 0.029;
 CrossPoint = 4;
 Psoas = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
-% Name = 'Tensory Fascia Latae';
-% mif = 233;
-% Location = [-0.031, 0.021, 0.124;
-%             0.029, -0.1, 0.06;
-%             0.005, -0.405, 0.036;
-%             0.006, -0.049, 0.03];
-% CrossPoint = [2, 4];
-% TFL = MuscleData(Name, Location, CrossPoint, MIF, T);
-% 
-% Name = 'Rectus Femoris (Quadriceps)';   %The Location should be updated to reflect the moving patella points. For now it is static in the knee frame
-% mif = 1169;
-% Location = [-0.029, -0.031, 0.097;
-%             0.033, -0.403, 0.002;
-%             0.062, 0.021, 0.0014];
-% CrossPoint = [2, 3];
-% Rect_Fem = MuscleData(Name, Location, CrossPoint, MIF, T);
-% 
-% Name = 'Gracilis';
-% mif = 162;
-% Location = [-0.072, -0.119, 0.028;
-%             -0.027, -0.032, -0.038;
-%             -0.019, -0.052, -0.036;
-%             0.006, -0.084 -0.023];
-% CrossPoint = [2, 2];
-% TFL = MuscleData(Name, Location, CrossPoint, MIF, T);
+Name = 'Tensory Fascia Latae';
+mif = 233;
+Location = [-0.031, 0.021, 0.124;
+            0.029, -0.1, 0.06;
+            0.005, -0.405, 0.036;
+            0.006, -0.049, 0.03];
+CrossPoint = [2, 4];
+TFL = BiMuscleData(Name, Location, CrossPoint, MIF, T);
+
+Name = 'Rectus Femoris (Quadriceps)';   %The Location should be updated to reflect the moving patella points. For now it is static in the knee frame
+mif = 1169;
+Location = [-0.029, -0.031, 0.097;
+            0.033, -0.403, 0.002;
+            0.062, 0.021, 0.0014];
+CrossPoint = [2, 3];
+Rect_Fem = BiMuscleData(Name, Location, CrossPoint, MIF, T);
+
+Name = 'Gracilis';
+mif = 162;
+Location = [-0.072, -0.119, 0.028;
+            -0.027, -0.032, -0.038;
+            -0.019, -0.052, -0.036;
+            0.006, -0.084 -0.023];
+CrossPoint = [2, 2];
+TFL = BiMuscleData(Name, Location, CrossPoint, MIF, T);
 
 Name = 'Adductor Magnus 1';
 MIF = 381;
@@ -212,31 +209,31 @@ Location = [-0.111, -0.114, 0.049;
 CrossPoint = 2;
 Add_Mag3 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
 
-% Name = 'Bicep Femoris (Long Head)';
-% MIF = 896;
-% Location = [-0.126, -0.103, 0.069;
-%             -0.03, -0.036, 0.029;
-%             -0.023, -0.056, 0.034];
-% CrossPoint = [2, 2];
-% Bifemlh = BiMuscleData(Name, Location, CrossPoint, MIF, T);
-% 
-% Name = 'Semimembranosus';
-% MIF = 1288;
-% Location = [-0.119, -0.097, 0.072;
-%             -0.035, -0.035, -0.019;
-%             -0.027, -0.048, -0.02];
-% CrossPoint = [2, 2];
-% Semimem = BiMuscleData(Name, Location, CrossPoint, MIF, T);
-% 
-% Name = 'Semitendinosus';
-% MIF = 410;
-% Location = [-0.126, -0.11, 0.06;
-%             -0.042, -0.029, -0.023;
-%             -0.033, -0.053, -0.023;
-%             -0.011, -0.075, -0.025;
-%             0.003, -0.096, -0.019];
-% CrossPoint = [2, 2];
-% Semiten = BiMuscleData(Name, Location, CrossPoint, MIF, T);
+Name = 'Bicep Femoris (Long Head)';
+MIF = 896;
+Location = [-0.126, -0.103, 0.069;
+            -0.03, -0.036, 0.029;
+            -0.023, -0.056, 0.034];
+CrossPoint = [2, 2];
+Bifemlh = BiMuscleData(Name, Location, CrossPoint, MIF, T);
+
+Name = 'Semimembranosus';
+MIF = 1288;
+Location = [-0.119, -0.097, 0.072;
+            -0.035, -0.035, -0.019;
+            -0.027, -0.048, -0.02];
+CrossPoint = [2, 2];
+Semimem = BiMuscleData(Name, Location, CrossPoint, MIF, T);
+
+Name = 'Semitendinosus';
+MIF = 410;
+Location = [-0.126, -0.11, 0.06;
+            -0.042, -0.029, -0.023;
+            -0.033, -0.053, -0.023;
+            -0.011, -0.075, -0.025;
+            0.003, -0.096, -0.019];
+CrossPoint = [2, 2];
+Semiten = BiMuscleData(Name, Location, CrossPoint, MIF, T);
 
 %% Hip Internal and External Rotation
 Name = 'Gemellus';

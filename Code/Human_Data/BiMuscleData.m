@@ -50,9 +50,9 @@ classdef BiMuscleData
                 MD.TransformationMat = t;
                 MD.MuscleLength = computeMuscleLength(MD);
                 MD.UnitDirection = computeUnitDirection(MD);
-%                 MD.Force = computeForce(MD);
+                MD.Force = computeForce(MD);
                 MD.MomentArm = computeMomentArm(MD);
-%                 MD.Torque = computeTorque(MD);
+                MD.Torque = computeTorque(MD);
             else
                 fprintf('Invalid number of arguments\n')
             end
@@ -62,7 +62,6 @@ classdef BiMuscleData
 %         %Function that calculates the muscle length, based
         function mL = computeMuscleLength(obj)
             L = obj.Location;
-            j = size(L, 2);
             C = obj.Cross;
             T = obj.TransformationMat;
             
@@ -76,18 +75,22 @@ classdef BiMuscleData
                         pointA = L(i, :);
                         pointB = L(i+1, :);
                         if i+1 == C(currentCross)
-                            if C(currentCross) == C(currentCross + 1)
-                                pointB = RowVecTrans(T(:, :, iii, currentCross)*T(:, :, ii, currentCross + 1), pointB);
-                            else
-                                if currentCross == 1
-                                    pointB = RowVecTrans(T(:, :, ii, currentCross), pointB);
+                            if currentCross == 1
+                                if C(currentCross) == C(currentCross + 1)
+                                    pointB = RowVecTrans(T(:, :, ii, currentCross)*T(:, :, iii, currentCross + 1), pointB);
                                 else
-                                    pointB = RowVecTrans(T(:, :, iii, currentCross), pointB);
-                                end
+                                    pointB = RowVecTrans(T(:, :, ii, currentCross), pointB);
+                                    currentCross = currentCross + 1;
+                                end   
+                            else
+                                pointB = RowVecTrans(T(:, :, iii, currentCross), pointB);
                                 currentCross = currentCross + 1;
+                                if currentCross > length(C)
+                                    currentCross = currentCross - 1;
+                                end
                             end
-                        end                        
-                        mL(ii, iii) = mL(ii, iii) + norm(pointA - pointB);
+                        end
+                        mL(ii, iii) = mL(ii, iii) + norm(pointA - pointB);    
                     end                   
                 end
             end
@@ -109,7 +112,7 @@ classdef BiMuscleData
                         pointB = L(C(i), :);
                         if i > 1
                             if C(i - 1) == C(i)
-                                direction(ii, :, iii, i) = RowVecTrans((T(:, :, iii, i)*T(:, :, ii, i))\eye(4), pointA) - pointB;
+                                direction(ii, :, iii, i) = RowVecTrans((T(:, :, ii, i)*T(:, :, iii, i))\eye(4), pointA) - pointB;
                             else
                                 direction(ii, :, iii, i) = RowVecTrans(T(:, :, iii, i)\eye(4), pointA) - pointB;
                             end
@@ -171,13 +174,17 @@ classdef BiMuscleData
         function tor = computeTorque(obj)
             mA = obj.MomentArm;
             F = obj.Force;
+            T = obj.TransformationMat;
+            C = obj.Cross;
             tor = zeros(size(mA));
             
-            for i = 1:size(mA, 1)
-                tor(i, :) = cross(mA(i, :), F(i, :));
-            end
-                
-
+            for iii = size(T, 3)
+                for ii = size(T, 3)
+                    for i = 1:size(C, 2)
+                        tor(ii, :, iii, i) = cross(mA(ii, :, iii, i), F(ii, :, iii, i));
+                    end
+                end
+            end              
         end    
     end
 end
