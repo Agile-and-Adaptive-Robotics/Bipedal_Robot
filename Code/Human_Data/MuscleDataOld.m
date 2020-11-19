@@ -12,15 +12,18 @@
 
 
 
-classdef MuscleData
+classdef MuscleDataOld
     
     %% ------------Public Properties---------------------------
     %List of explicit properties for the muscles
     properties
-        Name                        %Name of the muscle
+        Muscle                      %Name of the muscle
         Location
-        Cross                       %Designates which column corresponds with a wrapping point in the Muscle Location
+        ViaPoints                   %Designates which column corresponds with a wrapping point in the Muscle Location
         MIF                         %Max Isometric Force
+        OFL                         %Optimal Fiber Length
+        TSL                         %Tendon Slack Length
+        PA                          %Pennation Angle
         TransformationMat           %Contains a transformation matrix to change the 
         Axis                        %Contains the axes that the muscle will cause the joint to rotate about. 1>x, 2>y, 3>z
         MuscleLength
@@ -40,16 +43,21 @@ classdef MuscleData
         %% ------------- Muscle Data Constructor -----------------
         %Constructor Function. By calling 'MuscleData' and entering the
         %muscle information, we construct an object for that muscle.
-        function MD = MuscleData(name, location, cross, mif, t)
+        function MD = MuscleData(muscle, location, viapoints, mif, ofl, tsl, pa, t, axis)
             if nargin > 0
-                MD.Name = name;
+                MD.Muscle = muscle;
                 MD.Location = location;
-                MD.Cross = cross;
+                MD.ViaPoints = viapoints;
                 MD.MIF = mif;
+                MD.OFL = ofl;
+                MD.TSL = tsl;
+                MD.PA = pa;
                 MD.TransformationMat = t;
+                MD.Axis = axis;
                 MD.MuscleLength = computeMuscleLength(MD);
-%                 MD.MomentArm = computeMomentArm(MD);
-%                 MD.Torque = computeTorque(MD);
+                MD.MomentArm = computeMomentArm(MD);
+                MD.Force = computeForce(MD);
+                MD.Torque = computeTorque(MD);
             else
                 fprintf('Invalid number of arguments\n')
             end
@@ -58,29 +66,7 @@ classdef MuscleData
         %% ------------- Muscle Length ------------------------
 %         %Function that calculates the muscle length, based
         function mL = computeMuscleLength(obj)
-            L = obj.Location;
-            j = size(L, 2);
-            T = obj.TransformationMat;
-            C = obj.Cross
-            mL = zeros(1, size(T, 3));     %Initialize the muscle length for each transformation matrix to start at 0
-            
-            for ii = 1:size(T, 3)
-                for i = 1:size(L, 1)-1
-                    pointA = L(i, :);
-                    pointB = L(i+1, :);
-                    if i+1 >= C
-                        pointA = RowVecTrans(T(:, :, ii), pointA);
-                    end
-                    if i+1 >= C
-                        L(i+1) = RowVecTrans(T(:, :, ii), pointB);
-                    end
-                    
-                    mL(ii) = mL(ii) + norm(pointA - pointB);
-                end
-            end
-            
-            
-            
+            mL = zeros(1, size(obj.TransformationMat, 4));     %Initialize the muscle length for each transformation matrix to start at 0
             for iii = 1:size(obj.TransformationMat, 4)
                 L = obj.Location;                   %Rename the location matrix to something simpler
                 j = size(L, 2);                      %Determine the number of via points along the muscle
@@ -164,6 +150,48 @@ classdef MuscleData
             end
         end
         
+        %% ---------------------- Muscle Force --------------
+        % Reminder: Clean this code up if possible. Looks ugly after the
+        % copy paste.
+        function f = computeForce(obj)
+            for i = 1:length(obj.MuscleLength)
+                Lmt = obj.MuscleLength(i);
+                mif = obj.MIF;
+                ofl = obj.OFL;
+                tsl = obj.TSL;
+                pa = obj.PA;
+
+                kPE = 4;    %passive exponential shape factor (OpenSim Kshape Pasive)
+                eom = 0.6;  %passive muscle strain at max isometric force (OpenSim FmaxMuscleStrain)
+                y = 0.5;    %active shape factor (OpenSim KshapeActive)
+                
+
+
+                if Lmt ~= tsl
+                    x0 = (Lmt-tsl)/ofl; %Initial guess
+                else
+                    x0 = (Lmt*1.001-tsl)/ofl; %Initial guess, avoid computational crash
+                end
+                options = optimoptions('fsolve','Display','none','FunctionTolerance',0.001);
+                Lma = fsolve(@myfunc,x0,options);
+                
+                f(i) = mif*(37.5/(tsl/ofl))*((Lmt/ofl)-(Lma)*((1-(sin(pa)/(Lma))^2)^(1/2))-(tsl/ofl)); %mif at Lmt
+                if f < 0
+                       f(i) = 0;  %Muscle force is tensile only (Millard 2013)
+                end
+            end
+            
+            function Fbal = myfunc(Lmn)
+
+                Fpe = (exp(kPE*((Lmn)-1)/eom)-1)/(exp(kPE)-1); %Passive force-length curve, normalized (Thelen 2003)
+                fL = exp(-(((Lmn)-1).^2/y));  %Active force-length curve, normalized (Thelen 2003)
+                cosa = ((1-(sin(pa)/(Lmn)).^2)^(1/2)); %cosine of pennation angle (Hoy 1990)
+                fT = (37.5/(tsl/ofl))*((Lmt/ofl)-(Lmn)*cosa-(tsl/ofl)); %Normalized tendon force (Hoy 1990)
+                Fbal = (fL+Fpe)*cosa-fT;
+
+            end 
+    
+        end
         
         %% ---------------------- Torque about a Joint --------------
         function tor = computeTorque(obj)
