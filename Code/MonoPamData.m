@@ -14,15 +14,18 @@ classdef MonoPamData
     properties
         Name                        %Name of the muscle
         Location
-        Cross                       %Designates which column corresponds with a location where the muscle crosses into a new reference frame
+        Cross                       %Designates which row corresponds with a location where the muscle crosses into a new reference frame
         Diameter                    %Diameter of the BPA
         TransformationMat           %Contains a transformation matrix to change the 
         MuscleLength                %Total length of the muscle
         LongestSegment              %Longest contiguous section of a muscle. Where the BPA will reside
-        UnitDirection
-        MomentArm
+        UnitDirection               %The Unit direction of the force about a joint
+        MomentArm                   %The moment arm from a joint to the force causing rotation about it
         RestingL
-        Force        
+        Contraction
+        TendonL
+        LengthCheck
+        Force                       %Calculate the maximum amount of force that the BPA can output at different orientations
         Torque
     end
     
@@ -36,16 +39,17 @@ classdef MonoPamData
         %% ------------- Muscle Data Constructor -----------------
         %Constructor Function. By calling 'MuscleData' and entering the
         %muscle information, we construct an object for that muscle.
-        function PD = PamData(name, location, cross, diameter, t)
+        function PD = MonoPamData(name, location, cross, diameter, t)
             if nargin > 0
                 PD.Name = name;
                 PD.Location = location;
                 PD.Cross = cross;
                 PD.Diameter = diameter;
                 PD.TransformationMat = t;
-                PD.MuscleLength = computeMuscleLength(PD);
+                [PD.MuscleLength, PD.LongestSegment] = computeMuscleLength(PD);
+                PD.UnitDirection = computeUnitDirection(PD);
                 PD.MomentArm = computeMomentArm(PD);
-                [PD.Diameter, PD.RestingL, PD.LongestL] = Size(PD.MuscleLength, PD.MIF);
+                [PD.RestingL, PD.Contraction, PD.TendonL, PD.LengthCheck] = computePamLength(PD);
                 PD.Force = festo(PD);
                 PD.Torque = computeTorque(PD);
             else
@@ -54,102 +58,110 @@ classdef MonoPamData
         end
 
         %% ------------- Muscle Length ------------------------
-%         %Function that calculates the muscle length, based
-        function mL = computeMuscleLength(obj)
-            mL = zeros(1, size(obj.TransformationMat, 4));     %Initialize the muscle length for each transformation matrix to start at 0
-            for iii = 1:size(obj.TransformationMat, 4)
-                L = obj.Location;                   %Rename the location matrix to something simpler
-                j = size(L, 2);                      %Determine the number of via points along the muscle
-                T = obj.TransformationMat(:, :, :, iii);          %Rename the Transformation Tensor to something simpler
-
-                cross = obj.CrossPoints(1);                 %The first crossing point
-                ii = 1;                             %Index for the wrapping points
-                t1 = eye(4);                        %Create an identity transformation matrix
-                t2 = eye(4);                        %Create an identity transformation matrix
-                if cross == 0                       %If the muscle starts AFTER the first joint, let's make some corrections
-                    cross = obj.CrossPoints(2);     %Consider the second crossing point, as the first one (=0) only indicates the above sentence
-                    ii = 2;                         %Increment the joint index
+        %Function that calculates the muscle length, based
+        function [mL, longestSeg] = computeMuscleLength(obj)
+            L = obj.Location;
+            C = obj.Cross;
+            T = obj.TransformationMat;
+            mL = zeros(size(T, 3), 1);
+            segLenghts = zeros(size(T, 3), size(L, 1) - 1);
+            
+            for ii = 1:size(mL, 1)                          %Repeat for each orientation
+                for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
+                    pointA = L(i, :);
+                    pointB = L(i+1, :);
+                    if i+1 == C
+                        pointB = RowVecTrans(T(:, :, ii), pointB);
+                    end
+                    segLength(ii, i) = norm(pointA - pointB);
+                    mL(ii, 1) = mL(ii, 1) + segLength;
                 end
-                for i = 1:j-1
-                    while i + 1 == cross                %Begin changing the transformation matrices if we've reached a crossing point
-                        t2 = t2*T(:, :, ii);           %Store the first Transformation matrix in t2
-                        ii = ii+1;                  %Update the pointer for the transformation matrix
-                        if ii <= length(obj.CrossPoints)
-                            cross = obj.CrossPoints(ii);        %Set the next wrapping point, if ii isn't currently greater than the length of the via points vector
-                        else
-                            cross = 0;                   %Cause the while loop to exit when the last wrapping point is used.
-                        end
-                    end
-
-                    %Calculate the euclidean distance between the two via
-                    %points, including the transformation matrix if necessary
-                    dim = size(L);              %Used in case one of the locations is function of angle
-                    if length(dim) > 2
-                        mL(iii) = mL(iii) + norm(VecTrans(t1, L(:, i, iii))-VecTrans(t2, L(:, i+1, iii)));
-                    else
-                        mL(iii) = mL(iii) + norm(VecTrans(t1, L(:, i))-VecTrans(t2, L(:, i+1)));
-                    end
-    %                 t1 = t2;                        %If the forward point was transformed, store the transformation for the next iteration
-                    t2 = t1;                        %Replace the transformtaion matrix with an identity matrix
-                end         
+            end
+            
+        end
+        
+        %% -------------- Force Unit Direction ----------------
+        %Calculate the unit direction of the muscle force about the joint.
+        function unitD = computeUnitDirection(obj)
+            L = obj.Location;
+            T = obj.TransformationMat;
+            C = obj.Cross;
+            direction = zeros(size(T, 3), 3);
+            unitD = zeros(size(direction));
+            
+            for i = 1:size(T, 3)
+                pointA = L(C-1, :);
+                pointB = L(C, :);
+                direction(i, :) = RowVecTrans(T(:, :, i)\eye(4), pointA) - pointB;
+                unitD(i, :) = direction(i, :)/norm(direction(i, :));
             end
         end
         
         %% -------------- Moment Arm --------------------------
         %Calculate the moment arm about a joint
-        %For every CrossPoint, calculate the moment arm of the muscle about
+        %For every ViaPoint, calculate the moment arm of the muscle about
         %the joint it crosses over
-        
-        %Useful information
-        % i -> Index for Crossing Points/Joints
-        % ii -> Index for every degree of motion
-        % iii -> Index for axes of interest to observe Torque about
         function mA = computeMomentArm(obj)
-            mA = zeros(length(obj.CrossPoints), size(obj.TransformationMat, 4), size(obj.Axis, 2));
-            for ii = 1:size(obj.TransformationMat, 4)       %Repeat calculation for every degree of motion we are observing
-                for i = 1:length(obj.CrossPoints)           %Repeat calculation for every joint the muscle will cross over. 
-                    T = obj.TransformationMat(:, :, :, ii);
-                    L = obj.Location;
-                    cross = obj.CrossPoints;
-                    if cross(i) == 0                       %If the muscle starts AFTER the first joint, let's make some corrections
-                        i = i+1;                         %Increment the joint index
-                    end
-
-                    %Setting up transformation matrix for the point before
-                    %the cross over
-                    if i == 1
-                        t1 = T(:, :, i);                %if this is the first crossing point, the transformation matrix has to be the first one listed. We do not need to check if the muscle has passed over multiple joints
-                    elseif cross(i) == cross(i-1)      
-                        t1 = T(:, :, i-1)*T(:, :, i);   %if the new crossing point is the same as the last one, that means that the muscle is spanning two joints. Therefore, we need two transformation matrices to bring the point forward into the current frame
-                    else
-                        t1 = T(:, :, i);                %if the new crossing point is not the first one or it doesn't span multiple joints, the transformation matrix is good as is.
-                    end
-
-                    %Setting up transformation matrix for the point after
-                    %the cross over
-                    if i == length(cross)                %If this is the last crossing point, then the second cross over point is already in the correct frame
-                        t2 = eye(4);
-                    elseif cross(i) == cross(i+1)       %If the next crossing point is the same as the current one, then the muscle spans two joints. We will need the next transformation matrix to pull the point into the current frame
-                        t2 = T(:, :, i+1);
-                    else
-                        t2 = eye(4);                    %Otherwise, the second point is in the correct frame already.
-                    end
-
-                    direction = VecTrans(t1\eye(4), L(:, cross(i)-1))-VecTrans(t2, L(:, cross(i)));     %Calculate the direction from the previous crossing point to the next
-                    unitDirection = direction/norm(direction);                                          %Calculate the unit direction of the direciton vector
-                    dim = size(L);
-                    for iii = 1:size(obj.Axis, 2)       %Repeat the moment arm calculation for every axis of interest 
-                        if obj.Axis(i, iii) > 0         %Do not calculate the moment arm if the axis is listed as 0, which can happen if we are interested in multiple axes for one joint, but only one axis for the next joint that the muscles crosses
-                            if length(dim) > 2
-                                mA(i, ii, iii) = CrossProd(VecTrans(t2, L(:, cross(i), ii)), unitDirection, obj.Axis(i, iii), T(1:3, 1:3, i)); %Cross the distance vector to the
-                            else
-                                mA(i, ii, iii) = CrossProd(VecTrans(t2, L(:, cross(i))), unitDirection, obj.Axis(i, iii), T(1:3, 1:3, i)); %Cross the distance vector to the
-                            end
-                        end
-                    end
-                                    
-                end
+            T = obj.TransformationMat;
+            L = obj.Location;
+            C = obj.Cross;
+            unitD = obj.UnitDirection;
+            mA = zeros(size(T, 3), 3);
+            
+            for i = 1:size(T, 3)
+                pointB = L(C, :);
+                mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
             end
+        end
+        %% -------------- Pam Length --------------------------
+        %This function calculates the length of the Pam that will be used
+        %for this muscle. The BPA will be placed in the longest segment of
+        %the muscle. The rest of the muscle segments will be considered
+        %tendons for attaching to the robot.
+        %This also checks to make sure that the BPA fully contracted length
+        %is short enough to achieve the full joint rotation.
+        function [restingPamLength, contraction, tendonLength, lengthCheck] = computePamLength(obj)
+            dia = obj.Diameter;
+            longestSeg = obj.LongestSegment;
+            mL = obj.MuscleLength;
+            contractPercent = 0.25;                     %Maximum contraction percentage of a BPA
+           
+            %Calculate the Pam end cap fitting length (estimates currently)
+            if dia == 20
+                fittingLength = 0.025;
+            elseif dia == 40
+                fittingLength = 0.05;
+            else
+                fittingLength = 0.0125;
+            end
+            
+            restingPamLength = max(longestSeg) - 2*fittingLength;   %The resting Pam length, needs to be accomodate the largest muscle length
+            tendonLength = max(mL) - restingPamLength - 2*fittingLength;
+            
+            if tendonLength < 0.04
+                tendonLength = 0.04;
+                restingPamLength = restingPamLength - tendonLength;
+            end
+
+            contraction = zeros(length(mL), 1);
+            for i = 1:length(mL)
+                contraction(i) = (mL(i) - tendonLength - 2*fittingLength)/restingPamLength;
+            end
+            
+            if min(contraction) >= (1 - contractPercent)
+                lengthCheck = 'Usable';
+            else
+                lengthCheck = 'Unusable';
+            end
+        end
+        
+        %% -------------- Force --------------------------
+        %Calculate the directin of the forced applied by the muscle
+        function F = computeForce(obj)
+            mif = obj.MIF;
+            unitD = obj.UnitDirection;
+            
+            F = unitD*mif;
         end
         
         %% ---------------------- Torque --------------

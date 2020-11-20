@@ -1,6 +1,6 @@
-%% Human Muscle Data
-% This script sets up test muscles to validate the different Muscle class
-% calculations
+%% BPA Data Test
+% This script sets up test BPAs to validate the calculations in the BPA
+% classes
 clear
 clc
 close all
@@ -10,7 +10,7 @@ addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
 
 %% ------------- Test Case ----------------
 %% Test Monoarticulate Muscle
-iteration = 20;
+iteration = 2;
 
 adducMax = -90*pi/180;
 adducMin = 0;
@@ -51,57 +51,58 @@ MIF = 20;
 Location = [0.1, 0.2, 0;
             0.4, 0.5, 0];
 CrossPoint = 2;
-TestM = MonoMuscleData(Name, Location, CrossPoint, MIF, T); 
+Dia = 10;
+TestBPA = MonoPamData(Name, Location, CrossPoint, Dia, T); 
 
 %% Test Biarticulate Muscle with attachment point after the middle joint
-clear T
-iteration = 2;
-
-adducMax = -90*pi/180;
-adducMin = 0;
-theta = linspace(adducMin, adducMax, iteration);
-
-testShiftAxis = [1, 0, 0];
-
-R = zeros(3, 3, iteration);
-Rx = zeros(3, 3, iteration);
-Ry = zeros(3, 3, iteration);
-Rz = zeros(3, 3, iteration);
-T = zeros(4, 4, iteration);
-
-for i = 1:size(theta, 2)
-    Rz(:, :, i) = [cos(theta(i)), -sin(theta(i)), 0;
-                    sin(theta(i)), cos(theta(i)), 0;
-                    0, 0, 1];
-
-    R(:, :, i) = Rz(:, :, i);            
-
-    T(:, :, i) = RpToTrans(R(:, :, i), testShiftAxis');
-end
-T(:, :, :, 2) = T(:, :, :, 1);
-Name = 'Test Biarticular Muscle';
-MIF = 20;
-Location = [0.8, 0.7, 0;
-            0.5, 0.4, 0];
-CrossPoint = [2, 2];
-TestBM = BiMuscleData(Name, Location, CrossPoint, MIF, T);
-
-%Verification Calculation
-v1 = Location(1, :);
-v2 = Location(2, :);
-v1p = RowVecTrans(T(:, :, 1, 1)\eye(4), v1);
-v1pp = RowVecTrans((T(:, :, 1, 1)*T(:, :, 2, 2))\eye(4), v1);
-v2p = RowVecTrans(T(:, :, 2, 2), v2);
-
-TestBM.UnitDirection
-
-unitD1 = (v1p - v2p)/norm(v1p - v2p)
-unitD2 = (v1pp - v2)/norm(v1pp - v2)
-
-TestBM.MomentArm
-
-mA1 = v2p - unitD1*dot(unitD1, v2p)
-mA2 = v2 - unitD2*dot(unitD2, v2)
+% clear T
+% iteration = 2;
+% 
+% adducMax = -90*pi/180;
+% adducMin = 0;
+% theta = linspace(adducMin, adducMax, iteration);
+% 
+% testShiftAxis = [1, 0, 0];
+% 
+% R = zeros(3, 3, iteration);
+% Rx = zeros(3, 3, iteration);
+% Ry = zeros(3, 3, iteration);
+% Rz = zeros(3, 3, iteration);
+% T = zeros(4, 4, iteration);
+% 
+% for i = 1:size(theta, 2)
+%     Rz(:, :, i) = [cos(theta(i)), -sin(theta(i)), 0;
+%                     sin(theta(i)), cos(theta(i)), 0;
+%                     0, 0, 1];
+% 
+%     R(:, :, i) = Rz(:, :, i);            
+% 
+%     T(:, :, i) = RpToTrans(R(:, :, i), testShiftAxis');
+% end
+% T(:, :, :, 2) = T(:, :, :, 1);
+% Name = 'Test Biarticular Muscle';
+% MIF = 20;
+% Location = [0.8, 0.7, 0;
+%             0.5, 0.4, 0];
+% CrossPoint = [2, 2];
+% TestBM = BiMuscleData(Name, Location, CrossPoint, MIF, T);
+% 
+% %Verification Calculation
+% v1 = Location(1, :);
+% v2 = Location(2, :);
+% v1p = RowVecTrans(T(:, :, 1, 1)\eye(4), v1);
+% v1pp = RowVecTrans((T(:, :, 1, 1)*T(:, :, 2, 2))\eye(4), v1);
+% v2p = RowVecTrans(T(:, :, 2, 2), v2);
+% 
+% TestBM.UnitDirection
+% 
+% unitD1 = (v1p - v2p)/norm(v1p - v2p)
+% unitD2 = (v1pp - v2)/norm(v1pp - v2)
+% 
+% TestBM.MomentArm
+% 
+% mA1 = v2p - unitD1*dot(unitD1, v2p)
+% mA2 = v2 - unitD2*dot(unitD2, v2)
 
 %% Test Biarticulate, with points on the first and second joint
 % Name = 'Second Test Biarticular Muscle';

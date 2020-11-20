@@ -61,19 +61,17 @@ classdef MonoMuscleData
 %         %Function that calculates the muscle length, based
         function mL = computeMuscleLength(obj)
             L = obj.Location;
-            j = size(L, 2);
             C = obj.Cross;
             T = obj.TransformationMat;
             mL = zeros(size(T, 3), 1);
             
-            for ii = 1:size(mL, 1)
+            for ii = 1:size(mL, 1)                          %Repeat for each orientation
                 for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
                     pointA = L(i, :);
                     pointB = L(i+1, :);
                     if i+1 == C
                         pointB = RowVecTrans(T(:, :, ii), pointB);
                     end
-
                     mL(ii, 1) = mL(ii, 1) + norm(pointA - pointB);
                 end
             end
