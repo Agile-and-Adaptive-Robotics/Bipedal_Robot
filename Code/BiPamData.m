@@ -1,13 +1,13 @@
-% Pam Data
+% Bi Pam Data
 % Author: Connor Morrow
-% Date: 11/16/2020
+% Date: 11/23/2020
 % Description: This script allows for creating reusable classes, which 
 % categorize and calculates PAM muscle information. This will be used in 
 % determining muscle placement, optimization, and torque verification
 
 %Refer to https://www.mathworks.com/help/matlab/matlab_oop/example-representing-structured-data.html
 
-classdef MonoPamData
+classdef BiPamData
     
     %% ------------Public Properties---------------------------
     %List of explicit properties for the muscles
@@ -63,18 +63,35 @@ classdef MonoPamData
             L = obj.Location;
             C = obj.Cross;
             T = obj.TransformationMat;
+            
             mL = zeros(size(T, 3), 1);
             segLengths = zeros(size(T, 3), size(L, 1) - 1);
             
-            for ii = 1:size(mL, 1)                          %Repeat for each orientation
-                for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
-                    pointA = L(i, :);
-                    pointB = L(i+1, :);
-                    if i+1 == C
-                        pointB = RowVecTrans(T(:, :, ii), pointB);
-                    end
-                    segLengths(ii, i) = norm(pointA - pointB);
-                    mL(ii, 1) = mL(ii, 1) + segLengths(ii, i);
+            for iii = 1:size(mL, 2)                         %Repeat for all iterations of the second joint
+                for ii = 1:size(mL, 1)                      %Repeat for all iterations of the first joint
+                    currentCross = 1;
+                    for i = 1:size(L, 1)-1                  %Repeat for each muscle segment
+                        pointA = L(i, :);
+                        pointB = L(i+1, :);
+                        if i+1 == C(currentCross)
+                            if currentCross == 1
+                                if C(currentCross) == C(currentCross + 1)
+                                    pointB = RowVecTrans(T(:, :, ii, currentCross)*T(:, :, iii, currentCross + 1), pointB);
+                                else
+                                    pointB = RowVecTrans(T(:, :, ii, currentCross), pointB);
+                                    currentCross = currentCross + 1;
+                                end   
+                            else
+                                pointB = RowVecTrans(T(:, :, iii, currentCross), pointB);
+                                currentCross = currentCross + 1;
+                                if currentCross > length(C)
+                                    currentCross = currentCross - 1;
+                                end
+                            end
+                        end
+                        segLengths(iii, i, ii) = norm(pointA - pointB);
+                        mL(ii, iii) = mL(ii, iii) + segLengths(iii, i, ii);    
+                    end                   
                 end
             end
             
@@ -82,18 +99,18 @@ classdef MonoPamData
             % This will be where the Pam resides.
             avgSegL = zeros(size(L, 1) - 1);
             for i = 1:size(segLengths, 2)
-                avgSegL(i) = mean(segLengths(:, i));
+                avgSegL(i) = mean(segLengths(:, i, :));
             end
             
             longestSegPointer = 1;
             if size(avgSegL, 1) > 1
-                for i = 1:size(avgSegL, 1) - 1
+                for i = 1:size(avgSegL, 1)
                     if avgSegL(i + 1) > avgSegL(i)
-                        longestSegPointer = i + 1;                        
+                        longestSegPointer = i + 1;
                     end
                 end
             end
-            longestSeg = segLengths(:, longestSegPointer); 
+            longestSeg = segLengths(:, longestSegPointer, :);
         end
         
         %% -------------- Force Unit Direction ----------------
@@ -105,11 +122,27 @@ classdef MonoPamData
             direction = zeros(size(T, 3), 3);
             unitD = zeros(size(direction));
             
-            for i = 1:size(T, 3)
-                pointA = L(C-1, :);
-                pointB = L(C, :);
-                direction(i, :) = RowVecTrans(T(:, :, i)\eye(4), pointA) - pointB;
-                unitD(i, :) = direction(i, :)/norm(direction(i, :));
+            for iii = 1:size(T, 3)                              %Rotation for second joint
+                for ii = 1:size(T, 3)                           %Rotation for first joint
+                    for i = 1:size(C, 2)
+                        pointA = L(C(i)-1, :);
+                        pointB = L(C(i), :);
+                        if i > 1
+                            if C(i - 1) == C(i)
+                                direction(ii, :, iii, i) = RowVecTrans((T(:, :, ii, i)*T(:, :, iii, i))\eye(4), pointA) - pointB;
+                            else
+                                direction(ii, :, iii, i) = RowVecTrans(T(:, :, iii, i)\eye(4), pointA) - pointB;
+                            end
+                        else
+                            if C(i) == C(i+1)
+                                direction(ii, :, iii, i) = RowVecTrans(T(:, :, ii, i)\eye(4), pointA) - RowVecTrans(T(:, :, iii, i+1), pointB);
+                            else
+                                direction(ii, :, iii, i) = RowVecTrans(T(:, :, ii, i)\eye(4), pointA) - pointB;
+                            end
+                        end
+                        unitD(ii, :, iii, i) = direction(ii, :, iii, i)/norm(direction(ii, :, iii, i));
+                    end
+                end
             end
         end
         
@@ -122,13 +155,28 @@ classdef MonoPamData
             L = obj.Location;
             C = obj.Cross;
             unitD = obj.UnitDirection;
-            mA = zeros(size(T, 3), 3);
+            mA = zeros(size(T, 3), 3, size(T, 4), 2);
             
-            for i = 1:size(T, 3)
-                pointB = L(C, :);
-                mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
+            for iii = 1:size(T, 3)                          %Rotation for second joint
+                for ii = 1:size(T, 3)                       %Rotation for first joint
+                    for i = 1:size(C, 2)                    %Repeat for each crossing point
+                        pointB = L(C(i), :);
+                        u = unitD(ii, :, iii, i);  
+                        if i > 1
+                            mA(ii, :, iii, i) = pointB - u*dot(u, pointB);
+                        else
+                            if C(i + 1) == C(i)
+                                pointBp = RowVecTrans(T(:, :, iii, i+1), pointB);
+                                mA(ii, :, iii, i) = pointBp - u*dot(u, pointBp);
+                            else
+                                mA(ii, :, iii, i) = pointB - u*dot(u, pointB);
+                            end
+                        end
+                    end
+                end
             end
         end
+        
         %% -------------- Pam Length --------------------------
         %This function calculates the length of the Pam that will be used
         %for this muscle. The BPA will be placed in the longest segment of
@@ -198,11 +246,17 @@ classdef MonoPamData
         function tor = computeTorque(obj)
             mA = obj.MomentArm;
             F = obj.Force;
+            T = obj.TransformationMat;
+            C = obj.Cross;
             tor = zeros(size(mA));
             
-            for i = 1:size(mA, 1)
-                tor(i, :) = cross(mA(i, :), F(i, :));
-            end
+            for iii = size(T, 3)                    %Rotation for the second joint
+                for ii = size(T, 3)                 %Rotation for the first joint
+                    for i = 1:size(C, 2)            %Repeat for eaching crossing point
+                        tor(ii, :, iii, i) = cross(mA(ii, :, iii, i), F(ii, :, iii, i));
+                    end
+                end
+            end            
         end    
     end
 end

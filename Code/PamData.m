@@ -268,7 +268,7 @@ function [ID, size, longest]= Size(length, mif)
     if size+2*x > long
         for def = opt_max:0.001:max_def
             if size+2*x > long && def <= max_def
-                size = delta/(1 - 1/def);
+                size = delta/(1 - 1/def);9hi 
             elseif size+2*x <= long
                 def;
                 break
