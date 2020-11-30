@@ -2,7 +2,7 @@ clc                 %Command Line Clear
 clear               %Clear the workspace of stored variables
 close all           %Close all open figures
 
-addpath Functions
+addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
 
 % v1 = [0.1, 0.2, 0];
 % 
