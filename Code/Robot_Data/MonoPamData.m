@@ -173,20 +173,33 @@ classdef MonoPamData
         end
         
         %% -------------- Force --------------------------
-        %Calculate the directin of the forced applied by the muscle
+        %Calculate the direction of the forced applied by the muscle
         function F = computeForce(obj)
             dia = obj.Diameter;
             unitD = obj.UnitDirection;
+            contract = obj.Contraction;
             
             if dia == 20
-                maxForce = 1500;
+                x = [0, 0.07, 0.11, 0.15, 0.25]';
+                y = [1400, 800, 600, 400, 0]';
+                BPAFit = fit(x, y, 'poly2');
             elseif dia == 40
-                maxForce = 6000;
+                x = [0, 0.06, 0.12, 0.15, 0.25]';
+                y = [6000, 3500, 2000, 1500, 0]';
+                BPAFit = fit(x, y, 'poly2');
             else
-                maxForce = 630;
+                x = [0, 0.1, 0.17, 0.25]';
+                y = [630, 300, 150, 0]';
+                BPAFit = fit(x, y, 'exp2');
             end
+
+            contract = 1 - contract;
+            scalarForce = BPAFit(contract);
             
-            F = unitD*maxForce;
+            F = zeros(size(unitD));
+            for i = 1:size(unitD, 1)
+                F(i, :) = unitD(i, :)*scalarForce(i);
+            end
         end
         
         %% ---------------------- Torque --------------

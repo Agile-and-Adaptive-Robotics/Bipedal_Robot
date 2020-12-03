@@ -223,20 +223,40 @@ classdef BiPamData
         end
         
         %% -------------- Force --------------------------
-        %Calculate the directin of the forced applied by the muscle
+        %Calculate the direction of the forced applied by the muscle
         function F = computeForce(obj)
             dia = obj.Diameter;
             unitD = obj.UnitDirection;
+            contract = obj.Contraction;
+            C = obj.Cross;
             
             if dia == 20
-                maxForce = 1500;
+                x = [0, 0.07, 0.11, 0.15, 0.25]';
+                y = [1400, 800, 600, 400, 0]';
+                BPAFit = fit(x, y, 'poly2');
             elseif dia == 40
-                maxForce = 6000;
+                x = [0, 0.06, 0.12, 0.15, 0.25]';
+                y = [6000, 3500, 2000, 1500, 0]';
+                BPAFit = fit(x, y, 'poly2');
             else
-                maxForce = 630;
+                x = [0, 0.1, 0.17, 0.25]';
+                y = [630, 300, 150, 0]';
+                BPAFit = fit(x, y, 'exp2');
             end
+
+            contract = 1 - contract;
+            scalarForce = BPAFit(contract);
             
-            F = unitD*maxForce;
+            pos = 1;
+            F = zeros(size(unitD));
+            for iii = 1:size(unitD, 3)                  %Repeat for second joint rotation
+                for ii = 1:size(unitD, 1)               %Repeat for first joint rotation
+                    for i = 1:size(C, 2)                %Repeat for eaching crossing point
+                        F(ii, :, iii, i) = unitD(ii, :, iii, i)*scalarForce(pos);
+                    end
+                    pos = pos + 1;
+                end
+            end
         end
         
         %% ---------------------- Torque --------------

@@ -115,28 +115,37 @@ end
 T(:, :, :, 2) = T(:, :, :, 1);
 
 Name = 'Test Biarticular Muscle';
-Location = [0.8, 0.7, 0;
-            0.5, 0.4, 0];
+Location = [0.5, 0.5, 0;
+            0.5, 0.5, 0;
+            1, -0.5, 0];
 CrossPoint = [2, 2];
 Dia = 20;
 TestBM = BiPamData(Name, Location, CrossPoint, Dia, T);
-% 
-% %Verification Calculation
-% v1 = Location(1, :);
-% v2 = Location(2, :);
-% v1p = RowVecTrans(T(:, :, 1, 1)\eye(4), v1);
-% v1pp = RowVecTrans((T(:, :, 1, 1)*T(:, :, 2, 2))\eye(4), v1);
-% v2p = RowVecTrans(T(:, :, 2, 2), v2);
-% 
-% TestBM.UnitDirection
-% 
-% unitD1 = (v1p - v2p)/norm(v1p - v2p)
-% unitD2 = (v1pp - v2)/norm(v1pp - v2)
-% 
-% TestBM.MomentArm
-% 
-% mA1 = v2p - unitD1*dot(unitD1, v2p)
-% mA2 = v2 - unitD2*dot(unitD2, v2)
+
+%Verification Calculation, home position
+v1 = Location(1, :);
+v2 = Location(2, :);
+v3 = Location(3, :);
+
+mL2 = sqrt((1-0.5)^2 + (-1)^2);
+
+%Verification Calculation, 1st joint rotation
+v22 = [1.5, 0.5, 0];
+u1 = [-2, -1, 0]/norm([-2, -1, 0]);
+u2 = u1;
+
+mA1 = v22 - u1*dot(u1, v22);
+mL1 = norm([2, 1, 0])
+
+%Verification Calculation 2nd joint rotation
+v22 = [1.5, -0.5, 0];
+u1 = [-2, 1, 0]/norm([-2, 1, 0])
+
+u2 = [-1, -2, 0]/norm([-1, -2, 0])
+
+mL1 = norm([-1, -2, 0])
+
+
 
 %% Test Biarticulate, with points on the first and second joint
 % Name = 'Second Test Biarticular Muscle';
