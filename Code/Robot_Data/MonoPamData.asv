@@ -165,7 +165,7 @@ classdef MonoPamData
                 contraction(i) = (max(mL) - mL(i))/restingPamLength;
             end
             
-            if min(contraction) <= contractPercent
+            if min(contraction) >= (1 - contractPercent)
                 lengthCheck = 'Usable';
             else
                 lengthCheck = 'Unusable';
@@ -193,6 +193,7 @@ classdef MonoPamData
                 BPAFit = fit(x, y, 'exp2');
             end
 
+            contract = 1 - contract;
             scalarForce = BPAFit(contract);
             
             F = zeros(size(unitD));

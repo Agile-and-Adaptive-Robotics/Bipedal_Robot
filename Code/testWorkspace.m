@@ -21,32 +21,14 @@ close all           %Close all open figures
 % plot(xFit, yFit)
 % hold off
 
-% x = [0, 0.07, 0.11, 0.15, 0.25]';
-% y = [1400, 800, 600, 400, 0]';
-% 
-% figure
-% plot(x, y)
-% 
-% 
-% twentyFit = fit(x, y, 'poly2');
-% 
-% xFit = linspace(0, 0.25);
-% yFit = twentyFit(xFit);
-% 
-% figure
-% hold on
-% plot(x, y, 'r.')
-% plot(xFit, yFit)
-% hold off
-
-x = [0, 0.06, 0.12, 0.15, 0.25]';
-y = [6000, 3500, 2000, 1500, 0]';
+x = [0, 0.07, 0.11, 0.15, 0.25]';
+y = [1400, 800, 600, 400, 0]';
 
 figure
 plot(x, y)
 
 
-twentyFit = fit(x, y, 'poly2');
+twentyFit = fit(x, y, 'poly3');
 
 xFit = linspace(0, 0.25);
 yFit = twentyFit(xFit);
@@ -56,3 +38,21 @@ hold on
 plot(x, y, 'r.')
 plot(xFit, yFit)
 hold off
+% 
+% x = [0, 0.06, 0.12, 0.15, 0.25]';
+% y = [6000, 3500, 2000, 1500, 0]';
+% 
+% figure
+% plot(x, y)
+% 
+% 
+% twentyFit = fit(x, y, 'poly3');
+% 
+% xFit = linspace(0, 0.25);
+% yFit = twentyFit(xFit);
+% 
+% figure
+% hold on
+% plot(x, y, 'r.')
+% plot(xFit, yFit)
+% hold off

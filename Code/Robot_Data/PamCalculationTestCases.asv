@@ -152,17 +152,9 @@ mL1 = norm([-1, -2, 0])
 Name = 'Test Biarticular Muscle Single Cross';
 Location = [0.5, 0.5, 0;
             0.5, 0.5, 0;
-            0, 0.5, 0];
+            0.5, -0.5, 0];
 CrossPoint = [2, 3];
 Dia = 40;
 TestBM2 = BiPamData(Name, Location, CrossPoint, Dia, T);
 
 %Verification calculation, home position
-v1 = Location(1, :);
-v2 = Location(2, :);
-v3 = Location(3, :);
-
-u2 = [-1, 1, 0]/norm([-1, 1, 0])
-
-%Verification calculation, second joint rotation
-u2 = [-0.5, -1, 0]/norm([-0.5, -1, 0])

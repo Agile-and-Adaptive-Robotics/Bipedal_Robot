@@ -87,10 +87,7 @@ Dia = 20;
 Add_Mag_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
 
 %% Unstacking the Torques to identify specific rotations
-Torque1 = zeros(length(theta), 3, length(phi), length(gamma));
-Torque2 = zeros(length(theta), 3, length(phi), length(gamma));
-Torque3 = zeros(length(theta), 3, length(phi), length(gamma));
-Torque4 = zeros(length(theta), 3, length(phi), length(gamma));
+Torque1 = zeros(length(theta), 3, length(phi, 
 
 j = 1;
 for iii = 1:length(gamma)
@@ -105,8 +102,3 @@ for iii = 1:length(gamma)
         end
     end
 end
-
-%% Add Torques from the Muscle Group
-Torque = Torque1 + Torque2 + Torque3;
-
-%% Plotting 

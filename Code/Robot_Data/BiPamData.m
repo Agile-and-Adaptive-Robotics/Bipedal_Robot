@@ -211,11 +211,11 @@ classdef BiPamData
             contraction = zeros(size(mL));
             for i = 1:size(mL, 1)
                 for ii = 1:size(mL, 2)
-                    contraction(i, ii) = (mL(i, ii) - tendonLength - 2*fittingLength)/restingPamLength;
+                    contraction(i, ii) = (max(max(mL)) - mL(i, ii))/restingPamLength;
                 end
             end
             
-            if min(contraction) >= (1 - contractPercent)
+            if min(min(contraction)) <= contractPercent
                 lengthCheck = 'Usable';
             else
                 lengthCheck = 'Unusable';
@@ -233,18 +233,17 @@ classdef BiPamData
             if dia == 20
                 x = [0, 0.07, 0.11, 0.15, 0.25]';
                 y = [1400, 800, 600, 400, 0]';
-                BPAFit = fit(x, y, 'poly2');
+                BPAFit = fit(x, y, 'poly3');
             elseif dia == 40
                 x = [0, 0.06, 0.12, 0.15, 0.25]';
                 y = [6000, 3500, 2000, 1500, 0]';
-                BPAFit = fit(x, y, 'poly2');
+                BPAFit = fit(x, y, 'poly3');
             else
                 x = [0, 0.1, 0.17, 0.25]';
                 y = [630, 300, 150, 0]';
                 BPAFit = fit(x, y, 'exp2');
             end
 
-            contract = 1 - contract;
             scalarForce = BPAFit(contract);
             
             pos = 1;
