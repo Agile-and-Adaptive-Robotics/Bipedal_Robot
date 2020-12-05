@@ -9,23 +9,31 @@ function f = forz(Lmt, mif, ofl, tsl, pa)
     eom = 0.6;  %passive muscle strain at max isometric force (OpenSim FmaxMuscleStrain)
     y = 0.5;    %active shape factor (OpenSim KshapeActive)
 
-        function Fbal = myfunc(Lmn)
+    function Fbal = myfunc(Lmn)
 
-            Fpe = (exp(kPE*((Lmn)-1)/eom)-1)/(exp(kPE)-1); %Passive force-length curve, normalized (Thelen 2003)
-            fL = exp(-(((Lmn)-1).^2/y));  %Active force-length curve, normalized (Thelen 2003)
-            cosa = ((1-(sin(pa)/(Lmn)).^2)^(1/2)); %cosine of pennation angle (Hoy 1990)
-            fT = (37.5/(tsl/ofl))*((Lmt/ofl)-(Lmn)*cosa-(tsl/ofl)); %Normalized tendon force (Hoy 1990)
-            Fbal = (fL+Fpe)*cosa-fT;
+        Fpe = (exp(kPE*((Lmn)-1)/eom)-1)/(exp(kPE)-1); %Passive force-length curve, normalized (Thelen 2003) eqn 3 pg 74
 
-        end 
+        fL = exp(-(((Lmn)-1).^2/y));  %Active force-length curve, normalized (Thelen 2003) eqn 4 pg 74
+
+        cosa = ((1-(sin(pa)/(Lmn)).^2)^(1/2)); %cosine of pennation angle (Hoy 1990)
+
+        fT = (37.5/(tsl/ofl))*((Lmt/ofl)-(Lmn)*cosa-(tsl/ofl)); %Normalized tendon force (Hoy 1990)
+
+        Fbal = (fL+Fpe)*cosa-fT;
+
+    end 
 
     if Lmt ~= tsl
         x0 = (Lmt-tsl)/ofl; %Initial guess
     else
         x0 = (Lmt*1.001-tsl)/ofl; %Initial guess, avoid computational crash
     end
+    
     options = optimoptions('fsolve','Display','none','FunctionTolerance',0.001);
+    
+    %x0 is the guess of the Muscle length
     Lma = fsolve(@myfunc,x0,options);
+    
     f = mif*(37.5/(tsl/ofl))*((Lmt/ofl)-(Lma)*((1-(sin(pa)/(Lma))^2)^(1/2))-(tsl/ofl)); %mif at Lmt
     if f < 0
            f = 0;  %Muscle force is tensile only (Millard 2013)

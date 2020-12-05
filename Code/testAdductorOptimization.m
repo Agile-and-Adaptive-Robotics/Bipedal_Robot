@@ -3,13 +3,19 @@
 % process to compare muscles. We will be comparing the adductor longus and
 % adductor magnus muscles to a theoretical BPA to replace them
 
+%% Freshen up the workspace
+clc
+clear
+close all
+
 %% Add paths to the muscle and pam calculators
 addpath Human_Data
 addpath Robot_Data
+addpath Functions
 
 
 %% Joint rotation transformation matrices
-positions = 2;
+positions = 20;
 Rx = zeros(3, 3, positions);
 Ry = zeros(3, 3, positions);
 Rz = zeros(3, 3, positions);
@@ -83,7 +89,7 @@ Name = 'Adductor Magnus';
 Location = [-0.083, -0.119, 0.031;
             0.005, -0.229, 0.023];
 CrossPoint = 2;
-Dia = 20;
+Dia = 40;
 Add_Mag_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
 
 %% Unstacking the Torques to identify specific rotations
@@ -99,7 +105,7 @@ for iii = 1:length(gamma)
             Torque1(i, :, ii, iii) = Add_Mag1.Torque(j, :);
             Torque2(i, :, ii, iii) = Add_Mag2.Torque(j, :);
             Torque3(i, :, ii, iii) = Add_Mag3.Torque(j, :);
-            Torque4(i, :, ii, iii) = Add_Mag_Pam.Torque(j, :);
+            TorqueR(i, :, ii, iii) = Add_Mag_Pam.Torque(j, :);
 
             j = j + 1;
         end
@@ -107,6 +113,50 @@ for iii = 1:length(gamma)
 end
 
 %% Add Torques from the Muscle Group
-Torque = Torque1 + Torque2 + Torque3;
+TorqueH = Torque1 + Torque2 + Torque3;
 
-%% Plotting 
+%% Plotting Torque Results
+
+[mTheta, mGamma] = meshgrid(theta, gamma);
+xTorqueHxzRotation = zeros(length(gamma), length(theta));
+xTorqueRxzRotation = zeros(length(gamma), length(theta));
+
+for iii = 1:length(gamma)
+    for i = 1:length(theta)
+        xTorqueHxzRotation(iii, i) = TorqueH(i, 1, 1, iii);
+        
+        xTorqueRxzRotation(iii, i) = TorqueR(i, 1, 1, iii);
+    end
+end
+
+figure
+surf(mTheta*180/pi, mGamma*180/pi, xTorqueHxzRotation, 'EdgeColor', 'none')
+title('Adductor Magnus X Axis Torque during Abduction/Adduction and Flexion/Extension')
+xlabel('Abduction/Adduction, deg')
+ylabel('Flexion/Extension, deg')
+zlabel('Torque, N*m')
+colorbar
+caxis([-40, 150])
+
+figure
+surf(mTheta*180/pi, mGamma*180/pi, xTorqueRxzRotation, 'EdgeColor', 'none')
+title('PAM Adductor Magnus X Axis Torque during Abduction/Adduction and Flexion/Extension')
+xlabel('Abduction/Adduction, deg')
+ylabel('Flexion/Extension, deg')
+zlabel('Torque, N*m')
+colorbar
+caxis([-40, 150])
+
+%% Plotting Error
+
+xTorqueExzRotation = xTorqueRxzRotation - xTorqueHxzRotation;
+
+figure
+surf(mTheta*180/pi, mGamma*180/pi, xTorqueExzRotation, 'EdgeColor', 'none')
+title('Error Adductor Magnus X Axis Torque during Abduction/Adduction and Flexion/Extension')
+xlabel('Abduction/Adduction, deg')
+ylabel('Flexion/Extension, deg')
+zlabel('Torque, N*m')
+colorbar
+caxis([-40, 150])
+
