@@ -118,6 +118,11 @@ classdef MonoMuscleData
             unitD = obj.UnitDirection;
             
             F = unitD*mif;
+%             kPE = 4;
+%             eom = 0.6;
+%             gamma = 0.5;
+
+
         end
         
         %% -------------- Torque about a Joint --------------
