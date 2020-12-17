@@ -92,6 +92,8 @@ CrossPoint = 2;
 Dia = 40;
 Add_Mag_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
 
+
+
 %% Unstacking the Torques to identify specific rotations
 Torque1 = zeros(length(theta), 3, length(phi), length(gamma));
 Torque2 = zeros(length(theta), 3, length(phi), length(gamma));
