@@ -65,24 +65,27 @@ end
 %% Muscle calculation
 Name = 'Adductor Magnus 1';
 MIF = 381;
+OFL = 0.087; TSL = 0.06; Pennation = 0.08726646;
 Location = [-0.073, -0.117, 0.025;
             -0.004, -0.121, 0.034];
 CrossPoint = 2;
-Add_Mag1 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
+Add_Mag1 = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 Name = 'Adductor Magnus 2';
 MIF = 343;
+OFL = 0.121; TSL = 0.12; Pennation = 0.05235988;
 Location = [-0.083, -0.119, 0.031;
             0.005, -0.229, 0.023];
 CrossPoint = 2;
-Add_Mag2 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
+Add_Mag2 = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 Name = 'Adductor Magnus 3';
 MIF = 488;
+OFL = 0.131; TSL = 0.249; Pennation = 0.08726646;
 Location = [-0.111, -0.114, 0.049;
             0.007, -0.384, -0.027];
 CrossPoint = 2;
-Add_Mag3 = MonoMuscleData(Name, Location, CrossPoint, MIF, T);
+Add_Mag3 = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 %% PAM calculation
 Name = 'Adductor Magnus';
