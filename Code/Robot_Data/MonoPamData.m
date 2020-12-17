@@ -197,6 +197,9 @@ classdef MonoPamData
             
             F = zeros(size(unitD));
             for i = 1:size(unitD, 1)
+                if scalarForce(i) <= 0
+                    scalarForce(i) = 0;
+                end
                 F(i, :) = unitD(i, :)*scalarForce(i);
             end
         end

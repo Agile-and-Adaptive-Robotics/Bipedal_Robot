@@ -251,6 +251,9 @@ classdef BiPamData
             for iii = 1:size(unitD, 3)                  %Repeat for second joint rotation
                 for ii = 1:size(unitD, 1)               %Repeat for first joint rotation
                     for i = 1:size(C, 2)                %Repeat for eaching crossing point
+                        if scalarForce(pos) <= 0
+                            scalarForce(pos) = 0;
+                        end
                         F(ii, :, iii, i) = unitD(ii, :, iii, i)*scalarForce(pos);
                     end
                     pos = pos + 1;

@@ -143,12 +143,34 @@ for iii = 1:length(gamma)
     end
 end
 
-testAdductorOptimizationPlot
+figure
+surf(mTheta*180/pi, mGamma*180/pi, xTorqueHxzRotation, 'EdgeColor', 'none')
+title('Adductor Magnus X Axis Torque during Abduction/Adduction and Flexion/Extension')
+xlabel('Abduction/Adduction, deg')
+ylabel('Flexion/Extension, deg')
+zlabel('Torque, N*m')
+colorbar
+caxis([-40, 150])
 
-Add_Mag_Pam.Location
+figure
+surf(mTheta*180/pi, mGamma*180/pi, xTorqueRxzRotation, 'EdgeColor', 'none')
+title('PAM Adductor Magnus X Axis Torque during Abduction/Adduction and Flexion/Extension')
+xlabel('Abduction/Adduction, deg')
+ylabel('Flexion/Extension, deg')
+zlabel('Torque, N*m')
+colorbar
+caxis([-40, 150])
 
-Add_Mag_Pam.MomentArm(1, :)
+%% Plotting Error
 
-Add_Mag_Pam.Location = Add_Mag_Pam.Location + 0.1
+xTorqueExzRotation = xTorqueRxzRotation - xTorqueHxzRotation;
 
-Add_Mag_Pam.MomentArm(1, :)
+figure
+surf(mTheta*180/pi, mGamma*180/pi, xTorqueExzRotation, 'EdgeColor', 'none')
+title('Error Adductor Magnus X Axis Torque')
+xlabel('Abduction/Adduction, deg')
+ylabel('Flexion/Extension, deg')
+zlabel('Torque, N*m')
+colorbar
+caxis([-40, 150])
+
