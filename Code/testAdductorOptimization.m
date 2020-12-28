@@ -100,6 +100,8 @@ Torque2 = zeros(length(theta), 3, length(phi), length(gamma));
 Torque3 = zeros(length(theta), 3, length(phi), length(gamma));
 TorqueR = zeros(length(theta), 3, length(phi), length(gamma));
 
+PAMTorque = Add_Mag_Pam.Torque;
+
 j = 1;
 for iii = 1:length(gamma)
     for ii = 1:length(phi)
@@ -107,7 +109,7 @@ for iii = 1:length(gamma)
             Torque1(i, :, ii, iii) = Add_Mag1.Torque(j, :);
             Torque2(i, :, ii, iii) = Add_Mag2.Torque(j, :);
             Torque3(i, :, ii, iii) = Add_Mag3.Torque(j, :);
-            TorqueR(i, :, ii, iii) = Add_Mag_Pam.Torque(j, :);
+            TorqueR(i, :, ii, iii) = PAMTorque(j, :);
 
             j = j + 1;
         end
@@ -147,10 +149,3 @@ end
 
 testAdductorOptimizationPlot
 
-Add_Mag_Pam.Location
-
-Add_Mag_Pam.MomentArm(1, :)
-
-Add_Mag_Pam.Location = Add_Mag_Pam.Location + 0.1
-
-Add_Mag_Pam.MomentArm(1, :)
