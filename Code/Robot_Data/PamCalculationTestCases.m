@@ -54,6 +54,7 @@ CrossPoint = 2;
 Dia = 10;
 TestBPA = MonoPamData(Name, Location, CrossPoint, Dia, T); 
 
+
 % %Position 1 verification
 % v1 = Location(1, :);
 % v2 = Location(2, :);
@@ -122,47 +123,55 @@ CrossPoint = [2, 2];
 Dia = 20;
 TestBM = BiPamData(Name, Location, CrossPoint, Dia, T);
 
-%Verification Calculation, home position
-v1 = Location(1, :);
-v2 = Location(2, :);
-v3 = Location(3, :);
+TestBM.RestingL
 
-mL2 = sqrt((1-0.5)^2 + (-1)^2);
+TestBM.TendonL
 
-%Verification Calculation, 1st joint rotation
-v22 = [1.5, 0.5, 0];
-u1 = [-2, -1, 0]/norm([-2, -1, 0]);
-u2 = u1;
+TestBM.RestingL
 
-mA1 = v22 - u1*dot(u1, v22);
-mL1 = norm([2, 1, 0])
-
-%Verification Calculation 2nd joint rotation
-v22 = [1.5, -0.5, 0];
-u1 = [-2, 1, 0]/norm([-2, 1, 0])
-
-u2 = [-1, -2, 0]/norm([-1, -2, 0])
-
-mL1 = norm([-1, -2, 0])
-
-
-
-%% Test Biarticulate, with points on the first and second joint
-
-Name = 'Test Biarticular Muscle Single Cross';
-Location = [0.5, 0.5, 0;
-            0.5, 0.5, 0;
-            0, 0.5, 0];
-CrossPoint = [2, 3];
-Dia = 40;
-TestBM2 = BiPamData(Name, Location, CrossPoint, Dia, T);
-
-%Verification calculation, home position
-v1 = Location(1, :);
-v2 = Location(2, :);
-v3 = Location(3, :);
-
-u2 = [-1, 1, 0]/norm([-1, 1, 0])
-
-%Verification calculation, second joint rotation
-u2 = [-0.5, -1, 0]/norm([-0.5, -1, 0])
+TestBM.Torque
+% 
+% %Verification Calculation, home position
+% v1 = Location(1, :);
+% v2 = Location(2, :);
+% v3 = Location(3, :);
+% 
+% mL2 = sqrt((1-0.5)^2 + (-1)^2);
+% 
+% %Verification Calculation, 1st joint rotation
+% v22 = [1.5, 0.5, 0];
+% u1 = [-2, -1, 0]/norm([-2, -1, 0]);
+% u2 = u1;
+% 
+% mA1 = v22 - u1*dot(u1, v22);
+% mL1 = norm([2, 1, 0])
+% 
+% %Verification Calculation 2nd joint rotation
+% v22 = [1.5, -0.5, 0];
+% u1 = [-2, 1, 0]/norm([-2, 1, 0])
+% 
+% u2 = [-1, -2, 0]/norm([-1, -2, 0])
+% 
+% mL1 = norm([-1, -2, 0])
+% 
+% 
+% 
+% %% Test Biarticulate, with points on the first and second joint
+% 
+% Name = 'Test Biarticular Muscle Single Cross';
+% Location = [0.5, 0.5, 0;
+%             0.5, 0.5, 0;
+%             0, 0.5, 0];
+% CrossPoint = [2, 3];
+% Dia = 40;
+% TestBM2 = BiPamData(Name, Location, CrossPoint, Dia, T);
+% 
+% %Verification calculation, home position
+% v1 = Location(1, :);
+% v2 = Location(2, :);
+% v3 = Location(3, :);
+% 
+% u2 = [-1, 1, 0]/norm([-1, 1, 0])
+% 
+% %Verification calculation, second joint rotation
+% u2 = [-0.5, -1, 0]/norm([-0.5, -1, 0])

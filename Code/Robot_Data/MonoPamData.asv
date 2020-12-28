@@ -166,7 +166,7 @@ classdef MonoPamData < handle
         function tendonLength = get.TendonL(obj)
             mL = obj.MuscleLength;
             restingPamLength = obj.RestingL;
-            fittingLength = obj.FittingLength;
+            
             
             tendonLength = max(mL) - restingPamLength - 2*fittingLength;
             

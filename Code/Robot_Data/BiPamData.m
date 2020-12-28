@@ -7,7 +7,7 @@
 
 %Refer to https://www.mathworks.com/help/matlab/matlab_oop/example-representing-structured-data.html
 
-classdef BiPamData
+classdef BiPamData < handle
     
     %% ------------Public Properties---------------------------
     %List of explicit properties for the muscles
@@ -17,22 +17,24 @@ classdef BiPamData
         Cross                       %Designates which row corresponds with a location where the muscle crosses into a new reference frame
         Diameter                    %Diameter of the BPA
         TransformationMat           %Contains a transformation matrix to change the 
-        MuscleLength                %Total length of the muscle
-        LongestSegment              %Longest contiguous section of a muscle. Where the BPA will reside
-        UnitDirection               %The Unit direction of the force about a joint
-        MomentArm                   %The moment arm from a joint to the force causing rotation about it
-        RestingL
-        Contraction
-        TendonL
-        LengthCheck
-        Force                       %Calculate the maximum amount of force that the BPA can output at different orientations
-        Torque
+        FittingLength
     end
     
     %Dependent properties are those that are calculated by the explicit
     %properties. Matlab will not calculate these until it is queried in the
     %main script
-    properties (Dependent)        
+    properties (Dependent)  
+        SegmentLengths
+        LongestSegment
+        MuscleLength
+        RestingL
+        TendonL
+        Contraction
+        LengthCheck
+        UnitDirection
+        MomentArm
+        Force
+        Torque
     end
     
     methods
@@ -46,29 +48,20 @@ classdef BiPamData
                 PD.Cross = cross;
                 PD.Diameter = diameter;
                 PD.TransformationMat = t;
-                [PD.MuscleLength, PD.LongestSegment] = computeMuscleLength(PD);
-                PD.UnitDirection = computeUnitDirection(PD);
-                PD.MomentArm = computeMomentArm(PD);
-                [PD.RestingL, PD.Contraction, PD.TendonL, PD.LengthCheck] = computePamLength(PD);
-                PD.Force = computeForce(PD);
-                PD.Torque = computeTorque(PD);
             else
                 fprintf('Invalid number of arguments\n')
             end
         end
-
-        %% ------------- Muscle Length ------------------------
-        %Function that calculates the muscle length, based
-        function [mL, longestSeg] = computeMuscleLength(obj)
+        
+        %% ------------- Segment Lengths ----------------------------------
+        function segLengths = get.SegmentLengths(obj)
             L = obj.Location;
             C = obj.Cross;
             T = obj.TransformationMat;
-            
-            mL = zeros(size(T, 3), size(T, 3));
             segLengths = zeros(size(T, 3), size(T, 3), size(L, 1)-1);
             
-            for iii = 1:size(mL, 2)                         %Repeat for all iterations of the second joint
-                for ii = 1:size(mL, 1)                      %Repeat for all iterations of the first joint
+            for iii = 1:size(T, 4)                         %Repeat for all iterations of the second joint
+                for ii = 1:size(T, 3)                      %Repeat for all iterations of the first joint
                     currentCross = 1;
                     for i = 1:size(L, 1)-1                  %Repeat for each muscle segment
                         pointA = L(i, :);
@@ -89,11 +82,16 @@ classdef BiPamData
                                 end
                             end
                         end
-                        segLengths(ii, iii, i) = norm(pointA - pointB);
-                        mL(ii, iii) = mL(ii, iii) + segLengths(ii, iii, i);    
+                        segLengths(ii, iii, i) = norm(pointA - pointB);  
                     end                   
                 end
             end
+        end
+        
+        %% ------------- Longest Segment Calculation ----------------------
+        function longestSeg = get.LongestSegment(obj)
+            L = obj.Location;
+            segLengths = obj.SegmentLengths;
             
             % Calculate which muscle segment is the longest on average.
             % This will be where the Pam resides.
@@ -112,10 +110,28 @@ classdef BiPamData
             end
             longestSeg = segLengths(:, :, longestSegPointer);
         end
+            
+        %% ------------- Muscle Length ------------------------------------
+        %Function that calculates the muscle length, based
+        function mL = get.MuscleLength(obj)
+            L = obj.Location;
+            T = obj.TransformationMat;
+            
+            mL = zeros(size(T, 3), size(T, 3));
+            segLengths = obj.SegmentLengths;
+            
+            for iii = 1:size(mL, 2)
+                for ii = 1:size(mL, 1)
+                    for i = 1:size(L, 1) - 1
+                        mL(ii, iii) = mL(ii, iii) + segLengths(ii, iii, i);
+                    end
+                end
+            end
+        end
         
         %% -------------- Force Unit Direction ----------------
         %Calculate the unit direction of the muscle force about the joint.
-        function unitD = computeUnitDirection(obj)
+        function unitD = get.UnitDirection(obj)
             L = obj.Location;
             T = obj.TransformationMat;
             C = obj.Cross;
@@ -150,7 +166,7 @@ classdef BiPamData
         %Calculate the moment arm about a joint
         %For every ViaPoint, calculate the moment arm of the muscle about
         %the joint it crosses over
-        function mA = computeMomentArm(obj)
+        function mA = get.MomentArm(obj)
             T = obj.TransformationMat;
             L = obj.Location;
             C = obj.Cross;
@@ -177,19 +193,11 @@ classdef BiPamData
             end
         end
         
-        %% -------------- Pam Length --------------------------
-        %This function calculates the length of the Pam that will be used
-        %for this muscle. The BPA will be placed in the longest segment of
-        %the muscle. The rest of the muscle segments will be considered
-        %tendons for attaching to the robot.
-        %This also checks to make sure that the BPA fully contracted length
-        %is short enough to achieve the full joint rotation.
-        function [restingPamLength, contraction, tendonLength, lengthCheck] = computePamLength(obj)
+        %% -------------- Resting PAM Length ------------------------------
+        function restingPamLength = get.RestingL(obj)
             dia = obj.Diameter;
             longestSeg = obj.LongestSegment;
-            mL = obj.MuscleLength;
-            contractPercent = 0.25;                     %Maximum contraction percentage of a BPA
-           
+            
             %Calculate the Pam end cap fitting length (estimates currently)
             if dia == 20
                 fittingLength = 0.025;
@@ -199,21 +207,42 @@ classdef BiPamData
                 fittingLength = 0.0125;
             end
             
+            obj.FittingLength = fittingLength;
             restingPamLength = max(max(longestSeg)) - 2*fittingLength;   %The resting Pam length, needs to be accomodate the largest muscle length
+        end
+        
+        %% -------------- Tendon Length -----------------------------------
+        function tendonLength = get.TendonL(obj)
+            mL = obj.MuscleLength;
+            restingPamLength = obj.RestingL;
+            fittingLength = obj.FittingLength;
+            
             tendonLength = max(max(mL)) - restingPamLength - 2*fittingLength;
             
             % Make sure there is at least 4 cm of tendon for connections
             if tendonLength < 0.04
                 tendonLength = 0.04;
-                restingPamLength = restingPamLength - tendonLength;
+                obj.RestingL = restingPamLength - tendonLength;
             end
-
+        end
+        
+        %% -------------- Contraction of the PAM --------------------------
+        function contraction = get.Contraction(obj)
+            mL = obj.MuscleLength;
+            restingPamLength = obj.RestingL;
+            
             contraction = zeros(size(mL));
             for i = 1:size(mL, 1)
                 for ii = 1:size(mL, 2)
                     contraction(i, ii) = (max(max(mL)) - mL(i, ii))/restingPamLength;
                 end
             end
+        end
+        
+        %% -------------- Length Check ------------------------------------
+        function lengthCheck = get.LengthCheck(obj)
+            contraction = obj.Contraction;
+            contractPercent = 0.25;
             
             if min(min(contraction)) <= contractPercent
                 lengthCheck = 'Usable';
@@ -224,7 +253,7 @@ classdef BiPamData
         
         %% -------------- Force --------------------------
         %Calculate the direction of the forced applied by the muscle
-        function F = computeForce(obj)
+        function F = get.Force(obj)
             dia = obj.Diameter;
             unitD = obj.UnitDirection;
             contract = obj.Contraction;
@@ -251,6 +280,9 @@ classdef BiPamData
             for iii = 1:size(unitD, 3)                  %Repeat for second joint rotation
                 for ii = 1:size(unitD, 1)               %Repeat for first joint rotation
                     for i = 1:size(C, 2)                %Repeat for eaching crossing point
+                        if scalarForce(pos) <= 0
+                            scalarForce(pos) = 0;
+                        end
                         F(ii, :, iii, i) = unitD(ii, :, iii, i)*scalarForce(pos);
                     end
                     pos = pos + 1;
@@ -264,7 +296,7 @@ classdef BiPamData
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-        function tor = computeTorque(obj)
+        function tor = get.Torque(obj)
             mA = obj.MomentArm;
             F = obj.Force;
             T = obj.TransformationMat;
