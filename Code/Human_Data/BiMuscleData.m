@@ -21,6 +21,9 @@ classdef BiMuscleData
         Name                        %Name of the muscle
         Location
         Cross                       %Designates which column corresponds with a wrapping point in the Muscle Location
+        TendonSlackLength           %Length of the tendon before it starts producing force
+        PennationAngle              %Pennation angle of the muscle attaching to the tendon
+        OptFiberLength              %Optimal fiber length of the muscle (where it generates the maximum force)
         MIF                         %Max Isometric Force
         TransformationMat           %Contains a transformation matrix to change the 
         MuscleLength
@@ -41,12 +44,15 @@ classdef BiMuscleData
         %% ------------- Muscle Data Constructor -----------------
         %Constructor Function. By calling 'MuscleData' and entering the
         %muscle information, we construct an object for that muscle.
-        function MD = BiMuscleData(name, location, cross, mif, t)
+        function MD = BiMuscleData(name, location, cross, mif, tsl, pennation, ofl, t)
             if nargin > 0
                 MD.Name = name;
                 MD.Location = location;
                 MD.Cross = cross;
                 MD.MIF = mif;
+                MD.TendonSlackLength = tsl;
+                MD.PennationAngle = pennation;
+                MD.OptFiberLength = ofl; 
                 MD.TransformationMat = t;
                 MD.MuscleLength = computeMuscleLength(MD);
                 MD.UnitDirection = computeUnitDirection(MD);
@@ -140,9 +146,9 @@ classdef BiMuscleData
             unitD = obj.UnitDirection;
             mA = zeros(size(T, 3), 3, size(T, 4), 2);
             
-            for iii = 1:size(T, 3)
-                for ii = 1:size(T, 3)
-                    for i = 1:size(C, 2)
+            for iii = 1:size(T, 3)                  %Repeat for the rotations about the second joint
+                for ii = 1:size(T, 3)               %Repeat for the rotations about the first joint
+                    for i = 1:size(C, 2)            %Repeat for direction about each joint
                         pointB = L(C(i), :);
                         u = unitD(ii, :, iii, i);
                         
@@ -162,14 +168,91 @@ classdef BiMuscleData
         end
         
         %% -------------- Force --------------------------
-        %Calculate the directin of the forced applied by the muscle
-        function F = computeForce(obj)
-            mif = obj.MIF;
-            unitD = obj.UnitDirection;
-            
-            F = unitD*mif;
-        end
+        %Calculating muscle force, the algorithm comes from Hoy 1990,
+        %Thelen 2003, and Millard 2013. Estimates the actual muscle length
+        %along the segment length, then attempts to balance the force of
+        %the tendon with the force of the pennated muscle to determine the
+        %actual muscle length. Having a concrete muscle length provides the
+        %actual force.
         
+        function F = computeForce(obj)
+            T = obj.TransformationMat;
+            C = obj.Cross;
+            miF = obj.MIF;
+            tsL = obj.TendonSlackLength;
+            alphaP = obj.PennationAngle;
+            ofL = obj.OptFiberLength;
+            F = zeros(size(obj.UnitDirection));
+            
+            %This function will solve for a nominal muscle length that
+            %balances tendon force (fT) and the muscle force ( [fPE + fL]*cos(pennation) ) 
+            function balanceF = muscleF(nmL)
+                %Values from OpenSim, slightly different than Thelen and Hoy
+                gamma = 0.5;                    %Shape factor for force length curve of contractile element
+                epsilon = 0.6;                  %Passive muscle strain due to maximum isometric force
+                kPE = 4;                        %Exponential shape facor for passive muscle element
+
+                ntsL = tsL/ofL;             %Normalized Tendon Slack Length
+                nmtL = mtL/ofL;             %Normalized Musculo-Tendon Length
+
+                %Force of the passive elastic element in the muscle
+                %(Thelen eqn 3)
+                fPE = (exp(kPE*(nmL - 1)/epsilon) - 1)/(exp(kPE) - 1);
+
+                %Force of the active contractile element of the muscle
+                %(Thelen eqn 4)
+                fL = exp(-(nmL - 1)^2/gamma);
+
+                %Calculation of the square root of the current pennation
+                %angle (Hoy eqn 7
+                cosAlpha = sqrt(1 - (sin(alphaP)/nmL)^2);
+
+                %Force of the elastic tendon as it stretches (Hoy eqn 7)
+                fT = 37.5/ntsL*(nmtL - nmL*cosAlpha - ntsL);
+
+                %Balance of the muscle forces. Solving to find when it
+                %becomes equal to 0
+                balanceF = (fL + fPE)*cosAlpha - fT;
+            end
+            
+            for iii = 1:size(T, 3)                           %Repeat for each rotation of the second joint
+                for ii = 1:size(T, 3)                        %Repeat for each rotation of the first join
+                    mtL = obj.MuscleLength(ii, iii);              %Muscle-Tendon Length, which is the full calculated length between points in OpenSim
+
+                    %Estimate the nominal muscle length, without the tendon. If it
+                    %is thought to be all tendon, the solver will crash
+                    if mtL == tsL
+                        nmL0 = (mtL*1.01 - tsL)/ofL;
+                    else
+                        nmL0 = (mtL - tsL)/ofL;
+                    end
+
+                    %Set Function solver parameters
+                    options = optimoptions('fsolve','Display','none','FunctionTolerance',0.001);
+
+                    %Determine the normalized muscle length that solves the force
+                    %equations
+                    snmL = fsolve(@muscleF, nmL0, options);
+
+                    %With the solved muscle length, we can determine the scalar muscle
+                    %force by plugging it back into one of the force equations (fT)
+                    sF = miF*37.5/(tsL/ofL)*(mtL/ofL - snmL*sqrt(1 - (sin(alphaP)/snmL)^2) - tsL/ofL);
+
+                    %If the force is less than 0, set it to 0 as a muscle can
+                    %only be in tension
+                    if sF < 0
+                        sF = 0;
+                    end
+
+                    %With the scalar muscle force, we can multiply it by the unit
+                    %direction of the force to calculate the vectorized version
+                    for i = 1:size(C, 2)
+                        F(ii, :, iii, i) = sF*obj.UnitDirection(ii, :, iii, i);
+                    end
+                end
+            end
+        end
+
         %% -------------- Torque about a Joint --------------
         function tor = computeTorque(obj)
             mA = obj.MomentArm;
