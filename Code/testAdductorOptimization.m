@@ -15,7 +15,9 @@ addpath Functions
 
 
 %% Joint rotation transformation matrices
-positions = 20;
+positions = 10;
+fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions*positions*positions)
+
 Rx = zeros(3, 3, positions);
 Ry = zeros(3, 3, positions);
 Rz = zeros(3, 3, positions);
