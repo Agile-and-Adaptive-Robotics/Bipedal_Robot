@@ -1,17 +1,59 @@
-% clc                 %Command Line Clear
-% clear               %Clear the workspace of stored variables
-% close all           %Close all open figures
-% 
+clc                 %Command Line Clear
+clear               %Clear the workspace of stored variables
+close all           %Close all open figures
 
-sig = 15000/(1.75*0.25);
+x = linspace(0, 2);
 
-Kf = 1 + 0.95*(2.6 - 1);
+muscle = 3*x - 3;
 
-sigMax = Kf * sig;
-sigMax = sigMax*10^(-3);
+% Pam1 = 4*x + 7;
+Pam1 = 8*ones(100, 1);
 
-a = (0.76 * 260)^2/25;
+Pam2 = 4*x - 4;
 
-b = -1/3*log10(0.76*260/25);
+figure
+hold on
+plot(x, muscle)
+plot(x, Pam1)
+plot(x, Pam2)
+plot(x, linspace(0, 0), 'k')
+legend('Muscle', 'Pam1', 'Pam2')
+hold off
 
-N = (sigMax/a)^(1/b)
+Pam1C = 0;
+Pam2C = 0;
+for i = 1:length(x)
+    if muscle(i) >= 0
+        Pam1C = Pam1C + Pam1(i) - muscle(i);
+        Pam2C = Pam2C + Pam2(i) - muscle(i);
+    elseif muscle(i) < 0
+        Pam1C = Pam1C + muscle(i) - Pam1(i);
+        Pam2C = Pam2C + muscle(i) - Pam2(i);
+    end
+end
+
+
+muscleAbs = abs(muscle);
+Pam2Abs = abs(Pam2);
+
+figure
+hold on
+plot(x, muscleAbs)
+plot(x, Pam1)
+plot(x, Pam2Abs)
+plot(x, linspace(0, 0), 'k')
+legend('Muscle', 'Pam1', 'Pam2')
+hold off
+
+muscleNom = muscle./muscle;
+Pam1Nom = Pam1./muscle;
+Pam2Nom = Pam2./muscle;
+
+figure
+hold on
+plot(x, muscleNom)
+plot(x, Pam1Nom)
+plot(x, Pam2Nom)
+plot(x, linspace(0, 0), 'k')
+legend('Muscle', 'Pam1', 'Pam2')
+hold off

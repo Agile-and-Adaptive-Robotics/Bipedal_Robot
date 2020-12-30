@@ -125,6 +125,8 @@ end
 TorqueH = Torque1 + Torque2 + Torque3;
 
 %% Plotting Torque Results
+% This looks at the x, y, and z torque when rotating the hip through the x
+% and z axis. 
 
 %Set up a mesh for x and y coordinates on the plot
 [mTheta, mGamma] = meshgrid(theta, gamma);
@@ -153,4 +155,6 @@ for iii = 1:length(gamma)
 end
 
 testAdductorOptimizationPlot
+
+testAdductorCostFunction
 
