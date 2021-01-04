@@ -38,5 +38,3 @@ for i = 1:size(TorqueH, 1)
     end
 end
 
-% Normalize the error to the amount of data points that it was summed over
-eC(1) = eC(1)/(i*ii*iii*iiii);

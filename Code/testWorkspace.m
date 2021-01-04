@@ -57,3 +57,6 @@ plot(x, Pam2Nom)
 plot(x, linspace(0, 0), 'k')
 legend('Muscle', 'Pam1', 'Pam2')
 hold off
+
+siga = 1.63*2.5
+sigm = 1.63*12.5
