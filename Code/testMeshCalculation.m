@@ -1,7 +1,7 @@
-%% Test Adductor case
-% This script is a test case (that can be later used) for the optimization
-% process to compare muscles. We will be comparing the adductor longus and
-% adductor magnus muscles to a theoretical BPA to replace them
+%% Mesh Points Calculation
+% This code will calculate the torque difference between all of the points
+% from one bone mesh to another to determine the best location for muscle
+% placement
 
 %% Freshen up the workspace
 clc
@@ -12,7 +12,7 @@ close all
 addpath Human_Data
 addpath Robot_Data
 addpath Functions
-
+addpath Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
 positions = 5;
@@ -62,7 +62,6 @@ for iii = 1:length(gamma)
         end
     end
 end
-
 
 %% Muscle calculation
 Name = 'Adductor Magnus 1';
@@ -124,45 +123,37 @@ end
 %% Add Torques from the Muscle Group
 TorqueH = Torque1 + Torque2 + Torque3;
 
-%% Plotting Torque Results
-% This looks at the x, y, and z torque when rotating the hip through the x
-% and z axis. 
-
-%Set up a mesh for x and y coordinates on the plot
-[mTheta, mGamma] = meshgrid(theta, gamma);
-
-%Create variables for the x, y, and z toque
-xTorqueHxzRotation = zeros(length(gamma), length(theta));
-xTorqueRxzRotation = zeros(length(gamma), length(theta));
-
-yTorqueHxzRotation = zeros(length(gamma), length(theta));
-yTorqueRxzRotation = zeros(length(gamma), length(theta));
-
-zTorqueHxzRotation = zeros(length(gamma), length(theta));
-zTorqueRxzRotation = zeros(length(gamma), length(theta));
-
-
-
-for iii = 1:length(gamma)
-    for i = 1:length(theta)
-        xTorqueHxzRotation(iii, i) = TorqueH(i, 1, 1, iii);
-        xTorqueRxzRotation(iii, i) = TorqueR(i, 1, 1, iii);
-        
-        yTorqueHxzRotation(iii, i) = TorqueH(i, 2, 1, iii);
-        yTorqueRxzRotation(iii, i) = TorqueR(i, 2, 1, iii);
-        
-        zTorqueHxzRotation(iii, i) = TorqueH(i, 3, 1, iii);
-        zTorqueRxzRotation(iii, i) = TorqueR(i, 3, 1, iii);
-    end
-end
-
-testAdductorOptimizationPlot
-
-
+%% First cost function calculation
 C = costFunction(TorqueH, TorqueR);
 
-%% Begin moving the location of the attachment points. 
+%% Generating new points for the PAM based on the bone mesh
 
-epsilon 
+Pelvis = xlsread('Pelvis_R_Mesh_Points.xlsx');
+Femur = xlsread('Femur_Mesh_Points.xlsx');
 
+iC = 2;                     %Index variable for the cost function
+
+for i = 1:size(Femur, 1)
+    for ii = 1:size(Pelvis, 1)
+        Location(1, :) = Pelvis(ii, :);
+        Location(2, :) = Femur(i, :);
+        
+        Add_Mag_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
+        PAMTorque = Add_Mag_Pam.Torque;
+        
+        j = 1;
+        for iG = 1:length(gamma)
+            for iP = 1:length(phi)
+                for iT = 1:length(theta)
+                    TorqueR(iT, :, iP, iG) = PAMTorque(j, :);
+
+                    j = j + 1;
+                end
+            end
+        end
+
+        C(iC) = costFunction(TorqueH, TorqueR);
+        iC = iC + 1;
+    end
+end
 
