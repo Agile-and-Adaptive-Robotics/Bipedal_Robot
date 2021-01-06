@@ -96,8 +96,6 @@ CrossPoint = 2;
 Dia = 40;
 Add_Mag_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
 
-
-
 %% Unstacking the Torques to identify specific rotations
 Torque1 = zeros(length(theta), 3, length(phi), length(gamma));
 Torque2 = zeros(length(theta), 3, length(phi), length(gamma));
@@ -130,6 +128,7 @@ C = costFunction(TorqueH, TorqueR);
 
 Pelvis = xlsread('Pelvis_R_Mesh_Points.xlsx');
 Femur = xlsread('Femur_Mesh_Points.xlsx');
+meshTracker = [0, 0];
 
 iC = 2;                     %Index variable for the cost function
 
@@ -153,7 +152,61 @@ for i = 1:size(Femur, 1)
         end
 
         C(iC) = costFunction(TorqueH, TorqueR);
+        
+        if C(iC) > C(iC - 1);
+            Tracker = [i, ii];
+        end
+
         iC = iC + 1;
+        
     end
 end
 
+%% Plotting Torque Results
+% This looks at the x, y, and z torque when rotating the hip through the x
+% and z axis. 
+
+%Set up a mesh for x and y coordinates on the plot
+[mTheta, mGamma] = meshgrid(theta, gamma);
+
+%Create variables for the x, y, and z toque
+xTorqueHxzRotation = zeros(length(gamma), length(theta));
+xTorqueRxzRotation = zeros(length(gamma), length(theta));
+
+yTorqueHxzRotation = zeros(length(gamma), length(theta));
+yTorqueRxzRotation = zeros(length(gamma), length(theta));
+
+zTorqueHxzRotation = zeros(length(gamma), length(theta));
+zTorqueRxzRotation = zeros(length(gamma), length(theta));
+
+Location(1, :) = Pelvis(Tracker(2), :);
+Location(2, :) = Femur(Tracker(1), :);
+
+Add_Mag_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
+PAMTorque = Add_Mag_Pam.Torque;
+
+j = 1;
+for iG = 1:length(gamma)
+    for iP = 1:length(phi)
+        for iT = 1:length(theta)
+            TorqueR(iT, :, iP, iG) = PAMTorque(j, :);
+
+            j = j + 1;
+        end
+    end
+end
+
+for iii = 1:length(gamma)
+    for i = 1:length(theta)
+        xTorqueHxzRotation(iii, i) = TorqueH(i, 1, 1, iii);
+        xTorqueRxzRotation(iii, i) = TorqueR(i, 1, 1, iii);
+        
+        yTorqueHxzRotation(iii, i) = TorqueH(i, 2, 1, iii);
+        yTorqueRxzRotation(iii, i) = TorqueR(i, 2, 1, iii);
+        
+        zTorqueHxzRotation(iii, i) = TorqueH(i, 3, 1, iii);
+        zTorqueRxzRotation(iii, i) = TorqueR(i, 3, 1, iii);
+    end
+end
+
+testAdductorOptimizationPlot
