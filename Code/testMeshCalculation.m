@@ -210,3 +210,5 @@ for iii = 1:length(gamma)
 end
 
 testAdductorOptimizationPlot
+
+run("Bone_Mesh_Plots\MuscleBonePlotting")

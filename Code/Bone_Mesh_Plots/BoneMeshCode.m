@@ -5,9 +5,9 @@
 % geometries to create plots of the bone points. These points will be used
 % in the muscle placement optimization code.
 
-clc
-clear 
-close all
+% clc
+% clear 
+% close all
 
 addpath('Open_Sim_Bone_Geometry')
 
