@@ -153,12 +153,11 @@ for i = 1:size(Femur, 1)
 
         C(iC) = costFunction(TorqueH, TorqueR);
         
-        if C(iC) > C(iC - 1);
+        if C(iC) == max(C)
             Tracker = [i, ii];
         end
 
         iC = iC + 1;
-        
     end
 end
 

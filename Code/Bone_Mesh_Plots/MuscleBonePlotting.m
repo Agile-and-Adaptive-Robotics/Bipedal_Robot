@@ -54,27 +54,35 @@ Calcaneus = Calcaneus*RotationM;
 Toes = Toes*RotationM;
 
 %% Calculate Muscle Locations
-M1Locations = Add_Mag1.Location;
-M2Locations = Add_Mag2.Location;
-M3Locations = Add_Mag3.Location;
 
-P1Locations = Add_Mag_Pam.Location;
+for i = 1:size(HMuscleLocation, 2)
+    HMuscleLocation{i}(1:HMuscleCross{i}-1, :) = HMuscleLocation{i}(1:HMuscleCross{i}-1, :) + Hip;
+    HMuscleLocation{i}(HMuscleCross{i}:end, :) = HMuscleLocation{i}(HMuscleCross{i}:end, :) + Hip + Knee;
+    HMuscleLocation{i} = HMuscleLocation{i}*RotationM;
+end
 
-% M1Locations = M1Locations + Back;
-% M2Locations = M2Locations + Back;
-% M3Locations = M3Locations + Back;
-% P1Locations = P1Locations + Back;
+for i = 1:size(RMuscleLocation, 2)
+    RMuscleLocation{i}(1:RMuscleCross{i}-1, :) = RMuscleLocation{i}(1:RMuscleCross{i}-1, :) + Hip;
+    RMuscleLocation{i}(RMuscleCross{i}:end, :) = RMuscleLocation{i}(RMuscleCross{i}:end, :) + Hip + Knee;
+    RMuscleLocation{i} = RMuscleLocation{i}*RotationM;
+end
 
-M1Locations(2, :) = M1Locations(2, :) + Hip;
-M2Locations(2, :) = M2Locations(2, :) + Hip;
-M3Locations(2, :) = M3Locations(2, :) + Hip;
-P1Locations(2, :) = P1Locations(2, :) + Hip;
-
-M1Locations = M1Locations*RotationM;
-M2Locations = M2Locations*RotationM;
-M3Locations = M3Locations*RotationM;
-
-P1Locations = P1Locations*RotationM;
+% M1Locations = Add_Mag1.Location;
+% M2Locations = Add_Mag2.Location;
+% M3Locations = Add_Mag3.Location;
+% 
+% P1Locations = Add_Mag_Pam.Location;
+% 
+% M1Locations(2, :) = M1Locations(2, :) + Hip;
+% M2Locations(2, :) = M2Locations(2, :) + Hip;
+% M3Locations(2, :) = M3Locations(2, :) + Hip;
+% P1Locations(2, :) = P1Locations(2, :) + Hip;
+% 
+% M1Locations = M1Locations*RotationM;
+% M2Locations = M2Locations*RotationM;
+% M3Locations = M3Locations*RotationM;
+% 
+% P1Locations = P1Locations*RotationM;
 
 %% Plot everything
 axisLimits = [-1 1 -1 1 -1.25 0.75];
@@ -92,9 +100,15 @@ plot3(Calcaneus(:, 1), Calcaneus(:, 2), Calcaneus(:, 3), '.', 'color', 'b');
 plot3(Toes(:, 1), Toes(:, 2), Toes(:, 3), '.', 'color', 'b');
 
 %MusclePlotting
-plot3(M1Locations(:, 1), M1Locations(:, 2), M1Locations(:, 3), '.-', 'color', 'r');
-plot3(M2Locations(:, 1), M2Locations(:, 2), M2Locations(:, 3), '.-', 'color', 'r');
-plot3(M3Locations(:, 1), M3Locations(:, 2), M3Locations(:, 3), '.-', 'color', 'r');
-plot3(P1Locations(:, 1), P1Locations(:, 2), P1Locations(:, 3), '.-', 'color', 'g');
+for i = 1:size(HMuscleLocation, 2)
+    plot3(HMuscleLocation{i}(:, 1), HMuscleLocation{i}(:, 2), HMuscleLocation{i}(:, 3), '.-', 'color', 'r', 'linewidth', 3);
+end
+for i = 1:size(RMuscleLocation, 2)
+        plot3(RMuscleLocation{i}(:, 1), RMuscleLocation{i}(:, 2), RMuscleLocation{i}(:, 3), '.-', 'color', 'g', 'linewidth', 3);
+end
+% plot3(M1Locations(:, 1), M1Locations(:, 2), M1Locations(:, 3), '.-', 'color', 'r');
+% plot3(M2Locations(:, 1), M2Locations(:, 2), M2Locations(:, 3), '.-', 'color', 'r');
+% plot3(M3Locations(:, 1), M3Locations(:, 2), M3Locations(:, 3), '.-', 'color', 'r');
+% plot3(P1Locations(:, 1), P1Locations(:, 2), P1Locations(:, 3), '.-', 'color', 'g');
 axis(axisLimits)
 hold off

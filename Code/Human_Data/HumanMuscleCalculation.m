@@ -153,10 +153,11 @@ kneeMin = -2.0943951;
 kneeMax = 0.17453293;
 phi = linspace(kneeMin, kneeMax, iteration);
 
+
 for i = 1:iteration
     hipToKnee = [fcn1(phi(i)), fcn2(phi(i)), 0];
-    R(:, :, i, 2) = [cos(theta(i)), -sin(theta(i)), 0;
-                    sin(theta(i)), cos(theta(i)), 0;
+    R(:, :, i, 2) = [cos(phi(i)), -sin(phi(i)), 0;
+                    sin(phi(i)), cos(phi(i)), 0;
                     0, 0, 1];
     
     T(:, :, i, 2) = RpToTrans(R(:, :, i, 2), hipToKnee');
