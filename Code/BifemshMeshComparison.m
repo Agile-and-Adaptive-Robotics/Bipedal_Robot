@@ -15,7 +15,7 @@ addpath Functions
 addpath Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
-positions = 5;
+positions = 100;
 fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions)
 
 R = zeros(3, 3, positions);
@@ -78,7 +78,10 @@ fprintf('The algorithm will be calculating Torque between %d different mesh loca
 
 meshTracker = [0, 0];
 
-iC = 2;                     %Index variable for the cost function
+originalLocation = Location;
+
+iC = 1;                     %Index variable for the cost function
+CMaxPrev = -10^5;
 
 for i = 1:size(Tibia, 1)
     for ii = 1:size(Femur, 1)
@@ -90,10 +93,13 @@ for i = 1:size(Tibia, 1)
         Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
         TorqueR = Bifemsh_Pam.Torque;
         
-        C(iC) = costFunction(TorqueH, TorqueR);
+        C = costFunction(TorqueH, TorqueR);
         
-        if C(iC) == max(C)
-            Tracker = [i, ii];
+        if C > CMaxPrev
+            if isequal(Bifemsh_Pam.LengthCheck, 'Usable')
+                Tracker = [i, ii];
+                CMaxPrev = C;
+            end
         end
 
         iC = iC + 1;
@@ -104,13 +110,16 @@ end
 % This looks at the x, y, and z torque when rotating the hip through the x
 % and z axis. 
 
+if exist('Tracker', 'var') == 0
+    Location = originalLocation;
+else
+    Location(1, :) = Femur(Tracker(2), :);
+    Location(2, :) = Tibia(Tracker(1), :);
+end
 
 %Create variables for the x, y, and z toque
 zTorqueHxzRotation = zeros(length(phi));
 zTorqueRxzRotation = zeros(length(phi));
-
-Location(1, :) = Femur(Tracker(2), :);
-Location(2, :) = Tibia(Tracker(1), :);
 
 Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
 TorqueR = Bifemsh_Pam.Torque;

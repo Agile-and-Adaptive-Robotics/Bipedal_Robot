@@ -102,6 +102,8 @@ fprintf('The algorithm will be calculating Torque between %d different mesh loca
 
 meshTracker = [0, 0];
 
+originalLocation = Location;
+
 iC = 2;                     %Index variable for the cost function
 
 for i = 1:size(Tibia, 1)
@@ -128,13 +130,16 @@ end
 % This looks at the x, y, and z torque when rotating the hip through the x
 % and z axis. 
 
+if exist('Tracker', 'var') == 0
+    Location = originalLocation;
+else
+    Location(1, :) = Femur(Tracker(2), :);
+    Location(3, :) = Tibia(Tracker(1), :);
+end
 
 %Create variables for the x, y, and z toque
 zTorqueHxzRotation = zeros(length(phi));
 zTorqueRxzRotation = zeros(length(phi));
-
-Location(1, :) = Femur(Tracker(2), :);
-Location(2, :) = Tibia(Tracker(1), :);
 
 Vas_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
 TorqueR = Vas_Pam.Torque;

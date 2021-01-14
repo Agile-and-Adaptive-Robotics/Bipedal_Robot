@@ -165,8 +165,8 @@ classdef MonoPamData < handle
             restingPamLength = max(longestSeg) - 2*fittingLength;
             
             tendonLength = max(mL) - restingPamLength - 2*fittingLength;
-            if tendonLength < 0.02
-                tendonLength = 0.02;
+            if tendonLength < 0.04
+                tendonLength = 0.04;
             end
             
             %If there is only one muscle segment, make the segment length
@@ -193,23 +193,35 @@ classdef MonoPamData < handle
         %% -------------- Length Check --------------------------
         function lengthCheck = get.LengthCheck(obj)
             contraction = obj.Contraction;
-            maxContractPercent = 0.25;          %Contracting to 75% of length
-            minContractPercent = -0.1;          %Elongating to 110% of length
+            minContractPercent = 0.25;
+            maxContractPercent = -0.1;
             restingPamLength = obj.RestingL;
             
             if restingPamLength < 0
                 lengthCheck = 'Unusable';
             else
-                if max(contraction) <= maxContractPercent
-                    if min(contraction) >= minContractPercent
+                if min(contraction) <= minContractPercent
+                    if max(contraction) >= maxContractPercent
                         lengthCheck = 'Usable';
                     else
-                        lengthCheck = 'Unusable';
+                        lenghtCheck = 'Unusable';
                     end
                 else
                     lengthCheck = 'Unusable';
                 end
             end
+            
+            if min(contraction) <= contractPercent
+                if max(contraction) <= 1.1
+                    lengthCheck = 'Usable';
+                else
+                    lengthCheck = 'Unusable';
+                end
+            else
+                lengthCheck = 'Unusable';
+            end
+            
+            
         end
         
         %% -------------- Force --------------------------
