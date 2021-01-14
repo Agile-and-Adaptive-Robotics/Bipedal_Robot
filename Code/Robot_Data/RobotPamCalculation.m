@@ -12,7 +12,7 @@ addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
 %% ------------- Hip Muscles ----------------
 
 %% Abduction & Adduction
-iteration = 100;
+iteration = 2;
 R = zeros(3, 3, iteration);
 T = zeros(4, 4, iteration);
 adducMax = 30*pi/180;

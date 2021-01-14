@@ -27,7 +27,6 @@ for i = 1:length(xTorqueRzRotation)
     else
         zTorqueEzRotation(i) = zTorqueHzRotation(i) - zTorqueRzRotation(i);
     end
-    
 end
 
 figure

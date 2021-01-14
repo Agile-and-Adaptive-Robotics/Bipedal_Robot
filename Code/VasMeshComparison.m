@@ -15,7 +15,7 @@ addpath Functions
 addpath Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
-positions = 5;
+positions = 100;
 fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions)
 
 R = zeros(3, 3, positions);
@@ -104,7 +104,8 @@ meshTracker = [0, 0];
 
 originalLocation = Location;
 
-iC = 2;                     %Index variable for the cost function
+iC = 1;                     %Index variable for the cost function
+CMaxPrev = -10^5;
 
 for i = 1:size(Tibia, 1)
     for ii = 1:size(Femur, 1)
@@ -116,10 +117,13 @@ for i = 1:size(Tibia, 1)
         Vas_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
         TorqueR = Vas_Pam.Torque;
         
-        C(iC) = costFunction(TorqueH, TorqueR);
+        C = costFunction(TorqueH, TorqueR);
         
-        if C(iC) == max(C)
-            Tracker = [i, ii];
+        if C > CMaxPrev
+            if isequal(Vas_Pam.LengthCheck, 'Usable')
+                Tracker = [i, ii];
+                CMaxPrev = C;
+            end
         end
 
         iC = iC + 1;

@@ -15,7 +15,7 @@ addpath Functions
 addpath Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
-positions = 25;
+positions = 5;
 fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions*positions*positions)
 
 Rx = zeros(3, 3, positions);
@@ -217,12 +217,10 @@ end
 
 testAdductorOptimizationPlot
 
-HMuscleLocation = {Add_Mag1.Location, Add_Mag2.Location, Add_Mag3.Location};
-HMuscleCross = {Add_Mag1.Cross, Add_Mag2.Cross, Add_Mag3.Cross};
+HMuscleLocation = {Add_M.Location, Vas_Lat.Location, Vas_Med.Location};
+HMuscleCross = {Vas_Int.Cross, Vas_Lat.Cross, Vas_Med.Cross};
 
 RMuscleLocation = {Add_Mag_Pam.Location};
 RMuscleCross = {Add_Mag_Pam.Cross};
-
-Bones = {'Pelvis', 'Femur'};
 
 run("Bone_Mesh_Plots\MuscleBonePlotting")

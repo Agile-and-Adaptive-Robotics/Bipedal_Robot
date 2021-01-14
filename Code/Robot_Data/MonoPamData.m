@@ -29,7 +29,6 @@ classdef MonoPamData < handle
         LongestSegment
         MuscleLength
         RestingL
-%         TendonL
         Contraction
         LengthCheck
         UnitDirection

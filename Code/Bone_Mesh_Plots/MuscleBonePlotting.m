@@ -54,18 +54,38 @@ Calcaneus = Calcaneus*RotationM;
 Toes = Toes*RotationM;
 
 %% Calculate Muscle Locations
+if isequal(Bones{1}, 'Pelvis')
+    offset1 = 0;
+end
+
+if isequal(Bones{2}, 'Femur')
+    offset2 = Hip;
+end
+
 
 for i = 1:size(HMuscleLocation, 2)
-    HMuscleLocation{i}(1:HMuscleCross{i}-1, :) = HMuscleLocation{i}(1:HMuscleCross{i}-1, :) + Hip;
-    HMuscleLocation{i}(HMuscleCross{i}:end, :) = HMuscleLocation{i}(HMuscleCross{i}:end, :) + Hip + Knee;
+    HMuscleLocation{i}(1:HMuscleCross{i}-1, :) = HMuscleLocation{i}(1:HMuscleCross{i}-1, :) + offset1;
+    HMuscleLocation{i}(HMuscleCross{i}:end, :) = HMuscleLocation{i}(HMuscleCross{i}:end, :) + offset1 + offset2;
     HMuscleLocation{i} = HMuscleLocation{i}*RotationM;
 end
 
 for i = 1:size(RMuscleLocation, 2)
-    RMuscleLocation{i}(1:RMuscleCross{i}-1, :) = RMuscleLocation{i}(1:RMuscleCross{i}-1, :) + Hip;
-    RMuscleLocation{i}(RMuscleCross{i}:end, :) = RMuscleLocation{i}(RMuscleCross{i}:end, :) + Hip + Knee;
+    RMuscleLocation{i}(1:RMuscleCross{i}-1, :) = RMuscleLocation{i}(1:RMuscleCross{i}-1, :) + offset1;
+    RMuscleLocation{i}(RMuscleCross{i}:end, :) = RMuscleLocation{i}(RMuscleCross{i}:end, :) + offset1 + offset2;
     RMuscleLocation{i} = RMuscleLocation{i}*RotationM;
 end
+
+% for i = 1:size(HMuscleLocation, 2)
+%     HMuscleLocation{i}(1:HMuscleCross{i}-1, :) = HMuscleLocation{i}(1:HMuscleCross{i}-1, :) + Hip;
+%     HMuscleLocation{i}(HMuscleCross{i}:end, :) = HMuscleLocation{i}(HMuscleCross{i}:end, :) + Hip + Knee;
+%     HMuscleLocation{i} = HMuscleLocation{i}*RotationM;
+% end
+% 
+% for i = 1:size(RMuscleLocation, 2)
+%     RMuscleLocation{i}(1:RMuscleCross{i}-1, :) = RMuscleLocation{i}(1:RMuscleCross{i}-1, :) + Hip;
+%     RMuscleLocation{i}(RMuscleCross{i}:end, :) = RMuscleLocation{i}(RMuscleCross{i}:end, :) + Hip + Knee;
+%     RMuscleLocation{i} = RMuscleLocation{i}*RotationM;
+% end
 
 % M1Locations = Add_Mag1.Location;
 % M2Locations = Add_Mag2.Location;
