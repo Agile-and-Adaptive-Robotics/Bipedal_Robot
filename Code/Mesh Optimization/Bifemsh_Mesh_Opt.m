@@ -9,10 +9,10 @@ clear
 close all
 
 %% Add paths to the muscle and pam calculators
-addpath Human_Data
-addpath Robot_Data
-addpath Functions
-addpath Bone_Mesh_Plots\Open_Sim_Bone_Geometry
+addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Human_Data
+addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Robot_Data
+addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
+addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
 positions = 10;
@@ -124,12 +124,12 @@ TorqueRH = Bifemsh_PamH.Torque;
 
 phiD = phi*180/pi;
 
-TorqueEx = zeros(size(TorqueH, 1));
-TorqueEHx = zeros(size(TorqueH, 1));
-TorqueEy = zeros(size(TorqueH, 1));
-TorqueEHy = zeros(size(TorqueH, 1));
-TorqueEz = zeros(size(TorqueH, 1));
-TorqueEHz = zeros(size(TorqueH, 1));
+TorqueEx = zeros(size(TorqueH, 1), 1);
+TorqueEHx = zeros(size(TorqueH, 1),1 );
+TorqueEy = zeros(size(TorqueH, 1), 1);
+TorqueEHy = zeros(size(TorqueH, 1), 1);
+TorqueEz = zeros(size(TorqueH, 1), 1);
+TorqueEHz = zeros(size(TorqueH, 1), 1);
 
 for i = 1:size(TorqueR, 1)
     if TorqueH(i, 1) >= 0
@@ -165,38 +165,52 @@ subplot(3, 2, 1)
 plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3), phiD, TorqueRH(:, 3))
 legend('Human Muscle', 'Optimal BPA Location', 'BPA at Human Locations')
 title('Muscle and PAM Z Torque')
-legend('Human', 'PAM', 'PAM at Human Locations')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
+legend('Human', 'PAM', 'PAM at Human Locations', 'Location', 'best')
 
 subplot(3, 2, 2)
 plot(phiD, TorqueEz, phiD, TorqueEHz)
 legend('Optimal PAM Location', 'At Human Locations')
-title('Adjusted Error X Torque')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
+title('Adjusted Error Z Torque')
 
 subplot(3, 2, 3)
 plot(phiD, TorqueH(:, 2), phiD, TorqueR(:, 2), phiD, TorqueRH(:, 2))
 title('Muscle and PAM Y Torque')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
 legend('Human', 'PAM', 'PAM at Human Locations')
 
 subplot(3, 2, 4)
 plot(phiD, TorqueEy, phiD, TorqueEHy)
 legend('Optimal PAM Location', 'At Human Locations')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
 title('Adjusted Error Y Torque')
 
 subplot(3, 2, 5)
 plot(phiD, TorqueH(:, 1), phiD, TorqueR(:, 1), phiD, TorqueRH(:, 1))
 title('Muscle and PAM X Torque')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
 legend('Human', 'PAM', 'PAM at Human Locations')
 
 subplot(3, 2, 6)
 plot(phiD, TorqueEx, phiD, TorqueEHx)
 legend('Optimal PAM Location', 'At Human Locations')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
 title('Adjusted Error X Torque')
 
 hold off
 
+
 %% Plotting the angle between the vectors
-aHR = zeros(size(TorqueH, 1));
-aHRH = zeros(size(TorqueH, 1));
+
+aHR = zeros(size(TorqueH, 1), 1);
+aHRH = zeros(size(TorqueH, 1), 1);
 
 for i = 1:size(TorqueH, 1)
     uvecH = TorqueH(i, :)/norm(TorqueH(i, :));
@@ -207,17 +221,17 @@ for i = 1:size(TorqueH, 1)
     if norm(TorqueR(i, :)) == 0
         uvecR = -uvecH;
     else
-        uvecR = TorqueR(i, :)/norm(TorqueR(i, :, ii, iii));
+        uvecR = TorqueR(i, :)/norm(TorqueR(i, :));
     end
     
     if norm(TorqueRH(i, :)) == 0
         uvecRH = -uvecH;
     else
-        uvecRH = TorqueRH(i, :)/norm(TorqueRH(i, :);
+        uvecRH = TorqueRH(i, :)/norm(TorqueRH(i, :));
     end
     
-    aHR(i) = dot(TorqueH(i, :), TorqueR(i, :));
-    aHRH(i) = dot(TorqueH(i, :), TorqueRH(i, :));
+    aHR(i) = dot(uvecH, uvecR);
+    aHRH(i) = dot(uvecH, uvecRH);
 end
 
 
@@ -230,35 +244,6 @@ legend('Human and Optimal PAM', 'Human and PAM at Human Locations')
 ylabel('Radians')
 xlabel('Knee Angle, degree')
 hold off
-
-%% Plotting Torque Results
-% This looks at the x, y, and z torque when rotating the hip through the x
-% and z axis. 
-
-% if exist('Tracker', 'var') == 0
-%     Location = originalLocation;
-% else
-%     Location(1, :) = Femur(Tracker(2), :);
-%     Location(2, :) = Tibia(Tracker(1), :);
-% end
-% 
-% %Create variables for the x, y, and z toque
-% zTorqueHxzRotation = zeros(length(phi));
-% zTorqueRxzRotation = zeros(length(phi));
-% 
-% Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
-% TorqueR = Bifemsh_Pam.Torque;
-% 
-% zTorqueHzRotation = TorqueH(:, 3);
-% zTorqueRzRotation = TorqueR(:, 3);
-% 
-% yTorqueHzRotation = TorqueH(:, 2);
-% yTorqueRzRotation = TorqueR(:, 2);
-% 
-% xTorqueHzRotation = TorqueH(:, 1);
-% xTorqueRzRotation = TorqueR(:, 1);
-% 
-% oneDofJointTorquePlot
 
 %% Plotting on the Mesh Skeleton
 

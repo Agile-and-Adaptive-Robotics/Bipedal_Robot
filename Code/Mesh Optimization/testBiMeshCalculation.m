@@ -15,14 +15,15 @@ addpath Functions
 addpath Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
-positions = 25;
-fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions*positions*positions)
+positions = 2;
+fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions^6)
 
 Rx = zeros(3, 3, positions);
 Ry = zeros(3, 3, positions);
 Rz = zeros(3, 3, positions);
 T = zeros(4, 4, positions);
 
+% Hip rotations
 % Adduction/Abduction, X rotation
 adducMax = 20*pi/180;
 adducMin = -45*pi/180;
@@ -63,38 +64,60 @@ for iii = 1:length(gamma)
     end
 end
 
+%Knee Extension and Flexion
+knee_angle_x = [-2.0944; -1.74533; -1.39626; -1.0472; -0.698132; -0.349066; -0.174533;  0.197344;  0.337395;  0.490178;   1.52146;   2.0944];
+knee_x =       [-0.0032;  0.00179;  0.00411;  0.0041;   0.00212;    -0.001;   -0.0031; -0.005227; -0.005435; -0.005574; -0.005435; -0.00525];
+fcn1 = fit(knee_angle_x,knee_x,'cubicspline');
+knee_angle_y = [-2.0944; -1.22173; -0.523599; -0.349066; -0.174533;  0.159149; 2.0944];
+knee_y =       [-0.4226;  -0.4082;    -0.399;   -0.3976;   -0.3966; -0.395264; -0.396];
+fcn2 = fit(knee_angle_y,knee_y,'cubicspline');
+
+kneeMin = -2.0943951;
+kneeMax = 0.17453293;
+phi = linspace(kneeMin, kneeMax, positions);
+
+iAngle = 1;             %Tracking location of the knee joint
+    
+iT = 1;                 %Tracking location to place in the transformation Matrix
+
+for iii = 1:length(gamma)
+    for ii = 1:length(theta)
+        for i = 1:length(phi)
+            hipToKnee = [fcn1(phi(iAngle)), fcn2(phi(iAngle)), 0];
+            R(:, :, iT, 2) = [cos(theta(iAngle)), -sin(theta(iAngle)), 0;
+                            sin(theta(iAngle)), cos(theta(iAngle)), 0;
+                            0, 0, 1];
+
+            T(:, :, iT, 2) = RpToTrans(R(:, :, iT, 2), hipToKnee');
+            
+            iT = iT + 1;
+            
+            iAngle = iAngle + 1;
+            if iAngle > length(phi)
+                iAngle = 1;
+            end
+        end
+    end
+end
+
 %% Muscle calculation
-Name = 'Adductor Magnus 1';
-MIF = 381;
-OFL = 0.087; TSL = 0.06; Pennation = 0.08726646;
-Location = [-0.073, -0.117, 0.025;
-            -0.004, -0.121, 0.034];
-CrossPoint = 2;
-Add_Mag1 = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
+Name = 'Bicep Femoris (Long Head)';
+MIF = 896;
+OFL = 0.109; TSL = 0.326; Pennation = 0.0;
+Location = [-0.126, -0.103, 0.069;
+            -0.03, -0.036, 0.029;
+            -0.023, -0.056, 0.034];
+CrossPoint = [2, 2];
+Bifemlh = BiMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
-Name = 'Adductor Magnus 2';
-MIF = 343;
-OFL = 0.121; TSL = 0.12; Pennation = 0.05235988;
-Location = [-0.083, -0.119, 0.031;
-            0.005, -0.229, 0.023];
-CrossPoint = 2;
-Add_Mag2 = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
-
-Name = 'Adductor Magnus 3';
-MIF = 488;
-OFL = 0.131; TSL = 0.249; Pennation = 0.08726646;
-Location = [-0.111, -0.114, 0.049;
-            0.007, -0.384, -0.027];
-CrossPoint = 2;
-Add_Mag3 = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 %% PAM calculation
-Name = 'Adductor Magnus';
-Location = [-0.083, -0.119, 0.031;
-            0.005, -0.229, 0.023];
-CrossPoint = 2;
-Dia = 40;
-Add_Mag_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
+Name = 'Bicep Femoris (Long Head)';
+Location = [-0.126, -0.103, 0.069;
+            -0.023, -0.056, 0.034];
+CrossPoint = [2, 2];
+Dia = 20;
+Bifemlh_Pam = BiPamData(Name, Location, CrossPoint, Dia, T);
 
 %% Unstacking the Torques to identify specific rotations
 Torque1 = zeros(length(theta), 3, length(phi), length(gamma));

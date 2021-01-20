@@ -32,12 +32,12 @@ theta = linspace(adducMin, adducMax, positions);
 % Internal/External rotation, Y rotation
 rotationMax = 40*pi/180;
 rotationMin = -45*pi/180;
-phi = linspace(rotationMin, rotationMax, positions);
+phi = [rotationMin, 0, rotationMax];
 
 % Flexion/Extension, Z rotation
 flexMax = 85*pi/180;
 flexMin = -25*pi/180;
-gamma = linspace(flexMin, flexMax, positions);
+gamma = [flexMin, 0, flexMax];
 
 pelvisToHip = [-0.0707, -0.0661, 0.0835];
 

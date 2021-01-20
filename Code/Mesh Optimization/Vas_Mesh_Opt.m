@@ -9,10 +9,10 @@ clear
 close all
 
 %% Add paths to the muscle and pam calculators
-addpath Human_Data
-addpath Robot_Data
-addpath Functions
-addpath Bone_Mesh_Plots\Open_Sim_Bone_Geometry
+addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Human_Data
+addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Robot_Data
+addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
+addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
 positions = 10;
