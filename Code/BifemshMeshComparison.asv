@@ -195,7 +195,6 @@ title('Adjusted Error X Torque')
 hold off
 
 %% Plotting the angle between the vectors
-
 aHR = zeros(size(TorqueH, 1));
 aHRH = zeros(size(TorqueH, 1));
 
@@ -208,17 +207,17 @@ for i = 1:size(TorqueH, 1)
     if norm(TorqueR(i, :)) == 0
         uvecR = -uvecH;
     else
-        uvecR = TorqueR(i, :)/norm(TorqueR(i, :));
+        uvecR = TorqueR(i, :)/norm(TorqueR(i, :, ii, iii));
     end
     
     if norm(TorqueRH(i, :)) == 0
         uvecRH = -uvecH;
     else
-        uvecRH = TorqueRH(i, :)/norm(TorqueRH(i, :));
+        uvecRH = TorqueRH(i, :)/norm(TorqueRH(i, :);
     end
     
-    aHR(i) = dot(uvecH, uvecR);
-    aHRH(i) = dot(uvecH, uvecRH);
+    aHR(i) = dot(TorqueH(i, :), TorqueR(i, :));
+    aHRH(i) = dot(TorqueH(i, :), TorqueRH(i, :));
 end
 
 

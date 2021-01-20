@@ -56,10 +56,14 @@ Toes = Toes*RotationM;
 %% Calculate Muscle Locations
 if isequal(Bones{1}, 'Pelvis')
     offset1 = 0;
+elseif isequal(Bones{1}, 'Femur')
+    offset1 = Hip;
 end
 
 if isequal(Bones{2}, 'Femur')
     offset2 = Hip;
+elseif isequal(Bones{2}, 'Tibia')
+    offset2 = Knee;
 end
 
 

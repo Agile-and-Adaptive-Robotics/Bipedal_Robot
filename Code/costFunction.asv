@@ -18,7 +18,7 @@ function C = costFunction(TorqueH, TorqueR)
     % Set up the weights that will be used for the cost function. In the
     % future this might be an input variable.
     Gt = 1;     %Gain for the torque component
-    Ga = 10;     %Gain for the angle between vectors
+    Ga = 1;     %Gain for the angle between vectors
     
     % Sum the differences in torque between the human and robot
     Ct = 0;
@@ -47,15 +47,12 @@ function C = costFunction(TorqueH, TorqueR)
             for iii = 1:size(TorqueH, 4)
                 uvecH = TorqueH(i, :, ii, iii)/norm(TorqueH(i, :, ii, iii));
                 
-                %Sometimes the BPA can't produce any force due to high
-                %contraction. We will set it equal to negative the human
-                %vector to maximize the penalty. Consider changing later
                 if norm(TorqueR(i, :, ii, iii)) == 0
                     uvecR = -uvecH;
                 else
                     uvecR = TorqueR(i, :, ii, iii)/norm(TorqueR(i, :, ii, iii));
                 end
-                Ca = Ca + dot(uvecH, uvecR) - 1;      %Dot product ranges from 1 (aligned) to -1 (opposite direction). Using the -1, it shifts the range to 0-> -2
+                    Ca = Ca + dot(uvecH, uvecR) - 1;      %Dot product ranges from 1 (aligned) to -1 (opposite direction). Using the -1, it shifts the range to 0-> -2
             end
         end
     end
@@ -63,5 +60,5 @@ function C = costFunction(TorqueH, TorqueR)
     Ca = Ca/(i*ii*iii);
     
     % Sum the costs
-    C = -Gt*Ct - Ga*Ca;
+    C = Gt*Ct + Ga*Ca;
 end
