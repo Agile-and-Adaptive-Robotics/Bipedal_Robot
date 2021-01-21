@@ -15,7 +15,7 @@ addpath Functions
 addpath Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
-positions = 2;
+positions = 4;
 fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions^6)
 
 Rx = zeros(3, 3, positions);
@@ -27,7 +27,7 @@ T = zeros(4, 4, positions);
 % Adduction/Abduction, X rotation
 adducMax = 20*pi/180;
 adducMin = -45*pi/180;
-theta = linspace(adducMin, adducMax, positions);
+theta = [adducMin, 0, adducMax];
 
 % Internal/External rotation, Y rotation
 rotationMax = 40*pi/180;
@@ -74,31 +74,39 @@ fcn2 = fit(knee_angle_y,knee_y,'cubicspline');
 
 kneeMin = -2.0943951;
 kneeMax = 0.17453293;
-phi = linspace(kneeMin, kneeMax, positions);
+alpha = linspace(kneeMin, kneeMax, size(T, 3));
 
 iAngle = 1;             %Tracking location of the knee joint
     
 iT = 1;                 %Tracking location to place in the transformation Matrix
 
-for iii = 1:length(gamma)
-    for ii = 1:length(theta)
-        for i = 1:length(phi)
-            hipToKnee = [fcn1(phi(iAngle)), fcn2(phi(iAngle)), 0];
-            R(:, :, iT, 2) = [cos(theta(iAngle)), -sin(theta(iAngle)), 0;
-                            sin(theta(iAngle)), cos(theta(iAngle)), 0;
-                            0, 0, 1];
-
-            T(:, :, iT, 2) = RpToTrans(R(:, :, iT, 2), hipToKnee');
-            
-            iT = iT + 1;
-            
-            iAngle = iAngle + 1;
-            if iAngle > length(phi)
-                iAngle = 1;
-            end
-        end
-    end
+for i = 1:length(alpha)
+    hipToKnee = [fcn1(alpha(i)), fcn2(alpha(i)), 0];
+    R(:, :, i, 2) = [cos(alpha(i)), -sin(alpha(i)), 0;
+                    sin(alpha(i)), cos(alpha(i)), 0;
+                    0, 0, 1];
+    T(:, :, i, 2) = RpToTrans(R(:, :, i, 2), hipToKnee');
 end
+
+% for iii = 1:length(gamma)
+%     for ii = 1:length(theta)
+%         for i = 1:length(phi)
+%             hipToKnee = [fcn1(alpha(iAngle)), fcn2(alpha(iAngle)), 0];
+%             R(:, :, iT, 2) = [cos(alpha(iAngle)), -sin(alpha(iAngle)), 0;
+%                             sin(alpha(iAngle)), cos(alpha(iAngle)), 0;
+%                             0, 0, 1];
+% 
+%             T(:, :, iT, 2) = RpToTrans(R(:, :, iT, 2), hipToKnee');
+% 
+%             iT = iT + 1;
+% 
+%             iAngle = iAngle + 1;
+%             if iAngle > length(phi)
+%                 iAngle = 1;
+%             end
+%         end
+%     end
+% end
 
 %% Muscle calculation
 Name = 'Bicep Femoris (Long Head)';

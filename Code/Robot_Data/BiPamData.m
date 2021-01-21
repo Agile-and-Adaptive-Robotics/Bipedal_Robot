@@ -60,7 +60,7 @@ classdef BiPamData < handle
             T = obj.TransformationMat;
             segLengths = zeros(size(T, 3), size(T, 3), size(L, 1)-1);
             
-            for iii = 1:size(T, 4)                         %Repeat for all iterations of the second joint
+            for iii = 1:size(T, 3)                         %Repeat for all iterations of the second joint
                 for ii = 1:size(T, 3)                      %Repeat for all iterations of the first joint
                     currentCross = 1;
                     for i = 1:size(L, 1)-1                  %Repeat for each muscle segment
