@@ -71,7 +71,7 @@ TorqueR = Bifemsh_Pam.Torque;
 TorqueH = Torque1;
 
 %% First cost function calculation
-C = costFunctionKnee(TorqueH, TorqueR);
+C = costFunction(TorqueH, TorqueR);
 
 %% Generating new points for the PAM based on the bone mesh
 Femur = xlsread('Femur_Mesh_Points.xlsx');
@@ -96,7 +96,7 @@ for i = 1:size(Tibia, 1)
         Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
         TorqueR = Bifemsh_Pam.Torque;
         
-        C = costFunctionKnee(TorqueH, TorqueR);
+        C = costFunction(TorqueH, TorqueR);
         
         if C < CMaxPrev
             if isequal(Bifemsh_Pam.LengthCheck, 'Usable')
@@ -106,6 +106,62 @@ for i = 1:size(Tibia, 1)
         end
 
         iC = iC + 1;
+    end
+end
+
+%% Refining the Mesh Search
+if exist('Tracker', 'var') == 0
+    Location = originalLocation;
+else
+    Location(1, :) = Femur(Tracker(2), :);
+    Location(2, :) = Tibia(Tracker(1), :);
+end
+
+neg = [-1 1];
+epsilon = 0.01;
+refine = 0.75;
+
+LocationTracker = Location;
+
+%Change this to a while loop of reducing epsilon after testing 
+for i = 1:10
+    startingLocation = LocationTracker;
+    for k1 = 1:2
+        ep1(1) = epsilon*neg(k1);
+    for k2 = 1:2
+        ep1(2) = epsilon*neg(k2);
+    for k3 = 1:2
+        ep1(3) = epsilon*neg(k3);
+    for k4 = 1:2
+        ep2(1) = epsilon*neg(k4);
+    for k5 = 1:2
+        ep2(2) = epsilon*neg(k5);
+    for k6 = 1:2
+        ep2(3) = epsilon*neg(k6);
+        
+        Location(1, :) = startingLocation(1, :) + ep1;
+        Location(2, :) = startingLocation(2, :) + ep2;
+        
+        Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
+        TorqueR = Bifemsh_Pam.Torque;
+        
+        C = costFunction(TorqueH, TorqueR);
+        
+        if C < CMaxPrev
+            if isequal(Bifemsh_Pam.LengthCheck, 'Usable')
+                LocationTracker = Location;
+                CMaxPrev = C;
+            end
+        end
+        
+    end
+    end
+    end
+    end
+    end
+    end
+    if LocationTracker == startingLocation
+        epsilon = epsilon*refine;
     end
 end
 
@@ -255,4 +311,4 @@ RMuscleCross = {Bifemsh_Pam.Cross};
 
 Bones = {'Femur', 'Tibia'};
 
-run("MuscleBonePlotting")
+run("Bone_Mesh_Plots\MuscleBonePlotting")

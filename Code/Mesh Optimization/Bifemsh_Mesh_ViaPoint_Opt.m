@@ -15,7 +15,7 @@ addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
 addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
-positions = 10;
+positions = 100;
 fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions)
 
 R = zeros(3, 3, positions);
@@ -60,6 +60,7 @@ Dia = 20;
 Bifemsh_PamH = MonoPamData(Name, Location, CrossPoint, Dia, T);
 
 Location = [0.005, -0.211, 0.023;
+            -0.03, -0.036, 0.029;
             -0.023, -0.056, 0.034];
 Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
 
@@ -71,7 +72,7 @@ TorqueR = Bifemsh_Pam.Torque;
 TorqueH = Torque1;
 
 %% First cost function calculation
-C = costFunctionKnee(TorqueH, TorqueR);
+C = costFunction(TorqueH, TorqueR);
 
 %% Generating new points for the PAM based on the bone mesh
 Femur = xlsread('Femur_Mesh_Points.xlsx');
@@ -91,12 +92,12 @@ for i = 1:size(Tibia, 1)
         clc
         fprintf('%d \t of %d \n', iC, size(Tibia, 1)*size(Femur, 1))
         Location(1, :) = Femur(ii, :);
-        Location(2, :) = Tibia(i, :);
+        Location(3, :) = Tibia(i, :);
         
         Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
         TorqueR = Bifemsh_Pam.Torque;
         
-        C = costFunctionKnee(TorqueH, TorqueR);
+        C = costFunction(TorqueH, TorqueR);
         
         if C < CMaxPrev
             if isequal(Bifemsh_Pam.LengthCheck, 'Usable')
@@ -115,7 +116,7 @@ if exist('Tracker', 'var') == 0
     Location = originalLocation;
 else
     Location(1, :) = Femur(Tracker(2), :);
-    Location(2, :) = Tibia(Tracker(1), :);
+    Location(3, :) = Tibia(Tracker(1), :);
 end
 Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
 TorqueR = Bifemsh_Pam.Torque;
