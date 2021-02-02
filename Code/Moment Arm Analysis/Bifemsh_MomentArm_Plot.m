@@ -61,6 +61,7 @@ phiD = phi*180/pi;
 
 figure
 plot(phiD, BifemshMA)
+title('My Calculated Moment Arm Magnitude')
 
 for i = 1:(size(BifemshMA, 1)-1)
     ma(i) = (Bifemsh.MuscleLength(i)-Bifemsh.MuscleLength(i+1))/(phi(i)-phi(i+1));
@@ -74,21 +75,106 @@ figure
 hold on
 plot(phiD(1:end-1), -ma)
 plot(opD, opma)
+legend('Replicated Moment Arm Calculation', 'OpenSim Moment Arm')
+title('OpenSim Moment Arm')
 hold off
 
 figure
 hold on
 plot(phiD, maTest)
 plot(opD, opma)
+legend('My Torque/Scalar Force', 'OpenSim Moment Arm')
+title('OS Moment Arm Compared to Derived Moment Arm')
 hold off
 
 figure
 plot(phiD, Bifemsh.Torque(:, 3))
 
-TorqueZTest = ma*norm(Bifemsh.Force(1:end-1, :));
+TorqueZTest = -ma*norm(Bifemsh.Force(1:end-1, :));
 
 figure
 plot(phiD(1:end-1), TorqueZTest)
 
+Force = Bifemsh.Force;
 
+for i = 1:length(Force)
+    normForce(i) = norm(Force(i, :));
+end
 
+op = xlsread('Bifemsh_Force_OpenSim.xlsx');
+opf = op(:, 3);
+% opD = op(:, 2);
+
+figure
+hold on
+plot(phiD, normForce)
+plot(opD, opf)
+title('Muscle Force')
+legend('My Calculated Force', 'OS Force')
+hold off
+
+op = xlsread('Bifemsh_Torque_OpenSim.xlsx');
+opt = op(:, 3);
+
+figure
+plot(opD, opma)
+title('OpenSim Moment Arm')
+
+figure
+plot(opD, opf)
+title('OpenSim Force')
+
+figure
+plot(opD, opt)
+title('OpenSim Torque')
+
+opTcalc = opma.*opf;
+
+figure
+hold on
+plot(opD, opt)
+plot(opD, opTcalc)
+title('OpenSim torque and recreation')
+legend('Given T', 'Calced T')
+hold off
+
+op = xlsread('Bifemsh_TendonForce_OpenSim.xlsx');
+optf = op(:, 3);
+
+opTcalcTendon = opma.*optf;
+
+figure
+hold on
+plot(opD, opt)
+plot(opD, opTcalcTendon)
+title('OpenSim Torque and Tendon Recreation')
+legend('Given T', 'Calced T from Tendon Force')
+hold off
+
+figure
+hold on
+plot(opD, optf)
+plot(phiD, normForce)
+hold off
+
+myT = -ma.*normForce(1:end - 1);
+
+theirT = opma.*optf;
+
+figure
+hold on
+plot(opD, opt)
+plot(phiD(1:end-1), myT)
+% plot(opD, theirT)
+% legend('Given T', 'My Calced T', 'ma*tendon force')
+hold off
+
+figure
+plot(opD, opma)
+
+for i = 1:size(Bifemsh.Torque, 1)
+    Torque(i) = norm(Bifemsh.Torque(i, :));
+end
+
+figure
+plot(phiD, Torque)

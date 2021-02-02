@@ -1,21 +1,39 @@
-theta = deg2rad(linspace(0, 90));
-phi = pi/2 - theta/2;
+Sp = 85000;
+At = 0.606;
 
-x1 = cos(theta);
+Fi = 0.75*Sp*At*10^(-3)
 
-for i = 1:length(theta)
-    x2(i) = 1 - sin(theta(i))/tan(phi(i));
-end
+C = 1/6;
 
-figure
-hold on
-plot(theta, x1)
-plot(theta, x2, '.')
-legend('cos', 'sin/tan')
-hold off
+Fbmin = Fi;
 
-gamma = linspace(-2*pi, 2*pi);
-x3 = tan(gamma)
+Fbmax = Fi + C*10000*10^(-3)
 
-figure
-plot(gamma, x3)
+sigmin = Fbmin/At
+
+sigmax = Fbmax/At
+
+sigm = (sigmin + sigmax)/2
+
+siga = (sigmax - sigmin)/2
+
+sigi = Fi/At
+
+Se = 18.6;
+Sut = 120;
+
+n = Se*(Sut - sigi)/(Sut*siga + Se*(sigm - sigi))
+
+r = sqrt(2)
+
+Fdd = 12000/(4*r)
+
+Fby = 250 + sin(deg2rad(45))*Fdd
+
+Fbx = sin(deg2rad(45))*Fdd
+
+Fb = sqrt(Fby^2 + Fbx^2)
+
+tau = Fb/(pi/4*0.5^2)
+
+n = 0.577*57*10^3/tau

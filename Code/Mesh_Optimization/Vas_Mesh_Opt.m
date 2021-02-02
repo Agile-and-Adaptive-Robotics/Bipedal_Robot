@@ -15,7 +15,7 @@ addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
 addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
-positions = 10;
+positions = 100;
 fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions)
 
 R = zeros(3, 3, positions);
@@ -157,7 +157,7 @@ yTorqueRzRotation = TorqueR(:, 2);
 xTorqueHzRotation = TorqueH(:, 1);
 xTorqueRzRotation = TorqueR(:, 1);
 
-oneDofJointTorquePlot
+% oneDofJointTorquePlot
 
 HMuscleLocation = {Vas_Int.Location, Vas_Lat.Location, Vas_Med.Location};
 HMuscleCross = {Vas_Int.Cross, Vas_Lat.Cross, Vas_Med.Cross};
@@ -167,4 +167,4 @@ RMuscleCross = {Vas_Pam.Cross};
 
 Bones = {'Femur', 'Tibia'};
 
-run("Bone_Mesh_Plots\MuscleBonePlotting")
+run("MuscleBonePlotting")

@@ -164,8 +164,8 @@ classdef MonoPamData < handle
             restingPamLength = max(longestSeg) - 2*fittingLength;
             
             tendonLength = max(mL) - restingPamLength - 2*fittingLength;
-            if tendonLength < 0.02
-                tendonLength = 0.02;
+            if tendonLength < 0.08
+                tendonLength = 0.08;
             end
             
             %If there is only one muscle segment, make the segment length

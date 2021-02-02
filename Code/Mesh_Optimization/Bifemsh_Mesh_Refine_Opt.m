@@ -15,7 +15,7 @@ addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
 addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
-positions = 10;
+positions = 100;
 fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions)
 
 R = zeros(3, 3, positions);
@@ -32,6 +32,10 @@ fcn2 = fit(knee_angle_y,knee_y,'cubicspline');
 kneeMin = -2.0943951;
 kneeMax = 0.17453293;
 phi = linspace(kneeMin, kneeMax, positions);
+%We want one of our positions to be home position, so let's make the
+%smallest value of phi equal to 0
+[val, pos] = min(abs(phi));
+phi(pos) = 0;
 
 for i = 1:positions
     hipToKnee = [fcn1(phi(i)), fcn2(phi(i)), 0];
@@ -93,7 +97,8 @@ for i = 1:size(Tibia, 1)
         Location(1, :) = Femur(ii, :);
         Location(2, :) = Tibia(i, :);
         
-        Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
+        Bifemsh_Pam.Location = Location;
+%         Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
         TorqueR = Bifemsh_Pam.Torque;
         
         C = costFunctionKnee(TorqueH, TorqueR);
@@ -109,15 +114,69 @@ for i = 1:size(Tibia, 1)
     end
 end
 
-%% Plotting Torque Results
-
+% %% Refining the Mesh Search
 if exist('Tracker', 'var') == 0
     Location = originalLocation;
 else
     Location(1, :) = Femur(Tracker(2), :);
     Location(2, :) = Tibia(Tracker(1), :);
 end
-Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
+
+bestMeshLocation = Location;
+
+neg = [-1 1];
+epsilon = 0.01;
+refine = 0.75;
+
+LocationTracker = Location;
+
+%Change this to a while loop of reducing epsilon after testing 
+for i = 1:10
+    startingLocation = LocationTracker;
+    for k1 = 1:2
+        ep1(1) = epsilon*neg(k1);
+    for k2 = 1:2
+        ep1(2) = epsilon*neg(k2);
+    for k3 = 1:2
+        ep1(3) = epsilon*neg(k3);
+    for k4 = 1:2
+        ep2(1) = epsilon*neg(k4);
+    for k5 = 1:2
+        ep2(2) = epsilon*neg(k5);
+    for k6 = 1:2
+        ep2(3) = epsilon*neg(k6);
+        
+        Location(1, :) = startingLocation(1, :) + ep1;
+        Location(2, :) = startingLocation(2, :) + ep2;
+        
+        Bifemsh_Pam.Location = Location;
+        
+%         Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
+        TorqueR = Bifemsh_Pam.Torque;
+        
+        C = costFunctionKnee(TorqueH, TorqueR);
+        
+        if C < CMaxPrev
+            if isequal(Bifemsh_Pam.LengthCheck, 'Usable')
+                LocationTracker = Location;
+                CMaxPrev = C;
+            end
+        end
+        
+    end
+    end
+    end
+    end
+    end
+    end
+    if LocationTracker == startingLocation
+        epsilon = epsilon*refine;
+    end
+end
+
+%% Plotting Torque Results
+
+% Bifemsh_Pam.Location = LocationTracker;
 TorqueR = Bifemsh_Pam.Torque;
 
 TorqueRH = Bifemsh_PamH.Torque;
