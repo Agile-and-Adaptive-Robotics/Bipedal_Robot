@@ -15,7 +15,7 @@ addpath Functions
 
 
 %% Joint rotation transformation matrices
-positions = 10;
+positions = 5;
 fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions*positions*positions)
 
 Rx = zeros(3, 3, positions);
@@ -125,6 +125,8 @@ end
 TorqueH = Torque1 + Torque2 + Torque3;
 
 %% Plotting Torque Results
+% This looks at the x, y, and z torque when rotating the hip through the x
+% and z axis. 
 
 %Set up a mesh for x and y coordinates on the plot
 [mTheta, mGamma] = meshgrid(theta, gamma);
@@ -138,6 +140,8 @@ yTorqueRxzRotation = zeros(length(gamma), length(theta));
 
 zTorqueHxzRotation = zeros(length(gamma), length(theta));
 zTorqueRxzRotation = zeros(length(gamma), length(theta));
+
+
 
 for iii = 1:length(gamma)
     for i = 1:length(theta)
@@ -154,3 +158,64 @@ end
 
 testAdductorOptimizationPlot
 
+
+C = costFunction(TorqueH, TorqueR);
+
+%% Begin moving the location of the attachment points. 
+
+epsilon = 0.01;
+neg = [1, -1];
+startingLocation = Location;
+
+ep1 = zeros(1, 3);
+ep2 = zeros(1, 3);
+
+iC = 2;                                 %Index variable for cost function
+
+for iter = 1:1
+    for k1 = 1:2
+        ep1(1) = epsilon*neg(k1);
+    for k2 = 1:2
+        ep1(2) = epsilon*neg(k2);
+    for k3 = 1:2
+        ep1(3) = epsilon*neg(k3);
+    for k4 = 1:2
+        ep2(1) = epsilon*neg(k4);
+    for k5 = 1:2
+        ep2(2) = epsilon*neg(k5);
+    for k6 = 1:2
+        ep2(3) = epsilon*neg(k6);
+
+        Location(1, :) = startingLocation(1, :) + ep1;
+        Location(2, :) = startingLocation(2, :) + ep2;
+
+
+        Add_Mag_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
+        PAMTorque = Add_Mag_Pam.Torque;
+
+        j = 1;
+        for iii = 1:length(gamma)
+            for ii = 1:length(phi)
+                for i = 1:length(theta)
+                    TorqueR(i, :, ii, iii) = PAMTorque(j, :);
+
+                    j = j + 1;
+                end
+            end
+        end
+
+        C(iC) = costFunction(TorqueH, TorqueR);
+
+        iC = iC + 1;
+
+    end
+    end
+    end
+    end
+    end
+    end
+
+end
+
+figure
+plot(C)

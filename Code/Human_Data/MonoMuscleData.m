@@ -64,7 +64,7 @@ classdef MonoMuscleData
         end
         
         %% ------------- Muscle Length ------------------------
-%         %Function that calculates the muscle length, based
+        %Function that calculates the muscle length, based on muscle points
         function mL = computeMuscleLength(obj)
             L = obj.Location;
             C = obj.Cross;

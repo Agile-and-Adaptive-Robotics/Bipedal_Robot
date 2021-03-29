@@ -1,17 +1,39 @@
-% clc                 %Command Line Clear
-% clear               %Clear the workspace of stored variables
-% close all           %Close all open figures
-% 
+Sp = 85000;
+At = 0.606;
 
-sig = 15000/(1.75*0.25);
+Fi = 0.75*Sp*At*10^(-3)
 
-Kf = 1 + 0.95*(2.6 - 1);
+C = 1/6;
 
-sigMax = Kf * sig;
-sigMax = sigMax*10^(-3);
+Fbmin = Fi;
 
-a = (0.76 * 260)^2/25;
+Fbmax = Fi + C*10000*10^(-3)
 
-b = -1/3*log10(0.76*260/25);
+sigmin = Fbmin/At
 
-N = (sigMax/a)^(1/b)
+sigmax = Fbmax/At
+
+sigm = (sigmin + sigmax)/2
+
+siga = (sigmax - sigmin)/2
+
+sigi = Fi/At
+
+Se = 18.6;
+Sut = 120;
+
+n = Se*(Sut - sigi)/(Sut*siga + Se*(sigm - sigi))
+
+r = sqrt(2)
+
+Fdd = 12000/(4*r)
+
+Fby = 250 + sin(deg2rad(45))*Fdd
+
+Fbx = sin(deg2rad(45))*Fdd
+
+Fb = sqrt(Fby^2 + Fbx^2)
+
+tau = Fb/(pi/4*0.5^2)
+
+n = 0.577*57*10^3/tau

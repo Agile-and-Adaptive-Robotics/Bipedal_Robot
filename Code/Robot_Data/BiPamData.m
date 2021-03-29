@@ -18,6 +18,7 @@ classdef BiPamData < handle
         Diameter                    %Diameter of the BPA
         TransformationMat           %Contains a transformation matrix to change the 
         FittingLength
+        TendonL
     end
     
     %Dependent properties are those that are calculated by the explicit
@@ -28,7 +29,6 @@ classdef BiPamData < handle
         LongestSegment
         MuscleLength
         RestingL
-        TendonL
         Contraction
         LengthCheck
         UnitDirection
@@ -60,7 +60,7 @@ classdef BiPamData < handle
             T = obj.TransformationMat;
             segLengths = zeros(size(T, 3), size(T, 3), size(L, 1)-1);
             
-            for iii = 1:size(T, 4)                         %Repeat for all iterations of the second joint
+            for iii = 1:size(T, 3)                         %Repeat for all iterations of the second joint
                 for ii = 1:size(T, 3)                      %Repeat for all iterations of the first joint
                     currentCross = 1;
                     for i = 1:size(L, 1)-1                  %Repeat for each muscle segment
@@ -195,6 +195,7 @@ classdef BiPamData < handle
         
         %% -------------- Resting PAM Length ------------------------------
         function restingPamLength = get.RestingL(obj)
+            mL = obj.MuscleLength;
             dia = obj.Diameter;
             longestSeg = obj.LongestSegment;
             
@@ -208,7 +209,23 @@ classdef BiPamData < handle
             end
             
             obj.FittingLength = fittingLength;
-            restingPamLength = max(max(longestSeg)) - 2*fittingLength;   %The resting Pam length, needs to be accomodate the largest muscle length
+            
+            restingPamLength = max(max(longestSeg)) - 2*fittingLength;
+            
+            tendonLength = max(max(mL)) - restingPamLength - 2*fittingLength;
+            if tendonLength < 0.02
+                tendonLength = 0.02;
+            end
+            
+            %If there is only one muscle segment, make the segment length
+            %include the tendon length in the calculation for the resting
+            %PAM length
+            if size(obj.Location, 1) < 3
+                restingPamLength = restingPamLength - tendonLength;
+            end
+            
+            obj.TendonL = tendonLength;
+            
         end
         
         %% -------------- Tendon Length -----------------------------------
@@ -242,15 +259,24 @@ classdef BiPamData < handle
         %% -------------- Length Check ------------------------------------
         function lengthCheck = get.LengthCheck(obj)
             contraction = obj.Contraction;
-            contractPercent = 0.25;
+            maxContractPercent = 0.25;
+            minContractPercent = -0.1;
+            restingPamLength = obj.RestingL;
             
-            if min(min(contraction)) <= contractPercent
-                lengthCheck = 'Usable';
-            else
+            if restingPamLength < 0
                 lengthCheck = 'Unusable';
+            else
+                if max(max(contraction)) <= maxContractPercent
+                    if min(min(contraction)) >= minContractPercent
+                        lengthCheck = 'Usable';
+                    else
+                        lengthCheck = 'Unusable';
+                    end
+                else
+                    lengthCheck = 'Unusable';
+                end
             end
         end
-        
         %% -------------- Force --------------------------
         %Calculate the direction of the forced applied by the muscle
         function F = get.Force(obj)

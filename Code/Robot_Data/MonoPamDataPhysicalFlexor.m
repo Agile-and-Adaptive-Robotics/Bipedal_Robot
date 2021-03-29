@@ -7,7 +7,7 @@
 
 %Refer to https://www.mathworks.com/help/matlab/matlab_oop/example-representing-structured-data.html
 
-classdef MonoPamData < handle
+classdef MonoPamDataPhysicalFlexor < handle
     
     %% ------------Public Properties---------------------------
     %List of explicit properties for the muscles
@@ -41,7 +41,7 @@ classdef MonoPamData < handle
         %% ------------- Muscle Data Constructor -----------------
         %Constructor Function. By calling 'MuscleData' and entering the
         %muscle information, we construct an object for that muscle.
-        function PD = MonoPamData(name, location, cross, diameter, t)
+        function PD = MonoPamDataPhysicalFlexor(name, location, cross, diameter, t)
             if nargin > 0
                 PD.Name = name;
                 PD.Location = location;
@@ -146,34 +146,39 @@ classdef MonoPamData < handle
         
         %% -------------- Resting PAM Length --------------------------
         function restingPamLength = get.RestingL(obj)
-            mL = obj.MuscleLength;
-            dia = obj.Diameter;
-            longestSeg = obj.LongestSegment;
-           
-            %Calculate the Pam end cap fitting length (estimates currently)
-            if dia == 20
-                fittingLength = 0.025;
-            elseif dia == 40
-                fittingLength = 0.05;
-            else
-                fittingLength = 0.0125;
-            end
-
+            
+            restingPamLength = 0.36195;
+            fittingLength = 0.0254;
+            tendonLength = 0.142875;
+            
+%             mL = obj.MuscleLength;
+%             dia = obj.Diameter;
+%             longestSeg = obj.LongestSegment;
+%            
+%             %Calculate the Pam end cap fitting length (estimates currently)
+%             if dia == 20
+%                 fittingLength = 0.025;
+%             elseif dia == 40
+%                 fittingLength = 0.05;
+%             else
+%                 fittingLength = 0.0125;
+%             end
+% 
             obj.FittingLength = fittingLength;
-            
-            restingPamLength = max(longestSeg) - 2*fittingLength;
-            
-            tendonLength = max(mL) - restingPamLength - 2*fittingLength;
-            if tendonLength < 0.08
-                tendonLength = 0.08;
-            end
-            
-            %If there is only one muscle segment, make the segment length
-            %include the tendon length in the calculation for the resting
-            %PAM length
-            if size(obj.Location, 1) < 3
-                restingPamLength = restingPamLength - tendonLength;   %The resting Pam length, needs to be accomodate the largest muscle length
-            end
+%             
+%             restingPamLength = max(longestSeg) - 2*fittingLength;
+%             
+%             tendonLength = max(mL) - restingPamLength - 2*fittingLength;
+%             if tendonLength < 0.08
+%                 tendonLength = 0.08;
+%             end
+%             
+%             %If there is only one muscle segment, make the segment length
+%             %include the tendon length in the calculation for the resting
+%             %PAM length
+%             if size(obj.Location, 1) < 3
+%                 restingPamLength = restingPamLength - tendonLength;   %The resting Pam length, needs to be accomodate the largest muscle length
+%             end
             
             obj.TendonL = tendonLength;
         end

@@ -10,6 +10,7 @@ close all
 addpath('Open_Sim_Bone_Geometry')
 addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
 addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code
+addpath C:\users\Connor\Documents\GitHub\Bipedal_Robot\Code\Human_Data
 
 %% Retrieve the datasets
 Spine = xlsread('Spine_Mesh_Points.xlsx');
@@ -93,12 +94,14 @@ end
 
 Name = 'Gluteus Maximus 1';
 MIF = 573;
+OFL = 0.142; TSL = 0.125; Pennation = 0.08726646;
 Location = [-0.119, 0.061, 0.07;
             -0.129, 0.001, 0.089;
             -0.046, -0.025, 0.039;
             -0.028, -0.057, 0.047];
 CrossPoint = 3;
-Glut_Max1 = MonoMuscleData(Name, Location, CrossPoint, MIF, T); 
+Glut_Max1 = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T); 
+
 for i = 1:iteration
     Glut_Max1_Location(:, :, i) = Glut_Max1.Location;
 end
@@ -114,6 +117,7 @@ end
 
 Name = 'Rectus Femoris (Quadriceps)';   %The Location should be updated to reflect the moving patella points. For now it is static in the knee frame
 mif = 1169;
+Pennation = 0.08726646;
 Location = [-0.029, -0.031, 0.097;
             0.033, -0.403, 0.002;
             0.062, 0.021, 0.0014];
