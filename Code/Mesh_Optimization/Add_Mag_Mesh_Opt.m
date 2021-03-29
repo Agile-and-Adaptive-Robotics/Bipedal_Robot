@@ -17,7 +17,6 @@ addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Bone_Mesh_Plots\Open
 %% Joint rotation transformation matrices
 positions = 25;
 
-
 Rx = zeros(3, 3, positions);
 Ry = zeros(3, 3, positions);
 Rz = zeros(3, 3, positions);

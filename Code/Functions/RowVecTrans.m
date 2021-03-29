@@ -1,5 +1,5 @@
 function v = RowVecTrans(T,p)
-% Takes 4x4 transformation matrix R and 3x1 column vector p.
+% Takes 4x4 transformation matrix T and 3x1 row vector p.
 % Adds row to the column matrix p to get r
 % Multiplies transform T and vector r together to get vector s
 % Returns 3x1 column taking first three rows of vector s

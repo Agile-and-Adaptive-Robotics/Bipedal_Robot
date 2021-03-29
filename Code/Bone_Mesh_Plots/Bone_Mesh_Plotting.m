@@ -1,9 +1,12 @@
 % Bone_Mesh_Plotting
 % Author: Connor Morrow
 % Date: 10/14/2020
-% Description: This script pulls date from bone scans used for OpenSim to
+% Description: This script pulls data from bone scans used for OpenSim to
 % generate a pot matrix representation of the bone, and then plots the
 % muscle pathing on top of it.
+% This script is intended to go at the end of the optimization script. It
+% will also pull location data from a muscle and plot the muscle on the
+% skeletal structure. 
 
 addpath('Open_Sim_Bone_Geometry')
 
@@ -51,15 +54,6 @@ Calcaneus = Calcaneus*RotationM;
 Toes = Toes*RotationM;
 
 %% Take the data from the optimization and put it into the correct frame
-%---------- In Progress ------------
-% Bifemlh = [-0.126, -0.03, -0.023;
-%             -0.103, -0.036, -0.056;
-%             0.069, 0.029, 0.034];
-% 
-% Bifemlh = Bifemlh';
-% Bifemlh(2:3, :) = Bifemlh(2:3, :) + Hip + Knee; %2 is probably a cross point
-% 
-% Bifemlh = Bifemlh*RotationM;
 
 %Pull the best locations for the optimized muscles and prepare them for
 %plotting.

@@ -1,4 +1,4 @@
-% Muscle Data
+% Biarticular Muscle Data
 % Author: Connor Morrow
 % Date: 11/12/2020
 % Description: This script allows for creating reusable classes, which 
@@ -65,14 +65,14 @@ classdef BiMuscleData
         end
         
         %% ------------- Muscle Length ------------------------
-%         %Function that calculates the muscle length, based
+%         %Function that calculates the muscle length, based on muscle
+%         points
         function mL = computeMuscleLength(obj)
             L = obj.Location;
             C = obj.Cross;
             T = obj.TransformationMat;
-            
+          
             mL = zeros(size(T, 3), size(T, 3));
-
             
             for iii = 1:size(mL, 2)                         %Repeat for all iterations of the second joint
                 for ii = 1:size(mL, 1)                      %Repeat for all iterations of the first joint
@@ -117,13 +117,13 @@ classdef BiMuscleData
                         pointA = L(C(i)-1, :);
                         pointB = L(C(i), :);
                         if i > 1
-                            if C(i - 1) == C(i)
+                            if C(i - 1) == C(i)                 %Check if a single crossing oint spans two joints
                                 direction(ii, :, iii, i) = RowVecTrans((T(:, :, ii, i)*T(:, :, iii, i))\eye(4), pointA) - pointB;
                             else
                                 direction(ii, :, iii, i) = RowVecTrans(T(:, :, iii, i)\eye(4), pointA) - pointB;
                             end
                         else
-                            if C(i) == C(i+1)
+                            if C(i) == C(i+1)                   %Check if a single crossing point spans two joints
                                 direction(ii, :, iii, i) = RowVecTrans(T(:, :, ii, i)\eye(4), pointA) - RowVecTrans(T(:, :, iii, i+1), pointB);
                             else
                                 direction(ii, :, iii, i) = RowVecTrans(T(:, :, ii, i)\eye(4), pointA) - pointB;

@@ -61,8 +61,12 @@ Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
 Dia = 20;
-Location = [-0.005, -0.022, 0.002;
-            -0.011, -0.042, 0.024];
+% Location = [-0.005, -0.022, 0.002;
+%             -0.011, -0.042, 0.024];
+
+%Origin and Insertion from Ben
+Location = [-0.050, -0.045, 0.0328;
+            -0.01587, -0.035, 0.0328];
 Bifemsh_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
 
 %% Unstacking the Torques to identify specific rotations

@@ -87,10 +87,11 @@ Location = [0.030, -0.050, 0;
             0.034, -0.403, 0.005;
             0.0555, 0.025, 0.0018];
 CrossPoint = 3;
-Dia = 40;
-Vas_Pam = MonoPamData(Name, Location, CrossPoint, Dia, T);
+Dia = 10;
+Vas_Pam = MonoPamDataPhysicalExtensor(Name, Location, CrossPoint, Dia, T);
 
 %% Unstacking the Torques to identify specific rotations
+Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
 Torque1 = Vas_Int.Torque + Vas_Lat.Torque + Vas_Med.Torque;
 TorqueR = Vas_Pam.Torque;
 
