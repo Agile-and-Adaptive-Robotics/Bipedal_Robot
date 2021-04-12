@@ -7,7 +7,7 @@
 function [Data, Stats] = KneeTest(protocol_id)
 
 %Initialize serial port 
-s = serial('COM3', 'Baudrate', 9600);
+s = serial('COM4','Baudrate', 9600);
 
 %Open serial port s
 fopen(s);
@@ -25,7 +25,7 @@ end
 %prepare a cell array to receive ASCii data from the incoming buffer
 total = 6000;  
   %for protocol_id == '1', total == 150
-  %for protocol_id == '3', total needs to be at least 6000 for the system
+  %for protocol_id == '2', total needs to be at least 6000 for the system
   %to reach equilibrium
 svalues = cell (total,2);
 

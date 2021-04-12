@@ -42,7 +42,7 @@ Example using the SparkFun HX711 breakout board with a scale
 #define LOADCELL_DOUT_PIN 3  //define the Serial Data Output Pin
 #define LOADCELL_SCK_PIN 2  // define the Power Down and Serial Clock Input Pin
 
-HX711 scale
+HX711 scale;
 
 int choose_branch = 1; // initialize the variable "choose_branch"
 float calibration_factor = -15400; 
