@@ -7,7 +7,7 @@
 function [Data, Stats] = KneeTest(protocol_id)
 
 %Initialize serial port 
-s = serial('COM4','Baudrate', 9600);
+s = serialport('COM4', 9600);
 
 %Open serial port s
 fopen(s);
@@ -17,7 +17,7 @@ fopen(s);
 %command should be needed, but when this is the case, there seems to a 
 %timing issue with Arduino. The While statement was constructed as a work 
 % around
-while (s.BytesAvailable == 0)
+while (s.NumBytesAvailable == 0)
     fwrite(s, protocol_id)
 end
 
@@ -73,4 +73,4 @@ Stats(3,1) = mode(data(5500:5999,1));
 Stats(4,1) = std(data(5500:5999,1));
 Stats;
 
-fclose(s)
+%fclose(s)
