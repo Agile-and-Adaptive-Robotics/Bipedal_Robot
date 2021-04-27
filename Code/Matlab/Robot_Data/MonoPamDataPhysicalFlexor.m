@@ -147,35 +147,35 @@ classdef MonoPamDataPhysicalFlexor < handle
         %% -------------- Resting PAM Length --------------------------
         function restingPamLength = get.RestingL(obj)
             
-            restingPamLength = 0.36195;
-            fittingLength = 0.0254;
-            tendonLength = 0.142875;
+            restingPamLength = 0.362;
+%            fittingLength = 0.0254;
+%            tendonLength = 0.142875;
             
-%             mL = obj.MuscleLength;
-%             dia = obj.Diameter;
-%             longestSeg = obj.LongestSegment;
+            mL = obj.MuscleLength;
+            dia = obj.Diameter;
+            longestSeg = obj.LongestSegment;
 %            
-%             %Calculate the Pam end cap fitting length (estimates currently)
-%             if dia == 20
-%                 fittingLength = 0.025;
-%             elseif dia == 40
-%                 fittingLength = 0.05;
-%             else
-%                 fittingLength = 0.0125;
-%             end
-% 
+            %Calculate the Pam end cap fitting length (estimates currently)
+            if dia == 20
+                fittingLength = 0.0254;
+            elseif dia == 40
+                fittingLength = 0.0254;
+            else
+                fittingLength = 0.0254;
+            end
+
             obj.FittingLength = fittingLength;
 %             
-%             restingPamLength = max(longestSeg) - 2*fittingLength;
-%             
-%             tendonLength = max(mL) - restingPamLength - 2*fittingLength;
-%             if tendonLength < 0.08
-%                 tendonLength = 0.08;
-%             end
-%             
-%             %If there is only one muscle segment, make the segment length
-%             %include the tendon length in the calculation for the resting
-%             %PAM length
+%            restingPamLength = max(longestSeg) - 2*fittingLength;
+            
+            tendonLength = max(mL) - restingPamLength - 2*fittingLength;
+            if tendonLength < 0.01
+                tendonLength = 0;
+            end
+            
+            %If there is only one muscle segment, make the segment length
+            %include the tendon length in the calculation for the resting
+            %PAM length
 %             if size(obj.Location, 1) < 3
 %                 restingPamLength = restingPamLength - tendonLength;   %The resting Pam length, needs to be accomodate the largest muscle length
 %             end
@@ -222,6 +222,9 @@ classdef MonoPamDataPhysicalFlexor < handle
             dia = obj.Diameter;
             unitD = obj.UnitDirection;
             contract = obj.Contraction;
+            contraction = obj.Contraction;
+            maxContractPercent = 0.25;          %Contracting to 75% of length
+            minContractPercent = -0.1;          %Elongating to 110% of length
             
             if dia == 20
                 x = [0, 0.07, 0.11, 0.15, 0.25]';
@@ -234,17 +237,18 @@ classdef MonoPamDataPhysicalFlexor < handle
             else
                 x = [0, 0.1, 0.17, 0.25]';
                 y = [630, 300, 150, 0]';
-                BPAFit = fit(x, y, 'exp2');
+                BPAFit = fit(x, y, 'linearinterp');
             end
 
-            scalarForce = BPAFit(contract);
+            scalarForce = BPAFit(contract)
             
             F = zeros(size(unitD));
             for i = 1:size(unitD, 1)
                 if scalarForce(i) <= 0
                     scalarForce(i) = 0;
+                else
+                    F(i, :) = unitD(i, :)*scalarForce(i);  
                 end
-                F(i, :) = unitD(i, :)*scalarForce(i);
             end
         end
         
