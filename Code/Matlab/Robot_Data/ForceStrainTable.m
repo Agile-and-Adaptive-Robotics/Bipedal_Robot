@@ -30,6 +30,6 @@ ForceStrain = [0	4.2805	32.333	60.386	88.438	116.49	144.54	172.6	200.65	228.7	25
 1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0];
 
 RelativeStrain = ForceStrain(:,1);
-Force = ForceStrain(:,20);
+Force2 = ForceStrain(:,20);
 
 save ForceStrainTable.mat
