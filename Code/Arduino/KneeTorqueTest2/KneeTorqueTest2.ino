@@ -73,7 +73,10 @@ void loop()
   {  char choose_branch = Serial.read(); // read the serial data into variable "choose_branch"
       if (choose_branch == '2')  // If choose_branch is equal to '2', iterate through the following for loop
       {  for (int i = 0; i <1500; i++)
+        // Write the data points, followed by the terminator "Carriage Return" and "Linefeed".
          {    Serial.println(scale.get_units(), 1); //scale.get_units() returns a float
+              Serial.write(13);
+              Serial.write(10);
          }
       }
   }
