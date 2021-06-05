@@ -73,7 +73,7 @@ Location = [0.005, -0.211, 0.023;
             -0.03, -0.036, 0.029;
             -0.023, -0.056, 0.034];
 CrossPoint = 2;
-Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
+Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T_Pam);
 
 %% PAM calculation
 Name = 'Bicep Femoris (Short Head)';
