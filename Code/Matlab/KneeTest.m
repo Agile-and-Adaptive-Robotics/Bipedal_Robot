@@ -6,6 +6,7 @@
 
 function [Data, Stats] = KneeTest(protocol_id)
 
+
 %Initialize serial port 
 s = serial('COM4','Baudrate', 9600);
 
@@ -23,7 +24,7 @@ end
 
 
 %prepare a cell array to receive ASCii data from the incoming buffer
-total = 6000;  
+total = 1500;  
   %for protocol_id == '1', total == 150
   %for protocol_id == '2', total needs to be at least 6000 for the system
   %to reach equilibrium
@@ -66,11 +67,13 @@ ylabel('Force(N)')
 
 % **NOTE: If protocol_id == '1', either comment out the following code,
 % or change the range of data on which the basic statistics are calculated.
+beg = total-500;
+fin = total -1;
 Stats = zeros(4,1);
-Stats(1,1) = mean(data(5500:5999,1));
-Stats(2,1) = median(data(5500:5999,1));
-Stats(3,1) = mode(data(5500:5999,1));
-Stats(4,1) = std(data(5500:5999,1));
+Stats(1,1) = mean(data(beg:fin,1));
+Stats(2,1) = median(data(beg:fin,1));
+Stats(3,1) = mode(data(beg:fin,1));
+Stats(4,1) = std(data(beg:fin,1));
 Stats;
 
 fclose(s)

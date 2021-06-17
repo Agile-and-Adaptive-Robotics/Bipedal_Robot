@@ -1,0 +1,66 @@
+# hugin project file
+#hugin_ptoversion 2
+p f0 w214 h183 v46  E0 R0 S7,213,2,153 n"TIFF_m c:LZW r:CROP"
+m i0
+
+# image lines
+#-hugin  cropFactor=1
+i w300 h225 f0 v45 Ra0 Rb0 Rc0 Rd0 Re0 Eev0 Er1 Eb1 r-1.78887680274481 p2.84872071384178 y0.268883783180782 TrX0 TrY0 TrZ0 Tpy0 Tpp0 j0 a0 b0 c0 d0 e0 g0 t0 Va1 Vb0 Vc0 Vd0 Vx0 Vy0  Vm5 n"Tutorial2_3.jpg"
+
+
+# specify variables that should be optimized
+v Ra0
+v Rb0
+v Rc0
+v Rd0
+v Re0
+v r0
+v p0
+v Vb0
+v Vc0
+v Vd0
+v
+
+
+# control points
+c n0 N0 x288.605769230769 y136.298076923077 X18.1730769230769 Y127.211538461538 t2
+c n0 N0 x12.5480769230769 y125.048076923077 X13.8461538461538 Y44.1346153846154 t1
+c n0 N0 x22.8461538461538 y14.8846153846154 X279.346153846154 Y27.3461538461538 t2
+c n0 N0 x9.95192307692308 y192.980769230769 X264 Y200 t2
+c n0 N0 x22.8461538461538 y174.461538461538 X291.201923076923 Y183.028846153846 t2
+c n0 N0 x20.7692307692308 y36 X271.730769230769 Y46.0384615384615 t2
+c n0 N0 x286.269230769231 y55.0384615384615 X289.730769230769 Y132.923076923077 t1
+c n0 N0 x192 y52 X194.734936391301 Y118.065159758085 t1
+c n0 N0 x204.576923076923 y129.807692307692 X203 Y62 t1
+c n0 N0 x109 y48 X110.34964109878 Y111.613609422604 t1
+c n0 N0 x101 y125 X99.1651703401755 Y58.2965529930484 t1
+c n0 N0 x13 y64 X12.9632241119388 Y105.924105918541 t1
+
+#hugin_optimizeReferenceImage 0
+#hugin_blender enblend
+#hugin_remapper nona
+#hugin_enblendOptions 
+#hugin_enfuseOptions 
+#hugin_hdrmergeOptions -m avg -c
+#hugin_verdandiOptions 
+#hugin_outputLDRBlended true
+#hugin_outputLDRLayers false
+#hugin_outputLDRExposureRemapped false
+#hugin_outputLDRExposureLayers false
+#hugin_outputLDRExposureBlended false
+#hugin_outputLDRStacks false
+#hugin_outputLDRExposureLayersFused false
+#hugin_outputHDRBlended false
+#hugin_outputHDRLayers false
+#hugin_outputHDRStacks false
+#hugin_outputLayersCompression LZW
+#hugin_outputImageType tif
+#hugin_outputImageTypeCompression LZW
+#hugin_outputJPEGQuality 90
+#hugin_outputImageTypeHDR exr
+#hugin_outputImageTypeHDRCompression LZW
+#hugin_outputStacksMinOverlap 0.7
+#hugin_outputLayersExposureDiff 0.5
+#hugin_outputRangeCompression 0
+#hugin_optimizerMasterSwitch 0
+#hugin_optimizerPhotoMasterSwitch 21
