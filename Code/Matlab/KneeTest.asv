@@ -43,8 +43,8 @@ end
 %svalues into a numeric array
 a = 1;
 while ~isempty(svalues{a}) && a<total
-        data(a,1) = str2num(svalues{a,1})*4.4482216; %%Convert lb to N
-        data(a,2) = str2num(svalues{a,2});
+        data(a,1) = str2num(svalues{a,1})*4.4482216;    %Convert lb to N
+        data(a,2) = str2num(svalues{a,2})*395/512-115;  %convert analog input to kPa
         data(a,3) = svalues{a,3};
         a = a+1;
 end
@@ -89,5 +89,6 @@ Stats(2,2) = median(data(5500:5999,2));
 Stats(3,2) = mode(data(5500:5999,2));
 Stats(4,2) = std(data(5500:5999,2));
 Stats;
+end
 }
 fclose(s)
