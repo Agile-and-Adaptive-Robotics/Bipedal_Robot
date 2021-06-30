@@ -74,6 +74,7 @@ void loop()
       if (choose_branch == '2')  // If choose_branch is equal to '2', iterate through the following for loop
       {  for (int i = 0; i <6000; i++)
          {    Serial.println(scale.get_units(), 1); //scale.get_units() returns a float
+              Serial.println(analogRead(A0));
          }
       }
   }
