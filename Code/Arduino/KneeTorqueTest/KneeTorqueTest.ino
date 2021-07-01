@@ -50,9 +50,11 @@ float calibration_factor = -15400;
    // Calibration factor found using a separate arduino sketch 
    // called SLoadCell_CalibrationFactorSketch"
 
+int total = 2000;
 
 void setup() {
-
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
   Serial.begin(9600);  // initialize arduino serial communication
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN); // initialize load cell 
   scale.set_scale(calibration_factor); 
@@ -63,22 +65,26 @@ void setup() {
     //This sets the offset value to a known zero.
     //There is no need for taring the scale once the zero point is known for a scale in a
     // set configuration.
-    // The Zero Factor -17200 was found using a separate Arduino Sketch 
+    // The Zero Factor -17200 was found using a separate Arduino Sketch              m  
     //called "SLoadCell_ZeroFactorSketch"
 }
 
 void loop() 
 {
-  if (Serial.available()) // if information is sent over serial from matlab
-  {  char choose_branch = Serial.read(); // read the serial data into variable "choose_branch"
-      if (choose_branch == '2')  // If choose_branch is equal to '2', iterate through the following for loop
-      {  for (int i = 0; i <6000; i++)
-         {    Serial.println(scale.get_units(), 1); //scale.get_units() returns a float
-              Serial.println(analogRead(A0));
+  if (Serial.available() > 0) { // if information is sent over serial from matlab
+      char choose_branch = Serial.read(); // read the serial data into variable "choose_branch"
+      digitalWrite(LED_BUILTIN, HIGH);
+        if (choose_branch == '2')  // If choose_branch is equal to '2', iterate through the following for loop
+        {
+          double start = millis();
+          for (int i = 0; i < total; i++) {
+            Serial.println(scale.get_units(), 1); //scale.get_units() returns a float
+            Serial.println(analogRead(A0));
+            Serial.println(millis()-start);
          }
       }
-  }
-  else  //if there is no information to read over serial from matlab, wait...
+  } else  //if there is no information to read over serial from matlab, wait...
   {  while(Serial.available() <1);
+  
   }
 }
