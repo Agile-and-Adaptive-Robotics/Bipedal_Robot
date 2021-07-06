@@ -50,7 +50,6 @@ float calibration_factor = -15400;
    // Calibration factor found using a separate arduino sketch 
    // called SLoadCell_CalibrationFactorSketch"
 
-int total = 2000;
 
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
@@ -65,26 +64,37 @@ void setup() {
     //This sets the offset value to a known zero.
     //There is no need for taring the scale once the zero point is known for a scale in a
     // set configuration.
-    // The Zero Factor -17200 was found using a separate Arduino Sketch              m  
+    // The Zero Factor -17200 was found using a separate Arduino Sketch  
     //called "SLoadCell_ZeroFactorSketch"
 }
 
 void loop() 
+
 {
-  if (Serial.available() > 0) { // if information is sent over serial from matlab
+  if (Serial.available() > 0) { // if information is sent over serial from matlab]
       char choose_branch = Serial.read(); // read the serial data into variable "choose_branch"
-      digitalWrite(LED_BUILTIN, HIGH);
         if (choose_branch == '2')  // If choose_branch is equal to '2', iterate through the following for loop
-        {
+        {          
+          digitalWrite(LED_BUILTIN, HIGH);
+          delay(500);
+          while (Serial.available() > 0) {
+            Serial.read();
+            digitalWrite(LED_BUILTIN, LOW);
+            delay(100);
+          }
+          digitalWrite(LED_BUILTIN,HIGH);
+          String tests = Serial.readString();
+          int total = tests.toInt();
+
           double start = millis();
           for (int i = 0; i < total; i++) {
             Serial.println(scale.get_units(), 1); //scale.get_units() returns a float
-            Serial.println(analogRead(A0));
-            Serial.println(millis()-start);
+            Serial.println(analogRead(A0));       //reads raw pressure sensor data
+            Serial.println(millis()-start);       //record time stamp of data
          }
-      }
+        }
   } else  //if there is no information to read over serial from matlab, wait...
-  {  while(Serial.available() <1);
-  
+  { 
+  digitalWrite(LED_BUILTIN, LOW);
   }
 }
