@@ -20,12 +20,12 @@ https://github.com/bogde/HX711/tree/master/src
 
 HX711 scale;
 
-float calibration_factor = -15400; // initialize variable calibration_factor to some guess value
+float calibration_factor = -21000; // initialize variable calibration_factor to some guess value
 
 
 void setup() {
 
-  Serial.begin(9600);  // initialize arduino serial communication
+  Serial.begin(115200);  // initialize arduino serial communication
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN); // initialize load cell 
   scale.set_scale(); //set the scale value; 
     //this value is used to convert the raw
