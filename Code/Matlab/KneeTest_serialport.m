@@ -8,7 +8,7 @@ function [Data, Stats] = KneeTest_serialport(protocol_id)
 
 
 %Initialize serial port 
-s = serialport("COM4",9600);
+s = serialport("COM8",9600);
 flush(s);
 s.UserData = struct("Force",[],"Time",[],"Count",1);
 total = 1500; 

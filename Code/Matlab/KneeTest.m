@@ -8,7 +8,7 @@ function [Data, Stats] = KneeTest(protocol_id)
 
 
 %Initialize serial port 
-s = serial('COM4','Baudrate', 9600);
+s = serial('COM8','Baudrate', 9600);
 
 %Open serial port s
 fopen(s);
