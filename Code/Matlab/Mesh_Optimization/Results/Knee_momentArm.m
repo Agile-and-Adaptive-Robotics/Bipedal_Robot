@@ -8,9 +8,19 @@ arms = fcn(measured_ang)
 Torque_measured = -1*[7.113136537	6.665293601	6.340343593	4.71060257	4.449527719	3.539596694	2.901372937	2.480600054	2.194234049	1.718798005	1.412978615	0.92945505	0.586381564	0.390128872	0.099186634];
 
 figure
-plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3), measured_ang, Torque_measured, '*')
-legend('Human Muscle', 'Calculated BPA', 'Measured BPA')
+a = plot(phiD, TorqueH(:, 3));
+hold on
 title('Muscle and PAM Z Torque')
 xlabel('Knee Extension/Rotation, degrees')
 ylabel('Torque, Nm')
 legend('Human', 'BPA Calc', 'BPA measured')
+ax = gca;
+ax.FontSize = 32;
+ax.FontName = 'Times New Roman';
+ax.FontWeight = 'bold';
+ax.LineWidth = 5;
+fig = gcf;
+b = plot(phiD, TorqueR(:, 3),'--');
+c = plot(measured_ang, Torque_measured, '*');
+legend('Human Muscle', 'Calculated BPA', 'Measured BPA')
+hold off
