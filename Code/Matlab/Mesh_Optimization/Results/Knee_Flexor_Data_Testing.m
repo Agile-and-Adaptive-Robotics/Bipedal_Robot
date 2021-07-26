@@ -4,9 +4,9 @@
 % placement
 
 %% Freshen up the workspace
-% clc
+clc
 clear
-% close all
+close all
 
 %% Add paths to the muscle and pam calculators
 current_dir = cd;
@@ -34,6 +34,12 @@ fcn1 = fit(knee_angle_x,knee_x,'cubicspline');
 knee_angle_y = [-2.0944; -1.22173; -0.523599; -0.349066; -0.174533;  0.159149; 2.0944];
 knee_y =       [-0.4226;  -0.4082;    -0.399;   -0.3976;   -0.3966; -0.395264; -0.396];
 fcn2 = fit(knee_angle_y,knee_y,'cubicspline');
+knee_angle = [0.17; 0.09; 0.03; 0.00; -0.09; -0.17; -0.26; -0.52; -0.79; -1.05; -1.31; -1.57; -1.83; -2.09; -2.36; -2.62];
+knee_x_Pam =     [-0.00711	-0.00968	-0.01112	-0.01203	-0.01414	-0.01604	-0.01772	-0.02153	-0.02371	-0.02455	-0.02433	-0.02329	-0.02161	-0.01935	-0.0165	-0.01288]';
+fcn3 = fit(knee_angle,knee_x_Pam,'cubicspline');
+knee_y_Pam =     [-0.44754	-0.44531	-0.44392	-0.44297	-0.44053	-0.43802	-0.43546	-0.42767	-0.42002	-0.41281	-0.40617	-0.40012	-0.39461	-0.38953	-0.38473 -0.38006]';
+fcn4 = fit(knee_angle,knee_y_Pam,'cubicspline');
+
 
 kneeMin = -2.0943951;
 kneeMax = 0.17453293;
@@ -50,6 +56,13 @@ for i = 1:positions
                     0, 0, 1];
     
     T(:, :, i) = RpToTrans(R(:, :, i), hipToKnee');
+    
+    hipToKnee_Pam = [fcn3(phi(i)), fcn4(phi(i)), 0];
+    R_Pam(:, :, i) = [cos(phi(i)), -sin(phi(i)), 0;
+                    sin(phi(i)), cos(phi(i)), 0;
+                    0, 0, 1];
+    
+    T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');
 end
 
 %% Muscle calculation
@@ -60,7 +73,7 @@ Location = [0.005, -0.211, 0.023;
             -0.03, -0.036, 0.029;
             -0.023, -0.056, 0.034];
 CrossPoint = 2;
-Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
+Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T_Pam);
 
 %% PAM calculation
 Name = 'Bicep Femoris (Short Head)';
@@ -72,7 +85,7 @@ Dia = 10;
 %Origin and Insertion from Ben
 Location = [-0.050, -0.045, 0.0328;
             -0.01587, -0.035, 0.0328];
-Bifemsh_Pam = MonoPamDataPhysicalFlexor(Name, Location, CrossPoint, Dia, T);
+Bifemsh_Pam = MonoPamDataPhysicalFlexor(Name, Location, CrossPoint, Dia, T_Pam);
 
 figure
 plot(phi,Bifemsh_Pam.MuscleLength)
@@ -89,121 +102,121 @@ TorqueR = Bifemsh_Pam.Torque;
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
 
-% %% Plotting Torque Results
-% phiD = phi*180/pi;
-% 
-% TorqueEx = zeros(size(TorqueH, 1), 1);
-% TorqueEy = zeros(size(TorqueH, 1), 1);
-% TorqueEz = zeros(size(TorqueH, 1), 1);
-% 
-% for i = 1:size(TorqueR, 1)
-%     if TorqueH(i, 1) >= 0
-%         TorqueEx(i) = TorqueR(i, 1) - TorqueH(i, 1);
-%     else
-%         TorqueEx(i) = TorqueH(i, 1) - TorqueR(i, 1);
-%     end
-%     
-%     if TorqueH(i, 2) >= 0
-%         TorqueEy(i) = TorqueR(i, 2) - TorqueH(i, 2);
-%     else
-%         TorqueEy(i) = TorqueH(i, 2) - TorqueR(i, 2);
-%     end
-%     
-%     if TorqueH(i, 3) >= 0
-%         TorqueEz(i) = TorqueR(i, 3) - TorqueH(i, 3);
-%     else
-%         TorqueEz(i) = TorqueH(i, 3) - TorqueR(i, 3);
-%     end
-% end
-% 
-% figure
-% hold on
-% sgtitle('Bicep Femoris Short Head Torque through Knee Flexion and Extension')
-% 
-% subplot(3, 2, 1)
-% plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3))
-% legend('Human Muscle', 'Optimal BPA Location')
-% title('Muscle and PAM Z Torque')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% legend('Human', 'PAM', 'best')
-% 
-% subplot(3, 2, 2)
-% plot(phiD, TorqueEz)
-% legend('Optimal PAM Location')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% title('Adjusted Error Z Torque')
-% 
-% subplot(3, 2, 3)
-% plot(phiD, TorqueH(:, 2), phiD, TorqueR(:, 2))
-% title('Muscle and PAM Y Torque')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% legend('Human', 'PAM')
-% 
-% subplot(3, 2, 4)
-% plot(phiD, TorqueEy)
-% legend('Optimal PAM Location')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% title('Adjusted Error Y Torque')
-% 
-% subplot(3, 2, 5)
-% plot(phiD, TorqueH(:, 1), phiD, TorqueR(:, 1))
-% title('Muscle and PAM X Torque')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% legend('Human', 'PAM')
-% 
-% subplot(3, 2, 6)
-% plot(phiD, TorqueEx)
-% legend('Optimal PAM Location')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% title('Adjusted Error X Torque')
-% 
-% hold off
-% 
-% 
-% %% Plotting the angle between the vectors
-% 
-% aHR = zeros(size(TorqueH, 1), 1);
-% aHRH = zeros(size(TorqueH, 1), 1);
-% 
-% for i = 1:size(TorqueH, 1)
-%     uvecH = TorqueH(i, :)/norm(TorqueH(i, :));
-%                 
-%     %Sometimes the BPA can't produce any force due to high
-%     %contraction. We will set it equal to negative the human
-%     %vector to maximize the penalty. Consider changing later
-%     if norm(TorqueR(i, :)) == 0
-%         uvecR = -uvecH;
-%     else
-%         uvecR = TorqueR(i, :)/norm(TorqueR(i, :));
-%     end
-%     
-%     aHR(i) = dot(uvecH, uvecR);
-% end
-% 
-% 
-% figure
-% hold on
-% title('Angle between the Human Torque Vector and PAM Torque Vectors')
-% plot(phiD, aHR)
-% legend('Human and Optimal PAM')
-% ylabel('Radians')
-% xlabel('Knee Angle, degree')
-% hold off
-% 
-% %% Plotting on the Mesh Skeleton
-% 
-% HMuscleLocation = {Bifemsh.Location};
-% HMuscleCross = {Bifemsh.Cross};
-% 
-% RMuscleLocation = {Bifemsh_Pam.Location};
-% RMuscleCross = {Bifemsh_Pam.Cross};
-% 
-% Bones = {'Femur', 'Tibia'};
+%% Plotting Torque Results
+phiD = phi*180/pi;
 
-% run("MuscleBonePlotting")
+TorqueEx = zeros(size(TorqueH, 1), 1);
+TorqueEy = zeros(size(TorqueH, 1), 1);
+TorqueEz = zeros(size(TorqueH, 1), 1);
+
+for i = 1:size(TorqueR, 1)
+    if TorqueH(i, 1) >= 0
+        TorqueEx(i) = TorqueR(i, 1) - TorqueH(i, 1);
+    else
+        TorqueEx(i) = TorqueH(i, 1) - TorqueR(i, 1);
+    end
+    
+    if TorqueH(i, 2) >= 0
+        TorqueEy(i) = TorqueR(i, 2) - TorqueH(i, 2);
+    else
+        TorqueEy(i) = TorqueH(i, 2) - TorqueR(i, 2);
+    end
+    
+    if TorqueH(i, 3) >= 0
+        TorqueEz(i) = TorqueR(i, 3) - TorqueH(i, 3);
+    else
+        TorqueEz(i) = TorqueH(i, 3) - TorqueR(i, 3);
+    end
+end
+
+figure
+hold on
+sgtitle('Bicep Femoris Short Head Torque through Knee Flexion and Extension')
+
+subplot(3, 2, 1)
+plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3))
+legend('Human Muscle', 'Optimal BPA Location')
+title('Muscle and PAM Z Torque')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
+legend('Human', 'PAM', 'best')
+
+subplot(3, 2, 2)
+plot(phiD, TorqueEz)
+legend('Optimal PAM Location')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
+title('Adjusted Error Z Torque')
+
+subplot(3, 2, 3)
+plot(phiD, TorqueH(:, 2), phiD, TorqueR(:, 2))
+title('Muscle and PAM Y Torque')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
+legend('Human', 'PAM')
+
+subplot(3, 2, 4)
+plot(phiD, TorqueEy)
+legend('Optimal PAM Location')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
+title('Adjusted Error Y Torque')
+
+subplot(3, 2, 5)
+plot(phiD, TorqueH(:, 1), phiD, TorqueR(:, 1))
+title('Muscle and PAM X Torque')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
+legend('Human', 'PAM')
+
+subplot(3, 2, 6)
+plot(phiD, TorqueEx)
+legend('Optimal PAM Location')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
+title('Adjusted Error X Torque')
+
+hold off
+
+
+%% Plotting the angle between the vectors
+
+aHR = zeros(size(TorqueH, 1), 1);
+aHRH = zeros(size(TorqueH, 1), 1);
+
+for i = 1:size(TorqueH, 1)
+    uvecH = TorqueH(i, :)/norm(TorqueH(i, :));
+                
+    %Sometimes the BPA can't produce any force due to high
+    %contraction. We will set it equal to negative the human
+    %vector to maximize the penalty. Consider changing later
+    if norm(TorqueR(i, :)) == 0
+        uvecR = -uvecH;
+    else
+        uvecR = TorqueR(i, :)/norm(TorqueR(i, :));
+    end
+    
+    aHR(i) = dot(uvecH, uvecR);
+end
+
+
+figure
+hold on
+title('Angle between the Human Torque Vector and PAM Torque Vectors')
+plot(phiD, aHR)
+legend('Human and Optimal PAM')
+ylabel('Radians')
+xlabel('Knee Angle, degree')
+hold off
+
+%% Plotting on the Mesh Skeleton
+
+HMuscleLocation = {Bifemsh.Location};
+HMuscleCross = {Bifemsh.Cross};
+
+RMuscleLocation = {Bifemsh_Pam.Location};
+RMuscleCross = {Bifemsh_Pam.Cross};
+
+Bones = {'Femur', 'Tibia'};
+
+run("MuscleBonePlotting")

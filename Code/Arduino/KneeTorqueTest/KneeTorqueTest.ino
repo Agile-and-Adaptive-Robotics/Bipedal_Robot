@@ -45,7 +45,7 @@ Example using the SparkFun HX711 breakout board with a scale
 HX711 scale;
 
 int choose_branch = 1; // initialize the variable "choose_branch"
-float calibration_factor = -15400; 
+float calibration_factor = -17550; 
    // initialized variable calibration_factor. 
    // Calibration factor found using a separate arduino sketch 
    // called SLoadCell_CalibrationFactorSketch"
@@ -59,7 +59,7 @@ void setup() {
     //set the scale value; 
     //this value is used to convert the raw
     //data to "human readable" data.  Output units are in lbs 
-  scale.set_offset(-17200);
+  scale.set_offset(-17916);
     //This sets the offset value to a known zero.
     //There is no need for taring the scale once the zero point is known for a scale in a
     // set configuration.
@@ -72,7 +72,7 @@ void loop()
   if (Serial.available()) // if information is sent over serial from matlab
   {  char choose_branch = Serial.read(); // read the serial data into variable "choose_branch"
       if (choose_branch == '2')  // If choose_branch is equal to '2', iterate through the following for loop
-      {  for (int i = 0; i <6000; i++)
+      {  for (int i = 0; i <1500; i++)
          {    Serial.println(scale.get_units(), 1); //scale.get_units() returns a float
          }
       }
