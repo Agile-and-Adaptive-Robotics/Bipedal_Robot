@@ -1,4 +1,4 @@
-%This function is written to be used with 2 arduino sketches
+  %This function is written to be used with 2 arduino sketches
 %(1) SLoadCell_ZeroFactorSketch, when protocol_id == 1
 %(2) Knee TorqueTest, when protocol_id == 2
 %if protocol_id == 2, then the 'total' variable is how many data points
@@ -14,13 +14,13 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
     
     protocol_id = num2str(p.Results.protocol_id);
     port = strjoin({'COM',num2str(p.Results.port)},'');
-    total = num2str(p.Results.total);
+    total = p.Results.total;
     
     %remove scientific notation
     format short g
 
     %Initialize serial port 
-    s = serialport(port,115200);
+    s = serialport(port,9600);
 
     while s.NumBytesAvailable < 1               
         write(s,string(protocol_id),'string');
@@ -39,7 +39,7 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
 
     yyaxis left     %graph force on left axis in blue
     Force = animatedline('color','blue');
-    ylim([-50,300]);
+    ylim([-50,1000]);
     ylabel('Force (N)');
 
     yyaxis right    %graph pressure on right in red
@@ -75,7 +75,7 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
             %value, which doesn't exist if the loop started at the minimum
             %i value
             
-                if abs(svalues(i-prev,1)-svalues(i,1))<100     
+                if abs(svalues(i-prev,1)-svalues(i,1))<200     
                     
                     %check if next value is more than
                     %100 N away from the last known value
