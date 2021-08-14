@@ -5,7 +5,6 @@
 %to collect (should be at least 10000 to get reliable data)
 
 function [Data, Stats] = KneeTest(protocol_id,port,varargin) 
-
     %Allows for the "total" argument be left blank if you are not using
     %KneeTorqueTest.ino, if left blank it will default to 10000
     p = inputParser;
@@ -14,14 +13,9 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
     addOptional(p,'total',10000);
     parse(p,protocol_id,port,varargin{:});
     
-    %Creates variables equal to the argument values
     protocol_id = num2str(p.Results.protocol_id);
-    total = p.Results.total;
-    
-    %Creates a string in the format "COMx" where x is the port number to be
-    %able to connect to the arduino
     port = strjoin({'COM',num2str(p.Results.port)},'');
-
+    total = p.Results.total;
     
     %remove scientific notation
     format short g
@@ -119,6 +113,9 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
     %and that the last 500 data points will exists outside of the transient
     %system response.
 
+    %**NOTE: If protocol_id == '1', either comment out the following code,
+    %or change the range of data on which the basic statistics are calculated.
+
     forceData = svalues(500:total,1);
     pressureData = svalues(500:total,2);
 
@@ -139,7 +136,6 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
     stats(5,2) = max(pressureData);
     stats(6,2) = std(pressureData);
 
-    %Makes table for stats
     rows = {'Mean','Median','mode','min','max','Standard Deviation'};
     columns = {'Force','Pressure'};
     stats = array2table(stats,'RowNames',rows,'VariableNames',columns);

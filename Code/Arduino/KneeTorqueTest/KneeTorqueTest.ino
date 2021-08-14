@@ -34,9 +34,9 @@ The HX711 board can be powered from 2.7V to 5V so the Arduino 5V power should be
 
 #include "HX711.h" //this library can be obtained here http://librarymanager/All#Avia_HX711
 
-#define LOADCELL_DOUT_PIN 10   //define the Serial Data Output Pin
-#define LOADCELL_SCK_PIN 11    //define the Power Down and Serial Clock Input Pin
-int valve = 5;
+#define LOADCELL_DOUT_PIN 10    //define the Serial Data Output Pin
+#define LOADCELL_SCK_PIN 11     //define the Power Down and Serial Clock Input Pin
+int valve = 5;                  //arduino pin connected to the valve
 int baud = 9600;
 HX711 scale;
 
@@ -49,7 +49,6 @@ float calibration_factor = -15400;
 
 void setup() {
   pinMode(valve, OUTPUT);
-  digitalWrite(LED_BUILTIN,LOW);
   Serial.begin(baud);  //initialize arduino serial communication
   Serial.setTimeout(200);
   
@@ -69,9 +68,8 @@ void setup() {
 }
 
 void loop() {
-  char choose_branch = '0';
-  int total = 0;
-  digitalWrite(LED_BUILTIN,LOW);
+  char choose_branch = '0'; 
+  int total = 0; //variable to store how many data points to collect
   if (Serial.available() > 0) {     //if information is sent over serial from matlab]
     choose_branch = Serial.read();  //read the serial data into variable "choose_branch"
     if (choose_branch == '2') {     //if choose_branch is equal to '2', iterate through the following for loop
@@ -92,25 +90,22 @@ void loop() {
       }
       
       total = reading.toInt();     //convert the read string to an integer
-      //Serial.println(total);
       double start = millis();     //start timer
       int timer = 0;
       
       for (int i = 0; i < total; i++) {
-        digitalWrite(valve,HIGH);
-        digitalWrite(LED_BUILTIN,HIGH);
+        digitalWrite(valve,HIGH);               //open valve during testing
         timer = millis() - start;
         Serial.println(scale.get_units(), 2);   //scale.get_units() returns a float representing the force on the load cell
         Serial.println(analogRead(A0));         //reads raw pressure sensor data
-        Serial.println(timer);       //record time stamp of data collection
+        Serial.println(timer);                  //record time stamp of data collection
         
       }
-      digitalWrite(valve, LOW);
+      digitalWrite(valve, LOW);                 //close valve after testing
       delay(5000);
       
     } else {  //if there is no information to read over serial from matlab, wait...
-      digitalWrite(valve,LOW);
-      digitalWrite(LED_BUILTIN,LOW);
+      digitalWrite(valve,LOW);                  //close valve when no data is being sent over
     }
   }
 }
