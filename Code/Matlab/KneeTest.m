@@ -1,3 +1,4 @@
+
   %This function is written to be used with 2 arduino sketches
 %(1) SLoadCell_ZeroFactorSketch, when protocol_id == 1
 %(2) Knee TorqueTest, when protocol_id == 2
@@ -148,3 +149,4 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
     Stats = stats;
 
 end
+

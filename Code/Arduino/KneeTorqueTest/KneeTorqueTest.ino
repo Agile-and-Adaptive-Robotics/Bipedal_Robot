@@ -40,6 +40,7 @@ int valve = 5;                  //arduino pin connected to the valve
 int baud = 9600;
 HX711 scale;
 
+
 int choose_branch; //initialize the variable "choose_branch"
 float calibration_factor = -15400;
 //initialized variable calibration_factor.
@@ -87,6 +88,7 @@ void loop() {
         if (reading.length() > 1 and reading != "2\n") {    
           break;
         }
+
       }
       
       total = reading.toInt();     //convert the read string to an integer
