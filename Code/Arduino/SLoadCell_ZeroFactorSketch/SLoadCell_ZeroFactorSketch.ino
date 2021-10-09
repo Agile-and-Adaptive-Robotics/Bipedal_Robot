@@ -23,7 +23,7 @@ HX711 scale;
 
 
 void setup() {
-Serial.begin(9600);  // initialize arduino serial communication
+Serial.begin(115200);  // initialize arduino serial communication
 }
 
 void loop() 

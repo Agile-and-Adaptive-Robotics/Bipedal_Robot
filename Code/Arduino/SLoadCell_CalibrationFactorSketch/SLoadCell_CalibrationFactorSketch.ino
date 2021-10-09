@@ -20,22 +20,24 @@
 
 HX711 scale;
 
-float calibration_factor = -17550; // initialize variable calibration_factor to some guess value
+float calibration_factor = -21000; // initialize variable calibration_factor to some guess value
 
 
 void setup() {
 
-  Serial.begin(9600);  // initialize arduino serial communication
-  scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN); // initialize load cell
-  scale.set_scale(); //set the scale value;
-  //this value is used to convert the raw
-  //data to "human readable" data (measure units)
-  scale.set_offset(-14462);
-  //This sets the offset value to a known zero.
-  //There is no need for taring the scale once the zero point is known for a scale in a
-  // set configuration.
-  // The Zero Factor -17200 was found using a separate Arduino Sketch
-  //called "SLoadCell_ZeroFactorSketch"
+
+  Serial.begin(115200);  // initialize arduino serial communication
+  scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN); // initialize load cell 
+  scale.set_scale(); //set the scale value; 
+    //this value is used to convert the raw
+    //data to "human readable" data (measure units) 
+  scale.set_offset(-17280);
+    //This sets the offset value to a known zero.
+    //There is no need for taring the scale once the zero point is known for a scale in a
+    // set configuration.
+    // The Zero Factor -17200 was found using a separate Arduino Sketch 
+    //called "SLoadCell_ZeroFactorSketch"
+
 }
 
 void loop() {
