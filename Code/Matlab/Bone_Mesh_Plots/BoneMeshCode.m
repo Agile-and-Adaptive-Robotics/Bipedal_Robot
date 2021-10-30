@@ -8,7 +8,10 @@ clc
 clear 
 close all
 
-addpath('Open_Sim_Bone_Geometry')
+current_dir = cd;
+all_code = fullfile(current_dir,'../..');
+addpath(genpath(all_code));
+% addpath('Open_Sim_Bone_Geometry')
 
 %Spine
 PointsFile = 'Spine_Mesh_Points.xlsx';

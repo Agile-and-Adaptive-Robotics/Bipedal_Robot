@@ -6,8 +6,10 @@ clear
 clc
 close all
 
-
-addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
+current_dir = cd;
+all_code = fullfile(current_dir,'../..');
+addpath(genpath(all_code));
+% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
 
 %% ------------- Hip Muscles ----------------
 

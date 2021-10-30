@@ -9,10 +9,14 @@ clear
 close all
 
 %% Add paths to the muscle and pam calculators
-addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Human_Data
-addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Robot_Data
-addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
-addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Bone_Mesh_Plots\Open_Sim_Bone_Geometry
+current_dir = cd;
+all_code = fullfile(current_dir,'../..');
+addpath(genpath(all_code));
+
+% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Human_Data
+% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Robot_Data
+% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
+% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
 positions = 100;
