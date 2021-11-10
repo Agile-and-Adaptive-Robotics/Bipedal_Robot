@@ -26,16 +26,29 @@ R = zeros(3, 3, positions);
 T = zeros(4, 4, positions);
 
 %Knee Extension and Flexion
+%Human knee
 knee_angle_x = [-2.0944; -1.74533; -1.39626; -1.0472; -0.698132; -0.349066; -0.174533;  0.197344;  0.337395;  0.490178;   1.52146;   2.0944];
 knee_x =       [-0.0032;  0.00179;  0.00411;  0.0041;   0.00212;    -0.001;   -0.0031; -0.005227; -0.005435; -0.005574; -0.005435; -0.00525];
 fcn1 = fit(knee_angle_x,knee_x,'cubicspline');
 knee_angle_y = [-2.0944; -1.22173; -0.523599; -0.349066; -0.174533;  0.159149; 2.0944];
 knee_y =       [-0.4226;  -0.4082;    -0.399;   -0.3976;   -0.3966; -0.395264; -0.396];
 fcn2 = fit(knee_angle_y,knee_y,'cubicspline');
+%Robot Knee
+knee_angle = [0.17; 0.09; 0.03; 0.00; -0.09; -0.17; -0.26; -0.52; -0.79; -1.05; -1.31; -1.57; -1.83; -2.09; -2.36; -2.62];
+knee_x_Pam =     [0.0010	0.0027	0.0038	0.0045	0.0064	0.0084	0.0105	0.0164	0.0213	0.0246	0.0255	0.0239	0.0197	0.0132	0.0052	-0.0036]';
+fcn3 = fit(knee_angle,knee_x_Pam,'cubicspline');
+knee_y_Pam =     [-0.3982	-0.3969	-0.3962	-0.3958	-0.3950	-0.3944	-0.3942	-0.3951	-0.3984	-0.4035	-0.4099	-0.4167	-0.4228	-0.4274	-0.4298	-0.4292]';
+fcn4 = fit(knee_angle,knee_y_Pam,'cubicspline');
+%P_T_x = [ %Patella top, x location
 
 kneeMin = -2.0943951;
 kneeMax = 0.17453293;
 phi = linspace(kneeMin, kneeMax, positions);
+%We want one of our positions to be home position, so let's make the
+%smallest value of phi equal to 0
+[val, pos] = min(abs(phi));
+phi(pos) = 0;
+
 
 for i = 1:positions
     hipToKnee = [fcn1(phi(i)), fcn2(phi(i)), 0];
@@ -44,6 +57,13 @@ for i = 1:positions
                     0, 0, 1];
     
     T(:, :, i) = RpToTrans(R(:, :, i), hipToKnee');
+    
+    hipToKnee_Pam = [fcn3(phi(i)), fcn4(phi(i)), 0];
+    R_Pam(:, :, i) = [cos(phi(i)), -sin(phi(i)), 0;   %Rotation matrix for robot
+                    sin(phi(i)), cos(phi(i)), 0;
+                    0, 0, 1];
+    
+    T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
 end
 
 %% Muscle calculation
@@ -88,8 +108,10 @@ Name = 'Vastus Intermedius';
 
 % Origin Location from Ben
 Location = [0.030, -0.050, 0;
-            0.034, -0.403, 0.005;
-            0.0555, 0.025, 0.0018];
+            0.048, -0.349, 0.000;               %BPA contacts head of socket head cap screw that joins Femur to Femoral end
+            fcn5(phi(i)), fcn6(phi(i)), 0;      %Top of patella, as a function of knee angle
+            fcn7(phi(i)), fcn8(phi(i)), 0;      %Bottom of patella, as a function of knee angle
+            0.04261, 0.07741, 0.000];           %Top of patellar ligament bracket
 CrossPoint = 3;
 Dia = 10;
 Vas_Pam = MonoPamDataPhysicalExtensor(Name, Location, CrossPoint, Dia, T);

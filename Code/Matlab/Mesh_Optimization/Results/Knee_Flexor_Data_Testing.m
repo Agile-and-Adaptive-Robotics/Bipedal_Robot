@@ -28,12 +28,14 @@ R = zeros(3, 3, positions);
 T = zeros(4, 4, positions);
 
 %Knee Extension and Flexion
+%Human
 knee_angle_x = [-2.0944; -1.74533; -1.39626; -1.0472; -0.698132; -0.349066; -0.174533;  0.197344;  0.337395;  0.490178;   1.52146;   2.0944];
 knee_x =       [-0.0032;  0.00179;  0.00411;  0.0041;   0.00212;    -0.001;   -0.0031; -0.005227; -0.005435; -0.005574; -0.005435; -0.00525];
 fcn1 = fit(knee_angle_x,knee_x,'cubicspline');
 knee_angle_y = [-2.0944; -1.22173; -0.523599; -0.349066; -0.174533;  0.159149; 2.0944];
 knee_y =       [-0.4226;  -0.4082;    -0.399;   -0.3976;   -0.3966; -0.395264; -0.396];
 fcn2 = fit(knee_angle_y,knee_y,'cubicspline');
+%Robot
 knee_angle = [0.17; 0.09; 0.03; 0.00; -0.09; -0.17; -0.26; -0.52; -0.79; -1.05; -1.31; -1.57; -1.83; -2.09; -2.36; -2.62];
 knee_x_Pam =     [0.0010	0.0027	0.0038	0.0045	0.0064	0.0084	0.0105	0.0164	0.0213	0.0246	0.0255	0.0239	0.0197	0.0132	0.0052	-0.0036]';
 fcn3 = fit(knee_angle,knee_x_Pam,'cubicspline');
@@ -58,11 +60,11 @@ for i = 1:positions
     T(:, :, i) = RpToTrans(R(:, :, i), hipToKnee');
     
     hipToKnee_Pam = [fcn3(phi(i)), fcn4(phi(i)), 0];
-    R_Pam(:, :, i) = [cos(phi(i)), -sin(phi(i)), 0;
+    R_Pam(:, :, i) = [cos(phi(i)), -sin(phi(i)), 0;   %Rotation matrix for robot
                     sin(phi(i)), cos(phi(i)), 0;
                     0, 0, 1];
     
-    T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');
+    T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
 end
 
 %% Muscle calculation
