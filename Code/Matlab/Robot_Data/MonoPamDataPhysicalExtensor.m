@@ -147,26 +147,26 @@ classdef MonoPamDataPhysicalExtensor < handle
         %% -------------- Resting PAM Length --------------------------
         function restingPamLength = get.RestingL(obj)
             
-            restingPamLength = 0.3857625;
-            fittingLength = 0.0238125;
-            tendonLength = 0.168275;
+%             restingPamLength = 0.3857625;
+%             fittingLength = 0.022;
+            tendonLength = 0.111;
             
-%             mL = obj.MuscleLength;
-%             dia = obj.Diameter;
-%             longestSeg = obj.LongestSegment;
-%            
-%             %Calculate the Pam end cap fitting length (estimates currently)
-%             if dia == 20
-%                 fittingLength = 0.025;
-%             elseif dia == 40
-%                 fittingLength = 0.05;
-%             else
-%                 fittingLength = 0.0125;
-%             end
+            mL = obj.MuscleLength;
+            dia = obj.Diameter;
+            longestSeg = obj.LongestSegment;
+           
+            %Calculate the Pam end cap fitting length (estimates currently)
+            if dia == 20
+                fittingLength = 0.02275;
+            elseif dia == 40
+                fittingLength = 0.028;
+            else
+                fittingLength = 0.022;
+            end
 % 
             obj.FittingLength = fittingLength;
-%             
-%             restingPamLength = max(longestSeg) - 2*fittingLength;
+            
+            restingPamLength = max(mL) - 2*fittingLength-tendonLength;
 %             
 %             tendonLength = max(mL) - restingPamLength - 2*fittingLength;
 %             if tendonLength < 0.08
@@ -230,6 +230,7 @@ classdef MonoPamDataPhysicalExtensor < handle
             contract = obj.Contraction;
             contraction = obj.Contraction;
             mL = obj.MuscleLength;
+            rest = obj.RestingL
             long = max(mL);
             load ForceStrainTable.mat RelativeStrain Force2
             tendon = long - rest;   %Length of artificial tendon and air fittings
