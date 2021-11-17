@@ -106,45 +106,76 @@ end
 Name = 'Vastus Medialis';
 MIF = 1294;
 OFL = 0.089; TSL = 0.126; Pennation = 0.08726646;
-Location = [0.014, -0.21, 0.019;
-            0.036, -0.277, 0.001;
-            0.037, -0.405, -0.013;
-            0.027, -0.425, -0.013;
-            fcn5(phi(i)), fcn6(phi(i)) -0.0146];
-CrossPoint = 5;
+if phi*180/pi < -80
+     Location = [0.014, -0.21, 0.019;
+                 0.036, -0.277, 0.001;
+                 0.037, -0.405, -0.013;
+                 0.027, -0.425, -0.013;
+                 fcn5(phi(i)), fcn6(phi(i)) -0.0146];
+     CrossPoint = 5;
+else 
+     Location = [0.014, -0.21, 0.019;
+                 0.036, -0.277, 0.001;
+                 0.037, -0.405, -0.013;
+                 fcn5(phi(i)), fcn6(phi(i)) -0.0146];
+     CrossPoint = 4;
+end
 Vas_Med = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 Name = 'Vastus Intermedius';
 MIF = 1365;
 OFL = 0.087; TSL = 0.136; Pennation = 0.05235988;
-Location = [0.029, -0.192, 0.031;
-            0.034, -0.208, 0.029;
-            0.034, -0.403, 0.005;
-            fcn7(phi(i)), fcn8(phi(i)) 0.0018];
-CrossPoint = 4;
+if phi*180/pi < -80
+    Location = [0.029, -0.192, 0.031;
+                0.034, -0.208, 0.029;
+                0.034, -0.403, 0.005;
+                fcn7(phi(i)), fcn8(phi(i)) 0.0018];
+    CrossPoint = 4;
+else
+    Location = [0.029, -0.192, 0.031;
+                0.034, -0.208, 0.029;
+                fcn7(phi(i)), fcn8(phi(i)) 0.0018];
+    CrossPoint = 3;
+end
 Vas_Int = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 Name = 'Vastus Lateralis';
 MIF = 1871;
 OFL = 0.084; TSL = 0.157; Pennation = 0.08726646;
-Location = [0.005, -0.185, 0.035;
-            0.027, -0.259, 0.041;
-            0.036, -0.403, 0.021;
-            0.025, -0.424, 0.018;
-            fcn9(phi(i)), fcn10(phi(i)) 0.0165];
-CrossPoint = 5;
+if phi*180/pi < -80
+    Location = [0.005, -0.185, 0.035;
+                0.027, -0.259, 0.041;
+                0.036, -0.403, 0.021;
+                0.025, -0.424, 0.018;
+                fcn9(phi(i)), fcn10(phi(i)) 0.0165];
+    CrossPoint = 5;
+else
+    Location = [0.005, -0.185, 0.035;
+                0.027, -0.259, 0.041;
+                0.036, -0.403, 0.021;
+                fcn9(phi(i)), fcn10(phi(i)) 0.0165];
+    CrossPoint = 4;
+end
 Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 %% PAM calculation
 Name = 'Vastus Intermedius';
 
 % Origin Location from Ben
-Location = [0.030, -0.050, 0;
-            0.048, -0.349, 0.000;               %BPA contacts head of socket head cap screw that joins Femur to Femoral end
-            fcn13(phi(i)), fcn14(phi(i)), 0;    %Top of patella, as a function of knee angle
-            fcn15(phi(i)), fcn16(phi(i)), 0;    %Bottom of patella, as a function of knee angle
-            0.04261, 0.07741, 0.000];           %Top of patellar ligament bracket
-CrossPoint = 5;
+if phi*180/pi < -80
+    Location = [0.030, -0.050, 0;
+                0.048, -0.349, 0.000;               %BPA contacts head of socket head cap screw that joins Femur to Femoral end
+                fcn13(phi(i)), fcn14(phi(i)), 0;    %Top of patella, as a function of knee angle
+                fcn15(phi(i)), fcn16(phi(i)), 0;    %Bottom of patella, as a function of knee angle
+                0.04261, -0.07741, 0.000];           %Top of patellar ligament bracket
+    CrossPoint = 5;
+else
+    Location = [0.030, -0.050, 0;
+                fcn13(phi(i)), fcn14(phi(i)), 0;    %Top of patella, as a function of knee angle
+                fcn15(phi(i)), fcn16(phi(i)), 0;    %Bottom of patella, as a function of knee angle
+                0.04261, -0.07741, 0.000];           %Top of patellar ligament bracket
+    CrossPoint = 4;
+end
 Dia = 40;
 Vas_Pam = MonoPamDataPhysicalExtensor(Name, Location, CrossPoint, Dia, T_Pam);
 
