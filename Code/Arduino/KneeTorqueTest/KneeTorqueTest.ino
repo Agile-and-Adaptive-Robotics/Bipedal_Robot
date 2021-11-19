@@ -34,8 +34,8 @@ The HX711 board can be powered from 2.7V to 5V so the Arduino 5V power should be
 
 #include "HX711.h" //this library can be obtained here http://librarymanager/All#Avia_HX711
 
-#define LOADCELL_DOUT_PIN 10    //define the Serial Data Output Pin
-#define LOADCELL_SCK_PIN 11     //define the Power Down and Serial Clock Input Pin
+#define LOADCELL_DOUT_PIN 8    //define the Serial Data Output Pin
+#define LOADCELL_SCK_PIN 9     //define the Power Down and Serial Clock Input Pin
 int valve = 5;                  //arduino pin connected to the valve
 int baud = 9600;
 HX711 scale;
