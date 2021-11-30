@@ -53,7 +53,7 @@ float calibration_factor = -17550;
 
 void setup() {
 
-  Serial.begin(9600);  // initialize arduino serial communication
+  Serial.begin(57600);  // initialize arduino serial communication
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN); // initialize load cell 
   scale.set_scale(calibration_factor); 
     //set the scale value; 

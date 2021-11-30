@@ -28,7 +28,7 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
     format short g
 
     %Initialize serial port 
-    s = serialport(port,9600);
+    s = serialport(port,57600);
 
     while s.NumBytesAvailable < 1               
         write(s,string(protocol_id),'string');

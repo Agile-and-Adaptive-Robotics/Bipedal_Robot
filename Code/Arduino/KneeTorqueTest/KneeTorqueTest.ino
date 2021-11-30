@@ -37,7 +37,7 @@ The HX711 board can be powered from 2.7V to 5V so the Arduino 5V power should be
 #define LOADCELL_DOUT_PIN 8    //define the Serial Data Output Pin
 #define LOADCELL_SCK_PIN 9     //define the Power Down and Serial Clock Input Pin
 int valve = 5;                  //arduino pin connected to the valve
-int baud = 9600;
+int baud = 57600;
 HX711 scale;
 
 
