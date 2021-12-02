@@ -20,8 +20,7 @@
 
 HX711 scale;
 
-float calibration_factor = -17000; // initialize variable calibration_factor to some guess value
-
+float calibration_factor = -17000; // initialize variable calibration_factor to some guess value                                   
 
 void setup() {
 
@@ -31,11 +30,11 @@ void setup() {
   scale.set_scale(); //set the scale value; 
     //this value is used to convert the raw
     //data to "human readable" data (measure units) 
-  scale.set_offset(-27500);
+  scale.set_offset(-20000);
     //This sets the offset value to a known zero.
     //There is no need for taring the scale once the zero point is known for a scale in a
     // set configuration.
-    // The Zero Factor -27280 was found using a separate Arduino Sketch 
+    // The Zero Factor -20000 was found using a separate Arduino Sketch 
     //called "SLoadCell_ZeroFactorSketch"
 
 }

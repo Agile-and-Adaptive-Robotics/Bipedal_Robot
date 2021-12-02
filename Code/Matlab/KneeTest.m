@@ -1,5 +1,5 @@
 
-  %This function is written to be used with 2 arduino sketches
+%This function is written to be used with 2 arduino sketches
 %(1) SLoadCell_ZeroFactorSketch, when protocol_id == 1
 %(2) Knee TorqueTest, when protocol_id == 2
 %if protocol_id == 2, then the 'total' variable is how many data points
@@ -12,7 +12,7 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
     p = inputParser;
     addRequired(p,'protocol_id');
     addRequired(p,'port');
-    addOptional(p,'total',10000);
+    addOptional(p,'total',1000);
     parse(p,protocol_id,port,varargin{:});
     
     %Creates variables equal to the argument values
@@ -47,22 +47,22 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
 
     yyaxis left     %graph force on left axis in blue
     Force = animatedline('color','blue');
-    ylim([-50,1000]);
+    ylim([0,50]);
     ylabel('Force (N)');
 
     yyaxis right    %graph pressure on right in red
     Pressure = animatedline('color','red');
-    ylim([10,700]);
+    ylim([0,620]);
     ylabel('Pressure (kPa)');
 
-    %the load cell data will sometimes spike unexpectedly which
-    %causes problems in data collection
+%     the load cell data will sometimes spike unexpectedly which
+%     causes problems in data collection
 
     prev = 1;   
-    %since the spikes can span over multiple data readings, 
-    %this variable keeps track of the last data point not in the spike 
-    %and compares new data against it until it finds one that is within
-    %100 N, which indicates that the spike has ended
+%     since the spikes can span over multiple data readings, 
+%     this variable keeps track of the last data point not in the spike 
+%     and compares new data against it until it finds one that is within
+%     100 N, which indicates that the spike has ended
 
     for i = 1:total
         
@@ -70,12 +70,12 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
         svalues(i,2) = str2double(readline(s))*395/512-115;
         svalues(i,3) = str2double(readline(s))/1000;
 
-        %read data to each column and convert units when needed
-        %column 1 is force, converting lbs to N
-        %column 2 is pressure, converting analog value (1-1023) to
-        %kPa
-        %column 3 is the time that the data was collected,
-        %converting milliseconds to seconds
+%         read data to each column and convert units when needed
+%         column 1 is force, converting lbs to N
+%         column 2 is pressure, converting analog value (1-1023) to
+%         kPa
+%         column 3 is the time that the data was collected,
+%         converting milliseconds to seconds
 
         if i > 1
             

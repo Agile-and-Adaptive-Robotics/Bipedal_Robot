@@ -36,9 +36,8 @@ The HX711 board can be powered from 2.7V to 5V so the Arduino 5V power should be
 
 #define LOADCELL_DOUT_PIN 8    //define the Serial Data Output Pin
 #define LOADCELL_SCK_PIN 9     //define the Power Down and Serial Clock Input Pin
-#define baud 57600
-int valve = 5;                  //arduino pin connected to the valve. Attached to Pin 4 on the valve manifold.
-
+int valve = 5;                  //arduino pin connected to the valve
+int baud = 57600;
 HX711 scale;
 
 
@@ -51,8 +50,8 @@ float calibration_factor = -17000;
 
 void setup() {
   pinMode(valve, OUTPUT);
-  Serial.begin(baud);  //initialize arduino serial communication
-  Serial.setTimeout(200);
+  Serial.begin(57600);  //initialize arduino serial communication
+//  Serial.setTimeout(200);
   digitalWrite(valve, LOW);
   
   //initialize load cell
@@ -68,6 +67,7 @@ void setup() {
   //set configuration.
   //the Zero Factor -20000 was found using a separate Arduino Sketch
   //called "SLoadCell_ZeroFactorSketch"
+  Serial.println("text");
 }
 
 void loop() {
@@ -78,22 +78,22 @@ void loop() {
     if (choose_branch == '2') {     //if choose_branch is equal to '2', iterate through the following for loop
 
       Serial.println("running");    // tell matlab that the arduino recieved the protocol id
-      String reading = "2";
+  //    String reading = "2";
       //initiate variable to store the serial data when it is being read
 
-      while (true) {
-        reading = Serial.readString();                      
+ //     while (true) {
+ //       reading = Serial.readString();                      
         //read from serial
         //if the reading is anything but 2 then break and start collecting data (we need to ignore any value of '2' because matlab sends many instances   
         //of the protocol id, so we want to make sure that it checks for the next unique value, which would be how many data points to collect)
-        digitalWrite(LED_BUILTIN,LOW);
-        if (reading.length() > 1 and reading != "2\n") {    
-          break;
-        }
+  //      digitalWrite(LED_BUILTIN,LOW);
+  //      if (reading.length() > 1 and reading != "2\n") {    
+ //         break;
+ //      }
 
       }
       
-      total = reading.toInt();     //convert the read string to an integer
+      total = 1000;     //convert the read string to an integer
       double start = millis();     //start timer
       double timer = 0;
       
@@ -105,12 +105,11 @@ void loop() {
         Serial.println(timer);                  //record time stamp of data collection
         
       }
-    //  digitalWrite(valve, LOW);                 //close valve after testing
-    //  delay(5000);
+      digitalWrite(valve, LOW);                 //close valve after testing
+      delay(5000);
       
-    } else {  //if there is no information to read over serial from matlab, wait...
-    digitalWrite(valve,LOW);                  //close valve when no data is being sent over
-    }
+ //   } else {  //if there is no information to read over serial from matlab, wait...
+ //     digitalWrite(valve,LOW);                  //close valve when no data is being sent over
+   }
   }
-  digitalWrite(valve,LOW);
-}
+//}
