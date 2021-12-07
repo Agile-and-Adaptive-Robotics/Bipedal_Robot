@@ -179,6 +179,10 @@ end
 Dia = 40;
 Vas_Pam = MonoPamDataPhysicalExtensor(Name, Location, CrossPoint, Dia, T_Pam);
 
+max_length = max(Bifemsh_Pam.MuscleLength)
+min_length = min(Bifemsh_Pam.MuscleLength)
+ratio = min_length/max_length
+
 %% Unstacking the Torques to identify specific rotations
 Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
 Torque1 = Vas_Int.Torque + Vas_Lat.Torque + Vas_Med.Torque;
