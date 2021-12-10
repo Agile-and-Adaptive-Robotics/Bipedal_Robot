@@ -16,7 +16,7 @@ classdef MonoPamDataPhysicalFlexor < handle
         Location
         Cross                       %Designates which row corresponds with a location where the muscle crosses into a new reference frame
         Diameter                    %Diameter of the BPA
-        TransformationMat           %Contains a transformation matrix to change the 
+        TransformationMat           %Contains a transformation matrix 
         FittingLength
         TendonL
     end
@@ -140,7 +140,8 @@ classdef MonoPamDataPhysicalFlexor < handle
             
             for i = 1:size(T, 3)
                 pointB = L(C, :);
-                mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
+               % mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
+                mA(i, :) = cross(pointB, unitD(i, :));
             end
         end
         
