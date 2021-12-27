@@ -140,7 +140,7 @@ classdef MonoPamDataPhysicalFlexor < handle
             
             for i = 1:size(T, 3)
                 pointB = L(C, :);
-               % mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
+                %mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
                 mA(i, :) = cross(pointB, unitD(i, :));
             end
         end
@@ -148,7 +148,7 @@ classdef MonoPamDataPhysicalFlexor < handle
         %% -------------- Resting PAM Length --------------------------
         function restingPamLength = get.RestingL(obj)
             
-            restingPamLength = 0.362;
+%            restingPamLength = 0.362;
 %            fittingLength = 0.0254;
 %            tendonLength = 0.142875;
             
@@ -158,7 +158,7 @@ classdef MonoPamDataPhysicalFlexor < handle
 %            
             %Calculate the Pam end cap fitting length (estimates currently)
             if dia == 20
-                fittingLength = 0.0254;
+                fittingLength = 0.0225;
             elseif dia == 40
                 fittingLength = 0.0254;
             else
@@ -167,9 +167,10 @@ classdef MonoPamDataPhysicalFlexor < handle
 
             obj.FittingLength = fittingLength;
 %             
-%            restingPamLength = max(longestSeg) - 2*fittingLength;
+            restingPamLength = max(longestSeg) - 2*fittingLength;
             
-            tendonLength = max(mL) - restingPamLength - 2*fittingLength;
+%            tendonLength = max(mL) - restingPamLength - 2*fittingLength;
+            tendonLength = 0.01;
             if tendonLength < 0.01
                 tendonLength = 0;
             end

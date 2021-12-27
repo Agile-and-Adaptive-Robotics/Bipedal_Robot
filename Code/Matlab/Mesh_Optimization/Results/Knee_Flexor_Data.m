@@ -77,23 +77,25 @@ Location = [0.005, -0.211, 0.023;
             -0.03, -0.036, 0.029;
             -0.023, -0.056, 0.034];
 CrossPoint = 2;
-Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T_Pam);
+Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 %% PAM calculation
 Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
-Dia = 10;
+Dia = 20;
 
 %Origin and Insertion from Ben
-Location = [-0.050, -0.045, 0.0328;
-            -0.03239, -0.08217, 0.0328];
+% Location = [-0.050, -0.045, 0.0328;
+%             -0.03239, -0.08217, 0.0328];
+Location = [-0.070, 0.100, 0.0328;
+            -0.050, -0.045, 0.0328];
 Bifemsh_Pam = MonoPamDataPhysicalFlexor(Name, Location, CrossPoint, Dia, T_Pam);
 
 figure
 plot(phi,Bifemsh_Pam.MuscleLength)
 
-max_length = max(Bifemsh_Pam.MuscleLength);
-min_length = min(Bifemsh_Pam.MuscleLength);
+max_length = max(Bifemsh_Pam.MuscleLength)
+min_length = min(Bifemsh_Pam.MuscleLength)
 ratio = min_length/max_length
 
 

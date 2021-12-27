@@ -106,7 +106,7 @@ end
 Name = 'Vastus Medialis';
 MIF = 1294;
 OFL = 0.089; TSL = 0.126; Pennation = 0.08726646;
-if phi*180/pi < -80
+if phi(i)*180/pi < -80
      Location = [0.014, -0.21, 0.019;
                  0.036, -0.277, 0.001;
                  0.037, -0.405, -0.013;
@@ -125,7 +125,7 @@ Vas_Med = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 Name = 'Vastus Intermedius';
 MIF = 1365;
 OFL = 0.087; TSL = 0.136; Pennation = 0.05235988;
-if phi*180/pi < -80
+if phi(i)*180/pi < -80
     Location = [0.029, -0.192, 0.031;
                 0.034, -0.208, 0.029;
                 0.034, -0.403, 0.005;
@@ -142,7 +142,7 @@ Vas_Int = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 Name = 'Vastus Lateralis';
 MIF = 1871;
 OFL = 0.084; TSL = 0.157; Pennation = 0.08726646;
-if phi*180/pi < -80
+if phi(i)*180/pi < -80
     Location = [0.005, -0.185, 0.035;
                 0.027, -0.259, 0.041;
                 0.036, -0.403, 0.021;
@@ -162,7 +162,7 @@ Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 Name = 'Vastus Intermedius';
 
 % Origin Location from Ben
-if phi*180/pi < -80
+if phi(i)*180/pi < -80
     Location = [0.030, -0.050, 0;
                 0.048, -0.349, 0.000;               %BPA contacts head of socket head cap screw that joins Femur to Femoral end
                 fcn13(phi(i)), fcn14(phi(i)), 0;    %Top of patella, as a function of knee angle
@@ -179,8 +179,8 @@ end
 Dia = 40;
 Vas_Pam = MonoPamDataPhysicalExtensor(Name, Location, CrossPoint, Dia, T_Pam);
 
-max_length = max(Bifemsh_Pam.MuscleLength)
-min_length = min(Bifemsh_Pam.MuscleLength)
+max_length = max(Vas_Pam.MuscleLength)
+min_length = min(Vas_Pam.MuscleLength)
 ratio = min_length/max_length
 
 %% Unstacking the Torques to identify specific rotations
