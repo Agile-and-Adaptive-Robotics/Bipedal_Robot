@@ -113,8 +113,8 @@ classdef MonoMuscleData
             
             for i = 1:size(T, 3)
                 pointB = L(C, :);
-               %mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
-               mA(i, :) = cross(pointB, unitD(i, :));
+               mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
+               %mA(i, :) = cross(pointB, unitD(i, :));
             end
         end
         

@@ -1,0 +1,808 @@
+
+@incollection{hunt_neuromechanical_2014,
+	address = {Milan, Italy},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Neuromechanical {Simulation} of an {Inter}-leg {Controller} for {Tetrapod} {Coordination}},
+	copyright = {©2014 Springer International Publishing Switzerland},
+	isbn = {978-3-319-09434-2 978-3-319-09435-9},
+	url = {http://link.springer.com/chapter/10.1007/978-3-319-09435-9_13},
+	abstract = {A biologically inspired control system has been developed for coordinating a tetrapod walking gait in the sagittal plane. The controller is built with biologically based neurons and synapses, and connections are based on data from literature where available. It is applied to a simplified, planar biomechanical model of a rat with 14 joints with an antagonistic pair of Hill muscle models per joint. The controller generates tension in the muscles through activation of simulated motoneurons. Though significant portions of the controller are based on cat research, this model is capable of reproducing hind leg behavior observed in walking rats. Additionally, the applied inter-leg coordination pathways between fore and hind legs are capable of creating and maintaining coordination in this rat model. Ablation tests of the different connections involved in coordination indicate the role of each connection in providing coordination with low variability.},
+	language = {en},
+	number = {8608},
+	urldate = {2016-11-07},
+	booktitle = {Biomimetic and {Biohybrid} {Systems}},
+	publisher = {Springer International Publishing},
+	author = {Hunt, Alexander and Schmidt, Manuela and Fischer, Martin and Quinn, Roger D.},
+	editor = {Duff, Armin and Lepora, Nathan F. and Mura, Anna and Prescott, Tony J. and Verschure, Paul F. M. J.},
+	month = jul,
+	year = {2014},
+	doi = {10.1007/978-3-319-09435-9_13},
+	keywords = {Artificial Intelligence (incl. Robotics), Central pattern generator, Computer Imaging, Vision, Pattern Recognition and Graphics, Control, Robotics, Mechatronics, Data Mining and Knowledge Discovery, Inter-leg Coordination, Mammal, Neural controller, Rat, Theory of Computation},
+	pages = {142--153},
+	annote = {Category:
+
+In silico (computer simulation) evaluation of an Animatlab controller to coordinate sagittal plane walking gait in a 14 DoF rat model.
+
+Context:
+
+Legged robots locomotion not as good as animals.
+Neurobiology theory: hierarchies in the CNS sub-divide complex tasks into subtasks. Brain at the top, motoneurons at the bottom, and each level relies on level-appropriate sensory information to act on the levels below.
+Neurological measurement experiments suggest hypothetical circuits.
+Non-detailed evidence of CPGs in mammalian systems has resulted in manymodeling theories.
+This paper expands upon a state controller for tetrapod hind leg stepping by implementing it in a neurologically based CPG controller.
+
+similar to the one produced by Szczecinski [reference 10].
+
+
+
+Correctness:
+
+Generally correct and not a bad match. Hard to quantify error.
+Tests done without fully supporting body weight (although this is similar to how tests are done on in vivo animals).
+Brains and neural circuitry are very complex, with tens of thousands of connections, highly nonlinear, and involve many parallel processes. Occam's razor does not always hold in these circumstances.
+
+Contributions:
+
+Modeling theories can be tested in Animatlab
+In silico ablation tests can be performed.
+
+This can reduce the or eliminate the need to perform these experiments on living animals.
+Models can give insight into what/where we should look for future experiments.
+
+
+
+Summary:
+
+Biologically inspired controller, based on theoretical neurological circuits, for rat model is simulated. Produces a decent gait match between output and actual animal models.
+},
+	file = {Hunt et al. - 2014 - Neuromechanical Simulation of an Inter-leg Control.pdf:C\:\\Users\\Connor\\Zotero\\storage\\YTWALTLA\\Hunt et al. - 2014 - Neuromechanical Simulation of an Inter-leg Control.pdf:application/pdf;Snapshot:C\:\\Users\\Connor\\Zotero\\storage\\5ZFE8GZD\\10.html:text/html}
+}
+
+@article{hunt_biologically_2015,
+	title = {A biologically based neural system coordinates the joints and legs of a tetrapod},
+	volume = {10},
+	issn = {1748-3190},
+	url = {http://stacks.iop.org/1748-3190/10/i=5/a=055004},
+	doi = {10.1088/1748-3190/10/5/055004},
+	abstract = {A biologically inspired neural control system has been developed that coordinates a tetrapod trotting gait in the sagittal plane. The developed neuromechanical system is used to explore properties of connections in inter-leg and intra-leg coordination. The neural controller is built with biologically based neurons and synapses, and connections are based on data from literature where available. It is applied to a planar biomechanical model of a rat with 14 joints, each actuated by a pair of antagonistic Hill muscle models. The controller generates tension in the muscles through activation of simulated motoneurons. The hind leg and inter-leg control networks are based on pathways discovered in cat research tuned to the kinematic motions of a rat. The foreleg network was developed by extrapolating analogous pathways from the hind legs. The formulated intra-leg and inter-leg networks properly coordinate the joints and produce motions similar to those of a walking rat. Changing the strength of a single inter-leg connection is sufficient to account for differences in phase timing in different trotting rats.},
+	language = {en},
+	number = {5},
+	urldate = {2016-11-07},
+	journal = {Bioinspiration \& Biomimetics},
+	author = {Hunt, Alexander and Schmidt, Manuela and Fischer, Martin and Quinn, Roger},
+	year = {2015},
+	pages = {055004},
+	annote = {Category:
+
+In silico CPG based neural controller for a planar biomechanical 14 DoF rat model.
+
+ 
+Context:
+
+Further development of Hunt's Living Machines 2014 paper.
+Each joint activated by antagonistic set of muscles using the Hill model.
+Added connected circuit from last paper.
+
+Correctness:
+
+Good results.
+
+Contributions:
+
+This is a great method to coordinate tetrapod walking without weight feedback.
+Shows that CPG information from cat experiments can be extrapolated to rat models.
+Shows that foreleg network is analogous to hind legs.
+
+Summary:
+
+Biologically based controller using hypothesized neuron pathways designed in Animatlab and simulated. Results show this to be a good controller for the system. Need an artificial muscle similar to real muscle for a physical test.
+},
+	file = {Hunt et al. - 2015 - A biologically based neural system coordinates the.pdf:C\:\\Users\\Connor\\Zotero\\storage\\DHU6ZG88\\Hunt et al. - 2015 - A biologically based neural system coordinates the.pdf:application/pdf}
+}
+
+@inproceedings{klute_mckibben_1999,
+	title = {{McKibben} artificial muscles: pneumatic actuators with biomechanical intelligence},
+	shorttitle = {{McKibben} artificial muscles},
+	url = {http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=803170},
+	abstract = {This paper reports on the design of a biorobotic
+actuator. Biological requirements are developed from
+published reports in the muscle physiology literature
+whose parameters are extracted and applied in the form of
+the Hill muscle model. Data from several vertebrate
+species (rat, frog, cat, and human) are used to evaluate the
+performance of a McKibben pneumatic actuator. The
+experimental results show the force-length properties of
+the actuator are muscle-like, but the force-velocity
+properties are not. The design of a hydraulic damper with
+fixed orifices, placed in parallel with the McKibben
+actuator, is proposed to improve the force-velocity
+performance. Simulation results of this practical design
+indicate a significant improvement.},
+	urldate = {2016-10-04},
+	booktitle = {Advanced {Intelligent} {Mechatronics}, 1999. {Proceedings}. 1999 {IEEE}/{ASME} {International} {Conference} on},
+	publisher = {IEEE},
+	author = {Klute, Glenn K. and Czerniecki, Joseph M. and Hannaford, Blake},
+	year = {1999},
+	keywords = {Pneumatic Muscles},
+	pages = {221--226},
+	annote = {
+Category
+
+ 
+
+
+Context
+
+ 
+
+
+Correctness
+
+ 
+
+
+Contributions
+
+ 
+
+
+Clarity
+
+asd
+
+
+
+ 
+
+Category
+
+This paper both describes a measurement of the properties of a BPA, and also offers a prototype of a artificial muscle system that is more biologically inspired.
+
+
+Context
+
+This paper is heavily based off of the McKibben paper that describes the construction of a BPA, as well as the Hill paper which describes an equation to compute muscle properties. With the Hill model, the authors also compile a list of animal muscle properties to provide a range of coefficients that their experimental set up will try to achieve. While trying to create a damping system to make a more biologically realistic muscle system, they derive orifice size based off of Bernoulli's equation.
+
+
+Correctness
+
+The experimental procedure isn't described particularly well, so verifying     . During orifice calculation, some leaps in logic make it difficult to foll
+
+
+Contributions
+
+ 
+
+
+Clarity
+
+This paper was easy to follow, however, some of the jumps in calculations for the orifice sizing was not described well. Having all the figures and tables listed at the back of the paper was frustrating, as one has to flip pages often to view figures that are being described in the text.
+
+
+},
+	file = {Klute, Czerniecki, Hannaford - 1999 - McKibben artificial muscles pneumatic actuators with biomechanical intelligence.pdf:C\:\\Users\\Connor\\Zotero\\storage\\GUCF33EZ\\Klute, Czerniecki, Hannaford - 1999 - McKibben artificial muscles pneumatic actuators with biomechanical intelligence.pdf:application/pdf}
+}
+
+@inproceedings{hunt_modeling_2017,
+	address = {Cleveland, OH},
+	title = {Modeling length effects of braided pneumatic actuators},
+	url = {https://asme.pinetec.com/detc2017/data/pdfs/trk-8/DETC2017-67458.pdf},
+	abstract = {Braided pneumatic actuators (BPAs) are attractive for use in
+bio-robots because they offer many muscle-like properties,
+especially when compared to most other commercially available
+robotic actuators. Unfortunately, the same properties that make
+these actuators similar to muscles make them more difficult to
+control. One such actuator manufactured by Festo, the MXAM-
+10-AA, is frequently utilized in robotics because of its
+commercial availability, durability, and force capability.
+Although models for BPAs exist, the properties that make this
+actuator more durable also make its behavior less like other
+braided pneumatic actuators, especially for shorter actuator
+lengths. Length specific models that do exist for Festo fluidic
+muscles have numerous parameters that can only be found
+experimentally by taking hundreds to thousands of data points
+and performing a lengthy optimization process to fit parameter
+values for each actuator in the system. This lack of
+generalizability makes it difficult to build a new robot and begin
+testing new control systems without significant startup time and
+cost. The key contribution of this work is the development of a
+generalizable actuator model that accounts for the geometry and
+limitations of the actuator at shorter lengths. This empirical
+model relates internal pressure, strain, stretching or contracting
+state, and applied force on the MXAM-10-AA actuator. The
+model is scalable to different length actuators by measuring their
+resting length at zero pressure and their minimum contraction
+length at maximum air pressure, and can be used for feedforward
+length control. The model is evaluated on a robot leg with three
+joints and 6 actuators, each with different length. The developed
+controller, using the actuator model, controls the joints to within
+± 3 degrees of the desired position for different desired torques
+only using internal actuator pressure feedback. We also
+demonstrate control speed by cycling a joint over 40 degrees of
+rotation at varying frequencies.},
+	booktitle = {{IDETC}/{CIE} 2017},
+	publisher = {ASME},
+	author = {Hunt, Alexander and Graber-Tilton, Alexander and Quinn, Roger},
+	month = aug,
+	year = {2017},
+	annote = {
+Category
+
+ This paper derives a generalized model for calculating the pressure needed in a 10 mm Festa BPA to generate a specific force and strain at the end effector. The model requires knowledge of the strain and force at maximum pressure (620 kPa). The paper continues to evaluate this model's effectiveness on a robot in which two antagonistic muscles are controlling joint angle.
+
+
+Context
+
+ This paper
+
+
+Correctness
+
+ The assumptions appear to be valid. One of the areas that could improve the results of the paper is removal of the use of kinked muscles on the robot. In a few spots, the author describes that due to the kinking, pressure filling in the muscle doesn't result in a change in length. Using unkinked muscles could improve the results and strengthen the conclusions. 
+
+
+Contributions
+
+ The main contribution of this paper is the model that is described above. The hope is that given a 10 mm Festo BPA, a user only needs to measure two parameters in order to have a functional model that will provide them pressure needed in the BPA in order to achieve a desired strain and force. It also describes how the model can be used in conjuction with a robot and bang bang controller to control a compliant robotic joint.
+
+
+Clarity
+
+The paper is well written, however, it almost feels like two papers in one. The first being a description of how the model was generated. The second paper being an implementation of the model on a controller for a robot.
+
+
+},
+	file = {Hunt - Modeling length effects of braided pneumatic actuators.pdf:C\:\\Users\\Connor\\Zotero\\storage\\6JCN3D63\\Hunt - Modeling length effects of braided pneumatic actuators.pdf:application/pdf}
+}
+
+@inproceedings{scharzenberger_design_2019,
+	address = {Nara, Japan},
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Design of a {Canine} {Inspired} {Quadruped} {Robot} as a {Platform} for {Synthetic} {Neural} {Network} {Control}},
+	booktitle = {Biomimetic and {Biohybrid} {Systems}},
+	publisher = {Springer},
+	author = {Scharzenberger, Cody and Mendoza, Jonas and Hunt, Alexander J},
+	month = jul,
+	year = {2019},
+	file = {Scharzenberger et al. - 2019 - Design of a Canine Inspired Quadruped Robot as a P.pdf:C\:\\Users\\Connor\\Zotero\\storage\\LTGL49GL\\Scharzenberger et al. - 2019 - Design of a Canine Inspired Quadruped Robot as a P.pdf:application/pdf}
+}
+
+@article{sherman_how_nodate,
+	title = {How to compute muscle moment arm using generalized coordinates},
+	language = {en},
+	author = {Sherman, Michael and Seth, Ajay and Delp, Scott},
+	pages = {12},
+	file = {Sherman et al. - How to compute muscle moment arm using generalized.pdf:C\:\\Users\\Connor\\Zotero\\storage\\YEWDFCJL\\Sherman et al. - How to compute muscle moment arm using generalized.pdf:application/pdf}
+}
+
+@article{hill_heat_1938,
+	title = {The {Heat} of {Shortening} and the {Dynamic} {Constants} of {Muscle}},
+	volume = {126},
+	issn = {0962-8452, 1471-2954},
+	url = {http://rspb.royalsocietypublishing.org/content/126/843/136},
+	doi = {10.1098/rspb.1938.0050},
+	language = {en},
+	number = {843},
+	urldate = {2016-11-11},
+	journal = {Proceedings of the Royal Society of London B: Biological Sciences},
+	author = {Hill, A. V.},
+	month = oct,
+	year = {1938},
+	pages = {136--195},
+	file = {Full Text PDF:C\:\\Users\\Connor\\Zotero\\storage\\MTL5SKPH\\Hill - 1938 - The Heat of Shortening and the Dynamic Constants o.pdf:application/pdf;Snapshot:C\:\\Users\\Connor\\Zotero\\storage\\5I2IDDGA\\136.html:text/html}
+}
+
+@article{shin_constructive_2018,
+	title = {Constructive understanding and reproduction of functions of gluteus medius by using a musculoskeletal walking robot},
+	volume = {32},
+	issn = {0169-1864},
+	url = {https://doi.org/10.1080/01691864.2018.1434015},
+	doi = {10.1080/01691864.2018.1434015},
+	abstract = {Several factors affect the performance of humanoid walking. One factor is the complex nature of lower limbs, especially the muscles around the pelvis that contribute significantly to the stability and adaptivity of humanoid locomotion. The significance of this muscle group assures a impact on the facility of walking robots once the nature of its contribution is understood, and it can be replicated on robots. To propose a mechanical structure that facilitates walking in robots, we realized a muscle by modeling its pelvis region like that of a humanoid and developing a musculoskeletal humanoid robot. Especially, we focused on the gluteus medius, which is important for the general stability against frontal movements of the hip. Furthermore, it passively changes its influence on such motions; this is helpful during the different phases of locomotion. These changes depend on the alignment of the pelvis and femur. We confirmed the viability of the robotic gluteus medius, which was simplified to a model of two partial muscles by accomplishing the walking using this robot. This accomplishment verifies our hypothesis that using this model, the supporting functionality for the locomotion of the muscle can be reproduced and enhances the biological plausibility.},
+	number = {4},
+	urldate = {2019-02-13},
+	journal = {Advanced Robotics},
+	author = {Shin, Hirofumi and Ikemoto, Shuhei and Hosoda, Koh},
+	month = feb,
+	year = {2018},
+	keywords = {gluteus medius, humanoid robot, McKibben pneumatic artificial muscle, Pelvis structure, three-dimensional biped walking},
+	pages = {202--214}
+}
+
+@misc{chou_measurement_1996,
+	title = {measurement and modeling of mckibben pneumatic artifical muscles.pdf},
+	url = {https://www.semanticscholar.org/paper/Measurement-and-modeling-of-McKibben-pneumatic-Chou-Hannaford/814994b99a9f70c202932cd95f5f89d9f8c7a6b4},
+	abstract = {This paper reports mechanical tasting and modeling results for the McKibben artificial muscle pneumatic actuator. This device, first developed in the 1950’s, contains an expanding tube surrounded by braided cords. We report static and dynamic length-tension testing results and derive a linearized model of these properties for three different models. The results are brieffy compared with human muscle properties to evaluate the suit- ability of McKibben actuators for human muscle emulation in biologically based robot arms.},
+	language = {EN-US},
+	urldate = {2019-10-03},
+	publisher = {IEE Transactions on Robotics and Automation},
+	author = {Chou, Ching-Ping and Hannaford, Blake},
+	month = feb,
+	year = {1996},
+	file = {measurement and modeling of mckibben pneumatic artifical muscles.pdf:C\:\\Users\\Connor\\Zotero\\storage\\3L8LAQ9G\\measurement and modeling of mckibben pneumatic artifical muscles.pdf:application/pdf}
+}
+
+@inproceedings{tondu_mckibben_2006,
+	title = {{McKibben} artificial muscle can be in accordance with the {Hill} skeletal muscle model},
+	isbn = {978-1-4244-0040-9},
+	url = {http://ieeexplore.ieee.org/document/1639174/},
+	doi = {10.1109/BIOROB.2006.1639174},
+	abstract = {McKibben pneumatic artificial muscle shows a great functional analogy with skeletal muscle. To better characterize this dynamic analogous behavior, we analyze in what conditions McKibben muscle can be applied in accordance with the fundamental Hill muscle model. We show that the choice of an adequate textile sheath can lead to a Velocity-Tension curve in conformity with the Hill model equation. We propose to relate this phenomenon to specific textile yarn hydrodynamic friction. In terms of control we emphasize the interest of this agreement with the Hill model for giving the artificial muscle a dynamic behaviour more naturally adapted to load variations.},
+	language = {en},
+	urldate = {2019-10-03},
+	publisher = {IEEE},
+	author = {Tondu, B. and Zagal, S.D.},
+	year = {2006},
+	pages = {714--720},
+	file = {Tondu and Zagal - 2006 - McKibben artificial muscle can be in accordance wi.pdf:C\:\\Users\\Connor\\Zotero\\storage\\GR5BY5X9\\Tondu and Zagal - 2006 - McKibben artificial muscle can be in accordance wi.pdf:application/pdf}
+}
+
+@inproceedings{klute_mckibben_1999-1,
+	title = {{McKibben} artificial muscles: pneumatic actuators with biomechanical intelligence},
+	isbn = {978-0-7803-5038-0},
+	shorttitle = {{McKibben} artificial muscles},
+	url = {http://ieeexplore.ieee.org/document/803170/},
+	doi = {10.1109/AIM.1999.803170},
+	abstract = {This paper reports on the design of a biorobotic actuator. Biological requirements are developed from published reports in the muscle physiology literature whose parameters are extracted and applied in the form of the Hill muscle model. Data from several vertebrate species (rat, fiog, cat, and human) are used to evaluate the performance of a McKibben pneumatic actuator. The experimental results show the force-length properties of the actuator are muscle-like, but the force-velocity properties are not. The design of a hydraulic damper with fixed orifices, placed in parallel with the McKibben actuator, is proposed to improve the force-velocity performance. Simulation results of this practical design indicate a significant improvement.},
+	language = {en},
+	urldate = {2019-10-03},
+	publisher = {IEEE},
+	author = {Klute, G.K. and Czerniecki, J.M. and Hannaford, B.},
+	year = {1999},
+	pages = {221--226},
+	file = {Klute et al. - 1999 - McKibben artificial muscles pneumatic actuators w.pdf:C\:\\Users\\Connor\\Zotero\\storage\\52V3XPZ8\\Klute et al. - 1999 - McKibben artificial muscles pneumatic actuators w.pdf:application/pdf}
+}
+
+@article{asano_design_2017,
+	title = {Design principles of a human mimetic humanoid: {Humanoid} platform to study human intelligence and internal body system},
+	volume = {2},
+	issn = {2470-9476},
+	shorttitle = {Design principles of a human mimetic humanoid},
+	url = {http://robotics.sciencemag.org/lookup/doi/10.1126/scirobotics.aaq0899},
+	doi = {10.1126/scirobotics.aaq0899},
+	abstract = {Here, we described our work on human mimetic humanoids, whose musculoskeletal systems are as close as possible to that of a human. We proceeded with the study based on the idea that the features crucial for improving humanoids are hidden behind the structure and motion processes of humans. Hence, we incorporated elements that facilitate fidelity with the human musculoskeletal system. To realize these humanoid systems, we mimicked human musculoskeletal structures based on our knowledge of anatomy. In terms of the design principles of the human mimetic humanoid, our design centered around four key areas—body proportion, skeletal structure, muscle arrangement, and joint performance—and the humanoids Kenshiro and Kengoro were developed on this basis. We conducted an evaluation of their design by comparing them with humans or existing humanoids and confirmed that the two humanoids have great anatomical fidelity to humans.},
+	language = {en},
+	number = {13},
+	urldate = {2019-10-03},
+	journal = {Science Robotics},
+	author = {Asano, Yuki and Okada, Kei and Inaba, Masayuki},
+	month = dec,
+	year = {2017},
+	pages = {eaaq0899},
+	file = {Asano et al. - 2017 - Design principles of a human mimetic humanoid Hum.pdf:C\:\\Users\\Connor\\Zotero\\storage\\XF4TH6FY\\Asano et al. - 2017 - Design principles of a human mimetic humanoid Hum.pdf:application/pdf}
+}
+
+@inproceedings{asano_human_2016,
+	title = {Human mimetic musculoskeletal humanoid {Kengoro} toward real world physically interactive actions},
+	isbn = {978-1-5090-4718-5},
+	url = {http://ieeexplore.ieee.org/document/7803376/},
+	doi = {10.1109/HUMANOIDS.2016.7803376},
+	abstract = {We have been developing human mimetic musculoskeletal humanoids from the view point of human-inspired design approach. Kengoro is our latest version of musculoskeletal humanoid designed to achieve physically interactive actions in real world. This study presents the design concept, body characteristics, and motion achievements of Kengoro. In the design process of Kengoro, we adopted the novel idea of multifunctional skeletal structures to achieve both humanoid performance and humanlike proportions. We adopted the sensor–driver integrated muscle modules for improved muscle control. In order to demonstrate the effectiveness of these body structures, we conducted several preliminary movements using Kengoro.},
+	language = {en},
+	urldate = {2019-10-03},
+	publisher = {IEEE},
+	author = {Asano, Yuki and Kozuki, Toyotaka and Ookubo, Soichi and Kawamura, Masaya and Nakashima, Shinsuke and Katayama, Takeshi and Yanokura, Iori and Hirose, Toshinori and Kawaharazuka, Kento and Makino, Shogo and Kakiuchi, Youhei and Okada, Kei and Inaba, Masayuki},
+	month = nov,
+	year = {2016},
+	pages = {876--883},
+	file = {Asano et al. - 2016 - Human mimetic musculoskeletal humanoid Kengoro tow.pdf:C\:\\Users\\Connor\\Zotero\\storage\\36VBM4EW\\Asano et al. - 2016 - Human mimetic musculoskeletal humanoid Kengoro tow.pdf:application/pdf}
+}
+
+@article{nakanishi_design_2013,
+	title = {Design {Approach} of {Biologically}-{Inspired} {Musculoskeletal} {Humanoids}},
+	volume = {10},
+	issn = {1729-8814, 1729-8814},
+	url = {http://journals.sagepub.com/doi/10.5772/55443},
+	doi = {10.5772/55443},
+	abstract = {In order to realize more natural and various motions like humans, humanlike musculoskeletal tendon-driven humanoids have been studied. Especially, it is very challenging to design musculoskeletal body structure which consists of complicated bones, redundant powerful and ﬂexible muscles, and large number of distributed sensors. In addition, it is very challenging to reveal humanlike intelligence to manage these complicated musculoskeletal body structure. This paper sums up life-sized musculoskeletal humanoids Kenta, Kotaro, Kenzoh and Kenshiro which we have developed so far, and describes key technologies to develop and control these robots.},
+	language = {en},
+	number = {4},
+	urldate = {2019-10-03},
+	journal = {International Journal of Advanced Robotic Systems},
+	author = {Nakanishi, Yuto and Ohta, Shigeki and Shirai, Takuma and Asano, Yuki and Kozuki, Toyotaka and Kakehashi, Yuriko and Mizoguchi, Hironori and Kurotobi, Tomoko and Motegi, Yotaro and Sasabuchi, Kazuhiro and Urata, Junichi and Okada, Kei and Mizuuchi, Ikuo and Inaba, Masayuki},
+	month = apr,
+	year = {2013},
+	pages = {216},
+	file = {Nakanishi et al. - 2013 - Design Approach of Biologically-Inspired Musculosk.pdf:C\:\\Users\\Connor\\Zotero\\storage\\7W4D2FXJ\\Nakanishi et al. - 2013 - Design Approach of Biologically-Inspired Musculosk.pdf:application/pdf}
+}
+
+@inproceedings{ishii_development_2018,
+	title = {Development of a {Musculoskeletal} {Humanoid} {Robot} as a {Platform} for {Biomechanical} {Research} on the {Underwater} {Dolphin} {Kick}},
+	isbn = {978-1-5386-8094-0},
+	url = {https://ieeexplore.ieee.org/document/8593912/},
+	doi = {10.1109/IROS.2018.8593912},
+	abstract = {The dolphin kick is a swimming style characterized by undulation of the body. As a platform for swimming research, we have developed a musculoskeletal humanoid robot called Triton. Triton has a ﬂexible spine with erector spinae muscles and a stiffness adjustment system for lumbar joints. The musculoskeletal body includes biarticular and polyarticular muscles, providing multi-joint coordination. The robot is actuated by pneumatic muscles, yielding lightweight and inherently waterproof properties. The compliance of the joints allows interactions between body and ﬂuid similar to those of human swimming. This study presents the design concept of Triton and experimental results from a water tank test. We compare the results with simulation and human movements reported in literature. The results show that the musculoskeletal swimming robot has similar cycle trends in joint angle and thrust force.},
+	language = {en},
+	urldate = {2019-10-03},
+	publisher = {IEEE},
+	author = {Ishii, Yasuaki and Nishikawa, Satoshi and Niiyama, Ryuma and Kuniyoshi, Yasuo},
+	month = oct,
+	year = {2018},
+	pages = {3285--3291},
+	file = {Ishii et al. - 2018 - Development of a Musculoskeletal Humanoid Robot as.pdf:C\:\\Users\\Connor\\Zotero\\storage\\M8WVP96Q\\Ishii et al. - 2018 - Development of a Musculoskeletal Humanoid Robot as.pdf:application/pdf}
+}
+
+@article{liu_bipedal_2016,
+	title = {Bipedal walking with dynamic balance that involves three-dimensional upper body motion},
+	volume = {77},
+	issn = {09218890},
+	url = {https://linkinghub.elsevier.com/retrieve/pii/S0921889015003036},
+	doi = {10.1016/j.robot.2015.12.002},
+	abstract = {This paper presents a method of designing a more human-like walking pattern for a bipedal humanoid robot. Motivated by biomechanical studies on human walking, we model the walking pattern with continuous and differentiable mathematical functions. For dynamic balance of the robot, we design a pattern generator based on the ZMP (Zero-Moment Point) criterion. In comparison to the conventional bent-knee walking pattern, the proposed walking pattern involves three-dimensional motion of the upper body. With the proposed walking pattern the robot can walk with almost stretched knees at low and medium walking speeds. This paper also presents a body posture control method. The controller is based on sensory feedback and modifies the reference walking pattern in real time in order to stabilize the robot. We have implemented the proposed walking pattern and control method on the humanoid robot NAO. Walking experiments have verified that the proposed scheme improves the dynamic balance of the robot. Besides, we have investigated the energy consumption at the knee joint actuators and the overall energy consumption at all the joints of both legs, by using NAO that fulfills the conventional walking pattern and the proposed walking pattern respectively. Experiments have proved that (i) knee-stretched motion can improve the walking efficiency of a humanoid robot; and (ii) the proposed walking pattern is more efficient.},
+	language = {en},
+	urldate = {2019-10-03},
+	journal = {Robotics and Autonomous Systems},
+	author = {Liu, Jing and Urbann, Oliver},
+	month = mar,
+	year = {2016},
+	pages = {39--54},
+	file = {Liu and Urbann - 2016 - Bipedal walking with dynamic balance that involves.pdf:C\:\\Users\\Connor\\Zotero\\storage\\X9FWN89C\\Liu and Urbann - 2016 - Bipedal walking with dynamic balance that involves.pdf:application/pdf}
+}
+
+@article{radford_valkyrie:_2015,
+	title = {Valkyrie: {NASA}'s {First} {Bipedal} {Humanoid} {Robot}: {Learned} {Stochastic} {Mobility} {Prediction} for {Planning}},
+	volume = {32},
+	issn = {15564959},
+	shorttitle = {Valkyrie},
+	url = {http://doi.wiley.com/10.1002/rob.21560},
+	doi = {10.1002/rob.21560},
+	language = {en},
+	number = {3},
+	urldate = {2019-10-03},
+	journal = {Journal of Field Robotics},
+	author = {Radford, Nicolaus A. and Strawser, Philip and Hambuchen, Kimberly and Mehling, Joshua S. and Verdeyen, William K. and Donnan, A. Stuart and Holley, James and Sanchez, Jairo and Nguyen, Vienny and Bridgwater, Lyndon and Berka, Reginald and Ambrose, Robert and Myles Markee, Mason and Fraser-Chanpong, N. J. and McQuin, Christopher and Yamokoski, John D. and Hart, Stephen and Guo, Raymond and Parsons, Adam and Wightman, Brian and Dinh, Paul and Ames, Barrett and Blakely, Charles and Edmondson, Courtney and Sommers, Brett and Rea, Rochelle and Tobler, Chad and Bibby, Heather and Howard, Brice and Niu, Lei and Lee, Andrew and Conover, Michael and Truong, Lily and Reed, Ryan and Chesney, David and Platt, Robert and Johnson, Gwendolyn and Fok, Chien-Liang and Paine, Nicholas and Sentis, Luis and Cousineau, Eric and Sinnet, Ryan and Lack, Jordan and Powell, Matthew and Morris, Benjamin and Ames, Aaron and Akinyode, Jide},
+	month = may,
+	year = {2015},
+	pages = {397--419},
+	file = {Radford et al. - 2015 - Valkyrie NASA's First Bipedal Humanoid Robot Lea.pdf:C\:\\Users\\Connor\\Zotero\\storage\\G7SWSSNX\\Radford et al. - 2015 - Valkyrie NASA's First Bipedal Humanoid Robot Lea.pdf:application/pdf}
+}
+
+@inproceedings{reher_realizing_2016,
+	title = {Realizing dynamic and efficient bipedal locomotion on the humanoid robot {DURUS}},
+	isbn = {978-1-4673-8026-3},
+	url = {http://ieeexplore.ieee.org/document/7487325/},
+	doi = {10.1109/ICRA.2016.7487325},
+	abstract = {This paper presents the methodology used to achieve efﬁcient and dynamic walking behaviors on the prototype humanoid robotics platform, DURUS. As a means of providing a hardware platform capable of these behaviors, the design of DURUS combines highly efﬁcient electromechanical components with “control in the loop” design of the leg morphology. Utilizing the ﬁnal design of DURUS, a formal framework for the generation of dynamic walking gaits which maximizes efﬁciency by exploiting the full body dynamics of the robot, including the interplay between the passive and active elements, is developed. The gaits generated through this methodology form the basis of the control implementation experimentally realized on DURUS; in particular, the trajectories generated through the formal framework yield a feedforward control input which is modulated by feedback in the form of regulators that compensate for discrepancies between the model and physical system. The end result of the uniﬁed approach to control-informed mechanical design, formal gait design and regulator-based feedback control implementation is efﬁcient and dynamic locomotion on the humanoid robot DURUS. In particular, DURUS was able to demonstrate dynamic locomotion at the DRC Finals Endurance Test, walking for just under ﬁve hours in a single day, traveling 3.9 km with a mean cost of transport of 1.61—the lowest reported cost of transport achieved on a bipedal humanoid robot.},
+	language = {en},
+	urldate = {2019-10-03},
+	publisher = {IEEE},
+	author = {Reher, Jacob and Cousineau, Eric A. and Hereid, Ayonga and Hubicki, Christian M. and Ames, Aaron D.},
+	month = may,
+	year = {2016},
+	pages = {1794--1801},
+	file = {Reher et al. - 2016 - Realizing dynamic and efficient bipedal locomotion.pdf:C\:\\Users\\Connor\\Zotero\\storage\\IXXDLQ7D\\Reher et al. - 2016 - Realizing dynamic and efficient bipedal locomotion.pdf:application/pdf}
+}
+
+@article{liu_robotic_2018,
+	title = {Robotic investigation on effect of stretch reflex and crossed inhibitory response on bipedal hopping},
+	volume = {15},
+	issn = {1742-5689, 1742-5662},
+	url = {https://royalsocietypublishing.org/doi/10.1098/rsif.2018.0024},
+	doi = {10.1098/rsif.2018.0024},
+	language = {en},
+	number = {140},
+	urldate = {2019-10-03},
+	journal = {Journal of The Royal Society Interface},
+	author = {Liu, Xiangxiao and Rosendo, Andre and Ikemoto, Shuhei and Shimizu, Masahiro and Hosoda, Koh},
+	month = mar,
+	year = {2018},
+	pages = {20180024},
+	file = {Liu et al. - 2018 - Robotic investigation on effect of stretch reflex .pdf:C\:\\Users\\Connor\\Zotero\\storage\\ABC5E6JD\\Liu et al. - 2018 - Robotic investigation on effect of stretch reflex .pdf:application/pdf}
+}
+
+@article{hosoda_pneumatic-driven_2010,
+	title = {Pneumatic-driven jumping robot with anthropomorphic muscular skeleton structure},
+	volume = {28},
+	issn = {0929-5593, 1573-7527},
+	url = {http://link.springer.com/10.1007/s10514-009-9171-6},
+	doi = {10.1007/s10514-009-9171-6},
+	abstract = {Human muscular skeleton structure plays an important role for adaptive locomotion. Understanding of its mechanism is expected to be used for realizing adaptive locomotion of a humanoid robot as well. In this paper, a jumping robot driven by pneumatic artiﬁcial muscles is designed to duplicate human leg structure and function. It has three joints and nine muscles, three of them are biarticular muscles. For controlling such a redundant robot, we take biomechanical ﬁndings into account: biarticular muscles mainly contribute to joint coordination whereas monoarticular muscles contribute to provide power. Through experiments, we ﬁnd (1) the biarticular muscles realize coordinated movement of joints when knee and/or hip is extended, (2) the extension of the ankle does not lead to coordinated movement, and (3) we can superpose extension of the knee with that of the hip without losing the joint coordination. The obtained knowledge can be used not only for robots, but may also contribute to understanding of adaptive human mechanism.},
+	language = {en},
+	number = {3},
+	urldate = {2019-10-03},
+	journal = {Autonomous Robots},
+	author = {Hosoda, Koh and Sakaguchi, Yuki and Takayama, Hitoshi and Takuma, Takashi},
+	month = apr,
+	year = {2010},
+	pages = {307--316},
+	file = {Hosoda et al. - 2010 - Pneumatic-driven jumping robot with anthropomorphi.pdf:C\:\\Users\\Connor\\Zotero\\storage\\HPCIEGE2\\Hosoda et al. - 2010 - Pneumatic-driven jumping robot with anthropomorphi.pdf:application/pdf}
+}
+
+@article{ijspeert_central_2008,
+	title = {Central pattern generators for locomotion control in animals and robots: a review.},
+	volume = {21},
+	issn = {0893-6080},
+	url = {http://www.ncbi.nlm.nih.gov/pubmed/18555958},
+	doi = {10.1016/j.neunet.2008.03.014},
+	abstract = {The problem of controlling locomotion is an area in which neuroscience and robotics can fruitfully interact. In this article, I will review research carried out on locomotor central pattern generators (CPGs), i.e. neural circuits capable of producing coordinated patterns of high-dimensional rhythmic output signals while receiving only simple, low-dimensional, input signals. The review will first cover neurobiological observations concerning locomotor CPGs and their numerical modelling, with a special focus on vertebrates. It will then cover how CPG models implemented as neural networks or systems of coupled oscillators can be used in robotics for controlling the locomotion of articulated robots. The review also presents how robots can be used as scientific tools to obtain a better understanding of the functioning of biological CPGs. Finally, various methods for designing CPGs to control specific modes of locomotion will be briefly reviewed. In this process, I will discuss different types of CPG models, the pros and cons of using CPGs with robots, and the pros and cons of using robots as scientific tools. Open research topics both in biology and in robotics will also be discussed.},
+	number = {4},
+	journal = {Neural networks : the official journal of the International Neural Network Society},
+	author = {Ijspeert, Auke Jan},
+	month = may,
+	year = {2008},
+	pmid = {18555958},
+	keywords = {Humans, Movement, Animals, Locomotion, Movement: physiology, Central Nervous System, Central Nervous System: physiology, robotics, Nerve Net, neural networks (computer), Locomotion: physiology, biological clocks, Biological Clocks: physiology, CPG, Nerve Net: physiology, Neural Pathways, Neural Pathways: physiology, Neurosciences, Neurosciences: methods, Neurosciences: trends, Robotics: methods, Robotics: trends},
+	pages = {642--653},
+	file = {Attachment:C\:\\Users\\Connor\\Zotero\\storage\\7NMTH7VS\\Ijspeert - 2008 - Central pattern generators for locomotion control in animals and robots a review.pdf:application/pdf}
+}
+
+@article{van_der_noot_bio-inspired_2018,
+	title = {Bio-inspired controller achieving forward speed modulation with a {3D} bipedal walker},
+	volume = {37},
+	issn = {0278-3649},
+	url = {https://doi.org/10.1177/0278364917743320},
+	doi = {10.1177/0278364917743320},
+	abstract = {Despite all the effort devoted to generating locomotion algorithms for bipedal walkers, robots are still far from reaching the impressive human walking capabilities, for instance regarding robustness and energy consumption. In this paper, we have developed a bio-inspired torque-based controller supporting the emergence of a new generation of robust and energy-efficient walkers. It recruits virtual muscles driven by reflexes and a central pattern generator, and thus requires no computationally intensive inverse kinematics or dynamics modeling. This controller is capable of generating energy-efficient and human-like gaits (both regarding kinematics and dynamics) across a large range of forward speeds, in a 3D environment. After a single off-line optimization process, the forward speed can be continuously commanded within this range by changing high-level parameters, as linear or quadratic functions of the target speed. Sharp speed transitions can then be achieved with no additional tuning, resulting in immediate adaptations of the step length and frequency. In this paper, we particularly embodied this controller on a simulated version of COMAN, a 95 cm tall humanoid robot. We reached forward speed modulations between 0.4 and 0.9 m/s. This covers normal human walking speeds once scaled to the robot size. Finally, the walker demonstrated significant robustness against a large spectrum of unpredicted perturbations: facing external pushes or walking on altered environments, such as stairs, slopes, and irregular ground.},
+	language = {en},
+	number = {1},
+	urldate = {2018-10-25},
+	journal = {The International Journal of Robotics Research},
+	author = {Van der Noot, Nicolas and Ijspeert, Auke Jan and Ronsse, Renaud},
+	month = jan,
+	year = {2018},
+	pages = {168--196},
+	annote = {Category:
+
+Development and modeling of a bio-inspired CPG controller for a bipedal robot's forward locomotion. Model is energy and computationally efficient. Controller incorporates reflexes and feedback to achieve human-like gait. Virtual Hill-type muscles used in the controller.
+
+Context:
+
+Humanoid bipedal robots are potentially well-adapted to our world.
+Robots are far from reaching high fidelity human walking capabilities.
+Zero-moment point (ZMP) method of robot locomotion analyzed, and pitfalls discussed. E.g. energy inefficiency and unnatural gait.
+Other locomotion concepts looked at:
+
+Inverted Pendulum Model (IPM).
+Linear Inverted Pendulum (LPM).
+Limit cycle walking.
+
+
+Two papers, Geyer and Herr (2010), and Song and Geyer (2015), developed bipedal models being actuated by a human-like neuromuscular model.
+
+Part of model adapted by Eilenberg et al. (2010) to control a powered ankle-foot prosthetic device.
+
+
+Previous Van der Noot paper (2015a) brought this controller to a real humanoid robot.
+Central Pattern Generator (CPG). CPGs are neural circuits can make rhythmic patternsof neural activity without receiving rhythmic inputs. Properties:
+
+distributed control
+redundancies handling
+locomotion modulation using simple control signals
+
+
+
+Correctness:
+
+This seems correct.
+
+Contributions:
+
+Controller adaptable to other humanoid robots.
+Combines a CPG and reflexes in a neuromuscular torque based controller for bipedal locomotion.
+Shows the successive increments performed while designing this CPG network, in order to generate the stimulation patterns governing different walking features.
+Control schematic in Figure 1 can be adapted with some modification for our robot that uses Festo artificial muscles.
+Simulations of different walking parameters shown in their Youtube videos.
+Hill-type muscle actuated bipedal robot is feasible.
+
+Summary:
+
+This paper is very well put together, if long. They evaluate some of the existing controllers for bipedal robot locomotion and make a strong case for combining CPG and reflexes in a neuromuscular torque base controller. Model is shown to be energy-efficient. Gait is robust and COMAN (robot) can handle getting hit by balls, uneven ground, and stairs. Better match to human gait than Linear Inverted Pendulum (LIP) model. Has the potential to match human gait better with modified muscle placement, more muscles, and more degrees of freedom.
+},
+	file = {Van der Noot et al. - 2018 - Bio-inspired controller achieving forward speed mo.pdf:C\:\\Users\\Connor\\Zotero\\storage\\9D6275QN\\Van der Noot et al. - 2018 - Bio-inspired controller achieving forward speed mo.pdf:application/pdf}
+}
+
+@article{millard_flexing_2013,
+	title = {Flexing {Computational} {Muscle}: {Modeling} and {Simulation} of {Musculotendon} {Dynamics}},
+	volume = {135},
+	issn = {0148-0731, 1528-8951},
+	shorttitle = {Flexing {Computational} {Muscle}},
+	url = {https://asmedigitalcollection.asme.org/biomechanical/article/doi/10.1115/1.4023390/371394/Flexing-Computational-Muscle-Modeling-and},
+	doi = {10.1115/1.4023390},
+	language = {en},
+	number = {2},
+	urldate = {2019-10-01},
+	journal = {Journal of Biomechanical Engineering},
+	author = {Millard, Matthew and Uchida, Thomas and Seth, Ajay and Delp, Scott L.},
+	month = feb,
+	year = {2013},
+	pages = {021005},
+	file = {Millard et al. - 2013 - Flexing Computational Muscle Modeling and Simulat.pdf:C\:\\Users\\Connor\\Zotero\\storage\\LKZBJ9QL\\Millard et al. - 2013 - Flexing Computational Muscle Modeling and Simulat.pdf:application/pdf}
+}
+
+@article{delp_interactive_1990,
+	title = {An interactive graphics-based model of the lower extremity to study orthopaedic surgical procedures},
+	volume = {37},
+	issn = {00189294},
+	url = {http://ieeexplore.ieee.org/document/102791/},
+	doi = {10.1109/10.102791},
+	abstract = {We have developed a model of the human lower extremity to study how surgical changes in musculoskeletal geometry and musculotendon parameters affect muscle force and its moment about the joints. The lines of action of 43 musculotendon actuators were defined based on their anatomical relationships to three-dimensional bone surface representations. A model for each actuator was formulated to compute its isometric force-length relation. T h e kinematics of the lower extremity were defined by modeling the hip, knee, ankle, subtalar, and metatarsophalangeal joints. Thus, the force and joint moment that each musculotendon actuator develops can he computed for any body position. The joint moments calculated with the model compare well with experimentally measured isometric joint moments.},
+	language = {en},
+	number = {8},
+	urldate = {2019-10-01},
+	journal = {IEEE Transactions on Biomedical Engineering},
+	author = {Delp, S.L. and Loan, J.P. and Hoy, M.G. and Zajac, F.E. and Topp, E.L. and Rosen, J.M.},
+	month = aug,
+	year = {1990},
+	pages = {757--767},
+	file = {Delp et al. - 1990 - An interactive graphics-based model of the lower e.pdf:C\:\\Users\\Connor\\Zotero\\storage\\5P74K9AB\\Delp et al. - 1990 - An interactive graphics-based model of the lower e.pdf:application/pdf}
+}
+
+@article{li_neural_2017,
+	title = {A neural network with central pattern generators entrained by sensory feedback controls walking of a bipedal model},
+	volume = {12},
+	issn = {1748-3190},
+	url = {https://doi.org/10.1088%2F1748-3190%2Faa8290},
+	doi = {10.1088/1748-3190/aa8290},
+	abstract = {A neuromechanical simulation of a planar, bipedal walking robot has been developed. It is constructed as a simplified, planar musculoskeletal model of the biomechanics of the human lower body. The controller consists of a dynamic neural network with central pattern generators (CPGs) entrained by force and movement sensory feedback to generate appropriate muscle forces for walking. The CPG model is a two-level architecture, which consists of separate rhythm generator and pattern formation networks. The biped model walks stably in the sagittal plane without inertial sensors or a centralized posture controller or a ‘baby walker’ to help overcome gravity. Its gait is similar to humans’ and it walks at speeds from 0.850 m s−1 up to 1.289 m s−1 with leg length of 0.84 m. The model walks over small unknown steps (6\% of leg length) and up and down 5° slopes without any additional higher level control actions.},
+	language = {en},
+	number = {6},
+	urldate = {2019-09-30},
+	journal = {Bioinspiration \& Biomimetics},
+	author = {Li, Wei and Szczecinski, Nicholas S. and Quinn, Roger D.},
+	month = oct,
+	year = {2017},
+	pages = {065002},
+	annote = {Category:
+
+Simulation of CPG controller for bipedal walking.
+
+Context:
+
+CPG with two levels: the rhythm generator and pattern formation.
+Hill type muscle model, simulated in Animatlab.
+Antagonistic, uniarticular muscle pairs for hip, knee, and ankle.
+
+Correctness:
+
+Biologically plausible, looks correct.
+
+Contributions:
+
+Model can walk at typical human speeds, with a leg length that is the typical adult range (0.84 m), and can accommodate walking over 50mm steps (6\% of leg length), and up and down 5 degree slopes.
+Stable without using IMUs, a walker, or a central posture controller.
+
+Summary:
+
+Biologically inspired, neuromechanical model for simplified bipedal humanoid locomotion. Uses Hill type muscle model in Animatlab. Model is self-stable, and is capable of walking up and down 5 degree inclines, as well as over steps (6\% of leg length).
+},
+	file = {Li et al. - 2017 - A neural network with central pattern generators e.pdf:C\:\\Users\\Connor\\Zotero\\storage\\5AX4LTXR\\Li et al. - 2017 - A neural network with central pattern generators e.pdf:application/pdf}
+}
+
+@incollection{bolen_determination_2019,
+	address = {Cham},
+	title = {Determination of {Artificial} {Muscle} {Placement} for {Biomimetic} {Humanoid} {Robot} {Legs}},
+	volume = {11556},
+	isbn = {978-3-030-24740-9 978-3-030-24741-6},
+	url = {http://link.springer.com/10.1007/978-3-030-24741-6_2},
+	abstract = {Bipedal robotic leg kinematics and dynamics are a key component in designing biomimetic humanoid robots. This work describes the process of designing artificial muscle attachment locations of the legs of a bipedal robot utilizing pneumatic artificial muscles (PAMs). PAMs offer similar force and activation times to real muscles, while being lightweight and low power. However, not all properties are identical, and substituting artificial muscles in with the same attachment locations results in different torque profiles about each joint. This work analyzes muscle length, moment arm, and isometric force of muscles over a range of different joint configurations, based on muscle attachment and wrapping points of the Gait2392 model in OpenSim. These parameters are then used to find joint torques produced by each muscle. This process is repeated for a model of the robot actuated by PAMs. Joint torques for individual muscles and groups of muscles are then compared between the models. Results indicate that several muscles torque profiles in the robot model closely match that of the human model, however, many muscles fall far short of the human capabilities. Where appropriate, additional results demonstrate how muscle attachment locations on the robot have been modified to better match the torque capabilities demonstrated by the OpenSim model. Matlab tools created for this project will facilitate further design refinement before implementation on the robot.},
+	language = {en},
+	urldate = {2019-11-21},
+	booktitle = {Biomimetic and {Biohybrid} {Systems}},
+	publisher = {Springer International Publishing},
+	author = {Bolen, Ben P. and Hunt, Alexander J.},
+	editor = {Martinez-Hernandez, Uriel and Vouloutsi, Vasiliki and Mura, Anna and Mangan, Michael and Asada, Minoru and Prescott, Tony J. and Verschure, Paul F.M.J.},
+	year = {2019},
+	doi = {10.1007/978-3-030-24741-6_2},
+	pages = {15--26},
+	file = {Bolen and Hunt - 2019 - Determination of Artificial Muscle Placement for B.pdf:C\:\\Users\\Connor\\Zotero\\storage\\F6HNVMBL\\Bolen and Hunt - 2019 - Determination of Artificial Muscle Placement for B.pdf:application/pdf}
+}
+
+@article{grillner_biological_2006,
+	title = {Biological pattern generation: the cellular and computational logic of networks in motion.},
+	volume = {52},
+	issn = {0896-6273},
+	url = {http://www.ncbi.nlm.nih.gov/pubmed/17145498},
+	doi = {10.1016/j.neuron.2006.11.008},
+	abstract = {In 1900, Ramón y Cajal advanced the neuron doctrine, defining the neuron as the fundamental signaling unit of the nervous system. Over a century later, neurobiologists address the circuit doctrine: the logic of the core units of neuronal circuitry that control animal behavior. These are circuits that can be called into action for perceptual, conceptual, and motor tasks, and we now need to understand whether there are coherent and overriding principles that govern the design and function of these modules. The discovery of central motor programs has provided crucial insight into the logic of one prototypic set of neural circuits: those that generate motor patterns. In this review, I discuss the mode of operation of these pattern generator networks and consider the neural mechanisms through which they are selected and activated. In addition, I will outline the utility of computational models in analysis of the dynamic actions of these motor networks.},
+	number = {5},
+	journal = {Neuron},
+	author = {Grillner, Sten},
+	month = dec,
+	year = {2006},
+	pmid = {17145498},
+	keywords = {Humans, Movement, Animals, Locomotion, spinal cord, Movement: physiology, Psychomotor Performance, Neurons, Nerve Net, Behavior, Locomotion: physiology, biological clocks, Nerve Net: physiology, Neurons: physiology, Electrophysiology, Psychomotor Performance: physiology, Nerve Net: cytology, Spinal Cord: physiology, receptors, Motor Cortex, Motor Cortex: physiology, Behavior: physiology, G-Protein-Coupled, G-Protein-Coupled: physiology},
+	pages = {751--66},
+	file = {Attachment:C\:\\Users\\Connor\\Zotero\\storage\\RGRW6Y5S\\Grillner - 2006 - Biological pattern generation the cellular and computational logic of networks in motion.pdf:application/pdf}
+}
+
+@article{deng_neuromechanical_2019,
+	title = {Neuromechanical {Model} of {Rat} {Hindlimb} {Walking} with {Two}-{Layer} {CPGs}},
+	volume = {4},
+	issn = {2313-7673},
+	url = {https://www.mdpi.com/2313-7673/4/1/21},
+	doi = {10.3390/biomimetics4010021},
+	abstract = {This work demonstrates a neuromechanical model of rat hindlimb locomotion undergoing nominal walking with perturbations. In the animal, two types of responses to perturbations are observed: resetting and non-resetting deletions. This suggests that the animal locomotor system contains a memory-like organization. To model this phenomenon, we built a synthetic nervous system that uses separate rhythm generator and pattern formation layers to activate antagonistic muscle pairs about each joint in the sagittal plane. Our model replicates the resetting and non-resetting deletions observed in the animal. In addition, in the intact (i.e., fully afferented) rat walking simulation, we observe slower recovery after perturbation, which is different from the deafferented animal experiment. These results demonstrate that our model is a biologically feasible description of some of the neural circuits in the mammalian spinal cord that control locomotion, and the difference between our simulation and ﬁctive motion shows the importance of sensory feedback on motor output. This model also demonstrates how the pattern formation network can activate muscle synergies in a coordinated way to produce stable walking, which motivates the use of more complex synergies activating more muscles in the legs for three-dimensional limb motion.},
+	language = {en},
+	number = {1},
+	urldate = {2020-04-10},
+	journal = {Biomimetics},
+	author = {Deng, Kaiyu and Szczecinski, Nicholas S. and Arnold, Dirk and Andrada, Emanuel and Fischer, Martin S. and Quinn, Roger D. and Hunt, Alexander J.},
+	month = mar,
+	year = {2019},
+	pages = {21},
+	file = {Deng et al. - 2019 - Neuromechanical Model of Rat Hindlimb Walking with.pdf:C\:\\Users\\Connor\\Zotero\\storage\\54ZDWL7G\\Deng et al. - 2019 - Neuromechanical Model of Rat Hindlimb Walking with.pdf:application/pdf}
+}
+
+@article{hoy_musculoskeletal_1990,
+	title = {A musculoskeletal model of the human lower extremity: the effect of muscle, tendon, and moment arm on the moment-angle relationship of musculotendon actuators at the hip, knee, and ankle},
+	volume = {23},
+	number = {2},
+	journal = {Journal of Biomechanics},
+	author = {Hoy, Melissa and Zajac, Felix and Gordon, Michael},
+	year = {1990},
+	pages = {157--169},
+	file = {HoyEtAl90.pdf:C\:\\Users\\Connor\\Zotero\\storage\\5DQXIIB7\\HoyEtAl90.pdf:application/pdf}
+}
+
+@article{delp_opensim_2007,
+	title = {{OpenSim}: {Open}-{Source} {Software} to {Create} and {Analyze} {Dynamic} {Simulations} of {Movement}},
+	volume = {54},
+	issn = {0018-9294},
+	shorttitle = {{OpenSim}},
+	url = {http://ieeexplore.ieee.org/document/4352056/},
+	doi = {10.1109/TBME.2007.901024},
+	abstract = {Dynamic simulations of movement allow one to study neuromuscular coordination, analyze athletic performance, and estimate internal loading of the musculoskeletal system. Simulations can also be used to identify the sources of pathological movement and establish a scientiﬁc basis for treatment planning. We have developed a freely available, open-source software system (OpenSim) that lets users develop models of musculoskeletal structures and create dynamic simulations of a wide variety of movements. We are using this system to simulate the dynamics of individuals with pathological gait and to explore the biomechanical effects of treatments. OpenSim provides a platform on which the biomechanics community can build a library of simulations that can be exchanged, tested, analyzed, and improved through a multi-institutional collaboration. Developing software that enables a concerted effort from many investigators poses technical and sociological challenges. Meeting those challenges will accelerate the discovery of principles that govern movement control and improve treatments for individuals with movement pathologies.},
+	language = {en},
+	number = {11},
+	urldate = {2020-04-21},
+	journal = {IEEE Transactions on Biomedical Engineering},
+	author = {Delp, Scott L. and Anderson, Frank C. and Arnold, Allison S. and Loan, Peter and Habib, Ayman and John, Chand T. and Guendelman, Eran and Thelen, Darryl G.},
+	month = nov,
+	year = {2007},
+	pages = {1940--1950},
+	file = {Delp et al. - 2007 - OpenSim Open-Source Software to Create and Analyz.pdf:C\:\\Users\\Connor\\Zotero\\storage\\R2EWDLR3\\Delp et al. - 2007 - OpenSim Open-Source Software to Create and Analyz.pdf:application/pdf}
+}
+
+@article{zang_design_2016,
+	title = {Design and control of a pneumatic musculoskeletal biped robot},
+	volume = {24},
+	issn = {09287329, 18787401},
+	url = {https://www.medra.org/servlet/aliasResolver?alias=iospress&doi=10.3233/THC-161167},
+	doi = {10.3233/THC-161167},
+	abstract = {BACKGROUND: Pneumatic artiﬁcial muscles are quite promising actuators for humanoid robots owing to their similar characteristics with human muscles. Moreover, biologically inspired musculoskeletal systems are particularly important for humanoid robots to perform versatile dynamic tasks.
+OBJECTIVE: This study aims to develop a pneumatic musculoskeletal biped robot, and its controller, to realize human-like walking.
+METHODS: According to the simpliﬁed musculoskeletal structure of human lower limbs, each leg of the biped robot is driven by nine muscles, including three pairs of monoarticular muscles which are arranged in the ﬂexor-extensor form, as well as three biarticular muscles which span two joints. To lower cost, high-speed on/off solenoid valves rather than proportional valves are used to control the muscles. The joint trajectory tracking controller based on PID control method is designed to achieve the desired motion. Considering the complex characteristics of pneumatic artiﬁcial muscles, the control model is obtained through parameter identiﬁcation experiments.
+RESULTS: Preliminary experimental results demonstrate that the biped robot is able to walk with this control strategy.
+CONCLUSION: The proposed musculoskeletal structure and control strategy are effective for the biped robot to achieve human-like walking.},
+	language = {en},
+	number = {s2},
+	urldate = {2020-04-23},
+	journal = {Technology and Health Care},
+	author = {Zang, Xizhe and Liu, Yixiang and Liu, Xinyu and Zhao, Jie},
+	month = jun,
+	year = {2016},
+	pages = {S443--S454},
+	file = {Zang et al. - 2016 - Design and control of a pneumatic musculoskeletal .pdf:C\:\\Users\\Connor\\Zotero\\storage\\GDNGFLJE\\Zang et al. - 2016 - Design and control of a pneumatic musculoskeletal .pdf:application/pdf}
+}
+
+@misc{noauthor_14_nodate,
+	title = {14},
+	file = {14.pdf:C\:\\Users\\Connor\\Zotero\\storage\\JQ8KTJLD\\14.pdf:application/pdf}
+}
+
+@article{buschmann_controlling_2015,
+	title = {Controlling legs for locomotion—insights from robotics and neurobiology},
+	volume = {10},
+	issn = {1748-3190},
+	url = {https://doi.org/10.1088%2F1748-3190%2F10%2F4%2F041001},
+	doi = {10.1088/1748-3190/10/4/041001},
+	abstract = {Walking is the most common terrestrial form of locomotion in animals. Its great versatility and flexibility has led to many attempts at building walking machines with similar capabilities. The control of walking is an active research area both in neurobiology and robotics, with a large and growing body of work. This paper gives an overview of the current knowledge on the control of legged locomotion in animals and machines and attempts to give walking control researchers from biology and robotics an overview of the current knowledge in both fields. We try to summarize the knowledge on the neurobiological basis of walking control in animals, emphasizing common principles seen in different species. In a section on walking robots, we review common approaches to walking controller design with a slight emphasis on biped walking control. We show where parallels between robotic and neurobiological walking controllers exist and how robotics and biology may benefit from each other. Finally, we discuss where research in the two fields diverges and suggest ways to bridge these gaps.},
+	language = {en},
+	number = {4},
+	urldate = {2020-04-25},
+	journal = {Bioinspiration \& Biomimetics},
+	author = {Buschmann, Thomas and Ewald, Alexander and Twickel, Arndt von and Büschges, Ansgar},
+	month = jun,
+	year = {2015},
+	note = {Publisher: IOP Publishing},
+	pages = {041001},
+	file = {IOP Full Text PDF:C\:\\Users\\Connor\\Zotero\\storage\\XDYT27ZB\\Buschmann et al. - 2015 - Controlling legs for locomotion—insights from robo.pdf:application/pdf}
+}
+
+@book{matlab_version_2019,
+	address = {Natick, Massachusetts},
+	title = {version 9.7.0 ({R2019b})},
+	publisher = {The MathWorks Inc.},
+	author = {MATLAB},
+	year = {2019}
+}
