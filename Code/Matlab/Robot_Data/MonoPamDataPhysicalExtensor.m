@@ -148,8 +148,8 @@ classdef MonoPamDataPhysicalExtensor < handle
         %% -------------- Resting PAM Length --------------------------
         function restingPamLength = get.RestingL(obj)
             
-%             restingPamLength = 0.3857625;
-%             fittingLength = 0.022;
+            restingPamLength = 0.3857625;
+            fittingLength = 0.031;
             tendonLength = 0.111;
             
             mL = obj.MuscleLength;
@@ -157,17 +157,17 @@ classdef MonoPamDataPhysicalExtensor < handle
             longestSeg = obj.LongestSegment;
            
             %Calculate the Pam end cap fitting length (estimates currently)
-            if dia == 20
-                fittingLength = 0.02275;
-            elseif dia == 40
-                fittingLength = 0.028;
-            else
-                fittingLength = 0.022;
-            end
+%             if dia == 20
+%                 fittingLength = 0.02275;
+%             elseif dia == 40
+%                 fittingLength = 0.028;
+%             else
+%                 fittingLength = 0.022;
+%             end
 % 
             obj.FittingLength = fittingLength;
             
-            restingPamLength = max(mL) - 2*fittingLength-tendonLength;
+%             restingPamLength = max(mL) - 2*fittingLength-tendonLength;
 %             
 %             tendonLength = max(mL) - restingPamLength - 2*fittingLength;
 %             if tendonLength < 0.08

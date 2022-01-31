@@ -43,7 +43,7 @@ HX711 scale;
 
 
 int choose_branch; //initialize the variable "choose_branch"
-float calibration_factor = -17000;
+float calibration_factor = -20400;
 //initialized variable calibration_factor.
 //calibration factor found using a separate arduino sketch
 //called SLoadCell_CalibrationFactorSketch"
@@ -62,11 +62,11 @@ void setup() {
   //this value is used to convert the raw
   //data to "human readable" data.  Output units are in lbs
   
-  scale.set_offset(-15300);
+  scale.set_offset(-35100);
   //this sets the offset value to a known zero.
   //there is no need for taring the scale once the zero point is known for a scale in a
   //set configuration.
-  //the Zero Factor -13900 was found using a separate Arduino Sketch
+  //the Zero Factor -35100 was found using a separate Arduino Sketch
   //called "SLoadCell_ZeroFactorSketch"
 }
 
