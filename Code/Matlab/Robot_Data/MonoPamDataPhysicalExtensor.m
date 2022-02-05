@@ -141,6 +141,7 @@ classdef MonoPamDataPhysicalExtensor < handle
             for i = 1:size(T, 3)
                 pointB = L(C, :);
                 mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
+                %mA(i, :) = cross(pointB, unitD(i, :));
             end
         end
         
@@ -148,25 +149,25 @@ classdef MonoPamDataPhysicalExtensor < handle
         function restingPamLength = get.RestingL(obj)
             
             restingPamLength = 0.3857625;
-            fittingLength = 0.0238125;
-            tendonLength = 0.168275;
+            fittingLength = 0.031;
+            tendonLength = 0.111;
             
-%             mL = obj.MuscleLength;
-%             dia = obj.Diameter;
-%             longestSeg = obj.LongestSegment;
-%            
-%             %Calculate the Pam end cap fitting length (estimates currently)
+            mL = obj.MuscleLength;
+            dia = obj.Diameter;
+            longestSeg = obj.LongestSegment;
+           
+            %Calculate the Pam end cap fitting length (estimates currently)
 %             if dia == 20
-%                 fittingLength = 0.025;
+%                 fittingLength = 0.02275;
 %             elseif dia == 40
-%                 fittingLength = 0.05;
+%                 fittingLength = 0.028;
 %             else
-%                 fittingLength = 0.0125;
+%                 fittingLength = 0.022;
 %             end
 % 
             obj.FittingLength = fittingLength;
-%             
-%             restingPamLength = max(longestSeg) - 2*fittingLength;
+            
+%             restingPamLength = max(mL) - 2*fittingLength-tendonLength;
 %             
 %             tendonLength = max(mL) - restingPamLength - 2*fittingLength;
 %             if tendonLength < 0.08
@@ -219,25 +220,70 @@ classdef MonoPamDataPhysicalExtensor < handle
         %% -------------- Force --------------------------
         %Calculate the direction of the forced applied by the muscle
         function F = get.Force(obj)
+        %Inputs:
+        %Lmt == muscle-tendon length, scalar
+        %rest == resting length of artificial muscle, "size" from Size function
+        %dia == diameter of Festo tube, from Size function
+        %Outputs:
+        %F == Force, N           
             dia = obj.Diameter;
             unitD = obj.UnitDirection;
             contract = obj.Contraction;
-            
-            if dia == 20
-                x = [0, 0.07, 0.11, 0.15, 0.25]';
-                y = [1400, 800, 600, 400, 0]';
-                BPAFit = fit(x, y, 'poly2');
-            elseif dia == 40
-                x = [0, 0.06, 0.12, 0.15, 0.25]';
-                y = [6000, 3500, 2000, 1500, 0]';
-                BPAFit = fit(x, y, 'poly2');
+            contraction = obj.Contraction;
+            mL = obj.MuscleLength;
+            rest = obj.RestingL
+            long = max(mL);
+            load ForceStrainTable.mat RelativeStrain Force2
+            tendon = long - rest;   %Length of artificial tendon and air fittings
+
+            k = (rest-(mL-tendon))/rest; %current strain
+            act = [15.31; 18.28; 18.94; 19.50; 27.27; 28.09]/100; %Resting actuator lengths (Hunt 2017)
+            strain = [0.1491; 0.1618; 0.1633; 0.1680; 0.1692; 0.1750]; %Max strain for these lengths (Hunt 2017)
+
+            if rest >= max(act)
+                kmax = max(strain);                 %maximum strain
+            elseif rest <= min(act)
+                kmax = min(strain);                 %maximum strain
             else
-                x = [0, 0.1, 0.17, 0.25]';
-                y = [630, 300, 150, 0]';
-                BPAFit = fit(x, y, 'exp2');
+                kmax = interp1q(act,strain,rest);   %maximum strain
             end
 
-            scalarForce = BPAFit(contract);
+            rel = k/kmax; %relative strain
+    
+            for i = 1:size(unitD, 1)
+                if rel(i) >= 0 && rel(i) <=1
+                    scalarForce(i) = interp1(RelativeStrain, Force2, rel(i));
+                else
+                    scalarForce(i) = 0;
+                end
+            end
+
+            %If diameter is not 10 mm, then upscale force
+            if dia == 20
+                scalarForce = (1500/630)*scalarForce;
+            end
+
+            if dia == 40
+                scalarForce = (6000/630)*scalarForce;
+            end
+
+            
+            
+%             if dia == 20
+%                 x = [0, 0.07, 0.11, 0.15, 0.25]';
+%                 y = [1400, 800, 600, 400, 0]';
+%                 BPAFit = fit(x, y, 'poly2');
+%             elseif dia == 40
+%                 x = [0, 0.06, 0.12, 0.15, 0.25]';
+%                 y = [6000, 3500, 2000, 1500, 0]';
+%                 BPAFit = fit(x, y, 'poly2');
+%             else
+%                 x = [0, 0.1, 0.17, 0.25]';
+%                 y = [630, 300, 150, 0]';
+%                 BPAFit = fit(x, y, 'exp2');
+%             end
+
+%             scalarForce = BPAFit(contract);
             
             F = zeros(size(unitD));
             for i = 1:size(unitD, 1)

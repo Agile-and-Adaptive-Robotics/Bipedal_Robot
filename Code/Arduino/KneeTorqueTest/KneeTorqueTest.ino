@@ -34,15 +34,16 @@ The HX711 board can be powered from 2.7V to 5V so the Arduino 5V power should be
 
 #include "HX711.h" //this library can be obtained here http://librarymanager/All#Avia_HX711
 
-#define LOADCELL_DOUT_PIN 10    //define the Serial Data Output Pin
-#define LOADCELL_SCK_PIN 11     //define the Power Down and Serial Clock Input Pin
-int valve = 5;                  //arduino pin connected to the valve
-int baud = 9600;
+#define LOADCELL_DOUT_PIN 8    //define the Serial Data Output Pin
+#define LOADCELL_SCK_PIN 9     //define the Power Down and Serial Clock Input Pin
+#define baud 57600
+int valve = 5;                  //arduino pin connected to the valve. Attached to Pin 4 on the valve manifold.
+
 HX711 scale;
 
 
 int choose_branch; //initialize the variable "choose_branch"
-float calibration_factor = -15400;
+float calibration_factor = -20400;
 //initialized variable calibration_factor.
 //calibration factor found using a separate arduino sketch
 //called SLoadCell_CalibrationFactorSketch"
@@ -52,6 +53,7 @@ void setup() {
   pinMode(valve, OUTPUT);
   Serial.begin(baud);  //initialize arduino serial communication
   Serial.setTimeout(200);
+  digitalWrite(valve, LOW);
   
   //initialize load cell
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN); 
@@ -60,11 +62,11 @@ void setup() {
   //this value is used to convert the raw
   //data to "human readable" data.  Output units are in lbs
   
-  scale.set_offset(-17200);
+  scale.set_offset(-24771);
   //this sets the offset value to a known zero.
   //there is no need for taring the scale once the zero point is known for a scale in a
   //set configuration.
-  //the Zero Factor -17200 was found using a separate Arduino Sketch
+  //the Zero Factor -35100 was found using a separate Arduino Sketch
   //called "SLoadCell_ZeroFactorSketch"
 }
 
@@ -93,7 +95,7 @@ void loop() {
       
       total = reading.toInt();     //convert the read string to an integer
       double start = millis();     //start timer
-      int timer = 0;
+      double timer = 0;
       
       for (int i = 0; i < total; i++) {
         digitalWrite(valve,HIGH);               //open valve during testing
@@ -103,11 +105,12 @@ void loop() {
         Serial.println(timer);                  //record time stamp of data collection
         
       }
-      digitalWrite(valve, LOW);                 //close valve after testing
-      delay(5000);
+    //  digitalWrite(valve, LOW);                 //close valve after testing
+    //  delay(5000);
       
     } else {  //if there is no information to read over serial from matlab, wait...
-      digitalWrite(valve,LOW);                  //close valve when no data is being sent over
+    digitalWrite(valve,LOW);                  //close valve when no data is being sent over
     }
   }
+  digitalWrite(valve,LOW);
 }

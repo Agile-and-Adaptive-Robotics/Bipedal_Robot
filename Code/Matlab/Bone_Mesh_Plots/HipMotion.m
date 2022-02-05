@@ -7,10 +7,13 @@ clc
 clear all
 close all
 
-addpath('Open_Sim_Bone_Geometry')
-addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
-addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code
-addpath C:\users\Connor\Documents\GitHub\Bipedal_Robot\Code\Human_Data
+current_dir = cd;
+all_code = fullfile(current_dir,'../..');
+addpath(genpath(all_code));
+% addpath('Open_Sim_Bone_Geometry')
+% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
+% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code
+% addpath C:\users\Connor\Documents\GitHub\Bipedal_Robot\Code\Human_Data
 
 %% Retrieve the datasets
 Spine = xlsread('Spine_Mesh_Points.xlsx');
