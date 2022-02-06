@@ -16,7 +16,7 @@ classdef MonoPamDataPhysicalFlexor < handle
         Location
         Cross                       %Designates which row corresponds with a location where the muscle crosses into a new reference frame
         Diameter                    %Diameter of the BPA
-        TransformationMat           %Contains a transformation matrix to change the 
+        TransformationMat           %Contains a transformation matrix 
         FittingLength
         TendonL
     end
@@ -141,37 +141,39 @@ classdef MonoPamDataPhysicalFlexor < handle
             for i = 1:size(T, 3)
                 pointB = L(C, :);
                 mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
+                %mA(i, :) = cross(pointB, unitD(i, :));
             end
         end
         
         %% -------------- Resting PAM Length --------------------------
         function restingPamLength = get.RestingL(obj)
             
-            restingPamLength = 0.362;
-%            fittingLength = 0.0254;
-%            tendonLength = 0.142875;
+           restingPamLength = 0.416;
+           fittingLength = 0.031;
+           tendonLength = 0.009;
             
             mL = obj.MuscleLength;
             dia = obj.Diameter;
             longestSeg = obj.LongestSegment;
 %            
             %Calculate the Pam end cap fitting length (estimates currently)
-            if dia == 20
-                fittingLength = 0.0254;
-            elseif dia == 40
-                fittingLength = 0.0254;
-            else
-                fittingLength = 0.0254;
-            end
+%             if dia == 20
+%                 fittingLength = 0.0225;
+%             elseif dia == 40
+%                 fittingLength = 0.0254;
+%             else
+%                 fittingLength = 0.0254;
+%             end
 
             obj.FittingLength = fittingLength;
 %             
-%            restingPamLength = max(longestSeg) - 2*fittingLength;
+%             restingPamLength = max(longestSeg) - 2*fittingLength;
             
-            tendonLength = max(mL) - restingPamLength - 2*fittingLength;
-            if tendonLength < 0.01
-                tendonLength = 0;
-            end
+%            tendonLength = max(mL) - restingPamLength - 2*fittingLength;
+%             tendonLength = 0.01;
+%             if tendonLength < 0.01
+%                 tendonLength = 0;
+%             end
             
             %If there is only one muscle segment, make the segment length
             %include the tendon length in the calculation for the resting

@@ -39,8 +39,8 @@ Example using the SparkFun HX711 breakout board with a scale
 
 #include "HX711.h" //This library can be obtained here http://librarymanager/All#Avia_HX711
 
-#define LOADCELL_DOUT_PIN 3  //define the Serial Data Output Pin
-#define LOADCELL_SCK_PIN 2  // define the Power Down and Serial Clock Input Pin
+#define LOADCELL_DOUT_PIN 8  //define the Serial Data Output Pin
+#define LOADCELL_SCK_PIN 9  // define the Power Down and Serial Clock Input Pin
 
 HX711 scale;
 
@@ -53,7 +53,7 @@ float calibration_factor = -17550;
 
 void setup() {
 
-  Serial.begin(9600);  // initialize arduino serial communication
+  Serial.begin(57600);  // initialize arduino serial communication
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN); // initialize load cell 
   scale.set_scale(calibration_factor); 
     //set the scale value; 

@@ -15,27 +15,26 @@
 
 #include "HX711.h" //This library can be obtained here http://librarymanager/All#Avia_HX711
 
-#define LOADCELL_DOUT_PIN 3 //define the Serial Data Output Pin
-#define LOADCELL_SCK_PIN 2  // define the Power Down and Serial Clock Input Pin
+#define LOADCELL_DOUT_PIN 8 //define the Serial Data Output Pin
+#define LOADCELL_SCK_PIN 9  // define the Power Down and Serial Clock Input Pin
 
 HX711 scale;
 
-float calibration_factor = -21000; // initialize variable calibration_factor to some guess value
-
+float calibration_factor = -20400; // initialize variable calibration_factor to some guess value                                   
 
 void setup() {
 
 
-  Serial.begin(115200);  // initialize arduino serial communication
+  Serial.begin(57600);  // initialize arduino serial communication
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN); // initialize load cell 
   scale.set_scale(); //set the scale value; 
     //this value is used to convert the raw
     //data to "human readable" data (measure units) 
-  scale.set_offset(-17280);
+  scale.set_offset(-35100);
     //This sets the offset value to a known zero.
     //There is no need for taring the scale once the zero point is known for a scale in a
     // set configuration.
-    // The Zero Factor -17200 was found using a separate Arduino Sketch 
+    // The Zero Factor -29000 was found using a separate Arduino Sketch 
     //called "SLoadCell_ZeroFactorSketch"
 
 }
@@ -58,8 +57,10 @@ void loop() {
     char temp = Serial.read();
     if (temp == '+' || temp == 'a')
       calibration_factor += 10;
-    if (temp == '+' || temp == 'a')
-      calibration_factor += 10;
+    if (temp == 'q')
+      calibration_factor += 100;
+    if (temp == 'w')
+      calibration_factor -= 100;
     else if (temp == '-' || temp == 's')
       calibration_factor -= 10;
   }
