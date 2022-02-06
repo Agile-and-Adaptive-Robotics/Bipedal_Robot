@@ -67,7 +67,7 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
     for i = 1:total
         
         svalues(i,1) = str2double(readline(s))*4.4482216;                                
-        svalues(i,2) = str2double(readline(s))*154.48*(5/1023)-124.86;
+        svalues(i,2) = str2double(readline(s))*151.84*(5/1023)-125.59;
         svalues(i,3) = str2double(readline(s))/1000;
 
 %         read data to each column and convert units when needed
