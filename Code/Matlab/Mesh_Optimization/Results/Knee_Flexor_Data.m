@@ -82,13 +82,11 @@ Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 %% PAM calculation
 Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
-Dia = 20;
+Dia = 10;
 
 %Origin and Insertion from Ben
-% Location = [-0.050, -0.045, 0.0328;
-%             -0.03239, -0.08217, 0.0328];
-Location = [-0.070, 0.100, 0.0328;
-            -0.050, -0.045, 0.0328];
+Location = [-0.050, 0.035, 0.050;
+            -0.03029, -0.04263, 0.027];
 Bifemsh_Pam = MonoPamDataPhysicalFlexor(Name, Location, CrossPoint, Dia, T_Pam);
 
 figure
@@ -185,8 +183,10 @@ hold off
 %calculations
 ML = Bifemsh.MuscleLength;
 PamL = Bifemsh_Pam.MuscleLength;
-MA = Bifemsh.MomentArm(:,3);               %Muscle moment arm, Z axis
-BPAma = Bifemsh_Pam.MomentArm(:,3);        %BPA moment arm, Z axis
+for i = 1:size(Bifemsh.MomentArm,1)
+    MA(i,:) = norm(Bifemsh.MomentArm(i,1:2));               %Muscle moment arm, Z axis
+    BPAma(i,:) = norm(Bifemsh_Pam.MomentArm(i,1:2));        %BPA moment arm, Z axis
+end
 dM = diff(Bifemsh.MuscleLength);           %Muscle length difference
 dP = diff(Bifemsh_Pam.MuscleLength);       %PAM length difference
 dO = diff(phiD);                           %Angle difference

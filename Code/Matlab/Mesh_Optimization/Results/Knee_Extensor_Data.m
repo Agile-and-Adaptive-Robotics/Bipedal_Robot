@@ -163,20 +163,20 @@ Name = 'Vastus Intermedius';
 
 % Origin Location from Ben
 if phi(i)*180/pi < -80
-    Location = [0.030, -0.050, 0;
-                0.048, -0.349, 0.000;               %BPA contacts head of socket head cap screw that joins Femur to Femoral end
-                fcn13(phi(i)), fcn14(phi(i)), 0;    %Top of patella, as a function of knee angle
-                fcn15(phi(i)), fcn16(phi(i)), 0;    %Bottom of patella, as a function of knee angle
-                0.04261, -0.07741, 0.000];           %Top of patellar ligament bracket
-    CrossPoint = 5;
-else
-    Location = [0.030, -0.050, 0;
-                fcn13(phi(i)), fcn14(phi(i)), 0;    %Top of patella, as a function of knee angle
-                fcn15(phi(i)), fcn16(phi(i)), 0;    %Bottom of patella, as a function of knee angle
-                0.04261, -0.07741, 0.000];           %Top of patellar ligament bracket
+    Location = [0.040, 0.035, 0;
+                0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
+                0.04817, -0.41646,    0;        %anterior femoral condyle when flexion is high
+                0.04094, -0.05098 0;            %Tibia contact
+                0.02362, -0.07556, 0.000];      %patellar ligament ring
     CrossPoint = 4;
+else
+    Location = [0.040, 0.035, 0;
+                0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
+                0.04094, -0.05098 0;            %Tibia contact
+                0.02362, -0.07556, 0.000];      %patellar ligament ring
+    CrossPoint = 3;
 end
-Dia = 40;
+Dia = 10;
 Vas_Pam = MonoPamDataPhysicalExtensor(Name, Location, CrossPoint, Dia, T_Pam);
 
 max_length = max(Vas_Pam.MuscleLength)
