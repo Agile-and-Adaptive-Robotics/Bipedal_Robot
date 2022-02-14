@@ -85,7 +85,7 @@ CrossPoint = 2;
 Dia = 10;
 
 %Origin and Insertion from Ben
-Location = [-0.050, 0.035, 0.050;
+Location = [-0.050, 0.035, 0.028;
             -0.03029, -0.04263, 0.027];
 Bifemsh_Pam = MonoPamDataPhysicalFlexor(Name, Location, CrossPoint, Dia, T_Pam);
 
