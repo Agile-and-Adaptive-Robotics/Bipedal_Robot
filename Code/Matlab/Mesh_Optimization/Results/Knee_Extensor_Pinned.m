@@ -84,7 +84,7 @@ phi = linspace(kneeMin, kneeMax, positions);
 %smallest value of phi equal to 0
 [val, pos] = min(abs(phi));
 phi(pos) = 0;
-
+phiD = phi*180/pi;
 
 for i = 1:positions
     hipToKnee = [0.0045, -0.3958, 0];
@@ -103,200 +103,226 @@ for i = 1:positions
 end
 
 %% Muscle calculation
-Name = 'Vastus Medialis';
-MIF = 1294;
-OFL = 0.089; TSL = 0.126; Pennation = 0.08726646;
-if phi(i)*180/pi < -80
-     Location = [0.014, -0.21, 0.019;
-                 0.036, -0.277, 0.001;
-                 0.037, -0.405, -0.013;
-                 0.027, -0.425, -0.013;
-                 fcn5(phi(i)), fcn6(phi(i)) -0.0146];
-     CrossPoint = 5;
-else 
-     Location = [0.014, -0.21, 0.019;
-                 0.036, -0.277, 0.001;
-                 0.037, -0.405, -0.013;
-                 fcn5(phi(i)), fcn6(phi(i)) -0.0146];
-     CrossPoint = 4;
-end
-Vas_Med = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
+% Name = 'Vastus Medialis';
+% MIF = 1294;
+% OFL = 0.089; TSL = 0.126; Pennation = 0.08726646;
+% for i = 1:positions
+%     if phi(i)*180/pi < -80
+%         Location(:,:,i) = [0.014, -0.21, 0.019;
+%                            0.036, -0.277, 0.001;
+%                            0.037, -0.405, -0.013;
+%                            0.027, -0.425, -0.013;
+%                            fcn5(phi(i)), fcn6(phi(i)) -0.0146];
+%         CrossPoint = 5;
+%     else 
+%         Location = [0.014, -0.21, 0.019;
+%                     0.036, -0.277, 0.001;
+%                     0.037, -0.405, -0.013;
+%                     0.037, -0.405, -0.013;
+%                     fcn5(phi(i)), fcn6(phi(i)) -0.0146];
+%         CrossPoint = 5;
+%     end
+% end
+% Vas_Med = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
-Name = 'Vastus Intermedius';
-MIF = 1365;
-OFL = 0.087; TSL = 0.136; Pennation = 0.05235988;
-if phi(i)*180/pi < -80
-    Location = [0.029, -0.192, 0.031;
-                0.034, -0.208, 0.029;
-                0.034, -0.403, 0.005;
-                fcn7(phi(i)), fcn8(phi(i)) 0.0018];
-    CrossPoint = 4;
-else
-    Location = [0.029, -0.192, 0.031;
-                0.034, -0.208, 0.029;
-                fcn7(phi(i)), fcn8(phi(i)) 0.0018];
-    CrossPoint = 3;
-end
-Vas_Int = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
-
-Name = 'Vastus Lateralis';
-MIF = 1871;
-OFL = 0.084; TSL = 0.157; Pennation = 0.08726646;
-if phi(i)*180/pi < -80
-    Location = [0.005, -0.185, 0.035;
-                0.027, -0.259, 0.041;
-                0.036, -0.403, 0.021;
-                0.025, -0.424, 0.018;
-                fcn9(phi(i)), fcn10(phi(i)) 0.0165];
-    CrossPoint = 5;
-else
-    Location = [0.005, -0.185, 0.035;
-                0.027, -0.259, 0.041;
-                0.036, -0.403, 0.021;
-                fcn9(phi(i)), fcn10(phi(i)) 0.0165];
-    CrossPoint = 4;
-end
-Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
+% Name = 'Vastus Intermedius';
+% MIF = 1365;
+% OFL = 0.087; TSL = 0.136; Pennation = 0.05235988;
+% if phi(i)*180/pi < -80
+%     Location = [0.029, -0.192, 0.031;
+%                 0.034, -0.208, 0.029;
+%                 0.034, -0.403, 0.005;
+%                 fcn7(phi(i)), fcn8(phi(i)) 0.0018];
+%     CrossPoint = 4;
+% else
+%     Location = [0.029, -0.192, 0.031;
+%                 0.034, -0.208, 0.029;
+%                 fcn7(phi(i)), fcn8(phi(i)) 0.0018];
+%     CrossPoint = 3;
+% end
+% Vas_Int = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
+% 
+% Name = 'Vastus Lateralis';
+% MIF = 1871;
+% OFL = 0.084; TSL = 0.157; Pennation = 0.08726646;
+% if phi(i)*180/pi < -80
+%     Location = [0.005, -0.185, 0.035;
+%                 0.027, -0.259, 0.041;
+%                 0.036, -0.403, 0.021;
+%                 0.025, -0.424, 0.018;
+%                 fcn9(phi(i)), fcn10(phi(i)) 0.0165];
+%     CrossPoint = 5;
+% else
+%     Location = [0.005, -0.185, 0.035;
+%                 0.027, -0.259, 0.041;
+%                 0.036, -0.403, 0.021;
+%                 fcn9(phi(i)), fcn10(phi(i)) 0.0165];
+%     CrossPoint = 4;
+% end
+% Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 %% PAM calculation
 Name = 'Vastus Intermedius';
+Location = zeros(5,3,positions);
 
 % Origin Location from Ben
-    Location = [0.030, -0.050, 0;
-                0.060, -0.350, 0.000;        %BPA contacts mounting boss
-                0.04128, -0.410,    0;        %anterior femoral condyle when flexion is high
-                0.01138, -0.425 0;            %Tibia contact
-                0.0425, -0.07591, 0.000];      %patellar ligament ring
-    CrossPoint = 5;
+for i = 1:positions
+    if phiD(i) >= -45 && phiD(i) < -35
+     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
+                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
+                0.04128, -0.410,    0;        %Contact point between 35 and 45 degrees flexion
+                0.04128, -0.410,    0;        %Row 4 = Row 3
+                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+    elseif phiD(i) >= -35
+     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
+                0.060, -0.350, 0.000;        %BPA contacts screw that joins femur body with femoral condyles
+                0.060, -0.350, 0.000;        %Row 3 = Row 2
+                0.060, -0.350, 0.000;        %Row 4 = Row 2
+                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+    else
+     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
+                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
+                0.04128, -0.410,    0;        %Contact point between 35 and 45 degrees flexion
+                0.01138, -0.425 0;            %Contact point over 45 degrees flexion
+                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+    end
+end
+        
+CrossPoint = 5;
 Dia = 10;
-Vas_Pam = MonoPamDataPhysicalExtensor(Name, Location, CrossPoint, Dia, T);
+Vas_Pam = MonoPamDataPinnedExtensor(Name, Location, CrossPoint, Dia, T);
 
 max_length = max(Vas_Pam.MuscleLength)
 min_length = min(Vas_Pam.MuscleLength)
 ratio = min_length/max_length
 
 %% Unstacking the Torques to identify specific rotations
-Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
-Torque1 = Vas_Int.Torque + Vas_Lat.Torque + Vas_Med.Torque;
+% Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
+% Torque1 = Vas_Int.Torque + Vas_Lat.Torque + Vas_Med.Torque;
 TorqueR = Vas_Pam.Torque;
 
 %% Add Torques from the Muscle Group
-TorqueH = Torque1;
+% TorqueH = Torque1;
 
 
 %% Plotting Torque Results
-phiD = phi*180/pi;
 
-TorqueEx = zeros(size(TorqueH, 1), 1);
-TorqueEy = zeros(size(TorqueH, 1), 1);
-TorqueEz = zeros(size(TorqueH, 1), 1);
-
-for i = 1:size(TorqueR, 1)
-    if TorqueH(i, 1) >= 0
-        TorqueEx(i) = TorqueR(i, 1) - TorqueH(i, 1);
-    else
-        TorqueEx(i) = TorqueH(i, 1) - TorqueR(i, 1);
-    end
-    
-    if TorqueH(i, 2) >= 0
-        TorqueEy(i) = TorqueR(i, 2) - TorqueH(i, 2);
-    else
-        TorqueEy(i) = TorqueH(i, 2) - TorqueR(i, 2);
-    end
-    
-    if TorqueH(i, 3) >= 0
-        TorqueEz(i) = TorqueR(i, 3) - TorqueH(i, 3);
-    else
-        TorqueEz(i) = TorqueH(i, 3) - TorqueR(i, 3);
-    end
-end
-
-figure
-hold on
-sgtitle('Bicep Femoris Short Head Torque through Knee Flexion and Extension')
-
-subplot(3, 2, 1)
-plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3))
-legend('Human Muscle', 'Optimal BPA Location')
-title('Muscle and PAM Z Torque')
-xlabel('Knee Extension/Rotation, degrees')
+plot(phiD, TorqueR(:, 3))
+title('BPA Z Torque')
+xlabel('Knee Extension(+)/Flexion(-), degrees')
 ylabel('Torque, Nm')
-legend('Human', 'PAM')
+legend('BPA')
 
-subplot(3, 2, 2)
-plot(phiD, TorqueEz)
-legend('Optimal PAM Location')
-xlabel('Knee Extension/Rotation, degrees')
-ylabel('Torque, Nm')
-title('Adjusted Error Z Torque')
+% TorqueEx = zeros(size(TorqueH, 1), 1);
+% TorqueEy = zeros(size(TorqueH, 1), 1);
+% TorqueEz = zeros(size(TorqueH, 1), 1);
+% 
+% for i = 1:size(TorqueR, 1)
+%     if TorqueH(i, 1) >= 0
+%         TorqueEx(i) = TorqueR(i, 1) - TorqueH(i, 1);
+%     else
+%         TorqueEx(i) = TorqueH(i, 1) - TorqueR(i, 1);
+%     end
+%     
+%     if TorqueH(i, 2) >= 0
+%         TorqueEy(i) = TorqueR(i, 2) - TorqueH(i, 2);
+%     else
+%         TorqueEy(i) = TorqueH(i, 2) - TorqueR(i, 2);
+%     end
+%     
+%     if TorqueH(i, 3) >= 0
+%         TorqueEz(i) = TorqueR(i, 3) - TorqueH(i, 3);
+%     else
+%         TorqueEz(i) = TorqueH(i, 3) - TorqueR(i, 3);
+%     end
+% end
 
-subplot(3, 2, 3)
-plot(phiD, TorqueH(:, 2), phiD, TorqueR(:, 2))
-title('Muscle and PAM Y Torque')
-xlabel('Knee Extension/Rotation, degrees')
-ylabel('Torque, Nm')
-legend('Human', 'PAM')
-
-subplot(3, 2, 4)
-plot(phiD, TorqueEy)
-legend('Optimal PAM Location')
-xlabel('Knee Extension/Rotation, degrees')
-ylabel('Torque, Nm')
-title('Adjusted Error Y Torque')
-
-subplot(3, 2, 5)
-plot(phiD, TorqueH(:, 1), phiD, TorqueR(:, 1))
-title('Muscle and PAM X Torque')
-xlabel('Knee Extension/Rotation, degrees')
-ylabel('Torque, Nm')
-legend('Human', 'PAM')
-
-subplot(3, 2, 6)
-plot(phiD, TorqueEx)
-legend('Optimal PAM Location')
-xlabel('Knee Extension/Rotation, degrees')
-ylabel('Torque, Nm')
-title('Adjusted Error X Torque')
-
-hold off
+% figure
+% hold on
+% sgtitle('Bicep Femoris Short Head Torque through Knee Flexion and Extension')
+% 
+% subplot(3, 2, 1)
+% plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3))
+% legend('Human Muscle', 'Optimal BPA Location')
+% title('Muscle and PAM Z Torque')
+% xlabel('Knee Extension/Rotation, degrees')
+% ylabel('Torque, Nm')
+% legend('Human', 'PAM')
+% 
+% subplot(3, 2, 2)
+% plot(phiD, TorqueEz)
+% legend('Optimal PAM Location')
+% xlabel('Knee Extension/Rotation, degrees')
+% ylabel('Torque, Nm')
+% title('Adjusted Error Z Torque')
+% 
+% subplot(3, 2, 3)
+% plot(phiD, TorqueH(:, 2), phiD, TorqueR(:, 2))
+% title('Muscle and PAM Y Torque')
+% xlabel('Knee Extension/Rotation, degrees')
+% ylabel('Torque, Nm')
+% legend('Human', 'PAM')
+% 
+% subplot(3, 2, 4)
+% plot(phiD, TorqueEy)
+% legend('Optimal PAM Location')
+% xlabel('Knee Extension/Rotation, degrees')
+% ylabel('Torque, Nm')
+% title('Adjusted Error Y Torque')
+% 
+% subplot(3, 2, 5)
+% plot(phiD, TorqueH(:, 1), phiD, TorqueR(:, 1))
+% title('Muscle and PAM X Torque')
+% xlabel('Knee Extension/Rotation, degrees')
+% ylabel('Torque, Nm')
+% legend('Human', 'PAM')
+% 
+% subplot(3, 2, 6)
+% plot(phiD, TorqueEx)
+% legend('Optimal PAM Location')
+% xlabel('Knee Extension/Rotation, degrees')
+% ylabel('Torque, Nm')
+% title('Adjusted Error X Torque')
+% 
+% hold off
 
 
 %% Plotting the angle between the vectors
 
-aHR = zeros(size(TorqueH, 1), 1);
-aHRH = zeros(size(TorqueH, 1), 1);
+% aHR = zeros(size(TorqueH, 1), 1);
+% aHRH = zeros(size(TorqueH, 1), 1);
+% 
+% for i = 1:size(TorqueH, 1)
+%     uvecH = TorqueH(i, :)/norm(TorqueH(i, :));
+%                 
+%     %Sometimes the BPA can't produce any force due to high
+%     %contraction. We will set it equal to negative the human
+%     %vector to maximize the penalty. Consider changing later
+%     if norm(TorqueR(i, :)) == 0
+%         uvecR = -uvecH;
+%     else
+%         uvecR = TorqueR(i, :)/norm(TorqueR(i, :));
+%     end
+%     
+%     aHR(i) = dot(uvecH, uvecR);
+% end
 
-for i = 1:size(TorqueH, 1)
-    uvecH = TorqueH(i, :)/norm(TorqueH(i, :));
-                
-    %Sometimes the BPA can't produce any force due to high
-    %contraction. We will set it equal to negative the human
-    %vector to maximize the penalty. Consider changing later
-    if norm(TorqueR(i, :)) == 0
-        uvecR = -uvecH;
-    else
-        uvecR = TorqueR(i, :)/norm(TorqueR(i, :));
-    end
-    
-    aHR(i) = dot(uvecH, uvecR);
-end
 
-
-figure
-hold on
-title('Angle between the Human Torque Vector and PAM Torque Vectors')
-plot(phiD, aHR)
-legend('Human and Optimal PAM')
-ylabel('Radians')
-xlabel('Knee Angle, degree')
-hold off
-
-HMuscleLocation = {Vas_Int.Location, Vas_Lat.Location, Vas_Med.Location};
-HMuscleCross = {Vas_Int.Cross, Vas_Lat.Cross, Vas_Med.Cross};
-
-RMuscleLocation = {Vas_Pam.Location};
-RMuscleCross = {Vas_Pam.Cross};
-
-Bones = {'Femur', 'Tibia'};
-
-run("MuscleBonePlotting")
+% figure
+% hold on
+% title('Angle between the Human Torque Vector and PAM Torque Vectors')
+% plot(phiD, aHR)
+% legend('Human and Optimal PAM')
+% ylabel('Radians')
+% xlabel('Knee Angle, degree')
+% hold off
+% 
+% HMuscleLocation = {Vas_Int.Location, Vas_Lat.Location, Vas_Med.Location};
+% HMuscleCross = {Vas_Int.Cross, Vas_Lat.Cross, Vas_Med.Cross};
+% 
+% RMuscleLocation = {Vas_Pam.Location};
+% RMuscleCross = {Vas_Pam.Cross};
+% 
+% Bones = {'Femur', 'Tibia'};
+% 
+% run("MuscleBonePlotting")

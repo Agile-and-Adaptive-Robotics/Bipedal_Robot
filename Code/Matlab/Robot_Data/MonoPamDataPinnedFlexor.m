@@ -7,7 +7,7 @@
 
 %Refer to https://www.mathworks.com/help/matlab/matlab_oop/example-representing-structured-data.html
 
-classdef MonoPamDataPhysicalFlexor < handle
+classdef MonoPamDataPinnedFlexor < handle
     
     %% ------------Public Properties---------------------------
     %List of explicit properties for the muscles
@@ -41,7 +41,7 @@ classdef MonoPamDataPhysicalFlexor < handle
         %% ------------- Muscle Data Constructor -----------------
         %Constructor Function. By calling 'MuscleData' and entering the
         %muscle information, we construct an object for that muscle.
-        function PD = MonoPamDataPhysicalFlexor(name, location, cross, diameter, t)
+        function PD = MonoPamDataPinnedFlexor(name, location, cross, diameter, t)
             if nargin > 0
                 PD.Name = name;
                 PD.Location = location;
@@ -148,9 +148,9 @@ classdef MonoPamDataPhysicalFlexor < handle
         %% -------------- Resting PAM Length --------------------------
         function restingPamLength = get.RestingL(obj)
             
-           restingPamLength = 0.416;
-           fittingLength = 0.031;
-           tendonLength = 0.009;
+           restingPamLength = 0.485;
+           fittingLength = 0.0254;
+           tendonLength = 0;
             
             mL = obj.MuscleLength;
             dia = obj.Diameter;

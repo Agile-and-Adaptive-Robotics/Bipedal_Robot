@@ -7,7 +7,7 @@
 
 %Refer to https://www.mathworks.com/help/matlab/matlab_oop/example-representing-structured-data.html
 
-classdef MonoPamDataPhysicalExtensor < handle
+classdef MonoPamDataPinnedExtensor < handle
     
     %% ------------Public Properties---------------------------
     %List of explicit properties for the muscles
@@ -37,11 +37,12 @@ classdef MonoPamDataPhysicalExtensor < handle
         Torque
     end
     
+   
     methods
         %% ------------- Muscle Data Constructor -----------------
         %Constructor Function. By calling 'MuscleData' and entering the
         %muscle information, we construct an object for that muscle.
-        function PD = MonoPamDataPhysicalExtensor(name, location, cross, diameter, t)
+        function PD = MonoPamDataPinnedExtensor(name, location, cross, diameter, t)
             if nargin > 0
                 PD.Name = name;
                 PD.Location = location;
@@ -53,6 +54,7 @@ classdef MonoPamDataPhysicalExtensor < handle
             end
         end
         
+        
         %% ------------- Segment Lengths ------------------------
         function segLengths = get.SegmentLengths(obj)
             L = obj.Location;
@@ -60,10 +62,29 @@ classdef MonoPamDataPhysicalExtensor < handle
             T = obj.TransformationMat;
             segLengths = zeros(size(T, 3), size(L, 1) - 1);
             
+
+%             for j = 1:size(T,3)
+%                 if angle(j)>80
+%                     L = obj.Location;
+%                 elseif j>= 40 && j<= 80
+%                     L(:,:,j) = [L(1,:);
+%                          L(2,:);
+%                          L(3,:);
+%                          L(3,:);
+%                          L(5,:);];
+%                else 
+%                     L(:,:,j) = [L(1,:);
+%                          L(2,:);
+%                          L(2,:);
+%                          L(2,:);
+%                          L(5,:);];
+%                 end      
+%             end
+            
             for ii = 1:size(T, 3)                          %Repeat for each orientation
-                for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
-                    pointA = L(i, :);
-                    pointB = L(i+1, :);
+                for i = 1:size(L, 1,ii)-1                      %Repeat for all muscle segments
+                    pointA = L(i, :,ii);
+                    pointB = L(i+1, :,ii);
                     if i+1 == C
                         pointB = RowVecTrans(T(:, :, ii), pointB);
                     end
@@ -79,7 +100,7 @@ classdef MonoPamDataPhysicalExtensor < handle
             
             % Calculate which muscle segment is the longest on average.
             % This will be where the Pam resides.
-            avgSegL = zeros(size(L, 1) - 1);
+            avgSegL = zeros(size(L, 1, 1) - 1);
             for i = 1:size(segLengths, 2)
                 avgSegL(i) = mean(segLengths(:, i));
             end
@@ -104,7 +125,7 @@ classdef MonoPamDataPhysicalExtensor < handle
             segLengths = obj.SegmentLengths;
             
             for ii = 1:size(mL, 1)                          %Repeat for each orientation
-                for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
+                for i = 1:size(L, 1, 1)-1                      %Repeat for all muscle segments
                     mL(ii, 1) = mL(ii, 1) + segLengths(ii, i);
                 end
             end
@@ -120,8 +141,8 @@ classdef MonoPamDataPhysicalExtensor < handle
             unitD = zeros(size(direction));
             
             for i = 1:size(T, 3)
-                pointA = L(C-1, :);
-                pointB = L(C, :);
+                pointA = L(C-1, :, i);
+                pointB = L(C, :, i);
                 direction(i, :) = RowVecTrans(T(:, :, i)\eye(4), pointA) - pointB;
                 unitD(i, :) = direction(i, :)/norm(direction(i, :));
             end
@@ -139,7 +160,7 @@ classdef MonoPamDataPhysicalExtensor < handle
             mA = zeros(size(T, 3), 3);
             
             for i = 1:size(T, 3)
-                pointB = L(C, :);
+                pointB = L(C, :, i);
                 mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
                 %mA(i, :) = cross(pointB, unitD(i, :));
             end
