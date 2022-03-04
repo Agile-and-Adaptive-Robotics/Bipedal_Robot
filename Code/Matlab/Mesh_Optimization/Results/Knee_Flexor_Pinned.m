@@ -30,7 +30,7 @@ T = zeros(4, 4, positions);
 % T_Pam = zeros(4, 4, positions);
 
 %Knee Extension and Flexion
-% %Human
+%Human
 % knee_angle_x = [-2.0944; -1.74533; -1.39626; -1.0472; -0.698132; -0.349066; -0.174533;  0.197344;  0.337395;  0.490178;   1.52146;   2.0944];
 % knee_x =       [-0.0032;  0.00179;  0.00411;  0.0041;   0.00212;    -0.001;   -0.0031; -0.005227; -0.005435; -0.005574; -0.005435; -0.00525];
 % fcn1 = fit(knee_angle_x,knee_x,'cubicspline');
@@ -184,8 +184,8 @@ hold off
 ML = Bifemsh.MuscleLength;
 PamL = Bifemsh_Pam.MuscleLength;
 for i = 1:size(Bifemsh.MomentArm,1)
-    MA(i,:) = norm(Bifemsh.MomentArm(i,1:2));               %Muscle moment arm, Z axis
-    BPAma(i,:) = norm(Bifemsh_Pam.MomentArm(i,1:2));        %BPA moment arm, Z axis
+    MA(i,:) = -norm(Bifemsh.MomentArm(i,1:2));               %Muscle moment arm, Z axis
+    BPAma(i,:) = -norm(Bifemsh_Pam.MomentArm(i,1:2));        %BPA moment arm, Z axis
 end
 dM = diff(Bifemsh.MuscleLength);           %Muscle length difference
 dP = diff(Bifemsh_Pam.MuscleLength);       %PAM length difference

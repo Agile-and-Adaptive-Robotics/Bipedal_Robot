@@ -167,13 +167,13 @@ Location = zeros(5,3,positions);
 
 % Origin Location from Ben
 for i = 1:positions
-    if phiD(i) >= -45 && phiD(i) < -35
+    if phiD(i) >= -74.01 && phiD(i) < -19.6
      Location(:,:,i) = [0.030, -0.050, 0;             %Origin
                 0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
-                0.04128, -0.410,    0;        %Contact point between 35 and 45 degrees flexion
+                0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
                 0.04128, -0.410,    0;        %Row 4 = Row 3
                 0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
-    elseif phiD(i) >= -35
+    elseif phiD(i) >= -19.6
      Location(:,:,i) = [0.030, -0.050, 0;             %Origin
                 0.060, -0.350, 0.000;        %BPA contacts screw that joins femur body with femoral condyles
                 0.060, -0.350, 0.000;        %Row 3 = Row 2
@@ -182,8 +182,8 @@ for i = 1:positions
     else
      Location(:,:,i) = [0.030, -0.050, 0;             %Origin
                 0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
-                0.04128, -0.410,    0;        %Contact point between 35 and 45 degrees flexion
-                0.01138, -0.425 0;            %Contact point over 45 degrees flexion
+                0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
+                0.01138, -0.425 0;            %Contact point over 74.01 degrees flexion
                 0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
     end
 end
