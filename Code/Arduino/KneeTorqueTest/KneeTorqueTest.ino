@@ -63,7 +63,7 @@ void setup() {
   //data to "human readable" data.  Output units are in lbs
   
 
-  scale.set_offset(-36880);
+  scale.set_offset(-16820);
   //this sets the offset value to a known zero.
   //there is no need for taring the scale once the zero point is known for a scale in a
   //set configuration.
