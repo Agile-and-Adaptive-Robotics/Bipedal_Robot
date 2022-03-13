@@ -72,6 +72,10 @@ classdef MonoMuscleData
             mL = zeros(size(T, 3), 1);
             
             for ii = 1:size(mL, 1)                          %Repeat for each orientation
+                    %PUT IN: If i > -7 degrees, new L = old L except row x
+                    %= x+1   %This comment is for future work for this
+                    %specific case, needs to be coded. Not applicable for
+                    %all muscles at all times.
                 for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
                     pointA = L(i, :);
                     pointB = L(i+1, :);

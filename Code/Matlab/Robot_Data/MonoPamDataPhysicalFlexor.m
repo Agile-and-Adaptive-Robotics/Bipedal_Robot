@@ -248,7 +248,7 @@ classdef MonoPamDataPhysicalFlexor < handle
             elseif rest <= min(act)
                 kmax = min(strain);                 %maximum strain
             else
-                kmax = interp1q(act,strain,rest);   %maximum strain
+                kmax = interp1(act,strain,rest);   %maximum strain
             end
 
             rel = k/kmax; %relative strain

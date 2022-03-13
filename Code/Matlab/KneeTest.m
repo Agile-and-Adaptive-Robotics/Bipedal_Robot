@@ -47,7 +47,7 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
 
     yyaxis left     %graph force on left axis in blue
     Force = animatedline('color','blue');
-    ylim([0,50]);
+    ylim([0,65]);
     ylabel('Force (N)');
 
     yyaxis right    %graph pressure on right in red
@@ -67,7 +67,7 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
     for i = 1:total
         
         svalues(i,1) = str2double(readline(s))*4.4482216;                                
-        svalues(i,2) = str2double(readline(s))*154.48*(5/1023)-124.86;
+        svalues(i,2) = str2double(readline(s))*151.6*(5/1023)-117.58;
         svalues(i,3) = str2double(readline(s))/1000;
 
 %         read data to each column and convert units when needed
@@ -120,8 +120,8 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
     %and that the last 500 data points will exists outside of the transient
     %system response.
 
-    forceData = svalues(500:total,1);
-    pressureData = svalues(500:total,2);
+    forceData = svalues(total-50:total,1);
+    pressureData = svalues(total-50:total,2);
 
     %Force stats
     stats = zeros(6,2);
