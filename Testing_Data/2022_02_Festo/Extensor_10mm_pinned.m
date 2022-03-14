@@ -19,51 +19,51 @@ Torque = [Torque1, Torque2, Torque3];
 
 %% Calculate Torque by finding force from muscle contraction and distance
 %from force line of action to muscle ICR.
+%Hand measurements for test 2 were done incorrectly and will be disregarded
 restingLength = 480;
 InflatedLength1 = [430,	430,	420,	415,	410,	401,	390,	388,	385];
-InflatedLength2 = [448	445.5	429.5	413.5	401	410	417.5	422.5	430.5	429.5	441.5	439	443.5];
+%InflatedLength2 = [448	445.5	429.5	413.5	401	410	417.5	422.5	430.5	429.5	441.5	439	443.5];
 InflatedLength3 = [445	445	433	426	423	421	420	415	405	400	398	400	405	407	416	420	430	433	441	440	450	453];
-InflatedLength = [InflatedLength1, InflatedLength2, InflatedLength3];
+InflatedLength = [InflatedLength1, InflatedLength3];
 
 ICRtoMuscle1 = [30	30	30	30	34	35	45	50	55]/1000;
-ICRtoMuscle2 = [46	54.5	53	52	57	49	53	53	54	51	52	53	55.5]/1000;
+%ICRtoMuscle2 = [46	54.5	53	52	57	49	53	53	54	51	52	53	55.5]/1000;
 ICRtoMuscle3 = [32	30	30	30	30	30	30	30	35	35	40	35	34	33	30	30	30	30	30	30	30	30]/1000;
-ICRtoMuscle = [ICRtoMuscle1, ICRtoMuscle2, ICRtoMuscle3];
+ICRtoMuscle = [ICRtoMuscle1, ICRtoMuscle3];
 
 F1 = zeros(1,size(InflatedLength1, 2));
-F2 = zeros(1,size(InflatedLength2, 2));
+%F2 = zeros(1,size(InflatedLength2, 2));
 F3 = zeros(1,size(InflatedLength3, 2));
-F = [F1, F2, F3];
+F = [F1, F3];
 
 TorqueHand1 = zeros(1,size(InflatedLength1, 2));
-TorqueHand2 = zeros(1,size(InflatedLength2, 2));
+%TorqueHand2 = zeros(1,size(InflatedLength2, 2));
 TorqueHand3 = zeros(1,size(InflatedLength3, 2));
-TorqueHand = [TorqueHand1, TorqueHand2, TorqueHand3];
+TorqueHand = [TorqueHand1, TorqueHand3];
 
 for i = 1:size(InflatedLength, 2)
     F(i) = festo2(InflatedLength(i), restingLength, 10, restingLength, 20);    
     TorqueHand(i) = ICRtoMuscle(i)*F(i);
 end
 TorqueHand1 = TorqueHand(1:size(TorqueHand1,2));
-TorqueHand2 = TorqueHand((size(TorqueHand1,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)));
-TorqueHand3 = TorqueHand(((size(TorqueHand1,2)+size(TorqueHand2,2))+1):size(TorqueHand,2));
+TorqueHand3 = TorqueHand(((size(TorqueHand1,2)+1)):size(TorqueHand,2));
 %% Mean and RMSE
-X = linspace(-120,10,size(Angle,2));      %Range of motion
-modelfun = @(b,x)b(1)*cosd(b(2)*x+b(3)) + b(4)*sind(b(5)*x+b(6))+b(7);
-beta0 = [0 1 1 6 1 90 6];
-mdl1 = fitnlm(Angle,Torque,modelfun,beta0)
-TorqueStd = mdl1.RMSE;
-TorqueMean = feval(mdl1,X);
+X1 = linspace(-113.5,-5,size(Angle,2));      %Range of motion
+% modelfun = @(b,x)b(1)*cosd(b(2)*x+b(3)) + b(4)*sind(b(5)*x+b(6))+b(7);
+% beta0 = [0 1 1 6 1 90 6];
+% mdl1 = fitnlm(Angle,Torque,modelfun,beta0)
+% TorqueStd = mdl1.RMSE;
+% TorqueMean = feval(mdl1,X);
 
-% [mdl1,S1,mu1] = polyfit(Angle,Torque,3);
-% [TorqueMean, TorqueStd] = polyval(mdl1,X,S1,mu1);
+[mdl1,S1,mu1] = polyfit(Angle,Torque,4);
+[TorqueMean, TorqueStd] = polyval(mdl1,X1,S1,mu1);
 
-mdl2 = fitnlm(Angle,TorqueHand,modelfun,beta0)
-HandStd = mdl2.RMSE;
-HandMean = feval(mdl2,X);
-
-% [mdl2,S2,mu2] = polyfit(Angle,TorqueHand,3);
-% [HandMean,HandStd] = polyval(mdl2,X,S2,mu2);
+% mdl2 = fitnlm(Angle,TorqueHand,modelfun,beta0)
+% HandStd = mdl2.RMSE;
+% HandMean = feval(mdl2,X);
+X2 = linspace(-113.5,-5,(size(Angle1,2)+size(Angle3,2)));
+[mdl2,S2,mu2] = polyfit([Angle1 Angle3],TorqueHand,4);
+[HandMean,HandStd] = polyval(mdl2,X2,S2,mu2);
 
 %% Plotting
 figure
@@ -73,19 +73,20 @@ xlabel('degrees Flexion(-),Extension(+)')
 ylabel('Torque, N*m')
 plot(phiD, Theoretical,'DisplayName','Theoretical Calculation')
 
-Xnew=[X,fliplr(X)];
+X1new=[X1,fliplr(X1)];
 Y1=[TorqueMean+TorqueStd,fliplr(TorqueMean-TorqueStd)];
+X2new=[X2,fliplr(X2)];
 Y2=[HandMean+HandStd,fliplr(HandMean-HandStd)];
-fill(Xnew,Y1,[1 0.4 0.8],'DisplayName','Fish scale std','FaceAlpha',0.25);
-fill(Xnew,Y2,[.6 1.0 .6],'DisplayName','Hand torque std','FaceAlpha',0.25);
-plot(X,TorqueMean,'--k','Linewidth',2,'DisplayName','Torque, fish scale')
-plot(X,HandMean,'--r','Linewidth',2,'DisplayName','Torque, hand method')
+fill(X1new,Y1,[1 0.4 0.8],'DisplayName','Fish scale std','FaceAlpha',0.25);
+fill(X2new,Y2,[.6 1.0 .6],'DisplayName','Hand torque std','FaceAlpha',0.25);
+plot(X1,TorqueMean,'--k','Linewidth',2,'DisplayName','Torque, fish scale')
+plot(X2,HandMean,'--r','Linewidth',2,'DisplayName','Torque, hand method')
 
 scatter(Angle1,Torque1,50,'d','g','DisplayName','BB fish scale');
 scatter(Angle2,Torque2,50,'d','r','DisplayName','JM fish scale');
 scatter(Angle3,Torque3,50,'d','b','DisplayName','BB fish scale');
 scatter(Angle1,TorqueHand1,[],'g','filled','DisplayName','BB hand');
-scatter(Angle2,TorqueHand2,[],'r','filled','DisplayName','JM hand');
+%scatter(Angle2,TorqueHand2,[],'r','filled','DisplayName','JM hand');
 scatter(Angle3,TorqueHand3,[],'b','filled','DisplayName','BB hand');
 
 legend
