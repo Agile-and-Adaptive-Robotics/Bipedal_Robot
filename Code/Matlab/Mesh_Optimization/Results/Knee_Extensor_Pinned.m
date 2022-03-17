@@ -4,9 +4,9 @@
 % placement
 
 %% Freshen up the workspace
-clc
-clear
-close all
+% clc
+% clear
+% close all
 
 %% Add paths to the muscle and pam calculators
 current_dir = cd;
@@ -207,8 +207,9 @@ TorqueR = Vas_Pam.Torque;
 
 %% Plotting Torque Results
 
+figure
 plot(phiD, TorqueR(:, 3))
-title('BPA Z Torque')
+title('BPA Z Torque, Length = 415 mm')
 xlabel('Knee Extension(+)/Flexion(-), degrees')
 ylabel('Torque, Nm')
 legend('BPA')

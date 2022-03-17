@@ -84,7 +84,7 @@ Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
 Dia = 10;
 
-%Origin and Insertion from Ben
+%Origin and Insertion from Assem2.75 Solidworks assembly
 Location = [-0.075, 0.100, 0.0328;
             -0.05011, -0.045, 0.0328];
 Bifemsh_Pam = MonoPamDataPinnedFlexor(Name, Location, CrossPoint, Dia, T);

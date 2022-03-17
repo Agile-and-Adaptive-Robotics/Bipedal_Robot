@@ -188,11 +188,13 @@ classdef MonoPamDataPinnedFlexor < handle
         %% -------------- Contraction of the PAM --------------------------
         function contraction = get.Contraction(obj)
             mL = obj.MuscleLength;
-            restingPamLength = obj.RestingL;
+            rest = obj.RestingL;
+            tendon = obj.TendonL;
+            fitting = obj.FittingLength;
             
             contraction = zeros(length(mL), 1);
             for i = 1:length(mL)
-                contraction(i) = (max(mL) - mL(i))/restingPamLength;
+                contraction(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest;
             end
         end
         
@@ -221,43 +223,43 @@ classdef MonoPamDataPinnedFlexor < handle
         %% -------------- Force --------------------------
         %Calculate the direction of the forced applied by the muscle
         function F = get.Force(obj)
-        %Inputs:
+       %Inputs:
         %Lmt == muscle-tendon length, scalar
         %rest == resting length of artificial muscle, "size" from Size function
         %dia == diameter of Festo tube, from Size function
+        %pres == measured pressure
+        %kmax == maximum contraction length
         %Outputs:
-        %F == Force, N
+        %F == Force, N           
             dia = obj.Diameter;
             unitD = obj.UnitDirection;
             contract = obj.Contraction;
-            contraction = obj.Contraction;
-            rest = obj.RestingL;
+%            contraction = obj.Contraction;
             mL = obj.MuscleLength;
+            rest = obj.RestingL;
             long = max(mL);
-%             maxContractPercent = 0.25;          %Contracting to 75% of length
-%             minContractPercent = -0.1;          %Elongating to 110% of length
-            load ForceStrainTable.mat RelativeStrain Force2
-            tendon = long - rest;   %Length of artificial tendon and air fittings
+            fitting = obj.FittingLength;
+            
+            kmax = (rest-0.398)/rest; %398 mm 
+            pres = 600; %600 kPa average measured pressure
+            
+           load ForceStrainTable.mat ForceStrain
+           tendon =  obj.TendonL;   %Length of artificial tendon and air fittings
 
-            k = (rest-(mL-tendon))/rest; %current strain
-            act = [15.31; 18.28; 18.94; 19.50; 27.27; 28.09]/100; %Resting actuator lengths (Hunt 2017)
-            strain = [0.1491; 0.1618; 0.1633; 0.1680; 0.1692; 0.1750]; %Max strain for these lengths (Hunt 2017)
-
-            if rest >= max(act)
-                kmax = max(strain);                 %maximum strain
-            elseif rest <= min(act)
-                kmax = min(strain);                 %maximum strain
-            else
-                kmax = interp1(act,strain,rest);   %maximum strain
-            end
-
-            rel = k/kmax; %relative strain
-    
+           X = linspace(0,620,20); %Pressure for interpolation
+           Y = linspace(0,1,30);   %Relative strain range for interpolation
+           
+           k = zeros(size(unitD,1),1);
+           rel = zeros(size(unitD,1),1);
+           scalarForce = zeros(size(unitD,1),1);
             for i = 1:size(unitD, 1)
-                if rel(i) >= 0 && rel(i) <=1
-                    scalarForce(i) = interp1(RelativeStrain, Force2, rel(i));
+                k(i,1) = (rest-(mL(i,1)-tendon-2*fitting))/rest %current strain 
+                rel(i,1) = k(i,1)/kmax %relative strain
+%                 if rel(i,1) >= 0 && rel(i,1) <=1
+                if contract(i,1) >=-0.03 && rel(i,1) <=1
+                    scalarForce(i,1) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear',  0)
                 else
-                    scalarForce(i) = 0;
+                    scalarForce(i,1) = 0
                 end
             end
 
@@ -269,7 +271,6 @@ classdef MonoPamDataPinnedFlexor < handle
             if dia == 40
                 scalarForce = (6000/630)*scalarForce;
             end
-
 
 %         end
 %             if dia == 20
