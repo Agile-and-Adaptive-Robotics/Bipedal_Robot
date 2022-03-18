@@ -90,7 +90,7 @@ Location = [-0.075, 0.100, 0.0328;
 Bifemsh_Pam = MonoPamDataPinnedFlexor(Name, Location, CrossPoint, Dia, T);
 
 figure
-plot(phi,Bifemsh_Pam.MuscleLength)
+plot(phi,Bifemsh_Pam.MuscleLength)  %Length including fittings
 
 max_length = max(Bifemsh_Pam.MuscleLength)
 min_length = min(Bifemsh_Pam.MuscleLength)
@@ -265,3 +265,11 @@ RMuscleCross = {Bifemsh_Pam.Cross};
 Bones = {'Femur', 'Tibia'};
 
 run("MuscleBonePlotting")
+
+%% Plot just robot Z axis Torque
+figure
+plot(phiD, TorqueR(:, 3))
+title('BPA Z Torque, Length = 485 mm')
+xlabel('Knee Extension(+)/Flexion(-), degrees')
+ylabel('Torque, Nm')
+legend('BPA')

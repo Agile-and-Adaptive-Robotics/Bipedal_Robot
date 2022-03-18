@@ -1,32 +1,36 @@
-function F = festo3(Lmt, rest, dia, long, pres, kmax)
+function F = festo3(Lmt, rest, dia, pres, kmax)
 %Inputs:
 %Lmt == muscle-tendon length, scalar
 %rest == resting length of artificial muscle, "size" from Size function
 %dia == diameter of Festo tube, from Size function
 %long == longest musculotendon length
 %pres == pressure in kPa
-%kmax == maximum measured contraction
+%kmax == maximum measured contraction length. Input as length, will
+%convert to percent in the code
 %Outputs:
 %F == Force, N
 
-load ForceStrainTable.mat RelativeStrain ForceStrain
-tendon = long - rest;   %Length of artificial tendon and air fittings
+load ForceStrainTable.mat ForceStrain
+tendon = 0;   %Length of artificial tendon and air fittings
+fitting = 0.0254; %End cap length
+            
+kmax = (rest-kmax)/rest; %Convert maximum contraction from length into percent
 
-k = (rest-(Lmt-tendon))/rest; %current strain
-
-rel = k/kmax; %relative strain;
-
-pressure = linspace(0,620,20);
-column = linspace(1,20,20);
-col = interp1(pressure,column,pres); %interpolate force strain column from pressure
-
-for i=1:size(Lmt, 2)
- if rel(i) >= 0 && rel(i) <=1
-    F(i) = interp2(ForceStrain, col, rel(i), 'linear',  0);
- else
-    F(i) = 0;
- end
-end
+X = linspace(0,620,20); %Pressure for interpolation
+Y = linspace(0,1,30);   %Relative strain range for interpolation
+           
+k = zeros(size(Lmt,1),1);
+rel = zeros(size(Lmt,1),1);
+F = zeros(size(Lmt,1),1);
+            for i = 1:size(Lmt, 1)
+                k(i,1) = (rest-(Lmt(i,1)))/rest; %current strain
+                rel(i,1) = k(i,1)/kmax; %relative strain
+                if rel(i,1) >= 0 && rel(i,1) <=1
+                    F(i,1) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear',  0);
+                else
+                    F(i,1) = 0;
+                end
+            end
 
 %If diameter is not 10 mm, then upscale force
 if dia == 20

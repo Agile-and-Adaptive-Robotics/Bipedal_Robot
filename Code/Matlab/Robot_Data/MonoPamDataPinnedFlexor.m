@@ -152,9 +152,9 @@ classdef MonoPamDataPinnedFlexor < handle
            fittingLength = 0.0254;
            tendonLength = 0;
             
-            mL = obj.MuscleLength;
-            dia = obj.Diameter;
-            longestSeg = obj.LongestSegment;
+%             mL = obj.MuscleLength;
+%             dia = obj.Diameter;
+%             longestSeg = obj.LongestSegment;
 %            
             %Calculate the Pam end cap fitting length (estimates currently)
 %             if dia == 20

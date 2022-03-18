@@ -77,8 +77,8 @@ c = pi/180; %Convert from degrees to radians
 % P_B_y = [-0.41712	-0.42073	-0.42306	-0.42447	-0.42847	-0.43298	-0.43779	-0.44568	-0.455	-0.46374	-0.46981	-0.46987	-0.46785	-0.46119	-0.44844	-0.4316]'; %Patella Bottom, y location
 % fcn16 = fit(knee_angle,P_B_y,'cubicspline');
 
-kneeMin = -2.0943951;
-kneeMax = 0.17453293;
+kneeMin = -90*c;
+kneeMax = 35*c;
 phi = linspace(kneeMin, kneeMax, positions);
 %We want one of our positions to be home position, so let's make the
 %smallest value of phi equal to 0
@@ -173,11 +173,17 @@ for i = 1:positions
                 0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
                 0.04128, -0.410,    0;        %Row 4 = Row 3
                 0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
-    elseif phiD(i) >= -19.6
+    elseif phiD(i) >= -19.6 && phiD(i) < 20
      Location(:,:,i) = [0.030, -0.050, 0;             %Origin
                 0.060, -0.350, 0.000;        %BPA contacts screw that joins femur body with femoral condyles
                 0.060, -0.350, 0.000;        %Row 3 = Row 2
                 0.060, -0.350, 0.000;        %Row 4 = Row 2
+                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+    elseif phiD(i) >= 20
+     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
+                0.030, -0.050, 0;        %Row 2 = Row 1 (no screw contact)
+                0.030, -0.050, 0;        %Row 3 = Row 2
+                0.030, -0.050, 0;        %Row 4 = Row 2
                 0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
     else
      Location(:,:,i) = [0.030, -0.050, 0;             %Origin
