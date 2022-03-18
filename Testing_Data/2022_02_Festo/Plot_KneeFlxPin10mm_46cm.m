@@ -45,17 +45,7 @@ TorqueHand2 = zeros(1,size(InflatedLength2, 2));
 TorqueHand = [TorqueHand1, TorqueHand2];
 
 %load pressure where applicable
-test = 2;
-runsperseries = 29;
-
-    pres1 = zeros(1,runsperseries);
-    
-    for j = 1:runsperseries
-                file_name = sprintf('ExtTest%0.0f_%0.0f.mat', test,j);
-                load(file_name,'Stats')
-                pres1(1,j) = Stats{'Mean',2};
-    end
-
+pres1 = 612*ones(1,size(InflatedLength1, 2));
 pres2 = 612*ones(1,size(InflatedLength2, 2));
 pres = [pres1 pres2];
 
