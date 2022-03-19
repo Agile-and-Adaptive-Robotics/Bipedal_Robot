@@ -7,11 +7,12 @@ kmax = 0.398; %Length at maximum contraction, m
 
 load KneeFlxPin_10mm_48cm.mat
 Theoretical = TorqueR(:,3)';
-%% Test 1 done with CALT load cell. Tests 2 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
+%% Test 1&2 done with CALT load cell. Tests 3-5 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
 %Test 1 == sheet FlxTest10mm_1 from Results_table10mm_pinned_LoadCell
 %Test 2 == sheet FlxTest10mm_2 from Results_table10mm_pinned_LoadCell
 %Test 3 == sheet FlxTest10mm_1 from Results_table10mm_pinned_FishScale
 %Test 4 == sheet FlxTest10mm_4 from Results_table10mm_pinned_FishScale
+%Test 5 == sheet FlxTest10mm_2 from Results_table10mm_pinned_FishScale
 %% Torque calculated from measurements
 
 Angle1 = [-5.5	-10.5	-25.5	-4.5	-14.5	-20	-33	-39.5	-43	-50	-62.5	-60	-55	-53.5	-46	-40	-36.5	-33.5	-29.5	-24.5	-17.5	-14.5	-5.5	-3	-0.5	3.5	11.5	19.5];
@@ -156,12 +157,6 @@ fill(Xnew,Y2,[.6 1.0 .6],'DisplayName','Hand torque std','FaceAlpha',0.25);
 plot(X,TorqueMeanu,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
 plot(X,HandMeanu,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
 
-sz = 50;
-c1 = [0.8500 0.3250 0.0980]; % color, burnt orange
-c2 = [0.6350 0.0780 0.1840]; %color, red/violet
-c3 = [0 0.4470 0.7410]; %color, navy blue
-c4 = [0.4660 0.6740 0.1880]; %color, moss green
-c5 = [0.9290 0.6940 0.1250]; %color, dark yellow
 scatter(Angle1,Torque1,sz,'d','CData',c1,'DisplayName','JM LC');
 scatter(Angle2,Torque2,sz,'d','CData',c3,'DisplayName','BB LC');
 scatter(Angle3,Torque3,sz,'d','CData',c4,'DisplayName','BB FS');
