@@ -62,23 +62,28 @@ end
 % TorqueHand2 = TorqueHand(((size(TorqueHand1,2)+1)):size(TorqueHand,2));
 
 %% Mean and RMSE
-X = linspace(-80,35,size(Angle,2));      %Range of motion
-% modelfun = @(b,x)b(1)*cosd(b(2)*x+b(3)) + b(4)*sind(b(5)*x+b(6))+b(7);
-% beta0 = [0 1 1 6 1 90 6];
-% mdl1 = fitnlm(Angle,Torque,modelfun,beta0)
-% TorqueStd = mdl1.RMSE;
-% TorqueMean = feval(mdl1,X);
+X = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
+mod = 'sin2';
+fitOptions = fitoptions(mod, 'Normalize', 'on');
+[mdl1u, gof1] = fit(Angle',Torque',mod,fitOptions)
+TorqueStdu = gof1.rmse
+TorqueMeanu = feval(mdl1u,X)';
 
-[mdl1,S1,mu1] = polyfit(Angle,Torque,3);
-[TorqueMean, TorqueStd] = polyval(mdl1,X,S1,mu1);
+[mdl2u, gof2] = fit(Angle',TorqueHand',mod,fitOptions);
+HandStdu = gof2.rmse;
+HandMeanu = feval(mdl2u,X)';
 
-% mdl2 = fitnlm(Angle,TorqueHand,modelfun,beta0)
-% HandStd = mdl2.RMSE;
-% HandMean = feval(mdl2,X);
-[mdl2,S2,mu2] = polyfit(Angle,TorqueHand,3);
-[HandMean,HandStd] = polyval(mdl2,X,S2,mu2);
+modp = 'poly3';
+fitOp = fitoptions(modp,'Normalize','on');
+[mdl1, gofp1] = fit(Angle',Torque',modp,fitOp)
+TorqueStd = gofp1.rmse
+TorqueMean = feval(mdl1,X)';
 
-%% Plotting
+[mdl2, gofp2] = fit(Angle',TorqueHand',modp,fitOp);
+HandStd = gofp2.rmse;
+HandMean = feval(mdl2,X)';
+
+%% Plotting polynomial fit
 figure
 hold on
 title('Isometric Torque vs Knee Angle, 10mm Extensor, 41.5cm long')
@@ -89,15 +94,37 @@ plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Th
 Xnew=[X,fliplr(X)];
 Y1=[TorqueMean+TorqueStd,fliplr(TorqueMean-TorqueStd)];
 Y2=[HandMean+HandStd,fliplr(HandMean-HandStd)];
-fill(Xnew,Y1,[1 0.4 0.8],'DisplayName','Fish scale std','FaceAlpha',0.25);
-fill(Xnew,Y2,[.6 1.0 .6],'DisplayName','Hand torque std','FaceAlpha',0.25);
 plot(X,TorqueMean,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
+fill(Xnew,Y1,[1 0.4 0.8],'DisplayName','Scale SD','FaceAlpha',0.25);
 plot(X,HandMean,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
+fill(Xnew,Y2,[.6 1.0 .6],'DisplayName','Hand torque SD','FaceAlpha',0.25);
 
 sz = 50;
 c = [0.8500 0.3250 0.0980]; % color
-ss = scatter(Angle,Torque,sz,'d','CData',c,'DisplayName','BB&JM LC');
-sb = scatter(Angle,TorqueHand,sz,'filled','CData',c,'DisplayName','BB&JM hand');
+scatter(Angle,Torque,sz,'d','CData',c,'DisplayName','BB&JM LC');
+scatter(Angle,TorqueHand,sz,'filled','CData',c,'DisplayName','BB&JM hand');
+
+legend
+hold off
+%% Plotting nonlinear fit
+figure
+hold on
+title('Isometric Torque vs Knee Angle, 10mm Extensor, 41.5cm long')
+xlabel('degrees Flexion(-),Extension(+)')
+ylabel('Torque, N*m')
+plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
+
+Y3=[TorqueMeanu+TorqueStdu,fliplr(TorqueMeanu-TorqueStdu)];
+Y4=[HandMeanu+HandStdu,fliplr(HandMeanu-HandStdu)];
+plot(X,TorqueMeanu,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
+fill(Xnew,Y3,[1 0.4 0.8],'DisplayName','Scale SD','FaceAlpha',0.25);
+plot(X,HandMeanu,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
+fill(Xnew,Y4,[.6 1.0 .6],'DisplayName','Hand torque SD','FaceAlpha',0.25);
+
+sz = 50;
+c = [0.8500 0.3250 0.0980]; % color
+scatter(Angle,Torque,sz,'d','CData',c,'DisplayName','BB&JM LC');
+scatter(Angle,TorqueHand,sz,'filled','CData',c,'DisplayName','BB&JM hand');
 
 legend
 hold off

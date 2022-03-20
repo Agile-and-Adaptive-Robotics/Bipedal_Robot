@@ -81,24 +81,30 @@ TorqueHand1 = TorqueHand(1:size(TorqueHand1,2));
 TorqueHand3 = TorqueHand(((size(TorqueHand1,2)+1)):(size(TorqueHand1,2)+size(TorqueHand3,2)));
 TorqueHand4 = TorqueHand((((size(TorqueHand1,2)+size(TorqueHand3,2))+1)):size(TorqueHand,2));
 %% Mean and RMSE
-X1 = linspace(-120,-10,size(Angle,2));      %Range of motion
-% modelfun = @(b,x)b(1)*cosd(b(2)*x+b(3)) + b(4)*sind(b(5)*x+b(6))+b(7);
-% beta0 = [0 1 1 6 1 90 6];
-% mdl1 = fitnlm(Angle,Torque,modelfun,beta0)
-% TorqueStd = mdl1.RMSE;
-% TorqueMean = feval(mdl1,X);
+X1 = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
+X2 = linspace(min(Angle),max(Angle),(size(Angle1,2)+size(Angle3,2)+size(Angle4,2)));
 
-[mdl1,S1,mu1] = polyfit(Angle,Torque,3);
-[TorqueMean, TorqueStd] = polyval(mdl1,X1,S1,mu1);
+modp = 'poly3';
+fitOp = fitoptions(modp,'Normalize','on');
+[mdl1, gofp1] = fit(Angle',Torque',modp,fitOp)
+TorqueStd = gofp1.rmse
+TorqueMean = feval(mdl1,X1)';
 
-% mdl2 = fitnlm(Angle,TorqueHand,modelfun,beta0)
-% HandStd = mdl2.RMSE;
-% HandMean = feval(mdl2,X);
-X2 = linspace(-120,10,(size(Angle1,2)+size(Angle3,2)+size(Angle4,2)));
-[mdl2,S2,mu2] = polyfit([Angle1 Angle3, Angle4],TorqueHand,3);
-[HandMean,HandStd] = polyval(mdl2,X2,S2,mu2);
+[mdl2, gofp2] = fit([Angle1 Angle3 Angle4]',TorqueHand',modp,fitOp);
+HandStd = gofp2.rmse;
+HandMean = feval(mdl2,X2)';
 
-%% Plotting
+mod = fittype( {'(sind(x-1))', '((x-10)^2)', '1'}, 'independent', 'x', 'dependent', 'y', 'coefficients', {'a', 'b', 'c'} );
+fitOptions = fitoptions(mod);
+[mdl1u, gof1] = fit(Angle',Torque',mod,fitOptions)
+TorqueStdu = gof1.rmse
+TorqueMeanu = feval(mdl1u,X1)';
+
+[mdl2u, gof2] = fit([Angle1 Angle3 Angle4]',TorqueHand',mod,fitOptions);
+HandStdu = gof2.rmse;
+HandMeanu = feval(mdl2u,X2)';
+
+%% Plotting the polynomial solution
 figure
 hold on
 title('Isometric Torque vs Knee Angle, 10mm Extensor, 48.5cm long')
@@ -110,17 +116,45 @@ X1new=[X1,fliplr(X1)];
 Y1=[TorqueMean+TorqueStd,fliplr(TorqueMean-TorqueStd)];
 X2new=[X2,fliplr(X2)];
 Y2=[HandMean+HandStd,fliplr(HandMean-HandStd)];
-fill(X1new,Y1,[1 0.4 0.8],'DisplayName','Fish scale std','FaceAlpha',0.25);
-fill(X2new,Y2,[.6 1.0 .6],'DisplayName','Hand torque std','FaceAlpha',0.25);
-plot(X1,TorqueMean,'--k','Linewidth',2,'DisplayName','Torque, scale')
-plot(X2,HandMean,'--r','Linewidth',2,'DisplayName','Torque, hand')
+plot(X1,TorqueMean,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
+fill(X1new,Y1,[1 0.4 0.8],'DisplayName','Scale SD','FaceAlpha',0.25);
+plot(X2,HandMean,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
+fill(X2new,Y2,[.6 1.0 .6],'DisplayName','Hand torque SD','FaceAlpha',0.25);
 
 sz = 50;
 c = [0.8500 0.3250 0.0980]; % color
 scatter(Angle1,Torque1,sz,'d','g','DisplayName','BB LC');
 scatter(Angle2,Torque2,sz,'d','r','DisplayName','JM FS');
-sb = scatter(Angle3,Torque3,sz,'d','b','DisplayName','BB FS');
-sc = scatter(Angle4,Torque4,sz,'d','CData',c,'DisplayName','BB LC');
+scatter(Angle3,Torque3,sz,'d','b','DisplayName','BB FS');
+scatter(Angle4,Torque4,sz,'d','CData',c,'DisplayName','BB LC');
+scatter(Angle1,TorqueHand1,[],'g','filled','DisplayName','JM hand');
+%scatter(Angle2,TorqueHand2,[],'r','filled','DisplayName','JM hand');
+scatter(Angle3,TorqueHand3,[],'b','filled','DisplayName','BB hand');
+scatter(Angle4,TorqueHand4,[],[0.8500 0.3250 0.0980],'DisplayName','BB hand');
+
+legend
+hold off
+%% Plotting nonlinear solution
+figure
+hold on
+title('Isometric Torque vs Knee Angle, 10mm Extensor, 48.5cm long')
+xlabel('degrees Flexion(-),Extension(+)')
+ylabel('Torque, N*m')
+plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
+
+Y3=[TorqueMeanu+TorqueStdu,fliplr(TorqueMeanu-TorqueStdu)];
+Y4=[HandMeanu+HandStdu,fliplr(HandMeanu-HandStdu)];
+plot(X1,TorqueMeanu,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
+fill(X1new,Y3,[1 0.4 0.8],'DisplayName','Scale SD','FaceAlpha',0.25);
+plot(X2,HandMeanu,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
+fill(X2new,Y4,[.6 1.0 .6],'DisplayName','Hand torque SD','FaceAlpha',0.25);
+
+sz = 50;
+c = [0.8500 0.3250 0.0980]; % color
+scatter(Angle1,Torque1,sz,'d','g','DisplayName','BB LC');
+scatter(Angle2,Torque2,sz,'d','r','DisplayName','JM FS');
+scatter(Angle3,Torque3,sz,'d','b','DisplayName','BB FS');
+scatter(Angle4,Torque4,sz,'d','CData',c,'DisplayName','BB LC');
 scatter(Angle1,TorqueHand1,[],'g','filled','DisplayName','JM hand');
 %scatter(Angle2,TorqueHand2,[],'r','filled','DisplayName','JM hand');
 scatter(Angle3,TorqueHand3,[],'b','filled','DisplayName','BB hand');
