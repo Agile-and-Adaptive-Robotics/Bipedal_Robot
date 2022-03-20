@@ -63,11 +63,11 @@ void setup() {
   //data to "human readable" data.  Output units are in lbs
   
 
-  scale.set_offset(-16820);
+  scale.set_offset(-15030);
   //this sets the offset value to a known zero.
   //there is no need for taring the scale once the zero point is known for a scale in a
   //set configuration.
-  //the Zero Factor -16820 was found using a separate Arduino Sketch
+  //the Zero Factor -15030 was found using a separate Arduino Sketch
   //called "SLoadCell_ZeroFactorSketch"
 }
 
