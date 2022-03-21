@@ -52,7 +52,7 @@ FestoLookup20(6,:) = interp1(x20_6,y20_6,Y2,'pchip',0);
 FestoLookup20(7,:) = interp1(x20_7,y20_7,Y2,'pchip',0);
 
 %% Save it
-save ForceStrainTable.mat FestoLookup40 FestoLookup20
+save FestoLookup.mat FestoLookup40 FestoLookup20
 
 %% Plot it
 figure
