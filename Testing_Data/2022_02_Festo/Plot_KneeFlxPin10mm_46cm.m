@@ -52,22 +52,26 @@ end
 % TorqueHand1 = TorqueHand(1:size(TorqueHand1,2));
 % TorqueHand2 = TorqueHand((size(TorqueHand1,2)+1):size(TorqueHand,2));
 %% Mean and RMSE
-X = linspace(-120,10,size(Angle,2));      %Range of motion
+X = linspace(-120,0,size(Angle,2));      %Range of motion
 mod = 'gauss1';
-fitOptions = fitoptions(mod);
-[mdl1u, gof1] = fit(Angle',Torque',mod,fitOptions)
+fitOptions = fitoptions(mod, 'Normalize', 'on');
+[mdl1u, gof1] = fit(Angle',Torque',mod,fitOptions);
 TorqueStdu = gof1.rmse;
 TorqueMeanu = feval(mdl1u,X)';
 
-% [mdl1,S1,mu1] = polyfit(Angle,Torque,3);
-% [TorqueMean, TorqueStd] = polyval(mdl1,X,S1,mu1);
-
-
-[mdl2u, gof2] = fit(Angle',TorqueHand',mod,fitOptions)
-HandStdu = gof2.rmse
+[mdl2u, gof2] = fit(Angle',TorqueHand',mod,fitOptions);
+HandStdu = gof2.rmse;
 HandMeanu = feval(mdl2u,X)';
-% [mdl2,S2,mu2] = polyfit(Angle,TorqueHand,3);
-% [HandMean,HandStd] = polyval(mdl2,X,S2,mu2);
+
+modp = 'poly5';
+fitOp = fitoptions(modp,'Normalize','on');
+[mdl1, gofp1] = fit(Angle',Torque',modp,fitOptions)
+TorqueStd = gofp1.rmse
+TorqueMean = feval(mdl1,X)';
+
+[mdl2, gofp2] = fit(Angle',TorqueHand',modp,fitOptions)
+HandStd = gofp2.rmse
+HandMean = feval(mdl2,X)';
 
 %% Plotting with polynomial solver
 % figure
