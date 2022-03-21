@@ -84,7 +84,7 @@ phi = linspace(kneeMin, kneeMax, positions);
 %smallest value of phi equal to 0
 [val, pos] = min(abs(phi));
 phi(pos) = 0;
-
+phiD = phi*180/pi;
 
 for i = 1:positions
     hipToKnee = [fcn1(phi(i)), fcn2(phi(i)), 0];
@@ -106,77 +106,86 @@ end
 Name = 'Vastus Medialis';
 MIF = 1294;
 OFL = 0.089; TSL = 0.126; Pennation = 0.08726646;
-if phi(i)*180/pi < -80
+for i = 1:positions
+    if phi(i)*180/pi < -80
      Location = [0.014, -0.21, 0.019;
                  0.036, -0.277, 0.001;
                  0.037, -0.405, -0.013;
                  0.027, -0.425, -0.013;
                  fcn5(phi(i)), fcn6(phi(i)) -0.0146];
-     CrossPoint = 5;
-else 
+    else 
      Location = [0.014, -0.21, 0.019;
                  0.036, -0.277, 0.001;
                  0.037, -0.405, -0.013;
+                 0.037, -0.405, -0.013;
                  fcn5(phi(i)), fcn6(phi(i)) -0.0146];
-     CrossPoint = 4;
+    end
 end
+CrossPoint = 5;
 Vas_Med = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 Name = 'Vastus Intermedius';
 MIF = 1365;
 OFL = 0.087; TSL = 0.136; Pennation = 0.05235988;
-if phi(i)*180/pi < -80
+for i = 1:positions
+    if phiD(i) < -80
     Location = [0.029, -0.192, 0.031;
                 0.034, -0.208, 0.029;
                 0.034, -0.403, 0.005;
                 fcn7(phi(i)), fcn8(phi(i)) 0.0018];
-    CrossPoint = 4;
-else
+    else
     Location = [0.029, -0.192, 0.031;
                 0.034, -0.208, 0.029;
+                0.034, -0.208, 0.029;
                 fcn7(phi(i)), fcn8(phi(i)) 0.0018];
-    CrossPoint = 3;
+    end
 end
+CrossPoint = 4;
 Vas_Int = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 Name = 'Vastus Lateralis';
 MIF = 1871;
 OFL = 0.084; TSL = 0.157; Pennation = 0.08726646;
-if phi(i)*180/pi < -80
+for i = 1:positions
+    if phiD(i) < -80
     Location = [0.005, -0.185, 0.035;
                 0.027, -0.259, 0.041;
                 0.036, -0.403, 0.021;
                 0.025, -0.424, 0.018;
                 fcn9(phi(i)), fcn10(phi(i)) 0.0165];
-    CrossPoint = 5;
-else
+    else
     Location = [0.005, -0.185, 0.035;
                 0.027, -0.259, 0.041;
                 0.036, -0.403, 0.021;
+                0.036, -0.403, 0.021;
                 fcn9(phi(i)), fcn10(phi(i)) 0.0165];
-    CrossPoint = 4;
+    end
 end
+CrossPoint = 5;
 Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 %% PAM calculation
 Name = 'Vastus Intermedius';
 
 % Origin Location from Ben
-if phi(i)*180/pi < -80
-    Location = [0.040, 0.035, 0;
+for i=1:positions
+    if phiD(i) < -80
+     Location = [0.040, 0.035, 0;
                 0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
                 0.04817, -0.41646,    0;        %anterior femoral condyle when flexion is high
                 0.04094, -0.05098 0;            %Tibia contact
                 0.02362, -0.07556, 0.000];      %patellar ligament ring
-    CrossPoint = 4;
-else
-    Location = [0.040, 0.035, 0;
+
+    else
+        Location = [0.040, 0.035, 0;
                 0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
+                0.0689, -0.27476, 0.000;        %no femoral contact
                 0.04094, -0.05098 0;            %Tibia contact
                 0.02362, -0.07556, 0.000];      %patellar ligament ring
-    CrossPoint = 3;
+    end
 end
-Dia = 10;
+CrossPoint = 4;
+Dia = 40;
 Vas_Pam = MonoPamDataPhysicalExtensor(Name, Location, CrossPoint, Dia, T_Pam);
 
 max_length = max(Vas_Pam.MuscleLength)
@@ -193,7 +202,6 @@ TorqueH = Torque1;
 
 
 %% Plotting Torque Results
-phiD = phi*180/pi;
 
 TorqueEx = zeros(size(TorqueH, 1), 1);
 TorqueEy = zeros(size(TorqueH, 1), 1);

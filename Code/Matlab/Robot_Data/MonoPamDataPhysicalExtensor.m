@@ -148,13 +148,13 @@ classdef MonoPamDataPhysicalExtensor < handle
         %% -------------- Resting PAM Length --------------------------
         function restingPamLength = get.RestingL(obj)
             
-            restingPamLength = 0.3857625;
-            fittingLength = 0.031;
-            tendonLength = 0.111;
+            restingPamLength = 0.5525;
+            fittingLength = 0.0254;
+            tendonLength = 0.030;
             
-            mL = obj.MuscleLength;
-            dia = obj.Diameter;
-            longestSeg = obj.LongestSegment;
+%             mL = obj.MuscleLength;
+%             dia = obj.Diameter;
+%             longestSeg = obj.LongestSegment;
            
             %Calculate the Pam end cap fitting length (estimates currently)
 %             if dia == 20
@@ -228,33 +228,33 @@ classdef MonoPamDataPhysicalExtensor < handle
         %F == Force, N           
             dia = obj.Diameter;
             unitD = obj.UnitDirection;
-            contract = obj.Contraction;
-            contraction = obj.Contraction;
+            %contract = obj.Contraction;
+            %contraction = obj.Contraction;
             mL = obj.MuscleLength;
-            rest = obj.RestingL
-            long = max(mL);
-            load ForceStrainTable.mat RelativeStrain Force2
-            tendon = long - rest;   %Length of artificial tendon and air fittings
+            rest = obj.RestingL;
+            %long = max(mL);
+            fitting = obj.FittingLength;
+            
+            kmax = 0.391;
+            kmax = (rest-kmax)/rest;
+            pres = 600; %600 kPa average measured pressure
+            
+           load ForceStrainTable.mat ForceStrain
+           tendon =  obj.TendonL;   %Length of artificial tendon and air fittings
 
-            k = (rest-(mL-tendon))/rest; %current strain
-            act = [15.31; 18.28; 18.94; 19.50; 27.27; 28.09]/100; %Resting actuator lengths (Hunt 2017)
-            strain = [0.1491; 0.1618; 0.1633; 0.1680; 0.1692; 0.1750]; %Max strain for these lengths (Hunt 2017)
-
-            if rest >= max(act)
-                kmax = max(strain);                 %maximum strain
-            elseif rest <= min(act)
-                kmax = min(strain);                 %maximum strain
-            else
-                kmax = interp1q(act,strain,rest);   %maximum strain
-            end
-
-            rel = k/kmax; %relative strain
-    
+           X = linspace(0,620,20); %Pressure for interpolation
+           Y = linspace(0,1,30);   %Relative strain range for interpolation
+           
+           k = zeros(size(unitD,1),1);
+           rel = zeros(size(unitD,1),1);
+           scalarForce = zeros(size(unitD,1),1);
             for i = 1:size(unitD, 1)
-                if rel(i) >= 0 && rel(i) <=1
-                    scalarForce(i) = interp1(RelativeStrain, Force2, rel(i));
+                k(i,1) = (rest-(mL(i,1)-tendon-2*fitting))/rest; %current strain 
+                rel(i,1) = k(i,1)/kmax; %relative strain
+                if rel(i,1) >= 0 && rel(i,1) <=1
+                    scalarForce(i,1) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear',  0);
                 else
-                    scalarForce(i) = 0;
+                    scalarForce(i,1) = 0;
                 end
             end
 
