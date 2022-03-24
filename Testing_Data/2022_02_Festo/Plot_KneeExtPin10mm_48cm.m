@@ -110,6 +110,10 @@ hold on
 title('Isometric Torque vs Knee Angle, 10mm Extensor, 48.5cm long')
 xlabel('degrees Flexion(-),Extension(+)')
 ylabel('Torque, N*m')
+gca1 = gca;
+gcf1 = gcf;
+set(gcf,'Position',[1 384 950 612]);
+set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
 
 X1new=[X1,fliplr(X1)];
@@ -140,6 +144,10 @@ hold on
 title('Isometric Torque vs Knee Angle, 10mm Extensor, 48.5cm long')
 xlabel('degrees Flexion(-),Extension(+)')
 ylabel('Torque, N*m')
+gca2 = gca;
+gcf2 = gcf;
+set(gcf,'Position',[960 384 950 612]);
+set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
 
 Y3=[TorqueMeanu+TorqueStdu,fliplr(TorqueMeanu-TorqueStdu)];
@@ -161,4 +169,21 @@ scatter(Angle3,TorqueHand3,[],'b','filled','DisplayName','BB hand');
 scatter(Angle4,TorqueHand4,[],[0.8500 0.3250 0.0980],'DisplayName','BB hand');
 
 legend
+hold off
+%% Plot error and standard deviation as bar graphs
+xb=categorical({'Theoretical','Scale','Hand'});
+xb = reordercats(xb,{'Theoretical','Scale','Hand'});
+yb = [mean(Theoretical) mean(TorqueMean) mean(TorqueHand)];
+std_dev = [0 mean(TorqueStd) mean(HandStd)];
+figure
+hold on
+b = bar(xb,yb,'FaceColor',[0 0.8 1.0]);
+gca3 = gca;
+gcf3 = gcf;
+ylabel('Torque, N*m')
+title('Mean Torque Values and SD for Each Calculation Method')
+set(gcf,'Position',[0 0 950 612]);
+set(gca,'FontSize', 18, 'FontWeight', 'bold');
+b.CData = [0 0.4470 0.7410; 0  0  0; 1  0  0];
+errb = errorbar(yb,std_dev ,'LineStyle','none','LineWidth',4,'CapSize',20);
 hold off
