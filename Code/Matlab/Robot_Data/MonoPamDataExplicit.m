@@ -253,16 +253,13 @@ classdef MonoPamDataExplicit < handle
         %F == Force, N           
             dia = obj.Diameter;
             unitD = obj.UnitDirection;
-%            contract = obj.Contraction;
-%            contraction = obj.Contraction;
+            contract = obj.Contraction;
             mL = obj.MuscleLength;
             rest = obj.RestingL;
-            long = max(mL);
             fitting = obj.FittingLength;
-            kmax = obj.Kmax;
-            
-            kmax = (rest-kmax)/rest; %349 mm 
-            pres = 600; %600 kPa average measured pressure
+            pres = obj.Pressure;
+            kmax = obj.Kmax;  
+            kmax = (rest-kmax)/rest; %turn it into a percentage 
             
            load ForceStrainTable.mat ForceStrain
            tendon =  obj.TendonL;   %Length of artificial tendon and air fittings
@@ -273,27 +270,23 @@ classdef MonoPamDataExplicit < handle
            k = zeros(size(unitD,1),1);
            rel = zeros(size(unitD,1),1);
            scalarForce = zeros(size(unitD,1),1);
-            for i = 1:size(unitD, 1)
-                k(i,1) = (rest-(mL(i,1)-tendon-2*fitting))/rest; %current strain 
-                rel(i,1) = k(i,1)/kmax; %relative strain
-                if rel(i,1) >= 0 && rel(i,1) <=1
-                    scalarForce(i,1) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear',  0);
-                else
-                    scalarForce(i,1) = 0;
+           for i = 1:size(unitD, 1)
+              if dia == 10
+                k(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest; %current strain 
+                rel(i) = k(i)/kmax; %relative strain
+                if contract(i) < 0 && contract(i) <= -0.03
+                    scalarForce(i) = interp1([-0.03 -0.015 0], [630 630 510], contract(i),'linear');
+                elseif rel(i) >= 0 && rel(i) <=1.25
+                    scalarForce(i) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear');
+                else 
+                    scalarForce(i) = 0;
                 end
-            end
-
-            %If diameter is not 10 mm, then upscale force
-            if dia == 20
-                scalarForce = (1500/630)*scalarForce;
-            end
-
-            if dia == 40
-                scalarForce = (6000/630)*scalarForce;
-            end
-
-            
-            
+             
+              else %If diameter is not 10 mm, then use Festo Lookup table
+                scalarForce(i) = festo4(dia, pres, contract(i));
+              end
+           end
+                    
 %             if dia == 20
 %                 x = [0, 0.07, 0.11, 0.15, 0.25]';
 %                 y = [1400, 800, 600, 400, 0]';

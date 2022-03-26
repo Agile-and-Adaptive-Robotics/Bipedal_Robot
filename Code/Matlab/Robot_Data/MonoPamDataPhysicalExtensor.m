@@ -61,9 +61,9 @@ classdef MonoPamDataPhysicalExtensor < handle
             segLengths = zeros(size(T, 3), size(L, 1) - 1);
             
             for ii = 1:size(T, 3)                          %Repeat for each orientation
-                for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
-                    pointA = L(i, :);
-                    pointB = L(i+1, :);
+                for i = 1:size(L, 1,ii)-1                      %Repeat for all muscle segments
+                    pointA = L(i, :, ii);
+                    pointB = L(i+1, :, ii);
                     if i+1 == C
                         pointB = RowVecTrans(T(:, :, ii), pointB);
                     end
@@ -120,8 +120,8 @@ classdef MonoPamDataPhysicalExtensor < handle
             unitD = zeros(size(direction));
             
             for i = 1:size(T, 3)
-                pointA = L(C-1, :);
-                pointB = L(C, :);
+                pointA = L(C-1, :,i);
+                pointB = L(C, :,i);
                 direction(i, :) = RowVecTrans(T(:, :, i)\eye(4), pointA) - pointB;
                 unitD(i, :) = direction(i, :)/norm(direction(i, :));
             end
@@ -139,7 +139,7 @@ classdef MonoPamDataPhysicalExtensor < handle
             mA = zeros(size(T, 3), 3);
             
             for i = 1:size(T, 3)
-                pointB = L(C, :);
+                pointB = L(C, :,i);
                 mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
                 %mA(i, :) = cross(pointB, unitD(i, :));
             end
@@ -148,7 +148,7 @@ classdef MonoPamDataPhysicalExtensor < handle
         %% -------------- Resting PAM Length --------------------------
         function restingPamLength = get.RestingL(obj)
             
-            restingPamLength = 0.5525;
+            restingPamLength = 0.557;
             fittingLength = 0.0254;
             tendonLength = 0.030;
             
@@ -188,10 +188,12 @@ classdef MonoPamDataPhysicalExtensor < handle
         function contraction = get.Contraction(obj)
             mL = obj.MuscleLength;
             restingPamLength = obj.RestingL;
+            fittingLength = obj.FittingLength;
+            tendonLength = obj.TendonL;
             
             contraction = zeros(length(mL), 1);
             for i = 1:length(mL)
-                contraction(i) = (max(mL) - mL(i))/restingPamLength;
+                contraction(i) = (restingPamLength - (mL(i,1)-tendonLength-2*fittingLength))/restingPamLength;
             end
         end
         
@@ -228,14 +230,13 @@ classdef MonoPamDataPhysicalExtensor < handle
         %F == Force, N           
             dia = obj.Diameter;
             unitD = obj.UnitDirection;
-            %contract = obj.Contraction;
-            %contraction = obj.Contraction;
+            contract = obj.Contraction;
             mL = obj.MuscleLength;
             rest = obj.RestingL;
             %long = max(mL);
             fitting = obj.FittingLength;
             
-            kmax = 0.391;
+            kmax = 0.41775;
             kmax = (rest-kmax)/rest;
             pres = 600; %600 kPa average measured pressure
             
@@ -260,11 +261,13 @@ classdef MonoPamDataPhysicalExtensor < handle
 
             %If diameter is not 10 mm, then upscale force
             if dia == 20
-                scalarForce = (1500/630)*scalarForce;
+                scalarForce(i) = (1500/630)*scalarForce(i);
+                %scalarForce(i,1) = festo4(dia, pres, contract);
             end
 
             if dia == 40
-                scalarForce = (6000/630)*scalarForce;
+                scalarForce(i) = (6000/630)*scalarForce(i);
+                %scalarForce(i,1) = festo4(dia, pres, contract);
             end
 
             

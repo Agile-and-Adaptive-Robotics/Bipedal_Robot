@@ -87,15 +87,12 @@ for i = 1:positions
                 0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
     end
 end
-        
 CrossPoint = 5;
 Dia = 10;
 Vas_Pam = MonoPamDataPinnedExtensor(Name, Location, CrossPoint, Dia, T);
 
 Name = 'Vastus Intermedius Realistic';
 Location = zeros(5,3,positions);
-
-% Origin Location from Ben
 for i = 1:positions
     if phiD(i) >= -74.01 && phiD(i) < -19.6
      Location(:,:,i) = [0.030, -0.050, 0;             %Origin
@@ -120,10 +117,9 @@ for i = 1:positions
                 0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
                 0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
                 0.01138, -0.425 0;            %Contact point over 74.01 degrees flexion
-                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+                0.0375, -0.074, 0.000];     %Tibia bracket (insertion)
     end
-end
-        
+end      
 CrossPoint = 5;
 Dia = 10;
 Rest = (415-8)/1000;   %resting length clamp to clamp, minus the barb
@@ -132,6 +128,82 @@ tendon = 0;             %Tendon length
 fit = 0.0254;           %fitting length
 pres = 605;             %Pressure, kPa
 Vas_Pam_real = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+
+Name = 'Vastus Intermedius Tendon and slip';
+Location = zeros(5,3,positions);
+for i = 1:positions
+    if phiD(i) >= -74.01 && phiD(i) < -19.6
+     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
+                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
+                0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
+                0.04128, -0.410,    0;        %Row 4 = Row 3
+                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+    elseif phiD(i) >= -19.6 && phiD(i) < 20
+     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
+                0.060, -0.350, 0.000;        %BPA contacts screw that joins femur body with femoral condyles
+                0.060, -0.350, 0.000;        %Row 3 = Row 2
+                0.060, -0.350, 0.000;        %Row 4 = Row 2
+                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+    elseif phiD(i) >= 20
+     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
+                0.030, -0.050, 0;        %Row 2 = Row 1 (no screw contact)
+                0.030, -0.050, 0;        %Row 3 = Row 2
+                0.030, -0.050, 0;        %Row 4 = Row 2
+                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+    else
+     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
+                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
+                0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
+                0.01138, -0.425 0;            %Contact point over 74.01 degrees flexion
+                0.0375, -0.074, 0.000];     %Tibia bracket (insertion)
+    end
+end      
+CrossPoint = 5;
+Dia = 10;
+Rest = (415)/1000;   %resting length clamp to clamp, minus the barb
+kmax = 0.349;          %length at maximum contraction
+tendon = 0.02;             %Tendon length
+fit = 0.0254;           %fitting length
+pres = 605;             %Pressure, kPa
+Vas_Pam_slip = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+
+Name = 'Vastus Intermedius Tendon and slip';
+Location = zeros(5,3,positions);
+for i = 1:positions
+    if phiD(i) >= -74.01 && phiD(i) < -19.6
+     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
+                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
+                0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
+                0.04128, -0.410,    0;        %Row 4 = Row 3
+                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+    elseif phiD(i) >= -19.6 && phiD(i) < 20
+     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
+                0.060, -0.350, 0.000;        %BPA contacts screw that joins femur body with femoral condyles
+                0.060, -0.350, 0.000;        %Row 3 = Row 2
+                0.060, -0.350, 0.000;        %Row 4 = Row 2
+                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+    elseif phiD(i) >= 20
+     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
+                0.030, -0.050, 0;        %Row 2 = Row 1 (no screw contact)
+                0.030, -0.050, 0;        %Row 3 = Row 2
+                0.030, -0.050, 0;        %Row 4 = Row 2
+                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+    else
+     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
+                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
+                0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
+                0.01138, -0.425 0;            %Contact point over 74.01 degrees flexion
+                0.0375, -0.074, 0.000];     %Tibia bracket (insertion)
+    end
+end      
+CrossPoint = 5;
+Dia = 10;
+Rest = (415)/1000;   %resting length clamp to clamp, minus the barb
+kmax = 0.349;          %length at maximum contraction
+tendon = 0.022;             %Tendon length
+fit = 0.0254;           %fitting length
+pres = 605;             %Pressure, kPa
+Vas_Pam_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
 
 %% Unstacking the Torques to identify specific rotations
 % Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;

@@ -22,8 +22,10 @@ addpath(genpath(all_code));
 positions = 100;
 fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions)
 
+hipToKnee = zeros(1,3,positions);
 R = zeros(3, 3, positions);
 T = zeros(4, 4, positions);
+hipToKnee_Pam = zeros(1,3,positions);
 R_Pam = zeros(3, 3, positions);
 T_Pam = zeros(4, 4, positions);
 
@@ -87,19 +89,19 @@ phi(pos) = 0;
 phiD = phi*180/pi;
 
 for i = 1:positions
-    hipToKnee = [fcn1(phi(i)), fcn2(phi(i)), 0];
+    hipToKnee(1,:,i) = [fcn1(phi(i)), fcn2(phi(i)), 0];
     R(:, :, i) = [cos(phi(i)), -sin(phi(i)), 0;
                     sin(phi(i)), cos(phi(i)), 0;
                     0, 0, 1];
     
-    T(:, :, i) = RpToTrans(R(:, :, i), hipToKnee');
+    T(:, :, i) = RpToTrans(R(:, :, i), hipToKnee(1,:,i)');
     
-    hipToKnee_Pam = [fcn11(phi(i)), fcn12(phi(i)), 0];
+    hipToKnee_Pam(1,:,i) = [fcn11(phi(i)), fcn12(phi(i)), 0];
     R_Pam(:, :, i) = [cos(phi(i)), -sin(phi(i)), 0;   %Rotation matrix for robot
                     sin(phi(i)), cos(phi(i)), 0;
                     0, 0, 1];
     
-    T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
+    T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam(1,:,i)');     %Transformation matrix for robot
 end
 
 %% Muscle calculation
@@ -220,6 +222,7 @@ Vas_Pam_exp = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, 
 Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
 Torque1 = Vas_Int.Torque + Vas_Lat.Torque + Vas_Med.Torque;
 TorqueR = Vas_Pam.Torque;
+TorqueRp = Vas_Pam_exp.Torque;
 
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
@@ -256,12 +259,12 @@ hold on
 sgtitle('Bicep Femoris Short Head Torque through Knee Flexion and Extension')
 
 subplot(3, 2, 1)
-plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3))
-legend('Human Muscle', 'Optimal BPA Location')
+plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3),phiD, TorqueRp(:, 3))
+legend('Human Muscle', 'BPA, 1st method','BPA, 2nd method')
 title('Muscle and PAM Z Torque')
 xlabel('Knee Extension/Rotation, degrees')
 ylabel('Torque, Nm')
-legend('Human', 'PAM')
+legend('Human', 'PAM1','PAM2')
 
 subplot(3, 2, 2)
 plot(phiD, TorqueEz)
@@ -271,11 +274,12 @@ ylabel('Torque, Nm')
 title('Adjusted Error Z Torque')
 
 subplot(3, 2, 3)
-plot(phiD, TorqueH(:, 2), phiD, TorqueR(:, 2))
+plot(phiD, TorqueH(:, 2), phiD, TorqueR(:, 2),phiD, TorqueRp(:, 2))
+legend('Human Muscle', 'BPA, 1st method','BPA, 2nd method')
 title('Muscle and PAM Y Torque')
 xlabel('Knee Extension/Rotation, degrees')
 ylabel('Torque, Nm')
-legend('Human', 'PAM')
+legend('Human', 'PAM 1', 'PAM 2')
 
 subplot(3, 2, 4)
 plot(phiD, TorqueEy)
@@ -285,11 +289,12 @@ ylabel('Torque, Nm')
 title('Adjusted Error Y Torque')
 
 subplot(3, 2, 5)
-plot(phiD, TorqueH(:, 1), phiD, TorqueR(:, 1))
+plot(phiD, TorqueH(:, 1), phiD, TorqueR(:, 1), phiD, TorqueRp(:, 2))
+legend('Human Muscle', 'BPA, 1st method','BPA, 2nd method')
 title('Muscle and PAM X Torque')
 xlabel('Knee Extension/Rotation, degrees')
 ylabel('Torque, Nm')
-legend('Human', 'PAM')
+legend('Human', 'PAM 2', 'PAM 2')
 
 subplot(3, 2, 6)
 plot(phiD, TorqueEx)
@@ -331,12 +336,12 @@ ylabel('Radians')
 xlabel('Knee Angle, degree')
 hold off
 
-HMuscleLocation = {Vas_Int.Location, Vas_Lat.Location, Vas_Med.Location};
-HMuscleCross = {Vas_Int.Cross, Vas_Lat.Cross, Vas_Med.Cross};
-
-RMuscleLocation = {Vas_Pam.Location};
-RMuscleCross = {Vas_Pam.Cross};
-
-Bones = {'Femur', 'Tibia'};
-
-run("MuscleBonePlotting")
+% HMuscleLocation = {Vas_Int.Location, Vas_Lat.Location, Vas_Med.Location};
+% HMuscleCross = {Vas_Int.Cross, Vas_Lat.Cross, Vas_Med.Cross};
+% 
+% RMuscleLocation = {Vas_Pam.Location};
+% RMuscleCross = {Vas_Pam.Cross};
+% 
+% Bones = {'Femur', 'Tibia'};
+% 
+% run("MuscleBonePlotting")

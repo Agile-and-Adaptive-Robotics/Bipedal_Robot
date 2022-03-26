@@ -1,4 +1,4 @@
-function F = festo3(Lmt, rest, dia, pres, kmax)
+function F = festo3(Lmt, rest, dia, pres, kmax, ten, Fitting)
 %Inputs:
 %Lmt == muscle-tendon length, scalar
 %rest == resting length of artificial muscle, "size" from Size function
@@ -6,13 +6,25 @@ function F = festo3(Lmt, rest, dia, pres, kmax)
 %long == longest musculotendon length
 %pres == pressure in kPa
 %kmax == maximum measured contraction length. Input as length, will
-%convert to percent in the code
+%convert to percent in the code.
+%ten == tendon length
+%Fitting == fitting length
 %Outputs:
 %F == Force, N
+if nanarg == 5              %Use if comparing measured muscle length to resting
+    tendon = 0;
+    fitting = 0;
+elseif nanarg == 6          %Use if measured muscle length and "tendon" where tendon can be a stand in for everything else in the Lmt that isn't active muscle
+    tendon = ten;
+    fitting = 0;
+elseif nanarg == 7          %Use if muscle length, tendon, and fitting sizes are known
+    tendon = ten;
+    fitting = Fitting;
+else
+    fprintf('Invalid number of arguments\n')
+end
 
 load ForceStrainTable.mat ForceStrain
-tendon = 0;   %Length of artificial tendon and air fittings
-fitting = 0.0254; %End cap length
             
 kmax = (rest-kmax)/rest; %Convert maximum contraction from length into percent
 

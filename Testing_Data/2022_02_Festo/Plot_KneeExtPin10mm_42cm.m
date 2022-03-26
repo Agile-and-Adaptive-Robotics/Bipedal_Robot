@@ -8,7 +8,7 @@ kmax = 0.349; %Length at maximum contraction, m
 load KneeExtPin_10mm_42cm.mat
 Theoretical = TorqueR(:,3)';
 %% Test 1 done with CALT load cell. Tests 2 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
-%Test 1 == sheet ExtTest10mm_2 from Results_table10mm_pinned_LoadCell
+%Test 1 == sheet ExtTest10mm_4 from Results_table10mm_pinned_LoadCell
 %% Torque calculated from measurements
 
 Angle = [-76.5	-69	-51.5	-40.5	-39.5	-55.5	-35	-25.5	-20	-12.5	-5	0.5	4	12.5	20	28	35	23	20	11	1	-16	-24	-44	-53.4	-66];

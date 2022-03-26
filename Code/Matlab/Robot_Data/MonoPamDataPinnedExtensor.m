@@ -261,7 +261,7 @@ classdef MonoPamDataPinnedExtensor < handle
             fitting = obj.FittingLength;
             
             kmax = (rest-0.349)/rest; %349 mm 
-            pres = 600; %600 kPa average measured pressure
+            pres = 620; %600 kPa average measured pressure
             
            load ForceStrainTable.mat ForceStrain
            tendon =  obj.TendonL;   %Length of artificial tendon and air fittings

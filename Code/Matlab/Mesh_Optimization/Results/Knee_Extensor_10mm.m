@@ -188,7 +188,7 @@ for i=1:positions
     end
 end
 CrossPoint = 4;
-Dia = 40;
+Dia = 10;
 Vas_Pam = MonoPamDataPhysicalExtensor(Name, Location, CrossPoint, Dia, T_Pam);
 
 Name = 'Vastus Intermedius, Explicit';
@@ -210,7 +210,7 @@ for i=1:positions
     end
 end
 CrossPoint = 4;
-Dia = 40;
+Dia = 10;
 rest = 0.557;
 kmax = 0.41775;
 tendon = 0.030; Fit = 0.0254; pres = 600;
