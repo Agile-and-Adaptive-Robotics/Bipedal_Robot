@@ -15,8 +15,8 @@ vas_med_H = vas_med_tqZ(:,1);
 vas_tqZ = vas_int_H+vas_lat_H+vas_med_H;
 
 load 'KneeExt40_Comparison.mat'
-TheoreticalR1 = Vas_Pam_exp.Torque(:,3)';   %Ben's modified class
-TheoreticalR2 = Vas_Pam.Torque(:,3)';       %Class from Morrow paper
+TheoreticalR1 = Vas_Pam_dist.Torque(:,3)';   %distal insertion ring
+TheoreticalR2 = Vas_Pam_prox.Torque(:,3)';       %proximal insertion ring
 TorqueHnew = Torque1(:,3);                     %Human calculations, class
 
 Tab = readmatrix('OpenSim_Vasti_Results.txt');
@@ -41,8 +41,8 @@ Torque = [6.853017236	3.061644838	1.756743486	0.428753004	0.962918245	1.43325136
 Torque1 = Torque(1:7);
 Torque2 = Torque(8:12);
 Torque3 = Torque(13:14);
-Torque4 = 19.58607747;
-Torque5 = 28.87222244;
+Torque4 = 19.9071246;
+Torque5 = 29.4178228;
 
 %% Calculate Torque by finding force from muscle contraction and distance
 %from force line of action to muscle ICR.
@@ -148,18 +148,18 @@ TorqueMean3H = feval(mdl3H,X)';
 %% Plotting polynomial solver
 figure
 hold on
-title('Isometric Torque vs Knee Angle, 10mm Extensor, 45.5cm long')
+title('Isometric Torque vs Knee Angle, 40mm Extensor, 55.7cm long')
 xlabel('degrees Flexion(-),Extension(+)')
 ylabel('Torque, N*m')
 gca1 = gca;
 gcf1 = gcf;
-set(gcf,'Position',[4 86 1800 900]);
-set(gca,'FontSize', 12, 'FontWeight', 'bold','XLim',[-120 20],'XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on','YLim',[-10 500]);
+set(gcf,'Position',[4 86 900 900]);
+set(gca,'FontWeight', 'bold','XLim',[-120 20],'XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on','YLim',[-10 500]);
 plot(knee_angle_r, vas_r,'LineStyle','-','Color',[0 0 1],'Linewidth',3,'DisplayName','Direct values from OpenSim')
-plot(phiD, TheoreticalR1,'LineStyle','-.','Color',[0 0.2 0.2],'Linewidth',2,'DisplayName','Theoretical, Robot, explicit')
-plot(phiD, TheoreticalR2,'LineStyle',':','Color',[1 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical, Robot, method 2')
-plot(theta_K, vas_tqZ,'LineStyle','--','Color',[0.6 0 0.8],'Linewidth',2,'DisplayName','Human values Bolen')
-plot(phiD, TorqueHnew,'LineStyle','-.','Color',[0.4 1 0.8],'Linewidth',2,'DisplayName','Human values Morrow')
+plot(phiD, TheoreticalR1,'LineStyle','-.','Color',[0 0.2 0.2],'Linewidth',2,'DisplayName','Robot, distal ring')
+plot(phiD, TheoreticalR2,'LineStyle',':','Color',[1 0.4470 0.7410],'Linewidth',2,'DisplayName','Robot, proximal ring')
+plot(theta_K, vas_tqZ,'LineStyle','--','Color',[0.6 0 0.8],'Linewidth',2,'DisplayName','Human values (Bolen)')
+plot(phiD, TorqueHnew,'LineStyle','-.','Color',[0.4 1 0.8],'Linewidth',2,'DisplayName','Human values (Morrow)')
 legend
 
 % Xnew=[X,fliplr(X)];
@@ -189,18 +189,18 @@ legend
 
 sz = 50;
 c = [0.8 0.2 0.2]; % color
-scatter(Angle1,Torque1,sz,'+','MarkerFaceColor','g','LineWidth',3,'DisplayName','100 kPa');
-scatter(Angle2,Torque2,sz,'+','MarkerFaceColor','r','LineWidth',3,'DisplayName','230 kPa');
-scatter(Angle3,Torque3,sz,'+','MarkerFaceColor','b','LineWidth',3,'DisplayName','380 FS');
+scatter(Angle1,Torque1,sz,'+','MarkerFaceColor','g','LineWidth',3,'DisplayName','100 kPa, load cell');
+scatter(Angle2,Torque2,sz,'+','MarkerFaceColor','r','LineWidth',3,'DisplayName','230 kPa, load cell');
+scatter(Angle3,Torque3,sz,'+','MarkerFaceColor','b','LineWidth',3,'DisplayName','380 kPa, load cell');
 scatter(Angle4,Torque4,sz,'+','CData',c,'LineWidth',3,'DisplayName','604 kPa');
-scatter(Angle1,TorqueHand1,sz,'g','filled','DisplayName','100 kPa');
-scatter(Angle2,TorqueHand2,sz,'r','filled','DisplayName','230 kPa');
-scatter(Angle3,TorqueHand3,sz,'b','filled','DisplayName','380 kPa');
-scatter(Angle4,TorqueHand4,sz,'CData',c,'DisplayName','604 kPA');
+scatter(Angle1,TorqueHand1,sz,'g','filled','DisplayName','100 kPa, hand');
+scatter(Angle2,TorqueHand2,sz,'r','filled','DisplayName','230 kPa, hand');
+scatter(Angle3,TorqueHand3,sz,'b','filled','DisplayName','380 kPa, hand');
+scatter(Angle4,TorqueHand4,sz,'filled','CData',c,'DisplayName','604 kPA, hand');
 
 scatter(Angle(1:15),Hand_alt,sz,'Marker','v','CData',[0.6350 0.0780 0.1840],'DisplayName','projected 600 kPa Torque for data');
 
-legend('FontSize',12)
+legend
 hold off
 
 %% Plotting nonlinear solver

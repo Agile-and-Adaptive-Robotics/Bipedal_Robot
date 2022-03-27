@@ -11,13 +11,13 @@ function F = festo3(Lmt, rest, dia, pres, kmax, ten, Fitting)
 %Fitting == fitting length
 %Outputs:
 %F == Force, N
-if nanarg == 5              %Use if comparing measured muscle length to resting
+if nargin == 5              %Use if comparing measured muscle length to resting
     tendon = 0;
     fitting = 0;
-elseif nanarg == 6          %Use if measured muscle length and "tendon" where tendon can be a stand in for everything else in the Lmt that isn't active muscle
+elseif nargin == 6          %Use if measured muscle length and "tendon" where tendon can be a stand in for everything else in the Lmt that isn't active muscle
     tendon = ten;
     fitting = 0;
-elseif nanarg == 7          %Use if muscle length, tendon, and fitting sizes are known
+elseif nargin == 7          %Use if muscle length, tendon, and fitting sizes are known
     tendon = ten;
     fitting = Fitting;
 else
@@ -30,21 +30,24 @@ kmax = (rest-kmax)/rest; %Convert maximum contraction from length into percent
 
 X = linspace(0,620,20); %Pressure for interpolation
 Y = linspace(0,1,30);   %Relative strain range for interpolation
-           
+
 k = zeros(size(Lmt,1),1);
 rel = zeros(size(Lmt,1),1);
 F = zeros(size(Lmt,1),1);
             for i = 1:size(Lmt, 1)
-                k(i,1) = (rest-(Lmt(i,1)))/rest; %current strain
-                rel(i,1) = k(i,1)/kmax; %relative strain
+                k(i,1) = (rest-(Lmt(i,1)-tendon-2*fitting))/rest %current strain
+                rel(i,1) = k(i,1)/kmax %relative strain               
                 if rel(i,1) >= 0 && rel(i,1) <=1
-                    F(i,1) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear',  0);
+                    F(i,1) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear')
+                elseif k(i,1) < 0 && k(i,1) <= -0.03
+                    F(i,1) = interp1([-0.03 -0.015 0], [630 630 510], contract,'linear') 
                 else
                     F(i,1) = 0;
                 end
             end
 
-%If diameter is not 10 mm, then upscale force
+%If diameter is not 10 mm, then upscale force (but probably better to use
+%festo4.m function
 if dia == 20
     F = (1500/630)*F;
 end

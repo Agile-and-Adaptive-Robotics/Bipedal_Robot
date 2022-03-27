@@ -170,45 +170,34 @@ CrossPoint = 5;
 Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 %% PAM calculation
-Name = 'Vastus Intermedius';
-Location = zeros(5,3,positions);
+Name = 'Vastus Intermedius, Proximal Ring';
+Location = zeros(7,3,positions);
 % Origin Location from Ben
 for i=1:positions
     if phiD(i) < -80
      Location(:,:,i) = [0.040, 0.035, 0;
-                0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
-                0.04817, -0.41646,    0;        %anterior femoral condyle when flexion is high
+                0.080, -0.275, 0.000;        %BPA contacts mounting boss
+                0.05546, -0.44305,    0;        %anterior femoral condyle when flexion is high
+                0.06594, -0.0129, 0;
+                0.052744, -0.0129, 0;
                 0.04094, -0.05098 0;            %Tibia contact
-                0.02163, -0.07164, 0.000];      %patellar ligament ring, proximal
-
-    else
+                0.02183, -0.07227, 0.000];      %patellar ligament ring, proximal
+    elseif phiD(i) >= -80 && phiD(i) < -30
+             Location(:,:,i) = [0.040, 0.035, 0;
+                0.099, -0.260, 0.000;        %BPA contacts mounting boss
+                0.08317, -0.385,    0;        %anterior femoral condyle when flexion is high
+                0.07094, -0.0129, 0;
+                0.06094, -0.040, 0;
+                0.05107, -0.055 0;            %Tibia contact
+                0.02183, -0.07227, 0.000];      %patellar ligament ring, proximal
+    else   %greater than or equal to  30 degrees
         Location(:,:,i) = [0.040, 0.035, 0;
-                0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
-                0.0689, -0.27476, 0.000;        %no femoral contact
-                0.04094, -0.05098 0;            %Tibia contact
-                0.02163, -0.07164, 0.000];      %patellar ligament ring
-    end
-end
-CrossPoint = 4;
-Dia = 40;
-Vas_Pam = MonoPamDataPhysicalExtensor(Name, Location, CrossPoint, Dia, T_Pam);
-
-Name = 'Vastus Intermedius, Explicit';
-Location = zeros(5,3,positions);
-for i=1:positions
-    if phiD(i) < -80
-     Location(:,:,i) = [0.040, 0.035, 0;
-                0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
-                0.04817, -0.41646,    0;        %anterior femoral condyle when flexion is high
-                0.04094, -0.05098 0;            %Tibia contact
-                0.02163, -0.07164, 0.000];      %patellar ligament ring, proximal
-
-    else
-        Location(:,:,i) = [0.040, 0.035, 0;
-                0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
-                0.0689, -0.27476, 0.000;        %no femoral contact
-                0.04094, -0.05098 0;            %Tibia contact
-                0.02163, -0.07164, 0.000];      %patellar ligament ring
+                0.099, -0.219, 0.000;        %BPA contacts mounting boss
+                0.099, -0.30252, 0.000;        
+                0.05794, -0.022, 0;             %Tibia frame
+                0.05794, -0.022, 0;
+                0.04908, -0.0443, 0;            %Tibia contact
+                0.02183, -0.07227, 0.000];      %patellar ligament ring
     end
 end
 CrossPoint = 4;
@@ -216,13 +205,46 @@ Dia = 40;
 rest = 0.557;
 kmax = 0.41775;
 tendon = 0.030; Fit = 0.0254; pres = 600;
-Vas_Pam_exp = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, Fit, pres);
+Vas_Pam_prox = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, Fit, pres);
+
+Name = 'Vastus Intermedius, Distal Ring';
+Location = zeros(6,3,positions);
+for i=1:positions
+    if phiD(i) < -80
+     Location(:,:,i) = [0.040, 0.035, 0;
+                0.099, -0.275, 0.000;        %BPA contacts mounting boss
+                0.05546, -0.44305,    0;        %anterior femoral condyle when flexion is high
+                0.06594, -0.010 0;             %Tibia contact
+                0.06594, -0.03716 0;            %Tibia contact
+                0.01969, -0.11115, 0.000];      %patellar ligament ring, distal
+    elseif phiD(i) >= -80 && phiD(i) < -40
+             Location(:,:,i) = [0.040, 0.035, 0;
+                0.099, -0.240, 0.000;        %BPA contacts mounting boss
+                0.08317, -0.385,    0;        %anterior femoral condyle when flexion is high
+                0.07094, -0.0129 0;             %Tibia contact
+                0.07094, -0.03716 0;            %Tibia contact
+                0.01969, -0.11115, 0.000];      %patellar ligament ring, distal
+    else   %greater than or equal to  30 degrees
+        Location(:,:,i) = [0.040, 0.035, 0;
+                0.099, -0.219, 0.000;        %BPA contacts mounting boss
+                0.099, -0.30252, 0.000;  
+                0.07094, -0.0129 0;             %Tibia contact
+                0.07094, -0.03716 0;            %Tibia contact
+                0.01969, -0.11115, 0.000];      %patellar ligament ring, distal
+    end
+end
+CrossPoint = 4;
+Dia = 40;
+rest = 0.557;
+kmax = 0.41775;
+tendon = 0.090; Fit = 0.0254; pres = 600;
+Vas_Pam_dist = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, Fit, pres);
 
 %% Unstacking the Torques to identify specific rotations
 Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
 Torque1 = Vas_Int.Torque + Vas_Lat.Torque + Vas_Med.Torque;
-TorqueR = Vas_Pam.Torque;
-TorqueRp = Vas_Pam_exp.Torque;
+TorqueR = Vas_Pam_prox.Torque;
+TorqueRp = Vas_Pam_dist.Torque;
 
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
