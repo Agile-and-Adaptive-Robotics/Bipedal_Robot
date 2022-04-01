@@ -97,7 +97,12 @@ X3 = linspace(min(Angle3),max(Angle3));      %Range of motion
 
 modp = 'poly3';
 fitOp = fitoptions(modp,'Normalize','on','Robust','on');
-
+%%
+% 
+% $$e^{\pi i} + 1 = 0$$
+% 
+%%
+%$x^2+e^{\pi i}$
 [mdl1, gof1] = fit(Angle1',Torque1',modp,fitOp)
 TorqueStd1 = gof1.rmse
 TorqueMean1 = feval(mdl1,X1)';
@@ -128,8 +133,14 @@ ylabel('Torque, N*m')
 hold on
 gca1 = gca;
 gcf1 = gcf;
-set(gcf,'Position',[1 384 950 612]);
+%set(gcf,'Position',[1 1 950 612]);
+%set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
+%%
+% 
+%  PREFORMATTED
+%  TEXT
+% 
 c1 = [0.8500 0.3250 0.0980]; % color, burnt orange
 c2 = [0.6350 0.0780 0.1840]; %color, red/violet
 c3 = [0 0.4470 0.7410]; %color, navy blue
@@ -186,11 +197,11 @@ title('Z axis Torque, 10mm Extensor, 41.5cm long, no tendon')
 xlabel('degrees Flexion(-),Extension(+)')
 ylabel('Torque, N*m')
 hold on
-gca1 = gca;
-gcf1 = gcf;
-set(gcf,'Position',[1 384 950 612]);
+gca2 = gca;
+gcf2 = gcf;
+%set(gcf,'Position',[1 1 950 612]);
+%set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-
 
 plot(phiD, TorqueR1(:, 3),'Color',c1,'Linewidth',2,'DisplayName','Ideal');
 plot(phiD,TorqueR2(:, 3),'--^','DisplayName','Realistic 1','Linewidth',2)
@@ -220,10 +231,11 @@ title('Z axis Torque, 10mm Extensor, 41.5cm long, 22 mm tendon')
 xlabel('degrees Flexion(-),Extension(+)')
 ylabel('Torque, N*m')
 hold on
-gca1 = gca;
-gcf1 = gcf;
-set(gcf,'Position',[1 384 950 612]);
-set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
+gca3 = gca;
+gcf3 = gcf;
+%set(gcf,'Position',[1 1 950 612]);
+%set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
+set(gca,'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 c1 = [0.8500 0.3250 0.0980]; % color, burnt orange
 c2 = [0.6350 0.0780 0.1840]; %color, red/violet
 c3 = [0 0.4470 0.7410]; %color, navy blue

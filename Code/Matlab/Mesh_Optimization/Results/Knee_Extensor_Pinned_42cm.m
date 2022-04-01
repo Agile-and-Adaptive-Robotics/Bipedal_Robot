@@ -144,8 +144,8 @@ for i = 1:positions
     if phiD(i) >= -74.01 && phiD(i) < -19.6
      Location(:,:,i) = [0.030, -0.050, 0;             %Origin
                 0.049, -0.350, 0.020;         %Contact, no screw
-                0.04128, -0.410,    0.010;        %Contact point between 19.6 and 74.01 degrees flexion
-                0.04128, -0.410,    0.010;        %Row 4 = Row 3
+                0.04128, -0.410,    0.015;        %Contact point between 19.6 and 74.01 degrees flexion
+                0.04128, -0.410,    0.015;        %Row 4 = Row 3
                 0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
     elseif phiD(i) >= -19.6 && phiD(i) < 20
      Location(:,:,i) = [0.030, -0.050, 0;             %Origin
@@ -162,8 +162,8 @@ for i = 1:positions
     else
      Location(:,:,i) = [0.025, -0.050, 0;             %Origin, origin point goes -5mm at high angles due to load
                 0.049, -0.350, 0.020;         %Contact, no screw
-                0.04128, -0.410,    0.010;        %Contact point between 19.6 and 74.01 degrees flexion
-                0.01568, -0.42093 0;            %Contact point over 74.01 degrees flexion, added compression
+                0.04128, -0.410,    0.020;        %Contact point between 19.6 and 74.01 degrees flexion
+                0.01568, -0.42093 0.010;            %Contact point over 74.01 degrees flexion, added compression
                 0.0375, -0.074, 0.000];     %Tibia bracket (insertion)
     end
 end      
