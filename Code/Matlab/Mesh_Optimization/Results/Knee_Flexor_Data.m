@@ -39,9 +39,9 @@ knee_y =       [-0.4226;  -0.4082;    -0.399;   -0.3976;   -0.3966; -0.395264; -
 fcn2 = fit(knee_angle_y,knee_y,'cubicspline');
 %Robot
 knee_angle = [0.17; 0.09; 0.03; 0.00; -0.09; -0.17; -0.26; -0.52; -0.79; -1.05; -1.31; -1.57; -1.83; -2.09; -2.36; -2.62];
-knee_x_Pam =     [0.0010	0.0027	0.0038	0.0045	0.0064	0.0084	0.0105	0.0164	0.0213	0.0246	0.0255	0.0239	0.0197	0.0132	0.0052	-0.0036]';
+knee_x_Pam =     [0.0065    0.0083    0.0094    0.0101    0.0120    0.0140    0.0161    0.0220    0.0269    0.0302    0.0311    0.0295    0.0253    0.0189    0.0109    0.0021]';
 fcn3 = fit(knee_angle,knee_x_Pam,'cubicspline');
-knee_y_Pam =     [-0.3982	-0.3969	-0.3962	-0.3958	-0.3950	-0.3944	-0.3942	-0.3951	-0.3984	-0.4035	-0.4099	-0.4167	-0.4228	-0.4274	-0.4298	-0.4292]';
+knee_y_Pam =     [-0.3981   -0.3968   -0.3961   -0.3957   -0.3949   -0.3943   -0.3941   -0.3950   -0.3982   -0.4034   -0.4098   -0.4165   -0.4227   -0.4273   -0.4297   -0.4289]';
 fcn4 = fit(knee_angle,knee_y_Pam,'cubicspline');
 
 
@@ -73,9 +73,12 @@ end
 Name = 'Bicep Femoris (Short Head)';
 MIF = 804;
 OFL = 0.173; TSL = 0.089; Pennation = 0.40142573;
-Location = [0.005, -0.211, 0.023;
+Location = zeros(3,3,positions);
+for i = 1:positions
+    Location(:,:,i) = [0.005, -0.211, 0.023;
             -0.03, -0.036, 0.029;
             -0.023, -0.056, 0.034];
+end
 CrossPoint = 2;
 Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
@@ -84,10 +87,22 @@ Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
 Dia = 10;
 
+Location = zeros(2,3,positions);
+for i = 1:positions
 %Origin and Insertion from Ben
-Location = [-0.050, 0.035, 0.028;
-            -0.03029, -0.04263, 0.027];
-Bifemsh_Pam = MonoPamDataPhysicalFlexor(Name, Location, CrossPoint, Dia, T_Pam);
+    Location(:,:,i) = [-0.050, 0.035, 0.0328;
+            -0.02788, -0.04598, 0.0328];
+end
+rest = 0.415;
+kmax = 0.350;
+tendon = 0.012; 
+fitting = 0.0254; 
+pres = 602;         %average pressure
+Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
+
+rest = 0.42;
+tendon = 0.03;
+Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
 figure
 plot(phi,Bifemsh_Pam.MuscleLength)
@@ -178,6 +193,15 @@ ylabel('Torque, Nm')
 title('Adjusted Error X Torque')
 
 hold off
+
+%% Compare Expected vs Adjusted PAM values
+figure
+plot(phiD, Bifemsh_Pam_adj.Torque(:, 3), phiD, TorqueR(:, 3))
+title('Muscle and PAM Z Torque')
+xlabel('Knee Ext(+)/Flx(-), degrees')
+ylabel('Torque, Nm')
+legend('rest+5,tendon+18', 'Expected')
+
 
 %% Plotting muscle lengths and moment arms using two different moment arm
 %calculations

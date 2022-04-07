@@ -68,14 +68,14 @@ fcn11 = fit(knee_angle,knee_x_Pam,'cubicspline');  %Tibia reference frame
 knee_y_Pam =     [-0.3982	-0.3969	-0.3962	-0.3958	-0.3950	-0.3944	-0.3942	-0.3951	-0.3984	-0.4035	-0.4099	-0.4167	-0.4228	-0.4274	-0.4298	-0.4292]';
 fcn12 = fit(knee_angle,knee_y_Pam,'cubicspline');  %Tibia reference frame
 %Patella locations in Femur frame
-P_T_x = [0.06055	0.06	0.05956	0.06094	0.05953	0.06072	0.05927	0.05982	0.05955	0.05228	0.04206	0.03099	0.016	-0.00064	-0.01722	-0.03161]'; %Patella Top, x location
-fcn13 = fit(knee_angle,P_T_x,'cubicspline');
-P_T_y = [-0.37779	-0.38615	-0.38366	-0.3857	-0.38907	-0.39348	-0.39766	-0.41177	-0.42227	-0.43372	-0.44375	-0.45354	-0.45795	-0.45839	-0.45529	-0.44819]'; %Patella Top, y location
-fcn14 = fit(knee_angle,P_T_y,'cubicspline');
-P_B_x = [0.05898	0.0585	0.05891	0.05828	0.05822	0.05856	0.05842	0.04735	0.038	0.0264	0.01175	-0.00467	-0.02223	-0.03997	-0.05465	-0.06578]'; %Patella Bottom, x location
-fcn15 = fit(knee_angle,P_B_x,'cubicspline');
-P_B_y = [-0.41712	-0.42073	-0.42306	-0.42447	-0.42847	-0.43298	-0.43779	-0.44568	-0.455	-0.46374	-0.46981	-0.46987	-0.46785	-0.46119	-0.44844	-0.4316]'; %Patella Bottom, y location
-fcn16 = fit(knee_angle,P_B_y,'cubicspline');
+% P_T_x = [0.06055	0.06	0.05956	0.06094	0.05953	0.06072	0.05927	0.05982	0.05955	0.05228	0.04206	0.03099	0.016	-0.00064	-0.01722	-0.03161]'; %Patella Top, x location
+% fcn13 = fit(knee_angle,P_T_x,'cubicspline');
+% P_T_y = [-0.37779	-0.38615	-0.38366	-0.3857	-0.38907	-0.39348	-0.39766	-0.41177	-0.42227	-0.43372	-0.44375	-0.45354	-0.45795	-0.45839	-0.45529	-0.44819]'; %Patella Top, y location
+% fcn14 = fit(knee_angle,P_T_y,'cubicspline');
+% P_B_x = [0.05898	0.0585	0.05891	0.05828	0.05822	0.05856	0.05842	0.04735	0.038	0.0264	0.01175	-0.00467	-0.02223	-0.03997	-0.05465	-0.06578]'; %Patella Bottom, x location
+% fcn15 = fit(knee_angle,P_B_x,'cubicspline');
+% P_B_y = [-0.41712	-0.42073	-0.42306	-0.42447	-0.42847	-0.43298	-0.43779	-0.44568	-0.455	-0.46374	-0.46981	-0.46987	-0.46785	-0.46119	-0.44844	-0.4316]'; %Patella Bottom, y location
+% fcn16 = fit(knee_angle,P_B_y,'cubicspline');
 
 kneeMin = -2.0943951;
 kneeMax = 0.17453293;
@@ -169,52 +169,52 @@ Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 
 %% PAM calculation
 Name = 'Vastus Intermedius';
-Location = zeros(5,3,positions);
+Location = zeros(8,3,positions);
 % Origin Location from Ben
 for i=1:positions
-    if phiD(i) < -80
-     Location(:,:,i) = [0.040, 0.035, 0;
-                0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
-                0.04817, -0.41646,    0;        %anterior femoral condyle when flexion is high
-                0.04094, -0.05098 0;            %Tibia contact
-                0.02163, -0.07164, 0.000];      %patellar ligament ring, proximal
+    if phiD(i) > -40
+        Location(:,:,i) = [0.040, 0.035, 0;     %Origin
+                0.07140, -0.28576, 0;           %BPA contacts mounting base
+                0.07140, -0.28576, 0;           %Point 3 = 2
+                0.07140, -0.28576, 0;           %Point 4 = 2
+                0.03911, -0.0166, 0;            %Tibia contact initial
+                0.04960, -0.02795 0;            %Tibia contact
+                0.036, -0.05508 0;              %Tibia tendon contact
+                0.02053, -0.07164, 0.000];      %patellar ligament ring
+            
+    elseif phiD(i) > -85 && phiD(i) <= -40
+        Location(:,:,i) = [0.040, 0.035, 0;     %Origin
+                0.07140, -0.28576, 0;           %BPA contacts mounting base
+                0.05567, -0.37427, 0.000;       %femur channel contact
+                0.05567, -0.37427, 0.000;       %Point 4 = 3
+                0.03911, -0.0166, 0;            %Tibia contact initial
+                0.04960, -0.02795 0;            %Tibia contact
+                0.036, -0.05508 0;              %Tibia tendon contact
+                0.02053, -0.07164, 0.000];      %patellar ligament ring
 
     else
-        Location(:,:,i) = [0.040, 0.035, 0;
-                0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
-                0.0689, -0.27476, 0.000;        %no femoral contact
-                0.04094, -0.05098 0;            %Tibia contact
-                0.02163, -0.07164, 0.000];      %patellar ligament ring
+        Location(:,:,i) = [0.040, 0.035, 0;     %Origin
+                0.07140, -0.28576, 0;           %BPA contacts mounting base
+                0.05567, -0.37427, 0.000;       %femur channel contact
+                0.3105, -0.42528, 0.000;       %femoral condyle contact
+                0.03911, -0.0166, 0;            %Tibia contact initial
+                0.04960, -0.02795 0;            %Tibia contact
+                0.036, -0.05508 0;              %Tibia tendon contact
+                0.02053, -0.07164, 0.000];      %patellar ligament ring
     end
 end
-CrossPoint = 4;
+CrossPoint = 5;
 Dia = 10;
-Vas_Pam = MonoPamDataPhysicalExtensor(Name, Location, CrossPoint, Dia, T_Pam);
+rest = 0.520;
+kmax = 0.440;
+tendon = 0.030; 
+fitting = 0.0254; 
+pres = 597;         %average pressure
+Vas_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
-Name = 'Vastus Intermedius, Explicit';
-Location = zeros(5,3,positions);
-for i=1:positions
-    if phiD(i) < -80
-     Location(:,:,i) = [0.040, 0.035, 0;
-                0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
-                0.04817, -0.41646,    0;        %anterior femoral condyle when flexion is high
-                0.04094, -0.05098 0;            %Tibia contact
-                0.02163, -0.07164, 0.000];      %patellar ligament ring, proximal
-
-    else
-        Location(:,:,i) = [0.040, 0.035, 0;
-                0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
-                0.0689, -0.27476, 0.000;        %no femoral contact
-                0.04094, -0.05098 0;            %Tibia contact
-                0.02163, -0.07164, 0.000];      %patellar ligament ring
-    end
-end
-CrossPoint = 4;
-Dia = 10;
-rest = 0.557;
-kmax = 0.41775;
-tendon = 0.030; Fit = 0.0254; pres = 600;
-Vas_Pam_exp = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, Fit, pres);
+rest = 0.528;
+fitting = 0.0204;
+Vas_Pam_8mmrest = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
 %% Unstacking the Torques to identify specific rotations
 Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
@@ -300,6 +300,15 @@ title('Adjusted Error X Torque')
 
 hold off
 
+figure
+hold on
+plot(phiD, Vas_Pam_8mmrest.Torque(:, 3), phiD, TorqueR(:, 3))
+legend('Adjusted resting length and fitting', 'BPA modeled')
+title('Muscle and PAM Z Torque')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
+hold off
+
 
 %% Plotting the angle between the vectors
 
@@ -331,12 +340,12 @@ ylabel('Radians')
 xlabel('Knee Angle, degree')
 hold off
 
-HMuscleLocation = {Vas_Int.Location, Vas_Lat.Location, Vas_Med.Location};
-HMuscleCross = {Vas_Int.Cross, Vas_Lat.Cross, Vas_Med.Cross};
-
-RMuscleLocation = {Vas_Pam.Location};
-RMuscleCross = {Vas_Pam.Cross};
-
-Bones = {'Femur', 'Tibia'};
-
-run("MuscleBonePlotting")
+% HMuscleLocation = {Vas_Int.Location, Vas_Lat.Location, Vas_Med.Location};
+% HMuscleCross = {Vas_Int.Cross, Vas_Lat.Cross, Vas_Med.Cross};
+% 
+% RMuscleLocation = {Vas_Pam.Location};
+% RMuscleCross = {Vas_Pam.Cross};
+% 
+% Bones = {'Femur', 'Tibia'};
+% 
+% run("MuscleBonePlotting")

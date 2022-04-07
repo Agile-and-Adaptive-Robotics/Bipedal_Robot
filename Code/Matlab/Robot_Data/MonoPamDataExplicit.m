@@ -214,7 +214,8 @@ classdef MonoPamDataExplicit < handle
             
             contraction = zeros(length(mL), 1);
             for i = 1:length(mL)
-                contraction(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest;
+%                 contraction(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest;
+                  contraction(i) = ((rest+tendon+2*fitting)-mL(i,1))/(rest+tendon+2*fitting);
             end
         end
         
@@ -274,12 +275,14 @@ classdef MonoPamDataExplicit < handle
               if dia == 10
                 k(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest; %current strain 
                 rel(i) = k(i)/kmax; %relative strain
-                if contract(i) < 0 && contract(i) <= -0.03
+                if contract(i) < 0 && contract(i) >= -0.03
                     scalarForce(i) = interp1([-0.03 -0.015 0], [630 630 510], contract(i),'linear');
-                elseif rel(i) >= 0 && rel(i) <=1.25
+                elseif rel(i) >= 0 && rel(i) <= 1
                     scalarForce(i) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear');
-                else 
+                elseif rel(i) > 1
                     scalarForce(i) = 0;
+                else
+                    scalarForce(i) = NaN;
                 end
              
               else %If diameter is not 10 mm, then use Festo Lookup table
