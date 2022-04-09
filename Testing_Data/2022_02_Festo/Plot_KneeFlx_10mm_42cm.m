@@ -14,11 +14,13 @@ Theoretical = TorqueR(:,3)';
 %rest = 0.415, tendon = 0.012
 
 %% Adjustment to Theoretical Calculation
-rest = 0.42;
-tendon = 0.03;
-Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
+rest = 0.415;
+tendon = 0.035;
+Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, dia, T_Pam, rest, kmax, tendon, fitting, pres);
 Theo_adj = Bifemsh_Pam_adj.Torque(:,3)';
 
+rest = 0.415; %set resting length back to measured value
+tendon = 0.012; %set tendon back to measured(?) value
 %% Test 1 done with CALT load cell
 %Test 1 == sheet FlxTest10mm from Results_table_10mm
 
@@ -85,10 +87,11 @@ c6 = '#9D02D7'; %magenta 2
 c7 = '#0000FF'; %indigo
 sz = 60;        %size of data points
 
-figure
+close(get(gcf,'Number'));
+figure('units','normalized','position',[0.0892 0.1100 0.5317 0.8150])
 hold on
-title('Isometric Torque vs Knee Angle, 10mm Flexor, 41.5cm long')
-xlabel('degrees Flexion(-),Extension(+)')
+title('Isometric Torque for Biomimetic Knee, 10mm Flexor, 41.5cm long')
+xlabel('Knee angle, degrees, Flexion(-),Extension(+)')
 ylabel('Torque, N*m')
 gca1 = gca;
 gcf1 = gcf;
@@ -96,7 +99,7 @@ gcf1 = gcf;
 % set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 set(gca,'FontSize', 12, 'FontWeight', 'bold');
 plot(phiD, Theoretical,'Color',c5,'Linewidth',2,'DisplayName','Expected')
-plot(phiD, Theo_adj,'Color',c3,'Linewidth',2,'DisplayName','Adjusted: rest+5,tendon+18')
+plot(phiD, Theo_adj,'Color',c3,'Linewidth',2,'DisplayName','Adjusted: rest+0,tendon+23')
 
 % Xnew=[X,fliplr(X)];
 % Y1=[TorqueMean+TorqueStd,fliplr(TorqueMean-TorqueStd)];
@@ -110,7 +113,8 @@ plot(X1,HandMean,'--','Color',c1,'Linewidth',2,'DisplayName','Torque expected, h
 sc1 = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, experimental');
 sc2 = scatter(Angle,TorqueHand,sz,'filled','MarkerFaceColor',c1,'DisplayName','Torque data, Hand calc');
 
-legend
+Legend = legend('Location','eastOutside');
+% Legend.location = 'eastOutside';
 hold off
 
 %% Plot error and standard deviation as bar graphs

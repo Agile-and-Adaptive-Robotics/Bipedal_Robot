@@ -275,7 +275,7 @@ classdef MonoPamDataExplicit < handle
               if dia == 10
                 k(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest; %current strain 
                 rel(i) = k(i)/kmax; %relative strain
-                if contract(i) < 0 && contract(i) >= -0.03
+                if k(i) < 0 && k(i) >= -0.03
                     scalarForce(i) = interp1([-0.03 -0.015 0], [630 630 510], contract(i),'linear');
                 elseif rel(i) >= 0 && rel(i) <= 1
                     scalarForce(i) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear');
