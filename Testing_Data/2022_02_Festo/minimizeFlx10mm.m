@@ -1,4 +1,4 @@
-function [A,I,M, G, M2] = minimizeFlx10mm
+function [Afinal, M, I] = minimizeFlx10mm
 load KneeFlx_10mm_42cm.mat TorqueR phiD Location Name kmax CrossPoint Dia T_Pam fitting
 Theoretical = TorqueR(:,3)';   %Load theoretical torque
 load Plot_KneeFlx_10mm_42cm.mat X1 Angle Torque modp mdl1 gofp2 TorqueMean pres 
@@ -9,32 +9,30 @@ rest = 0.415;
 tendon = 0.012;
 kmax = 0.350;
 %KMAX = kmax;
-deltaRest = (-10:20)/1000;
+
 deltaTendon = (-5:30)/1000;
-deltaK = (-10/10)/1000;
+deltaRest = (-10:20)/1000;
+deltaK = (-10:10)/1000;
 A = NaN(length(deltaTendon),length(deltaRest),length(deltaK));
 %A = NaN(length(deltaTendon),length(deltaRest));
 
   for t = 1:length(deltaTendon)         %vary the tendon length
     for u = 1:length(deltaRest)         %vary the resting length
         for v = 1:length(deltaK)       %vary the kmax length
-            restingL = rest+deltaRest(u);
-            Tendon = tendon+deltaTendon(t);
-            KMAX = kmax+deltaK(v);
-            y2 = nestedfun1(restingL,Tendon,KMAX);
+            Tendon(t) = tendon+deltaTendon(t);
+            restingL(u) = rest+deltaRest(u);
+            KMAX(v) = kmax+deltaK(v);
+            y2 = nestedfun1(restingL(u),Tendon(t),KMAX(v));
             yresid = y1-y2;                     %residual error
             SSresid = sum(yresid.^2);            %Sum of squares of the residual
             %SStotal = (length(y1)-1)*var(y1);   %total sum of squares
             A(t,u,v) = SSresid;
-            G(v) = min(A,[],[1 2]);
         end
     end
   end
 
-Gdisp = G
 Afinal = A
 [M,I] = min(A,[],'all','linear');         %M finds the minimum value of A over all dimensions. I is the index location.
-M2 = min(A,[],'all');
 M
 I
 [Irow, Icolumn, I3] = ind2sub([length(deltaTendon),length(deltaRest), length(deltaK)],I)

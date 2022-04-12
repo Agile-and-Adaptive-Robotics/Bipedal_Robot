@@ -85,7 +85,7 @@ Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 %% PAM calculation
 Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
-Dia = 10;
+Dia = 20;
 
 Location = zeros(2,3,positions);
 for i = 1:positions
@@ -93,15 +93,16 @@ for i = 1:positions
     Location(:,:,i) = [-0.050, 0.035, 0.0328;
             -0.02788, -0.04598, 0.0328];
 end
-rest = 0.415;
-kmax = 0.350;
-tendon = 0.012; 
+rest = 0.423;
+kmax = 0.322;
+tendon = 0.017; 
 fitting = 0.0254; 
 pres = 602;         %average pressure
 Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
-rest = 0.42;
-tendon = 0.03;
+rest = 0.418;
+tendon = 0.043;
+kmax = 0.318;
 Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
 figure
@@ -200,7 +201,7 @@ plot(phiD, Bifemsh_Pam_adj.Torque(:, 3), phiD, TorqueR(:, 3))
 title('Muscle and PAM Z Torque')
 xlabel('Knee Ext(+)/Flx(-), degrees')
 ylabel('Torque, Nm')
-legend('rest+5,tendon+18', 'Expected')
+legend('rest-5,tendon+26,kmax-4', 'Expected')
 
 
 %% Plotting muscle lengths and moment arms using two different moment arm
