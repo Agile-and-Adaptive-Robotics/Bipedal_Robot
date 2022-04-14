@@ -3,8 +3,8 @@ load KneeFlx_10mm_42cm.mat TorqueR phiD Location Name kmax CrossPoint Dia T_Pam 
 Theoretical = TorqueR(:,3)';   %Load theoretical torque
 load Plot_KneeFlx_10mm_42cm.mat X1 Angle Torque modp mdl1 gofp2 TorqueMean pres 
 pres = mean(pres);                  %Make pressure a scalar value
-y1 = feval(mdl1, X1);               %Make y1 the curve fit
-%y1 = Torque                        %Make it just the data
+%y1 = feval(mdl1, X1);               %Make y1 the curve fit
+y1 = Torque;                        %Make it just the data
 rest = 0.415;
 tendon = 0.012;
 kmax = 0.350;

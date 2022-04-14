@@ -7,7 +7,7 @@ kmax = 0.380; %Length at maximum contraction, m
 
 load KneeFlxPin_10mm_46cm.mat
 Theoretical = TorqueR(:,3)';
-%% Tests 1 & 2 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
+%% Tests 1 & 2 . 
 %Test 1 == sheet FlxTest10mm_3 from Results_table10mm_pinned_LoadCell
 %Test 2 == sheet FlxTest10mm_3 from Results_table10mm_pinned_FishScale
 %% Torque calculated from measurements
@@ -63,28 +63,39 @@ TorqueHand1 = TorqueHand(1:size(TorqueHand1,2));
 TorqueHand2 = TorqueHand((size(TorqueHand1,2)+1):size(TorqueHand,2));
 
 %% Mean and RMSE
-X = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
+X1 = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
 mod = 'gauss1';
 fitOptions = fitoptions(mod, 'Normalize', 'on');
 [mdl1u, gof1] = fit(Angle',Torque',mod,fitOptions);
 TorqueStdu = gof1.rmse;
-TorqueMeanu = feval(mdl1u,X)';
+TorqueMeanu = feval(mdl1u,X1)';
 
 [mdl2u, gof2] = fit(Angle',TorqueHand',mod,fitOptions);
 HandStdu = gof2.rmse;
-HandMeanu = feval(mdl2u,X)';
+HandMeanu = feval(mdl2u,X1)';
 
 modp = 'poly3';
 fitOp = fitoptions(modp,'Normalize','on');
 [mdl1, gofp1] = fit(Angle',Torque',modp,fitOptions)
 TorqueStd = gofp1.rmse
-TorqueMean = feval(mdl1,X)';
+TorqueMean = feval(mdl1,X1)';
 
 [mdl2, gofp2] = fit(Angle',TorqueHand',modp,fitOptions)
 HandStd = gofp2.rmse
-HandMean = feval(mdl2,X)';
+HandMean = feval(mdl2,X1)';
 
 %% Plotting with polynomial solver
+%Matlab hex color values:
+c1 = '#FFD700'; %gold
+c2 = '#FFB14E'; %orange
+c3 = '#FA8775'; %light orange
+c4 = '#EA5F94'; %pink
+c5 = '#CD34B5'; %magenta
+c6 = '#9D02D7'; %magenta 2
+c7 = '#0000FF'; %indigo
+sz = 60;        %size of data points
+
+
 figure
 hold on
 title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.5cm long')
@@ -92,71 +103,27 @@ xlabel('degrees Flexion(-),Extension(+)')
 ylabel('Torque, N*m')
 gca1 = gca;
 gcf1 = gcf;
-set(gcf,'Position',[1 384 950 612]);
-set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
+% set(gcf,'Position',[1 384 950 612]);
+% set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
+set(gca,'FontSize', 12, 'FontWeight', 'bold')
+plot(phiD, Theoretical,'Color',c5,'Linewidth',2,'DisplayName','Expected')
+% chr = ['Adjusted fit'];
+% plot(phiD, Theo_adj,'Color',c3,'Linewidth',2,'DisplayName',chr)
 
-Xnew=[X,fliplr(X)];
-Y1=[TorqueMean+TorqueStd,fliplr(TorqueMean-TorqueStd)];
-Y2=[HandMean+HandStd,fliplr(HandMean-HandStd)];
-fill(Xnew,Y1,[1 0.4 0.8],'DisplayName','Fish scale std','FaceAlpha',0.25);
-fill(Xnew,Y2,[.6 1.0 .6],'DisplayName','Hand torque std','FaceAlpha',0.25);
-plot(X,TorqueMean,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
-plot(X,HandMean,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
+plot(X1,TorqueMean,'--','Color',c7,'Linewidth',2,'DisplayName','Torque mean, scale')
+plot(X1,HandMean,'--','Color',c1,'Linewidth',2,'DisplayName','Torque expected, hand measurements')
 
-c = [0.8500 0.3250 0.0980]; % color
-sz = 50;
-c1 = [0.8500 0.3250 0.0980]; % color, burnt orange
-c2 = [0.6350 0.0780 0.1840]; %color, red/violet
-c3 = [0 0.4470 0.7410]; %color, navy blue
-c4 = [0.4660 0.6740 0.1880]; %color, moss green
-c5 = [0.9290 0.6940 0.1250]; %color, dark yellow
-scatter(Angle1,Torque1,sz,'d','CData',c1,'DisplayName','JM LC');
-scatter(Angle2,Torque2,sz,'d','CData',c3,'DisplayName','BB FS');
-scatter(Angle1,TorqueHand1,sz,'filled','CData',c1,'DisplayName','JM hand');
-scatter(Angle2,TorqueHand2,sz,'filled','CData',c3,'DisplayName','BB hand');
+sc1 = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, experimental');
+sc2 = scatter(Angle,TorqueHand,sz,'filled','MarkerFaceColor',c1,'DisplayName','Torque data, Hand calc');
 
 legend
 hold off
 
-%% Plotting with nonlinear solver
-figure
-hold on
-title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.5cm long')
-xlabel('degrees Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
-gca2 = gca;
-gcf2 = gcf;
-set(gcf,'Position',[960 384 950 612]);
-set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
 
-Xnew=[X,fliplr(X)];
-Y1=[TorqueMeanu+TorqueStdu,fliplr(TorqueMeanu-TorqueStdu)];
-Y2=[HandMeanu+HandStdu,fliplr(HandMeanu-HandStdu)];
-fill(Xnew,Y1,[1 0.4 0.8],'DisplayName','Fish scale std','FaceAlpha',0.25);
-fill(Xnew,Y2,[.6 1.0 .6],'DisplayName','Hand torque std','FaceAlpha',0.25);
-plot(X,TorqueMeanu,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
-plot(X,HandMeanu,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
-
-c = [0.8500 0.3250 0.0980]; % color
-sz = 50;
-c1 = [0.8500 0.3250 0.0980]; % color, burnt orange
-c2 = [0.6350 0.0780 0.1840]; %color, red/violet
-c3 = [0 0.4470 0.7410]; %color, navy blue
-c4 = [0.4660 0.6740 0.1880]; %color, moss green
-c5 = [0.9290 0.6940 0.1250]; %color, dark yellow
-scatter(Angle1,Torque1,sz,'d','CData',c1,'DisplayName','JM LC');
-scatter(Angle2,Torque2,sz,'d','CData',c3,'DisplayName','BB FS');
-scatter(Angle1,TorqueHand1,sz,'filled','CData',c1,'DisplayName','JM hand');
-scatter(Angle2,TorqueHand2,sz,'filled','CData',c3,'DisplayName','BB hand');
-
-legend
-hold off
 %% Plot error and standard deviation as bar graphs
 xb=categorical({'Theoretical','Scale','Hand'});
 xb = reordercats(xb,{'Theoretical','Scale','Hand'});
-yb = [mean(Theoretical) mean(TorqueMean) mean(TorqueHand)];
+yb = [mean(Theoretical,'omitnan') mean(TorqueMean) mean(TorqueHand)];
 std_dev = [0 mean(TorqueStd) mean(HandStd)];
 figure
 hold on
@@ -165,8 +132,8 @@ gca3 = gca;
 gcf3 = gcf;
 ylabel('Torque, N*m')
 title('Mean Torque Values and SD for Each Calculation Method')
-set(gcf,'Position',[0 0 950 612]);
-set(gca,'FontSize', 18, 'FontWeight', 'bold');
+% set(gcf,'Position',[0 0 950 612]);
+set(gca,'FontSize', 12, 'FontWeight', 'bold');
 b.CData = [0 0.4470 0.7410; 0  0  0; 1  0  0];
 errb = errorbar(yb,std_dev ,'LineStyle','none','LineWidth',4,'CapSize',20);
 hold off
