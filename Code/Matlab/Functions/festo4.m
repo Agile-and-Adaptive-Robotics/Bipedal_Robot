@@ -12,13 +12,13 @@ load FestoLookup.mat FestoLookup40 FestoLookup20
 clear X Y
 
 X = linspace(0,600,7); %Pressure for interpolation
-Y = linspace(-0.05,0.25,31);   %Relative strain range for interpolation
-
+Y1 = linspace(-0.05,0.25,31);   %Relative strain range for interpolation
+Y2 = linspace(-0.04,0.25,30);
 
   if dia == 20
-            F = interp2(Y, X, FestoLookup20, contract, pres, 'linear');
+            F = interp2(Y2, X, FestoLookup20, contract, pres, 'linear');
   elseif dia == 40
-            F = interp2(Y, X, FestoLookup40, contract, pres, 'linear');
+            F = interp2(Y1, X, FestoLookup40, contract, pres, 'linear');
   else
             x = [0, 0.1, 0.17, 0.25]';
             y = [630, 300, 150, 0]';
