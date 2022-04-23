@@ -1,9 +1,9 @@
-   function [x, fval] = minimizeFlx10mm_nest(x0,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c)
+   function f = minimizeFlx10mm_nest(x,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c)
 
-    options = optimset('Display','iter','PlotFcns',@optimplotfval);
-    [x, fval] = fminsearch(@minimize,x0,options);
-
-        function f = minimize(x)
+%     options = optimset('Display','iter','PlotFcns',@optimplotfval);
+%     [x, fval] = fminsearch(@minimize,x0,options);
+% 
+%         function f = minimize(x)
 
 
         [y2, y4] = nestedfun1(x);
@@ -24,8 +24,8 @@
             %tendon = tendon length, meters
             %kmax = maximum contracted length, meters (will be converted to percent later)
             Rest = x(1);
-            kmax1 = x(2);
-            Teender = x(3); 
+            Teender = x(2); 
+            kmax1 = x(3);
             Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, Rest, kmax1, Teender, fitting, pres); %Call the class to do the Torque calculation
             T2 = Bifemsh_Pam_adj.Torque(:,3);             %Calculated Adjusted Torque
             mod_Pam = fittype('smoothingspline');
@@ -37,5 +37,5 @@
             der = diff(val);
             end
 
-    end
+%     end
 end
