@@ -6,18 +6,24 @@
 %         function f = minimize(x)
 
 
-        [y2, y4] = nestedfun1(x);
+        val = nestedfun1(x);
+        y2 = val(1);
+        y4 = val(2);
         yresid1 = y1-y2;                     %residual error
         SSresid1 = sum(yresid1.^2);          %Sum of squares of the residual
-        %SStotal = (length(y1)-1)*var(y1);   %total sum of squares
+        SStotal1 = (length(y1)-1)*var(y1);   %total sum of squares
+        f1 = SSresid1/SStotal1;              %SSE/SST
 
         yresid2 = y3-y4;                     %residual error from derivatives
         SSresid2 = sum(yresid2.^2);          %Sum of squares of the residual from the derivatives
+        SStotal2 = (length(y3)-1)*var(y3);   %total sum of squares
+        f2 = SSresid2/SStotal2;              %SSE/SST
 
-        f = c(1)*SSresid1+c(2)*SSresid2;     %Combine the error from the data and the error of the slopes
 
+        f = c(1)*f1 + c(2)*f2;     %Combine the error from the data and the error of the slopes
+ 
 
-            function [val, der] = nestedfun1(x)
+            function val = nestedfun1(x)
             % Find the difference between experimental and calculated results
             % Inputs:
             %Rest = resting length, meters
@@ -33,8 +39,8 @@
             Options.Normal = 'on';
             Options.Exclude = isnan(T2);
             mdl_Pam = fit(phiD',T2,mod_Pam,Options);
-            val = feval(mdl_Pam,X1);
-            der = diff(val);
+            val(1) = feval(mdl_Pam,X1);
+            val(2) = diff(val(1));
             end
 
 %     end
