@@ -7,7 +7,7 @@ pres = mean(pres);                  %Make pressure a scalar value
 y1 = Torque';                        %Make it just the data
 y = feval(mdl1, X1);               %Make y1 the curve fit
 y3 = diff(y);
-weight = [0.75 0.25];               %Assign relative weight to  functions 1 and 2
+weight = [1 0];               %Assign relative weight to  functions 1 and 2
 weight_norm = norm(weight);         %Find magnitude of vector "weight"
 c = weight/weight_norm;                          %Weights c1 & c2 for functions 1 & 2, respectively, in unit vector form
 
@@ -34,9 +34,9 @@ end
 % plot3( X( 4, 1 ), X( 4, 2 ), X( 4, 3 ), '.m', 'Markersize', 20 )
 
 alpha = 1;         %Reflection value
-gamma = 1.5;         %Expansion value
-beta = 0.5;        %Contraction value
-sigma = 0.5;       %Shrink value
+gamma = 1.1;         %Expansion value
+beta = 0.75;        %Contraction value
+sigma = 0.75;       %Shrink value
 epsilon = 0.001;   %Convergence value
 
 f = zeros((n+1),1); 

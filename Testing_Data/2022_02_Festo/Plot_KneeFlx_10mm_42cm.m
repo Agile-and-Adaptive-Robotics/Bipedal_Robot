@@ -14,9 +14,9 @@ Theoretical = TorqueR(:,3)';
 %rest = 0.415, tendon = 0.012
 
 %% Adjustment to Theoretical Calculation
-rest = 0.5261;
-tendon = 0.0125;
-kmax = 0.3506;
+rest = 0.4637;
+tendon = 0.0729;
+kmax = 0.3473;
 Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, dia, T_Pam, rest, kmax, tendon, fitting, pres);
 Theo_adj = Bifemsh_Pam_adj.Torque(:,3)';
 
@@ -63,7 +63,7 @@ end
 X1 = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
 mod = 'poly4';
 fitOptions = fitoptions(mod, 'Normalize', 'on','Robust','on');
-[mdl1u, gof1] = fit(Angle',Torque',mod,fitOptions)
+[mdl1u, gof1] = fit(Angle',Torque',mod,fitOptions);
 TorqueStdu = gof1.rmse;
 TorqueMeanu = feval(mdl1u,X1)';
 
