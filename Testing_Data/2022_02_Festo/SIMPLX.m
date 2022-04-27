@@ -12,7 +12,7 @@ weight_norm = norm(weight);         %Find magnitude of vector "weight"
 c = weight/weight_norm;                          %Weights c1 & c2 for functions 1 & 2, respectively, in unit vector form
 
 n = 3;              %number of dimensions
-a = 0.003;          %size of tetrahedron
+a = 0.001;          %size of tetrahedron
 p = a/(n*sqrt(2))*(sqrt(n+1)+n-1);
 q = a/(n*sqrt(2))*(sqrt(n+1)-1);
 pq = p*eye(n)+q*(ones(n)-eye(n));
@@ -34,50 +34,118 @@ end
 % plot3( X( 4, 1 ), X( 4, 2 ), X( 4, 3 ), '.m', 'Markersize', 20 )
 
 alpha = 1;         %Reflection value
-gamma = 2;         %Expansion value
+gamma = 1.5;         %Expansion value
 beta = 0.5;        %Contraction value
 sigma = 0.5;       %Shrink value
 epsilon = 0.001;   %Convergence value
 
-f = zeros((n+1),1);
+f = zeros((n+1),1); 
 k = 1;
-iter = 250;                                 %number of iterations
-while k < iter+1                               %Set max iterations to 100
-   for i = 1:n+1
+iter = 150;                                   %number of iterations
+while k < iter+1                              %Run loop for maximum number of iterations if needed
+    
+    for i = 1:n+1
        f(i,1) = minimizeFlx10mm_nest(X(i,:),X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c); 
 
-   end    
+    end
+    
     A = [X, f];
     B = sortrows(A,(n+1));                  %sort A from low to high
-    x = B(:,1:n);
-    xc = (1/n)*sum(x((1:n),:));             %Centroid
-    xr = (1+alpha)*xc-alpha*x((n+1),:);     %Reflection point
-    fr = minimizeFlx10mm_nest(xr,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
+    X = B(:,1:n);
+    Xc = (1/n)*sum(X((1:n),:));             %Centroid
+    Xr = (1+alpha)*Xc-alpha*X((n+1),:);     %Reflection point
+    fr = minimizeFlx10mm_nest(Xr,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
 
-        if fr < f(1)                        %Expansion
-            xnew = (1-gamma)*xc+gamma*xr;
+    
+        if fr < f(n) && fr > f(1)              %Reflection
+            Xnew = Xr;
+            fnew = fr;
+            
+        elseif fr < f(1)                        %Expansion
+            Xnew = (1+gamma)*Xc-gamma*X(n+1,:);
+            fnew = minimizeFlx10mm_nest(Xnew,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
+
         elseif fr >= f(n+1)                     %Contraction, fr>f(n+1)
-            xnew = (1-beta)*xc+beta*x(n+1,:);
-        elseif fr < f(n+1) && fr >= f(n)        %Contraction, fr=<f(n+1)
-            xnew = (1+beta)*xc-beta*x(n+1,:);
-        else
-            x = x(1,:)+sigma*(x-x(1,:));        %Shrink
+            Xnew = (1-beta)*Xc+beta*X(n+1,:);
+            fnew = minimizeFlx10mm_nest(Xnew,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
+                
+        elseif fr < f(n+1) && fr > f(n)        %Contraction, fr=<f(n+1)
+            Xnew = (1+beta)*Xc-beta*X(n+1,:);
+            fnew = minimizeFlx10mm_nest(Xnew,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
+        
+        else                                    %Shrink
+            X = X(1,:)+sigma*(X-X(1,:));
+            Xnew = X(1,:);
+            fnew = f(1);
         end
-    fnew = minimizeFlx10mm_nest(xnew,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
-    fc = minimizeFlx10mm_nest(xc,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
-    Q = sqrt((1/n+1)*(sum(f(1:n)-fc)^2+(fnew-fc)^2));
+        
+%         if fr < f(n) && fr >= f(1)              %Reflection
+% %             Xnew = Xr;
+% %             fnew = fr;
+%             X(n+1,:) = Xr;
+%             f(n+1) = fr;
+%             
+%         elseif fr < f(1)                        %Expansion
+%             Xnew = (1-gamma)*Xc+gamma*Xr;
+%             fnew = minimizeFlx10mm_nest(Xnew,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
+%             if fnew > f(1)
+%                 X(n+1,:) = Xr;
+%                 f(n+1) = fr;
+%             else
+%                 X(n+1,:) = Xnew;
+%                 f(n+1)=fnew;
+%             end
+%         elseif fr >= f(n+1)                     %Contraction, fr>f(n+1)
+%             Xnew = (1-beta)*Xc+beta*X(n+1,:);
+%             fnew = minimizeFlx10mm_nest(Xnew,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
+%             if fnew >= f(n+1)                       %Shrink
+%                 X = X(1,:)+sigma*(X-X(1,:));
+%                 Xnew = X(1,:);
+%                 fnew = f(1);
+%                 for i = 2:n+1
+%                     f(i,1) = minimizeFlx10mm_nest(X(i,:),X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
+%                 end
+%             else
+%                 X(n+1,:) = Xnew;
+%                 f(n+1) = fnew;
+%             end
+%                 
+%         elseif fr < f(n+1) && fr >= f(n)        %Contraction, fr=<f(n+1)
+%             Xnew = (1+beta)*Xc-beta*X(n+1,:);
+%             fnew = minimizeFlx10mm_nest(Xnew,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
+%             if fnew >= fr                       %Shrink
+%                 X = X(1,:)+sigma*(X-X(1,:));
+%                 Xnew = X(1,:);
+%                 fnew = f(1);
+%                 for i = 2:n+1
+%                     f(i,1) = minimizeFlx10mm_nest(X(i,:),X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
+%                 end
+%             else
+%                 X(n+1,:) = Xnew;
+%                 f(n+1) = fnew;
+%             end
+% 
+%         end
+
+
+    fc = minimizeFlx10mm_nest(Xc,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
+    Q = sqrt(1/(n+1)*sum((f(1:n+1)-fc).^2));
        if Q <= epsilon
-           xnew
-           fnew
+           X(1,:)
+           f(1)
+           X(n+1,:)
+           f(n+1)
            Q
            k
            break
        elseif Q > epsilon
            k = k+1;
-           x((n+1),:) = xnew;
+           X(n+1,:) = Xnew
            if k == iter+1
-                xnew
-                fnew
+                X(1,:)
+                f(1)
+                X(n+1,:)
+                f(n+1)
                 Q
                 k
            end

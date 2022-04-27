@@ -20,16 +20,16 @@ x0 = [rest, tendon, kmax];
 [point,value] = minimizeFlx10mm_nest(x0);
 
 
-   function [x, fval] = minimizeFlx10mm_nest(x0,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c)
+   function [X, FVAL] = minimizeFlx10mm_nest(x0,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c)
 
-   call = {X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c};
+%   call = [{X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c}];
     options = optimset('Display','iter','PlotFcns',@optimplotfval);
 %     fun = @(x)minimize;
     [x, fval] = fminsearch(@minimize,x0,options);
 
         function f = minimize(x)
 
-        call2 = {X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c};
+%        call2 = {X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c};
         [y2, y4] = nestedfun1(x);
         yresid1 = y1-y2;                     %residual error
         SSresid1 = sum(yresid1.^2);          %Sum of squares of the residual
