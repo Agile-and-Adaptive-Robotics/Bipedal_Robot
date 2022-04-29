@@ -7,7 +7,7 @@ pres = mean(pres);                  %Make pressure a scalar value
 y1 = Torque';                        %Make it just the data
 y = feval(mdl1, X1);               %Make y1 the curve fit
 y3 = diff(y);
-weight = [1 0];               %Assign relative weight to  functions 1 and 2
+weight = [5 1];               %Assign relative weight to  functions 1 and 2
 weight_norm = norm(weight);         %Find magnitude of vector "weight"
 c = weight/weight_norm;                          %Weights c1 & c2 for functions 1 & 2, respectively, in unit vector form
 
