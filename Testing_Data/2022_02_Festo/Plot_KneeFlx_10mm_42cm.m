@@ -14,9 +14,9 @@ Theoretical = TorqueR(:,3)';
 %rest = 0.415, tendon = 0.012
 
 %% Adjustment to Theoretical Calculation
-rest = 0.5355;
-tendon = 0.0872;
-kmax = 0.2466;
+rest = 0.55;
+tendon = 0.0196;
+kmax = 0.3312;
 Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, dia, T_Pam, rest, kmax, tendon, fitting, pres);
 Theo_adj = Bifemsh_Pam_adj.Torque(:,3)';
 

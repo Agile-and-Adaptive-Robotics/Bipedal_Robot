@@ -57,12 +57,12 @@ save FestoLookup.mat FestoLookup40 FestoLookup20
 %% Plot it
 figure
 surf(Y1,X,FestoLookup40)
-xlabel('Contraction','interpreter','latex'),ylabel('Pressure, kPA','interpreter','latex'),zlabel('Force, N','interpreter','latex')
-title('40 mm BPA Force-Pressure-Contraction relationship','interpreter','latex')
+xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, kPA','interpreter','latex'),zlabel('Force, N','interpreter','latex')
+title('40 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
 
 figure
-xlabel('$\int_1^{20} x^2 dx$','interpreter','latex'),ylabel('Force, N','interpreter','latex')
-title('40 \mm BPA Force-Pressure-Contraction relationship','interpreter','latex')
+xlabel('\bf Contraction','interpreter','latex'),ylabel('Force, N','interpreter','latex')
+title('40 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
 hold on
 
 plot(Y1,FestoLookup40(7,:),'DisplayName','600 kPa')
@@ -78,5 +78,5 @@ hold off
 
 figure
 surf(Y2,X,FestoLookup20)
-xlabel('Contraction','interpreter','latex'),ylabel('Pressure, kPA','interpreter','latex'),zlabel('Force, N','interpreter','latex')
-title('20 mm BPA Force-Pressure-Contraction relationship','interpreter','latex')
+xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, kPA','interpreter','latex'),zlabel('\bf Force, N','interpreter','latex')
+title('\bf 20 $ mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
