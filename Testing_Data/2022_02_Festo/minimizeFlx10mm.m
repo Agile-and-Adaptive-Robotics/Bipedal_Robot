@@ -53,7 +53,9 @@ x0 = [rest, tendon, kmax];
 
 %         f = c(1)*f1+c(2)*f2;     %Combine the error from the data and the error of the slopes
         f = [c(1)*f1; c(2)*f2];  %For pareto search. f1 is data match, f2 is slope match
-
+        
+        % Add term Cost = (1/(max_length-length)^2 + 1/(length)   
+        
             function [val, der] = nestedfun1(x,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD)
             % Find the difference between experimental and calculated results
             % Inputs:
@@ -72,6 +74,7 @@ x0 = [rest, tendon, kmax];
             mdl_Pam = fit(phiD',T2,mod_Pam,Options);
             val = feval(mdl_Pam,X1);
             der = diff(val);
+                       
             end
 
     end
