@@ -18,13 +18,18 @@ x40_6 = [-.02 -.01 .008 0.04 0.09 0.15 0.23 .25]';
 y40_6 = [6000 5750 5000 4000 3000 2000 1000 800]'; %500 kPa force, N
 x40_7 = [.008 0.02 0.04 .075 0.12 .175 0.25]';
 y40_7 = [6000 5500 5000 4000 3000 2000  990]';     %620 kPa force, N
-FestoLookup40(1,:) = interp1(x40_1,y40_1,Y1,'spline');
-FestoLookup40(2,:) = interp1(x40_2,y40_2,Y1,'spline');
-FestoLookup40(3,:) = interp1(x40_3,y40_3,Y1,'spline');
-FestoLookup40(4,:) = interp1(x40_4,y40_4,Y1,'spline');
-FestoLookup40(5,:) = interp1(x40_5,y40_5,Y1,'spline');
-FestoLookup40(6,:) = interp1(x40_6,y40_6,Y1,'spline');
-FestoLookup40(7,:) = interp1(x40_7,y40_7,Y1,'spline');
+FestoLookup40(1,:) = interp1(x40_1,y40_1,Y1,'pchip');
+FestoLookup40(2,:) = interp1(x40_2,y40_2,Y1,'pchip');
+FestoLookup40(3,:) = interp1(x40_3,y40_3,Y1,'pchip');
+FestoLookup40(4,:) = interp1(x40_4,y40_4,Y1,'pchip');
+FestoLookup40(5,:) = interp1(x40_5,y40_5,Y1,'pchip');
+FestoLookup40(6,:) = interp1(x40_6,y40_6,Y1,'pchip');
+FestoLookup40(7,:) = interp1(x40_7,y40_7,Y1,'pchip');
+
+
+f = fit([X, Y1],FestoLookup40,'linearinterp');
+figure
+plot( f, [X, Y1],FestoLookup40)
 
 %% 20 mm BPA
 Y2 = linspace(-0.04,0.25,30);   %Relative strain range for interpolation
@@ -43,13 +48,13 @@ x20_6 = [-.04 -.01 0.01 .04 .08 .13 .195 .245 .25]';
 y20_6 = [1500 1500 1250 990 750 500  250    0   0]';    %500 kPa force, N
 x20_7 = [-.04 0.01 .035 .065 .11 .25]';
 y20_7 = [1500 1500 1250 1000 750 125]';                 %620 kPa force, N
-FestoLookup20(1,:) = interp1(x20_1,y20_1,Y2,'spline');
-FestoLookup20(2,:) = interp1(x20_2,y20_2,Y2,'spline');
-FestoLookup20(3,:) = interp1(x20_3,y20_3,Y2,'spline');
-FestoLookup20(4,:) = interp1(x20_4,y20_4,Y2,'spline');
-FestoLookup20(5,:) = interp1(x20_5,y20_5,Y2,'spline');
-FestoLookup20(6,:) = interp1(x20_6,y20_6,Y2,'spline');
-FestoLookup20(7,:) = interp1(x20_7,y20_7,Y2,'spline');
+FestoLookup20(1,:) = interp1(x20_1,y20_1,Y2,'pchip');
+FestoLookup20(2,:) = interp1(x20_2,y20_2,Y2,'pchip');
+FestoLookup20(3,:) = interp1(x20_3,y20_3,Y2,'pchip');
+FestoLookup20(4,:) = interp1(x20_4,y20_4,Y2,'pchip');
+FestoLookup20(5,:) = interp1(x20_5,y20_5,Y2,'pchip');
+FestoLookup20(6,:) = interp1(x20_6,y20_6,Y2,'pchip');
+FestoLookup20(7,:) = interp1(x20_7,y20_7,Y2,'pchip');
 
 %% Save it
 save FestoLookup.mat FestoLookup40 FestoLookup20
