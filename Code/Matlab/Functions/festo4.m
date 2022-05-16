@@ -8,7 +8,7 @@ function F = festo4(dia, pres, contract)
 %Outputs:
 %F == Force, N
 
-load FestoLookup.mat FestoLookup40 FestoLookup20
+load FestoLookup.mat f40 f20
 clear X Y
 
 X = linspace(0,600,7); %Pressure for interpolation
@@ -16,12 +16,12 @@ Y1 = linspace(-0.05,0.25,31);   %Relative strain range for interpolation
 Y2 = linspace(-0.04,0.25,30);
 
   if dia == 20
-            F = interp2(Y2, X, FestoLookup20, contract, pres, 'linear');
+            F = f20(contract, pres);
             if F > 1500
                 F = 1500;
             end
   elseif dia == 40
-            F = interp2(Y1, X, FestoLookup40, contract, pres, 'linear');
+            F = f40(contract, pres);
             if F > 6000
                 F = 6000;
             end

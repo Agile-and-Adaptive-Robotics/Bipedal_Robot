@@ -40,7 +40,7 @@ F = zeros(size(Lmt,1),1);
                 if rel(i,1) >= 0 && rel(i,1) <=1
                     F(i,1) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear');
                 elseif k(i,1) < 0 && k(i,1) >= -0.03
-                    F(i,1) = interp1([-0.03 -0.015 0], [630 630 510], contract,'linear');
+                    F(i,1) = interp2([-0.03 -0.015 0], [630 630 510], contract,'linear');
                 elseif rel(i,1) > 1
                     F(i,1) = 0;
                 else
