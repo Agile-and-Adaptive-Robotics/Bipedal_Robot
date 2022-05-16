@@ -17,12 +17,18 @@ Y2 = linspace(-0.04,0.25,30);
 
   if dia == 20
             F = interp2(Y2, X, FestoLookup20, contract, pres, 'linear');
+            if F > 1500
+                F = 1500;
+            end
   elseif dia == 40
             F = interp2(Y1, X, FestoLookup40, contract, pres, 'linear');
+            if F > 6000
+                F = 6000;
+            end
   else
-            x = [0, 0.1, 0.17, 0.25]';
-            y = [630, 300, 150, 0]';
-            BPAFit = fit(x, y, 'linearinterp');
+            x = [0,   0.1, 0.17, 0.224]';
+            z = [630, 300, 150,  0]';
+            BPAFit = fit(x, z, 'linearinterp');
             F = BPAFit(contract);
   end
 
