@@ -28,7 +28,7 @@ load ForceStrainTable.mat ForceStrain
             
 kmax = (rest-kmax)/rest; %Convert maximum contraction from length into percent
 
-X = linspace(0,620,20); %Pressure for interpolation
+X = linspace(0,620,19); %Pressure for interpolation
 Y = linspace(0,1,30);   %Relative strain range for interpolation
 
 k = zeros(size(Lmt,1),1);
@@ -38,7 +38,7 @@ F = zeros(size(Lmt,1),1);
                 k(i,1) = (rest-(Lmt(i,1)-tendon-2*fitting))/rest; %current strain
                 rel(i,1) = k(i,1)/kmax; %relative strain               
                 if rel(i,1) >= 0 && rel(i,1) <=1
-                    F(i,1) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear');
+                    F(i,1) = interp2(X, Y, ForceStrain(:,2:20), pres, rel(i), 'linear');
                 elseif k(i,1) < 0 && k(i,1) >= -0.03
                     F(i,1) = interp2([-0.03 -0.015 0], [630 630 510], contract,'linear');
                 elseif rel(i,1) > 1

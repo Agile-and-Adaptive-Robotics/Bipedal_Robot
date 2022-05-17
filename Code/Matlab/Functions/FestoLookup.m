@@ -76,7 +76,7 @@ y20 = [0*ones(length(x20_1),1);
        500*ones(length(x20_6),1);
        600*ones(length(x20_7),1)];
 z20 = [z20_1; z20_2; z20_3; z20_4; z20_5; z20_6; z20_7];
-[f20, gof20] = fit([x20, y20],z20,'poly51','Normalize','on')
+[f20, gof20] = fit([x20, y20],z20,'poly53','Normalize','on')
 
 figure
 plot(f20, [x20, y20],z20)
