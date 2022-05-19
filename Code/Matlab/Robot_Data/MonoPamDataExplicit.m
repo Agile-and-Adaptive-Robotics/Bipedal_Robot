@@ -265,7 +265,7 @@ classdef MonoPamDataExplicit < handle
            load ForceStrainTable.mat ForceStrain
            tendon =  obj.TendonL;   %Length of artificial tendon and air fittings
 
-           X = linspace(0,620,20); %Pressure for interpolation
+           X = linspace(0,620,19); %Pressure for interpolation
            Y = linspace(0,1,30);   %Relative strain range for interpolation
            
            k = zeros(size(unitD,1),1);
@@ -277,8 +277,11 @@ classdef MonoPamDataExplicit < handle
                 rel(i) = k(i)/kmax; %relative strain
                 if k(i) < 0 && k(i) >= -0.03
                     scalarForce(i) = griddedInterpolant([-0.03 -0.02 -0.01 0], [630 630 539 474], contract(i),'linear');
+                        if scalarForce(i) >= 630
+                            scalarForce(i) = 630
+                        end
                 elseif rel(i) >= 0 && rel(i) <= 1
-                    scalarForce(i) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear');
+                    scalarForce(i) = interp2(X, Y, ForceStrain(:,2:20), pres, rel(i), 'linear');
                 elseif rel(i) > 1
                     scalarForce(i) = 0;
                 else

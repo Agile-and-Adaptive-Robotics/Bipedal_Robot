@@ -32,7 +32,13 @@ y40 = [0*ones(length(x40_1),1);
        400*ones(length(x40_5),1);
        500*ones(length(x40_6),1);
        600*ones(length(x40_7),1)];
-z40 = [z40_1; z40_2; z40_3; z40_4; z40_5; z40_6; z40_7];
+z40 = [z40_1;
+       z40_2;
+       z40_3;
+       z40_4;
+       z40_5;
+       z40_6;
+       z40_7];
 [f40, gof40] = fit([x40, y40],z40,'poly51','Normalize','on')
 
 figure
