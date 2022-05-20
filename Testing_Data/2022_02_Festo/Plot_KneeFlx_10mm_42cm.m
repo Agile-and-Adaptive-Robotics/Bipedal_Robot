@@ -14,10 +14,10 @@ Theoretical = TorqueR(:,3)';
 %rest = 0.415, tendon = 0.012
 
 %% Adjustment to Theoretical Calculation
-rest = 0.430;
-tendon = 0.03;
-kmax = 0.35;
-Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, dia, T_Pam, rest, kmax, tendon, fitting, pres);
+rest_adj = 0.5;
+tendon_adj = 0.0497;
+kmax_adj = 0.30;
+Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, dia, T_Pam, rest_adj, kmax_adj, tendon_adj, fitting, pres);
 Theo_adj = Bifemsh_Pam_adj.Torque(:,3)';
 
 rest = 0.415; %set resting length back to measured value

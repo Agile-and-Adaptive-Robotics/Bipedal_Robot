@@ -27,11 +27,11 @@ x0 = [rest, tendon, kmax];
 %     options = optimset('Display','iter','PlotFcns',@optimplotfval);     %fminsearch options
 %     [X, FVAL] = fminsearch(fun,x0,options);
 
-%     options = optimoptions('patternsearch','Display','iter','PlotFcn',@psplotbestf);        %pattern search options
-%     [X, FVAL] = patternsearch(fun,x0,[],[],[],[],[0.370 0 0.3],[.5 .1 .4],[],options);
+    options = optimoptions('patternsearch','Display','iter','PlotFcn',@psplotbestf);        %pattern search options
+    [X, FVAL] = patternsearch(fun,x0,[],[],[],[],[0.370 0 0.3],[.46 .1 .4],[],options);
     
-    options = optimoptions('paretosearch','PlotFcn','psplotparetof','InitialPoints',x0);
-    [X, FVAL] = paretosearch(fun,3,[1 1 0],0.6,[],[],[0.4 0.001 0.3],[0.55 0.1 0.4],[],options);
+%     options = optimoptions('paretosearch','PlotFcn','psplotparetof','InitialPoints',x0);
+%     [X, FVAL] = paretosearch(fun,3,[1 1 0],0.6,[],[],[0.4 0.001 0.3],[0.55 0.1 0.4],[],options);
     
     disp(X)
     disp(FVAL)
@@ -42,17 +42,16 @@ x0 = [rest, tendon, kmax];
         [y2, y4] = nestedfun1(x,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD);
         yresid1 = y1-y2;                     %residual error
         SSresid1 = sum(yresid1.^2);          %Sum of squares of the residual
-        SStotal1 = sum(y1.^2);
-%         SStotal1 = (length(y1)-1)*var(y1);   %total sum of squares
+        SStotal1 = sum((y1-mean(y1)).^2);    %total sum of squares
         f1 = SSresid1/SStotal1;              %SSE/SST
 
         yresid2 = y3-y4;                     %residual error from derivatives
         SSresid2 = sum(yresid2.^2);          %Sum of squares of the residual from the derivatives
-        SStotal2 = sum(y3.^2);   %total sum of squares
+        SStotal2 = sum((y3-mean(y3)).^2);    %total sum of squares
         f2 = SSresid2/SStotal2;              %SSE/SST
 
-%         f = c(1)*f1+c(2)*f2;     %Combine the error from the data and the error of the slopes
-        f = [c(1)*f1; c(2)*f2];  %For pareto search. f1 is data match, f2 is slope match
+        f = c(1)*f1+c(2)*f2;     %Combine the error from the data and the error of the slopes
+%         f = [c(1)*f1; c(2)*f2];  %For pareto search. f1 is data match, f2 is slope match
         
         % Add term Cost = (1/(max_length-length)^2 + 1/(length)   
         

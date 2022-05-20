@@ -9,12 +9,12 @@
         [y2, y4] = nestedfun1(x);
         yresid1 = y1-y2;                     %residual error
         SSresid1 = sum(yresid1.^2);          %Sum of squares of the residual
-        SStotal1 = (length(y1)-1)*var(y1);   %total sum of squares
+        SStotal1 = sum((y1-mean(y1)).^2);   %total sum of squares
         f1 = SSresid1/SStotal1;              %SSE/SST
 
         yresid2 = y3-y4;                     %residual error from derivatives
         SSresid2 = sum(yresid2.^2);          %Sum of squares of the residual from the derivatives
-        SStotal2 = (length(y3)-1)*var(y3);   %total sum of squares
+        SStotal2 = sum((y3-mean(y3)).^2);   %total sum of squares
         f2 = SSresid2/SStotal2;              %SSE/SST
 
 
