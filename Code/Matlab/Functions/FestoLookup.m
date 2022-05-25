@@ -44,7 +44,7 @@ z40 = [z40_1;
 figure
 plot(f40, [x40, y40],z40)
 xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, $kPA$','interpreter','latex'),zlabel('\bf Force, $N$','interpreter','latex')
-title('40 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
+title('\bf 40 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
 
 FestoLookup40(1,:) = f40(X1,0);
 FestoLookup40(2,:) = f40(X1,100);
@@ -87,7 +87,7 @@ z20 = [z20_1; z20_2; z20_3; z20_4; z20_5; z20_6; z20_7];
 figure
 plot(f20, [x20, y20],z20)
 xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, $kPA$','interpreter','latex'),zlabel('\bf Force, $N$','interpreter','latex')
-title('20 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
+title('\bf 20 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
 
 FestoLookup20(1,:) = f20(X2,0);
 FestoLookup20(2,:) = f20(X2,100);

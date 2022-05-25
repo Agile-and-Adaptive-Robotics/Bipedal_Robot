@@ -148,15 +148,15 @@ TorqueMean3H = feval(mdl3H,X)';
 %% Plotting polynomial solver
 figure
 hold on
-title('Isometric Torque vs Knee Angle, 40mm Extensor, 55.7cm long')
-xlabel('degrees Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
+title('Isometric Torque vs Knee Angle, 40mm Extensor, 55.7cm long''interpreter','latex')
+xlabel('degrees Flexion(-),Extension(+)''interpreter','latex')
+ylabel('Torque, N*m''interpreter','latex')
 gca1 = gca;
 gcf1 = gcf;
 set(gcf,'Position',[4 86 900 900]);
-set(gca,'FontWeight', 'bold','XLim',[-120 20],'XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on','YLim',[-10 500]);
+set(gca,'FontWeight', 'bold','XLim',[-120 20],'XMinorGrid','off','XMinorTick','off','YMinorGrid','off','YMinorTick','off','YLim',[-10 500]);
 plot(knee_angle_r, vas_r,'LineStyle','-','Color',[0 0 1],'Linewidth',3,'DisplayName','Direct values from OpenSim')
-plot(phiD, TheoreticalR1,'LineStyle','-.','Color',[0 0.2 0.2],'Linewidth',2,'DisplayName','Robot, distal ring')
+plot(phiD, TheoreticalR1,'LineStyle','-.','Color',[0 0.2 0.2],'Linewidth',2,'DisplayName','Robot, distal ring',)
 plot(phiD, TheoreticalR2,'LineStyle',':','Color',[1 0.4470 0.7410],'Linewidth',2,'DisplayName','Robot, proximal ring')
 plot(theta_K, vas_tqZ,'LineStyle','--','Color',[0.6 0 0.8],'Linewidth',2,'DisplayName','Human values (Bolen)')
 plot(phiD, TorqueHnew,'LineStyle','-.','Color',[0.4 1 0.8],'Linewidth',2,'DisplayName','Human values (Morrow)')
@@ -189,16 +189,16 @@ legend
 
 sz = 50;
 c = [0.8 0.2 0.2]; % color
-scatter(Angle1,Torque1,sz,'+','MarkerFaceColor','g','LineWidth',3,'DisplayName','100 kPa, load cell');
-scatter(Angle2,Torque2,sz,'+','MarkerFaceColor','r','LineWidth',3,'DisplayName','230 kPa, load cell');
-scatter(Angle3,Torque3,sz,'+','MarkerFaceColor','b','LineWidth',3,'DisplayName','380 kPa, load cell');
-scatter(Angle4,Torque4,sz,'+','CData',c,'LineWidth',3,'DisplayName','604 kPa');
-scatter(Angle1,TorqueHand1,sz,'g','filled','DisplayName','100 kPa, hand');
-scatter(Angle2,TorqueHand2,sz,'r','filled','DisplayName','230 kPa, hand');
-scatter(Angle3,TorqueHand3,sz,'b','filled','DisplayName','380 kPa, hand');
-scatter(Angle4,TorqueHand4,sz,'filled','CData',c,'DisplayName','604 kPA, hand');
+scatter(Angle1,Torque1,sz,'+','MarkerFaceColor','g','LineWidth',3,'DisplayName','100 kPa, experiment','interpreter','latex');
+scatter(Angle2,Torque2,sz,'+','MarkerFaceColor','r','LineWidth',3,'DisplayName','230 kPa, experiment','interpreter','latex');
+scatter(Angle3,Torque3,sz,'+','MarkerFaceColor','b','LineWidth',3,'DisplayName','380 kPa, experiment','interpreter','latex');
+scatter(Angle4,Torque4,sz,'+','CData',c,'LineWidth',3,'DisplayName','604 kPa','interpreter','latex');
+scatter(Angle1,TorqueHand1,sz,'g','filled','DisplayName','100 kPa, hand','interpreter','latex');
+scatter(Angle2,TorqueHand2,sz,'r','filled','DisplayName','230 kPa, hand','interpreter','latex');
+scatter(Angle3,TorqueHand3,sz,'b','filled','DisplayName','380 kPa, hand','interpreter','latex');
+scatter(Angle4,TorqueHand4,sz,'filled','CData',c,'DisplayName','604 kPA, hand','interpreter','latex');
 
-scatter(Angle(1:15),Hand_alt,sz,'Marker','v','CData',[0.6350 0.0780 0.1840],'DisplayName','projected 600 kPa Torque for data');
+scatter(Angle(1:15),Hand_alt,sz,'Marker','v','CData',[0.6350 0.0780 0.1840],'DisplayName','projected 600 kPa Torque for data','interpreter','latex');
 
 legend
 hold off

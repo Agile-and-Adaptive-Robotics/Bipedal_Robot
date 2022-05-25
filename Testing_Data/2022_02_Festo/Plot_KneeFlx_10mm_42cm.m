@@ -62,14 +62,14 @@ end
 %% Mean and RMSE
 X1 = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
 mod = 'poly4';
-fitOptions = fitoptions(mod, 'Normalize', 'on','Robust','on');
+fitOptions = fitoptions(mod, 'Normalize', 'on','Robust','off');
 [mdl1u, gof1] = fit(Angle',Torque',mod,fitOptions);
 TorqueStdu = gof1.rmse;
 TorqueMeanu = feval(mdl1u,X1)';
 
 
 modp = 'poly3';
-fitOp = fitoptions(modp,'Normalize','on','Robust','on');
+fitOp = fitoptions(modp,'Normalize','on','Robust','off');
 [mdl1, gofp1] = fit(Angle',Torque',modp,fitOp)
 TorqueStd = gofp1.rmse;
 TorqueMean = feval(mdl1,X1)';
@@ -100,9 +100,9 @@ gcf1 = gcf;
 % set(gcf,'Position',[1 384 950 612]);
 % set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 set(gca,'FontSize', 12, 'FontWeight', 'bold');
-plot(phiD, Theoretical,'Color',c5,'Linewidth',2,'DisplayName','Expected')
-chr = ['|Adjustment, mm' newline '|rest-5' newline '|tendon+26' newline '|kmax-4'];
-plot(phiD, Theo_adj,'Color',c3,'Linewidth',2,'DisplayName',chr)
+plot(phiD, Theoretical,'Color',c5,'Linewidth',2,'DisplayName','Expected','interpreter','latex')
+chr = 'Adjusted';
+plot(phiD, Theo_adj,'Color',c3,'Linewidth',2,'DisplayName',chr,'interpreter','latex')
 
 % Xnew=[X,fliplr(X)];
 % Y1=[TorqueMean+TorqueStd,fliplr(TorqueMean-TorqueStd)];

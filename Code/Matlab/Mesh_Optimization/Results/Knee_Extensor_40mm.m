@@ -66,9 +66,9 @@ fcn10 = fit(rect_fem_yD,rect_fem_y-(0.02346-0.0215281),'smoothingspline');
 %Robot Knee
 knee_angle = [0.17; 0.09; 0.03; 0.00; -0.09; -0.17; -0.26; -0.52; -0.79; -1.05; -1.31; -1.57; -1.83; -2.09; -2.36; -2.62];
 knee_x_Pam =     [0.0065    0.0083    0.0094    0.0101    0.0120    0.0140    0.0161    0.0220    0.0269    0.0302    0.0311    0.0295    0.0253    0.0189    0.0109    0.0021]';
-fcn3 = fit(knee_angle,knee_x_Pam,'cubicspline');
+fcn11 = fit(knee_angle,knee_x_Pam,'cubicspline');
 knee_y_Pam =     [-0.3981   -0.3968   -0.3961   -0.3957   -0.3949   -0.3943   -0.3941   -0.3950   -0.3982   -0.4034   -0.4098   -0.4165   -0.4227   -0.4273   -0.4297   -0.4289]';
-fcn4 = fit(knee_angle,knee_y_Pam,'cubicspline');
+fcn12 = fit(knee_angle,knee_y_Pam,'cubicspline');
 %Patella locations in Femur frame
 P_T_x = [0.06055	0.06	0.05956	0.06094	0.05953	0.06072	0.05927	0.05982	0.05955	0.05228	0.04206	0.03099	0.016	-0.00064	-0.01722	-0.03161]'; %Patella Top, x location
 fcn13 = fit(knee_angle,P_T_x,'cubicspline');

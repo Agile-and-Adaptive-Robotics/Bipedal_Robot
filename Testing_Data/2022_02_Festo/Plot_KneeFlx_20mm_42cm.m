@@ -6,7 +6,7 @@ f = fullfile('github/bipedal_robot/code/matlab');
 qt = addpath(genpath(f));
 
 restingLength = 0.423; %resting length, m
-kmax = 0.31725; %Length at maximum contraction, m
+kmax = 0.322; %Length at maximum contraction, m
 dia = 20;
 
 load KneeFlx_20mm_42cm.mat
@@ -62,8 +62,8 @@ pres2 = pres(11:15);
 pres3 = pres(16:17);
 
 for i = 1:size(InflatedLength, 2)
-    F(i) = festo4(InflatedLength(i), restingLength, 10, pres(i), kmax);
-    F_alt(i) = festo4(InflatedLength(i), restingLength, 10, 600, kmax);
+    F(i) = festo4(20, pres(i), kmax);
+    F_alt(i) = festo4(20, 600, kmax);
     TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Moment will be negative because it causes flexion
     TorqueHand_alt(i) = -ICRtoMuscle(i)*F_alt(i);  %Potentially acheivable force
 end
@@ -82,7 +82,7 @@ X = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
 % HandStdu = gof2.rmse;
 % HandMeanu = feval(mdl2u,X)';
 
-modp = 'poly3';
+modp = 'poly5';
 fitOp = fitoptions(modp,'Normalize','on','Robust','on');
 [mdl1, gofp1] = fit(Angle1',Torque1',modp,fitOp)
 TorqueStd = gofp1.rmse
@@ -93,24 +93,32 @@ HandStd = gofp2.rmse;
 HandMean = feval(mdl2,X)'
 
 %% Plotting with polynomial solver
+%Matlab hex color values:
+c1 = '#FFD700'; %gold
+c2 = '#FFB14E'; %orange
+c3 = '#FA8775'; %light orange
+c4 = '#EA5F94'; %pink
+c5 = '#CD34B5'; %magenta
+c6 = '#9D02D7'; %magenta 2
+c7 = '#0000FF'; %indigo
+sz = 60;        %size of data points
+
 figure
 hold on
-title('Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long')
-xlabel('degrees Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
+title('/bf Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long','interpreter','latex')
+xlabel('/bf degrees Flexion$(-)$,Extension$(+)$','interpreter','latex')
+ylabel('/bf Torque, {N*m}','interpreter','latex')
 gca1 = gca;
 gcf1 = gcf;
 set(gcf,'Position',[1 384 950 612]);
-set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
+set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','off','XMinorTick','off','YMinorGrid','off','YMinorTick','off');
+plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation''interpreter,'latex')
 
 Xnew=[X,fliplr(X)];
-Y1=[TorqueMean+TorqueStd,fliplr(TorqueMean-TorqueStd)];
-Y2=[HandMean+HandStd,fliplr(HandMean-HandStd)];
-plot(X,TorqueMean,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
-fill(Xnew,Y1,[1 0.4 0.8],'DisplayName','Scale torque SD','FaceAlpha',0.25);
-plot(X,HandMean,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
-fill(Xnew,Y2,[.6 1.0 .6],'DisplayName','Hand torque SD','FaceAlpha',0.25);
+
+plot(X,TorqueMean,'--k','Linewidth',2,'DisplayName','Torque mean, scale','interpreter','latex')
+plot(X,HandMean,'--r','Linewidth',2,'DisplayName','Torque mean, hand','interpreter','latex')
+
 
 
 sz = 60;
