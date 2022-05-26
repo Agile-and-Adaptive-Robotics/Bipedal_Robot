@@ -14,9 +14,9 @@ Theoretical = TorqueR(:,3)';
 %rest = 0.415, tendon = 0.012
 
 %% Adjustment to Theoretical Calculation
-rest_adj = 0.5;
-tendon_adj = 0.0497;
-kmax_adj = 0.30;
+rest_adj = 0.44;
+tendon_adj = 0.06;
+kmax_adj = 0.355;
 Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, dia, T_Pam, rest_adj, kmax_adj, tendon_adj, fitting, pres);
 Theo_adj = Bifemsh_Pam_adj.Torque(:,3)';
 
@@ -92,17 +92,17 @@ sz = 60;        %size of data points
 %close(get(gcf,'Number'));
 figure('units','normalized','position',[0.0892 0.1100 0.5317 0.8150])
 hold on
-title('Isometric Torque for Biomimetic Knee, 10mm Flexor, 41.5cm long')
-xlabel('Knee angle, degrees, Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
+title('Isometric Torque for Biomimetic Knee, 10mm Flexor, 41.5cm long','interpreter','latex')
+xlabel('Knee angle, degrees, Flexion(-),Extension(+)','interpreter','latex')
+ylabel('Torque, N*m','interpreter','latex')
 gca1 = gca;
 gcf1 = gcf;
 % set(gcf,'Position',[1 384 950 612]);
 % set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 set(gca,'FontSize', 12, 'FontWeight', 'bold');
-plot(phiD, Theoretical,'Color',c5,'Linewidth',2,'DisplayName','Expected','interpreter','latex')
+plot(phiD, Theoretical,'Color',c5,'Linewidth',2,'DisplayName','Expected')
 chr = 'Adjusted';
-plot(phiD, Theo_adj,'Color',c3,'Linewidth',2,'DisplayName',chr,'interpreter','latex')
+plot(phiD, Theo_adj,'Color',c3,'Linewidth',2,'DisplayName',chr)
 
 % Xnew=[X,fliplr(X)];
 % Y1=[TorqueMean+TorqueStd,fliplr(TorqueMean-TorqueStd)];
@@ -117,7 +117,7 @@ sc1 = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','T
 sc2 = scatter(Angle,TorqueHand,sz,'filled','MarkerFaceColor',c1,'DisplayName','Torque data, Hand calc');
 
 % Legend = legend('Location','eastOutside');
-legend
+legend('interpreter','latex')
 hold off
 
 %% Plot error and standard deviation as bar graphs

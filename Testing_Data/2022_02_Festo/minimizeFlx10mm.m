@@ -9,12 +9,12 @@ pres = mean(pres);                  %Make pressure a scalar value
 y1 = Torque';                        %Make it just the data
 y = feval(mdl1, X1);               %Make y1 the curve fit
 y3 = diff(y);
-weight = [10 1];               %Assign relative weight to  functions 1 and 2
+weight = [100 0];               %Assign relative weight to  functions 1 and 2
 weight_norm = norm(weight);         %Find magnitude of vector "weight"
 c = weight/weight_norm;             %Weights c1 & c2 for functions 1 & 2, respectively, in unit vector form
 
-rest = 0.415;
-tendon = 0.012;
+rest = 0.420;
+tendon = 0.0345;
 kmax = 0.350;
 x0 = [rest, tendon, kmax];
 [point,value] = minimizeFlx10mm_nest(x0,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
@@ -28,7 +28,7 @@ x0 = [rest, tendon, kmax];
 %     [X, FVAL] = fminsearch(fun,x0,options);
 
     options = optimoptions('patternsearch','Display','iter','PlotFcn',@psplotbestf);        %pattern search options
-    [X, FVAL] = patternsearch(fun,x0,[],[],[],[],[0.370 0 0.3],[.46 .1 .4],[],options);
+    [X, FVAL] = patternsearch(fun,x0,[],[],[],[],[0.4 0.01 0.345],[.44 .06 .355],[],options);
     
 %     options = optimoptions('paretosearch','PlotFcn','psplotparetof','InitialPoints',x0);
 %     [X, FVAL] = paretosearch(fun,3,[1 1 0],0.6,[],[],[0.4 0.001 0.3],[0.55 0.1 0.4],[],options);
