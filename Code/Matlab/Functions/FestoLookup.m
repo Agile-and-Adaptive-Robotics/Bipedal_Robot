@@ -39,7 +39,10 @@ z40 = [z40_1;
        z40_5;
        z40_6;
        z40_7];
-[f40, gof40] = fit([x40, y40],z40,'poly51','Normalize','on')
+
+ft=fittype(@(a0,a1,a2,a3,a4,a5,x,y) a0+exp(-a1*x+a2)+y.*exp(-(a3*x+a4).^2)+a5*y,...
+'coefficients',{'a0','a1','a2','a3','a4','a5'}, 'independent',{'x','y'},'dependent','ft');   
+[f40, gof40] = fit([x40, y40],z40,ft,'Normalize','off','StartPoint',[-422,34,6,0.8,3.7,-32.65])
 
 figure
 plot(f40, [x40, y40],z40)
@@ -82,7 +85,7 @@ y20 = [0*ones(length(x20_1),1);
        500*ones(length(x20_6),1);
        600*ones(length(x20_7),1)];
 z20 = [z20_1; z20_2; z20_3; z20_4; z20_5; z20_6; z20_7];
-[f20, gof20] = fit([x20, y20],z20,'poly51','Normalize','on')
+[f20, gof20] = fit([x20, y20],z20,ft,'Normalize','off')
 
 figure
 plot(f20, [x20, y20],z20)
