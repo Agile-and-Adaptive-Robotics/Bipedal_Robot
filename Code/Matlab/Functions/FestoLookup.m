@@ -40,26 +40,9 @@ z40 = [z40_1;
        z40_6;
        z40_7];
 
-ft=fittype(@(a0,a1,a2,a3,a4,a5,x,y) a0+exp(-a1*x+a2)+y.*exp(-(a3*x+a4).^2)+a5*y,...
-'coefficients',{'a0','a1','a2','a3','a4','a5'}, 'independent',{'x','y'},'dependent','ft');   
-[f40, gof40] = fit([x40, y40],z40,ft,'Normalize','off','StartPoint',[-422,34,6,0.8,3.7,-32.65])
-
-figure
-plot(f40, [x40, y40],z40)
-xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, $kPA$','interpreter','latex'),zlabel('\bf Force, $N$','interpreter','latex')
-title('\bf 40 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
-
-FestoLookup40(1,:) = f40(X1,0);
-FestoLookup40(2,:) = f40(X1,100);
-FestoLookup40(3,:) = f40(X1,200);
-FestoLookup40(4,:) = f40(X1,300);
-FestoLookup40(5,:) = f40(X1,400);
-FestoLookup40(6,:) = f40(X1,500);
-FestoLookup40(7,:) = f40(X1,600);
-
 
 %% 20 mm BPA
-X2 = linspace(-0.04,0.25,30);   %Relative strain range for interpolation
+X2 = linspace(-0.04,0.25,30);   %Strain range for interpolation
 FestoLookup20 = zeros(size(Y,2),size(X2,2));
 x20_1 = [-.04 -.03 -.02 -.01 0 0.03 .125 .25]';
 z20_1 = [ 684  416  229   96 0 -160 -270 -287]';                   %0 kPa force, N
@@ -85,12 +68,76 @@ y20 = [0*ones(length(x20_1),1);
        500*ones(length(x20_6),1);
        600*ones(length(x20_7),1)];
 z20 = [z20_1; z20_2; z20_3; z20_4; z20_5; z20_6; z20_7];
-[f20, gof20] = fit([x20, y20],z20,ft,'Normalize','off')
 
-figure
-plot(f20, [x20, y20],z20)
-xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, $kPA$','interpreter','latex'),zlabel('\bf Force, $N$','interpreter','latex')
-title('\bf 20 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
+%% From Curve Fit app generate code
+
+% Initialize arrays to store fits and goodness-of-fit.
+fitresult = cell( 4, 1 );
+gof = struct( 'sse', cell( 7, 1 ), ...
+    'rsquare', [], 'dfe', [], 'adjrsquare', [], 'rmse', [] );
+
+%% Fit: 'Exponential 40'.
+[xData, yData, zData] = prepareSurfaceData( x40, y40, z40 );
+
+% Set up fittype and options.
+ft = fittype( 'a0+exp(-a1.*x+a2)+y.*exp(-a3.*x+a4)+a5*y', 'independent', {'x', 'y'}, 'dependent', 'z' );
+opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
+opts.Display = 'Off';
+opts.StartPoint = [0.655740699156587 0.0357116785741896 0.849129305868777 1.2 0.6787 0.757740130578333];
+
+% Fit model to data.
+[fitresult{1}, gof(1)] = fit( [xData, yData], zData, ft, opts );
+f40 = fitresult{1}
+gof40 = gof(1)
+
+FestoLookup40(1,:) = f40(X1,0);
+FestoLookup40(2,:) = f40(X1,100);
+FestoLookup40(3,:) = f40(X1,200);
+FestoLookup40(4,:) = f40(X1,300);
+FestoLookup40(5,:) = f40(X1,400);
+FestoLookup40(6,:) = f40(X1,500);
+FestoLookup40(7,:) = f40(X1,600);
+
+% Create a figure for the plots.
+figure( 'Name', 'Exponential 40' );
+
+% Plot fit with data.
+subplot( 2, 1, 1 );
+h = plot( fitresult{1}, [xData, yData], zData );
+legend( h, 'Exponential 40', 'z40 vs. x40, y40', 'Location', 'NorthEast', 'Interpreter', 'latex' );
+% Label axes
+xlabel( 'x40', 'Interpreter', 'latex' );
+ylabel( 'y40', 'Interpreter', 'latex' );
+zlabel( 'z40', 'Interpreter', 'latex' );
+grid on
+view( -0.9, 1.7 );
+
+% Plot residuals.
+subplot( 2, 1, 2 );
+h = plot( fitresult{1}, [xData, yData], zData, 'Style', 'Residual' );
+legend( h, 'Exponential 40 - residuals', 'Location', 'NorthEast', 'Interpreter', 'latex' );
+% Label axes
+xlabel( 'x40', 'Interpreter', 'latex' );
+ylabel( 'y40', 'Interpreter', 'latex' );
+zlabel( 'z40', 'Interpreter', 'latex' );
+grid on
+view( -0.9, 1.7 );
+
+%% Fit: 'Exponential 20'.
+[xData, yData, zData] = prepareSurfaceData( x20, y20, z20 );
+
+% Set up fittype and options.
+ft = fittype( 'a0+exp(-a1*x+a2)+y.*exp(-(a3*x).^2+a4)+a5*y', 'independent', {'x', 'y'}, 'dependent', 'z' );
+opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
+opts.Display = 'Off';
+opts.MaxFunEvals = 6000;
+opts.MaxIter = 4000;
+opts.StartPoint = [0.530797553008973 0.779167230102011 0.934010684229183 0.12990620847373 0.5688 -0.4694];
+
+% Fit model to data.
+[fitresult{2}, gof(2)] = fit( [xData, yData], zData, ft, opts );
+f20 = fitresult{2}
+gof20 = gof(2)
 
 FestoLookup20(1,:) = f20(X2,0);
 FestoLookup20(2,:) = f20(X2,100);
@@ -100,10 +147,114 @@ FestoLookup20(5,:) = f20(X2,400);
 FestoLookup20(6,:) = f20(X2,500);
 FestoLookup20(7,:) = f20(X2,600);
 
+% Create a figure for the plots.
+figure( 'Name', 'Exponential 20' );
+
+% Plot fit with data.
+subplot( 2, 1, 1 );
+h = plot( fitresult{2}, [xData, yData], zData);
+legend( h, 'Exponential 20', 'z20 vs. x20, y20', 'Location', 'NorthEast', 'Interpreter', 'latex' );
+% Label axes
+xlabel( 'x20', 'Interpreter', 'latex' );
+ylabel( 'y20', 'Interpreter', 'latex' );
+zlabel( 'z20', 'Interpreter', 'latex' );
+grid off
+view( -12.3, 35.2 );
+
+% Plot residuals.
+subplot( 2, 1, 2 );
+h = plot( fitresult{2}, [xData, yData], zData, 'Style', 'Residual' );
+legend( h, 'Exponential 20 - residuals', 'Location', 'NorthEast', 'Interpreter', 'latex' );
+% Label axes
+xlabel( 'x20', 'Interpreter', 'latex' );
+ylabel( 'y20', 'Interpreter', 'latex' );
+zlabel( 'z20', 'Interpreter', 'latex' );
+grid off
+view( -12.3, 35.2 );
+
+%% Fit: 'Polynomial 20'.
+[xData, yData, zData] = prepareSurfaceData( x20, y20, z20 );
+
+% Set up fittype and options.
+ft = fittype( 'poly51' );
+
+% Fit model to data.
+[fitresult{3}, gof(3)] = fit( [xData, yData], zData, ft, 'Normalize', 'on' );
+
+% Create a figure for the plots.
+figure( 'Name', 'Polynomial 20' );
+
+% Plot fit with data.
+subplot( 2, 1, 1 );
+h = plot( fitresult{3}, [xData, yData], zData );
+legend( h, 'Polynomial 20', 'z20 vs. x20, y20', 'Location', 'NorthEast', 'Interpreter', 'latex' );
+% Label axes
+xlabel( 'x20', 'Interpreter', 'latex' );
+ylabel( 'y20', 'Interpreter', 'latex' );
+zlabel( 'z20', 'Interpreter', 'latex' );
+grid on
+view( -29.8, 0.9 );
+
+% Plot residuals.
+subplot( 2, 1, 2 );
+h = plot( fitresult{3}, [xData, yData], zData, 'Style', 'Residual' );
+legend( h, 'Polynomial 20 - residuals', 'Location', 'NorthEast', 'Interpreter', 'latex' );
+% Label axes
+xlabel( 'x20', 'Interpreter', 'latex' );
+ylabel( 'y20', 'Interpreter', 'latex' );
+zlabel( 'z20', 'Interpreter', 'latex' );
+grid on
+view( -29.8, 0.9 );
+
+%% Fit: 'Polynomial 40'.
+[xData, yData, zData] = prepareSurfaceData( x40, y40, z40 );
+
+% Set up fittype and options.
+ft = fittype( 'poly51' );
+
+% Fit model to data.
+[fitresult{4}, gof(4)] = fit( [xData, yData], zData, ft, 'Normalize', 'on' );
+
+% Create a figure for the plots.
+figure( 'Name', 'Polynomial 40' );
+
+% Plot fit with data.
+subplot( 2, 1, 1 );
+h = plot( fitresult{4}, [xData, yData], zData );
+legend( h, 'Polynomial 40', 'z40 vs. x40, y40', 'Location', 'NorthEast', 'Interpreter', 'latex' );
+% Label axes
+xlabel( 'x40', 'Interpreter', 'latex' );
+ylabel( 'y40', 'Interpreter', 'latex' );
+zlabel( 'z40', 'Interpreter', 'latex' );
+grid off
+view( 1.4, 7.2 );
+
+% Plot residuals.
+subplot( 2, 1, 2 );
+h = plot( fitresult{4}, [xData, yData], zData, 'Style', 'Residual' );
+legend( h, 'Polynomial 40 - residuals', 'Location', 'NorthEast', 'Interpreter', 'latex' );
+% Label axes
+xlabel( 'x40', 'Interpreter', 'latex' );
+ylabel( 'y40', 'Interpreter', 'latex' );
+zlabel( 'z40', 'Interpreter', 'latex' );
+grid off
+view( 1.4, 7.2 );
+
+
 %% Save it
 save FestoLookup.mat f40 f20
 
 %% Plot it
+figure
+plot(f40, [x40, y40],z40)
+xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, $kPA$','interpreter','latex'),zlabel('\bf Force, $N$','interpreter','latex')
+title('\bf 40 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
+
+figure
+plot(f20, [x20, y20],z20)
+xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, $kPA$','interpreter','latex'),zlabel('\bf Force, $N$','interpreter','latex')
+title('\bf 40 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
+
 figure
 surf(X1,Y,FestoLookup40)
 xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, $kPA$','interpreter','latex'),zlabel('\bf Force, $N$','interpreter','latex')
