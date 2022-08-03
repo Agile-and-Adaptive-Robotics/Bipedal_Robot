@@ -24,11 +24,11 @@ x0 = [rest, tendon, kmax];
 
     fun = @(x)minimize(x,X1,Name, Location, CrossPoint, Dia, T_Pam, fitting, pres, phiD, y1, y3, c);
     
-%     options = optimset('Display','iter','PlotFcns',@optimplotfval);     %fminsearch options
-%     [X, FVAL] = fminsearch(fun,x0,options);
+    options = optimset('Display','iter','PlotFcns',@optimplotfval);     %fminsearch options
+    [X, FVAL] = fminsearch(fun,x0,options);
 
-    options = optimoptions('patternsearch','Display','iter','PlotFcn',@psplotbestf);        %pattern search options
-    [X, FVAL] = patternsearch(fun,x0,[],[],[],[],[0.4 0.01 0.345],[.44 .06 .355],[],options);
+%     options = optimoptions('patternsearch','Display','iter','PlotFcn',@psplotbestf);        %pattern search options
+%     [X, FVAL] = patternsearch(fun,x0,[],[],[],[],[0.4 0.01 0.345],[.44 .06 .355],[],options);
     
 %     options = optimoptions('paretosearch','PlotFcn','psplotparetof','InitialPoints',x0);
 %     [X, FVAL] = paretosearch(fun,3,[1 1 0],0.6,[],[],[0.4 0.001 0.3],[0.55 0.1 0.4],[],options);
