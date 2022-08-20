@@ -1,6 +1,6 @@
 %% Pinned knee, Extensor
 %Run and save data from testing results
-clear; clc; %close all;
+% clear; clc; %close all;
 
 f = fullfile('github/bipedal_robot/code/matlab');
 qt = addpath(genpath(f));
@@ -92,9 +92,9 @@ sz = 60;        %size of data points
 %close(get(gcf,'Number'));
 figure('units','normalized','position',[0.0892 0.1100 0.5317 0.8150])
 hold on
-title('Isometric Torque for Biomimetic Knee, 10mm Flexor, 41.5cm long','interpreter','latex')
-xlabel('Knee angle, degrees, Flexion(-),Extension(+)','interpreter','latex')
-ylabel('Torque, N*m','interpreter','latex')
+title('Isometric Torque for Biomimetic Knee, 10mm Flexor, 41.5cm long','interpreter','tex')
+xlabel('Knee angle, degrees, Flexion (-), Extension (+)','FontWeight','bold','interpreter','tex')
+ylabel('Torque, N*m','FontWeight','bold','interpreter','tex')
 gca1 = gca;
 gcf1 = gcf;
 % set(gcf,'Position',[1 384 950 612]);

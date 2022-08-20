@@ -82,7 +82,7 @@ X = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
 % HandStdu = gof2.rmse;
 % HandMeanu = feval(mdl2u,X)';
 
-modp = 'poly5';
+modp = 'poly3';
 fitOp = fitoptions(modp,'Normalize','on','Robust','on');
 [mdl1, gofp1] = fit(Angle1',Torque1',modp,fitOp)
 TorqueStd = gofp1.rmse
@@ -105,19 +105,19 @@ sz = 60;        %size of data points
 
 figure
 hold on
-title('/bf Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long','interpreter','latex')
-xlabel('/bf degrees Flexion$(-)$,Extension$(+)$','interpreter','latex')
+title('/bf Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long','interpreter','tex')
+xlabel('/bf degrees Flexion$(-)$,Extension$(+)$','interpreter','tex')
 ylabel('/bf Torque, {N*m}','interpreter','latex')
 gca1 = gca;
 gcf1 = gcf;
 set(gcf,'Position',[1 384 950 612]);
 set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','off','XMinorTick','off','YMinorGrid','off','YMinorTick','off');
-plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation''interpreter,'latex')
+plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
 
 Xnew=[X,fliplr(X)];
 
-plot(X,TorqueMean,'--k','Linewidth',2,'DisplayName','Torque mean, scale','interpreter','latex')
-plot(X,HandMean,'--r','Linewidth',2,'DisplayName','Torque mean, hand','interpreter','latex')
+plot(X,TorqueMean,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
+plot(X,HandMean,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
 
 
 
@@ -144,13 +144,13 @@ set(gcf,'Position',[960 384 950 612]);
 set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
 
-Xnew=[X,fliplr(X)];
-Y1=[TorqueMeanu+TorqueStdu,fliplr(TorqueMeanu-TorqueStdu)];
-Y2=[HandMeanu+HandStdu,fliplr(HandMeanu-HandStdu)];
-plot(X,TorqueMeanu,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
-fill(Xnew,Y1,[1 0.4 0.8],'DisplayName','Fish scale SD','FaceAlpha',0.25);
-plot(X,HandMeanu,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
-fill(Xnew,Y2,[.6 1.0 .6],'DisplayName','Hand torque SD','FaceAlpha',0.25);
+% Xnew=[X,fliplr(X)];
+% Y1=[TorqueMeanu+TorqueStdu,fliplr(TorqueMeanu-TorqueStdu)];
+% Y2=[HandMeanu+HandStdu,fliplr(HandMeanu-HandStdu)];
+% plot(X,TorqueMeanu,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
+% fill(Xnew,Y1,[1 0.4 0.8],'DisplayName','Fish scale SD','FaceAlpha',0.25);
+% plot(X,HandMeanu,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
+% fill(Xnew,Y2,[.6 1.0 .6],'DisplayName','Hand torque SD','FaceAlpha',0.25);
 
 sc3 = scatter(Angle,Torque,sz,'d','CData',c1,'DisplayName','JM LC');
 sc4 = scatter(Angle,TorqueHand,sz,'filled','CData',c1,'DisplayName','JM hand');
