@@ -242,7 +242,7 @@ view( 1.4, 7.2 );
 
 
 %% Save it
-save FestoLookup.mat f40 f20
+% save FestoLookup.mat f40 f20
 
 %% Plot it
 figure

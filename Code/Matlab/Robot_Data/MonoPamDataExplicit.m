@@ -275,7 +275,7 @@ classdef MonoPamDataExplicit < handle
               if dia == 10
                 k(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest; %current strain 
                 rel(i) = k(i)/kmax; %relative strain
-                if k(i) < 0 && k(i) >= -0.03
+                if k(i) < 0 && k(i) >= -0.03                     %Using data from Festo Corp
                     x1 = [ -.03   -.02  -.01      0]';
                     z1 = [741.9    613   523  458.2]';
                     z2 = [759.2  629.3 539.3  473.3]';
@@ -290,7 +290,7 @@ classdef MonoPamDataExplicit < handle
                         if scalarForce(i) >= 630
                             scalarForce(i) = 630;
                         end
-                elseif rel(i) >= 0 && rel(i) <= 1
+                elseif rel(i) >= 0 && rel(i) <= 1               %Using data from Dr. Hunt
                     scalarForce(i) = interp2(X, Y, ForceStrain(:,2:20), pres, rel(i), 'linear');
                 elseif rel(i) > 1
                     scalarForce(i) = 0;
