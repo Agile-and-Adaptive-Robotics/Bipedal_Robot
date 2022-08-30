@@ -11,7 +11,7 @@
  function A = HuntEq(epsilon, epsilon_max, P, S)
  % parameters
  a6 = 15.6;
- a5 = 1.23;
+ a5 = 1.23e-3;
  a4 = -0.331e-6;
  a3 = -0.461;
  a2 = 2.0265;
