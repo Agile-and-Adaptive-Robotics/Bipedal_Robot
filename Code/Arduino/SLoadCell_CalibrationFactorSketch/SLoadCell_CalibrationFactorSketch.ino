@@ -20,7 +20,7 @@
 
 HX711 scale;
 
-float calibration_factor = -20130; // initialize variable calibration_factor to some guess value                                   
+float calibration_factor = -20330; // initialize variable calibration_factor to some guess value                                   
 
 void setup() {
 
@@ -30,7 +30,7 @@ void setup() {
   scale.set_scale(); //set the scale value; 
     //this value is used to convert the raw
     //data to "human readable" data (measure units) 
-  scale.set_offset(-25490);
+  scale.set_offset(-30975);
     //This sets the offset value to a known zero.
     //There is no need for taring the scale once the zero point is known for a scale in a
     // set configuration.
