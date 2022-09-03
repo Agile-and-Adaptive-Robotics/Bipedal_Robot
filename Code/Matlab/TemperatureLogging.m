@@ -6,6 +6,7 @@
 % Use the arduino command to connect to an Arduino device.
 
 a = arduino;
+LoadCell = addon(a, 'basicHX711/basic_HX711',{'D8','D9'});
 
 %% Take a single temperature measurement
 % The datasheet for the TMP36 temperature sensor tells us that the voltage
