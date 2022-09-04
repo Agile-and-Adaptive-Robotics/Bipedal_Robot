@@ -12,7 +12,7 @@ function [Data, Stats] = KneeTest(protocol_id,port,varargin)
     p = inputParser;
     addRequired(p,'protocol_id');
     addRequired(p,'port');
-    addOptional(p,'total',1000);
+    addOptional(p,'total',500);
     parse(p,protocol_id,port,varargin{:});
     
     %Creates variables equal to the argument values
