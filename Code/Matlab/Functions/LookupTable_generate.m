@@ -1,7 +1,7 @@
 row = 30;
 col = 19;
 
-epsilon_max = 0.18;                    %Maximum relative contraction
+epsilon_max = 0.165;                    %Maximum relative contraction
 epsilon = linspace(0,epsilon_max,row)';%Relative contraction
 P = linspace(0,620,col);             %Pressure
 
