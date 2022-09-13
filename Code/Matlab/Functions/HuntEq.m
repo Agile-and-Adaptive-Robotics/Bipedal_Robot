@@ -10,13 +10,13 @@
  
  function A = HuntEq(epsilon, epsilon_max, P, S)
  % parameters
- a6 = 15.598;
- a5 = 1.2289;
- a4 = -0.331e-3;
+ a6 = 15.6;
+ a5 = 1.229e-3;
+ a4 = -0.331e-6;
  a3 = -0.4609;
  a2 = 2.0265;
- a1 = 191.9763;
- a0 = 254.3234;
+ a1 = 192;
+ a0 = 254.3;
  %S = 0;
  %a = [a0 a1 a2 a3 a4 a5 a6];
  A = NaN(length(epsilon),length(P)+1);         %Make lookup table 
@@ -25,13 +25,14 @@
 fI = (1-epsilon-epsilon_max)*P;                          %Create a matrix of initial guesses for force
 
 
-options = optimoptions('fsolve','Display','none','FunctionTolerance',0.0001);
+%options = optimoptions('fsolve','Display','none','FunctionTolerance',0.0001);
+options = optimset(@fzero);
     for i = 1:length(epsilon)
         for j = 2:length(P)+1
             P1 = P(j-1);
             epsilon1 = epsilon(i);
             f0 = fI(i,j-1);                        %initial guess, Newtons
-            g = fsolve(@(F)createLookup(F, P1, epsilon1, epsilon_max, a0, a1, a2, a3, a4, a5, a6, S),f0,options);
+            g = fzero(@(F)createLookup(F, P1, epsilon1, epsilon_max, a0, a1, a2, a3, a4, a5, a6, S),f0,options);
             if g < 0
                 g = 0;
             end

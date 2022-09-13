@@ -30,11 +30,11 @@ void setup() {
   scale.set_scale(); //set the scale value; 
     //this value is used to convert the raw
     //data to "human readable" data (measure units) 
-  scale.set_offset(-30975);
+  scale.set_offset(-26420);
     //This sets the offset value to a known zero.
     //There is no need for taring the scale once the zero point is known for a scale in a
     // set configuration.
-    // The Zero Factor -25490 was found using a separate Arduino Sketch 
+    // The Zero Factor -26400 was found using a separate Arduino Sketch 
     //called "SLoadCell_ZeroFactorSketch"
 
 }

@@ -1,13 +1,13 @@
 row = 30;
 col = 19;
 
-epsilon_max = 0.165;                    %Maximum relative contraction
+epsilon_max = 0.168;                    %Maximum relative contraction
 epsilon = linspace(0,epsilon_max,row)';%Relative contraction
 P = linspace(0,620,col);             %Pressure
 
 %% Isometric Condition
 S0 = 0;                             %Not inflating or deflating
-B0 = HuntEq(epsilon, epsilon_max, P, S0);
+B0 = HuntEq(epsilon, epsilon_max, P, S0)/1000;
 
 %Only keep first zero value in columns. Set others to NaN. This helps with
 %curve fitting.
@@ -25,7 +25,7 @@ end
 
 %% Inflating condition 
 S1 = 1;                             %Inflating
-B1 = HuntEq(epsilon, epsilon_max, P, S1);
+B1 = HuntEq(epsilon, epsilon_max, P, S1)/1000;
 A1 = B1(:,2:col+1);
 for i = 2:row
     for j = 1:col
@@ -40,7 +40,7 @@ end
 
 %% Deflating condition
 S_1 = -1;                           %Deflating
-B_1 = HuntEq(epsilon, epsilon_max, P, S_1);
+B_1 = HuntEq(epsilon, epsilon_max, P, S_1)/1000;
 A_1 = B_1(:,2:col+1);
 for i = 2:row
     for j = 1:col
