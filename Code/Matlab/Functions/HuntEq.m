@@ -31,7 +31,7 @@ options = optimset(@fzero);
         for j = 2:length(P)+1
             P1 = P(j-1);
             epsilon1 = epsilon(i);
-            f0 = fI(i,j-1);                        %initial guess, Newtons
+            f0 = fI(i,j-1)-0.1*P1;                        %initial guess, Newtons
             g = fzero(@(F)createLookup(F, P1, epsilon1, epsilon_max, a0, a1, a2, a3, a4, a5, a6, S),f0,options);
             if g < 0
                 g = 0;
@@ -40,7 +40,7 @@ options = optimset(@fzero);
         end
     end
 
-disp(A)
+disp(A/1000)
 
         function Balance = createLookup(F, P1, epsilon1, epsilon_max, a0, a1, a2, a3, a4, a5, a6, S)
         

@@ -53,6 +53,21 @@ for i = 2:row
     end
 end
 
+%% Normalize all the pressure, strain, and force
+%    - scaling everything helps with curve fitting
+%    - Fmax seems to be a function of resting length
+
+rel = epsilon./epsilon_max;   %relative strain
+Prel = P./max(P);             %relative pressure
+Fmax = max(A_1(1,:));         %maximum force
+
+%create force-strain-pressure tables scaled to maximum force
+z0 = A0./Fmax;
+z1 = A1./Fmax;
+z_1 = A_1./Fmax;
+
+
+
 %% This is now in a separate m-file called HuntEq
 %  function A = genlookup(epsilon, epsilon_max, P)
 %  % parameters

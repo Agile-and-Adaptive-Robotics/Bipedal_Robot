@@ -20,7 +20,7 @@
 
 HX711 scale;
 
-float calibration_factor = -20330; // initialize variable calibration_factor to some guess value                                   
+float calibration_factor = -20360; // initialize variable calibration_factor to some guess value                                   
 
 void setup() {
 
