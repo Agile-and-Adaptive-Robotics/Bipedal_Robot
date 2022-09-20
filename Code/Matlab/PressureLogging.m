@@ -27,6 +27,7 @@ fprintf('Pressure Reading:\n  %.1f kPA\n  %.1f psi\n',kPa,psi)
 %% Record and plot 10 seconds of temperature data
 
 ii = 0;
+v = zeros(1e4,1);
 kPa = zeros(1e4,1);
 psi = zeros(1e4,1);
 t = zeros(1e4,1);
@@ -35,9 +36,9 @@ tic
 while toc < 10
     ii = ii + 1;
     % Read current voltage value
-    v = readVoltage(a,'A0');
+    v(ii) = readVoltage(a,'A0');
     % Calculate pressure from voltage (based on data sheet)
-    kPa(ii) = v*155.61-126.99;
+    kPa(ii) = v(ii)*155.61-126.99;
     psi(ii) = kPa(ii)*0.1450377377;
     % Get time since starting
     t(ii) = toc;
