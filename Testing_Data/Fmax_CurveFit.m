@@ -15,9 +15,10 @@ kmax = A(2,:);
 Fmax = A(3,:);
 Fmax_norm = Fmax/max(Fmax);
 %% Nonlinear fit for Fmax
-modelfun = @(b,x)b(1)*atan(b(2)*(x-0.0075)); %based on the shape, it looks like resting length reaches a limit
-%modelfun = @(b,x)b(1)*(x).^(-0.25)+b(2);
-beta0 = [300 19.7];
+modelfun = @(b,xm)b(1)*atan(b(2)*(xm-0.0075)); %based on the shape, it looks like resting length reaches a limit
+%modelfun = @(b,xm)-exp(-b(1)*(xm-b(2))+b(3))+b(4);
+beta0 = [301.76 19.714];
+%beta0 = [11 0.41 1.2 478];
 opts = statset('fitnlm');
 opts.MaxIter = 1000;
 mdl = fitnlm(restingL,Fmax,modelfun,beta0,'Exclude',[1,3,5,7],'Options',opts)
@@ -30,7 +31,56 @@ xlabel('Resting Length, mm')
 ylabel('Maximum Force, N')
 legend('Data','Model Fit')
 
+%% Fit maximum force (i.e. zero contraction BPA) for different resting lengths and pressures
+%Load data from StraightForceTest Fmax(L) tab. It uses data from some of
+%Lawrence's tests.
+
+% Force (z-axis) unsorted
+Zun = [840	0	NaN	114.32	191.8	275.2	355.4	447.1
+780	0	NaN	139.2	216	299.7	378.1	472
+709	0	NaN	124.21	201.4	276.02	355.9	452.32
+571	0	NaN	136.1	212.39	288.2	366.94	461.6
+112	0	NaN	NaN	NaN	NaN	NaN	334
+415	0	NaN	NaN	NaN	NaN	NaN	444.8
+455	0	NaN	NaN	NaN	NaN	NaN	460
+490	0	NaN	NaN	NaN	NaN	NaN	451.38
+518	0	NaN	NaN	NaN	NaN	NaN	455.83
+551	0	NaN	129.26	201.3	282.34	360.24	453.14
+361	0	NaN	121.5	192.91	269	344.5	436.4
+54	0	NaN	56.1	103.37	155.45	207	266.5
+27	0	NaN	NaN	NaN	NaN	NaN	135.32
+69	0	NaN	NaN	NaN	NaN	NaN	271.48
+275	0	NaN	NaN	NaN	NaN	NaN	412.3
+151	0	NaN	NaN	NaN	NaN	NaN	347.11
+193	0	NaN	NaN	NaN	NaN	NaN	396.17
+10	0	NaN	NaN	NaN	NaN	NaN	8.3
+120	0	19.7	66	124.82	195.1	258.3	341.5
+220	0	23	80.8	146.2	215.6	289.8	377.23
+260	0	31.9	89.7	154.6	225.3	294.8	385.4
+281	0	54.65	117.8	185	257.2	329.9	415.8
+281	0	37.1	101.1	170.4	242.3	314.2	406
+];
+
+Zsrt = sortrows(Zun);           %first column is resting lengths
+bpaRestL = Zsrt(:,1);
+bpaNorm = bpaRestL/1000;        %Convert mm to meters also normalizes these lengths
+
+pointz = [0,100,200,300,400,500,620];  %Pressure value for columns
+Zfin = Zsrt(:,2:8);                    %Z values (i.e. force) are these columns
+
+Znorm = Zfin/(max(max(Zfin)));      %Scale force   
+P_norm = pointz/max(pointz);        %Scale pressure
+
+%Now use curve fitting tool Fmax_fitTool.sfit
+ 
+
 %% Fit for maximum strain
+%Hint: no relationship found for max strain either as a linear or 2nd
+%degree polynomial function of resting length. Hypothesis of linear
+%relationship is not shown. Maximum strain may instead be dependent on
+%Festo BPA batch number, age of BPA, number of full spirals in BPA length,
+%being stored in kinked position, or other factors. Using a tape measure
+%has +/- 1 mm accuracy which can affect the maximum strain listed.
 
 %ft = fittype('a+b*x');
 max_k = fit(restingL',kmax','poly2','Normalize','on')
