@@ -1,4 +1,5 @@
 %% After running PlotAll10mmData
+clear data13cm data23cm data27cm data 29cm data30cm
 
 %% Plot tests 9 and 10, only Pressurizing
  testnumber = 9; %choosing test numner 9 as the standard
