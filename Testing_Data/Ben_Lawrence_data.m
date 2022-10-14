@@ -1,4 +1,4 @@
-%% After running PlotAll10mmData
+%% After running LoadAll10mmData from Lawrence's muscle sensory branch
 clear data13cm data23cm data27cm data 29cm data30cm
 
 %% Plot tests 9 and 10, only Pressurizing
@@ -14,15 +14,11 @@ Fmax30 = 406;
 figure %11
 subplot 321
 hold on
-data13cm = [1 620 0];
 for a = 1:length(vals_13cmkinks)
     b=vals_13cmkinks(a);
     data13cm_test9 = AllBPA10mm13cm(AllBPA10mm13cm(:,5)==13& AllBPA10mm13cm(:,6)==b&AllBPA10mm13cm(:,7)==testnumber&AllBPA10mm13cm(:,8)==1,:);
     data13cm_test10 = AllBPA10mm13cm(AllBPA10mm13cm(:,5)==13& AllBPA10mm13cm(:,6)==b&AllBPA10mm13cm(:,7)==testnum&AllBPA10mm13cm(:,8)==1,:);
     txt = sprintf('%dmm',vals_13cmkinks(a));
-    data13cm = [data13cm;
-                data13cm_test9(:,13) data13cm_test9(:,2) smooth(data13cm_test9(:,1))/Fmax13; 
-                data13cm_test10(:,13) data13cm_test10(:,2) smooth(data13cm_test10(:,1))/Fmax13];
     plot(data13cm_test9(:,2),data13cm_test9(:,3),'DisplayName',txt)
     plot(data13cm_test10(:,2),data13cm_test10(:,3),'DisplayName',txt)
 end
@@ -31,19 +27,21 @@ legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 13cm all Kinks(Test 9&10)')
+data13cm_test9 = AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==9,:);
+data13cm_test10 = AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==10,:);
+data13cm = [data13cm_test9(:,13) data13cm_test9(:,2) smooth(data13cm_test9(:,1))/Fmax13;
+            1 620 0;
+            data13cm_test10(:,13) data13cm_test10(:,2) smooth(data13cm_test10(:,1))/Fmax13;
+            1 620 0];
 
 %23cm
 subplot 322
 hold on
-data23cm = [1 620 0];
 for a = 1:length(vals_23cmkinks)
     b=vals_23cmkinks(a);
     data23cm_test9 = AllBPA10mm23cm(AllBPA10mm23cm(:,5)==23& AllBPA10mm23cm(:,6)==b&AllBPA10mm23cm(:,7)==testnumber&AllBPA10mm23cm(:,8)==1,:);
     data23cm_test10 = AllBPA10mm23cm(AllBPA10mm23cm(:,5)==23& AllBPA10mm23cm(:,6)==b&AllBPA10mm23cm(:,7)==testnum&AllBPA10mm23cm(:,8)==1,:);
     txt = sprintf('%dmm',vals_23cmkinks(a));
-    data23cm = [data23cm;
-                data23cm_test9(:,13) data23cm_test9(:,2) smooth(data23cm_test9(:,1))/Fmax23; 
-                data23cm_test10(:,13) data23cm_test10(:,2) smooth(data23cm_test10(:,1))/Fmax23];
     plot(data23cm_test9(:,2),data23cm_test9(:,3),'DisplayName',txt)
     plot(data23cm_test10(:,2),data23cm_test10(:,3),'DisplayName',txt)
 end
@@ -52,19 +50,21 @@ legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 23cm all Kinks(Test 9&10)')
+data23cm_test9 = AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==9,:);
+data23cm_test10 = AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==9,:);
+data23cm = [1 620 0;
+                1 620 0;
+                data23cm_test9(:,13), data23cm_test9(:,2), smooth(data23cm_test9(:,1))/Fmax23; 
+                data23cm_test10(:,13), data23cm_test10(:,2), smooth(data23cm_test10(:,1))/Fmax23];
 
 %27cm
 subplot 323
 hold on
-data27cm = [1 620 0];
 for a = 1:length(vals_27cmkinks)
     b = vals_27cmkinks(a);
     data27cm_test9 = AllBPA10mm27cm(AllBPA10mm27cm(:,5)==27& AllBPA10mm27cm(:,6)==b&AllBPA10mm27cm(:,7)==testnumber&AllBPA10mm27cm(:,8)==1,:);
     data27cm_test10 = AllBPA10mm27cm(AllBPA10mm27cm(:,5)==27& AllBPA10mm27cm(:,6)==b&AllBPA10mm27cm(:,7)==testnum&AllBPA10mm27cm(:,8)==1,:);
     txt = sprintf('%dmm',vals_27cmkinks(a));
-    data27cm = [data27cm;
-                data27cm_test9(:,13) data27cm_test9(:,2) smooth(data27cm_test9(:,1))/Fmax27; 
-                data27cm_test10(:,13) data27cm_test10(:,2) smooth(data27cm_test10(:,1))/Fmax27];
     plot(data27cm_test9(:,2),data27cm_test9(:,3),'DisplayName',txt)
     plot(data27cm_test10(:,2),data27cm_test10(:,3),'DisplayName',txt)
 end
@@ -73,6 +73,12 @@ legend
 xlabel('Pressure (kPa)')
 ylabel('Force(N)')
 title('10mm 27cm all Kinks(Test 9&10)')
+data27cm_test9 = AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==9,:);
+data27cm_test10 = AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==10,:);
+data27cm = [    data27cm_test9(:,13) data27cm_test9(:,2) smooth(data27cm_test9(:,1))/Fmax27; 
+                data27cm_test10(:,13) data27cm_test10(:,2) smooth(data27cm_test10(:,1))/Fmax27;
+                1 620 0;
+                1 620 0];
 
 %29cm
 subplot 324
@@ -83,9 +89,6 @@ for a = 1:length(vals_29cmkinks)
     data29cm_test9 = AllBPA10mm29cm(AllBPA10mm29cm(:,5)==29& AllBPA10mm29cm(:,6)==b&AllBPA10mm29cm(:,7)==testnumber&AllBPA10mm29cm(:,8)==1,:);
     data29cm_test10 = AllBPA10mm29cm(AllBPA10mm29cm(:,5)==29& AllBPA10mm29cm(:,6)==b&AllBPA10mm29cm(:,7)==testnum&AllBPA10mm29cm(:,8)==1,:);
     txt = sprintf('%dmm',vals_29cmkinks(a));
-    data29cm = [data29cm;
-                data29cm_test9(:,13) data29cm_test9(:,2) smooth(data29cm_test9(:,1))/Fmax29; 
-                data29cm_test10(:,13) data29cm_test10(:,2) smooth(data29cm_test10(:,1))/Fmax29];
     plot(data29cm_test9(:,2),data29cm_test9(:,3),'DisplayName',txt)
     plot(data29cm_test10(:,2),data29cm_test10(:,3),'DisplayName',txt)
 end
@@ -94,19 +97,21 @@ legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 29cm all Kinks(Test 9&10)')
+data29cm_test9 = AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==9,:);
+data29cm_test10 = AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==10,:);
+data29cm = [    data29cm_test9(:,13) data29cm_test9(:,2) smooth(data29cm_test9(:,1))/Fmax29; 
+                data29cm_test10(:,13) data29cm_test10(:,2) smooth(data29cm_test10(:,1))/Fmax29;
+                1 620 0;
+                1 620 0];
 
 %30cm
 subplot 325
 hold on
-data30cm = [1 620 0];
 for a = 1:length(vals_30cmkinks)
     b = vals_30cmkinks(a);
     data30cm_test9 = AllBPA10mm30cm(AllBPA10mm30cm(:,5)==30& AllBPA10mm30cm(:,6)==b&AllBPA10mm30cm(:,7)==testnumber&AllBPA10mm30cm(:,8)==1,:);
     data30cm_test10 = AllBPA10mm30cm(AllBPA10mm30cm(:,5)==30& AllBPA10mm30cm(:,6)==b&AllBPA10mm30cm(:,7)==testnum&AllBPA10mm30cm(:,8)==1,:);
     txt = sprintf('%dmm',vals_30cmkinks(a));
-    data30cm = [data30cm;
-                data30cm_test9(:,13) data30cm_test9(:,2) smooth(data30cm_test9(:,1))/Fmax30; 
-                data30cm_test10(:,13) data30cm_test10(:,2) smooth(data30cm_test10(:,1))/Fmax30];
     plot(data30cm_test9(:,2),data30cm_test9(:,3),'DisplayName',txt)
     plot(data30cm_test10(:,2),data30cm_test10(:,3),'DisplayName',txt)
 end
@@ -115,6 +120,12 @@ legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 30cm all Kinks(Test 9&10)')
+data30cm_test9 = AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==9,:);
+data30cm_test10 = AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==10,:);
+data30cm = [    1 620 0;
+                1 620 0;
+                data30cm_test9(:,13) data30cm_test9(:,2) smooth(data30cm_test9(:,1))/Fmax30; 
+                data30cm_test10(:,13) data30cm_test10(:,2) smooth(data30cm_test10(:,1))/Fmax30];
 
 %% Add Ben's data
 rawdata11cm = [325.164999	620	0.008928571	0.055555556;
@@ -200,9 +211,46 @@ data52cm = [rawdata52cm(:,4), rawdata52cm(:,2), rawdata52cm(:,1)/445];
 
 %% Combine all data and do a 3d scatter plot. 
 allData = [data13cm; data23cm; data27cm; data29cm; data30cm; data11cm; data42cm; data45cm; data49cm; data52cm];
+
+X = allData(:,1); Y=allData(:,2); Z=allData(:,3);
+Ynorm = Y/620;
+
 figure
-scatter3(allData(:,1), allData(:,2), allData(:,3))
+scatter3(X, Y, Z)
 xlabel('Relative Strain')
-ylabel('Pressure (kPa)')
+ylabel('Pressure (normalized)')
 zlabel('Force (normalized)')
 title('10mm length normalized')
+
+allData_test9 = [data13cm_test9(:,13) data13cm_test9(:,2) smooth(data13cm_test9(:,1))/Fmax13;
+                1 620 0;
+                1 620 0;
+                data23cm_test9(:,13), data23cm_test9(:,2), smooth(data23cm_test9(:,1))/Fmax23; 
+                data27cm_test9(:,13) data27cm_test9(:,2) smooth(data27cm_test9(:,1))/Fmax27; 
+                1 620 0;
+                data29cm_test9(:,13) data29cm_test9(:,2) smooth(data29cm_test9(:,1))/Fmax29; 
+                1 620 0;
+                data30cm_test9(:,13) data30cm_test9(:,2) smooth(data30cm_test9(:,1))/Fmax30; 
+                1 620 0;
+                data11cm; data42cm; data45cm; data49cm; data52cm];
+X9 = allData_test9(:,1); Y9=allData_test9(:,2); Z9=allData_test9(:,3);
+Y9norm = Y9/620;
+            
+allData_smooth9 = [data13cm_test9(:,13) smooth(data13cm_test9(:,2)) smooth(data13cm_test9(:,1))/Fmax13;
+                1 620 0;
+                1 620 0;
+                data23cm_test9(:,13), smooth(data23cm_test9(:,2)), smooth(data23cm_test9(:,1))/Fmax23; 
+                data27cm_test9(:,13) smooth(data27cm_test9(:,2)), smooth(data27cm_test9(:,1))/Fmax27; 
+                1 620 0;
+                data29cm_test9(:,13) smooth(data29cm_test9(:,2)) smooth(data29cm_test9(:,1))/Fmax29; 
+                1 620 0;
+                data30cm_test9(:,13) smooth(data30cm_test9(:,2)) smooth(data30cm_test9(:,1))/Fmax30; 
+                1 620 0;
+                data11cm; data42cm; data45cm; data49cm; data52cm];
+Y9smooth=allData_smooth9(:,2);
+Y9smoothnorm = Y9smooth/620;
+
+save allData.mat    allData allData_test9 allData_smooth9...
+                    X Y Ynorm Z X9 Y9 Y9norm Z9  Y9smooth Y9smoothnorm ...
+                    data13cm data23cm data27cm data29cm data30cm data11cm data42cm data45cm data49cm data52cm...
+                    data13cm_test9 data23cm_test9 data27cm_test9 data29cm_test9 data30cm_test9 
