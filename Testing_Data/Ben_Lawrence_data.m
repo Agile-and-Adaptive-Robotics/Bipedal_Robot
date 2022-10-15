@@ -4,11 +4,11 @@ clear data13cm data23cm data27cm data 29cm data30cm
 %% Plot tests 9 and 10, only Pressurizing
  testnumber = 9; %choosing test numner 9 as the standard
  testnum = 10;   %adding test 10 b/c Lawrence says it's good
-Fmax13 = 341.5;
-Fmax23 = 377.23;
-Fmax27 = 385.4;
-Fmax29 = 415.8;
-Fmax30 = 406;
+Fmax13 = 343.05; %maxBPAforce(120);
+Fmax23 = 377.2; %maxBPAforce(220);
+Fmax27 = 377.2; %maxBPAforce(260);
+Fmax29 = 418.19; %maxBPAforce(281);
+Fmax30 = 402.48; %maxBPAforce(281);
  
 %13cm
 figure %11
@@ -27,12 +27,18 @@ legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 13cm all Kinks(Test 9&10)')
-data13cm_test9 = AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==9,:);
-data13cm_test10 = AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==10,:);
-data13cm = [data13cm_test9(:,13) data13cm_test9(:,2) smooth(data13cm_test9(:,1))/Fmax13;
-            1 620 0;
-            data13cm_test10(:,13) data13cm_test10(:,2) smooth(data13cm_test10(:,1))/Fmax13;
-            1 620 0];
+data13cm_test9 = [BPA10mm13cm{9,1}(BPA10mm13cm{9,1}(:,8)==1,13), smooth(BPA10mm13cm{9,1}(:,2)), smooth(BPA10mm13cm{9,1}(:,1));
+                     BPA10mm13cm{9,2}(BPA10mm13cm{9,2}(:,8)==1,13), smooth(BPA10mm13cm{9,2}(:,2)), smooth(BPA10mm13cm{9,2}(:,1));
+                     BPA10mm13cm{9,3}(BPA10mm13cm{9,3}(:,8)==1,13), smooth(BPA10mm13cm{9,3}(:,2)), smooth(BPA10mm13cm{9,3}(:,1));
+                     BPA10mm13cm{9,4}(BPA10mm13cm{9,4}(:,8)==1,13), smooth(BPA10mm13cm{9,4}(:,2)), smooth(BPA10mm13cm{9,4}(:,1))];
+data13cm_test10 = [BPA10mm13cm{10,1}(BPA10mm13cm{10,1}(:,8)==1,13), smooth(BPA10mm13cm{10,1}(:,2)), smooth(BPA10mm13cm{10,1}(:,1));
+                     BPA10mm13cm{10,2}(BPA10mm13cm{10,2}(:,8)==1,13), smooth(BPA10mm13cm{10,2}(:,2)), smooth(BPA10mm13cm{10,2}(:,1));
+                     BPA10mm13cm{10,3}(BPA10mm13cm{10,3}(:,8)==1,13), smooth(BPA10mm13cm{10,3}(:,2)), smooth(BPA10mm13cm{10,3}(:,1));
+                     BPA10mm13cm{10,4}(BPA10mm13cm{10,4}(:,8)==1,13), smooth(BPA10mm13cm{10,4}(:,2)), smooth(BPA10mm13cm{10,4}(:,1))];
+data13cm = [    data13cm_test9(:,1) data13cm_test9(:,2) (data13cm_test9(:,3))/Fmax13; 
+                data13cm_test10(:,1) data13cm_test10(:,2) (data13cm_test10(:,3))/Fmax13;
+                1 620 0;
+                1 620 0];
 
 %23cm
 subplot 322
@@ -50,12 +56,16 @@ legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 23cm all Kinks(Test 9&10)')
-data23cm_test9 = AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==9,:);
-data23cm_test10 = AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==9,:);
-data23cm = [1 620 0;
+data23cm_test9 = [BPA10mm23cm{9,1}(BPA10mm23cm{9,1}(:,8)==1,13), smooth(BPA10mm23cm{9,1}(:,2)), smooth(BPA10mm23cm{9,1}(:,1));
+                     BPA10mm23cm{9,2}(BPA10mm23cm{9,2}(:,8)==1,13), smooth(BPA10mm23cm{9,2}(:,2)), smooth(BPA10mm23cm{9,2}(:,1));
+                     BPA10mm23cm{9,3}(BPA10mm23cm{9,3}(:,8)==1,13), smooth(BPA10mm23cm{9,3}(:,2)), smooth(BPA10mm23cm{9,3}(:,1));];                 
+data23cm_test10 = [BPA10mm23cm{10,1}(BPA10mm23cm{10,1}(:,8)==1,13), smooth(BPA10mm23cm{10,1}(:,2)), smooth(BPA10mm23cm{10,1}(:,1));
+                     BPA10mm23cm{10,2}(BPA10mm23cm{10,2}(:,8)==1,13), smooth(BPA10mm23cm{10,2}(:,2)), smooth(BPA10mm23cm{10,2}(:,1));
+                     BPA10mm23cm{10,3}(BPA10mm23cm{10,3}(:,8)==1,13), smooth(BPA10mm23cm{10,3}(:,2)), smooth(BPA10mm23cm{10,3}(:,1));];
+data23cm = [    data23cm_test9(:,1) data23cm_test9(:,2) (data23cm_test9(:,3))/Fmax23; 
+                data23cm_test10(:,1) data23cm_test10(:,2) (data23cm_test10(:,3))/Fmax23;
                 1 620 0;
-                data23cm_test9(:,13), data23cm_test9(:,2), smooth(data23cm_test9(:,1))/Fmax23; 
-                data23cm_test10(:,13), data23cm_test10(:,2), smooth(data23cm_test10(:,1))/Fmax23];
+                1 620 0];
 
 %27cm
 subplot 323
@@ -73,17 +83,22 @@ legend
 xlabel('Pressure (kPa)')
 ylabel('Force(N)')
 title('10mm 27cm all Kinks(Test 9&10)')
-data27cm_test9 = AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==9,:);
-data27cm_test10 = AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==10,:);
-data27cm = [    data27cm_test9(:,13) data27cm_test9(:,2) smooth(data27cm_test9(:,1))/Fmax27; 
-                data27cm_test10(:,13) data27cm_test10(:,2) smooth(data27cm_test10(:,1))/Fmax27;
+data27cm_test9 = [BPA10mm27cm{9,1}(BPA10mm27cm{9,1}(:,8)==1,13), smooth(BPA10mm27cm{9,1}(:,2)), smooth(BPA10mm27cm{9,1}(:,1));
+                     BPA10mm27cm{9,2}(BPA10mm27cm{9,2}(:,8)==1,13), smooth(BPA10mm27cm{9,2}(:,2)), smooth(BPA10mm27cm{9,2}(:,1));
+                     BPA10mm27cm{9,3}(BPA10mm27cm{9,3}(:,8)==1,13), smooth(BPA10mm27cm{9,3}(:,2)), smooth(BPA10mm27cm{9,3}(:,1));
+                     BPA10mm27cm{9,4}(BPA10mm27cm{9,4}(:,8)==1,13), smooth(BPA10mm27cm{9,4}(:,2)), smooth(BPA10mm27cm{9,4}(:,1))];
+data27cm_test10 = [BPA10mm27cm{10,1}(BPA10mm27cm{10,1}(:,8)==1,13), smooth(BPA10mm27cm{10,1}(:,2)), smooth(BPA10mm27cm{10,1}(:,1));
+                     BPA10mm27cm{10,2}(BPA10mm27cm{10,2}(:,8)==1,13), smooth(BPA10mm27cm{10,2}(:,2)), smooth(BPA10mm27cm{10,2}(:,1));
+                     BPA10mm27cm{10,3}(BPA10mm27cm{10,3}(:,8)==1,13), smooth(BPA10mm27cm{10,3}(:,2)), smooth(BPA10mm27cm{10,3}(:,1));
+                     BPA10mm27cm{10,4}(BPA10mm27cm{10,4}(:,8)==1,13), smooth(BPA10mm27cm{10,4}(:,2)), smooth(BPA10mm27cm{10,4}(:,1))];
+data27cm = [    data27cm_test9(:,1) data27cm_test9(:,2) (data27cm_test9(:,3))/Fmax27; 
+                data27cm_test10(:,1) data27cm_test10(:,2) (data27cm_test10(:,3))/Fmax27;
                 1 620 0;
                 1 620 0];
 
 %29cm
 subplot 324
 hold on
-data29cm = [1 620 0];
 for a = 1:length(vals_29cmkinks)
     b = vals_29cmkinks(a);
     data29cm_test9 = AllBPA10mm29cm(AllBPA10mm29cm(:,5)==29& AllBPA10mm29cm(:,6)==b&AllBPA10mm29cm(:,7)==testnumber&AllBPA10mm29cm(:,8)==1,:);
@@ -97,10 +112,16 @@ legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 29cm all Kinks(Test 9&10)')
-data29cm_test9 = AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==9,:);
-data29cm_test10 = AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==10,:);
-data29cm = [    data29cm_test9(:,13) data29cm_test9(:,2) smooth(data29cm_test9(:,1))/Fmax29; 
-                data29cm_test10(:,13) data29cm_test10(:,2) smooth(data29cm_test10(:,1))/Fmax29;
+data29cm_test9 = [BPA10mm29cm{9,1}(BPA10mm29cm{9,1}(:,8)==1,13), smooth(BPA10mm29cm{9,1}(:,2)), smooth(BPA10mm29cm{9,1}(:,1));
+                     BPA10mm29cm{9,2}(BPA10mm29cm{9,2}(:,8)==1,13), smooth(BPA10mm29cm{9,2}(:,2)), smooth(BPA10mm29cm{9,2}(:,1));
+                     BPA10mm29cm{9,3}(BPA10mm29cm{9,3}(:,8)==1,13), smooth(BPA10mm29cm{9,3}(:,2)), smooth(BPA10mm29cm{9,3}(:,1));
+                     BPA10mm29cm{9,4}(BPA10mm29cm{9,4}(:,8)==1,13), smooth(BPA10mm29cm{9,4}(:,2)), smooth(BPA10mm29cm{9,4}(:,1))];
+data29cm_test10 = [BPA10mm29cm{10,1}(BPA10mm29cm{10,1}(:,8)==1,13), smooth(BPA10mm29cm{10,1}(:,2)), smooth(BPA10mm29cm{10,1}(:,1));
+                     BPA10mm29cm{10,2}(BPA10mm29cm{10,2}(:,8)==1,13), smooth(BPA10mm29cm{10,2}(:,2)), smooth(BPA10mm29cm{10,2}(:,1));
+                     BPA10mm29cm{10,3}(BPA10mm29cm{10,2}(:,8)==1,13), smooth(BPA10mm29cm{10,3}(:,2)), smooth(BPA10mm29cm{10,3}(:,1));
+                     BPA10mm29cm{10,4}(BPA10mm29cm{10,3}(:,8)==1,13), smooth(BPA10mm29cm{10,4}(:,2)), smooth(BPA10mm29cm{10,4}(:,1))];
+data29cm = [    data29cm_test9(:,1) data29cm_test9(:,2) (data29cm_test9(:,3))/Fmax29; 
+                data29cm_test10(:,1) data29cm_test10(:,2) (data29cm_test10(:,3))/Fmax29;
                 1 620 0;
                 1 620 0];
 
@@ -120,12 +141,22 @@ legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 30cm all Kinks(Test 9&10)')
-data30cm_test9 = AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==9,:);
-data30cm_test10 = AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==10,:);
-data30cm = [    1 620 0;
+for ii = 9:10
+for j = 1:size(BPA10mm13cm,2)
+   i = ii-8;
+   BPA13cm{j,i} = {BPA10mm13cm{i,j}(BPA10mm13cm{i,j}(:,8)==1,13), smooth(BPA10mm13cm{i,j}(BPA10mm13cm{i,j}(:,8)==1,2)), smooth(BPA10mm13cm{i,j}(BPA10mm13cm{i,j}(:,8)==1,1))};
+end
+end
+
+data30cm_test9 = [BPA13cm{1,j};
+data30cm_test10 = [BPA10mm30cm{10,1}(BPA10mm30cm{10,1}(:,8)==1,13), smooth(BPA10mm30cm{10,1}(:,2)), smooth(BPA10mm30cm{10,1}(:,1));
+                     BPA10mm30cm{10,2}(BPA10mm30cm{10,2}(:,8)==1,13), smooth(BPA10mm30cm{10,2}(:,2)), smooth(BPA10mm30cm{10,2}(:,1));
+                     BPA10mm30cm{10,3}(BPA10mm30cm{10,3}(:,8)==1,13), smooth(BPA10mm30cm{10,3}(:,2)), smooth(BPA10mm30cm{10,3}(:,1));
+                     BPA10mm30cm{10,4}(BPA10mm30cm{10,4}(:,8)==1,13), smooth(BPA10mm30cm{10,4}(:,2)), smooth(BPA10mm30cm{10,4}(:,1))];
+data30cm = [    data30cm_test9(:,1) data30cm_test9(:,2) (data30cm_test9(:,3))/Fmax30; 
+                data30cm_test10(:,1) data30cm_test10(:,2) (data30cm_test10(:,3))/Fmax30;
                 1 620 0;
-                data30cm_test9(:,13) data30cm_test9(:,2) smooth(data30cm_test9(:,1))/Fmax30; 
-                data30cm_test10(:,13) data30cm_test10(:,2) smooth(data30cm_test10(:,1))/Fmax30];
+                1 620 0];
 
 %% Add Ben's data
 rawdata11cm = [325.164999	620	0.008928571	0.055555556;
@@ -133,7 +164,7 @@ rawdata11cm = [325.164999	620	0.008928571	0.055555556;
                 135.6707588	620	0.089285714	0.555555556;
                 89.40925416	620	0.125	0.777777778;
                 13.3446648	620	0.169642857	1.055555556];
-data11cm = [rawdata11cm(:,4), rawdata11cm(:,2), rawdata11cm(:,1)/342];
+data11cm = [rawdata11cm(:,4), rawdata11cm(:,2), rawdata11cm(:,1)/maxBPAforce(0.112)];
 
 rawdata42cm = [444.82216	620	0.002409639	0.014492754;
             358.9714831	620	0.019277108	0.115942029;
@@ -142,7 +173,7 @@ rawdata42cm = [444.82216	620	0.002409639	0.014492754;
             103.1987411	620	0.113253012	0.68115942;
                     40.92363872	620	0.151807229	0.913043478;
                                 0	620	0.16626506	1];
-data42cm = [rawdata42cm(:,4), rawdata42cm(:,2), rawdata42cm(:,1)/448.82];
+data42cm = [rawdata42cm(:,4), rawdata42cm(:,2), rawdata42cm(:,1)/maxBPAforce(0.415)];
 
 rawdata45cm = [26	620	0.164835165	1.041666667;
 61	620	0.151648352	0.958333333;
@@ -161,7 +192,7 @@ rawdata45cm = [26	620	0.164835165	1.041666667;
 335.3959086	620	0.021978022	0.138888889;
 257.9968528	620	0.046153846	0.291666667;
 203.2837271	620	0.074725275	0.472222222];
-data45cm = [rawdata45cm(:,4), rawdata45cm(:,2), rawdata45cm(:,1)/441];
+data45cm = [rawdata45cm(:,4), rawdata45cm(:,2), rawdata45cm(:,1)/maxBPAforce(0.518)];
 
 rawdata49cm = [12	618	0.173469388	0.923913043;
 1.11	618	0.175510204	0.934782609;
@@ -184,7 +215,7 @@ rawdata49cm = [12	618	0.173469388	0.923913043;
 20	617	0.17755102	0.945652174;
 2.29	617	0.185714286	0.989130435;
 0	617	0.187755102	1];
-data49cm = [rawdata49cm(:,4), rawdata49cm(:,2), rawdata49cm(:,1)/443.3];
+data49cm = [rawdata49cm(:,4), rawdata49cm(:,2), rawdata49cm(:,1)/maxBPAforce(0.490)];
 
 rawdata52cm = [0	619	0.166023166	1;
 6	618	0.167953668	1.011627907;
@@ -207,7 +238,7 @@ rawdata52cm = [0	619	0.166023166	1;
 230	617	0.063706564	0.38372093;
 278	617	0.05019305	0.302325581;
 429	617	0	0];
-data52cm = [rawdata52cm(:,4), rawdata52cm(:,2), rawdata52cm(:,1)/445];
+data52cm = [rawdata52cm(:,4), rawdata52cm(:,2), rawdata52cm(:,1)/maxBPAforce(0.518)];
 
 %% Combine all data and do a 3d scatter plot. 
 allData = [data13cm; data23cm; data27cm; data29cm; data30cm; data11cm; data42cm; data45cm; data49cm; data52cm];
@@ -222,35 +253,45 @@ ylabel('Pressure (normalized)')
 zlabel('Force (normalized)')
 title('10mm length normalized')
 
-allData_test9 = [data13cm_test9(:,13) data13cm_test9(:,2) smooth(data13cm_test9(:,1))/Fmax13;
+allData_test9 = [data13cm_test9(:,1) data13cm_test9(:,2) (data13cm_test9(:,3))/Fmax13;
+                data23cm_test9(:,1), data23cm_test9(:,2), (data23cm_test9(:,3))/Fmax23; 
+                data27cm_test9(:,1) data27cm_test9(:,2) (data27cm_test9(:,3))/Fmax27; 
+                data29cm_test9(:,1) data29cm_test9(:,2) (data29cm_test9(:,3))/Fmax29; 
+                data30cm_test9(:,1) data30cm_test9(:,2) (data30cm_test9(:,3))/Fmax30; 
                 1 620 0;
                 1 620 0;
-                data23cm_test9(:,13), data23cm_test9(:,2), smooth(data23cm_test9(:,1))/Fmax23; 
-                data27cm_test9(:,13) data27cm_test9(:,2) smooth(data27cm_test9(:,1))/Fmax27; 
                 1 620 0;
-                data29cm_test9(:,13) data29cm_test9(:,2) smooth(data29cm_test9(:,1))/Fmax29; 
                 1 620 0;
-                data30cm_test9(:,13) data30cm_test9(:,2) smooth(data30cm_test9(:,1))/Fmax30; 
+                1 620 0;
+                1 620 0;
+                1 620 0;
+                1 620 0;
+                1 620 0;
                 1 620 0;
                 data11cm; data42cm; data45cm; data49cm; data52cm];
 X9 = allData_test9(:,1); Y9=allData_test9(:,2); Z9=allData_test9(:,3);
 Y9norm = Y9/620;
             
-allData_smooth9 = [data13cm_test9(:,13) smooth(data13cm_test9(:,2)) smooth(data13cm_test9(:,1))/Fmax13;
+allData_test10 = [data13cm_test10(:,1) data13cm_test10(:,2) (data13cm_test10(:,3))/Fmax13;
+                data23cm_test10(:,1), data23cm_test10(:,2), (data23cm_test10(:,3))/Fmax23; 
+                data27cm_test10(:,1) data27cm_test10(:,2) (data27cm_test10(:,3))/Fmax27; 
+                data29cm_test10(:,1) data29cm_test10(:,2) (data29cm_test10(:,3))/Fmax29; 
+                data30cm_test10(:,1) data30cm_test10(:,2) (data30cm_test10(:,3))/Fmax30; 
                 1 620 0;
                 1 620 0;
-                data23cm_test9(:,13), smooth(data23cm_test9(:,2)), smooth(data23cm_test9(:,1))/Fmax23; 
-                data27cm_test9(:,13) smooth(data27cm_test9(:,2)), smooth(data27cm_test9(:,1))/Fmax27; 
                 1 620 0;
-                data29cm_test9(:,13) smooth(data29cm_test9(:,2)) smooth(data29cm_test9(:,1))/Fmax29; 
                 1 620 0;
-                data30cm_test9(:,13) smooth(data30cm_test9(:,2)) smooth(data30cm_test9(:,1))/Fmax30; 
+                1 620 0;
+                1 620 0;
+                1 620 0;
+                1 620 0;
+                1 620 0;
                 1 620 0;
                 data11cm; data42cm; data45cm; data49cm; data52cm];
-Y9smooth=allData_smooth9(:,2);
-Y9smoothnorm = Y9smooth/620;
+X10 = allData_test10(:,1); Y10=allData_test10(:,2); Z10=allData_test10(:,3);
+Y10norm = Y10/620;
 
-save allData.mat    allData allData_test9 allData_smooth9...
-                    X Y Ynorm Z X9 Y9 Y9norm Z9  Y9smooth Y9smoothnorm ...
+save allData.mat    allData allData_test9 allData_test10...
+                    X Y Ynorm Z X9 Y9 Y9norm Z9 X10 Y10 Y10norm Z10 ...
                     data13cm data23cm data27cm data29cm data30cm data11cm data42cm data45cm data49cm data52cm...
                     data13cm_test9 data23cm_test9 data27cm_test9 data29cm_test9 data30cm_test9 
