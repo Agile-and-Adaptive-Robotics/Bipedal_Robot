@@ -14,11 +14,11 @@ Fmax30 = 402.48; %maxBPAforce(281);
 figure %11
 subplot 321
 hold on
-for a = 1:length(vals_13cm)
-    b=vals_13cm(a);
+for a = 1:length(vals_13cmkinks)
+    b=vals_13cmkinks(a);
     data13cm_test9 = AllBPA10mm13cm(AllBPA10mm13cm(:,5)==13& AllBPA10mm13cm(:,6)==b&AllBPA10mm13cm(:,7)==testnumber&AllBPA10mm13cm(:,8)==1,:);
     data13cm_test10 = AllBPA10mm13cm(AllBPA10mm13cm(:,5)==13& AllBPA10mm13cm(:,6)==b&AllBPA10mm13cm(:,7)==testnum&AllBPA10mm13cm(:,8)==1,:);
-    txt = sprintf('%dmm',vals_13cm(a));
+    txt = sprintf('%dmm',vals_13cmkinks(a));
     plot(data13cm_test9(:,2),data13cm_test9(:,3),'DisplayName',txt)
     plot(data13cm_test10(:,2),data13cm_test10(:,3),'DisplayName',txt)
 end
@@ -27,14 +27,14 @@ legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 13cm all Kinks(Test 9&10)')
-data13cm_test9 = [BPA10mm13cm{9,1}(BPA10mm13cm{9,1}(:,8)==1,13), (BPA10mm13cm{9,1}(BPA10mm13cm{9,1}(:,8)==1,2)), (BPA10mm13cm{10,1}(BPA10mm13cm{9,1}(:,8)==1,1));
-                     BPA10mm13cm{9,2}(BPA10mm13cm{9,2}(:,8)==1,13), (BPA10mm13cm{9,2}(BPA10mm13cm{9,2}(:,8)==1,2)), (BPA10mm13cm{9,2}(BPA10mm13cm{9,2}(:,8)==1,1));
-                     BPA10mm13cm{9,3}(BPA10mm13cm{9,3}(:,8)==1,13), (BPA10mm13cm{9,3}(BPA10mm13cm{9,3}(:,8)==1,2)), (BPA10mm13cm{9,3}(BPA10mm13cm{9,3}(:,8)==1,1));
-                     BPA10mm13cm{9,4}(BPA10mm13cm{9,4}(:,8)==1,13), (BPA10mm13cm{9,4}(BPA10mm13cm{9,4}(:,8)==1,2)), (BPA10mm13cm{9,4}(BPA10mm13cm{9,4}(:,8)==1,1))];
-data13cm_test10 = [BPA10mm13cm{10,1}(BPA10mm13cm{10,1}(:,8)==1,13), (BPA10mm13cm{10,1}(BPA10mm13cm{10,1}(:,8)==1,2)), (BPA10mm13cm{10,1}(BPA10mm13cm{10,1}(:,8)==1,1));
-                     BPA10mm13cm{10,2}(BPA10mm13cm{10,2}(:,8)==1,13), (BPA10mm13cm{10,2}(BPA10mm13cm{10,2}(:,8)==1,2)), (BPA10mm13cm{10,2}(BPA10mm13cm{10,2}(:,8)==1,1));
-                     BPA10mm13cm{10,3}(BPA10mm13cm{10,3}(:,8)==1,13), (BPA10mm13cm{10,3}(BPA10mm13cm{10,3}(:,8)==1,2)), (BPA10mm13cm{10,3}(BPA10mm13cm{10,3}(:,8)==1,1));
-                     BPA10mm13cm{10,4}(BPA10mm13cm{10,4}(:,8)==1,13), (BPA10mm13cm{10,4}(BPA10mm13cm{10,4}(:,8)==1,2)), (BPA10mm13cm{10,4}(BPA10mm13cm{10,4}(:,8)==1,1))];
+data13cm_test9 = [BPA10mm13cm{9,1}(BPA10mm13cm{9,1}(:,8)==1,13), smooth(BPA10mm13cm{9,1}(BPA10mm13cm{9,1}(:,8)==1,2)), smooth(BPA10mm13cm{10,1}(BPA10mm13cm{9,1}(:,8)==1,1));
+                     BPA10mm13cm{9,2}(BPA10mm13cm{9,2}(:,8)==1,13), smooth(BPA10mm13cm{9,2}(BPA10mm13cm{9,2}(:,8)==1,2)), smooth(BPA10mm13cm{9,2}(BPA10mm13cm{9,2}(:,8)==1,1));
+                     BPA10mm13cm{9,3}(BPA10mm13cm{9,3}(:,8)==1,13), smooth(BPA10mm13cm{9,3}(BPA10mm13cm{9,3}(:,8)==1,2)), smooth(BPA10mm13cm{9,3}(BPA10mm13cm{9,3}(:,8)==1,1));
+                     BPA10mm13cm{9,4}(BPA10mm13cm{9,4}(:,8)==1,13), smooth(BPA10mm13cm{9,4}(BPA10mm13cm{9,4}(:,8)==1,2)), smooth(BPA10mm13cm{9,4}(BPA10mm13cm{9,4}(:,8)==1,1))];
+data13cm_test10 = [BPA10mm13cm{10,1}(BPA10mm13cm{10,1}(:,8)==1,13), smooth(BPA10mm13cm{10,1}(BPA10mm13cm{10,1}(:,8)==1,2)), smooth(BPA10mm13cm{10,1}(BPA10mm13cm{10,1}(:,8)==1,1));
+                     BPA10mm13cm{10,2}(BPA10mm13cm{10,2}(:,8)==1,13), smooth(BPA10mm13cm{10,2}(BPA10mm13cm{10,2}(:,8)==1,2)), smooth(BPA10mm13cm{10,2}(BPA10mm13cm{10,2}(:,8)==1,1));
+                     BPA10mm13cm{10,3}(BPA10mm13cm{10,3}(:,8)==1,13), smooth(BPA10mm13cm{10,3}(BPA10mm13cm{10,3}(:,8)==1,2)), smooth(BPA10mm13cm{10,3}(BPA10mm13cm{10,3}(:,8)==1,1));
+                     BPA10mm13cm{10,4}(BPA10mm13cm{10,4}(:,8)==1,13), smooth(BPA10mm13cm{10,4}(BPA10mm13cm{10,4}(:,8)==1,2)), smooth(BPA10mm13cm{10,4}(BPA10mm13cm{10,4}(:,8)==1,1))];
 data13cm_test9 = data13cm_test9(data13cm_test9(:,2)<= 625 &data13cm_test9(:,3)>=10,:);
 data13cm_test10 = data13cm_test10(data13cm_test10(:,2) <= 625 &data13cm_test10(:,3)>=10,:);
 data13cm = [    data13cm_test9(:,1) data13cm_test9(:,2) (data13cm_test9(:,3))/Fmax13; 
@@ -45,11 +45,11 @@ data13cm = [    data13cm_test9(:,1) data13cm_test9(:,2) (data13cm_test9(:,3))/Fm
 %23cm
 subplot 322
 hold on
-for a = 1:length(vals_23cm)
-    b=vals_23cm(a);
+for a = 1:length(vals_23cmkinks)
+    b=vals_23cmkinks(a);
     data23cm_test9 = AllBPA10mm23cm(AllBPA10mm23cm(:,5)==23& AllBPA10mm23cm(:,6)==b&AllBPA10mm23cm(:,7)==testnumber&AllBPA10mm23cm(:,8)==1,:);
     data23cm_test10 = AllBPA10mm23cm(AllBPA10mm23cm(:,5)==23& AllBPA10mm23cm(:,6)==b&AllBPA10mm23cm(:,7)==testnum&AllBPA10mm23cm(:,8)==1,:);
-    txt = sprintf('%dmm',vals_23cm(a));
+    txt = sprintf('%dmm',vals_23cmkinks(a));
     plot(data23cm_test9(:,2),data23cm_test9(:,3),'DisplayName',txt)
     plot(data23cm_test10(:,2),data23cm_test10(:,3),'DisplayName',txt)
 end
@@ -58,12 +58,12 @@ legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 23cm all Kinks(Test 9&10)')
-data23cm_test9 = [BPA10mm23cm{9,1}(BPA10mm23cm{9,1}(:,8)==1,13), (BPA10mm23cm{9,1}(BPA10mm23cm{9,1}(:,8)==1,2)), (BPA10mm23cm{10,1}(BPA10mm23cm{9,1}(:,8)==1,1));
-                     BPA10mm23cm{9,2}(BPA10mm23cm{9,2}(:,8)==1,13), (BPA10mm23cm{9,2}(BPA10mm23cm{9,2}(:,8)==1,2)), (BPA10mm23cm{9,2}(BPA10mm23cm{9,2}(:,8)==1,1));
-                     BPA10mm23cm{9,3}(BPA10mm23cm{9,3}(:,8)==1,13), (BPA10mm23cm{9,3}(BPA10mm23cm{9,3}(:,8)==1,2)), (BPA10mm23cm{9,3}(BPA10mm23cm{9,3}(:,8)==1,1))];
-data23cm_test10 = [BPA10mm23cm{10,1}(BPA10mm23cm{10,1}(:,8)==1,13), (BPA10mm23cm{10,1}(BPA10mm23cm{10,1}(:,8)==1,2)), (BPA10mm23cm{10,1}(BPA10mm23cm{10,1}(:,8)==1,1));
-                     BPA10mm23cm{10,2}(BPA10mm23cm{10,2}(:,8)==1,13), (BPA10mm23cm{10,2}(BPA10mm23cm{10,2}(:,8)==1,2)), (BPA10mm23cm{10,2}(BPA10mm23cm{10,2}(:,8)==1,1));
-                     BPA10mm23cm{10,3}(BPA10mm23cm{10,3}(:,8)==1,13), (BPA10mm23cm{10,3}(BPA10mm23cm{10,3}(:,8)==1,2)), (BPA10mm23cm{10,3}(BPA10mm23cm{10,3}(:,8)==1,1))];
+data23cm_test9 = [BPA10mm23cm{9,1}(BPA10mm23cm{9,1}(:,8)==1,13), smooth(BPA10mm23cm{9,1}(BPA10mm23cm{9,1}(:,8)==1,2)), smooth(BPA10mm23cm{10,1}(BPA10mm23cm{9,1}(:,8)==1,1));
+                     BPA10mm23cm{9,2}(BPA10mm23cm{9,2}(:,8)==1,13), smooth(BPA10mm23cm{9,2}(BPA10mm23cm{9,2}(:,8)==1,2)), smooth(BPA10mm23cm{9,2}(BPA10mm23cm{9,2}(:,8)==1,1));
+                     BPA10mm23cm{9,3}(BPA10mm23cm{9,3}(:,8)==1,13), smooth(BPA10mm23cm{9,3}(BPA10mm23cm{9,3}(:,8)==1,2)), smooth(BPA10mm23cm{9,3}(BPA10mm23cm{9,3}(:,8)==1,1))];
+data23cm_test10 = [BPA10mm23cm{10,1}(BPA10mm23cm{10,1}(:,8)==1,13), smooth(BPA10mm23cm{10,1}(BPA10mm23cm{10,1}(:,8)==1,2)), smooth(BPA10mm23cm{10,1}(BPA10mm23cm{10,1}(:,8)==1,1));
+                     BPA10mm23cm{10,2}(BPA10mm23cm{10,2}(:,8)==1,13), smooth(BPA10mm23cm{10,2}(BPA10mm23cm{10,2}(:,8)==1,2)), smooth(BPA10mm23cm{10,2}(BPA10mm23cm{10,2}(:,8)==1,1));
+                     BPA10mm23cm{10,3}(BPA10mm23cm{10,3}(:,8)==1,13), smooth(BPA10mm23cm{10,3}(BPA10mm23cm{10,3}(:,8)==1,2)), smooth(BPA10mm23cm{10,3}(BPA10mm23cm{10,3}(:,8)==1,1))];
 data23cm_test9 = data23cm_test9(data23cm_test9(:,2)<= 625 &data23cm_test9(:,3)>=10,:);
 data23cm_test10 = data23cm_test10(data23cm_test10(:,2) <= 625 &data23cm_test10(:,3)>=10,:);
 data23cm = [    data23cm_test9(:,1) data23cm_test9(:,2) (data23cm_test9(:,3))/Fmax23; 
@@ -74,11 +74,11 @@ data23cm = [    data23cm_test9(:,1) data23cm_test9(:,2) (data23cm_test9(:,3))/Fm
 %27cm
 subplot 323
 hold on
-for a = 1:length(vals_27cm)
-    b = vals_27cm(a);
+for a = 1:length(vals_27cmkinks)
+    b = vals_27cmkinks(a);
     data27cm_test9 = AllBPA10mm27cm(AllBPA10mm27cm(:,5)==27& AllBPA10mm27cm(:,6)==b&AllBPA10mm27cm(:,7)==testnumber&AllBPA10mm27cm(:,8)==1,:);
     data27cm_test10 = AllBPA10mm27cm(AllBPA10mm27cm(:,5)==27& AllBPA10mm27cm(:,6)==b&AllBPA10mm27cm(:,7)==testnum&AllBPA10mm27cm(:,8)==1,:);
-    txt = sprintf('%dmm',vals_27cm(a));
+    txt = sprintf('%dmm',vals_27cmkinks(a));
     plot(data27cm_test9(:,2),data27cm_test9(:,3),'DisplayName',txt)
     plot(data27cm_test10(:,2),data27cm_test10(:,3),'DisplayName',txt)
 end
@@ -87,14 +87,14 @@ legend
 xlabel('Pressure (kPa)')
 ylabel('Force(N)')
 title('10mm 27cm all Kinks(Test 9&10)')
-data27cm_test9 = [BPA10mm27cm{9,1}(BPA10mm27cm{9,1}(:,8)==1,13), (BPA10mm27cm{9,1}(BPA10mm27cm{9,1}(:,8)==1,2)), (BPA10mm27cm{10,1}(BPA10mm27cm{9,1}(:,8)==1,1));
-                     BPA10mm27cm{9,2}(BPA10mm27cm{9,2}(:,8)==1,13), (BPA10mm27cm{9,2}(BPA10mm27cm{9,2}(:,8)==1,2)), (BPA10mm27cm{9,2}(BPA10mm27cm{9,2}(:,8)==1,1));
-                     BPA10mm27cm{9,3}(BPA10mm27cm{9,3}(:,8)==1,13), (BPA10mm27cm{9,3}(BPA10mm27cm{9,3}(:,8)==1,2)), (BPA10mm27cm{9,3}(BPA10mm27cm{9,3}(:,8)==1,1));
-                     BPA10mm27cm{9,4}(BPA10mm27cm{9,4}(:,8)==1,13), (BPA10mm27cm{9,4}(BPA10mm27cm{9,4}(:,8)==1,2)), (BPA10mm27cm{9,4}(BPA10mm27cm{9,4}(:,8)==1,1))];
-data27cm_test10 = [BPA10mm27cm{10,1}(BPA10mm27cm{10,1}(:,8)==1,13), (BPA10mm27cm{10,1}(BPA10mm27cm{10,1}(:,8)==1,2)), (BPA10mm27cm{10,1}(BPA10mm27cm{10,1}(:,8)==1,1));
-                     BPA10mm27cm{10,2}(BPA10mm27cm{10,2}(:,8)==1,13), (BPA10mm27cm{10,2}(BPA10mm27cm{10,2}(:,8)==1,2)), (BPA10mm27cm{10,2}(BPA10mm27cm{10,2}(:,8)==1,1));
-                     BPA10mm27cm{10,3}(BPA10mm27cm{10,3}(:,8)==1,13), (BPA10mm27cm{10,3}(BPA10mm27cm{10,3}(:,8)==1,2)), (BPA10mm27cm{10,3}(BPA10mm27cm{10,3}(:,8)==1,1));
-                     BPA10mm27cm{10,4}(BPA10mm27cm{10,4}(:,8)==1,13), (BPA10mm27cm{10,4}(BPA10mm27cm{10,4}(:,8)==1,2)), (BPA10mm27cm{10,4}(BPA10mm27cm{10,4}(:,8)==1,1))];
+data27cm_test9 = [BPA10mm27cm{9,1}(BPA10mm27cm{9,1}(:,8)==1,13), smooth(BPA10mm27cm{9,1}(BPA10mm27cm{9,1}(:,8)==1,2)), smooth(BPA10mm27cm{10,1}(BPA10mm27cm{9,1}(:,8)==1,1));
+                     BPA10mm27cm{9,2}(BPA10mm27cm{9,2}(:,8)==1,13), smooth(BPA10mm27cm{9,2}(BPA10mm27cm{9,2}(:,8)==1,2)), smooth(BPA10mm27cm{9,2}(BPA10mm27cm{9,2}(:,8)==1,1));
+                     BPA10mm27cm{9,3}(BPA10mm27cm{9,3}(:,8)==1,13), smooth(BPA10mm27cm{9,3}(BPA10mm27cm{9,3}(:,8)==1,2)), smooth(BPA10mm27cm{9,3}(BPA10mm27cm{9,3}(:,8)==1,1));
+                     BPA10mm27cm{9,4}(BPA10mm27cm{9,4}(:,8)==1,13), smooth(BPA10mm27cm{9,4}(BPA10mm27cm{9,4}(:,8)==1,2)), smooth(BPA10mm27cm{9,4}(BPA10mm27cm{9,4}(:,8)==1,1))];
+data27cm_test10 = [BPA10mm27cm{10,1}(BPA10mm27cm{10,1}(:,8)==1,13), smooth(BPA10mm27cm{10,1}(BPA10mm27cm{10,1}(:,8)==1,2)), smooth(BPA10mm27cm{10,1}(BPA10mm27cm{10,1}(:,8)==1,1));
+                     BPA10mm27cm{10,2}(BPA10mm27cm{10,2}(:,8)==1,13), smooth(BPA10mm27cm{10,2}(BPA10mm27cm{10,2}(:,8)==1,2)), smooth(BPA10mm27cm{10,2}(BPA10mm27cm{10,2}(:,8)==1,1));
+                     BPA10mm27cm{10,3}(BPA10mm27cm{10,3}(:,8)==1,13), smooth(BPA10mm27cm{10,3}(BPA10mm27cm{10,3}(:,8)==1,2)), smooth(BPA10mm27cm{10,3}(BPA10mm27cm{10,3}(:,8)==1,1));
+                     BPA10mm27cm{10,4}(BPA10mm27cm{10,4}(:,8)==1,13), smooth(BPA10mm27cm{10,4}(BPA10mm27cm{10,4}(:,8)==1,2)), smooth(BPA10mm27cm{10,4}(BPA10mm27cm{10,4}(:,8)==1,1))];
 data27cm_test9 = data27cm_test9(data27cm_test9(:,2)<= 625 &data27cm_test9(:,3)>=10,:);
 data27cm_test10 = data27cm_test10(data27cm_test10(:,2) <= 625 &data27cm_test10(:,3)>=10,:);
 data27cm = [    data27cm_test9(:,1) data27cm_test9(:,2) (data27cm_test9(:,3))/Fmax27; 
@@ -105,11 +105,11 @@ data27cm = [    data27cm_test9(:,1) data27cm_test9(:,2) (data27cm_test9(:,3))/Fm
 %29cm
 subplot 324
 hold on
-for a = 1:length(vals_29cm)
-    b = vals_29cm(a);
+for a = 1:length(vals_29cmkinks)
+    b = vals_29cmkinks(a);
     data29cm_test9 = AllBPA10mm29cm(AllBPA10mm29cm(:,5)==29& AllBPA10mm29cm(:,6)==b&AllBPA10mm29cm(:,7)==testnumber&AllBPA10mm29cm(:,8)==1,:);
     data29cm_test10 = AllBPA10mm29cm(AllBPA10mm29cm(:,5)==29& AllBPA10mm29cm(:,6)==b&AllBPA10mm29cm(:,7)==testnum&AllBPA10mm29cm(:,8)==1,:);
-    txt = sprintf('%dmm',vals_29cm(a));
+    txt = sprintf('%dmm',vals_29cmkinks(a));
     plot(data29cm_test9(:,2),data29cm_test9(:,3),'DisplayName',txt)
     plot(data29cm_test10(:,2),data29cm_test10(:,3),'DisplayName',txt)
 end
@@ -118,14 +118,14 @@ legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 29cm all Kinks(Test 9&10)')
-data29cm_test9 = [BPA10mm29cm{9,1}(BPA10mm29cm{9,1}(:,8)==1,13), (BPA10mm29cm{9,1}(BPA10mm29cm{9,1}(:,8)==1,2)), (BPA10mm29cm{10,1}(BPA10mm29cm{9,1}(:,8)==1,1));
-                     BPA10mm29cm{9,2}(BPA10mm29cm{9,2}(:,8)==1,13), (BPA10mm29cm{9,2}(BPA10mm29cm{9,2}(:,8)==1,2)), (BPA10mm29cm{9,2}(BPA10mm29cm{9,2}(:,8)==1,1));
-                     BPA10mm29cm{9,3}(BPA10mm29cm{9,3}(:,8)==1,13), (BPA10mm29cm{9,3}(BPA10mm29cm{9,3}(:,8)==1,2)), (BPA10mm29cm{9,3}(BPA10mm29cm{9,3}(:,8)==1,1));
-                     BPA10mm29cm{9,4}(BPA10mm29cm{9,4}(:,8)==1,13), (BPA10mm29cm{9,4}(BPA10mm29cm{9,4}(:,8)==1,2)), (BPA10mm29cm{9,4}(BPA10mm29cm{9,4}(:,8)==1,1))];
-data29cm_test10 = [BPA10mm29cm{10,1}(BPA10mm29cm{10,1}(:,8)==1,13), (BPA10mm29cm{10,1}(BPA10mm29cm{10,1}(:,8)==1,2)), (BPA10mm29cm{10,1}(BPA10mm29cm{10,1}(:,8)==1,1));
-                     BPA10mm29cm{10,2}(BPA10mm29cm{10,2}(:,8)==1,13), (BPA10mm29cm{10,2}(BPA10mm29cm{10,2}(:,8)==1,2)), (BPA10mm29cm{10,2}(BPA10mm29cm{10,2}(:,8)==1,1));
-                     BPA10mm29cm{10,3}(BPA10mm29cm{10,3}(:,8)==1,13), (BPA10mm29cm{10,3}(BPA10mm29cm{10,3}(:,8)==1,2)), (BPA10mm29cm{10,3}(BPA10mm29cm{10,3}(:,8)==1,1));
-                     BPA10mm29cm{10,4}(BPA10mm29cm{10,4}(:,8)==1,13), (BPA10mm29cm{10,4}(BPA10mm29cm{10,4}(:,8)==1,2)), (BPA10mm29cm{10,4}(BPA10mm29cm{10,4}(:,8)==1,1))];
+data29cm_test9 = [BPA10mm29cm{9,1}(BPA10mm29cm{9,1}(:,8)==1,13), smooth(BPA10mm29cm{9,1}(BPA10mm29cm{9,1}(:,8)==1,2)), smooth(BPA10mm29cm{10,1}(BPA10mm29cm{9,1}(:,8)==1,1));
+                     BPA10mm29cm{9,2}(BPA10mm29cm{9,2}(:,8)==1,13), smooth(BPA10mm29cm{9,2}(BPA10mm29cm{9,2}(:,8)==1,2)), smooth(BPA10mm29cm{9,2}(BPA10mm29cm{9,2}(:,8)==1,1));
+                     BPA10mm29cm{9,3}(BPA10mm29cm{9,3}(:,8)==1,13), smooth(BPA10mm29cm{9,3}(BPA10mm29cm{9,3}(:,8)==1,2)), smooth(BPA10mm29cm{9,3}(BPA10mm29cm{9,3}(:,8)==1,1));
+                     BPA10mm29cm{9,4}(BPA10mm29cm{9,4}(:,8)==1,13), smooth(BPA10mm29cm{9,4}(BPA10mm29cm{9,4}(:,8)==1,2)), smooth(BPA10mm29cm{9,4}(BPA10mm29cm{9,4}(:,8)==1,1))];
+data29cm_test10 = [BPA10mm29cm{10,1}(BPA10mm29cm{10,1}(:,8)==1,13), smooth(BPA10mm29cm{10,1}(BPA10mm29cm{10,1}(:,8)==1,2)), smooth(BPA10mm29cm{10,1}(BPA10mm29cm{10,1}(:,8)==1,1));
+                     BPA10mm29cm{10,2}(BPA10mm29cm{10,2}(:,8)==1,13), smooth(BPA10mm29cm{10,2}(BPA10mm29cm{10,2}(:,8)==1,2)), smooth(BPA10mm29cm{10,2}(BPA10mm29cm{10,2}(:,8)==1,1));
+                     BPA10mm29cm{10,3}(BPA10mm29cm{10,3}(:,8)==1,13), smooth(BPA10mm29cm{10,3}(BPA10mm29cm{10,3}(:,8)==1,2)), smooth(BPA10mm29cm{10,3}(BPA10mm29cm{10,3}(:,8)==1,1));
+                     BPA10mm29cm{10,4}(BPA10mm29cm{10,4}(:,8)==1,13), smooth(BPA10mm29cm{10,4}(BPA10mm29cm{10,4}(:,8)==1,2)), smooth(BPA10mm29cm{10,4}(BPA10mm29cm{10,4}(:,8)==1,1))];
 data29cm_test9 = data29cm_test9(data29cm_test9(:,2)<= 625 &data29cm_test9(:,3)>=10,:);
 data29cm_test10 = data29cm_test10(data29cm_test10(:,2) <= 625 &data29cm_test10(:,3)>=10,:);
 data29cm = [    data29cm_test9(:,1) data29cm_test9(:,2) (data29cm_test9(:,3))/Fmax29; 
@@ -136,11 +136,11 @@ data29cm = [    data29cm_test9(:,1) data29cm_test9(:,2) (data29cm_test9(:,3))/Fm
 %30cm
 subplot 325
 hold on
-for a = 1:length(vals_30cm)
-    b = vals_30cm(a);
+for a = 1:length(vals_30cmkinks)
+    b = vals_30cmkinks(a);
     data30cm_test9 = AllBPA10mm30cm(AllBPA10mm30cm(:,5)==30& AllBPA10mm30cm(:,6)==b&AllBPA10mm30cm(:,7)==testnumber&AllBPA10mm30cm(:,8)==1,:);
     data30cm_test10 = AllBPA10mm30cm(AllBPA10mm30cm(:,5)==30& AllBPA10mm30cm(:,6)==b&AllBPA10mm30cm(:,7)==testnum&AllBPA10mm30cm(:,8)==1,:);
-    txt = sprintf('%dmm',vals_30cm(a));
+    txt = sprintf('%dmm',vals_30cmkinks(a));
     plot(data30cm_test9(:,2),data30cm_test9(:,3),'DisplayName',txt)
     plot(data30cm_test10(:,2),data30cm_test10(:,3),'DisplayName',txt)
 end
@@ -152,18 +152,18 @@ title('10mm 30cm all Kinks(Test 9&10)')
 % for ii = 9:10
 %  for j = 1:size(BPA10mm13cm,2)
 %    i = ii-8;
-%    BPA13cm(j,i) = [BPA10mm13cm{i,j}(BPA10mm13cm{i,j}(:,8)==1,13), (BPA10mm13cm{i,j}(BPA10mm13cm{i,j}(:,8)==1,2)), (BPA10mm13cm{i,j}(BPA10mm13cm{i,j}(:,8)==1,1))];
+%    BPA13cm(j,i) = [BPA10mm13cm{i,j}(BPA10mm13cm{i,j}(:,8)==1,13), smooth(BPA10mm13cm{i,j}(BPA10mm13cm{i,j}(:,8)==1,2)), smooth(BPA10mm13cm{i,j}(BPA10mm13cm{i,j}(:,8)==1,1))];
 %  end
 % end
 
-data30cm_test9 = [BPA10mm30cm{9,1}(BPA10mm30cm{9,1}(:,8)==1,13), (BPA10mm30cm{9,1}(BPA10mm30cm{9,1}(:,8)==1,2)), (BPA10mm30cm{10,1}(BPA10mm30cm{9,1}(:,8)==1,1));
-                     BPA10mm30cm{9,2}(BPA10mm30cm{9,2}(:,8)==1,13), (BPA10mm30cm{9,2}(BPA10mm30cm{9,2}(:,8)==1,2)), (BPA10mm30cm{9,2}(BPA10mm30cm{9,2}(:,8)==1,1));
-                     BPA10mm30cm{9,3}(BPA10mm30cm{9,3}(:,8)==1,13), (BPA10mm30cm{9,3}(BPA10mm30cm{9,3}(:,8)==1,2)), (BPA10mm30cm{9,3}(BPA10mm30cm{9,3}(:,8)==1,1));
-                     BPA10mm30cm{9,4}(BPA10mm30cm{9,4}(:,8)==1,13), (BPA10mm30cm{9,4}(BPA10mm30cm{9,4}(:,8)==1,2)), (BPA10mm30cm{9,4}(BPA10mm30cm{9,4}(:,8)==1,1))];
-data30cm_test10 = [BPA10mm30cm{10,1}(BPA10mm30cm{10,1}(:,8)==1,13), (BPA10mm30cm{10,1}(BPA10mm30cm{10,1}(:,8)==1,2)), (BPA10mm30cm{10,1}(BPA10mm30cm{10,1}(:,8)==1,1));
-                     BPA10mm30cm{10,2}(BPA10mm30cm{10,2}(:,8)==1,13), (BPA10mm30cm{10,2}(BPA10mm30cm{10,2}(:,8)==1,2)), (BPA10mm30cm{10,2}(BPA10mm30cm{10,2}(:,8)==1,1));
-                     BPA10mm30cm{10,3}(BPA10mm30cm{10,3}(:,8)==1,13), (BPA10mm30cm{10,3}(BPA10mm30cm{10,3}(:,8)==1,2)), (BPA10mm30cm{10,3}(BPA10mm30cm{10,3}(:,8)==1,1));
-                     BPA10mm30cm{10,4}(BPA10mm30cm{10,4}(:,8)==1,13), (BPA10mm30cm{10,4}(BPA10mm30cm{10,4}(:,8)==1,2)), (BPA10mm30cm{10,4}(BPA10mm30cm{10,4}(:,8)==1,1))];
+data30cm_test9 = [BPA10mm30cm{9,1}(BPA10mm30cm{9,1}(:,8)==1,13), smooth(BPA10mm30cm{9,1}(BPA10mm30cm{9,1}(:,8)==1,2)), smooth(BPA10mm30cm{10,1}(BPA10mm30cm{9,1}(:,8)==1,1));
+                     BPA10mm30cm{9,2}(BPA10mm30cm{9,2}(:,8)==1,13), smooth(BPA10mm30cm{9,2}(BPA10mm30cm{9,2}(:,8)==1,2)), smooth(BPA10mm30cm{9,2}(BPA10mm30cm{9,2}(:,8)==1,1));
+                     BPA10mm30cm{9,3}(BPA10mm30cm{9,3}(:,8)==1,13), smooth(BPA10mm30cm{9,3}(BPA10mm30cm{9,3}(:,8)==1,2)), smooth(BPA10mm30cm{9,3}(BPA10mm30cm{9,3}(:,8)==1,1));
+                     BPA10mm30cm{9,4}(BPA10mm30cm{9,4}(:,8)==1,13), smooth(BPA10mm30cm{9,4}(BPA10mm30cm{9,4}(:,8)==1,2)), smooth(BPA10mm30cm{9,4}(BPA10mm30cm{9,4}(:,8)==1,1))];
+data30cm_test10 = [BPA10mm30cm{10,1}(BPA10mm30cm{10,1}(:,8)==1,13), smooth(BPA10mm30cm{10,1}(BPA10mm30cm{10,1}(:,8)==1,2)), smooth(BPA10mm30cm{10,1}(BPA10mm30cm{10,1}(:,8)==1,1));
+                     BPA10mm30cm{10,2}(BPA10mm30cm{10,2}(:,8)==1,13), smooth(BPA10mm30cm{10,2}(BPA10mm30cm{10,2}(:,8)==1,2)), smooth(BPA10mm30cm{10,2}(BPA10mm30cm{10,2}(:,8)==1,1));
+                     BPA10mm30cm{10,3}(BPA10mm30cm{10,3}(:,8)==1,13), smooth(BPA10mm30cm{10,3}(BPA10mm30cm{10,3}(:,8)==1,2)), smooth(BPA10mm30cm{10,3}(BPA10mm30cm{10,3}(:,8)==1,1));
+                     BPA10mm30cm{10,4}(BPA10mm30cm{10,4}(:,8)==1,13), smooth(BPA10mm30cm{10,4}(BPA10mm30cm{10,4}(:,8)==1,2)), smooth(BPA10mm30cm{10,4}(BPA10mm30cm{10,4}(:,8)==1,1))];
 data30cm_test9 = data30cm_test9(data30cm_test9(:,2)<= 625 &data30cm_test9(:,3)>=10,:);
 data30cm_test10 = data30cm_test10(data30cm_test10(:,2) <= 625 &data30cm_test10(:,3)>=10,:);
 
