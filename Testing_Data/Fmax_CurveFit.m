@@ -17,11 +17,13 @@ Fmax_norm = Fmax/max(Fmax);
 %% Nonlinear fit for Fmax
 modelfun = @(b,xm)b(1)*atan(b(2)*(xm-0.0075)); %based on the shape, it looks like resting length reaches a limit
 %modelfun = @(b,xm)-exp(-b(1)*(xm-b(2))+b(3))+b(4);
-beta0 = [301.76 19.714];
+beta0 = [301.568 20.4972];
 %beta0 = [11 0.41 1.2 478];
 opts = statset('fitnlm');
 opts.MaxIter = 1000;
-mdl = fitnlm(restingL,Fmax,modelfun,beta0,'Exclude',[1,3,5,7],'Options',opts)
+opts.Display = 'final';
+opts.RobustWgtFun = 'logistic';
+mdl = fitnlm(restingL,Fmax,modelfun,beta0,'Exclude',[7,27],'Options',opts)
 x = linspace(0,1);
 p1 = feval(mdl,x);
 
@@ -83,7 +85,7 @@ P_norm = pointz/max(pointz);        %Scale pressure
 %has +/- 1 mm accuracy which can affect the maximum strain listed.
 
 %ft = fittype('a+b*x');
-max_k = fit(restingL',kmax','poly2','Normalize','on')
+max_k = fit(restingL',kmax','poly1','Normalize','on')
 p2 = feval(max_k,x);
 
 figure

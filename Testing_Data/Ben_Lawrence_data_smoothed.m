@@ -173,12 +173,19 @@ data30cm = [    data30cm_test9(:,1) data30cm_test9(:,2) (data30cm_test9(:,3))/Fm
                 1 620 0];
 
 %% Add Ben's data
+Fmax112 = 348.6;
+Fmax415 = 459.63;
+Fmax455 = 460;
+Fmax490 = 464;
+Fmax518 = 455.83;
+
+
 rawdata11cm = [325.164999	620	0.008928571	0.055555556;
                 252.6589869	620	0.044642857	0.277777778;
                 135.6707588	620	0.089285714	0.555555556;
                 89.40925416	620	0.125	0.777777778;
-                13.3446648	620	0.169642857	1.055555556];
-data11cm = [rawdata11cm(:,4), rawdata11cm(:,2), rawdata11cm(:,1)/maxBPAforce(0.112)];
+                13.3446648	620	0.169642857	1];
+data11cm = [rawdata11cm(:,4), rawdata11cm(:,2), rawdata11cm(:,1)/Fmax112];
 
 rawdata42cm = [444.82216	620	0.002409639	0.014492754;
             358.9714831	620	0.019277108	0.115942029;
@@ -187,7 +194,7 @@ rawdata42cm = [444.82216	620	0.002409639	0.014492754;
             103.1987411	620	0.113253012	0.68115942;
                     40.92363872	620	0.151807229	0.913043478;
                                 0	620	0.16626506	1];
-data42cm = [rawdata42cm(:,4), rawdata42cm(:,2), rawdata42cm(:,1)/maxBPAforce(0.415)];
+data42cm = [rawdata42cm(:,4), rawdata42cm(:,2), rawdata42cm(:,1)/Fmax415];
 
 rawdata45cm = [26	620	0.164835165	1.041666667;
 61	620	0.151648352	0.958333333;
@@ -206,7 +213,7 @@ rawdata45cm = [26	620	0.164835165	1.041666667;
 335.3959086	620	0.021978022	0.138888889;
 257.9968528	620	0.046153846	0.291666667;
 203.2837271	620	0.074725275	0.472222222];
-data45cm = [rawdata45cm(:,4), rawdata45cm(:,2), rawdata45cm(:,1)/maxBPAforce(0.518)];
+data45cm = [rawdata45cm(:,4), rawdata45cm(:,2), rawdata45cm(:,1)/Fmax455];
 
 rawdata49cm = [12	618	0.173469388	0.923913043;
 1.11	618	0.175510204	0.934782609;
@@ -229,7 +236,7 @@ rawdata49cm = [12	618	0.173469388	0.923913043;
 20	617	0.17755102	0.945652174;
 2.29	617	0.185714286	0.989130435;
 0	617	0.187755102	1];
-data49cm = [rawdata49cm(:,4), rawdata49cm(:,2), rawdata49cm(:,1)/maxBPAforce(0.490)];
+data49cm = [rawdata49cm(:,4), rawdata49cm(:,2), rawdata49cm(:,1)/Fmax490];
 
 rawdata52cm = [0	619	0.166023166	1;
 6	618	0.167953668	1.011627907;
@@ -252,7 +259,7 @@ rawdata52cm = [0	619	0.166023166	1;
 230	617	0.063706564	0.38372093;
 278	617	0.05019305	0.302325581;
 429	617	0	0];
-data52cm = [rawdata52cm(:,4), rawdata52cm(:,2), rawdata52cm(:,1)/maxBPAforce(0.518)];
+data52cm = [rawdata52cm(:,4), rawdata52cm(:,2), rawdata52cm(:,1)/Fmax518];
 
 %% Combine all data and do a 3d scatter plot. 
 allData = [data13cm; data23cm; data27cm; data29cm; data30cm; data11cm; data42cm; data45cm; data49cm; data52cm];
