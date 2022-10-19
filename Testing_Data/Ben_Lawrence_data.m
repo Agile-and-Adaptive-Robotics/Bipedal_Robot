@@ -147,12 +147,16 @@ data30cm = [    data30cm_test9(:,1) data30cm_test9(:,2) (data30cm_test9(:,3))/Fm
                 1 620 0];
 
 %% Add Ben's data
-Fmax112 = 325.165;
-Fmax415 = 444.8222;
-Fmax455 = 440;
-Fmax490 = 464;
-Fmax518 = 429;
-
+% Fmax112 = 325.165;
+% Fmax415 = 444.8222;
+% Fmax455 = 440;
+% Fmax490 = 464;
+% Fmax518 = 429;
+Fmax112 = maxBPAforce(.112);
+Fmax415 = maxBPAforce(.415);
+Fmax455 = maxBPAforce(.455);
+Fmax490 = maxBPAforce(0.490);
+Fmax518 = maxBPAforce(.518);
 
 rawdata11cm = [325.164999	620	0.008928571	0.055555556;
                 252.6589869	620	0.044642857	0.277777778;
@@ -248,6 +252,11 @@ ylabel('Pressure (normalized)')
 zlabel('Force (normalized)')
 title('10mm length normalized')
 
+%addnoise 
+r110 = [0.99 + (1.01 - 0.99) * rand(100,2), -0.01 + 0.02 * rand(100,1)].*[1 620 1];
+r011 = [-0.01 + 0.02 * rand(100,1), 0.99 + (1.01 - 0.99) * rand(100,2)].*[1 620 1];
+r000 = -0.01 + 0.02 * rand(100,3);
+
 allData_test9 = [data13cm_test9(:,1) data13cm_test9(:,2) (data13cm_test9(:,3))/Fmax13;
                 data23cm_test9(:,1), data23cm_test9(:,2), (data23cm_test9(:,3))/Fmax23; 
                 data27cm_test9(:,1) data27cm_test9(:,2) (data27cm_test9(:,3))/Fmax27; 
@@ -263,7 +272,11 @@ allData_test9 = [data13cm_test9(:,1) data13cm_test9(:,2) (data13cm_test9(:,3))/F
                 1 620 0;
                 1 620 0;
                 1 620 0;
-                data11cm; data42cm; data45cm; data49cm; data52cm];
+                data11cm; data42cm; data45cm; data49cm; data52cm;
+                r110; r011; r000];
+numrows = 100;
+allData_test9_scaled = imresize(allData_test9,[numrows 3], 'nearest');
+
 X9 = allData_test9(:,1); Y9=allData_test9(:,2); Z9=allData_test9(:,3);
 Y9norm = Y9/620;
             
@@ -282,7 +295,9 @@ allData_test10 = [data13cm_test10(:,1) data13cm_test10(:,2) (data13cm_test10(:,3
                 1 620 0;
                 1 620 0;
                 1 620 0;
-                data11cm; data42cm; data45cm; data49cm; data52cm];
+                data11cm; data42cm; data45cm; data49cm; data52cm;
+                r110; r011; r000];
+allData_test10_scaled = imresize(allData_test10,[numrows 3], 'nearest');
 X10 = allData_test10(:,1); Y10=allData_test10(:,2); Z10=allData_test10(:,3);
 Y10norm = Y10/620;
 
