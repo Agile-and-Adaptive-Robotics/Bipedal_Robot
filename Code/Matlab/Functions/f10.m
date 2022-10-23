@@ -5,16 +5,24 @@
 
 %Input:
 %  x = relative strain
-%  y = Pressure
+%  y = Pressure, kPa
 %Output:
-%  f10 = Force
+%  f10 = Force, N
 
 function F = f10(x,y)
-a0 = -133;
-a1 = 7.981;
-a2 = 5.139;
-a3 = 1.135;
-a4 = -0.4361;
-a5 = 0.04946;
+% coefficients w/ 95% confidence interval
+a0 = -139.9;        % [-141.9, 137]
+a1 = 6.313;         % [6.155, 6.472]
+a2 = 5.166;         % [5.154, 5.177]
+a3 = 0.9434;        % [0.9111, 0.9757]
+a4 = -0.2811;       % [-0.3213, -0.241]
+a5 = -0.07965;      % [-0.1109, -0.04839]
+
+
 
 F = a0 + exp(-a1*x+a2) + y*exp(-(a3*x).^2+a4)+a5*y;
+
+%% Goodness of fit
+% SSE: 1854;
+% R-Square: 0.9995; (Same as adjusted)
+% RMSE: 2.396
