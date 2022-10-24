@@ -6,7 +6,15 @@ restingLength = 0.457; %resting length, m
 kmax = 0.380; %Length at maximum contraction, m
 
 load KneeFlxPin_10mm_46cm.mat
-Theoretical = TorqueR(:,3)';
+Theoretical = cell(2, size(TorqueR,3));
+Theoretical{1,1} = 'Hunt Eq.';
+Theoretical{1,2} = 'Exponential Eq.';
+Theoretical{1,3} = 'Polynomial Eq.';
+Theoretical{1,4} = 'Exponential Eq., Simplified';
+Theoretical{1,5} = 'Polynomial Eq., Simplified';
+for i = 1:length(Theoretical)
+    Theoretical{2,i} = TorqueR(:,3,i)';
+end
 %% Tests 1 & 2 . 
 %Test 1 == sheet FlxTest10mm_3 from Results_table10mm_pinned_LoadCell
 %Test 2 == sheet FlxTest10mm_3 from Results_table10mm_pinned_FishScale
@@ -52,37 +60,80 @@ runsperseries = 10;
                 pres1(1,j) = Stats{'Mean',2};
     end
 
-pres2 = 606*ones(1,size(InflatedLength, 2));
+pres2 = 606*ones(1,size(InflatedLength2, 2));
 pres = [pres1 pres2];
 
-for i = 1:size(InflatedLength, 2)
-    F(i) = festo3(InflatedLength(i), restingLength, 10, pres(i), kmax);    
+for i = 1:size(InflatedLength, 2)  
+    F(1,i,1) = festo3(InflatedLength(i), restingLength, 10, pres(i), kmax);    
     TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Torque will be negative because it is causing flexion
 end
-TorqueHand1 = TorqueHand(1:size(TorqueHand1,2));
-TorqueHand2 = TorqueHand((size(TorqueHand1,2)+1):size(TorqueHand,2));
 
+rel = ((restingLength-InflatedLength)/restingLength)/kmax;
+Fn = bpaForce10(restingLength,rel,pres);
+
+for i = 2:(size(Fn,3)+1)
+    F(:,:,i) = Fn(:,:,i-1);
+end
+
+for i = 1:size(F,3)
+    TorqueHand(:,:,i) = -ICRtoMuscle.*F(1,:,i);  %Torque will be negative because it is causing flexion
+    
+    TorqueHand1(:,:,i) = TorqueHand(1,1:size(TorqueHand1,2),i);
+    TorqueHand2(:,:,i) = TorqueHand(1,(size(TorqueHand1,2)+1):size(TorqueHand,2),i);
+end
+
+TorqueH = cell(1, size(TorqueHand,3));
+for i = 1:size(TorqueHand,3)
+    TorqueH{i} = TorqueHand(:,:,i);
+end
 %% Mean and RMSE
 X1 = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
-mod = 'gauss1';
-fitOptions = fitoptions(mod, 'Normalize', 'on');
-[mdl1u, gof1] = fit(Angle',Torque',mod,fitOptions);
-TorqueStdu = gof1.rmse;
-TorqueMeanu = feval(mdl1u,X1)';
+[Angle, Torque] = prepareCurveData(Angle, Torque);
 
-[mdl2u, gof2] = fit(Angle',TorqueHand',mod,fitOptions);
-HandStdu = gof2.rmse;
-HandMeanu = feval(mdl2u,X1)';
+% for i = size(TorqueHand,3)
+%     [mdl2u{i}, gof2{i}, out2{i}] = fit(Angle',TorqueHand,mod,fitOptions);
+%     HandStdu{i} = gof2{i}.rmse;
+%     HandMeanu{i} = feval(mdl2u{i},X1)';
+%     
+%     [mdl2{i}, gofp2{i}, outp2{i}] = fit(Angle',TorqueHand(:,:,i)',modp,fitOptions)
+%     HandStd{i} = gofp2.rmse
+%     HandMean{i} = feval(mdl2,X1)';
+% end
 
-modp = 'poly3';
-fitOp = fitoptions(modp,'Normalize','on');
-[mdl1, gofp1] = fit(Angle',Torque',modp,fitOptions)
-TorqueStd = gofp1.rmse
-TorqueMean = feval(mdl1,X1)';
-
-[mdl2, gofp2] = fit(Angle',TorqueHand',modp,fitOptions)
-HandStd = gofp2.rmse
-HandMean = feval(mdl2,X1)';
+% mod = 'cubicspline';
+% fitOptions = fitoptions('Normalize', 'on','Robust','Bisquare');
+% [mdl1u, gof1, out1] = fit(Angle,Torque,mod,fitOptions);
+% TorqueStdu = gof1.rmse;
+% TorqueMeanu = feval(mdl1u,X1);
+% 
+% modp = 'smoothingspline';
+% fitOp = fitoptions(modp,'Normalize','on');
+% [mdl1, gofp1, outp1] = fit(Angle,Torque,modp,fitOptions)
+% TorqueStd = gofp1.rmse
+% TorqueMean = feval(mdl1,X1);
+% 
+% %Create cells for Hand Torque fit outputs
+% mdl2u = cell(1,size(TorqueHand,3));
+% gof2 = cell(1,size(TorqueHand,3));
+% out2 = cell(1,size(TorqueHand,3));
+% HandStdu = cell(1,size(TorqueHand,3));
+% HandMeanu = cell(1,size(TorqueHand,3));
+%     
+% mdl2 = cell(1,size(TorqueHand,3));
+% gofp2 = cell(1,size(TorqueHand,3));
+% outp2 = cell(1,size(TorqueHand,3));
+% HandStd = cell(1,size(TorqueHand,3));
+% HandMean = cell(1,size(TorqueHand,3));
+% 
+% for i = size(TorqueHand,3)
+%     [mdl2u{i}, gof2{i}, out2{i}] = fit(Angle',TorqueHand',mod,fitOptions);
+%     HandStdu{i} = gof2{i}.rmse;
+%     HandMeanu{i} = feval(mdl2u{i},X1)';
+%     
+%     [mdl2{i}, gofp2{i}, outp2{i}] = fit(Angle',TorqueHand(:,:,i)',modp,fitOptions)
+%     HandStd{i} = gofp2.rmse
+%     HandMean{i} = feval(mdl2,X1)';
+% end
 
 %% Plotting with polynomial solver
 %Matlab hex color values:
@@ -93,12 +144,17 @@ c4 = '#EA5F94'; %pink
 c5 = '#CD34B5'; %magenta
 c6 = '#9D02D7'; %magenta 2
 c7 = '#0000FF'; %indigo
+c8 = '#000000'; %black
 sz = 60;        %size of data points
+c = {c1; c2; c3; c4; c5; c6; c7; c8};
 
+PL = cell(1, size(Theoretical,2));
+sc = cell(1, size(Theoretical,2));
+Disp = cell(1, 2*size(Theoretical,2));
 
 figure
 hold on
-title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.5cm long')
+title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.7cm long')
 xlabel('degrees Flexion(-),Extension(+)')
 ylabel('Torque, N*m')
 gca1 = gca;
@@ -106,34 +162,16 @@ gcf1 = gcf;
 % set(gcf,'Position',[1 384 950 612]);
 % set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 set(gca,'FontSize', 12, 'FontWeight', 'bold')
-plot(phiD, Theoretical,'Color',c5,'Linewidth',2,'DisplayName','Expected')
-% chr = ['Adjusted fit'];
-% plot(phiD, Theo_adj,'Color',c3,'Linewidth',2,'DisplayName',chr)
 
-plot(X1,TorqueMean,'--','Color',c7,'Linewidth',2,'DisplayName','Torque mean, scale')
-plot(X1,HandMean,'--','Color',c1,'Linewidth',2,'DisplayName','Torque expected, hand measurements')
-
-sc1 = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, experimental');
-sc2 = scatter(Angle,TorqueHand,sz,'filled','MarkerFaceColor',c1,'DisplayName','Torque data, Hand calc');
-
-legend
-hold off
-
-
-%% Plot error and standard deviation as bar graphs
-xb=categorical({'Theoretical','Scale','Hand'});
-xb = reordercats(xb,{'Theoretical','Scale','Hand'});
-yb = [mean(Theoretical,'omitnan') mean(TorqueMean) mean(TorqueHand)];
-std_dev = [0 mean(TorqueStd) mean(HandStd)];
-figure
-hold on
-b = bar(xb,yb,'FaceColor',[0 0.8 1.0]);
-gca3 = gca;
-gcf3 = gcf;
-ylabel('Torque, N*m')
-title('Mean Torque Values and SD for Each Calculation Method')
-% set(gcf,'Position',[0 0 950 612]);
-set(gca,'FontSize', 12, 'FontWeight', 'bold');
-b.CData = [0 0.4470 0.7410; 0  0  0; 1  0  0];
-errb = errorbar(yb,std_dev ,'LineStyle','none','LineWidth',4,'CapSize',20);
+    for i = 1:size(Theoretical,2)
+        txt = Theoretical{1,i};
+        T1 = 2*i-1;
+        H1 = 2*i;
+        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
+        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1})
+        sc{i} = scatter(Angle,TorqueHand(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1})
+    end
+scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+lgd = legend;
 hold off
