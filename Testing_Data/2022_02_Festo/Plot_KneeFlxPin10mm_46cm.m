@@ -135,7 +135,7 @@ X1 = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
 %     HandMean{i} = feval(mdl2,X1)';
 % end
 
-%% Plotting with polynomial solver
+%% Plotting with multiple theoretical values
 %Matlab hex color values:
 c1 = '#FFD700'; %gold
 c2 = '#FFB14E'; %orange

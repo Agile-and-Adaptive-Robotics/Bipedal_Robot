@@ -2,7 +2,7 @@
 clear data13cm data23cm data27cm data 29cm data30cm
 
 %% Plot tests 9 and 10, only Pressurizing
- testnumber = 9; %choosing test number 9 as the standard
+ testnumber = 9; %choosing test numner 9 as the standard
  testnum = 10;   %adding test 10 b/c Lawrence says it's good
 Fmax13 = 343.05; %maxBPAforce(120);
 Fmax23 = 377.2; %maxBPAforce(220);
@@ -16,11 +16,12 @@ subplot 321
 hold on
 for a = 1:length(vals_13cm)
     b=vals_13cm(a);
+    c = [0 0.2 0.4 0.6];
     data13cm_test9 = AllBPA10mm13cm(AllBPA10mm13cm(:,5)==13& AllBPA10mm13cm(:,6)==b&AllBPA10mm13cm(:,7)==testnumber&AllBPA10mm13cm(:,8)==1,:);
     data13cm_test10 = AllBPA10mm13cm(AllBPA10mm13cm(:,5)==13& AllBPA10mm13cm(:,6)==b&AllBPA10mm13cm(:,7)==testnum&AllBPA10mm13cm(:,8)==1,:);
-    txt = sprintf('%dmm',vals_13cm(a));
-    plot(data13cm_test9(:,2),data13cm_test9(:,1),'DisplayName',txt)
-    plot(data13cm_test10(:,2),data13cm_test10(:,1),'DisplayName',txt)
+    txt = sprintf('%d',c(a));
+    plot(data13cm_test9(:,2),data13cm_test9(:,1)/Fmax13,'DisplayName',txt)
+    plot(data13cm_test10(:,2),data13cm_test10(:,1)/Fmax13,'DisplayName',txt)
 end
 hold off
 legend
@@ -41,11 +42,13 @@ subplot 322
 hold on
 for a = 1:length(vals_23cm)
     b=vals_23cm(a);
+    c = [0 0.424 0.91];
     data23cm_test9 = AllBPA10mm23cm(AllBPA10mm23cm(:,5)==23& AllBPA10mm23cm(:,6)==b&AllBPA10mm23cm(:,7)==testnumber&AllBPA10mm23cm(:,8)==1,:);
     data23cm_test10 = AllBPA10mm23cm(AllBPA10mm23cm(:,5)==23& AllBPA10mm23cm(:,6)==b&AllBPA10mm23cm(:,7)==testnum&AllBPA10mm23cm(:,8)==1,:);
-    txt = sprintf('%dmm',vals_23cm(a));
-    plot(data23cm_test9(:,2),data23cm_test9(:,1),'DisplayName',txt)
-    plot(data23cm_test10(:,2),data23cm_test10(:,1),'DisplayName',txt)
+    %txt = sprintf('%dmm',vals_23cm(a));
+    txt = sprintf('%d',c(a));
+    plot(data23cm_test9(:,2),data23cm_test9(:,1)/Fmax23,'DisplayName',txt)
+    plot(data23cm_test10(:,2),data23cm_test10(:,1)/Fmax23,'DisplayName',txt)
 end
 hold off
 legend
@@ -66,11 +69,13 @@ subplot 323
 hold on
 for a = 1:length(vals_27cm)
     b = vals_27cm(a);
+    c = [0 0.19444 0.41666 0.8611];
     data27cm_test9 = AllBPA10mm27cm(AllBPA10mm27cm(:,5)==27& AllBPA10mm27cm(:,6)==b&AllBPA10mm27cm(:,7)==testnumber&AllBPA10mm27cm(:,8)==1,:);
     data27cm_test10 = AllBPA10mm27cm(AllBPA10mm27cm(:,5)==27& AllBPA10mm27cm(:,6)==b&AllBPA10mm27cm(:,7)==testnum&AllBPA10mm27cm(:,8)==1,:);
-    txt = sprintf('%dmm',vals_27cm(a));
-    plot(data27cm_test9(:,2),data27cm_test9(:,1),'DisplayName',txt)
-    plot(data27cm_test10(:,2),data27cm_test10(:,1),'DisplayName',txt)
+    %txt = sprintf('%dmm',vals_27cm(a));
+    txt = sprintf('%d',c(a));
+    plot(data27cm_test9(:,2),data27cm_test9(:,1)/Fmax27,'DisplayName',txt)
+    plot(data27cm_test10(:,2),data27cm_test10(:,1)/Fmax27,'DisplayName',txt)
 end
 hold off
 legend
@@ -92,11 +97,12 @@ subplot 324
 hold on
 for a = 1:length(vals_29cm)
     b = vals_29cm(a);
+    c = [0 0.378 0.622 0.911];
     data29cm_test9 = AllBPA10mm29cm(AllBPA10mm29cm(:,5)==29& AllBPA10mm29cm(:,6)==b&AllBPA10mm29cm(:,7)==testnumber&AllBPA10mm29cm(:,8)==1,:);
     data29cm_test10 = AllBPA10mm29cm(AllBPA10mm29cm(:,5)==29& AllBPA10mm29cm(:,6)==b&AllBPA10mm29cm(:,7)==testnum&AllBPA10mm29cm(:,8)==1,:);
-    txt = sprintf('%dmm',vals_29cm(a));
-    plot(data29cm_test9(:,2),data29cm_test9(:,1),'DisplayName',txt)
-    plot(data29cm_test10(:,2),data29cm_test10(:,1),'DisplayName',txt)
+    txt = sprintf('%dmm',c(a));
+    plot(data29cm_test9(:,2),data29cm_test9(:,1)/Fmax29,'DisplayName',txt)
+    plot(data29cm_test10(:,2),data29cm_test10(:,1)/Fmax29,'DisplayName',txt)
 end
 hold off
 legend
@@ -118,11 +124,13 @@ subplot 325
 hold on
 for a = 1:length(vals_30cm)
     b = vals_30cm(a);
+    c = [0 0.29 0.54 0.80];
     data30cm_test9 = AllBPA10mm30cm(AllBPA10mm30cm(:,5)==30& AllBPA10mm30cm(:,6)==b&AllBPA10mm30cm(:,7)==testnumber&AllBPA10mm30cm(:,8)==1,:);
     data30cm_test10 = AllBPA10mm30cm(AllBPA10mm30cm(:,5)==30& AllBPA10mm30cm(:,6)==b&AllBPA10mm30cm(:,7)==testnum&AllBPA10mm30cm(:,8)==1,:);
-    txt = sprintf('%dmm',vals_30cm(a));
-    plot(data30cm_test9(:,2),data30cm_test9(:,3),'DisplayName',txt)
-    plot(data30cm_test10(:,2),data30cm_test10(:,3),'DisplayName',txt)
+    %txt = sprintf('%dmm',vals_30cm(a));
+    txt = sprintf('%d',c(a));
+    plot(data30cm_test9(:,2),data30cm_test9(:,1)/Fmax30,'DisplayName',txt)
+    plot(data30cm_test10(:,2),data30cm_test10(:,1)/Fmax30,'DisplayName',txt)
 end
 hold off
 legend
@@ -145,7 +153,7 @@ data30cm = [    data30cm_test9(:,1) data30cm_test9(:,2) (data30cm_test9(:,3))/Fm
                 data30cm_test10(:,1) data30cm_test10(:,2) (data30cm_test10(:,3))/Fmax30;
                 1 620 0;
                 1 620 0];
-
+            
 %% Add Ben's data
 % Fmax112 = 325.165;
 % Fmax415 = 444.8222;
@@ -166,10 +174,10 @@ rawdata11cm = [325.164999	620	0.008928571	0.055555556;
 data11cm = [rawdata11cm(:,4), rawdata11cm(:,2), rawdata11cm(:,1)/Fmax112];
 
 rawdata42cm = [444.82216	620	0.002409639	0.014492754;
-            358.9714831	620	0.019277108	0.115942029;
-            275.7897392	620	0.031325301	0.188405797;
-            200.169972	620	0.06746988	0.405797101;
-            103.1987411	620	0.113253012	0.68115942;
+                358.9714831	620	0.019277108	0.115942029;
+                275.7897392	620	0.031325301	0.188405797;
+                200.169972	620	0.06746988	0.405797101;
+                103.1987411	620	0.113253012	0.68115942;
                     40.92363872	620	0.151807229	0.913043478;
                                 0	620	0.16626506	1];
 data42cm = [rawdata42cm(:,4), rawdata42cm(:,2), rawdata42cm(:,1)/Fmax415];
@@ -298,6 +306,7 @@ zlabel('Force (normalized)')
 title('10mm force, normalized, resized')
 
 save allData.mat    allData allData_test9 allData_test10...
+                    test9 test10 Ben_data anchor...
                     X Y Ynorm Z X9 Y9 Y9norm Z9 X10 Y10 Y10norm Z10 ...
                     data13cm data23cm data27cm data29cm data30cm data11cm data42cm data45cm data49cm data52cm...
                     data13cm_test9 data23cm_test9 data27cm_test9 data29cm_test9 data30cm_test9 
