@@ -6,7 +6,15 @@ restingLength = 0.485; %resting length, m
 kmax = 0.398; %Length at maximum contraction, m
 
 load KneeFlxPin_10mm_48cm.mat
-Theoretical = TorqueR(:,3)';
+Theoretical = cell(2, size(TorqueR,3));
+Theoretical{1,1} = 'Hunt Eq.';
+Theoretical{1,2} = 'Exponential Eq.';
+Theoretical{1,3} = 'Polynomial Eq.';
+Theoretical{1,4} = 'Exponential Eq., Simplified';
+Theoretical{1,5} = 'Polynomial Eq., Simplified';
+for i = 1:length(Theoretical)
+    Theoretical{2,i} = TorqueR(:,3,i)';
+end
 %% Test 1&2 done with CALT load cell. Tests 3-5 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
 %Test 1 == sheet FlxTest10mm_1 from Results_table10mm_pinned_LoadCell
 %Test 2 == sheet FlxTest10mm_2 from Results_table10mm_pinned_LoadCell
@@ -90,38 +98,65 @@ pres4 = 612*ones(1,size(InflatedLength4, 2));
 %pres5 = 612*ones(1,size(InflatedLength5, 2));
 pres = [pres1 pres2 presx pres3 pres4];
 
-for i = 1:size(InflatedLength, 2)
-    F(i) = festo3(InflatedLength(i), restingLength, 10, pres(i), kmax);    
-    TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Moment will be negative because it causes flexion
+for i = 1:size(InflatedLength, 2)  
+    F(1,i,1) = festo3(InflatedLength(i), restingLength, 10, pres(i), kmax);    
+    TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Torque will be negative because it is causing flexion
 end
-TorqueHand1 = TorqueHand(1:size(TorqueHand1,2));
-TorqueHand2 = TorqueHand((size(TorqueHand1,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)));
-TorqueHand3 = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)));
-TorqueHand4 = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+size(TorqueHand4,2)));
-%TorqueHand5 = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+size(TorqueHand4,2)+1):size(TorqueHand,2));
-%% Mean and RMSE
-X = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
-mod = 'gauss1';
-fitOptions = fitoptions(mod, 'Normalize', 'on');
-[mdl1u, gof1] = fit(Angle',Torque',mod,fitOptions)
-TorqueStdu = gof1.rmse
-TorqueMeanu = feval(mdl1u,X)';
 
-[mdl2u, gof2] = fit(Angle',TorqueHand',mod,fitOptions);
-HandStdu = gof2.rmse;
-HandMeanu = feval(mdl2u,X)';
+rel = ((restingLength-InflatedLength)/restingLength)/kmax;
+Fn = bpaForce10(restingLength,rel,pres);
 
-modp = 'poly3';
-fitOp = fitoptions(modp,'Normalize','on');
-[mdl1, gofp1] = fit(Angle',Torque',modp,fitOp)
-TorqueStd = gofp1.rmse
-TorqueMean = feval(mdl1,X)';
+for i = 2:(size(Fn,3)+1)
+    F(:,:,i) = Fn(:,:,i-1);
+end
 
-[mdl2, gofp2] = fit(Angle',TorqueHand',modp,fitOp);
-HandStd = gofp2.rmse;
-HandMean = feval(mdl2,X)';
+for i = 1:size(F,3)
+    TorqueHand(:,:,i) = -ICRtoMuscle.*F(1,:,i);  %Torque will be negative because it is causing flexion
+    
+    TorqueHand1(:,:,i) = TorqueHand(1,1:size(TorqueHand1,2),i);
+    TorqueHand2(:,:,i) = TorqueHand((size(TorqueHand1,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)));
+    TorqueHand3(:,:,i) = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)));
+    TorqueHand4(:,:,i) = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+size(TorqueHand4,2)));
+end
 
-%% Plotting with polynomial solver
+TorqueH = cell(1, size(TorqueHand,3));
+for i = 1:size(TorqueHand,3)
+    TorqueH{i} = TorqueHand(:,:,i);
+end
+
+% for i = 1:size(InflatedLength, 2)
+%     F(i) = festo3(InflatedLength(i), restingLength, 10, pres(i), kmax);    
+%     TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Moment will be negative because it causes flexion
+% end
+% TorqueHand1 = TorqueHand(1:size(TorqueHand1,2));
+% TorqueHand2 = TorqueHand((size(TorqueHand1,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)));
+% TorqueHand3 = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)));
+% TorqueHand4 = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+size(TorqueHand4,2)));
+% %TorqueHand5 = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+size(TorqueHand4,2)+1):size(TorqueHand,2));
+
+%% Plot expected versus measured moment arm
+Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
+G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+
+figure
+hold on
+fig1 = gcf;
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+title('Expected vs measured moment arm')
+xlabel('Knee angle, degrees')
+ylabel('Moment Arm, z axis (m)')
+pp = plot(phiD,G,'DisplayName','MA expected');
+ss = scatter(Angle, ICRtoMuscle,'DisplayName','MA measured');
+lgdMa = legend;
+lgdMa.FontSize = 10;
+hold off
+
+%% Plotting measured versus expected Torque values solver
 %Matlab hex color values:
 c1 = '#FFD700'; %gold
 c2 = '#FFB14E'; %orange
@@ -134,80 +169,146 @@ c8 = '#000000'; %black
 sz = 60;        %size of data points
 c = {c1; c2; c3; c4; c5; c6; c7; c8};
 
+PL = cell(1, size(Theoretical,2));
+sc = cell(1, size(Theoretical,2));
+sc1 = cell(1, size(Theoretical,2));
+sc2 = cell(1, size(Theoretical,2));
+sc3 = cell(1, size(Theoretical,2));
+sc4 = cell(1, size(Theoretical,2));
+Disp = cell(1, 2*size(Theoretical,2));
+
 figure
-hold on
+fig2 = gcf;
+ax2 = gca;
 title('Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long')
-xlabel('degrees Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
-gca1 = gca;
-gcf1 = gcf;
-set(gcf,'Position',[1 384 950 612]);
-set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','off','XMinorTick','on','YMinorGrid','off','YMinorTick','on');
-plot(phiD, Theoretical,'Color',c1,'Linewidth',2,'DisplayName','Theoretical Calculation')
-
-%scatter(Angle,Torque,sz,'d','MarkerFaceColor',c7,'DisplayName','Measured Torque');
-scatter(Angle1,Torque1,sz,'d','MarkerFaceColor',c1,'DisplayName','JM LC');
-scatter(Angle2,Torque2,sz,'d','MarkerFaceColor',c3,'DisplayName','BB LC');
-scatter(Angle3,Torque3,sz,'d','MarkerFaceColor',c4,'DisplayName','BB FS');
-scatter(Angle4,Torque4,sz,'d','MarkerFaceColor',c5,'DisplayName','BB FS');
-% scatter(Angle5,Torque5,sz,'d','CData',c2,'DisplayName','JM FS');
-%scatter(Angle,TorqueHand,sz,'filled','MarkerFaceColor',c3,'DisplayName','Back calculated expected torque');
-scatter(Angle1,TorqueHand1,sz,'filled','MarkerFaceColor',c1,'DisplayName','JM hand');
-scatter(Angle2,TorqueHand2,sz,'filled','MarkerFaceColor',c3,'DisplayName','BB hand');
-scatter(Angle3,TorqueHand3,sz,'filled','MarkerFaceColor',c4,'DisplayName','BB hand');
-scatter(Angle4,TorqueHand4,sz,'filled','MarkerFaceColor',c5,'DisplayName','BB hand');
-% scatter(Angle5,TorqueHand5,sz,'filled','CData',c2,'DisplayName','JM hand');
-
-
-legend
+xlabel('Knee Flexion(-)/Extension(+), \circ')
+ylabel('Torque, N \bullet m')
+scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+hold on
+    for i = 1:size(Theoretical,2)
+        txt = Theoretical{1,i};
+        T1 = 2*i-1;
+        H1 = 2*i;
+        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
+        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
+        sc{i} = scatter(Angle,TorqueHand(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
+    end
+ax2.FontSize = 12;
+ax2.FontWeight = 'bold';
+ax2.FontName = 'Arial';
+ax2.YAxis.LineWidth = 2; ax2.YAxis.FontSize = 10;
+ax2.XAxis.LineWidth = 2; ax2.XAxis.FontSize = 10;
+lgd = legend;
+lgd.FontSize = 10;
 hold off
-% %% Plotting with nonlinear solution
-% figure
-% hold on
-% title('Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long')
-% xlabel('degrees Flexion(-),Extension(+)')
-% ylabel('Torque, N*m')
-% gca2 = gca;
-% gcf2 = gcf;
-% set(gcf,'Position',[960 384 950 612]);
-% set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-% plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
-% 
-% Xnew=[X,fliplr(X)];
-% Y1=[TorqueMeanu+TorqueStdu,fliplr(TorqueMeanu-TorqueStdu)];
-% Y2=[HandMeanu+HandStdu,fliplr(HandMeanu-HandStdu)];
-% plot(X,TorqueMeanu,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
-% fill(Xnew,Y1,[1 0.4 0.8],'DisplayName','Fish scale SD','FaceAlpha',0.25);
-% plot(X,HandMeanu,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
-% fill(Xnew,Y2,[.6 1.0 .6],'DisplayName','Hand torque SD','FaceAlpha',0.25);
-% 
-% scatter(Angle1,Torque1,sz,'d','CData',c1,'DisplayName','JM LC');
-% scatter(Angle2,Torque2,sz,'d','CData',c3,'DisplayName','BB LC');
-% scatter(Angle3,Torque3,sz,'d','CData',c4,'DisplayName','BB FS');
-% scatter(Angle4,Torque4,sz,'d','CData',c5,'DisplayName','BB FS');
-% %scatter(Angle5,Torque5,sz,'d','CData',c2,'DisplayName','JM FS');
-% scatter(Angle1,TorqueHand1,sz,'filled','CData',c1,'DisplayName','JM hand');
-% scatter(Angle2,TorqueHand2,sz,'filled','CData',c3,'DisplayName','BB hand');
-% scatter(Angle3,TorqueHand3,sz,'filled','CData',c4,'DisplayName','BB hand');
-% scatter(Angle4,TorqueHand4,sz,'filled','CData',c5,'DisplayName','BB hand');
-% %scatter(Angle5,TorqueHand5,sz,'filled','CData',c2,'DisplayName','JM hand');
-% 
-% legend
-% hold off
-% %% Plot error and standard deviation as bar graphs
-% xb=categorical({'Theoretical','Scale','Hand'});
-% xb = reordercats(xb,{'Theoretical','Scale','Hand'});
-% yb = [mean(Theoretical) mean(TorqueMean) mean(TorqueHand)];
-% std_dev = [0 mean(TorqueStd) mean(HandStd)];
-% figure
-% hold on
-% b = bar(xb,yb,'FaceColor',[0 0.8 1.0]);
-% gca3 = gca;
-% gcf3 = gcf;
-% ylabel('Torque, N*m')
-% title('Mean Torque Values and SD for Each Calculation Method')
-% set(gcf,'Position',[0 0 950 612]);
-% set(gca,'FontSize', 18, 'FontWeight', 'bold');
-% b.CData = [0 0.4470 0.7410; 0  0  0; 1  0  0];
-% errb = errorbar(yb,std_dev ,'LineStyle','none','LineWidth',4,'CapSize',20);
-% hold off
+
+figure
+t = tiledlayout(2,2);
+t.Title.String = 'Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long';
+t.XLabel.String = 'Knee Flexion(-)/Extension(+), \circ';
+t.YLabel.String = 'Torque, N \bullet m';
+ax3 = gca;
+ax3.FontSize = 12;
+ax3.FontWeight = 'bold';
+ax3.FontName = 'Arial';
+ax3.YAxis.LineWidth = 2; ax3.YAxis.FontSize = 10;
+ax3.XAxis.LineWidth = 2; ax3.XAxis.FontSize = 10;
+
+nexttile
+scM1 = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+hold on
+    for i = 1:size(Theoretical,2)
+        txt = Theoretical{1,i};
+        T1 = 2*i-1;
+        H1 = 2*i;
+        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
+        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
+        sc1{i} = scatter(Angle1,TorqueHand1(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
+    end
+title('Subplot 1: JM LC/hand')
+ax = gca;
+ax.FontSize = 12;
+ax.FontWeight = 'bold';
+ax.FontName = 'Arial';
+ax.YAxis.LineWidth = 2; ax.YAxis.FontSize = 10;
+ax.XAxis.LineWidth = 2; ax.XAxis.FontSize = 10;
+lgd1 = legend;
+lgd1.FontWeight = 'bold';
+lgd1.FontSize = 10;
+hold off
+
+nexttile
+hold on
+    for i = 1:size(Theoretical,2)
+        txt = Theoretical{1,i};
+        T1 = 2*i-1;
+        H1 = 2*i;
+        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
+        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
+        sc2{i} = scatter(Angle2,TorqueHand2(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
+    end
+scM2 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+title('Subplot 2: BB LC/hand')
+ax = gca;
+ax.FontSize = 12;
+ax.FontWeight = 'bold';
+ax.FontName = 'Arial';
+ax.YAxis.LineWidth = 2; ax.YAxis.FontSize = 10;
+ax.XAxis.LineWidth = 2; ax.XAxis.FontSize = 10;
+lgd2 = legend;
+lgd2.FontSize = 10;
+lgd2.FontWeight = 'bold';
+hold off
+
+nexttile
+hold on
+    for i = 1:size(Theoretical,2)
+        txt = Theoretical{1,i};
+        T1 = 2*i-1;
+        H1 = 2*i;
+        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
+        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
+        sc3{i} = scatter(Angle3,TorqueHand3(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
+    end
+scM3 = scatter(Angle3,Torque3,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+title('Subplot 3: BB FS/hand')
+ax = gca;
+ax.FontSize = 12;
+ax.FontWeight = 'bold';
+ax.FontName = 'Arial';
+ax.YAxis.LineWidth = 2; ax.YAxis.FontSize = 10;
+ax.XAxis.LineWidth = 2; ax.XAxis.FontSize = 10;
+lgd3 = legend;
+lgd3.FontSize = 10;
+lgd3.FontWeight = 'bold';
+hold off
+
+nexttile
+hold on
+    for i = 1:size(Theoretical,2)
+        txt = Theoretical{1,i};
+        T1 = 2*i-1;
+        H1 = 2*i;
+        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
+        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
+        sc4{i} = scatter(Angle4,TorqueHand4(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
+    end
+scM4 = scatter(Angle4,Torque4,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+title('Subplot 4: BB FS/hand')
+ax = gca;
+ax.FontSize = 12;
+ax.FontWeight = 'bold';
+ax.FontName = 'Arial';
+ax.YAxis.LineWidth = 2; ax.YAxis.FontSize = 10;
+ax.XAxis.LineWidth = 2; ax.XAxis.FontSize = 10;
+lgd4 = legend;
+lgd4.FontSize = 10;
+lgd4.FontWeight = 'bold';
+hold off
+
+

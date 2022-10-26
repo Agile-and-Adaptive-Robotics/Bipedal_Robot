@@ -1,6 +1,6 @@
 %% Pinned knee, Extensor
 %Run and save data from testing results
-clear; clc; close all;
+clear; clc; %close all;
 
 restingLength = 0.457; %resting length, m
 kmax = 0.380; %Length at maximum contraction, m
@@ -86,54 +86,18 @@ TorqueH = cell(1, size(TorqueHand,3));
 for i = 1:size(TorqueHand,3)
     TorqueH{i} = TorqueHand(:,:,i);
 end
-%% Mean and RMSE
-X1 = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
-[Angle, Torque] = prepareCurveData(Angle, Torque);
+%% Plot expected versus measured moment arm
+Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
+G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
 
-% for i = size(TorqueHand,3)
-%     [mdl2u{i}, gof2{i}, out2{i}] = fit(Angle',TorqueHand,mod,fitOptions);
-%     HandStdu{i} = gof2{i}.rmse;
-%     HandMeanu{i} = feval(mdl2u{i},X1)';
-%     
-%     [mdl2{i}, gofp2{i}, outp2{i}] = fit(Angle',TorqueHand(:,:,i)',modp,fitOptions)
-%     HandStd{i} = gofp2.rmse
-%     HandMean{i} = feval(mdl2,X1)';
-% end
-
-% mod = 'cubicspline';
-% fitOptions = fitoptions('Normalize', 'on','Robust','Bisquare');
-% [mdl1u, gof1, out1] = fit(Angle,Torque,mod,fitOptions);
-% TorqueStdu = gof1.rmse;
-% TorqueMeanu = feval(mdl1u,X1);
-% 
-% modp = 'smoothingspline';
-% fitOp = fitoptions(modp,'Normalize','on');
-% [mdl1, gofp1, outp1] = fit(Angle,Torque,modp,fitOptions)
-% TorqueStd = gofp1.rmse
-% TorqueMean = feval(mdl1,X1);
-% 
-% %Create cells for Hand Torque fit outputs
-% mdl2u = cell(1,size(TorqueHand,3));
-% gof2 = cell(1,size(TorqueHand,3));
-% out2 = cell(1,size(TorqueHand,3));
-% HandStdu = cell(1,size(TorqueHand,3));
-% HandMeanu = cell(1,size(TorqueHand,3));
-%     
-% mdl2 = cell(1,size(TorqueHand,3));
-% gofp2 = cell(1,size(TorqueHand,3));
-% outp2 = cell(1,size(TorqueHand,3));
-% HandStd = cell(1,size(TorqueHand,3));
-% HandMean = cell(1,size(TorqueHand,3));
-% 
-% for i = size(TorqueHand,3)
-%     [mdl2u{i}, gof2{i}, out2{i}] = fit(Angle',TorqueHand',mod,fitOptions);
-%     HandStdu{i} = gof2{i}.rmse;
-%     HandMeanu{i} = feval(mdl2u{i},X1)';
-%     
-%     [mdl2{i}, gofp2{i}, outp2{i}] = fit(Angle',TorqueHand(:,:,i)',modp,fitOptions)
-%     HandStd{i} = gofp2.rmse
-%     HandMean{i} = feval(mdl2,X1)';
-% end
+figure
+hold on
+plot(phiD,G,'DisplayName','MA expected')
+scatter(Angle, ICRtoMuscle,'DisplayName','MA measured')
+xlabel('Knee angle, degrees')
+ylabel('Moment Arm, z axis (m)')
+title('Expected vs measured moment arm')
+hold off
 
 %% Plotting with multiple theoretical values
 %Matlab hex color values:
