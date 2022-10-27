@@ -114,9 +114,9 @@ for i = 1:size(F,3)
     TorqueHand(:,:,i) = -ICRtoMuscle.*F(1,:,i);  %Torque will be negative because it is causing flexion
     
     TorqueHand1(:,:,i) = TorqueHand(1,1:size(TorqueHand1,2),i);
-    TorqueHand2(:,:,i) = TorqueHand((size(TorqueHand1,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)));
-    TorqueHand3(:,:,i) = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)));
-    TorqueHand4(:,:,i) = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+size(TorqueHand4,2)));
+    TorqueHand2(:,:,i) = TorqueHand(1,(length(TorqueHand1)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)),i);
+    TorqueHand3(:,:,i) = TorqueHand(1,(size(TorqueHand1,2)+size(TorqueHand2,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)),i);
+    TorqueHand4(:,:,i) = TorqueHand(1,(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+size(TorqueHand4,2)),i);
 end
 
 TorqueH = cell(1, size(TorqueHand,3));
@@ -140,7 +140,6 @@ G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
 
 figure
 hold on
-fig1 = gcf;
 ax1 = gca;
 ax1.FontSize = 12;
 ax1.FontWeight = 'bold';
@@ -152,6 +151,111 @@ xlabel('Knee angle, degrees')
 ylabel('Moment Arm, z axis (m)')
 pp = plot(phiD,G,'DisplayName','MA expected');
 ss = scatter(Angle, ICRtoMuscle,'DisplayName','MA measured');
+lgdMa = legend;
+lgdMa.FontSize = 10;
+hold off
+
+figure
+hold on
+fig1 = gcf;
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+title('Expected vs measured moment arm')
+xlabel('Knee angle, \circ')
+ylabel('Moment Arm, z axis (m)')
+
+subplot(2,2,1)
+hold on
+pp1 = plot(phiD,G,'DisplayName','MA expected');
+ss1 = scatter(Angle1, ICRtoMuscle1,'DisplayName','MA measured, JM LC');
+title('Expected vs measured moment arm')
+xlabel('Knee angle, \circ')
+ylabel('Moment Arm, z axis (m)')
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+lgdMa = legend;
+lgdMa.FontSize = 10;
+hold off
+
+subplot(2,2,2)
+hold on
+pp2 = plot(phiD,G,'DisplayName','MA expected');
+ss2 = scatter(Angle2, ICRtoMuscle2,'DisplayName','MA measured, BB LC');
+title('Expected vs measured moment arm')
+xlabel('Knee angle, \circ')
+ylabel('Moment Arm, z axis (m)')
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+lgdMa = legend;
+lgdMa.FontSize = 10;
+hold off
+
+subplot(2,2,3)
+hold on
+pp3 = plot(phiD,G,'DisplayName','MA expected');
+ss3 = scatter(Angle3, ICRtoMuscle3,'DisplayName','MA measured, BB FS');
+title('Expected vs measured moment arm')
+xlabel('Knee angle, \circ')
+ylabel('Moment Arm, z axis (m)')
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+lgdMa = legend;
+lgdMa.FontSize = 10;
+hold off
+
+subplot(2,2,4)
+hold on
+pp4 = plot(phiD,G,'DisplayName','MA expected');
+ss4 = scatter(Angle4, ICRtoMuscle4,'DisplayName','MA measured, BB FS');
+title('Expected vs measured moment arm')
+xlabel('Knee angle, \circ')
+ylabel('Moment Arm, z axis (m)')
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+lgdMa = legend;
+lgdMa.FontSize = 10;
+hold off
+
+%% Plot relative strain versus angle. Compare strain, relative strain, and measured values
+
+KMAX = (rest-kmax)/rest;
+strain = Bifemsh_Pam.Contraction;
+relstrain = (strain)./KMAX;
+realRel = (rest-InflatedLength)/rest/KMAX;
+
+figure
+hold on
+plot(phiD,relstrain,'DisplayName','Expected Relative Strain')
+scatter(Angle,realRel,'DisplayName','Measured Relative Strain')
+title('Expected vs measured relative strain')
+xlabel('Knee angle, \circ')
+ylabel('strain/kmax')
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
 lgdMa = legend;
 lgdMa.FontSize = 10;
 hold off
@@ -178,22 +282,26 @@ sc4 = cell(1, size(Theoretical,2));
 Disp = cell(1, 2*size(Theoretical,2));
 
 figure
-fig2 = gcf;
-ax2 = gca;
-title('Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long')
-xlabel('Knee Flexion(-)/Extension(+), \circ')
-ylabel('Torque, N \bullet m')
+
+% ax1 = gca;
+% ax1.FontSize = 12;
+% ax1.FontWeight = 'bold';
+% ax1.FontName = 'Arial';
 scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 hold on
     for i = 1:size(Theoretical,2)
         txt = Theoretical{1,i};
         T1 = 2*i-1;
         H1 = 2*i;
-        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
-        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        Disp{T1} = sprintf('Theoretical Torque, %s',txt);
+        Disp{H1} = sprintf('A posteriori torque, %s',txt);
         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
         sc{i} = scatter(Angle,TorqueHand(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
     end
+title('Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long','FontSize',12,'FontWeight','Bold')
+xlabel('Knee Flexion(-)/Extension(+), \circ','FontSize',12)
+ylabel('Torque, N \bullet m','FontSize',12)
+ax2 = gca;
 ax2.FontSize = 12;
 ax2.FontWeight = 'bold';
 ax2.FontName = 'Arial';
@@ -201,113 +309,117 @@ ax2.YAxis.LineWidth = 2; ax2.YAxis.FontSize = 10;
 ax2.XAxis.LineWidth = 2; ax2.XAxis.FontSize = 10;
 lgd = legend;
 lgd.FontSize = 10;
+lgd.Location = 'southwest';
 hold off
 
 figure
 t = tiledlayout(2,2);
 t.Title.String = 'Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long';
+t.Title.FontSize =12;
+t.Title.FontWeight = 'bold';
+t.Title.FontName = 'Arial';
 t.XLabel.String = 'Knee Flexion(-)/Extension(+), \circ';
+t.XLabel.FontSize =12;
+t.XLabel.FontWeight = 'bold';
+t.XLabel.FontName = 'Arial';
 t.YLabel.String = 'Torque, N \bullet m';
-ax3 = gca;
-ax3.FontSize = 12;
-ax3.FontWeight = 'bold';
-ax3.FontName = 'Arial';
-ax3.YAxis.LineWidth = 2; ax3.YAxis.FontSize = 10;
-ax3.XAxis.LineWidth = 2; ax3.XAxis.FontSize = 10;
+t.YLabel.FontSize =12;
+t.YLabel.FontWeight = 'bold';
+t.YLabel.FontName = 'Arial';
 
-nexttile
+
+ax4 = nexttile;
 scM1 = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 hold on
     for i = 1:size(Theoretical,2)
         txt = Theoretical{1,i};
         T1 = 2*i-1;
         H1 = 2*i;
-        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
-        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        Disp{T1} = sprintf('Theoretical Torque, %s',txt);
+        Disp{H1} = sprintf('A posteriori torque, %s',txt);
         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
         sc1{i} = scatter(Angle1,TorqueHand1(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
     end
 title('Subplot 1: JM LC/hand')
-ax = gca;
-ax.FontSize = 12;
-ax.FontWeight = 'bold';
-ax.FontName = 'Arial';
-ax.YAxis.LineWidth = 2; ax.YAxis.FontSize = 10;
-ax.XAxis.LineWidth = 2; ax.XAxis.FontSize = 10;
+ax4.FontSize = 10;
+ax4.FontWeight = 'bold';
+ax4.FontName = 'Arial';
+ax4.YAxis.LineWidth = 2; ax4.YAxis.FontSize = 10;
+ax4.XAxis.LineWidth = 2; ax4.XAxis.FontSize = 10;
 lgd1 = legend;
 lgd1.FontWeight = 'bold';
-lgd1.FontSize = 10;
+lgd1.FontSize = 8;
+lgd1.FontName = 'Arial';
 hold off
 
-nexttile
+ax5 = nexttile;
+scM2 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 hold on
     for i = 1:size(Theoretical,2)
         txt = Theoretical{1,i};
         T1 = 2*i-1;
         H1 = 2*i;
-        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
-        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        Disp{T1} = sprintf('Theoretical Torque, %s',txt);
+        Disp{H1} = sprintf('A posteriori torque, %s',txt);
         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
         sc2{i} = scatter(Angle2,TorqueHand2(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
     end
-scM2 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+
 title('Subplot 2: BB LC/hand')
-ax = gca;
-ax.FontSize = 12;
-ax.FontWeight = 'bold';
-ax.FontName = 'Arial';
-ax.YAxis.LineWidth = 2; ax.YAxis.FontSize = 10;
-ax.XAxis.LineWidth = 2; ax.XAxis.FontSize = 10;
+ax5.FontSize = 10;
+ax5.FontWeight = 'bold';
+ax5.FontName = 'Arial';
+ax5.YAxis.LineWidth = 2; ax5.YAxis.FontSize = 10;
+ax5.XAxis.LineWidth = 2; ax5.XAxis.FontSize = 10;
 lgd2 = legend;
-lgd2.FontSize = 10;
+lgd2.FontSize = 8;
 lgd2.FontWeight = 'bold';
 hold off
 
-nexttile
+ax6 = nexttile;
+scM3 = scatter(Angle3,Torque3,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 hold on
     for i = 1:size(Theoretical,2)
         txt = Theoretical{1,i};
         T1 = 2*i-1;
         H1 = 2*i;
-        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
-        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        Disp{T1} = sprintf('Theoretical Torque, %s',txt);
+        Disp{H1} = sprintf('A posteriori torque, %s',txt);
         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
         sc3{i} = scatter(Angle3,TorqueHand3(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
     end
-scM3 = scatter(Angle3,Torque3,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+
 title('Subplot 3: BB FS/hand')
-ax = gca;
-ax.FontSize = 12;
-ax.FontWeight = 'bold';
-ax.FontName = 'Arial';
-ax.YAxis.LineWidth = 2; ax.YAxis.FontSize = 10;
-ax.XAxis.LineWidth = 2; ax.XAxis.FontSize = 10;
+ax6.FontSize = 12;
+ax6.FontWeight = 'bold';
+ax6.FontName = 'Arial';
+ax6.YAxis.LineWidth = 2; ax6.YAxis.FontSize = 10;
+ax6.XAxis.LineWidth = 2; ax6.XAxis.FontSize = 10;
 lgd3 = legend;
-lgd3.FontSize = 10;
+lgd3.FontSize = 8;
 lgd3.FontWeight = 'bold';
 hold off
 
-nexttile
+ax7 = nexttile;
+scM4 = scatter(Angle4,Torque4,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 hold on
     for i = 1:size(Theoretical,2)
         txt = Theoretical{1,i};
         T1 = 2*i-1;
         H1 = 2*i;
-        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
-        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        Disp{T1} = sprintf('Theoretical Torque, %s',txt);
+        Disp{H1} = sprintf('A posteriori torque, %s',txt);
         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
         sc4{i} = scatter(Angle4,TorqueHand4(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
     end
-scM4 = scatter(Angle4,Torque4,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 title('Subplot 4: BB FS/hand')
-ax = gca;
-ax.FontSize = 12;
-ax.FontWeight = 'bold';
-ax.FontName = 'Arial';
-ax.YAxis.LineWidth = 2; ax.YAxis.FontSize = 10;
-ax.XAxis.LineWidth = 2; ax.XAxis.FontSize = 10;
+ax7.FontSize = 12;
+ax7.FontWeight = 'bold';
+ax7.FontName = 'Arial';
+ax7.YAxis.LineWidth = 2; ax7.YAxis.FontSize = 10;
+ax7.XAxis.LineWidth = 2; ax7.XAxis.FontSize = 10;
 lgd4 = legend;
-lgd4.FontSize = 10;
+lgd4.FontSize = 8;
 lgd4.FontWeight = 'bold';
 hold off
 
