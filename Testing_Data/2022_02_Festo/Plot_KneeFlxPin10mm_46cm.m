@@ -1,6 +1,6 @@
 %% Pinned knee, Extensor
 %Run and save data from testing results
-clear; clc; %close all;
+clear; clc; close all;
 
 restingLength = 0.457; %resting length, m
 kmax = 0.380; %Length at maximum contraction, m
@@ -32,7 +32,7 @@ Torque = [Torque1, Torque2];
 %from force line of action to muscle ICR.
 %Hand measurements for Fish scale Extensor test 2 were done incorrectly and will be disregarded
 
-InflatedLength1 = [428	418	409.5	405.5	395	396	390	348	381	376]/1000;
+InflatedLength1 = [428	418	409.5	405.5	395	396	390	384	381	376]/1000;
 InflatedLength2 = [438	438	434	424	419	415	408	401	399	394	388	388	386	381	380	384	386	390	394	400	407	413	422	426	433	438]/1000;
 InflatedLength = [InflatedLength1, InflatedLength2];
 
@@ -97,6 +97,77 @@ scatter(Angle, ICRtoMuscle,'DisplayName','MA measured')
 xlabel('Knee angle, degrees')
 ylabel('Moment Arm, z axis (m)')
 title('Expected vs measured moment arm')
+hold off
+
+figure
+hold on
+fig1 = gcf;
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+title('Expected vs measured moment arm')
+xlabel('Knee angle, \circ')
+ylabel('Moment Arm, z axis (m)')
+
+subplot(1,2,1)
+hold on
+pp1 = plot(phiD,G,'DisplayName','MA expected');
+ss1 = scatter(Angle1, ICRtoMuscle1,'DisplayName','MA measured, JM LC');
+title('Expected vs measured moment arm')
+xlabel('Knee angle, \circ')
+ylabel('Moment Arm, z axis (m)')
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+lgdMa = legend;
+lgdMa.FontSize = 10;
+hold off
+
+subplot(1,2,2)
+hold on
+pp2 = plot(phiD,G,'DisplayName','MA expected');
+ss2 = scatter(Angle2, ICRtoMuscle2,'DisplayName','MA measured, BB LC');
+title('Expected vs measured moment arm')
+xlabel('Knee angle, \circ')
+ylabel('Moment Arm, z axis (m)')
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+lgdMa = legend;
+lgdMa.FontSize = 10;
+hold off
+
+%% Plot relative strain versus angle. Compare strain, relative strain, and measured values
+
+KMAX = (rest-kmax)/rest;
+strain = Bifemsh_Pam.Contraction;
+relstrain = (strain)./KMAX;
+realRel = (rest-InflatedLength)/rest/KMAX;
+
+figure
+hold on
+plot(phiD,relstrain,'DisplayName','Expected Relative Strain')
+scatter(Angle,realRel,'DisplayName','Measured Relative Strain')
+title('Expected vs measured relative strain')
+xlabel('Knee angle, \circ')
+ylabel('strain/kmax')
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+lgdMa = legend;
+lgdMa.FontSize = 10;
 hold off
 
 %% Plotting with multiple theoretical values

@@ -44,14 +44,15 @@ Dia = 10;
 Location = zeros(2,3,positions);
 %Origin and Insertion from Assem2.75 Solidworks assembly
 for i = 1:positions
-    Location(:,:,i) = [-0.075, 0.100, 0.0328;
+    Location(:,:,i) = [-0.0795, 0.100, 0.0328;
                     -0.05011, -0.045, 0.0328];
 end
-rest = 0.485; %resting length, m
-kmax = 0.398;     %Length at maximum contraction, m
+rest = 0.457; %resting length, m
+kmax = 0.380;     %Length at maximum contraction, m
 tendon = 0;       %pinned, no tendon
-fitting = 0.0254; %fitting length
-Pres = 605.6671;     %average pressure
+fitting = 0.020; %fitting length
+%Pres = 605.6671;     %average pressure for 49cm
+Pres = 604.5573;      %average pressure for 46cm
 Bifemsh_Pam = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, Pres);
 
 
@@ -68,7 +69,7 @@ phiD = phi*180/pi;
 %% Plot just robot Z axis Torque
 figure
 plot(phiD, TorqueR(:, 3))
-title('BPA Z Torque, Length = 485 mm')
+title(sprintf('BPA Z Torque, Length = %1.3  mm',rest))
 xlabel('Knee Extension(+)/Flexion(-), degrees')
 ylabel('Torque, Nm')
 hold on
