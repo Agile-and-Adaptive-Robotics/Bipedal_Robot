@@ -215,8 +215,8 @@ classdef MonoPamDataExplicit_compare < handle
             
             contraction = zeros(length(mL), 1);
             for i = 1:length(mL)
-%                 contraction(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest;
-                  contraction(i) = ((rest+tendon+2*fitting)-mL(i,1))/(rest+tendon+2*fitting);
+                 contraction(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest;
+%                  contraction(i) = ((rest+tendon+2*fitting)-mL(i,1))/(rest+tendon+2*fitting);
             end
         end
         

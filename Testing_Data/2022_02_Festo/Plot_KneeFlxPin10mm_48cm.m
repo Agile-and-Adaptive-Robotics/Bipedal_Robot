@@ -103,7 +103,8 @@ for i = 1:size(InflatedLength, 2)
     TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Torque will be negative because it is causing flexion
 end
 
-rel = ((restingLength-InflatedLength)/restingLength)/kmax;
+KMAX = (restingLength-kmax)/restingLength;
+rel = ((restingLength-InflatedLength)/restingLength)/KMAX;
 Fn = bpaForce10(restingLength,rel,pres);
 
 for i = 2:(size(Fn,3)+1)
@@ -124,15 +125,6 @@ for i = 1:size(TorqueHand,3)
     TorqueH{i} = TorqueHand(:,:,i);
 end
 
-% for i = 1:size(InflatedLength, 2)
-%     F(i) = festo3(InflatedLength(i), restingLength, 10, pres(i), kmax);    
-%     TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Moment will be negative because it causes flexion
-% end
-% TorqueHand1 = TorqueHand(1:size(TorqueHand1,2));
-% TorqueHand2 = TorqueHand((size(TorqueHand1,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)));
-% TorqueHand3 = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)));
-% TorqueHand4 = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+size(TorqueHand4,2)));
-% %TorqueHand5 = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+size(TorqueHand4,2)+1):size(TorqueHand,2));
 
 %% Plot expected versus measured moment arm
 Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
@@ -238,10 +230,11 @@ hold off
 
 %% Plot relative strain versus angle. Compare strain, relative strain, and measured values
 
-KMAX = (rest-kmax)/rest;
-strain = Bifemsh_Pam.Contraction;
+% tendon = 0;
+% fitting = 0.40;
+strain = (restingLength-(Bifemsh_Pam.MuscleLength-tendon-2*fitting))/restingLength;
 relstrain = (strain)./KMAX;
-realRel = (rest-InflatedLength)/rest/KMAX;
+realRel = (restingLength-InflatedLength)/restingLength/KMAX;
 
 figure
 hold on
@@ -250,6 +243,26 @@ scatter(Angle,realRel,'DisplayName','Measured Relative Strain')
 title('Expected vs measured relative strain')
 xlabel('Knee angle, \circ')
 ylabel('strain/kmax')
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+lgdMa = legend;
+lgdMa.FontSize = 10;
+hold off
+
+%% Plot measured versus expected strain (like above, but not normalized
+realStrain = (restingLength-InflatedLength)/restingLength;
+
+figure
+hold on
+plot(phiD,strain,'DisplayName','Expected Strain')
+scatter(Angle,realStrain,'DisplayName','MeasuredStrain')
+title('Expected vs measured strain')
+xlabel('Knee angle, \circ')
+ylabel('strain')
 ax1 = gca;
 ax1.FontSize = 12;
 ax1.FontWeight = 'bold';
@@ -283,10 +296,6 @@ Disp = cell(1, 2*size(Theoretical,2));
 
 figure
 
-% ax1 = gca;
-% ax1.FontSize = 12;
-% ax1.FontWeight = 'bold';
-% ax1.FontName = 'Arial';
 scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 hold on
     for i = 1:size(Theoretical,2)

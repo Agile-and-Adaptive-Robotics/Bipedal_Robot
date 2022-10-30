@@ -68,7 +68,8 @@ for i = 1:size(InflatedLength, 2)
     TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Torque will be negative because it is causing flexion
 end
 
-rel = ((restingLength-InflatedLength)/restingLength)/kmax;
+KMAX = (restingLength-kmax)/kmax;
+rel = ((restingLength-InflatedLength)/restingLength)/KMAX;
 Fn = bpaForce10(restingLength,rel,pres);
 
 for i = 2:(size(Fn,3)+1)
@@ -148,10 +149,11 @@ hold off
 
 %% Plot relative strain versus angle. Compare strain, relative strain, and measured values
 
-KMAX = (rest-kmax)/rest;
-strain = Bifemsh_Pam.Contraction;
+% tendon = 0;
+% fitting = 0.40;
+strain = (restingLength-(Bifemsh_Pam.MuscleLength-tendon-2*fitting))/restingLength;
 relstrain = (strain)./KMAX;
-realRel = (rest-InflatedLength)/rest/KMAX;
+realRel = (restingLength-InflatedLength)/restingLength/KMAX;
 
 figure
 hold on

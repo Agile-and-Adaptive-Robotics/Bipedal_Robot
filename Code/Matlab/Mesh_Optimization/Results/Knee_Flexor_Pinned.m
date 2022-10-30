@@ -50,18 +50,21 @@ end
 rest = 0.457; %resting length, m
 kmax = 0.380;     %Length at maximum contraction, m
 tendon = 0;       %pinned, no tendon
-fitting = 0.020; %fitting length
-%Pres = 605.6671;     %average pressure for 49cm
-Pres = 604.5573;      %average pressure for 46cm
+fitting = 0.0325; %fitting length
+% Pres = 605.6671;     %average pressure (kPa) for 49cm
+Pres = 604.5573;      %average pressure (kPa) for 46cm
 Bifemsh_Pam = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, Pres);
 
 
-%% Unstacking the Torques to identify specific rotations
+%% Unstacking the Values to identify specific rotations
 
 TorqueR = Bifemsh_Pam.Torque;
+Strain = (rest-(Bifemsh_Pam.MuscleLength-tendon-2*fitting))/rest;
+KMAX = (rest-kmax)/rest;
+rel = Strain./KMAX;
 
 
-%% Plotting Torque Results
+%% Plotting Torque Results for Degrees Flexion(-) or Extension (+)
 phiD = phi*180/pi;
 
 
@@ -77,3 +80,28 @@ for i = 2:size(TorqueR,3)
     plot(phiD, TorqueR(:,3,i))
 end
 legend('Hunt','Exponential','Polynomial','Exponential, simplified','Polynomial, simplified')
+
+%% Plot relative muscle Strain
+figure
+hold on
+plot(phiD,rel,'DisplayName','Expected Relative Strain')
+title('Expected relative strain')
+xlabel('Knee angle, \circ')
+ylabel('strain/kmax')
+hold off
+
+%% Plot muscle length
+
+BPAlength = (Bifemsh_Pam.MuscleLength-2*fitting);
+upper = rest.*ones(length(phiD));
+lower = kmax.*ones(length(phiD));
+figure
+hold on
+plot(phiD,BPAlength,'DisplayName','BPA Length')
+plot(phiD,upper,'--', phiD, lower, '--')
+title('Muscle Length')
+xlabel('Knee angle, \circ')
+ylabel('Length, m')
+hold off
+
+
