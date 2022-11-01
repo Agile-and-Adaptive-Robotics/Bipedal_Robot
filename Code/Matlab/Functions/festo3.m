@@ -40,20 +40,17 @@ F = zeros(size(Lmt,1),1);
                 if rel(i,1) >= 0 && rel(i,1) <=1
                     F(i,1) = interp2(X, Y, ForceStrain(:,2:20), pres, rel(i), 'linear');
                 elseif k(i,1) < 0 && k(i,1) >= -0.03
-                    x1 = [ -.03   -.02  -.01      0]';
-%                     z1 = [741.9    613   523  458.2]';
-%                     z2 = [759.2  629.3 539.3  473.3]';
-%                     z3 = [785.1  653.5 562.6  495.9]';
-                    z1 = [630    613   523  458.2]';
-                    z2 = [630  629.3 539.3  473.3]';
-                    z3 = [630  630 562.6  495.9]';
-                    x = [x1; x1; x1];
-                    y = [580*ones(length(x1),1);
-                         600*ones(length(x1),1);
-                         630*ones(length(x1),1)];
-                    z = [z1; z2; z3]; 
-                    BPAFit = fit([x, y],z,'linearinterp','Normalize','on');
-                    F(i,1) = BPAFit(contract,pres);
+%                     x1 = [ -.03   -.02  -.01      0]';
+%                     z1 = [630    613   523  458.2]';
+%                     z2 = [630  629.3 539.3  473.3]';
+%                     z3 = [630  630 562.6  495.9]';
+%                     x = [x1; x1; x1];
+%                     y = [580*ones(length(x1),1);
+%                          600*ones(length(x1),1);
+%                          630*ones(length(x1),1)];
+%                     z = [z1; z2; z3]; 
+%                     BPAFit = fit([x, y],z,'linearinterp','Normalize','on');
+                    F(i,1) = f10(rel(i),pres);
                 elseif rel(i,1) > 1
                     F(i,1) = 0;
                 else

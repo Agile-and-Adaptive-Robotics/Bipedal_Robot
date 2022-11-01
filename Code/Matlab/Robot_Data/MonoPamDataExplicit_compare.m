@@ -309,17 +309,17 @@ classdef MonoPamDataExplicit_compare < handle
            for i = 1:size(unitD, 1)
               if dia == 10
                 if k(i) < 0 && k(i) >= -0.03                     %Using data from Festo Corp
-                    x1 = [ -.03   -.02  -.01      0]';
-                    z1 = [741.9    613   523  458.2]';
-                    z2 = [759.2  629.3 539.3  473.3]';
-                    z3 = [785.1  653.5 562.6  495.9]';
-                    x = [x1; x1; x1];
-                    y = [580*ones(length(x1),1);
-                         600*ones(length(x1),1);
-                         630*ones(length(x1),1)];
-                    z = [z1; z2; z3]; 
-                    BPAFit = fit([x, y],z,'linearinterp','Normalize','on');
-                    scalarForce(i,1) = BPAFit(rel(i),pres);
+%                     x1 = [ -.03   -.02  -.01      0]';
+%                     z1 = [741.9    613   523  458.2]';
+%                     z2 = [759.2  629.3 539.3  473.3]';
+%                     z3 = [785.1  653.5 562.6  495.9]';
+%                     x = [x1; x1; x1];
+%                     y = [580*ones(length(x1),1);
+%                          600*ones(length(x1),1);
+%                          630*ones(length(x1),1)];
+%                     z = [z1; z2; z3]; 
+%                     BPAFit = fit([x, y],z,'linearinterp','Normalize','on');
+                    scalarForce(i,1) = f10(rel(i),pres);
                         if scalarForce(i,1) >= 630
                             scalarForce(i,1) = NaN;
                         end
