@@ -83,7 +83,7 @@ classdef MonoPamDataExplicit_compare < handle
             
           
             for ii = 1:size(T, 3)                          %Repeat for each orientation
-                for i = 1:size(L, 1,ii)-1                      %Repeat for all muscle segments
+                for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
                     pointA = L(i, :,ii);
                     pointB = L(i+1, :,ii);
                     if i+1 == C
@@ -320,7 +320,7 @@ classdef MonoPamDataExplicit_compare < handle
 %                     z = [z1; z2; z3]; 
 %                     BPAFit = fit([x, y],z,'linearinterp','Normalize','on');
                     scalarForce(i,1) = f10(rel(i),pres);
-                        if scalarForce(i,1) >= 630
+                        if scalarForce(i,1) >= 509*1.05
                             scalarForce(i,1) = NaN;
                         end
                 elseif rel(i) >= 0 && rel(i) <= 1               %Using data from Dr. Hunt
@@ -348,7 +348,7 @@ classdef MonoPamDataExplicit_compare < handle
                 for r = 1:length(rel)
                     if scalarForce(r,i) < 0
                         scalarForce(r,i) = 0;
-                    elseif scalarForce(r,i) > 630
+                    elseif scalarForce(r,i) > maxF*1.05
                         scalarForce(r,i) = NaN;
                     end
                     F(r, :, i) = unitD(r, :).*scalarForce(r, i);

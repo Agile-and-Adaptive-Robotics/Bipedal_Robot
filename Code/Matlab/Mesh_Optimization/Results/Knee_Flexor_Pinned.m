@@ -44,11 +44,13 @@ Dia = 10;
 Location = zeros(2,3,positions);
 %Origin and Insertion from Assem2.75 Solidworks assembly
 for i = 1:positions
-    Location(:,:,i) = [-0.0795, 0.100, 0.0328;
-                    -0.05011, -0.045, 0.0328];
+    Location(:,:,i) = [-0.075, 0.100, 0.0328;
+                    -0.05011, -0.045, 0.0326];
 end
 rest = 0.457; %resting length, m
 kmax = 0.380;     %Length at maximum contraction, m
+% rest = 0.485; %resting length, m
+% kmax = 0.398;     %Length at maximum contraction, m
 tendon = 0;       %pinned, no tendon
 fitting = 0.0325; %fitting length
 % Pres = 605.6671;     %average pressure (kPa) for 49cm

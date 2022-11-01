@@ -212,3 +212,52 @@ set(gca,'FontSize', 12, 'FontWeight', 'bold')
 scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 lgd = legend;
 hold off
+
+%% Plot each test independently
+figure
+hold on
+title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.7cm long, test1')
+xlabel('degrees Flexion(-),Extension(+)')
+ylabel('Torque, N*m')
+gca1 = gca;
+gcf1 = gcf;
+% set(gcf,'Position',[1 384 950 612]);
+% set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
+set(gca,'FontSize', 12, 'FontWeight', 'bold')
+
+    for i = 1:size(Theoretical,2)
+        txt = Theoretical{1,i};
+        T1 = 2*i-1;
+        H1 = 2*i;
+        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
+        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1})
+        sc{i} = scatter(Angle1,TorqueHand1(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1})
+    end
+scM1 = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+lgd1 = legend;
+hold off
+
+figure
+hold on
+title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.7cm long, test2')
+xlabel('degrees Flexion(-),Extension(+)')
+ylabel('Torque, N*m')
+gca1 = gca;
+gcf1 = gcf;
+% set(gcf,'Position',[1 384 950 612]);
+% set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
+set(gca,'FontSize', 12, 'FontWeight', 'bold')
+
+    for i = 1:size(Theoretical,2)
+        txt = Theoretical{1,i};
+        T1 = 2*i-1;
+        H1 = 2*i;
+        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
+        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1})
+        sc{i} = scatter(Angle2,TorqueHand2(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1})
+    end
+scM2 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+lgd2 = legend;
+hold off

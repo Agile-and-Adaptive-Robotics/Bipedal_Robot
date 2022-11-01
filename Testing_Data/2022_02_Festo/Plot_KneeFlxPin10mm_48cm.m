@@ -1,6 +1,6 @@
 %% Pinned knee, Extensor
 %Run and save data from testing results
-clear; clc; %close all;
+clear; clc; close all;
 
 restingLength = 0.485; %resting length, m
 kmax = 0.398; %Length at maximum contraction, m
