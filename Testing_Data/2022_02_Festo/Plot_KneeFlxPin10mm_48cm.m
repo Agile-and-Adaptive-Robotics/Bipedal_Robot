@@ -120,11 +120,27 @@ for i = 1:size(F,3)
     TorqueHand4(:,:,i) = TorqueHand(1,(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+size(TorqueHand4,2)),i);
 end
 
-TorqueH = cell(1, size(TorqueHand,3));
-for i = 1:size(TorqueHand,3)
-    TorqueH{i} = TorqueHand(:,:,i);
-end
 
+%% Process data for further curve fitting
+
+Hand1 = TorqueHand(:,:,1); %'Hunt Eq.';
+Hand2 = TorqueHand(:,:,2); %'Exponential Eq.';
+Hand3 = TorqueHand(:,:,3); %'Polynomial Eq.';
+Hand4 = TorqueHand(:,:,4); %'Exponential Eq., Simplified';
+Hand5 = TorqueHand(:,:,5); %'Polynomial Eq., Simplified';
+
+A = [Angle', Torque'];                              % Arrange Data
+[UA,~,idx] = unique(A(:,1));                        % Find repeated angle values
+NEW_A = [UA,accumarray(idx,A(:,2),[],@mean)];       % Take mean of torque at repeated angle values
+
+NEW_ang = NEW_A(:,1);           % New angle
+NEW_tq = NEW_A(:,2);            % New torque
+
+RMSE_1 = sum((Torque-Hand1).^2,'omitnan')/length(Torque)
+RMSE_2 = sum((Torque-Hand2).^2,'omitnan')/length(Torque)
+RMSE_3 = sum((Torque-Hand3).^2,'omitnan')/length(Torque)
+RMSE_4 = sum((Torque-Hand4).^2,'omitnan')/length(Torque)
+RMSE_5 = sum((Torque-Hand5).^2,'omitnan')/length(Torque)
 
 %% Plot expected versus measured moment arm
 Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
@@ -263,6 +279,26 @@ scatter(Angle,realStrain,'DisplayName','MeasuredStrain')
 title('Expected vs measured strain')
 xlabel('Knee angle, \circ')
 ylabel('strain')
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+lgdMa = legend;
+lgdMa.FontSize = 10;
+hold off
+
+%% Plot measured versus expected strain (like above, but not normalized
+MuscleLength = Bifemsh_Pam.MuscleLength-2*fitting-tendon;
+
+figure
+hold on
+plot(phiD,MuscleLength,'DisplayName','Expected Muscle Length')
+scatter(Angle,InflatedLength,'DisplayName','Measured Length')
+title('Expected vs measured muscle length')
+xlabel('Knee angle, \circ')
+ylabel('Length, m')
 ax1 = gca;
 ax1.FontSize = 12;
 ax1.FontWeight = 'bold';

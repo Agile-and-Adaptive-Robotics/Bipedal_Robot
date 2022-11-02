@@ -68,7 +68,7 @@ for i = 1:size(InflatedLength, 2)
     TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Torque will be negative because it is causing flexion
 end
 
-KMAX = (restingLength-kmax)/kmax;
+KMAX = (restingLength-kmax)/restingLength;
 rel = ((restingLength-InflatedLength)/restingLength)/KMAX;
 Fn = bpaForce10(restingLength,rel,pres);
 
@@ -83,10 +83,27 @@ for i = 1:size(F,3)
     TorqueHand2(:,:,i) = TorqueHand(1,(size(TorqueHand1,2)+1):size(TorqueHand,2),i);
 end
 
-TorqueH = cell(1, size(TorqueHand,3));
-for i = 1:size(TorqueHand,3)
-    TorqueH{i} = TorqueHand(:,:,i);
-end
+%% Process data for further curve fitting
+
+Hand1 = TorqueHand(:,:,1); %'Hunt Eq.';
+Hand2 = TorqueHand(:,:,2); %'Exponential Eq.';
+Hand3 = TorqueHand(:,:,3); %'Polynomial Eq.';
+Hand4 = TorqueHand(:,:,4); %'Exponential Eq., Simplified';
+Hand5 = TorqueHand(:,:,5); %'Polynomial Eq., Simplified';
+
+A = [Angle', Torque'];                              % Arrange Data
+[UA,~,idx] = unique(A(:,1));                        % Find repeated angle values
+NEW_A = [UA,accumarray(idx,A(:,2),[],@mean)];       % Take mean of torque at repeated angle values
+
+NEW_ang = NEW_A(:,1);           % New angle
+NEW_tq = NEW_A(:,2);            % New torque
+
+RMSE_1 = sum((Torque-Hand1).^2,'omitnan')/length(Torque)
+RMSE_2 = sum((Torque-Hand2).^2,'omitnan')/length(Torque)
+RMSE_3 = sum((Torque-Hand3).^2,'omitnan')/length(Torque)
+RMSE_4 = sum((Torque-Hand4).^2,'omitnan')/length(Torque)
+RMSE_5 = sum((Torque-Hand5).^2,'omitnan')/length(Torque)
+
 %% Plot expected versus measured moment arm
 Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
 G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
@@ -206,8 +223,8 @@ set(gca,'FontSize', 12, 'FontWeight', 'bold')
         H1 = 2*i;
         Disp{T1} = sprintf('Theoretical Torque from %s',txt);
         Disp{H1} = sprintf('Back calculated torque using %s',txt);
-        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1})
-        sc{i} = scatter(Angle,TorqueHand(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1})
+        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
+        sc{i} = scatter(Angle,TorqueHand(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
     end
 scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 lgd = legend;
@@ -231,8 +248,8 @@ set(gca,'FontSize', 12, 'FontWeight', 'bold')
         H1 = 2*i;
         Disp{T1} = sprintf('Theoretical Torque from %s',txt);
         Disp{H1} = sprintf('Back calculated torque using %s',txt);
-        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1})
-        sc{i} = scatter(Angle1,TorqueHand1(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1})
+        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
+        sc{i} = scatter(Angle1,TorqueHand1(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
     end
 scM1 = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 lgd1 = legend;
@@ -255,8 +272,8 @@ set(gca,'FontSize', 12, 'FontWeight', 'bold')
         H1 = 2*i;
         Disp{T1} = sprintf('Theoretical Torque from %s',txt);
         Disp{H1} = sprintf('Back calculated torque using %s',txt);
-        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1})
-        sc{i} = scatter(Angle2,TorqueHand2(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1})
+        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
+        sc{i} = scatter(Angle2,TorqueHand2(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
     end
 scM2 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 lgd2 = legend;
