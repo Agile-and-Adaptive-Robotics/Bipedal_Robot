@@ -98,11 +98,11 @@ NEW_A = [UA,accumarray(idx,A(:,2),[],@mean)];       % Take mean of torque at rep
 NEW_ang = NEW_A(:,1);           % New angle
 NEW_tq = NEW_A(:,2);            % New torque
 
-RMSE_1 = sum((Torque-Hand1).^2,'omitnan')/length(Torque)
-RMSE_2 = sum((Torque-Hand2).^2,'omitnan')/length(Torque)
-RMSE_3 = sum((Torque-Hand3).^2,'omitnan')/length(Torque)
-RMSE_4 = sum((Torque-Hand4).^2,'omitnan')/length(Torque)
-RMSE_5 = sum((Torque-Hand5).^2,'omitnan')/length(Torque)
+RMSE_1 = sqrt(sum((Torque-Hand1).^2,'omitnan')/length(Torque))
+RMSE_2 = sqrt(sum((Torque-Hand2).^2,'omitnan')/length(Torque))
+RMSE_3 = sqrt(sum((Torque-Hand3).^2,'omitnan')/length(Torque))
+RMSE_4 = sqrt(sum((Torque-Hand4).^2,'omitnan')/length(Torque))
+RMSE_5 = sqrt(sum((Torque-Hand5).^2,'omitnan')/length(Torque))
 
 %% Plot expected versus measured moment arm
 Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm

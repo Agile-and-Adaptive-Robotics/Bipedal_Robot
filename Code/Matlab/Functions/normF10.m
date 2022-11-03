@@ -12,7 +12,7 @@ function [Fn1, Fn2, Fn3, Fn4] = normF10(RelStrain, Pressure)
 minArgs = 1;
 maxArgs =4;
 nargoutchk(minArgs,maxArgs)
-disp("You requested " + nargout + " outputs.")
+% disp("You requested " + nargout + " outputs.")
 
 x = RelStrain;
 y = Pressure/620;
