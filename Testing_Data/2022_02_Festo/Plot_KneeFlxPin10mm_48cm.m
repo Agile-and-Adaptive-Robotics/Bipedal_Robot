@@ -136,6 +136,11 @@ NEW_A = [UA,accumarray(idx,A(:,2),[],@mean)];       % Take mean of torque at rep
 NEW_ang = NEW_A(:,1);           % New angle
 NEW_tq = NEW_A(:,2);            % New torque
 
+SSE_1 = sum((Torque-Hand1).^2,'omitnan')
+SSE_2 = sum((Torque-Hand2).^2,'omitnan')
+SSE_3 = sum((Torque-Hand3).^2,'omitnan')
+SSE_4 = sum((Torque-Hand4).^2,'omitnan')
+SSE_5 = sum((Torque-Hand5).^2,'omitnan')
 RMSE_1 = sqrt(sum((Torque-Hand1).^2,'omitnan')/length(Torque))
 RMSE_2 = sqrt(sum((Torque-Hand2).^2,'omitnan')/length(Torque))
 RMSE_3 = sqrt(sum((Torque-Hand3).^2,'omitnan')/length(Torque))
