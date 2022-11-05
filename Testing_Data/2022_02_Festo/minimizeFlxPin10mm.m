@@ -10,12 +10,12 @@
 
 clear; clc; close all
 
-load KneeFlxPin_10mm_46cm.mat phiD Location Name CrossPoint Dia T rest tendon kmax fitting
-load Plot_KneeFlxPin_10mm_46cm.mat Angle Torque pres 
+load KneeFlxPin_10mm_48cm.mat phiD Location Name CrossPoint Dia T rest tendon kmax fitting
+load Plot_KneeFlxPin_10mm_48cm.mat Angle Torque pres 
 pres = mean(pres);                  %Make pressure a scalar value
 y = Torque';                        %Make it just the data
 
-x0 = 0.02881;                        %Initial fitting length guess
+x0 = 0.035;                        %Initial fitting length guess
 %SIMPLX search for SSE, x = 0.0288; for RMSE x =  
 %pattern search for SSE, x = 0.03613; for RMSE x = 0.0358.
 
@@ -23,20 +23,94 @@ x0 = 0.02881;                        %Initial fitting length guess
 [point,value, exit, out] = minimizeFlx10mm_nest(x0,y, phiD, Angle, Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, pres);
 
 %% Validate with other muscle length in this configuration
-% P = value;
-% par1 = mean(point);
+P = value;
+point = mean(point);
 % par2 = mode(point);
-[SSE, RMSE] = validateFlxPin10mm(point);
+[SSE, RMSE, A2, T2, v2, r2] = validateFlxPin10mm(point);
 
-fprintf('fitting length is %5d with a SSE of %5d\n',point,value)
+% fprintf('fitting length is %5d with a SSE of %5d\n',point,value)
 
-fprintf('Validation returns, SSE of %5d with an RMSE of %5d\n',SSE,RMSE)
+% fprintf('Validation returns, SSE of %5d with an RMSE of %5d\n',SSE,RMSE)
 
 
 
 %% Plot the results
+%Matlab hex color values:
+c1 = '#FFD700'; %gold
+c2 = '#FFB14E'; %orange
+c3 = '#FA8775'; %light orange
+c4 = '#EA5F94'; %pink
+c5 = '#CD34B5'; %magenta
+c6 = '#9D02D7'; %magenta 2
+c7 = '#0000FF'; %indigo
+c8 = '#000000'; %black
+sz = 60;        %size of data points
+c = {c1; c2; c3; c4; c5; c6; c7; c8};
 
+%Call class for optimized muscle, use torque
+Bifemsh_Pam_new = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, point, pres);
+TorqueR = Bifemsh_Pam_new.Torque(:,3,:);
+Theoretical = cell(2, size(TorqueR,3));
+Theoretical{1,1} = 'Hunt Eq.';
+Theoretical{1,2} = 'Exponential Eq.';
+Theoretical{1,3} = 'Polynomial Eq.';
+Theoretical{1,4} = 'Exponential Eq., Simplified';
+Theoretical{1,5} = 'Polynomial Eq., Simplified';
+for i = 1:length(Theoretical)
+    Theoretical{2,i} = TorqueR(:,:,i)';
+end
 
+PL = cell(1, size(Theoretical,2));
+
+%Plot Torque values against theoretical for optimized muscle
+figure
+scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+hold on
+    for i = 1:size(Theoretical,2)
+        txt = Theoretical{1,i};
+        T1 = 2*i-1;
+        Disp{T1} = sprintf('Theoretical Torque, %s',txt);
+        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
+    end
+title(sprintf('Isometric Torque vs Knee Angle, 10mm Flexor, %4.3f m long',rest),'FontSize',12,'FontWeight','Bold')
+xlabel('Knee Flexion(-)/Extension(+), \circ','FontSize',12)
+ylabel('Torque, N \bullet m','FontSize',12)
+ax2 = gca;
+ax2.FontSize = 12;
+ax2.FontWeight = 'bold';
+ax2.FontName = 'Arial';
+ax2.YAxis.LineWidth = 2; ax2.YAxis.FontSize = 10;
+ax2.XAxis.LineWidth = 2; ax2.XAxis.FontSize = 10;
+lgd = legend;
+lgd.FontSize = 10;
+lgd.Location = 'southwest';
+hold off
+
+PL2 = cell(1, size(Theoretical,2));
+
+%Plot validation
+figure
+scM2 = scatter(A2,T2,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+hold on
+    for i = 1:size(Theoretical,2)
+        txt = Theoretical{1,i};
+        T1 = 2*i-1;
+        Disp2{T1} = sprintf('Theoretical Torque, %s',txt);
+        PL2{i} = plot(phiD, v2{i},'Color',c{i},'Linewidth',2,'DisplayName',Disp2{T1});
+    end
+title(sprintf('Isometric Torque vs Knee Angle, 10mm Flexor, %4.3f m long',r2),'FontSize',12,'FontWeight','Bold')
+xlabel('Knee Flexion(-)/Extension(+), \circ','FontSize',12)
+ylabel('Torque, N \bullet m','FontSize',12)
+ax2 = gca;
+ax2.FontSize = 12;
+ax2.FontWeight = 'bold';
+ax2.FontName = 'Arial';
+ax2.YAxis.LineWidth = 2; ax2.YAxis.FontSize = 10;
+ax2.XAxis.LineWidth = 2; ax2.XAxis.FontSize = 10;
+lgd = legend;
+lgd.FontSize = 10;
+lgd.Location = 'southwest';
+hold off
 
 
 %% Nested function for optimization
@@ -44,11 +118,11 @@ fprintf('Validation returns, SSE of %5d with an RMSE of %5d\n',SSE,RMSE)
 
     fun = @(x)minimize(y, phiD, Angle, Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, x, pres);
     
-%     options = optimset('Display','iter','PlotFcns',@optimplotfval);     %fminsearch options
-%     [X, FVAL, flag, put] = fminsearch(fun,x0,options);
+    options = optimset('Display','iter','PlotFcns',@optimplotfval);     %fminsearch options
+    [X, FVAL, flag, put] = fminsearch(fun,x0,options);
 
-    options = optimoptions('patternsearch','Display','iter','PlotFcn',@psplotbestx);        %pattern search options
-    [X, FVAL, flag, put] = patternsearch(fun,x0,[],[],[],[],0.02,.04,[],options);
+%     options = optimoptions('patternsearch','Display','iter','PlotFcn',@psplotbestx);        %pattern search options
+%     [X, FVAL, flag, put] = patternsearch(fun,x0,[],[],[],[],0.02,.04,[],options);
     
 %     options = optimoptions('paretosearch','PlotFcn','psplotdistance','InitialPoints',x0);
 %     [X, FVAL, flag, put] = paretosearch(fun,1,[],[],[],[],0.02,0.04,[],options);
@@ -80,7 +154,7 @@ fprintf('Validation returns, SSE of %5d with an RMSE of %5d\n',SSE,RMSE)
         end
         
 %        f = [f1; f2];
-       f = sum([f2(4) f2(5)],'omitnan');     %Combine the error from the different equation fits if not pareto search
+      f = sum([f1(2):f1(5)],'omitnan');     %Combine the error from the different equation fits if not pareto search
 
   
   
