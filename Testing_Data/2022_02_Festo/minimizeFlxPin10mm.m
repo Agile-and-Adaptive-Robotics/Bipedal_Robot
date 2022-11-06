@@ -15,22 +15,22 @@ load Plot_KneeFlxPin_10mm_48cm.mat Angle Torque pres
 pres = mean(pres);                  %Make pressure a scalar value
 y = Torque';                        %Make it just the data
 
-x0 = 0.035;                        %Initial fitting length guess
-%SIMPLX search for SSE, x = 0.0288; for RMSE x =  
+x0 = 0.033;                        %Initial fitting length guess
+%SIMPLX search for SSE, x = 0.0347; for RMSE x = 0.033 
 %pattern search for SSE, x = 0.03613; for RMSE x = 0.0358.
 
 
-[point,value, exit, out] = minimizeFlx10mm_nest(x0,y, phiD, Angle, Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, pres);
+[point,value] = minimizeFlx10mm_nest(x0,y, phiD, Angle, Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, pres);
 
 %% Validate with other muscle length in this configuration
 P = value;
+par = point;
 point = mean(point);
-% par2 = mode(point);
 [SSE, RMSE, A2, T2, v2, r2] = validateFlxPin10mm(point);
 
-% fprintf('fitting length is %5d with a SSE of %5d\n',point,value)
+fprintf('fitting length is %5d with a SSE of %5d\n',point,value)
 
-% fprintf('Validation returns, SSE of %5d with an RMSE of %5d\n',SSE,RMSE)
+fprintf('Validation returns, SSE of %5d with an RMSE of %5d\n',SSE,RMSE)
 
 
 
@@ -114,17 +114,19 @@ hold off
 
 
 %% Nested function for optimization
-   function [X, FVAL, flag, put] = minimizeFlx10mm_nest(x0,y, phiD, Angle, Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, pres)
+   function [X, FVAL] = minimizeFlx10mm_nest(x0,y, phiD, Angle, Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, pres)
 
     fun = @(x)minimize(y, phiD, Angle, Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, x, pres);
     
-    options = optimset('Display','iter','PlotFcns',@optimplotfval);     %fminsearch options
-    [X, FVAL, flag, put] = fminsearch(fun,x0,options);
+%     options = optimset('Display','iter','PlotFcns',@optimplotfval);     %fminsearch options
+%     [X, FVAL, flag, put] = fminsearch(fun,x0,options);
 
+     [X, FVAL] = bnd_con_pen_nelder_mead( fun, x0, [0.02 0.04], [], 100, [], 1, 1);
+    
 %     options = optimoptions('patternsearch','Display','iter','PlotFcn',@psplotbestx);        %pattern search options
 %     [X, FVAL, flag, put] = patternsearch(fun,x0,[],[],[],[],0.02,.04,[],options);
     
-%     options = optimoptions('paretosearch','PlotFcn','psplotdistance','InitialPoints',x0);
+%     options = optimoptions('paretosearch','PlotFcn','psplotbestx','InitialPoints',x0);
 %     [X, FVAL, flag, put] = paretosearch(fun,1,[],[],[],[],0.02,0.04,[],options);
     
     disp(X)
@@ -153,7 +155,8 @@ hold off
             f2(i) = fu{i};                       %This works as f for pareto search
         end
         
-%        f = [f1; f2];
+%        f = [f1(2); f1(4); f1(5)];
+%         f = f2(4);
       f = sum([f1(2):f1(5)],'omitnan');     %Combine the error from the different equation fits if not pareto search
 
   

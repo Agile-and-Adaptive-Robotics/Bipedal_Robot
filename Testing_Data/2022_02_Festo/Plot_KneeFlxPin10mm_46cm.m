@@ -98,16 +98,22 @@ NEW_A = [UA,accumarray(idx,A(:,2),[],@mean)];       % Take mean of torque at rep
 NEW_ang = NEW_A(:,1);           % New angle
 NEW_tq = NEW_A(:,2);            % New torque
 
-SSE_1 = sum((Torque-Hand1).^2,'omitnan')
-SSE_2 = sum((Torque-Hand2).^2,'omitnan')
-SSE_3 = sum((Torque-Hand3).^2,'omitnan')
-SSE_4 = sum((Torque-Hand4).^2,'omitnan')
-SSE_5 = sum((Torque-Hand5).^2,'omitnan')
-RMSE_1 = sqrt(sum((Torque-Hand1).^2,'omitnan')/length(Torque))
-RMSE_2 = sqrt(sum((Torque-Hand2).^2,'omitnan')/length(Torque))
-RMSE_3 = sqrt(sum((Torque-Hand3).^2,'omitnan')/length(Torque))
-RMSE_4 = sqrt(sum((Torque-Hand4).^2,'omitnan')/length(Torque))
-RMSE_5 = sqrt(sum((Torque-Hand5).^2,'omitnan')/length(Torque))
+SSE = zeros(size(TorqueHand,3),1);
+RMSE = zeros(size(TorqueHand,3),1);
+
+SSE(1) = sum((Torque-Hand1).^2,'omitnan');
+SSE(2) = sum((Torque-Hand2).^2,'omitnan');
+SSE(3) = sum((Torque-Hand3).^2,'omitnan');
+SSE(4) = sum((Torque-Hand4).^2,'omitnan');
+SSE(5) = sum((Torque-Hand5).^2,'omitnan');
+RMSE(1) = sqrt(sum((Torque-Hand1).^2,'omitnan')/length(Torque));
+RMSE(2) = sqrt(sum((Torque-Hand2).^2,'omitnan')/length(Torque));
+RMSE(3) = sqrt(sum((Torque-Hand3).^2,'omitnan')/length(Torque));
+RMSE(4) = sqrt(sum((Torque-Hand4).^2,'omitnan')/length(Torque));
+RMSE(5) = sqrt(sum((Torque-Hand5).^2,'omitnan')/length(Torque));
+
+disp(SSE)
+disp(RMSE)
 
 %% Plot expected versus measured moment arm
 Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
@@ -194,7 +200,28 @@ lgdMa = legend;
 lgdMa.FontSize = 10;
 hold off
 
-%% Plotting with multiple theoretical values
+%% Plot measured versus expected BPA length
+MuscleLength = Bifemsh_Pam.MuscleLength-2*fitting-tendon;
+
+figure
+hold on
+plot(phiD,MuscleLength,'DisplayName','Expected Muscle Length')
+scatter(Angle,InflatedLength,'DisplayName','Measured Length')
+title('Expected vs measured muscle length')
+xlabel('Knee angle, \circ')
+ylabel('Length, m')
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+lgdMa = legend;
+lgdMa.FontSize = 10;
+hold off
+
+
+%% Plotting Torque with multiple theoretical values
 %Matlab hex color values:
 c1 = '#FFD700'; %gold
 c2 = '#FFB14E'; %orange
