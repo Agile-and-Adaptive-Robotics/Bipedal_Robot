@@ -10,12 +10,12 @@
 
 clear; clc; close all
 
-load KneeFlxPin_10mm_48cm.mat phiD Location Name CrossPoint Dia T rest tendon kmax fitting
-load Plot_KneeFlxPin_10mm_48cm.mat Angle Torque pres 
+load KneeFlxPin_10mm_46cm.mat phiD Location Name CrossPoint Dia T rest tendon kmax fitting
+load Plot_KneeFlxPin_10mm_46cm.mat Angle Torque pres 
 pres = mean(pres);                  %Make pressure a scalar value
 y = Torque';                        %Make it just the data
 
-x0 = 0.033;                        %Initial fitting length guess
+x0 = 0.0328;                        %Initial fitting length guess
 %SIMPLX search for SSE, x = 0.0347; for RMSE x = 0.033 
 %pattern search for SSE, x = 0.03613; for RMSE x = 0.0358.
 
@@ -28,7 +28,7 @@ par = point;
 point = mean(point);
 [SSE, RMSE, A2, T2, v2, r2] = validateFlxPin10mm(point);
 
-fprintf('fitting length is %5d with a SSE of %5d\n',point,value)
+fprintf('fitting length is %5d with a RMSE of %5d\n',point,value)
 
 fprintf('Validation returns, SSE of %5d with an RMSE of %5d\n',SSE,RMSE)
 
@@ -126,8 +126,12 @@ hold off
 %     options = optimoptions('patternsearch','Display','iter','PlotFcn',@psplotbestx);        %pattern search options
 %     [X, FVAL, flag, put] = patternsearch(fun,x0,[],[],[],[],0.02,.04,[],options);
     
-%     options = optimoptions('paretosearch','PlotFcn','psplotbestx','InitialPoints',x0);
+%     options = optimoptions('paretosearch','PlotFcn',{@psplotbestf, @psplotfuncount, @psplotparetof},'InitialPoints',x0);
 %     [X, FVAL, flag, put] = paretosearch(fun,1,[],[],[],[],0.02,0.04,[],options);
+    
+%     hybridopts = optimoptions('patternsearch','Display','iter');
+%     options = optimoptions('gamultiobj','Display','iter','PlotFcn',{@gaplotpareto, @gaplotdistance, @gaplotscores},'HybridFcn',{@fgoalattain,hybridopts});
+%     [X, FVAL, flag, put] = gamultiobj(fun,1,[],[],[],[],0.02,0.04,[],options);
     
     disp(X)
     disp(FVAL)
@@ -135,7 +139,6 @@ hold off
 %% Nested function that calculates SSE and RMSE
         function f = minimize(y, phiD, Angle, Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, x, pres)
 
-%        call2 = {X1,Name, Location, CrossPoint, Dia, T, fitting, pres, phiD, y1, y3, c};
         ynew = nestedfun1(phiD, Angle, Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, x, pres);
         
         yresid = cell(length(ynew),1);
@@ -151,13 +154,16 @@ hold off
         f1 = zeros(length(SSresid),1);
         f2 = zeros(length(fu),1);
         for i = 1:length(fu)
-            f1(i) = SSresid{1};
+            f1(i) = SSresid{i};
             f2(i) = fu{i};                       %This works as f for pareto search
         end
-        
-%        f = [f1(2); f1(4); f1(5)];
-%         f = f2(4);
-      f = sum([f1(2):f1(5)],'omitnan');     %Combine the error from the different equation fits if not pareto search
+       
+%        [f1_other, f2_other] =  validateFlxPin10mm(x);       %Combine both muscle lengths
+       
+%          f1 = [f1, f1_other];
+%         f = f1_other(4);
+%       f = f2(4);
+      f = mean(f1,'omitnan');     %Combine the error from the different equation fits if not pareto search
 
   
   
