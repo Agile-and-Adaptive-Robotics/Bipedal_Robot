@@ -15,9 +15,9 @@ kmax = A(2,:);
 Fmax = A(3,:);
 Fmax_norm = Fmax/max(Fmax);
 %% Nonlinear fit for Fmax
-modelfun = @(b,xm)b(1)*atan(b(2)*(xm-0.0075)); %based on the shape, it looks like resting length reaches a limit
+modelfun = @(b,xm)b(1)*620*atan(b(2)*(xm-0.0075)*620); %based on the shape, it looks like resting length reaches a limit
 %modelfun = @(b,xm)-exp(-b(1)*(xm-b(2))+b(3))+b(4);
-beta0 = [301.568 20.4972];
+beta0 = [0.4864 0.03306];
 %beta0 = [11 0.41 1.2 478];
 opts = statset('fitnlm');
 opts.MaxIter = 1000;
@@ -27,8 +27,12 @@ mdl = fitnlm(restingL,Fmax,modelfun,beta0,'Exclude',[7,27],'Options',opts)
 x = linspace(0,1);
 p1 = feval(mdl,x);
 
+md2 = @(x) 0.4864*620*atan(0.03306*620*(x-0.0075));     %from Fmax_fitTool
+p2 = feval(md2,x);
+
 figure
-plot(restingL,Fmax,'o',x,p1,'--')
+plot(restingL,Fmax,'o',x,p2,'--')
+title('Max. Force vs. Resting Length')
 xlabel('Resting Length, mm')
 ylabel('Maximum Force, N')
 legend('Data','Model Fit')
@@ -84,11 +88,12 @@ P_norm = pointz/max(pointz);        %Scale pressure
 %has +/- 1 mm accuracy which can affect the maximum strain listed.
 
 %ft = fittype('a+b*x');
-max_k = fit(restingL',kmax','poly1','Normalize','on')
-p2 = feval(max_k,x);
+[max_k, gof2, output2] = fit(restingL',kmax','poly1','Exclude',[22],'Normalize','on')
+p3 = feval(max_k,x);
 
 figure
-plot(restingL,kmax,'o',x,p2,'--')
+plot(restingL,kmax,'o',x,p3,'--')
+title('Max. Strain vs. Resting Length')
 xlabel('Resting Length, mm')
 ylabel('Maximum Strain')
 legend('Data','Model Fit')

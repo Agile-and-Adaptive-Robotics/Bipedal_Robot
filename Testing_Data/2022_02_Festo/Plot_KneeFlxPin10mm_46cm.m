@@ -220,8 +220,7 @@ lgdMa = legend;
 lgdMa.FontSize = 10;
 hold off
 
-
-%% Plotting Torque with multiple theoretical values
+%% Plotting Torque only with simplified exponential equation
 %Matlab hex color values:
 c1 = '#FFD700'; %gold
 c2 = '#FFB14E'; %orange
@@ -249,64 +248,105 @@ gcf1 = gcf;
 % set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 set(gca,'FontSize', 12, 'FontWeight', 'bold')
 
-    for i = 1:size(Theoretical,2)
+    for i = 4
         txt = Theoretical{1,i};
         T1 = 2*i-1;
         H1 = 2*i;
-        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
-        Disp{H1} = sprintf('Back calculated torque using %s',txt);
+        Disp{T1} = sprintf('Theoretical Torque');
+        Disp{H1} = sprintf('Back calculated torque');
         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
         sc{i} = scatter(Angle,TorqueHand(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
     end
-scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
 lgd = legend;
 hold off
 
-%% Plot each test independently
-figure
-hold on
-title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.7cm long, test1')
-xlabel('degrees Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
-gca1 = gca;
-gcf1 = gcf;
-% set(gcf,'Position',[1 384 950 612]);
-% set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-set(gca,'FontSize', 12, 'FontWeight', 'bold')
-
-    for i = 1:size(Theoretical,2)
-        txt = Theoretical{1,i};
-        T1 = 2*i-1;
-        H1 = 2*i;
-        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
-        Disp{H1} = sprintf('Back calculated torque using %s',txt);
-        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
-        sc{i} = scatter(Angle1,TorqueHand1(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
-    end
-scM1 = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
-lgd1 = legend;
-hold off
-
-figure
-hold on
-title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.7cm long, test2')
-xlabel('degrees Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
-gca1 = gca;
-gcf1 = gcf;
-% set(gcf,'Position',[1 384 950 612]);
-% set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-set(gca,'FontSize', 12, 'FontWeight', 'bold')
-
-    for i = 1:size(Theoretical,2)
-        txt = Theoretical{1,i};
-        T1 = 2*i-1;
-        H1 = 2*i;
-        Disp{T1} = sprintf('Theoretical Torque from %s',txt);
-        Disp{H1} = sprintf('Back calculated torque using %s',txt);
-        PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
-        sc{i} = scatter(Angle2,TorqueHand2(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
-    end
-scM2 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
-lgd2 = legend;
-hold off
+% %% Plotting Torque with multiple theoretical values
+% %Matlab hex color values:
+% c1 = '#FFD700'; %gold
+% c2 = '#FFB14E'; %orange
+% c3 = '#FA8775'; %light orange
+% c4 = '#EA5F94'; %pink
+% c5 = '#CD34B5'; %magenta
+% c6 = '#9D02D7'; %magenta 2
+% c7 = '#0000FF'; %indigo
+% c8 = '#000000'; %black
+% sz = 60;        %size of data points
+% c = {c1; c2; c3; c4; c5; c6; c7; c8};
+% 
+% PL = cell(1, size(Theoretical,2));
+% sc = cell(1, size(Theoretical,2));
+% Disp = cell(1, 2*size(Theoretical,2));
+% 
+% figure
+% hold on
+% title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.7cm long')
+% xlabel('degrees Flexion(-),Extension(+)')
+% ylabel('Torque, N*m')
+% gca1 = gca;
+% gcf1 = gcf;
+% % set(gcf,'Position',[1 384 950 612]);
+% % set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
+% set(gca,'FontSize', 12, 'FontWeight', 'bold')
+% 
+%     for i = 1:size(Theoretical,2)
+%         txt = Theoretical{1,i};
+%         T1 = 2*i-1;
+%         H1 = 2*i;
+%         Disp{T1} = sprintf('Theoretical Torque from %s',txt);
+%         Disp{H1} = sprintf('Back calculated torque using %s',txt);
+%         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
+%         sc{i} = scatter(Angle,TorqueHand(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
+%     end
+% scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+% lgd = legend;
+% hold off
+% 
+% %% Plot each test independently
+% figure
+% hold on
+% title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.7cm long, test1')
+% xlabel('degrees Flexion(-),Extension(+)')
+% ylabel('Torque, N*m')
+% gca1 = gca;
+% gcf1 = gcf;
+% % set(gcf,'Position',[1 384 950 612]);
+% % set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
+% set(gca,'FontSize', 12, 'FontWeight', 'bold')
+% 
+%     for i = 1:size(Theoretical,2)
+%         txt = Theoretical{1,i};
+%         T1 = 2*i-1;
+%         H1 = 2*i;
+%         Disp{T1} = sprintf('Theoretical Torque from %s',txt);
+%         Disp{H1} = sprintf('Back calculated torque using %s',txt);
+%         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
+%         sc{i} = scatter(Angle1,TorqueHand1(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
+%     end
+% scM1 = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+% lgd1 = legend;
+% hold off
+% 
+% figure
+% hold on
+% title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.7cm long, test2')
+% xlabel('degrees Flexion(-),Extension(+)')
+% ylabel('Torque, N*m')
+% gca1 = gca;
+% gcf1 = gcf;
+% % set(gcf,'Position',[1 384 950 612]);
+% % set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
+% set(gca,'FontSize', 12, 'FontWeight', 'bold')
+% 
+%     for i = 1:size(Theoretical,2)
+%         txt = Theoretical{1,i};
+%         T1 = 2*i-1;
+%         H1 = 2*i;
+%         Disp{T1} = sprintf('Theoretical Torque from %s',txt);
+%         Disp{H1} = sprintf('Back calculated torque using %s',txt);
+%         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
+%         sc{i} = scatter(Angle2,TorqueHand2(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
+%     end
+% scM2 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+% lgd2 = legend;
+% hold off

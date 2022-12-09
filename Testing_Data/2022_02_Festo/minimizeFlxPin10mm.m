@@ -10,12 +10,14 @@
 
 clear; clc; close all
 
-load KneeFlxPin_10mm_46cm.mat phiD Location Name CrossPoint Dia T rest tendon kmax fitting
-load Plot_KneeFlxPin_10mm_46cm.mat Angle Torque pres 
+load KneeFlxPin_10mm_48cm.mat phiD Location Name CrossPoint Dia T rest tendon kmax fitting
+load Plot_KneeFlxPin_10mm_48cm.mat Angle Torque pres 
 pres = mean(pres);                  %Make pressure a scalar value
 y = Torque';                        %Make it just the data
 
-x0 = 0.0328;                        %Initial fitting length guess
+
+
+x0 = 0.0351;                        %Initial fitting length guess
 %SIMPLX search for SSE, x = 0.0347; for RMSE x = 0.033 
 %pattern search for SSE, x = 0.03613; for RMSE x = 0.0358.
 
@@ -28,9 +30,9 @@ par = point;
 point = mean(point);
 [SSE, RMSE, A2, T2, v2, r2] = validateFlxPin10mm(point);
 
-fprintf('fitting length is %5d with a RMSE of %5d\n',point,value)
+fprintf('fitting length is %5d with a SSE of %5d\n',point,value)
 
-fprintf('Validation returns, SSE of %5d with an RMSE of %5d\n',SSE,RMSE)
+fprintf('Validation returns, SSE of %5d with an RMSE of %5d\n',SSE(4),RMSE(4))
 
 
 
@@ -64,16 +66,16 @@ PL = cell(1, size(Theoretical,2));
 
 %Plot Torque values against theoretical for optimized muscle
 figure
-scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
 hold on
-    for i = 1:size(Theoretical,2)
+    for i = 4 %1:size(Theoretical,2)
         txt = Theoretical{1,i};
         T1 = 2*i-1;
-        Disp{T1} = sprintf('Theoretical Torque, %s',txt);
+        Disp{T1} = sprintf('Theoretical Torque');
         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
     end
 title(sprintf('Isometric Torque vs Knee Angle, 10mm Flexor, %4.3f m long',rest),'FontSize',12,'FontWeight','Bold')
-xlabel('Knee Flexion(-)/Extension(+), \circ','FontSize',12)
+xlabel('Knee angle, \circ','FontSize',12)
 ylabel('Torque, N \bullet m','FontSize',12)
 ax2 = gca;
 ax2.FontSize = 12;
@@ -90,16 +92,16 @@ PL2 = cell(1, size(Theoretical,2));
 
 %Plot validation
 figure
-scM2 = scatter(A2,T2,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+scM2 = scatter(A2,T2,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
 hold on
-    for i = 1:size(Theoretical,2)
+    for i = 4   %1:size(Theoretical,2)
         txt = Theoretical{1,i};
         T1 = 2*i-1;
-        Disp2{T1} = sprintf('Theoretical Torque, %s',txt);
+        Disp2{T1} = sprintf('Theoretical Torque');
         PL2{i} = plot(phiD, v2{i},'Color',c{i},'Linewidth',2,'DisplayName',Disp2{T1});
     end
 title(sprintf('Isometric Torque vs Knee Angle, 10mm Flexor, %4.3f m long',r2),'FontSize',12,'FontWeight','Bold')
-xlabel('Knee Flexion(-)/Extension(+), \circ','FontSize',12)
+xlabel('Knee angle, \circ','FontSize',12)
 ylabel('Torque, N \bullet m','FontSize',12)
 ax2 = gca;
 ax2.FontSize = 12;
@@ -121,7 +123,7 @@ hold off
 %     options = optimset('Display','iter','PlotFcns',@optimplotfval);     %fminsearch options
 %     [X, FVAL, flag, put] = fminsearch(fun,x0,options);
 
-     [X, FVAL] = bnd_con_pen_nelder_mead( fun, x0, [0.02 0.04], [], 100, [], 1, 1);
+     [X, FVAL] = bnd_con_pen_nelder_mead( fun, x0, [0.03 0.04], [], 100, [], 1, 1);
     
 %     options = optimoptions('patternsearch','Display','iter','PlotFcn',@psplotbestx);        %pattern search options
 %     [X, FVAL, flag, put] = patternsearch(fun,x0,[],[],[],[],0.02,.04,[],options);
@@ -162,8 +164,8 @@ hold off
        
 %          f1 = [f1, f1_other];
 %         f = f1_other(4);
-%       f = f2(4);
-      f = mean(f1,'omitnan');     %Combine the error from the different equation fits if not pareto search
+      f = f1(4);
+%       f = mean(f1,'omitnan');     %Combine the error from the different equation fits if not pareto search
 
   
   

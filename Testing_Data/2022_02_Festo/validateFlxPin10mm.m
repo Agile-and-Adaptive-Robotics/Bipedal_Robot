@@ -2,8 +2,8 @@
 function [SSE, RMSE, Angle, Torque, Tqz, rest] = validateFlxPin10mm(fitting)
 %Validation of minimizeFlxPin10mm
 %   Validate fitting length obtained by the other function.
-load KneeFlxPin_10mm_48cm.mat phiD Location Name CrossPoint Dia T rest tendon kmax
-load Plot_KneeFlxPin_10mm_48cm.mat Angle Torque pres 
+load KneeFlxPin_10mm_46cm.mat phiD Location Name CrossPoint Dia T rest tendon kmax
+load Plot_KneeFlxPin_10mm_46cm.mat Angle Torque pres 
 pres = mean(pres);                  %Make pressure a scalar value
 y = Torque';                        %Make it just the data
 
