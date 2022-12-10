@@ -163,8 +163,8 @@ hold on
 pp2 = plot(phiD,G,'DisplayName','MA expected');
 ss2 = scatter(Angle2, ICRtoMuscle2,'DisplayName','MA measured, BB LC');
 title('Expected vs measured moment arm')
-xlabel('Knee angle, \circ')
-ylabel('Moment Arm, z axis (m)')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Z axis \Vec{r}, m','Interpreter','tex')
 ax1 = gca;
 ax1.FontSize = 12;
 ax1.FontWeight = 'bold';
@@ -176,27 +176,24 @@ lgdMa.FontSize = 10;
 hold off
 
 %% Plot relative strain versus angle. Compare strain, relative strain, and measured values
-
-% tendon = 0;
-% fitting = 0.40;
 strain = (restingLength-(Bifemsh_Pam.MuscleLength-tendon-2*fitting))/restingLength;
 relstrain = (strain)./KMAX;
 realRel = (restingLength-InflatedLength)/restingLength/KMAX;
 
 figure
 hold on
-plot(phiD,relstrain,'DisplayName','Expected Relative Strain')
-scatter(Angle,realRel,'DisplayName','Measured Relative Strain')
-title('Expected vs measured relative strain')
-xlabel('Knee angle, \circ')
-ylabel('strain/kmax')
+plot(phiD,relstrain,'DisplayName','Expected \epsilon^*')
+scatter(Angle,realRel,'DisplayName','Measured \epsilon^*')
+title('Expected vs measured \epsilon^*','Interpreter','tex')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('\epsilon^*','Interpreter','tex')
 ax1 = gca;
 ax1.FontSize = 12;
 ax1.FontWeight = 'bold';
 ax1.FontName = 'Arial';
 ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
 ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
-lgdMa = legend;
+lgdMa = legend('Interpreter','tex');
 lgdMa.FontSize = 10;
 hold off
 
@@ -208,7 +205,7 @@ hold on
 plot(phiD,MuscleLength,'DisplayName','Expected Muscle Length')
 scatter(Angle,InflatedLength,'DisplayName','Measured Length')
 title('Expected vs measured muscle length')
-xlabel('Knee angle, \circ')
+xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Length, m')
 ax1 = gca;
 ax1.FontSize = 12;
@@ -240,8 +237,8 @@ Disp = cell(1, 2*size(Theoretical,2));
 figure
 hold on
 title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.7cm long')
-xlabel('degrees Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
+xlabel('Knee angle, \circ','FontWeight','bold','interpreter','tex')
+ylabel('Torque, N \cdot m','FontWeight','bold','interpreter','tex')
 gca1 = gca;
 gcf1 = gcf;
 % set(gcf,'Position',[1 384 950 612]);

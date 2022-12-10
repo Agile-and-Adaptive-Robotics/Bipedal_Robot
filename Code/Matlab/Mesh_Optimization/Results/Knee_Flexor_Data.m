@@ -13,13 +13,6 @@ current_dir = cd;
 all_code = fullfile(current_dir,'../..');
 addpath(genpath(all_code));
 
-% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Human_Data
-% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Robot_Data
-% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
-% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Bone_Mesh_Plots\Open_Sim_Bone_Geometry
-% addpath
-% C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Mesh_Optimization\results
-
 %% Joint rotation transformation matrices
 positions = 100;
 fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions)
@@ -85,7 +78,7 @@ Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 %% PAM calculation
 Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
-Dia = 20;
+Dia = 10;
 
 Location = zeros(2,3,positions);
 for i = 1:positions
@@ -93,29 +86,20 @@ for i = 1:positions
     Location(:,:,i) = [-0.050, 0.035, 0.0328;
             -0.02788, -0.04598, 0.0328];
 end
-rest = 0.423;
-kmax = 0.322;
-tendon = 0.017; 
+rest = 0.415;
+kmax = 0.350;
+tendon = 0.011; 
 fitting = 0.0254; 
-pres = 602;         %average pressure
-Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
+pres = 603.5236;         %average pressure
+Bifemsh_Pam = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
-rest = 0.418;
-tendon = 0.043;
-kmax = 0.318;
-Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
-
-figure
-plot(phi,Bifemsh_Pam.MuscleLength)
-
-max_length = max(Bifemsh_Pam.MuscleLength)
-min_length = min(Bifemsh_Pam.MuscleLength)
-ratio = min_length/max_length
-
+fitting = 0.0352; 
+Bifemsh_Pam_adj = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
 %% Unstacking the Torques to identify specific rotations
 Torque1 = Bifemsh.Torque;
-TorqueR = Bifemsh_Pam.Torque;
+TorqueR = Bifemsh_Pam.Torque(:,:,4);
+TorqueR_adj = Bifemsh_Pam_adj.Torque(:,:,4);
 
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
@@ -154,43 +138,43 @@ sgtitle('Bicep Femoris Short Head Torque through Knee Flexion and Extension')
 subplot(3, 2, 1)
 plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3))
 title('Muscle and PAM Z Torque')
-xlabel('Knee Ext(+)/Flx(-), degrees')
-ylabel('Torque, Nm')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Torque, N \cdot m','Interpreter','tex')
 legend('Human', 'PAM')
 
 subplot(3, 2, 2)
 plot(phiD, TorqueEz)
 legend('Optimal PAM Location')
-xlabel('Knee Ext(+)/Flx(-), degrees')
-ylabel('Torque, Nm')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Torque, N \cdot m','Interpreter','tex')
 title('Adjusted Error Z Torque')
 
 subplot(3, 2, 3)
 plot(phiD, TorqueH(:, 2), phiD, TorqueR(:, 2))
 title('Muscle and PAM Y Torque')
-xlabel('Knee Ext(+)/Flx(-), degrees')
-ylabel('Torque, Nm')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Torque, N \cdot m','Interpreter','tex')
 legend('Human', 'PAM')
 
 subplot(3, 2, 4)
 plot(phiD, TorqueEy)
 legend('Optimal PAM Location')
-xlabel('Knee Ext(+)/Flx(-), degrees')
-ylabel('Torque, Nm')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Torque, N \cdot m','Interpreter','tex')
 title('Adjusted Error Y Torque')
 
 subplot(3, 2, 5)
 plot(phiD, TorqueH(:, 1), phiD, TorqueR(:, 1))
 title('Muscle and PAM X Torque')
-xlabel('Knee Ext(+)/Flx(-), degrees')
-ylabel('Torque, Nm')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Torque, N \cdot m','Interpreter','tex')
 legend('Human', 'PAM')
 
 subplot(3, 2, 6)
 plot(phiD, TorqueEx)
 legend('Optimal PAM Location')
-xlabel('Knee Ext(+)/Flx(-), degrees')
-ylabel('Torque, Nm')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Torque, N \cdot m','Interpreter','tex')
 title('Adjusted Error X Torque')
 
 hold off
@@ -199,9 +183,9 @@ hold off
 figure
 plot(phiD, Bifemsh_Pam_adj.Torque(:, 3), phiD, TorqueR(:, 3))
 title('Muscle and PAM Z Torque')
-xlabel('Knee Ext(+)/Flx(-), degrees')
-ylabel('Torque, Nm')
-legend('rest-5,tendon+26,kmax-4', 'Expected')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Torque, N \cdot m','Interpreter','tex')
+legend('Optimized', 'Original Theoretical')
 
 
 %% Plotting muscle lengths and moment arms using two different moment arm
@@ -223,28 +207,28 @@ sgtitle('Bicep Femoris Short Head Length and Moment Arm through Knee Flexion and
 subplot(2, 2, 1)
 plot(phiD, ML, phiD, PamL)
 title('Muscle and PAM Lengths')
-xlabel('Knee Ext(+)/Flx(-), degrees')
+xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Length, m')
 legend('Human', 'PAM')
 
 subplot(2, 2, 2)
 plot(phiD, MA, phiD, BPAma)
 title('Moment arm, Z axis, vector method')
-xlabel('Knee Ext(+)/Flx(-), degrees')
+xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Length, m')
 legend('Human', 'PAM')
 
 subplot(2, 2, 3)
 plot(phiD(1:99), -dM./dO', phiD(1:99), -dP./dO')
 title('Moment arm, Z axis, left difference method')
-xlabel('Knee Ext(+)/Flx(-), degrees')
+xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Length, m')
 legend('Human', 'PAM')
 
 subplot(2, 2, 4)
 plot(phiD(2:100), -dM./dO', phiD(2:100), -dP./dO')
 title('Moment arm, Z axis, right difference method')
-xlabel('Knee Ext(+)/Flx(-), degrees')
+xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Length, m')
 legend('Human', 'PAM')
 

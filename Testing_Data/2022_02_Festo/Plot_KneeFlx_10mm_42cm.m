@@ -1,28 +1,22 @@
 %% Pinned knee, Extensor
 %Run and save data from testing results
-% clear; clc; %close all;
+clear;
+clc;
+close all;
 
 f = fullfile('github/bipedal_robot/code/matlab');
 qt = addpath(genpath(f));
-
-restingLength = 0.415; %resting length, m
-kmax = 0.350; %Length at maximum contraction, m
-dia = 10;
 
 load KneeFlx_10mm_42cm.mat
 Theoretical = TorqueR(:,3)';
 %rest = 0.415, tendon = 0.012
 
-%% Adjustment to Theoretical Calculation
-rest_adj = 0.44;
-tendon_adj = 0.06;
-kmax_adj = 0.355;
-Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, dia, T_Pam, rest_adj, kmax_adj, tendon_adj, fitting, pres);
-Theo_adj = Bifemsh_Pam_adj.Torque(:,3)';
+%% Optimized Theoretical Calculation
+Theo_adj = TorqueR_adj(:,3)';
 
-rest = 0.415; %set resting length back to measured value
-tendon = 0.012; %set tendon back to measured(?) value
-kmax = 0.350; %set kmax back to measured value
+% rest = 0.415; %set resting length back to measured value
+% tendon = 0.012; %set tendon back to measured(?) value
+% kmax = 0.350; %set kmax back to measured value
 %% Test 1 done with CALT load cell
 %Test 1 == sheet FlxTest10mm from Results_table_10mm
 
@@ -54,29 +48,85 @@ pres = zeros(1,runsperseries);
                 pres(1,j) = Stats{'Mean',2};
      end
 
-for i = 1:size(InflatedLength, 2)
-    F(i) = festo3(InflatedLength(i), restingLength, dia, pres(i), kmax);
-    TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Moment will be negative because it causes flexion
+for i = 1:size(InflatedLength, 2)  
+    F(1,i,1) = festo3(InflatedLength(i), rest, 10, pres(i), kmax);    
+    TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Torque will be negative because it is causing flexion
 end
 
-%% Mean and RMSE
-X1 = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
-mod = 'poly4';
-fitOptions = fitoptions(mod, 'Normalize', 'on','Robust','off');
-[mdl1u, gof1] = fit(Angle',Torque',mod,fitOptions);
-TorqueStdu = gof1.rmse;
-TorqueMeanu = feval(mdl1u,X1)';
+KMAX = (rest-kmax)/rest;
+rel = ((rest-InflatedLength)/rest)/KMAX;
+Fn = bpaForce10(rest,rel,pres);
 
+for i = 2:(size(Fn,3)+1)
+    F(:,:,i) = Fn(:,:,i-1);
+end
 
-modp = 'poly3';
-fitOp = fitoptions(modp,'Normalize','on','Robust','off');
-[mdl1, gofp1] = fit(Angle',Torque',modp,fitOp)
-TorqueStd = gofp1.rmse;
-TorqueMean = feval(mdl1,X1)';
+for i = 1:size(F,3)
+    TorqueHand(:,:,i) = -ICRtoMuscle.*F(1,:,i);  %Torque will be negative because it is causing flexion
+end
 
-[mdl2, gofp2] = fit(Angle',TorqueHand',modp,fitOp);
-HandStd = gofp2.rmse;
-HandMean = feval(mdl2,X1)';
+%% Plot expected versus measured moment arm
+Ma = Bifemsh_Pam_adj.MomentArm;                 %Calculated moment arm
+G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+
+figure
+hold on
+pp2 = plot(phiD,G,'DisplayName','\bf Expected $\vec{r}$');
+ss2 = scatter(Angle, ICRtoMuscle,'DisplayName','\bf Measured $\vec{r}$');
+title('\bf Expected vs measured $\vec{r}$', 'Interpreter','latex')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Z axis $\vec{r}$, m','Interpreter','latex')
+ax1 = gca;
+ax1.FontSize = 12;
+ax1.FontWeight = 'bold';
+ax1.FontName = 'Arial';
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+lgdMa = legend('Interpreter','latex');
+lgdMa.FontSize = 10;
+hold off
+
+%% Plot relative strain versus angle. Compare strain, relative strain, and measured values
+strain = (rest-(Bifemsh_Pam_adj.MuscleLength-tendon-2*fitting))/rest;
+relstrain = (strain)./KMAX;
+realRel = (rest-InflatedLength)/rest/KMAX;
+
+figure
+hold on
+plot(phiD,relstrain,'DisplayName','Expected \epsilon^*')
+scatter(Angle,realRel,'DisplayName','Measured \epsilon^*')
+title('Expected vs measured \epsilon^*','Interpreter','tex')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('\epsilon^*','Interpreter','tex')
+ax2 = gca;
+ax2.FontSize = 12;
+ax2.FontWeight = 'bold';
+ax2.FontName = 'Arial';
+ax2.YAxis.LineWidth = 2; ax2.YAxis.FontSize = 10;
+ax2.XAxis.LineWidth = 2; ax2.XAxis.FontSize = 10;
+lgdMa = legend('Interpreter','tex');
+lgdMa.FontSize = 10;
+hold off
+
+%% Plot measured versus expected BPA length
+MuscleLength = Bifemsh_Pam_adj.MuscleLength-2*fitting-tendon;
+
+figure
+hold on
+plot(phiD,MuscleLength,'DisplayName','Expected Muscle Length')
+scatter(Angle,InflatedLength,'DisplayName','Measured Length')
+title('Expected vs measured muscle length')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Length, m')
+ax3 = gca;
+ax3.FontSize = 12;
+ax3.FontWeight = 'bold';
+ax3.FontName = 'Arial';
+ax3.YAxis.LineWidth = 2; ax3.YAxis.FontSize = 10;
+ax3.XAxis.LineWidth = 2; ax3.XAxis.FontSize = 10;
+lgdMa = legend;
+lgdMa.FontSize = 10;
+hold off
 
 %% Plotting with polynomial solver
 %Matlab hex color values:
@@ -87,53 +137,67 @@ c4 = '#EA5F94'; %pink
 c5 = '#CD34B5'; %magenta
 c6 = '#9D02D7'; %magenta 2
 c7 = '#0000FF'; %indigo
+c8 = '#000000'; %black
 sz = 60;        %size of data points
+c = {c1; c2; c3; c4; c5; c6; c7; c8};
 
-%close(get(gcf,'Number'));
-figure('units','normalized','position',[0.0892 0.1100 0.5317 0.8150])
+figure('units','normalized')
 hold on
-title('Isometric Torque for Biomimetic Knee, 10mm Flexor, 41.5cm long','interpreter','tex')
-xlabel('Knee angle, degrees, Flexion (-), Extension (+)','FontWeight','bold','interpreter','tex')
-ylabel('Torque, N*m','FontWeight','bold','interpreter','tex')
+title('\bf Torque for Biomimetic Knee, $10\,$mm Flexor, $l_{rest}=41.5\,$cm','interpreter','latex')
+xlabel('Knee angle, \circ','FontWeight','bold','interpreter','tex')
+ylabel('Torque, N{\cdot}m','FontWeight','bold','interpreter','tex')
 gca1 = gca;
 gcf1 = gcf;
-% set(gcf,'Position',[1 384 950 612]);
-% set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 set(gca,'FontSize', 12, 'FontWeight', 'bold');
-plot(phiD, Theoretical,'Color',c5,'Linewidth',2,'DisplayName','Expected')
-chr = 'Adjusted';
-plot(phiD, Theo_adj,'Color',c3,'Linewidth',2,'DisplayName',chr)
-
-% Xnew=[X,fliplr(X)];
-% Y1=[TorqueMean+TorqueStd,fliplr(TorqueMean-TorqueStd)];
-% Y2=[HandMean+HandStd,fliplr(HandMean-HandStd)];
-% fill(Xnew,Y1,[1 0.4 0.8],'DisplayName','Scale torque SD','FaceAlpha',0.25);
-% fill(Xnew,Y2,[.6 1.0 .6],'DisplayName','Hand torque SD','FaceAlpha',0.25);
-
-plot(X1,TorqueMean,'--','Color',c7,'Linewidth',2,'DisplayName','Torque mean, scale')
-plot(X1,HandMean,'--','Color',c1,'Linewidth',2,'DisplayName','Torque expected, hand measurements')
-
-sc1 = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, experimental');
-sc2 = scatter(Angle,TorqueHand,sz,'filled','MarkerFaceColor',c1,'DisplayName','Torque data, Hand calc');
-
-% Legend = legend('Location','eastOutside');
-legend('interpreter','latex')
+PL1 = plot(phiD, Theoretical,'Color',c1,'Linewidth',2,'DisplayName','Theoretical, original');
+chr = 'Theoretical, optimized';
+PL3 = plot(phiD, Theo_adj,'Color',c3,'Linewidth',2,'DisplayName',chr);
+sc5 = scatter(Angle,TorqueHand(:,:,4),sz,'filled','MarkerFaceColor',c5,'DisplayName','Back calculated torque');
+sc7 = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
+ax4 = gca;
+ax4.FontSize = 12;
+ax4.FontWeight = 'bold';
+ax4.FontName = 'Arial';
+ax4.YAxis.LineWidth = 2; ax4.YAxis.FontSize = 10;
+ax4.XAxis.LineWidth = 2; ax4.XAxis.FontSize = 10;
+%lgd = legend('interpreter','latex');
+lgd = legend;
 hold off
 
-%% Plot error and standard deviation as bar graphs
-% xb=categorical({'Theoretical','Scale','Hand'});
-% xb = reordercats(xb,{'Theoretical','Scale','Hand'});
-% yb = [mean(Theoretical) mean(TorqueMean) mean(TorqueHand)];
-% std_dev = [0 mean(TorqueStd) mean(HandStd)];
-% figure
-% hold on
-% b = bar(xb,yb,'FaceColor',[0 0.8 1.0]);
-% gca3 = gca;
-% gcf3 = gcf;
-% ylabel('Torque, N*m')
-% title('Mean Torque Values and SD for Each Calculation Method')
-% set(gcf,'Position',[0 0 950 612]);
-% set(gca,'FontSize', 18, 'FontWeight', 'bold');
-% b.CData = [0 0.4470 0.7410; 0  0  0; 1  0  0];
-% errb = errorbar(yb,std_dev ,'LineStyle','none','LineWidth',4,'CapSize',20);
-% hold off
+%% Mean and RMSE
+Tqz = cell(2,1);
+Tqz{1} = Bifemsh_Pam.Torque(:,3,4);    %Calculated Adjusted Torque
+Tqz{2} = Bifemsh_Pam_adj.Torque(:,3,4);    %Calculated Adjusted Torque
+%Tqz{3} = TorqueHand(:,:,4);                %Placeholder in case we want to compare SSE/RMSE of back calculated torque to measured torque
+
+%fit options
+mod_Pam = fittype('cubicinterp');
+Options = fitoptions(mod_Pam);
+Options.Normal = 'on';
+
+%prepare cells
+mdl_Pam = cell(size(Tqz,1));
+val = cell(length(mdl_Pam),1);
+          
+%Get values at each angle there is measurement data for
+for j = 1:length(Tqz)
+     Options.Exclude = isnan(Tqz{j});
+     mdl_Pam{j} = fit(phiD',Tqz{j},mod_Pam,Options);
+     val{j} = feval(mdl_Pam{j},Angle');
+end
+
+y = Torque';        
+ynew = val;
+        
+yresid = cell(length(ynew),1);
+SSresid = cell(length(ynew),1);
+fu = cell(length(ynew),1);
+        
+for i = 1:length(ynew)
+    yresid{i} = y-ynew{i};              %residual error
+    SSresid{i} = sum(yresid{i}.^2,'omitnan'); %Sum of squares of the residual
+    fu{i} = sqrt(SSresid{i}/length(yresid{i}));        % RMSE for function 1
+end
+
+fprintf('Original torque calculation returns SSE of %5d with an RMSE of %5d\n',SSresid{1},fu{1})
+fprintf('Optimized torque calculation returns SSE of %5d with an RMSE of %5d\n',SSresid{2},fu{2})

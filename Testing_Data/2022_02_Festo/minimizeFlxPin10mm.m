@@ -75,8 +75,8 @@ hold on
         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
     end
 title(sprintf('Isometric Torque vs Knee Angle, 10mm Flexor, %4.3f m long',rest),'FontSize',12,'FontWeight','Bold')
-xlabel('Knee angle, \circ','FontSize',12)
-ylabel('Torque, N \bullet m','FontSize',12)
+xlabel('Knee angle, \circ','FontSize',12,'Interpreter','tex')
+ylabel('Torque, N \cdot m','FontSize',12,'Interpreter','tex')
 ax2 = gca;
 ax2.FontSize = 12;
 ax2.FontWeight = 'bold';
@@ -101,8 +101,8 @@ hold on
         PL2{i} = plot(phiD, v2{i},'Color',c{i},'Linewidth',2,'DisplayName',Disp2{T1});
     end
 title(sprintf('Isometric Torque vs Knee Angle, 10mm Flexor, %4.3f m long',r2),'FontSize',12,'FontWeight','Bold')
-xlabel('Knee angle, \circ','FontSize',12)
-ylabel('Torque, N \bullet m','FontSize',12)
+xlabel('Knee angle, \circ','FontSize',12,'Interpreter','tex')
+ylabel('Torque, N \cdot m','FontSize',12,'Interpreter','tex')
 ax2 = gca;
 ax2.FontSize = 12;
 ax2.FontWeight = 'bold';

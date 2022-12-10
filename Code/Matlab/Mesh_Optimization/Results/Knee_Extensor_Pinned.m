@@ -4,8 +4,8 @@
 % placement
 
 %% Freshen up the workspace
-% clc
-% clear
+clc
+clear
 % close all
 
 %% Add paths to the muscle and pam calculators
@@ -29,8 +29,8 @@ T = zeros(4, 4, positions);
 
 c = pi/180; %Convert from degrees to radians
 
-kneeMin = -90*c;
-kneeMax = 35*c;
+kneeMin = -120*c;
+kneeMax = 10*c;
 phi = linspace(kneeMin, kneeMax, positions);
 
 %We want one of our positions to be home position, so let's make the
@@ -47,16 +47,10 @@ for i = 1:positions
     
     T(:, :, i) = RpToTrans(R(:, :, i), hipToKnee');
     
-%     hipToKnee_Pam = [0.0045, -0.3958, 0];
-%     R_Pam(:, :, i) = [cos(phi(i)), -sin(phi(i)), 0;   %Rotation matrix for robot
-%                     sin(phi(i)), cos(phi(i)), 0;
-%                     0, 0, 1];
-%     
-%     T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
 end
 
 %% PAM calculation
-Name = 'Vastus Intermedius Normal';
+Name = 'Vastus Intermedius, Robot';
 Location = zeros(5,3,positions);
 
 % Origin Location from Ben
@@ -90,136 +84,68 @@ end
         
 CrossPoint = 5;
 Dia = 10;
-Vas_Pam = MonoPamDataPinnedExtensor(Name, Location, CrossPoint, Dia, T);
+fit = 0.0352;           %fitting length
 
-Name = 'Vastus Intermedius Realistic';
-Location = zeros(5,3,positions);
-
-% Origin Location from Ben
-for i = 1:positions
-    if phiD(i) >= -74.01 && phiD(i) < -19.6
-     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
-                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
-                0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
-                0.04128, -0.410,    0;        %Row 4 = Row 3
-                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
-    elseif phiD(i) >= -19.6 && phiD(i) < 20
-     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
-                0.060, -0.350, 0.000;        %BPA contacts screw that joins femur body with femoral condyles
-                0.060, -0.350, 0.000;        %Row 3 = Row 2
-                0.060, -0.350, 0.000;        %Row 4 = Row 2
-                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
-    elseif phiD(i) >= 20
-     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
-                0.030, -0.050, 0;        %Row 2 = Row 1 (no screw contact)
-                0.030, -0.050, 0;        %Row 3 = Row 2
-                0.030, -0.050, 0;        %Row 4 = Row 2
-                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
-    else
-     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
-                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
-                0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
-                0.01138, -0.425 0;            %Contact point over 74.01 degrees flexion
-                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
-    end
-end
-        
-CrossPoint = 5;
-Dia = 10;
-Rest = (415-8)/1000;   %resting length clamp to clamp, minus the barb
+%41.5 cm, no tendon
+rest = 415/1000;   %resting length clamp to clamp, minus the barb
 kmax = 0.349;          %length at maximum contraction
 tendon = 0;             %Tendon length
-fit = 0.0254;           %fitting length
-pres = 605;             %Pressure, kPa
-Vas_Pam_real = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+pres = 605.2351;             %Pressure, kPa
+Vas_Pam_42cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+
+%41.5 cm,  tendon
+rest = 415/1000;   %resting length clamp to clamp, minus the barb
+kmax = 0.349;          %length at maximum contraction
+tendon = 0.022;             %Tendon length
+pres = 605.2351;             %Pressure, kPa
+Vas_Pam_42cm_tendon = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+
+%45.7 cm, no tendon
+rest = 457/1000;   %resting length clamp to clamp, minus the barb
+kmax = 0.349;          %length at maximum contraction
+tendon = 0;             %Tendon length
+pres = 602;             %Pressure, kPa
+Vas_Pam_46cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+
+%48.6 cm, no tendon
+rest = 485/1000;   %resting length clamp to clamp, minus the barb
+kmax = 0.405;          %length at maximum contraction
+tendon = 0;             %Tendon length
+pres = 605.8523;             %Pressure, kPa
+Vas_Pam_48cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
 
 %% Unstacking the Torques to identify specific rotations
-% Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
-% Torque1 = Vas_Int.Torque + Vas_Lat.Torque + Vas_Med.Torque;
-TorqueR_pin = Vas_Pam.Torque;
-
-%% Add Torques from the Muscle Group
-% TorqueH = Torque1;
-
+Torque_42cm = Vas_Pam_42cm.Torque(:,3,4);
+Torque_42cm_ten = Vas_Pam_42cm_tendon.Torque(:,3,4);
+Torque_46cm = Vas_Pam_46cm.Torque(:,3,4);
+Torque_48cm = Vas_Pam_48cm.Torque(:,3,4);
 
 %% Plotting Torque Results
 
 figure
-plot(phiD, TorqueR(:, 3))
-title('BPA Z Torque, Length = 415 mm')
-xlabel('Knee Extension(+)/Flexion(-), degrees')
-ylabel('Torque, Nm')
+plot(phiD, Torque_42cm)
+title('\bf \textfont{12} Iso. Torque vs \theta_{k}, $l_{rest}=415\,$ mm, no tendon','Interpreter','tex')
+xlabel('\bf \textfont{12} Knee angle, \circ','Interpreter','tex')
+ylabel('\bf \textfont{12} Torque, $N \cdot m$','Interpreter','tex')
 legend('pinned joint')
 
-% TorqueEx = zeros(size(TorqueH, 1), 1);
-% TorqueEy = zeros(size(TorqueH, 1), 1);
-% TorqueEz = zeros(size(TorqueH, 1), 1);
-% 
-% for i = 1:size(TorqueR, 1)
-%     if TorqueH(i, 1) >= 0
-%         TorqueEx(i) = TorqueR(i, 1) - TorqueH(i, 1);
-%     else
-%         TorqueEx(i) = TorqueH(i, 1) - TorqueR(i, 1);
-%     end
-%     
-%     if TorqueH(i, 2) >= 0
-%         TorqueEy(i) = TorqueR(i, 2) - TorqueH(i, 2);
-%     else
-%         TorqueEy(i) = TorqueH(i, 2) - TorqueR(i, 2);
-%     end
-%     
-%     if TorqueH(i, 3) >= 0
-%         TorqueEz(i) = TorqueR(i, 3) - TorqueH(i, 3);
-%     else
-%         TorqueEz(i) = TorqueH(i, 3) - TorqueR(i, 3);
-%     end
-% end
+figure
+plot(phiD, Torque_42cm_ten)
+title('\bf \textfont{12} Iso. Torque vs \theta_{k}, $l_{rest}=415\,$ mm, $22\,mm$ tendon','Interpreter','tex')
+xlabel('\bf \textfont{12} Knee angle, \circ','Interpreter','tex')
+ylabel('\bf \textfont{12} Torque, $N \cdot m$','Interpreter','tex')
+legend('pinned joint')
 
-% figure
-% hold on
-% sgtitle('Bicep Femoris Short Head Torque through Knee Flexion and Extension')
-% 
-% subplot(3, 2, 1)
-% plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3))
-% legend('Human Muscle', 'Optimal BPA Location')
-% title('Muscle and PAM Z Torque')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% legend('Human', 'PAM')
-% 
-% subplot(3, 2, 2)
-% plot(phiD, TorqueEz)
-% legend('Optimal PAM Location')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% title('Adjusted Error Z Torque')
-% 
-% subplot(3, 2, 3)
-% plot(phiD, TorqueH(:, 2), phiD, TorqueR(:, 2))
-% title('Muscle and PAM Y Torque')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% legend('Human', 'PAM')
-% 
-% subplot(3, 2, 4)
-% plot(phiD, TorqueEy)
-% legend('Optimal PAM Location')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% title('Adjusted Error Y Torque')
-% 
-% subplot(3, 2, 5)
-% plot(phiD, TorqueH(:, 1), phiD, TorqueR(:, 1))
-% title('Muscle and PAM X Torque')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% legend('Human', 'PAM')
-% 
-% subplot(3, 2, 6)
-% plot(phiD, TorqueEx)
-% legend('Optimal PAM Location')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% title('Adjusted Error X Torque')
-% 
-% hold off
+figure
+plot(phiD, Torque_46cm)
+title('\bf \textfont{12} Iso. Torque vs \theta_{k}, $l_{rest}=457\,$ mm','Interpreter','tex')
+xlabel('\bf \textfont{12} Knee angle, \circ','Interpreter','tex')
+ylabel('\bf \textfont{12} Torque, $N \cdot m$','Interpreter','tex')
+legend('pinned joint')
+
+figure
+plot(phiD, Torque_48cm)
+title('\bf \textfont{12} Iso. Torque vs \theta_{k}, $l_{rest}=457\,$ mm','Interpreter','tex')
+xlabel('\bf \textfont{12} Knee angle, \circ','Interpreter','tex')
+ylabel('\bf \textfont{12} Torque, $N \cdot m$','Interpreter','tex')
+legend('pinned joint')
