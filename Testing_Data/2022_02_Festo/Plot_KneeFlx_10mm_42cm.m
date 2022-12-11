@@ -71,19 +71,19 @@ G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
 
 figure
 hold on
-pp2 = plot(phiD,G,'DisplayName','\bf Expected $\vec{r}$');
-ss2 = scatter(Angle, ICRtoMuscle,'DisplayName','\bf Measured $\vec{r}$');
-title('\bf Expected vs measured $\vec{r}$', 'Interpreter','latex')
-xlabel('Knee angle, \circ','Interpreter','tex')
-ylabel('\bf Z axis $\vec{r}$, m','Interpreter','latex')
+pp2 = plot(phiD,G,'DisplayName','\bf Expected $r_{\hat{k}}$');
+ss2 = scatter(Angle, ICRtoMuscle,'DisplayName','\bf Measured $r_{\hat{k}}$');
+title('\bf Expected vs measured $r_{\hat{k}}$', 'Interpreter','latex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Z axis $r_{\hat{k}}$, m','Interpreter','latex')
 ax1 = gca;
 ax1.FontSize = 12;
 ax1.FontWeight = 'bold';
 ax1.FontName = 'Arial';
-ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
-ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 12;
+ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 12;
 lgdMa = legend('Interpreter','latex');
-lgdMa.FontSize = 10;
+lgdMa.FontSize = 12;
 hold off
 
 %% Plot relative strain versus angle. Compare strain, relative strain, and measured values
@@ -93,8 +93,8 @@ realRel = (rest-InflatedLength)/rest/KMAX;
 
 figure
 hold on
-plot(phiD,relstrain,'DisplayName','Expected \epsilon^*')
-scatter(Angle,realRel,'DisplayName','Measured \epsilon^*')
+plot(phiD,relstrain,'DisplayName','\bf Expected \epsilon^*')
+scatter(Angle,realRel,'DisplayName','\bf Measured \epsilon^*')
 title('Expected vs measured \epsilon^*','Interpreter','tex')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('\epsilon^*','Interpreter','tex')
@@ -102,10 +102,10 @@ ax2 = gca;
 ax2.FontSize = 12;
 ax2.FontWeight = 'bold';
 ax2.FontName = 'Arial';
-ax2.YAxis.LineWidth = 2; ax2.YAxis.FontSize = 10;
-ax2.XAxis.LineWidth = 2; ax2.XAxis.FontSize = 10;
+ax2.YAxis.LineWidth = 2; ax2.YAxis.FontSize = 12;
+ax2.XAxis.LineWidth = 2; ax2.XAxis.FontSize = 12;
 lgdMa = legend('Interpreter','tex');
-lgdMa.FontSize = 10;
+lgdMa.FontSize = 12;
 hold off
 
 %% Plot measured versus expected BPA length
@@ -113,19 +113,19 @@ MuscleLength = Bifemsh_Pam_adj.MuscleLength-2*fitting-tendon;
 
 figure
 hold on
-plot(phiD,MuscleLength,'DisplayName','Expected Muscle Length')
-scatter(Angle,InflatedLength,'DisplayName','Measured Length')
-title('Expected vs measured muscle length')
-xlabel('Knee angle, \circ','Interpreter','tex')
-ylabel('Length, m')
+plot(phiD,MuscleLength,'DisplayName','\bf Expected $l_{m}$')
+scatter(Angle,InflatedLength,'DisplayName','\bf Measured $l_{m}$')
+title('\bf Expected vs measured $l_{m}$','Interpreter','latex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf $l_{m}$, m','Interpreter','latex')
 ax3 = gca;
 ax3.FontSize = 12;
 ax3.FontWeight = 'bold';
 ax3.FontName = 'Arial';
-ax3.YAxis.LineWidth = 2; ax3.YAxis.FontSize = 10;
-ax3.XAxis.LineWidth = 2; ax3.XAxis.FontSize = 10;
-lgdMa = legend;
-lgdMa.FontSize = 10;
+ax3.YAxis.LineWidth = 2; ax3.YAxis.FontSize = 12;
+ax3.XAxis.LineWidth = 2; ax3.XAxis.FontSize = 12;
+lgdMa = legend('Interpreter','latex');
+lgdMa.FontSize = 12;
 hold off
 
 %% Plotting with polynomial solver
@@ -166,8 +166,8 @@ hold off
 
 %% Mean and RMSE
 Tqz = cell(2,1);
-Tqz{1} = Bifemsh_Pam.Torque(:,3,4);    %Calculated Adjusted Torque
-Tqz{2} = Bifemsh_Pam_adj.Torque(:,3,4);    %Calculated Adjusted Torque
+Tqz{1} = Bifemsh_Pam.Torque(:,3,4);         %Calculated Torque, new simplified exponential equation w/o optimized fitting length
+Tqz{2} = Bifemsh_Pam_adj.Torque(:,3,4);     %Calculated Torque, adjusted with optimized fitting length
 %Tqz{3} = TorqueHand(:,:,4);                %Placeholder in case we want to compare SSE/RMSE of back calculated torque to measured torque
 
 %fit options

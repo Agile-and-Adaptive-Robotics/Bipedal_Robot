@@ -236,13 +236,11 @@ Disp = cell(1, 2*size(Theoretical,2));
 
 figure
 hold on
-title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.7cm long')
+title('Isometric Torque vs {\theta_{k}}, 10mm Flexor, 45.7cm long')
 xlabel('Knee angle, \circ','FontWeight','bold','interpreter','tex')
-ylabel('Torque, N \cdot m','FontWeight','bold','interpreter','tex')
+ylabel('Torque, {N \cdot m}','FontWeight','bold','interpreter','tex')
 gca1 = gca;
 gcf1 = gcf;
-% set(gcf,'Position',[1 384 950 612]);
-% set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
 set(gca,'FontSize', 12, 'FontWeight', 'bold')
 
     for i = 4

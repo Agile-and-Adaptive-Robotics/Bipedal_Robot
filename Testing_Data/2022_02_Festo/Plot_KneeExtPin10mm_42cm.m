@@ -1,24 +1,23 @@
 %% Pinned knee, Extensor
 %Run and save data from testing results
-clear; clc; close all;
+clear;
+clc;
+close all;
 
-restingLength = 0.415; %resting length, m
+load 'KneeExtPin_10mm_all.mat'
+Theoretical = Torque_42cm;
+Theoretical_ten = Torque_42cm_ten;
+
+tendon0 = 0;            %no tendon condition
+tendon22 = 0.022;       %22 mm tendon
+
+rest = 0.415; %resting length, m
 kmax = 0.349; %Length at maximum contraction, m
-
-load 'KneeExtPin_10mm_42cm_comparisons.mat'
-TorqueR1 = Vas_Pam_ideal.Torque;
-TorqueR2 = Vas_Pam_real1.Torque;
-TorqueR3 = Vas_Pam_real2.Torque; 
-TorqueR4 = Vas_Pam_real3.Torque;
-TorqueR5 = Vas_Pam_tendon_ideal.Torque;
-TorqueR6 = Vas_Pam_tendon_real.Torque;
-TorqueR7 = Vas_Pam_slip.Torque;
-
-clear fit
 %% Test 1 done with CALT load cell. Tests 2 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
-%Test 1 == sheet ExtTest10mm_4 from Results_table10mm_pinned_LoadCell
-%Test 2 == sheet ExtTest10mm_5 from Results_table10mm_pinned_LoadCell
-%Test 3 == sheet ExtTest10mm_6 from Results_table10mm_pinned_LoadCell
+%Test 1 == sheet ExtTest10mm_4 from Results_table10mm_pinned_LoadCell   (no tendon)
+%Test 2 == sheet ExtTest10mm_5 from Results_table10mm_pinned_LoadCell   (tendon, test w/ wrapping point #4 +20mm Z direction (i.e. BPA slipped from bolt) 
+%Test 3 == sheet ExtTest10mm_6 from Results_table10mm_pinned_LoadCell   (tendon)
+
 %% Torque calculated from measurements
 
 Angle1 = [-76.5	-69	-51.5	-40.5	-39.5	-55.5	-35	-25.5	-20	-12.5	-5	0.5	4	12.5	20	28	35	23	20	11	1	-16	-24	-44	-53.4	-66];
@@ -63,239 +62,230 @@ pres2 = zeros(1,runsperseries(2));
 pres3 = zeros(1,runsperseries(3));
     for i = 1:3
         for j = 1:runsperseries(i)
-            if j == 1
+            if i == 1
                 file_name = sprintf('ExtTest%0.0f_%0.0f.mat', test(i),j);
                 load(file_name,'Stats')
                 pres1(1,j) = Stats{'Mean',2};
-            elseif j ==2
+            elseif i ==2
                 file_name = sprintf('ExtTest%0.0f_%0.0f.mat', test(i),j);
                 load(file_name,'Stats')
                 pres2(1,j) = Stats{'Mean',2};
-            else
+            elseif i ==3
                 file_name = sprintf('ExtTest%0.0f_%0.0f.mat', test(i),j);
                 load(file_name,'Stats')
                 pres3(1,j) = Stats{'Mean',2};
+            else
             end
         end       
     end
 
 pres = [pres1 pres2 pres3];
-pressy = nonzeros(pres);
-pres = mean(pressy).*ones(1,size(pres,2));
+% pressy = nonzeros(pres);
+% pres = mean(pressy).*ones(1,size(pres,2));
 
-for i = 1:size(InflatedLength, 2)
-    F(i) = festo3(InflatedLength(i), restingLength, 10, pres(i), kmax);    
-    TorqueHand(i) = ICRtoMuscle(i)*F(i);
+for i = 1:size(InflatedLength, 2)  
+    F(1,i,1) = festo3(InflatedLength(i), rest, 10, pres(i), kmax);    
+    TorqueHand(i) = ICRtoMuscle(i)*F(i);  %Torque will be positive because it is causing extension
 end
-TorqueHand1 = TorqueHand(1:size(TorqueHand1,2));
-TorqueHand2 = TorqueHand(((size(TorqueHand1,2)+1)):(size(TorqueHand1,2)+size(TorqueHand2,2)));
-TorqueHand3 = TorqueHand((size(TorqueHand1,2)+size(TorqueHand2,2)+1):size(TorqueHand,2));
+
+KMAX = (rest-kmax)/rest;
+rel = ((rest-InflatedLength)/rest)/KMAX;
+Fn = bpaForce10(rest,rel,pres);
+
+for i = 2:(size(Fn,3)+1)
+    F(:,:,i) = Fn(:,:,i-1);
+end
+
+for i = 1:size(F,3)
+    TorqueHand(:,:,i) = ICRtoMuscle.*F(1,:,i);  %Torque will be positive because it is causing extension   
+    TorqueHand1(:,:,i) = TorqueHand(1,1:size(TorqueHand1,2),i);
+    TorqueHand2(:,:,i) = TorqueHand(1,((size(TorqueHand1,2)+1)):(size(TorqueHand1,2)+size(TorqueHand2,2)),i);
+    TorqueHand3(:,:,i) = TorqueHand(1,(size(TorqueHand1,2)+size(TorqueHand2,2)+1):size(TorqueHand,2),i);
+end
+
+%% Prepare for plotting
+% Create accessible color scheme
+c1 = '#FFD700'; %gold
+c2 = '#FFB14E'; %orange
+c3 = '#FA8775'; %light orange
+c4 = '#EA5F94'; %pink
+c5 = '#CD34B5'; %magenta
+c6 = '#9D02D7'; %magenta 2
+c7 = '#0000FF'; %indigo
+c8 = '#000000'; %black
+sz = 60;        %size of data points
+sz2 = sz*0.666; %size of second data points
+c = {c1; c2; c3; c4; c5; c6; c7; c8};
+
+%% Plot expected versus measured moment arm
+Ma1 = Vas_Pam_42cm.MomentArm;                  %Calculated moment arm
+G1 = (Ma1(:,1).^2+Ma1(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+Ma2 = Vas_Pam_42cm_tendon.MomentArm;                  %Calculated moment arm
+G2 = (Ma2(:,1).^2+Ma2(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+
+figure
+ax1_1 = subplot(2,1,1);
+hold on
+title('\bf Expected vs measured $r_{\hat{k}}$, no tendon', 'Interpreter','latex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Z axis $r_{\hat{k}}$, m','Interpreter','latex')
+pp1_1 = plot(phiD,G1,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected $r_{\hat{k}}$ w/o tendon');
+ss1_1 = scatter(Angle1, ICRtoMuscle1,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured $r_{\hat{k}}$');
+set(ax1_1,'FontSize', 12, 'FontWeight', 'bold','LineWidth', 2, 'FontName','Arial')
+lgdMa1 = legend('Interpreter','latex');
+lgdMa1.FontSize = 12;
+hold off
+
+ax1_2 = subplot(2,1,2);
+hold on
+title('\bf Expected vs measured $r_{\hat{k}}$, tendon', 'Interpreter','latex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Z axis $r_{\hat{k}}$, m','Interpreter','latex')
+pp2_1 = plot(phiD,G2,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected $r_{\hat{k}}$ w/ tendon');
+ss2_1 = scatter(Angle2, ICRtoMuscle2,sz,'filled','MarkerFaceColor',c2,'DisplayName','\bf Measured $r_{\hat{k}}$, tendon (slip)');
+ss2_2 = scatter(Angle3, ICRtoMuscle3,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured $r_{\hat{k}}$, tendon');
+set(ax1_2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial')
+lgdMa12 = legend('Interpreter','latex');
+lgdMa12.FontSize = 12;
+hold off
+
+%% Plot relative strain versus angle. Compare strain, relative strain, and measured values
+%Calculated strain
+strain = (rest-(Vas_Pam_42cm.MuscleLength-tendon0-2*fitting))/rest;          %strain w/o tendon
+strain_ten = (rest-(Vas_Pam_42cm_tendon.MuscleLength-tendon22-2*fitting))/rest;  %strain w/ tendon
+%Calculated relative strain
+relstrain = (strain)./KMAX;                             %w/o tendon
+relstrain_ten = (strain_ten)./KMAX;                     %w/ tendon
+%Measured actual relative strain
+realRel1 = (rest-InflatedLength1)/rest/KMAX;            %w/o tendon
+realRel2 = (rest-InflatedLength2)/rest/KMAX;            %w/ tendon (BPA slipped)
+realRel3 = (rest-InflatedLength3)/rest/KMAX;            %w/ tendon
+
+figure %Show same length BPA w/ and w/o tendon               
+ax2_1 = subplot(2,1,1);
+hold on
+title('Expected vs measured \epsilon^*,no tendon','Interpreter','tex')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('\epsilon^*','Interpreter','tex')
+pE1_1 = plot(phiD,relstrain,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected \epsilon^*, no tendon');
+sE1_1 = scatter(Angle1,realRel1,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured \epsilon^*, no tendon');
+set(ax2_1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
+lgdEp1 = legend('Interpreter','tex');
+lgdEp1.FontSize = 12;
+hold off
+
+ax2_2 = subplot(2,1,2);
+hold on
+title('Expected vs measured \epsilon^*, w/tendon','Interpreter','tex')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('\epsilon^*','Interpreter','tex')
+pE2_1 = plot(phiD,relstrain_ten,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected \epsilon^* w/ tendon');
+sE2_1 = scatter(Angle2,realRel2,sz,'filled','MarkerFaceColor',c2,'DisplayName','\bf Measured \epsilon^* w/ tendon (slip)');
+sE2_2 = scatter(Angle3,realRel3,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured \epsilon^* w/ tendon');
+set(ax2_2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
+lgdEp2 = legend('Interpreter','tex');
+lgdEp2.FontSize = 12;
+hold off
+
+%% Plot measured versus expected BPA length
+MuscleLength = Vas_Pam_42cm.MuscleLength-2*fitting-tendon0;
+MuscleLength_ten = Vas_Pam_42cm_tendon.MuscleLength-2*fitting-tendon22;
+
+figure
+Lm1 = subplot(2,1,1);
+hold on
+title('\bf Expected vs measured {l_{m}}, no tendon','Interpreter','tex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf {l_{m}}, m','Interpreter','tex')
+pLm1_1 = plot(phiD,MuscleLength,'DisplayName','\bf Expected {l_{m}}, no tendon');
+sLm1_1 = scatter(Angle1,InflatedLength1,'DisplayName','\bf Measured {l_{m}}, no tendon');
+set(Lm1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
+lgdLm1 = legend('Interpreter','tex');
+lgdLm1.FontSize = 12;
+hold off
+
+Lm2 = subplot(2,1,2);
+hold on
+title('\bf Expected vs measured {l_{m}}, w/ tendon','Interpreter','tex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf {l_{m}}, m','Interpreter','tex')
+pLm2_1 = plot(phiD,MuscleLength_ten,'DisplayName','\bf Expected {l_{m}}, w/ tendon');
+sLm2_1 = scatter(Angle2,InflatedLength2,'DisplayName','\bf Measured {l_{m}}, w/ tendon (slip)');
+sLm2_2 = scatter(Angle3,InflatedLength3,'DisplayName','\bf Measured {l_{m}}, w/ tendon');
+set(Lm1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
+lgdLm2 = legend('Interpreter','tex');
+lgdLm2.FontSize = 12;
+hold off
+
+%% Plotting Z axis Torque values
+figure
+gca1 = subplot(2,1,1);
+hold on
+title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 45.7cm','Interpreter','tex')
+xlabel('Knee angle, \circ','FontWeight','bold','Interpreter','tex')
+ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
+PL1 = plot(phiD, Theoretical,'Color',c4,'Linewidth',2,'DisplayName','Theoretical Torque');
+scM = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
+scH = scatter(Angle1,TorqueHand1(:,:,4),sz2,'filled','MarkerFaceColor',c1,'DisplayName','Back calculated Torque');
+set(gca1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial')
+lgd1 = legend;
+lgd1.FontSize = 12;
+hold off
+
+gca2 = subplot(2,1,2);
+hold on
+title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 45.7cm, 22mm tendon','Interpreter','tex')
+xlabel('Knee angle, \circ','FontWeight','bold','Interpreter','tex')
+ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
+PL2 = plot(phiD, Theoretical_ten,'Color',c7,'Linewidth',2,'DisplayName','Theoretical, 22mm tendon');
+scM1 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c6,'DisplayName','\bf Measured (slip)');
+scH1 = scatter(Angle2,TorqueHand2(:,:,4),sz2,'filled','MarkerFaceColor',c4,'DisplayName','\bf Back calculated (slip)');
+scM2 = scatter(Angle3,Torque3,sz,'d','filled','MarkerFaceColor',c2,'DisplayName','\bf Measured');
+scH2 = scatter(Angle3,TorqueHand3(:,:,4),sz2,'filled','MarkerFaceColor',c1,'DisplayName','\bf Back calculated');
+set(gca2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial')
+lgd2 = legend('Interpreter','latex');
+lgd2.FontSize = 12;
+hold off
+
 %% Mean and RMSE
-X1 = linspace(min(Angle1),max(Angle1));      %Range of motion
-X2 = linspace(min(Angle2),max(Angle2));      %Range of motion
-X3 = linspace(min(Angle3),max(Angle3));      %Range of motion
+Tqz = cell(2,1);
+Tqz{1} = Torque_42cm;        %Calculated Torque, no tendon, new simplified exponential equation
+Tqz{2} = Torque_42cm_ten;    %Calculated Torque, 22mm tendon, new simplified exponential equation, no model modification for BPA slipping off of screw
+Tqz{3} = Torque_42cm_ten;    %Calculated Torque, 22mm tendon, new simplified exponential equation
 
-modp = 'poly3';
-fitOp = fitoptions(modp,'Normalize','on','Robust','on');
-%%
-% 
-% $$e^{\pi i} + 1 = 0$$
-% 
-%%
-%$x^2+e^{\pi i}$
-[mdl1, gof1] = fit(Angle1',Torque1',modp,fitOp)
-TorqueStd1 = gof1.rmse
-TorqueMean1 = feval(mdl1,X1)';
-[mdl1p, gofp1] = fit(Angle1',TorqueHand1',modp,fitOp);
-HandStd1 = gofp1.rmse;
-HandMean1 = feval(mdl1p,X1)';
+%fit options
+mod_Pam = fittype('cubicinterp');
+Options = fitoptions(mod_Pam);
+Options.Normal = 'on';
 
-[mdl2, gof2] = fit(Angle2',Torque2',modp,fitOp)
-TorqueStd2 = gof2.rmse
-TorqueMean2 = feval(mdl2,X2)';
-[mdl2p, gofp2] = fit(Angle2',TorqueHand2',modp,fitOp);
-HandStd2 = gofp2.rmse;
-HandMean2 = feval(mdl2p,X2)';
+%prepare cells
+mdl_Pam = cell(size(Tqz,1));
+val = cell(length(mdl_Pam),1);
+          
+%Get values at each angle there is measurement data for
+for j = 1:length(Tqz)
+     Options.Exclude = isnan(Tqz{j});
+     mdl_Pam{j} = fit(phiD',Tqz{j},mod_Pam,Options);
+end
 
-[mdl3, gof3] = fit(Angle3',Torque3',modp,fitOp)
-TorqueStd3 = gof3.rmse
-TorqueMean3 = feval(mdl3,X3)';
-[mdl3p, gofp3] = fit(Angle3',TorqueHand3',modp,fitOp);
-HandStd3 = gofp3.rmse;
-HandMean3 = feval(mdl3p,X3)';
+y = cell(3,1);
+y{1} = Torque1';        %no tendon
+y{2} = Torque2';        %w/ tendon and BPA slip
+y{3} = Torque3';        %w/ tendon
+ynew{1} = feval(mdl_Pam{1},Angle1');
+ynew{2} = feval(mdl_Pam{2},Angle2');
+ynew{3} = feval(mdl_Pam{3},Angle3');
+        
+yresid = cell(length(ynew),1);
+SSresid = cell(length(ynew),1);
+fu = cell(length(ynew),1);
+        
+for i = 1:length(ynew)
+    yresid{i} = y{i}-ynew{i};              %residual error
+    SSresid{i} = sum(yresid{i}.^2,'omitnan'); %Sum of squares of the residual
+    fu{i} = sqrt(SSresid{i}/length(yresid{i}));        % RMSE for function 1
+end
 
-%% Plotting polynomial fit
-figure
-hold on
-title('Isometric Z axis Torque, 10mm Extensor, 41.5cm long')
-xlabel('degrees Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
-hold on
-gca1 = gca;
-gcf1 = gcf;
-%set(gcf,'Position',[1 1 950 612]);
-%set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-%%
-% 
-%  PREFORMATTED
-%  TEXT
-% 
-c1 = [0.8500 0.3250 0.0980]; % color, burnt orange
-c2 = [0.6350 0.0780 0.1840]; %color, red/violet
-c3 = [0 0.4470 0.7410]; %color, navy blue
-c4 = [0.4660 0.6740 0.1880]; %color, moss green
-c5 = [0.9290 0.6940 0.1250]; %color, dark yellow
-
-plot(phiD, TorqueR1(:, 3),'Color',c1,'Linewidth',2,'DisplayName','Ideal');
-plot(phiD,TorqueR2(:, 3),'--^','DisplayName','Realistic 1','Linewidth',2)
-plot(phiD, TorqueR3(:, 3),'--<','DisplayName','Realistic 2','Linewidth',2)
-plot(phiD, TorqueR4(:, 3),'--v','DisplayName','Realistic 3','Linewidth',2)
-plot(phiD, TorqueR5(:, 3),'-','Color',c3,'DisplayName','Tendon Ideal','Linewidth',2)
-plot(phiD, TorqueR6(:, 3),'-.','DisplayName','Tendon Real','Linewidth',2)
-plot(phiD, TorqueR7(:,3),':','Color',c2,'DisplayName','Slippage+Tendon','Linewidth',2)
-
-X1new=[X1,fliplr(X1)];
-Y1=[TorqueMean1+TorqueStd1,fliplr(TorqueMean1-TorqueStd1)];
-Y1p=[HandMean1+HandStd1,fliplr(HandMean1-HandStd1)];
-plot(X1,TorqueMean1,'--k','Linewidth',2,'DisplayName','Test1 mean, scale')
-fill(X1new,Y1,[.4 .4 1],'DisplayName','Test1, scale SD','FaceAlpha',0.25);
-plot(X1,HandMean1,'--r','Linewidth',2,'DisplayName','Test1 mean, hand')
-fill(X1new,Y1p,[.6 1.0 .6],'DisplayName','Test1 mean, hand SD','FaceAlpha',0.25);
-
-X2new=[X2,fliplr(X2)];
-Y2=[TorqueMean2+TorqueStd2,fliplr(TorqueMean2-TorqueStd2)];
-Y2p=[HandMean2+HandStd2,fliplr(HandMean2-HandStd2)];
-plot(X2,TorqueMean2,'--k','Linewidth',2,'DisplayName','Test2 mean, scale')
-fill(X2new,Y2,[0.4 0 0.6],'DisplayName','Test2, scale SD','FaceAlpha',0.25);
-plot(X2,HandMean2,'--r','Linewidth',2,'DisplayName','Test2 mean, hand')
-fill(X2new,Y2p,[0 0.6 1],'DisplayName','Test2 mean, hand SD','FaceAlpha',0.25);
-
-X3new=[X3,fliplr(X3)];
-Y3=[TorqueMean3+TorqueStd3,fliplr(TorqueMean3-TorqueStd3)];
-Y3p=[HandMean3+HandStd3,fliplr(HandMean3-HandStd3)];
-plot(X3,TorqueMean3,'--k','Linewidth',2,'DisplayName','Test3 mean, scale')
-fill(X3new,Y3,[0.6 0 0.6],'DisplayName','Test3, scale SD','FaceAlpha',0.25);
-plot(X3,HandMean3,'--r','Linewidth',2,'DisplayName','Test3 mean, hand')
-fill(X3new,Y3p,[.2 1.0 1],'DisplayName','Test3 mean, hand SD','FaceAlpha',0.25);
-
-sz = 50;
-sz2 = 100;
-scatter(Angle1,Torque1,sz2,'+','CData',c1,'DisplayName','No tendon, LC');
-scatter(Angle1,TorqueHand1,sz,'filled','CData',c1,'DisplayName','No tendon, hand');
-scatter(Angle2,Torque2,sz2,'+','CData',c2,'DisplayName','Tendon+slip, LC');
-scatter(Angle2,TorqueHand2,sz,'filled','CData',c2,'DisplayName','Tendon+slip, hand');
-scatter(Angle3,Torque3,sz2,'+','CData',c3,'DisplayName','Tendon, LC');
-scatter(Angle3,TorqueHand3,sz,'filled','CData',c3,'DisplayName','Tendon, hand');
-
-legend
-hold off
-%% Plot compare no tendon
-figure
-hold on
-title('Z axis Torque, 10mm Extensor, 41.5cm long, no tendon')
-xlabel('degrees Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
-hold on
-gca2 = gca;
-gcf2 = gcf;
-%set(gcf,'Position',[1 1 950 612]);
-%set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-
-plot(phiD, TorqueR1(:, 3),'Color',c1,'Linewidth',2,'DisplayName','Ideal');
-plot(phiD,TorqueR2(:, 3),'--^','DisplayName','Realistic 1','Linewidth',2)
-plot(phiD, TorqueR3(:, 3),'--<','DisplayName','Realistic 2','Linewidth',2)
-plot(phiD, TorqueR4(:, 3),'--v','DisplayName','Realistic 3','Linewidth',2)
-
-X1new=[X1,fliplr(X1)];
-Y1=[TorqueMean1+TorqueStd1,fliplr(TorqueMean1-TorqueStd1)];
-Y1p=[HandMean1+HandStd1,fliplr(HandMean1-HandStd1)];
-plot(X1,TorqueMean1,'--k','Linewidth',2,'DisplayName','Test1 mean, scale')
-fill(X1new,Y1,[.4 .4 1],'DisplayName','Test1, scale SD','FaceAlpha',0.25);
-plot(X1,HandMean1,'--r','Linewidth',2,'DisplayName','Test1 mean, hand')
-fill(X1new,Y1p,[.6 1.0 .6],'DisplayName','Test1 mean, hand SD','FaceAlpha',0.25);
-
-
-scatter(Angle1,Torque1,sz2,'+','CData',c1,'DisplayName','No tendon, LC');
-scatter(Angle1,TorqueHand1,sz,'filled','CData',c1,'DisplayName','No tendon, hand');
-
-legend
-hold off
-
-
-%% Plot compare tendon results
-figure
-hold on
-title('Z axis Torque, 10mm Extensor, 41.5cm long, 22 mm tendon')
-xlabel('degrees Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
-hold on
-gca3 = gca;
-gcf3 = gcf;
-%set(gcf,'Position',[1 1 950 612]);
-%set(gca,'FontSize', 12, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-set(gca,'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-c1 = [0.8500 0.3250 0.0980]; % color, burnt orange
-c2 = [0.6350 0.0780 0.1840]; %color, red/violet
-c3 = [0 0.4470 0.7410]; %color, navy blue
-c4 = [0.4660 0.6740 0.1880]; %color, moss green
-c5 = [0.9290 0.6940 0.1250]; %color, dark yellow
-
-plot(phiD, TorqueR5(:, 3),'-','Color',c3,'DisplayName','Tendon Ideal','Linewidth',2)
-plot(phiD, TorqueR6(:, 3),'-.','DisplayName','Tendon Real','Linewidth',2)
-plot(phiD, TorqueR7(:,3),':','Color',c2,'DisplayName','Slippage+Tendon','Linewidth',2)
-
-X2new=[X2,fliplr(X2)];
-Y2=[TorqueMean2+TorqueStd2,fliplr(TorqueMean2-TorqueStd2)];
-Y2p=[HandMean2+HandStd2,fliplr(HandMean2-HandStd2)];
-plot(X2,TorqueMean2,'--k','Linewidth',2,'DisplayName','Test2 mean, scale')
-fill(X2new,Y2,[0.4 0 0.6],'DisplayName','Test2, scale SD','FaceAlpha',0.25);
-plot(X2,HandMean2,'--r','Linewidth',2,'DisplayName','Test2 mean, hand')
-fill(X2new,Y2p,[0 0.6 1],'DisplayName','Test2 mean, hand SD','FaceAlpha',0.25);
-
-X3new=[X3,fliplr(X3)];
-Y3=[TorqueMean3+TorqueStd3,fliplr(TorqueMean3-TorqueStd3)];
-Y3p=[HandMean3+HandStd3,fliplr(HandMean3-HandStd3)];
-plot(X3,TorqueMean3,'--k','Linewidth',2,'DisplayName','Test3 mean, scale')
-fill(X3new,Y3,[0.6 0 0.6],'DisplayName','Test3, scale SD','FaceAlpha',0.25);
-plot(X3,HandMean3,'--r','Linewidth',2,'DisplayName','Test3 mean, hand')
-fill(X3new,Y3p,[.2 1.0 1],'DisplayName','Test3 mean, hand SD','FaceAlpha',0.25);
-
-scatter(Angle2,Torque2,sz2,'+','CData',c2,'DisplayName','Tendon+slip, LC');
-scatter(Angle2,TorqueHand2,sz,'filled','CData',c2,'DisplayName','Tendon+slip, hand');
-scatter(Angle3,Torque3,sz2,'+','CData',c3,'DisplayName','Tendon, LC');
-scatter(Angle3,TorqueHand3,sz,'filled','CData',c3,'DisplayName','Tendon, hand');
-
-legend
-hold off
-
-
-%% Plotting X axis Torque
-figure
-hold on
-plot(phiD, TorqueR5(:, 1),phiD, TorqueR7(:, 1),'-.')
-title('BPA X Torque, Length = 415 mm')
-xlabel('Knee Extension(+)/Flexion(-), degrees')
-ylabel('Torque, Nm')
-legend('Ideal Tendon','Slippage+Tendon')
-hold off
-
-
-%% Plot error and standard deviation as bar graphs
-% xb=categorical({'Theoretical','Scale','Hand'});
-% xb = reordercats(xb,{'Theoretical','Scale','Hand'});
-% yb = [mean(Theoretical) mean(TorqueMean) mean(TorqueHand)];
-% std_dev = [0 mean(TorqueStd) mean(HandStd)];
-% figure
-% hold on
-% b = bar(xb,yb,'FaceColor',[0 0.8 1.0]);
-% gca3 = gca;
-% gcf3 = gcf;
-% ylabel('Torque, N*m')
-% title('Mean Torque Values and SD for Each Calculation Method')
-% set(gcf,'Position',[0 0 950 612]);
-% set(gca,'FontSize', 18, 'FontWeight', 'bold');
-% b.CData = [0 0.4470 0.7410; 0  0  0; 1  0  0];
-% errb = errorbar(yb,std_dev ,'LineStyle','none','LineWidth',4,'CapSize',20);
-% hold off
+fprintf('Original torque calculation, no tendon, returns SSE of %5d with an RMSE of %5d\n',SSresid{1},fu{1})
+fprintf('Original torque calculation, tendon w/ BPA slip, returns SSE of %5d with an RMSE of %5d\n',SSresid{2},fu{2})
+fprintf('Original torque calculation, tendon, returns SSE of %5d with an RMSE of %5d\n',SSresid{3},fu{3})

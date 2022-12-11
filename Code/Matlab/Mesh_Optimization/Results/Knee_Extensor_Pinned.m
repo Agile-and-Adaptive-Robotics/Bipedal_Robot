@@ -6,17 +6,12 @@
 %% Freshen up the workspace
 clc
 clear
-% close all
+close all
 
 %% Add paths to the muscle and pam calculators
 current_dir = cd;
 all_code = fullfile(current_dir,'../..');
 addpath(genpath(all_code));
-
-% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Human_Data
-% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Robot_Data
-% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
-% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Bone_Mesh_Plots\Open_Sim_Bone_Geometry
 
 %% Joint rotation transformation matrices
 positions = 100;
@@ -84,35 +79,37 @@ end
         
 CrossPoint = 5;
 Dia = 10;
-fit = 0.0352;           %fitting length
+fitting = 0.0254;           %fitting length
+% tendon0 = 0;
+% tendon22 = 0.022;
 
 %41.5 cm, no tendon
-rest = 415/1000;   %resting length clamp to clamp, minus the barb
-kmax = 0.349;          %length at maximum contraction
+rest = 415/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.350;           %length at maximum contraction
 tendon = 0;             %Tendon length
-pres = 605.2351;             %Pressure, kPa
-Vas_Pam_42cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+pres = 605.2351;        %Pressure, kPa
+Vas_Pam_42cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 %41.5 cm,  tendon
-rest = 415/1000;   %resting length clamp to clamp, minus the barb
-kmax = 0.349;          %length at maximum contraction
-tendon = 0.022;             %Tendon length
-pres = 605.2351;             %Pressure, kPa
-Vas_Pam_42cm_tendon = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+rest = 415/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.350;           %length at maximum contraction
+tendon = 0.022;         %Tendon length
+pres = 605.2351;        %Pressure, kPa
+Vas_Pam_42cm_tendon = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 %45.7 cm, no tendon
-rest = 457/1000;   %resting length clamp to clamp, minus the barb
-kmax = 0.349;          %length at maximum contraction
+rest = 457/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.380;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 602;             %Pressure, kPa
-Vas_Pam_46cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+Vas_Pam_46cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 %48.6 cm, no tendon
-rest = 485/1000;   %resting length clamp to clamp, minus the barb
-kmax = 0.405;          %length at maximum contraction
+rest = 485/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.405;           %length at maximum contraction
 tendon = 0;             %Tendon length
-pres = 605.8523;             %Pressure, kPa
-Vas_Pam_48cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+pres = 605.8523;        %Pressure, kPa
+Vas_Pam_48cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 %% Unstacking the Torques to identify specific rotations
 Torque_42cm = Vas_Pam_42cm.Torque(:,3,4);
@@ -124,28 +121,24 @@ Torque_48cm = Vas_Pam_48cm.Torque(:,3,4);
 
 figure
 plot(phiD, Torque_42cm)
-title('\bf \textfont{12} Iso. Torque vs \theta_{k}, $l_{rest}=415\,$ mm, no tendon','Interpreter','tex')
-xlabel('\bf \textfont{12} Knee angle, \circ','Interpreter','tex')
-ylabel('\bf \textfont{12} Torque, $N \cdot m$','Interpreter','tex')
-legend('pinned joint')
+title('\bf Iso. Torque vs $\theta_{k}$, $l_{rest}=415\,$ mm, no tendon','Interpreter','latex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Torque, $N \cdot m$','Interpreter','latex')
 
 figure
 plot(phiD, Torque_42cm_ten)
-title('\bf \textfont{12} Iso. Torque vs \theta_{k}, $l_{rest}=415\,$ mm, $22\,mm$ tendon','Interpreter','tex')
-xlabel('\bf \textfont{12} Knee angle, \circ','Interpreter','tex')
-ylabel('\bf \textfont{12} Torque, $N \cdot m$','Interpreter','tex')
-legend('pinned joint')
+title('\bf Iso. Torque vs $\theta_{k}$, $l_{rest}=415\,$ mm, $22\,mm$ tendon','Interpreter','latex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Torque, $N \cdot m$','Interpreter','latex')
 
 figure
 plot(phiD, Torque_46cm)
-title('\bf \textfont{12} Iso. Torque vs \theta_{k}, $l_{rest}=457\,$ mm','Interpreter','tex')
-xlabel('\bf \textfont{12} Knee angle, \circ','Interpreter','tex')
-ylabel('\bf \textfont{12} Torque, $N \cdot m$','Interpreter','tex')
-legend('pinned joint')
+title('\bf Iso. Torque vs $\theta_{k}$, $l_{rest}=457\,$ mm','Interpreter','latex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Torque, $N \cdot m$','Interpreter','latex')
 
 figure
 plot(phiD, Torque_48cm)
-title('\bf \textfont{12} Iso. Torque vs \theta_{k}, $l_{rest}=457\,$ mm','Interpreter','tex')
-xlabel('\bf \textfont{12} Knee angle, \circ','Interpreter','tex')
-ylabel('\bf \textfont{12} Torque, $N \cdot m$','Interpreter','tex')
-legend('pinned joint')
+title('\bf Iso. Torque vs $\theta_{k}$, $l_{rest}=485\,$ mm','Interpreter','latex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Torque, $N \cdot m$','Interpreter','latex')

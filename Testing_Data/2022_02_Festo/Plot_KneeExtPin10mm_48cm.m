@@ -1,13 +1,15 @@
 %% Pinned knee, Extensor
 %Run and save data from testing results
-clear; clc; close all;
+clear;
+clc;
+close all;
 
-restingLength = 0.485; %resting length, m
-kmax = 0.405; %Length at maximum contraction, m
+load KneeExtPin_10mm_all.mat
+Theoretical = Torque_48cm';
 
-load KneeExtPin_10mm_48cm.mat
-Theoretical = TorqueR(:,3)';
-phiD = [-119.999999862880,-118.686868548355,-117.373737233831,-116.060605919306,-114.747474604782,-113.434343290257,-112.121211975733,-110.808080661208,-109.494949346683,-108.181818032159,-106.868686717634,-105.555555403110,-104.242424088585,-102.929292774061,-101.616161459536,-100.303030145011,-98.9898988304869,-97.6767675159623,-96.3636362014378,-95.0505048869132,-93.7373735723886,-92.4242422578641,-91.1111109433395,-89.7979796288149,-88.4848483142904,-87.1717169997658,-85.8585856852412,-84.5454543707167,-83.2323230561921,-81.9191917416675,-80.6060604271430,-79.2929291126184,-77.9797977980938,-76.6666664835693,-75.3535351690447,-74.0404038545201,-72.7272725399956,-71.4141412254710,-70.1010099109464,-68.7878785964218,-67.4747472818973,-66.1616159673727,-64.8484846528482,-63.5353533383236,-62.2222220237990,-60.9090907092744,-59.5959593947499,-58.2828280802253,-56.9696967657007,-55.6565654511762,-54.3434341366516,-53.0303028221270,-51.7171715076025,-50.4040401930779,-49.0909088785533,-47.7777775640288,-46.4646462495042,-45.1515149349796,-43.8383836204551,-42.5252523059305,-41.2121209914059,-39.8989896768814,-38.5858583623568,-37.2727270478322,-35.9595957333077,-34.6464644187831,-33.3333331042585,-32.0202017897339,-30.7070704752094,-29.3939391606848,-28.0808078461603,-26.7676765316357,-25.4545452171111,-24.1414139025866,-22.8282825880620,-21.5151512735374,-20.2020199590128,-18.8888886444883,-17.5757573299637,-16.2626260154391,-14.9494947009146,-13.6363633863900,-12.3232320718654,-11.0101007573409,-9.69696944281631,-8.38383812829173,-7.07070681376716,-5.75757549924259,-4.44444418471801,-3.13131287019346,-1.81818155566888,0,0.808081073380252,2.12121238790480,3.43434370242938,4.74747501695393,6.06060633147851,7.37373764600309,8.68686896052764,10.0000002750522];
+rest = 0.485;      %resting length, m
+kmax = 0.405;      %Length at maximum contraction, m
+
 %% Tests 1 and 4 done with CALT load cell. Tests 2 and 3 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
 
 
@@ -30,160 +32,263 @@ Torque = [Torque1, Torque2, Torque3, Torque4];
 %Hand measurements for Fish scale Extensor test 2 were done incorrectly and will be disregarded
 
 InflatedLength1 = [455.5	461	451	451	440	438.5	435	415.5	413	410	409.5	418	426.5	438	442.5	441.5	450	458.5	455.5	463]/1000;
-%InflatedLength2 = [448	445.5	429.5	413.5	401	410	417.5	422.5	430.5	429.5	441.5	439	443.5]/1000;
+InflatedLength2 = [448	445.5	429.5	413.5	401	410	417.5	422.5	430.5	429.5	441.5	439	443.5]/1000;
 InflatedLength3 = [445	445	433	426	423	421	420	415	405	400	398	400	405	407	416	420	430	433	441	440	450	453]/1000;
 InflatedLength4 = [459	456	447	438]/1000;
-InflatedLength = [InflatedLength1, InflatedLength3, InflatedLength4];
+% InflatedLength = [InflatedLength1, InflatedLength3, InflatedLength4];
+InflatedLength = [InflatedLength1, InflatedLength2, InflatedLength3, InflatedLength4];
 
 ICRtoMuscle1 = [30.5	41.5	39	35.5	37	40.5	37	46.5	38.5	45.5	36.5	38.5	35	38.5	36	42	39	36	38	37]/1000;
-%ICRtoMuscle2 = [46	54.5	53	52	57	49	53	53	54	51	52	53	55.5]/1000;
+ICRtoMuscle2 = [46	54.5	53	52	57	49	53	53	54	51	52	53	55.5]/1000;
 ICRtoMuscle3 = [32	30	30	30	30	30	30	30	35	35	40	35	34	33	30	30	30	30	30	30	30	30]/1000;
 ICRtoMuscle4 = [30	30	30	30]/1000;
-ICRtoMuscle = [ICRtoMuscle1, ICRtoMuscle3, ICRtoMuscle4];
+% ICRtoMuscle = [ICRtoMuscle1, ICRtoMuscle3, ICRtoMuscle4];
+ICRtoMuscle = [ICRtoMuscle1, ICRtoMuscle2, ICRtoMuscle3, ICRtoMuscle4];
 
 F1 = zeros(1,size(InflatedLength1, 2));
-%F2 = zeros(1,size(InflatedLength2, 2));
+F2 = zeros(1,size(InflatedLength2, 2));
 F3 = zeros(1,size(InflatedLength3, 2));
 F4 = zeros(1,size(InflatedLength4, 2));
-F = [F1, F3, F4];
+% F = [F1, F3, F4];
+F = [F1, F2, F3, F4];
 
 TorqueHand1 = zeros(1,size(InflatedLength1, 2));
-%TorqueHand2 = zeros(1,size(InflatedLength2, 2));
+TorqueHand2 = zeros(1,size(InflatedLength2, 2));
 TorqueHand3 = zeros(1,size(InflatedLength3, 2));
 TorqueHand4 = zeros(1,size(InflatedLength4, 2));
-TorqueHand = [TorqueHand1, TorqueHand3, TorqueHand4];
+% TorqueHand = [TorqueHand1, TorqueHand3, TorqueHand4];
+TorqueHand = [TorqueHand1, TorqueHand2, TorqueHand3, TorqueHand4];
 
 %load pressure where applicable
 test = [1 3];
 runsperseries = [20 4];
 
     pres1 = zeros(1,size(runsperseries(1),2));
-    pres3 = zeros(1,size(runsperseries(2),2));
+    pres4 = zeros(1,size(runsperseries(2),2));
     
     for j = 1:runsperseries(1)
-                file_name = sprintf('ExtTest%0.0f_%0.0f.mat', test(1),j)
+                file_name = sprintf('ExtTest%0.0f_%0.0f.mat', test(1),j);
                 load(file_name,'Stats')
-                pres1(1,j) = Stats{'Mean',2}
+                pres1(1,j) = Stats{'Mean',2};
     end
     for j = 1:runsperseries(2)
-                file_name = sprintf('ExtTest%0.0f_%0.0f.mat', test(2),j)
+                file_name = sprintf('ExtTest%0.0f_%0.0f.mat', test(2),j);
                 load(file_name,'Stats')
-                pres3(1,j) = Stats{'Mean',2}
+                pres4(1,j) = Stats{'Mean',2};
     end
-pres2 = 612*ones(1,size(InflatedLength3, 2));
-pres = [pres1 pres2 pres3];
+pres2 = 612*ones(1,size(InflatedLength2, 2));
+pres3 = 612*ones(1,size(InflatedLength3, 2));
+% pres = [pres1 pres3 pres4];
+pres = [pres1 pres2 pres3 pres4];
 
-for i = 1:size(InflatedLength, 2)
-    F(i) = festo3(InflatedLength(i), restingLength, 10, pres(i), 0.405);    
-    TorqueHand(i) = ICRtoMuscle(i)*F(i);
+for i = 1:size(InflatedLength, 2)  
+    F(1,i,1) = festo3(InflatedLength(i), rest, 10, pres(i), kmax);    
+    TorqueHand(i) = ICRtoMuscle(i)*F(i);  %Torque will be positive because it is causing extension
 end
-TorqueHand1 = TorqueHand(1:size(TorqueHand1,2));
-TorqueHand3 = TorqueHand(((size(TorqueHand1,2)+1)):(size(TorqueHand1,2)+size(TorqueHand3,2)));
-TorqueHand4 = TorqueHand((((size(TorqueHand1,2)+size(TorqueHand3,2))+1)):size(TorqueHand,2));
-%% Mean and RMSE
-X1 = linspace(min(Angle),max(Angle),size(Angle,2));      %Range of motion
-X2 = linspace(min(Angle),max(Angle),(size(Angle1,2)+size(Angle3,2)+size(Angle4,2)));
 
-modp = 'poly3';
-fitOp = fitoptions(modp,'Normalize','on');
-[mdl1, gofp1] = fit(Angle',Torque',modp,fitOp)
-TorqueStd = gofp1.rmse
-TorqueMean = feval(mdl1,X1)';
+KMAX = (rest-kmax)/rest;
+rel = ((rest-InflatedLength)/rest)/KMAX;
+Fn = bpaForce10(rest,rel,pres);
 
-[mdl2, gofp2] = fit([Angle1 Angle3 Angle4]',TorqueHand',modp,fitOp);
-HandStd = gofp2.rmse;
-HandMean = feval(mdl2,X2)';
+for i = 2:(size(Fn,3)+1)
+    F(:,:,i) = Fn(:,:,i-1);
+end
 
-mod = fittype( {'(sind(x-1))', '((x-10)^2)', '1'}, 'independent', 'x', 'dependent', 'y', 'coefficients', {'a', 'b', 'c'} );
-fitOptions = fitoptions(mod);
-[mdl1u, gof1] = fit(Angle',Torque',mod,fitOptions)
-TorqueStdu = gof1.rmse
-TorqueMeanu = feval(mdl1u,X1)';
+for i = 1:size(F,3)
+    TorqueHand(:,:,i) = ICRtoMuscle.*F(1,:,i);  %Torque will be positive because it is causing extension
+    
+%     TorqueHand1(:,:,i) = TorqueHand(1,1:size(TorqueHand1,2),i);
+%     TorqueHand3(:,:,i) = TorqueHand(1,(size(TorqueHand1,2)+1):(size(TorqueHand1,2)+size(TorqueHand3,2)),i);
+%     TorqueHand4(:,:,i) = TorqueHand(1,((size(TorqueHand1,2)+size(TorqueHand3,2))+1):size(TorqueHand,2),i);
+    TorqueHand1(:,:,i) = TorqueHand(1,1:size(TorqueHand1,2),i);
+    TorqueHand2(:,:,i) = TorqueHand(1,(size(TorqueHand1,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)),i);
+    TorqueHand3(:,:,i) = TorqueHand(1,(size(TorqueHand1,2)+size(TorqueHand2,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)),i);
+    TorqueHand4(:,:,i) = TorqueHand(1,((size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2))+1):size(TorqueHand,2),i);
 
-[mdl2u, gof2] = fit([Angle1 Angle3 Angle4]',TorqueHand',mod,fitOptions);
-HandStdu = gof2.rmse;
-HandMeanu = feval(mdl2u,X2)';
+end
 
-%% Plotting the polynomial solution
+%% Prepare for plotting
+
+% Since one of the hand measurement recordings was corrupted, use a different 'Angle' for tests 1+3+4
+AngleX = [Angle1 Angle3 Angle4];
+
+% Create accessible color scheme
+c1 = '#FFD700'; %gold
+c2 = '#FFB14E'; %orange
+c3 = '#FA8775'; %light orange
+c4 = '#EA5F94'; %pink
+c5 = '#CD34B5'; %magenta
+c6 = '#9D02D7'; %magenta 2
+c7 = '#0000FF'; %indigo
+c8 = '#000000'; %black
+sz = 60;        %size of data points
+sz2 = sz*0.666; %size of second data points
+c = {c1; c2; c3; c4; c5; c6; c7; c8};
+
+%% Plot expected versus measured moment arm
+Ma = Vas_Pam_48cm.MomentArm;                 %Calculated moment arm
+G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+
+figure
+ax11 = subplot(2,1,1);
+hold on
+title('\bf Expected vs measured $r_{\hat{k}}$', 'Interpreter','latex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Z axis $r_{\hat{k}}$, m','Interpreter','latex')
+pp21 = plot(phiD,G,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected $r_{\hat{k}}$');
+% ss2 = scatter(AngleX, ICRtoMuscle,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured $r_{\hat{k}}$');
+ss2 = scatter(Angle, ICRtoMuscle,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured $r_{\hat{k}}$');
+set(ax11,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
+lgdMa11 = legend('Interpreter','latex');
+lgdMa11.FontSize = 12;
+hold off
+
+ax12 = subplot(2,1,2);
+hold on
+title('\bf Expected vs measured $r_{\hat{k}}$', 'Interpreter','latex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Z axis $r_{\hat{k}}$, m','Interpreter','latex')
+pp22 = plot(phiD,G,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected $r_{\hat{k}}$');
+ss2_1 = scatter(Angle1, ICRtoMuscle1,sz,'filled','MarkerFaceColor',c1,'DisplayName','\bf Measured $r_{\hat{k}}$, JM LC');
+ss2_2 = scatter(Angle2, ICRtoMuscle2,sz,'filled','MarkerFaceColor',c2,'DisplayName','\bf Measured $r_{\hat{k}}$, JM LC');
+ss2_3 = scatter(Angle3, ICRtoMuscle3,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured $r_{\hat{k}}$, BB FS');
+ss2_4 = scatter(Angle4, ICRtoMuscle4,sz,'filled','MarkerFaceColor',c6,'DisplayName','\bf Measured $r_{\hat{k}}$, BB LC');
+set(ax12,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial')
+lgdMa12 = legend('Interpreter','latex');
+lgdMa12.FontSize = 12;
+hold off
+
+%% Plot relative strain versus angle. Compare strain, relative strain, and measured values
+strain = (rest-(Vas_Pam_48cm.MuscleLength-tendon-2*fitting))/rest;
+relstrain = (strain)./KMAX;
+realRel = (rest-InflatedLength)/rest/KMAX;
+realRel1 = (rest-InflatedLength1)/rest/KMAX;
+realRel2 = (rest-InflatedLength2)/rest/KMAX;
+realRel3 = (rest-InflatedLength3)/rest/KMAX;
+realRel4 = (rest-InflatedLength4)/rest/KMAX;
+
+figure
+ax21 = subplot(2,1,1);
+hold on
+title('Expected vs measured \epsilon^*','Interpreter','tex')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('\epsilon^*','Interpreter','tex')
+plot(phiD,relstrain,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected \epsilon^*')
+% scatter(AngleX,realRel,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured \epsilon^*')
+scatter(Angle,realRel,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured \epsilon^*')
+set(ax21,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
+lgdEp1 = legend('Interpreter','tex');
+lgdEp1.FontSize = 12;
+hold off
+
+ax22 = subplot(2,1,2);
+hold on
+title('Expected vs measured \epsilon^*','Interpreter','tex')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('\epsilon^*','Interpreter','tex')
+plot(phiD,relstrain,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected \epsilon^*')
+scatter(Angle1,realRel1,sz,'filled','MarkerFaceColor',c1,'DisplayName','\bf Measured \epsilon^*, JM LC')
+scatter(Angle2,realRel2,sz,'filled','MarkerFaceColor',c2,'DisplayName','\bf Measured \epsilon^*, JM LC')
+scatter(Angle3,realRel3,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured \epsilon^*, BB FS')
+scatter(Angle4,realRel4,sz,'filled','MarkerFaceColor',c6,'DisplayName','\bf Measured \epsilon^*, BB LC')
+set(ax22,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
+lgdEp1 = legend('Interpreter','tex');
+lgdEp1.FontSize = 12;
+hold off
+
+%% Plot measured versus expected BPA length
+MuscleLength = Vas_Pam_48cm.MuscleLength-2*fitting-tendon;
+
 figure
 hold on
-title('Isometric Torque vs Knee Angle, 10mm Extensor, 48.5cm long')
-xlabel('degrees Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
+title('\bf Expected vs measured $l_{m}$','Interpreter','latex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf $l_{m}$, m','Interpreter','latex')
+plot(phiD,MuscleLength,'DisplayName','\bf Expected $l_{m}$')
+% scatter(AngleX,InflatedLength,'DisplayName','\bf Measured $l_{m}$')
+scatter(Angle,InflatedLength,'DisplayName','\bf Measured $l_{m}$')
+set(ax22,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
+lgdLm = legend('Interpreter','latex');
+lgdLm.FontSize = 12;
+hold off
+
+%% Plotting the Torque results
+figure
+hold on
+title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 48.5cm','interpreter','tex')
+xlabel('Knee angle, \circ','FontWeight','bold','interpreter','tex')
+ylabel('Torque, N{\cdot}m','FontWeight','bold','interpreter','tex')
 gca1 = gca;
 gcf1 = gcf;
-set(gcf,'Position',[1 384 950 612]);
-set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
+set(gca1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial')
 
-X1new=[X1,fliplr(X1)];
-Y1=[TorqueMean+TorqueStd,fliplr(TorqueMean-TorqueStd)];
-X2new=[X2,fliplr(X2)];
-Y2=[HandMean+HandStd,fliplr(HandMean-HandStd)];
-plot(X1,TorqueMean,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
-fill(X1new,Y1,[1 0.4 0.8],'DisplayName','Scale SD','FaceAlpha',0.25);
-plot(X2,HandMean,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
-fill(X2new,Y2,[.6 1.0 .6],'DisplayName','Hand torque SD','FaceAlpha',0.25);
+PL1 = plot(phiD, Theoretical,'Color',c4,'Linewidth',2,'DisplayName','Theoretical Torque');
+scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
+% scH = scatter(AngleX,TorqueHand(:,:,4),sz,'filled','MarkerFaceColor',c2,'DisplayName','Back calculated Torque');
+scH = scatter(Angle,TorqueHand(:,:,4),sz2,'filled','MarkerFaceColor',c1,'DisplayName','Back calculated Torque');
 
-sz = 50;
-c = [0.8500 0.3250 0.0980]; % color
-scatter(Angle1,Torque1,sz,'d','g','DisplayName','BB LC');
-scatter(Angle2,Torque2,sz,'d','r','DisplayName','JM FS');
-scatter(Angle3,Torque3,sz,'d','b','DisplayName','BB FS');
-scatter(Angle4,Torque4,sz,'d','CData',c,'DisplayName','BB LC');
-scatter(Angle1,TorqueHand1,[],'g','filled','DisplayName','JM hand');
-%scatter(Angle2,TorqueHand2,[],'r','filled','DisplayName','JM hand');
-scatter(Angle3,TorqueHand3,[],'b','filled','DisplayName','BB hand');
-scatter(Angle4,TorqueHand4,[],[0.8500 0.3250 0.0980],'DisplayName','BB hand');
-
-legend
+lgd1 = legend;
 hold off
-%% Plotting nonlinear solution
+
+%% Plotting Torque tests, Color results by tests
+
 figure
 hold on
-title('Isometric Torque vs Knee Angle, 10mm Extensor, 48.5cm long')
-xlabel('degrees Flexion(-),Extension(+)')
-ylabel('Torque, N*m')
+title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 48.5cm','interpreter','tex')
+xlabel('Knee angle, \circ','FontWeight','bold','interpreter','tex')
+ylabel('Torque, N{\cdot}m','FontWeight','bold','interpreter','tex')
 gca2 = gca;
 gcf2 = gcf;
-set(gcf,'Position',[960 384 950 612]);
-set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
+set(gca2,'FontSize', 12, 'FontWeight','bold','LineWidth',2)
+gca2.FontName = 'Arial';
 
-Y3=[TorqueMeanu+TorqueStdu,fliplr(TorqueMeanu-TorqueStdu)];
-Y4=[HandMeanu+HandStdu,fliplr(HandMeanu-HandStdu)];
-plot(X1,TorqueMeanu,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
-fill(X1new,Y3,[1 0.4 0.8],'DisplayName','Scale SD','FaceAlpha',0.25);
-plot(X2,HandMeanu,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
-fill(X2new,Y4,[.6 1.0 .6],'DisplayName','Hand torque SD','FaceAlpha',0.25);
+PL2 = plot(phiD, Theoretical,'Color',c4,'Linewidth',2,'DisplayName','Theoretical Torque');
 
-sz = 50;
-c = [0.8500 0.3250 0.0980]; % color
-scatter(Angle1,Torque1,sz,'d','g','DisplayName','BB LC');
-scatter(Angle2,Torque2,sz,'d','r','DisplayName','JM FS');
-scatter(Angle3,Torque3,sz,'d','b','DisplayName','BB FS');
-scatter(Angle4,Torque4,sz,'d','CData',c,'DisplayName','BB LC');
-scatter(Angle1,TorqueHand1,[],'g','filled','DisplayName','JM hand');
-%scatter(Angle2,TorqueHand2,[],'r','filled','DisplayName','JM hand');
-scatter(Angle3,TorqueHand3,[],'b','filled','DisplayName','BB hand');
-scatter(Angle4,TorqueHand4,[],[0.8500 0.3250 0.0980],'DisplayName','BB hand');
+scM1 = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c1,'DisplayName','JM LC');
+scM2 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c3,'DisplayName','JM FS');
+scM3 = scatter(Angle3,Torque3,sz,'d','filled','MarkerFaceColor',c5,'DisplayName','BB FS');
+scM4 = scatter(Angle4,Torque4,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','BB LC');
+scH1 = scatter(Angle1,TorqueHand1(:,:,4),sz2,'filled','MarkerFaceColor',c1,'DisplayName','JM LC hand');
+scH2 = scatter(Angle2,TorqueHand2(:,:,4),sz2,'filled','MarkerFaceColor',c3,'DisplayName','JM FS hand');
+scH3 = scatter(Angle3,TorqueHand3(:,:,4),sz2,'filled','MarkerFaceColor',c5,'DisplayName','BB FS hand');
+scH4 = scatter(Angle4,TorqueHand4(:,:,4),sz2,'filled','MarkerFaceColor',c7,'DisplayName','BB LC hand');
 
-legend
+lgd2 = legend;
 hold off
-%% Plot error and standard deviation as bar graphs
-xb=categorical({'Theoretical','Scale','Hand'});
-xb = reordercats(xb,{'Theoretical','Scale','Hand'});
-yb = [mean(Theoretical) mean(TorqueMean) mean(TorqueHand)];
-std_dev = [0 mean(TorqueStd) mean(HandStd)];
-figure
-hold on
-b = bar(xb,yb,'FaceColor',[0 0.8 1.0]);
-gca3 = gca;
-gcf3 = gcf;
-ylabel('Torque, N*m')
-title('Mean Torque Values and SD for Each Calculation Method')
-set(gcf,'Position',[0 0 950 612]);
-set(gca,'FontSize', 18, 'FontWeight', 'bold');
-b.CData = [0 0.4470 0.7410; 0  0  0; 1  0  0];
-errb = errorbar(yb,std_dev ,'LineStyle','none','LineWidth',4,'CapSize',20);
-hold off
+
+%% Mean and RMSE
+Tqz = cell(1,1);
+Tqz{1} = Vas_Pam_48cm.Torque(:,3,4);    	%Calculated Torque, new simplified exponential equation w/o optimized fitting length
+%Tqz{2} = Vas_Pam_48cm_adj.Torque(:,3,4);   %Calculated Torque, adjusted with optimized fitting length
+%Tqz{3} = TorqueHand(:,:,4);                %Placeholder in case we want to compare SSE/RMSE of back calculated torque to measured torque
+
+%fit options
+mod_Pam = fittype('cubicinterp');
+Options = fitoptions(mod_Pam);
+Options.Normal = 'on';
+
+%prepare cells
+mdl_Pam = cell(size(Tqz,1));
+val = cell(length(mdl_Pam),1);
+          
+%Get values at each angle there is measurement data for
+for j = 1:length(Tqz)
+     Options.Exclude = isnan(Tqz{j});
+     mdl_Pam{j} = fit(phiD',Tqz{j},mod_Pam,Options);
+     val{j} = feval(mdl_Pam{j},Angle');
+end
+
+y = Torque';        
+ynew = val;
+        
+yresid = cell(length(ynew),1);
+SSresid = cell(length(ynew),1);
+fu = cell(length(ynew),1);
+        
+for i = 1:length(ynew)
+    yresid{i} = y-ynew{i};              %residual error
+    SSresid{i} = sum(yresid{i}.^2,'omitnan'); %Sum of squares of the residual
+    fu{i} = sqrt(SSresid{i}/length(yresid{i}));        % RMSE for function 1
+end
+
+fprintf('Original torque calculation returns SSE of %5d with an RMSE of %5d\n',SSresid{1},fu{1})
