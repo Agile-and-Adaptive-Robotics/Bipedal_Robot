@@ -35,6 +35,7 @@ classdef MonoPamDataExplicit < handle
         LengthCheck
         UnitDirection
         MomentArm
+        Fmax
         Force
         Torque
     end
@@ -82,7 +83,7 @@ classdef MonoPamDataExplicit < handle
             
           
             for ii = 1:size(T, 3)                          %Repeat for each orientation
-                for i = 1:size(L, 1,ii)-1                      %Repeat for all muscle segments
+                for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
                     pointA = L(i, :,ii);
                     pointB = L(i+1, :,ii);
                     if i+1 == C
@@ -214,8 +215,8 @@ classdef MonoPamDataExplicit < handle
             
             contraction = zeros(length(mL), 1);
             for i = 1:length(mL)
-%                 contraction(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest;
-                  contraction(i) = ((rest+tendon+2*fitting)-mL(i,1))/(rest+tendon+2*fitting);
+                contraction(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest;
+%                   contraction(i) = ((rest+tendon+2*fitting)-mL(i,1))/(rest+tendon+2*fitting);
             end
         end
         
@@ -240,7 +241,31 @@ classdef MonoPamDataExplicit < handle
                 end
             end
         end
+
+        %% -------------- Maximum Force --------------------------
+        %Calculate the direction of the forced applied by the muscle
+        function maxF = get.Fmax(obj)
+        %Inputs:
+        %rest == resting length of artificial muscle, "size" from Size function
+        %dia == diameter of Festo tube, from Size function
+        %Outputs:
+        %maxF == Maximum Force, N, produced by BPA at 0% contraction and
+        %           620 kPa
         
+            dia = obj.Diameter;
+            rest = obj.RestingL;
+
+            if dia == 10    
+                maxF = maxBPAforce(rest,620);
+            elseif dia ==20
+                maxF = 1500;
+            elseif dia ==40
+                maxF = 6000;
+            else
+                disp('Wrong size diameter BPA')
+            end
+        end
+
         %% -------------- Force --------------------------
         %Calculate the direction of the forced applied by the muscle
         function F = get.Force(obj)
@@ -261,6 +286,7 @@ classdef MonoPamDataExplicit < handle
             pres = obj.Pressure;
             kmax = obj.Kmax;  
             kmax = (rest-kmax)/rest; %turn it into a percentage 
+            maxF = obj.Fmax;
             
            load ForceStrainTable.mat ForceStrain
            tendon =  obj.TendonL;   %Length of artificial tendon and air fittings
@@ -268,57 +294,56 @@ classdef MonoPamDataExplicit < handle
            X = linspace(0,620,19); %Pressure for interpolation
            Y = linspace(0,1,30);   %Relative strain range for interpolation
            
-           k = zeros(size(unitD,1),1);
-           rel = zeros(size(unitD,1),1);
-           scalarForce = zeros(size(unitD,1),1);
+           k = (rest-(mL-tendon-2*fitting))./rest;  %strain 
+           rel = k./kmax;                             %relative strain        
+
+           if dia == 10
+                Fz = cell(1,4);
+                [Fz{1}, Fz{2}, Fz{3}, Fz{4}] = normF10(rel, pres);
+                Fn =Fz{3};
+           else
+                Fn = 1;
+           end 
+           
+           scalarForce = zeros([size(unitD,1),length(Fn)]);
+           
            for i = 1:size(unitD, 1)
               if dia == 10
-                k(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest; %current strain 
-                rel(i) = k(i)/kmax; %relative strain
                 if k(i) < 0 && k(i) >= -0.03                     %Using data from Festo Corp
-                    x1 = [ -.03   -.02  -.01      0]';
-                    z1 = [741.9    613   523  458.2]';
-                    z2 = [759.2  629.3 539.3  473.3]';
-                    z3 = [785.1  653.5 562.6  495.9]';
-                    x = [x1; x1; x1];
-                    y = [580*ones(length(x1),1);
-                         600*ones(length(x1),1);
-                         630*ones(length(x1),1)];
-                    z = [z1; z2; z3]; 
-                    BPAFit = fit([x, y],z,'linearinterp','Normalize','on');
-                    scalarForce(i) = BPAFit(rel(i),pres);
-                        if scalarForce(i) >= 630
-                            scalarForce(i) = 630;
+%                     x1 = [ -.03   -.02  -.01      0]';
+%                     z1 = [741.9    613   523  458.2]';
+%                     z2 = [759.2  629.3 539.3  473.3]';
+%                     z3 = [785.1  653.5 562.6  495.9]';
+%                     x = [x1; x1; x1];
+%                     y = [580*ones(length(x1),1);
+%                          600*ones(length(x1),1);
+%                          630*ones(length(x1),1)];
+%                     z = [z1; z2; z3]; 
+%                     BPAFit = fit([x, y],z,'linearinterp','Normalize','on');
+                    scalarForce(i,1) = f10(rel(i),pres);
+                        if scalarForce(i,1) >= 509*1.05
+                            scalarForce(i,1) = NaN;
                         end
                 elseif rel(i) >= 0 && rel(i) <= 1               %Using data from Dr. Hunt
-                    scalarForce(i) = interp2(X, Y, ForceStrain(:,2:20), pres, rel(i), 'linear');
+                    scalarForce(i,1) = interp2(X, Y, ForceStrain(:,2:20), pres, rel(i), 'linear');
                 elseif rel(i) > 1
-                    scalarForce(i) = 0;
+                    scalarForce(i,1) = 0;
                 else
-                    scalarForce(i) = NaN;
+                    scalarForce(i,1) = NaN;
                 end
              
               else %If diameter is not 10 mm, then use Festo Lookup table
                 scalarForce(i) = festo4(dia, pres, contract(i));
               end
            end
-                    
-%             if dia == 20
-%                 x = [0, 0.07, 0.11, 0.15, 0.25]';
-%                 y = [1400, 800, 600, 400, 0]';
-%                 BPAFit = fit(x, y, 'poly2');
-%             elseif dia == 40
-%                 x = [0, 0.06, 0.12, 0.15, 0.25]';
-%                 y = [6000, 3500, 2000, 1500, 0]';
-%                 BPAFit = fit(x, y, 'poly2');
-%             else
-%                 x = [0, 0.1, 0.17, 0.25]';
-%                 y = [630, 300, 150, 0]';
-%                 BPAFit = fit(x, y, 'exp2');
-%             end
 
-%             scalarForce = BPAFit(contract);
-            
+          if dia == 10 
+           for i = 1:length(Fn)
+            A = Fn{i};
+            scalarForce(:,i+1) = maxF.*A;
+           end
+          end
+          
             F = zeros(size(unitD));
             for i = 1:size(unitD, 1)
                 if scalarForce(i) <= 0

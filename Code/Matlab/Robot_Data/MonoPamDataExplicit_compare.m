@@ -215,8 +215,8 @@ classdef MonoPamDataExplicit_compare < handle
             
             contraction = zeros(length(mL), 1);
             for i = 1:length(mL)
-                 contraction(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest;
-%                  contraction(i) = ((rest+tendon+2*fitting)-mL(i,1))/(rest+tendon+2*fitting);
+                contraction(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest;
+%                   contraction(i) = ((rest+tendon+2*fitting)-mL(i,1))/(rest+tendon+2*fitting);
             end
         end
         
@@ -265,7 +265,7 @@ classdef MonoPamDataExplicit_compare < handle
                 disp('Wrong size diameter BPA')
             end
         end
-        
+
         %% -------------- Force --------------------------
         %Calculate the direction of the forced applied by the muscle
         function F = get.Force(obj)
@@ -293,7 +293,7 @@ classdef MonoPamDataExplicit_compare < handle
 
            X = linspace(0,620,19); %Pressure for interpolation
            Y = linspace(0,1,30);   %Relative strain range for interpolation
-                    
+           
            k = (rest-(mL-tendon-2*fitting))./rest;  %strain 
            rel = k./kmax;                             %relative strain        
 
@@ -334,15 +334,15 @@ classdef MonoPamDataExplicit_compare < handle
               else %If diameter is not 10 mm, then use Festo Lookup table
                 scalarForce(i,1) = festo4(dia, pres, contract(i));
               end
-           end            
-          
+           end
+
           if dia == 10 
            for i = 1:length(Fn)
             A = Fn{i};
             scalarForce(:,i+1) = maxF.*A;
            end
           end
-           
+          
             F = zeros([size(unitD),length(Fn)+1]);
             for i = 1:length(Fn)+1
                 for r = 1:length(rel)
