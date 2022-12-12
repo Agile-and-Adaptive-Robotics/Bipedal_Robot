@@ -6,10 +6,19 @@ close all;
 
 load 'KneeExtPin_10mm_all.mat'
 Theoretical = Torque_42cm;
-Theoretical_ten = Torque_42cm_ten;
 
 tendon0 = 0;            %no tendon condition
-tendon22 = 0.022;       %22 mm tendon
+% tendon22 = 0.022;       %22 mm tendon
+
+tendon22 = 0.022;       %Adjust tendon length
+rest = 415/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.349;           %length at maximum contraction
+pres = 605.2351;        %Pressure, kPa
+Vas_Pam_42cm_tendon = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon22, fitting, pres);
+Torque_42cm_ten = Vas_Pam_42cm_tendon.Torque(:,3,4);
+
+Theoretical_ten = Torque_42cm_ten;
+
 
 rest = 0.415; %resting length, m
 kmax = 0.349; %Length at maximum contraction, m
@@ -132,7 +141,7 @@ ylabel('\bf Z axis $r_{\hat{k}}$, m','Interpreter','latex')
 pp1_1 = plot(phiD,G1,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected $r_{\hat{k}}$ w/o tendon');
 ss1_1 = scatter(Angle1, ICRtoMuscle1,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured $r_{\hat{k}}$');
 set(ax1_1,'FontSize', 12, 'FontWeight', 'bold','LineWidth', 2, 'FontName','Arial')
-lgdMa1 = legend('Interpreter','latex');
+lgdMa1 = legend('Interpreter','latex','Location','Northwest');
 lgdMa1.FontSize = 12;
 hold off
 
@@ -145,8 +154,9 @@ pp2_1 = plot(phiD,G2,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected $r_{\h
 ss2_1 = scatter(Angle2, ICRtoMuscle2,sz,'filled','MarkerFaceColor',c2,'DisplayName','\bf Measured $r_{\hat{k}}$, tendon (slip)');
 ss2_2 = scatter(Angle3, ICRtoMuscle3,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured $r_{\hat{k}}$, tendon');
 set(ax1_2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial')
-lgdMa12 = legend('Interpreter','latex');
+lgdMa12 = legend('Interpreter','latex','Location','Northwest');
 lgdMa12.FontSize = 12;
+set(ax1_2,'XLim',[-120 40],'YLim',[0.02 0.08])
 hold off
 
 %% Plot relative strain versus angle. Compare strain, relative strain, and measured values
@@ -170,8 +180,9 @@ ylabel('\epsilon^*','Interpreter','tex')
 pE1_1 = plot(phiD,relstrain,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected \epsilon^*, no tendon');
 sE1_1 = scatter(Angle1,realRel1,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured \epsilon^*, no tendon');
 set(ax2_1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
-lgdEp1 = legend('Interpreter','tex');
+lgdEp1 = legend('Interpreter','tex','Location','Northwest');
 lgdEp1.FontSize = 12;
+set(ax2_1,'XLim',[-120 40],'YLim',[0 1.2])
 hold off
 
 ax2_2 = subplot(2,1,2);
@@ -183,8 +194,9 @@ pE2_1 = plot(phiD,relstrain_ten,'Color',c7,'LineWidth',2,'DisplayName','\bf Expe
 sE2_1 = scatter(Angle2,realRel2,sz,'filled','MarkerFaceColor',c2,'DisplayName','\bf Measured \epsilon^* w/ tendon (slip)');
 sE2_2 = scatter(Angle3,realRel3,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured \epsilon^* w/ tendon');
 set(ax2_2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
-lgdEp2 = legend('Interpreter','tex');
+lgdEp2 = legend('Interpreter','tex','Location','Southeast');
 lgdEp2.FontSize = 12;
+set(ax2_2,'XLim',[-120 40],'YLim',[0 1.2])
 hold off
 
 %% Plot measured versus expected BPA length
@@ -212,16 +224,17 @@ ylabel('\bf {l_{m}}, m','Interpreter','tex')
 pLm2_1 = plot(phiD,MuscleLength_ten,'DisplayName','\bf Expected {l_{m}}, w/ tendon');
 sLm2_1 = scatter(Angle2,InflatedLength2,'DisplayName','\bf Measured {l_{m}}, w/ tendon (slip)');
 sLm2_2 = scatter(Angle3,InflatedLength3,'DisplayName','\bf Measured {l_{m}}, w/ tendon');
-set(Lm1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
+set(Lm2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
 lgdLm2 = legend('Interpreter','tex');
 lgdLm2.FontSize = 12;
+set(Lm2,'XLim',[-120 40],'YLim',[0.34 0.46])
 hold off
 
 %% Plotting Z axis Torque values
 figure
 gca1 = subplot(2,1,1);
 hold on
-title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 45.7cm','Interpreter','tex')
+title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 45.7cm, no tendon','Interpreter','tex')
 xlabel('Knee angle, \circ','FontWeight','bold','Interpreter','tex')
 ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
 PL1 = plot(phiD, Theoretical,'Color',c4,'Linewidth',2,'DisplayName','Theoretical Torque');
@@ -237,14 +250,15 @@ hold on
 title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 45.7cm, 22mm tendon','Interpreter','tex')
 xlabel('Knee angle, \circ','FontWeight','bold','Interpreter','tex')
 ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
-PL2 = plot(phiD, Theoretical_ten,'Color',c7,'Linewidth',2,'DisplayName','Theoretical, 22mm tendon');
+PL2 = plot(phiD, Theoretical_ten,'Color',c7,'Linewidth',2,'DisplayName','\bf Theoretical, 22mm tendon');
 scM1 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c6,'DisplayName','\bf Measured (slip)');
 scH1 = scatter(Angle2,TorqueHand2(:,:,4),sz2,'filled','MarkerFaceColor',c4,'DisplayName','\bf Back calculated (slip)');
 scM2 = scatter(Angle3,Torque3,sz,'d','filled','MarkerFaceColor',c2,'DisplayName','\bf Measured');
 scH2 = scatter(Angle3,TorqueHand3(:,:,4),sz2,'filled','MarkerFaceColor',c1,'DisplayName','\bf Back calculated');
 set(gca2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial')
-lgd2 = legend('Interpreter','latex');
+lgd2 = legend('Interpreter','tex');
 lgd2.FontSize = 12;
+set(gca2,'XLim',[-120 40])
 hold off
 
 %% Mean and RMSE
