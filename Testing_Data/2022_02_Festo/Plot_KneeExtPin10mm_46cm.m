@@ -2,13 +2,14 @@
 %Run and save data from testing results
 clear;
 clc;
-close all;
+% close all;
 
 load KneeExtPin_10mm_all.mat
-Theoretical = Torque_46cm';
-
 rest = 0.457;      %resting length, m
 kmax = 0.380;               %Length at maximum contraction, m
+Vas_Pam_46cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
+Torque_46cm = Vas_Pam_46cm.Torque(:,3,4);
+Theoretical = Torque_46cm';
 
 %% Test 1 done with CALT load cell. Tests 2 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
 %Test 1 == sheet ExtTest10mm_2 from Results_table10mm_pinned_LoadCell
@@ -181,11 +182,11 @@ ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
 gca1 = gca;
 gcf1 = gcf;
 
-PL1 = plot(phiD, Theoretical,'Color',c4,'Linewidth',2,'DisplayName','Theoretical Torque');
-scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
-scH = scatter(Angle,TorqueHand(:,:,4),sz2,'filled','MarkerFaceColor',c1,'DisplayName','Back calculated Torque');
+PL1 = plot(phiD, Theoretical,'Color',c4,'Linewidth',2,'DisplayName','Theoretical');
+scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured');
+scH = scatter(Angle,TorqueHand(:,:,4),sz2,'filled','MarkerFaceColor',c1,'DisplayName','Back calculated');
 
-set(gca1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial')
+set(gca1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',[-125 40])
 lgd1 = legend;
 lgd1.FontSize = 12;
 hold off
@@ -200,13 +201,13 @@ ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
 gca2 = gca;
 gcf2 = gcf;
 
-PL2 = plot(phiD, Theoretical,'Color',c7,'Linewidth',2,'DisplayName','Theoretical');
+PL2 = plot(phiD, Theoretical,'Color',c7,'Linewidth',2,'DisplayName','\bf Theoretical');
 scM1 = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c6,'DisplayName','\bf BB{\&}JM LC, measured');
 scH1 = scatter(Angle1,TorqueHand1,sz2,'filled','MarkerFaceColor',c4,'DisplayName','\bf BB{\&}JM LC, back calc');
 scM2 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c2,'DisplayName','\bf BB FS, measured');
 scH2 = scatter(Angle2,TorqueHand2,sz2,'filled','MarkerFaceColor',c1,'DisplayName','\bf BB FS, back calc');
 
-set(gca2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial')
+set(gca2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',[-125 40])
 lgd2 = legend('Interpreter','latex');
 lgd2.FontSize = 12;
 hold off

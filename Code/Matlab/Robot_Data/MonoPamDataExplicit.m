@@ -339,7 +339,7 @@ classdef MonoPamDataExplicit < handle
 
           if dia == 10 
            for i = 1:length(Fn)
-            A = Fn{i};
+            A = Fn;
             scalarForce(:,i+1) = maxF.*A;
            end
           end

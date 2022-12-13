@@ -2,13 +2,16 @@
 %Run and save data from testing results
 clear;
 clc;
-close all;
+%  close all;
 
 load KneeExtPin_10mm_all.mat
+rest = 0.480;      %resting length, m
+kmax = 0.398;      %Length at maximum contraction, m
+Vas_Pam_48cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
+Torque_48cm = Vas_Pam_48cm.Torque(:,3,4);
 Theoretical = Torque_48cm';
 
-rest = 0.485;      %resting length, m
-kmax = 0.405;      %Length at maximum contraction, m
+
 
 %% Tests 1 and 4 done with CALT load cell. Tests 2 and 3 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
 
@@ -29,20 +32,20 @@ Torque = [Torque1, Torque2, Torque3, Torque4];
 
 %% Calculate Torque by finding force from muscle contraction and distance
 %from force line of action to muscle ICR.
-%Hand measurements for Fish scale Extensor test 2 were done incorrectly and will be disregarded
+%Hand measurements for tests 1 & 2 were done incorrectly and should be disregarded
 
 InflatedLength1 = [455.5	461	451	451	440	438.5	435	415.5	413	410	409.5	418	426.5	438	442.5	441.5	450	458.5	455.5	463]/1000;
 InflatedLength2 = [448	445.5	429.5	413.5	401	410	417.5	422.5	430.5	429.5	441.5	439	443.5]/1000;
 InflatedLength3 = [445	445	433	426	423	421	420	415	405	400	398	400	405	407	416	420	430	433	441	440	450	453]/1000;
 InflatedLength4 = [459	456	447	438]/1000;
-% InflatedLength = [InflatedLength1, InflatedLength3, InflatedLength4];
+InflatedLengthX = [InflatedLength3, InflatedLength4];
 InflatedLength = [InflatedLength1, InflatedLength2, InflatedLength3, InflatedLength4];
 
 ICRtoMuscle1 = [30.5	41.5	39	35.5	37	40.5	37	46.5	38.5	45.5	36.5	38.5	35	38.5	36	42	39	36	38	37]/1000;
 ICRtoMuscle2 = [46	54.5	53	52	57	49	53	53	54	51	52	53	55.5]/1000;
 ICRtoMuscle3 = [32	30	30	30	30	30	30	30	35	35	40	35	34	33	30	30	30	30	30	30	30	30]/1000;
 ICRtoMuscle4 = [30	30	30	30]/1000;
-% ICRtoMuscle = [ICRtoMuscle1, ICRtoMuscle3, ICRtoMuscle4];
+ICRtoMuscleX = [ICRtoMuscle3, ICRtoMuscle4];
 ICRtoMuscle = [ICRtoMuscle1, ICRtoMuscle2, ICRtoMuscle3, ICRtoMuscle4];
 
 F1 = zeros(1,size(InflatedLength1, 2));
@@ -109,8 +112,14 @@ end
 
 %% Prepare for plotting
 
-% Since one of the hand measurement recordings was corrupted, use a different 'Angle' for tests 1+3+4
-AngleX = [Angle1 Angle3 Angle4];
+% % Since one of the hand measurement recordings was corrupted, use a different 'Angle' for tests 1+3+4
+% AngleX = [Angle1 Angle3 Angle4];
+% TorqueHandX = [TorqueHand1 TorqueHand3 TorqueHand4];
+
+% Since two of the hand measurement recordings was corrupted, use a different 'Angle' for tests 3+4
+AngleX = [Angle3 Angle4];
+TorqueX = [Torque3 Torque4];
+TorqueHandX = [TorqueHand3 TorqueHand4];
 
 % Create accessible color scheme
 c1 = '#FFD700'; %gold
@@ -136,8 +145,8 @@ title('\bf Expected vs measured $r_{\hat{k}}$', 'Interpreter','latex')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
 ylabel('\bf Z axis $r_{\hat{k}}$, m','Interpreter','latex')
 pp21 = plot(phiD,G,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected $r_{\hat{k}}$');
-% ss2 = scatter(AngleX, ICRtoMuscle,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured $r_{\hat{k}}$');
-ss2 = scatter(Angle, ICRtoMuscle,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured $r_{\hat{k}}$');
+ss2 = scatter(AngleX, ICRtoMuscleX,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured $r_{\hat{k}}$');
+% ss2 = scatter(Angle, ICRtoMuscle,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured $r_{\hat{k}}$');
 set(ax11,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
 lgdMa11 = legend('Interpreter','latex');
 lgdMa11.FontSize = 12;
@@ -162,6 +171,7 @@ hold off
 strain = (rest-(Vas_Pam_48cm.MuscleLength-tendon-2*fitting))/rest;
 relstrain = (strain)./KMAX;
 realRel = (rest-InflatedLength)/rest/KMAX;
+realRelX = (rest-InflatedLengthX)/rest/KMAX;
 realRel1 = (rest-InflatedLength1)/rest/KMAX;
 realRel2 = (rest-InflatedLength2)/rest/KMAX;
 realRel3 = (rest-InflatedLength3)/rest/KMAX;
@@ -175,7 +185,7 @@ xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('\epsilon^*','Interpreter','tex')
 plot(phiD,relstrain,'Color',c7,'LineWidth',2,'DisplayName','\bf Expected \epsilon^*')
 % scatter(AngleX,realRel,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured \epsilon^*')
-scatter(Angle,realRel,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured \epsilon^*')
+scatter(AngleX,realRelX,sz,'filled','MarkerFaceColor',c4,'DisplayName','\bf Measured \epsilon^*')
 set(ax21,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
 lgdEp1 = legend('Interpreter','tex');
 lgdEp1.FontSize = 12;
@@ -205,8 +215,8 @@ title('\bf Expected vs measured $l_{m}$','Interpreter','latex')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
 ylabel('\bf $l_{m}$, m','Interpreter','latex')
 plot(phiD,MuscleLength,'DisplayName','\bf Expected $l_{m}$')
-% scatter(AngleX,InflatedLength,'DisplayName','\bf Measured $l_{m}$')
-scatter(Angle,InflatedLength,'DisplayName','\bf Measured $l_{m}$')
+scatter(AngleX,InflatedLengthX,'DisplayName','\bf Measured $l_{m}$')
+% scatter(Angle,InflatedLength,'DisplayName','\bf Measured $l_{m}$')
 set(ax22,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial')
 lgdLm = legend('Interpreter','latex');
 lgdLm.FontSize = 12;
@@ -215,17 +225,17 @@ hold off
 %% Plotting the Torque results
 figure
 hold on
-title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 48.5cm','interpreter','tex')
+title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 48 cm','interpreter','tex')
 xlabel('Knee angle, \circ','FontWeight','bold','interpreter','tex')
 ylabel('Torque, N{\cdot}m','FontWeight','bold','interpreter','tex')
 gca1 = gca;
 gcf1 = gcf;
-set(gca1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial')
+set(gca1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',[-125 40])
 
-PL1 = plot(phiD, Theoretical,'Color',c4,'Linewidth',2,'DisplayName','Theoretical Torque');
-scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
-% scH = scatter(AngleX,TorqueHand(:,:,4),sz,'filled','MarkerFaceColor',c2,'DisplayName','Back calculated Torque');
-scH = scatter(Angle,TorqueHand(:,:,4),sz2,'filled','MarkerFaceColor',c1,'DisplayName','Back calculated Torque');
+PL1 = plot(phiD, Theoretical,'Color',c4,'Linewidth',2,'DisplayName','Theoretical');
+scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured');
+scH = scatter(AngleX,TorqueHandX(:,:,4),sz,'filled','MarkerFaceColor',c1,'DisplayName','Back calculated');
+% scH = scatter(Angle,TorqueHand(:,:,4),sz2,'filled','MarkerFaceColor',c1,'DisplayName','Back calculated');
 
 lgd1 = legend;
 hold off
@@ -234,15 +244,14 @@ hold off
 
 figure
 hold on
-title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 48.5cm','interpreter','tex')
+title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 48 cm','interpreter','tex')
 xlabel('Knee angle, \circ','FontWeight','bold','interpreter','tex')
 ylabel('Torque, N{\cdot}m','FontWeight','bold','interpreter','tex')
 gca2 = gca;
 gcf2 = gcf;
-set(gca2,'FontSize', 12, 'FontWeight','bold','LineWidth',2)
-gca2.FontName = 'Arial';
+set(gca2,'FontSize', 12, 'FontWeight','bold','LineWidth',2,'FontName','Arial','XLim',[-125 40])
 
-PL2 = plot(phiD, Theoretical,'Color',c4,'Linewidth',2,'DisplayName','Theoretical Torque');
+PL2 = plot(phiD, Theoretical,'Color',c4,'Linewidth',2,'DisplayName','Theoretical');
 
 scM1 = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c1,'DisplayName','JM LC');
 scM2 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c3,'DisplayName','JM FS');
