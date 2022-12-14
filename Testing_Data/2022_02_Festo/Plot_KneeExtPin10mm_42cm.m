@@ -254,10 +254,10 @@ hold on
 title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 41.5cm, 22mm tendon','Interpreter','tex')
 xlabel('Knee angle, \circ','FontWeight','bold','Interpreter','tex')
 ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
-PL2 = plot(phiD, Theoretical_ten,'Color',c4,'Linewidth',2,'DisplayName','\bf Theoretical, w/ tendon');
+PL2 = plot(phiD, Theoretical_ten,'Color',c7,'Linewidth',2,'DisplayName','\bf Theoretical, w/ tendon');
 % scM1 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c6,'DisplayName','\bf Measured (slip)');
-% scH1 = scatter(Angle2,TorqueHand2(:,:,4),sz2,'filled','MarkerFaceColor',c2,'DisplayName','\bf Back calculated (slip)');
-scM2 = scatter(Angle3,Torque3,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','\bf Measured');
+% scH1 = scatter(Angle2,TorqueHand2(:,:,4),sz2,'filled','MarkerFaceColor',c4,'DisplayName','\bf Back calculated (slip)');
+scM2 = scatter(Angle3,Torque3,sz,'d','filled','MarkerFaceColor',c2,'DisplayName','\bf Measured');
 scH2 = scatter(Angle3,TorqueHand3(:,:,4),sz2,'filled','MarkerFaceColor',c1,'DisplayName','\bf Back calculated');
 set(gca2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',[xmin xmax])
 lgd2 = legend('Interpreter','tex');

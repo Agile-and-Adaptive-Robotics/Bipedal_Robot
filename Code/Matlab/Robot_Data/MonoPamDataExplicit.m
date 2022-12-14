@@ -45,7 +45,7 @@ classdef MonoPamDataExplicit < handle
         %% ------------- Muscle Data Constructor -----------------
         %Constructor Function. By calling 'MuscleData' and entering the
         %muscle information, we construct an object for that muscle.
-        function PD = MonoPamDataExplicit(name, location, cross, diameter, t, rest, kmax, tendon, fit, pres)
+        function PD = MonoPamDataExplicit(name, location, cross, diameter, t, rest, kmax, tendon, fitn, pres)
             if nargin == 10
                 PD.Name = name;
                 PD.Location = location;
@@ -55,7 +55,7 @@ classdef MonoPamDataExplicit < handle
                 PD.RestingL = rest;
                 PD.Kmax = kmax;
                 PD.TendonL = tendon;
-                PD.FittingLength = fit;
+                PD.FittingLength = fitn;
                 PD.Pressure = pres;
             elseif nargin == 7
                 PD.Name = name;
@@ -288,11 +288,11 @@ classdef MonoPamDataExplicit < handle
             kmax = (rest-kmax)/rest; %turn it into a percentage 
             maxF = obj.Fmax;
             
-           load ForceStrainTable.mat ForceStrain
+%            load ForceStrainTable.mat ForceStrain
            tendon =  obj.TendonL;   %Length of artificial tendon and air fittings
 
-           X = linspace(0,620,19); %Pressure for interpolation
-           Y = linspace(0,1,30);   %Relative strain range for interpolation
+%            X = linspace(0,620,19); %Pressure for interpolation
+%            Y = linspace(0,1,30);   %Relative strain range for interpolation
            
            k = (rest-(mL-tendon-2*fitting))./rest;  %strain 
            rel = k./kmax;                             %relative strain        
@@ -301,15 +301,16 @@ classdef MonoPamDataExplicit < handle
                 Fz = cell(1,4);
                 [Fz{1}, Fz{2}, Fz{3}, Fz{4}] = normF10(rel, pres);
                 Fn =Fz{3};
-           else
-                Fn = 1;
+                scalarForce = Fn.*maxF;
+           elseif dia ~= 10
+               scalarForce = festo4(dia, pres, contract); 
            end 
            
-           scalarForce = zeros([size(unitD,1),length(Fn)]);
+%            scalarForce = zeros([size(unitD,1),length(Fn)]);
            
-           for i = 1:size(unitD, 1)
-              if dia == 10
-                if k(i) < 0 && k(i) >= -0.03                     %Using data from Festo Corp
+%            for i = 1:size(unitD, 1)
+%               if dia == 10
+%                 if k(i) < 0 && k(i) >= -0.03                     %Using data from Festo Corp
 %                     x1 = [ -.03   -.02  -.01      0]';
 %                     z1 = [741.9    613   523  458.2]';
 %                     z2 = [759.2  629.3 539.3  473.3]';
@@ -320,30 +321,30 @@ classdef MonoPamDataExplicit < handle
 %                          630*ones(length(x1),1)];
 %                     z = [z1; z2; z3]; 
 %                     BPAFit = fit([x, y],z,'linearinterp','Normalize','on');
-                    scalarForce(i,1) = f10(rel(i),pres);
-                        if scalarForce(i,1) >= 509*1.05
-                            scalarForce(i,1) = NaN;
-                        end
-                elseif rel(i) >= 0 && rel(i) <= 1               %Using data from Dr. Hunt
-                    scalarForce(i,1) = interp2(X, Y, ForceStrain(:,2:20), pres, rel(i), 'linear');
-                elseif rel(i) > 1
-                    scalarForce(i,1) = 0;
-                else
-                    scalarForce(i,1) = NaN;
-                end
+%                     scalarForce(i,1) = f10(rel(i),pres);
+%                         if scalarForce(i,1) >= 509*1.05
+%                             scalarForce(i,1) = NaN;
+%                         end
+%                 elseif rel(i) >= 0 && rel(i) <= 1               %Using data from Dr. Hunt
+%                     scalarForce(i,1) = interp2(X, Y, ForceStrain(:,2:20), pres, rel(i), 'linear');
+%                 elseif rel(i) > 1
+%                     scalarForce(i,1) = 0;
+%                 else
+%                     scalarForce(i,1) = NaN;
+%                 end
              
-              else %If diameter is not 10 mm, then use Festo Lookup table
-                scalarForce(i) = festo4(dia, pres, contract(i));
-              end
-           end
+%               else %If diameter is not 10 mm, then use Festo Lookup table
+%                 scalarForce(i) = festo4(dia, pres, contract(i));
+%               end
+%            end
 
-          if dia == 10 
-           for i = 1:length(Fn)
-            A = Fn;
-            scalarForce(:,i+1) = maxF.*A;
-           end
-          end
-          
+%           if dia == 10 
+%            for i = 1:length(Fn)
+%             A = Fn;
+%             scalarForce(:,i+1) = maxF.*A;
+%            end
+%           end
+
             F = zeros(size(unitD));
             for i = 1:size(unitD, 1)
                 if scalarForce(i) <= 0
@@ -362,11 +363,11 @@ classdef MonoPamDataExplicit < handle
         function tor = get.Torque(obj)
             mA = obj.MomentArm;
             F = obj.Force;
-            tor = zeros(size(mA));
+            tor = cross(mA,F,2);
             
-            for i = 1:size(mA, 1)
-                tor(i, :) = cross(mA(i, :), F(i, :));
-            end
+%             for i = 1:size(mA, 1)
+%                 tor(i, :) = cross(mA(i, :), F(i, :));
+%             end
         end    
     end
 end

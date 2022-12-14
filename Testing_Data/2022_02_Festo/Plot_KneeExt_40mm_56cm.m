@@ -48,7 +48,7 @@ Torque5 = 29.4178228;
 %from force line of action to muscle ICR.
 %Hand measurements for Fish scale Extensor test 2 were done incorrectly and will be disregarded
 
-contraction = [0.043087971	0.049371634	0.066427289	0.059245961	0.062836625	0.062836625	0.055655296	0.156193896	0.172351885	0.172351885	0.170556553	0.179533214	0.21005386	0.228007181 0.283662478]/1000;
+contraction = [0.043087971	0.049371634	0.066427289	0.059245961	0.062836625	0.062836625	0.055655296	0.156193896	0.172351885	0.172351885	0.170556553	0.179533214	0.21005386	0.228007181 0.283662478];
 contraction1 = contraction(1:7);
 contraction2 = contraction(8:12);
 contraction3 = contraction(13:14);
@@ -146,87 +146,36 @@ TorqueStd3H = gof3H.rmse;
 TorqueMean3H = feval(mdl3H,X)';
 
 %% Plotting polynomial solver
+sz = 50;
+c = [0.8 0.2 0.2]; % color
+
 figure
 hold on
-title('Isometric Torque vs Knee Angle, 40mm Extensor, 55.7cm long''interpreter','latex')
-xlabel('degrees Flexion(-),Extension(+)''interpreter','latex')
-ylabel('Torque, N*m''interpreter','latex')
+title('Isometric Torque vs Knee Angle, 40mm Extensor, 55.7cm long','interpreter','latex')
+xlabel('degrees Flexion(-),Extension(+)','interpreter','latex')
+ylabel('Torque, N*m','interpreter','latex')
 gca1 = gca;
 gcf1 = gcf;
-set(gcf,'Position',[4 86 900 900]);
+set(gcf,'Position',[4 50 800 750]);
 set(gca,'FontWeight', 'bold','XLim',[-120 20],'XMinorGrid','off','XMinorTick','off','YMinorGrid','off','YMinorTick','off','YLim',[-10 500]);
 plot(knee_angle_r, vas_r,'LineStyle','-','Color',[0 0 1],'Linewidth',3,'DisplayName','Direct values from OpenSim')
-plot(phiD, TheoreticalR1,'LineStyle','-.','Color',[0 0.2 0.2],'Linewidth',2,'DisplayName','Robot, distal ring',)
+plot(phiD, TheoreticalR1,'LineStyle','-.','Color',[0 0.2 0.2],'Linewidth',2,'DisplayName','Robot, distal ring')
 plot(phiD, TheoreticalR2,'LineStyle',':','Color',[1 0.4470 0.7410],'Linewidth',2,'DisplayName','Robot, proximal ring')
 plot(theta_K, vas_tqZ,'LineStyle','--','Color',[0.6 0 0.8],'Linewidth',2,'DisplayName','Human values (Bolen)')
 plot(phiD, TorqueHnew,'LineStyle','-.','Color',[0.4 1 0.8],'Linewidth',2,'DisplayName','Human values (Morrow)')
 legend
 
-% Xnew=[X,fliplr(X)];
-% Ys1=[TorqueMean1+TorqueStd1,fliplr(TorqueMean1-TorqueStd1)];
-% Yh1=[TorqueMean1H+TorqueStd1H,fliplr(TorqueMean1H-TorqueStd1H)];
-% 
-% Ys2=[TorqueMean2+TorqueStd2,fliplr(TorqueMean2-TorqueStd2)];
-% Yh2=[TorqueMean2H+TorqueStd2H,fliplr(TorqueMean2H-TorqueStd2H)];
-% 
-% Ys3=[TorqueMean3+TorqueStd3,fliplr(TorqueMean3-TorqueStd3)];
-% Yh3=[TorqueMean3H+TorqueStd3H,fliplr(TorqueMean3H-TorqueStd3H)];
-% 
-% plot(X,TorqueMean1,'--','Linewidth',2,'Color',[1 0 1],'DisplayName','100 kPa torque mean, scale')
-% fill(Xnew,Ys1,[1 0.4 0.8],'DisplayName','100 kPa torque SD, scale','FaceAlpha',0.25);
-% plot(X,TorqueMean1H,'--','Linewidth',2,'DisplayName','100 kPa torque mean, hand')
-% fill(Xnew,Yh2,[.6 1.0 .6],'DisplayName','100 kPa torque SD, hand','FaceAlpha',0.25);
-% 
-% plot(X,TorqueMean2,'--','Linewidth',2,'Color',[1 0 1],'DisplayName','230 kPa torque mean, scale')
-% fill(Xnew,Ys2,[1 0.4 0.8],'DisplayName','230 kPa torque SD, scale','FaceAlpha',0.25);
-% plot(X,TorqueMean2H,'--','Linewidth',2,'DisplayName','230 kPa torque mean, hand')
-% fill(Xnew,Yh2,[.6 1.0 .6],'DisplayName','230 kPa torque SD, hand','FaceAlpha',0.25);
-% 
-% plot(X,TorqueMean3,'--','Linewidth',2,'Color',[1 0 1],'DisplayName','380 kPa torque mean, scale')
-% fill(Xnew,Ys3,[1 0.4 0.8],'DisplayName','100 kPa torque SD, scale','FaceAlpha',0.25);
-% plot(X,TorqueMean3H,'--','Linewidth',2,'DisplayName','100 kPa torque mean, hand')
-% fill(Xnew,Yh3,[.6 1.0 .6],'DisplayName','100 kPa torque SD, hand','FaceAlpha',0.25);
+scatter(Angle1,Torque1,sz,'+','MarkerFaceColor','g','LineWidth',3,'DisplayName','100 kPa, Measured');
+scatter(Angle2,Torque2,sz,'+','MarkerFaceColor','r','LineWidth',3,'DisplayName','230 kPa, Measured');
+scatter(Angle3,Torque3,sz,'+','MarkerFaceColor','b','LineWidth',3,'DisplayName','380 kPa, Measured');
+scatter(Angle4,Torque4,sz,'+','CData',c,'LineWidth',3,'DisplayName','604 kPa, Measured');
+scatter(Angle1,TorqueHand1,sz,'g','filled','DisplayName','100 kPa, back calc');
+scatter(Angle2,TorqueHand2,sz,'r','filled','DisplayName','230 kPa, back calc');
+scatter(Angle3,TorqueHand3,sz,'b','filled','DisplayName','380 kPa, back calc');
+scatter(Angle4,TorqueHand4,sz,'filled','CData',c,'DisplayName','604 kPA, back calc');
 
-sz = 50;
-c = [0.8 0.2 0.2]; % color
-scatter(Angle1,Torque1,sz,'+','MarkerFaceColor','g','LineWidth',3,'DisplayName','100 kPa, experiment','interpreter','latex');
-scatter(Angle2,Torque2,sz,'+','MarkerFaceColor','r','LineWidth',3,'DisplayName','230 kPa, experiment','interpreter','latex');
-scatter(Angle3,Torque3,sz,'+','MarkerFaceColor','b','LineWidth',3,'DisplayName','380 kPa, experiment','interpreter','latex');
-scatter(Angle4,Torque4,sz,'+','CData',c,'LineWidth',3,'DisplayName','604 kPa','interpreter','latex');
-scatter(Angle1,TorqueHand1,sz,'g','filled','DisplayName','100 kPa, hand','interpreter','latex');
-scatter(Angle2,TorqueHand2,sz,'r','filled','DisplayName','230 kPa, hand','interpreter','latex');
-scatter(Angle3,TorqueHand3,sz,'b','filled','DisplayName','380 kPa, hand','interpreter','latex');
-scatter(Angle4,TorqueHand4,sz,'filled','CData',c,'DisplayName','604 kPA, hand','interpreter','latex');
-
-scatter(Angle(1:15),Hand_alt,sz,'Marker','v','CData',[0.6350 0.0780 0.1840],'DisplayName','projected 600 kPa Torque for data','interpreter','latex');
+scatter(Angle(1:15),Hand_alt,sz,'Marker','v','CData',[0.6350 0.0780 0.1840],'DisplayName','projected 600 kPa Torque for data');
 
 legend
 hold off
 
-%% Plotting nonlinear solver
-% figure
-% hold on
-% title('Isometric Torque vs Knee Angle, 40mm Extensor, 45.5cm long')
-% xlabel('degrees Flexion(-),Extension(+)')
-% ylabel('Torque, N*m')
-% gca2 = gca;
-% gcf2 = gcf;
-% set(gcf,'Position',[960 384 950 612]);
-% set(gca,'FontSize', 18, 'FontWeight', 'bold','XMinorGrid','on','XMinorTick','on','YMinorGrid','on','YMinorTick','on');
-% plot(phiD, Theoretical,'Color',[0 0.4470 0.7410],'Linewidth',2,'DisplayName','Theoretical Calculation')
-% 
-% Xnew=[X,fliplr(X)];
-% Y3=[TorqueMeanu+TorqueStdu,fliplr(TorqueMeanu-TorqueStdu)];
-% Y4=[HandMeanu+HandStdu,fliplr(HandMeanu-HandStdu)];
-% plot(X,TorqueMeanu,'--k','Linewidth',2,'DisplayName','Torque mean, scale')
-% fill(Xnew,Y3,[1 0.4 0.8],'DisplayName','Scale SD','FaceAlpha',0.25);
-% plot(X,HandMeanu,'--r','Linewidth',2,'DisplayName','Torque mean, hand')
-% fill(Xnew,Y4,[.6 1.0 .6],'DisplayName','Hand torque SD','FaceAlpha',0.25);
-% 
-% scatter(Angle1,Torque1,sz,'d','g','DisplayName','BB&JM LC');
-% scatter(Angle2,Torque2,sz,'d','CData',c,'DisplayName','BB FS');
-% scatter(Angle1,TorqueHand1,sz,'g','filled','DisplayName','BB&JM hand');
-% scatter(Angle2,TorqueHand2,sz,'filled','CData',c,'DisplayName','BB hand');
-% 
-% legend
-% hold off

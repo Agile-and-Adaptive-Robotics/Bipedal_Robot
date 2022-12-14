@@ -475,7 +475,7 @@ grid on
 view( -10.4, 21.9 );
 
 %% Save it
-% save FestoLookup.mat f40 f20
+save FestoLookup.mat f40 f20
 
 %% Plot it
 figure
