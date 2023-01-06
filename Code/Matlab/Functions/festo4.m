@@ -1,17 +1,16 @@
 %% Create a force lookup table based on festo data
-function F = festo4(dia, pres, contract)
+function F = festo4(dia, rel, pres)
 %Inputs:
 %dia == diameter of Festo tube, from Size function
 %pres == pressure in kPa
-%contract == percent of original length contracted, e.g. a 400 mm BPA that
-%is inflacted to a length of 300 mm would be 25% (contract = .25)
+%rel == relative strain
 %Outputs:
 %F == Force, N
 
 load FestoLookup.mat f40 f20
 clear X Y
 
-rel = contract/0.25;    % Normalize contraction
+% rel = contract/0.25;    % Normalize contraction
 P = pres/600;           % Normalize pressure
 Fmax20 = 1500;          % Max 20mm BPA force
 Fmax40 = 6000;          % Max 20mm BPA force
@@ -21,12 +20,12 @@ Fmax40 = 6000;          % Max 20mm BPA force
 % Y2 = linspace(-0.04,0.25,30);
 
   if dia == 20
-            F = f20(P, rel).*Fmax20;
+            F = f20(rel, P).*Fmax20;
             if F > 1500
                 F = 1500;
             end
   elseif dia == 40
-            F = f40(P, rel).*Fmax40;
+            F = f40(rel, P).*Fmax40;
             if F > 6000
                 F = 6000;
             end
@@ -41,7 +40,7 @@ Fmax40 = 6000;          % Max 20mm BPA force
 %                  630*ones(length(x1),1)];
 %             z = [z1; z2; z3]; 
 %             BPAFit = fit([x, y],z,'linearinterp','Normalize','on');
-            F = f10(contract,pres);
+            F = f10(rel,pres);
   end
 
     if F < 0

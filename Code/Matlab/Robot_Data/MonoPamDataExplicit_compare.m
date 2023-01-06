@@ -257,9 +257,9 @@ classdef MonoPamDataExplicit_compare < handle
 
             if dia == 10    
                 maxF = maxBPAforce(rest,620);
-            elseif dia ==20
+            elseif dia == 20
                 maxF = 1500;
-            elseif dia ==40
+            elseif dia == 40
                 maxF = 6000;
             else
                 disp('Wrong size diameter BPA')
@@ -332,7 +332,7 @@ classdef MonoPamDataExplicit_compare < handle
                 end
              
               else %If diameter is not 10 mm, then use Festo Lookup table
-                scalarForce(i,1) = festo4(dia, pres, contract(i));
+                scalarForce(i,1) = festo4(dia, rel(i), pres);
               end
            end
 

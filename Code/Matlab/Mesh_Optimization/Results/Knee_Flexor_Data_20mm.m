@@ -112,14 +112,25 @@ Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest,
 Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
 
 fitting_adj = 0.0352; 
-Bifemsh_Pam_adj1 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres1);
-Bifemsh_Pam_adj2 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres2);
-Bifemsh_Pam_adj3 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres3);
+Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres1);
+Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres2);
+Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres3);
 
 %% Unstacking the Torques to identify specific rotations
 Torque1 = Bifemsh.Torque;
-TorqueR = Bifemsh_Pam.Torque(:,:,4);
-TorqueR_adj = Bifemsh_Pam_adj.Torque(:,:,4);
+% TorqueR = Bifemsh_Pam.Torque(:,:,4);
+% TorqueR_adj = Bifemsh_Pam_adj.Torque(:,:,4);
+TorqueR = Bifemsh_Pam3.Torque;
+TorqueR_adj = Bifemsh_Pam_adj3.Torque;
+
+%% Add OpenSim values for comparison
+TabMA = readmatrix('OpenSim_Bifem_MomentArm.txt');
+knee_angle_rMA = TabMA(:,2)';           %Angle values directly from O
+Bifemsh_MA = TabMA(:,3)';              %Torque values directly from OpenSim
+
+Tab = readmatrix('OpenSim_Bifem_Results.txt');
+knee_angle_rT = Tab(:,2)';           %Angle values directly from O
+Bifemsh_T = Tab(:,4)';              %Torque values directly from OpenSim
 
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
@@ -199,25 +210,37 @@ title('Adjusted Error X Torque')
 
 hold off
 
-%% Compare Expected vs Adjusted PAM values
+%% Compare Torques between Original and optimized PAM and OpenSim Human model
 figure
-plot(phiD, Bifemsh_Pam_adj.Torque(:, 3), phiD, TorqueR(:, 3))
+plot(phiD, Bifemsh_Pam_adj3.Torque(:, 3), phiD, TorqueR(:, 3), knee_angle_rT, Bifemsh_T)
 title('Muscle and PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
-legend('Optimized', 'Original Theoretical')
+legend('Optimized', 'Original Theoretical', 'OpenSim')
 
+%% Compare Moment Arms between Original and optimized PAM and OpenSim Human model
+Ma1 = Bifemsh_Pam3.MomentArm;                 %Calculated moment arm
+G1 = -(Ma1(:,1).^2+Ma1(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+Ma2 = Bifemsh_Pam_adj3.MomentArm;                 %Calculated moment arm
+G2 = -(Ma2(:,1).^2+Ma2(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+
+figure
+plot(phiD, G2, phiD, G1, knee_angle_rMA, Bifemsh_MA)
+title('Moment arm comparison')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Moment arm, m','Interpreter','tex')
+legend('Optimized', 'Original Theoretical', 'OpenSim')
 
 %% Plotting muscle lengths and moment arms using two different moment arm
 %calculations
 ML = Bifemsh.MuscleLength;
-PamL = Bifemsh_Pam.MuscleLength;
+PamL = Bifemsh_Pam3.MuscleLength;
 for i = 1:size(Bifemsh.MomentArm,1)
     MA(i,:) = norm(Bifemsh.MomentArm(i,1:2));               %Muscle moment arm, Z axis
-    BPAma(i,:) = norm(Bifemsh_Pam.MomentArm(i,1:2));        %BPA moment arm, Z axis
+    BPAma(i,:) = norm(Bifemsh_Pam3.MomentArm(i,1:2));        %BPA moment arm, Z axis
 end
 dM = diff(Bifemsh.MuscleLength);           %Muscle length difference
-dP = diff(Bifemsh_Pam.MuscleLength);       %PAM length difference
+dP = diff(Bifemsh_Pam3.MuscleLength);       %PAM length difference
 dO = diff(phiD);                           %Angle difference
 
 figure
@@ -284,13 +307,13 @@ xlabel('Knee Angle, degree')
 hold off
 
 %% Plotting on the Mesh Skeleton
-
-HMuscleLocation = {Bifemsh.Location};
-HMuscleCross = {Bifemsh.Cross};
-
-RMuscleLocation = {Bifemsh_Pam.Location};
-RMuscleCross = {Bifemsh_Pam.Cross};
-
-Bones = {'Femur', 'Tibia'};
-
-run("MuscleBonePlotting")
+% 
+% HMuscleLocation = {Bifemsh.Location};
+% HMuscleCross = {Bifemsh.Cross};
+% 
+% RMuscleLocation = {Bifemsh_Pam3.Location};
+% RMuscleCross = {Bifemsh_Pam3.Cross};
+% 
+% Bones = {'Femur', 'Tibia'};
+% 
+% run("MuscleBonePlotting")

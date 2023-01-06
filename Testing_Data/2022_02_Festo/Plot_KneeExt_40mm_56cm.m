@@ -91,12 +91,12 @@ runsperseries = 14;
 pres2 = 604.65;
 pres = [pres1 pres1(13) pres2];
 
-for i = 1:size(ICRtoMuscle, 2)
-    F(i) = festo4(40, pres(i), contraction(i));
-    TorqueHand(i) = ICRtoMuscle(i)*F(i);
-    F_alt(i) = festo4(40, 600, contraction(i));
-    Hand_alt(i) = ICRtoMuscle(i)*F_alt(i);
-end
+
+F = festo4(40, contraction, pres);
+TorqueHand = ICRtoMuscle.*F;
+F_alt = festo4(40, contraction, 600);
+Hand_alt = ICRtoMuscle.*F_alt;
+
 TorqueHand1 = TorqueHand(1:7);
 TorqueHand2 = TorqueHand(8:12);
 TorqueHand3 = TorqueHand(13:14);

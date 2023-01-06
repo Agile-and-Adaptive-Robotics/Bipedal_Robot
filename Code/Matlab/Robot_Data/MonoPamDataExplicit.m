@@ -285,7 +285,7 @@ classdef MonoPamDataExplicit < handle
             fitting = obj.FittingLength;
             pres = obj.Pressure;
             kmax = obj.Kmax;  
-            kmax = (rest-kmax)/rest; %turn it into a percentage 
+            KMAX = (rest-kmax)/rest; %turn it into a percentage 
             maxF = obj.Fmax;
             
 %            load ForceStrainTable.mat ForceStrain
@@ -295,7 +295,7 @@ classdef MonoPamDataExplicit < handle
 %            Y = linspace(0,1,30);   %Relative strain range for interpolation
            
            k = (rest-(mL-tendon-2*fitting))./rest;  %strain 
-           rel = k./kmax;                             %relative strain        
+           rel = contract./KMAX;                             %relative strain        
 
            if dia == 10
                 Fz = cell(1,4);
@@ -303,7 +303,7 @@ classdef MonoPamDataExplicit < handle
                 Fn =Fz{3};
                 scalarForce = Fn.*maxF;
            elseif dia ~= 10
-               scalarForce = festo4(dia, pres, contract); 
+               scalarForce = festo4(dia, rel, pres); 
            end 
            
 %            scalarForce = zeros([size(unitD,1),length(Fn)]);
