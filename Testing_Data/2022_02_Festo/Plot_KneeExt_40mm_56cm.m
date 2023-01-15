@@ -1,6 +1,8 @@
 %% Pinned knee, Extensor
 %Run and save data from testing results
-clear; clc; close all;
+clear;
+clc;
+close all;
 
 f = fullfile('github/bipedal_robot/code/matlab');
 qt = addpath(genpath(f));
