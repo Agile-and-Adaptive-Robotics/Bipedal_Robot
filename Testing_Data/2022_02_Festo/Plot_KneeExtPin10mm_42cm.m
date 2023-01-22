@@ -14,7 +14,7 @@ Vas_Pam_42cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, r
 Torque_42cm = Vas_Pam_42cm.Torque(:,3,4);
 Theoretical = Torque_42cm;
 
-tendon22 = 0.022;       %22 mm tendon
+tendon22 = 0.0384;       %22 mm tendon
 Vas_Pam_42cm_tendon = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon22, fitting, pres);
 Torque_42cm_ten = Vas_Pam_42cm_tendon.Torque(:,3,4);
 Theoretical_ten = Torque_42cm_ten;
@@ -243,6 +243,8 @@ PL1 = plot(phiD, Theoretical,'Color',c4,'Linewidth',2,'DisplayName','Theoretical
 scM = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured');
 scH = scatter(Angle1,TorqueHand1(:,:,4),sz2,'filled','MarkerFaceColor',c1,'DisplayName','Back calculated');
 set(gca1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',[xmin xmax])
+h1 = get(gca1,'Children');
+set(gca1,'Children',[h1(3) h1(2) h1(1)]);
 lgd1 = legend;
 lgd1.FontSize = 12;
 hold off
@@ -254,12 +256,14 @@ hold on
 title('Iso. Torque vs {\theta_{k}}, Pinned, Extensor, l_{rest} = 41.5cm, 22mm tendon','Interpreter','tex')
 xlabel('Knee angle, \circ','FontWeight','bold','Interpreter','tex')
 ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
-PL2 = plot(phiD, Theoretical_ten,'Color',c7,'Linewidth',2,'DisplayName','\bf Theoretical, w/ tendon');
+PL2 = plot(phiD, Theoretical_ten,'Color',c4,'Linewidth',2,'DisplayName','\bf Theoretical, w/ tendon');
 % scM1 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c6,'DisplayName','\bf Measured (slip)');
 % scH1 = scatter(Angle2,TorqueHand2(:,:,4),sz2,'filled','MarkerFaceColor',c4,'DisplayName','\bf Back calculated (slip)');
-scM2 = scatter(Angle3,Torque3,sz,'d','filled','MarkerFaceColor',c2,'DisplayName','\bf Measured');
+scM2 = scatter(Angle3,Torque3,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','\bf Measured');
 scH2 = scatter(Angle3,TorqueHand3(:,:,4),sz2,'filled','MarkerFaceColor',c1,'DisplayName','\bf Back calculated');
 set(gca2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',[xmin xmax])
+h2 = get(gca2,'Children');
+set(gca2,'Children',[h2(3) h2(2) h2(1)]);
 lgd2 = legend('Interpreter','tex');
 lgd2.FontSize = 12;
 hold off

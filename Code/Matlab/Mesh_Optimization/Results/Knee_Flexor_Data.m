@@ -1,3 +1,4 @@
+
 %% Mesh Points Calculation - Bicep Femoris Short Head
 % This code will calculate the torque difference between all of the points
 % from one bone mesh to another to determine the best location for muscle
@@ -21,6 +22,9 @@ R = zeros(3, 3, positions);
 T = zeros(4, 4, positions);
 R_Pam = zeros(3, 3, positions);
 T_Pam = zeros(4, 4, positions);
+t1toICR = zeros(1,3,positions);
+T_t1_ICR = zeros(4, 4, positions);
+T_ICR_t1 = zeros(4, 4, positions);
 
 %Knee Extension and Flexion
 %Human
@@ -36,6 +40,13 @@ knee_x_Pam =     [0.0065    0.0083    0.0094    0.0101    0.0120    0.0140    0.
 fcn3 = fit(knee_angle,knee_x_Pam,'cubicspline');
 knee_y_Pam =     [-0.3981   -0.3968   -0.3961   -0.3957   -0.3949   -0.3943   -0.3941   -0.3950   -0.3982   -0.4034   -0.4098   -0.4165   -0.4227   -0.4273   -0.4297   -0.4289]';
 fcn4 = fit(knee_angle,knee_y_Pam,'cubicspline');
+
+
+%Theta1 to ICR
+t1_ICR_x = ([33.55	30.45	28.62	27.40	24.38	21.39	18.47	10.23	3.07	-2.79	-7.21	-10.15	-11.63	-11.66	-10.15	-6.79]')/1000;
+fcn13 = fit(knee_angle,t1_ICR_x,'cubicspline');
+t1_ICR_y = ([27.94	26.70	26.00	25.53	24.42	23.37	22.39	19.96	18.34	17.56	17.52	18.07	19.06	20.21	21.4	22.4]')/1000;
+fcn14 = fit(knee_angle,theta1_ICR_y,'cubicspline');
 
 
 kneeMin = -2.0943951;
@@ -60,6 +71,10 @@ for i = 1:positions
                     0, 0, 1];
     
     T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
+    
+    t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0];
+    T_t1_ICR(:, :, i) = RpToTrans(R_Pam(:, :, i), t1toICR(1,:,i)');    
+    T_ICR_t1(:, :, i) = TransInv(T_t1_ICR(:, :, i));
 end
 
 %% Muscle calculation

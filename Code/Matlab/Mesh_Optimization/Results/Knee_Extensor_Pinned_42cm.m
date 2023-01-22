@@ -86,9 +86,9 @@ Dia = 10;
 rest = (415)/1000;   %resting length clamp to clamp, minus the barb
 kmax = 0.349;          %length at maximum contraction
 tendon = 0;             %Tendon length
-fit = 0.0254;           %fitting length
+fitting = 0.0254;           %fitting length
 pres = 605;             %Pressure, kPa
-Vas_Pam_ideal = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+Vas_Pam_ideal = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 Name = 'Vastus Intermedius Realistic, shorter resting length';
 Location = zeros(5,3,positions);
@@ -124,19 +124,19 @@ Dia = 10;
 rest = (415-8)/1000;   %resting length clamp to clamp, minus the barb
 kmax = 0.349;          %length at maximum contraction
 tendon = 0;             %Tendon length
-fit = 0.0254;           %fitting length
+fitting = 0.0254;           %fitting length
 pres = 605;             %Pressure, kPa
-Vas_Pam_real1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+Vas_Pam_real1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 Name = 'Vastus Intermedius Realistic 2, shorter fittings';
 rest = 415/1000;
-fit = 0.0254-0.004;           %fitting length
-Vas_Pam_real2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+fitting = 0.0254-0.004;           %fitting length
+Vas_Pam_real2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 Name = 'Vastus Intermedius Realistic 3, longer resting length';
 rest = (415+8)/1000;
-fit = 0.0254;           %fitting length
-Vas_Pam_real3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+fitting = 0.0254;           %fitting length
+Vas_Pam_real3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 Name = 'Vastus Intermedius Tendon and slip';
 Location = zeros(5,3,positions);
@@ -172,9 +172,9 @@ Dia = 10;
 rest = (415)/1000;   %resting length clamp to clamp, minus the barb
 kmax = 0.349;          %length at maximum contraction
 tendon = 0.02;             %Tendon length
-fit = 0.0254;           %fitting length
+fitting = 0.0254;           %fitting length
 pres = 605;             %Pressure, kPa
-Vas_Pam_slip = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+Vas_Pam_slip = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 Name = 'Vastus Intermedius Tendon, real, no slip';
 Location = zeros(5,3,positions);
@@ -210,9 +210,9 @@ Dia = 10;
 rest = (415)/1000;   %resting length clamp to clamp, minus the barb
 kmax = 0.349;          %length at maximum contraction
 tendon = 0.022;             %Tendon length
-fit = 0.0254;           %fitting length
+fitting = 0.0254;           %fitting length
 pres = 605;             %Pressure, kPa
-Vas_Pam_tendon_real = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+Vas_Pam_tendon_real = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 Name = 'Vastus Intermedius Tendon, ideal';
 Location = zeros(5,3,positions);
@@ -248,9 +248,9 @@ Dia = 10;
 Rest = (415)/1000;   %resting length clamp to clamp, minus the barb
 kmax = 0.349;          %length at maximum contraction
 tendon = 0.022;             %Tendon length
-fit = 0.0254;           %fitting length
+fitting = 0.0254;           %fitting length
 pres = 605;             %Pressure, kPa
-Vas_Pam_tendon_ideal = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fit, pres);
+Vas_Pam_tendon_ideal = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 %% Unstacking the Torques to identify specific rotations
 % Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;

@@ -30,6 +30,8 @@ copyobj(fig1,s1); %copy children to new parent axes i.e. the subplot axes
 title(s1,'\bf $l_{rest}=48$ cm','Interpreter','latex')
 set(s1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',[-125 35],'XTick',[-120 -90 -60 -30 0 30],'YLim',[0 14])
 lgd1 = legend;
+g1 = get(s1,'Children');
+set(s1,'Children',[g1(3) g1(2) g1(1)]);
 
 s2 = nexttile(2);
 fig2 = get(ax2,'children');
@@ -37,6 +39,8 @@ copyobj(fig2,s2);
 title(s2,'\bf $l_{rest}=45.7$ cm','Interpreter','latex')
 set(s2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',[-125 35],'XTick',[-120 -90 -60 -30 0 30],'YLim',[0 14])
 lgd2 = legend;
+g2 = get(s2,'Children');
+set(s2,'Children',[g2(3) g2(2) g2(1)]);
 
 s3 = nexttile(3); %create and get handle to the subplot axes
 fig3 = get(ax3,'children');
@@ -48,7 +52,7 @@ lgd3 = legend('Location','SouthWest');
 s4 = nexttile(4);
 fig4 = get(ax4,'children');
 copyobj(fig4,s4);
-title(s4,'\bf $l_{rest}=41.5$ cm, $22$ mm tendon','Interpreter','latex')
+title(s4,'\bf $l_{rest}=41.5$ cm, $38$ mm tendon','Interpreter','latex')
 set(s4,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',[-125 35],'XTick',[-120 -90 -60 -30 0 30],'YLim',[0 14])
 lgd4 = legend;
 
