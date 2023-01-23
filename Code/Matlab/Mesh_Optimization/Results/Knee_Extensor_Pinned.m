@@ -49,31 +49,38 @@ Name = 'Vastus Intermedius, Robot';
 Location = zeros(5,3,positions);
 
 % Origin Location from Ben
+p1 = [0.030, -0.050, 0];             %Extensor Origin
+p2 = [0.055, -0.350, 0.000];         %BPA contacts screw that joins femur body with femoral condyles
+p2p = [0.053, -0.350, -0.005];         %BPA slips off screw that joins femur body with femoral condyles
+p3 = [0.04128, -0.410,    -0.01];        %Contact point between 19.6 and 74.01 degrees flexion
+p4 = [0.01138, -0.425, -0.010];            %Contact point over 74.01 degrees flexion
+p5 = [0.0425, -0.07591, 0.000];      %%Tibia bracket (insertion)
+
 for i = 1:positions
-    if phiD(i) >= -74.01 && phiD(i) < -19.6
-     Location(:,:,i) = [0.030, -0.050, 0;     %Origin
-                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
-                0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
-                0.04128, -0.410,    0;        %Row 4 = Row 3
-                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
-    elseif phiD(i) >= -19.6 && phiD(i) < 20
-     Location(:,:,i) = [0.030, -0.050, 0;     %Origin
-                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
-                0.060, -0.350, 0.000;         %Row 3 = Row 2
-                0.060, -0.350, 0.000;         %Row 4 = Row 2
-                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+    if phiD(i) >= -74.01 && phiD(i) < -15.5
+     Location(:,:,i) = [p1;...     %Origin
+                        p2p;...    %BPA contacts screw that joins femur body with femoral condyles
+                        p3;...     %Contact point between 19.6 and 74.01 degrees flexion
+                        p3;...     %Row 4 = Row 3
+                        p5];       %Tibia bracket (insertion)
+    elseif phiD(i) >= -15.5 && phiD(i) < 20
+     Location(:,:,i) = [p1;...     %Origin
+                        p2;...     %BPA contacts screw that joins femur body with femoral condyles
+                        p2;...     %Row 3 = Row 2
+                        p2;...     %Row 4 = Row 2
+                        p5];       %Tibia bracket (insertion)
     elseif phiD(i) >= 20
-     Location(:,:,i) = [0.030, -0.050, 0;     %Origin
-                0.030, -0.050, 0;             %Row 2 = Row 1 (no screw contact)
-                0.030, -0.050, 0;             %Row 3 = Row 2
-                0.030, -0.050, 0;             %Row 4 = Row 2
-                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+     Location(:,:,i) = [p1;...     %Origin
+                        p1;...     %Row 2 = Row 1 (no screw contact)
+                        p1;...     %Row 3 = Row 2
+                        p1;...     %Row 4 = Row 2
+                        p5];       %Tibia bracket (insertion)
     else
-     Location(:,:,i) = [0.030, -0.050, 0;     %Origin
-                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
-                0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
-                0.01138, -0.425 0;            %Contact point over 74.01 degrees flexion
-                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+     Location(:,:,i) = [p1;...     %Origin
+                        p2p;...         %BPA slips off screw that joins femur body with femoral condyles
+                        p3;...        %Contact point between 19.6 and 74.01 degrees flexion
+                        p4;...            %Contact point over 74.01 degrees flexion
+                        p5];     %Tibia bracket (insertion)
     end
 end
         
@@ -127,7 +134,7 @@ ylabel('\bf Torque, $N \cdot m$','Interpreter','latex')
 
 figure
 plot(phiD, Torque_42cm_ten)
-title('\bf Iso. Torque vs $\theta_{k}$, $l_{rest}=415\,$ mm, $22\,mm$ tendon','Interpreter','latex')
+title('\bf Iso. Torque vs $\theta_{k}$, $l_{rest}=415\,$ mm, $38\,mm$ tendon','Interpreter','latex')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
 ylabel('\bf Torque, $N \cdot m$','Interpreter','latex')
 
