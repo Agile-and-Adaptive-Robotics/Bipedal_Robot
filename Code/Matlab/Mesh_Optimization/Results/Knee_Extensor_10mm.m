@@ -72,10 +72,10 @@ knee_y_Pam =     [-0.3981   -0.3968   -0.3961   -0.3957   -0.3949   -0.3943   -0
 fcn12 = fit(knee_angle,knee_y_Pam,'cubicspline');
 
 %Theta1 to ICR
-t1_ICR_x = ([33.55	30.45	28.62	27.40	24.38	21.39	18.47	10.23	3.07	-2.79	-7.21	-10.15	-11.63	-11.66	-10.15	-6.79]')/1000;
+t1_ICR_x = ([29.66	28.54	27.86	27.40	26.23	25.03	23.81	20.03	16.17	12.34	8.67	5.24	2.04	-1.01	-4.1	-7.58]')/1000;
 fcn13 = fit(knee_angle,t1_ICR_x,'cubicspline');
-t1_ICR_y = ([27.94	26.70	26.00	25.53	24.42	23.37	22.39	19.96	18.34	17.56	17.52	18.07	19.06	20.21	21.4	22.4]')/1000;
-fcn14 = fit(knee_angle,theta1_ICR_y,'cubicspline');
+t1_ICR_y = ([25.97	25.74	25.61	25.53	25.35	25.19	25.03	24.57	24.04	23.39	22.66	21.93	21.32	20.99	21.2	22.33]')/1000;
+fcn14 = fit(knee_angle,t1_ICR_y,'cubicspline');
 
 kneeMin = -2.0943951;
 kneeMax = 0.17453293;
@@ -103,7 +103,7 @@ for i = 1:positions
     
     %Transformation matrix for ICR to theta1 and inverse
     t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0];
-    T_t1_ICR(:, :, i) = RpToTrans(R_Pam(:, :, i), t1toICR(1,:,i)');    
+    T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');    
     T_ICR_t1(:, :, i) = TransInv(T_t1_ICR(:, :, i));
 end
 
@@ -187,47 +187,63 @@ Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 %% PAM calculation
 Name = 'Vastus Intermedius';
 Location = zeros(8,3,positions);
-% Origin Location from Ben
+%Origin and routing location from Ben
 for i=1:positions
-    if phiD(i) > -40
-        p5 = [0.03911, -0.0166, 0];
-        v5 = RowVecTrans(T_
-        
+    p5 = [0.05704, 0.02835, 0];
+    v5(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p5);
+    p6 = [0.06153, 0.01646, 0];
+    v6(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p6);
+    p7 = [0.05146, -0.00797, 0];
+    v7(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p7);
+    p8 = [0.03598, -0.02845, 0];
+    v8(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p8);
+    
+    if phiD(i) > -9.85 
         Location(:,:,i) = [0.040, 0.035, 0;               %Origin
-                          0.07140, -0.28576, 0;           %BPA contacts mounting base
-                          0.07140, -0.28576, 0;           %Point 3 = 2
-                          0.07140, -0.28576, 0;           %Point 4 = 2
-                          0.03911, -0.0166, 0;            %Tibia contact initial
-                          0.04960, -0.02795 0;            %Tibia contact
-                          0.036, -0.05508 0;              %Tibia tendon contact
-                          0.02053, -0.07164, 0.000];      %patellar ligament ring
+                          0.0749, -0.27476, 0;            %BPA contacts mounting base
+                          0.0749, -0.27476, 0;            %Point 3 = 2
+                          0.0749, -0.27476, 0;            %Point 4 = 2
+                          v6(:,:,i);                             %Point 5 = 6
+                          v6(:, :, i);                             %Tibia contact
+                          v7(:, :, i);                             %Tibia tendon contact
+                          v8(:, :, i)];                            %patellar ligament ring
+    elseif phiD(i) > -34.5   && phiD(i) <= -9.85 
+        Location(:,:,i) = [0.040, 0.035, 0;               %Origin
+                          0.0749, -0.27476, 0;            %BPA contacts mounting base
+                          0.06117, -0.37427, 0;           %femur channel contact
+                          0.06117, -0.37427, 0;           %Point 4 = 3
+                          v6(:, :, i);                             %Point 5 = 6
+                          v6(:, :, i);                             %Tibia contact
+                          v7(:, :, i);                             %Tibia tendon contact
+                          v8(:, :, i)];                            %patellar ligament ring
             
-    elseif phiD(i) > -85 && phiD(i) <= -40
+    elseif phiD(i) > -83.4 && phiD(i) <= -34.5
         Location(:,:,i) = [0.040, 0.035, 0;               %Origin
-                          0.07140, -0.28576, 0;           %BPA contacts mounting base
-                          0.05567, -0.37427, 0.000;       %femur channel contact
-                          0.05567, -0.37427, 0.000;       %Point 4 = 3
-                          0.03911, -0.0166, 0;            %Tibia contact initial
-                          0.04960, -0.02795 0;            %Tibia contact
-                          0.036, -0.05508 0;              %Tibia tendon contact
-                          0.02053, -0.07164, 0.000];      %patellar ligament ring
+                          0.0749, -0.27476, 0;            %BPA contacts mounting base
+                          0.06117, -0.37427, 0.000;       %femur channel contact
+                          0.06117, -0.37427, 0.000;       %Point 4 = 3
+                          v5(:, :, i);                             %Tibia contact initial
+                          v6(:, :, i);                             %Tibia contact
+                          v7(:, :, i);                             %Tibia tendon contact
+                          v8(:, :, i)];                            %patellar ligament ring
 
+    elseif phiD(i) < -83.4
+        Location(:,:,i) = [0.040, 0.035, 0;               %Origin
+                          0.0749, -0.27476, 0;            %BPA contacts mounting base
+                          0.06117, -0.37427, 0.000;       %femur channel contact
+                          0.03817, -0.41646, 0.000;       %femoral condyle contact
+                          v5(:, :, i);                             %Tibia contact initial
+                          v6(:, :, i);                             %Tibia contact
+                          v7(:, :, i);                             %Tibia tendon contact
+                          v8(:, :, i)];                            %patellar ligament ring
     else
-        Location(:,:,i) = [0.040, 0.035, 0;     %Origin
-                          0.07140, -0.28576, 0;           %BPA contacts mounting base
-                          0.05567, -0.37427, 0.000;       %femur channel contact
-                          0.03105, -0.42528, 0.000;       %femoral condyle contact
-                          0.03911, -0.0166, 0;            %Tibia contact initial
-                          0.04960, -0.02795 0;            %Tibia contact
-                          0.036, -0.05508 0;              %Tibia tendon contact
-                          0.02053, -0.07164, 0.000];      %patellar ligament ring
     end
 end
 CrossPoint = 5;
 Dia = 10;
 rest = 0.520;
 kmax = 0.440;
-tendon = 0.050; 
+tendon = 0.055; 
 fitting = 0.0254; 
 pres = 596.4717;         %average pressure
 Vas_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
