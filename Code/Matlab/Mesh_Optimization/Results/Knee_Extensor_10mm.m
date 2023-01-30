@@ -188,50 +188,56 @@ Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 Name = 'Vastus Intermedius';
 Location = zeros(8,3,positions);
 %Origin and routing location from Ben
+p1 = [0.040, 0.035, 0];                %Origin
+p2 = [0.0739, -0.27476, 0];            %BPA contacts mounting base
+p3 = [0.05817, -0.37427, 0.000];       %femur channel contact
+p4 = [0.04317, -0.41646, 0.000];       %femoral condyle contact
+p5 = [0.05871, 0.02916, 0];
+p6 = [0.05871, 0.01646, 0];
+p7 = [0.05230, -0.00793, 0];
+p8 = [0.03598, -0.02845, 0];
 for i=1:positions
-    p5 = [0.05704, 0.02835, 0];
+    
     v5(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p5);
-    p6 = [0.06153, 0.01646, 0];
     v6(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p6);
-    p7 = [0.05146, -0.00797, 0];
     v7(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p7);
-    p8 = [0.03598, -0.02845, 0];
     v8(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p8);
     
-    if phiD(i) > -9.85 
-        Location(:,:,i) = [0.040, 0.035, 0;               %Origin
-                          0.0749, -0.27476, 0;            %BPA contacts mounting base
-                          0.0749, -0.27476, 0;            %Point 3 = 2
-                          0.0749, -0.27476, 0;            %Point 4 = 2
-                          v6(:,:,i);                             %Point 5 = 6
-                          v6(:, :, i);                             %Tibia contact
-                          v7(:, :, i);                             %Tibia tendon contact
-                          v8(:, :, i)];                            %patellar ligament ring
-    elseif phiD(i) > -34.5   && phiD(i) <= -9.85 
-        Location(:,:,i) = [0.040, 0.035, 0;               %Origin
-                          0.0749, -0.27476, 0;            %BPA contacts mounting base
-                          0.06117, -0.37427, 0;           %femur channel contact
-                          0.06117, -0.37427, 0;           %Point 4 = 3
-                          v6(:, :, i);                             %Point 5 = 6
-                          v6(:, :, i);                             %Tibia contact
-                          v7(:, :, i);                             %Tibia tendon contact
-                          v8(:, :, i)];                            %patellar ligament ring
+    if phiD(i) > 3.2 
+        Location(:,:,i) = [p1;                            %Origin
+                          p2;                             %BPA contacts mounting base
+                          p3;                             %Point 3 = 2
+                          p3;                             %Point 4 = 2
+                          v7(:,:,i);                      %Point 5 = 6
+                          v7(:, :, i);                    %Tibia contact
+                          v7(:, :, i);                    %Tibia tendon contact
+                          v8(:, :, i)];                   %patellar ligament ring
+                      
+    elseif phiD(i) > -13   && phiD(i) <= 3.2 
+        Location(:,:,i) = [p1;                            %Origin
+                          p2;                             %BPA contacts mounting base
+                          p3;                             %femur channel contact
+                          p3;                             %Point 4 = 3
+                          v6(:, :, i);                    %Point 5 = 6
+                          v6(:, :, i);                    %Tibia contact
+                          v7(:, :, i);                    %Tibia tendon contact
+                          v8(:, :, i)];                   %patellar ligament ring
             
-    elseif phiD(i) > -83.4 && phiD(i) <= -34.5
-        Location(:,:,i) = [0.040, 0.035, 0;               %Origin
-                          0.0749, -0.27476, 0;            %BPA contacts mounting base
-                          0.06117, -0.37427, 0.000;       %femur channel contact
-                          0.06117, -0.37427, 0.000;       %Point 4 = 3
+    elseif phiD(i) > -75 && phiD(i) <= -13
+        Location(:,:,i) = [p1;               %Origin
+                          p2;            %BPA contacts mounting base
+                          p3;       %femur channel contact
+                          p3;       %Point 4 = 3
                           v5(:, :, i);                             %Tibia contact initial
                           v6(:, :, i);                             %Tibia contact
                           v7(:, :, i);                             %Tibia tendon contact
                           v8(:, :, i)];                            %patellar ligament ring
 
-    elseif phiD(i) < -83.4
-        Location(:,:,i) = [0.040, 0.035, 0;               %Origin
-                          0.0749, -0.27476, 0;            %BPA contacts mounting base
-                          0.06117, -0.37427, 0.000;       %femur channel contact
-                          0.03817, -0.41646, 0.000;       %femoral condyle contact
+    elseif phiD(i) <= -75
+        Location(:,:,i) = [p1;               %Origin
+                          p2;            %BPA contacts mounting base
+                          p3;       %femur channel contact
+                          p4;       %femoral condyle contact
                           v5(:, :, i);                             %Tibia contact initial
                           v6(:, :, i);                             %Tibia contact
                           v7(:, :, i);                             %Tibia tendon contact
@@ -364,6 +370,13 @@ legend('Human and Optimal PAM')
 ylabel('Radians')
 xlabel('Knee Angle, degree')
 hold off
+
+figure
+plot(phiD, TorqueR(:, 3))
+legend('BPA')
+title('PAM Z Torque')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
 
 % HMuscleLocation = {Vas_Int.Location, Vas_Lat.Location, Vas_Med.Location};
 % HMuscleCross = {Vas_Int.Cross, Vas_Lat.Cross, Vas_Med.Cross};
