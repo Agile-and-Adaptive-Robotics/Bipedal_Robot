@@ -223,7 +223,7 @@ for i=1:positions
                           v7(:, :, i);                    %Tibia tendon contact
                           v8(:, :, i)];                   %patellar ligament ring
             
-    elseif phiD(i) > -75 && phiD(i) <= -13
+    elseif phiD(i) > -70 && phiD(i) <= -13
         Location(:,:,i) = [p1;               %Origin
                           p2;            %BPA contacts mounting base
                           p3;       %femur channel contact
@@ -233,7 +233,7 @@ for i=1:positions
                           v7(:, :, i);                             %Tibia tendon contact
                           v8(:, :, i)];                            %patellar ligament ring
 
-    elseif phiD(i) <= -75
+    elseif phiD(i) <= -70
         Location(:,:,i) = [p1;               %Origin
                           p2;            %BPA contacts mounting base
                           p3;       %femur channel contact
@@ -249,7 +249,7 @@ CrossPoint = 5;
 Dia = 10;
 rest = 0.520;
 kmax = 0.440;
-tendon = 0.055; 
+tendon = 0.05; 
 fitting = 0.0254; 
 pres = 596.4717;         %average pressure
 Vas_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
@@ -387,3 +387,44 @@ ylabel('Torque, Nm')
 % Bones = {'Femur', 'Tibia'};
 % 
 % run("MuscleBonePlotting")
+
+%% Compare to results
+Load = [16.269	11.219	10.593	11.395	10.655	7.7816	3.958	1.909	1.22];     %Load in Newtons
+K_ang = [-120	-108.5	-93	-70	-53.5	-49	-21	-9	-2]*c;      %Knee angle
+LC_ang = [30.5	30	34	42.5	40	41.5	38	38	35]*c;      %Load Cell angle
+
+d = 312.46/1000;
+ang = -91.39;
+p_rf = [d*cosd(ang), d*sind(ang), 0]';     %point of reaction force
+T_t1_rf = RpToTrans(eye(3),p_rf);   %Tranformation matrix from theta 1 to reaction point
+Trk = pagemtimes(TransInv(T_t1_rf),T_t1_ICR);
+p1 = Trk(1,4,:);
+p1 = squeeze(p1);
+fcn15 = fit(phi',p1,'cubicspline');
+p2 = Trk(2,4,:);
+p2 = squeeze(p2);
+fcn16 = fit(phi',p2,'cubicspline');
+
+Trk = zeros(4,4,length(Load));
+Fr = zeros(6,1,length(Load));
+AdTrk = zeros(6,6,length(Load));
+Fk = zeros(6,1,length(Load));
+
+for i=1:length(Load)
+    Trk(:,:,i) = RpToTrans(eye(3),[fcn15(K_ang(i)), fcn16(K_ang(i)), 0]');
+    Fr(:,:,i) = -[0; 0; 0; Load(i)*cos(pi-LC_ang(i)); Load(i)*sin(pi-LC_ang(i)); 0];
+    AdTrk(:,:,i) = Adjoint(Trk(:,:,i));
+    Fk(:,:,i) = AdTrk(:,:,i)'*Fr(:,:,i);
+    
+end
+
+TorqueZ = Fk(3,1,:);
+TorqueZ = squeeze(TorqueZ);
+
+
+figure
+plot(phiD, TorqueR(:, 3), K_ang/c, TorqueZ,'o')
+legend('Theoretical','Measured')
+title('PAM Z Torque')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')

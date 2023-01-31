@@ -388,3 +388,5 @@ hold off
 % Bones = {'Femur', 'Tibia'};
 % 
 % run("MuscleBonePlotting")
+
+%% Compare to results
