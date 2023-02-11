@@ -1,3 +1,4 @@
+
 %% Mesh Points Calculation - Bicep Femoris Short Head
 % This code will calculate the torque difference between all of the points
 % from one bone mesh to another to determine the best location for muscle
@@ -25,6 +26,8 @@ t1toICR = zeros(1,3,positions);
 T_t1_ICR = zeros(4, 4, positions);
 T_ICR_t1 = zeros(4, 4, positions);
 
+c = pi/180; %Convert from degrees to radians
+
 %Knee Extension and Flexion
 %Human
 knee_angle_x = [-2.0944; -1.74533; -1.39626; -1.0472; -0.698132; -0.349066; -0.174533;  0.197344;  0.337395;  0.490178;   1.52146;   2.0944];
@@ -35,9 +38,9 @@ knee_y =       [-0.4226;  -0.4082;    -0.399;   -0.3976;   -0.3966; -0.395264; -
 fcn2 = fit(knee_angle_y,knee_y,'cubicspline');
 %Robot
 knee_angle = [0.17; 0.09; 0.03; 0.00; -0.09; -0.17; -0.26; -0.52; -0.79; -1.05; -1.31; -1.57; -1.83; -2.09; -2.36; -2.62];
-knee_x_Pam =     [0.0065    0.0083    0.0094    0.0101    0.0120    0.0140    0.0161    0.0220    0.0269    0.0302    0.0311    0.0295    0.0253    0.0189    0.0109    0.0021]';
+knee_x_Pam =     ([23.30	22.22	21.55	21.09	19.91	18.70	17.48	13.82	10.44	7.60	5.52	4.35	4.16	5.01	7.04	10.47]')/1000;
 fcn3 = fit(knee_angle,knee_x_Pam,'cubicspline');
-knee_y_Pam =     [-0.3981   -0.3968   -0.3961   -0.3957   -0.3949   -0.3943   -0.3941   -0.3950   -0.3982   -0.4034   -0.4098   -0.4165   -0.4227   -0.4273   -0.4297   -0.4289]';
+knee_y_Pam =     ([-416.65	-417.03	-417.19	-417.28	-417.41	-417.41	-417.30	-416.28	-414.36	-411.72	-408.62	-405.32	-402.08	-399.16	-396.85	-395.66]')/1000;
 fcn4 = fit(knee_angle,knee_y_Pam,'cubicspline');
 
 %Theta1 to ICR
@@ -70,8 +73,8 @@ for i = 1:positions
     T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
     
     t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0];
-    T_t1_ICR(:, :, i) = RpToTrans(R_Pam(:, :, i), t1toICR(1,:,i)');    
-    T_ICR_t1(:, :, i) = TransInv(T_t1_ICR(:, :, i));
+    T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');    
+    T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');
 end
 
 %% Muscle calculation
@@ -92,23 +95,17 @@ Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
 
 Location = zeros(2,3,positions);
-for i = 1:positions
 %Origin and Insertion from Ben
-    Location(:,:,i) = [-0.050, 0.035, 0.0328;
-            -0.02788, -0.04598, 0.0328];
-end
+p1 = [-0.050, 0.035, 0.0328];       %Origin
+p2 = [-0.01146, 0.00113, 0.027];  %Insertion distance from theta1
+v2 = zeros(1,3,positions);
 
-%10 mm Festo
-% Dia = 10;
-% rest = 0.415;
-% kmax = 0.350;
-% tendon = 0.011; 
-% fitting = 0.0254; 
-% pres = 603.5236;         %average pressure
-% Bifemsh_Pam = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
-% 
-% fitting = 0.0352; 
-% Bifemsh_Pam_adj = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
+for i = 1:positions
+
+    v2(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p2); %Insertion location wrt Knee ICR
+    Location(:,:,i) = [p1;
+                       v2(:,:,i)];
+end
 
 %20 mm Festo
 Dia = 20;
@@ -124,25 +121,14 @@ Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest,
 Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
 
 fitting_adj = 0.0352; 
-Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres1);
-Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres2);
-Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres3);
+Bifemsh_Pam_adj1 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres1);
+Bifemsh_Pam_adj2 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres2);
+Bifemsh_Pam_adj3 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres3);
 
 %% Unstacking the Torques to identify specific rotations
 Torque1 = Bifemsh.Torque;
-% TorqueR = Bifemsh_Pam.Torque(:,:,4);
-% TorqueR_adj = Bifemsh_Pam_adj.Torque(:,:,4);
-TorqueR = Bifemsh_Pam3.Torque;
-TorqueR_adj = Bifemsh_Pam_adj3.Torque;
-
-%% Add OpenSim values for comparison
-TabMA = readmatrix('OpenSim_Bifem_MomentArm.txt');
-knee_angle_rMA = TabMA(:,2)';           %Angle values directly from O
-Bifemsh_MA = TabMA(:,3)';              %Torque values directly from OpenSim
-
-Tab = readmatrix('OpenSim_Bifem_Results.txt');
-knee_angle_rT = Tab(:,2)';           %Angle values directly from O
-Bifemsh_T = Tab(:,4)';              %Torque values directly from OpenSim
+TorqueR = Bifemsh_Pam.Torque(:,:,4);
+TorqueR_adj = Bifemsh_Pam_adj.Torque(:,:,4);
 
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
@@ -222,37 +208,25 @@ title('Adjusted Error X Torque')
 
 hold off
 
-%% Compare Torques between Original and optimized PAM and OpenSim Human model
+%% Compare Expected vs Adjusted PAM values
 figure
-plot(phiD, Bifemsh_Pam_adj3.Torque(:, 3), phiD, TorqueR(:, 3), knee_angle_rT, Bifemsh_T)
+plot(phiD, Bifemsh_Pam_adj.Torque(:, 3), phiD, TorqueR(:, 3))
 title('Muscle and PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
-legend('Optimized', 'Original Theoretical', 'OpenSim')
+legend('Optimized', 'Original Theoretical')
 
-%% Compare Moment Arms between Original and optimized PAM and OpenSim Human model
-Ma1 = Bifemsh_Pam3.MomentArm;                 %Calculated moment arm
-G1 = -(Ma1(:,1).^2+Ma1(:,2).^2).^(1/2);         %Moment arm for z-axis torque
-Ma2 = Bifemsh_Pam_adj3.MomentArm;                 %Calculated moment arm
-G2 = -(Ma2(:,1).^2+Ma2(:,2).^2).^(1/2);         %Moment arm for z-axis torque
-
-figure
-plot(phiD, G2, phiD, G1, knee_angle_rMA, Bifemsh_MA)
-title('Moment arm comparison')
-xlabel('Knee angle, \circ','Interpreter','tex')
-ylabel('Moment arm, m','Interpreter','tex')
-legend('Optimized', 'Original Theoretical', 'OpenSim')
 
 %% Plotting muscle lengths and moment arms using two different moment arm
 %calculations
 ML = Bifemsh.MuscleLength;
-PamL = Bifemsh_Pam3.MuscleLength;
+PamL = Bifemsh_Pam.MuscleLength;
 for i = 1:size(Bifemsh.MomentArm,1)
     MA(i,:) = norm(Bifemsh.MomentArm(i,1:2));               %Muscle moment arm, Z axis
-    BPAma(i,:) = norm(Bifemsh_Pam3.MomentArm(i,1:2));        %BPA moment arm, Z axis
+    BPAma(i,:) = norm(Bifemsh_Pam.MomentArm(i,1:2));        %BPA moment arm, Z axis
 end
 dM = diff(Bifemsh.MuscleLength);           %Muscle length difference
-dP = diff(Bifemsh_Pam3.MuscleLength);       %PAM length difference
+dP = diff(Bifemsh_Pam.MuscleLength);       %PAM length difference
 dO = diff(phiD);                           %Angle difference
 
 figure
@@ -318,14 +292,4 @@ ylabel('Radians')
 xlabel('Knee Angle, degree')
 hold off
 
-%% Plotting on the Mesh Skeleton
-% 
-% HMuscleLocation = {Bifemsh.Location};
-% HMuscleCross = {Bifemsh.Cross};
-% 
-% RMuscleLocation = {Bifemsh_Pam3.Location};
-% RMuscleCross = {Bifemsh_Pam3.Cross};
-% 
-% Bones = {'Femur', 'Tibia'};
-% 
-% run("MuscleBonePlotting")
+

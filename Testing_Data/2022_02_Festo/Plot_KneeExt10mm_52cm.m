@@ -8,8 +8,8 @@ load KneeExt_10mm_52cm.mat
 rest = 0.520;      %resting length, m
 kmax = 0.440;               %Length at maximum contraction, m
 tendon = 0.030;             %Tendon, measured
-Vas_Pam_52cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
-Torque_52cm = Vas_Pam_52cm.Torque(:,3);
+% Vas_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
+Torque_52cm = TorqueR(:,3);
 Theoretical = Torque_52cm';
 
 %% Test 1 done with CALT load cell. Tests 2 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
@@ -18,7 +18,7 @@ Theoretical = Torque_52cm';
 
 Angle = [-120	-108.5	-93	-70	-53.5	-49	-21	-9	-2];
 
-Torque = [5.284784416	3.660735424	3.325465724	3.220868075	3.116935495	2.230770431	1.187533441	0.57276436	0.37892854];
+Torque = TorqueZ;
 
 %% Calculate Torque by finding force from muscle contraction and distance
 
@@ -26,9 +26,7 @@ InflatedLength = [518	520	510	495	485	475	460	450	450]/1000;
 
 ICRtoMuscle = [38	35	40	40	45	45	40	40	41]/1000;
 
-F = zeros(1,size(InflatedLength, 2));
 
-TorqueHand = zeros(1,size(InflatedLength, 2));
 
 %load pressure where applicable
 test = 1;
@@ -64,7 +62,7 @@ sz2 = sz*0.666; %size of second data points
 c = {c1; c2; c3; c4; c5; c6; c7; c8};
 
 %% Plot expected versus measured moment arm
-Ma = Vas_Pam_52cm.MomentArm;                 %Calculated moment arm
+Ma = Vas_Pam.MomentArm;                 %Calculated moment arm
 G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
 
 figure
@@ -81,7 +79,7 @@ lgdMa11.FontSize = 12;
 hold off
 
 %% Plot relative strain versus angle. Compare strain, relative strain, and measured values
-strain = (rest-(Vas_Pam_52cm.MuscleLength-tendon-2*fitting))/rest;
+strain = (rest-(Vas_Pam.MuscleLength-tendon-2*fitting))/rest;
 relstrain = (strain)./KMAX;
 realRel = (rest-InflatedLength)/rest/KMAX;
 
@@ -101,7 +99,7 @@ hold off
 
 
 %% Plot measured versus expected BPA length
-MuscleLength = Vas_Pam_52cm.MuscleLength-2*fitting-tendon;
+MuscleLength = Vas_Pam.MuscleLength-2*fitting-tendon;
 
 figure
 hold on
@@ -137,8 +135,8 @@ hold off
 
 %% Mean and RMSE
 Tqz = cell(1,1);
-Tqz{1} = Vas_Pam_52cm.Torque(:,3);        %Calculated Torque, new simplified exponential equation w/o optimized fitting length
-%Tqz{2} = Vas_Pam_52cm_adj.Torque(:,3);   %Calculated Torque, adjusted with optimized fitting length
+Tqz{1} = Vas_Pam.Torque(:,3);        %Calculated Torque, new simplified exponential equation w/o optimized fitting length
+%Tqz{2} = Vas_Pam_adj.Torque(:,3);   %Calculated Torque, adjusted with optimized fitting length
 %Tqz{3} = TorqueHand;                %Placeholder in case we want to compare SSE/RMSE of back calculated torque to measured torque
 
 %fit options
