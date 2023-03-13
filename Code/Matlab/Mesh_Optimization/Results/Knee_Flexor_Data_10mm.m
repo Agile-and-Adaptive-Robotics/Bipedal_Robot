@@ -338,3 +338,44 @@ legend('Theoretical','Measured','Optimized')
 title('PAM Z Torque')
 xlabel('Knee Extension/Rotation, degrees')
 ylabel('Torque, Nm')
+
+%% Compare to results
+Load = [23.455	23.064	21.006	15.817	11.64	7.852	7.0689	4.274	2.855	1.235];     %Load in Newtons
+K_ang = [-2	-11	-16	-26.5	-40	-49.5	-54.5	-61	-63.5	-81]*c;      %Knee angle
+LC_ang = [23	23	21	23	28	28	29.5	34	34	41]*c;      %Load Cell angle
+
+d = 314.73/1000;
+ang = -82.97;
+p_rf = [d*cosd(ang), d*sind(ang), 0]';     %point of reaction force
+T_t1_rf = RpToTrans(eye(3),p_rf);   %Tranformation matrix from theta 1 to reaction point
+Trk = pagemtimes(TransInv(T_t1_rf),T_t1_ICR);
+s1 = Trk(1,4,:);
+s1 = squeeze(s1);
+fcn15 = fit(phi',s1,'cubicspline');
+s2 = Trk(2,4,:);
+s2 = squeeze(s2);
+fcn16 = fit(phi',s2,'cubicspline');
+
+Trk = zeros(4,4,length(Load));
+Fr = zeros(6,1,length(Load));
+AdTrk = zeros(6,6,length(Load));
+Fk = zeros(6,1,length(Load));
+
+for i=1:length(Load)
+    Trk(:,:,i) = RpToTrans(eye(3),[fcn15(K_ang(i)), fcn16(K_ang(i)), 0]');
+    Fr(:,:,i) = -[0; 0; 0; Load(i)*cos(pi-LC_ang(i)); Load(i)*sin(pi-LC_ang(i)); 0];
+    AdTrk(:,:,i) = Adjoint(Trk(:,:,i));
+    Fk(:,:,i) = AdTrk(:,:,i)'*Fr(:,:,i);
+    
+end
+
+TorqueZ = Fk(3,1,:);
+TorqueZ = squeeze(TorqueZ);
+
+
+figure
+plot(phiD, TorqueR(:, 3), K_ang/c, TorqueZ,'o')
+legend('Theoretical','Measured')
+title('PAM Z Torque')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')

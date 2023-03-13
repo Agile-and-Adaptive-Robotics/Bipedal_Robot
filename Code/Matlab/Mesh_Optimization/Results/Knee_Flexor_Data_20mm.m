@@ -47,7 +47,7 @@ fcn4 = fit(knee_angle,knee_y_Pam,'cubicspline');
 t1_ICR_x = ([29.66	28.54	27.86	27.40	26.23	25.03	23.81	20.03	16.17	12.34	8.67	5.24	2.04	-1.01	-4.1	-7.58]')/1000;
 fcn13 = fit(knee_angle,t1_ICR_x,'cubicspline');
 t1_ICR_y = ([25.97	25.74	25.61	25.53	25.35	25.19	25.03	24.57	24.04	23.39	22.66	21.93	21.32	20.99	21.2	22.33]')/1000;
-fcn14 = fit(knee_angle,theta1_ICR_y,'cubicspline');
+fcn14 = fit(knee_angle,t1_ICR_y,'cubicspline');
 
 kneeMin = -2.0943951;
 kneeMax = 0.17453293;
@@ -127,8 +127,8 @@ Bifemsh_Pam_adj3 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, 
 
 %% Unstacking the Torques to identify specific rotations
 Torque1 = Bifemsh.Torque;
-TorqueR = Bifemsh_Pam.Torque(:,:,4);
-TorqueR_adj = Bifemsh_Pam_adj.Torque(:,:,4);
+TorqueR = Bifemsh_Pam3.Torque(:,:,1);
+TorqueR_adj = Bifemsh_Pam_adj3.Torque(:,:,4);
 
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
@@ -293,3 +293,43 @@ xlabel('Knee Angle, degree')
 hold off
 
 
+%% Compare to results
+% Load = [];     %Load in Newtons
+% K_ang = []*c;      %Knee angle
+% LC_ang = []*c;      %Load Cell angle
+% 
+% d = 314.73/1000;
+% ang = -82.97;
+% p_rf = [d*cosd(ang), d*sind(ang), 0]';     %point of reaction force
+% T_t1_rf = RpToTrans(eye(3),p_rf);   %Tranformation matrix from theta 1 to reaction point
+% Trk = pagemtimes(TransInv(T_t1_rf),T_t1_ICR);
+% s1 = Trk(1,4,:);
+% s1 = squeeze(s1);
+% fcn15 = fit(phi',s1,'cubicspline');
+% s2 = Trk(2,4,:);
+% s2 = squeeze(s2);
+% fcn16 = fit(phi',s2,'cubicspline');
+% 
+% Trk = zeros(4,4,length(Load));
+% Fr = zeros(6,1,length(Load));
+% AdTrk = zeros(6,6,length(Load));
+% Fk = zeros(6,1,length(Load));
+% 
+% for i=1:length(Load)
+%     Trk(:,:,i) = RpToTrans(eye(3),[fcn15(K_ang(i)), fcn16(K_ang(i)), 0]');
+%     Fr(:,:,i) = -[0; 0; 0; Load(i)*cos(pi-LC_ang(i)); Load(i)*sin(pi-LC_ang(i)); 0];
+%     AdTrk(:,:,i) = Adjoint(Trk(:,:,i));
+%     Fk(:,:,i) = AdTrk(:,:,i)'*Fr(:,:,i);
+%     
+% end
+% 
+% TorqueZ = Fk(3,1,:);
+% TorqueZ = squeeze(TorqueZ);
+% 
+% 
+% figure
+% plot(phiD, TorqueR(:, 3), K_ang/c, TorqueZ,'o')
+% legend('Theoretical','Measured')
+% title('PAM Z Torque')
+% xlabel('Knee Extension/Rotation, degrees')
+% ylabel('Torque, Nm')

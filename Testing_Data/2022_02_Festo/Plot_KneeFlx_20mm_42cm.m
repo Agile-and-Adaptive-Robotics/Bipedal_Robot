@@ -322,3 +322,4 @@ ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
 set(gca1,'FontSize', 12, 'LineWidth',2,'FontWeight', 'bold','FontName','Arial','XMinorGrid','off','XMinorTick','off','YMinorGrid','off','YMinorTick','off');
 lgd = legend;
 hold off
+

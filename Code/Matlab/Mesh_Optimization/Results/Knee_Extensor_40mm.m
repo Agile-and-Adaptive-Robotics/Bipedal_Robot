@@ -76,7 +76,7 @@ fcn12 = fit(knee_angle,knee_y_Pam,'cubicspline');
 t1_ICR_x = ([29.66	28.54	27.86	27.40	26.23	25.03	23.81	20.03	16.17	12.34	8.67	5.24	2.04	-1.01	-4.1	-7.58]')/1000;
 fcn13 = fit(knee_angle,t1_ICR_x,'cubicspline');
 t1_ICR_y = ([25.97	25.74	25.61	25.53	25.35	25.19	25.03	24.57	24.04	23.39	22.66	21.93	21.32	20.99	21.2	22.33]')/1000;
-fcn14 = fit(knee_angle,theta1_ICR_y,'cubicspline');
+fcn14 = fit(knee_angle,t1_ICR_y,'cubicspline');
 
 
 kneeMin = -2.0943951;
@@ -391,3 +391,78 @@ hold off
 % run("MuscleBonePlotting")
 
 %% Compare to results
+%Extensor test ExtTest40mm_1
+Load1 = [21.395	9.8043	5.4329	1.5627	3.1173	4.5189	1.1431	20.043	3.3938	4.079	20.853	10.809	33.079	19.314];     %Load in Newtons
+K_ang1 = [-117	-106	-96	-66.5	-74.5	-85.5	-53.5	-53.5	-17	-17	-42.5	-30	-6	6.5]*c;      %Knee angle
+LC_ang1 = [32	34.5	31	44.5	35.5	33	35.5	35	35	37	40.5	38	34	33.5]*c;      %Load Cell angle
+
+d1 = 312.46/1000;
+ang1 = -91.39;
+p_rf1 = [d1*cosd(ang1), d1*sind(ang1), 0]';     %point of reaction force
+T_t1_rf1 = RpToTrans(eye(3),p_rf1);   %Tranformation matrix from theta 1 to reaction point
+Trk1 = pagemtimes(TransInv(T_t1_rf1),T_t1_ICR);
+s1_1 = Trk1(1,4,:);
+s1_1 = squeeze(s1_1);
+fcn15_1 = fit(phi',s1_1,'cubicspline');
+s2_1 = Trk1(2,4,:);
+s2_1 = squeeze(s2_1);
+fcn16_1 = fit(phi',s2_1,'cubicspline');
+
+Trk1 = zeros(4,4,length(Load1));
+Fr1 = zeros(6,1,length(Load1));
+AdTrk1 = zeros(6,6,length(Load1));
+Fk1 = zeros(6,1,length(Load1));
+
+for i=1:length(Load1)
+    Trk1(:,:,i) = RpToTrans(eye(3),[fcn15_1(K_ang1(i)), fcn16_1(K_ang1(i)), 0]');
+    Fr1(:,:,i) = -[0; 0; 0; Load1(i)*cos(pi-LC_ang1(i)); Load1(i)*sin(pi-LC_ang1(i)); 0];
+    AdTrk1(:,:,i) = Adjoint(Trk1(:,:,i));
+    Fk1(:,:,i) = AdTrk1(:,:,i)'*Fr1(:,:,i);
+    
+end
+
+TorqueZ1 = Fk1(3,1,:);
+TorqueZ1 = squeeze(TorqueZ1);
+
+%Extensor test ExtTest40mm_2
+Load2 = [84.118];     %Load in Newtons
+K_ang2 = [6]*c;      %Knee angle
+LC_ang2 = [14.6]*c;      %Load Cell angle
+
+d2 = 190.81/1000;
+ang2 = -90.32;
+p_rf2 = [d2*cosd(ang2), d2*sind(ang2), 0]';     %point of reaction force
+T_t1_rf2 = RpToTrans(eye(3),p_rf2);   %Tranformation matrix from theta 1 to reaction point
+Trk2 = pagemtimes(TransInv(T_t1_rf2),T_t1_ICR);
+s1_2 = Trk2(1,4,:);
+s1_2 = squeeze(s1_2);
+fcn15_2 = fit(phi',s1_2,'cubicspline');
+s2_2 = Trk2(2,4,:);
+s2_2 = squeeze(s2_2);
+fcn16_2 = fit(phi',s2_2,'cubicspline');
+
+Trk2 = zeros(4,4,length(Load2));
+Fr2 = zeros(6,1,length(Load2));
+AdTrk2 = zeros(6,6,length(Load2));
+Fk2 = zeros(6,1,length(Load2));
+
+for i=1:length(Load2)
+    Trk2(:,:,i) = RpToTrans(eye(3),[fcn15_2(K_ang2(i)), fcn16_2(K_ang2(i)), 0]');
+    Fr2(:,:,i) = -[0; 0; 0; Load2(i)*cos(pi-LC_ang2(i)); Load2(i)*sin(pi-LC_ang2(i)); 0];
+    AdTrk2(:,:,i) = Adjoint(Trk2(:,:,i));
+    Fk2(:,:,i) = AdTrk2(:,:,i)'*Fr2(:,:,i);
+    
+end
+
+TorqueZ2 = Fk2(3,1,:);
+TorqueZ2 = squeeze(TorqueZ2);
+
+K_ang = [K_ang1 K_ang2];
+TorqueZ = [TorqueZ1; TorqueZ2];
+
+figure
+plot(phiD, TorqueR(:, 3), K_ang/c, TorqueZ,'o')
+legend('Theoretical','Measured')
+title('PAM Z Torque')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
