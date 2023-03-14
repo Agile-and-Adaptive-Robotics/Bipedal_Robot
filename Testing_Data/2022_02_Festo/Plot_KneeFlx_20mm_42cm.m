@@ -38,7 +38,7 @@ Angle1 = Angle(1:10);
 Angle2 = Angle(11:15);
 Angle3 = Angle(16:17);
 
-Torque = [-9.952075229	-8.30977619	-6.937208541	-5.83121108	-4.652816908	-3.594317472	-3.575454453	-3.026551477	-2.199767729	-0.922103339	-5.680697771	-4.039259835	-3.25137834	-1.326357902	-0.705989473	-1.826208162	-1.093715313];
+Torque = [-8.84322291179594,-7.38771014573315,-6.12295907061857,-5.11416855627929,-4.00577506118469,-3.08271954812317,-3.04251451225018,-2.59384366567520,-1.86178531541841,-0.774849368079027,-4.65440909149842,-3.19703540259264,-2.57966382173969,-0.959098909344151,-0.499572417339300,-1.33299525437727,-0.772724305518311];
 Torque1 = Torque(1:10);
 Torque2 = Torque(11:15);
 Torque3 = Torque(16:17);
@@ -316,7 +316,7 @@ SC4 = scatter(Angle,TorqueHand,sz,'filled','MarkerFaceColor',c1,'DisplayName','B
 sc7 = scatter(Angle,TorqueHand_alt,sz,'v','MarkerEdgeColor',c8,'DisplayName','Back calculated @ 600 kPa');
 OST = plot(knee_angle_rT,Bifemsh_T,'-.','Color',c8,'LineWidth',1,'DisplayName','OpenSim Torque');
 
-title('Iso. Torque vs {\theta_{k}}, {\phi}20mm Extensor, l_{rest} = 42.3cm','Interpreter','tex')
+title('Iso. Torque vs {\theta_{k}}, {\phi}20mm Flexor, l_{rest} = 42.3cm','Interpreter','tex')
 xlabel('Knee angle, \circ','FontWeight','bold','Interpreter','tex')
 ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
 set(gca1,'FontSize', 12, 'LineWidth',2,'FontWeight', 'bold','FontName','Arial','XMinorGrid','off','XMinorTick','off','YMinorGrid','off','YMinorTick','off');

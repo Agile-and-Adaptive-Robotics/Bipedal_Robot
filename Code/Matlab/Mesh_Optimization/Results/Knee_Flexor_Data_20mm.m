@@ -1,4 +1,5 @@
 
+
 %% Mesh Points Calculation - Bicep Femoris Short Head
 % This code will calculate the torque difference between all of the points
 % from one bone mesh to another to determine the best location for muscle
@@ -121,14 +122,14 @@ Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest,
 Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
 
 fitting_adj = 0.0352; 
-Bifemsh_Pam_adj1 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres1);
-Bifemsh_Pam_adj2 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres2);
-Bifemsh_Pam_adj3 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres3);
+Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres1);
+Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres2);
+Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres3);
 
 %% Unstacking the Torques to identify specific rotations
 Torque1 = Bifemsh.Torque;
 TorqueR = Bifemsh_Pam3.Torque(:,:,1);
-TorqueR_adj = Bifemsh_Pam_adj3.Torque(:,:,4);
+TorqueR_adj = Bifemsh_Pam_adj3.Torque(:,:,1);
 
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
@@ -142,21 +143,21 @@ TorqueEz = zeros(size(TorqueH, 1), 1);
 
 for i = 1:size(TorqueR, 1)
     if TorqueH(i, 1) >= 0
-        TorqueEx(i) = TorqueR(i, 1) - TorqueH(i, 1);
+        TorqueEx(i) = TorqueR_adj(i, 1) - TorqueH(i, 1);
     else
-        TorqueEx(i) = TorqueH(i, 1) - TorqueR(i, 1);
+        TorqueEx(i) = TorqueH(i, 1) - TorqueR_adj(i, 1);
     end
     
     if TorqueH(i, 2) >= 0
-        TorqueEy(i) = TorqueR(i, 2) - TorqueH(i, 2);
+        TorqueEy(i) = TorqueR_adj(i, 2) - TorqueH(i, 2);
     else
-        TorqueEy(i) = TorqueH(i, 2) - TorqueR(i, 2);
+        TorqueEy(i) = TorqueH(i, 2) - TorqueR_adj(i, 2);
     end
     
     if TorqueH(i, 3) >= 0
-        TorqueEz(i) = TorqueR(i, 3) - TorqueH(i, 3);
+        TorqueEz(i) = TorqueR_adj(i, 3) - TorqueH(i, 3);
     else
-        TorqueEz(i) = TorqueH(i, 3) - TorqueR(i, 3);
+        TorqueEz(i) = TorqueH(i, 3) - TorqueR_adj(i, 3);
     end
 end
 
@@ -165,7 +166,7 @@ hold on
 sgtitle('Bicep Femoris Short Head Torque through Knee Flexion and Extension')
 
 subplot(3, 2, 1)
-plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3))
+plot(phiD, TorqueH(:, 3), phiD, TorqueR_adj(:, 3))
 title('Muscle and PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
@@ -179,7 +180,7 @@ ylabel('Torque, N \cdot m','Interpreter','tex')
 title('Adjusted Error Z Torque')
 
 subplot(3, 2, 3)
-plot(phiD, TorqueH(:, 2), phiD, TorqueR(:, 2))
+plot(phiD, TorqueH(:, 2), phiD, TorqueR_adj(:, 2))
 title('Muscle and PAM Y Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
@@ -193,7 +194,7 @@ ylabel('Torque, N \cdot m','Interpreter','tex')
 title('Adjusted Error Y Torque')
 
 subplot(3, 2, 5)
-plot(phiD, TorqueH(:, 1), phiD, TorqueR(:, 1))
+plot(phiD, TorqueH(:, 1), phiD, TorqueR_adj(:, 1))
 title('Muscle and PAM X Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
@@ -210,7 +211,7 @@ hold off
 
 %% Compare Expected vs Adjusted PAM values
 figure
-plot(phiD, Bifemsh_Pam_adj.Torque(:, 3), phiD, TorqueR(:, 3))
+plot(phiD, Bifemsh_Pam_adj3.Torque(:, 3), phiD, TorqueR(:, 3))
 title('Muscle and PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
@@ -220,13 +221,13 @@ legend('Optimized', 'Original Theoretical')
 %% Plotting muscle lengths and moment arms using two different moment arm
 %calculations
 ML = Bifemsh.MuscleLength;
-PamL = Bifemsh_Pam.MuscleLength;
+PamL = Bifemsh_Pam3.MuscleLength;
 for i = 1:size(Bifemsh.MomentArm,1)
     MA(i,:) = norm(Bifemsh.MomentArm(i,1:2));               %Muscle moment arm, Z axis
-    BPAma(i,:) = norm(Bifemsh_Pam.MomentArm(i,1:2));        %BPA moment arm, Z axis
+    BPAma(i,:) = norm(Bifemsh_Pam3.MomentArm(i,1:2));        %BPA moment arm, Z axis
 end
 dM = diff(Bifemsh.MuscleLength);           %Muscle length difference
-dP = diff(Bifemsh_Pam.MuscleLength);       %PAM length difference
+dP = diff(Bifemsh_Pam3.MuscleLength);       %PAM length difference
 dO = diff(phiD);                           %Angle difference
 
 figure
@@ -294,42 +295,45 @@ hold off
 
 
 %% Compare to results
-% Load = [];     %Load in Newtons
-% K_ang = []*c;      %Knee angle
-% LC_ang = []*c;      %Load Cell angle
-% 
-% d = 314.73/1000;
-% ang = -82.97;
-% p_rf = [d*cosd(ang), d*sind(ang), 0]';     %point of reaction force
-% T_t1_rf = RpToTrans(eye(3),p_rf);   %Tranformation matrix from theta 1 to reaction point
-% Trk = pagemtimes(TransInv(T_t1_rf),T_t1_ICR);
-% s1 = Trk(1,4,:);
-% s1 = squeeze(s1);
-% fcn15 = fit(phi',s1,'cubicspline');
-% s2 = Trk(2,4,:);
-% s2 = squeeze(s2);
-% fcn16 = fit(phi',s2,'cubicspline');
-% 
-% Trk = zeros(4,4,length(Load));
-% Fr = zeros(6,1,length(Load));
-% AdTrk = zeros(6,6,length(Load));
-% Fk = zeros(6,1,length(Load));
-% 
-% for i=1:length(Load)
-%     Trk(:,:,i) = RpToTrans(eye(3),[fcn15(K_ang(i)), fcn16(K_ang(i)), 0]');
-%     Fr(:,:,i) = -[0; 0; 0; Load(i)*cos(pi-LC_ang(i)); Load(i)*sin(pi-LC_ang(i)); 0];
-%     AdTrk(:,:,i) = Adjoint(Trk(:,:,i));
-%     Fk(:,:,i) = AdTrk(:,:,i)'*Fr(:,:,i);
-%     
-% end
-% 
-% TorqueZ = Fk(3,1,:);
-% TorqueZ = squeeze(TorqueZ);
-% 
-% 
-% figure
-% plot(phiD, TorqueR(:, 3), K_ang/c, TorqueZ,'o')
-% legend('Theoretical','Measured')
-% title('PAM Z Torque')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
+Load = [29.225	24.009	20.302	17.246	14.472	11.127	11.121	9.284	6.8421	2.9257	19.083	14.757	11.612	5.8364	3.1772	7.6226	4.8666];     %Load in Newtons
+K_ang = [-2	-11.5	-20	-27	-35	-44	-54.5	-50	-63	-64	-73.5	-82	-88	-103.5	-114	-115	-120]*c;      %Knee angle
+LC_ang = [24.5	22	24	25.5	31.5	31	31.5	30	31.5	33.5	38.5	44.5	43	54.5	55.5	52	55]*c;      %Load Cell angle
+
+d = 314.73/1000;
+ang = -82.97;
+p_rf = [d*cosd(ang), d*sind(ang), 0]';     %point of reaction force
+T_t1_rf = RpToTrans(eye(3),p_rf);   %Tranformation matrix from theta 1 to reaction point
+Trk = pagemtimes(TransInv(T_t1_rf),T_t1_ICR);
+s1 = Trk(1,4,:);
+s1 = squeeze(s1);
+fcn15 = fit(phi',s1,'cubicspline');
+s2 = Trk(2,4,:);
+s2 = squeeze(s2);
+fcn16 = fit(phi',s2,'cubicspline');
+
+Trk = zeros(4,4,length(Load));
+Fr = zeros(6,1,length(Load));
+AdTrk = zeros(6,6,length(Load));
+Fk = zeros(6,1,length(Load));
+
+for i=1:length(Load)
+    Trk(:,:,i) = RpToTrans(eye(3),[fcn15(K_ang(i)), fcn16(K_ang(i)), 0]');
+    Fr(:,:,i) = -[0; 0; 0; Load(i)*cos(-LC_ang(i)); Load(i)*sin(-LC_ang(i)); 0];
+    AdTrk(:,:,i) = Adjoint(Trk(:,:,i));
+    Fk(:,:,i) = AdTrk(:,:,i)'*Fr(:,:,i);
+    
+end
+
+TorqueZ = Fk(3,1,:);
+TorqueZ = squeeze(TorqueZ);
+
+
+figure
+hold on
+plot(phiD, Bifemsh_Pam_adj1.Torque(:,3), phiD, Bifemsh_Pam_adj2.Torque(:,3),phiD, Bifemsh_Pam_adj3.Torque(:,3))
+plot(K_ang(1:10)/c, TorqueZ(1:10),'o',K_ang(11:15)/c, TorqueZ(11:15),'s',K_ang(16:17)/c, TorqueZ(16:17),'d')
+legend('Theoretical 274 kPa','Theoretical 485 kPa','Theoretical 606 kPa','Measured, 274 kPa','Measured, 485 kPa','Measured, 606 kPa')
+title('PAM Z Torque')
+xlabel('Knee Extension/Rotation, degrees')
+ylabel('Torque, Nm')
+hold off
