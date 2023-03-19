@@ -14,8 +14,10 @@ knee_angle_rT = Tab(:,2)';           %Angle values directly from O
 Bifemsh_T = Tab(:,4)';              %Torque values directly from OpenSim
 
 load KneeFlx_20mm_42cm.mat
-rest = 0.423; %resting length, m
-kmax = 0.322; %Length at maximum contraction, m
+% rest = 0.423; %resting length, m
+% kmax = 0.322; %Length at maximum contraction, m
+rest = 0.432; %resting length, m
+kmax = 0.328; %Length at maximum contraction, m
 dia = 20;
 fitting = 0.0352;
 KMAX = (rest-kmax)/rest;
