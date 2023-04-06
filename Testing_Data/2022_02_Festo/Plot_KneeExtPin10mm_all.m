@@ -10,10 +10,10 @@ ax1 = gca; % get handle to axes of figure
 %Second Figure
 h2 = openfig('Ext10mm_pin_46cm.fig','reuse');
 ax2 = gca;
-%Second Figure
+%Third Figure
 h3 = openfig('Ext10mm_pin_42cm.fig','reuse');
 ax3 = gca;
-%Second Figure
+%Fourth Figure
 h4 = openfig('Ext10mm_pin_42cm_tendon.fig','reuse');
 ax4 = gca;
 
