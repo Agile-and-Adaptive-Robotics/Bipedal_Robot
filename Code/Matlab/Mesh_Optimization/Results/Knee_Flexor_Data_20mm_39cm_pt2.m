@@ -114,7 +114,7 @@ Dia = 20;
 % kmax = 0.322;
 rest = 0.39; %resting length, m
 kmax = (1-0.259)*rest; %Length at maximum contraction, m
-tendon = 0.020; 
+tendon = 0.02; 
 fitting = 0.0254; 
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 200;
@@ -300,9 +300,13 @@ hold off
 
 
 %% Compare to results
+% Load = [18	37	18.5	32	44	53 61];     %Load in Newtons
+% K_ang = [-124	-98.5	-118.5	-111 -90	-75 -64]*c;      %Knee angle
+% LC_ang = [29	31	31	27	28	24 20]*c;      %Load Cell angle
 Load = [18	37	18.5	32	44	53 61];     %Load in Newtons
 K_ang = [-124	-98.5	-118.5	-111 -90	-75 -64]*c;      %Knee angle
 LC_ang = [29	31	31	27	28	24 20]*c;      %Load Cell angle
+
 
 d = 320/1000;
 ang = -82.97;
