@@ -112,15 +112,15 @@ end
 Dia = 20;
 % rest = 0.423;
 % kmax = 0.322;
-rest = 0.39; %resting length, m
+rest = 0.390; %resting length, m
 kmax = (1-0.259)*rest; %Length at maximum contraction, m
-tendon = 0.02; 
+tendon = 0.025; 
 fitting = 0.0254; 
 %pres1 = 273.9783;         %average pressure, first test
-pres1 = 200;
-pres2 = 484.8063;         %average pressure, first test
+pres1 = 10;
+pres2 = 200;         %average pressure, first test
 %pres3 = 606.4926;         %average pressure, first test
-pres3 = 620;
+pres3 = 610;
 Bifemsh_Pam1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1);
 Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2);
 Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
@@ -300,13 +300,13 @@ hold off
 
 
 %% Compare to results
-% Load = [18	37	18.5	32	44	53 61];     %Load in Newtons
-% K_ang = [-124	-98.5	-118.5	-111 -90	-75 -64]*c;      %Knee angle
-% LC_ang = [29	31	31	27	28	24 20]*c;      %Load Cell angle
-Load = [18	37	18.5	32	44	53 61];     %Load in Newtons
-K_ang = [-124	-98.5	-118.5	-111 -90	-75 -64]*c;      %Knee angle
-LC_ang = [29	31	31	27	28	24 20]*c;      %Load Cell angle
+Load = [10.6 28.6 36.9 50.45];     %Load in Newtons
+K_ang = [-125 -112 -91.5 -75]*c;      %Knee angle
+LC_ang = [33 31.5 30 26.5]*c;      %Load Cell angle
 
+Load2 = [];     %Load in Newtons, no pressure
+K_ang2 = []*c;      %Knee angle, no pressure
+LC_ang2 = []*c;      %Load Cell angle, no pressure
 
 d = 320/1000;
 ang = -82.97;
@@ -341,7 +341,7 @@ figure
 hold on
 % plot(phiD, Bifemsh_Pam_adj1.Torque(:,3), phiD, Bifemsh_Pam_adj2.Torque(:,3),phiD, Bifemsh_Pam_adj3.Torque(:,3))
 % plot(K_ang(1:10)/c, TorqueZ(1:10),'o',K_ang(11:15)/c, TorqueZ(11:15),'s',K_ang(16:17)/c, TorqueZ(16:17),'d')
-% legend('Theoretical 274 kPa','Theoretical 485 kPa','Theoretical 606 kPa','Measured, 274 kPa','Measured, 485 kPa','Measured, 606 kPa')
+% legend('Theoretical 0 kPa','Theoretical 200 kPa','Theoretical 606 kPa','Measured, 0 kPa','Measured, 200 kPa','Measured, 606 kPa')
 plot(phiD, Bifemsh_Pam_adj3.Torque(:,3))
 plot(K_ang/c, TorqueZ,'o')
 legend('Theoretical 610 kPa','Measured, 610 kPa')
@@ -362,7 +362,7 @@ Bifemsh_T = Tab(:,4)';              %Torque values directly from OpenSim
 figure
 hold on
 plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g', K_ang/c, TorqueZ,'o', knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
-legend('Theoretical 620 kPa','Theoretical 485 kPa','Theoretical 200 kPa','Measured, 608 kPa','OpenSim Human Torque','Location','southwest')
+legend('Theoretical 610 kPa','Theoretical 200 kPa','Theoretical 10 kPa','Measured, 608 kPa','OpenSim Human Torque','Location','southwest')
 title('Knee Torque, 20mm BPA vs Human')
 xlabel('Knee Extension/Rotation, degrees')
 ylabel('Torque, Nm')
