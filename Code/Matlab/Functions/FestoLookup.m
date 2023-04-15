@@ -311,7 +311,7 @@ FestoLookup20(1,:) = f20(X2/Emax,0);
 FestoLookup20(2,:) = f20(X2/Emax,100/Pmax);
 FestoLookup20(3,:) = f20(X2/Emax,200/Pmax);
 FestoLookup20(4,:) = f20(X2/Emax,300/Pmax);
-FestoLookup20(5,:) = f20(X2/Emax,400/Pmax);
+FestoLookup20(5,:) = f20(X2/Emax,400/Pmax); 
 FestoLookup20(6,:) = f20(X2/Emax,500/Pmax);
 FestoLookup20(7,:) = f20(X2/Emax,600/Pmax);
 
@@ -497,14 +497,21 @@ figure
 xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Force, $N$','interpreter','latex')
 title('\bf 40 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
 hold on
-plot(X1,FestoLookup40(7,:)*z40max,'DisplayName','600 kPa')
-plot(X1,FestoLookup40(6,:)*z40max,'DisplayName','500 kPa')
-plot(X1,FestoLookup40(5,:)*z40max,'DisplayName','400 kPa')
-plot(X1,FestoLookup40(4,:)*z40max,'DisplayName','300 kPa')
-plot(X1,FestoLookup40(3,:)*z40max,'DisplayName','200 kPa')
-plot(X1,FestoLookup40(2,:)*z40max,'DisplayName','100 kPa')
-plot(X1,FestoLookup40(1,:)*z40max,'DisplayName','  0 kPa')
-lgd40 = legend('interpreter','latex');
+plot(X1,FestoLookup40(7,:)*z40max,'DisplayName','600 kPa, model')
+plot(x40_7,z40_7,'o','DisplayName','600 kPa,  Festo')
+plot(X1,FestoLookup40(6,:)*z40max,'DisplayName','500 kPa, model')
+plot(x40_6,z40_6,'o','DisplayName','500 kPa,  Festo')
+plot(X1,FestoLookup40(5,:)*z40max,'DisplayName','400 kPa, model')
+plot(x40_5,z40_5,'o','DisplayName','400 kPa,  Festo')
+plot(X1,FestoLookup40(4,:)*z40max,'DisplayName','300 kPa, model')
+plot(x40_4,z40_4,'o','DisplayName','300 kPa,  Festo')
+plot(X1,FestoLookup40(3,:)*z40max,'DisplayName','200 kPa, model')
+plot(x40_3,z40_3,'o','DisplayName','200 kPa,  Festo')
+plot(X1,FestoLookup40(2,:)*z40max,'DisplayName','100 kPa, model')
+plot(x40_2,z40_2,'o','DisplayName','100 kPa,  Festo')
+plot(X1,FestoLookup40(1,:)*z40max,'DisplayName','    0 kPa, model')
+plot(x40_1,z40_1,'o','DisplayName','    0 kPa,  Festo')
+lgd40 = legend;
 title(lgd40,'\bf Pressure')
 hold off
 
@@ -517,13 +524,20 @@ figure
 xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Force, $N$','interpreter','latex')
 title('\bf 20 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
 hold on
-plot(X2,FestoLookup20(7,:)*z20max,'DisplayName','600 kPa')
-plot(X2,FestoLookup20(6,:)*z20max,'DisplayName','500 kPa')
-plot(X2,FestoLookup20(5,:)*z20max,'DisplayName','400 kPa')
-plot(X2,FestoLookup20(4,:)*z20max,'DisplayName','300 kPa')
-plot(X2,FestoLookup20(3,:)*z20max,'DisplayName','200 kPa')
-plot(X2,FestoLookup20(2,:)*z20max,'DisplayName','100 kPa')
-plot(X2,FestoLookup20(1,:)*z20max,'DisplayName','  0 kPa')
-lgd40 = legend('interpreter','latex');
-title(lgd40,'\bf Pressure')
+plot(X2,FestoLookup20(7,:)*z20max,'DisplayName','600 kPa, model')
+plot(x20_7,z20_7,'o','DisplayName','600 kPa,  Festo')
+plot(X2,FestoLookup20(6,:)*z20max,'DisplayName','500 kPa, model')
+plot(x20_6,z20_6,'o','DisplayName','500 kPa,  Festo')
+plot(X2,FestoLookup20(5,:)*z20max,'DisplayName','400 kPa, model')
+plot(x20_5,z20_5,'o','DisplayName','400 kPa,  Festo')
+plot(X2,FestoLookup20(4,:)*z20max,'DisplayName','300 kPa, model')
+plot(x20_4,z20_4,'o','DisplayName','300 kPa,  Festo')
+plot(X2,FestoLookup20(3,:)*z20max,'DisplayName','200 kPa, model')
+plot(x20_3,z20_3,'o','DisplayName','200 kPa,  Festo')
+plot(X2,FestoLookup20(2,:)*z20max,'DisplayName','100 kPa, model')
+plot(x20_2,z20_2,'o','DisplayName','100 kPa,  Festo')
+plot(X2,FestoLookup20(1,:)*z20max,'DisplayName','    0 kPa, model')
+plot(x20_1,z20_1,'o','DisplayName','    0 kPa,  Festo')
+lgd20 = legend;
+title(lgd20,'\bf Pressure')
 hold off

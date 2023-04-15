@@ -345,13 +345,20 @@ classdef MonoPamDataExplicit < handle
 %            end
 %           end
 
-            F = zeros(size(unitD));
+%             F = zeros(size(unitD));
             for i = 1:size(unitD, 1)
-                if scalarForce(i) <= 0
+                if scalarForce(i) < 0
                     scalarForce(i) = 0;
                 end
-                F(i, :) = unitD(i, :)*scalarForce(i);
+                if scalarForce(i) > maxF
+                    scalarForce(i) = NaN;
+                end
             end
+            
+            SF = diag(scalarForce);
+            F = SF*unitD;
+%                 F(i, :) = unitD(i, :).*scalarForce(i);
+%             end
         end
         
         %% ---------------------- Torque --------------

@@ -10,7 +10,7 @@ function F = festo4(dia, rel, pres)
 load FestoLookup.mat f40 f20
 clear X Y
 
-% rel = contract/0.25;    % Normalize contraction
+%rel = contract/0.25;    % Normalize contraction
 P = pres/600;           % Normalize pressure
 Fmax20 = 1500;          % Max 20mm BPA force
 Fmax40 = 6000;          % Max 20mm BPA force
@@ -21,28 +21,25 @@ Fmax40 = 6000;          % Max 20mm BPA force
 
   if dia == 20
             F = f20(rel, P).*Fmax20;
-            if F > 1500
-                F = 1500;
+            for i = 1:length(F)
+                if F > 1500
+                    F = NaN;
+                end
             end
   elseif dia == 40
             F = f40(rel, P).*Fmax40;
-            if F > 6000
-                F = 6000;
+            for i = 1:length(F)
+                if F > 6000
+                    F = NaN;
+                end
             end
   else
-%             x1 = [ -.03   -.02  -.01      0]';
-%             z1 = [741.9    613   523  458.2]';
-%             z2 = [759.2  629.3 539.3  473.3]';
-%             z3 = [785.1  653.5 562.6  495.9]';
-%             x = [x1; x1; x1];
-%             y = [580*ones(length(x1),1);
-%                  600*ones(length(x1),1);
-%                  630*ones(length(x1),1)];
-%             z = [z1; z2; z3]; 
-%             BPAFit = fit([x, y],z,'linearinterp','Normalize','on');
-            F = f10(rel,pres);
-  end
 
-    if F < 0
-        F = 0;
-    end
+            F = f10(rel,pres);
+        for i = length(F)
+            if F(i) < 0
+                F(i) = 0;
+            end
+        end
+  end
+    

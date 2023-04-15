@@ -97,8 +97,8 @@ CrossPoint = 2;
 
 Location = zeros(2,3,positions);
 %Origin and Insertion from Ben
-p1 = [-0.050, 0.035, 0.0328];       %Origin
-p2 = [-0.01146, 0.00113, 0.027];  %Insertion distance from theta1
+p1 = [-0.050, 0.035, 0.050];       %Origin
+p2 = [-0.01598, 0.00113, 0.03146];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);
 
 for i = 1:positions
@@ -112,12 +112,12 @@ end
 Dia = 20;
 % rest = 0.423;
 % kmax = 0.322;
-rest = 0.390; %resting length, m
-kmax = (1-0.259)*rest; %Length at maximum contraction, m
-tendon = 0.025; 
+rest = 0.39; %resting length, m
+kmax = (1-0.25)*rest; %Length at maximum contraction, m
+tendon = 0.020; 
 fitting = 0.0254; 
 %pres1 = 273.9783;         %average pressure, first test
-pres1 = 10;
+pres1 = 0;
 pres2 = 200;         %average pressure, first test
 %pres3 = 606.4926;         %average pressure, first test
 pres3 = 610;
@@ -130,6 +130,17 @@ fitting_adj = 0.0352;
 Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres1);
 Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres2);
 Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres3);
+
+%% Create strings for later plots
+%First pressure
+sT1 = sprintf('Theoretical %d kPa',pres1);
+sM1 = sprintf('Measured %d kPa',pres1);
+%Second pressure
+sT2 = sprintf('Theoretical %d kPa',pres2);
+sM2 = sprintf('Measured %d kPa',pres2);
+%Third pressure
+sT3 = sprintf('Theoretical %d kPa',pres3);
+sM3 = sprintf('Measured %d kPa',pres3);
 
 %% Unstacking the Torques to identify specific rotations
 Torque1 = Bifemsh.Torque;
@@ -339,15 +350,16 @@ TorqueZ = squeeze(TorqueZ);
 
 figure
 hold on
-% plot(phiD, Bifemsh_Pam_adj1.Torque(:,3), phiD, Bifemsh_Pam_adj2.Torque(:,3),phiD, Bifemsh_Pam_adj3.Torque(:,3))
-% plot(K_ang(1:10)/c, TorqueZ(1:10),'o',K_ang(11:15)/c, TorqueZ(11:15),'s',K_ang(16:17)/c, TorqueZ(16:17),'d')
-% legend('Theoretical 0 kPa','Theoretical 200 kPa','Theoretical 606 kPa','Measured, 0 kPa','Measured, 200 kPa','Measured, 606 kPa')
 plot(phiD, Bifemsh_Pam_adj3.Torque(:,3))
 plot(K_ang/c, TorqueZ,'o')
-legend('Theoretical 610 kPa','Measured, 610 kPa')
+legend(sT3,sM3)
 title('PAM Z Torque')
-xlabel('Knee Extension/Rotation, degrees')
-ylabel('Torque, Nm')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Torque, N \cdot m','Interpreter','tex')
+ax = gca;
+set(ax,'FontWeight','bold','LineWidth',2,'FontSize',10)
+kid = ax.Children;
+set(kid,'LineWidth',2)
 hold off
 
 %% Compare theoretical to OpenSim
@@ -362,8 +374,12 @@ Bifemsh_T = Tab(:,4)';              %Torque values directly from OpenSim
 figure
 hold on
 plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g', K_ang/c, TorqueZ,'o', knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
-legend('Theoretical 610 kPa','Theoretical 200 kPa','Theoretical 10 kPa','Measured, 608 kPa','OpenSim Human Torque','Location','southwest')
-title('Knee Torque, 20mm BPA vs Human')
-xlabel('Knee Extension/Rotation, degrees')
-ylabel('Torque, Nm')
+legend(sT3,sT2,sT1,sM3,'OpenSim Human Torque','Location','southwest')
+title('Torque Comparison, Human vs. BPA')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Torque, N \cdot m','Interpreter','tex')
+ax = gca;
+set(ax,'FontWeight','bold','LineWidth',2,'FontSize',10)
+kid = ax.Children;
+set(kid,'LineWidth',2)
 hold off
