@@ -120,7 +120,7 @@ fitting = 0.0254;
 pres1 = 0;
 pres2 = 200;         %average pressure, first test
 %pres3 = 606.4926;         %average pressure, first test
-pres3 = 610;
+pres3 = 614;
 Bifemsh_Pam1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1);
 Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2);
 Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
@@ -311,9 +311,9 @@ hold off
 
 
 %% Compare to results
-Load = [10.6 28.6 36.9 50.45];     %Load in Newtons
-K_ang = [-125 -112 -91.5 -75]*c;      %Knee angle
-LC_ang = [33 31.5 30 26.5]*c;      %Load Cell angle
+Load = [5.3 19.83 31.35 44.78 56.1 68.12 74.9 78.14];     %Load in Newtons
+K_ang = [-125 -112 -93 -80 -75 -52 -42 -32]*c;      %Knee angle
+LC_ang = [35 32.5 26.5 25.5 22 22 16 12]*c;      %Load Cell angle
 
 Load2 = [];     %Load in Newtons, no pressure
 K_ang2 = []*c;      %Knee angle, no pressure
