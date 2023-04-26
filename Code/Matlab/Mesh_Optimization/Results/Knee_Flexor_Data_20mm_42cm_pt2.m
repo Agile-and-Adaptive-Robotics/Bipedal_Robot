@@ -118,9 +118,9 @@ tendon = 0.015;
 fitting = 0.0254; 
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 0;
-pres2 = 200;         %average pressure, first test
+pres2 = 325;         %average pressure, first test
 %pres3 = 606.4926;         %average pressure, first test
-pres3 = 614;
+pres3 = 620;
 Bifemsh_Pam1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1);
 Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2);
 Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
@@ -311,13 +311,10 @@ hold off
 
 
 %% Compare to results
-Load = [5.3 19.83 31.35 44.78 56.1 68.12 74.9 78.14];     %Load in Newtons
-K_ang = [-125 -112 -93 -80 -75 -52 -42 -32]*c;      %Knee angle
-LC_ang = [35 32.5 26.5 25.5 22 22 16 12]*c;      %Load Cell angle
-
-Load2 = [];     %Load in Newtons, no pressure
-K_ang2 = []*c;      %Knee angle, no pressure
-LC_ang2 = []*c;      %Load Cell angle, no pressure
+%Longer Tibia
+Load = [18.5 18.05 32 40.97 44.4 50.84 62.45 69.4 64.3 70.6 90.15 70];     %Load in Newtons
+K_ang = [-125 -114 -98 -83 -75.5 -69 -55.5 -53 3 7 -6.5 -32]*c;      %Knee angle
+LC_ang = [32.5 30 28 26 24.5 17 20 24 7 5.5 10 13.5]*c;      %Load Cell angle
 
 d = 320/1000;
 ang = -82.97;
@@ -344,9 +341,44 @@ for i=1:length(Load)
     
 end
 
-TorqueZ = Fk(3,1,:);
-TorqueZ = squeeze(TorqueZ);
+TorqueZ1 = Fk(3,1,:);
+TorqueZ1 = squeeze(TorqueZ1);
 
+%Tibia 2
+Load2 = [91.7 114.1 129.8 78 92.78 63.6 97.28 71.92 84.5 93.9];     %Load in Newtons
+K_ang2 = [-53 -41 -30 -26 -25.5 -18.5 -18 -7 -9 0]*c;      %Knee angle
+LC_ang2 = [-5 -7 -12 -12 -12.5 -16.5 -15 -19.5 -15 -17]*c;      %Load Cell angle
+
+d2 = 218.29/1000;
+ang2 = -79.84;
+p_rf2 = [d2*cosd(ang2), d2*sind(ang2), 0]';     %point of reaction force
+T_t1_rf2 = RpToTrans(eye(3),p_rf2);   %Tranformation matrix from theta 1 to reaction point
+Trk2 = pagemtimes(TransInv(T_t1_rf2),T_t1_ICR);
+s3 = Trk2(1,4,:);
+s3 = squeeze(s3);
+fcn17 = fit(phi',s3,'cubicspline');
+s4 = Trk2(2,4,:);
+s4 = squeeze(s4);
+fcn18 = fit(phi',s4,'cubicspline');
+
+Trk2 = zeros(4,4,length(Load2));
+Fr2 = zeros(6,1,length(Load2));
+AdTrk2 = zeros(6,6,length(Load2));
+Fk2 = zeros(6,1,length(Load2));
+
+for i=1:length(Load2)
+    Trk2(:,:,i) = RpToTrans(eye(3),[fcn17(K_ang2(i)), fcn18(K_ang2(i)), 0]');
+    Fr2(:,:,i) = [0; 0; 0; Load2(i)*cos(LC_ang2(i)+pi); Load2(i)*sin(LC_ang2(i)+pi); 0];
+    AdTrk2(:,:,i) = Adjoint(Trk2(:,:,i));
+    Fk2(:,:,i) = AdTrk2(:,:,i)'*Fr2(:,:,i);
+    
+end
+
+TorqueZ2 = Fk2(3,1,:);
+TorqueZ2 = squeeze(TorqueZ2);
+
+TorqueZ = [TorqueZ1; TorqueZ2];
+K_ang = [K_ang, K_ang2];
 
 figure
 hold on
