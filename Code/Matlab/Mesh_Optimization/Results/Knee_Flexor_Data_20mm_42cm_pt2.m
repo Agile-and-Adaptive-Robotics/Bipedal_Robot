@@ -380,10 +380,13 @@ TorqueZ2 = squeeze(TorqueZ2);
 TorqueZ = [TorqueZ1; TorqueZ2];
 K_ang = [K_ang, K_ang2];
 
+Presh = [613	614	614	615	615	615	618	618	620	620	620	385	451	296.6	421	281	324.8	325.58	325.58	325	500	560]; %Measured pressure
+sz = 40/620*Presh;
+
 figure
 hold on
 plot(phiD, Bifemsh_Pam_adj3.Torque(:,3))
-plot(K_ang/c, TorqueZ,'o')
+scatter(K_ang/c, TorqueZ,sz,'filled')
 legend(sT3,sM3)
 title('PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
@@ -405,8 +408,10 @@ Bifemsh_T = Tab(:,4)';              %Torque values directly from OpenSim
 
 figure
 hold on
-plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g', K_ang/c, TorqueZ,'o', knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
-legend(sT3,sT2,sT1,sM3,'OpenSim Human Torque','Location','southwest')
+%plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g', K_ang/c, TorqueZ,'o', knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
+plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g',knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
+scatter(K_ang/c, TorqueZ,sz,'filled')
+legend(sT3,sT2,sT1,'OpenSim Human Torque','Measured','Location','southwest')
 title('Torque Comparison, Human vs. BPA')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
