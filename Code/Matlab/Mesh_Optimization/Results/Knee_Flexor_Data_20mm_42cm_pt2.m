@@ -391,7 +391,7 @@ c5 = '#CD34B5'; %magenta
 c6 = '#9D02D7'; %magenta 2
 c7 = '#0000FF'; %indigo
 c8 = '#000000'; %black
-sz = 620*Presh;        %size of data points
+sz = 60*Presh/620;        %size of data points
 sz2 = sz*0.666; %size of second data points
 C = {c1; c2; c3; c4; c5; c6; c7; c8};
 
@@ -424,7 +424,10 @@ Bifemsh_T = Tab(:,4)';              %Torque values directly from OpenSim
 figure
 hold on
 %plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g', K_ang/c, TorqueZ,'o', knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
-plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-','Color',c7, phiD, Bifemsh_Pam_adj2.Torque(:,3),'--','Color',c6,phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-','Color',c5,knee_angle_rT, Bifemsh_T,':','Color',c2,'LineWidth',2)
+plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'LineStyle','-','Color',c7); 
+plot(phiD, Bifemsh_Pam_adj2.Torque(:,3),'LineStyle','--','Color',c6);
+plot(phiD, Bifemsh_Pam_adj1.Torque(:,3),'LineStyle','-.','Color',c5);
+plot(knee_angle_rT, Bifemsh_T,'LineStyle',':','Color',c2);
 scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4')
 legend(sT3,sT2,sT1,'OpenSim Human Torque','Measured','Location','southwest')
 title('Torque Comparison, Human vs. BPA')
