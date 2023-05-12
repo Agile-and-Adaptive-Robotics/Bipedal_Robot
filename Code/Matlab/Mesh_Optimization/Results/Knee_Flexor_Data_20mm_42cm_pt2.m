@@ -381,12 +381,27 @@ TorqueZ = [TorqueZ1; TorqueZ2];
 K_ang = [K_ang, K_ang2];
 
 Presh = [613	614	614	615	615	615	618	618	620	620	620	385	451	296.6	421	281	324.8	325.58	325.58	325	500	560]; %Measured pressure
-sz = 40/620*Presh;
+
+%% Create accessible color scheme
+c1 = '#FFD700'; %gold
+c2 = '#FFB14E'; %orange
+c3 = '#FA8775'; %light orange
+c4 = '#EA5F94'; %pink
+c5 = '#CD34B5'; %magenta
+c6 = '#9D02D7'; %magenta 2
+c7 = '#0000FF'; %indigo
+c8 = '#000000'; %black
+sz = 620*Presh;        %size of data points
+sz2 = sz*0.666; %size of second data points
+C = {c1; c2; c3; c4; c5; c6; c7; c8};
+
+%% Plot the results
+Cang = K_ang/c;
 
 figure
 hold on
-plot(phiD, Bifemsh_Pam_adj3.Torque(:,3))
-scatter(K_ang/c, TorqueZ,sz,'filled')
+plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'Color',c7)
+scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4)
 legend(sT3,sM3)
 title('PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
@@ -409,8 +424,8 @@ Bifemsh_T = Tab(:,4)';              %Torque values directly from OpenSim
 figure
 hold on
 %plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g', K_ang/c, TorqueZ,'o', knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
-plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g',knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
-scatter(K_ang/c, TorqueZ,sz,'filled')
+plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-','Color',c7, phiD, Bifemsh_Pam_adj2.Torque(:,3),'--','Color',c6,phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-','Color',c5,knee_angle_rT, Bifemsh_T,':','Color',c2,'LineWidth',2)
+scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4')
 legend(sT3,sT2,sT1,'OpenSim Human Torque','Measured','Location','southwest')
 title('Torque Comparison, Human vs. BPA')
 xlabel('Knee angle, \circ','Interpreter','tex')
