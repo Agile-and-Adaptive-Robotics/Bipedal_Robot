@@ -430,7 +430,7 @@ plot(phiD, Bifemsh_Pam_adj1.Torque(:,3),'LineStyle','-.','Color',c5);
 plot(knee_angle_rT, Bifemsh_T,'LineStyle',':','Color',c2);
 scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4')
 legend(sT3,sT2,sT1,'OpenSim Human Torque','Measured','Location','southwest')
-title('Torque Comparison, Human vs. BPA')
+title('Knee Torque, Human vs. $\phi$20 mm BPA, $l_{rest}=420$ mm','Interpreter','latex')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
 ax = gca;
