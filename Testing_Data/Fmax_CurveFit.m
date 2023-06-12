@@ -68,7 +68,7 @@ Zun = [840	0	NaN	114.32	191.8	275.2	355.4	447.1
 
 Zsrt = sortrows(Zun);           %first column is resting lengths
 bpaRestL = Zsrt(:,1);
-bpaNorm = bpaRestL/1000;        %Convert mm to meters also normalizes these lengths
+bpaNorm = bpaRestL/1000;        %Convert mm to meters also "normalizes" these lengths
 
 pointz = [0,100,200,300,400,500,620];  %Pressure value for columns
 Zfin = Zsrt(:,2:8);                    %Z values (i.e. force) are these columns
