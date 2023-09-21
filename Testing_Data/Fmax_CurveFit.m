@@ -8,11 +8,11 @@ A = [845	840	785	780	710	709	571	571	112	415	455	490	518	551	361	54	27	69	275	15
     447.1	447.1	472	472	452.32	452.32	461.6	461.6	334	444.8222	460	451.38	455.83	453.14	436.4	238.2	135.32	271.48	412.3	347.18	396.17	8.3	343.05	377.2	377.2	418.19	402.48];
 
 
-restingL = A(1,:)/1000;
+restingL = A(1,:)/1000;  %Resting length
 
-kmax = A(2,:);
+kmax = A(2,:);          %Maximum strain
 
-Fmax = A(3,:);
+Fmax = A(3,:);          %Maximum force
 Fmax_norm = Fmax/max(Fmax);
 %% Nonlinear fit for Fmax
 modelfun = @(b,xm)b(1)*620*atan(b(2)*(xm-0.0075)*620); %based on the shape, it looks like resting length reaches a limit
