@@ -4,9 +4,11 @@ close all;
 
 %% Create Festo force lookup tables based on their datasheets
 Y = linspace(0,600,7);                      %Pressure for interpolation
+z10max = 650
 z20max = 1500;                              %Max force in 20mm BPA
 z40max = 6000;                              %Max force in 40mm BPA
 Pmax = 600;                                 %Max pressure in 20 & 40 mm BPAs
+P10max = 600;                               %Max pressure in 10 mm BPAs
 Emax = 0.25;                                %Max contraction in 20 and 40 mm BPAs
 
 %% 40mm dia BPA
