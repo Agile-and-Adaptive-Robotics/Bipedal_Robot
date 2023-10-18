@@ -155,16 +155,19 @@ data30cm = [    data30cm_test9(:,1) data30cm_test9(:,2) (data30cm_test9(:,3))/Fm
                 1 620 0];
             
 %% Add Ben's data
-% Fmax112 = 325.165;
-% Fmax415 = 444.8222;
-% Fmax455 = 440;
-% Fmax490 = 464;
-% Fmax518 = 429;
-Fmax112 = maxBPAforce(.112);
-Fmax415 = maxBPAforce(.415);
-Fmax455 = maxBPAforce(.455);
-Fmax490 = maxBPAforce(0.490);
-Fmax518 = maxBPAforce(.518);
+%Fmax from experiments
+Fmax112 = 325.165;
+Fmax415 = 444.8222;
+Fmax455 = 440;
+Fmax490 = 464;
+Fmax518 = 429;
+
+%Fmax from maxBPAforce equation
+% Fmax112 = maxBPAforce(.112);
+% Fmax415 = maxBPAforce(.415);
+% Fmax455 = maxBPAforce(.455);
+% Fmax490 = maxBPAforce(0.490);
+% Fmax518 = maxBPAforce(.518);
 
 rawdata11cm = [325.164999	620	0.008928571	0.055555556;
                 252.6589869	620	0.044642857	0.277777778;
