@@ -4,12 +4,15 @@ clear data13cm data23cm data27cm data 29cm data30cm
 %% Plot tests 9 and 10, only Pressurizing
  testnumber = 9; %choosing test numner 9 as the standard
  testnum = 10;   %adding test 10 b/c Lawrence says it's good
-Fmax13 = 343.05; %maxBPAforce(120);
-Fmax23 = 377.2; %maxBPAforce(220);
-Fmax27 = 377.2; %maxBPAforce(260);
-Fmax29 = 418.19; %maxBPAforce(281);
-Fmax30 = 402.48; %maxBPAforce(281);
- 
+%Mean maximum force at 620kPa, from tests 9 and 10, respecitively.  
+Fmax13 = 341.2402; %mean([341.9415  340.5389]);
+Fmax23 = 377.8612; %mean([378.1035 377.6189]);
+Fmax27 = 383.3393; %mean([383.1724 383.5062]);
+Fmax29 = 419.1045; %mean([419.1600 419.0490]);
+Fmax30 = 406.9386; %mean([407.2156 406.6616]);
+maxP = 800;
+minF = 0;
+
 %13cm
 figure %11
 subplot 321
@@ -17,23 +20,23 @@ hold on
 for a = 1:length(vals_13cm)
     b=vals_13cm(a);
     c = [0 0.2 0.4 0.6];
-    data13cm_test9 = AllBPA10mm13cm(AllBPA10mm13cm(:,5)==13& AllBPA10mm13cm(:,6)==b&AllBPA10mm13cm(:,7)==testnumber&AllBPA10mm13cm(:,8)==1,:);
-    data13cm_test10 = AllBPA10mm13cm(AllBPA10mm13cm(:,5)==13& AllBPA10mm13cm(:,6)==b&AllBPA10mm13cm(:,7)==testnum&AllBPA10mm13cm(:,8)==1,:);
+    data13cm_t9 = AllBPA10mm13cm(AllBPA10mm13cm(:,5)==13& AllBPA10mm13cm(:,6)==b&AllBPA10mm13cm(:,7)==testnumber&AllBPA10mm13cm(:,8)==1,:);
+    data13cm_t10 = AllBPA10mm13cm(AllBPA10mm13cm(:,5)==13& AllBPA10mm13cm(:,6)==b&AllBPA10mm13cm(:,7)==testnum&AllBPA10mm13cm(:,8)==1,:);
     txt = sprintf('%d',c(a));
-    plot(data13cm_test9(:,2),data13cm_test9(:,1)/Fmax13,'DisplayName',txt)
-    plot(data13cm_test10(:,2),data13cm_test10(:,1)/Fmax13,'DisplayName',txt)
+    plot(data13cm_t9(:,2),data13cm_t9(:,1)/Fmax13,'DisplayName',txt)
+    plot(data13cm_t10(:,2),data13cm_t10(:,1)/Fmax13,'DisplayName',txt)
 end
 hold off
 legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 13cm all Kinks(Test 9&10)')
-data13cm_test9 = [AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==testnumber,13), AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==testnumber,2), AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==testnumber,1)];                     
-data13cm_test10 = [AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==testnum,13), AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==testnum,2), AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==testnum,1)];                     
-data13cm_test9 = data13cm_test9(data13cm_test9(:,2)<= 625 &data13cm_test9(:,3)>=10,:);
-data13cm_test10 = data13cm_test10(data13cm_test10(:,2) <= 625 &data13cm_test10(:,3)>=10,:);
-data13cm = [    data13cm_test9(:,1) data13cm_test9(:,2) (data13cm_test9(:,3))/Fmax13; 
-                data13cm_test10(:,1) data13cm_test10(:,2) (data13cm_test10(:,3))/Fmax13;
+data13cm_t9 = [AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==testnumber,13), AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==testnumber,2), AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==testnumber,1)];                     
+data13cm_t10 = [AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==testnum,13), AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==testnum,2), AllBPA10mm13cm_P(AllBPA10mm13cm_P(:,7)==testnum,1)];                     
+data13cm_t9 = data13cm_t9(data13cm_t9(:,2)<= maxP &data13cm_t9(:,3)>=minF,:);
+data13cm_t10 = data13cm_t10(data13cm_t10(:,2) <= maxP &data13cm_t10(:,3)>=minF,:);
+data13cm = [    data13cm_t9(:,1) data13cm_t9(:,2) (data13cm_t9(:,3))/Fmax13; 
+                data13cm_t10(:,1) data13cm_t10(:,2) (data13cm_t10(:,3))/Fmax13;
                 1 620 0;
                 1 620 0];
 
@@ -43,24 +46,24 @@ hold on
 for a = 1:length(vals_23cm)
     b=vals_23cm(a);
     c = [0 0.424 0.91];
-    data23cm_test9 = AllBPA10mm23cm(AllBPA10mm23cm(:,5)==23& AllBPA10mm23cm(:,6)==b&AllBPA10mm23cm(:,7)==testnumber&AllBPA10mm23cm(:,8)==1,:);
-    data23cm_test10 = AllBPA10mm23cm(AllBPA10mm23cm(:,5)==23& AllBPA10mm23cm(:,6)==b&AllBPA10mm23cm(:,7)==testnum&AllBPA10mm23cm(:,8)==1,:);
+    data23cm_t9 = AllBPA10mm23cm(AllBPA10mm23cm(:,5)==23& AllBPA10mm23cm(:,6)==b&AllBPA10mm23cm(:,7)==testnumber&AllBPA10mm23cm(:,8)==1,:);
+    data23cm_t10 = AllBPA10mm23cm(AllBPA10mm23cm(:,5)==23& AllBPA10mm23cm(:,6)==b&AllBPA10mm23cm(:,7)==testnum&AllBPA10mm23cm(:,8)==1,:);
     %txt = sprintf('%dmm',vals_23cm(a));
     txt = sprintf('%d',c(a));
-    plot(data23cm_test9(:,2),data23cm_test9(:,1)/Fmax23,'DisplayName',txt)
-    plot(data23cm_test10(:,2),data23cm_test10(:,1)/Fmax23,'DisplayName',txt)
+    plot(data23cm_t9(:,2),data23cm_t9(:,1)/Fmax23,'DisplayName',txt)
+    plot(data23cm_t10(:,2),data23cm_t10(:,1)/Fmax23,'DisplayName',txt)
 end
 hold off
 legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 23cm all Kinks(Test 9&10)')
-data23cm_test9 = [AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==testnumber,13), AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==testnumber,2), AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==testnumber,1)];                     
-data23cm_test10 = [AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==testnum,13), AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==testnum,2), AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==testnum,1)];    
-data23cm_test9 = data23cm_test9(data23cm_test9(:,2)<= 625 &data23cm_test9(:,3)>=10,:);
-data23cm_test10 = data23cm_test10(data23cm_test10(:,2) <= 625 &data23cm_test10(:,3)>=10,:);
-data23cm = [    data23cm_test9(:,1) data23cm_test9(:,2) (data23cm_test9(:,3))/Fmax23; 
-                data23cm_test10(:,1) data23cm_test10(:,2) (data23cm_test10(:,3))/Fmax23;
+data23cm_t9 = [AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==testnumber,13), AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==testnumber,2), AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==testnumber,1)];                     
+data23cm_t10 = [AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==testnum,13), AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==testnum,2), AllBPA10mm23cm_P(AllBPA10mm23cm_P(:,7)==testnum,1)];    
+data23cm_t9 = data23cm_t9(data23cm_t9(:,2)<= maxP &data23cm_t9(:,3)>=minF,:);
+data23cm_t10 = data23cm_t10(data23cm_t10(:,2) <= maxP &data23cm_t10(:,3)>=minF,:);
+data23cm = [    data23cm_t9(:,1) data23cm_t9(:,2) (data23cm_t9(:,3))/Fmax23; 
+                data23cm_t10(:,1) data23cm_t10(:,2) (data23cm_t10(:,3))/Fmax23;
                 1 620 0;
                 1 620 0];
 
@@ -70,25 +73,25 @@ hold on
 for a = 1:length(vals_27cm)
     b = vals_27cm(a);
     c = [0 0.19444 0.41666 0.8611];
-    data27cm_test9 = AllBPA10mm27cm(AllBPA10mm27cm(:,5)==27& AllBPA10mm27cm(:,6)==b&AllBPA10mm27cm(:,7)==testnumber&AllBPA10mm27cm(:,8)==1,:);
-    data27cm_test10 = AllBPA10mm27cm(AllBPA10mm27cm(:,5)==27& AllBPA10mm27cm(:,6)==b&AllBPA10mm27cm(:,7)==testnum&AllBPA10mm27cm(:,8)==1,:);
+    data27cm_t9 = AllBPA10mm27cm(AllBPA10mm27cm(:,5)==27& AllBPA10mm27cm(:,6)==b&AllBPA10mm27cm(:,7)==testnumber&AllBPA10mm27cm(:,8)==1,:);
+    data27cm_t10 = AllBPA10mm27cm(AllBPA10mm27cm(:,5)==27& AllBPA10mm27cm(:,6)==b&AllBPA10mm27cm(:,7)==testnum&AllBPA10mm27cm(:,8)==1,:);
     %txt = sprintf('%dmm',vals_27cm(a));
     txt = sprintf('%d',c(a));
-    plot(data27cm_test9(:,2),data27cm_test9(:,1)/Fmax27,'DisplayName',txt)
-    plot(data27cm_test10(:,2),data27cm_test10(:,1)/Fmax27,'DisplayName',txt)
+    plot(data27cm_t9(:,2),data27cm_t9(:,1)/Fmax27,'DisplayName',txt)
+    plot(data27cm_t10(:,2),data27cm_t10(:,1)/Fmax27,'DisplayName',txt)
 end
 hold off
 legend
 xlabel('Pressure (kPa)')
 ylabel('Force(N)')
 title('10mm 27cm all Kinks(Test 9&10)')
-data27cm_test9 = [AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==testnumber,13), AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==testnumber,2), AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==testnumber,1)];                     
-data27cm_test10 = [AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==testnum,13), AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==testnum,2), AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==testnum,1)];    
+data27cm_t9 = [AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==testnumber,13), AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==testnumber,2), AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==testnumber,1)];                     
+data27cm_t10 = [AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==testnum,13), AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==testnum,2), AllBPA10mm27cm_P(AllBPA10mm27cm_P(:,7)==testnum,1)];    
 
-data27cm_test9 = data27cm_test9(data27cm_test9(:,2)<= 625 &data27cm_test9(:,3)>=10,:);
-data27cm_test10 = data27cm_test10(data27cm_test10(:,2) <= 625 &data27cm_test10(:,3)>=10,:);
-data27cm = [    data27cm_test9(:,1) data27cm_test9(:,2) (data27cm_test9(:,3))/Fmax27; 
-                data27cm_test10(:,1) data27cm_test10(:,2) (data27cm_test10(:,3))/Fmax27;
+data27cm_t9 = data27cm_t9(data27cm_t9(:,2)<= maxP &data27cm_t9(:,3)>=minF,:);
+data27cm_t10 = data27cm_t10(data27cm_t10(:,2) <= maxP &data27cm_t10(:,3)>=minF,:);
+data27cm = [    data27cm_t9(:,1) data27cm_t9(:,2) (data27cm_t9(:,3))/Fmax27; 
+                data27cm_t10(:,1) data27cm_t10(:,2) (data27cm_t10(:,3))/Fmax27;
                 1 620 0;
                 1 620 0];
 
@@ -98,24 +101,24 @@ hold on
 for a = 1:length(vals_29cm)
     b = vals_29cm(a);
     c = [0 0.378 0.622 0.911];
-    data29cm_test9 = AllBPA10mm29cm(AllBPA10mm29cm(:,5)==29& AllBPA10mm29cm(:,6)==b&AllBPA10mm29cm(:,7)==testnumber&AllBPA10mm29cm(:,8)==1,:);
-    data29cm_test10 = AllBPA10mm29cm(AllBPA10mm29cm(:,5)==29& AllBPA10mm29cm(:,6)==b&AllBPA10mm29cm(:,7)==testnum&AllBPA10mm29cm(:,8)==1,:);
+    data29cm_t9 = AllBPA10mm29cm(AllBPA10mm29cm(:,5)==29& AllBPA10mm29cm(:,6)==b&AllBPA10mm29cm(:,7)==testnumber&AllBPA10mm29cm(:,8)==1,:);
+    data29cm_t10 = AllBPA10mm29cm(AllBPA10mm29cm(:,5)==29& AllBPA10mm29cm(:,6)==b&AllBPA10mm29cm(:,7)==testnum&AllBPA10mm29cm(:,8)==1,:);
     txt = sprintf('%dmm',c(a));
-    plot(data29cm_test9(:,2),data29cm_test9(:,1)/Fmax29,'DisplayName',txt)
-    plot(data29cm_test10(:,2),data29cm_test10(:,1)/Fmax29,'DisplayName',txt)
+    plot(data29cm_t9(:,2),data29cm_t9(:,1)/Fmax29,'DisplayName',txt)
+    plot(data29cm_t10(:,2),data29cm_t10(:,1)/Fmax29,'DisplayName',txt)
 end
 hold off
 legend
 xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 29cm all Kinks(Test 9&10)')
-data29cm_test9 = [AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==testnumber,13), AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==testnumber,2), AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==testnumber,1)];                     
-data29cm_test10 = [AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==testnum,13), AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==testnum,2), AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==testnum,1)];    
+data29cm_t9 = [AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==testnumber,13), AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==testnumber,2), AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==testnumber,1)];                     
+data29cm_t10 = [AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==testnum,13), AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==testnum,2), AllBPA10mm29cm_P(AllBPA10mm29cm_P(:,7)==testnum,1)];    
 
-data29cm_test9 = data29cm_test9(data29cm_test9(:,2)<= 625 &data29cm_test9(:,3)>=10,:);
-data29cm_test10 = data29cm_test10(data29cm_test10(:,2) <= 625 &data29cm_test10(:,3)>=10,:);
-data29cm = [    data29cm_test9(:,1) data29cm_test9(:,2) (data29cm_test9(:,3))/Fmax29; 
-                data29cm_test10(:,1) data29cm_test10(:,2) (data29cm_test10(:,3))/Fmax29;
+data29cm_t9 = data29cm_t9(data29cm_t9(:,2)<= maxP &data29cm_t9(:,3)>=minF,:);
+data29cm_t10 = data29cm_t10(data29cm_t10(:,2) <= maxP &data29cm_t10(:,3)>=minF,:);
+data29cm = [    data29cm_t9(:,1) data29cm_t9(:,2) (data29cm_t9(:,3))/Fmax29; 
+                data29cm_t10(:,1) data29cm_t10(:,2) (data29cm_t10(:,3))/Fmax29;
                 1 620 0;
                 1 620 0];
 
@@ -125,12 +128,12 @@ hold on
 for a = 1:length(vals_30cm)
     b = vals_30cm(a);
     c = [0 0.29 0.54 0.80];
-    data30cm_test9 = AllBPA10mm30cm(AllBPA10mm30cm(:,5)==30& AllBPA10mm30cm(:,6)==b&AllBPA10mm30cm(:,7)==testnumber&AllBPA10mm30cm(:,8)==1,:);
-    data30cm_test10 = AllBPA10mm30cm(AllBPA10mm30cm(:,5)==30& AllBPA10mm30cm(:,6)==b&AllBPA10mm30cm(:,7)==testnum&AllBPA10mm30cm(:,8)==1,:);
+    data30cm_t9 = AllBPA10mm30cm(AllBPA10mm30cm(:,5)==30& AllBPA10mm30cm(:,6)==b&AllBPA10mm30cm(:,7)==testnumber&AllBPA10mm30cm(:,8)==1,:);
+    data30cm_t10 = AllBPA10mm30cm(AllBPA10mm30cm(:,5)==30& AllBPA10mm30cm(:,6)==b&AllBPA10mm30cm(:,7)==testnum&AllBPA10mm30cm(:,8)==1,:);
     %txt = sprintf('%dmm',vals_30cm(a));
     txt = sprintf('%d',c(a));
-    plot(data30cm_test9(:,2),data30cm_test9(:,1)/Fmax30,'DisplayName',txt)
-    plot(data30cm_test10(:,2),data30cm_test10(:,1)/Fmax30,'DisplayName',txt)
+    plot(data30cm_t9(:,2),data30cm_t9(:,1)/Fmax30,'DisplayName',txt)
+    plot(data30cm_t10(:,2),data30cm_t10(:,1)/Fmax30,'DisplayName',txt)
 end
 hold off
 legend
@@ -144,13 +147,13 @@ title('10mm 30cm all Kinks(Test 9&10)')
 %  end
 % end
 
-data30cm_test9 = [AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==testnumber,13), AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==testnumber,2), AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==testnumber,1)];                     
-data30cm_test10 = [AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==testnum,13), AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==testnum,2), AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==testnum,1)];    
-data30cm_test9 = data30cm_test9(data30cm_test9(:,2)<= 625 &data30cm_test9(:,3)>=10,:);
-data30cm_test10 = data30cm_test10(data30cm_test10(:,2) <= 625 &data30cm_test10(:,3)>=10,:);
+data30cm_t9 = [AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==testnumber,13), AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==testnumber,2), AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==testnumber,1)];                     
+data30cm_t10 = [AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==testnum,13), AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==testnum,2), AllBPA10mm30cm_P(AllBPA10mm30cm_P(:,7)==testnum,1)];    
+data30cm_t9 = data30cm_t9(data30cm_t9(:,2)<= maxP &data30cm_t9(:,3)>=minF,:);
+data30cm_t10 = data30cm_t10(data30cm_t10(:,2) <= maxP &data30cm_t10(:,3)>=minF,:);
 
-data30cm = [    data30cm_test9(:,1) data30cm_test9(:,2) (data30cm_test9(:,3))/Fmax30; 
-                data30cm_test10(:,1) data30cm_test10(:,2) (data30cm_test10(:,3))/Fmax30;
+data30cm = [    data30cm_t9(:,1) data30cm_t9(:,2) (data30cm_t9(:,3))/Fmax30; 
+                data30cm_t10(:,1) data30cm_t10(:,2) (data30cm_t10(:,3))/Fmax30;
                 1 620 0;
                 1 620 0];
             
@@ -158,8 +161,8 @@ data30cm = [    data30cm_test9(:,1) data30cm_test9(:,2) (data30cm_test9(:,3))/Fm
 %Fmax from experiments
 Fmax112 = 325.165;
 Fmax415 = 444.8222;
-Fmax455 = 440;
-Fmax490 = 464;
+Fmax455 = 479;
+Fmax490 = 457.8;
 Fmax518 = 429;
 
 %Fmax from maxBPAforce equation
@@ -199,7 +202,7 @@ rawdata45cm = [26	620	0.164835165	1.041666667;
 435.9257168	620	0.006593407	0.041666667;
 404.7881656	620	0.010989011	0.069444444;
 408.3467429	620	0.008791209	0.055555556;
-335.3959086	620	0.021978022	0.138888889;
+335.3959086	620	0.021978022	0.1388;
 257.9968528	620	0.046153846	0.291666667;
 203.2837271	620	0.074725275	0.472222222];
 data45cm = [rawdata45cm(:,4), rawdata45cm(:,2), rawdata45cm(:,1)/Fmax455];
@@ -207,8 +210,8 @@ data45cm = [rawdata45cm(:,4), rawdata45cm(:,2), rawdata45cm(:,1)/Fmax455];
 rawdata49cm = [12	618	0.173469388	0.923913043;
 1.11	618	0.175510204	0.934782609;
 464	620	-0.002040816	-0.010869565;
-416	616	0.008163265	0.043478261;
-308.77	618	0.030612245	0.163043478;
+433	616	0.008163265	0.043478261;
+320	618	0.030612245	0.163043478;
 356	620	0.02244898	0.119565217;
 300	618	0.03877551	0.206521739;
 268	617	0.048979592	0.260869565;
@@ -272,44 +275,50 @@ r011 = [-err + 2*err * rand(sz,1), 1-err + 2*err * rand(sz,2)].*[1 620 1];
 r000 = -0.01 + 0.02 * rand(sz,3);
 anchor = [r110; r011; r000];
 
-test9 = [data13cm_test9(:,1) data13cm_test9(:,2) (data13cm_test9(:,3))/Fmax13;
-                data23cm_test9(:,1), data23cm_test9(:,2), (data23cm_test9(:,3))/Fmax23; 
-                data27cm_test9(:,1) data27cm_test9(:,2) (data27cm_test9(:,3))/Fmax27; 
-                data29cm_test9(:,1) data29cm_test9(:,2) (data29cm_test9(:,3))/Fmax29; 
-                data30cm_test9(:,1) data30cm_test9(:,2) (data30cm_test9(:,3))/Fmax30]; 
-numrows = 100;            
-test9 = imresize(test9,[numrows 3], 'nearest');
+%test 9, Big
+t9B = [data13cm_t9(:,1) data13cm_t9(:,2) (data13cm_t9(:,3))/Fmax13;
+                data23cm_t9(:,1), data23cm_t9(:,2), (data23cm_t9(:,3))/Fmax23; 
+                data27cm_t9(:,1) data27cm_t9(:,2) (data27cm_t9(:,3))/Fmax27; 
+                data29cm_t9(:,1) data29cm_t9(:,2) (data29cm_t9(:,3))/Fmax29; 
+                data30cm_t9(:,1) data30cm_t9(:,2) (data30cm_t9(:,3))/Fmax30]; 
+numrows = 400;  
+%test 9, resized
+t9 = imresize(t9B,[numrows 3]);
                 
-allData_test9 = [test9;
+allData_t9 = [t9;
                 Ben_data;
                 anchor];
 
-X9 = allData_test9(:,1); Y9=allData_test9(:,2); Z9=allData_test9(:,3);
+X9 = allData_t9(:,1); Y9=allData_t9(:,2); Z9=allData_t9(:,3);
 Y9norm = Y9/620;
             
-test10 = [data13cm_test10(:,1) data13cm_test10(:,2) (data13cm_test10(:,3))/Fmax13;
-                data23cm_test10(:,1), data23cm_test10(:,2), (data23cm_test10(:,3))/Fmax23; 
-                data27cm_test10(:,1) data27cm_test10(:,2) (data27cm_test10(:,3))/Fmax27; 
-                data29cm_test10(:,1) data29cm_test10(:,2) (data29cm_test10(:,3))/Fmax29; 
-                data30cm_test10(:,1) data30cm_test10(:,2) (data30cm_test10(:,3))/Fmax30]; 
+t10B = [data13cm_t10(:,1) data13cm_t10(:,2) (data13cm_t10(:,3))/Fmax13;
+                data23cm_t10(:,1), data23cm_t10(:,2), (data23cm_t10(:,3))/Fmax23; 
+                data27cm_t10(:,1) data27cm_t10(:,2) (data27cm_t10(:,3))/Fmax27; 
+                data29cm_t10(:,1) data29cm_t10(:,2) (data29cm_t10(:,3))/Fmax29; 
+                data30cm_t10(:,1) data30cm_t10(:,2) (data30cm_t10(:,3))/Fmax30]; 
             
-test10 = imresize(test10,[numrows 3], 'nearest');
-allData_test10 = [test10;
+t10 = imresize(t10B,[numrows 3]);
+
+allData_t10 = [t10;
                 Ben_data;
                 anchor];
 
-X10 = allData_test10(:,1); Y10=allData_test10(:,2); Z10=allData_test10(:,3);
+X10 = t10(:,1); Y10=t10(:,2); Z10=t10(:,3); %Use just test 10 data for validation (i.e. not include anchor or Ben_data)
 Y10norm = Y10/620;
 
 figure
-scatter3(X9, Y9, Z9)
+hold on
+scatter3(X9, Y9norm, Z9, [],'blue')
+scatter3(X10, Y10norm, Z10, [],'red')
 xlabel('Relative Strain')
 ylabel('Pressure (normalized)')
 zlabel('Force (normalized)')
 title('10mm force, normalized, resized')
+hold off
 
-save allData.mat    allData allData_test9 allData_test10...
-                    test9 test10 Ben_data anchor...
-                    X Y Ynorm Z X9 Y9 Y9norm Z9 X10 Y10 Y10norm Z10 ...
-                    data13cm data23cm data27cm data29cm data30cm data11cm data42cm data45cm data49cm data52cm...
-                    data13cm_test9 data23cm_test9 data27cm_test9 data29cm_test9 data30cm_test9 
+% save allData.mat    allData allData_t9 allData_t10...
+%                     t9 t10 Ben_data anchor...
+%                     X Y Ynorm Z X9 Y9 Y9norm Z9 X10 Y10 Y10norm Z10 ...
+%                     data13cm data23cm data27cm data29cm data30cm data11cm data42cm data45cm data49cm data52cm...
+%                     data13cm_t9 data23cm_t9 data27cm_t9 data29cm_t9 data30cm_t9 
