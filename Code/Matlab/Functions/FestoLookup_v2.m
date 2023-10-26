@@ -1,9 +1,9 @@
-clear;
-clc;
-close all;
+% clear;
+% clc;
+% close all;
 
 %% Create Festo force lookup tables based on their datasheets
-Y = [0, 100, 200, 300, 400, 500, 600, 620];                 %Pressure for interpolation, 20 & 40 mm
+Y1 = [0, 100, 200, 300, 400, 500, 600, 620];                 %Pressure for interpolation, 20 & 40 mm
 Y2 = [0, 100, 200, 300, 400, 500, 600, 620, 700, 800];      %Pressure for interpolation, 10 mm
 z10max = 488.4;                               %Max force in 10mm BPA
 z10max_real = 458.89;                       %Max force in 10mm BPA, calculated using maxBPAforce(1)
@@ -16,7 +16,7 @@ E10max = 0.2238;                               %Max contraction in 10 mm BPAs
 
 %% 40mm dia BPA
 X1 = linspace(-0.05,0.25,31);   %Contraction percent for interpolation
-FestoLookup40 = zeros(size(Y,2),size(X1,2));
+FestoLookup40 = zeros(size(Y1,2),size(X1,2));
 x40_1 = [-0.05 -0.04 -0.03, -.02   -.01  0 0.25]';
 z40_1 = [2141   1325 789.6   427.4 176.6 0 -383]';                  %0 kPa force, N
 x40_2 = [-0.05  -.04  -.03  -0.02 -0.01     0   0.05 0.12 0.18 0.25]';
@@ -58,7 +58,7 @@ z40norm = z40/z40max;
 
 %% 20 mm BPA
 X2 = linspace(-0.04,0.25,30);   %Strain range for interpolation
-FestoLookup20 = zeros(size(Y,2),size(X2,2));
+FestoLookup20 = zeros(size(Y1,2),size(X2,2));
 x20_1 = [-.04 -.03 -.02 -.01 0 0.03 .125 .25]';
 z20_1 = [ 684  416  229   96 0 -160 -270 -287]';                   %0 kPa force, N
 x20_2 = [-.04 -.03 -.02 -.01 0   0.02 0.06 0.17 .25]';
@@ -545,7 +545,7 @@ load ForceStrainForFit.mat z
 % title('\bf 40 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
 % 
 % figure
-% surf(X1,Y,FestoLookup40*z40max)
+% surf(X1,Y1,FestoLookup40*z40max)
 % xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, $kPA$','interpreter','latex'),zlabel('\bf Force, $N$','interpreter','latex')
 % title('40 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
 % 
@@ -574,7 +574,7 @@ load ForceStrainForFit.mat z
 % hold off
 % 
 % figure
-% surf(X2,Y,FestoLookup20*z20max)
+% surf(X2,Y1,FestoLookup20*z20max)
 % xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, kPA','interpreter','latex'),zlabel('\bf Force, N','interpreter','latex')
 % title('\bf 20 $ mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
 % 
