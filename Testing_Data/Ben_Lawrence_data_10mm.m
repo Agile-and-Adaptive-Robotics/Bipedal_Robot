@@ -10,6 +10,15 @@ Fmax23 = 377.8612; %mean([378.1035 377.6189]);
 Fmax27 = 383.3393; %mean([383.1724 383.5062]);
 Fmax29 = 419.1045; %mean([419.1600 419.0490]);
 Fmax30 = 406.9386; %mean([407.2156 406.6616]);
+
+% Fmax10 = ;
+% Fmax15 = ;
+% Fmax20 = ;
+% Fmax25 = ;
+% Fmax30_2 = ;
+% Fmax40 = ;
+% Fmax52 = ;
+
 maxP = 800;
 minF = 0;
 
@@ -317,8 +326,8 @@ zlabel('Force (normalized)')
 title('10mm force, normalized, resized')
 hold off
 
-% save allData.mat    allData allData_t9 allData_t10...
-%                     t9 t10 Ben_data anchor...
-%                     X Y Ynorm Z X9 Y9 Y9norm Z9 X10 Y10 Y10norm Z10 ...
-%                     data13cm data23cm data27cm data29cm data30cm data11cm data42cm data45cm data49cm data52cm...
-%                     data13cm_t9 data23cm_t9 data27cm_t9 data29cm_t9 data30cm_t9 
+save allData.mat    allData allData_t9 allData_t10...
+                    t9 t10 Ben_data anchor...
+                    X Y Ynorm Z X9 Y9 Y9norm Z9 X10 Y10 Y10norm Z10 ...
+                    data13cm data23cm data27cm data29cm data30cm data11cm data42cm data45cm data49cm data52cm...
+                    data13cm_t9 data23cm_t9 data27cm_t9 data29cm_t9 data30cm_t9 
