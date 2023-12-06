@@ -1,7 +1,7 @@
 %% Look for equations of max force and max strain as functions of resting length
 %  Data from experiments. See Excel spreadsheet "StraightForceTest"
 
-%clear; clc; close all
+clear; clc; close all
 
 A = [845	840	785	780	710	709	571	571	112	415	455	490	518	551	361	54	27	69	275	151	193	10	120	220	260	281	281;
     0.171597633	0.172619048	0.169426752	0.170512821	0.177464789	0.174894217	0.183887916	0.182136602	0.160714286	0.16626506	0.158241758	0.187755102	0.166023166	0.174228675	0.171745152	0.148148148	0.148148148	0.15942029	0.170909091	0.152317881	0.165803109	0.1	0.166666667	0.159090909	0.161538462	0.163701068	0.145907473;
@@ -73,11 +73,47 @@ bpaNorm = bpaRestL/1000;        %Convert mm to meters also "normalizes" these le
 pointz = [0,100,200,300,400,500,620];  %Pressure value for columns
 Zfin = Zsrt(:,2:8);                    %Z values (i.e. force) are these columns
 
-Znorm = Zfin/(max(max(Zfin)));      %Scale force   
-P_norm = pointz/max(pointz);        %Scale pressure
+% Znorm = Zfin/(max(max(Zfin)));      %Scale force   
+% P_norm = pointz/max(pointz);        %Scale pressure
 
 %Now use curve fitting tool Fmax_fitTool.sfit
- 
+md3 = @(x,y) 0.4864*y.*atan(0.03306*y.*(x-0.0075));
+z = feval(md3,bpaNorm,pointz);
+
+%Create accessible color pallete for plotting
+c6 = [0.392156862745098 0.56078431372549 1];
+c5 = [0.470588235294118 0.368627450980392 0.941176470588235];
+c4 = [0.862745098039216 0.149019607843137 0.498039215686275];
+c3 = [0.996078431372549 0.380392156862745 0];
+c2 = [1 0.690196078431373 0];
+c1 = [0 0 0];
+
+fig3d = figure;
+ax1 = axes('Parent',fig3d);
+hold(ax1,'on');
+s1 = plot(bpaNorm(~isnan(Zfin(:,7))),Zfin(~isnan(Zfin(:,7)),7),'o',bpaNorm,z(:,7),'--');
+set(s1,'LineWidth',2,'Color',c1);
+s2 = plot(bpaNorm(~isnan(Zfin(:,6))),Zfin(~isnan(Zfin(:,6)),6),'o',bpaNorm,z(:,6),'--');
+set(s2,'LineWidth',2,'Color',c2);
+s3 = plot(bpaNorm(~isnan(Zfin(:,5))),Zfin(~isnan(Zfin(:,5)),5),'o',bpaNorm,z(:,5),'--');
+set(s3,'LineWidth',2,'Color',c3);
+s4 = plot(bpaNorm(~isnan(Zfin(:,4))),Zfin(~isnan(Zfin(:,4)),4),'o',bpaNorm,z(:,4),'--');
+set(s4,'LineWidth',2,'Color',c4);
+s5 = plot(bpaNorm(~isnan(Zfin(:,3))),Zfin(~isnan(Zfin(:,3)),3),'o',bpaNorm,z(:,3),'--');
+set(s5,'LineWidth',2,'Color',c5);
+s6 = plot(bpaNorm(~isnan(Zfin(:,2))),Zfin(~isnan(Zfin(:,2)),2),'o',bpaNorm,z(:,2),'--');
+set(s6,'LineWidth',2,'Color',c6);
+xlim(ax1,[0 1.1]);
+title('F_{max} vs. l_{rest} and P_{max}, \phi10 mm')
+xlabel('l_{rest}, m','FontWeight','bold')
+ylabel('F_{max}, N','FontWeight','bold')
+hold(ax1,'off');
+set(ax1,'FontSize',12,'FontWeight','bold','LineWidth',2,'TickLength',...
+    [0.02 0.05],'XMinorTick','on','YMinorTick','on');
+leg = legend('Measured 620 kPa','Model 620 kPa','500 kPa',' ','400 kPa',' ','300 kPa',' ','200 kPa',' ','100 kPa',' ');  %Note, use '' w/o space to remove dash from legend, use ' ' w/ space to include dashed lines in legend
+set(leg,...
+    'Position',[0.753623173004846 0.257738103327298 0.223602479696274 0.565476174297787]);
+% hold off
 
 %% Fit for maximum strain
 %Hint: no relationship found for max strain either as a linear or 2nd
