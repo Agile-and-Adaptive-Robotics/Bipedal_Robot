@@ -60,6 +60,8 @@ F = zeros(size(Lmt,1),1);
 
 %If diameter is not 10 mm, then upscale force (but probably better to use
 %festo4.m function
+% ***NOTE: Do not calculate 20 and 40 mm force this way! We have more
+% accurate ways to do this!*****
 if dia == 20
     F = (1500/630)*F;
 end

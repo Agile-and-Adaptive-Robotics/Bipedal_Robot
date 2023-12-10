@@ -35,7 +35,7 @@ Fmax40 = 6000;          % Max 20mm BPA force
             end
   else
 
-            F = f10(rel,pres);
+            F = f10(rel,pres);    % This uses the equation fit from Dr. Hunt's lookup table. We now have more accurate ways to calculate force.
         for i = length(F)
             if F(i) < 0
                 F(i) = 0;
