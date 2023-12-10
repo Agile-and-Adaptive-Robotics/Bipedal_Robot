@@ -7,11 +7,11 @@ Y1 = [0, 100, 200, 300, 400, 500, 600, 620];                 %Pressure for inter
 Y2 = [0, 100, 200, 300, 400, 500, 600, 620, 700, 800];      %Pressure for interpolation, 10 mm
 z10max = 488.4;                               %Max force in 10mm BPA
 z10max_real = 458.89;                       %Max force in 10mm BPA, calculated using maxBPAforce(1)
-z20max = 1500;                              %Max force in 20mm BPA
+z20max = 1565;                              %Max force in 20mm BPA
 z40max = 6000;                              %Max force in 40mm BPA
 Pmax = 620;                                 %Max pressure in 20 & 40 mm BPAs
 P10max = 620;                               %Max pressure in 10 mm BPAs
-Emax = 0.25;                                %Max contraction in 20 and 40 mm BPAs
+Emax = 0.275;                                %Max contraction in 20 and 40 mm BPAs
 E10max = 0.2238;                               %Max contraction in 10 mm BPAs
 
 %% 40mm dia BPA
