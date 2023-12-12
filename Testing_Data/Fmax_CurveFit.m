@@ -14,11 +14,11 @@ restingL = A(1,1:27)/1000;  %Resting length
 kmax = A(2,1:27);          %Maximum strain
 
 Fmax = A(3,1:27);          %Maximum force
-Fmax_norm = Fmax/max(Fmax);
+%Fmax_norm = Fmax/max(Fmax);
 %% Nonlinear fit for Fmax
-modelfun = @(b,xm)b(1)*620*atan(b(2)*(xm-0.0075)*620); %based on the shape, it looks like resting length reaches a limit
+modelfun = @(b,xm)b(1)*atan(b(2)*(xm-0.0075)); %based on the shape, it looks like resting length reaches a limit
 %modelfun = @(b,xm)-exp(-b(1)*(xm-b(2))+b(3))+b(4);
-beta0 = [0.4864 0.03306];
+beta0 = [303.6 19.43];
 %beta0 = [11 0.41 1.2 478];
 opts = statset('fitnlm');
 opts.MaxIter = 1000;
@@ -28,7 +28,7 @@ mdl = fitnlm(restingL,Fmax,modelfun,beta0,'Exclude',[],'Options',opts)
 x = linspace(0,1);
 p1 = feval(mdl,x);
 
-md2 = @(x) 0.4864*620*atan(0.03306*620*(x-0.0075));     %from Fmax_fitTool
+md2 = @(x) 303.6*atan(19.43*(x-0.0075));     %from Fmax_fitTool
 p2 = feval(md2,x);
 
 figure
@@ -87,7 +87,7 @@ Zfin = Zsrt(:,2:8);                    %Z values (i.e. force) are these columns
 % P_norm = pointz/max(pointz);        %Scale pressure
 
 %Now use curve fitting tool Fmax_fitTool.sfit
-md3 = @(x,y) 0.4864*y.*atan(0.03306*y.*(x-0.0075));
+md3 = @(x,y) 0.4741*y.*atan(0.03896*y.*(x-0.0075));
 z = feval(md3,bpaNorm,pointz);
 
 %Create accessible color pallete for plotting

@@ -4,7 +4,9 @@ clear allData allData_t9 allData_t10...
                     X Y Ynorm Z X9 Y9 Y9norm Z9 X10 Y10 Y10norm Z10 ...
                     data13cm data23cm data27cm data29cm data30cm...
                     data10cm data15cm data20cm data25cm data30cm_2 data40cm data45cm_2 data52cm_2...
-                    data11cm data42cm data45cm data49cm data52cm...
+                    data10cm_t9 data15cm_t9 data20cm_t9 data25cm_t9 data30cm_2_t9 data40cm_t9 data45cm_2_t9 data52cm_2_t9...
+                    data10cm_t10 data15cm_t10 data20cm_t10 data25cm_t10 data30cm_2_t10 data40cm_t10 data45cm_2_t10 data52cm_2_t10...
+                    data11cm data42cm data45cm data49cm data52cm h H...
                     data13cm_t9 data23cm_t9 data27cm_t9 data29cm_t9 data30cm_t9
 %% Plot tests 9 and 10, only Pressurizing
  testnumber = 9; %choosing test numner 9 as the standard
@@ -19,7 +21,7 @@ Fmax29 = 419.1045; %mean([419.1600 419.0490]);
 Fmax30 = 406.9386; %mean([407.2156 406.6616]);
 
 maxP = 800;
-minF = 4;
+minF = 15;
 
 %13cm
 figure %11
@@ -217,7 +219,7 @@ xlabel('Pressure(kPa)')
 ylabel('Force(N)')
 title('10mm 15cm all Kinks(Test 9&10)')
 
-data15cm_t9 = [AllBPA10mm15cm_P(AllBPA10mm15cm_P(:,14)==testnumber,13), AllBPA10mm15cm_P(AllBPA10mm15cm_P(:,14)==testnumber,2), AllBPA10mm15cm_P(AllBPA10mm15cm_P(:,14)==testnumber,1)];                     
+data15cm_t9 = [AllBPA10mm15cm_P((AllBPA10mm15cm_P(:,14)==testnumber),13), AllBPA10mm15cm_P(AllBPA10mm15cm_P(:,14)==testnumber,2), AllBPA10mm15cm_P(AllBPA10mm15cm_P(:,14)==testnumber,1)];                     
 data15cm_t10 = [AllBPA10mm15cm_P(AllBPA10mm15cm_P(:,14)==testnum,13), AllBPA10mm15cm_P(AllBPA10mm15cm_P(:,14)==testnum,2), AllBPA10mm15cm_P(AllBPA10mm15cm_P(:,14)==testnum,1)];    
 data15cm_t9 = data15cm_t9(data15cm_t9(:,2)<= maxP &data15cm_t9(:,3)>=minF,:);
 data15cm_t10 = data15cm_t10(data15cm_t10(:,2) <= maxP &data15cm_t10(:,3)>=minF,:);
@@ -523,8 +525,14 @@ t9B = [data13cm_t9(:,1) data13cm_t9(:,2) (data13cm_t9(:,3))/Fmax13;
                 ]; 
 numrows = 200;  
 %test 9, resized
-t9 = imresize(t9B,[numrows 3],'nearest');
-                
+law = {data13cm_t9; data23cm_t9; data27cm_t9; data29cm_t9; data30cm_t9};
+sm = numrows/length(law);
+
+for i=1:length(law)
+   h{i,1} = imresize(law{i},[sm 3],'nearest');
+end
+t9 = cell2mat(h);
+
 allData_t9 = [t9B;
                 Ben_data;
                 anchor];
@@ -548,7 +556,14 @@ t10B = [data13cm_t10(:,1) data13cm_t10(:,2) (data13cm_t10(:,3))/Fmax13;
                 ]; 
             
 %test 10, resized
-t10 = imresize(t10B,[numrows 3],'nearest');
+
+LAW = {data13cm_t10; data23cm_t10; data27cm_t10; data29cm_t10; data30cm_t10};
+sm = numrows/length(LAW);
+
+for i=1:length(law)
+   H{i,1} = imresize(LAW{i},[sm 3],'nearest');
+end
+t10 = cell2mat(H);
 
 allData_t10 = [t10B;
                 Ben_data;
