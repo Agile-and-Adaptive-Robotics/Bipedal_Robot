@@ -5,14 +5,15 @@
 %% Create Festo force lookup tables based on their datasheets
 Y1 = [0, 100, 200, 300, 400, 500, 600, 620];                 %Pressure for interpolation, 20 & 40 mm
 Y2 = [0, 100, 200, 300, 400, 500, 600, 620, 700, 800];      %Pressure for interpolation, 10 mm
-z10max = 488.4;                               %Max force in 10mm BPA
-z10max_real = 458.89;                       %Max force in 10mm BPA, calculated using maxBPAforce(1)
-z20max = 1565;                              %Max force in 20mm BPA
+z10max = 488.4;                               %Max force in 10mm BPA @ 620 kPa
+z10maxFesto = 630;                          %Max force in 10mm BPA, specified by Festo
+z20max = 1500;                              %Max force in 20mm BPA
 z40max = 6000;                              %Max force in 40mm BPA
 Pmax = 620;                                 %Max pressure in 20 & 40 mm BPAs
 P10max = 620;                               %Max pressure in 10 mm BPAs
 Emax = 0.275;                                %Max contraction in 20 and 40 mm BPAs
 E10max = 0.2238;                               %Max contraction in 10 mm BPAs
+Emin = -0.01;                            %disregard sretching more than 1%
 
 %% 40mm dia BPA
 X1 = linspace(-0.05,0.25,31);   %Contraction percent for interpolation
@@ -87,10 +88,18 @@ y20 = [0*ones(length(x20_1),1);
        620*ones(length(x20_7),1)];
 z20 = [z20_1; z20_2; z20_3; z20_4; z20_5; z20_6; z20_7; z20_8];
 
+%Remove values with a lot of stretching or those above the Festo specified
+%value
+Festemp = [x20, y20, z20];
+Fest20 = Festemp((Festemp(:,1)>=Emin &Festemp(:,3)<z20max),:);
+
+x20 = Fest20(:,1); y20=Fest20(:,2); z20=Fest20(:,3);     %convert to column vectors again
+
 x20norm = x20/Emax;
 y20norm = y20/Pmax;
 z20norm = z20/z20max;
 
+[X20, Y20, Z20] = prepareSurfaceData(x20norm, y20norm, z20norm);
 %% 10 mm BPA
 X3 = linspace(-0.03,0.25,29);   %Strain range for interpolation
 FestoLookup10 = zeros(size(Y2,2),size(X3,2));
@@ -128,10 +137,19 @@ y10 = [0*ones(length(x10_1),1);
        800*ones(length(x10_7),1)];
 z10 = [z10_1; z10_2; z10_3; z10_4; z10_5; z10_6; z10_7; z10_8; z10_9; z10_10];
 
+%Remove values with a lot of stretching or those above the Festo specified
+%value
+Festemp = [x10, y10, z10];
+Fest10 = Festemp((Festemp(:,1)>=Emin &Festemp(:,3)<z10maxFesto),:);
+
+x10 = Fest10(:,1); y10=Fest10(:,2); z10=Fest10(:,3);     %convert to column vectors again
+
+%normalize
 x10norm = x10/E10max;
 y10norm = y10/P10max;
 z10norm = z10/z10max;
-z10norm_real = z10/z10max_real;
+
+[X10, Y10, Z10] = prepareSurfaceData(x10norm, y10norm, z10norm);
 
 %% From Curve Fit app generate code
 % For Hunt's 10mm Data:

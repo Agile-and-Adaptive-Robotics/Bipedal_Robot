@@ -44,7 +44,7 @@ meth = 'linear';
 extrap = 'extrap';
 
 maxP = 800;
-minF = 15;
+minF = 20;
 
 
 maxF = cell(1,length(li));
@@ -59,18 +59,18 @@ for a = 1:length(li)
         maxF{a}{i,k} = interp1(pres,fz,Ymax,meth,extrap);
         end
        gg = vertcat(maxF{a}{i,:});
-       Fmax{i,a} = mean(gg,1);
+       Fmax{i,a} = mean(gg,1,'omitnan');
     end
 
 end
 
 B = vertcat(Fmax{:});
-F = max(B,2);
-Fmax = max(F,[],2);
+F = max(B,2);    %I think this doesn't do anything?
+F_max = max(F,[],2);
 
 % [Fmax13, Fmax23, Fmax27, Fmax29,Fmax30,Fmax10,Fmax15,Fmax20,Fmax25,Fmax30_2,Fmax40,Fmax45_2,Fmax52_2]'=F(:)';
-
-Ts = vertcat(T{1}(:,:,2),T{2}(:,:,1));  %keep test 9 from first set of data, test 8 from second set
+keep = [2 1]; %keep test 9 from first set of data, test 8 from second set
+Ts = vertcat(T{1}(:,:,keep(1)),T{2}(:,:,keep(2)));  
 [a,b] = size(Ts);
 V = cell(size(Ts));
 Pmax = 620;
@@ -78,7 +78,7 @@ for i = 1:a
     for j = 1:b
             if ~isempty(Ts{i,j})
             V{i,j} = Ts{i,j}((Ts{i,j}(:,3)>minF &Ts{i,j}(:,2)<maxP),1:3);    
-            V{i,j} = [Ts{i,j}(:,1), Ts{i,j}(:,2)./Pmax, Ts{i,j}(:,3)./Fmax(i)];
+            V{i,j} = [Ts{i,j}(:,1), Ts{i,j}(:,2)./Pmax, Ts{i,j}(:,3)./F_max(i)];
             else
             end
     end
@@ -87,6 +87,10 @@ end
 R = vertcat(V{:});
 R1 = vertcat(V{1:length(Cuts1),:});
 R2 = vertcat(V{(length(Cuts1)+1):end,:});
+
+Rx = R(:,1); Ry = R(:,2); Rz = R(:,3);
+R1x = R1(:,1); R1y = R1(:,2); R1z = R1(:,3);
+R2x = R2(:,1); R2y = R2(:,2); R2z = R2(:,3);
 %% Add Ben's data
 %Fmax from experiments, using interpolation
 Fmax112 = 334.74;
@@ -179,23 +183,31 @@ data52cm = [rawdata52cm(:,4), rawdata52cm(:,2), rawdata52cm(:,1)/Fmax518];
 %% Combine all data and do a 3d scatter plot. 
 %addnoise to anchor surface at three points
 sz = 15;                   % size of anchor surface
-err = 0.005;                 % ammount of error
+err = 0.001;                 % ammount of error
 r110 = [1-err + 2*err * rand(sz,2), -err + 2*err * rand(sz,1)].*[1 1 1];
 r011 = [-err + 2*err * rand(sz,1), 1-err + 2*err * rand(sz,2)].*[1 1 1];
 r000 = -0.01 + 0.02 * rand(sz,3);
 anchor = [r110; r011; r000];
+ancX = anchor(:,1); ancY = anchor(:,2); ancZ = anchor(:,3);
+
 
 Ben_data = [data11cm; data42cm; data45cm; data49cm; data52cm];
 Ben_data = [Ben_data(:,1), Ben_data(:,2)./620, Ben_data(:,3)];
+BenX = Ben_data(:,1); BenY = Ben_data(:,2); BenZ = Ben_data(:,3);
 
-allData = [ R;...
+allData = [ R1;...
+            R2;...
             Ben_data;...
             anchor];
 
 
-w = [0.33*ones(length(R1),1); 0.66*ones(length(R2),1); 4*ones(length(Ben_data),1); 0.25*ones(length(anchor),1)]; %set weights
+w = [0.33*ones(length(R1),1); 
+    0.66*ones(length(R2),1); 
+    2*ones(length(Ben_data),1); 
+    0.25*ones(length(anchor),1)]; %set weights
 
-XX = allData(:,1); YY=allData(:,2); ZZ=allData(:,3);
+[XX, YY, ZZ, WW] = prepareSurfaceData(allData(:,1), allData(:,2),allData(:,3),w);
+% XX = allData(:,1); YY=allData(:,2); ZZ=allData(:,3);
 %Ypres = YY*620;   %YY repressurized
 
 figure
@@ -220,4 +232,11 @@ zlabel('Force (normalized)')
 title('10mm force, normalized')
 lgd = legend;
 
-save allData.mat    XX YY ZZ Ben_data R anchor w
+save allData.mat    XX YY ZZ... 
+                    Ben_data BenX BenY BenZ...
+                    R Rx Ry Rz...
+                    R1 R1x R1y R1z...
+                    R2 R2x R2y R2z...
+                    anchor ancX ancY ancZ...
+                    w...
+                    F F_max
