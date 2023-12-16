@@ -1,29 +1,32 @@
 %% Import data from Lawrence's two sets of tests, compare with Ben's. Upload for curve fit
-clear; clc; close all
+clear;
+clc;
+close all
 
+load FestoData.mat
 %% Lawrence's first set of tests
 load allData_Ben.mat Cut li lo l620 maxE relE T test
-Cuts1 = Cut;       %cut lengths
-Ts1 = T;           %data
+Cuts1 = Cut;      %cut lengths
+Ts1 = T;          %data
 lis1 = li;        %contracted length
 lmin1 = l620;     %minimum length
 restL1 = lo;      %resting lengths
 maxE1 = maxE;     %maximum strain
 relE1 = relE;     %relative strain
-tests1 = test;  %cell of strings indicating test number
+tests1 = test;    %cell of strings indicating test number
 
 clear Cut li lo l620 maxE relE T test
 
 %% Lawrence's first set of tests
 load allData_Nov22_Ben.mat Cut li lo l620 maxE relE T vars
-Cuts2 = Cut;       %cut lengths
-Ts2 = T;           %data
+Cuts2 = Cut;      %cut lengths
+Ts2 = T;          %data
 lis2 = li;        %contracted length
 lmin2 = l620;     %minimum length
 restL2 = lo;      %resting lengths
 maxE2 = maxE;     %maximum strain
 relE2 = relE;     %relative strain
-tests2 = vars;  %cell of strings indicating test number
+tests2 = vars;    %cell of strings indicating test number
 
 clear Cut li lo l620 maxE relE T vars
 
@@ -69,7 +72,7 @@ F = max(B,2);    %I think this doesn't do anything?
 F_max = max(F,[],2);
 
 % [Fmax13, Fmax23, Fmax27, Fmax29,Fmax30,Fmax10,Fmax15,Fmax20,Fmax25,Fmax30_2,Fmax40,Fmax45_2,Fmax52_2]'=F(:)';
-keep = [2 1]; %keep test 9 from first set of data, test 8 from second set
+keep = [3 2]; %keep test 9 (keep(2)) from first set of data, test 8 from second set (keep(1))
 Ts = vertcat(T{1}(:,:,keep(1)),T{2}(:,:,keep(2)));  
 [a,b] = size(Ts);
 V = cell(size(Ts));
@@ -84,9 +87,16 @@ for i = 1:a
     end
 end
 
+H = [1 1 0;...    %full strain, full pressure, no force
+    0 1 1;...     %no strain, full pressure, full force
+    0 0 0];       %no strain, no pressure, no force
+
 R = vertcat(V{:});
+R = [R; H];
 R1 = vertcat(V{1:length(Cuts1),:});
+R1 = [R1; H];
 R2 = vertcat(V{(length(Cuts1)+1):end,:});
+R2 = [R2; H];
 
 Rx = R(:,1); Ry = R(:,2); Rz = R(:,3);
 R1x = R1(:,1); R1y = R1(:,2); R1z = R1(:,3);
@@ -196,15 +206,15 @@ Ben_data = [Ben_data(:,1), Ben_data(:,2)./620, Ben_data(:,3)];
 BenX = Ben_data(:,1); BenY = Ben_data(:,2); BenZ = Ben_data(:,3);
 
 allData = [ R1;...
-            R2;...
+%             R2;...
             Ben_data;...
             anchor];
 
 
-w = [0.33*ones(length(R1),1); 
-    0.66*ones(length(R2),1); 
+w = [0.5*ones(length(R1),1); 
+%     0.66*ones(length(R2),1); 
     2*ones(length(Ben_data),1); 
-    0.25*ones(length(anchor),1)]; %set weights
+    ones(length(anchor),1)]; %set weights
 
 [XX, YY, ZZ, WW] = prepareSurfaceData(allData(:,1), allData(:,2),allData(:,3),w);
 % XX = allData(:,1); YY=allData(:,2); ZZ=allData(:,3);
