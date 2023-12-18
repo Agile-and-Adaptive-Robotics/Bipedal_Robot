@@ -206,14 +206,15 @@ for k = 1: length(Dia)
         scatter(x40norm{i},z40norm{i},'o','DisplayName',str(1))
         plot(Xgr{3},FestoLookup{3}(i,:),'DisplayName',str(2))
         if k == 1
-            plot(
+%             plot(
         else
         end
     end
+    lgd(k) = legend;
+    title(lgd,'P^* value, data source')
+    hold off
 end
-lgd40 = legend;
-title(lgd40,'P^* value, data source')
-hold off
+
 % 
 % figure
 % xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Force, $N$','interpreter','latex')
