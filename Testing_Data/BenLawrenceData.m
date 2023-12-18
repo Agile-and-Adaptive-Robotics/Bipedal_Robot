@@ -47,7 +47,7 @@ meth = 'linear';
 extrap = 'extrap';
 
 maxP = 800;
-minF = 20;
+minF = 5;
 
 
 maxF = cell(1,length(li));
@@ -102,47 +102,87 @@ Rx = R(:,1); Ry = R(:,2); Rz = R(:,3);
 R1x = R1(:,1); R1y = R1(:,2); R1z = R1(:,3);
 R2x = R2(:,1); R2y = R2(:,2); R2z = R2(:,3);
 %% Add Ben's data
-%Fmax from experiments, using interpolation
-Fmax112 = 334.74;
-Fmax415 = 445;
-Fmax455 = 460;
-Fmax490 = 458.6;
-Fmax518 = 455.83;
+%Fmax from experiments, using gridded or scattered interpolation
+Fmax112 = 343.2915;
+Fmax415 = 457.0865;
+Fmax455 = 439.6307;
+Fmax490 = 455;
+Fmax518 = 493.0899;
 
 rawdata11cm = [325.164999	620	0.008928571	0.055555556;
                 252.6589869	620	0.044642857	0.277777778;
                 135.6707588	620	0.089285714	0.555555556;
                 89.40925416	620	0.125	0.777777778;
-                13.3446648	620	0.169642857	1.055555556];
+                13.3446648	620	0.169642857	1.055555556
+                        0	620	0.160714286	1];
+% gg = sortrows([rawdata11cm(:,4), rawdata11cm(:,1)]);
+% max112 = griddedInterpolant(gg(:,1),gg(:,2),'linear','linear');
+% Fmax112 = max112(0);
 data11cm = [rawdata11cm(:,4), rawdata11cm(:,2), rawdata11cm(:,1)/Fmax112];
+
+% zcomp = max112([0; gg(:,1)]);
+% figure
+% hold on
+% scatter(rawdata11cm(:,4),rawdata11cm(:,1),[],'bo');
+% plot([0; gg(:,1)],zcomp, '-.r');
+% hold off
 
 rawdata42cm = [444.82216	620	0.002409639	0.014492754;
                 358.9714831	620	0.019277108	0.115942029;
                 275.7897392	620	0.031325301	0.188405797;
                 200.169972	620	0.06746988	0.405797101;
                 103.1987411	620	0.113253012	0.68115942;
-                    40.92363872	620	0.151807229	0.913043478;
-                                0	620	0.16626506	1];
+                40.92363872	620	0.151807229	0.913043478;
+                       0	620	0.16626506	1];
+% gg = sortrows([rawdata42cm(:,4),rawdata42cm(:,1)]);
+% max415 = griddedInterpolant(gg(:,1),gg(:,2),'linear','makima');
+% Fmax415 = max415(0);
 data42cm = [rawdata42cm(:,4), rawdata42cm(:,2), rawdata42cm(:,1)/Fmax415];
+% 
+% zcomp = max415([0; gg(:,1)]);
+% figure
+% hold on
+% scatter(rawdata42cm(:,4),rawdata42cm(:,1),[],'bo');
+% plot([0; gg(:,1)],zcomp, '-.r');
+% hold off
 
-rawdata45cm = [26	620	0.164835165	1.041666667
-61	620	0.151648352	0.958333333
-150	620	0.101098901	0.638888889
-96	620	0.13956044	0.881944444
-100	620	0.134065934	0.847222222
-119	620	0.12967033	0.819444444
-158	620	0.10989011	0.694444444
-217.0732141	620	0.083516484	0.527777778
-262.0002522	620	0.061538462	0.388888889
-335.3959086	620	0.037362637	0.236111111
-407.0122764	620	0.021978022	0.138888889
-435.9257168	620	0.006593407	0.041666667
-404.7881656	620	0.010989011	0.069444444
-408.3467429	620	0.008791209	0.055555556
-335.3959086	620	0.021978022	0.138888889
-257.9968528	620	0.046153846	0.291666667
-203.2837271	620	0.074725275	0.472222222];
+rawdata45cm = [26	620	0.161147903	1
+61	620	0.14790287	0.917808219
+150	620	0.097130243	0.602739726
+96	620	0.135761589	0.842465753
+100	620	0.130242826	0.808219178
+119	620	0.125827815	0.780821918
+158	620	0.105960265	0.657534247
+217.0732141	620	0.079470199	0.493150685
+262.0002522	620	0.057395143	0.356164384
+335.3959086	620	0.033112583	0.205479452
+407.0122764	620	0.017660044	0.109589041
+435.9257168	620	0.002207506	0.01369863
+404.7881656	620	0.006622517	0.04109589
+408.3467429	620	0.004415011	0.02739726
+335.3959086	620	0.017660044	0.109589041
+257.9968528	620	0.041942605	0.260273973
+203.2837271	620	0.070640177	0.438356164
+0	620	0.161147903	1];
+% gg = sortrows([rawdata45cm(:,4),rawdata45cm(:,1)],1);
+% [p, gof, output] = fit(gg(:,1),gg(:,2),'poly3','Normalize','on','Robust','on');
+% ggRsz = imresize(gg, [length(gg)/2, 2]);
+% gg = groupsummary(gg, gg(:,1), 'mean');
+% max455 = griddedInterpolant(ggRsz(:,1),ggRsz(:,2),'linear','linear');
+% Fmax455 = p(0);
 data45cm = [rawdata45cm(:,4), rawdata45cm(:,2), rawdata45cm(:,1)/Fmax455];
+% 
+% zcomp = max455([0; gg(:,1)]);
+% xi = 0:0.1:1;
+% zi = feval(p,xi);
+% figure
+% hold on
+% scatter(rawdata45cm(:,4),rawdata45cm(:,1),5,'bo');
+% plot([0; gg(:,1)],zcomp, '-.r');
+% scatter(ggRsz(:,1),ggRsz(:,2),10,'d','b');
+% plot(xi,zi, '--k');
+% hold off
+
 
 rawdata49cm = [12	618	0.173469388	0.923913043
 1.11	618	0.175510204	0.934782609
@@ -165,13 +205,25 @@ rawdata49cm = [12	618	0.173469388	0.923913043
 20	617	0.17755102	0.945652174
 2.29	617	0.185714286	0.989130435
 0   620	0.187755102	1];
+% gg = sortrows([rawdata49cm(:,4),rawdata49cm(:,2),rawdata49cm(:,1)],1);
+% max490 = scatteredInterpolant(gg(:,1), gg(:,2), gg(:,3),'linear','linear');
+% Fmax490 = max490(0,620);
 data49cm = [rawdata49cm(:,4), rawdata49cm(:,2), rawdata49cm(:,1)/Fmax490];
+
+% xi = [0; gg(:,1)];
+% yi = 620*ones(length(xi),1);
+% zcomp = max490(xi, yi);
+% figure
+% hold on
+% scatter3(gg(:,1),gg(:,2),gg(:,3),[],'bo');
+% plot3(xi,yi,zcomp, '-.r');
+% hold off
 
 rawdata52cm = [0	619	0.166023166	1
 6	618	0.167953668	1.011627907
 -5.3	618	0.171814672	1.034883721
 60	616	0.150579151	0.906976744
-427.6	615	0.005791506	0.034883721
+443	615	0.005791506	0.034883721
 347	616.8	0.023166023	0.139534884
 296	618	0.038610039	0.23255814
 245	617	0.055984556	0.337209302
@@ -187,8 +239,43 @@ rawdata52cm = [0	619	0.166023166	1
 378	617	0.019305019	0.11627907
 230	617	0.063706564	0.38372093
 278	617	0.05019305	0.302325581
-429	617	0	0];
+518	617	0	0
+0	0	0	0];
+
+% gg = sortrows([rawdata52cm(:,4), rawdata52cm(:,2), rawdata52cm(:,1)],1);
+% [gx, gy, gz] = prepareSurfaceData( gg(:,1), gg(:,2), gg(:,3) );
+% 
+% % Set up fittype and options.
+% ft = fittype( 'a*x^3+b*x^2+c*x+d+f*y', 'independent', {'x', 'y'}, 'dependent', 'z' );
+% opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
+% opts.Display = 'Off';
+% opts.StartPoint = [-800 1400 -1115 0 0.9];
+% 
+% % Fit model to data.
+% [max518, gof] = fit( [gx, gy], gz, ft, opts );
+% % 
+% % % Plot fit with data.
+% % figure( 'Name', 'untitled fit 2' );
+% % h = plot( max518, [gx, gy], gz );
+% % legend( h, 'untitled fit 2', 'gz vs. gx, gy', 'Location', 'NorthEast', 'Interpreter', 'none' );
+% % % Label axes
+% % xlabel( 'gx', 'Interpreter', 'none' );
+% % ylabel( 'gy', 'Interpreter', 'none' );
+% % zlabel( 'gz', 'Interpreter', 'none' );
+% % grid on
+% % view( -51.0, 38.5 );
+% 
+% Fmax518 = max518(0,620);
 data52cm = [rawdata52cm(:,4), rawdata52cm(:,2), rawdata52cm(:,1)/Fmax518];
+% 
+% xi = [0; gg(:,1)];
+% yi = 620*ones(length(xi),1);
+% zcomp = max518(xi, yi);
+% figure
+% hold on
+% scatter3(gg(:,1),gg(:,2),gg(:,3),[],'bo');
+% plot3(xi,yi,zcomp, '-.r');
+% hold off
 
 %% Combine all data and do a 3d scatter plot. 
 %addnoise to anchor surface at three points
