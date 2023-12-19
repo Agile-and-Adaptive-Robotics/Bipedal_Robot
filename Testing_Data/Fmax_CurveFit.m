@@ -24,7 +24,7 @@ opts = statset('fitnlm');
 opts.MaxIter = 1000;
 opts.Display = 'final';
 opts.RobustWgtFun = 'logistic';
-mdl = fitnlm(restingL,Fmax,modelfun,beta0,'Exclude',[],'Options',opts)
+mdl = fitnlm(restingL,Fmax,modelfun,beta0,'Exclude',[1 3 5],'Options',opts)
 x = linspace(0,1);
 p1 = feval(mdl,x);
 

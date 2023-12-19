@@ -196,7 +196,7 @@ load allData.mat Xf Yf Zf
 Datmat = [Xf, Yf, Zf];
 A = sortrows(Datmat,[1 2 3],'ascend');
 D = cell(length(Y2),1);
-buff = 1;                 %buffer around P value (in kPa) to incorporate in plot
+buff = 5;                 %buffer around P value (in kPa) to incorporate in plot
 for i = 1:length(Y2)
     D{i} = A(( round(A(:,2)*620)<=(Y2(i)+buff) & round(A(:,2)*620)>=(Y2(i)-buff)   ),:);
 end
@@ -265,9 +265,9 @@ Zmax = [z10max, z20max, z40max];
     hold on
     for i = 1:length(Xc{k})
         for j = 1: length(dstr)
-            str{i,j} = sprintf('P^*=%.3f, %s',Ygr{k}(i),dstr{j});
+            str{i,j} = sprintf('P=%.0f kPa, %s',Ygr{k}(i)*620,dstr{j});
         end
-        sc{i,k} = scatter(Xc{k}{i}/Emax(k),Zc{k}{i}/Zmax(k),[],'o', 'DisplayName',str{i,1});
+        sc{i,k} = scatter(Xc{k}{i}/Emax(k),Zc{k}{i}/Zmax(k),[],'.', 'DisplayName',str{i,1});
         sc{i,k}.SeriesIndex = i;
         pl{i,k} = plot(Xgr{k}(i,:),FestoLookup{k}(i,:),'DisplayName',str{i,2});
         pl{i,k}.SeriesIndex = i;
@@ -275,9 +275,9 @@ Zmax = [z10max, z20max, z40max];
             if ~isempty(D{i})
                 x = D{i}(:,1);
                 z = D{i}(:,3);
-                sk{i,k} = scatter(x,z,[],'d','DisplayName',str{i,3});
+                sk{i,k} = scatter(x,z,[],'.','DisplayName',str{i,3});
             else
-                sk{i,k} = scatter([],[],'d','DisplayName','');
+                sk{i,k} = scatter([],[],'.','DisplayName','');
             end
             sk{i,k}.SeriesIndex = i; 
         else
