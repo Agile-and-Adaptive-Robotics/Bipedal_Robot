@@ -173,7 +173,7 @@ load ForceStrainForFit.mat z
 %% Load fit results from bpaFits.m (Testing_Data folder)
 load bpaFitsResult.mat fitresult gof output valid XX YY ZZ
 
-
+%% Create lookup tables
 f_10 = fitresult{3};
 [X2h,Y2h] = meshgrid(X2./E10max,Y2./Pmax);
 FestoLookup10 = f_10(X2h,Y2h);
@@ -182,6 +182,7 @@ f20 = fitresult{1};
 [X2g, Y1g] = meshgrid(X2./E20max,Y1./Pmax);
 FestoLookup20 = f20(X2g,Y1g);
 
+f40 = fitresult{4};
 [X1h,Y1h] = meshgrid(X1./E40max,Y1./Pmax);
 FestoLookup40 = f40(X1h,Y1h);
 
@@ -190,28 +191,46 @@ Ygr = {Y2h, Y1g, Y1h};
 FestoLookup = {FestoLookup10, FestoLookup20, FestoLookup40};
 
 
-Dia = ["10","20","40"];
+%% Get experimental data ready for plotting
+load allData.mat Xf Yf Zf
+Datmat = [Xf, Yf, Zf];
+A = sortrows(Datmat,[1 2 3],'ascend');
+D = cell(length(Y2),1);
+buff = 1;                 %buffer around P value (in kPa) to incorporate in plot
+for i = 1:length(Y2)
+    D{i} = A(( round(A(:,2)*620)<=(Y2(i)+buff) & round(A(:,2)*620)>=(Y2(i)-buff)   ),:);
+end
 
-dstr = {'model','festo','experiment'};
+%% Create figure
+Dia = ["10","20","40"];
+dstr = ["model","festo","experiment"];
 for k = 1: length(Dia)
     figure
-    xlabel('Contraction \epsilon^*','interpreter','tex'),ylabel('\bf Force, F^*','interpreter','tex')
-    strTit = sprintf('\phi%s mm BPA Force-Pressure-Contraction relationship',Dia(3));
+    subplot(3,1,k)
+    xlabel('Contraction \\epsilon^*','interpreter','tex'),ylabel('Force, F^*','interpreter','tex')
+    strTit = sprintf('\\phi%s mm BPA Force-Pressure-Contraction relationship',Dia(k));
     title(strTit,'interpreter','tex')
     hold on
-    for i = 1:length(x_40)
+    for i = 1:length(x40norm)
         for j = 1: length(dstr)
-            str(j) = sprintf('P^*=$-.3f, %s',Ygr{3}(i),dstr{j});
+            str(i,j) = sprintf('P^*=$-.3f, %s',Ygr{k}(i,j),dstr{j});
         end
         scatter(x40norm{i},z40norm{i},'o','DisplayName',str(1))
-        plot(Xgr{3},FestoLookup{3}(i,:),'DisplayName',str(2))
+        plot(Xgr{k},FestoLookup{k}(i,:),'DisplayName',str(2))
         if k == 1
-%             plot(
+            for r = 1:length(D)
+                if ~isempty(D{r})
+                    x = D{r}(:,1);
+                    z = D{r}(:,3);
+                    scatter(x,z,[],'DisplayName',str(3))
+                else
+                end
+            end
         else
         end
     end
     lgd(k) = legend;
-    title(lgd,'P^* value, data source')
+    title(lgd(k),'P^* value, data source')
     hold off
 end
 

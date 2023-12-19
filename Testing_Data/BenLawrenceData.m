@@ -5,7 +5,7 @@ close all
 
 load FestoData.mat
 %% Lawrence's first set of tests
-load allData_Ben.mat Cut li lo l620 maxE relE T test
+load allData_Ben.mat Cut li lo l620 maxE relE T test Q
 Cuts1 = Cut;      %cut lengths
 Ts1 = T;          %data
 lis1 = li;        %contracted length
@@ -14,11 +14,12 @@ restL1 = lo;      %resting lengths
 maxE1 = maxE;     %maximum strain
 relE1 = relE;     %relative strain
 tests1 = test;    %cell of strings indicating test number
+Qs1 = Q;          %full set of data from all the tests
 
-clear Cut li lo l620 maxE relE T test
+clear Cut li lo l620 maxE relE T test Q
 
 %% Lawrence's first set of tests
-load allData_Nov22_Ben.mat Cut li lo l620 maxE relE T vars
+load allData_Nov22_Ben.mat Cut li lo l620 maxE relE T vars Q
 Cuts2 = Cut;      %cut lengths
 Ts2 = T;          %data
 lis2 = li;        %contracted length
@@ -27,8 +28,9 @@ restL2 = lo;      %resting lengths
 maxE2 = maxE;     %maximum strain
 relE2 = relE;     %relative strain
 tests2 = vars;    %cell of strings indicating test number
+Qs2 = Q;          %full set of data from all the tests
 
-clear Cut li lo l620 maxE relE T vars
+clear Cut li lo l620 maxE relE T vars Q
 
 %% Combine both into cells
 Cut = {Cuts1, Cuts2};
@@ -39,6 +41,7 @@ restL = {restL1, restL2};
 maxE = {maxE1, maxE2};
 relE = {relE1, relE2};
 tests = {tests1, tests2};
+Q = {Qs1, Qs2};
 
 
 %% Find max. forces
@@ -87,20 +90,44 @@ for i = 1:a
     end
 end
 
+%Repeat above but for full size data
+Qs = vertcat(Q{1}(:,:,keep(1)),Q{2}(:,:,keep(2)));  
+U = cell(size(Qs));
+for i = 1:a
+    for j = 1:b
+            if ~isempty(Qs{i,j})
+            U{i,j} = Qs{i,j}((Qs{i,j}(:,3)>minF &Qs{i,j}(:,2)<maxP),1:3);    
+            U{i,j} = [Qs{i,j}(:,1), Qs{i,j}(:,2)./Pmax, Qs{i,j}(:,3)./F_max(i)];
+            else
+            end
+    end
+end
+
 H = [1 1 0;...    %full strain, full pressure, no force
     0 1 1;...     %no strain, full pressure, full force
     0 0 0];       %no strain, no pressure, no force
 
+%Reduced data
 R = vertcat(V{:});
 R = [R; H];
 R1 = vertcat(V{1:length(Cuts1),:});
 R1 = [R1; H];
 R2 = vertcat(V{(length(Cuts1)+1):end,:});
 R2 = [R2; H];
-
 Rx = R(:,1); Ry = R(:,2); Rz = R(:,3);
 R1x = R1(:,1); R1y = R1(:,2); R1z = R1(:,3);
 R2x = R2(:,1); R2y = R2(:,2); R2z = R2(:,3);
+
+%Full size data
+S = vertcat(U{:});
+S = [S; H];
+S1 = vertcat(U{1:length(Cuts1),:});
+S1 = [S1; H];
+S2 = vertcat(U{(length(Cuts1)+1):end,:});
+S2 = [S2; H];
+Sx = S(:,1); Sy = S(:,2); Sz = S(:,3);
+S1x = S1(:,1); S1y = S1(:,2); S1z = S1(:,3);
+S2x = S2(:,1); S2y = S2(:,2); S2z = S2(:,3);
 %% Add Ben's data
 %Fmax from experiments, using gridded or scattered interpolation
 Fmax112 = 343.2915;
@@ -307,14 +334,29 @@ w = [0.5*ones(length(R1),1);
 % XX = allData(:,1); YY=allData(:,2); ZZ=allData(:,3);
 %Ypres = YY*620;   %YY repressurized
 
+
+w = [0.5*ones(length(S1),1); 
+%     0.66*ones(length(S2),1); 
+    2*ones(length(Ben_data),1); 
+    ones(length(anchor),1)]; %set weights
+
+bigData = [ S1;...
+%             S2;...
+            Ben_data;...
+            anchor];
+        
+[Xf, Yf, Zf, Wf] = prepareSurfaceData(bigData(:,1), bigData(:,2), bigData(:,3),w);
+
 figure
 hold on
-scatter3(XX, YY, ZZ)
+scatter3(XX, YY, ZZ, 'DisplayName', 'All data, resized')
+scatter3(Xf, Yf, Zf, 'DisplayName', 'All data, full sized')
 hold off
 xlabel('Relative Strain')
 ylabel('Pressure (normalized)')
 zlabel('Force (normalized)')
 title('10mm force, normalized')
+lgd1 = legend;
 
 figure
 hold on
@@ -327,13 +369,16 @@ xlabel('Relative Strain')
 ylabel('Pressure (normalized)')
 zlabel('Force (normalized)')
 title('10mm force, normalized')
-lgd = legend;
+lgd2 = legend;
 
-save allData.mat    XX YY ZZ... 
+save allData.mat    XX YY ZZ WW... 
                     Ben_data BenX BenY BenZ...
                     R Rx Ry Rz...
                     R1 R1x R1y R1z...
                     R2 R2x R2y R2z...
                     anchor ancX ancY ancZ...
-                    w...
-                    F F_max
+                    Xf Yf Zf Wf...
+                    F F_max...
+                    S Sx Sy Sz...
+                    S1 S1x S1y S1z...
+                    S2 S2x S2y S2z...
