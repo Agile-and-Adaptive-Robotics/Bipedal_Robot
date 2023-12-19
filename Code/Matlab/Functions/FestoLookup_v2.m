@@ -24,14 +24,14 @@ E40max = 0.32;          %Max contraction in 40 mm BPAs at 620 kPa
 
 
 % %disregard sretching more than Festo limit
-% Emin10= -0.03;
-% Emin20= -0.04;
-% Emin40= -0.05;
+% E10min= -0.03;
+% E20min= -0.04;
+% E40min= -0.05;
 
 %disregard sretching more than 2% resting length
-Emin10= -0.02;
-Emin20= -0.02;
-Emin40= -0.02;
+E10min= -0.02;
+E20min= -0.02;
+E40min= -0.02;
 
 X1 = linspace(-0.02,0.32,35);   %Strain range for interpolation, 40mm
 X2 = linspace(-0.02,0.25,28);   %Strain range for interpolation, 10 & 20mm
@@ -65,7 +65,7 @@ y40 = cell(length(x40),1);
 %Remove values with a lot of stretching or those above the Festo specified
 %value
 Festemp = cell2mat([x40, y40, z40]);
-Fest40 = Festemp((Festemp(:,1)>=Emin40 &Festemp(:,3)<=z40maxFesto &Festemp(:,3)>=0),:);
+Fest40 = Festemp((Festemp(:,1)>=E40min &Festemp(:,3)<=z40maxFesto &Festemp(:,3)>=0),:);
 
 x_40 = Fest40(:,1); y_40=Fest40(:,2); z_40=Fest40(:,3);     %convert to column vectors again
 
@@ -105,7 +105,7 @@ y20 = cell(length(x20),1);
 %Remove values with a lot of stretching or those above the Festo specified
 %value
 Festemp = cell2mat([x20, y20, z20]);
-Fest20 = Festemp((Festemp(:,1)>=Emin20 &Festemp(:,3)<=z20maxFesto &Festemp(:,3)>=0),:);
+Fest20 = Festemp((Festemp(:,1)>=E20min &Festemp(:,3)<=z20maxFesto &Festemp(:,3)>=0),:);
 
 x_20 = Fest20(:,1); y_20=Fest20(:,2); z_20=Fest20(:,3);     %convert to column vectors again
 
@@ -151,7 +151,7 @@ y10 = cell(length(x10),1);
 %Remove values with a lot of stretching or those above the Festo specified
 %maximum force value
 Festemp = cell2mat([x10, y10, z10]);
-Fest10 = Festemp((Festemp(:,1)>=Emin10 &Festemp(:,3)<=z10maxFesto),:);
+Fest10 = Festemp((Festemp(:,1)>=E10min &Festemp(:,3)<=z10maxFesto),:);
 
 x_10 = Fest10(:,1); y_10=Fest10(:,2); z_10=Fest10(:,3);     %convert to column vectors again
 
@@ -201,71 +201,98 @@ for i = 1:length(Y2)
     D{i} = A(( round(A(:,2)*620)<=(Y2(i)+buff) & round(A(:,2)*620)>=(Y2(i)-buff)   ),:);
 end
 
-%% Create figure
+%% Addition figure script setup
 Dia = ["10","20","40"];
 dstr = ["model","festo","experiment"];
-for k = 1: length(Dia)
+Xc = {x10, x20, x40};
+Yc = {y10, y20, y40};
+Zc = {z10, z20, z40};
+
+Emax = [E10max, E20max, E40max];
+Emin = [E10min, E20min, E40min];
+Pmax = [P10max, Pmax, Pmax];
+Zmax = [z10max, z20max, z40max];
+
+
+%% Figure (for all)
+
+%     figure
+%     for k = 1: length(Dia)
+%     a(k) = subplot(3,1,k);
+%     xlabel('Contraction \\epsilon^*','interpreter','tex'),ylabel('Force, F^*','interpreter','tex')
+%     strTit = sprintf('\\phi%s mm BPA Force-Pressure-Contraction relationship',Dia(k));
+%     title(strTit,'interpreter','tex')
+%     hold on
+%     for i = 1:length(Xc{k})
+%         for j = 1: length(dstr)
+%             str{i,j} = sprintf('P^*=%.3f, %s',Ygr{k}(i),dstr{j});
+%         end
+%         sc{i,k} = scatter(Xc{k}{i}/Emax(k),Zc{k}{i}/Zmax(k),[],'o', 'DisplayName',str{i,1});
+%         sc{i,k}.SeriesIndex = i;
+%         pl{i,k} = plot(Xgr{k}(i,:),FestoLookup{k}(i,:),'DisplayName',str{i,2});
+%         pl{i,k}.SeriesIndex = i;
+%         if k == 1
+%             if ~isempty(D{i})
+%                 x = D{i}(:,1);
+%                 z = D{i}(:,3);
+%                 sk{i,k} = scatter(x,z,[],'d','DisplayName',str{i,3});
+%             else
+%                 sk{i,k} = scatter([],[],'d','DisplayName','');
+%             end
+%             sk{i,k}.SeriesIndex = i;
+%         else
+%         end
+%     end
+%     lgd(k) = legend;
+%     lgd(k).Location = 'eastoutside';
+%     lgd(k).Orientation = 'horizontal';   
+%     title(lgd(k),'P^* value, data source')
+%     hold off
+%     end
+%     
+% lgd(1).NumColumns = 3;
+% lgd(2).NumColumns = 2;
+% lgd(3).NumColumns = 2;
+
+%% Figure (for 10 mm & 20 mm)
+
     figure
-    subplot(3,1,k)
+    for k = 1: 2
+    a(k) = subplot(2,1,k);
     xlabel('Contraction \\epsilon^*','interpreter','tex'),ylabel('Force, F^*','interpreter','tex')
     strTit = sprintf('\\phi%s mm BPA Force-Pressure-Contraction relationship',Dia(k));
     title(strTit,'interpreter','tex')
     hold on
-    for i = 1:length(x40norm)
+    for i = 1:length(Xc{k})
         for j = 1: length(dstr)
-            str(i,j) = sprintf('P^*=$-.3f, %s',Ygr{k}(i,j),dstr{j});
+            str{i,j} = sprintf('P^*=%.3f, %s',Ygr{k}(i),dstr{j});
         end
-        scatter(x40norm{i},z40norm{i},'o','DisplayName',str(1))
-        plot(Xgr{k},FestoLookup{k}(i,:),'DisplayName',str(2))
+        sc{i,k} = scatter(Xc{k}{i}/Emax(k),Zc{k}{i}/Zmax(k),[],'o', 'DisplayName',str{i,1});
+        sc{i,k}.SeriesIndex = i;
+        pl{i,k} = plot(Xgr{k}(i,:),FestoLookup{k}(i,:),'DisplayName',str{i,2});
+        pl{i,k}.SeriesIndex = i;
         if k == 1
-            for r = 1:length(D)
-                if ~isempty(D{r})
-                    x = D{r}(:,1);
-                    z = D{r}(:,3);
-                    scatter(x,z,[],'DisplayName',str(3))
-                else
-                end
+            if ~isempty(D{i})
+                x = D{i}(:,1);
+                z = D{i}(:,3);
+                sk{i,k} = scatter(x,z,[],'d','DisplayName',str{i,3});
+            else
+                sk{i,k} = scatter([],[],'d','DisplayName','');
             end
+            sk{i,k}.SeriesIndex = i; 
         else
         end
     end
+    a(k).XLim = [0 1];
+    a(k).YLim = [0 max(max(Ygr{1}))];
     lgd(k) = legend;
+    lgd(k).Location = 'eastoutside';
+    lgd(k).Orientation = 'horizontal';   
     title(lgd(k),'P^* value, data source')
     hold off
-end
+    end
+    
+lgd(1).NumColumns = 3;
+lgd(2).NumColumns = 2;
 
-% 
-% figure
-% xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Force, $N$','interpreter','latex')
-% title('\bf 20 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
-% hold on
-% plot(X2,FestoLookup20(8,:)*z20max,'DisplayName','620 kPa, model')
-% plot(x20{8},z20{8},'o','DisplayName','620 kPa,  Festo')
-% plot(X2,FestoLookup20(7,:)*z20max,'DisplayName','600 kPa, model')
-% plot(x20{7},z20{7},'o','DisplayName','600 kPa,  Festo')
-% plot(X2,FestoLookup20(6,:)*z20max,'DisplayName','500 kPa, model')
-% plot(x20{6},z20{6},[],'o','DisplayName','500 kPa,  Festo')
-% plot(X2,FestoLookup20(5,:)*z20max,'DisplayName','400 kPa, model')
-% plot(x20{5},z20{5},'o','DisplayName','400 kPa,  Festo')
-% plot(X2,FestoLookup20(4,:)*z20max,'DisplayName','300 kPa, model')
-% plot(x20{4},z20{4},'o','DisplayName','300 kPa,  Festo')
-% plot(X2,FestoLookup20(3,:)*z20max,'DisplayName','200 kPa, model')
-% plot(x20{3},z20{3},'o','DisplayName','200 kPa,  Festo')
-% plot(X2,FestoLookup20(2,:)*z20max,'DisplayName','100 kPa, model')
-% plot(x20{2},z20{2},'o','DisplayName','100 kPa,  Festo')
-% plot(X2,FestoLookup20(1,:)*z20max,'DisplayName','    0 kPa, model')
-% plot(x20{1},z20{1},'o','DisplayName','    0 kPa,  Festo')
-% lgd20 = legend;
-% title(lgd20,'\bf Pressure')
-% hold off
 
-% figure
-% surf(X2,Y1,FestoLookup20*z20max)
-% xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, kPA','interpreter','latex'),zlabel('\bf Force, N','interpreter','latex')
-% title('\bf 20 $ mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
-% 
-% figure
-% surf(X1,Y1,FestoLookup40)
-% xlabel('\bf Contraction','interpreter','latex'),ylabel('\bf Pressure, $kPA$','interpreter','latex'),zlabel('\bf Force, $N$','interpreter','latex')
-% title('40 $mm$ BPA Force-Pressure-Contraction relationship','interpreter','latex')
-%
