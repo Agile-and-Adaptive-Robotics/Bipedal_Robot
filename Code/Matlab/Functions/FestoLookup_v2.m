@@ -34,10 +34,10 @@ E20min= -0.02;
 E40min= -0.02;
 
 X1 = linspace(-0.02,0.32,35);   %Strain range for interpolation, 40mm
-X2 = linspace(-0.02,0.25,28);   %Strain range for interpolation, 10 & 20mm
+X2 = linspace(-0.02,0.28,31);   %Strain range for interpolation, 10 & 20mm
 %% 40mm dia BPA
 x40 = cell(length(Y1),1);
-z40 = cell(length(x40),1);
+z40 = cell(length(Y1),1);
 
 x40{1} = [-0.05 -0.04 -0.03, -.02   -.01  0 0.25]';
 z40{1} = [2141   1325 789.6   427.4 176.6 0 -383]';                  %0 kPa force, N
@@ -56,8 +56,8 @@ z40{7} = [9105 7000 6000 5568 5031 4214 3293 2286 1051 141.2]';     %600 kPa for
 x40{8} = [-.05 -.02 .013 0.02 0.04 .075 0.12 .175 0.25 0.32]';
 z40{8} = [9331 7210 5970 5759 5209 4368 3418 2378 1102 12]';     %620 kPa force, N
 
-% x40 = [x40{1}; x40{2}; x40{3}; x40{4}; x40{5}; x40{6}; x40{7}; x40{8}];
-y40 = cell(length(x40),1);
+
+y40 = cell(length(Y1),1);
     for i = 1:length(x40)
         y40{i} = [Y1(i).*ones(length(x40{i}),1)]; 
     end
@@ -77,24 +77,24 @@ z40norm = z_40/z40max;
 [XX40, YY40, ZZ40] = prepareSurfaceData(x40norm, y40norm, z40norm);
 %% 20 mm BPA
 x20 = cell(length(Y1),1);
-z20 = cell(length(x20),1);
+z20 = cell(length(Y1),1);
 
 x20{1} = [-.04 -.03 -.02 -.01 0 0.03 .125 .25]';
 z20{1} = [ 684  416  229   96 0 -160 -270 -287]';                   %0 kPa force, N
 x20{2} = [-.04 -.03 -.02 -.01 0   0.02 0.06 0.17 .25]';
-z20{2} = [ 940  672  486  352 253 123    -8 -147 -218]';       %100 kPa force, N
+z20{2} = [ 940  672  486  352 253 123    -8 -147 -218]';            %100 kPa force, N
 x20{3} = [-.04 -.02 -.01 0.01 .05 .12 .155 .25]';
-z20{3} = [1194  743  608  429 240 112 8.7  -150]';            %200 kPa force, N
+z20{3} = [1194  743  608  429 240 112 8.7  -150]';                  %200 kPa force, N
 x20{4} = [-.04 -.03 -.01 .01 .04 .12 .215 .25]';
-z20{4} = [1451 1187  864 678 507 241  0.5 -84]';          %300 kPa force, N
+z20{4} = [1451 1187  864 678 507 241  0.5 -84]';                    %300 kPa force, N
 x20{5} = [-.04 -.02    0 .01 .04 .09 .16 .24 .25]';
-z20{5} = [1707 1257 1012 926 737 518 271  13 -19]';     %400 kPa force, N
+z20{5} = [1707 1257 1012 926 737 518 271  13 -19]';                 %400 kPa force, N
 x20{6} = [-.04 -.019    0 0.01 .04 .08 .13 .195 .22 .25  .26]';
-z20{6} = [1963  1498 1264 1173 966 756 531  262 162  45  5.8]';    %500 kPa force, N
-x20{7} = [-.04 0.00 .002 .035 .065 .11 .25]';
-z20{7} = [2219 1515 1495 1228 1040 791 107]';                 %600 kPa force, N
-x20{8} = [-.04 0.00 .007 .035 .065 .11 .25]';
-z20{8} = [2270 1565 1497 1274 1082 826 119]';                 %620 kPa force, N
+z20{6} = [1963  1498 1264 1173 966 756 531  262 162  45  5.8]';     %500 kPa force, N
+x20{7} = [-.04 0.00 .002 .035 .065 .11 .14 .17  .20  .22 .25 .273]';
+z20{7} = [2219 1515 1495 1228 1040 791 637 487  342  247 107  0.9]';       %600 kPa force, N
+x20{8} = [-.04 0.00 .007 .035 .065 .11  .14 .17  .20  .22  .25 .275]';
+z20{8} = [2270 1565 1497 1274 1082 826  666 512  362  264  119  0.3]';     %620 kPa force, N
 
 
 y20 = cell(length(x20),1);
@@ -116,10 +116,8 @@ z20norm = z_20/z20max;
 [XX20, YY20, ZZ20] = prepareSurfaceData(x20norm, y20norm, z20norm);
 %% 10 mm BPA
 X3 = linspace(-0.03,0.25,29);   %Strain range for interpolation
-FestoLookup10 = zeros(size(Y2,2),size(X3,2));
-
 x10 = cell(length(Y2),1);
-z10 = cell(length(x10),1);
+z10 = cell(length(Y2),1);
 
 x10{1} = [-.03   -.025  -.02   -.015  -.01  -.005 0]';
 z10{1} = [232.4  175.3  127.6   87.5  53.5  24.7  0]';                   %0 kPa force, N
@@ -142,7 +140,7 @@ z10{9} = [616.5  548.3  495.7  453.1 417.3 386.1  358.1  286.2  223.8  166.3  14
 x10{10} = [0      .01      .02   .03    .04    .05   .06    .08   .11   .15    .2   .24]';
 z10{10} = [622.1  567.6  523.5   486  453.2  423.5 396.1  345.8  277  191.5  90.4  12.4]';                 %800 kPa force, N
 
-y10 = cell(length(x10),1);
+y10 = cell(length(Y2),1);
     for i = 1:length(x10)
         y10{i} = [Y2(i).*ones(length(x10{i}),1)]; 
     end
@@ -175,19 +173,19 @@ load bpaFitsResult.mat fitresult gof output valid XX YY ZZ
 
 %% Create lookup tables
 f_10 = fitresult{3};
-[X2h,Y2h] = meshgrid(X2./E10max,Y2./Pmax);
-FestoLookup10 = f_10(X2h,Y2h);
+[X3g,Y2g] = meshgrid(X3./E10max,Y2./P10max);
+FestoLookup10 = f_10(X3g,Y2g);
 
 f20 = fitresult{1};
 [X2g, Y1g] = meshgrid(X2./E20max,Y1./Pmax);
 FestoLookup20 = f20(X2g,Y1g);
 
 f40 = fitresult{4};
-[X1h,Y1h] = meshgrid(X1./E40max,Y1./Pmax);
-FestoLookup40 = f40(X1h,Y1h);
+[X1g,Y1h] = meshgrid(X1./E40max,Y1./Pmax);
+FestoLookup40 = f40(X1g,Y1h);
 
-Xgr = {X2h, X2g, X1h};
-Ygr = {Y2h, Y1g, Y1h};
+Xgr = {X3g, X2g, X1g};
+Ygr = {Y2g, Y1g, Y1h};
 FestoLookup = {FestoLookup10, FestoLookup20, FestoLookup40};
 
 
@@ -259,7 +257,7 @@ Zmax = [z10max, z20max, z40max];
     figure
     for k = 1: 2
     a(k) = subplot(2,1,k);
-    xlabel('Contraction \\epsilon^*','interpreter','tex'),ylabel('Force, F^*','interpreter','tex')
+    xlabel('Contraction, \epsilon^*','interpreter','tex'),ylabel('Force, F^*','interpreter','tex')
     strTit = sprintf('\\phi%s mm BPA Force-Pressure-Contraction relationship',Dia(k));
     title(strTit,'interpreter','tex')
     hold on
@@ -288,7 +286,7 @@ Zmax = [z10max, z20max, z40max];
     lgd(k) = legend;
     lgd(k).Location = 'eastoutside';
     lgd(k).Orientation = 'horizontal';   
-    title(lgd(k),'P^* value, data source')
+    title(lgd(k),'P value and data source')
     hold off
     end
     
