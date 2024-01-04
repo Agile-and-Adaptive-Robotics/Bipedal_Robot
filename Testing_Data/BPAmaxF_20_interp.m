@@ -70,12 +70,16 @@ E37 = RelStrain;
 P37 = Pressure;
 F37 = Force/Fmax;
 
-%% Plot normalized values together
+%% Plot normalized values together, including from Festo
+load FestoData.mat XX20 YY20 ZZ20
+
+YY20 = YY20*620;
 
 figure
 hold on
 scatter3(E50,P50,F50,'DisplayName','509 mm l_{rest}')
 scatter3(E30,P30,F30,'DisplayName','300 mm l_{rest}')
 scatter3(E37,P37,F37,'DisplayName','369 mm l_{rest}')
+scatter3(XX20,YY20,ZZ20,[],'d','DisplayName','Festo')
 hold off
 lgd = legend;
