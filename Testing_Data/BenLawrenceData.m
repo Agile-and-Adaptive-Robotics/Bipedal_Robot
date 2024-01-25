@@ -80,7 +80,7 @@ Ts = vertcat(T{1}(:,:,keep(1)),T{2}(:,:,keep(2)));
 [a,b] = size(Ts);
 V = cell(size(Ts));
 Pmax = 620;
-for i = 1:a
+for i = 2:a
     for j = 1:b
             if ~isempty(Ts{i,j})
             V{i,j} = Ts{i,j}((Ts{i,j}(:,3)>minF &Ts{i,j}(:,2)<maxP),1:3);    
@@ -130,7 +130,7 @@ S1x = S1(:,1); S1y = S1(:,2); S1z = S1(:,3);
 S2x = S2(:,1); S2y = S2(:,2); S2z = S2(:,3);
 %% Add Ben's data
 %Fmax from experiments, using gridded or scattered interpolation
-Fmax112 = 343.2915;
+Fmax112 = 350.86;
 Fmax415 = 457.0865;
 Fmax455 = 439.6307;
 Fmax490 = 455;
@@ -145,6 +145,7 @@ rawdata11cm = [325.164999	620	0.008928571	0.055555556;
 % gg = sortrows([rawdata11cm(:,4), rawdata11cm(:,1)]);
 % max112 = griddedInterpolant(gg(:,1),gg(:,2),'linear','linear');
 % Fmax112 = max112(0);
+% disp(Fmax112)
 data11cm = [rawdata11cm(:,4), rawdata11cm(:,2), rawdata11cm(:,1)/Fmax112];
 
 % zcomp = max112([0; gg(:,1)]);
@@ -315,7 +316,8 @@ anchor = [r110; r011; r000];
 ancX = anchor(:,1); ancY = anchor(:,2); ancZ = anchor(:,3);
 
 
-Ben_data = [data11cm; data42cm; data45cm; data49cm; data52cm];
+% Ben_data = [data11cm; data42cm; data45cm; data49cm; data52cm];
+Ben_data = [data42cm; data49cm; data52cm];
 Ben_data = [Ben_data(:,1), Ben_data(:,2)./620, Ben_data(:,3)];
 BenX = Ben_data(:,1); BenY = Ben_data(:,2); BenZ = Ben_data(:,3);
 
