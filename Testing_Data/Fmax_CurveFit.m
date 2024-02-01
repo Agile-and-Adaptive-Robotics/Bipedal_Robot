@@ -29,7 +29,7 @@ mdl = fitnlm(restingL,Fmax,modelfun,beta0,'Options',opts)
 x = linspace(0,1);
 p1 = feval(mdl,x);
 
-md2 = @(x) 301.258*atan(20.3112*(x-0.0075));     %from Fmax_fitTool
+md2 = @(x) 303.5*atan(19.03*(x-0.0075));     %from Fmax_fitTool
 p2 = feval(md2,x);
 
 figure
@@ -79,7 +79,7 @@ Zfin = Zsrt(:,2:8);                    %Z values (i.e. force) are these columns
 % P_norm = pointz/max(pointz);        %Scale pressure
 
 %Now use curve fitting tool Fmax_fitTool.sfit
-md3 = @(x,y) 0.4909*y.*atan(0.03171*y.*(x-0.0075));
+md3 = @(x,y) 0.4895*y.*atan(0.03068*y.*(x-0.0075));
 z = feval(md3,bpaNorm,pointz);
 
 %Create accessible color pallete for plotting
