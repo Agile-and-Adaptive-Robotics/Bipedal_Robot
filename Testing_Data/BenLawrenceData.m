@@ -93,7 +93,7 @@ end
 %Repeat above but for full size data
 Qs = vertcat(Q{1}(:,:,keep(1)),Q{2}(:,:,keep(2)));  
 U = cell(size(Qs));
-for i = 1:a
+for i = 2:a            %remove data for first cut length (l_rest = 120 mm)
     for j = 1:b
             if ~isempty(Qs{i,j})
             U{i,j} = Qs{i,j}((Qs{i,j}(:,3)>minF &Qs{i,j}(:,2)<maxP),1:3);    

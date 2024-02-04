@@ -116,3 +116,5 @@ lgd = legend;
 Ax = [E50; E45; E37; E30];
 Ay = [P50; P45; P37; P30]/620;
 Az = [F50; F45; F37; F30];
+
+save data20mm.mat Ax Ay Az

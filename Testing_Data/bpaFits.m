@@ -1,4 +1,4 @@
-function [fitresult, gof, output, valid] = bpaFits(XX20, YY20, ZZ20, XX10, YY10, ZZ10, XX, YY, ZZ, XX40, YY40, ZZ40)
+function [fitresult, gof, output, valid] = bpaFits(XX40, YY40, ZZ40, XX, YY, ZZ, XX10, YY10, ZZ10, Ax, Ay, Az, XX20, YY20, ZZ20)
 %CREATEFITS(XX20,YY20,ZZ20,XX10,YY10,ZZ10,XX,YY,ZZ,XX40,YY40,ZZ40)
 %  Create fits for 10mm, 20mm, and 40mm BPAs using experimental and Festo
 %  data. Run after running "BenLawrenceData.m" in the Testing_Data folder.
@@ -41,180 +41,36 @@ function [fitresult, gof, output, valid] = bpaFits(XX20, YY20, ZZ20, XX10, YY10,
 
 %% Initialization.
 
+%Use these commands if variables are not loaded into workspace
+% load FestoData.mat XX40 YY40 ZZ40 XX10 YY10 ZZ10 XX20 YY20 ZZ20
+% load allData.mat XX YY ZZ
+% load data20mm.mat Ax Ay Az
+
 % Initialize arrays to store fits and goodness-of-fit.
-fitresult = cell( 4, 1 );
-gof = struct( 'sse', cell( 4, 1 ), ...
+fitresult = cell( 3, 1 );
+gof = struct( 'sse', cell( 3, 1 ), ...
     'rsquare', [], 'dfe', [], 'adjrsquare', [], 'rmse', [] );
-output = cell( 4,1);
-
-
-%% Fit: 'Exponential 20, Festo'.
-[xData, yData, zData] = prepareSurfaceData( XX20, YY20, ZZ20 );
-
-% Set up fittype and options.
-ft = fittype( 'a0*(1-exp(-a1.*x))+y.*exp(-a3*(x.^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
-opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
-opts.Display = 'Off';
-opts.Lower = [-Inf 0 0];
-opts.MaxFunEvals = 6000;
-opts.MaxIter = 4000;
-opts.Robust = 'Bisquare';
-opts.StartPoint = [-0.1835 8.565 1.633];
-opts.TolFun = 1e-07;
-opts.TolX = 1e-07;
-opts.Upper = [0 Inf Inf];
-
-% Fit model to data.
-[fitresult{1}, gof(1), output{1}] = fit( [xData, yData], zData, ft, opts );
-
-% Compare against validation data.
-[xValidation, yValidation, zValidation] = prepareSurfaceData( XX20, YY20, ZZ20 );
-residual = zValidation - fitresult{1}( xValidation, yValidation );
-nNaN = nnz( isnan( residual ) );
-residual(isnan( residual )) = [];
-sse = norm( residual )^2;
-rmse = sqrt( sse/length( residual ) );
-sst = norm(zValidation - mean(zValidation))^2;
-Rsquare = 1-(sse*(length(residual)-1))/(sst*(length(residual)));
-fprintf( 'Goodness-of-validation for ''%s'' fit:\n', 'Exponential 20, Festo' );
-fprintf( '    SSE : %f\n', sse );
-fprintf( '    RMSE : %f\n', rmse );
-fprintf( '    Adj. R^2 : %f\n', Rsquare );
-fprintf( '    Largest residual: %f\n',max(residual));
-fprintf( '    %i points outside domain of data.\n', nNaN );
-
-valid(1,:) = table(sse, rmse, sst, Rsquare);
-
-% Create a figure for the plots.
-figure( 'Name', 'Exponential 20, Festo' );
-
-% Compute limits for axes.
-xlim = [min( [xData; xValidation] ), max( [xData; xValidation] )];
-ylim = [min( [yData; yValidation] ), max( [yData; yValidation] )];
-
-% Plot fit with data.
-subplot( 2, 1, 1 );
-h = plot( fitresult{1}, [xData, yData], zData, 'XLim', xlim, 'YLim', ylim );
-% Add validation data to plot.
-hold on
-h(end+1) = plot3( xValidation, yValidation, zValidation, 'bo', 'MarkerFaceColor', 'w' );
-hold off
-legend( h, 'Exponential 20, Festo', 'ZZ20 vs. XX20, YY20', 'ZZ20 vs. XX20, YY20', 'Location', 'NorthEast', 'Interpreter', 'none' );
-% Label axes
-xlabel( 'XX20', 'Interpreter', 'none' );
-ylabel( 'YY20', 'Interpreter', 'none' );
-zlabel( 'ZZ20', 'Interpreter', 'none' );
-grid on
-view( 0.0, 0.0 );
-
-% Plot residuals.
-subplot( 2, 1, 2 );
-h = plot( fitresult{1}, [xData, yData], zData, 'Style', 'Residual', 'XLim', xlim, 'YLim', ylim );
-% Add validation data to plot.
-hold on
-h(end+1) = plot3( xValidation, yValidation, zValidation - fitresult{1}( xValidation, yValidation ), 'bo', 'MarkerFaceColor', 'w' );
-hold off
-legend( h, 'Exponential 20, Festo - residuals', 'Exponential 20, Festo - validation residuals', 'Location', 'NorthEast', 'Interpreter', 'none' );
-% Label axes
-xlabel( 'XX20', 'Interpreter', 'none' );
-ylabel( 'YY20', 'Interpreter', 'none' );
-zlabel( 'ZZ20', 'Interpreter', 'none' );
-grid on
-view( 0.0, 0.0 );
-
-%% Fit: 'Exp10, Festo vs Experiment'.
-[xData, yData, zData] = prepareSurfaceData( XX10, YY10, ZZ10 );
-
-% Set up fittype and options.
-ft = fittype( 'a0*(1-exp(-a1.*x))+y.*exp(-a3*(x.^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
-opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
-opts.Display = 'Off';
-opts.Lower = [-Inf 0 0];
-opts.MaxFunEvals = 6000;
-opts.MaxIter = 3000;
-opts.Robust = 'Bisquare';
-opts.StartPoint = [-0.4039 6.269 0.9842];
-opts.Upper = [0 Inf Inf];
-
-% Fit model to data.
-[fitresult{2}, gof(2), output{2}] = fit( [xData, yData], zData, ft, opts );
-
-% Compare against validation data.
-[xValidation, yValidation, zValidation] = prepareSurfaceData( XX, YY, ZZ );
-residual = zValidation - fitresult{2}( xValidation, yValidation );
-nNaN = nnz( isnan( residual ) );
-residual(isnan( residual )) = [];
-sse = norm( residual )^2;
-rmse = sqrt( sse/length( residual ) );
-sst = norm(zValidation - mean(zValidation))^2;
-Rsquare = 1-(sse*(length(residual)-1))/(sst*(length(residual)));
-fprintf( 'Goodness-of-validation for ''%s'' fit:\n', 'Exp10, Festo vs Experiment' );
-fprintf( '    SSE : %f\n', sse );
-fprintf( '    RMSE : %f\n', rmse );
-fprintf( '    Adj. R^2 : %f\n', Rsquare );
-fprintf( '    Largest residual: %f\n',max(residual));
-fprintf( '    %i points outside domain of data.\n', nNaN );
-
-valid(2,:) = table(sse, rmse, sst, Rsquare);
-
-% Create a figure for the plots.
-figure( 'Name', 'Exp10, Festo vs Experiment' );
-
-% Compute limits for axes.
-xlim = [min( [xData; xValidation] ), max( [xData; xValidation] )];
-ylim = [min( [yData; yValidation] ), max( [yData; yValidation] )];
-
-% Plot fit with data.
-subplot( 2, 1, 1 );
-h = plot( fitresult{2}, [xData, yData], zData, 'XLim', xlim, 'YLim', ylim );
-% Add validation data to plot.
-hold on
-h(end+1) = plot3( xValidation, yValidation, zValidation, 'bo', 'MarkerFaceColor', 'w' );
-hold off
-legend( h, 'Exp10, Festo vs Experiment', 'ZZ10 vs. XX10, YY10', 'ZZ vs. XX, YY', 'Location', 'NorthEast', 'Interpreter', 'none' );
-% Label axes
-xlabel( 'XX10', 'Interpreter', 'none' );
-ylabel( 'YY10', 'Interpreter', 'none' );
-zlabel( 'ZZ10', 'Interpreter', 'none' );
-grid on
-view( 90.0, 0.0 );
-
-% Plot residuals.
-subplot( 2, 1, 2 );
-h = plot( fitresult{2}, [xData, yData], zData, 'Style', 'Residual', 'XLim', xlim, 'YLim', ylim );
-% Add validation data to plot.
-hold on
-h(end+1) = plot3( xValidation, yValidation, zValidation - fitresult{2}( xValidation, yValidation ), 'bo', 'MarkerFaceColor', 'w' );
-hold off
-legend( h, 'Exp10, Festo vs Experiment - residuals', 'Exp10, Festo vs Experiment - validation residuals', 'Location', 'NorthEast', 'Interpreter', 'none' );
-% Label axes
-xlabel( 'XX10', 'Interpreter', 'none' );
-ylabel( 'YY10', 'Interpreter', 'none' );
-zlabel( 'ZZ10', 'Interpreter', 'none' );
-grid on
-view( 90.0, 0.0 );
+output = cell( 3,1);
 
 %% Fit: 'Exp10, Experiment vs Festo'.
 [xData, yData, zData] = prepareSurfaceData( XX, YY, ZZ );
 
 % Set up fittype and options.
-ft = fittype( 'a0*(1-exp(-a1.*x))+y.*exp(-a3*(x.^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
+ft = fittype( 'a0*(exp(-a1.*x)-1)+y*exp(-a3*((x).^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
 opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
 opts.Display = 'Off';
-opts.Lower = [-Inf 0 0];
+opts.Lower = [0 0 0];
 opts.MaxFunEvals = 6000;
 opts.MaxIter = 2000;
-opts.Robust = 'Bisquare';
-opts.StartPoint = [-0.5756 4.085 0.5497];
-opts.Upper = [0 Inf Inf];
-
+opts.Robust = 'LAR';
+opts.StartPoint = [0.5822 4.142 0.5368];
 
 % Fit model to data.
-[fitresult{3}, gof(3), output{3}] = fit( [xData, yData], zData, ft, opts );
+[fitresult{1}, gof(1), output{1}] = fit( [xData, yData], zData, ft, opts );
 
 % Compare against validation data.
 [xValidation, yValidation, zValidation] = prepareSurfaceData( XX10, YY10, ZZ10 );
-residual = zValidation - fitresult{3}( xValidation, yValidation );
+residual = zValidation - fitresult{1}( xValidation, yValidation );
 nNaN = nnz( isnan( residual ) );
 residual(isnan( residual )) = [];
 sse = norm( residual )^2;
@@ -228,7 +84,7 @@ fprintf( '    Adj. R^2 : %f\n', Rsquare );
 fprintf( '    Largest residual: %f\n',max(residual));
 fprintf( '    %i points outside domain of data.\n', nNaN );
 
-valid(3,:) = table(sse, rmse, sst, Rsquare);
+valid(1,:) = table(sse, rmse, sst, Rsquare);
 % Create a figure for the plots.
 figure( 'Name', 'Exp10, Experiment vs Festo' );
 
@@ -238,7 +94,7 @@ ylim = [min( [yData; yValidation] ), max( [yData; yValidation] )];
 
 % Plot fit with data.
 subplot( 2, 1, 1 );
-h = plot( fitresult{3}, [xData, yData], zData, 'XLim', xlim, 'YLim', ylim );
+h = plot( fitresult{1}, [xData, yData], zData, 'XLim', xlim, 'YLim', ylim );
 % Add validation data to plot.
 hold on
 h(end+1) = plot3( xValidation, yValidation, zValidation, 'bo', 'MarkerFaceColor', 'w' );
@@ -253,10 +109,10 @@ view( 90.0, 0.0 );
 
 % Plot residuals.
 subplot( 2, 1, 2 );
-h = plot( fitresult{3}, [xData, yData], zData, 'Style', 'Residual', 'XLim', xlim, 'YLim', ylim );
+h = plot( fitresult{1}, [xData, yData], zData, 'Style', 'Residual', 'XLim', xlim, 'YLim', ylim );
 % Add validation data to plot.
 hold on
-h(end+1) = plot3( xValidation, yValidation, zValidation - fitresult{3}( xValidation, yValidation ), 'bo', 'MarkerFaceColor', 'w' );
+h(end+1) = plot3( xValidation, yValidation, zValidation - fitresult{1}( xValidation, yValidation ), 'bo', 'MarkerFaceColor', 'w' );
 hold off
 legend( h, 'Exp10, Experiment vs Festo - residuals', 'Exp10, Experiment vs Festo - validation residuals', 'Location', 'NorthEast', 'Interpreter', 'none' );
 % Label axes
@@ -266,27 +122,104 @@ zlabel( 'ZZ', 'Interpreter', 'none' );
 grid on
 view( 90.0, 0.0 );
 
+%% Fit: 'Exponential 20, Festo'.
+[xData, yData, zData] = prepareSurfaceData(  Ax, Ay, Az);
+
+% Set up fittype and options.
+ft = fittype( 'a0*(exp(-a1.*x)-1)+y*exp(-a3*((x).^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
+excludedPoints = zData < 0;
+opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
+opts.Display = 'Off';
+opts.Lower = [0 0 0];
+opts.MaxFunEvals = 6000;
+opts.MaxIter = 4000;
+opts.Robust = 'LAR';
+opts.StartPoint = [0.2607 6.398 1.303];
+opts.TolFun = 1e-07;
+opts.TolX = 1e-07;
+opts.Exclude = excludedPoints;
+
+% Fit model to data.
+[fitresult{2}, gof(2), output{2}] = fit( [xData, yData], zData, ft, opts );
+
+% Compare against validation data.
+[xValidation, yValidation, zValidation] = prepareSurfaceData( XX20, YY20, ZZ20 );
+residual = zValidation - fitresult{2}( xValidation, yValidation );
+nNaN = nnz( isnan( residual ) );
+residual(isnan( residual )) = [];
+sse = norm( residual )^2;
+rmse = sqrt( sse/length( residual ) );
+sst = norm(zValidation - mean(zValidation))^2;
+Rsquare = 1-(sse*(length(residual)-1))/(sst*(length(residual)));
+fprintf( 'Goodness-of-validation for ''%s'' fit:\n', 'Exponential 20, Festo' );
+fprintf( '    SSE : %f\n', sse );
+fprintf( '    RMSE : %f\n', rmse );
+fprintf( '    Adj. R^2 : %f\n', Rsquare );
+fprintf( '    Largest residual: %f\n',max(residual));
+fprintf( '    %i points outside domain of data.\n', nNaN );
+
+valid(2,:) = table(sse, rmse, sst, Rsquare);
+
+% Create a figure for the plots.
+figure( 'Name', 'Exponential 20, Festo' );
+
+% Compute limits for axes.
+xlim = [min( [xData; xValidation] ), max( [xData; xValidation] )];
+ylim = [min( [yData; yValidation] ), max( [yData; yValidation] )];
+
+% Plot fit with data.
+subplot( 2, 1, 1 );
+h = plot( fitresult{2}, [xData, yData], zData, 'Exclude', excludedPoints, 'XLim', xlim, 'YLim', ylim );
+% Add validation data to plot.
+hold on
+h(end+1) = plot3( xValidation, yValidation, zValidation, 'bo', 'MarkerFaceColor', 'w' );
+hold off
+legend( h, 'Exp20, Data vs Festo', 'Az vs. Ax, Ay', 'Excluded Az vs. Ax, Ay', 'ZZ20 vs. XX20, YY20', 'Location', 'NorthEast', 'Interpreter', 'none' );
+% Label axes
+xlabel( 'Ax', 'Interpreter', 'none' );
+ylabel( 'Ay', 'Interpreter', 'none' );
+zlabel( 'Az', 'Interpreter', 'none' );
+grid on
+view( 0.0, 0.0 );
+
+% Plot residuals.
+subplot( 2, 1, 2 );
+h = plot( fitresult{2}, [xData, yData], zData, 'Style', 'Residual', 'Exclude', excludedPoints, 'XLim', xlim, 'YLim', ylim );
+% Add validation data to plot.
+hold on
+h(end+1) = plot3( xValidation, yValidation, zValidation - fitresult{2}( xValidation, yValidation ), 'bo', 'MarkerFaceColor', 'w' );
+hold off
+legend( h, 'Exp20, Data vs Festo - residuals', 'Excluded Az vs. Ax, Ay', 'Exp20, Data vs Festo - validation residuals', 'Location', 'NorthEast', 'Interpreter', 'none' );
+% Label axes
+xlabel( 'Ax', 'Interpreter', 'none' );
+ylabel( 'Ay', 'Interpreter', 'none' );
+zlabel( 'Az', 'Interpreter', 'none' );
+grid on
+view( 0.0, 0.0 );
+
+
 %% Fit: 'Exponential 40 normalized'.
 [xData, yData, zData] = prepareSurfaceData( XX40, YY40, ZZ40 );
 
 % Set up fittype and options.
-ft = fittype( 'a0*(1-exp(-a1.*x))+y.*exp(-a2.*x.^2)', 'independent', {'x', 'y'}, 'dependent', 'z' );
+ft = fittype( 'a0*(exp(-a1.*x)-1)+y*exp(-a3*((x).^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
+excludedPoints = zData < 0;
 opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
 opts.Display = 'Off';
-opts.Lower = [-Inf 0 0];
-opts.MaxFunEvals = 6000;
-opts.MaxIter = 4000;
-opts.Robust = 'Bisquare';
-opts.StartPoint = [-0.119 10.83 2.141];
-opts.Upper = [0 Inf Inf];
+opts.Lower = [0 -Inf 0];
+opts.MaxFunEvals = 7000;
+opts.MaxIter = 5000;
+opts.Robust = 'LAR';
+opts.StartPoint = [0.1224 10.47 2.023];
+opts.Exclude = excludedPoints;
 
 
 % Fit model to data.
-[fitresult{4}, gof(4), output{4}] = fit( [xData, yData], zData, ft, opts );
+[fitresult{3}, gof(3), output{3}] = fit( [xData, yData], zData, ft, opts );
 
 % Compare against validation data.
 [xValidation, yValidation, zValidation] = prepareSurfaceData( XX40, YY40, ZZ40 );
-residual = zValidation - fitresult{4}( xValidation, yValidation );
+residual = zValidation - fitresult{3}( xValidation, yValidation );
 nNaN = nnz( isnan( residual ) );
 residual(isnan( residual )) = [];
 sse = norm( residual )^2;
@@ -300,7 +233,7 @@ fprintf( '    Adj. R^2 : %f\n', Rsquare );
 fprintf( '    Largest residual: %f\n',max(residual));
 fprintf( '    %i points outside domain of data.\n', nNaN );
 
-valid(4,:) = table(sse, rmse, sst, Rsquare);
+valid(3,:) = table(sse, rmse, sst, Rsquare);
 % Create a figure for the plots.
 figure( 'Name', 'Exponential 40 normalized' );
 
@@ -310,7 +243,7 @@ ylim = [min( [yData; yValidation] ), max( [yData; yValidation] )];
 
 % Plot fit with data.
 subplot( 2, 1, 1 );
-h = plot( fitresult{4}, [xData, yData], zData, 'XLim', xlim, 'YLim', ylim );
+h = plot( fitresult{3}, [xData, yData], zData, 'XLim', xlim, 'YLim', ylim );
 % Add validation data to plot.
 hold on
 h(end+1) = plot3( xValidation, yValidation, zValidation, 'bo', 'MarkerFaceColor', 'w' );
@@ -325,10 +258,10 @@ view( 0.0, 0.0 );
 
 % Plot residuals.
 subplot( 2, 1, 2 );
-h = plot( fitresult{4}, [xData, yData], zData, 'Style', 'Residual', 'XLim', xlim, 'YLim', ylim );
+h = plot( fitresult{3}, [xData, yData], zData, 'Style', 'Residual', 'XLim', xlim, 'YLim', ylim );
 % Add validation data to plot.
 hold on
-h(end+1) = plot3( xValidation, yValidation, zValidation - fitresult{4}( xValidation, yValidation ), 'bo', 'MarkerFaceColor', 'w' );
+h(end+1) = plot3( xValidation, yValidation, zValidation - fitresult{3}( xValidation, yValidation ), 'bo', 'MarkerFaceColor', 'w' );
 hold off
 legend( h, 'Exponential 40 normalized - residuals', 'Exponential 40 normalized - validation residuals', 'Location', 'NorthEast', 'Interpreter', 'none' );
 % Label axes
@@ -339,3 +272,5 @@ grid on
 view( 0.0, 0.0 );
 
 
+%% save it
+save bpaFitsResult.mat fitresult gof output valid XX40 YY40 ZZ40 XX YY ZZ XX10 YY10 ZZ10 Ax Ay Az XX20 YY20 ZZ20
