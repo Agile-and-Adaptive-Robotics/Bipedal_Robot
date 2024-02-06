@@ -172,16 +172,18 @@ load ForceStrainForFit.mat z
 load bpaFitsResult.mat fitresult gof output valid XX YY ZZ Ax Ay Az
 
 %% Create lookup tables
+Yp = [0, 100, 200, 300, 400, 500, 620]; %"Y prime", Remove 600 kPA
+
 f_10 = fitresult{1};                            %10 mm, using data
-[X3g,Y2g] = meshgrid(X3./E10max,Y2./P10max);
+[X3g,Y2g] = meshgrid(X3./E10max,Yp./P10max);
 FestoLookup10 = f_10(X3g,Y2g);
 
 f20 = fitresult{2};                             %20 mm, using data
-[X2g, Y1g] = meshgrid(X2./E20max,Y1./Pmax);
+[X2g, Y1g] = meshgrid(X2./E20max,Yp./Pmax);
 FestoLookup20 = f20(X2g,Y1g);
 
 f40 = fitresult{3};                             %40 mm, using data
-[X1g,Y1h] = meshgrid(X1./E40max,Y1./Pmax);
+[X1g,Y1h] = meshgrid(X1./E40max,Yp./Pmax);
 FestoLookup40 = f40(X1g,Y1h);
 
 Xgr = {X3g, X2g, X1g};
@@ -193,74 +195,48 @@ FestoLookup = {FestoLookup10, FestoLookup20, FestoLookup40};
 load allData.mat Xf Yf Zf
 Datmat = [Xf, Yf, Zf];
 A = sortrows(Datmat,[1 2 3],'ascend');
-D = cell(length(Y1),1);
-buff = 5;                 %buffer around P value (in kPa) to incorporate in plot
-for i = 1:length(Y1)
-    D{i} = A(( round(A(:,2)*620)<=(Y1(i)+buff) & round(A(:,2)*620)>=(Y1(i)-buff)   ),:);
+D = cell(length(Yp),1);
+buff = 10;                 %buffer around P value (in kPa) to incorporate in plot
+for i = 1:length(Yp)
+    D{i} = A(( round(A(:,2)*620)<=(Yp(i)+buff) & round(A(:,2)*620)>=(Yp(i)-buff)   ),:);
 end
 
 %% Get 20 mm experimental data ready for plotting
 load data20mm.mat Ax Ay Az
 Datmat = [Ax, Ay, Az];
 A = sortrows(Datmat,[1 2 3],'ascend');
-E = cell(length(Y1),1);
+E = cell(length(Yp),1);
 buff = 10;                 %buffer around P value (in kPa) to incorporate in plot
-for i = 1:length(Y1)
-    E{i} = A(( round(A(:,2)*620)<=(Y1(i)+buff) & round(A(:,2)*620)>=(Y1(i)-buff)   ),:);
+for i = 1:length(Yp)
+    E{i} = A(( round(A(:,2)*620)<=(Yp(i)+buff) & round(A(:,2)*620)>=(Yp(i)-buff)   ),:);
 end
+
+%% "Get rid of 600, 700, and 800 kPa Festo data, keep 620" - Dr. Hunt
+x10p = [x10(1:6); x10(8)];
+y10p = [y10(1:6); y10(8)];
+z10p = [z10(1:6); z10(8)];
+
+x20p = [x20(1:6); x20(8)];
+y20p = [y20(1:6); y20(8)];
+z20p = [z20(1:6); z20(8)];
+
+x40p = [x40(1:6); x40(8)];
+y40p = [y40(1:6); y40(8)];
+z40p = [z40(1:6); z40(8)];
 
 %% Addition figure script setup
 Dia = ["10","20","40"];
 dstr = ["festo","model","experiment"];
-Xc = {x10, x20, x40};
-Yc = {y10, y20, y40};
-Zc = {z10, z20, z40};
+
+Xc = {x10p, x20p, x40p};
+Yc = {y10p, y20p, y40p};
+Zc = {z10p, z20p, z40p};
 
 Emax = [E10max, E20max, E40max];
 Emin = [E10min, E20min, E40min];
 Pmax = [P10max, Pmax, Pmax];
 Zmax = [z10max, z20max, z40max];
 
-
-%% Figure (for all)
-
-%     figure
-%     for k = 1: length(Dia)
-%     a(k) = subplot(3,1,k);
-%     xlabel('Contraction \\epsilon^*','interpreter','tex'),ylabel('Force, F^*','interpreter','tex')
-%     strTit = sprintf('\\phi%s mm BPA Force-Pressure-Contraction relationship',Dia(k));
-%     title(strTit,'interpreter','tex')
-%     hold on
-%     for i = 1:length(Xc{k})
-%         for j = 1: length(dstr)
-%             str{i,j} = sprintf('P^*=%.3f, %s',Ygr{k}(i),dstr{j});
-%         end
-%         sc{i,k} = scatter(Xc{k}{i}/Emax(k),Zc{k}{i}/Zmax(k),[],'o', 'DisplayName',str{i,1});
-%         sc{i,k}.SeriesIndex = i;
-%         pl{i,k} = plot(Xgr{k}(i,:),FestoLookup{k}(i,:),'DisplayName',str{i,2});
-%         pl{i,k}.SeriesIndex = i;
-%         if k == 1
-%             if ~isempty(D{i})
-%                 x = D{i}(:,1);
-%                 z = D{i}(:,3);
-%                 sk{i,k} = scatter(x,z,[],'d','DisplayName',str{i,3});
-%             else
-%                 sk{i,k} = scatter([],[],'d','DisplayName','');
-%             end
-%             sk{i,k}.SeriesIndex = i;
-%         else
-%         end
-%     end
-%     lgd(k) = legend;
-%     lgd(k).Location = 'eastoutside';
-%     lgd(k).Orientation = 'horizontal';   
-%     title(lgd(k),'P^* value, data source')
-%     hold off
-%     end
-%     
-% lgd(1).NumColumns = 3;
-% lgd(2).NumColumns = 3;
-% lgd(3).NumColumns = 2;
 
 %% Figure (for 10 mm & 20 mm)
 
@@ -271,7 +247,7 @@ Zmax = [z10max, z20max, z40max];
     strTit = sprintf('\\phi%s mm BPA Force-Pressure-Contraction relationship',Dia(k));
     title(strTit,'interpreter','tex')
     hold on
-    for i = 1:length(Xc{2})
+    for i = 1:length(Xc{k})
         for j = 1: length(dstr)
             str{i,j} = sprintf('P=%.0f kPa, %s',Ygr{k}(i)*620,dstr{j});
         end
@@ -301,15 +277,14 @@ Zmax = [z10max, z20max, z40max];
         end
     end
     a(k).XLim = [0 1];
-    a(k).YLim = [0 max(max(Ygr{1}))];
+    a(k).YLim = [0 max(max(Ygr{2}))];
     lgd(k) = legend;
     lgd(k).Location = 'eastoutside';
-    lgd(k).Orientation = 'horizontal';   
+    lgd(k).Orientation = 'horizontal';
+    lgd(k).NumColumns = 3;
     title(lgd(k),'P value and data source')
     hold off
     end
     
-lgd(1).NumColumns = 3;
-lgd(2).NumColumns = 3;
 
 
