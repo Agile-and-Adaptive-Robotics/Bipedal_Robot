@@ -196,7 +196,7 @@ load allData.mat Xf Yf Zf
 Datmat = [Xf, Yf, Zf];
 A = sortrows(Datmat,[1 2 3],'ascend');
 D = cell(length(Yp),1);
-buff = 10;                 %buffer around P value (in kPa) to incorporate in plot
+buff = 1;                 %buffer around P value (in kPa) to incorporate in plot
 for i = 1:length(Yp)
     D{i} = A(( round(A(:,2)*620)<=(Yp(i)+buff) & round(A(:,2)*620)>=(Yp(i)-buff)   ),:);
 end
@@ -206,7 +206,7 @@ load data20mm.mat Ax Ay Az
 Datmat = [Ax, Ay, Az];
 A = sortrows(Datmat,[1 2 3],'ascend');
 E = cell(length(Yp),1);
-buff = 10;                 %buffer around P value (in kPa) to incorporate in plot
+buff = 5;                 %buffer around P value (in kPa) to incorporate in plot
 for i = 1:length(Yp)
     E{i} = A(( round(A(:,2)*620)<=(Yp(i)+buff) & round(A(:,2)*620)>=(Yp(i)-buff)   ),:);
 end
