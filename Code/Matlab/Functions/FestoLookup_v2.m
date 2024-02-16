@@ -172,7 +172,7 @@ load ForceStrainForFit.mat z
 load bpaFitsResult.mat fitresult gof output valid XX YY ZZ Ax Ay Az
 
 %% Create lookup tables
-Yp = [0, 100, 200, 300, 400, 500, 620]; %"Y prime", Remove 600 kPA
+Yp = [200, 300, 400, 500, 620]; %"Y prime", Remove 600 kPA
 
 f_10 = fitresult{1};                            %10 mm, using data
 [X3g,Y2g] = meshgrid(X3./E10max,Yp./P10max);
@@ -211,18 +211,18 @@ for i = 1:length(Yp)
     E{i} = A(( round(A(:,2)*620)<=(Yp(i)+buff) & round(A(:,2)*620)>=(Yp(i)-buff)   ),:);
 end
 
-%% "Get rid of 600, 700, and 800 kPa Festo data, keep 620" - Dr. Hunt
-x10p = [x10(1:6); x10(8)];
-y10p = [y10(1:6); y10(8)];
-z10p = [z10(1:6); z10(8)];
+%% "Get rid of 0, 100, 600, 700, and 800 kPa Festo data, keep 620" - Dr. Hunt
+x10p = [x10(3:6); x10(8)];
+y10p = [y10(3:6); y10(8)];
+z10p = [z10(3:6); z10(8)];
 
-x20p = [x20(1:6); x20(8)];
-y20p = [y20(1:6); y20(8)];
-z20p = [z20(1:6); z20(8)];
+x20p = [x20(3:6); x20(8)];
+y20p = [y20(3:6); y20(8)];
+z20p = [z20(3:6); z20(8)];
 
-x40p = [x40(1:6); x40(8)];
-y40p = [y40(1:6); y40(8)];
-z40p = [z40(1:6); z40(8)];
+x40p = [x40(3:6); x40(8)];
+y40p = [y40(3:6); y40(8)];
+z40p = [z40(3:6); z40(8)];
 
 %% Addition figure script setup
 Dia = ["10","20","40"];
@@ -279,7 +279,7 @@ Zmax = [z10max, z20max, z40max];
     a(k).XLim = [0 1];
     a(k).YLim = [0 max(max(Ygr{2}))];
     lgd(k) = legend;
-    lgd(k).Location = 'eastoutside';
+    lgd(k).Location = 'northeast';
     lgd(k).Orientation = 'horizontal';
     lgd(k).NumColumns = 3;
     title(lgd(k),'P value and data source')
