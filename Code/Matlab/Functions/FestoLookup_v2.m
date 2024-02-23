@@ -259,18 +259,18 @@ Zmax = [z10max, z20max, z40max];
             if ~isempty(D{i})
                 x = D{i}(:,1);
                 z = D{i}(:,3);
-                sk{i,k} = scatter(x,z,[],'o','DisplayName',str{i,3});
+                sk{i,k} = scatter(x,z,120,'.','DisplayName',str{i,3});
             else
-                sk{i,k} = scatter([],[],'o','DisplayName','');
+                sk{i,k} = scatter([],[],'.','DisplayName','');
             end
             sk{i,k}.SeriesIndex = i; 
         elseif k==2
             if ~isempty(E{i})
                 x = E{i}(:,1);
                 z = E{i}(:,3);
-                sk{i,k} = scatter(x,z,[],'o','DisplayName',str{i,3});
+                sk{i,k} = scatter(x,z,120,'.','DisplayName',str{i,3});
             else
-                sk{i,k} = scatter([],[],'o','DisplayName','');
+                sk{i,k} = scatter([],[],'.','DisplayName','');
             end
             sk{i,k}.SeriesIndex = i; 
         else

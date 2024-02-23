@@ -23,7 +23,7 @@ beta0 = [0.4895 0.03068];
 opts = statset('fitnlm');
 opts.MaxIter = 1000;
 opts.Display = 'final';
-opts.RobustWgtFun = 'logistic';
+opts.RobustWgtFun = 'bisquare';
 % mdl = fitnlm(restingL,Fmax,modelfun,beta0,'Exclude',[1 3 5 7 9 11 23],'Options',opts)
 mdl = fitnlm(restingL,Fmax,modelfun,beta0,'Options',opts)
 x = linspace(0,1);
@@ -33,7 +33,7 @@ md2 = @(x) 303.5*atan(19.03*(x-0.0075));     %from Fmax_fitTool
 p2 = feval(md2,x);
 
 figure
-plot(restingL,Fmax,'o',x,p2,'--')
+plot(restingL,Fmax,'.',x,p2,'--','MarkerSize',18)
 title('F_{max10} vs. l_{rest}')
 xlabel('l_{rest}, m')
 ylabel('F_{max}, N')
@@ -93,17 +93,17 @@ c1 = [0 0 0];
 fig3d = figure;
 ax1 = axes('Parent',fig3d);
 hold(ax1,'on');
-s1 = plot(bpaNorm(~isnan(Zfin(:,7))),Zfin(~isnan(Zfin(:,7)),7),'o',bpaNorm,z(:,7),'--');
+s1 = plot(bpaNorm(~isnan(Zfin(:,7))),Zfin(~isnan(Zfin(:,7)),7),'.',bpaNorm,z(:,7),'--','MarkerSize',18);
 set(s1,'LineWidth',2,'Color',c1);
-s2 = plot(bpaNorm(~isnan(Zfin(:,6))),Zfin(~isnan(Zfin(:,6)),6),'o',bpaNorm,z(:,6),'--');
+s2 = plot(bpaNorm(~isnan(Zfin(:,6))),Zfin(~isnan(Zfin(:,6)),6),'.',bpaNorm,z(:,6),'--','MarkerSize',18);
 set(s2,'LineWidth',2,'Color',c2);
-s3 = plot(bpaNorm(~isnan(Zfin(:,5))),Zfin(~isnan(Zfin(:,5)),5),'o',bpaNorm,z(:,5),'--');
+s3 = plot(bpaNorm(~isnan(Zfin(:,5))),Zfin(~isnan(Zfin(:,5)),5),'.',bpaNorm,z(:,5),'--','MarkerSize',18);
 set(s3,'LineWidth',2,'Color',c3);
-s4 = plot(bpaNorm(~isnan(Zfin(:,4))),Zfin(~isnan(Zfin(:,4)),4),'o',bpaNorm,z(:,4),'--');
+s4 = plot(bpaNorm(~isnan(Zfin(:,4))),Zfin(~isnan(Zfin(:,4)),4),'.',bpaNorm,z(:,4),'--','MarkerSize',18);
 set(s4,'LineWidth',2,'Color',c4);
-s5 = plot(bpaNorm(~isnan(Zfin(:,3))),Zfin(~isnan(Zfin(:,3)),3),'o',bpaNorm,z(:,3),'--');
+s5 = plot(bpaNorm(~isnan(Zfin(:,3))),Zfin(~isnan(Zfin(:,3)),3),'.',bpaNorm,z(:,3),'--','MarkerSize',18);
 set(s5,'LineWidth',2,'Color',c5);
-s6 = plot(bpaNorm(~isnan(Zfin(:,2))),Zfin(~isnan(Zfin(:,2)),2),'o',bpaNorm,z(:,2),'--');
+s6 = plot(bpaNorm(~isnan(Zfin(:,2))),Zfin(~isnan(Zfin(:,2)),2),'.',bpaNorm,z(:,2),'--','MarkerSize',18);
 set(s6,'LineWidth',2,'Color',c6);
 xlim(ax1,[0 1.1]);
 title('F_{max} vs. l_{rest} and P_{max}, \phi10 mm')
@@ -131,8 +131,8 @@ set(leg,...
 p3 = feval(max_k,x);
 
 figure
-plot(restingL,kmax,'o',x,p3,'--')
-title('\epsilon_{max} vs. Resting Length')
+plot(restingL,kmax,'.',x,p3,'--','MarkerSize',18)
+title('\epsilon_{max} vs. Resting Length, \phi10 mm')
 xlabel('Resting Length, mm')
 ylabel('Maximum Strain')
 legend('Data','Model Fit')
