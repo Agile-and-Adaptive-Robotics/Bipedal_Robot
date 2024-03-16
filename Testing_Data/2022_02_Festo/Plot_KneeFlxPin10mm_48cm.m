@@ -98,36 +98,23 @@ pres4 = 612*ones(1,size(InflatedLength4, 2));
 %pres5 = 612*ones(1,size(InflatedLength5, 2));
 pres = [pres1 pres2 presx pres3 pres4];
 
-for i = 1:size(InflatedLength, 2)  
-    F(1,i,1) = festo3(InflatedLength(i), restingLength, 10, pres(i), kmax);    
-    TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Torque will be negative because it is causing flexion
-end
+% for i = 1:size(InflatedLength, 2)  
+%     F(1,i) = festo3(InflatedLength(i), restingLength, 10, pres(i), kmax);    
+% end
 
 KMAX = (restingLength-kmax)/restingLength;
 rel = ((restingLength-InflatedLength)/restingLength)/KMAX;
-Fn = bpaForce10(restingLength,rel,pres);
+F = bpaForce10(restingLength,rel,pres);
 
-for i = 2:(size(Fn,3)+1)
-    F(:,:,i) = Fn(:,:,i-1);
-end
-
-for i = 1:size(F,3)
-    TorqueHand(:,:,i) = -ICRtoMuscle.*F(1,:,i);  %Torque will be negative because it is causing flexion
+TorqueHand = -ICRtoMuscle.*F;  %Torque will be negative because it is causing flexion
     
-    TorqueHand1(:,:,i) = TorqueHand(1,1:size(TorqueHand1,2),i);
-    TorqueHand2(:,:,i) = TorqueHand(1,(length(TorqueHand1)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)),i);
-    TorqueHand3(:,:,i) = TorqueHand(1,(size(TorqueHand1,2)+size(TorqueHand2,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)),i);
-    TorqueHand4(:,:,i) = TorqueHand(1,(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+size(TorqueHand4,2)),i);
-end
-
-
+TorqueHand1 = TorqueHand(1,1:size(TorqueHand1,2));
+TorqueHand2 = TorqueHand(1,(length(TorqueHand1)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)));
+TorqueHand3 = TorqueHand(1,(size(TorqueHand1,2)+size(TorqueHand2,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)));
+TorqueHand4 = TorqueHand(1,(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+1):(size(TorqueHand1,2)+size(TorqueHand2,2)+size(TorqueHand3,2)+size(TorqueHand4,2)));
 %% Process data for further curve fitting
 
-Hand1 = TorqueHand(:,:,1); %'Hunt Eq.';
-Hand2 = TorqueHand(:,:,2); %'Exponential Eq.';
-Hand3 = TorqueHand(:,:,3); %'Polynomial Eq.';
-Hand4 = TorqueHand(:,:,4); %'Exponential Eq., Simplified';
-Hand5 = TorqueHand(:,:,5); %'Polynomial Eq., Simplified';
+Hand = TorqueHand; %from experimental data
 
 A = [Angle', Torque'];                              % Arrange Data
 [UA,~,idx] = unique(A(:,1));                        % Find repeated angle values
@@ -139,16 +126,8 @@ NEW_tq = NEW_A(:,2);            % New torque
 SSE = zeros(size(TorqueHand,3),1);
 RMSE = zeros(size(TorqueHand,3),1);
 
-SSE(1) = sum((Torque-Hand1).^2,'omitnan');
-SSE(2) = sum((Torque-Hand2).^2,'omitnan');
-SSE(3) = sum((Torque-Hand3).^2,'omitnan');
-SSE(4) = sum((Torque-Hand4).^2,'omitnan');
-SSE(5) = sum((Torque-Hand5).^2,'omitnan');
-RMSE(1) = sqrt(sum((Torque-Hand1).^2,'omitnan')/length(Torque));
-RMSE(2) = sqrt(sum((Torque-Hand2).^2,'omitnan')/length(Torque));
-RMSE(3) = sqrt(sum((Torque-Hand3).^2,'omitnan')/length(Torque));
-RMSE(4) = sqrt(sum((Torque-Hand4).^2,'omitnan')/length(Torque));
-RMSE(5) = sqrt(sum((Torque-Hand5).^2,'omitnan')/length(Torque));
+SSE = sum((Torque-Hand).^2,'omitnan');
+RMSE = sqrt(sum((Torque-Hand).^2,'omitnan')/length(Torque));
 
 disp(SSE)
 disp(RMSE)
@@ -357,7 +336,7 @@ set(gca,'FontSize', 12, 'FontWeight', 'bold')
         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
         sc{i} = scatter(Angle,TorqueHand(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
     end
-scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
+scM = scatter(Angle,Torque,sz,'filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
 lgd = legend;
 hold off
 
@@ -384,7 +363,7 @@ hold off
 % 
 % figure
 % 
-% scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+% scM = scatter(Angle,Torque,sz,'filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 % hold on
 %     for i = 1:size(Theoretical,2)
 %         txt = Theoretical{1,i};
@@ -426,7 +405,7 @@ hold off
 % 
 % 
 % ax4 = nexttile;
-% scM1 = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+% scM1 = scatter(Angle1,Torque1,sz,'filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 % hold on
 %     for i = 1:size(Theoretical,2)
 %         txt = Theoretical{1,i};
@@ -450,7 +429,7 @@ hold off
 % hold off
 % 
 % ax5 = nexttile;
-% scM2 = scatter(Angle2,Torque2,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+% scM2 = scatter(Angle2,Torque2,sz,'filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 % hold on
 %     for i = 1:size(Theoretical,2)
 %         txt = Theoretical{1,i};
@@ -474,7 +453,7 @@ hold off
 % hold off
 % 
 % ax6 = nexttile;
-% scM3 = scatter(Angle3,Torque3,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+% scM3 = scatter(Angle3,Torque3,sz,'filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 % hold on
 %     for i = 1:size(Theoretical,2)
 %         txt = Theoretical{1,i};
@@ -498,7 +477,7 @@ hold off
 % hold off
 % 
 % ax7 = nexttile;
-% scM4 = scatter(Angle4,Torque4,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+% scM4 = scatter(Angle4,Torque4,sz,'filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 % hold on
 %     for i = 1:size(Theoretical,2)
 %         txt = Theoretical{1,i};

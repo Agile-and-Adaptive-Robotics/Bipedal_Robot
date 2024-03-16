@@ -9,13 +9,13 @@
         [y2, y4] = nestedfun1(x);
         yresid1 = y1-y2;                     %residual error
         SSresid1 = sum(yresid1.^2);          %Sum of squares of the residual
-        SStotal1 = sum((y1-mean(y1)).^2);   %total sum of squares
-        f1 = SSresid1/SStotal1;              %SSE/SST
+        SStotal1 = sum((y1-mean(y1)).^2);    %total sum of squares
+        f1 = SSresid1/SStotal1;              %SSE/SST, fraction of variance unexplained
 
         yresid2 = y3-y4;                     %residual error from derivatives
         SSresid2 = sum(yresid2.^2);          %Sum of squares of the residual from the derivatives
-        SStotal2 = sum((y3-mean(y3)).^2);   %total sum of squares
-        f2 = SSresid2/SStotal2;              %SSE/SST
+        SStotal2 = sum((y3-mean(y3)).^2);    %total sum of squares
+        f2 = SSresid2/SStotal2;              %SSE/SST, fraction of variance unexplained
 
 
         f = c(1)*f1 + c(2)*f2;     %Combine the error from the data and the error of the slopes

@@ -252,7 +252,7 @@ set(gca,'FontSize', 12, 'FontWeight', 'bold')
         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
         sc{i} = scatter(Angle,TorqueHand(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
     end
-scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
+scM = scatter(Angle,Torque,sz,'filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
 lgd = legend;
 hold off
 
@@ -293,7 +293,7 @@ hold off
 %         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
 %         sc{i} = scatter(Angle,TorqueHand(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
 %     end
-% scM = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+% scM = scatter(Angle,Torque,sz,'filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 % lgd = legend;
 % hold off
 % 
@@ -318,7 +318,7 @@ hold off
 %         PL{i} = plot(phiD, Theoretical{2,i},'Color',c{i},'Linewidth',2,'DisplayName',Disp{T1});
 %         sc{i} = scatter(Angle1,TorqueHand1(:,:,i),sz,'filled','MarkerFaceColor',c{i},'DisplayName',Disp{H1});
 %     end
-% scM1 = scatter(Angle1,Torque1,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
+% scM1 = scatter(Angle1,Torque1,sz,'filled','MarkerFaceColor',c7,'DisplayName','Torque data, measured');
 % lgd1 = legend;
 % hold off
 % 

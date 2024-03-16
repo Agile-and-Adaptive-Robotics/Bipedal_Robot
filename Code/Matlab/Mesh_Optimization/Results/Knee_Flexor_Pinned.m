@@ -55,14 +55,14 @@ tendon = 0;       %pinned, no tendon
 fitting = 0.0254; %fitting length
 Pres = 605.6671;     %average pressure (kPa) for 49cm
 % Pres = 604.5573;      %average pressure (kPa) for 46cm
-Bifemsh_Pam = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, Pres);
+Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, Pres);
 
 
 %% Unstacking the Values to identify specific rotations
 
 TorqueR = Bifemsh_Pam.Torque;
-Strain = (rest-(Bifemsh_Pam.MuscleLength-tendon-2*fitting))/rest;
-KMAX = (rest-kmax)/rest;
+Strain = Bifemsh_Pam.Contraction;
+KMAX = (rest-kmax)/rest;        %Turn maximum contraction into percentage
 rel = Strain./KMAX;
 
 
@@ -78,10 +78,8 @@ title(sprintf('BPA Z Torque, Length = %1.3  mm',rest))
 xlabel('Knee Extension(+)/Flexion(-), degrees')
 ylabel('Torque, Nm')
 hold on
-for i = 2:size(TorqueR,3)
-    plot(phiD, TorqueR(:,3,i))
-end
-legend('Hunt','Exponential','Polynomial','Exponential, simplified','Polynomial, simplified')
+plot(phiD, TorqueR(:,3))
+legend('Theoretical')
 
 %% Plot relative muscle Strain
 figure
@@ -94,7 +92,7 @@ hold off
 
 %% Plot muscle length
 
-BPAlength = (Bifemsh_Pam.MuscleLength-2*fitting);
+BPAlength = (Bifemsh_Pam.MuscleLength-2*fitting-tendon);
 upper = rest.*ones(length(phiD));
 lower = kmax.*ones(length(phiD));
 figure

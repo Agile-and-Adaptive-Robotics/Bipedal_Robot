@@ -45,7 +45,7 @@ fcn4 = fit(knee_angle,knee_y_Pam,'cubicspline');
 t1_ICR_x = ([29.66	28.54	27.86	27.40	26.23	25.03	23.81	20.03	16.17	12.34	8.67	5.24	2.04	-1.01	-4.1	-7.58]')/1000;
 fcn13 = fit(knee_angle,t1_ICR_x,'cubicspline');
 t1_ICR_y = ([25.97	25.74	25.61	25.53	25.35	25.19	25.03	24.57	24.04	23.39	22.66	21.93	21.32	20.99	21.2	22.33]')/1000;
-fcn14 = fit(knee_angle,theta1_ICR_y,'cubicspline');
+fcn14 = fit(knee_angle,t1_ICR_y,'cubicspline');
 
 kneeMin = -2.0943951;
 kneeMax = 0.17453293;
@@ -100,39 +100,39 @@ for i = 1:positions
 end
 
 %10 mm Festo
-% Dia = 10;
-% rest = 0.415;
-% kmax = 0.350;
-% tendon = 0.011; 
-% fitting = 0.0254; 
-% pres = 603.5236;         %average pressure
-% Bifemsh_Pam = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
-% 
-% fitting = 0.0352; 
-% Bifemsh_Pam_adj = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
+Dia = 10;
+rest = 0.415;
+kmax = 0.350;
+tendon = 0.011; 
+fitting = 0.0254; 
+pres = 603.5236;         %average pressure
+Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
+
+fitting = 0.0352; 
+Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
 %20 mm Festo
-Dia = 20;
-rest = 0.423;
-kmax = 0.322;
-tendon = 0.017; 
-fitting = 0.0254; 
-pres1 = 273.9783;         %average pressure, first test
-pres2 = 484.8063;         %average pressure, first test
-pres3 = 606.4926;         %average pressure, first test
-Bifemsh_Pam1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1);
-Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2);
-Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
-
-fitting_adj = 0.0352; 
-Bifemsh_Pam_adj1 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres1);
-Bifemsh_Pam_adj2 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres2);
-Bifemsh_Pam_adj3 = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres3);
+% Dia = 20;
+% rest = 0.423;
+% kmax = 0.322;
+% tendon = 0.017; 
+% fitting = 0.0254; 
+% pres1 = 273.9783;         %average pressure, first test
+% pres2 = 484.8063;         %average pressure, first test
+% pres3 = 606.4926;         %average pressure, first test
+% Bifemsh_Pam1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1);
+% Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2);
+% Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
+% 
+% fitting_adj = 0.0352; 
+% Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres1);
+% Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres2);
+% Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres3);
 
 %% Unstacking the Torques to identify specific rotations
 Torque1 = Bifemsh.Torque;
-TorqueR = Bifemsh_Pam.Torque(:,:,4);
-TorqueR_adj = Bifemsh_Pam_adj.Torque(:,:,4);
+TorqueR = Bifemsh_Pam.Torque;
+TorqueR_adj = Bifemsh_Pam_adj.Torque;
 
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
@@ -214,7 +214,7 @@ hold off
 
 %% Compare Expected vs Adjusted PAM values
 figure
-plot(phiD, Bifemsh_Pam_adj.Torque(:, 3), phiD, TorqueR(:, 3))
+plot(phiD, TorqueR_adj(:, 3), phiD, TorqueR(:, 3))
 title('Muscle and PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
@@ -297,13 +297,12 @@ xlabel('Knee Angle, degree')
 hold off
 
 %% Plotting on the Mesh Skeleton
-
-HMuscleLocation = {Bifemsh.Location};
-HMuscleCross = {Bifemsh.Cross};
-
-RMuscleLocation = {Bifemsh_Pam.Location};
-RMuscleCross = {Bifemsh_Pam.Cross};
-
-Bones = {'Femur', 'Tibia'};
-
-run("MuscleBonePlotting")
+% HMuscleLocation = {Bifemsh.Location};
+% HMuscleCross = {Bifemsh.Cross};
+% 
+% RMuscleLocation = {Bifemsh_Pam.Location};
+% RMuscleCross = {Bifemsh_Pam.Cross};
+% 
+% Bones = {'Femur', 'Tibia'};
+% 
+% run("MuscleBonePlotting")

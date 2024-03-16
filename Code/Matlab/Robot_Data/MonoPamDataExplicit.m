@@ -118,7 +118,7 @@ classdef MonoPamDataExplicit < handle
         end
         
         %% ------------- Muscle Length ------------------------
-        %Function that calculates the muscle length, based
+        %Function that calculates the musclutendon length
         function mL = get.MuscleLength(obj)
             L = obj.Location;
             T = obj.TransformationMat;
@@ -180,11 +180,11 @@ classdef MonoPamDataExplicit < handle
 %            
 %             %Calculate the Pam end cap fitting length (estimates currently)
 % %             if dia == 20
-% %                 fittingLength = 0.02275;
+% %                 fittingLength = 0.0254;
 % %             elseif dia == 40
-% %                 fittingLength = 0.028;
+% %                 fittingLength = 0.0254;
 % %             else
-% %                 fittingLength = 0.022;
+% %                 fittingLength = 0.0254;
 % %             end
 % % 
 %             obj.FittingLength = fittingLength;
@@ -208,7 +208,7 @@ classdef MonoPamDataExplicit < handle
         
         %% -------------- Contraction of the PAM --------------------------
         function contraction = get.Contraction(obj)
-            mL = obj.MuscleLength;
+            mL = obj.MuscleLength;      %musculotendon length
             rest = obj.RestingL;
             tendon = obj.TendonL;
             fitting = obj.FittingLength;

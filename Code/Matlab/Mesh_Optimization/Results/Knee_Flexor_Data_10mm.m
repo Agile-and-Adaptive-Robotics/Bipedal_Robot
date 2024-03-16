@@ -115,15 +115,15 @@ kmax = 0.350;
 tendon = 0.011; 
 fitting = 0.0254; 
 pres = 603.5236;         %average pressure
-Bifemsh_Pam = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
+Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
 fitting = 0.0352; 
-Bifemsh_Pam_adj = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
+Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
 %% Unstacking the Torques to identify specific rotations
 Torque1 = Bifemsh.Torque;
-TorqueR = Bifemsh_Pam.Torque(:,:,4);
-TorqueR_adj = Bifemsh_Pam_adj.Torque(:,:,4);
+TorqueR = Bifemsh_Pam.Torque;
+TorqueR_adj = Bifemsh_Pam_adj.Torque;
 
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
@@ -374,8 +374,8 @@ TorqueZ = squeeze(TorqueZ);
 
 
 figure
-plot(phiD, TorqueR(:, 3), K_ang/c, TorqueZ,'o')
-legend('Theoretical','Measured')
+plot(K_ang/c, -TorqueZ,'.',phiD, Bifemsh_Pam_adj.Torque(:, 3),phiD, TorqueR(:, 3))
+legend('Measured','Optimized','Original Theoretical')
 title('PAM Z Torque')
 xlabel('Knee Extension/Rotation, degrees')
 ylabel('Torque, Nm')
