@@ -20,11 +20,11 @@ end
 x = restingLength;
 y = Pressure;
 %Parameters for Fmax equation
-a1 = 1.5;                    %N/kPa
-a2 = 0.0228;                   %1/kPa
+a1 = 1.4877;                    %N/kPa
+a2 = 0.0248;                   %1/kPa
 % a = [a1 a2];
-% a_ub = [1.515 0.02368];      %Upper bound on coefficient confidence interval
-% a_lb = [1.487 0.02187];      %Lower bound on coefficient confidence interval
+% a_ub = [1.5011 0.0258];      %Upper bound on coefficient confidence interval
+% a_lb = [1.4745 0.0238];      %Lower bound on coefficient confidence interval
                              %Maximum Pressure
 
 z = y*(a1*atan(a2*(x-0.0075)*y));

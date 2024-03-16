@@ -9,8 +9,8 @@
 
 %Inputs:
 %   - Resting length (in meters)
-%   - Pressure (in kPa); if no pressure given, use 620;
 %   - Diameter (as a string?): if no diameter given, use 10 mm;
+%   - Pressure (in kPa); if no pressure given, use 620;
 %Outputs:
 %   - Force (Newtons)
 
@@ -26,29 +26,31 @@ checkDia = @(x) any(validatestring(x,validDia));
 addOptional(p,'diameter',defaultDia,checkDia);
 
 defaultPres = 620;
-checkPres = @(x) (x > 0) && isnumeric(x);
+checkPres = @(y) (y > 0) && isnumeric(y);
 addOptional(p,'pressure',defaultPres,checkPres);
+parse(p, restingLength, varargin{:})
 
 x = restingLength;
-y = pressure;
+y = p.Results.pressure;
+dia = p.Results.diameter;
 
-    switch diameter
+    switch dia
         case '10'
         %Parameters for F_{max10} equation
-        a1 = 0.4909;                    %N\per\kPa
-        a2 = 0.03171;                   %\per\kPa\per\m
+        a1 = 0.4895;                    %N\per\kPa
+        a2 = 0.03068;                   %\per\kPa\per\m
         % a = [a1 a2];
-        % a_ub = [0.5008 0.02813];      %Upper bound on coefficient confidence interval
-        % a_lb = [0.481  0.03528];      %Lower bound on coefficient confidence interval                   
+        % a_ub = [];      %Upper bound on coefficient confidence interval
+        % a_lb = [];      %Lower bound on coefficient confidence interval                   
         z = y.*(a1.*atan(a2.*(x-0.0075).*y));
         
         case '20'
         %Parameters for F_{max20} equation
-        a1 = 1.51;                    %N\per\kPa
-        a2 = 0.0224;                   %\per\kPa\per\m
+        a1 = 1.4877;                    %N\per\kPa
+        a2 = 0.0248;                   %\per\kPa\per\m
         % a = [a1 a2];
-        % a_ub = [1.526 0.03528];      %Upper bound on coefficient confidence interval
-        % a_lb = [1.494  0.02138];      %Lower bound on coefficient confidence interval                   
+        % a_ub = [];      %Upper bound on coefficient confidence interval
+        % a_lb = [];      %Lower bound on coefficient confidence interval                   
         z = y.*(a1.*atan(a2.*(x-0.0075).*y));
         
         case '40'

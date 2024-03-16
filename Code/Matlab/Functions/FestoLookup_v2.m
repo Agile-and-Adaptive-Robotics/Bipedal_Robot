@@ -190,6 +190,8 @@ Xgr = {X3g, X2g, X1g};
 Ygr = {Y2g, Y1g, Y1h};
 FestoLookup = {FestoLookup10, FestoLookup20, FestoLookup40};
 
+save FestoLookup.mat f_10 f20 f40
+
 
 %% Get 10 mm experimental data ready for plotting
 load allData.mat Xf Yf Zf

@@ -11,7 +11,7 @@ load FestoLookup.mat f40 f20
 clear X Y
 
 %rel = contract/0.25;    % Normalize contraction
-P = pres/600;           % Normalize pressure
+P = pres/620;           % Normalize pressure
 Fmax20 = 1500;          % Max 20mm BPA force
 Fmax40 = 6000;          % Max 20mm BPA force
 
