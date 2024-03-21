@@ -213,10 +213,7 @@ classdef MonoPamDataExplicit < handle
             tendon = obj.TendonL;
             fitting = obj.FittingLength;
             
-            contraction = zeros(length(mL), 1);
-            for i = 1:length(mL)
-                contraction(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest;
-            end
+            contraction = (rest-(mL-tendon-2*fitting))/rest;
         end
         
         %% -------------- Length Check --------------------------

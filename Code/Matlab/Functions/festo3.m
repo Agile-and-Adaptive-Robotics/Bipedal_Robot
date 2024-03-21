@@ -43,22 +43,18 @@ rel = zeros(size(Lmt,1),1);
     if dia == 10
         load FestoLookup.mat f_10
         Fn = f_10(rel,P);
+        Fn(Fn > 1.005) = NaN;           %Allow for relative force 1+RMSE          
     elseif dia == 20
        load FestoLookup.mat f20
        Fn = f20(rel,P);
+       Fn(Fn > 1.023) = NaN;           %Allow for relative force 1+RMSE
     elseif dia == 40
         load FestoLookup.mat f40
         Fn = f40(rel,P);
+        Fn(Fn > 1.04) = NaN;           %Allow for relative force 1+RMSE
     end
 
-    for i = length(Fn)
-        if Fn(i) > 1
-            Fn(i) = NaN;
-        elseif Fn(i)<0
-            Fn(i) = 0;
-        else
-        end
-    end
+    Fn( Fn < 0) = 0;                   %No negative force
     
     F = Fn.*maxF;
             

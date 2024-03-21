@@ -43,15 +43,19 @@ dia = p.Results.diameter;
         % a_ub = [];      %Upper bound on coefficient confidence interval
         % a_lb = [];      %Lower bound on coefficient confidence interval                   
         z = y.*(a1.*atan(a2.*(x-0.0075).*y));
+        %RMSE = 14.72 N for P = 620 kPa
+        %Max error = 30..9 N for P = 620 kPa
         
         case '20'
         %Parameters for F_{max20} equation
         a1 = 1.4877;                    %N\per\kPa
-        a2 = 0.0248;                   %\per\kPa\per\m
+        a2 = 0.0248;                    %\per\kPa\per\m
         % a = [a1 a2];
         % a_ub = [];      %Upper bound on coefficient confidence interval
         % a_lb = [];      %Lower bound on coefficient confidence interval                   
         z = y.*(a1.*atan(a2.*(x-0.0075).*y));
+        %RMSE = 23.83 N for P = 620 kPa
+        %Max error = 62.1 N for P = 620 kPa
         
         case '40'
         %From Festo tool. Irrespective of length.
