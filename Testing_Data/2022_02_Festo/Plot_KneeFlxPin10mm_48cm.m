@@ -14,18 +14,13 @@ kmax = 0.398; %Length at maximum contraction, m
 %Test 3 == sheet FlxTest10mm_1 from Results_table10mm_pinned_FishScale
 %Test 4 == sheet FlxTest10mm_4 from Results_table10mm_pinned_FishScale
 %Test 5 == sheet FlxTest10mm_2 from Results_table10mm_pinned_FishScale [not
-%%used due to uncertainty about resting length]
+%%used due to uncertainty about resting length, and divergence from the results of the other 4 tests]
 %% Torque calculated from measurements
 Angle{1} = [-5.5	-10.5	-25.5	-4.5	-14.5	-20	-33	-39.5	-43	-50	-62.5	-60	-55	-53.5	-46	-40	-36.5	-33.5	-29.5	-24.5	-17.5	-14.5	-5.5	-3	-0.5	3.5	11.5	19.5]';
-L1 = length(Angle{1});
 Angle{2} = [6	5.5	-1	-15	-26.6	-35	-42.5	-56	-56	-63	-64	-55	-48	-42	-35	-26	-19	-11	0.5	11.5]';
-L2 = length(Angle{2});
 Angle{3} = [-10	-14	-24	-27	-23	-21	-35	-45	-52	-61	-65]';
-L3 = length(Angle{3});
 Angle{4} = [-22	-25	-32	-35	-37	-42	-44.5	-52	-57	-62	-68	-71	-69.5	-67	-61.5	-48	-33	-34	-25.5	-36	-2	-8	-13.5	-19.5	-24	-24	-20	-19	-15	-13	-2]';
-L4 = length(Angle{4});
 % Angle{5} = [-18.5	-30.5	-39.5	-36.5	-42	-46.5	-52.5	-69.5	-68.5	-69.9	-60.5	-53	-47.5	-37.5	-44.5	-31.5	-26.5	-23]';
-% L5 = length(Angle{5});
 
 Torque{1} = [-13.55019944	-12.71574633	-12.2274503	-13.57429518	-12.61783318	-11.4271733	-7.828935983	-6.496239587	-4.940487337	-2.826134001	-1.210800042	-0.110215947	-1.513744872	-3.192740824	-4.861595823	-6.86945259	-8.599788984	-10.3582314	-11.8636379	-13.47755504	-13.77813076	-14.88459711	-14.53453947	-14.33814406	-14.02122399	-12.53904665	-11.16785477	-8.28360707]';
 Torque{2} = [-12.02448648	-12.01072043	-12.46707433	-11.42926509	-9.361208447	-7.676179585	-4.957997672	-1.67225365	-0.807464392	-0.003574341	-2.019875	-4.170597119	-6.466679019	-8.166509485	-10.60330251	-12.64002428	-13.93045057	-14.68948292	-14.67482254	-13.15130291]';
@@ -99,7 +94,6 @@ c{7} = '#0000FF'; %indigo
 c{8} = '#000000'; %black
 sz = 60;        %size of data points
 
-
 %% Plot the expected value and scatter the data that show which test they come from
 Test = ["FlxTest10mm_1...10mm_pinned_LoadCell"; 
         "FlxTest10mm_2...10mm_pinned_LoadCell";
@@ -122,12 +116,12 @@ TorqueHand = cell2mat(TorqueHand);
 Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
 G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
 
-figure
+fig_MA = figure;
 ax1 = gca;
 hold on
-pp = plot(phiD,G,'Color',c{7},'DisplayName','MA expected');
+pp = plot(phiD,G,'Color',c{7},'Linewidth',2,'DisplayName','MA expected');
 if ~iscell(Angle)
-    ss = scatter(Angle, ICRtoMuscle,sz,'filled','MarkerFaceColor',c{6},'DisplayName','MA measured');
+    ss = scatter(Angle, ICRtoMuscle,sz,'filled','MarkerFaceColor',c{5},'DisplayName','MA measured');
 else
     for i = 1:length(Angle)
     ss{i} = scatter(Angle{i}, ICRtoMuscle{i},sz,'filled','MarkerFaceColor',c{7-i},'DisplayName',Test{i});
@@ -137,8 +131,7 @@ hold off
 title('Expected vs measured moment arm')
 xlabel('Knee angle, degrees')
 ylabel('Moment Arm, z axis (m)')
-ax1.FontSize = 12;
-ax1.FontWeight = 'bold';
+set(ax1,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
 ax1.FontName = 'Arial';
 ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
 ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
@@ -150,12 +143,12 @@ hold off
 strain = Bifemsh_Pam.Contraction;
 relstrain = (strain)./KMAX;
 
-figure
-ax1 = gca;
+fig_relstrain = figure;
+ax2 = gca;
 hold on
-plot(phiD,relstrain,'DisplayName','Expected Relative Strain')
+plot(phiD,relstrain,'Linewidth',2,'DisplayName','Expected Relative Strain')
 if ~iscell(Angle)
-    scatter(Angle,rel,sz,'filled','MarkerFaceColor',c{6},'DisplayName','Measured Relative Strain')
+    sc_rel = scatter(Angle,rel,sz,'filled','MarkerFaceColor',c{5},'DisplayName','Measured Relative Strain');
 else
     for i = 1:length(Angle)
         sc_rel{i} = scatter(Angle{i},rel{i},sz,'filled','MarkerFaceColor',c{7-i},'DisplayName',Test(i));
@@ -165,49 +158,47 @@ hold off
 title('Relative strain')
 xlabel('Knee angle, \circ')
 ylabel('strain/kmax')
-ax1.FontSize = 12;
-ax1.FontWeight = 'bold';
-ax1.FontName = 'Arial';
-ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
-ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+set(ax2,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+ax2.FontName = 'Arial';
+ax2.YAxis.LineWidth = 2; ax2.YAxis.FontSize = 10;
+ax2.XAxis.LineWidth = 2; ax2.XAxis.FontSize = 10;
 lgdMa = legend;
 lgdMa.FontSize = 8;
 hold off
 
 %% Plot measured versus expected strain (like above, but not normalized
-figure
+fig_strain = figure;
+ax3 = gca;
 hold on
-plot(phiD,strain,'Color',c{7},'DisplayName','Expected Strain')
+pl_strain = plot(phiD,strain,'Color',c{7},'Linewidth',2,'DisplayName','Expected Strain');
 if ~iscell(Angle)
-    scatter(Angle,strainz,sz,'filled','MarkerFaceColor',c{6},'DisplayName','MeasuredStrain')
+    sc_str = scatter(Angle,strainz,sz,'filled','MarkerFaceColor',c{5},'DisplayName','MeasuredStrain');
 else
     for i = 1:length(Angle)
-        sc_rel{i} = scatter(Angle{i},strainz{i},sz,'filled','MarkerFaceColor',c{7-i},'DisplayName',Test(i));
+        sc_str{i} = scatter(Angle{i},strainz{i},sz,'filled','MarkerFaceColor',c{7-i},'DisplayName',Test(i));
     end
 end
 hold off
 title('Absolute strain')
 xlabel('Knee angle, \circ')
 ylabel('strain')
-ax1 = gca;
-ax1.FontSize = 12;
-ax1.FontWeight = 'bold';
-ax1.FontName = 'Arial';
-ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
-ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+set(ax3,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+ax3.FontName = 'Arial';
+ax3.YAxis.LineWidth = 2; ax3.YAxis.FontSize = 10;
+ax3.XAxis.LineWidth = 2; ax3.XAxis.FontSize = 10;
 lgdMa = legend;
 lgdMa.FontSize = 8;
 hold off
 
 %% Plot measured versus expected BPA length
-MuscleLength = Bifemsh_Pam.MuscleLength;
+MuscleLength = Bifemsh_Pam.MuscleLength-2*fitting-tendon;
 
-figure
-ax1 = gca;
+fig_mL = figure;
+ax4 = gca;
 hold on
-plot(phiD,MuscleLength,'Color',c{7},'DisplayName','Expected Muscle Length')
+plml = plot(phiD,MuscleLength,'Color',c{7},'Linewidth',2,'DisplayName','Expected Muscle Length');
 if ~iscell(Angle)
-    scatter(Angle,InflatedLength,sz,'filled','MarkerFaceColor',c{6},'DisplayName','Measured Length')
+    sc_ML = scatter(Angle,InflatedLength,sz,'filled','MarkerFaceColor',c{5},'DisplayName','Measured Length');
 else
     for i = 1:length(Angle)
         sc_mL{i} = scatter(Angle{i},InflatedLength{i},sz,'filled','MarkerFaceColor',c{7-i},'DisplayName','Measured Length');
@@ -217,24 +208,23 @@ hold off
 title('Expected vs measured muscle length')
 xlabel('Knee angle, \circ')
 ylabel('Length, m')
-ax1.FontSize = 12;
-ax1.FontWeight = 'bold';
-ax1.FontName = 'Arial';
-ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
-ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
+set(ax4,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+ax4.FontName = 'Arial';
+ax4.YAxis.LineWidth = 2; ax4.YAxis.FontSize = 12;
+ax4.XAxis.LineWidth = 2; ax4.XAxis.FontSize = 12;
 lgdMa = legend;
 lgdMa.FontSize = 8;
 hold off
 
 %% Plotting Torque 
-fig2 = figure;
-gcf2 = gcf;
-ax2 = gca;
+fig_T = figure;
+gcf_T = gcf;
+ax5 = gca;
 hold on
 PL = plot(phiD, Theoretical,'Color',c{7},'Linewidth',2,'DisplayName','Expected Torque');
 if ~iscell(Angle)
-    scH = scatter(Angle,TorqueHand,sz,'MarkerFaceColor',c{2},'DisplayName','Hybrid calc');
-    scM = scatter(Angle,Torque,sz,'filled','d','MarkerFaceColor',c{6},'DisplayName','Measured Torque');
+    scH = scatter(Angle,TorqueHand,sz,'filled','MarkerFaceAlpha',0.75,'MarkerFaceColor',c{2},'DisplayName','Hybrid calc');
+    scM = scatter(Angle,Torque,sz,'filled','MarkerFaceAlpha',0.75,'MarkerFaceColor',c{5},'DisplayName','Measured Torque');
 else
     for i = 1:length(Angle)
     scM{i} = scatter(Angle{i},Torque{i},sz,'filled','d','MarkerFaceColor',c{7-i},'DisplayName',sprintf('Measured, test%d',i));
@@ -244,9 +234,12 @@ end
 hold off
 title('Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long')
 xlabel('Knee angle, \circ')
-ylabel('Torque, $N \cdot m$')
+ylabel('Torque, N \cdot m')
 % set(gcf2,'Position',[1 384 950 612]);
-set(ax2,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+set(ax5,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+ax5.FontName = 'Arial';
+ax5.YAxis.LineWidth = 2; ax5.YAxis.FontSize = 12;
+ax5.XAxis.LineWidth = 2; ax5.XAxis.FontSize = 12;
 lgd = legend;
 lgd.FontSize = 8;
 

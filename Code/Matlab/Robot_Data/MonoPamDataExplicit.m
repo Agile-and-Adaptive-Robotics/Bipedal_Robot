@@ -272,9 +272,7 @@ classdef MonoPamDataExplicit < handle
             dia = obj.Diameter;
             unitD = obj.UnitDirection;
             contract = obj.Contraction;
-%             mL = obj.MuscleLength;
             rest = obj.RestingL;
-%             fitting = obj.FittingLength;
             pres = obj.Pressure;
             kmax = obj.Kmax;  
             KMAX = (rest-kmax)/rest; %turn it into a percentage 

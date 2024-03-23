@@ -95,57 +95,57 @@ rest = 415/1000;        %resting length clamp to clamp, minus the barb
 kmax = 0.350;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 605.2351;        %Pressure, kPa
-Vas_Pam_42cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
+Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 %41.5 cm,  tendon
 rest = 415/1000;        %resting length clamp to clamp, minus the barb
 kmax = 0.350;           %length at maximum contraction
 tendon = 0.0384;         %Tendon length
 pres = 605.2351;        %Pressure, kPa
-Vas_Pam_42cm_tendon = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
+Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 %45.7 cm, no tendon
 rest = 457/1000;        %resting length clamp to clamp, minus the barb
 kmax = 0.380;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 602;             %Pressure, kPa
-Vas_Pam_46cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
+Vas_Pam_46cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 %48.6 cm, no tendon
 rest = 485/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.405;           %length at maximum contraction
+kmax = 0.398;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 605.8523;        %Pressure, kPa
-Vas_Pam_48cm = MonoPamDataExplicit_compare(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
+Vas_Pam_48cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 
 %% Unstacking the Torques to identify specific rotations
-Torque_42cm = Vas_Pam_42cm.Torque(:,3,4);
-Torque_42cm_ten = Vas_Pam_42cm_tendon.Torque(:,3,4);
-Torque_46cm = Vas_Pam_46cm.Torque(:,3,4);
-Torque_48cm = Vas_Pam_48cm.Torque(:,3,4);
+Torque_42cm = Vas_Pam_42cm.Torque(:,3);
+Torque_42cm_ten = Vas_Pam_42cm_tendon.Torque(:,3);
+Torque_46cm = Vas_Pam_46cm.Torque(:,3);
+Torque_48cm = Vas_Pam_48cm.Torque(:,3);
 
 %% Plotting Torque Results
 
 figure
 plot(phiD, Torque_42cm)
-title('\bf Iso. Torque vs $\theta_{k}$, $l_{rest}=415\,$ mm, no tendon','Interpreter','latex')
+title('\bf l_{rest}=41.5 cm, no tendon','Interpreter','tex')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
-ylabel('\bf Torque, $N \cdot m$','Interpreter','latex')
+ylabel('\bf Torque, N\cdotm','Interpreter','tex')
 
 figure
 plot(phiD, Torque_42cm_ten)
-title('\bf Iso. Torque vs $\theta_{k}$, $l_{rest}=415\,$ mm, $38\,mm$ tendon','Interpreter','latex')
+title('\bf l_{rest}=41.5 cm, 38 mm tendon','Interpreter','tex')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
-ylabel('\bf Torque, $N \cdot m$','Interpreter','latex')
+ylabel('\bf Torque N\cdotm','Interpreter','tex')
 
 figure
 plot(phiD, Torque_46cm)
-title('\bf Iso. Torque vs $\theta_{k}$, $l_{rest}=457\,$ mm','Interpreter','latex')
+title('\bf l_{rest}=45.7 cm','Interpreter','tex')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
-ylabel('\bf Torque, $N \cdot m$','Interpreter','latex')
+ylabel('\bf Torque, N\cdotm','Interpreter','tex')
 
 figure
 plot(phiD, Torque_48cm)
-title('\bf Iso. Torque vs $\theta_{k}$, $l_{rest}=485\,$ mm','Interpreter','latex')
+title('\bf l_{rest}=48.5 cm','Interpreter','tex')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
-ylabel('\bf Torque, $N \cdot m$','Interpreter','latex')
+ylabel('\bf Torque, N\cdotm','Interpreter','tex')

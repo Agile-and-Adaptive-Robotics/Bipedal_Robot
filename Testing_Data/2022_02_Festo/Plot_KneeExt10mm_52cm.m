@@ -27,7 +27,6 @@ InflatedLength = [518	520	510	495	485	475	460	450	450]/1000;
 ICRtoMuscle = [38	35	40	40	45	45	40	40	41]/1000;
 
 
-
 %load pressure where applicable
 test = 1;
 runsperseries = 9;
