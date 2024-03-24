@@ -24,8 +24,8 @@ T = zeros(4, 4, positions);
 
 c = pi/180; %Convert from degrees to radians
 
-kneeMin = -120*c;
-kneeMax = 10*c;
+kneeMin = -125*c;
+kneeMax = 35*c;
 phi = linspace(kneeMin, kneeMax, positions);
 
 %We want one of our positions to be home position, so let's make the
@@ -48,32 +48,39 @@ end
 Name = 'Vastus Intermedius, Robot';
 Location = zeros(5,3,positions);
 
-% Origin Location from Ben
+% Locations from Assem2.75
+% p1 = [0.030, -0.050, 0];             %Extensor Origin
+% p2 = [0.055, -0.350, 0.000];         %BPA contacts screw that joins femur body with femoral condyles
+% p2p = [0.053, -0.350, -0.005];         %BPA slips off screw that joins femur body with femoral condyles
+% p3 = [0.04128, -0.410,    -0.01];        %Contact point between 19.6 and 74.01 degrees flexion
+% p4 = [0.01138, -0.425, -0.010];            %Contact point over 74.01 degrees flexion
+% p5 = [0.0425, -0.07591, 0.000];      %%Tibia bracket (insertion)
+
 p1 = [0.030, -0.050, 0];             %Extensor Origin
-p2 = [0.055, -0.350, 0.000];         %BPA contacts screw that joins femur body with femoral condyles
-p2p = [0.053, -0.350, -0.005];         %BPA slips off screw that joins femur body with femoral condyles
-p3 = [0.04128, -0.410,    -0.01];        %Contact point between 19.6 and 74.01 degrees flexion
-p4 = [0.01138, -0.425, -0.010];            %Contact point over 74.01 degrees flexion
+p2 = [0.065, -0.350, 0.000];         %BPA contacts screw that joins femur body with femoral condyles
+p2p = [0.054, -0.350, -0.02];         %BPA slips off screw that joins femur body with femoral condyles
+p3 = [0.03743, -0.41851,  -0.01];        %Contact point between 24.5 and 74.01 degrees flexion
+p4 = [0.00612, -0.4286, -0.005];            %Contact point over 74.01 degrees flexion
 p5 = [0.0425, -0.07591, 0.000];      %%Tibia bracket (insertion)
 
 for i = 1:positions
-    if phiD(i) >= -74.01 && phiD(i) < -15.5
-     Location(:,:,i) = [p1;...     %Origin
-                        p2p;...    %BPA contacts screw that joins femur body with femoral condyles
-                        p3;...     %Contact point between 19.6 and 74.01 degrees flexion
-                        p3;...     %Row 4 = Row 3
-                        p5];       %Tibia bracket (insertion)
-    elseif phiD(i) >= -15.5 && phiD(i) < 20
-     Location(:,:,i) = [p1;...     %Origin
-                        p2;...     %BPA contacts screw that joins femur body with femoral condyles
-                        p2;...     %Row 3 = Row 2
-                        p2;...     %Row 4 = Row 2
-                        p5];       %Tibia bracket (insertion)
-    elseif phiD(i) >= 20
+    if phiD(i) >= 15.15
      Location(:,:,i) = [p1;...     %Origin
                         p1;...     %Row 2 = Row 1 (no screw contact)
                         p1;...     %Row 3 = Row 2
                         p1;...     %Row 4 = Row 2
+                        p5];       %Tibia bracket (insertion)
+    elseif phiD(i) >= -18.71 && phiD(i) < 15.15
+     Location(:,:,i) = [p1;...     %Origin
+                        p2p;...     %BPA contacts screw that joins femur body with femoral condyles, does not slip at low contact angle
+                        p2p;...     %Row 3 = Row 2
+                        p2p;...     %Row 4 = Row 2
+                        p5];       %Tibia bracket (insertion)
+    elseif phiD(i) >= -80 && phiD(i) < -18.71
+     Location(:,:,i) = [p1;...     %Origin
+                        p2p;...    %BPA contacts screw that joins femur body with femoral condyles
+                        p3;...     %Contact point between 19.6 and 74.01 degrees flexion
+                        p3;...     %Row 4 = Row 3
                         p5];       %Tibia bracket (insertion)
     else
      Location(:,:,i) = [p1;...     %Origin
@@ -91,32 +98,32 @@ fitting = 0.0254;           %fitting length
 % tendon22 = 0.022;
 
 %41.5 cm, no tendon
-rest = 415/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.350;           %length at maximum contraction
+rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.349;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 605.2351;        %Pressure, kPa
-Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
+Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon, fitting, pres);
 
 %41.5 cm,  tendon
-rest = 415/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.350;           %length at maximum contraction
-tendon = 0.0384;         %Tendon length
+rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.349;           %length at maximum contraction
+tendon1 = 0.032;         %Tendon length
 pres = 605.2351;        %Pressure, kPa
-Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
+Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon1, fitting, pres);
 
 %45.7 cm, no tendon
-rest = 457/1000;        %resting length clamp to clamp, minus the barb
+rest46 = 457/1000;        %resting length clamp to clamp, minus the barb
 kmax = 0.380;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 602;             %Pressure, kPa
-Vas_Pam_46cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
+Vas_Pam_46cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest46, kmax, tendon, fitting, pres);
 
 %48.6 cm, no tendon
-rest = 485/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.398;           %length at maximum contraction
+rest48 = 486/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.405;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 605.8523;        %Pressure, kPa
-Vas_Pam_48cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
+Vas_Pam_48cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest48, kmax, tendon, fitting, pres);
 
 %% Unstacking the Torques to identify specific rotations
 Torque_42cm = Vas_Pam_42cm.Torque(:,3);
@@ -134,7 +141,7 @@ ylabel('\bf Torque, N\cdotm','Interpreter','tex')
 
 figure
 plot(phiD, Torque_42cm_ten)
-title('\bf l_{rest}=41.5 cm, 38 mm tendon','Interpreter','tex')
+title(sprintf('l_{rest} = 41.5 cm, tendon = %d mm',tendon1*10^3),'Interpreter','tex','FontWeight','bold')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
 ylabel('\bf Torque N\cdotm','Interpreter','tex')
 

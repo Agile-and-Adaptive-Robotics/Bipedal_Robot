@@ -127,7 +127,7 @@ hold off
 title('Relative strain')
 xlabel('Knee angle, \circ')
 ylabel('strain/kmax')
-set(ax2,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+set(ax2,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05]);
 ax2.FontName = 'Arial';
 ax2.YAxis.LineWidth = 2; ax2.YAxis.FontSize = 10;
 ax2.XAxis.LineWidth = 2; ax2.XAxis.FontSize = 10;
@@ -151,7 +151,7 @@ hold off
 title('Absolute strain')
 xlabel('Knee angle, \circ')
 ylabel('strain')
-set(ax3,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+set(ax3,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05]);
 ax3.FontName = 'Arial';
 ax3.YAxis.LineWidth = 2; ax3.YAxis.FontSize = 10;
 ax3.XAxis.LineWidth = 2; ax3.XAxis.FontSize = 10;
@@ -177,7 +177,7 @@ hold off
 title('Expected vs measured muscle length')
 xlabel('Knee angle, \circ')
 ylabel('Length, m')
-set(ax4,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+set(ax4,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05]);
 ax4.FontName = 'Arial';
 ax4.YAxis.LineWidth = 2; ax4.YAxis.FontSize = 12;
 ax4.XAxis.LineWidth = 2; ax4.XAxis.FontSize = 12;
@@ -205,7 +205,7 @@ title('Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long')
 xlabel('Knee angle, \circ')
 ylabel('Torque, $N \cdot m$')
 % set(gcf2,'Position',[1 384 950 612]);
-set(ax5,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+set(ax5,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05]);
 ax5.FontName = 'Arial';
 ax5.YAxis.LineWidth = 2; ax5.YAxis.FontSize = 12;
 ax5.XAxis.LineWidth = 2; ax5.XAxis.FontSize = 12;

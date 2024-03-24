@@ -7,7 +7,7 @@ close all;
 load KneeExtPin_10mm_all.mat
 restingLength = 0.480;      %resting length, m
 kmax = 0.3984;      %Length at maximum contraction, m
-Vas_Pam_48cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
+Vas_Pam_48cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, restingLength, kmax, tendon, fitting, pres);
 Theoretical = Vas_Pam_48cm.Torque(:,3);
 
 %% Tests 1 and 4 done with CALT load cell. Tests 2 and 3 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
@@ -93,8 +93,8 @@ c{7} = '#0000FF'; %indigo
 c{8} = '#000000'; %black
 sz = 60;        %size of data points
 
-%X Limits
-xLim = [-125 40];
+%X axis limit
+xLim = [-120 35];
 
 %% Plot the expected value and scatter the data that show which test they come from
 Test = ["ExtTest10mm-1 pin LoadCell";
@@ -124,7 +124,7 @@ ax1 = gca;
 hold on
 pp = plot(phiD,G,'Color',c{7},'Linewidth',2,'DisplayName','MA expected');
 if ~iscell(Angle)
-    ss = scatter(Angle, ICRtoMuscle,sz,'filled','MarkerFaceColor',c{5},'DisplayName','MA measured');
+    ss = scatter(AngleX, ICRtoMuscleX,sz,'filled','MarkerFaceColor',c{5},'DisplayName','MA measured');
 else
     for i = 1:length(AngleX)
     ss{i} = scatter(AngleX{i}, ICRtoMuscleX{i},sz,'filled','MarkerFaceColor',c{6-i},'DisplayName',Test{i+2});
@@ -134,7 +134,7 @@ hold off
 title('Expected vs measured moment arm')
 xlabel('Knee angle, degrees')
 ylabel('Moment Arm, z axis (m)')
-set(ax1,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+set(ax1,'FontSize', 12,'XLim',xLim, 'FontWeight','bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05]);
 ax1.FontName = 'Arial';
 ax1.YAxis.LineWidth = 2; ax1.YAxis.FontSize = 10;
 ax1.XAxis.LineWidth = 2; ax1.XAxis.FontSize = 10;
@@ -161,7 +161,7 @@ hold off
 title('Relative strain')
 xlabel('Knee angle, \circ')
 ylabel('strain/kmax')
-set(ax2,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+set(ax2,'FontSize', 12,'XLim',xLim, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05]);
 ax2.FontName = 'Arial';
 ax2.YAxis.LineWidth = 2; ax2.YAxis.FontSize = 10;
 ax2.XAxis.LineWidth = 2; ax2.XAxis.FontSize = 10;
@@ -185,7 +185,7 @@ hold off
 title('Absolute strain')
 xlabel('Knee angle, \circ')
 ylabel('strain')
-set(ax3,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+set(ax3,'FontSize', 12, 'XLim',xLim,'FontWeight', 'bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05]);
 ax3.FontName = 'Arial';
 ax3.YAxis.LineWidth = 2; ax3.YAxis.FontSize = 10;
 ax3.XAxis.LineWidth = 2; ax3.XAxis.FontSize = 10;
@@ -211,7 +211,7 @@ hold off
 title('Expected vs measured muscle length')
 xlabel('Knee angle, \circ')
 ylabel('Length, m')
-set(ax4,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+set(ax4,'FontSize', 12, 'XLim',xLim,'FontWeight', 'bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05]);
 ax4.FontName = 'Arial';
 ax4.YAxis.LineWidth = 2; ax4.YAxis.FontSize = 12;
 ax4.XAxis.LineWidth = 2; ax4.XAxis.FontSize = 12;
@@ -241,7 +241,7 @@ title('l_{rest}=48.0 cm')
 xlabel('Knee angle, \circ')
 ylabel('Torque, N\cdotm')
 % set(gcf2,'Position',[1 384 950 612]);
-set(ax5,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on');
+set(ax5,'FontSize', 12,'XLim',xLim, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05]);
 ax5.FontName = 'Arial';
 ax5.YAxis.LineWidth = 2; ax5.YAxis.FontSize = 12;
 ax5.XAxis.LineWidth = 2; ax5.XAxis.FontSize = 12;
