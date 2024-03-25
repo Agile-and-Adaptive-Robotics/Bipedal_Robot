@@ -2,7 +2,7 @@
 %Run and save data from testing results
 clear;
 clc;
-close all;
+% close all;
 
 load KneeExtPin_10mm_all.mat
 restingLength = 0.480;      %resting length, m

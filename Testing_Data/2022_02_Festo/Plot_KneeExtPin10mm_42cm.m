@@ -2,7 +2,7 @@
 %Run and save data from testing results
 clear;
 clc;
-close all;
+% close all;
 
 load KneeExtPin_10mm_all.mat
 rest = cell(3,1);
