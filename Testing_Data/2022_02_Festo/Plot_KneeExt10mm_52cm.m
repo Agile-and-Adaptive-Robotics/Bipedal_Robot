@@ -43,7 +43,7 @@ KMAX = (rest-kmax)/rest;
 rel = ((rest-InflatedLength)/rest)/KMAX;
 Fn = bpaForce10(rest,rel,pres);
 
-F = Fn(3);
+F = Fn;
 TorqueHand = ICRtoMuscle.*F;  %Torque will be positive because it is causing extension   
 
 %% Prepare for plotting
@@ -133,38 +133,22 @@ lgd1.FontSize = 12;
 hold off
 
 %% Mean and RMSE
-Tqz = cell(1,1);
-Tqz{1} = Vas_Pam.Torque(:,3);        %Calculated Torque, new simplified exponential equation w/o optimized fitting length
+% Tqz = cell(1,1);
+Tqz = Vas_Pam.Torque(:,3);        %Calculated Torque, new simplified exponential equation w/o optimized fitting length
 %Tqz{2} = Vas_Pam_adj.Torque(:,3);   %Calculated Torque, adjusted with optimized fitting length
 %Tqz{3} = TorqueHand;                %Placeholder in case we want to compare SSE/RMSE of back calculated torque to measured torque
 
-%fit options
-mod_Pam = fittype('cubicinterp');
-Options = fitoptions(mod_Pam);
-Options.Normal = 'on';
-
 %prepare cells
-mdl_Pam = cell(size(Tqz,1));
-val = cell(length(mdl_Pam),1);
-          
-%Get values at each angle there is measurement data for
-for j = 1:length(Tqz)
-     Options.Exclude = isnan(Tqz{j});
-     mdl_Pam{j} = fit(phiD',Tqz{j},mod_Pam,Options);
-     val{j} = feval(mdl_Pam{j},Angle');
-end
+gI = griddedInterpolant(phiD',Tqz);
+val = gI(Angle);
+
 
 y = Torque';        
 ynew = val;
         
-yresid = cell(length(ynew),1);
-SSresid = cell(length(ynew),1);
-fu = cell(length(ynew),1);
-        
-for i = 1:length(ynew)
-    yresid{i} = y-ynew{i};              %residual error
-    SSresid{i} = sum(yresid{i}.^2,'omitnan'); %Sum of squares of the residual
-    fu{i} = sqrt(SSresid{i}/length(yresid{i}));        % RMSE for function 1
-end
+       
+    yresid = y-ynew;              %residual error
+    SSresid = sum(yresid.^2,'omitnan'); %Sum of squares of the residual
+    RMSE = sqrt(SSresid/sum(~isnan(yresid)));        % RMSE for function 1
 
-fprintf('Original torque calculation returns SSE of %5d with an RMSE of %5d\n',SSresid{1},fu{1})
+fprintf('Original torque calculation returns SSE of %5d with an RMSE of %5d\n',SSresid,RMSE)

@@ -56,7 +56,7 @@ output = cell( 3,1);
 [xData, yData, zData] = prepareSurfaceData( XX, YY, ZZ );
 
 % Set up fittype and options.
-ft = fittype( 'a0*(exp(-a1.*x)-1)+y*exp(-a3*((x).^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
+ft = fittype( 'a0*(exp(-a1.*x)-1)+y.*exp(-a3*((x).^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
 opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
 opts.Display = 'Off';
 opts.Lower = [0 0 0];
@@ -126,7 +126,7 @@ view( 90.0, 0.0 );
 [xData, yData, zData] = prepareSurfaceData(  Ax, Ay, Az);
 
 % Set up fittype and options.
-ft = fittype( 'a0*(exp(-a1.*x)-1)+y*exp(-a3*((x).^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
+ft = fittype( 'a0*(exp(-a1.*x)-1)+y.*exp(-a3*((x).^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
 excludedPoints = zData < 0;
 opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
 opts.Display = 'Off';
@@ -202,7 +202,7 @@ view( 0.0, 0.0 );
 [xData, yData, zData] = prepareSurfaceData( XX40, YY40, ZZ40 );
 
 % Set up fittype and options.
-ft = fittype( 'a0*(exp(-a1.*x)-1)+y*exp(-a3*((x).^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
+ft = fittype( 'a0*(exp(-a1.*x)-1)+y.*exp(-a3*((x).^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
 excludedPoints = zData < 0;
 opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
 opts.Display = 'Off';

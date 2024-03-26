@@ -13,6 +13,7 @@ ax2 = gca;
 %Third Figure
 h3 = openfig('Flx10mm_pin_48cm_optimized.fig','reuse');
 ax3 = gca;
+ylabel('Relative strain \epsilon^*');
 %Fourth Figure
 h4 = openfig('Flx10mm_pin_46cm_optimized.fig','reuse');
 ax4 = gca;
@@ -29,7 +30,7 @@ fig1 = get(ax1,'children'); %get handle to all the children in the figure
 copyobj(fig1,s1); %copy children to new parent axes i.e. the subplot axes
 % title(s1,'\bf l_{rest}=48.5 cm')
 set(s1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',xLim,'XTick',xTik)
-set(s1,'XMinorTick','on','YMinorTick','on')
+set(s1,'XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05])
 lgd1 = legend('Location','SouthWest','FontSize',8);
 
 s2 = nexttile(2);
@@ -37,7 +38,7 @@ fig2 = get(ax2,'children');
 copyobj(fig2,s2);
 % title(s2,'\bf l_{rest}=48.5 cm')
 set(s2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',xLim,'XTick',xTik)
-set(s2,'XMinorTick','on','YMinorTick','on')
+set(s2,'XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05])
 lgd2 = legend('Location','SouthWest','FontSize',8);
 
 s3 = nexttile(3); %create and get handle to the subplot axes
@@ -45,7 +46,7 @@ fig3 = get(ax3,'children');
 copyobj(fig3,s3);
 % title(s3,'\bf l_{rest}=48.5 cm, optimized')
 set(s3,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',[-120 15],'XTick',xTik,'YLim',[-30 0])
-set(s3,'XMinorTick','on','YMinorTick','on')
+set(s3,'XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05])
 lgd3 = legend('Location','SouthWest','FontSize',8);
 
 s4 = nexttile(4);
@@ -53,7 +54,7 @@ fig4 = get(ax4,'children');
 copyobj(fig4,s4);
 % title(s4,'l_{rest}=45.7 cm, validated')
 set(s4,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XTick',xTik,'YLim',[-30 0])
-set(s4,'XMinorTick','on','YMinorTick','on')
+set(s4,'XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05])
 lgd4 = legend('Location','SouthWest','FontSize',8);
 
 title(h5,'\bf Optimization of fitting length')

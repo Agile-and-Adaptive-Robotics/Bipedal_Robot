@@ -122,9 +122,9 @@ G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
 fig_MA = figure;
 ax1 = gca;
 hold on
-pp = plot(phiD,G,'Color',c{7},'Linewidth',2,'DisplayName','MA expected');
+pp = plot(phiD,G,'Color',c{5},'Linewidth',2,'DisplayName','MA expected');
 if ~iscell(Angle)
-    ss = scatter(AngleX, ICRtoMuscleX,sz,'filled','MarkerFaceColor',c{5},'DisplayName','MA measured');
+    ss = scatter(AngleX, ICRtoMuscleX,sz,'filled','MarkerFaceColor',c{7},'DisplayName','MA measured');
 else
     for i = 1:length(AngleX)
     ss{i} = scatter(AngleX{i}, ICRtoMuscleX{i},sz,'filled','MarkerFaceColor',c{6-i},'DisplayName',Test{i+2});
@@ -149,9 +149,9 @@ relstrain = (strain)./KMAX;
 fig_relstrain = figure;
 ax2 = gca;
 hold on
-plot(phiD,relstrain,'Linewidth',2,'DisplayName','Expected Relative Strain')
+plot(phiD,relstrain,'Linewidth',2,'Color',c{5},'DisplayName','Expected Relative Strain')
 if ~iscell(Angle)
-    sc_rel = scatter(Angle,rel,sz,'filled','MarkerFaceColor',c{5},'DisplayName','Measured Relative Strain');
+    sc_rel = scatter(Angle,rel,sz,'filled','MarkerFaceColor',c{7},'DisplayName','Measured Relative Strain');
 else
     for i = 1:length(Angle)
         sc_rel{i} = scatter(Angle{i},rel{i},sz,'filled','MarkerFaceColor',c{6-i},'DisplayName',Test(i));
@@ -173,9 +173,9 @@ hold off
 fig_strain = figure;
 ax3 = gca;
 hold on
-pl_strain = plot(phiD,strain,'Color',c{7},'Linewidth',2,'DisplayName','Expected Strain');
+pl_strain = plot(phiD,strain,'Color',c{5},'Linewidth',2,'DisplayName','Expected Strain');
 if ~iscell(Angle)
-    sc_str = scatter(Angle,strainz,sz,'filled','MarkerFaceColor',c{5},'DisplayName','MeasuredStrain');
+    sc_str = scatter(Angle,strainz,sz,'filled','MarkerFaceColor',c{7},'DisplayName','MeasuredStrain');
 else
     for i = 1:length(Angle)
         sc_str{i} = scatter(Angle{i},strainz{i},sz,'filled','MarkerFaceColor',c{6-i},'DisplayName',Test(i));
@@ -199,9 +199,9 @@ MuscleLength = Vas_Pam_48cm.MuscleLength-2*fitting-tendon;
 fig_mL = figure;
 ax4 = gca;
 hold on
-plml = plot(phiD,MuscleLength,'Color',c{7},'Linewidth',2,'DisplayName','Expected Muscle Length');
+plml = plot(phiD,MuscleLength,'Color',c{5},'Linewidth',2,'DisplayName','Expected Muscle Length');
 if ~iscell(Angle)
-    sc_ML = scatter(Angle,InflatedLength,sz,'filled','MarkerFaceColor',c{5},'DisplayName','Measured Length');
+    sc_ML = scatter(Angle,InflatedLength,sz,'filled','MarkerFaceColor',c{7},'DisplayName','Measured Length');
 else
     for i = 1:length(Angle)
         sc_mL{i} = scatter(Angle{i},InflatedLength{i},sz,'filled','MarkerFaceColor',c{6-i},'DisplayName',Test(i));
@@ -224,10 +224,10 @@ fig_T = figure;
 gcf_T = gcf;
 ax5 = gca;
 hold on
-PL = plot(phiD, Theoretical,'Color',c{7},'Linewidth',2,'DisplayName','Expected Torque');
+PL = plot(phiD, Theoretical,'Color',c{5},'Linewidth',2,'DisplayName','Expected Torque');
 if ~iscell(Angle)
     scH = scatter(AngleX,TorqueHandX,sz,'filled','MarkerFaceAlpha',0.75,'MarkerFaceColor',c{2},'DisplayName','Hybrid calc');
-    scM = scatter(Angle,Torque,sz,'filled','MarkerFaceAlpha',0.75,'MarkerFaceColor',c{5},'DisplayName','Measured Torque');
+    scM = scatter(Angle,Torque,sz,'filled','MarkerFaceAlpha',0.75,'MarkerFaceColor',c{7},'DisplayName','Measured Torque');
 else
     for i = 1:length(Angle)
     scM{i} = scatter(Angle{i},Torque{i},sz,'filled','d','MarkerFaceColor',c{7-i},'DisplayName',Test(i));
