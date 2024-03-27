@@ -131,7 +131,7 @@ Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, k
 %41.5 cm,  tendon
 rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
 kmax = 0.349;           %length at maximum contraction
-tendon1 = 0.032;         %Tendon length
+tendon1 = 0.046;         %Tendon length
 pres = 605.2351;        %Pressure, kPa
 Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon1, fitting, pres);
 
