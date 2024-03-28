@@ -17,7 +17,7 @@ Theoretical = Vas_Pam_42cm.Torque(:,3);
 
 rest{2} = 0.415;
 kmax{2} = 0.340;
-tendon{2} = 0.046;       %22 mm tendon
+tendon{2} = 0.040;       %tendon, image measured
 rest{3} = rest{2};         %repeat  
 kmax{3} = kmax{2};
 tendon{3} = tendon{2}; 

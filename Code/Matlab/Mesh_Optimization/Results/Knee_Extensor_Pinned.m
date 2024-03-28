@@ -111,7 +111,7 @@ for i = 1:positions
                         p4;...
                         p5;...
                         hipToKnee(1)+0.03*cosd(phiD(i)+9.072), hipToKnee(2)+0.03*sind(phiD(i)+9.072), 0;...            %Contact point over 74.01 degrees flexion
-                        p7];     %Tibia bracket (insertion)
+                        p7-[25.4/4, 0, 0]];     %Tibia bracket (insertion)
     end
 end
         
@@ -131,7 +131,7 @@ Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, k
 %41.5 cm,  tendon
 rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
 kmax = 0.349;           %length at maximum contraction
-tendon1 = 0.046;         %Tendon length
+tendon1 = 0.042;         %Tendon length
 pres = 605.2351;        %Pressure, kPa
 Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon1, fitting, pres);
 
