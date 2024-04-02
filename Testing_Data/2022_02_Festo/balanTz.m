@@ -1,4 +1,4 @@
-function [f,x] = balanTz(Angle, Torque, Inflated Length, ICRtoMuscle, Lmt, pres, rest, Dia, tendon, fitting, KMAX, class)
+function [x, fval] = balanTz(Angle, Torque, InflatedLength, ICRtoMuscle, pres, class)
     %Lm == length of muscle (BPA), measured
     %Lmt == length of musculotendon, predicted
     %pres == BPA pressure
@@ -38,26 +38,29 @@ function [f,x] = balanTz(Angle, Torque, Inflated Length, ICRtoMuscle, Lmt, pres,
     elseif dia == 40
         load FestoLookup.mat f40
        Fn = f40;
+    else
+        disp('Error with uninflated diameter')
+    end
     
-    d = optimvar('d','LowerBound',0);
-    kSE = optimvar('y','Type','integer','LowerBound',0);
+    d = optimvar('d',1,'LowerBound',0);
+    kSE = optimvar('y',1,'LowerBound',0);
     
     function Fbal = myfunc(u)
 
         strain = (rest-(Lmt-u(1)-tendon-2*fitting))/rest;      
         rel = strain./kmax;
-        Fbpa = a0*(exp(-a1.*rel)-1)+relPres.*exp(-a3*((rel).^2)); %
+        Fbpa = Fmax.*Fn(rel,relPres); %
 
         Ft = u(2).*u(1); %Series elastic element
 
-        Fbal(:,1) = Fmax.*Fbpa-Ft;
-        Fbal(:,2) = Lmt - (Lm+tendon+2.*fitting+u(1));
+        Fbal(1) = Fbpa-Ft;
+        Fbal(2) = Lmt - (Lm+tendon+2.*fitting+u(1));
 
     end 
 
     x0(1) = 0.01; %Initial guess
     x0(2) = 1000;         %Spring rate, N/m    
-    options = optimoptions('fsolve','Display','iter','FunctionTolerance',0.001,'StepTolerance',1*10^-8);
+    options = optimoptions('fsolve','Display','iter','FunctionTolerance',0.001,'StepTolerance',1*10^-6,'PlotFcn',[@optimplotx, @optimplotfval]);
     
     %x0 is the guess of the Muscle length
     [x, fval] = fsolve(@myfunc,x0,options);

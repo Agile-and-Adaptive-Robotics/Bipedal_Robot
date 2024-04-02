@@ -111,7 +111,7 @@ for i = 1:positions
                         p4;...
                         p5;...
                         hipToKnee(1)+0.03*cosd(phiD(i)+9.072), hipToKnee(2)+0.03*sind(phiD(i)+9.072), 0;...            %Contact point over 74.01 degrees flexion
-                        p7-[25.4/4, 0, 0]];     %Tibia bracket (insertion)
+                        p7-[25.4/4*10^-3, 0, 0]];     %Tibia bracket (insertion)
     end
 end
         

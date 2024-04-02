@@ -2,7 +2,7 @@
 %Run and save data from testing results
 clear;
 clc;
-% close all;
+close all;
 
 %Load file with all the extensors using the pinned knee
 load KneeExtPin_10mm_all.mat

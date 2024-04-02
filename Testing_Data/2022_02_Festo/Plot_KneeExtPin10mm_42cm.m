@@ -16,7 +16,7 @@ Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest{1}, 
 Theoretical = Vas_Pam_42cm.Torque(:,3);
 
 rest{2} = 0.415;
-kmax{2} = 0.340;
+kmax{2} = 0.335;
 tendon{2} = 0.040;       %tendon, image measured
 rest{3} = rest{2};         %repeat  
 kmax{3} = kmax{2};
