@@ -9,9 +9,9 @@ clear
 close all
 
 %% Add paths to the muscle and pam calculators
-current_dir = cd;
-all_code = fullfile(current_dir,'../..');
-addpath(genpath(all_code));
+% current_dir = cd;
+% all_code = fullfile(current_dir,'../..');
+% addpath(genpath(all_code));
 
 % addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Human_Data
 % addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Robot_Data
