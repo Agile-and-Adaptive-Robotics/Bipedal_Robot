@@ -7,9 +7,9 @@ clear
 close all
 
 %% Add paths to the muscle and pam calculators
-current_dir = cd;
-all_code = fullfile(current_dir,'../..');
-addpath(genpath(all_code));
+% current_dir = cd;
+% all_code = fullfile(current_dir,'../..');
+% addpath(genpath(all_code));
 
 %% Joint rotation transformation matrices
 positions = 100;
