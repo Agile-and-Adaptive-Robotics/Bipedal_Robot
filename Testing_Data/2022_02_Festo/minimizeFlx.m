@@ -1,5 +1,5 @@
 %% Optimize predicted torque for extensors.
-function [f, g, bpa] = minimizeFlx(Xi0,Xi1,Xi2)
+function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
 
 %% 46cm length
 %kf = knee flexor, kf(1) = pinned joint, kf(2) = biomimetic;
@@ -45,7 +45,7 @@ clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 M_opt = zeros(length(kf(1).L(2).Mexp)); %Optimized torque prediction
 
 %% RMSE, fvu, and Max Residual
-h = zeros(2,3);
+h = cell(1,2);
 for j = 1:2
     klaus(j) = kf(1).L(j+1);
     bpa(j) = klaus(j);
@@ -57,6 +57,8 @@ end
 
 f = h{1};
 g = h{2};
+varargout{1} = g;
+varargout{2} = bpa;
 
 %% Nested functions, modified from MonoPamExplicit
         %% ------------- Location  ------------------------
