@@ -1,7 +1,7 @@
 %% Optimize predicted torque for extensors.
 function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
 
-%% 46cm length
+%% load
 %kf = knee flexor, kf(1) = pinned joint, kf(2) = biomimetic;
 %ke = knee extensor, same as above
 %kf.L := lengths = [42 46 48] cm
@@ -9,13 +9,12 @@ function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
 %'exp' suffix means experimental
 %'_h' suffix means hybrid
 %'_p' suffix means prime, as in the new prediction values
-
-load KneeFlxPin_10mm_46cm.mat Bifemsh_Pam phiD
-Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
-load Plot_KneeFlxPin_10mm_46cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
-A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
-kf(1).L(2) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
+    load KneeFlxPin_10mm_48cm.mat Bifemsh_Pam phiD
+    Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
+    G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+    load Plot_KneeFlxPin_10mm_48cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
+    A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
+    kf(1).L(3) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
                   'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
                   'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
                   'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
@@ -23,15 +22,16 @@ kf(1).L(2) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
                   'Lmt_p',[],'mA_p',[],'M_p',[]);
-clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+    clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 
-%% 48 cm length
-load KneeFlxPin_10mm_48cm.mat Bifemsh_Pam phiD
-Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
-load Plot_KneeFlxPin_10mm_48cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
-A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
-kf(1).L(3) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
+if nargout > 1
+    % 46cm length
+    load KneeFlxPin_10mm_46cm.mat Bifemsh_Pam phiD
+    Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
+    G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+    load Plot_KneeFlxPin_10mm_46cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
+    A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
+    kf(1).L(2) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
                   'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
                   'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
                   'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
@@ -39,19 +39,35 @@ kf(1).L(3) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
                   'Lmt_p',[],'mA_p',[],'M_p',[]);
-clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+    clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+end
+
 
 %% What to optimize based on selection
-M_opt = zeros(length(kf(1).L(2).Mexp)); %Optimized torque prediction
+M_opt = zeros(size(kf(1).L(3).Mexp)); %Optimized torque prediction
 
 %% RMSE, fvu, and Max Residual
+if nargout>1
+    a = 2;
+else
+    a = 1;
+end
 h = cell(1,2);
-for j = 1:2
-    klaus(j) = kf(1).L(j+1);
+
+for j = 1:a
+    klaus(j) = kf(1).L(4-j);
     bpa(j) = klaus(j);
-    bpa(j).Lmt_p = LMT(klaus(j));
-    bpa(j).mA_p = Mom(klaus(j));    
-    bpa(j).M_p = Tor(klaus(j));
+    L_p = Lok(klaus(j));
+    unitD_p = UD(klaus(j));
+    sL_p = seg(klaus(j));
+    Lmt_p = LMT(klaus(j));
+    bpa(j).Lmt_p = Lmt_p;
+    mA_p = Mom(klaus(j));
+    strain_p = Contraction(klaus(j));
+    F_p = Force(klaus(j));
+    bpa(j).mA_p = mA_p;
+    M_p = Tor;
+    bpa(j).M_p = M_p;
     h{j} = SSE(klaus(j));
 end
 
@@ -62,12 +78,13 @@ varargout{2} = bpa;
 
 %% Nested functions, modified from MonoPamExplicit
         %% ------------- Location  ------------------------
-        function LOC = Lok(klass)
+function LOC = Lok(klass)
             L = klass.Loc;      %Location (wrapping, attachment points)
             C = klass.CP;       %Cross point (moves from one frame to another)
 %             T = klass.Tk;       %Transformation matrix
-            F = klass.F;        %Force vector
+            FF = festo4(10,klass.strain/(klass.rest-klass.Kmax),klass.P);        %Force vector
             unitD = klass.unitD;
+            F = unitD.*FF.*klass.Fm;
             pkI = [-0.043, -.1115, 0];     %from knee ICR to flexor insertion bracket (where it starts to cantilever)
 %             pkI = [0.2575, -104.25, 0];    %from knee ICR to extensor insertion bracket (where it starts to cantilever)
             RkI = [1, 0, 0;                 %Rotation matrix (no rotation)
@@ -108,92 +125,85 @@ varargout{2} = bpa;
 
                 end
             end
-        end
+end
 
 %% ------------- Segment Lengths ------------------------
-        function SL = seg(klass)
-            L = Lok(klass);
+function SL = seg(klass)
             C = klass.CP;
             T = klass.Tk;
-            SL = zeros(size(T, 3), size(L, 1) - 1);
+            SL = zeros(size(T, 3), size(L_p, 1) - 1);
             
             for ii = 1:size(T, 3)                          %Repeat for each orientation
-                for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
-                    pointA = L(i, :,ii);
-                    pointB = L(i+1, :,ii);
+                for i = 1:size(L_p, 1)-1                      %Repeat for all muscle segments
+                    pointA = L_p(i, :,ii);
+                    pointB = L_p(i+1, :,ii);
                     if i+1 == C
                         pointB = RowVecTrans(T(:, :, ii), pointB);
                     end
                     SL(ii, i) = norm(pointA - pointB);
                 end
             end
-        end
+end
                
         %% ------------- Muscle Length ------------------------
         %Function that calculates the musclutendon length
-        function Lmt = LMT(klass)
-            L = Lok(klass);
+function Lmt = LMT(klass)
             T = klass.Tk;
             Lmt = zeros(size(T, 3), 1);
-            segLengths = seg(klass);
             
             for ii = 1:size(Lmt, 1)                          %Repeat for each orientation
-                for i = 1:size(L, 1, 1)-1                      %Repeat for all muscle segments
-                    Lmt(ii, 1) = Lmt(ii, 1) + segLengths(ii, i);
+                for i = 1:size(L_p, 1, 1)-1                      %Repeat for all muscle segments
+                    Lmt(ii, 1) = Lmt(ii, 1) + sL_p(ii, i);
                 end
             end
             Lmt = Lmt - Xi0;
-        end            
+end            
 
         %% -------------- Force Unit Direction ----------------
         %Calculate the unit direction of the muscle force about the joint.
-        function unitD = UD(klass)
-            L = Lok(klass);
+function unitD = UD(klass)
             T = klass.Tk;
             C = klass.CP;
             direction = zeros(size(T, 3), 3);
             unitD = zeros(size(direction));
             
             for i = 1:size(T, 3)
-                pointA = L(C-1, :, i);
-                pointB = L(C, :, i);
+                pointA = L_p(C-1, :, i);
+                pointB = L_p(C, :, i);
                 direction(i, :) = RowVecTrans(T(:, :, i)\eye(4), pointA) - pointB;
                 unitD(i, :) = direction(i, :)/norm(direction(i, :));
             end
-        end
+end
         
         %% -------------- Moment Arm --------------------------
         %Calculate the moment arm about a joint
         %For every ViaPoint, calculate the moment arm of the muscle about
         %the joint it crosses over
-        function mA = Mom(klass)
+function mA = Mom(klass)
             T = klass.Tk;
-            L = Lok(klass);
             C = klass.CP;
-            unitD = UD(klass);
             mA = zeros(size(T, 3), 3);
             
             for i = 1:size(T, 3)
-                pointB = L(C, :, i);
-                mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
-                %mA(i, :) = cross(pointB, unitD(i, :));
+                pointB = L_p(C, :, i);
+                mA(i, :) = pointB - unitD_p(i, :)*dot(unitD_p(i, :), pointB);
+                %mA(i, :) = cross(pointB, unitD_p(i, :));
             end
-        end        
+end        
         
         %% -------------- Contraction of the PAM --------------------------
-        function contraction = Contraction(klass)
-            Lmt = LMT(klass);      %musculotendon length, this calls optimvar Xi0
+function contraction = Contraction(klass)
             rest = klass.rest;
             tendon = klass.ten;
             fitting = klass.fitn;
             
-            contraction = (rest-(Lmt-tendon-2*fitting))/rest;    %(minus Xi0 is above)
-        end
+            contraction = (rest-(Lmt_p-tendon-2*fitting))/rest;    %(minus Xi0 is used in LMT function, above)
+end
 
 
         %% -------------- Force --------------------------
         %Calculate the direction of the forced applied by the muscle
-        function F = Force(klass)
+function F = Force(klass)
         %Inputs:
         %Lmt == muscle-tendon length, scalar
         %rest == resting length of artificial muscle, "size" from Size function
@@ -203,15 +213,13 @@ varargout{2} = bpa;
         %Outputs:
         %F == Force, N           
             dia = klass.dBPA;
-            unitD = UD(klass);
-            contract = Contraction(klass);
             rest = klass.rest;
             pres = klass.P;
             kmax = klass.Kmax;  
             KMAX = (rest-kmax)/rest; %turn it into a percentage 
             maxF = klass.Fm;
             
-           rel = contract./KMAX;                    %relative strain        
+           rel = strain_p./KMAX;                    %relative strain        
            relPres = pres/620;                      %relative pressure
            
            if dia == 10
@@ -226,7 +234,7 @@ varargout{2} = bpa;
            end 
            scalarForce = Fn.*maxF;
 
-            for i = 1:size(unitD, 1)
+            for i = 1:size(unitD_p, 1)
                 if scalarForce(i) < 0
                     scalarForce(i) = 0;
                 end
@@ -236,9 +244,9 @@ varargout{2} = bpa;
             end
             
             
-            F = scalarForce.*unitD;
+            F = scalarForce.*unitD_p;
 
-        end
+end
         
         %% ---------------------- Torque --------------
         %Calculate torque by multiplying the the force along the 
@@ -246,21 +254,22 @@ varargout{2} = bpa;
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-        function Mz = Tor(klass)
-            mA = Mom(klass);
-            F = Force(klass);
-            Mz = cross(mA,F,2);
+function Mz = Tor(~)
+            Mz = zeros(size(F_p));
             
-            for i = 1:size(mA, 1)
-                Mz(i, :) = cross(mA(i, :), F(i, :));
+            for i = 1:size(F_p, 1)
+                Mz(i, :) = cross(mA_p(i, :), F_p(i, :));
             end
 
-        end    
+end    
 
 %% Subfunctions
 function t = SSE(klass)
      Mpredict1 = Tor(klass);
+%      Mpredict1 = Mom(klass);
+%      G_p = (Mpredict1(:,1).^2+Mpredict1(:,2).^2).^(1/2);
      Mpredict2 = griddedInterpolant(klass.Ak,Mpredict1(:,3));
+%      Mpredict2 = griddedInterpolant(klass.Ak,G_p);
      M_opt = Mpredict2(klass.Aexp);
      [RMSE, fvu, maxResid] = Go_OfF(klass.Mexp,M_opt);
      t = [RMSE, fvu, maxResid];

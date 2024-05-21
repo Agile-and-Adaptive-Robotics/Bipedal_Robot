@@ -5,70 +5,104 @@ clear; clc; close all
 
 [a, b, ~] = minimizeFlx(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
 %% Problem setup
-x1 = optimvar('x1',1,'LowerBound',-0.007,'UpperBound',0.02,'Type','continuous');
-kT = optimvar('kT',1,'LowerBound',100,'UpperBound',10^5,'Type','continuous');
-kB = optimvar('kB',1,'LowerBound',100,'UpperBound',10^5,'Type','continuous');
-lb = [-0.007, 1*10^2, 1*10^2];
-ub = [0.02, 10^5, 10^5];
-[f, g]   = fcn2optimexpr(@minimizeFlx,x1,kT,kB,'OutputSize',{[1,3],[1,3]},'ReuseEvaluation',true);
-fun1 = f(1,1);
-fun2 = f(1,2);
-fun3 = f(1,3);
-prob = optimproblem;
-prob.Objective = fun2;
-prob.Constraints.better1 = f(1) <= a(1);          %solution must be better than no optimization
-prob.Constraints.better1 = f(2) <= a(2);          %solution must be better than no optimization
-prob.Constraints.better2 = g(1) <= a(1);          %validation solution must be better than no optimization
-prob.Constraints.better2 = g(2) <= a(2);          %validation solution must be better than no optimization
-x0.x1 = 0.013;
-x0.kT = 1000;
-x0.kB = 1000;
+% x1 = optimvar('x1',1,'LowerBound',-0.007*10^3,'UpperBound',0.02*10^3,'Type','continuous');
+% kT = optimvar('kT',1,'LowerBound',100*10^-3,'UpperBound',10^5*10^-3,'Type','continuous');
+% kB = optimvar('kB',1,'LowerBound',100*10^-3,'UpperBound',10^5*10^-3,'Type','continuous');
+lb = [-0.007*10^3, 10^2*10^-3, 10^2*10^-3];
+ub = [0.02*10^3, 10^8*10^-3, 10^8*10^-3];
+% f   = fcn2optimexpr(@min1,x1*10^-3,kT*10^3,kB*10^3,'OutputSize',[1,3],'ReuseEvaluation',true);
+% g   = fcn2optimexpr(@min2,x1*10^-3,kT*10^3,kB*10^3,'OutputSize',[1,3],'ReuseEvaluation',true);
+% fun1 = f(1,1);
+% fun2 = f(1,2);
+% fun3 = f(1,3);
+% prob = optimproblem;
+% prob.Objective = f;
+% prob.Constraints.better1 = f <= a;          %solution must be better than no optimization
+% prob.Constraints.better2 = g <= b;          %validation solution must be better than no optimization
+% x0.x1 = 0.013*10^3;
+% x0.kT = 1000*10^-3;
+% x0.kB = 1000*10^-3;
 % hybridopts = optimoptions('fmincon','OptimalityTolerance',1e-10);
 % options = optimoptions(@particleswarm,'Display','iter','UseParallel',true,'PlotFcn','pswplotbestf',...
 %                         'OutputFcn',@pswplotranges,'HybridFcn',{'fmincon',hybridopts});
-options = 
-show(prob)
-
+% options = optimoptions(@paretosearch,'Display','iter','PlotFcn',{'psplotparetof','psplotparetox'},'InitialPoints',cell2mat(struct2cell(x0))); 
+% show(prob)
+% f = @(x,y,z)min1(x,y,z);
+% g = @(x,y,z)min2(x,y,z);
 % fun = @(x,y,z) minimizeFlx;
+
 %% Solve 
-[sol,fval,exitflag,output] = solve(prob,x0);
-% [sol,fval,Pareto_front, Pareto_Fvals, exitflag,output] = GODLIKE(fun,lb,ub,[],...
-%                                          'algorithms', {'DE';'GA';'ASA'},...
-%                                          'display'   , 'plot',...
-%                                          'popsize'   , 500);
+% [sol,fval,exitflag,output] = solve(prob,Solver="paretosearch");
+% [sol,fval,exitflag,output] = paretosearch(f,3,[],[],[],[],lb,ub,@nonlinc,options);
+[sol,fval,Pareto_front, Pareto_Fvals, exitflag,output] = GODLIKE(@min1,lb,ub,[],'NumObjectives',3,...
+                                         'algorithms', {'DE';'GA';'PSO';'ASA'},...
+                                         'display'   , 'plot',...
+                                         'popsize'   , 75);
 
-[u,v,bpa] = minimizeFlx(sol.x1,sol.kT,sol.kB);           % Now pull bpa structures out       
+sol_actual = [sol(1)*10^-3, sol(2)*10^3, sol(3)*10^3];                                     
+[u,v,bpa] = minimizeFlx(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out       
 
-%% Plot Optimized fit
-figure
-hold on
-scatter(bpa(1).Aexp,bpa(1).Mexp,[],'filled','DisplayName','Experiment')
-plot(bpa(1).Ak,bpa(1).M_p,'DisplayName','New predict')
-plot(bpa(1).Ak,bpa(1).M,'DisplayName','Predict original')
-hold off
-title('Optimization')
-xlabel('\theta_{k}, \circ')
-ylable('Torque, N\cdotm')
-legend
+%% Plot torque curves, Optimized and validation 
+str = ["Optimization"; "Validation"];
+for i = 1:2
+    figure
+    ax = gca;
+    hold on
+    scatter(bpa(i).Aexp,bpa(i).Mexp,[],'filled','DisplayName','Experiment')
+    scatter(bpa(i).A_h,bpa(i).M_h,[],'filled','DisplayName','Hybrid')
+    plot(bpa(i).Ak,bpa(i).M_p(:,3),'DisplayName','New predict')
+    plot(bpa(i).Ak,bpa(i).M,'DisplayName','Predict original')
+    hold off
+    title(str(i))
+    xlabel('\theta_{k}, \circ')
+    ylabel('Torque, N\cdotm')
+    legend
+end
 
-%% Plot validation
-figure
-hold on
-scatter(bpa(2).Aexp,bpa(2).Mexp,[],'filled','DisplayName','Experiment')
-plot(bpa(2).Ak,bpa(2).M_p,'DisplayName','New predict')
-plot(bpa(2).Ak,bpa(2).M,'DisplayName','Predict original')
-hold off
-title('Validation')
-xlabel('\theta_{k}, \circ')
-ylable('Torque, N\cdotm')
-legend
+%% Plot muscle length, optimization and validation
+for i = 1:2
+    figure
+    ax = gca;
+    Lm = bpa(1).Lmt-2*bpa(i).fitn-bpa(i).ten;      %Original predicted muscle length
+    Lm_p = bpa(1).Lmt_p-2*bpa(i).fitn-bpa(i).ten;    %Optimized muscle length (Lmt_p uses sol_actual(1)
+    hold on
+    scatter(bpa(i).A_h,bpa(i).Lm_h,[],'filled','DisplayName','Measured')
+    plot(bpa(i).Ak,Lm_p,'DisplayName','New predict')
+    plot(bpa(i).Ak,Lm,'DisplayName','Predict original')
+    hold off
+    title(str(i))
+    xlabel('\theta_{k}, \circ')
+    ylabel('Length, m')
+    legend
+end
+
+%% Plot moment arm, optimization and validation
+for i = 1:2
+    figure
+    ax = gca;
+    G_p = (bpa(i).mA_p(:,1).^2+bpa(i).mA_p(:,2).^2).^(1/2);      %z-axis moment arm for optimized
+    hold on
+    scatter(bpa(i).A_h,bpa(i).mA_h,[],'filled','DisplayName','Measured')
+    plot(bpa(i).Ak,G_p,'DisplayName','New predict')
+    plot(bpa(i).Ak,bpa(i).mA,'DisplayName','Predict original')
+    hold off
+    title(str(i))
+    xlabel('\theta_{k}, \circ')
+    ylabel('Length, m')
+    legend
+end
 
 %% Helper functions
-function ff = min1(x1,kT,kB)
-ff = minimizeFlx(x1,kT,kB); %get GOF vector
+function ff = min1(x)
+ff = minimizeFlx(x(:,1)*10^-3,x(:,2)*10^3,x(:,3)*10^3); %get GOF vector
 end
 
 
-function gg = min2(x1,kT,kB)
-[~, gg] = minimizeFlx(x1,kT,kB); %get validation vector
+function gg = min2(x)
+[~, gg] = minimizeFlx(x(:,1)*10^-3,x(:,2)*10^3,x(:,3)*10^3); %get validation vector
+end
+
+function [c, ceq] = nonlinc(f,g)
+c = [f-a; g-b];
+ceq = [];
 end
