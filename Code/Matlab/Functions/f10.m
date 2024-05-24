@@ -20,7 +20,7 @@ a5 = -0.07965;      % [-0.1109, -0.04839]
 
 
 
-F = a0 + exp(-a1*x+a2) + y*exp(-(a3*x).^2+a4)+a5*y;
+F = a0 + exp(-a1*x+a2) + y.*exp(-(a3*x).^2+a4)+a5.*y;
 
 %% Goodness of fit
 % SSE: 1854;
