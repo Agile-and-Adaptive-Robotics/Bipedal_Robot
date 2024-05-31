@@ -192,10 +192,8 @@ classdef MonoPamDataPinnedFlexor < handle
             tendon = obj.TendonL;
             fitting = obj.FittingLength;
             
-            contraction = zeros(length(mL), 1);
-            for i = 1:length(mL)
-                contraction(i) = (rest-(mL(i,1)-tendon-2*fitting))/rest;
-            end
+            contraction = (rest-(mL-tendon-2*fitting))/rest;
+ 
         end
         
         %% -------------- Length Check --------------------------
@@ -234,32 +232,26 @@ classdef MonoPamDataPinnedFlexor < handle
             dia = obj.Diameter;
             unitD = obj.UnitDirection;
             contract = obj.Contraction;
-%            contraction = obj.Contraction;
-            mL = obj.MuscleLength;
             rest = obj.RestingL;
-            long = max(mL);
-            fitting = obj.FittingLength;
             
             kmax = (rest-0.398)/rest; %398 mm 
-            pres = 600; %600 kPa average measured pressure
+            pres = 620; %600 kPa average measured pressure
             
            load ForceStrainTable.mat ForceStrain
-           tendon =  obj.TendonL;   %Length of artificial tendon and air fittings
+
 
            X = linspace(0,620,20); %Pressure for interpolation
            Y = linspace(0,1,30);   %Relative strain range for interpolation
            
-           k = zeros(size(unitD,1),1);
-           rel = zeros(size(unitD,1),1);
+           rel = contract./kmax; %relative strain
            scalarForce = zeros(size(unitD,1),1);
             for i = 1:size(unitD, 1)
-                k(i,1) = (rest-(mL(i,1)-tendon-2*fitting))/rest %current strain 
-                rel(i,1) = k(i,1)/kmax %relative strain
-%                 if rel(i,1) >= 0 && rel(i,1) <=1
                 if contract(i,1) >=-0.03 && rel(i,1) <=1
-                    scalarForce(i,1) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear',  0)
-                else
-                    scalarForce(i,1) = 0
+                    scalarForce(i,1) = interp2(X, Y, ForceStrain, pres, rel(i), 'linear',  0);
+                elseif rel(i,1)>1
+                    scalarForce(i,1) = 0;
+                elseif contract(i,1) < -0.03
+                    scalarForce(i,1) = NaN;
                 end
             end
 
@@ -271,24 +263,7 @@ classdef MonoPamDataPinnedFlexor < handle
             if dia == 40
                 scalarForce = (6000/630)*scalarForce;
             end
-
-%         end
-%             if dia == 20
-%                 x = [0, 0.07, 0.11, 0.15, 0.25]';
-%                 y = [1400, 800, 600, 400, 0]';
-%                 BPAFit = fit(x, y, 'poly2');
-%             elseif dia == 40
-%                 x = [0, 0.06, 0.12, 0.15, 0.25]';
-%                 y = [6000, 3500, 2000, 1500, 0]';
-%                 BPAFit = fit(x, y, 'poly2');
-%             else
-%                 x = [0, 0.1, 0.17, 0.25]';
-%                 y = [630, 300, 150, 0]';
-%                 BPAFit = fit(x, y, 'linearinterp');
-%             end
-% 
-%             scalarForce = BPAFit(contract)
-%             
+            
             F = zeros(size(unitD));
             for i = 1:size(unitD, 1)
                 if scalarForce(i) <= 0

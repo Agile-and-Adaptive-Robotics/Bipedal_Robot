@@ -80,15 +80,15 @@ xLim = [-120 35];
 Test = ["ExtTest10mm-2 10mm pin LoadCell";
         "ExtTest10mm-1 10mm pin FishScale"];
 %% Convert cells to column arrays once bad tests are eliminated
-Angle = cell2mat(Angle');
-Torque = cell2mat(Torque);
-InflatedLength = cell2mat(InflatedLength');
-ICRtoMuscle = cell2mat(ICRtoMuscle');
-pres = cell2mat(pres);
-strainz = cell2mat(strainz);
-rel = cell2mat(rel);
-F = cell2mat(F);
-TorqueHand = cell2mat(TorqueHand);
+% Angle = cell2mat(Angle');
+% Torque = cell2mat(Torque);
+% InflatedLength = cell2mat(InflatedLength');
+% ICRtoMuscle = cell2mat(ICRtoMuscle');
+% pres = cell2mat(pres);
+% strainz = cell2mat(strainz);
+% rel = cell2mat(rel);
+% F = cell2mat(F);
+% TorqueHand = cell2mat(TorqueHand);
 
 %% Plot expected versus measured moment arm
 Ma = Vas_Pam_46cm.MomentArm;                 %Calculated moment arm
