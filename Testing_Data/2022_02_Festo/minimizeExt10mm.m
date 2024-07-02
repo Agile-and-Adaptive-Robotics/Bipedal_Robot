@@ -3,7 +3,7 @@
 
 clear; clc; close all
 
-[a, b, ~] = minimizeFlx(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
+[a, b, ~] = minimizeExt(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
 %% Problem setup
 % x1 = optimvar('x1',1,'LowerBound',-0.007*10^3,'UpperBound',0.02*10^3,'Type','continuous');
 % kT = optimvar('kT',1,'LowerBound',100*10^-3,'UpperBound',10^5*10^-3,'Type','continuous');
