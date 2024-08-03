@@ -81,9 +81,17 @@ rel = cell(length(Angle),1);
 F = cell(length(Angle),1);
 TorqueHand = cell(length(Angle),1);
 
+korr = [0.25 0.4 0.4];           % correction factor
+wR = [5 -15 -15];           % Angle (deg) that wrapping starts to occur
 for i = 1:length(Angle)
     KMAX{i} = (rest{i}-kmax{i})./rest{i};
     strainz{i} = ((rest{i}-InflatedLength{i})./rest{i});
+    for j = 1:length(Angle{i})
+        if Angle{i}(j)<=wR(i)
+            strainz{i}(j) = ((rest{i}-(InflatedLength{i}(j)-korr(i)*ICRtoMuscle{i}(j)*deg2rad(wR(i) - Angle{i}(j))))./rest{i});
+        else
+        end
+    end
     rel{i} = strainz{i}./KMAX{i};
     F{i} = bpaForce10(rest{i},rel{i},pres{i});
     TorqueHand{i} = ICRtoMuscle{i}.*F{i};  %Torque will be positive because it is causing extension

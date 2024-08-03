@@ -2,7 +2,7 @@
 %Run and save data from testing results
 clear;
 clc;
-close all;
+% close all;
 
 %Load file with all the extensors using the pinned knee
 load KneeExtPin_10mm_all.mat
@@ -53,8 +53,16 @@ rel = cell(length(Angle),1);
 F = cell(length(Angle),1);
 TorqueHand = cell(length(Angle),1);
 
+korr = 0.33;           % correction factor
+wR = -30;           % Angle (deg) that wrapping starts to occur
 for i = 1:length(Angle)
-    strainz{i} = ((restingLength-InflatedLength{i})/restingLength);
+    strainz{i} = ((restingLength-InflatedLength{i})./restingLength);
+    for j = 1:length(Angle{i})
+        if Angle{i}(j)<=wR
+            strainz{i}(j) = ((restingLength-(InflatedLength{i}(j)-korr*ICRtoMuscle{i}(j)*deg2rad(wR - Angle{i}(j))))./restingLength);
+        else
+        end
+    end
     rel{i} = strainz{i}/KMAX;
     F{i} = bpaForce10(restingLength,rel{i},pres{i});
     TorqueHand{i} = ICRtoMuscle{i}.*F{i};  %Torque will be positive because it is causing extension
