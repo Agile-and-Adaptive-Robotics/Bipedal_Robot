@@ -81,19 +81,20 @@ rel = cell(length(Angle),1);
 F = cell(length(Angle),1);
 TorqueHand = cell(length(Angle),1);
 
-korr = [0.05 0.1 0.1];           % correction factor
-r = 0.125;                      %radius of curvature
+korr = [0 0 0];           % correction factor
+r = 0.085;                      %radius of curvature
 wR = 15;           % Angle (deg) that wrapping starts to occur
 for i = 1:length(Angle)
     KMAX{i} = (rest{i}-kmax{i})./rest{i};
     strainz{i} = ((rest{i}-InflatedLength{i})./rest{i});
     for j = 1:length(Angle{i})
         if Angle{i}(j)<=wR
-            strainz{i}(j) = ((rest{i}-(InflatedLength{i}(j)-korr(i)*r*deg2rad(wR - Angle{i}(j))))./rest{i});
+            strainz{i}(j) = ((rest{i}-(InflatedLength{i}(j)-korr(i)*ICRtoMuscle{i}(j)*deg2rad(wR - Angle{i}(j))))./rest{i});
         else
         end
     end
     rel{i} = strainz{i}./KMAX{i};
+%     for j = 1:length(Angle{i})
     F{i} = bpaForce10(rest{i},rel{i},pres{i});
     TorqueHand{i} = ICRtoMuscle{i}.*F{i};  %Torque will be positive because it is causing extension
 end 
@@ -124,22 +125,22 @@ Test = ["ExtTest 4";
 %% Convert cells to column arrays once bad tests are eliminated
 Angle1 = cell2mat([Angle(2); Angle(3)]);
 Angle0 = Angle{1};
-Angle = cell2mat(Angle');       %This makes the if statements in the later code work
-Torque0 = Torque{1};
-Torque1 = cell2mat([Torque(2); Torque(3)]);
-InflatedLength0 = InflatedLength{1};
-InflatedLength1 = cell2mat([InflatedLength(2); InflatedLength(3)]);
-ICRtoMuscle0 = ICRtoMuscle{1};
-ICRtoMuscle1 = cell2mat([ICRtoMuscle(2); ICRtoMuscle(3)]);
-pres = cell2mat(pres);
-strainz = cell2mat(strainz);
-rel0 = rel{1};
-rel1 = cell2mat([rel(2); rel(3)]);
-F = cell2mat(F);
-TorqueHand0 = TorqueHand{1};
-TorqueHand1 = cell2mat([TorqueHand(2); TorqueHand(3)]);
-KMAX0 = KMAX{1};
-KMAX1 = KMAX{2};
+% Angle = cell2mat(Angle');       %This makes the if statements in the later code work
+% Torque0 = Torque{1};
+% Torque1 = cell2mat([Torque(2); Torque(3)]);
+% InflatedLength0 = InflatedLength{1};
+% InflatedLength1 = cell2mat([InflatedLength(2); InflatedLength(3)]);
+% ICRtoMuscle0 = ICRtoMuscle{1};
+% ICRtoMuscle1 = cell2mat([ICRtoMuscle(2); ICRtoMuscle(3)]);
+% pres = cell2mat(pres);
+% strainz = cell2mat(strainz);
+% rel0 = rel{1};
+% rel1 = cell2mat([rel(2); rel(3)]);
+% F = cell2mat(F);
+% TorqueHand0 = TorqueHand{1};
+% TorqueHand1 = cell2mat([TorqueHand(2); TorqueHand(3)]);
+% KMAX0 = KMAX{1};
+% KMAX1 = KMAX{2};
 
 %% Plot expected versus measured moment arm
 Ma1 = Vas_Pam_42cm.MomentArm;                  %Calculated moment arm

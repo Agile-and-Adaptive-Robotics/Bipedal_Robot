@@ -66,14 +66,14 @@ rel = cell(length(Angle),1);
 F = cell(length(Angle),1);
 TorqueHand = cell(length(Angle),1);
 
-korr = 0.01;           % correction factor
+korr = 0;           % correction factor
 r = 0.125;             %radius of curvature
 wR = 15;           % Angle (deg) that wrapping starts to occur
 for i = 1:length(Angle)
     strainz{i} = ((restingLength-InflatedLength{i})/restingLength);
     for j = 1:length(Angle{i})
         if Angle{i}(j)<=wR
-            strainz{i}(j) = ((restingLength-(InflatedLength{i}(j)-korr*r*deg2rad(wR - Angle{i}(j))))./restingLength);
+            strainz{i}(j) = ((restingLength-(InflatedLength{i}(j)-korr*ICRtoMuscle{i}(j)*deg2rad(wR - Angle{i}(j))))./restingLength);
         else
         end
     end
