@@ -90,9 +90,7 @@ function LOC = Lok(klass)
             RkI = [1, 0, 0;                 %Rotation matrix (no rotation)
                    0, 1, 0;
                    0, 0, 1];
-            TkI = RpToTrans(RkI, pkI');    %Transformation matrix from knee to flexor bracket frame
-%             TkI = RpToTrans(RkI, pkeI');    %Transformation matrix from knee to extensor bracket frame
-                    
+            TkI = RpToTrans(RkI, pkI');    %Transformation matrix from knee to flexor bracket frame                
             LOC = zeros(size(L));
             pB = zeros(size(L,3),3);
             pBI = zeros(size(L,3),3);
@@ -110,8 +108,9 @@ function LOC = Lok(klass)
                     if i == C
                         pB(ii,:) = L(C, :,ii);
                         pBI(ii,:) = RowVecTrans(TkI,pB(ii,:));
-                        uDkI(ii,:) = RowVecTrans(TkI,unitD(ii,:));
+%                         uDkI(ii,:) = RowVecTrans(TkI,unitD(ii,:));
                         thetaBI(ii) = acos(dot(pBI(ii,:),[1,0,0])/(norm(pBI(ii,:))));   %angle between pBI and x axis
+                        
                         Rot(:,:,ii) = [cos(thetaBI(ii)) -sin(thetaBI(ii)) 0; ...
                                        sin(thetaBI(ii)) cos(thetaBI(ii)) 0; ...
                                        0    0   1];

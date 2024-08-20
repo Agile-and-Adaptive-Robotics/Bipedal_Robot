@@ -8,8 +8,8 @@ clear; clc; close all
 % x1 = optimvar('x1',1,'LowerBound',-0.007*10^3,'UpperBound',0.02*10^3,'Type','continuous');
 % kT = optimvar('kT',1,'LowerBound',100*10^-3,'UpperBound',10^5*10^-3,'Type','continuous');
 % kB = optimvar('kB',1,'LowerBound',100*10^-3,'UpperBound',10^5*10^-3,'Type','continuous');
-lb = [-0.01*10^3, 10^3*10^-3, 10^3*10^-3];
-ub = [0.03*10^3, 10^8*10^-3, 10^8*10^-3];
+lb = [-0.01*100, 3, 3];
+ub = [0.03*100, 10, 10];
 % f   = fcn2optimexpr(@min1,x1*10^-3,kT*10^3,kB*10^3,'OutputSize',[1,3],'ReuseEvaluation',true);
 % g   = fcn2optimexpr(@min2,x1*10^-3,kT*10^3,kB*10^3,'OutputSize',[1,3],'ReuseEvaluation',true);
 % fun1 = f(1,1);
@@ -35,11 +35,11 @@ ub = [0.03*10^3, 10^8*10^-3, 10^8*10^-3];
 % [sol,fval,exitflag,output] = solve(prob,Solver="paretosearch");
 % [sol,fval,exitflag,output] = paretosearch(f,3,[],[],[],[],lb,ub,@nonlinc,options);
 [sol,fval,Pareto_front, Pareto_Fvals, exitflag,output] = GODLIKE(@min1,lb,ub,[],'NumObjectives',3,...
-                                         'algorithms', {'DE';'GA';'PSO';'ASA'},...
+                                         'algorithms', {'DE';'GA';'PSO'},...
                                          'display'   , 'plot',...
-                                         'popsize'   , 300);
+                                         'popsize'   , 100);
 
-sol_actual = [sol(1)*10^-3, sol(2)*10^3, sol(3)*10^3];                                     
+sol_actual = [sol(1)/100, 10^sol(2), 10^sol(3)];                                     
 [u,v,bpa] = minimizeFlx(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out       
 
 %% Plot torque curves, Optimized and validation 
@@ -120,12 +120,12 @@ end
 
 %% Helper functions
 function ff = min1(x)
-ff = minimizeFlx(x(:,1)*10^-3,x(:,2)*10^3,x(:,3)*10^3); %get GOF vector
+ff = minimizeFlx(x(:,1)/100,10^x(:,2),10^x(:,3)); %get GOF vector
 end
 
 
 function gg = min2(x)
-[~, gg] = minimizeFlx(x(:,1)*10^-3,x(:,2)*10^3,x(:,3)*10^3); %get validation vector
+[~, gg] = minimizeFlx(x(:,1)/100,10^x(:,2),10^x(:,3)); %get validation vector
 end
 
 function [c, ceq] = nonlinc(f,g)
