@@ -5,37 +5,14 @@ clear; clc; close all
 
 [a, b, ~] = minimizeFlx(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
 %% Problem setup
-% x1 = optimvar('x1',1,'LowerBound',-0.007*10^3,'UpperBound',0.02*10^3,'Type','continuous');
-% kT = optimvar('kT',1,'LowerBound',100*10^-3,'UpperBound',10^5*10^-3,'Type','continuous');
-% kB = optimvar('kB',1,'LowerBound',100*10^-3,'UpperBound',10^5*10^-3,'Type','continuous');
-lb = [-0.01*100, 3, 3];
-ub = [0.03*100, 10, 10];
-% f   = fcn2optimexpr(@min1,x1*10^-3,kT*10^3,kB*10^3,'OutputSize',[1,3],'ReuseEvaluation',true);
-% g   = fcn2optimexpr(@min2,x1*10^-3,kT*10^3,kB*10^3,'OutputSize',[1,3],'ReuseEvaluation',true);
-% fun1 = f(1,1);
-% fun2 = f(1,2);
-% fun3 = f(1,3);
-% prob = optimproblem;
-% prob.Objective = f;
-% prob.Constraints.better1 = f <= a;          %solution must be better than no optimization
-% prob.Constraints.better2 = g <= b;          %validation solution must be better than no optimization
-% x0.x1 = 0.013*10^3;
-% x0.kT = 1000*10^-3;
-% x0.kB = 1000*10^-3;
-% hybridopts = optimoptions('fmincon','OptimalityTolerance',1e-10);
-% options = optimoptions(@particleswarm,'Display','iter','UseParallel',true,'PlotFcn','pswplotbestf',...
-%                         'OutputFcn',@pswplotranges,'HybridFcn',{'fmincon',hybridopts});
-% options = optimoptions(@paretosearch,'Display','iter','PlotFcn',{'psplotparetof','psplotparetox'},'InitialPoints',cell2mat(struct2cell(x0))); 
-% show(prob)
-% f = @(x,y,z)min1(x,y,z);
-% g = @(x,y,z)min2(x,y,z);
-% fun = @(x,y,z) minimizeFlx;
+
+lb = [-0.01*100, 4, 4];
+ub = [0.03*100, 9, 9];
 
 %% Solve 
-% [sol,fval,exitflag,output] = solve(prob,Solver="paretosearch");
-% [sol,fval,exitflag,output] = paretosearch(f,3,[],[],[],[],lb,ub,@nonlinc,options);
+
 [sol,fval,Pareto_front, Pareto_Fvals, exitflag,output] = GODLIKE(@min1,lb,ub,[],'NumObjectives',3,...
-                                         'algorithms', {'DE';'GA';'PSO'},...
+                                         'algorithms', {'GA';'PSO'},...
                                          'display'   , 'plot',...
                                          'popsize'   , 100);
 
