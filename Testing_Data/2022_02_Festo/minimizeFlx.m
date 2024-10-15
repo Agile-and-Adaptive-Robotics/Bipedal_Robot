@@ -79,64 +79,55 @@ varargout{2} = bpa;
 %% Nested functions, modified from MonoPamExplicit
         %% ------------- Location  ------------------------
 function LOC = Lok(klass)
-    L = klass.Loc; % Location (wrapping, attachment points)
-    C = klass.CP; % Cross point (moves from one frame to another)
-    FF = festo4(10, klass.strain / (klass.rest - klass.Kmax), klass.P); % Force magnitude
-    unitD = klass.unitD; % Unit direction of force vector
-    F = unitD .* FF .* klass.Fm; % Force vector
-    pkG = [-0.043, -0.1115, 0]; % From knee ICR to flexor insertion bracket
-    RkG = eye(3); % Rotation matrix (identity for no rotation)
-    TkG = RpToTrans(RkG, pkG'); % Transformation matrix from knee to flexor bracket frame
-    TgB = zeros(4, 4, 100); % Transformation matrix from bracket frame to point B
-    LOC = zeros(size(L));
-    pB = zeros(size(L, 3), 3); % Point B in tibial frame
-    pBG = zeros(size(L, 3), 3); % Point B in G frame
-    uDB = zeros(size(L, 3), 3); % Unit direction in B frame
-    thetaBG = zeros(size(L, 3), 1); % Angle between pBG and tibial x frame
-    Rz = zeros(3, 3, size(L, 3));
-    Fb = zeros(size(F));
-    epsilon = zeros(size(L, 3), 3);
-    delta = zeros(size(L, 3), 3);
-    Xi = zeros(size(L, 3), 3);
-    pBnew = zeros(size(L, 3), 3);
-    
-    for ii = 1:size(L, 3) % Repeat for each orientation
-        for i = 1:size(L, 1) % Repeat for all muscle segments
-            LOC(i, :, ii) = L(i, :, ii);
-            if i == C
-                pB(ii, :) = L(C, :, ii);
-                pBG(ii, :) = RowVecTrans(TkG, pB(ii, :));
-                
-                % Angle between pBG and tibial x-axis
-                thetaBG(ii) = acos(dot(pBG(ii, :), [1, 0, 0]) / norm(pBG(ii, :)));
-%                 if acos(dot(pBG(ii, :), [0, 1, 0]) / norm(pBG(ii, :))) > pi / 2
-%                     thetaBG(ii) = -thetaBG(ii);
-%                 end
-                
-                % Rotation matrix around z-axis
-                Rz(:, :, ii) = [cos(thetaBG(ii)), -sin(thetaBG(ii)), 0;
-                                sin(thetaBG(ii)),  cos(thetaBG(ii)), 0;
-                                0,                0,                1];
-                %Transformation matrix from G to B frames
-                TgB(:,:,ii) = RpToTrans(Rz(:,:,ii),pBG(ii,:)');
-                
-                % Transform force vector F from frame {k} to frame {B}
-                uDB(ii,:) = (Rz(:,:,ii)' * F(ii,:)')';
-                Fb(ii, :) = (Rz(:, :, ii)' * F(ii, :)')';
-                
-                % Calculate point Xi based on Fb and stiffness values
-                epsilon(ii, :) = Fb(ii, 1)/Xi1; % Strain from tensile stiffness
-                delta(ii, :) = Fb(ii, 2)/Xi2;   % Deflection from bending stiffness
-                Xi(ii, :) = [delta(ii), epsilon(ii), 0];
-                
-                % Transform point Xi from frame {B} to frame {k}
-                pBnew(ii, :) = RowVecTrans((TkG \ eye(4)) * (TgB(:, :, ii) \ eye(4)), Xi(ii, :));
-                LOC(i, :, ii) = pBnew(ii, :);
-            end
-        end
-    end
-end
+            L = klass.Loc;      %Location (wrapping, attachment points)
+            C = klass.CP;       %Cross point (moves from one frame to another)
+%             T = klass.Tk;       %Transformation matrix
+            FF = festo4(10,klass.strain/(klass.rest-klass.Kmax),klass.P);        %Force vector
+            unitD = klass.unitD;
+            F = unitD.*FF.*klass.Fm;
+            pkI = [-0.043, -.1115, 0];     %from knee ICR to flexor insertion bracket (where it starts to cantilever)
+%             pkI = [0.2575, -104.25, 0];    %from knee ICR to extensor insertion bracket (where it starts to cantilever)
+            RkI = [1, 0, 0;                 %Rotation matrix (no rotation)
+                   0, 1, 0;
+                   0, 0, 1];
+            TkI = RpToTrans(RkI, pkI');    %Transformation matrix from knee to flexor bracket frame                
+            LOC = zeros(size(L));
+            pB = zeros(size(L,3),3);
+            pBI = zeros(size(L,3),3);
+            thetaBI = zeros(size(L,3),1);
+            thetaBIy = zeros(size(L,3),1);
+            Rot = zeros(3,3,size(L,3));
+            yprime = zeros(size(L,3),3);
+            epsilon = zeros(size(L,3),3);
+            delta = zeros(size(L,3),3);
+            pBInew = zeros(size(L,3),3);
+            pBnew = zeros(size(L,3),3);
+            for ii = 1:size(L, 3)                          %Repeat for each orientation
+                for i = 1:size(L, 1)                      %Repeat for all muscle segments
+                    LOC(i,:,ii) = L(i, :,ii);
+                    if i == C
+                        pB(ii,:) = L(C, :,ii);
+                        pBI(ii,:) = RowVecTrans(TkI,pB(ii,:));
+%                         uDkI(ii,:) = RowVecTrans(TkI,unitD(ii,:));
+                        thetaBI(ii) = norm(wrapToPi(acos(dot(pBI(ii,:),[1,0,0])/(norm(pBI(ii,:))))));   %angle between pBI and x axis
+                        thetaBIy(ii) = norm(wrapToPi(acos(dot(pBI(ii,:),[0,1,0])/(norm(pBI(ii,:))))));
+                        if  thetaBIy(ii)> pi/2
+                            thetaBI(ii) = -thetaBI(ii);
+                        end
+                        Rot(:,:,ii) = [cos(thetaBI(ii)) -sin(thetaBI(ii)) 0; ...
+                                       sin(thetaBI(ii)) cos(thetaBI(ii)) 0; ...
+                                       0    0   1];
+                        yprime(ii,:) = Rot(:,:,ii)*[0 1 0]';
+                        epsilon(ii,:) = ((dot(F(ii,:),pBI(ii,:))/norm(pBI(ii,:))^2)*pBI(ii,:))./Xi1;  %strain from tensile stiffness
+                        delta(ii,:) = ((dot(F(ii,:),yprime(ii,:))/norm(yprime(ii,:))^2)*yprime(ii,:))./Xi2;    %deflection bending stiffness
+                        pBInew(ii,:) = pBI(ii,:)+delta(ii,:)+epsilon(ii,:);
+                        pBnew(ii,:) = RowVecTrans(TkI\eye(4), pBInew(ii,:));
+                        LOC(i,:,ii) = pBnew(ii,:);
+                    end
 
+                end
+            end
+end
 
 %% ------------- Segment Lengths ------------------------
 function SL = seg(klass)
