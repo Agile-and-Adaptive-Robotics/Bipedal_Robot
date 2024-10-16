@@ -6,15 +6,15 @@ clear; clc; close all
 [a, b, ~] = minimizeFlx(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
 %% Problem setup
 
-lb = [-0.01*100, 4, 4];
-ub = [0.03*100, 9, 9];
+lb = [-0.01*100, 3, 3];
+ub = [0.03*100, 10, 10];
 
 %% Solve 
 
 [sol,fval,Pareto_front, Pareto_Fvals, exitflag,output] = GODLIKE(@min1,lb,ub,[],'NumObjectives',3,...
-                                         'algorithms', {'PSO'},...
+                                         'algorithms', {'DE';'GA';'ASA';'PSO'},...
                                          'display'   , 'plot',...
-                                         'popsize'   , 100);
+                                         'popsize'   , 75);
 
 sol_actual = [sol(1)/100, 10^sol(2), 10^sol(3)];                                     
 [u,v,bpa] = minimizeFlx(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out       
