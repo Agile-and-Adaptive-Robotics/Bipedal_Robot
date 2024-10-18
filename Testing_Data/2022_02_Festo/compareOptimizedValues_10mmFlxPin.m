@@ -5,15 +5,16 @@ PAR = [Pareto_front, Pareto_Fvals];
 [Par2, index] = sortrows(PAR, [5 4 6]);
 PAR3 = [index, Par2];
 PAR4 = unique(PAR3(:,2:7),'rows');
-X1 = PAR4(:,1:3);
+X1 = [PAR4(:,1)./100, 10.^PAR4(:,2), 10.^PAR4(:,3)];
 Z1 = PAR4(:,4:6);
 
 Lz = size(X1, 1);
 Z2 = zeros(size(Z1));
+g = zeros(size(Z1));
 
 for i = 1:Lz
-    [f, g] = minimizeFlx(X1(i,1),X1(i,2),X1(i,3));
-    Z2(i,:)= g;
+    [~, g(i,:)] = minimizeFlx(X1(i,1),X1(i,2),X1(i,3));
+    Z2(i,:)= g(i,:);
 end
 
 sz = 3*ones(Lz, 1);
@@ -31,3 +32,7 @@ ylabel('FVU')
 zlabel('Residual')
 lgd = legend;
 view(40,35);
+ax = gca;
+ax.XGrid = 'on';
+ax.YGrid = 'on';
+ax.ZGrid = 'on';
