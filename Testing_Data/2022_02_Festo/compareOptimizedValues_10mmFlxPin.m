@@ -2,8 +2,8 @@
 %front
 
 PAR = [Pareto_front, Pareto_Fvals];                     %Combine Pareto front and fvals from optimizer
-[Par2, index] = sortrows(PAR, [5 4 6]);                 %Resort Pareto front values in the order FVU, RMSE, Largest Residual
-PAR3 = [index, Par2];                                   %Add the index back into the matrix
+[PAR2, index] = sortrows(PAR, [5 4 6]);                 %Resort Pareto front values in the order FVU, RMSE, Largest Residual
+PAR3 = [index, PAR2];                                   %Add the index back into the matrix
 PAR4 = unique(PAR3(:,2:7),'rows');                      %Find non-repeating values
 X1 = [PAR4(:,1)./100, 10.^PAR4(:,2), 10.^PAR4(:,3)];    %Input variables scaled back to proper numbers
 Z1 = PAR4(:,4:6);                                       %Output of optimized   
@@ -166,5 +166,46 @@ for i = 1:2
     title(str2(i))
     xlabel('\theta_{k}, \circ')
     ylabel('Length, m')
+    legend
+end
+
+%% Plot optimized again. Get rid of unnecessary stuff. Keep "Best1", change display name to "Optimized"
+
+for i = 1:2
+    %Find old old torque, then plot everything
+    clear Yq Xq Vq Fold Fq Mold
+    Yq = bpa(i).strain./((bpa(i).rest-bpa(i).Kmax)/bpa(i).rest);
+    Xq = bpa(i).P;
+    Vq = zeros(size(bpa(i).unitD,1),1);   
+        for j = 1:size(bpa(i).unitD, 1)
+            if bpa(i).strain(j) >=-0.03 && Yq(j) <=1
+                Vq(j) = interp2(X, Y, z, Xq, Yq(j));
+%             Vq(j) = f10(Yq(j),Xq);
+            elseif Yq(j)>1
+            Vq(j) = 0;
+            elseif bpa(i).strain(j) < -0.03
+            Vq(j) = NaN;
+            end
+        end
+
+    Fold = Vq.*bpa(i).unitD;    %Force vector
+    Fq = (Fold(:,1).^2+Fold(:,2).^2).^(1/2);
+    Mold = -bpa(i).mA.*Fq;
+    
+    figure
+    ax = gca;
+    hold on
+    plot(bpa(i).Ak,bpa(i).M,'-.','DisplayName','Predict original') %"original" is with updated BPA characterization
+    plot(bpa(i).Ak,Mold,':','DisplayName','Predict old') %"original" is with updated BPA characterization
+    scatter(bpa(i).A_h,bpa(i).M_h,[],'filled','DisplayName','Hybrid')
+    scatter(bpa(i).Aexp,bpa(i).Mexp,[],'filled','DisplayName','Experiment')
+    for k = 2
+        plot(bpaB{k}(i).Ak,bpaB{k}(i).M_p(:,3),'DisplayName','Optimized')
+    end
+    hold off
+    title(str2(i))
+    xlabel('\theta_{k}, \circ')
+    ylabel('Torque, N\cdotm')
+    ax.FontWeight='bold';
     legend
 end

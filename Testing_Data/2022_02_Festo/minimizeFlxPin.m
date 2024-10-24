@@ -1,21 +1,20 @@
 %% Optimize predicted torque for extensors.
-function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
+function [f, varargout] = minimizeFlxPin(Xi0,Xi1,Xi2)
 
 %% load
 %kf = knee flexor, kf(1) = pinned joint, kf(2) = biomimetic;
 %ke = knee extensor, same as above
-%kf.L := lengths = [42 42] cm   where 1st length is for 10mm diameter,
-%2nd length is for 20mm diameter.
-%example: kf(2).L(1).Mz z-axis torque for biomimetic knee, flexor, 42cm length
+%kf.L := lengths = [42 46 48] cm
+%example: kf(1).L(2).Mz z-axis torque for pinned knee, flexor, 46cm length
 %'exp' suffix means experimental
 %'_h' suffix means hybrid
 %'_p' suffix means prime, as in the new prediction values
-    load KneeFlx_10mm_42cm.mat Bifemsh_Pam phiD
+    load KneeFlxPin_10mm_48cm.mat Bifemsh_Pam phiD
     Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
     G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
-    load Plot_KneeFlx_10mm_42cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
+    load Plot_KneeFlxPin_10mm_48cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
     A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
-    kf(2).L(1) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
+    kf(1).L(3) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
                   'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
                   'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
                   'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
@@ -26,14 +25,13 @@ function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
     clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 
 if nargout > 1
-    % 42cm length, 20mm diameter.
-    load KneeFlx_20mm_42cm.mat Bifemsh_Pam3 phiD
-    Bifemsh_Pam = Bifemsh_Pam3;
+    % 46cm length
+    load KneeFlxPin_10mm_46cm.mat Bifemsh_Pam phiD
     Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
     G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
-    load Plot_KneeFlx_20mm_42cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
+    load Plot_KneeFlxPin_10mm_46cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
     A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
-    kf(2).L(2) = struct('Ak',phiD,'Lo0c',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
+    kf(1).L(2) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
                   'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
                   'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
                   'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
@@ -46,7 +44,7 @@ end
 
 
 %% What to optimize based on selection
-M_opt = zeros(size(kf(2).L(1).Mexp)); %Optimized torque prediction
+M_opt = zeros(size(kf(1).L(3).Mexp)); %Optimized torque prediction
 
 %% RMSE, fvu, and Max Residual
 if nargout>1

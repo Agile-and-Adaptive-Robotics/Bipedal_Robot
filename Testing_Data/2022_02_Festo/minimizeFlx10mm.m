@@ -6,19 +6,24 @@ clear; clc; close all
 [a, b, ~] = minimizeFlx(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
 %% Problem setup
 
-lb = [-0.01*100, 3, 3];
-ub = [0.03*100, 10, 10];
+% lb = [-0.01*100, 3, 3];
+% ub = [0.03*100, 10, 10];
 
 %% Solve 
 
-[sol,fval,Pareto_front, Pareto_Fvals, exitflag,output] = GODLIKE(@min1,lb,ub,[],'NumObjectives',3,...
-                                         'algorithms', {'DE';'GA';'ASA';'PSO'},...
-                                         'display'   , 'plot',...
-                                         'popsize'   , 75);
+% [sol,fval,Pareto_front, Pareto_Fvals, exitflag,output] = GODLIKE(@min1,lb,ub,[],'NumObjectives',3,...
+%                                          'algorithms', {'DE';'GA';'ASA';'PSO'},...
+%                                          'display'   , 'plot',...
+%                                          'popsize'   , 75);
+% 
+% sol_actual = [sol(1)/100, 10^sol(2), 10^sol(3)];                                     
+% [u,v,bpa] = minimizeFlxPin(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out       
 
-sol_actual = [sol(1)/100, 10^sol(2), 10^sol(3)];                                     
-[u,v,bpa] = minimizeFlx(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out       
+%% Use solution from optimizer and check validity on biomimetic knee
 
+load minimizeFlxPin10_results.mat BEST X1
+
+[u,v,bpa] = minimizeFlxPin(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out
 %% Plot torque curves, Optimized and validation 
 load ForceStrainForFit.mat z
 X = linspace(0,620,20); %Pressure for interpolation
@@ -97,12 +102,12 @@ end
 
 %% Helper functions
 function ff = min1(x)
-ff = minimizeFlx(x(:,1)/100,10^x(:,2),10^x(:,3)); %get GOF vector
+ff = minimizeFlxPin(x(:,1)/100,10^x(:,2),10^x(:,3)); %get GOF vector
 end
 
 
 function gg = min2(x)
-[~, gg] = minimizeFlx(x(:,1)/100,10^x(:,2),10^x(:,3)); %get validation vector
+[~, gg] = minimizeFlxPin(x(:,1)/100,10^x(:,2),10^x(:,3)); %get validation vector
 end
 
 function [c, ceq] = nonlinc(f,g)
