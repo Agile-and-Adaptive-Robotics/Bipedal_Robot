@@ -4,8 +4,8 @@ clear;
 clc;
 close all;
 
-f = fullfile('github/bipedal_robot/code/matlab');
-qt = addpath(genpath(f));
+% f = fullfile('github/bipedal_robot/code/matlab');
+% qt = addpath(genpath(f));
 
 load KneeFlx_10mm_42cm.mat
 Theoretical = TorqueR(:,3)';
@@ -40,7 +40,7 @@ runsperseries = 10;
 
 pres = zeros(1,runsperseries);
 
-     for j = 1:runsperseries(i)
+     for j = 1:runsperseries
                 file_name = sprintf('FlxTest%0.0f.mat', j);
                 load(file_name,'Stats')
                 pres(1,j) = Stats{'Mean',2};

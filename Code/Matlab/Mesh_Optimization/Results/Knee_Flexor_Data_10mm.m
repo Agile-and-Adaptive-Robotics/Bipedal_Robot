@@ -112,12 +112,12 @@ end
 Dia = 10;
 rest = 0.415;
 kmax = 0.350;
-tendon = 0.011; 
+tendon = 0.012; 
 fitting = 0.0254; 
 pres = 603.5236;         %average pressure
 Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
-fitting = 0.0352; 
+tendon = 0.012+0.0109; 
 Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
 %% Unstacking the Torques to identify specific rotations

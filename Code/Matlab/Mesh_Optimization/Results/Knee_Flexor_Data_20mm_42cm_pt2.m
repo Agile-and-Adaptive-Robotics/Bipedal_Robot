@@ -112,12 +112,12 @@ end
 Dia = 20;
 % rest = 0.423;
 % kmax = 0.322;
-rest = 0.415; %resting length, m
-kmax = (1-0.25)*rest; %Length at maximum contraction, m
+rest = 0.42; %resting length, m
+kmax = 0.322; %Length at maximum contraction, m
 tendon = 0.015; 
 fitting = 0.0254; 
 %pres1 = 273.9783;         %average pressure, first test
-pres1 = 0;
+pres1 = 300;
 pres2 = 325;         %average pressure, first test
 %pres3 = 606.4926;         %average pressure, first test
 pres3 = 620;
@@ -126,10 +126,10 @@ Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest,
 Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
 
 
-fitting_adj = 0.0352; 
-Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres1);
-Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres2);
-Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting_adj, pres3);
+tendon_adj = 0.015+0.0109; 
+Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres1);
+Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres2);
+Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres3);
 
 %% Create strings for later plots
 %First pressure
@@ -324,6 +324,7 @@ Trk = pagemtimes(TransInv(T_t1_rf),T_t1_ICR);
 s1 = Trk(1,4,:);
 s1 = squeeze(s1);
 fcn15 = fit(phi',s1,'cubicspline');
+
 s2 = Trk(2,4,:);
 s2 = squeeze(s2);
 fcn16 = fit(phi',s2,'cubicspline');
@@ -424,12 +425,13 @@ Bifemsh_T = Tab(:,4)';              %Torque values directly from OpenSim
 figure
 hold on
 %plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g', K_ang/c, TorqueZ,'o', knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
+plot(phiD, Bifemsh_Pam3.Torque(:,3),':','Color',c7)
 plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'LineStyle','-','Color',c7); 
 plot(phiD, Bifemsh_Pam_adj2.Torque(:,3),'LineStyle','--','Color',c6);
 plot(phiD, Bifemsh_Pam_adj1.Torque(:,3),'LineStyle','-.','Color',c5);
 plot(knee_angle_rT, Bifemsh_T,'LineStyle',':','Color',c2);
 scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4')
-legend(sT3,sT2,sT1,'OpenSim Human Torque','Measured','Location','southwest')
+legend('Unoptimized',sT3,sT2,sT1,'OpenSim Human Torque','Measured','Location','southwest')
 title('Knee Torque, Human vs. $\phi$20 mm BPA, $l_{rest}=420$ mm','Interpreter','latex')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
