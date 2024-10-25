@@ -23,7 +23,7 @@ clear; clc; close all
 
 load minimizeFlxPin10_results.mat BEST X1
 
-[u,v,bpa] = minimizeFlxPin(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out
+[u,v,bpa] = minimizeFlx(BEST(:,1),BEST(:,2),BEST(:,3));           % Now pull bpa structures out
 %% Plot torque curves, Optimized and validation 
 load ForceStrainForFit.mat z
 X = linspace(0,620,20); %Pressure for interpolation
@@ -38,12 +38,12 @@ for i = 1:2
     Xq = bpa(i).P;
     Vq = zeros(size(bpa(i).unitD,1),1);
     for j = 1:size(bpa(i).unitD, 1)
-        if bpa(i).strain(j) >=-0.03 && Yq(j) <=1
+        if bpa(i).strain(j) >= 0 && Yq(j) <=1
             Vq(j) = interp2(X, Y, z, Xq, Yq(j));
 %             Vq(j) = f10(Yq(j),Xq);
         elseif Yq(j)>1
             Vq(j) = 0;
-        elseif bpa(i).strain(j) < -0.03
+        elseif bpa(i).strain(j) < 0
             Vq(j) = NaN;
         end
     end   

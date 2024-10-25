@@ -16,10 +16,10 @@ Bifemsh_T = Tab(:,4)';              %Torque values directly from OpenSim
 load KneeFlx_20mm_42cm.mat
 % rest = 0.423; %resting length, m
 % kmax = 0.322; %Length at maximum contraction, m
-rest = 0.432; %resting length, m
-kmax = 0.328; %Length at maximum contraction, m
+rest = 0.420; %resting length, m
+kmax = 0.315; %Length at maximum contraction, m
 dia = 20;
-fitting = 0.0352;
+fitting = 0.0254;
 KMAX = (rest-kmax)/rest;
 
 Theo1 = Bifemsh_Pam1.Torque(:,3)';          %Original Torque calculations

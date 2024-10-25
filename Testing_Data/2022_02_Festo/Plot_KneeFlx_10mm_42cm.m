@@ -33,9 +33,7 @@ InflatedLength = [397	390	387	380	375	371	367	365	365	357]/1000;
 
 ICRtoMuscle = [38	42	42	40	35	39	35	35	33	29]/1000;
 
-F = zeros(1,size(InflatedLength, 2));
-
-TorqueHand = zeros(1,size(InflatedLength, 2));
+F = zeros(size(InflatedLength));
 
 %load pressure where applicable
 runsperseries = 10;
@@ -48,22 +46,14 @@ pres = zeros(1,runsperseries);
                 pres(1,j) = Stats{'Mean',2};
      end
 
-for i = 1:size(InflatedLength, 2)  
-    F(1,i,1) = festo3(InflatedLength(i), rest, 10, pres(i), kmax);    
-    TorqueHand(i) = -ICRtoMuscle(i)*F(i);  %Torque will be negative because it is causing flexion
-end
-
 KMAX = (rest-kmax)/rest;
-rel = ((rest-InflatedLength)/rest)/KMAX;
-Fn = bpaForce10(rest,rel,pres);
-
-for i = 2:(size(Fn,3)+1)
-    F(:,:,i) = Fn(:,:,i-1);
+rel = ((rest-InflatedLength)/rest)/KMAX;     
+     
+for i = 1:length(InflatedLength)  
+    F(i) = bpaForce10(rest, rel(i), pres(i));    
 end
 
-for i = 1:size(F,3)
-    TorqueHand(:,:,i) = -ICRtoMuscle.*F(1,:,i);  %Torque will be negative because it is causing flexion
-end
+TorqueHand = -ICRtoMuscle.*F;  %Torque will be negative because it is causing flexion
 
 %% Plot expected versus measured moment arm
 Ma = Bifemsh_Pam_adj.MomentArm;                 %Calculated moment arm
@@ -152,7 +142,7 @@ set(gca,'FontSize', 12, 'FontWeight', 'bold');
 PL1 = plot(phiD, Theoretical,'Color',c1,'Linewidth',2,'DisplayName','Theoretical, original');
 chr = 'Theoretical, optimized';
 PL3 = plot(phiD, Theo_adj,'Color',c3,'Linewidth',2,'DisplayName',chr);
-sc5 = scatter(Angle,TorqueHand(:,:,4),sz,'filled','MarkerFaceColor',c5,'DisplayName','Back calculated torque');
+sc5 = scatter(Angle,TorqueHand,sz,'filled','MarkerFaceColor',c5,'DisplayName','Back calculated torque');
 sc7 = scatter(Angle,Torque,sz,'d','filled','MarkerFaceColor',c7,'DisplayName','Measured Torque');
 ax4 = gca;
 ax4.FontSize = 12;
@@ -165,39 +155,39 @@ lgd = legend;
 hold off
 
 %% Mean and RMSE
-Tqz = cell(2,1);
-Tqz{1} = Bifemsh_Pam.Torque(:,3,4);         %Calculated Torque, new simplified exponential equation w/o optimized fitting length
-Tqz{2} = Bifemsh_Pam_adj.Torque(:,3,4);     %Calculated Torque, adjusted with optimized fitting length
-%Tqz{3} = TorqueHand(:,:,4);                %Placeholder in case we want to compare SSE/RMSE of back calculated torque to measured torque
-
-%fit options
-mod_Pam = fittype('cubicinterp');
-Options = fitoptions(mod_Pam);
-Options.Normal = 'on';
-
-%prepare cells
-mdl_Pam = cell(size(Tqz,1));
-val = cell(length(mdl_Pam),1);
-          
-%Get values at each angle there is measurement data for
-for j = 1:length(Tqz)
-     Options.Exclude = isnan(Tqz{j});
-     mdl_Pam{j} = fit(phiD',Tqz{j},mod_Pam,Options);
-     val{j} = feval(mdl_Pam{j},Angle');
-end
-
-y = Torque';        
-ynew = val;
-        
-yresid = cell(length(ynew),1);
-SSresid = cell(length(ynew),1);
-fu = cell(length(ynew),1);
-        
-for i = 1:length(ynew)
-    yresid{i} = y-ynew{i};              %residual error
-    SSresid{i} = sum(yresid{i}.^2,'omitnan'); %Sum of squares of the residual
-    fu{i} = sqrt(SSresid{i}/length(yresid{i}));        % RMSE for function 1
-end
-
-fprintf('Original torque calculation returns SSE of %5d with an RMSE of %5d\n',SSresid{1},fu{1})
-fprintf('Optimized torque calculation returns SSE of %5d with an RMSE of %5d\n',SSresid{2},fu{2})
+% Tqz = cell(2,1);
+% Tqz{1} = Bifemsh_Pam.Torque(:,3,4);         %Calculated Torque, new simplified exponential equation w/o optimized fitting length
+% Tqz{2} = Bifemsh_Pam_adj.Torque(:,3,4);     %Calculated Torque, adjusted with optimized fitting length
+% %Tqz{3} = TorqueHand(:,:,4);                %Placeholder in case we want to compare SSE/RMSE of back calculated torque to measured torque
+% 
+% %fit options
+% mod_Pam = fittype('cubicinterp');
+% Options = fitoptions(mod_Pam);
+% Options.Normal = 'on';
+% 
+% %prepare cells
+% mdl_Pam = cell(size(Tqz,1));
+% val = cell(length(mdl_Pam),1);
+%           
+% %Get values at each angle there is measurement data for
+% for j = 1:length(Tqz)
+%      Options.Exclude = isnan(Tqz{j});
+%      mdl_Pam{j} = fit(phiD',Tqz{j},mod_Pam,Options);
+%      val{j} = feval(mdl_Pam{j},Angle');
+% end
+% 
+% y = Torque';        
+% ynew = val;
+%         
+% yresid = cell(length(ynew),1);
+% SSresid = cell(length(ynew),1);
+% fu = cell(length(ynew),1);
+%         
+% for i = 1:length(ynew)
+%     yresid{i} = y-ynew{i};              %residual error
+%     SSresid{i} = sum(yresid{i}.^2,'omitnan'); %Sum of squares of the residual
+%     fu{i} = sqrt(SSresid{i}/length(yresid{i}));        % RMSE for function 1
+% end
+% 
+% fprintf('Original torque calculation returns SSE of %5d with an RMSE of %5d\n',SSresid{1},fu{1})
+% fprintf('Optimized torque calculation returns SSE of %5d with an RMSE of %5d\n',SSresid{2},fu{2})
