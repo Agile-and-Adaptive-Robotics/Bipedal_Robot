@@ -36,7 +36,8 @@ Theo3opt = Bifemsh_Pam_adj3.Torque(:,3)';
 %% Torque calculated from measurements
 Angle = [-125	-114	-98	-83	-75.5	-69	-55.5	-53	-53	-41	-30	-26	-26	-18.5	-18	-7	-9	0	3	7.7	-6.5	-32];
 
-Torque = [-8.84322291179594,-7.38771014573315,-6.12295907061857,-5.11416855627929,-4.00577506118469,-3.08271954812317,-3.04251451225018,-2.59384366567520,-1.86178531541841,-0.774849368079027,-4.65440909149842,-3.19703540259264,-2.57966382173969,-0.959098909344151,-0.499572417339300,-1.33299525437727,-0.772724305518311];
+% Torque = [-5.69223299793786;-5.64607310931704;-10.1189918113583;-13.0958827614242;-14.3095704119172;-16.9888650925735;-20.5703017554824;-22.3443344787345;-21.6005799691930;-26.7782354011598;-29.8989119909231;-17.9933462510876;-21.3479308751662;-14.3413577310638;-22.1444235766143;-15.9751818502667;-19.3052271060351;-21.2820366247165;-21.9932291986419;-24.2024569662071;-30.6504310267844;-23.6067801126758];
+Torque = TorqueZ;
 %% Calculate Torque by finding force from muscle contraction and distance
 %from force line of action to muscle ICR.
 %Hand measurements for Fish scale Extensor test 2 were done incorrectly and will be disregarded
@@ -57,12 +58,13 @@ ICRtoMuscle = [25	25	35	35	NaN	37	40	45	48	45	40	40	40	42	45	46	48	48	42	43	45	3
 %                 load(file_name,'Stats')
 %                 pres(1,j) = Stats{'Mean',2};
 %      end
-pres = [613	614	614	615	615	615	618	618	620	620	620	385	451	296.6	421	281	324.8	325.58	325.58	325	500	560];
+% pres = [613	614	614	615	615	615	618	618	620	620	620	385	451	296.6	421	281	324.8	325.58	325.58	325	500	560];
+pres = Presh;
 
 contract = (rest-InflatedLength)/rest;
 realRel = contract./KMAX;
-
-F = festo4(20, realRel, pres);
+maxF = maxBPAforce(rest,'20');
+F = maxF*festo4(20, realRel, pres);
 
 TorqueHand = -ICRtoMuscle.*F;  %Moment will be negative because it causes flexion
 
@@ -152,22 +154,24 @@ hold on
 gca1 = gca;
 gcf1 = gcf;
 
-
-    for i = 1:size(ANG,1)
-        T1 = 2*i;
-        H1 = 2*i+1;
-        Disp1{i} = sprintf('Theoretical, %.0f kPa',PRZ{i});
-        Disp2{i} = sprintf('Theoretical optimized, %.0f kPa',PRZ{i});
-        Disp3{i} = sprintf('Measured, %.0f kPa',PRZ{i});
-        PL{i} = plot(ANG{i}, val{i},'--','Color',c{H1},'Linewidth',2,'DisplayName',Disp1{i});
-        PL_opt{i} = plot(ANG{i}, val_opt{i},'Color',c{H1},'Linewidth',2,'DisplayName',Disp2{i});
-        sc{i} = scatter(ANG{i},y{i},sz,'d','filled','MarkerFaceColor',c{H1},'DisplayName',Disp3{i});
-    end
+% 
+%     for i = 1:size(ANG,1)
+%         T1 = 2*i;
+%         H1 = 2*i+1;
+%         Disp1{i} = sprintf('Theoretical, %.0f kPa',PRZ{i});
+%         Disp2{i} = sprintf('Theoretical optimized, %.0f kPa',PRZ{i});
+%         Disp3{i} = sprintf('Measured, %.0f kPa',PRZ{i});
+%         PL{i} = plot(ANG{i}, val{i},'--','Color',c{H1},'Linewidth',2,'DisplayName',Disp1{i});
+%         PL_opt{i} = plot(ANG{i}, val_opt{i},'Color',c{H1},'Linewidth',2,'DisplayName',Disp2{i});
+%         sc{i} = scatter(ANG{i},y{i},sz,'d','filled','MarkerFaceColor',c{H1},'DisplayName',Disp3{i});
+%     end
 
 
 SC4 = scatter(Angle,TorqueHand,sz,'filled','MarkerFaceColor',c1,'DisplayName','Hybrid calc');
 OST = plot(knee_angle_rT,Bifemsh_T,'-.','Color',c8,'LineWidth',1,'DisplayName','Human');
-
+PL1 = plot(phiD, Bifemsh_Pam3.Torque(:,3),':','Color',c7,'DisplayName','Unoptimized');
+PL2 = plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'LineStyle','--','Color',c7,'DisplayName','Length Optimized, 620 kPa'); 
+PL3 = plot(phiD, Bifemsh_Pam_adj1.Torque(:,3),'LineStyle','--','Color',c7,'DisplayName','Length Optimized, 1 kPa'); 
 title('Iso. Torque vs {\theta_{k}}, {\phi}20mm Flexor, l_{rest} = 42.3cm','Interpreter','tex')
 xlabel('Knee angle, \circ','FontWeight','bold','Interpreter','tex')
 ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')

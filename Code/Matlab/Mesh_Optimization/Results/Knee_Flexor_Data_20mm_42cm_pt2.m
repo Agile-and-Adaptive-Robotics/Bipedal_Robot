@@ -113,11 +113,11 @@ Dia = 20;
 % rest = 0.423;
 % kmax = 0.322;
 rest = 0.413; %resting length, m
-kmax = 0.314; %Length at maximum contraction, m
+kmax = 0.311; %Length at maximum contraction, m
 tendon = 0.014; 
 fitting = 0.0254; 
 %pres1 = 273.9783;         %average pressure, first test
-pres1 = 300;
+pres1 = 1;
 pres2 = 325;         %average pressure, first test
 %pres3 = 606.4926;         %average pressure, first test
 pres3 = 620;
@@ -313,7 +313,7 @@ hold off
 %% Compare to results
 %Longer Tibia
 Load = [18.5 18.05 32 40.97 44.4 50.84 62.45 69.4 64.3 70.6 90.15 70];     %Load in Newtons
-K_ang = [-125 -114 -98 -83 -75.5 -69 -55.5 -53 3 7 -6.5 -32]*c;      %Knee angle
+K_ang = [-125 -114 -98 -83 -75.5 -69 -55.5 -53.001 3 7 -6.5 -32]*c;      %Knee angle
 LC_ang = [32.5 30 28 26 24.5 17 20 24 7 5.5 10 13.5]*c;      %Load Cell angle
 
 d = 320/1000;
@@ -347,7 +347,7 @@ TorqueZ1 = squeeze(TorqueZ1);
 
 %Tibia 2
 Load2 = [91.7 114.1 129.8 78 92.78 63.6 97.28 71.92 84.5 93.9];     %Load in Newtons
-K_ang2 = [-53 -41 -30 -26 -25.5 -18.5 -18 -7 -9 0]*c;      %Knee angle
+K_ang2 = [-53.01 -41 -30 -26.01 -26.001 -18.5 -18 -7 -9 0]*c;      %Knee angle
 LC_ang2 = [-5 -7 -12 -12 -12.5 -16.5 -15 -19.5 -15 -17]*c;      %Load Cell angle
 
 d2 = 218.29/1000;
@@ -378,8 +378,8 @@ end
 TorqueZ2 = Fk2(3,1,:);
 TorqueZ2 = squeeze(TorqueZ2);
 
-TorqueZ = [TorqueZ1; TorqueZ2];
-K_ang = [K_ang, K_ang2];
+TorqueZ = [TorqueZ1(1:8); TorqueZ2; TorqueZ1(9:12)];
+K_ang = [K_ang(1:8)'; K_ang2'; K_ang(9:12)'];
 
 Presh = [613	614	614	615	615	615	618	618	620	620	620	385	451	296.6	421	281	324.8	325.58	325.58	325	500	560]; %Measured pressure
 
@@ -426,9 +426,9 @@ figure
 hold on
 %plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g', K_ang/c, TorqueZ,'o', knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
 plot(phiD, Bifemsh_Pam3.Torque(:,3),':','Color',c7)
-plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'LineStyle','-','Color',c7); 
+plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'LineStyle','--','Color',c7); 
 plot(phiD, Bifemsh_Pam_adj2.Torque(:,3),'LineStyle','--','Color',c6);
-plot(phiD, Bifemsh_Pam_adj1.Torque(:,3),'LineStyle','-.','Color',c5);
+plot(phiD, Bifemsh_Pam_adj1.Torque(:,3),'LineStyle','--','Color',c5);
 plot(knee_angle_rT, Bifemsh_T,'LineStyle',':','Color',c2);
 scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4')
 legend('Unoptimized',sT3,sT2,sT1,'OpenSim Human Torque','Measured','Location','southwest')
