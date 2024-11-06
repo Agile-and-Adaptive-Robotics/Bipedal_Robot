@@ -112,9 +112,9 @@ end
 Dia = 20;
 % rest = 0.423;
 % kmax = 0.322;
-rest = 0.413; %resting length, m
-kmax = 0.311; %Length at maximum contraction, m
-tendon = 0.014; 
+rest = 0.411; %resting length, m
+kmax = 0.309; %Length at maximum contraction, m
+tendon = 0.015; 
 fitting = 0.0254; 
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 1;

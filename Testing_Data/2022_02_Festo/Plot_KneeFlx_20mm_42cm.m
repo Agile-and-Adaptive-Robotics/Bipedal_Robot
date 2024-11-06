@@ -153,25 +153,24 @@ figure
 hold on
 gca1 = gca;
 gcf1 = gcf;
-
-% 
-%     for i = 1:size(ANG,1)
-%         T1 = 2*i;
-%         H1 = 2*i+1;
-%         Disp1{i} = sprintf('Theoretical, %.0f kPa',PRZ{i});
-%         Disp2{i} = sprintf('Theoretical optimized, %.0f kPa',PRZ{i});
-%         Disp3{i} = sprintf('Measured, %.0f kPa',PRZ{i});
-%         PL{i} = plot(ANG{i}, val{i},'--','Color',c{H1},'Linewidth',2,'DisplayName',Disp1{i});
-%         PL_opt{i} = plot(ANG{i}, val_opt{i},'Color',c{H1},'Linewidth',2,'DisplayName',Disp2{i});
-%         sc{i} = scatter(ANG{i},y{i},sz,'d','filled','MarkerFaceColor',c{H1},'DisplayName',Disp3{i});
-%     end
-
-
-SC4 = scatter(Angle,TorqueHand,sz,'filled','MarkerFaceColor',c1,'DisplayName','Hybrid calc');
+SC4 = scatter(Angle,TorqueHand,sz2,'filled','MarkerFaceColor',c1,'DisplayName','Hybrid calc');
 OST = plot(knee_angle_rT,Bifemsh_T,'-.','Color',c8,'LineWidth',1,'DisplayName','Human');
-PL1 = plot(phiD, Bifemsh_Pam3.Torque(:,3),':','Color',c7,'DisplayName','Unoptimized');
-PL2 = plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'LineStyle','--','Color',c7,'DisplayName','Length Optimized, 620 kPa'); 
-PL3 = plot(phiD, Bifemsh_Pam_adj1.Torque(:,3),'LineStyle','--','Color',c7,'DisplayName','Length Optimized, 1 kPa'); 
+PL1 = plot(phiD, Bifemsh_Pam3.Torque(:,3),':','Color',c5,'DisplayName','Unoptimized');
+PL2 = plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'LineStyle','--','Color',c6,'DisplayName','Length Optimized, 620 kPa'); 
+PL3 = plot(phiD, Bifemsh_Pam_adj1.Torque(:,3),'LineStyle','--','Color',c2,'DisplayName','Length Optimized, 1 kPa'); 
+SC5 = scatter(Angle,Torque,sz2,'filled','MarkerFaceColor',c7,'DisplayName','Measured');
+kk = find(pres<600);
+formatSpec = '%-3.0f'; 
+st = string(num2str(pres(kk)',formatSpec));
+% str = plus(st," kPa");
+t = cell(length(kk),1);
+x = zeros(length(kk),1);
+y = zeros(length(kk),1);
+for i = 1:length(kk)
+    x(i) = Angle(kk(i))'-2;
+    y(i) = Torque(kk(i))-2; 
+    t{i} = text(x(i),y(i),st{i});
+end
 title('Iso. Torque vs {\theta_{k}}, {\phi}20mm Flexor, l_{rest} = 42.3cm','Interpreter','tex')
 xlabel('Knee angle, \circ','FontWeight','bold','Interpreter','tex')
 ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
