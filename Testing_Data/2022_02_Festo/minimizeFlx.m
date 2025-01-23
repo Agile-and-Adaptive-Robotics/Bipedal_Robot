@@ -33,7 +33,7 @@ if nargout > 1
     G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
     load Plot_KneeFlx_20mm_42cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
     A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
-    kf(2).L(2) = struct('Ak',phiD,'Lo0c',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
+    kf(2).L(2) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
                   'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
                   'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
                   'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
@@ -57,7 +57,7 @@ end
 h = cell(1,2);
 
 for j = 1:a
-    klaus(j) = kf(1).L(4-j);
+    klaus(j) = kf(1).L(j);
     bpa(j) = klaus(j);
     L_p = Lok(klaus(j));
     unitD_p = UD(klaus(j));
@@ -87,7 +87,7 @@ function LOC = Lok(klass)
             FF = festo4(10,klass.strain/(klass.rest-klass.Kmax),klass.P);        %Force vector
             unitD = klass.unitD;
             F = unitD.*FF.*klass.Fm;
-            pkI = [-0.043, -.1115, 0];     %from knee ICR to flexor insertion bracket (where it starts to cantilever)
+            pkI = [-0.01093, -.00792, 0.02479];     %from theta1 to flexor insertion ring (surface before the hole)
 %             pkI = [0.2575, -104.25, 0];    %from knee ICR to extensor insertion bracket (where it starts to cantilever)
             RkI = [1, 0, 0;                 %Rotation matrix (no rotation)
                    0, 1, 0;
