@@ -23,8 +23,8 @@ T = zeros(4, 4, positions);
 R_Pam = zeros(3, 3, positions);
 T_Pam = zeros(4, 4, positions);
 t1toICR = zeros(1,3,positions);
-T_t1_ICR = zeros(4, 4, positions);
-T_ICR_t1 = zeros(4, 4, positions);
+T_ICRt1 = zeros(4, 4, positions);
+T_t1ICR = zeros(4, 4, positions);
 
 %Knee Extension and Flexion
 %Human
@@ -41,7 +41,7 @@ fcn3 = fit(knee_angle,knee_x_Pam,'cubicspline');
 knee_y_Pam =     [-0.3981   -0.3968   -0.3961   -0.3957   -0.3949   -0.3943   -0.3941   -0.3950   -0.3982   -0.4034   -0.4098   -0.4165   -0.4227   -0.4273   -0.4297   -0.4289]';
 fcn4 = fit(knee_angle,knee_y_Pam,'cubicspline');
 
-%Theta1 to ICR
+%Theta1 to ICR distance
 t1_ICR_x = ([29.66	28.54	27.86	27.40	26.23	25.03	23.81	20.03	16.17	12.34	8.67	5.24	2.04	-1.01	-4.1	-7.58]')/1000;
 fcn13 = fit(knee_angle,t1_ICR_x,'cubicspline');
 t1_ICR_y = ([25.97	25.74	25.61	25.53	25.35	25.19	25.03	24.57	24.04	23.39	22.66	21.93	21.32	20.99	21.2	22.33]')/1000;
@@ -56,23 +56,23 @@ phi = linspace(kneeMin, kneeMax, positions);
 phi(pos) = 0;
 
 for i = 1:positions
-    hipToKnee = [fcn1(phi(i)), fcn2(phi(i)), 0];
+    hipToKnee = [fcn1(phi(i)), fcn2(phi(i)), 0];   
     R(:, :, i) = [cos(phi(i)), -sin(phi(i)), 0;
                     sin(phi(i)), cos(phi(i)), 0;
                     0, 0, 1];
     
     T(:, :, i) = RpToTrans(R(:, :, i), hipToKnee');
     
-    hipToKnee_Pam = [fcn3(phi(i)), fcn4(phi(i)), 0];
+    hipToKnee_Pam = [fcn3(phi(i)), fcn4(phi(i)), 0];  %Distance from hip origin to Knee ICR
     R_Pam(:, :, i) = [cos(phi(i)), -sin(phi(i)), 0;   %Rotation matrix for robot
                     sin(phi(i)), cos(phi(i)), 0;
                     0, 0, 1];
     
-    T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
+    T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot to represent 
     
-    t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0];
-    T_t1_ICR(:, :, i) = RpToTrans(R_Pam(:, :, i), t1toICR(1,:,i)');    
-    T_ICR_t1(:, :, i) = TransInv(T_t1_ICR(:, :, i));
+    t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0];          %Distance from theta1 to knee ICR
+    T_ICRt1(:, :, i) = RpToTrans(R_Pam(:, :, i), t1toICR(1,:,i)');    %Converts the t1 frame to the ICR frame
+    T_t1ICR(:, :, i) = TransInv(T_ICRt1(:, :, i));                    %Converts the ICR frame to the t1 frame
 end
 
 %% Muscle calculation
