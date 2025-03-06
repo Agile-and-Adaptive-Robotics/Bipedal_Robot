@@ -32,7 +32,7 @@ if nargout > 1
     Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
     G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
     load Plot_KneeFlx_20mm_42cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
-    A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
+    A = sortrows([Angle', Torque, InflatedLength', ICRtoMuscle', TorqueHand']);
     kf(2).L(2) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
                   'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
                   'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
@@ -57,7 +57,7 @@ end
 h = cell(1,2);
 
 for j = 1:a
-    klaus(j) = kf(1).L(j);
+    klaus(j) = kf(2).L(j);
     bpa(j) = klaus(j);
     L_p = Lok(klaus(j));
     unitD_p = UD(klaus(j));
@@ -84,49 +84,37 @@ varargout{2} = bpa;
 function LOC = Lok(klass)
             L = klass.Loc;      %Location (wrapping, attachment points)
             C = klass.CP;       %Cross point (moves from one frame to another)
-%             T = klass.Tk;       %Transformation matrix
+            T = klass.Tk;       %Transformation matrix, tibia frame represented in the hip frame
             FF = festo4(10,klass.strain/(klass.rest-klass.Kmax),klass.P);       %Force magnitude
-            unitD = klass.unitD;                                                %Unit direction of force
-            F = unitD.*FF.*klass.Fm;                                            %Force vector
-            pA = L(1,:,1);                                  %Distance from 
+            unitD = klass.unitD;                                                %Unit direction of force, tibia frame
+            F = unitD.*FF.*klass.Fm;                                            %Force vector, tibia frame
+            pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
             Pbr = [-0.8100  -20.2650   32.2100]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
             pbrA = pA-Pbr;                                  %vector from bracket to point A
             thetabrA = norm(wrapToPi(acos(dot(pbrA,[1,0,0])/(norm(pbrA)))));   %angle between pbrA and x axis
             Rhbr = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
                    sin(thetabrA) cos(thetabrA) 0; ...
                    0    0   1];
-            Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
-            
+            Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame              
             LOC = zeros(size(L));
-            yprime = zeros(size(L,3),3);
-            epsilon = zeros(size(L,3),3);
-            delta = zeros(size(L,3),3);
+            Fh = zeros(size(L,3),3);
+            Fbrh = zeros(size(L,3),3);
+            epsilon = zeros(size(L,3),1);
+            delta = zeros(size(L,3),1);
             pbrAnew = zeros(size(L,3),3);   %New point A, represented in bracket frame
             pAnew = zeros(size(L,3),3);     %New point A, in the hip frame
             for ii = 1:size(L, 3)                          %Repeat for each orientation
                 for i = 1:size(L, 1)                      %Repeat for all muscle segments
-                    LOC(i,:,ii) = L(i, :,ii);
                     if i == C-1
-%                         pA(ii,:) = L(i, :,ii);
-%                         pbrA(ii,:) = RowVecTrans(Thbr,pA(ii,:));
-%                         thetabrA(ii) = norm(wrapToPi(acos(dot(pbrA(ii,:),[1,0,0])/(norm(pbrA(ii,:))))));   %angle between pBI and x axis
-%                         thetabrBy(ii) = norm(wrapToPi(acos(dot(pbrA(ii,:),[0,1,0])/(norm(pbrA(ii,:))))));
-%                         if  thetabrBy(ii)> pi/2
-%                             thetabrA(ii) = -thetabrA(ii);
-%                         end
-%                         Rot(:,:,ii) = [cos(thetabrA(ii)) -sin(thetabrA(ii)) 0; ...
-%                                        sin(thetabrA(ii)) cos(thetabrA(ii)) 0; ...
-%                                        0    0   1];
-%Use Thbr^-1, get Fbrh (force vector hip frame to bracket frame, 
-%   pbrAnew(ii,:) = [Fbrh(ii,:)/Xi1+norm(PbrA), Fbrh(ii,:)/Xi2, 0];
-%   pAnew(ii,:) = Thbr*pbrAnew(ii,:)
-                        %
-                        yprime(ii,:) = Rot(:,:,ii)*[0 1 0]';
-                        epsilon(ii,:) = ((dot(F(ii,:),pbrA(ii,:))/norm(pbrA(ii,:))^2)*pbrA(ii,:))./Xi1;  %strain from tensile stiffness
-                        delta(ii,:) = ((dot(F(ii,:),yprime(ii,:))/norm(yprime(ii,:))^2)*yprime(ii,:))./Xi2;    %deflection bending stiffness
-                        pbrAnew(ii,:) = pbrA(ii,:)+delta(ii,:)+epsilon(ii,:);
-                        pAnew(ii,:) = RowVecTrans(Thbr\eye(4), pbrAnew(ii,:));
-                        LOC(i,:,ii) = pAnew(ii,:);
+                        Fh(ii,:) = -RowVecTrans(T(:,:,ii),F(ii,:));               %Force vector represented in the hip frame
+                        Fbrh(ii,:) = RowVecTrans(Thbr\eye(4),Fh(ii,:));   %Force vector in the hip frame represented in the bracket frame
+                        epsilon(ii) = Fbrh(ii,1)./Xi1;  %strain from tensile stiffness
+                        delta(ii) = Fbrh(ii,2)./Xi2;    %deflection bending stiffness
+                        pbrAnew(ii,:) = [norm([pbrA(1) pbrA(2)])+epsilon(ii,:), delta(ii,:), pbrA(3)]; %New point A, represented in the bracket frame
+                        pAnew(ii,:) = RowVecTrans(Thbr, pbrAnew(ii,:)); %New point A in the hip frame
+                        LOC(i,:,ii) = pAnew(ii,:);      %Update location matrix
+                    else
+                        LOC(i,:,ii) = L(i, :,ii);
                     end
 
                 end
