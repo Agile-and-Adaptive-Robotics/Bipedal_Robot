@@ -85,7 +85,13 @@ function LOC = Lok(klass)
             L = klass.Loc;      %Location (wrapping, attachment points)
             C = klass.CP;       %Cross point (moves from one frame to another)
             T = klass.Tk;       %Transformation matrix, tibia frame represented in the hip frame
-            FF = festo4(10,klass.strain/(klass.rest-klass.Kmax),klass.P);       %Force magnitude
+            switch klass.dBPA
+                case 10
+                    D = 10;
+                case 20
+                    D = 20;
+            end
+            FF = festo4(D,klass.strain/(klass.rest-klass.Kmax),klass.P);       %Force magnitude
             unitD = klass.unitD;                                                %Unit direction of force, tibia frame
             F = unitD.*FF.*klass.Fm;                                            %Force vector, tibia frame
             pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion

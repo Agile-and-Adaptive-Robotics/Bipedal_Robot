@@ -146,7 +146,7 @@ function Lmt = LMT(klass)
                     Lmt(ii, 1) = Lmt(ii, 1) + sL_p(ii, i);
                 end
             end
-            Lmt = Lmt - Xi0;
+            Lmt = Lmt - Xi0';
 end            
 
         %% -------------- Force Unit Direction ----------------
@@ -225,11 +225,13 @@ function F = Force(klass)
            scalarForce = Fn.*maxF;
 
             for i = 1:size(unitD_p, 1)
-                if scalarForce(i) < 0
-                    scalarForce(i) = 0;
-                end
-                if scalarForce(i) > maxF
-                    scalarForce(i) = NaN;
+                for k = 1:size(Fn,2)
+                    if scalarForce(i,k) < 0
+                        scalarForce(i,k) = 0;
+                    end
+                    if scalarForce(i,k) > maxF
+                        scalarForce(i,k) = NaN;
+                    end
                 end
             end
             
