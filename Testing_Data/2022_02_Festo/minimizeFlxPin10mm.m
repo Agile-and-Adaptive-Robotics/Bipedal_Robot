@@ -24,6 +24,8 @@ end
 ind = 1:length(Pareto_front);  %Index to original Pareto_front and Pareto_Fvals
 relate = vecnorm(Pareto_Fvals-val_Fvals,2,2);   %Find the distance between the optimization and validation solutions for the same input
 results = [ind', Pareto_front, Pareto_Fvals, val_Fvals, relate]; 
+
+%% Sort results
 results_sort = sortrows(results,[11 8 9 10 5 6 7]); %Sort results first on distance between optimization and validation, then on validation columns, then on original Fvals columns.
 sol_actual = [results_sort(1,2)/100, 10^results_sort(1,3), 10^results_sort(1,4)];  %Best solution                                   
 [u,v,bpa] = minimizeFlxPin(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out       

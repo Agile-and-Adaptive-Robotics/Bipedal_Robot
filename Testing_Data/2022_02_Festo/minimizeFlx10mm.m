@@ -7,9 +7,9 @@ clear; clc; close all
 
 %% Use solution from optimizer and check validity on biomimetic knee
 
-load minimizeFlxPin10_results.mat BEST X1
+load minimizeFlxPin10_results.mat sol_actual
 
-g = BEST(1,1:3);
+g = sol_actual(1,1:3);
 [u,v,bpa] = minimizeFlx(g(1),g(2),g(3));           % Now pull bpa structures out
 %% Plot torque curves, Optimized and validation 
 load ForceStrainForFit.mat z
@@ -85,19 +85,4 @@ for i = 1:2
     xlabel('\theta_{k}, \circ')
     ylabel('Length, m')
     legend
-end
-
-%% Helper functions
-function ff = min1(x)
-ff = minimizeFlx(x(:,1)/100,10^x(:,2),10^x(:,3)); %get GOF vector
-end
-
-
-function gg = min2(x)
-[~, gg] = minimizeFlx(x(:,1)/100,10^x(:,2),10^x(:,3)); %get validation vector
-end
-
-function [c, ceq] = nonlinc(f,g)
-c = [f-a; g-b];
-ceq = [];
 end
