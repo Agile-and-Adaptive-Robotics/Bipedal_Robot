@@ -33,7 +33,10 @@ for i = 1:2
         elseif bpa(i).strain(j) < 0
             Vq(j) = NaN;
         end
-    end   
+    end
+    if bpa(i).dBPA == 20
+        Vq = 1500/630*Vq;
+    end
     Fold = Vq.*bpa(i).unitD;    %Force vector
     Fq = (Fold(:,1).^2+Fold(:,2).^2).^(1/2);
     Mold = -bpa(i).mA.*Fq;
