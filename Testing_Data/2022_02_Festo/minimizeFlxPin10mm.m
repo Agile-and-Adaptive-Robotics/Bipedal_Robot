@@ -68,7 +68,7 @@ for i = 1:2
     plot(bpa(i).Ak,bpa(i).M,'DisplayName','Predict original') %"original" is with updated BPA characterization
     plot(bpa(i).Ak,Mold,'DisplayName','Predict old') %"original" is with updated BPA characterization
     hold off
-    title(str(i))
+    title(sprintf('Torque, %s',str(i)))
     xlabel('\theta_{k}, \circ')
     ylabel('Torque, N\cdotm')
     legend
@@ -85,7 +85,7 @@ for i = 1:2
     plot(bpa(i).Ak,Lm_p,'DisplayName','New predict')
     plot(bpa(i).Ak,Lm,'DisplayName','Predict original')
     hold off
-    title(str(i))
+    title(sprintf('Muscle length, %s',str(i)))
     xlabel('\theta_{k}, \circ')
     ylabel('Length, m')
     legend
@@ -101,7 +101,7 @@ for i = 1:2
     plot(bpa(i).Ak,G_p,'DisplayName','New predict')
     plot(bpa(i).Ak,bpa(i).mA,'DisplayName','Predict original')
     hold off
-    title(str(i))
+    title(sprintf('Moment arm, %s',str(i)))
     xlabel('\theta_{k}, \circ')
     ylabel('Length, m')
     legend

@@ -35,7 +35,7 @@ for i = 1:2
         end
     end
     if bpa(i).dBPA == 20
-        Vq = 1500/630*Vq;
+        Vq = 1500/500*Vq;
     end
     Fold = Vq.*bpa(i).unitD;    %Force vector
     Fq = (Fold(:,1).^2+Fold(:,2).^2).^(1/2);
@@ -51,7 +51,7 @@ for i = 1:2
     plot(bpa(i).Ak,bpa(i).M,'DisplayName','Predict original') %"original" is with updated BPA characterization
     plot(bpa(i).Ak,Mold,'DisplayName','Predict old') %"old" is before updated BPA characterization
     hold off
-    title(str(i))
+    title(sprintf('Torque, %s',str(i)))
     xlabel('\theta_{k}, \circ')
     ylabel('Torque, N\cdotm')
     legend
@@ -68,7 +68,7 @@ for i = 1:2
     plot(bpa(i).Ak,Lm_p,'DisplayName','New predict')
     plot(bpa(i).Ak,Lm,'DisplayName','Predict original')
     hold off
-    title(str(i))
+    title(sprintf('Muscle length, %s',str(i)))
     xlabel('\theta_{k}, \circ')
     ylabel('Length, m')
     legend
@@ -84,7 +84,7 @@ for i = 1:2
     plot(bpa(i).Ak,G_p,'DisplayName','New predict')
     plot(bpa(i).Ak,bpa(i).mA,'DisplayName','Predict original')
     hold off
-    title(str(i))
+    title(sprintf('Moment Arm, %s',str(i)))
     xlabel('\theta_{k}, \circ')
     ylabel('Length, m')
     legend

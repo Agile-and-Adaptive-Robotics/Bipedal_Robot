@@ -98,7 +98,8 @@ CrossPoint = 2;
 Location = zeros(2,3,positions);
 %Origin and Insertion from Ben
 p1 = [-0.050, 0.035, 0.050];       %Origin
-p2 = [-0.01224, -0.00887, 0.02777];  %Insertion distance from theta1
+p2 = [-0.01146, 0.00113, 0.027];  %Insertion distance from theta1
+% p2 = [-0.01224, -0.00887, 0.02777];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);
 
 for i = 1:positions
@@ -112,9 +113,9 @@ end
 Dia = 20;
 % rest = 0.423;
 % kmax = 0.322;
-rest = 0.411; %resting length, m
-kmax = 0.309; %Length at maximum contraction, m
-tendon = 0.015; 
+rest = 0.415; %resting length, m
+kmax = 0.314; %Length at maximum contraction, m
+tendon = 0.014; 
 fitting = 0.0254; 
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 1;

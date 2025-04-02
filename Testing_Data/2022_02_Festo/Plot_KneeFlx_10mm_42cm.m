@@ -56,7 +56,7 @@ end
 TorqueHand = -ICRtoMuscle.*F;  %Torque will be negative because it is causing flexion
 
 %% Plot expected versus measured moment arm
-Ma = Bifemsh_Pam_adj.MomentArm;                 %Calculated moment arm
+Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
 G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
 
 figure
@@ -77,7 +77,7 @@ lgdMa.FontSize = 12;
 hold off
 
 %% Plot relative strain versus angle. Compare strain, relative strain, and measured values
-strain = (rest-(Bifemsh_Pam_adj.MuscleLength-tendon-2*fitting))/rest;
+strain = (rest-(Bifemsh_Pam.MuscleLength-tendon-2*fitting))/rest;
 relstrain = (strain)./KMAX;
 realRel = (rest-InflatedLength)/rest/KMAX;
 
@@ -99,7 +99,7 @@ lgdMa.FontSize = 12;
 hold off
 
 %% Plot measured versus expected BPA length
-MuscleLength = Bifemsh_Pam_adj.MuscleLength-2*fitting-tendon;
+MuscleLength = Bifemsh_Pam.MuscleLength-2*fitting-tendon;
 
 figure
 hold on
