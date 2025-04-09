@@ -82,14 +82,14 @@ function LOC = Lok(klass)
             L = klass.Loc;      %Location (wrapping, attachment points)
             C = klass.CP;       %Cross point (moves from one frame to another)
 %             T = klass.Tk;       %Transformation matrix
-            FF = festo4(10,klass.strain/(klass.rest-klass.Kmax),klass.P);        %Force magnitude
+            FF = festo4(10,klass.strain/(klass.rest-klass.Kmax),klass.P);        %Force magnitude (relative)
             unitD = klass.unitD;            %unit direction of force vector
             F = unitD.*FF.*klass.Fm;        %Force vector
             pB = L(2,:,1);                  %Distance from knee frame to muscle insertion
             Pbr = [-0.043, -.1115, 0];     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
 %             pkI = [0.2575, -104.25, 0];    %from knee ICR to extensor insertion bracket (where it starts to cantilever)
-            pbrB = pB-Pbr;                  %vector from bracket to point B
-            thetabrB = norm(wrapToPi(acos(dot(pbrB,[1,0,0])/(norm(pbrB)))));   %angle between pbrB and x axis
+            pkbrB = pB-Pbr;                  %vector from bracket to point B, in the knee frame
+            thetabrB = wrapToPi(acos(dot(pkbrB,[1,0,0])/(norm(pkbrB))));   %angle between pbrB and x axis
             Rkbr = [cos(thetabrB) -sin(thetabrB) 0; ...     %Rotation matrix
                    sin(thetabrB) cos(thetabrB) 0; ...
                    0    0   1];
@@ -103,10 +103,10 @@ function LOC = Lok(klass)
             for ii = 1:size(L, 3)                          %Repeat for each orientation
                 for i = 1:size(L, 1)                      %Repeat for all muscle segments
                     if i == C
-                        Fbrk(ii,:) = RowVecTrans(Tkbr\eye(4),F(ii,:)); %Force vector in the bracket frame
-                        epsilon(ii) = F(ii,1)./Xi1;  %strain from tensile stiffness
-                        delta(ii) = F(ii,2)./Xi2;    %deflection bending stiffness
-                        pbrBnew(ii,:) = [norm([pbrB(1) pbrB(2)])+delta(ii), epsilon(ii), pbrB(3)]; %new point B, in the bracket frame
+                        Fbrk(ii,:) = RowVecTrans(Tkbr\eye(4),F(ii,:)); %Force vector in the tibia frame represented in the bracket frame
+                        epsilon(ii) = Fbrk(ii,1)./Xi1;  %strain from tensile stiffness
+                        delta(ii) = Fbrk(ii,2)./Xi2;    %deflection bending stiffness
+                        pbrBnew(ii,:) = [norm([pkbrB(1) pkbrB])+epsilon(ii), delta(ii), pkbrB(3)]; %new point B, in the bracket frame
                         pBnew(ii,:) = RowVecTrans(Tkbr, pbrBnew(ii,:));     %New point B, in the tibia frame
                         LOC(i,:,ii) = pBnew(ii,:);
                     else

@@ -13,6 +13,7 @@ g = sol_actual(1,1:3);
 [u,v,bpa] = minimizeFlx(g(1),g(2),g(3));           % Now pull bpa structures out
 %% Plot torque curves, Optimized and validation 
 load ForceStrainForFit.mat z
+load festo20datasheet.mat Fest20 x_20 y_20 z_20 x20norm y20norm z20norm XX20 YY20 ZZ20
 X = linspace(0,620,20); %Pressure for interpolation
 X = X(2:20);
 Y = linspace(0,1,30);   %Relative strain range for interpolation
@@ -21,21 +22,22 @@ str = ["Optimization"; "Validation"];
 for i = 1:2
     %Find old old torque, then plot everything
     clear Yq Xq Vq Fold Fq Mold
-    Yq = bpa(i).strain./((bpa(i).rest-bpa(i).Kmax)/bpa(i).rest);
-    Xq = bpa(i).P;
     Vq = zeros(size(bpa(i).unitD,1),1);
-    for j = 1:size(bpa(i).unitD, 1)
-        if bpa(i).strain(j) >= 0 && Yq(j) <=1
-            Vq(j) = interp2(X, Y, z, Xq, Yq(j));
-%             Vq(j) = f10(Yq(j),Xq);
-        elseif Yq(j)>1
-            Vq(j) = 0;
-        elseif bpa(i).strain(j) < 0
-            Vq(j) = NaN;
-        end
-    end
-    if bpa(i).dBPA == 20
-        Vq = 1500/500*Vq;
+    if i == 1
+        Yq = bpa(i).strain./((bpa(i).rest-bpa(i).Kmax)/bpa(i).rest);
+        Xq = bpa(i).P*ones(size(Yq));
+        Vq = interp2(X, Y, z, Xq, Yq);
+        Vq (Yq > 1) = 0;
+        Vq (Yq < 0) = NaN;
+
+    elseif i == 2
+        Xq = bpa(i).strain./((bpa(i).rest-bpa(i).Kmax)/bpa(i).rest);
+        Yq = 617*ones(size(Xq))/620;
+        H = scatteredInterpolant(XX20, YY20, ZZ20);
+        Vq = H(Xq, Yq);
+        Vq = Vq*bpa(i).Fm;
+        Vq(bpa(i).strain<-0.02) = NaN;
+        Vq(Xq > 1) = 0;
     end
     Fold = Vq.*bpa(i).unitD;    %Force vector
     Fq = (Fold(:,1).^2+Fold(:,2).^2).^(1/2);

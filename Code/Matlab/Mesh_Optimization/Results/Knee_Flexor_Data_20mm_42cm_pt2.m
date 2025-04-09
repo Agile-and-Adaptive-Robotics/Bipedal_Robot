@@ -98,8 +98,7 @@ CrossPoint = 2;
 Location = zeros(2,3,positions);
 %Origin and Insertion from Ben
 p1 = [-0.050, 0.035, 0.050];       %Origin
-p2 = [-0.01146, 0.00113, 0.027];  %Insertion distance from theta1
-% p2 = [-0.01224, -0.00887, 0.02777];  %Insertion distance from theta1
+p2 = [-0.01224, -0.00887, 0.02777];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);
 
 for i = 1:positions

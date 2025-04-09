@@ -24,14 +24,8 @@ P = pres/620;           % Normalize pressure
         F = f40(rel,P);
     end
     
-    for i = length(F)
-        if F(i) > 1
-            F(i) = NaN;
-        elseif F(i)<0
-            F(i) = 0;
-        else
-        end
-    end
+    F(rel > 1) = 0; %No force if shorter than shortest length
+    F(F > 1.05) = NaN; %If force is greater than 5% of it's maximum, return NaN.
 %     F = Fn.*maxF;
 
   end

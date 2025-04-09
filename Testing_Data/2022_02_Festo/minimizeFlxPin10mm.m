@@ -16,18 +16,19 @@ ub = [0.03*100, 10, 10];
                                          'display'   , 'plot',...
                                          'popsize'   , 75);
                                      
-%% Post process results
+%% Get validation GoF results from pareto front
 val_Fvals = zeros(size(Pareto_Fvals));
 for i = 1:length(Pareto_front)
     val_Fvals(i,:) = min2([Pareto_front(i,1),Pareto_front(i,2),Pareto_front(i,3)]);    %Get validation Fvals for all Pareto_front points
 end
+
+%% Sort results
 ind = 1:length(Pareto_front);  %Index to original Pareto_front and Pareto_Fvals
 relate = vecnorm(Pareto_Fvals-val_Fvals,2,2);   %Find the distance between the optimization and validation solutions for the same input
 results = [ind', Pareto_front, Pareto_Fvals, val_Fvals, relate]; 
-
-%% Sort results
 results_sort = sortrows(results,[11 8 9 10 5 6 7]); %Sort results first on distance between optimization and validation, then on validation columns, then on original Fvals columns.
-sol_actual = [results_sort(1,2)/100, 10^results_sort(1,3), 10^results_sort(1,4)];  %Best solution                                   
+pick = 1; %Pick the best solution from the sorted results (should be 1)
+sol_actual = [results_sort(pick,2)/100, 10^results_sort(pick,3), 10^results_sort(pick,4)];  %Best solution                                   
 [u,v,bpa] = minimizeFlxPin(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out       
 
 %% Plot torque curves, Optimized and validation 

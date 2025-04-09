@@ -23,7 +23,7 @@ function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
                   'Lmt_p',[],'mA_p',[],'M_p',[]);
-    clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+    clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand Angle
 
 if nargout > 1
     % 42cm length, 20mm diameter.
@@ -41,7 +41,7 @@ if nargout > 1
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
                   'Lmt_p',[],'mA_p',[],'M_p',[]);
-    clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+    clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand Angle
 end
 
 
@@ -96,7 +96,7 @@ function LOC = Lok(klass)
             F = unitD.*FF.*klass.Fm;                                            %Force vector, tibia frame
             pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
             Pbr = [-0.8100  -20.2650   32.2100]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
-            pbrA = pA-Pbr;                                  %vector from bracket to point A
+            pbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
             thetabrA = norm(wrapToPi(acos(dot(pbrA,[1,0,0])/(norm(pbrA)))));   %angle between pbrA and x axis
             Rhbr = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
                    sin(thetabrA) cos(thetabrA) 0; ...
