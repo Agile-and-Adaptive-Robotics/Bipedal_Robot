@@ -66,7 +66,7 @@ for j = 1:a
     strain_p = Contraction(klaus(j));
     F_p = Force(klaus(j));
     bpa(j).mA_p = mA_p;
-    M_p = Tor;
+    M_p = Tor(klaus(j));
     bpa(j).M_p = M_p;
     h{j} = SSE(klaus(j));
 end
@@ -224,17 +224,9 @@ function F = Force(klass)
            end 
            scalarForce = Fn.*maxF;
 
-            for i = 1:size(unitD_p, 1)
-                for k = 1:size(Fn,2)
-                    if scalarForce(i,k) < 0
-                        scalarForce(i,k) = 0;
-                    end
-                    if scalarForce(i,k) > maxF
-                        scalarForce(i,k) = NaN;
-                    end
-                end
-            end
-            
+           scalarForce(scalarForce < 0) = 0;
+%            scalarForce(scalarForce > maxF) = NaN;
+          
             
             F = scalarForce.*unitD_p;
 
@@ -246,12 +238,13 @@ end
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-function Mz = Tor(~)
+function Mz = Tor(klass)
             Mz = zeros(size(F_p));
             
             for i = 1:size(F_p, 1)
                 Mz(i, :) = cross(mA_p(i, :), F_p(i, :));
             end
+            Mz(vecnorm(F_p,2,2)>klass.Fm) = NaN;
 
 end    
 

@@ -69,7 +69,7 @@ for j = 1:a
     strain_p = Contraction(klaus(j));
     F_p = Force(klaus(j));
     bpa(j).mA_p = mA_p;
-    M_p = Tor;
+    M_p = Tor(klaus(j));
     bpa(j).M_p = M_p;
     h{j} = SSE(klaus(j));
 end
@@ -86,13 +86,15 @@ function [LOC, gamma] = Lok(klass)
             L = klass.Loc;      %Location (wrapping, attachment points)
             C = klass.CP;       %Cross point (moves from one frame to another)
             T = klass.Tk;       %Transformation matrix, tibia frame represented in the hip frame
+            kmax = klass.Kmax;  
+            KMAX = (klass.rest-kmax)/klass.rest; %turn it into a percentage 
             switch klass.dBPA
                 case 10
                     D = 10;
                 case 20
                     D = 20;
             end
-            FF = festo4(D,klass.strain/(klass.rest-klass.Kmax),klass.P).*klass.Fm;       %Force magnitude
+            FF = festo4(D,klass.strain/KMAX,klass.P).*klass.Fm;       %Force magnitude
             unitD = klass.unitD;                                                %Unit direction of force, tibia frame
             F = unitD.*FF;                                            %Force vector, tibia frame
             pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
@@ -116,7 +118,7 @@ function [LOC, gamma] = Lok(klass)
                     if i == C-1
                         Fh(ii,:) = -RowVecTrans(T(:,:,ii),F(ii,:));               %Force vector represented in the hip frame
                         Fbrh(ii,:) = RowVecTrans(Thbr\eye(4),Fh(ii,:));   %Force vector in the hip frame represented in the bracket frame
-                        [epsilon(ii), delta(ii), gamma(ii)] = fortz(klass,Fbrh(ii,1:2));  %strain from force divided by tensile stiffness
+                        [epsilon(ii), delta(ii), gamma(ii)] = fortz(klass,Fbrh(ii,1:2),ii);  %strain from force divided by tensile stiffness
                         pbrAnew(ii,:) = [norm([pbrA(1) pbrA(2)])+epsilon(ii,:), delta(ii,:), pbrA(3)]; %New point A, represented in the bracket frame
                         pAnew(ii,:) = RowVecTrans(Thbr, pbrAnew(ii,:)); %New point A in the hip frame
                         LOC(i,:,ii) = pAnew(ii,:);      %Update location matrix
@@ -197,7 +199,7 @@ function contraction = Contraction(klass)
             tendon = klass.ten;
             fitting = klass.fitn;
             
-            contraction = (rest-(Lmt_p-tendon-2*fitting)-gemma)/rest;    %(minus Xi0 is used in LMT function, above)
+            contraction = (rest-(Lmt_p-(tendon+gemma)-2*fitting))/rest;    %(minus Xi0 is used in LMT function, above)
 end
 
 
@@ -220,9 +222,8 @@ function F = Force(klass)
             maxF = klass.Fm;
             
            rel = strain_p./KMAX;                    %relative strain        
-           relPres = pres/620;                      %relative pressure
            
-           Fn = festo4(dia,rel,relPres);
+           Fn = festo4(dia,rel,pres);
 
            scalarForce = Fn.*maxF;
            scalarForce(scalarForce < 0) = 0;
@@ -238,12 +239,13 @@ end
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-function Mz = Tor(~)
+function Mz = Tor(klass)
             Mz = zeros(size(F_p));
             
             for i = 1:size(F_p, 1)
                 Mz(i, :) = cross(mA_p(i, :), F_p(i, :));
             end
+            Mz(vecnorm(F_p,2,2)>klass.Fm) = NaN;
 
 end  
 
@@ -251,32 +253,34 @@ end
 function springrate = Spr(klass)
         switch klass.dBPA
             case 10
-                mult = 2;
+                mult = 1;
             case 20
-                mult = 6;
+                mult = 4;
         end
         Aeff = 1.555*10^-6;%Effective area for 19-strand cable
         E = 193*10^9;       %Young's Modulus
         L = klass.ten;      %tendon length
         
         springrate = mult*Aeff*E/L;
+%         springrate = Inf;
         
 end
 
 %% Force and length reduction due to tendon
-function [e_axial, e_bending, e_cable] = fortz(klass,Fbrh)
+function [e_axial, e_bending, e_cable] = fortz(klass,Fbrh,index)
 % e_axial, bracket axial elongation
 % e_bending, bracket bending displacement
 % e_cable, tendon cable stretch
 
     D = klass.dBPA;         %BPA diameter
-    mL = klass.Lmt;         %musculotendon length
+    mL = klass.Lmt(index);         %musculotendon length
     rest = klass.rest;      %resting length
     tendon = klass.ten;     %tendon length
     fitting = klass.fitn;    %fitting length
     mif = klass.Fm;         %maximum force
     kmax = klass.Kmax;      %maximum contracted length
-    KMAX = (rest-kmax)/rest; %turn it into a percentage 
+    KMAX = (rest-kmax)/rest; %turn it into a percentage
+    pres = klass.P;         %pressure
     
     % Ensure Fbrh_vec is a column vector
     if isrow(Fbrh)
@@ -287,34 +291,52 @@ function [e_axial, e_bending, e_cable] = fortz(klass,Fbrh)
     k_b = u_hat' * diag([Xi1, Xi2]) *u_hat;       %project bracket stiffness onto cable direction
     k_eff = 1 / (1/k_b + 1/kspr);   %effective stiffness
     function Fbal = myfunc(r)
-        contraction = (rest-(mL-tendon-2*fitting)-r)/rest;
+        contraction = (rest-(mL-(tendon+r)-2*fitting))/rest;
         rel = contraction/KMAX;
-        fM = festo4(D,rel,klass.P)*mif;     % Muscle force
+        P = pres/620;           % Normalize pressure
+        switch D
+            case 10
+            load FestoLookup.mat f_10
+            Fmn = f_10(rel,P);      %Normalized muscle force
+            case 20
+            load FestoLookup.mat f20
+            Fmn = f20(rel,P);
+            case 40
+            load FestoLookup.mat f40
+            Fmn = f40(rel,P);
+        end
+        fM = Fmn*mif;     % Muscle force
         fT = k_eff*r;                       % tendon force
         Fbal = fM-fT;
 
     end 
 
-    x0 = 1e-4; %Initial guess    
-    options = optimoptions('fsolve','Display','none','FunctionTolerance',1e-6);    
+  if ~isnan(Fbrh)
+    x0 = 0.001; %Initial guess    
+    options = optimoptions('fsolve','Display','none');    
     r2 = fsolve(@myfunc,x0,options);
     
-    contract = (rest-(mL-tendon-2*fitting)-r2)/rest;
+    contract = (rest-(mL-(tendon+r2)-2*fitting))/rest;
     relstrain = contract/KMAX;
     F_mag = festo4(D,relstrain,klass.P)*mif;     % Muscle force at equilibrium
 %     Fbrh_final = F_mag*u_hat;
     
-    %bracket displacement vector
+    % bracket displacement vector
     e_bkt = k_b \ (F_mag * u_hat);
     e_axial = e_bkt(1);
     e_bending = e_bkt(2);
     
-    %Project bracket displacement into cable direction
+    % Project bracket displacement into cable direction
     r_bracket = u_hat' * e_bkt;
     
     % Cable elongation
     e_cable = r2 - r_bracket;
-
+    
+  else
+     e_axial = 0;
+     e_bending = 0;
+     e_cable = 0;
+  end
 end
 
 %% Subfunctions
