@@ -21,7 +21,7 @@ function [f, varargout] = minimizeFlxPin(Xi0,Xi1,Xi2)
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[]);
+                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'L_p',[]);
     clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 
 if nargout > 1
@@ -38,44 +38,61 @@ if nargout > 1
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[]);
+                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'L_p',[]);
     clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 end
 
 
 %% What to optimize based on selection
-M_opt = zeros(size(kf(1).L(3).Mexp)); %Optimized torque prediction
+% M_opt = zeros(size(kf(1).L(3).Mexp)); %Optimized torque prediction
 
 %% RMSE, fvu, and Max Residual
-if nargout>1
-    a = 2;
-else
-    a = 1;
-end
+f = NaN(1,3);
+g = NaN(1,3);
+a = 1 + ( nargout>1 );
 h = cell(1,2);
 
+klaus_temp = kf(1).L(3);   % Grab a template struct
+bpa = repmat(klaus_temp, 1, a);  % ✅ GOOD INIT
+
 for j = 1:a
-    klaus(j) = kf(1).L(4-j);
-    bpa(j) = klaus(j);
-    L_p = Lok(klaus(j));
-    unitD_p = UD(klaus(j));
-    sL_p = seg(klaus(j));
-    Lmt_p = LMT(klaus(j));
+    klaus = kf(1).L(4-j);
+    % Calculate locations and properties
+    L_p = Lok(klaus);
+    unitD_p = UD(klaus, L_p);
+    sL_p = seg(klaus, L_p);
+    Lmt_p = LMT(klaus, sL_p, Xi0);
+    strain_p = Contraction(klaus, Lmt_p);
+    F_p = Force(klaus, unitD_p, strain_p);
+    mA_p = Mom(klaus, L_p, unitD_p);
+    M_p = Tor(mA_p, F_p, klaus.Fm);
+    
+    % Package into output struct
+    bpa(j) = klaus;
+    bpa(j).L_p = L_p;
     bpa(j).Lmt_p = Lmt_p;
-    mA_p = Mom(klaus(j));
-    strain_p = Contraction(klaus(j));
-    F_p = Force(klaus(j));
-    bpa(j).F_p = F_p;
     bpa(j).mA_p = mA_p;
-    M_p = Tor(klaus(j));
+    bpa(j).F_p = F_p;
     bpa(j).M_p = M_p;
-    h{j} = SSE(klaus(j));
+
+    % SSE calculation
+    h{j} = SSE(klaus, M_p);
 end
 
-f = h{1};
-g = h{2};
-varargout{1} = g;
-varargout{2} = bpa;
+try
+    f = h{1}; % Optimization fit values
+    if nargout > 1
+        varargout{1} = h{2}; % Validation fit values
+        varargout{2} = bpa;  % Full structure with prediction info
+    end
+catch ME
+    warning("Error inside minimizeFlxPin: %s", ME.message);
+    f = [1e6, 1e6, 1e6];
+    if nargout > 1
+        varargout{1} = [1e6, 1e6, 1e6];
+        varargout{2} = [];
+    end
+end
 
 %% Nested functions, modified from MonoPamExplicit
         %% ------------- Location  ------------------------
@@ -105,7 +122,7 @@ function LOC = Lok(klass)
             end
             
             [epsilon, delta, beta] = fortz(klass,Fbrk);  %strain from force divided by tensile stiffness
-            pbrBnew = [norm([pkbrB(1) pkbrB])+epsilon, delta, pkbrB(3)+beta]; %new point B, in the bracket frame
+            pbrBnew = [norm([pkbrB(1) pkbrB(2)])+epsilon, delta, pkbrB(3)+beta]; %new point B, in the bracket frame
         
             for ii = 1:N                          %Repeat for each orientation
                 for i = 1:M                      %Repeat for all muscle segments
@@ -120,7 +137,7 @@ function LOC = Lok(klass)
 end
 
 %% ------------- Segment Lengths ------------------------
-function SL = seg(klass)
+function SL = seg(klass, L_p)
             C = klass.CP;
             T = klass.Tk;
             SL = zeros(size(T, 3), size(L_p, 1) - 1);
@@ -139,7 +156,7 @@ end
                
         %% ------------- Muscle Length ------------------------
         %Function that calculates the musclutendon length
-function Lmt = LMT(klass)
+function Lmt = LMT(klass, sL_p, Xi0)
             T = klass.Tk;
             Lmt = zeros(size(T, 3), 1);
             
@@ -148,12 +165,12 @@ function Lmt = LMT(klass)
                     Lmt(ii, 1) = Lmt(ii, 1) + sL_p(ii, i);
                 end
             end
-            Lmt = Lmt - Xi0';
+            Lmt = Lmt - Xi0;
 end            
 
         %% -------------- Force Unit Direction ----------------
         %Calculate the unit direction of the muscle force about the joint.
-function unitD = UD(klass)
+function unitD = UD(klass, L_p)
             T = klass.Tk;
             C = klass.CP;
             direction = zeros(size(T, 3), 3);
@@ -171,7 +188,7 @@ end
         %Calculate the moment arm about a joint
         %For every ViaPoint, calculate the moment arm of the muscle about
         %the joint it crosses over
-function mA = Mom(klass)
+function mA = Mom(klass, L_p, unitD_p)
             T = klass.Tk;
             C = klass.CP;
             mA = zeros(size(T, 3), 3);
@@ -184,7 +201,7 @@ function mA = Mom(klass)
 end        
         
         %% -------------- Contraction of the PAM --------------------------
-function contraction = Contraction(klass)
+function contraction = Contraction(klass, Lmt_p)
             rest = klass.rest;
             tendon = klass.ten;
             fitting = klass.fitn;
@@ -195,7 +212,7 @@ end
 
         %% -------------- Force --------------------------
         %Calculate the direction of the forced applied by the muscle
-function F = Force(klass)
+function F = Force(klass, unitD_p, strain_p)
         %Inputs:
         %Lmt == muscle-tendon length, scalar
         %rest == resting length of artificial muscle, "size" from Size function
@@ -204,31 +221,17 @@ function F = Force(klass)
         %kmax == maximum contraction length
         %Outputs:
         %F == Force, N           
-            dia = klass.dBPA;
-            rest = klass.rest;
-            pres = klass.P;
-            kmax = klass.Kmax;  
-            KMAX = (rest-kmax)/rest; %turn it into a percentage 
-            maxF = klass.Fm;
+           rest = klass.rest;
+           kmax = klass.Kmax;  
+           KMAX = (rest-kmax)/rest; %turn it into a percentage 
             
            rel = strain_p./KMAX;                    %relative strain        
-           relPres = pres/620;                      %relative pressure
            
-           if dia == 10
-                load FestoLookup.mat f_10
-                Fn = f_10(rel,relPres);
-           elseif dia == 20
-               load FestoLookup.mat f20
-               Fn = f20(rel,relPres);
-           elseif dia == 40
-               load FestoLookup.mat f40
-               Fn = f40(rel,relPres);
-           end 
-           scalarForce = Fn.*maxF;
+           Fn = festo4(klass.dBPA,rel,klass.P);
 
+           scalarForce = Fn.*klass.Fm;
            scalarForce(scalarForce < 0) = 0;
-%            scalarForce(scalarForce > maxF) = NaN;
-          
+%            scalarForce(scalarForce > maxF) = NaN;            
             
             F = scalarForce.*unitD_p;
 
@@ -240,13 +243,13 @@ end
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-function Mz = Tor(klass)
+function Mz = Tor(mA_p, F_p, maxF)
             Mz = zeros(size(F_p));
             
             for i = 1:size(F_p, 1)
                 Mz(i, :) = cross(mA_p(i, :), F_p(i, :));
             end
-            Mz(vecnorm(F_p,2,2)>klass.Fm) = NaN;
+            Mz(vecnorm(F_p,2,2)>maxF) = NaN;
 
 end    
 
@@ -277,7 +280,7 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr)
     u_hat_all(valid, :) = Fbr(valid, :) ./ norms(valid);
     
     % Vectorized k_b computation
-    K_bracket = diag([Xi1, Xi2, Xi2]);       %project bracket stiffness onto force direction
+    K_bracket = diag([Xi1, Xi2, Xi1]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
@@ -307,7 +310,7 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr)
             e_axial(i) = 0;
             e_bendY(i) = 0;
             e_bendZ(i) = 0;
-        break;
+        continue;
         end
 
         for iter = 1:50
@@ -357,12 +360,9 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr)
 end
 
 %% Subfunctions
-function t = SSE(klass)
-     Mpredict1 = Tor(klass);
-%      Mpredict1 = Mom(klass);
-%      G_p = (Mpredict1(:,1).^2+Mpredict1(:,2).^2).^(1/2);
+function t = SSE(klass, M_p)
+     Mpredict1 = M_p;
      Mpredict2 = griddedInterpolant(klass.Ak,Mpredict1(:,3));
-%      Mpredict2 = griddedInterpolant(klass.Ak,G_p);
      M_opt = Mpredict2(klass.Aexp);
      [RMSE, fvu, maxResid] = Go_OfF(klass.Mexp,M_opt);
      t = [RMSE, fvu, maxResid];

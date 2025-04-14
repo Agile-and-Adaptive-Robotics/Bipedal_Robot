@@ -22,7 +22,7 @@ function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[]);
+                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[]);
     clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand Angle
 
 if nargout > 1
@@ -40,7 +40,7 @@ if nargout > 1
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[]);
+                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[]);
     clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand Angle
 end
 
@@ -69,6 +69,7 @@ for j = 1:a
     mA_p = Mom(klaus(j));
     strain_p = Contraction(klaus(j));
     F_p = Force(klaus(j));
+    bpa(j).F_p = F_p;
     bpa(j).mA_p = mA_p;
     M_p = Tor(klaus(j));
     bpa(j).M_p = M_p;
@@ -217,12 +218,12 @@ function F = Force(klass)
             KMAX = (rest-kmax)/rest; %turn it into a percentage 
             maxF = klass.Fm;
             
-           rel = strain_p./KMAX;                    %relative strain        
+            rel = strain_p./KMAX;                    %relative strain        
            
-           Fn = festo4(dia,rel,pres);
+            Fn = festo4(dia,rel,pres);
 
-           scalarForce = Fn.*maxF;
-           scalarForce(scalarForce < 0) = 0;
+            scalarForce = Fn.*maxF;
+            scalarForce(scalarForce < 0) = 0;
 %            scalarForce(scalarForce > maxF) = NaN;            
             
             F = scalarForce.*unitD_p;
@@ -263,7 +264,7 @@ function springrate = Spr(klass)
 end
 
 %% Force and length reduction due to tendon
-function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbrh)
+function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr)
 % e_axial, bracket axial elongation
 % e_bendY, bracket bending displacement y - direction
 % e_bendZ, bracket bending displacement z - direction
@@ -281,15 +282,15 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbrh)
     pres = klass.P;         %pressure
     P = pres/620;            %normalized pressure
     
-    N = size(Fbrh,1);
+    N = size(Fbr,1);
     % Normalize force vectors safely
-    norms = vecnorm(Fbrh, 2, 2);
-    valid = norms > 1e-8 & all(~isnan(Fbrh), 2);
+    norms = vecnorm(Fbr, 2, 2);
+    valid = norms > 1e-8 & all(~isnan(Fbr), 2);
     u_hat_all = zeros(N, 3);
-    u_hat_all(valid, :) = Fbrh(valid, :) ./ norms(valid);
+    u_hat_all(valid, :) = Fbr(valid, :) ./ norms(valid);
     
     % Vectorized k_b computation
-    K_bracket = diag([Xi1, Xi2, Xi2]);       %project bracket stiffness onto force direction
+    K_bracket = diag([Xi1, Xi2, Xi1]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
@@ -342,6 +343,12 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbrh)
             Fbal_d = fM_d - keff * (r + dr);
             dF = (Fbal_d - Fbal) / dr;
 
+            %Avoid zero slope
+            if abs(dF) < 1e-12 || isnan(dF)
+            r = NaN;
+            break;
+            end
+            
             % Newton-Raphson update
             r = r - Fbal / dF;
 
