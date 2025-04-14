@@ -21,7 +21,7 @@ function [f, varargout] = minimizeFlxPin(Xi0,Xi1,Xi2)
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[]);
+                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[]);
     clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 
 if nargout > 1
@@ -38,7 +38,7 @@ if nargout > 1
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[]);
+                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[]);
     clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 end
 
@@ -65,6 +65,7 @@ for j = 1:a
     mA_p = Mom(klaus(j));
     strain_p = Contraction(klaus(j));
     F_p = Force(klaus(j));
+    bpa(j).F_p = F_p;
     bpa(j).mA_p = mA_p;
     M_p = Tor(klaus(j));
     bpa(j).M_p = M_p;
@@ -89,28 +90,29 @@ function LOC = Lok(klass)
             Pbr = [-0.043, -.1115, 0];     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
 %             pkI = [0.2575, -104.25, 0];    %from knee ICR to extensor insertion bracket (where it starts to cantilever)
             pkbrB = pB-Pbr;                  %vector from bracket to point B, in the knee frame
-            thetabrB = wrapToPi(acos(dot(pkbrB,[1,0,0])/(norm(pkbrB))));   %angle between pbrB and x axis
+            thetabrB = wrapToPi(acos(dot([pkbrB(1) pkbrB(2) 0],[1,0,0])/(norm([pkbrB(1) pkbrB(2) 0]))));   %angle between pbrB and x axis
             Rkbr = [cos(thetabrB) -sin(thetabrB) 0; ...     %Rotation matrix
                    sin(thetabrB) cos(thetabrB) 0; ...
                    0    0   1];
             Tkbr = RpToTrans(Rkbr, Pbr');    %Transformation matrix, flexor bracket frame in knee frame                
-            LOC = zeros(size(L));            %new location matrix
-            Fbrk = zeros(size(L,3),3);       %Force vector represented in the bracket frame  
-            epsilon = zeros(size(L,3),1);
-            delta = zeros(size(L,3),1);
-            pbrBnew = zeros(size(L,3),3);
-            pBnew = zeros(size(L,3),3);
-            for ii = 1:size(L, 3)                          %Repeat for each orientation
-                for i = 1:size(L, 1)                      %Repeat for all muscle segments
+            LOC = L;            %new location matrix
+            N = size(L,3);
+            M = size(L,1);
+            Fbrk = zeros(N,3);       %Force vector represented in the bracket frame  
+            pBnew = zeros(N,3);
+            for ii = 1:N                          %Repeat for each orientation
+                    Fbrk(ii,:) = RowVecTrans(Tkbr\eye(4),F(ii,:)); %Force vector in the tibia frame represented in the bracket frame
+            end
+            
+            [epsilon, delta, beta] = fortz(klass,Fbrk);  %strain from force divided by tensile stiffness
+            pbrBnew = [norm([pkbrB(1) pkbrB])+epsilon, delta, pkbrB(3)+beta]; %new point B, in the bracket frame
+        
+            for ii = 1:N                          %Repeat for each orientation
+                for i = 1:M                      %Repeat for all muscle segments
                     if i == C
-                        Fbrk(ii,:) = RowVecTrans(Tkbr\eye(4),F(ii,:)); %Force vector in the tibia frame represented in the bracket frame
-                        epsilon(ii) = Fbrk(ii,1)./Xi1;  %strain from tensile stiffness
-                        delta(ii) = Fbrk(ii,2)./Xi2;    %deflection bending stiffness
-                        pbrBnew(ii,:) = [norm([pkbrB(1) pkbrB])+epsilon(ii), delta(ii), pkbrB(3)]; %new point B, in the bracket frame
                         pBnew(ii,:) = RowVecTrans(Tkbr, pbrBnew(ii,:));     %New point B, in the tibia frame
                         LOC(i,:,ii) = pBnew(ii,:);
                     else
-                        LOC(i,:,ii) = L(i, :,ii);
                     end
 
                 end
@@ -247,6 +249,112 @@ function Mz = Tor(klass)
             Mz(vecnorm(F_p,2,2)>klass.Fm) = NaN;
 
 end    
+
+%% Force and length reduction due to tendon
+function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr)
+% e_axial, bracket axial elongation
+% e_bendY, bracket bending displacement y - direction
+% e_bendZ, bracket bending displacement z - direction
+% e_cable, tendon cable stretch
+% total length change
+
+    D = klass.dBPA;         %BPA diameter
+    mL = klass.Lmt;         %musculotendon length
+    rest = klass.rest;      %resting length
+    tendon = klass.ten;     %tendon length
+    fitting = klass.fitn;    %fitting length
+    mif = klass.Fm;         %maximum force
+    kmax = klass.Kmax;      %maximum contracted length
+    KMAX = (rest-kmax)/rest; %turn it into a percentage
+    pres = klass.P;         %pressure
+    P = pres/620;            %normalized pressure
+    
+    N = size(Fbr,1);
+    % Normalize force vectors safely
+    norms = vecnorm(Fbr, 2, 2);
+    valid = norms > 1e-8 & all(~isnan(Fbr), 2);
+    u_hat_all = zeros(N, 3);
+    u_hat_all(valid, :) = Fbr(valid, :) ./ norms(valid);
+    
+    % Vectorized k_b computation
+    K_bracket = diag([Xi1, Xi2, Xi2]);       %project bracket stiffness onto force direction
+    u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
+    K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
+    k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
+    k_b = reshape(k_b, [N, 1]);
+%     k_eff = 1 ./ (1 ./ k_b );  % Nx1 (If you end up doing one for lower and upper brackets, it would be 1./(1./k_b1+1./k_b2)
+    k_eff = k_b;
+    
+    % Allocate outputs
+    e_axial = zeros(N, 1);
+    e_bendY = zeros(N, 1);
+    e_bendZ = zeros(N, 1); 
+    
+    % Parallel root solve
+    for i = 1:N
+        if ~valid(i)
+            continue;
+        end
+        
+        % Per-instance constants
+        keff = k_eff(i);
+        unit_vec = u_hat_all(i, :);
+
+        r = 0.0001;     %initial guess        
+        
+        if isinf(Xi1) || isinf(Xi2)
+            % Rigid body: no bracket deformation
+            e_axial(i) = 0;
+            e_bendY(i) = 0;
+            e_bendZ(i) = 0;
+        break;
+        end
+
+        for iter = 1:50
+            contraction = (rest - (mL(i) - (tendon + r) - 2 * fitting)) / rest;
+            rel = contraction / KMAX;
+
+            fM = f_festo(rel, P, D) * mif;
+            fT = keff * r;
+            Fbal = fM - fT;
+
+            % Numerical derivative
+            dr = 1e-6;
+            contraction_d = (rest - (mL(i) - (tendon + r + dr) - 2 * fitting)) / rest;
+            rel_d = contraction_d / KMAX;
+
+            fM_d = f_festo(rel_d, P, D) * mif;
+            Fbal_d = fM_d - keff * (r + dr);
+            dF = (Fbal_d - Fbal) / dr;
+            
+            %Avoid zero slope
+            if abs(dF) < 1e-12 || isnan(dF)
+            r = NaN;
+            break;
+            end
+
+            % Newton-Raphson update
+            r = r - Fbal / dF;
+
+            if abs(Fbal) < 1e-6
+                break;
+            end
+        end
+
+        % Final force magnitude
+        contraction = (rest - (mL(i) - (tendon + r) - 2 * fitting)) / rest;
+        relstrain = contraction / KMAX;
+        F_mag = f_festo(relstrain, P, D) * mif;
+
+        % Bracket displacement
+        e_bkt = K_bracket \ (F_mag * unit_vec');
+
+        e_axial(i) = e_bkt(1);
+        e_bendY(i) = e_bkt(2);
+        e_bendZ(i) = e_bkt(3);
+
+    end
+end
 
 %% Subfunctions
 function t = SSE(klass)
