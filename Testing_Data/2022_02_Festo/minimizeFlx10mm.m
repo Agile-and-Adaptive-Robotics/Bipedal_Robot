@@ -18,8 +18,8 @@ X = linspace(0,620,20); %Pressure for interpolation
 X = X(2:20);
 Y = linspace(0,1,30);   %Relative strain range for interpolation
 
-str = ["Optimization"; "Validation"];
-for i = 1:2
+str = ["10 mm"; "20 mm, 625 kPa"; "20 mm, 325 kPa"];
+for i = 1:3
     %Find old old torque, then plot everything
     clear Yq Xq Vq Fold Fq Mold
     Vq = zeros(size(bpa(i).unitD,1),1);
@@ -38,7 +38,17 @@ for i = 1:2
         Vq = Vq*bpa(i).Fm;
         Vq(bpa(i).strain<-0.02) = NaN;
         Vq(Xq > 1) = 0;
+    elseif i == 3
+        Xq = bpa(i).strain./((bpa(i).rest-bpa(i).Kmax)/bpa(i).rest);
+        Yq = 325*ones(size(Xq))/620;
+        H = scatteredInterpolant(XX20, YY20, ZZ20);
+        Vq = H(Xq, Yq);
+        Vq = Vq*bpa(i).Fm;
+        Vq(bpa(i).strain<-0.02) = NaN;
+        Vq(Xq > 1) = 0;
     end
+    
+    
     Fold = Vq.*bpa(i).unitD;    %Force vector
     Fq = (Fold(:,1).^2+Fold(:,2).^2).^(1/2);
     Mold = -bpa(i).mA.*Fq;
@@ -60,7 +70,7 @@ for i = 1:2
 end
 
 %% Plot muscle length, optimization and validation
-for i = 1:2
+for i = 1:3
     figure
     ax = gca;
     Lm = bpa(i).Lmt-2*bpa(i).fitn-bpa(i).ten;      %Original predicted muscle length
@@ -77,7 +87,7 @@ for i = 1:2
 end
 
 %% Plot moment arm, optimization and validation
-for i = 1:2
+for i = 1:3
     figure
     ax = gca;
     G_p = (bpa(i).mA_p(:,1).^2+bpa(i).mA_p(:,2).^2).^(1/2);      %z-axis moment arm for optimized

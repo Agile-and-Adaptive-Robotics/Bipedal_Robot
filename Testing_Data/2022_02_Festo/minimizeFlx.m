@@ -22,7 +22,7 @@ function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[]);
+                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'L_p',[]);
     clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand Angle
 
 if nargout > 1
@@ -38,9 +38,9 @@ if nargout > 1
                   'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
                   'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
-                  'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(1:11,1),'Mexp',A(1:11,2),...
-                  'A_h',A(1:11,1),'Lm_h',A(1:11,3),'mA_h',A(1:11,4),'M_h',A(1:11,5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[]);
+                  'M',Bifemsh_Pam.Torque(:,3),'Aexp',A([1:10, 12],1),'Mexp',A([1:10, 12],2),...
+                  'A_h',A([1:10, 12],1),'Lm_h',A([1:10, 12],3),'mA_h',A([1:10, 12],4),'M_h',A([1:10, 12],5),...
+                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'L_p',[]);
     clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand Angle
     
     % 42cm length, 20mm diameter, 325 pressure.
@@ -55,9 +55,9 @@ if nargout > 1
                   'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
                   'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
-                  'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(17:20,1),'Mexp',A(17:20,2),...
-                  'A_h',A(17:20,1),'Lm_h',A(17:20,3),'mA_h',A(17:20,4),'M_h',A(17:20,5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[]);
+                  'M',Bifemsh_Pam.Torque(:,3),'Aexp',A([17, 20:22],1),'Mexp',A([17, 20:22],2),...
+                  'A_h',A([17, 20:22],1),'Lm_h',A([17, 20:22],3),'mA_h',A([17, 20:22],4),'M_h',A([17, 20:22],5),...
+                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'L_p',[]);
     clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand Angle
 end
 
@@ -69,12 +69,22 @@ end
 %% RMSE, fvu, and Max Residual
 f = NaN(1,3);
 g = NaN(1,3);
-a = 1 + ( nargout>1 );
+a = 3;
 h = cell(1,3);
 
-klaus_temp = kf(2).L(1);   % Grab a template struct
-klaus = repmat(klaus_temp, 1, a);  % ✅ GOOD INIT
-bpa = repmat(klaus_temp, 1, a);  % ✅ GOOD INIT
+% Use first loaded struct as template
+klaus_template = kf(2).L(1);  
+
+% Initialize prediction fields to empty
+klaus_template.L_p   = [];
+klaus_template.Lmt_p = [];
+klaus_template.mA_p  = [];
+klaus_template.F_p   = [];
+klaus_template.M_p   = [];
+
+% Initialize struct arrays with proper shape and fields
+klaus = repmat(klaus_template, 1, a);
+bpa   = repmat(klaus_template, 1, a);
 
 L_p = cell(1,a);
 gemma = cell(1,a);
