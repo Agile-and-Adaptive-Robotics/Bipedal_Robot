@@ -53,54 +53,61 @@ a = 1 + ( nargout>1 );
 h = cell(1,2);
 
 klaus_temp = kf(1).L(3);   % Grab a template struct
+klaus = repmat(klaus_temp, 1, a);  % ✅ GOOD INIT
 bpa = repmat(klaus_temp, 1, a);  % ✅ GOOD INIT
 
+L_p = cell(1,a);
+unitD_p = cell(1,a);
+sL_p = cell(1,a);
+Lmt_p = cell(1,a);
+strain_p = cell(1,a);
+F_p = cell(1,a);
+mA_p = cell(1,a);
+M_p = cell(1,a);
+
 for j = 1:a
-    klaus = kf(1).L(4-j);
+    klaus(j) = kf(1).L(4-j);
     % Calculate locations and properties
-    L_p = Lok(klaus);
-    unitD_p = UD(klaus, L_p);
-    sL_p = seg(klaus, L_p);
-    Lmt_p = LMT(klaus, sL_p, Xi0);
-    strain_p = Contraction(klaus, Lmt_p);
-    F_p = Force(klaus, unitD_p, strain_p);
-    mA_p = Mom(klaus, L_p, unitD_p);
-    M_p = Tor(mA_p, F_p, klaus.Fm);
+    L_p{j} = Lok(klaus(j), Xi1, Xi2);
+    unitD_p{j} = UD(klaus(j), L_p{j});
+    sL_p{j} = seg(klaus(j), L_p{j});
+    Lmt_p{j} = LMT(sL_p{j}, Xi0);
+    strain_p{j} = Contraction(klaus(j), Lmt_p{j});
+    F_p{j} = Force(klaus(j), unitD_p{j}, strain_p{j});
+    mA_p{j} = Mom(klaus(j), L_p{j}, unitD_p{j});
+    M_p{j} = Tor(mA_p{j}, F_p{j}, klaus(j).Fm);
     
     % Package into output struct
-    bpa(j) = klaus;
-    bpa(j).L_p = L_p;
-    bpa(j).Lmt_p = Lmt_p;
-    bpa(j).mA_p = mA_p;
-    bpa(j).F_p = F_p;
-    bpa(j).M_p = M_p;
+    bpa(j) = klaus(j);
+    bpa(j).L_p = L_p{j};
+    bpa(j).Lmt_p = Lmt_p{j};
+    bpa(j).mA_p = mA_p{j};
+    bpa(j).F_p = F_p{j};
+    bpa(j).M_p = M_p{j};
 
     % SSE calculation
-    h{j} = SSE(klaus, M_p);
+    h{j} = SSE(klaus(j), M_p{j});
 end
 
-try
+
     f = h{1}; % Optimization fit values
     if nargout > 1
         varargout{1} = h{2}; % Validation fit values
         varargout{2} = bpa;  % Full structure with prediction info
     end
-catch ME
-    warning("Error inside minimizeFlxPin: %s", ME.message);
-    f = [1e6, 1e6, 1e6];
-    if nargout > 1
-        varargout{1} = [1e6, 1e6, 1e6];
-        varargout{2} = [];
-    end
-end
+
 
 %% Nested functions, modified from MonoPamExplicit
         %% ------------- Location  ------------------------
-function LOC = Lok(klass)
+function LOC = Lok(klass,X1,X2)
             L = klass.Loc;      %Location (wrapping, attachment points)
             C = klass.CP;       %Cross point (moves from one frame to another)
 %             T = klass.Tk;       %Transformation matrix
-            FF = festo4(10,klass.strain/(klass.rest-klass.Kmax),klass.P);        %Force magnitude (relative)
+            kmax = klass.Kmax;
+            KMAX = (klass.rest-kmax)/klass.rest; %turn it into a percentage 
+            relstrain = klass.strain/KMAX;
+            FF = festo4(klass.dBPA,relstrain,klass.P);        %Force magnitude (relative)
+            FF(relstrain>1) = 0;
             unitD = klass.unitD;            %unit direction of force vector
             F = unitD.*FF.*klass.Fm;        %Force vector
             pB = L(2,:,1);                  %Distance from knee frame to muscle insertion
@@ -119,11 +126,13 @@ function LOC = Lok(klass)
             pBnew = zeros(N,3);
             for ii = 1:N                          %Repeat for each orientation
                     Fbrk(ii,:) = RowVecTrans(Tkbr\eye(4),F(ii,:)); %Force vector in the tibia frame represented in the bracket frame
+                    
             end
-            
-            [epsilon, delta, beta] = fortz(klass,Fbrk);  %strain from force divided by tensile stiffness
+%             idx = klass.strain < -0.01;     %when force is too high
+%             Fbrk(idx,:) = 1e3*Fbrk(idx,:);                %penalty
+            [epsilon, delta, beta] = fortz(klass,Fbrk,X1,X2);  %strain from force divided by tensile stiffness
             pbrBnew = [norm([pkbrB(1) pkbrB(2)])+epsilon, delta, pkbrB(3)+beta]; %new point B, in the bracket frame
-        
+                        
             for ii = 1:N                          %Repeat for each orientation
                 for i = 1:M                      %Repeat for all muscle segments
                     if i == C
@@ -156,16 +165,9 @@ end
                
         %% ------------- Muscle Length ------------------------
         %Function that calculates the musclutendon length
-function Lmt = LMT(klass, sL_p, Xi0)
-            T = klass.Tk;
-            Lmt = zeros(size(T, 3), 1);
-            
-            for ii = 1:size(Lmt, 1)                          %Repeat for each orientation
-                for i = 1:size(L_p, 1, 1)-1                      %Repeat for all muscle segments
-                    Lmt(ii, 1) = Lmt(ii, 1) + sL_p(ii, i);
-                end
-            end
-            Lmt = Lmt - Xi0;
+function Lmt = LMT(sL_p, Xi0)
+            Lmt1 = sL_p;
+            Lmt = Lmt1 - Xi0;
 end            
 
         %% -------------- Force Unit Direction ----------------
@@ -243,18 +245,22 @@ end
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-function Mz = Tor(mA_p, F_p, maxF)
+function Mz = Tor(mA_p, F_p, maxF)  
             Mz = zeros(size(F_p));
-            
+           
             for i = 1:size(F_p, 1)
-                Mz(i, :) = cross(mA_p(i, :), F_p(i, :));
+                if norm(F_p(i,:)) > maxF
+                    Mz(i,:) = NaN;
+                else
+                    Mz(i, :) = cross(mA_p(i, :), F_p(i, :));
+                end
             end
-            Mz(vecnorm(F_p,2,2)>maxF) = NaN;
+
 
 end    
 
 %% Force and length reduction due to tendon
-function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr)
+function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2)
 % e_axial, bracket axial elongation
 % e_bendY, bracket bending displacement y - direction
 % e_bendZ, bracket bending displacement z - direction
@@ -275,12 +281,12 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr)
     N = size(Fbr,1);
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
-    valid = norms > 1e-8 & all(~isnan(Fbr), 2);
+    valid = norms > 1 & all(~isnan(Fbr), 2);
     u_hat_all = zeros(N, 3);
     u_hat_all(valid, :) = Fbr(valid, :) ./ norms(valid);
     
     % Vectorized k_b computation
-    K_bracket = diag([Xi1, Xi2, Xi1]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
@@ -294,69 +300,55 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr)
     e_bendZ = zeros(N, 1); 
     
     % Parallel root solve
-    for i = 1:N
-        if ~valid(i)
-            continue;
-        end
-        
-        % Per-instance constants
-        keff = k_eff(i);
-        unit_vec = u_hat_all(i, :);
-
-        r = 0.0001;     %initial guess        
-        
-        if isinf(Xi1) || isinf(Xi2)
-            % Rigid body: no bracket deformation
-            e_axial(i) = 0;
-            e_bendY(i) = 0;
-            e_bendZ(i) = 0;
+   for i = 1:N
+    if ~valid(i)
         continue;
-        end
-
-        for iter = 1:50
-            contraction = (rest - (mL(i) - (tendon + r) - 2 * fitting)) / rest;
-            rel = contraction / KMAX;
-
-            fM = f_festo(rel, P, D) * mif;
-            fT = keff * r;
-            Fbal = fM - fT;
-
-            % Numerical derivative
-            dr = 1e-6;
-            contraction_d = (rest - (mL(i) - (tendon + r + dr) - 2 * fitting)) / rest;
-            rel_d = contraction_d / KMAX;
-
-            fM_d = f_festo(rel_d, P, D) * mif;
-            Fbal_d = fM_d - keff * (r + dr);
-            dF = (Fbal_d - Fbal) / dr;
-            
-            %Avoid zero slope
-            if abs(dF) < 1e-12 || isnan(dF)
-            r = NaN;
-            break;
-            end
-
-            % Newton-Raphson update
-            r = r - Fbal / dF;
-
-            if abs(Fbal) < 1e-6
-                break;
-            end
-        end
-
-        % Final force magnitude
-        contraction = (rest - (mL(i) - (tendon + r) - 2 * fitting)) / rest;
-        relstrain = contraction / KMAX;
-        F_mag = f_festo(relstrain, P, D) * mif;
-
-        % Bracket displacement
-        e_bkt = K_bracket \ (F_mag * unit_vec');
-
-        e_axial(i) = e_bkt(1);
-        e_bendY(i) = e_bkt(2);
-        e_bendZ(i) = e_bkt(3);
-
     end
+
+    % Per-instance constants
+    keff = k_eff(i);
+    unit_vec = u_hat_all(i, :);
+
+    % Bracket stiffness disabled (rigid bracket)
+    if isinf(X1) || isinf(X2)
+        e_axial(i) = 0;
+        e_bendY(i) = 0;
+        e_bendZ(i) = 0;
+        continue;
+    end
+
+    % Solve for r using fzero
+    relfun = @(r) ...
+        f_festo( ...
+            (rest - (mL(i) - (tendon + r) - 2*fitting)) / rest / KMAX, ...
+            P, D ...
+        ) * mif - keff * r;
+
+    try
+        r = fzero(relfun, [0, 0.2]);
+    catch
+        r = 0;
+    end
+
+    if isnan(r)
+        e_axial(i) = 0;
+        e_bendY(i) = 0;
+        e_bendZ(i) = 0;
+        continue;
+    end
+
+    % Final force magnitude
+    contraction = (rest - (mL(i) - (tendon + r) - 2 * fitting)) / rest;
+    relstrain = contraction / KMAX;
+    F_mag = f_festo(relstrain, P, D) * mif;
+
+    % Bracket displacement
+    e_bkt = K_bracket \ (F_mag * unit_vec');
+
+    e_axial(i) = e_bkt(1);
+    e_bendY(i) = e_bkt(2);
+    e_bendZ(i) = e_bkt(3);
+   end
 end
 
 %% Subfunctions

@@ -3,14 +3,14 @@
 
 clear; clc; close all
 
-[a, b, ~] = minimizeFlx(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
+[a, b, c, ~] = minimizeFlx(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
 
 %% Use solution from optimizer and check validity on biomimetic knee
 
 load minimizeFlxPin10_results.mat sol_actual
 
 g = sol_actual(1,1:3);
-[u,v,bpa] = minimizeFlx(g(1),g(2),g(3));           % Now pull bpa structures out
+[u, v, w, bpa] = minimizeFlx(g(1),g(2),g(3));           % Now pull bpa structures out
 %% Plot torque curves, Optimized and validation 
 load ForceStrainForFit.mat z
 load festo20datasheet.mat Fest20 x_20 y_20 z_20 x20norm y20norm z20norm XX20 YY20 ZZ20
@@ -63,8 +63,8 @@ end
 for i = 1:2
     figure
     ax = gca;
-    Lm = bpa(1).Lmt-2*bpa(i).fitn-bpa(i).ten;      %Original predicted muscle length
-    Lm_p = bpa(1).Lmt_p-2*bpa(i).fitn-bpa(i).ten;    %Optimized muscle length (Lmt_p uses sol_actual(1)
+    Lm = bpa(i).Lmt-2*bpa(i).fitn-bpa(i).ten;      %Original predicted muscle length
+    Lm_p = bpa(i).Lmt_p-2*bpa(i).fitn-bpa(i).ten;    %Optimized muscle length (Lmt_p uses sol_actual(1)
     hold on
     scatter(bpa(i).A_h,bpa(i).Lm_h,[],'filled','DisplayName','Measured')
     plot(bpa(i).Ak,Lm_p,'DisplayName','New predict')

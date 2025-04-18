@@ -7,7 +7,7 @@ clear; clc; close all
 %% Problem setup
 
 lb = [-0.01*100, 3, 3];
-ub = [0.03*100, 10, 10];
+ub = [0.03*100, 7, 7];
 
 %% Solve 
 opts = optimoptions('gamultiobj', ...
@@ -24,12 +24,11 @@ opts = optimoptions('gamultiobj', ...
     opts);
 
 % [sol,fval,Pareto_front, Pareto_Fvals, exitflag,output] = GODLIKE(@min1,lb,ub,[],'NumObjectives',3,...
-%                                          'goal',[0,0,0], ...
 %                                          'algorithms', {'DE';'GA';'ASA';'PSO'},...
 %                                          'display'   , 'plot',...
-%                                          'popsize'   , 50, ...
-%                                          'generations', 100);
-                                     
+%                                          'popsize'   , 75 );
+% x = Pareto_front;
+% fvals = Pareto_Fvals;
 %% Get validation GoF results from pareto front
 val_Fvals = zeros(size(fvals));
 for i = 1:length(x)
@@ -93,8 +92,8 @@ end
 for i = 1:2
     figure
     ax = gca;
-    Lm = bpa(1).Lmt-2*bpa(i).fitn-bpa(i).ten;      %Original predicted muscle length
-    Lm_p = bpa(1).Lmt_p-2*bpa(i).fitn-bpa(i).ten;    %Optimized muscle length (Lmt_p uses sol_actual(1)
+    Lm = bpa(i).Lmt-2*bpa(i).fitn-bpa(i).ten;      %Original predicted muscle length
+    Lm_p = bpa(i).Lmt_p-2*bpa(i).fitn-bpa(i).ten;    %Optimized muscle length (Lmt_p uses sol_actual(1)
     hold on
     scatter(bpa(i).A_h,bpa(i).Lm_h,[],'filled','DisplayName','Measured')
     plot(bpa(i).Ak,Lm_p,'DisplayName','New predict')
