@@ -104,7 +104,7 @@ v2 = zeros(1,3,positions);
 for i = 1:positions
 
     v2(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p2); %Insertion location wrt Knee ICR
-    Location(:,:,i) = [p1;
+    Location(:,:,i) = [p1; ...
                        v2(:,:,i)];
 end
 
@@ -112,10 +112,10 @@ end
 Dia = 20;
 % rest = 0.423;
 % kmax = 0.322;
-rest = 0.415; %resting length, m
-kmax = 0.314; %Length at maximum contraction, m
-tendon = 0.014; 
-fitting = 0.0254; 
+rest = 0.420; %resting length, m
+kmax = 0.315; %Length at maximum contraction, m
+tendon = 0.015; 
+fitting = 0.02; 
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 1;
 pres2 = 325;         %average pressure, first test
@@ -126,7 +126,7 @@ Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest,
 Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
 
 
-tendon_adj = tendon+0.0109; 
+tendon_adj = tendon+0.0076; 
 Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres1);
 Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres2);
 Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres3);

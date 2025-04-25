@@ -108,7 +108,7 @@ for j = 1:a
     strain_p{j} = Contraction(klaus(j), Lmt_p{j},gemma{j});
     F_p{j} = Force(klaus(j), unitD_p{j}, strain_p{j});
     mA_p{j} = Mom(klaus(j), L_p{j}, unitD_p{j});
-    M_p{j} = Tor(mA_p{j}, F_p{j}, klaus(j).Fm);
+    M_p{j} = Tor(mA_p{j}, F_p{j}, klaus(j).Fm, strain_p{j});
     
     % Package into output struct
     bpa(j) = klaus(j);
@@ -196,9 +196,9 @@ end
                
         %% ------------- Muscle Length ------------------------
         %Function that calculates the musclutendon length
-function Lmt = LMT(sL_p, Xi0)
+function Lmt = LMT(sL_p, X0)
             Lmt1 = sL_p;
-            Lmt = Lmt1 - Xi0;
+            Lmt = Lmt1 - X0;
 end          
 
         %% -------------- Force Unit Direction ----------------
@@ -275,11 +275,13 @@ end
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-function Mz = Tor(mA_p, F_p, maxF)  
+function Mz = Tor(mA_p, F_p, maxF, strain_p)  
             Mz = zeros(size(F_p));
            
             for i = 1:size(F_p, 1)
                 if norm(F_p(i,:)) > maxF
+                    Mz(i,:) = NaN;
+                elseif strain_p(i,:) < 0
                     Mz(i,:) = NaN;
                 else
                     Mz(i, :) = cross(mA_p(i, :), F_p(i, :));
@@ -294,11 +296,11 @@ function springrate = Spr(klass)
             case 10
                 mult = 2;
             case 20
-                mult = 4;
+                mult = 6;
         end
         Aeff = 1.51*10^-6;%Effective area for 19-strand cable
         E = 193*10^9;       %Young's Modulus
-        L = klass.ten+.011;      %tendon length
+        L = klass.ten+.015;      %tendon length
         
         springrate = mult*Aeff*E/L;
 %         springrate = Inf;
