@@ -14,13 +14,15 @@ opts = optimoptions('gamultiobj', ...
     'UseParallel', true, ...
     'Display', 'iter', ...
     'PlotFcn', {@gaplotpareto}, ...
-    'PopulationSize', 75, ...
-    'MaxGenerations', 600);
+    'PopulationSize', 100, ...
+    'MaxGenerations', 600, ...
+    'FunctionTolerance', 1e-4);
 
 [x, fvals, exitflag, output, population, scores] = gamultiobj( ...
     @min1, 3, ...
     [], [], [], [], ...
     lb, ub, ...
+    @(X) nonlinc(X), ...
     opts);
 
 % [sol,fval,Pareto_front, Pareto_Fvals, exitflag,output] = GODLIKE(@min1,lb,ub,[],'NumObjectives',3,...
@@ -40,8 +42,11 @@ ind = 1:length(x);  %Index to original Pareto_front and Pareto_Fvals
 relate = vecnorm(fvals-val_Fvals,2,2);   %Find the distance between the optimization and validation solutions for the same input
 results = [ind', x, fvals, val_Fvals, relate]; 
 results_sort = sortrows(results,[11 8 9 10 5 6 7]); %Sort results first on distance between optimization and validation, then on validation columns, then on original Fvals columns.
+results_sort_actual = [results_sort(:,1), results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5:end)];
+
+%% Pick ultimate solution
 pick = 1; %Pick the best solution from the sorted results (should be 1)
-sol_actual = [results_sort(pick,2)/100, 10^results_sort(pick,3), 10^results_sort(pick,4)];  %Best solution                                   
+sol_actual = results_sort_actual(pick, 2:4);  %Best solution                                   
 [u,v,bpa] = minimizeFlxPin(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out       
 
 %% Plot torque curves, Optimized and validation 
@@ -131,7 +136,17 @@ function gg = min2(x)
 [~, gg] = minimizeFlxPin(x(:,1)./100,10.^x(:,2),10.^x(:,3)); %get validation vector
 end
 
-function [c, ceq] = nonlinc(f,g)
-c = [f-a; g-b];
-ceq = [];
+function [c, ceq] = nonlinc(X)
+    % Evaluate the model
+    [f, g] = minimizeFlxPin(X(1)/100, 10^X(2), 10^X(3));
+    
+    % Baseline a, b must be pre-loaded or set globally
+    persistent a_local b_local
+    if isempty(a_local) || isempty(b_local)
+        [a_local, b_local, ~] = minimizeFlxPin(0, Inf, Inf);
+    end
+    
+    % Constraints: f < a and g < b
+    c = [f - a_local; g - b_local];
+    ceq = [];
 end

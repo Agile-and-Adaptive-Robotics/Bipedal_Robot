@@ -281,7 +281,7 @@ function Mz = Tor(mA_p, F_p, maxF, strain_p)
             for i = 1:size(F_p, 1)
                 if norm(F_p(i,:)) > maxF
                     Mz(i,:) = NaN;
-                elseif strain_p(i,:) < 0
+                elseif strain_p(i,:) < -0.03
                     Mz(i,:) = NaN;
                 else
                     Mz(i, :) = cross(mA_p(i, :), F_p(i, :));
@@ -334,7 +334,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr)
     u_hat_all(valid, :) = Fbr(valid, :) ./ norms(valid);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X2, X2]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));

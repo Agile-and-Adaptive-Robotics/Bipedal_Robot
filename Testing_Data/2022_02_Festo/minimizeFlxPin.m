@@ -75,7 +75,7 @@ for j = 1:a
     strain_p{j} = Contraction(klaus(j), Lmt_p{j});
     F_p{j} = Force(klaus(j), unitD_p{j}, strain_p{j});
     mA_p{j} = Mom(klaus(j), L_p{j}, unitD_p{j});
-    M_p{j} = Tor(mA_p{j}, F_p{j}, klaus(j).Fm);
+    M_p{j} = Tor(mA_p{j}, F_p{j}, klaus(j).Fm, strain_p{j});
     
     % Package into output struct
     bpa(j) = klaus(j);
@@ -245,11 +245,13 @@ end
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-function Mz = Tor(mA_p, F_p, maxF)  
+function Mz = Tor(mA_p, F_p, maxF, strain_p)  
             Mz = zeros(size(F_p));
            
             for i = 1:size(F_p, 1)
                 if norm(F_p(i,:)) > maxF
+                    Mz(i,:) = NaN;
+                elseif strain_p(i,:) < -0.03
                     Mz(i,:) = NaN;
                 else
                     Mz(i, :) = cross(mA_p(i, :), F_p(i, :));
@@ -286,7 +288,7 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2)
     u_hat_all(valid, :) = Fbr(valid, :) ./ norms(valid);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X2, X2]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));

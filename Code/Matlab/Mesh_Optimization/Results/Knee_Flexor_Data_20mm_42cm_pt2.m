@@ -112,12 +112,12 @@ end
 Dia = 20;
 % rest = 0.423;
 % kmax = 0.322;
-rest = 0.420; %resting length, m
+rest = 0.411; %resting length, m
 kmax = 0.315; %Length at maximum contraction, m
 tendon = 0.015; 
-fitting = 0.02; 
+fitting = 0.022; 
 %pres1 = 273.9783;         %average pressure, first test
-pres1 = 1;
+pres1 = 0;
 pres2 = 325;         %average pressure, first test
 %pres3 = 606.4926;         %average pressure, first test
 pres3 = 620;
@@ -126,7 +126,7 @@ Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest,
 Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
 
 
-tendon_adj = tendon+0.0076; 
+tendon_adj = tendon+0.0056; 
 Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres1);
 Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres2);
 Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres3);
