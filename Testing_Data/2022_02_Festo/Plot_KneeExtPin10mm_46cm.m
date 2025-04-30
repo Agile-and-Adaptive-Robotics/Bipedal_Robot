@@ -88,14 +88,14 @@ sz = 60;        %size of data points
 xLim = [-120 35];
 
 %% Plot the expected value and scatter the data that show which test they come from
-% Test = ["ExtTest10mm-2 10mm pin LoadCell";
-%         "ExtTest10mm-1 10mm pin FishScale"];
+Test = ["ExtTest10mm-2 10mm pin LoadCell";
+        "ExtTest10mm-1 10mm pin FishScale"];
 %% Convert cells to column arrays once bad tests are eliminated
 AngleX = Angle{1};
 Angle = cell2mat(Angle');
-Torque = cell2mat(Torque);
+Torque = Torque{1};
 InflatedLength = InflatedLength{1};
-ICRtoMuscle = ICRtoMuscle{1}';
+ICRtoMuscle = ICRtoMuscle{1};
 pres = pres{1};
 strainz = strainz{1};
 rel = rel{1};
@@ -214,7 +214,7 @@ hold on
 PL = plot(phiD, Theoretical,'Color',c{5},'Linewidth',2,'DisplayName','Expected Torque');
 if ~iscell(Angle)
     scH = scatter(AngleX,TorqueHand,sz,'filled','MarkerFaceAlpha',0.75,'MarkerFaceColor',c{2},'DisplayName','Hybrid calc');
-    scM = scatter(Angle,Torque,sz,'filled','MarkerFaceAlpha',0.75,'MarkerFaceColor',c{7},'DisplayName','Measured Torque');
+    scM = scatter(AngleX,Torque,sz,'filled','MarkerFaceAlpha',0.75,'MarkerFaceColor',c{7},'DisplayName','Measured Torque');
 else
     for i = 1:length(Angle)
     scM{i} = scatter(Angle{i},Torque{i},sz,'filled','d','MarkerFaceColor',c{7-i},'DisplayName',sprintf('Measured, test%d',i));
