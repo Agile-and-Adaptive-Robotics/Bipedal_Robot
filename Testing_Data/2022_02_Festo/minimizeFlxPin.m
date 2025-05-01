@@ -114,7 +114,7 @@ function LOC = Lok(klass,X1,X2)
             Pbr = [-0.043, -.1115, 0];     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
 %             pkI = [0.2575, -104.25, 0];    %from knee ICR to extensor insertion bracket (where it starts to cantilever)
             pkbrB = pB-Pbr;                  %vector from bracket to point B, in the knee frame
-            thetabrB = wrapToPi(acos(dot([pkbrB(1) pkbrB(2) 0],[1,0,0])/(norm([pkbrB(1) pkbrB(2) 0]))));   %angle between pbrB and x axis
+            thetabrB = atan2(pbrB(2),pbrB(1));   %angle between pbrB and x axis
             Rkbr = [cos(thetabrB) -sin(thetabrB) 0; ...     %Rotation matrix
                    sin(thetabrB) cos(thetabrB) 0; ...
                    0    0   1];

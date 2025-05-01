@@ -145,7 +145,7 @@ function [LOC, gamma] = Lok(klass,X1,X2,kSpr)
             pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
             Pbr = [-0.8100  -20.2650   32.2100]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
             pbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
-            thetabrA = norm(wrapToPi(acos(dot([pbrA(1) pbrA(2) 0],[1,0,0])/(norm([pbrA(1) pbrA(2) 0])))));   %angle between pbrA and x axis
+            thetabrA = atan2(pbrA(2),pbrA(1));   %angle between pbrA and x axis
             Rhbr = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
                    sin(thetabrA) cos(thetabrA) 0; ...
                    0    0   1];
