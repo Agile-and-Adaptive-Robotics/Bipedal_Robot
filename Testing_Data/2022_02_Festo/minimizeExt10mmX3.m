@@ -47,7 +47,9 @@ for holdoutIdx = 1:numBPA
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'FunctionTolerance', 1e-4);
-    opts.HybridFcn = {@fgoalattain};
+    goal = [0 0 0];
+    weight = [1 5 0.75];
+    opts.HybridFcn = {@fgoalattain,goal,weight};
 %     opts.OutputFcn = {@debugPop};
     % Run optimization
     [x, fvals] = gamultiobj(@(X) min1(X, trainIdx), 4, [], [], [], [], ...
