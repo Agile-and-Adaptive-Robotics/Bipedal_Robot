@@ -190,19 +190,32 @@ function [LOC, gama] = Lok(klass,X1,X2, kSpr, Funit)
             relstrain = klass.strain/KMAX;
             FF = festo4(klass.dBPA,relstrain,klass.P).*klass.Fm;        %Force magnitude
             FF(relstrain>1) = 0;
-            unitD = klass.unitD;            %unit direction of force vector
-            F = unitD.*FF;                  %Force vector
+%             unitD = klass.unitD;            %unit direction of force vector
+%             F = unitD.*FF;                  %Force vector
+            Fh = Funit.*FF.*klass.Fm;     %Force vector represented in the hip frame
             
             %BPA origin bracket
             pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
-            Pbr_A = [-6.45  -28.33   -71.44]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
-            pbrA = pA-Pbr_A;                                  %vector from bracket to point A (in the hip frame)
-            thetabrA = atan2(pbrA(2),pbrA(1));   %angle between pbrA and x axis
-            Rhbr = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
-                   sin(thetabrA) cos(thetabrA) 0; ...
-                   0    0   1];
-            Thbr = RpToTrans(Rhbr, Pbr_A');    %Transformation matrix, represent bracket frame in hip frame 
+            p0 = [-6.26, -29.69, 75.06] / 1000;       %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
+            y0 = [-47.48, -35.63, 75.06] / 1000;             % y reference, lower bolt hole on superior posterior bracket
+            z0 = [-8.39, -14.85, 75.06] / 1000;              % z reference, upper bolt hole on superior anterior bracket
             
+            %Compute direction vectors
+            z_hat = (p0 - z0) / norm(p0 - z0);               % z' direction
+            y_hat_prelim = (p0 - y0) / norm(p0 - y0);        % y' approximate
+            
+            %Project pA-p0 onto z' to ensure its on x'-y' plane
+            v = pA - p0;
+            lambda = -dot(v, z_hat);                        %project v onto z'
+            Pbr_A = p0 + lambda * z_hat;                      % bracket frame origin            
+            
+            x_hat = cross(y_hat_prelim, z_hat);     %Orthogonal to y_hat_prelim and z_hat
+            x_hat = x_hat / norm(x_hat);            %unit vector
+            y_hat = cross(z_hat, x_hat);            %Recomputed to ensure right-handedness
+
+            Rhbr = [x_hat(:), y_hat(:), z_hat(:)];  %Rotation matrix for bracket frame described in hip frame
+            Thbr = RpToTrans(Rhbr, Pbr_A');         %Transformation matrix, represent bracket frame in hip frame 
+            pbrA = pA-Pbr_A;                        %vector from bracket to point A (i.e. Point A in the bracket frame)
             %BPA insertion bracket
             pB = L(end,:,1);                  %Distance from knee frame to muscle insertion
 %             Pbr_B = [27.61, -125.91, -0.54]/1000;    %from knee ICR to extensor insertion bracket (where it starts to cantilever)
@@ -217,22 +230,22 @@ function [LOC, gama] = Lok(klass,X1,X2, kSpr, Funit)
             LOC = L;            %new location matrix            
             N = size(L,3);
             M = size(L,1);
-            Fh = zeros(N,3);
+%             Fh = zeros(N,3);
             Fbrh = zeros(N,3);
             pAnew = zeros(N,3);     %New point A, in the hip frame
-            Fbrk = zeros(N,3);       %Force vector represented in the tibia bracket frame  
+%             Fbrk = zeros(N,3);       %Force vector represented in the tibia bracket frame  
 %             pBnew = zeros(N,3);
             pBnew = repmat(pB, N, 1); %Force pBnew = pB across all orientations
-            gama = zeros(N,1);  % Ensure gamma is returned even if bracket B is rigid
+%             gama = zeros(N,1);  % Ensure gamma is returned even if bracket B is rigid
+
             %Transform force vector into each bracket's frame
             for ii = 1:N                          %Repeat for each orientation
-                Fh(ii,:) = Funit(ii,:).*klass.Fm;     %Force vector represented in the hip frame
 %                 Fh(ii,:) = -RowVecTrans(T(:,:,ii),F(ii,:));       %Force vector represented in the hip frame
                 Fbrh(ii,:) = RowVecTrans(Thbr\eye(4),Fh(ii,:));   %Force vector in the hip frame represented in the bracket frame    
 %                 Fbrk(ii,:) = RowVecTrans(Tkbr\eye(4),F(ii,:));    %Force vector in the tibia frame represented in the bracket frame                    
             end
             [epsilon1, delta1, beta1, gama] = fortz(klass,Fbrh,X1,X2,kSpr);  %strain from force divided by tensile stiffness
-            pbrAnew = [norm([pbrA(1) pbrA(2)])+epsilon1, delta1, pbrA(3)+beta1]; %New point A, represented in the bracket frame
+            pbrAnew = [pbrA(1)+epsilon1, pbrA(2)+delta1, pbrA(3)+beta1]; %New point A, represented in the bracket frame
             
 % --- (Optional) Compute deformation for insertion bracket
 % [epsilon2, delta2, beta2, gama] = fortz(klass, Fbrk, X1, X2, kSpr);
@@ -324,7 +337,7 @@ function mA = Mom(klass, L_p, unitD_p)
 end       
         
         %% -------------- Contraction of the PAM --------------------------
-function contraction = Contraction(klass,Lmt_p,gama)
+function contraction = Contraction(klass,Lmt_p,gama, Xi3)
             rest = klass.rest;
             tendon = klass.ten;
             fitting = klass.fitn;
