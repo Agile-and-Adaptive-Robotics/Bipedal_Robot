@@ -132,8 +132,8 @@ function [LOC, gamma] = Lok(klass,X1,X2,kSpr)
             kmax = klass.Kmax;  
             KMAX = (klass.rest-kmax)/klass.rest; %turn it into a percentage 
             FF = festo4(klass.dBPA,klass.strain/KMAX,klass.P).*klass.Fm;       %Force magnitude
-            unitD = klass.unitD;                                                %Unit direction of force, tibia frame
-            F = unitD.*FF;                                            %Force vector, tibia frame
+%             unitD = klass.unitD;                                                %Unit direction of force, tibia frame
+%             F = unitD.*FF;                                            %Force vector, tibia frame
             pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
 %             Pbr = [-0.8100  -20.222   31.66]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
             Pbr = [9.48  -36.15   30.27]/1000;       %from hip origin to bracket bolt pattern centroid
@@ -151,7 +151,7 @@ function [LOC, gamma] = Lok(klass,X1,X2,kSpr)
                   0                1  0;
                  -sin(thetaY) 0  cos(thetaY)];
             Rhbr = RhbrZ*Ry;            %Rotate about y-axis in body frame
-            Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame              
+            Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame              
             LOC = L;
             N = size(L,3);
             M = size(L,1);
@@ -159,11 +159,11 @@ function [LOC, gamma] = Lok(klass,X1,X2,kSpr)
             Fbrh = zeros(N,3);
             pAnew = zeros(N,3);     %New point A, in the hip frame
             for ii = 1:N                          %Repeat for each orientation
-                        Fh(ii,:) = -RowVecTrans(T(:,:,ii),F(ii,:));               %Force vector represented in the hip frame
+                        Fh(ii,:) = norm(RowVecTrans(T(:,:,ii),L(C,:,ii))-L(C-1,:,ii)).*FF(ii,1);               %Force vector represented in the hip frame
                         Fbrh(ii,:) = RowVecTrans(Thbr\eye(4),Fh(ii,:));            %Force vector in the hip frame represented in the bracket frame
             end
             [epsilon, delta, beta, gamma] = fortz(klass,Fbrh,X1,X2,kSpr);  %strain from force divided by tensile stiffness
-            pbrAnew = [norm(pbrhA)+epsilon, delta, beta]; %New point A, represented in the bracket frame
+            pbrAnew = [norm(pbrhA(1:2))+epsilon, delta, pbrhA(3)+ beta]; %New point A, represented in the bracket frame
                         
 
             for ii = 1:N                          %Repeat for each orientation
@@ -417,7 +417,8 @@ function springrate = Spr(klass)
         end
         Aeff = 1.51*10^-6;%Effective area for 19-strand cable
         E = 193*10^9;       %Young's Modulus
-        L = klass.ten+.015;      %tendon length
+        L = klass.ten;      %tendon length
+%         L = klass.ten+.015;      %tendon length
         
         springrate = mult*Aeff*E/L;
 %         springrate = Inf;
@@ -432,17 +433,17 @@ function t = SSE(klass, M_p)
      M_sorted = M_p(idx, 3);
      Mpredict2 = griddedInterpolant(Ak_sorted, M_sorted);
      M_opt = Mpredict2(klass.Aexp);
-     [RMSE, fvu, ~] = Go_OfF(klass.Mexp,M_opt);
-%      t = [RMSE, fvu, maxResid];
+     [RMSE, fvu, maxResid] = Go_OfF(klass.Mexp,M_opt);
+     t = [RMSE, fvu, maxResid];
 % --- New: Focused SSE where |Mexp| < 3 Nm ---
-    lowTorqueMask = abs(klass.Mexp) < 3;
-    if any(lowTorqueMask)
-        SSE_low = mean((klass.Mexp(lowTorqueMask) - M_opt(lowTorqueMask)).^2,'omitnan');
-    else
-        SSE_low = 0; % Or NaN if you'd rather it not contribute
-    end
-
-    t = [RMSE, fvu, SSE_low];  % Replace maxResid with low-torque SSE
+%     lowTorqueMask = abs(klass.Mexp) < 3;
+%     if any(lowTorqueMask)
+%         SSE_low = mean((klass.Mexp(lowTorqueMask) - M_opt(lowTorqueMask)).^2,'omitnan');
+%     else
+%         SSE_low = 0; % Or NaN if you'd rather it not contribute
+%     end
+% 
+%     t = [RMSE, fvu, SSE_low];  % Replace maxResid with low-torque SSE
 end
 
 end
