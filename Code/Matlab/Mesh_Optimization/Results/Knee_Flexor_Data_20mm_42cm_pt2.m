@@ -73,9 +73,9 @@ for i = 1:positions
     
     T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
     
-    t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0];
-    T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');    
-    T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');
+    t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0]; %distance from theta1 to ICR
+    T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');    %transform from the ICR frame to theta1
+    T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');    %transform from t1 frame to ICR
 end
 
 %% Muscle calculation
@@ -98,7 +98,7 @@ CrossPoint = 2;
 Location = zeros(2,3,positions);
 %Origin and Insertion from Ben
 p1 = [-0.050, 0.035, 0.050];       %Origin
-p2 = [-0.01224, -0.00887, 0.02777];  %Insertion distance from theta1
+p2 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);
 
 for i = 1:positions
@@ -110,12 +110,12 @@ end
 
 %20 mm Festo
 Dia = 20;
-% rest = 0.423;
-% kmax = 0.322;
-rest = 0.411; %resting length, m
-kmax = 0.315; %Length at maximum contraction, m
+rest = 0.42;
+kmax = 0.311;
+% rest = 0.415; %resting length, m
+% kmax = 0.315; %Length at maximum contraction, m
 tendon = 0.015; 
-fitting = 0.022; 
+fitting = 0.021; %Lower profile fittings at this BPA diameter
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 0;
 pres2 = 325;         %average pressure, first test
@@ -126,7 +126,7 @@ Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest,
 Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
 
 
-tendon_adj = tendon+0.0056; 
+tendon_adj = tendon+0.009; 
 Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres1);
 Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres2);
 Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres3);
@@ -440,3 +440,24 @@ set(ax,'FontWeight','bold','LineWidth',2,'FontSize',10)
 kid = ax.Children;
 set(kid,'LineWidth',2)
 hold off
+
+%% Plot length and compare
+bpa = Bifemsh_Pam_adj3;
+Lmt = bpa.MuscleLength;
+fitn = bpa.FittingLength;
+rest = bpa.RestingL;
+ten = bpa.TendonL;
+
+Lm = Lmt-ten-2*fitn;
+Angle = [-125	-114	-98	-83	-75.5	-69	-55.5	-53.001	-53.01	-41	-30];
+InflatedLength = [334	334	338	343	NaN	348	356	356	357	365	368]/1000;
+
+figure
+hold on
+scatter(Angle,InflatedLength)
+plot(phiD, Lm)
+hold off
+legend('Measured','Original')
+title('BPA length')
+xlabel('Knee angle, degrees')
+ylabel('Length, m')

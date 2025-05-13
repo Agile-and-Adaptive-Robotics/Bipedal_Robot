@@ -97,8 +97,8 @@ CrossPoint = 2;
 Location = zeros(2,3,positions);
 
 %Origin and Insertion from Ben
-p1 = [-0.050, 0.035, 0.0328];       %Origin
-p2 = [-0.01224, -0.00887, 0.02777];  %Insertion distance from theta1
+p1 = [-0.050, 0.035, 0.050];       %Origin
+p2 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);
 
 for i = 1:positions
@@ -112,13 +112,13 @@ end
 Dia = 10;
 rest = 0.415;
 kmax = 0.350;
-tendon = 0.012; 
+tendon = 0.021; 
 fitting = 0.0254; 
 pres = 603.5236;         %average pressure
 Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
-tendon = 0.012+0.0109; 
-Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
+tendon_adj = tendon+0.009; 
+Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres);
 
 %% Unstacking the Torques to identify specific rotations
 Torque1 = Bifemsh.Torque;
@@ -379,3 +379,23 @@ legend('Measured','Optimized','Original Theoretical')
 title('PAM Z Torque')
 xlabel('Knee Extension/Rotation, degrees')
 ylabel('Torque, Nm')
+
+%% Plot length and compare
+bpa = Bifemsh_Pam;
+Lmt = bpa.MuscleLength;
+fitn = bpa.FittingLength;
+rest = bpa.RestingL;
+ten = bpa.TendonL;
+
+Lm = Lmt-ten-2*fitn;
+InflatedLength = [397	390	387	380	375	371	367	365	365	357]/1000;
+
+figure
+hold on
+scatter(K_ang/c,InflatedLength)
+plot(phiD, Lm)
+hold off
+legend('Measured','Original')
+title('BPA length')
+xlabel('Knee angle, degrees')
+ylabel('Length, m')

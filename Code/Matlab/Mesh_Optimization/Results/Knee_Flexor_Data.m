@@ -71,8 +71,8 @@ for i = 1:positions
     T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot to represent 
     
     t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0];          %Distance from theta1 to knee ICR
-    T_ICRt1(:, :, i) = RpToTrans(R_Pam(:, :, i), t1toICR(1,:,i)');    %Converts the t1 frame to the ICR frame
-    T_t1ICR(:, :, i) = TransInv(T_ICRt1(:, :, i));                    %Converts the ICR frame to the t1 frame
+    T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');    %Converts the t1 frame to the ICR frame
+    T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');                    %Converts the ICR frame to the t1 frame
 end
 
 %% Muscle calculation
@@ -93,10 +93,16 @@ Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
 
 Location = zeros(2,3,positions);
-for i = 1:positions
 %Origin and Insertion from Ben
-    Location(:,:,i) = [-0.050, 0.035, 0.0328;
-            -0.02788, -0.04598, 0.0328];
+p1 = [-0.050, 0.035, 0.050];       %Origin
+p2 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
+v2 = zeros(1,3,positions);
+
+for i = 1:positions
+
+    v2(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p2); %Insertion location wrt Knee ICR
+    Location(:,:,i) = [p1;
+                       v2(:,:,i)];
 end
 
 %10 mm Festo
@@ -108,8 +114,8 @@ fitting = 0.0254;
 pres = 603.5236;         %average pressure
 Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 
-fitting = 0.0352; 
-Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
+tendon_adj = tendon+0.009; 
+Bifemsh_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres);
 
 %20 mm Festo
 % Dia = 20;

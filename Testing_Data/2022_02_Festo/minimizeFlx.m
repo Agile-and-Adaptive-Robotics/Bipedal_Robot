@@ -43,7 +43,7 @@ load FlxBioBPASet.mat kf %This loads the following, which was ran and saved:
 %                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A([1:10, 12],1),'Mexp',A([1:10, 12],2),...
 %                   'A_h',A([1:10, 12],1),'Lm_h',A([1:10, 12],3),'mA_h',A([1:10, 12],4),'M_h',A([1:10, 12],5),...
 %                   'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
-%     clear Bifemsh_Pam3 phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+%     clear Bifemsh_Pam3 Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 %     
 %     % 42cm length, 20mm diameter, 325 pressure.
 %     load KneeFlx_20mm_42cm.mat Bifemsh_Pam2 phiD
@@ -132,11 +132,14 @@ function [LOC, gamma] = Lok(klass,X1,X2,kSpr)
             kmax = klass.Kmax;  
             KMAX = (klass.rest-kmax)/klass.rest; %turn it into a percentage 
             FF = festo4(klass.dBPA,klass.strain/KMAX,klass.P).*klass.Fm;       %Force magnitude
-%             unitD = klass.unitD;                                                %Unit direction of force, tibia frame
-%             F = unitD.*FF;                                            %Force vector, tibia frame
+            unitD = klass.unitD;                                                %Unit direction of force, tibia frame
+            F = unitD.*FF;                                            %Force vector, tibia frame
             pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
 %             Pbr = [-0.8100  -20.222   31.66]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
-            Pbr = [9.48  -36.15   30.27]/1000;       %from hip origin to bracket bolt pattern centroid
+            %for 20mm:
+%             Pbr = [9.48  -36.15   30.27]/1000;       %from hip origin to bracket bolt pattern centroid
+            %for 10mm:
+            Pbr = [-19 22 27.6]/1000;       %from hip origin centroid of bracket cantilever 
             phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
             thetabrA = atan2(phbrA(2),phbrA(1));   %angle between pbrA and x axis
             RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
@@ -159,7 +162,7 @@ function [LOC, gamma] = Lok(klass,X1,X2,kSpr)
             Fbrh = zeros(N,3);
             pAnew = zeros(N,3);     %New point A, in the hip frame
             for ii = 1:N                          %Repeat for each orientation
-                        Fh(ii,:) = norm(RowVecTrans(T(:,:,ii),L(C,:,ii))-L(C-1,:,ii)).*FF(ii,1);               %Force vector represented in the hip frame
+                        Fh(ii,:) = -RowVecTrans(T(:,:,ii),F(ii,:));               %Force vector represented in the hip frame, opposite direction
                         Fbrh(ii,:) = RowVecTrans(Thbr\eye(4),Fh(ii,:));            %Force vector in the hip frame represented in the bracket frame
             end
             [epsilon, delta, beta, gamma] = fortz(klass,Fbrh,X1,X2,kSpr);  %strain from force divided by tensile stiffness
@@ -211,7 +214,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr)
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
     k_b = reshape(k_b, [N, 1]);
-    k_eff = 1 ./ (1 ./ k_b + 1 / kSpr);  % Nx1
+    k_eff = 1 ./ (1 ./ k_b + 1 ./ kSpr);  % Nx1
     
     % Allocate outputs
     e_axial = zeros(N, 1);
