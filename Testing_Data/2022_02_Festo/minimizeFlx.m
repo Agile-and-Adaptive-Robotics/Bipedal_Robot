@@ -135,11 +135,14 @@ function [LOC, gamma] = Lok(klass,X1,X2,kSpr)
             unitD = klass.unitD;                                                %Unit direction of force, tibia frame
             F = unitD.*FF;                                            %Force vector, tibia frame
             pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
-%             Pbr = [-0.8100  -20.222   31.66]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
-            %for 20mm:
-%             Pbr = [9.48  -36.15   30.27]/1000;       %from hip origin to bracket bolt pattern centroid
-            %for 10mm:
-            Pbr = [-19 22 27.6]/1000;       %from hip origin centroid of bracket cantilever 
+            switch klass.dBPA
+                case 20
+%                   Pbr = [-0.8100  -20.222   31.66]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
+                    Pbr = [9.48  -36.15   30.27]/1000;       %from hip origin to bracket bolt pattern centroid
+                case 10
+                    Pbr = [-19 22 27.6]/1000;       %from hip origin centroid of bracket cantilever 
+            end
+                
             phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
             thetabrA = atan2(phbrA(2),phbrA(1));   %angle between pbrA and x axis
             RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
