@@ -25,8 +25,8 @@ labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
 Color_var = nchoosek(1:4,3);  % Each row = 3 BPAs for training
 
 %% Problem bounds
-lb = [-0.01 * 100, log10(5000),log10(5000), 0];   % [mm, log10(N/m), log10(N/m)]
-ub = [0.03 * 100, 9, 9, 0.02*100];
+lb = [-0.01 * 100, 3,3, 0];   % [mm, log10(N/m), log10(N/m)]
+ub = [0.03 * 100, 7, 7, 0.02*100];
 
 %% Solver
 for holdoutIdx = 1:numBPA
@@ -47,9 +47,9 @@ for holdoutIdx = 1:numBPA
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'FunctionTolerance', 1e-4);
-    goal = [0 0 0];
-    weight = [1 5 0.75];
-    opts.HybridFcn = {@fgoalattain,goal,weight};
+%     goal = [0 0 0];
+%     weight = [1 5 0.75];
+    opts.HybridFcn = {@fgoalattain};
 %     opts.OutputFcn = {@debugPop};
     % Run optimization
     [x, fvals] = gamultiobj(@(X) min1(X, trainIdx), 4, [], [], [], [], ...
