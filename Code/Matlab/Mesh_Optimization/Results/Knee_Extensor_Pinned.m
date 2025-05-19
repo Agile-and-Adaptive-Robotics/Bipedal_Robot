@@ -6,7 +6,7 @@
 %% Freshen up the workspace
 clc
 clear
-% close all
+close all
 
 %% Add paths to the muscle and pam calculators
 current_dir = cd;
@@ -123,28 +123,28 @@ fitting = 0.0254;           %fitting length
 
 %41.5 cm, no tendon
 rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.349;           %length at maximum contraction
+kmax = 0.335;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 605.2351;        %Pressure, kPa
 Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon, fitting, pres);
 
 %41.5 cm,  tendon
 rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.349;           %length at maximum contraction
-tendon1 = 0.042;         %Tendon length
+kmax = 0.335;           %length at maximum contraction
+tendon1 = 0.035;         %Tendon length
 pres = 605.2351;        %Pressure, kPa
 Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon1, fitting, pres);
 
 %45.7 cm, no tendon
 rest46 = 457/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.380;           %length at maximum contraction
+kmax = 0.375;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 602;             %Pressure, kPa
 Vas_Pam_46cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest46, kmax, tendon, fitting, pres);
 
 %48.6 cm, no tendon
 rest48 = 480/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.3984;           %length at maximum contraction
+kmax = 0.397;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 605.8523;        %Pressure, kPa
 Vas_Pam_48cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest48, kmax, tendon, fitting, pres);

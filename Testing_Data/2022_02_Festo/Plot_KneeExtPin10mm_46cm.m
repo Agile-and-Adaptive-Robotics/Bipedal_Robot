@@ -2,13 +2,13 @@
 %Run and save data from testing results
 clear;
 clc;
-% close all;
+close all;
 
 %Load file with all the extensors using the pinned knee
 load KneeExtPin_10mm_all.mat
 %Specify values for this BPA
 restingLength = 0.457;      %resting length, m
-kmax = 0.380;               %Length at maximum contraction, m
+kmax = 0.375;               %Length at maximum contraction, m
 tendon = 0;             %Tendon, measured
 fitting = 0.0254;
 Vas_Pam_46cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, restingLength, kmax, tendon, fitting, pres);

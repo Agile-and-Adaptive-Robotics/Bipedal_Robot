@@ -169,9 +169,9 @@ for i = 1:size(L,3)
     end
 end
 
-% Step 2: Direction vector
+% Force Direction vector (hip frame)
 F_vec = pt2 - pt1;
-F_unit = F_vec / norm(F_vec);
+F_unit = normalize(F_vec);
 
 end
 
@@ -292,18 +292,16 @@ function SL = seg(klass, L_p)
 end
                
         %% ------------- Muscle Length ------------------------
-        %Function that calculates the musclutendon length
-function Lmt = LMT(klass,L_p,sL_p, Xi0)
-            T = klass.Tk;
-            Lmt = zeros(size(T, 3), 1);
-            
-            for ii = 1:size(Lmt, 1)                          %Repeat for each orientation
-                for i = 1:size(L_p, 1, 1)-1                      %Repeat for all muscle segments
-                    Lmt(ii, 1) = Lmt(ii, 1) + sL_p(ii, i);
-                end
-            end
-            Lmt = Lmt - Xi0;
-end            
+function Lmt = LMT(sL, Xi0)
+% Compute muscle-tendon length from segment lengths and offset Xi0
+% Xi0 can be empty [] to skip correction (i.e., when already applied)
+% N = size(sL_p, 1);
+Lmt = sum(sL, 2);  % Nx1, sum across segments
+
+if ~isempty(Xi0)
+    Lmt = Lmt - Xi0;
+end
+end           
 
         %% -------------- Force Unit Direction ----------------
         %Calculate the unit direction of the muscle force about the joint.
@@ -317,8 +315,8 @@ function unitD = UD(klass, L_p)
                 pointA = L_p(C-1, :, i);
                 pointB = L_p(C, :, i);
                 direction(i, :) = RowVecTrans(T(:, :, i)\eye(4), pointA) - pointB;
-                unitD(i, :) = direction(i, :)/norm(direction(i, :));
             end
+            unitD = normalize(direction);
 end
         
         %% -------------- Moment Arm --------------------------
@@ -337,41 +335,15 @@ function mA = Mom(klass, L_p, unitD_p)
 end       
         
         %% -------------- Contraction of the PAM --------------------------
-function contraction = Contraction(klass,Lmt_p,gama, Xi3)
+function contraction = Contraction(klass,Lmt_p,gama)
             rest = klass.rest;
             tendon = klass.ten;
             fitting = klass.fitn;
-            theta_k = klass.Ak;
-%             L = klass.Loc;
-            ang2 = -23; %from Knee_Extensor_Pinned, where contact starts to happen, in degrees
-            angleRad = deg2rad(theta_k - ang2);
-            delta_L = zeros(size(theta_k));
-            
-            % Apply curvature correction only for theta_k < ang2
-            idx = angleRad < 0;
-            kapp = Curvature(angleRad(idx));  % returns vector
-            R = 1./kapp;
-            delta_L(idx) = (Xi3 / rest) ./ R;
+%             theta_k = klass.Ak;
             
             adjusted_Lmt = Lmt_p - (tendon + gama + delta_L) - 2*fitting;
             contraction = (rest - adjusted_Lmt) / rest;
 end
-
-%% Curvature in bending BPA estimate
-function kappa = Curvature(angleRad)
-    % Parameters
-    R_min = 0.03;               % [m] min radius of curvature (30 mm)
-    kappa_max = 1 ./ R_min;      % Max curvature
-    angleMid = deg2rad(-60);    % Midpoint of transition (steepest change)
-    sharpness = 12;             % Larger value => steeper transition
-
-    % Logistic-style transition: 0 → kappa_max
-    kappa = kappa_max ./ (1 + exp(sharpness .* (angleRad - angleMid)));
-
-    % Optional clamp (shouldn't be necessary, but safe)
-    kappa = min(kappa, kappa_max);
-end
-
 
         %% -------------- Force --------------------------
         %Calculate the direction of the forced applied by the muscle
@@ -428,7 +400,7 @@ function springrate = Spr(klass)
         mult = 1;
         Aeff = 1.51*10^-6;%Effective area for 19-strand cable
         E = 193*10^9;       %Young's Modulus
-        L = klass.ten+.01;      %tendon length        
+        L = klass.ten;      %tendon length        
         springrate = mult*Aeff*E/L;
     else
         springrate = Inf;
@@ -464,7 +436,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr)
     u_hat_all(valid, :) = Fbr(valid, :) ./ norms(valid);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X2]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X2, X2, X1]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
@@ -558,7 +530,13 @@ function t = SSE(klass, M_p)
      t = [RMSE, fvu, maxResid];
 end
 
-
+function vhat = normalize(v)
+    N = size(v,1);
+    norms = vecnorm(v,2,2);
+    valid = norms > 1 & all(~isnan(v), 2);
+    vhat = zeros(N, 3);
+    vhat(valid, :) = v(valid, :) ./ norms(valid);
+end
 
 
 end   

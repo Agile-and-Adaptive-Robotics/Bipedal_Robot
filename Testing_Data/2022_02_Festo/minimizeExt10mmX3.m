@@ -25,8 +25,8 @@ labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
 Color_var = nchoosek(1:4,3);  % Each row = 3 BPAs for training
 
 %% Problem bounds
-lb = [-0.01 * 100, 3,3, 0];   % [mm, log10(N/m), log10(N/m)]
-ub = [0.03 * 100, 7, 7, 0.02*100];
+lb = [-0.01 * 100, 3,3, 0];   % [cm, log10(N/m), log10(N/m), unitless]
+ub = [0.03 * 100, 7, 7, 0.4*10];
 
 %% Solver
 for holdoutIdx = 1:numBPA
@@ -42,13 +42,13 @@ for holdoutIdx = 1:numBPA
         'Display', 'iter', ...
         'InitialPopulationRange',[lb; ub], ...
         'PopulationSize', 100, ...
-        'MaxGenerations', 100, ...
+        'MaxGenerations', 400, ...
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
-        'FunctionTolerance', 1e-4);
-%     goal = [0 0 0];
-%     weight = [1 5 0.75];
+        'FunctionTolerance', 1e-5);
+    goal = [0 0 0];
+    weight = [1 5 0.5];
     opts.HybridFcn = {@fgoalattain};
 %     opts.OutputFcn = {@debugPop};
     % Run optimization
@@ -91,7 +91,7 @@ for i = 1:numBPA
 end
 
 %% Sort by validation distance first, then validation metrics
-results = all_candidates;  % [fold, Xi0, Xi1, Xi2, train (3), val (3), dist]
+results = all_candidates;  % [fold, Xi0, Xi1, Xi2, Xi3, train (3), val (3), dist]
 results_sort = sortrows(results, [12 9 10 11 6 7 8]);  % sort by distance, then val, then train
 
 %% De-normalize to get physical parameters
@@ -100,7 +100,7 @@ results_sort_actual = [results_sort(:,1), x_actual, results_sort(:,6:end)];
 
 %% Pick best solution (later, flexible)
 pick = 1;
-sol_actual = results_sort_actual(pick, 2:5);  % [Xi0, Xi1, Xi2]
+sol_actual = results_sort_actual(pick, 2:5);  % [Xi0, Xi1, Xi2, Xi3]
 [f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
 
 fprintf('\nPerformance with sol_actual:\n');
@@ -326,7 +326,7 @@ function ff = min1(x, trainIdx)
     Xi0 = x(1) / 100;
     Xi1 = 10^x(2);
     Xi2 = 10^x(3);
-    Xi3 = x(4) / 100;
+    Xi3 = x(4) / 10;
     [f_all, ~] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, trainIdx); % Nx3 matrix (e.g., 3x3 if 3 training BPAs)
     ff = mean(f_all, 1, 'omitnan'); % Return 1x3: [mean RMSE, mean FVU, mean MaxResidual]
 end
@@ -334,7 +334,7 @@ end
 %% --- Nonlinear constraint
 function [c, ceq] = nonlinc(X, baseline, trainIdx)
     % Inputs:
-    %   X         = [Xi0_cm, log10(Xi1), log10(Xi2), Xi3_cm]
+    %   X         = [Xi0_cm, log10(Xi1), log10(Xi2), , Xi3_%]
     %   baseline  = baselineScores (size: 4x3)
     %   trainIdx  = which BPAs are being optimized
     try
@@ -342,7 +342,7 @@ function [c, ceq] = nonlinc(X, baseline, trainIdx)
         Xi0 = X(1) / 100;
         Xi1 = 10^X(2);
         Xi2 = 10^X(3);
-        Xi3 = X(4) / 100;
+        Xi3 = X(4) / 10;
         % Call model with current X on the training BPAs
         [f_all, ~] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, trainIdx);
         % beat the average baseline, not per-BPA
