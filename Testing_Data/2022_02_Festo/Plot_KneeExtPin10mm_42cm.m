@@ -9,19 +9,19 @@ rest = cell(3,1);
 kmax = cell(3,1);
 tendon = cell(3,1);
 rest{1} = 0.415;        %resting length clamp to clamp, minus the barb
-kmax{1} = 0.335;           %length at maximum contraction
+kmax{1} = 0.349;           %length at maximum contraction
 pres = 605.2351;        %Pressure, kPa
 tendon{1} = 0;            %no tendon condition
-Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest{1}, kmax{1}, tendon{1}, fitting, pres);
+Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest{1}, kmax{1}, tendon{1}-0.009, fitting, pres);
 Theoretical = Vas_Pam_42cm.Torque(:,3);
 
 rest{2} = 0.415;
-kmax{2} = 0.335;
-tendon{2} = 0.035;       %tendon, image measured
+kmax{2} = 0.349;
+tendon{2} = 0.030;       %tendon, image measured
 rest{3} = rest{2};         %repeat  
 kmax{3} = kmax{2};
 tendon{3} = tendon{2}; 
-Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest{2}, kmax{2}, tendon{2}, fitting, pres);
+Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest{2}, kmax{2}, tendon{2}-0.009, fitting, pres);
 Theoretical_ten = Vas_Pam_42cm_tendon.Torque(:,3);
 
 %% Test 1 done with CALT load cell. Tests 2 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 

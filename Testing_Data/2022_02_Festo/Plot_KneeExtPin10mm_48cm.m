@@ -2,11 +2,11 @@
 %Run and save data from testing results
 clear;
 clc;
-% close all;
+close all;
 
 load KneeExtPin_10mm_all.mat
 restingLength = 0.480;      %resting length, m
-kmax = 0.397;      %Length at maximum contraction, m
+kmax = 0.410;      %Length at maximum contraction, m
 Vas_Pam_48cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, restingLength, kmax, tendon, fitting, pres);
 Theoretical = Vas_Pam_48cm.Torque(:,3);
 

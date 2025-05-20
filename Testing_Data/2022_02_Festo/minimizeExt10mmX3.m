@@ -353,10 +353,10 @@ function [c, ceq] = nonlinc(X, baseline, trainIdx)
         ceq = [];
 
         if any(c > 0)
-            fprintf('[nonlinc] Violated mean at x = %.4f, %.4f, %.4f %.4f\n', X);
+%             fprintf('[nonlinc] Violated mean at x = %.4f, %.4f, %.4f %.4f\n', X);
         end
     catch
-        fprintf('[nonlinc] Error — invalid at x = %.4f, %.4f, %.4f %.4f\n', X);
+%         fprintf('[nonlinc] Error — invalid at x = %.4f, %.4f, %.4f %.4f\n', X);
         c = ones(4, 1) * 1e3;  % Large penalty
         ceq = [];
     end

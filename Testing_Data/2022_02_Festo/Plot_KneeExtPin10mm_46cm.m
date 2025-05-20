@@ -8,7 +8,7 @@ close all;
 load KneeExtPin_10mm_all.mat
 %Specify values for this BPA
 restingLength = 0.457;      %resting length, m
-kmax = 0.375;               %Length at maximum contraction, m
+kmax = 0.3815;               %Length at maximum contraction, m
 tendon = 0;             %Tendon, measured
 fitting = 0.0254;
 Vas_Pam_46cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, restingLength, kmax, tendon, fitting, pres);

@@ -87,7 +87,7 @@ load ExtPinBPASet.mat ke %This loads the following, which was ran and saved:
 %                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
 %                   'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
 %     clear Vas_Pam_48cm phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
-
+% 
 
 %% Initialize output
 nBPA = numel(ke);
@@ -191,7 +191,7 @@ end
 function contraction = Contraction(klass, Lmt, X0, gama, X3)
 rest   = klass.rest;
 tendon = klass.ten;
-fitting = klass.fitn;
+fitn = klass.fitn;
 theta_k = klass.Ak(:);  % degrees
 N = length(theta_k);
 
@@ -209,11 +209,12 @@ if ~isempty(X3)
     ang2 = -23;
     angleRad = deg2rad(theta_k - ang2);
     idx = angleRad < 0;
-%     kappa = Curvature(angleRad(idx));
-%     R = 1 ./ kappa;
-%     delta_L(idx) = (X3 / rest) ./ R;
+    KMAX = (rest - klass.Kmax)/rest;
+    strain = (rest - (Lmt - tendon -2*fitn))/rest;
+    relstrain = strain/KMAX;
+    comp = 1-relstrain;  %additive complement to relative strain
     R = 0.03;           %minimum radius
-    delta_L(idx) = X3*(R/rest)*angleRad(idx);
+    delta_L(idx) = X3*(R)*angleRad(idx).*comp(idx);
 end
 
 % --- Gama (deformation) ---
@@ -221,7 +222,7 @@ if isempty(gama)
     gama = zeros(N,1);
 end
 
-adjusted_Lm = Lmt - (tendon + gama + delta_L) - 2 * fitting;
+adjusted_Lm = Lmt - (tendon + gama + delta_L) - 2 * fitn;
 contraction = (rest - adjusted_Lm) / rest;
 end
 
@@ -366,7 +367,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
     u_hat_all(valid, :) = Fbr(valid, :) ./ norms(valid);
     
     % Vectorized k_b computation
-    K_bracket = diag([X2, X1, X1]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
