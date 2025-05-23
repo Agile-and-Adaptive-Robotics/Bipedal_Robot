@@ -12,7 +12,7 @@ rest{1} = 0.415;        %resting length clamp to clamp, minus the barb
 kmax{1} = 0.345;           %length at maximum contraction
 pres = 605.2351;        %Pressure, kPa
 tendon{1} = 0;            %no tendon condition
-Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest{1}, kmax{1}, tendon{1}-0.009, fitting, pres);
+Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest{1}, kmax{1}, tendon{1}, fitting, pres);
 Theoretical = Vas_Pam_42cm.Torque(:,3);
 
 rest{2} = 0.415;
@@ -21,7 +21,7 @@ tendon{2} = 0.040;       %tendon, image measured
 rest{3} = rest{2};         %repeat  
 kmax{3} = kmax{2};
 tendon{3} = tendon{2}; 
-Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest{2}, kmax{2}, tendon{2}-0.009, fitting, pres);
+Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest{2}, kmax{2}, tendon{2}, fitting, pres);
 Theoretical_ten = Vas_Pam_42cm_tendon.Torque(:,3);
 
 %% Test 1 done with CALT load cell. Tests 2 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
@@ -123,24 +123,46 @@ Test = ["ExtTest 4";
         "ExtTest 5";
         "ExtTest 6"];
 %% Convert cells to column arrays once bad tests are eliminated
-Angle1 = cell2mat([Angle(2); Angle(3)]);
+%Keep test 4 and 6
+Angle1 = cell2mat(Angle(3));
 Angle0 = Angle{1};
 Angle = cell2mat(Angle');       %This makes the if statements in the later code work
 Torque0 = Torque{1};
-Torque1 = cell2mat([Torque(2); Torque(3)]);
+Torque1 = cell2mat(Torque(3));
 InflatedLength0 = InflatedLength{1};
-InflatedLength1 = cell2mat([InflatedLength(2); InflatedLength(3)]);
+InflatedLength1 = cell2mat(InflatedLength(3));
 ICRtoMuscle0 = ICRtoMuscle{1};
-ICRtoMuscle1 = cell2mat([ICRtoMuscle(2); ICRtoMuscle(3)]);
+ICRtoMuscle1 = cell2mat(ICRtoMuscle(3));
 pres = cell2mat(pres);
 strainz = cell2mat(strainz);
 rel0 = rel{1};
-rel1 = cell2mat([rel(2); rel(3)]);
+rel1 = cell2mat(rel(3));
 F = cell2mat(F);
 TorqueHand0 = TorqueHand{1};
-TorqueHand1 = cell2mat([TorqueHand(2); TorqueHand(3)]);
+TorqueHand1 = cell2mat(TorqueHand(3));
 KMAX0 = KMAX{1};
 KMAX1 = KMAX{2};
+
+
+%Keep all tests
+% Angle1 = cell2mat([Angle(2); Angle(3)]);
+% Angle0 = Angle{1};
+% Angle = cell2mat(Angle');       %This makes the if statements in the later code work
+% Torque0 = Torque{1};
+% Torque1 = cell2mat([Torque(2); Torque(3)]);
+% InflatedLength0 = InflatedLength{1};
+% InflatedLength1 = cell2mat([InflatedLength(2); InflatedLength(3)]);
+% ICRtoMuscle0 = ICRtoMuscle{1};
+% ICRtoMuscle1 = cell2mat([ICRtoMuscle(2); ICRtoMuscle(3)]);
+% pres = cell2mat(pres);
+% strainz = cell2mat(strainz);
+% rel0 = rel{1};
+% rel1 = cell2mat([rel(2); rel(3)]);
+% F = cell2mat(F);
+% TorqueHand0 = TorqueHand{1};
+% TorqueHand1 = cell2mat([TorqueHand(2); TorqueHand(3)]);
+% KMAX0 = KMAX{1};
+% KMAX1 = KMAX{2};
 
 %% Plot expected versus measured moment arm
 Ma1 = Vas_Pam_42cm.MomentArm;                  %Calculated moment arm

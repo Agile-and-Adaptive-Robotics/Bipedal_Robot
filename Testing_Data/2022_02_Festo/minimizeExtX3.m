@@ -556,10 +556,10 @@ end
 %% tendon springrate
 function springrate = Spr(klass)
     if klass.ten > 0
-        mult = 1;
+        mult = 2;
         Aeff = 1.51*10^-6;%Effective area for 19-strand cable
         E = 193*10^9;       %Young's Modulus
-        L = klass.ten+.01;      %tendon length        
+        L = klass.ten;      %tendon length        
         springrate = mult*Aeff*E/L;
     else
         springrate = Inf;

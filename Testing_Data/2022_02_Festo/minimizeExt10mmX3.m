@@ -16,13 +16,13 @@ baselineScores1 = a1;  % RMSE, FVU, Max Residual
 fprintf('Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
 
 %% Cross-validation setup
-numBPA = 4;
-allBPA = 1:numBPA;
+numBPA = 3;
+allBPA = [1,2,4];
 
 results_cv = cell(1, numBPA);
 scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out validation
 labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
-Color_var = nchoosek(1:4,3);  % Each row = 3 BPAs for training
+Color_var = nchoosek([1,2,4],3);  % Each row = 3 BPAs for training
 
 %% Problem bounds
 lb = [-0.02 * 100, 3,3, -5];   % [cm, log10(N/m), log10(N/m), unitless]
@@ -41,15 +41,15 @@ for holdoutIdx = 1:numBPA
         'UseParallel', true, ...
         'Display', 'iter', ...
         'InitialPopulationRange',[lb; ub], ...
-        'PopulationSize', 100, ...
-        'MaxGenerations', 400, ...
+        'PopulationSize', 50, ...
+        'MaxGenerations', 50, ...
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'FunctionTolerance', 1e-5);
-    goal = [0 0 0];
-    weight = [1 5 0.5];
-    opts.HybridFcn = {@fgoalattain, goal, weight};
+%     goal = [0 0 0];
+%     weight = [1 5 0.5];
+%     opts.HybridFcn = {@fgoalattain, goal, weight};
 %     opts.OutputFcn = {@debugPop};
     % Run optimization
     [x, fvals] = gamultiobj(@(X) min1(X, trainIdx), 4, [], [], [], [], ...
@@ -101,7 +101,7 @@ results_sort_actual = [results_sort(:,1), x_actual, results_sort(:,6:end)];
 %% Pick best solution (later, flexible)
 pick = 1;
 sol_actual = results_sort_actual(pick, 2:5);  % [Xi0, Xi1, Xi2, Xi3]
-[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
+[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), [1 2 4]);  % [f: 4x3], [bpa: full struct]
 
 fprintf('\nPerformance with sol_actual:\n');
 disp(array2table(f, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
@@ -131,6 +131,9 @@ figT.Position = [100 100 950 700];
 tT = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
 
 for i = 1:4
+    if i == 3 
+        continue;
+    end
     ax = nexttile;
     hold on
 
@@ -195,6 +198,9 @@ figL.Position = [100 100 950 700];
 tL = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
 
 for i = 1:4
+    if i == 3 
+        continue;
+    end
     ax = nexttile;
     hold on
 
@@ -240,6 +246,9 @@ figMA.Position = [100 100 950 700];
 tMA = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
 
 for i = 1:4
+    if i == 3 
+        continue;
+    end
     ax = nexttile;
     hold on
 
@@ -282,17 +291,21 @@ figS.Position = [100 100 950 700];
 tS = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
 
 for i = 1:4
+    if i == 3 
+        continue;
+    end
     ax = nexttile;
     hold on
     strain_h = (bpa(i).rest - bpa(i).Lm_h)/bpa(i).rest;
-    scatter(bpa(i).A_h, strain_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
+    kmax = (bpa(i).rest - bpa(i).Kmax)/bpa(i).rest;
+    scatter(bpa(i).A_h, strain_h/kmax, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
         'MarkerFaceColor', c{1});  % Hybrid
 
 %     scatter(bpa(i).Aexp, bpa(i).strain_exp, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
 %         'MarkerFaceColor', c{7});  % Measured
 
-    plot(bpa(i).Ak, bpa(i).strain, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2);     % Original
-    plot(bpa(i).Ak, bpa(i).strain_p, '-', 'Color', c{5}, 'LineWidth', 2.5);          % Predicted
+    plot(bpa(i).Ak, bpa(i).strain/kmax, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2);     % Original
+    plot(bpa(i).Ak, bpa(i).strain_p/kmax, '-', 'Color', c{5}, 'LineWidth', 2.5);          % Predicted
 
     title(['\bf ' labels(i)], 'Interpreter', 'tex');
 
@@ -309,7 +322,7 @@ for i = 1:4
         'TickLength', [0.025 0.05], 'GridLineStyle','none');
 
     if ismember(i,[1,3])
-        ylabel('\bf Strain','Interpreter','tex')
+        ylabel('\bf Relative Strain','Interpreter','tex')
     end
     if ismember(i,[3,4])
         xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
