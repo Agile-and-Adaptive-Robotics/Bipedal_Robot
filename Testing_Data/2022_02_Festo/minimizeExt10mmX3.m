@@ -25,8 +25,8 @@ labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
 Color_var = nchoosek(1:4,3);  % Each row = 3 BPAs for training
 
 %% Problem bounds
-lb = [-0.01 * 100, 3,3, 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [0.03 * 100, 7, 7, 0.4*10];
+lb = [-0.02 * 100, 3,3, -5];   % [cm, log10(N/m), log10(N/m), unitless]
+ub = [0.03 * 100, 8, 8, 5];
 
 %% Solver
 for holdoutIdx = 1:numBPA
@@ -49,7 +49,7 @@ for holdoutIdx = 1:numBPA
         'FunctionTolerance', 1e-5);
     goal = [0 0 0];
     weight = [1 5 0.5];
-    opts.HybridFcn = {@fgoalattain};
+    opts.HybridFcn = {@fgoalattain, goal, weight};
 %     opts.OutputFcn = {@debugPop};
     % Run optimization
     [x, fvals] = gamultiobj(@(X) min1(X, trainIdx), 4, [], [], [], [], ...

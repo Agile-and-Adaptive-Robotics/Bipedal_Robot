@@ -87,7 +87,7 @@ load ExtPinBPASet.mat ke %This loads the following, which was ran and saved:
 %                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
 %                   'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
 %     clear Vas_Pam_48cm phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
-% 
+
 
 %% Initialize output
 nBPA = numel(ke);
@@ -210,11 +210,13 @@ if ~isempty(X3)
     angleRad = deg2rad(theta_k - ang2);
     idx = angleRad < 0;
     KMAX = (rest - klass.Kmax)/rest;
-    strain = (rest - (Lmt - tendon -2*fitn))/rest;
+    Lm = (Lmt - tendon -2*fitn); %length of the BPA
+    strain = (rest - Lm)/rest;
     relstrain = strain/KMAX;
-    comp = 1-relstrain;  %additive complement to relative strain
+%     comp = 1-relstrain;  %additive complement to relative strain
     R = 0.03;           %minimum radius
-    delta_L(idx) = X3*(R)*angleRad(idx).*comp(idx);
+%     delta_L(idx) = X3*(R)*angleRad(idx).*comp(idx);
+    delta_L(idx) = X3*(R)*abs(angleRad(idx)).*Lm(idx)/rest;
 end
 
 % --- Gama (deformation) ---
@@ -449,6 +451,9 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
         % Cable elongation
         r_bracket = unit_vec * e_bkt;
         e_cable(i) = r - r_bracket;
+        if e_cable(i) < 0  || klass.ten == 0
+            e_cable(i) = 0;
+        end
     end
 end
 
