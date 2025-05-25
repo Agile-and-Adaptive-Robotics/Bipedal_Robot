@@ -16,20 +16,22 @@ baselineScores1 = a1;  % RMSE, FVU, Max Residual
 fprintf('Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
 
 %% Cross-validation setup
-numBPA = 3;
-allBPA = [1,2,4];
+allBPA = [1,3,4];           %We're going to skip 42cm l_rest with a tendon
+labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
+validLabels = labels(allBPA);
+numBPA = numel(allBPA);
 
 results_cv = cell(1, numBPA);
 scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out validation
-labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
 Color_var = nchoosek([1,2,4],3);  % Each row = 3 BPAs for training
 
 %% Problem bounds
 lb = [-0.02 * 100, 3,3, -5];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [0.03 * 100, 8, 8, 5];
+ub = [0.03 * 100, 8, 8, 10];
 
 %% Solver
-for holdoutIdx = 1:numBPA
+for k = 1:numel(allBPA)
+    holdoutIdx = allBPA(k);
     fprintf('\n---- Cross-validation: Holding out BPA #%d (%s) ----\n', ...
         holdoutIdx, labels(holdoutIdx));
 
@@ -62,11 +64,12 @@ for holdoutIdx = 1:numBPA
     end
 
     % Store full set (no bestIdx decision now)
-    results_cv{holdoutIdx}.optParams_all = x;        % Nx3
-    results_cv{holdoutIdx}.trainScores_all = fvals;  % Nx3
-    results_cv{holdoutIdx}.validation_all = valF;    % Nx3
-    results_cv{holdoutIdx}.distance_all = vecnorm(fvals - valF, 2, 2);  % Nx1
-    results_cv{holdoutIdx}.foldIdx = repmat(holdoutIdx, size(x,1), 1);  % Nx1
+    
+    results_cv{k}.optParams_all = x;        % Nx4
+    results_cv{k}.trainScores_all = fvals;  % Nx3
+    results_cv{k}.validation_all = valF;    % Nx3
+    results_cv{k}.distance_all = vecnorm(fvals - valF, 2, 2);  % Nx1
+    results_cv{k}.foldIdx = repmat(holdoutIdx, size(x,1), 1);  % Nx1
 end
     
 % [sol,fval,Pareto_front, Pareto_Fvals, exitflag,output] = GODLIKE(@min1,lb,ub,[],'NumObjectives',3,...
@@ -81,12 +84,11 @@ all_candidates = [];  % Will collect [foldIdx, x(3), fvals(3), valF(3), dist]
 
 for i = 1:numBPA
     fold = results_cv{i}.foldIdx;           % Nx1
-    x = results_cv{i}.optParams_all;        % Nx3
+    x = results_cv{i}.optParams_all;        % Nx4
     train = results_cv{i}.trainScores_all;  % Nx3
     val = results_cv{i}.validation_all;     % Nx3
     dist = results_cv{i}.distance_all;      % Nx1
-
-    rows = [fold, x, train, val, dist];     % Nx11
+    rows = [fold, x, train, val, dist];     % Nx12
     all_candidates = [all_candidates; rows];
 end
 
@@ -95,7 +97,7 @@ results = all_candidates;  % [fold, Xi0, Xi1, Xi2, Xi3, train (3), val (3), dist
 results_sort = sortrows(results, [12 9 10 11 6 7 8]);  % sort by distance, then val, then train
 
 %% De-normalize to get physical parameters
-x_actual = [results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5)/100];
+x_actual = [results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5)/10];
 results_sort_actual = [results_sort(:,1), x_actual, results_sort(:,6:end)];
 
 %% Pick best solution (later, flexible)
@@ -122,18 +124,17 @@ c{7} = '#0000FF'; % indigo → Measured
 c{8} = '#000000'; % black
 
 labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
-tileLabels = {'\bf (A)', '\bf (B)', '\bf (C)', '\bf (D)'};
+tileOrder = [4, 3, 1];
+tileLabels = {'\bf (A)', '\bf (B)', '\bf (C)'};
 sz = 60;
 
 %% --- Torque Figure with 2x2 tiles ---
-figT = figure('Name','Torque - 2x2','Color','w');
+figT = figure('Name','Torque','Color','w');
 figT.Position = [100 100 950 700];
 tT = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
 
-for i = 1:4
-    if i == 3 
-        continue;
-    end
+for j = 1:3
+    i = tileOrder(j);
     ax = nexttile;
     hold on
 
@@ -151,20 +152,9 @@ for i = 1:4
         'DisplayName', 'Predicted');
 
     % Tile-specific title and annotation label
-    title(['\bf ' labels(i)], 'Interpreter', 'tex');
-    
-    % === Annotation Labels (A–D) ===
-    annotation(figT, 'textbox', [0.035  0.89  0.05  0.05], 'String', '\bf (A)', ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
-
-    annotation(figT, 'textbox', [0.49  0.89  0.05  0.05], 'String', '\bf (B)', ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
-
-    annotation(figT, 'textbox', [0.035  0.41  0.05  0.05], 'String', '\bf (C)', ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
-
-    annotation(figT, 'textbox', [0.49  0.41  0.05  0.05], 'String', '\bf (D)', ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    title(['\\bf ' labels(i)], 'Interpreter','tex');
+    annotation(figT, 'textbox', [0.035 + 0.45*mod(j-1,2), 0.89 - 0.48*floor((j-1)/2), 0.05, 0.05], ...
+        'String', ['\\bf ' tileLabels{j}], 'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
 
 
     % Axis config
@@ -179,10 +169,10 @@ for i = 1:4
         'TickLength', [0.025 0.05], ...
         'GridLineStyle','none');
 
-    if ismember(i,[1,3])
+    if ismember(j,[1,3])
         ylabel('\bf Torque, N\cdotm','Interpreter','tex')
     end
-    if ismember(i,[3,4])
+    if j >= 1
         xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
     end
 end
@@ -198,9 +188,9 @@ figL.Position = [100 100 950 700];
 tL = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
 
 for i = 1:4
-    if i == 3 
-        continue;
-    end
+%     if i == 3 
+%         continue;
+%     end
     ax = nexttile;
     hold on
 
@@ -246,9 +236,9 @@ figMA.Position = [100 100 950 700];
 tMA = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
 
 for i = 1:4
-    if i == 3 
-        continue;
-    end
+%     if i == 3 
+%         continue;
+%     end
     ax = nexttile;
     hold on
 
@@ -286,14 +276,14 @@ for i = 1:4
 end
 
 %% --- Strain Figure with 2x2 tiles ---
-figS = figure('Name','Strain - 2x2','Color','w');
+figS = figure('Name','Relative Strain - 2x2','Color','w');
 figS.Position = [100 100 950 700];
 tS = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
 
 for i = 1:4
-    if i == 3 
-        continue;
-    end
+%     if i == 3 
+%         continue;
+%     end
     ax = nexttile;
     hold on
     strain_h = (bpa(i).rest - bpa(i).Lm_h)/bpa(i).rest;

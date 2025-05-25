@@ -213,10 +213,10 @@ if ~isempty(X3)
     Lm = (Lmt - tendon -2*fitn); %length of the BPA
     strain = (rest - Lm)/rest;
     relstrain = strain/KMAX;
-%     comp = 1-relstrain;  %additive complement to relative strain
+    comp = 1-relstrain;  %additive complement to relative strain
     R = 0.03;           %minimum radius
-%     delta_L(idx) = X3*(R)*angleRad(idx).*comp(idx);
-    delta_L(idx) = X3*(R)*abs(angleRad(idx)).*Lm(idx)/rest;
+    delta_L(idx) = X3*(R)*abs(angleRad(idx)).*comp(idx);
+%     delta_L(idx) = X3*(R)*abs(angleRad(idx)).*Lm(idx)/rest;
 end
 
 % --- Gama (deformation) ---
