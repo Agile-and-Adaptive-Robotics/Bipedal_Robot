@@ -91,12 +91,16 @@ load ExtPinBPASet.mat ke %This loads the following, which was ran and saved:
 
 %% Initialize output
 nBPA = numel(ke);
+% Default to all BPAs if none specified
+if nargin < 5 || isempty(idx_val)
+        idx_val = 1:nBPA;
+end
+
 bpa_all = ke;  % initialize
 f_all = NaN(nBPA, 3);
-idx_opt = setdiff(1:nBPA, idx_val);
 
 %% Evaluate each BPA
-for i = 1:nBPA
+for i = idx_val
 %     fprintf('Evaluating BPA #%d with [%.4f, %.2e, %.2e]\n', i, Xi0, Xi1, Xi2, Xi3);
     klass_i = ke(i);
     [bpa_all(i), f_all(i,:)] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
