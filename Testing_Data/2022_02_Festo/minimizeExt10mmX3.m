@@ -11,7 +11,7 @@ fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScor
 load minimizeFlxPin10_results.mat sol_actual
 sol_actual1 = sol_actual;
 [a1, ~] = minimizeExtX3(sol_actual1(1), sol_actual1(2), sol_actual1(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
-clear sol_actual
+% clear sol_actual
 baselineScores1 = a1;  % RMSE, FVU, Max Residual
 fprintf('Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
 
@@ -25,9 +25,11 @@ results_cv = cell(1, numBPA);
 scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out validation
 
 %% Problem bounds
-lb = [-0.02 * 100, 3,3, 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [0.03 * 100, 8, 8, 15];
-
+% lb = [-0.02 * 100, 3,3, 0];   % [cm, log10(N/m), log10(N/m), unitless]
+% ub = [0.03 * 100, 8, 8, 15];
+lb = [-0.02 * 100, log10(5e3),log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+ub = [0 * 100, log10(5e5), log10(5e5), 2];
+clear sol_actual
 %% Solver
 for k = 1:numel(allBPA)
     holdoutIdx = allBPA(k);
@@ -42,8 +44,8 @@ for k = 1:numel(allBPA)
         'UseParallel', true, ...
         'Display', 'iter', ...
         'InitialPopulationRange',[lb; ub], ...
-        'PopulationSize', 100, ...
-        'MaxGenerations', 400, ...
+        'PopulationSize', 150, ...
+        'MaxGenerations', 750, ...
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
@@ -96,7 +98,7 @@ results = all_candidates;  % [fold, Xi0, Xi1, Xi2, Xi3, train (3), val (3), dist
 results_sort = sortrows(results, [12 9 10 11 6 7 8]);  % sort by distance, then val, then train
 
 %% De-normalize to get physical parameters
-x_actual = [results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5)/10];
+x_actual = [results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5)];
 results_sort_actual = [results_sort(:,1), x_actual, results_sort(:,6:end)];
 
 %% Pick best solution (later, flexible)
@@ -123,13 +125,14 @@ c{7} = '#0000FF'; % indigo → Measured
 c{8} = '#000000'; % black
 
 labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
-tileIdxs = [1, 5, 10];  % A, B, C, D
+% tileIdxs = [1, 5, 8, 12];  % A, B, C, D
+tileIdxs = [1, 5, 10];  % A, B, C
 tileSpans = [1 3];      % Span: [rows cols]
-tileOrder = [4, 3, 1];
+tileOrder = [4, 3, 1, 2];
 tileLabels = {'(A)', '(B)', '(C)', '(D)'};
 % Annotation positions [x, y] in normalized figure units
-% xAnn = [0.035, 0.51, 0.035, 0.51];  % (A), (B), (C)
-% yAnn = [0.89, 0.89, 0.41, 0.41];    % (A), (B), (C)
+% xAnn = [0.035, 0.51, 0.035, 0.51];  % (A), (B), (C), (D)
+% yAnn = [0.89, 0.89, 0.41, 0.41];    % (A), (B), (C), (D)
 xAnn = [0.035, 0.51, 0.265];  % (A), (B), (C)
 yAnn = [0.89, 0.89, 0.41];    % (A), (B), (C)
 sz = 60;
@@ -325,7 +328,7 @@ function ff = min1(x, trainIdx)
     Xi0 = x(1) / 100;
     Xi1 = 10^x(2);
     Xi2 = 10^x(3);
-    Xi3 = x(4) / 10;
+    Xi3 = x(4);
     [f_all, ~] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, trainIdx); % Nx3 matrix (e.g., 3x3 if 3 training BPAs)
     ff = mean(f_all(trainIdx, :), 1, 'omitnan'); % Return 1x3: [mean RMSE, mean FVU, mean MaxResidual]
 end
@@ -341,7 +344,7 @@ function [c, ceq] = nonlinc(X, baseline, trainIdx)
         Xi0 = X(1) / 100;
         Xi1 = 10^X(2);
         Xi2 = 10^X(3);
-        Xi3 = X(4) / 10;
+        Xi3 = X(4);
         % Call model with current X on the training BPAs
         [f_all, ~] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, trainIdx);
         % beat the average baseline, not per-BPA

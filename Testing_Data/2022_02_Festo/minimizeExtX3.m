@@ -1,3 +1,4 @@
+%minimizeExtX3.m
 %% Optimize predicted torque for extensors.
 function [f_all, bpa_all] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, idx_val)
 % minimizeExt: calculates predicted torque and fit metrics for a given BPA index
@@ -111,23 +112,20 @@ end
 
 end
 
-
 function [bpa_i, fitvec] = evaluateBPA(klass, Xi0, Xi1, Xi2, Xi3)
 %% Calculate locations and properties
-
 bpa_i = klass;
 kspr = Spr(bpa_i);          %tendon spring rate
 Funit = computeForceVector(bpa_i);  %Force unit direction in the hip frame 
-strain_Xi3 = Contraction(bpa_i, [], [], [], Xi3);
-[L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, []); %Bracket deformation and new geometry
+[strain_Xi3, delta_L] = Contraction(bpa_i, [], [], [], Xi3);
+[L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, delta_L); %Bracket deformation and new geometry
 sL_p = seg(bpa_i, L_p); %segment lengths
 Lmt_p = LMT(sL_p, Xi0); 
-strain_p = Contraction(bpa_i, Lmt_p, [], gemma, []);
+[strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []);
 unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
 F_p = Force(bpa_i, unitD_p, strain_p); %Muscle force, new prediction
 mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
 M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_p); %New torque prediction
-
 
 %% Package into output struct
 bpa_i.L_p = L_p;
@@ -192,7 +190,7 @@ F_unit = normalize(F_vec);
 end
 
         %% -------------- Contraction of the PAM --------------------------
-function contraction = Contraction(klass, Lmt, X0, gama, X3)
+function [contraction, delta_L] = Contraction(klass, Lmt, X0, gama, X3)
 rest   = klass.rest;
 tendon = klass.ten;
 fitn = klass.fitn;
@@ -218,9 +216,26 @@ if ~isempty(X3)
     strain = (rest - Lm)/rest;
     relstrain = strain/KMAX;
     comp = 1-relstrain;  %additive complement to relative strain
+    comp = max(0, min(1, comp));
     R = 0.03;           %minimum radius
-    delta_L(idx) = X3*(R)*abs(angleRad(idx)).*comp(idx);
+    delta_L(idx) = X3*(R)*abs(angleRad(idx)).*comp(idx).^2;
 %     delta_L(idx) = X3*(R)*abs(angleRad(idx)).*Lm(idx)/rest;
+
+debug_contraction_plot = false;
+    if exist('debug_contraction_plot', 'var') && debug_contraction_plot
+        figure;
+        subplot(2,2,1);
+        plot(theta_k, comp, 'b'); title('comp = 1 - relstrain'); ylabel('comp'); grid on;
+
+        subplot(2,2,2);
+        plot(theta_k, delta_L, 'r'); title('delta_L'); ylabel('delta_L [m]'); grid on;
+
+        subplot(2,2,3);
+        plot(theta_k, strain, 'k'); title('strain'); ylabel('strain'); grid on;
+
+        subplot(2,2,4);
+        plot(theta_k, angleRad, 'm'); title('angleRad'); ylabel('angle [rad]'); grid on;
+    end
 end
 
 % --- Gama (deformation) ---
@@ -230,25 +245,12 @@ end
 
 adjusted_Lm = Lmt - (tendon + gama + delta_L) - 2 * fitn;
 contraction = (rest - adjusted_Lm) / rest;
-end
 
-%% Curvature in bending BPA estimate
-function kappa = Curvature(angleRad)
-    % Parameters
-    R_min = 0.03;               % [m] min radius of curvature (30 mm)
-    kappa_max = 1 ./ R_min;      % Max curvature
-    angleMid = deg2rad(-60);    % Midpoint of transition (steepest change)
-    sharpness = 1;             % Larger value => steeper transition
 
-    % Logistic-style transition: 0 → kappa_max
-    kappa = kappa_max ./ (1 + exp(sharpness .* (angleRad - angleMid)));
-
-    % Optional clamp (shouldn't be necessary, but safe)
-    kappa = min(kappa, kappa_max);
 end
 
 %% ------------- Location  ------------------------
-function [LOC, gama] = Lok(klass, X1, X2, kSpr, Funit, strain_predef, X0)
+function [LOC, gama] = Lok(klass, X1, X2, kSpr, Funit, strain_predef, delta_L)
 % Inputs:
 %   strain_predef – N×1 strain vector (e.g., from Xi0 + Xi3 curvature-only effect)
 
@@ -271,13 +273,13 @@ Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
-Pbr = [-6.26, -29.69, 75.06]/1000;                          %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
-phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
-thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
-RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
-       sin(thetabrA) cos(thetabrA) 0; ...
-       0    0   1];
-pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
+% Pbr = [-6.26, -29.69, 75.06]/1000;                          %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
+% phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
+% thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
+% RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
+%        sin(thetabrA) cos(thetabrA) 0; ...
+%        0    0   1];
+% pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
 %             pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
 %             % Now calculate angle from x-axis to this vector
 %             thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
@@ -287,26 +289,26 @@ pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
 %                   0                1  0;
 %                  -sin(thetaY) 0  cos(thetaY)];
 %             Rhbr = RhbrZ*Ry;            %Rotate about y-axis in body frame
-            Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
+%             Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
             
 % %more complicated way to calculate vector and rotation matrix so that your
 % %new x axis points to muscle origin.
-% p0 = [-6.26, -29.69, 75.06]/1000;
-% y0 = [-47.48, -35.63, 75.06]/1000;
-% z0 = [-8.39, -14.85, 75.06]/1000;
-% 
-% z_hat = normalize(p0 - z0);
-% y_hat_prelim = normalize(p0 - y0);
-% v = pA - p0;
-% lambda = -dot(v, z_hat);
-% Pbr_A = p0 + lambda * z_hat;
-% 
-% x_hat = normalize(cross(y_hat_prelim, z_hat));
-% y_hat = cross(z_hat, x_hat);
-% 
-% Rhbr = [x_hat(:), y_hat(:), z_hat(:)];
-% Thbr = RpToTrans(Rhbr, Pbr_A');
-% pbrA = (pA - Pbr_A) * Rhbr;
+p0 = [-6.26, -29.69, 75.06]/1000;
+y0 = [-47.48, -35.63, 75.06]/1000;
+z0 = [-8.39, -14.85, 75.06]/1000;
+
+z_hat = normalize(p0 - z0);
+y_hat_prelim = normalize(p0 - y0);
+v = pA - p0;
+lambda = -dot(v, z_hat);
+Pbr_A = p0 + lambda * z_hat;
+
+x_hat = normalize(cross(y_hat_prelim, z_hat));
+y_hat = cross(z_hat, x_hat);
+
+Rhbr = [x_hat(:), y_hat(:), z_hat(:)];
+Thbr = RpToTrans(Rhbr, Pbr_A');
+pbrA = (pA - Pbr_A) * Rhbr;
 
 % Transform force into bracket frame
 Fbrh = zeros(N,3);
@@ -315,8 +317,10 @@ for ii = 1:N
 end
 
 % Bracket deformation
-[epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, X0);
-pbrAnew = [norm(pbrhA(1:2))+epsilon, delta, pbrhA(3)+ beta];
+[epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, delta_L);
+deflection = [epsilon, delta, beta];
+pbrAnew = pbrA +deflection;
+% pbrAnew = [norm(pbrhA(1:2))+epsilon, delta, pbrhA(3)+ beta];
 
 % Replace points
 LOC = L;
@@ -343,18 +347,15 @@ end
 end
 
 %% Force and length reduction due to tendon
-function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
+function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta_L)
 % e_axial, bracket axial elongation
 % e_bendY, bracket bending displacement y - direction
 % e_bendZ, bracket bending displacement z - direction
 % e_cable, tendon cable stretch
 % total length change
-    if nargin < 6 || isempty(X0)
-        X0 = 0;
-    end
     
     D      = klass.dBPA;    %uninflated diameter
-    mL     = klass.Lmt-X0;     %Length of musculo-tendon
+    mL     = klass.Lmt-delta_L;     %Length of musculo-tendon
     rest   = klass.rest;    %BPA resting length
     tendon = klass.ten;     %tendon length
     fitting = klass.fitn;   %end cap length
