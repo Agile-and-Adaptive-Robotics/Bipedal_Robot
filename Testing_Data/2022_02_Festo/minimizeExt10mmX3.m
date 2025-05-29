@@ -27,8 +27,8 @@ scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out va
 %% Problem bounds
 % lb = [-0.02 * 100, 3,3, 0];   % [cm, log10(N/m), log10(N/m), unitless]
 % ub = [0.03 * 100, 8, 8, 15];
-lb = [-0.02 * 100, log10(5e3),log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [0 * 100, log10(5e5), log10(5e5), 2];
+lb = [-0.02 * 100, log10(1e4),log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+ub = [0.02 * 100, log10(1e7), log10(5e6), 3];
 clear sol_actual
 %% Solver
 for k = 1:numel(allBPA)
@@ -43,20 +43,30 @@ for k = 1:numel(allBPA)
     opts = optimoptions('gamultiobj', ...
         'UseParallel', true, ...
         'Display', 'iter', ...
+        'PlotFcn', {@gaplotpareto3D_simple}, ...
         'InitialPopulationRange',[lb; ub], ...
-        'PopulationSize', 150, ...
-        'MaxGenerations', 750, ...
+        'PopulationSize', 50, ...
+        'MaxGenerations', 50, ...
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'FunctionTolerance', 1e-5);
 %     goal = [0 0 0];
-%     weight = [1 5 0.5];
+%     weight = [0.33 10 0.1];
 %     opts.HybridFcn = {@fgoalattain, goal, weight};
 %     opts.OutputFcn = {@debugPop};
     % Run optimization
-    [x, fvals] = gamultiobj(@(X) min1(X, trainIdx), 4, [], [], [], [], ...
-        lb, ub, [], opts);
+     [x, fvals,exitflag,output,population,scores] = gamultiobj(@(X) min1(X, trainIdx), 4, [], [], [], [], ...
+         lb, ub, [], opts);
+    
+% If I want to use GODLIKE instead:  
+%     trainIdx_fixed = trainIdx;  % capture loop var for closure
+%     min1_wrapper = @(x) min1(x, trainIdx_fixed);
+%     [sol,fval,x, fvals, exitflag,output] = GODLIKE(min1_wrapper,lb,ub,[],'NumObjectives',3,...
+%                                              'algorithms', {'PSO';'GA';'DE';'ASA'},...
+%                                              'display'   , 'plot', ...
+%                                              'UseParallel','true', ...
+%                                              'popsize'   , 150 );
 
     % Evaluate each solution on held-out BPA
     valF = zeros(size(x,1), 3);
@@ -72,13 +82,6 @@ for k = 1:numel(allBPA)
     results_cv{k}.distance_all = vecnorm(fvals - valF, 2, 2);  % Nx1
     results_cv{k}.foldIdx = repmat(holdoutIdx, size(x,1), 1);  % Nx1
 end
-    
-% [sol,fval,Pareto_front, Pareto_Fvals, exitflag,output] = GODLIKE(@min1,lb,ub,[],'NumObjectives',3,...
-%                                          'algorithms', {'DE';'GA';'ASA';'PSO'},...
-%                                          'display'   , 'plot',...
-%                                          'popsize'   , 75 );
-% x = Pareto_front;
-% fvals = Pareto_Fvals;
 
 %% === Compile All Pareto Candidates from Cross-Validation ===
 all_candidates = [];  % Will collect [foldIdx, x(3), fvals(3), valF(3), dist]
@@ -329,9 +332,17 @@ function ff = min1(x, trainIdx)
     Xi1 = 10^x(2);
     Xi2 = 10^x(3);
     Xi3 = x(4);
-    [f_all, ~] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, trainIdx); % Nx3 matrix (e.g., 3x3 if 3 training BPAs)
-    ff = mean(f_all(trainIdx, :), 1, 'omitnan'); % Return 1x3: [mean RMSE, mean FVU, mean MaxResidual]
+    try
+        [f_all, ~] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, trainIdx); % Nx3 matrix (e.g., 3x3 if 3 training BPAs)
+        ff = mean(f_all(trainIdx, :), 1, 'omitnan');              % Return 1x3: [mean RMSE, mean FVU, mean MaxResidual]
+        if ~isnumeric(ff) || numel(ff) ~= 3
+            ff = [Inf, Inf, Inf];  % Defensive return if shape is wrong
+        end
+    catch
+        ff = [Inf, Inf, Inf];      % Defensive return if minimizeExtX3 throws
+    end
 end
+
 
 %% --- Nonlinear constraint
 function [c, ceq] = nonlinc(X, baseline, trainIdx)
@@ -364,6 +375,14 @@ function [c, ceq] = nonlinc(X, baseline, trainIdx)
     end
 end
 
+function [c, ceq] = nonlcon2(x)
+    % Inequality constraints (c <= 0)
+    c = x(3) - x(2);  % This ensures x(3) < x(2)
+
+    % No equality constraints
+    ceq = [];
+end
+
 function [state, options, optchanged] = debugPop(options, state, flag)
     optchanged = false;  % required for gamultiobj
     if strcmp(flag, 'iter') || strcmp(flag, 'done')
@@ -375,20 +394,27 @@ function [state, options, optchanged] = debugPop(options, state, flag)
     end
 end
 
-function stop = gaplotpareto3D_simple(options, state, flag)
-    stop = false;
+function [state, options, optchanged] = gaplotpareto3D_simple(options, state, flag)
+    optchanged = false;  % Must be returned even if unchanged
     persistent figHandle
     if strcmp(flag, 'init') || isempty(figHandle) || ~isvalid(figHandle)
-        figHandle = figure(99); clf; 
+        figHandle = figure(99); 
+        set(figHandle, 'Name', 'Live Pareto Front', 'NumberTitle', 'off');
     end
     if strcmp(flag, 'iter') || strcmp(flag, 'done')
         scores = state.Score;
-        if size(scores,2) == 3
-            figure(figHandle); clf;
-            scatter3(scores(:,1), scores(:,2), scores(:,3), 40, 'filled');
-            xlabel('RMSE'); ylabel('FVU'); zlabel('Max Residual');
-            title('Pareto Front (Training Set)');
-            grid on; view(135, 30);
+        if ~isempty(scores) && isnumeric(scores) && size(scores,2) == 3
+            figure(figHandle); 
+            scatter3(scores(:,1), scores(:,2), scores(:,3), 50, 'filled');
+            xlabel('\bf RMSE', 'FontSize', 12);
+            ylabel('\bf FVU', 'FontSize', 12);
+            zlabel('\bf Max Residual', 'FontSize', 12);
+            title('\bf Pareto Front (Training Set)', 'FontSize', 14);
+            grid on;
+            view(135, 30);
+            drawnow;
         end
     end
 end
+
+
