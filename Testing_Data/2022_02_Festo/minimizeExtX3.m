@@ -121,10 +121,11 @@ Funit = computeForceVector(bpa_i);  %Force unit direction in the hip frame
 [L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, delta_L); %Bracket deformation and new geometry
 sL_p = seg(bpa_i, L_p); %segment lengths
 Lmt_p = LMT(sL_p, Xi0); 
-[strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []);
+[strain_f, ~] = Contraction(bpa_i, Lmt_p, [], gemma, Xi3);
 unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
-F_p = Force(bpa_i, unitD_p, strain_p); %Muscle force, new prediction
+F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
 mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
+[strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []);
 M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_p); %New torque prediction
 
 %% Package into output struct
@@ -550,7 +551,7 @@ N = size(F_p, 1);
 Mz = zeros(N, 3);
 
     for i = 1:N
-        if norm(F_p(i,:)) > maxF || strain_p(i,:) < -0.03
+        if norm(F_p(i,:)) > maxF || strain_p(i,:) < 0
             Mz(i,:) = NaN;
         else
             Mz(i,:) = cross(mA_p(i,:), F_p(i,:));
