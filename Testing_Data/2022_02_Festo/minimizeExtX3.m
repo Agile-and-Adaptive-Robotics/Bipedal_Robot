@@ -217,7 +217,7 @@ if ~isempty(X3)
     relstrain = strain/KMAX;
     comp = 1-relstrain;  %additive complement to relative strain
     comp = max(0, min(1, comp));
-    R = 0.03;           %minimum radius
+    R = 0.04;           %minimum radius
     delta_L(idx) = X3*(R)*abs(angleRad(idx)).*comp(idx).^2;
 %     delta_L(idx) = X3*(R)*abs(angleRad(idx)).*Lm(idx)/rest;
 
@@ -228,7 +228,7 @@ debug_contraction_plot = false;
         plot(theta_k, comp, 'b'); title('comp = 1 - relstrain'); ylabel('comp'); grid on;
 
         subplot(2,2,2);
-        plot(theta_k, delta_L, 'r'); title('delta_L'); ylabel('delta_L [m]'); grid on;
+        plot(theta_k, delta_L*1000, 'r'); title('delta_L'); ylabel('delta_L [mm]'); grid on;
 
         subplot(2,2,3);
         plot(theta_k, strain, 'k'); title('strain'); ylabel('strain'); grid on;

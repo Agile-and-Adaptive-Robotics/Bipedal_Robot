@@ -27,8 +27,8 @@ scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out va
 %% Problem bounds
 % lb = [-0.02 * 100, 3,3, 0];   % [cm, log10(N/m), log10(N/m), unitless]
 % ub = [0.03 * 100, 8, 8, 15];
-lb = [-0.02 * 100, log10(1e4),log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [0.02 * 100, log10(1e7), log10(5e6), 3];
+lb = [-0.02 * 100, log10(5e3),log10(5e3), -2];   % [cm, log10(N/m), log10(N/m), unitless]
+ub = [0 * 100, log10(5e5), log10(5e5), 2];
 clear sol_actual
 %% Solver
 for k = 1:numel(allBPA)
@@ -45,15 +45,15 @@ for k = 1:numel(allBPA)
         'Display', 'iter', ...
         'PlotFcn', {@gaplotpareto3D_simple}, ...
         'InitialPopulationRange',[lb; ub], ...
-        'PopulationSize', 50, ...
-        'MaxGenerations', 50, ...
+        'PopulationSize', 150, ...
+        'MaxGenerations', 750, ...
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'FunctionTolerance', 1e-5);
-%     goal = [0 0 0];
-%     weight = [0.33 10 0.1];
-%     opts.HybridFcn = {@fgoalattain, goal, weight};
+    goal = [0 0 0];
+    weight = [0.33 10 0.1];
+    opts.HybridFcn = {@fgoalattain, goal, weight};
 %     opts.OutputFcn = {@debugPop};
     % Run optimization
      [x, fvals,exitflag,output,population,scores] = gamultiobj(@(X) min1(X, trainIdx), 4, [], [], [], [], ...
@@ -139,6 +139,8 @@ tileLabels = {'(A)', '(B)', '(C)', '(D)'};
 xAnn = [0.035, 0.51, 0.265];  % (A), (B), (C)
 yAnn = [0.89, 0.89, 0.41];    % (A), (B), (C)
 sz = 60;
+
+%for plotting 
 
 %% --- Torque Figure with tiles ---
 figT = figure('Name','Torque','Color','w');
