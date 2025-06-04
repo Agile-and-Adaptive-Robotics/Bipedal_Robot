@@ -69,7 +69,7 @@ c{8} = '#000000'; % black
 
 tileLabels = {'(A)', '(B)', '(C)', '(D)'};
 % Annotation positions [x, y] in normalized figure units
-xAnn = [0.002, 0.48, 0.002, 0.48];
+xAnn = [0, 0.48, 0, 0.48];
 yAnn = [0.89, 0.89, 0.41, 0.41];
 sz = 60;
 
@@ -116,12 +116,13 @@ for j = 1:2
     end
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
-    xlim([-120 20]); ylim([-35 0]);
+    xlim([-120 20]); ylim([-25 0]);
 end
 
 for j = 1:2
     ax = nexttile(2 + j);
     hold on
+    
     scatter(bpa(j).A_h, bpa(j).M_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
     plot(bpa(j).Ak, bpa(j).M, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
     plot(bpa(j).Ak, bpa(j).M_p(:,3), '-', 'Color', c{5}, 'LineWidth', 2.5, 'DisplayName', 'Optimized prediction');
@@ -133,7 +134,7 @@ for j = 1:2
     end
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
-    xlim([-120 20]); ylim([-35 0]);
+    xlim([-120 20]); ylim([-25 0]);
 end
 
 % Shared labels
@@ -153,46 +154,190 @@ annotation(gcf, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', .
     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 
 % Legends in 2nd and 4th tile
-lg = legend(tT.Children(2));
-lg.Location = 'northeast';
+lg = legend(tT.Children(end-1));
+lg.Location = 'best';
 lg.FontSize = 8;
 
-lg2 = legend(tT.Children(4));
-lg2.Location = 'northeast';
+lg2 = legend(tT.Children(end-3));
+lg2.Location = 'best';
 lg2.FontSize = 8;
 
 %% Plot muscle length, optimization and validation
-for i = 1:2
-    figure
-    ax = gca;
-    Lm = bpa(i).Lmt-2*bpa(i).fitn-bpa(i).ten;      %Original predicted muscle length
-    Lm_p = bpa(i).Lmt_p-2*bpa(i).fitn-bpa(i).ten;    %Optimized muscle length (Lmt_p uses sol_actual(1)
+figL = figure('Name','Muscle Length','Color','w');
+figL.Position = [100 100 950 700];
+tL = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
+
+for j = 1:2
+    ax = nexttile(j);
     hold on
-    scatter(bpa(i).A_h,bpa(i).Lm_h,[],'filled','DisplayName','Measured')
-    plot(bpa(i).Ak,Lm_p,'DisplayName','New predict')
-    plot(bpa(i).Ak,Lm,'DisplayName','Predict original')
-    hold off
-    title(sprintf('Muscle length, %s',str(i)))
-    xlabel('\theta_{k}, \circ')
-    ylabel('Length, m')
-    legend
+    
+    % Predicted
+    Lm_p = bpa(j).Lmt_p - 2 * bpa(j).fitn - bpa(j).ten;
+    Lm   = bpa(j).Lmt   - 2 * bpa(j).fitn - bpa(j).ten;
+    
+    scatter(bpa(j).A_h, bpa(j).Lm_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
+        'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
+    plot(bpa(j).Ak, Lm, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Original prediction');
+
+    if j == 1
+        ylabel('\bf Pre-optimization', 'Interpreter', 'tex', ...
+            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    end
+    set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
+        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
 end
 
-%% Plot moment arm, optimization and validation
-for i = 1:2
-    figure
-    ax = gca;
-    G_p = (bpa(i).mA_p(:,1).^2+bpa(i).mA_p(:,2).^2).^(1/2);      %z-axis moment arm for optimized
+for j = 1:2
+    ax = nexttile(2 + j);
     hold on
-    scatter(bpa(i).A_h,bpa(i).mA_h,[],'filled','DisplayName','Measured')
-    plot(bpa(i).Ak,G_p,'DisplayName','New predict')
-    plot(bpa(i).Ak,bpa(i).mA,'DisplayName','Predict original')
-    hold off
-    title(sprintf('Moment arm, %s',str(i)))
-    xlabel('\theta_{k}, \circ')
-    ylabel('Length, m')
-    legend
+    
+    % Predicted
+    Lm_p = bpa(j).Lmt_p - 2 * bpa(j).fitn - bpa(j).ten;
+    Lm   = bpa(j).Lmt   - 2 * bpa(j).fitn - bpa(j).ten;
+    
+    scatter(bpa(j).A_h, bpa(j).Lm_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
+        'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
+    plot(bpa(j).Ak, Lm, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Original prediction');
+    plot(bpa(j).Ak, Lm_p, '-', 'Color', c{5}, 'LineWidth', 2.5, 'DisplayName', 'Optimized prediction');
+
+    if (2 + j) == 3
+        ylabel('\bf Optimized', 'Interpreter', 'tex', ...
+            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    end
+    set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
+        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
 end
+
+ylabel(tL,'\bf Muscle length, m','Interpreter','tex');
+xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex');
+
+
+for j = 1:4
+    annotation(figL, 'textbox', [xAnn(j), yAnn(j), 0.05, 0.05], 'String', ['\bf ' tileLabels{j}], ...
+        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+end
+
+annotation(figL, 'textbox', [0.2, 0.95, 0.1, 0.05], 'String', '\bf Optimization', ...
+    'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+annotation(figL, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
+    'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+
+lg = legend(tL.Children(end-1));
+lg.Location = 'best';
+lg.FontSize = 8;
+
+lg2 = legend(tL.Children(end-3));
+lg2.Location = 'best';
+lg2.FontSize = 8;
+
+%% Plot moment arm, optimization and validation
+figMA = figure('Name','Moment Arm','Color','w');
+figMA.Position = [100 100 950 700];
+tMA = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
+
+for j = 1:2
+    ax = nexttile(j);
+    hold on
+    scatter(bpa(j).A_h, bpa(j).mA_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
+        'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
+    plot(bpa(j).Ak, bpa(j).mA, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
+
+    if j == 1
+        ylabel('\bf Pre-optimization', 'Interpreter', 'tex', ...
+            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    end
+    set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
+        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
+end
+
+for j = 1:2
+    ax = nexttile(2 + j);
+    hold on
+    
+    G_p = hypot(bpa(j).mA_p(:,1), bpa(j).mA_p(:,2));
+    
+    scatter(bpa(j).A_h, bpa(j).mA_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
+        'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
+    plot(bpa(j).Ak, bpa(j).mA, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
+    plot(bpa(j).Ak, G_p, '-', 'Color', c{5}, 'LineWidth', 2.5, 'DisplayName', 'Optimized prediction');
+
+    if (2 + j) == 3
+        ylabel('\bf Optimized', 'Interpreter', 'tex', ...
+            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    end
+    set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
+        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
+end
+
+ylabel(tMA,'\bf Moment arm, m','Interpreter','tex');
+xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex');
+for j = 1:4
+    annotation(figMA, 'textbox', [xAnn(j), yAnn(j), 0.05, 0.05], 'String', ['\bf ' tileLabels{j}], ...
+        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+end
+annotation(figMA, 'textbox', [0.2, 0.95, 0.1, 0.05], 'String', '\bf Optimization', ...
+    'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+annotation(figMA, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
+    'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+legend(tMA.Children(end-1),'Location','best','FontSize',8);
+legend(tMA.Children(end-3),'Location','best','FontSize',8);
+
+%% Plot relative strain, optimization and validation
+figS = figure('Name','Relative Strain','Color','w');
+figS.Position = [100 100 950 700];
+tS = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
+
+for j = 1:2
+    ax = nexttile(j);
+    hold on
+    
+    strain_h = (bpa(j).rest - bpa(j).Lm_h)/bpa(j).rest;
+    kmax = (bpa(j).rest - bpa(j).Kmax)/bpa(j).rest;
+    
+    scatter(bpa(j).A_h, strain_h/kmax, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
+        'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
+    plot(bpa(j).Ak, bpa(j).strain/kmax, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Original prediction');
+
+    if j == 1
+        ylabel('\bf Pre-optimization', 'Interpreter', 'tex', ...
+            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    end
+    set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
+        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
+end
+
+for j = 1:2
+    ax = nexttile(2 + j);
+    hold on
+    
+    strain_h = (bpa(j).rest - bpa(j).Lm_h)/bpa(j).rest;
+    kmax = (bpa(j).rest - bpa(j).Kmax)/bpa(j).rest;
+    scatter(bpa(j).A_h, strain_h/kmax, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
+        'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
+    plot(bpa(j).Ak, bpa(j).strain/kmax, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
+    plot(bpa(j).Ak, bpa(j).strain_p/kmax, '-', 'Color', c{5}, 'LineWidth', 2.5, 'DisplayName', 'Optimized prediction');
+
+    if (2 + j) == 3
+        ylabel('\bf Optimized', 'Interpreter', 'tex', ...
+            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    end
+    set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
+        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
+end
+
+ylabel(tS,'\bf Relative strain','Interpreter','tex');
+xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex');
+for j = 1:4
+    annotation(figS, 'textbox', [xAnn(j), yAnn(j), 0.05, 0.05], 'String', ['\bf ' tileLabels{j}], ...
+        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+end
+annotation(figS, 'textbox', [0.2, 0.95, 0.1, 0.05], 'String', '\bf Optimization', ...
+    'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+annotation(figS, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
+    'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+legend(tS.Children(end-1),'Location','best','FontSize',8);
+legend(tS.Children(end-3),'Location','best','FontSize',8);
+
 
 %% Helper functions
 function ff = min1(x)
