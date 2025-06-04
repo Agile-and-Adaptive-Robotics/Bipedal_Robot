@@ -1,4 +1,4 @@
-%% MinimizeExtPin
+%% MinimizeExtPinX3.m
 %Minimization scheme
 
 clear; clc; close all

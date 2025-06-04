@@ -1,4 +1,4 @@
-
+%%minimizeFlxPin10mm.m
 %Minimization scheme
 
 clear; clc; close all
@@ -56,49 +56,110 @@ pick = 1; %Pick the best solution from the sorted results (should be 1)
 sol_actual = results_sort_actual(pick, 2:4);  %Best solution                                   
 [u,v,bpa] = minimizeFlxPin(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out       
 
+%% --- Define color scheme and labels ---
+c = cell(8,1);
+c{1} = '#FFD700'; % gold → Hybrid
+c{2} = '#FFB14E'; % orange
+c{3} = '#FA8775'; % light orange
+c{4} = '#EA5F94'; % pink
+c{5} = '#CD34B5'; % magenta → Predicted
+c{6} = '#9D02D7'; % magenta 2
+c{7} = '#0000FF'; % indigo → Measured
+c{8} = '#000000'; % black
+
+tileLabels = {'(A)', '(B)', '(C)', '(D)'};
+% Annotation positions [x, y] in normalized figure units
+xAnn = [0.002, 0.48, 0.002, 0.48];
+yAnn = [0.89, 0.89, 0.41, 0.41];
+sz = 60;
+
 %% Plot torque curves, Optimized and validation 
 load ForceStrainForFit.mat z
 X = linspace(0,620,20); %Pressure for interpolation
 X = X(2:20);
 Y = linspace(0,1,30);   %Relative strain range for interpolation
 
-str = ["Optimization"; "Validation"];
-str2 = ["Torque"; "Muscle Length"; "Moment Arm"];
-for i = 1:2
-    %Find old old torque, then plot everything
-    clear Yq Xq Vq Fold Fq Mold
-    Yq = bpa(i).strain./((bpa(i).rest-bpa(i).Kmax)/bpa(i).rest);
-    Xq = bpa(i).P;
-    Vq = zeros(size(bpa(i).unitD,1),1);
-    for j = 1:size(bpa(i).unitD, 1)
-        if bpa(i).strain(j) >=-0.03 && Yq(j) <=1
-            Vq(j) = interp2(X, Y, z, Xq, Yq(j));
-%             Vq(j) = f10(Yq(j),Xq);
-        elseif Yq(j)>1
-            Vq(j) = 0;
-        elseif bpa(i).strain(j) < -0.03
-            Vq(j) = NaN;
-        end
-    end   
-    Fold = Vq.*bpa(i).unitD;    %Force vector
-    Fq = (Fold(:,1).^2+Fold(:,2).^2).^(1/2);
-    Mold = -bpa(i).mA.*Fq;
-    
-    
-    figure
-    ax = gca;
+figT = figure('Name','Torque','Color','w');
+figT.Position = [100 100 950 700];
+tT = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
+
+for j = 1:2
+    ax = nexttile(j);
     hold on
-    scatter(bpa(i).Aexp,bpa(i).Mexp,[],'filled','DisplayName','Experiment')
-    scatter(bpa(i).A_h,bpa(i).M_h,[],'filled','DisplayName','Hybrid')
-    plot(bpa(i).Ak,bpa(i).M_p(:,3),'DisplayName','New predict')
-    plot(bpa(i).Ak,bpa(i).M,'DisplayName','Predict original') %"original" is with updated BPA characterization
-    plot(bpa(i).Ak,Mold,'DisplayName','Predict old') %"original" is with updated BPA characterization
-    hold off
-    title(sprintf('Torque, %s',str(i)))
-    xlabel('\theta_{k}, \circ')
-    ylabel('Torque, N\cdotm')
-    legend
+
+    % Pre-optimization: Mold calculation
+    Yq = bpa(j).strain./((bpa(j).rest - bpa(j).Kmax)/bpa(j).rest);
+    Xq = bpa(j).P;
+    Vq = zeros(size(bpa(j).unitD,1),1);
+    for k = 1:size(bpa(j).unitD,1)
+        if bpa(j).strain(k) >= -0.03 && Yq(k) <= 1
+            Vq(k) = interp2(X, Y, z, Xq, Yq(k));
+        elseif Yq(k) > 1
+            Vq(k) = 0;
+        elseif bpa(j).strain(k) < -0.03
+            Vq(k) = NaN;
+        end
+    end
+    Fold = Vq.*bpa(j).unitD;
+    Fq = sqrt(Fold(:,1).^2 + Fold(:,2).^2);
+    Mold = -bpa(j).mA.*Fq;
+
+    scatter(bpa(j).A_h, bpa(j).M_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{1}, 'DisplayName', 'Hybrid');
+    scatter(bpa(j).Aexp, bpa(j).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
+    plot(bpa(j).Ak, Mold, '--', 'Color', c{8}, 'LineWidth', 2, 'DisplayName', 'Original');
+    plot(bpa(j).Ak, bpa(j).M, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
+
+    % Add y-label only for tile 1
+    if (j) == 1
+        ylabel('\bf Pre-optimization', 'Interpreter', 'tex', ...
+            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    end
+    set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
+        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
+    xlim([-120 20]); ylim([-35 0]);
 end
+
+for j = 1:2
+    ax = nexttile(2 + j);
+    hold on
+    scatter(bpa(j).A_h, bpa(j).M_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
+    plot(bpa(j).Ak, bpa(j).M, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
+    plot(bpa(j).Ak, bpa(j).M_p(:,3), '-', 'Color', c{5}, 'LineWidth', 2.5, 'DisplayName', 'Optimized prediction');
+    
+    % Add y-label only for tile 3
+    if (2 + j) == 3
+        ylabel('\bf Optimized', 'Interpreter', 'tex', ...
+            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    end
+    set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
+        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
+    xlim([-120 20]); ylim([-35 0]);
+end
+
+% Shared labels
+ylabel(tT,'\bf Torque, N\cdotm','Interpreter','tex');
+xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex');
+
+% (A)-(D) annotations
+for j = 1:4
+    annotation(gcf, 'textbox', [xAnn(j), yAnn(j), 0.05, 0.05], 'String', ['\bf ' tileLabels{j}], ...
+        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+end
+
+% Column titles
+annotation(gcf, 'textbox', [0.2, 0.95, 0.1, 0.05], 'String', '\bf Optimization', ...
+    'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+annotation(gcf, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
+    'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+
+% Legends in 2nd and 4th tile
+lg = legend(tT.Children(2));
+lg.Location = 'northeast';
+lg.FontSize = 8;
+
+lg2 = legend(tT.Children(4));
+lg2.Location = 'northeast';
+lg2.FontSize = 8;
 
 %% Plot muscle length, optimization and validation
 for i = 1:2
