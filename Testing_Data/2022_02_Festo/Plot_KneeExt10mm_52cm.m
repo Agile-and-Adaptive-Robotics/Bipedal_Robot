@@ -135,23 +135,19 @@ hold off
 %%
 %% Plot a tile with torque, relative strain, and moment arm
 
-labels = ["Torque", "Relative strain", "Moment arm"];
-tileIdxs = [1, 5, 10];  % A, B, C
-tileSpans = [1 3];      % Span: [rows cols]
-tileOrder = [1, 2, 3];
-tileLabels = {'(A)', '(B)', '(C)'};
-yabels = {'Torque, N\cdotm', '\epsilon^*', 'Moment arm, m'};
-xAnn = [0.035, 0.51, 0.265];  % (A), (B), (C)
-yAnn = [0.89, 0.89, 0.41];    % (A), (B), (C)
+labels = ["Torque", "Relative strain"];
+tileLabels = {'(A)', '(B)'};
+yabels = {'Torque, N\cdotm', '\epsilon^*'};
+xAnn = [0.025, 0.46];  % (A), (B), (C)
+yAnn = [0.88, 0.88];    % (A), (B), (C)
 sz = 60;
 
 figT = figure('Name','Ext10mm_52cm','Color','w');
-figT.Position = [100 100 950 700];
-tT = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
+figT.Position = [100 100 950 350];
+tT = tiledlayout(1,2,'TileSpacing','loose','Padding','loose');
 
-for j = 1:3
-    i = tileOrder(j);
-    ax = nexttile(tileIdxs(j), tileSpans);
+for j = 1:2
+    ax = nexttile(j);
     hold on
 
     if j == 1
@@ -161,14 +157,13 @@ for j = 1:3
     elseif j == 2
         plot(phiD,relstrain,'Color',c4,'LineWidth',2,'DisplayName','Original')
         scatter(Angle,realRel,sz,'filled','MarkerFaceColor',c7,'DisplayName','Measured')
-    elseif j == 3
-        plot(phiD,G,'Color',c4,'LineWidth',2,'DisplayName','Original');
-        scatter(Angle, ICRtoMuscle,sz,'filled','MarkerFaceColor',c7,'DisplayName','Measured');
+    else
     end
 
     % Tile-specific title and annotation label
-    title(['\bf ' labels(i)], 'Interpreter','tex');
-    ylabel(['\bf ' yabels{i}], 'Interpreter','tex'); % corrected: use {} for cell array index
+    title(['\bf ' labels(j)], 'Interpreter','tex');
+    ylabel(['\bf ' yabels{j}], 'Interpreter','tex'); 
+    xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
     annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
         'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
 
@@ -182,15 +177,13 @@ for j = 1:3
         'YMinorTick', 'on', ...
         'TickLength', [0.025 0.05], ...
         'GridLineStyle','none');
+    
+    lg{j} = legend;  % choose a reliable handle
+    lg{j}.Location = 'best';
+    lg{j}.FontSize = 8;
 end
 
-% Shared X-axis label
-xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex')
 
-% Legend in top-right tile only
-lg = legend(tT.Children(end-1));  % choose a reliable handle
-lg.Location = 'northeast';
-lg.FontSize = 8;
 
 
 %% Mean and RMSE
