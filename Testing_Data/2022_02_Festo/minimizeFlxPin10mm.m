@@ -70,7 +70,7 @@ c{8} = '#000000'; % black
 tileLabels = {'(A)', '(B)', '(C)', '(D)'};
 % Annotation positions [x, y] in normalized figure units
 xAnn = [0, 0.48, 0, 0.48];
-yAnn = [0.89, 0.89, 0.41, 0.41];
+yAnn = [0.94, 0.94, 0.45, 0.45];
 sz = 60;
 
 %% Plot torque curves, Optimized and validation 
@@ -82,6 +82,9 @@ Y = linspace(0,1,30);   %Relative strain range for interpolation
 figT = figure('Name','Torque','Color','w');
 figT.Position = [100 100 950 700];
 tT = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
+
+titles = ["\bf 48.0 cm", "\bf 45.7 cm","\bf 48.0 cm", "\bf 45.7 cm"];
+subtitles = ["\bf Pre-optimized","\bf Pre-optimized","\bf Optimized","\bf Validation"];
 
 for j = 1:2
     ax = nexttile(j);
@@ -109,13 +112,16 @@ for j = 1:2
     plot(bpa(j).Ak, Mold, '--', 'Color', c{8}, 'LineWidth', 2, 'DisplayName', 'Original');
     plot(bpa(j).Ak, bpa(j).M, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
 
-    % Add y-label only for tile 1
-    if (j) == 1
-        ylabel('\bf Pre-optimization', 'Interpreter', 'tex', ...
+    title(titles(j), 'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    
+    ylabel('\bf Torque, N \cdot m', 'Interpreter', 'tex', ...
             'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
-    end
+    xlabel('\bf \theta_{k}, \circ', 'Interpreter', 'tex', ...
+            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
+    subtitle(subtitles(j), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
     xlim([-120 20]); ylim([-25 0]);
 end
 
@@ -123,23 +129,25 @@ for j = 1:2
     ax = nexttile(2 + j);
     hold on
     
-    scatter(bpa(j).A_h, bpa(j).M_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
+    scatter(bpa(j).Aexp, bpa(j).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
     plot(bpa(j).Ak, bpa(j).M, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
     plot(bpa(j).Ak, bpa(j).M_p(:,3), '-', 'Color', c{5}, 'LineWidth', 2.5, 'DisplayName', 'Optimized prediction');
     
-    % Add y-label only for tile 3
-    if (2 + j) == 3
-        ylabel('\bf Optimized', 'Interpreter', 'tex', ...
+    title(titles(j), 'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    
+    ylabel('\bf Torque, N \cdot m', 'Interpreter', 'tex', ...
             'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
-    end
+    xlabel('\bf \theta_{k}, \circ', 'Interpreter', 'tex', ...
+            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
+    subtitle(subtitles(j+2), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
     xlim([-120 20]); ylim([-25 0]);
 end
 
 % Shared labels
-ylabel(tT,'\bf Torque, N\cdotm','Interpreter','tex');
-xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex');
+% ylabel(tT,'\bf Torque, N\cdotm','Interpreter','tex');
+% xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex');
 
 % (A)-(D) annotations
 for j = 1:4
@@ -148,10 +156,10 @@ for j = 1:4
 end
 
 % Column titles
-annotation(gcf, 'textbox', [0.2, 0.95, 0.1, 0.05], 'String', '\bf Optimization', ...
-    'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
-annotation(gcf, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
-    'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+% annotation(gcf, 'textbox', [0.2, 0.95, 0.1, 0.05], 'String', '\bf Optimization', ...
+%     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+% annotation(gcf, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
+%     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 
 % Legends in 2nd and 4th tile
 lg = legend(tT.Children(end-1));
