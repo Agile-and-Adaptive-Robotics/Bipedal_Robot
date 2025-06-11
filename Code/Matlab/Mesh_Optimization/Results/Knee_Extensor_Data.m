@@ -67,15 +67,21 @@ knee_x_Pam =     [0.0065    0.0083    0.0094    0.0101    0.0120    0.0140    0.
 fcn3 = fit(knee_angle,knee_x_Pam,'cubicspline');
 knee_y_Pam =     [-0.3981   -0.3968   -0.3961   -0.3957   -0.3949   -0.3943   -0.3941   -0.3950   -0.3982   -0.4034   -0.4098   -0.4165   -0.4227   -0.4273   -0.4297   -0.4289]';
 fcn4 = fit(knee_angle,knee_y_Pam,'cubicspline');
+%Theta1 to ICR
+t1_ICR_x = ([29.66	28.54	27.86	27.40	26.23	25.03	23.81	20.03	16.17	12.34	8.67	5.24	2.04	-1.01	-4.1	-7.58]')/1000;
+fcn13 = fit(knee_angle,t1_ICR_x,'cubicspline');
+t1_ICR_y = ([25.97	25.74	25.61	25.53	25.35	25.19	25.03	24.57	24.04	23.39	22.66	21.93	21.32	20.99	21.2	22.33]')/1000;
+fcn14 = fit(knee_angle,t1_ICR_y,'cubicspline');
+
 %Patella locations in Femur frame
 P_T_x = [0.06055	0.06	0.05956	0.06094	0.05953	0.06072	0.05927	0.05982	0.05955	0.05228	0.04206	0.03099	0.016	-0.00064	-0.01722	-0.03161]'; %Patella Top, x location
-fcn13 = fit(knee_angle,P_T_x,'cubicspline');
+fcn15 = fit(knee_angle,P_T_x,'cubicspline');
 P_T_y = [-0.37779	-0.38615	-0.38366	-0.3857	-0.38907	-0.39348	-0.39766	-0.41177	-0.42227	-0.43372	-0.44375	-0.45354	-0.45795	-0.45839	-0.45529	-0.44819]'; %Patella Top, y location
-fcn14 = fit(knee_angle,P_T_y,'cubicspline');
+fcn16 = fit(knee_angle,P_T_y,'cubicspline');
 P_B_x = [0.05898	0.0585	0.05891	0.05828	0.05822	0.05856	0.05842	0.04735	0.038	0.0264	0.01175	-0.00467	-0.02223	-0.03997	-0.05465	-0.06578]'; %Patella Bottom, x location
-fcn15 = fit(knee_angle,P_B_x,'cubicspline');
+fcn17 = fit(knee_angle,P_B_x,'cubicspline');
 P_B_y = [-0.41712	-0.42073	-0.42306	-0.42447	-0.42847	-0.43298	-0.43779	-0.44568	-0.455	-0.46374	-0.46981	-0.46987	-0.46785	-0.46119	-0.44844	-0.4316]'; %Patella Bottom, y location
-fcn16 = fit(knee_angle,P_B_y,'cubicspline');
+fcn18 = fit(knee_angle,P_B_y,'cubicspline');
 
 kneeMin = -2.0943951;
 kneeMax = 0.17453293;
@@ -100,6 +106,10 @@ for i = 1:positions
                     0, 0, 1];
     
     T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
+        %Transformation matrix for ICR to theta1 and inverse
+    t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0];
+    T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');    
+    T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');
 end
 
 %% Muscle calculation
