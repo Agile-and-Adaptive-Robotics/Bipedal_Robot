@@ -103,8 +103,8 @@ for i = 1:positions
     
     %Transformation matrix for ICR to theta1 and inverse
     t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0];
-    T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');    
-    T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');
+    T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');     %Converts the t1 frame to the ICR frame
+    T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)'); %Converts the t1 frame to ICR
 end
 
 %% Muscle calculation
