@@ -5,9 +5,15 @@ clc;
 close all;
 
 load KneeExt_10mm_52cm.mat
-rest = 0.520;      %resting length, m
-kmax = 0.440;               %Length at maximum contraction, m
-tendon = 0.030;             %Tendon, measured
+%Values from .mat file
+% rest = 0.520;
+% kmax = 0.434;
+% tendon = 0.047; 
+
+%Not used. Saved if needed.
+% rest = 0.520;      %resting length, m
+% kmax = 0.440;               %Length at maximum contraction, m
+% tendon = 0.030;             %Tendon, measured
 % Vas_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, pres);
 Torque_52cm = TorqueR(:,3);
 Theoretical = Torque_52cm';

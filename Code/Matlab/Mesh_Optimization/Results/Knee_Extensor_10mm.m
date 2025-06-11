@@ -66,8 +66,8 @@ fcn10 = fit(rect_fem_yD,rect_fem_y-(0.02346-0.0215281),'smoothingspline');
 
 %Robot Knee
 knee_angle = [0.17; 0.09; 0.03; 0.00; -0.09; -0.17; -0.26; -0.52; -0.79; -1.05; -1.31; -1.57; -1.83; -2.09; -2.36; -2.62];
-knee_x_Pam = [0.0065; 0.0083; 0.0094; 0.0101; 0.0120; 0.0140; 0.0161; 0.0220; 0.0269; 0.0302; 0.0311; 0.0295; 0.0253; 0.0189; 0.0109; 0.0021];
-knee_y_Pam = [-0.3981; -0.3968; -0.3961; -0.3957; -0.3949; -0.3943; -0.3941; -0.3950; -0.3982; -0.4034; -0.4098; -0.4165; -0.4227; -0.4273; -0.4297; -0.4289];
+knee_x_Pam =     ([23.30	22.22	21.55	21.09	19.91	18.70	17.48	13.82	10.44	7.60	5.52	4.35	4.16	5.01	7.04	10.47]')/1000;
+knee_y_Pam =     ([-416.65	-417.03	-417.19	-417.28	-417.41	-417.41	-417.30	-416.28	-414.36	-411.72	-408.62	-405.32	-402.08	-399.16	-396.85	-395.66]')/1000;
 fcn11 = fit(knee_angle,knee_x_Pam,'cubicspline');
 fcn12 = fit(knee_angle,knee_y_Pam,'cubicspline');
 
@@ -261,21 +261,22 @@ end
 CrossPoint = 5;
 Dia = 10;
 rest = 0.520;
-kmax = 0.432;
-tendon = 0.030; 
-% kmax = 0.432;
-% tendon = 0.046; 
-fitting = 0.0254; 
+% kmax = 0.440;
+% tendon = 0.055;
+kmax = 0.434;
+tendon = 0.047; 
+fitting = 0.0254;
+tendon_adj = tendon-0.0091;
 pres = 596.3717;         %average pressure
 Vas_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
-
+Vas_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres);
 %% Unstacking the Torques to identify specific rotations
 % Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
 % Torque1 = Vas_Int.Torque + Vas_Lat.Torque + Vas_Med.Torque;
 Force1 = Vas_Med.Force;
 Torque1 = Vas_Med.Torque;
 TorqueR = Vas_Pam.Torque;
-
+TorqueR_adj = Vas_Pam_adj.Torque;
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
 
@@ -311,8 +312,8 @@ hold on
 sgtitle('Bicep Femoris Short Head Torque through Knee Flexion and Extension')
 
 subplot(3, 2, 1)
-plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3))
-legend('Human Muscle', 'Optimal BPA Location')
+plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3), phiD, TorqueR_adj(:, 3))
+legend('Human Muscle', 'Original', 'BPA length offset')
 title('Muscle and PAM Z Torque')
 xlabel('Knee Extension/Rotation, degrees')
 ylabel('Torque, N\cdotm')
@@ -440,8 +441,12 @@ TorqueZ = squeeze(TorqueZ);
 
 
 figure
-plot(phiD, TorqueR(:, 3), K_ang/c, TorqueZ,'o')
-legend('Theoretical','Measured')
+hold on
+plot(phiD, TorqueR(:, 3)) 
+scatter(K_ang/c, TorqueZ)
+plot(phiD, TorqueR_adj(:, 3))
+hold off
+legend('Original','Measured','BPA length offset')
 title('PAM Z Torque')
 xlabel('Knee Extension/Rotation, degrees')
 ylabel('Torque, Nm')

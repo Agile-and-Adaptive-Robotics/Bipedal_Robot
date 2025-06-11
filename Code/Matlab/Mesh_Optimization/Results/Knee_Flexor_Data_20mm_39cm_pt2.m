@@ -40,8 +40,8 @@ fcn2 = fit(knee_angle_y,knee_y,'cubicspline');
 %Robot
 knee_angle = [0.17; 0.09; 0.03; 0.00; -0.09; -0.17; -0.26; -0.52; -0.79; -1.05; -1.31; -1.57; -1.83; -2.09; -2.36; -2.62];
 knee_x_Pam =     ([23.30	22.22	21.55	21.09	19.91	18.70	17.48	13.82	10.44	7.60	5.52	4.35	4.16	5.01	7.04	10.47]')/1000;
-fcn3 = fit(knee_angle,knee_x_Pam,'cubicspline');
 knee_y_Pam =     ([-416.65	-417.03	-417.19	-417.28	-417.41	-417.41	-417.30	-416.28	-414.36	-411.72	-408.62	-405.32	-402.08	-399.16	-396.85	-395.66]')/1000;
+fcn3 = fit(knee_angle,knee_x_Pam,'cubicspline');
 fcn4 = fit(knee_angle,knee_y_Pam,'cubicspline');
 
 %Theta1 to ICR
