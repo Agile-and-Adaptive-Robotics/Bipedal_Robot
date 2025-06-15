@@ -4,15 +4,15 @@
 clear; clc; close all
 
 %% Initial Baseline Evaluation (for constraint bounds)
-[a0, ~] = minimizeExt(0, Inf, Inf, 0, 1:4);  % All for baseline
+[a0, ~] = minimizeExt(0, Inf, Inf, 0, 1);  % All for baseline
 baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
 load minimizeExtPin10_results.mat sol_actual
 sol_actual1 = sol_actual;
-[f, bpa] = minimizeExt(sol_actual1(1), sol_actual1(2), sol_actual1(3), sol_actual1(4), 1:4);   % Use solution from Flexor bracket, and compare results
+[f, bpa] = minimizeExt(sol_actual1(1), sol_actual1(2), sol_actual1(3), sol_actual1(4), 1);   % Use solution from Flexor bracket, and compare results
 % clear sol_actual
-baselineScores1 = a1;  % RMSE, FVU, Max Residual
+baselineScores1 = f;  % RMSE, FVU, Max Residual
 fprintf('Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
 
 
@@ -29,11 +29,11 @@ c{6} = '#9D02D7'; % magenta 2
 c{7} = '#0000FF'; % indigo → Measured
 c{8} = '#000000'; % black
 
-labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
+labels = ["52cm", "52cm", "52cm", "52cm"];
 % tileIdxs = [1, 5, 8, 12];  % A, B, C, D
 tileIdxs = [1, 5, 10];  % A, B, C
-tileSpans = [1 3];      % Span: [rows cols]
-tileOrder = [4, 3, 1, 2];
+tileSpans = [1 1];      % Span: [rows cols]
+tileOrder = [1, 2, 3, 4];
 tileLabels = {'(A)', '(B)', '(C)', '(D)'};
 % Annotation positions [x, y] in normalized figure units
 % xAnn = [0.035, 0.51, 0.035, 0.51];  % (A), (B), (C), (D)
@@ -43,61 +43,13 @@ yAnn = [0.89, 0.89, 0.41];    % (A), (B), (C)
 sz = 60;
 
 %for plotting 
-
-%% --- Torque Figure with tiles ---
-figT = figure('Name','Torque','Color','w');
-figT.Position = [100 100 950 700];
-tT = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
-
-for j = 1:3
-    i = tileOrder(j);
-    ax = nexttile(tileIdxs(j), tileSpans);
-    hold on
-
-    % Plot order: hybrid (gold), experimental (indigo), original (gray dash), predicted (magenta)
-    scatter(bpa(i).A_h, bpa(i).M_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-        'MarkerFaceColor', c{1}, 'DisplayName', 'Hybrid');
-    scatter(bpa(i).Aexp, bpa(i).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-        'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
-    plot(bpa(i).Ak, bpa(i).M, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2, ...
-        'DisplayName', 'Original');
-    plot(bpa(i).Ak, bpa(i).M_p(:,3), '-', 'Color', c{5}, 'LineWidth', 2.5, ...
-        'DisplayName', 'Predicted');
-
-    % Tile-specific title and annotation label
-    title(['\bf ' labels(i)], 'Interpreter','tex');
-    annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
-
-    % Axis config
-    set(gca, ...
-        'FontSize', 12, ...
-        'FontWeight', 'bold', ...
-        'FontName', 'Arial', ...
-        'LineWidth', 2, ...
-        'XMinorTick', 'on', ...
-        'YMinorTick', 'on', ...
-        'YLim', [0 15], ...
-        'TickLength', [0.025 0.05], ...
-        'GridLineStyle','none');
-end
-
-%shared axes labels
-ylabel(tT,'\bf Torque, N\cdotm','Interpreter','tex')
-xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex')
-
-% Legend in top-right tile only
-lg = legend(tT.Children(end-1));
-lg.Location = 'northeast';
-lg.FontSize = 8;
-
 %% --- Muscle Length Figure with tiles---
 figL = figure('Name','Muscle Length','Color','w');
 figL.Position = [100 100 950 700];
-tL = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
+tL = tiledlayout(1,1,'TileSpacing','loose','Padding','loose');
 
-for j = 1:3
-    i = tileOrder(j);
+for j = 1
+    i = 1;
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
 
@@ -109,10 +61,11 @@ for j = 1:3
         'MarkerFaceColor', c{7},'DisplayName', 'Measured'); % Hybrid (gold)
     plot(bpa(i).Ak, Lm, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');      % Original
     plot(bpa(i).Ak, Lm_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');            % Predicted
-    title(['\bf ' labels(i)], 'Interpreter', 'tex');
+    ylabel(tL,'\bf Length, m','Interpreter','tex')
+    xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
 
     % Tile-specific title and annotation label
-    title(['\bf ' labels(i)], 'Interpreter','tex');
+    title('\bf 52 cm', 'Interpreter','tex');
     annotation(figL, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
         'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
 
@@ -126,25 +79,19 @@ for j = 1:3
         'YMinorTick', 'on', ...
         'TickLength', [0.025 0.05], ...
         'GridLineStyle','none');
+    lg = legend;
+    lg.Location = 'best';
+    lg.FontSize = 8;
 
 end
-
-%shared axes labels
-ylabel(tL,'\bf Torque, N\cdotm','Interpreter','tex')
-xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
-
-% Legend in top-right tile only
-lg = legend(tL.Children(end-1));
-lg.Location = 'northeast';
-lg.FontSize = 8;
 
 %% --- Moment Arm Figure with tiles ---
 figMA = figure('Name','Moment Arm - 2x2','Color','w');
 figMA.Position = [100 100 950 700];
-tMA = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
+tMA = tiledlayout(1,1,'TileSpacing','loose','Padding','loose');
 
-for j = 1:3
-    i = tileOrder(j);
+for j = 1
+    i = 1;
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
 
@@ -155,7 +102,7 @@ for j = 1:3
     plot(bpa(i).Ak, bpa(i).mA, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');      % Original
     plot(bpa(i).Ak, G_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');                   % Predicted
 
-    title(['\bf ' labels(i)], 'Interpreter', 'tex');
+    title('\bf 52 cm', 'Interpreter', 'tex');
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
@@ -172,37 +119,76 @@ for j = 1:3
         'YMinorTick', 'on', ...
         'TickLength', [0.025 0.05], ...
         'GridLineStyle','none');
+    
+        lg = legend;
+        lg.Location = 'best';
+        lg.FontSize = 8;
 end
 
 %shared axes labels
-ylabel(tMA,'\bf Torque, N\cdotm','Interpreter','tex')
+ylabel(tMA,'\bf Moment arm, m','Interpreter','tex')
 xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex')
 
-% Legend in top-right tile only
-lg = legend(tMA.Children(end-1));
-lg.Location = 'northeast';
-lg.FontSize = 8;
+%% --- Torque and relative strain Figure with tiles ---
+figT = figure('Name','Torque and relative strain','Color','w');
+figT.Position = [100 100 950 400];
+tT = tiledlayout(1,2,'TileSpacing','loose','Padding','loose');
 
-%% --- Strain Figure with tiles ---
-figS = figure('Name','Relative Strain','Color','w');
-figS.Position = [100 100 950 700];
-tS = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
+for j = 1
+    i = 1;
+    ax = nexttile(tileIdxs(j));
+    hold on
 
-for j = 1:3
-    i = tileOrder(j);
-    ax = nexttile(tileIdxs(j), tileSpans);
+    % Plot order: hybrid (gold), experimental (indigo), original (gray dash), predicted (magenta)
+    scatter(bpa(i).A_h, bpa(i).M_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
+        'MarkerFaceColor', c{1}, 'DisplayName', 'Hybrid');
+    scatter(bpa(i).Aexp, bpa(i).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
+        'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
+    plot(bpa(i).Ak, bpa(i).M, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2, ...
+        'DisplayName', 'Original');
+    plot(bpa(i).Ak, bpa(i).M_p(:,3), '-', 'Color', c{5}, 'LineWidth', 2.5, ...
+        'DisplayName', 'Predicted');
+    ylabel('\bf Torque, N\cdotm','Interpreter','tex')
+    xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
+    % Tile-specific title and annotation label
+    title('Torque', 'Interpreter','tex');
+    annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
+        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+
+    % Axis config
+    set(gca, ...
+        'FontSize', 12, ...
+        'FontWeight', 'bold', ...
+        'FontName', 'Arial', ...
+        'LineWidth', 2, ...
+        'XMinorTick', 'on', ...
+        'YMinorTick', 'on', ...
+        'YLim', [0 15], ...
+        'TickLength', [0.025 0.05], ...
+        'GridLineStyle','none');
+    
+        lg = legend;
+        lg.Location = 'best';
+        lg.FontSize = 8;
+end
+
+for j = 2
+    i = 1;
+    ax = nexttile(j);
     hold on
     
     strain_h = (bpa(i).rest - bpa(i).Lm_h)/bpa(i).rest;
     kmax = (bpa(i).rest - bpa(i).Kmax)/bpa(i).rest;
-    scatter(bpa(i).A_h, strain_h/kmax, 60, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', '#FFD700','DisplayName', 'Measured');
+    scatter(bpa(i).A_h, strain_h/kmax, 60, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7},'DisplayName', 'Measured');
     plot(bpa(i).Ak, bpa(i).strain/kmax, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');
     plot(bpa(i).Ak, bpa(i).strain_p/kmax, '-', 'Color', '#CD34B5', 'LineWidth', 2.5,'DisplayName', 'Predicted');
-    title(['\bf ' labels(i)], 'Interpreter', 'tex');
+    
+    ylabel('\bf \epsilon^*','Interpreter','tex')
+    xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
+    title('\bf Relative Strain', 'Interpreter', 'tex');
 
-    % Tile-specific title and annotation label
-    title(['\bf ' labels(i)], 'Interpreter','tex');
-    annotation(figS, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
+   
+    annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
         'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
 
     % Axis config
@@ -215,16 +201,21 @@ for j = 1:3
         'YMinorTick', 'on', ...
         'TickLength', [0.025 0.05], ...
         'GridLineStyle','none');
+    
+        lg = legend;
+        lg.Location = 'best';
+        lg.FontSize = 8;          
 end
 
-%shared axes labels
-ylabel(tS,'\bf Torque, N\cdotm','Interpreter','tex')
-xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
 
-% Legend in top-right tile only
-lg = legend(tS.Children(end-1));
-lg.Location = 'northeast';
-lg.FontSize = 8;
+
+%% --- Strain Figure with tiles ---
+% figS = figure('Name','Relative Strain','Color','w');
+% figS.Position = [100 100 950 700];
+% tS = tiledlayout(1,2,'TileSpacing','loose','Padding','loose');
+
+
+
 %% Helper functions
 function ff = min1(x, trainIdx)
     if numel(x) == 4 && size(x,1) == 1
@@ -247,78 +238,5 @@ function ff = min1(x, trainIdx)
     end
 end
 
-
-%% --- Nonlinear constraint
-function [c, ceq] = nonlinc(X, baseline, trainIdx)
-    % Inputs:
-    %   X         = [Xi0_cm, log10(Xi1), log10(Xi2), , Xi3_%]
-    %   baseline  = baselineScores (size: 4x3)
-    %   trainIdx  = which BPAs are being optimized
-    try
-        % Convert to physical parameters
-        Xi0 = X(1) / 100;
-        Xi1 = 10^X(2);
-        Xi2 = 10^X(3);
-        Xi3 = X(4);
-        % Call model with current X on the training BPAs
-        [f_all, ~] = minimizeExt(Xi0, Xi1, Xi2, Xi3, trainIdx);
-        % beat the average baseline, not per-BPA
-        mean_baseline = mean(baseline(trainIdx,:), 1, 'omitnan');  % 1x3
-        mean_model = mean(f_all, 1, 'omitnan');                    % 1x3
-
-        c = mean_model - mean_baseline;  % Element-wise (positive means violation)
-        ceq = [];
-
-        if any(c > 0)
-%             fprintf('[nonlinc] Violated mean at x = %.4f, %.4f, %.4f %.4f\n', X);
-        end
-    catch
-%         fprintf('[nonlinc] Error — invalid at x = %.4f, %.4f, %.4f %.4f\n', X);
-        c = ones(4, 1) * 1e3;  % Large penalty
-        ceq = [];
-    end
-end
-
-function [c, ceq] = nonlcon2(x)
-    % Inequality constraints (c <= 0)
-    c = x(3) - x(2);  % This ensures x(3) < x(2)
-
-    % No equality constraints
-    ceq = [];
-end
-
-function [state, options, optchanged] = debugPop(options, state, flag)
-    optchanged = false;  % required for gamultiobj
-    if strcmp(flag, 'iter') || strcmp(flag, 'done')
-        if isfield(state, 'Population')
-            fprintf('[debugPop] Generation %d\n', state.Generation);
-            assignin('base', 'currentPop', state.Population);
-            assignin('base', 'currentScores', state.Score);
-        end
-    end
-end
-
-function [state, options, optchanged] = gaplotpareto3D_simple(options, state, flag)
-    optchanged = false;  % Must be returned even if unchanged
-    persistent figHandle
-    if strcmp(flag, 'init') || isempty(figHandle) || ~isvalid(figHandle)
-        figHandle = figure(99); 
-        set(figHandle, 'Name', 'Live Pareto Front', 'NumberTitle', 'off');
-    end
-    if strcmp(flag, 'iter') || strcmp(flag, 'done')
-        scores = state.Score;
-        if ~isempty(scores) && isnumeric(scores) && size(scores,2) == 3
-            figure(figHandle); 
-            scatter3(scores(:,1), scores(:,2), scores(:,3), 50, 'filled');
-            xlabel('\bf RMSE', 'FontSize', 12);
-            ylabel('\bf FVU', 'FontSize', 12);
-            zlabel('\bf Max Residual', 'FontSize', 12);
-            title('\bf Pareto Front (Training Set)', 'FontSize', 14);
-            grid on;
-            view(135, 30);
-            drawnow;
-        end
-    end
-end
 
 

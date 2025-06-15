@@ -48,13 +48,14 @@ hold on
 
 i = 1;
 plot(bpa(i).Ak, bpa(i).M, '--', 'Color', c2, 'LineWidth', 2, 'DisplayName', 'Original');
-scatter(bpa(i).Aexp, bpa(i).Mexp, sz, 'filled', 'MarkerFaceColor', c7, 'DisplayName', 'Measured');
 plot(bpa(i).Ak, bpa(i).M_p(:,3), '-', 'Color', c5, 'LineWidth', 2, 'DisplayName', 'Predicted');
+scatter(bpa(i).Aexp, bpa(i).Mexp, sz, 'filled', 'MarkerFaceColor', c7, 'DisplayName', 'Measured');
 
 title('\phi 10 mm', 'FontWeight', 'bold', 'FontSize', 12, 'FontName', 'Arial');
 ylabel('Torque, N \cdot m', 'Interpreter', 'tex', ...
        'FontWeight', 'bold', 'FontSize', 11, 'FontName', 'Arial');
-
+xlabel('\bf \theta_{k} , \circ', 'Interpreter', 'tex', ...
+       'FontSize', 12, 'FontName', 'Arial');
 set(gca, 'FontWeight', 'bold', 'FontSize', 11, 'LineWidth', 2, ...
     'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
 
@@ -65,15 +66,59 @@ xlim([-120 10]);
 ax2 = nexttile(2);
 hold on
 
+% plot(knee_angle_rT, Bifemsh_T, ':', 'Color', c8, 'LineWidth', 4, 'DisplayName', 'Human Model');
+% 
+% for i = 2:3
+%     plot(bpa(i).Ak, bpa(i).M, '--', 'Color', c{i}, 'LineWidth', 2, 'DisplayName', labelz(i,1));
+%     scatter(bpa(i).Aexp, bpa(i).Mexp, sz, 'filled', 'MarkerFaceColor', c{9-i}, 'DisplayName', labelz(i,2));
+%     plot(bpa(i).Ak, bpa(i).M_p(:,3), '-', 'Color', c{7-i}, 'LineWidth', 2, 'DisplayName', labelz(i,3));
+% end
+
+% 1) human model
 plot(knee_angle_rT, Bifemsh_T, ':', 'Color', c8, 'LineWidth', 4, 'DisplayName', 'Human Model');
 
-for i = 2:3
-    plot(bpa(i).Ak, bpa(i).M, '--', 'Color', c{i}, 'LineWidth', 2, 'DisplayName', labelz(i,1));
-    scatter(bpa(i).Aexp, bpa(i).Mexp, sz, 'filled', 'MarkerFaceColor', c{9-i}, 'DisplayName', labelz(i,2));
-    plot(bpa(i).Ak, bpa(i).M_p(:,3), '-', 'Color', c{7-i}, 'LineWidth', 2, 'DisplayName', labelz(i,3));
+% 2) only the 20 mm @ 620 kPa curves (bpa(2))
+i = 2;
+plot(bpa(i).Ak, bpa(i).M, '--', 'Color', c{i}, 'LineWidth', 2, 'DisplayName', 'Original, 620 kPa');
+plot(bpa(i).Ak, bpa(i).M_p(:,3), '-', 'Color', c{7-i}, 'LineWidth', 2, 'DisplayName', 'Predicted, 620 kPa');
+scatter(bpa(i).Aexp, bpa(i).Mexp, sz, 'filled','MarkerFaceColor', c7, 'DisplayName', 'Measured, 620 kPa');
+
+% 3) overlay the four measured pressures you want (rows in Excel)
+angle_data = readmatrix('Results_table_FullSize.xlsx', ...
+    'Sheet','FlxTest20mm_42cm (3)', 'Range','C7:X7');
+pressure_data = readmatrix('Results_table_FullSize.xlsx', ...
+    'Sheet','FlxTest20mm_42cm (3)', 'Range','C8:X8');
+torque_data = readmatrix('Results_table_FullSize.xlsx', ...
+    'Sheet','FlxTest20mm_42cm (3)', 'Range','C17:X17');
+
+wantP = [560, 421, 325, 281];
+% specify marker shapes and face colors for each pressure
+markers = {'o','s','d','^'};
+pColors = [c6; c4; c3; c1];  % face-colors: 560->c6, 421->c4, 325->c3, 281->c1
+
+% loop through fixed pressures except 325
+for j = [1,2,4]  % indices for 560, 421, 281
+    sel = pressure_data == wantP(j);
+    scatter(angle_data(sel), torque_data(sel), sz, markers{j}, ...
+        'filled', 'MarkerFaceColor', pColors(j,:), ...
+        'DisplayName', sprintf('Measured %d kPa', wantP(j)));
+end
+% special case: pick the single ~325 kPa sample whose angle < angle at 281 kPa
+angle281 = angle_data(pressure_data == 281);
+near325 = abs(pressure_data - 325) <= 5;
+idx = find(near325 & angle_data < angle281, 1, 'first');
+if ~isempty(idx)
+    scatter(angle_data(idx), torque_data(idx), sz, markers{3}, ...
+        'filled', 'MarkerFaceColor', pColors(3,:), ...
+        'DisplayName', 'Measured 325 kPa');
 end
 
 title('\phi 20 mm', 'FontWeight', 'bold', 'FontSize', 12, 'FontName', 'Arial');
+ylabel('Torque, N \cdot m', 'Interpreter', 'tex', ...
+       'FontWeight', 'bold', 'FontSize', 11, 'FontName', 'Arial');
+xlabel('\bf \theta_{k} , \circ', 'Interpreter', 'tex', ...
+       'FontSize', 12, 'FontName', 'Arial');
+
 set(gca, 'FontWeight', 'bold', 'FontSize', 11, 'LineWidth', 2, ...
     'XMinorTick', 'on', 'YMinorTick', 'on','TickLength', [0.025 0.05]);
 
@@ -81,13 +126,11 @@ legend('Location', 'best', 'FontSize', 8);
 xlim([-120 10]);
 
 % Shared x-label
-xlabel(tT, '\bf \theta_{k} , \circ', 'Interpreter', 'tex', ...
-       'FontSize', 12, 'FontName', 'Arial');
 
 % Textboxes (A) and (B)
 annotation(figT, 'textbox', [0.01, 0.9, 0.05, 0.05], 'String', '\bf (A)', ...
     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
-annotation(figT, 'textbox', [0.51, 0.9, 0.05, 0.05], 'String', '\bf (B)', ...
+annotation(figT, 'textbox', [0.46, 0.9, 0.05, 0.05], 'String', '\bf (B)', ...
     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 
 
@@ -138,7 +181,7 @@ xlabel(tL, '\bf \theta_{k} , \circ', 'Interpreter', 'tex', ...
 
 annotation(figL, 'textbox', [0.01, 0.9, 0.05, 0.05], 'String', '\bf (A)', ...
     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
-annotation(figL, 'textbox', [0.51, 0.9, 0.05, 0.05], 'String', '\bf (B)', ...
+annotation(figL, 'textbox', [0.46, 0.9, 0.05, 0.05], 'String', '\bf (B)', ...
     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 
 
@@ -192,7 +235,7 @@ xlabel(tMA, '\bf \theta_{k} , \circ', 'Interpreter', 'tex', ...
 
 annotation(figMA, 'textbox', [0.01, 0.9, 0.05, 0.05], 'String', '\bf (A)', ...
     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
-annotation(figMA, 'textbox', [0.51, 0.9, 0.05, 0.05], 'String', '\bf (B)', ...
+annotation(figMA, 'textbox', [0.46, 0.9, 0.05, 0.05], 'String', '\bf (B)', ...
     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 
 %% Plot normalized strain, optimization and validation
@@ -252,7 +295,7 @@ xlabel(tS, '\bf \theta_{k} , \circ', 'Interpreter', 'tex', ...
 
 annotation(figS, 'textbox', [0.01, 0.9, 0.05, 0.05], 'String', '\bf (A)', ...
     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
-annotation(figS, 'textbox', [0.51, 0.9, 0.05, 0.05], 'String', '\bf (B)', ...
+annotation(figS, 'textbox', [0.46, 0.9, 0.05, 0.05], 'String', '\bf (B)', ...
     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 
 

@@ -164,6 +164,8 @@ for j = 1:3
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
+    ylabel('\bf Torque, N\cdotm','Interpreter','tex')
+    xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
     annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
         'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
 
@@ -181,8 +183,8 @@ for j = 1:3
 end
 
 %shared axes labels
-ylabel(tT,'\bf Torque, N\cdotm','Interpreter','tex')
-xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex')
+% ylabel(tT,'\bf Torque, N\cdotm','Interpreter','tex')
+% xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
 lg = legend(tT.Children(end-1));
@@ -207,7 +209,8 @@ for j = 1:3
         'MarkerFaceColor', c{7},'DisplayName', 'Measured'); % Hybrid (gold)
     plot(bpa(i).Ak, Lm, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');      % Original
     plot(bpa(i).Ak, Lm_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');            % Predicted
-    title(['\bf ' labels(i)], 'Interpreter', 'tex');
+    ylabel('\bf Length','Interpreter','tex')
+    xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
@@ -228,8 +231,8 @@ for j = 1:3
 end
 
 %shared axes labels
-ylabel(tL,'\bf Torque, N\cdotm','Interpreter','tex')
-xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
+% ylabel(tL,'\bf Length','Interpreter','tex')
+% xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
 lg = legend(tL.Children(end-1));
@@ -253,7 +256,8 @@ for j = 1:3
     plot(bpa(i).Ak, bpa(i).mA, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');      % Original
     plot(bpa(i).Ak, G_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');                   % Predicted
 
-    title(['\bf ' labels(i)], 'Interpreter', 'tex');
+    ylabel(tL,'\bf Moment arm, m','Interpreter','tex')
+    xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
@@ -273,8 +277,8 @@ for j = 1:3
 end
 
 %shared axes labels
-ylabel(tMA,'\bf Torque, N\cdotm','Interpreter','tex')
-xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex')
+% ylabel(tMA,'\bf Moment arm, m','Interpreter','tex')
+% xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
 lg = legend(tMA.Children(end-1));
@@ -293,10 +297,11 @@ for j = 1:3
     
     strain_h = (bpa(i).rest - bpa(i).Lm_h)/bpa(i).rest;
     kmax = (bpa(i).rest - bpa(i).Kmax)/bpa(i).rest;
-    scatter(bpa(i).A_h, strain_h/kmax, 60, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', '#FFD700','DisplayName', 'Measured');
+    scatter(bpa(i).A_h, strain_h/kmax, 60, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7},'DisplayName', 'Measured');
     plot(bpa(i).Ak, bpa(i).strain/kmax, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');
     plot(bpa(i).Ak, bpa(i).strain_p/kmax, '-', 'Color', '#CD34B5', 'LineWidth', 2.5,'DisplayName', 'Predicted');
-    title(['\bf ' labels(i)], 'Interpreter', 'tex');
+    ylabel(tL,'\bf \epsilon^*','Interpreter','tex')
+    xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
@@ -316,8 +321,8 @@ for j = 1:3
 end
 
 %shared axes labels
-ylabel(tS,'\bf Torque, N\cdotm','Interpreter','tex')
-xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
+% ylabel(tS,'\bf \epsilon^*','Interpreter','tex')
+% xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
 lg = legend(tS.Children(end-1));
