@@ -274,42 +274,42 @@ Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
-% Pbr = [-6.26, -29.69, 75.06]/1000;                          %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
-% phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
-% thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
-% RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
-%        sin(thetabrA) cos(thetabrA) 0; ...
-%        0    0   1];
+Pbr = [-6.26, -29.69, 75.06]/1000;                          %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
+phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
+thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
+RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
+       sin(thetabrA) cos(thetabrA) 0; ...
+       0    0   1];
 % pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
-%             pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
-%             % Now calculate angle from x-axis to this vector
-%             thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
-% 
-%             % Rotation matrix about y-axis (local frame adjustment)
-%             Ry = [cos(thetaY)  0  sin(thetaY);
-%                   0                1  0;
-%                  -sin(thetaY) 0  cos(thetaY)];
-%             Rhbr = RhbrZ*Ry;            %Rotate about y-axis in body frame
-%             Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
+% Now calculate angle from x-axis to this vector
+thetaY = atan2(phbrA(3), phbrA(1));  % z vs x (in bracket frame)
+
+% % Rotation matrix about y-axis (local frame adjustment)
+Ry = [cos(thetaY)  0  sin(thetaY);
+      0                1  0;
+     -sin(thetaY) 0  cos(thetaY)];
+%  pbrhA = Ry'*phbrA';       %Vector in the bracket frame
+% Rhbr = RhbrZ*Ry;            %Rotate about y-axis in body frame
+Thbr = RpToTrans(Ry', Pbr');    %Transformation matrix, represent bracket frame in hip frame  
             
 % %more complicated way to calculate vector and rotation matrix so that your
 % %new x axis points to muscle origin.
-p0 = [-6.26, -29.69, 75.06]/1000;
-y0 = [-47.48, -35.63, 75.06]/1000;
-z0 = [-8.39, -14.85, 75.06]/1000;
-
-z_hat = normalize(p0 - z0);
-y_hat_prelim = normalize(p0 - y0);
-v = pA - p0;
-lambda = -dot(v, z_hat);
-Pbr_A = p0 + lambda * z_hat;
-
-x_hat = normalize(cross(y_hat_prelim, z_hat));
-y_hat = cross(z_hat, x_hat);
-
-Rhbr = [x_hat(:), y_hat(:), z_hat(:)];
-Thbr = RpToTrans(Rhbr, Pbr_A');
-pbrA = (pA - Pbr_A) * Rhbr;
+% p0 = [-6.26, -29.69, 75.06]/1000;
+% y0 = [-47.48, -35.63, 75.06]/1000;
+% z0 = [-8.39, -14.85, 75.06]/1000;
+% 
+% z_hat = normalize(p0 - z0);
+% y_hat_prelim = normalize(p0 - y0);
+% v = pA - p0;
+% lambda = -dot(v, z_hat);
+% Pbr_A = p0 + lambda * z_hat;
+% 
+% x_hat = normalize(cross(y_hat_prelim, z_hat));
+% y_hat = cross(z_hat, x_hat);
+% 
+% Rhbr = [x_hat(:), y_hat(:), z_hat(:)];
+% Thbr = RpToTrans(Rhbr, Pbr_A');
+% pbrA = (pA - Pbr_A) * Rhbr;
 
 % Transform force into bracket frame
 Fbrh = zeros(N,3);
@@ -319,9 +319,9 @@ end
 
 % Bracket deformation
 [epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, delta_L);
-deflection = [epsilon, delta, beta];
-pbrAnew = pbrA +deflection;
-% pbrAnew = [norm(pbrhA(1:2))+epsilon, delta, pbrhA(3)+ beta];
+% deflection = [epsilon, delta, beta];
+% pbrAnew = pbrA +deflection;
+pbrAnew = [norm([phbrA(1) phbrA(3)])+epsilon, phbrA(2)+delta,  beta];
 
 % Replace points
 LOC = L;

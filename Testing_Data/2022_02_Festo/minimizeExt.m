@@ -237,7 +237,7 @@ Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
-Pbr = [40    35     0]/1000;       %from hip origin to bracket bolt pattern centroid
+Pbr = [8.07  21.92   23.2]/1000;       %from centroid of bracket where it starts to cantilever.
 phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
 thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
 RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix

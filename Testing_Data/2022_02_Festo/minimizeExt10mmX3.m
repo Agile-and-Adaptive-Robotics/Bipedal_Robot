@@ -28,7 +28,7 @@ scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out va
 % lb = [-0.02 * 100, 3,3, 0];   % [cm, log10(N/m), log10(N/m), unitless]
 % ub = [0.03 * 100, 8, 8, 15];
 lb = [-0.02 * 100, log10(5e3),log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [0 * 100, log10(5e5), log10(5e5), 2];
+ub = [0 * 100, log10(5e7), log10(5e5), 2];
 clear sol_actual
 %% Solver
 for k = 1:numel(allBPA)
@@ -104,9 +104,40 @@ results_sort = sortrows(results, [12 9 10 11 6 7 8]);  % sort by distance, then 
 x_actual = [results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5)];
 results_sort_actual = [results_sort(:,1), x_actual, results_sort(:,6:end)];
 
+
+%% --- Filter Pareto candidates against baseline on BPAs 1, 3 & 4 ---
+N = size(results_sort_actual, 1);
+keep = false(N,1);
+
+for ii = 1:N
+    % extract decision variables
+    Xi0 = results_sort_actual(ii,2);
+    Xi1 = results_sort_actual(ii,3);
+    Xi2 = results_sort_actual(ii,4);
+    Xi3 = results_sort_actual(ii,5);
+
+    % re-evaluate on all 4 BPAs
+    f_all = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, 1:4);   % returns 4×3 [RMSE, FVU, MaxResidual]
+
+    % compare RMSE & FVU for BPAs 1, 3 & 4 to baselineScores
+    pass1 = all( f_all(1,1:2) <= baselineScores(1,1:2) );
+    pass3 = all( f_all(3,1:2) <= baselineScores(3,1:2) );
+    pass4 = all( f_all(4,1:2) <= baselineScores(4,1:2) );
+
+    keep(ii) = pass1 && pass3 && pass4;
+end
+
+% keep only the rows that passed all three checks
+filtered_results = results_sort_actual(keep, :);
+fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
+
+
 %% Pick best solution (later, flexible)
-pick = 78;
-sol_actual = results_sort_actual(pick, 2:5);  % [Xi0, Xi1, Xi2, Xi3]
+ 
+
+pick = 1;
+sol_actual = filtered_results(pick, 2:5);
+% sol_actual = results_sort_actual(pick, 2:5);  % [Xi0, Xi1, Xi2, Xi3]
 [f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
 
 fprintf('\nPerformance with sol_actual:\n');

@@ -138,7 +138,7 @@ function [LOC, gamma] = Lok(klass,X1,X2,kSpr)
             switch klass.dBPA
                 case 20
 %                   Pbr = [-0.8100  -20.222   31.66]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
-                    Pbr = [9.48  -36.15   30.27]/1000;       %from hip origin to bracket bolt pattern centroid
+                    Pbr = [9.48  -36.2   30.76]/1000;       %from hip origin to bracket bolt pattern centroid
                 case 10
                     Pbr = [-19 22 27.6]/1000;       %from hip origin centroid of bracket cantilever 
             end
