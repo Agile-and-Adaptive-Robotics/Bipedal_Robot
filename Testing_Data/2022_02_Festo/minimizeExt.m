@@ -23,7 +23,7 @@ function [f_all, bpa_all] = minimizeExt(Xi0, Xi1, Xi2, Xi3, idx_val)
 %'_h' suffix means hybrid calculation
 %'_p' suffix means prime, as in the new prediction values
 
-% 42cm length, no tendon
+% 52cm length, no tendon
     load KneeExt_10mm_52cm.mat Vas_Pam phiD
     Ma = Vas_Pam.MomentArm;                 %Calculated moment arm
     G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
@@ -171,16 +171,15 @@ if ~isempty(X3)
     comp = max(0, min(1, comp));
     
     for i = 1:N
+        R1 = 0.022; %minimum radius 1
+        R2 = 0.05334; %minimum radius 2
         if theta_k(i) <= ang1 && theta_k(i) >= ang2
             angleRad1(i) = deg2rad(theta_k(i) - ang1);
-            R1 = 0.022;           %minimum radius
-            delta_L(i) = X3*(R1)*abs(angleRad1(i)).*comp(i).^2;
+            delta_L(i) = X3*(R1)*abs(angleRad1(i)).*comp(i);
         elseif theta_k(i) < ang2
             angleRad1(i) = ang1 - ang2;
             angleRad2(i) = deg2rad(theta_k(i) - ang2);
-            R1 = 0.022;           %minimum radius
-            R2 = 0.05334;         %minimum radius
-            delta_L(i) = X3*( (R1)*abs(angleRad1(i)).*comp(i).^2  +  (R2)*abs(angleRad2(i)).*comp(i).^2);
+            delta_L(i) = X3.*comp(i).^2.*( (R1)*abs(angleRad1(i))  +  (R2)*abs(angleRad2(i)));
         else
         end
     end
@@ -238,7 +237,7 @@ Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
-Pbr = [9.48  -36.15   30.27]/1000;       %from hip origin to bracket bolt pattern centroid
+Pbr = [40    35     0]/1000;       %from hip origin to bracket bolt pattern centroid
 phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
 thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
 RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
