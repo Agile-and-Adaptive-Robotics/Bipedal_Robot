@@ -83,35 +83,28 @@ plot(bpa(i).Ak, bpa(i).M, '--', 'Color', c{i}, 'LineWidth', 2, 'DisplayName', 'O
 plot(bpa(i).Ak, bpa(i).M_p(:,3), '-', 'Color', c{7-i}, 'LineWidth', 2, 'DisplayName', 'Predicted, 620 kPa');
 scatter(bpa(i).Aexp, bpa(i).Mexp, sz, 'filled','MarkerFaceColor', c7, 'DisplayName', 'Measured, 620 kPa');
 
-% 3) overlay the four measured pressures you want (rows in Excel)
-angle_data = readmatrix('Results_table_FullSize.xlsx', ...
+% 3) overlay exactly four measured points < 620 kPa as one scatter
+%  - 560 kPa, 421 kPa, nearest ~325 kPa with angle < 281 kPa, and 281 kPa
+angle_data    = readmatrix('Results_table_FullSize.xlsx', ...
     'Sheet','FlxTest20mm_42cm (3)', 'Range','C7:X7');
 pressure_data = readmatrix('Results_table_FullSize.xlsx', ...
     'Sheet','FlxTest20mm_42cm (3)', 'Range','C8:X8');
-torque_data = readmatrix('Results_table_FullSize.xlsx', ...
+torque_data   = readmatrix('Results_table_FullSize.xlsx', ...
     'Sheet','FlxTest20mm_42cm (3)', 'Range','C17:X17');
 
-wantP = [560, 421, 325, 281];
-% specify marker shapes and face colors for each pressure
-markers = {'o','s','d','^'};
-pColors = [c6; c4; c3; c1];  % face-colors: 560->c6, 421->c4, 325->c3, 281->c1
-
-% loop through fixed pressures except 325
-for j = [1,2,4]  % indices for 560, 421, 281
-    sel = pressure_data == wantP(j);
-    scatter(angle_data(sel), torque_data(sel), sz, markers{j}, ...
-        'filled', 'MarkerFaceColor', pColors(j,:), ...
-        'DisplayName', sprintf('Measured %d kPa', wantP(j)));
-end
-% special case: pick the single ~325 kPa sample whose angle < angle at 281 kPa
+% find index for 281 kPa
 angle281 = angle_data(pressure_data == 281);
+% mask for 560, 421, 281 kPa
+mask = ismember(pressure_data, [560, 421, 281]);
+% find one ~325 kPa point with angle < angle281
 near325 = abs(pressure_data - 325) <= 5;
-idx = find(near325 & angle_data < angle281, 1, 'first');
-if ~isempty(idx)
-    scatter(angle_data(idx), torque_data(idx), sz, markers{3}, ...
-        'filled', 'MarkerFaceColor', pColors(3,:), ...
-        'DisplayName', 'Measured 325 kPa');
+idx325 = find(near325 & angle_data < angle281, 1, 'first');
+if ~isempty(idx325)
+    mask(idx325) = true;
 end
+% plot all four as one scatter
+scatter(angle_data(mask), torque_data(mask), sz, 'filled', ...
+    'MarkerFaceColor', c4, 'DisplayName', 'Measured < 620 kPa');
 
 title('\phi 20 mm', 'FontWeight', 'bold', 'FontSize', 12, 'FontName', 'Arial');
 ylabel('Torque, N \cdot m', 'Interpreter', 'tex', ...

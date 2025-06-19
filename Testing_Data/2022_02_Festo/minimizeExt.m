@@ -1,4 +1,4 @@
-%minimizeExtX3.m
+%minimizeExt.m
 %% Optimize predicted torque for extensors.
 function [f_all, bpa_all] = minimizeExt(Xi0, Xi1, Xi2, Xi3, idx_val)
 % minimizeExt: calculates predicted torque and fit metrics for a given BPA index
