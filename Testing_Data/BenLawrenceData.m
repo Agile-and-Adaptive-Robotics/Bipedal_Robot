@@ -354,8 +354,8 @@ bigData = [ S1;...
 
 figure
 hold on
-scatter3(XX, YY, ZZ, 'DisplayName', 'All data, resized')
 scatter3(Xf, Yf, Zf, 'DisplayName', 'All data, full sized')
+scatter3(XX, YY, ZZ,'filled', 'DisplayName', 'All data, resized')
 hold off
 xlabel('Relative Strain')
 ylabel('Pressure (normalized)')
