@@ -1,29 +1,22 @@
-function [fitresult, gof, output, valid] = bpaFits(XX40, YY40, ZZ40, XX, YY, ZZ, XX10, YY10, ZZ10, Ax, Ay, Az, XX20, YY20, ZZ20)
+function [fitresult, gof, output, valid] = bpaFits(XX40, YY40, ZZ40, xTrain, yTrain, zTrain, xVal, yVal, zVal, xTrain20, yTrain20, zTrain20, xVal20, yVal20, zVal20)
 %CREATEFITS(XX20,YY20,ZZ20,XX10,YY10,ZZ10,XX,YY,ZZ,XX40,YY40,ZZ40)
 %  Create fits for 10mm, 20mm, and 40mm BPAs using experimental and Festo
 %  data. Run after running "BenLawrenceData.m" in the Testing_Data folder.
 %
-%  Data for 'Exponential 20, Festo' fit:
-%      X Input : XX20
-%      Y Input : YY20
-%      Z Output: ZZ20
-%      Validation X: XX20
-%      Validation Y: YY20
-%      Validation Z: ZZ20
-%  Data for 'Exp10, Festo vs Experiment' fit:
-%      X Input : XX10
-%      Y Input : YY10
-%      Z Output: ZZ10
-%      Validation X: XX
-%      Validation Y: YY
-%      Validation Z: ZZ
-%  Data for 'Exp10, Experiment vs Festo' fit:
-%      X Input : XX
-%      Y Input : YY
-%      Z Output: ZZ
-%      Validation X: XX10
-%      Validation Y: YY10
-%      Validation Z: ZZ10
+%  Data for 'Exp10, Training vs Validation' fit:
+%      X Input : xTrain
+%      Y Input : yTrain
+%      Z Output: zTrain
+%      Validation X: xVal
+%      Validation Y: yVal
+%      Validation Z: zVal
+%  Data for 'Exponential 20, Training vs Validation' fit:
+%      X Input : xTrain20
+%      Y Input : yTrain20
+%      Z Output: zTrain20
+%      Validation X: xVal20
+%      Validation Y: yVal20
+%      Validation Z: zVal20
 %  Data for 'Exponential 40 normalized' fit:
 %      X Input : XX40
 %      Y Input : YY40
@@ -42,9 +35,9 @@ function [fitresult, gof, output, valid] = bpaFits(XX40, YY40, ZZ40, XX, YY, ZZ,
 %% Initialization.
 
 %Use these commands if variables are not loaded into workspace
-% load FestoData.mat XX40 YY40 ZZ40 XX10 YY10 ZZ10 XX20 YY20 ZZ20
-% load allData.mat XX YY ZZ
-% load data20mm.mat Ax Ay Az
+load FestoData.mat XX40 YY40 ZZ40 XX10 YY10 ZZ10 XX20 YY20 ZZ20
+load allData.mat XX YY ZZ xTrain yTrain zTrain xVal yVal zVal
+load data20mm_sorted.mat Ax Ay Az xTrain20 yTrain20 zTrain20 xVal20 yVal20 zVal20
 
 % Initialize arrays to store fits and goodness-of-fit.
 fitresult = cell( 3, 1 );
@@ -52,8 +45,8 @@ gof = struct( 'sse', cell( 3, 1 ), ...
     'rsquare', [], 'dfe', [], 'adjrsquare', [], 'rmse', [] );
 output = cell( 3,1);
 
-%% Fit: 'Exp10, Experiment vs Festo'.
-[xData, yData, zData] = prepareSurfaceData( XX, YY, ZZ );
+%% Fit: 'Exp10, Experiment vs Validation'.
+[xData, yData, zData] = prepareSurfaceData( xTrain, yTrain, zTrain );
 
 % Set up fittype and options.
 ft = fittype( 'a0*(exp(-a1.*x)-1)+y.*exp(-a3*((x).^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
@@ -63,13 +56,13 @@ opts.Lower = [0 0 0];
 opts.MaxFunEvals = 6000;
 opts.MaxIter = 2000;
 opts.Robust = 'LAR';
-opts.StartPoint = [0.5822 4.142 0.5368];
+opts.StartPoint = [0.5682 4.254 0.5597];
 
 % Fit model to data.
 [fitresult{1}, gof(1), output{1}] = fit( [xData, yData], zData, ft, opts );
 
 % Compare against validation data.
-[xValidation, yValidation, zValidation] = prepareSurfaceData( XX10, YY10, ZZ10 );
+[xValidation, yValidation, zValidation] = prepareSurfaceData( xVal, yVal, zVal );
 residual = zValidation - fitresult{1}( xValidation, yValidation );
 nNaN = nnz( isnan( residual ) );
 residual(isnan( residual )) = [];
@@ -77,7 +70,7 @@ sse = norm( residual )^2;
 rmse = sqrt( sse/length( residual ) );
 sst = norm(zValidation - mean(zValidation))^2;
 Rsquare = 1-(sse*(length(residual)-1))/(sst*(length(residual)));
-fprintf( 'Goodness-of-validation for ''%s'' fit:\n', 'Exp10, Experiment vs Festo' );
+fprintf( 'Goodness-of-validation for ''%s'' fit:\n', 'Exp10, Training vs Validation' );
 fprintf( '    SSE : %f\n', sse );
 fprintf( '    RMSE : %f\n', rmse );
 fprintf( '    Adj. R^2 : %f\n', Rsquare );
@@ -99,7 +92,7 @@ h = plot( fitresult{1}, [xData, yData], zData, 'XLim', xlim, 'YLim', ylim );
 hold on
 h(end+1) = plot3( xValidation, yValidation, zValidation, 'bo', 'MarkerFaceColor', 'w' );
 hold off
-legend( h, 'Exp10, Experiment vs Festo', 'ZZ vs. XX, YY', 'ZZ10 vs. XX10, YY10', 'Location', 'NorthEast', 'Interpreter', 'none' );
+legend( h, 'Exp10, Training vs Validation', 'ZZ vs. XX, YY', 'ZZ10 vs. XX10, YY10', 'Location', 'NorthEast', 'Interpreter', 'none' );
 % Label axes
 xlabel( 'XX', 'Interpreter', 'none' );
 ylabel( 'YY', 'Interpreter', 'none' );
@@ -123,7 +116,7 @@ grid on
 view( 90.0, 0.0 );
 
 %% Fit: 'Exponential 20, Festo'.
-[xData, yData, zData] = prepareSurfaceData(  Ax, Ay, Az);
+[xData, yData, zData] = prepareSurfaceData(  xTrain20, yTrain20, zTrain20);
 
 % Set up fittype and options.
 ft = fittype( 'a0*(exp(-a1.*x)-1)+y.*exp(-a3*((x).^2))', 'independent', {'x', 'y'}, 'dependent', 'z' );
@@ -134,7 +127,7 @@ opts.Lower = [0 0 0];
 opts.MaxFunEvals = 6000;
 opts.MaxIter = 4000;
 opts.Robust = 'LAR';
-opts.StartPoint = [0.2607 6.398 1.303];
+opts.StartPoint = [0.2579 6.477 1.321];
 opts.TolFun = 1e-07;
 opts.TolX = 1e-07;
 opts.Exclude = excludedPoints;
@@ -143,7 +136,7 @@ opts.Exclude = excludedPoints;
 [fitresult{2}, gof(2), output{2}] = fit( [xData, yData], zData, ft, opts );
 
 % Compare against validation data.
-[xValidation, yValidation, zValidation] = prepareSurfaceData( XX20, YY20, ZZ20 );
+[xValidation, yValidation, zValidation] = prepareSurfaceData( xVal20, yVal20, zVal20 );
 residual = zValidation - fitresult{2}( xValidation, yValidation );
 nNaN = nnz( isnan( residual ) );
 residual(isnan( residual )) = [];
@@ -151,7 +144,7 @@ sse = norm( residual )^2;
 rmse = sqrt( sse/length( residual ) );
 sst = norm(zValidation - mean(zValidation))^2;
 Rsquare = 1-(sse*(length(residual)-1))/(sst*(length(residual)));
-fprintf( 'Goodness-of-validation for ''%s'' fit:\n', 'Exponential 20, Festo' );
+fprintf( 'Goodness-of-validation for ''%s'' fit:\n', 'Exponential 20, Training vs Validation' );
 fprintf( '    SSE : %f\n', sse );
 fprintf( '    RMSE : %f\n', rmse );
 fprintf( '    Adj. R^2 : %f\n', Rsquare );
@@ -161,7 +154,7 @@ fprintf( '    %i points outside domain of data.\n', nNaN );
 valid(2,:) = table(sse, rmse, sst, Rsquare);
 
 % Create a figure for the plots.
-figure( 'Name', 'Exponential 20, Festo' );
+figure( 'Name', 'Exponential 20, Training vs Validation' );
 
 % Compute limits for axes.
 xlim = [min( [xData; xValidation] ), max( [xData; xValidation] )];
@@ -206,7 +199,7 @@ ft = fittype( 'a0*(exp(-a1.*x)-1)+y.*exp(-a3*((x).^2))', 'independent', {'x', 'y
 excludedPoints = zData < 0;
 opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
 opts.Display = 'Off';
-opts.Lower = [0 -Inf 0];
+opts.Lower = [0 0 0];
 opts.MaxFunEvals = 7000;
 opts.MaxIter = 5000;
 opts.Robust = 'LAR';
@@ -273,4 +266,4 @@ view( 0.0, 0.0 );
 
 
 %% save it
-% save bpaFitsResult.mat fitresult gof output valid XX40 YY40 ZZ40 XX YY ZZ XX10 YY10 ZZ10 Ax Ay Az XX20 YY20 ZZ20
+save bpaFitsResult.mat fitresult gof output valid XX40 YY40 ZZ40 XX YY ZZ XX10 YY10 ZZ10 Ax Ay Az XX20 YY20 ZZ20 xTrain yTrain zTrain xVal yVal zVal xTrain20 yTrain20 zTrain20 xVal20 yVal20 zVal20

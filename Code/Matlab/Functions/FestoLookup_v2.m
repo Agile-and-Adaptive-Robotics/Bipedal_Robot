@@ -204,7 +204,7 @@ for i = 1:length(Yp)
 end
 
 %% Get 20 mm experimental data ready for plotting
-load data20mm.mat Ax Ay Az
+load data20mm_sorted.mat Ax Ay Az
 Datmat = [Ax, Ay, Az];
 A = sortrows(Datmat,[1 2 3],'ascend');
 E = cell(length(Yp),1);

@@ -7,10 +7,11 @@ Theoretical = TorqueR(:,3);
 
 %Put resting length and kmax again in case something else was run for the
 %class we just loaded.
-restingLength = 0.457; %resting length, m
-kmax = 0.380; %Length at maximum contraction, m
-fitting = 0.0254;
-tendon = 0.013;
+% restingLength = 0.457; %resting length, m
+% kmax = 0.380; %Length at maximum contraction, m
+% fitting = 0.0254;
+% tendon = 0;
+restingLength = rest;
 Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, Pres);
 Theoretical = Bifemsh_Pam.Torque(:,3);
 %% Tests 1 & 2 . 
