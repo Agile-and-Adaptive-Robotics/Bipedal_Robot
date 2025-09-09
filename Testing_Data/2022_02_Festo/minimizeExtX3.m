@@ -116,17 +116,17 @@ function [bpa_i, fitvec] = evaluateBPA(klass, Xi0, Xi1, Xi2, Xi3)
 %% Calculate locations and properties
 bpa_i = klass;
 kspr = Spr(bpa_i);          %tendon spring rate
-Funit = computeForceVector(bpa_i);  %Force unit direction in the hip frame 
-[strain_Xi3, delta_L] = Contraction(bpa_i, [], Xi0, [], Xi3);
+Funit = computeForceVector(bpa_i);  %Force unit direction, calculate in the hip frame 
+[strain_Xi3, delta_L] = Contraction(bpa_i, [], Xi0, [], Xi3); %Calculate contraction and loss of length due to constant length offset Xi0 and wrapping factor Xi3
 [L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, delta_L+Xi0); %Bracket deformation and new geometry
 sL_p = seg(bpa_i, L_p); %segment lengths
 Lmt_p = LMT(sL_p, Xi0); 
-[strain_f, ~] = Contraction(bpa_i, Lmt_p, [], gemma, Xi3);
+[strain_f, ~] = Contraction(bpa_i, Lmt_p, [], gemma, Xi3); %Simulated strain, includes loss of usable length due to wrapping
 unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
 F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
 mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
 [strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []);
-M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_p); %New torque prediction
+M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_p); %New torque prediction, using new moment arm, new Force vector, Fmax, and strain_p
 
 %% Package into output struct
 bpa_i.L_p = L_p;
@@ -146,7 +146,7 @@ function F_unit = computeForceVector(klass)
 %Calculate the force unit direction from muscle origin (hip frame) to the next
 %real point. This takes into account if there are any additional via
 %points between muscle origin and muscle insertion. It also takes into
-%account if a homogenous transformation matrix needs to be used to
+%account if a homogenous transform+ation matrix needs to be used to
 %convert the second point into the first points frame.
 
 L = klass.Loc;      %Location (wrapping, attachment points)
