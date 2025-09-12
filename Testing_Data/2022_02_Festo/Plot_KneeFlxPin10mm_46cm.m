@@ -206,7 +206,7 @@ else
     end
 end
 hold off
-title('Isometric Torque vs Knee Angle, 10mm Flexor, 48.5cm long')
+title('Isometric Torque vs Knee Angle, 10mm Flexor, 45.7cm long')
 xlabel('Knee angle, \circ')
 ylabel('Torque, $N \cdot m$')
 % set(gcf2,'Position',[1 384 950 612]);

@@ -1,4 +1,4 @@
-function [fitresult, gof, output, valid] = bpaFits(XX40, YY40, ZZ40, xTrain, yTrain, zTrain, xVal, yVal, zVal, xTrain20, yTrain20, zTrain20, xVal20, yVal20, zVal20)
+function [fitresult, gof, output, valid] = bpaFits
 %CREATEFITS(XX20,YY20,ZZ20,XX10,YY10,ZZ10,XX,YY,ZZ,XX40,YY40,ZZ40)
 %  Create fits for 10mm, 20mm, and 40mm BPAs using experimental and Festo
 %  data. Run after running "BenLawrenceData.m" in the Testing_Data folder.

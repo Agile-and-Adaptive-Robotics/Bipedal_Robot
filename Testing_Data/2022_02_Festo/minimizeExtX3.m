@@ -356,23 +356,20 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
 % total length change
     
     D      = klass.dBPA;    %uninflated diameter
-    mL     = klass.Lmt-delta_L;     %Length of musculo-tendon
     rest   = klass.rest;    %BPA resting length
     tendon = klass.ten;     %tendon length
     fitting = klass.fitn;   %end cap length
+    mL     = klass.Lmt-delta_L-tendon-2*fitting;     %Length of BPA
     mif    = klass.Fm;   %maximum bpa force
     kmax   = klass.Kmax; %maximum contraction length
     KMAX   = (rest-kmax)/rest; %maximum contraction percent
-    pres   = klass.P;           %pressure
-    P      = pres/620;          %normalized pressure
+    P = klass.P;                %pressure
     
     N = size(Fbr,1);
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
-    valid = norms > 1e-8 & all(~isnan(Fbr), 2);
-    
-    u_hat_all = zeros(N, 3);
-    u_hat_all(valid, :) = Fbr(valid, :) ./ norms(valid);
+    valid = norms > 1 & all(~isnan(Fbr), 2);
+    u_hat_all(valid, :) = normalize(Fbr);
     
     % Vectorized k_b computation
     K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
@@ -396,7 +393,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         end
         
         % Per-instance constants
-%         keff = k_eff(i);
+        keff = k_eff(i);
         unit_vec = u_hat_all(i, :);
 
         if isinf(X1) && isinf(X2)
@@ -410,21 +407,20 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         
         % Flexible case: run Newton-Raphson
         r = 0.0001;  % Initial guess
-        keff = k_eff(i);
 
         for iter = 1:50
-            contraction = (rest - (mL(i) - (tendon + r) - 2 * fitting)) / rest;
+            contraction = (rest - (mL(i) - r)) / rest;
             rel = contraction / KMAX;
 
-            fM = f_festo(rel, P, D) * mif;
+            fM = festo4(D,rel, P) * mif;
             fT = keff * r;
             Fbal = fM - fT;
 
             % Numerical derivative
             dr = 1e-6;
-            contraction_d = (rest - (mL(i) - (tendon + r + dr) - 2 * fitting)) / rest;
+            contraction_d = (rest - (mL(i) - ( r + dr)) ) / rest;
             rel_d = contraction_d / KMAX;
-            fM_d = f_festo(rel_d, P, D) * mif;
+            fM_d = festo4(D,rel_d, P) * mif;
             Fbal_d = fM_d - keff * (r + dr);
             dF = (Fbal_d - Fbal) / dr;
 
@@ -443,9 +439,9 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         end
 
         % Final force magnitude
-        contraction = (rest - (mL(i) - (tendon + r) - 2 * fitting)) / rest;
+        contraction = (rest - (mL(i) - r)) / rest;
         relstrain = contraction / KMAX;
-        F_mag = f_festo(relstrain, P, D) * mif;
+        F_mag = festo4(D, relstrain, P) * mif;
 
         % Bracket displacement
         e_bkt = K_bracket \ (F_mag * unit_vec');

@@ -59,6 +59,7 @@ klaus_temp = kf(1);   % Grab a template struct
 klaus = repmat(klaus_temp, 1, a);  % ✅ GOOD INIT
 bpa = repmat(klaus_temp, 1, a);  % ✅ GOOD INIT
 
+strain_Xi0 = cell(1,a);
 L_p = cell(1,a);
 unitD_p = cell(1,a);
 sL_p = cell(1,a);
@@ -71,14 +72,39 @@ M_p = cell(1,a);
 for j = 1:a
     klaus(j) = kf(j);
     % Calculate locations and properties
-    L_p{j} = Lok(klaus(j), Xi1, Xi2, []);   %Bracket deformation changing geometry
+    %Borrowed from minimizeExt3, for reference
+%     bpa_i = klass;
+%     kspr = Spr(bpa_i);          %tendon spring rate
+%     Funit = computeForceVector(bpa_i);  %Force unit direction, calculate in the hip frame 
+%     [strain_Xi3, delta_L] = Contraction(bpa_i, [], Xi0, [], Xi3); %Calculate contraction and loss of length due to constant length offset Xi0 and wrapping factor Xi3
+%     [L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, delta_L+Xi0); %Bracket deformation and new geometry
+%     sL_p = seg(bpa_i, L_p); %segment lengths
+%     Lmt_p = LMT(sL_p, Xi0); 
+%     [strain_f, ~] = Contraction(bpa_i, Lmt_p, [], gemma, Xi3); %Simulated strain, includes loss of usable length due to wrapping
+%     unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
+%     F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
+%     mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
+%     [strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []);
+%     M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_p); %New torque prediction, using new moment arm, new Force vector, Fmax, and strain_p
+    %Updated code
+    strain_Xi0{j} = Contraction(klaus(j), [],Xi0); %Calculate contraction with constant length offset
+    L_p{j} = Lok(klaus(j), Xi1, Xi2, strain_Xi0{j},Xi0);   %Bracket deformation changing geometry using stiffnesses and constant length offset
     unitD_p{j} = UD(klaus(j), L_p{j});   %New force direction
     sL_p{j} = seg(klaus(j), L_p{j});   %New segment lengths
-    Lmt_p{j} = LMT(sL_p{j}, Xi0);     %New musclulotendon length
-    strain_p{j} = Contraction(klaus(j), Lmt_p{j});  %new contraction amount
+    Lmt_p{j} = LMT(sL_p{j}, Xi0);     %New musclulotendon length includes constant length offset
+    strain_p{j} = Contraction(klaus(j), Lmt_p{j}, []);  %*new contraction amount
     F_p{j} = Force(klaus(j), unitD_p{j}, strain_p{j});  %new force amount
     mA_p{j} = Mom(klaus(j), L_p{j}, unitD_p{j});   %new moment arm
     M_p{j} = Tor(mA_p{j}, F_p{j}, klaus(j).Fm, strain_p{j});  %new torque
+    %Original code, kept as reference
+%     L_p{j} = Lok(klaus(j), Xi1, Xi2, []);   %Bracket deformation changing geometry
+%     unitD_p{j} = UD(klaus(j), L_p{j});   %New force direction
+%     sL_p{j} = seg(klaus(j), L_p{j});   %New segment lengths
+%     Lmt_p{j} = LMT(sL_p{j}, Xi0);     %New musclulotendon length
+%     strain_p{j} = Contraction(klaus(j), Lmt_p{j});  %new contraction amount
+%     F_p{j} = Force(klaus(j), unitD_p{j}, strain_p{j});  %new force amount
+%     mA_p{j} = Mom(klaus(j), L_p{j}, unitD_p{j});   %new moment arm
+%     M_p{j} = Tor(mA_p{j}, F_p{j}, klaus(j).Fm, strain_p{j});  %new torque
     
     % Package into output struct
     bpa(j) = klaus(j);
@@ -102,20 +128,38 @@ end
 
 
 %% Nested functions, modified from MonoPamExplicit
-        %% ------------- Location  ------------------------
-function LOC = Lok(klass,X1,X2,X0)
+
+%% -------------- Contraction of the PAM --------------------------
+function contraction = Contraction(klass, L_mt, X0)
+rest   = klass.rest;
+tendon = klass.ten;
+fitting = klass.fitn;
+
+if isempty(X0)
+    X0 = 0;
+end
+
+if isempty(L_mt)
+    L_mt = klass.Lmt;
+end
+
+contraction = (rest-(L_mt-tendon-2*fitting-X0))/rest;    %(minus Xi0 is also used in LMT function)
+end
+
+%% ------------- Location  ------------------------
+function LOC = Lok(klass,X1,X2,strain,X0)
             L = klass.Loc;      %Location (wrapping, attachment points)
             C = klass.CP;       %Cross point (moves from one frame to another)
-            T = klass.Tk;       %Transformation matrix
+%             T = klass.Tk;       %Transformation matrix
             kmax = klass.Kmax;  %max contracted length
             KMAX = (klass.rest-kmax)/klass.rest; %turn it into a percentage
-            sL = seg(klass, L);
+%             sL = seg(klass, L);
             if isempty(X0)
                 X0=0;
             end
-            Lmt = LMT(sL, X0);   %musculotendon length
-            strain = Contraction(klass, Lmt);
-            relstrain = strain/KMAX;
+%             Lmt = LMT(sL, X0);   %musculotendon length
+%             strain = Contraction(klass, Lmt);
+            relstrain = strain/KMAX;            %relative strain
             FF = festo4(klass.dBPA,relstrain,klass.P).*klass.Fm;        %Force magnitude
             FF(relstrain>=1) = 0;
             %For muscle insertion
@@ -159,7 +203,7 @@ function LOC = Lok(klass,X1,X2,X0)
             M = size(L,1);
 %             Fh = zeros(N,3);        %Force vector in the hip frame
 %             Fbrh = zeros(N,3);       %Force vector represented in the tibial bracket frame  
-            pAnew = zeros(N,3);
+%             pAnew = zeros(N,3);
             Fbrk = zeros(N,3);       %Force vector represented in the tibial bracket frame  
             pBnew = zeros(N,3);
             for ii = 1:N                          %Repeat for each orientation
@@ -186,7 +230,7 @@ function LOC = Lok(klass,X1,X2,X0)
             end
 end
 
-%% Force and length reduction due to tendon
+%% Force and length reduction due to deformation
 function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
 % e_axial, bracket axial elongation
 % e_bendY, bracket bending displacement y - direction
@@ -194,29 +238,24 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
 % e_cable, tendon cable stretch
 % total length change
     
-    % Segment-based muscle length with Xi0 applied via LMT()
-    sL = seg(klass, klass.Loc); % current, undeformed path
     if isempty(X0)
         X0=0;
     end
-    Lmt = LMT(sL, X0);          % muscle length from geometry
-    
     D = klass.dBPA;         %BPA diameter
     rest = klass.rest;      %resting length
     tendon = klass.ten;     %tendon length
     fitn = klass.fitn;    %fitting length
+    mL = klass.Lmt - X0 -tendon -2*fitn;       %Musculotendon length
     mif = klass.Fm;         %maximum force
     kmax = klass.Kmax;      %maximum contracted length
     KMAX = (rest-kmax)/rest; %turn it into a percentage
-    pres = klass.P;         %pressure
-    P = pres/620;            %normalized pressure
+    P = klass.P;            %pressure
     
     N = size(Fbr,1);
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
     valid = norms > 1 & all(~isnan(Fbr), 2);
-    u_hat_all = zeros(N, 3);
-    u_hat_all(valid, :) = Fbr(valid, :) ./ norms(valid);
+    u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
     K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
@@ -224,7 +263,6 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
     k_b = reshape(k_b, [N, 1]);
-%     k_eff = 1 ./ (1 ./ k_b );  % Nx1 (If you end up doing one for lower and upper brackets, it would be 1./(1./k_b1+1./k_b2)
     k_eff = k_b;
     
     % Allocate outputs
@@ -252,9 +290,7 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
 
     % Solve for r (deflection) using fzero
     % First, compute contraction from Xi0 if deflection is zero 
-    contraction0    = ( rest ...
-                   - ( Lmt(i) - (tendon + 0) - 2*fitn ) ) ...
-                   / rest;
+    contraction0    = ( rest -  mL(i)  ) / rest;
     relstrain0      = contraction0 / KMAX;  %relative strain
     if relstrain0 >= 1
         r = 0;
@@ -263,10 +299,9 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
     else
     
         relfun = @(r) ...
-            f_festo( ...
-                (rest - (Lmt(i) - (tendon + r) - 2*fitn)) / rest / KMAX, ...
-                P, D ...
-            ) * mif - keff * r;
+            festo4( D, ...
+                (rest - (mL(i) -  r)) / rest / KMAX, ...
+                P) * mif - keff * r;
 
         try
             r = fzero(relfun, [0, 0.2]);
@@ -277,9 +312,9 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
     end
 
     % Final force magnitude
-        contraction = (rest - (Lmt(i) - (tendon + r) - 2 * fitn)) / rest;
+        contraction = (rest - (mL(i) -  r)) / rest;
         relstrain = contraction / KMAX;
-        F_mag = f_festo(relstrain, P, D) * mif;
+        F_mag = festo4(D, relstrain, P) * mif;
 
         % Bracket displacement
         e_bkt = K_bracket \ (F_mag * unit_vec');
@@ -288,100 +323,6 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
         e_bendY(i) = e_bkt(2);
         e_bendZ(i) = e_bkt(3);
    end
-end
-
-%% Force and BPA length reduction due to bracket deflection (two brackets)
-function [eA, eB] = fortz_dual(klass, FbrB, FbrA, X1, X2, pbrB, pbrA,X0)
-
-    % Constants
-    rest   = klass.rest; %resting length
-    tendon = klass.ten; %tendon length
-    fitn   = klass.fitn; %BPA end cap length
-    D      = klass.dBPA; %BPA diameter, uninflated
-    P      = klass.P / 620;  % Pressure, normalized
-    mif    = klass.Fm;  %max. force
-    KMAX   = (rest - klass.Kmax)/rest; %max. contraction percent
-    sL     = seg(klass, klass.Loc); %length of segments of muscle
-    if isempty(X0)
-        X0=0;
-    end
-    Lmt    = LMT(sL, X0);  % Xi0 not yet applied
-
-    % Geometry
-    lenB = norm(pbrB);  %length of bracket
-    lenA = norm(pbrA);  %length of bracket
-    KB = diag([X1, X2, X2]); %Stiffness of lower bracket
-    KA = diag([X1, X2, X2]); %Stiffness of upper bracket
-
-    % Normalize forces
-    uB = normalize(FbrB);
-    uA = normalize(FbrA);
-    N  = size(FbrB,1);
-    % ✅ Preallocate as Nx3
-    eA = zeros(N,3);
-    eB = zeros(N,3);
-
-    for i = 1:N
-        if any(isnan(FbrA(i,:))) || any(isnan(FbrB(i,:))) || norm(FbrA(i,:)) < 1
-            continue;
-        end
-
-        % Projections
-        u_hatA = uA(i,:)'; 
-        u_hatB = uB(i,:)';
-        ka = u_hatA' * KA * u_hatA;
-        kb = u_hatB' * KB * u_hatB;
-        keff = 1 / (1/ka + 1/kb);  % effective spring constant
-        
-            % Bracket stiffness disabled (rigid bracket)
-        if isinf(X1) && isinf(X2)
-            eA(i,:) = zeros(1,3);
-            eB(i,:) = zeros(1,3);
-            continue;
-        end
-
-        % Define relfun for fzero
-        relfun = @(r_total) ...
-            f_festo( ...
-                (rest - (Lmt(i) - (tendon + r_total) - 2*fitn)) / rest / KMAX, ...
-                P, D ...
-            ) * mif - keff * r_total;
-
-        % Initial check
-        contraction0 = (rest - (Lmt(i) - tendon - 2*fitn)) / rest;
-        relstrain0 = contraction0 / KMAX;
-
-        if relstrain0 >= 1
-            r_total = 0;
-        else
-            try
-                r_total = fzero(relfun, [0, 0.2]);
-            catch
-                r_total = 0;
-            end
-        end
-
-        r_total = max(r_total, 0);  % safety
-
-        % Split displacements
-        rA = r_total * (1/ka) / (1/ka + 1/kb);
-        rB = r_total * (1/kb) / (1/ka + 1/kb);
-
-        % Final force value
-        contraction = (rest - (Lmt(i) - tendon - 2*fitn - r_total)) / rest;
-        relstrain = contraction / KMAX;
-        Fmag = f_festo(relstrain, P, D) * mif;
-
-        % Deformation vectors
-        eA(i,:) = (KA \ (Fmag * u_hatA))';
-        eB(i,:) = (KB \ (Fmag * u_hatB))';
-%         e_total = eA + eB;
-% 
-%         % Store output
-%         e_axial(i) = e_total(1);
-%         e_bendY(i) = e_total(2);
-%         e_bendZ(i) = e_total(3);
-    end
 end
 
 %% ------------- Segment Lengths ------------------------
@@ -423,14 +364,15 @@ function unitD = UD(klass, L)
             T = klass.Tk;
             C = klass.CP;
             direction = zeros(size(T, 3), 3);
-            unitD = zeros(size(direction));
+%             unitD = zeros(size(direction));
             
             for i = 1:size(T, 3)
                 pointA = L(C-1, :, i);
                 pointB = L(C, :, i);
                 direction(i, :) = RowVecTrans(T(:, :, i)\eye(4), pointA) - pointB;
-                unitD(i, :) = direction(i, :)/norm(direction(i, :));
+%                 unitD(i, :) = direction(i, :)/norm(direction(i, :));
             end
+            unitD = normalize(direction);
 end
         
         %% -------------- Moment Arm --------------------------
@@ -446,16 +388,7 @@ function mA = Mom(klass, L, unitD)
                 pointB = L(C, :, i);
                 mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
             end
-end        
-        
-        %% -------------- Contraction of the PAM --------------------------
-function contraction = Contraction(klass, L_mt)
-rest   = klass.rest;
-tendon = klass.ten;
-fitting = klass.fitn;
-
-contraction = (rest-(L_mt-tendon-2*fitting))/rest;    %(minus Xi0 is used in LMT function, above)
-end
+end               
 
 
         %% -------------- Force --------------------------
@@ -512,15 +445,6 @@ function t = SSE(klass, M_p)
      M_opt = Mpredict2(klass.Aexp);
      [RMSE, fvu, maxResid] = Go_OfF(klass.Mexp,M_opt);
      t = [RMSE, fvu, maxResid];
-% --- New: Focused SSE where |Mexp| < 3 Nm ---
-%     lowTorqueMask = abs(klass.Mexp) < 3;
-%     if any(lowTorqueMask)
-%         SSE_low = mean((klass.Mexp(lowTorqueMask) - M_opt(lowTorqueMask)).^2,'omitnan');
-%     else
-%         SSE_low = 0; % Or NaN if you'd rather it not contribute
-%     end
-% 
-%     t = [RMSE, fvu, SSE_low];  % Replace maxResid with low-torque SSE
 end
 
 function vhat = normalize(v)
