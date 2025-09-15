@@ -91,9 +91,9 @@ for j = 1:a
     L_p{j} = Lok(klaus(j), Xi1, Xi2, strain_Xi0{j},Xi0);   %Bracket deformation changing geometry using stiffnesses and constant length offset
     unitD_p{j} = UD(klaus(j), L_p{j});   %New force direction
     sL_p{j} = seg(klaus(j), L_p{j});   %New segment lengths
-    Lmt_p{j} = LMT(sL_p{j}, Xi0);     %New musclulotendon length includes constant length offset
+    Lmt_p{j} = LMT(sL_p{j}, Xi0);     %New musclulotendon length. Uses deformed geometry and constant length offset.
     strain_p{j} = Contraction(klaus(j), Lmt_p{j}, []);  %*new contraction amount
-    F_p{j} = Force(klaus(j), unitD_p{j}, strain_p{j});  %new force amount
+    F_p{j} = Force(klaus(j), unitD_p{j}, strain_p{j});  %new force vector
     mA_p{j} = Mom(klaus(j), L_p{j}, unitD_p{j});   %new moment arm
     M_p{j} = Tor(mA_p{j}, F_p{j}, klaus(j).Fm, strain_p{j});  %new torque
     %Original code, kept as reference
@@ -153,12 +153,9 @@ function LOC = Lok(klass,X1,X2,strain,X0)
 %             T = klass.Tk;       %Transformation matrix
             kmax = klass.Kmax;  %max contracted length
             KMAX = (klass.rest-kmax)/klass.rest; %turn it into a percentage
-%             sL = seg(klass, L);
             if isempty(X0)
                 X0=0;
             end
-%             Lmt = LMT(sL, X0);   %musculotendon length
-%             strain = Contraction(klass, Lmt);
             relstrain = strain/KMAX;            %relative strain
             FF = festo4(klass.dBPA,relstrain,klass.P).*klass.Fm;        %Force magnitude
             FF(relstrain>=1) = 0;
@@ -173,51 +170,22 @@ function LOC = Lok(klass,X1,X2,strain,X0)
                    sin(thetabrB) cos(thetabrB) 0; ...
                    0    0   1];
             pbrkB = RkbrZ'*pkbrB';       %Vector in the bracket frame
-            % Now calculate angle from x-axis to this vector
-%             thetaY = atan2(pbrkB(3), pbrkB(1));  % z vs x (in bracket frame)
-%             % Rotation matrix about y-axis (local frame adjustment)
-%             Ry = [cos(thetaY)  0  sin(thetaY);
-%                   0                1  0;
-%                  -sin(thetaY) 0  cos(thetaY)];
-%             Rkbr = RkbrZ*Ry;            %Rotate about y-axis in body frame
+
             Tkbr = RpToTrans(RkbrZ, Pbri');    %Transformation matrix, flexor bracket frame in knee frame
-%             %For muscle origin
-%             pA = L(C-1,:,1); %Distance from hip frame origin to muscle origin
-%             Pbro = [-49.62 -20.79 75.06]/1000; %Distance from hip origin to upper bracket (upper bolt hole)
-%             phbrA = pA - Pbro;  %vector from bracket to point A, in the hip frame
-%             thetabrA = atan2(phbrA(2),phbrA(1));   %angle between pbrB and x axis
-%             RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
-%                    sin(thetabrA) cos(thetabrA) 0; ...
-%                    0    0   1];
-%             pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
-%             % Now calculate angle from x-axis to this vector
-%             thetaYh = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
-%             % Rotation matrix about y-axis (local frame adjustment)
-%             Ryh = [cos(thetaYh)  0  sin(thetaYh);
-%                   0                1  0;
-%                  -sin(thetaYh) 0  cos(thetaYh)];
-%             Rhbr = RhbrZ*Ryh;            %Rotate about y-axis in body frame
-%             Thbr = RpToTrans(RhbrZ, Pbro');    %Transformation matrix, flexor bracket frame in knee frame
+
             LOC = L;            %new location matrix
             N = size(L,3);
             M = size(L,1);
-%             Fh = zeros(N,3);        %Force vector in the hip frame
-%             Fbrh = zeros(N,3);       %Force vector represented in the tibial bracket frame  
-%             pAnew = zeros(N,3);
             Fbrk = zeros(N,3);       %Force vector represented in the tibial bracket frame  
             pBnew = zeros(N,3);
             for ii = 1:N                          %Repeat for each orientation
                     Fbrk(ii,:) = RowVecTrans(Tkbr\eye(4),Fk(ii,:)); %Force vector in the tibia frame represented in the lower bracket frame
-%                     Fh(ii,:) = norm(RowVecTrans(T(:,:,ii),L(C,:,ii))-L(C-1,:,ii)).*FF(ii,1);    %Force vector in the hip frame
-%                     Fbrh(ii,:) = RowVecTrans(Thbr\eye(4),Fh(ii,:)); %Force vector in the hip frame represented in the lower bracket frame  
             end
-%             idx = klass.strain < -0.01;     %when force is too high
-%             Fbrk(idx,:) = 1e3*Fbrk(idx,:);                %penalty
+
             [epsilon, delta, beta] = fortz(klass,Fbrk,X1,X2,X0);  %strain from force divided by tensile stiffness
-%             [eA, eB] = fortz_dual(klass, Fbrk, Fbrh, X1, X2, pkbrB, phbrA,X0);
             eB = [epsilon, delta, beta];
             pbrBnew = [norm(pkbrB(1:2)), 0, pkbrB(3)]+eB; %new point B, in the bracket's frame
-%             pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)]+eA; %new point A, in the bracket's frame            
+          
             for ii = 1:N                          %Repeat for each orientation
                 for i = 1:M                      %Repeat for all muscle segments
                     if i == C
@@ -287,32 +255,42 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
         e_bendZ(i) = 0;
         continue;
     end
-
-    % Solve for r (deflection) using fzero
-    % First, compute contraction from Xi0 if deflection is zero 
-    contraction0    = ( rest -  mL(i)  ) / rest;
-    relstrain0      = contraction0 / KMAX;  %relative strain
-    if relstrain0 >= 1
-        r = 0;
-%     elseif contraction0 <= -0.03
-%         r = NaN;
-    else
     
-        relfun = @(r) ...
-            festo4( D, ...
-                (rest - (mL(i) -  r)) / rest / KMAX, ...
-                P) * mif - keff * r;
+    % Flexible case: run Newton-Raphson
+        r = 0.0001;  % Initial guess
 
-        try
-            r = fzero(relfun, [0, 0.2]);
-        catch
-            r = 0;
+        for iter = 1:50
+            contraction = (rest - (mL(i) - r)) / rest;
+            rel = contraction / KMAX;
+
+            fM = festo4(D,rel, P) * mif;
+            fT = keff * r;
+            Fbal = fM - fT;
+
+            % Numerical derivative
+            dr = 1e-6;
+            contraction_d = (rest - (mL(i) - ( r + dr)) ) / rest;
+            rel_d = contraction_d / KMAX;
+            fM_d = festo4(D,rel_d, P) * mif;
+            Fbal_d = fM_d - keff * (r + dr);
+            dF = (Fbal_d - Fbal) / dr;
+
+            %Avoid zero slope
+            if abs(dF) < 1e-12 || isnan(dF)
+                r = NaN;
+            break;
+            end
+            
+            % Newton-Raphson update
+            r = r - Fbal / dF;
+
+            if abs(Fbal) < 1e-6
+                break;
+            end
         end
-        r = max(r,0); %guard against r being slightly negative.
-    end
 
-    % Final force magnitude
-        contraction = (rest - (mL(i) -  r)) / rest;
+        % Final force magnitude
+        contraction = (rest - (mL(i) - r)) / rest;
         relstrain = contraction / KMAX;
         F_mag = festo4(D, relstrain, P) * mif;
 
@@ -322,6 +300,42 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
         e_axial(i) = e_bkt(1);
         e_bendY(i) = e_bkt(2);
         e_bendZ(i) = e_bkt(3);
+
+
+%     % Solve for r (deflection) using fzero
+%     % First, compute contraction from Xi0 if deflection is zero 
+%     contraction0    = ( rest -  mL(i)  ) / rest;
+%     relstrain0      = contraction0 / KMAX;  %relative strain
+%     if relstrain0 >= 1
+%         r = 0;
+% %     elseif contraction0 <= -0.03
+% %         r = NaN;
+%     else
+%     
+%         relfun = @(r) ...
+%             festo4( D, ...
+%                 (rest - (mL(i) -  r)) / rest / KMAX, ...
+%                 P) * mif - keff * r;
+% 
+%         try
+%             r = fzero(relfun, [0, 0.2]);
+%         catch
+%             r = 0;
+%         end
+%         r = max(r,0); %guard against r being slightly negative.
+%     end
+% 
+%     % Final force magnitude
+%         contraction = (rest - (mL(i) -  r)) / rest;
+%         relstrain = contraction / KMAX;
+%         F_mag = festo4(D, relstrain, P) * mif;
+% 
+%         % Bracket displacement
+%         e_bkt = K_bracket \ (F_mag * unit_vec');
+% 
+%         e_axial(i) = e_bkt(1);
+%         e_bendY(i) = e_bkt(2);
+%         e_bendZ(i) = e_bkt(3);
    end
 end
 

@@ -14,8 +14,8 @@ ub = [0.03*100, 9, 9];
 opts = optimoptions('gamultiobj', ...
         'UseParallel', true, ...
         'Display', 'iter', ...        %
-        'InitialPopulationRange',[-.003*100 log10(700) log10(370); 0.015*100 5 4], ...
-        'PopulationSize', 75, ...  %Originally 75
+        'InitialPopulationRange',[.005*100 4 log10(3700); 0.02*100 6 5], ...
+        'PopulationSize', 50, ...  %Originally 75
         'MaxGenerations', 600, ... %Originally 600
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
@@ -45,9 +45,16 @@ for i = 1:length(x)
     val_Fvals(i,:) = min2([x(i,1),x(i,2),x(i,3)]);    %Get validation Fvals for all Pareto_front points
 end
 
-%% Sort results
+% %% Sort results
+% ind = 1:length(x);  %Index to original Pareto_front and Pareto_Fvals
+% relate = vecnorm(fvals-val_Fvals,2,2);   %Find the distance between the optimization and validation solutions for the same input
+% results = [ind', x, fvals, val_Fvals, relate]; 
+% results_sort = sortrows(results,[11 8 9 10 5 6 7]); %Sort results first on distance between optimization and validation, then on validation columns, then on original Fvals columns.
+% results_sort_actual = [results_sort(:,1), results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5:end)];
+
+%% Sort results, normalized
 ind = 1:length(x);  %Index to original Pareto_front and Pareto_Fvals
-relate = vecnorm(fvals-val_Fvals,2,2);   %Find the distance between the optimization and validation solutions for the same input
+relate = vecnorm((fvals./a)-(val_Fvals./b),2,2);   %Find the distance between the optimization and validation solutions for the same input
 results = [ind', x, fvals, val_Fvals, relate]; 
 results_sort = sortrows(results,[11 8 9 10 5 6 7]); %Sort results first on distance between optimization and validation, then on validation columns, then on original Fvals columns.
 results_sort_actual = [results_sort(:,1), results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5:end)];
