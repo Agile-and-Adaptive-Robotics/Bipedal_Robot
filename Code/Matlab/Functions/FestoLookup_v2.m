@@ -243,6 +243,10 @@ Zmax = [z10max, z20max, z40max];
 %% Figure (for 10 mm & 20 mm)
 
     figure
+    tileLabels = {'(A)', '(B)', '(C)', '(D)'};
+    % Annotation positions [x, y] in normalized figure units
+    xAnn = [0, 0];
+    yAnn = [0.94, 0.45];
     for k = 1: 2
     a(k) = subplot(2,1,k);
     xlabel('Contraction, \epsilon^*','interpreter','tex'),ylabel('Force, F^*','interpreter','tex')
@@ -280,12 +284,21 @@ Zmax = [z10max, z20max, z40max];
     end
     a(k).XLim = [0 1];
     a(k).YLim = [0 max(max(Ygr{2}))];
+    set(gca, 'FontSize', 10, 'FontWeight', 'bold', 'FontName', 'Arial', ...
+        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
     lgd(k) = legend;
     lgd(k).Location = 'northeast';
     lgd(k).Orientation = 'horizontal';
     lgd(k).NumColumns = 3;
     title(lgd(k),'P value and data source')
+
     hold off
+    
+    end
+    
+    for j = 1:2
+    annotation(gcf, 'textbox', [xAnn(j), yAnn(j), 0.05, 0.05], 'String', ['\bf ' tileLabels{j}], ...
+        'FontSize', 10, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
     end
     
 
