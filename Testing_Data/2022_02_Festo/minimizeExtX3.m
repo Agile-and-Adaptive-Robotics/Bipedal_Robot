@@ -125,8 +125,8 @@ Lmt_p = LMT(sL_p, Xi0);
 unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
 F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
 mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
-[strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []);
-M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_p); %New torque prediction, using new moment arm, new Force vector, Fmax, and strain_p
+[strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []); %Predicted actual strain (doesn't include wrapping)
+M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_f, strain_p); %New torque prediction, using new moment arm, new Force vector, Fmax, and strain_p
 
 %% Package into output struct
 bpa_i.L_p = L_p;
@@ -203,7 +203,12 @@ if isempty(X0)
 end
 
 if isempty(Lmt)
-    Lmt = LMT(klass.seg,X0);
+    Lmt = klass.Lmt;
+end
+
+% --- Gama (deformation) ---
+if isempty(gama)
+    gama = zeros(N,1);
 end
 
 % --- Delta_L from curvature ---
@@ -213,16 +218,16 @@ if ~isempty(X3)
     angleRad = deg2rad(theta_k - ang2);
     idx = angleRad < 0;
     KMAX = (rest - klass.Kmax)/rest;
-    Lm = (Lmt - tendon -2*fitn); %length of the BPA
+    Lm = (Lmt - tendon -2*fitn-X0-gama); %length of the BPA
     strain = (rest - Lm)/rest;
     relstrain = strain/KMAX;
     comp = 1-relstrain;  %additive complement to relative strain
-    comp = max(0, min(1, comp));
+%     comp = max(0, min(1, comp));
     R = 0.04;           %minimum radius
     delta_L(idx) = X3*(R)*abs(angleRad(idx)).*comp(idx).^2;
 %     delta_L(idx) = X3*(R)*abs(angleRad(idx)).*Lm(idx)/rest;
 
-debug_contraction_plot = false;
+debug_contraction_plot = true;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         figure;
         subplot(2,2,1);
@@ -239,13 +244,8 @@ debug_contraction_plot = false;
     end
 end
 
-% --- Gama (deformation) ---
-if isempty(gama)
-    gama = zeros(N,1);
-end
-
-adjusted_Lm = Lmt - (tendon + gama + delta_L) - 2 * fitn;
-contraction = (rest - adjusted_Lm) / rest;
+Lm_adj = (Lmt - tendon -2*fitn-X0-gama) - delta_L; %muscle length
+contraction = (rest - Lm_adj) / rest;
 
 
 end
@@ -369,7 +369,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
     valid = norms > 1 & all(~isnan(Fbr), 2);
-    u_hat_all(valid, :) = normalize(Fbr);
+    u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
     K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
@@ -542,15 +542,15 @@ end
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-function Mz = Tor(mA_p, F_p, maxF, strain_p)
-N = size(F_p, 1);
+function Mz = Tor(mA, F, maxF, strain, strain2)
+N = size(F, 1);
 Mz = zeros(N, 3);
 
     for i = 1:N
-        if norm(F_p(i,:)) > maxF || strain_p(i,:) < 0
+        if norm(F(i,:)) > maxF || strain(i,:) < 0 || strain2(i,:) < 0
             Mz(i,:) = NaN;
         else
-            Mz(i,:) = cross(mA_p(i,:), F_p(i,:));
+            Mz(i,:) = cross(mA(i,:), F(i,:));
         end
     end
 end    

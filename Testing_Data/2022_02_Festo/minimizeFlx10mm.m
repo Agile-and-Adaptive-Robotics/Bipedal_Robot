@@ -8,7 +8,7 @@ profile on
 
 %% Use solution from optimizer and check validity on biomimetic knee
 
-load minimizeFlxPin10_results.mat results_sort_actual
+load minimizeFlxPin10_results_20250915.mat results_sort_actual
 
 pick = 1;
 g = results_sort_actual(pick,2:4);
