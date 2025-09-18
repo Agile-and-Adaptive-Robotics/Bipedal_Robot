@@ -11,10 +11,11 @@ fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScor
 load minimizeFlxPin10_results_20250915.mat sol_actual
 sol_actual1 = sol_actual;
 [a1, ~] = minimizeExtX3(sol_actual1(1), sol_actual1(2), sol_actual1(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
+[a2, ~] = minimizeExtX3(-sol_actual1(1), sol_actual1(2), sol_actual1(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
 % clear sol_actual
 baselineScores1 = a1;  % RMSE, FVU, Max Residual
 fprintf('Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
-
+fprintf('Baseline using best guess: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(a2(:,1)),mean(a2(:,2)),mean(a2(:,3)));
 %% Cross-validation setup
 allBPA = [1,3,4];           %We're going to skip 42cm l_rest with a tendon
 labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
@@ -46,7 +47,7 @@ for k = 1:numel(allBPA)
         'PlotFcn', {@gaplotpareto3D_simple}, ...
         'InitialPopulationRange',[lb; ub], ...
         'PopulationSize', 40, ... %was 150
-        'MaxGenerations', 150, ... %was 750
+        'MaxGenerations', 100, ... %was 750
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...

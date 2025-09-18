@@ -126,7 +126,10 @@ unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
 F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
 mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
 [strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []); %Predicted actual strain (doesn't include wrapping)
-M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_f, strain_p); %New torque prediction, using new moment arm, new Force vector, Fmax, and strain_p
+
+M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_p); %New torque prediction, using new moment arm, new Force vector, and Fmax. 
+%strain_p actual strain is used to ensure torque = Nan when the BPA is
+%stretched.
 
 %% Package into output struct
 bpa_i.L_p = L_p;
@@ -227,7 +230,7 @@ if ~isempty(X3)
     delta_L(idx) = X3*(R)*abs(angleRad(idx)).*comp(idx).^2;
 %     delta_L(idx) = X3*(R)*abs(angleRad(idx)).*Lm(idx)/rest;
 
-debug_contraction_plot = true;
+debug_contraction_plot = false;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         figure;
         subplot(2,2,1);
@@ -368,7 +371,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     N = size(Fbr,1);
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
-    valid = norms > 1 & all(~isnan(Fbr), 2);
+    valid = norms > 1e-6 & all(~isnan(Fbr), 2) & norms < 1.05*mif;
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
@@ -425,7 +428,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
             dF = (Fbal_d - Fbal) / dr;
 
             %Avoid zero slope
-            if abs(dF) < 1e-12 || isnan(dF)
+            if abs(dF) < 1e-8 || isnan(dF)  %1e-12
                 r = NaN;
             break;
             end
@@ -433,7 +436,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
             % Newton-Raphson update
             r = r - Fbal / dF;
 
-            if abs(Fbal) < 1e-6
+            if abs(Fbal) < 1e-4     %1e-6
                 break;
             end
         end
@@ -542,12 +545,12 @@ end
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-function Mz = Tor(mA, F, maxF, strain, strain2)
+function Mz = Tor(mA, F, maxF, strain)
 N = size(F, 1);
 Mz = zeros(N, 3);
 
     for i = 1:N
-        if norm(F(i,:)) > maxF || strain(i,:) < 0 || strain2(i,:) < 0
+        if norm(F(i,:)) > maxF || strain(i,:) < 0
             Mz(i,:) = NaN;
         else
             Mz(i,:) = cross(mA(i,:), F(i,:));
