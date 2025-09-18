@@ -127,7 +127,7 @@ F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
 mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
 [strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []); %Predicted actual strain (doesn't include wrapping)
 
-M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_p); %New torque prediction, using new moment arm, new Force vector, and Fmax. 
+M_p = Tor(mA_p, F_p, strain_p); %New torque prediction, using new moment arm, new Force vector, and class (for Fmax and Kmax). 
 %strain_p actual strain is used to ensure torque = Nan when the BPA is
 %stretched.
 
@@ -218,16 +218,19 @@ end
 delta_L = zeros(N,1);
 if ~isempty(X3)
     ang2 = -23;
-    angleRad = deg2rad(theta_k - ang2);
-    idx = angleRad < 0;
+    angleRad = deg2rad(ang2 - theta_k);
+    idx = angleRad > 0;
     KMAX = (rest - klass.Kmax)/rest;
     Lm = (Lmt - tendon -2*fitn-X0-gama); %length of the BPA
     strain = (rest - Lm)/rest;
     relstrain = strain/KMAX;
     comp = 1-relstrain;  %additive complement to relative strain
+%     pass1 = Lm >= klass.Kmax;
+%     pass2 = strain >=-0.02;
+%     idx = pass1 & pass2 &angleRad<0;
 %     comp = max(0, min(1, comp));
     R = 0.04;           %minimum radius
-    delta_L(idx) = X3*(R)*abs(angleRad(idx)).*comp(idx).^2;
+    delta_L(idx) = X3*(R)*angleRad(idx).*comp(idx).^2;
 %     delta_L(idx) = X3*(R)*abs(angleRad(idx)).*Lm(idx)/rest;
 
 debug_contraction_plot = false;
@@ -273,6 +276,7 @@ M = size(L,1);
 relstrain = strain_predef ./ KMAX;
 FF = festo4(D, relstrain, P) .* Fm;
 FF(relstrain > 1) = 0;
+FF(strain_predef < 0)  = 0;
 Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
@@ -528,10 +532,10 @@ end
 
         %% -------------- Force --------------------------
         %Calculate the direction of the forced applied by the muscle
-function F = Force(klass, unitD_p, strain_p)
+function F = Force(klass, unitD_p, strain_f)
     rest = klass.rest;
     KMAX = (rest - klass.Kmax) / rest;
-    rel = strain_p ./ KMAX;  % normalized strain
+    rel = strain_f ./ KMAX;  % normalized strain
     Fn = festo4(klass.dBPA, rel, klass.P);  % Force, normalized
     scalarForce = Fn .* klass.Fm;  %Redimensionalize
     scalarForce(scalarForce < 0) = 0;  % Eliminate negatives
@@ -545,12 +549,14 @@ end
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-function Mz = Tor(mA, F, maxF, strain)
+function Mz = Tor(mA, F, strain)
+% maxF = klass.Fm;        %Maximum BPA force
 N = size(F, 1);
 Mz = zeros(N, 3);
+% kmax = (klass.rest - klass.Kmax)/klass.rest;
 
     for i = 1:N
-        if norm(F(i,:)) > maxF || strain(i,:) < 0
+        if strain(i,:) < 0
             Mz(i,:) = NaN;
         else
             Mz(i,:) = cross(mA(i,:), F(i,:));
