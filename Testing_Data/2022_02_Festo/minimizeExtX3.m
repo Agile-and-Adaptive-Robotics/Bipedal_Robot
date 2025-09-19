@@ -118,10 +118,10 @@ bpa_i = klass;
 kspr = Spr(bpa_i);          %tendon spring rate
 Funit = computeForceVector(bpa_i);  %Force unit direction, calculate in the hip frame 
 [strain_Xi3, delta_L] = Contraction(bpa_i, [], Xi0, [], Xi3); %Calculate contraction and loss of length due to constant length offset Xi0 and wrapping factor Xi3
-[L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, delta_L+Xi0); %Bracket deformation and new geometry
+[L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, Xi0+delta_L); %Bracket deformation and new geometry
 sL_p = seg(bpa_i, L_p); %segment lengths
 Lmt_p = LMT(sL_p, Xi0); 
-[strain_f, ~] = Contraction(bpa_i, Lmt_p, [], gemma, Xi3); %Simulated strain, includes loss of usable length due to wrapping
+[strain_f, delta_w] = Contraction(bpa_i, Lmt_p, [], gemma, Xi3); %Simulated strain, includes loss of usable length due to wrapping
 unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
 F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
 mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
@@ -228,12 +228,12 @@ if ~isempty(X3)
 %     pass1 = Lm >= klass.Kmax;
 %     pass2 = strain >=-0.02;
 %     idx = pass1 & pass2 &angleRad<0;
-%     comp = max(0, min(1, comp));
+    comp = max(0, comp);
     R = 0.04;           %minimum radius
     delta_L(idx) = X3*(R)*angleRad(idx).*comp(idx).^2;
 %     delta_L(idx) = X3*(R)*abs(angleRad(idx)).*Lm(idx)/rest;
 
-debug_contraction_plot = false;
+debug_contraction_plot = true;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         figure;
         subplot(2,2,1);
@@ -276,47 +276,46 @@ M = size(L,1);
 relstrain = strain_predef ./ KMAX;
 FF = festo4(D, relstrain, P) .* Fm;
 FF(relstrain > 1) = 0;
-FF(strain_predef < 0)  = 0;
 Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
-Pbr = [-6.26, -29.69, 75.06]/1000;                          %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
-phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
-thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
-RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
-       sin(thetabrA) cos(thetabrA) 0; ...
-       0    0   1];
-% pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
-% Now calculate angle from x-axis to this vector
-thetaY = atan2(phbrA(3), phbrA(1));  % z vs x (in bracket frame)
-
-% % Rotation matrix about y-axis (local frame adjustment)
-Ry = [cos(thetaY)  0  sin(thetaY);
-      0                1  0;
-     -sin(thetaY) 0  cos(thetaY)];
-%  pbrhA = Ry'*phbrA';       %Vector in the bracket frame
-% Rhbr = RhbrZ*Ry;            %Rotate about y-axis in body frame
-Thbr = RpToTrans(Ry', Pbr');    %Transformation matrix, represent bracket frame in hip frame  
+% Pbr = [-6.26, -29.69, 75.06]/1000;                          %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
+% phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
+% thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
+% RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
+%        sin(thetabrA) cos(thetabrA) 0; ...
+%        0    0   1];
+% % pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
+% % Now calculate angle from x-axis to this vector
+% thetaY = atan2(phbrA(3), phbrA(1));  % z vs x (in bracket frame)
+% 
+% % % Rotation matrix about y-axis (local frame adjustment)
+% Ry = [cos(thetaY)  0  sin(thetaY);
+%       0                1  0;
+%      -sin(thetaY) 0  cos(thetaY)];
+% %  pbrhA = Ry'*phbrA';       %Vector in the bracket frame
+% % Rhbr = RhbrZ*Ry;            %Rotate about y-axis in body frame
+% Thbr = RpToTrans(Ry', Pbr');    %Transformation matrix, represent bracket frame in hip frame  
             
-% %more complicated way to calculate vector and rotation matrix so that your
-% %new x axis points to muscle origin.
-% p0 = [-6.26, -29.69, 75.06]/1000;
-% y0 = [-47.48, -35.63, 75.06]/1000;
-% z0 = [-8.39, -14.85, 75.06]/1000;
-% 
-% z_hat = normalize(p0 - z0);
-% y_hat_prelim = normalize(p0 - y0);
-% v = pA - p0;
-% lambda = -dot(v, z_hat);
-% Pbr_A = p0 + lambda * z_hat;
-% 
-% x_hat = normalize(cross(y_hat_prelim, z_hat));
-% y_hat = cross(z_hat, x_hat);
-% 
-% Rhbr = [x_hat(:), y_hat(:), z_hat(:)];
-% Thbr = RpToTrans(Rhbr, Pbr_A');
-% pbrA = (pA - Pbr_A) * Rhbr;
+%more complicated way to calculate vector and rotation matrix so that your
+%new x axis points to muscle origin.
+p0 = [-6.26, -29.69, 75.06]/1000;
+y0 = [-47.48, -35.63, 75.06]/1000;
+z0 = [-8.39, -14.85, 75.06]/1000;
+
+z_hat = normalize(p0 - z0);
+y_hat_prelim = normalize(p0 - y0);
+v = pA - p0;
+lambda = -dot(v, z_hat);
+Pbr_A = p0 + lambda * z_hat;
+
+x_hat = normalize(cross(y_hat_prelim, z_hat));
+y_hat = cross(z_hat, x_hat);
+
+Rhbr = [x_hat(:), y_hat(:), z_hat(:)];
+Thbr = RpToTrans(Rhbr, Pbr_A');
+pbrA = (pA - Pbr_A) * Rhbr;
 
 % Transform force into bracket frame
 Fbrh = zeros(N,3);
@@ -326,9 +325,9 @@ end
 
 % Bracket deformation
 [epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, delta_L);
-% deflection = [epsilon, delta, beta];
-% pbrAnew = pbrA +deflection;
-pbrAnew = [norm([phbrA(1) phbrA(3)])+epsilon, phbrA(2)+delta,  beta];
+deflection = [epsilon, delta, beta];
+pbrAnew = pbrA +deflection;
+% pbrAnew = [norm([phbrA(1) phbrA(3)])+epsilon, phbrA(2)+delta,  beta];
 
 % Replace points
 LOC = L;
@@ -375,7 +374,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     N = size(Fbr,1);
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
-    valid = norms > 1e-6 & all(~isnan(Fbr), 2) & norms < 1.05*mif;
+    valid = norms > 1e-2 & all(~isnan(Fbr), 2);
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
@@ -557,7 +556,8 @@ Mz = zeros(N, 3);
 
     for i = 1:N
         if strain(i,:) < 0
-            Mz(i,:) = NaN;
+%             Mz(i,:) = NaN;
+            Mz(i,:) = cross(mA(i,:), F(i,:));
         else
             Mz(i,:) = cross(mA(i,:), F(i,:));
         end

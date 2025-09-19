@@ -168,7 +168,7 @@ if ~isempty(X3)
     strain = (rest - Lm)/rest;
     relstrain = strain/KMAX;
     comp = 1-relstrain;  %additive complement to relative strain
-    comp = max(0, min(1, comp));
+    comp = max(0, comp);
     
     for i = 1:N
         R1 = 0.022; %minimum radius 1
