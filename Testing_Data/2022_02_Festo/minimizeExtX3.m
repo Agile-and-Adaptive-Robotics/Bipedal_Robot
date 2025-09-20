@@ -233,7 +233,7 @@ if ~isempty(X3)
     delta_L(idx) = X3*(R)*angleRad(idx).*comp(idx).^2;
 %     delta_L(idx) = X3*(R)*abs(angleRad(idx)).*Lm(idx)/rest;
 
-debug_contraction_plot = true;
+debug_contraction_plot = false;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         figure;
         subplot(2,2,1);
