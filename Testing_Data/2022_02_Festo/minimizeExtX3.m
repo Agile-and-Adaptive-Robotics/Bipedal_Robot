@@ -374,7 +374,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     N = size(Fbr,1);
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
-    valid = norms > 1e-2 & all(~isnan(Fbr), 2);
+    valid = norms > 1e-6 & all(~isnan(Fbr), 2);
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
@@ -556,8 +556,8 @@ Mz = zeros(N, 3);
 
     for i = 1:N
         if strain(i,:) < 0
-%             Mz(i,:) = NaN;
-            Mz(i,:) = cross(mA(i,:), F(i,:));
+            Mz(i,:) = NaN;
+%             Mz(i,:) = cross(mA(i,:), F(i,:));
         else
             Mz(i,:) = cross(mA(i,:), F(i,:));
         end

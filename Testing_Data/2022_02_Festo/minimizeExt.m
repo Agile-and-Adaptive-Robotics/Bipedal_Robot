@@ -76,7 +76,7 @@ unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
 F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
 mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
 [strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []);
-M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_p); %New torque prediction
+M_p = Tor(mA_p, F_p, strain_p); %New torque prediction
 
 %% Package into output struct
 bpa_i.L_p = L_p;
@@ -153,39 +153,37 @@ if isempty(X0)
 end
 
 if isempty(Lmt)
-    Lmt = LMT(klass.seg,X0);
+    Lmt = klass.Lmt;
+end
+
+% --- Gama (deformation) ---
+if isempty(gama)
+    gama = zeros(N,1);
 end
 
 % --- Delta_L from curvature ---
 delta_L = zeros(N,1);
-angleRad1 = zeros(N,1);
-angleRad2 = zeros(N,1);
+
 if ~isempty(X3)
     ang1 = 4.69;
     ang2 = -6.5;
+    angleRad1 = deg2rad(ang1-theta_k);
+    angleRad2 = deg2rad(ang2-theta_k);
+    idx1 = theta_k <= ang1 & theta_k >= ang2;
+    idx2 = angleRad2 > 0;
     KMAX = (rest - klass.Kmax)/rest;
-    Lm = (Lmt - tendon -2*fitn); %length of the BPA
+    Lm = (Lmt - tendon -2*fitn -X0 -gama); %length of the BPA
     strain = (rest - Lm)/rest;
     relstrain = strain/KMAX;
     comp = 1-relstrain;  %additive complement to relative strain
     comp = max(0, comp);
-    
-    for i = 1:N
-        R1 = 0.022; %minimum radius 1
-        R2 = 0.05334; %minimum radius 2
-        if theta_k(i) <= ang1 && theta_k(i) >= ang2
-            angleRad1(i) = deg2rad(theta_k(i) - ang1);
-            delta_L(i) = X3*(R1)*abs(angleRad1(i)).*comp(i);
-        elseif theta_k(i) < ang2
-            angleRad1(i) = ang1 - ang2;
-            angleRad2(i) = deg2rad(theta_k(i) - ang2);
-            delta_L(i) = X3.*comp(i).^2.*( (R1)*abs(angleRad1(i))  +  (R2)*abs(angleRad2(i)));
-        else
-        end
-    end
+    R1 = 0.022; %minimum radius 1
+    R2 = 0.05334; %minimum radius 2
+    delta_L(idx1) = X3*(R1)*angleRad1(idx1).*comp(idx1).^2;
+    delta_L(idx2) = X3*(R2)*angleRad2(idx2).*comp(idx2).^2 + X3*(R1)*(ang1-ang2).*comp(idx2).^2;
 
 
-debug_contraction_plot = false;
+debug_contraction_plot = true;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         figure;
         subplot(2,2,1);
@@ -198,18 +196,16 @@ debug_contraction_plot = false;
         plot(theta_k, strain, 'k'); title('strain'); ylabel('strain'); grid on;
 
         subplot(2,2,4);
-        plot(theta_k, angleRad, 'm'); title('angleRad'); ylabel('angle [rad]'); grid on;
+        hold on
+        plot(theta_k, angleRad1, 'DisplayName','angleRad1'); 
+        plot(theta_k, angleRad2, 'DisplayName','angleRad2');
+        title('angleRad'); ylabel('angle [rad]'); grid on; legend;
     end
 end
 
-% --- Gama (deformation) ---
-if isempty(gama)
-    gama = zeros(N,1);
-end
 
-adjusted_Lm = Lmt - (tendon + gama + delta_L) - 2 * fitn;
-contraction = (rest - adjusted_Lm) / rest;
-
+Lm_adj = (Lmt - tendon -2*fitn-X0-gama) - delta_L; %muscle length
+contraction = (rest - Lm_adj) / rest;
 
 end
 
@@ -249,8 +245,8 @@ thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
 
 % % Rotation matrix about y-axis (local frame adjustment)
 % Ry = [cos(thetaY)  0  sin(thetaY);
-%       0                1  0;
-%      -sin(thetaY) 0  cos(thetaY)];
+%       0            1  0;
+%      -sin(thetaY)  0  cos(thetaY)];
 % Rhbr = RhbrZ*Ry;            %Rotate about y-axis in body frame
 Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
 
@@ -292,23 +288,20 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
 % total length change
     
     D      = klass.dBPA;    %uninflated diameter
-    mL     = klass.Lmt-delta_L;     %Length of musculo-tendon
     rest   = klass.rest;    %BPA resting length
     tendon = klass.ten;     %tendon length
     fitting = klass.fitn;   %end cap length
+    mL     = klass.Lmt-delta_L-tendon-2*fitting;     %Length of BPA
     mif    = klass.Fm;   %maximum bpa force
     kmax   = klass.Kmax; %maximum contraction length
     KMAX   = (rest-kmax)/rest; %maximum contraction percent
-    pres   = klass.P;           %pressure
-    P      = pres/620;          %normalized pressure
+    P      = klass.P;          %pressure
     
     N = size(Fbr,1);
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
-    valid = norms > 1e-8 & all(~isnan(Fbr), 2);
-    
-    u_hat_all = zeros(N, 3);
-    u_hat_all(valid, :) = Fbr(valid, :) ./ norms(valid);
+    valid = norms > 1e-6 & all(~isnan(Fbr), 2);
+    u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
     K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
@@ -349,18 +342,18 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         keff = k_eff(i);
 
         for iter = 1:50
-            contraction = (rest - (mL(i) - (tendon + r) - 2 * fitting)) / rest;
+            contraction = (rest - (mL(i) - r)) / rest;
             rel = contraction / KMAX;
 
-            fM = f_festo(rel, P, D) * mif;
+            fM = festo4(D, rel, P) * mif;
             fT = keff * r;
             Fbal = fM - fT;
 
             % Numerical derivative
             dr = 1e-6;
-            contraction_d = (rest - (mL(i) - (tendon + r + dr) - 2 * fitting)) / rest;
+            contraction_d = (rest - (mL(i) - (r + dr)) ) / rest;
             rel_d = contraction_d / KMAX;
-            fM_d = f_festo(rel_d, P, D) * mif;
+            fM_d = festo4(D, rel_d, P) * mif;
             Fbal_d = fM_d - keff * (r + dr);
             dF = (Fbal_d - Fbal) / dr;
 
@@ -379,9 +372,9 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         end
 
         % Final force magnitude
-        contraction = (rest - (mL(i) - (tendon + r) - 2 * fitting)) / rest;
+        contraction = (rest - (mL(i) -  r )) / rest;
         relstrain = contraction / KMAX;
-        F_mag = f_festo(relstrain, P, D) * mif;
+        F_mag = festo4(D, relstrain, P) * mif;
 
         % Bracket displacement
         e_bkt = K_bracket \ (F_mag * unit_vec');
@@ -465,15 +458,15 @@ end
 
         %% -------------- Force --------------------------
         %Calculate the direction of the forced applied by the muscle
-function F = Force(klass, unitD_p, strain_p)
+function F = Force(klass, unitD, strain)
     rest = klass.rest;
     KMAX = (rest - klass.Kmax) / rest;
-    rel = strain_p ./ KMAX;  % normalized strain
+    rel = strain ./ KMAX;  % normalized strain
     Fn = festo4(klass.dBPA, rel, klass.P);  % Force, normalized
     scalarForce = Fn .* klass.Fm;  %Redimensionalize
     scalarForce(scalarForce < 0) = 0;  % Eliminate negatives
 
-    F = scalarForce .* unitD_p;  % Nx3
+    F = scalarForce .* unitD;  % Nx3
 end
         
         %% ---------------------- Torque --------------
@@ -482,15 +475,15 @@ end
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-function Mz = Tor(mA_p, F_p, maxF, strain_p)
-N = size(F_p, 1);
+function Mz = Tor(mA, F, strain)
+N = size(F, 1);
 Mz = zeros(N, 3);
 
     for i = 1:N
-        if norm(F_p(i,:)) > maxF || strain_p(i,:) < 0
+        if strain(i,:) < 0
             Mz(i,:) = NaN;
         else
-            Mz(i,:) = cross(mA_p(i,:), F_p(i,:));
+            Mz(i,:) = cross(mA(i,:), F(i,:));
         end
     end
 end    
