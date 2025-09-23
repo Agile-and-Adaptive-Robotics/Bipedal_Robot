@@ -166,7 +166,7 @@ delta_L = zeros(N,1);
 
 if ~isempty(X3)
     ang1 = 4.69;
-    ang2 = -6.5;
+    ang2 = -9.19;
     angleRad1 = deg2rad(ang1-theta_k);
     angleRad2 = deg2rad(ang2-theta_k);
     idx1 = theta_k <= ang1 & theta_k >= ang2;
@@ -178,34 +178,45 @@ if ~isempty(X3)
     comp = 1-relstrain;  %additive complement to relative strain
     comp = max(0, comp);
     R1 = 0.022; %minimum radius 1
-    R2 = 0.05334; %minimum radius 2
+    R2 = 0.030; %minimum radius 2
     delta_L(idx1) = X3*(R1)*angleRad1(idx1).*comp(idx1).^2;
     delta_L(idx2) = X3*(R2)*angleRad2(idx2).*comp(idx2).^2 + X3*(R1)*(ang1-ang2).*comp(idx2).^2;
+    
+    
 
-
-debug_contraction_plot = true;
+    debug_contraction_plot = true;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         figure;
-        subplot(2,2,1);
+        subplot(3,2,1);
         plot(theta_k, comp, 'b'); title('comp = 1 - relstrain'); ylabel('comp'); grid on;
 
-        subplot(2,2,2);
+        subplot(3,2,2);
         plot(theta_k, delta_L*1000, 'r'); title('delta_L'); ylabel('delta_L [mm]'); grid on;
 
-        subplot(2,2,3);
-        plot(theta_k, strain, 'k'); title('strain'); ylabel('strain'); grid on;
+        subplot(3,2,3);
+        hold on
+        plot(theta_k, strain, 'k', 'DisplayName','strain'); 
+        hold off
+        title('strain'); ylabel('strain'); grid on; legend
 
-        subplot(2,2,4);
+        subplot(3,2,4);
         hold on
         plot(theta_k, angleRad1, 'DisplayName','angleRad1'); 
         plot(theta_k, angleRad2, 'DisplayName','angleRad2');
-        title('angleRad'); ylabel('angle [rad]'); grid on; legend;
+        hold off
+        title('angleRad'); ylabel('angle [deg]'); grid on; legend;
+        
+        subplot(3,2,5);
+        plot(theta_k, gama, 'k'); title('cable stretch'); ylabel('length (m)'); grid on;
+
+
     end
 end
 
-
 Lm_adj = (Lmt - tendon -2*fitn-X0-gama) - delta_L; %muscle length
 contraction = (rest - Lm_adj) / rest;
+
+
 
 end
 

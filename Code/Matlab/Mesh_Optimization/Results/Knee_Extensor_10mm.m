@@ -188,72 +188,63 @@ Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 Name = 'Vastus Intermedius';
 Location = zeros(8,3,positions);
 %Origin and routing location from Ben
-p1 = [0.040, 0.035, 0];                %Origin
-p2 = [0.0759, -0.27476, 0];            %BPA contacts mounting base
-p3 = [0.06017, -0.41650, 0.000];       %femur channel contact
-p4 = [0.045, -0.440, 0.000];       %femoral condyle contact
-% p5 = [0.05871, 0.02916, 0];             %Tibia contact initial
-p6 = [0.0645, 0.020, 0];             %Tibia contact
-p7 = [0.06019, -0.00888, 0];            %Tibia tendon contact
+p1 = [0.040, 0.035, 0];                 %Origin
+p2 = [0.0759, -0.27476, 0];             %BPA contacts mounting base
+p3 = [0.05982, -0.37427, 0.000];        %femur channel contact, updated
+p4 = [0.03955, -0.42183, 0.000];        %femoral condyle contact, updated
+p5 = [0.05871, 0.02916, 0];             %Tibia contact initial
+p6 = [0.05871, 0.01228, 0];                %Tibia contact, updated
+p7 = [0.05189, -0.00612, 0];            %Tibia tendon contact, updated
 p8 = [0.03604, -0.02844, 0];            %patellar ligament ring
 
 %Points for transformation matrices;
-% v5 = zeros(1,3,positions);
+v5 = zeros(1,3,positions);
 v6 = zeros(1,3,positions);
 v7 = zeros(1,3,positions);
 v8 = zeros(1,3,positions);
 
 %Set up angle limits (degrees)
 % AA = -68;      
-BB = -55.69;
-CC = -6.5;
-DD = 4.69;
+BB = -74;   %add p4 when flexion reaches this value
+CC = -9.19;   %add p3 and p5 (v5) when flexion reaches this value
+DD = 10;  
 for i=1:positions
     
-%     v5(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p5);
+    v5(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p5);
     v6(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p6);
     v7(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p7);
     v8(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p8);
     
-    if phiD(i) > DD 
+    if phiD(i) > CC 
         Location(:,:,i) = [p1;                           
                           p2;                             
                           p2;                             
                           p2;                            
-                          v7(:,:,i);                     
-                          v7(:, :, i);                   
+                          v6(:,:,i);                     
+                          v6(:, :, i);                   
                           v7(:, :, i);                   
                           v8(:, :, i)];
                       
-    elseif phiD(i) > CC && phiD(i)<= DD
+    elseif phiD(i) <= CC && phiD(i)> BB
         Location(:,:,i) = [p1;                           
                           p2;                             
                           p3;                             
                           p3;                            
-                          v7(:,:,i);                     
-                          v7(:, :, i);                   
+                          v5(:,:,i);                     
+                          v6(:, :, i);                   
                           v7(:, :, i);                   
                           v8(:, :, i)]; 
                       
-    elseif phiD(i) > BB   && phiD(i) <= CC 
+    elseif phiD(i) <= BB   
         Location(:,:,i) = [p1;                            
                           p2;                             
                           p3;                             
-                          p3;                             
-                          v6(:, :, i);                    
+                          p4;                             
+                          v5(:, :, i);                    
                           v6(:, :, i);                   
                           v7(:, :, i);                   
                           v8(:, :, i)];                   
             
-    elseif phiD(i) <= BB
-        Location(:,:,i) = [p1;               
-                          p2;            
-                          p3;       
-                          p4;       
-                          v6(:, :, i);                             
-                          v6(:, :, i);                             %Tibia contact
-                          v7(:, :, i);                             %Tibia tendon contact
-                          v8(:, :, i)];                            %patellar ligament ring
 
     else
     end
@@ -264,9 +255,9 @@ rest = 0.520;
 % kmax = 0.440;
 % tendon = 0.055;
 kmax = 0.434;
-tendon = 0.047; 
+tendon = 0.040; 
 fitting = 0.0254;
-tendon_adj = tendon-0.0091;
+tendon_adj = tendon-0.0107;
 pres = 596.3717;         %average pressure
 Vas_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 Vas_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres);
