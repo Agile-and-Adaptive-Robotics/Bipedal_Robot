@@ -192,9 +192,9 @@ p1 = [0.040, 0.035, 0];                 %Origin
 p2 = [0.0759, -0.27476, 0];             %BPA contacts mounting base
 p3 = [0.05982, -0.37427, 0.000];        %femur channel contact, updated
 p4 = [0.03955, -0.42183, 0.000];        %femoral condyle contact, updated
-p5 = [0.05871, 0.02916, 0];             %Tibia contact initial
+p5 = [0.05871, 0.025, 0];             %Tibia contact initial
 p6 = [0.05871, 0.01228, 0];                %Tibia contact, updated
-p7 = [0.05189, -0.00612, 0];            %Tibia tendon contact, updated
+p7 = [0.054, -0.00612, 0];            %Tibia tendon contact, updated
 p8 = [0.03604, -0.02844, 0];            %patellar ligament ring
 
 %Points for transformation matrices;
@@ -205,7 +205,7 @@ v8 = zeros(1,3,positions);
 
 %Set up angle limits (degrees)
 % AA = -68;      
-BB = -74;   %add p4 when flexion reaches this value
+BB = -69.8;   %add p4 when flexion reaches this value
 CC = -9.19;   %add p3 and p5 (v5) when flexion reaches this value
 DD = 10;  
 for i=1:positions
@@ -255,7 +255,7 @@ rest = 0.520;
 % kmax = 0.440;
 % tendon = 0.055;
 kmax = 0.434;
-tendon = 0.040; 
+tendon = 0.038; 
 fitting = 0.0254;
 tendon_adj = tendon-0.0107;
 pres = 596.3717;         %average pressure

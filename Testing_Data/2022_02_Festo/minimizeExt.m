@@ -163,12 +163,14 @@ end
 
 % --- Delta_L from curvature ---
 delta_L = zeros(N,1);
+delta_L1 = zeros(N,1);
+delta_L2 = zeros(N,1);
 
 if ~isempty(X3)
-    ang1 = 4.69;
+    ang1 = 10;
     ang2 = -9.19;
     angleRad1 = deg2rad(ang1-theta_k);
-    angleRad2 = deg2rad(ang2-theta_k);
+    angleRad2 = deg2rad((ang2-theta_k)*80/(ang2+120));
     idx1 = theta_k <= ang1 & theta_k >= ang2;
     idx2 = angleRad2 > 0;
     KMAX = (rest - klass.Kmax)/rest;
@@ -178,9 +180,16 @@ if ~isempty(X3)
     comp = 1-relstrain;  %additive complement to relative strain
     comp = max(0, comp);
     R1 = 0.022; %minimum radius 1
-    R2 = 0.030; %minimum radius 2
-    delta_L(idx1) = X3*(R1)*angleRad1(idx1).*comp(idx1).^2;
-    delta_L(idx2) = X3*(R2)*angleRad2(idx2).*comp(idx2).^2 + X3*(R1)*(ang1-ang2).*comp(idx2).^2;
+    R2 = 0.176; %minimum radius 2
+    for i = 1:length(theta_k)
+        if theta_k(i) >= ang2
+         delta_L1(i) = X3*(R1)*deg2rad(28).*comp(i).^2;
+        elseif theta_k(i) < ang2
+         delta_L2(i) = X3*(R2)*angleRad2(i).*comp(i).^2 + X3*(R1)*deg2rad(28).*comp(i).^2;
+        else
+        end
+    end
+    delta_L = delta_L1+delta_L2;
     
     
 
@@ -191,7 +200,12 @@ if ~isempty(X3)
         plot(theta_k, comp, 'b'); title('comp = 1 - relstrain'); ylabel('comp'); grid on;
 
         subplot(3,2,2);
-        plot(theta_k, delta_L*1000, 'r'); title('delta_L'); ylabel('delta_L [mm]'); grid on;
+        hold on
+        plot(theta_k, delta_L*1000, 'r','DisplayName','Delta L'); 
+        plot(theta_k, delta_L1*1000, 'b','DisplayName','Delta L1');
+        plot(theta_k, delta_L2*1000, 'g','DisplayName','Delta L2');
+        hold off
+        title('delta_L'); ylabel('delta_L [mm]'); grid on; legend;
 
         subplot(3,2,3);
         hold on
@@ -213,7 +227,7 @@ if ~isempty(X3)
     end
 end
 
-Lm_adj = (Lmt - tendon -2*fitn-X0-gama) - delta_L; %muscle length
+Lm_adj = (Lmt - tendon -2*fitn -X0 -gama) - delta_L; %muscle length
 contraction = (rest - Lm_adj) / rest;
 
 
@@ -221,7 +235,7 @@ contraction = (rest - Lm_adj) / rest;
 end
 
 %% ------------- Location  ------------------------
-function [LOC, gama] = Lok(klass, X1, X2, kSpr, Funit, strain_predef, delta_L)
+function [LOC, gama] = Lok(klass, X1, X2, kSpr, Funit, strain_predef, deltaL)
 % Inputs:
 %   strain_predef – N×1 strain vector (e.g., from Xi0 + Xi3 curvature-only effect)
 
@@ -244,7 +258,7 @@ Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
-Pbr = [8.07  21.92   23.2]/1000;       %from centroid of bracket where it starts to cantilever.
+Pbr = [8.07  -21.92   23.2]/1000;       %from centroid of bracket where it starts to cantilever.
 phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
 thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
 RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
@@ -268,13 +282,13 @@ for ii = 1:N
 end
 
 % Bracket deformation
-[epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, delta_L);
+[epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, deltaL);
 pbrAnew = [norm(pbrhA(1:2))+epsilon, delta, pbrhA(3) + beta];
 
 % Replace points
 LOC = L;
-pB = L(end,:,1);
-pBnew = repmat(pB, N, 1);
+% pB = L(end,:,1);
+% pBnew = repmat(pB, N, 1);
 
 
 %Basically, we need to replace point one, but point 1 is never the same as
@@ -291,7 +305,7 @@ end
 end
 
 %% Force and length reduction due to tendon
-function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta_L)
+function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,deltaL)
 % e_axial, bracket axial elongation
 % e_bendY, bracket bending displacement y - direction
 % e_bendZ, bracket bending displacement z - direction
@@ -302,7 +316,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     rest   = klass.rest;    %BPA resting length
     tendon = klass.ten;     %tendon length
     fitting = klass.fitn;   %end cap length
-    mL     = klass.Lmt-delta_L-tendon-2*fitting;     %Length of BPA
+    mL     = klass.Lmt-deltaL-tendon-2*fitting;     %Length of BPA
     mif    = klass.Fm;   %maximum bpa force
     kmax   = klass.Kmax; %maximum contraction length
     KMAX   = (rest-kmax)/rest; %maximum contraction percent
@@ -320,7 +334,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
     k_b = reshape(k_b, [N, 1]);
-    if isinf(kSpr) || isnan(kSpr)
+    if isinf(kSpr) || klass.ten == 0
         k_eff = k_b;
     else
         k_eff = 1 ./ (1 ./ k_b + 1 / kSpr);  % Nx1
@@ -344,12 +358,12 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
             e_axial(i) = 0;
             e_bendY(i) = 0;
             e_bendZ(i) = 0;
-            e_cable(i) = (klass.ten > 0) * 0.0000;  % Zero or small value if needed
+            e_cable(i) = (klass.ten > 0) * 0.0001;  % Zero or small value if needed
             continue;
         end
         
         % Flexible case: run Newton-Raphson
-        r = 0.0001;  % Initial guess
+        r = 1e-3;  % Initial guess
         keff = k_eff(i);
 
         for iter = 1:50
@@ -502,8 +516,8 @@ end
 %% tendon springrate
 function springrate = Spr(klass)
     if klass.ten > 0
-        mult = 2;
-        Aeff = 1.51*10^-6;%Effective area for 19-strand cable
+        mult = 2;           %Multiplier for number of cables used.
+        Aeff = 1.51*10^-6;  %Effective area for 19-strand cable
         E = 193*10^9;       %Young's Modulus
         L = klass.ten;      %tendon length        
         springrate = mult*Aeff*E/L;
