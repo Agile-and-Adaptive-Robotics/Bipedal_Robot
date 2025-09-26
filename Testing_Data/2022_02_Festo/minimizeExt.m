@@ -239,7 +239,6 @@ function [LOC, gama] = Lok(klass, X1, X2, kSpr, Funit, strain_predef, deltaL)
 
 L = klass.Loc;
 C = klass.CP;
-% T = klass.Tk;
 rest = klass.rest;
 Fm = klass.Fm;
 P = klass.P;
@@ -267,12 +266,12 @@ pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
 % Now calculate angle from x-axis to this vector
 thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
 
-% % Rotation matrix about y-axis (local frame adjustment)
-% Ry = [cos(thetaY)  0  sin(thetaY);
-%       0            1  0;
-%      -sin(thetaY)  0  cos(thetaY)];
-% Rhbr = RhbrZ*Ry;            %Rotate about y-axis in body frame
-Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
+% Rotation matrix about y-axis (local frame adjustment)
+Ry = [cos(thetaY)  0  sin(thetaY);
+      0            1  0;
+     -sin(thetaY)  0  cos(thetaY)];
+Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
+Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
 
 % Transform force into bracket frame
 Fbrh = zeros(N,3);
@@ -282,29 +281,25 @@ end
 
 % Bracket deformation
 [epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, deltaL);
-pbrAnew = [norm(pbrhA(1:2))+epsilon, delta, pbrhA(3) + beta];
+deflection = [epsilon, delta, beta];
+pbrAnew = [norm(pbrhA), 0, 0] + deflection;
 
 % Replace points
 LOC = L;
-% pB = L(end,:,1);
-% pBnew = repmat(pB, N, 1);
 
 
 %Basically, we need to replace point one, but point 1 is never the same as
 %point 2 over our RoM
-for ii = 1:N
-    for i = 1:M
-        if i == 1
-            pAnew = RowVecTrans(Thbr, pbrAnew(ii,:));
-            LOC(i,:,ii) = pAnew;
-        end
+    for ii = 1:N
+        pAnew = RowVecTrans(Thbr, pbrAnew(ii,:));
+        LOC(1,:,ii) = pAnew;
     end
-end
 
 end
 
 %% Force and length reduction due to tendon
 function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,deltaL)
+%deltaL input combines X0 and delta_L (from X3)
 % e_axial, bracket axial elongation
 % e_bendY, bracket bending displacement y - direction
 % e_bendZ, bracket bending displacement z - direction
@@ -328,13 +323,15 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X2, X2]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
     k_b = reshape(k_b, [N, 1]);
     if isinf(kSpr) || klass.ten == 0
         k_eff = k_b;
+    elseif isinf(X1) && isinf(X2)
+        k_eff = kSpr;
     else
         k_eff = 1 ./ (1 ./ k_b + 1 / kSpr);  % Nx1
     end

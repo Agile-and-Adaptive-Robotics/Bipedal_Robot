@@ -6,16 +6,17 @@ clear; clc; close all
 %% Initial Baseline Evaluation (for constraint bounds)
 [a0, ~] = minimizeExtX3(0, Inf, Inf, 0, 1:4);  % All for baseline
 baselineScores = a0;  % RMSE, FVU, Max Residual
-fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
+fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
 load minimizeFlxPin10_results_20250915.mat sol_actual
 sol_actual1 = sol_actual;
 [a1, ~] = minimizeExtX3(sol_actual1(1), sol_actual1(2), sol_actual1(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
 [a2, ~] = minimizeExtX3(-sol_actual1(1), sol_actual1(2), sol_actual1(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
 % clear sol_actual
-baselineScores1 = a1;  % RMSE, FVU, Max Residual
-fprintf('Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
-fprintf('Baseline using best guess: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(a2(:,1)),mean(a2(:,2)),mean(a2(:,3)));
+baselineScores1 = a1./(a0);  % RMSE, FVU, Max Residual, normalized to baselineScores
+fprintf('Normalized to baseline score \n Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
+baselineScores2 = a2./(a0); % RMSE, FVU, Max Residual, normalized to baselineScores
+fprintf('Normalized to baseline score \n Baseline using best guess: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores2(:,1)),mean(baselineScores2(:,2)),mean(baselineScores2(:,3)));
 %% Cross-validation setup
 allBPA = [1,3,4];           %We're going to skip 42cm l_rest with a tendon
 labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
@@ -29,7 +30,7 @@ scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out va
 % lb = [-0.02 * 100, 3,3, 0];   % [cm, log10(N/m), log10(N/m), unitless]
 % ub = [0.03 * 100, 8, 8, 15];
 lb = [-0.02 * 100, 4, log10(8e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [0 * 100, log10(5e7), log10(5e6), 2];
+ub = [0 * 100, log10(5e7), log10(5e6), 1];
 clear sol_actual
 %% Solver
 for k = 1:numel(allBPA)
@@ -45,21 +46,21 @@ for k = 1:numel(allBPA)
         'UseParallel', true, ...
         'Display', 'iter', ...
         'PlotFcn', {@gaplotpareto3D_simple}, ...
-        'InitialPopulationRange',[-0.05, log10(5e4), 4, 0.05; ...
-                                  -0.013, log10(5e5), 5, 0.2], ...
+        'InitialPopulationRange',[-0.013*100, log10(5e4), log10(8e3), 0.05; ...
+                                  -0.007*100, log10(5e6), log10(8e5), 0.3], ...
         'PopulationSize', 40, ... %was 150
-        'MaxGenerations', 100, ... %was 750
+        'MaxGenerations', 125, ... %was 750
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'FunctionTolerance', 1e-4);
     goal = [0 0 0];
     weight = 1./max(a0(allBPA,:));
-    opts.HybridFcn = {@fgoalattain, goal, weight};
+%     opts.HybridFcn = {@fgoalattain, goal, weight};
 %     opts.OutputFcn = {@debugPop};
 
     % Run optimization
-     [x, fvals,exitflag,output,population,scores] = gamultiobj(@(X) min1(X, trainIdx), 4, [], [], [], [], ...
+     [x, fvals,exitflag,output,population,scores] = gamultiobj(@(X) min1(X, trainIdx, a0), 4, [], [], [], [], ...
                                                     lb, ub, ... %@(x) nonlinc(x), 
                                                     opts);
     
@@ -75,7 +76,7 @@ for k = 1:numel(allBPA)
     % Evaluate each solution on held-out BPA
     valF = zeros(size(x,1), 3);
     for i = 1:size(x,1)
-        valF(i,:) = min1(x(i,:), holdoutIdx);
+        valF(i,:) = min1(x(i,:), holdoutIdx, a0);
     end
 
     % Store full set (no bestIdx decision now)
@@ -363,7 +364,7 @@ lg = legend(tS.Children(end-1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 %% Helper functions
-function ff = min1(x, trainIdx)
+function ff = min1(x, trainIdx, kompare)
     if numel(x) == 4 && size(x,1) == 1
         % OK
     else
@@ -375,7 +376,8 @@ function ff = min1(x, trainIdx)
     Xi3 = x(4);
     try
         [f_all, ~] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, trainIdx); % Nx3 matrix (e.g., 3x3 if 3 training BPAs)
-        ff = mean(f_all(trainIdx, :), 1, 'omitnan');              % Return 1x3: [mean RMSE, mean FVU, mean MaxResidual]
+        fnorm = f_all(trainIdx,:)./kompare(trainIdx,:);     %normalize results before taking the mean
+        ff = mean(fnorm, 1, 'omitnan');              % Return 1x3: [mean RMSE, mean FVU, mean MaxResidual]
         if ~isnumeric(ff) || numel(ff) ~= 3
             ff = [Inf, Inf, Inf];  % Defensive return if shape is wrong
         end
