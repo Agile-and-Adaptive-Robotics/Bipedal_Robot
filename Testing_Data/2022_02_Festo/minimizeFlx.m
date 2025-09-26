@@ -110,14 +110,14 @@ for j = 1:a
     kspr{j} = Spr(klaus(j)); %Calculate the spring rate
     Funit{j} = computeForceVector(klaus(j));  %Calculate force vector in the hip frame
     strain_Xi0{j} = Contraction(klaus(j), [],[],Xi0); %*Calculate contraction from constant length offset
-    [L_p{j}, gemma{j}] = Lok(klaus(j), Xi1, Xi2,kspr{j},Funit{j}, strain_Xi0, Xi0); %Calculate deformed bracket geometry and stretched tendon with stiffnesses and length offset.
+    [L_p{j}, gemma{j}] = Lok(klaus(j), Xi1, Xi2,kspr{j},Funit{j}, strain_Xi0{j}, Xi0); %Calculate deformed bracket geometry and stretched tendon with stiffnesses and length offset.
     unitD_p{j} = UD(klaus(j), L_p{j}); %Calculate force unit vector with deformed geometry
     sL_p{j} = seg(klaus(j), L_p{j}); %Calculate segment lengths with deformed geometry
     Lmt_p{j} = LMT(sL_p{j}, Xi0);   %Calculate musculotendon length with deformed geometry and constant length offset
-    strain_p{j} = Contraction(klaus(j), Lmt_p{j},gemma{j},Xi0); %*Calculate contraction with bracket deformation, tendon stretch, and constant length offset
+    strain_p{j} = Contraction(klaus(j), Lmt_p{j},gemma{j},[]); %*Calculate contraction with bracket deformation, tendon stretch, and constant length offset
     F_p{j} = Force(klaus(j), unitD_p{j}, strain_p{j}); %Calculate force vector in body frame
     mA_p{j} = Mom(klaus(j), L_p{j}, unitD_p{j}); %Calculate moment arm
-    M_p{j} = Tor(mA_p{j}, F_p{j}, klaus(j).Fm, strain_p{j}); %Torque
+    M_p{j} = Tor(klaus(j), mA_p{j}, F_p{j}, strain_p{j}); %Torque
     %Original code, for reference
 %     kspr{j} = Spr(klaus(j));
 %     [L_p{j}, gemma{j}] = Lok(klaus(j), Xi1, Xi2,kspr{j});
@@ -202,36 +202,42 @@ F_unit = normalize(F_vec);
 end
 
 %% -------------- Contraction of the PAM --------------------------
-function contraction = Contraction(klass,Lmt_p,gama,X0)
+function contraction = Contraction(klass,Lmt_p,gema,X0)
             rest = klass.rest;      %resting length
             tendon = klass.ten;     %artificial tendon length
             fitting = klass.fitn;   %fitting length
+            
             if isempty(Lmt_p)
-                Lmt_p = klass.Lmt;
+                Lmt = klass.Lmt;
+            else
+                Lmt = Lmt_p;    %minus Xi0 is used in LMT function
             end
-            if isempty(gama)
-                gama = X0;
+            
+            if isempty(gema)
+                gema = 0;
             end
+            
             if isempty(X0)
                 X0 = 0;
-            end          
-            contraction = (rest-(Lmt_p-(tendon+gama)-2*fitting-X0))/rest;    %(minus Xi0 is used in LMT function, above)
+            end
+            
+            Lm = Lmt-tendon-gema-2*fitting-X0;  %active BPA muscle length
+            contraction = (rest-Lm)/rest;    %contracted percent of original
 end
 
 
 %% ------------- Location  ------------------------
-function [LOC, gamma] = Lok(klass,X1,X2,kSpr,Funit,strain,X0)
+function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain,X0)
             L = klass.Loc;      %Location (wrapping, attachment points)
             C = klass.CP;       %Cross point (moves from one frame to another)
-            T = klass.Tk;       %Transformation matrix, tibia frame represented in the hip frame
             kmax = klass.Kmax;  
             KMAX = (klass.rest-kmax)/klass.rest; %turn it into a percentage 
             if isempty(X0)
                 X0 = 0;
             end
-            FF = festo4(klass.dBPA,klass.strain/KMAX,klass.P).*klass.Fm;       %Force magnitude
-            unitD = klass.unitD;                                                %Unit direction of force, tibia frame
-            F = unitD.*FF;                                            %Force vector, tibia frame
+            rel = strain/KMAX;
+            FF = festo4(klass.dBPA,rel,klass.P).*klass.Fm;       %Force magnitude 
+            F = Funit.*FF;                                            %Force vector, hip frame
             pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
             switch klass.dBPA
                 case 20
@@ -242,7 +248,7 @@ function [LOC, gamma] = Lok(klass,X1,X2,kSpr,Funit,strain,X0)
             end
                 
             phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
-            thetabrA = atan2(phbrA(2),phbrA(1));   %angle between pbrA and x axis
+            thetabrA = atan2(phbrA(2),phbrA(1));             %angle between pbrA and x axis
             RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
                    sin(thetabrA) cos(thetabrA) 0; ...
                    0    0   1];
@@ -252,22 +258,24 @@ function [LOC, gamma] = Lok(klass,X1,X2,kSpr,Funit,strain,X0)
 
             % Rotation matrix about y-axis (local frame adjustment)
             Ry = [cos(thetaY)  0  sin(thetaY);
-                  0                1  0;
-                 -sin(thetaY) 0  cos(thetaY)];
-            Rhbr = RhbrZ*Ry;            %Rotate about y-axis in body frame
-            Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame              
+                  0            1  0;
+                 -sin(thetaY) 0   cos(thetaY)];
+            Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
+            Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame              
             LOC = L;
             N = size(L,3);
             M = size(L,1);
-            Fh = zeros(N,3);
+%             Fh = zeros(N,3);
             Fbrh = zeros(N,3);
             pAnew = zeros(N,3);     %New point A, in the hip frame
             for ii = 1:N                          %Repeat for each orientation
-                        Fh(ii,:) = -RowVecTrans(T(:,:,ii),F(ii,:));               %Force vector represented in the hip frame, opposite direction
-                        Fbrh(ii,:) = RowVecTrans(Thbr\eye(4),Fh(ii,:));            %Force vector in the hip frame represented in the bracket frame
+%                         Fh(ii,:) = -RowVecTrans(T(:,:,ii),F(ii,:));               %Force vector represented in the hip frame, opposite direction
+%                         Fbrh(ii,:) = RowVecTrans(Thbr\eye(4),Fh(ii,:));            %Force vector in the hip frame represented in the bracket frame
+                    Fbrh(ii,:) = RowVecTrans(Thbr\eye(4),F(ii,:));            %Force vector in the hip frame represented in the bracket frame
             end
-            [epsilon, delta, beta, gamma] = fortz(klass,Fbrh,X1,X2,kSpr,X0);  %strain from force divided by tensile stiffness
-            pbrAnew = [norm(pbrhA(1:2))+epsilon, delta, pbrhA(3)+ beta]; %New point A, represented in the bracket frame
+            [epsilon, delta, beta, gema] = fortz(klass,F,X1,X2,kSpr,X0);  %strain from force divided by tensile stiffness
+%             pbrAnew = [norm(pbrhA(1:2))+epsilon, delta, pbrhA(3)+ beta]; %New point A, represented in the bracket frame
+            pbrAnew = [norm(pbrhA)+epsilon, delta, beta]; %New point A, represented in the bracket frame
                         
 
             for ii = 1:N                          %Repeat for each orientation
@@ -306,22 +314,27 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
     N = size(Fbr,1);
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
-    valid = norms > 1e-8 & all(~isnan(Fbr), 2);
+    valid = norms > 1e-1 & all(~isnan(Fbr), 2);
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X2, X2]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
     k_b = reshape(k_b, [N, 1]);
-    k_eff = 1 ./ (1 ./ k_b + 1 ./ kSpr);  % Nx1
+    if isinf(X1) && isinf(X2)
+        k_eff = kSpr*ones(N, 1);
+    else
+        k_eff = 1 ./ (1 ./ k_b + 1 ./ kSpr);  % Nx1
+    end
     
     % Allocate outputs
     e_axial = zeros(N, 1);
     e_bendY = zeros(N, 1);
     e_bendZ = zeros(N, 1);
     e_cable = zeros(N, 1);    
+%     ub = rest*KMAX/2;         %upper bound of fzero
     
     % Parallel root solve
     for i = 1:N
@@ -332,58 +345,59 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
         % Per-instance constants
         keff = k_eff(i);
         unit_vec = u_hat_all(i, :);
+        Lm = mL(i);
+        
+%         r = 0.0001;     %initial guess
 
+        % Solve for r (deflection) using fzero
+    % First, compute contraction from Xi0 if deflection is zero 
+    contraction0    = ( rest - Lm ) / rest;
+    relstrain0      = contraction0 / KMAX;  %relative strain
+    if relstrain0 >= 1
+        r = 0;
+
+    else
+    
+        relfun = @(r) ...
+            festo4( D, ...
+                (rest - (Lm -  r)) / rest / KMAX, ...
+                P  ...
+            ) * mif - keff * r;
+
+        try
+            r = fzero(relfun, [0, .02]);
+        catch
+            r = 0;
+        end
+        r = max(r,0); %guard against r being slightly negative.
+    end
         
-        r = 0.0001;     %initial guess
-        
-        
-        if isinf(X1) && isinf(X2)
+        if r == 0
+            continue;
+        elseif isinf(X1) && isinf(X2)
             % Rigid body: no bracket deformation
             e_axial(i) = 0;
             e_bendY(i) = 0;
             e_bendZ(i) = 0;
             e_cable(i) = r;  % All elongation goes to cable
             continue;
+        else
+            % Final force magnitude
+            contraction = (rest - (Lm - r)) / rest;
+            relstrain = contraction / KMAX;
+            F_mag = festo4(D, relstrain, P) * mif;
+
+            % Bracket displacement
+            e_bkt = K_bracket \ (F_mag * unit_vec');
+
+            e_axial(i) = e_bkt(1);
+            e_bendY(i) = e_bkt(2);
+            e_bendZ(i) = e_bkt(3);
+            % Cable elongation
+%             r_bracket = unit_vec * e_bkt;
+            e_cable(i) = F_mag/kSpr;
         end
 
-        % Solve for r (deflection) using fzero
-    % First, compute contraction from Xi0 if deflection is zero 
-    contraction0    = ( rest - mL(i) ) / rest;
-    relstrain0      = contraction0 / KMAX;  %relative strain
-    if relstrain0 >= 1
-        r = 0;
-%     elseif contraction0 <= -0.03
-%         r = NaN;
-    else
-    
-        relfun = @(r) ...
-            festo4( D, ...
-                (rest - (mL(i) -  r)) / rest / KMAX, ...
-                P  ...
-            ) * mif - keff * r;
-
-        try
-            r = fzero(relfun, [0, 0.2]);
-        catch
-            r = 0;
-        end
-        r = max(r,0); %guard against r being slightly negative.
-    end
-
-    % Final force magnitude
-        contraction = (rest - (mL(i) - (tendon + r) - 2 * fitn)) / rest;
-        relstrain = contraction / KMAX;
-        F_mag = festo4(D, relstrain, P) * mif;
-
-        % Bracket displacement
-        e_bkt = K_bracket \ (F_mag * unit_vec');
-
-        e_axial(i) = e_bkt(1);
-        e_bendY(i) = e_bkt(2);
-        e_bendZ(i) = e_bkt(3);
-        % Cable elongation
-        r_bracket = unit_vec * e_bkt;
-        e_cable(i) = r - r_bracket;
     end
 end
 
@@ -484,13 +498,18 @@ end
         % i -> Index for Crossing Points/Joints
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
-function Mz = Tor(mA_p, F_p, maxF, strain_p)  
+function Mz = Tor(klass, mA_p, F_p, strain_p)  
             Mz = zeros(size(F_p));
            
+            switch klass.dBPA
+                case 20
+                    ss = -.03;       %maximum allowable strain
+                case 10
+                    ss = -.02;
+            end
+                    
             for i = 1:size(F_p, 1)
-                if norm(F_p(i,:)) > maxF
-                    Mz(i,:) = NaN;
-                elseif strain_p(i,:) < -0.03
+                if strain_p(i,:) < ss
                     Mz(i,:) = NaN;
                 else
                     Mz(i, :) = cross(mA_p(i, :), F_p(i, :));
@@ -532,7 +551,7 @@ end
 function vhat = normalize(v)
     N = size(v,1);
     norms = vecnorm(v,2,2);
-    valid = norms > 1e-6 & all(~isnan(v), 2);
+    valid = norms > 1e-1 & all(~isnan(v), 2);
     vhat = zeros(N, 3);
     vhat(valid, :) = v(valid, :) ./ norms(valid);
 end

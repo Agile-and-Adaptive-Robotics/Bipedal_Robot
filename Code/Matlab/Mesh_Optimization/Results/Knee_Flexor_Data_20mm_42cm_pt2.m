@@ -115,7 +115,7 @@ kmax = 0.311;
 % rest = 0.415; %resting length, m
 % kmax = 0.315; %Length at maximum contraction, m
 tendon = 0.015; 
-fitting = 0.021; %Lower profile fittings at this BPA diameter
+fitting = 0.0254; %Lower profile fittings at this BPA diameter
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 0;
 pres2 = 325;         %average pressure, first test
@@ -126,7 +126,7 @@ Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest,
 Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
 
 
-tendon_adj = tendon+0.009; 
+tendon_adj = tendon+0.01; 
 Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres1);
 Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres2);
 Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres3);

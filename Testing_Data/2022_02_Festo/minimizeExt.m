@@ -230,8 +230,6 @@ end
 Lm_adj = (Lmt - tendon -2*fitn -X0 -gama) - delta_L; %muscle length
 contraction = (rest - Lm_adj) / rest;
 
-
-
 end
 
 %% ------------- Location  ------------------------
@@ -258,7 +256,8 @@ Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
-Pbr = [8.07  -21.92   23.2]/1000;       %from centroid of bracket where it starts to cantilever.
+Pbr = [8.38 20.75 25.1]/1000;           %from centroid of bracket where it starts to cantilever (10mm).
+% Pbr = [8.07  -21.92   23.2]/1000;       %from centroid of bracket where it starts to cantilever (40mm).
 phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
 thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
 RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
@@ -325,7 +324,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     N = size(Fbr,1);
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
-    valid = norms > 1e-6 & all(~isnan(Fbr), 2);
+    valid = norms > 1e-1 & all(~isnan(Fbr), 2);
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
@@ -349,25 +348,14 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
             continue;
         end
         
-        % Per-instance constants
-%         keff = k_eff(i);
-        unit_vec = u_hat_all(i, :);
-
-        if isinf(X1) && isinf(X2)
-            % Rigid bracket: no deformation, optional cable stretch
-            e_axial(i) = 0;
-            e_bendY(i) = 0;
-            e_bendZ(i) = 0;
-            e_cable(i) = (klass.ten > 0) * 0.0001;  % Zero or small value if needed
-            continue;
-        end
-        
         % Flexible case: run Newton-Raphson
+        % Per-instance constants
+        unit_vec = u_hat_all(i, :);
         r = 1e-3;  % Initial guess
         keff = k_eff(i);
-
+        Lm = mL(i);
         for iter = 1:50
-            contraction = (rest - (mL(i) - r)) / rest;
+            contraction = (rest - (Lm - r)) / rest;
             rel = contraction / KMAX;
 
             fM = festo4(D, rel, P) * mif;
@@ -376,8 +364,9 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
 
             % Numerical derivative
             dr = 1e-6;
-            contraction_d = (rest - (mL(i) - (r + dr)) ) / rest;
+            contraction_d = (rest - (Lm - (r + dr)) ) / rest;
             rel_d = contraction_d / KMAX;
+            
             fM_d = festo4(D, rel_d, P) * mif;
             Fbal_d = fM_d - keff * (r + dr);
             dF = (Fbal_d - Fbal) / dr;
@@ -396,23 +385,34 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
             end
         end
 
-        % Final force magnitude
-        contraction = (rest - (mL(i) -  r )) / rest;
-        relstrain = contraction / KMAX;
-        F_mag = festo4(D, relstrain, P) * mif;
+        r = max(r,0);   %guard against negative r values
+        
+        if isinf(X1) && isinf(X2)
+            % Rigid bracket: no deformation, optional cable stretch
+            e_axial(i) = 0;
+            e_bendY(i) = 0;
+            e_bendZ(i) = 0;
+            e_cable(i) = r;  % Small value if needed
+            continue;
+        else
+            % Final force magnitude
+            contraction = (rest - (Lm -  r )) / rest;
+            relstrain = contraction / KMAX;
+            F_mag = festo4(D, relstrain, P) * mif;
 
-        % Bracket displacement
-        e_bkt = K_bracket \ (F_mag * unit_vec');
+            % Bracket displacement
+            e_bkt = K_bracket \ (F_mag * unit_vec');
 
-        e_axial(i) = e_bkt(1);
-        e_bendY(i) = e_bkt(2);
-        e_bendZ(i) = e_bkt(3);
+            e_axial(i) = e_bkt(1);
+            e_bendY(i) = e_bkt(2);
+            e_bendZ(i) = e_bkt(3);
 
-        % Cable elongation
-        r_bracket = unit_vec * e_bkt;
-        e_cable(i) = r - r_bracket;
-        if e_cable(i) < 0  || klass.ten == 0
-            e_cable(i) = 0;
+            % Cable elongation
+%             r_bracket = unit_vec * e_bkt;
+            e_cable(i) = F_mag/kSpr;
+%             if e_cable(i) < 0  || klass.ten == 0
+%                 e_cable(i) = 0;
+%             end
         end
     end
 end
@@ -505,7 +505,7 @@ N = size(F, 1);
 Mz = zeros(N, 3);
 
     for i = 1:N
-        if strain(i,:) < 0
+        if strain(i,:) < -.020
             Mz(i,:) = NaN;
         else
             Mz(i,:) = cross(mA(i,:), F(i,:));
@@ -540,7 +540,7 @@ end
 function vhat = normalize(v)
     N = size(v,1);
     norms = vecnorm(v,2,2);
-    valid = norms > 1e-6 & all(~isnan(v), 2);
+    valid = norms > 1e-1 & all(~isnan(v), 2);
     vhat = zeros(N, 3);
     vhat(valid, :) = v(valid, :) ./ norms(valid);
 end
