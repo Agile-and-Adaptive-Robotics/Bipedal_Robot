@@ -92,20 +92,6 @@ M_p = cell(1,a);
 for j = 1:a
     klaus(j) = kf(j);
     % Calculate locations and properties
-    %Borrowed from minimizeExt3, for reference
-%     bpa_i = klass;
-%     kspr = Spr(bpa_i);          %tendon spring rate
-%     Funit = computeForceVector(bpa_i);  %Force unit direction, calculate in the hip frame 
-%     [strain_Xi3, delta_L] = Contraction(bpa_i, [], Xi0, [], Xi3); %Calculate contraction and loss of length due to constant length offset Xi0 and wrapping factor Xi3
-%     [L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, delta_L+Xi0); %Bracket deformation and new geometry
-%     sL_p = seg(bpa_i, L_p); %segment lengths
-%     Lmt_p = LMT(sL_p, Xi0); 
-%     [strain_f, ~] = Contraction(bpa_i, Lmt_p, [], gemma, Xi3); %Simulated strain, includes loss of usable length due to wrapping
-%     unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
-%     F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
-%     mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
-%     [strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []);
-%     M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_p); %New torque prediction, using new moment arm, new Force vector, Fmax, and strain_p
     %updated code
     kspr{j} = Spr(klaus(j)); %Calculate the spring rate
     Funit{j} = computeForceVector(klaus(j));  %Calculate force vector in the hip frame
@@ -118,16 +104,7 @@ for j = 1:a
     F_p{j} = Force(klaus(j), unitD_p{j}, strain_p{j}); %Calculate force vector in body frame
     mA_p{j} = Mom(klaus(j), L_p{j}, unitD_p{j}); %Calculate moment arm
     M_p{j} = Tor(klaus(j), mA_p{j}, F_p{j}, strain_p{j}); %Torque
-    %Original code, for reference
-%     kspr{j} = Spr(klaus(j));
-%     [L_p{j}, gemma{j}] = Lok(klaus(j), Xi1, Xi2,kspr{j});
-%     unitD_p{j} = UD(klaus(j), L_p{j});
-%     sL_p{j} = seg(klaus(j), L_p{j});
-%     Lmt_p{j} = LMT(sL_p{j}, Xi0);
-%     strain_p{j} = Contraction(klaus(j), Lmt_p{j},gemma{j});
-%     F_p{j} = Force(klaus(j), unitD_p{j}, strain_p{j});
-%     mA_p{j} = Mom(klaus(j), L_p{j}, unitD_p{j});
-%     M_p{j} = Tor(mA_p{j}, F_p{j}, klaus(j).Fm, strain_p{j});
+    
     % Package into output struct
     bpa(j) = klaus(j);
     bpa(j).Lmt_p = Lmt_p{j};
@@ -202,16 +179,15 @@ F_unit = normalize(F_vec);
 end
 
 %% -------------- Contraction of the PAM --------------------------
-function contraction = Contraction(klass,Lmt_p,gema,X0)
+function contraction = Contraction(klass,Lmt,gema,X0)
             rest = klass.rest;      %resting length
             tendon = klass.ten;     %artificial tendon length
             fitting = klass.fitn;   %fitting length
             
-            if isempty(Lmt_p)
+            if isempty(Lmt)
                 Lmt = klass.Lmt;
-            else
-                Lmt = Lmt_p;    %minus Xi0 is used in LMT function
             end
+
             
             if isempty(gema)
                 gema = 0;
@@ -246,7 +222,7 @@ function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain_predef,X0)
     % Compute Force
     relstrain = strain_predef / KMAX;  %Relative strain
     FF = zeros(size(strain_predef));
-    idx = strain_predef > -0.02 & relstrain < 1;
+    idx = relstrain < 1;
     FF (idx)= festo4(D, relstrain(idx), P) * Fm; %Force magnitude
     F = Funit * FF;  % N×3, already in hip frame
     
@@ -282,14 +258,18 @@ function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain_predef,X0)
 %                         Fbrh(ii,:) = RowVecTrans(Thbr\eye(4),Fh(ii,:));            %Force vector in the hip frame represented in the bracket frame
                     Fbrh(ii,:) = RowVecTrans(Thbr\eye(4),F(ii,:));            %Force vector in the hip frame represented in the bracket frame
             end
-            [epsilon, delta, beta, gema] = fortz(klass,F,X1,X2,kSpr,X0);  %strain from force divided by tensile stiffness
+            if isinf(X1) && isinf(X2) && isinf(kSpr)
+                [epsilon, delta, beta, gema] = deal(zeros(N,1));
+            else
+                [epsilon, delta, beta, gema] = fortz(klass,F,X1,X2,kSpr,X0);  %strain from force divided by tensile stiffness
+            end
             deflection = [epsilon, delta, beta];    %bracket movement
             pbrAnew = [norm(pbrhA),0,0]+deflection; %New point A, represented in the bracket frame
             
             LOC = L;
             for ii = 1:N                          %Repeat for each orientation 
-                pAnew = RowVecTrans(Thbr, pbrAnew(ii,:)); %New point A in the hip frame
-                LOC(1,:,ii) = pAnew;      %Update location matrix
+                pAnew(ii,:) = RowVecTrans(Thbr, pbrAnew(ii,:)); %New point A in the hip frame
+                LOC(1,:,ii) = pAnew(ii,:);      %Update location matrix
             end
 
 end
@@ -329,7 +309,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X2]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));

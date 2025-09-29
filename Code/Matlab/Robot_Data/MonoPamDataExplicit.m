@@ -278,33 +278,13 @@ classdef MonoPamDataExplicit < handle
             KMAX = (rest-kmax)/rest; %turn it into a percentage 
             maxF = obj.Fmax;
             
-           rel = contract./KMAX;                    %relative strain        
-           relPres = pres/620;                      %relative pressure
-            
+           rel = contract./KMAX;                    %relative strain                    
            
-           if dia == 10
-                load FestoLookup.mat f_10
-                Fn = f_10(rel,relPres);
-           elseif dia == 20
-               load FestoLookup.mat f20
-               Fn = f20(rel,relPres);
-           elseif dia == 40
-               load FestoLookup.mat f40
-               Fn = f40(rel,relPres);
-           end 
+           Fn = festo4(dia,rel,pres);
+           Fn( Fn < 0) = 0;
            scalarForce = Fn.*maxF;
-
-            for i = 1:size(unitD, 1)
-                if scalarForce(i) < 0
-                    scalarForce(i) = 0;
-                end
-                if scalarForce(i) > maxF
-                    scalarForce(i) = NaN;
-                end
-            end
             
-            SF = diag(scalarForce);
-            F = SF*unitD;
+            F = diag(scalarForce)*unitD;            
 
         end
         
@@ -317,8 +297,20 @@ classdef MonoPamDataExplicit < handle
         function tor = get.Torque(obj)
             mA = obj.MomentArm;
             F = obj.Force;
+            strain = obj.Contraction;
             tor = cross(mA,F,2);
             
+            N = size(F, 1);
+            Mz = zeros(N, 3);
+
+
+            for i = 1:N
+                if strain(i,:) < -0.02
+                    Mz(i,:) = NaN;
+                else
+                    Mz(i,:) = cross(mA(i,:), F(i,:));
+                end
+            end
 %             for i = 1:size(mA, 1)
 %                 tor(i, :) = cross(mA(i, :), F(i, :));
 %             end

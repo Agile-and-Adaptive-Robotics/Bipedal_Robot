@@ -235,11 +235,11 @@ if isempty(Lmt)
     Lmt = klass.Lmt;
 end
 
-Lm_adj = Lmt - tendon -2*fitn-X0-gama - delta_L; %BPA length, either real or effective, and either before or after bracket deformation and tendon stretch.
+Lm_adj = Lmt - tendon - 2*fitn - X0 - gama - delta_L; %BPA length, either real or effective, and either before or after bracket deformation and tendon stretch.
 contraction = (rest - Lm_adj) / rest;
 
 if ~isempty(X3)
-    debug_contraction_plot = false;
+    debug_contraction_plot = true;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         figure;
         f = tiledlayout(3,2);
@@ -269,7 +269,7 @@ if ~isempty(X3)
         plot(theta_k, Lm, 'DisplayName','Lm');
         plot(theta_k, Lm_adj, 'DisplayName','Lm, adj');
         hold off
-        title('angleRad'); ylabel('angle [deg]'); grid on; legend;
+        title('Lm'); ylabel('angle [deg]'); grid on; legend;
         
         nexttile(5);
         plot(theta_k, gama, 'k'); title('cable stretch'); ylabel('length (m)'); grid on;
@@ -307,13 +307,13 @@ N = size(L,3);
 % Compute Force
 relstrain = strain_predef / KMAX;  %Relative strain
 FF = zeros(size(strain_predef));
-idx = strain_predef > -0.02 & relstrain < 1;
+idx = relstrain < 1;
 FF (idx)= festo4(D, relstrain(idx), P) * Fm; %Force magnitude
 Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
-Pbr = [-6.26, -29.69, 75.06]/1000;                          %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
+Pbr = [-2.65, -54.71, 75.06]/1000;                          %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
 % Pbr = [-7.325, -22.27, 75.06]/1000;                          %from hip origin to midpoint between two bolt holes on superior anterior bracket of the Bifemsh_Pam
 phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
 thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
@@ -322,13 +322,13 @@ RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
        0    0   1];
 pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
 % Now calculate angle from x-axis to this vector
-thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
-% % Rotation matrix about y-axis (local frame adjustment)
-Ry = [cos(thetaY) 0  sin(thetaY);
-      0           1  0;
-     -sin(thetaY) 0  cos(thetaY)];
-Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
-Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
+% thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
+% % % Rotation matrix about y-axis (local frame adjustment)
+% Ry = [cos(thetaY) 0  sin(thetaY);
+%       0           1  0;
+%      -sin(thetaY) 0  cos(thetaY)];
+% Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
+Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
             
 %more complicated way to calculate vector and rotation matrix so that your
 %new x axis points to muscle origin.
@@ -357,9 +357,13 @@ for ii = 1:N
 end
 
 % Bracket deformation
-[epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, delta_L);
+if isinf(X1) && isinf(X2) && isinf(kSpr)
+    [epsilon, delta, beta] = deal(zeros(N,1));
+else
+    [epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, delta_L);
+end
 deflection = [epsilon, delta, beta];
-pbrAnew = [norm(phbrA), 0, 0] +deflection; %Muscle origin location, bracket frame
+pbrAnew = [norm(pbrhA(1:2)), 0, pbrhA(3)] +deflection; %Muscle origin location, bracket frame
 % pbrAnew = [norm([phbrA(1) phbrA(3)])+epsilon, phbrA(2)+delta,  beta];
 
 % Replace points
@@ -412,7 +416,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X2]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X2, X1, X2]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
@@ -427,11 +431,11 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         
         keff = k_eff(i);
         unit_vec = u_hat_all(i, :);
-        Lm = mL(i);
+%         Lm = mL(i);
         
         % Solve for r (deflection) using fzero
         % First, compute contraction from Xi0 if deflection is zero 
-        contraction0    = ( rest - Lm ) / rest;
+        contraction0    = ( rest - mL(i) ) / rest;
         relstrain0      = contraction0 / KMAX;  %relative strain
         if relstrain0 >= 1
             r = 0;
@@ -440,7 +444,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
 
             relfun = @(r) ...
                 festo4( D, ...
-                    (rest - (Lm -  r)) / rest / KMAX, ...
+                    (rest - (mL(i) -  r)) / rest / KMAX, ...
                     P  ...
                 ) * mif - keff * r;
 
@@ -463,7 +467,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
             continue;
         else
             % Final force magnitude
-            contraction = (rest - (Lm - r)) / rest;
+            contraction = (rest - (mL(i) - r)) / rest;
             relstrain = contraction / KMAX;
             F_mag = festo4(D, relstrain, P) * mif;
 
@@ -485,7 +489,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         % Flexible case: run Newton-Raphson
 
 %         for iter = 1:50
-%             contraction = (rest - (Lm - r)) / rest;
+%             contraction = (rest - (mL(i) - r)) / rest;
 %             rel = contraction / KMAX;
 % 
 %             fM = festo4(D,rel, P) * mif;
@@ -494,7 +498,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
 % 
 %             % Numerical derivative
 %             dr = 1e-6;
-%             contraction_d = (rest - (Lm - ( r + dr)) ) / rest;
+%             contraction_d = (rest - (mL(i) - ( r + dr)) ) / rest;
 %             rel_d = contraction_d / KMAX;
 %             fM_d = festo4(D,rel_d, P) * mif;
 %             Fbal_d = fM_d - keff * (r + dr);
@@ -526,7 +530,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
 %         end
 %         
 %         % Final force magnitude
-%         contraction = (rest - (Lm - r)) / rest;
+%         contraction = (rest - (mL(i) - r)) / rest;
 %         relstrain = contraction / KMAX;
 %         F_mag = festo4(D, relstrain, P) * mif;
 % 
@@ -632,15 +636,14 @@ end
         % ii -> Index for every degree of motion
         % iii -> Index for axes of interest to observe Torque about
 function Mz = Tor(mA, F, strain)
-% maxF = klass.Fm;        %Maximum BPA force
+
 N = size(F, 1);
 Mz = zeros(N, 3);
-% kmax = (klass.rest - klass.Kmax)/klass.rest;
+
 
     for i = 1:N
-        if strain(i,:) < 0
+        if strain(i,:) < -0.02
             Mz(i,:) = NaN;
-%             Mz(i,:) = cross(mA(i,:), F(i,:));
         else
             Mz(i,:) = cross(mA(i,:), F(i,:));
         end

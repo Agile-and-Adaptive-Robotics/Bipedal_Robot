@@ -82,7 +82,7 @@ for i = 1:positions
                         p7];       %Tibia bracket (insertion)
     elseif phiD(i) >= ang2 && phiD(i) < ang1
      Location(:,:,i) = [p1;...     %Origin
-                        p2;...         %BPA slips off screw that joins femur body with femoral condyles
+                        p2;...        %Contact with screw that joins femur body with femoral condyles
                         p2;...        %Contact point
                         p2;...
                         p2;...

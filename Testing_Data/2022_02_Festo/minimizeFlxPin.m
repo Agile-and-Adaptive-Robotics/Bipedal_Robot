@@ -72,21 +72,7 @@ M_p = cell(1,a);
 for j = 1:a
     klaus(j) = kf(j);
     % Calculate locations and properties
-    %Borrowed from minimizeExt3, for reference
-%     bpa_i = klass;
-%     kspr = Spr(bpa_i);          %tendon spring rate
-%     Funit = computeForceVector(bpa_i);  %Force unit direction, calculate in the hip frame 
-%     [strain_Xi3, delta_L] = Contraction(bpa_i, [], Xi0, [], Xi3); %Calculate contraction and loss of length due to constant length offset Xi0 and wrapping factor Xi3
-%     [L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, delta_L+Xi0); %Bracket deformation and new geometry
-%     sL_p = seg(bpa_i, L_p); %segment lengths
-%     Lmt_p = LMT(sL_p, Xi0); 
-%     [strain_f, ~] = Contraction(bpa_i, Lmt_p, [], gemma, Xi3); %Simulated strain, includes loss of usable length due to wrapping
-%     unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
-%     F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
-%     mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
-%     [strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []);
-%     M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_p); %New torque prediction, using new moment arm, new Force vector, Fmax, and strain_p
-    %Updated code
+    
     strain_Xi0{j} = Contraction(klaus(j), [],Xi0); %Calculate contraction with constant length offset
     L_p{j} = Lok(klaus(j), Xi1, Xi2, strain_Xi0{j},Xi0);   %Bracket deformation changing geometry using stiffnesses and constant length offset
     unitD_p{j} = UD(klaus(j), L_p{j});   %New force direction
@@ -96,15 +82,6 @@ for j = 1:a
     F_p{j} = Force(klaus(j), unitD_p{j}, strain_p{j});  %new force vector
     mA_p{j} = Mom(klaus(j), L_p{j}, unitD_p{j});   %new moment arm
     M_p{j} = Tor(mA_p{j}, F_p{j}, klaus(j).Fm, strain_p{j});  %new torque
-    %Original code, kept as reference
-%     L_p{j} = Lok(klaus(j), Xi1, Xi2, []);   %Bracket deformation changing geometry
-%     unitD_p{j} = UD(klaus(j), L_p{j});   %New force direction
-%     sL_p{j} = seg(klaus(j), L_p{j});   %New segment lengths
-%     Lmt_p{j} = LMT(sL_p{j}, Xi0);     %New musclulotendon length
-%     strain_p{j} = Contraction(klaus(j), Lmt_p{j});  %new contraction amount
-%     F_p{j} = Force(klaus(j), unitD_p{j}, strain_p{j});  %new force amount
-%     mA_p{j} = Mom(klaus(j), L_p{j}, unitD_p{j});   %new moment arm
-%     M_p{j} = Tor(mA_p{j}, F_p{j}, klaus(j).Fm, strain_p{j});  %new torque
     
     % Package into output struct
     bpa(j) = klaus(j);
@@ -163,15 +140,21 @@ function LOC = Lok(klass,X1,X2,strain,X0)
             unitD = klass.unitD;            %unit direction of force vector, tibia frame
             Fk = unitD.*FF;                  %Force vector, tibia frame
             pB = L(C,:,1);                  %Distance from knee frame to muscle insertion
-            Pbri = [-27.5, -125.91, -0.54]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
+            Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
             pkbrB = pB-Pbri;                  %vector from bracket to point B, in the knee frame
             thetabrB = atan2(pkbrB(2),pkbrB(1));   %angle between pbrB and x axis
             RkbrZ = [cos(thetabrB) -sin(thetabrB) 0; ...     %Rotation matrix
                    sin(thetabrB) cos(thetabrB) 0; ...
                    0    0   1];
             pbrkB = RkbrZ'*pkbrB';       %Vector in the bracket frame
-
-            Tkbr = RpToTrans(RkbrZ, Pbri');    %Transformation matrix, flexor bracket frame in knee frame
+%             Now calculate angle from x-axis to this vector
+            thetaY = atan2(pbrkB(3), pbrkB(1));  % z vs x (in bracket frame)
+            % % Rotation matrix about y-axis (local frame adjustment)
+            Ry = [cos(thetaY) 0  sin(thetaY);
+                  0           1  0;
+                 -sin(thetaY) 0  cos(thetaY)];
+            Rkbr = RkbrZ*Ry';            %Rotate about y-axis in body frame
+            Tkbr = RpToTrans(Rkbr, Pbri');    %Transformation matrix, flexor bracket frame in knee frame
 
             LOC = L;            %new location matrix
             N = size(L,3);
@@ -182,19 +165,19 @@ function LOC = Lok(klass,X1,X2,strain,X0)
                     Fbrk(ii,:) = RowVecTrans(Tkbr\eye(4),Fk(ii,:)); %Force vector in the tibia frame represented in the lower bracket frame
             end
 
-            [epsilon, delta, beta] = fortz(klass,Fbrk,X1,X2,X0);  %strain from force divided by tensile stiffness
+            if isinf(X1) && isinf(X2)
+                [epsilon, delta, beta] = deal(zeros(N,1));
+            else
+                [epsilon, delta, beta] = fortz(klass,Fbrk,X1,X2,X0);  %strain from force divided by tensile stiffness
+            end
+            
             eB = [epsilon, delta, beta];
-            pbrBnew = [norm(pkbrB(1:2)), 0, pkbrB(3)]+eB; %new point B, in the bracket's frame
-          
-            for ii = 1:N                          %Repeat for each orientation
-                for i = 1:M                      %Repeat for all muscle segments
-                    if i == C
-                        pBnew(ii,:) = RowVecTrans(Tkbr, pbrBnew(ii,:));     %New point B, in the tibia frame
-                        LOC(i,:,ii) = pBnew(ii,:);
-                    else
-                    end
+            pbrBnew = [norm(pkbrB), 0, 0] + eB; %new point B, in the bracket's frame
+            
 
-                end
+            for ii = 1:N                          %Repeat for each orientation
+                pBnew(ii,:) = RowVecTrans(Tkbr, pbrBnew(ii,:));     %New point B, in the tibia frame
+                LOC(2,:,ii) = pBnew(ii,:);
             end
 end
 

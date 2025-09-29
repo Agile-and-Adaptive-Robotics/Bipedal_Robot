@@ -263,8 +263,9 @@ N = size(L,3);
 % Compute Force
 relstrain = strain_predef ./ KMAX;
 FF = zeros(size(strain_predef));
-idx = strain_predef > -0.02 & relstrain < 1;
+idx = relstrain < 1;
 FF (idx)= festo4(D, relstrain(idx), P) .* Fm; %Force magnitude
+FF (FF<0) = 0;
 Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
@@ -293,7 +294,11 @@ for ii = 1:N
 end
 
 % Bracket deformation
-[epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, deltaL);
+if isinf(X1) && isinf(X2) && isinf(kSpr)
+                [epsilon, delta, beta, gama] = deal(zeros(N,1));
+else
+                [epsilon, delta, beta, gama] = fortz(klass,F,X1,X2,kSpr,X0);  %strain from force divided by tensile stiffness
+end
 deflection = [epsilon, delta, beta];
 pbrAnew = [norm(pbrhA), 0, 0] + deflection;
 
@@ -348,10 +353,9 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
     k_b = reshape(k_b, [N, 1]);
-    if isinf(kSpr) || klass.ten == 0
-        k_eff = k_b;
-    elseif isinf(X1) && isinf(X2)
-        k_eff = kSpr;
+
+    if isinf(X1) && isinf(X2)
+        k_eff = kSpr*ones(size(mL));
     else
         k_eff = 1 ./ (1 ./ k_b + 1 / kSpr);  % Nx1
     end
@@ -365,25 +369,11 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         
         % Flexible case: run Newton-Raphson
         % Per-instance constants
+        keff = k_eff(i);
         unit_vec = u_hat_all(i, :);
         Lm = mL(i);
-        r = 1e-3;  % Initial guess
-        
-        if length(k_eff)>1
-            keff = k_eff(i);
-        else
-            keff = k_eff;
-        end
-        
-        if isinf(X1) && isinf(X2) && tendon == 0
-            % Rigid bracket: no deformation, optional cable stretch
-            e_axial(i) = 0;
-            e_bendY(i) = 0;
-            e_bendZ(i) = 0;
-            e_cable(i) = 0;  % Zero or small value if needed
-        break;
-        end
-        
+        r = 1e-3;  % Initial guess                
+
         for iter = 1:50
             contraction = (rest - (Lm - r)) / rest;
             rel = contraction / KMAX;
