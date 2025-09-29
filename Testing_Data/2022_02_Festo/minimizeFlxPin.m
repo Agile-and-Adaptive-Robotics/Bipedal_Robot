@@ -222,7 +222,7 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
     N = size(Fbr,1);
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
-    valid = norms > 1 & all(~isnan(Fbr), 2);
+    valid = norms > 1e-4 & all(~isnan(Fbr), 2);
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
@@ -464,7 +464,7 @@ end
 function vhat = normalize(v)
     N = size(v,1);
     norms = vecnorm(v,2,2);
-    valid = norms > 1e-6 & all(~isnan(v), 2);
+    valid = norms > 1e-4 & all(~isnan(v), 2);
     vhat = zeros(N, 3);
     vhat(valid, :) = v(valid, :) ./ norms(valid);
 end

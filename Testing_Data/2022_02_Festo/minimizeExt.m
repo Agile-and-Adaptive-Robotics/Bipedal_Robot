@@ -147,6 +147,39 @@ tendon = klass.ten;
 fitn = klass.fitn;
 theta_k = klass.Ak(:);  % degrees
 N = length(theta_k);
+KMAX = (rest - klass.Kmax)/rest;
+
+% --- Gama (deformation) ---
+if isempty(gama)
+    gama = zeros(N,1);
+end
+
+% --- Delta_L from curvature ---
+delta_L = zeros(N,1);
+delta_L2 = zeros(N,1);
+
+if ~isempty(X3)
+    ang = -9.19;
+    angleRad = deg2rad((ang-theta_k)*80/(ang+120));
+    idx = angleRad > 0;
+    if isempty(Lmt)     %Then use klass.Lmt and X0
+        Lm = (klass.Lmt - tendon -2*fitn-X0); %length of the BPA
+    end
+    if isempty(X0)              %then X0 is already used in LMT
+        Lm = Lmt-tendon-2*fitn-gama;
+    end
+    strain = (rest - Lm)/rest;
+    relstrain = strain/KMAX;
+    comp = 1-relstrain;  %additive complement to relative strain
+    comp = max(0, comp);
+    R1 = 0.022; %minimum radius 1
+    R2 = 0.176; %minimum radius 2
+    delta_L1 = X3*(R1)*deg2rad(28).*comp.^2*ones(size(N,1));
+    delta_L2(idx) = X3*(R2)*angleRad(idx).*comp(idx).^2 ;
+
+    delta_L = delta_L1+delta_L2;   
+    
+end
 
 if isempty(X0)
     X0 = 0;
@@ -156,48 +189,21 @@ if isempty(Lmt)
     Lmt = klass.Lmt;
 end
 
-% --- Gama (deformation) ---
-if isempty(gama)
-    gama = zeros(N,1);
-end
-
-% --- Delta_L from curvature ---
-delta_L = zeros(N,1);
-delta_L1 = zeros(N,1);
-delta_L2 = zeros(N,1);
+Lm_adj = Lmt - tendon -2*fitn-X0-gama - delta_L; %muscle length
+contraction = (rest - Lm_adj) / rest;
 
 if ~isempty(X3)
-    ang1 = 10;
-    ang2 = -9.19;
-    angleRad1 = deg2rad(ang1-theta_k);
-    angleRad2 = deg2rad((ang2-theta_k)*80/(ang2+120));
-    idx1 = theta_k <= ang1 & theta_k >= ang2;
-    idx2 = angleRad2 > 0;
-    KMAX = (rest - klass.Kmax)/rest;
-    Lm = (Lmt - tendon -2*fitn -X0 -gama); %length of the BPA
-    strain = (rest - Lm)/rest;
-    relstrain = strain/KMAX;
-    comp = 1-relstrain;  %additive complement to relative strain
-    comp = max(0, comp);
-    R1 = 0.022; %minimum radius 1
-    R2 = 0.176; %minimum radius 2
-    for i = 1:length(theta_k)
-        if theta_k(i) >= ang2
-         delta_L1(i) = X3*(R1)*deg2rad(28).*comp(i).^2;
-        elseif theta_k(i) < ang2
-         delta_L2(i) = X3*(R2)*angleRad2(i).*comp(i).^2 + X3*(R1)*deg2rad(28).*comp(i).^2;
-        else
-        end
-    end
-    delta_L = delta_L1+delta_L2;
-    
-    
-
     debug_contraction_plot = true;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         figure;
+        txt = sprintf("Lrest = %.3f, tendon = %.3f",klass.rest, klass.ten);
+        title(txt);
         subplot(3,2,1);
-        plot(theta_k, comp, 'b'); title('comp = 1 - relstrain'); ylabel('comp'); grid on;
+        hold on
+        plot(theta_k, comp, 'b','DisplayName','comp'); 
+        plot(theta_k, comp.^2, 'b','DisplayName','comp^2');
+        hold off
+        title('comp = 1 - relstrain'); ylabel('comp'); grid on; legend;
 
         subplot(3,2,2);
         hold on
@@ -209,48 +215,56 @@ if ~isempty(X3)
 
         subplot(3,2,3);
         hold on
-        plot(theta_k, strain, 'k', 'DisplayName','strain'); 
+        plot(theta_k, strain, 'k', 'DisplayName','\epsilon'); 
+        plot(theta_k, contraction, 'k', 'DisplayName','\epsilon, adjusted');
         hold off
         title('strain'); ylabel('strain'); grid on; legend
 
         subplot(3,2,4);
-        hold on
-        plot(theta_k, angleRad1, 'DisplayName','angleRad1'); 
-        plot(theta_k, angleRad2, 'DisplayName','angleRad2');
+        hold on 
+        plot(theta_k, Lm, 'DisplayName','Lm');
+        plot(theta_k, Lm_adj, 'DisplayName','Lm, adj');
         hold off
         title('angleRad'); ylabel('angle [deg]'); grid on; legend;
         
         subplot(3,2,5);
         plot(theta_k, gama, 'k'); title('cable stretch'); ylabel('length (m)'); grid on;
-
-
+        
+        subplot(3,2,6);
+        hold on 
+        plot(theta_k, angleRad, 'DisplayName','angleRad');
+        hold off
+        title('angleRad'); ylabel('angle [deg]'); grid on; legend;
     end
 end
-
-Lm_adj = (Lmt - tendon -2*fitn -X0 -gama) - delta_L; %muscle length
-contraction = (rest - Lm_adj) / rest;
 
 end
 
 %% ------------- Location  ------------------------
 function [LOC, gama] = Lok(klass, X1, X2, kSpr, Funit, strain_predef, deltaL)
 % Inputs:
+%   bpa class info
+%   X1, X2 stiffness
+%   kSpr, tendon stiffness
+%   Funit, force unit direction in the hip frame
 %   strain_predef – N×1 strain vector (e.g., from Xi0 + Xi3 curvature-only effect)
-
+%   delta_L, which is actually X0 and delta_L combined
 L = klass.Loc;
-C = klass.CP;
+% C = klass.CP;
 rest = klass.rest;
 Fm = klass.Fm;
 P = klass.P;
 D = klass.dBPA;
-KMAX = (rest - klass.Kmax)/rest;
+kmax = klass.Kmax;
+KMAX = (rest - kmax)/rest;
 N = size(L,3);
-M = size(L,1);
+% M = size(L,1);
 
 % Compute Force
 relstrain = strain_predef ./ KMAX;
-FF = festo4(D, relstrain, P) .* Fm;
-FF(relstrain > 1) = 0;
+FF = zeros(size(strain_predef));
+idx = strain_predef > -0.02 & relstrain < 1;
+FF (idx)= festo4(D, relstrain(idx), P) .* Fm; %Force magnitude
 Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
@@ -265,7 +279,6 @@ RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
 pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
 % Now calculate angle from x-axis to this vector
 thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
-
 % Rotation matrix about y-axis (local frame adjustment)
 Ry = [cos(thetaY)  0  sin(thetaY);
       0            1  0;
@@ -286,13 +299,12 @@ pbrAnew = [norm(pbrhA), 0, 0] + deflection;
 
 % Replace points
 LOC = L;
-
-
+pAnew = zeros(size(pbrAnew));
 %Basically, we need to replace point one, but point 1 is never the same as
 %point 2 over our RoM
     for ii = 1:N
-        pAnew = RowVecTrans(Thbr, pbrAnew(ii,:));
-        LOC(1,:,ii) = pAnew;
+        pAnew(ii,:) = RowVecTrans(Thbr, pbrAnew(ii,:));
+        LOC(1,:,ii) = pAnew(ii,:);
     end
 
 end
@@ -305,7 +317,15 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
 % e_bendZ, bracket bending displacement z - direction
 % e_cable, tendon cable stretch
 % total length change
+    N = size(Fbr,1);
+    % Initialize outputs
+    [e_axial, e_bendY, e_bendZ, e_cable] = deal(zeros(N,1));
     
+    if isinf(X1) && isinf(X2) && isinf(kSpr)
+        return
+    end
+    
+    %Initialize inputs
     D      = klass.dBPA;    %uninflated diameter
     rest   = klass.rest;    %BPA resting length
     tendon = klass.ten;     %tendon length
@@ -316,14 +336,14 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     KMAX   = (rest-kmax)/rest; %maximum contraction percent
     P      = klass.P;          %pressure
     
-    N = size(Fbr,1);
+
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
-    valid = norms > 1e-1 & all(~isnan(Fbr), 2);
+    valid = norms > 1e-3 & all(~isnan(Fbr), 2);
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X2]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
@@ -336,9 +356,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         k_eff = 1 ./ (1 ./ k_b + 1 / kSpr);  % Nx1
     end
     
-    % Initialize outputs
-    [e_axial, e_bendY, e_bendZ, e_cable] = deal(zeros(N,1));    
-    
+
     % Parallel root solve
     for i = 1:N
         if ~valid(i)
@@ -348,9 +366,24 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         % Flexible case: run Newton-Raphson
         % Per-instance constants
         unit_vec = u_hat_all(i, :);
-        r = 1e-3;  % Initial guess
-        keff = k_eff(i);
         Lm = mL(i);
+        r = 1e-3;  % Initial guess
+        
+        if length(k_eff)>1
+            keff = k_eff(i);
+        else
+            keff = k_eff;
+        end
+        
+        if isinf(X1) && isinf(X2) && tendon == 0
+            % Rigid bracket: no deformation, optional cable stretch
+            e_axial(i) = 0;
+            e_bendY(i) = 0;
+            e_bendZ(i) = 0;
+            e_cable(i) = 0;  % Zero or small value if needed
+        break;
+        end
+        
         for iter = 1:50
             contraction = (rest - (Lm - r)) / rest;
             rel = contraction / KMAX;
@@ -384,7 +417,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
 
         r = max(r,0);   %guard against negative r values
         
-        if isinf(X1) && isinf(X2)
+        if isinf(X1) && isinf(X2) && tendon > 0
             % Rigid bracket: no deformation, optional cable stretch
             e_axial(i) = 0;
             e_bendY(i) = 0;
@@ -405,11 +438,8 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
             e_bendZ(i) = e_bkt(3);
 
             % Cable elongation
-%             r_bracket = unit_vec * e_bkt;
             e_cable(i) = F_mag/kSpr;
-%             if e_cable(i) < 0  || klass.ten == 0
-%                 e_cable(i) = 0;
-%             end
+
         end
     end
 end
@@ -481,11 +511,17 @@ end
         %% -------------- Force --------------------------
         %Calculate the direction of the forced applied by the muscle
 function F = Force(klass, unitD, strain)
+    D = klass.dBPA;
     rest = klass.rest;
-    KMAX = (rest - klass.Kmax) / rest;
+    P = klass.P;
+    mif = klass.Fm;
+    kmax = klass.Kmax;
+    KMAX = (rest - kmax) / rest;
     rel = strain ./ KMAX;  % normalized strain
-    Fn = festo4(klass.dBPA, rel, klass.P);  % Force, normalized
-    scalarForce = Fn .* klass.Fm;  %Redimensionalize
+%     idx = strain > -0.02 & rel < 1;
+%     Fn = zeros(size(klass.unitD,1),1);
+    Fn = festo4(D, rel, P);  % Force, normalized
+    scalarForce = Fn *mif;  %Redimensionalize
     scalarForce(scalarForce < 0) = 0;  % Eliminate negatives
 
     F = scalarForce .* unitD;  % Nx3
@@ -537,7 +573,7 @@ end
 function vhat = normalize(v)
     N = size(v,1);
     norms = vecnorm(v,2,2);
-    valid = norms > 1e-1 & all(~isnan(v), 2);
+    valid = norms > 1e-3 & all(~isnan(v), 2);
     vhat = zeros(N, 3);
     vhat(valid, :) = v(valid, :) ./ norms(valid);
 end

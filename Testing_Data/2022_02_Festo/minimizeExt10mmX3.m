@@ -4,14 +4,14 @@
 clear; clc; close all
 
 %% Initial Baseline Evaluation (for constraint bounds)
-[a0, ~] = minimizeExtX3(0, Inf, Inf, 0, 1:4);  % All for baseline
+[a0, bpa0] = minimizeExtX3(0, Inf, Inf, 0, 1:4);  % All for baseline
 baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
 load minimizeFlxPin10_results_20250915.mat sol_actual
 sol_actual1 = sol_actual;
 [a1, ~] = minimizeExtX3(sol_actual1(1), sol_actual1(2), sol_actual1(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
-[a2, ~] = minimizeExtX3(-sol_actual1(1), sol_actual1(2), sol_actual1(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
+[a2, bpa2] = minimizeExtX3(-sol_actual1(1), sol_actual1(2), sol_actual1(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
 % clear sol_actual
 baselineScores1 = a1./(a0);  % RMSE, FVU, Max Residual, normalized to baselineScores
 fprintf('Normalized to baseline score \n Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
@@ -49,14 +49,14 @@ for k = 1:numel(allBPA)
         'InitialPopulationRange',[-0.013*100, log10(5e4), log10(8e3), 0.05; ...
                                   -0.007*100, log10(5e6), log10(8e5), 0.3], ...
         'PopulationSize', 40, ... %was 150
-        'MaxGenerations', 125, ... %was 750
+        'MaxGenerations', 50, ... %was 750
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'FunctionTolerance', 1e-4);
     goal = [0 0 0];
-    weight = 1./max(a0(allBPA,:));
-%     opts.HybridFcn = {@fgoalattain, goal, weight};
+    weight = 1./max(a0(trainIdx,:));
+    opts.HybridFcn = {@fgoalattain, goal, weight};
 %     opts.OutputFcn = {@debugPop};
 
     % Run optimization

@@ -9,7 +9,7 @@ baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
 load minimizeExtPin10_results_20250919_squared.mat filtered_results
-pick = 3;
+pick = 1;
 sol_actual = filtered_results(pick, 2:5);
 sol_actual1 = sol_actual;
 [f, bpa] = minimizeExt(sol_actual1(1), sol_actual1(2), sol_actual1(3), sol_actual1(4), 1);   % Use solution from Flexor bracket, and compare results
