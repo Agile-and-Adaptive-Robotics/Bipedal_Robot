@@ -224,7 +224,7 @@ function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain_predef,X0)
     FF = zeros(size(strain_predef));
     idx = relstrain < 1;
     FF (idx)= festo4(D, relstrain(idx), P) * Fm; %Force magnitude
-    F = Funit * FF;  % N×3, already in hip frame
+    F = diag(FF)*Funit;  % N×3, already in hip frame
     
     pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
             switch klass.dBPA
@@ -282,12 +282,10 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
 % e_cable, tendon cable stretch
 % total length change
     
+    N = size(Fbr,1);
     % Initialize outputs
     [e_axial, e_bendY, e_bendZ, e_cable] = deal(zeros(N,1));
     
-    if isinf(X1) && isinf(X2) && isinf(kSpr)
-        return;
-    end
     
     D = klass.dBPA;         %BPA diameter
     if isempty(X0)
@@ -302,7 +300,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
     KMAX = (rest-kmax)/rest; %turn it into a percentage
     P = klass.P;            %pressure
     
-    N = size(Fbr,1);
+    
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
     valid = norms > 1e-3 & all(~isnan(Fbr), 2);

@@ -2,9 +2,11 @@
 %Minimization scheme
 
 clear; clc; close all
-profile on
+% profile on
 
 [a, b, ~] = minimizeFlxPin(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
+fprintf('Baseline training: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',a(1),a(2),a(3));
+fprintf('Baseline validation: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',b(1),b(2),b(3));
 %% Problem setup
 
 lb = [-0.03*100, 3, 3];
@@ -14,14 +16,14 @@ ub = [0.03*100, 9, 9];
 opts = optimoptions('gamultiobj', ...
         'UseParallel', true, ...
         'Display', 'iter', ...        %
-        'InitialPopulationRange',[.005*100, 4, log10(3700); 0.02*100 6 5], ...
+        'InitialPopulationRange',[.005*100, 4, 4; 0.015*100 7 6], ...
         'PopulationSize', 50, ...  %Originally 75
-        'MaxGenerations', 600, ... %Originally 600
+        'MaxGenerations', 80, ... %Originally 600
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
-        'PlotFcn', {@gaplotpareto}, ...
-        'FunctionTolerance', 1e-5);
+        'PlotFcn', {@gaplotpareto3D_simple}, ...
+        'FunctionTolerance', 1e-3);
 goal = [0 0 0];
 weight = 1./a;
 opts.HybridFcn = {@fgoalattain, goal, weight};
@@ -32,7 +34,7 @@ opts.HybridFcn = {@fgoalattain, goal, weight};
     lb, ub, ...    %@(x) nonlinc(x), ...
     opts);
 
-profile viewer
+% profile viewer
 % [sol,fval,Pareto_front, Pareto_Fvals, exitflag,output] = GODLIKE(@min1,lb,ub,[],'NumObjectives',3,...
 %                                          'algorithms', {'DE';'GA';'ASA';'PSO'},...
 %                                          'display'   , 'plot',...
@@ -378,4 +380,27 @@ function [c, ceq] = nonlinc(X)
     % Constraints: f < a and g < b
     c = [f - a_local; g - b_local];
     ceq = [];
+end
+
+function [state, options, optchanged] = gaplotpareto3D_simple(options, state, flag)
+    optchanged = false;  % Must be returned even if unchanged
+    persistent figHandle
+    if strcmp(flag, 'init') || isempty(figHandle) || ~isvalid(figHandle)
+        figHandle = figure(99); 
+        set(figHandle, 'Name', 'Live Pareto Front', 'NumberTitle', 'off');
+    end
+    if strcmp(flag, 'iter') || strcmp(flag, 'done')
+        scores = state.Score;
+        if ~isempty(scores) && isnumeric(scores) && size(scores,2) == 3
+            figure(figHandle); 
+            scatter3(scores(:,1), scores(:,2), scores(:,3), 50, 'filled');
+            xlabel('\bf RMSE', 'FontSize', 12);
+            ylabel('\bf FVU', 'FontSize', 12);
+            zlabel('\bf Max Residual', 'FontSize', 12);
+            title('\bf Pareto Front (Training Set)', 'FontSize', 14);
+            grid on;
+            view(135, 30);
+            drawnow;
+        end
+    end
 end

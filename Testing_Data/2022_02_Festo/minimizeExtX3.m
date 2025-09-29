@@ -239,7 +239,7 @@ Lm_adj = Lmt - tendon - 2*fitn - X0 - gama - delta_L; %BPA length, either real o
 contraction = (rest - Lm_adj) / rest;
 
 if ~isempty(X3)
-    debug_contraction_plot = true;
+    debug_contraction_plot = false;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         figure;
         f = tiledlayout(3,2);
@@ -358,7 +358,7 @@ end
 
 % Bracket deformation
 if isinf(X1) && isinf(X2) && isinf(kSpr)
-    [epsilon, delta, beta] = deal(zeros(N,1));
+    [epsilon, delta, beta, gama] = deal(zeros(N,1));
 else
     [epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, delta_L);
 end
@@ -416,7 +416,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X2, X1, X2]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X2, X1, X1]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
@@ -478,7 +478,14 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
             e_bendY(i) = e_bkt(2);
             e_bendZ(i) = e_bkt(3);
             % Cable elongation
-%             r_bracket = unit_vec * e_bkt;
+            r_bracket = unit_vec * e_bkt;
+            r_cable = r - r_bracket;
+      
+            if r_cable < 0
+                r_cable = 0;
+            end
+            e_cable(i) = r_cable;
+                
             e_cable(i) = F_mag/kSpr;
         end
 
