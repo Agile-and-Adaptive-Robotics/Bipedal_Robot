@@ -2,7 +2,6 @@
 %Minimization scheme
 
 clear; clc; close all
-profile on
 
 [a, b, d, ~] = minimizeFlx(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
 

@@ -8,7 +8,7 @@ clear; clc; close all
 baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
-load minimizeFlxPin10_results_20250915.mat sol_actual
+load minimizeFlxPin10_results_20250929.mat sol_actual
 sol_actual1 = sol_actual;
 [a1, ~] = minimizeExtX3(sol_actual1(1), sol_actual1(2), sol_actual1(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
 [a2, bpa2] = minimizeExtX3(-sol_actual1(1), sol_actual1(2), sol_actual1(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
@@ -29,8 +29,8 @@ scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out va
 %% Problem bounds
 % lb = [-0.02 * 100, 3,3, 0];   % [cm, log10(N/m), log10(N/m), unitless]
 % ub = [0.03 * 100, 8, 8, 15];
-lb = [-0.02 * 100, 4, log10(8e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [0 * 100, log10(5e7), log10(5e6), 1];
+lb = [-0.02 * 100, 4, log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+ub = [0 * 100, log10(5e7), log10(5e7), 2];
 clear sol_actual
 %% Solver
 for k = 1:numel(allBPA)
@@ -46,17 +46,17 @@ for k = 1:numel(allBPA)
         'UseParallel', true, ...
         'Display', 'iter', ...
         'PlotFcn', {@gaplotpareto3D_simple}, ...
-        'InitialPopulationRange',[-0.013*100, log10(5e4), log10(8e3), 0.05; ...
-                                  -0.007*100, log10(5e6), log10(8e5), 0.3], ...
+        'InitialPopulationRange',[-0.013*100, log10(5e4), log10(5e3), 0.1; ...
+                                  -0.007*100, log10(5e6), log10(8e4), 0.5], ...
         'PopulationSize', 40, ... %was 150
-        'MaxGenerations', 50, ... %was 750
+        'MaxGenerations', 60, ... %was 750
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'FunctionTolerance', 1e-4);
     goal = [0 0 0];
-    weight = 1./max(a0(trainIdx,:));
-    opts.HybridFcn = {@fgoalattain, goal, weight};
+%     weight = 1./max(a0(trainIdx,:));
+    opts.HybridFcn = {@fgoalattain, goal};
 %     opts.OutputFcn = {@debugPop};
 
     % Run optimization
@@ -139,10 +139,10 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 3;
+pick = 1;
 sol_actual = filtered_results(pick, 2:5);
 % sol_actual = results_sort_actual(pick, 2:5);  % [Xi0, Xi1, Xi2, Xi3]
-[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
+[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(3), sol_actual(2), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
 
 fprintf('\nPerformance with sol_actual:\n');
 disp(array2table(f, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...

@@ -193,15 +193,15 @@ Lm_adj = Lmt - tendon -2*fitn-X0-gama - delta_L; %muscle length
 contraction = (rest - Lm_adj) / rest;
 
 if ~isempty(X3)
-    debug_contraction_plot = true;
+    debug_contraction_plot = false;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         figure;
         txt = sprintf("Lrest = %.3f, tendon = %.3f",klass.rest, klass.ten);
         title(txt);
         subplot(3,2,1);
         hold on
-        plot(theta_k, comp, 'b','DisplayName','comp'); 
-        plot(theta_k, comp.^2, 'b','DisplayName','comp^2');
+        plot(theta_k, comp, 'DisplayName','comp'); 
+        plot(theta_k, comp.^2, 'DisplayName','comp^2');
         hold off
         title('comp = 1 - relstrain'); ylabel('comp'); grid on; legend;
 
@@ -215,8 +215,8 @@ if ~isempty(X3)
 
         subplot(3,2,3);
         hold on
-        plot(theta_k, strain, 'k', 'DisplayName','\epsilon'); 
-        plot(theta_k, contraction, 'k', 'DisplayName','\epsilon, adjusted');
+        plot(theta_k, strain, 'DisplayName','\epsilon'); 
+        plot(theta_k, contraction,  'DisplayName','\epsilon, adjusted');
         hold off
         title('strain'); ylabel('strain'); grid on; legend
 
@@ -271,7 +271,7 @@ Fh = Funit .* FF;  % N×3, already in hip frame
 %Bracket transform
 pA = L(1,:,1);
 Pbr = [8.38 20.75 25.1]/1000;           %from centroid of bracket where it starts to cantilever (10mm).
-% Pbr = [8.07  -21.92   23.2]/1000;       %from centroid of bracket where it starts to cantilever (40mm).
+% Pbr = [-21.33  -79   6.94]/1000;       %from centroid of bracket bolts.
 phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
 thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
 RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
@@ -285,7 +285,7 @@ Ry = [cos(thetaY)  0  sin(thetaY);
       0            1  0;
      -sin(thetaY)  0  cos(thetaY)];
 Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
-Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
+Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
 
 % Transform force into bracket frame
 Fbrh = zeros(N,3);
@@ -297,7 +297,7 @@ end
 if isinf(X1) && isinf(X2) && isinf(kSpr)
                 [epsilon, delta, beta, gama] = deal(zeros(N,1));
 else
-                [epsilon, delta, beta, gama] = fortz(klass,F,X1,X2,kSpr,X0);  %strain from force divided by tensile stiffness
+                [epsilon, delta, beta, gama] = fortz(klass,Fbrh,X1,X2,kSpr,deltaL);  %strain from force divided by tensile stiffness
 end
 deflection = [epsilon, delta, beta];
 pbrAnew = [norm(pbrhA), 0, 0] + deflection;
