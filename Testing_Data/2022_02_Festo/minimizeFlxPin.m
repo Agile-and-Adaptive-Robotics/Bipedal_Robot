@@ -222,7 +222,7 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
     e_bendZ = zeros(N, 1); 
     
     % Parallel root solve
-   for i = 1:N
+   parfor i = 1:N
     if ~valid(i)
         continue;
     end

@@ -101,14 +101,58 @@ bpa_all = ke;  % initialize
 f_all = NaN(nBPA, 3);
 
 %% Evaluate each BPA
-for i = idx_val
-%     fprintf('Evaluating BPA #%d with [%.4f, %.2e, %.2e]\n', i, Xi0, Xi1, Xi2, Xi3);
-    klass_i = ke(i);
-    [bpa_all(i), f_all(i,:)] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
-    if any(isnan(bpa_all(i).strain_p))
-        warning('NaNs in strain_p for BPA #%d', i);
-    end
+% for i = idx_val
+% %     fprintf('Evaluating BPA #%d with [%.4f, %.2e, %.2e]\n', i, Xi0, Xi1, Xi2, Xi3);
+%     klass_i = ke(i);
+%     [bpa_all(i), f_all(i,:)] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
+%     if any(isnan(bpa_all(i).strain_p))
+%         warning('NaNs in strain_p for BPA #%d', i);
+%     end
+% end
+
+%% Evaluate each BPA (parallelized)
+% idx_val may be e.g. [1 3 4] or 1:n
+if isempty(idx_val)
+    return;
 end
+
+numIdx = numel(idx_val);
+
+% Preallocate temporary containers for parfor
+local_f   = zeros(numIdx, 3);    % fitness results per BPA
+local_bpa = cell(numIdx, 1);     % store returned struct in cell (parfor-friendly)
+nanFlags  = false(numIdx, 1);    % record NaN occurrences to warn later
+
+% NOTE: 'ke' must be visible on the workers (it is broadcast-read only).
+parfor ii = 1:numIdx
+    i = idx_val(ii);            % actual BPA index
+    klass_i = ke(i);            % broadcasted read of ke
+    try
+        [bpa_i, fitvec] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
+    catch err
+        % If evaluateBPA throws inside a worker, record Inf fitness and empty struct
+        fitvec = [Inf, Inf, Inf];
+        bpa_i = klass_i; % put something sensible (same struct) back
+        % You can also store the error message into a cell array for post-mortem if wanted
+    end
+
+    local_f(ii, :) = fitvec;
+    local_bpa{ii}  = bpa_i;
+    nanFlags(ii)   = any(isnan(bpa_i.strain_p));
+end
+
+% Scatter local results back into outputs at the correct indices
+f_all(idx_val, :) = local_f;
+for ii = 1:numIdx
+    bpa_all(idx_val(ii)) = local_bpa{ii};
+end
+
+% Post-loop warnings (one consolidated report)
+if any(nanFlags)
+    badIdx = idx_val(nanFlags);
+    warning('NaNs detected in strain_p for BPA indices: %s', mat2str(badIdx));
+end
+
 
 end
 
@@ -231,7 +275,7 @@ if ~isempty(X3)
     R1 = 0.012;         %minimum radius
     R2 = 0.04;           %minimum radius
     delta_L1(idx1) = X3*(R1)*angleRad1(idx1).*comp(idx1).^2*deg2rad(27.75/(ang1-ang2));
-    delta_L2(idx2) = X3*(R2)*angleRad2(idx2).*comp(idx2).^2*deg2rad(92.46/(ang2-(-120))) + X3*(R1)*deg2rad(27.75).*comp(idx2).^2;
+    delta_L2(idx2) = X3*(R2)*angleRad2(idx2).*comp(idx2).^2*deg2rad(92.46/(ang2-(-120))) + X3*(R1)*deg2rad(27.75).*comp(idx2).^2;    
     delta_L = delta_L1+delta_L2;
 end
 
@@ -250,7 +294,7 @@ if ~isempty(X3)
     debug_contraction_plot = false;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         str = sprintf("%.3f Lrest, %.3f tendon",rest, tendon);
-        f = figure('Name',str);
+        figure('Name',str);
         t = tiledlayout(3,2);
         t.Title.String = str;
         nexttile(1);
@@ -262,8 +306,8 @@ if ~isempty(X3)
 
         nexttile(2);
         hold on
-        plot(theta_k, delta_L1*1000, 'DisplayName','Delta L1'); 
-        plot(theta_k, delta_L2*1000, 'DisplayName','Delta L2');
+%         plot(theta_k, delta_L1*1000, 'DisplayName','Delta L1'); 
+%         plot(theta_k, delta_L2*1000, 'DisplayName','Delta L2');
         plot(theta_k, delta_L*1000, 'DisplayName','Delta L');
         hold off
         title('delta_L'); ylabel('delta_L [mm]'); grid on; legend;
@@ -287,7 +331,7 @@ if ~isempty(X3)
         
         nexttile(6);
         hold on 
-        plot(theta_k, angleRad1, 'DisplayName','angleRad1');
+%         plot(theta_k, angleRad1, 'DisplayName','angleRad1');
         plot(theta_k, angleRad2, 'DisplayName','angleRad2');
         hold off
         title('angleRad'); ylabel('angle [deg]'); grid on; legend;
@@ -333,7 +377,7 @@ RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
        sin(thetabrA) cos(thetabrA) 0; ...
        0    0   1];
 pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
-% Now calculate angle from x-axis to this vector
+% % Now calculate angle from x-axis to this vector
 thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
 % % Rotation matrix about y-axis (local frame adjustment)
 Ry = [cos(thetaY) 0  sin(thetaY);
@@ -364,7 +408,7 @@ Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame
 % Transform force into bracket frame
 Fbrh = zeros(N,3);
 % pAnew = zeros(N,3);
-for ii = 1:N
+parfor ii = 1:N
     Fbrh(ii,:) = RowVecTrans(Thbr\eye(4), Fh(ii,:));
 end
 
@@ -436,7 +480,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     k_eff = 1 ./ (1 ./ k_b + 1 / kSpr);  % Nx1       
     
     % Parallel root solve
-    for i = 1:N
+    parfor i = 1:N
         if ~valid(i)
             continue;
         end
@@ -577,7 +621,7 @@ C = klass.CP;
 N = size(klass.Tk, 3);
 mA = zeros(N, 3);
 
-    for i = 1:N
+    parfor i = 1:N
         pointB = L_p(C,:,i);
         mA(i,:) = pointB - unitD_p(i,:) * dot(unitD_p(i,:), pointB);
     end
@@ -612,8 +656,9 @@ function Mz = Tor(mA, F, strain)
 N = size(F, 1);
 Mz = zeros(N, 3);
 
-
-    for i = 1:N
+% idx = strain < -0.02;
+% Mz(idx,:) = cross(mA(idx,:),F(idx,:),2);
+    parfor i = 1:N
         if strain(i,:) < -0.02
             Mz(i,:) = NaN;
         else

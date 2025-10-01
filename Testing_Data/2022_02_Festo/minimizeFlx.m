@@ -318,7 +318,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
 %     ub = rest*KMAX/2;         %upper bound of fzero
     
     % Parallel root solve
-    for i = 1:N
+    parfor i = 1:N
         if ~valid(i)
             continue;
         end
