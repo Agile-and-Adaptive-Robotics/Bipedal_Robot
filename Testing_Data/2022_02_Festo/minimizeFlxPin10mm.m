@@ -43,7 +43,7 @@ opts.HybridFcn = {@fgoalattain, goal, weight};
 % fvals = Pareto_Fvals;
 %% Get validation GoF results from pareto front
 val_Fvals = zeros(size(fvals));
-for i = 1:length(x)
+parfor i = 1:length(x)
     val_Fvals(i,:) = min2([x(i,1),x(i,2),x(i,3)]);    %Get validation Fvals for all Pareto_front points
 end
 

@@ -145,7 +145,7 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 1;
+pick = 11;
 sol_actual = filtered_results(pick, 2:5);
 % sol_actual = results_sort_actual(24,2:5);
 % sol_actual = results_sort_actual(pick, 2:5);  % [Xi0, Xi1, Xi2, Xi3]
