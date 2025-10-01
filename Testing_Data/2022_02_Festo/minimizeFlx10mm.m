@@ -7,7 +7,7 @@ clear; clc; close all
 
 %% Use solution from optimizer and check validity on biomimetic knee
 
-load minimizeFlxPin10_results_20250929.mat results_sort_actual
+load minimizeFlxPin10_results_20251001_1transform.mat results_sort_actual
 
 pick = 1;
 g = results_sort_actual(pick,2:4);
