@@ -8,7 +8,7 @@ clear; clc; close all
 baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
-load minimizeFlxPin10_results_20250929.mat sol_actual
+load minimizeFlxPin10_results_20251001_2transforms.mat sol_actual
 sol_actual1 = sol_actual;
 [a1, ~] = minimizeExtX3(sol_actual1(1), sol_actual1(2), sol_actual1(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
 [a2, bpa2] = minimizeExtX3(-sol_actual1(1), sol_actual1(2), sol_actual1(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3

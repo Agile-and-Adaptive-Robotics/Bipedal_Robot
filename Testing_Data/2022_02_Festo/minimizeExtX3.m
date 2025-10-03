@@ -472,7 +472,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X2, X1, X2]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
