@@ -112,10 +112,6 @@ f_all = NaN(nBPA, 3);
 
 %% Evaluate each BPA (parallelized)
 % idx_val may be e.g. [1 3 4] or 1:n
-if isempty(idx_val)
-    return;
-end
-
 numIdx = numel(idx_val);
 
 % Preallocate temporary containers for parfor
@@ -124,10 +120,9 @@ local_bpa = cell(numIdx, 1);     % store returned struct in cell (parfor-friendl
 nanFlags  = false(numIdx, 1);    % record NaN occurrences to warn later
 
 % NOTE: 'ke' must be visible on the workers (it is broadcast-read only).
-parfor ii = 1:numIdx
-for ii = 1:numIdx
-    i = idx_val(ii);            % actual BPA index
-    klass_i = ke(i);            % broadcasted read of ke
+for n = 1:numIdx
+    m = idx_val(n);            % actual BPA index
+    klass_i = ke(m);            % broadcasted read of ke
     try
         [bpa_i, fitvec] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
     catch err
@@ -137,25 +132,24 @@ for ii = 1:numIdx
         % You can also store the error message into a cell array for post-mortem if wanted
     end
 
-    local_f(ii, :) = fitvec;
-    local_bpa{ii}  = bpa_i;
-    nanFlags(ii)   = any(isnan(bpa_i.strain_p));
+    local_f(n, :) = fitvec;
+    local_bpa{n}  = bpa_i;
+    nanFlags(n)   = any(isnan(bpa_i.strain_p));
 end
 
 % Scatter local results back into outputs at the correct indices
 f_all(idx_val, :) = local_f;
-for ii = 1:numIdx
-    bpa_all(idx_val(ii)) = local_bpa{ii};
-end
+    for n = 1:numIdx
+        bpa_all(idx_val(n)) = local_bpa{n};
+    end
 
-% Post-loop warnings (one consolidated report)
-if any(nanFlags)
-    badIdx = idx_val(nanFlags);
-    warning('NaNs detected in strain_p for BPA indices: %s', mat2str(badIdx));
-end
+    % Post-loop warnings (one consolidated report)
+    if any(nanFlags)
+        badIdx = idx_val(nanFlags);
+        warning('NaNs detected in strain_p for BPA indices: %s', mat2str(badIdx));
+    end
 
 
-end
 
 function [bpa_i, fitvec] = evaluateBPA(klass, Xi0, Xi1, Xi2, Xi3)
 %% Calculate locations and properties
@@ -166,7 +160,7 @@ Funit = computeForceVector(bpa_i);  %Force unit direction, calculate in the hip 
 [L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, Xi0+delta_L); %Bracket deformation and new geometry
 sL_p = seg(bpa_i, L_p); %segment lengths
 Lmt_p = LMT(sL_p, Xi0); 
-[strain_f, ~] = Contraction(bpa_i, Lmt_p, [], gemma, Xi3); %Simulated strain, includes loss of usable length due to wrapping
+[strain_f, ~] = Contraction(bpa_i, Lmt_p, Xi0, gemma, Xi3); %Simulated strain, includes loss of usable length due to wrapping
 unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
 F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
 mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
@@ -187,6 +181,8 @@ bpa_i.gama   = gemma;
 
 % SSE calculation
 fitvec = SSE(bpa_i, M_p);
+
+end
 
 %% Nested functions, modified from MonoPamExplicit
 %% -------------Force unit direction ---------------
@@ -257,33 +253,30 @@ delta_L = zeros(N,1);
 delta_L1 = zeros(N,1);
 delta_L2 = zeros(N,1);
 if ~isempty(X3)
-if ~isempty(X3) && ~eq(X3,0)
     ang1 = 27;
     ang2 = -23;
     angleRad1 = deg2rad(ang1 - theta_k);
     angleRad2 = deg2rad(ang2 - theta_k);
     idx1 = theta_k > ang2 & theta_k < ang1;
     idx2 = angleRad2 > 0;
-    if isempty(Lmt)     %Then use klass.Lmt and X0
-        Lm = (klass.Lmt - tendon - 2*fitn - X0); %length of the BPA before bracket deformation and tendon stretch
-    end
-    if isempty(X0)              %then X0 is already used in LMT, length of BPA after bracket deformation and tendon stretch
-        Lm = Lmt-tendon-2*fitn-gama;
-    end
+%     if isempty(Lmt)     %Then use klass.Lmt and X0
+    Lm = (klass.Lmt - tendon - 2*fitn - X0); %length of the BPA before bracket deformation and tendon stretch
+%     end
+%     if isempty(X0)              %then X0 is already used in LMT, length of BPA after bracket deformation and tendon stretch
+%         Lm = Lmt-tendon-2*fitn-gama;
+%     end
     strain = (rest - Lm)/rest;
     relstrain = strain/KMAX;
     comp = 1-relstrain;  %additive complement to relative strain
     comp = max(0, comp);
     R1 = 0.012;         %minimum radius
     R2 = 0.04;           %minimum radius
-    delta_L1(idx1) = X3*(R1)*angleRad1(idx1).*comp(idx1).^2*deg2rad(27.75/(ang1-ang2));
-    delta_L2(idx2) = X3*(R2)*angleRad2(idx2).*comp(idx2).^2*deg2rad(92.46/(ang2-(-120))) + X3*(R1)*deg2rad(27.75).*comp(idx2).^2;    
     delta_L1(idx1) = X3*(R1)*angleRad1(idx1).*comp(idx1).^2*(27.75/(ang1-ang2));
     delta_L2(idx2) = X3*(R2)*angleRad2(idx2).*comp(idx2).^2*(92.46/(ang2-(-120))) + X3*(R1)*deg2rad(27.75).*comp(idx2).^2;    
     delta_L = delta_L1+delta_L2;
 end
 
-if isempty(X0)
+if isempty(X0) || ~isempty(Lmt)
     X0 = 0;
 end
 
@@ -295,8 +288,6 @@ Lm_adj = Lmt - tendon - 2*fitn - X0 - gama - delta_L; %BPA length, either real o
 contraction = (rest - Lm_adj) / rest;
 
 if ~isempty(X3)
-    debug_contraction_plot = false;
-if ~isempty(X3) && ~eq(X3,0)
     debug_contraction_plot = true;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         str = sprintf("%.3f Lrest, %.3f tendon",rest, tendon);
@@ -320,7 +311,9 @@ if ~isempty(X3) && ~eq(X3,0)
 
         nexttile(3);
         hold on
-        plot(theta_k, strain, 'DisplayName','\epsilon'); 
+        if  exist('strain','var')
+            plot(theta_k, strain, 'DisplayName','\epsilon');
+        end
         plot(theta_k, contraction, 'DisplayName','\epsilon, adjusted');
         hold off
         title('strain'); ylabel('strain'); grid on; legend
@@ -383,7 +376,7 @@ RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
        sin(thetabrA) cos(thetabrA) 0; ...
        0    0   1];
 pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
-% % Now calculate angle from x-axis to this vector
+% Now calculate angle from x-axis to this vector
 thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
 % % Rotation matrix about y-axis (local frame adjustment)
 Ry = [cos(thetaY) 0  sin(thetaY);
@@ -391,13 +384,6 @@ Ry = [cos(thetaY) 0  sin(thetaY);
      -sin(thetaY) 0  cos(thetaY)];
 Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
 Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
-% thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
-% % % Rotation matrix about y-axis (local frame adjustment)
-% Ry = [cos(thetaY) 0  sin(thetaY);
-%       0           1  0;
-%      -sin(thetaY) 0  cos(thetaY)];
-% Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
-Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
             
 %more complicated way to calculate vector and rotation matrix so that your
 %new x axis points to muscle origin.
@@ -421,7 +407,7 @@ Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket fram
 % Transform force into bracket frame
 Fbrh = zeros(N,3);
 % pAnew = zeros(N,3);
-parfor ii = 1:N
+for ii = 1:N
     Fbrh(ii,:) = RowVecTrans(Thbr\eye(4), Fh(ii,:));
 end
 
@@ -432,10 +418,8 @@ else
     [epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, delta_L);
 end
 deflection = [epsilon, delta, beta];
-% pbrAnew = [norm(pbrhA(1:2)), 0, pbrhA(3)] +deflection; %Muscle origin location, bracket frame
-pbrAnew = [norm(pbrhA), 0, 0] +deflection; %Muscle origin location, bracket frame
-pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] +deflection; %Muscle origin location, bracket frame
-% pbrAnew = [norm(phbrA), 0, 0] +deflection; %Muscle origin location, bracket frame
+% pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] +deflection; %Muscle origin location, bracket frame
+pbrAnew = [norm(phbrA), 0, 0] +deflection; %Muscle origin location, bracket frame
 
 % Replace points
 LOC = L;
@@ -455,7 +439,7 @@ pAnew = zeros(size(pbrAnew));
 end
 
 %% Force and length reduction due to tendon
-function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta_L)
+function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,deltaL)
 % e_axial, bracket axial elongation
 % e_bendY, bracket bending displacement y - direction
 % e_bendZ, bracket bending displacement z - direction
@@ -474,7 +458,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     rest   = klass.rest;    %BPA resting length
     tendon = klass.ten;     %tendon length
     fitting = klass.fitn;   %end cap length
-    mL     = klass.Lmt-delta_L-tendon-2*fitting;     %Length of BPA
+    mL     = klass.Lmt-deltaL-tendon-2*fitting;     %Length of BPA
     mif    = klass.Fm;   %maximum bpa force
     kmax   = klass.Kmax; %maximum contraction length
     KMAX   = (rest-kmax)/rest; %maximum contraction percent
@@ -487,7 +471,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X2, X1, X2]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X1, X2]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
@@ -512,7 +496,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         
         % Solve for r (deflection) using fzero
         % First, compute contraction from Xi0 if deflection is zero 
-        r = 0;  % Initial guess             
+        r = 0.0001;  % Initial guess             
         
         %Flexible case: run Newton-Raphson
         for iter = 1:50
@@ -636,7 +620,7 @@ C = klass.CP;
 N = size(klass.Tk, 3);
 mA = zeros(N, 3);
 
-    parfor i = 1:N
+    for i = 1:N
         pointB = L_p(C,:,i);
         mA(i,:) = pointB - unitD_p(i,:) * dot(unitD_p(i,:), pointB);
     end
@@ -673,7 +657,7 @@ Mz = zeros(N, 3);
 
 % idx = strain < -0.02;
 % Mz(idx,:) = cross(mA(idx,:),F(idx,:),2);
-    parfor i = 1:N
+    for i = 1:N
         if strain(i,:) < -0.02
             Mz(i,:) = NaN;
         else

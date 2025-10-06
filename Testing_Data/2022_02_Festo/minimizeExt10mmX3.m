@@ -8,11 +8,10 @@ clear; clc; close all
 baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
-load minimizeFlxPin10_results_20251001_2transforms.mat sol_actual
 load minimizeFlxPin10_results_20251001_1transform.mat sol_actual
 sol_actual1 = sol_actual;
 [a1, ~] = minimizeExtX3(sol_actual1(1), sol_actual1(2), sol_actual1(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
-[a2, bpa2] = minimizeExtX3(-sol_actual1(1), sol_actual1(2), sol_actual1(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
+[a2, bpa2] = minimizeExtX3(-sol_actual1(1), sol_actual1(2), sol_actual1(3), 0.4, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
 % clear sol_actual
 baselineScores1 = a1./(a0);  % RMSE, FVU, Max Residual, normalized to baselineScores
 fprintf('Normalized to baseline score \n Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
@@ -28,12 +27,10 @@ results_cv = cell(1, numBPA);
 scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out validation
 
 %% Problem bounds
-% lb = [-0.02 * 100, 3,3, 0];   % [cm, log10(N/m), log10(N/m), unitless]
-% ub = [0.03 * 100, 8, 8, 15];
 lb = [-0.020 * 100, log10(5e3), log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
 ub = [-0.005 * 100, log10(5e7), log10(5e7), 3];
 
-A = [0 -1 1 0; ...
+A = [0 -1 1 0; ...              % x2 (bending) is less stiff than x1 (axial), (x2 <= x1)
      0 0 0 0; ...
      0 0 0 0];
  b = [0, 0, 0, 0]';
@@ -56,7 +53,6 @@ for k = 1:numel(allBPA)
         'InitialPopulationRange',[-.015*100, log10(8e4), log10(8e3), 0.1; ...
                                   -0.007*100, log10(8e5), log10(8e4), 0.3], ...
         'PopulationSize', 40, ... %was 150
-        'MaxGenerations', 60, ... %was 750
         'MaxGenerations', 75, ... %was 750
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
@@ -68,8 +64,8 @@ for k = 1:numel(allBPA)
 %     opts.OutputFcn = {@debugPop};
 
     % Run optimization
-     [x, fvals,exitflag,output,population,scores] = gamultiobj(@(X) min1(X, trainIdx, a0), 4, [], [], [], [], ...
-                                                    lb, ub, ... %@(x) nonlinc(x), 
+     [x, fvals,exitflag,output,population,scores] = gamultiobj(@(X) min1(X, trainIdx, a0), 4, A, b, [], [], ...
+                                                    lb, ub, ... %@(x) nonlinc(x), ...
                                                     opts);
     
 % If I want to use GODLIKE instead:  
@@ -117,7 +113,6 @@ results_sort = sortrows(results, [12 9 10 11 6 7 8]);  % sort by distance, then 
 x_actual = [results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5)];
 results_sort_actual = [results_sort(:,1), x_actual, results_sort(:,6:end)];
 
-
 %% --- Filter Pareto candidates against baseline on BPAs 1, 3 & 4 ---
 N = size(results_sort_actual, 1);
 keep = false(N,1);
@@ -147,13 +142,11 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 11;
-pick = 8;
+pick = 6;
 sol_actual = filtered_results(pick, 2:5);
 % sol_actual = results_sort_actual(24,2:5);
 % sol_actual = results_sort_actual(pick, 2:5);  % [Xi0, Xi1, Xi2, Xi3]
-[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), 2, 1:4);  % [f: 4x3], [bpa: full struct]
-[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
+[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), 0.2, 1:4);  % [f: 4x3], [bpa: full struct]
 
 fprintf('\nPerformance with sol_actual:\n');
 disp(array2table(f, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
@@ -438,16 +431,16 @@ function [c, ceq] = nonlcon2(x)
     ceq = [];
 end
 
-function [state, options, optchanged] = debugPop(options, state, flag)
-    optchanged = false;  % required for gamultiobj
-    if strcmp(flag, 'iter') || strcmp(flag, 'done')
-        if isfield(state, 'Population')
-            fprintf('[debugPop] Generation %d\n', state.Generation);
-            assignin('base', 'currentPop', state.Population);
-            assignin('base', 'currentScores', state.Score);
-        end
-    end
-end
+% function [state, options, optchanged] = debugPop(options, state, flag)
+%     optchanged = false;  % required for gamultiobj
+%     if strcmp(flag, 'iter') || strcmp(flag, 'done')
+%         if isfield(state, 'Population')
+%             fprintf('[debugPop] Generation %d\n', state.Generation);
+%             assignin('base', 'currentPop', state.Population);
+%             assignin('base', 'currentScores', state.Score);
+%         end
+%     end
+% end
 
 function [state, options, optchanged] = gaplotpareto3D_simple(options, state, flag)
     optchanged = false;  % Must be returned even if unchanged
