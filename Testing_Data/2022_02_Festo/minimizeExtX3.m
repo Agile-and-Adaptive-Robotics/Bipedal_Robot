@@ -125,6 +125,7 @@ nanFlags  = false(numIdx, 1);    % record NaN occurrences to warn later
 
 % NOTE: 'ke' must be visible on the workers (it is broadcast-read only).
 parfor ii = 1:numIdx
+for ii = 1:numIdx
     i = idx_val(ii);            % actual BPA index
     klass_i = ke(i);            % broadcasted read of ke
     try
@@ -256,6 +257,7 @@ delta_L = zeros(N,1);
 delta_L1 = zeros(N,1);
 delta_L2 = zeros(N,1);
 if ~isempty(X3)
+if ~isempty(X3) && ~eq(X3,0)
     ang1 = 27;
     ang2 = -23;
     angleRad1 = deg2rad(ang1 - theta_k);
@@ -276,6 +278,8 @@ if ~isempty(X3)
     R2 = 0.04;           %minimum radius
     delta_L1(idx1) = X3*(R1)*angleRad1(idx1).*comp(idx1).^2*deg2rad(27.75/(ang1-ang2));
     delta_L2(idx2) = X3*(R2)*angleRad2(idx2).*comp(idx2).^2*deg2rad(92.46/(ang2-(-120))) + X3*(R1)*deg2rad(27.75).*comp(idx2).^2;    
+    delta_L1(idx1) = X3*(R1)*angleRad1(idx1).*comp(idx1).^2*(27.75/(ang1-ang2));
+    delta_L2(idx2) = X3*(R2)*angleRad2(idx2).*comp(idx2).^2*(92.46/(ang2-(-120))) + X3*(R1)*deg2rad(27.75).*comp(idx2).^2;    
     delta_L = delta_L1+delta_L2;
 end
 
@@ -292,6 +296,8 @@ contraction = (rest - Lm_adj) / rest;
 
 if ~isempty(X3)
     debug_contraction_plot = false;
+if ~isempty(X3) && ~eq(X3,0)
+    debug_contraction_plot = true;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         str = sprintf("%.3f Lrest, %.3f tendon",rest, tendon);
         figure('Name',str);
@@ -421,6 +427,8 @@ end
 deflection = [epsilon, delta, beta];
 % pbrAnew = [norm(pbrhA(1:2)), 0, pbrhA(3)] +deflection; %Muscle origin location, bracket frame
 pbrAnew = [norm(pbrhA), 0, 0] +deflection; %Muscle origin location, bracket frame
+pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] +deflection; %Muscle origin location, bracket frame
+% pbrAnew = [norm(phbrA), 0, 0] +deflection; %Muscle origin location, bracket frame
 
 % Replace points
 LOC = L;
@@ -578,6 +586,14 @@ for ii = 1:N                    %Repeat for each orientation
         pointB = L_p(i+1,:,ii);
         if i+1 == C
             pointB = RowVecTrans(T(:,:,ii), pointB);
+    for ii = 1:N                    %Repeat for each orientation
+        for i = 1:M-1               %Calculate all segments
+            pointA = L_p(i,:,ii);
+            pointB = L_p(i+1,:,ii);
+            if i+1 == C
+                pointB = RowVecTrans(T(:,:,ii), pointB);
+            end
+            SL(ii,i) = norm(pointA - pointB);
         end
         SL(ii,i) = norm(pointA - pointB);
     end
