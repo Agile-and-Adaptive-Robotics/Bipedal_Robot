@@ -120,7 +120,7 @@ local_bpa = cell(numIdx, 1);     % store returned struct in cell (parfor-friendl
 nanFlags  = false(numIdx, 1);    % record NaN occurrences to warn later
 
 % NOTE: 'ke' must be visible on the workers (it is broadcast-read only).
-for n = 1:numIdx
+parfor n = 1:numIdx
     m = idx_val(n);            % actual BPA index
     klass_i = ke(m);            % broadcasted read of ke
     try
@@ -288,7 +288,7 @@ Lm_adj = Lmt - tendon - 2*fitn - X0 - gama - delta_L; %BPA length, either real o
 contraction = (rest - Lm_adj) / rest;
 
 if ~isempty(X3)
-    debug_contraction_plot = true;
+    debug_contraction_plot = false;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         str = sprintf("%.3f Lrest, %.3f tendon",rest, tendon);
         figure('Name',str);
