@@ -391,6 +391,13 @@ Ry = [cos(thetaY) 0  sin(thetaY);
      -sin(thetaY) 0  cos(thetaY)];
 Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
 Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
+% thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
+% % % Rotation matrix about y-axis (local frame adjustment)
+% Ry = [cos(thetaY) 0  sin(thetaY);
+%       0           1  0;
+%      -sin(thetaY) 0  cos(thetaY)];
+% Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
+Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
             
 %more complicated way to calculate vector and rotation matrix so that your
 %new x axis points to muscle origin.
@@ -580,12 +587,6 @@ N = size(T, 3);
 M = size(L_p, 1);
 SL = zeros(N, M-1);
 
-for ii = 1:N                    %Repeat for each orientation
-    for i = 1:M-1               %Calculate all segments
-        pointA = L_p(i,:,ii);
-        pointB = L_p(i+1,:,ii);
-        if i+1 == C
-            pointB = RowVecTrans(T(:,:,ii), pointB);
     for ii = 1:N                    %Repeat for each orientation
         for i = 1:M-1               %Calculate all segments
             pointA = L_p(i,:,ii);
@@ -595,9 +596,7 @@ for ii = 1:N                    %Repeat for each orientation
             end
             SL(ii,i) = norm(pointA - pointB);
         end
-        SL(ii,i) = norm(pointA - pointB);
     end
-end
 end
                
         %% ------------- Muscle Length ------------------------
