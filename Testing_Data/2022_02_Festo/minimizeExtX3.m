@@ -120,7 +120,7 @@ local_bpa = cell(numIdx, 1);     % store returned struct in cell (parfor-friendl
 nanFlags  = false(numIdx, 1);    % record NaN occurrences to warn later
 
 % NOTE: 'ke' must be visible on the workers (it is broadcast-read only).
-parfor n = 1:numIdx
+for n = 1:numIdx
     m = idx_val(n);            % actual BPA index
     klass_i = ke(m);            % broadcasted read of ke
     try
@@ -149,7 +149,7 @@ f_all(idx_val, :) = local_f;
         warning('NaNs detected in strain_p for BPA indices: %s', mat2str(badIdx));
     end
 
-
+end
 
 function [bpa_i, fitvec] = evaluateBPA(klass, Xi0, Xi1, Xi2, Xi3)
 %% Calculate locations and properties
@@ -288,7 +288,7 @@ Lm_adj = Lmt - tendon - 2*fitn - X0 - gama - delta_L; %BPA length, either real o
 contraction = (rest - Lm_adj) / rest;
 
 if ~isempty(X3)
-    debug_contraction_plot = false;
+    debug_contraction_plot = true;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         str = sprintf("%.3f Lrest, %.3f tendon",rest, tendon);
         figure('Name',str);
@@ -696,7 +696,4 @@ function vhat = normalize(v)
     valid = norms > 1e-4 & all(~isnan(v), 2);
     vhat = zeros(N, 3);
     vhat(valid, :) = v(valid, :) ./ norms(valid,:);
-end
-
-
-end   
+end  

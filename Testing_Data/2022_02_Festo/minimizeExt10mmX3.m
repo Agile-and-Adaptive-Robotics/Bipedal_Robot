@@ -142,11 +142,11 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 6;
+pick = 1;
 sol_actual = filtered_results(pick, 2:5);
 % sol_actual = results_sort_actual(24,2:5);
 % sol_actual = results_sort_actual(pick, 2:5);  % [Xi0, Xi1, Xi2, Xi3]
-[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), 0.2, 1:4);  % [f: 4x3], [bpa: full struct]
+[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
 
 fprintf('\nPerformance with sol_actual:\n');
 disp(array2table(f, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
