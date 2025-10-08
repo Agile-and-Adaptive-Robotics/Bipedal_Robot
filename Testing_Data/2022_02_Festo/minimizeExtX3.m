@@ -120,7 +120,7 @@ local_bpa = cell(numIdx, 1);     % store returned struct in cell (parfor-friendl
 nanFlags  = false(numIdx, 1);    % record NaN occurrences to warn later
 
 % NOTE: 'ke' must be visible on the workers (it is broadcast-read only).
-for n = 1:numIdx
+parfor n = 1:numIdx
     m = idx_val(n);            % actual BPA index
     klass_i = ke(m);            % broadcasted read of ke
     try
@@ -288,7 +288,7 @@ Lm_adj = Lmt - tendon - 2*fitn - X0 - gama - delta_L; %BPA length, either real o
 contraction = (rest - Lm_adj) / rest;
 
 if ~isempty(X3)
-    debug_contraction_plot = true;
+    debug_contraction_plot = false;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         str = sprintf("%.3f Lrest, %.3f tendon",rest, tendon);
         figure('Name',str);
@@ -368,8 +368,8 @@ Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
-Pbr = [-2.65, -54.71, 75.06]/1000;                          %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
-% Pbr = [-7.325, -22.27, 75.06]/1000;                          %from hip origin to midpoint between two bolt holes on superior anterior bracket of the Bifemsh_Pam
+% Pbr = [-2.65, -54.71, 75.06]/1000;                          %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
+Pbr = [-7.325, -22.27, 75.06]/1000;                          %from hip origin to midpoint between two bolt holes on superior anterior bracket of the Bifemsh_Pam
 phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
 thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
 RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
@@ -377,13 +377,13 @@ RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
        0    0   1];
 pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
 % Now calculate angle from x-axis to this vector
-thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
-% % Rotation matrix about y-axis (local frame adjustment)
-Ry = [cos(thetaY) 0  sin(thetaY);
-      0           1  0;
-     -sin(thetaY) 0  cos(thetaY)];
-Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
-Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
+% thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
+% % % Rotation matrix about y-axis (local frame adjustment)
+% Ry = [cos(thetaY) 0  sin(thetaY);
+%       0           1  0;
+%      -sin(thetaY) 0  cos(thetaY)];
+% Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
+Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
             
 %more complicated way to calculate vector and rotation matrix so that your
 %new x axis points to muscle origin.
@@ -418,8 +418,8 @@ else
     [epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, delta_L);
 end
 deflection = [epsilon, delta, beta];
-% pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] +deflection; %Muscle origin location, bracket frame
-pbrAnew = [norm(phbrA), 0, 0] +deflection; %Muscle origin location, bracket frame
+pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] +deflection; %Muscle origin location, bracket frame
+% pbrAnew = [norm(phbrA), 0, 0] +deflection; %Muscle origin location, bracket frame
 
 % Replace points
 LOC = L;
@@ -471,7 +471,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X1, X2]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X2, X1, X1]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
@@ -496,7 +496,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         
         % Solve for r (deflection) using fzero
         % First, compute contraction from Xi0 if deflection is zero 
-        r = 0.0001;  % Initial guess             
+        r = 0;  % Initial guess             
         
         %Flexible case: run Newton-Raphson
         for iter = 1:50

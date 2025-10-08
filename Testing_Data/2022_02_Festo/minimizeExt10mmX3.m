@@ -11,7 +11,7 @@ fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineSc
 load minimizeFlxPin10_results_20251001_1transform.mat sol_actual
 sol_actual1 = sol_actual;
 [a1, ~] = minimizeExtX3(sol_actual1(1), sol_actual1(2), sol_actual1(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
-[a2, bpa2] = minimizeExtX3(-sol_actual1(1), sol_actual1(2), sol_actual1(3), 0.4, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
+[a2, bpa2] = minimizeExtX3(-sol_actual1(1), sol_actual1(2), sol_actual1(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
 % clear sol_actual
 baselineScores1 = a1./(a0);  % RMSE, FVU, Max Residual, normalized to baselineScores
 fprintf('Normalized to baseline score \n Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
@@ -65,7 +65,7 @@ for k = 1:numel(allBPA)
 
     % Run optimization
      [x, fvals,exitflag,output,population,scores] = gamultiobj(@(X) min1(X, trainIdx, a0), 4, [], [], [], [], ...
-                                                    lb, ub, @(x) nonlcon2(x), ...
+                                                    lb, ub, ... % @(x) nonlcon2(x), ...
                                                     opts);
     
 % If I want to use GODLIKE instead:  
