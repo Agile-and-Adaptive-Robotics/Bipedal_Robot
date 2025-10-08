@@ -9,8 +9,8 @@ fprintf('Baseline training: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',a(1),a(
 fprintf('Baseline validation: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',b(1),b(2),b(3));
 %% Problem setup
 
-lb = [-0.03*100, 3, 3];
-ub = [0.03*100, 9, 9];
+lb = [0.011*100, log10(4e3), log10(4e4)];
+ub = [0.015*100, log10(5e4), log10(5e4)];
 
 %% Solve 
 opts = optimoptions('gamultiobj', ...
