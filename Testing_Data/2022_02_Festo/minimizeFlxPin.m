@@ -135,12 +135,13 @@ function LOC = Lok(klass,X1,X2,strain,X0)
             end
             relstrain = strain/KMAX;            %relative strain
             FF = festo4(klass.dBPA,relstrain,klass.P).*klass.Fm;        %Force magnitude
-            FF(relstrain>=1) = 0;
+            FF(FF<0) = 0;
             %For muscle insertion
             unitD = klass.unitD;            %unit direction of force vector, tibia frame
             Fk = unitD.*FF;                  %Force vector, tibia frame
             pB = L(C,:,1);                  %Distance from knee frame to muscle insertion
-            Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
+%             Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
+            Pbri = [-27.5, -125.91, -0.54]/1000;     %vector from knee ICR to upper bolt
             pkbrB = pB-Pbri;                  %vector from bracket to point B, in the knee frame
             thetabrB = atan2(pkbrB(2),pkbrB(1));   %angle between pbrB and x axis
             RkbrZ = [cos(thetabrB) -sin(thetabrB) 0; ...     %Rotation matrix
@@ -210,7 +211,7 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X2]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
