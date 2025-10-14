@@ -9,14 +9,14 @@ fprintf('Baseline training: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',a(1),a(
 fprintf('Baseline validation: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',b(1),b(2),b(3));
 %% Problem setup
 
-lb = [0.011*100, log10(4e3), log10(4e4)];
+lb = [0, log10(4e3), log10(4e3)];
 ub = [0.015*100, log10(5e7), log10(5e7)];
 
 %% Solve 
 opts = optimoptions('gamultiobj', ...
         'UseParallel', true, ...
         'Display', 'iter', ...        %
-        'InitialPopulationRange',[0, 4, 4; 0.015*100 7 6], ...
+        'InitialPopulationRange',[0.006, 3.9, 3.9; 0.012*100 4.3 4.3], ...
         'PopulationSize', 50, ...  %Originally 75
         'MaxGenerations', 80, ... %Originally 600
         'MutationFcn', {@mutationadaptfeasible}, ...

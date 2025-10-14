@@ -7,9 +7,9 @@ clear; clc; close all
 
 %% Use solution from optimizer and check validity on biomimetic knee
 
-load minimizeFlxPin10_results_20251001_1transform.mat results_sort_actual
+load minimizeFlxPin10_results_20251014_1transform.mat results_sort_actual
 
-pick = 1;
+pick = 13;
 g = results_sort_actual(pick,2:4);
 [u, v, w, bpa] = minimizeFlx(0,g(2),g(3));           % Now pull bpa structures out
 
