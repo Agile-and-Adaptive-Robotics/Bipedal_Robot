@@ -11,7 +11,7 @@ load minimizeFlxPin10_results_20251001_1transform.mat results_sort_actual
 
 pick = 1;
 g = results_sort_actual(pick,2:4);
-[u, v, w, bpa] = minimizeFlx(g(1),g(2),g(3));           % Now pull bpa structures out
+[u, v, w, bpa] = minimizeFlx(0,g(2),g(3));           % Now pull bpa structures out
 
 %% Plot setup;
 % Define a colorblind-friendly palette

@@ -123,7 +123,7 @@ end
     f = h{1}; % 10mm biomimetic knee fit values
     if nargout > 1
         varargout{1} = h{2}; % 20mm biomimetic knee fit values, full pressure
-        varargout{2} = h{3}; % 20mm biomimetic knee fit values, full pressure
+        varargout{2} = h{3}; % 20mm biomimetic knee fit values, partial pressure
         varargout{3} = bpa;  % Full structure with prediction info
     end
 
@@ -221,10 +221,9 @@ function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain_predef,X0)
     
     % Compute Force
     relstrain = strain_predef / KMAX;  %Relative strain
-    FF = zeros(size(strain_predef));
-    idx = relstrain < 1;
-    FF (idx)= festo4(D, relstrain(idx), P) * Fm; %Force magnitude
-    F = diag(FF)*Funit;  % N×3, already in hip frame
+    FF = festo4(D, relstrain, P) * Fm; %Force magnitude
+    FF (FF < 0) = 0;
+    F = FF.*Funit;  % N×3, already in hip frame
     
     pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
             switch klass.dBPA
@@ -262,7 +261,7 @@ function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain_predef,X0)
             if isinf(X1) && isinf(X2) && isinf(kSpr)
                 [epsilon, delta, beta, gema] = deal(zeros(N,1));
             else
-                [epsilon, delta, beta, gema] = fortz(klass,F,X1,X2,kSpr,X0);  %strain from force divided by tensile stiffness
+                [epsilon, delta, beta, gema] = fortz(klass,Fbrh,X1,X2,kSpr,X0);  %strain from force divided by tensile stiffness
             end
             deflection = [epsilon, delta, beta];    %bracket movement
 %             pbrAnew = [norm(pbrhA),0,0]+deflection; %New point A, represented in the bracket frame
@@ -308,7 +307,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X2]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
     k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
@@ -346,7 +345,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
                 ) * mif - keff * r;
 
             try
-                r = fzero(relfun, [0, .1]);
+                r = fzero(relfun, [0, .5]);
             catch
                 r = 0;
             end
