@@ -7,11 +7,11 @@ clear; clc; close all
 
 %% Use solution from optimizer and check validity on biomimetic knee
 
-load minimizeFlxPin10_results_20251014_1transform.mat results_sort_actual
+load minimizeFlxPin10_results_20251017_1transform.mat results_sort_actual
 
-pick = 13;
+pick = 5;
 g = results_sort_actual(pick,2:4);
-[u, v, w, bpa] = minimizeFlx(0,g(2),g(3));           % Now pull bpa structures out
+[u, v, w, bpa] = minimizeFlx(g(1),g(2),g(3));           % Now pull bpa structures out
 
 %% Plot setup;
 % Define a colorblind-friendly palette

@@ -8,10 +8,10 @@ clear; clc; close all
 baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
-load minimizeFlxPin10_results_20251001_1transform.mat sol_actual
-sol_actual1 = sol_actual;
-[a1, ~] = minimizeExtX3(sol_actual1(1), sol_actual1(2), sol_actual1(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
-[a2, bpa2] = minimizeExtX3(-sol_actual1(1), sol_actual1(2), sol_actual1(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
+load minimizeFlxPin10_results sol_actual
+g = sol_actual;
+[a1, ~] = minimizeExtX3(g(1), g(2), g(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
+[a2, bpa2] = minimizeExtX3(-g(1), g(2), g(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
 % clear sol_actual
 baselineScores1 = a1./(a0);  % RMSE, FVU, Max Residual, normalized to baselineScores
 fprintf('Normalized to baseline score \n Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
@@ -27,8 +27,11 @@ results_cv = cell(1, numBPA);
 scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out validation
 
 %% Problem bounds
-lb = [-0.020 * 100, log10(5e3), log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [-0.005 * 100, log10(5e7), log10(5e7), 3];
+% lb = [-0.020 * 100, log10(5e3), log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+% ub = [-0.005 * 100, log10(5e7), log10(5e7), 3];
+
+lb = [-0.020 * 100, g(2), g(3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+ub = [-0.005 * 100, g(2), g(3), 3];
 
 % A = [0 -1 1 0; ...              % x2 (bending) is less stiff than x1 (axial), (x2 <= x1)
 %      0 0 0 0; ...
@@ -49,9 +52,7 @@ for k = 1:numel(allBPA)
     opts = optimoptions('gamultiobj', ...
         'UseParallel', true, ...
         'Display', 'iter', ...
-        'PlotFcn', {@gaplotpareto3D_simple}, ...
-        'InitialPopulationRange',[-.015*100, log10(8e4), log10(8e3), 0.1; ...
-                                  -0.007*100, log10(8e6), log10(8e5), 0.4], ...
+        'PlotFcn', {@gaplotpareto3D_simple}, ...    %'InitialPopulationRange',[-.015*100, log10(8e4), log10(8e3), 0.1; -0.007*100, log10(8e6), log10(8e5), 0.4], ...
         'PopulationSize', 50, ... %was 150
         'MaxGenerations', 95, ... %was 750
         'MutationFcn', {@mutationadaptfeasible}, ...
