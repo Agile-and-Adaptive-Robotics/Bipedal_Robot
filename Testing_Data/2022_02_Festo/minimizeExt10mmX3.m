@@ -30,8 +30,8 @@ scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out va
 % lb = [-0.020 * 100, log10(5e3), log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
 % ub = [-0.005 * 100, log10(5e7), log10(5e7), 3];
 
-lb = [-0.020 * 100, g(2), g(3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [-0.005 * 100, g(2), g(3), 3];
+lb = [-0.020 * 100, log10(g(2)), log10(g(3)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+ub = [-0.005 * 100, log10(g(2)), log10(g(3)), 3];
 
 % A = [0 -1 1 0; ...              % x2 (bending) is less stiff than x1 (axial), (x2 <= x1)
 %      0 0 0 0; ...
@@ -143,10 +143,8 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 1;
+pick = 32;
 sol_actual = filtered_results(pick, 2:5);
-% sol_actual = results_sort_actual(24,2:5);
-% sol_actual = results_sort_actual(pick, 2:5);  % [Xi0, Xi1, Xi2, Xi3]
 [f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
 
 fprintf('\nPerformance with sol_actual:\n');

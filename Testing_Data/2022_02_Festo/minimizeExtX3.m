@@ -450,9 +450,9 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     % Initialize outputs
     [e_axial, e_bendY, e_bendZ, e_cable] = deal(zeros(N,1));
     
-    if isinf(X1) && isinf(X2) && isinf(kSpr)
-        return
-    end
+%     if isinf(X1) && isinf(X2) && isinf(kSpr)
+%         return
+%     end
     
     D      = klass.dBPA;    %uninflated diameter
     rest   = klass.rest;    %BPA resting length

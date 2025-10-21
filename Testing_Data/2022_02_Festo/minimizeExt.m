@@ -270,8 +270,8 @@ Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
-% Pbr = [8.38 20.75 25.1]/1000;           %from centroid of bracket where it starts to cantilever (10mm).
-Pbr = [-21.33  -79   6.94]/1000;       %from centroid of bracket bolts.
+Pbr = [8.38 20.75 25.1]/1000;           %from centroid of bracket where it starts to cantilever (10mm).
+% Pbr = [-21.33  -79   6.94]/1000;       %from centroid of bracket bolts.
 phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
 thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
 RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
@@ -300,7 +300,8 @@ else
                 [epsilon, delta, beta, gama] = fortz(klass,Fbrh,X1,X2,kSpr,deltaL);  %strain from force divided by tensile stiffness
 end
 deflection = [epsilon, delta, beta];
-pbrAnew = [norm(pbrhA), 0, 0] + deflection;
+pbrAnew = [norm(pbrhA(1:2)), 0, pbrhA(3)] + deflection;
+% pbrAnew = [norm(pbrhA), 0, 0] + deflection;
 
 % Replace points
 LOC = L;
