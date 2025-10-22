@@ -15,15 +15,14 @@ ub = [0.015*100, log10(5e7), log10(5e7)];
 %% Solve 
 opts = optimoptions('gamultiobj', ...
         'UseParallel', true, ...
-        'Display', 'iter', ...        %
-        'InitialPopulationRange',[0.006, 3.9, 3.9; 0.012*100 4.3 4.3], ...
+        'Display', 'iter', ...        %'InitialPopulationRange',[0.002, 3.9, 3.9; 0.012*100 4.3 4.3], ...
         'PopulationSize', 50, ...  %Originally 75
         'MaxGenerations', 80, ... %Originally 600
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'PlotFcn', {@gaplotpareto3D_simple}, ...
-        'FunctionTolerance', 1e-3);
+        'FunctionTolerance', 4e-3);
 goal = [0 0 0];
 weight = 1./a;
 opts.HybridFcn = {@fgoalattain, goal, weight};
@@ -62,7 +61,7 @@ results_sort = sortrows(results,[11 8 9 10 5 6 7]); %Sort results first on dista
 results_sort_actual = [results_sort(:,1), results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5:end)];
 
 %% Pick ultimate solution
-pick = 1; %Pick the best solution from the sorted results (should be 1)
+pick = 5; %Pick the best solution from the sorted results (should be 1)
 sol_actual = results_sort_actual(pick, 2:4);  %Best solution                                   
 [u,v,bpa] = minimizeFlxPin(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out       
 

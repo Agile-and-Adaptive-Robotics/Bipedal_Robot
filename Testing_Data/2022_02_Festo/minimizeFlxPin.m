@@ -140,7 +140,8 @@ function LOC = Lok(klass,X1,X2,strain,X0)
             unitD = klass.unitD;            %unit direction of force vector, tibia frame
             Fk = unitD.*FF;                  %Force vector, tibia frame
             pB = L(C,:,1);                  %Distance from knee frame to muscle insertion
-            Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
+%             Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
+            Pbri = [-27.5, -107.81, -0.54]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever, but at tibial contact, no z offset)
 %             Pbri = [-27.5, -125.91, -0.54]/1000;     %vector from knee ICR to upper bolt
             pkbrB = pB-Pbri;                  %vector from bracket to point B, in the knee frame
             thetabrB = atan2(pkbrB(2),pkbrB(1));   %angle between pbrB and x axis
@@ -155,7 +156,7 @@ function LOC = Lok(klass,X1,X2,strain,X0)
                   0           1  0;
                  -sin(thetaY) 0  cos(thetaY)];
             Rkbr = RkbrZ*Ry';            %Rotate about y-axis in body frame
-            Tkbr = RpToTrans(Rkbr, Pbri');    %Transformation matrix, flexor bracket frame in knee frame
+            Tkbr = RpToTrans(RkbrZ, Pbri');    %Transformation matrix, flexor bracket frame in knee frame
 
             LOC = L;            %new location matrix
             N = size(L,3);
@@ -173,8 +174,8 @@ function LOC = Lok(klass,X1,X2,strain,X0)
             end
             
             eB = [epsilon, delta, beta];
-%             pbrBnew = [norm(pkbrB(1:2)), 0, pkbrB(3)] + eB; %new point B, in the bracket's frame
-            pbrBnew = [norm(pkbrB), 0, 0] + eB; %new point B, in the bracket's frame
+            pbrBnew = [norm(pkbrB(1:2)), 0, pkbrB(3)] + eB; %new point B, in the bracket's frame
+%             pbrBnew = [norm(pkbrB), 0, 0] + eB; %new point B, in the bracket's frame
             
             pBnew = zeros(N,3);
             for ii = 1:N                          %Repeat for each orientation
