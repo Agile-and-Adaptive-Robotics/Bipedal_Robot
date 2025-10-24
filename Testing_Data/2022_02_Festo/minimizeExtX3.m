@@ -658,7 +658,7 @@ Mz = zeros(N, 3);
 % idx = strain < -0.02;
 % Mz(idx,:) = cross(mA(idx,:),F(idx,:),2);
     for i = 1:N
-        if strain(i,:) < -0.02
+        if strain(i,:) < 0
             Mz(i,:) = NaN;
         else
             Mz(i,:) = cross(mA(i,:), F(i,:));
