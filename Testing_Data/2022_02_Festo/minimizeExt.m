@@ -529,7 +529,7 @@ N = size(F, 1);
 Mz = zeros(N, 3);
 
     for i = 1:N
-        if strain(i,:) < -.020
+        if strain(i,:) < 0
             Mz(i,:) = NaN;
         else
             Mz(i,:) = cross(mA(i,:), F(i,:));

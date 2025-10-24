@@ -131,10 +131,10 @@ end
 ylabel(tMA,'\bf Moment arm, m','Interpreter','tex')
 xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex')
 
-%% --- Torque and relative strain Figure with tiles ---
-figT = figure('Name','Torque and relative strain','Color','w');
+%% --- Torque Figure  ---
+figT = figure('Name','Torque','Color','w');
 figT.Position = [100 100 950 400];
-tT = tiledlayout(1,2,'TileSpacing','loose','Padding','loose');
+tT = tiledlayout(1,1,'TileSpacing','loose','Padding','loose');
 
 for j = 1
     i = 1;
@@ -154,8 +154,8 @@ for j = 1
     xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
     % Tile-specific title and annotation label
     title('Torque', 'Interpreter','tex');
-    annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+%     annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
+%         'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
 
     % Axis config
     set(gca, ...
@@ -164,8 +164,7 @@ for j = 1
         'FontName', 'Arial', ...
         'LineWidth', 2, ...
         'XMinorTick', 'on', ...
-        'YMinorTick', 'on', ...
-        'YLim', [0 15], ...
+        'YMinorTick', 'on', ...        'YLim', [0 15], ...
         'TickLength', [0.025 0.05], ...
         'GridLineStyle','none');
     
@@ -174,9 +173,14 @@ for j = 1
         lg.FontSize = 8;
 end
 
+%% --- Relative Strain Figure with tile ---
+figE = figure('Name','Relative Strain','Color','w');
+figE.Position = [100 100 950 400];
+tE = tiledlayout(1,1,'TileSpacing','loose','Padding','loose');
+
 for j = 2
     i = 1;
-    ax = nexttile(j);
+    ax = nexttile(1);
     hold on
     
     strain_h = (bpa(i).rest - bpa(i).Lm_h)/bpa(i).rest;
@@ -190,8 +194,8 @@ for j = 2
     title('\bf Relative Strain', 'Interpreter', 'tex');
 
    
-    annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+%     annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
+%         'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
 
     % Axis config
     set(gca, ...
@@ -208,11 +212,6 @@ for j = 2
         lg.Location = 'best';
         lg.FontSize = 8;          
 end
-
-%% --- Strain Figure with tiles ---
-% figS = figure('Name','Relative Strain','Color','w');
-% figS.Position = [100 100 950 700];
-% tS = tiledlayout(1,2,'TileSpacing','loose','Padding','loose');
 
 
 %% Helper functions
