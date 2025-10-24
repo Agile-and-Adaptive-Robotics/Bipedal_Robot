@@ -368,7 +368,7 @@ Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
-% Pbr = [-2.65, -54.71, 75.06]/1000;                          %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
+% Pbr = [-3.15, -54.78, 75.06]/1000;                          %from hip origin to lower section of the superior anterior bracket on the Bifemsh_Pam
 Pbr = [-7.325, -22.27, 75.06]/1000;                          %from hip origin to midpoint between two bolt holes on superior anterior bracket of the Bifemsh_Pam
 phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
 thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
