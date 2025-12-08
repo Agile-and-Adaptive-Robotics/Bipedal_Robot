@@ -27,18 +27,18 @@ y_t1 = fcn_t1y(theta_dense);
 
 % Plot parametric curve in magenta color
 % figICR = figure('Name','Knee ICR','Color','w');
-t = tiledlayout(1, 2);
+t = tiledlayout(1, 1);
 t.Parent.Color = 'w';
 t.Parent.Name = 'Knee ICR';
-t.Parent.Position = [78 387 1250 552];
+% t.Parent.Position = [78 387 1250 552];
 tileLabels = {'(A)', '(B)'};
 % Annotation positions [x, y] in normalized figure units
 xAnn = [0, 0.54];
 yAnn = [0.86, 0.86];
-    for j = 1:2
-    annotation(gcf, 'textbox', [xAnn(j), yAnn(j), 0.05, 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 10, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
-    end
+%     for j = 1:2
+%     annotation(gcf, 'textbox', [xAnn(j), yAnn(j), 0.05, 0.05], 'String', ['\bf ' tileLabels{j}], ...
+%         'FontSize', 10, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
+%     end
 
 % Plot distance from t1 parametric line in light orange with display name
 nexttile
@@ -87,28 +87,29 @@ y_min = min([y_t1]);
 y_max = max([y_t1]);
 y_margin = 0.30 * (y_max - y_min);
 
-ylim([y_min - y_margin, y_max + y_margin]);
+ylim([0, 0.035]);
+% ylim([y_min - y_margin, y_max + y_margin]);
 
 x_min = min([x_t1]);
 x_max = max([x_t1]);
 x_margin = 0.30 * (x_max - x_min);
 
-xlim([x_min - x_margin, x_max + x_margin]);
-
+% xlim([x_min - x_margin, x_max + x_margin]);
+xlim([-.015, 0.035]);
 lgd = legend('Location','best');
 title(lgd,'Distance from')
 
-nexttile
-B0 = imread('KneeLinkage.PNG');
-B = imresize(B0,2);
-image(B)
-axis image
-axis off
-
-boxLabels = ["\theta_{3}", "\theta_{2}", "\theta_{1}", "\theta_{4}"];
-xbox = [0.6488,0.7212; 0.8176,0.7576; 0.6176,0.6908; 0.8192,0.76720];
-ybox = [0.6431,0.6417; 0.5797,0.57645; 0.4438,0.4417; 0.4438,0.4453];
-    for j = 1:4
-    annotation(gcf, 'textarrow', xbox(j,:), ybox(j,:), 'String', ['\bf ' boxLabels(j)], ...
-        'FontSize', 10, 'FontName', 'Arial');
-    end
+% nexttile
+% B0 = imread('KneeLinkage.PNG');
+% B = imresize(B0,2);
+% image(B)
+% axis image
+% axis off
+% 
+% boxLabels = ["\theta_{3}", "\theta_{2}", "\theta_{1}", "\theta_{4}"];
+% xbox = [0.6488,0.7212; 0.8176,0.7576; 0.6176,0.6908; 0.8192,0.76720];
+% ybox = [0.6431,0.6417; 0.5797,0.57645; 0.4438,0.4417; 0.4438,0.4453];
+%     for j = 1:4
+%     annotation(gcf, 'textarrow', xbox(j,:), ybox(j,:), 'String', ['\bf ' boxLabels(j)], ...
+%         'FontSize', 10, 'FontName', 'Arial');
+%     end

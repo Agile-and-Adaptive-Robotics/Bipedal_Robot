@@ -101,53 +101,53 @@ bpa_all = ke;  % initialize
 f_all = NaN(nBPA, 3);
 
 %% Evaluate each BPA
-% for i = idx_val
-% %     fprintf('Evaluating BPA #%d with [%.4f, %.2e, %.2e]\n', i, Xi0, Xi1, Xi2, Xi3);
-%     klass_i = ke(i);
-%     [bpa_all(i), f_all(i,:)] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
-%     if any(isnan(bpa_all(i).strain_p))
-%         warning('NaNs in strain_p for BPA #%d', i);
-%     end
-% end
+for i = idx_val
+%     fprintf('Evaluating BPA #%d with [%.4f, %.2e, %.2e]\n', i, Xi0, Xi1, Xi2, Xi3);
+    klass_i = ke(i);
+    [bpa_all(i), f_all(i,:)] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
+    if any(isnan(bpa_all(i).strain_p))
+        warning('NaNs in strain_p for BPA #%d', i);
+    end
+end
 
 %% Evaluate each BPA (parallelized)
 % idx_val may be e.g. [1 3 4] or 1:n
-numIdx = numel(idx_val);
-
-% Preallocate temporary containers for parfor
-local_f   = zeros(numIdx, 3);    % fitness results per BPA
-local_bpa = cell(numIdx, 1);     % store returned struct in cell (parfor-friendly)
-nanFlags  = false(numIdx, 1);    % record NaN occurrences to warn later
-
-% NOTE: 'ke' must be visible on the workers (it is broadcast-read only).
-parfor n = 1:numIdx
-    m = idx_val(n);            % actual BPA index
-    klass_i = ke(m);            % broadcasted read of ke
-    try
-        [bpa_i, fitvec] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
-    catch err
-        % If evaluateBPA throws inside a worker, record Inf fitness and empty struct
-        fitvec = [Inf, Inf, Inf];
-        bpa_i = klass_i; % put something sensible (same struct) back
-        % You can also store the error message into a cell array for post-mortem if wanted
-    end
-
-    local_f(n, :) = fitvec;
-    local_bpa{n}  = bpa_i;
-    nanFlags(n)   = any(isnan(bpa_i.strain_p));
-end
-
-% Scatter local results back into outputs at the correct indices
-f_all(idx_val, :) = local_f;
-    for n = 1:numIdx
-        bpa_all(idx_val(n)) = local_bpa{n};
-    end
-
-    % Post-loop warnings (one consolidated report)
-    if any(nanFlags)
-        badIdx = idx_val(nanFlags);
-        warning('NaNs detected in strain_p for BPA indices: %s', mat2str(badIdx));
-    end
+% numIdx = numel(idx_val);
+% 
+% % Preallocate temporary containers for parfor
+% local_f   = zeros(numIdx, 3);    % fitness results per BPA
+% local_bpa = cell(numIdx, 1);     % store returned struct in cell (parfor-friendly)
+% nanFlags  = false(numIdx, 1);    % record NaN occurrences to warn later
+% 
+% % NOTE: 'ke' must be visible on the workers (it is broadcast-read only).
+% parfor n = 1:numIdx
+%     m = idx_val(n);            % actual BPA index
+%     klass_i = ke(m);            % broadcasted read of ke
+%     try
+%         [bpa_i, fitvec] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
+%     catch err
+%         % If evaluateBPA throws inside a worker, record Inf fitness and empty struct
+%         fitvec = [Inf, Inf, Inf];
+%         bpa_i = klass_i; % put something sensible (same struct) back
+%         % You can also store the error message into a cell array for post-mortem if wanted
+%     end
+% 
+%     local_f(n, :) = fitvec;
+%     local_bpa{n}  = bpa_i;
+%     nanFlags(n)   = any(isnan(bpa_i.strain_p));
+% end
+% 
+% % Scatter local results back into outputs at the correct indices
+% f_all(idx_val, :) = local_f;
+%     for n = 1:numIdx
+%         bpa_all(idx_val(n)) = local_bpa{n};
+%     end
+% 
+%     % Post-loop warnings (one consolidated report)
+%     if any(nanFlags)
+%         badIdx = idx_val(nanFlags);
+%         warning('NaNs detected in strain_p for BPA indices: %s', mat2str(badIdx));
+%     end
 
 end
 
@@ -252,6 +252,9 @@ end
 delta_L = zeros(N,1);
 delta_L1 = zeros(N,1);
 delta_L2 = zeros(N,1);
+delta_L0 = zeros(N,1);
+delta_L01 = zeros(N,1);
+delta_L02 = zeros(N,1);
 if ~isempty(X3)
     ang1 = 27;
     ang2 = -23;
@@ -271,9 +274,14 @@ if ~isempty(X3)
     comp = max(0, comp);
     R1 = 0.012;         %minimum radius
     R2 = 0.04;           %minimum radius
+    %With additive complement
     delta_L1(idx1) = X3*(R1)*angleRad1(idx1).*comp(idx1).^2*(27.75/(ang1-ang2));
     delta_L2(idx2) = X3*(R2)*angleRad2(idx2).*comp(idx2).^2*(92.46/(ang2-(-120))) + X3*(R1)*deg2rad(27.75).*comp(idx2).^2;    
     delta_L = delta_L1+delta_L2;
+    %Without additive complement
+    delta_L01(idx1) = X3*(R1)*angleRad1(idx1)*(27.75/(ang1-ang2));
+    delta_L02(idx2) = X3*(R2)*angleRad2(idx2)*(92.46/(ang2-(-120))) + X3*(R1)*deg2rad(27.75);    
+    delta_L0 = delta_L01+delta_L02;
 end
 
 if isempty(X0) || ~isempty(Lmt)
@@ -288,7 +296,7 @@ Lm_adj = Lmt - tendon - 2*fitn - X0 - gama - delta_L; %BPA length, either real o
 contraction = (rest - Lm_adj) / rest;
 
 if ~isempty(X3)
-    debug_contraction_plot = false;
+    debug_contraction_plot = true;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         str = sprintf("%.3f Lrest, %.3f tendon",rest, tendon);
         figure('Name',str);
@@ -307,7 +315,7 @@ if ~isempty(X3)
 %         plot(theta_k, delta_L2*1000, 'DisplayName','Delta L2');
         plot(theta_k, delta_L*1000, 'DisplayName','Delta L');
         hold off
-        title('delta_L'); ylabel('delta_L [mm]'); grid on; legend;
+        title('delta_L w/ \xi'); ylabel('delta_L [mm]'); grid on; legend;
 
         nexttile(3);
         hold on
@@ -326,7 +334,12 @@ if ~isempty(X3)
         title('Lm'); ylabel('angle [deg]'); grid on; legend;
         
         nexttile(5);
-        plot(theta_k, gama, 'k'); title('cable stretch'); ylabel('length (m)'); grid on;
+        hold on
+%         plot(theta_k, delta_L01*1000, 'DisplayName','Delta L01'); 
+%         plot(theta_k, delta_L02*1000, 'DisplayName','Delta L02');
+        plot(theta_k, delta_L0*1000, 'DisplayName','Delta L0');
+        hold off
+        title('delta_L no \xi'); ylabel('delta_L [mm]'); grid on; legend;
         
         nexttile(6);
         hold on 
