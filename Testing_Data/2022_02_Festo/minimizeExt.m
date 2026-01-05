@@ -1,0 +1,573 @@
+%minimizeExt.m
+%% Optimize predicted torque for extensors.
+function [f_all, bpa_all] = minimizeExt(Xi0, Xi1, Xi2, Xi3, idx_val)
+% minimizeExt: calculates predicted torque and fit metrics for a given BPA index
+%
+% Inputs:
+%   Xi0 - extra length correction (m)
+%   Xi1 - axial bracket stiffness (N/m)
+%   Xi2 - bending bracket stiffness (N/m)
+%   Xi3 - curvature factor
+%   whichIdx - index of the BPA to process (scalar)
+%
+% Outputs:
+%   fitvec - [RMSE, FVU, MaxResidual] for the selected BPA
+%   bpa    - updated BPA struct with prediction fields filled in
+
+%% load
+%kf = knee flexor, kf(1) = pinned joint, kf(2) = biomimetic;
+%ke = knee extensor, same as above
+%ke.L := lengths = [42 42 46 48] cm
+%example: ke(1).L(3).Mz z-axis torque for pinned knee, flexor, 46cm length
+%'exp' suffix means experimentally measured
+%'_h' suffix means hybrid calculation
+%'_p' suffix means prime, as in the new prediction values
+
+% 52cm length, no tendon
+    load KneeExt_10mm_52cm.mat Vas_Pam phiD
+    Ma = Vas_Pam.MomentArm;                 %Calculated moment arm
+    G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+    load Plot_KneeExt10mm_52cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
+    A = sortrows([Angle(:), Torque(:), InflatedLength(:), ICRtoMuscle(:), TorqueHand(:)]);
+    ke(1) = struct('Ak',phiD,'Loc',Vas_Pam.Location,'CP',Vas_Pam.Cross,'dBPA',Vas_Pam.Diameter, ...
+                  'Tk',Vas_Pam.TransformationMat,'rest',Vas_Pam.RestingL,'Kmax',Vas_Pam.Kmax,...
+                  'fitn',Vas_Pam.FittingLength,'ten',Vas_Pam.TendonL,'P',Vas_Pam.Pressure, ...
+                  'Lmt',Vas_Pam.MuscleLength,'strain',Vas_Pam.Contraction, 'unitD',Vas_Pam.UnitDirection, ...
+                  'mA',G,'Fm',Vas_Pam.Fmax,'F',Vas_Pam.Force, 'seg',Vas_Pam.SegmentLengths, ...
+                  'M',Vas_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+                  'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
+                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
+    clear Vas_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+
+
+%% Initialize output
+nBPA = numel(ke);
+% Default to all BPAs if none specified
+if nargin < 5 || isempty(idx_val)
+        idx_val = 1:nBPA;
+end
+
+bpa_all = ke;  % initialize
+f_all = NaN(nBPA, 3);
+
+%% Evaluate each BPA
+for i = idx_val
+%     fprintf('Evaluating BPA #%d with [%.4f, %.2e, %.2e]\n', i, Xi0, Xi1, Xi2, Xi3);
+    klass_i = ke(i);
+    [bpa_all(i), f_all(i,:)] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
+    if any(isnan(bpa_all(i).strain_p))
+        warning('NaNs in strain_p for BPA #%d', i);
+    end
+end
+
+end
+
+function [bpa_i, fitvec] = evaluateBPA(klass, Xi0, Xi1, Xi2, Xi3)
+%% Calculate locations and properties
+bpa_i = klass;
+kspr = Spr(bpa_i);          %tendon spring rate
+Funit = computeForceVector(bpa_i);  %Force unit direction in the hip frame 
+[strain_Xi3, delta_L] = Contraction(bpa_i, [], Xi0, [], Xi3);
+[L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, delta_L+Xi0); %Bracket deformation and new geometry
+sL_p = seg(bpa_i, L_p); %segment lengths
+Lmt_p = LMT(sL_p, Xi0); 
+[strain_f, ~] = Contraction(bpa_i, Lmt_p, [], gemma, Xi3);
+unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
+F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
+mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
+[strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []);
+M_p = Tor(mA_p, F_p, strain_p); %New torque prediction
+
+%% Package into output struct
+bpa_i.L_p = L_p;
+bpa_i.Lmt_p = Lmt_p;
+bpa_i.mA_p = mA_p;
+bpa_i.F_p = F_p;
+bpa_i.M_p = M_p;
+bpa_i.strain_p   = strain_p;
+bpa_i.gama   = gemma;
+
+% SSE calculation
+fitvec = SSE(bpa_i, M_p);
+
+%% Nested functions, modified from MonoPamExplicit
+%% -------------Force unit direction ---------------
+function F_unit = computeForceVector(klass)
+%Calculate the force unit direction from muscle origin (hip frame) to the next
+%real point. This takes into account if there are any additional via
+%points between muscle origin and muscle insertion. It also takes into
+%account if a homogenous transformation matrix needs to be used to
+%convert the second point into the first points frame.
+
+L = klass.Loc;      %Location (wrapping, attachment points)
+C = klass.CP;       %Cross point (moves from one frame to another)
+T = klass.Tk;       %Transformation matrix
+    
+% Step 1: Detect the first valid segment (non-repeated)
+N = size(L, 3);      % Number of samples/frames
+pt1 = squeeze(L(1,:,:))';  % Origin point, 3×N → N×3
+pt2 = NaN(N, 3);
+
+for i = 1:N
+    pt1(i,:) = L(1,:,i);  % muscle origin
+    found = false;
+
+    for k = 2:size(L,1)
+        d = norm(L(k,:,i) - L(1,:,i));
+        if d > 1e-6
+            if k == C
+                pt2(i,:) = RowVecTrans(T(:,:,i), L(k,:,i));
+            else
+                pt2(i,:) = L(k,:,i);
+            end
+            found = true;
+            break;
+        end
+    end
+
+    if ~found
+        warning("Frame %d: No valid second point, using pt1=pt2", i);
+        pt2(i,:) = pt1(i,:);  % fallback
+    end
+
+%     % Debug output
+%     fprintf("Frame %3d | pt1: [% .4f, % .4f, % .4f]  pt2: [% .4f, % .4f, % .4f]  norm: %.6f\n", ...
+%         i, pt1(i,:), pt2(i,:), norm(pt2(i,:) - pt1(i,:)));
+end
+% Force Direction vector (hip frame)
+F_vec = pt2 - pt1;
+F_unit = normalize(F_vec);
+
+end
+
+        %% -------------- Contraction of the PAM --------------------------
+function [contraction, delta_L] = Contraction(klass, Lmt, X0, gama, X3)
+rest   = klass.rest;
+tendon = klass.ten;
+fitn = klass.fitn;
+theta_k = klass.Ak(:);  % degrees
+N = length(theta_k);
+KMAX = (rest - klass.Kmax)/rest;
+
+% --- Gama (deformation) ---
+if isempty(gama)
+    gama = zeros(N,1);
+end
+
+% --- Delta_L from curvature ---
+delta_L = zeros(N,1);
+delta_L2 = zeros(N,1);
+
+if ~isempty(X3)
+    ang = -9.19;
+    angleRad = deg2rad((ang-theta_k)*80/(ang+120));
+    idx = angleRad > 0;
+    if isempty(Lmt)     %Then use klass.Lmt and X0
+        Lm = (klass.Lmt - tendon -2*fitn-X0); %length of the BPA
+    end
+    if isempty(X0)              %then X0 is already used in LMT
+        Lm = Lmt-tendon-2*fitn-gama;
+    end
+    strain = (rest - Lm)/rest;
+    relstrain = strain/KMAX;
+    comp = 1-relstrain;  %additive complement to relative strain
+    comp = max(0, comp);
+    R1 = 0.022; %minimum radius 1
+    R2 = 0.176; %minimum radius 2
+    delta_L1 = X3*(R1)*deg2rad(28).*comp.^2*ones(size(N,1));
+    delta_L2(idx) = X3*(R2)*angleRad(idx).*comp(idx).^2 ;
+
+    delta_L = delta_L1+delta_L2;   
+    
+end
+
+if isempty(X0)
+    X0 = 0;
+end
+
+if isempty(Lmt)
+    Lmt = klass.Lmt;
+end
+
+Lm_adj = Lmt - tendon -2*fitn-X0-gama - delta_L; %muscle length
+contraction = (rest - Lm_adj) / rest;
+
+if ~isempty(X3)
+    debug_contraction_plot = false;
+    if exist('debug_contraction_plot', 'var') && debug_contraction_plot
+        figure;
+        txt = sprintf("Lrest = %.3f, tendon = %.3f",klass.rest, klass.ten);
+        title(txt);
+        subplot(3,2,1);
+        hold on
+        plot(theta_k, comp, 'DisplayName','comp'); 
+        plot(theta_k, comp.^2, 'DisplayName','comp^2');
+        hold off
+        title('comp = 1 - relstrain'); ylabel('comp'); grid on; legend;
+
+        subplot(3,2,2);
+        hold on
+        plot(theta_k, delta_L*1000, 'r','DisplayName','Delta L'); 
+        plot(theta_k, delta_L1*1000, 'b','DisplayName','Delta L1');
+        plot(theta_k, delta_L2*1000, 'g','DisplayName','Delta L2');
+        hold off
+        title('delta_L'); ylabel('delta_L [mm]'); grid on; legend;
+
+        subplot(3,2,3);
+        hold on
+        plot(theta_k, strain, 'DisplayName','\epsilon'); 
+        plot(theta_k, contraction,  'DisplayName','\epsilon, adjusted');
+        hold off
+        title('strain'); ylabel('strain'); grid on; legend
+
+        subplot(3,2,4);
+        hold on 
+        plot(theta_k, Lm, 'DisplayName','Lm');
+        plot(theta_k, Lm_adj, 'DisplayName','Lm, adj');
+        hold off
+        title('angleRad'); ylabel('angle [deg]'); grid on; legend;
+        
+        subplot(3,2,5);
+        plot(theta_k, gama, 'k'); title('cable stretch'); ylabel('length (m)'); grid on;
+        
+        subplot(3,2,6);
+        hold on 
+        plot(theta_k, angleRad, 'DisplayName','angleRad');
+        hold off
+        title('angleRad'); ylabel('angle [deg]'); grid on; legend;
+    end
+end
+
+end
+
+%% ------------- Location  ------------------------
+function [LOC, gama] = Lok(klass, X1, X2, kSpr, Funit, strain_predef, deltaL)
+% Inputs:
+%   bpa class info
+%   X1, X2 stiffness
+%   kSpr, tendon stiffness
+%   Funit, force unit direction in the hip frame
+%   strain_predef – N×1 strain vector (e.g., from Xi0 + Xi3 curvature-only effect)
+%   delta_L, which is actually X0 and delta_L combined
+L = klass.Loc;
+% C = klass.CP;
+rest = klass.rest;
+Fm = klass.Fm;
+P = klass.P;
+D = klass.dBPA;
+kmax = klass.Kmax;
+KMAX = (rest - kmax)/rest;
+N = size(L,3);
+% M = size(L,1);
+
+% Compute Force
+relstrain = strain_predef ./ KMAX;
+FF = zeros(size(strain_predef));
+idx = relstrain < 1;
+FF (idx)= festo4(D, relstrain(idx), P) .* Fm; %Force magnitude
+FF (FF<0) = 0;
+Fh = Funit .* FF;  % N×3, already in hip frame
+
+%Bracket transform
+pA = L(1,:,1);
+Pbr = [8.38 20.75 25.1]/1000;           %from centroid of bracket where it starts to cantilever (10mm).
+% Pbr = [-21.33  -79   6.94]/1000;       %from centroid of bracket bolts.
+phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
+thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
+RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
+       sin(thetabrA) cos(thetabrA) 0; ...
+       0    0   1];
+pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
+% Now calculate angle from x-axis to this vector
+thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
+% Rotation matrix about y-axis (local frame adjustment)
+Ry = [cos(thetaY)  0  sin(thetaY);
+      0            1  0;
+     -sin(thetaY)  0  cos(thetaY)];
+Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
+Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
+
+% Transform force into bracket frame
+Fbrh = zeros(N,3);
+for ii = 1:N
+    Fbrh(ii,:) = RowVecTrans(Thbr\eye(4), Fh(ii,:));
+end
+
+% Bracket deformation
+if isinf(X1) && isinf(X2) && isinf(kSpr)
+                [epsilon, delta, beta, gama] = deal(zeros(N,1));
+else
+                [epsilon, delta, beta, gama] = fortz(klass,Fbrh,X1,X2,kSpr,deltaL);  %strain from force divided by tensile stiffness
+end
+deflection = [epsilon, delta, beta];
+pbrAnew = [norm(pbrhA(1:2)), 0, pbrhA(3)] + deflection;
+% pbrAnew = [norm(pbrhA), 0, 0] + deflection;
+
+% Replace points
+LOC = L;
+pAnew = zeros(size(pbrAnew));
+%Basically, we need to replace point one, but point 1 is never the same as
+%point 2 over our RoM
+    for ii = 1:N
+        pAnew(ii,:) = RowVecTrans(Thbr, pbrAnew(ii,:));
+        LOC(1,:,ii) = pAnew(ii,:);
+    end
+
+end
+
+%% Force and length reduction due to tendon
+function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,deltaL)
+%deltaL input combines X0 and delta_L (from X3)
+% e_axial, bracket axial elongation
+% e_bendY, bracket bending displacement y - direction
+% e_bendZ, bracket bending displacement z - direction
+% e_cable, tendon cable stretch
+% total length change
+    N = size(Fbr,1);
+    % Initialize outputs
+    [e_axial, e_bendY, e_bendZ, e_cable] = deal(zeros(N,1));
+    
+    if isinf(X1) && isinf(X2) && isinf(kSpr)
+        return
+    end
+    
+    %Initialize inputs
+    D      = klass.dBPA;    %uninflated diameter
+    rest   = klass.rest;    %BPA resting length
+    tendon = klass.ten;     %tendon length
+    fitting = klass.fitn;   %end cap length
+    mL     = klass.Lmt-deltaL-tendon-2*fitting;     %Length of BPA
+    mif    = klass.Fm;   %maximum bpa force
+    kmax   = klass.Kmax; %maximum contraction length
+    KMAX   = (rest-kmax)/rest; %maximum contraction percent
+    P      = klass.P;          %pressure
+    
+
+    % Normalize force vectors safely
+    norms = vecnorm(Fbr, 2, 2);
+    valid = norms > 1e-3 & all(~isnan(Fbr), 2);
+    u_hat_all = normalize(Fbr);
+    
+    % Vectorized k_b computation
+    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
+    u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
+    K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
+    k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
+    k_b = reshape(k_b, [N, 1]);
+
+    if isinf(X1) && isinf(X2)
+        k_eff = kSpr*ones(size(mL));
+    else
+        k_eff = 1 ./ (1 ./ k_b + 1 / kSpr);  % Nx1
+    end
+    
+
+    % Parallel root solve
+    parfor i = 1:N
+        if ~valid(i)
+            continue;
+        end
+        
+        % Flexible case: run Newton-Raphson
+        % Per-instance constants
+        keff = k_eff(i);
+        unit_vec = u_hat_all(i, :);
+        Lm = mL(i);
+        r = 1e-3;  % Initial guess                
+
+        for iter = 1:50
+            contraction = (rest - (Lm - r)) / rest;
+            rel = contraction / KMAX;
+
+            fM = festo4(D, rel, P) * mif;
+            fT = keff * r;
+            Fbal = fM - fT;
+
+            % Numerical derivative
+            dr = 1e-6;
+            contraction_d = (rest - (Lm - (r + dr)) ) / rest;
+            rel_d = contraction_d / KMAX;
+            
+            fM_d = festo4(D, rel_d, P) * mif;
+            Fbal_d = fM_d - keff * (r + dr);
+            dF = (Fbal_d - Fbal) / dr;
+
+            %Avoid zero slope
+            if abs(dF) < 1e-12 || isnan(dF)
+                r = NaN;
+            break;
+            end
+            
+            % Newton-Raphson update
+            r = r - Fbal / dF;
+
+            if abs(Fbal) < 1e-6
+                break;
+            end
+        end
+
+        r = max(r,0);   %guard against negative r values
+        
+        if isinf(X1) && isinf(X2) && tendon > 0
+            % Rigid bracket: no deformation, optional cable stretch
+            e_axial(i) = 0;
+            e_bendY(i) = 0;
+            e_bendZ(i) = 0;
+            e_cable(i) = r;  % Small value if needed
+            continue;
+        else
+            % Final force magnitude
+            contraction = (rest - (Lm -  r )) / rest;
+            relstrain = contraction / KMAX;
+            F_mag = festo4(D, relstrain, P) * mif;
+
+            % Bracket displacement
+            e_bkt = K_bracket \ (F_mag * unit_vec');
+
+            e_axial(i) = e_bkt(1);
+            e_bendY(i) = e_bkt(2);
+            e_bendZ(i) = e_bkt(3);
+
+            % Cable elongation
+            e_cable(i) = F_mag/kSpr;
+
+        end
+    end
+end
+
+%% ------------- Segment Lengths ------------------------
+function SL = seg(klass, L_p)
+C = klass.CP;
+T = klass.Tk;
+N = size(T, 3);
+M = size(L_p, 1);
+SL = zeros(N, M-1);
+
+for ii = 1:N                    %Repeat for each orientation
+    for i = 1:M-1               %Calculate all segments
+        pointA = L_p(i,:,ii);
+        pointB = L_p(i+1,:,ii);
+        if i+1 == C
+            pointB = RowVecTrans(T(:,:,ii), pointB);
+        end
+        SL(ii,i) = norm(pointA - pointB);
+    end
+end
+end
+               
+        %% ------------- Muscle Length ------------------------
+function Lmt = LMT(sL, Xi0)
+% Compute muscle-tendon length from segment lengths and offset Xi0
+% Xi0 can be empty [] to skip correction (i.e., when already applied)
+% N = size(sL_p, 1);
+Lmt = sum(sL, 2);  % Nx1, sum across segments
+
+if ~isempty(Xi0)
+    Lmt = Lmt - Xi0;
+end
+end           
+
+        %% -------------- Force Unit Direction ----------------
+        %Calculate the unit direction of the muscle force about the joint.
+function unitD = UD(klass, L_p)
+            T = klass.Tk;
+            C = klass.CP;
+            direction = zeros(size(T, 3), 3);
+            
+            for i = 1:size(T, 3)
+                pointA = L_p(C-1, :, i);
+                pointB = L_p(C, :, i);
+                direction(i, :) = RowVecTrans(T(:, :, i)\eye(4), pointA) - pointB;
+            end
+            unitD = normalize(direction);
+end
+        
+        %% -------------- Moment Arm --------------------------
+        %Calculate the moment arm about a joint
+        %For every ViaPoint, calculate the moment arm of the muscle about
+        %the joint it crosses over
+function mA = Mom(klass, L_p, unitD_p)
+% Moment arm = perpendicular offset from joint to line of action
+C = klass.CP;
+N = size(klass.Tk, 3);
+mA = zeros(N, 3);
+
+    for i = 1:N
+        pointB = L_p(C,:,i);
+        mA(i,:) = pointB - unitD_p(i,:) * dot(unitD_p(i,:), pointB);
+    end
+end     
+
+
+        %% -------------- Force --------------------------
+        %Calculate the direction of the forced applied by the muscle
+function F = Force(klass, unitD, strain)
+    D = klass.dBPA;
+    rest = klass.rest;
+    P = klass.P;
+    mif = klass.Fm;
+    kmax = klass.Kmax;
+    KMAX = (rest - kmax) / rest;
+    rel = strain ./ KMAX;  % normalized strain
+%     idx = strain > -0.02 & rel < 1;
+%     Fn = zeros(size(klass.unitD,1),1);
+    Fn = festo4(D, rel, P);  % Force, normalized
+    scalarForce = Fn *mif;  %Redimensionalize
+    scalarForce(scalarForce < 0) = 0;  % Eliminate negatives
+
+    F = scalarForce .* unitD;  % Nx3
+end
+        
+        %% ---------------------- Torque --------------
+        %Calculate torque by multiplying the the force along the 
+        %Useful information
+        % i -> Index for Crossing Points/Joints
+        % ii -> Index for every degree of motion
+        % iii -> Index for axes of interest to observe Torque about
+function Mz = Tor(mA, F, strain)
+N = size(F, 1);
+Mz = zeros(N, 3);
+
+    for i = 1:N
+        if strain(i,:) < 0
+            Mz(i,:) = NaN;
+        else
+            Mz(i,:) = cross(mA(i,:), F(i,:));
+        end
+    end
+end    
+
+%% tendon springrate
+function springrate = Spr(klass)
+    if klass.ten > 0
+        mult = 2;           %Multiplier for number of cables used.
+        Aeff = 1.51*10^-6;  %Effective area for 19-strand cable
+        E = 193*10^9;       %Young's Modulus
+        L = klass.ten;      %tendon length        
+        springrate = mult*Aeff*E/L;
+    else
+        springrate = Inf;
+    end
+        
+end
+
+%% Subfunctions
+function t = SSE(klass, M_p)
+     [Ak_sorted, idx] = sort(klass.Ak);
+     M_sorted = M_p(idx, 3);
+     Mpredict2 = griddedInterpolant(Ak_sorted, M_sorted);
+     M_opt = Mpredict2(klass.Aexp);
+     [RMSE, fvu, maxResid] = Go_OfF(klass.Mexp,M_opt);
+     t = [RMSE, fvu, maxResid];
+end
+
+function vhat = normalize(v)
+    N = size(v,1);
+    norms = vecnorm(v,2,2);
+    valid = norms > 1e-3 & all(~isnan(v), 2);
+    vhat = zeros(N, 3);
+    vhat(valid, :) = v(valid, :) ./ norms(valid);
+end
+
+
+end   

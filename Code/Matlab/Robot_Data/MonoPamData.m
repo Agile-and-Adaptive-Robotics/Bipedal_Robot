@@ -152,11 +152,11 @@ classdef MonoPamData < handle
            
             %Calculate the Pam end cap fitting length (estimates currently)
             if dia == 20
-                fittingLength = 0.025;
+                fittingLength = 0.0254;
             elseif dia == 40
-                fittingLength = 0.05;
+                fittingLength = 0.0254;
             else
-                fittingLength = 0.0125;
+                fittingLength = 0.0254;
             end
 
             obj.FittingLength = fittingLength;

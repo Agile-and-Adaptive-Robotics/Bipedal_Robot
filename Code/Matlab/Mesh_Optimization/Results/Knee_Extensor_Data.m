@@ -63,19 +63,25 @@ fcn10 = fit(rect_fem_yD,rect_fem_y-(0.02346-0.0215281),'smoothingspline');
 
 %Robot Knee
 knee_angle = [0.17; 0.09; 0.03; 0.00; -0.09; -0.17; -0.26; -0.52; -0.79; -1.05; -1.31; -1.57; -1.83; -2.09; -2.36; -2.62];
-knee_x_Pam =     [0.0010	0.0027	0.0038	0.0045	0.0064	0.0084	0.0105	0.0164	0.0213	0.0246	0.0255	0.0239	0.0197	0.0132	0.0052	-0.0036]'; 
-fcn11 = fit(knee_angle,knee_x_Pam,'cubicspline');  %Tibia reference frame
-knee_y_Pam =     [-0.3982	-0.3969	-0.3962	-0.3958	-0.3950	-0.3944	-0.3942	-0.3951	-0.3984	-0.4035	-0.4099	-0.4167	-0.4228	-0.4274	-0.4298	-0.4292]';
-fcn12 = fit(knee_angle,knee_y_Pam,'cubicspline');  %Tibia reference frame
+knee_x_Pam =     ([23.30	22.22	21.55	21.09	19.91	18.70	17.48	13.82	10.44	7.60	5.52	4.35	4.16	5.01	7.04	10.47]')/1000;
+knee_y_Pam =     ([-416.65	-417.03	-417.19	-417.28	-417.41	-417.41	-417.30	-416.28	-414.36	-411.72	-408.62	-405.32	-402.08	-399.16	-396.85	-395.66]')/1000;
+fcn3 = fit(knee_angle,knee_x_Pam,'cubicspline');
+fcn4 = fit(knee_angle,knee_y_Pam,'cubicspline');
+%Theta1 to ICR
+t1_ICR_x = ([29.66	28.54	27.86	27.40	26.23	25.03	23.81	20.03	16.17	12.34	8.67	5.24	2.04	-1.01	-4.1	-7.58]')/1000;
+fcn13 = fit(knee_angle,t1_ICR_x,'cubicspline');
+t1_ICR_y = ([25.97	25.74	25.61	25.53	25.35	25.19	25.03	24.57	24.04	23.39	22.66	21.93	21.32	20.99	21.2	22.33]')/1000;
+fcn14 = fit(knee_angle,t1_ICR_y,'cubicspline');
+
 %Patella locations in Femur frame
 P_T_x = [0.06055	0.06	0.05956	0.06094	0.05953	0.06072	0.05927	0.05982	0.05955	0.05228	0.04206	0.03099	0.016	-0.00064	-0.01722	-0.03161]'; %Patella Top, x location
-fcn13 = fit(knee_angle,P_T_x,'cubicspline');
+fcn15 = fit(knee_angle,P_T_x,'cubicspline');
 P_T_y = [-0.37779	-0.38615	-0.38366	-0.3857	-0.38907	-0.39348	-0.39766	-0.41177	-0.42227	-0.43372	-0.44375	-0.45354	-0.45795	-0.45839	-0.45529	-0.44819]'; %Patella Top, y location
-fcn14 = fit(knee_angle,P_T_y,'cubicspline');
+fcn16 = fit(knee_angle,P_T_y,'cubicspline');
 P_B_x = [0.05898	0.0585	0.05891	0.05828	0.05822	0.05856	0.05842	0.04735	0.038	0.0264	0.01175	-0.00467	-0.02223	-0.03997	-0.05465	-0.06578]'; %Patella Bottom, x location
-fcn15 = fit(knee_angle,P_B_x,'cubicspline');
+fcn17 = fit(knee_angle,P_B_x,'cubicspline');
 P_B_y = [-0.41712	-0.42073	-0.42306	-0.42447	-0.42847	-0.43298	-0.43779	-0.44568	-0.455	-0.46374	-0.46981	-0.46987	-0.46785	-0.46119	-0.44844	-0.4316]'; %Patella Bottom, y location
-fcn16 = fit(knee_angle,P_B_y,'cubicspline');
+fcn18 = fit(knee_angle,P_B_y,'cubicspline');
 
 kneeMin = -2.0943951;
 kneeMax = 0.17453293;
@@ -84,7 +90,7 @@ phi = linspace(kneeMin, kneeMax, positions);
 %smallest value of phi equal to 0
 [val, pos] = min(abs(phi));
 phi(pos) = 0;
-
+phiD = phi*180/pi;
 
 for i = 1:positions
     hipToKnee = [fcn1(phi(i)), fcn2(phi(i)), 0];
@@ -100,88 +106,125 @@ for i = 1:positions
                     0, 0, 1];
     
     T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
+        %Transformation matrix for ICR to theta1 and inverse
+    t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0];
+    T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');    
+    T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');
 end
 
 %% Muscle calculation
 Name = 'Vastus Medialis';
 MIF = 1294;
 OFL = 0.089; TSL = 0.126; Pennation = 0.08726646;
-if phi(i)*180/pi < -80
-     Location = [0.014, -0.21, 0.019;
+Location = zeros(5,3,positions);
+for i = 1:positions
+    if phiD(i) < -80
+     Location(:,:,i) = [0.014, -0.21, 0.019;
                  0.036, -0.277, 0.001;
                  0.037, -0.405, -0.013;
                  0.027, -0.425, -0.013;
                  fcn5(phi(i)), fcn6(phi(i)) -0.0146];
-     CrossPoint = 5;
-else 
-     Location = [0.014, -0.21, 0.019;
+    else 
+     Location(:,:,i) = [0.014, -0.21, 0.019;
                  0.036, -0.277, 0.001;
                  0.037, -0.405, -0.013;
+                 0.037, -0.405, -0.013;
                  fcn5(phi(i)), fcn6(phi(i)) -0.0146];
-     CrossPoint = 4;
+    end
 end
+CrossPoint = 5;
 Vas_Med = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 Name = 'Vastus Intermedius';
 MIF = 1365;
 OFL = 0.087; TSL = 0.136; Pennation = 0.05235988;
-if phi(i)*180/pi < -80
-    Location = [0.029, -0.192, 0.031;
+Location = zeros(4,3,positions);
+for i = 1:positions
+    if phiD(i) < -80
+    Location(:,:,i) = [0.029, -0.192, 0.031;
                 0.034, -0.208, 0.029;
                 0.034, -0.403, 0.005;
                 fcn7(phi(i)), fcn8(phi(i)) 0.0018];
-    CrossPoint = 4;
-else
-    Location = [0.029, -0.192, 0.031;
+    else
+    Location(:,:,i) = [0.029, -0.192, 0.031;
+                0.034, -0.208, 0.029;
                 0.034, -0.208, 0.029;
                 fcn7(phi(i)), fcn8(phi(i)) 0.0018];
-    CrossPoint = 3;
+    end
 end
+CrossPoint = 4;
 Vas_Int = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 Name = 'Vastus Lateralis';
 MIF = 1871;
 OFL = 0.084; TSL = 0.157; Pennation = 0.08726646;
-if phi(i)*180/pi < -80
-    Location = [0.005, -0.185, 0.035;
+Location = zeros(5,3,positions);
+for i = 1:positions
+    if phiD(i) < -80
+    Location(:,:,i) = [0.005, -0.185, 0.035;
                 0.027, -0.259, 0.041;
                 0.036, -0.403, 0.021;
                 0.025, -0.424, 0.018;
                 fcn9(phi(i)), fcn10(phi(i)) 0.0165];
-    CrossPoint = 5;
-else
-    Location = [0.005, -0.185, 0.035;
+    else
+    Location(:,:,i) = [0.005, -0.185, 0.035;
                 0.027, -0.259, 0.041;
                 0.036, -0.403, 0.021;
+                0.036, -0.403, 0.021;
                 fcn9(phi(i)), fcn10(phi(i)) 0.0165];
-    CrossPoint = 4;
+    end
 end
+CrossPoint = 5;
 Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
 
 %% PAM calculation
 Name = 'Vastus Intermedius';
-
+Location = zeros(5,3,positions);
 % Origin Location from Ben
-if phi(i)*180/pi < -80
-    Location = [0.040, 0.035, 0;
+for i=1:positions
+    if phiD(i) < -80
+     Location(:,:,i) = [0.040, 0.035, 0;
                 0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
                 0.04817, -0.41646,    0;        %anterior femoral condyle when flexion is high
                 0.04094, -0.05098 0;            %Tibia contact
-                0.02362, -0.07556, 0.000];      %patellar ligament ring
-    CrossPoint = 4;
-else
-    Location = [0.040, 0.035, 0;
+                0.02163, -0.07164, 0.000];      %patellar ligament ring, proximal
+
+    else
+        Location(:,:,i) = [0.040, 0.035, 0;
                 0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
+                0.0689, -0.27476, 0.000;        %no femoral contact
                 0.04094, -0.05098 0;            %Tibia contact
-                0.02362, -0.07556, 0.000];      %patellar ligament ring
-    CrossPoint = 3;
+                0.02163, -0.07164, 0.000];      %patellar ligament ring
+    end
 end
-Dia = 10;
+CrossPoint = 4;
+Dia = 40;
 Vas_Pam = MonoPamDataPhysicalExtensor(Name, Location, CrossPoint, Dia, T_Pam);
 
-max_length = max(Vas_Pam.MuscleLength)
-min_length = min(Vas_Pam.MuscleLength)
-ratio = min_length/max_length
+Name = 'Vastus Intermedius, Explicit';
+Location = zeros(5,3,positions);
+for i=1:positions
+    if phiD(i) < -80
+     Location(:,:,i) = [0.040, 0.035, 0;
+                0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
+                0.04817, -0.41646,    0;        %anterior femoral condyle when flexion is high
+                0.04094, -0.05098 0;            %Tibia contact
+                0.02163, -0.07164, 0.000];      %patellar ligament ring, proximal
+
+    else
+        Location(:,:,i) = [0.040, 0.035, 0;
+                0.0689, -0.27476, 0.000;        %BPA contacts mounting boss
+                0.0689, -0.27476, 0.000;        %no femoral contact
+                0.04094, -0.05098 0;            %Tibia contact
+                0.02163, -0.07164, 0.000];      %patellar ligament ring
+    end
+end
+CrossPoint = 4;
+Dia = 40;
+rest = 0.557;
+kmax = 0.41775;
+tendon = 0.030; Fit = 0.0254; pres = 600;
+Vas_Pam_exp = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, Fit, pres);
 
 %% Unstacking the Torques to identify specific rotations
 Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
@@ -193,7 +236,6 @@ TorqueH = Torque1;
 
 
 %% Plotting Torque Results
-phiD = phi*180/pi;
 
 TorqueEx = zeros(size(TorqueH, 1), 1);
 TorqueEy = zeros(size(TorqueH, 1), 1);

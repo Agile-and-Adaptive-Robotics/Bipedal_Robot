@@ -77,8 +77,8 @@ classdef MonoMuscleData
                     %specific case, needs to be coded. Not applicable for
                     %all muscles at all times.
                 for i = 1:size(L, 1)-1                      %Repeat for all muscle segments
-                    pointA = L(i, :);
-                    pointB = L(i+1, :);
+                    pointA = L(i, : ,ii);
+                    pointB = L(i+1, : ,ii);
                     if i+1 == C
                         pointB = RowVecTrans(T(:, :, ii), pointB);
                     end
@@ -97,8 +97,8 @@ classdef MonoMuscleData
             unitD = zeros(size(direction));
             
             for i = 1:size(T, 3)
-                pointA = L(C-1, :);
-                pointB = L(C, :);
+                pointA = L(C-1, :,i);
+                pointB = L(C, :,i);
                 direction(i, :) = RowVecTrans(T(:, :, i)\eye(4), pointA) - pointB;
                 unitD(i, :) = direction(i, :)/norm(direction(i, :));
             end
@@ -116,7 +116,7 @@ classdef MonoMuscleData
             mA = zeros(size(T, 3), 3);
             
             for i = 1:size(T, 3)
-                pointB = L(C, :);
+                pointB = L(C, :,i);
                mA(i, :) = pointB - unitD(i, :)*dot(unitD(i, :), pointB);
                %mA(i, :) = cross(pointB, unitD(i, :));
             end
@@ -176,10 +176,10 @@ classdef MonoMuscleData
 
                 %Estimate the nominal muscle length, without the tendon. If it
                 %is thought to be all tendon, the solver will crash
-                if mtL == tsL
-                    nmL0 = (mtL*1.01 - tsL)/ofL;
-                else
+                if mtL ~= tsL
                     nmL0 = (mtL - tsL)/ofL;
+                else
+                    nmL0 = (mtL*1.01 - tsL)/ofL;          
                 end
 
                 %Set Function solver parameters

@@ -13,11 +13,6 @@ current_dir = cd;
 all_code = fullfile(current_dir,'../..');
 addpath(genpath(all_code));
 
-% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Human_Data
-% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Robot_Data
-% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Functions
-% addpath C:\Users\Connor\Documents\GitHub\Bipedal_Robot\Code\Bone_Mesh_Plots\Open_Sim_Bone_Geometry
-
 %% Joint rotation transformation matrices
 positions = 100;
 fprintf('The algorithm will be calculating Torque at %d different joint positions.\n', positions)
@@ -29,300 +24,168 @@ T = zeros(4, 4, positions);
 
 c = pi/180; %Convert from degrees to radians
 
-%Knee Extension and Flexion
-
-%Human knee
-% knee_angle_x = [-2.0944; -1.74533; -1.39626; -1.0472; -0.698132; -0.349066; -0.174533;  0.197344;  0.337395;  0.490178;   1.52146;   2.0944];
-% knee_x =       [-0.0032;  0.00179;  0.00411;  0.0041;   0.00212;    -0.001;   -0.0031; -0.005227; -0.005435; -0.005574; -0.005435; -0.00525];
-% fcn1 = fit(knee_angle_x,knee_x,'cubicspline');
-% knee_angle_y = [-2.0944; -1.22173; -0.523599; -0.349066; -0.174533;  0.159149; 2.0944];
-% knee_y =       [-0.4226;  -0.4082;    -0.399;   -0.3976;   -0.3966; -0.395264; -0.396];
-% fcn2 = fit(knee_angle_y,knee_y,'cubicspline');
-% %Human Quadriceps muscles
-% %Rectus Femoris 
-% %(Insertion point as a function of knee angle due to patella)
-% rect_fem_x = [0.0156367; 0.0179948; 0.0274274; 0.029683; 0.0306; 0.0366; 0.0422; 0.0451; 0.0484; 0.0533; 0.0617; 0.0634; 0.067; 0.0733];
-% rect_fem_xD = c*[-120.118; -114.871; -90.068; -83.532; -80; -60; -40; -30; -20; -10; 0; 1.6; 5; 10];
-% fcn3 = fit(rect_fem_xD,rect_fem_x,'smoothingspline');
-% rect_fem_y =[0.0234; 0.0238; 0.0251; 0.0253; 0.025284; 0.0249; 0.0243; 0.0239; 0.0234; 0.0228; 0.0210; 0.0206; 0.0192; 0.0160];
-% rect_fem_yD = c*[-120; -114.6; -90; -83.5; -80.01; -60; -40; -30; -20; -10; 0; 1.6; 5; 10 ];
-% fcn4 = fit(rect_fem_yD,rect_fem_y,'smoothingspline');
-% %Vastus Medialis
-% %(Insertion point as a function of knee angle due to patella)
-% fcn5 = fit(rect_fem_xD,rect_fem_x-(0.0156367-0.009811),'smoothingspline');
-% fcn6 = fit(rect_fem_yD,rect_fem_y-(0.02346-0.02242),'smoothingspline');
-% %Vastus Intermedius
-% %(Insertion point as a function of knee angle due to patella)
-% fcn7 = fit(rect_fem_xD,rect_fem_x-(0.0156367-0.008285),'smoothingspline');
-% fcn8 = fit(rect_fem_yD,rect_fem_y+(0.0256239-0.02346),'smoothingspline');
-% %Vastus Lateralis
-% %(Insertion point as a function of knee angle due to patella)
-% fcn9 = fit(rect_fem_xD,rect_fem_x-(0.0156367-0.0142881),'smoothingspline');
-% fcn10 = fit(rect_fem_yD,rect_fem_y-(0.02346-0.0215281),'smoothingspline');
-
-
-%Robot Knee
-% knee_angle = [0.17; 0.09; 0.03; 0.00; -0.09; -0.17; -0.26; -0.52; -0.79; -1.05; -1.31; -1.57; -1.83; -2.09; -2.36; -2.62];
-% knee_x_Pam =     [0.0010	0.0027	0.0038	0.0045	0.0064	0.0084	0.0105	0.0164	0.0213	0.0246	0.0255	0.0239	0.0197	0.0132	0.0052	-0.0036]'; 
-% fcn11 = fit(knee_angle,knee_x_Pam,'cubicspline');  %Tibia reference frame
-% knee_y_Pam =     [-0.3982	-0.3969	-0.3962	-0.3958	-0.3950	-0.3944	-0.3942	-0.3951	-0.3984	-0.4035	-0.4099	-0.4167	-0.4228	-0.4274	-0.4298	-0.4292]';
-% fcn12 = fit(knee_angle,knee_y_Pam,'cubicspline');  %Tibia reference frame
-% %Patella locations in Femur frame
-% P_T_x = [0.06055	0.06	0.05956	0.06094	0.05953	0.06072	0.05927	0.05982	0.05955	0.05228	0.04206	0.03099	0.016	-0.00064	-0.01722	-0.03161]'; %Patella Top, x location
-% fcn13 = fit(knee_angle,P_T_x,'cubicspline');
-% P_T_y = [-0.37779	-0.38615	-0.38366	-0.3857	-0.38907	-0.39348	-0.39766	-0.41177	-0.42227	-0.43372	-0.44375	-0.45354	-0.45795	-0.45839	-0.45529	-0.44819]'; %Patella Top, y location
-% fcn14 = fit(knee_angle,P_T_y,'cubicspline');
-% P_B_x = [0.05898	0.0585	0.05891	0.05828	0.05822	0.05856	0.05842	0.04735	0.038	0.0264	0.01175	-0.00467	-0.02223	-0.03997	-0.05465	-0.06578]'; %Patella Bottom, x location
-% fcn15 = fit(knee_angle,P_B_x,'cubicspline');
-% P_B_y = [-0.41712	-0.42073	-0.42306	-0.42447	-0.42847	-0.43298	-0.43779	-0.44568	-0.455	-0.46374	-0.46981	-0.46987	-0.46785	-0.46119	-0.44844	-0.4316]'; %Patella Bottom, y location
-% fcn16 = fit(knee_angle,P_B_y,'cubicspline');
-
-kneeMin = -2.0943951;
-kneeMax = 0.17453293;
+kneeMin = -125*c;
+kneeMax = 35*c;
 phi = linspace(kneeMin, kneeMax, positions);
+
 %We want one of our positions to be home position, so let's make the
 %smallest value of phi equal to 0
 [val, pos] = min(abs(phi));
 phi(pos) = 0;
-phiD = phi*180/pi;
+phiD = phi*180/pi;       %Knee angle in degrees
 
 for i = 1:positions
-    hipToKnee = [0.0045, -0.3958, 0];
+    hipToKnee = [0.0045, -0.3958, 0];              %pinned location
     R(:, :, i) = [cos(phi(i)), -sin(phi(i)), 0;
                     sin(phi(i)), cos(phi(i)), 0;
                     0, 0, 1];
     
     T(:, :, i) = RpToTrans(R(:, :, i), hipToKnee');
     
-%     hipToKnee_Pam = [0.0045, -0.3958, 0];
-%     R_Pam(:, :, i) = [cos(phi(i)), -sin(phi(i)), 0;   %Rotation matrix for robot
-%                     sin(phi(i)), cos(phi(i)), 0;
-%                     0, 0, 1];
-%     
-%     T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
 end
 
-%% Muscle calculation
-% Name = 'Vastus Medialis';
-% MIF = 1294;
-% OFL = 0.089; TSL = 0.126; Pennation = 0.08726646;
-% for i = 1:positions
-%     if phi(i)*180/pi < -80
-%         Location(:,:,i) = [0.014, -0.21, 0.019;
-%                            0.036, -0.277, 0.001;
-%                            0.037, -0.405, -0.013;
-%                            0.027, -0.425, -0.013;
-%                            fcn5(phi(i)), fcn6(phi(i)) -0.0146];
-%         CrossPoint = 5;
-%     else 
-%         Location = [0.014, -0.21, 0.019;
-%                     0.036, -0.277, 0.001;
-%                     0.037, -0.405, -0.013;
-%                     0.037, -0.405, -0.013;
-%                     fcn5(phi(i)), fcn6(phi(i)) -0.0146];
-%         CrossPoint = 5;
-%     end
-% end
-% Vas_Med = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
-
-% Name = 'Vastus Intermedius';
-% MIF = 1365;
-% OFL = 0.087; TSL = 0.136; Pennation = 0.05235988;
-% if phi(i)*180/pi < -80
-%     Location = [0.029, -0.192, 0.031;
-%                 0.034, -0.208, 0.029;
-%                 0.034, -0.403, 0.005;
-%                 fcn7(phi(i)), fcn8(phi(i)) 0.0018];
-%     CrossPoint = 4;
-% else
-%     Location = [0.029, -0.192, 0.031;
-%                 0.034, -0.208, 0.029;
-%                 fcn7(phi(i)), fcn8(phi(i)) 0.0018];
-%     CrossPoint = 3;
-% end
-% Vas_Int = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
-% 
-% Name = 'Vastus Lateralis';
-% MIF = 1871;
-% OFL = 0.084; TSL = 0.157; Pennation = 0.08726646;
-% if phi(i)*180/pi < -80
-%     Location = [0.005, -0.185, 0.035;
-%                 0.027, -0.259, 0.041;
-%                 0.036, -0.403, 0.021;
-%                 0.025, -0.424, 0.018;
-%                 fcn9(phi(i)), fcn10(phi(i)) 0.0165];
-%     CrossPoint = 5;
-% else
-%     Location = [0.005, -0.185, 0.035;
-%                 0.027, -0.259, 0.041;
-%                 0.036, -0.403, 0.021;
-%                 fcn9(phi(i)), fcn10(phi(i)) 0.0165];
-%     CrossPoint = 4;
-% end
-% Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T);
-
 %% PAM calculation
-Name = 'Vastus Intermedius';
-Location = zeros(5,3,positions);
+Name = 'Vastus Intermedius, Robot';
+Location = zeros(7,3,positions);
 
-% Origin Location from Ben
+% Locations from Assem2.75
+% p1 = [0.030, -0.050, 0];             %Extensor Origin
+% p2 = [0.055, -0.350, 0.000];         %BPA contacts screw that joins femur body with femoral condyles
+% p2p = [0.053, -0.350, -0.005];         %BPA slips off screw that joins femur body with femoral condyles
+% p3 = [0.04128, -0.410,    -0.01];        %Contact point between 19.6 and 74.01 degrees flexion
+% p4 = [0.01138, -0.425, -0.010];            %Contact point over 74.01 degrees flexion
+% p5 = [0.0425, -0.07591, 0.000];      %%Tibia bracket (insertion)
+
+p1 = [0.030, -0.050, 0];             %Extensor Origin
+p2 = [0.065, -0.350, 0];         %BPA contacts screw that joins femur body with femoral condyles
+p2p = [0.054, -0.350, -0.02];         %BPA slips off screw that joins femur body with femoral condyles
+p3 = [0.04244, -0.40847,  0];        %Contact point 
+p4 = [0.02818, -0.42157, 0];            %Contact point
+p5 = [0.01052, -0.42519, 0];
+p7 = [0.0425, -0.07591, 0.000];      %%Tibia bracket (insertion)
+
+%Angles where via points added
+ang1 = 27;
+ang2 = -23;
+ang3 = -53;
+ang4 = -88;
+
+
 for i = 1:positions
-    if phiD(i) >= -74.01 && phiD(i) < -19.6
-     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
-                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
-                0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
-                0.04128, -0.410,    0;        %Row 4 = Row 3
-                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
-    elseif phiD(i) >= -19.6
-     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
-                0.060, -0.350, 0.000;        %BPA contacts screw that joins femur body with femoral condyles
-                0.060, -0.350, 0.000;        %Row 3 = Row 2
-                0.060, -0.350, 0.000;        %Row 4 = Row 2
-                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+    if phiD(i) >= ang1
+     Location(:,:,i) = [p1;...     %Origin
+                        p1;...     %Row 2 (no screw contact)
+                        p1;...     %Row 3
+                        p1;...     %Row 4
+                        p1;...     %Row 5
+                        p1;...      %Row 6
+                        p7];       %Tibia bracket (insertion)
+    elseif phiD(i) >= ang2 && phiD(i) < ang1
+     Location(:,:,i) = [p1;...     %Origin
+                        p2;...        %Contact with screw that joins femur body with femoral condyles
+                        p2;...        %Contact point
+                        p2;...
+                        p2;...
+                        p2;...
+                        p7];     %Tibia bracket (insertion)
+    elseif phiD(i) >= ang3 && phiD(i) < ang2
+     Location(:,:,i) = [p1;...     %Origin
+                        p2;...         %BPA slips off screw that joins femur body with femoral condyles
+                        p3;...        %Contact point
+                        p3;...
+                        p3;...
+                        p3;...
+                        p7];     %Tibia bracket (insertion)
+    elseif phiD(i) >= ang4 && phiD(i) < ang3
+     Location(:,:,i) = [p1;...     %Origin
+                        p2;...         %BPA slips off screw that joins femur body with femoral condyles
+                        p3;...        %Contact point
+                        p4;...
+                        p4;...
+                        p4;...
+                        p7];     %Tibia bracket (insertion)
     else
-     Location(:,:,i) = [0.030, -0.050, 0;             %Origin
-                0.060, -0.350, 0.000;         %BPA contacts screw that joins femur body with femoral condyles
-                0.04128, -0.410,    0;        %Contact point between 19.6 and 74.01 degrees flexion
-                0.01138, -0.425 0;            %Contact point over 74.01 degrees flexion
-                0.0425, -0.07591, 0.000];     %Tibia bracket (insertion)
+     Location(:,:,i) = [p1;...     %Origin
+                        p2;...         %BPA slips off screw that joins femur body with femoral condyles
+                        p3;...        %Contact point
+                        p4;...
+                        p5;...
+                        hipToKnee(1)+0.03*cosd(phiD(i)+9.072), hipToKnee(2)+0.03*sind(phiD(i)+9.072), 0;...            %Contact point over 74.01 degrees flexion
+                        p7-[25.4/4*10^-3, 0, 0]];     %Tibia bracket (insertion)
     end
 end
         
-CrossPoint = 5;
+CrossPoint = 7;
 Dia = 10;
-Vas_Pam = MonoPamDataPinnedExtensor(Name, Location, CrossPoint, Dia, T);
+fitting = 0.0254;           %fitting length
+% tendon0 = 0;
+% tendon22 = 0.022;
 
-max_length = max(Vas_Pam.MuscleLength)
-min_length = min(Vas_Pam.MuscleLength)
-ratio = min_length/max_length
+%41.5 cm, no tendon
+rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.345;           %length at maximum contraction
+tendon = 0;             %Tendon length
+pres = 605.2351;        %Pressure, kPa
+Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon, fitting, pres);
+
+%41.5 cm,  tendon
+rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.345;           %length at maximum contraction
+tendon1 = 0.040;         %Tendon length
+pres = 605.2351;        %Pressure, kPa
+Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon1, fitting, pres);
+
+%45.7 cm, no tendon
+rest46 = 457/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.3815;           %length at maximum contraction
+tendon = 0;             %Tendon length
+pres = 602;             %Pressure, kPa
+Vas_Pam_46cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest46, kmax, tendon, fitting, pres);
+
+%48.6 cm, no tendon
+rest48 = 480/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.405;           %length at maximum contraction
+tendon = 0;             %Tendon length
+pres = 605.8523;        %Pressure, kPa
+Vas_Pam_48cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest48, kmax, tendon, fitting, pres);
 
 %% Unstacking the Torques to identify specific rotations
-% Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
-% Torque1 = Vas_Int.Torque + Vas_Lat.Torque + Vas_Med.Torque;
-TorqueR = Vas_Pam.Torque;
-
-%% Add Torques from the Muscle Group
-% TorqueH = Torque1;
-
+Torque_42cm = Vas_Pam_42cm.Torque(:,3);
+Torque_42cm_ten = Vas_Pam_42cm_tendon.Torque(:,3);
+Torque_46cm = Vas_Pam_46cm.Torque(:,3);
+Torque_48cm = Vas_Pam_48cm.Torque(:,3);
 
 %% Plotting Torque Results
+xLim = [-125 35];
+yLim = [0 15];
 
-plot(phiD, TorqueR(:, 3))
-title('BPA Z Torque')
-xlabel('Knee Extension(+)/Flexion(-), degrees')
-ylabel('Torque, Nm')
-legend('BPA')
+figure
+h = tiledlayout(2,2);
 
-% TorqueEx = zeros(size(TorqueH, 1), 1);
-% TorqueEy = zeros(size(TorqueH, 1), 1);
-% TorqueEz = zeros(size(TorqueH, 1), 1);
-% 
-% for i = 1:size(TorqueR, 1)
-%     if TorqueH(i, 1) >= 0
-%         TorqueEx(i) = TorqueR(i, 1) - TorqueH(i, 1);
-%     else
-%         TorqueEx(i) = TorqueH(i, 1) - TorqueR(i, 1);
-%     end
-%     
-%     if TorqueH(i, 2) >= 0
-%         TorqueEy(i) = TorqueR(i, 2) - TorqueH(i, 2);
-%     else
-%         TorqueEy(i) = TorqueH(i, 2) - TorqueR(i, 2);
-%     end
-%     
-%     if TorqueH(i, 3) >= 0
-%         TorqueEz(i) = TorqueR(i, 3) - TorqueH(i, 3);
-%     else
-%         TorqueEz(i) = TorqueH(i, 3) - TorqueR(i, 3);
-%     end
-% end
+ax1 = nexttile(1);
+plot(phiD, Torque_48cm)
+title('\bf l_{rest}=48.5 cm','Interpreter','tex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Torque, N\cdotm','Interpreter','tex')
+set(ax1,'XLim',xLim,'YLim',yLim)
 
-% figure
-% hold on
-% sgtitle('Bicep Femoris Short Head Torque through Knee Flexion and Extension')
-% 
-% subplot(3, 2, 1)
-% plot(phiD, TorqueH(:, 3), phiD, TorqueR(:, 3))
-% legend('Human Muscle', 'Optimal BPA Location')
-% title('Muscle and PAM Z Torque')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% legend('Human', 'PAM')
-% 
-% subplot(3, 2, 2)
-% plot(phiD, TorqueEz)
-% legend('Optimal PAM Location')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% title('Adjusted Error Z Torque')
-% 
-% subplot(3, 2, 3)
-% plot(phiD, TorqueH(:, 2), phiD, TorqueR(:, 2))
-% title('Muscle and PAM Y Torque')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% legend('Human', 'PAM')
-% 
-% subplot(3, 2, 4)
-% plot(phiD, TorqueEy)
-% legend('Optimal PAM Location')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% title('Adjusted Error Y Torque')
-% 
-% subplot(3, 2, 5)
-% plot(phiD, TorqueH(:, 1), phiD, TorqueR(:, 1))
-% title('Muscle and PAM X Torque')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% legend('Human', 'PAM')
-% 
-% subplot(3, 2, 6)
-% plot(phiD, TorqueEx)
-% legend('Optimal PAM Location')
-% xlabel('Knee Extension/Rotation, degrees')
-% ylabel('Torque, Nm')
-% title('Adjusted Error X Torque')
-% 
-% hold off
+ax2 = nexttile(2);
+plot(phiD, Torque_46cm)
+title('\bf l_{rest}=45.7 cm','Interpreter','tex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Torque, N\cdotm','Interpreter','tex')
+set(ax2,'XLim',xLim,'YLim',yLim)
 
+ax3 = nexttile(3);
+plot(phiD, Torque_42cm)
+title('\bf l_{rest}=41.5 cm, no tendon','Interpreter','tex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Torque, N\cdotm','Interpreter','tex')
+set(ax3,'XLim',xLim,'YLim',yLim)
 
-%% Plotting the angle between the vectors
-
-% aHR = zeros(size(TorqueH, 1), 1);
-% aHRH = zeros(size(TorqueH, 1), 1);
-% 
-% for i = 1:size(TorqueH, 1)
-%     uvecH = TorqueH(i, :)/norm(TorqueH(i, :));
-%                 
-%     %Sometimes the BPA can't produce any force due to high
-%     %contraction. We will set it equal to negative the human
-%     %vector to maximize the penalty. Consider changing later
-%     if norm(TorqueR(i, :)) == 0
-%         uvecR = -uvecH;
-%     else
-%         uvecR = TorqueR(i, :)/norm(TorqueR(i, :));
-%     end
-%     
-%     aHR(i) = dot(uvecH, uvecR);
-% end
-
-
-% figure
-% hold on
-% title('Angle between the Human Torque Vector and PAM Torque Vectors')
-% plot(phiD, aHR)
-% legend('Human and Optimal PAM')
-% ylabel('Radians')
-% xlabel('Knee Angle, degree')
-% hold off
-% 
-% HMuscleLocation = {Vas_Int.Location, Vas_Lat.Location, Vas_Med.Location};
-% HMuscleCross = {Vas_Int.Cross, Vas_Lat.Cross, Vas_Med.Cross};
-% 
-% RMuscleLocation = {Vas_Pam.Location};
-% RMuscleCross = {Vas_Pam.Cross};
-% 
-% Bones = {'Femur', 'Tibia'};
-% 
-% run("MuscleBonePlotting")
+ax4 = nexttile(4);
+plot(phiD, Torque_42cm_ten)
+title(sprintf('l_{rest} = 41.5 cm, tendon = %d mm',tendon1*10^3),'Interpreter','tex','FontWeight','bold')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Torque N\cdotm','Interpreter','tex')
+set(ax4,'XLim',xLim,'YLim',yLim)

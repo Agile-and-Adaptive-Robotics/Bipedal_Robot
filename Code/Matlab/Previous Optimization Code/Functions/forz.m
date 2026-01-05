@@ -11,13 +11,13 @@ function f = forz(Lmt, mif, ofl, tsl, pa)
 
     function Fbal = myfunc(Lmn)
 
-        Fpe = (exp(kPE*((Lmn)-1)/eom)-1)/(exp(kPE)-1); %Passive force-length curve, normalized (Thelen 2003) eqn 3 pg 74
+        Fpe = (exp(kPE.*((Lmn)-1)./eom)-1)./(exp(kPE)-1); %Passive force-length curve, normalized (Thelen 2003) eqn 3 pg 74
 
         fL = exp(-(((Lmn)-1).^2/y));  %Active force-length curve, normalized (Thelen 2003) eqn 4 pg 74
 
-        cosa = ((1-(sin(pa)/(Lmn)).^2)^(1/2)); %cosine of pennation angle (Hoy 1990)
+        cosa = ((1-(sin(pa)./(Lmn)).^2)^(1/2)); %cosine of pennation angle (Hoy 1990)
 
-        fT = (37.5/(tsl/ofl))*((Lmt/ofl)-(Lmn)*cosa-(tsl/ofl)); %Normalized tendon force (Hoy 1990)
+        fT = (37.5/(tsl/ofl))*((Lmt/ofl)-(Lmn).*cosa-(tsl/ofl)); %Normalized tendon force (Hoy 1990)
 
         Fbal = (fL+Fpe)*cosa-fT;
 
@@ -34,7 +34,7 @@ function f = forz(Lmt, mif, ofl, tsl, pa)
     %x0 is the guess of the Muscle length
     Lma = fsolve(@myfunc,x0,options);
     
-    f = mif*(37.5/(tsl/ofl))*((Lmt/ofl)-(Lma)*((1-(sin(pa)/(Lma))^2)^(1/2))-(tsl/ofl)); %mif at Lmt
+    f = mif*(37.5/(tsl/ofl))*((Lmt/ofl)-(Lma).*((1-(sin(pa)./(Lma)).^2)^(1/2))-(tsl/ofl)); %mif at Lmt
     if f < 0
            f = 0;  %Muscle force is tensile only (Millard 2013)
     end

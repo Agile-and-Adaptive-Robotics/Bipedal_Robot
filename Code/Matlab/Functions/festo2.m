@@ -1,3 +1,4 @@
+
 function F = festo2(Lmt, rest, dia, long, col)
 %Inputs:
 %Lmt == muscle-tendon length, scalar
@@ -33,7 +34,9 @@ for i=1:size(Lmt, 2)
  end
 end
 
-%If diameter is not 10 mm, then upscale force
+%If diameter is not 10 mm, then upscale force  
+% ***Note: Do not do this. We now have more accurate ways to calculate
+% these forces!****
 if dia == 20
     F = (1500/630)*F;
 end
