@@ -106,9 +106,9 @@ set(s5,'LineWidth',2,'Color',c5);
 s6 = plot(bpaNorm(~isnan(Zfin(:,2))),Zfin(~isnan(Zfin(:,2)),2),'.',bpaNorm,z(:,2),'--','MarkerSize',18);
 set(s6,'LineWidth',2,'Color',c6);
 xlim(ax1,[0 1.1]);
-title('F_{max} vs. l_{rest} and P_{max}, \phi10 mm')
+title('F_{620} vs. l_{rest} and P_{620}, \phi10 mm')
 xlabel('l_{rest}, m','FontWeight','bold')
-ylabel('F_{max}, N','FontWeight','bold')
+ylabel('F_{620}, N','FontWeight','bold')
 hold(ax1,'off');
 set(ax1,'FontSize',12,'FontWeight','bold','LineWidth',2,'TickLength',...
     [0.02 0.05],'XMinorTick','on','YMinorTick','on');

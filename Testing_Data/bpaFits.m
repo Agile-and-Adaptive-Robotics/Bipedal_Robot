@@ -266,4 +266,4 @@ view( 0.0, 0.0 );
 
 
 %% save it
-save bpaFitsResult.mat fitresult gof output valid XX40 YY40 ZZ40 XX YY ZZ XX10 YY10 ZZ10 Ax Ay Az XX20 YY20 ZZ20 xTrain yTrain zTrain xVal yVal zVal xTrain20 yTrain20 zTrain20 xVal20 yVal20 zVal20
+% save bpaFitsResult.mat fitresult gof output valid XX40 YY40 ZZ40 XX YY ZZ XX10 YY10 ZZ10 Ax Ay Az XX20 YY20 ZZ20 xTrain yTrain zTrain xVal yVal zVal xTrain20 yTrain20 zTrain20 xVal20 yVal20 zVal20
