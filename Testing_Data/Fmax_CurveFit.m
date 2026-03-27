@@ -8,7 +8,7 @@ A = [840	780     709     571          415          490       518         551    
     447.1	472.0	452.3	461.6	  444.82          451.15	456.17	453.1	436.4	238.2	135.3	271.5	412.3	347.2	396.2	8.3     377.75	383.53	419.44	407.13];
 
 
-restingL = A(1,:)/1000;  %Resting length
+restingL = A(1,:)/1000;  %Resting length, m
 
 kmax = A(2,:);          %Maximum strain
 
@@ -82,39 +82,108 @@ Zfin = Zsrt(:,2:8);                    %Z values (i.e. force) are these columns
 md3 = @(x,y) 0.4895*y.*atan(0.03068*y.*(x-0.0075));
 z = feval(md3,bpaNorm,pointz);
 
-%Create accessible color pallete for plotting
-c6 = [0.392156862745098 0.56078431372549 1];
-c5 = [0.470588235294118 0.368627450980392 0.941176470588235];
-c4 = [0.862745098039216 0.149019607843137 0.498039215686275];
-c3 = [0.996078431372549 0.380392156862745 0];
-c2 = [1 0.690196078431373 0];
-c1 = [0 0 0];
+% Accessible colors (hex)
+c = cell(8,1);
+c{1} = '#FFD700'; % gold
+c{2} = '#FFB14E'; % orange
+c{3} = '#FA8775'; % light orange
+c{4} = '#EA5F94'; % pink
+c{5} = '#CD34B5'; % magenta
+c{6} = '#9D02D7'; % magenta 2
+c{7} = '#0000FF'; % indigo
+c{8} = '#000000'; % black
+
+% Assign colors
+clr1 = c{7}; % 620 kPa (indigo)
+clr2 = c{6}; % 500 kPa (magenta 2)
+clr3 = c{4}; % 400 kPa (pink)
+clr4 = c{3}; % 300 kPa (light orange)
+clr5 = c{2}; % 200 kPa (orange)
 
 fig3d = figure;
+set(fig3d, 'Units', 'centimeters', 'Position', [2 2 14.0 9.0]);
 ax1 = axes('Parent',fig3d);
 hold(ax1,'on');
-s1 = plot(bpaNorm(~isnan(Zfin(:,7))),Zfin(~isnan(Zfin(:,7)),7),'.',bpaNorm,z(:,7),'--','MarkerSize',18);
-set(s1,'LineWidth',2,'Color',c1);
-s2 = plot(bpaNorm(~isnan(Zfin(:,6))),Zfin(~isnan(Zfin(:,6)),6),'.',bpaNorm,z(:,6),'--','MarkerSize',18);
-set(s2,'LineWidth',2,'Color',c2);
-s3 = plot(bpaNorm(~isnan(Zfin(:,5))),Zfin(~isnan(Zfin(:,5)),5),'.',bpaNorm,z(:,5),'--','MarkerSize',18);
-set(s3,'LineWidth',2,'Color',c3);
-s4 = plot(bpaNorm(~isnan(Zfin(:,4))),Zfin(~isnan(Zfin(:,4)),4),'.',bpaNorm,z(:,4),'--','MarkerSize',18);
-set(s4,'LineWidth',2,'Color',c4);
-s5 = plot(bpaNorm(~isnan(Zfin(:,3))),Zfin(~isnan(Zfin(:,3)),3),'.',bpaNorm,z(:,3),'--','MarkerSize',18);
-set(s5,'LineWidth',2,'Color',c5);
-s6 = plot(bpaNorm(~isnan(Zfin(:,2))),Zfin(~isnan(Zfin(:,2)),2),'.',bpaNorm,z(:,2),'--','MarkerSize',18);
-set(s6,'LineWidth',2,'Color',c6);
+
+% 620 kPa
+m1 = plot(bpaNorm(~isnan(Zfin(:,7))), Zfin(~isnan(Zfin(:,7)),7), ...
+    '.', 'Color', clr1, 'MarkerSize', 18, 'LineWidth', 2);
+l1 = plot(bpaNorm, z(:,7), '--', 'Color', clr1, 'LineWidth', 2);
+% 500 kPa
+m2 = plot(bpaNorm(~isnan(Zfin(:,6))), Zfin(~isnan(Zfin(:,6)),6), ...
+    '.', 'Color', clr2, 'MarkerSize', 18, 'LineWidth', 2);
+l2 = plot(bpaNorm, z(:,6), '--', 'Color', clr2, 'LineWidth', 2);
+% 400 kPa
+m3 = plot(bpaNorm(~isnan(Zfin(:,5))), Zfin(~isnan(Zfin(:,5)),5), ...
+    '.', 'Color', clr3, 'MarkerSize', 18, 'LineWidth', 2);
+l3 = plot(bpaNorm, z(:,5), '--', 'Color', clr3, 'LineWidth', 2);
+% 300 kPa
+m4 = plot(bpaNorm(~isnan(Zfin(:,4))), Zfin(~isnan(Zfin(:,4)),4), ...
+    '.', 'Color', clr4, 'MarkerSize', 18, 'LineWidth', 2);
+l4 = plot(bpaNorm, z(:,4), '--', 'Color', clr4, 'LineWidth', 2);
+% 200 kPa
+m5 = plot(bpaNorm(~isnan(Zfin(:,3))), Zfin(~isnan(Zfin(:,3)),3), ...
+    '.', 'Color', clr5, 'MarkerSize', 18, 'LineWidth', 2);
+l5 = plot(bpaNorm, z(:,3), '--', 'Color', clr5, 'LineWidth', 2);
+
 xlim(ax1,[0 1.1]);
-title('F_{620} vs. l_{rest} and P_{620}, \phi10 mm')
-xlabel('l_{rest}, m','FontWeight','bold')
-ylabel('F_{620}, N','FontWeight','bold')
+ylim(ax1,[0 500]);
+% title('F_{620} vs. l_{rest} and P_{620}, \phi10 mm', ...
+%     'FontWeight','bold', 'FontSize',12)
+xlabel('Resting Length (m)', 'FontWeight','bold', 'FontSize',12)
+ylabel('F_{max_{10}} (N)', 'FontWeight','bold', 'FontSize',12)
+set(ax1, ...
+    'FontSize',12, ...
+    'FontWeight','bold', ...
+    'LineWidth',2, ...
+    'TickLength',[0.02 0.05], ...
+    'XMinorTick','on', ...
+    'YMinorTick','on');
+% 2-column legend with explicit experiment/model labels
+leg = legend([l1 l2 l3 l4 l5 m1 m2 m3 m4 m5], ...
+    {'620 kPa, model', ...
+     '500 kPa, model', ...
+     '400 kPa, model', ...
+     '300 kPa, model', ...
+     '200 kPa, model', ...
+     '620 kPa, data', ...
+     '500 kPa, data', ...
+     '400 kPa, data', ...
+     '300 kPa, data', ...
+     '200 kPa, data'}, ...
+    'NumColumns', 2, ...
+    'Location', 'southwest');
+set(leg, ...
+    'FontWeight', 'bold', ...
+    'FontSize', 12, ...
+    'LineWidth', 1);
 hold(ax1,'off');
-set(ax1,'FontSize',12,'FontWeight','bold','LineWidth',2,'TickLength',...
-    [0.02 0.05],'XMinorTick','on','YMinorTick','on');
-leg = legend('Measured 620 kPa','Model 620 kPa','500 kPa',' ','400 kPa',' ','300 kPa',' ','200 kPa',' ','100 kPa',' ');  %Note, use '' w/o space to remove dash from legend, use ' ' w/ space to include dashed lines in legend
-set(leg,...
-    'Position',[0.753623173004846 0.257738103327298 0.223602479696274 0.565476174297787]);
+
+% fig3d = figure;
+% ax1 = axes('Parent',fig3d);
+% hold(ax1,'on');
+% s1 = plot(bpaNorm(~isnan(Zfin(:,7))),Zfin(~isnan(Zfin(:,7)),7),'.',bpaNorm,z(:,7),'--','MarkerSize',18);
+% set(s1,'LineWidth',2,'Color',c1);
+% s2 = plot(bpaNorm(~isnan(Zfin(:,6))),Zfin(~isnan(Zfin(:,6)),6),'.',bpaNorm,z(:,6),'--','MarkerSize',18);
+% set(s2,'LineWidth',2,'Color',c2);
+% s3 = plot(bpaNorm(~isnan(Zfin(:,5))),Zfin(~isnan(Zfin(:,5)),5),'.',bpaNorm,z(:,5),'--','MarkerSize',18);
+% set(s3,'LineWidth',2,'Color',c3);
+% s4 = plot(bpaNorm(~isnan(Zfin(:,4))),Zfin(~isnan(Zfin(:,4)),4),'.',bpaNorm,z(:,4),'--','MarkerSize',18);
+% set(s4,'LineWidth',2,'Color',c4);
+% s5 = plot(bpaNorm(~isnan(Zfin(:,3))),Zfin(~isnan(Zfin(:,3)),3),'.',bpaNorm,z(:,3),'--','MarkerSize',18);
+% set(s5,'LineWidth',2,'Color',c5);
+% s6 = plot(bpaNorm(~isnan(Zfin(:,2))),Zfin(~isnan(Zfin(:,2)),2),'.',bpaNorm,z(:,2),'--','MarkerSize',18);
+% set(s6,'LineWidth',2,'Color',c6);
+% xlim(ax1,[0 1.1]);
+% title('F_{620} vs. l_{rest} and P_{620}, \phi10 mm')
+% xlabel('l_{rest}, m','FontWeight','bold')
+% ylabel('F_{620}, N','FontWeight','bold')
+% hold(ax1,'off');
+% set(ax1,'FontSize',12,'FontWeight','bold','LineWidth',2,'TickLength',...
+%     [0.02 0.05],'XMinorTick','on','YMinorTick','on');
+% leg = legend('Measured 620 kPa','Model 620 kPa','500 kPa',' ','400 kPa',' ','300 kPa',' ','200 kPa',' ','100 kPa',' ');  %Note, use '' w/o space to remove dash from legend, use ' ' w/ space to include dashed lines in legend
+% set(leg,...
+%     'Position',[0.753623173004846 0.257738103327298 0.223602479696274 0.565476174297787]);
 % hold off
 
 %% Fit for maximum strain
@@ -127,15 +196,58 @@ set(leg,...
 
 %ft = fittype('a+b*x');
 % [max_k, gof2, output2] = fit(restingL',kmax','poly1','Exclude',[9 11 23],'Normalize','on')
+
+lmin = restingL.*(1-kmax);  %Length at kmax
+deltL = .001;           %measurement length being off by 1 mm
+
+% Horizontal uncertainty
+xneg = deltL*ones(size(restingL));
+xpos = deltL*ones(size(restingL));
+
+% Vertical uncertainty from bounds on both restingL and lmin
+yhigh = 1 - (lmin - deltL)./(restingL + deltL);
+ylow  = 1 - (lmin + deltL)./(restingL - deltL);
+ylow = max(ylow, 0); %make sure no negative strain
+ypos = yhigh - kmax;    %computed error, high
+yneg = kmax - ylow;
+
 [max_k, gof2, output2] = fit(restingL',kmax','poly1','Normalize','on')
 p3 = feval(max_k,x);
 
 figure
-plot(restingL,kmax,'.',x,p3,'--','MarkerSize',18)
-title('\epsilon_{max} vs. Resting Length, \phi10 mm')
-xlabel('Resting Length, mm')
-ylabel('Maximum Strain')
-legend('Data','Model Fit')
+hold on
+errorbar(restingL, kmax, yneg, ypos, xneg, xpos, '.', ...
+     'Color', [1 0 1], ...            % magenta
+    'MarkerEdgeColor', 'k', ...      % black dots
+    'MarkerFaceColor', 'k', ...
+    'MarkerSize', 18, ...
+    'LineStyle', 'none', ...
+    'LineWidth', 1.2, ...
+    'CapSize', 5);
+plot(x, p3, '--', ...
+    'Color', [0.470588235294118 0.368627450980392 0.941176470588235], ...
+    'LineWidth', 2)
+hold off
+xlabel('Resting Length, m', 'FontWeight', 'bold', 'FontSize', 10)
+ylabel('\epsilon_{620_{10}}', 'FontWeight', 'bold', 'FontSize', 10,'Interpreter','tex')
+legend('Data with error bars', 'Model Fit', ...
+    'FontWeight', 'bold', ...
+    'FontSize', 10, ...
+    'Location', 'best')
+set(gca, ...
+    'FontWeight', 'bold', ...
+    'FontSize', 10, ...
+    'LineWidth', 2)
+ylim([0, max(yhigh)*1.05])
+xlim([0, 1])
+
+
+% figure
+% plot(restingL,kmax,'.',x,p3,'--','MarkerSize',18)
+% title('\epsilon_{max} vs. Resting Length, \phi10 mm')
+% xlabel('Resting Length, mm')
+% ylabel('Maximum Strain')
+% legend('Data','Model Fit')
 
 %% Characterize pressure vs relative strain relationship
 % l_rest  kmax     batch
