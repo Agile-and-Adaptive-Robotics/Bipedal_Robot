@@ -17,7 +17,7 @@
 function z = maxBPAforce(restingLength, varargin)
 p = inputParser;
 
-checkLength = @(x) (x > 0) && isnumeric(x);
+checkLength = @(x) isnumeric(x) && all(x > 0);
 addRequired(p,'restingLength',checkLength);
 
 defaultDia = '10';
@@ -26,8 +26,9 @@ checkDia = @(x) any(validatestring(x,validDia));
 addOptional(p,'diameter',defaultDia,checkDia);
 
 defaultPres = 620;
-checkPres = @(y) (y > 0) && isnumeric(y);
+checkPres = @(y) isnumeric(y) && all(y>0);
 addOptional(p,'pressure',defaultPres,checkPres);
+
 parse(p, restingLength, varargin{:})
 
 x = restingLength;
