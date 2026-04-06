@@ -1,0 +1,539 @@
+%  LaTeX support: latex@mdpi.com 
+
+%  For support, please attach all files needed for compiling as well as the log file, and specify your operating system, LaTeX version, and LaTeX editor.
+
+%=================================================================
+\documentclass[actuators,article,submit,pdftex,moreauthors]{Definitions/mdpi} 
+%\documentclass[preprints,article,submit,pdftex,moreauthors]{Definitions/mdpi} 
+% For posting an early version of this manuscript as a preprint, you may use "preprints" as the journal. Changing "submit" to "accept" before posting will remove line numbers.
+
+%--------------------
+% Class Options:
+%--------------------
+%----------
+% journal
+%----------
+% Choose between the following MDPI journals:
+% actuators
+
+%---------
+% article
+%---------
+% The default type of manuscript is "article", but can be replaced by: 
+% abstract, addendum, article, benchmark, book, bookreview, briefcommunication, briefreport, casereport, changes, clinicopathologicalchallenge, comment, commentary, communication, conceptpaper, conferenceproceedings, correction, conferencereport, creative, datadescriptor, discussion, entry, expressionofconcern, extendedabstract, editorial, essay, erratum, fieldguide, hypothesis, interestingimages, letter, meetingreport, monograph, newbookreceived, obituary, opinion, proceedingpaper, projectreport, reply, retraction, review, perspective, protocol, shortnote, studyprotocol, supfile, systematicreview, technicalnote, viewpoint, guidelines, registeredreport, tutorial,  giantsinurology, urologyaroundtheworld
+% supfile = supplementary materials
+
+%----------
+% submit
+%----------
+% The class option "submit" will be changed to "accept" by the Editorial Office when the paper is accepted. This will only make changes to the frontpage (e.g., the logo of the journal will get visible), the headings, and the copyright information. Also, line numbering will be removed. Journal info and pagination for accepted papers will also be assigned by the Editorial Office.
+
+%---------
+% pdftex
+%---------
+% The option pdftex is for use with pdfLaTeX. Remove "pdftex" for (1) compiling with LaTeX & dvi2pdf (if eps figures are used) or for (2) compiling with XeLaTeX.
+
+%=================================================================
+% MDPI internal commands - do not modify
+\firstpage{1} 
+\makeatletter 
+\setcounter{page}{\@firstpage} 
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2026}
+\copyrightyear{2026}
+%\externaleditor{Firstname Lastname} % More than 1 editor, please add `` and '' before the last editor name
+\datereceived{ } 
+\daterevised{ } % Comment out if no revised date
+\dateaccepted{ } 
+\datepublished{ } 
+%\datecorrected{} % For corrected papers: "Corrected: XXX" date in the original paper.
+%\dateretracted{} % For retracted papers: "Retracted: XXX" date in the original paper.
+%\doinum{} % Used for some special journals, like molbank
+%\pdfoutput=1 % Uncommented for upload to arXiv.org
+%\CorrStatement{yes}  % For updates
+%\longauthorlist{yes} % For many authors that exceed the left citation part
+%\IsAssociation{yes} % For association journals
+
+%=================================================================
+% Add packages and commands here. The following packages are loaded in our class file: fontenc, inputenc, calc, indentfirst, fancyhdr, graphicx, epstopdf, lastpage, ifthen, float, amsmath, amssymb, lineno, setspace, enumitem, mathpazo, booktabs, titlesec, etoolbox, tabto, xcolor, colortbl, soul, multirow, microtype, tikz, totcount, changepage, attrib, upgreek, array, tabularx, pbox, ragged2e, tocloft, marginnote, marginfix, enotez, amsthm, natbib, hyperref, cleveref, scrextend, url, geometry, newfloat, caption, draftwatermark, seqsplit
+% cleveref: load \crefname definitions after \begin{document}
+\usepackage{siunitx}
+\let\DeclareUSUnit\DeclareSIUnit
+\let\US\SI
+\DeclareUSUnit\inch{in}
+\DeclareUSUnit\inch{in}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{array}
+
+
+
+%=================================================================
+% Please use the following mathematics environments: Theorem, Lemma, Corollary, Proposition, Characterization, Property, Problem, Example, ExamplesandDefinitions, Hypothesis, Remark, Definition, Notation, Assumption
+%% For proofs, please use the proof environment (the amsthm package is loaded by the MDPI class).
+
+%=================================================================
+% Full title of the paper (Capitalized)
+\Title{Isometric Force Characterization of Braided Pneumatic Actuators}
+
+% Author Orchid ID: enter ID or remove command
+\newcommand{\orcidauthorA}{0000-0003-3789-7205} % Add \orcidA{} behind the author's name
+\newcommand{\orcidauthorB}{0009-0008-9985-0676} % Add \orcidB{} behind the author's name
+\newcommand{\orcidauthorC}{0000-0002-3820-4821} % Add \orcidC{} behind the author's name
+
+% Authors, for the paper (add full first names)
+\Author{Ben Bolen $^{1,}$*\orcidA{}, Mohammad Elzein $^{1}$\orcidB{}, Lawrence Pang $^{1}$ and Alexander Hunt $^{1,}$\orcidC{}}
+
+%\longauthorlist{yes}
+
+% MDPI internal command: Authors, for metadata in PDF
+\AuthorNames{Firstname Lastname, Firstname Lastname and Firstname Lastname}
+
+% Affiliations / Addresses (Add [1] after \address if there is only one affiliation.)
+\address{%
+$^{1}$ \quad Department of Mechanical and Materials Engineering, Portland State University, Portland, OR, USA}
+
+
+% Contact information of the corresponding author
+\corres{Correspondence: bbolen83@gmail.com}
+
+% Current address and/or shared authorship
+%\firstnote{Current address: Affiliation.}  
+% Current address should not be the same as any items in the Affiliation section.
+
+%\secondnote{These authors contributed equally to this work.}
+% The commands \thirdnote{} till \eighthnote{} are available for further notes.
+
+%\simplesumm{} % Simple summary
+
+%\conference{} % An extended version of a conference paper
+
+% Abstract (Do not insert blank lines, i.e. \\) 
+\abstract{Artificial muscles such as braided pneumatic actuators (BPAs) offer many advantages for robotic systems, including high durability and strength-to-weight ratios. However, their use in robotic systems is still extremely limited, in part due to their poor force, length, and pressure characterization. In this work, a test setup is created to compare force produced by Festo fluidic BPAs with leading models. Our analysis of the data has resulted in 1) the development of new equations to calculate force as functions of pressure and contraction for Festo BPAs with uninflated diameters of \qtylist{10;20}{\mm}, and 2) a novel equation for the maximum force in \qtylist{10;20}{\mm} diameter Festo BPAs as a function of their resting length. This will lead to faster design processes and the development of new systems such as biomimetic robots that are able to more accurately reproduce the range of motion and isometric torque profiles that exist in the animals they are mimicking.}
+
+% Keywords
+\keyword{BPA; Biomimetic; Function Fit; PAM; Artificial Muscle; Isometric Force} 
+
+% The fields PACS, MSC, and JEL may be left empty or commented out if not applicable
+%\PACS{J0101}
+%\MSC{}
+%\JEL{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Different journals have different requirements. Please check the specific journal guidelines in the "Instructions for Authors" on the journal's official website.
+\addhighlights{yes}
+\renewcommand{\addhighlights}{%
+%
+%\noindent The goal is to increase the discoverability and readability of the article via search engines and other scholars. Highlights should not be a copy of the abstract, but a simple text allowing the reader to quickly and simplified find out what the article is about and what can be cited from it. Each of these parts should be devoted up to 2~bullet points.\vspace{3pt}\\
+%\textbf{What are the main findings?}
+\begin{itemize}[labelsep=2.5mm,topsep=-3pt]
+\item Braided Pneumatic Actuator maximum isometric force is a function of resting length
+\item Force curves are normalized with pressure and maximum contraction
+\item A high-fidelity predictive force model is developed using few coefficients
+\end{itemize}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+
+
+
+\section{Introduction}\label{introduction}
+Biomimetic robots provide a platform for investigating how mechanical structure and control interact to generate movement, offering complementary insights to simulation-based studies \citep{andrews_general_1985, millard_flexing_2013, arnold_model_2010}. Musculoskeletal humanoids and limb systems driven by tendon-like actuators have been shown to support biologically meaningful experiments on motion generation, internal force transmission, and neural control hypotheses \citep{asano_design_2017, asano_musculoskeletal_2019, hitzmann_anthropomorphic_2018, liu_robotic_2018, chen_realizing_2019}. This dual perspective of using robots to learn about biology and using biology to design more adaptive robots has been emphasized in both biomimetic robotics and biomechanics \citep{ijspeert_amphibious_2020, asano_design_2017}.
+
+A wide range of actuation technologies have been explored in robotics, including electric motors, hydraulic systems, smart-material actuators, and artificial muscles \citep{he_mechanism_2020, liang_comparative_2020}. Electric motors are widely used due to their controllability and maturity, but are limited by thermal constraints, gearing requirements, and reduced compliance compared to muscle-like actuators \citep{veale_towards_2016, suzumori_trends_2018}. Hydraulic actuators offer exceptionally high power density and have enabled highly dynamic legged systems, but they remain relatively heavy, less efficient than biological muscle, and require a dedicated fluid infrastructure \citep{suzumori_trends_2018}. Dielectric elastomer actuators (DEAs), a class of electronic electroactive polymers, demonstrate high specific work and good bandwidth in comparative studies \citep{liang_comparative_2020}. However, they are limited by the need for kilovolt-range driving voltages \citep{madden_artificial_2004}, electromechanical instability, and the requirement for compliant electrodes \citep{liang_comparative_2020}. In contrast, McKibben-style braided pneumatic actuators (BPAs) combine low mass, high force-to-weight ratio, and intrinsic compliance with a force–length curve that qualitatively resembles that of skeletal muscle \citep{liang_comparative_2020, hunt_modeling_2017}. BPAs have been used in quadrupedal robots \citep{aschenbeck_design_2006, hunt_modeling_2017}, musculoskeletal humanoids \citep{asano_design_2017, hitzmann_anthropomorphic_2018}, and dexterous manipulation systems \citep{chen_realizing_2019}, demonstrating their ability to support biologically motivated investigations and improve robot adaptability in unstructured environments.
+
+Despite these advantages, BPAs exhibit several important differences from biological muscle. First, BPA maximum tensile force occurs at resting (i.e., uninflated) length ($l_{rest}$) rather than at an optimal fiber length \citep{liang_comparative_2020}. Second, their maximum contraction ratio is substantially lower than that of human muscle, presenting challenges for achieving biomimetic joint ranges of motion \citep{hunt_modeling_2017, sarosi_comparative_2017, liang_comparative_2020}. Third, BPAs have a highly nonlinear dependence on internal pressure ($P$), contraction ($\epsilon$), and loading state \citep{hunt_modeling_2017, martens_modeling_2017}, which complicates control and motivates high-fidelity force–length–pressure modeling.
+
+To address these challenges, numerous researchers have proposed static and dynamic models for BPAs. \citet{sarosi_comparative_2017} compared geometric and empirical models for uninflated diameters ($\phi$) \qty{10}{\mm} and \qty{20}{\mm} actuators and highlighted limitations when $l_{rest}$ varies. \citet{martens_modeling_2017} introduced a physically motivated static model for the Festo DMSP series and demonstrated accurate predictions at specific $l_{rest}$. Festo provides a manufacturer tool for predicting force as a function of pressure and contraction \citep{festo_festo_2022, lang_festo_2005}, but experimental comparisons indicate that it does not adequately account for variation in $l_{rest}$ or actuator-specific contraction limits. \citet{hunt_modeling_2017} developed a more generalizable empirical model for $\phi$\qty{10}{\mm} Festo BPAs that incorporates differences between eccentric and concentric loading states and accounts for the maximum achievable contraction ($\epsilon_{max}$) at high pressures. Comparisons with experimental data indicates that none of the existing models effectively takes into account differences in maximum force due to initial actuator length.
+
+The present work develops an improved force–pressure–length model for both $\phi$\qty{10}{\mm} and $\phi$\qty{20}{\mm} Festo BPAs. We collected extensive force data for a wide range of resting lengths, contraction ratios, and internal pressures. These data were first used to find maximum force as a function of resting length. Then we normalized the data to formulate normalized force ($F^*$) as a function of relative strain ($\epsilon^*$) and relative pressure ($P^*$). The resulting model provides improved predictive accuracy for isometric BPA force, supporting the design and control of biomimetic robotic systems that rely on BPAs.
+
+
+
+\section{Background}
+
+Previous studies have generated empirical models of the force-length-pressure relationship of BPA actuators. \citet{sarosi_comparative_2017} discuss several high-fidelity BPA force models. They present a static force model with a 21 coefficient polynomial function for a Festo MAS-20-200N (i.e. $\phi$\qty{20}{\mm}, $l_{rest}=\qty{200}{\mm}$) with an impressive $\text{R}^2=0.9994$. They also present Sárosi's static force model for a Festo DMSP-20-400N-RM-RM (i.e. $\phi$\qty{20}{\mm}, $l_{rest}=\qty{400}{\mm}$) , with 6 coefficients and a $\text{R}^2=0.9995$. Martins and Boblan present an even more accurate model, in terms of absolute error, using five coefficients for a DMSP-10-250 (i.e. $\phi$\qty{10}{\mm}, $l_{rest}=\qty{250}{\mm}$) and a DMSP-20-300 (i.e. $\phi$\qty{20}{\mm}, $l_{rest}=\qty{300}{\mm}$) \citep{martens_modeling_2017}.  However, our work, as presented below, demonstrates that different resting lengths produce different force-length curves, preventing the use of these models for designing systems with different resting lengths.
+
+\citet{hunt_modeling_2017} looked at six resting lengths of $\phi$\qty{10}{\mm} Festo BPAs, accounting for differences in maximum contractile percentages, and elucidating the force-length-pressure relationship. In particular, for a given contraction percent and force $F$ (in Newtons), the scalar pressure $P$ (in kPa) required to produce this force for a $\phi$\qty{10}{\mm} Festo artificial muscle can be determined by solving the equation:
+
+\begin{adjustwidth}{-\extralength}{0cm}
+\begin{equation}
+P = \qty{254}{\kPa} + F \cdot \qty{1.23}{\kPa\per\newton} + S \cdot \qty{15.6}{\kPa} + \qty{192}{\kPa} \cdot \tan\,\left( 2.03 \left( \frac{\epsilon}{\epsilon_{\max} - F \cdot \qty{0.331e-3}{\per\newton}} - 0.46 \right) \right)
+\end{equation} \label{eq:BPAFit}
+\end{adjustwidth}
+
+\noindent
+where $S$ is the artificial muscle hysteresis factor such that $S=1$ indicates the muscle is shortening, $S=-1$ indicates it is lengthening, and $S=0$ under static conditions. An important note for Equation~\ref{eq:BPAFit} is that the coefficients have been updated with the correct values as the values reported in \cite{hunt_modeling_2017} contained typographical errors. The amount of contraction, ${\epsilon}$, is calculated as
+
+\begin{equation}
+    \epsilon = \frac{(l_{rest}-l)}{l_{rest}} \label{eq:strain}
+\end{equation}
+
+\noindent
+where ${\epsilon_{620}}$ is the amount of contraction in a BPA without external load when inflated at $\qty{620}{\kPa}$ (90 psi), similarly calculated as 
+
+\begin{equation}
+    \epsilon_{620} = \frac{(l_{rest}-l_{620})}{l_{rest}} \label{eq:max_strain}
+\end{equation}
+
+\noindent
+where $l_{620}$ is defined as the muscle length measured at 620 kPa. 
+Equation~\ref{eq:BPAFit} was used to create a lookup table for actuator force, $F$, for a given amount of pressure, $P$, and relative contraction, $\epsilon^*$, defined as
+
+\begin{equation}
+    \epsilon^* = \frac{\epsilon}{\epsilon_{620}} \label{eq:rel_strain}
+\end{equation}
+
+\noindent
+using the results from Equation~\ref{eq:strain} and Equation~\ref{eq:max_strain}.
+
+However, this model was taken with low external forces ($\leq$ 24 lbs), and it is unclear how well this model captures actuator behavior at higher forces, so we compare this model with data collected in this work.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Materials and Methods}
+
+\subsection{Overview}
+
+To measure artificial muscle force as a function of length and pressure, we built a test jig from extruded alumnium and 3D printed parts. Festo BPAs with \qtylist{10;20}{\mm} diameter were tested with various resting lengths and different amounts of contraction. These data are used to develop an improved model that more accurately predicts maximum muscle force based on $l_{rest}$, current muscle length $l_{m}$, and pressure $P$. The results are compared with existing models and the new data is used to create an updated model. 
+
+\subsection{BPA force characterization experiment}
+A test jig was made of 80/20{\textregistered} brand 1515 series extruded aluminum (Figure~\ref{fig:testJig}). Artificial muscles were placed vertically in the jig one at a time. The upper end was attached to an S-shaped load cell. The lower end was attached to an adjustable crossmember that was used to change the actuator length $l_{m}$. Compressed air was supplied through the building at \qty{620}{\kPa} and measured with a Freescale MPX5700 pressure sensor. 
+
+The inner distance between the hose clamps on each BPA was measured to determine the muscle's resting length ($l_{rest}$). This is how \citet{festo_festo_2022} defines $l_{rest}$, although in \citet{hunt_modeling_2017} it was measured to also include end cap length. We then inflated each BPA to $P_{620}=\qty{620}{kPa}$, with one end allowed to move freely in the axial Degree of Freedom (DoF), and measured the length $l_{620}$ to calculate maximum contraction at \qty{620}{\kPa} using Equation~\ref{eq:max_strain}. The distance between the crossmembers was then controlled to obtain different amounts of contraction, the muscles were inflated to various pressures, and the contractile force was recorded at the pressure-contraction pairs. This was done for $\phi$\qty{10}{\mm} BPA resting lengths ($l_{rest}$) of \SIrange[range-phrase=~--~]{112}{518}{\mm}. For $\phi$\qty{20}{\mm} BPAs, resting lengths ($l_{rest}$) of \SIrange[range-phrase=~--~]{300}{509}{\mm} were used.
+
+%The BPAs were then deflated, placed vertically in the test jig made out of 80/20 1515 series extruded aluminum pieces and fixed between two crossmembers.  The force sensor was placed between the upper crossmember and the BPA. $\phi$\qty{10}{\mm} BPAs with $l_{rest}$ of \qtylist{120;220;260;281;281}{\mm} had a lot of $P$ variation, with only 4--5 different values of $\epsilon^*$ per BPA. Conversely, BPAs with $l_{rest}$ of \qtylist{112;415;455;490;518}{\mm} had many different values of $\epsilon^*$ recorded, but all values were taken at or near $P_{max}$.
+
+\begin{figure}[htbp]
+    \begin{center}
+    \includegraphics[width=0.45\textwidth]{01_testJigs1.pdf}
+    \end{center}
+    \caption{A picture of a BPA in the isometric force test stand with components labeled.}\label{fig:testJig}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+
+\subsection{Maximum Force at 620 kPa}
+
+Data of the maximum force from BPA characterization tests of the \qty{10}{\mm} and \qty{20}{\mm} diameters at 620 kPa show a dependency on resting length (Figure~\ref{fig:Fmax_fit}). This is a previously unreported characteristic of these artificial muscles. Detailed anaylsis of the Festo Tool \citep{festo_festo_2022}, do in fact predict a change in maximum force with the resting length, however the Festo Tool predicts increased force with shorter lengths, while our collected data indicate decreasing force with shorter lengths. The data show a force response resembling an $\arctan$ curve along the $l_{rest}$ dimension. Using the Nonlinear Least Squares method and a Least Absolute Residual robustness, we fit an arctan curve to the data to get the maximum force at 620 kPA given a resting length as:
+
+\begin{align}
+    F_{620_{10}} &= \qty{303.5}{\N}\cdot \arctan{( \qty{19.03}{\per\metre} \cdot (l_{rest}-0.0075))}  \label{eq:Fmax10} \\[10pt]
+    F_{620_{20}} &= \qty{922.4}{\N} \cdot \arctan{(\qty{15.37}{\per\m} \cdot (l_{rest}-0.013))} \label{eq:Fmax20}
+\end{align}
+
+\noindent
+The length is offset by \qty{0.0075}{\m} and \qty{0.013}{\m} because solid modeling showed that the end caps contact each other at these lengths. At these lengths, the actuator would not be able to contract to produce force.
+
+
+\begin{figure}[tbp]
+\begin{adjustwidth}{-\extralength}{0cm}
+\centering
+\includegraphics[width=1\textwidth]{02_Fmax_fit.eps}
+\end{adjustwidth}
+\caption{Results for finding the relationship between $F_{620}$ and $l_{rest}$. \textbf{(A)} $F_{620_{10}}$ as a function of $l_{rest}$, at $P_{620}$. Dashed line is the $F_{620_{10}}$ data from Festo. Solid line is the fit from equation \ref{eq:Fmax10}. \textbf{(B)} $F_{620_{20}}$ as a function of $l_{rest}$ at $P_{620}$. Dashed line is $F_{620_{20}}$ data from Festo. Solid line is the fit from equation \ref{eq:Fmax20}.}\label{fig:Fmax_fit}
+\end{figure}
+
+
+%Data from BPA characterization tests of the \qty{10}{\mm} muscles resulted in force-pressure pairings for different muscle resting lengths ($l_{rest}$) Figure~\ref{fig:Fmax_fit}\textbf{A}. Analysis of the data showed that the maximum isometric force ($F_{max}$) produced by the actuator at its resting length is a function of resting length $l_{rest}$ (Figure~\ref{fig:Fmax_fit}B), a previously unreported characteristic of these artificial muscles. The data show a force response resembling an $\arctan$ curve along the $l_{rest}$ dimension and with a more linear response with changes in pressure. Using the Nonlinear Least Squares method and a Least Absolute Residual robustness, we fit an arctan curve to the data at to get the maximum force given a resting length and pressure as:
+
+\subsection{Force as a function of pressure and resting length}
+
+Data from BPA characterization tests of the \qty{10}{\mm} muscles resulted in force-pressure pairings for different muscle resting lengths ($l_{rest}$) (Figure~\ref{fig:F-P_contraction}\textbf{A}). Similar to the maximum force data, these data show a force response resembling an $\arctan$ curve along the $l_{rest}$ dimension  with a more linear response to changes in pressure. Using the Nonlinear Least Squares method and a Least Absolute Residual robustness, we fit an arctan curve to the data to get the maximum force given a resting length and pressure as:
+
+\begin{equation}
+    F_{max}(l_{rest},P) = a_1 \cdot P \cdot \arctan{(a_2 \cdot P \cdot (l_{rest}-0.0075))} \label{eq:Fmax_3D}
+\end{equation}
+
+\noindent
+where $a_1 = \qty{0.4895}{\N\per\kPa}$  and $a_2=\qty{0.03068}{\per\kPa\per\m}$ for the \qty{10}{\mm} actuator, and $a_1 = \qty{1.49}{\N\per\kPa}$, $a_2=\qty{0.0248}{\per\kPa\per\m}$ for the \qty{20}{\mm} actuator. Goodness-of-fit measures are given in Table~\ref{tab:Fmax}. 
+
+\begin{figure}[tbp]
+\begin{adjustwidth}{-\extralength}{0cm}
+\centering
+\includegraphics[width=1\textwidth]{03_F-P_contraction.eps}
+\end{adjustwidth}
+\caption{Results for finding the relationship between $F_{620}$, $l_{rest}$, $P_{620}$, and $\epsilon_{620}$. \textbf{(A)} Isoclines of the surface fit for $F_{620_{10}}(l_{rest},P_{620})$. \textbf{(B)} $\epsilon_{620}$ versus $l_{rest}$ at $P_{620}$. Although there is a general trend of longer resting lengths producing more contraction, no conclusive relationship between $\epsilon_{620}$ and $l_{rest}$ could be deduced from this experiment. }\label{fig:F-P_contraction}
+\end{figure}
+
+
+\subsection{Maximum Contraction at \qty{620}{\kPa}}
+
+Figure~\ref{fig:F-P_contraction}\textbf{B} shows an attempt at a linear fit for maximum contraction at \qty{620}{\kPa} ($\epsilon_{620}$) as a function of resting length ($l_{rest})$. There was a large amount of variance in the data, with the linear fit giving an adjusted $\text{R}^2=0.4124$ and an $\text{RMSE}=0.0083$. Since there is no direct, predicable relationship between maximum contraction and $l_{rest}$, this value should be recorded in each muscle used on a robot to best predict the force it may produce at different pressures and contraction. 
+
+
+\subsection{Force as a function of pressure and contraction}
+
+In addition to being a function of the pressure and resting length, the force produced by the actuator is also a function of the amount of actuator contraction, with less force being applied as the actuator contracts. 
+To build this model, the collected data of force, pressure, and contraction are normalized by dividing by $F_{620}$, $P_{620}$, and $\epsilon_{620}$, respectively. This had the effect of compressing the data into a 3D surface ranging from 0 to 1 on all axes. Normalized data are compared with pressure isoclines of force predicted by the Festo tool divided by the maximum force equation described in the previous section (Figure~\ref{fig:GenForceFit}. With this comparison, it is clear that the Festo tool over-predicts the expected force, especially at lower pressures and contraction.  
+
+
+\begin{figure}[tbp]
+\begin{adjustwidth}{-\extralength}{0cm}
+\centering
+\includegraphics[width=14.0cm]{04_GeneralizedForceFit.eps}
+\end{adjustwidth}
+\caption{Surface fit for $F^*(\epsilon^*,P^*)$. Solid lines are from our model. Dashed lines from Festo supplied data. In total, 537 data points were collected and used to fit the 3D surfaces (321 data points for $\phi$\qty{10}{\mm} BPAs and 216 data points for $\phi$\qty{20}{\mm} BPAs). 80\% of these data were used for training, and 20\% were used for validation. For figure clarity, not all data is included and plotted circles represent collected data at $\pm\qty{10}{\kPa}$ of the stated pressure. \textbf{(A)} Fit data for $\phi$\qty{10}{\mm} Festo BPAs. \textbf{(B)} Fit data for $\phi$\qty{20}{\mm} Festo BPAs.}\label{fig:GenForceFit}
+\end{figure}
+
+We therefore derived our own equation for isometric force in the BPA as a function of pressure and contraction. Visual analysis of the experimental data shows an exponential relationship between $\epsilon^*$ and $F^*$, and a linear relationship between $P^*$ and $F$. We fit a surface to the data using nonlinear least squares and a least absolute residual robustness such that:
+
+\begin{adjustwidth}{-\extralength}{0cm}
+\begin{equation}
+F^*(\epsilon^*,P^*)=
+\begin{cases}
+\begin{aligned}
+c_0\cdot\bigl(\exp(-c_1 \cdot \epsilon^*)-1\bigr)
++ P^*\cdot\exp\!\bigl(-c_2(\epsilon^*)^{2}\bigr)
+\end{aligned}
+& \text{for } F^*>0\\[10pt]
+0
+& \text{for } F^*\le 0
+\end{cases}\label{eq:exp}
+\end{equation}
+\end{adjustwidth}
+
+For the $\phi\qty{10}{\mm}$ BPAs, the result of the improved fit can be seen in Figure \ref{fig:GenForceFit}\textbf{A}. The adjusted $\text{R}^2=0.9998$, a $\text{RMSE}=0.004537$, and a maximum absolute residual of $10.6\%$. Solving \ref{eq:exp} for the $\phi$\qty{20}{\mm} BPA, yields different coefficients, and results are seen in Figure~\ref{fig:GenForceFit}\textbf{B}. Coefficient values and goodness of fit statistics are found in table \ref{tab:Fstar}. 
+
+\startlandscape
+\begin{table}[H]
+\caption{Maximum force equation coefficient values with confidence intervals (CI) and goodness-of-fit measures. Equation~\ref{eq:Fmax_3D} is compared to data taken at \qty{620}{\kPa} . Equation~\ref{eq:Fmax10} and Equation~\ref{eq:Fmax20} are compared against maximum force from using the Festo tool. It was not necessary to fit an adjusted $\text{R}^2$ in these cases.} 
+\label{tab:Fmax}
+\begin{tabularx}{\fulllength}{cll|llr|clr|}
+\hline
+\multirow{2}{*}{\textbf{Equation}} &
+  \multirow{2}{*}{\textbf{Coefficient}} &
+  \multirow{2}{*}{\textbf{CI (95\%)}} &
+  \multicolumn{3}{c|}{\textbf{Our Model}} &
+  \multicolumn{3}{c|}{\textbf{Festo Tool}} \\ \cline{4-9} 
+ &
+   &
+   &
+  \multicolumn{1}{l|}{\textbf{Adj. $\text{R}^2$}} &
+  \multicolumn{1}{l|}{\textbf{RMSE}} &
+  \textbf{Max. Error} &
+  \multicolumn{1}{l|}{\textbf{Adj. $\text{R}^2$}} &
+  \multicolumn{1}{l|}{\textbf{RMSE}} &
+  \textbf{Max. Error} \\ \hline
+\multirow{2}{*}{\eqref{eq:Fmax_3D}} &
+  $a_1 =   \qty{0.4895}{\N\per\kPa}$ &
+  (0.4822, 0.4968) &
+  \multicolumn{1}{l|}{\multirow{2}{*}{0.9945}} &
+  \multicolumn{1}{l|}{\multirow{2}{*}{11.61 N}} &
+  \multirow{2}{*}{55.3 N} &
+  \multicolumn{1}{l|}{\multirow{2}{*}{0.9854}} &
+  \multicolumn{1}{l|}{\multirow{2}{*}{14.7 N}} &
+  \multirow{2}{*}{30.9 N} \\ \cline{2-3}
+ &
+  $a_2 =   \qty{0.03068}{\per\kPa\per\m}$ &
+  (0.0282, 0.03317) &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+   &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+   \\ \hline
+\multirow{2}{*}{\eqref{eq:Fmax10}} &
+  $b_1   =\qty{303.5}{\N}$ &
+  (300, 308) &
+  \multicolumn{1}{l|}{\multirow{2}{*}{0.9854}} &
+  \multicolumn{1}{l|}{\multirow{2}{*}{14.72 N}} &
+  \multirow{2}{*}{30.9 N} &
+  \multicolumn{1}{c|}{\multirow{2}{*}{--}} &
+  \multicolumn{1}{l|}{\multirow{2}{*}{189.9 N}} &
+  \multirow{2}{*}{375.6 N} \\ \cline{2-3}
+ &
+  $b_2 =   \qty{19.03}{\per\m}$ &
+  (17.48, 20.57) &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+   &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+   \\ \hline
+\multirow{2}{*}{\eqref{eq:Fmax20}} &
+  $b_1 =   \qty{922.4}{\N}$ &
+  (914.2, 930.7) &
+  \multicolumn{1}{l|}{\multirow{2}{*}{0.9945}} &
+  \multicolumn{1}{l|}{\multirow{2}{*}{23.83 N}} &
+  \multirow{2}{*}{62.1 N} &
+  \multicolumn{1}{c|}{\multirow{2}{*}{--}} &
+  \multicolumn{1}{l|}{\multirow{2}{*}{668.4 N}} &
+  \multirow{2}{*}{1590.1 N} \\ \cline{2-3}
+ &
+  $b_2=\qty{15.37}{\per\m}$ &
+  (14.75, 15.98) &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+   &
+  \multicolumn{1}{l|}{} &
+  \multicolumn{1}{l|}{} &
+   \\ \hline
+\end{tabularx}
+\end{table}
+
+
+\begin{table}[htb]
+\caption{Normalized isometric BPA force eccquation (Equation~\ref{eq:exp}) coefficient values and goodness-of-fit measures.}
+\label{tab:Fstar}
+\begin{tabularx}{\fulllength}{lll|llr|llr|}
+\hline
+\multirow{2}{*}{\textbf{BPA}} &
+  \multirow{2}{*}{\textbf{Coefficient}} &
+  \multirow{2}{*}{\textbf{CI (95\%)}} &
+  \multicolumn{3}{c|}{\textbf{Model}} &
+  \multicolumn{3}{c|}{\textbf{Validation}} \\ \cline{4-9}
+& & &
+  \multicolumn{1}{l|}{\textbf{Adj. $\text{R}^2$}} &
+  \multicolumn{1}{l|}{\textbf{RMSE}} &
+  \textbf{Max. Error} &
+  \multicolumn{1}{l|}{\textbf{Adj. $\text{R}^2$}} &
+  \multicolumn{1}{l|}{\textbf{RMSE}} &
+  \textbf{Max. Error} \\ \hline
+\multirow{3}{*}{$\phi\qty{10}{\mm}$} &
+  $c_0 = 0.5682$ & (0.5584, 0.578) &
+  \multicolumn{1}{l|}{\multirow{3}{*}{0.9998}} &
+  \multicolumn{1}{l|}{\multirow{3}{*}{0.005118}} &
+  \multirow{3}{*}{10.3\%} &
+  \multicolumn{1}{l|}{\multirow{3}{*}{0.9994}} &
+  \multicolumn{1}{l|}{\multirow{3}{*}{0.0245409}} &
+  \multirow{3}{*}{10.6\%} \\ \cline{2-3}
+& $c_1 = 4.254$ & (4.126, 4.383) &
+  \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & &
+  \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \\ \cline{2-3}
+& $c_2 = 0.5597$ & (0.5429, 0.5766) &
+  \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & &
+  \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \\ \hline
+\multirow{3}{*}{$\phi\qty{20}{\mm}$} &
+  $c_0 = 0.2579$ & (0.2401, 0.2756) &
+  \multicolumn{1}{l|}{\multirow{3}{*}{0.992}} &
+  \multicolumn{1}{l|}{\multirow{3}{*}{0.02294}} &
+  \multirow{3}{*}{6.8\%} &
+  \multicolumn{1}{l|}{\multirow{3}{*}{0.9943}} &
+  \multicolumn{1}{l|}{\multirow{3}{*}{0.0231303}} &
+  \multirow{3}{*}{5.7\%} \\ \cline{2-3}
+& $c_1 = 6.477$ & (5.558, 7.396) &
+  \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & &
+  \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \\ \cline{2-3}
+& $c_2 = 1.321$ & (1.239, 1.403) &
+\multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & &
+\multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \\ \hline
+\end{tabularx}
+\end{table}
+\finishlandscape
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion}
+
+We have developed new $F_{620}$ equations for \qtylist{10;20}{\mm} diameter Festo BPAs that capture the change in maximum force produced by the actuators at 620 kPa as a function of their resting length. When examining Equation~\ref{eq:Fmax10} and measured data in Figure~\ref{fig:Fmax_fit}\textbf{B}, it can be seen that as $l_{rest}$ goes to infinity, $F_{620_{10}}$ goes to \qty{470}{\N}. When the Festo tool \citep{lang_festo_2005} was queried at $l_{rest}=\qty{1}{m}$ as an approximation of infinity, it predicts the $\phi$\qty{10}{\mm} BPA can produce $F=\qty{490}{\N}$ at $P_{620}$. This is within the 10\% variability that Festo states may occur in manufacturing tolerances. Similarly, the Festo data predict a $\phi$\qty{20}{\mm} BPA will produce $F=\qty{1570}{\N}$. However, our results for Equation~\ref{eq:Fmax20} show that  $F_{620_{20}}$ goes to \qty{1460}{\N} as $l_{rest}$ approaches infinity. Although the difference is much larger, it is also with the 10\% manufacturing tolerance. 
+
+Where our measured data differs significantly from the Festo model, is that as $l_{rest}$ goes to zero. For the measured data, as the length gets smaller, the force does as well, whereas the Festo tool predicts exponential force increase (see Figure~\ref{fig:Fmax_fit}). As a specific example, when specifying $l_{rest}=\qty{112}{\mm}$ for the \qtylist{10}{\mm} diameter BPAs, the Festo predicted $F_{620}$ is \qtylist{498.6}{\N}. However, using Equation~\ref{eq:Fmax10}, $F_{620}$ is calculated to be \qtylist{335.3}{\N}. Actual force in the $l_{rest}=\qty{112}{\mm}$ was measured at \qtylist{350.9}{\N} Therefore, the error in predicted $F_{620}$ for the $\phi$\qty{10}{\mm} BPA is $4.5\%$ for our model and $42.1\%$ using the Festo tool. Researchers using BPA resting lengths under \qty{300}{\mm} should take note of these results.
+
+It remains to be seen how $\mathbf{\epsilon_{620}}$ can be known a priori. We still suspect that it is a function of $l_{rest}$, but it might also be a function of product batch number. Modeling work of ideal McKibben actuators describe how this is a function of the total number of twists, and the angle of twist in the usable muscle area \citep{chou_measurement_1996}. Uncovering this relationship for the Festo DMSP/MAS artificial muscles, if it exists in a meaningful way, will require additional controlled tests. Not knowing this relationship a priori means there is still the potential for robots and other systems to go through an iterative design stage if it is discovered that the system does not produce the torque or have the RoM that the design team expects. However, the data and models provided here should enable for faster redesigns with fewer additional measurements.
+
+We have also introduced the concept of nondimensionalized isometric force that is a function of relative strain and relative pressure (Equation~\ref{eq:exp}). This elegant equation has only 3 coefficients with low error (Table~\ref{tab:Fstar}. In the work presented here, we add in the relative pressure term, $P^*=P/P_{620}$. Our data shows that by normalizing force, contraction, and pressure, we are able to create a simplified force equation as a function of contraction and pressure that scales well with initial actuator length, i.e.
+
+ \begin{equation}
+   F(\epsilon^*,P^*,l_{rest}) = F^*(\epsilon^*,P^*) \cdot F_{620}(l_{rest}) \label{eq:force}
+\end{equation}
+
+For example, given $l_{rest}=\qty{54}{\mm}$ and $P=\qty{300}{\kPa}$, the measured force was $F_{actual} = \qty{103}{\N}$. Force prediction using only the Festo tool predicts the force to be $F_{predict} = \qty{270}{\N}$. This is $161\%$ greater than the measured force. Using Equation~\ref{eq:Fmax10} and Equation~\ref{eq:exp} with Equation~\ref{eq:force} gives $F_{predict} = F^*(0, 0.48) \cdot F_{620}(0.054) = 0.49 \cdot \qty{230}{\N} = \qty{112}{\N}$. This is an error of $8\%$, which is much more accurate than using the Festo tool only.
+
+In our work, $P_{620}=\qty{620}{\kPa}$ is the maximum supply pressure for our system, and other users of this actuator may use a different supply pressure. However, this supply pressure is not required, and normalizing by this value was chosen as a method for improving the optimization techniques by reducing the sensitivity of the term associated with pressure. This equation will work for any pressure supplies below the 620 kPa. We also anticipate the equation will also work for pressures up to 800 kPa (the maximum rated pressure for Festo 10 mm BPAs), however we do not have the data to confirm this.
+
+The improved BPA characterization more accurately predicts isometric force produced by the BPAs. Unlike Equation~\ref{eq:force}, it does not account for the hysteresis that occurs in BPAs. BPA artificial muscles are often said to be analogous to biological muscles because they have force length curves and can produce force only in tension. This analogy is worth closer inspection, although it should be kept in mind that biological muscle optimum fiber length $l_{OFL}$ is not equivalent to $l_{rest}$. The improved Hill-muscle model of  \citet{thelen_adjustment_2003} shows an exponential term for a muscle's passive force-length property concentric loading.
+
+
+The analysis in this study has created novel equations for calculating force in Festo \qtylist{10;20}{\mm} diameter BPAs. This study has elucidated the relationship between maximum BPA force at 620 kPa $F_{620}$ as a function of resting length $l_{rest}$ (Equation~\ref{eq:Fmax10}, Equation~\ref{eq:Fmax20}, Table~\ref{tab:Fmax}). We have also created more accurate equations for the nondimensionalized force in a BPA as a function of relative strain $\epsilon^*$ and relative pressure $P^*$, (Equation~\ref{eq:exp} and Table~\ref{tab:Fstar}). Taken together, the $F_{620}(l_{rest})$ fits and the nondimensional force surface $F^*(\epsilon^*,P^*)$ provide a practical way to predict isometric BPA force across resting lengths using a small number of measurements. In a design workflow, these equations make it easier to select actuator diameter and resting length, and to evaluate whether a proposed routing can meet force and range-of-motion requirements before committing to a full prototype. As a result, BPA-driven mechanisms (e.g., joints in biomimetic legs or manipulators) can be developed with fewer design iterations and with realistic expectations of force output at short resting lengths.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{6pt} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% optional
+%\supplementary{The following supporting information can be downloaded at:  \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.}
+
+
+% Only used for preprtints:
+% \supplementary{The following supporting information can be downloaded at the website of this paper posted on \href{https://www.preprints.org/}{Preprints.org}.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\authorcontributions{Conceptualization, B.B. and A.H..; Methodology, B.B., A.H., M.E., and L.P.; Software, B.B., M.E., and L.P.; Validation, B.B. and A.H.; Formal Analysis, B.B.; Investigation, B.B., M.E., and L.P.; Resources, B.B. and A.H.; Data Curation, B.B. and L.P.; Writing – Original Draft Preparation, B.B.; Writing – Review \& Editing, B.B., M.E., L.P., and A.H.; Visualization, B.B. and A.H.; Supervision, B.B. and A.H.; Project Administration, B.B. and A.H.; Funding Acquisition, A.H.}
+
+\funding{Research for this article was funded by the Department of Mechanical and Materials Engineering at Portland State University, the National Science Foundation (NSF) grant for NeuroNex: Communication, Coordination, and Control in Systems (C3NS) 2015317 and NSF grant 1943483. }
+
+\dataavailability{The data sets are available from the authors upon reasonable request.} 
+
+\acknowledgments{The authors would like to thank Jasmine Bradley for her help reworking the figures in the results section. As a visual designer, her contributions improved the aesthetic quality of the images and ensured data accessibility for people with color blindness. Furthermore, the authors would like to express their gratitude towards Cody Scharzenberger for all his assistance in proof-reading and editing the manuscript.}
+
+\conflictsofinterest{The authors declare no conflicts of interest. The funders had no role in the design of the study; in the collection, analyses, or interpretation of data; in the writing of the manuscript; or in the decision to publish the results.} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optional
+
+\abbreviations{Abbreviations}{
+The following abbreviations are used in this manuscript:
+\\
+
+\noindent 
+\begin{tabular}{@{}ll}
+BPA & Braided Pneumatic Actuators\\
+\end{tabular}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\isPreprints{}{% This command is only used for ``preprints''.
+\begin{adjustwidth}{-\extralength}{0cm}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+%\printendnotes[custom] % Un-comment to print a list of endnotes
+
+\reftitle{References}
+
+% Please provide the correct journal abbreviation (e.g. according to the “List of Title Word Abbreviations” http://www.issn.org/services/online-services/access-to-the-ltwa/).
+% Citations and References in Supplementary files are permitted provided that they also appear in the reference list here. 
+
+%=====================================
+% References, variant A: external bibliography
+%=====================================
+\bibliography{BolenIsoF25}
+
+% If authors have biography, please use the format below
+%\section*{Short Biography of Authors}
+%\bio
+%{\raisebox{-0.35cm}{\includegraphics[width=3.5cm,height=5.3cm,clip,keepaspectratio]{Definitions/author1.pdf}}}
+%{\textbf{Firstname Lastname} Biography of first author}
+%
+%\bio
+%{\raisebox{-0.35cm}{\includegraphics[width=3.5cm,height=5.3cm,clip,keepaspectratio]{Definitions/author2.jpg}}}
+%{\textbf{Firstname Lastname} Biography of second author}
+
+% For the MDPI journals use author-date citation, please follow the formatting guidelines on http://www.mdpi.com/authors/references
+% To cite two works by the same author: \citeauthor{ref-journal-1a} (\citeyear{ref-journal-1a}, \citeyear{ref-journal-1b}). This produces: Whittaker (1967, 1975)
+% To cite two works by the same author with specific pages: \citeauthor{ref-journal-3a} (\citeyear{ref-journal-3a}, p. 328; \citeyear{ref-journal-3b}, p.475). This produces: Wong (1999, p. 328; 2000, p. 475)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% for journal Sci
+%\reviewreports{\\
+%Reviewer 1 comments and authors’ response\\
+%Reviewer 2 comments and authors’ response\\
+%Reviewer 3 comments and authors’ response
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\PublishersNote{}
+%\isPreprints{}{% This command is only used for ``preprints''.
+\end{adjustwidth}
+%} % If the paper is ``preprints'', please uncomment this parenthesis.
+\end{document}
+
+

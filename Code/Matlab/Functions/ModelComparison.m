@@ -58,8 +58,8 @@ c20 = [93.232*10^6 -715.29*10^6 1.5483*10^9 -502.95*10^6 -0.073]; %20 mm
 k10 = (0.25 - 0.198)/0.25;   % 0.208 from Martens Table A2
 k20 = (0.30 - 0.222)/0.30;   % 0.260 from Martens Table A1
 
-[Mar10_1, Mar10_2, Mar10_3, L10] = Martens(lrest,13.6,c10,XX,YY,k10);
-[Mar20_1, Mar20_2, Mar20_3, L20] = Martens(lrest,23.6,c20,Ax,Ay,k20);
+[Mar10_1, Mar10_2, Mar10_3, L10] = Martens(lrest,11.8,c10,XX,YY,k10);
+[Mar20_1, Mar20_2, Mar20_3, L20] = Martens(lrest,21.8,c20,Ax,Ay,k20);
 
 %Compare Martens and Boblan to his own force map
 % Appendix A1: DMSP-20-300 measured force map
