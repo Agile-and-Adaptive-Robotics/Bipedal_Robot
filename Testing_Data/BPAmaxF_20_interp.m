@@ -25,7 +25,7 @@ hold off
 
 E50 = RelStrain;
 P50 = Pressure;
-F50 = Force/Fmax;
+F50 = Force;    %/Fmax;
 
 %% 300 mm BPA resting length
 
@@ -47,7 +47,8 @@ hold off
 
 E30 = RelStrain;
 P30 = Pressure;
-F30 = Force/Fmax;
+F30 = Force;
+% F30 = Force/Fmax30;
 
 %% 369 mm BPA
 
@@ -69,7 +70,7 @@ hold off
 
 E37 = RelStrain;
 P37 = Pressure;
-F37 = Force/Fmax;
+F37 = Force;  %/Fmax;
 
 %% 451 mm BPA
 
@@ -94,7 +95,8 @@ hold off
 
 E45 = RelStrain;
 P45 = Pressure;
-F45 = Force/Fmax;
+F45 = Force;
+% F45 = Force/Fmax;
 
 %% Plot normalized values together, including from Festo
 load FestoData.mat XX20 YY20 ZZ20
@@ -107,7 +109,7 @@ scatter3(E50,P50,F50,'DisplayName','509 mm l_{rest}')
 scatter3(E45,P45,F45,'DisplayName','451 mm l_{rest}')
 scatter3(E37,P37,F37,'DisplayName','369 mm l_{rest}')
 scatter3(E30,P30,F30,'DisplayName','300 mm l_{rest}')
-scatter3(XX20,YY20,ZZ20,[],'d','DisplayName','Festo')
+% scatter3(XX20,YY20,ZZ20,[],'d','DisplayName','Festo')
 hold off
 lgd = legend;
 
