@@ -198,7 +198,7 @@ load allData.mat Xf Yf Zf
 Datmat = [Xf, Yf, Zf];
 A = sortrows(Datmat,[1 2 3],'ascend');
 D = cell(length(Yp),1);
-buff = 1;                 %buffer around P value (in kPa) to incorporate in plot
+buff = 10;                 %buffer around P value (in kPa) to incorporate in plot
 for i = 1:length(Yp)
     D{i} = A(( round(A(:,2)*620)<=(Yp(i)+buff) & round(A(:,2)*620)>=(Yp(i)-buff)   ),:);
 end
@@ -208,7 +208,7 @@ load data20mm_sorted.mat Ax Ay Az
 Datmat = [Ax, Ay, Az];
 A = sortrows(Datmat,[1 2 3],'ascend');
 E = cell(length(Yp),1);
-buff = 5;                 %buffer around P value (in kPa) to incorporate in plot
+buff = 10;                 %buffer around P value (in kPa) to incorporate in plot
 for i = 1:length(Yp)
     E{i} = A(( round(A(:,2)*620)<=(Yp(i)+buff) & round(A(:,2)*620)>=(Yp(i)-buff)   ),:);
 end
@@ -254,18 +254,25 @@ c{7} = '#0000FF'; % indigo
 
 % Data order = 200,300,400,500,620 → match colors to that
 clr = {c{2}, c{3}, c{4}, c{6}, c{7}};  % 200→620
-
+sz = 90;        %Marker size
+lw = 3;         %Line width size
+ft = 12;        %Font size
 pLabels = [200 300 400 500 620];
+
+%Trim D and E so we don't have a bunch on no-information points near zero
+D2 = trimTail(D,1);     %Case one, don't truncate 400 kPa until relative contraction greater than 0.6
+E2 = trimTail(E,0);     %Case zero, normal truncation
+
 
 for k = 1:2
 
     figure
-    set(gcf, 'Units', 'centimeters', 'Position', [2 2 14.0 9.0]);
+    % set(gcf, 'Units', 'centimeters', 'Position', [2 2 14.0 9.0]);
 
     hold on
 
     % Restore original titles
-    strTit = sprintf('\\phi%s mm BPA Force-Pressure-Contraction relationship',Dia(k));
+    strTit = sprintf('\\phi%s mm',Dia(k));
     title(strTit,'interpreter','tex')
 
     % Handles
@@ -277,37 +284,35 @@ for k = 1:2
 
         % festo
         sc(i) = plot(Xc{k}{i}/Emax(k), Zc{k}{i}/Zmax(k), '--', ...
-            'Color', clr{i}, 'LineWidth', 2);
+            'Color', clr{i}, 'LineWidth', lw);
 
         % model
         pl(i) = plot(Xgr{k}(i,:), FestoLookup{k}(i,:), '-', ...
-            'Color', clr{i}, 'LineWidth', 2);
+            'Color', clr{i}, 'LineWidth', lw);
 
         % data
-        if k == 1 && ~isempty(D{i})
-            sk(i) = scatter(D{i}(:,1), D{i}(:,3), 120, '.', ...
-                'MarkerEdgeColor', clr{i});
-        elseif k == 2 && ~isempty(E{i})
-            sk(i) = scatter(E{i}(:,1), E{i}(:,3), 120, '.', ...
-                'MarkerEdgeColor', clr{i});
+        if k == 1 && ~isempty(D2{i})
+            sk(i) = scatter(D2{i}(:,1), D2{i}(:,3), sz, hex2rgb(clr{i}),'filled');
+        elseif k == 2 && ~isempty(E2{i})
+            sk(i) = scatter(E2{i}(:,1), E2{i}(:,3), sz, hex2rgb(clr{i}),'filled');
         else
-            sk(i) = scatter([],[],120,'.','MarkerEdgeColor',clr{i});
+            sk(i) = scatter([],[],sz, hex2rgb(clr{i}),'filled');
         end
 
     end
 
-    xlabel('Contraction, \epsilon^*','interpreter','tex','FontWeight','bold','FontSize',12)
-    ylabel('Force, F^*','interpreter','tex','FontWeight','bold','FontSize',12)
+    xlabel('Contraction, \epsilon^*','interpreter','tex','FontWeight','bold','FontSize',10)
+    ylabel('Force, F^*','interpreter','tex','FontWeight','bold','FontSize',10)
 
     xlim([0 1])
     ylim([0 1])
 
     set(gca, ...
-        'FontSize',12, ...
+        'FontSize',10, ...
         'FontWeight','bold', ...
-        'LineWidth',2, ...
+        'LineWidth',lw, ...
         'XMinorTick','on', ...
-        'YMinorTick','on', ...
+        'YMinorTick','off', ...
         'TickLength',[0.02 0.05]);
 
     % ---- LEGEND  ----
@@ -317,27 +322,27 @@ for k = 1:2
         pl(5) pl(4) pl(3) pl(2) pl(1) ...
         sk(5) sk(4) sk(3) sk(2) sk(1)], ...
         { ...
-        'P=620 kPa, festo', ...
-        'P=500 kPa, festo', ...
-        'P=400 kPa, festo', ...
-        'P=300 kPa, festo', ...
-        'P=200 kPa, festo', ...
-        'P=620 kPa, model', ...
-        'P=500 kPa, model', ...
-        'P=400 kPa, model', ...
-        'P=300 kPa, model', ...
-        'P=200 kPa, model', ...
-        'P=620 kPa, data', ...
-        'P=500 kPa, data', ...
-        'P=400 kPa, data', ...
-        'P=300 kPa, data', ...
-        'P=200 kPa, data'}, ...
+        'P=620 kPa, Festo', ...
+        'P=500 kPa, Festo', ...
+        'P=400 kPa, Festo', ...
+        'P=300 kPa, Festo', ...
+        'P=200 kPa, Festo', ...
+        'Model', ...
+        'Model', ...
+        'Model', ...
+        'Model', ...
+        'Model', ...
+        'Data', ...
+        'Data', ...
+        'Data', ...
+        'Data', ...
+        'Data'}, ...
         'NumColumns', 3, ...
         'Location', 'northeast');
 
     set(leg, ...
         'FontWeight','bold', ...
-        'FontSize',12, ...
+        'FontSize',10, ...
         'LineWidth',1);
 
     hold off
@@ -352,7 +357,7 @@ end
 %     % Annotation positions [x, y] in normalized figure units
 %     xAnn = [0, 0];
 %     yAnn = [0.94, 0.45];
-%     for k = 1: 2
+%     for k = 1:2
 %     a(k) = subplot(2,1,k);
 %     xlabel('Contraction, \epsilon^*','interpreter','tex'),ylabel('Force, F^*','interpreter','tex')
 %     strTit = sprintf('\\phi%s mm BPA Force-Pressure-Contraction relationship',Dia(k));
@@ -407,4 +412,45 @@ end
 %     end
 %     
 
+function C2 = trimTail(C,mode)
+    tol_x = 0.02;
+    tol_y = 0.05;
 
+    C2 = cell(size(C));
+
+    for i = 1:numel(C)
+        M = C{i};
+
+        x = M(:,1);
+        y = M(:,3);
+
+        R = size(M,1);   % default: keep all rows
+
+        for u = 3:size(M,1)
+            sameX = abs(x(u-1) - x(u-2)) < tol_x;
+            nearZero = max(abs(y(u-2:u-1))) < tol_y;
+
+            allowTruncation = true;
+
+            % Special rule: only for D{3} when mode = 1
+            if mode == 1 && i == 3
+                if x(u-1) < 0.6
+                    allowTruncation = false;
+                end
+            elseif mode == 0 && i==3
+                if y(u-1) == 0
+                    allowTruncation = true;
+                    sameX = true;
+                    nearZero = true;
+                end
+            end
+
+            if sameX && nearZero && allowTruncation
+                R = u - 1;
+                break
+            end
+        end
+
+        C2{i} = M(1:R,:);
+    end
+end
