@@ -1,4 +1,9 @@
 %% Import data from Lawrence's two sets of tests, compare with Ben's. Upload for curve fit
+% Derived from BenLawrenceData, but instead of nondimensionalizing 10 mm
+% BPA force, we keep it dimensioned. Now we can pull out certain resting
+% length to compare with other BPA models. Namely, the 25.7 cm and 23.3 cm
+% resting lengths to compare with the models of Sarosi and Martens and
+% Boblan
 clear;
 clc;
 close all
@@ -79,6 +84,7 @@ keep = [3 1]; %keep test 9 (keep(2)) from first set of data, test 8 from second 
 Ts = vertcat(T{1}(:,:,keep(1)),T{2}(:,:,keep(2)));  
 [a,b] = size(Ts);
 V = cell(size(Ts));
+W = cell(size(V));
 Pmax = 620;
 for i = 2:a             %remove data for first cut length (l_rest = 120 mm)
     for j = 1:b
@@ -104,26 +110,32 @@ for i = 2:a            %remove data for first cut length (l_rest = 120 mm)
 end
 
 H = [1 1 0;...    %full strain, full pressure, no force
-    0 1 1;...     %no strain, full pressure, full force
     0 0 0];       %no strain, no pressure, no force
+
+W1 = vertcat(V{3,:});     %resting length 25.7 cm from Lawrence
+W2 = vertcat(V{(length(Cuts1)+4),:});   %resting length 23.3 cm;
 
 %Reduced data
 R = vertcat(V{:});
 R = [R; H];
-R1 = vertcat(V{1:length(Cuts1),:});
+R1 = vertcat(V{[1 2 4 5],:});
 R1 = [R1; H];
-R2 = vertcat(V{(length(Cuts1)+1):end,:});
+R2 = vertcat(V{[6 7 8 10 11 12 13],:});
 R2 = [R2; H];
 Rx = R(:,1); Ry = R(:,2); Rz = R(:,3);
 R1x = R1(:,1); R1y = R1(:,2); R1z = R1(:,3);
 R2x = R2(:,1); R2y = R2(:,2); R2z = R2(:,3);
 
+
+G1 = vertcat(U{3,:});     %resting length 25.7 cm from Lawrence
+G2 = vertcat(U{(length(Cuts1)+4),:});   %resting length 23.3 cm;
+
 %Full size data
 S = vertcat(U{:});
 S = [S; H];
-S1 = vertcat(U{1:length(Cuts1),:});
+S1 = vertcat(U{[1 2 4 5],:});
 S1 = [S1; H];
-S2 = vertcat(U{(length(Cuts1)+1):end,:});
+S2 = vertcat(U{[6 7 8 10 11 12 13],:});
 S2 = [S2; H];
 Sx = S(:,1); Sy = S(:,2); Sz = S(:,3);
 S1x = S1(:,1); S1y = S1(:,2); S1z = S1(:,3);
@@ -166,7 +178,7 @@ rawdata42cm = [444.82216	620	0.002409639	0.014492754;
 % gg = sortrows([rawdata42cm(:,4),rawdata42cm(:,1)]);
 % max415 = griddedInterpolant(gg(:,1),gg(:,2),'linear','makima');
 % Fmax415 = max415(0);
-data42cm = [rawdata42cm(:,4), rawdata42cm(:,2), rawdata42cm(:,1)
+data42cm = [rawdata42cm(:,4), rawdata42cm(:,2), rawdata42cm(:,1); ...
             0, 0, 0];
 
 % zcomp = max415([0; gg(:,1)]);
@@ -200,7 +212,7 @@ rawdata45cm = [26	620	0.161147903	1
 % gg = groupsummary(gg, gg(:,1), 'mean');
 % max455 = griddedInterpolant(ggRsz(:,1),ggRsz(:,2),'linear','linear');
 % Fmax455 = p(0);
-data45cm = [rawdata45cm(:,4), rawdata45cm(:,2), rawdata45cm(:,1)
+data45cm = [rawdata45cm(:,4), rawdata45cm(:,2), rawdata45cm(:,1); ...
             0, 0, 0];
 
 % zcomp = max455([0; gg(:,1)]);
@@ -272,113 +284,138 @@ rawdata52cm = [0	619	0.166023166	1
 429	617	0	0
 0	0	0	0];
 
-%% Build combined dimensional dataset near 620 kPa
-pressureTol = 5;   % kPa window around 620
-restL_all = vertcat(restL{:});
+gg = sortrows([rawdata52cm(:,4), rawdata52cm(:,2), rawdata52cm(:,1)],1);
+[gx, gy, gz] = prepareSurfaceData( gg(:,1), gg(:,2)/620, gg(:,3) );
 
-% Lawrence data: columns = [sourceCode, restLength_cm, relStrain, pressure_kPa, force_N]
-lawRows = {};
+% Set up fittype and options.
+ft = fittype( 'a*x^3+b*x^2+c*x+f*y', 'independent', {'x', 'y'}, 'dependent', 'z' );
+opts = fitoptions( 'Method', 'NonlinearLeastSquares' );
+opts.Display = 'Off';
+opts.StartPoint = [-800 1400 -1115 492];
+opts.Robust = 'Bisquare';
 
-for i = 2:a
-    for j = 1:b
-        if isempty(Qs{i,j})
-            continue
-        end
+% Fit model to data.
+[max518, gof] = fit( [gx, gy], gz, ft, opts );
 
-        M = Qs{i,j}(:,1:3);
-        keepRows = M(:,3) > minF & abs(M(:,2) - Pmax) <= pressureTol;
-        M = M(keepRows,:);
+% Plot fit with data.
+figure( 'Name', 'untitled fit 2' );
+h = plot( max518, [gx, gy], gz );
+legend( h, 'untitled fit 2', 'gz vs. gx, gy', 'Location', 'NorthEast', 'Interpreter', 'none' );
+% Label axes
+xlabel( 'gx', 'Interpreter', 'none' );
+ylabel( 'gy', 'Interpreter', 'none' );
+zlabel( 'gz', 'Interpreter', 'none' );
+grid on
+view( -51.0, 38.5 );
 
-        if isempty(M)
-            continue
-        end
+Fmax518 = max518(0,1);
+data52cm = [rawdata52cm(:,4), rawdata52cm(:,2), rawdata52cm(:,1)];
 
-        lawRows{end+1} = [ ...
-            ones(size(M,1),1), ...
-            restL_all(i) * ones(size(M,1),1), ...
-            M(:,1), ...
-            M(:,2), ...
-            M(:,3)];
-    end
-end
+xi = [0; gg(:,1)];
+yi = ones(length(xi),1);
+zcomp = max518(xi, yi);
+figure
+hold on
+scatter3(gg(:,1),gg(:,2)/620,gg(:,3),[],'bo');
+plot3(xi,yi,zcomp, '-.r');
+hold off
 
-if isempty(lawRows)
-    Lawrence620 = zeros(0,5);
-else
-    Lawrence620 = vertcat(lawRows{:});
-end
+%% Combine all data and do a 3d scatter plot. 
+%addnoise to anchor surface at three points
+sz = 15;                   % size of anchor surface
+err = 0.001;                 % ammount of error
+r110 = [1-err + 2*err * rand(sz,2), -err + 2*err * rand(sz,1)].*[1 1 1];
+r000 = -0.001 + 0.002 * rand(sz,3);
+anchor = [r110; r000];
+ancX = anchor(:,1); ancY = anchor(:,2); ancZ = anchor(:,3);
 
-% Ben data: columns = [sourceCode, restLength_cm, relStrain, pressure_kPa, force_N]
-benRows = {};
 
-benSets = {
-    11.2, rawdata11cm;
-    41.5, rawdata42cm;
-    45.5, rawdata45cm;
-    49.0, rawdata49cm;
-    51.8, rawdata52cm
-};
+% Ben_data = [data11cm; data42cm; data45cm; data49cm; data52cm];
+Ben_data = [data42cm; data49cm; data52cm];
+Ben_data = [Ben_data(:,1), Ben_data(:,2)./620, Ben_data(:,3)];
+BenX = Ben_data(:,1); BenY = Ben_data(:,2); BenZ = Ben_data(:,3);
 
-for k = 1:size(benSets,1)
-    Lrest = benSets{k,1};
-    M = benSets{k,2};
+allData = [ R1;...
+            R2;...
+            Ben_data;...
+            anchor];
 
-    keepRows = M(:,1) > minF & abs(M(:,2) - Pmax) <= pressureTol;
-    M = M(keepRows,:);
+WW = [W1;W2];
 
-    if isempty(M)
-        continue
-    end
 
-    benRows{end+1} = [ ...
-        2*ones(size(M,1),1), ...
-        Lrest*ones(size(M,1),1), ...
-        M(:,4), ...
-        M(:,2), ...
-        M(:,1)];
-end
+[XX, YY, ZZ] = prepareSurfaceData(allData(:,1), allData(:,2),allData(:,3));
+[xx, yy, zz] = prepareSurfaceData(WW(:,1), WW(:,2),WW(:,3));
+% XX = allData(:,1); YY=allData(:,2); ZZ=allData(:,3);
+%Ypres = YY*620;   %YY repressurized
 
-if isempty(benRows)
-    Ben620 = zeros(0,5);
-else
-    Ben620 = vertcat(benRows{:});
-end
 
-all620 = [Lawrence620; Ben620];
 
-%% Final plot only: color by resting length, marker by dataset
-figure;
-hold on;
-grid on;
 
-restGroups = unique(all620(:,2));
-nGroups = numel(restGroups);
-cmap = turbo(nGroups);
+bigData = [ S1;...
+            S2;...
+            Ben_data;...
+            anchor];
+GG = [G1; G2];        
+[Xf, Yf, Zf] = prepareSurfaceData(bigData(:,1), bigData(:,2), bigData(:,3));
+[xa, yb, zc] = prepareSurfaceData(GG(:,1), GG(:,2),GG(:,3));
+figure
+hold on
+scatter3(Xf, Yf, Zf, 'DisplayName', 'All data except ~25cm, full sized')
+scatter3(xa, yb, zc, 'DisplayName', '~25cm, full sized')
+scatter3(XX, YY, ZZ,'filled', 'DisplayName', 'All data except ~25cm, resized')
+scatter3(xx, yy, zz, 'DisplayName', '~25cm, resized')
+hold off
+xlabel('Relative Strain')
+ylabel('Pressure (normalized)')
+zlabel('Force (N)')
+title('10mm')
+lgd1 = legend;
 
-for k = 1:nGroups
-    L = restGroups(k);
-    color_k = cmap(k,:);
+figure
+hold on
+scatter3(anchor(:,1), anchor(:,2), anchor(:,3),'DisplayName','anchors')
+scatter3(Ben_data(:,1),Ben_data(:,2),Ben_data(:,3),'DisplayName','Ben data')
+scatter3(W1(:,1), W1(:,2), W1(:,3),'DisplayName','Lawrence test set 1 25.7 cm')
+scatter3(W2(:,1), W2(:,2), W2(:,3),'DisplayName','Lawrence test set 2 23.3 cm')
+scatter3(R1(:,1), R1(:,2), R1(:,3),'DisplayName','Lawrence remaider test set 1')
+scatter3(R2(:,1), R2(:,2), R2(:,3),'DisplayName','Lawrence remainder test set 2')
+hold off
+xlabel('Relative Strain')
+ylabel('Pressure (normalized)')
+zlabel('Force (normalized)')
+title('10mm force, normalized')
+lgd2 = legend;
 
-    idxLaw = all620(:,2) == L & all620(:,1) == 1;
-    idxBen = all620(:,2) == L & all620(:,1) == 2;
+% Assuming x, y, z are column vectors of the same length
+n = length(XX);
+rng('default'); % For reproducibility
+idx = randperm(n);
 
-    if any(idxLaw)
-        scatter3(all620(idxLaw,3), all620(idxLaw,4), all620(idxLaw,5), ...
-            36, color_k, 'o', 'filled', ...
-            'DisplayName', sprintf('Lawrence, L_{rest}=%.1f cm', L));
-    end
+% 80% training, 20% validation
+numTrain = round(0.8 * n);
+trainIdx = idx(1:numTrain);
+valIdx = idx(numTrain+1:end);
 
-    if any(idxBen)
-        scatter3(all620(idxBen,3), all620(idxBen,4), all620(idxBen,5), ...
-            52, color_k, '^', ...
-            'DisplayName', sprintf('Ben, L_{rest}=%.1f cm', L));
-    end
-end
+% Training data
+xTrain = XX(trainIdx);
+yTrain = YY(trainIdx);
+zTrain = ZZ(trainIdx);
 
-xlabel('Relative Strain');
-ylabel('Pressure (kPa)');
-zlabel('Force (N)');
-title(sprintf('Force map near %d \\pm %d kPa', Pmax, pressureTol));
-legend('Location','bestoutside');
-view(35,25);
-hold off;
+% Validation data
+xVal = XX(valIdx);
+yVal = YY(valIdx);
+zVal = ZZ(valIdx);
+
+save Data4compare10.mat    XX YY ZZ... 
+                    xx yy zz xa yb zc G1 G2 GG W1 W2 WW ...
+                    Ben_data BenX BenY BenZ...
+                    R Rx Ry Rz...
+                    R1 R1x R1y R1z...
+                    R2 R2x R2y R2z...
+                    anchor ancX ancY ancZ...
+                    Xf Yf Zf...
+                    S Sx Sy Sz...
+                    S1 S1x S1y S1z...
+                    S2 S2x S2y S2z...
+                    xTrain yTrain zTrain...
+                    xVal yVal zVal
