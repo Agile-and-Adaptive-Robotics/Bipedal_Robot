@@ -134,3 +134,4 @@ Ay = [P50; P45; P37; P30]/620;
 Az = [Fn50; Fn45; Fn37; Fn30];
 
 % save data20mm.mat Ax Ay Az
+% save datacompare20.mat E30 P30 F30 E45 P45 F45
