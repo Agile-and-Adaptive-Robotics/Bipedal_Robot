@@ -25,7 +25,8 @@ hold off
 
 E50 = RelStrain;
 P50 = Pressure;
-F50 = Force;    %/Fmax;
+F50 = Force;    
+Fn50 = Force/Fmax;    %Normalized force
 
 %% 300 mm BPA resting length
 
@@ -48,7 +49,7 @@ hold off
 E30 = RelStrain;
 P30 = Pressure;
 F30 = Force;
-% F30 = Force/Fmax30;
+Fn30 = Force/Fmax;        %Normalized force
 
 %% 369 mm BPA
 
@@ -70,7 +71,8 @@ hold off
 
 E37 = RelStrain;
 P37 = Pressure;
-F37 = Force;  %/Fmax;
+F37 = Force;  
+Fn37 = Force/Fmax;        %normalized force
 
 %% 451 mm BPA
 
@@ -96,7 +98,19 @@ hold off
 E45 = RelStrain;
 P45 = Pressure;
 F45 = Force;
-% F45 = Force/Fmax;
+Fn45 = Force/Fmax;      %Normalized force
+
+%% Plot experimental values together, normalized by contraction only 
+
+figure
+hold on
+scatter3(E50,P50,F50,'DisplayName','509 mm l_{rest}')
+scatter3(E45,P45,F45,'DisplayName','451 mm l_{rest}')
+scatter3(E37,P37,F37,'DisplayName','369 mm l_{rest}')
+scatter3(E30,P30,F30,'DisplayName','300 mm l_{rest}')
+hold off
+lgd = legend;
+
 
 %% Plot normalized values together, including from Festo
 load FestoData.mat XX20 YY20 ZZ20
@@ -105,11 +119,11 @@ YY20 = YY20*620;
 
 figure
 hold on
-scatter3(E50,P50,F50,'DisplayName','509 mm l_{rest}')
-scatter3(E45,P45,F45,'DisplayName','451 mm l_{rest}')
-scatter3(E37,P37,F37,'DisplayName','369 mm l_{rest}')
-scatter3(E30,P30,F30,'DisplayName','300 mm l_{rest}')
-% scatter3(XX20,YY20,ZZ20,[],'d','DisplayName','Festo')
+scatter3(E50,P50,Fn50,'DisplayName','509 mm l_{rest}')
+scatter3(E45,P45,Fn45,'DisplayName','451 mm l_{rest}')
+scatter3(E37,P37,Fn37,'DisplayName','369 mm l_{rest}')
+scatter3(E30,P30,Fn30,'DisplayName','300 mm l_{rest}')
+scatter3(XX20,YY20,ZZ20,[],'d','DisplayName','Festo')
 hold off
 lgd = legend;
 
@@ -117,6 +131,6 @@ lgd = legend;
 
 Ax = [E50; E45; E37; E30];
 Ay = [P50; P45; P37; P30]/620;
-Az = [F50; F45; F37; F30];
+Az = [Fn50; Fn45; Fn37; Fn30];
 
 % save data20mm.mat Ax Ay Az

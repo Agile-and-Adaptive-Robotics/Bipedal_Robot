@@ -22,11 +22,11 @@ clear Cut li lo l620 maxE relE T test Q
 load allData_Nov22_Ben.mat Cut li lo l620 maxE relE T vars Q
 Cuts2 = Cut;      %cut lengths
 Ts2 = T;          %data
-lis2 = li;        %contracted length
+lis2 = li;        %contracted length, "length l at index i"
 lmin2 = l620;     %minimum length
-restL2 = lo;      %resting lengths
-maxE2 = maxE;     %maximum strain
-relE2 = relE;     %relative strain
+restL2 = lo;      %resting lengths, initial length l_{0}
+maxE2 = maxE;     %maximum strain, where capital E is a stand-in for epsilon
+relE2 = relE;     %relative strain, where capital E is a stand-in for 
 tests2 = vars;    %cell of strings indicating test number
 Qs2 = Q;          %full set of data from all the tests
 
