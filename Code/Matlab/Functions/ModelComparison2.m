@@ -167,7 +167,7 @@ for iD = 1:numel(D)
         cases(kk).Lmin_mm = 1000 * Lmin_i(iL);
 
         cases(kk).x = thisData(:,1);
-        cases(kk).p_kPa = thisData(:,2);
+        cases(kk).p_kPa = 620*thisData(:,2);    %Convert normalized pressure to kPa
         cases(kk).z = thisData(:,3);
 
         cases(kk).CaseIndexWithinDiameter = iL;
@@ -221,13 +221,13 @@ end
 
 %% Evaluate models for each case
 for i = 1:nCase
-    x = cases(i).x(:);
-    p_kPa = cases(i).p_kPa(:);
-    z = cases(i).z(:); %#ok<NASGU>
-
-    p_norm = p_kPa / 620;
-    p_bar  = p_kPa / 100;
-    p_Pa   = p_kPa * 1000;
+    x = cases(i).x(:);      %relative strain
+    p_raw = cases(i).p_kPa(:)/620;
+    % z = cases(i).z(:);      %Experimental data
+    
+    p_norm = p_raw;         %of course this is a little inefficient but it works
+    p_bar  = p_raw * 6.2;
+    p_Pa   = p_raw * 6.2E5;
 
     cases(i).OurModel = cases(i).OurModelFun(x, p_norm) .* ...
         maxBPAforce(cases(i).RestLength_m, num2str(cases(i).Diameter_mm), 620);
@@ -527,6 +527,14 @@ for i = 1:nCase
     end
     scatter(cases(i).z, cases(i).Martens, ms, 'filled')
 
+    allPred = [cases(i).OurModel(:); cases(i).SarosiPrimary(:); cases(i).Martens(:)];
+    if cases(i).HasSarosiComparison
+        allPred = [allPred; cases(i).SarosiAlt(:)];
+    end
+    limmax = max([cases(i).z(:); allPred(:)]);
+    xlim([0 limmax])
+    ylim([0 limmax])
+    axis square
     xlabel('Experimental data force (N)')
     ylabel('Predicted force (N)')
     title(cases(i).FigureTitle)
@@ -569,6 +577,7 @@ if ~isempty(idx10)
         i = idx10(k);
         scatter3(cases(i).x, cases(i).p_kPa, cases(i).z - cases(i).OurModel, ms, 'filled')
     end
+    view(0,0);
     xlabel('Relative contraction')
     ylabel('Pressure (kPa)')
     zlabel('Residual (N)')
@@ -743,8 +752,8 @@ function [FF, kmax] = sar(Lrest, Dia, u, x, pbar)
 % x is your contraction coordinate, used as k = x*kmax
 % pbar is already in bar
 
-    Lrest = Lrest; %#ok<NASGU>
-    Dia = Dia; %#ok<NASGU>
+    Lrest = Lrest; %Resting length is not used
+    Dia = Dia; %Diameter is not used
 
     a = u(1);
     b = u(2);
@@ -795,9 +804,9 @@ function F = Martens_force_from_PL(L0, d, c, P, L)
     c3 = c(4);
     d0 = c(5);
 
-    t0    = 28.6;
-    tcorr = t0 + d0;
-    H0    = 0.0018;
+    t0    = 28.6;           %initial angle
+    tcorr = t0 + d0;        %corrected angle
+    H0    = 0.0018;         %material thickness
 
     D0 = d / 1000;
 
