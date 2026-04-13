@@ -345,6 +345,77 @@ for i = 1:nCase
         cases(i).SarosiBest_MaxResidual = cases(i).SarosiPrimary_MaxResidual;
     end
 end
+
+%% Compare MB inputs for 20 mm, 300 mm and 450 mm
+idx300 = find([cases.Diameter_mm] == 20 & abs([cases.RestLength_m] - 0.300) < 1e-12, 1, 'first');
+idx450 = find([cases.Diameter_mm] == 20 & abs([cases.RestLength_m] - 0.450) < 1e-12, 1, 'first');
+
+if ~isempty(idx300)
+    x300 = cases(idx300).x(:);
+    p300_kPa = cases(idx300).p_kPa(:);
+    L300 = cases(idx300).RestLength_m - x300 .* (cases(idx300).RestLength_m - cases(idx300).Lmin_m);
+
+    fprintf('\n--- MB input summary: 20 mm, 300 mm ---\n')
+    fprintf('d used = %.3f mm\n', cases(idx300).MartensDiameter_mm)
+    fprintf('Lrest = %.3f m, Lmin = %.3f m\n', cases(idx300).RestLength_m, cases(idx300).Lmin_m)
+    fprintf('x range    = [%.4f, %.4f]\n', min(x300), max(x300))
+    fprintf('p range    = [%.1f, %.1f] kPa\n', min(p300_kPa), max(p300_kPa))
+    fprintf('Lm range   = [%.4f, %.4f] m\n', min(L300), max(L300))
+end
+
+if ~isempty(idx450)
+    x450 = cases(idx450).x(:);
+    p450_kPa = cases(idx450).p_kPa(:);
+    L450 = cases(idx450).RestLength_m - x450 .* (cases(idx450).RestLength_m - cases(idx450).Lmin_m);
+
+    fprintf('\n--- MB input summary: 20 mm, 450 mm ---\n')
+    fprintf('d used = %.3f mm\n', cases(idx450).MartensDiameter_mm)
+    fprintf('Lrest = %.3f m, Lmin = %.3f m\n', cases(idx450).RestLength_m, cases(idx450).Lmin_m)
+    fprintf('x range    = [%.4f, %.4f]\n', min(x450), max(x450))
+    fprintf('p range    = [%.1f, %.1f] kPa\n', min(p450_kPa), max(p450_kPa))
+    fprintf('Lm range   = [%.4f, %.4f] m\n', min(L450), max(L450))
+end
+
+%% Debug MB on 20 mm, 450 mm case
+idx450_dbg = find([cases.Diameter_mm] == 20 & abs([cases.RestLength_m] - 0.450) < 1e-12, 1, 'first');
+
+if ~isempty(idx450_dbg)
+    x_dbg = cases(idx450_dbg).x(:);
+    p_dbg = cases(idx450_dbg).p_kPa(:) / 620;
+    p_dbg_Pa = p_dbg * 6.2e5;
+    L_dbg = cases(idx450_dbg).RestLength_m - x_dbg .* (cases(idx450_dbg).RestLength_m - cases(idx450_dbg).Lmin_m);
+
+    [F_dbg, Fp_dbg, Fpe_dbg, Fl_dbg, D_dbg, rad_dbg] = Martens_force_from_PL( ...
+        cases(idx450_dbg).RestLength_m, ...
+        cases(idx450_dbg).MartensDiameter_mm, ...
+        cases(idx450_dbg).MartensCoeff, ...
+        p_dbg_Pa, ...
+        L_dbg);
+
+    disp('--- MB debug: 20 mm, 450 mm ---')
+    disp(table(x_dbg, cases(idx450_dbg).p_kPa(:), L_dbg, F_dbg, Fp_dbg, Fpe_dbg, Fl_dbg, D_dbg, rad_dbg, ...
+        'VariableNames', {'x','p_kPa','L_m','F_total','F_p','F_pe','F_l','D_m','rad'}))
+end
+%% Debug MB on 20 mm, 300 mm case
+idx300_dbg = find([cases.Diameter_mm] == 20 & abs([cases.RestLength_m] - 0.300) < 1e-12, 1, 'first');
+
+if ~isempty(idx300_dbg)
+    x_dbg = cases(idx300_dbg).x(:);
+    p_dbg = cases(idx300_dbg).p_kPa(:) / 620;
+    p_dbg_Pa = p_dbg * 6.2e5;
+    L_dbg = cases(idx300_dbg).RestLength_m - x_dbg .* (cases(idx300_dbg).RestLength_m - cases(idx300_dbg).Lmin_m);
+
+    [F_dbg, Fp_dbg, Fpe_dbg, Fl_dbg, D_dbg, rad_dbg] = Martens_force_from_PL( ...
+        cases(idx300_dbg).RestLength_m, ...
+        cases(idx300_dbg).MartensDiameter_mm, ...
+        cases(idx300_dbg).MartensCoeff, ...
+        p_dbg_Pa, ...
+        L_dbg);
+
+    disp('--- MB debug: 20 mm, 300 mm ---')
+    disp(table(x_dbg, cases(idx300_dbg).p_kPa(:), L_dbg, F_dbg, Fp_dbg, Fpe_dbg, Fl_dbg, D_dbg, rad_dbg, ...
+        'VariableNames', {'x','p_kPa','L_m','F_total','F_p','F_pe','F_l','D_m','rad'}))
+end
 %% Main summary table
 CaseLabel = strings(nCase,1);
 Diameter_mm = zeros(nCase,1);
@@ -535,8 +606,6 @@ resid = F_A2(:)-F_M10_A2(:);
 scatter3(LL_A2g(:), PP_A2(:), resid, ms, 'filled')
 xlabel('Length (m)')
 ylabel('Pressure (kPa)')
-colorbar
-colormap(cmap)
 zlabel('Residual (N)')
 title(sprintf('DMSP-10-250 residual, err = %.2f%%', errPct_A2))
 
@@ -553,8 +622,6 @@ nexttile
 scatter3(LL_A1g(:), PP_A1(:), F_A1(:)-F_M20_A1(:), ms, 'filled')
 xlabel('Length (m)')
 ylabel('Pressure (kPa)')
-colorbar
-colormap(cmap)
 zlabel('Residual (N)')
 title(sprintf('DMSP-20-300 residual, err = %.2f%%', errPct_A1))
 
@@ -612,13 +679,15 @@ for i = 1:nCase
 end
 
 %% Measured vs predicted 2D scatter
-figScatter2D = figure('Color','w','Name','Measured vs predicted force by case');
-set(figScatter2D,'Units','pixels','Position',[100 100 1100 950])
+figScatter2D = figure('Color','w','Name','Measured vs predicted force by case','Renderer','painters');
+set(figScatter2D,'Units','pixels','Position',[100 100 980 780],'PaperPositionMode','auto')
 tiledlayout(2,2,'TileSpacing','loose','Padding','loose')
 
+letters = {'(a)','(b)','(c)','(d)'};
+
 for i = 1:nCase
-    nexttile
-    hold on
+    ax = nexttile;
+    hold(ax,'on')
 
     scatter(cases(i).z, cases(i).OurModel, ms, 'filled','MarkerFaceColor',colBolen)
 
@@ -639,8 +708,19 @@ for i = 1:nCase
     end
 
     limmax = max([cases(i).z(:); allPred(:)]);
-    xlim([0 limmax])
-    ylim([0 limmax])
+
+    if i == 4
+        xlim([0 limmax])
+        ylim([-limmax limmax])
+        plot([0 limmax],[0 limmax],'LineStyle','--', ...
+            'Color',[128 128 128]/255,'LineWidth',2.5)
+    else
+        xlim([0 limmax])
+        ylim([0 limmax])
+        plot([0 limmax],[0 limmax],'LineStyle','--', ...
+            'Color',[128 128 128]/255,'LineWidth',2.5)
+    end
+
     axis square
 
     if i <= 2
@@ -650,8 +730,13 @@ for i = 1:nCase
         ylim([0 600])
     end
 
-    xlabel('Experimental data force (N)')
-    ylabel('Predicted force (N)')
+    hxl = xlabel('Experimental data force (N)');
+    hxl.Units = 'normalized';
+    hxl.Position(2) = hxl.Position(2) - 0.07;
+
+    hyl = ylabel('Predicted force (N)');
+    hyl.Units = 'normalized';
+    hyl.Position(1) = hyl.Position(1) - 0.12;
 
     title(sprintf('\\phi%d mm, l_{rest} = %.3f m', ...
         cases(i).Diameter_mm, cases(i).RestLength_m), ...
@@ -662,20 +747,24 @@ for i = 1:nCase
             [char(cases(i).SarosiPrimaryLabel) ' prediction'], ...
             [char(cases(i).SarosiAltLabel) ' prediction'], ...
             'MB prediction', ...
-            'Location','bestoutside')
+            'Measured = predicted', ...
+            'Location','southeast')
     else
         legend('Bolen prediction', ...
             'Sarosi prediction', ...
             'MB prediction', ...
-            'Location','bestoutside')
+            'Measured = predicted', ...
+            'Location','southeast')
     end
 
-    text(0.5, -0.22, sprintf('(%c)', 'a'+(i-1)), ...
+    text(ax,0.5,-0.22,letters{i}, ...
         'Units','normalized', ...
         'HorizontalAlignment','center', ...
         'VerticalAlignment','top', ...
-        'FontWeight','bold')
+        'FontWeight','bold', ...
+        'Clipping','off')
 end
+
 
 
 %% 3D comparison plots by diameter
@@ -698,7 +787,7 @@ if ~isempty(idx10)
         ylabel('Pressure (kPa)')
         zlabel('Force (N)')
         title(cases(i).CaseLabel)
-        legend('Experimental data','Bolen prediction','Sarosi prediction','MB prediction','Location','best')
+        legend('Experimental data','Bolen prediction','Sarosi prediction','MB prediction','Location','bestoutside')
     end
 
     nexttile
@@ -710,8 +799,6 @@ if ~isempty(idx10)
     view(0,0);
     xlabel('Relative contraction')
     ylabel('Pressure (kPa)')
-    colorbar
-    colormap(cmap)
     zlabel('Residual (N)')
     title('10 mm residuals: Bolen')
     legend(string({cases(idx10).CaseLabel}),'Location','best')
@@ -722,10 +809,9 @@ if ~isempty(idx10)
         i = idx10(k);
         scatter3(cases(i).x, cases(i).p_kPa, cases(i).z - cases(i).SarosiPrimary, ms, 'filled')
     end
+    view(0,0)
     xlabel('Relative contraction')
     ylabel('Pressure (kPa)')
-    colorbar
-    colormap(cmap)
     zlabel('Residual (N)')
     title('10 mm residuals: Sarosi')
     legend(string({cases(idx10).CaseLabel}),'Location','best')
@@ -736,10 +822,9 @@ if ~isempty(idx10)
         i = idx10(k);
         scatter3(cases(i).x, cases(i).p_kPa, cases(i).z - cases(i).Martens, ms, 'filled')
     end
+    view(0,0)
     xlabel('Relative contraction')
     ylabel('Pressure (kPa)')
-    colorbar
-    colormap(cmap)
     zlabel('Residual (N)')
     title('10 mm residuals: Martens')
     legend(string({cases(idx10).CaseLabel}),'Location','best')
@@ -775,12 +860,11 @@ if ~isempty(idx20)
                 [char(cases(i).SarosiPrimaryLabel) ' prediction'], ...
                 'MB prediction'};
         end
-
         xlabel('Relative contraction')
         ylabel('Pressure (kPa)')
         zlabel('Force (N)')
         title(cases(i).CaseLabel)
-        legend(legendEntries,'Location','best')
+        legend(legendEntries,'Location','bestoutside')
     end
 
     nexttile
@@ -789,9 +873,8 @@ if ~isempty(idx20)
         i = idx20(k);
         scatter3(cases(i).x, cases(i).p_kPa, cases(i).z - cases(i).OurModel, ms, 'filled')
     end
+    view(0,0)
     xlabel('Relative contraction')
-    colorbar
-    colormap(cmap)
     ylabel('Pressure (kPa)')
     zlabel('Residual (N)')
     title('20 mm residuals: Bolen')
@@ -810,10 +893,9 @@ if ~isempty(idx20)
             scatter3(cases(i).x, cases(i).p_kPa, cases(i).z - cases(i).SarosiPrimary, ms, 'filled')
         end
     end
+    view(0,0)
     xlabel('Relative contraction')
     ylabel('Pressure (kPa)')
-    colorbar
-    colormap(cmap)
     zlabel('Residual (N)')
     title('20 mm residuals: Sarosi')
     if sarLegendAdded
@@ -825,9 +907,8 @@ if ~isempty(idx20)
     for k = 1:numel(idx20)
         i = idx20(k);
         scatter3(cases(i).x, cases(i).p_kPa, cases(i).z - cases(i).Martens, ms, 'filled')
-        colorbar
-        colormap(cmap)
     end
+    view(0,0)
     xlabel('Relative contraction')
     ylabel('Pressure (kPa)')
     zlabel('Residual (N)')
@@ -938,7 +1019,7 @@ function [FF, Lmin_used] = Martens(rest, Lmin, d, c, x, pPa)
     Lmin_used = Lmin;
 end
 
-function F = Martens_force_from_PL(L0, d, c, P, L)
+function [F, Fp, FpeTerm, FlTerm, D, rad] = Martens_force_from_PL(L0, d, c, P, L)
 
     c0 = c(1);
     c1 = c(2);
@@ -975,7 +1056,11 @@ function F = Martens_force_from_PL(L0, d, c, P, L)
     FL  = sigL  .* H0 .* pi .* D;
     FPE = sigPE .* H0 .* L  .* pi;
 
-    F = -P .* dVdL + FPE .* dDdL - FL;
+    Fp      = -P .* dVdL;
+    FpeTerm = FPE .* dDdL;
+    FlTerm  = -FL;
+
+    F = Fp + FpeTerm + FlTerm;
 end
 
 function F = Martens_PL(L0, d, c, P, L)
