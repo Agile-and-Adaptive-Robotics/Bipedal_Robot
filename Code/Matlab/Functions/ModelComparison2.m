@@ -48,6 +48,7 @@ set(groot, ...
 ms = 60;
 
 %% Colors that are accessible
+<<<<<<< Updated upstream
 % c = cell(7,1);
 % c{1} = '#FFD700'; % gold
 % c{2} = '#FFB14E'; % orange
@@ -68,6 +69,18 @@ d =[1.0000    0.8431         0;
     0.8039    0.2039    0.7098;
     0.6157    0.0078    0.8431;
          0         0    1.0000];
+=======
+c = cell(7,1);
+c{1} = '#FFD700'; % gold
+c{2} = '#FFB14E'; % orange
+c{3} = '#FA8775'; % light orange
+c{4} = '#EA5F94'; % pink
+c{5} = '#CD34B5'; % magenta
+c{6} = '#9D02D7'; % magenta 2
+c{7} = '#0000FF'; % indigo
+
+d = hex2rgb(c);
+>>>>>>> Stashed changes
 
 % Assign meaning 
 colExp     = d(7,:); 
@@ -226,7 +239,11 @@ for iD = 1:numel(D)
         if Dia_mm == 10
             cases(kk).OurModelFun = f_10;
             cases(kk).MartensCoeff = c10;
+<<<<<<< Updated upstream
             cases(kk).MartensDiameter_mm = 10.0 + MartensDOffset_mm;
+=======
+            cases(kk).MartensDiameter_mm = 10.0 + MartensD0ffset_mm;
+>>>>>>> Stashed changes
             cases(kk).SarosiCoeffPrimary = a10;
             cases(kk).SarosiCoeffAlt = [];
             cases(kk).SarosiPrimaryLabel = 'Sarosi';
@@ -236,7 +253,11 @@ for iD = 1:numel(D)
         elseif Dia_mm == 20
             cases(kk).OurModelFun = f20;
             cases(kk).MartensCoeff = c20;
+<<<<<<< Updated upstream
             cases(kk).MartensDiameter_mm = 20.0 + MartensDOffset_mm;
+=======
+            cases(kk).MartensDiameter_mm = 20.0 + MartensD0ffset_mm;
+>>>>>>> Stashed changes
 
             if abs(Lrest_i(iL) - 0.300) < 1e-12
                 cases(kk).SarosiCoeffPrimary = a20a;
@@ -291,17 +312,26 @@ for i = 1:nCase
         cases(i).SarosiCoeffPrimary, ...
         x, p_bar);
 
-    if cases(i).HasSarosiComparison
-        [cases(i).SarosiAlt, cases(i).SarosiAlt_kmax] = sar( ...
-            cases(i).RestLength_m, ...
-            cases(i).Diameter_mm, ...
-            cases(i).SarosiCoeffAlt, ...
-            x, p_bar);
+    if cases(i).HasSarosiComparison && useSarosiBest
+        [rmseA_tmp, fvuA_tmp, maxA_tmp] = Go_OfF(cases(i).z, cases(i).SarosiPrimary(:));
+        [rmseB_tmp, fvuB_tmp, maxB_tmp] = Go_OfF(cases(i).z, cases(i).SarosiAlt(:));
+
+        if rmseA_tmp <= rmseB_tmp
+            cases(i).SarosiBest = cases(i).SarosiPrimary;
+            cases(i).SarosiBest_kmax = cases(i).SarosiPrimary_kmax;
+            cases(i).SarosiBestLabel = cases(i).SarosiPrimaryLabel;
+        else
+            cases(i).SarosiBest = cases(i).SarosiAlt;
+            cases(i).SarosiBest_kmax = cases(i).SarosiAlt_kmax;
+            cases(i).SarosiBestLabel = cases(i).SarosiAltLabel;
+        end
     else
-        cases(i).SarosiAlt = [];
-        cases(i).SarosiAlt_kmax = [];
+        cases(i).SarosiBest = cases(i).SarosiPrimary;
+        cases(i).SarosiBest_kmax = cases(i).SarosiPrimary_kmax;
+        cases(i).SarosiBestLabel = cases(i).SarosiPrimaryLabel;
     end
 
+<<<<<<< Updated upstream
     [cases(i).OurModel_RMSE, cases(i).OurModel_FVU, cases(i).OurModel_MaxResidual] = ...
         Go_OfF(cases(i).z, cases(i).OurModel(:));
 
@@ -310,6 +340,28 @@ for i = 1:nCase
 
     [cases(i).SarosiPrimary_RMSE, cases(i).SarosiPrimary_FVU, cases(i).SarosiPrimary_MaxResidual] = ...
         Go_OfF(cases(i).z, cases(i).SarosiPrimary(:));
+=======
+    [cases(i).OurModel_RMSE, cases(i).OurModel_FVU, cases(i).OurModel_MaxResidual] = Go_OfF(cases(i).z, cases(i).OurModel(:));
+    [cases(i).Martens_RMSE, cases(i).Martens_FVU, cases(i).Martens_MaxResidual] = Go_OfF(cases(i).z, cases(i).Martens(:));
+    if cases(i).HasSarosiComparison && useSarosiBest
+        [rmseA_tmp, fvuA_tmp, maxA_tmp] = Go_OfF(cases(i).z, cases(i).SarosiPrimary(:));
+        [rmseB_tmp, fvuB_tmp, maxB_tmp] = Go_OfF(cases(i).z, cases(i).SarosiAlt(:));
+
+        if rmseA_tmp <= rmseB_tmp
+            cases(i).SarosiBest = cases(i).SarosiPrimary;
+            cases(i).SarosiBest_kmax = cases(i).SarosiPrimary_kmax;
+            cases(i).SarosiBestLabel = cases(i).SarosiPrimaryLabel;
+        else
+            cases(i).SarosiBest = cases(i).SarosiAlt;
+            cases(i).SarosiBest_kmax = cases(i).SarosiAlt_kmax;
+            cases(i).SarosiBestLabel = cases(i).SarosiAltLabel;
+        end
+    else
+        cases(i).SarosiBest = cases(i).SarosiPrimary;
+        cases(i).SarosiBest_kmax = cases(i).SarosiPrimary_kmax;
+        cases(i).SarosiBestLabel = cases(i).SarosiPrimaryLabel;
+    end
+>>>>>>> Stashed changes
 
     if cases(i).HasSarosiComparison
         [cases(i).SarosiAlt_RMSE, cases(i).SarosiAlt_FVU, cases(i).SarosiAlt_MaxResidual] = ...
@@ -606,6 +658,8 @@ resid = F_A2(:)-F_M10_A2(:);
 scatter3(LL_A2g(:), PP_A2(:), resid, ms, 'filled')
 xlabel('Length (m)')
 ylabel('Pressure (kPa)')
+colorbar
+colormap(cmap)
 zlabel('Residual (N)')
 title(sprintf('DMSP-10-250 residual, err = %.2f%%', errPct_A2))
 
@@ -622,6 +676,8 @@ nexttile
 scatter3(LL_A1g(:), PP_A1(:), F_A1(:)-F_M20_A1(:), ms, 'filled')
 xlabel('Length (m)')
 ylabel('Pressure (kPa)')
+colorbar
+colormap(cmap)
 zlabel('Residual (N)')
 title(sprintf('DMSP-20-300 residual, err = %.2f%%', errPct_A1))
 
@@ -679,6 +735,7 @@ for i = 1:nCase
 end
 
 %% Measured vs predicted 2D scatter
+<<<<<<< Updated upstream
 figScatter2D = figure('Color','w','Name','Measured vs predicted force by case','Renderer','painters');
 set(figScatter2D,'Units','pixels','Position',[100 100 980 780],'PaperPositionMode','auto')
 tiledlayout(2,2,'TileSpacing','loose','Padding','loose')
@@ -690,6 +747,33 @@ for i = 1:nCase
     hold(ax,'on')
 
     scatter(cases(i).z, cases(i).OurModel, ms, 'filled','MarkerFaceColor',colBolen)
+=======
+figScatter2D = figure('Color','w','Name','Measured vs predicted force by case');
+tiledlayout(ceil(nCase/2),2)
+
+for i = 1:nCase
+    nexttile
+    scatter(cases(i).z, cases(i).OurModel, ms, 'filled','MarkerFaceColor',colBolen); hold on
+    scatter(cases(i).z, cases(i).SarosiPrimary, ms, 'filled','MarkerFaceColor',colSarosiA)
+    if cases(i).HasSarosiComparison
+        scatter(cases(i).z, cases(i).SarosiAlt, ms, 'filled','MarkerFaceColor',colSarosiB)
+    end
+    scatter(cases(i).z, cases(i).Martens, ms, 'filled','MarkerFaceColor',colMartens)
+
+    allPred = [cases(i).OurModel(:); cases(i).SarosiPrimary(:); cases(i).Martens(:)];
+    if cases(i).HasSarosiComparison
+        allPred = [allPred; cases(i).SarosiAlt(:)];
+    end
+    limmax = max([cases(i).z(:); allPred(:)]);
+    xlim([0 limmax])
+    ylim([0 limmax])
+    axis square
+    xticks(linspace(0,limmax,5))
+    yticks(linspace(0,limmax,5))
+    xlabel('Experimental data force (N)')
+    ylabel('Predicted force (N)')
+    title(cases(i).FigureTitle)
+>>>>>>> Stashed changes
 
     if cases(i).HasSarosiComparison && ~useSarosiBest
         scatter(cases(i).z, cases(i).SarosiPrimary, ms, 'filled','MarkerFaceColor',colSarosiA)
@@ -799,6 +883,8 @@ if ~isempty(idx10)
     view(0,0);
     xlabel('Relative contraction')
     ylabel('Pressure (kPa)')
+    colorbar
+    colormap(cmap)
     zlabel('Residual (N)')
     title('10 mm residuals: Bolen')
     legend(string({cases(idx10).CaseLabel}),'Location','best')
@@ -812,6 +898,8 @@ if ~isempty(idx10)
     view(0,0)
     xlabel('Relative contraction')
     ylabel('Pressure (kPa)')
+    colorbar
+    colormap(cmap)
     zlabel('Residual (N)')
     title('10 mm residuals: Sarosi')
     legend(string({cases(idx10).CaseLabel}),'Location','best')
@@ -825,6 +913,8 @@ if ~isempty(idx10)
     view(0,0)
     xlabel('Relative contraction')
     ylabel('Pressure (kPa)')
+    colorbar
+    colormap(cmap)
     zlabel('Residual (N)')
     title('10 mm residuals: Martens')
     legend(string({cases(idx10).CaseLabel}),'Location','best')
@@ -875,6 +965,8 @@ if ~isempty(idx20)
     end
     view(0,0)
     xlabel('Relative contraction')
+    colorbar
+    colormap(cmap)
     ylabel('Pressure (kPa)')
     zlabel('Residual (N)')
     title('20 mm residuals: Bolen')
@@ -896,6 +988,8 @@ if ~isempty(idx20)
     view(0,0)
     xlabel('Relative contraction')
     ylabel('Pressure (kPa)')
+    colorbar
+    colormap(cmap)
     zlabel('Residual (N)')
     title('20 mm residuals: Sarosi')
     if sarLegendAdded
@@ -907,6 +1001,8 @@ if ~isempty(idx20)
     for k = 1:numel(idx20)
         i = idx20(k);
         scatter3(cases(i).x, cases(i).p_kPa, cases(i).z - cases(i).Martens, ms, 'filled')
+        colorbar
+        colormap(cmap)
     end
     view(0,0)
     xlabel('Relative contraction')
