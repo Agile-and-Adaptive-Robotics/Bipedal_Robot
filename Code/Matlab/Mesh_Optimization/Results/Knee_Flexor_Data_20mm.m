@@ -11,9 +11,9 @@ clear
 close all
 
 %% Add paths to the muscle and pam calculators
-current_dir = cd;
-all_code = fullfile(current_dir,'../..');
-addpath(genpath(all_code));
+% current_dir = cd;
+% all_code = fullfile(current_dir,'../..');
+% addpath(genpath(all_code));
 
 %% Joint rotation transformation matrices
 positions = 100;
@@ -73,9 +73,9 @@ for i = 1:positions
     
     T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
     
-    t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0];
-    T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');    
-    T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');
+    t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0]; %distance from theta1 to ICR
+    T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');    %transform from the ICR frame to theta1
+    T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');    %transform from t1 frame to ICR
 end
 
 %% Muscle calculation
@@ -104,20 +104,20 @@ v2 = zeros(1,3,positions);
 for i = 1:positions
 
     v2(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p2); %Insertion location wrt Knee ICR
-    Location(:,:,i) = [p1;
+    Location(:,:,i) = [p1; ...
                        v2(:,:,i)];
 end
 
 %20 mm Festo
 Dia = 20;
-rest = 0.423;
-kmax = 0.322;
-tendon = 0.017;
-% rest = 0.39; %resting length, m
-% kmax = (1-0.24)*rest; %Length at maximum contraction, m
-% tendon = 0.01;
-
-fitting = 0.0254; 
+% rest = 0.42;
+% kmax = 0.311;
+% rest = 0.423; %resting length, m
+% kmax = 0.322; %Length at maximum contraction, m
+rest = 0.415; %resting length, m
+kmax = 0.314; %Length at maximum contraction, m
+tendon = 0.014; 
+fitting = 0.021; %Lower profile fittings at this BPA diameter
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 0;
 pres2 = 325;         %average pressure, first test
@@ -127,10 +127,22 @@ Bifemsh_Pam1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest,
 Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2);
 Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
 
-tendon_adj = tendon+0.009; 
+
+tendon_adj = tendon+0.0119; 
 Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres1);
 Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres2);
 Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres3);
+
+%% Create strings for later plots
+%First pressure
+sT1 = sprintf('Theoretical %d kPa',pres1);
+sM1 = sprintf('Measured %d kPa',pres1);
+%Second pressure
+sT2 = sprintf('Theoretical %d kPa',pres2);
+sM2 = sprintf('Measured %d kPa',pres2);
+%Third pressure
+sT3 = sprintf('Theoretical %d kPa',pres3);
+sM3 = sprintf('Measured %d kPa',pres3);
 
 %% Unstacking the Torques to identify specific rotations
 Torque1 = Bifemsh.Torque;
@@ -301,11 +313,12 @@ hold off
 
 
 %% Compare to results
-Load = [29.225	24.009	20.302	17.246	14.472	11.127	11.121	9.284	6.8421	2.9257	19.083	14.757	11.612	5.8364	3.1772	7.6226	4.8666];     %Load in Newtons
-K_ang = [-2	-11.5	-20	-27	-35	-44	-54.5	-50	-63	-64	-73.5	-82	-88	-103.5	-114	-115	-120]*c;      %Knee angle
-LC_ang = [24.5	22	24	25.5	31.5	31	31.5	30	31.5	33.5	38.5	44.5	43	54.5	55.5	52	55]*c;      %Load Cell angle
+%Longer Tibia
+Load = [18.5 18.05 32 40.97 44.4 50.84 62.45 69.4 64.3 70.6 90.15 70];     %Load in Newtons
+K_ang = [-125 -114 -98 -83 -75.5 -69 -55.5 -53.001 3 7 -6.5 -32]*c;      %Knee angle
+LC_ang = [32.5 30 28 26 24.5 17 20 24 7 5.5 10 13.5]*c;      %Load Cell angle
 
-d = 314.73/1000;
+d = 320/1000;
 ang = -82.97;
 p_rf = [d*cosd(ang), d*sind(ang), 0]';     %point of reaction force
 T_t1_rf = RpToTrans(eye(3),p_rf);   %Tranformation matrix from theta 1 to reaction point
@@ -313,6 +326,7 @@ Trk = pagemtimes(TransInv(T_t1_rf),T_t1_ICR);
 s1 = Trk(1,4,:);
 s1 = squeeze(s1);
 fcn15 = fit(phi',s1,'cubicspline');
+
 s2 = Trk(2,4,:);
 s2 = squeeze(s2);
 fcn16 = fit(phi',s2,'cubicspline');
@@ -324,24 +338,81 @@ Fk = zeros(6,1,length(Load));
 
 for i=1:length(Load)
     Trk(:,:,i) = RpToTrans(eye(3),[fcn15(K_ang(i)), fcn16(K_ang(i)), 0]');
-    Fr(:,:,i) = -[0; 0; 0; Load(i)*cos(-LC_ang(i)); Load(i)*sin(-LC_ang(i)); 0];
+    Fr(:,:,i) = [0; 0; 0; Load(i)*cos(LC_ang(i)+pi); Load(i)*sin(LC_ang(i)+pi); 0];
     AdTrk(:,:,i) = Adjoint(Trk(:,:,i));
     Fk(:,:,i) = AdTrk(:,:,i)'*Fr(:,:,i);
     
 end
 
-TorqueZ = Fk(3,1,:);
-TorqueZ = squeeze(TorqueZ);
+TorqueZ1 = Fk(3,1,:);
+TorqueZ1 = squeeze(TorqueZ1);
 
+%Tibia 2
+Load2 = [91.7 114.1 129.8 78 92.78 63.6 97.28 71.92 84.5 93.9];     %Load in Newtons
+K_ang2 = [-53.01 -41 -30 -26.01 -26.001 -18.5 -18 -7 -9 0]*c;      %Knee angle
+LC_ang2 = [-5 -7 -12 -12 -12.5 -16.5 -15 -19.5 -15 -17]*c;      %Load Cell angle
+
+d2 = 218.29/1000;
+ang2 = -79.84;
+p_rf2 = [d2*cosd(ang2), d2*sind(ang2), 0]';     %point of reaction force
+T_t1_rf2 = RpToTrans(eye(3),p_rf2);   %Tranformation matrix from theta 1 to reaction point
+Trk2 = pagemtimes(TransInv(T_t1_rf2),T_t1_ICR);
+s3 = Trk2(1,4,:);
+s3 = squeeze(s3);
+fcn17 = fit(phi',s3,'cubicspline');
+s4 = Trk2(2,4,:);
+s4 = squeeze(s4);
+fcn18 = fit(phi',s4,'cubicspline');
+
+Trk2 = zeros(4,4,length(Load2));
+Fr2 = zeros(6,1,length(Load2));
+AdTrk2 = zeros(6,6,length(Load2));
+Fk2 = zeros(6,1,length(Load2));
+
+for i=1:length(Load2)
+    Trk2(:,:,i) = RpToTrans(eye(3),[fcn17(K_ang2(i)), fcn18(K_ang2(i)), 0]');
+    Fr2(:,:,i) = [0; 0; 0; Load2(i)*cos(LC_ang2(i)+pi); Load2(i)*sin(LC_ang2(i)+pi); 0];
+    AdTrk2(:,:,i) = Adjoint(Trk2(:,:,i));
+    Fk2(:,:,i) = AdTrk2(:,:,i)'*Fr2(:,:,i);
+    
+end
+
+TorqueZ2 = Fk2(3,1,:);
+TorqueZ2 = squeeze(TorqueZ2);
+
+TorqueZ = [TorqueZ1(1:8); TorqueZ2; TorqueZ1(9:12)];
+K_ang = [K_ang(1:8)'; K_ang2'; K_ang(9:12)'];
+
+Presh = [613	614	614	615	615	615	618	618	620	620	620	385	451	296.6	421	281	324.8	325.58	325.58	325	500	560]; %Measured pressure
+
+%% Create accessible color scheme
+c1 = '#FFD700'; %gold
+c2 = '#FFB14E'; %orange
+c3 = '#FA8775'; %light orange
+c4 = '#EA5F94'; %pink
+c5 = '#CD34B5'; %magenta
+c6 = '#9D02D7'; %magenta 2
+c7 = '#0000FF'; %indigo
+c8 = '#000000'; %black
+sz = 60*Presh/620;        %size of data points
+sz2 = sz*0.666; %size of second data points
+C = {c1; c2; c3; c4; c5; c6; c7; c8};
+
+%% Plot the results
+Cang = K_ang/c;
 
 figure
 hold on
-plot(phiD, Bifemsh_Pam_adj1.Torque(:,3), phiD, Bifemsh_Pam_adj2.Torque(:,3),phiD, Bifemsh_Pam_adj3.Torque(:,3))
-plot(K_ang(1:10)/c, TorqueZ(1:10),'o',K_ang(11:15)/c, TorqueZ(11:15),'s',K_ang(16:17)/c, TorqueZ(16:17),'d')
-legend('Theoretical 274 kPa','Theoretical 485 kPa','Theoretical 606 kPa','Measured, 274 kPa','Measured, 485 kPa','Measured, 606 kPa')
+plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'Color',c7)
+scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4)
+legend(sT3,sM3)
 title('PAM Z Torque')
-xlabel('Knee Extension/Rotation, degrees')
-ylabel('Torque, Nm')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Torque, N \cdot m','Interpreter','tex')
+ax = gca;
+set(ax,'FontWeight','bold','LineWidth',2,'FontSize',10)
+kid = ax.Children;
+set(kid,'LineWidth',2)
 hold off
 
 %% Compare theoretical to OpenSim
@@ -355,11 +426,21 @@ Bifemsh_T = Tab(:,4)';              %Torque values directly from OpenSim
 
 figure
 hold on
-plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g', knee_angle_rT, Bifemsh_T,':k')
-legend('Theoretical 620 kPa','Theoretical 485 kPa','Theoretical 200 kPa','OpenSim Human Torque')
-title('PAM Z Torque')
-xlabel('Knee Extension/Rotation, degrees')
-ylabel('Torque, Nm')
+%plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g', K_ang/c, TorqueZ,'o', knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
+plot(phiD, Bifemsh_Pam3.Torque(:,3),':','Color',c7)
+plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'LineStyle','--','Color',c7); 
+plot(phiD, Bifemsh_Pam_adj2.Torque(:,3),'LineStyle','--','Color',c6);
+plot(phiD, Bifemsh_Pam_adj1.Torque(:,3),'LineStyle','--','Color',c5);
+plot(knee_angle_rT, Bifemsh_T,'LineStyle',':','Color',c2);
+scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4')
+legend('Unoptimized',sT3,sT2,sT1,'OpenSim Human Torque','Measured','Location','southwest')
+title('Knee Torque, Human vs. $\phi$20 mm BPA, $l_{rest}=420$ mm','Interpreter','latex')
+xlabel('Knee angle, \circ','Interpreter','tex')
+ylabel('Torque, N \cdot m','Interpreter','tex')
+ax = gca;
+set(ax,'FontWeight','bold','LineWidth',2,'FontSize',10)
+kid = ax.Children;
+set(kid,'LineWidth',2)
 hold off
 
 %% Plot length and compare
