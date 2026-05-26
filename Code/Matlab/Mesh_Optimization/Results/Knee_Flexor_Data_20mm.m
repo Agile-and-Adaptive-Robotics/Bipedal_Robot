@@ -123,15 +123,26 @@ pres1 = 0;
 pres2 = 325;         %average pressure, first test
 %pres3 = 606.4926;         %average pressure, first test
 pres3 = 620;
-Bifemsh_Pam1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1);
-Bifemsh_Pam2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2);
-Bifemsh_Pam3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3);
+
+% Load optimized stiffness parameters
+load minimizeFlxPin10_results_20251017_1transform.mat results_sort_actual
+pick = 5;
+g = results_sort_actual(pick,2:4);   % [Xi0, Xi1, Xi2]
+
+Xi0   = g(1);
+Xi1   = g(2);
+Xi2   = g(3);
+wraps = 3;   % number of cable wraps
+
+Bifemsh_Pam1 = MonoPamDataExplicit_balance(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, wraps);
+Bifemsh_Pam2 = MonoPamDataExplicit_balance(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, wraps);
+Bifemsh_Pam3 = MonoPamDataExplicit_balance(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, wraps);
 
 
-tendon_adj = tendon+0.0119; 
-Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres1);
-Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres2);
-Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres3);
+% tendon_adj = tendon+0.0119; 
+% Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres1);
+% Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres2);
+% Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres3);
 
 %% Create strings for later plots
 %First pressure
@@ -147,7 +158,7 @@ sM3 = sprintf('Measured %d kPa',pres3);
 %% Unstacking the Torques to identify specific rotations
 Torque1 = Bifemsh.Torque;
 TorqueR = Bifemsh_Pam3.Torque(:,:,1);
-TorqueR_adj = Bifemsh_Pam_adj3.Torque(:,:,1);
+TorqueR_adj = Bifemsh_Pam3.Torque_p(:,:,1);
 
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
@@ -229,58 +240,58 @@ hold off
 
 %% Compare Expected vs Adjusted PAM values
 figure
-plot(phiD, Bifemsh_Pam_adj3.Torque(:, 3), phiD, TorqueR(:, 3))
+plot(phiD, Bifemsh_Pam3.Torque_p(:, 3), phiD, TorqueR(:, 3))
 title('Muscle and PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
 legend('Optimized', 'Original Theoretical')
 
 
-%% Plotting muscle lengths and moment arms using two different moment arm
-%calculations
-ML = Bifemsh.MuscleLength;
-PamL = Bifemsh_Pam3.MuscleLength;
-for i = 1:size(Bifemsh.MomentArm,1)
-    MA(i,:) = norm(Bifemsh.MomentArm(i,1:2));               %Muscle moment arm, Z axis
-    BPAma(i,:) = norm(Bifemsh_Pam3.MomentArm(i,1:2));        %BPA moment arm, Z axis
-end
-dM = diff(Bifemsh.MuscleLength);           %Muscle length difference
-dP = diff(Bifemsh_Pam3.MuscleLength);       %PAM length difference
-dO = diff(phiD);                           %Angle difference
-
-figure
-hold on
-sgtitle('Bicep Femoris Short Head Length and Moment Arm through Knee Flexion and Extension')
-
-subplot(2, 2, 1)
-plot(phiD, ML, phiD, PamL)
-title('Muscle and PAM Lengths')
-xlabel('Knee angle, \circ','Interpreter','tex')
-ylabel('Length, m')
-legend('Human', 'PAM')
-
-subplot(2, 2, 2)
-plot(phiD, MA, phiD, BPAma)
-title('Moment arm, Z axis, vector method')
-xlabel('Knee angle, \circ','Interpreter','tex')
-ylabel('Length, m')
-legend('Human', 'PAM')
-
-subplot(2, 2, 3)
-plot(phiD(1:99), -dM./dO', phiD(1:99), -dP./dO')
-title('Moment arm, Z axis, left difference method')
-xlabel('Knee angle, \circ','Interpreter','tex')
-ylabel('Length, m')
-legend('Human', 'PAM')
-
-subplot(2, 2, 4)
-plot(phiD(2:100), -dM./dO', phiD(2:100), -dP./dO')
-title('Moment arm, Z axis, right difference method')
-xlabel('Knee angle, \circ','Interpreter','tex')
-ylabel('Length, m')
-legend('Human', 'PAM')
-
-hold off
+% %% Plotting muscle lengths and moment arms using two different moment arm
+% %calculations
+% ML = Bifemsh.MuscleLength;
+% PamL = Bifemsh_Pam3.L_p;
+% for i = 1:size(Bifemsh.MomentArm,1)
+%     MA(i,:) = norm(Bifemsh.MomentArm(i,1:2));               %Muscle moment arm, Z axis
+%     BPAma(i,:) = norm(Bifemsh_Pam3.mA_p(i,1:2));        %BPA moment arm, Z axis
+% end
+% dM = diff(Bifemsh.MuscleLength);           %Muscle length difference
+% dP = diff(Bifemsh_Pam3.L_p);       %PAM length difference
+% dO = diff(phiD);                           %Angle difference
+% 
+% figure
+% hold on
+% sgtitle('Bicep Femoris Short Head Length and Moment Arm through Knee Flexion and Extension')
+% 
+% subplot(2, 2, 1)
+% plot(phiD, ML, phiD, PamL)
+% title('Muscle and PAM Lengths')
+% xlabel('Knee angle, \circ','Interpreter','tex')
+% ylabel('Length, m')
+% legend('Human', 'PAM')
+% 
+% subplot(2, 2, 2)
+% plot(phiD, MA, phiD, BPAma)
+% title('Moment arm, Z axis, vector method')
+% xlabel('Knee angle, \circ','Interpreter','tex')
+% ylabel('Length, m')
+% legend('Human', 'PAM')
+% 
+% subplot(2, 2, 3)
+% plot(phiD(1:99), -dM./dO', phiD(1:99), -dP./dO')
+% title('Moment arm, Z axis, left difference method')
+% xlabel('Knee angle, \circ','Interpreter','tex')
+% ylabel('Length, m')
+% legend('Human', 'PAM')
+% 
+% subplot(2, 2, 4)
+% plot(phiD(2:100), -dM./dO', phiD(2:100), -dP./dO')
+% title('Moment arm, Z axis, right difference method')
+% xlabel('Knee angle, \circ','Interpreter','tex')
+% ylabel('Length, m')
+% legend('Human', 'PAM')
+% 
+% hold off
 %% Plotting the angle between the vectors
 
 aHR = zeros(size(TorqueH, 1), 1);
@@ -403,7 +414,7 @@ Cang = K_ang/c;
 
 figure
 hold on
-plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'Color',c7)
+plot(phiD, Bifemsh_Pam3.Torque_p(:,3),'Color',c7)
 scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4)
 legend(sT3,sM3)
 title('PAM Z Torque')
@@ -426,11 +437,11 @@ Bifemsh_T = Tab(:,4)';              %Torque values directly from OpenSim
 
 figure
 hold on
-%plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g', K_ang/c, TorqueZ,'o', knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
+%plot(phiD, Bifemsh_Pam3.Torque(:,3),'-b', phiD, Bifemsh_Pam_adj2.Torque(:,3),'--r',phiD, Bifemsh_Pam_adj1.Torque(:,3),'.-g', K_ang/c, TorqueZ,'o', knee_angle_rT, Bifemsh_T,':k','LineWidth',2)
 plot(phiD, Bifemsh_Pam3.Torque(:,3),':','Color',c7)
-plot(phiD, Bifemsh_Pam_adj3.Torque(:,3),'LineStyle','--','Color',c7); 
-plot(phiD, Bifemsh_Pam_adj2.Torque(:,3),'LineStyle','--','Color',c6);
-plot(phiD, Bifemsh_Pam_adj1.Torque(:,3),'LineStyle','--','Color',c5);
+plot(phiD, Bifemsh_Pam3.Torque_p(:,3),'LineStyle','--','Color',c7); 
+plot(phiD, Bifemsh_Pam2.Torque_p(:,3),'LineStyle','--','Color',c6);
+plot(phiD, Bifemsh_Pam1.Torque_p(:,3),'LineStyle','--','Color',c5);
 plot(knee_angle_rT, Bifemsh_T,'LineStyle',':','Color',c2);
 scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4')
 legend('Unoptimized',sT3,sT2,sT1,'OpenSim Human Torque','Measured','Location','southwest')
@@ -444,8 +455,8 @@ set(kid,'LineWidth',2)
 hold off
 
 %% Plot length and compare
-bpa = Bifemsh_Pam_adj3;
-Lmt = bpa.MuscleLength;
+bpa = Bifemsh_Pam3;
+Lmt = bpa.L_p;
 fitn = bpa.FittingLength;
 rest = bpa.RestingL;
 ten = bpa.TendonL;
