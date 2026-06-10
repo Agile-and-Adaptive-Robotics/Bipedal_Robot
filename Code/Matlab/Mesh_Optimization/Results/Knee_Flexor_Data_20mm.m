@@ -96,6 +96,7 @@ Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
 
 Location = zeros(2,3,positions);
+
 %Origin and Insertion from Ben
 p1 = [-0.050, 0.035, 0.050];       %Origin
 p2 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
@@ -114,9 +115,9 @@ Dia = 20;
 % kmax = 0.311;
 % rest = 0.423; %resting length, m
 % kmax = 0.322; %Length at maximum contraction, m
-rest = 0.415; %resting length, m
-kmax = 0.314; %Length at maximum contraction, m
-tendon = 0.014; 
+rest = 0.405; %resting length, m
+kmax = (1-.258)*rest; %Length at maximum contraction, m
+tendon = 0.025; 
 fitting = 0.021; %Lower profile fittings at this BPA diameter
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 0;
@@ -456,21 +457,19 @@ hold off
 
 %% Plot length and compare
 bpa = Bifemsh_Pam3;
-Lmt = bpa.L_p;
-fitn = bpa.FittingLength;
-rest = bpa.RestingL;
-ten = bpa.TendonL;
 
-Lm = Lmt-ten-2*fitn;
-Angle = [-125	-114	-98	-83	-75.5	-69	-55.5	-53.001	-53.01	-41	-30];
-InflatedLength = [334	334	338	343	NaN	348	356	356	357	365	368]/1000;
+Lm = bpa.RestingL .* (1 - bpa.strain_p);
+Lm = Lm(:);
+
+Angle = [-125 -114 -98 -83 -75.5 -69 -55.5 -53.001 -53.01 -41 -30];
+InflatedLength = [334 334 338 343 NaN 348 356 356 357 365 368]/1000;
 
 figure
 hold on
-scatter(Angle,InflatedLength)
-plot(phiD, Lm)
+scatter(Angle, InflatedLength)
+plot(phiD(:), Lm)
 hold off
-legend('Measured','Original')
+legend('Measured','Adjusted')
 title('BPA length')
 xlabel('Knee angle, degrees')
 ylabel('Length, m')

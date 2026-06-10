@@ -240,85 +240,30 @@ classdef MonoPamDataExplicit_balance < handle
             end
         end
 
-        %% -------------- Force --------------------------
-        %Calculate the direction of the forced applied by the muscle
-        function F = get.Force(obj)
-        %Inputs:
-        %Lmt == muscle-tendon length, scalar
-        %rest == resting length of artificial muscle, "size" from Size function
-        %dia == diameter of Festo tube, from Size function
-        %pres == measured pressure
-        %kmax == maximum contraction length
-        %Outputs:
-        %F == Force, N           
-            dia = obj.Diameter;
-            unitD = obj.UnitDirection;
-            contract = obj.Contraction;
-            mL = obj.MuscleLength;
-            rest = obj.RestingL;
-            fitting = obj.FittingLength;
-            pres = obj.Pressure;
-            kmax = obj.Kmax;  
-            KMAX = (rest-kmax)/rest; %turn it into a percentage 
-            maxF = obj.Fmax;
-            stiff = 0;               % no longer used for balance here
-            tendon =  obj.TendonL;   %Length of artificial tendon and air fittings
+%% -------------- Force --------------------------
+% Calculate PAM force using rigid/original geometry.
+% Stiffness-adjusted force is handled separately by obj.F_p / obj.Torque_p.
+function F = get.Force(obj)
 
-           sF = zeros(size(obj.UnitDirection));
-            
-            %This function will solve for a new muscle length that
-            %balances tendon force (fT) and the muscle force (fM) 
-            function balanceF = muscleF(nmL)
-                k = (rest-(mL-nmL-tendon-2.*fitting))./rest;  %strain 
-                rel = k./KMAX;                             %relative strain  
-                
-               if dia == 10
-                Fz = cell(1,4);
-                [Fz{1}, Fz{2}, Fz{3}, Fz{4}] = normF10(rel, pres);
-                Fn =Fz{3};
-                fM = Fn.*maxF;
-               elseif dia ~= 10
-                fM = festo4(dia, rel, pres); 
-               end
+    unitD = obj.UnitDirection;      % Nx3
+    strain = obj.Contraction;       % Nx1
 
-                fT = stiff*nmL;
+    rest = obj.RestingL;
+    kmax = obj.Kmax;
+    KMAX = (rest - kmax)/rest;      % max contraction fraction
 
-                %Balance of the muscle forces. Solving to find when it
-                %becomes equal to 0
-                balanceF = fM - fT;
-            end
-            
-          %Repeat the force calculation for every rotation of the joint
-           for i = 1:size(unitD, 1)
-                ML = obj.MuscleLength(i);              %Muscle-Tendon Length, which is the full calculated length between points in OpenSim
+    rel = strain ./ KMAX;           % relative strain
 
-                %Set Function solver parameters
-                options = optimoptions('fsolve','Display','none','FunctionTolerance',0.001);
+    Fn = festo4(obj.Diameter, rel, obj.Pressure);  % normalized force
 
-                %Determine the normalized muscle length that solves the force
-                %equations
-                snmL = fsolve(@muscleF, ML, options);
+    scalarForce = Fn .* obj.Fmax;   % N
 
-                %With the solved muscle length, we can determine the scalar muscle
-                %force by plugging it back into one of the force equations (fT)
-                sF = stiff.*snmL;
-                
-           end
+    scalarForce(scalarForce < 0) = 0;
+    scalarForce(scalarForce > obj.Fmax) = NaN;
 
-            for i = 1:size(unitD, 1)
-                if sF(i) < 0
-                    sF(i) = 0;
-                end
-                if sF(i) > maxF
-                    sF(i) = NaN;
-                end
-            end
-            
-            SF = diag(sF);
-            F = SF*unitD;
+    F = scalarForce .* unitD;       % Nx3
 
-        end
-        
+end
         %% ---------------------- Torque --------------
         %Calculate torque by multiplying the the force along the 
         %Useful information
@@ -567,7 +512,7 @@ k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
 k_b = reshape(k_b, [N, 1]);
 k_eff = 1 ./ (1 ./ k_b + 1 ./ kSpr);  % Nx1
 
-parfor i = 1:N
+for i = 1:N
     if ~valid(i)
         continue;
     end
