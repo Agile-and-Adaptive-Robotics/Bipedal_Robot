@@ -99,7 +99,8 @@ Location = zeros(2,3,positions);
 
 %Origin and Insertion from Ben
 p1 = [-0.050, 0.035, 0.050];       %Origin
-p2 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
+% p2 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
+p2 = [-0.022, -0.024, 0.02787];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);
 
 for i = 1:positions
@@ -111,13 +112,11 @@ end
 
 %20 mm Festo
 Dia = 20;
-% rest = 0.42;
-% kmax = 0.311;
 % rest = 0.423; %resting length, m
 % kmax = 0.322; %Length at maximum contraction, m
-rest = 0.405; %resting length, m
+rest = 0.418; %resting length, m
 kmax = (1-.258)*rest; %Length at maximum contraction, m
-tendon = 0.025; 
+tendon = 0.030; 
 fitting = 0.021; %Lower profile fittings at this BPA diameter
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 0;
