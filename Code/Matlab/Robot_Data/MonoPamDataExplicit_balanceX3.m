@@ -294,11 +294,23 @@ end
             % Force unit vector in hip frame (origin to first non-duplicate point)
             Funit = computeForceVector_local(obj);
             
-            % Contraction from constant length offset only
-            strain_Xi0 = Contraction_local(obj, [], [], obj.Xi0);
+            % First-pass strain including Xi0 and Xi3 curvature correction.
+            % delta_L0 is the Xi3 curvature length correction.
+            [strain_Xi3, delta_L0] = Contraction_local(obj, [], obj.Xi0, [], obj.Xi3);
+        
+            obj.delta_L = delta_L0;
             
-            % Deformed geometry and tendon stretch
-            [L_p_local, gama_local] = Lok_local(obj, obj.Xi1, obj.Xi2, obj.kSpr, Funit, strain_Xi0, obj.Xi0);
+            % Deformed bracket geometry and tendon stretch.
+            % The extensor X3 code passes Xi0 + delta_L into the bracket equilibrium.
+            [L_p_local, gama_local] = Lok_local( ...
+                obj, ...
+                obj.Xi1, ...
+                obj.Xi2, ...
+                obj.kSpr, ...
+                Funit, ...
+                strain_Xi3, ...
+                obj.Xi0 + delta_L0);
+
             obj.L_p = L_p_local;
             obj.gama = gama_local;
             
@@ -311,19 +323,17 @@ end
             % Musculotendon length with deformed geometry and Xi0
             Lmt_p_local = LMT_local(sL_p, obj.Xi0);
             
-            % Contraction with bracket deformation, tendon stretch, and Xi0
-            strain_p_local = Contraction_local(obj, Lmt_p_local, obj.gama, []);
+            % Stored strain_p should be the physical strain without Xi3 curvature
+            % correction, matching the old minimizeExt logic.
+            [strain_p_local, ~] = Contraction_local( ...
+                obj, ...
+                Lmt_p_local, ...
+                [], ...
+                obj.gama, ...
+                []);
+        
             obj.strain_p = strain_p_local;
-            
-            % Force with stiffness effects
-            F_p_local = Force_local(obj, unitD_p, obj.strain_p);
-            obj.F_p = F_p_local;
-            
-            % Moment arm with stiffness effects
-            mA_p_local = Mom_local(obj, obj.L_p, unitD_p);
-            obj.mA_p = mA_p_local;
-            
-            % Torque with stiffness effects
+        
             obj.Torque_p = Tor_local(obj, obj.mA_p, obj.F_p, obj.strain_p);
         end
         
@@ -381,29 +391,64 @@ F_unit = normalize_local(F_vec);
 end
 
 %% -------------- Contraction of the PAM --------------------------
-function contraction = Contraction_local(klass,Lmt,gema,X0)
-rest = klass.RestingL;      %resting length
-tendon = klass.TendonL;     %artificial tendon length
-fitting = klass.FittingLength;   %fitting length
+function [contraction, delta_L] = Contraction_local(klass, Lmt, X0, gama, X3)
 
-if isempty(Lmt)
-    Lmt = klass.MuscleLength;
-end
+rest   = klass.RestingL;
+tendon = klass.TendonL;
+fitn   = klass.FittingLength;
+theta_k = klass.AngleD(:);     % degrees
+N = numel(theta_k);
 
-if isempty(gema)
-    gema = 0;
+KMAX = (rest - klass.Kmax)/rest;
+
+if isempty(gama)
+    gama = zeros(N,1);
 end
 
 if isempty(X0)
     X0 = 0;
 end
 
-Lm = Lmt-tendon-gema-2*fitting-X0;  %active BPA muscle length
-contraction = (rest-Lm)/rest;    %contracted percent of original
+if isempty(Lmt)
+    Lmt = klass.MuscleLength;
+end
+
+delta_L = zeros(N,1);
+
+if ~isempty(X3)
+
+    % These constants come from the existing extensor Xi3 model.
+    ang = -9.19;
+
+    angleRad = deg2rad((ang - theta_k) * 80 / (ang + 120));
+    idx = angleRad > 0;
+
+    Lm0 = Lmt - tendon - 2*fitn - X0 - gama;
+
+    strain0 = (rest - Lm0) / rest;
+    relstrain0 = strain0 / KMAX;
+
+    comp = 1 - relstrain0;
+    comp = max(0, comp);
+
+    R1 = 0.022;
+    R2 = 0.176;
+
+    delta_L1 = X3 * R1 * deg2rad(28) .* comp.^2;
+
+    delta_L2 = zeros(N,1);
+    delta_L2(idx) = X3 * R2 .* angleRad(idx) .* comp(idx).^2;
+
+    delta_L = delta_L1 + delta_L2;
+end
+
+Lm_adj = Lmt - tendon - 2*fitn - X0 - gama - delta_L;
+contraction = (rest - Lm_adj) / rest;
+
 end
 
 %% ------------- Location  ------------------------
-function [LOC, gema] = Lok_local(klass,X1,X2,kSpr,Funit,strain_predef,X0)
+function [LOC, gema] = Lok_local(klass,X1,X2,kSpr,Funit,strain_predef,deltaL)
 % Inputs:
 %   bpa class info
 %   X1, X2 stiffness
@@ -461,7 +506,7 @@ end
 if isinf(X1) && isinf(X2) && isinf(kSpr)
     [epsilon, delta, beta, gema] = deal(zeros(N,1));
 else
-    [epsilon, delta, beta, gema] = fortz_local(klass,Fbrh,X1,X2,kSpr,X0);  %strain from force divided by tensile stiffness
+    [epsilon, delta, beta, gema] = fortz_local(klass,Fbrh,X1,X2,kSpr,deltaL);  %strain from force divided by tensile stiffness
 end
 deflection = [epsilon, delta, beta];    %bracket movement
 % pbrAnew = [norm(pbrhA),0,0]+deflection; %New point A, represented in the bracket frame
@@ -475,7 +520,7 @@ end
 end
 
 %% Force and length reduction due to tendon
-function [e_axial, e_bendY, e_bendZ, e_cable] = fortz_local(klass,Fbr,X1,X2,kSpr,X0)
+function [e_axial, e_bendY, e_bendZ, e_cable] = fortz_local(klass,Fbr,X1,X2,kSpr,deltaL)
 % e_axial, bracket axial elongation
 % e_bendY, bracket bending displacement y - direction
 % e_bendZ, bracket bending displacement z - direction
@@ -487,13 +532,13 @@ N = size(Fbr,1);
 [e_axial, e_bendY, e_bendZ, e_cable] = deal(zeros(N,1));
 
 D = klass.Diameter;         %BPA diameter
-if isempty(X0)
-    X0 = 0;
+if isempty(deltaL)
+    deltaL = 0;
 end
 rest = klass.RestingL;      %resting length
 tendon = klass.TendonL;      %tendon length
 fitn = klass.FittingLength;    %fitting length
-mL = klass.MuscleLength - X0 - tendon - 2*fitn;   %musculotendon length
+mL = klass.MuscleLength - deltaL - tendon - 2*fitn;   %musculotendon length
 mif = klass.Fmax;         %maximum force
 kmax = klass.Kmax;      %maximum contracted length
 KMAX = (rest-kmax)/rest; %turn it into a percentage
