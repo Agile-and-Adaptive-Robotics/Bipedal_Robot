@@ -7,23 +7,30 @@ function F = festo4(dia, rel, pres)
 %Outputs:
 %F == Force, % of maximum
 
-clear X Y
+persistent f_10 f20 f40
 
 P = pres/620;           % Normalize pressure
 % Fmax20 = 1500;          % Max 20mm BPA force
 % Fmax40 = 6000;          % Max 20mm BPA force
 
-    if dia == 10
-        load FestoLookup.mat f_10
-        F = f_10(rel,P);
-    elseif dia == 20
-        load FestoLookup.mat f20
-       	F = f20(rel,P);
-    elseif dia == 40
-        load FestoLookup.mat f40
-        F = f40(rel,P);
+     if isempty(f20)
+        S = load('FestoLookup.mat', 'f_10', 'f20', 'f40');
+        f_10 = S.f_10;
+        f20  = S.f20;
+        f40  = S.f40;
     end
     
+    switch dia
+        case 10
+            F = f_10(rel, P);
+        case 20
+            F = f20(rel, P);
+        case 40
+            F = f40(rel, P);
+        otherwise
+            error('Unsupported BPA diameter: %g', dia);
+    end
+
     F(rel > 1) = 0; %No force if shorter than shortest length
 %     F(F > 1.05) = NaN; %If force is greater than 5% of it's maximum, return NaN.
 %     F = Fn.*maxF;

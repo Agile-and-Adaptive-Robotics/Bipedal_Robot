@@ -98,9 +98,11 @@ CrossPoint = 2;
 Location = zeros(2,3,positions);
 
 %Origin and Insertion from Ben
-p1 = [-0.050, 0.035, 0.050];       %Origin
+% p1 = [-0.050, 0.035, 0.050];       %Origin
 % p2 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
-p2 = [-0.022, -0.024, 0.02787];  %Insertion distance from theta1
+% p2 = [-0.022, -0.024, 0.02787];  %Insertion distance from theta1
+p1 = [-0.017620, 0.062090, 0.056925];       %Origin
+p2 = [-0.002286, -0.014183, 0.022701];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);
 
 for i = 1:positions
@@ -114,10 +116,17 @@ end
 Dia = 20;
 % rest = 0.423; %resting length, m
 % kmax = 0.322; %Length at maximum contraction, m
-rest = 0.418; %resting length, m
-kmax = (1-.258)*rest; %Length at maximum contraction, m
-tendon = 0.030; 
-fitting = 0.021; %Lower profile fittings at this BPA diameter
+% rest = 0.418; %resting length, m
+% kmax = (1-.258)*rest; %Length at maximum contraction, m
+% tendon = 0.030; 
+% fitting = 0.021; %Lower profile fittings at this BPA diameter
+
+%from optimization:
+rest = 0.452623;
+KMAX = 0.255;
+kmax = (1 - KMAX)*rest;
+tendon = 0.028516;
+fitting = 0.021;
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 0;
 pres2 = 325;         %average pressure, first test
@@ -472,3 +481,34 @@ legend('Measured','Adjusted')
 title('BPA length')
 xlabel('Knee angle, degrees')
 ylabel('Length, m')
+
+
+%% Muscle Bone Plotting
+
+% Pick one knee pose to plot.
+% pos is the index where phi was forced to 0 earlier in the script.
+plotIdx = pos;
+
+% Human muscle path at one pose only.
+% Bifemsh.Location is points x xyz x positions, but MuscleBonePlotting
+% expects points x xyz.
+HLoc = Bifemsh.Location(:,:,plotIdx);
+
+HMuscleLocation = {HLoc};
+HMuscleCross = {Bifemsh.Cross};
+
+% Robot BPA path for plotting the bracket design.
+% Use p1 and p2 directly:
+%   p1 is in the femur frame
+%   p2 is in the tibia/theta1 frame
+%
+% Do NOT use Bifemsh_Pam3.Location here, because that stores v2 after
+% transforming p2 into the knee/ICR frame for the torque calculation.
+RLoc = [p1; p2];
+
+RMuscleLocation = {RLoc};
+RMuscleCross = {CrossPoint};
+
+Bones = {'Femur', 'Tibia'};
+
+MuscleBonePlotting
