@@ -101,8 +101,8 @@ Location = zeros(2,3,positions);
 % p1 = [-0.050, 0.035, 0.050];       %Origin
 % p2 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
 % p2 = [-0.022, -0.024, 0.02787];  %Insertion distance from theta1
-p1 = [-0.017620, 0.062090, 0.056925];       %Origin
-p2 = [-0.002286, -0.014183, 0.022701];  %Insertion distance from theta1
+p1 = [-0.024231, 0.092689, 0.068830];       %Origin
+p2 = [-0.007889, -0.013833, 0.019712];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);
 
 for i = 1:positions
@@ -122,10 +122,10 @@ Dia = 20;
 % fitting = 0.021; %Lower profile fittings at this BPA diameter
 
 %from optimization:
-rest = 0.452623;
+rest   = 0.488344;
+tendon = 0.025000;
 KMAX = 0.255;
 kmax = (1 - KMAX)*rest;
-tendon = 0.028516;
 fitting = 0.021;
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 0;
@@ -512,3 +512,8 @@ RMuscleCross = {CrossPoint};
 Bones = {'Femur', 'Tibia'};
 
 MuscleBonePlotting
+
+AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
+'PauseTime', 0.18, ...
+'FrameStep', 1, ...
+'Loop', true);
