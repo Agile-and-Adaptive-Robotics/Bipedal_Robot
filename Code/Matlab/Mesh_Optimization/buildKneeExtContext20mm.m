@@ -41,6 +41,7 @@ fcn14 = fit(knee_angle,t1_ICR_y,'cubicspline');
 kneeMin = -2.0943951;
 kneeMax = 0.17453293;
 phi = linspace(kneeMin, kneeMax, positions);
+phiD = phi*180/pi;
 %We want one of our positions to be home position, so let's make the
 %smallest value of phi equal to 0
 [val, pos] = min(abs(phi));
@@ -66,64 +67,93 @@ for i = 1:positions
     T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');    %transform from t1 frame to ICR
 end
 
-%% Build optimization context
-
-ctx.Name       = 'Bicep Femoris (Short Head)';
-ctx.CrossPoint = 2;
+%% Build Optimization Context
+ctx.Name       = 'Vastus Intermedius Distal Ring 20mm BPA';
+ctx.CrossPoint = 4;
 ctx.Dia        = 20;
+ctx.BPAcount   = 2;
 
+ctx.T          = T;
 ctx.T_Pam      = T_Pam;
 ctx.T_ICR_t1   = T_ICR_t1;
-ctx.phiD       = phi(:)*180/pi;
-ctx.N          = numel(ctx.phiD);
+ctx.T_t1_ICR   = T_t1_ICR;
+ctx.t1toICR    = t1toICR;
+
+ctx.phi        = phi(:);
+ctx.phiD       = phiD(:);
+ctx.pos        = pos;
+ctx.N          = numel(phiD);
 
 ctx.fitting    = 0.021;
 ctx.wraps      = 3;
 
-% Choose extension angle for the resting-length constraint.
-% Use 10 if you trust kneeMax; use 5 if the CAD hard stop is real.
-ctx.extensionAngleD = 5;
-[~, ctx.idxExtension] = min(abs(ctx.phiD - ctx.extensionAngleD));
+[~, ctx.idxMaxFlex] = min(ctx.phiD);
 
-% OpenSim target: column 2 = knee angle, column 4 = bifemsh_r.
-H = readmatrix('OpenSim_Bifem_Results.txt', ...
+%% OpenSim target: column 2 = knee angle, columns 3-5 = vastus muscles.
+H = readmatrix('OpenSim_Vasti_Results.txt', ...
     'FileType', 'text', ...
     'NumHeaderLines', 7);
 
 ctx.humanAngleD = H(:,2);
-ctx.humanTorque = H(:,4);
-ctx.humanTorqueAbs = abs(ctx.humanTorque);
 
-% Use 620 kPa as the "can this BPA meet the human target?" condition.
+ctx.targetName = "vas_med_r";  % "vas_int_r", "vas_lat_r", or "vas_med_r"
+
+switch ctx.targetName
+    case "vas_int_r"
+        ctx.humanTorque = H(:,3);
+    case "vas_lat_r"
+        ctx.humanTorque = H(:,4);
+    case "vas_med_r"
+        ctx.humanTorque = H(:,5);
+    otherwise
+        error('Unknown Vasti targetName: %s', ctx.targetName)
+end
+
+ctx.humanTorqueAbs = abs(ctx.humanTorque);
+ctx.torqueScale = max(1, max(ctx.humanTorqueAbs));
+
+%% BPA / stiffness constants
 ctx.targetPressure = 620;
 ctx.Pbins = 620;
 
 ctx.KMAX = 0.255;          % KMAX = (rest - kmax)/rest at 620 kPa
-ctx.maxRelStrain = 1.0;    % allow relative strain up to 1
+ctx.maxRelStrain = 1.0;    % allow relative strain up to KMAX
 ctx.minStrain = -0.03;
 
-ctx.torqueScale = max(1, max(ctx.humanTorqueAbs));
-
-% Replace these with your best current estimates if desired
-Xi0 = 0.0119;
-Xi1 = 1.0174e5;
-Xi2 = 1.0648e4;
-
-% Fixed stiffness / compliance parameters.
-% These are already identified and are NOT optimization variables.
-ctx.Xi0 = Xi0;
-ctx.Xi1 = Xi1;
-ctx.Xi2 = Xi2;
+ctx.Xi0 = 0.0119;
+ctx.Xi1 = 1.0174e5;
+ctx.Xi2 = 1.0648e4;
+ctx.Xi3 = 0.2;
 ctx.wraps = 3;
 
-% Initial geometry / BPA design guess
-p1_0 = [-0.050,   0.035,   0.050];
-p2_0 = [-0.01224, -0.00887, 0.02787];
+%% Distal-ring route initial geometry
+% These are the row values from the Distal Ring Location matrix in
+% Knee_Extensor_40mm. Rows 1 and 6 are the optimizer attachment variables.
+%
+% p1_0: row 1, femur-side BPA attachment
+% p2_0: row 6, tibia/theta1-side distal ring attachment
+raw0 = distalRingRawLocation(ctx.phiD(ctx.pos));
 
-rest0     = 0.415;
-tendon0   = 0.025;
+p1_0 = raw0(1,:);
+p2_0 = raw0(6,:);
 
-% Optimization variables:
+% Tendon initial guess:
+% Use the norm between rows 5 and 6 of the distal ring Location matrix.
+tendon0 = norm(raw0(5,:) - raw0(6,:));
+
+% Resting length initial guess:
+% Use undeformed normal musculotendon length:
+%   rest0 = max(Lmt_undeformed) - 2*fitting - tendon0 - Xi0
+Location0 = buildDistalRingLocation(p1_0, p2_0, ctx.phiD, ctx.T_ICR_t1);
+Lmt0 = muscleLengthNormal(Location0, ctx.CrossPoint, ctx.T_Pam);
+
+rest0 = max(Lmt0) - 2*ctx.fitting - tendon0 - ctx.Xi0;
+
+if rest0 <= 0
+    error('Initial rest0 is non-positive. Check distal ring path geometry.')
+end
+
+%% Optimization variables:
 % [p1(1:3), p2(1:3), rest, kmaxFrac, tendon]
 x0 = [p1_0, p2_0, rest0, tendon0];
 
@@ -134,15 +164,113 @@ ub = x0;
 lb(1:3) = p1_0 + [-0.060, -0.060, -0.060];
 ub(1:3) = p1_0 + [ 0.060,  0.060,  0.060];
 
-lb(4:6) = p2_0 + [-0.060, -0.060, -0.060];
-ub(4:6) = p2_0 + [ 0.005,  0.09,  0.060];
+lb(4:6) = p2_0 + [0, -0.060, -0.060];
+ub(4:6) = p2_0 + [ 0.06,  0.06,  0.060];
 
 % BPA / tendon bounds
 lb(7) = 0.360;    ub(7) = 0.520;    % rest length, m
-lb(8) = 0.025;    ub(8) = 0.100;    % tendon length, m
+lb(8) = max(0.025,tendon0-0.040);    ub(8) = tendon0+0.1;    % tendon length, m
 
 ctx.x0 = x0;
 ctx.lb = lb;
 ctx.ub = ub;
+
+%% Initial-design diagnostics
+ctx.initialRawLocation = raw0;
+ctx.initialLocation = Location0;
+ctx.initialLmt0 = Lmt0;
+ctx.initialMaxLmt0 = max(Lmt0);
+ctx.initialIdxMaxLmt0 = find(Lmt0 == max(Lmt0), 1, 'first');
+ctx.initialMaxLmtAngleD = ctx.phiD(ctx.initialIdxMaxLmt0);
+ctx.initialRest0 = rest0;
+ctx.initialTendon0 = tendon0;
+
+end
+
+
+%% Local helper functions
+
+function raw = distalRingRawLocation(phiD_i)
+% Distal ring Location matrix from Knee_Extensor_40mm.
+%
+% Rows 1:3 are femur / parent frame.
+% Rows 4:6 are theta1 / tibia frame before conversion to ICR.
+
+if phiD_i < -80
+    raw = [ ...
+        0.040,   0.035,   0.000;
+        0.099,  -0.275,   0.000;
+        0.05546,-0.44305, 0.000;
+        0.06594,-0.010,   0.000;
+        0.06594,-0.03716, 0.000;
+        0.01969,-0.11115, 0.000];
+
+elseif phiD_i >= -80 && phiD_i < -40
+    raw = [ ...
+        0.040,   0.035,   0.000;
+        0.099,  -0.240,   0.000;
+        0.08317,-0.385,   0.000;
+        0.07094,-0.0129,  0.000;
+        0.07094,-0.03716, 0.000;
+        0.01969,-0.11115, 0.000];
+
+else
+    raw = [ ...
+        0.040,   0.035,   0.000;
+        0.099,  -0.219,   0.000;
+        0.099,  -0.30252, 0.000;
+        0.07094,-0.0129,  0.000;
+        0.07094,-0.03716, 0.000;
+        0.01969,-0.11115, 0.000];
+end
+
+end
+
+function Location = buildDistalRingLocation(p1, p2, phiD, T_ICR_t1)
+% Build the 6-row extensor distal-ring Location matrix.
+%
+% p1 replaces row 1.
+% p2 replaces row 6.
+% Rows 4:6 are converted from theta1 -> ICR with T_ICR_t1(:,:,i).
+
+N = numel(phiD);
+Location = zeros(6, 3, N);
+
+for i = 1:N
+    raw = distalRingRawLocation(phiD(i));
+
+    raw(1,:) = p1;
+    raw(6,:) = p2;
+
+    % Convert tibia/theta1-side rows to ICR frame.
+    for j = 4:6
+        raw(j,:) = RowVecTrans(T_ICR_t1(:,:,i), raw(j,:));
+    end
+
+    Location(:,:,i) = raw;
+end
+
+end
+
+function Lmt = muscleLengthNormal(Location, CrossPoint, T)
+% Normal undeformed musculotendon length calculation, matching
+% MonoPamDataExplicit SegmentLengths/MuscleLength behavior.
+
+N = size(Location, 3);
+M = size(Location, 1);
+Lmt = zeros(N, 1);
+
+for ii = 1:N
+    for j = 1:M-1
+        pointA = Location(j,:,ii);
+        pointB = Location(j+1,:,ii);
+
+        if j+1 == CrossPoint
+            pointB = RowVecTrans(T(:,:,ii), pointB);
+        end
+
+        Lmt(ii) = Lmt(ii) + norm(pointA - pointB);
+    end
+end
 
 end

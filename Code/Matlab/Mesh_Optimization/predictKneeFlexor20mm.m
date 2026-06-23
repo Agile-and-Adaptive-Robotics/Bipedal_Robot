@@ -84,11 +84,11 @@ function pred = predictKneeFlexor20mm(x, ctx)
     
     % Physical no-load musculotendon length available between attachment points.
     % Xi0 is not included here because this is a physical packaging constraint.
-    pred.restLmt = rest + tendon + 2*ctx.fitting;
+    % pred.restLmt = rest + tendon + 2*ctx.fitting;
 
     % Diagnostic only: this is the modeled zero-strain musculotendon length.
     % Positive Xi0 makes the model behave as if the required Lmt is longer.
-    % pred.restLmt = rest + tendon + 2*ctx.fitting + Xi0;
+    pred.restLmt = rest + tendon + 2*ctx.fitting + Xi0;
 
     % Constraint value <= 0 is feasible:
     % distance(p1, v2 at extension) <= rest + tendon + 2*fitting
