@@ -696,15 +696,15 @@ switch klass.Diameter
         mult = 2;
 end
 
-if nargin >= 2 && ~isempty(wraps)
-    mult = mult * wraps;
+if nargin < 2 || isempty(wraps)
+    wraps = mult;
 end
 
 Aeff = 1.51*10^-6;%Effective area for 19-strand cable
 E = 193*10^9;       %Young's Modulus
 L = klass.TendonL;      %tendon length
 
-springrate = mult*Aeff*E/L;        
+springrate = wraps*Aeff*E/L;        
 end
 
 %% Subfunctions
