@@ -1,6 +1,6 @@
 function J = objective_KneeExt20mm(x, ctx)
 
-    pred = predictKneeFlexor20mm(x, ctx);
+    pred = predictKneeExt20mm(x, ctx);
 
     if ~pred.ok
         J = 1e12;
@@ -36,11 +36,12 @@ function J = objective_KneeExt20mm(x, ctx)
 
     % Strain feasibility.
     % KMAX is the measured free-contraction strain at 620 kPa.
-    % maxRelStrain = 1 allows strain up to KMAX.
+    % High-contraction check uses strain_f because strain_f is what goes into force.
     maxStrainAllowed = ctx.maxRelStrain * pred.KMAX;
+    JstrainHi = 1e4 * max(0, max(pred.strain_f) - maxStrainAllowed).^2;
     
-    JstrainHi = 1e4 * max(0, max(pred.strain) - maxStrainAllowed).^2;
-    JstrainLo = 1e4 * max(0, ctx.minStrain - min(pred.strain)).^2;
+    % Stretch check uses strain_p because strain_p corresponds to the measured/physical BPA strain.
+    JstrainLo = 1e4 * max(0, ctx.minStrain - min(pred.strain_p)).^2;
 
     % Keep solution near practical geometry unless torque requires otherwise.
     x0 = ctx.x0(:);

@@ -7,14 +7,14 @@
 %
 %Refer to https://www.mathworks.com/help/matlab/matlab_oop/example-representing-structured-data.html
 
-classdef MonoPamDataExplicit_balance < handle
+classdef MonoPamDataExplicit_balanceX3 < handle
     
     %% ------------Public Properties---------------------------
     %List of explicit properties for the muscles
     properties
         Name                        %Name of the muscle
-        Location
-        Cross                       %Designates which row corresponds with a location where the muscle crosses into a new reference frame
+        Location                    %BPA routing point locations
+        Cross                       %Designates which Location row corresponds with a location where the muscle crosses into a new reference frame
         Diameter                    %Diameter of the BPA
         TransformationMat           %Contains a transformation matrix to change the 
         RestingL                    %Resting Length of the muscle
@@ -22,16 +22,22 @@ classdef MonoPamDataExplicit_balance < handle
         FittingLength               %Length of each end cap (center of hole to bottom port)
         TendonL                     %Length of tendon, if any
         Pressure                    %Pressure of BPA
+        AngleD                      %Angle vector in degrees
         
         % --- Stiffness parameters (always provided) ---
         Xi0                         %Constant length offset
         Xi1                         %Bracket axial stiffness
         Xi2                         %Bracket bending stiffness
+        Xi3                         %Factor for loss of usable length
         Wraps                       %Number of cable wraps (affects tendon stiffness)
-        
-        % --- Stiffness-aware fields (minimizeFlx-style) ---
+        BPAcount                    %Number of BPAs in parallel
+
+        % --- Stiffness-aware fields (minimizeExt-style) ---
         L_p                         %Deformed location matrix (updated attachment points)
-        strain_p                    %Contraction with bracket deformation, tendon stretch, and constant length offset
+        Lmt_p                       %Length of musculotendon including constant length offset Xi0
+        delta_L                     %Loss of usable length due to bending
+        strain_p                    %Contraction with bracket deformation, tendon stretch, Xi0, but not delta_L
+        strain_f                    %Contraction with bracket deformation, tendon stretch, Xi0 and delta_L
         F_p                         %Force vector with stiffness effects
         mA_p                        %Moment arm with stiffness effects
         Torque_p                    %Torque with stiffness effects
@@ -61,8 +67,8 @@ classdef MonoPamDataExplicit_balance < handle
         %% ------------- Muscle Data Constructor -----------------
         %Constructor Function. By calling 'MuscleData' and entering the
         %muscle information, we construct an object for that muscle.
-        function PD = MonoPamDataExplicit_balance(name, location, cross, diameter, t, rest, kmax, tendon, fitn, pres, xi0, xi1, xi2, wraps)
-            if nargin == 14
+        function PD = MonoPamDataExplicit_balanceX3(name, location, cross, diameter, t, rest, kmax, tendon, fitn, pres, xi0, xi1, xi2, xi3, wraps, angleD, bpaCount)
+            if nargin == 17
                 PD.Name = name;
                 PD.Location = location;
                 PD.Cross = cross;
@@ -73,16 +79,20 @@ classdef MonoPamDataExplicit_balance < handle
                 PD.TendonL = tendon;
                 PD.FittingLength = fitn;
                 PD.Pressure = pres;
-                
+
                 PD.Xi0 = xi0;
                 PD.Xi1 = xi1;
                 PD.Xi2 = xi2;
+                PD.Xi3 = xi3;
                 PD.Wraps = wraps;
-                
-                % Automatically compute stiffness-aware geometry and torque
+                PD.AngleD = angleD(:);
+                PD.BPAcount = bpaCount;
+
+                % Automatically compute stiffness-aware geometry and torque.
                 PD = PD.updateStiffnessGeometry();
             else
-                fprintf('Invalid number of arguments\n')
+                error('MonoPamDataExplicit_balanceX3:BadInputCount', ...
+                    'Expected 17 inputs, got %d.', nargin);
             end
         end
         
@@ -281,61 +291,90 @@ end
         end    
         
         % ============================================================
-        % === Stiffness-aware pipeline (minimizeFlx-style) ===========
+        % === Stiffness-aware pipeline (minimizeExt-style) ===========
         % ============================================================
         
         % Xi0: constant length offset
         % Xi1, Xi2: bracket stiffness components
+        % Xi3: factor for loss of usable length
         % Wraps: number of cable wraps (affects tendon spring rate)
         function obj = updateStiffnessGeometry(obj)
-            % Tendon spring rate
-            obj.kSpr = Spr_local(obj, obj.Wraps);
-            
-            % Force unit vector in hip frame (origin to first non-duplicate point)
-            Funit = computeForceVector_local(obj);
-            
-            % First-pass strain including Xi0 and Xi3 curvature correction.
-            % delta_L0 is the Xi3 curvature length correction.
-            [strain_Xi3, delta_L0] = Contraction_local(obj, [], obj.Xi0, [], obj.Xi3);
-        
-            obj.delta_L = delta_L0;
-            
-            % Deformed bracket geometry and tendon stretch.
-            % The extensor X3 code passes Xi0 + delta_L into the bracket equilibrium.
-            [L_p_local, gama_local] = Lok_local( ...
-                obj, ...
-                obj.Xi1, ...
-                obj.Xi2, ...
-                obj.kSpr, ...
-                Funit, ...
-                strain_Xi3, ...
-                obj.Xi0 + delta_L0);
 
-            obj.L_p = L_p_local;
-            obj.gama = gama_local;
-            
-            % Unit direction with deformed geometry
-            unitD_p = UD_local(obj, obj.L_p);
-            
-            % Segment lengths with deformed geometry
-            sL_p = seg_local(obj, obj.L_p);
-            
-            % Musculotendon length with deformed geometry and Xi0
-            Lmt_p_local = LMT_local(sL_p, obj.Xi0);
-            
-            % Stored strain_p should be the physical strain without Xi3 curvature
-            % correction, matching the old minimizeExt logic.
-            [strain_p_local, ~] = Contraction_local( ...
-                obj, ...
-                Lmt_p_local, ...
-                [], ...
-                obj.gama, ...
-                []);
-        
-            obj.strain_p = strain_p_local;
-        
-            obj.Torque_p = Tor_local(obj, obj.mA_p, obj.F_p, obj.strain_p);
-        end
+        % Tendon spring rate.
+        % If two BPAs use two parallel tendon paths, multiply this by BPAcount.
+        % If they share one tendon path, do not multiply it.
+        obj.kSpr = obj.BPAcount * Spr_local(obj, obj.Wraps);
+    
+        % Force unit vector from original path.
+        Funit = computeForceVector_local(obj);
+    
+        % First pass:
+        % Include Xi0 and Xi3 to estimate force for deformation calculation.
+        [strain_Xi3, delta_L] = Contraction_local(obj, [], obj.Xi0, [], obj.Xi3);
+    
+        obj.delta_L = delta_L;
+    
+        % Bracket deformation and tendon stretch.
+        % This matches minimizeExt:
+        %   Lok(..., strain_Xi3, delta_L + Xi0)
+        [L_p_local, gama_local] = Lok_local( ...
+            obj, ...
+            obj.Xi1, ...
+            obj.Xi2, ...
+            obj.kSpr, ...
+            Funit, ...
+            strain_Xi3, ...
+            delta_L + obj.Xi0);
+    
+        obj.L_p = L_p_local;
+        obj.gama = gama_local;
+    
+        % Segment lengths after deformation.
+        sL_p = seg_local(obj, obj.L_p);
+    
+        % Lmt_p is the path musculotendon length with Xi0 removed.
+        % Therefore geometric path length = Lmt_p + Xi0.
+        Lmt_p_local = LMT_local(sL_p, obj.Xi0);
+        obj.Lmt_p = Lmt_p_local;
+    
+        % Force strain:
+        % includes Xi3 and is used to calculate BPA force.
+        [strain_f_local, delta_L_final] = Contraction_local( ...
+            obj, ...
+            Lmt_p_local, ...
+            [], ...
+            obj.gama, ...
+            obj.Xi3);
+    
+        obj.strain_f = strain_f_local;
+        obj.delta_L = delta_L_final;
+    
+        % Unit direction after deformation.
+        unitD_p = UD_local(obj, obj.L_p);
+    
+        % Force uses strain_f.
+        F_p_local = Force_local(obj, unitD_p, obj.strain_f);
+        obj.F_p = F_p_local;
+    
+        % Moment arm after deformation.
+        mA_p_local = Mom_local(obj, obj.L_p, unitD_p);
+        obj.mA_p = mA_p_local;
+    
+        % Measured-comparison strain:
+        % excludes Xi3. Use this to check whether the real BPA is stretching.
+        [strain_p_local, ~] = Contraction_local( ...
+            obj, ...
+            Lmt_p_local, ...
+            [], ...
+            obj.gama, ...
+            []);
+    
+        obj.strain_p = strain_p_local;
+    
+        % Torque uses F_p from strain_f, but Tor checks strain_p for stretching.
+        obj.Torque_p = Tor_local(obj, obj.mA_p, obj.F_p, obj.strain_p);
+
+end
         
     end % methods
     
@@ -466,9 +505,11 @@ N = size(L,3);
 
 % Compute Force
 relstrain = strain_predef / KMAX;  %Relative strain
-FF = festo4(D, relstrain, P) * Fm; %Force magnitude
-FF (FF < 0) = 0;
-F = FF.*Funit;  % N×3, already in hip frame
+FF_single = festo4(D, relstrain, P) .* Fm; %Force magnitude
+FF_single(FF_single < 0) = 0;
+
+FF = klass.BPAcount .* FF_single;
+F = FF .* Funit;  % N×3, already in hip frame
 
 pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
 switch klass.Diameter
@@ -694,8 +735,11 @@ rel = strain./KMAX;                    %relative strain
 
 Fn = festo4(klass.Diameter,rel,klass.Pressure);
 
-scalarForce = Fn.*klass.Fmax;
-scalarForce(scalarForce < 0) = 0;            
+scalarForceSingle = Fn.*klass.Fmax;
+scalarForceSingle(scalarForceSingle < 0) = 0;            
+
+% Total force from parallel BPAs.
+scalarForce = klass.BPAcount .* scalarForceSingle;
 
 F = scalarForce.*unitD_p;
 
