@@ -4,7 +4,12 @@ rehash
 
 ctx = buildKneeFlexorContext20mm();
 
+geo = buildGeoExclusion();
+idxP2 = 4:6;
+
 obj = @(x) objective_KneeFlexor20mm(x, ctx);
+objconstr = @(x) objconstrExclusion(x, obj, geo, idxP2);
+nonlcon = @(x) nonlconExclusion(x, geo, idxP2);
 
 rng default
 
@@ -15,9 +20,9 @@ end
 optsG = optimoptions('surrogateopt', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 600);
+    'MaxFunctionEvaluations', 800);
 
-[xG, fG] = surrogateopt(obj, ctx.lb, ctx.ub, optsG);
+[xG, fG] = surrogateopt(objconstr, ctx.lb, ctx.ub, optsG);
 
 optsP = optimoptions('patternsearch', ...
     'Display', 'iter', ...
@@ -26,7 +31,7 @@ optsP = optimoptions('patternsearch', ...
     'MeshTolerance', 1e-5, ...
     'StepTolerance', 1e-5);
 
-[xBest, fBest] = patternsearch(obj, xG, [], [], [], [], ctx.lb, ctx.ub, [], optsP);
+[xBest, fBest] = patternsearch(obj, xG, [], [], [], [], ctx.lb, ctx.ub, nonlcon, optsP);
 
 predBest = predictKneeFlexor20mm(xBest, ctx);
 

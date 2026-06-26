@@ -7,8 +7,12 @@ rehash
 
 ctx = buildKneeFlexorContext20mm();
 
+geo = buildGeoExclusion();
+idxP2 = 4:6;
+
 J0 = objective_KneeFlexor20mm(ctx.x0, ctx);
 pred0 = predictKneeFlexor20mm(ctx.x0, ctx);
+
 
 disp(J0)
 disp(pred0.failReason)
@@ -33,10 +37,15 @@ ylabel('Torque magnitude, N m')
 
 %% After the first section runs and the plot looks reasonable, run the following code
 obj = @(x) objective_KneeFlexor20mm(x, ctx);
+objconstr = @(x) objconstrExclusion(x, obj, geo, idxP2);
+nonlcon = @(x) nonlconExclusion(x, geo, idxP2);
+
+[c0, ~] = nonlcon(ctx.x0);
+fprintf('exclusion c0 = %.6f\n', c0)
 
 optsTest = optimoptions('surrogateopt', ...
     'Display', 'iter', ...
     'UseParallel', false, ...
     'MaxFunctionEvaluations', 30);
 
-[xTest, fTest] = surrogateopt(obj, ctx.lb, ctx.ub, optsTest);
+[xTest, fTest] = surrogateopt(objconstr, ctx.lb, ctx.ub, optsTest);

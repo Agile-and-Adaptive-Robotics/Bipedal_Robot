@@ -101,8 +101,8 @@ Location = zeros(2,3,positions);
 % p1 = [-0.050, 0.035, 0.050];       %Origin
 % p2 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
 % p2 = [-0.022, -0.024, 0.02787];  %Insertion distance from theta1
-p1 = [-0.024231, 0.092689, 0.068830];       %Origin
-p2 = [-0.007889, -0.013833, 0.019712];  %Insertion distance from theta1
+p1 = [0.009795, 0.066859, 0.054987];       %Origin
+p2 = [-0.007764, -0.012619, 0.041109];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);
 
 for i = 1:positions
@@ -122,10 +122,10 @@ Dia = 20;
 % fitting = 0.021; %Lower profile fittings at this BPA diameter
 
 %from optimization:
-rest   = 0.488344;
-tendon = 0.025000;
-KMAX = 0.255;
-kmax = (1 - KMAX)*rest;
+rest   = 0.426872;
+tendon = 0.056795;
+KMAX = 0.255; %maximum contraction percentage
+kmax = 0.318;  % (1 - KMAX)*rest; Maximum contraction length.
 fitting = 0.021;
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 0;
@@ -511,9 +511,31 @@ RMuscleCross = {CrossPoint};
 
 Bones = {'Femur', 'Tibia'};
 
+%Static display
 MuscleBonePlotting
 
+%Animated continous loop
+% AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
+% 'PauseTime', 0.18, ...
+% 'FrameStep', 1, ...
+% 'Loop', true);
+
+%Export as GIF
 AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
-'PauseTime', 0.18, ...
-'FrameStep', 1, ...
-'Loop', true);
+    'PauseTime', 0.02, ...
+    'Loop', false, ...
+    'ExportGif', true, ...
+    'GifFile', 'Knee_Flexor_20mm.gif', ...
+    'FrameRate', 20)
+
+%Export as MP4
+% AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
+%     'PauseTime', 0.02, ...
+%     'Loop', false, ...
+%     'ExportVideo', true, ...
+%     'VideoFile', 'Knee_Flexor_20mm.mp4', ...
+%     'FrameRate', 20)
+
+%To pause at a specific frame (for example frame 50)
+% AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
+%     'PauseAtFrames', 50)

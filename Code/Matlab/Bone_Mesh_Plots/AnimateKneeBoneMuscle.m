@@ -51,9 +51,28 @@ function AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, varargin)
     addParameter(p, 'FrameStep', 1);
     addParameter(p, 'Loop', true);
 
+    addParameter(p, 'ExportGif', false);
+    addParameter(p, 'GifFile', 'KneeBoneMuscle.gif');
+    
+    addParameter(p, 'ExportVideo', false);
+    addParameter(p, 'VideoFile', 'KneeBoneMuscle.mp4');
+    
+    addParameter(p, 'FrameRate', 20);
+    addParameter(p, 'PauseAtFrames', []);
+
+    addParameter(p, 'XLim', [-0.5 0.05]);
+    addParameter(p, 'YLim', [-0.225 0.0348]);
+    addParameter(p, 'ZLim', [-1 0.04]);
+
     parse(p, varargin{:});
     opt = p.Results;
     Rplot = opt.DisplayRotation;
+
+    if (opt.ExportGif || opt.ExportVideo) && opt.Loop
+        opt.Loop = false;
+    end
+    
+    gifDelayTime = 1/opt.FrameRate;
 
     %% Load raw bone point clouds
     % femur0 is in femur frame.
@@ -96,6 +115,9 @@ function AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, varargin)
 
     %% Plot setup
     fig = figure;
+    setappdata(fig, 'isPaused', false);
+    setappdata(fig, 'stopAnimation', false);
+    set(fig, 'KeyPressFcn', @localKeyPress);
     hold on
     grid on
     axis equal
@@ -131,21 +153,40 @@ function AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, varargin)
     legend('Femur', 'Tibia', 'Optimized BPA path', 'Human muscle path', ...
         'p1', 'p2', 'Location', 'best')
 
-    allPts = [femur_plot; tibia_plot; bpa_plot; human_plot];
-    pad = 0.08;
-    xlim([min(allPts(:,1))-pad, max(allPts(:,1))+pad])
-    ylim([min(allPts(:,2))-pad, max(allPts(:,2))+pad])
-    zlim([min(allPts(:,3))-pad, max(allPts(:,3))+pad])
+    xlim(opt.XLim)
+    ylim(opt.YLim)
+    zlim(opt.ZLim)
 
+    %% Export setup
+    firstGifFrame = true;
+    
+    if opt.ExportGif && exist(opt.GifFile, 'file')
+        delete(opt.GifFile)
+    end
+    
+    videoObj = [];
+    
+    if opt.ExportVideo
+        videoObj = VideoWriter(opt.VideoFile, 'MPEG-4');
+        videoObj.FrameRate = opt.FrameRate;
+        open(videoObj)
+    end
+    
     %% Loop animation
     keepGoing = true;
 
     while keepGoing && ishandle(fig)
 
         for i = idxList
-
-            if ~ishandle(fig)
-                return
+        
+            while ishandle(fig) && getappdata(fig, 'isPaused')
+                drawnow
+                pause(0.05)
+            end
+        
+            if ~ishandle(fig) || getappdata(fig, 'stopAnimation')
+                keepGoing = false;
+                break
             end
 
             Ti = T(:,:,i);  % 4x4 only
@@ -187,11 +228,48 @@ function AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, varargin)
                 phi(i)*180/pi, Lbpa))
 
             drawnow
+
+            if any(i == opt.PauseAtFrames)
+                pause
+            end
+            
+            if opt.ExportGif || opt.ExportVideo
+                frame = getframe(fig);
+            
+                if opt.ExportGif
+                    im = frame2im(frame);
+                    [A, map] = rgb2ind(im, 256);
+            
+                    if firstGifFrame
+                        imwrite(A, map, opt.GifFile, 'gif', ...
+                            'LoopCount', Inf, ...
+                            'DelayTime', gifDelayTime);
+                        firstGifFrame = false;
+                    else
+                        imwrite(A, map, opt.GifFile, 'gif', ...
+                            'WriteMode', 'append', ...
+                            'DelayTime', gifDelayTime);
+                    end
+                end
+            
+                if opt.ExportVideo
+                    writeVideo(videoObj, frame);
+                end
+            end
+            
             pause(opt.PauseTime)
         end
 
-        keepGoing = opt.Loop;
+        if ~ishandle(fig) || getappdata(fig, 'stopAnimation')
+            keepGoing = false;
+        end
+
+        keepGoing = keepGoing && opt.Loop;
     end
+
+     if opt.ExportVideo && ~isempty(videoObj)
+        close(videoObj)
+     end
 
 end
 
@@ -242,3 +320,47 @@ function [tibia_i_f, w2, humanPath_f] = transformFrame(Ti, tibia0, p1, v2, Bifem
     end
 
 end
+
+function localKeyPress(src, event)
+% localKeyPress
+%
+% Spacebar pauses/resumes animation.
+% Escape stops animation.
+
+    switch event.Key
+        case 'space'
+            isPaused = getappdata(src, 'isPaused');
+            setappdata(src, 'isPaused', ~isPaused); %spacebar pauses the animation
+
+        case 'escape'
+            setappdata(src, 'stopAnimation', true); %Esc button stops the animation
+    end
+
+end
+
+%% Examples of how to call
+%Animated continous loop
+% AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
+% 'PauseTime', 0.18, ...
+% 'FrameStep', 1, ...
+% 'Loop', true);
+
+%Export as GIF
+% AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
+%     'PauseTime', 0.02, ...
+%     'Loop', false, ...
+%     'ExportGif', true, ...
+%     'GifFile', 'Knee_Flexor_20mm.gif', ...
+%     'FrameRate', 20)
+
+%Export as MP4
+% AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
+%     'PauseTime', 0.02, ...
+%     'Loop', false, ...
+%     'ExportVideo', true, ...
+%     'VideoFile', 'Knee_Flexor_20mm.mp4', ...
+%     'FrameRate', 20)
+
+%To pause at a specific frame (for example frame 50)
+% AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
+%     'PauseAtFrames', 50)
