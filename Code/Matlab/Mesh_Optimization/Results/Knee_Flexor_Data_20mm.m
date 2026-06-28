@@ -96,11 +96,14 @@ Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
 
 Location = zeros(2,3,positions);
+Location0 = zeros(2,3,positions);
 
-%Origin and Insertion from Ben
-% p1 = [-0.050, 0.035, 0.050];       %Origin
-% p2 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
-% p2 = [-0.022, -0.024, 0.02787];  %Insertion distance from theta1
+%Original origin and insertion from Ben
+p10 = [-0.050, 0.035, 0.050];       %Origin
+p20 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
+% p20 = [-0.022, -0.024, 0.02787];  %Insertion distance from theta1
+v20 = zeros(1,3,positions);      
+
 p1 = [0.009795, 0.066859, 0.054987];       %Origin
 p2 = [-0.007764, -0.012619, 0.041109];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);
@@ -110,15 +113,19 @@ for i = 1:positions
     v2(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p2); %Insertion location wrt Knee ICR
     Location(:,:,i) = [p1; ...
                        v2(:,:,i)];
+
+     v20(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p20); %Insertion location wrt Knee ICR
+    Location0(:,:,i) = [p10; ...
+                       v20(:,:,i)];
 end
 
 %20 mm Festo
 Dia = 20;
 % rest = 0.423; %resting length, m
 % kmax = 0.322; %Length at maximum contraction, m
-% rest = 0.418; %resting length, m
-% kmax = (1-.258)*rest; %Length at maximum contraction, m
-% tendon = 0.030; 
+rest0 = 0.415; %resting length, m
+kmax0 = (1-.255)*rest0; %Length at maximum contraction, m
+tendon0 = 0.015; 
 % fitting = 0.021; %Lower profile fittings at this BPA diameter
 
 %from optimization:
@@ -141,8 +148,12 @@ g = results_sort_actual(pick,2:4);   % [Xi0, Xi1, Xi2]
 Xi0   = g(1);
 Xi1   = g(2);
 Xi2   = g(3);
-wraps = 3;   % number of cable wraps
+wraps = 6;   % number of cable wraps. Each full circle is two "columns" or cables.
 
+%Original work
+Bifemsh_Pam0 = MonoPamDataExplicit_balance(Name, Location0, CrossPoint, Dia, T_Pam, rest0, kmax0, tendon0, fitting, pres3, Xi0, Xi1, Xi2, wraps);
+
+%Optimizer results
 Bifemsh_Pam1 = MonoPamDataExplicit_balance(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, wraps);
 Bifemsh_Pam2 = MonoPamDataExplicit_balance(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, wraps);
 Bifemsh_Pam3 = MonoPamDataExplicit_balance(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, wraps);
@@ -161,6 +172,7 @@ sM1 = sprintf('Measured %d kPa',pres1);
 sT2 = sprintf('Theoretical %d kPa',pres2);
 sM2 = sprintf('Measured %d kPa',pres2);
 %Third pressure
+sT0 = sprintf('Original %d kPa',pres3);
 sT3 = sprintf('Theoretical %d kPa',pres3);
 sM3 = sprintf('Measured %d kPa',pres3);
 
@@ -249,11 +261,11 @@ hold off
 
 %% Compare Expected vs Adjusted PAM values
 figure
-plot(phiD, Bifemsh_Pam3.Torque_p(:, 3), phiD, TorqueR(:, 3))
+plot(phiD, Bifemsh_Pam3.Torque_p(:, 3), phiD, TorqueR(:, 3),phiD, Bifemsh_Pam0.Torque_p(:, 3))
 title('Muscle and PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
-legend('Optimized', 'Original Theoretical')
+legend('Optimized stiffness aware', 'Stiffness unaware',"Unoptimized, stiffness aware")
 
 
 % %% Plotting muscle lengths and moment arms using two different moment arm
@@ -451,9 +463,10 @@ plot(phiD, Bifemsh_Pam3.Torque(:,3),':','Color',c7)
 plot(phiD, Bifemsh_Pam3.Torque_p(:,3),'LineStyle','--','Color',c7); 
 plot(phiD, Bifemsh_Pam2.Torque_p(:,3),'LineStyle','--','Color',c6);
 plot(phiD, Bifemsh_Pam1.Torque_p(:,3),'LineStyle','--','Color',c5);
+plot(phiD, Bifemsh_Pam0.Torque_p(:,3),'LineStyle','-.','Color',c3);
 plot(knee_angle_rT, Bifemsh_T,'LineStyle',':','Color',c2);
 scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4')
-legend('Unoptimized',sT3,sT2,sT1,'OpenSim Human Torque','Measured','Location','southwest')
+legend('Unoptimized',sT3,sT2,sT1,sT0,'OpenSim Human Torque','Measured','Location','southwest')
 title('Knee Torque, Human vs. $\phi$20 mm BPA, $l_{rest}=420$ mm','Interpreter','latex')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
@@ -465,9 +478,13 @@ hold off
 
 %% Plot length and compare
 bpa = Bifemsh_Pam3;
+bpa0 = Bifemsh_Pam0;
 
 Lm = bpa.RestingL .* (1 - bpa.strain_p);
 Lm = Lm(:);
+
+Lm0 = bpa0.RestingL .* (1 - bpa0.strain_p);
+Lm0 = Lm0(:);
 
 Angle = [-125 -114 -98 -83 -75.5 -69 -55.5 -53.001 -53.01 -41 -30];
 InflatedLength = [334 334 338 343 NaN 348 356 356 357 365 368]/1000;
@@ -476,8 +493,9 @@ figure
 hold on
 scatter(Angle, InflatedLength)
 plot(phiD(:), Lm)
+plot(phiD(:), Lm0)
 hold off
-legend('Measured','Adjusted')
+legend('Measured','Prediction, adjusted','Prediction, original')
 title('BPA length')
 xlabel('Knee angle, degrees')
 ylabel('Length, m')

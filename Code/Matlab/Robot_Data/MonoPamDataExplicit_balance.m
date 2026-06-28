@@ -31,6 +31,10 @@ classdef MonoPamDataExplicit_balance < handle
         
         % --- Stiffness-aware fields (minimizeFlx-style) ---
         L_p                         %Deformed location matrix (updated attachment points)
+        Funit                       %Force direction in hip frame
+        sL_p                        %Segment lengths
+        Lmt_p                       %Musculotendon length with deformed geometry and constant length offset
+        uD_p                        %Force unit direction in tibia frame with deformed geometry
         strain_p                    %Contraction with bracket deformation, tendon stretch, and constant length offset
         F_p                         %Force vector with stiffness effects
         mA_p                        %Moment arm with stiffness effects
@@ -52,7 +56,6 @@ classdef MonoPamDataExplicit_balance < handle
         MomentArm
         Fmax
         Force
-        Fbal
         Torque
     end
     
@@ -230,11 +233,11 @@ classdef MonoPamDataExplicit_balance < handle
             rest = obj.RestingL;
 
             if dia == 10    
-                maxF = maxBPAforce(rest,620);
+                maxF = maxBPAforce(rest,'10');
             elseif dia ==20
-                maxF = 1500;
+                maxF = maxBPAforce(rest,'20');
             elseif dia ==40
-                maxF = 6000;
+                maxF = maxBPAforce(rest,'40');
             else
                 disp('Wrong size diameter BPA')
             end
@@ -293,34 +296,38 @@ end
             
             % Force unit vector in hip frame (origin to first non-duplicate point)
             Funit = computeForceVector_local(obj);
+            obj.Funit = Funit;
             
             % Contraction from constant length offset only
             strain_Xi0 = Contraction_local(obj, [], [], obj.Xi0);
             
             % Deformed geometry and tendon stretch
-            [L_p_local, gama_local] = Lok_local(obj, obj.Xi1, obj.Xi2, obj.kSpr, Funit, strain_Xi0, obj.Xi0);
+            [L_p_local, gama_local] = Lok_local(obj, obj.Xi1, obj.Xi2, obj.kSpr, obj.Funit, strain_Xi0, obj.Xi0);
             obj.L_p = L_p_local;
             obj.gama = gama_local;
             
             % Unit direction with deformed geometry
             unitD_p = UD_local(obj, obj.L_p);
+            obj.uD_p = unitD_p;
             
             % Segment lengths with deformed geometry
             sL_p = seg_local(obj, obj.L_p);
-            
+            obj.sL_p = sL_p;
+
             % Musculotendon length with deformed geometry and Xi0
-            Lmt_p_local = LMT_local(sL_p, obj.Xi0);
+            Lmt_p_local = LMT_local(obj.sL_p, obj.Xi0);
+            obj.Lmt_p = Lmt_p_local;
             
             % Contraction with bracket deformation, tendon stretch, and Xi0
             strain_p_local = Contraction_local(obj, Lmt_p_local, obj.gama, []);
             obj.strain_p = strain_p_local;
             
             % Force with stiffness effects
-            F_p_local = Force_local(obj, unitD_p, obj.strain_p);
+            F_p_local = Force_local(obj, obj.uD_p, obj.strain_p);
             obj.F_p = F_p_local;
             
             % Moment arm with stiffness effects
-            mA_p_local = Mom_local(obj, obj.L_p, unitD_p);
+            mA_p_local = Mom_local(obj, obj.L_p, obj.uD_p);
             obj.mA_p = mA_p_local;
             
             % Torque with stiffness effects
