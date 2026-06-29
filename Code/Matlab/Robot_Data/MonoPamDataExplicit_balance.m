@@ -512,7 +512,8 @@ valid = norms > 1e-3 & all(~isnan(Fbr), 2);
 u_hat_all = normalize_local(Fbr);
 
 % Vectorized k_b computation
-K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
+K_bracket = diag([X1, X2, X1]);       %bracket stiffness matrix
+C_bracket = inv(K_bracket);             %compliance matrix
 u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
 K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
 k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
