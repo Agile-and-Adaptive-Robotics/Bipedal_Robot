@@ -8,9 +8,9 @@
 % clear all
 % close all
 
-current_dir = cd;
-all_code = fullfile(current_dir,'../..');
-addpath(genpath(all_code));
+% current_dir = cd;
+% all_code = fullfile(current_dir,'../..');
+% addpath(genpath(all_code));
 % addpath('Open_Sim_Bone_Geometry')
 
 %% Retrieve the datasets

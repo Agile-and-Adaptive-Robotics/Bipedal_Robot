@@ -59,9 +59,10 @@ for k = 1:numel(allBPA)
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'FunctionTolerance', 1e-3);
-    goal = [0 0 0];
-%     weight = 1./max(a0(trainIdx,:));
-    opts.HybridFcn = {@fgoalattain, goal};
+hybridOpts = optimoptions('fgoalattain', ...
+    'Display','iter');
+
+opts.HybridFcn = {@fgoalattain, hybridOpts};
 %     opts.OutputFcn = {@debugPop};
 
     % Run optimization
@@ -143,7 +144,7 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 32;
+pick = 1;
 sol_actual = filtered_results(pick, 2:5);
 [f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
 
@@ -294,8 +295,8 @@ for j = 1:3
     plot(bpa(i).Ak, bpa(i).mA, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');      % Original
     plot(bpa(i).Ak, G_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');                   % Predicted
 
-    ylabel(tL,'\bf Moment arm, m','Interpreter','tex')
-    xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
+    ylabel(tMA,'\bf Moment arm, m','Interpreter','tex')
+    xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex')
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
@@ -338,8 +339,8 @@ for j = 1:3
     scatter(bpa(i).A_h, strain_h/kmax, 60, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7},'DisplayName', 'Measured');
     plot(bpa(i).Ak, bpa(i).strain/kmax, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');
     plot(bpa(i).Ak, bpa(i).strain_p/kmax, '-', 'Color', '#CD34B5', 'LineWidth', 2.5,'DisplayName', 'Predicted');
-    ylabel(tL,'\bf \epsilon^*','Interpreter','tex')
-    xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
+    ylabel(tS,'\bf \epsilon^*','Interpreter','tex')
+    xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');

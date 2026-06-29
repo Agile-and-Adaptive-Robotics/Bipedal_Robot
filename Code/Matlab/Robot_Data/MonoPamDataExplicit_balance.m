@@ -512,13 +512,16 @@ valid = norms > 1e-3 & all(~isnan(Fbr), 2);
 u_hat_all = normalize_local(Fbr);
 
 % Vectorized k_b computation
-K_bracket = diag([X1, X2, X1]);       %bracket stiffness matrix
-C_bracket = inv(K_bracket);             %compliance matrix
+% K_bracket = diag([X1, X2, X1]);       % bracket stiffness matrix
+C_bracket = diag([1/X1, 1/X2, 1/X1]);             % compliance matrix
 u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
-K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
-k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
-k_b = reshape(k_b, [N, 1]);
-k_eff = 1 ./ (1 ./ k_b + 1 ./ kSpr);  % Nx1
+C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
+c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));
+c_b = reshape(c_b, [N, 1]);
+cSpr = 1/kSpr;              % compliance of the tendon
+c_eff = c_b + cSpr;         % effective compliance along u
+k_eff = 1 ./ c_eff;         % effective stiffness along u
+% k_eff = 1 ./ (1 ./ k_b + 1 ./ kSpr);  % Nx1
 
 for i = 1:N
     if ~valid(i)
@@ -564,7 +567,7 @@ for i = 1:N
         F_mag = festo4(D, relstrain, P) * mif;
 
         % Bracket displacement
-        e_bkt = K_bracket \ (F_mag * unit_vec');
+        e_bkt = C_bracket * (F_mag * unit_vec');
 
         e_axial(i) = e_bkt(1);
         e_bendY(i) = e_bkt(2);

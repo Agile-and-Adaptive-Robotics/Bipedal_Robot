@@ -23,9 +23,10 @@ opts = optimoptions('gamultiobj', ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'PlotFcn', {@gaplotpareto3D_simple}, ...
         'FunctionTolerance', 4e-3);
-goal = [0 0 0];
-weight = 1./a;
-opts.HybridFcn = {@fgoalattain, goal, weight};
+hybridOpts = optimoptions('fgoalattain', ...
+    'Display','iter');
+
+opts.HybridFcn = {@fgoalattain, hybridOpts};
     
 [x, fvals, exitflag, output, population, scores] = gamultiobj( ...
     @min1, 3, ...
@@ -61,7 +62,7 @@ results_sort = sortrows(results,[11 8 9 10 5 6 7]); %Sort results first on dista
 results_sort_actual = [results_sort(:,1), results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5:end)];
 
 %% Pick ultimate solution
-pick = 5; %Pick the best solution from the sorted results (should be 1)
+pick = 1; %Pick the best solution from the sorted results (should be 1)
 sol_actual = results_sort_actual(pick, 2:4);  %Best solution                                   
 [u,v,bpa] = minimizeFlxPin(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out       
 

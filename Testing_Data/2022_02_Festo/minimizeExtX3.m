@@ -296,7 +296,7 @@ Lm_adj = Lmt - tendon - 2*fitn - X0 - gama - delta_L; %BPA length, either real o
 contraction = (rest - Lm_adj) / rest;
 
 if ~isempty(X3)
-    debug_contraction_plot = true;
+    debug_contraction_plot = false;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         str = sprintf("%.3f Lrest, %.3f tendon",rest, tendon);
         figure('Name',str);
@@ -484,12 +484,16 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X2, X1, X1]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X2, X1]);       %bracket stiffness
+    C_bracket = diag([1/X1, 1/X2, 1/X1]); %bracket compliance 
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
-    K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
-    k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
-    k_b = reshape(k_b, [N, 1]);
-    k_eff = 1 ./ (1 ./ k_b + 1 / kSpr);  % Nx1       
+    C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
+    c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));
+    c_b = reshape(c_b, [N, 1]);
+    cSpr = 1/kSpr;          %compliance of tendon
+    c_eff = c_b + cSpr;        %effective compliance along actuator path
+    k_eff = 1 ./ c_eff;         % effective stiffness along u
+     
     
     % Parallel root solve
     parfor i = 1:N
@@ -569,8 +573,14 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         % Cable elongation
             if tendon > 0
                 r_bracket = unit_vec * e_bkt;
-%                 e_cable(i) = r-r_bracket;
+                r_cable = r-r_bracket;
                 e_cable(i) = F_mag/kSpr;
+
+                if abs(r_cable - e_cable(i)) > 1e-6
+                    warning('fortz:LengthBalanceMismatch', ...
+                        'Frame %d: e_cable = %.9g, r_cable = %.9g, diff = %.9g', ...
+                        i, e_cable(i), r_cable, r_cable - e_cable(i));
+                end
             end
         end  
     end

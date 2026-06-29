@@ -212,12 +212,14 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
+    K_bracket = diag([X1, X2, X1]);       %bracket stiffness
+    C_bracket = diag([1/X1, 1/X2, 1/X1]); %bracket compliance 
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
-    K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
-    k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
-    k_b = reshape(k_b, [N, 1]);
-    k_eff = k_b;
+    C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
+    c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));
+    c_b = reshape(c_b, [N, 1]);
+    c_eff = c_b;        %effective compliance
+    k_eff = 1 ./ c_eff;         % effective stiffness along u
     
     % Allocate outputs
     e_axial = zeros(N, 1);
