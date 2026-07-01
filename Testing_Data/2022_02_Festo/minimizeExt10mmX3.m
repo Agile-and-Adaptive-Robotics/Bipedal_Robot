@@ -10,15 +10,15 @@ fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineSc
 
 load minimizeFlxPin10_results sol_actual
 g = sol_actual;
-[a1, ~] = minimizeExtX3(g(1), g(2), g(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
+[a1, ~] = minimizeExtX3(-g(1), g(2), g(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
 [a2, bpa2] = minimizeExtX3(-g(1), g(2), g(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
-% clear sol_actual
+clear sol_actual
 baselineScores1 = a1./(a0);  % RMSE, FVU, Max Residual, normalized to baselineScores
 fprintf('Normalized to baseline score \n Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
 baselineScores2 = a2./(a0); % RMSE, FVU, Max Residual, normalized to baselineScores
 fprintf('Normalized to baseline score \n Baseline using best guess: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores2(:,1)),mean(baselineScores2(:,2)),mean(baselineScores2(:,3)));
 %% Cross-validation setup
-allBPA = [1,3,4];           %We're going to skip 42cm l_rest with a tendon
+allBPA = [1,2,3,4];           %We're going to skip 42cm l_rest with a tendon
 labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
 validLabels = labels(allBPA);
 numBPA = numel(allBPA);
@@ -59,10 +59,10 @@ for k = 1:numel(allBPA)
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
         'FunctionTolerance', 1e-3);
-hybridOpts = optimoptions('fgoalattain', ...
-    'Display','iter');
+% hybridOpts = optimoptions('fgoalattain', ...
+%     'Display','iter');
 
-opts.HybridFcn = {@fgoalattain, hybridOpts};
+% opts.HybridFcn = {@fgoalattain, hybridOpts};
 %     opts.OutputFcn = {@debugPop};
 
     % Run optimization
@@ -146,7 +146,7 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
  
 pick = 1;
 sol_actual = filtered_results(pick, 2:5);
-[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
+[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), 0.2, 1:4);  % [f: 4x3], [bpa: full struct]
 
 fprintf('\nPerformance with sol_actual:\n');
 disp(array2table(f, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
@@ -167,16 +167,18 @@ c{7} = '#0000FF'; % indigo → Measured
 c{8} = '#000000'; % black
 
 labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
-% tileIdxs = [1, 5, 8, 12];  % A, B, C, D
-tileIdxs = [1, 5, 10];  % A, B, C
+tileIdxs = [1, 5, 8, 12];  % A, B, C, D
+% tileIdxs = [1, 5, 10];  % A, B, C
+el = numel(tileIdxs);
 tileSpans = [1 3];      % Span: [rows cols]
+% tileSpans = [1 1];      % Span: [rows cols]
 tileOrder = [4, 3, 1, 2];
 tileLabels = {'(A)', '(B)', '(C)', '(D)'};
 % Annotation positions [x, y] in normalized figure units
-% xAnn = [0.035, 0.51, 0.035, 0.51];  % (A), (B), (C), (D)
-% yAnn = [0.89, 0.89, 0.41, 0.41];    % (A), (B), (C), (D)
-xAnn = [0.035, 0.51, 0.265];  % (A), (B), (C)
-yAnn = [0.89, 0.89, 0.41];    % (A), (B), (C)
+xAnn = [0.035, 0.51, 0.035, 0.51];  % (A), (B), (C), (D)
+yAnn = [0.89, 0.89, 0.41, 0.41];    % (A), (B), (C), (D)
+% xAnn = [0.035, 0.51, 0.265];  % (A), (B), (C)
+% yAnn = [0.89, 0.89, 0.41];    % (A), (B), (C)
 sz = 60;
 
 %for plotting 
@@ -186,7 +188,7 @@ figT = figure('Name','Torque','Color','w');
 figT.Position = [100 100 950 700];
 tT = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
 
-for j = 1:3
+for j = 1:el
     i = tileOrder(j);
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
@@ -235,7 +237,7 @@ figL = figure('Name','Muscle Length','Color','w');
 figL.Position = [100 100 950 700];
 tL = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
 
-for j = 1:3
+for j = 1:el
     i = tileOrder(j);
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
@@ -283,7 +285,7 @@ figMA = figure('Name','Moment Arm - 2x2','Color','w');
 figMA.Position = [100 100 950 700];
 tMA = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
 
-for j = 1:3
+for j = 1:el
     i = tileOrder(j);
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
@@ -329,7 +331,7 @@ figS = figure('Name','Relative Strain','Color','w');
 figS.Position = [100 100 950 700];
 tS = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
 
-for j = 1:3
+for j = 1:el
     i = tileOrder(j);
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
