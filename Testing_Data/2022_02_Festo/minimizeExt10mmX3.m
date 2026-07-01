@@ -40,11 +40,13 @@ ub = [-0.005 * 100, log10(g(2)), log10(g(3)), 3];
 
 clear sol_actual
 %% Solver
-for k = 1:numel(allBPA)
-    holdoutIdx = allBPA(k);
-    fprintf('\n---- Cross-validation: Holding out BPA #%d (%s) ----\n', ...
-        holdoutIdx, labels(holdoutIdx));
-
+list = nchoosek(allBPA,2);          %Choose how many BPAs for training, the others for validation
+for k = 1:length(list)
+    holdoutIdx = list(k,:);
+    for n = 1:size(holdoutIdx,2)
+        fprintf('\n---- Cross-validation: Holding out BPA #%d (%s) ----\n', ...
+            holdoutIdx(n), labels(holdoutIdx(n)));
+    end
     trainIdx = setdiff(allBPA, holdoutIdx);
     baseline_train = baselineScores(trainIdx,:);
 
@@ -53,8 +55,8 @@ for k = 1:numel(allBPA)
         'UseParallel', true, ...
         'Display', 'iter', ...
         'PlotFcn', {@gaplotpareto3D_simple}, ...    %'InitialPopulationRange',[-.015*100, log10(8e4), log10(8e3), 0.1; -0.007*100, log10(8e6), log10(8e5), 0.4], ...
-        'PopulationSize', 50, ... %was 150
-        'MaxGenerations', 95, ... %was 750
+        'PopulationSize', 150, ... %was 150
+        'MaxGenerations', 750, ... %was 750
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...
