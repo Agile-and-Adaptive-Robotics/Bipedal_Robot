@@ -40,7 +40,7 @@ ub = [-0.005 * 100, log10(g(2)), log10(g(3)), 3];
 
 clear sol_actual
 %% Solver
-list = nchoosek(allBPA,2);          %Choose how many BPAs for training, the others for validation
+list = nchoosek(allBPA,1);          %Choose how many BPAs to hold out, the others for training
 for k = 1:length(list)
     holdoutIdx = list(k,:);
     for n = 1:size(holdoutIdx,2)
