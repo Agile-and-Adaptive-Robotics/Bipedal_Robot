@@ -8,17 +8,19 @@ clear; clc; close all
 baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
-load minimizeFlxPin10_results sol_actual
+load minimizeFlxPin10_results_20260701.mat results_sort_actual
+pick = 1; %Pick the best solution from the sorted results (should be 1)
+sol_actual = results_sort_actual(pick, 2:4);  %Best solution
 g = sol_actual;
 [a1, ~] = minimizeExtX3(-g(1), g(2), g(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
-[a2, bpa2] = minimizeExtX3(-g(1), g(2), g(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
-clear sol_actual
+[a2, bpa2] = minimizeExtX3(-g(1), g(2), g(3), 1.5, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
+clear sol_actual pick results_sort_actual
 baselineScores1 = a1./(a0);  % RMSE, FVU, Max Residual, normalized to baselineScores
 fprintf('Normalized to baseline score \n Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
 baselineScores2 = a2./(a0); % RMSE, FVU, Max Residual, normalized to baselineScores
 fprintf('Normalized to baseline score \n Baseline using best guess: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores2(:,1)),mean(baselineScores2(:,2)),mean(baselineScores2(:,3)));
 %% Cross-validation setup
-allBPA = [1,2,3,4];           %We're going to skip 42cm l_rest with a tendon
+allBPA = [1,3,4];           %We're going to skip 42cm l_rest with a tendon
 labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
 validLabels = labels(allBPA);
 numBPA = numel(allBPA);
@@ -27,11 +29,11 @@ results_cv = cell(1, numBPA);
 scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out validation
 
 %% Problem bounds
-% lb = [-0.020 * 100, log10(5e3), log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-% ub = [-0.005 * 100, log10(5e7), log10(5e7), 3];
+% lb = [-0.020 * 100, log10(5e3), log10(5e3), 0.1];   % [cm, log10(N/m), log10(N/m), unitless]
+% ub = [-0.005 * 100, log10(5e7), log10(5e7), 0.33];
 
-lb = [-0.020 * 100, log10(g(2)), log10(g(3)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [-0.005 * 100, log10(g(2)), log10(g(3)), 3];
+lb = [-g(1) * 100, log10(g(2)), log10(g(3)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+ub = [-g(1) * 100, log10(g(2)), log10(g(3)), 3];
 
 % A = [0 -1 1 0; ...              % x2 (bending) is less stiff than x1 (axial), (x2 <= x1)
 %      0 0 0 0; ...
@@ -40,6 +42,7 @@ ub = [-0.005 * 100, log10(g(2)), log10(g(3)), 3];
 
 clear sol_actual
 %% Solver
+numHold = 1;                        %Number of BPAs held out for validation
 list = nchoosek(allBPA,1);          %Choose how many BPAs to hold out, the others for training
 for k = 1:length(list)
     holdoutIdx = list(k,:);
@@ -100,22 +103,29 @@ end
 all_candidates = [];  % Will collect [foldIdx, x(3), fvals(3), valF(3), dist]
 
 for i = 1:numBPA
-    fold = results_cv{i}.foldIdx;           % Nx1
+    fold = results_cv{i}.foldIdx;           % NxnumHold
     x = results_cv{i}.optParams_all;        % Nx4
     train = results_cv{i}.trainScores_all;  % Nx3
     val = results_cv{i}.validation_all;     % Nx3
     dist = results_cv{i}.distance_all;      % Nx1
-    rows = [fold, x, train, val, dist];     % Nx12
+    rows = [fold, x, train, val, dist];     % Nx(11+numHold)
     all_candidates = [all_candidates; rows];
 end
 
+%% Dynamic column indices before de-normalizing
+holdCols  = 1:numHold;
+xCols     = numHold + (1:4);
+trainCols = numHold + 4 + (1:3);
+valCols   = numHold + 7 + (1:3);
+distCol   = numHold + 11;
+
 %% Sort by validation distance first, then validation metrics
 results = all_candidates;  % [fold, Xi0, Xi1, Xi2, Xi3, train (3), val (3), dist]
-results_sort = sortrows(results, [12 9 10 11 6 7 8]);  % sort by distance, then val, then train
+results_sort = sortrows(results, [distCol valCols trainCols]);  % sort by distance, then val, then train
 
 %% De-normalize to get physical parameters
-x_actual = [results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5)];
-results_sort_actual = [results_sort(:,1), x_actual, results_sort(:,6:end)];
+x_actual = [results_sort(:,xCols(1))/100, 10.^results_sort(:,xCols(2)), 10.^results_sort(:,xCols(3)), results_sort(:,xCols(4))];
+results_sort_actual = [results_sort(:,holdCols), x_actual, results_sort(:,trainCols), results_sort(:,valCols), results_sort(:,distCol)];
 
 %% --- Filter Pareto candidates against baseline on BPAs 1, 3 & 4 ---
 N = size(results_sort_actual, 1);
@@ -123,10 +133,10 @@ keep = false(N,1);
 
 for ii = 1:N
     % extract decision variables
-    Xi0 = results_sort_actual(ii,2);
-    Xi1 = results_sort_actual(ii,3);
-    Xi2 = results_sort_actual(ii,4);
-    Xi3 = results_sort_actual(ii,5);
+    Xi0 = results_sort_actual(ii,xCols(1));
+    Xi1 = results_sort_actual(ii,xCols(2));
+    Xi2 = results_sort_actual(ii,xCols(3));
+    Xi3 = results_sort_actual(ii,xCols(4));
 
     % re-evaluate on all 4 BPAs
     f_all = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, 1:4);   % returns 4×3 [RMSE, FVU, MaxResidual]
@@ -146,9 +156,9 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 1;
-sol_actual = filtered_results(pick, 2:5);
-[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), 0.2, 1:4);  % [f: 4x3], [bpa: full struct]
+pick = 24;
+sol_actual = filtered_results(pick, xCols);
+[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
 
 fprintf('\nPerformance with sol_actual:\n');
 disp(array2table(f, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...

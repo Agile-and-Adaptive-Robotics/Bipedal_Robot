@@ -97,6 +97,9 @@ if nargin < 5 || isempty(idx_val)
         idx_val = 1:nBPA;
 end
 
+[ke.strain_f] = deal([]);
+[ke.Lm_f] = deal([]);
+
 bpa_all = ke;  % initialize
 f_all = NaN(nBPA, 3);
 
@@ -176,6 +179,8 @@ bpa_i.Lmt_p = Lmt_p;
 bpa_i.mA_p = mA_p;
 bpa_i.F_p = F_p;
 bpa_i.M_p = M_p;
+bpa_i.strain_f = strain_f;
+bpa_i.Lm_f = bpa_i.rest .* (1 - strain_f);
 bpa_i.strain_p   = strain_p;
 bpa_i.gama   = gemma;
 
@@ -296,7 +301,7 @@ Lm_adj = Lmt - tendon - 2*fitn - X0 - gama - delta_L; %BPA length, either real o
 contraction = (rest - Lm_adj) / rest;
 
 if ~isempty(X3)
-    debug_contraction_plot = false;
+    debug_contraction_plot = true;
     if exist('debug_contraction_plot', 'var') && debug_contraction_plot
         str = sprintf("%.3f Lrest, %.3f tendon",rest, tendon);
         figure('Name',str);
@@ -381,15 +386,15 @@ Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
-Pbr = [-3.15, -54.78, 75.06]/1000;                          %from hip origin to lower section of the superior anterior bracket on the Bifemsh_Pam
+Pbr = [-2.65, -54.71, 75.06]/1000;                          %from hip origin to lower section of the superior anterior bracket on the Bifemsh_Pam
 % Pbr = [-7.325, -22.27, 75.06]/1000;                          %from hip origin to midpoint between two bolt holes on superior anterior bracket of the Bifemsh_Pam
 phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
 thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
 RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
        sin(thetabrA) cos(thetabrA) 0; ...
        0    0   1];
-pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
-% Now calculate angle from x-axis to this vector
+% pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
+% % Now calculate angle from x-axis to this vector
 % thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
 % % % Rotation matrix about y-axis (local frame adjustment)
 % Ry = [cos(thetaY) 0  sin(thetaY);
