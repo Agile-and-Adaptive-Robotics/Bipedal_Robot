@@ -592,13 +592,16 @@ u_hat_all = normalize_local(Fbr);
 
 % Vectorized k_b computation
 K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
+C_bracket = diag([1/X1, 1/X2, 1/X1]);       %project bracket compliance onto force direction
 u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
-K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
-k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
-k_b = reshape(k_b, [N, 1]);
-k_eff = 1 ./ (1 ./ k_b + 1 ./ kSpr);  % Nx1
+C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
+c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));
+c_b = reshape(c_b, [N, 1]);
+cSpr = 1/kSpr;
+c_eff = c_b+cSpr;
+k_eff = 1 ./ c_eff;  % Nx1
 
-for i = 1:N
+parfor i = 1:N
     if ~valid(i)
         continue;
     end
@@ -619,7 +622,7 @@ for i = 1:N
             ) * mif - keff * r;
 
         try
-            r = fzero(relfun, [0, .5]);
+            r = fzero(relfun, [0, Lm-kmax]);
         catch
             r = 0;
         end
@@ -648,7 +651,17 @@ for i = 1:N
         e_bendY(i) = e_bkt(2);
         e_bendZ(i) = e_bkt(3);
         % Cable elongation
-        e_cable(i) = F_mag/kSpr;
+        if tendon > 0
+            r_bracket = unit_vec * e_bkt;
+            r_cable = r-r_bracket;
+            e_cable(i) = F_mag/kSpr;
+
+            if abs(r_cable - e_cable(i)) > 1e-6
+                warning('fortz:LengthBalanceMismatch', ...
+                    'Frame %d: e_cable = %.9g, r_cable = %.9g, diff = %.9g', ...
+                    i, e_cable(i), r_cable, r_cable - e_cable(i));
+            end
+        end
     end
 
 end

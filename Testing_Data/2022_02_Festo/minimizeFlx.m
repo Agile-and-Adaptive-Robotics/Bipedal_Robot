@@ -308,11 +308,14 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
     
     % Vectorized k_b computation
     K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
+    C_bracket = diag([1/X1, 1/X2, 1/X1]);       %project bracket compliance onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
-    K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
-    k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
-    k_b = reshape(k_b, [N, 1]);
-    k_eff = 1 ./ (1 ./ k_b + 1 ./ kSpr);  % Nx1
+    C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
+    c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));
+    c_b = reshape(c_b, [N, 1]);
+    cSpr = 1/kSpr;
+    c_eff = c_b + cSpr;     % effective compliance along u
+    k_eff = 1 ./ c_eff;  % effective stiffness along u
 
 %     ub = rest*KMAX/2;         %upper bound of fzero
     
@@ -327,17 +330,13 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
         unit_vec = u_hat_all(i, :);
         Lm = mL(i);
         
-%         r = 0.0001;     %initial guess
-
         % Solve for r (deflection) using fzero
         % First, compute contraction from Xi0 if deflection is zero 
         contraction0    = ( rest - Lm ) / rest;
         relstrain0      = contraction0 / KMAX;  %relative strain
         if relstrain0 >= 1
             r = 0;
-
         else
-
             relfun = @(r) ...
                 festo4( D, ...
                     (rest - (Lm -  r)) / rest / KMAX, ...
@@ -345,7 +344,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
                 ) * mif - keff * r;
 
             try
-                r = fzero(relfun, [0, .5]);
+                r = fzero(relfun, [0, Lm-kmax]);
             catch
                 r = 0;
             end
@@ -373,9 +372,19 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
             e_axial(i) = e_bkt(1);
             e_bendY(i) = e_bkt(2);
             e_bendZ(i) = e_bkt(3);
+
             % Cable elongation
-%             r_bracket = unit_vec * e_bkt;
-            e_cable(i) = F_mag/kSpr;
+                if tendon > 0
+                    r_bracket = unit_vec * e_bkt;
+                    r_cable = r-r_bracket;
+                    e_cable(i) = F_mag/kSpr;
+    
+                    if abs(r_cable - e_cable(i)) > 1e-6
+                        warning('fortz:LengthBalanceMismatch', ...
+                            'Frame %d: e_cable = %.9g, r_cable = %.9g, diff = %.9g', ...
+                            i, e_cable(i), r_cable, r_cable - e_cable(i));
+                    end
+                end
         end
 
     end

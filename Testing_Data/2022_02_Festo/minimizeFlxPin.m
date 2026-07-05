@@ -140,9 +140,9 @@ function LOC = Lok(klass,X1,X2,strain,X0)
             unitD = klass.unitD;            %unit direction of force vector, tibia frame
             Fk = unitD.*FF;                  %Force vector, tibia frame
             pB = L(C,:,1);                  %Distance from knee frame to muscle insertion
-%             Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
-            Pbri = [-27.5, -107.81, -0.54]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever, but at tibial contact, no z offset)
-%             Pbri = [-27.5, -125.91, -0.54]/1000;     %vector from knee ICR to upper bolt
+            % Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
+            % Pbri = [-27.5, -107.81, -0.54]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever, but at tibial contact, no z offset)
+            Pbri = [-27.5, -125.91, -0.54]/1000;     %vector from knee ICR to upper bolt
             pkbrB = pB-Pbri;                  %vector from bracket to point B, in the knee frame
             thetabrB = atan2(pkbrB(2),pkbrB(1));   %angle between pbrB and x axis
             RkbrZ = [cos(thetabrB) -sin(thetabrB) 0; ...     %Rotation matrix
@@ -228,102 +228,57 @@ function [e_axial, e_bendY, e_bendZ] = fortz(klass,Fbr,X1,X2,X0)
     
     % Parallel root solve
    parfor i = 1:N
-    if ~valid(i)
-        continue;
-    end
-
-    % Per-instance constants
-    keff = k_eff(i);
-    unit_vec = u_hat_all(i, :);
-
-    % Bracket stiffness disabled (rigid bracket)
-    if isinf(X1) && isinf(X2)
-        e_axial(i) = 0;
-        e_bendY(i) = 0;
-        e_bendZ(i) = 0;
-        continue;
-    end
-    
-    % Flexible case: run Newton-Raphson
-        r = 0.0001;  % Initial guess
-
-        for iter = 1:50
-            contraction = (rest - (mL(i) - r)) / rest;
-            rel = contraction / KMAX;
-
-            fM = festo4(D,rel, P) * mif;
-            fT = keff * r;
-            Fbal = fM - fT;
-
-            % Numerical derivative
-            dr = 1e-6;
-            contraction_d = (rest - (mL(i) - ( r + dr)) ) / rest;
-            rel_d = contraction_d / KMAX;
-            fM_d = festo4(D,rel_d, P) * mif;
-            Fbal_d = fM_d - keff * (r + dr);
-            dF = (Fbal_d - Fbal) / dr;
-
-            %Avoid zero slope
-            if abs(dF) < 1e-12 || isnan(dF)
-                r = NaN;
-            break;
-            end
-            
-            % Newton-Raphson update
-            r = r - Fbal / dF;
-
-            if abs(Fbal) < 1e-6
-                break;
-            end
+        if ~valid(i)
+            continue;
         end
-
-        % Final force magnitude
-        contraction = (rest - (mL(i) - r)) / rest;
-        relstrain = contraction / KMAX;
-        F_mag = festo4(D, relstrain, P) * mif;
-
-        % Bracket displacement
-        e_bkt = K_bracket \ (F_mag * unit_vec');
-
-        e_axial(i) = e_bkt(1);
-        e_bendY(i) = e_bkt(2);
-        e_bendZ(i) = e_bkt(3);
-
-
-%     % Solve for r (deflection) using fzero
-%     % First, compute contraction from Xi0 if deflection is zero 
-%     contraction0    = ( rest -  mL(i)  ) / rest;
-%     relstrain0      = contraction0 / KMAX;  %relative strain
-%     if relstrain0 >= 1
-%         r = 0;
-% %     elseif contraction0 <= -0.03
-% %         r = NaN;
-%     else
-%     
-%         relfun = @(r) ...
-%             festo4( D, ...
-%                 (rest - (mL(i) -  r)) / rest / KMAX, ...
-%                 P) * mif - keff * r;
-% 
-%         try
-%             r = fzero(relfun, [0, 0.2]);
-%         catch
-%             r = 0;
-%         end
-%         r = max(r,0); %guard against r being slightly negative.
-%     end
-% 
-%     % Final force magnitude
-%         contraction = (rest - (mL(i) -  r)) / rest;
-%         relstrain = contraction / KMAX;
-%         F_mag = festo4(D, relstrain, P) * mif;
-% 
-%         % Bracket displacement
-%         e_bkt = K_bracket \ (F_mag * unit_vec');
-% 
-%         e_axial(i) = e_bkt(1);
-%         e_bendY(i) = e_bkt(2);
-%         e_bendZ(i) = e_bkt(3);
+    
+        % Per-instance constants
+        keff = k_eff(i);
+        unit_vec = u_hat_all(i, :);
+        Lm = mL(i);
+    
+        % Bracket stiffness disabled (rigid bracket)
+        if isinf(X1) && isinf(X2)
+            e_axial(i) = 0;
+            e_bendY(i) = 0;
+            e_bendZ(i) = 0;
+            continue;
+        end
+        
+        contraction0    = ( rest - Lm ) / rest;
+        relstrain0      = contraction0 / KMAX;  %relative strain
+        if relstrain0 >= 1
+            r = 0;
+        else
+            relfun = @(r) ...
+                festo4( D, ...
+                    (rest - (Lm -  r)) / rest / KMAX, ...
+                    P  ...
+                ) * mif - keff * r;
+    
+            try
+                r = fzero(relfun, [0, Lm-kmax]);
+            catch
+                r = 0;
+            end
+            r = max(r,0); %guard against r being slightly negative.
+        end
+        
+        if r == 0
+            continue;
+        else
+            % Final force magnitude
+            contraction = (rest - (Lm - r)) / rest;
+            relstrain = contraction / KMAX;
+            F_mag = festo4(D, relstrain, P) * mif;
+    
+            % Bracket displacement
+            e_bkt = C_bracket * (F_mag * unit_vec');
+    
+            e_axial(i) = e_bkt(1);
+            e_bendY(i) = e_bkt(2);
+            e_bendZ(i) = e_bkt(3);
+        end
    end
 end
 

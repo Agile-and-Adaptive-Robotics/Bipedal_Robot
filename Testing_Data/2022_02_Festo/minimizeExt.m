@@ -350,17 +350,15 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     
     % Vectorized k_b computation
     K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
+    C_bracket = diag([1/X1, 1/X2, 1/X1]);       %project bracket compliance onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
-    K_rep = repmat(K_bracket, [1, 1, N]);   % [3x3xN]
-    k_b = pagemtimes(pagemtimes(u_hat, K_rep), permute(u_hat, [2, 1, 3]));
-    k_b = reshape(k_b, [N, 1]);
+    C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
+    c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));
+    c_b = reshape(c_b, [N, 1]);
+    cSpr = 1/kSpr;
 
-    if isinf(X1) && isinf(X2)
-        k_eff = kSpr*ones(size(mL));
-    else
-        k_eff = 1 ./ (1 ./ k_b + 1 / kSpr);  % Nx1
-    end
-    
+    c_eff = c_b + cSpr;     %effective compliance
+    k_eff = 1 ./c_eff;  % effective stiffness, Nx1
 
     % Parallel root solve
     parfor i = 1:N
@@ -368,56 +366,44 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
             continue;
         end
         
-        % Flexible case: run Newton-Raphson
         % Per-instance constants
         keff = k_eff(i);
         unit_vec = u_hat_all(i, :);
         Lm = mL(i);
-        r = 1e-3;  % Initial guess                
+        
+        % Solve for r (deflection) using fzero
+        % First, compute contraction from Xi0 if deflection is zero 
+        contraction0    = ( rest - Lm ) / rest;
+        relstrain0      = contraction0 / KMAX;  %relative strain
+        if relstrain0 >= 1
+            r = 0;
+        else
+            relfun = @(r) ...
+                festo4( D, ...
+                    (rest - (Lm -  r)) / rest / KMAX, ...
+                    P  ...
+                ) * mif - keff * r;
 
-        for iter = 1:50
-            contraction = (rest - (Lm - r)) / rest;
-            rel = contraction / KMAX;
-
-            fM = festo4(D, rel, P) * mif;
-            fT = keff * r;
-            Fbal = fM - fT;
-
-            % Numerical derivative
-            dr = 1e-6;
-            contraction_d = (rest - (Lm - (r + dr)) ) / rest;
-            rel_d = contraction_d / KMAX;
-            
-            fM_d = festo4(D, rel_d, P) * mif;
-            Fbal_d = fM_d - keff * (r + dr);
-            dF = (Fbal_d - Fbal) / dr;
-
-            %Avoid zero slope
-            if abs(dF) < 1e-12 || isnan(dF)
-                r = NaN;
-            break;
+            try
+                r = fzero(relfun, [0, Lm-kmax]);
+            catch
+                r = 0;
             end
-            
-            % Newton-Raphson update
-            r = r - Fbal / dF;
-
-            if abs(Fbal) < 1e-6
-                break;
-            end
+            r = max(r,0); %guard against r being slightly negative.
         end
 
-        r = max(r,0);   %guard against negative r values
-        
-        if isinf(X1) && isinf(X2) && tendon > 0
-            % Rigid bracket: no deformation, optional cable stretch
+        if r == 0
+            continue;
+        elseif isinf(X1) && isinf(X2)
+            % Rigid body: no bracket deformation
             e_axial(i) = 0;
             e_bendY(i) = 0;
             e_bendZ(i) = 0;
-            e_cable(i) = r;  % Small value if needed
+            e_cable(i) = r;  % All elongation goes to cable
             continue;
         else
             % Final force magnitude
-            contraction = (rest - (Lm -  r )) / rest;
+            contraction = (rest - (Lm - r)) / rest;
             relstrain = contraction / KMAX;
             F_mag = festo4(D, relstrain, P) * mif;
 
@@ -429,9 +415,19 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
             e_bendZ(i) = e_bkt(3);
 
             % Cable elongation
-            e_cable(i) = F_mag/kSpr;
-
+                if tendon > 0
+                    r_bracket = unit_vec * e_bkt;
+                    r_cable = r-r_bracket;
+                    e_cable(i) = F_mag/kSpr;
+    
+                    if abs(r_cable - e_cable(i)) > 1e-6
+                        warning('fortz:LengthBalanceMismatch', ...
+                            'Frame %d: e_cable = %.9g, r_cable = %.9g, diff = %.9g', ...
+                            i, e_cable(i), r_cable, r_cable - e_cable(i));
+                    end
+                end
         end
+
     end
 end
 

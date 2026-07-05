@@ -544,7 +544,7 @@ for i = 1:N
             ) * mif - keff * r;
 
         try
-            r = fzero(relfun, [0, .5]);
+            r = fzero(relfun, [0, Lm-kmax]);
         catch
             r = 0;
         end
@@ -572,8 +572,19 @@ for i = 1:N
         e_axial(i) = e_bkt(1);
         e_bendY(i) = e_bkt(2);
         e_bendZ(i) = e_bkt(3);
+        
         % Cable elongation
-        e_cable(i) = F_mag/kSpr;
+        if tendon > 0
+            r_bracket = unit_vec * e_bkt;
+            r_cable = r-r_bracket;
+            e_cable(i) = F_mag/kSpr;
+
+            if abs(r_cable - e_cable(i)) > 1e-6
+                warning('fortz:LengthBalanceMismatch', ...
+                    'Frame %d: e_cable = %.9g, r_cable = %.9g, diff = %.9g', ...
+                    i, e_cable(i), r_cable, r_cable - e_cable(i));
+            end
+        end
     end
 
 end

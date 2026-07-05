@@ -9,8 +9,8 @@ fprintf('Baseline training: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',a(1),a(
 fprintf('Baseline validation: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',b(1),b(2),b(3));
 %% Problem setup
 
-lb = [0, log10(4e4), log10(4e3)];
-ub = [0.020*100, log10(5e7), log10(5e6)];
+lb = [0, log10(1e3), log10(1e3)];
+ub = [0.030*100, log10(5e6), log10(5e6)];
 
 %% Solve 
 opts = optimoptions('gamultiobj', ...
@@ -62,7 +62,7 @@ results_sort = sortrows(results,[11 8 9 10 5 6 7]); %Sort results first on dista
 results_sort_actual = [results_sort(:,1), results_sort(:,2)/100, 10.^results_sort(:,3), 10.^results_sort(:,4), results_sort(:,5:end)];
 
 %% Pick ultimate solution
-pick = 1; %Pick the best solution from the sorted results (should be 1)
+pick = 53; %Pick the best solution from the sorted results (should be 1)
 sol_actual = results_sort_actual(pick, 2:4);  %Best solution                                   
 [u,v,bpa] = minimizeFlxPin(sol_actual(1),sol_actual(2),sol_actual(3));           % Now pull bpa structures out       
 
