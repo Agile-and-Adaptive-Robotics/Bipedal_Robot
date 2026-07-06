@@ -225,7 +225,7 @@ function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain_predef,X0)
     FF (FF < 0) = 0;
     F = FF.*Funit;  % N×3, already in hip frame
     
-    pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
+    pA = L(1,:,(klass.Ak==0));                                  %Distance from hip origin to muscle insertion
             switch klass.dBPA
                 case 20
 %                   Pbr = [-0.8100  -20.222   31.66]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
@@ -242,13 +242,13 @@ function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain_predef,X0)
                    0    0   1];
             pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
             % Now calculate angle from x-axis to this vector
-            thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
+            % thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
 
-            % Rotation matrix about y-axis (local frame adjustment)
-            Ry = [cos(thetaY)  0  sin(thetaY);
-                  0            1  0;
-                 -sin(thetaY) 0   cos(thetaY)];
-            Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
+            % % Rotation matrix about y-axis (local frame adjustment)
+            % Ry = [cos(thetaY)  0  sin(thetaY);
+            %       0            1  0;
+            %      -sin(thetaY) 0   cos(thetaY)];
+            % Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
             Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame              
             
             Fbrh = zeros(N,3);
@@ -285,8 +285,11 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
     N = size(Fbr,1);
     % Initialize outputs
     [e_axial, e_bendY, e_bendZ, e_cable] = deal(zeros(N,1));
-    
-    
+        
+    if isinf(X1) && isinf(X2) && isinf(kSpr)
+        return
+    end
+
     D = klass.dBPA;         %BPA diameter
     if isempty(X0)
         X0 = 0;

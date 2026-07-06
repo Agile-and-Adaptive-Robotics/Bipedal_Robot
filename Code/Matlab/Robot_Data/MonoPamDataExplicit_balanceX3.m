@@ -511,7 +511,8 @@ FF_single(FF_single < 0) = 0;
 FF = klass.BPAcount .* FF_single;
 F = FF .* Funit;  % N×3, already in hip frame
 
-pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
+%Bracket transform
+pA = L(1,:,(klass.Ak==0));               %Distance from hip origin to muscle insertion
 switch klass.Diameter
     case 20
 %       Pbr = [-0.8100  -20.222   31.66]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam

@@ -514,7 +514,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         
         keff = k_eff(i);
         unit_vec = u_hat_all(i, :);
-%         Lm = mL(i);
+        Lm = mL(i);
         
         % Solve for r (deflection) using fzero
         % First, compute contraction from Xi0 if deflection is zero 

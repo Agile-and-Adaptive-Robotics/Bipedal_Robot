@@ -8,7 +8,7 @@ clear; clc; close all
 baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
-load minimizeFlxPin10_results_20260701.mat results_sort_actual
+load minimizeExtPin10_results_20251020_1transform.mat results_sort_actual
 pick = 1; %Pick the best solution from the sorted results (should be 1)
 sol_actual = results_sort_actual(pick, 2:4);  %Best solution
 g = sol_actual;

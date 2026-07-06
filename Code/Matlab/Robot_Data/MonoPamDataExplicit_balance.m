@@ -432,7 +432,7 @@ FF = festo4(D, relstrain, P) * Fm; %Force magnitude
 FF (FF < 0) = 0;
 F = FF.*Funit;  % N×3, already in hip frame
 
-pA = L(1,:,1);                                  %Distance from hip origin to muscle insertion
+pA = L(1,:,(klass.Ak==0));                                  %Distance from hip origin to muscle insertion
 switch klass.Diameter
     case 20
 %       Pbr = [-0.8100  -20.222   31.66]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam

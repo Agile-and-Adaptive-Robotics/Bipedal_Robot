@@ -269,7 +269,7 @@ FF (FF<0) = 0;
 Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
-pA = L(1,:,1);
+pA = L(1,:,(klass.Ak==0));               %Distance from hip origin to muscle insertion
 Pbr = [8.38 20.75 25.1]/1000;           %from centroid of bracket where it starts to cantilever (10mm).
 % Pbr = [-21.33  -79   6.94]/1000;       %from centroid of bracket bolts.
 phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
@@ -279,12 +279,12 @@ RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
        0    0   1];
 pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
 % Now calculate angle from x-axis to this vector
-thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
-% Rotation matrix about y-axis (local frame adjustment)
-Ry = [cos(thetaY)  0  sin(thetaY);
-      0            1  0;
-     -sin(thetaY)  0  cos(thetaY)];
-Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
+% thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
+% % Rotation matrix about y-axis (local frame adjustment)
+% Ry = [cos(thetaY)  0  sin(thetaY);
+%       0            1  0;
+%      -sin(thetaY)  0  cos(thetaY)];
+% Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
 Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
 
 % Transform force into bracket frame
@@ -331,7 +331,9 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         return
     end
     
-    %Initialize inputs
+    if isempty(deltaL)
+        deltaL = 0;
+    end
     D      = klass.dBPA;    %uninflated diameter
     rest   = klass.rest;    %BPA resting length
     tendon = klass.ten;     %tendon length
@@ -340,8 +342,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     mif    = klass.Fm;   %maximum bpa force
     kmax   = klass.Kmax; %maximum contraction length
     KMAX   = (rest-kmax)/rest; %maximum contraction percent
-    P      = klass.P;          %pressure
-    
+    P      = klass.P;          %pressure  
 
     % Normalize force vectors safely
     norms = vecnorm(Fbr, 2, 2);
