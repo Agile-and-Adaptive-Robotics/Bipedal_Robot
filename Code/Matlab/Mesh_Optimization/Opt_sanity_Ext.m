@@ -43,13 +43,18 @@ fprintf('KMAX   = %.6f\n', pred0.KMAX)
 fprintf('kmax   = %.6f m\n', pred0.kmax)
 
 fprintf('\nPath-length check:\n')
-fprintf('maxPathLength  = %.6f m\n', pred0.maxPathLength)
-fprintf('maxPathAngleD  = %.2f deg\n', pred0.maxPathAngleD)
 fprintf('maxPathLength0 = %.6f m\n', pred0.maxPathLength0)
 fprintf('maxPathAngleD0 = %.2f deg\n', pred0.maxPathAngleD0)
 fprintf('restLmt        = %.6f m\n', pred0.restLmt)
 fprintf('cRestLength    = %.6f m\n', pred0.cRestLength)
-fprintf('row5-row6 tendon diagnostic at home = %.6f m\n', pred0.tendonRow56Home)
+
+if isfield(pred0, 'maxPathLength')
+    fprintf('maxPathLength deformed diagnostic = %.6f m\n', pred0.maxPathLength0)
+end
+
+if isfield(pred0, 'maxPathAngleD')
+    fprintf('maxPathAngleD deformed diagnostic = %.2f deg\n', pred0.maxPathAngleD)
+end
 
 fprintf('\nStrain check:\n')
 fprintf('max(strain_f) = %.6f  [includes Xi3, force strain]\n', max(pred0.strain_f))
@@ -59,6 +64,21 @@ fprintf('min(strain_p) = %.6f\n', min(pred0.strain_p))
 fprintf('====================================\n')
 
 %% Plot torque against target
+H = readmatrix('OpenSim_Vasti_Results.txt', ...
+    'FileType', 'text', ...
+    'NumHeaderLines', 7);
+
+ctx.humanAngleD = H(:,2);
+Hang = H(:,2); %Human knee angle data point
+
+Name1 = "Vastus Intemedius"; 
+Name2 = "Vastus Lateralis";
+Name3 = "Vastus Medialis";
+
+T1 = H(:,3);
+T2 = H(:,4);
+T3 = H(:,5);
+
 humanAbs = interp1( ...
     ctx.humanAngleD, ...
     ctx.humanTorqueAbs, ...
@@ -69,11 +89,13 @@ humanAbs = interp1( ...
 figure('Name','Extensor torque sanity','Color','w')
 hold on
 plot(ctx.phiD, abs(pred0.TorqueZ), 'LineWidth', 2)
-plot(ctx.phiD, humanAbs, '--', 'LineWidth', 2)
+plot(Hang, T1, '--', 'LineWidth', 2)
+plot(Hang, T2, '-.', 'LineWidth', 2)
+plot(Hang, T1, ':', 'LineWidth', 2)
 grid on
 xlabel('Knee angle, deg')
 ylabel('Torque magnitude, N m')
-legend('20 mm BPA prediction', sprintf('OpenSim target: %s', ctx.targetName), ...
+legend('20 mm BPA prediction', Name1, Name2, Name3, ...
     'Location', 'best')
 title('Initial extensor torque sanity check')
 
