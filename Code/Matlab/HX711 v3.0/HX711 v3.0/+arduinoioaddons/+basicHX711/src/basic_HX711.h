@@ -29,7 +29,7 @@ class basic_HX711 : public LibraryBase
     public:
         basic_HX711(MWArduinoClass& a)
         {
-            libName = "basicHX711/HX711";
+            libName = "basicHX711/basic_HX711";
             a.registerLibrary(this);
         }
 	public:
@@ -45,16 +45,18 @@ class basic_HX711 : public LibraryBase
 
                 while (digitalRead(DOUT))
                 {
-                    // Wait
+                    // Wait until HX711 data is ready
                 }
 
                 data[2] = shiftIn(DOUT, SCK, MSBFIRST);
                 data[1] = shiftIn(DOUT, SCK, MSBFIRST);
                 data[0] = shiftIn(DOUT, SCK, MSBFIRST);
-
+                
+                // 25th pulse selects channel A, gain 128
                 digitalWrite(SCK, HIGH);
                 digitalWrite(SCK, LOW);
 
+                // Convert signed 24-bit representation to offset binary
                 data[2] ^= 0x80;
 
                 sendResponseMsg(cmdID, data, 3);
