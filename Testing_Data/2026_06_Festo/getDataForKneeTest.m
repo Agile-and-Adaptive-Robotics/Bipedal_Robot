@@ -7,6 +7,13 @@ clear;
 data = readserialnumbers();
 
 %% Automatically determine the next file number
+saveFolder = fullfile(pwd, "Ext_10mm_pinned");
+
+% Create the subfolder if it does not already exist
+if ~isfolder(saveFolder)
+    mkdir(saveFolder);
+end
+
 baseName = "ExtTest9_";
 testNumber = 1;
 
