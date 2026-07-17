@@ -1,36 +1,27 @@
 clc;
-clear;
+clear all;
 
-%% Collect data
-% Columns:
-% Time (ms), Position (degrees), Force (N), Pressure (kPa)
-data = readserialnumbers();
+%% Assuming readserialnumbers() returns a matrix with 4 columns: Time(ms), Position(degrees), Force (N), Pressure (kPa)
+data = readserialnumbers(); 
+%% save current readings into their own file
+timestamp = string(datetime("now", "Format", "yyyy-MM-dd_HH-mm-ss"));
 
-%% Automatically determine the next file number
-baseName = "ExtTest9_";
-testNumber = 1;
+matFileName = "forceData_" + timestamp + ".mat";
+csvFileName = "forceData_" + timestamp + ".csv";
 
-while true
-    testLabel = sprintf("%02d", testNumber);
+% Save raw data variable as MATLAB file
 
-    matFileName = baseName + testLabel + ".mat";
-    csvFileName = baseName + testLabel + ".csv";
-
-    % Stop when neither filename already exists
-    if ~isfile(matFileName) && ~isfile(csvFileName)
-        break;
-    end
-
-    testNumber = testNumber + 1;
-end
-
-%% Save the data
 save(matFileName, "data");
+
+% Save data as CSV file too
+
 writematrix(data, csvFileName);
 
 fprintf("Data saved as:\n");
 fprintf("%s\n", matFileName);
 fprintf("%s\n", csvFileName);
+
+
 %% Extract columns
 
 timeData = data(:, 1); % given in ms
