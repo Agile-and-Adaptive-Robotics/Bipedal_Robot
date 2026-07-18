@@ -84,12 +84,13 @@ void handleSerialCommands()
 
 void setup()
 {
-  pinMode(fillPin, OUTPUT);
-  pinMode(exhaustPin, OUTPUT);
-
   // Enforce safe default state on boot
   digitalWrite(fillPin, LOW);
   digitalWrite(exhaustPin, LOW);
+
+  // Enable output drivers
+  pinMode(fillPin, OUTPUT);
+  pinMode(exhaustPin, OUTPUT);
 
   Serial.begin(115200);
 
@@ -117,39 +118,51 @@ void loop()
     float forceN = scale.get_units(1);
 
     float pressureRaw = analogRead(sensorPin);
-    float pressureCalibrated = 0.7633 * pressureRaw - 13.744;
+    float pressureCalibrated = 0.7572 * pressureRaw - 13.955;
 
     float angleRaw = analogRead(encoderPin);
-    float angleCalibrated = -(angleRaw * 0.3629) + 216.74;
+    float angleCalibrated = -(angleRaw * 0.359) + 215.25;
 
     int fillState = digitalRead(fillPin);
     int exhaustState = digitalRead(exhaustPin);
+    
     // Time
-    Serial.print("Time = ");
+    // Serial.print("Time = ");
     Serial.print(currentTimer);
     Serial.print(",");
+    
     // Angle raw
-    Serial.print("Angle (raw) = ");
-    Serial.print(angleRaw, 3);
-    Serial.print(",");
+    // Serial.print("Angle (raw) = ");
+    // Serial.print(angleRaw, 3);
+    // Serial.print(",");
+    
     // Angle degree
-    Serial.print("Angle (deg) = ");
+    // Serial.print("Angle (deg) = ");
     Serial.print(angleCalibrated, 3);
     Serial.print(",");
+    
     // Force (N)
-    Serial.print("Force (N) = ");
+    // Serial.print("Force (N) = ");
     Serial.print(forceN, 3);
     Serial.print(",");
+    
+    // Pressure (raw)
+    // Serial.print("Pressure (raw) = ");
+    // Serial.print(pressureRaw, 3);
+    // Serial.print(",");
+    
     // Pressure (kPa)
-    Serial.print("Pressure (kPa) = ");
+    // Serial.print("Pressure (kPa) = ");
     Serial.print(pressureCalibrated, 3);
     Serial.print(",");
+    
     // Fill Valve Pin State
-    Serial.print("Fill Valve State = ");
+    // Serial.print("Fill Valve State = ");
     Serial.print(fillState);
     Serial.print(",");
+    
     // Hold Valve Pin State
-    Serial.print("Hold Valve State = ");
+    // Serial.print("Hold Valve State = ");
     Serial.println(exhaustState);
   }
 }

@@ -2,8 +2,13 @@
 
 HX711 scale;
 
+// Valve Pin Assignments
+const int fillPin = 11; // Input 1 of TBD62381APG (Slice 1, Solenoid 14)
+const int exhaustPin = 6; // Input 2 of TBD62381APG (Slice 2, Solenoid 12)
+//HX711 Pins
 const uint8_t DATA_PIN  = 3;
 const uint8_t CLOCK_PIN = 2;
+//Analog reading
 const int sensorPin = A0; // Analog Input from MPX5700GP Pin 
 const int encoderPin = A2; // Analog Input from AS5600 Magnetic Encoder 
  unsigned long  currentTimer = 0;
@@ -12,8 +17,14 @@ const int encoderPin = A2; // Analog Input from AS5600 Magnetic Encoder
 const int32_t OFFSET = -12228;
 const float SCALE_FACTOR = -4489.861328;
 
-void setup()
-{
+void setup(){
+  pinMode(fillPin, OUTPUT);
+  pinMode(exhaustPin, OUTPUT);
+  
+  // Enforce safe default state on boot
+  digitalWrite(fillPin, LOW);
+  digitalWrite(exhaustPin, LOW);
+  
   Serial.begin(115200);
 
   scale.begin(DATA_PIN, CLOCK_PIN);
@@ -28,9 +39,9 @@ void loop()
   //if (currentTimer - previousTimer >=1){
   float forceN = scale.get_units(1);
   float pressureRaw = analogRead(sensorPin);
-  float pressureCalibrated = 0.7633 * pressureRaw - 13.744;
+  float pressureCalibrated = 0.7572 * pressureRaw - 13.955;
   float angleRaw = analogRead(encoderPin);
-  float angleCalibrated = -(angleRaw/1023)*360+88.33;
+  float angleCalibrated = -(angleRaw*0.359)+215.25;
   // Serial.print("Time = ");
   Serial.print(currentTimer);
   // Serial.print(" ms ");
