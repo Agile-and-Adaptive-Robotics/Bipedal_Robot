@@ -1,0 +1,48 @@
+Exact startup sequence
+Turn off the 24 V valve supply.
+Close the Arduino Serial Monitor.
+Upload ValveDataAcquisition.ino to the BlackBoard.
+Do not reopen Arduino Serial Monitor after uploading.
+Verify MATLAB uses the correct port:
+serialportlist("available")
+
+The provided MATLAB file currently uses:
+
+port = "COM10";
+Clear any old MATLAB serial object:
+ports = serialportfind("Port", "COM10");
+
+if ~isempty(ports)
+    delete(ports);
+end
+Turn the 24 V valve supply back on.
+Run:
+data = readserialnumbers2();
+Click once inside the live graph.
+Tap and release V.
+
+You should see:
+
+Sent V: requesting both valve outputs HIGH.
+Arduino acknowledged V: fill = 1, exhaust = 1
+Valve HIGH state confirmed. Recording started.
+Press and release S once to save.
+Collect the additional manual readings.
+Press and release O to turn both outputs LOW.
+Press V for another test. The next file number is not used until you press S.
+Press Q when completely finished.
+What the result tells you
+
+If MATLAB reports:
+
+Arduino acknowledged V: fill = 1, exhaust = 1
+
+then the BlackBoard received V and both Arduino pins read HIGH. Any remaining problem is downstream of the pins.
+
+If it reports:
+
+Arduino acknowledged V: fill = 0, exhaust = 0
+
+then the command reached the BlackBoard, but the pins did not rise. At that point, disconnect the 24 V supply and inspect the pull-down wiring or measure D11 and D6 directly.
+
+If there is no Arduino acknowledged V message at all, MATLAB and the Arduino are not running the matching new files, the wrong COM port is selected, or another program still owns COM10.

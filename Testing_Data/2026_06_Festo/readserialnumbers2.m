@@ -58,11 +58,11 @@ function data = readserialnumbers2()
     configureTerminator(s, "LF");
     s.Timeout = 1;
 
-    % Opening an Arduino serial port normally resets the Arduino.
-    pause(2);
+    % Opening a serial port normally resets this Arduino-compatible board.
+    pause(3);
 
     % Remove startup text or incomplete lines.
-    flush(s);
+    flush(s, "input");
 
     %% Data storage
 
@@ -116,14 +116,17 @@ function data = readserialnumbers2()
 
     % Ensure the valves are switched off when the function exits,
     % including exits caused by an error.
-    cleanupObject = onCleanup(@shutdown); %#ok<NASGU>
+    cleanupObject = onCleanup(@()shutdownSerial(s, fig)); %#ok<NASGU>
 
     fprintf("\nArduino acquisition started.\n");
-    fprintf("Click the live plot and press:\n");
+    fprintf("Click the live plot and release each key once:\n");
     fprintf("  V = valves HIGH and begin recording\n");
     fprintf("  S = save dynamic data and stop recording\n");
     fprintf("  O = valves LOW\n");
     fprintf("  Q = valves LOW and quit\n\n");
+
+    % Request the current valve state after the startup buffer was cleared.
+    write(s, uint8('?'), "uint8");
 
     %% Continuous acquisition loop
 
@@ -137,8 +140,9 @@ function data = readserialnumbers2()
         %% Read a limited number of complete serial lines per pass
         linesRead = 0;
 
-        while s.NumBytesAvailable > 0
-        linesRead = linesRead + 1;
+        while s.NumBytesAvailable > 0 && linesRead < maxLinesPerPass
+            linesRead = linesRead + 1;
+
             try
                 lineText = strtrim(readline(s));
             catch
@@ -150,10 +154,30 @@ function data = readserialnumbers2()
                 continue;
             end
 
+            %% Process board-startup messages
+
+            if startsWith(lineText, "BOOT,")
+                parts = split(lineText, ",");
+
+                if numel(parts) == 3
+                    stateValues = str2double(parts(2:3));
+
+                    if all(isfinite(stateValues))
+                        fillState = stateValues(1);
+                        exhaustState = stateValues(2);
+
+                        fprintf( ...
+                            "Arduino boot state: fill = %d, exhaust = %d\n", ...
+                            fillState, exhaustState);
+                    end
+                end
+
+                continue;
+            end
+
             %% Process immediate valve-state messages
 
             if startsWith(lineText, "STATE,")
-
                 parts = split(lineText, ",");
 
                 if numel(parts) == 3
@@ -166,6 +190,45 @@ function data = readserialnumbers2()
                         fprintf( ...
                             "Arduino valve state: fill = %d, exhaust = %d\n", ...
                             fillState, exhaustState);
+                    end
+                end
+
+                continue;
+            end
+
+            %% Process command acknowledgements
+
+            if startsWith(lineText, "ACK,")
+                parts = split(lineText, ",");
+
+                if numel(parts) == 4
+                    acknowledgedCommand = upper(parts(2));
+                    stateValues = str2double(parts(3:4));
+
+                    if all(isfinite(stateValues))
+                        fillState = stateValues(1);
+                        exhaustState = stateValues(2);
+
+                        fprintf( ...
+                            "Arduino acknowledged %s: fill = %d, exhaust = %d\n", ...
+                            char(acknowledgedCommand), fillState, exhaustState);
+
+                        if acknowledgedCommand == "V"
+                            if fillState == 1 && exhaustState == 1
+                                recordingPending = false;
+                                recording = true;
+                                fprintf("Valve HIGH state confirmed. Recording started.\n");
+                            else
+                                recordingPending = false;
+                                recording = false;
+                                fprintf( ...
+                                    "Valve command failed: Arduino did not report both outputs HIGH.\n");
+                            end
+
+                        elseif acknowledgedCommand == "O"
+                            recordingPending = false;
+                            recording = false;
+                        end
                     end
                 end
 
@@ -190,6 +253,7 @@ function data = readserialnumbers2()
             exhaustState = numericValues(6);
 
             %% Start recording with the first confirmed valves-HIGH row
+            % This is a fallback in case an ACK line was missed.
 
             if recordingPending && ...
                     fillState == 1 && exhaustState == 1
@@ -203,12 +267,12 @@ function data = readserialnumbers2()
             %% Store dynamic data only while recording
 
             if recording
-                recordedData(end + 1, :) = numericValues;
+                recordedData(end + 1, :) = numericValues; %#ok<AGROW>
             end
 
             %% Store only a limited rolling window for the plots
 
-            liveData(end + 1, :) = numericValues;
+            liveData(end + 1, :) = numericValues; %#ok<AGROW>
 
             latestTimeMs = numericValues(1);
             cutoffTimeMs = latestTimeMs - 1000 * plotWindowSeconds;
@@ -247,13 +311,13 @@ function data = readserialnumbers2()
             end
 
             statusTitle.String = sprintf( ...
-                    '%s | Fill = %d | Exhaust = %d\nAngle = %.3f deg | Force = %.3f N | Pressure = %.3f kPa', ...
-                    char(recordingText), ...
-                    fillState, ...
-                    exhaustState, ...
-                    liveData(end, 2), ...
-                    liveData(end, 3), ...
-                    liveData(end, 4));
+                '%s | Fill = %d | Exhaust = %d\nAngle = %.3f deg | Force = %.3f N | Pressure = %.3f kPa', ...
+                char(recordingText), ...
+                fillState, ...
+                exhaustState, ...
+                liveData(end, 2), ...
+                liveData(end, 3), ...
+                liveData(end, 4));
 
             drawnow limitrate;
             lastPlotUpdate = tic;
@@ -276,96 +340,98 @@ function data = readserialnumbers2()
 
     function keyReleased(~, event)
 
-    key = lower(string(event.Key));
+        key = lower(string(event.Key));
 
-    switch key
+        switch key
 
-        case "v"
+            case "v"
 
-            % Ignore duplicate V commands while already starting/recording
-            if recordingPending || recording
-                fprintf("A test is already recording.\n");
-                return;
-            end
+                % Ignore duplicate V commands while already starting/recording
+                if recordingPending || recording
+                    fprintf("A test is already recording.\n");
+                    return;
+                end
 
-            % Begin a new dynamic recording
-            recordedData = zeros(0, expectedNumCols);
-            data = zeros(0, expectedNumCols);
+                % Begin a new dynamic recording
+                recordedData = zeros(0, expectedNumCols);
+                data = zeros(0, expectedNumCols);
 
-            recording = false;
-            recordingPending = true;
-            testSaved = false;
+                recording = false;
+                recordingPending = true;
+                testSaved = false;
 
-            writeline(s, "V");
+                % Remove any queued startup/state lines, then send exactly one byte.
+                flush(s, "input");
+                write(s, uint8('V'), "uint8");
 
-            fprintf( ...
-                "Sent V: requesting both valve outputs HIGH.\n");
-
-        case "s"
-
-            % Prevent saving the same recording more than once
-            if testSaved
-                fprintf([ ...
-                    "This recording has already been saved.\n" ...
-                    "Press V to begin a new test.\n"]);
-                return;
-            end
-
-            if isempty(recordedData)
                 fprintf( ...
-                    "Nothing was saved because no recorded rows exist.\n");
-                return;
-            end
+                    "Sent V: requesting both valve outputs HIGH.\n");
 
-            % Stop adding rows after this point
-            recording = false;
-            recordingPending = false;
+            case "s"
 
-            data = recordedData;
+                % Prevent saving the same recording more than once
+                if testSaved
+                    fprintf([ ...
+                        "This recording has already been saved.\n" ...
+                        "Press V to begin a new test.\n"]);
+                    return;
+                end
 
-            % Make the first recorded sample time equal to zero
-            data(:, 1) = data(:, 1) - data(1, 1);
+                if isempty(recordedData)
+                    fprintf( ...
+                        "Nothing was saved because no recorded rows exist.\n");
+                    return;
+                end
 
-            [matFileName, csvFileName] = getNextFileNames();
+                % Stop adding rows after this point
+                recording = false;
+                recordingPending = false;
 
-            save(matFileName, "data");
-            writematrix(data, csvFileName);
+                data = recordedData;
 
-            % Lock this recording against additional S commands
-            testSaved = true;
+                % Make the first recorded sample time equal to zero
+                data(:, 1) = data(:, 1) - data(1, 1);
 
-            fprintf("\nDynamic data saved as:\n");
-            fprintf("%s\n", char(matFileName));
-            fprintf("%s\n\n", char(csvFileName));
+                [matFileName, csvFileName] = getNextFileNames();
 
-            fprintf([ ...
-                "Live readings will continue, but new rows " ...
-                "are not being stored.\n"]);
+                save(matFileName, "data");
+                writematrix(data, csvFileName);
 
-        case "o"
+                % Lock this recording against additional S commands
+                testSaved = true;
 
-            writeline(s, "O");
+                fprintf("\nDynamic data saved as:\n");
+                fprintf("%s\n", char(matFileName));
+                fprintf("%s\n\n", char(csvFileName));
 
-            % Stop recording when the valves are switched off
-            recording = false;
-            recordingPending = false;
+                fprintf([ ...
+                    "Live readings will continue, but new rows " ...
+                    "are not being stored.\n"]);
 
-            fprintf( ...
-                "Sent O: requesting both valve outputs LOW.\n");
+            case "o"
 
-        case "q"
+                write(s, uint8('O'), "uint8");
 
-            try
-                writeline(s, "O");
-            catch
-            end
+                % Stop recording when the valves are switched off
+                recording = false;
+                recordingPending = false;
 
-            stopRequested = true;
+                fprintf( ...
+                    "Sent O: requesting both valve outputs LOW.\n");
 
-        otherwise
-            % Ignore all other keys
+            case "q"
+
+                try
+                    write(s, uint8('O'), "uint8");
+                catch
+                end
+
+                stopRequested = true;
+
+            otherwise
+                % Ignore all other keys
+        end
     end
-end
 
 
     function closeRequested(source, ~)
@@ -397,19 +463,24 @@ end
             testNumber = testNumber + 1;
         end
     end
+end
 
 
-    function shutdown()
+function shutdownSerial(s, fig)
+%SHUTDOWNSERIAL Force valve outputs LOW and release the serial port.
 
-        % Safe shutdown even if MATLAB encounters an error.
-        try
-            writeline(s, "O");
-            pause(0.05);
-        catch
-        end
+    try
+        write(s, uint8('O'), "uint8");
+        pause(0.05);
+    catch
+    end
 
-        if isgraphics(fig)
-            delete(fig);
-        end
+    try
+        delete(s);
+    catch
+    end
+
+    if isgraphics(fig)
+        delete(fig);
     end
 end
