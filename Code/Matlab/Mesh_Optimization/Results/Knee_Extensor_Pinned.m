@@ -9,9 +9,9 @@ clear
 close all
 
 %% Add paths to the muscle and pam calculators
-current_dir = cd;
-all_code = fullfile(current_dir,'../..');
-addpath(genpath(all_code));
+% current_dir = cd;
+% all_code = fullfile(current_dir,'../..');
+% addpath(genpath(all_code));
 
 %% Joint rotation transformation matrices
 positions = 100;
@@ -121,6 +121,20 @@ fitting = 0.0254;           %fitting length
 % tendon0 = 0;
 % tendon22 = 0.022;
 
+%40.5 cm, no tendon
+rest42 = 405/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.344;           %length at maximum contraction
+tendon = 0;             %Tendon length
+pres = 625;        %Pressure, kPa
+Vas_Pam_40cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon, fitting, pres);
+
+%40.5 cm, 40 mm tendon
+rest42 = 400/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.341;           %length at maximum contraction
+tendon2 = 0.040;         %Tendon length
+pres = 620;        %Pressure, kPa
+Vas_Pam_40cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon1, fitting, pres);
+
 %41.5 cm, no tendon
 rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
 kmax = 0.345;           %length at maximum contraction
@@ -150,6 +164,8 @@ pres = 605.8523;        %Pressure, kPa
 Vas_Pam_48cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest48, kmax, tendon, fitting, pres);
 
 %% Unstacking the Torques to identify specific rotations
+Torque_40cm = Vas_Pam_40cm.Torque(:,3);
+Torque_40cm_ten = Vas_Pam_40cm_tendon.Torque(:,3);
 Torque_42cm = Vas_Pam_42cm.Torque(:,3);
 Torque_42cm_ten = Vas_Pam_42cm_tendon.Torque(:,3);
 Torque_46cm = Vas_Pam_46cm.Torque(:,3);
@@ -160,7 +176,7 @@ xLim = [-125 35];
 yLim = [0 15];
 
 figure
-h = tiledlayout(2,2);
+h = tiledlayout(3,2);
 
 ax1 = nexttile(1);
 plot(phiD, Torque_48cm)
@@ -189,3 +205,17 @@ title(sprintf('l_{rest} = 41.5 cm, tendon = %d mm',tendon1*10^3),'Interpreter','
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
 ylabel('\bf Torque N\cdotm','Interpreter','tex')
 set(ax4,'XLim',xLim,'YLim',yLim)
+
+ax5 = nexttile(5);
+plot(phiD, Torque_40cm)
+title('\bf l_{rest}=40.5 cm, no tendon','Interpreter','tex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Torque, N\cdotm','Interpreter','tex')
+set(ax5,'XLim',xLim,'YLim',yLim)
+
+ax6 = nexttile(6);
+plot(phiD', Torque_40cm_ten)
+title(sprintf('l_{rest} = 40.1 cm, tendon = %d mm',tendon2*10^3),'Interpreter','tex','FontWeight','bold')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Torque N\cdotm','Interpreter','tex')
+set(ax6,'XLim',xLim,'YLim',yLim)
