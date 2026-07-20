@@ -47,6 +47,9 @@ end
 %% PAM calculation
 Name = 'Vastus Intermedius, Robot';
 Location = zeros(7,3,positions);
+CrossPoint = 7;
+Dia = 10;
+fitting = 0.0254;           %fitting length
 
 % Locations from Assem2.75
 % p1 = [0.030, -0.050, 0];             %Extensor Origin
@@ -68,7 +71,7 @@ p7 = [0.0425, -0.07591, 0.000];      %%Tibia bracket (insertion)
 ang1 = 27;
 ang2 = -23;
 ang3 = -53;
-ang4 = -88;
+ang4 = -87.5;
 
 
 for i = 1:positions
@@ -110,17 +113,13 @@ for i = 1:positions
                         p3;...        %Contact point
                         p4;...
                         p5;...
-                        hipToKnee(1)+0.03*cosd(phiD(i)+9.072), hipToKnee(2)+0.03*sind(phiD(i)+9.072), 0;...            %Contact point over 74.01 degrees flexion
-                        p7-[25.4/4*10^-3, 0, 0]];     %Tibia bracket (insertion)
+                        hipToKnee(1)+0.03*cosd(phiD(i)+9.07), hipToKnee(2)+0.03*sind(phiD(i)+9.072), 0;...            %Contact point with -87.5 degrees flexion or more (i.e. more negative), when the angle is 87.5 the angle from horizontal to point 5 is 78.428 deg, so this 9.072 deg is the difference and point 6 follows this minimum circle.
+                        p7];    %Tibia bracket (insertion)
+                        % p7-[25.4/4*10^-3, 0, 0]];     %Tibia bracket
+                        % (insertion) don't really know what this is doing
     end
 end
         
-CrossPoint = 7;
-Dia = 10;
-fitting = 0.0254;           %fitting length
-% tendon0 = 0;
-% tendon22 = 0.022;
-
 %40.5 cm, no tendon
 rest42 = 405/1000;        %resting length clamp to clamp, minus the barb
 kmax = 0.344;           %length at maximum contraction
@@ -133,7 +132,7 @@ rest42 = 400/1000;        %resting length clamp to clamp, minus the barb
 kmax = 0.341;           %length at maximum contraction
 tendon2 = 0.040;         %Tendon length
 pres = 620;        %Pressure, kPa
-Vas_Pam_40cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon1, fitting, pres);
+Vas_Pam_40cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon2, fitting, pres);
 
 %41.5 cm, no tendon
 rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
