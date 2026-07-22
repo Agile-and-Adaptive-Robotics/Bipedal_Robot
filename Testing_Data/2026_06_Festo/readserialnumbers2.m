@@ -26,15 +26,15 @@ function data = readserialnumbers2()
     %% Serial settings
 
     port = "COM12";
-    baudRate = 115200;
+    baudRate = 115200;q
 
     expectedNumCols = 6;
 
     %% Save settings
 
     functionFolder = fileparts(mfilename("fullpath"));
-    saveFolder = fullfile(functionFolder, "Ext_10mm_pinned");
-    baseName = "ExtTest12_";
+    saveFolder = fullfile(functionFolder, "Flx_10mm_pinned");
+    baseName = "FlxTest04_";
 
     if ~isfolder(saveFolder)
         mkdir(saveFolder);
