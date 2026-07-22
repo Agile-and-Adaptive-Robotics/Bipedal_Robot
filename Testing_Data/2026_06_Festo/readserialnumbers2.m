@@ -17,16 +17,16 @@ function data = readserialnumbers2()
 %   6. Exhaust valve output state
 % 
 % run this to clear ports
-%   ports = serialportfind("Port", "COM10");
-% 
-%   if ~isempty(ports)
-%     delete(ports);
-%   end
+  % ports = serialportfind("Port", "COM10");
+  % 
+  % if ~isempty(ports)
+  %   delete(ports);
+  % end
 
     %% Serial settings
 
-    port = "COM12";
-    baudRate = 115200;q
+    port = "COM10";
+    baudRate = 115200;
 
     expectedNumCols = 6;
 
@@ -34,7 +34,7 @@ function data = readserialnumbers2()
 
     functionFolder = fileparts(mfilename("fullpath"));
     saveFolder = fullfile(functionFolder, "Flx_10mm_pinned");
-    baseName = "FlxTest04_";
+    baseName = "FlxTest05_";
 
     if ~isfolder(saveFolder)
         mkdir(saveFolder);
