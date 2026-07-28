@@ -121,8 +121,8 @@ for i = 1:positions
 end
         
 %40.5 cm, no tendon
-rest40 = 405/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.344;           %length at maximum contraction
+rest40 = 400/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.341;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 625;        %Pressure, kPa
 Vas_Pam_40cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest40, kmax, tendon, fitting, pres);
@@ -144,7 +144,7 @@ Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, k
 %41.5 cm,  tendon
 rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
 kmax = 0.345;           %length at maximum contraction
-tendon2 = 0.022;         %Tendon length
+tendon2 = 0.040;         %Tendon length
 pres = 605.2351;        %Pressure, kPa
 Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon2, fitting, pres);
 
@@ -188,7 +188,7 @@ Torque_48cm = Vas_Pam_48cm.Torque(:,3);
 
 %% Plotting Torque Results
 xLim = [-125 35];
-yLim = [0 60];
+yLim = [0 25];
 
 figure
 h = tiledlayout(4,2);
