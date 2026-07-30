@@ -4,13 +4,6 @@
 clear; clc; close all
 % profile on
 
-[a0, bpa0] = minimizeFlxPin(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
-baselineScores = a0;
-fprintf('\nPerformance with no length offset and infinite stiffness:\n');
-
-fprintf('Mean baseline training: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',a0(1),a0(2),a0(3));
-
-
 %% Cross-validation setup
 allBPA = [1, 2, 3, 4];           % Use if all data are valid 
 % allBPA = [3, 4];              % Use if old data do not hold up
@@ -21,9 +14,18 @@ numBPA = numel(allBPA);
 results_cv = cell(1, numBPA);  % Will store RMSE, FVU, Max Resid for BPA(s) optimized
 scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for BPA(s) held-out for validation
 
+%% Calculate baseline
+[a0, bpa0] = minimizeFlxPin(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
+baselineScores = a0;
+fprintf('\nPerformance with no length offset and infinite stiffness:\n');
+disp(array2table(f, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
+                    'RowNames', cellstr(labels')));
+fprintf('Mean baseline training: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
+
+
 %% Problem bounds
-lb = [0, log10(1e3), log10(1e3)];
-ub = [0.030*100, log10(5e6), log10(5e6)];
+lb = [-0.030*100, log10(5e3), log10(5e3)];
+ub = [0.020*100, log10(5e8), log10(5e8)];
 
 %% Solver
 numHold = 2;                        %Number of BPAs held out for validation
@@ -145,9 +147,17 @@ pick = 1;
 sol_actual = filtered_results(pick, xCols);
 [f, bpa] = minimizeFlxPin(sol_actual(1), sol_actual(2), sol_actual(3), 1:4);  % [f: 4x3], [bpa: full struct]
 
+%Show results for pre- and post-optimization
+fprintf('\nPerformance with no length offset and infinite stiffness:\n');
+disp(array2table(a0, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
+                    'RowNames', cellstr(labels')));
+
 fprintf('\nPerformance with sol_actual:\n');
 disp(array2table(f, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
                     'RowNames', cellstr(labels')));
+
+fprintf('Mean baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',a0(1),a0(2),a0(3));
+fprintf('Mean optimized: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',f(1),f(2),f(3));
    
 
 %% --- Define color scheme and labels ---
@@ -175,13 +185,14 @@ Y = linspace(0,1,30);   %Relative strain range for interpolation
 
 figT = figure('Name','Torque','Color','w');
 figT.Position = [100 100 950 700];
-tT = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
+tT = tiledlayout(2*ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
-titles = ["\bf 48.5 cm", "\bf 45.7 cm","\bf 48.5 cm", "\bf 45.7 cm"];
-subtitles = ["\bf Pre-optimized","\bf Pre-optimized","\bf Optimized","\bf Validation"];
+titles = ["\bf 48.5 cm", "\bf 45.7 cm","\bf 47.9 cm", "\bf 40.6 cm"];
+subtitles = ["\bf Pre-optimized","\bf Pre-optimized","\bf Pre-optimized","\bf Pre-optimized","\bf Optimized","\bf Optimized","\bf Optimized","\bf Optimized"];
 
-for j = 1:2
+for j = 1:numBPA
     ax = nexttile(j);
+
     hold on
 
     % Pre-optimization: Mold calculation
@@ -219,8 +230,8 @@ for j = 1:2
     xlim([-120 20]); ylim([-25 0]);
 end
 
-for j = 1:2
-    ax = nexttile(2 + j);
+for j = 1:numBPA
+    ax = nexttile(numBPA + j);
     hold on
     
     scatter(bpa(j).Aexp, bpa(j).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
@@ -235,7 +246,7 @@ for j = 1:2
             'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
-    subtitle(subtitles(j+2), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
+    subtitle(subtitles(j+numBPA), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
     xlim([-120 20]); ylim([-25 0]);
 end
 
@@ -260,52 +271,36 @@ lg = legend(tT.Children(end-1));
 lg.Location = 'best';
 lg.FontSize = 8;
 
-lg2 = legend(tT.Children(end-3));
+lg2 = legend(tT.Children(end-(numBPA+1)));
 lg2.Location = 'best';
 lg2.FontSize = 8;
 
 %% Plot muscle length, optimization and validation
 figL = figure('Name','Muscle Length','Color','w');
 figL.Position = [100 100 950 700];
-tL = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
+tL = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
-for j = 1:2
+for j = 1:numBPA
     ax = nexttile(j);
-    hold on
-    
-    % Predicted
-    Lm_p = bpa(j).Lmt_p - 2 * bpa(j).fitn - bpa(j).ten;
-    Lm   = bpa(j).Lmt   - 2 * bpa(j).fitn - bpa(j).ten;
-    
-    scatter(bpa(j).A_h, bpa(j).Lm_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-        'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
-    plot(bpa(j).Ak, Lm, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Original prediction');
-
-    if j == 1
-        ylabel('\bf Pre-optimization', 'Interpreter', 'tex', ...
-            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    if bpa(j).ten > 0
+        title(sprintf('\\bf l_\\rm{rest} = %0.1f cm, %0.0f mm tendon',bpa(j).rest*100, bpa(j).ten*10^3),'Interpreter','tex')
+    else
+        title(sprintf('\\bf l_{rest} = %0.1f cm',bpa(j).rest*100),'Interpreter','tex')
     end
-    set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
-        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
-end
-
-for j = 1:2
-    ax = nexttile(2 + j);
     hold on
     
-    % Predicted
+    % Calculate predicted
     Lm_p = bpa(j).Lmt_p - 2 * bpa(j).fitn - bpa(j).ten;
     Lm   = bpa(j).Lmt   - 2 * bpa(j).fitn - bpa(j).ten;
-    
+    % Measured
     scatter(bpa(j).A_h, bpa(j).Lm_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
         'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
+    %Old prediction
     plot(bpa(j).Ak, Lm, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Original prediction');
+    % New prediction
     plot(bpa(j).Ak, Lm_p, '-', 'Color', c{5}, 'LineWidth', 2.5, 'DisplayName', 'Optimized prediction');
 
-    if (2 + j) == 3
-        ylabel('\bf Optimized', 'Interpreter', 'tex', ...
-            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
-    end
+
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
 end
@@ -328,32 +323,23 @@ lg = legend(tL.Children(end-1));
 lg.Location = 'best';
 lg.FontSize = 8;
 
-lg2 = legend(tL.Children(end-3));
+lg2 = legend(tL.Children(end-(numBPA+1)));
 lg2.Location = 'best';
 lg2.FontSize = 8;
 
 %% Plot moment arm, optimization and validation
 figMA = figure('Name','Moment Arm','Color','w');
 figMA.Position = [100 100 950 700];
-tMA = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
+tMA = tiledlayout(2*ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
-for j = 1:2
+
+for j = 1:numBPA
     ax = nexttile(j);
-    hold on
-    scatter(bpa(j).A_h, bpa(j).mA_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-        'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
-    plot(bpa(j).Ak, bpa(j).mA, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
-
-    if j == 1
-        ylabel('\bf Pre-optimization', 'Interpreter', 'tex', ...
-            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    if bpa(j).ten > 0
+        title(sprintf('\\bf l_\\rm{rest} = %0.1f cm, %0.0f mm tendon',bpa(j).rest*100, bpa(j).ten*10^3),'Interpreter','tex')
+    else
+        title(sprintf('\\bf l_{rest} = %0.1f cm',bpa(j).rest*100),'Interpreter','tex')
     end
-    set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
-        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
-end
-
-for j = 1:2
-    ax = nexttile(2 + j);
     hold on
     
     G_p = hypot(bpa(j).mA_p(:,1), bpa(j).mA_p(:,2));
@@ -363,10 +349,6 @@ for j = 1:2
     plot(bpa(j).Ak, bpa(j).mA, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
     plot(bpa(j).Ak, G_p, '-', 'Color', c{5}, 'LineWidth', 2.5, 'DisplayName', 'Optimized prediction');
 
-    if (2 + j) == 3
-        ylabel('\bf Optimized', 'Interpreter', 'tex', ...
-            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
-    end
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
 end
@@ -382,34 +364,20 @@ xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex');
 % annotation(figMA, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
 %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 legend(tMA.Children(end-1),'Location','best','FontSize',8);
-legend(tMA.Children(end-3),'Location','best','FontSize',8);
+legend(tMA.Children(end-(numBPA+1)),'Location','best','FontSize',8);
 
 %% Plot relative strain, optimization and validation
 figS = figure('Name','Relative Strain','Color','w');
 figS.Position = [100 100 950 700];
-tS = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
+tS = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
-for j = 1:2
+for j = 1:numBPA
     ax = nexttile(j);
-    hold on
-    
-    strain_h = (bpa(j).rest - bpa(j).Lm_h)/bpa(j).rest;
-    kmax = (bpa(j).rest - bpa(j).Kmax)/bpa(j).rest;
-    
-    scatter(bpa(j).A_h, strain_h/kmax, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-        'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
-    plot(bpa(j).Ak, bpa(j).strain/kmax, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Original prediction');
-
-    if j == 1
-        ylabel('\bf Pre-optimization', 'Interpreter', 'tex', ...
-            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    if bpa(j).ten > 0
+        title(sprintf('\\bf l_\\rm{rest} = %0.1f cm, %0.0f mm tendon',bpa(j).rest*100, bpa(j).ten*10^3),'Interpreter','tex')
+    else
+        title(sprintf('\\bf l_{rest} = %0.1f cm',bpa(j).rest*100),'Interpreter','tex')
     end
-    set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
-        'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
-end
-
-for j = 1:2
-    ax = nexttile(2 + j);
     hold on
     
     strain_h = (bpa(j).rest - bpa(j).Lm_h)/bpa(j).rest;
@@ -419,10 +387,10 @@ for j = 1:2
     plot(bpa(j).Ak, bpa(j).strain/kmax, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
     plot(bpa(j).Ak, bpa(j).strain_p/kmax, '-', 'Color', c{5}, 'LineWidth', 2.5, 'DisplayName', 'Optimized prediction');
 
-    if (2 + j) == 3
-        ylabel('\bf Optimized', 'Interpreter', 'tex', ...
-            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
-    end
+    % if j == 1
+    %     ylabel('\bf Optimized', 'Interpreter', 'tex', ...
+    %         'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    % end
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
 end
@@ -438,7 +406,7 @@ xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex');
 % annotation(figS, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
 %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 legend(tS.Children(end-1),'Location','best','FontSize',8);
-legend(tS.Children(end-3),'Location','best','FontSize',8);
+legend(tS.Children(end-(numBPA+1)),'Location','best','FontSize',8);
 
 
 %% Helper functions
