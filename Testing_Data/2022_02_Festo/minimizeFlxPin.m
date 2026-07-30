@@ -87,16 +87,16 @@ load FlxPinBPASet.mat kf %This loads the following, which was ran and saved:
     % clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 
 %% Initialize output
-nBPA = numel(ke);
+nBPA = numel(kf);
 % Default to all BPAs if none specified
 if nargin < 4 || isempty(idx_val)
         idx_val = 1:nBPA;
 end
 
-% [ke.strain_f] = deal([]);
-% [ke.Lm_f] = deal([]);
+% [kf.strain_f] = deal([]);
+% [kf.Lm_f] = deal([]);
 
-bpa_all = ke;  % initialize
+bpa_all = kf;  % initialize
 f_all = NaN(nBPA, 3);
 
 
@@ -104,7 +104,7 @@ f_all = NaN(nBPA, 3);
 for i = idx_val
 %     fprintf('Evaluating BPA #%d with [%.4f, %.2e, %.2e]\n', i, Xi0, Xi1, Xi2, Xi3);
     klass_i = kf(i);
-    [bpa_all(i), f_all(i,:)] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
+    [bpa_all(i), f_all(i,:)] = evaluateBPA(klass_i, Xi0, Xi1, Xi2);
     if any(isnan(bpa_all(i).strain_p))
         warning('NaNs in strain_p for BPA #%d', i);
     end

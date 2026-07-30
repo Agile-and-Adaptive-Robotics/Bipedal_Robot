@@ -7,8 +7,6 @@ clear; clc; close all
 [a0, bpa0] = minimizeFlxPin(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
 baselineScores = a0;
 fprintf('\nPerformance with no length offset and infinite stiffness:\n');
-disp(array2table(a0, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
-                    'RowNames', cellstr(labels')));
 
 fprintf('Mean baseline training: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',a0(1),a0(2),a0(3));
 
@@ -29,7 +27,7 @@ ub = [0.030*100, log10(5e6), log10(5e6)];
 
 %% Solver
 numHold = 2;                        %Number of BPAs held out for validation
-list = nchoosek(allBPA,1);          %Choose how many BPAs to hold out, the others for training
+list = nchoosek(allBPA,numHold);          %Choose how many BPAs to hold out, the others for training
 for k = 1:length(list)
     holdoutIdx = list(k,:);
     for n = 1:size(holdoutIdx,2)
@@ -56,7 +54,7 @@ for k = 1:length(list)
     % opts.HybridFcn = {@fgoalattain, hybridOpts};
         
     % Run optimization
-     [x, fvals,exitflag,output,population,scores] = gamultiobj(@(X) min1(X, trainIdx, a0), 4, [], [], [], [], ...
+     [x, fvals,exitflag,output,population,scores] = gamultiobj(@(X) min1(X, trainIdx, a0), 3, [], [], [], [], ...
                                                     lb, ub, ... % @(x) nonlcon2(x), ...
                                                     opts);
 
