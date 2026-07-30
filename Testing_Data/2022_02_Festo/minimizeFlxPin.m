@@ -129,14 +129,14 @@ mA_p = Mom(bpa_i, L_p, unitD_p);   %new moment arm
 M_p = Tor(mA_p, F_p, strain_p);  %new torque
 
 %% Package into output struct
-bpa = bpa_i;
-bpa.Lmt_p = Lmt_p;
-bpa.mA_p = mA_p;
-bpa.M_p = M_p;
-bpa.F_p = F_p;
-bpa.strain_p = strain_p;
-bpa.L_p = L_p;
-bpa.gama = gemma;
+% bpa = bpa_i;
+bpa_i.Lmt_p = Lmt_p;
+bpa_i.mA_p = mA_p;
+bpa_i.M_p = M_p;
+bpa_i.F_p = F_p;
+bpa_i.strain_p = strain_p;
+bpa_i.L_p = L_p;
+bpa_i.gama = gemma;
 
 % GoF calculation
 fitvec = SSE(bpa_i, M_p);
