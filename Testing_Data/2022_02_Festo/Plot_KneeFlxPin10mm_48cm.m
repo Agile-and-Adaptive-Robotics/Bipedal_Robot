@@ -3,11 +3,12 @@
 clear; clc; close all;
 
 load KneeFlxPin_10mm_48cm.mat
-Theoretical = TorqueR(:,3);
+% Theoretical = TorqueR(:,3);
+rest = 0.485; %resting length, m
+kmax = 0.398; %Length at maximum contraction, m
+fitting = 0.0254;
 restingLength = rest;
-% restingLength = 0.485; %resting length, m
-% kmax = 0.398; %Length at maximum contraction, m
-% fitting = 0.0254;
+
 % tendon = 0.013;
 Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, Pres);
 Theoretical = Bifemsh_Pam.Torque(:,3);

@@ -47,14 +47,35 @@ for i = 1:positions
     Location(:,:,i) = [-0.075, 0.100, 0.0328;
                     -0.05011, -0.045, 0.03226];
 end
-rest = 0.457; %resting length, m
-kmax = 0.380;     %Length at maximum contraction, m
+
+%% Set BPA values
+%  For KneeFlxPin_10mm_40cm.mat
+% rest = 0.406; %resting length, m
+% kmax = 0.338;     %Length at maximum contraction, m
+% tendon = 0.035;
+% Pres = 623.43;      %average pressure (kPa) for 46cm
+
+% %  For KneeFlxPin_10mm_47cm.mat
+rest = 0.479; %resting length, m
+kmax = 0.413;     %Length at maximum contraction, m
+tendon = 0;
+Pres = 623.17;      %average pressure (kPa) for 46cm
+
+%  For KneeFlxPin_10mm_46cm.mat
+% rest = 0.457; %resting length, m
+% kmax = 0.380;     %Length at maximum contraction, m
+% tendon = 0;
+% Pres = 604.5573;      %average pressure (kPa) for 46cm
+
+%  For KneeFlxPin_10mm_48cm.mat
 % rest = 0.485; %resting length, m
 % kmax = 0.398;     %Length at maximum contraction, m
-tendon = 0;       %pinned, no tendon
-fitting = 0.0254; %fitting length
-Pres = 605.6671;     %average pressure (kPa) for 49cm
-% Pres = 604.5573;      %average pressure (kPa) for 46cm
+% tendon = 0;       %pinned, no tendon
+% Pres = 605.6671;     %average pressure (kPa) for 49cm
+
+fitting = 0.0254; %fitting length, universal
+
+%% Run class
 Bifemsh_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest, kmax, tendon, fitting, Pres);
 
 
