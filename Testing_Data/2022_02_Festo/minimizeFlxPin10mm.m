@@ -18,7 +18,7 @@ scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for BPA(s) held
 [a0, bpa0] = minimizeFlxPin(0,Inf,Inf);         %Get current goodness of fit measures with no extra length and infinite bracket stiffness
 baselineScores = a0;
 fprintf('\nPerformance with no length offset and infinite stiffness:\n');
-disp(array2table(f, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
+disp(array2table(a0, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
                     'RowNames', cellstr(labels')));
 fprintf('Mean baseline training: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
@@ -143,7 +143,7 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 1;
+pick = 62;
 sol_actual = filtered_results(pick, xCols);
 [f, bpa] = minimizeFlxPin(sol_actual(1), sol_actual(2), sol_actual(3), 1:4);  % [f: 4x3], [bpa: full struct]
 
@@ -177,15 +177,16 @@ xAnn = [0, 0.48, 0, 0.48];
 yAnn = [0.94, 0.94, 0.45, 0.45];
 sz = 60;
 
-%% Plot torque curves, Optimized and validation 
+%% Plot torque curves, pre- and post-Optimized
 load ForceStrainForFit.mat z
+z(isnan(z)) = 0;
 X = linspace(0,620,20); %Pressure for interpolation
 X = X(2:20);
 Y = linspace(0,1,30);   %Relative strain range for interpolation
 
-figT = figure('Name','Torque','Color','w');
-figT.Position = [100 100 950 700];
-tT = tiledlayout(2*ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
+figTpre = figure('Name','Torque, Pre-Optimized','Color','w');
+figTpre.Position = [100 100 950 700];
+tTpre = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
 titles = ["\bf 48.5 cm", "\bf 45.7 cm","\bf 47.9 cm", "\bf 40.6 cm"];
 subtitles = ["\bf Pre-optimized","\bf Pre-optimized","\bf Pre-optimized","\bf Pre-optimized","\bf Optimized","\bf Optimized","\bf Optimized","\bf Optimized"];
@@ -194,29 +195,21 @@ for j = 1:numBPA
     ax = nexttile(j);
 
     hold on
-
     % Pre-optimization: Mold calculation
     Yq = bpa(j).strain./((bpa(j).rest - bpa(j).Kmax)/bpa(j).rest);
-    Xq = bpa(j).P;
-    Vq = zeros(size(bpa(j).unitD,1),1);
-    for k = 1:size(bpa(j).unitD,1)
-        if bpa(j).strain(k) >= -0.03 && Yq(k) <= 1
-            Vq(k) = interp2(X, Y, z, Xq, Yq(k));
-        elseif Yq(k) > 1
-            Vq(k) = 0;
-        elseif bpa(j).strain(k) < -0.03
-            Vq(k) = NaN;
-        end
-    end
+    Xq = bpa(j).P.*ones(size(Yq));
+    Vq = interp2(X, Y', z, Xq, Yq,'spline');
     Fold = Vq.*bpa(j).unitD;     %Old force calc              
-    Fq = sqrt(Fold(:,1).^2 + Fold(:,2).^2); %Old force magnitude on the XY plane
+    Fq = hypot(Fold(:,1), Fold(:,2)); %Old force magnitude on the XY plane
     Mold = -bpa(j).mA.*Fq;       %Torque with old force calc
-
+    Mold(Yq>1) = 0;
+    Mold(bpa(j).strain < 0) = NaN;
     scatter(bpa(j).A_h, bpa(j).M_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{1}, 'DisplayName', 'Hybrid');
     scatter(bpa(j).Aexp, bpa(j).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
     plot(bpa(j).Ak, Mold, '--', 'Color', c{8}, 'LineWidth', 2, 'DisplayName', 'Original');
     plot(bpa(j).Ak, bpa(j).M, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
 
+    clear Vq Fold Fq Mold
     title(titles(j), 'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
     
     ylabel('\bf Torque, N \cdot m', 'Interpreter', 'tex', ...
@@ -226,12 +219,17 @@ for j = 1:numBPA
 
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
-    subtitle(subtitles(j), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
+    % subtitle(subtitles(j), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
     xlim([-120 20]); ylim([-25 0]);
 end
 
+figTpost = figure('Name','Torque, Post-Optimized','Color','w');
+figTpost.Position = [100 100 950 700];
+tTpost = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
+
 for j = 1:numBPA
-    ax = nexttile(numBPA + j);
+    % ax = nexttile(numBPA + j);
+    ax = nexttile(j);
     hold on
     
     scatter(bpa(j).Aexp, bpa(j).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
@@ -246,7 +244,7 @@ for j = 1:numBPA
             'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
-    subtitle(subtitles(j+numBPA), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
+    % subtitle(subtitles(j), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
     xlim([-120 20]); ylim([-25 0]);
 end
 
@@ -267,11 +265,11 @@ end
 %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 
 % Legends in 2nd and 4th tile
-lg = legend(tT.Children(end-1));
+lg = legend(tTpre.Children(end-1));
 lg.Location = 'best';
 lg.FontSize = 8;
 
-lg2 = legend(tT.Children(end-(numBPA+1)));
+lg2 = legend(tTpost.Children(end-1));
 lg2.Location = 'best';
 lg2.FontSize = 8;
 
@@ -283,9 +281,9 @@ tL = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 for j = 1:numBPA
     ax = nexttile(j);
     if bpa(j).ten > 0
-        title(sprintf('\\bf l_\\rm{rest} = %0.1f cm, %0.0f mm tendon',bpa(j).rest*100, bpa(j).ten*10^3),'Interpreter','tex')
+        title(sprintf('\\bf l_0 = %0.1f cm, %0.0f mm tendon',bpa(j).rest*100, bpa(j).ten*10^3),'Interpreter','tex')
     else
-        title(sprintf('\\bf l_{rest} = %0.1f cm',bpa(j).rest*100),'Interpreter','tex')
+        title(sprintf('\\bf l_0 = %0.1f cm',bpa(j).rest*100),'Interpreter','tex')
     end
     hold on
     
@@ -323,22 +321,22 @@ lg = legend(tL.Children(end-1));
 lg.Location = 'best';
 lg.FontSize = 8;
 
-lg2 = legend(tL.Children(end-(numBPA+1)));
+lg2 = legend(tL.Children(end-(numBPA-1)));
 lg2.Location = 'best';
 lg2.FontSize = 8;
 
 %% Plot moment arm, optimization and validation
 figMA = figure('Name','Moment Arm','Color','w');
 figMA.Position = [100 100 950 700];
-tMA = tiledlayout(2*ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
+tMA = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
 
 for j = 1:numBPA
     ax = nexttile(j);
     if bpa(j).ten > 0
-        title(sprintf('\\bf l_\\rm{rest} = %0.1f cm, %0.0f mm tendon',bpa(j).rest*100, bpa(j).ten*10^3),'Interpreter','tex')
+        title(sprintf('\\bf l_0 = %0.1f cm, %0.0f mm tendon',bpa(j).rest*100, bpa(j).ten*10^3),'Interpreter','tex')
     else
-        title(sprintf('\\bf l_{rest} = %0.1f cm',bpa(j).rest*100),'Interpreter','tex')
+        title(sprintf('\\bf l_0 = %0.1f cm',bpa(j).rest*100),'Interpreter','tex')
     end
     hold on
     
@@ -364,7 +362,7 @@ xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex');
 % annotation(figMA, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
 %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 legend(tMA.Children(end-1),'Location','best','FontSize',8);
-legend(tMA.Children(end-(numBPA+1)),'Location','best','FontSize',8);
+% legend(tMA.Children(end-(numBPA-1)),'Location','best','FontSize',8);
 
 %% Plot relative strain, optimization and validation
 figS = figure('Name','Relative Strain','Color','w');
@@ -374,9 +372,9 @@ tS = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 for j = 1:numBPA
     ax = nexttile(j);
     if bpa(j).ten > 0
-        title(sprintf('\\bf l_\\rm{rest} = %0.1f cm, %0.0f mm tendon',bpa(j).rest*100, bpa(j).ten*10^3),'Interpreter','tex')
+        title(sprintf('\\bf l_0 = %0.1f cm, %0.0f mm tendon',bpa(j).rest*100, bpa(j).ten*10^3),'Interpreter','tex')
     else
-        title(sprintf('\\bf l_{rest} = %0.1f cm',bpa(j).rest*100),'Interpreter','tex')
+        title(sprintf('\\bf l_0 = %0.1f cm',bpa(j).rest*100),'Interpreter','tex')
     end
     hold on
     
@@ -406,7 +404,7 @@ xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex');
 % annotation(figS, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
 %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 legend(tS.Children(end-1),'Location','best','FontSize',8);
-legend(tS.Children(end-(numBPA+1)),'Location','best','FontSize',8);
+% legend(tS.Children(end-(numBPA+1)),'Location','best','FontSize',8);
 
 
 %% Helper functions
