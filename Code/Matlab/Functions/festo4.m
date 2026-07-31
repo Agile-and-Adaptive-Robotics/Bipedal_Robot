@@ -32,8 +32,9 @@ P = pres/620;           % Normalize pressure
     end
 
     F(rel > 1) = 0; %No force if shorter than shortest length
+    F(F<0) = 0;     %No negative force
 %     F(F > 1.05) = NaN; %If force is greater than 5% of it's maximum, return NaN.
-%     F = Fn.*maxF;
+
 
   end
     

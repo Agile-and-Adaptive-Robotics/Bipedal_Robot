@@ -25,8 +25,8 @@ labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
 validLabels = labels(allBPA);
 numBPA = numel(allBPA);
 
-results_cv = cell(1, numBPA);
-scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for held-out validation
+results_cv = cell(1, numBPA);  % Will store RMSE, FVU, Max Resid for BPA(s) optimized
+scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for BPA(s) held-out for validation
 
 %% Problem bounds
 % lb = [-0.020 * 100, log10(5e3), log10(5e3), 0.1];   % [cm, log10(N/m), log10(N/m), unitless]
@@ -43,7 +43,7 @@ ub = [-g(1) * 100, log10(g(2)), log10(g(3)), 3];
 clear sol_actual
 %% Solver
 numHold = 1;                        %Number of BPAs held out for validation
-list = nchoosek(allBPA,1);          %Choose how many BPAs to hold out, the others for training
+list = nchoosek(allBPA,numHold);          %Choose how many BPAs to hold out, the others for training
 for k = 1:length(list)
     holdoutIdx = list(k,:);
     for n = 1:size(holdoutIdx,2)
