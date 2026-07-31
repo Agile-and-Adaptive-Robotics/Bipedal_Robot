@@ -24,8 +24,8 @@ fprintf('Mean baseline training: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',me
 
 
 %% Problem bounds
-lb = [-0.030*100, log10(5e3), log10(5e3)];
-ub = [0.020*100, log10(5e8), log10(5e8)];
+lb = [0*100, log10(5e3), log10(5e3)];
+ub = [0.020*100, log10(5e7), log10(5e7)];
 
 %% Solver
 numHold = 2;                        %Number of BPAs held out for validation
