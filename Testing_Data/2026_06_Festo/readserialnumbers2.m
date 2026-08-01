@@ -25,7 +25,7 @@ function data = readserialnumbers2()
 
     %% Serial settings
 
-    port = "COM11";
+    port = "COM12";
     baudRate = 115200;
 
     expectedNumCols = 6;
