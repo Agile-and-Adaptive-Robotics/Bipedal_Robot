@@ -119,16 +119,19 @@ for i = 1:numBPA
     train = results_cv{i}.trainScores_all;  % Nx3
     val = results_cv{i}.validation_all;     % Nx3
     dist = results_cv{i}.distance_all;      % Nx1
-    rows = [fold, x, train, val, dist];     % Nx(11+numHold)
+    ind = 1:length(x2);                         %create an index
+    ind = ind';                                 %Make Nx1 column array to show original results order
+    rows = [ind, fold, x2, train, val, dist];   % Nx(12+numHold)
     all_candidates = [all_candidates; rows];
 end
 
 %% Dynamic column indices before de-normalizing
-holdCols  = 1:numHold;
-xCols     = numHold + (1:4);
-trainCols = numHold + 4 + (1:3);
-valCols   = numHold + 7 + (1:3);
-distCol   = numHold + 11;
+rankCol   = 1;
+holdCols  = numel(rankCol) + (1:numHold);
+xCols     = numel(rankCol) + numel(holdCols) + (1:3);
+trainCols = numel(rankCol) + numel(holdCols) + numel(xCols) + (1:3);
+valCols   = numel(rankCol) + numel(holdCols) + numel(xCols) + numel(trainCols) + (1:3);
+distCol   = numel(rankCol) + numel(holdCols) + numel(xCols) + numel(trainCols) + numel(valCols) + 1;
 
 %% Sort by validation distance first, then validation metrics
 results = all_candidates;  % [fold, Xi0, Xi1, Xi2, Xi3, train (3), val (3), dist]
@@ -136,7 +139,7 @@ results_sort = sortrows(results, [distCol valCols trainCols]);  % sort by distan
 
 %% De-normalize to get physical parameters
 x_actual = [results_sort(:,xCols(1))/100, 10.^results_sort(:,xCols(2)), 10.^results_sort(:,xCols(3)), results_sort(:,xCols(4))];
-results_sort_actual = [results_sort(:,holdCols), x_actual, results_sort(:,trainCols), results_sort(:,valCols), results_sort(:,distCol)];
+results_sort_actual = [results_sort(:,rankCol), results_sort(:,holdCols), x_actual, results_sort(:,trainCols), results_sort(:,valCols), results_sort(:,distCol)];
 
 %% --- Filter Pareto candidates against baseline on BPAs 1, 3 & 4 ---
 N = size(results_sort_actual, 1);
@@ -149,8 +152,8 @@ for ii = 1:N
     Xi2 = results_sort_actual(ii,xCols(3));
     Xi3 = results_sort_actual(ii,xCols(4));
 
-    % re-evaluate on all 4 BPAs
-    f_all = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, 1:4);   % returns 4×3 [RMSE, FVU, MaxResidual]
+    % re-evaluate on all 9 BPAs
+    f_all = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, 1:9);   % returns 4×3 [RMSE, FVU, MaxResidual]
 
     % compare RMSE & FVU for BPAs 1, 3 & 4 to baselineScores
     pass1 = all( f_all(1,:) <= baselineScores(1,:) );
@@ -166,7 +169,7 @@ for ii = 1:N
     keep(ii) = pass1 && pass2 && pass5 && pass6;
 end
 
-% keep only the rows that passed all three checks
+% keep only the rows that passed all desired checks
 filtered_results = results_sort_actual(keep, :);
 fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 

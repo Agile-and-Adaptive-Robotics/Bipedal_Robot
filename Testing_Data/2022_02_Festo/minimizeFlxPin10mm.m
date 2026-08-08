@@ -94,7 +94,7 @@ for i = 1:numBPA
     dist = results_cv{i}.distance_all;          % Nx1
     ind = 1:length(x2);                         %create an index
     ind = ind';                                 %Make Nx1 column array to show original results order
-    rows = [ind, fold, x2, train, val, dist];   % Nx(10+numHold)
+    rows = [ind, fold, x2, train, val, dist];   % Nx(11+numHold)
     all_candidates = [all_candidates; rows];
 end
 
