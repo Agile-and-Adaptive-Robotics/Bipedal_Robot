@@ -28,7 +28,7 @@ lb = [0*100, log10(5e3), log10(5e3)];
 ub = [0.020*100, log10(5e7), log10(5e7)];
 
 %% Solver
-numHold = 2;                        %Number of BPAs held out for validation
+numHold = 3;                        %Number of BPAs held out for validation
 list = nchoosek(allBPA,numHold);          %Choose how many BPAs to hold out, the others for training
 for k = 1:length(list)
     holdoutIdx = list(k,:);
@@ -114,7 +114,7 @@ results_sort = sortrows(results, [distCol valCols(1:2) trainCols(1:2)]);  % sort
 x_actual = [results_sort(:,xCols(1))/100, 10.^results_sort(:,xCols(2)), 10.^results_sort(:,xCols(3))];
 results_sort_actual = [results_sort(:,rankCol), results_sort(:,holdCols), x_actual, results_sort(:,trainCols), results_sort(:,valCols), results_sort(:,distCol)];
 
-%% --- Filter Pareto candidates against baseline on BPAs 1, 3 & 4 ---
+%% --- Filter Pareto candidates against baseline on BPAs 1, 2, 3 & 4 ---
 N = size(results_sort_actual, 1);
 keep = false(N,1);
 
@@ -143,9 +143,9 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 62;
+pick =1;
 sol_actual = filtered_results(pick, xCols);
-[f, bpa] = minimizeFlxPin(sol_actual(1), sol_actual(2), sol_actual(3), 1:4);  % [f: 4x3], [bpa: full struct]
+[f, bpa] = minimizeFlxPin(sol_actual(1), 9e4, sol_actual(3), 1:4);  % [f: 4x3], [bpa: full struct]
 
 %Show results for pre- and post-optimization
 fprintf('\nPerformance with no length offset and infinite stiffness:\n');

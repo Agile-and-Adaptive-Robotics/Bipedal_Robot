@@ -15,79 +15,152 @@ function [f_all, bpa_all] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, idx_val)
 %   bpa    - updated BPA struct with prediction fields filled in
 
 %% load
-%kf = knee flexor, kf(1) = pinned joint, kf(2) = biomimetic;
+%kf = knee flexor, kf(1) = specific resting length, 
 %ke = knee extensor, same as above
-%ke.L := lengths = [42 42 46 48] cm
-%example: ke(1).L(3).Mz z-axis torque for pinned knee, flexor, 46cm length
+%example: ke(2).Mz z-axis torque for pinned knee, extensor, 42 cm length
+%with tendon
 %'exp' suffix means experimentally measured
-%'_h' suffix means hybrid calculation
+%'_h' suffix means hybrid calculated
 %'_p' suffix means prime, as in the new prediction values
+%'_f' suffix means fictive, as in fictive strain and length considering
+%loss of useful length from X3 term.
 
 load ExtPinBPASet.mat ke %This loads the following, which was ran and saved:
 
-% % 42cm length, no tendon
-%     load KneeExtPin_10mm_all.mat Vas_Pam_42cm phiD
-%     Ma = Vas_Pam_42cm.MomentArm;                 %Calculated moment arm
-%     G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
-%     load Plot_KneeExtPin10mm_42cm.mat Angle0 Torque0 InflatedLength0 ICRtoMuscle0 TorqueHand0
+% % 40cm length, no tendon
+%     load KneeExtPin_10mm_all.mat phiD
+%     load Plot_KneeExtPin10mm_40cm.mat Angle0 Torque0 InflatedLength0 ICRtoMuscle0 TorqueHand0 G1 Vas_Pam_40cm
+%     argh = Vas_Pam_40cm;
 %     A = sortrows([Angle0, Torque0, InflatedLength0, ICRtoMuscle0, TorqueHand0]);
-%     ke(1) = struct('Ak',phiD,'Loc',Vas_Pam_42cm.Location,'CP',Vas_Pam_42cm.Cross,'dBPA',Vas_Pam_42cm.Diameter, ...
-%                   'Tk',Vas_Pam_42cm.TransformationMat,'rest',Vas_Pam_42cm.RestingL,'Kmax',Vas_Pam_42cm.Kmax,...
-%                   'fitn',Vas_Pam_42cm.FittingLength,'ten',Vas_Pam_42cm.TendonL,'P',Vas_Pam_42cm.Pressure, ...
-%                   'Lmt',Vas_Pam_42cm.MuscleLength,'strain',Vas_Pam_42cm.Contraction, 'unitD',Vas_Pam_42cm.UnitDirection, ...
-%                   'mA',G,'Fm',Vas_Pam_42cm.Fmax,'F',Vas_Pam_42cm.Force, 'seg',Vas_Pam_42cm.SegmentLengths, ...
-%                   'M',Vas_Pam_42cm.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+%     ke(1) = struct('Ak',phiD,'Loc',argh.Location,'CP',argh.Cross,'dBPA',argh.Diameter, ...
+%                   'Tk',argh.TransformationMat,'rest',argh.RestingL,'Kmax',argh.Kmax,...
+%                   'fitn',argh.FittingLength,'ten',argh.TendonL,'P',argh.Pressure, ...
+%                   'Lmt',argh.MuscleLength,'strain',argh.Contraction, 'unitD',argh.UnitDirection, ...
+%                   'mA',G1,'Fm',argh.Fmax,'F',argh.Force, 'seg',argh.SegmentLengths, ...
+%                   'M',argh.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
 %                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-%                   'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
-%     clear Vas_Pam_42cm phiD Ma G Angle0 Torque0 InflatedLength0 ICRtoMuscle0 TorqueHand0 A
+%                   'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+%     clear Vas_Pam_40cm phiD Angle0 Torque0 InflatedLength0 ICRtoMuscle0 TorqueHand0 A G1 argh
 % 
-% % 42cm length, tendon
-%     load KneeExtPin_10mm_all.mat Vas_Pam_42cm_tendon phiD
-%     Ma = Vas_Pam_42cm_tendon.MomentArm;                 %Calculated moment arm
-%     G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
-%     load Plot_KneeExtPin10mm_42cm.mat Angle1 Torque1 InflatedLength1 ICRtoMuscle1 TorqueHand1
+% % 40cm length, tendon
+%     load KneeExtPin_10mm_all.mat phiD
+%     load Plot_KneeExtPin10mm_40cm.mat Angle1 Torque1 InflatedLength1 ICRtoMuscle1 TorqueHand1 G2 Vas_Pam_40cm_tendon
+%     argh = Vas_Pam_40cm_tendon;
 %     A = sortrows([Angle1, Torque1, InflatedLength1, ICRtoMuscle1, TorqueHand1]);
-%     ke(2) = struct('Ak',phiD,'Loc',Vas_Pam_42cm_tendon.Location,'CP',Vas_Pam_42cm_tendon.Cross,'dBPA',Vas_Pam_42cm_tendon.Diameter, ...
-%                   'Tk',Vas_Pam_42cm_tendon.TransformationMat,'rest',Vas_Pam_42cm_tendon.RestingL,'Kmax',Vas_Pam_42cm_tendon.Kmax,...
-%                   'fitn',Vas_Pam_42cm_tendon.FittingLength,'ten',Vas_Pam_42cm_tendon.TendonL,'P',Vas_Pam_42cm_tendon.Pressure, ...
-%                   'Lmt',Vas_Pam_42cm_tendon.MuscleLength,'strain',Vas_Pam_42cm_tendon.Contraction, 'unitD',Vas_Pam_42cm_tendon.UnitDirection, ...
-%                   'mA',G,'Fm',Vas_Pam_42cm_tendon.Fmax,'F',Vas_Pam_42cm_tendon.Force, 'seg',Vas_Pam_42cm_tendon.SegmentLengths, ...
-%                   'M',Vas_Pam_42cm_tendon.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+%     ke(2) = struct('Ak',phiD,'Loc',argh.Location,'CP',argh.Cross,'dBPA',argh.Diameter, ...
+%                   'Tk',argh.TransformationMat,'rest',argh.RestingL,'Kmax',argh.Kmax,...
+%                   'fitn',argh.FittingLength,'ten',argh.TendonL,'P',argh.Pressure, ...
+%                   'Lmt',argh.MuscleLength,'strain',argh.Contraction, 'unitD',argh.UnitDirection, ...
+%                   'mA',G2,'Fm',argh.Fmax,'F',argh.Force, 'seg',argh.SegmentLengths, ...
+%                   'M',argh.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
 %                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-%                   'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
-%     clear Vas_Pam_42cm_tendon phiD Ma G Angle1 Torque1 InflatedLength1 ICRtoMuscle1 TorqueHand1 A
-%     
+%                   'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+%     clear Vas_Pam_40cm_tendon phiD Angle1 Torque1 InflatedLength1 ICRtoMuscle1 TorqueHand1 A G2 argh
 % 
-% % 46cm length
-%     load KneeExtPin_10mm_all.mat Vas_Pam_46cm phiD
-%     Ma = Vas_Pam_46cm.MomentArm;                 %Calculated moment arm
-%     G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
-%     load Plot_KneeExtPin10mm_46cm.mat AngleX Torque InflatedLength ICRtoMuscle TorqueHand
+% % 42 cm length, no tendon
+%     load KneeExtPin_10mm_all.mat phiD
+%     load Plot_KneeExtPin10mm_42cm.mat Angle0 Torque0 InflatedLength0 ICRtoMuscle0 TorqueHand0 G1 Vas_Pam_42cm
+%     argh = Vas_Pam_42cm;
+%     A = sortrows([Angle0, Torque0, InflatedLength0, ICRtoMuscle0, TorqueHand0]);
+%     ke(3) = struct('Ak',phiD,'Loc',argh.Location,'CP',argh.Cross,'dBPA',argh.Diameter, ...
+%                   'Tk',argh.TransformationMat,'rest',argh.RestingL,'Kmax',argh.Kmax,...
+%                   'fitn',argh.FittingLength,'ten',argh.TendonL,'P',argh.Pressure, ...
+%                   'Lmt',argh.MuscleLength,'strain',argh.Contraction, 'unitD',argh.UnitDirection, ...
+%                   'mA',G1,'Fm',argh.Fmax,'F',argh.Force, 'seg',argh.SegmentLengths, ...
+%                   'M',argh.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+%                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
+%                   'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+%     clear Vas_Pam_42cm phiD Angle0 Torque0 InflatedLength0 ICRtoMuscle0 TorqueHand0 A G1 argh
+% 
+% % 42 cm length, tendon
+%     load KneeExtPin_10mm_all.mat phiD
+%     load Plot_KneeExtPin10mm_42cm.mat Angle1 Torque1 InflatedLength1 ICRtoMuscle1 TorqueHand1 G2 Vas_Pam_42cm_tendon
+%     argh = Vas_Pam_42cm_tendon;
+%     A = sortrows([Angle1, Torque1, InflatedLength1, ICRtoMuscle1, TorqueHand1]);
+%     ke(4) = struct('Ak',phiD,'Loc',argh.Location,'CP',argh.Cross,'dBPA',argh.Diameter, ...
+%                   'Tk',argh.TransformationMat,'rest',argh.RestingL,'Kmax',argh.Kmax,...
+%                   'fitn',argh.FittingLength,'ten',argh.TendonL,'P',argh.Pressure, ...
+%                   'Lmt',argh.MuscleLength,'strain',argh.Contraction, 'unitD',argh.UnitDirection, ...
+%                   'mA',G2,'Fm',argh.Fmax,'F',argh.Force, 'seg',argh.SegmentLengths, ...
+%                   'M',argh.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+%                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
+%                   'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+%     clear Vas_Pam_42cm_tendon phiD Angle1 Torque1 InflatedLength1 ICRtoMuscle1 TorqueHand1 A G2 argh
+% 
+% % 43cm length, no tendon
+%     load KneeExtPin_10mm_all.mat phiD
+%     load Plot_KneeExtPin10mm_43cm.mat Angle0 Torque0 InflatedLength0 ICRtoMuscle0 TorqueHand0 G1 Vas_Pam_43cm
+%     argh = Vas_Pam_43cm;
+%     A = sortrows([Angle0, Torque0, InflatedLength0, ICRtoMuscle0, TorqueHand0]);
+%     ke(5) = struct('Ak',phiD,'Loc',argh.Location,'CP',argh.Cross,'dBPA',argh.Diameter, ...
+%                   'Tk',argh.TransformationMat,'rest',argh.RestingL,'Kmax',argh.Kmax,...
+%                   'fitn',argh.FittingLength,'ten',argh.TendonL,'P',argh.Pressure, ...
+%                   'Lmt',argh.MuscleLength,'strain',argh.Contraction, 'unitD',argh.UnitDirection, ...
+%                   'mA',G1,'Fm',argh.Fmax,'F',argh.Force, 'seg',argh.SegmentLengths, ...
+%                   'M',argh.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+%                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
+%                   'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+%     clear Vas_Pam_43cm phiD Angle0 Torque0 InflatedLength0 ICRtoMuscle0 TorqueHand0 A G1 argh
+% 
+% % 43cm length, tendon
+%     load KneeExtPin_10mm_all.mat phiD
+%     load Plot_KneeExtPin10mm_43cm.mat Angle1 Torque1 InflatedLength1 ICRtoMuscle1 TorqueHand1 G2 Vas_Pam_43cm_tendon
+%     argh = Vas_Pam_43cm_tendon;
+%     A = sortrows([Angle1, Torque1, InflatedLength1, ICRtoMuscle1, TorqueHand1]);
+%     ke(6) = struct('Ak',phiD,'Loc',argh.Location,'CP',argh.Cross,'dBPA',argh.Diameter, ...
+%                   'Tk',argh.TransformationMat,'rest',argh.RestingL,'Kmax',argh.Kmax,...
+%                   'fitn',argh.FittingLength,'ten',argh.TendonL,'P',argh.Pressure, ...
+%                   'Lmt',argh.MuscleLength,'strain',argh.Contraction, 'unitD',argh.UnitDirection, ...
+%                   'mA',G2,'Fm',argh.Fmax,'F',argh.Force, 'seg',argh.SegmentLengths, ...
+%                   'M',argh.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+%                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
+%                   'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+%     clear Vas_Pam_43cm_tendon phiD Angle1 Torque1 InflatedLength1 ICRtoMuscle1 TorqueHand1 A G2 argh
+% 
+% % 46 cm length
+%     load KneeExtPin_10mm_all.mat phiD
+%     load Plot_KneeExtPin10mm_46cm.mat AngleX Torque InflatedLength ICRtoMuscle TorqueHand G Vas_Pam_46cm
+%     argh = Vas_Pam_46cm;
 %     A = sortrows([AngleX, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
-%     ke(3) = struct('Ak',phiD,'Loc',Vas_Pam_46cm.Location,'CP',Vas_Pam_46cm.Cross,'dBPA',Vas_Pam_46cm.Diameter, ...
-%                   'Tk',Vas_Pam_46cm.TransformationMat,'rest',Vas_Pam_46cm.RestingL,'Kmax',Vas_Pam_46cm.Kmax,...
-%                   'fitn',Vas_Pam_46cm.FittingLength,'ten',Vas_Pam_46cm.TendonL,'P',Vas_Pam_46cm.Pressure, ...
-%                   'Lmt',Vas_Pam_46cm.MuscleLength,'strain',Vas_Pam_46cm.Contraction, 'unitD',Vas_Pam_46cm.UnitDirection, ...
-%                   'mA',G,'Fm',Vas_Pam_46cm.Fmax,'F',Vas_Pam_46cm.Force, 'seg',Vas_Pam_46cm.SegmentLengths, ...
-%                   'M',Vas_Pam_46cm.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+%     ke(7) = struct('Ak',phiD,'Loc',argh.Location,'CP',argh.Cross,'dBPA',argh.Diameter, ...
+%                   'Tk',argh.TransformationMat,'rest',argh.RestingL,'Kmax',argh.Kmax,...
+%                   'fitn',argh.FittingLength,'ten',argh.TendonL,'P',argh.Pressure, ...
+%                   'Lmt',argh.MuscleLength,'strain',argh.Contraction, 'unitD',argh.UnitDirection, ...
+%                   'mA',G,'Fm',argh.Fmax,'F',argh.Force, 'seg',argh.SegmentLengths, ...
+%                   'M',argh.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
 %                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-%                   'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
-%     clear Vas_Pam_46cm phiD Ma G AngleX Torque InflatedLength ICRtoMuscle TorqueHand A
+%                   'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+%     clear Vas_Pam_46cm phiD Ma AngleX Torque InflatedLength ICRtoMuscle TorqueHand A G argh
 % 
-%     load KneeExtPin_10mm_all.mat Vas_Pam_48cm phiD
-%     Ma = Vas_Pam_48cm.MomentArm;                 %Calculated moment arm
-%     G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
-%     load Plot_KneeExtPin10mm_48cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
+% % 47 cm length
+%     load KneeExtPin_10mm_all.mat  phiD
+%     load Plot_KneeExtPin10mm_47cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Vas_Pam_47cm
+%     argh = Vas_Pam_47cm;
 %     A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
-%     ke(4) = struct('Ak',phiD,'Loc',Vas_Pam_48cm.Location,'CP',Vas_Pam_48cm.Cross,'dBPA',Vas_Pam_48cm.Diameter, ...
-%                   'Tk',Vas_Pam_48cm.TransformationMat,'rest',Vas_Pam_48cm.RestingL,'Kmax',Vas_Pam_48cm.Kmax,...
-%                   'fitn',Vas_Pam_48cm.FittingLength,'ten',Vas_Pam_48cm.TendonL,'P',Vas_Pam_48cm.Pressure, ...
-%                   'Lmt',Vas_Pam_48cm.MuscleLength,'strain',Vas_Pam_48cm.Contraction, 'unitD',Vas_Pam_48cm.UnitDirection, ...
-%                   'mA',G,'Fm',Vas_Pam_48cm.Fmax,'F',Vas_Pam_48cm.Force, 'seg',Vas_Pam_48cm.SegmentLengths, ...
-%                   'M',Vas_Pam_48cm.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+%     ke(8) = struct('Ak',phiD,'Loc',argh.Location,'CP',argh.Cross,'dBPA',argh.Diameter, ...
+%                   'Tk',argh.TransformationMat,'rest',argh.RestingL,'Kmax',argh.Kmax,...
+%                   'fitn',argh.FittingLength,'ten',argh.TendonL,'P',argh.Pressure, ...
+%                   'Lmt',argh.MuscleLength,'strain',argh.Contraction, 'unitD',argh.UnitDirection, ...
+%                   'mA',G,'Fm',argh.Fmax,'F',argh.Force, 'seg',argh.SegmentLengths, ...
+%                   'M',argh.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
 %                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-%                   'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
-%     clear Vas_Pam_48cm phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+%                   'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+%     clear Vas_Pam_47cm phiD Ma Angle Torque InflatedLength ICRtoMuscle TorqueHand A G argh
+% 
+% % 48 cm length
+%     load KneeExtPin_10mm_all.mat  phiD
+%     load Plot_KneeExtPin10mm_48cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Vas_Pam_48cm
+%     argh = Vas_Pam_48cm;
+%     A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
+%     ke(9) = struct('Ak',phiD,'Loc',argh.Location,'CP',argh.Cross,'dBPA',argh.Diameter, ...
+%                   'Tk',argh.TransformationMat,'rest',argh.RestingL,'Kmax',argh.Kmax,...
+%                   'fitn',argh.FittingLength,'ten',argh.TendonL,'P',argh.Pressure, ...
+%                   'Lmt',argh.MuscleLength,'strain',argh.Contraction, 'unitD',argh.UnitDirection, ...
+%                   'mA',G,'Fm',argh.Fmax,'F',argh.Force, 'seg',argh.SegmentLengths, ...
+%                   'M',argh.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+%                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
+%                   'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+%     clear Vas_Pam_48cm phiD Ma Angle Torque InflatedLength ICRtoMuscle TorqueHand A G argh
 
 
 %% Initialize output
@@ -96,9 +169,6 @@ nBPA = numel(ke);
 if nargin < 5 || isempty(idx_val)
         idx_val = 1:nBPA;
 end
-
-[ke.strain_f] = deal([]);
-[ke.Lm_f] = deal([]);
 
 bpa_all = ke;  % initialize
 f_all = NaN(nBPA, 3);
@@ -489,8 +559,8 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X2, X1, X1]);       %bracket stiffness
-    C_bracket = diag([1/X2, 1/X1, 1/X1]); %bracket compliance 
+    K_bracket = diag([X1, X2, X1]);       %bracket stiffness
+    C_bracket = diag([1/X1, 1/X2, 1/X1]); %bracket compliance 
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
     c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));
@@ -505,54 +575,31 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
         if ~valid(i)
             continue;
         end
-                
-        contraction0    = ( rest - mL(i) ) / rest;
-        relstrain0      = contraction0 / KMAX;  %relative strain
-        if relstrain0 >= 1
-            continue;
-        end
-        
+         
+        % Per-instance constants
         keff = k_eff(i);
         unit_vec = u_hat_all(i, :);
         Lm = mL(i);
-        
-        % Solve for r (deflection) using fzero
-        % First, compute contraction from Xi0 if deflection is zero 
-        r = 0;  % Initial guess             
-        
-        %Flexible case: run Newton-Raphson
-        for iter = 1:50
-            contraction = (rest - (mL(i) - r)) / rest;
-            rel = contraction / KMAX;
 
-            fM = festo4(D,rel, P) * mif;
-            fT = keff * r;
-            Fbal = fM - fT;
-
-            % Numerical derivative
-            dr = 1e-6;
-            contraction_d = (rest - (mL(i) - ( r + dr)) ) / rest;
-            rel_d = contraction_d / KMAX;
-            fM_d = festo4(D,rel_d, P) * mif;
-            Fbal_d = fM_d - keff * (r + dr);
-            dF = (Fbal_d - Fbal) / dr;
-
-            %Avoid zero slope
-            if abs(dF) < 1e-12 || isnan(dF)  %1e-12
-                r = NaN;
-                break;
+        contraction0    = ( rest - Lm ) / rest;
+        relstrain0      = contraction0 / KMAX;  %relative strain
+        if relstrain0 >= 1
+            r = 0;
+        else
+            relfun = @(r) ...
+                festo4( D, ...
+                    (rest - (Lm -  r)) / rest / KMAX, ...
+                    P  ...
+                ) * mif - keff * r;
+    
+            try
+                r = fzero(relfun, [0, Lm-kmax]);
+            catch
+                r = 0;
             end
-            
-            % Newton-Raphson update
-            r = r - Fbal / dF;
-
-            if abs(Fbal) < 1e-6     %1e-6
-                break;
-            end
+            r = max(r,0); %guard against r being slightly negative.
         end
 
-        r = max(r,0);   %guard against negative r values
-        
         if r == 0
             continue;            
         elseif isinf(X1) && isinf(X2) && tendon > 0
@@ -564,7 +611,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
             continue;
         else        
         % Final force magnitude
-        contraction = (rest - (mL(i) - r)) / rest;
+        contraction = (rest - (Lm- r)) / rest;
         relstrain = contraction / KMAX;
         F_mag = festo4(D, relstrain, P) * mif;
 

@@ -11,14 +11,14 @@ tendon = cell(2,1);
 
 
 rest{1} = 0.400;        %resting length clamp to clamp, minus the barb
-kmax{1} = 0.341;           %length at maximum contraction
+kmax{1} = 0.337;           %length at maximum contraction
 tendon{1} = 0;            %no tendon condition
 pres = 624.9;        %Average Pressure, kPa
 Vas_Pam_40cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest{1}, kmax{1}, tendon{1}, fitting, pres);
 Theoretical = Vas_Pam_40cm.Torque(:,3);
 
 rest{2} = 0.400;
-kmax{2} = 0.341;
+kmax{2} = 0.337;
 tendon{2} = 0.040;       %tendon
 pres = 618.37;         %average pressure, kPa
 Vas_Pam_40cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest{2}, kmax{2}, tendon{2}, fitting, pres);
@@ -117,9 +117,9 @@ KMAX1 = KMAX{2};
 
 %% Plot expected versus measured moment arm
 Ma1 = Vas_Pam_40cm.MomentArm;                  %Calculated moment arm
-G1 = (Ma1(:,1).^2+Ma1(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+G1 = hypot(Ma1(:,1),Ma1(:,2));         %Moment arm for z-axis torque
 Ma2 = Vas_Pam_40cm_tendon.MomentArm;                  %Calculated moment arm
-G2 = (Ma2(:,1).^2+Ma2(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+G2 = hypot(Ma2(:,1),Ma2(:,2));         %Moment arm for z-axis torque
 
 fig_MA = figure('Name','Moment Arm');
 figMA = tiledlayout(2,1);
@@ -134,7 +134,7 @@ else
     end
 end
 hold off
-title(sprintf(' \bf Torque, l_{rest} = %0.1f cm, %0.1f mm tendon',rest{1}*100, tendon{1}*10^3),'Interpreter','tex')
+title(sprintf('\\bf Torque, l_{rest} = %0.1f cm, %0.1f mm tendon',rest{1}*100, tendon{1}*10^3),'Interpreter','tex')
 xlabel(' \bf Knee angle, \circ')
 ylabel(' \bf Moment Arm, m')
 set(ax1_1,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05]);
@@ -155,7 +155,7 @@ else
     end
 end
 hold off
-title(sprintf(' \bf l_{rest} = %0.1f cm, %0.1f mm tendon',rest{2}*100, tendon{2}*10^3),'Interpreter','tex')
+title(sprintf('\\bf l_{rest} = %0.1f cm, %0.1f mm tendon',rest{2}*100, tendon{2}*10^3),'Interpreter','tex')
 xlabel(' \bf Knee angle, \circ')
 ylabel(' \bf Moment Arm, m')
 set(ax1_2,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05]);
@@ -192,7 +192,7 @@ else
     end
 end
 hold off
-title(sprintf(' \bf l_{rest} = %0.1f cm, %0.1f mm tendon',rest{1}*100, tendon{1}*10^3),'Interpreter','tex')
+title(sprintf('\\bf l_{rest} = %0.1f cm, %0.1f mm tendon',rest{1}*100, tendon{1}*10^3),'Interpreter','tex')
 xlabel('Knee angle, \circ')
 ylabel('strain/kmax')
 set(ax2_1,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05],'YLim',[0 1.5],'XLim',[-125 35]);
@@ -213,7 +213,7 @@ else
     end
 end
 hold off
-title(sprintf(' \bf l_{rest} = %0.1f cm, %0.1f mm tendon',rest{2}*100, tendon{2}*10^3),'Interpreter','tex')
+title(sprintf('\\bf l_{rest} = %0.1f cm, %0.1f mm tendon',rest{2}*100, tendon{2}*10^3),'Interpreter','tex')
 xlabel('Knee angle, \circ')
 ylabel('strain/kmax')
 set(ax2_2,'FontSize', 12, 'FontWeight', 'bold','XMinorTick','on','YMinorTick','on','TickLength',[0.025, 0.05],'YLim',[0 1.5],'XLim',[-125 35]);
@@ -238,7 +238,7 @@ else
     sLm1_1 = scatter(Angle{1},InflatedLength{1},'DisplayName',' \bf Measured');
 end
 hold off
-title(sprintf(' \bf L_{m}, l_{rest} = %0.1f cm, %0.1f mm tendon',rest{1}*100, tendon{1}*10^3),'Interpreter','tex')
+title(sprintf('\\bf L_{m}, l_{rest} = %0.1f cm, %0.1f mm tendon',rest{1}*100, tendon{1}*10^3),'Interpreter','tex')
 xlabel(' \bf Knee angle, \circ','Interpreter','tex')
 ylabel(' \bf l_{M}, m','Interpreter','tex')
 set(Lm1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial','TickLength',[0.025, 0.05])
@@ -255,7 +255,7 @@ else
 sLm2_1 = scatter(Angle{2},InflatedLength{2},'DisplayName',' \bf Measured');
 end
 hold off
-title(sprintf(' \bf L_{m}, l_{rest} = %0.1f cm, %0.1f mm tendon',rest{2}*100, tendon{2}*10^3),'Interpreter','tex')
+title(sprintf('\\bf L_{m}, l_{rest} = %0.1f cm, %0.1f mm tendon',rest{2}*100, tendon{2}*10^3),'Interpreter','tex')
 xlabel(' \bf Knee angle, \circ','Interpreter','tex')
 ylabel(' \bf l_{m}, m','Interpreter','tex')
 set(Lm2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2, 'FontName','Arial','TickLength',[0.025, 0.05])
@@ -278,7 +278,7 @@ else
     scH = scatter(Angle{1},TorqueHand{1},sz,'filled','MarkerFaceColor',c{2},'DisplayName','Back calculated');
 end
 hold off
-title(sprintf(' \bf Torque, l_{rest} = %0.1f cm, %0.1f mm tendon',rest{1}*100, tendon{1}*10^3),'Interpreter','tex')
+title(sprintf('\\bf Torque, l_{rest} = %0.1f cm, %0.1f mm tendon',rest{1}*100, tendon{1}*10^3),'Interpreter','tex')
 xlabel('Knee angle, \circ','FontWeight','bold','Interpreter','tex')
 ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
 set(gca1,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',xLim,'TickLength',[0.025, 0.05])
@@ -299,7 +299,7 @@ else
  scH1 = scatter(Angle{2},TorqueHand{2},sz,'filled','MarkerFaceColor',c{4},'DisplayName',Test(2));
 end
 hold off
-title(sprintf(' \bf Torque, l_{rest} = %0.1f cm, %0.1f mm tendon',rest{2}*100, tendon{2}*10^3),'Interpreter','tex')
+title(sprintf('\\bf Torque, l_{rest} = %0.1f cm, %0.1f mm tendon',rest{2}*100, tendon{2}*10^3),'Interpreter','tex')
 xlabel('Knee angle, \circ','FontWeight','bold','Interpreter','tex')
 ylabel('Torque, N{\cdot}m','FontWeight','bold','Interpreter','tex')
 set(gca2,'FontSize', 12, 'FontWeight', 'bold','LineWidth',2,'FontName','Arial','XLim',xLim,'TickLength',[0.025, 0.05])

@@ -15,18 +15,19 @@ function [f_all, bpa_all] = minimizeExt(Xi0, Xi1, Xi2, Xi3, idx_val)
 %   bpa    - updated BPA struct with prediction fields filled in
 
 %% load
-%kf = knee flexor, kf(1) = pinned joint, kf(2) = biomimetic;
+%kf = knee flexor, kf(1) = specific resting length, 
 %ke = knee extensor, same as above
-%ke.L := lengths = [42 42 46 48] cm
-%example: ke(1).L(3).Mz z-axis torque for pinned knee, flexor, 46cm length
+%example: ke(1).Mz z-axis torque for 10 mm biomimetic knee, extensor, 52 cm length
 %'exp' suffix means experimentally measured
-%'_h' suffix means hybrid calculation
+%'_h' suffix means hybrid calculated
 %'_p' suffix means prime, as in the new prediction values
+%'_f' suffix means fictive, as in fictive strain and length considering
+%loss of useful length from X3 term.
 
 % 52cm length, no tendon
     load KneeExt_10mm_52cm.mat Vas_Pam phiD
     Ma = Vas_Pam.MomentArm;                 %Calculated moment arm
-    G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+    G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
     load Plot_KneeExt10mm_52cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
     A = sortrows([Angle(:), Torque(:), InflatedLength(:), ICRtoMuscle(:), TorqueHand(:)]);
     ke(1) = struct('Ak',phiD,'Loc',Vas_Pam.Location,'CP',Vas_Pam.Cross,'dBPA',Vas_Pam.Diameter, ...
@@ -36,7 +37,7 @@ function [f_all, bpa_all] = minimizeExt(Xi0, Xi1, Xi2, Xi3, idx_val)
                   'mA',G,'Fm',Vas_Pam.Fmax,'F',Vas_Pam.Force, 'seg',Vas_Pam.SegmentLengths, ...
                   'M',Vas_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
+                  'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
     clear Vas_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 
 

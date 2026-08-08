@@ -7,69 +7,38 @@ close all;
 %Load file with all the extensors using the pinned knee
 load KneeExtPin_10mm_all.mat
 %Specify values for this BPA
-restingLength = 0.457;      %resting length, m
+restingLength = 0.465;      %resting length, m
 rest = restingLength;
-kmax = 0.3815;               %Length at maximum contraction, m
+kmax = 0.387;               %Length at maximum contraction, m
 tendon = 0;             %Tendon, measured
 fitting = 0.0254;
-Vas_Pam_46cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, restingLength, kmax, tendon, fitting, pres);
-Theoretical = Vas_Pam_46cm.Torque(:,3);
+Vas_Pam_47cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, restingLength, kmax, tendon, fitting, pres);
+Theoretical = Vas_Pam_47cm.Torque(:,3);
 
-%% Test 1 done with CALT load cell. Tests 2 done with fish scale. Fish scale tests had pressure spot checked around 612 kPa. 
-%Test 1 == sheet ExtTest10mm_2 from Results_table_10mm_pinned_LoadCell
-%Test 2 == sheet ExtTest10mm_1 from Results_table_10mm_pinned_FishScale
+%% Test 1 done with CALT load cell. 
+%Test 1 == sheet ExtTest10mm_13 from Results_table_10mm_pinned
+
 %% Torque calculated from measurements
-Angle{1} = [-125	-120.5	-115	-111.5	-108	-101.5	-88	-80	-71	-58	-40	-32	-17.5	-10.5	-4	2	-3.5	-16	-33.5	-48	-58.5	-72	-80	-85	-88.5	-99.5	-111.5	-114.5	-123]';
-Angle{2} = [-102	-100	-81.5	-66	-47	-35	-17	-11	-5]';
+Angle = [23.185	17.441	9.184	2.004	-4.817	-10.561	-16.305	-21.331	-26.357	-32.46	-40.717	-50.051	-55.795	-60.821	-67.642	-73.386	-84.156	-90.259	-75.181	-65.847	-51.487	-33.896	-17.023	-4.099	6.312	16.005]';
 
-Torque{1,1} = [6.168692258	6.072984004	5.91673494	5.983690138	6.220291194	5.580594946	4.981638504	4.559983227	4.059476693	3.15664206	2.56531606	2.127108003	1.785781666	0.774715989	0.309696885	-0.057265164	0.536074229	2.318668963	2.990337108	3.61356103	3.999580201	4.737782449	5.291362695	5.556525636	6.028604398	6.318428803	6.41672146	6.668472107	6.512037525]';
-Torque{2,1} = [5.969270431	5.781894229	4.978853364	3.667219951	2.623266826	2.087906249	1.579313702	1.311633413	0]';
+Torque = [0.177169291	0.235809831	0.318878577	0.723579948	0.892996679	1.941338478	2.420438069	2.732993875	2.89819417	2.962283833	3.090959977	3.555611423	3.850846249	3.629150651	4.182916171	4.464241445	5.351758717	5.524335655	4.643488202	3.933746211	3.236203509	2.428451719	1.795349447	0.662409429	0.277147599	0.238721942]';
 
 %% Calculate Torque by finding force from muscle contraction and distance
 %from force line of action to muscle ICR.
 %Hand measurements for Fish scale Extensor test 2 were done incorrectly and will be disregarded
-InflatedLength{1} = [453.5	452	456	450.5	449.5	442.5	439	435	422.5	420	410.5	398.5	400.5	395	384	381	382	394	408.5	414.5	420.5	425	427	432	438	438	441	445	447]'/1000;
-InflatedLength{2} = [430	430	420	415	410	401	390	388	385]'/1000;
+InflatedLength = [404	398	393	393	390	394	397	399	400	404	407	410	410	414	415	416	423	424	418	417	410	404	396	387	388	387]'/1000;
 
-ICRtoMuscle{1} = [29.5	30	30	29.5	30.5	30	30	32.5	34	35	37	38.5	44.5	50	54	60	55	48	34.5	33	32.5	31.5	30	30	30	30	30	30	30]'/1000;
-ICRtoMuscle{2} = [30	30	30	30	34	35	45	50	55]'/1000;
+ICRtoMuscle = [80	73	65	55	53	50	48	44	40	35	32	30	30	28	28	28	28	27	30	29	33	37	44	50	59	72]'/1000;
 
 %load pressure where applicable
-test = 2;
-runsperseries = 29;
-
-pres = cell(length(Angle),1);
-pres{1} = zeros(runsperseries,1);
-    for j = 1:runsperseries
-                file_name = sprintf('ExtTest%0.0f_%0.0f.mat', test,j);
-                load(file_name,'Stats')
-                pres{1}(j,1) = Stats{'Mean',2};
-    end
-
-pres{2} = 606*ones(length(InflatedLength{2}),1);
+pres = [620.579	623.607	622.093	621.336	621.336	623.607	622.093	622.093	621.336	620.579	620.58	623.607	622.85	623.607	623.607	622.096	620.579	622.85	623.85	622.85	621.336	622.093	623.607	622.85	622.093	621.336]';
 
 KMAX = (restingLength-kmax)/restingLength;  %Converts to percentage
-strainz = cell(length(Angle),1);
-rel = cell(length(Angle),1);
-F = cell(length(Angle),1);
-TorqueHand = cell(length(Angle),1);
-korr = 0;           % correction factor
-r = 0.085;          %radius of curvature
-wR = 15;           % Angle (deg) that wrapping starts to occur
-G = hypot(Vas_Pam_46cm.MomentArm(:,1),Vas_Pam_46cm.MomentArm(:,2)); %Moment Arm
-for i = 1:length(Angle)
-    strainz{i} = ((restingLength-InflatedLength{i})./restingLength);
-    MAr = interp1(phiD,G,Angle{i});
-    for j = 1:length(Angle{i})
-        if Angle{i}(j)<=wR
-            strainz{i}(j) = ((restingLength-(InflatedLength{i}(j)-korr*ICRtoMuscle{i}(j)*deg2rad(wR - Angle{i}(j))))./restingLength);
-        else
-        end
-    end
-    rel{i} = strainz{i}/KMAX;
-    F{i} = bpaForce10(restingLength,rel{i},pres{i});
-    TorqueHand{i} = ICRtoMuscle{i}.*F{i};  %Torque will be positive because it is causing extension
-end 
+strainz = (restingLength-InflatedLength)./restingLength;
+rel = strainz/KMAX;
+F = bpaForce10(restingLength,rel,pres);
+TorqueHand = ICRtoMuscle.*F;  %Torque will be positive because it is causing extension
+
 
 %% Plot setup
 %Matlab hex color values:
@@ -88,22 +57,12 @@ sz = 60;        %size of data points
 xLim = [-120 35];
 
 %% Plot the expected value and scatter the data that show which test they come from
-Test = ["ExtTest10mm-2 10mm pin LoadCell";
-        "ExtTest10mm-1 10mm pin FishScale"];
-%% Convert cells to column arrays once bad tests are eliminated
-AngleX = Angle{1};
-Angle = cell2mat(Angle');
-Torque = Torque{1};
-InflatedLength = InflatedLength{1};
-ICRtoMuscle = ICRtoMuscle{1};
-pres = pres{1};
-strainz = strainz{1};
-rel = rel{1};
-F = F{1};
-TorqueHand = TorqueHand{1};
+Test = ["ExtTest10mm-13 10mm pin LoadCell"];
+
+AngleX = Angle;
 
 %% Plot expected versus measured moment arm
-Ma = Vas_Pam_46cm.MomentArm;                 %Calculated moment arm
+Ma = Vas_Pam_47cm.MomentArm;                 %Calculated moment arm
 G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
 
 fig_MA = figure;
@@ -130,7 +89,7 @@ lgdMa.FontSize = 8;
 hold off
 
 %% Plot relative strain, expected and measured
-strain = Vas_Pam_46cm.Contraction;
+strain = Vas_Pam_47cm.Contraction;
 relstrain = (strain)./KMAX;
 
 fig_relstrain = figure;
@@ -181,7 +140,7 @@ lgdMa.FontSize = 8;
 hold off
 
 %% Plot measured versus expected BPA length
-MuscleLength = Vas_Pam_46cm.MuscleLength-2*fitting-tendon;
+MuscleLength = Vas_Pam_47cm.MuscleLength-2*fitting-tendon;
 
 fig_mL = figure;
 ax4 = gca;
@@ -222,7 +181,7 @@ else
     end
 end
 hold off
-title('l_{rest}=45.7cm')
+title('l_{rest}=46.5cm')
 xlabel('Knee angle, \circ')
 ylabel('Torque, N\cdotm')
 % set(gcf2,'Position',[1 384 950 612]);

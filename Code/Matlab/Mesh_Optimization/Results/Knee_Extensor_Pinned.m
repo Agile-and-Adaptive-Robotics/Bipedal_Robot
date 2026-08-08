@@ -122,28 +122,28 @@ end
         
 %40.5 cm, no tendon
 rest40 = 400/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.341;           %length at maximum contraction
+kmax = 0.337;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 625;        %Pressure, kPa
 Vas_Pam_40cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest40, kmax, tendon, fitting, pres);
 
 %40.5 cm, 40 mm tendon
 rest40 = 400/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.341;           %length at maximum contraction
+kmax = 0.337;           %length at maximum contraction
 tendon1 = 0.040;         %Tendon length
 pres = 618;        %Pressure, kPa
 Vas_Pam_40cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest40, kmax, tendon1, fitting, pres);
 
 %41.5 cm, no tendon
 rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.345;           %length at maximum contraction
+kmax = 0.3445;           %length at maximum contraction
 tendon = 0;             %Tendon length
 pres = 605.2351;        %Pressure, kPa
 Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon, fitting, pres);
 
 %41.5 cm,  tendon
 rest42 = 415/1000;        %resting length clamp to clamp, minus the barb
-kmax = 0.345;           %length at maximum contraction
+kmax = 0.3445;           %length at maximum contraction
 tendon2 = 0.040;         %Tendon length
 pres = 605.2351;        %Pressure, kPa
 Vas_Pam_42cm_tendon = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest42, kmax, tendon2, fitting, pres);
@@ -169,6 +169,13 @@ tendon = 0;             %Tendon length
 pres = 602;             %Pressure, kPa
 Vas_Pam_46cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest46, kmax, tendon, fitting, pres);
 
+%46.5 cm, no tendon
+rest47 = 465/1000;        %resting length clamp to clamp, minus the barb
+kmax = 0.387;           %length at maximum contraction
+tendon = 0;             %Tendon length
+pres = 622.2;             %Pressure, kPa
+Vas_Pam_47cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest46, kmax, tendon, fitting, pres);
+
 %48.6 cm, no tendon
 rest48 = 480/1000;        %resting length clamp to clamp, minus the barb
 kmax = 0.405;           %length at maximum contraction
@@ -184,6 +191,7 @@ Torque_42cm_ten = Vas_Pam_42cm_tendon.Torque(:,3);
 Torque_43cm = Vas_Pam_43cm.Torque(:,3);
 Torque_43cm_ten = Vas_Pam_43cm_tendon.Torque(:,3);
 Torque_46cm = Vas_Pam_46cm.Torque(:,3);
+Torque_47cm = Vas_Pam_47cm.Torque(:,3);
 Torque_48cm = Vas_Pam_48cm.Torque(:,3);
 
 %% Plotting Torque Results
@@ -191,7 +199,7 @@ xLim = [-125 35];
 yLim = [0 25];
 
 figure
-h = tiledlayout(4,2);
+h = tiledlayout(5,2);
 
 ax1 = nexttile(1);
 plot(phiD, Torque_48cm)
@@ -201,50 +209,57 @@ ylabel('\bf Torque, N\cdotm','Interpreter','tex')
 set(ax1,'XLim',xLim,'YLim',yLim)
 
 ax2 = nexttile(2);
-plot(phiD, Torque_46cm)
-title('\bf l_{rest}=45.7 cm','Interpreter','tex')
+plot(phiD, Torque_47cm)
+title('\bf l_{rest}=46.5 cm','Interpreter','tex')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
 ylabel('\bf Torque, N\cdotm','Interpreter','tex')
 set(ax2,'XLim',xLim,'YLim',yLim)
 
 ax3 = nexttile(3);
-plot(phiD, Torque_43cm_ten)
-title(sprintf('l_{rest} = 43.2 cm, tendon = %d mm',tendon3*10^3),'Interpreter','tex','FontWeight','bold')
-xlabel('\bf Knee angle, \circ','Interpreter','tex')
-ylabel('\bf Torque N\cdotm','Interpreter','tex')
-set(ax3,'XLim',xLim,'YLim',yLim)
-
-ax4 = nexttile(4);
-plot(phiD, Torque_43cm)
-title('\bf l_{rest}=43.6 cm, no tendon','Interpreter','tex')
+plot(phiD, Torque_46cm)
+title('\bf l_{rest}=45.7 cm','Interpreter','tex')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
 ylabel('\bf Torque, N\cdotm','Interpreter','tex')
-set(ax4,'XLim',xLim,'YLim',yLim)
+set(ax3,'XLim',xLim,'YLim',yLim)
 
 ax5 = nexttile(5);
-plot(phiD, Torque_42cm_ten)
-title(sprintf('l_{rest} = 41.5 cm, tendon = %d mm',tendon2*10^3),'Interpreter','tex','FontWeight','bold')
+plot(phiD, Torque_43cm_ten)
+title(sprintf('l_{rest} = 43.2 cm, tendon = %d mm',tendon3*10^3),'Interpreter','tex','FontWeight','bold')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
 ylabel('\bf Torque N\cdotm','Interpreter','tex')
 set(ax5,'XLim',xLim,'YLim',yLim)
 
 ax6 = nexttile(6);
-plot(phiD, Torque_42cm)
-title('\bf l_{rest}=41.5 cm, no tendon','Interpreter','tex')
+plot(phiD, Torque_43cm)
+title('\bf l_{rest}=43.6 cm, no tendon','Interpreter','tex')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
 ylabel('\bf Torque, N\cdotm','Interpreter','tex')
 set(ax6,'XLim',xLim,'YLim',yLim)
 
 ax7 = nexttile(7);
-plot(phiD', Torque_40cm_ten)
-title(sprintf('l_{rest} = 40.1 cm, tendon = %d mm',tendon1*10^3),'Interpreter','tex','FontWeight','bold')
+plot(phiD, Torque_42cm_ten)
+title(sprintf('l_{rest} = 41.5 cm, tendon = %d mm',tendon2*10^3),'Interpreter','tex','FontWeight','bold')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
 ylabel('\bf Torque N\cdotm','Interpreter','tex')
 set(ax7,'XLim',xLim,'YLim',yLim)
 
 ax8 = nexttile(8);
+plot(phiD, Torque_42cm)
+title('\bf l_{rest}=41.5 cm, no tendon','Interpreter','tex')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Torque, N\cdotm','Interpreter','tex')
+set(ax8,'XLim',xLim,'YLim',yLim)
+
+ax9 = nexttile(9);
+plot(phiD', Torque_40cm_ten)
+title(sprintf('l_{rest} = 40.1 cm, tendon = %d mm',tendon1*10^3),'Interpreter','tex','FontWeight','bold')
+xlabel('\bf Knee angle, \circ','Interpreter','tex')
+ylabel('\bf Torque N\cdotm','Interpreter','tex')
+set(ax9,'XLim',xLim,'YLim',yLim)
+
+ax10 = nexttile(10);
 plot(phiD, Torque_40cm)
 title('\bf l_{rest}=40.5 cm, no tendon','Interpreter','tex')
 xlabel('\bf Knee angle, \circ','Interpreter','tex')
 ylabel('\bf Torque, N\cdotm','Interpreter','tex')
-set(ax8,'XLim',xLim,'YLim',yLim)
+set(ax10,'XLim',xLim,'YLim',yLim)

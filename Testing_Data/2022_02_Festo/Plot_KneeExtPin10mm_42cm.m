@@ -16,7 +16,8 @@ Vas_Pam_42cm = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T, rest{1}, 
 Theoretical = Vas_Pam_42cm.Torque(:,3);
 
 rest{2} = 0.415;
-kmax{2} = 0.345;
+kmax{2} = 0.340;
+% tendon{2} = 0.022;       %tendon, recorded in excel
 tendon{2} = 0.040;       %tendon, image measured
 rest{3} = rest{2};         %repeat  
 kmax{3} = kmax{2};
@@ -166,9 +167,9 @@ KMAX1 = KMAX{2};
 
 %% Plot expected versus measured moment arm
 Ma1 = Vas_Pam_42cm.MomentArm;                  %Calculated moment arm
-G1 = (Ma1(:,1).^2+Ma1(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+G1 = hypot(Ma1(:,1),Ma1(:,2));         %Moment arm for z-axis torque
 Ma2 = Vas_Pam_42cm_tendon.MomentArm;                  %Calculated moment arm
-G2 = (Ma2(:,1).^2+Ma2(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+G2 = hypot(Ma2(:,1),Ma2(:,2));         %Moment arm for z-axis torque
 
 fig_MA = figure;
 ax1_1 = subplot(2,1,1);

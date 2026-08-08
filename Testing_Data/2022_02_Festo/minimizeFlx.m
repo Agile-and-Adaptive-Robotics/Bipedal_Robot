@@ -2,20 +2,21 @@
 function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
 
 %% load
-%kf = knee flexor, kf(1) = pinned joint, kf(2) = biomimetic;
+%kf = knee flexor, kf(1) = specific resting length, 
 %ke = knee extensor, same as above
-%kf.L := lengths = [42 42] cm   where 1st length is for 10mm diameter,
-%2nd length is for 20mm diameter.
-%example: kf(2).L(1).Mz z-axis torque for biomimetic knee, flexor, 42cm length
+%example: kf(1).Mz z-axis torque for biomimetic knee, flexor, 42cm length,
+%10 mm diameter BPA.
 %'exp' suffix means experimental
 %'_h' suffix means hybrid
 %'_p' suffix means prime, as in the new prediction values
+%'_f' suffix means fictive, as in fictive strain and length considering
+%loss of useful length from X3 term.
 
 % load FlxBioBPASet.mat kf %This loads the following, which was ran and saved:
 
     load KneeFlx_10mm_42cm.mat Bifemsh_Pam phiD
     Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-    G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+    G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
     load Plot_KneeFlx_10mm_42cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
     A = sortrows([Angle', Torque', InflatedLength', ICRtoMuscle', TorqueHand']);
     kf(1) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
@@ -25,14 +26,14 @@ function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
                   'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
+                  'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
     clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 
     % 42cm length, 20mm diameter, 620 pressure.
     load KneeFlx_20mm_42cm.mat Bifemsh_Pam3 phiD
     Bifemsh_Pam = Bifemsh_Pam3;
     Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-    G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+    G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
     load Plot_KneeFlx_20mm_42cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
     A = sortrows([Angle', Torque, InflatedLength', ICRtoMuscle', TorqueHand']);
     kf(2) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
@@ -42,14 +43,14 @@ function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A([1:10, 12],1),'Mexp',A([1:10, 12],2),...
                   'A_h',A([1:10, 12],1),'Lm_h',A([1:10, 12],3),'mA_h',A([1:10, 12],4),'M_h',A([1:10, 12],5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
+                  'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
     clear Bifemsh_Pam3 Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
     
     % 42cm length, 20mm diameter, 325 pressure.
     load KneeFlx_20mm_42cm.mat Bifemsh_Pam2 phiD
     Bifemsh_Pam = Bifemsh_Pam2;
     Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-    G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+    G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
     load Plot_KneeFlx_20mm_42cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
     A = sortrows([Angle', Torque, InflatedLength', ICRtoMuscle', TorqueHand']);
     kf(3) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
@@ -59,7 +60,7 @@ function [f, varargout] = minimizeFlx(Xi0,Xi1,Xi2)
                   'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
                   'M',Bifemsh_Pam.Torque(:,3),'Aexp',A([17, 20:22],1),'Mexp',A([17, 20:22],2),...
                   'A_h',A([17, 20:22],1),'Lm_h',A([17, 20:22],3),'mA_h',A([17, 20:22],4),'M_h',A([17, 20:22],5),...
-                  'Lmt_p',[],'mA_p',[],'M_p',[],'F_p',[],'strain_p',[],'L_p',[],'gama',[]);
+                  'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
     clear Bifemsh_Pam2 phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 
 

@@ -3,37 +3,48 @@
 
 clear; clc; close all
 
-%% Initial Baseline Evaluation (for constraint bounds)
-[a0, bpa0] = minimizeExtX3(0, Inf, Inf, 0, 1:4);  % All for baseline
-baselineScores = a0;  % RMSE, FVU, Max Residual
-fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
-
-load minimizeExtPin10_results_20251020_1transform.mat results_sort_actual
-pick = 1; %Pick the best solution from the sorted results (should be 1)
-sol_actual = results_sort_actual(pick, 2:4);  %Best solution
-g = sol_actual;
-[a1, ~] = minimizeExtX3(-g(1), g(2), g(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
-[a2, bpa2] = minimizeExtX3(-g(1), g(2), g(3), 1.5, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
-clear sol_actual pick results_sort_actual
-baselineScores1 = a1./(a0);  % RMSE, FVU, Max Residual, normalized to baselineScores
-fprintf('Normalized to baseline score \n Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
-baselineScores2 = a2./(a0); % RMSE, FVU, Max Residual, normalized to baselineScores
-fprintf('Normalized to baseline score \n Baseline using best guess: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores2(:,1)),mean(baselineScores2(:,2)),mean(baselineScores2(:,3)));
 %% Cross-validation setup
-allBPA = [1,3,4];           %We're going to skip 42cm l_rest with a tendon
-labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
+allBPA = [1, 2, 3, 4, 5, 6, 7, 8, 9];           %We're going to skip 42cm l_rest with a tendon
+labels = ["40cm", "40cm-tendon", "42cm", "42cm-tendon", "43cm", "43cm-tendon", "46cm", "47cm", "48cm"];
 validLabels = labels(allBPA);
 numBPA = numel(allBPA);
 
 results_cv = cell(1, numBPA);  % Will store RMSE, FVU, Max Resid for BPA(s) optimized
 scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for BPA(s) held-out for validation
 
-%% Problem bounds
-% lb = [-0.020 * 100, log10(5e3), log10(5e3), 0.1];   % [cm, log10(N/m), log10(N/m), unitless]
-% ub = [-0.005 * 100, log10(5e7), log10(5e7), 0.33];
+%% Initial Baseline Evaluation (for constraint bounds)
+[a0, bpa0] = minimizeExtX3(0, Inf, Inf, 0, 1:4);  % All for baseline
+baselineScores = a0;  % RMSE, FVU, Max Residual
+fprintf('\nPerformance with no length offset and infinite stiffness:\n');
+disp(array2table(a0, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
+                    'RowNames', cellstr(labels')));
+fprintf('Mean Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
-lb = [-g(1) * 100, log10(g(2)), log10(g(3)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [-g(1) * 100, log10(g(2)), log10(g(3)), 3];
+load minimizeFlxPin10_results_20260729.mat xCols filtered_results
+pick = 1; %Pick the best solution from the sorted results (should be 1)
+sol_actual = filtered_results(pick, xCols);  %Best solution
+g = sol_actual;
+[a1, ~] = minimizeExtX3(-g(1), g(2), g(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
+[a2, bpa2] = minimizeExtX3(-g(1), g(2), g(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
+clear sol_actual pick filtered_results xCols
+fprintf('\nBaseline using previous opt:\n');
+disp(array2table(a1, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
+                    'RowNames', cellstr(labels')));
+baselineScores1 = a1./(a0);  % RMSE, FVU, Max Residual, normalized to baselineScores
+fprintf('Mean normalized to baseline score: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));
+fprintf('\nBaseline using best guess:\n');
+disp(array2table(a2, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
+                    'RowNames', cellstr(labels')));
+baselineScores2 = a2./(a0); % RMSE, FVU, Max Residual, normalized to baselineScores
+fprintf('Mean normalized to baseline score: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores2(:,1)),mean(baselineScores2(:,2)),mean(baselineScores2(:,3)));
+
+
+%% Problem bounds
+lb = [-0.020 * 100, log10(5e3), log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+ub = [0.01 * 100, log10(5e7), log10(5e7), 3];
+
+% lb = [-g(1) * 100, log10(g(2)), log10(g(3)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+% ub = [-g(1) * 100, log10(g(2)), log10(g(3)), 3];
 
 % A = [0 -1 1 0; ...              % x2 (bending) is less stiff than x1 (axial), (x2 <= x1)
 %      0 0 0 0; ...
@@ -42,7 +53,7 @@ ub = [-g(1) * 100, log10(g(2)), log10(g(3)), 3];
 
 clear sol_actual
 %% Solver
-numHold = 1;                        %Number of BPAs held out for validation
+numHold = 4;                        %Number of BPAs held out for validation
 list = nchoosek(allBPA,numHold);          %Choose how many BPAs to hold out, the others for training
 for k = 1:length(list)
     holdoutIdx = list(k,:);
@@ -142,11 +153,17 @@ for ii = 1:N
     f_all = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, 1:4);   % returns 4×3 [RMSE, FVU, MaxResidual]
 
     % compare RMSE & FVU for BPAs 1, 3 & 4 to baselineScores
-    pass1 = all( f_all(1,1:2) <= baselineScores(1,1:2) );
-    pass3 = all( f_all(3,1:2) <= baselineScores(3,1:2) );
-    pass4 = all( f_all(4,1:2) <= baselineScores(4,1:2) );
+    pass1 = all( f_all(1,:) <= baselineScores(1,:) );
+    pass2 = all( f_all(2,:) <= baselineScores(2,:) );
+    pass3 = all( f_all(3,:) <= baselineScores(3,:) );
+    pass4 = all( f_all(4,:) <= baselineScores(4,:) );
+    pass5 = all( f_all(5,:) <= baselineScores(5,:) );
+    pass6 = all( f_all(6,:) <= baselineScores(6,:) );
+    pass7 = all( f_all(7,:) <= baselineScores(7,:) );
+    pass8 = all( f_all(8,:) <= baselineScores(8,:) );
+    pass9 = all( f_all(9,:) <= baselineScores(9,:) );
 
-    keep(ii) = pass1 && pass3 && pass4;
+    keep(ii) = pass1 && pass2 && pass5 && pass6;
 end
 
 % keep only the rows that passed all three checks
@@ -156,7 +173,7 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 24;
+pick = 1;
 sol_actual = filtered_results(pick, xCols);
 [f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
 
@@ -178,17 +195,18 @@ c{6} = '#9D02D7'; % magenta 2
 c{7} = '#0000FF'; % indigo → Measured
 c{8} = '#000000'; % black
 
-labels = ["42cm", "42cm-tendon", "46cm", "48cm"];
-tileIdxs = [1, 5, 8, 12];  % A, B, C, D
+tileIdxs = [1, 5, 8, 12, 15, 19, 22, 26, 29]; 
+% tileIdxs = [1, 5, 8, 12];  % A, B, C, D
 % tileIdxs = [1, 5, 10];  % A, B, C
 el = numel(tileIdxs);
 tileSpans = [1 3];      % Span: [rows cols]
 % tileSpans = [1 1];      % Span: [rows cols]
-tileOrder = [4, 3, 1, 2];
-tileLabels = {'(A)', '(B)', '(C)', '(D)'};
+tileOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+% tileOrder = [4, 3, 1, 2];
+% tileLabels = {'(A)', '(B)', '(C)', '(D)'};
 % Annotation positions [x, y] in normalized figure units
-xAnn = [0.035, 0.51, 0.035, 0.51];  % (A), (B), (C), (D)
-yAnn = [0.89, 0.89, 0.41, 0.41];    % (A), (B), (C), (D)
+% xAnn = [0.035, 0.51, 0.035, 0.51];  % (A), (B), (C), (D)
+% yAnn = [0.89, 0.89, 0.41, 0.41];    % (A), (B), (C), (D)
 % xAnn = [0.035, 0.51, 0.265];  % (A), (B), (C)
 % yAnn = [0.89, 0.89, 0.41];    % (A), (B), (C)
 sz = 60;
@@ -198,7 +216,7 @@ sz = 60;
 %% --- Torque Figure with tiles ---
 figT = figure('Name','Torque','Color','w');
 figT.Position = [100 100 950 700];
-tT = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
+tT = tiledlayout(ceil(el/2),7,'TileSpacing','loose','Padding','loose');
 
 for j = 1:el
     i = tileOrder(j);
@@ -219,8 +237,8 @@ for j = 1:el
     title(['\bf ' labels(i)], 'Interpreter','tex');
     ylabel('\bf Torque, N\cdotm','Interpreter','tex')
     xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
-    annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    % annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
+    %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
 
     % Axis config
     set(gca, ...
@@ -240,14 +258,14 @@ end
 % xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tT.Children(end-1));
+lg = legend(tT.Children(2));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
 %% --- Muscle Length Figure with tiles---
 figL = figure('Name','Muscle Length','Color','w');
 figL.Position = [100 100 950 700];
-tL = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
+tL = tiledlayout(ceil(el/2),7,'TileSpacing','loose','Padding','loose');
 
 for j = 1:el
     i = tileOrder(j);
@@ -267,8 +285,8 @@ for j = 1:el
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
-    annotation(figL, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    % annotation(figL, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
+    %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
 
     % Axis config
     set(gca, ...
@@ -288,14 +306,14 @@ end
 % xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tL.Children(end-1));
+lg = legend(tL.Children(2));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
 %% --- Moment Arm Figure with tiles ---
-figMA = figure('Name','Moment Arm - 2x2','Color','w');
+figMA = figure('Name','Moment Arm','Color','w');
 figMA.Position = [100 100 950 700];
-tMA = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
+tMA = tiledlayout(ceil(el/2),7,'TileSpacing','loose','Padding','loose');
 
 for j = 1:el
     i = tileOrder(j);
@@ -314,8 +332,8 @@ for j = 1:el
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
-    annotation(figMA, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    % % annotation(figMA, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
+    % %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
 
     % Axis config
     set(gca, ...
@@ -334,14 +352,14 @@ end
 % xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tMA.Children(end-1));
+lg = legend(tMA.Children(2));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
 %% --- Strain Figure with tiles ---
 figS = figure('Name','Relative Strain','Color','w');
 figS.Position = [100 100 950 700];
-tS = tiledlayout(2,7,'TileSpacing','loose','Padding','loose');
+tS = tiledlayout(ceil(el/2),7,'TileSpacing','loose','Padding','loose');
 
 for j = 1:el
     i = tileOrder(j);
@@ -358,8 +376,8 @@ for j = 1:el
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
-    annotation(figS, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-        'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    % annotation(figS, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
+    %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
 
     % Axis config
     set(gca, ...
@@ -378,7 +396,7 @@ end
 % xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tS.Children(end-1));
+lg = legend(tS.Children(2));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 %% Helper functions
