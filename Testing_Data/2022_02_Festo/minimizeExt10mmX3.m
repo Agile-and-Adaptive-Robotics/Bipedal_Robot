@@ -13,7 +13,7 @@ results_cv = cell(1, numBPA);  % Will store RMSE, FVU, Max Resid for BPA(s) opti
 scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for BPA(s) held-out for validation
 
 %% Initial Baseline Evaluation (for constraint bounds)
-[a0, bpa0] = minimizeExtX3(0, Inf, Inf, 0, 1:4);  % All for baseline
+[a0, bpa0] = minimizeExtX3(0, Inf, Inf, 0);  % All for baseline
 baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('\nPerformance with no length offset and infinite stiffness:\n');
 disp(array2table(a0, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
@@ -24,8 +24,8 @@ load minimizeFlxPin10_results_20260729.mat xCols filtered_results
 pick = 1; %Pick the best solution from the sorted results (should be 1)
 sol_actual = filtered_results(pick, xCols);  %Best solution
 g = sol_actual;
-[a1, ~] = minimizeExtX3(-g(1), g(2), g(3), 0, 1:4);   % Use solution from Flexor bracket, and compare results
-[a2, bpa2] = minimizeExtX3(-g(1), g(2), g(3), 0.2, 1:4);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
+[a1, ~] = minimizeExtX3(-g(1), g(2), g(3), 0);   % Use solution from Flexor bracket, and compare results
+[a2, bpa2] = minimizeExtX3(-g(1), g(2), g(3), 0.2);   % Use solution from Flexor bracket, reverse length offset, and guess for Xi3
 clear sol_actual pick filtered_results xCols
 fprintf('\nBaseline using previous opt:\n');
 disp(array2table(a1, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
