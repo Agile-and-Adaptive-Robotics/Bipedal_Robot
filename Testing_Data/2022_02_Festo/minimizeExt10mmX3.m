@@ -115,7 +115,7 @@ all_candidates = [];  % Will collect [foldIdx, x(3), fvals(3), valF(3), dist]
 
 for i = 1:numBPA
     fold = results_cv{i}.foldIdx;           % NxnumHold
-    x = results_cv{i}.optParams_all;        % Nx4
+    x2 = results_cv{i}.optParams_all;        % Nx4
     train = results_cv{i}.trainScores_all;  % Nx3
     val = results_cv{i}.validation_all;     % Nx3
     dist = results_cv{i}.distance_all;      % Nx1
@@ -128,7 +128,7 @@ end
 %% Dynamic column indices before de-normalizing
 rankCol   = 1;
 holdCols  = numel(rankCol) + (1:numHold);
-xCols     = numel(rankCol) + numel(holdCols) + (1:3);
+xCols     = numel(rankCol) + numel(holdCols) + (1:4);
 trainCols = numel(rankCol) + numel(holdCols) + numel(xCols) + (1:3);
 valCols   = numel(rankCol) + numel(holdCols) + numel(xCols) + numel(trainCols) + (1:3);
 distCol   = numel(rankCol) + numel(holdCols) + numel(xCols) + numel(trainCols) + numel(valCols) + 1;
@@ -153,7 +153,7 @@ for ii = 1:N
     Xi3 = results_sort_actual(ii,xCols(4));
 
     % re-evaluate on all 9 BPAs
-    f_all = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, 1:9);   % returns 4×3 [RMSE, FVU, MaxResidual]
+    f_all = minimizeExtX3(Xi0, Xi1, Xi2, Xi3);   % returns 4×3 [RMSE, FVU, MaxResidual]
 
     % compare RMSE & FVU for BPAs 1, 3 & 4 to baselineScores
     pass1 = all( f_all(1,:) <= baselineScores(1,:) );
@@ -178,13 +178,20 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
  
 pick = 1;
 sol_actual = filtered_results(pick, xCols);
-[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4), 1:4);  % [f: 4x3], [bpa: full struct]
+[f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4));  % [f: 4x3], [bpa: full struct]
+
+fprintf('\nPerformance with no length offset and infinite stiffness:\n');
+disp(array2table(a0, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
+                    'RowNames', cellstr(labels')));
+fprintf('Mean Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
 fprintf('\nPerformance with sol_actual:\n');
 disp(array2table(f, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
                     'RowNames', cellstr(labels')));
+fprintf('Mean GoF: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(f(:,1)),mean(f(:,2)),mean(f(:,3)));
 
-
+disp(array2table(sol_actual, 'VariableNames', {'X0', 'X1', 'X2','X3'}, ...
+'RowNames', {'Solution'}))
 %% Plot results
 
 %% --- Define color scheme and labels ---
@@ -219,7 +226,7 @@ sz = 60;
 %% --- Torque Figure with tiles ---
 figT = figure('Name','Torque','Color','w');
 figT.Position = [100 100 950 700];
-tT = tiledlayout(ceil(el/2),7,'TileSpacing','loose','Padding','loose');
+tT = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
 for j = 1:el
     i = tileOrder(j);
@@ -238,8 +245,8 @@ for j = 1:el
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
-    ylabel('\bf Torque, N\cdotm','Interpreter','tex')
-    xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
+    % ylabel('\bf Torque, N\cdotm','Interpreter','tex')
+    % xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
     % annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
     %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
 
@@ -257,18 +264,18 @@ for j = 1:el
 end
 
 %shared axes labels
-% ylabel(tT,'\bf Torque, N\cdotm','Interpreter','tex')
-% xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex')
+ylabel(tT,'\bf Torque, N\cdotm','Interpreter','tex')
+xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tT.Children(2));
+lg = legend(tT.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
 %% --- Muscle Length Figure with tiles---
 figL = figure('Name','Muscle Length','Color','w');
 figL.Position = [100 100 950 700];
-tL = tiledlayout(ceil(el/2),7,'TileSpacing','loose','Padding','loose');
+tL = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
 for j = 1:el
     i = tileOrder(j);
@@ -283,8 +290,8 @@ for j = 1:el
         'MarkerFaceColor', c{7},'DisplayName', 'Measured'); % Hybrid (gold)
     plot(bpa(i).Ak, Lm, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');      % Original
     plot(bpa(i).Ak, Lm_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');            % Predicted
-    ylabel('\bf Length','Interpreter','tex')
-    xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
+    % ylabel('\bf Length','Interpreter','tex')
+    % xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
@@ -305,18 +312,18 @@ for j = 1:el
 end
 
 %shared axes labels
-% ylabel(tL,'\bf Length','Interpreter','tex')
-% xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
+ylabel(tL,'\bf Length','Interpreter','tex')
+xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tL.Children(2));
+lg = legend(tL.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
 %% --- Moment Arm Figure with tiles ---
 figMA = figure('Name','Moment Arm','Color','w');
 figMA.Position = [100 100 950 700];
-tMA = tiledlayout(ceil(el/2),7,'TileSpacing','loose','Padding','loose');
+tMA = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
 for j = 1:el
     i = tileOrder(j);
@@ -330,8 +337,8 @@ for j = 1:el
     plot(bpa(i).Ak, bpa(i).mA, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');      % Original
     plot(bpa(i).Ak, G_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');                   % Predicted
 
-    ylabel(tMA,'\bf Moment arm, m','Interpreter','tex')
-    xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex')
+    % ylabel(ax,'\bf Moment arm, m','Interpreter','tex')
+    % xlabel(ax,'\bf \theta_{k} , \circ','Interpreter','tex')
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
@@ -351,18 +358,18 @@ for j = 1:el
 end
 
 %shared axes labels
-% ylabel(tMA,'\bf Moment arm, m','Interpreter','tex')
-% xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex')
+ylabel(tMA,'\bf Moment arm, m','Interpreter','tex')
+xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tMA.Children(2));
+lg = legend(tMA.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
 %% --- Strain Figure with tiles ---
 figS = figure('Name','Relative Strain','Color','w');
 figS.Position = [100 100 950 700];
-tS = tiledlayout(ceil(el/2),7,'TileSpacing','loose','Padding','loose');
+tS = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
 for j = 1:el
     i = tileOrder(j);
@@ -374,8 +381,8 @@ for j = 1:el
     scatter(bpa(i).A_h, strain_h/kmax, 60, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7},'DisplayName', 'Measured');
     plot(bpa(i).Ak, bpa(i).strain/kmax, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');
     plot(bpa(i).Ak, bpa(i).strain_p/kmax, '-', 'Color', '#CD34B5', 'LineWidth', 2.5,'DisplayName', 'Predicted');
-    ylabel(tS,'\bf \epsilon^*','Interpreter','tex')
-    xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
+    % ylabel(tS,'\bf \epsilon^*','Interpreter','tex')
+    % xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
 
     % Tile-specific title and annotation label
     title(['\bf ' labels(i)], 'Interpreter','tex');
@@ -395,11 +402,11 @@ for j = 1:el
 end
 
 %shared axes labels
-% ylabel(tS,'\bf \epsilon^*','Interpreter','tex')
-% xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
+ylabel(tS,'\bf \epsilon^*','Interpreter','tex')
+xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tS.Children(2));
+lg = legend(tS.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 %% Helper functions
