@@ -226,7 +226,7 @@ sz = 60;
 %% --- Torque Figure with tiles ---
 figT = figure('Name','Torque','Color','w');
 figT.Position = [100 100 950 700];
-tT = tiledlayout(ceil(el/2),7,'TileSpacing','loose','Padding','loose');
+tT = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
 for j = 1:el
     i = tileOrder(j);
@@ -268,14 +268,14 @@ ylabel(tT,'\bf Torque, N\cdotm','Interpreter','tex')
 xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tT.Children(end));
+lg = legend(tT.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
 %% --- Muscle Length Figure with tiles---
 figL = figure('Name','Muscle Length','Color','w');
 figL.Position = [100 100 950 700];
-tL = tiledlayout(ceil(el/2),7,'TileSpacing','loose','Padding','loose');
+tL = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
 for j = 1:el
     i = tileOrder(j);
@@ -316,14 +316,14 @@ ylabel(tL,'\bf Length','Interpreter','tex')
 xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tL.Children(2));
+lg = legend(tL.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
 %% --- Moment Arm Figure with tiles ---
 figMA = figure('Name','Moment Arm','Color','w');
 figMA.Position = [100 100 950 700];
-tMA = tiledlayout(ceil(el/2),7,'TileSpacing','loose','Padding','loose');
+tMA = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
 for j = 1:el
     i = tileOrder(j);
@@ -362,14 +362,14 @@ ylabel(tMA,'\bf Moment arm, m','Interpreter','tex')
 xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tMA.Children(2));
+lg = legend(tMA.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
 %% --- Strain Figure with tiles ---
 figS = figure('Name','Relative Strain','Color','w');
 figS.Position = [100 100 950 700];
-tS = tiledlayout(ceil(el/2),7,'TileSpacing','loose','Padding','loose');
+tS = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
 for j = 1:el
     i = tileOrder(j);
@@ -406,7 +406,7 @@ ylabel(tS,'\bf \epsilon^*','Interpreter','tex')
 xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
 
 % Legend in top-right tile only
-lg = legend(tS.Children(2));
+lg = legend(tS.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 %% Helper functions
