@@ -34,7 +34,7 @@ function data = readserialnumbers2()
 
     functionFolder = fileparts(mfilename("fullpath"));
     saveFolder = fullfile(functionFolder, "Flx_10mm_pinned");
-    baseName = "FlxTest06_";
+    baseName = "FlxTest07_";
 
     if ~isfolder(saveFolder)
         mkdir(saveFolder);
