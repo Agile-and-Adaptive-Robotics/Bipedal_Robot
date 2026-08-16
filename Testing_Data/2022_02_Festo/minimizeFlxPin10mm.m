@@ -212,16 +212,20 @@ for j = 1:numBPA
     clear Vq Fold Fq Mold
     title(titles(j), 'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
     
-    ylabel('\bf Torque, N \cdot m', 'Interpreter', 'tex', ...
-            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
-    xlabel('\bf \theta_{k}, \circ', 'Interpreter', 'tex', ...
-            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    % ylabel('\bf Torque, N \cdot m', 'Interpreter', 'tex', ...
+    %         'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    % xlabel('\bf \theta_{k}, \circ', 'Interpreter', 'tex', ...
+    %         'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
 
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
     % subtitle(subtitles(j), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
     xlim([-120 20]); ylim([-25 0]);
 end
+
+ylabel(tTpre,'\bf Torque, N\cdotm','Interpreter','tex');
+xlabel(tTpre,'\bf \theta_{k} , \circ','Interpreter','tex');
+
 
 figTpost = figure('Name','Torque, Post-Optimized','Color','w');
 figTpost.Position = [100 100 950 700];
@@ -238,10 +242,10 @@ for j = 1:numBPA
     
     title(titles(j), 'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
     
-    ylabel('\bf Torque, N \cdot m', 'Interpreter', 'tex', ...
-            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
-    xlabel('\bf \theta_{k}, \circ', 'Interpreter', 'tex', ...
-            'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    % ylabel('\bf Torque, N \cdot m', 'Interpreter', 'tex', ...
+    %         'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    % xlabel('\bf \theta_{k}, \circ', 'Interpreter', 'tex', ...
+    %         'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
     % subtitle(subtitles(j), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
@@ -249,8 +253,8 @@ for j = 1:numBPA
 end
 
 % Shared labels
-% ylabel(tT,'\bf Torque, N\cdotm','Interpreter','tex');
-% xlabel(tT,'\bf \theta_{k} , \circ','Interpreter','tex');
+ylabel(tTpost,'\bf Torque, N\cdotm','Interpreter','tex');
+xlabel(tTpost,'\bf \theta_{k} , \circ','Interpreter','tex');
 
 % (A)-(D) annotations
 % for j = 1:4
@@ -321,9 +325,9 @@ lg = legend(tL.Children(end-1));
 lg.Location = 'best';
 lg.FontSize = 8;
 
-lg2 = legend(tL.Children(end-(numBPA-1)));
-lg2.Location = 'best';
-lg2.FontSize = 8;
+% lg2 = legend(tL.Children(end-(numBPA-1)));
+% lg2.Location = 'best';
+% lg2.FontSize = 8;
 
 %% Plot moment arm, optimization and validation
 figMA = figure('Name','Moment Arm','Color','w');
