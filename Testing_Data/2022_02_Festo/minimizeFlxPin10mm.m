@@ -5,9 +5,9 @@ clear; clc; close all
 % profile on
 
 %% Cross-validation setup
-allBPA = [1, 2, 3, 4];           % Use if all data are valid 
+allBPA = [1, 2, 3, 4, 5];           % Use if all data are valid 
 % allBPA = [3, 4];              % Use if old data do not hold up
-labels = ["48cm", "46cm", "47cm", "40cm-tendon"];
+labels = ["48cm", "46cm", "47cm", "40cm-tendon", "42cm"];
 validLabels = labels(allBPA);
 numBPA = numel(allBPA);
 
@@ -28,7 +28,7 @@ lb = [0*100, log10(5e3), log10(5e3)];
 ub = [0.020*100, log10(5e7), log10(5e7)];
 
 %% Solver
-numHold = 3;                        %Number of BPAs held out for validation
+numHold = 2;                        %Number of BPAs held out for validation
 list = nchoosek(allBPA,numHold);          %Choose how many BPAs to hold out, the others for training
 for k = 1:length(list)
     holdoutIdx = list(k,:);

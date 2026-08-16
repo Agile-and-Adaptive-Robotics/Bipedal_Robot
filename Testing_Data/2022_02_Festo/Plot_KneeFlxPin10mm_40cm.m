@@ -75,7 +75,7 @@ TorqueHand = cell2mat(TorqueHand);
 
 %% Plot Predicted versus measured moment arm
 Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-G = (Ma(:,1).^2+Ma(:,2).^2).^(1/2);         %Moment arm for z-axis torque
+G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
 
 fig_MA = figure('Name','Moment Arm');
 ax1 = gca;

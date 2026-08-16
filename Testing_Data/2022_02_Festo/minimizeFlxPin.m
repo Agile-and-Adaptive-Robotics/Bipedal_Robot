@@ -22,10 +22,8 @@ function [f_all, bpa_all] = minimizeFlxPin(Xi0,Xi1,Xi2,idx_val)
 
 load FlxPinBPASet.mat kf %This loads the following, which was ran and saved:
 
-    % load KneeFlxPin_10mm_48cm.mat Bifemsh_Pam phiD
-    % Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-    % G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
-    % load Plot_KneeFlxPin10mm_48cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
+    % load KneeFlxPin_10mm_48cm.mat phiD
+    % load Plot_KneeFlxPin10mm_48cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Bifemsh_Pam
     % A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
     % kf(1) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
     %               'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
@@ -39,11 +37,9 @@ load FlxPinBPASet.mat kf %This loads the following, which was ran and saved:
     % 
     % 
     % % 46cm length
-    % load KneeFlxPin_10mm_46cm.mat Bifemsh_Pam phiD
-    % Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-    % G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
-    % load Plot_KneeFlxPin10mm_46cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
-    % A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
+    % load KneeFlxPin_10mm_46cm.mat phiD
+    % load Plot_KneeFlxPin10mm_46cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Bifemsh_Pam
+    % A = sortrows([Angle, Torque, InflatedLength', ICRtoMuscle', TorqueHand]);
     % kf(2) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
     %               'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
     %               'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
@@ -55,10 +51,8 @@ load FlxPinBPASet.mat kf %This loads the following, which was ran and saved:
     % clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
     % 
     % % 47cm length
-    % load KneeFlxPin_10mm_47cm.mat Bifemsh_Pam phiD
-    % Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-    % G = hypot(Ma(:,1),Ma(:,2));        %Moment arm for z-axis torque
-    % load Plot_KneeFlxPin10mm_47cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
+    % load KneeFlxPin_10mm_47cm.mat phiD
+    % load Plot_KneeFlxPin10mm_47cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Bifemsh_Pam
     % A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
     % kf(3) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
     %               'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
@@ -71,10 +65,8 @@ load FlxPinBPASet.mat kf %This loads the following, which was ran and saved:
     % clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
     % 
     % % 40cm length
-    % load KneeFlxPin_10mm_40cm.mat Bifemsh_Pam phiD
-    % Ma = Bifemsh_Pam.MomentArm;                 %Calculated moment arm
-    % G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
-    % load Plot_KneeFlxPin10mm_40cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
+    % load KneeFlxPin_10mm_40cm.mat phiD
+    % load Plot_KneeFlxPin10mm_40cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Bifemsh_Pam
     % A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
     % kf(4) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
     %               'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
@@ -85,6 +77,20 @@ load FlxPinBPASet.mat kf %This loads the following, which was ran and saved:
     %               'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
     %               'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
     % clear Bifemsh_Pam phiD Ma G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+    % 
+    % % 42cm length
+    % load KneeFlxPin_10mm_42cm.mat phiD
+    % load Plot_KneeFlxPin10mm_42cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Bifemsh_Pam
+    % A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
+    % kf(5) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
+    %               'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
+    %               'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
+    %               'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
+    %               'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
+    %               'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+    %               'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
+    %               'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+    % clear Bifemsh_Pam phiD G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 
 %% Initialize output
 nBPA = numel(kf);

@@ -56,22 +56,28 @@ end
 % Pres = 623.43;      %average pressure (kPa) for 46cm
 
 % %  For KneeFlxPin_10mm_47cm.mat
-rest = 0.479; %resting length, m
-kmax = 0.413;     %Length at maximum contraction, m
-tendon = 0;
-Pres = 623.17;      %average pressure (kPa) for 46cm
+% rest = 0.479; %resting length, m
+% kmax = 0.413;     %Length at maximum contraction, m
+% tendon = 0;
+% Pres = 623.17;      %average pressure (kPa) for 46cm
 
 %  For KneeFlxPin_10mm_46cm.mat
 % rest = 0.457; %resting length, m
-% kmax = 0.380;     %Length at maximum contraction, m
+% kmax = 0.381;     %Length at maximum contraction, m
 % tendon = 0;
-% Pres = 604.5573;      %average pressure (kPa) for 46cm
+% Pres = 614.2;      %average pressure (kPa) for 46cm
 
 %  For KneeFlxPin_10mm_48cm.mat
 % rest = 0.485; %resting length, m
 % kmax = 0.398;     %Length at maximum contraction, m
 % tendon = 0;       %pinned, no tendon
 % Pres = 605.6671;     %average pressure (kPa) for 49cm
+
+%  For KneeFlxPin_10mm_42cm.mat
+rest = 0.417; %resting length, m
+kmax = 0.341;     %Length at maximum contraction, m
+tendon = 0;
+Pres = 615.4;      %average pressure (kPa) for 46cm
 
 fitting = 0.0254; %fitting length, universal
 
