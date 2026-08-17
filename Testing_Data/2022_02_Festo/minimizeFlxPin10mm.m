@@ -125,15 +125,16 @@ for ii = 1:N
     Xi2 = results_sort_actual(ii,xCols(3));
 
     % re-evaluate on all 4 BPAs
-    f_all = minimizeFlxPin(Xi0, Xi1, Xi2, 1:numBPA);   % returns 4×3 [RMSE, FVU, MaxResidual] Assuming number of BPAs = 4.
+    f_all = minimizeFlxPin(Xi0, Xi1, Xi2);   % returns 4×3 [RMSE, FVU, MaxResidual] Assuming number of BPAs = 4.
 
     % compare RMSE & FVU for BPAs 1, 2, 3 & 4 to baselineScores
     pass1 = all( f_all(1,1:3) <= baselineScores(1,1:3) );
     pass2 = all( f_all(2,1:3) <= baselineScores(2,1:3) );
     pass3 = all( f_all(3,1:3) <= baselineScores(3,1:3) );
     pass4 = all( f_all(4,1:3) <= baselineScores(4,1:3) );
+    pass5 = all( f_all(5,1:3) <= baselineScores(5,1:3) );
 
-    keep(ii) = pass1 && pass2 && pass3 && pass4;
+    keep(ii) = pass1 && pass2 && pass3 && pass4 && pass5;
 end
 
 % keep only the rows that passed all three checks
@@ -143,9 +144,11 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick =1;
+pick = 225;
 sol_actual = filtered_results(pick, xCols);
-[f, bpa] = minimizeFlxPin(sol_actual(1), 9e4, sol_actual(3), 1:4);  % [f: 4x3], [bpa: full struct]
+[f, bpa] = minimizeFlxPin(0.013, sol_actual(2), sol_actual(3));  % [f: 4x3], [bpa: full struct]
+
+disp(array2table(sol_actual, 'VariableNames', {'X0', 'X1', 'X2'}));
 
 %Show results for pre- and post-optimization
 fprintf('\nPerformance with no length offset and infinite stiffness:\n');
@@ -188,7 +191,7 @@ figTpre = figure('Name','Torque, Pre-Optimized','Color','w');
 figTpre.Position = [100 100 950 700];
 tTpre = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
-titles = ["\bf 48.5 cm", "\bf 45.7 cm","\bf 47.9 cm", "\bf 40.6 cm"];
+titles = ["\bf 48.5 cm", "\bf 45.7 cm","\bf 47.9 cm", "\bf 40.6 cm", "\bf 41.7 cm"];
 subtitles = ["\bf Pre-optimized","\bf Pre-optimized","\bf Pre-optimized","\bf Pre-optimized","\bf Optimized","\bf Optimized","\bf Optimized","\bf Optimized"];
 
 for j = 1:numBPA
