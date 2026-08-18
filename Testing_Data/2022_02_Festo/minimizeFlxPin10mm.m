@@ -6,7 +6,7 @@ clear; clc; close all
 
 %% Cross-validation setup
 allBPA = [1, 2, 3, 4, 5];           % Use if all data are valid 
-% allBPA = [3, 4];              % Use if old data do not hold up
+% allBPA = [2, 3, 4, 5];              % Use if old data do not hold up
 labels = ["48cm", "46cm", "47cm", "40cm-tendon", "42cm"];
 validLabels = labels(allBPA);
 numBPA = numel(allBPA);
@@ -144,11 +144,17 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 225;
+pick = 1;
 sol_actual = filtered_results(pick, xCols);
-[f, bpa] = minimizeFlxPin(0.013, sol_actual(2), sol_actual(3));  % [f: 4x3], [bpa: full struct]
+k1 = sol_actual(1);
+k2 = sol_actual(2);
+k3 = sol_actual(3);
+% k1 = 0.01;
+% k2 = 5e4;
+% k3 = 3e3;
+[f, bpa] = minimizeFlxPin(k1, k2, k3);  % [f: 4x3], [bpa: full struct]
 
-disp(array2table(sol_actual, 'VariableNames', {'X0', 'X1', 'X2'}));
+disp(array2table([k1, k2, k3], 'VariableNames', {'X0', 'X1', 'X2'}));
 
 %Show results for pre- and post-optimization
 fprintf('\nPerformance with no length offset and infinite stiffness:\n');
@@ -191,12 +197,13 @@ figTpre = figure('Name','Torque, Pre-Optimized','Color','w');
 figTpre.Position = [100 100 950 700];
 tTpre = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
-titles = ["\bf 48.5 cm", "\bf 45.7 cm","\bf 47.9 cm", "\bf 40.6 cm", "\bf 41.7 cm"];
+% titles = ["\bf 48.5 cm", "\bf 45.7 cm","\bf 47.9 cm", "\bf 40.6 cm", "\bf 41.7 cm"];
+titles = validLabels;
 subtitles = ["\bf Pre-optimized","\bf Pre-optimized","\bf Pre-optimized","\bf Pre-optimized","\bf Optimized","\bf Optimized","\bf Optimized","\bf Optimized"];
 
-for j = 1:numBPA
-    ax = nexttile(j);
-
+for k = 1:numBPA
+    ax = nexttile(k);
+    j = allBPA(k);
     hold on
     % Pre-optimization: Mold calculation
     Yq = bpa(j).strain./((bpa(j).rest - bpa(j).Kmax)/bpa(j).rest);
@@ -213,7 +220,7 @@ for j = 1:numBPA
     plot(bpa(j).Ak, bpa(j).M, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
 
     clear Vq Fold Fq Mold
-    title(titles(j), 'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    title(titles(k), 'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
     
     % ylabel('\bf Torque, N \cdot m', 'Interpreter', 'tex', ...
     %         'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
@@ -222,7 +229,7 @@ for j = 1:numBPA
 
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
-    % subtitle(subtitles(j), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
+    % subtitle(subtitles(k), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
     xlim([-120 20]); ylim([-25 0]);
 end
 
@@ -234,16 +241,16 @@ figTpost = figure('Name','Torque, Post-Optimized','Color','w');
 figTpost.Position = [100 100 950 700];
 tTpost = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
-for j = 1:numBPA
-    % ax = nexttile(numBPA + j);
-    ax = nexttile(j);
+for k = 1:numBPA
+    ax = nexttile(k);
+    j = allBPA(k);
     hold on
     
     scatter(bpa(j).Aexp, bpa(j).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
     plot(bpa(j).Ak, bpa(j).M, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
     plot(bpa(j).Ak, bpa(j).M_p(:,3), '-', 'Color', c{5}, 'LineWidth', 2.5, 'DisplayName', 'Optimized prediction');
     
-    title(titles(j), 'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
+    title(titles(k), 'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
     
     % ylabel('\bf Torque, N \cdot m', 'Interpreter', 'tex', ...
     %         'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
@@ -251,7 +258,7 @@ for j = 1:numBPA
     %         'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
     set(gca, 'FontSize', 12, 'FontWeight', 'bold', 'FontName', 'Arial', ...
         'LineWidth', 2, 'XMinorTick', 'on', 'YMinorTick', 'on', 'TickLength', [0.025 0.05]);
-    % subtitle(subtitles(j), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
+    % subtitle(subtitles(k), 'FontSize', 10, 'FontName', 'Arial', 'FontWeight', 'bold');
     xlim([-120 20]); ylim([-25 0]);
 end
 
@@ -285,8 +292,9 @@ figL = figure('Name','Muscle Length','Color','w');
 figL.Position = [100 100 950 700];
 tL = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
-for j = 1:numBPA
-    ax = nexttile(j);
+for k = 1:numBPA
+    ax = nexttile(k);
+    j = allBPA(k);
     if bpa(j).ten > 0
         title(sprintf('\\bf l_0 = %0.1f cm, %0.0f mm tendon',bpa(j).rest*100, bpa(j).ten*10^3),'Interpreter','tex')
     else
@@ -338,8 +346,9 @@ figMA.Position = [100 100 950 700];
 tMA = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
 
-for j = 1:numBPA
-    ax = nexttile(j);
+for k = 1:numBPA
+    ax = nexttile(k);
+    j = allBPA(k);
     if bpa(j).ten > 0
         title(sprintf('\\bf l_0 = %0.1f cm, %0.0f mm tendon',bpa(j).rest*100, bpa(j).ten*10^3),'Interpreter','tex')
     else
@@ -376,8 +385,9 @@ figS = figure('Name','Relative Strain','Color','w');
 figS.Position = [100 100 950 700];
 tS = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
-for j = 1:numBPA
-    ax = nexttile(j);
+for k = 1:numBPA
+    ax = nexttile(k);
+    j = allBPA(k);
     if bpa(j).ten > 0
         title(sprintf('\\bf l_0 = %0.1f cm, %0.0f mm tendon',bpa(j).rest*100, bpa(j).ten*10^3),'Interpreter','tex')
     else

@@ -7,8 +7,8 @@ load KneeFlxPin_10mm_42cm.mat
 
 %Put resting length and kmax again in case something else was run for the
 %class we just loaded.
-rest = 0.417; %resting length, m
-kmax = 0.341; %Length at maximum contraction, m
+rest = 0.410; %resting length, m
+kmax = 0.335; %Length at maximum contraction, m
 fitting = 0.0254;
 tendon = 0;
 restingLength = rest;

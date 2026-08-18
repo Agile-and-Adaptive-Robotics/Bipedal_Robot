@@ -1,4 +1,4 @@
-%% Pinned knee, Extensor
+%% Pinned knee, Flexor
 %Run and save data from testing results
 clear; 
 clc; 
@@ -10,7 +10,7 @@ load KneeFlxPin_10mm_46cm.mat
 %Put resting length and kmax again in case something else was run for the
 %class we just loaded.
 rest = 0.457; %resting length, m
-kmax = 0.381; %Length at maximum contraction, m
+kmax = 0.387; %Length at maximum contraction, m (for last test. for first two tests it was like 0.380)
 fitting = 0.0254;
 tendon = 0;
 restingLength = rest;

@@ -125,7 +125,7 @@ strain_Xi0 = Contraction(bpa_i, [],Xi0); %Calculate contraction with constant le
 [L_p, gemma] = Lok(bpa_i, Xi1, Xi2, kspr, strain_Xi0, Xi0);   %Bracket deformation changing geometry using stiffnesses and constant length offset
 unitD_p = UD(bpa_i, L_p);   %New force direction
 sL_p = seg(bpa_i, L_p);   %New segment lengths uses deformation but does not subtract length offset
-Lmt_p = LMT(sL_p, Xi0);     %New musclulotendon length. Uses deformed geometry and constant length offset.
+Lmt_p = LMT(sL_p, Xi0+gemma);     %New musclulotendon length. Uses deformed geometry and constant length offset.
 strain_p = Contraction(bpa_i, Lmt_p, []);  %*new contraction amount includes deformed geometry and constant length offset
 F_p = Force(bpa_i, unitD_p, strain_p);  %new force vector
 mA_p = Mom(bpa_i, L_p, unitD_p);   %new moment arm
@@ -186,8 +186,8 @@ FF(FF<0) = 0;
 unitD = klass.unitD;            %unit direction of force vector, tibia frame
 Fk = unitD.*FF;                  %Force vector, tibia frame
 pB = L(C,:,(klass.Ak==0));                  %Distance from knee frame to muscle insertion
-% Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
-Pbri = [-27.5, -107.81, -0.54]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever, but at tibial contact, no z offset)
+Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
+% Pbri = [-27.5, -107.81, -0.54]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever, but at tibial contact, no z offset)
 % Pbri = [-27.5, -125.91, -0.54]/1000;     %vector from knee ICR to upper bolt
 pkbrB = pB-Pbri;                  %vector from bracket to point B, in the knee frame
 thetabrB = atan2(pkbrB(2),pkbrB(1));   %angle between pbrB and x axis
@@ -467,7 +467,7 @@ function springrate = Spr(klass)
     else
         springrate = Inf;
     end
-        
+        % springrate = 1e4;
 end
 
 %% Subfunctions
