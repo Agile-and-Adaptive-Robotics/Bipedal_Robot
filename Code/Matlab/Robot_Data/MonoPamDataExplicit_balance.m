@@ -201,7 +201,7 @@ classdef MonoPamDataExplicit_balance < handle
         function lengthCheck = get.LengthCheck(obj)
             contraction = obj.Contraction;
             maxContractPercent = 0.25;          %Contracting to 75% of length
-            minContractPercent = -0.1;          %Elongating to 110% of length
+            minContractPercent = -0.03;          %Elongating to 103% of length
             restingPamLength = obj.RestingL;
             
             if restingPamLength < 0
@@ -432,7 +432,8 @@ FF = festo4(D, relstrain, P) * Fm; %Force magnitude
 FF (FF < 0) = 0;
 F = FF.*Funit;  % N×3, already in hip frame
 
-pA = L(1,:,(klass.Ak==0));                                  %Distance from hip origin to muscle insertion
+% pA = L(1,:,(klass.Ak==0));                                  %Distance from hip origin to muscle insertion
+pA = L(1,:,92);                                  %Distance from hip origin to muscle insertion
 switch klass.Diameter
     case 20
 %       Pbr = [-0.8100  -20.222   31.66]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
@@ -458,7 +459,7 @@ Ry = [cos(thetaY)  0  sin(thetaY);
       0            1  0;
      -sin(thetaY) 0   cos(thetaY)];
 Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
-Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame              
+Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame              
 
 Fbrh = zeros(N,3);
 pAnew = zeros(N,3);     %New point A, in the hip frame
@@ -471,8 +472,8 @@ else
     [epsilon, delta, beta, gema] = fortz_local(klass,Fbrh,X1,X2,kSpr,X0);  %strain from force divided by tensile stiffness
 end
 deflection = [epsilon, delta, beta];    %bracket movement
-% pbrAnew = [norm(pbrhA),0,0]+deflection; %New point A, represented in the bracket frame
-pbrAnew = [norm(pbrhA(1:2)),0,pbrhA(3)]+deflection; %New point A, represented in the bracket frame
+pbrAnew = [norm(pbrhA),0,0]+deflection; %New point A, represented in the bracket frame
+% pbrAnew = [norm(pbrhA(1:2)),0,pbrhA(3)]+deflection; %New point A, represented in the bracket frame
 LOC = L;
 for ii = 1:N                          %Repeat for each orientation 
     pAnew(ii,:) = RowVecTrans(Thbr, pbrAnew(ii,:)); %New point A in the hip frame
@@ -512,8 +513,9 @@ valid = norms > 1e-3 & all(~isnan(Fbr), 2);
 u_hat_all = normalize_local(Fbr);
 
 % Vectorized k_b computation
-% K_bracket = diag([X1, X2, X1]);       % bracket stiffness matrix
-C_bracket = diag([1/X1, 1/X2, 1/X1]);             % compliance matrix
+K = [X1, X2, X2];   % bracket stiffness array
+% K_bracket = diag(K);       % bracket stiffness matrix
+C_bracket = diag([1/K(1), 1/K(2), 1/K(3)]);             % compliance matrix
 u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
 C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
 c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));

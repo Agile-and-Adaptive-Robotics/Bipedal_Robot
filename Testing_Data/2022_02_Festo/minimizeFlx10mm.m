@@ -7,10 +7,10 @@ clear; clc; close all
 
 %% Use solution from optimizer and check validity on biomimetic knee
 
-load minimizeFlxPin10_results_20251017_1transform.mat results_sort_actual
+load minimizeFlxPin10_results_20260730_2transforms_Z2.mat results_sort_actual filtered_results xCols
 
-pick = 5;
-g = results_sort_actual(pick,2:4);
+pick = 1;
+g = filtered_results(pick,xCols);
 [u, v, w, bpa] = minimizeFlx(g(1),g(2),g(3));           % Now pull bpa structures out
 
 %% Plot setup;

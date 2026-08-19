@@ -186,8 +186,8 @@ FF(FF<0) = 0;
 unitD = klass.unitD;            %unit direction of force vector, tibia frame
 Fk = unitD.*FF;                  %Force vector, tibia frame
 pB = L(C,:,(klass.Ak==0));                  %Distance from knee frame to muscle insertion
-Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
-% Pbri = [-27.5, -107.81, -0.54]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever, but at tibial contact, no z offset)
+% Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
+Pbri = [-27.5, -107.81, -0.54]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever, but at tibial contact, no z offset)
 % Pbri = [-27.5, -125.91, -0.54]/1000;     %vector from knee ICR to upper bolt
 pkbrB = pB-Pbri;                  %vector from bracket to point B, in the knee frame
 thetabrB = atan2(pkbrB(2),pkbrB(1));   %angle between pbrB and x axis
@@ -221,7 +221,7 @@ end
 
 eB = [epsilon, delta, beta];
 pbrBnew = [norm(pkbrB(1:2)), 0, pkbrB(3)] + eB; %new point B, in the bracket's frame
-%             pbrBnew = [norm(pkbrB), 0, 0] + eB; %new point B, in the bracket's frame
+ % pbrBnew = [norm(pkbrB), 0, 0] + eB; %new point B, in the bracket's frame
 
 pBnew = zeros(N,3);
 for ii = 1:N                          %Repeat for each orientation
@@ -264,8 +264,9 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X1]);       %bracket stiffness
-    C_bracket = diag([1/X1, 1/X2, 1/X1]); %bracket compliance 
+    K = [X1, X2, X1];  %bracket stiffness array      
+    K_bracket = diag(K);       %bracket stiffness matrix
+    C_bracket = diag([1/K(1), 1/K(2), 1/K(3)]); %bracket compliance 
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
     c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));

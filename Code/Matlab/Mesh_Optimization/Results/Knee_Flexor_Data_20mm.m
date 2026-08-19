@@ -104,8 +104,8 @@ p20 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
 % p20 = [-0.022, -0.024, 0.02787];  %Insertion distance from theta1
 v20 = zeros(1,3,positions);      
 
-p1 = [0.009795, 0.066859, 0.054987];       %Origin
-p2 = [-0.007764, -0.012619, 0.041109];  %Insertion distance from theta1
+p1 = [-0.110565, 0.214868, 0.079046];       %Origin
+p2 = [-0.007263, -0.032929, 0.020477];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);
 
 for i = 1:positions
@@ -129,10 +129,10 @@ tendon0 = 0.015;
 % fitting = 0.021; %Lower profile fittings at this BPA diameter
 
 %from optimization:
-rest   = 0.426872;
-tendon = 0.056795;
+rest   =  0.511201;
+tendon = 0.150;
 KMAX = 0.255; %maximum contraction percentage
-kmax = 0.318;  % (1 - KMAX)*rest; Maximum contraction length.
+kmax = (1 - KMAX)*rest;  % (1 - KMAX)*rest; Maximum contraction length.
 fitting = 0.021;
 %pres1 = 273.9783;         %average pressure, first test
 pres1 = 0;
@@ -141,13 +141,14 @@ pres2 = 325;         %average pressure, first test
 pres3 = 620;
 
 % Load optimized stiffness parameters
-load minimizeFlxPin10_results_20251017_1transform.mat results_sort_actual
-pick = 5;
-g = results_sort_actual(pick,2:4);   % [Xi0, Xi1, Xi2]
+% Replace these with your best current estimates if desired
+load minimizeFlxPin10_results_20260730_2transforms_Z2.mat filtered_results xCols
+pick = 1;
+g = filtered_results(pick,xCols);
+Xi0 = g(1);
+Xi1 = g(2);
+Xi2 = g(3);
 
-Xi0   = g(1);
-Xi1   = g(2);
-Xi2   = g(3);
 wraps = 6;   % number of cable wraps. Each full circle is two "columns" or cables.
 
 %Original work
@@ -184,6 +185,13 @@ TorqueR_adj = Bifemsh_Pam3.Torque_p(:,:,1);
 %% Add Torques from the Muscle Group
 TorqueH = Torque1;
 
+H = readmatrix('OpenSim_Bifem_Results.txt', ...
+    'FileType', 'text', ...
+    'NumHeaderLines', 7);
+
+humanAngle = H(:,2);
+TorqueHz = H(:,4);
+
 %% Plotting Torque Results
 phiD = phi*180/pi;
 
@@ -205,9 +213,9 @@ for i = 1:size(TorqueR, 1)
     end
     
     if TorqueH(i, 3) >= 0
-        TorqueEz(i) = TorqueR_adj(i, 3) - TorqueH(i, 3);
+        TorqueEz(i) = TorqueR_adj(i, 3) - TorqueHz(i);
     else
-        TorqueEz(i) = TorqueH(i, 3) - TorqueR_adj(i, 3);
+        TorqueEz(i) = TorqueHz(i) - TorqueR_adj(i, 3);
     end
 end
 
@@ -216,7 +224,7 @@ hold on
 sgtitle('Bicep Femoris Short Head Torque through Knee Flexion and Extension')
 
 subplot(3, 2, 1)
-plot(phiD, TorqueH(:, 3), phiD, TorqueR_adj(:, 3))
+plot(humanAngle, TorqueHz, phiD, TorqueR_adj(:, 3))
 title('Muscle and PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
@@ -261,11 +269,11 @@ hold off
 
 %% Compare Expected vs Adjusted PAM values
 figure
-plot(phiD, Bifemsh_Pam3.Torque_p(:, 3), phiD, TorqueR(:, 3),phiD, Bifemsh_Pam0.Torque_p(:, 3))
+plot(phiD, Bifemsh_Pam3.Torque_p(:, 3), phiD, TorqueR(:, 3),phiD, Bifemsh_Pam0.Torque_p(:, 3),phiD, TorqueHz)
 title('Muscle and PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
-legend('Optimized stiffness aware', 'Stiffness unaware',"Unoptimized, stiffness aware")
+legend('Optimized stiffness aware', 'Stiffness unaware',"Unoptimized, stiffness aware","Human values")
 
 
 % %% Plotting muscle lengths and moment arms using two different moment arm
@@ -315,8 +323,8 @@ legend('Optimized stiffness aware', 'Stiffness unaware',"Unoptimized, stiffness 
 % hold off
 %% Plotting the angle between the vectors
 
-aHR = zeros(size(TorqueH, 1), 1);
-aHRH = zeros(size(TorqueH, 1), 1);
+aHR = zeros(size(TorqueHz, 1), 1);
+aHRH = zeros(size(TorqueHz, 1), 1);
 
 for i = 1:size(TorqueH, 1)
     uvecH = TorqueH(i, :)/norm(TorqueH(i, :));
@@ -435,9 +443,11 @@ Cang = K_ang/c;
 
 figure
 hold on
-plot(phiD, Bifemsh_Pam3.Torque_p(:,3),'Color',c7)
+plot(phiD, Bifemsh_Pam0.Torque_p(:, 3),'Color',c2)
 scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4)
-legend(sT3,sM3)
+plot(humanAngle, TorqueHz,'--','Color',c8);
+plot(phiD, Bifemsh_Pam3.Torque_p(:,3),'Color',c7)
+legend(sT3,sM3,"Human","New theoretical")
 title('PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')

@@ -123,18 +123,19 @@ for ii = 1:N
     Xi0 = results_sort_actual(ii,xCols(1));
     Xi1 = results_sort_actual(ii,xCols(2));
     Xi2 = results_sort_actual(ii,xCols(3));
+    Xi3 = results_sort_actual(ii,xCols(4));
 
     % re-evaluate on all 4 BPAs
     f_all = minimizeFlxPinX3(Xi0, Xi1, Xi2, Xi3);   % returns 4×3 [RMSE, FVU, MaxResidual] Assuming number of BPAs = 4.
 
     % compare RMSE & FVU for BPAs 1, 2, 3 & 4 to baselineScores
-    pass1 = all( f_all(1,1:3) <= baselineScores(1,1:3) );
+    % pass1 = all( f_all(1,1:3) <= baselineScores(1,1:3) );
     pass2 = all( f_all(2,1:3) <= baselineScores(2,1:3) );
     pass3 = all( f_all(3,1:3) <= baselineScores(3,1:3) );
     pass4 = all( f_all(4,1:3) <= baselineScores(4,1:3) );
     pass5 = all( f_all(5,1:3) <= baselineScores(5,1:3) );
 
-    keep(ii) = pass1 && pass2 && pass3 && pass4 && pass5;
+    keep(ii) = pass2 && pass3 && pass4 && pass5;
 end
 
 % keep only the rows that passed all three checks
@@ -144,7 +145,7 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 1;
+pick = 2;
 sol_actual = filtered_results(pick, xCols);
 k1 = sol_actual(1);
 k2 = sol_actual(2);

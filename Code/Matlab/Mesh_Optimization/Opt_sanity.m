@@ -2,7 +2,7 @@
 
 clear
 clc
-clear classes
+% clear classes
 rehash
 
 ctx = buildKneeFlexorContext20mm();
@@ -16,6 +16,17 @@ pred0 = predictKneeFlexor20mm(ctx.x0, ctx);
 
 disp(J0)
 disp(pred0.failReason)
+
+if ~pred0.ok
+    disp('predictKneeFlexor20mm failed before creating full pred fields.')
+    disp('Available pred0 fields:')
+    disp(fieldnames(pred0))
+    return
+end
+
+disp(pred0.extensionDistance)
+disp(pred0.restLmt)
+disp(pred0.cRestLength)
 disp(pred0.extensionDistance)
 disp(pred0.restLmt)
 disp(pred0.cRestLength)
@@ -31,7 +42,7 @@ fprintf('restLmt = %.6f m\n', pred0.restLmt)
 
 figure
 plot(ctx.phiD, pred0.TorqueZ, ctx.humanAngleD, -ctx.humanTorqueAbs)
-legend('BPA abs torque','Human abs target')
+legend('BPA torque','Human target')
 xlabel('Knee angle, deg')
 ylabel('Torque magnitude, N m')
 

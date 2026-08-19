@@ -7,7 +7,7 @@ clear; clc; close all
 %% Cross-validation setup
 allBPA = [1, 2, 3, 4, 5];           % Use if all data are valid 
 % allBPA = [2, 3, 4, 5];              % Use if old data do not hold up
-labels = ["48cm", "46cm", "47cm", "40cm-tendon", "42cm"];
+labels = ["48cm", "46cm", "47cm", "40cm-tendon", "41cm"];
 validLabels = labels(allBPA);
 numBPA = numel(allBPA);
 
@@ -146,12 +146,12 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
  
 pick = 1;
 sol_actual = filtered_results(pick, xCols);
-k1 = sol_actual(1);
-k2 = sol_actual(2);
-k3 = sol_actual(3);
-% k1 = 0.01;
-% k2 = 5e4;
-% k3 = 3e3;
+% k1 = sol_actual(1);
+% k2 = sol_actual(2);
+% k3 = sol_actual(3);
+k1 = 0.01;
+k2 = 2e4;
+k3 = 0.8e4;
 [f, bpa] = minimizeFlxPin(k1, k2, k3);  % [f: 4x3], [bpa: full struct]
 
 disp(array2table([k1, k2, k3], 'VariableNames', {'X0', 'X1', 'X2'}));
@@ -197,8 +197,8 @@ figTpre = figure('Name','Torque, Pre-Optimized','Color','w');
 figTpre.Position = [100 100 950 700];
 tTpre = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
-% titles = ["\bf 48.5 cm", "\bf 45.7 cm","\bf 47.9 cm", "\bf 40.6 cm", "\bf 41.7 cm"];
-titles = validLabels;
+titles = ["\bf 48.5 cm", "\bf 45.7 cm","\bf 47.9 cm", "\bf 40.6 cm", "\bf 41.7 cm"];
+% titles = validLabels;
 subtitles = ["\bf Pre-optimized","\bf Pre-optimized","\bf Pre-optimized","\bf Pre-optimized","\bf Optimized","\bf Optimized","\bf Optimized","\bf Optimized"];
 
 for k = 1:numBPA

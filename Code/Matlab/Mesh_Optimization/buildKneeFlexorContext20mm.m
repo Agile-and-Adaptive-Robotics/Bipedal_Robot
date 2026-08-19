@@ -105,9 +105,12 @@ ctx.minStrain = -0.03;
 ctx.torqueScale = max(1, max(ctx.humanTorqueAbs));
 
 % Replace these with your best current estimates if desired
-Xi0 = 0.0119;
-Xi1 = 1.0174e5;
-Xi2 = 1.0648e4;
+load minimizeFlxPin10_results_20260730_2transforms_Z2.mat filtered_results xCols
+pick = 1;
+g = filtered_results(pick,xCols);
+Xi0 = g(1);
+Xi1 = g(2);
+Xi2 = g(3);
 
 % Fixed stiffness / compliance parameters.
 % These are already identified and are NOT optimization variables.
@@ -123,6 +126,12 @@ p2_0 = [-0.01224, -0.00887, 0.02787];
 rest0     = 0.415;
 tendon0   = 0.025;
 
+% p1_0 = [0.005, -0.211, 0.023];
+% p2_0 = [-0.03, -0.036, 0.029];
+
+% rest0     = 0.442;
+% tendon0   = 0.025;
+
 % Optimization variables:
 % [p1(1:3), p2(1:3), rest, kmaxFrac, tendon]
 x0 = [p1_0, p2_0, rest0, tendon0];
@@ -131,15 +140,15 @@ lb = x0;
 ub = x0;
 
 % Attachment search box, meters
-lb(1:3) = p1_0 + [-0.060, -0.060, -0.060];
-ub(1:3) = p1_0 + [ 0.060,  0.060,  0.060];
+lb(1:3) = p1_0 + [-0.090, 0, -0.050];
+ub(1:3) = p1_0 + [0,  0.200,  0.080];
 
-lb(4:6) = p2_0 + [-0.060, -0.060, -0.060];
+lb(4:6) = p2_0 + [-0.060, -0.100, -0.029];
 ub(4:6) = p2_0 + [ 0.005,  0.09,  0.060];
 
 % BPA / tendon bounds
-lb(7) = 0.360;    ub(7) = 0.520;    % rest length, m
-lb(8) = 0.025;    ub(8) = 0.100;    % tendon length, m
+lb(7) = 0.200;    ub(7) = 0.560;    % rest length, m
+lb(8) = 0.025;    ub(8) = 0.150;    % tendon length, m
 
 ctx.x0 = x0;
 ctx.lb = lb;

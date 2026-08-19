@@ -243,14 +243,14 @@ function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain_predef,X0)
                    0    0   1];
             pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
             % Now calculate angle from x-axis to this vector
-            % thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
+            thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
 
-            % % Rotation matrix about y-axis (local frame adjustment)
-            % Ry = [cos(thetaY)  0  sin(thetaY);
-            %       0            1  0;
-            %      -sin(thetaY) 0   cos(thetaY)];
-            % Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
-            Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame              
+            % Rotation matrix about y-axis (local frame adjustment)
+            Ry = [cos(thetaY)  0  sin(thetaY);
+                  0            1  0;
+                 -sin(thetaY) 0   cos(thetaY)];
+            Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
+            Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame              
             
             Fbrh = zeros(N,3);
             pAnew = zeros(N,3);     %New point A, in the hip frame
@@ -265,8 +265,8 @@ function [LOC, gema] = Lok(klass,X1,X2,kSpr,Funit,strain_predef,X0)
                 [epsilon, delta, beta, gema] = fortz(klass,Fbrh,X1,X2,kSpr,X0);  %strain from force divided by tensile stiffness
             end
             deflection = [epsilon, delta, beta];    %bracket movement
-%             pbrAnew = [norm(pbrhA),0,0]+deflection; %New point A, represented in the bracket frame
-            pbrAnew = [norm(pbrhA(1:2)),0,pbrhA(3)]+deflection; %New point A, represented in the bracket frame
+            pbrAnew = [norm(pbrhA),0,0]+deflection; %New point A, represented in the bracket frame
+            % pbrAnew = [norm(pbrhA(1:2)),0,pbrhA(3)]+deflection; %New point A, represented in the bracket frame
             LOC = L;
             for ii = 1:N                          %Repeat for each orientation 
                 pAnew(ii,:) = RowVecTrans(Thbr, pbrAnew(ii,:)); %New point A in the hip frame
@@ -311,8 +311,9 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,X0)
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
-    C_bracket = diag([1/X1, 1/X2, 1/X1]);       %project bracket compliance onto force direction
+    K = [X1, X2, X2]; %bracket stiffness
+    K_bracket = diag(K);       %project bracket stiffness onto force direction
+    C_bracket = diag([1/K(1), 1/K(2), 1/K(3)]);       %project bracket compliance onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
     c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));
