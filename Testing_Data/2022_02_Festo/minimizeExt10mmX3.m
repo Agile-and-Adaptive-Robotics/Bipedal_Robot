@@ -4,7 +4,7 @@
 clear; clc; close all
 
 %% Cross-validation setup
-allBPA = [1, 2, 3, 4, 5, 6, 7, 8, 9];           %We're going to skip 42cm l_rest with a tendon
+allBPA = [1, 2, 5, 6, 8];           %We're going to skip 42cm l_rest with a tendon
 labels = ["40cm", "40cm-tendon", "42cm", "42cm-tendon", "43cm", "43cm-tendon", "46cm", "47cm", "48cm"];
 validLabels = labels(allBPA);
 numBPA = numel(allBPA);
@@ -20,7 +20,7 @@ disp(array2table(a0, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
                     'RowNames', cellstr(labels')));
 fprintf('Mean Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
-load minimizeFlxPin10_results_20260729.mat xCols filtered_results
+load minimizeFlxPin10_results_20260730_2transforms_Z2.mat xCols filtered_results
 pick = 1; %Pick the best solution from the sorted results (should be 1)
 sol_actual = filtered_results(pick, xCols);  %Best solution
 g = sol_actual;
@@ -40,11 +40,11 @@ fprintf('Mean normalized to baseline score: RMSE %.4f, FVU %.4f, Max. Residual %
 
 
 %% Problem bounds
-lb = [-0.020 * 100, log10(5e3), log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [0.01 * 100, log10(5e7), log10(5e7), 3];
+% lb = [-0.020 * 100, log10(5e3), log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+% ub = [0.01 * 100, log10(5e7), log10(5e7), 3];
 
-% lb = [-g(1) * 100, log10(g(2)), log10(g(3)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-% ub = [-g(1) * 100, log10(g(2)), log10(g(3)), 3];
+lb = [-0.02 * 100, log10(g(2)), log10(g(3)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+ub = [0 * 100, log10(g(2)), log10(g(3)), 1];
 
 % A = [0 -1 1 0; ...              % x2 (bending) is less stiff than x1 (axial), (x2 <= x1)
 %      0 0 0 0; ...
@@ -53,7 +53,7 @@ ub = [0.01 * 100, log10(5e7), log10(5e7), 3];
 
 clear sol_actual
 %% Solver
-numHold = 4;                        %Number of BPAs held out for validation
+numHold = 3;                        %Number of BPAs held out for validation
 list = nchoosek(allBPA,numHold);          %Choose how many BPAs to hold out, the others for training
 for k = 1:length(list)
     holdoutIdx = list(k,:);
@@ -69,8 +69,8 @@ for k = 1:length(list)
         'UseParallel', true, ...
         'Display', 'iter', ...
         'PlotFcn', {@gaplotpareto3D_simple}, ...    %'InitialPopulationRange',[-.015*100, log10(8e4), log10(8e3), 0.1; -0.007*100, log10(8e6), log10(8e5), 0.4], ...
-        'PopulationSize', 150, ... %was 150
-        'MaxGenerations', 750, ... %was 750
+        'PopulationSize', 50, ... %was 150
+        'MaxGenerations', 150, ... %was 750
         'MutationFcn', {@mutationadaptfeasible}, ...
         'CrossoverFraction', 0.8, ...
         'CrossoverFcn', {@crossoverscattered}, ...

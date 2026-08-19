@@ -463,15 +463,15 @@ thetabrA = atan2(phbrA(2),phbrA(1));            %angle between pbrA and x axis
 RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
        sin(thetabrA) cos(thetabrA) 0; ...
        0    0   1];
-% pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
-% % Now calculate angle from x-axis to this vector
-% thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
-% % % Rotation matrix about y-axis (local frame adjustment)
-% Ry = [cos(thetaY) 0  sin(thetaY);
-%       0           1  0;
-%      -sin(thetaY) 0  cos(thetaY)];
-% Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
-Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
+pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
+% Now calculate angle from x-axis to this vector
+thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
+% Rotation matrix about y-axis (local frame adjustment)
+Ry = [cos(thetaY) 0  sin(thetaY);
+      0           1  0;
+     -sin(thetaY) 0  cos(thetaY)];
+Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
+Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
             
 %more complicated way to calculate vector and rotation matrix so that your
 %new x axis points to muscle origin.
@@ -506,8 +506,8 @@ else
     [epsilon, delta, beta, gama] = fortz(klass, Fbrh, X1, X2, kSpr, delta_L);
 end
 deflection = [epsilon, delta, beta];
-pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] +deflection; %Muscle origin location, bracket frame
-% pbrAnew = [norm(phbrA), 0, 0] +deflection; %Muscle origin location, bracket frame
+% pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] +deflection; %Muscle origin location, bracket frame
+pbrAnew = [norm(phbrA), 0, 0] +deflection; %Muscle origin location, bracket frame
 
 % Replace points
 LOC = L;
@@ -559,8 +559,9 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X1]);       %bracket stiffness
-    C_bracket = diag([1/X1, 1/X2, 1/X1]); %bracket compliance 
+    K = [X2, X1, X2]; %bracket stiffness array
+    K_bracket = diag(K);       %bracket stiffness
+    C_bracket = diag([1/K(1), 1/K(2), 1/K(3)]); %bracket compliance 
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
     c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));
@@ -602,7 +603,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
 
         if r == 0
             continue;            
-        elseif isinf(X1) && isinf(X2) && tendon > 0
+        elseif isinf(X1) && isinf(X2) && isinf(kSpr)
             % Rigid bracket: no deformation, optional cable stretch
             e_axial(i) = 0;
             e_bendY(i) = 0;
