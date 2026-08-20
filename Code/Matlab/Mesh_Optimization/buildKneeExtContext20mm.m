@@ -40,12 +40,13 @@ fcn14 = fit(knee_angle,t1_ICR_y,'cubicspline');
 
 kneeMin = -2.0943951;
 kneeMax = 0.17453293;
-phi = linspace(kneeMin, kneeMax, positions);
-phiD = phi*180/pi;
+phi = linspace(kneeMin, kneeMax, positions); %RoM
+
 %We want one of our positions to be home position, so let's make the
 %smallest value of phi equal to 0
 [val, pos] = min(abs(phi));
 phi(pos) = 0;
+phiD = phi*180/pi;  %Knee angle in degrees
 
 for i = 1:positions
     hipToKnee = [fcn1(phi(i)), fcn2(phi(i)), 0];
@@ -120,11 +121,19 @@ ctx.KMAX = 0.255;          % KMAX = (rest - kmax)/rest at 620 kPa
 ctx.maxRelStrain = 1.0;    % allow relative strain up to KMAX
 ctx.minStrain = -0.03;
 
-ctx.Xi0 = -0.0109;
-ctx.Xi1 = 1.0174e5;
-ctx.Xi2 = 1.0648e4;
-ctx.Xi3 = 0.1230;
+load minimizeExtPin10_results_20260819_2transforms_Z2.mat filtered_results xCols
+
+pick = 1;     % whatever candidate you decided to use
+
+g = filtered_results(pick,xCols);
+
+ctx.Xi0 = g(1);
+ctx.Xi1 = g(2);
+ctx.Xi2 = g(3);
+ctx.Xi3 = g(4);
+
 ctx.wraps = 3;
+
 
 %% Distal-ring route initial geometry
 % These are the row values from the Distal Ring Location matrix in
@@ -164,7 +173,7 @@ ub = x0;
 
 % Attachment search box, meters
 lb(1:3) = p1_0 + [-0.060, -0.060, -0.060];
-ub(1:3) = p1_0 + [ 0.060,  0.060,  0.060];
+ub(1:3) = p1_0 + [ 0.100,  0.100,  0.060];
 
 lb(4:6) = p2_0 + [0, -0.060, -0.060];
 ub(4:6) = p2_0 + [ 0.06,  0.06,  0.060];

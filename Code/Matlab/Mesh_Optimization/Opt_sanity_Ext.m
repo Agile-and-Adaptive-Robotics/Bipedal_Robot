@@ -91,7 +91,7 @@ hold on
 plot(ctx.phiD, abs(pred0.TorqueZ), 'LineWidth', 2)
 plot(Hang, T1, '--', 'LineWidth', 2)
 plot(Hang, T2, '-.', 'LineWidth', 2)
-plot(Hang, T1, ':', 'LineWidth', 2)
+plot(Hang, T3, ':', 'LineWidth', 2)
 grid on
 xlabel('Knee angle, deg')
 ylabel('Torque magnitude, N m')
