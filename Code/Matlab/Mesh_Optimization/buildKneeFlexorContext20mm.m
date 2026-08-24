@@ -120,16 +120,21 @@ ctx.Xi2 = Xi2;
 ctx.wraps = 3;
 
 % Initial geometry / BPA design guess
+%from previous test
 p1_0 = [-0.050,   0.035,   0.050];
 p2_0 = [-0.01224, -0.00887, 0.02787];
 
 rest0     = 0.415;
 tendon0   = 0.025;
 
+%from human model
 % p1_0 = [0.005, -0.211, 0.023];
-% p2_0 = [-0.03, -0.036, 0.029];
-
-% rest0     = 0.442;
+% % p2_0 = [-0.0026   -0.0105    0.0290];         %wrapping point
+% % p2_0 = [0.0044   -0.0305    0.0340];           %insertion point
+% p2_0 = [-0.0026   -0.0305    0.0340];           %insertion point, modified X value
+% 
+% 
+% rest0     = 0.225;
 % tendon0   = 0.025;
 
 % Optimization variables:
@@ -140,15 +145,15 @@ lb = x0;
 ub = x0;
 
 % Attachment search box, meters
-lb(1:3) = p1_0 + [-0.090, 0, -0.050];
-ub(1:3) = p1_0 + [0,  0.200,  0.080];
+lb(1:3) = p1_0 + [-0.090, -0.100, -0.050];
+ub(1:3) = p1_0 + [0.0125,  0.100,  0.080];
 
-lb(4:6) = p2_0 + [-0.060, -0.100, -0.029];
-ub(4:6) = p2_0 + [ 0.005,  0.09,  0.060];
+lb(4:6) = p2_0 + [-0.060, -0.100, -0.027];
+ub(4:6) = p2_0 + [ 0.025,  0.050,  0.060];
 
 % BPA / tendon bounds
-lb(7) = 0.200;    ub(7) = 0.560;    % rest length, m
-lb(8) = 0.025;    ub(8) = 0.150;    % tendon length, m
+lb(7) = 0.225;    ub(7) = 0.600;    % rest length, m
+lb(8) = 0.025;    ub(8) = 0.100;    % tendon length, m
 
 ctx.x0 = x0;
 ctx.lb = lb;

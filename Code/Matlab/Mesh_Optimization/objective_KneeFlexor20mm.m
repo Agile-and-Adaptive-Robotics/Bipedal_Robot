@@ -46,7 +46,15 @@ function J = objective_KneeFlexor20mm(x, ctx)
     x0 = ctx.x0(:);
     dx = x(:) - x0;
 
-    Jgeom = 1e-2 * sum(dx(1:6).^2) / (0.060^2);
+    geomScale = [ ...
+    0.030;   % p1 x
+    0.300;   % p1 y -- large movement allowed
+    0.030;   % p1 z
+    0.030;   % p2 x
+    0.030;   % p2 y
+    0.030];  % p2 z
+
+    Jgeom = 1e-2 * sum((dx(1:6)./geomScale).^2);
     Jlen  = 1e-3 * ((x(7) - x0(7))/0.040).^2;
 
     J = 100*Jtorque + Jovershoot + JrestLength + JstrainHi + JstrainLo + Jgeom + Jlen;

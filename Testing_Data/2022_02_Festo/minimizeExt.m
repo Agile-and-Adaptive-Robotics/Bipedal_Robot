@@ -25,10 +25,8 @@ function [f_all, bpa_all] = minimizeExt(Xi0, Xi1, Xi2, Xi3, idx_val)
 %loss of useful length from X3 term.
 
 % 52cm length, no tendon
-    load KneeExt_10mm_52cm.mat Vas_Pam phiD
-    Ma = Vas_Pam.MomentArm;                 %Calculated moment arm
-    G = hypot(Ma(:,1),Ma(:,2));         %Moment arm for z-axis torque
-    load Plot_KneeExt10mm_52cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand
+    load KneeExt_10mm_52cm.mat phiD
+    load Plot_KneeExt10mm_52cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand Vas_Pam G
     A = sortrows([Angle(:), Torque(:), InflatedLength(:), ICRtoMuscle(:), TorqueHand(:)]);
     ke(1) = struct('Ak',phiD,'Loc',Vas_Pam.Location,'CP',Vas_Pam.Cross,'dBPA',Vas_Pam.Diameter, ...
                   'Tk',Vas_Pam.TransformationMat,'rest',Vas_Pam.RestingL,'Kmax',Vas_Pam.Kmax,...
@@ -72,11 +70,11 @@ Funit = computeForceVector(bpa_i);  %Force unit direction in the hip frame
 [L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, delta_L+Xi0); %Bracket deformation and new geometry
 sL_p = seg(bpa_i, L_p); %segment lengths
 Lmt_p = LMT(sL_p, Xi0); 
-[strain_f, ~] = Contraction(bpa_i, Lmt_p, [], gemma, Xi3);
+[strain_f, ~] = Contraction(bpa_i, Lmt_p, [], gemma, Xi3);  %fictive strain, including deformation and tendon stretch
 unitD_p = UD(bpa_i, L_p);           %unit direction, predicted with updated path
 F_p = Force(bpa_i, unitD_p, strain_f); %Muscle force, new prediction
 mA_p = Mom(bpa_i, L_p, unitD_p); %Moment arm vector
-[strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []);
+[strain_p, ~] = Contraction(bpa_i, Lmt_p, [], gemma, []);  %actual strain, including deformation and tendon stretch
 M_p = Tor(mA_p, F_p, strain_p); %New torque prediction
 
 %% Package into output struct
@@ -280,13 +278,13 @@ RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...     %Rotation matrix
        0    0   1];
 pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
 % Now calculate angle from x-axis to this vector
-% thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
-% % Rotation matrix about y-axis (local frame adjustment)
-% Ry = [cos(thetaY)  0  sin(thetaY);
-%       0            1  0;
-%      -sin(thetaY)  0  cos(thetaY)];
-% Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
-Thbr = RpToTrans(RhbrZ, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
+thetaY = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
+% Rotation matrix about y-axis (local frame adjustment)
+Ry = [cos(thetaY)  0  sin(thetaY);
+      0            1  0;
+     -sin(thetaY)  0  cos(thetaY)];
+Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
+Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
 
 % Transform force into bracket frame
 Fbrh = zeros(N,3);
@@ -301,8 +299,8 @@ else
                 [epsilon, delta, beta, gama] = fortz(klass,Fbrh,X1,X2,kSpr,deltaL);  %strain from force divided by tensile stiffness
 end
 deflection = [epsilon, delta, beta];
-pbrAnew = [norm(pbrhA(1:2)), 0, pbrhA(3)] + deflection;
-% pbrAnew = [norm(pbrhA), 0, 0] + deflection;
+% pbrAnew = [norm(pbrhA(1:2)), 0, pbrhA(3)] + deflection;
+pbrAnew = [norm(pbrhA), 0, 0] + deflection;
 
 % Replace points
 LOC = L;
@@ -351,11 +349,12 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K_bracket = diag([X1, X2, X1]);       %project bracket stiffness onto force direction
-    C_bracket = diag([1/X1, 1/X2, 1/X1]);       %project bracket compliance onto force direction
+    K = [X1, X2, X2];       %bracket stiffness array
+    K_bracket = diag(K);       %bracket stiffness matrix
+    C_bracket = diag([1/K(1), 1/K(2), 1/K(3)]);       %project bracket compliance onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]
     C_rep = repmat(C_bracket, [1, 1, N]);   % [3x3xN]
-    c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3]));
+    c_b = pagemtimes(pagemtimes(u_hat, C_rep), permute(u_hat, [2, 1, 3])); %project bracket stiffness onto force direction
     c_b = reshape(c_b, [N, 1]);
     cSpr = 1/kSpr;
 

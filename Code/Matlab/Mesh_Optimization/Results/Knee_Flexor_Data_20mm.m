@@ -104,8 +104,8 @@ p20 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
 % p20 = [-0.022, -0.024, 0.02787];  %Insertion distance from theta1
 v20 = zeros(1,3,positions);      
 
-p1 = [-0.110565, 0.214868, 0.079046];       %Origin
-p2 = [-0.007263, -0.032929, 0.020477];  %Insertion distance from theta1
+p1 = [-0.049813, 0.134743, 0.050129];       %Origin
+p2 = [-0.008565, -0.022566, 0.027702];  %Insertion distance from theta1
 v2 = zeros(1,3,positions);
 
 for i = 1:positions
@@ -129,8 +129,8 @@ tendon0 = 0.015;
 % fitting = 0.021; %Lower profile fittings at this BPA diameter
 
 %from optimization:
-rest   =  0.511201;
-tendon = 0.150;
+rest   =  0.538494;
+tendon = 0.025022;
 KMAX = 0.255; %maximum contraction percentage
 kmax = (1 - KMAX)*rest;  % (1 - KMAX)*rest; Maximum contraction length.
 fitting = 0.021;

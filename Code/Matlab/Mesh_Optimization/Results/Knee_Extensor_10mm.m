@@ -257,10 +257,10 @@ rest = 0.520;
 kmax = 0.434;
 tendon = 0.038; 
 fitting = 0.0254;
-tendon_adj = tendon-0.0107;
+
 pres = 596.3717;         %average pressure
 Vas_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
-Vas_Pam_adj = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres);
+Vas_Pam_adj = MonoPamDataExplicit_balanceX3(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
 %% Unstacking the Torques to identify specific rotations
 % Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
 % Torque1 = Vas_Int.Torque + Vas_Lat.Torque + Vas_Med.Torque;
