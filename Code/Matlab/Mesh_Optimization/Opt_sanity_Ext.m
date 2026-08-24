@@ -126,8 +126,29 @@ legend('strain_f includes Xi3', 'strain_p excludes Xi3', 'KMAX', 'minStrain', ..
     'Location', 'best')
 title('Extensor strain sanity check')
 
+Fmag = vecnorm(pred0.bpa.F_p, 2, 2);
+
+rEff = abs(pred0.TorqueZ) ./ Fmag;
+
+figure
+yyaxis left
+plot(ctx.phiD, Fmag, 'LineWidth', 2)
+ylabel('Total BPA force, N')
+
+yyaxis right
+plot(ctx.phiD, 1000*rEff, 'LineWidth', 2)
+ylabel('Effective Z moment arm, mm')
+
+xlabel('Knee angle, deg')
+grid on
+figure
+plot(ctx.phiD, pred0.delta_L*1000, 'LineWidth', 2)
+xlabel('Knee angle, deg')
+ylabel('X3 length loss, mm')
+grid on
+
 %% Optional tiny optimizer smoke test
-runSmallOptimizer = false;
+runSmallOptimizer = true;
 
 if runSmallOptimizer
     obj = @(x) objective_KneeExt20mm(x, ctx);

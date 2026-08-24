@@ -12,7 +12,13 @@ load minimizeExtPin10_results_20260819_2transforms_Z2.mat filtered_results xCols
 pick = 1;
 sol_actual = filtered_results(pick, xCols);
 sol_actual1 = sol_actual;
-[f, bpa] = minimizeExt(sol_actual1(1), sol_actual1(2), sol_actual1(3), sol_actual1(4), 1);   % Use solution from Flexor bracket, and compare results
+k1 = sol_actual1(1);
+% k1 = -0.01;
+k2 = sol_actual1(2);
+k3 = sol_actual1(3);
+k4 = sol_actual1(4);
+% k4 = 0.15;
+[f, bpa] = minimizeExt(k1, k2, k3, k4, 1);   % Use solution from Flexor bracket, and compare results
 % clear sol_actual
 baselineScores1 = f;  % RMSE, FVU, Max Residual
 fprintf('Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));

@@ -516,7 +516,7 @@ pA = L(1,:,92);               %Distance from hip origin to muscle insertion
 switch klass.Diameter
     case 20
 %       Pbr = [-0.8100  -20.222   31.66]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
-        Pbr = [9.48  -36.2   30.76]/1000;       %from hip origin to bracket bolt pattern centroid
+        Pbr = [9.48  -33.38   30.86]/1000;       %from hip origin to bracket bolt pattern centroid
     case 10
         Pbr = [-19 22 27.6]/1000;       %from hip origin centroid of bracket cantilever 
 %         Pbr = [-21.33  -79   6.94]/1000;       %from centroid of bracket bolts.
