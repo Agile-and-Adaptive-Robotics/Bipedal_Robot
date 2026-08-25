@@ -29,6 +29,7 @@ classdef MonoPamDataExplicit_balanceX3 < handle
         Xi1                         %Bracket axial stiffness
         Xi2                         %Bracket bending stiffness
         Xi3                         %Factor for loss of usable length
+        BendMeasure                 % Nx1 geometric sum(R*alpha), m
         Wraps                       %Number of cable wraps (affects tendon stiffness)
         BPAcount                    %Number of BPAs in parallel
 
@@ -67,9 +68,16 @@ classdef MonoPamDataExplicit_balanceX3 < handle
         %% ------------- Muscle Data Constructor -----------------
         %Constructor Function. By calling 'MuscleData' and entering the
         %muscle information, we construct an object for that muscle.
-        function PD = MonoPamDataExplicit_balanceX3(name, location, cross, diameter, t, rest, kmax, tendon, fitn, pres, xi0, xi1, xi2, xi3, wraps, angleD, bpaCount)
+        function PD = MonoPamDataExplicit_balanceX3(name, location, cross, diameter, t, rest, kmax, tendon, fitn, pres, xi0, xi1, xi2, xi3, wraps, angleD, bpaCount, bendMeasure)
             if nargin == 17
-                PD.Name = name;
+                % Backwards compatibility with older callers.
+                bendMeasure = [];
+
+            elseif nargin ~= 18
+                error('MonoPamDataExplicit_balanceX3:BadInputCount', ...
+                    'Expected 17 or 18 inputs, got %d.', nargin);
+            end
+                            PD.Name = name;
                 PD.Location = location;
                 PD.Cross = cross;
                 PD.Diameter = diameter;
@@ -87,13 +95,9 @@ classdef MonoPamDataExplicit_balanceX3 < handle
                 PD.Wraps = wraps;
                 PD.AngleD = angleD(:);
                 PD.BPAcount = bpaCount;
-
+                PD.BendMeasure = bendMeasure;
                 % Automatically compute stiffness-aware geometry and torque.
                 PD = PD.updateStiffnessGeometry();
-            else
-                error('MonoPamDataExplicit_balanceX3:BadInputCount', ...
-                    'Expected 17 inputs, got %d.', nargin);
-            end
         end
         
         
@@ -456,29 +460,59 @@ delta_L = zeros(N,1);
 
 if ~isempty(X3)
 
-    % These constants come from the existing extensor Xi3 model.
-    ang = -9.19;
-
-    angleRad = deg2rad((ang - theta_k) * 80 / (ang + 120));
-    idx = angleRad > 0;
-
     Lm0 = Lmt - tendon - 2*fitn - X0 - gama;
 
     strain0 = (rest - Lm0) / rest;
+
     relstrain0 = strain0 / KMAX;
 
     comp = 1 - relstrain0;
     comp = max(0, comp);
 
-    R1 = 0.022;
-    R2 = 0.176;
 
-    delta_L1 = X3 * R1 * deg2rad(28) .* comp.^2;
+    if ~isempty(klass.BendMeasure)
 
-    delta_L2 = zeros(N,1);
-    delta_L2(idx) = X3 * R2 .* angleRad(idx) .* comp(idx).^2;
+        bendMeasure = klass.BendMeasure(:);
 
-    delta_L = delta_L1 + delta_L2;
+        if numel(bendMeasure) ~= N
+            error('MonoPamDataExplicit_balanceX3:BendMeasureSize', ...
+                'BendMeasure must contain one value per knee position.')
+        end
+
+        % Geometric Xi3 model:
+        %
+        %   delta_L = Xi3 * sum(R*alpha) * comp^2
+        %
+        % Xi3 itself is unchanged.
+
+        delta_L = ...
+            X3 .* bendMeasure .* comp.^2;
+
+    else
+
+        % ---------------------------------------------------------
+        % Backwards-compatible original pinned-knee formulation.
+        % ---------------------------------------------------------
+
+        ang = -9.19;
+
+        angleRad = deg2rad((ang - theta_k)*80/(ang + 120));
+
+        idx = angleRad > 0;
+
+        R1 = 0.022;
+        R2 = 0.176;
+
+        delta_L1 = X3*R1*deg2rad(28).*comp.^2;
+
+        delta_L2 = zeros(N,1);
+
+        delta_L2(idx) = X3*R2 .*angleRad(idx).*comp(idx).^2;
+
+        delta_L = delta_L1 + delta_L2;
+
+    end
+
 end
 
 Lm_adj = Lmt - tendon - 2*fitn - X0 - gama - delta_L;

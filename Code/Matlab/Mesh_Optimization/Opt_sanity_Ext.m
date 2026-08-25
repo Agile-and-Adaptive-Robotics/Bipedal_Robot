@@ -16,7 +16,9 @@ fprintf('Xi0 = %.6f m\n', ctx.Xi0)
 fprintf('Xi1 = %.6g N/m\n', ctx.Xi1)
 fprintf('Xi2 = %.6g N/m\n', ctx.Xi2)
 fprintf('Xi3 = %.6f\n', ctx.Xi3)
-fprintf('Initial tendon from norm(row5-row6) = %.6f m\n', ctx.initialTendon0)
+fprintf('Initial tendon = %.6f m\n', ctx.initialTendon0)
+fprintf('Initial geometry-dependent tendon maximum = %.6f m\n', ...
+    ctx.initialTendonMax)
 fprintf('Initial max undeformed Lmt = %.6f m at %.2f deg\n', ...
     ctx.initialMaxLmt0, ctx.initialMaxLmtAngleD)
 fprintf('Initial rest = max(Lmt0) - 2*fitting - tendon - Xi0 = %.6f m\n', ...
@@ -36,7 +38,7 @@ if ~pred0.ok
 end
 
 fprintf('\np1 = [%.6f %.6f %.6f] m\n', pred0.p1)
-fprintf('p2 = [%.6f %.6f %.6f] m\n', pred0.p2)
+fprintf('p8 = [%.6f %.6f %.6f] m\n', pred0.p8)
 fprintf('rest   = %.6f m\n', pred0.rest)
 fprintf('tendon = %.6f m\n', pred0.tendon)
 fprintf('KMAX   = %.6f\n', pred0.KMAX)
@@ -48,12 +50,14 @@ fprintf('maxPathAngleD0 = %.2f deg\n', pred0.maxPathAngleD0)
 fprintf('restLmt        = %.6f m\n', pred0.restLmt)
 fprintf('cRestLength    = %.6f m\n', pred0.cRestLength)
 
-if isfield(pred0, 'maxPathLength')
-    fprintf('maxPathLength deformed diagnostic = %.6f m\n', pred0.maxPathLength0)
+if isfield(pred0, 'maxPathLengthDeformed')
+    fprintf('maxPathLength deformed diagnostic = %.6f m\n', ...
+        pred0.maxPathLengthDeformed)
 end
 
-if isfield(pred0, 'maxPathAngleD')
-    fprintf('maxPathAngleD deformed diagnostic = %.2f deg\n', pred0.maxPathAngleD)
+if isfield(pred0, 'maxPathAngleDDeformed')
+    fprintf('maxPathAngleD deformed diagnostic = %.2f deg\n', ...
+        pred0.maxPathAngleDDeformed)
 end
 
 fprintf('\nStrain check:\n')
@@ -63,6 +67,84 @@ fprintf('max(strain_p) = %.6f  [excludes Xi3, measured-comparison strain]\n', ma
 fprintf('min(strain_p) = %.6f\n', min(pred0.strain_p))
 fprintf('====================================\n')
 
+
+%% Routing activation / discontinuity diagnostics
+routeInfo = pred0.routeInfo;
+
+fprintf('\n========== ROUTING CONTACT ACTIVATION ==========\n')
+fprintf('Sweep increment = %.9f deg\n', routeInfo.sweepStepD)
+fprintf('Sweep start     = %.9f deg\n', routeInfo.sweepD(1))
+fprintf('Solver max      = %.9f deg\n', max(ctx.phiD))
+fprintf('Solver min      = %.9f deg\n\n', min(ctx.phiD))
+fprintf('Point   Frame    Added angle, deg       x, m          y, m          z, m\n')
+fprintf('-----   -----    ----------------       ----------    ----------    ----------\n')
+
+for j = 1:8
+    if isnan(routeInfo.addedAngleD(j))
+        fprintf('p%d      %-5s    NOT ACTIVE\n', j, char(routeInfo.pointFrame(j)))
+    else
+        q = routeInfo.addedPoint(j,:);
+        fprintf('p%d      %-5s    %16.9f    % .8f   % .8f   % .8f\n', ...
+            j, char(routeInfo.pointFrame(j)), routeInfo.addedAngleD(j), ...
+            q(1), q(2), q(3))
+    end
+end
+
+fprintf('\nActivation order: ')
+for k = 1:numel(routeInfo.activationOrder)
+    j = routeInfo.activationOrder(k);
+    if ~isnan(routeInfo.addedAngleD(j))
+        fprintf('p%d ', j)
+    end
+end
+fprintf('\n')
+
+fprintf('\n========== ACTIVE POINTS OVER SOLVER RANGE ==========\n')
+prevActive = false(8,1);
+for ii = ctx.N:-1:1
+    a = routeInfo.active(:,ii);
+    if ii == ctx.N || any(a ~= prevActive)
+        fprintf('phi = %9.4f deg :', ctx.phiD(ii))
+        fprintf(' p%d', find(a))
+        fprintf('\n')
+    end
+    prevActive = a;
+end
+
+raw = routeInfo.raw;
+loc = pred0.Location;
+
+fprintf('\n========== MAX POINT-TO-POINT JUMPS ==========\n')
+for j = 1:8
+    Rj = squeeze(raw(j,:,:)).';
+    Lj = squeeze(loc(j,:,:)).';
+
+    dRaw = vecnorm(diff(Rj,1,1),2,2);
+    dLoc = vecnorm(diff(Lj,1,1),2,2);
+
+    [maxRaw, iRaw] = max(dRaw);
+    [maxLoc, iLoc] = max(dLoc);
+
+    fprintf(['p%d: raw = %8.3f mm, %8.3f -> %8.3f deg' ...
+             ' | Location = %8.3f mm, %8.3f -> %8.3f deg\n'], ...
+        j, ...
+        1000*maxRaw, ctx.phiD(iRaw), ctx.phiD(iRaw+1), ...
+        1000*maxLoc, ctx.phiD(iLoc), ctx.phiD(iLoc+1))
+end
+
+[dPathJump, iPathJump] = max(abs(diff(pred0.pathLength0)));
+[dBendJump, iBendJump] = max(abs(diff(pred0.bendMeasure)));
+[dLossJump, iLossJump] = max(abs(diff(pred0.delta_L)));
+
+fprintf('\n========== LARGEST CURVE JUMPS ==========\n')
+fprintf('undeformed path: %8.3f mm, %8.3f -> %8.3f deg\n', ...
+    1000*dPathJump, ctx.phiD(iPathJump), ctx.phiD(iPathJump+1))
+fprintf('bendMeasure:     %8.3f mm, %8.3f -> %8.3f deg\n', ...
+    1000*dBendJump, ctx.phiD(iBendJump), ctx.phiD(iBendJump+1))
+fprintf('X3 delta_L:      %8.3f mm, %8.3f -> %8.3f deg\n', ...
+    1000*dLossJump, ctx.phiD(iLossJump), ctx.phiD(iLossJump+1))
+fprintf('===============================================\n')
+
 %% Plot torque against target
 H = readmatrix('OpenSim_Vasti_Results.txt', ...
     'FileType', 'text', ...
@@ -71,7 +153,7 @@ H = readmatrix('OpenSim_Vasti_Results.txt', ...
 ctx.humanAngleD = H(:,2);
 Hang = H(:,2); %Human knee angle data point
 
-Name1 = "Vastus Intemedius"; 
+Name1 = "Vastus Intermedius"; 
 Name2 = "Vastus Lateralis";
 Name3 = "Vastus Medialis";
 
@@ -152,20 +234,22 @@ runSmallOptimizer = true;
 
 if runSmallOptimizer
     obj = @(x) objective_KneeExt20mm(x, ctx);
+    nonlcon = @(x) nonlconExt20mm(x, ctx);
+    objconstr = @(x) objconstrExt20mm(x, obj, nonlcon);
 
     optsTest = optimoptions('surrogateopt', ...
         'Display', 'iter', ...
         'UseParallel', false, ...
         'MaxFunctionEvaluations', 30);
 
-    [xTest, fTest] = surrogateopt(obj, ctx.lb, ctx.ub, optsTest);
+    [xTest, fTest] = surrogateopt(objconstr, ctx.lb, ctx.ub, optsTest);
 
     predTest = predictKneeExt20mm(xTest, ctx);
 
     fprintf('\n========== SMALL OPTIMIZER TEST ==========\n')
     fprintf('fTest = %.6g\n', fTest)
     fprintf('p1 = [%.6f %.6f %.6f] m\n', predTest.p1)
-    fprintf('p2 = [%.6f %.6f %.6f] m\n', predTest.p2)
+    fprintf('p8 = [%.6f %.6f %.6f] m\n', predTest.p8)
     fprintf('rest   = %.6f m\n', predTest.rest)
     fprintf('tendon = %.6f m\n', predTest.tendon)
     fprintf('maxPathLength = %.6f m\n', predTest.maxPathLength)

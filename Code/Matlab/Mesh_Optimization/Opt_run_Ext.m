@@ -6,6 +6,10 @@ ctx = buildKneeExtContext20mm();
 
 obj = @(x) objective_KneeExt20mm(x, ctx);
 
+nonlcon = @(x) nonlconExt20mm(x, ctx);
+
+objconstr = @(x) objconstrExt20mm(x, obj, nonlcon);
+
 rng default
 
 if isempty(gcp('nocreate'))
@@ -17,7 +21,7 @@ optsG = optimoptions('surrogateopt', ...
     'UseParallel', true, ...
     'MaxFunctionEvaluations', 100);
 
-[xG, fG] = surrogateopt(obj, ctx.lb, ctx.ub, optsG);
+[xG, fG] = surrogateopt(objconstr, ctx.lb, ctx.ub, optsG);
 
 optsP = optimoptions('patternsearch', ...
     'Display', 'iter', ...
@@ -26,7 +30,7 @@ optsP = optimoptions('patternsearch', ...
     'MeshTolerance', 1e-5, ...
     'StepTolerance', 1e-5);
 
-[xBest, fBest] = patternsearch(obj, xG, [], [], [], [], ctx.lb, ctx.ub, [], optsP);
+[xBest, fBest] = patternsearch(obj, xG, [], [], [], [], ctx.lb, ctx.ub, nonlcon, optsP);
 
 predBest = predictKneeExt20mm(xBest, ctx);
 
@@ -41,17 +45,17 @@ fprintf('[%.6f, %.6f, %.6f]\n', ctx.x0(1:3))
 fprintf('\np1 optimized, m:\n')
 fprintf('[%.6f, %.6f, %.6f]\n', predBest.p1)
 
-fprintf('\np2 original, m:\n')
+fprintf('\np8 original, m:\n')
 fprintf('[%.6f, %.6f, %.6f]\n', ctx.x0(4:6))
 
-fprintf('\np2 optimized, m:\n')
-fprintf('[%.6f, %.6f, %.6f]\n', predBest.p2)
+fprintf('\np8 optimized, m:\n')
+fprintf('[%.6f, %.6f, %.6f]\n', predBest.p8)
 
 fprintf('\np1 change, m:\n')
 fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.p1 - ctx.x0(1:3))
 
-fprintf('\np2 change, m:\n')
-fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.p2 - ctx.x0(4:6))
+fprintf('\np8 change, m:\n')
+fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.p8 - ctx.x0(4:6))
 
 fprintf('\nBPA/tendon lengths:\n')
 fprintf('rest   = %.6f m\n', predBest.rest)
@@ -62,9 +66,9 @@ fprintf('KMAX = %.6f\n', predBest.KMAX)
 fprintf('kmax = %.6f m\n', predBest.kmax)
 
 fprintf('\nConstraint check:\n')
-fprintf('restLmt           = %.6f m\n', predBest.restLmt)
-fprintf('extensionDistance = %.6f m\n', predBest.extensionDistance)
-fprintf('cRestLength       = %.6f m\n', predBest.cRestLength)
+fprintf('maxPathLength0 = %.6f m\n', predBest.maxPathLength0)
+fprintf('restLmt        = %.6f m\n', predBest.restLmt)
+fprintf('cRestLength    = %.6f m\n', predBest.cRestLength)
 
 fprintf('=============================================\n')
 

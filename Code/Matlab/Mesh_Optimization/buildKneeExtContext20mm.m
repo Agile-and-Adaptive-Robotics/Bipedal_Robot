@@ -88,6 +88,8 @@ ctx.N          = numel(phiD);
 ctx.fitting    = 0.021;
 ctx.wraps      = 3;
 
+
+
 [~, ctx.idxMaxFlex] = min(ctx.phiD);
 
 %% OpenSim target: column 2 = knee angle, columns 3-5 = vastus muscles.
@@ -134,60 +136,169 @@ ctx.Xi3 = g(4);
 
 ctx.wraps = 3;
 
-
-%% Distal-ring route initial geometry
-% These are the row values from the Distal Ring Location matrix in
-% Knee_Extensor_40mm. Rows 1 and 6 are the optimizer attachment variables.
+%% 20 mm extensor routing geometry
+% All geometry below is in meters.
 %
-% p1_0: row 1, femur-side BPA attachment
-% p2_0: row 6, tibia/theta1-side distal ring attachment
-[~, idxLongest] = min(phiD);
+% Femur-side geometry is in femur frame.
+% Tibia-side geometry is in theta1 / t1 frame.
 
-raw = distalRingRawLocation(phiD(idxLongest));
-p1_0 = raw(1,:);
-p2_0 = raw(8,:);
+geo = struct;
 
-% Tendon initial guess:
-% Use the norm between rows 5 and 6 of the distal ring Location matrix.
-tendon0 = norm(raw(7,:) - raw(8,:));
-fprintf('Initial tendon from norm(row7-row8) = %.6f m\n', tendon0)
+% Fully inflated 20 mm Festo BPA is approximately 75 mm diameter.
+geo.bpaRadius = 0.075/2;      % 0.0375 m
 
-% Resting length initial guess:
-% Use undeformed normal musculotendon length:
-%   rest0 = max(Lmt_undeformed) - 2*fitting - tendon0 - Xi0
-Location0 = buildDistalRingLocation(p1_0, p2_0, ctx.phiD, ctx.T_ICR_t1);
+% Ignore extremely small direction changes in Xi3 geometry.
+geo.alphaTol = deg2rad(1.0);
+
+
+%% Femur-side geometry
+
+% 10 mm radius cylindrical object.
+geo.femurCylCenter = [0.05390, -0.27476];
+geo.femurCylRadius = 0.010;
+
+% Required BPA centerline radius.
+geo.femurCylClearRadius = geo.femurCylRadius + geo.bpaRadius;
+% = 0.0475 m
+
+
+% Femoral lower profile center.
+geo.femurProfileCenter = [0.01817, -0.41031];
+
+% Original vertical line is x = 30 mm relative to profile center.
+% BPA centerline must lie another 37.5 mm in +x.
+geo.femurLineX = geo.femurProfileCenter(1) + 0.030 + geo.bpaRadius;
+
+% Original line extends from local y = 0 to +48.74 mm.
+geo.femurLineY = geo.femurProfileCenter(2) + [0, 0.04874];
+
+% Original 20 mm fillet plus BPA radius.
+geo.femurFilletClearRadius = 0.020 + geo.bpaRadius;
+% = 0.0575 m
+
+
+% Condyle ellipse.
+geo.femurEllipseA = 0.06640/2 + geo.bpaRadius;  % expanded semi-major
+geo.femurEllipseB = 0.05439/2 + geo.bpaRadius;  % expanded semi-minor
+geo.femurEllipseTheta = deg2rad(25.11);
+
+% These reproduce the two avoidance points we discussed.
+th = geo.femurEllipseTheta;
+
+geo.femurMinorAvoid = geo.femurProfileCenter + ...
+    [ geo.femurEllipseB*sin(th), ...
+     -geo.femurEllipseB*cos(th)];
+
+geo.femurMajorAvoid = geo.femurProfileCenter + ...
+    [-geo.femurEllipseA*cos(th), ...
+     -geo.femurEllipseA*sin(th)];
+
+
+%% Tibia / t1 geometry
+
+% Lower 5 mm radius cylinder.
+geo.tibiaLowerCenter = [0.04736, -0.00387];
+geo.tibiaLowerRadius = 0.005;
+geo.tibiaLowerClearRadius = geo.tibiaLowerRadius + geo.bpaRadius;
+% = 0.0425 m
+
+% Upper 7.5 mm radius cylinder.
+geo.tibiaUpperCenter = [0.04486, 0.02064];
+geo.tibiaUpperRadius = 0.0075;
+geo.tibiaUpperClearRadius = geo.tibiaUpperRadius + geo.bpaRadius;
+% = 0.0450 m
+
+% Original common tangent x = 52.36 mm.
+geo.tibiaWallX = 0.05236 + geo.bpaRadius;
+% = 0.08986 m
+
+geo.tibiaWallY = [ ...
+    geo.tibiaLowerCenter(2), ...
+    geo.tibiaUpperCenter(2)];
+
+
+%% Tendon limits
+
+geo.tendonMin = 0.025;
+
+ctx.geo = geo;
+
+%% 20 mm extensor route initial geometry
+
+% p1 is femur-side BPA attachment.
+p1_0 = [0.040, 0.035, 0];
+
+% p8 is the movable distal tendon/ring attachment in t1 frame.
+p8_0 = [0.03406, -0.06687, 0];
+
+% Pick a reasonable initial tendon length, but make sure it does not
+% exceed the geometry-dependent limit.
+[~, tendonGeom0] = tendonLimit20mm(p8_0, ctx.geo);
+
+if tendonGeom0 < ctx.geo.tendonMin
+    error('Initial p8 does not permit the minimum 25 mm tendon length.')
+end
+
+tendon0 = min(0.040, 0.95*tendonGeom0);
+tendon0 = max(ctx.geo.tendonMin, tendon0);
+
+fprintf('Initial tendon = %.6f m\n', tendon0)
+fprintf('Initial geometry-dependent tendon maximum = %.6f m\n', tendonGeom0)
+
+
+%% Build initial 20 mm route
+
+[Location0, ~, route0] = buildDistalRingLocation20mm( ...
+    p1_0, ...
+    p8_0, ...
+    tendon0, ...
+    ctx);
+
 Lmt0 = muscleLengthNormal(Location0, ctx.CrossPoint, ctx.T_Pam);
+
+
+%% Initial resting length
 
 rest0 = max(Lmt0) - 2*ctx.fitting - tendon0 - ctx.Xi0;
 
 if rest0 <= 0
-    error('Initial rest0 is non-positive. Check distal ring path geometry.')
+    error('Initial rest0 is non-positive. Check 20 mm route geometry.')
 end
 
-%% Optimization variables:
-% [p1(1:3), p2(1:3), rest, kmaxFrac, tendon]
-x0 = [p1_0, p2_0, rest0, tendon0];
+
+%% Optimization variables
+% x = [p1(1:3), p8(1:3), rest, tendon]
+
+x0 = [p1_0, p8_0, rest0, tendon0];
 
 lb = x0;
 ub = x0;
 
-% Attachment search box, meters
+% p1 search region
 lb(1:3) = p1_0 + [-0.060, -0.060, -0.060];
 ub(1:3) = p1_0 + [ 0.100,  0.100,  0.060];
 
-lb(4:6) = p2_0 + [0, -0.060, -0.060];
-ub(4:6) = p2_0 + [ 0.06,  0.06,  0.060];
+% p8 search region
+lb(4:6) = p8_0 + [0,    -0.060, -0.060];
+ub(4:6) = p8_0 + [0.060, 0.060,  0.060];
 
-% BPA / tendon bounds
-lb(7) = 0.360;    ub(7) = 0.520;    % rest length, m
-lb(8) = max(0.025,tendon0-0.040);    ub(8) = tendon0+0.1;    % tendon length, m
+% BPA rest-length bounds
+lb(7) = 0.340;
+ub(7) = 0.600;
+
+% Global tendon bounds.
+% The position-dependent upper bound is handled by nonlconExt20mm.
+lb(8) = ctx.geo.tendonMin;
+ub(8) = 0.150; %loose optimizer ceiling
 
 ctx.x0 = x0;
 ctx.lb = lb;
 ctx.ub = ub;
 
+
 %% Initial-design diagnostics
-ctx.initialRawLocation = raw;
+
+ctx.initialRawLocation = route0.raw(:,:,ctx.idxMaxFlex);
 ctx.initialLocation = Location0;
 ctx.initialLmt0 = Lmt0;
 ctx.initialMaxLmt0 = max(Lmt0);
@@ -195,103 +306,104 @@ ctx.initialIdxMaxLmt0 = find(Lmt0 == max(Lmt0), 1, 'first');
 ctx.initialMaxLmtAngleD = ctx.phiD(ctx.initialIdxMaxLmt0);
 ctx.initialRest0 = rest0;
 ctx.initialTendon0 = tendon0;
+ctx.initialTendonMax = tendonGeom0;
 
 end
 
 
 %% Local helper functions
 
-function raw = distalRingRawLocation(phiD_i)
-% Location matrix from Knee_Extensor_10mm.
-%
-% Rows 1:4 are femur / parent frame.
-% Rows 5:8 are theta1 / tibia frame before conversion to ICR.
-%
-% Original Knee_Extensor_10mm points:
-% p1 = [0.040, 0.035, 0];                 %Origin
-% p2 = [0.0759, -0.27476, 0];             %BPA contacts mounting base
-% p3 = [0.05982, -0.37427, 0.000];        %femur channel contact, updated
-% p4 = [0.03955, -0.42183, 0.000];        %femoral condyle contact, updated
-% p5 = [0.05871, 0.025, 0];               %Tibia contact initial
-% p6 = [0.05871, 0.01228, 0];             %Tibia contact, updated
-% p7 = [0.054, -0.00612, 0];              %Tibia tendon contact, updated
-% p8 = [0.03604, -0.02844, 0];            %patellar ligament ring
-
-p1 = [0.040,   0.035,    0.000];          %Origin
-p2 = [0.0759, -0.27476,  0.000];          %BPA contacts mounting base
-p3 = [0.05982,-0.37427,  0.000];          %femur channel contact, updated
-p4 = [0.03955,-0.42183,  0.000];          %femoral condyle contact, updated
-p5 = [0.05871, 0.025,    0.000];          %Tibia contact initial
-p6 = [0.05871, 0.01228,  0.000];          %Tibia contact, updated
-p7 = [0.054,  -0.00612,  0.000];          %Tibia tendon contact, updated
-p8 = [0.03604,-0.02844,  0.000];          %patellar ligament ring
-
-%Set up angle limits (degrees)
-% AA = -68;
-BB = -69.8;   %add p4 when flexion reaches this value
-CC = -9.19;   %add p3 and p5 when flexion reaches this value
-DD = 10;
-
-    if phiD_i > CC
-        raw = [p1;
-               p2;
-               p2;
-               p2;
-               p6;
-               p6;
-               p7;
-               p8];
-    
-    elseif phiD_i <= CC && phiD_i > BB
-        raw = [p1;
-               p2;
-               p3;
-               p3;
-               p5;
-               p6;
-               p7;
-               p8];
-    
-    elseif phiD_i <= BB
-        raw = [p1;
-               p2;
-               p3;
-               p4;
-               p5;
-               p6;
-               p7;
-               p8];
-    
-    else
-        raw = zeros(8,3);
-    end
-
-end
-
-function Location = buildDistalRingLocation(p1, p2, phiD, T_ICR_t1)
-% Build the extensor Location matrix using the Knee_Extensor_10mm route.
-%
-% p1 replaces row 1.
-% p2 replaces row 8.
-% Rows 5:8 are converted from theta1 -> ICR with T_ICR_t1(:,:,i).
-
-N = numel(phiD);
-Location = zeros(8, 3, N);
-
-    for i = 1:N
-        raw = distalRingRawLocation(phiD(i));
-    
-        raw(1,:) = p1;
-        raw(8,:) = p2;
-    
-        for j = 5:8
-            raw(j,:) = RowVecTrans(T_ICR_t1(:,:,i), raw(j,:));
-        end
-    
-        Location(:,:,i) = raw;
-    end
-
-end
+% function raw = distalRingRawLocation(phiD_i)
+% % Location matrix from Knee_Extensor_10mm.
+% %
+% % Rows 1:4 are femur / parent frame.
+% % Rows 5:8 are theta1 / tibia frame before conversion to ICR.
+% %
+% % Original Knee_Extensor_10mm points:
+% % p1 = [0.040, 0.035, 0];                 %Origin
+% % p2 = [0.0759, -0.27476, 0];             %BPA contacts mounting base
+% % p3 = [0.05982, -0.37427, 0.000];        %femur channel contact, updated
+% % p4 = [0.03955, -0.42183, 0.000];        %femoral condyle contact, updated
+% % p5 = [0.05871, 0.025, 0];               %Tibia contact initial
+% % p6 = [0.05871, 0.01228, 0];             %Tibia contact, updated
+% % p7 = [0.054, -0.00612, 0];              %Tibia tendon contact, updated
+% % p8 = [0.03604, -0.02844, 0];            %patellar ligament ring
+% 
+% p1 = [0.040,   0.035,    0.000];          %Origin
+% p2 = [0.0759, -0.27476,  0.000];          %BPA contacts mounting base
+% p3 = [0.05982,-0.37427,  0.000];          %femur channel contact, updated
+% p4 = [0.03955,-0.42183,  0.000];          %femoral condyle contact, updated
+% p5 = [0.05871, 0.025,    0.000];          %Tibia contact initial
+% p6 = [0.05871, 0.01228,  0.000];          %Tibia contact, updated
+% p7 = [0.054,  -0.00612,  0.000];          %Tibia tendon contact, updated
+% p8 = [0.03604,-0.02844,  0.000];          %patellar ligament ring
+% 
+% %Set up angle limits (degrees)
+% % AA = -68;
+% BB = -69.8;   %add p4 when flexion reaches this value
+% CC = -9.19;   %add p3 and p5 when flexion reaches this value
+% DD = 10;
+% 
+%     if phiD_i > CC
+%         raw = [p1;
+%                p2;
+%                p2;
+%                p2;
+%                p6;
+%                p6;
+%                p7;
+%                p8];
+% 
+%     elseif phiD_i <= CC && phiD_i > BB
+%         raw = [p1;
+%                p2;
+%                p3;
+%                p3;
+%                p5;
+%                p6;
+%                p7;
+%                p8];
+% 
+%     elseif phiD_i <= BB
+%         raw = [p1;
+%                p2;
+%                p3;
+%                p4;
+%                p5;
+%                p6;
+%                p7;
+%                p8];
+% 
+%     else
+%         raw = zeros(8,3);
+%     end
+% 
+% end
+% 
+% function Location = buildDistalRingLocation(p1, p2, phiD, T_ICR_t1)
+% % Build the extensor Location matrix using the Knee_Extensor_10mm route.
+% %
+% % p1 replaces row 1.
+% % p2 replaces row 8.
+% % Rows 5:8 are converted from theta1 -> ICR with T_ICR_t1(:,:,i).
+% 
+% N = numel(phiD);
+% Location = zeros(8, 3, N);
+% 
+%     for i = 1:N
+%         raw = distalRingRawLocation(phiD(i));
+% 
+%         raw(1,:) = p1;
+%         raw(8,:) = p2;
+% 
+%         for j = 5:8
+%             raw(j,:) = RowVecTrans(T_ICR_t1(:,:,i), raw(j,:));
+%         end
+% 
+%         Location(:,:,i) = raw;
+%     end
+% 
+% end
 
 function Lmt = muscleLengthNormal(Location, CrossPoint, T)
 % Normal undeformed musculotendon length calculation, matching
@@ -301,17 +413,17 @@ N = size(Location, 3);
 M = size(Location, 1);
 Lmt = zeros(N, 1);
 
-for ii = 1:N
-    for j = 1:M-1
-        pointA = Location(j,:,ii);
-        pointB = Location(j+1,:,ii);
-
-        if j+1 == CrossPoint
-            pointB = RowVecTrans(T(:,:,ii), pointB);
+    for ii = 1:N
+        for j = 1:M-1
+            pointA = Location(j,:,ii);
+            pointB = Location(j+1,:,ii);
+    
+            if j+1 == CrossPoint
+                pointB = RowVecTrans(T(:,:,ii), pointB);
+            end
+    
+            Lmt(ii) = Lmt(ii) + norm(pointA - pointB);
         end
-
-        Lmt(ii) = Lmt(ii) + norm(pointA - pointB);
     end
-end
 
 end
