@@ -12,6 +12,8 @@ function [Location, bendMeasure, info] = buildDistalRingLocation20mm(p1, p8, ten
 %
 % Contact order is constrained physically:
 %   femur: p2 -> p3 -> p4
+% p3 is frozen when first contacted. p4 can only activate on a later
+% sweep frame, when the fixed-p3-to-tibia route reaches the femoral body.
 %   tibia: p7 -> p6 -> p5
 %
 % The hidden sweep uses the exact phiD increment. phi/phiD are not modified.
@@ -78,6 +80,7 @@ info.pointFrame = ["femur";"femur";"femur";"femur"; ...
                    "t1";"t1";"t1";"t1"];
 info.addedAngleD = nan(8,1);
 info.addedPoint = nan(8,3);
+info.addedSweepIndex = nan(8,1);
 
 %% Progressive contact state
 active = false(8,1);
@@ -92,6 +95,8 @@ info.addedAngleD(1) = sweepD(1);
 info.addedAngleD(8) = sweepD(1);
 info.addedPoint(1,:) = p1;
 info.addedPoint(8,:) = p8;
+info.addedSweepIndex(1) = 1;
+info.addedSweepIndex(8) = 1;
 
 contactTol = 1e-7;
 
@@ -132,11 +137,14 @@ for s = 1:Ns
     % point is taken from the current segment at contact, activating it does
     % not create a finite path-length jump.
     if s > 1
+        activatedThisSweep = false(8,1);
+
         for pass = 1:6
             raw = collapseInactive(Pfixed, active);
 
             [newIdx, newPoint] = nextContact( ...
-                raw, active, T_Pam_i, T_ICR_t1_i, T_t1_ICR_i, ...
+                raw, active, activatedThisSweep, ...
+                T_Pam_i, T_ICR_t1_i, T_t1_ICR_i, ...
                 ctx.geo, frameInfo, seed20, contactTol);
 
             if newIdx == 0
@@ -144,11 +152,13 @@ for s = 1:Ns
             end
 
             active(newIdx) = true;
+            activatedThisSweep(newIdx) = true;
             Pfixed(newIdx,:) = newPoint;
 
             if isnan(info.addedAngleD(newIdx))
                 info.addedAngleD(newIdx) = thetaD;
                 info.addedPoint(newIdx,:) = newPoint;
+                info.addedSweepIndex(newIdx) = s;
             end
         end
     end
@@ -193,11 +203,14 @@ info.sweepStepD = dPhiD;
 info.seedOriginal = seed;
 info.seed20 = seed20;
 
-idx = (1:8)';
-keyAngle = info.addedAngleD;
-keyAngle(isnan(keyAngle)) = -Inf;
-[~,ord] = sortrows([-keyAngle, idx],[1 2]);
-info.activationOrder = idx(ord);
+idx = find(isfinite(info.addedAngleD));
+if isempty(idx)
+    info.activationOrder = zeros(0,1);
+else
+    keyAngle = info.addedAngleD(idx);
+    [~,ord] = sortrows([-keyAngle, idx],[1 2]);
+    info.activationOrder = idx(ord);
+end
 
 end
 
@@ -245,7 +258,8 @@ end
 
 
 function [newIdx, newPoint] = nextContact( ...
-    raw, active, T_Pam_i, T_ICR_t1_i, T_t1_ICR_i, ...
+    raw, active, activatedThisSweep, ...
+    T_Pam_i, T_ICR_t1_i, T_t1_ICR_i, ...
     geo, frameInfo, seed20, tol)
 % Return at most one new contact per pass. The caller rebuilds the route and
 % calls again, preserving physical contact order.
@@ -283,12 +297,19 @@ elseif ~active(3)
     end
 
 elseif ~active(4)
-    [hit,q] = segmentEllipseContactPoint( ...
-        raw(3,1:2), B_fem(1:2), geo, seed20(4,1:2), tol);
-    if hit
-        newIdx = 4;
-        newPoint = [q, raw(3,3)];
-        return
+    % p3 is a fixed femur contact. p4 is a later wrap/contact on the
+    % femoral body, so it cannot activate in the same sweep frame as p3.
+    % On later frames, test the straight segment from fixed p3 toward the
+    % current active tibia-side route for first contact with the expanded
+    % femoral condyle ellipse.
+    if ~activatedThisSweep(3)
+        [hit,q] = segmentEllipseContactPoint( ...
+            raw(3,1:2), B_fem(1:2), geo, seed20(4,1:2), tol);
+        if hit
+            newIdx = 4;
+            newPoint = [q, raw(3,3)];
+            return
+        end
     end
 end
 
