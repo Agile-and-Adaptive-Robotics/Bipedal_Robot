@@ -30,7 +30,15 @@ optsP = optimoptions('patternsearch', ...
     'MeshTolerance', 1e-5, ...
     'StepTolerance', 1e-5);
 
-[xBest, fBest] = patternsearch(obj, xG, [], [], [], [], ctx.lb, ctx.ub, nonlcon, optsP);
+% Do not throw away a better initial design before patternsearch.
+f0 = obj(ctx.x0);
+if f0 <= fG
+    xStart = ctx.x0;
+else
+    xStart = xG;
+end
+
+[xBest, fBest] = patternsearch(obj, xStart, [], [], [], [], ctx.lb, ctx.ub, nonlcon, optsP);
 
 predBest = predictKneeExt20mm(xBest, ctx);
 
@@ -45,17 +53,17 @@ fprintf('[%.6f, %.6f, %.6f]\n', ctx.x0(1:3))
 fprintf('\np1 optimized, m:\n')
 fprintf('[%.6f, %.6f, %.6f]\n', predBest.p1)
 
-fprintf('\np8 original, m:\n')
+fprintf('\npEnd original, m:\n')
 fprintf('[%.6f, %.6f, %.6f]\n', ctx.x0(4:6))
 
-fprintf('\np8 optimized, m:\n')
-fprintf('[%.6f, %.6f, %.6f]\n', predBest.p8)
+fprintf('\npEnd optimized, m:\n')
+fprintf('[%.6f, %.6f, %.6f]\n', predBest.pEnd)
 
 fprintf('\np1 change, m:\n')
 fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.p1 - ctx.x0(1:3))
 
-fprintf('\np8 change, m:\n')
-fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.p8 - ctx.x0(4:6))
+fprintf('\npEnd change, m:\n')
+fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.pEnd - ctx.x0(4:6))
 
 fprintf('\nBPA/tendon lengths:\n')
 fprintf('rest   = %.6f m\n', predBest.rest)

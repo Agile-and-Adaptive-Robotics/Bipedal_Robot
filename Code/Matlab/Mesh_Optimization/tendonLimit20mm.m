@@ -1,9 +1,9 @@
-function [pTan, tendonMax, targetRadius, targetType, cInside] = tendonLimit20mm(p8, geo)
+function [pTan, tendonMax, targetRadius, targetType, cInside] = tendonLimit20mm(pEnd, geo)
 % tendonLimit20mm
 %
 % Geometry-dependent upper tendon length for the 20 mm extensor route.
 %
-% p8 is in t1 frame.
+% pEnd is in t1 frame.
 %
 % targetType:
 %   1 = lower expanded cylinder
@@ -15,7 +15,7 @@ function [pTan, tendonMax, targetRadius, targetType, cInside] = tendonLimit20mm(
 % The tangent length is used instead of the radial distance because the
 % tendon/BPA path approaches the clearance envelope tangentially.
 
-P = p8(1:2);
+P = pEnd(1:2);
 
 yLower = geo.tibiaLowerCenter(2);
 yUpper = geo.tibiaUpperCenter(2);
@@ -83,7 +83,6 @@ else
     targetType = 3;
 
 end
-
 
 
 end

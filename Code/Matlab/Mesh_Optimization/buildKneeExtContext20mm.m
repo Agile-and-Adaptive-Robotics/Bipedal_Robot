@@ -70,7 +70,10 @@ end
 
 %% Build Optimization Context
 ctx.Name       = 'Vastus Medialis Proximal Ring 20mm BPA';
-ctx.CrossPoint = 5;
+ctx.CrossPoint = 6;
+ctx.routeRows = 9;
+ctx.femurRows = 1:5;
+ctx.t1Rows = 6:9;
 ctx.Dia        = 20;
 ctx.BPAcount   = 2;
 
@@ -144,8 +147,9 @@ ctx.wraps = 3;
 
 geo = struct;
 
-% Fully inflated 20 mm Festo BPA is approximately 75 mm diameter.
-geo.bpaRadius = 0.075/2;      % 0.0375 m
+% Fully inflated 20 mm Festo BPA diameter = 38.5 mm.
+% Clearance geometry is based on the inflated outside radius.
+geo.bpaRadius = 0.0385/2;      % 0.01925 m
 
 % Ignore extremely small direction changes in Xi3 geometry.
 geo.alphaTol = deg2rad(1.0);
@@ -159,14 +163,14 @@ geo.femurCylRadius = 0.010;
 
 % Required BPA centerline radius.
 geo.femurCylClearRadius = geo.femurCylRadius + geo.bpaRadius;
-% = 0.0475 m
+% = 0.02925 m
 
 
 % Femoral lower profile center.
 geo.femurProfileCenter = [0.01817, -0.41031];
 
 % Original vertical line is x = 30 mm relative to profile center.
-% BPA centerline must lie another 37.5 mm in +x.
+% BPA centerline must lie another inflated BPA radius in +x.
 geo.femurLineX = geo.femurProfileCenter(1) + 0.030 + geo.bpaRadius;
 
 % Original line extends from local y = 0 to +48.74 mm.
@@ -174,24 +178,59 @@ geo.femurLineY = geo.femurProfileCenter(2) + [0, 0.04874];
 
 % Original 20 mm fillet plus BPA radius.
 geo.femurFilletClearRadius = 0.020 + geo.bpaRadius;
-% = 0.0575 m
+% = 0.03925 m
 
 
-% Condyle ellipse.
-geo.femurEllipseA = 0.06640/2 + geo.bpaRadius;  % expanded semi-major
-geo.femurEllipseB = 0.05439/2 + geo.bpaRadius;  % expanded semi-minor
+% Physical femoral-condyle ellipse.
+geo.femurEllipsePhysicalA = 0.06640/2;
+geo.femurEllipsePhysicalB = 0.05439/2;
 geo.femurEllipseTheta = deg2rad(25.11);
 
-% These reproduce the two avoidance points we discussed.
+% Backward-compatible approximate expanded-axis values. The new route
+% builder does NOT use these for condyle collision; it uses the true
+% normal-offset boundary calculated below.
+geo.femurEllipseA = geo.femurEllipsePhysicalA + geo.bpaRadius;
+geo.femurEllipseB = geo.femurEllipsePhysicalB + geo.bpaRadius;
+
+% Precompute the TRUE centerline clearance envelope:
+% physical ellipse point + BPA_radius * outward unit normal.
+%
+% This is the geometry used by buildDistalRingLocation20mm for p4:p6,
+% including the semi-minor-axis clearance at high knee flexion.
+nOffset = 180;
+geo.femurOffsetTheta = linspace(-pi, pi, nOffset+1).';
+geo.femurOffsetTheta(end) = [];
+
 th = geo.femurEllipseTheta;
+Rell = [cos(th), -sin(th); sin(th), cos(th)];
 
-geo.femurMinorAvoid = geo.femurProfileCenter + ...
-    [ geo.femurEllipseB*sin(th), ...
-     -geo.femurEllipseB*cos(th)];
+ct = cos(geo.femurOffsetTheta);
+st = sin(geo.femurOffsetTheta);
 
-geo.femurMajorAvoid = geo.femurProfileCenter + ...
-    [-geo.femurEllipseA*cos(th), ...
-     -geo.femurEllipseA*sin(th)];
+ellipseLocal = [ ...
+    geo.femurEllipsePhysicalA*ct, ...
+    geo.femurEllipsePhysicalB*st];
+
+normalLocal = [ ...
+    ct/geo.femurEllipsePhysicalA, ...
+    st/geo.femurEllipsePhysicalB];
+
+normalLocal = normalLocal ./ vecnorm(normalLocal,2,2);
+
+offsetLocal = ellipseLocal + geo.bpaRadius*normalLocal;
+
+geo.femurOffsetBoundary = ...
+    geo.femurProfileCenter + offsetLocal*Rell';
+
+% Slightly denser closed grid used only for tangent root bracketing.
+geo.femurOffsetThetaSearch = linspace(-pi, pi, 361).';
+
+% Corrected avoidance references on the true normal-offset curve.
+minorLocal = [0, -(geo.femurEllipsePhysicalB + geo.bpaRadius)];
+geo.femurMinorAvoid = geo.femurProfileCenter + minorLocal*Rell';
+
+majorLocal = [-(geo.femurEllipsePhysicalA + geo.bpaRadius), 0];
+geo.femurMajorAvoid = geo.femurProfileCenter + majorLocal*Rell';
 
 
 %% Tibia / t1 geometry
@@ -200,17 +239,17 @@ geo.femurMajorAvoid = geo.femurProfileCenter + ...
 geo.tibiaLowerCenter = [0.04736, -0.00387];
 geo.tibiaLowerRadius = 0.005;
 geo.tibiaLowerClearRadius = geo.tibiaLowerRadius + geo.bpaRadius;
-% = 0.0425 m
+% = 0.02425 m
 
 % Upper 7.5 mm radius cylinder.
 geo.tibiaUpperCenter = [0.04486, 0.02064];
 geo.tibiaUpperRadius = 0.0075;
 geo.tibiaUpperClearRadius = geo.tibiaUpperRadius + geo.bpaRadius;
-% = 0.0450 m
+% = 0.02675 m
 
 % Original common tangent x = 52.36 mm.
 geo.tibiaWallX = 0.05236 + geo.bpaRadius;
-% = 0.08986 m
+% = 0.07161 m
 
 geo.tibiaWallY = [ ...
     geo.tibiaLowerCenter(2), ...
@@ -220,23 +259,52 @@ geo.tibiaWallY = [ ...
 %% Tendon limits
 
 geo.tendonMin = 0.025;
+% No hard physical tendon maximum is stored here. tendonLimit20mm computes
+% the geometry-dependent maximum directly from pEnd.
 
-ctx.geo = geo;
 
 %% 20 mm extensor route initial geometry
 
+%Origin and routing location for 20mm
+% p1:p5 are femur frame. p6:p9 are t1 frame.
+% These SolidWorks points are seed / branch-reference geometry.
+ctx.routeSeed = [ ...
+    0.04000,  0.03500,  0.00000; ... % p1 Origin
+    0.08315, -0.27476,  0.00000; ... % p2 BPA contacts mounting base
+    0.06536, -0.42389,  0.00000; ... % p3 femoral contact, updated
+    0.05438, -0.44085,  0.00000; ... % p4 femoral condyle contact, updated
+    0.03794, -0.45233,  0.00000; ... % p5 femoral condyle contact, updated
+    0.06377,  0.03955,  0.00000; ... % p6 Tibia contact initial
+    0.07161,  0.00765,  0.00000; ... % p7 Tibia contact, updated
+    0.06450, -0.02101,  0.00000; ... % p8 Tibia contact, updated
+    0.03406, -0.06687,  0.00000];    % p9 patellar ligament ring, distal
+
+% Use the condyle/ellipse center to define the p3 activation radius.
+% This is ONLY the trigger geometry for turning p3 on.
+geo.p3TriggerCenter = geo.femurProfileCenter;
+geo.p3TriggerRadius = norm(ctx.routeSeed(3,1:2) - geo.p3TriggerCenter);
+
+% Use the circumcenter of the 3-point tibia arc p6-p7-p8 as the tibia
+% bend-radius geometry.
+[geo.tibiaArcCenter, geo.tibiaArcRadius] = threePointCircle( ...
+    ctx.routeSeed(6,1:2), ...
+    ctx.routeSeed(7,1:2), ...
+    ctx.routeSeed(8,1:2));
+
+ctx.geo = geo;
+
 % p1 is femur-side BPA attachment.
-p1_0 = [0.040, 0.035, 0];
+p1_0 = ctx.routeSeed(1,:);
 
-% p8 is the movable distal tendon/ring attachment in t1 frame.
-p8_0 = [0.03406, -0.06687, 0];
+% pEnd is the movable distal tendon/ring attachment in t1 and is row p9.
+pEnd_0 = ctx.routeSeed(9,:);
 
-% Pick a reasonable initial tendon length, but make sure it does not
-% exceed the geometry-dependent limit.
-[~, tendonGeom0] = tendonLimit20mm(p8_0, ctx.geo);
+% Pick a reasonable initial tendon length above the 25 mm minimum,
+% but make sure it does not exceed the geometry-dependent limit.
+[~, tendonGeom0] = tendonLimit20mm(pEnd_0, ctx.geo);
 
 if tendonGeom0 < ctx.geo.tendonMin
-    error('Initial p8 does not permit the minimum 25 mm tendon length.')
+    error('Initial pEnd does not permit the minimum 25 mm tendon length.')
 end
 
 tendon0 = min(0.040, 0.95*tendonGeom0);
@@ -250,7 +318,7 @@ fprintf('Initial geometry-dependent tendon maximum = %.6f m\n', tendonGeom0)
 
 [Location0, ~, route0] = buildDistalRingLocation20mm( ...
     p1_0, ...
-    p8_0, ...
+    pEnd_0, ...
     tendon0, ...
     ctx);
 
@@ -258,6 +326,11 @@ Lmt0 = muscleLengthNormal(Location0, ctx.CrossPoint, ctx.T_Pam);
 
 
 %% Initial resting length
+%
+% This is ONLY the initial design guess based on the longest geometric path.
+% It does NOT force the BPA to be fully contracted at +10 deg extension.
+% KMAX remains an upper strain/contraction limit, not an equality condition.
+% The optimizer is free to choose rest within lb(7):ub(7).
 
 rest0 = max(Lmt0) - 2*ctx.fitting - tendon0 - ctx.Xi0;
 
@@ -267,9 +340,9 @@ end
 
 
 %% Optimization variables
-% x = [p1(1:3), p8(1:3), rest, tendon]
+% x = [p1(1:3), pEnd(1:3), rest, tendon]
 
-x0 = [p1_0, p8_0, rest0, tendon0];
+x0 = [p1_0, pEnd_0, rest0, tendon0];
 
 lb = x0;
 ub = x0;
@@ -278,9 +351,9 @@ ub = x0;
 lb(1:3) = p1_0 + [-0.060, -0.060, -0.060];
 ub(1:3) = p1_0 + [ 0.100,  0.100,  0.060];
 
-% p8 search region
-lb(4:6) = p8_0 + [0,    -0.060, -0.060];
-ub(4:6) = p8_0 + [0.060, 0.060,  0.060];
+% pEnd search region
+lb(4:6) = pEnd_0 + [0,    -0.060, -0.060];
+ub(4:6) = pEnd_0 + [0.060, 0.060,  0.060];
 
 % BPA rest-length bounds
 lb(7) = 0.340;
@@ -426,4 +499,30 @@ Lmt = zeros(N, 1);
         end
     end
 
+end
+
+function [C,R] = threePointCircle(P1,P2,P3)
+% Circumcenter / circumradius of a 2-D 3-point arc.
+
+x1 = P1(1); y1 = P1(2);
+x2 = P2(1); y2 = P2(2);
+x3 = P3(1); y3 = P3(2);
+
+d = 2*( x1*(y2-y3) + x2*(y3-y1) + x3*(y1-y2) );
+
+if abs(d) < 1e-12
+    error('threePointCircle:CollinearPoints', ...
+        'p6, p7, p8 are too close to collinear for a 3-point tibia arc.')
+end
+
+ux = ((x1^2+y1^2)*(y2-y3) + ...
+      (x2^2+y2^2)*(y3-y1) + ...
+      (x3^2+y3^2)*(y1-y2)) / d;
+
+uy = ((x1^2+y1^2)*(x3-x2) + ...
+      (x2^2+y2^2)*(x1-x3) + ...
+      (x3^2+y3^2)*(x2-x1)) / d;
+
+C = [ux, uy];
+R = norm(P1 - C);
 end
