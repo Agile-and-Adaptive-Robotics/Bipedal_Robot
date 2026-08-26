@@ -286,6 +286,11 @@ geo.p3TriggerRadius = norm(ctx.routeSeed(3,1:2) - geo.p3TriggerCenter);
 
 % Use the circumcenter of the 3-point tibia arc p6-p7-p8 as the tibia
 % bend-radius geometry.
+% Note: this is bend-loss geometry only. It is not a collision/contact
+% trigger, and it does not replace the polyline Lmt path.
+% It is retained as SolidWorks reference geometry, but the current delta_L
+% calculation uses only the p2 cylinder and the p3-to-transformed-p8
+% femoral-condyle definition.
 [geo.tibiaArcCenter, geo.tibiaArcRadius] = threePointCircle( ...
     ctx.routeSeed(6,1:2), ...
     ctx.routeSeed(7,1:2), ...
@@ -349,15 +354,15 @@ ub = x0;
 
 % p1 search region
 lb(1:3) = p1_0 + [-0.060, -0.060, -0.060];
-ub(1:3) = p1_0 + [ 0.100,  0.100,  0.060];
+ub(1:3) = p1_0 + [ 0.150,  0.150,  0.060];
 
 % pEnd search region
-lb(4:6) = pEnd_0 + [0,    -0.060, -0.060];
-ub(4:6) = pEnd_0 + [0.060, 0.060,  0.060];
+lb(4:6) = pEnd_0 + [0,    -0.150, -0.060];
+ub(4:6) = pEnd_0 + [0.100, 0.060,  0.060];
 
 % BPA rest-length bounds
 lb(7) = 0.340;
-ub(7) = 0.600;
+ub(7) = 0.850;
 
 % Global tendon bounds.
 % The position-dependent upper bound is handled by nonlconExt20mm.

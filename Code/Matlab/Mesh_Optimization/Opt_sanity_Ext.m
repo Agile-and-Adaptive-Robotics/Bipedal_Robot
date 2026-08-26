@@ -3,7 +3,11 @@
 clearvars
 clc
 close all
+clear buildDistalRingLocation20mm buildKneeExtContext20mm
 rehash
+
+fprintf('Using route builder: %s\n', which('buildDistalRingLocation20mm'))
+fprintf('Using context file:  %s\n', which('buildKneeExtContext20mm'))
 
 ctx = buildKneeExtContext20mm();
 
@@ -108,7 +112,7 @@ for k = 1:numel(routeInfo.activationOrder)
 end
 fprintf('\n')
 
-fprintf('Expected rough activation order after +10 deg baseline: p3 (~-6), p4 (~-45), p6 (~-60), p5 (~-85)\n')
+fprintf('Expected rough activation order after +10 deg baseline: p7 (~+7), p3 (~-6), p4 (~-44), p6 (~-58), p5 (~-91)\n')
 
 fprintf('\n========== ACTIVE POINTS OVER SOLVER RANGE ==========\n')
 prevActive = false(9,1);
@@ -120,6 +124,39 @@ for ii = ctx.N:-1:1
         fprintf('\n')
     end
     prevActive = a;
+end
+
+if isfield(routeInfo, 'angleCull')
+
+    sampleAnglesD = [9 7 -6 -44 -58 -91 -120];
+    sampleIdx = zeros(size(sampleAnglesD));
+
+    for kk = 1:numel(sampleAnglesD)
+        [~, sampleIdx(kk)] = min(abs(ctx.phiD - sampleAnglesD(kk)));
+    end
+
+    fprintf('\n========== HORIZONTAL-ANGLE CULL MARGINS ==========\n')
+    fprintf('Angles are signed from the t1-frame horizontal.\n')
+    fprintf('Positive margin is right of the bypass line; negative is left.\n')
+    fprintf('After first activation, a contact stays active at deeper flexion.\n')
+    fprintf('%-8s', 'Point')
+
+    for kk = 1:numel(sampleIdx)
+        fprintf('%10.1f', ctx.phiD(sampleIdx(kk)))
+    end
+
+    fprintf('\n')
+
+    cullRows = [7 3 4 6 5];
+
+    for rr = 1:numel(cullRows)
+        j = cullRows(rr);
+        fprintf('p%-7d', j)
+        fprintf('%10.3f', routeInfo.angleCull.marginD(j,sampleIdx))
+        fprintf('\n')
+    end
+
+    fprintf('====================================================\n')
 end
 
 raw = routeInfo.raw;
@@ -168,18 +205,86 @@ if any(routeInfo.femurOverflow)
 end
 fprintf('===============================================\n')
 
+if isfield(routeInfo, 'wrap')
+
+    wrap = routeInfo.wrap;
+
+    fprintf('\n========== WRAP ANGLES BY CONTACT ==========\n')
+    fprintf('Contact                    Max jump, deg      Knee span, deg       Max angle, deg\n')
+    fprintf('------------------------   -------------      --------------       --------------\n')
+
+    for cWrap = 1:numel(wrap.labels)
+
+        aD = wrap.angleDeg(cWrap,:);
+        [maxJump, iJump] = max(abs(diff(aD)));
+
+        fprintf('%-24s   %13.3f      %7.3f -> %7.3f       %14.3f\n', ...
+            wrap.labels{cWrap}, maxJump, ...
+            ctx.phiD(iJump), ctx.phiD(iJump+1), max(aD))
+    end
+
+    sampleAnglesD = [9 7 -6 -44 -58 -91 -120];
+    sampleIdx = zeros(size(sampleAnglesD));
+
+    for kk = 1:numel(sampleAnglesD)
+        [~, sampleIdx(kk)] = min(abs(ctx.phiD - sampleAnglesD(kk)));
+    end
+
+    fprintf('\nWrap angle samples, deg:\n')
+    fprintf('%-24s', 'Contact')
+    for kk = 1:numel(sampleIdx)
+        fprintf('%10.1f', ctx.phiD(sampleIdx(kk)))
+    end
+    fprintf('\n')
+
+    for cWrap = 1:numel(wrap.labels)
+        fprintf('%-24s', wrap.labels{cWrap})
+        fprintf('%10.3f', wrap.angleDeg(cWrap,sampleIdx))
+        fprintf('\n')
+    end
+
+    if isfield(wrap, 'radius')
+        fprintf('\nEffective bend radius samples, mm:\n')
+        fprintf('%-24s', 'Contact')
+        for kk = 1:numel(sampleIdx)
+            fprintf('%10.1f', ctx.phiD(sampleIdx(kk)))
+        end
+        fprintf('\n')
+
+        for cWrap = 1:numel(wrap.labels)
+            fprintf('%-24s', wrap.labels{cWrap})
+            fprintf('%10.3f', 1000*wrap.radius(cWrap,sampleIdx))
+            fprintf('\n')
+        end
+
+        fprintf('\nFemoral-condyle component radii, mm:\n')
+        fprintf('%-24s', 'p3-fcc')
+        fprintf('%10.3f', 1000*wrap.femurCondyleRadiusA(sampleIdx))
+        fprintf('\n')
+        fprintf('%-24s', 'p8*-fcc')
+        fprintf('%10.3f', 1000*wrap.femurCondyleRadiusB(sampleIdx))
+        fprintf('\n')
+        fprintf('%-24s', 'average')
+        fprintf('%10.3f', 1000*wrap.radius(2,sampleIdx))
+        fprintf('\n')
+    end
+
+    fprintf('============================================\n')
+end
+
 %% Plot full geometry and p1:p9 route
-plotAnglesRouteD = [10 -30 -90 -120];
+plotAnglesRouteD = [9 7 -6 -44 -58 -91 -120];
 thPlot = linspace(0,2*pi,200).';
 
 figure('Name','9-point extensor route geometry','Color','w')
-tiledlayout(2,2,'TileSpacing','compact','Padding','compact')
+tiledlayout('flow','TileSpacing','compact','Padding','compact')
 
 for qPlot = 1:numel(plotAnglesRouteD)
 
     [~,ii] = min(abs(ctx.phiD - plotAnglesRouteD(qPlot)));
 
-    P = routeInfo.raw(:,:,ii);
+    Praw = routeInfo.raw(:,:,ii);
+    P = Praw;
 
     % routeInfo.raw keeps p6:p9 in native t1. Convert them t1 -> ICR ->
     % femur for a common-frame geometry plot.
@@ -228,17 +333,18 @@ for qPlot = 1:numel(plotAnglesRouteD)
     end
     plot(Uf(:,1), Uf(:,2), '-', 'LineWidth', 1.2)
 
-    % --- tibia 3-point arc circle, plotted in femur frame
-    A = [ ...
-        ctx.geo.tibiaArcCenter(1)+ctx.geo.tibiaArcRadius*cos(thPlot), ...
-        ctx.geo.tibiaArcCenter(2)+ctx.geo.tibiaArcRadius*sin(thPlot), ...
-        zeros(numel(thPlot),1)];
-    Af = zeros(size(A));
-    for kk = 1:size(A,1)
-        qICR = RowVecTrans(ctx.T_ICR_t1(:,:,ii), A(kk,:));
-        Af(kk,:) = RowVecTrans(ctx.T_Pam(:,:,ii), qICR);
+    % --- p3-fcc and transformed-p8-fcc radius lines
+    radiusLineX = nan(1,5);
+    radiusLineY = nan(1,5);
+
+    if routeInfo.active(3,ii) && isfield(routeInfo, 'wrap')
+        fcc = routeInfo.wrap.femurCondyleCenter;
+        q3 = routeInfo.wrap.femurCondyleStart(ii,:);
+        q8star = routeInfo.wrap.femurCondyleEnd(ii,:);
+        radiusLineX = [fcc(1), q3(1), NaN, fcc(1), q8star(1)];
+        radiusLineY = [fcc(2), q3(2), NaN, fcc(2), q8star(2)];
     end
-    plot(Af(:,1), Af(:,2), '--', 'LineWidth', 1.0)
+    plot(radiusLineX, radiusLineY, '--', 'LineWidth', 1.0)
 
     % --- route
     plot(P(:,1), P(:,2), 'o-', 'LineWidth', 1.5, 'MarkerSize', 5)
@@ -257,7 +363,7 @@ for qPlot = 1:numel(plotAnglesRouteD)
     title(sprintf('\\phi = %.2f deg',ctx.phiD(ii)))
     legend('Femur cylinder clr', 'Femur line clr', ...
         'Corrected condyle clr', ...
-        'Tibia lower clr', 'Tibia upper clr', 'Tibia p6-p8 arc', ...
+        'Tibia lower clr', 'Tibia upper clr', 'Femur condyle radii', ...
         'p1:p9 route', 'Location', 'best')
 end
 
@@ -310,6 +416,53 @@ legend('Deformed path length', 'Undeformed path length', 'rest+tendon+2fitting+X
     'Location', 'best')
 title('Extensor path-length sanity check')
 
+if isfield(routeInfo, 'wrap')
+
+    figure('Name','Extensor wrap-angle sanity','Color','w')
+    hold on
+
+    hWrap = gobjects(numel(routeInfo.wrap.labels),1);
+
+    for cWrap = 1:numel(routeInfo.wrap.labels)
+        hWrap(cWrap) = plot(ctx.phiD, routeInfo.wrap.angleDeg(cWrap,:), ...
+            'LineWidth', 1.6);
+    end
+
+    xline(8, ':', 'LineWidth', 1.0)
+    xline(-6, ':', 'LineWidth', 1.0)
+    xline(-44, ':', 'LineWidth', 1.0)
+    xline(-58, ':', 'LineWidth', 1.0)
+    xline(-91, ':', 'LineWidth', 1.0)
+    grid on
+    xlabel('Knee angle, deg')
+    ylabel('Wrap angle, deg')
+    legend(hWrap, routeInfo.wrap.labels, 'Location', 'best')
+    title('Extensor wrap angles by contact')
+
+    if isfield(routeInfo.wrap, 'radius')
+        figure('Name','Extensor wrap-radius sanity','Color','w')
+        hold on
+
+        hRadius = gobjects(numel(routeInfo.wrap.labels),1);
+
+        for cWrap = 1:numel(routeInfo.wrap.labels)
+            hRadius(cWrap) = plot(ctx.phiD, ...
+                1000*routeInfo.wrap.radius(cWrap,:), 'LineWidth', 1.6);
+        end
+
+        xline(8, ':', 'LineWidth', 1.0)
+        xline(-6, ':', 'LineWidth', 1.0)
+        xline(-44, ':', 'LineWidth', 1.0)
+        xline(-58, ':', 'LineWidth', 1.0)
+        xline(-91, ':', 'LineWidth', 1.0)
+        grid on
+        xlabel('Knee angle, deg')
+        ylabel('Effective bend radius, mm')
+        legend(hRadius, routeInfo.wrap.labels, 'Location', 'best')
+        title('Extensor bend radii by contact')
+    end
+end
+
 %% Plot strain
 figure('Name','Extensor strain sanity','Color','w')
 hold on
@@ -346,7 +499,7 @@ ylabel('X3 length loss, mm')
 grid on
 
 %% Optional tiny optimizer smoke test
-runSmallOptimizer = false;
+runSmallOptimizer = true;
 
 if runSmallOptimizer
     obj = @(x) objective_KneeExt20mm(x, ctx);
@@ -355,7 +508,7 @@ if runSmallOptimizer
 
     optsTest = optimoptions('surrogateopt', ...
         'Display', 'iter', ...
-        'UseParallel', false, ...
+        'UseParallel', true, ...
         'MaxFunctionEvaluations', 30);
 
     [xTest, fTest] = surrogateopt(objconstr, ctx.lb, ctx.ub, optsTest);
