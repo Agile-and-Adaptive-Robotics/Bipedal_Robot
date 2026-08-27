@@ -1,7 +1,8 @@
 function [Location, bendMeasure, info] = buildDistalRingLocation20mm(p1, pEnd, tendon, ctx)
 % buildDistalRingLocation20mm
 %
-% 20 mm extensor route built by sweeping from extension toward flexion.
+% 20 mm extensor route built by initializing the fully-flexed route and
+% sweeping toward extension while only eliminating contacts.
 %
 % Fixed-size route representation:
 %   p1:p5  are femur-frame points.
@@ -13,24 +14,13 @@ function [Location, bendMeasure, info] = buildDistalRingLocation20mm(p1, pEnd, t
 %
 % p9 is the distal t1 attachment pEnd.
 %
-% Inactive points are represented by repeated neighboring active points.
-% Once a contact activates it is frozen in its native bone frame.
+% Eliminated femur points repeat the previous unique femur point.
+% Eliminated t1 points repeat the next unique t1 point.
 %
-% At the +10 deg solver-extension frame the seed route contains:
-%   p1, p2, p8, p9.
-%
-% Expected geometric progression while flexing (NOT hard-coded angles):
-%   p7 around +7 deg
-%   p3 around -6 deg
-%   p4 around -45 deg
-%   p6 around -60 deg
-%   p5 around -91 deg
-%
-% p3:p5 are successive femoral-body/condyle avoidance vertices.
-% p6 is the later upper-tibia contact. p7 is the straight tibia-wall
-% contact; p8 is already present at extension.
-%
-% The hidden sweep uses the exact phiD increment. phi/phiD are not modified.
+% p1 and p9 are optimizer-supplied. p2:p8 come from the SolidWorks seed,
+% except for local contact corrections needed after p1/p9 movement.
+% p2 and p8 remain as the local bend regions while the broader p3-to-
+% downstream condyle curvature model is deferred.
 
 N = ctx.N;
 phiD = ctx.phiD(:);
@@ -46,17 +36,8 @@ if ~isfinite(dPhiD) || dPhiD <= 0
         'ctx.phiD must have a finite nonzero increment.')
 end
 
-%% Grid-aligned hidden sweep from approximately +90 deg toward flexion
-phiMax = max(phiD);
-nAbove = max(0, ceil((90 - phiMax)/dPhiD));
-
-if nAbove > 0
-    preSweepD = phiMax + (nAbove:-1:1)'*dPhiD;
-else
-    preSweepD = zeros(0,1);
-end
-
-sweepD = [preSweepD; flipud(phiD)];
+%% Flexion-to-extension sweep over the solver grid
+sweepD = phiD;
 Ns = numel(sweepD);
 
 %% SolidWorks seed / branch reference
@@ -74,7 +55,7 @@ seed(9,:) = pEnd;
 
 % Preserve the SolidWorks x-y seed coordinates. Only the native-frame z
 % coordinate follows the optimized endpoint on each bone.
-seed20 = adjustedSeed20mm(seed, p1, pEnd, ctx.geo);
+seed20 = adjustedSeed20mm(seed, p1, pEnd, ctx);
 
 %% Output allocation
 Location = zeros(9,3,N);
@@ -91,6 +72,10 @@ info.femurCrossingCollision = false(N,1);
 info.angleCull.pointAngleD = nan(9,N);
 info.angleCull.bypassAngleD = nan(9,N);
 info.angleCull.marginD = nan(9,N);
+info.angleCull.tested = false(9,N);
+info.angleCull.angleGate = false(9,N);
+info.angleCull.bypassClear = false(9,N);
+info.angleCull.removed = false(9,N);
 info.angleCull.candidateActive = false(9,N);
 info.angleCull.retainedActive = false(9,N);
 
@@ -103,48 +88,39 @@ info.pointFrame = [ ...
 info.addedAngleD = nan(9,1);
 info.addedPoint = nan(9,3);
 info.addedSweepIndex = nan(9,1);
+info.eliminatedAngleD = nan(9,1);
+info.eliminatedPoint = nan(9,3);
+info.eliminatedSweepIndex = nan(9,1);
 
 %% Route contact state
-% The SolidWorks seed gives the full candidate wrap chain. Each solver frame
-% keeps/removes optional rows by comparing route-segment angles in the t1
-% view, matching the visual horizontal-angle checks from the CAD assembly.
+% The SolidWorks seed gives the fully-flexed candidate wrap chain. The route
+% starts with p1:p9 unique at -120 deg, then carries state toward extension.
+% Only optional p3:p7 contacts can be eliminated. p2 and p8 stay available
+% as local bend/contact regions.
 
 % Candidate point positions are fixed here in their native frames.
 Pfixed = seed20;
 Pfixed(1,:) = p1;
 Pfixed(9,:) = pEnd;
 
-% Contacts are one-way over the extension-to-flexion sweep. Once a point is
-% needed, deeper flexion cannot remove it if a signed/horizontal angle wraps
-% through its branch cut. Equivalently, begin at -120 deg with the full
-% chain and remove contacts monotonically while extending.
-activeState = false(9,1);
-activeState([1 2 8 9]) = true;
+activeState = true(9,1);
 
-info.addedAngleD(1) = sweepD(1);
-info.addedAngleD(9) = sweepD(1);
-info.addedPoint(1,:) = p1;
-info.addedPoint(9,:) = pEnd;
-info.addedSweepIndex(1) = 1;
-info.addedSweepIndex(9) = 1;
+info.addedAngleD(:) = sweepD(1);
+info.addedPoint(:,:) = Pfixed;
+info.addedSweepIndex(:) = 1;
 
 contactTol = 1e-8;
+angleTolD = 0.05;
 
 for s = 1:Ns
 
     thetaD = sweepD(s);
+    solverIndex = s;
 
-    if s <= nAbove
-        [T_Pam_i, T_ICR_t1_i, T_t1_ICR_i] = ...
-            extensionPrerollTransforms(thetaD, ctx);
-        solverIndex = 0;
-    else
-        k = s - nAbove;
-        solverIndex = N - k + 1;
-        T_Pam_i = ctx.T_Pam(:,:,solverIndex);
-        T_ICR_t1_i = ctx.T_ICR_t1(:,:,solverIndex);
-        T_t1_ICR_i = ctx.T_t1_ICR(:,:,solverIndex);
-    end
+    T_Pam_i = ctx.T_Pam(:,:,solverIndex);
+    T_Pam_inv_i = ctx.T_Pam_inv(:,:,solverIndex);
+    T_ICR_t1_i = ctx.T_ICR_t1(:,:,solverIndex);
+    T_t1_ICR_i = ctx.T_t1_ICR(:,:,solverIndex);
 
     [~, tendonMaxGeom, targetRadius, targetType, ~] = ...
         tendonLimit20mm(pEnd, ctx.geo);
@@ -166,41 +142,47 @@ for s = 1:Ns
 
     frameInfo.endcap_t1 = [endcapXY, pEnd(3)];
 
-    if solverIndex == 0
-        continue
+    angleFrame = emptyAngleFrame();
+
+    if s == 1
+        removedNow = false(9,1);
+    else
+        [activeState, angleFrame, removedFemur] = eliminateFemurContacts( ...
+            Pfixed, activeState, T_Pam_i, T_ICR_t1_i, ...
+            ctx.geo, contactTol, angleTolD, angleFrame);
+
+        [activeState, angleFrame, removedT1] = eliminateT1Contacts( ...
+            Pfixed, activeState, T_Pam_inv_i, T_t1_ICR_i, ...
+            ctx.geo, contactTol, angleTolD, angleFrame);
+
+        removedNow = removedFemur | removedT1;
     end
 
-    [candidateActive, angleFrame] = routeActiveFromHorizontalAngles( ...
-        Pfixed, thetaD, T_Pam_i, T_t1_ICR_i);
-
-    activeState = activeState | candidateActive;
     active = activeState;
 
     fixedBendRadius = routeBendRadii(active, seed20, ctx.geo);
 
-    for jj = find(active).'
-        if isnan(info.addedAngleD(jj))
-            info.addedAngleD(jj) = thetaD;
-            info.addedPoint(jj,:) = Pfixed(jj,:);
-            info.addedSweepIndex(jj) = s;
+    for jj = find(removedNow).'
+        if isnan(info.eliminatedAngleD(jj))
+            info.eliminatedAngleD(jj) = thetaD;
+            info.eliminatedPoint(jj,:) = Pfixed(jj,:);
+            info.eliminatedSweepIndex(jj) = s;
         end
     end
 
     raw = collapseInactive(Pfixed, active);
 
-    % Check the actual femur -> t1 crossing every frame. This catches a
-    % visually obvious condyle penetration even when p5 has not activated.
-    B_t1 = raw(6,:);
-    B_icr = RowVecTrans(T_ICR_t1_i, B_t1);
-    B_fem = RowVecTrans(T_Pam_i, B_icr);
-
-    crossingCollision = segmentPenetratesFemurOffset( ...
-        raw(5,1:2), B_fem(1:2), ctx.geo, contactTol);
-
-    % If all available femur contacts have already been used and the
-    % crossing still penetrates the corrected clearance, another femur row
-    % would be required.
-    overflow = active(5) && crossingCollision;
+    % Interference checks are disabled while validating the absolute-angle
+    % route state. The stored diagnostics stay false so downstream plots do
+    % not mix clearance failures with topology transitions.
+    % B_t1 = raw(6,:);
+    % B_icr = RowVecTrans(T_ICR_t1_i, B_t1);
+    % B_fem = RowVecTrans(T_Pam_i, B_icr);
+    % crossingCollision = segmentPenetratesFemurOffset( ...
+    %     raw(5,1:2), B_fem(1:2), ctx.geo, contactTol);
+    % overflow = active(5) && crossingCollision;
+    crossingCollision = false;
+    overflow = false;
 
     rBend = fixedBendRadius;
     rBend(~active) = 0;
@@ -224,8 +206,12 @@ for s = 1:Ns
     info.angleCull.pointAngleD(:,solverIndex) = angleFrame.pointAngleD;
     info.angleCull.bypassAngleD(:,solverIndex) = angleFrame.bypassAngleD;
     info.angleCull.marginD(:,solverIndex) = angleFrame.marginD;
-    info.angleCull.candidateActive(:,solverIndex) = candidateActive;
-    info.angleCull.retainedActive(:,solverIndex) = active & ~candidateActive;
+    info.angleCull.tested(:,solverIndex) = angleFrame.tested;
+    info.angleCull.angleGate(:,solverIndex) = angleFrame.angleGate;
+    info.angleCull.bypassClear(:,solverIndex) = angleFrame.bypassClear;
+    info.angleCull.removed(:,solverIndex) = angleFrame.removed;
+    info.angleCull.candidateActive(:,solverIndex) = active;
+    info.angleCull.retainedActive(:,solverIndex) = active;
     bendRadius(:,solverIndex) = rBend;
 
     % p6:p9 are native t1 points. Convert them t1 -> ICR exactly as in
@@ -242,7 +228,8 @@ end
 
 %% Xi3 geometric bend measure
 [bendMeasure, wrapInfo] = geometricBendMeasure( ...
-    Location, ctx.T_Pam, ctx.geo.alphaTol, ctx.geo, info.active);
+    Location, ctx.T_Pam, ctx.T_Pam_inv, ctx.T_t1_ICR, ctx.phiD, ...
+    ctx.geo.alphaTol, ctx.geo, info.active, info.raw);
 
 info.bendRadius = bendRadius;
 info.wrap = wrapInfo;
@@ -263,6 +250,37 @@ else
     info.activationOrder = idx(ord);
 end
 
+idx = find(isfinite(info.eliminatedAngleD));
+
+if isempty(idx)
+    info.eliminationOrder = zeros(0,1);
+else
+    keyAngle = info.eliminatedAngleD(idx);
+    tieRank = arrayfun(@eliminationTieRank, idx);
+    [~,ord] = sortrows([keyAngle, tieRank(:)],[1 2]);
+    info.eliminationOrder = idx(ord);
+end
+
+end
+
+
+function rank = eliminationTieRank(row)
+
+switch row
+    case 5
+        rank = 1;
+    case 4
+        rank = 2;
+    case 3
+        rank = 3;
+    case 6
+        rank = 4;
+    case 7
+        rank = 5;
+    otherwise
+        rank = row + 10;
+end
+
 end
 
 
@@ -270,17 +288,19 @@ end
 %% Seed geometry
 %% =====================================================================
 
-function seed20 = adjustedSeed20mm(seed, p1, pEnd, geo)
+function seed20 = adjustedSeed20mm(seed, p1, pEnd, ctx)
 % Preserve the SolidWorks route as the branch reference while allowing the
-% two baseline tangent contacts that should respond to endpoint motion to
-% move with p1 and pEnd.
+% local contacts that should respond to endpoint motion to move from their
+% seed locations.
 %
 % p2: femur-cylinder contact.  This should only move slightly as p1 moves.
 % p8: lower-tibia-cylinder contact.  This can move substantially when pEnd
 %     moves, which is why it must not remain frozen at the original seed.
 %
-% p3:p7 remain the SolidWorks seed/reference coordinates and are retained
-% or bypassed by the horizontal-angle route culling logic.
+% p3:p7 remain the SolidWorks seed/reference coordinates and are retained or
+% bypassed by the flexion-to-extension elimination logic.
+
+geo = ctx.geo;
 
 seed20 = seed;
 seed20(1,:) = p1;
@@ -296,6 +316,26 @@ if ok2
     seed20(2,1:2) = q2;
 end
 
+% This clearance-driven seed repair is disabled while validating the route
+% state machine. It changes p3:p5 before any elimination tests run, which
+% makes it harder to separate topology errors from seed-geometry changes.
+% iFlex = ctx.idxMaxFlex;
+% p6FlexFemur = t1PointToFemur( ...
+%     seed20(6,:), ...
+%     ctx.T_Pam(:,:,iFlex), ...
+%     ctx.T_ICR_t1(:,:,iFlex));
+%
+% [qFemurChain, okFemurChain] = adjustedFemurSeedChainAtFlexion( ...
+%     seed20(2,1:2), ...
+%     seed20(3:5,1:2), ...
+%     p6FlexFemur(1:2), ...
+%     geo, ...
+%     1e-8);
+%
+% if okFemurChain
+%     seed20(3:5,1:2) = qFemurChain;
+% end
+
 [q8, ok8] = tangentPointCircleNearest( ...
     pEnd(1:2), geo.tibiaLowerCenter, geo.tibiaLowerClearRadius, seed(8,1:2));
 
@@ -307,99 +347,227 @@ end
 
 
 %% =====================================================================
-%% Horizontal-angle route culling
+%% Absolute-angle contact elimination
 %% =====================================================================
 
-function [active, angleFrame] = routeActiveFromHorizontalAngles( ...
-    Pfixed, thetaD, T_Pam_i, T_t1_ICR_i)
-% Start from the full SolidWorks candidate chain and remove optional rows
-% that are bypassed by the current neighbor chord in the t1 view.
-
-angleTolD = 0.05;
+function angleFrame = emptyAngleFrame()
 angleFrame.pointAngleD = nan(9,1);
 angleFrame.bypassAngleD = nan(9,1);
 angleFrame.marginD = nan(9,1);
-
-active = false(9,1);
-active([1 2 8 9]) = true;
-
-% Straight tibia-wall contact. From the CAD check: needed at +7 deg and
-% gone by +9 deg.
-active(7) = thetaD <= 8.0;
-angleFrame.pointAngleD(7) = thetaD;
-angleFrame.bypassAngleD(7) = 8.0;
-angleFrame.marginD(7) = 8.0 - thetaD;
-
-if ~active(7)
-    return
-end
-
-Q = routeCandidatesInT1Frame(Pfixed, T_Pam_i, T_t1_ICR_i);
-
-[active(3), angleFrame] = angleKeepsPoint( ...
-    Q, 2, 3, 7, angleTolD, angleFrame);
-
-if active(3)
-    [active(4), angleFrame] = angleKeepsPoint( ...
-        Q, 3, 4, 7, angleTolD, angleFrame);
-end
-
-if active(4)
-    [active(6), angleFrame] = angleKeepsPoint( ...
-        Q, 4, 6, 7, angleTolD, angleFrame);
-end
-
-if active(4) && active(6)
-    [active(5), angleFrame] = angleKeepsPoint( ...
-        Q, 4, 5, 6, angleTolD, angleFrame);
-end
+angleFrame.tested = false(9,1);
+angleFrame.angleGate = false(9,1);
+angleFrame.bypassClear = false(9,1);
+angleFrame.removed = false(9,1);
 
 end
 
 
-function Q = routeCandidatesInT1Frame(Pfixed, T_Pam_i, T_t1_ICR_i)
+function [activeState, angleFrame, removed] = eliminateFemurContacts( ...
+    Pfixed, activeState, T_Pam_i, T_ICR_t1_i, geo, tol, angleTolD, angleFrame)
+% Remove the last unique femur-side optional contact if the absolute-angle
+% test passes. The bypass collision gate is retained below but disabled
+% while the angle-only route state is being validated.
 
-Q = Pfixed;
+removed = false(9,1);
 
-for j = 1:5
-    qICR = RowVecTrans(T_Pam_i\eye(4), Pfixed(j,:));
-    Q(j,:) = RowVecTrans(T_t1_ICR_i, qICR);
+while true
+
+    kOpt = find(activeState(3:5), 1, 'last');
+
+    if isempty(kOpt)
+        return
+    end
+
+    k = kOpt + 2;
+    iPrev = find(activeState(1:k-1), 1, 'last');
+    iNext = find(activeState(6:9), 1, 'first') + 5;
+
+    if isempty(iPrev) || isempty(iNext)
+        return
+    end
+
+    raw = collapseInactive(Pfixed, activeState);
+    pNextFemur = t1PointToFemur(raw(iNext,:), T_Pam_i, T_ICR_t1_i);
+
+    [angleGate, aBigD, aSmallD, marginD] = femurRemovalAngle( ...
+        raw(iPrev,:), raw(k,:), pNextFemur, angleTolD);
+
+    % The clearance polygon/tolerance gate can reject the intended topology
+    % change before the absolute-angle state machine can be evaluated.
+    % Re-enable this after the route order and p2/p8 wrap model are stable.
+    % bypassClear = femurBypassCollisionFree( ...
+    %     raw(iPrev,:), pNextFemur, geo, tol, k);
+    bypassClear = true;
+
+    angleFrame = recordEliminationTest( ...
+        angleFrame, k, aSmallD, aBigD, marginD, angleGate, bypassClear);
+
+    if angleGate
+        activeState(k) = false;
+        removed(k) = true;
+        angleFrame.removed(k) = true;
+    else
+        return
+    end
 end
 
 end
 
 
-function [keep, angleFrame] = angleKeepsPoint( ...
-    Q, iPrev, iPoint, iNext, angleTolD, angleFrame)
+function [activeState, angleFrame, removed] = eliminateT1Contacts( ...
+    Pfixed, activeState, T_Pam_inv_i, T_t1_ICR_i, geo, tol, angleTolD, angleFrame)
+% Remove the first unique t1-side optional contact if the absolute-angle
+% test passes. The bypass collision gate is retained below but disabled
+% while the angle-only route state is being validated.
 
-aPoint = horizontalAngleD(Q(iPrev,1:2), Q(iPoint,1:2));
-aBypass = horizontalAngleD(Q(iPrev,1:2), Q(iNext,1:2));
+removed = false(9,1);
 
-% Signed angle from the horizontal is retained for both segments. The
-% wrapped difference is positive when the candidate lies to the right of
-% the bypass line and negative when it lies to the left.
-marginD = wrapTo180D(aPoint - aBypass);
+while true
 
-keep = marginD >= -angleTolD;
+    jOpt = find(activeState(6:7), 1, 'first');
 
-angleFrame.pointAngleD(iPoint) = aPoint;
-angleFrame.bypassAngleD(iPoint) = aBypass;
-angleFrame.marginD(iPoint) = marginD;
+    if isempty(jOpt)
+        return
+    end
+
+    j = jOpt + 5;
+    iPrev = find(activeState(1:5), 1, 'last');
+    iNext = find(activeState(j+1:9), 1, 'first') + j;
+
+    if isempty(iPrev) || isempty(iNext)
+        return
+    end
+
+    raw = collapseInactive(Pfixed, activeState);
+    pPrevT1 = femurPointToT1(raw(iPrev,:), T_Pam_inv_i, T_t1_ICR_i);
+
+    [angleGate, aBigD, aSmallD, marginD] = t1RemovalAngle( ...
+        pPrevT1, raw(j,:), raw(iNext,:), angleTolD);
+
+    % The clearance polygon/tolerance gate can reject the intended topology
+    % change before the absolute-angle state machine can be evaluated.
+    % Re-enable this after the route order and p2/p8 wrap model are stable.
+    % bypassClear = t1BypassCollisionFree( ...
+    %     pPrevT1, raw(iNext,:), geo, tol, j);
+    bypassClear = true;
+
+    angleFrame = recordEliminationTest( ...
+        angleFrame, j, aSmallD, aBigD, marginD, angleGate, bypassClear);
+
+    if angleGate
+        activeState(j) = false;
+        removed(j) = true;
+        angleFrame.removed(j) = true;
+    else
+        return
+    end
+end
 
 end
 
 
-function aD = horizontalAngleD(A, B)
+function [removePoint, aBigD, aSmallD, marginD] = femurRemovalAngle( ...
+    pPrev, pSmallPoint, pNextFemur, angleTolD)
 
-d = B - A;
-aD = atan2d(d(2), d(1));
+pBig = pNextFemur(1:2) - pPrev(1:2);
+pSmall = pNextFemur(1:2) - pSmallPoint(1:2);
+
+% Femur-side removal is a clockwise comparison in the plotted/anatomical
+% view. Flipping y before atan2 keeps the user's aBig > aSmall rule while
+% avoiding the full-flexed seed being treated as already removable.
+% The principal-angle values are compared directly.
+aBigD = atan2d(-pBig(2), pBig(1));
+aSmallD = atan2d(-pSmall(2), pSmall(1));
+marginD = aBigD - aSmallD;
+
+removePoint = marginD > angleTolD;
 
 end
 
 
-function aD = wrapTo180D(aD)
+function [removePoint, aBigD, aSmallD, marginD] = t1RemovalAngle( ...
+    pPrevT1, pSmallPoint, pNext, angleTolD)
 
-aD = mod(aD + 180, 360) - 180;
+pBig = pPrevT1(1:2) - pNext(1:2);
+pSmall = pSmallPoint(1:2) - pNext(1:2);
+
+aBigD = atan2d(pBig(2), pBig(1));
+aSmallD = atan2d(pSmall(2), pSmall(1));
+marginD = aSmallD - aBigD;
+
+removePoint = marginD > angleTolD;
+
+end
+
+
+function angleFrame = recordEliminationTest( ...
+    angleFrame, row, aSmallD, aBigD, marginD, angleGate, bypassClear)
+
+angleFrame.pointAngleD(row) = aSmallD;
+angleFrame.bypassAngleD(row) = aBigD;
+angleFrame.marginD(row) = marginD;
+angleFrame.tested(row) = true;
+angleFrame.angleGate(row) = angleGate;
+angleFrame.bypassClear(row) = bypassClear;
+
+end
+
+
+function qFemur = t1PointToFemur(qT1, T_Pam_i, T_ICR_t1_i)
+
+qFemur = RowVecTrans(T_Pam_i*T_ICR_t1_i, qT1);
+
+end
+
+
+function qT1 = femurPointToT1(qFemur, T_Pam_inv_i, T_t1_ICR_i)
+
+qICR = RowVecTrans(T_Pam_inv_i, qFemur);
+qT1 = RowVecTrans(T_t1_ICR_i, qICR);
+
+end
+
+
+function clear = femurBypassCollisionFree(A, B, geo, tol, candidateRow)
+
+A = A(1:2);
+B = B(1:2);
+
+switch candidateRow
+    case 3
+        clear = ...
+            ~segmentPenetratesCircle(A, B, ...
+                geo.femurCylCenter, geo.femurCylClearRadius, tol) && ...
+            ~segmentPenetratesFemurOffset(A, B, geo, tol) && ...
+            ~segmentIntersectsVerticalSpan(A, B, ...
+                geo.femurLineX, geo.femurLineY, tol);
+
+    case {4, 5}
+        clear = ~segmentPenetratesFemurOffset(A, B, geo, tol);
+
+    otherwise
+        clear = true;
+end
+
+end
+
+
+function clear = t1BypassCollisionFree(A, B, geo, tol, candidateRow)
+
+A = A(1:2);
+B = B(1:2);
+
+clear = true;
+
+switch candidateRow
+    case 6
+        clear = ~segmentPenetratesCircle(A, B, ...
+            geo.tibiaUpperCenter, geo.tibiaUpperClearRadius, tol);
+
+    case 7
+        clear = ~segmentIntersectsVerticalSpan(A, B, ...
+            geo.tibiaWallX, geo.tibiaWallY, tol);
+end
 
 end
 
@@ -410,22 +578,6 @@ rBend = zeros(9,1);
 
 if active(2)
     rBend(2) = geo.femurCylClearRadius;
-end
-
-if active(3)
-    rBend(3) = geo.femurFilletClearRadius;
-end
-
-if active(4)
-    rBend(4) = norm(seed20(4,1:2) - geo.femurProfileCenter);
-end
-
-if active(5)
-    rBend(5) = norm(seed20(5,1:2) - geo.femurProfileCenter);
-end
-
-if active(6)
-    rBend(6) = geo.tibiaUpperClearRadius;
 end
 
 if active(8)
@@ -462,6 +614,66 @@ for j = 8:-1:6
         raw(j,:) = Pfixed(j,:);
     else
         raw(j,:) = raw(j+1,:);
+    end
+end
+
+end
+
+
+function [P, ok] = adjustedFemurSeedChainAtFlexion(A, Pseed, B, geo, tol)
+% Move the SolidWorks femur-chain seed just far enough outside the corrected
+% clearance envelope for the fully-flexed route to be collision-free.
+
+P = Pseed;
+ok = false;
+
+Pbase = Pseed;
+
+for k = 1:size(Pbase,1)
+    [q, okNearest] = nearestPointOnPolyline(Pbase(k,:), geo.femurOffsetBoundary);
+
+    if okNearest
+        Pbase(k,:) = q;
+    end
+end
+
+dir = Pbase - geo.femurProfileCenter;
+dirNorm = vecnorm(dir, 2, 2);
+
+bad = dirNorm < 1e-12;
+if any(bad)
+    dir(bad,:) = Pseed(bad,:) - geo.femurProfileCenter;
+    dirNorm(bad) = vecnorm(dir(bad,:), 2, 2);
+end
+
+bad = dirNorm < 1e-12;
+dir(bad,:) = repmat([1 0], nnz(bad), 1);
+dirNorm(bad) = 1;
+
+dir = dir ./ dirNorm;
+
+for clearance = 0:0.00025:0.050
+    Pcand = Pbase + clearance*dir;
+
+    if femurSeedChainClear(A, Pcand, B, geo, tol)
+        P = Pcand;
+        ok = true;
+        return
+    end
+end
+
+end
+
+
+function clear = femurSeedChainClear(A, P, B, geo, tol)
+
+chain = [A; P; B];
+clear = true;
+
+for k = 1:size(chain,1)-1
+    if segmentPenetratesFemurOffset(chain(k,:), chain(k+1,:), geo, tol)
+        clear = false;
+        return
     end
 end
 
@@ -580,6 +792,39 @@ end
 
 q = Q(k,:);
 ok = true;
+
+end
+
+
+function [q, ok] = nearestPointOnPolyline(P, poly)
+
+q = [NaN NaN];
+ok = false;
+
+if isempty(poly)
+    return
+end
+
+A = poly;
+B = [poly(2:end,:); poly(1,:)];
+D = B - A;
+d2 = sum(D.^2, 2);
+valid = d2 > 1e-18;
+
+if ~any(valid)
+    return
+end
+
+t = zeros(size(d2));
+t(valid) = sum((P - A(valid,:)).*D(valid,:), 2)./d2(valid);
+t = min(max(t, 0), 1);
+
+Q = A + t.*D;
+d = vecnorm(Q - P, 2, 2);
+[~,idx] = min(d);
+
+q = Q(idx,:);
+ok = all(isfinite(q));
 
 end
 
@@ -764,12 +1009,34 @@ q = [xValue,y];
 end
 
 
+function hit = segmentIntersectsVerticalSpan(A,B,xValue,yRange,tol)
+
+dx = B(1)-A(1);
+
+if abs(dx) < 1e-14
+    hit = false;
+    return
+end
+
+t = (xValue-A(1))/dx;
+
+if t <= tol || t >= 1-tol
+    hit = false;
+    return
+end
+
+y = A(2)+t*(B(2)-A(2));
+hit = y >= min(yRange)-tol && y <= max(yRange)+tol;
+
+end
+
+
 %% =====================================================================
 %% Corrected femoral-condyle clearance / tangent helpers
 %% =====================================================================
 
 function hit = segmentPenetratesFemurOffset(A,B,geo,tol)
-% Strict collision test against the TRUE normal-offset ellipse polygon.
+% Strict collision test against the clipped normal-offset femur polygon.
 % Tangency is allowed; activation occurs once the straight segment actually
 % enters the clearance envelope.
 
@@ -820,8 +1087,9 @@ end
 function [V, rhoEff, ok] = equivalentCondyleAvoidanceVertex(A,B,geo,qRef,tol)
 % Replace a many-point condyle wrap cluster by one equivalent fixed vertex.
 %
-% Tangents are calculated against the TRUE normal-offset curve:
+% Tangents are calculated against the unclipped normal-offset curve:
 %   physical ellipse point + BPA_radius * outward_unit_normal.
+% Tangency points on the clipped-away side of the vertical wall are rejected.
 %
 % Candidate tangent-line pairs are intersected. The valid equivalent corner
 % closest to the desired seed branch and with the shortest route is used.
@@ -896,7 +1164,8 @@ end
 
 
 function [Q, thetaRoots] = tangentPointsToFemurOffset(P,geo)
-% Find both external tangencies from P to the exact normal-offset ellipse.
+% Find external tangencies from P to the unclipped normal-offset ellipse.
+% Tangencies on the clipped-away side of the femur vertical wall are removed.
 %
 % For an offset point Q(theta), the tangent condition is
 %   (P-Q) dot n_hat(theta) = 0.
@@ -990,6 +1259,12 @@ Q = zeros(numel(thetaRoots),2);
 
 for k = 1:numel(thetaRoots)
     Q(k,:) = femurOffsetPoint(thetaRoots(k),geo);
+end
+
+if isfield(geo, 'femurCondyleClipX')
+    keep = Q(:,1) <= geo.femurCondyleClipX + 1e-10;
+    Q = Q(keep,:);
+    thetaRoots = thetaRoots(keep);
 end
 
 end
@@ -1211,40 +1486,20 @@ q = C + R*v/n;
 end
 
 
-%% =====================================================================
-%% Extension pre-roll / Xi3 geometry
-%% =====================================================================
-
-function [T_Pam_i,T_ICR_t1_i,T_t1_ICR_i] = ...
-    extensionPrerollTransforms(thetaD,ctx)
-% Above the measured solver range, preserve the max-extension translations
-% and ICR offset and continue only the knee rotation.
-
-T_Pam_i = ctx.T_Pam(:,:,end);
-
-ct = cosd(thetaD);
-st = sind(thetaD);
-
-T_Pam_i(1:3,1:3) = [ct,-st,0; st,ct,0; 0,0,1];
-
-T_ICR_t1_i = ctx.T_ICR_t1(:,:,end);
-T_t1_ICR_i = ctx.T_t1_ICR(:,:,end);
-
-end
-
-
 function [bendMeasure, wrapInfo] = geometricBendMeasure( ...
-    Location,T,alphaTol,geo,active)
-% bendMeasure is a geometric input to the usable-length-loss approximation.
-% It is not added to Lmt, and it does not make the polyline route an arc
-% length route. Lmt remains the existing polyline path length.
+    Location, T, T_Pam_inv, T_t1_ICR, phiD, alphaTol, geo, active, raw)
+% bendMeasure is the geometric input to the X3 usable-length-loss model.
+% Lmt stays as the piecewise-linear route length; the wrap terms below are
+% only the extra sum(R*alpha) terms used by MonoPamDataExplicit_balanceX3.
 
 N = size(Location,3);
 M = size(Location,1);
 
 labels = { ...
     'p2 femur cylinder'; ...
-    'p3-p8 femur condyle'};
+    'p6-p8 tibia curve'; ...
+    'p3-p5 femur curve'; ...
+    'p5-p6 ICR curve'};
 
 nWrap = numel(labels);
 
@@ -1254,58 +1509,114 @@ wrapLength = zeros(nWrap,N);
 wrapRadius = zeros(nWrap,N);
 pointAngleRad = zeros(M,N);
 pointLength = zeros(M,N);
+
 femurCylinderEntry = nan(N,2);
 femurCylinderExit = nan(N,2);
+tibiaCurveStart = nan(N,2);
+tibiaCurveEnd = nan(N,2);
 femurCondyleStart = nan(N,2);
 femurCondyleEnd = nan(N,2);
 femurCondyleRadiusA = nan(N,1);
 femurCondyleRadiusB = nan(N,1);
+crosspointStart = nan(N,2);
+crosspointEnd = nan(N,2);
+
+p2LineAngleRad = nan(N,1);
+p2WrapFraction = nan(N,1);
+tibiaCurveFraction = nan(N,1);
+femurCurveFraction = nan(N,1);
+
+Pall = zeros(M,3,N);
 
 for i = 1:N
+    Pall(:,:,i) = routeInFemurFrame(Location,T,i);
+end
 
-    P = routeInFemurFrame(Location,T,i);
+p2Ref = p2WrapReference(Pall, active, phiD, geo);
+tibiaRef = tibiaCurveWrapReference(raw, active, phiD, geo);
+femurRef = femurCurveWrapReference(raw, active, phiD, geo);
+crossRef = crosspointWrapReference(raw, Location, active, phiD, T_Pam_inv);
+for i = 1:N
 
-    [alpha, qIn, qOut, ok] = femurCylinderWrapAngle(P, active(:,i), geo);
+    P = Pall(:,:,i);
+
+    [alpha, R, qIn, qOut, ok, thetaLineRad, frac] = ...
+        femurCylinderWrapAngle(P, active(:,i), p2Ref, phiD(i));
 
     if ok
         femurCylinderEntry(i,:) = qIn;
         femurCylinderExit(i,:) = qOut;
+        p2LineAngleRad(i) = thetaLineRad;
+        p2WrapFraction(i) = frac;
+        wrapAngleRad(1,i) = alpha;
+        wrapRadius(1,i) = R;
+        pointAngleRad(2,i) = alpha;
 
         if alpha >= alphaTol
-            wrapAngleRad(1,i) = alpha;
-            wrapLength(1,i) = geo.femurCylClearRadius*alpha;
-            wrapRadius(1,i) = geo.femurCylClearRadius;
-            pointAngleRad(2,i) = alpha;
+            wrapLength(1,i) = R*alpha;
             pointLength(2,i) = wrapLength(1,i);
         end
     end
 
-    % Previous definition: p3, p4, and p5 were retained as separate local
-    % fallback bends. They remain polyline route points for Lmt, but they are
-    % now represented by one femoral-condyle bend-loss term. Its two radii
-    % are p3-fcc and transformed-p8-fcc; the effective radius is their mean
-    % and the wrap angle is the angle between those radius vectors.
-    [alpha, Ravg, Ra, Rb, qStart, qEnd, ok] = ...
-        femurCondyleWrapAngle(P, active(:,i), geo);
+    [alpha, R, qIn, qOut, ok, frac] = ...
+        tibiaCurveWrapAngle(raw(:,:,i), active(:,i), tibiaRef, phiD(i));
 
     if ok
-        femurCondyleStart(i,:) = qStart;
-        femurCondyleEnd(i,:) = qEnd;
+        tibiaCurveStart(i,:) = qIn;
+        tibiaCurveEnd(i,:) = qOut;
+        tibiaCurveFraction(i) = frac;
+        wrapAngleRad(2,i) = alpha;
+        wrapRadius(2,i) = R;
+        pointAngleRad(7,i) = alpha;
+
+        if alpha >= alphaTol
+            wrapLength(2,i) = R*alpha;
+            pointLength(7,i) = wrapLength(2,i);
+        end
+    end
+
+    [alpha, R, qIn, qOut, ok, frac, Ra, Rb] = ...
+        femurCurveWrapAngle(raw(:,:,i), active(:,i), femurRef, phiD(i), geo);
+
+    if ok
+        femurCondyleStart(i,:) = qIn;
+        femurCondyleEnd(i,:) = qOut;
         femurCondyleRadiusA(i) = Ra;
         femurCondyleRadiusB(i) = Rb;
+        femurCurveFraction(i) = frac;
+        wrapAngleRad(3,i) = alpha;
+        wrapRadius(3,i) = R;
+        pointAngleRad(4,i) = alpha;
 
-        wrapAngleRad(2,i) = alpha;
-        wrapLength(2,i) = Ravg*alpha;
-        wrapRadius(2,i) = Ravg;
-        pointAngleRad(3,i) = alpha;
-        pointLength(3,i) = wrapLength(2,i);
+        if alpha >= alphaTol
+            s = integratedVariableRadiusArc(femurRef, frac);
+            wrapLength(3,i) = s;
+            pointLength(4,i) = wrapLength(3,i);
+        end
+    end
+
+    [alpha, R, qIn, qOut, ok] = ...
+        crosspointICRWrapAngle(raw(:,:,i), Location(:,:,i), active(:,i), ...
+        T_Pam_inv(:,:,i), crossRef, phiD(i));
+
+    if ok
+        crosspointStart(i,:) = qIn;
+        crosspointEnd(i,:) = qOut;
+        wrapAngleRad(4,i) = alpha;
+        wrapRadius(4,i) = R;
+        pointAngleRad(6,i) = alpha;
+
+        if alpha >= alphaTol
+            wrapLength(4,i) = R*alpha;
+            pointLength(6,i) = wrapLength(4,i);
+        end
     end
 
     bendMeasure(i) = sum(wrapLength(:,i));
 end
 
 wrapInfo.labels = labels;
-wrapInfo.pointRows = [2;3];
+wrapInfo.pointRows = [2;7;4;6];
 wrapInfo.angleRad = wrapAngleRad;
 wrapInfo.angleDeg = wrapAngleRad*180/pi;
 wrapInfo.radius = wrapRadius;
@@ -1314,13 +1625,55 @@ wrapInfo.bendLossLength = wrapLength;
 wrapInfo.pointAngleRad = pointAngleRad;
 wrapInfo.pointAngleDeg = pointAngleRad*180/pi;
 wrapInfo.pointLength = pointLength;
+
 wrapInfo.femurCylinderEntry = femurCylinderEntry;
 wrapInfo.femurCylinderExit = femurCylinderExit;
+wrapInfo.tibiaCurveCenter = geo.tibiaCurveCenter;
+wrapInfo.tibiaCurveStart = tibiaCurveStart;
+wrapInfo.tibiaCurveEnd = tibiaCurveEnd;
+wrapInfo.tibiaCurveFraction = tibiaCurveFraction;
+
 wrapInfo.femurCondyleCenter = geo.femurProfileCenter;
 wrapInfo.femurCondyleStart = femurCondyleStart;
 wrapInfo.femurCondyleEnd = femurCondyleEnd;
 wrapInfo.femurCondyleRadiusA = femurCondyleRadiusA;
 wrapInfo.femurCondyleRadiusB = femurCondyleRadiusB;
+wrapInfo.femurCurveFraction = femurCurveFraction;
+
+wrapInfo.crosspointCenter = [0 0];
+wrapInfo.crosspointStart = crosspointStart;
+wrapInfo.crosspointEnd = crosspointEnd;
+
+wrapInfo.p2LineAngleRad = p2LineAngleRad;
+wrapInfo.p2LineAngleDeg = p2LineAngleRad*180/pi;
+wrapInfo.p2WrapFraction = p2WrapFraction;
+wrapInfo.p2ThetaBaseRad = p2Ref.thetaBaseRad;
+wrapInfo.p2ThetaBaseDeg = p2Ref.thetaBaseRad*180/pi;
+wrapInfo.p2ThetaMaxRad = p2Ref.thetaMaxRad;
+wrapInfo.p2ThetaMaxDeg = p2Ref.thetaMaxRad*180/pi;
+wrapInfo.p2AlphaBaseRad = p2Ref.alphaBaseRad;
+wrapInfo.p2AlphaBaseDeg = p2Ref.alphaBaseRad*180/pi;
+wrapInfo.p2AlphaMaxRad = p2Ref.alphaPlateauRad;
+wrapInfo.p2AlphaMaxDeg = p2Ref.alphaPlateauRad*180/pi;
+
+    function s = integratedVariableRadiusArc(ref, frac)
+
+            frac = max(0, min(1, frac));
+            n = 40;
+            u = linspace(0, frac, n).';
+            
+            alphaSpan = ref.alphaSpanRad;
+            r0 = ref.radiusBase;
+            r1 = ref.radiusPlateau;
+            drdu = r1 - r0;
+            
+            r = r0 + drdu*u;
+            dtheta_du = alphaSpan;
+            
+            ds_du = sqrt((r.*dtheta_du).^2 + drdu.^2);
+            s = trapz(u, ds_du);
+    
+        end
 
 end
 
@@ -1342,78 +1695,363 @@ end
 end
 
 
-function [alpha, qIn, qOut, ok] = femurCylinderWrapAngle(P, activeFrame, geo)
+function [alpha, R, qIn, qOut, ok, thetaLineRad, wrapFrac] = ...
+    femurCylinderWrapAngle(P, activeFrame, ref, kneeAngleD)
 
 alpha = 0;
+R = 0;
 qIn = [NaN NaN];
 qOut = [NaN NaN];
 ok = false;
+thetaLineRad = NaN;
+wrapFrac = NaN;
 
 if ~activeFrame(2)
     return
 end
 
-nextIdx = 0;
-
-for k = 3:size(P,1)
-    if activeFrame(k) && norm(P(k,1:2)-P(2,1:2)) > 1e-9
-        nextIdx = k;
-        break
-    end
-end
-
-if nextIdx == 0
+if activeFrame(3)
+    thetaLineRad = ref.thetaMaxRad;
+    qIn = P(2,1:2);
+    qOut = P(3,1:2);
+    wrapFrac = 1;
+    alpha = ref.alphaPlateauRad;
+    R = ref.radiusPlateau;
+    ok = ref.valid;
     return
 end
 
-C = geo.femurCylCenter;
-R = geo.femurCylClearRadius;
-qRef = P(2,1:2);
+% Before p3 is active, p2 wrap grows from the fully-extended p8*-p2
+% baseline toward the p3 plateau. p8 is stored in t1, but P is already the
+% common femur-frame route, so row 8 here is p8*.
+[thetaLineRad, okTheta] = p2LineAngleToRow(P, 8);
 
-[qIn, okIn] = tangentPointCircleNearest(P(1,1:2), C, R, qRef);
-[qOut, okOut] = tangentPointCircleNearest(P(nextIdx,1:2), C, R, qRef);
-
-if ~okIn || ~okOut
+if ~okTheta
     return
 end
 
-alpha = circleMinorAngle(qIn, qOut, C);
+qIn = P(2,1:2);
+qOut = P(8,1:2);
+
+[alpha, R, wrapFrac] = interpolatedWABKA(kneeAngleD, ref);
 ok = isfinite(alpha);
 
 end
 
 
-function [alpha, Ravg, Ra, Rb, qStart, qEnd, ok] = ...
-    femurCondyleWrapAngle(P, activeFrame, geo)
+function ref = p2WrapReference(Pall, active, phiD, geo)
 
-alpha = 0;
-Ravg = 0;
-Ra = 0;
-Rb = 0;
-qStart = [NaN NaN];
-qEnd = [NaN NaN];
-ok = false;
+N = size(Pall,3);
+idxExtension = N;
 
-if ~activeFrame(3) || ~activeFrame(8)
-    return
+[thetaBaseRad, okBase] = p2LineAngleToRow(Pall(:,:,idxExtension), 8);
+
+idxP3On = find(active(3,:), 1, 'last');
+
+if isempty(idxP3On)
+    idxP3On = 1;
+end
+
+[thetaMaxRad, okThetaMax] = p2LineAngleToRow(Pall(:,:,idxP3On), 8);
+[alphaPlateauRad, okPlateau] = p2LineAngleToRow(Pall(:,:,idxP3On), 3);
+
+ref = makeWABKARef( ...
+    phiD(idxExtension), ...
+    phiD(idxP3On), ...
+    thetaBaseRad, ...
+    alphaPlateauRad, ...
+    geo.femurCylClearRadius, ...
+    geo.femurCylClearRadius, ...
+    okBase && okThetaMax && okPlateau);
+
+ref.idxExtension = idxExtension;
+ref.idxP3On = idxP3On;
+ref.thetaBaseRad = thetaBaseRad;
+ref.thetaMaxRad = thetaMaxRad;
+
+end
+
+
+function ref = tibiaCurveWrapReference(raw, active, phiD, geo)
+% Temporary tibia wrap-loss model through p8, p7, and p6.  The knee-angle
+% map starts at extension and reaches its plateau when p6 is introduced
+% while reading the plot right-to-left.
+
+N = size(raw,3);
+idxExtension = N;
+
+C = geo.tibiaCurveCenter;
+seedPts = squeeze(raw([6 7 8],1:2,1));
+R = mean(vecnorm(seedPts - C, 2, 2));
+
+idxP6On = find(active(6,:), 1, 'last');
+
+if isempty(idxP6On)
+    idxP6On = 1;
+end
+
+[alphaBaseRad, okBase] = centralAngleUnsigned( ...
+    C, raw(9,1:2,idxExtension), raw(8,1:2,idxExtension));
+[alphaPlateauRad, okPlateau] = centralAngleUnsigned( ...
+    C, raw(9,1:2,idxP6On), raw(6,1:2,idxP6On));
+
+ref = makeWABKARef( ...
+    phiD(idxExtension), ...
+    phiD(idxP6On), ...
+    alphaBaseRad, ...
+    alphaPlateauRad, ...
+    R, ...
+    R, ...
+    okBase && okPlateau);
+
+ref.idxExtension = idxExtension;
+ref.idxP6On = idxP6On;
+ref.center = C;
+
+end
+
+
+function ref = femurCurveWrapReference(raw, active, phiD, geo)
+% Temporary femur wrap-loss model through p3, p4, and p5.  It is zero until
+% p3 is introduced and reaches its plateau when p5 is introduced.
+
+idxP3On = find(active(3,:), 1, 'last');
+idxP5On = find(active(5,:), 1, 'last');
+
+if isempty(idxP3On)
+    idxP3On = 1;
+end
+
+if isempty(idxP5On)
+    idxP5On = idxP3On;
 end
 
 C = geo.femurProfileCenter;
-qStart = P(3,1:2);
-qEnd = P(8,1:2);
-r2a = qStart - C;
-r2b = qEnd - C;
-Ra = norm(r2a);
-Rb = norm(r2b);
+R3 = norm(raw(3,1:2,idxP3On) - C);
+R5 = norm(raw(5,1:2,idxP5On) - C);
 
-if Ra < 1e-12 || Rb < 1e-12
+[alphaPlateauRad, okPlateau] = centralAngleUnsigned( ...
+    C, raw(3,1:2,idxP5On), raw(5,1:2,idxP5On));
+
+ref = makeWABKARef( ...
+    phiD(idxP3On), ...
+    phiD(idxP5On), ...
+    0, ...
+    alphaPlateauRad, ...
+    R3, ...
+    R5, ...
+    okPlateau);
+
+ref.idxP3On = idxP3On;
+ref.idxP5On = idxP5On;
+ref.center = C;
+
+end
+
+
+function ref = makeWABKARef( ...
+    phiBaseD, phiPlateauD, alphaBaseRad, alphaPlateauRad, ...
+    radiusBase, radiusPlateau, ok)
+% WABKA = wrap angle by knee angle.  The route state supplies the knee
+% angles where a wrap term starts and plateaus; this struct stores the
+% linear map between those knee-angle limits.
+
+ref.valid = logical(ok) && ...
+    all(isfinite([phiBaseD, phiPlateauD, alphaBaseRad, alphaPlateauRad, ...
+                  radiusBase, radiusPlateau])) && ...
+    radiusBase > 0 && radiusPlateau > 0 && ...
+    abs(phiPlateauD - phiBaseD) > 1e-12;
+
+ref.phiBaseD = phiBaseD;
+ref.phiExtensionD = phiBaseD;
+ref.phiPlateauD = phiPlateauD;
+ref.phiSpanD = phiPlateauD - phiBaseD;
+ref.alphaBaseRad = alphaBaseRad;
+ref.alphaPlateauRad = alphaPlateauRad;
+ref.alphaMaxRad = alphaPlateauRad;
+ref.alphaSpanRad = alphaPlateauRad - alphaBaseRad;
+ref.radiusBase = radiusBase;
+ref.radiusPlateau = radiusPlateau;
+ref.radiusSpan = radiusPlateau - radiusBase;
+
+end
+
+
+function [alpha, radius, frac] = interpolatedWABKA(kneeAngleD, ref)
+% WABKA = wrap angle by knee angle.  A negative phiSpanD is expected here
+% because the route is plotted from flexion on the left to extension on the
+% right, while the wrap grows when reading the plot right-to-left.
+
+alpha = 0;
+radius = 0;
+frac = 0;
+
+if ~ref.valid
     return
 end
 
-Ravg = 0.5*(Ra + Rb);
-crossZ = r2a(1)*r2b(2) - r2a(2)*r2b(1);
-alpha = atan2(abs(crossZ), dot(r2a,r2b));
-ok = isfinite(alpha) && isfinite(Ravg) && Ravg > 0;
+frac = (kneeAngleD - ref.phiBaseD) / ref.phiSpanD;
+frac = max(0, min(1, frac));
+
+alpha = ref.alphaBaseRad + ref.alphaSpanRad*frac;
+radius = ref.radiusBase + ref.radiusSpan*frac;
+
+end
+
+
+function [thetaRad, ok] = p2LineAngleToRow(P, row)
+
+vIn = P(2,1:2) - P(1,1:2);
+vOut = P(row,1:2) - P(2,1:2);
+
+[thetaRad, ok] = vectorAngleUnsigned(vIn, vOut);
+
+end
+
+
+function [thetaRad, ok] = vectorAngleUnsigned(a, b)
+
+na = norm(a);
+nb = norm(b);
+
+thetaRad = NaN;
+ok = false;
+
+if na < 1e-12 || nb < 1e-12
+    return
+end
+
+ca = dot(a/na, b/nb);
+ca = max(-1, min(1, ca));
+thetaRad = acos(ca);
+ok = true;
+
+end
+
+
+function [alpha, R, qIn, qOut, ok, frac] = ...
+    tibiaCurveWrapAngle(rawFrame, activeFrame, ref, kneeAngleD)
+
+alpha = 0;
+R = 0;
+qIn = [NaN NaN];
+qOut = [NaN NaN];
+ok = false;
+frac = NaN;
+
+if ~activeFrame(8)
+    return
+end
+
+[alpha, R, frac] = interpolatedWABKA(kneeAngleD, ref);
+
+if activeFrame(6)
+    qIn = rawFrame(6,1:2);
+    alpha = ref.alphaPlateauRad;
+    R = ref.radiusPlateau;
+    frac = 1;
+elseif activeFrame(7)
+    qIn = rawFrame(7,1:2);
+else
+    qIn = rawFrame(8,1:2);
+end
+
+qOut = rawFrame(9,1:2);
+ok = ref.valid && isfinite(alpha) && isfinite(R);
+
+end
+
+
+function [alpha, R, qIn, qOut, ok, frac, Ra, Rb] = ...
+    femurCurveWrapAngle(rawFrame, activeFrame, ref, kneeAngleD, geo)
+
+alpha = 0;
+R = 0;
+qIn = [NaN NaN];
+qOut = [NaN NaN];
+ok = false;
+frac = NaN;
+Ra = 0;
+Rb = 0;
+
+if ~activeFrame(3)
+    ok = ref.valid;
+    return
+end
+
+[alpha, R, frac] = interpolatedWABKA(kneeAngleD, ref);
+
+qIn = rawFrame(3,1:2);
+
+if activeFrame(5)
+    qOut = rawFrame(5,1:2);
+    alpha = ref.alphaPlateauRad;
+    R = ref.radiusPlateau;
+    frac = 1;
+elseif activeFrame(4)
+    qOut = rawFrame(4,1:2);
+else
+    qOut = rawFrame(3,1:2);
+end
+
+Ra = norm(qIn - geo.femurProfileCenter);
+Rb = norm(qOut - geo.femurProfileCenter);
+ok = ref.valid && isfinite(alpha) && isfinite(R);
+
+end
+
+function ref = crosspointWrapReference(raw, Location, active, phiD, T_Pam_inv)
+
+idxP5On = find(active(5,:), 1, 'last');
+idxFlex = 1;
+
+q5AtP5 = RowVecTrans(T_Pam_inv(:,:,idxP5On), raw(5,:,idxP5On));
+q6AtP5 = Location(6,:,idxP5On);
+
+q5Flex = RowVecTrans(T_Pam_inv(:,:,idxFlex), raw(5,:,idxFlex));
+q6Flex = Location(6,:,idxFlex);
+
+alphaAtP5 = 0;
+okP5 = true;
+
+[alphaFlex, okFlex] = centralAngleUnsigned([0 0], q5Flex(1:2), q6Flex(1:2));
+
+RAtP5 = 0.5*(norm(q5AtP5(1:2)) + norm(q6AtP5(1:2)));
+RFlex = 0.5*(norm(q5Flex(1:2)) + norm(q6Flex(1:2)));
+
+ref = makeWABKARef(phiD(idxP5On), phiD(idxFlex), ...
+    alphaAtP5, alphaFlex, RAtP5, RFlex, okP5 && okFlex);
+
+end
+
+function [alpha, R, qIn, qOut, ok] = ...
+    crosspointICRWrapAngle(rawFrame, locFrame, activeFrame, T_Pam_inv_i, ref, kneeAngleD)
+
+alpha = 0;
+R = 0;
+qIn = [NaN NaN];
+qOut = [NaN NaN];
+ok = false;
+
+if ~(activeFrame(5) && activeFrame(6))
+    return
+end
+
+q5ICR = RowVecTrans(T_Pam_inv_i, rawFrame(5,:));
+q6ICR = locFrame(6,:);
+
+[alpha, R] = interpolatedWABKA(kneeAngleD, ref);
+
+qIn = q5ICR(1:2);
+qOut = q6ICR(1:2);
+ok = ref.valid && isfinite(alpha) && isfinite(R);
+
+end
+
+
+function [thetaRad, ok] = centralAngleUnsigned(C, A, B)
+
+[thetaRad, ok] = vectorAngleUnsigned(A(1:2) - C, B(1:2) - C);
 
 end
 

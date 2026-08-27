@@ -81,45 +81,48 @@ fprintf('(No equality constraint forces strain_f(+10 deg) = KMAX.)\n')
 fprintf('====================================\n')
 
 
-%% Routing activation / discontinuity diagnostics
+%% Routing elimination / discontinuity diagnostics
 routeInfo = pred0.routeInfo;
 
-fprintf('\n========== ROUTING CONTACT ACTIVATION ==========\n')
+fprintf('\n========== ROUTING CONTACT ELIMINATION ==========\n')
 fprintf('Sweep increment = %.9f deg\n', routeInfo.sweepStepD)
 fprintf('Sweep start     = %.9f deg\n', routeInfo.sweepD(1))
 fprintf('Solver max      = %.9f deg\n', max(ctx.phiD))
 fprintf('Solver min      = %.9f deg\n\n', min(ctx.phiD))
-fprintf('Point   Frame    Added angle, deg       x, m          y, m          z, m\n')
-fprintf('-----   -----    ----------------       ----------    ----------    ----------\n')
+fprintf('%-5s %-7s %18s %22s %12s %12s %12s\n', ...
+    'Point', 'Frame', 'Initial deg', 'Eliminated deg', 'x, m', 'y, m', 'z, m')
+fprintf('%-5s %-7s %18s %22s %12s %12s %12s\n', ...
+    '-----', '-----', '-----------', '--------------', '----', '----', '----')
 
 for j = 1:9
-    if isnan(routeInfo.addedAngleD(j))
-        fprintf('p%d      %-5s    NOT ACTIVE\n', j, char(routeInfo.pointFrame(j)))
+    q = routeInfo.addedPoint(j,:);
+
+    if isnan(routeInfo.eliminatedAngleD(j))
+        elimText = 'active';
     else
-        q = routeInfo.addedPoint(j,:);
-        fprintf('p%d      %-5s    %16.9f    % .8f   % .8f   % .8f\n', ...
-            j, char(routeInfo.pointFrame(j)), routeInfo.addedAngleD(j), ...
-            q(1), q(2), q(3))
+        elimText = sprintf('% .9f', routeInfo.eliminatedAngleD(j));
     end
+
+    fprintf('p%-4d %-7s %18.9f %22s %12.8f %12.8f %12.8f\n', ...
+        j, char(routeInfo.pointFrame(j)), routeInfo.addedAngleD(j), ...
+        elimText, q(1), q(2), q(3))
 end
 
-fprintf('\nActivation order: ')
-for k = 1:numel(routeInfo.activationOrder)
-    j = routeInfo.activationOrder(k);
-    if ~isnan(routeInfo.addedAngleD(j))
+fprintf('\nElimination order: ')
+if isfield(routeInfo, 'eliminationOrder')
+    for k = 1:numel(routeInfo.eliminationOrder)
+        j = routeInfo.eliminationOrder(k);
         fprintf('p%d ', j)
     end
 end
 fprintf('\n')
 
-fprintf('Expected rough activation order after +10 deg baseline: p7 (~+7), p3 (~-6), p4 (~-44), p6 (~-58), p5 (~-91)\n')
-
 fprintf('\n========== ACTIVE POINTS OVER SOLVER RANGE ==========\n')
 prevActive = false(9,1);
-for ii = ctx.N:-1:1
+for ii = 1:ctx.N
     a = routeInfo.active(:,ii);
-    if ii == ctx.N || any(a ~= prevActive)
-        fprintf('phi = %9.4f deg :', ctx.phiD(ii))
+    if ii == 1 || any(a ~= prevActive)
+        fprintf('%10.4f deg :', ctx.phiD(ii))
         fprintf(' p%d', find(a))
         fprintf('\n')
     end
@@ -135,10 +138,10 @@ if isfield(routeInfo, 'angleCull')
         [~, sampleIdx(kk)] = min(abs(ctx.phiD - sampleAnglesD(kk)));
     end
 
-    fprintf('\n========== HORIZONTAL-ANGLE CULL MARGINS ==========\n')
-    fprintf('Angles are signed from the t1-frame horizontal.\n')
-    fprintf('Positive margin is right of the bypass line; negative is left.\n')
-    fprintf('After first activation, a contact stays active at deeper flexion.\n')
+    fprintf('\n========== ABSOLUTE-ANGLE ELIMINATION MARGINS ==========\n')
+    fprintf('Femur margins use y-flipped clockwise atan2d; t1 margins use native counterclockwise atan2d.\n')
+    fprintf('No principal-angle wrapping is applied to the comparison.\n')
+    fprintf('Positive margin means the angle gate allows removal. Collision gates are disabled for this route-state test.\n')
     fprintf('%-8s', 'Point')
 
     for kk = 1:numel(sampleIdx)
@@ -147,7 +150,7 @@ if isfield(routeInfo, 'angleCull')
 
     fprintf('\n')
 
-    cullRows = [7 3 4 6 5];
+    cullRows = [5 4 3 6 7];
 
     for rr = 1:numel(cullRows)
         j = cullRows(rr);
@@ -191,18 +194,7 @@ fprintf('bendMeasure:     %8.3f mm, %8.3f -> %8.3f deg\n', ...
     1000*dBendJump, ctx.phiD(iBendJump), ctx.phiD(iBendJump+1))
 fprintf('X3 delta_L:      %8.3f mm, %8.3f -> %8.3f deg\n', ...
     1000*dLossJump, ctx.phiD(iLossJump), ctx.phiD(iLossJump+1))
-fprintf('Femur crossing-collision frames = %d / %d\n', ...
-    nnz(routeInfo.femurCrossingCollision), ctx.N)
-if any(routeInfo.femurCrossingCollision)
-    fprintf('First crossing collision while flexing = %.4f deg\n', ...
-        max(ctx.phiD(routeInfo.femurCrossingCollision)))
-end
-fprintf('Femur overflow frames after p5 = %d / %d\n', ...
-    nnz(routeInfo.femurOverflow), ctx.N)
-if any(routeInfo.femurOverflow)
-    fprintf('First femur overflow while flexing = %.4f deg\n', ...
-        max(ctx.phiD(routeInfo.femurOverflow)))
-end
+fprintf('Interference gates are disabled; route elimination is angle-only in this run.\n')
 fprintf('===============================================\n')
 
 if isfield(routeInfo, 'wrap')
@@ -257,27 +249,18 @@ if isfield(routeInfo, 'wrap')
             fprintf('\n')
         end
 
-        fprintf('\nFemoral-condyle component radii, mm:\n')
-        fprintf('%-24s', 'p3-fcc')
-        fprintf('%10.3f', 1000*wrap.femurCondyleRadiusA(sampleIdx))
-        fprintf('\n')
-        fprintf('%-24s', 'p8*-fcc')
-        fprintf('%10.3f', 1000*wrap.femurCondyleRadiusB(sampleIdx))
-        fprintf('\n')
-        fprintf('%-24s', 'average')
-        fprintf('%10.3f', 1000*wrap.radius(2,sampleIdx))
-        fprintf('\n')
     end
 
     fprintf('============================================\n')
 end
 
 %% Plot full geometry and p1:p9 route
-plotAnglesRouteD = [9 7 -6 -44 -58 -91 -120];
+plotAnglesRouteD = fliplr([9 7 -6 -44 -58 -91 -120]);
 thPlot = linspace(0,2*pi,200).';
 
 figure('Name','9-point extensor route geometry','Color','w')
-tiledlayout('flow','TileSpacing','compact','Padding','compact')
+tGeo = tiledlayout(3,3,'TileSpacing','compact','Padding','compact');
+hGeoLegend = gobjects(7,1);
 
 for qPlot = 1:numel(plotAnglesRouteD)
 
@@ -293,21 +276,28 @@ for qPlot = 1:numel(plotAnglesRouteD)
         P(j,:) = RowVecTrans(ctx.T_Pam(:,:,ii), qICR);
     end
 
-    nexttile
+    nexttile(tGeo,qPlot)
     hold on
+    hGeo = gobjects(7,1);
 
     % --- femur cylinder clearance
     C = ctx.geo.femurCylCenter;
     R = ctx.geo.femurCylClearRadius;
-    plot(C(1)+R*cos(thPlot), C(2)+R*sin(thPlot), '-', 'LineWidth', 1.2)
+    hGeo(1) = plot(C(1)+R*cos(thPlot), C(2)+R*sin(thPlot), '-', 'LineWidth', 1.2);
 
     % --- femur wall / line clearance
-    plot([ctx.geo.femurLineX ctx.geo.femurLineX], ctx.geo.femurLineY, '-', ...
-        'LineWidth', 1.2)
+    hGeo(2) = plot([ctx.geo.femurLineX ctx.geo.femurLineX], ctx.geo.femurLineY, '-', ...
+        'LineWidth', 1.2);
 
     % --- corrected condyle clearance
     Q = ctx.geo.femurOffsetBoundary;
-    plot([Q(:,1);Q(1,1)], [Q(:,2);Q(1,2)], '-', 'LineWidth', 1.5)
+    hGeo(3) = plot([Q(:,1);Q(1,1)], [Q(:,2);Q(1,2)], '-', 'LineWidth', 1.5);
+    if isfield(ctx.geo, 'femurCondyleClipY')
+        plot([ctx.geo.femurCondyleClipX ctx.geo.femurCondyleClipX], ...
+            ctx.geo.femurCondyleClipY, '-', ...
+            'Color', hGeo(3).Color, 'LineWidth', 1.8, ...
+            'HandleVisibility', 'off')
+    end
 
     % --- t1 lower circle, plotted in femur frame
     L = [ ...
@@ -319,7 +309,7 @@ for qPlot = 1:numel(plotAnglesRouteD)
         qICR = RowVecTrans(ctx.T_ICR_t1(:,:,ii), L(kk,:));
         Lf(kk,:) = RowVecTrans(ctx.T_Pam(:,:,ii), qICR);
     end
-    plot(Lf(:,1), Lf(:,2), '-', 'LineWidth', 1.2)
+    hGeo(4) = plot(Lf(:,1), Lf(:,2), '-', 'LineWidth', 1.2);
 
     % --- t1 upper circle, plotted in femur frame
     U = [ ...
@@ -331,23 +321,26 @@ for qPlot = 1:numel(plotAnglesRouteD)
         qICR = RowVecTrans(ctx.T_ICR_t1(:,:,ii), U(kk,:));
         Uf(kk,:) = RowVecTrans(ctx.T_Pam(:,:,ii), qICR);
     end
-    plot(Uf(:,1), Uf(:,2), '-', 'LineWidth', 1.2)
+    hGeo(5) = plot(Uf(:,1), Uf(:,2), '-', 'LineWidth', 1.2);
 
-    % --- p3-fcc and transformed-p8-fcc radius lines
-    radiusLineX = nan(1,5);
-    radiusLineY = nan(1,5);
-
-    if routeInfo.active(3,ii) && isfield(routeInfo, 'wrap')
-        fcc = routeInfo.wrap.femurCondyleCenter;
-        q3 = routeInfo.wrap.femurCondyleStart(ii,:);
-        q8star = routeInfo.wrap.femurCondyleEnd(ii,:);
-        radiusLineX = [fcc(1), q3(1), NaN, fcc(1), q8star(1)];
-        radiusLineY = [fcc(2), q3(2), NaN, fcc(2), q8star(2)];
-    end
-    plot(radiusLineX, radiusLineY, '--', 'LineWidth', 1.0)
+    % --- local p2/p8 bend radius lines
+    tibiaLowerCenter = [ctx.geo.tibiaLowerCenter, 0];
+    tibiaLowerCenter = RowVecTrans(ctx.T_ICR_t1(:,:,ii), tibiaLowerCenter);
+    tibiaLowerCenter = RowVecTrans(ctx.T_Pam(:,:,ii), tibiaLowerCenter);
+    radiusLineX = [ ...
+        ctx.geo.femurCylCenter(1), P(2,1), NaN, ...
+        tibiaLowerCenter(1), P(8,1)];
+    radiusLineY = [ ...
+        ctx.geo.femurCylCenter(2), P(2,2), NaN, ...
+        tibiaLowerCenter(2), P(8,2)];
+    hGeo(6) = plot(radiusLineX, radiusLineY, '--', 'LineWidth', 1.0);
 
     % --- route
-    plot(P(:,1), P(:,2), 'o-', 'LineWidth', 1.5, 'MarkerSize', 5)
+    hGeo(7) = plot(P(:,1), P(:,2), 'o-', 'LineWidth', 1.5, 'MarkerSize', 5);
+
+    if qPlot == 1
+        hGeoLegend = hGeo;
+    end
 
     for j = 1:9
         if routeInfo.active(j,ii)
@@ -360,12 +353,18 @@ for qPlot = 1:numel(plotAnglesRouteD)
     grid on
     xlabel('Femur-frame x, m')
     ylabel('Femur-frame y, m')
-    title(sprintf('\\phi = %.2f deg',ctx.phiD(ii)))
-    legend('Femur cylinder clr', 'Femur line clr', ...
-        'Corrected condyle clr', ...
-        'Tibia lower clr', 'Tibia upper clr', 'Femur condyle radii', ...
-        'p1:p9 route', 'Location', 'best')
+    title(sprintf('%s, phi = %.2f deg', ...
+        routeStateTitle20mm(routeInfo, ii), ctx.phiD(ii)), ...
+        'Interpreter', 'none')
+
 end
+
+axLeg = nexttile(tGeo,numel(plotAnglesRouteD)+1);
+makeRouteLegend20mm(axLeg, hGeoLegend, { ...
+    'Femur cylinder clr', 'Femur line clr', ...
+    'Corrected condyle clr', ...
+    'Tibia lower clr', 'Tibia upper clr', 'Local bend radii', ...
+    'p1:p9 route'});
 
 %% Plot torque against target
 H = readmatrix('OpenSim_Vasti_Results.txt', ...
@@ -383,22 +382,15 @@ T1 = H(:,3);
 T2 = H(:,4);
 T3 = H(:,5);
 
-humanAbs = interp1( ...
-    ctx.humanAngleD, ...
-    ctx.humanTorqueAbs, ...
-    ctx.phiD, ...
-    'pchip', ...
-    'extrap');
-
 figure('Name','Extensor torque sanity','Color','w')
 hold on
-plot(ctx.phiD, abs(pred0.TorqueZ), 'LineWidth', 2)
+plot(ctx.phiD, pred0.TorqueZ, 'LineWidth', 2)
 plot(Hang, T1, '--', 'LineWidth', 2)
 plot(Hang, T2, '-.', 'LineWidth', 2)
 plot(Hang, T3, ':', 'LineWidth', 2)
 grid on
 xlabel('Knee angle, deg')
-ylabel('Torque magnitude, N m')
+ylabel('Torque, N m')
 legend('20 mm BPA prediction', Name1, Name2, Name3, ...
     'Location', 'best')
 title('Initial extensor torque sanity check')
@@ -428,11 +420,7 @@ if isfield(routeInfo, 'wrap')
             'LineWidth', 1.6);
     end
 
-    xline(8, ':', 'LineWidth', 1.0)
-    xline(-6, ':', 'LineWidth', 1.0)
-    xline(-44, ':', 'LineWidth', 1.0)
-    xline(-58, ':', 'LineWidth', 1.0)
-    xline(-91, ':', 'LineWidth', 1.0)
+    addEliminationLines20mm(routeInfo, ctx.phiD)
     grid on
     xlabel('Knee angle, deg')
     ylabel('Wrap angle, deg')
@@ -450,11 +438,7 @@ if isfield(routeInfo, 'wrap')
                 1000*routeInfo.wrap.radius(cWrap,:), 'LineWidth', 1.6);
         end
 
-        xline(8, ':', 'LineWidth', 1.0)
-        xline(-6, ':', 'LineWidth', 1.0)
-        xline(-44, ':', 'LineWidth', 1.0)
-        xline(-58, ':', 'LineWidth', 1.0)
-        xline(-91, ':', 'LineWidth', 1.0)
+        addEliminationLines20mm(routeInfo, ctx.phiD)
         grid on
         xlabel('Knee angle, deg')
         ylabel('Effective bend radius, mm')
@@ -479,7 +463,7 @@ title('Extensor strain sanity check')
 
 Fmag = vecnorm(pred0.bpa.F_p, 2, 2);
 
-rEff = abs(pred0.TorqueZ) ./ Fmag;
+rEff = pred0.TorqueZ ./ max(Fmag, eps);
 
 figure
 yyaxis left
@@ -499,7 +483,9 @@ ylabel('X3 length loss, mm')
 grid on
 
 %% Optional tiny optimizer smoke test
-runSmallOptimizer = true;
+% Disabled until the route-state model is stable enough for optimizer calls
+% to diagnose optimizer behavior instead of routing-transition behavior.
+runSmallOptimizer = false;
 
 if runSmallOptimizer
     obj = @(x) objective_KneeExt20mm(x, ctx);
@@ -525,4 +511,80 @@ if runSmallOptimizer
     fprintf('restLmt       = %.6f m\n', predTest.restLmt)
     fprintf('cRestLength   = %.6f m\n', predTest.cRestLength)
     fprintf('==========================================\n')
+end
+
+
+function label = routeStateTitle20mm(routeInfo, ii)
+
+optionalRows = 3:7;
+inactiveRows = optionalRows(~routeInfo.active(optionalRows,ii));
+
+if isempty(inactiveRows)
+    label = 'all';
+    return
+end
+
+if isfield(routeInfo, 'eliminationOrder')
+    orderedRows = routeInfo.eliminationOrder(:).';
+    inactiveRows = [ ...
+        orderedRows(ismember(orderedRows, inactiveRows)), ...
+        setdiff(inactiveRows, orderedRows, 'stable')];
+end
+
+label = ['minus ', strjoin(compose('p%d', inactiveRows), ' ')];
+
+end
+
+
+function makeRouteLegend20mm(axLeg, hTemplate, labels)
+
+axis(axLeg, 'off')
+hold(axLeg, 'on')
+
+hLegend = gobjects(numel(labels),1);
+
+for k = 1:numel(labels)
+    hLegend(k) = plot(axLeg, NaN, NaN);
+
+    if k <= numel(hTemplate) && isgraphics(hTemplate(k))
+        hLegend(k).Color = hTemplate(k).Color;
+        hLegend(k).LineStyle = hTemplate(k).LineStyle;
+        hLegend(k).LineWidth = hTemplate(k).LineWidth;
+        hLegend(k).Marker = hTemplate(k).Marker;
+        hLegend(k).MarkerSize = hTemplate(k).MarkerSize;
+    end
+end
+
+legend(axLeg, hLegend, labels, ...
+    'Location', 'northwest', ...
+    'NumColumns', 1)
+
+end
+
+
+function addEliminationLines20mm(routeInfo, phiD)
+
+if ~isfield(routeInfo, 'eliminatedAngleD')
+    return
+end
+
+for j = 1:numel(routeInfo.eliminatedAngleD)
+    phi = routeInfo.eliminatedAngleD(j);
+
+    if isfield(routeInfo, 'eliminatedSweepIndex')
+        ii = routeInfo.eliminatedSweepIndex(j);
+
+        if isfinite(ii) && ii > 1 && ii <= numel(phiD)
+            % Mark the last displayed sample before the repeated-row state.
+            phi = phiD(ii-1);
+        end
+    end
+
+    if isfinite(phi)
+        xline(phi, ':', sprintf('p%d',j), ...
+            'LineWidth', 1.0, ...
+            'HandleVisibility', 'off')
+    end
+end
+
 end

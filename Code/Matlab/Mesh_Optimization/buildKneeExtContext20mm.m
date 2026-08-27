@@ -11,6 +11,7 @@ R = zeros(3, 3, positions);
 T = zeros(4, 4, positions);
 R_Pam = zeros(3, 3, positions);
 T_Pam = zeros(4, 4, positions);
+T_Pam_inv = zeros(4, 4, positions);
 t1toICR = zeros(1,3,positions);
 T_t1_ICR = zeros(4, 4, positions);
 T_ICR_t1 = zeros(4, 4, positions);
@@ -62,6 +63,7 @@ for i = 1:positions
                     0, 0, 1];
     
     T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
+    T_Pam_inv(:, :, i) = TransInv(T_Pam(:, :, i));
     
     t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0]; %distance from theta1 to ICR
     T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');    %transform from the ICR frame to theta1
@@ -79,6 +81,7 @@ ctx.BPAcount   = 2;
 
 ctx.T          = T;
 ctx.T_Pam      = T_Pam;
+ctx.T_Pam_inv  = T_Pam_inv;
 ctx.T_ICR_t1   = T_ICR_t1;
 ctx.T_t1_ICR   = T_t1_ICR;
 ctx.t1toICR    = t1toICR;
@@ -154,7 +157,6 @@ geo.bpaRadius = 0.0385/2;      % 0.01925 m
 % Ignore extremely small direction changes in Xi3 geometry.
 geo.alphaTol = deg2rad(1.0);
 
-
 %% Femur-side geometry
 
 % 10 mm radius cylindrical object.
@@ -176,11 +178,6 @@ geo.femurLineX = geo.femurProfileCenter(1) + 0.030 + geo.bpaRadius;
 % Original line extends from local y = 0 to +48.74 mm.
 geo.femurLineY = geo.femurProfileCenter(2) + [0, 0.04874];
 
-% Original 20 mm fillet plus BPA radius.
-geo.femurFilletClearRadius = 0.020 + geo.bpaRadius;
-% = 0.03925 m
-
-
 % Physical femoral-condyle ellipse.
 geo.femurEllipsePhysicalA = 0.06640/2;
 geo.femurEllipsePhysicalB = 0.05439/2;
@@ -192,11 +189,12 @@ geo.femurEllipseTheta = deg2rad(25.11);
 geo.femurEllipseA = geo.femurEllipsePhysicalA + geo.bpaRadius;
 geo.femurEllipseB = geo.femurEllipsePhysicalB + geo.bpaRadius;
 
-% Precompute the TRUE centerline clearance envelope:
+% Precompute the centerline clearance envelope:
 % physical ellipse point + BPA_radius * outward unit normal.
 %
-% This is the geometry used by buildDistalRingLocation20mm for p4:p6,
-% including the semi-minor-axis clearance at high knee flexion.
+% The robot does not have condyle material to the right of the femur
+% vertical wall. Clip the inflated ellipse at femurLineX and close it with a
+% straight vertical segment; no connector fillet/radius is modeled here.
 nOffset = 180;
 geo.femurOffsetTheta = linspace(-pi, pi, nOffset+1).';
 geo.femurOffsetTheta(end) = [];
@@ -219,8 +217,15 @@ normalLocal = normalLocal ./ vecnorm(normalLocal,2,2);
 
 offsetLocal = ellipseLocal + geo.bpaRadius*normalLocal;
 
-geo.femurOffsetBoundary = ...
+geo.femurOffsetBoundaryFull = ...
     geo.femurProfileCenter + offsetLocal*Rell';
+
+[geo.femurOffsetBoundary, femurClipY] = ...
+    clipClosedPolygonLeftOfVerticalLine( ...
+        geo.femurOffsetBoundaryFull, geo.femurLineX);
+
+geo.femurCondyleClipX = geo.femurLineX;
+geo.femurCondyleClipY = [min(femurClipY), max(femurClipY)];
 
 % Slightly denser closed grid used only for tangent root bracketing.
 geo.femurOffsetThetaSearch = linspace(-pi, pi, 361).';
@@ -255,6 +260,19 @@ geo.tibiaWallY = [ ...
     geo.tibiaLowerCenter(2), ...
     geo.tibiaUpperCenter(2)];
 
+% Route p8 must stay to the +X side of this sloped t1-frame reference,
+% allowing only 7.5 mm of horizontal travel in the -X direction.  This is a
+% solver feasibility limit, not a collision gate in the route-state logic.
+geo.p8MinXLineT1 = [ ...
+    34.60,  -18.87; ...
+    31.38, -181.83]/1000;
+geo.p8MinXMinusOffset = 7.5/1000;
+
+% Temporary tibia wrap-loss curve through p8, p7, and p6.  The center is
+% from the current CAD/debug model; the effective radius is averaged from
+% the three route seed points after p8 is adjusted for the candidate pEnd.
+geo.tibiaCurveCenter = [33.85, 19.27]/1000;
+
 
 %% Tendon limits
 
@@ -278,23 +296,6 @@ ctx.routeSeed = [ ...
     0.07161,  0.00765,  0.00000; ... % p7 Tibia contact, updated
     0.06450, -0.02101,  0.00000; ... % p8 Tibia contact, updated
     0.03406, -0.06687,  0.00000];    % p9 patellar ligament ring, distal
-
-% Use the condyle/ellipse center to define the p3 activation radius.
-% This is ONLY the trigger geometry for turning p3 on.
-geo.p3TriggerCenter = geo.femurProfileCenter;
-geo.p3TriggerRadius = norm(ctx.routeSeed(3,1:2) - geo.p3TriggerCenter);
-
-% Use the circumcenter of the 3-point tibia arc p6-p7-p8 as the tibia
-% bend-radius geometry.
-% Note: this is bend-loss geometry only. It is not a collision/contact
-% trigger, and it does not replace the polyline Lmt path.
-% It is retained as SolidWorks reference geometry, but the current delta_L
-% calculation uses only the p2 cylinder and the p3-to-transformed-p8
-% femoral-condyle definition.
-[geo.tibiaArcCenter, geo.tibiaArcRadius] = threePointCircle( ...
-    ctx.routeSeed(6,1:2), ...
-    ctx.routeSeed(7,1:2), ...
-    ctx.routeSeed(8,1:2));
 
 ctx.geo = geo;
 
@@ -359,6 +360,10 @@ ub(1:3) = p1_0 + [ 0.150,  0.150,  0.060];
 % pEnd search region
 lb(4:6) = pEnd_0 + [0,    -0.150, -0.060];
 ub(4:6) = pEnd_0 + [0.100, 0.060,  0.060];
+
+% Keep the distal t1 insertion y search inside the current CAD envelope.
+lb(5) = -114/1000;
+ub(5) =   24/1000;
 
 % BPA rest-length bounds
 lb(7) = 0.340;
@@ -506,28 +511,103 @@ Lmt = zeros(N, 1);
 
 end
 
-function [C,R] = threePointCircle(P1,P2,P3)
-% Circumcenter / circumradius of a 2-D 3-point arc.
 
-x1 = P1(1); y1 = P1(2);
-x2 = P2(1); y2 = P2(2);
-x3 = P3(1); y3 = P3(2);
+function [polyClip, yCuts] = clipClosedPolygonLeftOfVerticalLine(poly, xMax)
+% Sutherland-Hodgman clip of a closed polygon to x <= xMax.
 
-d = 2*( x1*(y2-y3) + x2*(y3-y1) + x3*(y1-y2) );
+tol = 1e-12;
+n = size(poly, 1);
+polyClip = zeros(0, 2);
+yCuts = zeros(0, 1);
 
-if abs(d) < 1e-12
-    error('threePointCircle:CollinearPoints', ...
-        'p6, p7, p8 are too close to collinear for a 3-point tibia arc.')
+for i = 1:n
+    A = poly(i,:);
+    B = poly(mod(i,n)+1,:);
+
+    insideA = A(1) <= xMax + tol;
+    insideB = B(1) <= xMax + tol;
+
+    if insideA && insideB
+        polyClip(end+1,:) = B; %#ok<AGROW>
+
+    elseif insideA && ~insideB
+        I = verticalLineIntersection(A, B, xMax);
+        polyClip(end+1,:) = I; %#ok<AGROW>
+        yCuts(end+1,1) = I(2); %#ok<AGROW>
+
+    elseif ~insideA && insideB
+        I = verticalLineIntersection(A, B, xMax);
+        polyClip(end+1,:) = I; %#ok<AGROW>
+        yCuts(end+1,1) = I(2); %#ok<AGROW>
+        polyClip(end+1,:) = B; %#ok<AGROW>
+    end
 end
 
-ux = ((x1^2+y1^2)*(y2-y3) + ...
-      (x2^2+y2^2)*(y3-y1) + ...
-      (x3^2+y3^2)*(y1-y2)) / d;
+polyClip = removeAdjacentDuplicatePoints(polyClip, tol);
+yCuts = uniqueWithinTolerance(sort(yCuts), 1e-9);
 
-uy = ((x1^2+y1^2)*(x3-x2) + ...
-      (x2^2+y2^2)*(x1-x3) + ...
-      (x3^2+y3^2)*(x2-x1)) / d;
+if size(polyClip,1) < 3 || numel(yCuts) < 2
+    error('buildKneeExtContext20mm:BadFemurCondyleClip', ...
+        'Unable to clip femur condyle boundary at the vertical wall.')
+end
 
-C = [ux, uy];
-R = norm(P1 - C);
+end
+
+
+function I = verticalLineIntersection(A, B, xValue)
+
+dx = B(1) - A(1);
+
+if abs(dx) < 1e-14
+    I = [xValue, A(2)];
+    return
+end
+
+t = (xValue - A(1))/dx;
+t = min(max(t, 0), 1);
+I = A + t*(B-A);
+I(1) = xValue;
+
+end
+
+
+function P = removeAdjacentDuplicatePoints(P, tol)
+
+if isempty(P)
+    return
+end
+
+keep = true(size(P,1),1);
+
+for i = 2:size(P,1)
+    if norm(P(i,:) - P(i-1,:)) <= tol
+        keep(i) = false;
+    end
+end
+
+P = P(keep,:);
+
+if size(P,1) > 1 && norm(P(end,:) - P(1,:)) <= tol
+    P(end,:) = [];
+end
+
+end
+
+
+function x = uniqueWithinTolerance(x, tol)
+
+if isempty(x)
+    return
+end
+
+keep = true(size(x));
+
+for i = 2:numel(x)
+    if abs(x(i)-x(i-1)) <= tol
+        keep(i) = false;
+    end
+end
+
+x = x(keep);
+
 end
