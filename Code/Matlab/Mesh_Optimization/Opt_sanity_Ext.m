@@ -16,19 +16,19 @@ fprintf('Target: %s\n', ctx.targetName)
 fprintf('BPA diameter: %d mm\n', ctx.Dia)
 fprintf('BPA count: %d\n', ctx.BPAcount)
 fprintf('CrossPoint: %d\n', ctx.CrossPoint)
-fprintf('Xi0 = %.6f m\n', ctx.Xi0)
+fprintf('Xi0 = %.3f m\n', ctx.Xi0)
 fprintf('Xi1 = %.6g N/m\n', ctx.Xi1)
 fprintf('Xi2 = %.6g N/m\n', ctx.Xi2)
-fprintf('Xi3 = %.6f\n', ctx.Xi3)
-fprintf('Initial tendon = %.6f m\n', ctx.initialTendon0)
-fprintf('Initial geometry-dependent tendon maximum = %.6f m\n', ...
+fprintf('Xi3 = %.3f\n', ctx.Xi3)
+fprintf('Initial tendon = %.3f m\n', ctx.initialTendon0)
+fprintf('Initial geometry-dependent tendon maximum = %.3f m\n', ...
     ctx.initialTendonMax)
 fprintf('Inflated BPA clearance diameter = %.3f mm\n', 2*1000*ctx.geo.bpaRadius)
 fprintf('Inflated BPA clearance radius = %.3f mm\n', 1000*ctx.geo.bpaRadius)
 fprintf('Route rows: %d total = 5 femur + 4 t1\n', ctx.routeRows)
-fprintf('Initial max undeformed Lmt = %.6f m at %.2f deg\n', ...
+fprintf('Initial max undeformed Lmt = %.3f m at %.1f deg\n', ...
     ctx.initialMaxLmt0, ctx.initialMaxLmtAngleD)
-fprintf('Initial rest = max(Lmt0) - 2*fitting - tendon - Xi0 = %.6f m\n', ...
+fprintf('Initial rest = max(Lmt0) - 2*fitting - tendon - Xi0 = %.3f m\n', ...
     ctx.initialRest0)
 fprintf('=============================================\n')
 
@@ -44,39 +44,39 @@ if ~pred0.ok
     error('Initial prediction failed: %s', pred0.failReason)
 end
 
-fprintf('\np1 = [%.6f %.6f %.6f] m\n', pred0.p1)
-fprintf('pEnd = [%.6f %.6f %.6f] m  [route row p9]\n', pred0.pEnd)
-fprintf('rest   = %.6f m\n', pred0.rest)
-fprintf('tendon = %.6f m\n', pred0.tendon)
-fprintf('KMAX   = %.6f\n', pred0.KMAX)
-fprintf('kmax   = %.6f m\n', pred0.kmax)
+fprintf('\np1   = [% .3f % .3f % .3f] m\n', pred0.p1)
+fprintf('pEnd = [% .3f % .3f % .3f] m  [route row p9]\n', pred0.pEnd)
+fprintf('rest   = %.3f m\n', pred0.rest)
+fprintf('tendon = %.3f m\n', pred0.tendon)
+fprintf('KMAX   = %.3f\n', pred0.KMAX)
+fprintf('kmax   = %.3f m\n', pred0.kmax)
 
 fprintf('\nPath-length check:\n')
-fprintf('maxPathLength0 = %.6f m\n', pred0.maxPathLength0)
-fprintf('maxPathAngleD0 = %.2f deg\n', pred0.maxPathAngleD0)
-fprintf('restLmt        = %.6f m\n', pred0.restLmt)
-fprintf('cRestLength    = %.6f m\n', pred0.cRestLength)
+fprintf('maxPathLength0 = %.3f m\n', pred0.maxPathLength0)
+fprintf('maxPathAngleD0 = %.1f deg\n', pred0.maxPathAngleD0)
+fprintf('restLmt        = %.3f m\n', pred0.restLmt)
+fprintf('cRestLength    = %.3f m\n', pred0.cRestLength)
 
 if isfield(pred0, 'maxPathLengthDeformed')
-    fprintf('maxPathLength deformed diagnostic = %.6f m\n', ...
+    fprintf('maxPathLength deformed diagnostic = %.3f m\n', ...
         pred0.maxPathLengthDeformed)
 end
 
 if isfield(pred0, 'maxPathAngleDDeformed')
-    fprintf('maxPathAngleD deformed diagnostic = %.2f deg\n', ...
+    fprintf('maxPathAngleD deformed diagnostic = %.1f deg\n', ...
         pred0.maxPathAngleDDeformed)
 end
 
 fprintf('\nStrain check:\n')
-fprintf('max(strain_f) = %.6f  [includes Xi3, force strain]\n', max(pred0.strain_f))
-fprintf('min(strain_f) = %.6f\n', min(pred0.strain_f))
-fprintf('max(strain_p) = %.6f  [excludes Xi3, measured-comparison strain]\n', max(pred0.strain_p))
-fprintf('min(strain_p) = %.6f\n', min(pred0.strain_p))
+fprintf('max(strain_f) = %.3f  [includes Xi3, force strain]\n', max(pred0.strain_f))
+fprintf('min(strain_f) = %.3f\n', min(pred0.strain_f))
+fprintf('max(strain_p) = %.3f  [excludes Xi3, measured-comparison strain]\n', max(pred0.strain_p))
+fprintf('min(strain_p) = %.3f\n', min(pred0.strain_p))
 
 [~, idxExtension] = max(ctx.phiD);
 reserveAtExtension = pred0.KMAX - pred0.strain_f(idxExtension);
 
-fprintf('Reserve contraction at +10 deg = %.6f strain fraction\n', reserveAtExtension)
+fprintf('Reserve contraction at +10 deg = %.3f strain fraction\n', reserveAtExtension)
 fprintf('(No equality constraint forces strain_f(+10 deg) = KMAX.)\n')
 fprintf('====================================\n')
 
@@ -85,14 +85,14 @@ fprintf('====================================\n')
 routeInfo = pred0.routeInfo;
 
 fprintf('\n========== ROUTING CONTACT ELIMINATION ==========\n')
-fprintf('Sweep increment = %.9f deg\n', routeInfo.sweepStepD)
-fprintf('Sweep start     = %.9f deg\n', routeInfo.sweepD(1))
-fprintf('Solver max      = %.9f deg\n', max(ctx.phiD))
-fprintf('Solver min      = %.9f deg\n\n', min(ctx.phiD))
-fprintf('%-5s %-7s %18s %22s %12s %12s %12s\n', ...
+fprintf('Sweep increment = %.1f deg\n', routeInfo.sweepStepD)
+fprintf('Sweep start     = %.1f deg\n', routeInfo.sweepD(1))
+fprintf('Solver max      = %.1f deg\n', max(ctx.phiD))
+fprintf('Solver min      = %.1f deg\n\n', min(ctx.phiD))
+fprintf('%-5s | %-5s | %11s | %14s | %7s | %7s | %7s\n', ...
     'Point', 'Frame', 'Initial deg', 'Eliminated deg', 'x, m', 'y, m', 'z, m')
-fprintf('%-5s %-7s %18s %22s %12s %12s %12s\n', ...
-    '-----', '-----', '-----------', '--------------', '----', '----', '----')
+fprintf('%s\n', ...
+    '------+-------+-------------+----------------+---------+---------+---------')
 
 for j = 1:9
     q = routeInfo.addedPoint(j,:);
@@ -100,10 +100,10 @@ for j = 1:9
     if isnan(routeInfo.eliminatedAngleD(j))
         elimText = 'active';
     else
-        elimText = sprintf('% .9f', routeInfo.eliminatedAngleD(j));
+        elimText = sprintf('% .1f', routeInfo.eliminatedAngleD(j));
     end
 
-    fprintf('p%-4d %-7s %18.9f %22s %12.8f %12.8f %12.8f\n', ...
+    fprintf('p%-4d | %-5s | %11.1f | %14s | %7.3f | %7.3f | %7.3f\n', ...
         j, char(routeInfo.pointFrame(j)), routeInfo.addedAngleD(j), ...
         elimText, q(1), q(2), q(3))
 end
@@ -118,11 +118,13 @@ end
 fprintf('\n')
 
 fprintf('\n========== ACTIVE POINTS OVER SOLVER RANGE ==========\n')
+fprintf('%8s | %s\n', 'Phi deg', 'Active route rows')
+fprintf('%s\n', '---------+------------------')
 prevActive = false(9,1);
 for ii = 1:ctx.N
     a = routeInfo.active(:,ii);
     if ii == 1 || any(a ~= prevActive)
-        fprintf('%10.4f deg :', ctx.phiD(ii))
+        fprintf('%8.1f |', ctx.phiD(ii))
         fprintf(' p%d', find(a))
         fprintf('\n')
     end
@@ -142,10 +144,11 @@ if isfield(routeInfo, 'angleCull')
     fprintf('Femur margins use y-flipped clockwise atan2d; t1 margins use native counterclockwise atan2d.\n')
     fprintf('No principal-angle wrapping is applied to the comparison.\n')
     fprintf('Positive margin means the angle gate allows removal. Collision gates are disabled for this route-state test.\n')
-    fprintf('%-8s', 'Point')
+    fprintf('Columns after Point are nearest solver knee-angle samples, deg.\n')
+    fprintf('%-8s |', 'Point')
 
     for kk = 1:numel(sampleIdx)
-        fprintf('%10.1f', ctx.phiD(sampleIdx(kk)))
+        fprintf(' %8.1f |', ctx.phiD(sampleIdx(kk)))
     end
 
     fprintf('\n')
@@ -154,8 +157,8 @@ if isfield(routeInfo, 'angleCull')
 
     for rr = 1:numel(cullRows)
         j = cullRows(rr);
-        fprintf('p%-7d', j)
-        fprintf('%10.3f', routeInfo.angleCull.marginD(j,sampleIdx))
+        fprintf('p%-7d |', j)
+        fprintf(' %8.3f |', routeInfo.angleCull.marginD(j,sampleIdx))
         fprintf('\n')
     end
 
@@ -166,6 +169,11 @@ raw = routeInfo.raw;
 loc = pred0.Location;
 
 fprintf('\n========== MAX POINT-TO-POINT JUMPS ==========\n')
+fprintf('%-5s | %12s | %12s | %10s | %15s | %12s | %10s\n', ...
+    'Point', 'Raw jump m', 'Raw from deg', 'Raw to deg', ...
+    'Location jump m', 'Loc from deg', 'Loc to deg')
+fprintf('%s\n', ...
+    '------+--------------+--------------+------------+-----------------+--------------+------------')
 for j = 1:9
     Rj = squeeze(raw(j,:,:)).';
     Lj = squeeze(loc(j,:,:)).';
@@ -176,11 +184,10 @@ for j = 1:9
     [maxRaw, iRaw] = max(dRaw);
     [maxLoc, iLoc] = max(dLoc);
 
-    fprintf(['p%d: raw = %8.3f mm, %8.3f -> %8.3f deg' ...
-             ' | Location = %8.3f mm, %8.3f -> %8.3f deg\n'], ...
+    fprintf('p%-4d | %12.3f | %12.1f | %10.1f | %15.3f | %12.1f | %10.1f\n', ...
         j, ...
-        1000*maxRaw, ctx.phiD(iRaw), ctx.phiD(iRaw+1), ...
-        1000*maxLoc, ctx.phiD(iLoc), ctx.phiD(iLoc+1))
+        maxRaw, ctx.phiD(iRaw), ctx.phiD(iRaw+1), ...
+        maxLoc, ctx.phiD(iLoc), ctx.phiD(iLoc+1))
 end
 
 [dPathJump, iPathJump] = max(abs(diff(pred0.pathLength0)));
@@ -188,12 +195,16 @@ end
 [dLossJump, iLossJump] = max(abs(diff(pred0.delta_L)));
 
 fprintf('\n========== LARGEST CURVE JUMPS ==========\n')
-fprintf('undeformed path: %8.3f mm, %8.3f -> %8.3f deg\n', ...
-    1000*dPathJump, ctx.phiD(iPathJump), ctx.phiD(iPathJump+1))
-fprintf('bendMeasure:     %8.3f mm, %8.3f -> %8.3f deg\n', ...
-    1000*dBendJump, ctx.phiD(iBendJump), ctx.phiD(iBendJump+1))
-fprintf('X3 delta_L:      %8.3f mm, %8.3f -> %8.3f deg\n', ...
-    1000*dLossJump, ctx.phiD(iLossJump), ctx.phiD(iLossJump+1))
+fprintf('%-18s | %12s | %8s | %8s\n', ...
+    'Signal', 'Max jump m', 'From deg', 'To deg')
+fprintf('%s\n', ...
+    '-------------------+--------------+----------+---------')
+fprintf('%-18s | %12.3f | %8.1f | %8.1f\n', 'undeformed path', ...
+    dPathJump, ctx.phiD(iPathJump), ctx.phiD(iPathJump+1))
+fprintf('%-18s | %12.3f | %8.1f | %8.1f\n', 'bendMeasure', ...
+    dBendJump, ctx.phiD(iBendJump), ctx.phiD(iBendJump+1))
+fprintf('%-18s | %12.3f | %8.1f | %8.1f\n', 'X3 delta_L', ...
+    dLossJump, ctx.phiD(iLossJump), ctx.phiD(iLossJump+1))
 fprintf('Interference gates are disabled; route elimination is angle-only in this run.\n')
 fprintf('===============================================\n')
 
@@ -202,15 +213,18 @@ if isfield(routeInfo, 'wrap')
     wrap = routeInfo.wrap;
 
     fprintf('\n========== WRAP ANGLES BY CONTACT ==========\n')
-    fprintf('Contact                    Max jump, deg      Knee span, deg       Max angle, deg\n')
-    fprintf('------------------------   -------------      --------------       --------------\n')
+    fprintf('Summary table: max single-step wrap-angle change by contact.\n')
+    fprintf('%-24s | %12s | %8s | %8s | %13s\n', ...
+        'Contact', 'Max jump deg', 'From deg', 'To deg', 'Max angle deg')
+    fprintf('%s\n', ...
+        '-------------------------+--------------+----------+----------+---------------')
 
     for cWrap = 1:numel(wrap.labels)
 
         aD = wrap.angleDeg(cWrap,:);
         [maxJump, iJump] = max(abs(diff(aD)));
 
-        fprintf('%-24s   %13.3f      %7.3f -> %7.3f       %14.3f\n', ...
+        fprintf('%-24s | %12.1f | %8.1f | %8.1f | %13.1f\n', ...
             wrap.labels{cWrap}, maxJump, ...
             ctx.phiD(iJump), ctx.phiD(iJump+1), max(aD))
     end
@@ -223,29 +237,31 @@ if isfield(routeInfo, 'wrap')
     end
 
     fprintf('\nWrap angle samples, deg:\n')
-    fprintf('%-24s', 'Contact')
+    fprintf('Columns after Contact are nearest solver knee-angle samples, deg.\n')
+    fprintf('%-24s |', 'Contact')
     for kk = 1:numel(sampleIdx)
-        fprintf('%10.1f', ctx.phiD(sampleIdx(kk)))
+        fprintf(' %8.1f |', ctx.phiD(sampleIdx(kk)))
     end
     fprintf('\n')
 
     for cWrap = 1:numel(wrap.labels)
-        fprintf('%-24s', wrap.labels{cWrap})
-        fprintf('%10.3f', wrap.angleDeg(cWrap,sampleIdx))
+        fprintf('%-24s |', wrap.labels{cWrap})
+        fprintf(' %8.1f |', wrap.angleDeg(cWrap,sampleIdx))
         fprintf('\n')
     end
 
     if isfield(wrap, 'radius')
         fprintf('\nEffective bend radius samples, mm:\n')
-        fprintf('%-24s', 'Contact')
+        fprintf('Columns after Contact are nearest solver knee-angle samples, deg.\n')
+        fprintf('%-24s |', 'Contact')
         for kk = 1:numel(sampleIdx)
-            fprintf('%10.1f', ctx.phiD(sampleIdx(kk)))
+            fprintf(' %8.1f |', ctx.phiD(sampleIdx(kk)))
         end
         fprintf('\n')
 
         for cWrap = 1:numel(wrap.labels)
-            fprintf('%-24s', wrap.labels{cWrap})
-            fprintf('%10.3f', 1000*wrap.radius(cWrap,sampleIdx))
+            fprintf('%-24s |', wrap.labels{cWrap})
+            fprintf(' %8.3f |', 1000*wrap.radius(cWrap,sampleIdx))
             fprintf('\n')
         end
 

@@ -354,20 +354,20 @@ lb = x0;
 ub = x0;
 
 % p1 search region
-lb(1:3) = p1_0 + [-0.060, -0.060, -0.060];
-ub(1:3) = p1_0 + [ 0.150,  0.150,  0.060];
+lb(1:3) = p1_0 + [-0.040, -0.060, 0];
+ub(1:3) = p1_0 + [ 0.150,  0.10,  0.060];
 
 % pEnd search region
-lb(4:6) = pEnd_0 + [0,    -0.150, -0.060];
-ub(4:6) = pEnd_0 + [0.100, 0.060,  0.060];
+lb(4:6) = pEnd_0 + [-0.030,    -0.200, 0];
+ub(4:6) = pEnd_0 + [0.150, 0.024,  0.030];
 
 % Keep the distal t1 insertion y search inside the current CAD envelope.
-lb(5) = -114/1000;
-ub(5) =   24/1000;
+% lb(5) = -114/1000;
+% ub(5) =   24/1000;
 
 % BPA rest-length bounds
-lb(7) = 0.340;
-ub(7) = 0.850;
+lb(7) = 0.121/.255;  %distance travel required for RoM divided by kmax = 0.475; Judging by Opt_sanity_Ext, we probably need like travel/(kmax/2) which would be 0.949 m. So set upper limit to 1.2 m?
+ub(7) = 1.2;
 
 % Global tendon bounds.
 % The position-dependent upper bound is handled by nonlconExt20mm.

@@ -19,7 +19,7 @@ end
 optsG = optimoptions('surrogateopt', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 1000);
+    'MaxFunctionEvaluations', 1200);
 
 [xG, fG] = surrogateopt(objconstr, ctx.lb, ctx.ub, optsG);
 
@@ -47,42 +47,57 @@ fprintf('\n========== OPTIMIZED DESIGN VALUES ==========\n')
 fprintf('\nObjective value:\n')
 fprintf('fBest = %.6g\n', fBest)
 
-fprintf('\np1 original, m:\n')
-fprintf('[%.6f, %.6f, %.6f]\n', ctx.x0(1:3))
-
-fprintf('\np1 optimized, m:\n')
-fprintf('[%.6f, %.6f, %.6f]\n', predBest.p1)
-
-fprintf('\npEnd original, m:\n')
-fprintf('[%.6f, %.6f, %.6f]\n', ctx.x0(4:6))
-
-fprintf('\npEnd optimized, m:\n')
-fprintf('[%.6f, %.6f, %.6f]\n', predBest.pEnd)
-
-fprintf('\np1 change, m:\n')
-fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.p1 - ctx.x0(1:3))
-
-fprintf('\npEnd change, m:\n')
-fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.pEnd - ctx.x0(4:6))
+fprintf('\nEndpoint coordinates, m:\n')
+fprintf('%-15s | %9s | %9s | %9s\n', 'Point set', 'x, m', 'y, m', 'z, m')
+fprintf('%s\n', '----------------+-----------+-----------+----------')
+fprintf('%-15s | %9.3f | %9.3f | %9.3f\n', ...
+    'p1 original', ctx.x0(1:3))
+fprintf('%-15s | %9.3f | %9.3f | %9.3f\n', ...
+    'p1 optimized', predBest.p1)
+fprintf('%-15s | %9.3f | %9.3f | %9.3f\n', ...
+    'pEnd original', ctx.x0(4:6))
+fprintf('%-15s | %9.3f | %9.3f | %9.3f\n', ...
+    'pEnd optimized', predBest.pEnd)
+fprintf('%-15s | %+9.3f | %+9.3f | %+9.3f\n', ...
+    'p1 change', predBest.p1 - ctx.x0(1:3))
+fprintf('%-15s | %+9.3f | %+9.3f | %+9.3f\n', ...
+    'pEnd change', predBest.pEnd - ctx.x0(4:6))
 
 fprintf('\nBPA/tendon lengths:\n')
-fprintf('rest   = %.6f m\n', predBest.rest)
-fprintf('tendon = %.6f m\n', predBest.tendon)
+fprintf('%-15s | %10s\n', 'Quantity', 'Value, m')
+fprintf('%s\n', '----------------+------------')
+fprintf('%-15s | %10.3f\n', 'rest', predBest.rest)
+fprintf('%-15s | %10.3f\n', 'tendon', predBest.tendon)
 
 fprintf('\nKMAX/kmax:\n')
-fprintf('KMAX = %.6f\n', predBest.KMAX)
-fprintf('kmax = %.6f m\n', predBest.kmax)
+fprintf('%-15s | %10s\n', 'Quantity', 'Value')
+fprintf('%s\n', '----------------+------------')
+fprintf('%-15s | %10.3f\n', 'KMAX', predBest.KMAX)
+fprintf('%-15s | %10.3f m\n', 'kmax', predBest.kmax)
 
 fprintf('\nConstraint check:\n')
-fprintf('maxPathLength0 = %.6f m\n', predBest.maxPathLength0)
-fprintf('restLmt        = %.6f m\n', predBest.restLmt)
-fprintf('cRestLength    = %.6f m\n', predBest.cRestLength)
+fprintf('%-15s | %10s\n', 'Quantity', 'Value, m')
+fprintf('%s\n', '----------------+------------')
+fprintf('%-15s | %10.3f\n', 'maxPathLength0', predBest.maxPathLength0)
+fprintf('%-15s | %10.3f\n', 'restLmt', predBest.restLmt)
+fprintf('%-15s | %10.3f\n', 'cRestLength', predBest.cRestLength)
 
 fprintf('=============================================\n')
 
-restcheck = max(predBest.bpa.MuscleLength)-2*predBest.bpa.FittingLength-predBest.bpa.TendonL-predBest.bpa.Xi0
-distanceChange = max(predBest.bpa.MuscleLength)-min(predBest.bpa.MuscleLength)
-distancePossible = predBest.bpa.RestingL-predBest.bpa.Kmax
+restcheck = ...
+    max(predBest.bpa.MuscleLength) ...
+    - 2*predBest.bpa.FittingLength ...
+    - predBest.bpa.TendonL ...
+    - predBest.bpa.Xi0;
+distanceChange = max(predBest.bpa.MuscleLength) - min(predBest.bpa.MuscleLength);
+distancePossible = predBest.bpa.RestingL - predBest.bpa.Kmax;
+
+fprintf('\nBPA travel check:\n')
+fprintf('%-17s | %10s\n', 'Quantity', 'Value, m')
+fprintf('%s\n', '------------------+------------')
+fprintf('%-17s | %10.3f\n', 'restcheck', restcheck)
+fprintf('%-17s | %10.3f\n', 'distanceChange', distanceChange)
+fprintf('%-17s | %10.3f\n', 'distancePossible', distancePossible)
 
 %% ================================================================
 %  OPTIMIZED-DESIGN PLOTS
