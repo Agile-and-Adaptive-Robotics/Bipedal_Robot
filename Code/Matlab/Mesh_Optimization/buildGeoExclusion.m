@@ -1,5 +1,5 @@
 function geo = buildGeoExclusion()
-%BUILDGEOEXCLUSION Geometry for p2 exclusion.
+%BUILDGEOEXCLUSION Geometry for p2 and inflated-BPA exclusion.
 %
 % p2 = [px py pz]
 %
@@ -15,6 +15,18 @@ function geo = buildGeoExclusion()
 
 geo.clearance = 0.001;
 
+% Collision envelope for the nominal 20 mm BPA.  The measured/selected
+% maximum inflated diameter is 38.5 mm.  The tendon is 2.0 mm diameter.
+% Collision is checked at +5 deg, the physical robot extension limit,
+% where the flexor has the least joint clearance.  The centerline sampling
+% allowance in nonlconExclusion makes the discrete test conservative.
+geo.inflatedDiameter = 0.0385;
+geo.bpaRadius = geo.inflatedDiameter/2;
+geo.tendonDiameter = 0.002;
+geo.tendonRadius = geo.tendonDiameter/2;
+geo.collisionAngleD = 5;
+geo.centerlineSampleStep = 0.001;
+
 geo.yCut = -0.00887;
 
 % Case 2 circle
@@ -29,6 +41,27 @@ geo.R = 0.035;
 
 % Horizontal bottom is 37.5 mm below z = 0 in the SolidWorks top view.
 geo.zBottom = 0.0375;
+
+% Femoral-condyle ellipse from the extensor geometry, expressed in the
+% femur-frame X-Y plane.  Keep the physical ellipse here; the inflated BPA
+% radius is applied as a true Euclidean distance offset by the constraint.
+geo.femurProfileCenter = [0.01817, -0.41031];
+geo.femurEllipsePhysicalA = 0.06640/2;
+geo.femurEllipsePhysicalB = 0.05439/2;
+geo.femurEllipseTheta = deg2rad(25.11);
+
+% The condyles have the same Z width as the proximal-tibia outer profile.
+geo.femurZMin = geo.zBackTop;
+geo.femurZMax = geo.zBottom;
+
+ellipseParameter = linspace(0, 2*pi, 721).';
+ellipseLocal = [geo.femurEllipsePhysicalA*cos(ellipseParameter), ...
+                geo.femurEllipsePhysicalB*sin(ellipseParameter)];
+Rell = [cos(geo.femurEllipseTheta), -sin(geo.femurEllipseTheta); ...
+        sin(geo.femurEllipseTheta),  cos(geo.femurEllipseTheta)];
+ellipseFemur = ellipseLocal*Rell.' + geo.femurProfileCenter;
+geo.femurEllipseX = ellipseFemur(:,1);
+geo.femurEllipseY = ellipseFemur(:,2);
 
 % Pick this as far as you need the horizontal segment to exist.
 % Use your p2 upper x bound here if that is larger.

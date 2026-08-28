@@ -104,9 +104,12 @@ p20 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
 % p20 = [-0.022, -0.024, 0.02787];  %Insertion distance from theta1
 v20 = zeros(1,3,positions);      
 
-p1 = [-0.049813, 0.134743, 0.050129];       %Origin
-p2 = [-0.008565, -0.022566, 0.027702];  %Insertion distance from theta1
+load Bifemsh_20mm_Result.mat xBest
+p1 = xBest(1:3); %Origin
+p2 = xBest(4:6); %Insertion distance from theta
 v2 = zeros(1,3,positions);
+u2 = zeros(1,3,positions);
+
 
 for i = 1:positions
 
@@ -117,6 +120,16 @@ for i = 1:positions
      v20(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p20); %Insertion location wrt Knee ICR
     Location0(:,:,i) = [p10; ...
                        v20(:,:,i)];
+
+    %shift left
+    u2(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p2-[0.015, 0, 0]); %Insertion location wrt Knee ICR
+    Location2(:,:,i) = [p1-[0.015, 0, 0]; ...
+                       v2(:,:,i)];
+
+    %shift up
+    Location3(:,:,i) = [p1+[0,0.012,0]; ...
+                       v2(:,:,i)];
+
 end
 
 %20 mm Festo
@@ -129,8 +142,8 @@ tendon0 = 0.015;
 % fitting = 0.021; %Lower profile fittings at this BPA diameter
 
 %from optimization:
-rest   =  0.538494;
-tendon = 0.025022;
+rest   =  xBest(7);
+tendon = xBest(8);
 KMAX = 0.255; %maximum contraction percentage
 kmax = (1 - KMAX)*rest;  % (1 - KMAX)*rest; Maximum contraction length.
 fitting = 0.021;
@@ -159,11 +172,15 @@ Bifemsh_Pam1 = MonoPamDataExplicit_balance(Name, Location, CrossPoint, Dia, T_Pa
 Bifemsh_Pam2 = MonoPamDataExplicit_balance(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, wraps);
 Bifemsh_Pam3 = MonoPamDataExplicit_balance(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, wraps);
 
+% shift left; 
+Bifemsh_Pam1u = MonoPamDataExplicit_balance(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, wraps);
+Bifemsh_Pam2u = MonoPamDataExplicit_balance(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, wraps);
+Bifemsh_Pam3u = MonoPamDataExplicit_balance(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, wraps);
 
-% tendon_adj = tendon+0.0119; 
-% Bifemsh_Pam_adj1 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres1);
-% Bifemsh_Pam_adj2 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres2);
-% Bifemsh_Pam_adj3 = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon_adj, fitting, pres3);
+% shift left; 
+Bifemsh_Pam1w = MonoPamDataExplicit_balance(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, wraps);
+Bifemsh_Pam2w = MonoPamDataExplicit_balance(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, wraps);
+Bifemsh_Pam3w = MonoPamDataExplicit_balance(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, wraps);
 
 %% Create strings for later plots
 %First pressure

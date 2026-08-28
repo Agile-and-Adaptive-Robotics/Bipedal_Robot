@@ -58,7 +58,10 @@ function pred = predictKneeFlexor20mm(x, ctx)
     pred.Torque   = bpa.Torque_p;
     pred.TorqueZ  = bpa.Torque_p(:,3);
     pred.strain   = bpa.strain_p(:);
+    pred.relativeStrain = pred.strain ./ KMAX;
     pred.activeLength = rest .* (1 - pred.strain);
+    pred.momentArmVector = bpa.mA_p;
+    pred.momentArm = hypot(bpa.mA_p(:,1), bpa.mA_p(:,2));
 
     % Store design variables for optimizer output.
     pred.p1 = p1;

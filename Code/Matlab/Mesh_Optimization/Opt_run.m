@@ -1,15 +1,15 @@
 clear
+clear functions
 clc
 rehash
 
 ctx = buildKneeFlexorContext20mm();
-
 geo = buildGeoExclusion();
 idxP2 = 4:6;
 
 obj = @(x) objective_KneeFlexor20mm(x, ctx);
-objconstr = @(x) objconstrExclusion(x, obj, geo, idxP2);
-nonlcon = @(x) nonlconExclusion(x, geo, idxP2);
+objconstr = @(x) objconstrExclusion(x, obj, geo, ctx, idxP2);
+nonlcon = @(x) nonlconExclusion(x, geo, ctx, idxP2);
 
 rng default
 
@@ -17,65 +17,364 @@ if isempty(gcp('nocreate'))
     parpool;
 end
 
+%% Global search
 optsG = optimoptions('surrogateopt', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 400);
+    'MaxFunctionEvaluations', 1500);
 
-[xG, fG] = surrogateopt(objconstr, ctx.lb, ctx.ub, optsG);
+[xG, fG, exitflagG, outputG] = surrogateopt( ...
+    objconstr, ctx.lb, ctx.ub, optsG);
 
+%% Pattern-search refinement
 optsP = optimoptions('patternsearch', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 3000, ...
+    'MaxFunctionEvaluations', 30000, ...
     'MeshTolerance', 1e-5, ...
-    'StepTolerance', 1e-5);
+    'StepTolerance', 1e-5, ...
+    'PlotFcn', {@psplotbestf, ...
+                @psplotfuncount, ...
+                @psplotmeshsize, ...
+                @psplotmaxconstr}, ...
+    'OutputFcn', @patternProgress);
 
-[xBest, fBest] = patternsearch(obj, xG, [], [], [], [], ctx.lb, ctx.ub, nonlcon, optsP);
+[xBest, fBest, exitflagP, outputP] = patternsearch( ...
+    obj, xG, [], [], [], [], ctx.lb, ctx.ub, nonlcon, optsP);
 
+%% Evaluate original and optimized designs
+predOriginal = predictKneeFlexor20mm(ctx.x0, ctx);
 predBest = predictKneeFlexor20mm(xBest, ctx);
+[cCollision, ~, collisionInfo] = nonlconExclusion( ...
+    xBest, geo, ctx, idxP2);
+
+if ~predOriginal.ok
+    error('Original-design prediction failed: %s', predOriginal.failReason)
+end
+
+if ~predBest.ok
+    error('Optimized-design prediction failed: %s', predBest.failReason)
+end
+
+constraintTolerance = optsP.ConstraintTolerance;
+collisionFeasible = all(cCollision <= constraintTolerance);
+
+% Do not present an infeasible final iterate as an optimized solution.
+if ~collisionFeasible
+    error(['Pattern search returned an infeasible point. Maximum nonlinear ' ...
+        'constraint violation = %.9g m; tolerance = %.9g m.'], ...
+        max(cCollision), constraintTolerance)
+end
+
+%% Full-extension/full-flexion muscle-length and travel calculations
+[~, idxFullExtension] = max(ctx.phiD);  % +10 deg normal calculation limit
+[~, idxFullFlexion] = min(ctx.phiD);    % -120 deg normal calculation limit
+
+LmExtension = predBest.activeLength(idxFullExtension);
+LmFlexion = predBest.activeLength(idxFullFlexion);
+deltaLmSigned = LmFlexion - LmExtension;
+deltaLmAbsolute = abs(deltaLmSigned);
+
+% Maximum physical BPA shortening from resting to fully contracted length.
+maxContractionTravel = predBest.rest - predBest.kmax;
+
 %% Display results
-
 fprintf('\n========== OPTIMIZED DESIGN VALUES ==========\n')
-
-fprintf('\nObjective value:\n')
-fprintf('fBest = %.6g\n', fBest)
+fprintf('surrogateopt exitflag    = %d\n', exitflagG)
+fprintf('patternsearch exitflag   = %d\n', exitflagP)
+fprintf('surrogate evaluations   = %d\n', outputG.funccount)
+fprintf('pattern evaluations     = %d\n', outputP.funccount)
+fprintf('fG                       = %.9g\n', fG)
+fprintf('fBest                    = %.9g\n', fBest)
 
 fprintf('\np1 original, m:\n')
 fprintf('[%.6f, %.6f, %.6f]\n', ctx.x0(1:3))
-
-fprintf('\np1 optimized, m:\n')
+fprintf('p1 optimized, m:\n')
 fprintf('[%.6f, %.6f, %.6f]\n', predBest.p1)
+fprintf('p1 change, m:\n')
+fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.p1 - ctx.x0(1:3))
 
 fprintf('\np2 original, m:\n')
 fprintf('[%.6f, %.6f, %.6f]\n', ctx.x0(4:6))
-
-fprintf('\np2 optimized, m:\n')
+fprintf('p2 optimized, m:\n')
 fprintf('[%.6f, %.6f, %.6f]\n', predBest.p2)
-
-fprintf('\np1 change, m:\n')
-fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.p1 - ctx.x0(1:3))
-
-fprintf('\np2 change, m:\n')
+fprintf('p2 change, m:\n')
 fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.p2 - ctx.x0(4:6))
 
-fprintf('\nBPA/tendon lengths:\n')
-fprintf('rest   = %.6f m\n', predBest.rest)
-fprintf('tendon = %.6f m\n', predBest.tendon)
+fprintf('\nBPA and tendon lengths:\n')
+fprintf('rest length                         = %.6f m\n', predBest.rest)
+fprintf('fully contracted length, kmax       = %.6f m\n', predBest.kmax)
+fprintf('maximum contraction fraction, KMAX  = %.6f\n', predBest.KMAX)
+fprintf('maximum BPA contraction travel      = %.6f m\n', maxContractionTravel)
+fprintf('tendon length                       = %.6f m\n', predBest.tendon)
 
-fprintf('\nKMAX/kmax:\n')
-fprintf('KMAX = %.6f\n', predBest.KMAX)
-fprintf('kmax = %.6f m\n', predBest.kmax)
+fprintf('\nMuscle length over normal RoM:\n')
+fprintf('Lm at full extension (%+.6f deg) = %.6f m\n', ...
+    ctx.phiD(idxFullExtension), LmExtension)
+fprintf('Lm at full flexion   (%+.6f deg) = %.6f m\n', ...
+    ctx.phiD(idxFullFlexion), LmFlexion)
+fprintf('Lm flexion minus extension         = %+.6f m\n', deltaLmSigned)
+fprintf('absolute Lm difference             = %.6f m\n', deltaLmAbsolute)
 
-fprintf('\nConstraint check:\n')
+fprintf('\nRest-length check:\n')
 fprintf('restLmt           = %.6f m\n', predBest.restLmt)
 fprintf('extensionDistance = %.6f m\n', predBest.extensionDistance)
 fprintf('cRestLength       = %.6f m\n', predBest.cRestLength)
 
+fprintf('\nCollision check at %.6f deg:\n', collisionInfo.angleD)
+fprintf('constraint tolerance       = %.9g m\n', constraintTolerance)
+fprintf('all collision constraints feasible = %d\n', collisionFeasible)
+fprintf('p2 exclusion constraint    = %.6f m\n', cCollision(1))
+fprintf('tibia collision constraint = %.6f m\n', cCollision(2))
+fprintf('femur collision constraint = %.6f m\n', cCollision(3))
+fprintf('series-length constraint   = %.6f m\n', cCollision(4))
+fprintf('inflated BPA radius        = %.6f m\n', collisionInfo.bpaRadius)
+fprintf('tendon radius              = %.6f m\n', collisionInfo.tendonRadius)
+fprintf('optimized tendon length    = %.6f m\n', collisionInfo.tendon)
+fprintf('tendon length checked      = %.6f m\n', ...
+    collisionInfo.tendonLengthChecked)
+fprintf('current muscle length Lm   = %.6f m\n', ...
+    collisionInfo.currentMuscleLength)
+fprintf('Lm + two fittings          = %.6f m\n', ...
+    collisionInfo.bpaFittingsLengthChecked)
+fprintf('minimum tibia clearance    = %.6f m\n', ...
+    collisionInfo.minClearanceTibia)
+fprintf('minimum femur clearance    = %.6f m\n', ...
+    collisionInfo.minClearanceFemur)
+fprintf('required clearance         = %.6f m\n', ...
+    collisionInfo.requiredClearance)
+fprintf('worst tibia region         = %s\n', ...
+    collisionInfo.worstTibiaRegion)
+fprintf('worst tibia component      = %s (radius %.6f m)\n', ...
+    collisionInfo.worstTibiaComponent, collisionInfo.worstTibiaRadius)
+fprintf('worst tibia center, t1     = [%.6f, %.6f, %.6f] m\n', ...
+    collisionInfo.worstTibiaCenterT1)
+fprintf('worst femur component      = %s (radius %.6f m)\n', ...
+    collisionInfo.worstFemurComponent, collisionInfo.worstFemurRadius)
+fprintf('worst femur center, femur  = [%.6f, %.6f, %.6f] m\n', ...
+    collisionInfo.worstFemurCenterFemur)
 fprintf('=============================================\n')
 
-figure
-plot(ctx.phiD, predBest.TorqueZ, ctx.humanAngleD, -ctx.humanTorqueAbs)
-legend('BPA torque','Human target')
-xlabel('Knee angle, deg')
-ylabel('Torque magnitude, N m')
+%% Plot original and optimized results in separate figure windows
+humanTorque = -ctx.humanTorqueAbs;  % Flexor torque remains negative.
+
+% Use the established accessible project palette.  Colors.m supplies c for
+% line colors and d for RGB scatter-marker colors; these figures use c.
+run('Colors.m')
+originalColor = [0.4 0.4 0.4];
+optimizedColor = c{5};
+humanColor = '#000000';
+limitColor = c{7};
+
+fontName = 'Arial';
+axesFontSize = 10;
+titleFontSize = 12;
+legendFontSize = 8;
+axesLineWidth = 2;
+originalLineWidth = 2;
+optimizedLineWidth = 2.5;
+humanLineWidth = 4;
+tickLength = [0.025 0.05];
+figurePosition = [2 2 14 10.5];  % centimeters; 14 cm publication width
+xLimits = [min(ctx.phiD), max(ctx.phiD)];
+
+%% Flexor torque
+figure('Name', 'Flexor Torque', 'Color', 'w', ...
+    'Units', 'centimeters', 'Position', figurePosition)
+ax = gca;
+hold(ax, 'on')
+plot(ax, ctx.phiD, predOriginal.TorqueZ, '--', ...
+    'Color', originalColor, 'LineWidth', originalLineWidth, ...
+    'DisplayName', 'Original BPA')
+plot(ax, ctx.phiD, predBest.TorqueZ, '-', ...
+    'Color', optimizedColor, 'LineWidth', optimizedLineWidth, ...
+    'DisplayName', 'Optimized BPA')
+plot(ax, ctx.humanAngleD, humanTorque, ':', ...
+    'Color', humanColor, 'LineWidth', humanLineWidth, ...
+    'DisplayName', 'Human target')
+set(ax, 'FontName', fontName, 'FontSize', axesFontSize, ...
+    'FontWeight', 'bold', 'LineWidth', axesLineWidth, ...
+    'Box', 'off', 'XMinorTick', 'on', 'YMinorTick', 'on', ...
+    'TickLength', tickLength, 'XLim', xLimits, ...
+    'GridLineStyle', 'none')
+xlabel(ax, '\theta_k, °', 'Interpreter', 'tex', ...
+    'FontName', fontName, 'FontSize', axesFontSize, 'FontWeight', 'bold')
+ylabel(ax, 'Torque, N\cdotm', 'Interpreter', 'tex', ...
+    'FontName', fontName, 'FontSize', axesFontSize, 'FontWeight', 'bold')
+title(ax, 'Flexor Torque', 'FontName', fontName, ...
+    'FontSize', titleFontSize, 'FontWeight', 'bold')
+lg = legend(ax, 'Location', 'best');
+set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...
+    'FontWeight', 'bold', 'Box', 'off')
+grid(ax, 'off')
+
+%% Muscle length
+figure('Name', 'Muscle Length', 'Color', 'w', ...
+    'Units', 'centimeters', 'Position', figurePosition)
+ax = gca;
+hold(ax, 'on')
+plot(ax, ctx.phiD, predOriginal.activeLength, '--', ...
+    'Color', originalColor, 'LineWidth', originalLineWidth, ...
+    'DisplayName', 'Original BPA')
+plot(ax, ctx.phiD, predBest.activeLength, '-', ...
+    'Color', optimizedColor, 'LineWidth', optimizedLineWidth, ...
+    'DisplayName', 'Optimized BPA')
+set(ax, 'FontName', fontName, 'FontSize', axesFontSize, ...
+    'FontWeight', 'bold', 'LineWidth', axesLineWidth, ...
+    'Box', 'off', 'XMinorTick', 'on', 'YMinorTick', 'on', ...
+    'TickLength', tickLength, 'XLim', xLimits, ...
+    'GridLineStyle', 'none')
+xlabel(ax, '\theta_k, °', 'Interpreter', 'tex', ...
+    'FontName', fontName, 'FontSize', axesFontSize, 'FontWeight', 'bold')
+ylabel(ax, 'Muscle Length, m', 'FontName', fontName, ...
+    'FontSize', axesFontSize, 'FontWeight', 'bold')
+title(ax, 'Muscle Length, L_m', 'Interpreter', 'tex', ...
+    'FontName', fontName, 'FontSize', titleFontSize, 'FontWeight', 'bold')
+lg = legend(ax, 'Location', 'best');
+set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...
+    'FontWeight', 'bold', 'Box', 'off')
+grid(ax, 'off')
+
+%% Relative strain
+figure('Name', 'Relative Strain', 'Color', 'w', ...
+    'Units', 'centimeters', 'Position', figurePosition)
+ax = gca;
+hold(ax, 'on')
+plot(ax, ctx.phiD, predOriginal.relativeStrain, '--', ...
+    'Color', originalColor, 'LineWidth', originalLineWidth, ...
+    'DisplayName', 'Original BPA')
+plot(ax, ctx.phiD, predBest.relativeStrain, '-', ...
+    'Color', optimizedColor, 'LineWidth', optimizedLineWidth, ...
+    'DisplayName', 'Optimized BPA')
+limitLine = yline(ax, ctx.maxRelStrain, ':', 'Maximum allowed', ...
+    'Color', limitColor, 'LineWidth', originalLineWidth, ...
+    'HandleVisibility', 'off');
+limitLine.FontName = fontName;
+limitLine.FontSize = legendFontSize;
+limitLine.FontWeight = 'bold';
+set(ax, 'FontName', fontName, 'FontSize', axesFontSize, ...
+    'FontWeight', 'bold', 'LineWidth', axesLineWidth, ...
+    'Box', 'off', 'XMinorTick', 'on', 'YMinorTick', 'on', ...
+    'TickLength', tickLength, 'XLim', xLimits, ...
+    'GridLineStyle', 'none')
+xlabel(ax, '\theta_k, °', 'Interpreter', 'tex', ...
+    'FontName', fontName, 'FontSize', axesFontSize, 'FontWeight', 'bold')
+ylabel(ax, 'Relative Strain, \epsilon/K_{MAX}', 'Interpreter', 'tex', ...
+    'FontName', fontName, 'FontSize', axesFontSize, 'FontWeight', 'bold')
+title(ax, 'Relative Strain', 'FontName', fontName, ...
+    'FontSize', titleFontSize, 'FontWeight', 'bold')
+lg = legend(ax, 'Location', 'best');
+set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...
+    'FontWeight', 'bold', 'Box', 'off')
+grid(ax, 'off')
+
+%% Moment arm
+figure('Name', 'Moment Arm', 'Color', 'w', ...
+    'Units', 'centimeters', 'Position', figurePosition)
+ax = gca;
+hold(ax, 'on')
+plot(ax, ctx.phiD, predOriginal.momentArm, '--', ...
+    'Color', originalColor, 'LineWidth', originalLineWidth, ...
+    'DisplayName', 'Original BPA')
+plot(ax, ctx.phiD, predBest.momentArm, '-', ...
+    'Color', optimizedColor, 'LineWidth', optimizedLineWidth, ...
+    'DisplayName', 'Optimized BPA')
+set(ax, 'FontName', fontName, 'FontSize', axesFontSize, ...
+    'FontWeight', 'bold', 'LineWidth', axesLineWidth, ...
+    'Box', 'off', 'XMinorTick', 'on', 'YMinorTick', 'on', ...
+    'TickLength', tickLength, 'XLim', xLimits, ...
+    'GridLineStyle', 'none')
+xlabel(ax, '\theta_k, °', 'Interpreter', 'tex', ...
+    'FontName', fontName, 'FontSize', axesFontSize, 'FontWeight', 'bold')
+ylabel(ax, 'Moment Arm, m', 'FontName', fontName, ...
+    'FontSize', axesFontSize, 'FontWeight', 'bold')
+title(ax, 'Moment Arm', 'FontName', fontName, ...
+    'FontSize', titleFontSize, 'FontWeight', 'bold')
+lg = legend(ax, 'Location', 'best');
+set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...
+    'FontWeight', 'bold', 'Box', 'off')
+grid(ax, 'off')
+
+%% Torque margin fraction
+% Positive means the BPA exceeds the required human flexor-torque
+% magnitude. Negative means a remaining torque shortfall. The flexor
+% torque curves themselves remain signed and negative; absolute values are
+% used only here to form the magnitude ratio.
+humanAbsAtRobotAngles = interp1( ...
+    ctx.humanAngleD, ctx.humanTorqueAbs, ctx.phiD, 'pchip', 'extrap');
+validHumanTorque = humanAbsAtRobotAngles > 100*eps;
+torqueMarginFraction = nan(size(predBest.TorqueZ));
+torqueMarginFraction(validHumanTorque) = ...
+    abs(predBest.TorqueZ(validHumanTorque)) ./ ...
+    humanAbsAtRobotAngles(validHumanTorque) - 1;
+
+fprintf('\nTorque margin relative to human target:\n')
+fprintf('minimum margin fraction = %+.6f (%+.2f%%)\n', ...
+    min(torqueMarginFraction(validHumanTorque)), ...
+    100*min(torqueMarginFraction(validHumanTorque)))
+fprintf('mean remaining shortfall = %.6f (%.2f%%)\n', ...
+    mean(max(0, -torqueMarginFraction(validHumanTorque))), ...
+    100*mean(max(0, -torqueMarginFraction(validHumanTorque))))
+
+figure('Name', 'Torque Margin Fraction', 'Color', 'w', ...
+    'Units', 'centimeters', 'Position', figurePosition)
+ax = gca;
+hold(ax, 'on')
+plot(ax, ctx.phiD, 100*torqueMarginFraction, '-', ...
+    'Color', optimizedColor, 'LineWidth', optimizedLineWidth, ...
+    'DisplayName', 'Optimized BPA')
+zeroLine = yline(ax, 0, ':', 'Human target', ...
+    'Color', humanColor, 'LineWidth', originalLineWidth, ...
+    'HandleVisibility', 'off');
+zeroLine.FontName = fontName;
+zeroLine.FontSize = legendFontSize;
+zeroLine.FontWeight = 'bold';
+set(ax, 'FontName', fontName, 'FontSize', axesFontSize, ...
+    'FontWeight', 'bold', 'LineWidth', axesLineWidth, ...
+    'Box', 'off', 'XMinorTick', 'on', 'YMinorTick', 'on', ...
+    'TickLength', tickLength, 'XLim', xLimits, ...
+    'GridLineStyle', 'none')
+xlabel(ax, '\theta_k, °', 'Interpreter', 'tex', ...
+    'FontName', fontName, 'FontSize', axesFontSize, 'FontWeight', 'bold')
+ylabel(ax, 'Torque Margin, %', 'FontName', fontName, ...
+    'FontSize', axesFontSize, 'FontWeight', 'bold')
+title(ax, 'BPA Torque Margin Relative to Human', ...
+    'FontName', fontName, 'FontSize', titleFontSize, 'FontWeight', 'bold')
+grid(ax, 'off')
+
+%% Local output function: concise pattern-search progress in Command Window
+function [stop, options, optchanged] = patternProgress( ...
+        optimValues, options, flag)
+
+stop = false;
+optchanged = false;
+
+if strcmp(flag, 'init')
+    fprintf(['\nPattern search progress:\n' ...
+        ' Iteration    Function evaluations       Best f' ...
+        '       Mesh size     Max constraint\n'])
+    return
+end
+
+if ~strcmp(flag, 'iter') && ~strcmp(flag, 'done')
+    return
+end
+
+maxConstraint = 0;
+if isfield(optimValues, 'nonlinineq') && ...
+        ~isempty(optimValues.nonlinineq)
+    maxConstraint = max([0; optimValues.nonlinineq(:)]);
+end
+
+fprintf('%10d %23d %12.6g %15.6g %18.6g\n', ...
+    optimValues.iteration, ...
+    optimValues.funccount, ...
+    optimValues.fval, ...
+    optimValues.meshsize, ...
+    maxConstraint)
+
+if strcmp(flag, 'done')
+    fprintf('Pattern search finished.\n')
+end
+
+end

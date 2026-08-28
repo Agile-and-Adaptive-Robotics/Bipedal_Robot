@@ -48,11 +48,33 @@ ylabel('Torque magnitude, N m')
 
 %% After the first section runs and the plot looks reasonable, run the following code
 obj = @(x) objective_KneeFlexor20mm(x, ctx);
-objconstr = @(x) objconstrExclusion(x, obj, geo, idxP2);
-nonlcon = @(x) nonlconExclusion(x, geo, idxP2);
+objconstr = @(x) objconstrExclusion(x, obj, geo, ctx, idxP2);
+nonlcon = @(x) nonlconExclusion(x, geo, ctx, idxP2);
 
-[c0, ~] = nonlcon(ctx.x0);
-fprintf('exclusion c0 = %.6f\n', c0)
+[c0, ~, collision0] = nonlcon(ctx.x0);
+fprintf('p2 exclusion c0       = %.6f m\n', c0(1))
+fprintf('BPA-tibia collision c0= %.6f m\n', c0(2))
+fprintf('BPA-femur collision c0= %.6f m\n', c0(3))
+fprintf('series-length c0      = %.6f m\n', c0(4))
+fprintf('collision angle       = %.6f deg\n', collision0.angleD)
+fprintf('inflated BPA radius   = %.6f m\n', collision0.bpaRadius)
+fprintf('tendon radius         = %.6f m\n', collision0.tendonRadius)
+fprintf('tendon length         = %.6f m\n', collision0.tendon)
+fprintf('tendon length checked = %.6f m\n', collision0.tendonLengthChecked)
+fprintf('current Lm            = %.6f m\n', collision0.currentMuscleLength)
+fprintf('Lm + two fittings     = %.6f m\n', collision0.bpaFittingsLengthChecked)
+fprintf('minimum tibia clear.  = %.6f m\n', collision0.minClearanceTibia)
+fprintf('minimum femur clear.  = %.6f m\n', collision0.minClearanceFemur)
+fprintf('required clearance    = %.6f m\n', collision0.requiredClearance)
+fprintf('worst tibia region    = %s\n', collision0.worstTibiaRegion)
+fprintf('worst tibia component = %s (radius %.6f m)\n', ...
+    collision0.worstTibiaComponent, collision0.worstTibiaRadius)
+fprintf('worst tibia ctr., t1  = [%.6f %.6f %.6f] m\n', ...
+    collision0.worstTibiaCenterT1)
+fprintf('worst femur component = %s (radius %.6f m)\n', ...
+    collision0.worstFemurComponent, collision0.worstFemurRadius)
+fprintf('worst femur ctr.      = [%.6f %.6f %.6f] m\n', ...
+    collision0.worstFemurCenterFemur)
 
 optsTest = optimoptions('surrogateopt', ...
     'Display', 'iter', ...

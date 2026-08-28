@@ -1,4 +1,4 @@
-function out = objconstrExclusion(x, obj, geo, idxP2)
+function out = objconstrExclusion(x, obj, geo, ctx, idxP2)
 %OBJCONSTREXCLUSION Objective/constraint wrapper for surrogateopt.
 %
 % surrogateopt wants:
@@ -7,7 +7,7 @@ function out = objconstrExclusion(x, obj, geo, idxP2)
 
 out.Fval = obj(x);
 
-[c, ~] = nonlconExclusion(x, geo, idxP2);
+[c, ~] = nonlconExclusion(x, geo, ctx, idxP2);
 
 out.Ineq = c;
 
