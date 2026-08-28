@@ -4,6 +4,11 @@ function [Location, bendMeasure, info] = buildDistalRingLocation20mm(p1, pEnd, t
 % 20 mm extensor route built by initializing the fully-flexed route and
 % sweeping toward extension while only eliminating contacts.
 %
+% This is a route-topology state machine, not a shortest-path solver.  Each
+% knee angle inherits the previous angle's active/repeated row state, then
+% tries to remove only the next allowable contact points.  Once a contact is
+% removed, it stays removed for all more-extended knee positions.
+%
 % Fixed-size route representation:
 %   p1:p5  are femur-frame points.
 %   p6:p9  are t1-frame points and are transformed to ICR before Location output.
@@ -19,8 +24,15 @@ function [Location, bendMeasure, info] = buildDistalRingLocation20mm(p1, pEnd, t
 %
 % p1 and p9 are optimizer-supplied. p2:p8 come from the SolidWorks seed,
 % except for local contact corrections needed after p1/p9 movement.
-% p2 and p8 remain as the local bend regions while the broader p3-to-
-% downstream condyle curvature model is deferred.
+% p2 and p8 begin as local bend/contact candidates, but they may also be
+% eliminated when endpoint motion makes the straight p1-to-p9 bridge valid.
+%
+% Outputs:
+%   raw      = the 9 route rows in their native storage frames.
+%   Location = class-facing route. p6:p9 have been converted t1 -> ICR so
+%              MonoPamDataExplicit_balanceX3 can apply T_Pam at CrossPoint.
+%   bendMeasure = Nx1 geometric sum of bend arclength terms. This is the
+%                 only bend signal consumed directly by the class.
 
 N = ctx.N;
 phiD = ctx.phiD(:);
@@ -78,6 +90,9 @@ info.angleCull.bypassClear = false(9,N);
 info.angleCull.removed = false(9,N);
 info.angleCull.candidateActive = false(9,N);
 info.angleCull.retainedActive = false(9,N);
+% angleCull is diagnostic bookkeeping for the absolute-angle elimination
+% tests.  It is intentionally row-based so a later plot can answer "why did
+% p4 disappear here?" without reconstructing the route state afterward.
 
 info.CrossPoint = 6;
 info.routeRows = 9;
@@ -95,8 +110,9 @@ info.eliminatedSweepIndex = nan(9,1);
 %% Route contact state
 % The SolidWorks seed gives the fully-flexed candidate wrap chain. The route
 % starts with p1:p9 unique at -120 deg, then carries state toward extension.
-% Only optional p3:p7 contacts can be eliminated. p2 and p8 stay available
-% as local bend/contact regions.
+% Optional p2:p8 contacts can be eliminated.  p2 and p8 start as the local
+% bend/contact candidates, but large +X optimizer moves can make the straight
+% p1-to-p9 path valid near extension.
 
 % Candidate point positions are fixed here in their native frames.
 Pfixed = seed20;
@@ -117,6 +133,8 @@ for s = 1:Ns
     thetaD = sweepD(s);
     solverIndex = s;
 
+    % Per-angle transforms are used for crosspoint tests only. The route
+    % rows themselves stay in their native frame until the Location export.
     T_Pam_i = ctx.T_Pam(:,:,solverIndex);
     T_Pam_inv_i = ctx.T_Pam_inv(:,:,solverIndex);
     T_ICR_t1_i = ctx.T_ICR_t1(:,:,solverIndex);
@@ -145,8 +163,13 @@ for s = 1:Ns
     angleFrame = emptyAngleFrame();
 
     if s == 1
+        % Fully flexed frame: all seed contacts start unique.
         removedNow = false(9,1);
     else
+        % Same knee angle, two independent passes: femur side removes the
+        % last remaining optional femur contact; t1 side removes the first
+        % remaining optional t1 contact. Each pass can remove several rows
+        % if the angle gate continues to pass after the state collapses.
         [activeState, angleFrame, removedFemur] = eliminateFemurContacts( ...
             Pfixed, activeState, T_Pam_i, T_ICR_t1_i, ...
             ctx.geo, contactTol, angleTolD, angleFrame);
@@ -155,7 +178,15 @@ for s = 1:Ns
             Pfixed, activeState, T_Pam_inv_i, T_t1_ICR_i, ...
             ctx.geo, contactTol, angleTolD, angleFrame);
 
-        removedNow = removedFemur | removedT1;
+        % Endpoint-only escape hatch. After p3:p7 are gone, p2 and p8 can
+        % each block the other from disappearing in a one-point test, even
+        % when the combined p1-to-p9 bridge is the intended route.
+        [activeState, angleFrame, removedBridge] = eliminateTerminalBridgeContacts( ...
+            Pfixed, activeState, T_Pam_i, T_ICR_t1_i, ...
+            T_Pam_inv_i, T_t1_ICR_i, ...
+            ctx.geo, contactTol, angleTolD, angleFrame);
+
+        removedNow = removedFemur | removedT1 | removedBridge;
     end
 
     active = activeState;
@@ -214,9 +245,12 @@ for s = 1:Ns
     info.angleCull.retainedActive(:,solverIndex) = active;
     bendRadius(:,solverIndex) = rBend;
 
-    % p6:p9 are native t1 points. Convert them t1 -> ICR exactly as in
-    % the existing model before MonoPamDataExplicit_balanceX3 applies
-    % T_Pam at CrossPoint = 6.
+    % Export convention for the class:
+    %   raw rows 6:9 are native t1 points.
+    %   Location rows 6:9 are ICR-frame points.
+    % MonoPamDataExplicit_balanceX3 later applies T_Pam to the segment that
+    % crosses at row 6, so doing a full t1 -> femur conversion here would
+    % double-transform the tibia-side route.
     loc = raw;
 
     for j = 6:9
@@ -367,18 +401,22 @@ function [activeState, angleFrame, removed] = eliminateFemurContacts( ...
 % Remove the last unique femur-side optional contact if the absolute-angle
 % test passes. The bypass collision gate is retained below but disabled
 % while the angle-only route state is being validated.
+%
+% For a femur-side candidate p(k), the previous unique femur row is native
+% femur already. The next unique downstream row is on the t1 side, so it is
+% transformed t1 -> ICR -> femur before applying the user's atan2 rule.
 
 removed = false(9,1);
 
 while true
 
-    kOpt = find(activeState(3:5), 1, 'last');
+    kOpt = find(activeState(2:5), 1, 'last');
 
     if isempty(kOpt)
         return
     end
 
-    k = kOpt + 2;
+    k = kOpt + 1;
     iPrev = find(activeState(1:k-1), 1, 'last');
     iNext = find(activeState(6:9), 1, 'first') + 5;
 
@@ -419,12 +457,16 @@ function [activeState, angleFrame, removed] = eliminateT1Contacts( ...
 % Remove the first unique t1-side optional contact if the absolute-angle
 % test passes. The bypass collision gate is retained below but disabled
 % while the angle-only route state is being validated.
+%
+% For a t1-side candidate p(j), the next unique t1 row is native t1 already.
+% The previous unique upstream row is on the femur side, so it is transformed
+% femur -> ICR -> t1 before applying the user's counterclockwise rule.
 
 removed = false(9,1);
 
 while true
 
-    jOpt = find(activeState(6:7), 1, 'first');
+    jOpt = find(activeState(6:8), 1, 'first');
 
     if isempty(jOpt)
         return
@@ -461,6 +503,57 @@ while true
     else
         return
     end
+end
+
+end
+
+
+function [activeState, angleFrame, removed] = eliminateTerminalBridgeContacts( ...
+    Pfixed, activeState, T_Pam_i, T_ICR_t1_i, T_Pam_inv_i, T_t1_ICR_i, ...
+    geo, tol, angleTolD, angleFrame)
+% Handle the endpoint-contact trap that can appear after large +X endpoint
+% optimizer moves.  The ordinary one-point tests can leave p1-p2-p8-p9
+% active even when the straight p1-to-p9 bridge is the intended topology.
+
+removed = false(9,1);
+
+if any(~activeState([1 2 8 9])) || any(activeState(3:7))
+    return
+end
+
+raw = collapseInactive(Pfixed, activeState);
+
+p9Femur = t1PointToFemur(raw(9,:), T_Pam_i, T_ICR_t1_i);
+[gateP2, aBigP2D, aSmallP2D, marginP2D] = femurRemovalAngle( ...
+    raw(1,:), raw(2,:), p9Femur, angleTolD);
+
+p1T1 = femurPointToT1(raw(1,:), T_Pam_inv_i, T_t1_ICR_i);
+[gateP8, aBigP8D, aSmallP8D, marginP8D] = t1RemovalAngle( ...
+    p1T1, raw(8,:), raw(9,:), angleTolD);
+
+% These bridge clearance checks are intentionally disabled for the current
+% angle-only routing pass. Re-enable them once the p2/p8 endpoint topology
+% is validated with a finite clearance tolerance.
+% bypassP2Clear = femurBypassCollisionFree(raw(1,:), p9Femur, geo, tol, 2);
+% bypassP8Clear = t1BypassCollisionFree(p1T1, raw(9,:), geo, tol, 8);
+bypassP2Clear = true;
+bypassP8Clear = true;
+
+angleFrame = recordEliminationTest( ...
+    angleFrame, 2, aSmallP2D, aBigP2D, marginP2D, gateP2, bypassP2Clear);
+angleFrame = recordEliminationTest( ...
+    angleFrame, 8, aSmallP8D, aBigP8D, marginP8D, gateP8, bypassP8Clear);
+
+if gateP2 && bypassP2Clear
+    activeState(2) = false;
+    removed(2) = true;
+    angleFrame.removed(2) = true;
+end
+
+if gateP8 && bypassP8Clear
+    activeState(8) = false;
+    removed(8) = true;
+    angleFrame.removed(8) = true;
 end
 
 end
@@ -1491,6 +1584,10 @@ function [bendMeasure, wrapInfo] = geometricBendMeasure( ...
 % bendMeasure is the geometric input to the X3 usable-length-loss model.
 % Lmt stays as the piecewise-linear route length; the wrap terms below are
 % only the extra sum(R*alpha) terms used by MonoPamDataExplicit_balanceX3.
+%
+% The class consumes bendMeasure as a single Nx1 signal. wrapInfo keeps the
+% individual alpha/radius/arclength pieces for plotting and debugging.
+% Those debug pieces should stay aligned with labels and pointRows below.
 
 N = size(Location,3);
 M = size(Location,1);
@@ -1536,6 +1633,10 @@ p2Ref = p2WrapReference(Pall, active, phiD, geo);
 tibiaRef = tibiaCurveWrapReference(raw, active, phiD, geo);
 femurRef = femurCurveWrapReference(raw, active, phiD, geo);
 crossRef = crosspointWrapReference(raw, Location, active, phiD, T_Pam_inv);
+
+% Each reference object maps knee angle -> wrap angle. That prevents the
+% diagnostic line angle from deciding the interpolation timing; the active
+% route transition angles decide when a wrap starts or reaches its plateau.
 for i = 1:N
 
     P = Pall(:,:,i);
@@ -1657,6 +1758,10 @@ wrapInfo.p2AlphaMaxRad = p2Ref.alphaPlateauRad;
 wrapInfo.p2AlphaMaxDeg = p2Ref.alphaPlateauRad*180/pi;
 
     function s = integratedVariableRadiusArc(ref, frac)
+        % Femur p3-p5 wrap uses a simple polar arclength approximation with
+        % continuously changing radius:
+        %   ds = sqrt((r dtheta)^2 + dr^2)
+        % integrated over the knee-angle interpolation fraction.
 
             frac = max(0, min(1, frac));
             n = 40;
@@ -1697,6 +1802,9 @@ end
 
 function [alpha, R, qIn, qOut, ok, thetaLineRad, wrapFrac] = ...
     femurCylinderWrapAngle(P, activeFrame, ref, kneeAngleD)
+% p2 bend loss is tied to the known femur cylinder. When p3 is active the
+% p2 wrap is at its plateau; otherwise it interpolates by knee angle between
+% the extension baseline and the p3-introduction plateau.
 
 alpha = 0;
 R = 0;
@@ -1740,6 +1848,9 @@ end
 
 
 function ref = p2WrapReference(Pall, active, phiD, geo)
+% Build the p2 WABKA reference from two route states:
+%   extension baseline: line p1-p2-p8*
+%   plateau:           p3 is active downstream of p2
 
 N = size(Pall,3);
 idxExtension = N;
@@ -1900,6 +2011,8 @@ end
 
 
 function [thetaRad, ok] = p2LineAngleToRow(P, row)
+% Unsigned angle between p1->p2 and p2->selected downstream row in the
+% common femur plot frame.
 
 vIn = P(2,1:2) - P(1,1:2);
 vOut = P(row,1:2) - P(2,1:2);
@@ -1931,6 +2044,8 @@ end
 
 function [alpha, R, qIn, qOut, ok, frac] = ...
     tibiaCurveWrapAngle(rawFrame, activeFrame, ref, kneeAngleD)
+% Temporary p6-p8 tibia curve model. The center/radius are stored in the t1
+% frame, so this uses raw t1 rows directly rather than Location rows.
 
 alpha = 0;
 R = 0;
@@ -1964,6 +2079,8 @@ end
 
 function [alpha, R, qIn, qOut, ok, frac, Ra, Rb] = ...
     femurCurveWrapAngle(rawFrame, activeFrame, ref, kneeAngleD, geo)
+% Temporary p3-p5 femur curve model. The angle is mapped by knee angle; the
+% arclength is handled separately because the effective radius changes.
 
 alpha = 0;
 R = 0;
@@ -2001,6 +2118,9 @@ ok = ref.valid && isfinite(alpha) && isfinite(R);
 end
 
 function ref = crosspointWrapReference(raw, Location, active, phiD, T_Pam_inv)
+% p5-p6 crosspoint wrap lives in the ICR frame.  p5 starts in femur and is
+% transformed femur -> ICR with T_Pam_inv; p6 is already ICR in Location.
+% The angle is zero at p5 elimination and grows toward full flexion.
 
 idxP5On = find(active(5,:), 1, 'last');
 idxFlex = 1;
@@ -2026,6 +2146,8 @@ end
 
 function [alpha, R, qIn, qOut, ok] = ...
     crosspointICRWrapAngle(rawFrame, locFrame, activeFrame, T_Pam_inv_i, ref, kneeAngleD)
+% Evaluate the p5-p6 ICR wrap only while both sides of the crosspoint exist.
+% Once either contact is repeated away, the term intentionally contributes 0.
 
 alpha = 0;
 R = 0;

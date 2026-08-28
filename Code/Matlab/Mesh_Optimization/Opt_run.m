@@ -34,6 +34,7 @@ optsP = optimoptions('patternsearch', ...
 [xBest, fBest] = patternsearch(obj, xG, [], [], [], [], ctx.lb, ctx.ub, nonlcon, optsP);
 
 predBest = predictKneeFlexor20mm(xBest, ctx);
+%% Display results
 
 fprintf('\n========== OPTIMIZED DESIGN VALUES ==========\n')
 

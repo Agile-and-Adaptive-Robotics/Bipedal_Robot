@@ -153,7 +153,7 @@ if isfield(routeInfo, 'angleCull')
 
     fprintf('\n')
 
-    cullRows = [5 4 3 6 7];
+    cullRows = [5 4 3 2 6 7 8];
 
     for rr = 1:numel(cullRows)
         j = cullRows(rr);
@@ -501,7 +501,7 @@ grid on
 %% Optional tiny optimizer smoke test
 % Disabled until the route-state model is stable enough for optimizer calls
 % to diagnose optimizer behavior instead of routing-transition behavior.
-runSmallOptimizer = false;
+runSmallOptimizer = true;
 
 if runSmallOptimizer
     obj = @(x) objective_KneeExt20mm(x, ctx);
@@ -532,7 +532,7 @@ end
 
 function label = routeStateTitle20mm(routeInfo, ii)
 
-optionalRows = 3:7;
+optionalRows = 2:8;
 inactiveRows = optionalRows(~routeInfo.active(optionalRows,ii));
 
 if isempty(inactiveRows)

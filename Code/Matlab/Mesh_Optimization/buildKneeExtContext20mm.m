@@ -286,15 +286,39 @@ geo.tendonMin = 0.025;
 %Origin and routing location for 20mm
 % p1:p5 are femur frame. p6:p9 are t1 frame.
 % These SolidWorks points are seed / branch-reference geometry.
+%Original
+% ctx.routeSeed = [ ...
+%     0.04000,  0.03500,  0.00000; ... % p1 Origin
+%     0.08315, -0.27476,  0.00000; ... % p2 BPA contacts mounting base
+%     0.06536, -0.42389,  0.00000; ... % p3 femoral contact, updated
+%     0.05438, -0.44085,  0.00000; ... % p4 femoral condyle contact, updated
+%     0.03794, -0.45233,  0.00000; ... % p5 femoral condyle contact, updated
+%     0.06377,  0.03955,  0.00000; ... % p6 Tibia contact initial
+%     0.07161,  0.00765,  0.00000; ... % p7 Tibia contact, updated
+%     0.06450, -0.02101,  0.00000; ... % p8 Tibia contact, updated
+%     0.03406, -0.06687,  0.00000];    % p9 patellar ligament ring, distal
+
+%Does not violate 20mm restriction
+% ctx.routeSeed = [ ...
+%     0.04000,  0.03500,  0.00000; ... % p1 Origin
+%     0.08390, -0.27476,  0.00000; ... % p2 BPA contacts mounting base
+%     0.06667, -0.42433,  0.00000; ... % p3 femoral contact, updated
+%     0.05524, -0.44361,  0.00000; ... % p4 femoral condyle contact, updated
+%     0.03826, -0.45301,  0.00000; ... % p5 femoral condyle contact, updated
+%     0.07236,  0.03173,  0.00000; ... % p6 Tibia contact initial
+%     0.07236, -0.01169,  0.00000; ... % p7 Tibia contact, updated
+%     0.03406, -0.06687,  0.00000];    % p8 patellar ligament ring, distal
+
+%Improved, keeps 9 points.
 ctx.routeSeed = [ ...
     0.04000,  0.03500,  0.00000; ... % p1 Origin
-    0.08315, -0.27476,  0.00000; ... % p2 BPA contacts mounting base
-    0.06536, -0.42389,  0.00000; ... % p3 femoral contact, updated
-    0.05438, -0.44085,  0.00000; ... % p4 femoral condyle contact, updated
-    0.03794, -0.45233,  0.00000; ... % p5 femoral condyle contact, updated
-    0.06377,  0.03955,  0.00000; ... % p6 Tibia contact initial
-    0.07161,  0.00765,  0.00000; ... % p7 Tibia contact, updated
-    0.06450, -0.02101,  0.00000; ... % p8 Tibia contact, updated
+    0.08390, -0.27476,  0.00000; ... % p2 BPA contacts mounting base
+    0.06634, -0.42724,  0.00000; ... % p3 femoral contact, updated
+    0.05152, -0.44674,  0.00000; ... % p4 femoral condyle contact, updated
+    0.03826, -0.45301,  0.00000; ... % p5 femoral condyle contact, updated
+    0.06985,  0.03433,  0.00000; ... % p6 Tibia contact initial
+    0.07350,  0.01913,  0.00000; ... % p7 Tibia contact, updated
+    0.07198, -0.01223,  0.00000; ... % p8 Tibia contact, updated
     0.03406, -0.06687,  0.00000];    % p9 patellar ligament ring, distal
 
 ctx.geo = geo;
