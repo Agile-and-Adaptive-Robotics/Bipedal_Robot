@@ -7,27 +7,28 @@ function J = objective_KneeFlexor20mm(x, ctx)
         return
     end
 
-    if any(~isfinite(pred.TorqueZ)) || any(~isfinite(pred.strain))
+    idxOperating = ctx.phiD >= -120 & ctx.phiD <= 10;
+
+    if any(~isfinite(pred.TorqueZ(idxOperating))) || any(~isfinite(pred.strain(idxOperating)))
         J = 1e11;
         return
     end
 
-    humanAbs = interp1( ...
-        ctx.humanAngleD, ...
-        ctx.humanTorqueAbs, ...
-        ctx.phiD, ...
-        'pchip', ...
-        'extrap');
+    humanAbs = interp1(ctx.humanAngleD, ctx.humanTorqueAbs, ctx.phiD, 'pchip', 'extrap');
 
-    robotAbs = abs(pred.TorqueZ);
+    humanAbs = humanAbs(idxOperating);
+    robotAbs = abs(pred.TorqueZ(idxOperating));
 
-    % Main requirement: robot >= human.
-    torqueDeficit = max(0, humanAbs(:) - robotAbs(:));
-    Jtorque = mean((torqueDeficit ./ ctx.torqueScale).^2);
+    requiredAbs = 1.02*humanAbs(:);
+    humanScale = max(humanAbs(:), 1);
 
-    % Optional tiny overshoot penalty, only to avoid absurd geometry.
-    torqueOvershoot = max(0, robotAbs(:) - humanAbs(:));
-    Jovershoot = 1e-3 * mean((torqueOvershoot ./ ctx.torqueScale).^2);
+    shortfallFraction = max(0, (requiredAbs - robotAbs(:))./humanScale);
+
+    Jworst = max(shortfallFraction);
+    Jmean = mean(shortfallFraction.^2);
+
+    shapeError = (robotAbs(:) - requiredAbs)./humanScale;
+    Jshape = mean(shapeError.^2);
 
     % Resting length constraint:
     % rest + tendon + 2*fitting >= distance(p1, w2)
@@ -39,8 +40,10 @@ function J = objective_KneeFlexor20mm(x, ctx)
     % maxRelStrain = 1 allows strain up to KMAX.
     maxStrainAllowed = ctx.maxRelStrain * pred.KMAX;
     
-    JstrainHi = 1e4 * max(0, max(pred.strain) - maxStrainAllowed).^2;
-    JstrainLo = 1e4 * max(0, ctx.minStrain - min(pred.strain)).^2;
+    operatingStrain = pred.strain(idxOperating);
+
+    JstrainHi = 1e4*max(0, max(operatingStrain) - maxStrainAllowed).^2;
+    JstrainLo = 1e4*max(0, ctx.minStrain - min(operatingStrain)).^2;
 
     % Keep solution near practical geometry unless torque requires otherwise.
     x0 = ctx.x0(:);
@@ -57,7 +60,7 @@ function J = objective_KneeFlexor20mm(x, ctx)
     Jgeom = 1e-2 * sum((dx(1:6)./geomScale).^2);
     Jlen  = 1e-3 * ((x(7) - x0(7))/0.040).^2;
 
-    J = 100*Jtorque + Jovershoot + JrestLength + JstrainHi + JstrainLo + Jgeom + Jlen;
+    J = 1e5*Jworst + 1e3*Jmean + 1e-2*Jshape + JrestLength + JstrainHi + JstrainLo + Jgeom + Jlen;
 
     if ~isfinite(J)
         J = 1e12;

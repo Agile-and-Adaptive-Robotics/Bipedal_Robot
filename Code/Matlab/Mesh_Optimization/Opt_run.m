@@ -42,6 +42,29 @@ optsP = optimoptions('patternsearch', ...
 [xBest, fBest, exitflagP, outputP] = patternsearch( ...
     obj, xG, [], [], [], [], ctx.lb, ctx.ub, nonlcon, optsP);
 
+%% Hand tuning
+% % Rebuild context with expanded p1y bound
+% ctx = buildKneeFlexorContext20mm();
+% geo = buildGeoExclusion();
+% idxP2 = 4:6;
+% 
+% obj = @(x) objective_KneeFlexor20mm(x,ctx);
+% nonlcon = @(x) nonlconExclusion(x,geo,ctx,idxP2);
+% 
+% % Hand tune p1y and rest
+% xW = xBest;
+% xW(2) = xW(2)+0.012;
+% xW(7) = xW(7)+0.012;
+% 
+% predW = predictKneeFlexor20mm(xW,ctx);
+% xW(7) = xW(7)+max(0,predW.cRestLength);
+% 
+% % Run pattern search again
+% optsP.MeshTolerance = 1e-7;
+% optsP.StepTolerance = 1e-7;
+% optsP.ConstraintTolerance = 1e-7;
+% [xBest,fBest,exitflagP,outputP] = patternsearch(obj,xW,[],[],[],[],ctx.lb,ctx.ub,nonlcon,optsP);
+
 %% Evaluate original and optimized designs
 predOriginal = predictKneeFlexor20mm(ctx.x0, ctx);
 predBest = predictKneeFlexor20mm(xBest, ctx);
@@ -341,6 +364,8 @@ ylabel(ax, 'Torque Margin, %', 'FontName', fontName, ...
 title(ax, 'BPA Torque Margin Relative to Human', ...
     'FontName', fontName, 'FontSize', titleFontSize, 'FontWeight', 'bold')
 grid(ax, 'off')
+
+
 
 %% Local output function: concise pattern-search progress in Command Window
 function [stop, options, optchanged] = patternProgress( ...
