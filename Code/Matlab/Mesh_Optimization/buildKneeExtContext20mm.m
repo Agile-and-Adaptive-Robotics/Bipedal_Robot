@@ -379,11 +379,11 @@ ub = x0;
 
 % p1 search region
 lb(1:3) = p1_0 + [-0.040, -0.060, 0];
-ub(1:3) = p1_0 + [ 0.150,  0.10,  0.060];
+ub(1:3) = p1_0 + [ 0.0402,  0.10,  0.060];
 
 % pEnd search region
-lb(4:6) = pEnd_0 + [-0.030,    -0.200, 0];
-ub(4:6) = pEnd_0 + [0.150, 0.024,  0.030];
+lb(4:6) = pEnd_0 + [-0.036,    -0.200, 0];
+ub(4:6) = pEnd_0 + [0.036, 0.024,  0.030];
 
 % Keep the distal t1 insertion y search inside the current CAD envelope.
 % lb(5) = -114/1000;

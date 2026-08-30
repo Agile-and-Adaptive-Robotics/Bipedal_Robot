@@ -39,18 +39,19 @@ function J = objective_KneeExt20mm(x, ctx)
 
     %% Torque requirement
 
-    torqueDeficit = max(0, humanAbs(:) - robotAbs(:));
+    requiredTorque = 1.02*humanAbs(:);
+    torqueScale = max(humanAbs(:),1);
 
-    Jtorque = mean((torqueDeficit ./ ctx.torqueScale).^2);
+    torqueShortfall = max(0,requiredTorque-robotAbs(:));
+    shortfallFraction = torqueShortfall./torqueScale;
 
+    Jworst = max(shortfallFraction);
+    Jtorque = mean(shortfallFraction.^2);
 
-    %% Small overshoot penalty
+    %% Secondary shape objective
 
-    torqueOvershoot = max(0, robotAbs(:) - humanAbs(:));
-
-    Jovershoot = 1e-3 * ...
-        mean((torqueOvershoot ./ ctx.torqueScale).^2);
-
+    shapeError = (robotAbs(:)-requiredTorque)./torqueScale;
+    Jshape = mean(shapeError.^2);
 
     %% Rest-length constraint
 
@@ -93,16 +94,9 @@ function J = objective_KneeExt20mm(x, ctx)
 
     %% Total objective
 
-    J = ...
-        100*Jtorque + ...
-        Jovershoot + ...
-        JrestLength + ...
-        JstrainHi + ...
-        JstrainLo + ...
-        Jroute + ...
-        Jgeom + ...
-        Jlen;
+    %% Total objective
 
+    J = 1e5*Jworst + 1e3*Jtorque + 1e-2*Jshape + JrestLength + JstrainHi + JstrainLo + Jroute + Jgeom + Jlen;
 
     if ~isfinite(J)
         J = 1e12;
