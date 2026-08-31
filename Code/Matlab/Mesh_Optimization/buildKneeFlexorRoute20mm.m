@@ -70,9 +70,9 @@ for i = 1:N
     % User-specified release comparison, with both lines originating at
     % pEnd.  Release pWrap when aDirectD is greater than aWrapEndD.
     aDirectD(i) = atan2d( ...
-        -(p1T1(i,2) - pEnd(2)), p1T1(i,1) - pEnd(1));
+        (p1T1(i,2) - pEnd(2)), p1T1(i,1) - pEnd(1));
     aWrapEndD(i) = atan2d( ...
-        -(pWrap(2) - pEnd(2)), pWrap(1) - pEnd(1));
+        (pWrap(2) - pEnd(2)), pWrap(1) - pEnd(1));
 end
 
 % Sweep from full extension toward flexion.  The first frame satisfying the
