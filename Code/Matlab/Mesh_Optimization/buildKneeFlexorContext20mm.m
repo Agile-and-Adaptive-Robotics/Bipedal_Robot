@@ -79,6 +79,14 @@ ctx.N          = numel(ctx.phiD);
 
 ctx.fitting    = 0.021;
 ctx.wraps      = 3;
+ctx.BPAcount   = 1;
+
+% Intermediate t1-frame routing contact.  The old human-model wrap seed is
+% retained in x-y.  buildKneeFlexorRoute20mm places its z coordinate on the
+% full-extension p1-pEnd line projected into the t1 y-z plane.
+ctx.wrapPointT1XY = [-0.0026, -0.0105];
+ctx.wrapBendRadius = 0.022;       % local bend radius used by Xi3, m
+ctx.wrapAngleToleranceD = 0;      % direct atan2 comparison; no added margin
 
 % Choose extension angle for the resting-length constraint.
 % Use 10 if you trust kneeMax; use 5 if the CAD hard stop is real.
@@ -101,6 +109,9 @@ ctx.Pbins = 620;
 ctx.KMAX = 0.255;          % KMAX = (rest - kmax)/rest at 620 kPa
 ctx.maxRelStrain = 1.0;    % allow relative strain up to 1
 ctx.minStrain = -0.03;
+ctx.requiredTorqueMargin = 0.02;
+ctx.offAxisPenaltyWeight = 1e3;
+ctx.wrapReleasePenaltyWeight = 1e3;
 
 ctx.torqueScale = max(1, max(ctx.humanTorqueAbs));
 
@@ -117,6 +128,19 @@ Xi2 = g(3);
 ctx.Xi0 = Xi0;
 ctx.Xi1 = Xi1;
 ctx.Xi2 = Xi2;
+
+% Xi3 is a shared geometric loss factor.  Use the flexor result if it
+% contains Xi3; otherwise use the identified X3 result already used by the
+% extensor model.
+if numel(g) >= 4
+    ctx.Xi3 = g(4);
+else
+    x3Data = load( ...
+        'minimizeExtPin10_results_20260819_2transforms_Z2.mat', ...
+        'filtered_results', 'xCols');
+    gX3 = x3Data.filtered_results(1,x3Data.xCols);
+    ctx.Xi3 = gX3(4);
+end
 ctx.wraps = 3;
 
 % Initial geometry / BPA design guess
@@ -138,7 +162,7 @@ tendon0   = 0.025;
 % tendon0   = 0.025;
 
 % Optimization variables:
-% [p1(1:3), p2(1:3), rest, kmaxFrac, tendon]
+% [p1(1:3), pEnd(1:3), rest, tendon]
 x0 = [p1_0, p2_0, rest0, tendon0];
 
 lb = x0;
@@ -146,17 +170,28 @@ ub = x0;
 
 % Attachment search box, meters
 lb(1:3) = p1_0 + [-0.090, -0.100, -0.050];
-ub(1:3) = p1_0 + [0.030,  0.112,  0.080];
+ub(1:3) = p1_0 + [0.0125,  0.100,  0.080];
 
-lb(4:6) = p2_0 + [-0.090, -0.150, -0.027];
+lb(4:6) = p2_0 + [-0.060, -0.100, -0.027];
 ub(4:6) = p2_0 + [ 0.025,  0.050,  0.060];
 
 % BPA / tendon bounds
-lb(7) = 0.225;    ub(7) = 0.800;    % rest length, m
+lb(7) = 0.225;    ub(7) = 0.600;    % rest length, m
 lb(8) = 0.025;    ub(8) = 0.100;    % tendon length, m
 
 ctx.x0 = x0;
 ctx.lb = lb;
 ctx.ub = ub;
+
+% Pointwise off-axis baseline.  The objective penalizes only the amount by
+% which a candidate exceeds this x0 torque magnitude at the same knee pose.
+predX0 = predictKneeFlexor20mm(ctx.x0, ctx);
+if ~predX0.ok || any(~isfinite(predX0.offAxisTorque))
+    error('buildKneeFlexorContext20mm:X0Prediction', ...
+        'The x0 prediction failed or produced nonfinite torque: %s', ...
+        predX0.failReason)
+end
+ctx.offAxisTorqueX0 = predX0.offAxisTorque(:);
+ctx.offAxisTorqueScale = max(1, max(ctx.offAxisTorqueX0));
 
 end

@@ -10,6 +10,25 @@ clc
 clear
 close all
 
+set(groot, ...
+    'defaultAxesFontName','Arial', ...
+    'defaultAxesFontSize',10, ...
+    'defaultAxesFontWeight','bold', ...
+    'defaultAxesLabelFontSizeMultiplier',1, ...
+    'defaultAxesTitleFontSizeMultiplier',1.2, ...
+    'defaultAxesLineWidth',2, ...
+    'defaultAxesBox','off', ...
+    'defaultAxesXMinorTick','on', ...
+    'defaultAxesYMinorTick','on', ...
+    'defaultAxesTickLength',[0.025 0.05], ...
+    'defaultAxesXGrid','off', ...
+    'defaultAxesYGrid','off', ...
+    'defaultLineLineWidth',2, ...
+    'defaultLegendFontName','Arial', ...
+    'defaultLegendFontSize',8, ...
+    'defaultLegendFontWeight','bold', ...
+    'defaultLegendBox','off')
+
 %% Add paths to the muscle and pam calculators
 % current_dir = cd;
 % all_code = fullfile(current_dir,'../..');
@@ -78,6 +97,8 @@ for i = 1:positions
     T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');    %transform from t1 frame to ICR
 end
 
+phiD = phi*180/pi;
+
 %% Muscle calculation
 Name = 'Bicep Femoris (Short Head)';
 MIF = 804;
@@ -95,42 +116,34 @@ Bifemsh = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 Name = 'Bicep Femoris (Short Head)';
 CrossPoint = 2;
 
-Location = zeros(2,3,positions);
-Location0 = zeros(2,3,positions);
-
 %Original origin and insertion from Ben
 p10 = [-0.050, 0.035, 0.050];       %Origin
 p20 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
-% p20 = [-0.022, -0.024, 0.02787];  %Insertion distance from theta1
-v20 = zeros(1,3,positions);      
 
 load Bifemsh_20mm_Result.mat xBest
 p1 = xBest(1:3); %Origin
-p2 = xBest(4:6); %Insertion distance from theta
-v2 = zeros(1,3,positions);
-% u2 = zeros(1,3,positions);
+p2 = xBest(4:6); %End/insertion in the t1 frame
 
+% Use the same t1 wrap and release rule as the optimizer.  The wrap z
+% coordinate lies on the full-extension p1-pEnd line in the t1 y-z plane.
+routeCtx.N = positions;
+routeCtx.phiD = phiD(:);
+routeCtx.T_Pam = T_Pam;
+routeCtx.T_ICR_t1 = T_ICR_t1;
+routeCtx.wrapPointT1XY = [-0.0026, -0.0105];
+routeCtx.wrapBendRadius = 0.022;
+routeCtx.wrapAngleToleranceD = 0;
 
-for i = 1:positions
+[Location, bendMeasure, routeInfo] = ...
+    buildKneeFlexorRoute20mm(p1, p2, routeCtx);
+[Location0, bendMeasure0, routeInfo0] = ...
+    buildKneeFlexorRoute20mm(p10, p20, routeCtx);
 
-    v2(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p2); %Insertion location wrt Knee ICR
-    Location(:,:,i) = [p1; ...
-                       v2(:,:,i)];
-
-     v20(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p20); %Insertion location wrt Knee ICR
-    Location0(:,:,i) = [p10; ...
-                       v20(:,:,i)];
-
-    % %shift left
-    % u2(:, :, i) = RowVecTrans(T_ICR_t1(:, :, i),p2-[0.015, 0, 0]); %Insertion location wrt Knee ICR
-    % Location2(:,:,i) = [p1-[0.015, 0, 0]; ...
-    %                    u2(:,:,i)];
-    % 
-    % %shift up
-    % Location3(:,:,i) = [p1+[0,0.012,0]; ...
-    %                    v2(:,:,i)];
-
-end
+% Existing comparison geometries now use the same three-point route.
+[Location2, bendMeasure2] = ...
+    buildKneeFlexorRoute20mm(p1-[0.015,0,0], p2, routeCtx);
+[Location3, bendMeasure3] = ...
+    buildKneeFlexorRoute20mm(p1+[0,0.012,0], p2, routeCtx);
 
 %20 mm Festo
 Dia = 20;
@@ -162,29 +175,36 @@ Xi0 = g(1);
 Xi1 = g(2);
 Xi2 = g(3);
 
-wraps = 6;   % number of cable wraps. Each full circle is two "columns" or cables.
+if numel(g) >= 4
+    Xi3 = g(4);
+else
+    x3Data = load( ...
+        'minimizeExtPin10_results_20260819_2transforms_Z2.mat', ...
+        'filtered_results', 'xCols');
+    gX3 = x3Data.filtered_results(1,x3Data.xCols);
+    Xi3 = gX3(4);
+end
+
+wraps = 3;
+BPAcount = 1;
 
 %Original work
-Bifemsh_Pam0 = MonoPamDataExplicit_balance(Name, Location0, CrossPoint, Dia, T_Pam, rest0, kmax0, tendon0, fitting, pres3, Xi0, Xi1, Xi2, wraps);
+Bifemsh_Pam0 = MonoPamDataExplicit_balanceX3(Name, Location0, CrossPoint, Dia, T_Pam, rest0, kmax0, tendon0, fitting, pres3, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure0);
 
 %Optimizer results
-Bifemsh_Pam1 = MonoPamDataExplicit_balance(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, wraps);
-Bifemsh_Pam2 = MonoPamDataExplicit_balance(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, wraps);
-Bifemsh_Pam3 = MonoPamDataExplicit_balance(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, wraps);
+Bifemsh_Pam1 = MonoPamDataExplicit_balanceX3(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure);
+Bifemsh_Pam2 = MonoPamDataExplicit_balanceX3(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure);
+Bifemsh_Pam3 = MonoPamDataExplicit_balanceX3(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure);
 
-% % shift left; 
-% Bifemsh_Pam1u = MonoPamDataExplicit_balance(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, wraps);
-% Bifemsh_Pam2u = MonoPamDataExplicit_balance(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, wraps);
-% Bifemsh_Pam3u = MonoPamDataExplicit_balance(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, wraps);
-% 
-% % shift up; 
-% restW = rest+0.012;
-% kmaxW = (1-KMAX)*restW;
-% tendonW = tendon;
-% 
-% Bifemsh_Pam1w = MonoPamDataExplicit_balance(Name,Location3,CrossPoint,Dia,T_Pam,restW,kmaxW,tendonW,fitting,pres1,Xi0,Xi1,Xi2,wraps);
-% Bifemsh_Pam2w = MonoPamDataExplicit_balance(Name,Location3,CrossPoint,Dia,T_Pam,restW,kmaxW,tendonW,fitting,pres2,Xi0,Xi1,Xi2,wraps);
-% Bifemsh_Pam3w = MonoPamDataExplicit_balance(Name,Location3,CrossPoint,Dia,T_Pam,restW,kmaxW,tendonW,fitting,pres3,Xi0,Xi1,Xi2,wraps);
+% shift left; 
+Bifemsh_Pam1u = MonoPamDataExplicit_balanceX3(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure2);
+Bifemsh_Pam2u = MonoPamDataExplicit_balanceX3(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure2);
+Bifemsh_Pam3u = MonoPamDataExplicit_balanceX3(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure2);
+
+% shift left; 
+Bifemsh_Pam1w = MonoPamDataExplicit_balanceX3(Name, Location3, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure3);
+Bifemsh_Pam2w = MonoPamDataExplicit_balanceX3(Name, Location3, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure3);
+Bifemsh_Pam3w = MonoPamDataExplicit_balanceX3(Name, Location3, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure3);
 
 %% Create strings for later plots
 %First pressure
@@ -290,21 +310,58 @@ hold off
 
 %% Compare Expected vs Adjusted PAM values
 figure
-hold on
-plot(phiD,Bifemsh_Pam3.Torque_p(:,3), 'DisplayName','Optimized stiffness aware')
-% plot(phiD,Bifemsh_Pam3u.Torque_p(:,3),'--', 'DisplayName','p_1 and p_2: x -15 mm')
-% plot(phiD,Bifemsh_Pam3w.Torque_p(:,3),'-.', 'DisplayName','p_1: y +12 mm')
-plot(phiD,TorqueR(:,3), 'DisplayName','Stiffness unaware')
-plot(phiD,Bifemsh_Pam0.Torque_p(:,3), 'DisplayName','Unoptimized, stiffness aware')
-plot(humanAngle,TorqueHz, 'DisplayName','Human values')
-hold off
+plot(phiD, Bifemsh_Pam3.Torque_p(:, 3), phiD, TorqueR(:, 3),phiD, Bifemsh_Pam0.Torque_p(:, 3),phiD, TorqueHz)
 title('Muscle and PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
 ylabel('Torque, N \cdot m','Interpreter','tex')
-legend('show')
+legend('Optimized stiffness aware', 'Stiffness unaware',"Unoptimized, stiffness aware","Human values")
 
 
-
+% %% Plotting muscle lengths and moment arms using two different moment arm
+% %calculations
+% ML = Bifemsh.MuscleLength;
+% PamL = Bifemsh_Pam3.L_p;
+% for i = 1:size(Bifemsh.MomentArm,1)
+%     MA(i,:) = norm(Bifemsh.MomentArm(i,1:2));               %Muscle moment arm, Z axis
+%     BPAma(i,:) = norm(Bifemsh_Pam3.mA_p(i,1:2));        %BPA moment arm, Z axis
+% end
+% dM = diff(Bifemsh.MuscleLength);           %Muscle length difference
+% dP = diff(Bifemsh_Pam3.L_p);       %PAM length difference
+% dO = diff(phiD);                           %Angle difference
+% 
+% figure
+% hold on
+% sgtitle('Bicep Femoris Short Head Length and Moment Arm through Knee Flexion and Extension')
+% 
+% subplot(2, 2, 1)
+% plot(phiD, ML, phiD, PamL)
+% title('Muscle and PAM Lengths')
+% xlabel('Knee angle, \circ','Interpreter','tex')
+% ylabel('Length, m')
+% legend('Human', 'PAM')
+% 
+% subplot(2, 2, 2)
+% plot(phiD, MA, phiD, BPAma)
+% title('Moment arm, Z axis, vector method')
+% xlabel('Knee angle, \circ','Interpreter','tex')
+% ylabel('Length, m')
+% legend('Human', 'PAM')
+% 
+% subplot(2, 2, 3)
+% plot(phiD(1:99), -dM./dO', phiD(1:99), -dP./dO')
+% title('Moment arm, Z axis, left difference method')
+% xlabel('Knee angle, \circ','Interpreter','tex')
+% ylabel('Length, m')
+% legend('Human', 'PAM')
+% 
+% subplot(2, 2, 4)
+% plot(phiD(2:100), -dM./dO', phiD(2:100), -dP./dO')
+% title('Moment arm, Z axis, right difference method')
+% xlabel('Knee angle, \circ','Interpreter','tex')
+% ylabel('Length, m')
+% legend('Human', 'PAM')
+% 
+% hold off
 %% Plotting the angle between the vectors
 
 aHR = zeros(size(TorqueHz, 1), 1);
@@ -431,10 +488,6 @@ plot(phiD, Bifemsh_Pam0.Torque_p(:, 3),'Color',c2)
 scatter(K_ang/c, TorqueZ,sz,'filled','MarkerFaceColor',c4)
 plot(humanAngle, TorqueHz,'--','Color',c8);
 plot(phiD, Bifemsh_Pam3.Torque_p(:,3),'Color',c7)
-% plot(phiD,Bifemsh_Pam3u.Torque_p(:,3),'--', ...
-    % 'Color',c6,'DisplayName','p_1 and p_2: x -15 mm')
-% plot(phiD,Bifemsh_Pam3w.Torque_p(:,3),'-.', ...
-%     'Color',c5,'DisplayName','p_1: y +12 mm')
 legend(sT3,sM3,"Human","New theoretical")
 title('PAM Z Torque')
 xlabel('Knee angle, \circ','Interpreter','tex')
@@ -478,15 +531,11 @@ hold off
 bpa = Bifemsh_Pam3;
 bpa0 = Bifemsh_Pam0;
 
-Lm_p = bpa.RestingL .* (1 - bpa.strain_p);
-Lm_p = Lm_p(:);
-
-Lm0 = bpa0.RestingL .* (1 - bpa0.Contraction);
-Lm0 = Lm0(:);
-
-Lm = bpa.RestingL .* (1 - bpa.Contraction);
+Lm = bpa.RestingL .* (1 - bpa.strain_p);
 Lm = Lm(:);
 
+Lm0 = bpa0.RestingL .* (1 - bpa0.strain_p);
+Lm0 = Lm0(:);
 
 Angle = [-125 -114 -98 -83 -75.5 -69 -55.5 -53.001 -53.01 -41 -30];
 InflatedLength = [334 334 338 343 NaN 348 356 356 357 365 368]/1000;
@@ -494,72 +543,30 @@ InflatedLength = [334 334 338 343 NaN 348 356 356 357 365 368]/1000;
 figure
 hold on
 scatter(Angle, InflatedLength)
-plot(phiD(:), Lm0)
 plot(phiD(:), Lm)
-plot(phiD(:), Lm_p)
+plot(phiD(:), Lm0)
 hold off
-legend('Measured','Original BPA','Optimized BPA','Optimized BPA with deformation')
+legend('Measured','Prediction, adjusted','Prediction, original')
 title('BPA length')
 xlabel('Knee angle, degrees')
 ylabel('Length, m')
 
-%% Compare relative strain for shifted attachment locations
-relativeStrainOpt = Bifemsh_Pam3.Contraction(:)  ./ KMAX;
-relativeStrain_p = Bifemsh_Pam3.strain_p(:)  ./ KMAX;
-% relativeStrainU   = Bifemsh_Pam3u.Contraction(:) ./ KMAX;
-% relativeStrainW   = Bifemsh_Pam3w.Contraction(:) ./ KMAX;
-
-figure('Units','centimeters', ...
-    'Position',[2,2,14,10], ...
-    'Color','w');
-
+%% X3 strain definitions
+figure
 hold on
-plot(phiD,relativeStrainOpt, ...
-    'Color',c7, ...
-    'LineStyle','-', ...
-    'LineWidth',2, ...
-    'DisplayName','Stiffness unaware');
-
-plot(phiD,relativeStrain_p, ...
-    'Color',c6, ...
-    'LineStyle','--', ...
-    'LineWidth',2, ...
-    'DisplayName','with deformation');
-
-title('Relative Strain', ...
-    'FontName','Arial', ...
-    'FontSize',12, ...
-    'FontWeight','bold');
-
-xlabel('\theta_k, \circ', ...
-    'Interpreter','tex', ...
-    'FontWeight','bold');
-
-ylabel('\varepsilon^*', ...
-    'Interpreter','tex', ...
-    'FontWeight','bold');
-
-xlim([-120,10])
-
-ax = gca;
-set(ax, ...
-    'FontName','Arial', ...
-    'FontSize',10, ...
-    'FontWeight','bold', ...
-    'LineWidth',2, ...
-    'XMinorTick','on', ...
-    'YMinorTick','on', ...
-    'TickLength',[0.025,0.05], ...
-    'Box','off');
-
-grid(ax,'off')
-
-lgd = legend('Location','best');
-set(lgd, ...
-    'FontName','Arial', ...
-    'FontSize',8, ...
-    'FontWeight','bold', ...
-    'Box','off');
+plot(phiD(:), Bifemsh_Pam3.strain_f, 'LineWidth', 2)
+plot(phiD(:), Bifemsh_Pam3.strain_p, '--', 'LineWidth', 2)
+plot(phiD(:), Bifemsh_Pam3.Contraction, '-.', 'LineWidth', 2)
+yline(0, ':k', 'Minimum strain')
+yline(KMAX, ':', 'KMAX')
+hold off
+box off
+grid off
+legend('strain_f, includes Xi3', 'strain_p, excludes Xi3', ...
+    'Contraction', 'Location', 'best')
+xlabel('Knee angle, degrees')
+ylabel('Strain')
+title('BPA strain definitions')
 
 
 %% Muscle Bone Plotting
@@ -576,14 +583,16 @@ HLoc = Bifemsh.Location(:,:,plotIdx);
 HMuscleLocation = {HLoc};
 HMuscleCross = {Bifemsh.Cross};
 
-% Robot BPA path for plotting the bracket design.
-% Use p1 and p2 directly:
-%   p1 is in the femur frame
-%   p2 is in the tibia/theta1 frame
+% Robot BPA path for plotting the bracket design.  p1 is in the femur
+% frame; the intermediate wrap and p2 are in the tibia/theta1 frame.
 %
 % Do NOT use Bifemsh_Pam3.Location here, because that stores v2 after
 % transforming p2 into the knee/ICR frame for the torque calculation.
-RLoc = [p1; p2];
+if routeInfo.active(plotIdx)
+    RLoc = [p1; routeInfo.pWrapT1; p2];
+else
+    RLoc = [p1; p2; p2];
+end
 
 RMuscleLocation = {RLoc};
 RMuscleCross = {CrossPoint};

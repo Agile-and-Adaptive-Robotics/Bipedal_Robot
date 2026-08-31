@@ -1,7 +1,7 @@
 function pred = predictKneeFlexor20mm(x, ctx)
 
     p1       = x(1:3);       % parent-frame / femur-side attachment
-    p2       = x(4:6);       % theta1-frame insertion design variable
+    p2       = x(4:6);       % theta1-frame end/insertion design variable
     rest     = x(7);         % active BPA rest length
     tendon   = x(8);         % physical tendon length
     
@@ -9,6 +9,7 @@ function pred = predictKneeFlexor20mm(x, ctx)
     Xi0 = ctx.Xi0;
     Xi1 = ctx.Xi1;
     Xi2 = ctx.Xi2;
+    Xi3 = ctx.Xi3;
 
     KMAX = ctx.KMAX;
     kmax = rest*(1-KMAX);      % measured free-contracted BPA length at 620 kPa
@@ -22,18 +23,11 @@ function pred = predictKneeFlexor20mm(x, ctx)
         return
     end
 
-    N = ctx.N;
-    Location = zeros(2, 3, N);
-
-    for i = 1:N
-        % p2 is defined in the theta1 frame.
-        % Convert it into the knee/ICR frame before storing it in Location.
-        v2 = RowVecTrans(ctx.T_ICR_t1(:, :, i), p2);
-        Location(:, :, i) = [p1; v2];
-    end
+    [Location, bendMeasure, routeInfo] = ...
+        buildKneeFlexorRoute20mm(p1, p2, ctx);
 
     try
-        bpa = MonoPamDataExplicit_balance( ...
+        bpa = MonoPamDataExplicit_balanceX3( ...
             ctx.Name, ...
             Location, ...
             ctx.CrossPoint, ...
@@ -47,25 +41,45 @@ function pred = predictKneeFlexor20mm(x, ctx)
             Xi0, ...
             Xi1, ...
             Xi2, ...
-            ctx.wraps);
+            Xi3, ...
+            ctx.wraps, ...
+            ctx.phiD, ...
+            ctx.BPAcount, ...
+            bendMeasure);
     catch ME
         pred.ok = false;
         pred.failReason = string(ME.message);
         return
     end
 
+    pred.bpa = bpa;
     pred.Location = Location;
+    pred.bendMeasure = bendMeasure;
+    pred.routeInfo = routeInfo;
     pred.Torque   = bpa.Torque_p;
     pred.TorqueZ  = bpa.Torque_p(:,3);
-    pred.strain   = bpa.strain_p(:);
-    pred.relativeStrain = pred.strain ./ KMAX;
-    pred.activeLength = rest .* (1 - pred.strain);
+    pred.offAxisTorque = hypot(bpa.Torque_p(:,1), bpa.Torque_p(:,2));
+    pred.Contraction = bpa.Contraction(:);
+    pred.strain_f = bpa.strain_f(:);
+    pred.strain_p = bpa.strain_p(:);
+    pred.strain = pred.strain_p;  % compatibility with existing checks
+    pred.relativeContraction = pred.Contraction ./ KMAX;
+    pred.relativeStrainF = pred.strain_f ./ KMAX;
+    pred.relativeStrainP = pred.strain_p ./ KMAX;
+    pred.relativeStrain = pred.relativeStrainP;
+    pred.activeLength = rest .* (1 - pred.strain_p);
+    pred.pathLength0 = bpa.MuscleLength(:);
+    pred.pathLength = bpa.Lmt_p(:) + Xi0;
+    pred.delta_L = bpa.delta_L(:);
+    pred.gama = bpa.gama(:);
     pred.momentArmVector = bpa.mA_p;
     pred.momentArm = hypot(bpa.mA_p(:,1), bpa.mA_p(:,2));
 
     % Store design variables for optimizer output.
     pred.p1 = p1;
     pred.p2 = p2;
+    pred.pEnd = p2;
+    pred.pWrap = routeInfo.pWrapT1;
     pred.rest = rest;
     pred.tendon = tendon;
     pred.KMAX = KMAX;
@@ -74,8 +88,8 @@ function pred = predictKneeFlexor20mm(x, ctx)
     % Extension-frame geometry check.
     idx = ctx.idxExtension;
     
-    % v2 is the Location row-2 point in the knee/ICR frame.
-    v2 = Location(2,:,idx);
+    % v2 is the final insertion point in the knee/ICR frame.
+    v2 = Location(3,:,idx);
     
     % w2 is that same point transformed into the femur frame.
     w2 = RowVecTrans(ctx.T_Pam(:,:,idx), v2);
@@ -83,7 +97,7 @@ function pred = predictKneeFlexor20mm(x, ctx)
     pred.v2 = v2;
     pred.w2 = w2;
     
-    pred.extensionDistance = norm(p1 - w2);
+    pred.extensionDistance = pred.pathLength0(idx);
     
     % Physical no-load musculotendon length available between attachment points.
     % Xi0 is not included here because this is a physical packaging constraint.

@@ -6,10 +6,10 @@ function [c, ceq, info] = nonlconExclusion(x, geo, ctx, idxP2)
 % c(3) <= 0: the BPA/fittings and tendon clear the femoral ellipse.
 % c(4) <= 0: tendon + two fittings leave nonnegative current BPA length.
 %
-% The complete series path lies on u_hat from p1 toward p2:
-%   p1 -- [current Lm + two fittings, BPA radius] -- junction
-%      -- [tendon length, tendon radius] -- p2.
-% p1 is transformed from the femur frame into t1 before u_hat is formed.
+% The complete series path follows the same p1-wrap-p2 polyline used by the
+% predictor.  At +5 deg the wrap is normally active.  The tendon occupies
+% the final portion of that polyline and the BPA plus fittings occupy the
+% proximal portion.
 
 if nargin < 4 || isempty(idxP2)
     idxP2 = 4:6;
@@ -28,17 +28,24 @@ ceq = [];
 % Use the sampled knee position nearest the requested +5 deg collision
 % configuration.  p1 is stored in the femur frame; p2 is already in t1.
 [~, idxCollision] = min(abs(ctx.phiD - geo.collisionAngleD));
+[~, ~, routeInfo] = buildKneeFlexorRoute20mm(p1, p2, ctx);
+p1T1 = routeInfo.p1T1(idxCollision,:);
 
-p1ICR = RowVecTrans(ctx.T_Pam(:,:,idxCollision)\eye(4), p1);
-p1T1 = RowVecTrans(ctx.T_ICR_t1(:,:,idxCollision)\eye(4), p1ICR);
+if routeInfo.active(idxCollision)
+    routeT1 = [p1T1; routeInfo.pWrapT1; p2];
+else
+    routeT1 = [p1T1; p2];
+end
 
-pathVector = p2 - p1T1;
-pathLength = norm(pathVector);
+segmentLength = vecnorm(diff(routeT1,1,1),2,2);
+pathLength = sum(segmentLength);
 
 info = struct;
 info.angleD = ctx.phiD(idxCollision);
 info.p1T1 = p1T1;
 info.p2T1 = p2;
+info.pWrapT1 = routeInfo.pWrapT1;
+info.wrapActive = routeInfo.active(idxCollision);
 info.bpaRadius = geo.bpaRadius;
 info.tendonRadius = geo.tendonRadius;
 
@@ -52,8 +59,6 @@ if ~isfinite(pathLength) || pathLength <= eps || ...
     return
 end
 
-unitPath = pathVector/pathLength;
-
 % The tendon always terminates at p2.  The junction moves toward p2 when
 % the optimized tendon becomes shorter.  Everything proximal to the
 % junction consists of the current BPA length plus both fittings and uses
@@ -61,33 +66,29 @@ unitPath = pathVector/pathLength;
 tendonLengthChecked = min(tendon, pathLength);
 bpaFittingsLength = pathLength - tendonLengthChecked;
 currentMuscleLength = bpaFittingsLength - 2*ctx.fitting;
-junctionT1 = p2 - tendonLengthChecked*unitPath;
 
-nBPA = max(2, ceil(bpaFittingsLength/geo.centerlineSampleStep) + 1);
-nTendon = max(2, ceil(tendonLengthChecked/geo.centerlineSampleStep) + 1);
+nPath = max(2, ceil(pathLength/geo.centerlineSampleStep) + 1);
+pathPosition = linspace(0, pathLength, nPath).';
+pathPosition = unique([pathPosition; bpaFittingsLength]);
+centerlineT1 = pointsAlongPolyline(routeT1, pathPosition);
+junctionT1 = pointsAlongPolyline(routeT1, bpaFittingsLength);
 
-sBPA = linspace(0, bpaFittingsLength, nBPA).';
-sTendon = linspace(bpaFittingsLength, pathLength, nTendon).';
-
-pathPosition = [sBPA; sTendon];
-pointRadius = [geo.bpaRadius*ones(nBPA,1); ...
-               geo.tendonRadius*ones(nTendon,1)];
-component = [repmat("BPA + fittings", nBPA, 1); ...
-             repmat("tendon", nTendon, 1)];
-
-centerlineT1 = p1T1 + pathPosition.*unitPath;
+isBPA = pathPosition <= bpaFittingsLength + 10*eps;
+pointRadius = geo.tendonRadius*ones(size(pathPosition));
+pointRadius(isBPA) = geo.bpaRadius;
+component = repmat("tendon", numel(pathPosition), 1);
+component(isBPA) = "BPA + fittings";
 
 % Signed distance is positive outside the simplified tibia, zero on its
 % surface, and negative inside it.
 [signedDistanceTibia, region] = signedDistanceToTibia(centerlineT1, geo);
 
-% Transform only p2 into the femur frame.  p1 is already in that frame.
-% Rigid transforms preserve path distance, so the same pathPosition values
-% generate the exact straight centerline without transforming every sample.
-p2ICR = RowVecTrans(ctx.T_ICR_t1(:,:,idxCollision), p2);
-p2Femur = RowVecTrans(ctx.T_Pam(:,:,idxCollision), p2ICR);
-unitPathFemur = (p2Femur - p1)/pathLength;
-centerlineFemur = p1 + pathPosition.*unitPathFemur;
+% Transform the complete wrapped centerline into the femur frame.
+centerlineFemur = zeros(size(centerlineT1));
+for i = 1:size(centerlineT1,1)
+    qICR = RowVecTrans(ctx.T_ICR_t1(:,:,idxCollision), centerlineT1(i,:));
+    centerlineFemur(i,:) = RowVecTrans(ctx.T_Pam(:,:,idxCollision), qICR);
+end
 
 signedDistanceFemur = signedDistanceToFemur(centerlineFemur, geo);
 
@@ -137,6 +138,24 @@ info.cTibia = cTibia;
 info.cFemur = cFemur;
 info.cSeries = cSeries;
 info.failReason = "";
+
+end
+
+function points = pointsAlongPolyline(nodes, distance)
+%POINTSALONGPOLYLINE Evaluate one or more arclength positions.
+
+nodes = reshape(nodes, [], 3);
+distance = distance(:);
+segmentLength = vecnorm(diff(nodes,1,1),2,2);
+arc = [0; cumsum(segmentLength)];
+
+if arc(end) <= eps
+    points = repmat(nodes(1,:), numel(distance), 1);
+    return
+end
+
+distance = min(arc(end), max(0, distance));
+points = interp1(arc, nodes, distance, 'linear');
 
 end
 

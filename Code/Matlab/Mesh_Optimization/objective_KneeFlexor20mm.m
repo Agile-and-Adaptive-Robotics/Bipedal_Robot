@@ -7,43 +7,63 @@ function J = objective_KneeFlexor20mm(x, ctx)
         return
     end
 
-    idxOperating = ctx.phiD >= -120 & ctx.phiD <= 10;
-
-    if any(~isfinite(pred.TorqueZ(idxOperating))) || any(~isfinite(pred.strain(idxOperating)))
+    if any(~isfinite(pred.Torque(:))) || ...
+            any(~isfinite(pred.strain_f)) || ...
+            any(~isfinite(pred.strain_p)) || ...
+            any(~isfinite(pred.Contraction))
         J = 1e11;
         return
     end
 
-    humanAbs = interp1(ctx.humanAngleD, ctx.humanTorqueAbs, ctx.phiD, 'pchip', 'extrap');
+    humanAbs = interp1( ...
+        ctx.humanAngleD, ...
+        ctx.humanTorqueAbs, ...
+        ctx.phiD, ...
+        'pchip', ...
+        'extrap');
 
-    humanAbs = humanAbs(idxOperating);
-    robotAbs = abs(pred.TorqueZ(idxOperating));
+    requiredTorque = (1 + ctx.requiredTorqueMargin)*humanAbs(:);
+    robotAbs = abs(pred.TorqueZ(:));
 
-    requiredAbs = 1.02*humanAbs(:);
-    humanScale = max(humanAbs(:), 1);
-
-    shortfallFraction = max(0, (requiredAbs - robotAbs(:))./humanScale);
-
+    % Pointwise torque requirement with worst-position priority.
+    torqueShortfall = max(0, requiredTorque - robotAbs);
+    shortfallFraction = torqueShortfall ./ ctx.torqueScale;
     Jworst = max(shortfallFraction);
-    Jmean = mean(shortfallFraction.^2);
+    Jtorque = mean(shortfallFraction.^2);
 
-    shapeError = (robotAbs(:) - requiredAbs)./humanScale;
+    % Very small shape term; meeting the requirement takes precedence.
+    shapeError = (robotAbs - requiredTorque) ./ ctx.torqueScale;
     Jshape = mean(shapeError.^2);
+
+    % Off-axis torque is allowed up to the pointwise value produced by x0.
+    % Only excess resultant torque sqrt(Tx^2 + Ty^2) is penalized.
+    offAxisExcess = max(0, ...
+        pred.offAxisTorque(:) - ctx.offAxisTorqueX0(:));
+    JoffAxis = ctx.offAxisPenaltyWeight * ...
+        mean((offAxisExcess ./ ctx.offAxisTorqueScale).^2);
 
     % Resting length constraint:
     % rest + tendon + 2*fitting >= distance(p1, w2)
     % pred.cRestLength <= 0 is feasible.
     JrestLength = 1e6 * max(0, pred.cRestLength).^2;
 
-    % Strain feasibility.
-    % KMAX is the measured free-contraction strain at 620 kPa.
-    % maxRelStrain = 1 allows strain up to KMAX.
+    % Strain and no-load contraction feasibility.  strain_f includes Xi3
+    % and drives force; strain_p excludes Xi3 and remains the stretch check.
     maxStrainAllowed = ctx.maxRelStrain * pred.KMAX;
-    
-    operatingStrain = pred.strain(idxOperating);
 
-    JstrainHi = 1e4*max(0, max(operatingStrain) - maxStrainAllowed).^2;
-    JstrainLo = 1e4*max(0, ctx.minStrain - min(operatingStrain)).^2;
+    JstrainHi = 1e5 * max(0, ...
+        max([pred.strain_f; pred.Contraction]) - maxStrainAllowed).^2;
+    JstrainLo = 1e5 * max(0, ...
+        ctx.minStrain - min(pred.strain_p)).^2;
+
+    % The new contact must release during the extension-to-flexion sweep.
+    % The constant term makes a no-release route unacceptable.
+    if pred.routeInfo.releaseFound
+        JwrapRelease = 0;
+    else
+        remainingTurn = max(0, -pred.routeInfo.finalSignedTurnD)/180;
+        JwrapRelease = ctx.wrapReleasePenaltyWeight*(1 + remainingTurn).^2;
+    end
 
     % Keep solution near practical geometry unless torque requires otherwise.
     x0 = ctx.x0(:);
@@ -60,7 +80,9 @@ function J = objective_KneeFlexor20mm(x, ctx)
     Jgeom = 1e-2 * sum((dx(1:6)./geomScale).^2);
     Jlen  = 1e-3 * ((x(7) - x0(7))/0.040).^2;
 
-    J = 1e5*Jworst + 1e3*Jmean + 1e-2*Jshape + JrestLength + JstrainHi + JstrainLo + Jgeom + Jlen;
+    J = 1e5*Jworst + 1e3*Jtorque + 1e-2*Jshape + ...
+        JoffAxis + JrestLength + JstrainHi + JstrainLo + ...
+        JwrapRelease + Jgeom + Jlen;
 
     if ~isfinite(J)
         J = 1e12;

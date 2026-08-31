@@ -3,8 +3,8 @@ function [Location, bendMeasure, info] = buildKneeFlexorRoute20mm(p1, pEnd, ctx)
 %
 % p1 is fixed in the femur frame.  pEnd and the intermediate wrap point
 % are fixed in the t1 frame.  The wrap is active at full extension and is
-% removed at the first collinear crossing encountered while sweeping toward
-% flexion.  An inactive wrap is represented by repeating pEnd.
+% removed at the first extension-to-flexion sample for which aDirect is
+% greater than aWrap.  An inactive wrap is represented by repeating pEnd.
 
 p1 = p1(:).';
 pEnd = pEnd(:).';
@@ -16,11 +16,6 @@ end
 
 N = ctx.N;
 
-% The wrap x-y seed is fixed in t1.  Its z coordinate is placed between
-% the two candidate endpoint z coordinates for every optimizer evaluation.
-pWrap = [ctx.wrapPointT1XY(:).', ...
-    p1(3) + ctx.wrapZFraction*(pEnd(3) - p1(3))];
-
 p1T1 = zeros(N,3);
 aInD = zeros(N,1);
 aOutD = zeros(N,1);
@@ -28,9 +23,30 @@ turnWrappedD = zeros(N,1);
 aDirectD = zeros(N,1);
 aWrapEndD = zeros(N,1);
 
+% First express p1 in t1 at every knee angle.
 for i = 1:N
     p1ICR = RowVecTrans(ctx.T_Pam(:,:,i)\eye(4), p1);
     p1T1(i,:) = RowVecTrans(ctx.T_ICR_t1(:,:,i)\eye(4), p1ICR);
+end
+
+% The wrap x-y seed is fixed in t1.  At full extension, place its z
+% coordinate on the p1-pEnd line projected into the t1 y-z plane.
+[~, idxExtension] = max(ctx.phiD);
+y1 = p1T1(idxExtension,2);
+z1 = p1T1(idxExtension,3);
+yEnd = pEnd(2);
+zEnd = pEnd(3);
+
+if abs(yEnd - y1) <= eps
+    error('buildKneeFlexorRoute20mm:DegenerateYZLine', ...
+        'p1 and pEnd have the same t1 y coordinate at full extension.')
+end
+
+wrapYZFraction = (ctx.wrapPointT1XY(2) - y1)/(yEnd - y1);
+pWrapZ = z1 + wrapYZFraction*(zEnd - z1);
+pWrap = [ctx.wrapPointT1XY(:).', pWrapZ];
+
+for i = 1:N
 
     vIn = pWrap(1:2) - p1T1(i,1:2);
     vOut = pEnd(1:2) - pWrap(1:2);
@@ -40,8 +56,10 @@ for i = 1:N
             'A flexor route segment has zero length at sample %d.', i)
     end
 
-    aInD(i) = atan2d(vIn(2), vIn(1));
-    aOutD(i) = atan2d(vOut(2), vOut(1));
+    % Clockwise-positive line angles, matching the established t1 routing
+    % convention used by buildDistalRingLocation20mm.
+    aInD(i) = atan2d(-vIn(2), vIn(1));
+    aOutD(i) = atan2d(-vOut(2), vOut(1));
 
     % Signed difference between the two line angles.  No dot product,
     % cross product, or separate vector-angle helper is used.
@@ -52,9 +70,9 @@ for i = 1:N
     % User-specified release comparison, with both lines originating at
     % pEnd.  Release pWrap when aDirectD is greater than aWrapEndD.
     aDirectD(i) = atan2d( ...
-        p1T1(i,2) - pEnd(2), p1T1(i,1) - pEnd(1));
+        -(p1T1(i,2) - pEnd(2)), p1T1(i,1) - pEnd(1));
     aWrapEndD(i) = atan2d( ...
-        pWrap(2) - pEnd(2), pWrap(1) - pEnd(1));
+        -(pWrap(2) - pEnd(2)), pWrap(1) - pEnd(1));
 end
 
 % Sweep from full extension toward flexion.  The first frame satisfying the
@@ -104,6 +122,7 @@ end
 
 info = struct;
 info.pWrapT1 = pWrap;
+info.wrapYZFraction = wrapYZFraction;
 info.p1T1 = p1T1;
 info.active = active;
 info.releaseIndex = releaseIndex;
