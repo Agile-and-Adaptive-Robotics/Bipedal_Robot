@@ -20,12 +20,24 @@ ceq = [];
 [~, tendonMaxGeom, ~, ~, cInside] = ...
     tendonLimit20mm(pEnd, geo);
 
-[p8T1, okP8] = currentRouteP8T1(x, ctx);
+pred = predictKneeExt20mm(x, ctx);
 
-if okP8
+if pred.ok
+    p8T1 = pred.routeInfo.seed20(8,1:2);
     cP8MinX = p8MinusXLimit20mm(p8T1, geo);
+
+    % Hard length feasibility: the longest undeformed route must not exceed
+    % the zero-strain musculotendon length.
+    cRestLength = pred.cRestLength;
+
+    % Hard maximum-contraction feasibility using the class's original
+    % geometric Contraction definition, exactly as requested.
+    relativeContraction = pred.bpa.Contraction(:)/pred.KMAX;
+    cContractionMax = max(relativeContraction) - 1;
 else
     cP8MinX = 1;
+    cRestLength = 1;
+    cContractionMax = 1;
 end
 
 
@@ -39,6 +51,11 @@ end
 %
 % 3. If a circular tangent is being used, pEnd must permit a real
 %    external tangent.
+%
+% 4. The longest undeformed route must fit within the zero-strain series
+%    length.
+%
+% 5. bpa.Contraction/KMAX must not exceed one at any knee position.
 
 cTendonMax = tendon - tendonMaxGeom;
 
@@ -48,27 +65,9 @@ c = [ ...
     cTendonMax;
     cMinimumPossible;
     cInside;
-    cP8MinX];
-
-end
-
-
-function [p8T1, ok] = currentRouteP8T1(x, ctx)
-% Use the route builder so this nonlinear constraint sees the same adjusted
-% p8 that the prediction model uses for the current pEnd candidate.
-
-p8T1 = [NaN NaN];
-ok = false;
-
-try
-    [~, ~, routeInfo] = buildDistalRingLocation20mm( ...
-        x(1:3), x(4:6), x(8), ctx);
-
-    p8T1 = routeInfo.seed20(8,1:2);
-    ok = all(isfinite(p8T1));
-catch
-    ok = false;
-end
+    cP8MinX;
+    cRestLength;
+    cContractionMax];
 
 end
 

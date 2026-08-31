@@ -34,8 +34,8 @@ function [Location, bendMeasure, info] = buildDistalRingLocation20mm(p1, pEnd, t
 %   bendMeasure = Nx1 geometric sum of bend arclength terms. This is the
 %                 only bend signal consumed directly by the class.
 
-N = ctx.N;
-phiD = ctx.phiD(:);
+N = ctx.N;                  %Number of angle increments to use over RoM
+phiD = ctx.phiD(:);         %Knee angle in degree
 
 if N < 2
     error('buildDistalRingLocation20mm:NeedAtLeastTwoAngles', ...
@@ -162,10 +162,23 @@ for s = 1:Ns
 
     angleFrame = emptyAngleFrame();
 
-    if s == 1
-        % Fully flexed frame: all seed contacts start unique.
+        if s == 1
+        % At full flexion, remove p8 when p8-to-p9 is more
+        % counterclockwise than p7-to-p9.
         removedNow = false(9,1);
-    else
+
+        [removeP8, aBigP8D, aSmallP8D, marginP8D] = t1RemovalAngle( ...
+            Pfixed(7,:), Pfixed(8,:), Pfixed(9,:), angleTolD);
+
+        angleFrame = recordEliminationTest( ...
+            angleFrame, 8, aSmallP8D, aBigP8D, marginP8D, removeP8, true);
+
+            if removeP8
+                activeState(8) = false;
+                removedNow(8) = true;
+                angleFrame.removed(8) = true;
+            end
+        else
         % Same knee angle, two independent passes: femur side removes the
         % last remaining optional femur contact; t1 side removes the first
         % remaining optional t1 contact. Each pass can remove several rows
@@ -340,8 +353,10 @@ seed20 = seed;
 seed20(1,:) = p1;
 seed20(9,:) = pEnd;
 
-seed20(2:5,3) = p1(3);
-seed20(6:8,3) = pEnd(3);
+% Preserve the seed x-y route and distribute the optimized endpoint z
+% difference uniformly through p2:p8.  With nine route rows, each row is
+% one eighth of the endpoint z difference farther along the route.
+seed20(:,3) = linspace(p1(3), pEnd(3), 9).';
 
 [q2, ok2] = tangentPointCircleNearest( ...
     p1(1:2), geo.femurCylCenter, geo.femurCylClearRadius, seed(2,1:2));
@@ -425,7 +440,8 @@ while true
     end
 
     raw = collapseInactive(Pfixed, activeState);
-    pNextFemur = t1PointToFemur(raw(iNext,:), T_Pam_i, T_ICR_t1_i);
+    pNextFemur = RowVecTrans( ...
+        T_Pam_i*T_ICR_t1_i, raw(iNext,:));
 
     [angleGate, aBigD, aSmallD, marginD] = femurRemovalAngle( ...
         raw(iPrev,:), raw(k,:), pNextFemur, angleTolD);
@@ -481,7 +497,8 @@ while true
     end
 
     raw = collapseInactive(Pfixed, activeState);
-    pPrevT1 = femurPointToT1(raw(iPrev,:), T_Pam_inv_i, T_t1_ICR_i);
+    pPrevT1 = RowVecTrans( ...
+        T_t1_ICR_i, RowVecTrans(T_Pam_inv_i, raw(iPrev,:)));
 
     [angleGate, aBigD, aSmallD, marginD] = t1RemovalAngle( ...
         pPrevT1, raw(j,:), raw(iNext,:), angleTolD);
@@ -523,11 +540,12 @@ end
 
 raw = collapseInactive(Pfixed, activeState);
 
-p9Femur = t1PointToFemur(raw(9,:), T_Pam_i, T_ICR_t1_i);
+p9Femur = RowVecTrans(T_Pam_i*T_ICR_t1_i, raw(9,:));
 [gateP2, aBigP2D, aSmallP2D, marginP2D] = femurRemovalAngle( ...
     raw(1,:), raw(2,:), p9Femur, angleTolD);
 
-p1T1 = femurPointToT1(raw(1,:), T_Pam_inv_i, T_t1_ICR_i);
+p1T1 = RowVecTrans( ...
+    T_t1_ICR_i, RowVecTrans(T_Pam_inv_i, raw(1,:)));
 [gateP8, aBigP8D, aSmallP8D, marginP8D] = t1RemovalAngle( ...
     p1T1, raw(8,:), raw(9,:), angleTolD);
 
@@ -602,21 +620,6 @@ angleFrame.marginD(row) = marginD;
 angleFrame.tested(row) = true;
 angleFrame.angleGate(row) = angleGate;
 angleFrame.bypassClear(row) = bypassClear;
-
-end
-
-
-function qFemur = t1PointToFemur(qT1, T_Pam_i, T_ICR_t1_i)
-
-qFemur = RowVecTrans(T_Pam_i*T_ICR_t1_i, qT1);
-
-end
-
-
-function qT1 = femurPointToT1(qFemur, T_Pam_inv_i, T_t1_ICR_i)
-
-qICR = RowVecTrans(T_Pam_inv_i, qFemur);
-qT1 = RowVecTrans(T_t1_ICR_i, qICR);
 
 end
 
@@ -708,6 +711,11 @@ for j = 8:-1:6
     else
         raw(j,:) = raw(j+1,:);
     end
+end
+
+% An eliminated p8 repeats p7 for the wrap and bend calculation.
+if ~active(8) && active(7)
+    raw(8,:) = raw(7,:);
 end
 
 end
@@ -1802,9 +1810,6 @@ end
 
 function [alpha, R, qIn, qOut, ok, thetaLineRad, wrapFrac] = ...
     femurCylinderWrapAngle(P, activeFrame, ref, kneeAngleD)
-% p2 bend loss is tied to the known femur cylinder. When p3 is active the
-% p2 wrap is at its plateau; otherwise it interpolates by knee angle between
-% the extension baseline and the p3-introduction plateau.
 
 alpha = 0;
 R = 0;
@@ -1814,71 +1819,126 @@ ok = false;
 thetaLineRad = NaN;
 wrapFrac = NaN;
 
-if ~activeFrame(2)
+if ~activeFrame(2) || ~ref.valid
     return
 end
 
-if activeFrame(3)
-    thetaLineRad = ref.thetaMaxRad;
-    qIn = P(2,1:2);
-    qOut = P(3,1:2);
-    wrapFrac = 1;
-    alpha = ref.alphaPlateauRad;
-    R = ref.radiusPlateau;
-    ok = ref.valid;
-    return
-end
+% At the p2 activation angle:
+%   wrapFrac = 0
+%
+% At the p3 activation angle:
+%   wrapFrac = 1
+wrapFrac = ...
+    (ref.phiP2D-kneeAngleD) / ...
+    (ref.phiP2D-ref.phiP3D);
 
-% Before p3 is active, p2 wrap grows from the fully-extended p8*-p2
-% baseline toward the p3 plateau. p8 is stored in t1, but P is already the
-% common femur-frame route, so row 8 here is p8*.
-[thetaLineRad, okTheta] = p2LineAngleToRow(P, 8);
+wrapFrac = max(0,min(1,wrapFrac));
 
-if ~okTheta
-    return
-end
+% Interpolated absolute line angle.
+thetaLineRad = ...
+    ref.thetaP2P1Rad + ...
+    wrapFrac*ref.thetaSpanRad;
 
+% Wrap accumulated from the p2->p1 reference line.
+alpha = abs(wrapFrac*ref.thetaSpanRad);
+
+R = ref.radius;
+
+% Diagnostic representation of the current interpolated line.
 qIn = P(2,1:2);
-qOut = P(8,1:2);
+qOut = qIn + R*[cos(thetaLineRad),sin(thetaLineRad)];
 
-[alpha, R, wrapFrac] = interpolatedWABKA(kneeAngleD, ref);
-ok = isfinite(alpha);
+ok = isfinite(alpha) && isfinite(R);
 
 end
 
 
 function ref = p2WrapReference(Pall, active, phiD, geo)
-% Build the p2 WABKA reference from two route states:
-%   extension baseline: line p1-p2-p8*
-%   plateau:           p3 is active downstream of p2
+% p2 wrap construction:
+%
+%   1. At the p2 activation position, record the absolute atan2 angle
+%      of the line p2 -> p1.
+%
+%   2. At the p3 activation position, record the absolute atan2 angle
+%      of the line p2 -> p3.
+%
+%   3. Interpolate between those line angles using knee angle.
+%
+% phiD is ordered from full flexion toward extension. Therefore the last
+% active occurrence of each point is its activation position when the
+% motion is viewed in reverse, from extension toward flexion.
 
-N = size(Pall,3);
-idxExtension = N;
+ref.valid = false;
 
-[thetaBaseRad, okBase] = p2LineAngleToRow(Pall(:,:,idxExtension), 8);
+ref.idxP2On = [];
+ref.idxP3On = [];
 
-idxP3On = find(active(3,:), 1, 'last');
+ref.phiP2D = NaN;
+ref.phiP3D = NaN;
 
-if isempty(idxP3On)
-    idxP3On = 1;
+ref.thetaP2P1Rad = NaN;
+ref.thetaP3P2Rad = NaN;
+ref.thetaSpanRad = NaN;
+
+ref.radius = geo.femurCylClearRadius;
+
+% Retained field names used by the existing wrapInfo output.
+ref.idxExtension = [];
+ref.thetaBaseRad = NaN;
+ref.thetaMaxRad = NaN;
+ref.alphaBaseRad = 0;
+ref.alphaPlateauRad = NaN;
+ref.radiusBase = ref.radius;
+ref.radiusPlateau = ref.radius;
+
+idxP2On = find(active(2,:),1,'last');
+idxP3On = find(active(3,:),1,'last');
+
+if isempty(idxP2On) || isempty(idxP3On)
+    return
 end
 
-[thetaMaxRad, okThetaMax] = p2LineAngleToRow(Pall(:,:,idxP3On), 8);
-[alphaPlateauRad, okPlateau] = p2LineAngleToRow(Pall(:,:,idxP3On), 3);
+p1AtP2 = reshape(Pall(1,1:2,idxP2On),1,2);
+p2AtP2 = reshape(Pall(2,1:2,idxP2On),1,2);
 
-ref = makeWABKARef( ...
-    phiD(idxExtension), ...
-    phiD(idxP3On), ...
-    thetaBaseRad, ...
-    alphaPlateauRad, ...
-    geo.femurCylClearRadius, ...
-    geo.femurCylClearRadius, ...
-    okBase && okThetaMax && okPlateau);
+p2AtP3 = reshape(Pall(2,1:2,idxP3On),1,2);
+p3AtP3 = reshape(Pall(3,1:2,idxP3On),1,2);
 
-ref.idxExtension = idxExtension;
+% Absolute line angle p2 -> p1 when p2 activates.
+vP2P1 = p1AtP2 - p2AtP2;
+thetaP2P1Rad = atan2(vP2P1(2),vP2P1(1));
+
+% Absolute line angle p2 -> p3 when p3 activates.
+vP3P2 = p3AtP3 - p2AtP3;
+thetaP3P2Rad = atan2(vP3P2(2),vP3P2(1));
+
+% Shortest angular difference, protected against the +/-pi boundary.
+thetaSpanRad = atan2( ...
+    sin(thetaP3P2Rad-thetaP2P1Rad), ...
+    cos(thetaP3P2Rad-thetaP2P1Rad));
+
+ref.idxP2On = idxP2On;
 ref.idxP3On = idxP3On;
-ref.thetaBaseRad = thetaBaseRad;
-ref.thetaMaxRad = thetaMaxRad;
+
+ref.phiP2D = phiD(idxP2On);
+ref.phiP3D = phiD(idxP3On);
+
+ref.thetaP2P1Rad = thetaP2P1Rad;
+ref.thetaP3P2Rad = thetaP3P2Rad;
+ref.thetaSpanRad = thetaSpanRad;
+
+% Compatibility with the existing wrapInfo assignments.
+ref.idxExtension = idxP2On;
+ref.thetaBaseRad = thetaP2P1Rad;
+ref.thetaMaxRad = thetaP3P2Rad;
+ref.alphaBaseRad = 0;
+ref.alphaPlateauRad = abs(thetaSpanRad);
+
+ref.valid = ...
+    isfinite(ref.phiP2D) && ...
+    isfinite(ref.phiP3D) && ...
+    isfinite(ref.thetaSpanRad) && ...
+    ref.phiP2D > ref.phiP3D;
 
 end
 
@@ -2054,7 +2114,7 @@ qOut = [NaN NaN];
 ok = false;
 frac = NaN;
 
-if ~activeFrame(8)
+if ~any(activeFrame(6:8))
     return
 end
 

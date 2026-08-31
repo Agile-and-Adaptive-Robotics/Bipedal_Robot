@@ -44,6 +44,9 @@ if ~pred0.ok
     error('Initial prediction failed: %s', pred0.failReason)
 end
 
+[c0, ~] = nonlconExt20mm(ctx.x0, ctx);
+relativeContraction0 = pred0.bpa.Contraction(:)/pred0.KMAX;
+
 fprintf('\np1   = [% .3f % .3f % .3f] m\n', pred0.p1)
 fprintf('pEnd = [% .3f % .3f % .3f] m  [route row p9]\n', pred0.pEnd)
 fprintf('rest   = %.3f m\n', pred0.rest)
@@ -56,6 +59,7 @@ fprintf('maxPathLength0 = %.3f m\n', pred0.maxPathLength0)
 fprintf('maxPathAngleD0 = %.1f deg\n', pred0.maxPathAngleD0)
 fprintf('restLmt        = %.3f m\n', pred0.restLmt)
 fprintf('cRestLength    = %.3f m\n', pred0.cRestLength)
+fprintf('max constraint = %+.6g\n', max(c0))
 
 if isfield(pred0, 'maxPathLengthDeformed')
     fprintf('maxPathLength deformed diagnostic = %.3f m\n', ...
@@ -72,6 +76,7 @@ fprintf('max(strain_f) = %.3f  [includes Xi3, force strain]\n', max(pred0.strain
 fprintf('min(strain_f) = %.3f\n', min(pred0.strain_f))
 fprintf('max(strain_p) = %.3f  [excludes Xi3, measured-comparison strain]\n', max(pred0.strain_p))
 fprintf('min(strain_p) = %.3f\n', min(pred0.strain_p))
+fprintf('max(Contraction/KMAX) = %.6f\n', max(relativeContraction0))
 
 [~, idxExtension] = max(ctx.phiD);
 reserveAtExtension = pred0.KMAX - pred0.strain_f(idxExtension);
@@ -271,16 +276,33 @@ if isfield(routeInfo, 'wrap')
 end
 
 %% Plot full geometry and p1:p9 route
-plotAnglesRouteD = fliplr([9 7 -6 -44 -58 -91 -120]);
+transitionIdx = find(any( ...
+    routeInfo.active(:,1:end-1) & ~routeInfo.active(:,2:end), 1));
+plotIdx = unique([1, transitionIdx, numel(ctx.phiD)], 'stable');
+nPoseTiles = numel(plotIdx);
+
+if nPoseTiles == 9
+    nTileRows = 3;
+    nTileCols = 4;
+else
+    nTileRows = 3;
+    nTileCols = 3;
+end
+
+if nPoseTiles > nTileRows*nTileCols - 1
+    error('Too many route poses for the requested tiled layout.')
+end
+
 thPlot = linspace(0,2*pi,200).';
 
 figure('Name','9-point extensor route geometry','Color','w')
-tGeo = tiledlayout(3,3,'TileSpacing','compact','Padding','compact');
+tGeo = tiledlayout(nTileRows,nTileCols, ...
+    'TileSpacing','compact','Padding','compact');
 hGeoLegend = gobjects(7,1);
 
-for qPlot = 1:numel(plotAnglesRouteD)
+for qPlot = 1:nPoseTiles
 
-    [~,ii] = min(abs(ctx.phiD - plotAnglesRouteD(qPlot)));
+    ii = plotIdx(qPlot);
 
     Praw = routeInfo.raw(:,:,ii);
     P = Praw;
@@ -343,12 +365,22 @@ for qPlot = 1:numel(plotAnglesRouteD)
     tibiaLowerCenter = [ctx.geo.tibiaLowerCenter, 0];
     tibiaLowerCenter = RowVecTrans(ctx.T_ICR_t1(:,:,ii), tibiaLowerCenter);
     tibiaLowerCenter = RowVecTrans(ctx.T_Pam(:,:,ii), tibiaLowerCenter);
-    radiusLineX = [ ...
-        ctx.geo.femurCylCenter(1), P(2,1), NaN, ...
-        tibiaLowerCenter(1), P(8,1)];
-    radiusLineY = [ ...
-        ctx.geo.femurCylCenter(2), P(2,2), NaN, ...
-        tibiaLowerCenter(2), P(8,2)];
+    radiusLineX = [];
+    radiusLineY = [];
+
+    if routeInfo.active(2,ii)
+        radiusLineX = [radiusLineX, ...
+            ctx.geo.femurCylCenter(1), P(2,1), NaN];
+        radiusLineY = [radiusLineY, ...
+            ctx.geo.femurCylCenter(2), P(2,2), NaN];
+    end
+
+    if routeInfo.active(8,ii)
+        radiusLineX = [radiusLineX, ...
+            tibiaLowerCenter(1), P(8,1)];
+        radiusLineY = [radiusLineY, ...
+            tibiaLowerCenter(2), P(8,2)];
+    end
     hGeo(6) = plot(radiusLineX, radiusLineY, '--', 'LineWidth', 1.0);
 
     % --- route
@@ -369,13 +401,24 @@ for qPlot = 1:numel(plotAnglesRouteD)
     grid on
     xlabel('Femur-frame x, m')
     ylabel('Femur-frame y, m')
-    title(sprintf('%s, phi = %.2f deg', ...
-        routeStateTitle20mm(routeInfo, ii), ctx.phiD(ii)), ...
-        'Interpreter', 'none')
+    if qPlot == 1 || qPlot == nPoseTiles
+        tileTitle = sprintf( ...
+            '\\theta_k = %.1f^\\circ', ctx.phiD(ii));
+    else
+        removedNext = find( ...
+            routeInfo.active(:,ii) & ~routeInfo.active(:,ii+1));
+        removedText = strjoin( ...
+            cellstr(compose('-p%d', removedNext)), ', ');
+        tileTitle = sprintf( ...
+            '%s, \\theta_k = %.1f^\\circ', ...
+            removedText, ctx.phiD(ii));
+    end
+
+    title(tileTitle, 'Interpreter', 'tex')
 
 end
 
-axLeg = nexttile(tGeo,numel(plotAnglesRouteD)+1);
+axLeg = nexttile(tGeo,nTileRows*nTileCols);
 makeRouteLegend20mm(axLeg, hGeoLegend, { ...
     'Femur cylinder clr', 'Femur line clr', ...
     'Corrected condyle clr', ...
@@ -468,12 +511,14 @@ figure('Name','Extensor strain sanity','Color','w')
 hold on
 plot(ctx.phiD, pred0.strain_f, 'LineWidth', 2)
 plot(ctx.phiD, pred0.strain_p, '--', 'LineWidth', 2)
+plot(ctx.phiD, pred0.bpa.Contraction(:), '-.', 'LineWidth', 2)
 yline(ctx.KMAX, ':', 'LineWidth', 2)
-yline(ctx.minStrain, ':', 'LineWidth', 2)
+yline(0, ':', 'LineWidth', 2)
 grid on
 xlabel('Knee angle, deg')
 ylabel('Strain')
-legend('strain_f includes Xi3', 'strain_p excludes Xi3', 'KMAX', 'minStrain', ...
+legend('strain_f includes Xi3', 'strain_p excludes Xi3', 'Contraction', ...
+    'KMAX', 'Minimum strain = 0', ...
     'Location', 'best')
 title('Extensor strain sanity check')
 

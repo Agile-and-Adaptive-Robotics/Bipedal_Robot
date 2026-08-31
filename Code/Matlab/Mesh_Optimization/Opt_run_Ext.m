@@ -20,14 +20,14 @@ end
 optsG = optimoptions('surrogateopt', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 400);
+    'MaxFunctionEvaluations', 300);
 
 [xG, fG] = surrogateopt(objconstr, ctx.lb, ctx.ub, optsG);
 
 optsP = optimoptions('patternsearch', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 3000, ...
+    'MaxFunctionEvaluations', 1500, ...
     'MeshTolerance', 1e-5, ...
     'StepTolerance', 1e-5);
 
@@ -42,6 +42,8 @@ end
 [xBest, fBest] = patternsearch(obj, xStart, [], [], [], [], ctx.lb, ctx.ub, nonlcon, optsP);
 
 predBest = predictKneeExt20mm(xBest, ctx);
+[cBest, ~] = nonlconExt20mm(xBest, ctx);
+relativeContractionBest = predBest.bpa.Contraction(:)/predBest.KMAX;
 
 %% display results
 fprintf('\n========== OPTIMIZED DESIGN VALUES ==========\n')
@@ -83,6 +85,8 @@ fprintf('%s\n', '----------------+------------')
 fprintf('%-15s | %10.3f\n', 'maxPathLength0', predBest.maxPathLength0)
 fprintf('%-15s | %10.3f\n', 'restLmt', predBest.restLmt)
 fprintf('%-15s | %10.3f\n', 'cRestLength', predBest.cRestLength)
+fprintf('%-15s | %10.6f\n', 'max constraint', max(cBest))
+fprintf('%-15s | %10.6f\n', 'max Contr/KMAX', max(relativeContractionBest))
 
 fprintf('=============================================\n')
 
@@ -173,6 +177,8 @@ styleAxis20mm(ax, plt, xLim)
 styleLegend20mm(lgd, plt)
 
 %% 4. BPA strain
+contractionBest = predBest.bpa.Contraction(:);
+
 figure('Name','Optimized extensor strain','Color','w')
 ax = axes;
 hold(ax, 'on')
@@ -181,16 +187,19 @@ plot(ax, ctx.phiD, predBest.strain_f, ...
     'Color', plotColor20mm(plt,4), 'LineWidth', plt.lineWidth)
 plot(ax, ctx.phiD, predBest.strain_p, '--', ...
     'Color', plotColor20mm(plt,7), 'LineWidth', plt.lineWidth)
+plot(ax, ctx.phiD, contractionBest, '-.', ...
+    'Color', plotColor20mm(plt,2), 'LineWidth', plt.lineWidth)
 yline(ax, ctx.KMAX, ':', 'Color', plotColor20mm(plt,5), ...
     'LineWidth', plt.lineWidth)
-yline(ax, ctx.minStrain, ':', 'Color', plotColor20mm(plt,6), ...
+yline(ax, 0, ':', 'Color', plotColor20mm(plt,6), ...
     'LineWidth', plt.lineWidth)
 xlabel(ax, 'Knee angle, deg')
 ylabel(ax, 'Strain')
 lgd = legend(ax, 'strain_f includes Xi3', ...
        'strain_p excludes Xi3', ...
+       'Contraction', ...
        'KMAX', ...
-       'minStrain', ...
+       'Minimum strain = 0', ...
        'Location', 'best');
 title(ax, 'Optimized extensor strain')
 styleAxis20mm(ax, plt, xLim)
@@ -344,7 +353,24 @@ end
 
 routeInfo = predBest.routeInfo;
 
-plotAnglesRouteD = fliplr([9 7 -6 -44 -58 -91 -120]);
+% Plot full flexion, the solver frame immediately before each unique
+% elimination event, and full extension.
+transitionIdx = find(any( ...
+    routeInfo.active(:,1:end-1) & ~routeInfo.active(:,2:end), 1));
+plotIdx = unique([1, transitionIdx, numel(ctx.phiD)], 'stable');
+nPoseTiles = numel(plotIdx);
+
+if nPoseTiles == 9
+    nTileRows = 3;
+    nTileCols = 4;
+else
+    nTileRows = 3;
+    nTileCols = 3;
+end
+
+if nPoseTiles > nTileRows*nTileCols - 1
+    error('Too many route poses for the requested tiled layout.')
+end
 
 thPlot = linspace(0,2*pi,200).';
 
@@ -353,14 +379,14 @@ figure( ...
     'Color','w')
 
 tGeo = tiledlayout( ...
-    3, 3, ...
+    nTileRows, nTileCols, ...
     'TileSpacing','compact', ...
     'Padding','compact');
 hGeoLegend = gobjects(9,1);
 
-for qPlot = 1:numel(plotAnglesRouteD)
+for qPlot = 1:nPoseTiles
 
-    [~,ii] = min(abs(ctx.phiD - plotAnglesRouteD(qPlot)));
+    ii = plotIdx(qPlot);
 
     %% Native route
     Praw = routeInfo.raw(:,:,ii);
@@ -485,15 +511,22 @@ for qPlot = 1:numel(plotAnglesRouteD)
         ctx.T_Pam(:,:,ii), ...
         tibiaLowerCenter);
 
-    radiusLineX = [ ...
-        ctx.geo.femurCylCenter(1), P(2,1), ...
-        NaN, ...
-        tibiaLowerCenter(1), P(8,1)];
+    radiusLineX = NaN;
+    radiusLineY = NaN;
 
-    radiusLineY = [ ...
-        ctx.geo.femurCylCenter(2), P(2,2), ...
-        NaN, ...
-        tibiaLowerCenter(2), P(8,2)];
+    if routeInfo.active(2,ii)
+        radiusLineX = [radiusLineX, ...
+            ctx.geo.femurCylCenter(1), P(2,1), NaN];
+        radiusLineY = [radiusLineY, ...
+            ctx.geo.femurCylCenter(2), P(2,2), NaN];
+    end
+
+    if routeInfo.active(8,ii)
+        radiusLineX = [radiusLineX, ...
+            tibiaLowerCenter(1), P(8,1)];
+        radiusLineY = [radiusLineY, ...
+            tibiaLowerCenter(2), P(8,2)];
+    end
 
     hGeo(6) = plot(ax, ...
         radiusLineX, ...
@@ -558,15 +591,25 @@ for qPlot = 1:numel(plotAnglesRouteD)
     xlabel(ax, 'Femur-frame x, m')
     ylabel(ax, 'Femur-frame y, m')
 
-    title(ax, sprintf( ...
-        '%s, phi = %.2f deg', ...
-        routeStateTitle20mm(routeInfo, ii), ctx.phiD(ii)), ...
-        'Interpreter', 'none')
+    if qPlot == 1 || qPlot == nPoseTiles
+        tileTitle = sprintf( ...
+            '\\theta_k = %.1f^\\circ', ctx.phiD(ii));
+    else
+        removedNext = find( ...
+            routeInfo.active(:,ii) & ~routeInfo.active(:,ii+1));
+        removedText = strjoin( ...
+            cellstr(compose('-p%d', removedNext)), ', ');
+        tileTitle = sprintf( ...
+            '%s, \\theta_k = %.1f^\\circ', ...
+            removedText, ctx.phiD(ii));
+    end
+
+    title(ax, tileTitle, 'Interpreter', 'tex')
     styleAxis20mm(ax, plt)
 
 end
 
-axLeg = nexttile(tGeo,numel(plotAnglesRouteD)+1);
+axLeg = nexttile(tGeo,nTileRows*nTileCols);
 makeRouteLegend20mm(axLeg, hGeoLegend, { ...
     'Femur cylinder clr', ...
     'Femur line clr', ...

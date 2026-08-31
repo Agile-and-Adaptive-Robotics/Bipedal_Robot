@@ -1,15 +1,5 @@
 function J = objective_KneeExt20mm(x, ctx)
 
-    %% New 20 mm routing constraints
-
-    [cRoute, ~] = nonlconExt20mm(x, ctx);
-
-    if any(~isfinite(cRoute))
-        J = 1e12;
-        return
-    end
-
-
     %% Prediction
 
     pred = predictKneeExt20mm(x, ctx);
@@ -19,7 +9,12 @@ function J = objective_KneeExt20mm(x, ctx)
         return
     end
 
-    if any(~isfinite(pred.TorqueZ)) || any(~isfinite(pred.strain))
+    contraction = pred.bpa.Contraction(:);
+    relativeContraction = contraction/pred.KMAX;
+
+    if any(~isfinite(pred.TorqueZ)) || ...
+            any(~isfinite(pred.strain)) || ...
+            any(~isfinite(relativeContraction))
         J = 1e11;
         return
     end
@@ -39,19 +34,18 @@ function J = objective_KneeExt20mm(x, ctx)
 
     %% Torque requirement
 
-    requiredTorque = 1.02*humanAbs(:);
-    torqueScale = max(humanAbs(:),1);
+    torqueDeficit = max(0, humanAbs(:) - robotAbs(:));
 
-    torqueShortfall = max(0,requiredTorque-robotAbs(:));
-    shortfallFraction = torqueShortfall./torqueScale;
+    Jtorque = mean((torqueDeficit ./ ctx.torqueScale).^2);
 
-    Jworst = max(shortfallFraction);
-    Jtorque = mean(shortfallFraction.^2);
 
-    %% Secondary shape objective
+    %% Small overshoot penalty
 
-    shapeError = (robotAbs(:)-requiredTorque)./torqueScale;
-    Jshape = mean(shapeError.^2);
+    torqueOvershoot = max(0, robotAbs(:) - humanAbs(:));
+
+    Jovershoot = 1e-3 * ...
+        mean((torqueOvershoot ./ ctx.torqueScale).^2);
+
 
     %% Rest-length constraint
 
@@ -71,13 +65,12 @@ function J = objective_KneeExt20mm(x, ctx)
         1e4 * max(0, ...
         ctx.minStrain - min(pred.strain_p)).^2;
 
-
-    %% 20 mm routing geometry penalty
-    %
-    % Hard constraints are also supplied to the optimizers.
-    % This penalty keeps direct calls to the objective well behaved.
-
-    Jroute = 1e6 * sum(max(0,cRoute).^2);
+    % The original class Contraction is the undeformed geometric BPA
+    % contraction.  It must not exceed the measured maximum contraction.
+    % The same condition is also supplied to both solvers as a hard
+    % nonlinear constraint in nonlconExt20mm.
+    JcontractionHi = ...
+        1e6 * max(0, max(relativeContraction) - 1).^2;
 
 
     %% Mild design-change penalties
@@ -94,9 +87,16 @@ function J = objective_KneeExt20mm(x, ctx)
 
     %% Total objective
 
-    %% Total objective
+    J = ...
+        100*Jtorque + ...
+        Jovershoot + ...
+        JrestLength + ...
+        JstrainHi + ...
+        JstrainLo + ...
+        JcontractionHi + ...
+        Jgeom + ...
+        Jlen;
 
-    J = 1e5*Jworst + 1e3*Jtorque + 1e-2*Jshape + JrestLength + JstrainHi + JstrainLo + Jroute + Jgeom + Jlen;
 
     if ~isfinite(J)
         J = 1e12;

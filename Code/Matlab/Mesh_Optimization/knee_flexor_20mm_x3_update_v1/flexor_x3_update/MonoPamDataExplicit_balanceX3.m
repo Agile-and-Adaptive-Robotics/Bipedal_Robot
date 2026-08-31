@@ -77,7 +77,8 @@ classdef MonoPamDataExplicit_balanceX3 < handle
                 error('MonoPamDataExplicit_balanceX3:BadInputCount', ...
                     'Expected 17 or 18 inputs, got %d.', nargin);
             end
-                            PD.Name = name;
+
+                PD.Name = name;
                 PD.Location = location;
                 PD.Cross = cross;
                 PD.Diameter = diameter;
@@ -96,6 +97,7 @@ classdef MonoPamDataExplicit_balanceX3 < handle
                 PD.AngleD = angleD(:);
                 PD.BPAcount = bpaCount;
                 PD.BendMeasure = bendMeasure;
+
                 % Automatically compute stiffness-aware geometry and torque.
                 PD = PD.updateStiffnessGeometry();
         end
@@ -588,16 +590,15 @@ deflection = [epsilon, delta, beta];    %bracket movement
 pbrAnew = [norm(pbrhA),0,0]+deflection; %New point A, represented in the bracket frame
 % pbrAnew = [norm(pbrhA(1:2)),0,pbrhA(3)]+deflection; %New point A, represented in the bracket frame
 LOC = L;
-
-for ii = 1:N
+for ii = 1:N                          %Repeat for each orientation
     pAold = L(1,:,ii);
+    pAnew(ii,:) = RowVecTrans(Thbr, pbrAnew(ii,:)); %New point A in the hip frame
+    LOC(1,:,ii) = pAnew(ii,:);      %Update location matrix
 
-    pAnew(ii,:) = RowVecTrans(Thbr, pbrAnew(ii,:));
-    LOC(1,:,ii) = pAnew(ii,:);
-
-    % Rows eliminated from the beginning of the femur-side route repeat
-    % the original p1. Move those repeated rows with the deformed p1 so
-    % they remain zero-length bookkeeping segments.
+    % If leading femur-side route rows were eliminated, the fixed-size
+    % Location matrix stores them as repeats of the original p1. Move those
+    % bookkeeping rows with the deformed p1 so they remain zero-length
+    % segments instead of creating a false p1new-to-p1old path segment.
     for jj = 2:klass.Cross-1
         if norm(L(jj,:,ii) - pAold) < 1e-10
             LOC(jj,:,ii) = pAnew(ii,:);
