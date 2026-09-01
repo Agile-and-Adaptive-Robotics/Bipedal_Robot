@@ -120,24 +120,43 @@ CrossPoint = 2;
 p10 = [-0.050, 0.035, 0.050];       %Origin
 p20 = [-0.01224, -0.00887, 0.02787];  %Insertion distance from theta1
 
-load Bifemsh_20mm_Result.mat xBest
+resultData = load('Bifemsh_20mm_Result.mat', ...
+    'xBest', 'routeCtx', 'Xi3');
+
+requiredResultFields = {'xBest','routeCtx','Xi3'};
+for iField = 1:numel(requiredResultFields)
+    if ~isfield(resultData, requiredResultFields{iField})
+        error('Knee_Flexor_Data_20mm:MissingResultField', ...
+            ['Bifemsh_20mm_Result.mat does not contain %s. ' ...
+             'Rerun the updated Opt_run.m.'], requiredResultFields{iField})
+    end
+end
+
+xBest = resultData.xBest;
+routeCtx.geo = buildGeoExclusion();
+routeCtx = resultData.routeCtx;
+Xi3 = resultData.Xi3;
+
+if routeCtx.N ~= positions || numel(routeCtx.phiD) ~= positions
+    error('Knee_Flexor_Data_20mm:ResultSizeMismatch', ...
+        'The saved route context does not contain %d knee positions.', ...
+        positions)
+end
+
 p1 = xBest(1:3); %Origin
 p2 = xBest(4:6); %End/insertion in the t1 frame
 
-% Use the same t1 wrap and release rule as the optimizer.  The wrap z
-% coordinate lies on the full-extension p1-pEnd line in the t1 y-z plane.
-routeCtx.N = positions;
-routeCtx.phiD = phiD(:);
-routeCtx.T_Pam = T_Pam;
-routeCtx.T_ICR_t1 = T_ICR_t1;
-routeCtx.wrapPointT1XY = [-0.0026, -0.0105];
-routeCtx.wrapBendRadius = 0.022;
-routeCtx.wrapAngleToleranceD = 0;
-
+% Use the exact route context and Xi3 saved by Opt_run.
 [Location, bendMeasure, routeInfo] = ...
     buildKneeFlexorRoute20mm(p1, p2, routeCtx);
-[Location0, bendMeasure0, routeInfo0] = ...
-    buildKneeFlexorRoute20mm(p10, p20, routeCtx);
+
+% Original two-point route: no intermediate wrapping point and zero bend.
+Location0 = zeros(2,3,positions);
+for i = 1:positions
+    p20ICR = RowVecTrans(T_ICR_t1(:,:,i), p20);
+    Location0(:,:,i) = [p10; p20ICR];
+end
+bendMeasure0 = zeros(positions,1);
 
 % Existing comparison geometries now use the same three-point route.
 [Location2, bendMeasure2] = ...
@@ -175,20 +194,10 @@ Xi0 = g(1);
 Xi1 = g(2);
 Xi2 = g(3);
 
-if numel(g) >= 4
-    Xi3 = g(4);
-else
-    x3Data = load( ...
-        'minimizeExtPin10_results_20260819_2transforms_Z2.mat', ...
-        'filtered_results', 'xCols');
-    gX3 = x3Data.filtered_results(1,x3Data.xCols);
-    Xi3 = gX3(4);
-end
-
-wraps = 3;
+wraps = 6;
 BPAcount = 1;
 
-%Original work
+% Original work: correct two-point Location and exactly zero X3 bend.
 Bifemsh_Pam0 = MonoPamDataExplicit_balanceX3(Name, Location0, CrossPoint, Dia, T_Pam, rest0, kmax0, tendon0, fitting, pres3, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure0);
 
 %Optimizer results

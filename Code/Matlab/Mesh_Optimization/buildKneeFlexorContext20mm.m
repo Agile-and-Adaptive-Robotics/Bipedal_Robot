@@ -66,6 +66,14 @@ for i = 1:positions
     T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');    %transform from t1 frame to ICR
 end
 
+% Precompute the femur-to-t1 transformation used by the route builder.
+% T_Pam_inv maps femur -> ICR; T_t1_ICR maps ICR -> t1.
+T_Pam_inv = zeros(size(T_Pam));
+for i = 1:positions
+    T_Pam_inv(:,:,i) = T_Pam(:,:,i)\eye(4);
+end
+T_t1_f = pagemtimes(T_t1_ICR, T_Pam_inv);
+
 %% Build optimization context
 
 ctx.Name       = 'Bicep Femoris (Short Head)';
@@ -74,17 +82,19 @@ ctx.Dia        = 20;
 
 ctx.T_Pam      = T_Pam;
 ctx.T_ICR_t1   = T_ICR_t1;
+ctx.T_t1_f     = T_t1_f;
 ctx.phiD       = phi(:)*180/pi;
 ctx.N          = numel(ctx.phiD);
 
 ctx.fitting    = 0.021;
-ctx.wraps      = 3;
+ctx.geo = buildGeoExclusion();
+ctx.wraps      = 6;
 ctx.BPAcount   = 1;
 
 % Intermediate t1-frame routing contact.  The old human-model wrap seed is
 % retained in x-y.  buildKneeFlexorRoute20mm places its z coordinate on the
 % full-extension p1-pEnd line projected into the t1 y-z plane.
-ctx.wrapPointT1XY = [-0.0026, -0.0105];
+ctx.wrapPointT1XY = [-0.0026, -0.0055];
 ctx.wrapBendRadius = 0.022;       % local bend radius used by Xi3, m
 ctx.wrapAngleToleranceD = 0;      % direct atan2 comparison; no added margin
 
@@ -141,12 +151,18 @@ else
     gX3 = x3Data.filtered_results(1,x3Data.xCols);
     ctx.Xi3 = gX3(4);
 end
-ctx.wraps = 3;
+ctx.wraps = 6;
 
-% Initial geometry / BPA design guess
-%from previous test
-p1_0 = [-0.050,   0.035,   0.050];
-p2_0 = [-0.01224, -0.00887, 0.02787];
+% Fixed geometry from the previous two-point, no-wrap test.  These values
+% define the original BPA curves and the separate Tx/Ty limits.  Do not
+% change them when moving the initial point for a new wrapped search.
+p10_previous = [-0.050,   0.035,   0.050];
+p20_previous = [-0.01224, -0.00887, 0.02787];
+
+% Initial geometry for this wrapped optimization.  Change p2_0 here to
+% move the new test's search point without changing the previous test.
+p1_0 = p10_previous;
+p2_0 = [-0.01224, -0.00887, 0.02787];  % NEW WRAPPED-TEST SEARCH POINT
 
 rest0     = 0.415;
 tendon0   = 0.025;
@@ -169,29 +185,38 @@ lb = x0;
 ub = x0;
 
 % Attachment search box, meters
-lb(1:3) = p1_0 + [-0.090, -0.100, -0.050];
+lb(1:3) = p1_0 + [-0.100, -0.100, -0.050];
 ub(1:3) = p1_0 + [0.0125,  0.100,  0.080];
 
-lb(4:6) = p2_0 + [-0.060, -0.100, -0.027];
-ub(4:6) = p2_0 + [ 0.025,  0.050,  0.060];
+lb(4:6) = p2_0 + [-0.100, -0.15, -0.027];
+ub(4:6) = p2_0 + [ 0.025, -0.037,  0.060];
 
 % BPA / tendon bounds
-lb(7) = 0.225;    ub(7) = 0.600;    % rest length, m
-lb(8) = 0.025;    ub(8) = 0.100;    % tendon length, m
+lb(7) = 0.4;    ub(7) = 0.900;    % rest length, m
+lb(8) = 0.025;    ub(8) = 0.150;    % tendon length, m
 
 ctx.x0 = x0;
 ctx.lb = lb;
 ctx.ub = ub;
 
-% Pointwise off-axis baseline.  The objective penalizes only the amount by
-% which a candidate exceeds this x0 torque magnitude at the same knee pose.
-predX0 = predictKneeFlexor20mm(ctx.x0, ctx);
-if ~predX0.ok || any(~isfinite(predX0.offAxisTorque))
+% Original two-point BPA used for plots and the separate x/y off-axis
+% limits.  It uses the X3 class with a zero bend measure, so no wrapping
+% point or X3 length loss is introduced into the original calculation.
+ctx.originalP1 = p10_previous;
+ctx.originalPEnd = p20_previous;
+ctx.originalRest = 0.415;
+ctx.originalTendon = 0.015;
+ctx.originalWraps = 6;
+
+predOriginal = predictOriginalKneeFlexor20mm(ctx);
+if ~predOriginal.ok || any(~isfinite(predOriginal.Torque(:)))
     error('buildKneeFlexorContext20mm:X0Prediction', ...
-        'The x0 prediction failed or produced nonfinite torque: %s', ...
-        predX0.failReason)
+        'The original prediction failed or produced nonfinite torque: %s', ...
+        predOriginal.failReason)
 end
-ctx.offAxisTorqueX0 = predX0.offAxisTorque(:);
-ctx.offAxisTorqueScale = max(1, max(ctx.offAxisTorqueX0));
+ctx.originalTorqueX = predOriginal.TorqueX(:);
+ctx.originalTorqueY = predOriginal.TorqueY(:);
+ctx.offAxisTorqueScaleX = max(1, max(abs(ctx.originalTorqueX)));
+ctx.offAxisTorqueScaleY = max(1, max(abs(ctx.originalTorqueY)));
 
 end

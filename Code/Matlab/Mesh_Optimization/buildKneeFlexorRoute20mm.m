@@ -23,10 +23,10 @@ turnWrappedD = zeros(N,1);
 aDirectD = zeros(N,1);
 aWrapEndD = zeros(N,1);
 
-% First express p1 in t1 at every knee angle.
+% First express p1 in t1 at every knee angle.  The combined femur-to-t1
+% transform is precomputed once by buildKneeFlexorContext20mm.
 for i = 1:N
-    p1ICR = RowVecTrans(ctx.T_Pam(:,:,i)\eye(4), p1);
-    p1T1(i,:) = RowVecTrans(ctx.T_ICR_t1(:,:,i)\eye(4), p1ICR);
+    p1T1(i,:) = RowVecTrans(ctx.T_t1_f(:,:,i), p1);
 end
 
 % The wrap x-y seed is fixed in t1.  At full extension, place its z
@@ -42,9 +42,64 @@ if abs(yEnd - y1) <= eps
         'p1 and pEnd have the same t1 y coordinate at full extension.')
 end
 
-wrapYZFraction = (ctx.wrapPointT1XY(2) - y1)/(yEnd - y1);
+pWrapY = ctx.wrapPointT1XY(2);
+
+wrapYZFraction = (pWrapY - y1)/(yEnd - y1);
 pWrapZ = z1 + wrapYZFraction*(zEnd - z1);
-pWrap = [ctx.wrapPointT1XY(:).', pWrapZ];
+
+% pWrap represents intentional BPA contact with the tibia. Therefore its
+% centerline distance from the tibia equals the inflated BPA radius.
+targetClearance = ctx.geo.bpaRadius;
+
+distanceAtX = @(x) signedDistanceToTibia20mm( ...
+    [x, pWrapY, pWrapZ], ctx.geo);
+
+clearanceResidual = @(x) distanceAtX(x) - targetClearance;
+
+% Find the closest point on this fixed y-z line to the tibial geometry.
+xSearchLo = min(ctx.geo.xBack, ctx.geo.circleCenter(1)) ...
+          - 4*targetClearance;
+
+xSearchHi = max(ctx.geo.xAfter, ctx.geo.circleCenter(1)) ...
+          + 4*targetClearance;
+
+[xClosest, minimumDistance] = fminbnd( ...
+    distanceAtX, xSearchLo, xSearchHi);
+
+% This is a nonlinear feasibility constraint:
+%   <= 0: the fixed y-z line reaches the clearance surface
+%    > 0: the entire line is too far away to establish wrap contact
+wrapContactConstraint = minimumDistance - targetClearance;
+
+if wrapContactConstraint <= 1e-10
+    % Find the negative-x clearance root.
+    xOutside = xSearchLo;
+    searchStep = max(4*targetClearance, 0.05);
+
+    for k = 1:20
+        if clearanceResidual(xOutside) > 0
+            break
+        end
+
+        xOutside = xOutside - searchStep;
+        searchStep = 2*searchStep;
+    end
+
+    if clearanceResidual(xOutside) > 0
+        pWrapX = fzero(clearanceResidual, [xOutside, xClosest]);
+    else
+        % Do not crash an optimizer evaluation.
+        pWrapX = xClosest;
+        wrapContactConstraint = 1;
+    end
+else
+    % No exact contact point exists for this candidate y-z line. Use its
+    % closest point so the model remains finite, then reject the candidate
+    % through wrapContactConstraint.
+    pWrapX = xClosest;
+end
+
+pWrap = [pWrapX, pWrapY, pWrapZ];
 
 for i = 1:N
 
@@ -56,8 +111,8 @@ for i = 1:N
             'A flexor route segment has zero length at sample %d.', i)
     end
 
-    % Clockwise-positive line angles, matching the established t1 routing
-    % convention used by buildDistalRingLocation20mm.
+    % Preserve the current clockwise-positive convention for the bend
+    % angle.  These values affect bendMeasure, not wrap activation.
     aInD(i) = atan2d(-vIn(2), vIn(1));
     aOutD(i) = atan2d(-vOut(2), vOut(1));
 
@@ -70,9 +125,9 @@ for i = 1:N
     % User-specified release comparison, with both lines originating at
     % pEnd.  Release pWrap when aDirectD is greater than aWrapEndD.
     aDirectD(i) = atan2d( ...
-        (p1T1(i,2) - pEnd(2)), p1T1(i,1) - pEnd(1));
+        p1T1(i,2) - pEnd(2), p1T1(i,1) - pEnd(1));
     aWrapEndD(i) = atan2d( ...
-        (pWrap(2) - pEnd(2)), pWrap(1) - pEnd(1));
+        pWrap(2) - pEnd(2), pWrap(1) - pEnd(1));
 end
 
 % Sweep from full extension toward flexion.  The first frame satisfying the
@@ -137,5 +192,10 @@ info.aDirectSweepD = aDirectSweepD;
 info.aWrapEndSweepD = aWrapEndSweepD;
 info.sweepOrder = order;
 info.finalSignedTurnD = aDirectSweepD(end) - aWrapEndSweepD(end);
+info.wrapClearanceTarget = targetClearance;
+info.wrapMinimumDistance = minimumDistance;
+info.wrapDistanceAtPoint = distanceAtX(pWrapX);
+info.wrapContactConstraint = wrapContactConstraint;
+info.wrapContactFound = wrapContactConstraint <= 1e-10;
 
 end

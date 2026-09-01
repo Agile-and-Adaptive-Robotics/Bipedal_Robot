@@ -35,12 +35,20 @@ function J = objective_KneeFlexor20mm(x, ctx)
     shapeError = (robotAbs - requiredTorque) ./ ctx.torqueScale;
     Jshape = mean(shapeError.^2);
 
-    % Off-axis torque is allowed up to the pointwise value produced by x0.
-    % Only excess resultant torque sqrt(Tx^2 + Ty^2) is penalized.
-    offAxisExcess = max(0, ...
-        pred.offAxisTorque(:) - ctx.offAxisTorqueX0(:));
-    JoffAxis = ctx.offAxisPenaltyWeight * ...
-        mean((offAxisExcess ./ ctx.offAxisTorqueScale).^2);
+    % Enforce the off-axis requirement separately for x and y.  At each
+    % knee position, penalize only the amount by which the new component
+    % magnitude exceeds the corresponding original no-wrap component.
+    offAxisExcessX = max(0, ...
+        abs(pred.TorqueX(:)) - abs(ctx.originalTorqueX(:)));
+    offAxisExcessY = max(0, ...
+        abs(pred.TorqueY(:)) - abs(ctx.originalTorqueY(:)));
+
+    normalizedExcessX = offAxisExcessX ./ ctx.offAxisTorqueScaleX;
+    normalizedExcessY = offAxisExcessY ./ ctx.offAxisTorqueScaleY;
+
+    JoffAxis = ctx.offAxisPenaltyWeight * ( ...
+        max(normalizedExcessX).^2 + mean(normalizedExcessX.^2) + ...
+        max(normalizedExcessY).^2 + mean(normalizedExcessY.^2));
 
     % Resting length constraint:
     % rest + tendon + 2*fitting >= distance(p1, w2)
@@ -53,8 +61,8 @@ function J = objective_KneeFlexor20mm(x, ctx)
 
     JstrainHi = 1e5 * max(0, ...
         max([pred.strain_f; pred.Contraction]) - maxStrainAllowed).^2;
-    JstrainLo = 1e5 * max(0, ...
-        ctx.minStrain - min(pred.strain_p)).^2;
+    JstrainLo = 1e7 * max(0, ...
+        -min(pred.Contraction)/pred.KMAX).^2;
 
     % The new contact must release during the extension-to-flexion sweep.
     % The constant term makes a no-release route unacceptable.

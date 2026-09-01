@@ -4,7 +4,7 @@ clc
 rehash
 
 ctx = buildKneeFlexorContext20mm();
-geo = buildGeoExclusion();
+geo = ctx.geo;
 idxP2 = 4:6;
 
 obj = @(x) objective_KneeFlexor20mm(x, ctx);
@@ -43,13 +43,18 @@ optsP = optimoptions('patternsearch', ...
     obj, xG, [], [], [], [], ctx.lb, ctx.ub, nonlcon, optsP);
 
 %% Evaluate original and optimized designs
-predOriginal = predictKneeFlexor20mm(ctx.x0, ctx);
+predOriginal = predictOriginalKneeFlexor20mm(ctx);
+predX0 = predictKneeFlexor20mm(ctx.x0, ctx);
 predBest = predictKneeFlexor20mm(xBest, ctx);
 [cCollision, ~, collisionInfo] = nonlconExclusion( ...
     xBest, geo, ctx, idxP2);
 
 if ~predOriginal.ok
     error('Original-design prediction failed: %s', predOriginal.failReason)
+end
+
+if ~predX0.ok
+    error('Original optimizer-guess prediction failed: %s', predX0.failReason)
 end
 
 if ~predBest.ok
@@ -66,9 +71,27 @@ if ~collisionFeasible
         max(cCollision), constraintTolerance)
 end
 
-% Save the design in the filename consumed by Knee_Flexor_Data_20mm.
-save('Bifemsh_20mm_Result.mat', ...
-    'xBest', 'fBest', 'exitflagG', 'exitflagP', 'outputG', 'outputP')
+% Three-row design matrices: p1 is in femur; pWrap and pEnd are in t1.
+pOriginal = [predX0.p1; predX0.pWrap; predX0.pEnd];
+pOptimized = [predBest.p1; predBest.pWrap; predBest.pEnd];
+pChanged = pOptimized - pOriginal;
+
+% Save every optimizer-specific input consumed by Knee_Flexor_Data_20mm.
+routeCtx = struct;
+routeCtx.N = ctx.N;
+routeCtx.phiD = ctx.phiD;
+routeCtx.T_t1_f = ctx.T_t1_f;
+routeCtx.T_ICR_t1 = ctx.T_ICR_t1;
+routeCtx.wrapPointT1XY = ctx.wrapPointT1XY;
+routeCtx.wrapBendRadius = ctx.wrapBendRadius;
+routeCtx.wrapAngleToleranceD = ctx.wrapAngleToleranceD;
+Xi3 = ctx.Xi3;
+
+% Copy the next lines and paste in the results folder
+% save('Bifemsh_20mm_Result.mat', ...
+%     'xBest', 'pOriginal', 'pOptimized', 'pChanged', ...
+%     'routeCtx', 'Xi3', 'fBest', 'exitflagG', 'exitflagP', ...
+%     'outputG', 'outputP')
 
 %% Full-extension/full-flexion muscle-length and travel calculations
 [~, idxFullExtension] = max(ctx.phiD);  % +10 deg normal calculation limit
@@ -91,22 +114,21 @@ fprintf('pattern evaluations     = %d\n', outputP.funccount)
 fprintf('fG                       = %.9g\n', fG)
 fprintf('fBest                    = %.9g\n', fBest)
 
-fprintf('\np1 original, m:\n')
-fprintf('[%.6f, %.6f, %.6f]\n', ctx.x0(1:3))
-fprintf('p1 optimized, m:\n')
-fprintf('[%.6f, %.6f, %.6f]\n', predBest.p1)
-fprintf('p1 change, m:\n')
-fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.p1 - ctx.x0(1:3))
+fprintf('\np (original), m; rows = [p1; pWrap; pEnd]:\n')
+fprintf('[% .6f, % .6f, % .6f;\n', pOriginal(1,:))
+fprintf(' % .6f, % .6f, % .6f;\n', pOriginal(2,:))
+fprintf(' % .6f, % .6f, % .6f]\n', pOriginal(3,:))
 
-fprintf('\npEnd original, m:\n')
-fprintf('[%.6f, %.6f, %.6f]\n', ctx.x0(4:6))
-fprintf('pEnd optimized, m:\n')
-fprintf('[%.6f, %.6f, %.6f]\n', predBest.pEnd)
-fprintf('pEnd change, m:\n')
-fprintf('[%+.6f, %+.6f, %+.6f]\n', predBest.pEnd - ctx.x0(4:6))
+fprintf('\np (optimized), m; rows = [p1; pWrap; pEnd]:\n')
+fprintf('[% .6f, % .6f, % .6f;\n', pOptimized(1,:))
+fprintf(' % .6f, % .6f, % .6f;\n', pOptimized(2,:))
+fprintf(' % .6f, % .6f, % .6f]\n', pOptimized(3,:))
 
-fprintf('\nIntermediate t1 wrap point, m:\n')
-fprintf('[%.6f, %.6f, %.6f]\n', predBest.pWrap)
+fprintf('\np (changed), m; optimized minus original:\n')
+fprintf('[%+.6f, %+.6f, %+.6f;\n', pChanged(1,:))
+fprintf(' %+.6f, %+.6f, %+.6f;\n', pChanged(2,:))
+fprintf(' %+.6f, %+.6f, %+.6f]\n', pChanged(3,:))
+
 fprintf('wrap y-z line fraction at extension  = %.6f\n', ...
     predBest.routeInfo.wrapYZFraction)
 fprintf('wrap release found                  = %d\n', ...
@@ -139,13 +161,23 @@ fprintf('extensionDistance = %.6f m\n', predBest.extensionDistance)
 fprintf('cRestLength       = %.6f m\n', predBest.cRestLength)
 fprintf('max Contraction/KMAX = %.6f\n', max(predBest.relativeContraction))
 
-offAxisExcess = max(0, predBest.offAxisTorque - ctx.offAxisTorqueX0);
-fprintf('\nOff-axis torque relative to x0:\n')
-fprintf('maximum x0 resultant        = %.6f N m\n', ...
-    max(ctx.offAxisTorqueX0))
-fprintf('maximum optimized resultant = %.6f N m\n', ...
-    max(predBest.offAxisTorque))
-fprintf('maximum pointwise excess    = %.6f N m\n', max(offAxisExcess))
+offAxisExcessX = max(0, ...
+    abs(predBest.TorqueX) - abs(ctx.originalTorqueX));
+offAxisExcessY = max(0, ...
+    abs(predBest.TorqueY) - abs(ctx.originalTorqueY));
+fprintf('\nOff-axis torque relative to original BPA:\n')
+fprintf('maximum |original Tx|        = %.6f N m\n', ...
+    max(abs(ctx.originalTorqueX)))
+fprintf('maximum |optimized Tx|       = %.6f N m\n', ...
+    max(abs(predBest.TorqueX)))
+fprintf('maximum pointwise |Tx| excess= %.6f N m\n', ...
+    max(offAxisExcessX))
+fprintf('maximum |original Ty|        = %.6f N m\n', ...
+    max(abs(ctx.originalTorqueY)))
+fprintf('maximum |optimized Ty|       = %.6f N m\n', ...
+    max(abs(predBest.TorqueY)))
+fprintf('maximum pointwise |Ty| excess= %.6f N m\n', ...
+    max(offAxisExcessY))
 
 fprintf('\nCollision check at %.6f deg:\n', collisionInfo.angleD)
 fprintf('constraint tolerance       = %.9g m\n', constraintTolerance)
@@ -180,6 +212,11 @@ fprintf('worst femur component      = %s (radius %.6f m)\n', ...
 fprintf('worst femur center, femur  = [%.6f, %.6f, %.6f] m\n', ...
     collisionInfo.worstFemurCenterFemur)
 fprintf('=============================================\n')
+
+fprintf('min Contraction/KMAX = %+.6f\n', ...
+    min(predBest.Contraction)/predBest.KMAX);
+fprintf('max Contraction/KMAX = %+.6f\n', ...
+    max(predBest.Contraction)/predBest.KMAX);
 
 %% Plot original and optimized results in separate figure windows
 humanTorque = -ctx.humanTorqueAbs;  % Flexor torque remains negative.
@@ -326,15 +363,15 @@ set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...
     'FontWeight', 'bold', 'Box', 'off')
 grid(ax, 'off')
 
-%% Off-axis torque relative to the pointwise x0 baseline
-figure('Name', 'Off-axis Torque', 'Color', 'w', ...
+%% X-axis torque relative to the original no-wrap BPA
+figure('Name', 'X-axis Torque', 'Color', 'w', ...
     'Units', 'centimeters', 'Position', figurePosition)
 ax = gca;
 hold(ax, 'on')
-plot(ax, ctx.phiD, ctx.offAxisTorqueX0, '--', ...
+plot(ax, ctx.phiD, predOriginal.TorqueX, '--', ...
     'Color', originalColor, 'LineWidth', originalLineWidth, ...
-    'DisplayName', 'x0 baseline')
-plot(ax, ctx.phiD, predBest.offAxisTorque, '-', ...
+    'DisplayName', 'Original BPA')
+plot(ax, ctx.phiD, predBest.TorqueX, '-', ...
     'Color', optimizedColor, 'LineWidth', optimizedLineWidth, ...
     'DisplayName', 'Optimized BPA')
 set(ax, 'FontName', fontName, 'FontSize', axesFontSize, ...
@@ -344,9 +381,36 @@ set(ax, 'FontName', fontName, 'FontSize', axesFontSize, ...
     'GridLineStyle', 'none')
 xlabel(ax, '\theta_k, °', 'Interpreter', 'tex', ...
     'FontName', fontName, 'FontSize', axesFontSize, 'FontWeight', 'bold')
-ylabel(ax, 'sqrt(T_x^2 + T_y^2), N\cdotm', 'Interpreter', 'tex', ...
+ylabel(ax, 'T_x, N\cdotm', 'Interpreter', 'tex', ...
     'FontName', fontName, 'FontSize', axesFontSize, 'FontWeight', 'bold')
-title(ax, 'Off-axis Torque', 'FontName', fontName, ...
+title(ax, 'X-axis Torque', 'FontName', fontName, ...
+    'FontSize', titleFontSize, 'FontWeight', 'bold')
+lg = legend(ax, 'Location', 'best');
+set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...
+    'FontWeight', 'bold', 'Box', 'off')
+grid(ax, 'off')
+
+%% Y-axis torque relative to the original no-wrap BPA
+figure('Name', 'Y-axis Torque', 'Color', 'w', ...
+    'Units', 'centimeters', 'Position', figurePosition)
+ax = gca;
+hold(ax, 'on')
+plot(ax, ctx.phiD, predOriginal.TorqueY, '--', ...
+    'Color', originalColor, 'LineWidth', originalLineWidth, ...
+    'DisplayName', 'Original BPA')
+plot(ax, ctx.phiD, predBest.TorqueY, '-', ...
+    'Color', optimizedColor, 'LineWidth', optimizedLineWidth, ...
+    'DisplayName', 'Optimized BPA')
+set(ax, 'FontName', fontName, 'FontSize', axesFontSize, ...
+    'FontWeight', 'bold', 'LineWidth', axesLineWidth, ...
+    'Box', 'off', 'XMinorTick', 'on', 'YMinorTick', 'on', ...
+    'TickLength', tickLength, 'XLim', xLimits, ...
+    'GridLineStyle', 'none')
+xlabel(ax, '\theta_k, °', 'Interpreter', 'tex', ...
+    'FontName', fontName, 'FontSize', axesFontSize, 'FontWeight', 'bold')
+ylabel(ax, 'T_y, N\cdotm', 'Interpreter', 'tex', ...
+    'FontName', fontName, 'FontSize', axesFontSize, 'FontWeight', 'bold')
+title(ax, 'Y-axis Torque', 'FontName', fontName, ...
     'FontSize', titleFontSize, 'FontWeight', 'bold')
 lg = legend(ax, 'Location', 'best');
 set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...

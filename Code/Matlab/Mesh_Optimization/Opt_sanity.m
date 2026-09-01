@@ -25,11 +25,16 @@ set(groot, ...
     'defaultLegendBox','off')
 
 ctx = buildKneeFlexorContext20mm();
-geo = buildGeoExclusion();
+geo = ctx.geo;
 idxP2 = 4:6;
 
+predOriginal = predictOriginalKneeFlexor20mm(ctx);
 pred0 = predictKneeFlexor20mm(ctx.x0, ctx);
 J0 = objective_KneeFlexor20mm(ctx.x0, ctx);
+
+if ~predOriginal.ok
+    error('Original no-wrap prediction failed: %s', predOriginal.failReason)
+end
 
 if ~pred0.ok
     error('x0 prediction failed: %s', pred0.failReason)
@@ -78,7 +83,14 @@ fprintf('strain_f range             = %.6f to %.6f\n', ...
     min(pred0.strain_f), max(pred0.strain_f))
 fprintf('strain_p range             = %.6f to %.6f\n', ...
     min(pred0.strain_p), max(pred0.strain_p))
-fprintf('maximum x0 off-axis torque = %.6f N m\n', max(pred0.offAxisTorque))
+fprintf('maximum |original Tx|      = %.6f N m\n', ...
+    max(abs(predOriginal.TorqueX)))
+fprintf('maximum |wrapped x0 Tx|    = %.6f N m\n', ...
+    max(abs(pred0.TorqueX)))
+fprintf('maximum |original Ty|      = %.6f N m\n', ...
+    max(abs(predOriginal.TorqueY)))
+fprintf('maximum |wrapped x0 Ty|    = %.6f N m\n', ...
+    max(abs(pred0.TorqueY)))
 fprintf('extension route length     = %.6f m\n', pred0.extensionDistance)
 fprintf('restLmt                    = %.6f m\n', pred0.restLmt)
 fprintf('cRestLength                = %+.9f m\n', pred0.cRestLength)
@@ -86,15 +98,17 @@ fprintf('=======================================\n')
 
 %% Torque
 figure('Name','Flexor x0 torque','Color','w')
-plot(ctx.phiD, pred0.TorqueZ, 'LineWidth', 2)
+plot(ctx.phiD, predOriginal.TorqueZ, '--', 'LineWidth', 2)
 hold on
+plot(ctx.phiD, pred0.TorqueZ, 'LineWidth', 2)
 plot(ctx.humanAngleD, -ctx.humanTorqueAbs, ':k', 'LineWidth', 3)
 yline(0, ':', 'LineWidth', 2)
 box off
 grid off
 xlabel('\theta_k, deg')
 ylabel('Torque, N m')
-legend('x0 BPA', 'Human target', 'Location', 'best', 'Box', 'off')
+legend('Original BPA', 'Wrapped x0 BPA', 'Human target', ...
+    'Location', 'best', 'Box', 'off')
 
 %% Strain: requested three definitions, with the plotted minimum at zero.
 figure('Name','Flexor x0 strain','Color','w')
@@ -115,14 +129,31 @@ xlabel('\theta_k, deg')
 ylabel('Strain')
 legend('Location', 'best', 'Box', 'off')
 
-%% Off-axis baseline
-figure('Name','Flexor x0 off-axis torque','Color','w')
-plot(ctx.phiD, pred0.offAxisTorque, 'LineWidth', 2)
+%% X-axis torque baseline
+figure('Name','Flexor x0 X-axis torque','Color','w')
+plot(ctx.phiD, predOriginal.TorqueX, '--', 'LineWidth', 2)
+hold on
+plot(ctx.phiD, pred0.TorqueX, 'LineWidth', 2)
 box off
 grid off
 xlabel('\theta_k, deg')
-ylabel('sqrt(T_x^2 + T_y^2), N m')
-title('Pointwise x0 off-axis baseline')
+ylabel('T_x, N m')
+title('X-axis Torque')
+legend('Original BPA', 'Wrapped x0 BPA', ...
+    'Location', 'best', 'Box', 'off')
+
+%% Y-axis torque baseline
+figure('Name','Flexor x0 Y-axis torque','Color','w')
+plot(ctx.phiD, predOriginal.TorqueY, '--', 'LineWidth', 2)
+hold on
+plot(ctx.phiD, pred0.TorqueY, 'LineWidth', 2)
+box off
+grid off
+xlabel('\theta_k, deg')
+ylabel('T_y, N m')
+title('Y-axis Torque')
+legend('Original BPA', 'Wrapped x0 BPA', ...
+    'Location', 'best', 'Box', 'off')
 
 %% Route states: extension, immediately before release, and full flexion.
 [~, idxExtension] = max(ctx.phiD);

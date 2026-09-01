@@ -5,7 +5,8 @@ function [c, ceq, info] = nonlconExclusion(x, geo, ctx, idxP2)
 % c(2) <= 0: the BPA/fittings and tendon clear that solid at +5 deg.
 % c(3) <= 0: the BPA/fittings and tendon clear the femoral ellipse.
 % c(4) <= 0: tendon + two fittings leave nonnegative current BPA length.
-%
+%% c(5) <= 0: the fixed pWrap y-z line intersects the BPA contact surface.
+
 % The complete series path follows the same p1-wrap-p2 polyline used by the
 % predictor.  At +5 deg the wrap is normally active.  The tendon occupies
 % the final portion of that polyline and the BPA plus fittings occupy the
@@ -29,6 +30,7 @@ ceq = [];
 % configuration.  p1 is stored in the femur frame; p2 is already in t1.
 [~, idxCollision] = min(abs(ctx.phiD - geo.collisionAngleD));
 [~, ~, routeInfo] = buildKneeFlexorRoute20mm(p1, p2, ctx);
+cWrap = routeInfo.wrapContactConstraint;
 p1T1 = routeInfo.p1T1(idxCollision,:);
 
 if routeInfo.active(idxCollision)
@@ -52,7 +54,7 @@ info.tendonRadius = geo.tendonRadius;
 if ~isfinite(pathLength) || pathLength <= eps || ...
         ~isfinite(rest) || rest <= 0 || ...
         ~isfinite(tendon) || tendon < 0
-    c = [1; 1; 1; 1];
+    c = [1; 1; 1; 1; 1];
     info.minClearance = -Inf;
     info.constraintMargin = -Inf;
     info.failReason = "Invalid collision geometry";
@@ -81,7 +83,7 @@ component(isBPA) = "BPA + fittings";
 
 % Signed distance is positive outside the simplified tibia, zero on its
 % surface, and negative inside it.
-[signedDistanceTibia, region] = signedDistanceToTibia(centerlineT1, geo);
+[signedDistanceTibia, region] = signedDistanceToTibia20mm(centerlineT1, geo);
 
 % Transform the complete wrapped centerline into the femur frame.
 centerlineFemur = zeros(size(centerlineT1));
@@ -108,10 +110,10 @@ cSeries = -currentMuscleLength;
 % Preserve an explicit attachment-point exclusion in addition to the BPA
 % body constraint.  This uses the same 3-D union of the two simplified
 % tibia cases rather than only the cross-section selected at p2.y.
-signedDistanceP2 = signedDistanceToTibia(p2, geo);
+signedDistanceP2 = signedDistanceToTibia20mm(p2, geo);
 cP2 = geo.clearance - signedDistanceP2;
 
-c = [cP2; cTibia; cFemur; cSeries];
+c = [cP2; cTibia; cFemur; cSeries; cWrap];
 
 info.bpaStartT1 = p1T1;
 info.bpaEndT1 = junctionT1;
@@ -138,6 +140,7 @@ info.cTibia = cTibia;
 info.cFemur = cFemur;
 info.cSeries = cSeries;
 info.failReason = "";
+info.cWrap = cWrap;
 
 end
 
