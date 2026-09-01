@@ -34,7 +34,7 @@ cWrap = routeInfo.wrapContactConstraint;
 p1T1 = routeInfo.p1T1(idxCollision,:);
 
 if routeInfo.active(idxCollision)
-    routeT1 = [p1T1; routeInfo.pWrapT1; p2];
+    routeT1 = [p1T1; routeInfo.pWrapT1(idxCollision,:); p2];
 else
     routeT1 = [p1T1; p2];
 end
@@ -46,7 +46,7 @@ info = struct;
 info.angleD = ctx.phiD(idxCollision);
 info.p1T1 = p1T1;
 info.p2T1 = p2;
-info.pWrapT1 = routeInfo.pWrapT1;
+info.pWrapT1 = routeInfo.pWrapT1(idxCollision,:);
 info.wrapActive = routeInfo.active(idxCollision);
 info.bpaRadius = geo.bpaRadius;
 info.tendonRadius = geo.tendonRadius;
@@ -103,7 +103,7 @@ surfaceClearanceTibia = signedDistanceTibia - pointRadius;
 surfaceClearanceFemur = signedDistanceFemur - pointRadius;
 [minClearanceTibia, idxWorstTibia] = min(surfaceClearanceTibia);
 [minClearanceFemur, idxWorstFemur] = min(surfaceClearanceFemur);
-cTibia = geo.clearance + sampleAllowance - minClearanceTibia;
+cTibia = geo.clearance + sampleAllowance;
 cFemur = geo.clearance + sampleAllowance - minClearanceFemur;
 cSeries = -currentMuscleLength;
 

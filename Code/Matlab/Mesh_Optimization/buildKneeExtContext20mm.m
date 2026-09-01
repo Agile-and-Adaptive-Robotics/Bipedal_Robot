@@ -62,13 +62,31 @@ for i = 1:positions
                     sin(phi(i)), cos(phi(i)), 0;
                     0, 0, 1];
     
-    T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
-    T_Pam_inv(:, :, i) = TransInv(T_Pam(:, :, i));
-    
+    T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot, ICR to femur
+    T_Pam_inv(:,:,i) = T_Pam(:,:,i)\eye(4);   % T_Pam_inv maps femur -> ICR;
     t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0]; %distance from theta1 to ICR
     T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');    %transform from the ICR frame to theta1
     T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');    %transform from t1 frame to ICR
 end
+
+% Precompute the femur-to-t1 transformation used by the route builder.
+% T_f_t1 maps t1 -> femur, T_t1_f maps femur frame to t1
+T_t1_f = pagemtimes(T_t1_ICR, T_Pam_inv);
+T_f_t1 = zeros(size(T_t1_f));
+for i = 1:positions
+    T_f_t1(:,:,i) = T_t1_f(:,:,i)\eye(4);
+end
+
+ctx.T_Pam      = T_Pam;
+ctx.T_Pam_inv  = T_Pam_inv;
+ctx.T_ICR_t1   = T_ICR_t1;
+ctx.T_t1_ICR   = T_t1_ICR;
+ctx.T_t1_f     = T_t1_f;
+ctx.T_f_t1     = T_f_t1;
+ctx.phi        = phi(:);
+ctx.phiD       = phi(:)*180/pi;
+ctx.pos        = pos;
+ctx.N          = numel(ctx.phiD);
 
 %% Build Optimization Context
 ctx.Name       = 'Vastus Medialis Proximal Ring 20mm BPA';

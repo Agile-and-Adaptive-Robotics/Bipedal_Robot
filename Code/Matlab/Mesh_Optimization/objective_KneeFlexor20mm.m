@@ -66,7 +66,7 @@ function J = objective_KneeFlexor20mm(x, ctx)
 
     % The new contact must release during the extension-to-flexion sweep.
     % The constant term makes a no-release route unacceptable.
-    if pred.routeInfo.releaseFound
+    if ~any(pred.routeInfo.active) || pred.routeInfo.releaseFound
         JwrapRelease = 0;
     else
         remainingTurn = max(0, -pred.routeInfo.finalSignedTurnD)/180;

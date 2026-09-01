@@ -81,8 +81,8 @@ info.endcap_t1 = zeros(N,3);
 info.targetType = zeros(N,1);
 info.femurOverflow = false(N,1);
 info.femurCrossingCollision = false(N,1);
-info.angleCull.pointAngleD = nan(9,N);
-info.angleCull.bypassAngleD = nan(9,N);
+info.angleCull.pointAngle = nan(9,N);
+info.angleCull.bypassAngle = nan(9,N);
 info.angleCull.marginD = nan(9,N);
 info.angleCull.tested = false(9,N);
 info.angleCull.angleGate = false(9,N);
@@ -126,7 +126,7 @@ info.addedPoint(:,:) = Pfixed;
 info.addedSweepIndex(:) = 1;
 
 contactTol = 1e-8;
-angleTolD = 0.05;
+% angleTolD = 0.05;
 
 for s = 1:Ns
 
@@ -162,42 +162,78 @@ for s = 1:Ns
 
     angleFrame = emptyAngleFrame();
 
-        if s == 1
-        % At full flexion, remove p8 when p8-to-p9 is more
-        % counterclockwise than p7-to-p9.
+   if s == 1
+        % Start with all candidate contacts active, then prune the
+        % full-flexion route before storing its first frame.
+        %
+        % p5 and p6 remain active during this initialization pass.
+        % Therefore the neighbors of p2:p4 are all in femur, and
+        % the neighbors of p7:p8 are all in t1.
+
         removedNow = false(9,1);
+        changed = true;
 
-        [removeP8, aBigP8D, aSmallP8D, marginP8D] = t1RemovalAngle( ...
-            Pfixed(7,:), Pfixed(8,:), Pfixed(9,:), angleTolD);
+        while changed
+            changed = false;
 
-        angleFrame = recordEliminationTest( ...
-            angleFrame, 8, aSmallP8D, aBigP8D, marginP8D, removeP8, true);
+            for j = [4 3 2 8 7]
+                if ~activeState(j)
+                    continue
+                end
 
-            if removeP8
-                activeState(8) = false;
-                removedNow(8) = true;
-                angleFrame.removed(8) = true;
+                iPrev = find(activeState(1:j-1), 1, 'last');
+                iNext = j + find(activeState(j+1:9), 1, 'first');
+
+                if j <= 4
+                    [angleGate, aBig, aSmall, marginD] = ...
+                        femurRemovalAngle( ...
+                            Pfixed(iPrev,:), ...
+                            Pfixed(j,:), ...
+                            Pfixed(iNext,:));
+                else
+                    [angleGate, aBig, aSmall, marginD] = ...
+                        t1RemovalAngle( ...
+                            Pfixed(iPrev,:), ...
+                            Pfixed(j,:), ...
+                            Pfixed(iNext,:));
+                end
+
+                angleFrame = recordEliminationTest( ...
+                    angleFrame, j, aSmall, aBig, marginD, ...
+                    angleGate, true);
+
+                if angleGate
+                    activeState(j) = false;
+                    removedNow(j) = true;
+                    angleFrame.removed(j) = true;
+                    changed = true;
+                end
             end
-        else
-        % Same knee angle, two independent passes: femur side removes the
-        % last remaining optional femur contact; t1 side removes the first
-        % remaining optional t1 contact. Each pass can remove several rows
-        % if the angle gate continues to pass after the state collapses.
-        [activeState, angleFrame, removedFemur] = eliminateFemurContacts( ...
-            Pfixed, activeState, T_Pam_i, T_ICR_t1_i, ...
-            ctx.geo, contactTol, angleTolD, angleFrame);
+        end
 
-        [activeState, angleFrame, removedT1] = eliminateT1Contacts( ...
-            Pfixed, activeState, T_Pam_inv_i, T_t1_ICR_i, ...
-            ctx.geo, contactTol, angleTolD, angleFrame);
+        info.initiallyEliminated = removedNow;
+        info.activeAtFullFlexion = activeState;
 
-        % Endpoint-only escape hatch. After p3:p7 are gone, p2 and p8 can
-        % each block the other from disappearing in a one-point test, even
-        % when the combined p1-to-p9 bridge is the intended route.
-        [activeState, angleFrame, removedBridge] = eliminateTerminalBridgeContacts( ...
-            Pfixed, activeState, T_Pam_i, T_ICR_t1_i, ...
-            T_Pam_inv_i, T_t1_ICR_i, ...
-            ctx.geo, contactTol, angleTolD, angleFrame);
+        % These candidates never became active in the modeled range.
+        info.addedAngleD(removedNow) = NaN;
+        info.addedSweepIndex(removedNow) = NaN;
+
+    else
+        [activeState, angleFrame, removedFemur] = ...
+            eliminateFemurContacts( ...
+                Pfixed, activeState, T_Pam_i, T_ICR_t1_i, ...
+                ctx.geo, contactTol, angleFrame);
+
+        [activeState, angleFrame, removedT1] = ...
+            eliminateT1Contacts( ...
+                Pfixed, activeState, T_Pam_inv_i, T_t1_ICR_i, ...
+                ctx.geo, contactTol, angleFrame);
+
+        [activeState, angleFrame, removedBridge] = ...
+            eliminateTerminalBridgeContacts( ...
+                Pfixed, activeState, T_Pam_i, T_ICR_t1_i, ...
+                T_Pam_inv_i, T_t1_ICR_i, ...
+                ctx.geo, contactTol, angleFrame);
 
         removedNow = removedFemur | removedT1 | removedBridge;
     end
@@ -247,8 +283,8 @@ for s = 1:Ns
     info.targetType(solverIndex) = frameInfo.targetType;
     info.femurOverflow(solverIndex) = overflow;
     info.femurCrossingCollision(solverIndex) = crossingCollision;
-    info.angleCull.pointAngleD(:,solverIndex) = angleFrame.pointAngleD;
-    info.angleCull.bypassAngleD(:,solverIndex) = angleFrame.bypassAngleD;
+    info.angleCull.pointAngle(:,solverIndex) = angleFrame.pointAngle;
+    info.angleCull.bypassAngle(:,solverIndex) = angleFrame.bypassAngle;
     info.angleCull.marginD(:,solverIndex) = angleFrame.marginD;
     info.angleCull.tested(:,solverIndex) = angleFrame.tested;
     info.angleCull.angleGate(:,solverIndex) = angleFrame.angleGate;
@@ -400,8 +436,8 @@ end
 %% =====================================================================
 
 function angleFrame = emptyAngleFrame()
-angleFrame.pointAngleD = nan(9,1);
-angleFrame.bypassAngleD = nan(9,1);
+angleFrame.pointAngle = nan(9,1);
+angleFrame.bypassAngle = nan(9,1);
 angleFrame.marginD = nan(9,1);
 angleFrame.tested = false(9,1);
 angleFrame.angleGate = false(9,1);
@@ -412,7 +448,7 @@ end
 
 
 function [activeState, angleFrame, removed] = eliminateFemurContacts( ...
-    Pfixed, activeState, T_Pam_i, T_ICR_t1_i, geo, tol, angleTolD, angleFrame)
+    Pfixed, activeState, T_Pam_i, T_ICR_t1_i, geo, tol, angleFrame)
 % Remove the last unique femur-side optional contact if the absolute-angle
 % test passes. The bypass collision gate is retained below but disabled
 % while the angle-only route state is being validated.
@@ -443,8 +479,8 @@ while true
     pNextFemur = RowVecTrans( ...
         T_Pam_i*T_ICR_t1_i, raw(iNext,:));
 
-    [angleGate, aBigD, aSmallD, marginD] = femurRemovalAngle( ...
-        raw(iPrev,:), raw(k,:), pNextFemur, angleTolD);
+    [angleGate, aBig, aSmall, marginD] = femurRemovalAngle( ...
+        raw(iPrev,:), raw(k,:), pNextFemur);
 
     % The clearance polygon/tolerance gate can reject the intended topology
     % change before the absolute-angle state machine can be evaluated.
@@ -454,7 +490,7 @@ while true
     bypassClear = true;
 
     angleFrame = recordEliminationTest( ...
-        angleFrame, k, aSmallD, aBigD, marginD, angleGate, bypassClear);
+        angleFrame, k, aSmall, aBig, marginD, angleGate, bypassClear);
 
     if angleGate
         activeState(k) = false;
@@ -469,7 +505,7 @@ end
 
 
 function [activeState, angleFrame, removed] = eliminateT1Contacts( ...
-    Pfixed, activeState, T_Pam_inv_i, T_t1_ICR_i, geo, tol, angleTolD, angleFrame)
+    Pfixed, activeState, T_Pam_inv_i, T_t1_ICR_i, geo, tol, angleFrame)
 % Remove the first unique t1-side optional contact if the absolute-angle
 % test passes. The bypass collision gate is retained below but disabled
 % while the angle-only route state is being validated.
@@ -500,8 +536,8 @@ while true
     pPrevT1 = RowVecTrans( ...
         T_t1_ICR_i, RowVecTrans(T_Pam_inv_i, raw(iPrev,:)));
 
-    [angleGate, aBigD, aSmallD, marginD] = t1RemovalAngle( ...
-        pPrevT1, raw(j,:), raw(iNext,:), angleTolD);
+    [angleGate, aBig, aSmall, marginD] = t1RemovalAngle( ...
+        pPrevT1, raw(j,:), raw(iNext,:));
 
     % The clearance polygon/tolerance gate can reject the intended topology
     % change before the absolute-angle state machine can be evaluated.
@@ -511,7 +547,7 @@ while true
     bypassClear = true;
 
     angleFrame = recordEliminationTest( ...
-        angleFrame, j, aSmallD, aBigD, marginD, angleGate, bypassClear);
+        angleFrame, j, aSmall, aBig, marginD, angleGate, bypassClear);
 
     if angleGate
         activeState(j) = false;
@@ -527,7 +563,7 @@ end
 
 function [activeState, angleFrame, removed] = eliminateTerminalBridgeContacts( ...
     Pfixed, activeState, T_Pam_i, T_ICR_t1_i, T_Pam_inv_i, T_t1_ICR_i, ...
-    geo, tol, angleTolD, angleFrame)
+    geo, tol, angleFrame)
 % Handle the endpoint-contact trap that can appear after large +X endpoint
 % optimizer moves.  The ordinary one-point tests can leave p1-p2-p8-p9
 % active even when the straight p1-to-p9 bridge is the intended topology.
@@ -542,12 +578,12 @@ raw = collapseInactive(Pfixed, activeState);
 
 p9Femur = RowVecTrans(T_Pam_i*T_ICR_t1_i, raw(9,:));
 [gateP2, aBigP2D, aSmallP2D, marginP2D] = femurRemovalAngle( ...
-    raw(1,:), raw(2,:), p9Femur, angleTolD);
+    raw(1,:), raw(2,:), p9Femur);
 
 p1T1 = RowVecTrans( ...
     T_t1_ICR_i, RowVecTrans(T_Pam_inv_i, raw(1,:)));
 [gateP8, aBigP8D, aSmallP8D, marginP8D] = t1RemovalAngle( ...
-    p1T1, raw(8,:), raw(9,:), angleTolD);
+    p1T1, raw(8,:), raw(9,:));
 
 % These bridge clearance checks are intentionally disabled for the current
 % angle-only routing pass. Re-enable them once the p2/p8 endpoint topology
@@ -577,45 +613,53 @@ end
 end
 
 
-function [removePoint, aBigD, aSmallD, marginD] = femurRemovalAngle( ...
-    pPrev, pSmallPoint, pNextFemur, angleTolD)
+function [removePoint, aBig, aSmall, marginD] = femurRemovalAngle( ...
+    pPrev, pSmallPoint, pNextFemur)
 
 pBig = pNextFemur(1:2) - pPrev(1:2);
 pSmall = pNextFemur(1:2) - pSmallPoint(1:2);
+R = [0 -1; 1 0];    %rotate vectors pi/2
+
+vBig = R*pBig(:);
+vSmall = R*pSmall(:);
 
 % Femur-side removal is a clockwise comparison in the plotted/anatomical
 % view. Flipping y before atan2 keeps the user's aBig > aSmall rule while
 % avoiding the full-flexed seed being treated as already removable.
 % The principal-angle values are compared directly.
-aBigD = atan2d(-pBig(2), pBig(1));
-aSmallD = atan2d(-pSmall(2), pSmall(1));
-marginD = aBigD - aSmallD;
+aBig = atan2(vBig(2), vBig(1));
+aSmall = atan2(vSmall(2), vSmall(1));
+marginD = rad2deg(aBig - aSmall);
 
-removePoint = marginD > angleTolD;
+removePoint = marginD > 0;
 
 end
 
 
-function [removePoint, aBigD, aSmallD, marginD] = t1RemovalAngle( ...
-    pPrevT1, pSmallPoint, pNext, angleTolD)
+function [removePoint, aBig, aSmall, marginD] = t1RemovalAngle( ...
+    pPrevT1, pSmallPoint, pNext)
 
 pBig = pPrevT1(1:2) - pNext(1:2);
 pSmall = pSmallPoint(1:2) - pNext(1:2);
+R = [0 1; -1 0];    %rotate vectors -pi/2
 
-aBigD = atan2d(pBig(2), pBig(1));
-aSmallD = atan2d(pSmall(2), pSmall(1));
-marginD = aSmallD - aBigD;
+vBig = R*pBig(:);
+vSmall = R*pSmall(:);
 
-removePoint = marginD > angleTolD;
+aBig = atan2(vBig(2), vBig(1));
+aSmall = atan2(vSmall(2), vSmall(1));
+marginD = rad2deg(aSmall - aBig);
+
+removePoint = marginD > 0 ;
 
 end
 
 
 function angleFrame = recordEliminationTest( ...
-    angleFrame, row, aSmallD, aBigD, marginD, angleGate, bypassClear)
+    angleFrame, row, aSmall, aBig, marginD, angleGate, bypassClear)
 
-angleFrame.pointAngleD(row) = aSmallD;
-angleFrame.bypassAngleD(row) = aBigD;
+angleFrame.pointAngle(row) = aSmall;
+angleFrame.bypassAngle(row) = aBig;
 angleFrame.marginD(row) = marginD;
 angleFrame.tested(row) = true;
 angleFrame.angleGate(row) = angleGate;
@@ -702,20 +746,26 @@ for j = 2:5
     end
 end
 
-% Tibia side: inactive rows repeat the following active t1 point.
+% Tibia side:
+% Repeat the preceding active t1 point where available.
+% Before the first active t1 point, repeat the following active point.
 raw(9,:) = Pfixed(9,:);
 
-for j = 8:-1:6
+for j = 6:8
     if active(j)
         raw(j,:) = Pfixed(j,:);
-    else
-        raw(j,:) = raw(j+1,:);
+        continue
     end
-end
 
-% An eliminated p8 repeats p7 for the wrap and bend calculation.
-if ~active(8) && active(7)
-    raw(8,:) = raw(7,:);
+    iPrev = find(active(6:j-1), 1, 'last');
+
+    if ~isempty(iPrev)
+        iRepeat = iPrev + 5;
+    else
+        iRepeat = j + find(active(j+1:9), 1, 'first');
+    end
+
+    raw(j,:) = Pfixed(iRepeat,:);
 end
 
 end

@@ -11,6 +11,7 @@ R = zeros(3, 3, positions);
 T = zeros(4, 4, positions);
 R_Pam = zeros(3, 3, positions);
 T_Pam = zeros(4, 4, positions);
+T_Pam_inv = zeros(size(T_Pam));
 t1toICR = zeros(1,3,positions);
 T_t1_ICR = zeros(4, 4, positions);
 T_ICR_t1 = zeros(4, 4, positions);
@@ -59,32 +60,37 @@ for i = 1:positions
                     sin(phi(i)), cos(phi(i)), 0;
                     0, 0, 1];
     
-    T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot
-    
+    T_Pam(:, :, i) = RpToTrans(R_Pam(:, :, i), hipToKnee_Pam');     %Transformation matrix for robot, ICR to femur
+    T_Pam_inv(:,:,i) = T_Pam(:,:,i)\eye(4);   % T_Pam_inv maps femur -> ICR;
     t1toICR(1,:,i) = [fcn13(phi(i)), fcn14(phi(i)), 0]; %distance from theta1 to ICR
     T_t1_ICR(:, :, i) = RpToTrans(eye(3), t1toICR(1,:,i)');    %transform from the ICR frame to theta1
     T_ICR_t1(:, :, i) = RpToTrans(eye(3), -t1toICR(1,:,i)');    %transform from t1 frame to ICR
 end
 
 % Precompute the femur-to-t1 transformation used by the route builder.
-% T_Pam_inv maps femur -> ICR; T_t1_ICR maps ICR -> t1.
-T_Pam_inv = zeros(size(T_Pam));
-for i = 1:positions
-    T_Pam_inv(:,:,i) = T_Pam(:,:,i)\eye(4);
-end
+% T_f_t1 maps t1 -> femur, T_t1_f maps femur frame to t1
 T_t1_f = pagemtimes(T_t1_ICR, T_Pam_inv);
+T_f_t1 = zeros(size(T_t1_f));
+for i = 1:positions
+    T_f_t1(:,:,i) = T_t1_f(:,:,i)\eye(4);
+end
+
+ctx.T_Pam      = T_Pam;
+ctx.T_Pam_inv  = T_Pam_inv;
+ctx.T_ICR_t1   = T_ICR_t1;
+ctx.T_t1_ICR   = T_t1_ICR;
+ctx.T_t1_f     = T_t1_f;
+ctx.T_f_t1     = T_f_t1;
+ctx.phi        = phi(:);
+ctx.phiD       = phi(:)*180/pi;
+ctx.pos        = pos;
+ctx.N          = numel(ctx.phiD);
 
 %% Build optimization context
 
 ctx.Name       = 'Bicep Femoris (Short Head)';
 ctx.CrossPoint = 2;
 ctx.Dia        = 20;
-
-ctx.T_Pam      = T_Pam;
-ctx.T_ICR_t1   = T_ICR_t1;
-ctx.T_t1_f     = T_t1_f;
-ctx.phiD       = phi(:)*180/pi;
-ctx.N          = numel(ctx.phiD);
 
 ctx.fitting    = 0.021;
 ctx.geo = buildGeoExclusion();
@@ -94,8 +100,8 @@ ctx.BPAcount   = 1;
 % Intermediate t1-frame routing contact.  The old human-model wrap seed is
 % retained in x-y.  buildKneeFlexorRoute20mm places its z coordinate on the
 % full-extension p1-pEnd line projected into the t1 y-z plane.
-ctx.wrapPointT1XY = [-0.0026, -0.0055];
-ctx.wrapBendRadius = 0.022;       % local bend radius used by Xi3, m
+ctx.wrapPointT1XY = [-0.0026, -0.00587];
+ctx.wrapBendRadius = 0.025;       % local bend radius used by Xi3, m
 ctx.wrapAngleToleranceD = 0;      % direct atan2 comparison; no added margin
 
 % Choose extension angle for the resting-length constraint.
@@ -133,24 +139,19 @@ Xi0 = g(1);
 Xi1 = g(2);
 Xi2 = g(3);
 
+clear filtered_results xCols pick
+load minimizeExtPin10_results_20260819_2transforms_Z2.mat filtered_results xCols
+pick = 1;
+g(4) = filtered_results(pick,xCols(4));
+Xi3 = g(4);
+
 % Fixed stiffness / compliance parameters.
 % These are already identified and are NOT optimization variables.
 ctx.Xi0 = Xi0;
 ctx.Xi1 = Xi1;
 ctx.Xi2 = Xi2;
+ctx.Xi3 = Xi3;
 
-% Xi3 is a shared geometric loss factor.  Use the flexor result if it
-% contains Xi3; otherwise use the identified X3 result already used by the
-% extensor model.
-if numel(g) >= 4
-    ctx.Xi3 = g(4);
-else
-    x3Data = load( ...
-        'minimizeExtPin10_results_20260819_2transforms_Z2.mat', ...
-        'filtered_results', 'xCols');
-    gX3 = x3Data.filtered_results(1,x3Data.xCols);
-    ctx.Xi3 = gX3(4);
-end
 ctx.wraps = 6;
 
 % Fixed geometry from the previous two-point, no-wrap test.  These values
