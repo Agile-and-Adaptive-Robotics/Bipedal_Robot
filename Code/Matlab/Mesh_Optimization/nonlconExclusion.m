@@ -103,7 +103,7 @@ surfaceClearanceTibia = signedDistanceTibia - pointRadius;
 surfaceClearanceFemur = signedDistanceFemur - pointRadius;
 [minClearanceTibia, idxWorstTibia] = min(surfaceClearanceTibia);
 [minClearanceFemur, idxWorstFemur] = min(surfaceClearanceFemur);
-cTibia = geo.clearance + sampleAllowance;
+cTibia = -minClearanceTibia;
 cFemur = geo.clearance + sampleAllowance - minClearanceFemur;
 cSeries = -currentMuscleLength;
 

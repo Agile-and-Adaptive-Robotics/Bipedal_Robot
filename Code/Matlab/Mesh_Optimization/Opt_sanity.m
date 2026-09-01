@@ -5,6 +5,10 @@ clear functions
 clc
 rehash
 
+% Clear old global overrides; markers below specify their edges explicitly.
+set(groot, 'defaultLineMarkerEdgeColor', 'remove', ...
+    'defaultScatterMarkerEdgeColor', 'remove');
+
 set(groot, ...
     'defaultAxesFontName','Arial', ...
     'defaultAxesFontSize',10, ...
@@ -96,64 +100,75 @@ fprintf('restLmt                    = %.6f m\n', pred0.restLmt)
 fprintf('cRestLength                = %+.9f m\n', pred0.cRestLength)
 fprintf('=======================================\n')
 
+plt = plotStyle();
+c = plt.hexclr;
+
 %% Torque
 figure('Name','Flexor x0 torque','Color','w')
-plot(ctx.phiD, predOriginal.TorqueZ, '--', 'LineWidth', 2)
+plot(ctx.phiD, predOriginal.TorqueZ, '--', 'LineWidth', plt.lineW)
 hold on
-plot(ctx.phiD, pred0.TorqueZ, 'LineWidth', 2)
-plot(ctx.humanAngleD, -ctx.humanTorqueAbs, ':k', 'LineWidth', 3)
-yline(0, ':', 'LineWidth', 2)
+plot(ctx.phiD, pred0.TorqueZ, 'LineWidth', plt.lineW)
+plot(ctx.humanAngleD, -ctx.humanTorqueAbs, ':k', 'LineWidth', plt.lineW)
+yline(0, ':', 'LineWidth', plt.lineW)
 box off
 grid off
 xlabel('\theta_k, deg')
 ylabel('Torque, N m')
-legend('Original BPA', 'Wrapped x0 BPA', 'Human target', ...
-    'Location', 'best', 'Box', 'off')
+lgd = legend('Original BPA', 'Wrapped x0 BPA', 'Human target', ...
+    'Location', 'best', 'Box', 'off');
+styleAxis(gca, plt)
+styleLegend(lgd, plt)
 
 %% Strain: requested three definitions, with the plotted minimum at zero.
 figure('Name','Flexor x0 strain','Color','w')
-plot(ctx.phiD, pred0.strain_f, '-', 'LineWidth', 2, ...
+plot(ctx.phiD, pred0.strain_f, '-', 'LineWidth', plt.lineW, ...
     'DisplayName', 'strain_f, includes Xi3')
 hold on
-plot(ctx.phiD, pred0.strain_p, '--', 'LineWidth', 2, ...
+plot(ctx.phiD, pred0.strain_p, '--', 'LineWidth', plt.lineW, ...
     'DisplayName', 'strain_p, excludes Xi3')
-plot(ctx.phiD, pred0.Contraction, '-.', 'LineWidth', 2, ...
+plot(ctx.phiD, pred0.Contraction, '-.', 'LineWidth', plt.lineW, ...
     'DisplayName', 'Contraction')
-yline(0, ':k', 'Minimum strain', 'LineWidth', 2, ...
+yline(0, ':k', 'Minimum strain', 'LineWidth', plt.lineW, ...
     'HandleVisibility', 'off')
-yline(ctx.KMAX, ':', 'KMAX', 'LineWidth', 2, ...
+yline(ctx.KMAX, ':', 'KMAX', 'LineWidth', plt.lineW, ...
     'HandleVisibility', 'off')
 box off
 grid off
 xlabel('\theta_k, deg')
 ylabel('Strain')
-legend('Location', 'best', 'Box', 'off')
+lgd = legend('Location', 'best', 'Box', 'off');
+styleAxis(gca, plt)
+styleLegend(lgd, plt)
 
 %% X-axis torque baseline
 figure('Name','Flexor x0 X-axis torque','Color','w')
-plot(ctx.phiD, predOriginal.TorqueX, '--', 'LineWidth', 2)
+plot(ctx.phiD, predOriginal.TorqueX, '--', 'LineWidth', plt.lineW)
 hold on
-plot(ctx.phiD, pred0.TorqueX, 'LineWidth', 2)
+plot(ctx.phiD, pred0.TorqueX, 'LineWidth', plt.lineW)
 box off
 grid off
 xlabel('\theta_k, deg')
 ylabel('T_x, N m')
 title('X-axis Torque')
-legend('Original BPA', 'Wrapped x0 BPA', ...
-    'Location', 'best', 'Box', 'off')
+lgd = legend('Original BPA', 'Wrapped x0 BPA', ...
+    'Location', 'best', 'Box', 'off');
+styleAxis(gca, plt)
+styleLegend(lgd, plt)
 
 %% Y-axis torque baseline
 figure('Name','Flexor x0 Y-axis torque','Color','w')
-plot(ctx.phiD, predOriginal.TorqueY, '--', 'LineWidth', 2)
+plot(ctx.phiD, predOriginal.TorqueY, '--', 'LineWidth', plt.lineW)
 hold on
-plot(ctx.phiD, pred0.TorqueY, 'LineWidth', 2)
+plot(ctx.phiD, pred0.TorqueY, 'LineWidth', plt.lineW)
 box off
 grid off
 xlabel('\theta_k, deg')
 ylabel('T_y, N m')
 title('Y-axis Torque')
-legend('Original BPA', 'Wrapped x0 BPA', ...
-    'Location', 'best', 'Box', 'off')
+lgd = legend('Original BPA', 'Wrapped x0 BPA', ...
+    'Location', 'best', 'Box', 'off');
+styleAxis(gca, plt)
+styleLegend(lgd, plt)
 
 %% Route states: extension, immediately before release, and full flexion.
 [~, idxExtension] = max(ctx.phiD);
@@ -181,18 +196,24 @@ for k = 1:numel(poseIndex)
 
     ax = nexttile;
     hold(ax,'on')
-    plot(ax, P(:,1), P(:,2), 'o-', 'LineWidth', 2, ...
-        'DisplayName', 'BPA route')
-    scatter(ax, P(1,1), P(1,2), 50, 'filled', ...
-        'DisplayName', 'p1')
+    hRoute = plot(ax, P(:,1), P(:,2), '-', ...
+        'Color', c{5}, 'LineWidth', plt.lineW, ...
+        'MarkerEdgeColor', 'none', 'DisplayName', 'BPA route');
+    hP1 = scatter(ax, P(1,1), P(1,2), plt.scattersz, ...
+        'MarkerFaceColor', c{2}, 'MarkerEdgeColor', 'none', ...
+        'DisplayName', 'p1');
 
+    % Keep the wrap legend handle even when no wrap is drawn in this pose.
+    wrapXY = [NaN, NaN];
     if pred0.routeInfo.active(ii)
-        scatter(ax, P(2,1), P(2,2), 50, 'filled', ...
-            'DisplayName', 't1 wrap')
+        wrapXY = P(2,1:2);
     end
-
-    scatter(ax, P(3,1), P(3,2), 50, 'filled', ...
-        'DisplayName', 'pEnd')
+    hWrap = scatter(ax, wrapXY(1), wrapXY(2), plt.scattersz, ...
+        'MarkerFaceColor', c{1}, 'MarkerEdgeColor', 'none', ...
+        'DisplayName', 'pWrap');
+    hEnd = scatter(ax, P(3,1), P(3,2), plt.scattersz, ...
+        'MarkerFaceColor', c{6}, 'MarkerEdgeColor', 'none', ...
+        'DisplayName', 'pEnd');
     axis(ax,'equal')
     box(ax,'off')
     grid(ax,'off')
@@ -207,9 +228,12 @@ for k = 1:numel(poseIndex)
             'Interpreter','tex')
     end
 
+    styleAxis(ax, plt)
     if k == numel(poseIndex)
-        legend(ax,'Location','best','Box','off', ...
-            'FontName','Arial','FontSize',8,'FontWeight','bold')
+        lgd = legend(ax, [hRoute, hP1, hWrap, hEnd], ...
+            {'BPA route', 'p1', 'pWrap', 'pEnd'}, ...
+            'Location', 'best', 'AutoUpdate', 'off');
+        styleLegend(lgd, plt)
     end
 end
 
@@ -232,3 +256,87 @@ optsTest = optimoptions('surrogateopt', ...
     'MaxFunctionEvaluations', 30);
 
 [xTest, fTest] = surrogateopt(objconstr, ctx.lb, ctx.ub, optsTest); %#ok<NASGU,ASGLU>
+
+% Leave subsequent scripts with MATLAB's default marker-edge settings.
+set(groot, 'defaultLineMarkerEdgeColor', 'remove', ...
+    'defaultScatterMarkerEdgeColor', 'remove');
+
+function plt = plotStyle()
+
+[plt.hexclr, plt.rgbclr] = loadColors();
+plt.lineW = 2;
+plt.scattersz = 60;
+plt.markersz = 6;
+plt.fontN = 'Arial';
+plt.axFontsz = 12;
+plt.rulerFontsz = 10;
+plt.lgdFontsz = 8;
+plt.tickL = [0.025, 0.05];
+
+end
+
+
+function [hexclr, rgbclr] = loadColors()
+
+% Use the existing palette, without a separate hard-coded fallback.
+Colors
+hexclr = { ...
+    c{1}; ... % gold
+    c{2}; ... % orange
+    c{3}; ... % light orange
+    c{4}; ... % pink
+    c{5}; ... % magenta
+    c{6}; ... % purple (magenta 2 in Colors.m)
+    c{7}};    % indigo
+rgbclr = d;   % matching RGB rows, in the same color order
+
+end
+
+
+function styleAxis(ax, plt, xLim)
+
+if nargin >= 3 && ~isempty(xLim) && all(isfinite(xLim))
+    xlim(ax, xLim)
+end
+
+grid(ax, 'off')
+box(ax, 'off')
+set(ax, ...
+    'FontName', plt.fontN, ...
+    'FontSize', plt.rulerFontsz, ...
+    'FontWeight', 'bold', ...
+    'LineWidth', plt.lineW, ...
+    'XMinorTick', 'on', ...
+    'YMinorTick', 'on', ...
+    'TickLength', plt.tickL)
+
+for k = 1:numel(ax.XAxis)
+    ax.XAxis(k).LineWidth = plt.lineW;
+    ax.XAxis(k).FontSize = plt.rulerFontsz;
+    set(ax.XAxis(k).Label, 'FontName', plt.fontN, ...
+        'FontSize', plt.axFontsz, 'FontWeight', 'bold')
+end
+
+for k = 1:numel(ax.YAxis)
+    ax.YAxis(k).LineWidth = plt.lineW;
+    ax.YAxis(k).FontSize = plt.rulerFontsz;
+    set(ax.YAxis(k).Label, 'FontName', plt.fontN, ...
+        'FontSize', plt.axFontsz, 'FontWeight', 'bold')
+end
+
+set(ax.Title, 'FontName', plt.fontN, ...
+    'FontSize', plt.axFontsz, 'FontWeight', 'bold')
+
+end
+
+
+function styleLegend(lgd, plt)
+
+if isempty(lgd) || ~isgraphics(lgd)
+    return
+end
+
+set(lgd, 'FontName', plt.fontN, 'FontSize', plt.lgdFontsz, ...
+    'FontWeight', 'bold', 'Box', 'off')
+
+end

@@ -109,8 +109,8 @@ pWrap = [ ...
 for i = 1:N
 
     vIn = p1T1(i,:)-pWrap(i,:);
-    vOut = pEnd-pWrap(i,:);
-    vWrap = -vOut;
+    vOut = pWrap(i,:)-pEnd;
+    vWrap = vOut;
     vDirect = p1T1(i,:)-pEnd;
 
     if norm(vIn) <= eps || norm(vOut) <= eps

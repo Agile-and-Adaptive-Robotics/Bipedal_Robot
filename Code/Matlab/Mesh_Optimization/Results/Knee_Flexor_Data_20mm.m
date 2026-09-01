@@ -133,8 +133,10 @@ for iField = 1:numel(requiredResultFields)
 end
 
 xBest = resultData.xBest;
-routeCtx.geo = buildGeoExclusion();
 routeCtx = resultData.routeCtx;
+if ~isfield(routeCtx, 'geo')
+    routeCtx.geo = buildGeoExclusion();
+end
 Xi3 = resultData.Xi3;
 
 if routeCtx.N ~= positions || numel(routeCtx.phiD) ~= positions

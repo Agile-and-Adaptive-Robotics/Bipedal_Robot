@@ -125,7 +125,7 @@ ctx.Pbins = 620;
 ctx.KMAX = 0.255;          % KMAX = (rest - kmax)/rest at 620 kPa
 ctx.maxRelStrain = 1.0;    % allow relative strain up to 1
 ctx.minStrain = -0.03;
-ctx.requiredTorqueMargin = 0.02;
+ctx.requiredTorqueMargin = 0.005;
 ctx.offAxisPenaltyWeight = 1e3;
 ctx.wrapReleasePenaltyWeight = 1e3;
 

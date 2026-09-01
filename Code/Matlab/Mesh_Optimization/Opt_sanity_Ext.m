@@ -6,6 +6,10 @@ close all
 clear buildDistalRingLocation20mm buildKneeExtContext20mm
 rehash
 
+% Clear old global overrides; markers below specify their edges explicitly.
+set(groot, 'defaultLineMarkerEdgeColor', 'remove', ...
+    'defaultScatterMarkerEdgeColor', 'remove');
+
 fprintf('Using route builder: %s\n', which('buildDistalRingLocation20mm'))
 fprintf('Using context file:  %s\n', which('buildKneeExtContext20mm'))
 
@@ -275,6 +279,9 @@ if isfield(routeInfo, 'wrap')
     fprintf('============================================\n')
 end
 
+plt = plotStyle();
+c = plt.hexclr;
+
 %% Plot full geometry and p1:p9 route
 transitionIdx = find(any( ...
     routeInfo.active(:,1:end-1) & ~routeInfo.active(:,2:end), 1));
@@ -314,26 +321,26 @@ for qPlot = 1:nPoseTiles
         P(j,:) = RowVecTrans(ctx.T_Pam(:,:,ii), qICR);
     end
 
-    nexttile(tGeo,qPlot)
+    ax = nexttile(tGeo,qPlot);
     hold on
     hGeo = gobjects(7,1);
 
     % --- femur cylinder clearance
     C = ctx.geo.femurCylCenter;
     R = ctx.geo.femurCylClearRadius;
-    hGeo(1) = plot(C(1)+R*cos(thPlot), C(2)+R*sin(thPlot), '-', 'LineWidth', 1.2);
+    hGeo(1) = plot(C(1)+R*cos(thPlot), C(2)+R*sin(thPlot), '-', 'LineWidth', plt.lineW);
 
     % --- femur wall / line clearance
     hGeo(2) = plot([ctx.geo.femurLineX ctx.geo.femurLineX], ctx.geo.femurLineY, '-', ...
-        'LineWidth', 1.2);
+        'LineWidth', plt.lineW);
 
     % --- corrected condyle clearance
     Q = ctx.geo.femurOffsetBoundary;
-    hGeo(3) = plot([Q(:,1);Q(1,1)], [Q(:,2);Q(1,2)], '-', 'LineWidth', 1.5);
+    hGeo(3) = plot([Q(:,1);Q(1,1)], [Q(:,2);Q(1,2)], '-', 'LineWidth', plt.lineW);
     if isfield(ctx.geo, 'femurCondyleClipY')
         plot([ctx.geo.femurCondyleClipX ctx.geo.femurCondyleClipX], ...
             ctx.geo.femurCondyleClipY, '-', ...
-            'Color', hGeo(3).Color, 'LineWidth', 1.8, ...
+            'Color', hGeo(3).Color, 'LineWidth', plt.lineW, ...
             'HandleVisibility', 'off')
     end
 
@@ -347,7 +354,7 @@ for qPlot = 1:nPoseTiles
         qICR = RowVecTrans(ctx.T_ICR_t1(:,:,ii), L(kk,:));
         Lf(kk,:) = RowVecTrans(ctx.T_Pam(:,:,ii), qICR);
     end
-    hGeo(4) = plot(Lf(:,1), Lf(:,2), '-', 'LineWidth', 1.2);
+    hGeo(4) = plot(Lf(:,1), Lf(:,2), '-', 'LineWidth', plt.lineW);
 
     % --- t1 upper circle, plotted in femur frame
     U = [ ...
@@ -359,7 +366,7 @@ for qPlot = 1:nPoseTiles
         qICR = RowVecTrans(ctx.T_ICR_t1(:,:,ii), U(kk,:));
         Uf(kk,:) = RowVecTrans(ctx.T_Pam(:,:,ii), qICR);
     end
-    hGeo(5) = plot(Uf(:,1), Uf(:,2), '-', 'LineWidth', 1.2);
+    hGeo(5) = plot(Uf(:,1), Uf(:,2), '-', 'LineWidth', plt.lineW);
 
     % --- local p2/p8 bend radius lines
     tibiaLowerCenter = [ctx.geo.tibiaLowerCenter, 0];
@@ -381,10 +388,16 @@ for qPlot = 1:nPoseTiles
         radiusLineY = [radiusLineY, ...
             tibiaLowerCenter(2), P(8,2)];
     end
-    hGeo(6) = plot(radiusLineX, radiusLineY, '--', 'LineWidth', 1.0);
+    if isempty(radiusLineX)
+        radiusLineX = NaN;
+        radiusLineY = NaN;
+    end
+    hGeo(6) = plot(radiusLineX, radiusLineY, '--', 'LineWidth', plt.lineW);
 
     % --- route
-    hGeo(7) = plot(P(:,1), P(:,2), 'o-', 'LineWidth', 1.5, 'MarkerSize', 5);
+    hGeo(7) = plot(P(:,1), P(:,2), 'o-', 'Color', c{5}, ...
+        'LineWidth', plt.lineW, 'MarkerSize', plt.markersz, ...
+        'MarkerFaceColor', c{5}, 'MarkerEdgeColor', 'none');
 
     if qPlot == 1
         hGeoLegend = hGeo;
@@ -393,12 +406,13 @@ for qPlot = 1:nPoseTiles
     for j = 1:9
         if routeInfo.active(j,ii)
             text(P(j,1), P(j,2), sprintf(' p%d',j), ...
-                'FontSize', 8, 'Interpreter', 'none')
+                'FontName', plt.fontN, 'FontSize', plt.lgdFontsz, ...
+                'FontWeight', 'bold', 'Interpreter', 'none')
         end
     end
 
     axis equal
-    grid on
+    grid off
     xlabel('Femur-frame x, m')
     ylabel('Femur-frame y, m')
     if qPlot == 1 || qPlot == nPoseTiles
@@ -415,15 +429,16 @@ for qPlot = 1:nPoseTiles
     end
 
     title(tileTitle, 'Interpreter', 'tex')
+    styleAxis(ax, plt)
 
 end
 
 axLeg = nexttile(tGeo,nTileRows*nTileCols);
-makeRouteLegend20mm(axLeg, hGeoLegend, { ...
+makeRouteLegend(axLeg, hGeoLegend, { ...
     'Femur cylinder clr', 'Femur line clr', ...
     'Corrected condyle clr', ...
     'Tibia lower clr', 'Tibia upper clr', 'Local bend radii', ...
-    'p1:p9 route'});
+    'p1:p9 route'}, plt);
 
 %% Plot torque against target
 H = readmatrix('OpenSim_Vasti_Results.txt', ...
@@ -443,29 +458,33 @@ T3 = H(:,5);
 
 figure('Name','Extensor torque sanity','Color','w')
 hold on
-plot(ctx.phiD, pred0.TorqueZ, 'LineWidth', 2)
-plot(Hang, T1, '--', 'LineWidth', 2)
-plot(Hang, T2, '-.', 'LineWidth', 2)
-plot(Hang, T3, ':', 'LineWidth', 2)
-grid on
+plot(ctx.phiD, pred0.TorqueZ, 'LineWidth', plt.lineW)
+plot(Hang, T1, '--', 'LineWidth', plt.lineW)
+plot(Hang, T2, '-.', 'LineWidth', plt.lineW)
+plot(Hang, T3, ':', 'LineWidth', plt.lineW)
+grid off
 xlabel('Knee angle, deg')
 ylabel('Torque, N m')
-legend('20 mm BPA prediction', Name1, Name2, Name3, ...
+lgd = legend('20 mm BPA prediction', Name1, Name2, Name3, ...
     'Location', 'best')
 title('Initial extensor torque sanity check')
+styleAxis(gca, plt)
+styleLegend(lgd, plt)
 
 %% Plot path lengths
 figure('Name','Extensor path length sanity','Color','w')
 hold on
-plot(ctx.phiD, pred0.pathLength, 'LineWidth', 2)
-plot(ctx.phiD, pred0.pathLength0, '--', 'LineWidth', 2)
-yline(pred0.restLmt, ':', 'LineWidth', 2)
-grid on
+plot(ctx.phiD, pred0.pathLength, 'LineWidth', plt.lineW)
+plot(ctx.phiD, pred0.pathLength0, '--', 'LineWidth', plt.lineW)
+yline(pred0.restLmt, ':', 'LineWidth', plt.lineW)
+grid off
 xlabel('Knee angle, deg')
 ylabel('Length, m')
-legend('Deformed path length', 'Undeformed path length', 'rest+tendon+2fitting+Xi0', ...
+lgd = legend('Deformed path length', 'Undeformed path length', 'rest+tendon+2fitting+Xi0', ...
     'Location', 'best')
 title('Extensor path-length sanity check')
+styleAxis(gca, plt)
+styleLegend(lgd, plt)
 
 if isfield(routeInfo, 'wrap')
 
@@ -476,15 +495,17 @@ if isfield(routeInfo, 'wrap')
 
     for cWrap = 1:numel(routeInfo.wrap.labels)
         hWrap(cWrap) = plot(ctx.phiD, routeInfo.wrap.angleDeg(cWrap,:), ...
-            'LineWidth', 1.6);
+            'LineWidth', plt.lineW);
     end
 
-    addEliminationLines20mm(routeInfo, ctx.phiD)
-    grid on
+    addEliminationLines(routeInfo, ctx.phiD, plt)
+    grid off
     xlabel('Knee angle, deg')
     ylabel('Wrap angle, deg')
-    legend(hWrap, routeInfo.wrap.labels, 'Location', 'best')
+    lgd = legend(hWrap, routeInfo.wrap.labels, 'Location', 'best')
     title('Extensor wrap angles by contact')
+    styleAxis(gca, plt)
+    styleLegend(lgd, plt)
 
     if isfield(routeInfo.wrap, 'radius')
         figure('Name','Extensor wrap-radius sanity','Color','w')
@@ -494,54 +515,60 @@ if isfield(routeInfo, 'wrap')
 
         for cWrap = 1:numel(routeInfo.wrap.labels)
             hRadius(cWrap) = plot(ctx.phiD, ...
-                1000*routeInfo.wrap.radius(cWrap,:), 'LineWidth', 1.6);
+                1000*routeInfo.wrap.radius(cWrap,:), 'LineWidth', plt.lineW);
         end
 
-        addEliminationLines20mm(routeInfo, ctx.phiD)
-        grid on
+        addEliminationLines(routeInfo, ctx.phiD, plt)
+        grid off
         xlabel('Knee angle, deg')
         ylabel('Effective bend radius, mm')
-        legend(hRadius, routeInfo.wrap.labels, 'Location', 'best')
+        lgd = legend(hRadius, routeInfo.wrap.labels, 'Location', 'best')
         title('Extensor bend radii by contact')
+        styleAxis(gca, plt)
+        styleLegend(lgd, plt)
     end
 end
 
 %% Plot strain
 figure('Name','Extensor strain sanity','Color','w')
 hold on
-plot(ctx.phiD, pred0.strain_f, 'LineWidth', 2)
-plot(ctx.phiD, pred0.strain_p, '--', 'LineWidth', 2)
-plot(ctx.phiD, pred0.bpa.Contraction(:), '-.', 'LineWidth', 2)
-yline(ctx.KMAX, ':', 'LineWidth', 2)
-yline(0, ':', 'LineWidth', 2)
-grid on
+plot(ctx.phiD, pred0.strain_f, 'LineWidth', plt.lineW)
+plot(ctx.phiD, pred0.strain_p, '--', 'LineWidth', plt.lineW)
+plot(ctx.phiD, pred0.bpa.Contraction(:), '-.', 'LineWidth', plt.lineW)
+yline(ctx.KMAX, ':', 'LineWidth', plt.lineW)
+yline(0, ':', 'LineWidth', plt.lineW)
+grid off
 xlabel('Knee angle, deg')
 ylabel('Strain')
-legend('strain_f includes Xi3', 'strain_p excludes Xi3', 'Contraction', ...
+lgd = legend('strain_f includes Xi3', 'strain_p excludes Xi3', 'Contraction', ...
     'KMAX', 'Minimum strain = 0', ...
     'Location', 'best')
 title('Extensor strain sanity check')
+styleAxis(gca, plt)
+styleLegend(lgd, plt)
 
 Fmag = vecnorm(pred0.bpa.F_p, 2, 2);
 
 rEff = pred0.TorqueZ ./ max(Fmag, eps);
 
-figure
+figure('Name','Extensor force and moment arm sanity','Color','w')
 yyaxis left
-plot(ctx.phiD, Fmag, 'LineWidth', 2)
+plot(ctx.phiD, Fmag, 'LineWidth', plt.lineW)
 ylabel('Total BPA force, N')
 
 yyaxis right
-plot(ctx.phiD, 1000*rEff, 'LineWidth', 2)
+plot(ctx.phiD, 1000*rEff, 'LineWidth', plt.lineW)
 ylabel('Effective Z moment arm, mm')
 
 xlabel('Knee angle, deg')
-grid on
-figure
-plot(ctx.phiD, pred0.delta_L*1000, 'LineWidth', 2)
+grid off
+styleAxis(gca, plt)
+figure('Name','Extensor X3 length loss sanity','Color','w')
+plot(ctx.phiD, pred0.delta_L*1000, 'LineWidth', plt.lineW)
 xlabel('Knee angle, deg')
 ylabel('X3 length loss, mm')
-grid on
+grid off
+styleAxis(gca, plt)
 
 %% Optional tiny optimizer smoke test
 % Disabled until the route-state model is stable enough for optimizer calls
@@ -575,7 +602,92 @@ if runSmallOptimizer
 end
 
 
-function label = routeStateTitle20mm(routeInfo, ii)
+% Leave subsequent scripts with MATLAB's default marker-edge settings.
+set(groot, 'defaultLineMarkerEdgeColor', 'remove', ...
+    'defaultScatterMarkerEdgeColor', 'remove');
+
+function plt = plotStyle()
+
+[plt.hexclr, plt.rgbclr] = loadColors();
+plt.lineW = 2;
+plt.scattersz = 60;
+plt.markersz = 6;
+plt.fontN = 'Arial';
+plt.axFontsz = 12;
+plt.rulerFontsz = 10;
+plt.lgdFontsz = 8;
+plt.tickL = [0.025, 0.05];
+
+end
+
+
+function [hexclr, rgbclr] = loadColors()
+
+% Use the existing palette, without a separate hard-coded fallback.
+Colors
+hexclr = { ...
+    c{1}; ... % gold
+    c{2}; ... % orange
+    c{3}; ... % light orange
+    c{4}; ... % pink
+    c{5}; ... % magenta
+    c{6}; ... % purple (magenta 2 in Colors.m)
+    c{7}};    % indigo
+rgbclr = d;   % matching RGB rows, in the same color order
+
+end
+
+
+function styleAxis(ax, plt, xLim)
+
+if nargin >= 3 && ~isempty(xLim) && all(isfinite(xLim))
+    xlim(ax, xLim)
+end
+
+grid(ax, 'off')
+box(ax, 'off')
+set(ax, ...
+    'FontName', plt.fontN, ...
+    'FontSize', plt.rulerFontsz, ...
+    'FontWeight', 'bold', ...
+    'LineWidth', plt.lineW, ...
+    'XMinorTick', 'on', ...
+    'YMinorTick', 'on', ...
+    'TickLength', plt.tickL)
+
+for k = 1:numel(ax.XAxis)
+    ax.XAxis(k).LineWidth = plt.lineW;
+    ax.XAxis(k).FontSize = plt.rulerFontsz;
+    set(ax.XAxis(k).Label, 'FontName', plt.fontN, ...
+        'FontSize', plt.axFontsz, 'FontWeight', 'bold')
+end
+
+for k = 1:numel(ax.YAxis)
+    ax.YAxis(k).LineWidth = plt.lineW;
+    ax.YAxis(k).FontSize = plt.rulerFontsz;
+    set(ax.YAxis(k).Label, 'FontName', plt.fontN, ...
+        'FontSize', plt.axFontsz, 'FontWeight', 'bold')
+end
+
+set(ax.Title, 'FontName', plt.fontN, ...
+    'FontSize', plt.axFontsz, 'FontWeight', 'bold')
+
+end
+
+
+function styleLegend(lgd, plt)
+
+if isempty(lgd) || ~isgraphics(lgd)
+    return
+end
+
+set(lgd, 'FontName', plt.fontN, 'FontSize', plt.lgdFontsz, ...
+    'FontWeight', 'bold', 'Box', 'off')
+
+end
+
+
+function label = routeStateTitle(routeInfo, ii)
 
 optionalRows = 2:8;
 inactiveRows = optionalRows(~routeInfo.active(optionalRows,ii));
@@ -597,33 +709,61 @@ label = ['minus ', strjoin(compose('p%d', inactiveRows), ' ')];
 end
 
 
-function makeRouteLegend20mm(axLeg, hTemplate, labels)
+
+function makeRouteLegend(axLeg, hTemplate, labels, plt)
 
 axis(axLeg, 'off')
 hold(axLeg, 'on')
-
 hLegend = gobjects(numel(labels),1);
 
 for k = 1:numel(labels)
-    hLegend(k) = plot(axLeg, NaN, NaN);
+    hLegend(k) = plot(axLeg, NaN, NaN, 'MarkerEdgeColor', 'none');
 
     if k <= numel(hTemplate) && isgraphics(hTemplate(k))
-        hLegend(k).Color = hTemplate(k).Color;
-        hLegend(k).LineStyle = hTemplate(k).LineStyle;
-        hLegend(k).LineWidth = hTemplate(k).LineWidth;
-        hLegend(k).Marker = hTemplate(k).Marker;
-        hLegend(k).MarkerSize = hTemplate(k).MarkerSize;
+        if isprop(hTemplate(k), 'Color')
+            hLegend(k).Color = hTemplate(k).Color;
+        elseif isprop(hTemplate(k), 'CData')
+            hLegend(k).Color = hTemplate(k).CData(1,:);
+            hLegend(k).LineStyle = 'none'; % scatter symbols have no line
+        end
+
+        if isprop(hTemplate(k), 'LineStyle')
+            hLegend(k).LineStyle = hTemplate(k).LineStyle;
+        end
+
+        if isprop(hTemplate(k), 'LineWidth')
+            hLegend(k).LineWidth = hTemplate(k).LineWidth;
+        end
+
+        if isprop(hTemplate(k), 'Marker')
+            hLegend(k).Marker = hTemplate(k).Marker;
+        end
+
+        if isprop(hTemplate(k), 'MarkerSize')
+            hLegend(k).MarkerSize = hTemplate(k).MarkerSize;
+        elseif isprop(hTemplate(k), 'SizeData')
+            hLegend(k).MarkerSize = sqrt(hTemplate(k).SizeData(1));
+        end
+
+        if isprop(hTemplate(k), 'MarkerFaceColor')
+            faceColor = hTemplate(k).MarkerFaceColor;
+            if isequal(faceColor, 'flat') || isequal(faceColor, 'auto')
+                faceColor = hLegend(k).Color;
+            end
+            hLegend(k).MarkerFaceColor = faceColor;
+        end
+        hLegend(k).MarkerEdgeColor = 'none';
     end
 end
 
-legend(axLeg, hLegend, labels, ...
-    'Location', 'northwest', ...
-    'NumColumns', 1)
+lgd = legend(axLeg, hLegend, labels, ...
+    'Location', 'northwest', 'NumColumns', 1, 'AutoUpdate', 'off');
+styleLegend(lgd, plt)
 
 end
 
 
-function addEliminationLines20mm(routeInfo, phiD)
+function addEliminationLines(routeInfo, phiD, plt)
 
 if ~isfield(routeInfo, 'eliminatedAngleD')
     return
@@ -643,7 +783,7 @@ for j = 1:numel(routeInfo.eliminatedAngleD)
 
     if isfinite(phi)
         xline(phi, ':', sprintf('p%d',j), ...
-            'LineWidth', 1.0, ...
+            'LineWidth', plt.lineW, ...
             'HandleVisibility', 'off')
     end
 end

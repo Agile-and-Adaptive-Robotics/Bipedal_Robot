@@ -162,13 +162,10 @@ for s = 1:Ns
 
     angleFrame = emptyAngleFrame();
 
-   if s == 1
-        % Start with all candidate contacts active, then prune the
-        % full-flexion route before storing its first frame.
-        %
-        % p5 and p6 remain active during this initialization pass.
-        % Therefore the neighbors of p2:p4 are all in femur, and
-        % the neighbors of p7:p8 are all in t1.
+    if s == 1
+        % Settle every optional contact at full flexion before storing the
+        % first route. Revisit the entire chain after any removal, including
+        % removals across the femur/t1 boundary.
 
         removedNow = false(9,1);
         changed = true;
@@ -176,7 +173,9 @@ for s = 1:Ns
         while changed
             changed = false;
 
-            for j = [4 3 2 8 7]
+            % Preserve the previous seed-test order, then check p5 and p6.
+            % Each pass visits every remaining optional point p2:p8.
+            for j = [4 3 2 8 7 5 6]
                 if ~activeState(j)
                     continue
                 end
@@ -184,16 +183,30 @@ for s = 1:Ns
                 iPrev = find(activeState(1:j-1), 1, 'last');
                 iNext = j + find(activeState(j+1:9), 1, 'first');
 
-                if j <= 4
+                if j <= 5
+                    % Previous point and candidate are native femur. Only
+                    % transform the next point if it is stored in t1.
+                    pNextFemur = Pfixed(iNext,:);
+                    if iNext >= 6
+                        pNextFemur = RowVecTrans( ...
+                            T_Pam_i*T_ICR_t1_i, pNextFemur);
+                    end
                     [angleGate, aBig, aSmall, marginD] = ...
                         femurRemovalAngle( ...
                             Pfixed(iPrev,:), ...
                             Pfixed(j,:), ...
-                            Pfixed(iNext,:));
+                            pNextFemur);
                 else
+                    % Candidate and next point are native t1. Only
+                    % transform the previous point if it is in femur.
+                    pPrevT1 = Pfixed(iPrev,:);
+                    if iPrev <= 5
+                        pPrevT1 = RowVecTrans( ...
+                            T_t1_ICR_i*T_Pam_inv_i, pPrevT1);
+                    end
                     [angleGate, aBig, aSmall, marginD] = ...
                         t1RemovalAngle( ...
-                            Pfixed(iPrev,:), ...
+                            pPrevT1, ...
                             Pfixed(j,:), ...
                             Pfixed(iNext,:));
                 end
@@ -209,8 +222,18 @@ for s = 1:Ns
                     changed = true;
                 end
             end
-        end
 
+            % Preserve the existing joint p2/p8 bypass test. Any removal
+            % here also triggers another complete pass over p2:p8.
+            [activeState, angleFrame, removedBridge] = ...
+                eliminateTerminalBridgeContacts( ...
+                    Pfixed, activeState, T_Pam_i, T_ICR_t1_i, ...
+                    T_Pam_inv_i, T_t1_ICR_i, ...
+                    ctx.geo, contactTol, angleFrame);
+        
+            changed = changed || any(removedBridge);
+            removedNow = removedNow | removedBridge;
+        end
         info.initiallyEliminated = removedNow;
         info.activeAtFullFlexion = activeState;
 
@@ -617,7 +640,7 @@ function [removePoint, aBig, aSmall, marginD] = femurRemovalAngle( ...
     pPrev, pSmallPoint, pNextFemur)
 
 pBig = pNextFemur(1:2) - pPrev(1:2);
-pSmall = pNextFemur(1:2) - pSmallPoint(1:2);
+pSmall = pSmallPoint(1:2) - pPrev(1:2);
 R = [0 -1; 1 0];    %rotate vectors pi/2
 
 vBig = R*pBig(:);
@@ -2232,8 +2255,14 @@ function ref = crosspointWrapReference(raw, Location, active, phiD, T_Pam_inv)
 % transformed femur -> ICR with T_Pam_inv; p6 is already ICR in Location.
 % The angle is zero at p5 elimination and grows toward full flexion.
 
-idxP5On = find(active(5,:), 1, 'last');
-idxFlex = 1;
+ref = struct('valid', false);
+
+idxFlex = find(active(5,:) & active(6,:), 1, 'first');
+idxP5On = find(active(5,:) & active(6,:), 1, 'last');
+
+if isempty(idxFlex)
+    return
+end
 
 q5AtP5 = RowVecTrans(T_Pam_inv(:,:,idxP5On), raw(5,:,idxP5On));
 q6AtP5 = Location(6,:,idxP5On);
@@ -2251,7 +2280,11 @@ RFlex = 0.5*(norm(q5Flex(1:2)) + norm(q6Flex(1:2)));
 
 ref = makeWABKARef(phiD(idxP5On), phiD(idxFlex), ...
     alphaAtP5, alphaFlex, RAtP5, RFlex, okP5 && okFlex);
-
+    % A single active sample has a geometric angle, but no interpolation span.
+    if idxP5On == idxFlex
+        ref.valid = okFlex && isfinite(alphaFlex) && ...
+                    isfinite(RFlex) && RFlex > 0;
+    end
 end
 
 function [alpha, R, qIn, qOut, ok] = ...
@@ -2272,7 +2305,16 @@ end
 q5ICR = RowVecTrans(T_Pam_inv_i, rawFrame(5,:));
 q6ICR = locFrame(6,:);
 
-[alpha, R] = interpolatedWABKA(kneeAngleD, ref);
+if ~ref.valid
+    return
+end
+
+if ref.phiSpanD == 0
+    alpha = ref.alphaPlateauRad;
+    R = ref.radiusPlateau;
+else
+    [alpha, R] = interpolatedWABKA(kneeAngleD, ref);
+end
 
 qIn = q5ICR(1:2);
 qOut = q6ICR(1:2);
