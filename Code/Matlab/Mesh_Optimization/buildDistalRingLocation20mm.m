@@ -1978,7 +1978,7 @@ p2AtP3 = reshape(Pall(2,1:2,idxP3On),1,2);
 p3AtP3 = reshape(Pall(3,1:2,idxP3On),1,2);
 
 % Absolute line angle p2 -> p1 when p2 activates.
-vP2P1 = p1AtP2 - p2AtP2;
+vP2P1 = p2AtP2 - p1AtP2;
 thetaP2P1Rad = atan2(vP2P1(2),vP2P1(1));
 
 % Absolute line angle p2 -> p3 when p3 activates.
