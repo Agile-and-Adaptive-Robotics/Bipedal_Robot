@@ -118,21 +118,26 @@ kmax0 = (1-KMAX)*rest0;
 [Location0,bendMeasure0] = buildDistalRingLocation20mm(p10,pEnd0,tendon0,ctx);
 
 Vas_Pam0 = MonoPamDataExplicit_balanceX3(Name,Location0,CrossPoint,Dia,T_Pam,rest0,kmax0,tendon0,fitting,pres,Xi0,Xi1,Xi2,Xi3,wraps,phiD,BPAcount,bendMeasure0);
+Vas_Pam2 = MonoPamDataExplicit_balanceX3(Name,Location,CrossPoint,Dia,T_Pam,rest,kmax,tendon,fitting,200,Xi0,Xi1,Xi2,Xi3,wraps,phiD,BPAcount,bendMeasure);
 Vas_Pam3 = MonoPamDataExplicit_balanceX3(Name,Location,CrossPoint,Dia,T_Pam,rest,kmax,tendon,fitting,pres,Xi0,Xi1,Xi2,Xi3,wraps,phiD,BPAcount,bendMeasure);
 
-TorqueOriginal = abs(Vas_Pam0.Torque_p(:,3));
-TorqueOptimized = abs(Vas_Pam3.Torque_p(:,3));
-LmOriginal = rest0.*(1-Vas_Pam0.strain_p(:));
-LmOptimized = rest.*(1-Vas_Pam3.strain_p(:));
-relativeStrainOriginal = Vas_Pam0.strain_f(:)/KMAX;
-relativeStrainOptimized = Vas_Pam3.strain_f(:)/KMAX;
-momentArmOriginal = hypot(Vas_Pam0.mA_p(:,1),Vas_Pam0.mA_p(:,2));
-momentArmOptimized = hypot(Vas_Pam3.mA_p(:,1),Vas_Pam3.mA_p(:,2));
+Torque0 = Vas_Pam0.Torque_p(:,3);
+Torque2 = Vas_Pam2.Torque_p(:,3);
+Torque3 = Vas_Pam3.Torque_p(:,3);
+Lm0 = rest0.*(1-Vas_Pam0.strain_p(:));
+Lm2 = rest.*(1-Vas_Pam2.strain_p(:));
+Lm3 = rest.*(1-Vas_Pam3.strain_p(:));
+relstrain0 = Vas_Pam0.strain_f(:)/KMAX;
+relstrain2 = Vas_Pam2.strain_f(:)/KMAX;
+relstrain3 = Vas_Pam3.strain_f(:)/KMAX;
+G0 = hypot(Vas_Pam0.mA_p(:,1),Vas_Pam0.mA_p(:,2));
+G2 = hypot(Vas_Pam2.mA_p(:,1),Vas_Pam2.mA_p(:,2));
+G3 = hypot(Vas_Pam3.mA_p(:,1),Vas_Pam3.mA_p(:,2));
 
 humanAbs = interp1(ctx.humanAngleD,ctx.humanTorqueAbs,phiD,'pchip','extrap');
 validHumanTorque = humanAbs > 100*eps;
-torqueMarginFraction = nan(size(TorqueOptimized));
-torqueMarginFraction(validHumanTorque) = TorqueOptimized(validHumanTorque)./humanAbs(validHumanTorque)-1;
+torqueMarginFraction = nan(size(Torque3));
+torqueMarginFraction(validHumanTorque) = Torque3(validHumanTorque)./humanAbs(validHumanTorque)-1;
 
 fprintf('\nLoaded optimized extensor design:\n')
 fprintf('p1     = [%.6f %.6f %.6f] m\n',p1)
@@ -145,7 +150,8 @@ fprintf('minimum torque margin = %+.6f (%+.2f%%)\n',min(torqueMarginFraction(val
 %% Plot settings
 run('Colors.m')
 originalColor = [0.4 0.4 0.4];
-optimizedColor = c{5};
+optimizedColor = c{6};
+optClr2 = c{5};
 humanColor = '#000000';
 fontName = 'Arial';
 axesFontSize = 10;
@@ -159,8 +165,9 @@ xLimits = [min(phiD),max(phiD)];
 figure('Name','Extensor Torque', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
 ax = gca;
 hold(ax,'on')
-plot(ax,phiD,TorqueOriginal,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
-plot(ax,phiD,TorqueOptimized,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA')
+plot(ax,phiD,Torque0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
+plot(ax,phiD,Torque2,'--','Color',optClr2,'LineWidth',2,'DisplayName','Optimized BPA, 200 kPa')
+plot(ax,phiD,Torque3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa')
 plot(ax,ctx.humanAngleD,ctx.humanTorqueAbs,':','Color',humanColor,'LineWidth',4,'DisplayName','Human target')
 formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
 ylim(ax,[0 15])
@@ -173,8 +180,9 @@ formatLegend(ax,fontName,legendFontSize)
 figure('Name','Muscle Length', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
 ax = gca;
 hold(ax,'on')
-plot(ax,phiD,LmOriginal,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
-plot(ax,phiD,LmOptimized,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA')
+plot(ax,phiD,Lm0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
+plot(ax,phiD,Lm2,'-','Color',optClr2,'LineWidth',2.5,'DisplayName','Optimized BPA, 200 kPa')
+plot(ax,phiD,Lm3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa')
 formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
 xlabel(ax,'\theta_k, °','Interpreter','tex','FontWeight','bold')
 ylabel(ax,'Muscle Length, m','FontWeight','bold')
@@ -185,8 +193,9 @@ formatLegend(ax,fontName,legendFontSize)
 figure('Name','Relative Strain', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
 ax = gca;
 hold(ax,'on')
-plot(ax,phiD,relativeStrainOriginal,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
-plot(ax,phiD,relativeStrainOptimized,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA')
+plot(ax,phiD,relstrain0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
+plot(ax,phiD,relstrain2,'-','Color',optClr2,'LineWidth',2.5,'DisplayName','Optimized BPA')
+plot(ax,phiD,relstrain3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA')
 formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
 xlabel(ax,'\theta_k, °','Interpreter','tex','FontWeight','bold')
 ylabel(ax,'\varepsilon^*','Interpreter','tex','FontWeight','bold')
@@ -197,8 +206,9 @@ formatLegend(ax,fontName,legendFontSize)
 figure('Name','Moment Arm', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
 ax = gca;
 hold(ax,'on')
-plot(ax,phiD,momentArmOriginal,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
-plot(ax,phiD,momentArmOptimized,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA')
+plot(ax,phiD,G0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
+plot(ax,phiD,G2,'-','Color',optClr2,'LineWidth',2.5,'DisplayName','Optimized BPA, 200 kPa')
+plot(ax,phiD,G3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa')
 formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
 xlabel(ax,'\theta_k, °','Interpreter','tex','FontWeight','bold')
 ylabel(ax,'Moment Arm, m','FontWeight','bold')

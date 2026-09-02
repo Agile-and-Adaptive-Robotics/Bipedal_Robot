@@ -45,6 +45,53 @@ predBest = predictKneeExt20mm(xBest, ctx);
 [cBest, ~] = nonlconExt20mm(xBest, ctx);
 relativeContractionBest = predBest.bpa.Contraction(:)/predBest.KMAX;
 
+%% Run with adjusted seed
+% Section commented out if unused.
+% Earlier design, reconstructed from rounded printed values.
+% This is a trial seed, not an exact recovery of that solution.
+xSeed = [0.032, 0.148, 0.001, ...
+         0.033, -0.217, 0.001, ...
+         0.828, 0.074];
+
+Jseed = objective_KneeExt20mm(xSeed, ctx);
+cSeed = nonlconExt20mm(xSeed, ctx);
+
+boundViolation = max([ ...
+    ctx.lb(:) - xSeed(:); ...
+    xSeed(:) - ctx.ub(:)]);
+
+fprintf('Earlier-design objective = %.6g\n', Jseed);
+fprintf('Maximum nonlinear constraint = %.6g\n', max(cSeed));
+fprintf('Maximum bound violation = %.6g\n', boundViolation);
+
+% Adjust only coordinates outside the existing bounds.
+xStart = min(max(xSeed(:), ctx.lb(:)), ctx.ub(:)).';
+
+% Use the current context and objective.
+objRefine = @(x) objective_KneeExt20mm(x, ctx);
+conRefine = @(x) nonlconExt20mm(x, ctx);
+
+% Keep the new result separate from your current xBest.
+[xRefined, fRefined, exitRefined] = patternsearch( ...
+    objRefine, xStart, ...
+    [], [], [], [], ctx.lb, ctx.ub, conRefine, optsP);
+
+cRefined = conRefine(xRefined);
+
+fprintf('Refined objective = %.6g\n', fRefined);
+fprintf('Maximum nonlinear constraint = %.6g\n', max(cRefined));
+fprintf('Maximum bound violation = %.6g\n', max([ ...
+    ctx.lb(:) - xRefined(:); ...
+    xRefined(:) - ctx.ub(:)]));
+fprintf('Exit flag = %d\n', exitRefined);
+
+xBest = xRefined;
+fBest = fRefined;
+
+predBest = predictKneeExt20mm(xBest, ctx);
+[cBest, ~] = nonlconExt20mm(xBest, ctx);
+relativeContractionBest = predBest.bpa.Contraction(:)/predBest.KMAX;
+
 %% display results
 fprintf('\n========== OPTIMIZED DESIGN VALUES ==========\n')
 
