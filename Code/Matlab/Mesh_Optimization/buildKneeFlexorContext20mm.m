@@ -125,7 +125,7 @@ ctx.Pbins = 620;
 ctx.KMAX = 0.255;          % KMAX = (rest - kmax)/rest at 620 kPa
 ctx.maxRelStrain = 1.0;    % allow relative strain up to 1
 ctx.minStrain = -0.03;
-ctx.requiredTorqueMargin = 0.005;
+ctx.requiredTorqueMargin = 0.01;
 ctx.offAxisPenaltyWeight = 1e3;
 ctx.wrapReleasePenaltyWeight = 1e3;
 
@@ -186,15 +186,15 @@ lb = x0;
 ub = x0;
 
 % Attachment search box, meters
-lb(1:3) = p1_0 + [-0.100, -0.100, -0.050];
-ub(1:3) = p1_0 + [0.0125,  0.100,  0.080];
+lb(1:3) = p1_0 + [-0.075, -0.100, -0.075];
+ub(1:3) = p1_0 + [0.030,  0.100,  0];
 
-lb(4:6) = p2_0 + [-0.100, -0.15, -0.027];
-ub(4:6) = p2_0 + [ 0.025, -0.037,  0.060];
+lb(4:6) = p2_0 + [-0.100, -0.2, -0.05];
+ub(4:6) = p2_0 + [ 0.025, -0.037,  0.015];
 
 % BPA / tendon bounds
-lb(7) = 0.4;    ub(7) = 0.900;    % rest length, m
-lb(8) = 0.025;    ub(8) = 0.150;    % tendon length, m
+lb(7) = 0.415;    ub(7) = 1.200;    % rest length, m
+lb(8) = 0.025;    ub(8) = 0.20;    % tendon length, m
 
 ctx.x0 = x0;
 ctx.lb = lb;

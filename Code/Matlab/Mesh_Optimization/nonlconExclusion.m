@@ -5,7 +5,9 @@ function [c, ceq, info] = nonlconExclusion(x, geo, ctx, idxP2)
 % c(2) <= 0: the BPA/fittings and tendon clear that solid at +5 deg.
 % c(3) <= 0: the BPA/fittings and tendon clear the femoral ellipse.
 % c(4) <= 0: tendon + two fittings leave nonnegative current BPA length.
-%% c(5) <= 0: the fixed pWrap y-z line intersects the BPA contact surface.
+% c(5) <= 0: the fixed pWrap y-z line intersects the BPA contact surface.
+% c(6) <= 0: tendon does not extend proximally beyond pWrap.
+% c(7) <= 0: relatives strain between 0 and 1 for robot range of motion
 
 % The complete series path follows the same p1-wrap-p2 polyline used by the
 % predictor.  At +5 deg the wrap is normally active.  The tendon occupies
@@ -29,24 +31,62 @@ ceq = [];
 % Use the sampled knee position nearest the requested +5 deg collision
 % configuration.  p1 is stored in the femur frame; p2 is already in t1.
 [~, idxCollision] = min(abs(ctx.phiD - geo.collisionAngleD));
-[~, ~, routeInfo] = buildKneeFlexorRoute20mm(p1, p2, ctx);
-cWrap = routeInfo.wrapContactConstraint;
-p1T1 = routeInfo.p1T1(idxCollision,:);
+[Location, ~, routeInfo] = buildKneeFlexorRoute20mm(p1, p2, ctx);
+N = ctx.N;  %number of increments
+M = size(Location,1)-1;         %Number of rows minus 1 since we're taking the difference
+SL = zeros(N,M);
 
-if routeInfo.active(idxCollision)
-    routeT1 = [p1T1; routeInfo.pWrapT1(idxCollision,:); p2];
+for ii = 1:N                    %Repeat for each orientation
+    for i = 1:M               %Calculate all segments
+        pointA = Location(i,:,ii);
+        pointB = Location(i+1,:,ii);
+        if i+1 == ctx.CrossPoint
+            pointB = RowVecTrans(ctx.T_Pam(:,:,ii), pointB);
+        end
+        SL(ii,i) = norm(pointA - pointB);   %segment lengths
+    end
+end
+Lmt = sum(SL,2);            % Length of musculotendon
+Lm = Lmt - ctx.Xi0 - tendon - 2*ctx.fitting;    %BPA length
+relstrain = ((rest-Lm)./rest)./ctx.KMAX;      %relative strain
+idxRoM = ctx.phiD >= -120 & ctx.phiD <=5 ;   %RoM robot can actually perform
+relRoM = relstrain(idxRoM);
+
+cRelStrain = max([ ...
+    max(relRoM - 1); ...   % violation of upper bound relstrain <= 1
+    max(-relRoM)]);        % violation of lower bound relstrain >= 0
+
+% Maximum tendon length that can fit entirely on the distal
+% pWrap -> p2 segment.  Longer tendon would extend proximally
+% past pWrap and require a different collision model.
+tendonSL = SL((idxRoM & SL(:,2) > 0), 2);   %relevant nonzero tendon segment lengths
+
+% <= 0 is feasible.
+if isempty(tendonSL)
+    cTendonWrap = 0;            %defensive against no wrapping point
+    tendonMax = NaN;
+else
+    tendonMax = min(tendonSL) - ctx.fitting;  %The fitting cannot bend
+    cTendonWrap = tendon - tendonMax;
+end
+
+cWrap = routeInfo.wrapContactConstraint;
+
+p1T1 = routeInfo.p1T1(idxCollision,:);           %p1 in t1 at collision angle
+pWrapT1 = routeInfo.pWrapT1(idxCollision,:);     %wrap point in t1 at collision angle
+
+if SL(idxCollision,2) > 0
+    routeT1 = [p1T1; pWrapT1; p2];
 else
     routeT1 = [p1T1; p2];
 end
 
-segmentLength = vecnorm(diff(routeT1,1,1),2,2);
-pathLength = sum(segmentLength);
-
+pathLength = Lmt(idxCollision);
 info = struct;
 info.angleD = ctx.phiD(idxCollision);
 info.p1T1 = p1T1;
 info.p2T1 = p2;
-info.pWrapT1 = routeInfo.pWrapT1(idxCollision,:);
+info.pWrapT1 = pWrapT1;
 info.wrapActive = routeInfo.active(idxCollision);
 info.bpaRadius = geo.bpaRadius;
 info.tendonRadius = geo.tendonRadius;
@@ -54,7 +94,7 @@ info.tendonRadius = geo.tendonRadius;
 if ~isfinite(pathLength) || pathLength <= eps || ...
         ~isfinite(rest) || rest <= 0 || ...
         ~isfinite(tendon) || tendon < 0
-    c = [1; 1; 1; 1; 1];
+    c = ones(7,1);
     info.minClearance = -Inf;
     info.constraintMargin = -Inf;
     info.failReason = "Invalid collision geometry";
@@ -65,9 +105,14 @@ end
 % the optimized tendon becomes shorter.  Everything proximal to the
 % junction consists of the current BPA length plus both fittings and uses
 % the inflated BPA radius for collision clearance.
-tendonLengthChecked = min(tendon, pathLength);
-bpaFittingsLength = pathLength - tendonLengthChecked;
-currentMuscleLength = bpaFittingsLength - 2*ctx.fitting;
+
+
+% Location along the physical path where the tendon ends and
+% the BPA + fittings begin.
+bpaFittingsLength = pathLength - tendon;
+
+% Modeled BPA length already calculated above.
+currentMuscleLength = Lm(idxCollision);
 
 nPath = max(2, ceil(pathLength/geo.centerlineSampleStep) + 1);
 pathPosition = linspace(0, pathLength, nPath).';
@@ -105,7 +150,7 @@ surfaceClearanceFemur = signedDistanceFemur - pointRadius;
 [minClearanceFemur, idxWorstFemur] = min(surfaceClearanceFemur);
 cTibia = -minClearanceTibia;
 cFemur = geo.clearance + sampleAllowance - minClearanceFemur;
-cSeries = -currentMuscleLength;
+cSeries = -Lm(idxCollision);
 
 % Preserve an explicit attachment-point exclusion in addition to the BPA
 % body constraint.  This uses the same 3-D union of the two simplified
@@ -113,15 +158,22 @@ cSeries = -currentMuscleLength;
 signedDistanceP2 = signedDistanceToTibia20mm(p2, geo);
 cP2 = geo.clearance - signedDistanceP2;
 
-c = [cP2; cTibia; cFemur; cSeries; cWrap];
+c = [cP2; ...
+     cTibia; ...
+     cFemur; ...
+     cSeries; ...
+     cWrap; ...
+     cTendonWrap; ...
+     cRelStrain];
 
+info.tendonMax = tendonMax;
+info.cTendonWrap = cTendonWrap;
 info.bpaStartT1 = p1T1;
 info.bpaEndT1 = junctionT1;
 info.junctionT1 = junctionT1;
 info.bpaFittingsLengthChecked = bpaFittingsLength;
 info.currentMuscleLength = currentMuscleLength;
 info.tendon = tendon;
-info.tendonLengthChecked = tendonLengthChecked;
 info.minClearance = min(minClearanceTibia, minClearanceFemur);
 info.minClearanceTibia = minClearanceTibia;
 info.minClearanceFemur = minClearanceFemur;

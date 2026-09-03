@@ -4,6 +4,14 @@
 % Description: This script plots the bone skeleton and the muscles that are
 % currently being investigated
 
+% Frame-aware knee callers provide the same inputs as AnimateKneeBoneMuscle.
+% Static mode selects Location(:,:,pos) and returns without an animation.
+% Calls using the original HMuscleLocation/RMuscleLocation interface retain
+% the original full-skeleton path below.
+if exist('bonePlotArgs','var') && iscell(bonePlotArgs)
+    AnimateKneeBoneMuscle(bonePlotArgs{:}, 'Static',true);
+else
+
 % clc
 % clear all
 % close all
@@ -117,21 +125,27 @@ axisLimits = [-1 1 -1 1 -1.25 0.75];
 figure
 hold on
 %Bone Plotting
-plot3(Spine(:, 1), Spine(:, 2), Spine(:, 3), '.', 'color', 'b');
-plot3(Sacrum(:, 1), Sacrum(:, 2), Sacrum(:, 3), '.', 'color', 'b');
-plot3(Pelvis(:, 1), Pelvis(:, 2), Pelvis(:, 3), '.', 'color', 'b');
-plot3(Femur(:, 1), Femur(:, 2), Femur(:, 3), '.', 'color', 'b');
-plot3(Tibia(:, 1), Tibia(:, 2), Tibia(:, 3), '.', 'color', 'b');
-plot3(Talus(:, 1), Talus(:, 2), Talus(:, 3), '.', 'color', 'b');
-plot3(Calcaneus(:, 1), Calcaneus(:, 2), Calcaneus(:, 3), '.', 'color', 'b');
-plot3(Toes(:, 1), Toes(:, 2), Toes(:, 3), '.', 'color', 'b');
+boneMarkers = {'o','Color','b','MarkerSize',2, ...
+    'MarkerFaceColor','b','MarkerEdgeColor','none'};
+plot3(Spine(:, 1), Spine(:, 2), Spine(:, 3), boneMarkers{:});
+plot3(Sacrum(:, 1), Sacrum(:, 2), Sacrum(:, 3), boneMarkers{:});
+plot3(Pelvis(:, 1), Pelvis(:, 2), Pelvis(:, 3), boneMarkers{:});
+plot3(Femur(:, 1), Femur(:, 2), Femur(:, 3), boneMarkers{:});
+plot3(Tibia(:, 1), Tibia(:, 2), Tibia(:, 3), boneMarkers{:});
+plot3(Talus(:, 1), Talus(:, 2), Talus(:, 3), boneMarkers{:});
+plot3(Calcaneus(:, 1), Calcaneus(:, 2), Calcaneus(:, 3), boneMarkers{:});
+plot3(Toes(:, 1), Toes(:, 2), Toes(:, 3), boneMarkers{:});
 
 %MusclePlotting
 for i = 1:size(HMuscleLocation, 2)
-    plot3(HMuscleLocation{i}(:, 1), HMuscleLocation{i}(:, 2), HMuscleLocation{i}(:, 3), '.-', 'color', 'r', 'linewidth', 3);
+    plot3(HMuscleLocation{i}(:, 1), HMuscleLocation{i}(:, 2), HMuscleLocation{i}(:, 3), ...
+        'o-', 'Color','r', 'LineWidth',3, 'MarkerSize',4, ...
+        'MarkerFaceColor','r', 'MarkerEdgeColor','none');
 end
 for i = 1:size(RMuscleLocation, 2)
-        plot3(RMuscleLocation{i}(:, 1), RMuscleLocation{i}(:, 2), RMuscleLocation{i}(:, 3), '.-', 'color', 'g', 'linewidth', 3);
+        plot3(RMuscleLocation{i}(:, 1), RMuscleLocation{i}(:, 2), RMuscleLocation{i}(:, 3), ...
+            'o-', 'Color','g', 'LineWidth',3, 'MarkerSize',4, ...
+            'MarkerFaceColor','g', 'MarkerEdgeColor','none');
 end
 % plot3(M1Locations(:, 1), M1Locations(:, 2), M1Locations(:, 3), '.-', 'color', 'r');
 % plot3(M2Locations(:, 1), M2Locations(:, 2), M2Locations(:, 3), '.-', 'color', 'r');
@@ -139,3 +153,4 @@ end
 % plot3(P1Locations(:, 1), P1Locations(:, 2), P1Locations(:, 3), '.-', 'color', 'g');
 axis(axisLimits)
 hold off
+end

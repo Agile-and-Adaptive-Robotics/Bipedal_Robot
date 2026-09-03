@@ -8,9 +8,9 @@
 % will also pull location data from a muscle and plot the muscle on the
 % skeletal structure. 
 
-current_dir = cd;
-all_code = fullfile(current_dir,'../..');
-addpath(genpath(all_code));
+% current_dir = cd;
+% all_code = fullfile(current_dir,'../..');
+% addpath(genpath(all_code));
 % addpath('Open_Sim_Bone_Geometry')
 
 %% Retrieve the datasets
