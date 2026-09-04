@@ -21,7 +21,7 @@ end
 optsG = optimoptions('surrogateopt', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 1500);
+    'MaxFunctionEvaluations', 5000);
 
 [xG, fG, exitflagG, outputG] = surrogateopt( ...
     objconstr, ctx.lb, ctx.ub, optsG);
@@ -30,9 +30,9 @@ optsG = optimoptions('surrogateopt', ...
 optsP = optimoptions('patternsearch', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 30000, ...
-    'MeshTolerance', 1e-6, ...
-    'StepTolerance', 1e-6, ...
+    'MaxFunctionEvaluations', 15000, ...
+    'MeshTolerance', 1e-4, ...
+    'StepTolerance', 1e-4, ...
     'PlotFcn', {@psplotbestf, ...
                 @psplotfuncount, ...
                 @psplotmeshsize, ...
@@ -43,12 +43,27 @@ optsP = optimoptions('patternsearch', ...
     obj, xG, [], [], [], [], ctx.lb, ctx.ub, nonlcon, optsP);
 
 %% Run with adjusted seed
-% Section commented out if unused.
-% Earlier design, reconstructed from rounded printed values.
-% This is a trial seed, not an exact recovery of that solution.
-% xSeed = [-0.1056, 0.135, 0.0125, ...
-%          -0.05	-0.150	-0.0125, ...
-%          0.145/.255/.65, xBest(8)];
+% % Section commented out if unused.
+% 
+% %Listing constraints (can put this before or after the xSeed ... cSeed
+% %block)
+% constraintNames = { ...
+%     'p2 exclusion', ...
+%     'tibia collision', ...
+%     'femur collision', ...
+%     'series length', ...
+%     'wrap', ...
+%     'tendon/wrap length', ...
+%     'relative strain'};
+% 
+% fprintf('\nMirrored +z constraint values:\n');
+% for i = 1:numel(cSeed)
+%     fprintf('%-22s = %+0.9f\n', constraintNames{i}, cSeed(i));
+% end
+% 
+% xSeed = [xBest(1:2), -xBest(3)...
+%          xBest(4:5), -xBest(6),...
+%          xBest(7), xBest(8)];
 % 
 % Jseed = objective_KneeFlexor20mm(xSeed, ctx);
 % cSeed = nonlcon(xSeed);
@@ -119,20 +134,26 @@ if ~collisionFeasible
 end
 
 % Three-row design matrices: p1 is in femur; pWrap and pEnd are in t1.
-pOriginal = [predX0.p1; predX0.pWrap; predX0.pEnd];
+pInitialWrapped = [predX0.p1; predX0.pWrap; predX0.pEnd];
 pOptimized = [predBest.p1; predBest.pWrap; predBest.pEnd];
-pChanged = pOptimized - pOriginal;
+pChanged = pOptimized - pInitialWrapped;
 
 % Save every optimizer-specific input consumed by Knee_Flexor_Data_20mm.
 routeCtx = struct;
-routeCtx.geo = ctx.geo;         %optimization's actual geometry
+
 routeCtx.N = ctx.N;
 routeCtx.phiD = ctx.phiD;
 routeCtx.T_t1_f = ctx.T_t1_f;
 routeCtx.T_ICR_t1 = ctx.T_ICR_t1;
 routeCtx.wrapPointT1XY = ctx.wrapPointT1XY;
-routeCtx.wrapBendRadius = ctx.wrapBendRadius;
 routeCtx.wrapAngleToleranceD = ctx.wrapAngleToleranceD;
+
+% Save the exact geometry used by this optimization:
+% bpaRb = nominal BPA wrap-point standoff from the hard surface
+% bpaRs = minimum allowable BPA centerline clearance from the hard surface
+% wRap  = obstacle wrapping radius used for the Xi3 calculation
+routeCtx.geo = ctx.geo;
+
 Xi3 = ctx.Xi3;
 
 % Copy the next lines and paste in the results folder
@@ -163,9 +184,9 @@ fprintf('fG                       = %.9g\n', fG)
 fprintf('fBest                    = %.9g\n', fBest)
 
 fprintf('\np (original), m; rows = [p1; pWrap; pEnd]:\n')
-fprintf('[% .6f, % .6f, % .6f;\n', pOriginal(1,:))
-fprintf(' % .6f, % .6f, % .6f;\n', pOriginal(2,:))
-fprintf(' % .6f, % .6f, % .6f]\n', pOriginal(3,:))
+fprintf('[% .6f, % .6f, % .6f;\n', pInitialWrapped(1,:))
+fprintf(' % .6f, % .6f, % .6f;\n', pInitialWrapped(2,:))
+fprintf(' % .6f, % .6f, % .6f]\n', pInitialWrapped(3,:))
 
 fprintf('\np (optimized), m; rows = [p1; pWrap; pEnd]:\n')
 fprintf('[% .6f, % .6f, % .6f;\n', pOptimized(1,:))
@@ -234,7 +255,9 @@ fprintf('p2 exclusion constraint    = %.6f m\n', cCollision(1))
 fprintf('tibia collision constraint = %.6f m\n', cCollision(2))
 fprintf('femur collision constraint = %.6f m\n', cCollision(3))
 fprintf('series-length constraint   = %.6f m\n', cCollision(4))
-fprintf('inflated BPA radius        = %.6f m\n', collisionInfo.bpaRadius)
+fprintf('nominal pWrap radius bpaRb = %.6f m\n', collisionInfo.bpaRb)
+fprintf('minimum tibia radius bpaRs = %.6f m\n', collisionInfo.bpaRs)
+fprintf('Xi3 wrap radius wRap       = %.6f m\n', collisionInfo.wRap)
 fprintf('tendon radius              = %.6f m\n', collisionInfo.tendonRadius)
 fprintf('optimized tendon length    = %.6f m\n', collisionInfo.tendon)
 fprintf('current muscle length Lm   = %.6f m\n', ...
@@ -245,7 +268,7 @@ fprintf('minimum tibia clearance    = %.6f m\n', ...
     collisionInfo.minClearanceTibia)
 fprintf('minimum femur clearance    = %.6f m\n', ...
     collisionInfo.minClearanceFemur)
-fprintf('required clearance         = %.6f m\n', ...
+fprintf('extra femur clearance      = %.6f m\n', ...
     collisionInfo.requiredClearance)
 fprintf('worst tibia region         = %s\n', ...
     collisionInfo.worstTibiaRegion)

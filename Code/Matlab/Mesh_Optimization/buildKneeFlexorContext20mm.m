@@ -101,7 +101,7 @@ ctx.BPAcount   = 1;
 % retained in x-y.  buildKneeFlexorRoute20mm places its z coordinate on the
 % full-extension p1-pEnd line projected into the t1 y-z plane.
 ctx.wrapPointT1XY = [-0.0026, -0.00587];
-ctx.wrapBendRadius = 0.025;       % local bend radius used by Xi3, m
+ctx.wrapBendRadius = ctx.geo.wRap;       % local bend radius used by Xi3, m
 ctx.wrapAngleToleranceD = 0;      % direct atan2 comparison; no added margin
 
 % Choose extension angle for the resting-length constraint.
@@ -189,7 +189,8 @@ ub = x0;
 lb(1:3) = p1_0 + [-0.075, -0.100, -0.075];
 ub(1:3) = p1_0 + [0.030,  0.100,  0];
 
-lb(4:6) = p2_0 + [-0.100, -0.2, -0.05];
+lb(4:6) = p2_0 + [-0.100, -0.2, -0.05]; %Used for solver
+% lb(4:6) = p2_0 + [-0.100, -0.2, -0.05];  %potential use if bpaCount = 2.
 ub(4:6) = p2_0 + [ 0.025, -0.037,  0.015];
 
 % BPA / tendon bounds

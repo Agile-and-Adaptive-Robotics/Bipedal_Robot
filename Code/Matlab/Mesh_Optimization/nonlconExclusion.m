@@ -2,10 +2,12 @@ function [c, ceq, info] = nonlconExclusion(x, geo, ctx, idxP2)
 %NONLCONEXCLUSION Attachment and inflated-BPA collision constraints.
 %
 % c(1) <= 0: p2 clears the simplified proximal-tibia solid.
-% c(2) <= 0: the BPA/fittings and tendon clear that solid at +5 deg.
+% c(2) <= 0: at +5 deg, the straight route stays outside the hard tibia by
+%              bpaRs for BPA/fittings and tendonRadius for the tendon.
 % c(3) <= 0: the BPA/fittings and tendon clear the femoral ellipse.
 % c(4) <= 0: tendon + two fittings leave nonnegative current BPA length.
-% c(5) <= 0: the fixed pWrap y-z line intersects the BPA contact surface.
+% c(5) <= 0: while wrap is active, the prescribed pWrap y-z line reaches
+%              the nominal bpaRb standoff surface used to place pWrap.
 % c(6) <= 0: tendon does not extend proximally beyond pWrap.
 % c(7) <= 0: relatives strain between 0 and 1 for robot range of motion
 
@@ -31,7 +33,7 @@ ceq = [];
 % Use the sampled knee position nearest the requested +5 deg collision
 % configuration.  p1 is stored in the femur frame; p2 is already in t1.
 [~, idxCollision] = min(abs(ctx.phiD - geo.collisionAngleD));
-[Location, ~, routeInfo] = buildKneeFlexorRoute20mm(p1, p2, ctx);
+[Location, ~, routeInfo] = buildKneeFlexorRoute20mm(p1, p2, tendon, ctx);
 N = ctx.N;  %number of increments
 M = size(Location,1)-1;         %Number of rows minus 1 since we're taking the difference
 SL = zeros(N,M);
@@ -88,7 +90,12 @@ info.p1T1 = p1T1;
 info.p2T1 = p2;
 info.pWrapT1 = pWrapT1;
 info.wrapActive = routeInfo.active(idxCollision);
-info.bpaRadius = geo.bpaRadius;
+% Keep the three BPA radii explicit in diagnostics so their different roles
+% cannot be confused later.
+info.bpaRb = geo.bpaRb;        % nominal pWrap standoff from hard tibia
+info.bpaRadius = geo.bpaRb;     % legacy diagnostic alias; nominal radius only
+info.bpaRs = geo.bpaRs;        % minimum BPA centerline clearance to hard tibia
+info.wRap = geo.wRap;          % Xi3 bend-length radius; not a collision radius
 info.tendonRadius = geo.tendonRadius;
 
 if ~isfinite(pathLength) || pathLength <= eps || ...
@@ -101,30 +108,42 @@ if ~isfinite(pathLength) || pathLength <= eps || ...
     return
 end
 
-% The tendon always terminates at p2.  The junction moves toward p2 when
-% the optimized tendon becomes shorter.  Everything proximal to the
-% junction consists of the current BPA length plus both fittings and uses
-% the inflated BPA radius for collision clearance.
+% The tendon always terminates at p2.  Everything proximal to the
+% BPA/tendon junction is represented by the BPA + fittings portion.
+% The actual optimized tendon length is used; it is not clipped here.
 
-
-% Location along the physical path where the tendon ends and
-% the BPA + fittings begin.
+% Arc-length location, measured from p1, where the BPA/fittings end and the
+% distal tendon begins along the straight-segment route.
 bpaFittingsLength = pathLength - tendon;
 
-% Modeled BPA length already calculated above.
+% Modeled BPA length already calculated above from the same SL/Lmt route.
 currentMuscleLength = Lm(idxCollision);
 
+% Sample the straight p1 -> pWrap -> p2 approximation at about 1 mm spacing.
+% This sampling is ONLY for collision checking; it does not change SL, Lmt,
+% pWrap, the bend angle, or the Xi3 bend calculation.
 nPath = max(2, ceil(pathLength/geo.centerlineSampleStep) + 1);
 pathPosition = linspace(0, pathLength, nPath).';
+
+% Force the BPA/tendon junction to be one of the sampled points.
 pathPosition = unique([pathPosition; bpaFittingsLength]);
 centerlineT1 = pointsAlongPolyline(routeT1, pathPosition);
 junctionT1 = pointsAlongPolyline(routeT1, bpaFittingsLength);
 
+% Identify which centerline samples belong to the BPA/fittings versus tendon.
 isBPA = pathPosition <= bpaFittingsLength + 10*eps;
-pointRadius = geo.tendonRadius*ones(size(pathPosition));
-pointRadius(isBPA) = geo.bpaRadius;
 component = repmat("tendon", numel(pathPosition), 1);
 component(isBPA) = "BPA + fittings";
+
+% Tibia and femur intentionally use different BPA radii.  The tibial wrap
+% point is nominally placed bpaRb = 20 mm from the hard surface, but the
+% straight-line approximation is allowed to approach to bpaRs = 16 mm to
+% represent changing BPA diameter/local squish.  The femur has no intentional
+% wrap contact, so it retains the nominal bpaRb envelope.
+tibiaRadius = geo.tendonRadius*ones(size(pathPosition));
+tibiaRadius(isBPA) = geo.bpaRs;
+femurRadius = geo.tendonRadius*ones(size(pathPosition));
+femurRadius(isBPA) = geo.bpaRs;
 
 % Signed distance is positive outside the simplified tibia, zero on its
 % surface, and negative inside it.
@@ -139,15 +158,19 @@ end
 
 signedDistanceFemur = signedDistanceToFemur(centerlineFemur, geo);
 
-% A signed clearance of zero means the inflated BPA touches the bone.
-% Half a sample interval is added to the required clearance because signed
-% distance is 1-Lipschitz; this prevents a collision from hiding between
-% adjacent centerline samples.
-sampleAllowance = 0.5*geo.centerlineSampleStep;
-surfaceClearanceTibia = signedDistanceTibia - pointRadius;
-surfaceClearanceFemur = signedDistanceFemur - pointRadius;
+% Convert centerline-to-hard-surface distances into component surface
+% clearances.  For the tibia, zero means the BPA has reached the allowed
+% compressed radius bpaRs (or the tendon has reached tendonRadius).
+% For the femur, zero uses the nominal bpaRb envelope.
+surfaceClearanceTibia = signedDistanceTibia - tibiaRadius;
+surfaceClearanceFemur = signedDistanceFemur - femurRadius;
 [minClearanceTibia, idxWorstTibia] = min(surfaceClearanceTibia);
 [minClearanceFemur, idxWorstFemur] = min(surfaceClearanceFemur);
+
+% Tibia: no additional stand-off is imposed beyond bpaRs/tendonRadius.
+% Femur: retain the existing 1 mm rigid clearance plus half a sample spacing
+% so a collision cannot hide between adjacent centerline samples.
+sampleAllowance = 0.5*geo.centerlineSampleStep;
 cTibia = -minClearanceTibia;
 cFemur = geo.clearance + sampleAllowance - minClearanceFemur;
 cSeries = -Lm(idxCollision);
@@ -174,19 +197,23 @@ info.junctionT1 = junctionT1;
 info.bpaFittingsLengthChecked = bpaFittingsLength;
 info.currentMuscleLength = currentMuscleLength;
 info.tendon = tendon;
+info.tendonLengthChecked = tendon;  % diagnostic only; tendon is not clipped
 info.minClearance = min(minClearanceTibia, minClearanceFemur);
 info.minClearanceTibia = minClearanceTibia;
 info.minClearanceFemur = minClearanceFemur;
-info.requiredClearance = geo.clearance;
+info.tibiaBPAMinRadius = geo.bpaRs;
+info.femurBPANominalRadius = geo.bpaRb;
+info.requiredFemurClearance = geo.clearance;
+info.requiredClearance = geo.clearance;  % legacy diagnostic alias; femur/p2 only
 info.sampleAllowance = sampleAllowance;
 info.constraintMargin = -max(cTibia, cFemur);
 info.worstTibiaCenterT1 = centerlineT1(idxWorstTibia,:);
 info.worstTibiaRegion = char(region(idxWorstTibia));
 info.worstTibiaComponent = char(component(idxWorstTibia));
-info.worstTibiaRadius = pointRadius(idxWorstTibia);
+info.worstTibiaRadius = tibiaRadius(idxWorstTibia);
 info.worstFemurCenterFemur = centerlineFemur(idxWorstFemur,:);
 info.worstFemurComponent = char(component(idxWorstFemur));
-info.worstFemurRadius = pointRadius(idxWorstFemur);
+info.worstFemurRadius = femurRadius(idxWorstFemur);
 info.cP2 = cP2;
 info.cTibia = cTibia;
 info.cFemur = cFemur;
@@ -222,7 +249,7 @@ function sdFemur = signedDistanceToFemur(points, geo)
 points = reshape(points, [], 3);
 x = points(:,1);
 y = points(:,2);
-z = points(:,3);
+z = abs(points(:,3));   % Mirror femoral exclusion geometry about z = 0
 
 sdEllipse2D = signedDistanceToPolygon( ...
     x, y, geo.femurEllipseX, geo.femurEllipseY);

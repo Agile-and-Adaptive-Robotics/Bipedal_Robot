@@ -24,7 +24,7 @@ function pred = predictKneeFlexor20mm(x, ctx)
     end
 
     [Location, bendMeasure, routeInfo] = ...
-        buildKneeFlexorRoute20mm(p1, p2, ctx);
+        buildKneeFlexorRoute20mm(p1, p2, tendon, ctx);
 
     try
         bpa = MonoPamDataExplicit_balanceX3( ...

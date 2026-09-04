@@ -1,10 +1,15 @@
-function [Location, bendMeasure, info] = buildKneeFlexorRoute20mm(p1, pEnd, ctx)
+function [Location, bendMeasure, info] = buildKneeFlexorRoute20mm(p1, pEnd, tendon, ctx)
 %BUILDKNEEFLEXORROUTE20MM Build the flexor route with one t1 wrap point.
 %
-% p1 is fixed in the femur frame.  pEnd and the intermediate wrap point
-% are fixed in the t1 frame.  The wrap is active at full extension and is
-% removed at the first extension-to-flexion sample for which aDirect is
-% greater than aWrap.  An inactive wrap is represented by repeating pEnd.
+% p1 is fixed in the femur frame. pEnd is fixed in the t1 frame. pWrap is
+% an equivalent routing point used by the straight-segment model; it is not
+% a solved tangent point. While contact is active, pWrap is placed at the
+% nominal bpaRb standoff from the hard tibial surface. nonlconExclusion then
+% permits the straight segments to approach only as close as bpaRs.
+%
+% The wrap is released during the extension-to-flexion sweep when the
+% existing atan2 release rule is satisfied. An inactive wrap is represented
+% by repeating pEnd so the second segment has zero length.
 
 p1 = p1(:).';
 pEnd = pEnd(:).';
@@ -23,14 +28,68 @@ turnWrapped = zeros(N,1);
 aDirectD = zeros(N,1);
 aWrapEndD = zeros(N,1);
 
-% First express p1 in t1 at every knee angle.  The combined femur-to-t1
+% First express p1 in t1 at every knee angle. The combined femur-to-t1
 % transform is precomputed once by buildKneeFlexorContext20mm.
 for i = 1:N
     p1T1(i,:) = RowVecTrans(ctx.T_t1_f(:,:,i), p1);
 end
 
-% The wrap x-y seed is fixed in t1.  At full extension, place its z
-% coordinate on the p1-pEnd line projected into the t1 y-z plane.
+%% Check whether the direct p1 -> pEnd route actually requires tibial wrap
+
+directNeedsWrap = false(N,1);
+directMinClearance = inf(N,1);
+
+for i = 1:N
+
+    directVector = pEnd - p1T1(i,:);
+    directLength = norm(directVector);
+
+    if directLength <= eps
+        error('buildKneeFlexorRoute20mm:DegenerateDirectRoute', ...
+            'Direct p1-pEnd route has zero length at sample %d.', i)
+    end
+
+    % Along the physical series path, the tendon occupies the distal
+    % portion ending at pEnd. Everything proximal to it is BPA + fittings.
+    bpaFittingsLengthDirect = max(0, directLength - tendon);
+
+    nDirect = max(2, ...
+        ceil(directLength/ctx.geo.centerlineSampleStep) + 1);
+
+    sDirect = linspace(0, directLength, nDirect).';
+
+    % Explicitly include the BPA/tendon junction.
+    sDirect = unique([sDirect; bpaFittingsLengthDirect]);
+
+    directPoints = p1T1(i,:) + ...
+        (sDirect/directLength).*directVector;
+
+    % Tendon is allowed to approach to its physical radius.
+    directRadius = ...
+        ctx.geo.tendonRadius*ones(size(sDirect));
+
+    % BPA + fittings use the minimum allowable compressed BPA radius.
+    isDirectBPA = ...
+        sDirect <= bpaFittingsLengthDirect + 10*eps;
+
+    directRadius(isDirectBPA) = ctx.geo.bpaRs;
+
+    signedDistanceDirect = ...
+        signedDistanceToTibia20mm(directPoints, ctx.geo);
+
+    directClearance = signedDistanceDirect - directRadius;
+
+    directMinClearance(i) = min(directClearance);
+
+    % Zero means allowable contact. Negative means the direct path
+    % penetrates beyond the permitted BPA/tendon envelope and needs wrap.
+    directNeedsWrap(i) = directMinClearance(i) < 0;
+end
+
+
+% The wrap y seed is fixed in t1. At every pose, place pWrap z on the
+% p1-pEnd line projected into the t1 y-z plane. Its x coordinate is then
+% solved independently so pWrap lies on the nominal bpaRb standoff surface.
 y1 = p1T1(:,2);
 z1 = p1T1(:,3);
 yEnd = pEnd(2);
@@ -47,11 +106,15 @@ pWrapY = ctx.wrapPointT1XY(2);
 wrapYZFraction = (pWrapY - y1)./(yEnd - y1);
 pWrapZ = z1 + wrapYZFraction.*(zEnd - z1);
 
-% pWrap represents intentional BPA contact with the tibia. Therefore its
-% centerline distance from the tibia equals the inflated BPA radius.
-targetClearance = ctx.geo.bpaRadius;
+% bpaRb is the BIG/nominal BPA radius. It is used only to locate the
+% equivalent pWrap point relative to the hard tibial geometry. It is NOT the
+% minimum collision clearance for the straight p1-pWrap-pEnd segments;
+% nonlconExclusion uses the smaller bpaRs for that purpose.
+targetClearance = ctx.geo.bpaRb;
 
-% Find the closest point on this fixed y-z line to the tibial geometry.
+% Find the closest point on this fixed y-z line to the hard tibial geometry.
+% If the line reaches the bpaRb standoff surface, fzero locates the outside
+% intersection used as pWrap. No tangency is solved here.
 xSearchLo = min(ctx.geo.xBack, ctx.geo.circleCenter(1)) ...
           - 4*targetClearance;
 
@@ -73,6 +136,8 @@ for i = 1:N
     [xClosest(i), minimumDistance(i)] = fminbnd( ...
         distanceAtX, xSearchLo, xSearchHi);
 
+    % <= 0 means this y-z line reaches or passes inside the nominal bpaRb
+    % standoff surface, so a nominal pWrap intersection can be found.
     contactConstraintFrame(i) = ...
         minimumDistance(i) - targetClearance;
 
@@ -97,6 +162,9 @@ for i = 1:N
             contactConstraintFrame(i) = 1;
         end
     else
+        % No nominal bpaRb intersection exists on this prescribed y-z line.
+        % The active-wrap constraint will reject this pose if contact is
+        % still required by the current release logic.
         pWrapX(i) = xClosest(i);
     end
 end
@@ -108,6 +176,8 @@ pWrap = [ ...
 
 for i = 1:N
 
+    % Full 3-D vectors are used for the bend angle. The x-y projections below
+    % are used only by the existing wrap-release test.
     vIn = p1T1(i,:)-pWrap(i,:);
     vOut = pWrap(i,:)-pEnd;
     vWrap = vOut;
@@ -118,21 +188,21 @@ for i = 1:N
             'A flexor route segment has zero length at sample %d.', i)
     end
 
-    %shift vector by -90 degrees
+    % Shift the release-test vectors by -90 degrees in the t1 x-y plane.
     R = [0 1; -1 0]; %-90 degree rotation matrix
     vWrap9 = R*vWrap(1:2).';
     vDir9 = R*vDirect(1:2).';
 
-    % Angle between the vectors
+    % 3-D angle between the two straight routing segments, radians.
     turnWrapped(i) = acos(dot(vIn,vOut)/(norm(vIn)*norm(vOut)));
 
     % User-specified release comparison, with both lines originating at
-    % pEnd.  Release pWrap when aDirectD is greater than aWrapEndD.
-    aDirectD(i) = atan2d( vDir9(2), vDir9(1));
-    aWrapEndD(i) = atan2d( vWrap9(2), vWrap9(1));
+    % pEnd. Release pWrap when aDirectD is greater than aWrapEndD.
+    aDirectD(i) = atan2d(vDir9(2), vDir9(1));
+    aWrapEndD(i) = atan2d(vWrap9(2), vWrap9(1));
 end
 
-% Sweep from full extension toward flexion.  The first frame satisfying the
+% Sweep from full extension toward flexion. The first frame satisfying the
 % direct atan2 comparison releases pWrap.
 [~, order] = sort(ctx.phiD, 'descend');
 aDirectSweepD = aDirectD(order);
@@ -157,7 +227,13 @@ if ~isempty(releasePosition)
     end
 end
 
-% Require a valid contact location only where contact is active.
+% A geometrically available wrap is used only when the direct physical
+% BPA/tendon route would otherwise violate the tibial exclusion envelope.
+active = active & directNeedsWrap.';
+
+% Require a nominal bpaRb contact location only where the current release
+% logic says the wrap is active. This is a contact-location requirement, not
+% the bpaRs straight-segment collision constraint.
 if any(active)
     wrapContactConstraint = ...
         max(contactConstraintFrame(active));
@@ -174,7 +250,10 @@ for i = 1:N
 
     if active(i)
         Location(:,:,i) = [p1; pWrapICR; pEndICR];
-        bendMeasure(i) = ctx.wrapBendRadius*abs(turnWrapped(i));
+
+        % wRap is independent of the collision radii. Xi3 uses the modeled
+        % bent length wRap*angle to estimate bend-related BPA length loss.
+        bendMeasure(i) = ctx.geo.wRap*abs(turnWrapped(i));
     else
         Location(:,:,i) = [p1; pEndICR; pEndICR];
         bendMeasure(i) = 0;
@@ -184,7 +263,8 @@ end
 info = struct;
 
 [~, idxFullExtension] = max(ctx.phiD);
-
+info.directNeedsWrap = directNeedsWrap;
+info.directMinClearance = directMinClearance;
 % Preserve the scalar field consumed by existing printed diagnostics.
 info.wrapYZFraction = wrapYZFraction(idxFullExtension);
 info.wrapYZFractionByFrame = wrapYZFraction;
@@ -210,5 +290,8 @@ info.wrapDistanceAtPoint = signedDistanceToTibia20mm(pWrap, ctx.geo);
 info.contactConstraintFrame = contactConstraintFrame;
 info.wrapContactConstraint = wrapContactConstraint;
 info.wrapContactFound = wrapContactConstraint <= 1e-10;
+info.bpaRb = ctx.geo.bpaRb;
+info.bpaRs = ctx.geo.bpaRs;
+info.wRap = ctx.geo.wRap;
 
 end

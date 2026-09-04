@@ -134,23 +134,25 @@ end
 
 xBest = resultData.xBest;
 routeCtx = resultData.routeCtx;
-if ~isfield(routeCtx, 'geo')
-    routeCtx.geo = buildGeoExclusion();
-end
-Xi3 = resultData.Xi3;
 
-if routeCtx.N ~= positions || numel(routeCtx.phiD) ~= positions
-    error('Knee_Flexor_Data_20mm:ResultSizeMismatch', ...
-        'The saved route context does not contain %d knee positions.', ...
-        positions)
-end
+% Rebuild the current flexor geometry so this script can be used for
+% post-optimization hand tuning.  The saved optimizer result supplies the
+% starting design and kinematic context, while buildGeoExclusion supplies
+% the current hard geometry and current BPA/wrap definitions:
+%   bpaRb = nominal BPA centerline distance from the hard surface
+%   bpaRs = minimum allowable BPA centerline clearance from the hard surface
+%   wRap  = obstacle wrapping radius used for the Xi3 calculation
+routeCtx.geo = buildGeoExclusion();
+
+Xi3 = resultData.Xi3;
 
 p1 = xBest(1:3); %Origin
 p2 = xBest(4:6); %End/insertion in the t1 frame
 
-% Use the exact route context and Xi3 saved by Opt_run.
+% Use the saved kinematic/routing context with the current geometry
+% definitions and the Xi3 value saved by Opt_run.
 [Location, bendMeasure, routeInfo] = ...
-    buildKneeFlexorRoute20mm(p1, p2, routeCtx);
+    buildKneeFlexorRoute20mm(p1, p2, xBest(8), routeCtx);
 
 % Original two-point route: no intermediate wrapping point and zero bend.
 Location0 = zeros(2,3,positions);
@@ -162,9 +164,9 @@ bendMeasure0 = zeros(positions,1);
 
 % Existing comparison geometries now use the same three-point route.
 [Location2, bendMeasure2] = ...
-    buildKneeFlexorRoute20mm(p1-[0.015,0,0], p2, routeCtx);
+    buildKneeFlexorRoute20mm(p1-[0.015,0,0], p2, xBest(8), routeCtx);
 [Location3, bendMeasure3] = ...
-    buildKneeFlexorRoute20mm(p1+[0,0.012,0], p2, routeCtx);
+    buildKneeFlexorRoute20mm(p1+[0,0.012,0], p2, xBest(8), routeCtx);
 
 %20 mm Festo
 Dia = 20;

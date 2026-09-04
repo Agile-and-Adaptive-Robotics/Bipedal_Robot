@@ -13,17 +13,21 @@ function geo = buildGeoExclusion()
 %       diameter = 0.0381 m
 %       center   = [0.01586, 0, 0]
 
-geo.clearance = 0.001;
+geo.clearance = 0.001;      % Additional rigid clearance used for the femur and p2 constraints.
 
-% Collision envelope for the nominal 20 mm BPA.  The measured/selected
-% maximum inflated diameter is 38.5 mm.  The tendon is 2.0 mm diameter.
-% Collision is checked at +5 deg, the physical robot extension limit,
-% where the flexor has the least joint clearance.  The centerline sampling
-% allowance in nonlconExclusion makes the discrete test conservative.
-geo.inflatedDiameter = 0.0385;
-geo.bpaRadius = geo.inflatedDiameter/2;
+% Three different BPA radii are intentionally used for three different jobs.
+% Do not collapse these back into one generic BPA radius.
+geo.bpaRb = 0.016;         % Big/nominal BPA radius: place pWrap this far from the hard tibial surface.
+geo.bpaRs = 0.013;         % Small/compressed BPA radius: minimum BPA centerline distance allowed from the hard tibial surface.
+geo.wRap  = 0.025;         % Effective wrap radius used only to convert bend angle to Xi3 bend length loss.
+
+% Tendon collision radius remains geometric because the tendon is not being
+% given the same radial-compression allowance as the BPA.
 geo.tendonDiameter = 0.002;
 geo.tendonRadius = geo.tendonDiameter/2;
+
+% Collision is checked at +5 deg, the physical robot extension limit.
+% The straight p1-pWrap-p2 centerline is sampled at approximately 1 mm.
 geo.collisionAngleD = 5;
 geo.centerlineSampleStep = 0.001;
 
@@ -43,8 +47,8 @@ geo.R = 0.035;
 geo.zBottom = 0.0375;
 
 % Femoral-condyle ellipse from the extensor geometry, expressed in the
-% femur-frame X-Y plane.  Keep the physical ellipse here; the inflated BPA
-% radius is applied as a true Euclidean distance offset by the constraint.
+% femur-frame X-Y plane. Keep the physical ellipse here; the nominal BPA
+% radius bpaRb is applied later as a Euclidean clearance offset.
 geo.femurProfileCenter = [0.01817, -0.41031];
 geo.femurEllipsePhysicalA = 0.06640/2;
 geo.femurEllipsePhysicalB = 0.05439/2;

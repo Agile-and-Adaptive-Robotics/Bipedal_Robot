@@ -6,7 +6,7 @@ function [sdUnion, region] = signedDistanceToTibia20mm(points, geo)
 points = reshape(points, [], 3);
 x = points(:,1);
 y = points(:,2);
-z = points(:,3);
+z = abs(points(:,3));   % Mirror tibial exclusion geometry about z = 0
 
 % The original radial definition is exactly the polygon formed by the
 % origin, the ordered outer profile, and the origin again.
