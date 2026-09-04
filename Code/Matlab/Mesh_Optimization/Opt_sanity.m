@@ -5,7 +5,10 @@ clear functions
 clc
 rehash
 
-% Clear old global overrides; markers below specify their edges explicitly.
+% Save the caller's current root defaults, then clear any marker-edge
+% overrides while this script runs. Restore the saved values at the end.
+oldLineMarkerEdgeColor = get(groot, 'defaultLineMarkerEdgeColor');
+oldScatterMarkerEdgeColor = get(groot, 'defaultScatterMarkerEdgeColor');
 set(groot, 'defaultLineMarkerEdgeColor', 'remove', ...
     'defaultScatterMarkerEdgeColor', 'remove');
 
@@ -50,6 +53,15 @@ fprintf('Xi0                        = %.9g m\n', ctx.Xi0)
 fprintf('Xi1                        = %.9g N/m\n', ctx.Xi1)
 fprintf('Xi2                        = %.9g N/m\n', ctx.Xi2)
 fprintf('Xi3                        = %.9g\n', ctx.Xi3)
+fprintf('BPA count                  = %d\n', ctx.BPAcount)
+fprintf('BPA radius source          = %s\n', pred0.bpaRadiusMode)
+fprintf('BPA radius range           = %.6f to %.6f m\n', ...
+    min(pred0.bpaRadius), max(pred0.bpaRadius))
+if pred0.bpaRadiusMode == "bpaR"
+    fprintf('radius iterations           = %d\n', pred0.bpaRadiusIteration)
+    fprintf('radius update converged     = %d\n', pred0.bpaRadiusConverged)
+    fprintf('maximum radius change       = %.9g m\n', pred0.bpaRadiusChange)
+end
 fprintf('p1                         = [%.6f %.6f %.6f] m\n', pred0.p1)
 fprintf('wrap, t1                   = [%.6f %.6f %.6f] m\n', pred0.pWrap)
 fprintf('pEnd, t1                   = [%.6f %.6f %.6f] m\n', pred0.pEnd)
@@ -257,9 +269,9 @@ optsTest = optimoptions('surrogateopt', ...
 
 [xTest, fTest] = surrogateopt(objconstr, ctx.lb, ctx.ub, optsTest); %#ok<NASGU,ASGLU>
 
-% Leave subsequent scripts with MATLAB's default marker-edge settings.
-set(groot, 'defaultLineMarkerEdgeColor', 'remove', ...
-    'defaultScatterMarkerEdgeColor', 'remove');
+% Restore the marker-edge defaults that were active before this script.
+set(groot, 'defaultLineMarkerEdgeColor', oldLineMarkerEdgeColor, ...
+    'defaultScatterMarkerEdgeColor', oldScatterMarkerEdgeColor);
 
 function plt = plotStyle()
 

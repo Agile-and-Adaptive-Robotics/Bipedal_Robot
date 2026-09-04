@@ -93,9 +93,13 @@ ctx.CrossPoint = 2;
 ctx.Dia        = 20;
 
 ctx.fitting    = 0.021;
-ctx.geo = buildGeoExclusion();
+% Radius source for routing and collision:
+%   "bpaR"   = use the Nx1 physical outer-radius array from bpaR(strain_p,...)
+%   "scalar" = use bpaRbScalar and bpaRsScalar from buildGeoExclusion
+ctx.bpaRadiusMode = "bpaR";
+ctx.geo = buildGeoExclusion(ctx.bpaRadiusMode);
 ctx.wraps      = 6;
-ctx.BPAcount   = 1;
+ctx.BPAcount   = 2;
 
 % Intermediate t1-frame routing contact.  The old human-model wrap seed is
 % retained in x-y.  buildKneeFlexorRoute20mm places its z coordinate on the
@@ -189,9 +193,8 @@ ub = x0;
 lb(1:3) = p1_0 + [-0.075, -0.100, -0.075];
 ub(1:3) = p1_0 + [0.030,  0.100,  0];
 
-lb(4:6) = p2_0 + [-0.100, -0.2, -0.05]; %Used for solver
-% lb(4:6) = p2_0 + [-0.100, -0.2, -0.05];  %potential use if bpaCount = 2.
-ub(4:6) = p2_0 + [ 0.025, -0.037,  0.015];
+lb(4:6) = p2_0 + [-0.100, -0.200, -0.008];
+ub(4:6) = p2_0 + [ 0.025,  0.012,  0.015];
 
 % BPA / tendon bounds
 lb(7) = 0.415;    ub(7) = 1.200;    % rest length, m

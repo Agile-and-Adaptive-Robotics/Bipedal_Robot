@@ -21,7 +21,7 @@ end
 optsG = optimoptions('surrogateopt', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 5000);
+    'MaxFunctionEvaluations', 200);
 
 [xG, fG, exitflagG, outputG] = surrogateopt( ...
     objconstr, ctx.lb, ctx.ub, optsG);
@@ -30,7 +30,7 @@ optsG = optimoptions('surrogateopt', ...
 optsP = optimoptions('patternsearch', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 15000, ...
+    'MaxFunctionEvaluations', 600, ...
     'MeshTolerance', 1e-4, ...
     'StepTolerance', 1e-4, ...
     'PlotFcn', {@psplotbestf, ...
@@ -147,12 +147,12 @@ routeCtx.T_t1_f = ctx.T_t1_f;
 routeCtx.T_ICR_t1 = ctx.T_ICR_t1;
 routeCtx.wrapPointT1XY = ctx.wrapPointT1XY;
 routeCtx.wrapAngleToleranceD = ctx.wrapAngleToleranceD;
+routeCtx.BPAcount = ctx.BPAcount;
+routeCtx.bpaRadiusMode = ctx.bpaRadiusMode;
 
-% Save the exact geometry used by this optimization:
-% bpaRb = nominal BPA wrap-point standoff from the hard surface
-% bpaRs = minimum allowable BPA centerline clearance from the hard surface
-% wRap  = obstacle wrapping radius used for the Xi3 calculation
-routeCtx.geo = ctx.geo;
+% Save the exact scalar radii or converged per-frame bpaR arrays used by
+% the optimized prediction. wRap remains the independent Xi3 bend radius.
+routeCtx.geo = predBest.geo;
 
 Xi3 = ctx.Xi3;
 
@@ -210,6 +210,18 @@ else
 end
 
 fprintf('\nBPA and tendon lengths:\n')
+fprintf('number of parallel BPAs             = %d\n', predBest.BPAcount)
+fprintf('BPA radius source                    = %s\n', predBest.bpaRadiusMode)
+fprintf('BPA radius range                     = %.6f to %.6f m\n', ...
+    min(predBest.bpaRadius), max(predBest.bpaRadius))
+if predBest.bpaRadiusMode == "bpaR"
+    fprintf('BPA radius fixed-point iterations    = %d\n', ...
+        predBest.bpaRadiusIteration)
+    fprintf('BPA radius update converged          = %d\n', ...
+        predBest.bpaRadiusConverged)
+    fprintf('final maximum radius change          = %.9g m\n', ...
+        predBest.bpaRadiusChange)
+end
 fprintf('rest length                         = %.6f m\n', predBest.rest)
 fprintf('fully contracted length, kmax       = %.6f m\n', predBest.kmax)
 fprintf('maximum contraction fraction, KMAX  = %.6f\n', predBest.KMAX)
@@ -255,8 +267,9 @@ fprintf('p2 exclusion constraint    = %.6f m\n', cCollision(1))
 fprintf('tibia collision constraint = %.6f m\n', cCollision(2))
 fprintf('femur collision constraint = %.6f m\n', cCollision(3))
 fprintf('series-length constraint   = %.6f m\n', cCollision(4))
-fprintf('nominal pWrap radius bpaRb = %.6f m\n', collisionInfo.bpaRb)
-fprintf('minimum tibia radius bpaRs = %.6f m\n', collisionInfo.bpaRs)
+fprintf('radius source              = %s\n', collisionInfo.bpaRadiusMode)
+fprintf('pWrap radius bpaRb         = %.6f m\n', collisionInfo.bpaRb)
+fprintf('collision radius bpaRs     = %.6f m\n', collisionInfo.bpaRs)
 fprintf('Xi3 wrap radius wRap       = %.6f m\n', collisionInfo.wRap)
 fprintf('tendon radius              = %.6f m\n', collisionInfo.tendonRadius)
 fprintf('optimized tendon length    = %.6f m\n', collisionInfo.tendon)

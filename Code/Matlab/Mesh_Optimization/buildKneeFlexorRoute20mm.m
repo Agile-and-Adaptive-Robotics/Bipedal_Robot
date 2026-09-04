@@ -4,8 +4,9 @@ function [Location, bendMeasure, info] = buildKneeFlexorRoute20mm(p1, pEnd, tend
 % p1 is fixed in the femur frame. pEnd is fixed in the t1 frame. pWrap is
 % an equivalent routing point used by the straight-segment model; it is not
 % a solved tangent point. While contact is active, pWrap is placed at the
-% nominal bpaRb standoff from the hard tibial surface. nonlconExclusion then
-% permits the straight segments to approach only as close as bpaRs.
+% bpaRb standoff from the hard tibial surface. nonlconExclusion then checks
+% the straight segments using bpaRs. These may be two hand-set scalars or
+% identical pose-by-pose physical-radius arrays supplied by bpaR.
 %
 % The wrap is released during the extension-to-flexion sweep when the
 % existing atan2 release rule is satisfied. An inactive wrap is represented
@@ -20,6 +21,8 @@ if numel(p1) ~= 3 || numel(pEnd) ~= 3
 end
 
 N = ctx.N;
+bpaRb = radiusByFrame(ctx.geo.bpaRb, N, 'bpaRb');
+bpaRs = radiusByFrame(ctx.geo.bpaRs, N, 'bpaRs');
 
 p1T1 = zeros(N,3);
 % aInD = zeros(N,1);
@@ -68,11 +71,11 @@ for i = 1:N
     directRadius = ...
         ctx.geo.tendonRadius*ones(size(sDirect));
 
-    % BPA + fittings use the minimum allowable compressed BPA radius.
+    % BPA + fittings use the selected collision radius for this pose.
     isDirectBPA = ...
         sDirect <= bpaFittingsLengthDirect + 10*eps;
 
-    directRadius(isDirectBPA) = ctx.geo.bpaRs;
+    directRadius(isDirectBPA) = bpaRs(i);
 
     signedDistanceDirect = ...
         signedDistanceToTibia20mm(directPoints, ctx.geo);
@@ -106,20 +109,11 @@ pWrapY = ctx.wrapPointT1XY(2);
 wrapYZFraction = (pWrapY - y1)./(yEnd - y1);
 pWrapZ = z1 + wrapYZFraction.*(zEnd - z1);
 
-% bpaRb is the BIG/nominal BPA radius. It is used only to locate the
-% equivalent pWrap point relative to the hard tibial geometry. It is NOT the
-% minimum collision clearance for the straight p1-pWrap-pEnd segments;
-% nonlconExclusion uses the smaller bpaRs for that purpose.
-targetClearance = ctx.geo.bpaRb;
-
-% Find the closest point on this fixed y-z line to the hard tibial geometry.
-% If the line reaches the bpaRb standoff surface, fzero locates the outside
-% intersection used as pWrap. No tangency is solved here.
-xSearchLo = min(ctx.geo.xBack, ctx.geo.circleCenter(1)) ...
-          - 4*targetClearance;
-
-xSearchHi = max(ctx.geo.xAfter, ctx.geo.circleCenter(1)) ...
-          + 4*targetClearance;
+% bpaRb locates the equivalent pWrap point relative to the hard tibial
+% geometry. In scalar mode it is the larger hand-set radius and bpaRs is the
+% smaller collision radius. In bpaR mode both are the same physical radius
+% array, evaluated independently at every pose.
+targetClearance = bpaRb;
 
 pWrapX = zeros(N,1);
 xClosest = zeros(N,1);
@@ -127,11 +121,22 @@ minimumDistance = zeros(N,1);
 contactConstraintFrame = zeros(N,1);
 
 for i = 1:N
+    targetClearance_i = targetClearance(i);
+
+    % Find the closest point on this fixed y-z line to the hard tibial
+    % geometry. If the line reaches the frame-specific bpaRb standoff
+    % surface, fzero locates the outside intersection used as pWrap.
+    xSearchLo = min(ctx.geo.xBack, ctx.geo.circleCenter(1)) ...
+              - 4*targetClearance_i;
+
+    xSearchHi = max(ctx.geo.xAfter, ctx.geo.circleCenter(1)) ...
+              + 4*targetClearance_i;
+
     distanceAtX = @(x) signedDistanceToTibia20mm( ...
         [x, pWrapY, pWrapZ(i)], ctx.geo);
 
     clearanceResidual = @(x) ...
-        distanceAtX(x) - targetClearance;
+        distanceAtX(x) - targetClearance_i;
 
     [xClosest(i), minimumDistance(i)] = fminbnd( ...
         distanceAtX, xSearchLo, xSearchHi);
@@ -139,11 +144,11 @@ for i = 1:N
     % <= 0 means this y-z line reaches or passes inside the nominal bpaRb
     % standoff surface, so a nominal pWrap intersection can be found.
     contactConstraintFrame(i) = ...
-        minimumDistance(i) - targetClearance;
+        minimumDistance(i) - targetClearance_i;
 
     if contactConstraintFrame(i) <= 0
         xOutside = xSearchLo;
-        searchStep = max(4*targetClearance, 0.05);
+        searchStep = max(4*targetClearance_i, 0.05);
 
         for k = 1:20
             if clearanceResidual(xOutside) > 0
@@ -238,7 +243,7 @@ if any(active)
     wrapContactConstraint = ...
         max(contactConstraintFrame(active));
 else
-    wrapContactConstraint = -targetClearance;
+    wrapContactConstraint = -min(targetClearance);
 end
 
 Location = zeros(3,3,N);
@@ -290,8 +295,27 @@ info.wrapDistanceAtPoint = signedDistanceToTibia20mm(pWrap, ctx.geo);
 info.contactConstraintFrame = contactConstraintFrame;
 info.wrapContactConstraint = wrapContactConstraint;
 info.wrapContactFound = wrapContactConstraint <= 1e-10;
-info.bpaRb = ctx.geo.bpaRb;
-info.bpaRs = ctx.geo.bpaRs;
+info.bpaRb = bpaRb;
+info.bpaRs = bpaRs;
 info.wRap = ctx.geo.wRap;
+
+end
+
+function radius = radiusByFrame(radiusValue, N, fieldName)
+%RADIUSBYFRAME Expand a scalar radius or validate one value per knee pose.
+
+radius = radiusValue(:);
+
+if isscalar(radius)
+    radius = repmat(radius, N, 1);
+elseif numel(radius) ~= N
+    error('buildKneeFlexorRoute20mm:BadRadiusSize', ...
+        'ctx.geo.%s must be scalar or contain %d values.', fieldName, N)
+end
+
+if any(~isfinite(radius)) || any(radius <= 0)
+    error('buildKneeFlexorRoute20mm:BadRadiusValue', ...
+        'ctx.geo.%s must contain finite positive radii.', fieldName)
+end
 
 end

@@ -1,4 +1,4 @@
-function geo = buildGeoExclusion()
+function geo = buildGeoExclusion(bpaRadiusMode)
 %BUILDGEOEXCLUSION Geometry for p2 and inflated-BPA exclusion.
 %
 % p2 = [px py pz]
@@ -15,10 +15,29 @@ function geo = buildGeoExclusion()
 
 geo.clearance = 0.001;      % Additional rigid clearance used for the femur and p2 constraints.
 
-% Three different BPA radii are intentionally used for three different jobs.
-% Do not collapse these back into one generic BPA radius.
-geo.bpaRb = 0.016;         % Big/nominal BPA radius: place pWrap this far from the hard tibial surface.
-geo.bpaRs = 0.013;         % Small/compressed BPA radius: minimum BPA centerline distance allowed from the hard tibial surface.
+if nargin < 1 || isempty(bpaRadiusMode)
+    bpaRadiusMode = "scalar";
+end
+
+bpaRadiusMode = validatestring( ...
+    bpaRadiusMode, {'scalar','bpaR'}, mfilename, 'bpaRadiusMode');
+geo.bpaRadiusMode = string(bpaRadiusMode);
+
+% The scalar mode preserves the hand-estimated radii. In bpaR mode these
+% are only placeholders during context construction; predictKneeFlexor20mm
+% replaces both fields with the Nx1 outer-radius array returned by bpaR.
+geo.bpaRbScalar = 0.016;   % nominal pWrap standoff, m
+geo.bpaRsScalar = 0.013;   % minimum collision radius, m
+geo.bpaRb = geo.bpaRbScalar;
+geo.bpaRs = geo.bpaRsScalar;
+
+% The physical radius and route are weakly coupled: radius depends on the
+% resulting BPA contraction, while pWrap depends on radius. These settings
+% control the short fixed-point update used only in bpaR mode.
+geo.bpaRMaxIterations = 4;
+geo.bpaRTolerance = 1e-5;  % m
+
+% wRap is independent of BPA outside diameter. It is used only in Xi3.
 geo.wRap  = 0.025;         % Effective wrap radius used only to convert bend angle to Xi3 bend length loss.
 
 % Tendon collision radius remains geometric because the tendon is not being
@@ -47,8 +66,8 @@ geo.R = 0.035;
 geo.zBottom = 0.0375;
 
 % Femoral-condyle ellipse from the extensor geometry, expressed in the
-% femur-frame X-Y plane. Keep the physical ellipse here; the nominal BPA
-% radius bpaRb is applied later as a Euclidean clearance offset.
+% femur-frame X-Y plane. Keep the physical ellipse here; the selected BPA
+% radius is applied later as a Euclidean clearance offset.
 geo.femurProfileCenter = [0.01817, -0.41031];
 geo.femurEllipsePhysicalA = 0.06640/2;
 geo.femurEllipsePhysicalB = 0.05439/2;
