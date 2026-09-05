@@ -295,8 +295,8 @@ end
             obj.kSpr = Spr_local(obj, obj.Wraps);
             
             % Force unit vector in hip frame (origin to first non-duplicate point)
-            Funit = computeForceVector_local(obj);
-            obj.Funit = Funit;
+            Funit0 = computeForceVector_local(obj);
+            obj.Funit = Funit0;
             
             % Contraction from constant length offset only
             strain_Xi0 = Contraction_local(obj, [], [], obj.Xi0);
@@ -311,8 +311,8 @@ end
             obj.uD_p = unitD_p;
             
             % Segment lengths with deformed geometry
-            sL_p = seg_local(obj, obj.L_p);
-            obj.sL_p = sL_p;
+            sL_p0 = seg_local(obj, obj.L_p);
+            obj.sL_p = sL_p0;
 
             % Musculotendon length with deformed geometry and Xi0
             Lmt_p_local = LMT_local(obj.sL_p, obj.Xi0);
@@ -433,7 +433,7 @@ FF (FF < 0) = 0;
 F = FF.*Funit;  % N×3, already in hip frame
 
 % pA = L(1,:,(klass.Ak==0));                                  %Distance from hip origin to muscle insertion
-pA = L(1,:,92);                                  %Distance from hip origin to muscle insertion
+pA = L(1,:,92);                                  %Distance from hip origin to muscle insertion 
 switch klass.Diameter
     case 20
 %       Pbr = [-0.8100  -20.222   31.66]/1000;       %from hip origin to bracket bolt closest to the origin of the Bifemsh_Pam
