@@ -245,6 +245,22 @@ geo.femurOffsetBoundaryFull = ...
 geo.femurCondyleClipX = geo.femurLineX;
 geo.femurCondyleClipY = [min(femurClipY), max(femurClipY)];
 
+%% Bypass collision-gate clearance
+% A contact may only be eliminated when the straight bypass chord clears the
+% exclusion envelope by at least bypassTol. The femur-side gate needs the
+% same normal-offset boundary expanded by bypassTol.
+geo.bypassTol = 0.0005;   % 0.5 mm required bypass clearance
+
+% p7 seed colinearity guard: if p7 lies within this angle of the pEnd->p8
+% tangent ray at full flexion, it starts the sweep already eliminated.
+geo.seedColinearTolD = 1.0;
+
+gateOffsetLocal = ellipseLocal + (geo.bpaRadius + geo.bypassTol)*normalLocal;
+
+[geo.femurOffsetBoundaryGate, ~] = ...
+    clipClosedPolygonLeftOfVerticalLine( ...
+        geo.femurProfileCenter + gateOffsetLocal*Rell', geo.femurLineX);
+
 % Slightly denser closed grid used only for tangent root bracketing.
 geo.femurOffsetThetaSearch = linspace(-pi, pi, 361).';
 

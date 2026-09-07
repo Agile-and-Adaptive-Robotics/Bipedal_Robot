@@ -1,4 +1,15 @@
 *.asv
+
+# --- Global autosave/temp patterns (added 2026-09-07) ---
+# Office/SolidWorks owner + autosave files (~$ prefix), Word temp files
+~$*
+~WRL*.tmp
+# Optimizer/diagnostic run logs dropped in Mesh_Optimization root
+Code/Matlab/Mesh_Optimization/*.log
+# SolidWorks console logs
+Solid_Models/**/console.log
+# ZCode session state
+.zcode/
 Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$*
 Solid_Models/Biomimetics_2022-Knee_Test/Test_Jig/~$*
 Solid_Models/Biomimetics_2022-Knee_Test/AARL_Puppy_18_02_01_000-FLFE/~$*

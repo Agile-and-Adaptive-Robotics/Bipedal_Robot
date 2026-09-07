@@ -129,7 +129,6 @@ Lmt_p = LMT(sL_p, Xi0+gemma);     %New musclulotendon length. Uses deformed geom
 strain_p = Contraction(bpa_i, Lmt_p, []);  %*new contraction amount includes deformed geometry and constant length offset
 F_p = Force(bpa_i, unitD_p, strain_p);  %new force vector
 mA_p = Mom(bpa_i, L_p, unitD_p);   %new moment arm
-% M_p = Tor(mA_p, F_p, bpa_i.Fm, strain_p);  %new torque
 M_p = Tor(mA_p, F_p, strain_p);  %new torque
 
 %% Package into output struct
