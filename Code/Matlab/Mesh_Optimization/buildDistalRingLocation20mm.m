@@ -120,13 +120,36 @@ Pfixed(1,:) = p1;
 Pfixed(9,:) = pEnd;
 
 activeState = true(9,1);
+info.initiallyEliminated = false(9,1);
+
+% Seed colinearity guard: if the p7 seed lies within seedColinearTolD of the
+% pEnd->p8 tangent ray, the p7->p8->p9 path is nearly straight and p7 is a
+% detour spike rather than a wrap contact. p7 then starts the sweep already
+% eliminated ("not needed even at -120 deg").
+colTol = 1.0;
+if isfield(ctx.geo, 'seedColinearTolD')
+    colTol = ctx.geo.seedColinearTolD;
+end
+
+v8 = seed20(8,1:2) - pEnd(1:2);
+v7 = seed20(7,1:2) - pEnd(1:2);
+cosAng = dot(v8, v7) / max(norm(v8)*norm(v7), 1e-12);
+info.seedColinearAngleD = acosd(min(1, max(-1, cosAng)));
+
+if info.seedColinearAngleD < colTol
+    activeState(7) = false;
+    info.initiallyEliminated(7) = true;
+end
 
 info.addedAngleD(:) = sweepD(1);
 info.addedPoint(:,:) = Pfixed;
 info.addedSweepIndex(:) = 1;
 
 contactTol = 1e-8;
-% angleTolD = 0.05;
+angleTolD = 1.5;   % deg, release hysteresis (see candidateEliminationTest)
+if isfield(ctx.geo, 'marginTolD')
+    angleTolD = ctx.geo.marginTolD;
+end
 
 for s = 1:Ns
 
@@ -161,104 +184,88 @@ for s = 1:Ns
     frameInfo.endcap_t1 = [endcapXY, pEnd(3)];
 
     angleFrame = emptyAngleFrame();
+    removedNow = false(9,1);
 
     if s == 1
-        % Settle every optional contact at full flexion before storing the
-        % first route. Revisit the entire chain after any removal, including
-        % removals across the femur/t1 boundary.
+        % Settle the full-flexion seed to a fixpoint before the sweep: every
+        % optional contact already bypassed at -120 deg (including the p7
+        % colinearity guard) is removed here, so the sweep starts from a
+        % valid topology. Multiple removals are allowed while settling.
+        removedNow = info.initiallyEliminated;
 
-        removedNow = false(9,1);
         changed = true;
-
         while changed
             changed = false;
-
-            % Preserve the previous seed-test order, then check p5 and p6.
-            % Each pass visits every remaining optional point p2:p8.
-            for j = [4 3 2 8 7 5 6]
+            for j = 2:8
                 if ~activeState(j)
                     continue
                 end
 
-                iPrev = find(activeState(1:j-1), 1, 'last');
-                iNext = j + find(activeState(j+1:9), 1, 'first');
+                [remove, angleFrame] = candidateEliminationTest( ...
+                    j, Pfixed, activeState, ...
+                    T_Pam_i, T_ICR_t1_i, T_Pam_inv_i, T_t1_ICR_i, ...
+                    ctx.geo, contactTol, angleTolD, angleFrame);
 
-                if j <= 5
-                    % Previous point and candidate are native femur. Only
-                    % transform the next point if it is stored in t1.
-                    pNextFemur = Pfixed(iNext,:);
-                    if iNext >= 6
-                        pNextFemur = RowVecTrans( ...
-                            T_Pam_i*T_ICR_t1_i, pNextFemur);
-                    end
-                    [angleGate, aBig, aSmall, marginD] = ...
-                        femurRemovalAngle( ...
-                            Pfixed(iPrev,:), ...
-                            Pfixed(j,:), ...
-                            pNextFemur);
-                else
-                    % Candidate and next point are native t1. Only
-                    % transform the previous point if it is in femur.
-                    pPrevT1 = Pfixed(iPrev,:);
-                    if iPrev <= 5
-                        pPrevT1 = RowVecTrans( ...
-                            T_t1_ICR_i*T_Pam_inv_i, pPrevT1);
-                    end
-                    [angleGate, aBig, aSmall, marginD] = ...
-                        t1RemovalAngle( ...
-                            pPrevT1, ...
-                            Pfixed(j,:), ...
-                            Pfixed(iNext,:));
-                end
-
-                angleFrame = recordEliminationTest( ...
-                    angleFrame, j, aSmall, aBig, marginD, ...
-                    angleGate, true);
-
-                if angleGate
+                if remove
                     activeState(j) = false;
                     removedNow(j) = true;
                     angleFrame.removed(j) = true;
                     changed = true;
                 end
             end
-
-            % Preserve the existing joint p2/p8 bypass test. Any removal
-            % here also triggers another complete pass over p2:p8.
-            [activeState, angleFrame, removedBridge] = ...
-                eliminateTerminalBridgeContacts( ...
-                    Pfixed, activeState, T_Pam_i, T_ICR_t1_i, ...
-                    T_Pam_inv_i, T_t1_ICR_i, ...
-                    ctx.geo, contactTol, angleFrame);
-        
-            changed = changed || any(removedBridge);
-            removedNow = removedNow | removedBridge;
         end
+
         info.initiallyEliminated = removedNow;
         info.activeAtFullFlexion = activeState;
 
         % These candidates never became active in the modeled range.
         info.addedAngleD(removedNow) = NaN;
         info.addedSweepIndex(removedNow) = NaN;
-
     else
-        [activeState, angleFrame, removedFemur] = ...
-            eliminateFemurContacts( ...
-                Pfixed, activeState, T_Pam_i, T_ICR_t1_i, ...
-                ctx.geo, contactTol, angleFrame);
+        % At most ONE contact is eliminated per knee-angle step. If several
+        % candidates clear their gates in the same increment, the one with
+        % the strongest margin violation is removed now and the rest are
+        % re-tested at the next step.
+        bestJ = 0;
+        bestMargin = -inf;   % margins are negative when the hysteresis
+                             % threshold opens the gate, so the priority
+                             % comparison must start at -inf, not 0
 
-        [activeState, angleFrame, removedT1] = ...
-            eliminateT1Contacts( ...
-                Pfixed, activeState, T_Pam_inv_i, T_t1_ICR_i, ...
-                ctx.geo, contactTol, angleFrame);
+        for j = 2:8
+            if ~activeState(j)
+                continue
+            end
 
-        [activeState, angleFrame, removedBridge] = ...
-            eliminateTerminalBridgeContacts( ...
-                Pfixed, activeState, T_Pam_i, T_ICR_t1_i, ...
-                T_Pam_inv_i, T_t1_ICR_i, ...
-                ctx.geo, contactTol, angleFrame);
+            % Cascade guard, matching the reference release order
+            % p5, p6, p4, p3, p7: a femur candidate is only tested once
+            % every more distal femur candidate is already gone (p2 is
+            % exempt, it is the bridge test), and a tibia candidate only
+            % once every more proximal tibia candidate is gone. The old
+            % triplet tests were always evaluated with the deeper chain
+            % points absent, so this reproduces their thresholds.
+            if j >= 3 && j <= 5 && any(activeState(j+1:5))
+                continue
+            end
+            if j >= 6 && any(activeState(6:j-1))
+                continue
+            end
 
-        removedNow = removedFemur | removedT1 | removedBridge;
+            [remove, angleFrame] = candidateEliminationTest( ...
+                j, Pfixed, activeState, ...
+                T_Pam_i, T_ICR_t1_i, T_Pam_inv_i, T_t1_ICR_i, ...
+                ctx.geo, contactTol, angleTolD, angleFrame);
+
+            if remove && angleFrame.marginD(j) > bestMargin
+                bestMargin = angleFrame.marginD(j);
+                bestJ = j;
+            end
+        end
+
+        if bestJ > 0
+            activeState(bestJ) = false;
+            removedNow(bestJ) = true;
+            angleFrame.removed(bestJ) = true;
+        end
     end
 
     active = activeState;
@@ -400,11 +407,12 @@ function seed20 = adjustedSeed20mm(seed, p1, pEnd, ctx)
 % seed locations.
 %
 % p2: femur-cylinder contact.  This should only move slightly as p1 moves.
-% p8: lower-tibia-cylinder contact.  This can move substantially when pEnd
-%     moves, which is why it must not remain frozen at the original seed.
+% p6:p8: constructed on the tibia clearance geometry (see the construction
+%     block below), independent of pEnd.
 %
-% p3:p7 remain the SolidWorks seed/reference coordinates and are retained or
-% bypassed by the flexion-to-extension elimination logic.
+% p3:p5 remain the SolidWorks seed/reference coordinates (unless the
+% conditional chain repair fires) and are retained or bypassed by the
+% flexion-to-extension elimination logic.
 
 geo = ctx.geo;
 
@@ -424,31 +432,65 @@ if ok2
     seed20(2,1:2) = q2;
 end
 
-% This clearance-driven seed repair is disabled while validating the route
-% state machine. It changes p3:p5 before any elimination tests run, which
-% makes it harder to separate topology errors from seed-geometry changes.
-% iFlex = ctx.idxMaxFlex;
-% p6FlexFemur = t1PointToFemur( ...
-%     seed20(6,:), ...
-%     ctx.T_Pam(:,:,iFlex), ...
-%     ctx.T_ICR_t1(:,:,iFlex));
-%
-% [qFemurChain, okFemurChain] = adjustedFemurSeedChainAtFlexion( ...
-%     seed20(2,1:2), ...
-%     seed20(3:5,1:2), ...
-%     p6FlexFemur(1:2), ...
-%     geo, ...
-%     1e-8);
-%
-% if okFemurChain
-%     seed20(3:5,1:2) = qFemurChain;
-% end
+% Tibia seed construction (replaces the SolidWorks p6:p8 coordinates and
+% the old pEnd-tangent p8 adjustment). Ben's rule:
+%   p6 = upper-cylinder clearance circle at +30 deg,
+%   p8 = lower-cylinder clearance circle at -30 deg,
+%   p7 = on the tibia-wall clearance line, y midway between p6 and p8.
+% The fixed angular placement keeps the wall contact geometry stable as
+% pEnd moves, which is what the femur-side release thresholds are
+% measured against (p3/p4 bypass onto p7).
+a6D = 30;  a8D = -30;
+if isfield(geo, 'seedP6AngleD'), a6D = geo.seedP6AngleD; end
+if isfield(geo, 'seedP8AngleD'), a8D = geo.seedP8AngleD; end
 
-[q8, ok8] = tangentPointCircleNearest( ...
-    pEnd(1:2), geo.tibiaLowerCenter, geo.tibiaLowerClearRadius, seed(8,1:2));
+a6 = deg2rad(a6D);
+a8 = deg2rad(a8D);
 
-if ok8
-    seed20(8,1:2) = q8;
+seed20(6,1:2) = geo.tibiaUpperCenter + ...
+    geo.tibiaUpperClearRadius*[cos(a6), sin(a6)];
+seed20(8,1:2) = geo.tibiaLowerCenter + ...
+    geo.tibiaLowerClearRadius*[cos(a8), sin(a8)];
+
+x7 = geo.tibiaWallX;
+if isfield(geo, 'seedP7X')
+    x7 = geo.seedP7X;
+end
+
+seed20(7,1) = x7;
+seed20(7,2) = 0.5*(seed20(6,2) + seed20(8,2));
+
+% Clearance-driven seed repair, applied ONLY when the SolidWorks femur
+% chain actually violates the hard exclusion envelope. Compliant seed
+% points keep their validated SolidWorks positions (the reference release
+% thresholds were measured with them); the repair exists for optimizer
+% moves of p1/pEnd that push the chain into the condyle clearance.
+iFlex = ctx.idxMaxFlex;
+p6FlexFemur = RowVecTrans( ...
+    ctx.T_Pam(:,:,iFlex)*ctx.T_ICR_t1(:,:,iFlex), seed20(6,:));
+
+chain = [seed20(2,1:2); seed20(3:5,1:2); p6FlexFemur(1:2)];
+chainClear = true;
+for kkChain = 1:size(chain,1)-1
+    if segmentPenetratesPolygon( ...
+            chain(kkChain,:), chain(kkChain+1,:), ...
+            geo.femurOffsetBoundary, 1e-8)
+        chainClear = false;
+        break
+    end
+end
+
+if ~chainClear
+    [qFemurChain, okFemurChain] = adjustedFemurSeedChainAtFlexion( ...
+        seed20(2,1:2), ...
+        seed20(3:5,1:2), ...
+        p6FlexFemur(1:2), ...
+        geo, ...
+        1e-8);
+
+    if okFemurChain
+        seed20(3:5,1:2) = qFemurChain;
+    end
 end
 
 end
@@ -470,210 +512,116 @@ angleFrame.removed = false(9,1);
 end
 
 
-function [activeState, angleFrame, removed] = eliminateFemurContacts( ...
-    Pfixed, activeState, T_Pam_i, T_ICR_t1_i, geo, tol, angleFrame)
-% Remove the last unique femur-side optional contact if the absolute-angle
-% test passes. The bypass collision gate is retained below but disabled
-% while the angle-only route state is being validated.
+function [remove, angleFrame] = candidateEliminationTest( ...
+    j, Pfixed, activeState, T_Pam_i, T_ICR_t1_i, T_Pam_inv_i, T_t1_ICR_i, ...
+    geo, tol, angleTolD, angleFrame)
+% One elimination test for optional row j, using the native-frame
+% rotated-vector rule:
 %
-% For a femur-side candidate p(k), the previous unique femur row is native
-% femur already. The next unique downstream row is on the t1 side, so it is
-% transformed t1 -> ICR -> femur before applying the user's atan2 rule.
-
-removed = false(9,1);
-
-while true
-
-    kOpt = find(activeState(2:5), 1, 'last');
-
-    if isempty(kOpt)
-        return
-    end
-
-    k = kOpt + 1;
-    iPrev = find(activeState(1:k-1), 1, 'last');
-    iNext = find(activeState(6:9), 1, 'first') + 5;
-
-    if isempty(iPrev) || isempty(iNext)
-        return
-    end
-
-    raw = collapseInactive(Pfixed, activeState);
-    pNextFemur = RowVecTrans( ...
-        T_Pam_i*T_ICR_t1_i, raw(iNext,:));
-
-    [angleGate, aBig, aSmall, marginD] = femurRemovalAngle( ...
-        raw(iPrev,:), raw(k,:), pNextFemur);
-
-    % The clearance polygon/tolerance gate can reject the intended topology
-    % change before the absolute-angle state machine can be evaluated.
-    % Re-enable this after the route order and p2/p8 wrap model are stable.
-    % bypassClear = femurBypassCollisionFree( ...
-    %     raw(iPrev,:), pNextFemur, geo, tol, k);
-    bypassClear = true;
-
-    angleFrame = recordEliminationTest( ...
-        angleFrame, k, aSmall, aBig, marginD, angleGate, bypassClear);
-
-    if angleGate
-        activeState(k) = false;
-        removed(k) = true;
-        angleFrame.removed(k) = true;
-    else
-        return
-    end
-end
-
-end
-
-
-function [activeState, angleFrame, removed] = eliminateT1Contacts( ...
-    Pfixed, activeState, T_Pam_inv_i, T_t1_ICR_i, geo, tol, angleFrame)
-% Remove the first unique t1-side optional contact if the absolute-angle
-% test passes. The bypass collision gate is retained below but disabled
-% while the angle-only route state is being validated.
+%   Femur side (p2:p5, FEMUR frame, vectors from the previous active row):
+%     rotate the big and small line vectors by +90 deg. If the big vector
+%     is more counterclockwise than the small one, eliminate the
+%     intermediate point.
 %
-% For a t1-side candidate p(j), the next unique t1 row is native t1 already.
-% The previous unique upstream row is on the femur side, so it is transformed
-% femur -> ICR -> t1 before applying the user's counterclockwise rule.
+%   Tibia side (p6:p8, T1 frame, vectors from the next active row):
+%     rotate the big and small line vectors by -90 deg. If the big vector
+%     is more clockwise than the small one, eliminate the wrapping point.
+%
+% The signed angle between the rotated pair uses one atan2 (cross/dot), so
+% there is no +/-180 seam artifact from comparing principal values.
+%
+% angleTolD is a release hysteresis: a candidate is removed once its
+% margin comes within angleTolD of zero (margin > -angleTolD). In the
+% last 1-2 sweep steps before a wrapped contact goes collinear with its
+% chord, the computed moment arm swings through the joint and collapses;
+% releasing slightly early, still behind the collision gate, avoids that
+% artifact.
+%
+% Anchors are the nearest active rows on each side of j; row repetition is
+% inherent because eliminated femur rows repeat the previous unique femur
+% point and eliminated t1 rows repeat their neighbor. p3 and p4 use p7 as
+% their downstream anchor while it is active (validated reference
+% triplets; once p6 is gone its row repeats p7 anyway).
+%
+% A removal additionally requires the straight bypass chord to clear the
+% exclusion envelope by geo.bypassTol.
 
-removed = false(9,1);
+iPrev = find(activeState(1:j-1), 1, 'last');
+iNext = j + find(activeState(j+1:9), 1, 'first');
 
-while true
-
-    jOpt = find(activeState(6:8), 1, 'first');
-
-    if isempty(jOpt)
-        return
-    end
-
-    j = jOpt + 5;
-    iPrev = find(activeState(1:5), 1, 'last');
-    iNext = find(activeState(j+1:9), 1, 'first') + j;
-
-    if isempty(iPrev) || isempty(iNext)
-        return
-    end
-
-    raw = collapseInactive(Pfixed, activeState);
-    pPrevT1 = RowVecTrans( ...
-        T_t1_ICR_i, RowVecTrans(T_Pam_inv_i, raw(iPrev,:)));
-
-    [angleGate, aBig, aSmall, marginD] = t1RemovalAngle( ...
-        pPrevT1, raw(j,:), raw(iNext,:));
-
-    % The clearance polygon/tolerance gate can reject the intended topology
-    % change before the absolute-angle state machine can be evaluated.
-    % Re-enable this after the route order and p2/p8 wrap model are stable.
-    % bypassClear = t1BypassCollisionFree( ...
-    %     pPrevT1, raw(iNext,:), geo, tol, j);
-    bypassClear = true;
-
-    angleFrame = recordEliminationTest( ...
-        angleFrame, j, aSmall, aBig, marginD, angleGate, bypassClear);
-
-    if angleGate
-        activeState(j) = false;
-        removed(j) = true;
-        angleFrame.removed(j) = true;
-    else
-        return
-    end
+% p3 and p4 are tested against the tibia wall contact p7 when it is
+% available (the validated reference triplets). Once p6 has been
+% eliminated its row repeats p7 anyway, so this matches the "p1 to p6*
+% with row repetition" window: the bypass target is the first unique
+% tibia point past the femur chain.
+if (j == 3 || j == 4) && activeState(7)
+    iNext = 7;
 end
 
-end
+remove = false;
 
-
-function [activeState, angleFrame, removed] = eliminateTerminalBridgeContacts( ...
-    Pfixed, activeState, T_Pam_i, T_ICR_t1_i, T_Pam_inv_i, T_t1_ICR_i, ...
-    geo, tol, angleFrame)
-% Handle the endpoint-contact trap that can appear after large +X endpoint
-% optimizer moves.  The ordinary one-point tests can leave p1-p2-p8-p9
-% active even when the straight p1-to-p9 bridge is the intended topology.
-
-removed = false(9,1);
-
-if any(~activeState([1 2 8 9])) || any(activeState(3:7))
+if isempty(iPrev) || isempty(iNext)
     return
 end
 
-raw = collapseInactive(Pfixed, activeState);
+A = Pfixed(iPrev,:);
+B = Pfixed(iNext,:);
+C = Pfixed(j,:);
 
-p9Femur = RowVecTrans(T_Pam_i*T_ICR_t1_i, raw(9,:));
-[gateP2, aBigP2D, aSmallP2D, marginP2D] = femurRemovalAngle( ...
-    raw(1,:), raw(2,:), p9Femur);
+if j <= 5
+    % ---- femur frame, vectors from the previous active row ----
+    if iNext >= 6
+        B = RowVecTrans(T_Pam_i*T_ICR_t1_i, B);
+    end
 
-p1T1 = RowVecTrans( ...
-    T_t1_ICR_i, RowVecTrans(T_Pam_inv_i, raw(1,:)));
-[gateP8, aBigP8D, aSmallP8D, marginP8D] = t1RemovalAngle( ...
-    p1T1, raw(8,:), raw(9,:));
+    vBig   = B(1:2) - A(1:2);
+    vSmall = C(1:2) - A(1:2);
 
-% These bridge clearance checks are intentionally disabled for the current
-% angle-only routing pass. Re-enable them once the p2/p8 endpoint topology
-% is validated with a finite clearance tolerance.
-% bypassP2Clear = femurBypassCollisionFree(raw(1,:), p9Femur, geo, tol, 2);
-% bypassP8Clear = t1BypassCollisionFree(p1T1, raw(9,:), geo, tol, 8);
-bypassP2Clear = true;
-bypassP8Clear = true;
+    % Rotate both vectors by +90 deg: (x, y) -> (-y, x). The rotation
+    % preserves the signed angle between the pair, and the comparison uses
+    % ONE atan2 on the rotated pair (cross/dot), so there is no +/-180
+    % seam artifact from comparing two principal values separately.
+    % signed < 0  <=>  big vector more counterclockwise than small
+    %           <=>  eliminate the intermediate point.
+    vBigR   = [-vBig(2),   vBig(1)];
+    vSmallR = [-vSmall(2), vSmall(1)];
+    signedD = atan2d( ...
+        vBigR(1)*vSmallR(2) - vBigR(2)*vSmallR(1), ...
+        vBigR(1)*vSmallR(1) + vBigR(2)*vSmallR(2));
+
+    marginD = -signedD;                   % > 0: big more CCW -> remove
+    angleGate = marginD > -angleTolD;     % hysteresis: see note below
+
+    bypassClear = femurBypassCollisionFree(A(1:2), B(1:2), geo, tol, j);
+else
+    % ---- t1 frame, vectors from the next active row ----
+    if iPrev <= 5
+        A = RowVecTrans(T_t1_ICR_i, RowVecTrans(T_Pam_inv_i, A));
+    end
+
+    vBig   = A(1:2) - B(1:2);
+    vSmall = C(1:2) - B(1:2);
+
+    % Rotate both vectors by -90 deg: (x, y) -> (y, -x), single-atan2
+    % signed comparison.
+    % signed > 0  <=>  big vector more clockwise than small
+    %           <=>  eliminate the wrapping point.
+    vBigR   = [vBig(2),   -vBig(1)];
+    vSmallR = [vSmall(2), -vSmall(1)];
+    signedD = atan2d( ...
+        vBigR(1)*vSmallR(2) - vBigR(2)*vSmallR(1), ...
+        vBigR(1)*vSmallR(1) + vBigR(2)*vSmallR(2));
+
+    marginD = signedD;                    % > 0: big more CW -> remove
+    angleGate = marginD > -angleTolD;     % hysteresis: see note below
+
+    bypassClear = t1BypassCollisionFree(A(1:2), B(1:2), geo, tol, j);
+end
 
 angleFrame = recordEliminationTest( ...
-    angleFrame, 2, aSmallP2D, aBigP2D, marginP2D, gateP2, bypassP2Clear);
-angleFrame = recordEliminationTest( ...
-    angleFrame, 8, aSmallP8D, aBigP8D, marginP8D, gateP8, bypassP8Clear);
+    angleFrame, j, NaN, deg2rad(signedD), marginD, angleGate, bypassClear);
 
-if gateP2 && bypassP2Clear
-    activeState(2) = false;
-    removed(2) = true;
-    angleFrame.removed(2) = true;
-end
-
-if gateP8 && bypassP8Clear
-    activeState(8) = false;
-    removed(8) = true;
-    angleFrame.removed(8) = true;
-end
-
-end
-
-
-function [removePoint, aBig, aSmall, marginD] = femurRemovalAngle( ...
-    pPrev, pSmallPoint, pNextFemur)
-
-pBig = pNextFemur(1:2) - pPrev(1:2);
-pSmall = pSmallPoint(1:2) - pPrev(1:2);
-R = [0 -1; 1 0];    %rotate vectors pi/2
-
-vBig = R*pBig(:);
-vSmall = R*pSmall(:);
-
-% Femur-side removal is a clockwise comparison in the plotted/anatomical
-% view. Flipping y before atan2 keeps the user's aBig > aSmall rule while
-% avoiding the full-flexed seed being treated as already removable.
-% The principal-angle values are compared directly.
-aBig = atan2(vBig(2), vBig(1));
-aSmall = atan2(vSmall(2), vSmall(1));
-marginD = rad2deg(aBig - aSmall);
-
-removePoint = marginD > 0;
-
-end
-
-
-function [removePoint, aBig, aSmall, marginD] = t1RemovalAngle( ...
-    pPrevT1, pSmallPoint, pNext)
-
-pBig = pPrevT1(1:2) - pNext(1:2);
-pSmall = pSmallPoint(1:2) - pNext(1:2);
-R = [0 1; -1 0];    %rotate vectors -pi/2
-
-vBig = R*pBig(:);
-vSmall = R*pSmall(:);
-
-aBig = atan2(vBig(2), vBig(1));
-aSmall = atan2(vSmall(2), vSmall(1));
-marginD = rad2deg(aSmall - aBig);
-
-removePoint = marginD > 0 ;
+remove = angleGate && bypassClear;
 
 end
 
@@ -692,21 +640,45 @@ end
 
 
 function clear = femurBypassCollisionFree(A, B, geo, tol, candidateRow)
+% Femur-side bypass gate. The chord must clear the exclusion envelope,
+% with endpoint trimming (a chord that merely departs from a legitimate
+% contact point on the clearance boundary, e.g. p2 on the femur cylinder,
+% is not rejected for grazing its own endpoint).
+%
+% The condyle offset test uses the RELAXED gate polygon
+% (bypassRelaxFemur = contraction-radius slack, see the context file):
+% the envelope is drawn at the fully inflated radius while the routed BPA
+% is contracted, so pre-release chords may graze the inflated envelope.
+% The cylinder and wall tests are relaxed by the same amount, floored at
+% bone + 0.5 mm.
 
-A = A(1:2);
-B = B(1:2);
+gt = geo.bypassTol;
+[A, B] = trimChordEnds(A(1:2), B(1:2));
+
+relax = 0;
+if isfield(geo, 'bypassRelaxFemur')
+    relax = geo.bypassRelaxFemur;
+end
+
+rCyl = max(geo.femurCylRadius + 5e-4, ...
+    geo.femurCylClearRadius + gt - relax);
+
+poly = geo.femurOffsetBoundaryGate;
+if isfield(geo, 'femurOffsetBoundaryRelaxed')
+    poly = geo.femurOffsetBoundaryRelaxed;
+end
+
+xWall = geo.femurLineX - gt + relax;
 
 switch candidateRow
-    case 3
+    case {2, 3}
         clear = ...
-            ~segmentPenetratesCircle(A, B, ...
-                geo.femurCylCenter, geo.femurCylClearRadius, tol) && ...
-            ~segmentPenetratesFemurOffset(A, B, geo, tol) && ...
-            ~segmentIntersectsVerticalSpan(A, B, ...
-                geo.femurLineX, geo.femurLineY, tol);
+            ~segmentPenetratesCircle(A, B, geo.femurCylCenter, rCyl, tol) && ...
+            ~segmentPenetratesPolygon(A, B, poly, tol) && ...
+            ~segmentIntersectsVerticalSpan(A, B, xWall, geo.femurLineY, tol);
 
     case {4, 5}
-        clear = ~segmentPenetratesFemurOffset(A, B, geo, tol);
+        clear = ~segmentPenetratesPolygon(A, B, poly, tol);
 
     otherwise
         clear = true;
@@ -716,21 +688,68 @@ end
 
 
 function clear = t1BypassCollisionFree(A, B, geo, tol, candidateRow)
+% Tibia-side bypass gate. The chord must clear the exclusion geometry by
+% geo.bypassTol, with the same endpoint trimming as the femur gate.
+%
+% The tibia circles additionally allow geo.bypassRelaxTibia (default 3 mm)
+% of contraction-radius slack: the clearance circles use the fully
+% inflated BPA radius (k = 0), while the routed BPA at these angles is
+% contracted (bpaR gives 15-17 mm vs the 19.25 mm envelope). Each
+% effective radius is floored at the bone radius plus 0.5 mm. The wall
+% band between the cylinders is virtual geometry (no material) and is
+% only checked for p8, whose chord otherwise follows the wall.
 
-A = A(1:2);
-B = B(1:2);
+gt = geo.bypassTol;
+[A, B] = trimChordEnds(A(1:2), B(1:2));
+
+relax = 0;
+if isfield(geo, 'bypassRelaxTibia')
+    relax = geo.bypassRelaxTibia;
+end
+
+rUp = max(geo.tibiaUpperRadius + 5e-4, ...
+    geo.tibiaUpperClearRadius + gt - relax);
+rLo = max(geo.tibiaLowerRadius + 5e-4, ...
+    geo.tibiaLowerClearRadius + gt - relax);
 
 clear = true;
 
 switch candidateRow
     case 6
         clear = ~segmentPenetratesCircle(A, B, ...
-            geo.tibiaUpperCenter, geo.tibiaUpperClearRadius, tol);
+            geo.tibiaUpperCenter, rUp, tol);
 
     case 7
-        clear = ~segmentIntersectsVerticalSpan(A, B, ...
-            geo.tibiaWallX, geo.tibiaWallY, tol);
+        clear = ~segmentPenetratesCircle(A, B, ...
+                geo.tibiaUpperCenter, rUp, tol) && ...
+            ~segmentPenetratesCircle(A, B, ...
+                geo.tibiaLowerCenter, rLo, tol);
+
+    case 8
+        clear = ~segmentPenetratesCircle(A, B, ...
+                geo.tibiaLowerCenter, rLo, tol) && ...
+            ~segmentIntersectsVerticalSpan(A, B, ...
+                geo.tibiaWallX - gt, geo.tibiaWallY, tol);
 end
+
+end
+
+
+function [A, B] = trimChordEnds(A, B)
+% Shorten a bypass chord by 2 mm at each end (capped at 45% of its length)
+% so endpoint contact with the clearance boundary is not counted as a
+% collision. The route legitimately touches the boundary at its contacts.
+
+d = B - A;
+L = norm(d);
+
+if L < 4e-3
+    return
+end
+
+e = min(0.45, 2e-3/L);
+A = A + e*d;
+B = B - e*d;
 
 end
 
@@ -845,7 +864,8 @@ chain = [A; P; B];
 clear = true;
 
 for k = 1:size(chain,1)-1
-    if segmentPenetratesFemurOffset(chain(k,:), chain(k+1,:), geo, tol)
+    if segmentPenetratesPolygon(chain(k,:), chain(k+1,:), ...
+            geo.femurOffsetBoundary, tol)
         clear = false;
         return
     end
@@ -1211,10 +1231,15 @@ end
 
 function hit = segmentPenetratesFemurOffset(A,B,geo,tol)
 % Strict collision test against the clipped normal-offset femur polygon.
-% Tangency is allowed; activation occurs once the straight segment actually
-% enters the clearance envelope.
 
-poly = geo.femurOffsetBoundary;
+hit = segmentPenetratesPolygon(A, B, geo.femurOffsetBoundary, tol);
+
+end
+
+
+function hit = segmentPenetratesPolygon(A,B,poly,tol)
+% Strict collision test against a closed clearance polygon.
+% Tangency is allowed; a hit requires the segment to actually enter.
 
 [inA,onA] = inpolygon(A(1),A(2),poly(:,1),poly(:,2));
 [inB,onB] = inpolygon(B(1),B(2),poly(:,1),poly(:,2));

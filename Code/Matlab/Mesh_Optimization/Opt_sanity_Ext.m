@@ -466,7 +466,7 @@ grid off
 xlabel('Knee angle, deg')
 ylabel('Torque, N m')
 lgd = legend('20 mm BPA prediction', Name1, Name2, Name3, ...
-    'Location', 'best')
+    'Location', 'best');
 title('Initial extensor torque sanity check')
 styleAxis(gca, plt)
 styleLegend(lgd, plt)
@@ -481,7 +481,7 @@ grid off
 xlabel('Knee angle, deg')
 ylabel('Length, m')
 lgd = legend('Deformed path length', 'Undeformed path length', 'rest+tendon+2fitting+Xi0', ...
-    'Location', 'best')
+    'Location', 'best');
 title('Extensor path-length sanity check')
 styleAxis(gca, plt)
 styleLegend(lgd, plt)
@@ -502,7 +502,7 @@ if isfield(routeInfo, 'wrap')
     grid off
     xlabel('Knee angle, deg')
     ylabel('Wrap angle, deg')
-    lgd = legend(hWrap, routeInfo.wrap.labels, 'Location', 'best')
+    lgd = legend(hWrap, routeInfo.wrap.labels, 'Location', 'best');
     title('Extensor wrap angles by contact')
     styleAxis(gca, plt)
     styleLegend(lgd, plt)
@@ -522,7 +522,7 @@ if isfield(routeInfo, 'wrap')
         grid off
         xlabel('Knee angle, deg')
         ylabel('Effective bend radius, mm')
-        lgd = legend(hRadius, routeInfo.wrap.labels, 'Location', 'best')
+        lgd = legend(hRadius, routeInfo.wrap.labels, 'Location', 'best');
         title('Extensor bend radii by contact')
         styleAxis(gca, plt)
         styleLegend(lgd, plt)
@@ -542,7 +542,7 @@ xlabel('Knee angle, deg')
 ylabel('Strain')
 lgd = legend('strain_f includes Xi3', 'strain_p excludes Xi3', 'Contraction', ...
     'KMAX', 'Minimum strain = 0', ...
-    'Location', 'best')
+    'Location', 'best');
 title('Extensor strain sanity check')
 styleAxis(gca, plt)
 styleLegend(lgd, plt)

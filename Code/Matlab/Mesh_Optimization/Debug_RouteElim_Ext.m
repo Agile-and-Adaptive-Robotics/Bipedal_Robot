@@ -355,11 +355,12 @@ function [mRaw, mWrap, aBigAll, aSmallAll, actMask] = routeMargins(infoS, ctx)
 % Reconstruct the builder's native-frame rotated-vector rule for every
 % sweep index and relevant optional row:
 %   femur rows (2:5): vectors from the previous active row, rotated +90 deg,
-%     margin = aBig - aSmall (principal atan2 values, degrees).
+%     margin = -signed(big -> small), positive = remove.
 %   tibia rows (6:8): vectors from the next active row, rotated -90 deg,
-%     margin = aSmall - aBig.
-% Positive margin means the angle gate allows removal. mRaw and mWrap are
-% identical because the rule uses principal atan2 values directly.
+%     margin = +signed(big -> small), positive = remove.
+% The signed angle uses ONE atan2 (cross/dot) on the rotated pair, matching
+% the builder exactly (no seam artifact). Positions come from candidateRaw
+% (the fixed candidate positions), not the collapsed rows.
 %
 % A row is evaluated at index ii if it is active there OR if that index is
 % its recorded elimination index.
@@ -379,7 +380,7 @@ elimIdx = infoS.eliminatedSweepIndex;
 for ii = 1:N
 
     act = infoS.active(:,ii);
-    raw = infoS.raw(:,:,ii);
+    Pfix = infoS.candidateRaw(:,:,ii);
 
     for j = 2:8
 
@@ -394,9 +395,9 @@ for ii = 1:N
             continue
         end
 
-        A = raw(iPrev,:);
-        B = raw(iNext,:);
-        C = raw(j,:);
+        A = Pfix(iPrev,:);
+        B = Pfix(iNext,:);
+        C = Pfix(j,:);
 
         if j <= 5
             if iNext >= 6
@@ -404,9 +405,12 @@ for ii = 1:N
             end
             vBig   = B(1:2) - A(1:2);
             vSmall = C(1:2) - A(1:2);
-            aBig   = atan2d(-vBig(2),   vBig(1));    % +90 rotation
-            aSmall = atan2d(-vSmall(2), vSmall(1));
-            marginD = aBig - aSmall;
+            vBigR   = [-vBig(2),   vBig(1)];     % +90 rotation
+            vSmallR = [-vSmall(2), vSmall(1)];
+            signedD = atan2d( ...
+                vBigR(1)*vSmallR(2) - vBigR(2)*vSmallR(1), ...
+                vBigR(1)*vSmallR(1) + vBigR(2)*vSmallR(2));
+            marginD = -signedD;
         else
             if iPrev <= 5
                 A = RowVecTrans(ctx.T_t1_ICR(:,:,ii), ...
@@ -414,15 +418,18 @@ for ii = 1:N
             end
             vBig   = A(1:2) - B(1:2);
             vSmall = C(1:2) - B(1:2);
-            aBig   = atan2d(vBig(2),   -vBig(1));    % -90 rotation
-            aSmall = atan2d(vSmall(2), -vSmall(1));
-            marginD = aSmall - aBig;
+            vBigR   = [vBig(2),   -vBig(1)];     % -90 rotation
+            vSmallR = [vSmall(2), -vSmall(1)];
+            signedD = atan2d( ...
+                vBigR(1)*vSmallR(2) - vBigR(2)*vSmallR(1), ...
+                vBigR(1)*vSmallR(1) + vBigR(2)*vSmallR(2));
+            marginD = signedD;
         end
 
         mRaw(j,ii)  = marginD;
         mWrap(j,ii) = marginD;
-        aBigAll(j,ii)   = aBig;
-        aSmallAll(j,ii) = aSmall;
+        aBigAll(j,ii)   = signedD;
+        aSmallAll(j,ii) = signedD;
     end
 end
 
@@ -492,21 +499,35 @@ end
 
 function clear = femurChordClear(A, B, geo, tol, j)
 % Femur-side bypass chord clearance, replicating the builder's gates with
-% the bypass tolerance and endpoint trimming.
+% the bypass tolerance, endpoint trimming, and the femur relaxation.
 
 gt = geo.bypassTol;
 [A, B] = trimChordEnds(A, B);
 
+relax = 0;
+if isfield(geo, 'bypassRelaxFemur')
+    relax = geo.bypassRelaxFemur;
+end
+
+rCyl = max(geo.femurCylRadius + 5e-4, ...
+    geo.femurCylClearRadius + gt - relax);
+
+poly = geo.femurOffsetBoundaryGate;
+if isfield(geo, 'femurOffsetBoundaryRelaxed')
+    poly = geo.femurOffsetBoundaryRelaxed;
+end
+
+xWall = geo.femurLineX - gt + relax;
+
 switch j
     case {2, 3}
         clear = ...
-            ~segmentPenetratesCircle(A, B, ...
-                geo.femurCylCenter, geo.femurCylClearRadius + gt, tol) && ...
-            ~segmentPenetratesFemurOffset(A, B, geo, tol) && ...
+            ~segmentPenetratesCircle(A, B, geo.femurCylCenter, rCyl, tol) && ...
+            ~segmentPenetratesFemurOffset(A, B, geo, tol, poly) && ...
             ~segmentIntersectsVerticalSpan(A, B, ...
-                geo.femurLineX - gt, geo.femurLineY, tol);
+                xWall, geo.femurLineY, tol);
     case {4, 5}
-        clear = ~segmentPenetratesFemurOffset(A, B, geo, tol);
+        clear = ~segmentPenetratesFemurOffset(A, B, geo, tol, poly);
     otherwise
         clear = true;
 end
@@ -522,15 +543,26 @@ gt = geo.bypassTol;
 [A, B] = trimChordEnds(A, B);
 
 switch j
+    relax = 0;
+    if isfield(geo, 'bypassRelaxTibia')
+        relax = geo.bypassRelaxTibia;
+    end
+    rUp = max(geo.tibiaUpperRadius + 5e-4, ...
+        geo.tibiaUpperClearRadius + gt - relax);
+    rLo = max(geo.tibiaLowerRadius + 5e-4, ...
+        geo.tibiaLowerClearRadius + gt - relax);
+
     case 6
         clear = ~segmentPenetratesCircle(A, B, ...
-            geo.tibiaUpperCenter, geo.tibiaUpperClearRadius + gt, tol);
+            geo.tibiaUpperCenter, rUp, tol);
     case 7
-        clear = ~segmentIntersectsVerticalSpan(A, B, ...
-            geo.tibiaWallX - gt, geo.tibiaWallY, tol);
+        clear = ~segmentPenetratesCircle(A, B, ...
+                geo.tibiaUpperCenter, rUp, tol) && ...
+            ~segmentPenetratesCircle(A, B, ...
+                geo.tibiaLowerCenter, rLo, tol);
     case 8
         clear = ~segmentPenetratesCircle(A, B, ...
-                geo.tibiaLowerCenter, geo.tibiaLowerClearRadius + gt, tol) && ...
+                geo.tibiaLowerCenter, rLo, tol) && ...
             ~segmentIntersectsVerticalSpan(A, B, ...
                 geo.tibiaWallX - gt, geo.tibiaWallY, tol);
     otherwise
@@ -540,10 +572,14 @@ end
 end
 
 
-function hit = segmentPenetratesFemurOffset(A, B, geo, tol)
+function hit = segmentPenetratesFemurOffset(A, B, geo, tol, polyOverride)
 % Faithful replication of the builder's clipped-offset-polygon test.
 
-poly = geo.femurOffsetBoundaryGate;
+if nargin >= 5
+    poly = polyOverride;
+else
+    poly = geo.femurOffsetBoundaryGate;
+end
 
 [inA, onA] = inpolygon(A(1), A(2), poly(:,1), poly(:,2));
 [inB, onB] = inpolygon(B(1), B(2), poly(:,1), poly(:,2));
@@ -714,10 +750,12 @@ end
 
 
 function opens = gateOpens(marginD)
-% Removal-rule replica: the angle gate opens when the principal-value
-% margin is positive (big more counterclockwise on the femur side, big
-% more clockwise on the tibia side, per the builder convention).
+% Removal-rule replica including the release hysteresis: the angle gate
+% opens when the margin comes within marginTolD of zero (margin >
+% -marginTolD), matching the builder's candidateEliminationTest.
 
-opens = marginD > 0;
+marginTolD = 1.5;
+
+opens = marginD > -marginTolD;
 
 end

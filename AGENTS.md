@@ -46,6 +46,19 @@ Loaded automatically at session start. Keep it current; keep it lean.
 - `Code\Matlab\HX711-LoadCell\` — load-cell apps used with test data.
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
 - `Testing_Data\` — **important.** Immediate subfolders `2022_02_Festo\` and `2026_06_Festo\` matter.
+  - `2022_02_Festo\` holds the Xi-minimizer family: outer CV drivers (`minimizeFlxPin10mm.m`,
+    `minimizeFlxPin10mmX3.m`, `minimizeExt10mmX3.m`) call inner evaluators (`minimizeFlxPin`,
+    `minimizeFlxPinX3`, `minimizeExtX3`, `minimizeExt`, `minimizeFlx`) that each carry their own
+    `computeForceVector`/`Lok`/`fortz`. New (Sept 2026): two-bracket flexor method —
+    `minimizeFlxPin2brk.m` (evaluator; (d) single transform, (e) K=[X1,X2,X1], (f) origin-side
+    2nd bracket `Pbr2` (current: [-52.61, 0, 75.06]/1000, Ben-set), `USE_BRACKET2` flag).
+    **Pbr2 applies ONLY to the pinned-knee flexor configuration** — the extensor evaluators
+    (minimizeExtX3, minimizeExt) have their own independent bracket offsets; do not port Pbr2.
+    + driver `minimizeFlxPin10mm_2brk.m` (env `FLX2BRK_MODE`
+    = smoke|full, `FLX2BRK_SOLVER` = gamultiobj|surrogateopt), harnesses `crossPredictFlx.m`
+    (flexor→biomimetic/extensor cross-prediction), `sweepExtX3.m` (high-Xi1 hunt, pool
+    {1,2,5,6,7,8}; tests 3/4/9 EXCLUDED per Ben), `abSolver.m`, `runBatch.m` (overnight
+    sequence). `Robot_Data` must be on the MATLAB path for the biomimetic evaluators.
   - `2022_02_Festo\` subfolders (Flx/Ext × 10mm/10mm_pinned/20mm/40mm): needed only by certain
     plotting functions — add to path transiently and **remove afterward**; they shadow other
     plotting functions if left on path.

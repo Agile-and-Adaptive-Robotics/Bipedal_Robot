@@ -255,11 +255,38 @@ geo.bypassTol = 0.0005;   % 0.5 mm required bypass clearance
 % tangent ray at full flexion, it starts the sweep already eliminated.
 geo.seedColinearTolD = 1.0;
 
+% Tibia bypass relaxation: the clearance circles use the fully inflated
+% BPA radius (k = 0, 19.25 mm), but the routed BPA is contracted at these
+% angles (bpaR gives 15-17 mm), so tibia-side bypass chords may graze the
+% inflated circles by up to this much. Floored at bone + 0.5 mm in the
+% gate. Covers the CAD-observed p7 wall lift-off and the p6 pre-release
+% grazing.
+geo.bypassRelaxTibia = 0.003;
+
+% Release hysteresis for the elimination margin: a contact is removed once
+% its margin comes within this angle of zero, before the wrapped contact
+% goes collinear with its chord and collapses the computed moment arm.
+geo.marginTolD = 1.5;
+
 gateOffsetLocal = ellipseLocal + (geo.bpaRadius + geo.bypassTol)*normalLocal;
 
 [geo.femurOffsetBoundaryGate, ~] = ...
     clipClosedPolygonLeftOfVerticalLine( ...
         geo.femurProfileCenter + gateOffsetLocal*Rell', geo.femurLineX);
+
+% Femur bypass relaxation (contraction-radius slack, same physics as
+% bypassRelaxTibia): the envelope uses the fully inflated radius while
+% the routed BPA is contracted (bpaR gives 12.6-17.6 mm vs 19.25 mm).
+% Pre-release bypass chords may graze the inflated envelope by up to this
+% much; the offset stays far above the physical ellipse.
+geo.bypassRelaxFemur = 0.003;
+
+relaxedOffsetLocal = ellipseLocal + ...
+    (geo.bpaRadius + geo.bypassTol - geo.bypassRelaxFemur)*normalLocal;
+
+[geo.femurOffsetBoundaryRelaxed, ~] = ...
+    clipClosedPolygonLeftOfVerticalLine( ...
+        geo.femurProfileCenter + relaxedOffsetLocal*Rell', geo.femurLineX);
 
 % Slightly denser closed grid used only for tangent root bracketing.
 geo.femurOffsetThetaSearch = linspace(-pi, pi, 361).';
@@ -604,9 +631,17 @@ end
 polyClip = removeAdjacentDuplicatePoints(polyClip, tol);
 yCuts = uniqueWithinTolerance(sort(yCuts), 1e-9);
 
+% A polygon that lies entirely left of the line has no crossings and
+% needs no clipping (e.g. the relaxed gate envelope, whose smaller offset
+% no longer reaches the wall). Only a genuine partial clip failure errors.
 if size(polyClip,1) < 3 || numel(yCuts) < 2
-    error('buildKneeExtContext20mm:BadFemurCondyleClip', ...
-        'Unable to clip femur condyle boundary at the vertical wall.')
+    if max(poly(:,1)) <= xMax + tol
+        polyClip = removeAdjacentDuplicatePoints(poly, tol);
+        yCuts = zeros(0,1);
+    else
+        error('buildKneeExtContext20mm:BadFemurCondyleClip', ...
+            'Unable to clip femur condyle boundary at the vertical wall.')
+    end
 end
 
 end
