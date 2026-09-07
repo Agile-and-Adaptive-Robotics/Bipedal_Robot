@@ -111,12 +111,31 @@ Loaded automatically at session start. Keep it current; keep it lean.
   "bpaR" (candidate-dependent physical radii); `geo.bpaRbOffset` / `geo.bpaRsOffset` defaults 0.
   Three-radius scheme: `bpaRb` = 20 mm nominal pWrap standoff, `bpaRs` = 16 mm min tibia
   clearance, `wRap` = 25 mm Xi3 bend-length radius.
-- Extensor: hit-or-miss; `Debug_RouteElim_Ext.m` (untracked) is a **read-only** diagnostic for
-  the route-elimination state machine in `buildDistalRingLocation20mm.m` (2244 lines — the
-  core; read its docstring first: `x = [p1(1:3), pEnd(1:3), rest, tendon]`).
-- Open WIP (uncommitted): `Debug_RouteElim_Ext.m` + logs, modified
-  `buildDistalRingLocation20mm.m` / `buildKneeExtContext20mm.m`, staged deletion of
-  `Knee_Torque_revision_3\...\MonoPamDataExplicit_balanceX3.m`.
+- Extensor route elimination **REWORKED AND VERIFIED (Sept 2026, commits through 416f08f)**:
+  - Ben's rule in `buildDistalRingLocation20mm.m>candidateEliminationTest`: femur rows p2:p5
+    tested in femur frame (vectors from previous active row, rotated +90°; remove when big more
+    CCW); tibia rows p6:p8 in t1 frame (vectors from next active row, rotated −90°; remove when
+    big more CW). ONE `atan2(cross,dot)` on the rotated pair — comparing two principal atan2
+    values separately IS seam-bitten at ±180°. p3/p4 anchor to p7 while active; cascade guard
+    forces release order p5,p6,p4,p3,p7; ONE removal per step (priority must init
+    `bestMargin = -inf`, NOT 0 — hysteresis margins are negative).
+  - Collision gates ON: chord must clear envelope by `geo.bypassTol` (0.5 mm), 2 mm endpoint
+    trim, contraction-radius slack `geo.bypassRelaxFemur`/`bypassRelaxTibia` = 3 mm (envelopes
+    use inflated 19.25 mm radius; routed BPA is contracted per `bpaR`), p7's gate = the two
+    tibia cylinders only (wall band is virtual). `geo.marginTolD` = 1.5° release hysteresis —
+    releases BEFORE the wrapped contact goes collinear and collapses the moment arm (the old
+    "torque jog"). Tibia seeds CONSTRUCTED: p6 = +30° on upper clear circle, p8 = −30° on
+    lower, p7 = (tibiaWallX, mid-y); knobs `geo.seedP6AngleD/seedP8AngleD/seedP7X`.
+  - Verified x0 schedule: p5@−91.1°, p4@−50.4°, p6@−47.8°, p7@−20.2°, p3@+6.1°, one per step,
+    min moment arm +45.2 mm, max torque step 0.53 N·m (jog eliminated).
+  - `Debug_RouteElim_Ext.m` (tracked) = ~1 min verifier: elimination table, gate audit, p1/pEnd
+    bound scans. Tiled route figures in Opt_sanity_Ext/Opt_run_Ext: 4 poses per row, legend in
+    a 5th column spanning all rows.
+- `MonoPamDataExplicit_balanceX3.m` has exactly ONE copy: `Robot_Data\` (`mif = BPAcount*Fmax`).
+  The nested Knee_Torque_revision_3 shadow copy was deleted — do not resurrect it.
+- Open design question: replace the 4 per-contact wrap terms (geometricBendMeasure) with p2's
+  term kept + ONE unified R×(total polyline turn) term for p3–p8, plateau-calibrated so the
+  Xi3·bend product stays consistent; prototype behind `ctx.bendModel` flag. Ben hasn't decided.
 
 ## Readmes
 
