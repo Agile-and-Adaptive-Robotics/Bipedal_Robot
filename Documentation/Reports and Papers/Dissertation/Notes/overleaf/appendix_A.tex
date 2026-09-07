@@ -1,0 +1,123 @@
+% Appendix A — polished, paste-ready replacement for chapters/92-AppendixA.tex.
+% TODO(Ben): bracket stiffness third diagonal — code uses chi2 (minimizeFlxPin.m:266-268),
+% text eq (bktstiffness) states chi1. This file follows the CODE. Resolve before final.
+% Cross-references (eq:*, tab:*, sec:*, ch:*) resolve inside the full document.
+
+\chapter{Muscle Force and Joint Torque Calculations}\label{app:muscle_calcs}
+
+This appendix documents the reference implementation of the force, torque, and
+compliance equations used in Chapters~\ref{ch:methods}--\ref{ch:results}, as
+they exist in the project's Matlab code, so that any number in the dissertation
+can be traced to the code that produced it.
+
+\section{BPA Force Model Implementation}
+
+\subsection{Strain Measures}
+
+The musculotendon path length $l_{LMT}$ is the sum of straight segments between
+route via points, transformed into a common frame at each crossing. The
+contractile strain subtracts the artificial tendon and both end-cap fittings
+from the path length before normalization by the resting length,
+\begin{equation}
+    \varepsilon \;=\; \frac{l_{0} - \left(l_{LMT} - l_{ten} - 2\,l_{fitting} - \chi_{0}\right)}{l_{0}},
+    \label{eq:app_strain}
+\end{equation}
+where $\chi_{0}$ is the constant length offset of
+Section~\ref{sec:improved_model} (zero in the uncorrected model),
+$l_{ten}$ the tendon length, and $l_{fitting} = \qty{25.4}{\mm}$ the end-cap
+fitting length. The maximum free-load contraction at \qty{620}{\kPa} is
+$\varepsilon_{620} = (l_{0}-l_{620})/l_{0}$, with $l_{620}$ the BPA length at
+\qty{620}{\kPa} under no external load, and the relative strain is
+$\varepsilon^{*} = \varepsilon / \varepsilon_{620}$.
+
+\subsection{Normalized Force Surface}
+
+The normalized isometric force surface of Equation~(\ref{eq:Fstar}) is
+implemented in closed form,
+\begin{equation}
+    F^{*} = c_{0}\left(e^{-c_{1}\varepsilon^{*}} - 1\right)
+            + P^{*}\,e^{-c_{2}(\varepsilon^{*})^{2}},
+    \qquad F^{*}\le 0 \;\Rightarrow\; 0,
+    \label{eq:app_fstar}
+\end{equation}
+with $P^{*} = P/\qty{620}{\kPa}$. The coefficients were fitted by nonlinear
+least squares with least-absolute-residual robustness and are reported in
+Table~\ref{tab:Fstar}. The code additionally holds a \qty{40}{\mm} fit that this
+dissertation does not use ($c_0 = 0.1224$, $c_1 = 10.47$, $c_2 = 2.023$). A
+spline interpolation of the manufacturer's datasheet curves was used as a
+runtime alternative during model development, with force clamped to zero for
+$\varepsilon^{*}>1$ or $F^{*}<0$; Equation~(\ref{eq:app_fstar}) superseded it.
+
+\subsection{Maximum Force}
+
+The resting-length-dependent maximum force of Equation~(\ref{eq:Fmax_3D}) uses
+the fixed \qty{7.5}{\mm} end-contact offset. The fitted \qty{20}{\mm}
+coefficients carry 95\% confidence intervals of
+$a_1 \in [1.4745, 1.5011]$\,\si{\N\per\kPa} and
+$a_2 \in [0.0238, 0.0258]$\,\si{\per\kPa\per\metre}. Total force is the product
+$F = F^{*}(\varepsilon^{*},P^{*})\,F_{620}(l_{0})$, resolved into a vector along
+the force direction.
+
+\section{Muscle Path Length and Moment Arm}
+
+Path length accumulates the Euclidean norm of each segment between via points,
+applying the body-frame transformation whenever the path crosses between the
+femur and tibia frames. The vector moment arm is implemented as the
+perpendicular foot of the joint origin onto the line of action,
+\begin{equation}
+    \vec{r} \;=\; \vec{p} \;-\; \hat{u}\left(\hat{u}\cdot\vec{p}\right),
+    \label{eq:app_perpfoot}
+\end{equation}
+where $\vec{p}$ runs from the joint origin to the muscle-path crossing point and
+$\hat{u}$ is the unit force direction. This is the same quantity as the
+cross-product projection of Equation~(\ref{eq:project_ma}); the planar scalar
+moment arm about the joint axis is the magnitude of the in-plane components.
+Torque about the joint $z$-axis is $\vec{M} = \vec{r}\times\vec{F}$, evaluated
+only where the BPA is in tension; values in the compressive region
+($\varepsilon < -0.02$) are discarded.
+
+\section{Compliance Model Implementation}
+
+The compliance-corrected muscle length entering Equation~(\ref{eq:Lm}) is
+computed as $l_{m} = l_{LMT} - \chi_{0} - l_{ten} - 2\,l_{fitting}$. The bracket
+stiffness matrix and the projected scalar compliance along the force direction
+are evaluated per configuration as
+$\mathbf{K}_{br} = \mathrm{diag}(\chi_{1},\chi_{2},\chi_{2})$ in the bracket
+frame and $k_{\hat{u},br} = \left(\hat{u}^{\,T}\mathbf{K}_{br}^{-1}\hat{u}\right)^{-1}$.
+The artificial tendon is modeled as an axial spring with stiffness
+\begin{equation}
+    k_{ten} \;=\; \frac{n\,A_{c}\,E}{L_{ten}},
+    \label{eq:app_tendon}
+\end{equation}
+with $n=2$ parallel cable strands ($\times 6$ for the \qty{20}{\mm} assembly),
+$A_{c} = \qty{1.51e-6}{\metre\squared}$ for the 19-strand cable, and
+$E = \qty{193}{\giga\pascal}$. Series combination with the projected bracket
+compliance gives $k_{eq} = \left(k_{\hat{u},br}^{-1} + k_{ten}^{-1}\right)^{-1}$,
+as in Equation~(\ref{eq:equivalentstiffness}).
+
+The scalar compliance displacement $\delta$ of
+Equation~(\ref{eq:complianceforcebalance}) is found numerically with a
+bracketed root solve on $[0,\, l_{m}-l_{620}]$,
+\begin{equation}
+    F_{620}(l_{0})\,F^{*}\!\left(\varepsilon^{*}(\delta),P^{*}\right) - k_{eq}\,\delta = 0,
+    \label{eq:app_forcebalance}
+\end{equation}
+with $\delta \equiv 0$ when the uncorrected relative strain already exceeds
+unity. The vector bracket deflection then follows from
+$\boldsymbol{\epsilon}_{br} = \mathbf{K}_{br}^{-1}\left(\norm{\vec{F}}\hat{u}\right)$,
+the cable stretch is $\norm{\vec{F}}/k_{ten}$, and the attachment point, path,
+moment arm, and torque are recomputed. For the two-BPA flexor grouping, the
+coupled balance shares one common force between both muscles and is solved
+analogously on $[0, F_{620}]$.
+
+\section{Wrapping-Loss Implementation}
+
+For the pinned-knee extensor, Equation~(\ref{eq:deltaL}) is implemented
+segment-wise over the wrap arc with radii $R_1 = \qty{12}{\mm}$ and
+$R_2 = \qty{40}{\mm}$ and segment boundaries $\theta_{1} = \ang{27}$ and
+$\theta_{2} = \ang{-23}$. For the biomimetic-knee \qty{20}{\mm} configuration,
+the arc-length factor is the routed bend measure $b(\theta_{k})$, the arc length
+swept by the wrap, giving
+$\Delta l = \chi_{3}\, b(\theta_{k})\,(1-\varepsilon^{*})^{2}$, with a
+hardcoded-geometry fallback for degenerate routes. The loss enters only the
+force-producing strain; the kinematic strain used for prediction excludes it.

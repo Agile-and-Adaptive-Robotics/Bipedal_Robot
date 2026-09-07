@@ -53,8 +53,10 @@ for cIdx = 1:numel(configs)
     folds = nchoosek(cfg.allBPA, cfg.numHold);
     nFolds = size(folds, 1);
 
-    %Bounds: Xi0 in cm; Xi1/Xi2 log10, widened by x12factor; Xi3 raw [0,1]
-    lb = [-0.02 * 100, log10(g(2)), log10(g(3)), 0];
+    %Bounds: Xi0 in cm; Xi1/Xi2 log10, widened by x12factor; Xi3 raw [xi3min,1]
+    x3lb = 0;
+    if isfield(cfg, 'xi3min'), x3lb = cfg.xi3min; end
+    lb = [-0.02 * 100, log10(g(2)), log10(g(3)), x3lb];
     ub = [0 * 100, log10(cfg.x12factor * g(2)), log10(cfg.x12factor * g(3)), 1];
 
     fprintf('\n--- Config %d/%d: allBPA=[%s] numHold=%d x12factor=%g | %d folds ---\n', ...

@@ -45,6 +45,18 @@ Loaded automatically at session start. Keep it current; keep it lean.
 - `Code\Matlab\minimizers\`, `Code\Matlab\Previous Optimization Code\` — **legacy**; don't build on.
 - `Code\Matlab\HX711-LoadCell\` — load-cell apps used with test data.
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
+- **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
+  literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the
+  cable winch on the test mechanism. "Bending" (Xi2) is modeled as a simple Hooke-law spring in
+  N/m with no length/EI dependence. Ben's shorthand "bracket axial/bending stiffness" is
+  convenience, not definition; don't over-interpret them structurally.
+- Bracket reference points (Pbr, Pbri, Pbr2) are interpretation choices Ben sets from the CAD
+  (Onyx FDM parts, not simple beams). Moving a point changes identified stiffness dramatically
+  (Pbr2 move swung flexor Xi1 by 16x). Current active points: flexor insertion Pbri
+  [-27.5,-107.81,-0.54]mm, flexor origin Pbr2 [-52.61,0,75.06]mm (pinned-flexor ONLY), extensor
+  Pbr [-3.84,-46.44,62.5]mm (rib midpoint, medial side). Both 2brk brackets use two-rotation
+  (Z then Y) frames. Advisor requirement: one (Xi1,Xi2) consistent across pinned-flexor,
+  pinned-extensor, and both biomimetic configurations.
 - `Testing_Data\` — **important.** Immediate subfolders `2022_02_Festo\` and `2026_06_Festo\` matter.
   - `2022_02_Festo\` holds the Xi-minimizer family: outer CV drivers (`minimizeFlxPin10mm.m`,
     `minimizeFlxPin10mmX3.m`, `minimizeExt10mmX3.m`) call inner evaluators (`minimizeFlxPin`,
@@ -127,6 +139,9 @@ Loaded automatically at session start. Keep it current; keep it lean.
 
 - Delegate broad searches and audits to subagents; keep main-session context small.
 - Fresh session per task; long MATLAB runs in background; plan mode before expensive execution.
+- Ben uses **GitHub Desktop** for git and does not know git/Git Bash CLI. Run git via your own
+  tools when he asks, or give GitHub Desktop steps in GUI terms (Fetch/Pull origin, file
+  checklist, commit message, Push origin) — never hand him shell git commands.
 - Prefer COM/API automation (SolidWorks skill, Overleaf file edits, Zotero local HTTP) over
   screenshot-driven GUI automation.
 - Model strategy: default GLM-5.3-Flash; escalate to GLM-5.3 only for hard debugging or

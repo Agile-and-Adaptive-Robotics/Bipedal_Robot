@@ -288,21 +288,22 @@ transitionIdx = find(any( ...
 plotIdx = unique([1, transitionIdx, numel(ctx.phiD)], 'stable');
 nPoseTiles = numel(plotIdx);
 
-if nPoseTiles == 9
-    nTileRows = 3;
-    nTileCols = 4;
-else
-    nTileRows = 3;
-    nTileCols = 3;
-end
+% Pose tiles flow four per row; the legend gets its own fifth column
+% spanning all tile rows instead of consuming a pose tile.
+nPosesPerRow = 4;
+nTileRows = ceil(nPoseTiles/nPosesPerRow);
+nTileCols = nPosesPerRow + 1;
 
-if nPoseTiles > nTileRows*nTileCols - 1
+if nPoseTiles > nTileRows*nPosesPerRow
     error('Too many route poses for the requested tiled layout.')
 end
 
 thPlot = linspace(0,2*pi,200).';
 
-figure('Name','9-point extensor route geometry','Color','w')
+figGeo = figure( ...
+    'Name','9-point extensor route geometry', ...
+    'Color','w', ...
+    'Position', [40, 40, 1900, 250+560*nTileRows]);
 tGeo = tiledlayout(nTileRows,nTileCols, ...
     'TileSpacing','compact','Padding','compact');
 hGeoLegend = gobjects(7,1);
@@ -433,7 +434,9 @@ for qPlot = 1:nPoseTiles
 
 end
 
-axLeg = nexttile(tGeo,nTileRows*nTileCols);
+% Legend occupies the fifth column, spanning every tile row, so it never
+% pushes the poses into an extra row.
+axLeg = nexttile(tGeo, nPosesPerRow+1, [nTileRows, 1]);
 makeRouteLegend(axLeg, hGeoLegend, { ...
     'Femur cylinder clr', 'Femur line clr', ...
     'Corrected condyle clr', ...

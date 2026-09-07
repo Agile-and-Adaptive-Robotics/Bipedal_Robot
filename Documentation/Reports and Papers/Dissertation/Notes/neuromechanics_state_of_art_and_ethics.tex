@@ -1,0 +1,108 @@
+% =========================================================================
+% DRAFT — Insertion-ready prose for Background Chapter 2 (2026-09-07)
+% Two new sections proposed:
+%   Section 2.9  State of the Art in Neuromechanical Simulation
+%   Section 2.10 Testing Neuromechanical Hypotheses on Robots: The Ethical Case
+% Place both AFTER current section 2.8 (Simulation Tooling) so the pipeline
+% description precedes the field survey. Requires the 9 candidate references
+% in Notes/candidate_references(.md/.bib) to be merged into thesis.bib first
+% (keys: geyer_musclereflex_2010, song_deep_2021, degroote_perspective_2021,
+%  webb_robots_2001, webb_robots_2002, russell_principles_1959,
+%  tannenbaum_russell_2015, morton_cerebellar_2006, qin_vinsmono_2018).
+% All citations verified 2026-09-07. Numbering will auto-adjust in Overleaf.
+% =========================================================================
+
+\section{State of the Art in Neuromechanical Simulation}\label{sec:bg_sota}
+
+Neuromechanical simulation --- the coupling of a musculoskeletal plant to a model
+of the neural controller that drives it --- has advanced along three partially
+overlapping lines. The first line embeds reflex physiology directly into the
+controller. The muscle-reflex walking model of Geyer and Herr
+\citep{geyer_musclereflex_2010} demonstrated that positive force, length, and
+velocity feedback around each muscle, organized with simple interlimb
+coordination, is sufficient to produce self-stabilizing human-like walking
+dynamics and realistic muscle activations without any central pattern generator.
+That model became the reference point for a generation of reflex-based
+neuromechanical controllers, including the cat hindlimb models of
+Section~\ref{sec:bg_neural} \citep{markin_afferent_2010, shevtsova_modeling_2016}
+and their extensions.
+
+The second line replaces hand-designed circuitry with machine learning. Song and
+colleagues \citep{song_deep_2021} trained deep reinforcement learning policies on
+a physiologically realistic musculoskeletal model in OpenSim, reproducing human
+kinematics and muscle activations across locomotion tasks, with the learned
+policy re-usable for experiments that would be difficult in the laboratory. This
+approach inherits the fidelity of the musculoskeletal plant but encodes control
+in opaque function approximations: the trained policy can reproduce behavior, but
+the individual ``neurons'' of the controller do not correspond to identifiable
+physiological circuits, so the class of scientific questions it can answer ---
+lesions, deletions, pathway stimulation --- is narrower than its behavioral
+repertoire. Recent perspectives on predictive musculoskeletal simulation
+\citep{degroote_perspective_2021} place both learned and optimal-control
+approaches in the same frame: the plant models are mature, and the open problems
+are the cost of solving them and the biological interpretability of the control
+they find.
+
+The third line, in which this dissertation sits, is biologically grounded
+synthetic nervous systems: controllers whose neurons and synapses are explicit,
+conductance-based, and mapped to identified physiological circuits, simulated at
+speeds sufficient for real-time robotics \citep{nourse_sns_2023}. What
+distinguishes the present program from all three lines is the combination it
+attempts: an anatomically grounded controller (two-layer CPG with Ia, Ib, II,
+and contact feedback), a biomechanically validated pneumatic plant
+(Chapters~\ref{ch:methods}--\ref{ch:results}), and an eventual physical robot.
+Simulation speed is the practical enabler: the MuJoCo backend evaluates the
+musculoskeletal loop faster than real time on commodity hardware
+\citep{todorov_mujoco_2012, caggiano_myosuite_2022}, and SNS-Toolbox sustains
+real-time or faster network evaluation from workstations down to embedded boards
+\citep{nourse_sns_2023}. A single overnight run can therefore sweep thousands of
+parameter combinations or execute hundreds of simulated gait cycles per
+condition --- throughput that no human-subject or animal protocol could match,
+and that transforms lesion and stimulation studies from bespoke demonstrations
+into statistically powered experiments.
+
+\section{Testing Neuromechanical Hypotheses on Robots: The Ethical Case}\label{sec:bg_ethics}
+
+The experiments this research program is designed to enable --- deleting a
+muscle from a limb, blocking a sensory pathway, lesioning part of a rhythm
+generator, applying tonic stimulation to spinal circuits --- cannot be performed
+on healthy humans. Invasive intervention on the human neuromuscular system is
+limited to clinical populations, is tightly constrained by ethics review, and
+permits neither the within-subject control nor the reversibility that
+neuromechanical hypotheses demand. The same experiments in animals carry real
+moral cost, and their justification is governed by the Three Rs framework:
+replacement of animal subjects with non-animal methods, reduction of the numbers
+required, and refinement of the remaining procedures
+\citep{russell_principles_1959, tannenbaum_russell_2015}. A robot that implements
+a validated neuromechanical hypothesis is precisely such a replacement method:
+every deletion, lesion, and stimulation experiment that runs on the synthetic
+nervous system is an experiment that does not require a living subject, and the
+robot population can be duplicated exactly, so that ``subjects'' are
+statistically identical across conditions --- a form of reduction no breeding
+colony can offer. Refinement follows as well: the failure modes of these
+experiments damage hardware, not tissue.
+
+For a robot to serve as a replacement subject, however, it must first earn
+standing as a scientific model. Webb's influential analyses of biorobotic
+methodology \citep{webb_robots_2001, webb_robots_2002} argue that a robot is a
+good model of biological behavior when the mechanism it implements is tested at
+the same level of organization as the target phenomenon --- matching dynamics,
+control structure, and sensory ecology rather than surface appearance. The
+validation chain of this dissertation is constructed to that standard: the
+actuator force model is validated against bench data
+(Section~\ref{sec:results_force}), the joint torque model against isometric
+measurements and human torque envelopes (Section~\ref{sec:results_torque}), and
+the neuromechanical controller will be verified against published tonic
+stimulation and deletion phenomena \citep{selionov_tonic_2009,
+rybak_modelling_2006} before any locomotion tuning is attempted. Only then can a
+robot experiment be read as evidence about the hypothesized biological circuit
+rather than about the robot.
+
+The argument is ultimately bidirectional, completing the loop described in
+Section~\ref{sec:project}. Experiments that are unethical, impractical, or
+statistically unreachable in humans and animals become routine on the robot; the
+resulting insights into neuromechanical control feed back into biology, into the
+design of the next robot iteration, and directly into prosthetic and orthotic
+devices that face the same problem of controlling muscles-like actuators for
+human users. The ethical case and the scientific case are the same case: the
+robot is the instrument that makes these experiments possible at all.

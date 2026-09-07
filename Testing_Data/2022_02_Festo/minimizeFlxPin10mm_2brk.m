@@ -201,7 +201,11 @@ fprintf('Mean optimized: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',mean(f,1,'
 
 %% Save results
 stamp = char(string(datetime('now'),'yyyyMMdd'));
-resultFile = sprintf('minimizeFlxPin10_2brk_results_%s.mat', stamp);
+if isSmoke
+    resultFile = sprintf('minimizeFlxPin10_2brk_results_%s_smoke.mat', stamp);
+else
+    resultFile = sprintf('minimizeFlxPin10_2brk_results_%s.mat', stamp);
+end
 save(resultFile, 'results_cv', 'all_candidates', 'results_sort', 'results_sort_actual', ...
      'filtered_results', 'xCols', 'a0', 'f', 'k1', 'k2', 'k3', 'PICK', ...
      'ALLBPA', 'NUMHOLD', 'POP', 'MAXGEN', 'USE_BRACKET2', 'SOLVER', 'labels', 'W');

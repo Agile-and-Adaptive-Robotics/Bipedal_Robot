@@ -1,0 +1,107 @@
+% =========================================================================
+% DRAFT — Appendix B: Neuron Model Equations
+% Extracted from the AnimatLab walker models on 2026-09-07.
+% Source models: Neuromechanical_Models/Biped_2xCPG_wSubs/walk new new
+% tester_Standalone.asim (also Walker_2_Layer_CPG, Li Model), with network
+% structure in Rhythm_Generator.aform / L_Hip_Neural.aform.
+% DRAFT for review — paste into ProofFinal/chapters/93-AppendixB.tex only
+% after approval.
+% =========================================================================
+
+\chapter{Appendix B: Neuron Model Equations}\label{app:neuron_equations}
+
+This appendix documents the neuron and synapse models used by the synthetic
+nervous systems in this project, both in the current AnimatLab walker models and
+as they will be instantiated in SNS-Toolbox for the MuJoCo pipeline of
+Chapter~\ref{ch:futurework}. All parameter values below are read from the working
+bipedal walker model (\texttt{Biped\_2xCPG\_wSubs/walk new new tester\_Standalone.asim}).
+
+\section{Spiking Neuron Model}
+
+Each spiking neuron is a conductance-based leaky integrator with threshold and
+adaptation,
+\begin{equation}
+    C_{m}\,\dot{V} \;=\; -\,g_{\text{leak}}\left(V - E_{\text{rest}}\right)
+                      \;+\; I_{\text{syn}} \;+\; I_{\text{app}},
+    \label{eq:app_membrane}
+\end{equation}
+where $V$ is the membrane potential, $C_{m}$ the membrane capacitance
+($g_{\text{leak}} = C_{m}/\tau_{m}$ with membrane time constant $\tau_{m}$),
+$E_{\text{rest}}$ the resting potential, $I_{\text{syn}}$ the summed synaptic
+current, and $I_{\text{app}}$ any applied (tonic stimulation) current. A spike is
+emitted when $V$ exceeds the firing threshold, after which $V$ resets and an
+after-hyperpolarization (AHP) of amplitude $A_{\text{AHP}}$ with time constant
+$\tau_{\text{AHP}}$ is applied; the threshold itself accommodates with the
+firing history (relative accommodation $r_{\text{acc}}$, time constant
+$\tau_{\text{acc}}$). Optional calcium channels are defined but disabled in the
+current model ($G_{\text{max,Ca}} = 0$).
+
+The parameter values shared by the neurons in the walker model are given in
+Table~\ref{tab:app_neuron}.
+
+\begin{table}[htbp]
+\caption{Spiking neuron parameters in the AnimatLab bipedal walker model
+(\texttt{Biped\_2xCPG\_wSubs}). All neurons share these values except the motor
+neuron threshold noted below.}
+\label{tab:app_neuron}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Parameter} & \textbf{Symbol} & \textbf{Value} \\
+\midrule
+Resting potential        & $E_{\text{rest}}$   & \qty{-60}{\mV} \\
+Membrane time constant   & $\tau_{m}$          & \qty{5}{\ms}   \\
+Initial firing threshold & $V_{\text{th}}$     & \qty{-55}{\mV} (motor neurons: \qty{-59}{\mV}) \\
+Relative accommodation   & $r_{\text{acc}}$    & 0.3            \\
+Accommodation time const & $\tau_{\text{acc}}$ & \qty{10}{\ms}  \\
+AHP amplitude            & $A_{\text{AHP}}$    & \qty{1}{\mV}   \\
+AHP time constant        & $\tau_{\text{AHP}}$ & \qty{3}{\ms}   \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Non-Spiking (Graded) Chemical Synapses}
+
+Pattern-formation and motoneuron-drive connections in the walker use graded
+chemical synapses, whose conductance is a clipped linear ramp of the presynaptic
+potential,
+\begin{equation}
+    g_{\text{syn}}(V_{\text{pre}})
+    \;=\; g_{\text{max}}\;
+    \operatorname{clamp}\!\left(
+        \frac{V_{\text{pre}} - V_{\text{th}}}{V_{\text{sat}} - V_{\text{th}}},
+        \,0,\,1\right),
+    \qquad
+    I_{\text{syn}} = g_{\text{syn}}\left(V_{\text{post}} - E_{\text{syn}}\right),
+    \label{eq:app_nonsyn}
+\end{equation}
+where $V_{\text{th}}$ and $V_{\text{sat}}$ are the synaptic threshold and
+saturation potentials and $E_{\text{syn}}$ the reversal potential. The walker
+model instantiates three non-spiking synapse types:
+
+\begin{itemize}
+    \item \textbf{Nicotinic ACh (excitatory drive):}
+          $E_{\text{syn}} = \qty{-10}{\mV}$,
+          $g_{\text{max}} = \qty{0.5}{\micro\siemens}$,
+          $V_{\text{th}} \to V_{\text{sat}} = \qty{-65}{\mV} \to \qty{-20}{\mV}$.
+    \item \textbf{Hyperpolarizing IPSP (inhibition):}
+          $E_{\text{syn}} = \qty{-70}{\mV}$,
+          $V_{\text{th}} \to V_{\text{sat}} = \qty{-55}{\mV} \to \qty{-40}{\mV}$.
+    \item \textbf{Depolarizing IPSP:}
+          $E_{\text{syn}} = \qty{-55}{\mV}$,
+          $V_{\text{th}} \to V_{\text{sat}} = \qty{-60}{\mV} \to \qty{-40}{\mV}$.
+\end{itemize}
+
+Spiking chemical synapses and electrical synapses (rectifying coupling weight
+0.1, non-rectifying 0.2) are also defined in the model and are available for the
+sensory afferent pathways of the MuJoCo/SNS implementation.
+
+\section{Relation to the SNS-Toolbox Implementation}
+
+These are the standard AnimatLab firing-rate/conductance models; SNS-Toolbox
+\citep{nourse_sns_2023} implements the same classes of non-spiking and spiking
+neurons with conductance-based synapses, so the parameter set above transfers
+directly to the rhythm-generator, pattern-formation, and feedback circuits to be
+built for the MuJoCo pipeline (Chapter~\ref{ch:futurework}). The tonic
+stimulation tests of Section~\ref{sec:fw_cpg} correspond to constant
+$I_{\text{app}}$ injections into Equation~(\ref{eq:app_membrane}) at the
+motoneuron, pattern-formation, and rhythm-generator layers respectively.

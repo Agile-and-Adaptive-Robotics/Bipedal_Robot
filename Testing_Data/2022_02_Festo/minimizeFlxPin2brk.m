@@ -1,9 +1,10 @@
 %% Two-bracket flexor evaluator (new method, Sept 2026)
 function [f_all, bpa_all] = minimizeFlxPin2brk(Xi0,Xi1,Xi2,idx_val,useB2)
-% minimizeFlxPin2brk: minimizeFlxPin with bracket-model changes (d), (e), (f):
-%   (d) insertion bracket uses the single (yaw-only) rotation:
-%         Tkbr = RpToTrans(RkbrZ, Pbri')   [was RpToTrans(Rkbr, Pbri')]
-%         pbrBnew = [norm(pkbrB(1:2)), 0, pkbrB(3)] + eB   [was [norm(pkbrB), 0, 0] + eB]
+% minimizeFlxPin2brk: minimizeFlxPin with bracket-model changes (e) and (f):
+%   BOTH brackets use the two-rotation (Z then Y) frame method (restored 2026-09-07;
+%   the earlier single-transform experiment (d) is superseded):
+%         insertion: Tkbr = RpToTrans(RkbrZ*Ry', Pbri')
+%         origin:    Thbr = RpToTrans(RhbrZ*Ryh', Pbr2')
 %   (e) insertion-bracket stiffness array  K  = [X1, X2, X1]   [was [X1, X2, X2]]
 %   (f) SECOND (origin-side) bracket at the hip frame, to capture movement at pA
 %       that the single-bracket approximation misses at high force:
@@ -176,10 +177,16 @@ thetabrB = atan2(pkbrB(2),pkbrB(1));   %angle between pbrB and x axis
 RkbrZ = [cos(thetabrB) -sin(thetabrB) 0; ...     %Rotation matrix
        sin(thetabrB) cos(thetabrB) 0; ...
        0    0   1];
-% (d) single (yaw-only) rotation for the insertion bracket
-Tkbr = RpToTrans(RkbrZ, Pbri');    %Transformation matrix, flexor bracket frame in knee frame
+% Insertion (tibia) bracket frame: two-rotation method (restored 2026-09-07)
+pbrkB = RkbrZ'*pkbrB';       %Vector in the bracket frame
+thetaY = atan2(pbrkB(3), pbrkB(1));  % z vs x (in bracket frame)
+Ry = [cos(thetaY) 0  sin(thetaY);
+      0           1  0;
+     -sin(thetaY) 0  cos(thetaY)];
+Rkbr = RkbrZ*Ry';            %Rotate about y-axis in body frame
+Tkbr = RpToTrans(Rkbr, Pbri');    %Transformation matrix, flexor bracket frame in knee frame
 
-% (f) second bracket at the origin (hip frame)
+% (f) second bracket at the origin (hip frame), two-rotation method
 pA = L(1,:,1);                                 %Distance from hip frame to muscle origin
 Pbr2 = [-52.61, 0, 75.06]/1000;                 %vector from hip origin to flexor origin bracket
 phbrA = pA-Pbr2;                               %vector from bracket to point A (in the hip frame)
@@ -187,7 +194,13 @@ thetabrA = atan2(phbrA(2),phbrA(1));           %angle between phbrA and x axis
 RhbrZ = [cos(thetabrA) -sin(thetabrA) 0; ...   %Rotation matrix
        sin(thetabrA) cos(thetabrA) 0; ...
        0    0   1];
-Thbr = RpToTrans(RhbrZ, Pbr2');    %Transformation matrix, origin bracket frame in hip frame
+pbrhA = RhbrZ'*phbrA';       %Vector in the bracket frame
+thetaYh = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
+Ryh = [cos(thetaYh) 0  sin(thetaYh);
+       0            1  0;
+      -sin(thetaYh) 0  cos(thetaYh)];
+Rhbr = RhbrZ*Ryh';            %Rotate about y-axis in body frame
+Thbr = RpToTrans(Rhbr, Pbr2');    %Transformation matrix, origin bracket frame in hip frame
 
 LOC = L;            %new location matrix
 N = size(L,3);
@@ -208,7 +221,7 @@ else
 end
 
 eB = [epsilon, delta, beta];
-pbrBnew = [norm(pkbrB(1:2)), 0, pkbrB(3)] + eB; %new point B, in the insertion bracket's frame (d)
+pbrBnew = [norm(pkbrB), 0, 0] + eB; %new point B, in the insertion bracket's frame (x-axis along the nominal vector)
 
 pBnew = zeros(N,3);
 for ii = 1:N                          %Repeat for each orientation
@@ -220,7 +233,7 @@ end
 eA = [e_ax2, e_by2, e_bz2];
 eA2 = eA;
 if useB2
-    pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] + eA; %Muscle origin location, bracket frame
+    pbrAnew = [norm(phbrA), 0, 0] + eA; %Muscle origin location, bracket frame (x-axis along the nominal vector)
     pAnew = zeros(N,3);
     for ii = 1:N
         pAnew(ii,:) = RowVecTrans(Thbr, pbrAnew(ii,:)); %New point A, in the hip frame
