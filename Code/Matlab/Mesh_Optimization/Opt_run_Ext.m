@@ -103,6 +103,16 @@ predBest = predictKneeExt20mm(xBest, ctx);
 [cBest, ~] = nonlconExt20mm(xBest, ctx);
 relativeContractionBest = predBest.bpa.Contraction(:)/predBest.KMAX;
 
+% Dated result capture into Results; does not overwrite prior results.
+stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
+resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
+resultFile = fullfile(resDir, sprintf('Vas_Pam_20mm_Result_%s.mat', stamp));
+XiUsed = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
+save(resultFile, ...
+    'xBest', 'xSeed', 'fBest', 'fRefined', 'exitRefined', 'exitflagG', ...
+    'outputG', 'predBest', 'cBest', 'XiUsed')
+fprintf('Saved %s\n', resultFile)
+
 %% display results
 fprintf('\n========== OPTIMIZED DESIGN VALUES ==========\n')
 

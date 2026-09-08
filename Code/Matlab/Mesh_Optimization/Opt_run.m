@@ -160,11 +160,17 @@ routeCtx.geo = predBest.geo;
 
 Xi3 = ctx.Xi3;
 
-% Copy the next lines and paste in the results folder
-% save('Bifemsh_20mm_Result.mat', ...
-%     'xBest', 'pOriginal', 'pOptimized', 'pChanged', ...
-%     'routeCtx', 'Xi3', 'fBest', 'exitflagG', 'exitflagP', ...
-%     'outputG', 'outputP')
+% Dated result capture into Results; does not overwrite prior results.
+% (Replaces the old copy/paste save block; pOriginal never existed as a
+% variable -- the initial design matrix is pInitialWrapped.)
+stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
+resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
+resultFile = fullfile(resDir, sprintf('Bifemsh_20mm_Result_%s.mat', stamp));
+save(resultFile, ...
+    'xBest', 'pInitialWrapped', 'pOptimized', 'pChanged', ...
+    'routeCtx', 'Xi3', 'fBest', 'exitflagG', 'exitflagP', ...
+    'outputG', 'outputP', 'predBest', 'cCollision')
+fprintf('Saved %s\n', resultFile)
 
 %% Full-extension/full-flexion muscle-length and travel calculations
 [~, idxFullExtension] = max(ctx.phiD);  % +10 deg normal calculation limit
