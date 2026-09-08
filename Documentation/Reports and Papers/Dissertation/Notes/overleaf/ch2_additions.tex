@@ -1,46 +1,46 @@
 % Background additions — paste after Section 2.8 in chapters/15-background.tex.
 % Requires the candidate references (Notes/overleaf/candidate_references.bib
 % contents) merged into thesis.bib first.
+% Revised 2026-09-07 after independent review (citation accuracy + prose).
 
 \section{State of the Art in Neuromechanical Simulation}\label{sec:bg_sota}
 
 Neuromechanical simulation couples a musculoskeletal plant to a model of the
-neural controller that drives it, and current work follows three partially
-overlapping lines. The first treats reflex physiology as the controller. Geyer
-and Herr \citep{geyer_musclereflex_2010} showed that positive force, length, and
-velocity feedback around each muscle, organized with simple interlimb
-coordination, is enough to produce self-stabilizing human-like walking dynamics
-and realistic muscle activations without a central pattern generator. That model
-anchored a generation of reflex-based controllers, including the cat hindlimb
-neuromechanical models discussed in Section~\ref{sec:bg_neural}
-\citep{markin_afferent_2010, shevtsova_modeling_2016}.
+neural controller that drives it. One line of work treats reflex physiology as
+the controller. Geyer and Herr \citep{geyer_musclereflex_2010} showed that
+positive force, length, and velocity feedback around each muscle, organized with
+simple interlimb coordination, is enough to produce self-stabilizing human-like
+walking dynamics and realistic muscle activations without a central pattern
+generator. Complementary neuromechanical models of the cat hindlimb combine
+central pattern generation with afferent control, as discussed in
+Section~\ref{sec:bg_neural} \citep{markin_afferent_2010, shevtsova_modeling_2016}.
 
-The second line replaces hand-designed circuitry with machine learning. Song et
-al. \citep{song_deep_2021} trained deep reinforcement learning policies on a
-physiologically realistic musculoskeletal model in OpenSim and reproduced human
-kinematics and muscle activations across locomotion tasks. The plant in such
-work is mature, but the controller is an opaque function approximation: its
-internal variables do not correspond to identifiable physiological circuits, so
-the lesion, deletion, and stimulation experiments that make neuromechanical
-models scientifically useful lose their meaning. Recent perspectives on
-predictive musculoskeletal simulation identify the same tension between plant
-fidelity and interpretable control \citep{degroote_perspective_2021}.
+A second strand replaces hand-designed circuitry with machine learning. Song et
+al. \citep{song_deep_2021} surveyed this direction and reported the Learn to
+Move competitions, in which deep reinforcement learning policies were trained on
+OpenSim musculoskeletal models and produced walking and running with realistic
+kinematics. The plant in such work is mature, but the controller is an opaque
+function approximation: its internal variables do not correspond to identifiable
+physiological circuits, so the lesion, deletion, and stimulation experiments
+that make neuromechanical models scientifically useful lose their meaning.
+Reviews of predictive musculoskeletal simulation likewise discuss the persistent
+difficulty of specifying and validating the assumed motor control
+\citep{degroote_perspective_2021}.
 
-The third line, in which this dissertation sits, is the synthetic nervous system
-approach: controllers built from explicit, conductance-based neurons mapped to
-identified physiological circuits, simulated at speeds compatible with real-time
-robotics \citep{nourse_sns_2023}. The program attempted here combines an
-anatomically grounded controller, a biomechanically validated pneumatic plant
+This dissertation belongs to a third approach: synthetic nervous systems,
+controllers built from explicit, conductance-based neurons mapped to identified
+physiological circuits and simulated at speeds compatible with real-time
+robotics. The program attempted here combines an anatomically grounded
+controller, a biomechanically validated pneumatic plant
 (Chapters~\ref{ch:methods}--\ref{ch:results}), and an eventual physical robot.
-Simulation speed is what makes this combination practical. The MuJoCo backend
-evaluates the musculoskeletal loop faster than real time on commodity hardware
-\citep{todorov_mujoco_2012, caggiano_myosuite_2022}, and SNS-Toolbox sustains
-real-time or faster network evaluation from workstations down to embedded boards
-\citep{nourse_sns_2023}. A single overnight run can sweep thousands of parameter
-combinations or execute hundreds of simulated gait cycles per condition. That
-throughput turns lesion and stimulation studies from bespoke demonstrations into
-statistically powered experiments, a rate of testing no human-subject or animal
-protocol can approach.
+Simulation speed makes the combination practical. SNS-Toolbox couples directly
+to physics simulators such as MuJoCo and sustains real-time or faster network
+evaluation from workstations down to embedded boards
+\citep{caggiano_myosuite_2022, nourse_sns_2023}. A single overnight run can
+sweep thousands of parameter combinations or execute hundreds of simulated gait
+cycles per condition. This throughput makes lesion and stimulation studies
+statistically practicable on the model, at a scale that human-subject and
+animal protocols rarely reach.
 
 \section{Testing Neuromechanical Hypotheses on Robots: The Ethical Case}\label{sec:bg_ethics}
 
@@ -58,30 +58,31 @@ robot that implements a validated neuromechanical hypothesis is such a
 replacement method. Every deletion, lesion, and stimulation experiment that runs
 on the synthetic nervous system is an experiment that does not require a living
 subject. Robot subjects can also be duplicated exactly, so the populations
-across experimental conditions are statistically identical, a form of reduction
-no breeding colony can offer. Refinement follows directly: the failure modes of
+across experimental conditions are statistically identical, which breeding
+colonies cannot guarantee. Refinement follows directly: the failure modes of
 these experiments damage hardware, not tissue.
 
-Standing as a replacement subject, however, must first be earned. Webb's
-analyses of biorobotic methodology \citep{webb_robots_2001, webb_robots_2002}
-argue that a robot is a good model of biological behavior when the mechanism it
-implements is tested at the same level of organization as the target phenomenon:
-matching dynamics, control structure, and sensory ecology rather than surface
-appearance. The validation chain of this dissertation follows that standard. The
-actuator force model was validated against bench data
-(Section~\ref{sec:results_force}), the joint torque model against isometric
-measurements and human torque envelopes (Section~\ref{sec:results_torque}), and
-the neuromechanical controller will be verified against published tonic
-stimulation and deletion phenomena \citep{selionov_tonic_2009,
-rybak_modelling_2006} before any locomotion tuning is attempted. Only then can
-an experiment on the robot be read as evidence about the hypothesized biological
-circuit rather than about the robot.
+Before a robot can stand in as a replacement subject, however, its validation
+must meet an explicit standard. Webb's analyses of biorobotic methodology
+\citep{webb_robots_2001, webb_robots_2002} argue that a robot model earns
+biological relevance when it tests hypotheses about the target mechanism,
+represents the structure of that mechanism accurately, and matches, and ideally
+predicts, the target behavior, with relevance judged across several dimensions
+rather than by surface resemblance. The validation chain of this dissertation
+follows that standard. The actuator force model was validated against bench
+data (Section~\ref{sec:results_force}), the joint torque model against
+isometric measurements and human torque envelopes
+(Section~\ref{sec:results_torque}), and the neuromechanical controller will be
+verified against published tonic stimulation and deletion phenomena
+\citep{selionov_tonic_2009, rybak_modelling_2006} before any locomotion tuning
+is attempted. Only then can an experiment on the robot be read as evidence
+about the hypothesized biological circuit.
 
-The argument closes the loop described in Section~\ref{sec:project}. Experiments
-that are unethical, impractical, or statistically unreachable in humans and
-animals become routine on the robot. The resulting insights feed back into
-biology, into the design of the next robot iteration, and into prosthetic and
-orthotic devices, which face the same underlying problem of controlling
-muscle-like actuators for human users. The ethical case and the scientific case
-are the same case: the robot is the instrument that makes these experiments
-possible at all.
+These considerations return the argument to the program described in
+Section~\ref{sec:project}. Experiments that are unethical, impractical, or
+statistically out of reach in humans and animals become routine on the robot.
+The resulting insights feed back into biology, into the design of the next
+robot iteration, and into prosthetic and orthotic devices, which face the same
+underlying problem of controlling muscle-like actuators for human users. The
+ethical and scientific cases thus coincide: the robot is the instrument that
+makes these experiments possible.

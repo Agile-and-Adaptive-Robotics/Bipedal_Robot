@@ -20,6 +20,7 @@ SOLVER = getenv('FLX2BRK_SOLVER');
 if isempty(SOLVER), SOLVER = 'gamultiobj'; end
 
 USE_BRACKET2 = true;     %false = (d)+(e) ablation: no second bracket
+TRANSMODE = '2trans';    %frame method used by the evaluator: '2trans' (two-rotation, current) or '1trans' (yaw-only)
 DO_PLOTS = ~batchStartupOptionUsed;   %auto: plots when run interactively
 PICK = 1;                %which filtered Pareto candidate to evaluate
 
@@ -202,13 +203,13 @@ fprintf('Mean optimized: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',mean(f,1,'
 %% Save results
 stamp = char(string(datetime('now'),'yyyyMMdd'));
 if isSmoke
-    resultFile = sprintf('minimizeFlxPin10_2brk_results_%s_smoke.mat', stamp);
+    resultFile = sprintf('minimizeFlxPin10_results_%s_2brkt_%s_smoke.mat', stamp, TRANSMODE);
 else
-    resultFile = sprintf('minimizeFlxPin10_2brk_results_%s.mat', stamp);
+    resultFile = sprintf('minimizeFlxPin10_results_%s_2brkt_%s.mat', stamp, TRANSMODE);
 end
 save(resultFile, 'results_cv', 'all_candidates', 'results_sort', 'results_sort_actual', ...
      'filtered_results', 'xCols', 'a0', 'f', 'k1', 'k2', 'k3', 'PICK', ...
-     'ALLBPA', 'NUMHOLD', 'POP', 'MAXGEN', 'USE_BRACKET2', 'SOLVER', 'labels', 'W');
+     'ALLBPA', 'NUMHOLD', 'POP', 'MAXGEN', 'USE_BRACKET2', 'TRANSMODE', 'SOLVER', 'labels', 'W');
 fprintf('Results saved to %s\n', resultFile);
 
 %% Plot torque curves, pre- and post-Optimized

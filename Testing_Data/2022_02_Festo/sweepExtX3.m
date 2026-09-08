@@ -137,6 +137,8 @@ for cIdx = 1:numel(configs)
             && cand(ii,3+nH) >= XI1MIN && cand(ii,5+nH) >= XI3MIN;
     end
     survivors = cand(keep, :);
+    if ~isfield(sweepResults, 'allCandidates'), sweepResults.allCandidates = cell(1, numel(configs)); end
+    sweepResults.allCandidates{cIdx} = cand;   %full set, for later pattern mining
     fprintf('Config %d: %d candidates, %d survive (Xi1>=%.2e, Xi3>=%.2f, beats baseline)\n', ...
         cIdx, size(cand,1), size(survivors,1), XI1MIN, XI3MIN);
     sweepResults.candidates{cIdx} = survivors;

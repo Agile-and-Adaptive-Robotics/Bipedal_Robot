@@ -32,21 +32,18 @@ $\varepsilon^{*} = \varepsilon / \varepsilon_{620}$.
 
 \subsection{Normalized Force Surface}
 
-The normalized isometric force surface of Equation~(\ref{eq:Fstar}) is
-implemented in closed form,
-\begin{equation}
-    F^{*} = c_{0}\left(e^{-c_{1}\varepsilon^{*}} - 1\right)
-            + P^{*}\,e^{-c_{2}(\varepsilon^{*})^{2}},
-    \qquad F^{*}\le 0 \;\Rightarrow\; 0,
-    \label{eq:app_fstar}
-\end{equation}
-with $P^{*} = P/\qty{620}{\kPa}$. The coefficients were fitted by nonlinear
-least squares with least-absolute-residual robustness and are reported in
-Table~\ref{tab:Fstar}. The code additionally holds a \qty{40}{\mm} fit that this
-dissertation does not use ($c_0 = 0.1224$, $c_1 = 10.47$, $c_2 = 2.023$). A
-spline interpolation of the manufacturer's datasheet curves was used as a
-runtime alternative during model development, with force clamped to zero for
-$\varepsilon^{*}>1$ or $F^{*}<0$; Equation~(\ref{eq:app_fstar}) superseded it.
+The normalized isometric force surface of Equation~(\ref{eq:Fstar}) was fitted
+by nonlinear least squares with least-absolute-residual robustness, and its
+coefficients are reported in Table~\ref{tab:Fstar}. The code holds two
+implementations of this surface: a closed-form evaluation of
+Equation~(\ref{eq:app_fstar}) and a gridded interpolation of the manufacturer's
+datasheet curves, with force clamped to zero for $\varepsilon^{*}>1$ or
+$F^{*}<0$. The runtime torque evaluators used throughout this dissertation
+evaluate the gridded interpolation.
+% TODO(Ben): the closed-form file (Functions/f_festo.m) is the only place the
+% Table tab:Fstar coefficients appear; the evaluators call Functions/festo4.m
+% (FestoLookup.mat). Confirm which surface generated the reported Chapter 4
+% numbers and reconcile with Methods eq (Fstar) before final submission.
 
 \subsection{Maximum Force}
 
@@ -73,13 +70,17 @@ $\hat{u}$ is the unit force direction. This is the same quantity as the
 cross-product projection of Equation~(\ref{eq:project_ma}); the planar scalar
 moment arm about the joint axis is the magnitude of the in-plane components.
 Torque about the joint $z$-axis is $\vec{M} = \vec{r}\times\vec{F}$, evaluated
-only where the BPA is in tension; values in the compressive region
-($\varepsilon < -0.02$) are discarded.
+only where the BPA is in tension; values below the compressive-strain cutoff
+are discarded ($\varepsilon < -0.02$, or $\varepsilon < -0.03$ for the
+\qty{20}{\mm} assemblies).
 
 \section{Compliance Model Implementation}
 
 The compliance-corrected muscle length entering Equation~(\ref{eq:Lm}) is
-computed as $l_{m} = l_{LMT} - \chi_{0} - l_{ten} - 2\,l_{fitting}$. The bracket
+computed as $l_{m} = l_{LMT} - \chi_{0} - l_{ten} - 2\,l_{fitting}$. Equation
+(\ref{eq:Lm}) states this length without the explicit tendon term, subsuming it
+in the path length; the implementation keeps the two separate.
+% TODO(Ben): reconcile eq (Lm)/eq (x3) in Methods with the implemented length. The bracket
 stiffness matrix and the projected scalar compliance along the force direction
 are evaluated per configuration as
 $\mathbf{K}_{br} = \mathrm{diag}(\chi_{1},\chi_{2},\chi_{2})$ in the bracket
@@ -97,7 +98,7 @@ as in Equation~(\ref{eq:equivalentstiffness}).
 
 The scalar compliance displacement $\delta$ of
 Equation~(\ref{eq:complianceforcebalance}) is found numerically with a
-bracketed root solve on $[0,\, l_{m}-l_{620}]$,
+bracketed root solve (Matlab's \texttt{fzero}) on $[0,\, l_{m}-l_{620}]$,
 \begin{equation}
     F_{620}(l_{0})\,F^{*}\!\left(\varepsilon^{*}(\delta),P^{*}\right) - k_{eq}\,\delta = 0,
     \label{eq:app_forcebalance}
