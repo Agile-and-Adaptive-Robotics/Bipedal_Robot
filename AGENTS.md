@@ -145,10 +145,17 @@ Loaded automatically at session start. Keep it current; keep it lean.
 - `Code\Matlab\Mesh_Optimization\Knee_Torque_revision_3\Knee_Torque_revision_3\README_revision_3.md`
   — detailed flexor BPA/route model doc (modes, how to run tests).
 
+- Known data concern (Ben, 2026-09-07): ONE pinned test used an encoder whose true
+  measured angles may be ~+5 degrees off from reported — test not yet identified. If one
+  test's fits look angle-shifted, suspect this first; ask Ben which test before assuming.
+
 ## Hazards — do NOT open these as source
 
+- Known data concern (Ben, 2026-09-07): ONE pinned test used an encoder whose true
+  measured angles may be ~+5 degrees off from reported — test not yet identified. If one
+  test's fits look angle-shifted, suspect this first; ask Ben which test before assuming.
 - `Solid_Models\Biomimetics_2022-Knee_Test\Point_cloud\Tibia_copy.txt` (7.1 MB point cloud);
-  `Spine_Mesh_Points.txt` (172 KB, duplicated in 3 places); `HX711*\esempio.txt` (1 MB);
+  `Spine_Mesh_Points.txt` (172 KB, duplicated in 3 places); `HX711*sempio.txt` (1 MB);
   any `.mat` in `Previous Optimization Code\Trial Results\` (up to 95 MB).
 - `.asv` files = stale MATLAB autosaves that mislead; the real source is the `.m` beside them.
 - Logs: grep/tail them, never read whole. Point clouds/binary .mat: process with MATLAB, never

@@ -16,7 +16,8 @@ function summary = crossPredictFlx(srcMat, pick)
 
 if nargin < 2, pick = 1; end
 if nargin < 1 || isempty(srcMat)
-    d = dir([fileparts(mfilename('fullpath')), filesep, 'minimizeFlxPin10_2brk_results_*.mat']);
+    d = dir([fileparts(mfilename('fullpath')), filesep, 'minimizeFlxPin10_results_*_2brkt_*.mat']);
+    d = d(~contains({d.name}, '_smoke'));   %never auto-select smoke results
     if ~isempty(d)
         [~,ix] = max([d.datenum]); srcMat = fullfile(d(ix).folder, d(ix).name);
     else

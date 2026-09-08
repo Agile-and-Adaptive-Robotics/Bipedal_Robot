@@ -25,12 +25,12 @@ current. A spike is emitted when $V$ crosses the firing threshold, after which
 $V$ resets and an after-hyperpolarization of amplitude $A_{\text{AHP}}$ with
 time constant $\tau_{\text{AHP}}$ is applied. The threshold accommodates with
 firing history (relative accommodation $r_{\text{acc}}$, time constant
-$\tau_{\text{acc}}$). Optional calcium channels are defined in the model but
-disabled in the current configuration.
+$\tau_{\text{acc}}$).
 
 \begin{table}[htbp]
-\caption{Spiking neuron parameters in the AnimatLab bipedal walker model. All
-neurons share these values except the motor neuron threshold noted below.}
+\caption{Spiking neuron parameters for the rhythm-generator,
+pattern-formation, and motoneuron populations of the AnimatLab bipedal walker
+model. The sensory afferent (MV) populations differ, as noted in the text.}
 \label{tab:app_neuron}
 \begin{tabular}{@{}lll@{}}
 \toprule
@@ -46,6 +46,14 @@ AHP time constant        & $\tau_{\text{AHP}}$ & \qty{3}{\ms}   \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+The sensory afferent (MV) populations that carry position and load signals into
+the circuit differ from Table~\ref{tab:app_neuron}: they rest at
+\qty{-100}{\mV} with a firing threshold of \qty{+50}{\mV}, use no threshold
+accommodation, and have a slower \qty{90}{\ms} after-hyperpolarization. A
+subset of interneurons likewise disables accommodation
+($r_{\text{acc}} = 0$). Optional calcium channels are defined in all neurons
+but disabled in the current configuration ($G_{\text{max,Ca}} = 0$).
 
 \section{Non-Spiking Chemical Synapses}
 
@@ -71,9 +79,9 @@ hyperpolarizing IPSP ($E_{\text{syn}} = \qty{-70}{\mV}$,
 $\qty{-55}{\mV} \to \qty{-40}{\mV}$), and depolarizing IPSP
 ($E_{\text{syn}} = \qty{-55}{\mV}$,
 $\qty{-60}{\mV} \to \qty{-40}{\mV}$). Spiking chemical synapses and electrical
-synapses (rectifying coupling 0.1, non-rectifying 0.2) are also defined and
-remain available for the sensory afferent pathways of the MuJoCo/SNS
-implementation.
+synapses (rectifying coupling 0.1 in the low state and 0.3 in the high state;
+non-rectifying 0.2) are also defined and remain available for the sensory
+afferent pathways of the MuJoCo/SNS implementation.
 
 \section{Relation to the SNS-Toolbox Implementation}
 
