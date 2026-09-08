@@ -2,11 +2,29 @@
 
 Loaded automatically at session start. Keep it current; keep it lean.
 
+## Machines
+
+- **This machine = DESKTOP-5Q16KE9 (laptop), the main workstation** — newest/premium
+  MATLAB + SolidWorks, but modest hardware (6 cores, 16 GB RAM). MATLAB **R2025b** at
+  `C:\Program Files\MATLAB\R2025b`; SOLIDWORKS **2025 SP4.1** (33.4.1) at
+  `C:\Program Files\SOLIDWORKS Corp`. All GitHub repos live under
+  `C:\Users\Ben\Documents\GitHub\` — there is **no D: drive here** (easteregg2 keeps repos
+  on D:; ignore/copy-over D:-based notes from it).
+- **Other workstation = easteregg2** — 10 cores, 128 GB RAM; older installs (MATLAB R2025a,
+  SOLIDWORKS 2025 SP03, on D:). **Heavy parallel optimization runs belong on easteregg2**;
+  `parpool(10)` only makes sense there — on this laptop cap the pool at 6.
+- Custom skills (`matlab`, `solidworks`, `latex-overleaf`) are version-controlled in
+  `Documents\GitHub\ZCode_Skills`. On this machine `C:\Users\Ben\.zcode\skills\` holds
+  **directory junctions** into that repo — edit the repo copy, then Ben commits via GitHub
+  Desktop. On easteregg2 skills are copied folders under
+  `C:\Users\Ben Bolen\.agents\skills\`.
+
 ## Project purpose (priority order)
 
 1. **Dissertation first** (deadline: this week, Sept 2026). LaTeX source lives in
    `Documentation\Reports and Papers\Dissertation\` (untracked); the `upload\` mirror is the
-   canonical Overleaf copy. Use the `latex-overleaf` skill for Overleaf work.
+   canonical Overleaf copy. Use the `latex-overleaf` skill for Overleaf work (installed on
+   this machine via the ZCode_Skills repo junction).
 2. Design and control of bipedal humanoid robot legs with artificial muscles (PAMs/BPAs)
    controlled by a synthetic nervous system. Lab: AARL (Agile and Adaptive Robotics Lab), PSU.
 3. **Xi-correction-factor program** — run minimizers against pinned-knee test data in
@@ -94,7 +112,8 @@ Loaded automatically at session start. Keep it current; keep it lean.
   `buildKneeExtContext20mm()`; objectives/constraints are wrapped as anonymous functions of
   `(x, ctx)`. Flexor and extensor use different constraint machinery.
 - Optimizers use `parpool(10)` + `surrogateopt` (≈7000 evals) then `patternsearch` (≈15000) —
-  **hours, not minutes.** Run via the `matlab` skill (`matlab -batch`) in the background with
+  **hours, not minutes.** (parpool(10) fits easteregg2; on DESKTOP-5Q16KE9 cap at 6.) Run via
+  the `matlab` skill (`matlab -batch`) in the background with
   output tee'd to a log; check the log tail, never babysit the run turn-by-turn.
 - Path setup: self-locate the repo root, then `addpath(genpath(root/Code/Matlab))` with
   **Mesh_Optimization winning any shadowing contest** (duplicate filenames exist in Robot_Data,
