@@ -1,0 +1,55 @@
+{
+  "source_model": "Neuromechanical_Models\\Biped_2xCPG_wSubs\\walk new new tester added 2 axis_phase1.asim",
+  "source_model_sha256": "20b6b53aab3731043332a11e8232f9ea1959f8a44f9d79b22bc63059cc307a21",
+  "charts": [
+    {
+      "path": "Neuromechanical_Models\\Biped_2xCPG_wSubs\\DataTool_7.txt",
+      "sha256": "ca699e12129a7a2b9a5381f21a4bfd676c8f30c889c9dd34a5848e1253d2887d",
+      "total_rows": 50010,
+      "retained_rows": 50001,
+      "excluded_padding_rows": 9
+    },
+    {
+      "path": "Neuromechanical_Models\\Biped_2xCPG_wSubs\\DataTool_8.txt",
+      "sha256": "69091d1e70937d06ea8d92c168f89eaf3f660f2ec47e566c78e7aade81fdab5d",
+      "total_rows": 50010,
+      "retained_rows": 50001,
+      "excluded_padding_rows": 9
+    }
+  ],
+  "retained_time_seconds": [
+    0,
+    10
+  ],
+  "sample_interval_seconds": 0.0002,
+  "checks": [
+    "finite values",
+    "uniform increasing times",
+    "aligned chart times",
+    "channel types checked against source model",
+    "zero padding excluded only after chart end"
+  ],
+  "plotted_channels": [
+    "knee_L_deg",
+    "knee_R_deg",
+    "RG_L_stance",
+    "RG_R_stance",
+    "L_foot ground contact",
+    "R_foot ground contact"
+  ],
+  "joint_figure_channels": [
+    "hip_L_deg",
+    "hip_R_deg",
+    "knee_L_deg",
+    "knee_R_deg",
+    "ankle_L_deg",
+    "ankle_R_deg"
+  ],
+  "processing": "No filtering or resampling; volts multiplied by 1000 for mV. Within-window zero-voltage samples retained.",
+  "limits": [
+    "Contact channels are sensory-neuron voltages, not forces or Boolean contact states.",
+    "Model includes an enabled external ForceX=40 input to Root during 0-1 s.",
+    "No claim of stable walking or effective ground-contact gating.",
+    "Body-position channels were recorded but are not plotted; their unit convention was not resolved."
+  ]
+}

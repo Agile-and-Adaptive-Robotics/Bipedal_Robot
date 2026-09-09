@@ -47,10 +47,12 @@ with sensory neurons between afferents and synapses:
 - Ia(flex) → **Inh** → MN_ext, Ia(ext) → **Inh** → MN_flex (reciprocal inhibition)
 - Ia(flex) → **Exc** → MN_flex, Ib(flex) → **Inh** → MN_flex
 
-Demo behavior: knee rises from 15° and regulates ~45° against the 0.5 N·m load with
-graded co-contraction (A_ext≈0.6, A_flex≈0.5). The antagonist loop shows a ~9 Hz
-alternating limit cycle (clonus-like) — that's the stretch-reciprocal loop being
-lively, not a bug. Tune: `gmax` (loop gain), SN `Cm` (loop delay), `b_knee`, `tauAct`.
+Demo behavior after correcting the BPA force block to apply activation once
+(`F = Fmax*A*max(0, epsMax - strain)`): the knee rises from 15° and reaches
+~42.7° against the 0.5 N·m load with graded co-contraction at the final sample
+(A_ext≈0.34, A_flex≈0.73). The antagonist loop shows a ~9 Hz alternating
+model limit cycle. Its physiological significance has not been evaluated. Tune:
+`gmax` (loop gain), SN `Cm` (loop delay), `b_knee`, `tauAct`.
 Plant params (inertia, moment arm, Fmax) are placeholder rig estimates — replace from
 CAD mass properties and the Xi-corrected BPA predictions.
 

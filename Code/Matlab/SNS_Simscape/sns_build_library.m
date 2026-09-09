@@ -222,15 +222,15 @@ add_block('simulink/Sources/In1', [blk '/strain'], 'Port', '2', 'Position', [25 
 add_block('simulink/Math Operations/Gain', [blk '/Fmax_g'], 'Gain', 'Fmax', 'Position', [100 55 130 85]);
 add_block('simulink/Math Operations/Sum', [blk '/Lterm'], 'Inputs', '+-', 'Position', [100 130 130 160]);
 add_block('simulink/Sources/Constant', [blk '/epsMax_c'], 'Value', 'epsMax', 'Position', [30 175 60 205]);
-add_block('simulink/Math Operations/Product', [blk '/Fprod'], 'Inputs', '3', 'Position', [200 85 230 115]);
+add_block('simulink/Math Operations/Product', [blk '/Fprod'], 'Inputs', '2', 'Position', [200 85 230 115]);
 add_block('simulink/Discontinuities/Saturation', [blk '/Sat'], 'UpperLimit', 'Fmax', 'LowerLimit', '0', 'Position', [260 85 290 115]);
 add_block('simulink/Sinks/Out1', [blk '/force_N'], 'Position', [330 93 360 107]);
+% Fmax_g already forms Fmax*A; apply activation exactly once.
 add_line(blk, 'activation/1', 'Fmax_g/1', 'autorouting', 'on');
 add_line(blk, 'epsMax_c/1', 'Lterm/1', 'autorouting', 'on');
 add_line(blk, 'strain/1', 'Lterm/2', 'autorouting', 'on');
 add_line(blk, 'Fmax_g/1', 'Fprod/1', 'autorouting', 'on');
-add_line(blk, 'activation/1', 'Fprod/2', 'autorouting', 'on');
-add_line(blk, 'Lterm/1', 'Fprod/3', 'autorouting', 'on');
+add_line(blk, 'Lterm/1', 'Fprod/2', 'autorouting', 'on');
 add_line(blk, 'Fprod/1', 'Sat/1', 'autorouting', 'on');
 add_line(blk, 'Sat/1', 'force_N/1', 'autorouting', 'on');
 m = Simulink.Mask.create(blk);

@@ -6,7 +6,7 @@
 % used for the rhythm generator, pattern formation, and feedback circuits.
 
 
-This appendix documents the neuron and synapse models used by the synthetic nervous systems in this project, both in the current AnimatLab walker models and as they will be instantiated in SNS-Toolbox for the MuJoCo pipeline of Chapter~\ref{ch:futurework}. All parameter values below are read from the working bipedal walker model (\texttt{Biped\_2xCPG\_wSubs/walk new new tester\_Standalone.asim}).
+This appendix documents the neuron and synapse models used by the synthetic nervous systems in this project, both in the current AnimatLab walker models and as they will be instantiated in SNS-Toolbox for the MuJoCo pipeline of Chapter~\ref{ch:futurework}. The current file of record is the instrumented phase-1 walker model (\texttt{Biped\_2xCPG\_wSubs/walk new new tester added 2 axis\_phase1.asim}); the older \texttt{\_Standalone.asim} exports predate the subsystem reorganization and are not used here as the authoritative model state.
 
 \section{Spiking Neuron Model}
 
@@ -72,5 +72,5 @@ Spiking chemical synapses and electrical synapses (rectifying coupling weight 0.
 
 \section{Relation to the SNS-Toolbox Implementation}
 
-These are the standard AnimatLab firing-rate/conductance models. The SNS-Toolbox \citep{nourse_sns_2023} implements the same classes of non-spiking and spiking neurons with conductance-based synapses, so the parameter set above transfers directly to the rhythm-generator, pattern-formation, and feedback circuits to be built for the MuJoCo pipeline (Chapter~\ref{ch:futurework}). The tonic stimulation tests of Section~\ref{sec:fw_cpg} correspond to constant $I_{\text{app}}$ injections into Equation~(\ref{eq:app_membrane}) at the motoneuron, pattern-formation, and rhythm-generator layers respectively.
+These are the standard AnimatLab firing-rate/conductance models. SNS-Toolbox \citep{nourse_sns_2023} implements corresponding classes of non-spiking and spiking neurons with conductance-based synapses. The AnimatLab parameters therefore provide physically motivated initialization candidates for the rhythm-generator, pattern-formation, and feedback circuits of the MuJoCo pipeline (Chapter~\ref{ch:futurework}), but they require an explicit parameter mapping and validation before the two implementations can be considered equivalent. The tonic stimulation tests of Section~\ref{sec:fw_cpg} correspond to constant $I_{\text{app}}$ injections into Equation~(\ref{eq:app_membrane}) at the motoneuron, pattern-formation, and rhythm-generator layers respectively.
 
