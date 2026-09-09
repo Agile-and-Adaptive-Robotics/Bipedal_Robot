@@ -163,7 +163,15 @@ Loaded automatically at session start. Keep it current; keep it lean.
   are STALE (predate the subsystem reorg); the active phase-1 file is the instrumented
   working copy `Biped_2xCPG_wSubs\walk new new tester added 2 axis_phase1.asim` (2026-09-08).
   A fresh standalone export from the current .aproj is still pending; DataTool_*.txt are
-  run byproducts.
+  run byproducts. **2026-09-09 .aproj surgery (UNVERIFIED in GUI — Ben opens it next):**
+  RH-side wiring completed (RH_RG half-center, RG→PF drive, hip Ia/II + ankle Ib/II
+  coordination — mirrored from LH), LH↔RH RG commissural inhibition added via 4 new
+  OffPages on the top page (+ 2 nA tonic kick on L RG ext), and 4 biarticular muscles per
+  leg added (Gas/BFlh/Semimem/RF: physical bodies+receptors+attachments with TEMPLATE
+  gains and placeholder attachment spots, plus full Deng-style neural chains driven from
+  the existing PF layers). Also fixed a pre-existing bug: RH knee/ankle muscle-drive
+  adapters were wired from Renshaw cells, now from MNs. Pre-surgery backup in
+  `Biped_2xCPG_wSubs\AnimatLab_backups\`.
 - `Code\Matlab\SNS_Simscape\` — SNS neuron block library (`SNS_Library.slx`: non-spiking RC
   neurons, E/I synapses, Ia/Ib afferents) + `KneeReflexDemo.slx` (antagonist BPA knee reflex
   demo; runs in plain Simulink). See its README for the two open blockers: the LAPTOP's
