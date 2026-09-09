@@ -12,7 +12,9 @@ function [f_all, bpa_all] = minimizeFlxPin2brk(Xi0,Xi1,Xi2,idx_val,useB2,transMo
 %         direction from Loc geometry (origin -> first distinct point).
 %         Pbr2 = [-52.61, 0, 75.06]/1000 (hip origin to flexor origin bracket),
 %         pitch-only bracket frame Thbr = RpToTrans(RhbrZ, Pbr2'),
-%         K2 = [X2, X1, X2], compliance projected on the path force direction,
+%         K2 depends on frame convention (Ben 2026-09-08): 1trans = [X2, X1, X2],
+%         2trans = [X1, X1, X2] -- the space-frame-z buckling he observed splits
+%         differently between bracket axes under each convention.
 %         c_eff = c_b + cSpr + c_b2, pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] + eA,
 %         LOC row 1 (origin) updated with pAnew.
 %   useB2 (optional, default true): false reproduces the (d)+(e)-only variant
@@ -62,10 +64,9 @@ if isempty(kf)
                   'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
     clear Bifemsh_Pam phiD G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
 
-    % 47cm length -- ENCODER CORRECTION: true angle = reported + 5.3 deg
+    % 47cm length -- ENCODER CORRECTION: EXPERIMENTAL ANGLES ONLY; true = reported + 5.3 deg
     load KneeFlxPin_10mm_47cm.mat phiD
     load Plot_KneeFlxPin10mm_47cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Bifemsh_Pam
-    phiD = phiD + 5.3;
     A = sortrows([Angle + 5.3, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
     kfb(3) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
                   'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
@@ -109,6 +110,7 @@ if isempty(kf)
     %stays field-order compatible with the kf template.
     for jD = 1:numel(kfb)
         kfb(jD).eA2 = [];
+        kfb(jD).unitD_p = [];
     end
     kf = kfb;
 end
@@ -164,6 +166,7 @@ bpa_i.strain_p = strain_p;
 bpa_i.L_p = L_p;
 bpa_i.gama = gemma;
 bpa_i.eA2 = eA2;    %origin-bracket deflections [axial2, bendY2, bendZ2], N x 3
+bpa_i.unitD_p = unitD_p;   %deformed force unit direction (tibia frame), N x 3
 
 % GoF calculation
 fitvec = SSE(bpa_i, M_p);
@@ -309,7 +312,7 @@ end
 if isinf(X1) && isinf(X2)  && isinf(kSpr)
     [epsilon, delta, beta, gama, e_ax2, e_by2, e_bz2] = deal(zeros(N,1));
 else
-    [epsilon, delta, beta, gama, e_ax2, e_by2, e_bz2] = fortz(klass,Fbrk,Fbrh2,X1,X2,kSpr,X0,useB2);
+    [epsilon, delta, beta, gama, e_ax2, e_by2, e_bz2] = fortz(klass,Fbrk,Fbrh2,X1,X2,kSpr,X0,useB2,transMode);
 end
 
 eB = [epsilon, delta, beta];
@@ -348,7 +351,7 @@ end
 end
 
 %% Force and length reduction due to deformation
-function [e_axial, e_bendY, e_bendZ, e_cable, e_axial2, e_bendY2, e_bendZ2] = fortz(klass,Fbr,Fbr2,X1,X2,kSpr,X0,useB2)
+function [e_axial, e_bendY, e_bendZ, e_cable, e_axial2, e_bendY2, e_bendZ2] = fortz(klass,Fbr,Fbr2,X1,X2,kSpr,X0,useB2,transMode)
 % e_axial, insertion-bracket axial elongation
 % e_bendY, insertion-bracket bending displacement y - direction
 % e_bendZ, insertion-bracket bending displacement z - direction
@@ -395,7 +398,11 @@ function [e_axial, e_bendY, e_bendZ, e_cable, e_axial2, e_bendY2, e_bendZ2] = fo
         norms2 = vecnorm(Fbr2, 2, 2);
         valid2 = norms2 > 1e-4 & all(~isnan(Fbr2), 2);
         u_hat_all2 = normalize(Fbr2);
-        K2 = [X2, X1, X2]; %bracket stiffness array, origin bracket
+        if strcmpi(transMode, '1trans')
+            K2 = [X2, X1, X2]; %origin bracket, pitch-only frame (Ben 2026-09-08)
+        else
+            K2 = [X1, X1, X2]; %origin bracket, two-rotation frame (Ben 2026-09-08)
+        end
         K_bracket2 = diag(K2);       %bracket stiffness matrix
         C_bracket2 = diag([1/K2(1), 1/K2(2), 1/K2(3)]); %bracket compliance
         u_hat2 = permute(u_hat_all2, [3, 2, 1]);  % [1x3xN]

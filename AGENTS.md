@@ -250,9 +250,13 @@ Loaded automatically at session start. Keep it current; keep it lean.
 
 - Delegate broad searches and audits to subagents; keep main-session context small.
 - Fresh session per task; long MATLAB runs in background; plan mode before expensive execution.
-- Ben uses **GitHub Desktop** for git and does not know git/Git Bash CLI. Run git via your own
-  tools when he asks, or give GitHub Desktop steps in GUI terms (Fetch/Pull origin, file
-  checklist, commit message, Push origin) — never hand him shell git commands.
+- Ben uses **GitHub Desktop** for git and does not know git/Git Bash CLI. Read-only git
+  (status/log/diff/fetch) via my own tools is fine, but **never commit, amend, merge, or
+  push without his explicit go-ahead for that exact action** — even when he asks for git
+  work, prefer preparing the changes + a draft commit message and letting HIM click
+  Commit/Push in GitHub Desktop. Give GUI steps in GUI terms (Fetch/Pull origin, file
+  checklist, commit message, Push origin) — never hand him shell git commands. (Rule set
+  2026-09-08 after a two-machines-one-branch mix-up between parallel AI sessions.)
 - Prefer COM/API automation (SolidWorks skill, Overleaf file edits, Zotero local HTTP) over
   screenshot-driven GUI automation.
 - Model strategy: default GLM-5.3-Flash; escalate to GLM-5.3 only for hard debugging or

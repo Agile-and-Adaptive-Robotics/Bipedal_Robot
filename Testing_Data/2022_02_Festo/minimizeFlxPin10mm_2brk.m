@@ -68,8 +68,8 @@ fprintf('Mean baseline training: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',me
 
 
 %% Problem bounds
-lb = [0*100, log10(5e3), log10(5e3)];
-ub = [0.020*100, log10(5e7), log10(5e7)];
+lb = [0*100, log10(3e4), log10(5e3)];    %Xi1/Xi2 bounds re-centered per biomimetic refinement (Ben, 2026-09-08)
+ub = [0.020*100, log10(1e6), log10(2e4)];
 
 %% Solver
 list = nchoosek(ALLBPA,NUMHOLD);          %Choose how many BPAs to hold out, the others for training
@@ -95,10 +95,10 @@ for k = 1:length(list)
     if DO_PLOTS
         opts.PlotFcn = {@gaplotpareto3D_simple};
     end
-    %Initial population focused on the region of interest (Ben, 2026-09-08):
-    %physical [-0.012 m, 5e4, 0.9e4] to [-0.005 m, 2e5, 1.6e4]; x-space = [cm, log10, log10]
-    opts.InitialPopulationRange = [-0.012*100, log10(5e4), log10(0.9e4); ...
-                                   -0.005*100, log10(2e5), log10(1.6e4)];
+    %Initial population centered on the biomimetic-refinement winner corner
+    %(~Xi0 +5..12 mm, Xi1 ~5e4..5e5, Xi2 ~7e3..1.5e4); x-space = [cm, log10, log10]
+    opts.InitialPopulationRange = [0.5, log10(5e4), log10(7e3); ...
+                                   1.5, log10(5e5), log10(1.5e4)];
 
     switch lower(SOLVER)
         case 'gamultiobj'
