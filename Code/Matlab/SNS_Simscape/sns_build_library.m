@@ -13,6 +13,24 @@
 % Parameter conventions copied from SNS toolbox defaults / Animatlab:
 %   Vrest = -52 mV, tau_m = 50 ms, synapse Thr = -55 mV, slope = 1 /mV,
 %   excitatory Esyn = 0 mV, inhibitory Esyn = -72 mV.
+%
+% --- APPEARANCE CONVENTIONS (Ben, 2026-09-09) ---------------------------------
+% Diagram language follows Rybak/Shevtsova, Animatlab, and Szczecinski et al.
+% 2017 "functional subnetwork" papers:
+%   * neurons                = open circles (black edge, white fill)
+%   * sensory afferents      = open circles labeled Ia / Ib
+%   * muscles                = fusiform ellipses (light green tint)
+%   * EXCITATORY connection  = WHITE TRIANGLE with black edges (INVERTED per
+%     Ben 2026-09-09: tip points back toward the presynaptic side, flat base
+%     at the postsynaptic side)
+%   * INHIBITORY connection  = SOLID BLACK CIRCLE
+% The E/I marker on NonSpikingSynapse is chosen AUTOMATICALLY from the sign of
+% Esyn, so the icon always tells the truth about the connection. Shape is the
+% primary code; block tints use the colorblind-safe Okabe-Ito palette as a
+% redundant cue (excitatory = light orange, inhibitory = light blue; orange/blue
+% reads correctly under deuteranopia/protanopia/tritanopia).
+% Keep every masked block SQUARE (width == height) — mask icons autoscale to the
+% block rectangle, so a non-square block turns circles into ellipses.
 
 lib = 'SNS_Library';
 if bdIsLoaded(lib), close_system(lib, 0); end
@@ -22,7 +40,7 @@ load_system(lib);
 
 %% ---------------- NonSpikingNeuron ----------------
 blk = [lib '/NonSpikingNeuron'];
-add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 40 200 140]);
+add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 40 160 160]);
 delete_line(blk, 'In1/1', 'Out1/1');
 delete_block([blk '/In1']);
 delete_block([blk '/Out1']);
@@ -56,17 +74,17 @@ m = Simulink.Mask.create(blk);
 m.Type = 'SNS NonSpiking Neuron';
 m.Description = ['Non-spiking leaky integrate-and-fire neuron (RC membrane): ' ...
     'Cm*dV/dt = Gm*(Vrest-V) + Isyn. Outputs membrane potential V [mV] and normalized drive S(V) [0..1]. ' ...
-    'Parameter conventions: Animatlab / sns_toolbox.'];
-m.Display = 'disp(''SNS\nNS-Neuron'')';
-m.addParameter('Name', 'Vrest', 'Type', 'edit', 'Prompt', 'Resting potential Vrest (mV)', 'Value', '-52');
-m.addParameter('Name', 'Gm', 'Type', 'edit', 'Prompt', 'Membrane conductance Gm (uS)', 'Value', '0.1');
-m.addParameter('Name', 'Cm', 'Type', 'edit', 'Prompt', 'Membrane capacitance Cm (nF)', 'Value', '5');
-m.addParameter('Name', 'Thr', 'Type', 'edit', 'Prompt', 'Saturation threshold Thr (mV)', 'Value', '-55');
-m.addParameter('Name', 'Slope', 'Type', 'edit', 'Prompt', 'Saturation slope (1/mV)', 'Value', '1');
+    'Parameter conventions: Animatlab / sns_toolbox (Szczecinski et al. 2017).'];
+m.Display = neuronIconCode('NS');
+finishMask(m, blk, {'Vrest','Resting potential Vrest (mV)','-52'; ...
+                    'Gm','Membrane conductance Gm (uS)','0.1'; ...
+                    'Cm','Membrane capacitance Cm (nF)','5'; ...
+                    'Thr','Saturation threshold Thr (mV)','-55'; ...
+                    'Slope','Saturation slope (1/mV)','1'});
 
 %% ---------------- NonSpikingSynapse ----------------
 blk = [lib '/NonSpikingSynapse'];
-add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 220 200 320]);
+add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 220 140 320]);
 delete_line(blk, 'In1/1', 'Out1/1');
 delete_block([blk '/In1']);
 delete_block([blk '/Out1']);
@@ -94,16 +112,18 @@ add_line(blk, 'Iout/1', 'Isyn_nA/1', 'autorouting', 'on');
 m = Simulink.Mask.create(blk);
 m.Type = 'SNS NonSpiking Synapse';
 m.Description = ['Non-spiking chemical synapse: Isyn = gmax*Sat(Vpre)*(Esyn - Vpost) [nA]. ' ...
-    'Esyn = 0 mV -> excitatory; Esyn = -72 mV -> inhibitory. Sat threshold/slope are presynaptic.'];
-m.Display = 'disp(''SNS\nSyn E/I'')';
-m.addParameter('Name', 'gmax', 'Type', 'edit', 'Prompt', 'Max conductance gmax (uS)', 'Value', '1');
-m.addParameter('Name', 'Esyn', 'Type', 'edit', 'Prompt', 'Reversal potential Esyn (mV)', 'Value', '0');
-m.addParameter('Name', 'ThrPre', 'Type', 'edit', 'Prompt', 'Pre saturation threshold ThrPre (mV)', 'Value', '-55');
-m.addParameter('Name', 'SlopePre', 'Type', 'edit', 'Prompt', 'Pre saturation slope SlopePre (1/mV)', 'Value', '1');
+    'Esyn >= 0 mV -> EXCITATORY (icon: white triangle, black edges); ' ...
+    'Esyn < 0 mV -> INHIBITORY (icon: solid black circle). ' ...
+    'ThrPre/SlopePre presynaptic. Diagram language: Szczecinski et al. 2017 Fig. 2.'];
+m.Display = synapseIconCode();
+finishMask(m, blk, {'gmax','Max conductance gmax (uS)','1'; ...
+                    'Esyn','Reversal potential Esyn (mV). >=0 excit, <0 inhib','0'; ...
+                    'ThrPre','Pre saturation threshold ThrPre (mV)','-55'; ...
+                    'SlopePre','Pre saturation slope SlopePre (1/mV)','1'});
 
 %% ---------------- SpikingLIFNeuron ----------------
 blk = [lib '/SpikingLIFNeuron'];
-add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 380 200 480]);
+add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 380 160 500]);
 delete_line(blk, 'In1/1', 'Out1/1');
 delete_block([blk '/In1']);
 delete_block([blk '/Out1']);
@@ -134,15 +154,15 @@ m = Simulink.Mask.create(blk);
 m.Type = 'SNS Spiking LIF Neuron';
 m.Description = ['Spiking leaky integrate-and-fire neuron: tau*dV/dt = (Vrest-V) + Rm*Isyn; ' ...
     'V>=Vth -> output spike flag and membrane resets to Vrest.'];
-m.Display = 'disp(''SNS\nLIF-spike'')';
-m.addParameter('Name', 'Vrest', 'Type', 'edit', 'Prompt', 'Resting potential Vrest (mV)', 'Value', '-60');
-m.addParameter('Name', 'Vth', 'Type', 'edit', 'Prompt', 'Spike threshold Vth (mV)', 'Value', '-50');
-m.addParameter('Name', 'Rm', 'Type', 'edit', 'Prompt', 'Membrane resistance Rm (MOhm)', 'Value', '10');
-m.addParameter('Name', 'tau', 'Type', 'edit', 'Prompt', 'Membrane time constant tau (ms)', 'Value', '20');
+m.Display = lifIconCode();
+finishMask(m, blk, {'Vrest','Resting potential Vrest (mV)','-60'; ...
+                    'Vth','Spike threshold Vth (mV)','-50'; ...
+                    'Rm','Membrane resistance Rm (MOhm)','10'; ...
+                    'tau','Membrane time constant tau (ms)','20'});
 
 %% ---------------- IaMuscleSpindle ----------------
 blk = [lib '/IaMuscleSpindle'];
-add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 540 200 640]);
+add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 560 160 680]);
 delete_line(blk, 'In1/1', 'Out1/1');
 delete_block([blk '/In1']);
 delete_block([blk '/Out1']);
@@ -162,14 +182,14 @@ add_line(blk, 'Sat/1', 'Isyn_nA/1', 'autorouting', 'on');
 m = Simulink.Mask.create(blk);
 m.Type = 'SNS Ia Muscle Spindle Afferent';
 m.Description = 'Ia spindle afferent: Isyn = clip(Wl*stretch + Wv*velocity, 0, Imax) [nA]. Inputs are normalized (0..1) length and velocity signals.';
-m.Display = 'disp(''SNS\nIa spindle'')';
-m.addParameter('Name', 'Imax', 'Type', 'edit', 'Prompt', 'Peak current Imax (nA)', 'Value', '10');
-m.addParameter('Name', 'Wl', 'Type', 'edit', 'Prompt', 'Length weight Wl (nA)', 'Value', '6');
-m.addParameter('Name', 'Wv', 'Type', 'edit', 'Prompt', 'Velocity weight Wv (nA)', 'Value', '8');
+m.Display = afferentIconCode('Ia');
+finishMask(m, blk, {'Imax','Peak current Imax (nA)','10'; ...
+                    'Wl','Length weight Wl (nA)','6'; ...
+                    'Wv','Velocity weight Wv (nA)','8'});
 
 %% ---------------- IbGolgiTendon ----------------
 blk = [lib '/IbGolgiTendon'];
-add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 700 200 780]);
+add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 740 160 860]);
 delete_line(blk, 'In1/1', 'Out1/1');
 delete_block([blk '/In1']);
 delete_block([blk '/Out1']);
@@ -183,13 +203,13 @@ add_line(blk, 'Sat/1', 'Isyn_nA/1', 'autorouting', 'on');
 m = Simulink.Mask.create(blk);
 m.Type = 'SNS Ib Golgi Tendon Afferent';
 m.Description = 'Ib Golgi tendon organ afferent: Isyn = clip(Kf*forceNorm, 0, Imax) [nA]. Input is normalized force (0..1).';
-m.Display = 'disp(''SNS\nIb GTO'')';
-m.addParameter('Name', 'Imax', 'Type', 'edit', 'Prompt', 'Peak current Imax (nA)', 'Value', '10');
-m.addParameter('Name', 'Kf', 'Type', 'edit', 'Prompt', 'Force weight Kf (nA)', 'Value', '10');
+m.Display = afferentIconCode('Ib');
+finishMask(m, blk, {'Imax','Peak current Imax (nA)','10'; ...
+                    'Kf','Force weight Kf (nA)','10'});
 
 %% ---------------- MuscleActivation ----------------
 blk = [lib '/MuscleActivation'];
-add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 840 200 920]);
+add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 920 160 1040]);
 delete_line(blk, 'In1/1', 'Out1/1');
 delete_block([blk '/In1']);
 delete_block([blk '/Out1']);
@@ -208,12 +228,12 @@ add_line(blk, 'Sat/1', 'activation/1', 'autorouting', 'on');
 m = Simulink.Mask.create(blk);
 m.Type = 'SNS Muscle Activation';
 m.Description = 'First-order activation dynamics: tauAct*dA/dt = (S - A). Maps motoneuron drive S(V) [0..1] to muscle activation A [0..1].';
-m.Display = 'disp(''SNS\nMuscle act'')';
-m.addParameter('Name', 'tauAct', 'Type', 'edit', 'Prompt', 'Activation time constant tauAct (ms)', 'Value', '50');
+m.Display = muscleIconCode('MA');
+finishMask(m, blk, {'tauAct','Activation time constant tauAct (ms)','50'});
 
 %% ---------------- BPAForce ----------------
 blk = [lib '/BPAForce'];
-add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 980 200 1080]);
+add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 1100 160 1220]);
 delete_line(blk, 'In1/1', 'Out1/1');
 delete_block([blk '/In1']);
 delete_block([blk '/Out1']);
@@ -236,9 +256,99 @@ add_line(blk, 'Sat/1', 'force_N/1', 'autorouting', 'on');
 m = Simulink.Mask.create(blk);
 m.Type = 'SNS BPA Force Element';
 m.Description = 'Simple BPA (pneumatic muscle) force: F = Fmax*A*max(0, epsMax - strain). Replace with MonoPam/Xi-corrected prediction when available.';
-m.Display = 'disp(''SNS\nBPA force'')';
-m.addParameter('Name', 'Fmax', 'Type', 'edit', 'Prompt', 'Max isometric force Fmax (N)', 'Value', '500');
-m.addParameter('Name', 'epsMax', 'Type', 'edit', 'Prompt', 'Max contraction strain epsMax (0..1)', 'Value', '0.25');
+m.Display = muscleIconCode('BPA');
+finishMask(m, blk, {'Fmax','Max isometric force Fmax (N)','500'; ...
+                    'epsMax','Max contraction strain epsMax (0..1)','0.25'});
 
 save_system(lib);
-fprintf('SNS_Library.slx saved with 7 library blocks.\n');
+fprintf('SNS_Library.slx saved with 7 library blocks (journal diagram icons).\n');
+
+%% ---------------- local functions ----------------
+% NOTE on mask icon code: Simulink mask drawing commands (plot/patch/text) are
+% a RESTRICTED subset — numeric arguments only, no LineSpec strings ('k-'), no
+% name-value pairs ('LineWidth',...), and color() takes a color NAME only.
+% Use patch(...,[r g b]) for fills, color('black') before plot for edges,
+% and disp() for centered text.
+function finishMask(m, blk, params)
+    for k = 1:size(params, 1)
+        m.addParameter('Name', params{k,1}, 'Type', 'edit', ...
+            'Prompt', params{k,2}, 'Value', params{k,3});
+    end
+    % Square blocks + autoscaled mask icons -> circles stay circular.
+    % Frame off = the drawn shape IS the block, like a circuit diagram.
+    set_param(blk, 'MaskIconFrame', 'off', 'MaskIconUnits', 'autoscale', ...
+        'MaskIconOpaque', 'on', 'MaskIconRotate', 'none');
+end
+
+function s = neuronIconCode(lbl)
+    % Open circle, black edge, white fill, small label inside.
+    s = strjoin({ ...
+        't_ = linspace(0, 2*pi, 73);' ...
+        'patch(0.92*cos(t_), 0.92*sin(t_), [1 1 1]);' ...
+        'color(''black'');' ...
+        'plot(0.92*cos(t_), 0.92*sin(t_));' ...
+        ['disp(''' lbl ''');'] ...
+        }, newline);
+end
+
+function s = lifIconCode()
+    % Open circle with a spike glyph inside (distinguishes spiking cell).
+    s = strjoin({ ...
+        't_ = linspace(0, 2*pi, 73);' ...
+        'patch(0.92*cos(t_), 0.92*sin(t_), [1 1 1]);' ...
+        'color(''black'');' ...
+        'plot(0.92*cos(t_), 0.92*sin(t_));' ...
+        'plot([-0.55 -0.25 0.0 0.25 0.55], [-0.15 -0.15 0.45 -0.15 -0.15]);' ...
+        }, newline);
+end
+
+function s = afferentIconCode(lbl)
+    % Open circle, light-gray tint (sensory), afferent label inside.
+    s = strjoin({ ...
+        't_ = linspace(0, 2*pi, 73);' ...
+        'patch(0.92*cos(t_), 0.92*sin(t_), [0.93 0.93 0.93]);' ...
+        'color(''black'');' ...
+        'plot(0.92*cos(t_), 0.92*sin(t_));' ...
+        ['disp(''' lbl ''');'] ...
+        }, newline);
+end
+
+function s = muscleIconCode(lbl)
+    % Fusiform (spindle-shaped) muscle, light green tint (Okabe-Ito green).
+    s = strjoin({ ...
+        't_ = linspace(0, 2*pi, 73);' ...
+        'patch(0.92*cos(t_), 0.42*sin(t_), [0.82 0.92 0.87]);' ...
+        'color(''black'');' ...
+        'plot(0.92*cos(t_), 0.42*sin(t_));' ...
+        ['disp(''' lbl ''');'] ...
+        }, newline);
+end
+
+function s = synapseIconCode()
+    % E/I marker chosen automatically from the SIGN of Esyn:
+    %   Esyn <  0 -> inhibitory  -> SOLID BLACK CIRCLE on light-blue backdrop
+    %   Esyn >= 0 -> excitatory  -> WHITE TRIANGLE, black edges, on light-orange
+    %   unknown expression   -> gray backdrop + "E?" text
+    s = strjoin({ ...
+        'es_ = NaN;' ...
+        'try' ...
+        '    tmp_ = Esyn;' ...
+        '    if ischar(tmp_) || isstring(tmp_), tmp_ = eval(tmp_); end' ...
+        '    es_ = tmp_;' ...
+        'catch' ...
+        'end' ...
+        'if isnan(es_)' ...
+        '    patch([-1 1 1 -1], [-1 -1 1 1], [0.9 0.9 0.9]);' ...
+        '    disp(''E?'');' ...
+        'elseif es_ < 0' ...
+        '    patch([-1 1 1 -1], [-1 -1 1 1], [0.87 0.93 0.97]);' ...
+        '    t_ = linspace(0, 2*pi, 73);' ...
+        '    patch(0.78*cos(t_), 0.78*sin(t_), [0 0 0]);' ...
+        'else' ...
+        '    patch([-1 1 1 -1], [-1 -1 1 1], [1 0.94 0.85]);' ...
+        '    patch([0 -0.85 0.85], [-0.8 0.62 0.62], [1 1 1]);' ...
+        '    color(''black'');' ...
+        '    plot([0 -0.85 0.85 0], [-0.8 0.62 0.62 0]);' ...
+        'end' ...
+        }, newline);
+end
