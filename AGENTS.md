@@ -4,15 +4,15 @@ Loaded automatically at session start. Keep it current; keep it lean.
 
 ## Machines
 
-- **This machine = DESKTOP-5Q16KE9 (laptop), the main workstation** — newest/premium
+- **DESKTOP-5Q16KE9 (laptop), the main workstation** — newest/premium
   MATLAB + SolidWorks, but modest hardware (6 cores, 16 GB RAM). MATLAB **R2025b** at
   `C:\Program Files\MATLAB\R2025b`; SOLIDWORKS **2025 SP4.1** (33.4.1) at
-  `C:\Program Files\SOLIDWORKS Corp`. All GitHub repos live under
-  `C:\Users\Ben\Documents\GitHub\` — there is **no D: drive here** (easteregg2 keeps repos
-  on D:; ignore/copy-over D:-based notes from it).
-- **Other workstation = easteregg2** — 10 cores, 128 GB RAM; older installs (MATLAB R2025a,
-  SOLIDWORKS 2025 SP03, on D:). **Heavy parallel optimization runs belong on easteregg2**;
-  `parpool(10)` only makes sense there — on this laptop cap the pool at 6.
+  `C:\Program Files\SOLIDWORKS Corp`. Its GitHub repos live under
+  `C:\Users\Ben\Documents\GitHub\` — **no D: drive on this machine**.
+- **easteregg2 (desktop; sessions there read this file too)** — 10 cores, 128 GB RAM; older
+  installs (MATLAB R2025a, SOLIDWORKS 2025 SP03). Repos live under `D:\GitHub\`.
+  **Heavy parallel optimization runs belong on easteregg2**;
+  `parpool(10)` only makes sense there — on the laptop cap the pool at 6.
 - Custom skills (`matlab`, `solidworks`, `latex-overleaf`) are version-controlled in
   `Documents\GitHub\ZCode_Skills`. On this machine `C:\Users\Ben\.zcode\skills\` holds
   **directory junctions** into that repo — edit the repo copy, then Ben commits via GitHub
@@ -22,9 +22,10 @@ Loaded automatically at session start. Keep it current; keep it lean.
 ## Project purpose (priority order)
 
 1. **Dissertation first** (deadline: this week, Sept 2026). LaTeX source lives in
-   `Documentation\Reports and Papers\Dissertation\` (untracked); the `upload\` mirror is the
-   canonical Overleaf copy. Use the `latex-overleaf` skill for Overleaf work (installed on
-   this machine via the ZCode_Skills repo junction).
+   `Documentation\Reports and Papers\Dissertation\` (repo-tracked as of 2026-09-08; the
+   `ProofFinal\` folder is the working copy and `upload\` mirror is the canonical Overleaf
+   copy). Use the `latex-overleaf` skill for Overleaf work (installed on this machine via the
+   ZCode_Skills repo junction).
 2. Design and control of bipedal humanoid robot legs with artificial muscles (PAMs/BPAs)
    controlled by a synthetic nervous system. Lab: AARL (Agile and Adaptive Robotics Lab), PSU.
 3. **Xi-correction-factor program** — run minimizers against pinned-knee test data in
@@ -87,7 +88,9 @@ Loaded automatically at session start. Keep it current; keep it lean.
     `minimizeFlxPin10mmX3.m`, `minimizeExt10mmX3.m`) call inner evaluators (`minimizeFlxPin`,
     `minimizeFlxPinX3`, `minimizeExtX3`, `minimizeExt`, `minimizeFlx`) that each carry their own
     `computeForceVector`/`Lok`/`fortz`. New (Sept 2026): two-bracket flexor method —
-    `minimizeFlxPin2brk.m` (evaluator; (d) single transform, (e) K=[X1,X2,X1], (f) origin-side
+    `minimizeFlxPin2brk.m` (evaluator; (d) single transform, (e) insertion-bracket stiffness
+    array K (arm-2 config in the current file: [X1,X2,X1]; arm-1 2026-09-08 runs used
+    [X1,X2,X2]), (f) origin-side
     2nd bracket `Pbr2` (current: [-52.61, 0, 75.06]/1000, Ben-set), `USE_BRACKET2` flag).
     **Pbr2 applies ONLY to the pinned-knee flexor configuration** — the extensor evaluators
     (minimizeExtX3, minimizeExt) have their own independent bracket offsets; do not port Pbr2.
@@ -95,11 +98,18 @@ Loaded automatically at session start. Keep it current; keep it lean.
     = smoke|full, `FLX2BRK_SOLVER` = gamultiobj|surrogateopt, `FLX2BRK_TRANS` = 2trans|1trans),
     harnesses renamed to Ben's Collect/Dig scheme (2026-09-08): `Dig_crossPredict.m`
     (flexor→biomimetic/extensor cross-prediction), `Collect_ExtPinX3_sweep.m` (high-Xi1/Xi3
-    hunt, pool {1,2,5,6,7,8}; tests 3/4/9 EXCLUDED per Ben), `Collect_solverAB.m`,
-    `Collect_batch.m` (overnight sequence); `Dig_*` = analyze existing mats (Dig_CVpatterns,
+    hunt, pool {1,2,5,6,7,8}; tests 3/4/9 EXCLUDED per Ben),
+    `Collect_batch.m` (overnight sequence; solver A/B settled 2026-09-07 — gamultiobj kept,
+    the env flag is still honored); `Dig_*` = analyze existing mats (Dig_CVpatterns,
     Dig_ExtPinX3_CV, Dig_ExtPinX3_Xi3map, Dig_FlxPin_2brkt); their logs/one-off outputs live
     in `2022_02_Festo\Dig_out\`. `Robot_Data` must be on the MATLAB path for the biomimetic
     evaluators.
+    2026-09-08 encoder-corrected campaign: arm1 (2trans, K=[X1,X2,X2]) saved
+    `minimizeFlxPin10_results_20260908_2brkt_2trans_{full,noT3,noT5,noT3noT5}.mat`
+    (test-exclusion variants); arm2 (1trans pitch, K=[X1,X2,X1]) was re-run the evening of
+    Sept 8 — check Dig_out for its log/mats. **Scope of the 1trans≡2trans proof:** symmetric
+    about the y axis (K_x=K_z, e.g. [X1,X2,X1]). Arm1's [X1,X2,X2] (y=z) is NOT covered —
+    evaluate it 2trans only.
   - `2022_02_Festo\` subfolders (Flx/Ext × 10mm/10mm_pinned/20mm/40mm): needed only by certain
     plotting functions — add to path transiently and **remove afterward**; they shadow other
     plotting functions if left on path.
@@ -111,9 +121,22 @@ Loaded automatically at session start. Keep it current; keep it lean.
     and the HX711 apps.
 - `Solid_Models\Biomimetics_2022-Knee_Test\` — the knee test setup (CAD, STLs, point clouds).
 - `Solid_Models\OpenSim\Gait2392_Robotbody\` — OpenSim human reference models/data (incl.
-  Bifemsh/Vastus-adjusted variants used for muscle torque targets).
+  Bifemsh/Vastus-adjusted variants used for muscle torque targets). Also `gait2327.osim`.
+  MyoConverter outputs (`Gait2392_Robotbody\myosuite_gait2392_robotbody\`,
+  `Solid_Models\OpenSim\myosuite_gait2392_simbody\`) are **regenerable** (~116 MB, Geometry =
+  stock OpenSim STL copies) — gitignored 2026-09-08; rebuild with MyoConverter instead of
+  restoring from git.
 - `Documentation\Reports and Papers\` — papers; `Dissertation\` = the dissertation (see priority 1).
-- `Neuromechanical_Models\` — Animatlab CPG walker models.
+  `Documentation\Research Notes\` — agent-written lit reviews with V/L/U provenance tags
+  (board-sports/gymnastics motor control; kickflip neuromuscular hypothesis).
+- `Neuromechanical_Models\` — Animatlab CPG walker models. The `_Standalone.asim` exports
+  are STALE (predate the subsystem reorg); the active phase-1 file is the instrumented
+  working copy `Biped_2xCPG_wSubs\walk new new tester added 2 axis_phase1.asim` (2026-09-08).
+  A fresh standalone export from the current .aproj is still pending; DataTool_*.txt are
+  run byproducts.
+- Repo root: `CHATGPT_HANDOFF.md` (brief for other AI assistants when ZCode is unavailable)
+  and `CHATGPT_REPORT.md` (their report back; 2026-09-08 edition covers Overleaf
+  manuscript-status edits) — keep both current when work is handed off.
 
 ## MATLAB workflow (follow exactly)
 
@@ -175,15 +198,17 @@ Loaded automatically at session start. Keep it current; keep it lean.
 - `Code\Matlab\Mesh_Optimization\Knee_Torque_revision_3\Knee_Torque_revision_3\README_revision_3.md`
   — detailed flexor BPA/route model doc (modes, how to run tests).
 
-- Known data concern (Ben, 2026-09-07): ONE pinned test used an encoder whose true
-  measured angles may be ~+5 degrees off from reported — test not yet identified. If one
-  test's fits look angle-shifted, suspect this first; ask Ben which test before assuming.
+- Known data concern RESOLVED (Ben, 2026-09-08): the angle-shifted test was the **flexor
+  47 cm test** — its encoder read ~5.3° low. `minimizeFlxPin2brk.m` now adds +5.3° to that
+  test's reported angles (both Angle and phiD). Any other script that refits the 47 cm test
+  must apply the same shift; pre-2026-09-08 fit results predate the correction.
 
 ## Hazards — do NOT open these as source
 
-- Known data concern (Ben, 2026-09-07): ONE pinned test used an encoder whose true
-  measured angles may be ~+5 degrees off from reported — test not yet identified. If one
-  test's fits look angle-shifted, suspect this first; ask Ben which test before assuming.
+- Known data concern RESOLVED (Ben, 2026-09-08): the angle-shifted test was the **flexor
+  47 cm test** — its encoder read ~5.3° low. `minimizeFlxPin2brk.m` now adds +5.3° to that
+  test's reported angles (both Angle and phiD). Any other script that refits the 47 cm test
+  must apply the same shift; pre-2026-09-08 fit results predate the correction.
 - `Solid_Models\Biomimetics_2022-Knee_Test\Point_cloud\Tibia_copy.txt` (7.1 MB point cloud);
   `Spine_Mesh_Points.txt` (172 KB, duplicated in 3 places); `HX711*sempio.txt` (1 MB);
   any `.mat` in `Previous Optimization Code\Trial Results\` (up to 95 MB).
