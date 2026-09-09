@@ -73,7 +73,14 @@ Loaded automatically at session start. Keep it current; keep it lean.
   (Pbr2 move swung flexor Xi1 by 16x). Current active points: flexor insertion Pbri
   [-27.5,-107.81,-0.54]mm, flexor origin Pbr2 [-52.61,0,75.06]mm (pinned-flexor ONLY), extensor
   Pbr [-3.84,-46.44,62.5]mm (rib midpoint, medial side). Both 2brk brackets use two-rotation
-  (Z then Y) frames. Advisor requirement: one (Xi1,Xi2) consistent across pinned-flexor,
+  (Z then Y) frames — **proven 2026-09-08: frame convention is irrelevant** for y-symmetric
+  stiffness arrays K=[a,b,a] (compliance is invariant under the y-axis second rotation;
+  1trans/2trans agree to ~1e-17; transMode flag in minimizeFlxPin2brk demonstrates this).
+  The 39x Xi1 swings between flexor CV runs (5.4e4 vs 2.1e6, with Xi0 +7.5mm vs ~0) are
+  **gamultiobj stochasticity on a flat likelihood valley** — the pinned-flexor data cannot
+  distinguish them (both fit mean RMSE ~1.6). Break ties by cross-configuration consistency
+  or Lm_p/Lm_h checks, not reruns; consider rng seeding for reproducibility.
+  Advisor requirement: one (Xi1,Xi2) consistent across pinned-flexor,
   pinned-extensor, and both biomimetic configurations.
 - `Testing_Data\` — **important.** Immediate subfolders `2022_02_Festo\` and `2026_06_Festo\` matter.
   - `2022_02_Festo\` holds the Xi-minimizer family: outer CV drivers (`minimizeFlxPin10mm.m`,
@@ -85,10 +92,14 @@ Loaded automatically at session start. Keep it current; keep it lean.
     **Pbr2 applies ONLY to the pinned-knee flexor configuration** — the extensor evaluators
     (minimizeExtX3, minimizeExt) have their own independent bracket offsets; do not port Pbr2.
     + driver `minimizeFlxPin10mm_2brk.m` (env `FLX2BRK_MODE`
-    = smoke|full, `FLX2BRK_SOLVER` = gamultiobj|surrogateopt), harnesses `crossPredictFlx.m`
-    (flexor→biomimetic/extensor cross-prediction), `sweepExtX3.m` (high-Xi1 hunt, pool
-    {1,2,5,6,7,8}; tests 3/4/9 EXCLUDED per Ben), `abSolver.m`, `runBatch.m` (overnight
-    sequence). `Robot_Data` must be on the MATLAB path for the biomimetic evaluators.
+    = smoke|full, `FLX2BRK_SOLVER` = gamultiobj|surrogateopt, `FLX2BRK_TRANS` = 2trans|1trans),
+    harnesses renamed to Ben's Collect/Dig scheme (2026-09-08): `Dig_crossPredict.m`
+    (flexor→biomimetic/extensor cross-prediction), `Collect_ExtPinX3_sweep.m` (high-Xi1/Xi3
+    hunt, pool {1,2,5,6,7,8}; tests 3/4/9 EXCLUDED per Ben), `Collect_solverAB.m`,
+    `Collect_batch.m` (overnight sequence); `Dig_*` = analyze existing mats (Dig_CVpatterns,
+    Dig_ExtPinX3_CV, Dig_ExtPinX3_Xi3map, Dig_FlxPin_2brkt); their logs/one-off outputs live
+    in `2022_02_Festo\Dig_out\`. `Robot_Data` must be on the MATLAB path for the biomimetic
+    evaluators.
   - `2022_02_Festo\` subfolders (Flx/Ext × 10mm/10mm_pinned/20mm/40mm): needed only by certain
     plotting functions — add to path transiently and **remove afterward**; they shadow other
     plotting functions if left on path.

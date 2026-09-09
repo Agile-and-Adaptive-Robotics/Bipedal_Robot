@@ -1,6 +1,6 @@
 \documentclass[double,12pt]{psutex}
 \usepackage{graphicx}
-%\usepackage{rotating} %Package added to allow the rotation of figures and chart on a page, {sidewaysfigure} command
+\usepackage{rotating} % Rotation of figures/tables on a portrait page: {sidewaysfigure}, {sidewaystable} (PSU ETD: rotate the content 90 deg CCW, not the page)
 \usepackage{tablefootnote} %Packaged added to allow footnotes in the tabular environment, use \tablefootnote command
 
 \usepackage{url, hyperref, microtype}
@@ -48,9 +48,10 @@
 \renewcommand\thesubfigure{\normalfont(\textbf{\alph{subfigure}})} % Change subfigure label format
 \usepackage{natbib}
 \usepackage{siunitx}
+\DeclareSIUnit\bar{bar} % Explicit non-SI pressure unit
 \usepackage{caption}
 \usepackage{mathpazo}
-\usepackage{subfloat}
+%\usepackage{subfloat}
 \usepackage{tabularx}
 \usepackage[flushleft]{threeparttable}
 \usepackage{dcolumn}
@@ -129,6 +130,9 @@ David Turcic}
 \maketitle
 
 %-------------------------Pretext Pages----------------------------
+% Copyright
+\include{chapters/01-copyright}
+
 % Abstract
 \include{chapters/02-abstract}
 
@@ -138,8 +142,8 @@ David Turcic}
 % Acknowledgements
 \include{chapters/06-ack}
 
-% Motivation
-\include{chapters/08-motivation}
+% Motivation (no chapters/08-motivation.tex yet --- uncomment when written)
+% \include{chapters/08-motivation}
 
 %-------------------------Listings-----------------------------
 % Table of contents, list of figures, etc
@@ -147,7 +151,10 @@ David Turcic}
 \tableofcontents
 \listoftables
 \listoffigures
-\listofappendices
+% \listofappendices removed 2026-09-08: it stayed blank because the class only
+% fills it under the [seploa] option, which would MOVE the appendices out of
+% the ToC. Appendices belong in the ToC per PSU ETD rules, so the list is
+% redundant. Re-enable together with [seploa] if a separate list is ever wanted.
 % \listofappendixfigures
 % \listofappendixtables
 
@@ -166,10 +173,18 @@ David Turcic}
 \include{chapters/90-bib}
 
 %-------------------------Appendices-----------------------------
-\backmatter
+% NOTE: \backmatter removed 2026-09-08 --- it suppressed the appendix chapter
+% counter, so sections/tables/equations numbered ".1" and "(1)" instead of
+% "A.1"/"(A1)" (PSU ETD appendix lettering). The heading-number guard in
+% psutex.cls prevents a duplicated "A" before the "Appendix A:" titles.
 \appendix
+% Appendix-scoped numbering: A.1 sections, (A1) equations, Table A1/B1 style
+\renewcommand{\theequation}{\thechapter\arabic{equation}}
+\renewcommand{\thetable}{\thechapter\arabic{table}}
+\renewcommand{\thefigure}{\thechapter\arabic{figure}}
 \include{chapters/92-AppendixA}
 \include{chapters/93-AppendixB}
+\include{chapters/94-AppendixC}
 
 
 \end{document}

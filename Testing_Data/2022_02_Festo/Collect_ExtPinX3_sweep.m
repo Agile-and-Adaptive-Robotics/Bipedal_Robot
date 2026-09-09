@@ -1,4 +1,4 @@
-function sweepResults = sweepExtX3(configs, XI1MIN, XI3MIN, MAXHOURS)
+function sweepResults = Collect_ExtPinX3_sweep(configs, XI1MIN, XI3MIN, MAXHOURS)
 %SWEEPEXTX3 Hunt for pinned-extensor solutions with higher Xi1 and non-negligible Xi3.
 % Runs the minimizeExt10mmX3 cross-validation pipeline over a small explicit
 % config list, with:
@@ -12,9 +12,9 @@ function sweepResults = sweepExtX3(configs, XI1MIN, XI3MIN, MAXHOURS)
 %   - post-filter: Xi1 >= XI1MIN (default: flexor Xi1) and Xi3 >= XI3MIN (0.05)
 %   - confirmation of top survivors on all 9 pinned tests + biomimetic 52cm
 %
-%   sweepResults = sweepExtX3();              % default 2 configs
-%   sweepResults = sweepExtX3(configs)        % struct array: allBPA,numHold,x12factor,pop,maxgen,surrvals
-%   sweepResults = sweepExtX3(configs, XI1MIN, XI3MIN, MAXHOURS)
+%   sweepResults = Collect_ExtPinX3_sweep();              % default 2 configs
+%   sweepResults = Collect_ExtPinX3_sweep(configs)        % struct array: allBPA,numHold,x12factor,pop,maxgen,surrvals
+%   sweepResults = Collect_ExtPinX3_sweep(configs, XI1MIN, XI3MIN, MAXHOURS)
 
 if nargin < 1 || isempty(configs)
     configs = struct( ...
@@ -43,7 +43,7 @@ S = load('minimizeFlxPin10_results_20260730_2transforms_Z2.mat', 'filtered_resul
 g = S.filtered_results(1, S.xCols);
 a0 = minimizeExtX3(0, Inf, Inf, 0);
 
-fprintf('=== sweepExtX3 | SOLVER=%s | XI1MIN=%.3e | XI3MIN=%.3f | MAXHOURS=%.1f ===\n', ...
+fprintf('=== Collect_ExtPinX3_sweep | SOLVER=%s | XI1MIN=%.3e | XI3MIN=%.3f | MAXHOURS=%.1f ===\n', ...
     SOLVER, XI1MIN, XI3MIN, MAXHOURS);
 
 sweepResults = struct('configs', {configs}, 'candidates', {[]}, 'confirmed', {[]});
@@ -165,7 +165,7 @@ for cIdx = 1:numel(configs)
 end
 
 stamp = char(string(datetime('now'),'yyyyMMdd'));
-outFile = sprintf('sweepExtX3_results_%s.mat', stamp);
+outFile = sprintf('Collect_ExtPinX3_sweep_results_%s.mat', stamp);
 save(outFile, 'sweepResults', 'configs', 'XI1MIN', 'XI3MIN', 'POOL', 'SOLVER');
 fprintf('\nSweep saved to %s\n', outFile);
 end

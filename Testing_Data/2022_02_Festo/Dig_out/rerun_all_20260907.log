@@ -1,0 +1,1372 @@
+=== minimizeFlxPin10mm_2brk | MODE=smoke | SOLVER=gamultiobj | USE_BRACKET2=1 ===
+ALLBPA=[2  3  4  5] NUMHOLD=1 POP=25 MAXGEN=30
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+
+Performance with no length offset and infinite stiffness:
+                    RMSE       FVU      MaxResidual
+                   ______    _______    ___________
+
+    48cm           7.6174     2.1278      25.531   
+    46cm           8.8026      1.938      26.264   
+    47cm           5.5744    0.97523      17.848   
+    40cm-tendon    6.3725    0.59349      16.859   
+    41cm           9.6944     2.1149      21.076   
+
+Mean baseline training: RMSE 7.6123, FVU 1.5499, Max. Residual 21.5156
+
+
+---- Cross-validation: Holding out BPA #2 (46cm) ----
+
+Multi-objective optimization:
+3 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1            25                 1                 1
+    2            50                 0          0.209822
+    3            75         0.0351565           0.69988
+    4           100         0.0298509          0.601282
+    5           125         0.0184946          0.323481
+    6           150         0.0245491          0.265573
+    7           175         0.0157069          0.257577
+    8           200         0.0043697         0.0497447
+    9           225        0.00549224          0.440862
+   10           250         0.0110063          0.193231
+   11           275         0.0104313          0.237839
+   12           300         0.0198642          0.275027
+   13           325         0.0151649           0.31055
+   14           350         0.0136209          0.267259
+   15           375         0.0134332          0.279841
+   16           400         0.0121766          0.241018
+   17           425        0.00695717          0.100649
+   18           450        0.00523435         0.0838395
+   19           475         0.0042685            0.3192
+   20           500        0.00550088         0.0900283
+   21           525        0.00563822           0.21671
+   22           550        0.00436881          0.327883
+   23           575        0.00711351          0.162074
+   24           600        0.00721505          0.340886
+   25           625        0.00782766          0.323981
+   26           650        0.00412208          0.091446
+   27           675        0.00437998          0.104746
+   28           700        0.00684472          0.155726
+   29           725        0.00353245         0.0636762
+   30           750        0.00138318         0.0338828
+gamultiobj stopped because it exceeded options.MaxGenerations.
+
+---- Cross-validation: Holding out BPA #3 (47cm) ----
+
+Multi-objective optimization:
+3 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1            25                 1                 1
+    2            50                 0                 1
+    3            75                 0                 0
+    4           100                 0                 0
+    5           125                 0                 1
+    6           150                 0                 1
+    7           175        0.00490489          0.781026
+    8           200        0.00517572          0.326645
+    9           225         0.0062863          0.326521
+   10           250        0.00744194          0.908767
+   11           275        0.00602466          0.421857
+   12           300                 0                 1
+   13           325                 0                 0
+   14           350                 0                 0
+   15           375       0.000492045          0.958083
+   16           400        0.00447678          0.740956
+   17           425        0.00205156          0.488698
+   18           450        0.00287613          0.318279
+   19           475         0.0021383          0.267015
+   20           500        0.00171239          0.153262
+   21           525        0.00203265          0.207093
+   22           550           0.00125          0.155376
+   23           575         0.0012907          0.140513
+   24           600        0.00145311          0.132266
+   25           625       0.000871457         0.0997262
+   26           650       0.000205862         0.0332872
+   27           675       0.000514259          0.056846
+   28           700       0.000596214         0.0793083
+   29           725       0.000603153          0.088592
+   30           750       0.000637307          0.114775
+gamultiobj stopped because it exceeded options.MaxGenerations.
+
+---- Cross-validation: Holding out BPA #4 (40cm-tendon) ----
+
+Multi-objective optimization:
+3 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1            25                 1                 1
+    2            50                 0                 1
+    3            75                 0                 1
+    4           100         0.0325183          0.471405
+    5           125         0.0184219          0.315851
+    6           150         0.0196042          0.307785
+    7           175        0.00720265          0.111848
+    8           200         0.0118533          0.368178
+    9           225        0.00848507          0.206656
+   10           250         0.0108556          0.181204
+   11           275        0.00586395          0.228601
+   12           300        0.00574976         0.0670604
+   13           325        0.00888312          0.146618
+   14           350        0.00548687          0.091799
+   15           375          0.004947          0.184171
+   16           400        0.00370035          0.106781
+   17           425        0.00880397          0.311142
+   18           450        0.00576363          0.185607
+   19           475        0.00244831         0.0426824
+   20           500        0.00387291          0.202338
+   21           525        0.00318863          0.076457
+   22           550        0.00181246         0.0348666
+   23           575         0.0056483         0.0958425
+   24           600        0.00254885         0.0863411
+   25           625        0.00311306         0.0846423
+   26           650         0.0047144         0.0810721
+   27           675        0.00343107          0.100397
+   28           700        0.00748795          0.175129
+   29           725        0.00337326         0.0843449
+   30           750        0.00364426         0.0822312
+gamultiobj stopped because it exceeded options.MaxGenerations.
+
+---- Cross-validation: Holding out BPA #5 (41cm) ----
+
+Multi-objective optimization:
+3 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1            25                 1                 1
+    2            50                 0                 0
+    3            75          0.048994          0.392443
+    4           100         0.0342689           0.45707
+    5           125         0.0315872          0.300769
+    6           150                 0          0.232247
+    7           175         0.0592184          0.456557
+    8           200         0.0406891            0.7115
+    9           225         0.0357049          0.330996
+   10           250         0.0289974          0.268816
+   11           275         0.0242723          0.224678
+   12           300          0.032456          0.401494
+   13           325         0.0156723          0.343025
+   14           350         0.0164947          0.173137
+   15           375         0.0138007          0.550403
+   16           400         0.0279243          0.929726
+   17           425         0.0163388          0.315224
+   18           450         0.0251496          0.529564
+   19           475         0.0232536          0.214189
+   20           500         0.0154689           0.54712
+   21           525                 0                 1
+   22           550         0.0196908          0.666667
+   23           575         0.0177198          0.773451
+   24           600         0.0205222          0.563772
+   25           625        0.00839013          0.423781
+   26           650         0.0163814          0.296497
+   27           675         0.0172414          0.479658
+   28           700         0.0192381          0.519879
+   29           725         0.0145561          0.304425
+   30           750        0.00775159          0.114346
+gamultiobj stopped because it exceeded options.MaxGenerations.
+Filtered 36  36 candidates.
+       X0         X1       X2  
+    _________    _____    _____
+
+    0.0074543    54086    26694
+
+
+Performance with no length offset and infinite stiffness:
+                    RMSE       FVU      MaxResidual
+                   ______    _______    ___________
+
+    48cm           7.6174     2.1278      25.531   
+    46cm           8.8026      1.938      26.264   
+    47cm           5.5744    0.97523      17.848   
+    40cm-tendon    6.3725    0.59349      16.859   
+    41cm           9.6944     2.1149      21.076   
+
+
+Performance with sol_actual (pick=1):
+                    RMSE       FVU       MaxResidual
+                   ______    ________    ___________
+
+    48cm           1.9621     0.14118      4.4208   
+    46cm           1.3912    0.048405       3.065   
+    47cm           2.9662     0.27613      5.1058   
+    40cm-tendon    1.2844    0.027124      3.0609   
+    41cm           1.1783    0.032804      1.7818   
+
+Mean baseline: RMSE 7.6123, FVU 1.5499, Max. Residual 21.5156
+
+Mean optimized: RMSE 1.7564, FVU 0.1051, Max. Residual 3.4869
+
+Results saved to minimizeFlxPin10_2brk_results_20260907.mat
+=== crossPredictFlx | source: D:\GitHub\Bipedal_Robot\Testing_Data\2022_02_Festo\minimizeFlxPin10_2brk_results_20260907.mat | pick=1 ===
+Flexor solution: Xi0=0.0075 m, Xi1=5.409e+04 N/m, Xi2=2.669e+04 N/m
+
+--- Biomimetic flexor (minimizeFlx, 10mm case) ---
+                   RMSE      FVU      MaxResidual
+                  ______    ______    ___________
+
+    baseline      7.4482    5.5566      13.308   
+    flexor sol    3.1705    1.1327      5.3448   
+
+
+Published extensor solution: Xi0=-0.0122, Xi1=1.508e+04, Xi2=1.218e+04, Xi3=0.2937
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+ 
+ Iteration   Func-count         f(x)         Procedure
+     0            1         0.743825         
+     1            3         0.729427         initial simplex
+     2            5         0.651862         expand
+     3            7         0.595446         expand
+     4            9         0.480287         expand
+     5           11         0.430068         expand
+     6           12         0.430068         reflect
+     7           14         0.430068         contract inside
+     8           16         0.430068         contract inside
+     9           18         0.430068         contract outside
+    10           19         0.430068         reflect
+    11           21         0.430068         contract inside
+    12           23         0.430068         contract outside
+    13           25         0.430068         contract inside
+    14           26         0.430068         reflect
+    15           28         0.430068         contract inside
+    16           29         0.430068         reflect
+    17           31         0.430068         contract inside
+    18           33         0.430068         contract inside
+    19           35         0.430068         contract inside
+    20           37         0.430068         contract inside
+    21           39         0.430068         contract inside
+    22           41         0.430064         contract inside
+    23           43         0.430064         contract inside
+    24           45         0.430061         contract inside
+    25           47         0.430053         expand
+    26           48         0.430053         reflect
+    27           50         0.430045         reflect
+    28           51         0.430045         reflect
+    29           53          0.43003         expand
+    30           55          0.43003         contract inside
+    31           56          0.43003         reflect
+    32           58          0.43003         contract inside
+    33           60         0.430025         reflect
+    34           62         0.430025         contract inside
+    35           63         0.430025         reflect
+    36           65         0.430023         expand
+    37           67         0.430023         contract inside
+    38           69         0.430023         contract inside
+    39           71         0.430023         contract inside
+    40           73         0.430022         reflect
+    41           75         0.430022         contract inside
+    42           76         0.430022         reflect
+    43           78         0.430022         contract inside
+    44           80         0.430022         contract inside
+    45           82         0.430022         reflect
+    46           84         0.430022         contract inside
+    47           86         0.430022         contract inside
+    48           88         0.430022         contract inside
+    49           89         0.430022         reflect
+    50           91         0.430022         contract inside
+    51           93         0.430022         contract inside
+    52           95         0.430021         reflect
+ 
+Optimization terminated:
+ the current x satisfies the termination criteria using OPTIONS.TolX of 1.000000e-04 
+ and F(X) satisfies the convergence criteria using OPTIONS.TolFun of 1.000000e-04 
+
+
+Refit (Xi1/Xi2 locked to flexor): Xi0=-0.0051 m, Xi3=0.4552
+
+--- Pinned extensor (minimizeExtX3, 9 tests) ---
+                   RMSE_base    FVU_base    MaxR_base    RMSE_pub    FVU_pub     MaxR_pub    RMSE_pure    FVU_pure    MaxR_pure    RMSE_refit    FVU_refit    MaxR_refit
+                   _________    ________    _________    ________    ________    ________    _________    ________    _________    __________    _________    __________
+
+    40cm             3.0917     0.56382       4.842        1.117     0.094625     2.1079       3.1078      0.5697      5.7712        1.6991       0.17029       2.8786  
+    40cm-tendon      3.6221      6.3919      7.8452       1.4528       1.0284     2.1749       2.6344      2.8178      3.7909        1.4291       0.91208       2.2281  
+    42cm             3.5283       2.219      7.6646       1.9264      0.66145     3.2209       3.7502      2.1651       6.189        2.1048       0.78966       3.8808  
+    42cm-tendon      2.9105       6.225       6.367       1.4032       1.4469      2.056       2.3346      3.7551      3.0866        1.1673        1.0014       1.7951  
+    43cm             2.4368     0.96178      4.2836      0.87957       0.1253     1.7743       1.9119     0.49338      3.5533        1.0233       0.16019       1.9423  
+    43cm-tendon      2.8784      4.7304      4.8174       1.7592       1.7669     2.8974       2.7469      4.3082      4.0261        1.5847        1.4338       2.8772  
+    46cm             2.1777      1.0586      4.9744      0.86387      0.16658      1.676       1.4079     0.39504      2.6265       0.91508       0.18691       1.6562  
+    47cm            0.94857     0.31519      2.2718      0.45839     0.073604    0.72371      0.78035     0.21331      1.4878       0.70622       0.17471       1.7122  
+    48cm            0.57811     0.10854      1.5689      0.89357      0.25932     2.3096       1.0134     0.33356      2.6662       0.85232       0.23593       2.6247  
+
+Pool mean RMSE: pub 1.088 | pure 2.098 | refit 1.226
+ 
+ Iteration   Func-count         f(x)         Procedure
+     0            1         0.403621         
+     1            3         0.403621         initial simplex
+     2            5         0.336374         expand
+     3            7         0.293096         expand
+     4            8         0.293096         reflect
+     5           10         0.293096         contract inside
+     6           12         0.293096         contract inside
+     7           14         0.293096         contract inside
+     8           16         0.285479         expand
+     9           18         0.265923         expand
+    10           20         0.259401         expand
+    11           22         0.218106         expand
+    12           23         0.218106         reflect
+    13           25         0.187161         reflect
+    14           26         0.187161         reflect
+    15           28         0.187161         contract inside
+    16           30         0.187161         contract inside
+    17           32         0.187161         contract inside
+    18           34         0.182066         reflect
+    19           36         0.182066         contract inside
+    20           38         0.179398         expand
+    21           40         0.179398         contract inside
+    22           42         0.177736         reflect
+    23           44         0.177736         contract inside
+    24           46         0.177736         contract inside
+    25           48         0.177736         contract inside
+    26           50         0.176401         expand
+    27           52         0.176401         contract inside
+    28           54          0.17616         reflect
+    29           56         0.175426         reflect
+    30           58         0.175426         contract inside
+    31           60         0.175426         contract inside
+    32           62         0.175426         contract inside
+    33           64         0.175426         contract inside
+    34           66         0.175219         reflect
+    35           68         0.175179         contract inside
+    36           70         0.175059         reflect
+    37           72          0.17495         contract inside
+    38           74          0.17483         reflect
+    39           76          0.17483         contract inside
+    40           77          0.17483         reflect
+    41           79         0.174737         reflect
+    42           81         0.174737         contract inside
+    43           83         0.174737         contract inside
+ 
+Optimization terminated:
+ the current x satisfies the termination criteria using OPTIONS.TolX of 1.000000e-04 
+ and F(X) satisfies the convergence criteria using OPTIONS.TolFun of 1.000000e-04 
+
+
+--- Biomimetic extensor (minimizeExt, 52cm) ---
+            RMSE_base    FVU_base    MaxR_base    RMSE_pub    FVU_pub    MaxR_pub    RMSE_pure    FVU_pure    MaxR_pure    RMSE_refit    FVU_refit    MaxR_refit
+            _________    ________    _________    ________    _______    ________    _________    ________    _________    __________    _________    __________
+
+    52cm     3.0322       4.4856       5.587       1.2237     0.7305      3.0522      1.3546      0.89518      3.1542       0.73597       0.26425       1.2436  
+
+
+Saved crossPredict_20260907.mat
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+Warning: Matrix is singular to working precision.
+
+=== sweepExtX3 | SOLVER=gamultiobj | XI1MIN=1.508e+04 | XI3MIN=0.050 | MAXHOURS=6.0 ===
+
+--- Config 1/2: allBPA=[1  2  5  6  7  8] numHold=3 x12factor=10 | 20 folds ---
+Probe: 0.25s/eval, ~231s/fold, ETA 1.29 h for 20 folds
+  Fold 1/20: holdout [1  2  5] (train [6  7  8])
+    fold took 3.5 min, 18 pareto points
+  Fold 2/20: holdout [1  2  6] (train [5  7  8])
+    fold took 3.3 min, 18 pareto points
+  Fold 3/20: holdout [1  2  7] (train [5  6  8])
+    fold took 3.5 min, 18 pareto points
+  Fold 4/20: holdout [1  2  8] (train [5  6  7])
+    fold took 3.0 min, 18 pareto points
+  Fold 5/20: holdout [1  5  6] (train [2  7  8])
+    fold took 3.0 min, 18 pareto points
+  Fold 6/20: holdout [1  5  7] (train [2  6  8])
+    fold took 3.2 min, 18 pareto points
+  Fold 7/20: holdout [1  5  8] (train [2  6  7])
+    fold took 3.2 min, 18 pareto points
+  Fold 8/20: holdout [1  6  7] (train [2  5  8])
+    fold took 3.4 min, 18 pareto points
+  Fold 9/20: holdout [1  6  8] (train [2  5  7])
+    fold took 3.4 min, 18 pareto points
+  Fold 10/20: holdout [1  7  8] (train [2  5  6])
+    fold took 3.7 min, 18 pareto points
+  Fold 11/20: holdout [2  5  6] (train [1  7  8])
+    fold took 4.1 min, 18 pareto points
+  Fold 12/20: holdout [2  5  7] (train [1  6  8])
+    fold took 3.9 min, 18 pareto points
+  Fold 13/20: holdout [2  5  8] (train [1  6  7])
+    fold took 4.1 min, 18 pareto points
+  Fold 14/20: holdout [2  6  7] (train [1  5  8])
+    fold took 4.3 min, 18 pareto points
+  Fold 15/20: holdout [2  6  8] (train [1  5  7])
+    fold took 4.3 min, 18 pareto points
+  Fold 16/20: holdout [2  7  8] (train [1  5  6])
+    fold took 4.1 min, 18 pareto points
+  Fold 17/20: holdout [5  6  7] (train [1  2  8])
+    fold took 3.9 min, 18 pareto points
+  Fold 18/20: holdout [5  6  8] (train [1  2  7])
+    fold took 4.1 min, 18 pareto points
+  Fold 19/20: holdout [5  7  8] (train [1  2  6])
+    fold took 3.5 min, 18 pareto points
+  Fold 20/20: holdout [6  7  8] (train [1  2  5])
+    fold took 3.9 min, 18 pareto points
+Config 1: 360 candidates, 0 survive (Xi1>=1.51e+04, Xi3>=0.05, beats baseline)
+
+--- Config 2/2: allBPA=[1  2  5  6  7  8] numHold=3 x12factor=100 | 20 folds ---
+Probe: 0.25s/eval, ~231s/fold, ETA 1.29 h for 20 folds
+  Fold 1/20: holdout [1  2  5] (train [6  7  8])
+    fold took 3.7 min, 18 pareto points
+  Fold 2/20: holdout [1  2  6] (train [5  7  8])
+    fold took 3.8 min, 18 pareto points
+  Fold 3/20: holdout [1  2  7] (train [5  6  8])
+    fold took 3.7 min, 18 pareto points
+  Fold 4/20: holdout [1  2  8] (train [5  6  7])
+    fold took 3.6 min, 8 pareto points
+  Fold 5/20: holdout [1  5  6] (train [2  7  8])
+    fold took 3.6 min, 18 pareto points
+  Fold 6/20: holdout [1  5  7] (train [2  6  8])
+    fold took 3.6 min, 18 pareto points
+  Fold 7/20: holdout [1  5  8] (train [2  6  7])
+    fold took 3.5 min, 18 pareto points
+  Fold 8/20: holdout [1  6  7] (train [2  5  8])
+    fold took 3.8 min, 18 pareto points
+  Fold 9/20: holdout [1  6  8] (train [2  5  7])
+    fold took 3.8 min, 18 pareto points
+  Fold 10/20: holdout [1  7  8] (train [2  5  6])
+    fold took 3.7 min, 18 pareto points
+  Fold 11/20: holdout [2  5  6] (train [1  7  8])
+    fold took 4.1 min, 18 pareto points
+  Fold 12/20: holdout [2  5  7] (train [1  6  8])
+    fold took 3.4 min, 18 pareto points
+  Fold 13/20: holdout [2  5  8] (train [1  6  7])
+    fold took 3.4 min, 18 pareto points
+  Fold 14/20: holdout [2  6  7] (train [1  5  8])
+    fold took 3.6 min, 18 pareto points
+  Fold 15/20: holdout [2  6  8] (train [1  5  7])
+    fold took 3.8 min, 18 pareto points
+  Fold 16/20: holdout [2  7  8] (train [1  5  6])
+    fold took 3.6 min, 18 pareto points
+  Fold 17/20: holdout [5  6  7] (train [1  2  8])
+    fold took 3.4 min, 18 pareto points
+  Fold 18/20: holdout [5  6  8] (train [1  2  7])
+    fold took 3.6 min, 18 pareto points
+  Fold 19/20: holdout [5  7  8] (train [1  2  6])
+    fold took 2.9 min, 18 pareto points
+  Fold 20/20: holdout [6  7  8] (train [1  2  5])
+    fold took 3.3 min, 18 pareto points
+Config 2: 350 candidates, 0 survive (Xi1>=1.51e+04, Xi3>=0.05, beats baseline)
+
+Sweep saved to sweepExtX3_results_20260907.mat
+RERUN ALL DONE

@@ -20,8 +20,8 @@
 % [10pt], [11pt], and [12pt]. These options are passed to book class. The
 % default is 12pt.
 
-% [1.5in], [1.7in]. These two options set the left margin. Default is 1.7
-% inches.
+% [1in], [1.5in], [1.7in] set the left margin. Default is 1 inch.
+% PSU ETD minimum left margin changed to 1 inch effective Fall 2024.
 
 % [onehalf], [double]. These two options set the line spacing. Default is
 % double.
@@ -46,12 +46,17 @@
 \DeclareOption{12pt}{\renewcommand{\@ftsize}{12pt}}
 
 % Left side margin. 
-% [1.5in], [1.7in].
-% default is 1.7, unless [1.5in] is specified.
+% [1in], [1.5in], [1.7in].
+% Default is 1 inch; wider legacy margins remain available explicitly.
 \newcommand{\@lmarwidth}{}
 \newcommand{\@smarwidth}{}
 \newcommand{\@texwidth}{}
 
+\DeclareOption{1in}{%
+  \renewcommand{\@lmarwidth}{0in}%
+  \renewcommand{\@smarwidth}{0in}%
+  \renewcommand{\@texwidth}{6.5in}%
+}
 \DeclareOption{1.5in}{%
   \renewcommand{\@lmarwidth}{.5in}%
   \renewcommand{\@smarwidth}{.0in}%
@@ -88,7 +93,7 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{\bookclass}}
 
 % These are the default options.
-\ExecuteOptions{12pt,1.7in,double,submission}
+\ExecuteOptions{12pt,1in,double,submission}
 \ProcessOptions\relax
 
 \if@preprint
@@ -379,7 +384,10 @@
       \normalfont\heading
       \ifnum \c@secnumdepth >\m@ne
     %   \if@mainmatter\heading\@chapapp\ \thechapter:\ \fi % this includes "Chapter #:" in the chapter numbering
-      \if@mainmatter\chapterheading\thechapter\hspace{1em}\ \fi
+      % In the appendix the chapter titles already carry "Appendix A:" textually,
+      % so suppress the bare letter prefix there (counter still advances for
+      % A.1 / Table A1 / (A1) numbering). Patched 2026-09-08.
+      \if@appendix\else\if@mainmatter\chapterheading\thechapter\hspace{1em}\ \fi\fi
       \fi
       \chapterheading #1\par\nobreak
       \vskip 20\p@

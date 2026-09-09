@@ -21,6 +21,8 @@ if isempty(SOLVER), SOLVER = 'gamultiobj'; end
 
 USE_BRACKET2 = true;     %false = (d)+(e) ablation: no second bracket
 TRANSMODE = '2trans';    %frame method used by the evaluator: '2trans' (two-rotation, current) or '1trans' (yaw-only)
+tmv = getenv('FLX2BRK_TRANS');   %env override so batch chains can flip modes without editing this file
+if ~isempty(tmv), TRANSMODE = tmv; end
 DO_PLOTS = ~batchStartupOptionUsed;   %auto: plots when run interactively
 PICK = 1;                %which filtered Pareto candidate to evaluate
 
@@ -39,6 +41,13 @@ else
     SURRVALS = 6000;
 end
 
+abp = getenv('FLX2BRK_ALLBPA');      %e.g. '1,2,4,5' -- overrides ALLBPA for variant runs
+if ~isempty(abp)
+    ALLBPA = sscanf(abp, '%d,')';
+end
+TAG = getenv('FLX2BRK_TAG');         %appended to the results filename so variants don't collide
+if ~isempty(TAG), TAG = ['_' TAG]; else, TAG = ''; end
+
 labels = ["48cm", "46cm", "47cm", "40cm-tendon", "41cm"];
 validLabels = labels(ALLBPA);
 numBPA = numel(ALLBPA);
@@ -50,7 +59,7 @@ results_cv = cell(1, numBPA);  % Will store RMSE, FVU, Max Resid for BPA(s) opti
 scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for BPA(s) held-out for validation
 
 %% Calculate baseline
-[a0, bpa0] = minimizeFlxPin2brk(0,Inf,Inf,[],USE_BRACKET2);   %no extra length, infinite bracket stiffness
+[a0, bpa0] = minimizeFlxPin2brk(0,Inf,Inf,[],USE_BRACKET2,TRANSMODE);   %no extra length, infinite bracket stiffness
 baselineScores = a0;
 fprintf('\nPerformance with no length offset and infinite stiffness:\n');
 disp(array2table(a0, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
@@ -86,21 +95,25 @@ for k = 1:length(list)
     if DO_PLOTS
         opts.PlotFcn = {@gaplotpareto3D_simple};
     end
+    %Initial population focused on the region of interest (Ben, 2026-09-08):
+    %physical [-0.012 m, 5e4, 0.9e4] to [-0.005 m, 2e5, 1.6e4]; x-space = [cm, log10, log10]
+    opts.InitialPopulationRange = [-0.012*100, log10(5e4), log10(0.9e4); ...
+                                   -0.005*100, log10(2e5), log10(1.6e4)];
 
     switch lower(SOLVER)
         case 'gamultiobj'
-            [x, fvals,exitflag,output,population,scores] = gamultiobj(@(X) min1(X, trainIdx, a0, USE_BRACKET2), 3, [], [], [], [], ...
+            [x, fvals,exitflag,output,population,scores] = gamultiobj(@(X) min1(X, trainIdx, a0, USE_BRACKET2, TRANSMODE), 3, [], [], [], [], ...
                                                             lb, ub, opts);
         case 'surrogateopt'
             surrOpts = optimoptions('surrogateopt', ...
                 'UseParallel', true, ...
                 'Display', 'iter', ...
                 'MaxFunctionEvaluations', SURRVALS);
-            sol = surrogateopt(@(X) min1scalar(X, trainIdx, a0, W, USE_BRACKET2), lb, ub, surrOpts);
+            sol = surrogateopt(@(X) min1scalar(X, trainIdx, a0, W, USE_BRACKET2, TRANSMODE), lb, ub, surrOpts);
             %R2025a: first output IS the solution point (empty if all evals fail)
             assert(~isempty(sol), 'surrogateopt returned empty - all evaluations failed');
             x = reshape(sol, 1, []);
-            fvals = min1(x, trainIdx, a0, USE_BRACKET2);
+            fvals = min1(x, trainIdx, a0, USE_BRACKET2, TRANSMODE);
         otherwise
             error('Unknown FLX2BRK_SOLVER "%s": use gamultiobj or surrogateopt', SOLVER);
     end
@@ -108,7 +121,7 @@ for k = 1:length(list)
     % Evaluate each solution on held-out BPA
     valF = zeros(size(x,1), 3);
     parfor i = 1:size(x,1)
-        valF(i,:) = min1(x(i,:), holdoutIdx, a0, USE_BRACKET2);
+        valF(i,:) = min1(x(i,:), holdoutIdx, a0, USE_BRACKET2, TRANSMODE);
     end
 
     % Store full set (no bestIdx decision now)
@@ -160,10 +173,10 @@ for ii = 1:N
     Xi2 = results_sort_actual(ii,xCols(3));
 
     % re-evaluate on all BPAs
-    f_all = minimizeFlxPin2brk(Xi0, Xi1, Xi2, [], USE_BRACKET2);   % returns nBPA x 3 [RMSE, FVU, MaxResidual]
+    f_all = minimizeFlxPin2brk(Xi0, Xi1, Xi2, [], USE_BRACKET2, TRANSMODE);   % returns nBPA x 3 [RMSE, FVU, MaxResidual]
 
     pass = true;
-    for j = 1:numBPA
+    for j = 1:numel(labels)
         pass = pass && all( f_all(j,1:3) <= baselineScores(j,1:3) );
     end
     keep(ii) = pass;
@@ -184,7 +197,7 @@ end
 k1 = sol_actual(1);
 k2 = sol_actual(2);
 k3 = sol_actual(3);
-[f, bpa] = minimizeFlxPin2brk(k1, k2, k3, [], USE_BRACKET2);  % [f: nBPA x 3], [bpa: full struct]
+[f, bpa] = minimizeFlxPin2brk(k1, k2, k3, [], USE_BRACKET2, TRANSMODE);  % [f: nBPA x 3], [bpa: full struct]
 
 disp(array2table([k1, k2, k3], 'VariableNames', {'X0', 'X1', 'X2'}));
 
@@ -203,13 +216,13 @@ fprintf('Mean optimized: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',mean(f,1,'
 %% Save results
 stamp = char(string(datetime('now'),'yyyyMMdd'));
 if isSmoke
-    resultFile = sprintf('minimizeFlxPin10_results_%s_2brkt_%s_smoke.mat', stamp, TRANSMODE);
+    resultFile = sprintf('minimizeFlxPin10_results_%s_2brkt_%s%s_smoke.mat', stamp, TRANSMODE, TAG);
 else
-    resultFile = sprintf('minimizeFlxPin10_results_%s_2brkt_%s.mat', stamp, TRANSMODE);
+    resultFile = sprintf('minimizeFlxPin10_results_%s_2brkt_%s%s.mat', stamp, TRANSMODE, TAG);
 end
 save(resultFile, 'results_cv', 'all_candidates', 'results_sort', 'results_sort_actual', ...
      'filtered_results', 'xCols', 'a0', 'f', 'k1', 'k2', 'k3', 'PICK', ...
-     'ALLBPA', 'NUMHOLD', 'POP', 'MAXGEN', 'USE_BRACKET2', 'TRANSMODE', 'SOLVER', 'labels', 'W');
+     'ALLBPA', 'NUMHOLD', 'POP', 'MAXGEN', 'USE_BRACKET2', 'TRANSMODE', 'SOLVER', 'labels', 'W', 'TAG');
 fprintf('Results saved to %s\n', resultFile);
 
 %% Plot torque curves, pre- and post-Optimized
@@ -393,7 +406,7 @@ legend(tS.Children(end-1),'Location','best','FontSize',8);
 end % DO_PLOTS
 
 %% Helper functions
-function ff = min1(x, trainIdx, kompare, useB2)
+function ff = min1(x, trainIdx, kompare, useB2, transMode)
     if numel(x) == 3 && size(x,1) == 1
         % OK
     else
@@ -404,7 +417,7 @@ function ff = min1(x, trainIdx, kompare, useB2)
     Xi2 = 10^x(3);
 
     try
-        [f_all, ~] = minimizeFlxPin2brk(Xi0, Xi1, Xi2, trainIdx, useB2); % Nx3 matrix for training BPAs
+        [f_all, ~] = minimizeFlxPin2brk(Xi0, Xi1, Xi2, trainIdx, useB2, transMode); % Nx3 matrix for training BPAs
         fnorm = f_all(trainIdx,:)./kompare(trainIdx,:);     %normalize results before taking the mean
         ff = mean(fnorm, 1, 'omitnan');              % Return 1x3: [mean RMSE, mean FVU, mean MaxResidual]
         if ~isnumeric(ff) || numel(ff) ~= 3
@@ -415,8 +428,8 @@ function ff = min1(x, trainIdx, kompare, useB2)
     end
 end
 
-function fs = min1scalar(x, trainIdx, kompare, W, useB2)
-    f3 = min1(x, trainIdx, kompare, useB2);
+function fs = min1scalar(x, trainIdx, kompare, W, useB2, transMode)
+    f3 = min1(x, trainIdx, kompare, useB2, transMode);
     if any(~isfinite(f3))
         fs = Inf;
     else

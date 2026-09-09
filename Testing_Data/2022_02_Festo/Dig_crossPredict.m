@@ -1,4 +1,4 @@
-function summary = crossPredictFlx(srcMat, pick)
+function summary = Dig_crossPredict(srcMat, pick)
 %CROSSPREDICTFLX Cross-prediction check for a flexor pinned-knee solution.
 % Given flexor (Xi0, Xi1, Xi2), evaluate:
 %   (a) biomimetic flexor   : minimizeFlx   vs its baseline
@@ -8,8 +8,8 @@ function summary = crossPredictFlx(srcMat, pick)
 %   (c) biomimetic extensor : minimizeExt (52cm) - same three treatments
 % Prints and saves tables; returns a summary struct.
 %
-%   summary = crossPredictFlx()                    % latest 2brk results, else legacy
-%   summary = crossPredictFlx(srcMat, pick)        % explicit results .mat + candidate
+%   summary = Dig_crossPredict()                    % latest 2brk results, else legacy
+%   summary = Dig_crossPredict(srcMat, pick)        % explicit results .mat + candidate
 %
 % srcMat: results .mat holding filtered_results + xCols (3-col flexor solution).
 % pick:   which filtered candidate to use (default 1).
@@ -24,7 +24,7 @@ if nargin < 1 || isempty(srcMat)
         srcMat = 'minimizeFlxPin10_results_20260730_2transforms_Z2.mat';
     end
 end
-fprintf('=== crossPredictFlx | source: %s | pick=%d ===\n', srcMat, pick);
+fprintf('=== Dig_crossPredict | source: %s | pick=%d ===\n', srcMat, pick);
 S = load(srcMat, 'filtered_results', 'xCols');
 g = S.filtered_results(pick, S.xCols);   % [Xi0 m, Xi1 N/m, Xi2 N/m]
 fprintf('Flexor solution: Xi0=%.4f m, Xi1=%.3e N/m, Xi2=%.3e N/m\n', g(1), g(2), g(3));

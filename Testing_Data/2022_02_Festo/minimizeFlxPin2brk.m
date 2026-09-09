@@ -1,5 +1,5 @@
 %% Two-bracket flexor evaluator (new method, Sept 2026)
-function [f_all, bpa_all] = minimizeFlxPin2brk(Xi0,Xi1,Xi2,idx_val,useB2)
+function [f_all, bpa_all] = minimizeFlxPin2brk(Xi0,Xi1,Xi2,idx_val,useB2,transMode)
 % minimizeFlxPin2brk: minimizeFlxPin with bracket-model changes (e) and (f):
 %   BOTH brackets use the two-rotation (Z then Y) frame method (restored 2026-09-07;
 %   the earlier single-transform experiment (d) is superseded):
@@ -11,7 +11,7 @@ function [f_all, bpa_all] = minimizeFlxPin2brk(Xi0,Xi1,Xi2,idx_val,useB2)
 %         computeForceVector ports the minimizeExtX3 pattern: hip-frame unit
 %         direction from Loc geometry (origin -> first distinct point).
 %         Pbr2 = [-52.61, 0, 75.06]/1000 (hip origin to flexor origin bracket),
-%         yaw-only bracket frame Thbr = RpToTrans(RhbrZ, Pbr2'),
+%         pitch-only bracket frame Thbr = RpToTrans(RhbrZ, Pbr2'),
 %         K2 = [X2, X1, X2], compliance projected on the path force direction,
 %         c_eff = c_b + cSpr + c_b2, pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] + eA,
 %         LOC row 1 (origin) updated with pAnew.
@@ -29,13 +29,88 @@ function [f_all, bpa_all] = minimizeFlxPin2brk(Xi0,Xi1,Xi2,idx_val,useB2)
 %   f_all   - [RMSE, FVU, MaxResidual] per BPA
 %   bpa_all - updated BPA structs (bpa_all(i).eA2 holds origin-bracket deflections)
 
-%% load
-load FlxPinBPASet.mat kf
+%% Build kf from the raw per-test data (template = commented block in minimizeFlxPin.m).
+% 47cm test (kf(3)): encoder read ~5.3 deg low; true angle = reported + 5.3 (Ben, 2026-09-08).
+% The .mat files on disk are NOT modified -- the correction is applied here at build time.
+persistent kf
+if isempty(kf)
 
-%Declare the new diagnostics field so struct assignment in the evaluate loop
-%stays field-order compatible with the saved kf template.
-for jD = 1:numel(kf)
-    kf(jD).eA2 = [];
+    load KneeFlxPin_10mm_48cm.mat phiD
+    load Plot_KneeFlxPin10mm_48cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Bifemsh_Pam
+    A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
+    kfb(1) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
+                  'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
+                  'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
+                  'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
+                  'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
+                  'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+                  'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
+                  'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+    clear Bifemsh_Pam phiD G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+
+    % 46cm length
+    load KneeFlxPin_10mm_46cm.mat phiD
+    load Plot_KneeFlxPin10mm_46cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Bifemsh_Pam
+    A = sortrows([Angle, Torque, InflatedLength', ICRtoMuscle', TorqueHand]);
+    kfb(2) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
+                  'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
+                  'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
+                  'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
+                  'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
+                  'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+                  'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
+                  'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+    clear Bifemsh_Pam phiD G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+
+    % 47cm length -- ENCODER CORRECTION: true angle = reported + 5.3 deg
+    load KneeFlxPin_10mm_47cm.mat phiD
+    load Plot_KneeFlxPin10mm_47cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Bifemsh_Pam
+    phiD = phiD + 5.3;
+    A = sortrows([Angle + 5.3, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
+    kfb(3) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
+                  'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
+                  'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
+                  'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
+                  'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
+                  'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+                  'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
+                  'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+    clear Bifemsh_Pam phiD G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+
+    % 40cm length
+    load KneeFlxPin_10mm_40cm.mat phiD
+    load Plot_KneeFlxPin10mm_40cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Bifemsh_Pam
+    A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
+    kfb(4) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
+                  'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
+                  'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
+                  'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
+                  'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
+                  'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+                  'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
+                  'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+    clear Bifemsh_Pam phiD G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+
+    % 42cm length
+    load KneeFlxPin_10mm_42cm.mat phiD
+    load Plot_KneeFlxPin10mm_42cm.mat Angle Torque InflatedLength ICRtoMuscle TorqueHand G Bifemsh_Pam
+    A = sortrows([Angle, Torque, InflatedLength, ICRtoMuscle, TorqueHand]);
+    kfb(5) = struct('Ak',phiD,'Loc',Bifemsh_Pam.Location,'CP',Bifemsh_Pam.Cross,'dBPA',Bifemsh_Pam.Diameter, ...
+                  'Tk',Bifemsh_Pam.TransformationMat,'rest',Bifemsh_Pam.RestingL,'Kmax',Bifemsh_Pam.Kmax,...
+                  'fitn',Bifemsh_Pam.FittingLength,'ten',Bifemsh_Pam.TendonL,'P',Bifemsh_Pam.Pressure, ...
+                  'Lmt',Bifemsh_Pam.MuscleLength,'strain',Bifemsh_Pam.Contraction, 'unitD',Bifemsh_Pam.UnitDirection, ...
+                  'mA',G,'Fm',Bifemsh_Pam.Fmax,'F',Bifemsh_Pam.Force, 'seg',Bifemsh_Pam.SegmentLengths, ...
+                  'M',Bifemsh_Pam.Torque(:,3),'Aexp',A(:,1),'Mexp',A(:,2),...
+                  'A_h',A(:,1),'Lm_h',A(:,3),'mA_h',A(:,4),'M_h',A(:,5),...
+                  'Lmt_p', [], 'mA_p', [], 'M_p', [], 'F_p', [], 'strain_p', [], 'L_p', [], 'gama', [], 'strain_f', [],'Lm_f', []);
+    clear Bifemsh_Pam phiD G Angle Torque InflatedLength ICRtoMuscle TorqueHand A
+
+    %Declare the new diagnostics field so struct assignment in the evaluate loop
+    %stays field-order compatible with the kf template.
+    for jD = 1:numel(kfb)
+        kfb(jD).eA2 = [];
+    end
+    kf = kfb;
 end
 
 %% Initialize output
@@ -46,6 +121,9 @@ end
 if nargin < 5
     useB2 = true;
 end
+if nargin < 6 || isempty(transMode)
+    transMode = '2trans';   %'2trans' = two-rotation (Z then Y) frames; '1trans' = pitch-only frames
+end
 
 bpa_all = kf;
 f_all = NaN(nBPA, 3);
@@ -53,7 +131,7 @@ f_all = NaN(nBPA, 3);
 %% Evaluate each BPA
 for i = idx_val
     klass_i = kf(i);
-    [bpa_all(i), f_all(i,:)] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, useB2);
+    [bpa_all(i), f_all(i,:)] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, useB2, transMode);
     if any(isnan(bpa_all(i).strain_p))
         warning('NaNs in strain_p for BPA #%d', i);
     end
@@ -62,13 +140,13 @@ end
 end
 
 
-function [bpa_i, fitvec] = evaluateBPA(klass, Xi0, Xi1, Xi2, useB2)
+function [bpa_i, fitvec] = evaluateBPA(klass, Xi0, Xi1, Xi2, useB2, transMode)
 %% Calculate locations and properties
 bpa_i = klass;
 kspr = Spr(bpa_i); %Calculate spring rate (Infinite if no tendon is used)
 strain_Xi0 = Contraction(bpa_i, [],Xi0); %Calculate contraction with constant length offset
 Funit = computeForceVector(bpa_i);   %Force unit direction at the origin, hip frame (bracket 2)
-[L_p, gemma, eA2] = Lok(bpa_i, Xi1, Xi2, kspr, strain_Xi0, Xi0, useB2, Funit);   %Bracket deformation changing geometry
+[L_p, gemma, eA2] = Lok(bpa_i, Xi1, Xi2, kspr, strain_Xi0, Xi0, useB2, Funit, transMode);   %Bracket deformation changing geometry
 unitD_p = UD(bpa_i, L_p);   %New force direction
 sL_p = seg(bpa_i, L_p);   %New segment lengths uses deformation but does not subtract length offset
 Lmt_p = LMT(sL_p, Xi0+gemma);     %New musclulotendon length. Uses deformed geometry and constant length offset.
@@ -147,7 +225,7 @@ F_unit = normalize(F_vec);
 end
 
 %% ------------- Location  ------------------------
-function [LOC, gama, eA2] = Lok(klass,X1,X2,kSpr,strain,X0,useB2,Funit)
+function [LOC, gama, eA2] = Lok(klass,X1,X2,kSpr,strain,X0,useB2,Funit,transMode)
 % Inputs:
 %   bpa class info
 %   X1, X2 stiffness
@@ -168,9 +246,10 @@ FF(FF<0) = 0;
 unitD = klass.unitD;            %unit direction of force vector, tibia frame
 Fk = unitD.*FF;                  %Force vector, tibia frame
 Fh = Funit.*FF;                  %Force vector at the origin, hip frame (bracket 2)
-pB = L(C,:,(klass.Ak==0));                  %Distance from knee frame to muscle insertion
-% Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
-Pbri = [-27.5, -107.81, -0.54]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever, but at tibial contact, no z offset)
+[~, iz0] = min(abs(klass.Ak));              %frame nearest zero knee angle (exact 0 may not exist after encoder correction)
+pB = L(C,:,iz0);                            %Distance from knee frame to muscle insertion
+Pbri = [-48.11, -107.81, 13.8]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever)
+% Pbri = [-27.5, -107.81, -0.54]/1000;     %vector from knee ICR to flexor insertion bracket (where it starts to cantilever, but at tibial contact, no z offset)
 % Pbri = [-27.5, -125.91, -0.54]/1000;     %vector from knee ICR to upper bolt
 pkbrB = pB-Pbri;                  %vector from bracket to point B, in the knee frame
 thetabrB = atan2(pkbrB(2),pkbrB(1));   %angle between pbrB and x axis
@@ -178,13 +257,22 @@ RkbrZ = [cos(thetabrB) -sin(thetabrB) 0; ...     %Rotation matrix
        sin(thetabrB) cos(thetabrB) 0; ...
        0    0   1];
 % Insertion (tibia) bracket frame: two-rotation method (restored 2026-09-07)
+oneT = strcmpi(transMode, '1trans');   %'1trans' reproduces the pitch-only frame experiment
+%NOTE (proven 2026-09-08): for stiffness arrays of form K=[a,b,a] the compliance matrix is
+%invariant under y-axis rotations, so 1trans and 2trans give IDENTICAL predictions (L_p
+%agrees to ~1e-17). The transMode flag is kept to demonstrate this and because the point
+%forms would diverge if K ever becomes non-y-symmetric (e.g., [X1,X2,X2]).
 pbrkB = RkbrZ'*pkbrB';       %Vector in the bracket frame
 thetaY = atan2(pbrkB(3), pbrkB(1));  % z vs x (in bracket frame)
 Ry = [cos(thetaY) 0  sin(thetaY);
       0           1  0;
      -sin(thetaY) 0  cos(thetaY)];
-Rkbr = RkbrZ*Ry';            %Rotate about y-axis in body frame
-Tkbr = RpToTrans(Rkbr, Pbri');    %Transformation matrix, flexor bracket frame in knee frame
+if oneT
+    Tkbr = RpToTrans(RkbrZ, Pbri');          %pitch-only frame
+else
+    Rkbr = RkbrZ*Ry';            %Rotate about y-axis in body frame
+    Tkbr = RpToTrans(Rkbr, Pbri');    %Transformation matrix, flexor bracket frame in knee frame
+end
 
 % (f) second bracket at the origin (hip frame), two-rotation method
 pA = L(1,:,1);                                 %Distance from hip frame to muscle origin
@@ -199,15 +287,19 @@ thetaYh = atan2(pbrhA(3), pbrhA(1));  % z vs x (in bracket frame)
 Ryh = [cos(thetaYh) 0  sin(thetaYh);
        0            1  0;
       -sin(thetaYh) 0  cos(thetaYh)];
-Rhbr = RhbrZ*Ryh';            %Rotate about y-axis in body frame
-Thbr = RpToTrans(Rhbr, Pbr2');    %Transformation matrix, origin bracket frame in hip frame
+if oneT
+    Thbr = RpToTrans(RhbrZ, Pbr2');          %pitch-only frame
+else
+    Rhbr = RhbrZ*Ryh';            %Rotate about y-axis in body frame
+    Thbr = RpToTrans(Rhbr, Pbr2');    %Transformation matrix, origin bracket frame in hip frame
+end
 
 LOC = L;            %new location matrix
 N = size(L,3);
 Fbrk = zeros(N,3);       %Force vector represented in the tibial bracket frame
 Fbrh2 = zeros(N,3);      %Force vector represented in the origin bracket frame
 
-parfor ii = 1:N                          %Repeat for each orientation
+for ii = 1:N                          %Repeat for each orientation
         Fbrk(ii,:) = RowVecTrans(Tkbr\eye(4),Fk(ii,:)); %Force vector in the tibia frame represented in the insertion bracket frame
     if useB2
         Fbrh2(ii,:) = RowVecTrans(Thbr\eye(4),Fh(ii,:)); %Force vector in the hip frame represented in the origin bracket frame
@@ -221,7 +313,11 @@ else
 end
 
 eB = [epsilon, delta, beta];
-pbrBnew = [norm(pkbrB), 0, 0] + eB; %new point B, in the insertion bracket's frame (x-axis along the nominal vector)
+if oneT
+    pbrBnew = [norm(pkbrB(1:2)), 0, pkbrB(3)] + eB; %pitch-only frame: z is not rotated onto x
+else
+    pbrBnew = [norm(pkbrB), 0, 0] + eB; %two-rotation frame: point lies on frame x-axis
+end
 
 pBnew = zeros(N,3);
 for ii = 1:N                          %Repeat for each orientation
@@ -233,7 +329,11 @@ end
 eA = [e_ax2, e_by2, e_bz2];
 eA2 = eA;
 if useB2
-    pbrAnew = [norm(phbrA), 0, 0] + eA; %Muscle origin location, bracket frame (x-axis along the nominal vector)
+    if oneT
+        pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] + eA; %pitch-only frame: z is not rotated onto x
+    else
+        pbrAnew = [norm(phbrA), 0, 0] + eA; %two-rotation frame: point lies on frame x-axis
+    end
     pAnew = zeros(N,3);
     for ii = 1:N
         pAnew(ii,:) = RowVecTrans(Thbr, pbrAnew(ii,:)); %New point A, in the hip frame
@@ -281,7 +381,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable, e_axial2, e_bendY2, e_bendZ2] = fo
     u_hat_all = normalize(Fbr);
 
     % Vectorized k_b computation (insertion bracket, (e) axis order)
-    K = [X1, X2, X1];   %bracket stiffness array
+    K = [X1, X2, X1];   %bracket stiffness array (arm 2, 2026-09-08; arm 1 used [X1, X2, X2])
     K_bracket = diag(K);       %bracket stiffness matrix
     C_bracket = diag([1/K(1), 1/K(2), 1/K(3)]); %bracket compliance
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]

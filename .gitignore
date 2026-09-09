@@ -9,6 +9,15 @@ Code/Matlab/Mesh_Optimization/*.log
 Testing_Data/2022_02_Festo/*.log
 # SolidWorks console logs
 Solid_Models/**/console.log
+# --- MyoConverter / run byproducts (added 2026-09-08) ---
+# Regenerable MyoConverter conversion outputs (~116 MB; Geometry = stock OpenSim STL copies).
+# Rebuild with the MyoConverter scripts; see opensim skill notes.
+Solid_Models/OpenSim/Gait2392_Robotbody/myosuite_gait2392_robotbody/
+Solid_Models/OpenSim/myosuite_gait2392_simbody/
+# One-off run logs / crash traces dropped at repo root
+/opensim.log
+/convert_gait2392*.log
+/Trace_*.txt
 # ZCode session state
 .zcode/
 Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$*

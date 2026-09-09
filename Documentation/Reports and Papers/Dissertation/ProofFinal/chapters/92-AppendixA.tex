@@ -1,7 +1,63 @@
 \chapter{Appendix A: Muscle Force and Joint Torque Calculations}\label{app:muscle_calcs}
 
-% TODO: This appendix will contain the supplementary derivations for the
-% muscle force and joint torque calculations used in Chapters 3-5, including
-% the moment-arm projection method and the vector geometry of the muscle paths.
+This appendix documents the reference implementation of the force, torque, and compliance equations used in Chapters~\ref{ch:methods}--\ref{ch:results}, as they exist in the project's MATLAB code. File names are given so that any number in this dissertation can be traced to the code that produced it.
 
-[To be completed.]
+\section{BPA Force Model Implementation}
+
+\subsection{Strain Measures}
+The musculotendon path length $l_{LMT}$ is the sum of straight segments between route via points, transformed into a common frame at each frame crossing. The contractile strain used by the force model subtracts the artificial tendon and both end-cap fittings from the path length before normalization by the resting length,
+\begin{equation}
+    \varepsilon \;=\; \frac{l_{0} - \left(l_{LMT} - l_{ten} - 2\,l_{fitting} - \chi_{0}\right)}{l_{0}},
+    \label{eq:app_strain}
+\end{equation}
+where $\chi_{0}$ is the constant length offset of Section~\ref{sec:improved_model} (zero in the uncorrected model). [Provenance: \texttt{MonoPamDataExplicit.m} get.Contraction, lines 210--217; \texttt{minimizeFlxPin.m} lines 150--164. End-cap fitting length $l_{fitting}=\qty{25.4}{\mm}$ is a constructor default, line 69.]
+
+The maximum free-load contraction at \qty{620}{\kPa} is $\varepsilon_{620} = (l_{0}-l_{620})/l_{0}$, where $l_{620}$ is the BPA length at \qty{620}{\kPa} with no external load (code variable \texttt{KMAX}; \texttt{MonoPamDataExplicit.m} line 278). The relative strain is $\varepsilon^{*} = \varepsilon / \varepsilon_{620}$ (line 281).
+
+\subsection{Normalized Force Surface}
+The normalized isometric force surface of Equation~(\ref{eq:Fstar}) is implemented in closed form in \texttt{Functions/f\_festo.m} (lines 1--26),
+\begin{equation}
+    F^{*} = c_{0}\left(e^{-c_{1}\varepsilon^{*}} - 1\right)
+            + P^{*}\,e^{-c_{2}(\varepsilon^{*})^{2}},
+    \qquad F^{*}\le 0 \;\Rightarrow\; 0,
+    \label{eq:app_fstar}
+\end{equation}
+with $P^{*} = P/\qty{620}{\kPa}$. The coefficients were fitted with \texttt{fittype} nonlinear least squares and least-absolute-residual robustness (\texttt{Testing\_Data/bpaFits.m}, lines 45--60 and 115--140, lower bounds $[0,0,0]$) and are reported in Table~\ref{tab:Fstar}. The code additionally holds a 40\,mm fit not used in this dissertation ($c_0 = 0.1224$, $c_1 = 10.47$, $c_2 = 2.023$; \texttt{f\_festo.m} lines 17--20).
+
+At runtime the torque model may alternatively evaluate a spline interpolation of the manufacturer's datasheet curves (\texttt{Functions/festo4.m}, backed by \texttt{FestoLookup.mat}), with force clamped to zero for $\varepsilon^{*}>1$ or $F^{*}<0$. Equation~(\ref{eq:app_fstar}) replaced this lookup in the corrected model.
+
+\subsection{Maximum Force}
+The resting-length-dependent maximum force of Equation~(\ref{eq:Fmax_3D}) is implemented in \texttt{Functions/maxBPAforce.m} (10\,mm: line 46; 20\,mm: line 57; duplicate for 20\,mm in \texttt{Functions/Fmax20.m}) with the fixed \qty{7.5}{\mm} end-contact offset. The fitted 20\,mm coefficients carry confidence intervals $a_1 \in [1.4745, 1.5011]$\,\si{\N\per\kPa} and $a_2 \in [0.0238, 0.0258]$\,\si{\per\kPa\per\metre} (\texttt{Fmax20.m} lines 26--27). Total force is the product $F = F^{*}(\varepsilon^{*},P^{*})\,F_{620}(l_{0})$, resolved into a vector along the force direction (\texttt{MonoPamDataExplicit.m} lines 283--287).
+
+\section{Muscle Path Length and Moment Arm}
+
+Path length accumulates the Euclidean norm of each segment between via points, applying the body-frame transformation whenever the path crosses between the femur and tibia frames (\texttt{MonoPamDataExplicit.m} lines 78--95, total at lines 122--133).
+
+The vector moment arm is implemented as the perpendicular foot of the joint origin onto the line of action,
+\begin{equation}
+    \vec{r} \;=\; \vec{p} \;-\; \hat{u}\left(\hat{u}\cdot\vec{p}\right),
+    \label{eq:app_perpfoot}
+\end{equation}
+where $\vec{p}$ is the vector from the joint origin to the muscle-path crossing point and $\hat{u}$ is the unit force direction (\texttt{MonoPamDataExplicit.m} lines 156--168; identical implementations in \texttt{MonoMuscleData.m} lines 111--121, \texttt{minimizeFlxPin.m} lines 400--409, and \texttt{MonoPam\_mult.m} lines 186--199). This is the same quantity as the cross-product projection of Equation~(\ref{eq:project_ma}); the planar scalar moment arm about the joint axis is the magnitude of the in-plane components, computed as \texttt{hypot(mA(:,1), mA(:,2))} (\texttt{predictKneeFlexor20mm.m} line 61). Torque about the joint $z$-axis is $\vec{M} = \vec{r}\times\vec{F}$, evaluated only where the BPA is in tension (values are discarded for $\varepsilon < -0.02$, the compressive region; \texttt{MonoPamDataExplicit.m} line 311).
+
+\section{Compliance Model Implementation}
+
+The compliance-corrected muscle length entering Equation~(\ref{eq:Lm}) is computed as $l_{m} = l_{LMT} - \chi_{0} - l_{ten} - 2\,l_{fitting}$ (\texttt{minimizeFlxPin.m} lines 254 and 368--377). The bracket stiffness matrix and projected scalar compliance along the force direction are evaluated per configuration as $\mathbf{K}_{br} = \mathrm{diag}(\chi_{1},\chi_{2},\chi_{2})$ in the bracket frame and $k_{\hat{u},br} = \left(\hat{u}^{\,T}\mathbf{K}_{br}^{-1}\hat{u}\right)^{-1}$ (\texttt{minimizeFlxPin.m} lines 266--272). \textbf{Note for review:} the code sets the $z$-bracket element to $\chi_{2}$, whereas Equation~(\ref{eq:bktstiffness}) in the text states $\mathrm{diag}(\chi_{1},\chi_{2},\chi_{1})$; one of the two should be corrected after checking the CAD frame convention (the extensor text in Section~\ref{sec:improved_model} swaps the axes by design for the arch bracket).
+
+The artificial tendon is modeled as an axial spring with stiffness
+\begin{equation}
+    k_{ten} \;=\; \frac{n\,A_{c}\,E}{L_{ten}},
+    \label{eq:app_tendon}
+\end{equation}
+with $n=2$ parallel cable strands ($\times 6$ for the 20\,mm assembly), $A_{c} = \qty{1.51e-6}{\metre\squared}$ (19-strand cable), and $E = \qty{193e9}{\pascal}$ (\texttt{minimizeFlxPin.m} lines 460--471; \texttt{MonoPam\_mult.m} lines 606--617). Series combination with the projected bracket compliance gives $k_{eq} = \left(k_{\hat{u},br}^{-1} + k_{ten}^{-1}\right)^{-1}$ (lines 273--275).
+
+The scalar compliance displacement $\delta$ of Equation~(\ref{eq:complianceforcebalance}) is found numerically with \texttt{fzero} on the bracket $[0,\, l_{m}-l_{620}]$,
+\begin{equation}
+    F_{620}(l_{0})\,F^{*}\!\left(\varepsilon^{*}(\delta),P^{*}\right) - k_{eq}\,\delta = 0,
+    \label{eq:app_forcebalance}
+\end{equation}
+with $\delta \equiv 0$ when the uncorrected relative strain already exceeds unity (\texttt{minimizeFlxPin.m} lines 291--305). The vector bracket deflection is then $\boldsymbol{\epsilon}_{br} = \mathbf{K}_{br}^{-1}\left(\norm{\vec{F}}\hat{u}\right)$ (line 324), the cable stretch is $\norm{\vec{F}}/k_{ten}$ (line 334), and the attachment point, path, moment arm, and torque are recomputed. For the two-BPA flexor grouping, the coupled balance shares one common force between both muscles and is solved analogously on $[0, F_{620}]$ (\texttt{MonoPam\_mult.m} lines 500--565).
+
+\section{Wrapping-Loss Implementation}
+
+For the pinned-knee extensor, Equation~(\ref{eq:deltaL}) is implemented segment-wise over the wrap arc with radii $R_1 = \qty{12}{\mm}$ and $R_2 = \qty{40}{\mm}$ and segment boundaries $\theta_{1} = \ang{27}$ and $\theta_{2} = \ang{-23}$ (\texttt{minimizeExtX3.m}, nested \texttt{Contraction}, lines 327--370). For the biomimetic-knee 20\,mm cell, the arc-length factor is the routed bend measure $b(\theta_{k})$ (arc length swept by the wrap, built with the \texttt{wRap} bend radius in \texttt{buildKneeFlexorRoute20mm.m} lines 265--268), giving $\Delta l = \chi_{3}\, b(\theta_{k})\,(1-\varepsilon^{*})^{2}$ (\texttt{MonoPam\_mult.m} lines 398--441), with a hardcoded-geometry fallback for degenerate routes (lines 428--434). The loss enters only the force-producing strain; the kinematic (prediction) strain excludes it (\texttt{minimizeExtX3.m} lines 236--240).
