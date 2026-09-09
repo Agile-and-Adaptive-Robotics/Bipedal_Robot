@@ -165,7 +165,28 @@ units: with the default neuron parameters, `membrane_capacitance=20` gives a
 ~20 **second** time constant at dt in seconds — the demo uses 0.02 (~20 ms).
 Synapses are excitatory by default; pass `reversal_potential=-5` for inhibition.
 
-## 5. TODO / next steps
+## 5. Spinal cord network (`spinal/`) — added 2026-09-09
+
+Two-level RG+PF spinal network (SNS-Toolbox, numpy backend) for the
+converted `gait2392_simbody` model: 92 MN pools + Ia/II/Ib afferents,
+per-leg half-center RG, 4 phase-shifted PF groups per leg, stance-gated Ib
+load sharing, descending DRIVE/POSTURE, COM balance inputs, and a solved
+standing-posture injection. See `spinal/DESIGN.md` for the architecture,
+literature grounding, verified status, and the open-problems list (joint
+sign audit, leg-DoF NaNs, pathpoint weld, free balance).
+
+```bash
+cd Code/MuJoCo_SNS
+D:/Anaconda/envs/myo/python.exe spinal/check_rhythm.py   # rhythm layer alone
+D:/Anaconda/envs/myo/python.exe spinal/runner.py         # stand->walk->stand
+D:/Anaconda/envs/myo/python.exe spinal/fit_synapses.py   # back-solve scaffold
+```
+
+NOTE: on this machine the env is `myo` (`D:/Anaconda/envs/myo`), not
+`myoconv` — same stack (py3.10, mujoco 2.3.7, sns-toolbox 1.5.2, opensim
+4.4.1). Conda is not on the Git Bash PATH; call the env python directly.
+
+## 6. TODO / next steps
 
 - Map Ben's real BPA configurations (2×20 mm flexor/extensor sets) onto the
   converted gait2392 routes with `add_bpa_to_mjcf.py`, replacing selected

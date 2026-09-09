@@ -20,7 +20,7 @@ disp(array2table(a0, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
                     'RowNames', cellstr(labels')));
 fprintf('Mean Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
-load minimizeFlxPin10_results_20260730_2transforms_Z2.mat xCols filtered_results
+load minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat xCols filtered_results
 pick = 1; %Pick the best solution from the sorted results (should be 1)
 sol_actual = filtered_results(pick, xCols);  %Best solution
 g = sol_actual;
