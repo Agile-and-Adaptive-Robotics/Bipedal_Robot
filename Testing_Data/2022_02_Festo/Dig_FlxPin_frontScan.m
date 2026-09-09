@@ -1,4 +1,4 @@
-%Dig_FlxPin_frontScan.m — scan the deduped filtered fronts of the noT3newXi CVs
+%Dig_FlxPin_frontScan.m — scan the deduped filtered fronts of the noT3 CVs
 %(1trans and 2trans) through the biomimetic flexor calc. Top 8 per front, all 3 GoF
 %per case; score = mean of RMSE ratios (10/620/325) + FVU ratios (10/620 only,
 %325 baseline FVU degenerate). BenPrior = Xi0 in [5,10] mm and Xi1 > 10*Xi2.
@@ -7,9 +7,9 @@ addpath('D:/GitHub/Bipedal_Robot/Code/Matlab/Functions');
 addpath('D:/GitHub/Bipedal_Robot/Code/Matlab/Functions/ModernRobotics');
 addpath('D:/GitHub/Bipedal_Robot/Code/Matlab/Robot_Data');
 
-mats  = {'minimizeFlxPin10_results_20260908_2brkt_1trans_noT3newXi.mat', ...
-         'minimizeFlxPin10_results_20260908_2brkt_2trans_noT3newXi.mat'};
-names = {'1trans_noT3newXi', '2trans_noT3newXi'};
+mats  = {'minimizeFlxPin10_results_20260908_2brkt_1trans_noT3.mat', ...
+         'minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat'};
+names = {'1trans_noT3', '2trans_noT3'};
 
 [b10, b620, b325] = minimizeFlx(0, Inf, Inf);
 bR = [b10(1), b620(1), b325(1)]; bF = [b10(2), b620(2), b325(2)];

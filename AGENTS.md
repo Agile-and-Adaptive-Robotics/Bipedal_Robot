@@ -190,6 +190,10 @@ Loaded automatically at session start. Keep it current; keep it lean.
   **Mesh_Optimization winning any shadowing contest** (duplicate filenames exist in Robot_Data,
   Knee_Torque_revision_3, Bone_Mesh_Plots). `Debug_RouteElim_Ext.m` shows the canonical setup.
 - Results (.mat/GIF/CSV) go to `Mesh_Optimization\Results\`.
+- **2brk drivers keep Ben's "%% Pick best solution (later, flexible)" section VERBATIM** (lowercase
+  `pick`, commented `sol_actual` lines, hand-editable hardcoded k1/k2/k3, the two disp tables and
+  two Mean fprintf lines) — only the evaluator call line may carry the extra evaluator arguments.
+  Do not rework it into a PICK-strict or mean-of-all-tests version.
 - Never casually re-run entry scripts; ask/state intent first — runs are long and results get
   overwritten.
 

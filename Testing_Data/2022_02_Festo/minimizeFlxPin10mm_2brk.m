@@ -20,11 +20,11 @@ SOLVER = getenv('FLX2BRK_SOLVER');
 if isempty(SOLVER), SOLVER = 'gamultiobj'; end
 
 USE_BRACKET2 = true;     %false = (d)+(e) ablation: no second bracket
-TRANSMODE = '2trans';    %frame method used by the evaluator: '2trans' (two-rotation, current) or '1trans' (yaw-only)
+TRANSMODE = '1trans';    %frame method used by the evaluator: '1trans' (pitch) or '2trans' (two-rotation) -- match RESULTFILE
 tmv = getenv('FLX2BRK_TRANS');   %env override so batch chains can flip modes without editing this file
 if ~isempty(tmv), TRANSMODE = tmv; end
 DO_PLOTS = ~batchStartupOptionUsed;   %auto: plots when run interactively
-PICK = 1;                %which filtered Pareto candidate to evaluate
+RESULTFILE = 'minimizeFlxPin10_results_20260908_2brkt_1trans_noT3.mat';  %load this results file, choose pick below, plot -- CV is skipped. '' = always run the CV first.
 
 if isSmoke
     ALLBPA   = [2, 3, 4, 5];
@@ -58,7 +58,18 @@ fprintf('ALLBPA=[%s] NUMHOLD=%d POP=%d MAXGEN=%d\n', num2str(ALLBPA), NUMHOLD, P
 results_cv = cell(1, numBPA);  % Will store RMSE, FVU, Max Resid for BPA(s) optimized
 scores_cv = zeros(numBPA, 3);  % Will store RMSE, FVU, Max Resid for BPA(s) held-out for validation
 
-%% Calculate baseline
+%% Load an existing results file and skip the CV? (RESULTFILE above)
+RESUME = ~isempty(RESULTFILE) && exist(RESULTFILE, 'file') == 2;
+if RESUME
+    S = load(RESULTFILE, 'filtered_results', 'xCols', 'labels', 'ALLBPA', 'a0');
+    filtered_results = S.filtered_results; xCols = S.xCols; labels = S.labels;
+    ALLBPA = S.ALLBPA; a0 = S.a0; numBPA = numel(ALLBPA); validLabels = labels(ALLBPA);
+    fprintf('Loaded %s (%d front rows) -- skipping CV. TRANSMODE for evaluation = %s\n', ...
+        RESULTFILE, size(filtered_results,1), TRANSMODE);
+end
+
+%% Calculate baseline / CV / filter (skipped when resuming)
+if RESUME == false
 [a0, bpa0] = minimizeFlxPin2brk(0,Inf,Inf,[],USE_BRACKET2,TRANSMODE);   %no extra length, infinite bracket stiffness
 baselineScores = a0;
 fprintf('\nPerformance with no length offset and infinite stiffness:\n');
@@ -187,17 +198,19 @@ filtered_results = results_sort_actual(keep, :);
 fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 
-%% Pick best solution (strictly by PICK; no hardcoded overrides)
-if isempty(filtered_results)
-    warning('No candidate passed the baseline filter — pick from results_sort_actual instead.');
-    sol_actual = results_sort_actual(min(PICK, size(results_sort_actual,1)), xCols);
-else
-    sol_actual = filtered_results(min(PICK, size(filtered_results,1)), xCols);
-end
-k1 = sol_actual(1);
-k2 = sol_actual(2);
-k3 = sol_actual(3);
-[f, bpa] = minimizeFlxPin2brk(k1, k2, k3, [], USE_BRACKET2, TRANSMODE);  % [f: nBPA x 3], [bpa: full struct]
+end % if RESUME == false -- the CV/filter/save run only for a fresh results file
+
+%% Pick best solution (later, flexible)
+
+pick = 1;
+sol_actual = filtered_results(pick, xCols);
+% k1 = sol_actual(1);
+% k2 = sol_actual(2);
+% k3 = sol_actual(3);
+k1 = 0.01;
+k2 = 2e4;
+k3 = 0.8e4;
+[f, bpa] = minimizeFlxPin2brk(k1, k2, k3, [], USE_BRACKET2, TRANSMODE);  % [f: 5x3], [bpa: full struct]
 
 disp(array2table([k1, k2, k3], 'VariableNames', {'X0', 'X1', 'X2'}));
 
@@ -206,14 +219,15 @@ fprintf('\nPerformance with no length offset and infinite stiffness:\n');
 disp(array2table(a0, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
                     'RowNames', cellstr(labels')));
 
-fprintf('\nPerformance with sol_actual (pick=%d):\n', PICK);
+fprintf('\nPerformance with sol_actual:\n');
 disp(array2table(f, 'VariableNames', {'RMSE', 'FVU', 'MaxResidual'}, ...
                     'RowNames', cellstr(labels')));
 
-fprintf('Mean baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',mean(a0,1,'omitnan'));
-fprintf('Mean optimized: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',mean(f,1,'omitnan'));
+fprintf('Mean baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',a0(1),a0(2),a0(3));
+fprintf('Mean optimized: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n',f(1),f(2),f(3));
 
-%% Save results
+%% Save results (only when a fresh CV ran; never overwrite on resume)
+if RESUME == false
 stamp = char(string(datetime('now'),'yyyyMMdd'));
 if isSmoke
     resultFile = sprintf('minimizeFlxPin10_results_%s_2brkt_%s%s_smoke.mat', stamp, TRANSMODE, TAG);
@@ -221,9 +235,10 @@ else
     resultFile = sprintf('minimizeFlxPin10_results_%s_2brkt_%s%s.mat', stamp, TRANSMODE, TAG);
 end
 save(resultFile, 'results_cv', 'all_candidates', 'results_sort', 'results_sort_actual', ...
-     'filtered_results', 'xCols', 'a0', 'f', 'k1', 'k2', 'k3', 'PICK', ...
+     'filtered_results', 'xCols', 'a0', 'f', 'k1', 'k2', 'k3', ...
      'ALLBPA', 'NUMHOLD', 'POP', 'MAXGEN', 'USE_BRACKET2', 'TRANSMODE', 'SOLVER', 'labels', 'W', 'TAG');
 fprintf('Results saved to %s\n', resultFile);
+end % if RESUME == false
 
 %% Plot torque curves, pre- and post-Optimized
 if DO_PLOTS

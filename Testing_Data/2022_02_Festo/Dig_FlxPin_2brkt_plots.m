@@ -1,12 +1,13 @@
 %Dig_FlxPin_2brkt_plots.m — standard 2brk plots for ANY pick, from the saved mat.
 %Set PICK (row in filtered_results, sorted by validation distance), Run, figures appear.
 %In interactive MATLAB the figures open live; in -batch they save to Dig_out\ as .png/.fig.
-cd('D:/GitHub/Bipedal_Robot/Testing_Data/2022_02_Festo');
-addpath('D:/GitHub/Bipedal_Robot/Code/Matlab/Functions');
-addpath('D:/GitHub/Bipedal_Robot/Code/Matlab/Functions/ModernRobotics');
+% cd('D:/GitHub/Bipedal_Robot/Testing_Data/2022_02_Festo');
+% addpath('D:/GitHub/Bipedal_Robot/Code/Matlab/Functions');
+% addpath('D:/GitHub/Bipedal_Robot/Code/Matlab/Functions/ModernRobotics');
 
-MATNAME = 'minimizeFlxPin10_results_20260907_2brkt_2trans.mat';
-PICK    = 168;
+% MATNAME = 'minimizeFlxPin10_results_20260907_2brkt_2trans.mat';
+MATNAME = 'minimizeFlxPin10_results_20260908_2brkt_1trans_noT3.mat';
+PICK    = 1;
 
 S = load(MATNAME, 'filtered_results', 'xCols', 'ALLBPA', 'labels');
 F = S.filtered_results; xC = S.xCols;
