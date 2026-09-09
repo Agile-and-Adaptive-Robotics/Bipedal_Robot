@@ -1,11 +1,12 @@
 # HANDOFF — laptop zcode session → easteregg2 zcode session (2026-09-08)
 
-**Read this first if you are the other zcode chat.** Ben ran two chats in parallel and they
-got mixed up. This session ran on the laptop (DESKTOP-5Q16KE9) and **executed zero
-optimization runs** — it only mined existing results and staged scripts, per Ben's
-instruction ("mine the tests for information but don't actually execute new ones").
-Everything below is STAGED and UNTESTED. **You own this folder's compute — rename, rewrite,
-or delete any of it freely.** Ben commits this via GitHub Desktop.
+**STATUS: ADJUDICATED AND CLOSED (easteregg2 session, 2026-09-08 late, per Ben).** Ben ran
+two chats in parallel; this session (laptop, DESKTOP-5Q16KE9) executed zero optimization
+runs — it only mined existing results and staged scripts, per his instruction ("mine the
+tests for information but don't actually execute new ones"). Everything below that was
+STAGED has since been renamed into the Collect/Dig scheme or deleted; see "Fate of the
+staged files". The staging caveats no longer apply to what remains, except that neither
+kept script has been run end-to-end yet — smoke them first.
 
 ## What Ben asked this session (his words, condensed)
 
@@ -18,19 +19,21 @@ or delete any of it freely.** Ben commits this via GitHub Desktop.
 
 ## What the EXISTING data already answers (mining only, no new runs)
 
-- **No test is garbage.** Legacy 0817 leave-2-out CV (`mining_patterns_20260907.txt`):
+- **No test is garbage.** Legacy 0817 leave-2-out CV (`Dig_out\mining_patterns_20260907.txt`):
   every test is predicted well when held out, in every fold — norm RMSE vs baseline:
   48cm 0.25–0.32, 46cm 0.10–0.20, 47cm 0.43–0.56, 40cm-tendon 0.12–0.25, 41cm 0.10–0.19.
   Held-out means: 48cm 0.29 / 46cm 0.15 / 47cm 0.49 / 40t 0.21 / 41cm 0.17.
   47cm is the hardest but rock-stable; nothing blows up anywhere → no test poisons training.
+  (Its ~5° encoder lag was later IDENTIFIED as the 47cm test and is corrected in
+  `minimizeFlxPin2brk.m`'s kf-build — see AGENTS.md.)
 - **Training-set diversity matters mildly**: the worst row is when 46cm+41cm (the two
   easiest) are BOTH held out — everything degrades ~20%. Fits Ben's intuition that the
   quirky/easy extremes carry information.
-- **numHoldout: legacy data only covers leave-2 (train=3).** The staged
-  `allbpaNumHoldScan_20260908.m` completes the spectrum on the 2brk evaluator at smoke
-  scale: leave-1 (train=4), leave-2, Ben's split (train=2), and train=1, plus the encoder
-  angle-lag test below.
-- **Pick structure of the full result (265 filtered candidates, ALL pass baseline):**
+- **numHoldout: legacy data only covers leave-2 (train=3).** The kept
+  `Dig_allbpaNumHoldScan.m` completes the spectrum on the 2brk evaluator at smoke scale:
+  leave-1 (train=4), leave-2, Ben's split (train=2), and train=1.
+- **Pick structure of the full result (fold-1 front: 265 filtered candidates, all pass
+  baseline; the mat stores 3445 filtered across 10 folds):**
   - Xi0 sits at the lower bound 0.0000 for every top pick — and the extensor refit wanted
     −0.0024 (published extensor Xi0 = −0.0122). Ben may want to reconsider the flexor lb=0.
   - **Xi2 is tightly pinned (~1.06–1.11e4 across the top of the front) while Xi1 is a flat
@@ -46,59 +49,48 @@ or delete any of it freely.** Ben commits this via GitHub Desktop.
     pure 1.21 | refit 0.67. I.e. pick-1's high Xi1 does NOT transfer to the pinned
     extensor, but transfers fine to the biomimetic extensor.
 
-## ⚠ File gotcha: the "_smoke" mat is actually the FULL production run
+## RESOLVED: the "_smoke" mat question (was an open trap)
 
-`minimizeFlxPin10_results_20260907_2brkt_2trans_smoke.mat` contains ALLBPA=[1..5],
-NUMHOLD=2, POP=150, MAXGEN=600, SOLVER=gamultiobj, 265/265 candidates passing the baseline
-filter, and NO `TRANSMODE` field → saved by the pre-416f08f driver (old naming; the 09-07
-crossPredict sourced it on D: as `minimizeFlxPin10_2brk_results_20260907.mat`, pick 1
-[0, 2.107e6, 1.065e4] matches this file's pick 1 exactly).
+The git-tracked `minimizeFlxPin10_results_20260907_2brkt_2trans_smoke.mat` was the FULL
+09-07 production CV under a smoke-mode name (no TRANSMODE field — saved by the
+pre-416f08f driver; its pick 1 [0, 2.107e6, 1.065e4] matches the 09-07 crossPredict's
+source exactly). During the 2026-09-08 Collect/Dig rename it was renamed to the canonical
+**`minimizeFlxPin10_results_20260907_2brkt_2trans.mat`**, and easteregg2 verified those
+contents (10 folds, ALLBPA [1..5], pick 1 = Xi0 1.65e-6 / Xi1 2.11e6 / Xi2 1.06e4 — the
+restored-two-rotation, corrected-Pbr2 chain run). Provenance is therefore CLOSED: there is
+no separate smoke mat to worry about, and no smoke-named file should ever be resurrected.
 
-**Provenance unverified:** whether its stored scores came from the restored TWO-rotation
-evaluator or the superseded single-transform one. Step 0 of
-`allbpaNumHoldScan_20260908.m` resolves this in ~1 min (re-evaluates one stored candidate
-with both evaluators and compares). Also note `crossPredictFlx.m` auto-pick skips any file
-containing "_smoke" — pass this file explicitly or rename it.
+## Fate of the staged files (Ben's adjudication, 2026-09-08)
 
-## Staged files (all UNTESTED — smoke them before trusting)
-
-| file | what |
+| staged file | fate |
 |---|---|
-| `minimizeFlxPin2brk_1trans.m` | evaluator: exact recreation of the superseded single-transform (yaw-only frames, (d) pbrBnew/pbrAnew) version from **git commit 3374837's successor 3374847**; function renamed with `_1trans` suffix |
-| `minimizeFlxPin10mm_2brk_1trans.m` | driver copy routed to that evaluator, `TRANSMODE='1trans'` → saves `..._2brkt_1trans.mat` (no clobber) |
-| `picksScan_2brkt.m` | **fast pass scores the WHOLE filtered front** (one 5-test evaluator call per candidate → CSV + plateau stats), then deep cross-prediction (bio flexor, extensor pure + coarse refit, bio extensor) on picks 1..N. Evaluator variant from the file's TRANSMODE or 3rd arg |
-| `nightBatch_20260908.m` | queued sequence: picks scan → full 1trans CV (the killed rerun, surrogateopt) → crossPredict+picks → full 2trans CV → crossPredict+picks. Self-locating paths (safe on D: or C:). ~4–5 h on 6 workers, faster on your 10 |
-| `allbpaNumHoldScan_20260908.m` | step 0 provenance check + per-test held-out table from the stored full result + angle-lag encoder scan (the ±5° discriminator, flexor 5 tests across 5 solutions incl. baseline models) + new smoke folds E1/E3/E4/E4rev/E5 |
-| `mine_smoke_20260908.m` | read-only dump of the full mat + crossPredict summary (already run once on the laptop; findings are in this file) |
+| `minimizeFlxPin2brk_1trans.m` | **DELETED** — Ben: easteregg2's `transMode` flag on `minimizeFlxPin2brk.m` is the vehicle of record (and 1trans==2trans is proven for these y-symmetric K arrays; the arm-2 campaign already produced the 1trans CV: 4 mats `_20260908_2brkt_1trans_*`) |
+| `minimizeFlxPin10mm_2brk_1trans.m` | **DELETED** — same ruling |
+| `picksScan_2brkt.m` | **KEPT → `Dig_FlxPin_2brkt_picksScan.m`** (1trans branch routed through the transMode arg; outputs now go to `Dig_out\`) |
+| `nightBatch_20260908.m` | **DELETED** — superseded: the 1trans rerun it queued is moot (proof + arm-2 mats), the full 2trans CV already exists (canonical mat), and its picks scan lives on in the kept script |
+| `allbpaNumHoldScan_20260908.m` | **KEPT → `Dig_allbpaNumHoldScan.m`** — old (0) provenance check and old (B) angle-lag scan REMOVED (closed/resolved, see above); (A) stored-result per-test table + (C) E-fold numHoldout spectrum remain; Robot_Data addpath added (the 2brk kf-build needs it) |
+| `mine_smoke_20260908.m` | **DELETED** — its target name no longer exists; its findings are preserved in this file |
+| `HANDOFF_laptop_20260908.md` | this file, updated in place |
 
-## Suggested order when Ben says go
+## Still runnable (both UNTESTED end-to-end — smoke first)
 
-1. `allbpaNumHoldScan_20260908` (~25 min on 6 workers, less on 10): resolves provenance,
-   answers Ben's test/numHoldout questions, identifies the encoder-shift suspect if there
-   is one. Its E-fold results should set ALLBPA/NUMHOLD for the full runs.
-2. `picksScan_2brkt` on the 265-candidate result (nPicks 12): the "different picks" answer.
-   Watch whether low-Xi1 picks transfer to the pinned extensor better than pick 1 did.
-3. `nightBatch_20260908` (or your own runner): the full 1trans rerun + a full 2trans
-   production run for comparison. Solver note: abSolver A/B on 09-07 gave gamultiobj
-   333 s/dist 0.309 vs surrogateopt 231 s/dist 0.350 → the rule picks surrogateopt; full
-   gamultiobj at POP 150 × MAXGEN 600 × 10 folds is a DAY-length run on the laptop.
+1. `Dig_allbpaNumHoldScan` — (A) ~1 min, then (C) 14 ga folds at 25×30, ~15–30 min on 6
+   workers. Answers Ben's numHoldout question; its E-fold results should set ALLBPA/NUMHOLD
+   for any future full runs.
+2. `Dig_FlxPin_2brkt_picksScan('minimizeFlxPin10_results_20260907_2brkt_2trans.mat', 12)` —
+   the "different picks" answer. Watch whether low-Xi1 picks transfer to the pinned
+   extensor better than pick 1 did (~2–3 min fast pass + ~1–2 min per deep pick).
 
-## Known bugs/gotchas found (not fixed — existing files left untouched for you)
+## Still-valid gotchas
 
-- `runBatch.m` step 2 globs `minimizeFlxPin10_2brk_results_*.mat` but the 416f08f driver
-  saves `minimizeFlxPin10_results_*_2brkt_*.mat` → step 2 can't find step 1's output.
-- `runBatch.m` and `smoke_2brk.m` hardcode `D:/GitHub/...` paths (fine on easteregg2,
-  wrong on the laptop — no D: here).
-- `crossPredictFlx` saves `crossPredict_<stamp>.mat` → two calls on the same day
-  overwrite; nightBatch renames after each call.
-- Pre-TRANSMODE results files (like the misnamed one above) have no TRANSMODE field;
-  picksScan defaults them to '2trans' — verify with the provenance check first.
+- `Dig_crossPredict` saves `Dig_crossPredict_<stamp>.mat` → two calls on the same day
+  overwrite; rename/copy aside the first result before rerunning.
+- Pre-TRANSMODE results files (the canonical 09-07 mat) have no TRANSMODE field; scripts
+  default them to '2trans' — VERIFIED correct for that mat (see RESOLVED above).
 
 ## Do NOT
 
 - Don't port flexor `Pbr2` [-52.61, 0, 75.06] to the extensor evaluators (pinned-flexor
   only, per AGENTS.md).
-- Don't treat the 1trans evaluator as the method of record — two-rotation is restored and
-  supersedes it; the 1trans rerun is comparison data for the run Ben saw killed.
-- Don't trust the staged files sight-unseen: none were executed. `minimizeFlxPin2brk_1trans.m`
-  body is byte-for-byte from git 3374847 except the function name and a 2-line header.
+- Don't resurrect any smoke-named mat or the separate-file 1trans evaluator — both are
+  retired by Ben's ruling; the canonical mat + the transMode flag replace them.

@@ -98,12 +98,12 @@ Loaded automatically at session start. Keep it current; keep it lean.
     `minimizeFlxPin10mmX3.m`, `minimizeExt10mmX3.m`) call inner evaluators (`minimizeFlxPin`,
     `minimizeFlxPinX3`, `minimizeExtX3`, `minimizeExt`, `minimizeFlx`) that each carry their own
     `computeForceVector`/`Lok`/`fortz`. New (Sept 2026): two-bracket flexor method —
-    `minimizeFlxPin2brk.m` (evaluator; BOTH brackets use two-rotation (Z then Y) frames —
-    the single-transform "(d)" variant is superseded but was recreated verbatim 2026-09-08
-    as `minimizeFlxPin2brk_1trans.m` (laptop-staged, UNTESTED; easteregg2's arm-2 campaign
-    instead exercised 1trans via the transMode flag); (e) insertion-bracket stiffness array
-    K (arm-2 config in the current file: [X1,X2,X1]; arm-1 2026-09-08 runs used [X1,X2,X2]),
-    (f) origin-side 2nd bracket `Pbr2` (current: [-52.61, 0, 75.06]/1000,
+    `minimizeFlxPin2brk.m` (evaluator; BOTH brackets use two-rotation (Z then Y) frames and
+    1trans goes through the 6th `transMode` arg / the driver's `FLX2BRK_TRANS` env — the
+    laptop session's separate-file 1trans evaluator was DELETED 2026-09-08 at Ben's ruling:
+    easteregg2's transMode flag is the vehicle of record; (e) insertion-bracket stiffness
+    array K (arm-2 config in the current file: [X1,X2,X1]; arm-1 2026-09-08 runs used
+    [X1,X2,X2]), (f) origin-side 2nd bracket `Pbr2` (current: [-52.61, 0, 75.06]/1000,
     Ben-set), `USE_BRACKET2` flag).
     **Pbr2 applies ONLY to the pinned-knee flexor configuration** — the extensor evaluators
     (minimizeExtX3, minimizeExt) have their own independent bracket offsets; do not port Pbr2.
@@ -122,15 +122,17 @@ Loaded automatically at session start. Keep it current; keep it lean.
     arm2 (1trans pitch, K=[X1,X2,X1]) → `..._1trans_{full,noT3,noT5,noT3noT5}.mat`; logs in
     Dig_out. **Scope of the 1trans≡2trans proof:** symmetric about the y axis (K_x=K_z, e.g.
     [X1,X2,X1]). Arm1's [X1,X2,X2] (y=z) is NOT covered — evaluate it 2trans only.
-  - **Handoff (laptop zcode session, 2026-09-08):** read
-    `2022_02_Festo\HANDOFF_laptop_20260908.md` before running anything there. It stages
-    UNTESTED files (1trans evaluator+driver from git 3374847, `picksScan_2brkt.m` whole-
-    front pick scan, `nightBatch_20260908.m`, `allbpaNumHoldScan_20260908.m` with the
-    encoder angle-lag test), reports what existing data says about Ben's garbage-test /
-    numHoldout / picks questions, and flags that
-    `minimizeFlxPin10_results_20260907_2brkt_2trans_smoke.mat` is MISNAMED — it is the
-    FULL production CV (265 candidates; no TRANSMODE field; evaluator provenance
-    unverified — check step 0 of the scan).
+  - **Laptop-session mining handoff (2026-09-08, merged and adjudicated):** findings in
+    `2022_02_Festo\HANDOFF_laptop_20260908.md` — no flexor test is garbage; Xi2 is
+    consistent across configs (~1.1e4) while Xi1 is the flat, undetermined one; Xi0 pins
+    at lb=0 on the front (Ben may want lb<0). Kept under the Collect/Dig scheme:
+    `Dig_FlxPin_2brkt_picksScan.m` (whole-front pick scoring + shortlist cross-prediction)
+    and `Dig_allbpaNumHoldScan.m` (per-test held-out table + E-fold numHoldout spectrum);
+    both still UNTESTED end-to-end. Deleted as superseded: the `_1trans` evaluator/driver,
+    `nightBatch_20260908.m`, `mine_smoke_20260908.m`. The "_smoke mat" question is CLOSED:
+    that file was renamed to `minimizeFlxPin10_results_20260907_2brkt_2trans.mat`
+    (canonical restored-2trans full CV; no TRANSMODE field is expected for its vintage) —
+    never resurrect a smoke-named copy.
   - `2022_02_Festo\` subfolders (Flx/Ext × 10mm/10mm_pinned/20mm/40mm): needed only by certain
     plotting functions — add to path transiently and **remove afterward**; they shadow other
     plotting functions if left on path.

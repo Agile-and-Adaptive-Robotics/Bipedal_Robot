@@ -1,8 +1,11 @@
-function summary = picksScan_2brkt(srcMat, nPicks, modeOverride)
-%PICKSSCAN_2BRKT Score the WHOLE filtered Pareto front of a 2brk results .mat,
-%then cross-predict a shortlist of picks in detail.
-% STAGED 2026-09-08 by laptop zcode session (DESKTOP-5Q16KE9): UNTESTED, never
-% executed. Rename/erase/adapt freely - see HANDOFF_laptop_20260908.md.
+function summary = Dig_FlxPin_2brkt_picksScan(srcMat, nPicks, modeOverride)
+%DIG_FLXPIN_2BRKT_PICKSSCAN Score the WHOLE filtered Pareto front of a 2brk
+%results .mat, then cross-predict a shortlist of picks in detail.
+% Laptop-session script (2026-09-08), renamed into the Collect/Dig scheme same
+% day after Ben's adjudication: the laptop's separate-file 1trans evaluator was
+% deleted -- the transMode flag on minimizeFlxPin2brk is the vehicle of record.
+% Still UNTESTED end-to-end (the laptop session never executed it); smoke on a
+% small nPicks first.
 %
 % FAST PASS (all filtered candidates, ~2-3 min for ~265: one 5-test evaluator
 %   call each): flxPin = mean RMSE ratio vs baseline (<1 beats rigid baseline).
@@ -15,17 +18,19 @@ function summary = picksScan_2brkt(srcMat, nPicks, modeOverride)
 %   extPin  : pinned extensor pool {1,2,5,6,7,8} mean RMSE, pure substitution
 %             (published Xi0/Xi3 + this pick's Xi1/Xi2)
 %   rfXi0/rfXi3/extPinRF : coarse refit of (Xi0,Xi3) with Xi1/Xi2 LOCKED to the
-%             pick (fminsearch 100 evals, scan-grade; use crossPredictFlx for
+%             pick (fminsearch 100 evals, scan-grade; use Dig_crossPredict for
 %             an exact refit once a final pick is chosen)
 %   extBio  : biomimetic extensor (52cm) mean RMSE, pure substitution
 %
 % Usage:
-%   picksScan_2brkt('minimizeFlxPin10_results_20260907_2brkt_2trans_smoke.mat', 12)
-%   picksScan_2brkt()                          % newest NON-smoke 2brkt file
-%   picksScan_2brkt(srcMat, nPicks, '1trans')  % force evaluator variant
+%   Dig_FlxPin_2brkt_picksScan('minimizeFlxPin10_results_20260907_2brkt_2trans.mat', 12)
+%   Dig_FlxPin_2brkt_picksScan()                            % newest 2brkt file
+%   Dig_FlxPin_2brkt_picksScan(srcMat, nPicks, '1trans')    % force evaluator variant
 % Evaluator variant defaults to the TRANSMODE stored in the results file (if
-% present; older files without it default to '2trans' - check provenance first,
-% see step 0 of allbpaNumHoldScan_20260908.m).
+% present; older files without it default to '2trans'). The canonical 09-07
+% mat has no TRANSMODE field (pre-416f08f driver) -- provenance VERIFIED on
+% easteregg2: it is the restored-2trans chain run (corrected Pbr2), so the
+% default is correct for it.
 
 here = fileparts(mfilename('fullpath'));
 cd(here);
@@ -34,6 +39,8 @@ addpath(fullfile(root, 'Code', 'Matlab', 'Functions'));
 addpath(fullfile(root, 'Code', 'Matlab', 'Functions', 'ModernRobotics'));
 addpath(fullfile(root, 'Code', 'Matlab', 'Robot_Data'));
 set(0, 'DefaultFigureVisible', 'off');
+outDir = fullfile(here, 'Dig_out');
+if ~exist(outDir, 'dir'), mkdir(outDir); end
 
 if nargin < 3, modeOverride = ''; end
 if nargin < 2 || isempty(nPicks), nPicks = 8; end
@@ -45,16 +52,19 @@ if nargin < 1 || isempty(srcMat)
     srcMat = fullfile(d(ix).folder, d(ix).name);
 end
 S = load(srcMat, 'filtered_results', 'xCols', 'results_sort_actual', 'TRANSMODE');
-fprintf('=== picksScan_2brkt | %s ===\n', srcMat);
+fprintf('=== Dig_FlxPin_2brkt_picksScan | %s ===\n', srcMat);
 
-mode = '2trans';                       %default for pre-TRANSMODE files (verify provenance!)
+mode = '2trans';                       %default for pre-TRANSMODE files (verified for the 09-07 mat)
 if isfield(S, 'TRANSMODE') && ~isempty(S.TRANSMODE), mode = S.TRANSMODE; end
 if ~isempty(modeOverride), mode = modeOverride; end
 switch lower(mode)
     case '2trans'
         evalFlx = @(a, b, c) minimizeFlxPin2brk(a, b, c, [], true);
     case '1trans'
-        evalFlx = @(a, b, c) minimizeFlxPin2brk_1trans(a, b, c, [], true);
+        %Ben 2026-09-08: the transMode arg is the 1-trans vehicle (the laptop's
+        %separate-file evaluator was deleted); proof: 1trans==2trans for these
+        %y-symmetric K arrays, so this branch exists for completeness only.
+        evalFlx = @(a, b, c) minimizeFlxPin2brk(a, b, c, [], true, '1trans');
     otherwise
         error('unknown transmode "%s"', mode);
 end
@@ -103,7 +113,7 @@ for q = 1:min(25, nAll)
         p, fastR(p), fastXi(p, 1), fastXi(p, 2), fastXi(p, 3), fastDist(p));
 end
 [~, srcName] = fileparts(srcMat);
-csvFile = sprintf('picksScan_%s_fast.csv', srcName);
+csvFile = fullfile(outDir, sprintf('Dig_FlxPin_2brkt_picksScan_%s_fast.csv', srcName));
 outTbl = [(1:nAll)', (1:nAll)', fastXi, fastR, fastDist];
 fid = fopen(csvFile, 'w');
 fprintf(fid, 'pick,valDistRank,Xi0_m,Xi1,Xi2,flxPinRMSEratio,valDist\n');
@@ -136,7 +146,7 @@ fprintf(['\nflxPin <1 beats baseline; bioFlx/extPin/extBio are raw mean RMSE (N*
     'baselines: bioFlx %.2f | extPin pool %.2f | extBio %.2f\n'], ...
     mean(baseFlx(:, 1)), mean(a0e(POOL, 1)), mean(be0(:, 1)));
 
-outFile = sprintf('picksScan_%s.mat', srcName);
+outFile = fullfile(outDir, sprintf('Dig_FlxPin_2brkt_picksScan_%s.mat', srcName));
 save(outFile, 'rows', 'fastXi', 'fastR', 'fastDist', 'csvFile', ...
     'srcMat', 'mode', 'nPicks', 'POOL', 'ep', 'baseFlx', 'a0e', 'be0', 'a0full');
 fprintf('Saved %s\n', outFile);
