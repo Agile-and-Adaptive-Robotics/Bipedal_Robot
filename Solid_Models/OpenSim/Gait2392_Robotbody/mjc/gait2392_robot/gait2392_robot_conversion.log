@@ -1,0 +1,1331 @@
+2026-09-08 10:38:13.304 | INFO     | myoconverter.O2MPipeline:O2MPipeline:52 - Start the conversion pipeline for : gait2392_robot
+2026-09-08 10:38:13.304 | INFO     | myoconverter.O2MPipeline:coordinate_kwargs:75 - Coordinate the input configurations, remove conflicts.
+2026-09-08 10:38:13.304 | INFO     | myoconverter.O2MPipeline:coordinate_kwargs:86 -    Checking configurations for step 2 conversion.
+2026-09-08 10:38:13.314 | INFO     | myoconverter.O2MPipeline:coordinate_kwargs:103 -        All good now.
+2026-09-08 10:38:13.314 | INFO     | myoconverter.O2MPipeline:coordinate_kwargs:119 -    Checking configurations for step 3 conversion.
+2026-09-08 10:38:13.314 | INFO     | myoconverter.O2MPipeline:coordinate_kwargs:134 -        Configure of previous run does not exist, set osim_data_overwrite to TRUE.
+2026-09-08 10:38:13.314 | INFO     | myoconverter.O2MPipeline:coordinate_kwargs:136 -        All good now.
+2026-09-08 10:38:13.314 | INFO     | myoconverter.conversion_steps.O2MSteps:__init__:84 - Given OpenSim model file: C:\Users\Ben\Documents\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody\mjc\gait2392_robot\gait2392_robot.osim
+2026-09-08 10:38:13.314 | INFO     | myoconverter.conversion_steps.O2MSteps:__init__:85 - Reading mesh files from folder C:\Users\Ben\Documents\GitHub\myoconverter\models\osim\Gait2354Simbody\Geometry
+2026-09-08 10:38:13.314 | INFO     | myoconverter.conversion_steps.O2MSteps:__init__:86 - Converted model will be saved in folder C:\Users\Ben\Documents\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody\mjc\gait2392_robot
+2026-09-08 10:38:13.314 | INFO     | myoconverter.conversion_steps.O2MSteps:PipelineExecution:124 - Started step 1 conversion - cvt1.
+2026-09-08 10:38:14.007 | INFO     | myoconverter.xml.converter:convert:40 - Commencing the conversion procedure!
+2026-09-08 10:38:14.007 | INFO     | myoconverter.xml.converter:_parse_ground:138 - Parsing the ground
+2026-09-08 10:38:14.007 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Ground] ground
+2026-09-08 10:38:14.007 | INFO     | myoconverter.xml.converter:_parse_constraints:147 - Starting to parse constraints
+2026-09-08 10:38:14.007 | INFO     | myoconverter.xml.converter:_parse_bodies_and_joints:80 - Starting to parse bodies, wrapping objects, and joints
+2026-09-08 10:38:14.007 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Body] pelvis
+2026-09-08 10:38:14.038 | INFO     | myoconverter.xml.parsers:parse:59 - [JointParser: CustomJoint] ground_pelvis
+2026-09-08 10:38:14.038 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Body] femur_r
+2026-09-08 10:38:14.048 | INFO     | myoconverter.xml.parsers:parse:59 - [JointParser: CustomJoint] hip_r
+2026-09-08 10:38:14.048 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Body] tibia_r
+2026-09-08 10:38:14.059 | INFO     | myoconverter.xml.parsers:parse:59 - [JointParser: CustomJoint] knee_r
+2026-09-08 10:38:14.345 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Body] talus_r
+2026-09-08 10:38:14.359 | INFO     | myoconverter.xml.parsers:parse:59 - [JointParser: CustomJoint] ankle_r
+2026-09-08 10:38:14.359 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Body] calcn_r
+2026-09-08 10:38:14.375 | INFO     | myoconverter.xml.parsers:parse:59 - [JointParser: CustomJoint] subtalar_r
+2026-09-08 10:38:14.375 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Body] toes_r
+2026-09-08 10:38:14.416 | INFO     | myoconverter.xml.parsers:parse:59 - [JointParser: CustomJoint] mtp_r
+2026-09-08 10:38:14.416 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Body] femur_l
+2026-09-08 10:38:14.426 | INFO     | myoconverter.xml.parsers:parse:59 - [JointParser: CustomJoint] hip_l
+2026-09-08 10:38:14.426 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Body] tibia_l
+2026-09-08 10:38:14.437 | INFO     | myoconverter.xml.parsers:parse:59 - [JointParser: CustomJoint] knee_l
+2026-09-08 10:38:14.724 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Body] talus_l
+2026-09-08 10:38:14.734 | INFO     | myoconverter.xml.parsers:parse:59 - [JointParser: CustomJoint] ankle_l
+2026-09-08 10:38:14.734 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Body] calcn_l
+2026-09-08 10:38:14.765 | INFO     | myoconverter.xml.parsers:parse:59 - [JointParser: CustomJoint] subtalar_l
+2026-09-08 10:38:14.765 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Body] toes_l
+2026-09-08 10:38:14.796 | INFO     | myoconverter.xml.parsers:parse:59 - [JointParser: CustomJoint] mtp_l
+2026-09-08 10:38:14.796 | INFO     | myoconverter.xml.parsers:parse:59 - [BodyParser: Body] torso
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [JointParser: CustomJoint] back
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.converter:_parse_forces:156 - Starting to parse forces, including path points and wrap paths
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_med1_r
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_med1_r-P1
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_med1_r-P2
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_med2_r
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_med2_r-P1
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_med2_r-P2
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_med3_r
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_med3_r-P1
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_med3_r-P2
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_min1_r
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_min1_r-P1
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_min1_r-P2
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_min2_r
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_min2_r-P1
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_min2_r-P2
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_min3_r
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_min3_r-P1
+2026-09-08 10:38:17.212 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_min3_r-P2
+2026-09-08 10:38:17.222 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.222 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] semimem_r
+2026-09-08 10:38:17.222 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semimem_r-P1
+2026-09-08 10:38:17.222 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] default
+2026-09-08 10:38:17.222 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semimem_r-P3
+2026-09-08 10:38:17.222 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semimem_r-P4
+2026-09-08 10:38:17.222 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semimem_r-P5
+2026-09-08 10:38:17.222 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.222 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] semiten_r
+2026-09-08 10:38:17.222 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semiten_r-P1
+2026-09-08 10:38:17.222 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: ConditionalPathPoint] semiten_r-P2
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semiten_r-P3
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semiten_r-P4
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semiten_r-P5
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] bifemlh_r
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemlh_r-P1
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemlh_r-P2
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemlh_r-P3
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemlh_r-P4
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] bifemsh_r
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemsh_r-P1
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemsh_r-P2
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemsh_r-P3
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] sar_r
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_r-P1
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_r-P2
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_r-P3
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_r-P4
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_r-P3_0
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_r-P4_0
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_r-P5
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] add_long_r
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_long_r-P1
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_long_r-P2
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] add_brev_r
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_brev_r-P1
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_brev_r-P2
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] add_mag1_r
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag1_r-P1
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag1_r-P2
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] add_mag2_r
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag2_r-P1
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag2_r-P2
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] add_mag3_r
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag3_r-P1
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag3_r-P2
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag3_r-P2_0
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag3_r-P2_0_0
+2026-09-08 10:38:17.612 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] tfl_r
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tfl_r-P1
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tfl_r-P2
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tfl_r-P3
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tfl_r-P4
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tfl_r-P5
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] pect_r
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] pect_r-P1
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] pect_r-P2
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] grac_r
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] grac_r-P1
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] grac_r-P2
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] grac_r-P2_0
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] default
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] grac_r-P3
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] grac_r-P4
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_max1_r
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max1_r-P1
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max1_r-P2
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max1_r-P3
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max1_r-P4
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_max2_r
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max2_r-P1
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max2_r-P2
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max2_r-P3
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max2_r-P4
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_max3_r
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max3_r-P1
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max3_r-P2
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max3_r-P3
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max3_r-P3_0
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max3_r-P4
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] iliacus_r
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] iliacus_r-P1
+2026-09-08 10:38:17.622 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] iliacus_r-P2
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] iliacus_r-P4
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] psoas_r
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] psoas_r-P1
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] psoas_r-P2
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] psoas_r-P4
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] quad_fem_r
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] quad_fem_r-P1
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] quad_fem_r-P2
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] gem_r
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] gem_r-P1
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] gem_r-P2
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] peri_r
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] peri_r-P1
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] peri_r-P2
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] peri_r-P3
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] rect_fem_r
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] rect_fem_r-P1
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] rect_fem_r-P2
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] rect_fem_r-P3
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] default
+2026-09-08 10:38:17.632 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: MovingPathPoint] rect_fem_r-P3_0
+2026-09-08 10:38:18.082 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:18.082 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] vas_med_r
+2026-09-08 10:38:18.082 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] vas_med_r-P1
+2026-09-08 10:38:18.082 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] vas_med_r-P2
+2026-09-08 10:38:18.082 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: ConditionalPathPoint] vas_med_r-P3
+2026-09-08 10:38:18.512 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: ConditionalPathPoint] vas_med_r-P4
+2026-09-08 10:38:18.951 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: MovingPathPoint] vas_med_r-P5
+2026-09-08 10:38:19.331 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:19.331 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] vas_int_r
+2026-09-08 10:38:19.331 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] vas_int_r-P1
+2026-09-08 10:38:19.331 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] vas_int_r-P2
+2026-09-08 10:38:19.331 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] default
+2026-09-08 10:38:19.331 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: MovingPathPoint] vas_int_r-P4
+2026-09-08 10:38:19.720 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:19.720 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] vas_lat_r
+2026-09-08 10:38:19.720 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] vas_lat_r-P1
+2026-09-08 10:38:19.720 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] vas_lat_r-P2
+2026-09-08 10:38:19.720 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: ConditionalPathPoint] vas_lat_r-P3
+2026-09-08 10:38:20.230 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: ConditionalPathPoint] vas_lat_r-P4
+2026-09-08 10:38:20.681 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: MovingPathPoint] vas_lat_r-P5
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] med_gas_r
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] med_gas_r-P1
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] default
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] med_gas_r-P3
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] lat_gas_r
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] lat_gas_r-P1
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] default
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] lat_gas_r-P3
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] soleus_r
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] soleus_r-P1
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] soleus_r-P2
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] tib_post_r
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_post_r-P1
+2026-09-08 10:38:21.174 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_post_r-P2
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_post_r-P3
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_post_r-P4
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] flex_dig_r
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_r-P1
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_r-P2
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_r-P3
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_r-P4
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_r-P5
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_r-P6
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_r-P7
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_r-P8
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] flex_hal_r
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_r-P1
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_r-P2
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_r-P3
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_r-P4
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_r-P5
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_r-P6
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_r-P7
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] tib_ant_r
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_ant_r-P1
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_ant_r-P2
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_ant_r-P3
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] per_brev_r
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_brev_r-P1
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_brev_r-P2
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_brev_r-P3
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_brev_r-P4
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_brev_r-P5
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] per_long_r
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_r-P1
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_r-P2
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_r-P3
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_r-P4
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_r-P5
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_r-P6
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_r-P7
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] per_tert_r
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_tert_r-P1
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_tert_r-P2
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_tert_r-P3
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] ext_dig_r
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_dig_r-P1
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_dig_r-P2
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_dig_r-P3
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_dig_r-P4
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_dig_r-P5
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_dig_r-P6
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] ext_hal_r
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_r-P1
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_r-P2
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_r-P3
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_r-P4
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_r-P5
+2026-09-08 10:38:21.184 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_r-P6
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_r-P7
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_med1_l
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_med1_l-P1
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_med1_l-P2
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_med2_l
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_med2_l-P1
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_med2_l-P2
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_med3_l
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_med3_l-P1
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_med3_l-P2
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_min1_l
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_min1_l-P1
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_min1_l-P2
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_min2_l
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_min2_l-P1
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_min2_l-P2
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_min3_l
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_min3_l-P1
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_min3_l-P2
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] semimem_l
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semimem_l-P1
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] default
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semimem_l-P3
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semimem_l-P4
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semimem_l-P5
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] semiten_l
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semiten_l-P1
+2026-09-08 10:38:21.194 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: ConditionalPathPoint] semiten_l-P2
+2026-09-08 10:38:21.566 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semiten_l-P3
+2026-09-08 10:38:21.566 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semiten_l-P4
+2026-09-08 10:38:21.566 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] semiten_l-P5
+2026-09-08 10:38:21.566 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.566 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] bifemlh_l
+2026-09-08 10:38:21.566 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemlh_l-P1
+2026-09-08 10:38:21.566 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemlh_l-P2
+2026-09-08 10:38:21.566 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemlh_l-P3
+2026-09-08 10:38:21.566 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemlh_l-P4
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] bifemsh_l
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemsh_l-P1
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemsh_l-P2
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] bifemsh_l-P3
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] sar_l
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_l-P1
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_l-P2
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_l-P3
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_l-P4
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_l-P3_0
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_l-P4_0
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] sar_l-P5
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] add_long_l
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_long_l-P1
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_long_l-P2
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] add_brev_l
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_brev_l-P1
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_brev_l-P2
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] add_mag1_l
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag1_l-P1
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag1_l-P2
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] add_mag2_l
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag2_l-P1
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag2_l-P2
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] add_mag3_l
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag3_l-P1
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag3_l-P2
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag3_l-P2_0
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] add_mag3_l-P2_0_0
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] tfl_l
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tfl_l-P1
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tfl_l-P2
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tfl_l-P3
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tfl_l-P4
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tfl_l-P5
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] pect_l
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] pect_l-P1
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] pect_l-P2
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] grac_l
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] grac_l-P1
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] grac_l-P2
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] grac_l-P2_0
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] default
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] grac_l-P3
+2026-09-08 10:38:21.573 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] grac_l-P4
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_max1_l
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max1_l-P1
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max1_l-P2
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max1_l-P3
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max1_l-P4
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_max2_l
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max2_l-P1
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max2_l-P2
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max2_l-P3
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max2_l-P4
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] glut_max3_l
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max3_l-P1
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max3_l-P2
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max3_l-P3
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max3_l-P3_0
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] glut_max3_l-P4
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] iliacus_l
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] iliacus_l-P1
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] iliacus_l-P2
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] iliacus_l-P4
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] psoas_l
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] psoas_l-P1
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] psoas_l-P2
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] psoas_l-P4
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] quad_fem_l
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] quad_fem_l-P1
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] quad_fem_l-P2
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] gem_l
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] gem_l-P1
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] gem_l-P2
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] peri_l
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] peri_l-P1
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] peri_l-P2
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] peri_l-P3
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] rect_fem_l
+2026-09-08 10:38:21.583 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] rect_fem_l-P1
+2026-09-08 10:38:21.594 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] rect_fem_l-P2
+2026-09-08 10:38:21.594 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] rect_fem_l-P3
+2026-09-08 10:38:21.594 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] default
+2026-09-08 10:38:21.594 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: MovingPathPoint] rect_fem_l-P3_0
+2026-09-08 10:38:21.994 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:21.994 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] vas_med_l
+2026-09-08 10:38:21.994 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] vas_med_l-P1
+2026-09-08 10:38:21.994 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] vas_med_l-P2
+2026-09-08 10:38:21.994 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: ConditionalPathPoint] vas_med_l-P3
+2026-09-08 10:38:22.391 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: ConditionalPathPoint] vas_med_l-P4
+2026-09-08 10:38:22.846 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: MovingPathPoint] vas_med_l-P5
+2026-09-08 10:38:23.225 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:23.225 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] vas_int_l
+2026-09-08 10:38:23.235 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] vas_int_l-P1
+2026-09-08 10:38:23.235 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] vas_int_l-P2
+2026-09-08 10:38:23.235 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] default
+2026-09-08 10:38:23.235 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: MovingPathPoint] vas_int_l-P4
+2026-09-08 10:38:23.626 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:23.626 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] vas_lat_l
+2026-09-08 10:38:23.626 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] vas_lat_l-P1
+2026-09-08 10:38:23.626 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] vas_lat_l-P2
+2026-09-08 10:38:23.626 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: ConditionalPathPoint] vas_lat_l-P3
+2026-09-08 10:38:24.044 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: ConditionalPathPoint] vas_lat_l-P4
+2026-09-08 10:38:24.423 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: MovingPathPoint] vas_lat_l-P5
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] med_gas_l
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] med_gas_l-P1
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] default
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] med_gas_l-P3
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] lat_gas_l
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] lat_gas_l-P1
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] default
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] lat_gas_l-P3
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] soleus_l
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] soleus_l-P1
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] soleus_l-P2
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] tib_post_l
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_post_l-P1
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_post_l-P2
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_post_l-P3
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_post_l-P4
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] flex_dig_l
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_l-P1
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_l-P2
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_l-P3
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_l-P4
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_l-P5
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_l-P6
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_l-P7
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_dig_l-P8
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] flex_hal_l
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_l-P1
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_l-P2
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_l-P3
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_l-P4
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_l-P5
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_l-P6
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] flex_hal_l-P7
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.925 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] tib_ant_l
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_ant_l-P1
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_ant_l-P2
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] tib_ant_l-P3
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] per_brev_l
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_brev_l-P1
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_brev_l-P2
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_brev_l-P3
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_brev_l-P4
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_brev_l-P5
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] per_long_l
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_l-P1
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_l-P2
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_l-P3
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_l-P4
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_l-P5
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_l-P6
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_long_l-P7
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] per_tert_l
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_tert_l-P1
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_tert_l-P2
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] per_tert_l-P3
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] ext_dig_l
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_dig_l-P1
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_dig_l-P2
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_dig_l-P3
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_dig_l-P4
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_dig_l-P5
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_dig_l-P6
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] ext_hal_l
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_l-P1
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_l-P2
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_l-P3
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_l-P4
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_l-P5
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_l-P6
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ext_hal_l-P7
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] ercspn_r
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_r-P1
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_r-P2
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_r-P2_0
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_r-P4
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_r-P5
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_r-P6
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_r-P7
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_r-P8
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_r-P9
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] ercspn_l
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_l-P1
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_l-P2
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_l-P2_0
+2026-09-08 10:38:24.935 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_l-P4
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_l-P5
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_l-P6
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_l-P7
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_l-P8
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] ercspn_l-P9
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] intobl_r
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] intobl_r-P1
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] intobl_r-P2
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] intobl_l
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] intobl_l-P1
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] intobl_l-P2
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] extobl_r
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] extobl_r-P1
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] extobl_r-P2
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [ForceParser: Thelen2003Muscle] extobl_l
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] extobl_l-P1
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathPointParser: PathPoint] extobl_l-P2
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.parsers:parse:59 - [PathWrapSetParser: PathWrapSet] 
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.converter:_parse_markers:165 - Starting to parse markers
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.converter:_set_keyframe:176 - Setting the default keyframe
+2026-09-08 10:38:24.946 | INFO     | myoconverter.xml.converter:convert:65 - Writing the converted model into C:\Users\Ben\Documents\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody\mjc\gait2392_robot\gait2392_robot_cvt1.xml
+2026-09-08 10:38:24.956 | INFO     | myoconverter.xml.converter:convert:68 - All good, conversion procedure is finished
+2026-09-08 10:38:24.956 | INFO     | myoconverter.conversion_steps.O2MSteps:PipelineExecution:126 - Finished step 1 conversion - cvt1.
+2026-09-08 10:38:24.956 | INFO     | myoconverter.conversion_steps.O2MSteps:PipelineExecution:145 - validation is set to False, skipped step 1 validation - vlt1.
+2026-09-08 10:38:24.956 | INFO     | myoconverter.conversion_steps.O2MSteps:PipelineExecution:171 - xxx_cvt2 model already exist, process from it
+2026-09-08 10:38:25.192 | INFO     | myoconverter.conversion_steps.O2MStep2:__init__:102 - Overwrite command confirmed
+2026-09-08 10:38:25.192 | INFO     | myoconverter.conversion_steps.O2MStep2:__init__:103 - Generating MA data from OsimMuscleStates, may take a while
+2026-09-08 10:38:25.192 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getWrapingCoords:75 - Extract the joints that muscle wrapped over from Osim model
+2026-09-08 10:38:27.318 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:173 - Calculate moment arms from Osim model
+2026-09-08 10:38:27.318 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_med1_r
+2026-09-08 10:38:27.349 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_med2_r
+2026-09-08 10:38:27.379 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_med3_r
+2026-09-08 10:38:27.420 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_min1_r
+2026-09-08 10:38:27.461 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_min2_r
+2026-09-08 10:38:27.491 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_min3_r
+2026-09-08 10:38:27.532 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: semimem_r
+2026-09-08 10:38:27.583 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: semiten_r
+2026-09-08 10:38:27.644 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: bifemlh_r
+2026-09-08 10:38:27.706 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: bifemsh_r
+2026-09-08 10:38:27.727 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: sar_r
+2026-09-08 10:38:27.808 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: add_long_r
+2026-09-08 10:38:27.849 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: add_brev_r
+2026-09-08 10:38:27.901 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: add_mag1_r
+2026-09-08 10:38:27.952 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: add_mag2_r
+2026-09-08 10:38:27.993 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: add_mag3_r
+2026-09-08 10:38:28.034 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: tfl_r
+2026-09-08 10:38:28.096 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: pect_r
+2026-09-08 10:38:28.137 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: grac_r
+2026-09-08 10:38:28.178 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_max1_r
+2026-09-08 10:38:28.219 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_max2_r
+2026-09-08 10:38:28.260 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_max3_r
+2026-09-08 10:38:28.291 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: iliacus_r
+2026-09-08 10:38:28.332 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: psoas_r
+2026-09-08 10:38:28.455 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: quad_fem_r
+2026-09-08 10:38:28.496 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: gem_r
+2026-09-08 10:38:28.537 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: peri_r
+2026-09-08 10:38:28.578 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: rect_fem_r
+2026-09-08 10:38:28.640 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: vas_med_r
+2026-09-08 10:38:28.660 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: vas_int_r
+2026-09-08 10:38:28.691 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: vas_lat_r
+2026-09-08 10:38:28.712 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: med_gas_r
+2026-09-08 10:38:28.763 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: lat_gas_r
+2026-09-08 10:38:28.814 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: soleus_r
+2026-09-08 10:38:28.856 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: tib_post_r
+2026-09-08 10:38:28.887 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: flex_dig_r
+2026-09-08 10:38:28.948 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: flex_hal_r
+2026-09-08 10:38:29.000 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: tib_ant_r
+2026-09-08 10:38:29.021 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: per_brev_r
+2026-09-08 10:38:29.051 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: per_long_r
+2026-09-08 10:38:29.082 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: per_tert_r
+2026-09-08 10:38:29.112 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: ext_dig_r
+2026-09-08 10:38:29.154 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: ext_hal_r
+2026-09-08 10:38:29.216 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_med1_l
+2026-09-08 10:38:29.257 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_med2_l
+2026-09-08 10:38:29.308 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_med3_l
+2026-09-08 10:38:29.339 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_min1_l
+2026-09-08 10:38:29.381 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_min2_l
+2026-09-08 10:38:29.422 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_min3_l
+2026-09-08 10:38:29.473 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: semimem_l
+2026-09-08 10:38:29.535 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: semiten_l
+2026-09-08 10:38:29.586 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: bifemlh_l
+2026-09-08 10:38:29.658 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: bifemsh_l
+2026-09-08 10:38:29.675 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: sar_l
+2026-09-08 10:38:29.730 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: add_long_l
+2026-09-08 10:38:29.781 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: add_brev_l
+2026-09-08 10:38:29.832 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: add_mag1_l
+2026-09-08 10:38:29.883 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: add_mag2_l
+2026-09-08 10:38:29.925 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: add_mag3_l
+2026-09-08 10:38:29.956 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: tfl_l
+2026-09-08 10:38:30.017 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: pect_l
+2026-09-08 10:38:30.069 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: grac_l
+2026-09-08 10:38:30.120 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_max1_l
+2026-09-08 10:38:30.160 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_max2_l
+2026-09-08 10:38:30.211 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: glut_max3_l
+2026-09-08 10:38:30.262 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: iliacus_l
+2026-09-08 10:38:30.313 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: psoas_l
+2026-09-08 10:38:30.475 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: quad_fem_l
+2026-09-08 10:38:30.522 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: gem_l
+2026-09-08 10:38:30.575 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: peri_l
+2026-09-08 10:38:30.626 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: rect_fem_l
+2026-09-08 10:38:30.708 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: vas_med_l
+2026-09-08 10:38:30.739 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: vas_int_l
+2026-09-08 10:38:30.770 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: vas_lat_l
+2026-09-08 10:38:30.800 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: med_gas_l
+2026-09-08 10:38:30.864 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: lat_gas_l
+2026-09-08 10:38:30.928 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: soleus_l
+2026-09-08 10:38:30.964 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: tib_post_l
+2026-09-08 10:38:31.005 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: flex_dig_l
+2026-09-08 10:38:31.060 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: flex_hal_l
+2026-09-08 10:38:31.116 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: tib_ant_l
+2026-09-08 10:38:31.147 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: per_brev_l
+2026-09-08 10:38:31.190 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: per_long_l
+2026-09-08 10:38:31.229 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: per_tert_l
+2026-09-08 10:38:31.270 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: ext_dig_l
+2026-09-08 10:38:31.321 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: ext_hal_l
+2026-09-08 10:38:31.390 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: ercspn_r
+2026-09-08 10:38:31.446 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: ercspn_l
+2026-09-08 10:38:31.495 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: intobl_r
+2026-09-08 10:38:31.556 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: intobl_l
+2026-09-08 10:38:31.596 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: extobl_r
+2026-09-08 10:38:31.648 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMomentArms:178 - Muscle: extobl_l
+2026-09-08 10:38:32.145 | INFO     | myoconverter.conversion_steps.O2MStep2:__init__:173 - Finished cvt2 initialize
+2026-09-08 10:38:32.155 | INFO     | myoconverter.conversion_steps.O2MSteps:PipelineExecution:198 - Started step 2 conversion - cvt2.
+2026-09-08 10:38:32.155 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:191 - Running MA optimization with the given muscle list one by one
+2026-09-08 10:38:32.155 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_med1_r 
+2026-09-08 10:38:32.155 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.185 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.185 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_med2_r 
+2026-09-08 10:38:32.185 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.216 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.216 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_med3_r 
+2026-09-08 10:38:32.216 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.257 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.257 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_min1_r 
+2026-09-08 10:38:32.257 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.287 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.287 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_min2_r 
+2026-09-08 10:38:32.297 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.328 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.328 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_min3_r 
+2026-09-08 10:38:32.328 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.358 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.358 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : semimem_r 
+2026-09-08 10:38:32.358 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.430 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:32.430 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:32.430 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : semiten_r 
+2026-09-08 10:38:32.430 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.512 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:32.512 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:32.512 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : bifemlh_r 
+2026-09-08 10:38:32.512 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.604 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:32.604 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:32.604 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : bifemsh_r 
+2026-09-08 10:38:32.624 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_r
+2026-09-08 10:38:32.645 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:32.645 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:32.645 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : sar_r 
+2026-09-08 10:38:32.645 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.678 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.678 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_r
+2026-09-08 10:38:32.696 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:32.696 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:32.696 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : add_long_r 
+2026-09-08 10:38:32.706 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.737 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.737 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : add_brev_r 
+2026-09-08 10:38:32.737 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.778 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.778 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : add_mag1_r 
+2026-09-08 10:38:32.778 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.814 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.814 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : add_mag2_r 
+2026-09-08 10:38:32.819 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.853 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.853 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : add_mag3_r 
+2026-09-08 10:38:32.853 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.901 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.901 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : tfl_r 
+2026-09-08 10:38:32.901 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:32.953 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:32.953 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_r
+2026-09-08 10:38:32.995 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:32.995 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:32.999 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : pect_r 
+2026-09-08 10:38:33.003 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:33.055 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.057 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : grac_r 
+2026-09-08 10:38:33.059 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:33.118 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.118 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_r
+2026-09-08 10:38:33.155 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:33.155 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:33.155 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_max1_r 
+2026-09-08 10:38:33.159 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:33.211 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.213 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_max2_r 
+2026-09-08 10:38:33.215 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:33.266 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.266 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_max3_r 
+2026-09-08 10:38:33.276 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:33.317 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.317 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : iliacus_r 
+2026-09-08 10:38:33.317 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:33.368 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.368 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : psoas_r 
+2026-09-08 10:38:33.388 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: pelvis_ty
+2026-09-08 10:38:33.408 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.408 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: pelvis_list
+2026-09-08 10:38:33.419 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.419 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: lumbar_bending
+2026-09-08 10:38:33.450 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.450 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: pelvis_tz
+2026-09-08 10:38:33.460 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.460 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: pelvis_rotation
+2026-09-08 10:38:33.479 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.479 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: pelvis_tilt
+2026-09-08 10:38:33.491 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.491 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: pelvis_tx
+2026-09-08 10:38:33.501 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.501 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : quad_fem_r 
+2026-09-08 10:38:33.501 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:33.532 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.532 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : gem_r 
+2026-09-08 10:38:33.532 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:33.583 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.583 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : peri_r 
+2026-09-08 10:38:33.583 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:33.623 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.625 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : rect_fem_r 
+2026-09-08 10:38:33.633 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_r
+2026-09-08 10:38:33.674 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.674 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_r
+2026-09-08 10:38:33.695 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:33.695 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:33.695 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : vas_med_r 
+2026-09-08 10:38:33.695 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_r
+2026-09-08 10:38:33.716 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:33.716 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:33.716 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : vas_int_r 
+2026-09-08 10:38:33.726 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_r
+2026-09-08 10:38:33.756 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:33.756 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:33.756 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : vas_lat_r 
+2026-09-08 10:38:33.756 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_r
+2026-09-08 10:38:33.779 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:33.779 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:33.779 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : med_gas_r 
+2026-09-08 10:38:33.779 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_r
+2026-09-08 10:38:33.849 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:33.849 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:33.849 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : lat_gas_r 
+2026-09-08 10:38:33.863 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_r
+2026-09-08 10:38:33.920 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:33.920 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:33.920 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : soleus_r 
+2026-09-08 10:38:33.920 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_r
+2026-09-08 10:38:33.941 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.941 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : tib_post_r 
+2026-09-08 10:38:33.941 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_r
+2026-09-08 10:38:33.971 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.971 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : flex_dig_r 
+2026-09-08 10:38:33.971 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: mtp_angle_r
+2026-09-08 10:38:33.982 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:33.982 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_r
+2026-09-08 10:38:34.002 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.002 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : flex_hal_r 
+2026-09-08 10:38:34.002 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: mtp_angle_r
+2026-09-08 10:38:34.013 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.013 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_r
+2026-09-08 10:38:34.033 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.033 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : tib_ant_r 
+2026-09-08 10:38:34.054 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_r
+2026-09-08 10:38:34.074 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.080 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : per_brev_r 
+2026-09-08 10:38:34.080 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_r
+2026-09-08 10:38:34.104 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.104 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : per_long_r 
+2026-09-08 10:38:34.104 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_r
+2026-09-08 10:38:34.136 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.136 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : per_tert_r 
+2026-09-08 10:38:34.146 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_r
+2026-09-08 10:38:34.166 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.166 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : ext_dig_r 
+2026-09-08 10:38:34.186 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: mtp_angle_r
+2026-09-08 10:38:34.197 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.197 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_r
+2026-09-08 10:38:34.217 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.217 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : ext_hal_r 
+2026-09-08 10:38:34.217 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: mtp_angle_r
+2026-09-08 10:38:34.238 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.238 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_r
+2026-09-08 10:38:34.259 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.259 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_med1_l 
+2026-09-08 10:38:34.259 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.289 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.289 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_med2_l 
+2026-09-08 10:38:34.289 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.330 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.330 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_med3_l 
+2026-09-08 10:38:34.330 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.360 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.360 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_min1_l 
+2026-09-08 10:38:34.370 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.400 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.411 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_min2_l 
+2026-09-08 10:38:34.421 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.450 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.461 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_min3_l 
+2026-09-08 10:38:34.471 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.502 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.502 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : semimem_l 
+2026-09-08 10:38:34.523 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.580 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:34.580 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:34.580 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : semiten_l 
+2026-09-08 10:38:34.585 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.646 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:34.646 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:34.646 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : bifemlh_l 
+2026-09-08 10:38:34.646 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.707 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:34.707 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:34.707 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : bifemsh_l 
+2026-09-08 10:38:34.707 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_l
+2026-09-08 10:38:34.728 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:34.728 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:34.728 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : sar_l 
+2026-09-08 10:38:34.728 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_l
+2026-09-08 10:38:34.748 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:34.748 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:34.748 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.780 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.780 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : add_long_l 
+2026-09-08 10:38:34.789 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.820 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.820 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : add_brev_l 
+2026-09-08 10:38:34.830 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.861 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.871 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : add_mag1_l 
+2026-09-08 10:38:34.871 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.904 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.904 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : add_mag2_l 
+2026-09-08 10:38:34.906 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.932 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.932 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : add_mag3_l 
+2026-09-08 10:38:34.942 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:34.986 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:34.986 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : tfl_l 
+2026-09-08 10:38:34.986 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_l
+2026-09-08 10:38:35.005 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:35.005 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:35.005 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:35.025 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.035 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : pect_l 
+2026-09-08 10:38:35.045 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:35.086 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.086 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : grac_l 
+2026-09-08 10:38:35.086 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_l
+2026-09-08 10:38:35.106 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:35.106 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:35.106 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:35.127 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.127 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_max1_l 
+2026-09-08 10:38:35.127 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:35.168 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.168 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_max2_l 
+2026-09-08 10:38:35.181 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:35.210 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.210 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : glut_max3_l 
+2026-09-08 10:38:35.210 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:35.250 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.250 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : iliacus_l 
+2026-09-08 10:38:35.250 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:35.291 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.291 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : psoas_l 
+2026-09-08 10:38:35.302 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: pelvis_ty
+2026-09-08 10:38:35.312 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.312 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: pelvis_list
+2026-09-08 10:38:35.322 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.322 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: lumbar_bending
+2026-09-08 10:38:35.353 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.353 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: pelvis_tz
+2026-09-08 10:38:35.363 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.363 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: pelvis_rotation
+2026-09-08 10:38:35.374 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.374 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: pelvis_tilt
+2026-09-08 10:38:35.384 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.384 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: pelvis_tx
+2026-09-08 10:38:35.384 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.394 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : quad_fem_l 
+2026-09-08 10:38:35.405 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:35.435 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.435 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : gem_l 
+2026-09-08 10:38:35.435 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:35.466 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.466 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : peri_l 
+2026-09-08 10:38:35.476 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:35.507 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.507 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : rect_fem_l 
+2026-09-08 10:38:35.507 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_l
+2026-09-08 10:38:35.527 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:35.527 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:35.527 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: hip_adduction_l
+2026-09-08 10:38:35.558 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.558 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : vas_med_l 
+2026-09-08 10:38:35.568 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_l
+2026-09-08 10:38:35.592 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:35.592 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:35.592 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : vas_int_l 
+2026-09-08 10:38:35.592 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_l
+2026-09-08 10:38:35.621 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:35.621 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:35.621 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : vas_lat_l 
+2026-09-08 10:38:35.621 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: knee_angle_l
+2026-09-08 10:38:35.639 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:35.639 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:35.639 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : med_gas_l 
+2026-09-08 10:38:35.639 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_l
+2026-09-08 10:38:35.689 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:35.689 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:35.689 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : lat_gas_l 
+2026-09-08 10:38:35.689 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_l
+2026-09-08 10:38:35.751 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:227 -     Start MA optimization
+2026-09-08 10:38:35.751 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:231 -     No wrapping information extracted, skipped
+2026-09-08 10:38:35.751 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : soleus_l 
+2026-09-08 10:38:35.763 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_l
+2026-09-08 10:38:35.786 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.786 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : tib_post_l 
+2026-09-08 10:38:35.786 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_l
+2026-09-08 10:38:35.812 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.812 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : flex_dig_l 
+2026-09-08 10:38:35.812 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_l
+2026-09-08 10:38:35.833 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.833 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: mtp_angle_l
+2026-09-08 10:38:35.843 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.843 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : flex_hal_l 
+2026-09-08 10:38:35.843 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_l
+2026-09-08 10:38:35.864 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.864 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: mtp_angle_l
+2026-09-08 10:38:35.882 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.882 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : tib_ant_l 
+2026-09-08 10:38:35.895 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_l
+2026-09-08 10:38:35.926 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.926 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : per_brev_l 
+2026-09-08 10:38:35.926 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_l
+2026-09-08 10:38:35.946 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.946 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : per_long_l 
+2026-09-08 10:38:35.956 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_l
+2026-09-08 10:38:35.976 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.976 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : per_tert_l 
+2026-09-08 10:38:35.976 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_l
+2026-09-08 10:38:35.997 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:35.997 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : ext_dig_l 
+2026-09-08 10:38:35.997 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_l
+2026-09-08 10:38:36.017 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:36.017 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: mtp_angle_l
+2026-09-08 10:38:36.028 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:36.028 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : ext_hal_l 
+2026-09-08 10:38:36.028 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: ankle_angle_l
+2026-09-08 10:38:36.058 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:36.058 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: mtp_angle_l
+2026-09-08 10:38:36.069 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:36.069 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : ercspn_r 
+2026-09-08 10:38:36.069 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: lumbar_bending
+2026-09-08 10:38:36.099 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:36.099 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : ercspn_l 
+2026-09-08 10:38:36.099 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: lumbar_bending
+2026-09-08 10:38:36.130 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:36.130 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : intobl_r 
+2026-09-08 10:38:36.130 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: lumbar_bending
+2026-09-08 10:38:36.161 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:36.161 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : intobl_l 
+2026-09-08 10:38:36.161 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: lumbar_bending
+2026-09-08 10:38:36.191 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:36.191 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : extobl_r 
+2026-09-08 10:38:36.191 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: lumbar_bending
+2026-09-08 10:38:36.232 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:36.232 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:195 - Muscle : extobl_l 
+2026-09-08 10:38:36.242 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:208 -     At joints: lumbar_bending
+2026-09-08 10:38:36.272 | INFO     | myoconverter.conversion_steps.O2MStep2:optMomentArms:220 -     MA errors between Osim and Mjc models are smaller than throshold, optimization skipped
+2026-09-08 10:38:36.282 | INFO     | myoconverter.conversion_steps.O2MSteps:PipelineExecution:200 - Finished step 2 conversion - cvt2.
+2026-09-08 10:38:36.282 | INFO     | myoconverter.conversion_steps.O2MSteps:PipelineExecution:210 - validation is set to False, skipped step 2 validation - val2.
+2026-09-08 10:38:36.282 | INFO     | myoconverter.conversion_steps.O2MSteps:PipelineExecution:237 - xxx_cvt3 model does not exist, start from xxx_cvt2
+2026-09-08 10:38:36.446 | INFO     | myoconverter.conversion_steps.O2MStep3:__init__:96 - Overwrite command confirmed
+2026-09-08 10:38:36.446 | INFO     | myoconverter.conversion_steps.O2MStep3:__init__:97 - Generating force map data from OsimMuscleStates, may take a while
+2026-09-08 10:38:36.446 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getWrapingCoords:75 - Extract the joints that muscle wrapped over from Osim model
+2026-09-08 10:38:38.963 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:277 - Calculate muscle force curves from Osim model
+2026-09-08 10:38:38.963 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_med1_r
+2026-09-08 10:38:38.994 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_med1_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:38.994 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_med2_r
+2026-09-08 10:38:39.045 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_med2_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.045 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_med3_r
+2026-09-08 10:38:39.096 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_med3_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.096 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_min1_r
+2026-09-08 10:38:39.146 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_min1_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.146 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_min2_r
+2026-09-08 10:38:39.187 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_min2_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.194 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_min3_r
+2026-09-08 10:38:39.255 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_min3_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.257 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: semimem_r
+2026-09-08 10:38:39.338 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle semimem_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.338 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: semiten_r
+2026-09-08 10:38:39.441 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle semiten_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.441 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: bifemlh_r
+2026-09-08 10:38:39.520 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle bifemlh_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.522 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: bifemsh_r
+2026-09-08 10:38:39.573 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle bifemsh_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.573 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: sar_r
+2026-09-08 10:38:39.666 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle sar_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.666 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: add_long_r
+2026-09-08 10:38:39.736 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle add_long_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.738 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: add_brev_r
+2026-09-08 10:38:39.799 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle add_brev_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.799 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: add_mag1_r
+2026-09-08 10:38:39.861 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle add_mag1_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.861 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: add_mag2_r
+2026-09-08 10:38:39.912 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle add_mag2_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.922 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: add_mag3_r
+2026-09-08 10:38:39.995 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle add_mag3_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:39.997 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: tfl_r
+2026-09-08 10:38:40.074 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle tfl_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:40.074 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: pect_r
+2026-09-08 10:38:40.146 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle pect_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:40.156 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: grac_r
+2026-09-08 10:38:40.227 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle grac_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:40.238 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_max1_r
+2026-09-08 10:38:40.308 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_max1_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:40.308 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_max2_r
+2026-09-08 10:38:40.380 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_max2_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:40.380 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_max3_r
+2026-09-08 10:38:40.452 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_max3_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:40.452 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: iliacus_r
+2026-09-08 10:38:40.508 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle iliacus_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:40.508 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: psoas_r
+2026-09-08 10:38:40.818 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle psoas_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:40.818 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: quad_fem_r
+2026-09-08 10:38:40.885 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle quad_fem_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:40.885 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: gem_r
+2026-09-08 10:38:40.952 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle gem_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:40.963 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: peri_r
+2026-09-08 10:38:41.014 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle peri_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.014 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: rect_fem_r
+2026-09-08 10:38:41.085 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle rect_fem_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.085 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: vas_med_r
+2026-09-08 10:38:41.125 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle vas_med_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.125 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: vas_int_r
+2026-09-08 10:38:41.166 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle vas_int_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.166 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: vas_lat_r
+2026-09-08 10:38:41.207 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle vas_lat_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.218 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: med_gas_r
+2026-09-08 10:38:41.273 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle med_gas_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.275 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: lat_gas_r
+2026-09-08 10:38:41.340 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle lat_gas_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.340 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: soleus_r
+2026-09-08 10:38:41.390 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle soleus_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.401 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: tib_post_r
+2026-09-08 10:38:41.452 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle tib_post_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.462 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: flex_dig_r
+2026-09-08 10:38:41.524 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle flex_dig_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.535 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: flex_hal_r
+2026-09-08 10:38:41.595 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle flex_hal_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.595 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: tib_ant_r
+2026-09-08 10:38:41.646 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle tib_ant_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.646 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: per_brev_r
+2026-09-08 10:38:41.707 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle per_brev_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.717 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: per_long_r
+2026-09-08 10:38:41.769 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle per_long_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.769 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: per_tert_r
+2026-09-08 10:38:41.830 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle per_tert_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.840 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: ext_dig_r
+2026-09-08 10:38:41.892 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle ext_dig_r: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.892 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: ext_hal_r
+2026-09-08 10:38:41.892 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:304 - Muscle ext_hal_r: equilibrium unusable, writing placeholder force map
+2026-09-08 10:38:41.902 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_med1_l
+2026-09-08 10:38:41.953 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_med1_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:41.953 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_med2_l
+2026-09-08 10:38:42.004 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_med2_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.004 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_med3_l
+2026-09-08 10:38:42.055 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_med3_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.055 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_min1_l
+2026-09-08 10:38:42.106 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_min1_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.106 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_min2_l
+2026-09-08 10:38:42.167 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_min2_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.167 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_min3_l
+2026-09-08 10:38:42.234 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_min3_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.234 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: semimem_l
+2026-09-08 10:38:42.299 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle semimem_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.299 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: semiten_l
+2026-09-08 10:38:42.370 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle semiten_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.370 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: bifemlh_l
+2026-09-08 10:38:42.441 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle bifemlh_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.441 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: bifemsh_l
+2026-09-08 10:38:42.503 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle bifemsh_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.503 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: sar_l
+2026-09-08 10:38:42.579 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle sar_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.581 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: add_long_l
+2026-09-08 10:38:42.634 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle add_long_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.634 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: add_brev_l
+2026-09-08 10:38:42.695 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle add_brev_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.695 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: add_mag1_l
+2026-09-08 10:38:42.746 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle add_mag1_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.746 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: add_mag2_l
+2026-09-08 10:38:42.797 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle add_mag2_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.797 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: add_mag3_l
+2026-09-08 10:38:42.838 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle add_mag3_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.838 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: tfl_l
+2026-09-08 10:38:42.900 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle tfl_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.900 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: pect_l
+2026-09-08 10:38:42.941 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle pect_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:42.952 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: grac_l
+2026-09-08 10:38:43.003 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle grac_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.003 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_max1_l
+2026-09-08 10:38:43.064 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_max1_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.064 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_max2_l
+2026-09-08 10:38:43.105 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_max2_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.115 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: glut_max3_l
+2026-09-08 10:38:43.177 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle glut_max3_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.177 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: iliacus_l
+2026-09-08 10:38:43.238 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle iliacus_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.248 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: psoas_l
+2026-09-08 10:38:43.535 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle psoas_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.535 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: quad_fem_l
+2026-09-08 10:38:43.596 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle quad_fem_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.596 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: gem_l
+2026-09-08 10:38:43.657 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle gem_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.657 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: peri_l
+2026-09-08 10:38:43.718 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle peri_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.718 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: rect_fem_l
+2026-09-08 10:38:43.770 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle rect_fem_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.770 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: vas_med_l
+2026-09-08 10:38:43.811 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle vas_med_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.811 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: vas_int_l
+2026-09-08 10:38:43.853 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle vas_int_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.853 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: vas_lat_l
+2026-09-08 10:38:43.893 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle vas_lat_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.893 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: med_gas_l
+2026-09-08 10:38:43.934 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle med_gas_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.946 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: lat_gas_l
+2026-09-08 10:38:43.995 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle lat_gas_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:43.995 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: soleus_l
+2026-09-08 10:38:44.045 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle soleus_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:44.046 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: tib_post_l
+2026-09-08 10:38:44.076 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle tib_post_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:44.076 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: flex_dig_l
+2026-09-08 10:38:44.138 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle flex_dig_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:44.138 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: flex_hal_l
+2026-09-08 10:38:44.210 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle flex_hal_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:44.210 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: tib_ant_l
+2026-09-08 10:38:44.267 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle tib_ant_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:44.277 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: per_brev_l
+2026-09-08 10:38:44.347 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle per_brev_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:44.349 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: per_long_l
+2026-09-08 10:38:44.410 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle per_long_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:44.410 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: per_tert_l
+2026-09-08 10:38:44.469 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle per_tert_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:44.469 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: ext_dig_l
+2026-09-08 10:38:44.541 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:348 - Muscle ext_dig_l: no viable poses; using placeholder zero poses
+2026-09-08 10:38:44.541 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: ext_hal_l
+2026-09-08 10:38:44.541 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:304 - Muscle ext_hal_l: equilibrium unusable, writing placeholder force map
+2026-09-08 10:38:44.541 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: ercspn_r
+2026-09-08 10:38:44.541 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:304 - Muscle ercspn_r: equilibrium unusable, writing placeholder force map
+2026-09-08 10:38:44.541 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: ercspn_l
+2026-09-08 10:38:44.541 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:304 - Muscle ercspn_l: equilibrium unusable, writing placeholder force map
+2026-09-08 10:38:44.551 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: intobl_r
+2026-09-08 10:38:44.551 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:304 - Muscle intobl_r: equilibrium unusable, writing placeholder force map
+2026-09-08 10:38:44.551 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: intobl_l
+2026-09-08 10:38:44.551 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:304 - Muscle intobl_l: equilibrium unusable, writing placeholder force map
+2026-09-08 10:38:44.553 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: extobl_r
+2026-09-08 10:38:44.553 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:304 - Muscle extobl_r: equilibrium unusable, writing placeholder force map
+2026-09-08 10:38:44.553 | INFO     | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:282 - Muscle: extobl_l
+2026-09-08 10:38:44.553 | WARNING  | myoconverter.optimization.model_states.OsimMuscleStates:getMuscleForceMaps:304 - Muscle extobl_l: equilibrium unusable, writing placeholder force map
+2026-09-08 10:38:45.041 | INFO     | myoconverter.conversion_steps.O2MStep3:__init__:195 - Finished cvt3 initialize ...
+2026-09-08 10:38:45.041 | INFO     | myoconverter.conversion_steps.O2MSteps:PipelineExecution:260 - Started step 3 conversion - cvt3.
+2026-09-08 10:38:45.041 | INFO     | myoconverter.conversion_steps.O2MStep3:optMuscleForce:208 - Running MF optimization with the given muscle list one by one
+2026-09-08 10:38:45.041 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_med1_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.041 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_med2_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.051 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_med3_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.061 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_min1_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.061 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_min2_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.071 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_min3_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.071 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle semimem_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.071 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle semiten_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.088 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle bifemlh_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.102 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle bifemsh_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.102 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle sar_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.102 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle add_long_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.123 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle add_brev_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.123 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle add_mag1_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.123 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle add_mag2_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.123 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle add_mag3_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.133 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle tfl_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.143 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle pect_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.143 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle grac_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.153 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_max1_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.163 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_max2_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.176 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_max3_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.176 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle iliacus_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.194 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle psoas_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.194 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle quad_fem_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.204 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle gem_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.204 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle peri_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.215 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle rect_fem_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.225 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle vas_med_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.225 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle vas_int_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.225 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle vas_lat_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.231 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle med_gas_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.231 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle lat_gas_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.235 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle soleus_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.235 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle tib_post_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.254 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle flex_dig_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.274 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle flex_hal_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.274 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle tib_ant_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.292 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle per_brev_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.306 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle per_long_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.308 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle per_tert_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.324 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle ext_dig_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.345 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle ext_hal_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.347 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_med1_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.349 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_med2_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.353 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_med3_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.365 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_min1_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.375 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_min2_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.395 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_min3_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.399 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle semimem_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.401 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle semiten_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.401 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle bifemlh_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.408 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle bifemsh_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.416 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle sar_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.416 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle add_long_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.426 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle add_brev_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.442 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle add_mag1_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.442 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle add_mag2_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.446 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle add_mag3_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.456 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle tfl_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.466 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle pect_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.466 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle grac_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.487 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_max1_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.501 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_max2_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.501 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle glut_max3_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.507 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle iliacus_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.528 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle psoas_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.545 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle quad_fem_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.548 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle gem_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.550 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle peri_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.552 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle rect_fem_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.552 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle vas_med_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.558 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle vas_int_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.558 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle vas_lat_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.558 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle med_gas_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.558 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle lat_gas_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.568 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle soleus_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.570 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle tib_post_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.578 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle flex_dig_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.588 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle flex_hal_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.590 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle tib_ant_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.600 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle per_brev_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.627 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle per_long_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.629 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle per_tert_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.631 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle ext_dig_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.633 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle ext_hal_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.649 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle ercspn_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.649 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle ercspn_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.660 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle intobl_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.660 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle intobl_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.660 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle extobl_r: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.660 | WARNING  | myoconverter.conversion_steps.O2MStep3:optMuscleForce:219 -     Muscle extobl_l: placeholder force map, keeping default muscle parameters
+2026-09-08 10:38:45.680 | INFO     | myoconverter.conversion_steps.O2MSteps:PipelineExecution:262 - Finished step 3 conversion - cvt3.
+2026-09-08 10:38:45.680 | INFO     | myoconverter.conversion_steps.O2MSteps:PipelineExecution:272 - Skipped step 3 validation - val3.
