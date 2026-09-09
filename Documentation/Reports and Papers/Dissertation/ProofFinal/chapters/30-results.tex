@@ -323,6 +323,17 @@ Flexor, biomimetic knee, $\phi$\qty{20}{\mm}, $l_{0}=\qty{41.5}{\cm}$ (\qty{620}
 \end{tabular}
 \end{table}
 
+\section{Preliminary Neuromechanical Simulation Recordings}\label{sec:preliminary_sim_results}
+
+The AnimatLab phase-1 run described in Section~\ref{sec:preliminary_sim_methods} produced synchronized joint, neural, contact-sensory, and body-motion recordings over \qty{10}{\second}. Basic checks confirmed finite values and a uniform \qty{0.2}{\milli\second} sampling interval in both exported charts. Each chart contained 50,001 samples from 0 through \qty{10}{\second}; nine trailing zero-filled rows beyond the configured chart end were excluded. Figure~\ref{fig:animatlab_phase1_preliminary} shows bilateral hip, knee, and ankle angles. Neural and contact-sensory recordings remain archived with the run; the contact-sensory channels record membrane voltage rather than contact force. These recordings demonstrate signal acquisition and alternating activity in this run, rather than validated locomotor performance. The model included an externally applied horizontal force during the first second, and neither stable walking nor effective ground-contact gating was established.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{figs/Preliminary/animatlab_phase1_joint_angles.pdf}
+\caption[Preliminary AnimatLab hip, knee, and ankle recordings]{Preliminary AnimatLab phase-1 joint motion: \textbf{(A)} hip, \textbf{(B)} knee, and \textbf{(C)} ankle angles in the model's recorded joint conventions. Blue solid and orange dashed traces denote left and right sides. All 50,001 samples within the configured 0--\qty{10}{\second} chart window are retained without filtering. The model includes an external horizontal force during the first second. These traces document joint motion in an instrumented run; they do not establish stable walking or effective ground-contact gating.}
+\label{fig:animatlab_phase1_preliminary}
+\end{figure}
+
 \section{Ongoing Experiments}\label{sec:ongoing}
 
 At the time of this writing, two additional sets of isometric knee torque experiments are in progress, and space is reserved here for their results.

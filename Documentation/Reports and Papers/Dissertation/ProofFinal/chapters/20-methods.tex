@@ -338,3 +338,86 @@ Before the simulation pipeline of Chapter~\ref{ch:futurework} was defined, the a
 The biomechanical plant consisted of nine rigid bodies --- pelvis, thigh, shank, foot, and toe segments --- connected by sagittal-plane hinge joints with human-like rotational capabilities and actuated by antagonistic pairs of Hill-type muscles at the hip, knee, and ankle. The toe joint, the author's addition to the Li design, carried a passive spring instead of a muscle pair, increasing foot compliance and conserving energy; its contribution to push-off would make an interesting study in its own right once the model walks on the ground. The mechanics followed the suspended bipedal walking model of \citet{li_bipedal_2017}, whose CPGs were entrained by heel and toe mechanosensory receptors and hip-angle position sensors standing in for the group-I loading, cutaneous, and hip-joint afferents of the biological scheme --- muscle afferents were not modeled --- and it is worth noting that the Li model required support against falling: a system with only planar joints cannot balance side to side, so lateral stabilization falls to the vestibular layer and hardware design of Chapter~\ref{ch:futurework}.
 
 The synthetic nervous network was built from non-spiking, leaky-integrator neurons and followed the two-layer CPG organization of \citet{deng_neuromechanical_2019}. A rhythm-generator layer set the timing of the system; a pattern-formation layer reshaped the timing signals into phase-appropriate activation of antagonist muscle groups; and a sensorimotor layer containing Renshaw-cell-like recurrent inhibition drove the motor neurons. The sensorimotor layer received Ia (length and velocity) and Ib (tension) afferent feedback from the muscles, but the feedback gains were never systematically tuned, and no ground-contact signals were modeled. Every applied current, synaptic weight, and muscle-tension parameter was set by hand: each was adjusted by trial and error, one at a time, until the three layers oscillated in phase and the motor neurons produced stepping-like activation of the muscle pairs. That hand-tuning consumed the bulk of the project's effort, left no record of the sensitivity of the behavior to individual parameters, and did not generalize when new feedback pathways were added --- limitations that directly motivated the systematic, verification-first tuning approach of Chapter~\ref{ch:futurework}.
+
+\section{Preliminary Neuromechanical Simulation Workflows}\label{sec:preliminary_sim_methods}
+
+Preliminary simulation workflows were assembled to support future integration of the BPA mechanics and synthetic nervous system (SNS). The figures in this section document the biomechanical representations, controller organization, and software implementation. Their purpose is to identify what was constructed; quantitative validation remains separate.
+
+\subsection{AnimatLab Body and Controller Organization}
+
+The walker representation and controller hierarchy are shown in Figures~\ref{fig:animatlab_model_architecture} and~\ref{fig:animatlab_working_gui}. The hierarchy separates rhythm generation, hip control, and knee--ankle pattern formation within left- and right-side neural subsystems. The current AnimatLab working model was instrumented for a new \qty{10}{\second} phase-1 run recording joint, neural, contact-sensory, and body-motion channels. This run was used to inspect recorded signals and simulation behavior, without treating it as evidence of stable walking or effective ground-contact gating. It is distinct from the earlier walker study described in Section~\ref{sec:prior_walker}. Preliminary joint-motion results are reported in Section~\ref{sec:preliminary_sim_results}.
+
+Figure~\ref{fig:animatlab_controller_motifs} illustrates the rhythm-generator, pattern-formation, and sensorimotor organization at the neuron and synapse level. These reference schematics complement the subsystem view by making the antagonist pathways and sensory connections visible.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.64\textwidth,height=0.30\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/OurWalker.png}
+\par\medskip
+\includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/2layerImprove.png}
+\caption[AnimatLab walker and controller hierarchy]{AnimatLab model and architecture illustrations. Top: the segmented walker and labeled hip, knee, ankle, and toe joints. Bottom: the left/right subsystem organization and an expanded view of the left-side rhythm-generator, hip, and knee--ankle modules. These architectural views describe model organization and are not snapshots of the phase-1 trajectory.}
+\label{fig:animatlab_model_architecture}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\begin{minipage}[t]{0.47\textwidth}\centering
+\textbf{(A) Rhythm generator}\par\smallskip
+\includegraphics[width=\linewidth,height=0.20\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/RGnetwork.PNG}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.47\textwidth}\centering
+\textbf{(B) Pattern formation}\par\smallskip
+\includegraphics[width=\linewidth,height=0.20\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/PFnetwork.PNG}
+\end{minipage}
+\par\medskip
+\textbf{(C) Sensorimotor organization}\par\smallskip
+\includegraphics[width=0.76\textwidth,height=0.39\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/sensoryMotor_Network.PNG}
+\caption[AnimatLab controller reference schematics]{Reference schematics of \textbf{(A)} rhythm generation, \textbf{(B)} pattern formation, and \textbf{(C)} sensorimotor organization. Ext and Flx identify antagonist extensor and flexor pathways; IN denotes interneurons, MN motor neurons, and Ia and Ib muscle afferent pathways. Open triangles and filled circles distinguish excitatory and inhibitory synaptic connections. These schematics illustrate controller architecture and are not readouts from the phase-1 run.}
+\label{fig:animatlab_controller_motifs}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]{figs/Preliminary/animatlab_body_gui.png}
+\par\medskip
+\includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]{figs/Preliminary/animatlab_network_gui.png}
+\caption[AnimatLab working-project interface]{The saved AnimatLab working project opened in the application: the biomechanical body at initialization (top) and the expanded left-side controller subsystem (bottom). The workspace tree and property inspector expose the relationship between the body, sensory pathways, and neural modules. These interface captures were acquired without running a new simulation.}
+\label{fig:animatlab_working_gui}
+\end{figure}
+
+\subsection{MuJoCo Conversion and Synthetic BPA Knee}
+
+A reproducible OpenSim-to-MuJoCo conversion workflow was assembled using scripted model repair, MyoConverter, and a documented software environment. Separately, a custom quasi-static BPA model was ported from MATLAB to Python and coupled to MuJoCo tendon kinematics to compute actuator forces and their joint contributions. A minimal SNS with reciprocal inhibition drove a synthetic knee with antagonistic flexor and extensor BPAs. Figure~\ref{fig:mujoco_model_views} distinguishes the converted robot from this separate knee demonstration. The demonstration establishes a controller--actuator--joint interface; it does not establish SNS control of the converted Gait2392 robot or validation of correction-factor-based MuJoCo torque predictions.
+
+\begin{figure}[p]
+\centering
+\begin{minipage}[t]{0.48\textwidth}\centering
+\textbf{(A) Converted robot}\par\smallskip
+\includegraphics[width=\linewidth,height=0.53\textheight,keepaspectratio]{figs/Preliminary/mujoco_converted_robot.png}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}\centering
+\textbf{(B) Synthetic BPA knee}\par\smallskip
+\includegraphics[width=\linewidth,height=0.53\textheight,keepaspectratio]{figs/Preliminary/mujoco_synthetic_knee.png}
+\end{minipage}
+\caption[MuJoCo model representations]{Native MuJoCo renders of \textbf{(A)} the converted Gait2392 robot at its saved reference pose, with muscle paths visible, and \textbf{(B)} the independent synthetic antagonist-BPA knee at an illustrative static angle of \ang{-35}. Cyan and gold identify its named flexor and extensor tendon routes; transparency exposes the routes through the view. The models are not shown to the same scale. These views document model construction, not SNS control of the converted robot or validated torque predictions.}
+\label{fig:mujoco_model_views}
+\end{figure}
+
+\subsection{Simulink SNS Library and Reflex Topology}
+
+A seven-block Simulink SNS library was also created, comprising a non-spiking neuron, a graded chemical synapse, a spiking leaky integrate-and-fire neuron, Ia and Ib afferents, activation dynamics, and a placeholder BPA force block (Figure~\ref{fig:simulink_sns_implementation}). These components were connected in a reduced-order knee-reflex topology with antagonist actuation, stretch feedback, autogenic inhibition, and reciprocal inhibition (Figure~\ref{fig:simulink_reflex_topology}). The plant used provisional mechanical parameters and was not a completed CAD-coupled Simscape Multibody model. The current saved run was not used to establish quantitative knee-regulation performance.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.95\textwidth,height=0.42\textheight,keepaspectratio]{figs/Preliminary/simulink_sns_library_grid.png}
+\par\medskip
+\includegraphics[width=\textwidth,height=0.21\textheight,keepaspectratio]{figs/Preliminary/simulink_neuron_detail.png}
+\caption[Simulink SNS library and neuron implementation]{Native Simulink diagram exports showing the seven masked library blocks (top) and the internal implementation of the non-spiking neuron (bottom). The library blocks are arranged in a compact display grid for legibility. The BPA force block remains a placeholder. These implementation views do not establish quantitative knee regulation or a completed CAD-coupled Simscape Multibody plant.}
+\label{fig:simulink_sns_implementation}
+\end{figure}
+
+\begin{sidewaysfigure}[p]
+\centering
+\includegraphics[width=\textheight,height=0.79\textwidth,keepaspectratio]{figs/Preliminary/simulink_knee_reflex_arranged.png}
+\caption[Complete Simulink knee-reflex topology]{The complete reduced-order knee-reflex model exported from Simulink. The diagram connects Ia and Ib sensory pathways, excitatory and inhibitory synapses, antagonist motor neurons, activation and BPA force blocks, and the joint dynamics. Blocks and wires were arranged for display; source and destination ports were checked to confirm unchanged connectivity. Mechanical parameters and the BPA force block remain provisional.}
+\label{fig:simulink_reflex_topology}
+\end{sidewaysfigure}

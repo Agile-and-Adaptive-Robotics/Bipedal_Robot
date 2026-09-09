@@ -98,13 +98,13 @@ Loaded automatically at session start. Keep it current; keep it lean.
     `minimizeFlxPin10mmX3.m`, `minimizeExt10mmX3.m`) call inner evaluators (`minimizeFlxPin`,
     `minimizeFlxPinX3`, `minimizeExtX3`, `minimizeExt`, `minimizeFlx`) that each carry their own
     `computeForceVector`/`Lok`/`fortz`. New (Sept 2026): two-bracket flexor method —
-    `minimizeFlxPin2brk.m` (evaluator; BOTH brackets use two-rotation (Z then Y) frames and
-    1trans goes through the 6th `transMode` arg / the driver's `FLX2BRK_TRANS` env — the
-    laptop session's separate-file 1trans evaluator was DELETED 2026-09-08 at Ben's ruling:
-    easteregg2's transMode flag is the vehicle of record; (e) insertion-bracket stiffness
-    array K (arm-2 config in the current file: [X1,X2,X1]; arm-1 2026-09-08 runs used
-    [X1,X2,X2]), (f) origin-side 2nd bracket `Pbr2` (current: [-52.61, 0, 75.06]/1000,
-    Ben-set), `USE_BRACKET2` flag).
+    `minimizeFlxPin2brk.m` (evaluator; the 6th `transMode` arg / the driver's
+    `FLX2BRK_TRANS` env selects the convention — the laptop session's separate-file 1trans
+    evaluator was DELETED 2026-09-08 at Ben's ruling: transMode is the vehicle of record.
+    Insertion bracket: two-rotation (Z then Y) frame, K = [X1,X2,X1] (Sept-8-morning arm-1
+    runs used [X1,X2,X2]). Origin bracket at `Pbr2` (current: [-52.61, 0, 75.06]/1000,
+    Ben-set): 1trans pitch-only frame → K2 = [X2,X1,X2]; 2trans two-rotation frame →
+    K2 = [X1,X1,X2] (Ben, late 2026-09-08). `USE_BRACKET2` flag).
     **Pbr2 applies ONLY to the pinned-knee flexor configuration** — the extensor evaluators
     (minimizeExtX3, minimizeExt) have their own independent bracket offsets; do not port Pbr2.
     + driver `minimizeFlxPin10mm_2brk.m` (env `FLX2BRK_MODE`
@@ -117,11 +117,18 @@ Loaded automatically at session start. Keep it current; keep it lean.
     Dig_ExtPinX3_CV, Dig_ExtPinX3_Xi3map, Dig_FlxPin_2brkt); their logs/one-off outputs live
     in `2022_02_Festo\Dig_out\`. `Robot_Data` must be on the MATLAB path for the biomimetic
     evaluators.
-    2026-09-08 encoder-corrected campaign COMPLETE (both arms, 4 allBPA variants each):
-    arm1 (2trans, K=[X1,X2,X2]) → `minimizeFlxPin10_results_20260908_2brkt_2trans_{full,noT3,noT5,noT3noT5}.mat`;
-    arm2 (1trans pitch, K=[X1,X2,X1]) → `..._1trans_{full,noT3,noT5,noT3noT5}.mat`; logs in
-    Dig_out. **Scope of the 1trans≡2trans proof:** symmetric about the y axis (K_x=K_z, e.g.
-    [X1,X2,X1]). Arm1's [X1,X2,X2] (y=z) is NOT covered — evaluate it 2trans only.
+    2026-09-08 late rerun (commit 19fea63): driver bounds re-centered on the biomimetic
+    hand-tune winner (Xi0 +12 mm, Xi1 5e5, Xi2 1e4) → Xi1 ∈ [3e4,1e6], Xi2 ∈ [5e3,2e4],
+    initial population 0.5–1.5 cm / 5e4–5e5 / 7e3–1.5e4. Current CV mats:
+    `minimizeFlxPin10_results_20260908_2brkt_{1trans,2trans}_{noT3,noT3noT5}.mat`
+    (BPA #3 = 47 cm EXCLUDED from training; #5 = 41 cm also dropped in noT3noT5; flexor
+    labels: 1–5 = 48cm, 46cm, 47cm, 40cm-tendon, 41cm). All T3-including fronts (20260907
+    + full/noT5 variants) archived in `Dig_out\old_T3_results\`; log
+    `Dig_out\encoder_campaign_noT3newXi_20260908.log`. Biomimetic-flexor chain
+    `Dig_FlxBio_dubfilt` → `_handtune` → `_refine` (mats/logs in Dig_out; hardcoded D:/
+    paths, written on easteregg2). **Scope of the 1trans≡2trans proof:** y-symmetric arrays
+    only (K_x=K_z); the per-convention K2 orderings are Ben's buckling argument, NOT covered
+    by the proof — that choice is carried, not derived.
   - **Laptop-session mining handoff (2026-09-08, merged and adjudicated):** findings in
     `2022_02_Festo\HANDOFF_laptop_20260908.md` — no flexor test is garbage; Xi2 is
     consistent across configs (~1.1e4) while Xi1 is the flat, undetermined one; Xi0 pins
@@ -130,9 +137,9 @@ Loaded automatically at session start. Keep it current; keep it lean.
     and `Dig_allbpaNumHoldScan.m` (per-test held-out table + E-fold numHoldout spectrum);
     both still UNTESTED end-to-end. Deleted as superseded: the `_1trans` evaluator/driver,
     `nightBatch_20260908.m`, `mine_smoke_20260908.m`. The "_smoke mat" question is CLOSED:
-    that file was renamed to `minimizeFlxPin10_results_20260907_2brkt_2trans.mat`
-    (canonical restored-2trans full CV; no TRANSMODE field is expected for its vintage) —
-    never resurrect a smoke-named copy.
+    that file is `minimizeFlxPin10_results_20260907_2brkt_2trans.mat`, now archived in
+    `Dig_out\old_T3_results\` (canonical restored-2trans full CV; no TRANSMODE field is
+    expected for its vintage) — never resurrect a smoke-named copy.
   - `2022_02_Festo\` subfolders (Flx/Ext × 10mm/10mm_pinned/20mm/40mm): needed only by certain
     plotting functions — add to path transiently and **remove afterward**; they shadow other
     plotting functions if left on path.
@@ -229,16 +236,20 @@ Loaded automatically at session start. Keep it current; keep it lean.
   — detailed flexor BPA/route model doc (modes, how to run tests).
 
 - Known data concern RESOLVED (Ben, 2026-09-08): the angle-shifted test was the **flexor
-  47 cm test** — its encoder read ~5.3° low. `minimizeFlxPin2brk.m` now adds +5.3° to that
-  test's reported angles (both Angle and phiD). Any other script that refits the 47 cm test
-  must apply the same shift; pre-2026-09-08 fit results predate the correction.
+  47 cm test** — its encoder read ~5.3° low. `minimizeFlxPin2brk.m` adds +5.3° to that
+  test's experimental angles at build time (**Angle only — phiD is NOT shifted**; an
+  earlier version mistakenly shifted both, fixed late 2026-09-08). Any other script that
+  refits the 47 cm test must apply the same Angle-only shift; pre-2026-09-08 fit results
+  predate the correction.
 
 ## Hazards — do NOT open these as source
 
 - Known data concern RESOLVED (Ben, 2026-09-08): the angle-shifted test was the **flexor
-  47 cm test** — its encoder read ~5.3° low. `minimizeFlxPin2brk.m` now adds +5.3° to that
-  test's reported angles (both Angle and phiD). Any other script that refits the 47 cm test
-  must apply the same shift; pre-2026-09-08 fit results predate the correction.
+  47 cm test** — its encoder read ~5.3° low. `minimizeFlxPin2brk.m` adds +5.3° to that
+  test's experimental angles at build time (**Angle only — phiD is NOT shifted**; an
+  earlier version mistakenly shifted both, fixed late 2026-09-08). Any other script that
+  refits the 47 cm test must apply the same Angle-only shift; pre-2026-09-08 fit results
+  predate the correction.
 - `Solid_Models\Biomimetics_2022-Knee_Test\Point_cloud\Tibia_copy.txt` (7.1 MB point cloud);
   `Spine_Mesh_Points.txt` (172 KB, duplicated in 3 places); `HX711*sempio.txt` (1 MB);
   any `.mat` in `Previous Optimization Code\Trial Results\` (up to 95 MB).
