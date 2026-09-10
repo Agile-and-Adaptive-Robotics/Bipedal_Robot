@@ -4,28 +4,33 @@ This appendix documents the numeric geometry and compliance parameters behind th
 
 \section{Static BPA Pathway Data}
 
-The static BPA model routes each actuator as a straight-segment polyline through via points stored in a per-test \texttt{Location} array of dimensions $M\times3\times N$, where $N$ is the number of joint frames in the motion sweep and $M$ the number of via points; the first row in the distal link frame is marked by a cross-point index. There are no binormal or surface-frame quantities: at each frame the force direction is the normalized vector from the cross-point row to the previous row transformed into the crossing frame, $\hat{\mathbf{u}} \propto \mathbf{R}^{-1}\,\mathbf{p}_{C-1} - \mathbf{p}_{C}$ [Provenance: \texttt{Testing\_Data/2022\_02\_Festo/minimizeFlxPin2brk.m} lines 429--440; \texttt{minimizeFlxPin.m} lines 381--394; \texttt{minimizeExtX3.m} lines 676--687; BPA struct fields, \texttt{minimizeFlxPin.m} lines 28--35]. The pinned-knee test routes are archived as \texttt{FlxPinBPASet.mat} (5 flexor tests, $M=2$, knee angle $-120^{\circ}$ to $+10^{\circ}$) and \texttt{ExtPinBPASet.mat} (9 extensor tests, $M=7$, knee angle $-125^{\circ}$ to $+35^{\circ}$).
+The static BPA model routes each actuator as a straight-segment polyline through via points stored in a per-test \texttt{Location} array of dimensions $M\times3\times N$, where $N$ is the number of joint frames in the motion sweep and $M$ the number of via points; the first row in the distal link frame is marked by a cross-point index. There are no binormal or surface-frame quantities: at each frame the force direction is the normalized vector from the cross-point row to the previous row transformed into the crossing frame,
+\begin{equation}
+    \hat{\mathbf{u}} \;\propto\; \mathbf{R}^{-1}\,\mathbf{p}_{C-1} \;-\; \mathbf{p}_{C},
+    \label{eq:app_forcedir}
+\end{equation}
+where $\mathbf{p}_{C}$ is the cross-point row, $\mathbf{p}_{C-1}$ the previous row, and $\mathbf{R}$ the frame-crossing rotation [Provenance: \texttt{Testing\_Data/2022\_02\_Festo/minimizeFlxPin2brk.m} lines 536--547; \texttt{minimizeFlxPin.m} lines 381--394; \texttt{minimizeExtX3.m} lines 687--700; BPA struct fields, \texttt{minimizeFlxPin.m} lines 28--35]. The pinned-knee test routes are archived as \texttt{FlxPinBPASet.mat} (5 flexor tests, $M=2$, knee angle $-120^{\circ}$ to $+10^{\circ}$) and \texttt{ExtPinBPASet.mat} (9 extensor tests, $M=7$, knee angle $-125^{\circ}$ to $+35^{\circ}$).
 
-Table~\ref{tab:app_flxpin_tests} lists the five pinned-knee flexor tests; their routes are two points, femur-frame origin $\mathbf{p}_{1} = [-75.0,\,100.0,\,32.8]$~mm and tibia-frame insertion $\mathbf{p}_{2} = [-50.1,\,-45.0,\,32.3]$~mm (test 1; \texttt{FlxPinBPASet.mat}, kf(1), frame 1). Table~\ref{tab:app_extpin_route} lists the extensor pinned-knee route of test 1 at $\theta_{k}=-125^{\circ}$; rows 1--6 are femur-frame and row 7 is tibia-frame, and as the knee extends, rows 2--6 release onto $\mathbf{p}_{1}$ (wrap released at $+35^{\circ}$). Table~\ref{tab:app_extpin_tests} lists the per-test constants of the nine extensor tests; the validation pool used for the correction terms of Section~\ref{sec:improved_model} is tests \{1, 2, 5, 6, 7, 8\} [Provenance: \texttt{crossPredictFlx.m} line 46].
+Table~\ref{tab:app_flxpin_tests} lists the five pinned-knee flexor tests; their routes are two points, femur-frame origin $\mathbf{p}_{1} = [-75.0,\,100.0,\,32.8]$~mm and tibia-frame insertion $\mathbf{p}_{2} = [-50.1,\,-45.0,\,32.3]$~mm (test 1; \texttt{FlxPinBPASet.mat}, kf(1), frame 1). Table~\ref{tab:app_extpin_route} lists the extensor pinned-knee route of test 1 at $\theta_{k}=-125^{\circ}$; rows 1--6 are femur-frame and row 7 is tibia-frame, and as the knee extends, rows 2--6 release onto $\mathbf{p}_{1}$ (wrap released at $+35^{\circ}$). Table~\ref{tab:app_extpin_tests} lists the per-test constants of the nine extensor tests; the validation pool used for the correction terms of Section~\ref{sec:improved_model} is tests \{1, 2, 5, 6, 7, 8\} [Provenance: \texttt{Dig\_crossPredict.m} line 46].
 
-\begin{sidewaystable}
-\caption{Pinned-knee flexor test BPA constants (\texttt{FlxPinBPASet.mat}; test labels from \texttt{minimizeFlxPin10mm\_2brk.m} line 42). All tests use $\phi$\qty{10}{\mm} BPAs; \texttt{fitn} is the end-cap fitting length.}
+\begin{table}[htbp]
+\caption{Pinned-knee flexor test BPA constants, read directly from \texttt{FlxPinBPASet.mat} (kf(1)--kf(5)). Labels are the laboratory shorthand used in the fitting logs (\texttt{minimizeFlxPin10mm\_2brk.m} line 51); $l_{0}$, tendon, and pressure are the values used by the model. All tests use $\phi$\qty{10}{\mm} BPAs; the 47\,cm test's measured angles carry the $+5.3^{\circ}$ encoder correction at load time (\texttt{minimizeFlxPin2brk.m} lines 66--70), and it was held out of the two-bracket identification as validation.}
 \label{tab:app_flxpin_tests}
-\begin{tabular}{@{}llllll@{}}
+\begin{tabular}{@{}lllllll@{}}
 \toprule
-\textbf{Test} & $\boldsymbol{l_{0}}$ (m) & Tendon (m) & $P$ (kPa) & $F_{m}$ (N) & \textbf{Notes} \\
+\textbf{Test} & \textbf{Label} & $\boldsymbol{l_{0}}$ (m) & Tendon (m) & $P$ (kPa) & $F_{m}$ (N) & \textbf{Use} \\
 \midrule
-48\,cm        & 0.485 & 0     & 605.7 & 443.4 & \\
-46\,cm        & 0.457 & 0     & 614.2 &       & \\
-47\,cm        & 0.479 & 0     & 623.2 &       & \\
-40\,cm-tendon & 0.406 & 0.035 & 623.4 &       & \\
-41\,cm        & 0.410 & 0     & 615.4 &       & \\
+kf(1) & 48\,cm         & 0.485 & 0     & 605.7 & 443.4 & training \\
+kf(2) & 46\,cm         & 0.457 & 0     & 614.2 & 441.4 & training \\
+kf(3) & 47\,cm         & 0.479 & 0     & 623.2 & 443.0 & held-out validation \\
+kf(4) & 40\,cm-tendon  & 0.406 & 0.035 & 623.4 & 436.9 & training \\
+kf(5) & 41\,cm         & 0.410 & 0     & 615.4 & 437.3 & training \\
 \bottomrule
 \end{tabular}
-\end{sidewaystable}
+\end{table}
 
 \begin{sidewaystable}
-\caption{Biomimetic knee, extensor 20\,mm BPA route seed (femur frame: p1--p5; tibia frame: p6--p9; \texttt{buildKneeExtContext20mm.m} lines 349--384, Ben-set SolidWorks points). Release schedule of the verified elimination: p5 at $-91.1^{\circ}$, p4 at $-50.4^{\circ}$, p6 at $-47.8^{\circ}$, p7 at $-20.2^{\circ}$, p3 at $+6.1^{\circ}$.}
+\caption{Biomimetic knee, extensor 20\,mm BPA route seed (femur frame: p1--p5; tibia frame: p6--p9; \texttt{buildKneeExtContext20mm.m} lines 380--389, Ben-set SolidWorks points). Release schedule of the verified elimination: p5 at $-91.1^{\circ}$, p4 at $-50.4^{\circ}$, p6 at $-47.8^{\circ}$, p7 at $-20.2^{\circ}$, p3 at $+6.1^{\circ}$.}
 \label{tab:app_ext_seed}
 \begin{tabular}{@{}lrrrll@{}}
 \toprule
@@ -63,25 +68,26 @@ p7 & 42.50  & $-75.90$ & 0 \\
 \end{table}
 
 \begin{table}[htbp]
-\caption{Pinned-knee extensor test BPA constants (\texttt{ExtPinBPASet.mat}, ke(2)--ke(9); test 1: $l_0 = 0.400$~m, tendon 0, $P = 624.9$~kPa, $F_m = 436.3$~N). All tests use $\phi$\qty{10}{\mm} BPAs.}
+\caption{Pinned-knee extensor test BPA constants, read directly from \texttt{ExtPinBPASet.mat} (ke(1)--ke(9)). Labels are the laboratory shorthand used in the fitting logs (\texttt{Dig\_resultsTable.m} line 32); $l_{0}$, tendon, and pressure are the values used by the model --- note that the shorthand rounds several lengths (e.g.\ ``42\,cm'' is $l_{0}=0.415$~m and ``43\,cm-tendon'' is $l_{0}=0.432$~m). All tests use $\phi$\qty{10}{\mm} BPAs. The correction terms of Section~\ref{sec:improved_model} were identified on the validation pool \{1, 2, 5, 6, 7, 8\}; tests 3, 4, and 9 were excluded.}
 \label{tab:app_extpin_tests}
-\begin{tabular}{@{}llll@{}}
+\begin{tabular}{@{}lllllll@{}}
 \toprule
-\textbf{Test} & $\boldsymbol{l_{0}}$ (m) & Tendon (m) & $P$ (kPa) \\
+\textbf{Test} & \textbf{Label} & $\boldsymbol{l_{0}}$ (m) & Tendon (m) & $P$ (kPa) & $F_{m}$ (N) & \textbf{Use} \\
 \midrule
-40\,cm-tendon & 0.400 & 0.040 & 605.2 \\
-42\,cm        & 0.420 & 0     & $\sim$620 \\
-42\,cm-tendon & 0.420 & —     & $\sim$620 \\
-43\,cm        & 0.430 & 0     & $\sim$620 \\
-43\,cm-tendon & 0.430 & —     & $\sim$620 \\
-46\,cm        & 0.460 & 0     & $\sim$620 \\
-47\,cm        & 0.470 & 0     & $\sim$620 \\
-48\,cm        & 0.480 & 0     & $\sim$620 \\
+ke(1) & 40\,cm          & 0.400 & 0     & 624.9 & 436.3 & pool \\
+ke(2) & 40\,cm-tendon   & 0.400 & 0.040 & 618.4 & 436.3 & pool \\
+ke(3) & 42\,cm          & 0.415 & 0     & 605.2 & 437.8 & excluded \\
+ke(4) & 42\,cm-tendon   & 0.415 & 0.040 & 605.2 & 437.8 & excluded \\
+ke(5) & 43\,cm          & 0.436 & 0     & 621.8 & 439.7 & pool \\
+ke(6) & 43\,cm-tendon   & 0.432 & 0.022 & 622.9 & 439.3 & pool \\
+ke(7) & 46\,cm          & 0.457 & 0     & 605.9 & 441.4 & pool \\
+ke(8) & 47\,cm          & 0.465 & 0     & 605.9 & 442.0 & pool \\
+ke(9) & 48\,cm          & 0.480 & 0     & 605.9 & 443.1 & excluded \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The biomimetic flexor route (\texttt{buildKneeFlexorContext20mm.m}) is a three-point path --- femur-frame origin $\mathbf{p}_{1}$, a moving wrap point $\mathbf{p}_{\text{wrap}}$ on the tibia, and tibia-frame insertion $\mathbf{p}_{\text{end}}$ --- with the wrap point held on a standoff surface of radius \texttt{bpaRb} about the joint and its $z$ placed on the projected $\mathbf{p}_{1}$--$\mathbf{p}_{\text{end}}$ line; the optimizer seed is $\mathbf{p}_{1,0} = [-50.0,\,35.0,\,50.0]$~mm and $\mathbf{p}_{2,0} = [-12.24,\,-8.87,\,27.87]$~mm with $l_{0} = 415$~mm and 25~mm tendon [Provenance: \texttt{buildKneeFlexorContext20mm.m} lines 96--119, 179--188; \texttt{buildKneeFlexorRoute20mm.m} lines 99--186]. The biomimetic extensor seed route is given in Table~\ref{tab:app_ext_seed}, including the release schedule of the route-elimination rule.
+The biomimetic flexor route (\texttt{buildKneeFlexorContext20mm.m}) is a three-point path --- femur-frame origin $\mathbf{p}_{1}$, a moving wrap point $\mathbf{p}_{\text{wrap}}$ on the tibia, and tibia-frame insertion $\mathbf{p}_{\text{end}}$ --- with the wrap point held on a standoff surface of radius \texttt{bpaRb} about the joint and its $z$ placed on the projected $\mathbf{p}_{1}$--$\mathbf{p}_{\text{end}}$ line; the optimizer seed is $\mathbf{p}_{1,0} = [-50.0,\,35.0,\,50.0]$~mm and $\mathbf{p}_{2,0} = [-12.24,\,-8.87,\,27.87]$~mm with $l_{0} = 415$~mm and 25~mm tendon [Provenance: \texttt{buildKneeFlexorContext20mm.m} lines 178--190; \texttt{buildKneeFlexorRoute20mm.m} lines 98--186]. The biomimetic extensor seed route is given in Table~\ref{tab:app_ext_seed}, including the release schedule of the route-elimination rule.
 
 \section{Joint Transformation Matrices}
 
@@ -100,7 +106,23 @@ i.e., $\mathbf{R}_{z}(-120^{\circ})$ with constant translation $[4.5,\,-395.8,\,
 
 \section{Bracket Reference Points and Frames}
 
-Table~\ref{tab:app_bracket_points} lists the bracket reference points. Each compliant bracket carries an instantaneous body-fixed frame anchored at its reference point, constructed by two rotations (yaw about $z$, then pitch about the yawed $y$): with $\mathbf{p}_{b}$ the vector from the reference point to the bracket-to-BPA attachment target, $\theta_{br} = \operatorname{atan2}(p_{by}, p_{bx})$, $\mathbf{R}_{kbr} = \mathbf{R}_{z}(\theta_{br})\,\mathbf{R}_{y}(\phi_{br})^{\top}$ with $\phi_{br} = \operatorname{atan2}(p'_{bz}, p'_{bx})$ measured on the yawed vector $\mathbf{p}'_{b} = \mathbf{R}_{z}^{\top}\mathbf{p}_{b}$, and $\mathbf{T}_{kbr} = [\mathbf{R}_{kbr},\, \mathbf{p}_{br};\, \mathbf{0}\;1]$; the frame's $x$ axis therefore aims along the nominal load path. The angles are computed per configuration from the bracket geometry, not fixed [Provenance: \texttt{minimizeFlxPin2brk.m} lines 175--203; \texttt{minimizeExtX3.m} lines 463--474]. Force is transformed into the bracket frame by $\mathbf{RowVecTrans}(\mathbf{T}_{kbr}^{-1}, \mathbf{F}_{k})$ and deformed points are mapped back by $\mathbf{RowVecTrans}(\mathbf{T}_{kbr}, \cdot)$. The single-rotation (yaw-only) variant used in the earlier one-transform fit survives in \texttt{minimizeFlxPinX3.m} line 205.
+Table~\ref{tab:app_bracket_points} lists the bracket reference points. Each compliant bracket carries an instantaneous body-fixed frame anchored at its reference point, constructed by two rotations (yaw about $z$, then pitch about the yawed $y$). With $\mathbf{p}_{b}$ the vector from the reference point to the bracket-to-BPA attachment target, the yaw and pitch angles are
+\begin{equation}
+    \theta_{br} = \operatorname{atan2}(p_{by},\, p_{bx}),
+    \qquad
+    \phi_{br} = \operatorname{atan2}(p'_{bz},\, p'_{bx})
+    \quad\text{with}\quad
+    \mathbf{p}'_{b} = \mathbf{R}_{z}(\theta_{br})^{\top}\mathbf{p}_{b},
+    \label{eq:app_bracketangles}
+\end{equation}
+and the bracket-frame pose is
+\begin{equation}
+    \mathbf{R}_{kbr} = \mathbf{R}_{z}(\theta_{br})\,\mathbf{R}_{y}(\phi_{br})^{\top},
+    \qquad
+    \mathbf{T}_{kbr} = \left[\mathbf{R}_{kbr},\; \mathbf{p}_{br};\; \mathbf{0}\;\,1\right],
+    \label{eq:app_bracketframe}
+\end{equation}
+so the frame's $x$ axis aims along the nominal load path. The angles are computed per configuration from the bracket geometry, not fixed [Provenance: \texttt{minimizeFlxPin2brk.m} lines 252--298; \texttt{minimizeExtX3.m} lines 461--483]. Force is transformed into the bracket frame by $\mathbf{RowVecTrans}(\mathbf{T}_{kbr}^{-1}, \mathbf{F}_{k})$ and deformed points are mapped back by $\mathbf{RowVecTrans}(\mathbf{T}_{kbr}, \cdot)$. The single-rotation (yaw-only) variant used in the earlier one-transform fit survives in \texttt{minimizeFlxPinX3.m} lines 200--209.
 
 \begin{table}[htbp]
 \caption{Bracket reference points (mm, as coded; divided by 1000 in code). All are Ben-set CAD interpretation points; frame denotes the frame the vector is expressed in.}
@@ -121,45 +143,69 @@ Pbr  & $-19.00$ & 22.00 & 27.60 & biomimetic flexor 10\,mm, cantilever centroid 
 
 \section{Stiffness Arrays and Compliance}
 
-Every configuration models bracket compliance as a diagonal Hooke-law spring in the bracket frame, $\mathbf{K}_{br} = \operatorname{diag}(k_{1}, k_{2}, k_{3})$ newtons per meter, with the scalar compliance projected onto the force-path unit vector, $c_{b} = \hat{\mathbf{u}}\,\mathbf{K}_{br}^{-1}\hat{\mathbf{u}}^{\top}$, exactly as in Equations~(\ref{eq:bktstiffness})--(\ref{eq:keff}). The per-configuration stiffness arrays and their series combinations are given in Table~\ref{tab:app_stiffness_arrays}; when an artificial tendon is present its axial spring ($\times2$ cables, effective steel area $1.51\times10^{-6}$~m$^{2}$, $E = 193$~GPa) adds in series, $c_{\text{eff}} = c_{b} + c_{\text{ten}}$ ($+\,c_{b2}$ for the second bracket), and the force balance $F_{\max}F^{*}(\varepsilon^{*}(\delta), P^{*}) = k_{\text{eff}}\,\delta$ is solved per frame by \texttt{fzero} on the contraction interval [Provenance: \texttt{minimizeFlxPin2brk.m} lines 284--339, 489--499; \texttt{minimizeFlxPin.m} lines 266--275; \texttt{minimizeExtX3.m} lines 562--570; \texttt{minimizeExt.m} line 352; \texttt{minimizeFlx.m} line 314].
+Every configuration models bracket compliance as a diagonal Hooke-law spring in the bracket frame, $\mathbf{K}_{br} = \operatorname{diag}(k_{1}, k_{2}, k_{3})$ newtons per meter. The scalar compliance along the force path and its series combinations are
+\begin{equation}
+    c_{b} = \hat{\mathbf{u}}\,\mathbf{K}_{br}^{-1}\hat{\mathbf{u}}^{\top},
+    \qquad
+    c_{\text{eff}} = c_{b} + c_{\text{ten}} \;(+\,c_{b2}\ \text{for the second bracket}),
+    \label{eq:app_compliance}
+\end{equation}
+exactly as in Equations~(\ref{eq:bktstiffness})--(\ref{eq:keff}); when an artificial tendon is present its axial spring ($\times2$ cables, effective steel area $1.51\times10^{-6}$~m$^{2}$, $E = 193$~GPa) adds in series, and the force balance $F_{\max}F^{*}(\varepsilon^{*}(\delta), P^{*}) = k_{\text{eff}}\,\delta$ is solved per frame by \texttt{fzero} on the contraction interval [Provenance: \texttt{minimizeFlxPin2brk.m} lines 387--418 and 439--446; \texttt{minimizeFlxPin.m} lines 266--275; \texttt{minimizeExtX3.m} lines 575--584; \texttt{minimizeExt.m} line 352; \texttt{minimizeFlx.m} line 314]. The per-configuration stiffness arrays and their series combinations are given in Table~\ref{tab:app_stiffness_arrays}.
 
 \begin{table}[htbp]
-\caption{Bracket stiffness arrays by configuration ($K = [k_{1}, k_{2}, k_{3}]$ in bracket-frame axes, N/m; optimizer solves $X_{1}, X_{2}$ assigned as shown).}
+\caption{Bracket stiffness arrays by configuration ($K = [k_{1}, k_{2}, k_{3}]$ in bracket-frame axes, N/m; optimizer solves $X_{1}, X_{2}$ assigned as shown). The two-transformation (2trans) and pitch-only (1trans) origin-bracket conventions assign the pair differently; both are carried by the evaluator's \texttt{transMode} argument.}
 \label{tab:app_stiffness_arrays}
 \begin{tabular}{@{}lll@{}}
 \toprule
 \textbf{Configuration} & $\boldsymbol{K}$ array & \textbf{Source} \\
 \midrule
-Pinned flexor, single bracket       & $[X_{1},\,X_{2},\,X_{2}]$ & \texttt{minimizeFlxPin.m} line 266 \\
-Pinned flexor, insertion bracket    & $[X_{1},\,X_{2},\,X_{1}]$ & \texttt{minimizeFlxPin2brk.m} line 284 \\
-Pinned flexor, origin bracket       & $[X_{2},\,X_{1},\,X_{2}]$ & \texttt{minimizeFlxPin2brk.m} line 298 \\
-Pinned extensor (with $X_{3}$)      & $[X_{2},\,X_{1},\,X_{2}]$ & \texttt{minimizeExtX3.m} line 562 \\
-Biomimetic extensor                 & $[X_{1},\,X_{2},\,X_{2}]$ & \texttt{minimizeExt.m} line 352 \\
+Pinned flexor, single bracket (legacy)       & $[X_{1},\,X_{2},\,X_{2}]$ & \texttt{minimizeFlxPin.m} line 266 \\
+Pinned flexor, insertion bracket    & $[X_{1},\,X_{2},\,X_{1}]$ & \texttt{minimizeFlxPin2brk.m} line 387 \\
+Pinned flexor, origin bracket (1trans / 2trans) & $[X_{2},X_{1},X_{2}]$ / $[X_{1},X_{1},X_{2}]$ & \texttt{minimizeFlxPin2brk.m} lines 396--411 \\
+Pinned extensor (with $X_{3}$)      & $[X_{2},\,X_{1},\,X_{2}]$ & \texttt{minimizeExtX3.m} line 575 \\
+Biomimetic extensor                 & $[X_{1},\,X_{2},\,X_{1}]$ & \texttt{minimizeExt.m} line 352 \\
 Biomimetic flexor                   & $[X_{1},\,X_{2},\,X_{2}]$ & \texttt{minimizeFlx.m} line 314 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The wrapping-loss term $X_{3}$ (Equations~\ref{eq:deltaL}--\ref{eq:x3}) is evaluated as $X_{3}\,R\,\lvert\Delta\theta\rvert\,\zeta^{2}$ per contact arc. On the pinned extensor the two physical contact arcs use $R_{1} = 12$~mm ($27^{\circ}$ to $-23^{\circ}$) and $R_{2} = 40$~mm, with arc-length normalizers $27.75/(ang_{1} - ang_{2})$ and $92.46/(ang_{2}+120^{\circ})$; on the biomimetic configurations the bend measure is $w_{\text{rap}}\lvert\theta_{\text{turn}}\rvert$ with $w_{\text{rap}} = 25$~mm [Provenance: \texttt{minimizeExtX3.m} lines 333--359; \texttt{buildKneeFlexorRoute20mm.m} line 268; \texttt{MonoPamDataExplicit\_balanceX3.m} lines 489--494]. The optimizer parameterization is $[100\,X_{0}\ (\text{cm}),\ \log_{10}X_{1},\ \log_{10}X_{2},\ \ldots]$ with bounds $X_{0}\in[0, 20]$~mm and $X_{1}, X_{2}\in[5\times10^{3}, 5\times10^{7}]$~N/m for the flexor; the extensor refit locks $(X_{1}, X_{2})$ to the flexor values and solves $X_{0}\in[-20, 0]$~mm and $X_{3}\in[0, 1]$, enforcing a single stiffness pair across configurations [Provenance: \texttt{minimizeFlxPin10mm\_2brk.m} lines 62--63, 402--404; \texttt{minimizeExt10mmX3.m} lines 46--47; \texttt{sweepExtX3.m} lines 59--60].
-
-\section{Adopted Correction-Term Values}
-
-Table~\ref{tab:app_xi_values} records the correction-term values adopted by the archived code at the time of writing. The pinned-knee fits of record for the published comparison are those of \texttt{minimizeExtPin10\_results\_20260819\_2transforms\_Z2.mat}; the current redesign operating point (context builders \texttt{buildKneeFlexorContext20mm.m} lines 150--165 and \texttt{buildKneeExtContext20mm.m} lines 150--160) pairs the two-bracket flexor fit with an extensor refit in which $(X_{1}, X_{2})$ are locked to the flexor values. Regenerating the results files updates this table.
+The wrapping-loss term $X_{3}$ (Equations~\ref{eq:deltaL}--\ref{eq:x3}) is evaluated as $X_{3}\,R\,\lvert\Delta\theta\rvert\,\zeta^{2}$ per contact arc. On the pinned extensor the two physical contact arcs use $R_{1} = 12$~mm ($27^{\circ}$ to $-23^{\circ}$) and $R_{2} = 40$~mm, with arc-length normalizers $27.75/(ang_{1} - ang_{2})$ and $92.46/(ang_{2}+120^{\circ})$; on the biomimetic configurations the bend measure is $w_{\text{rap}}\lvert\theta_{\text{turn}}\rvert$ with $w_{\text{rap}} = 25$~mm [Provenance: \texttt{minimizeExtX3.m} lines 333--359; \texttt{buildKneeFlexorRoute20mm.m} line 268; \texttt{MonoPamDataExplicit\_balanceX3.m} lines 489--494]. Table~\ref{tab:app_opt_bounds} records the optimizer parameterization and bounds of the adopted identification campaign: the two-bracket flexor fit solves all three terms, and the extensor refit locks $(X_{1}, X_{2})$ to the adopted flexor-front values --- loaded directly from the flexor results file at run time --- and solves only the extensor-specific terms $(X_{0}, X_{3})$, enforcing a single stiffness pair across configurations.
 
 \begin{table}[htbp]
-\caption{Correction-term values of record and current operating point. $(X_{1}, X_{2})$ are shared across flexor and extensor in the current operating point.}
-\label{tab:app_xi_values}
+\caption{Optimizer parameterization and bounds of the adopted identification. Length offsets are carried in centimeters and stiffnesses on a base-10 logarithmic scale; the initial population of the flexor run was drawn from $X_{0}\in[5,15]$~mm, $X_{1}\in[5\times10^{4}, 5\times10^{5}]$~N/m, $X_{2}\in[7\times10^{3}, 1.5\times10^{4}]$~N/m.}
+\label{tab:app_opt_bounds}
 \begin{tabular}{@{}llll@{}}
 \toprule
-\textbf{Term} & \textbf{Pinned fit of record} & \textbf{Current operating point} & \textbf{Source (.mat)} \\
+\textbf{Identification} & \textbf{Solved terms} & \textbf{Bounds} & \textbf{Lock} \\
 \midrule
-Flexor $X_{0}$ (m)   & ---                & $1.647\times10^{-6}$ & crossPredict\_20260907 \\
-Flexor $X_{1}$ (N/m) & ---                & $2.107\times10^{6}$  & crossPredict\_20260907 \\
-Flexor $X_{2}$ (N/m) & ---                & $1.065\times10^{4}$  & crossPredict\_20260907 \\
-Extensor $X_{0}$ (m) & $-1.220\times10^{-2}$ & $-2.364\times10^{-3}$ & both \\
-Extensor $X_{1}$ (N/m) & $1.508\times10^{4}$ & $= $ flexor        & both \\
-Extensor $X_{2}$ (N/m) & $1.218\times10^{4}$ & $= $ flexor        & both \\
-$X_{3}$ (--)         & 0.2937             & 0.4637 (refit)       & both \\
+Two-bracket pinned flexor & $X_{0}, X_{1}, X_{2}$ & $X_{0}\in[0,\,20]$~mm; $X_{1}\in[3\times10^{4},\,10^{6}]$, $X_{2}\in[5\times10^{3},\,2\times10^{4}]$~N/m & --- \\
+Pinned extensor refit & $X_{0}, X_{3}$ & $X_{0}\in[-20,\,0]$~mm; $X_{3}\in[0,\,1]$ & $X_{1}, X_{2}$ = flexor front \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+[Provenance: \texttt{minimizeFlxPin10mm\_2brk.m} lines 82--83 (bounds) and 424--432 (parameterization); \texttt{minimizeExt10mmX3.m} lines 23--26 (lock load) and 67--68 (bounds); \texttt{Collect\_ExtPinX3\_sweep.m} lines 59--60.]
+
+\section{Adopted Correction-Term Values}
+
+Table~\ref{tab:app_xi_values} records the correction-term values adopted at the time of writing, together with the results file and front row each value was taken from. The initial single-bracket identification reported with the results figures (Table~\ref{tab:OptCoeff}) was superseded by the two-stage campaign described in Section~\ref{sec:ongoing}: a two-bracket flexor identification over the four training tests of Table~\ref{tab:app_flxpin_tests} (encoder-corrected, cross-validated), followed by an extensor refit that locks $(X_{1}, X_{2})$ to a member of the same flexor Pareto front and solves only $(X_{0}, X_{3})$ on the extensor validation pool. The pinned-flexor data do not uniquely determine $(X_{1}, X_{2})$ --- the cross-validation fronts contain a family of stiffness pairs of comparable fit quality --- so the adopted flexor row (front row 107) and the locked extensor pair (front row 1) are two operating points on one and the same front, chosen for their respective held-out and cross-configuration performance.
+
+\begin{table}[htbp]
+\caption{Adopted correction-term values of record. Flexor source: \texttt{minimizeFlxPin10\_results\_20260908\_2brkt\_2trans\_noT3.mat}, pooled two-bracket Pareto front (212 members). Extensor source: \texttt{minimizeExt10mmX3\_results\_20260910\_noT3.mat}, driver pick 1. The extensor refit locks $(X_{1}, X_{2})$ to row 1 of the flexor front and never searches them.}
+\label{tab:app_xi_values}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Term} & \textbf{Value} & \textbf{Source} & \textbf{Row / pick} \\
+\midrule
+Flexor $X_{0}$   & $+8.9$~mm ($8.86\times10^{-3}$~m) & flexor mat & 107 \\
+Flexor $X_{1}$   & $5.62\times10^{4}$~N/m           & flexor mat & 107 \\
+Flexor $X_{2}$   & $1.85\times10^{4}$~N/m           & flexor mat & 107 \\
+Extensor $X_{0}$ & $-10.1$~mm ($-1.012\times10^{-2}$~m) & extensor mat & 1 \\
+Extensor $X_{1}$ (locked) & $4.354\times10^{4}$~N/m  & flexor mat & 1 \\
+Extensor $X_{2}$ (locked) & $1.701\times10^{4}$~N/m  & flexor mat & 1 \\
+$X_{3}$          & 0.621                            & extensor mat & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At the adopted flexor values, per-test torque-prediction RMSE against the five pinned-flexor tests is 1.94/1.51/2.29/1.63/1.21~N{\,m} (48, 46, 47, 40-tendon, 41\,cm; FVU 0.14/0.06/0.17/0.04/0.03), the 47\,cm test being pure held-out validation. At the adopted extensor values, per-test RMSE on the six-test validation pool spans 0.56--1.88~N{\,m} against 0.95--3.62~N{\,m} for the uncorrected rigid model, improving on the baseline in every pool test; the three excluded tests (3, 4, 9) are not part of the fit of record. On the biomimetic extensor test ($l_{0} = 51.8$~cm) the same values give RMSE 2.20~N{\,m}, FVU 2.35, and maximum residual 4.73~N{\,m} --- a substantial improvement over the baseline (3.03/4.49/5.59) but with FVU above unity, so the corrected model under-predicts that configuration's measured torque variance and no claim of validated bio-extensor prediction is made. The redesign optimizations load these values directly: \texttt{buildKneeFlexorContext20mm.m} reads the flexor front, pick 107, for $(X_{0},X_{1},X_{2})$ at lines 156--174 (its $X_{3}$ still taken from the earlier \texttt{minimizeExtPin10\_results\_20260819\_2transforms\_Z2.mat} fit), and \texttt{buildKneeExtContext20mm.m} reads the extensor results file, pick 1, at lines 158--165. Regenerating the results files updates this table.

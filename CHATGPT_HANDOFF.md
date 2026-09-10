@@ -420,3 +420,57 @@ a new dated section rather than overwriting it.)
 3. If Ben asks about fit quality, the honest summary is: flexor all-5 FVU < 0.16;
    extensor held-out ~2x better than baseline; bio-ext better than baseline but FVU 2.35 > 1.
 4. Do not run optimizers. Values are settled; text updates only.
+
+## Dissertation text session 2026-09-10 (ZCode, easteregg2) — DONE, local only, NOT uploaded
+
+Synced Ben's 11:50 AM Overleaf zip into ProofFinal (advisor edits preserved: abstract wording +
+removed "Planned extensions..." sentence; intro "Muscle Mutt" rename + gap-statement rewrites;
+BolenFrontiers22.bib bolen_2026 -> Actuators entry; thesis.bib/BolenFrontiers22.bib restored at
+ProofFinal root, byte-identical to HEAD). Then edited 8 chapter files (all under
+Documentation\Reports and Papers\Dissertation\ProofFinal\chapters\):
+
+- 94-AppendixC: flexor + extensor test tables now carry ACTUAL l0/tendon/P/Fm read from
+  FlxPinBPASet.mat / ExtPinBPASet.mat (extensor shorthand was wrong: "42cm"=0.415, "43cm"=0.436/
+  0.432, "46cm"=0.457, "47cm"=0.465, "48cm"=0.480; ke(6) tendon 0.022); Fm filled for all rows;
+  pool/excluded roles marked. Adopted-values table rebuilt with the SETTLED picks (flexor row 107:
+  +8.9mm/5.62e4/1.85e4; extensor pick 1: -10.1mm/0.621 on locked pair 4.354e4/1.701e4 = flexor
+  front row 1, same 20260908_2trans_noT3 mat). New bounds table (flexor X1 [3e4,1e6], X2 [5e3,2e4]).
+  Frame construction + compliance chains converted from inline math to numbered equations.
+  All provenance line numbers re-verified against the working tree (subagent audit, 59 citations):
+  corrected 2brk (frames 252-298, K 387/396-411, UD 536-547, fzero 439-446, encoder corr 66-70,
+  labels line 51), ExtX3 (frames 461-483, K 575-584, UD 687-700), ext seed route 380-389, flexor
+  seed 178-190, contexts 156-174/158-165; crossPredictFlx.m -> Dig_crossPredict.m line 46,
+  sweepExtX3.m -> Collect_ExtPinX3_sweep.m lines 59-60; minimizeExt.m line 352 K-array is now
+  [X1,X2,X1] (changed per Ben 2026-09-10; table updated).
+- 92-AppendixA: l_m formula -> line 254 (not 368-377); strain discard -> line 308; hypot ->
+  predictKneeFlexor20mm.m line 199; MonoPam_mult coupled balance -> 490-564; F* zero-clamp
+  correctly attributed to festo4.m:35; "Note for review" RESOLVED (two-bracket fit of record uses
+  diag(X1,X2,X1) matching eq:bktstiffness; legacy [X1,X2,X2] marked superseded; new display eq).
+- 93-AppendixB: stale TODO block removed; file-of-record updated (fresh _Standalone.asim export
+  2026-09-09 runs headless; .aproj authoritative); SNS-Toolbox section now describes the built
+  406-neuron spinal network + verified antiphase rhythm.
+- 20-methods: new paragraph in sec:improved_model describing the two-bracket flexor extension +
+  locked-pair extensor refit (points to App C tables + sec:ongoing). Three preliminary-sim
+  subsections updated with current status (AnimatLab bilateral reorg + RG latch; MuJoCo conversion
+  verified + 0.1ms coupling + spinal net + NaN blocker, foot meshes first suspect; Simulink base-
+  Simulink operation + URDF route verified + placeholders still open).
+- 30-results: "Ongoing Experiments" -> "Follow-Up Identification and Route Redesign" (label
+  sec:ongoing kept): settled values + verified GoF; 20mm bio-flexor l0 41.5->42.0 cm (mat says
+  0.420); bio-ext 52.0->51.8 cm everywhere; extensor redesign meets target at all angles (thinnest
+  margin <0.1%); flexor re-run flagged as IN PROGRESS (no 20260910 flexor result mat exists).
+- 40-discussion: 48->48.5 cm for the fit BPA; "42 mm" typo -> 41.5 cm test; run-on fixed.
+- 50-futurework: pipeline status paragraph (assembly done, NaN blocker remains) + tonic-test
+  status sentence in Verification Tests.
+- 60-conclusion: parenthetical noting conversion/coupling/spinal-net/rhythm already in place.
+
+DATA-CHECK DISCREPANCY (needs Ben's eyes): the SETTLED block quotes flexor pick-107 per-test RMSE
+1.98/1.36/2.22/1.47/1.23 and "all FVU < 0.16". Direct evaluation with the current working-tree
+minimizeFlxPin2brk.m at (0.0088574, 56238, 18542) 2trans gives RMSE 1.94/1.51/2.29/1.63/1.21 and
+FVU 0.14/0.06/0.17/0.04/0.03 (test 3 = 0.1651, i.e. NOT <0.16). The DISSERTATION uses the
+reproducible numbers. Xi values themselves confirmed identical to the settled block (mat row 107
+= filtered_results(107,4:6)). Extensor pick + pool GoF + bio-ext 2.195/2.350/4.727 all confirmed
+(own evaluation + Dig_ExtPin_frontBio_newXiPair_20260910.log).
+
+Also deleted the tracked-but-junk _zipreview/ folder (unstaged deletions; include in next commit).
+No commits made. Ben uploads the 8 changed chapters/ files to Overleaf (built from his 11:50 zip,
+so advisor text edits are preserved).

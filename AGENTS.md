@@ -475,3 +475,7 @@ A separate chat is updating the dissertation text with these. Sources (Testing_D
   (Mesh_Optimization\Results\Vas_Pam_20mm_Result_20260910_0528.mat, XiUsed inside);
   Opt_run launched with buildKneeFlexorContext20mm.m re-pointed to the 2trans_noT3 pick 107.
 - **FVU caveat**: bio-ext 52cm FVU 2.35 > 1 at this pick — improved vs baseline 4.49 but do not overclaim.
+- **Opt_run runtime reality check (Ben, 2026-09-10):** configured eval budgets (surrogateopt
+  ~7000 + patternsearch ~15000) are MAXIMA — actual stages exit early on FunctionTolerance;
+  Ben's observed patternsearch stages wrap in ~5 min, not 1.5-2.5 h. Extrapolate ETAs from
+  measured rates and his historical runtimes, not from configured caps.
