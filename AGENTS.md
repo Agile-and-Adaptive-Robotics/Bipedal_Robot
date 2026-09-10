@@ -244,14 +244,23 @@ Loaded automatically at session start. Keep it current; keep it lean.
   choice): SolidWorks → sw2urdf add-in → .urdf → `smimport`. The old "Simscape
   Multibody not licensed" blocker was FALSE — the license carries it as legacy feature
   `SimMechanics` (=1) and `sns_urdf_smoke.m` proved smimport works (2026-09-09).
-  sw2urdf v1.6.1 NOT yet installed (installer in Downloads; official build targets
+  sw2urdf v1.6.1 INSTALLED on the laptop (Ben, 2026-09-10; official build targets
   SW2021, so on SW2025 watch for the vanishing-dialog issue, issue #147); fallback:
   Simscape Multibody Link IS installed+registered (disabled — enable in SW Tools >
   Add-Ins). `import_simscape_when_ready.m` takes URDF or XML. Tendon parts
   (`Tendon_Extensor/Flexor.SLDPRT`) are built but NOT yet inserted into `09_BA_003`;
   GUI steps in the README. Gotchas: mask icon drawing commands take numbers only
   (no LineSpec/name-value; `color('black')` not RGB), and keep masked blocks square
-  so circle icons stay round.
+  so circle icons stay round. **R2025a copies for the other machines (2026-09-10):**
+  `export_slx_to_R2025a.m` wrote `{SNS_Library,KneeReflexDemo,sns_simscape_EI_test}_R2025a.slx`
+  in this folder. The demo's 20 library links were re-pointed to `SNS_Library_R2025a`
+  (exported slx files get renamed to match their filename), so those two `_R2025a`
+  files must stay together in the same folder. Verified block-identical (67/67 and
+  54/54 blocks, same type inventories) and 20/20 links resolve. The EI-test copy is
+  best-effort only: Simscape-block downgrades are officially unsupported and it needs
+  `simscape_sources\SNS_lib.slx` (not exported — if needed on R2025a, rebuild there
+  from the `+SNS` sources via `sns_build_simscape_lib.m`). On R2025a machines, open
+  the `_R2025a` copies, not the originals (R2025b format won't load).
 - Repo root: `CHATGPT_HANDOFF.md` (brief for other AI assistants when ZCode is unavailable)
   and `CHATGPT_REPORT.md` (their report back; 2026-09-08 edition covers Overleaf
   manuscript-status edits) — keep both current when work is handed off.
