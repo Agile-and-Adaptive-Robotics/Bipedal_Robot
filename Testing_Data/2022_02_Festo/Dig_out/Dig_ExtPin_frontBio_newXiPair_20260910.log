@@ -1,0 +1,16 @@
+[Warning: Variable 'f' not found.] 
+[> In Dig_ExtPin_frontBio (line 11)
+In run (line 112)] 
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+Extensor front: 72 rows | pick=1: Xi0=-0.0101 Xi1=4.35e+04 Xi2=1.7e+04 Xi3=0.621
+Bio-ext baseline: RMSE 3.032 FVU 4.486 MaxR 5.587
+Dedup: 72 -> 4 unique candidates
+===== Bio-extensor results for the extensor front (best 12) =====
+rank front   Xi0(m)       Xi1       Xi2    Xi3 |     R   FVU  MaxR |  score
+1    11     -0.0060  4.35e+04   1.7e+04  0.504 |  1.99  1.94  4.73 |  0.545
+2    42     -0.0086  4.35e+04   1.7e+04  0.661 |  2.19  2.35  4.73 |  0.624
+3    1      -0.0101  4.35e+04   1.7e+04  0.621 |  2.19  2.35  4.73 |  0.624
+4    7      -0.0119  4.35e+04   1.7e+04  0.783 |  2.26  2.48  4.73 |  0.648
+Of the top 4 shown, 4 have Xi3 > 0.02
+Saved to Dig_out\Dig_ExtPin_frontBio_results.mat

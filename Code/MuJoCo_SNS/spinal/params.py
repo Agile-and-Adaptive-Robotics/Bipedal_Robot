@@ -24,7 +24,7 @@ from __future__ import annotations
 
 # ------------------------------------------------------------- global scales
 E_HI = 5.0          # mV, "full activation" membrane potential for MNs
-DT = 0.005          # s, matches the MJCF timestep
+DT = 0.002          # s, matches the MJCF timestep (2 ms for stability)
 
 # ------------------------------------------------------------- neuron time constants
 TAU = dict(

@@ -1,6 +1,10 @@
 %minimizeExtX3.m
 %% Optimize predicted torque for extensors.
-function [f_all, bpa_all] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, idx_val)
+function [f_all, bpa_all] = minimizeExtX3(Xi0, Xi1, Xi2, Xi3, idx_val, transMode)
+if nargin < 6 || isempty(transMode)
+    transMode = getenv("EXTX3_TRANS");
+    if isempty(transMode), transMode = "2trans"; end
+end
 % minimizeExt: calculates predicted torque and fit metrics for a given BPA index
 %
 % Inputs:
@@ -177,7 +181,7 @@ f_all = NaN(nBPA, 3);
 for i = idx_val
 %     fprintf('Evaluating BPA #%d with [%.4f, %.2e, %.2e]\n', i, Xi0, Xi1, Xi2, Xi3);
     klass_i = ke(i);
-    [bpa_all(i), f_all(i,:)] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
+    [bpa_all(i), f_all(i,:)] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3, transMode);
     if any(isnan(bpa_all(i).strain_p))
         warning('NaNs in strain_p for BPA #%d', i);
     end
@@ -197,7 +201,7 @@ end
 %     m = idx_val(n);            % actual BPA index
 %     klass_i = ke(m);            % broadcasted read of ke
 %     try
-%         [bpa_i, fitvec] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3);
+%         [bpa_i, fitvec] = evaluateBPA(klass_i, Xi0, Xi1, Xi2, Xi3, transMode);
 %     catch err
 %         % If evaluateBPA throws inside a worker, record Inf fitness and empty struct
 %         fitvec = [Inf, Inf, Inf];
@@ -224,13 +228,13 @@ end
 
 end
 
-function [bpa_i, fitvec] = evaluateBPA(klass, Xi0, Xi1, Xi2, Xi3)
+function [bpa_i, fitvec] = evaluateBPA(klass, Xi0, Xi1, Xi2, Xi3, transMode)
 %% Calculate locations and properties
 bpa_i = klass;
 kspr = Spr(bpa_i);          %tendon spring rate
 Funit = computeForceVector(bpa_i);  %Force unit direction, calculate in the hip frame 
 [strain_Xi3, delta_L] = Contraction(bpa_i, [], Xi0, [], Xi3); %Calculate contraction and loss of length due to constant length offset Xi0 and wrapping factor Xi3
-[L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, Xi0+delta_L); %Bracket deformation and new geometry
+[L_p, gemma] = Lok(bpa_i, Xi1, Xi2,kspr, Funit, strain_Xi3, Xi0+delta_L, transMode); %Bracket deformation and new geometry
 sL_p = seg(bpa_i, L_p); %segment lengths
 Lmt_p = LMT(sL_p, Xi0); 
 [strain_f, ~] = Contraction(bpa_i, Lmt_p, Xi0, gemma, Xi3); %Simulated strain, includes loss of usable length due to wrapping
@@ -429,7 +433,7 @@ end
 end
 
 %% ------------- Location  ------------------------
-function [LOC, gama] = Lok(klass, X1, X2, kSpr, Funit, strain_predef, delta_L)
+function [LOC, gama] = Lok(klass, X1, X2, kSpr, Funit, strain_predef, delta_L, transMode)
 % Inputs:
 %   bpa class info
 %   X1, X2 stiffness
@@ -456,6 +460,7 @@ Fh = Funit .* FF;  % N×3, already in hip frame
 
 %Bracket transform
 pA = L(1,:,1);
+% Pbr = [-6.26, -29.69, 75.06]/1000;                          %from hip origin to lower bolt hole on superior anterior bracket of the Bifemsh_Pam
 Pbr = [-3.84, -46.44, 62.5]/1000;                          %from hip origin to midpoint of the rib on the medial bracket side
 % Pbr = [-2.65, -54.71, 75.06]/1000;                          %from hip origin to lower section of the superior anterior bracket on the Bifemsh_Pam
 phbrA = pA-Pbr;                                  %vector from bracket to point A (in the hip frame)
@@ -471,7 +476,11 @@ Ry = [cos(thetaY) 0  sin(thetaY);
       0           1  0;
      -sin(thetaY) 0  cos(thetaY)];
 Rhbr = RhbrZ*Ry';            %Rotate about y-axis in body frame
-Thbr = RpToTrans(Rhbr, Pbr');    %Transformation matrix, represent bracket frame in hip frame  
+if strcmpi(transMode, '1trans')
+    Thbr = RpToTrans(RhbrZ, Pbr');       %pitch-only frame
+else
+    Thbr = RpToTrans(Rhbr, Pbr');        %two-rotation frame
+end
             
 %more complicated way to calculate vector and rotation matrix so that your
 %new x axis points to muscle origin.
@@ -507,7 +516,11 @@ else
 end
 deflection = [epsilon, delta, beta];
 % pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] +deflection; %Muscle origin location, bracket frame
-pbrAnew = [norm(phbrA), 0, 0] +deflection; %Muscle origin location, bracket frame
+if strcmpi(transMode, '1trans')
+    pbrAnew = [norm(phbrA(1:2)), 0, phbrA(3)] +deflection; %pitch-only frame
+else
+    pbrAnew = [norm(phbrA), 0, 0] +deflection; %two-rotation frame
+end
 
 % Replace points
 LOC = L;
@@ -603,7 +616,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
 
         if r == 0
             continue;            
-        elseif isinf(X1) && isinf(X2) && isinf(kSpr)
+        elseif isinf(X1) && isinf(X2)
             % Rigid bracket: no deformation, optional cable stretch
             e_axial(i) = 0;
             e_bendY(i) = 0;

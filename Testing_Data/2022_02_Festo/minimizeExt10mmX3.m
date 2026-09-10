@@ -43,8 +43,30 @@ fprintf('Mean normalized to baseline score: RMSE %.4f, FVU %.4f, Max. Residual %
 % lb = [-0.020 * 100, log10(5e3), log10(5e3), 0];   % [cm, log10(N/m), log10(N/m), unitless]
 % ub = [0.01 * 100, log10(5e7), log10(5e7), 3];
 
-lb = [-0.02 * 100, log10(g(2)), log10(g(3)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
-ub = [0 * 100, log10(g(2)), log10(g(3)), 1];
+%% Problem bounds -- two-pass scheme (Ben, 2026-09-10):
+%  EXTX3_PASS=1: wide Xi1/Xi2 bounds from the dub_filt flexor front range (Xi0 [-2,2] cm)
+%  EXTX3_PASS=2: Xi1/Xi2 LOCKED to EXTX3_XI1/EXTX3_XI2 (the pass-1 match), Xi0 [-2,0] cm
+%  no env: legacy behavior, Xi1/Xi2 locked to the flexor pick g
+p1 = getenv('EXTX3_PASS');
+if strcmp(p1, '1')
+    Df = load('Dig_out/Dig_FlxBio_dubfilt_results.mat', 'dub_filt_results');
+    dfr = Df.dub_filt_results;
+    xi1r = [min(dfr(:,2)), max(dfr(:,2))];
+    xi2r = [min(dfr(:,3)), max(dfr(:,3))];
+    lb = [-0.02 * 100, log10(xi1r(1)), log10(xi2r(1)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+    ub = [ 2.00 * 100, log10(xi1r(2)), log10(xi2r(2)), 1];
+    fprintf('PASS 1 (wide): Xi1 [%.3g %.3g], Xi2 [%.3g %.3g], Xi0 [-2 2] cm\n', ...
+        xi1r(1), xi1r(2), xi2r(1), xi2r(2));
+elseif strcmp(p1, '2')
+    xi1lock = sscanf(getenv('EXTX3_XI1'), '%g');
+    xi2lock = sscanf(getenv('EXTX3_XI2'), '%g');
+    lb = [-0.02 * 100, log10(xi1lock), log10(xi2lock), 0];
+    ub = [ 0.00 * 100, log10(xi1lock), log10(xi2lock), 1];
+    fprintf('PASS 2 (locked): Xi1=%.3g Xi2=%.3g, Xi0 [-2 0] cm\n', xi1lock, xi2lock);
+else
+    lb = [-0.02 * 100, log10(g(2)), log10(g(3)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
+    ub = [ 0.00 * 100, log10(g(2)), log10(g(3)), 1];
+end
 
 % A = [0 -1 1 0; ...              % x2 (bending) is less stiff than x1 (axial), (x2 <= x1)
 %      0 0 0 0; ...

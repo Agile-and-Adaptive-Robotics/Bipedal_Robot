@@ -67,25 +67,41 @@ control" knob.
 
 ## Open problems (in priority order)
 
-1. **Joint-axis sign audit** — `rect_fem` (hip flexor) emerges as the
-   solver's hip-*extension* provider and drives at ctrl=1.0 in every standing
-   solve: strong evidence the MJCF hinge axis for hip_flexion (and possibly
-   others) is inverted vs the OpenSim convention assumed in
-   `muscle_map.GROUPS`/`W_PF_MN`. Audit every hinge's axis sign against
-   OpenSim coordinate conventions before any further behavioral tuning.
-2. **Leg-DoF explosions / NaN** even with the pelvis rig: ankle angles spin
-   to 1e4–1e5 deg. `balanceinertia` applied; next suspects: contact
-   solref/solimp at dt=5 ms, ankle/subtalar damping,ctrl slew limits.
-3. **Pathpoint weld** — OpenSim conditional pathpoints arrived as massless
-   slide bodies (singular mass matrix) driven by equality polycoefs; we weld
-   them at keyframe geometry (`apply_harness`). Proper fix: per-pose spline
-   pathpoints or re-conversion with MyoSuite's own handling (check how
-   `myosuite_gait2392_simbody` deals with them before re-deriving).
-4. **Standing without the rig** — needs (1) then an actual balance
-   controller (ankle+hip strategy exists; COM-y/vel and foot-placement
-   absent). Swing-bench / rigid-rig first, free balance later.
-5. Stance duty 0.36 (human ~0.6): load-receptor prolongation of stance
-   should improve this once 1–3 stop the explosions; can also bias ADAP-E.
-6. Fit `W_PF_MN` from OpenSim SO activations (`fit_synapses.py`), then
-   reflex gains per speed from multiple-speed trials (Bunz-2026-style
-   modulation study).
+Progress 2026-09-09 (session 2): `audit_signs.py` now audits the model
+DYNAMICALLY (full muscle activation -> joint acceleration sign, which sees
+the pathpoint equality couplings that static `actuator_moment` misses).
+Findings + fixes applied in `runner.apply_harness` (all verified by audit):
+  - hip_flexion + hip_adduction hinge axes WERE flipped vs OpenSim
+    conventions (glut_max pulled flexion, iliacus/psoas extension) -> axes
+    negated, both sides; all hip anchors now pass.
+  - rect_fem drove the knee into FLEXION (no patella wrap, unlike the
+    vastii) -> rerouted over the vastii's patella-tracking via point
+    (vas_med-P4: origin -> patella path -> tuberosity); now knee-EXTENSOR.
+    A true patella BODY (slides on distal femur, fixed patellar-tendon
+    length to the tibia, per Ben) is the fuller fix if the via-point
+    proves inadequate at large knee angles.
+  - tiny short rotators quad_fem/gem/peri pruned (gainprm/biasprm[2]=0;
+    Ben's list - extend as needed).
+  - pathpoint couplings KEPT (reverted the earlier weld: welding froze
+    moment arms and zeroed several knee moments, e.g. semimem). Massless
+    bodies handled via boundmass/boundinertia (same structure as
+    MyoSuite's own conversion).
+
+REMAINING BLOCKER: ankle/knee DoFs still go NaN during simulation even at
+dt=2 ms with a rigid pelvis rig, while the network keeps rhythm and audit
+is clean. The static audit is now correct, so this is a simulation-dynamics
+problem, not kinematics. Next suspects, in order:
+  1. contact solref/solimp for the foot meshes at small timestep (huge
+     normal forces when mesh contacts engage); try primitive collision
+     (capsule/box feet) instead of mesh-mesh contact;
+  2. equality-coupling forces on the boundmass(0.01 kg) pathpoint bodies
+     (accelerations ~ F/0.01 are violent; try boundmass 0.05-0.1 with
+     matching joint damping, or densify the couplings' tolerance);
+  3. hip/ankle hinge damping (currently 0.05) - add explicit damping ~0.5-2;
+  4. ctrl slew limiting on MN outputs (rate-limit activation commands).
+Diagnostic: diag_nan.py (finds first NaN + which joints), audit_signs.py
+(static-sign ground truth).
+
+Then rerun: `runner.py` (stand -> walk -> stand under the rig), tune stance
+duty (0.36 vs human ~0.6; load-receptor prolongation helps in closed loop),
+and fit W_PF_MN from OpenSim SO activations (fit_synapses.py).

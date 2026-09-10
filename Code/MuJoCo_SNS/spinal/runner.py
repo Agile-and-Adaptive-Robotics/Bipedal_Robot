@@ -44,6 +44,10 @@ KEY_JOINTS = ("hip_flexion_r", "knee_angle_r", "ankle_angle_r",
 
 WARMUP = 0.6   # s: pose pinned while muscle activations build from zero
 
+# Ben's prune list: tiny short-rotator muscles, problematic even in OpenSim
+PRUNE_MUSCLES = {"quad_fem_r", "quad_fem_l", "gem_r", "gem_l",
+                 "peri_r", "peri_l"}
+
 
 def find_foot(model) -> tuple[int, int]:
     ids = []
@@ -121,8 +125,8 @@ def solve_standing_activations(model, data, Fmax: np.ndarray) -> np.ndarray:
     return np.clip(x, 0.0, 1.0)
 
 
-def apply_harness(model, data, kxy=1.0e6, kz=1.0e6, ky=1.0e6,
-                  dxy=2000.0, dy=2000.0):
+def apply_harness(model, data, kxy=2.0e5, kz=2.0e5, ky=5.0e5,
+                  dxy=2000.0, dy=3000.0):
     """Rigid pelvis rig (v1 default): the pelvis is spring-locked at the
     keyframe pose in all three translations - the classic biped walker test
     rig. Legs swing under it with ground contact; balance is NOT solved.
@@ -135,24 +139,68 @@ def apply_harness(model, data, kxy=1.0e6, kz=1.0e6, ky=1.0e6,
     # handles the joint-damping/spring terms stably
     xml_text = xml_text.replace(
         '<option timestep="0.005" collision="predefined"/>',
-        '<option timestep="0.005" collision="predefined" integrator="implicitfast"/>')
+        '<option timestep="0.002" collision="predefined" integrator="implicitfast"/>')
     # converted bone inertias violate the triangle inequality on some bodies
-    # (singular mass matrix -> QACC explosions); let MuJoCo rebalance them
+    # (singular mass matrix -> QACC explosions); rebalance + bound the
+    # massless pathpoint bodies (same structure as MyoSuite's own conversion,
+    # whose equality-coupled pathpoints we therefore KEEP - welding them
+    # breaks several moment arms, see audit_signs)
     xml_text = xml_text.replace(
         '<compiler angle="radian" autolimits="true"/>',
-        '<compiler angle="radian" autolimits="true" balanceinertia="true"/>')
-    # model repair (mechanics): OpenSim conditional pathpoints were converted
-    # to slide joints on MASSLESS bodies (mass 0, inertia 5e-14) -> singular
-    # mass matrix, NaN blowups. These points are computed projections in
-    # OpenSim, not physical masses; weld them as fixed via-points at the
-    # keyframe geometry (MyoSuite-style). 82 DoFs removed; upgrade path is a
-    # per-pose spline treatment, see DESIGN.md.
-    xml_text = re.sub(r'<joint name="[^"]*-P\d+_[xyz]"[^/>]*/>', '', xml_text)
-    # ...and the equality couplings that drove them (polycoef splines)
-    xml_text = re.sub(r'<joint joint1="[^"]*-P\d+_[xyz]"[^/>]*/>', '', xml_text)
-    # the recorded keyframe has the old 105-DoF size; pose is seeded
-    # programmatically instead (capture_pose/seed_pose)
-    xml_text = re.sub(r'<key [^/>]*/>', '', xml_text)
+        '<compiler angle="radian" autolimits="true" balanceinertia="true" '
+        'boundmass="0.01" boundinertia="1e-6"/>')
+
+    # ---- repair 1: hip joint axes are flipped vs the OpenSim conventions
+    # (audit_signs.py: glut_max pulls flexion, iliacus/psoas pull extension;
+    # same for adduction). Negate the hinge axes so + = flexion / adduction
+    # as the muscle_map tables assume. Ranges are symmetric (+-2.094).
+    for jn, old, new in (
+            ("hip_flexion_r",  'axis="0 0 1"',  'axis="0 0 -1"'),
+            ("hip_flexion_l",  'axis="0 0 1"',  'axis="0 0 -1"'),
+            ("hip_adduction_r", 'axis="1 0 0"', 'axis="-1 0 0"'),
+            ("hip_adduction_l", 'axis="-1 0 0"', 'axis="1 0 0"')):
+        pat = rf'(<joint name="{jn}"[^/]*?){re.escape(old)}'
+        xml_text, n = re.subn(pat, rf'\1{new}', xml_text, count=1)
+        assert n == 1, f"axis flip failed for {jn}"
+
+    # ---- repair 2: prune the tiny short-rotator muscles that are
+    # problematic even in OpenSim (Ben): quad_fem, gem, peri (both sides).
+    # Zero their force scale (gainprm[2]) and passive (biasprm[2]) so the
+    # actuator is inert; sites/tendons stay in place.
+    def _zero_fmax(match):
+        tag = match.group(0)
+        name = re.search(r'name="([^"]+)"', tag).group(1)
+        if name in PRUNE_MUSCLES:
+            tag = re.sub(r'gainprm="[^"]+"',
+                         lambda p: 'gainprm="' + " ".join(
+                             v if i != 2 else "0" for i, v in
+                             enumerate(p.group(0).split('"')[1].split())) + '"',
+                         tag)
+            tag = re.sub(r'biasprm="[^"]+"',
+                         lambda p: 'biasprm="' + " ".join(
+                             v if i != 2 else "0" for i, v in
+                             enumerate(p.group(0).split('"')[1].split())) + '"',
+                         tag)
+        return tag
+
+    xml_text = re.sub(r'<general name="[^"]+" class="muscle"[^/]*/>',
+                      _zero_fmax, xml_text)
+
+    # ---- repair 3: patella mechanism for rect_fem (Ben). Dynamic audit:
+    # rect_fem drives the knee into FLEXION (+894 rad/s^2 at full act) - its
+    # route lacks the patella wrap the vastii kept. Route it over the
+    # vastii's patella-tracking via point instead:
+    # P1(origin) -> vas_med-P4 (moving via point on the patella path)
+    # -> P3 (tibial tuberosity).
+    for side in ("r", "l"):
+        pat = (rf'(<spatial name="rect_fem_{side}_tendon">\s*'
+               rf'<site site="rect_fem_{side}_rect_fem_{side}-P1"/>\s*'
+               rf')<site site="rect_fem_{side}_rect_fem_{side}-P2"/>')
+        xml_text, n = re.subn(
+            pat, rf'\1<site site="vas_med_{side}_vas_med_{side}-P4"/>',
+            xml_text, count=1)
+        assert n == 1, f"rect_fem reroute failed for {side}"
+
     specs = {"pelvis_tx": (kxy, dxy), "pelvis_ty": (ky, dy),
              "pelvis_tz": (kz, dxy)}
     for jn, (k, c) in specs.items():
@@ -161,18 +209,6 @@ def apply_harness(model, data, kxy=1.0e6, kz=1.0e6, ky=1.0e6,
         # keep the existing damping attribute; just add stiffness + springref
         xml_text = re.sub(pat, rf'\1 stiffness="{k}" springref="{ref}"/>',
                           xml_text, count=1)
-    # model repair: the converted knee translation slides carry ZERO stiffness
-    # (OpenSim couples them kinematically to knee_angle; the MJCF leaves them
-    # as free slides with ~2.7 cm of play) -> the tibia/femur linkage buckles
-    # under any load. Spring them to their keyframe values to restore the
-    # moving-pathpoint coupling mechanically.
-    for jn in ("knee_r_translation1", "knee_r_translation2",
-               "knee_l_translation1", "knee_l_translation2"):
-        ref = data.qpos[model.joint(jn).qposadr[0]]
-        pat = rf'(<joint name="{jn}"[^/]*?)/>'
-        xml_text = re.sub(
-            pat, rf'\1 stiffness="5000" springref="{ref}" damping="100"/>',
-            xml_text, count=1)
     # mesh files are referenced relative to the model dir -> must load the
     # patched XML from a file in that directory, not from a string
     import tempfile, os

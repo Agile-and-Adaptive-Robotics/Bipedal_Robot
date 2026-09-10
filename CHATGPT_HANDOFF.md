@@ -3,7 +3,152 @@
 This file briefs any AI assistant (ChatGPT or otherwise) working on this project while the
 primary assistant (ZCode) is unavailable. Read it fully before doing anything. The repo-wide
 `AGENTS.md` next to this file has additional standing context — both are plain markdown.
-Deeper dive on the laptop-session mining findings: `Testing_Data\2022_02_Festo\HANDOFF_laptop_20260908.md`.
+**TWO ACTIVE WORK THREADS (both 2026-09-09): (A) AnimatLab .aproj arrow audit — section
+below; (B) MuJoCo gait2392 spinal cord network in `Code\MuJoCo_SNS\spinal\` (read its
+`DESIGN.md` first — rhythm layer verified; leg-DoF NaN blocker open with prioritized
+suspects).** Also: laptop-session mining findings in `Testing_Data\2022_02_Festo\HANDOFF_laptop_20260908.md`.
+
+## ACTIVE WORK B — MuJoCo gait2392 spinal network (started 2026-09-09, easteregg2)
+
+Two-level RG+PF spinal network (SNS-Toolbox 1.5.2) for the converted
+`gait2392_simbody` MJCF: 92 MN pools + Ia/II/Ib afferents each, per-leg
+half-center RG, 4 phase-shifted PF groups/leg, stance-gated Ib load sharing,
+descending DRIVE + balance inputs, static-opt standing posture injected as
+per-MN bias. **Rhythm layer VERIFIED** (0.885 s period, antiphase −0.88);
+closed-loop walk still NaNs in the leg joints.
+
+- Run with `D:\Anaconda\envs\myo\python.exe` (Anaconda at `D:\Anaconda`,
+  NOT on PATH; env `myo`, not `myoconv`), cwd `Code\MuJoCo_SNS\spinal`.
+  Read `spinal\DESIGN.md` first: architecture, verified/unverified split,
+  open problems. `audit_signs.py` (anatomical sign audit — must stay all-OK
+  after ANY model change), `check_rhythm.py`, `runner.py`, `diag_nan.py`
+  (first-NaN finder), `fit_synapses.py` (IK/SO → synergy NMF + per-phase
+  NNLS back-solve scaffold).
+- Model repairs are applied on the fly in `apply_harness()` (runner.py):
+  hip_flexion/hip_adduction MJCF hinge axes WERE flipped vs OpenSim
+  (negated, both sides); rect_fem lacked a patella wrap and pulled the knee
+  into FLEXION (rerouted over the vastii's vas_med-P4 patella-tracking via
+  point); quad_fem/gem/peri pruned (`PRUNE_MUSCLES`, Ben's list).
+- **Do NOT weld the conditional pathpoints** (massless slide bodies with
+  equality couplings): an earlier weld froze several muscle moment arms to
+  zero. They stay coupled; massless bodies handled via compiler
+  `boundmass`/`boundinertia`. The sign audit must run DYNAMICALLY (full
+  activation → joint acceleration) — static `actuator_moment` misses the
+  coupling paths and misdiagnoses.
+- Remaining blocker (dynamics, not kinematics — audit is clean): NaNs at
+  2 ms even under a rigid pelvis rig. Suspects in order: mesh foot contacts
+  (try primitive collision), equality forces on the 0.01 kg pathpoint
+  bodies, near-zero hinge damping, MN-command slew limiting.
+- Speed-control design: descending DRIVE + presynaptic reflex-gain
+  modulation (`params.MOD`); grounded in Bunz/Ijspeert/Schmitt 2026 Sci Rep
+  and Ben's Zotero "Sensory Afferent Database" collection. Read Di Russo/
+  Ijspeert/Bouri 2023 J Neural Eng before any novelty claims. MuJoCo gotcha:
+  muscle Fmax = `actuator_gainprm[:,2]`.
+
+# ACTIVE WORK A — AnimatLab .aproj neural surgery (started 2026-09-09, CONTINUES at 8am PT session)
+
+Ben's asks, in progress: (1) complete the RH-side feedback/connections, (2) add
+gastrocnemius, biceps femoris long head, rectus femoris, semimembranosus to each leg and
+drive them from the existing pattern-formation layers, (3) connect LH and RH with a rhythm
+generator layer. Ben also wants TFL eventually (needs a frontal-plane abduction DOF the Li
+legs don't have yet) and the LH_HipZ/RH_HipZ labels renamed LH_Hip/RH_Hip (cosmetic, not
+done). **Ben added some missing connections manually in the GUI on 2026-09-09 evening and
+reports more are still missing — auditing drawn-arrow completeness against the standard
+section is the FIRST task of the next session.**
+
+## Current file state
+
+- `Neuromechanical_Models/Biped_2xCPG_wSubs/Biped_2xCPG_wSubs.aproj` — GUI-verified clean
+  open on 2026-09-09 (zero dialogs; earlier builds threw 1–15 dialogs per open).
+- 20 muscles (12 original + 8 new biarticular: gas/bflh/semimem/rf per leg, Gait2392 Fmax
+  applied: 2241/896/1288/1169 N), 122 neurons, 261 synapses, grids off everywhere.
+- Completed: RH half-center + coordination wiring (mirrored from LH), RH knee/ankle
+  muscle-drive adapters repointed off Renshaw cells onto MNs, LH↔RH commissural RG
+  inhibition (4 synapses via OffPages on the top page), 2 nA tonic on L RG ext,
+  full Deng-style chains for the 8 new muscles (MN, afferent Ia, Ia E, Ib, Muscle+SR
+  nodes, 3 adapters each), Gait2392-derived Fmax. Gas Ia→Ia correctly retargeted to the
+  ankle Ia F interneuron.
+
+## Known remaining gaps (next session, in order)
+
+1. **Missing drawn arrows** — Ben found more after the fix pass. Likely cause: links
+   whose two endpoints never shared a page were left functional-but-undrawn. Audit each
+   page's drawn arrows against the standard section; draw the missing ones via new
+   OffPage instances on a page containing both endpoints.
+2. **RG does NOT oscillate** — 2–10 nA tonic on L RG ext latches (L ext depolarized,
+   everything else suppressed, even over 20 s). Sweep drive 20–40 nA; try the paper's
+   10 nA 1 ms pulse; apply Deng Table A2 PF→MN conductances (hip 2.565/3.632, knee
+   4.93/1.516, ankle 4.054/4.522 µS) instead of the 0.5 µS defaults.
+3. **16 placeholder attachments** — new-muscle origin/insertion points were copied from
+   anatomically similar sites; Ben must position them. Then set RestingLength = TSL + OFL
+   (Gait2392: Gas 0.45 m, BFlh 0.435 m, Semimem 0.439 m, RF 0.424 m), LengthTension
+   window = TSL+0.5·OFL to TSL+1.5·OFL, Kse ≈ Fmax/(0.033·TSL).
+4. No Renshaw cells on new MNs; no II afferents on the new hip-spanning muscles.
+5. TFL addition — needs a frontal-plane abduction DOF added to the Li legs first.
+6. LH_HipZ/RH_HipZ → LH_Hip/RH_Hip label rename (cosmetic, pending Ben's OK).
+
+## Toolchain (in `Neuromechanical_Models/Biped_2xCPG_wSubs/tools/`)
+
+Full deterministic pipeline, in this order from a pristine baseline (git
+`6437441:Neuromechanical_Models/Biped_2xCPG_wSubs/AnimatLab_backups/Biped_2xCPG_wSubs.aproj.bak_20260909_preRH`
+is the pre-surgery original): `build_A2.pl` (RH wiring) → `build_B2.pl` (muscles) →
+`repair_dup_ids2.pl` (re-GUID child IDs) → `fix_gas_ia3.pl` (Gas Ia retarget) →
+`rebuild_pages_v3.pl` (regenerate all 15 page drawings from the standard section; drops
+stale, dedups, recomputes all Org/Dst, grids off, exact counts) → `move_links_by_page.pl`
+(place generated links into the fragment whose page draws them) → `set_fmax2.pl`
+(Gait2392 Fmax). Verify with `verify_placement.pl` (link placement), `verify_final.pl`
+(battery), `shape_diff.pl` (element-shape diff vs a reference file).
+**If any input changes, re-run the WHOLE chain — never patch a patched file.**
+
+## CRITICAL format gotchas (each cost hours — do not relearn)
+
+- The .aproj has TWO layers: the standard section (functional model: neurons, links,
+  muscles — full GUIDs) and per-page `<DiagramXml><![CDATA[...]]></DiagramXml>` AddFlow
+  drawings (GUI only, objects referenced by `<Tag>`). The whole-file XML parse does NOT
+  validate CDATA contents — validate every page CDATA individually as its own XML doc.
+- Subsystem fragments are SCATTERED top-level blocks after `</NeuralModules>` (not
+  nested); hierarchy is via SubSystemID references. A drawn link must live in the same
+  fragment as the page that draws it, else the GUI shows nothing and clicking throws
+  "No item with ID". A page's OffPage instances are that page's local references.
+- Depth-counting `<Node>`/`</Node>` MUST (a) skip `<![CDATA[...]]>` spans (they contain
+  drawing `</Node>` closers with no matching opens in that counting scheme) and (b) count
+  both `<Node>` and `<Node attr...>` opens. Getting this wrong silently redirects
+  insertions into page CDATAs → "GetAttribute(Int32 i) out of range" pop-ups (one per
+  broken page).
+- Page rebuilds must emit, in order: prologue (through `<AddFlow ...>`), **`<Version>`
+  header** (inside the body, before the first node — dropping it throws the same
+  GetAttribute error), nodes, links, tail (fillers + `</AddFlow></Diagram></Root>`).
+  Missing tail = "An error occurred while deserializing the xml data."
+- Cloning any block: re-GUID the block's own ID AND every child-object ID inside
+  (StimulusTension, LengthTension, Gain, CaActivation, CaDeactivation, PID) or the C++
+  sim throws "Attempted to add an object with the same ID twice". Strip inherited
+  InLinks/OutLinks. Escape `&` as `&amp;` in Text. Patch `Value` AND `Actual`
+  attributes together. Regex replacements that build XML MUST use the /e flag.
+- The recurring silent-corruption warning: lvalue `substr($x,$p,length($seg)) = $seg`
+  with a GROWN $seg eats trailing bytes (always use the original range length).
+- **Verification protocol (MANDATORY before handing the file to Ben):** launch
+  `D:\Program Files (x86)\NeuroRobotic Technologies\AnimatLab\bin\AnimatLab2.exe` with
+  the .aproj path as argument, wait ~15 s, inspect the app state for an "Error" dialog
+  window. Each broken page throws its own dialog at load, so zero dialogs ⇒ all 15 pages
+  deserialized. Status bar must show "Load project complete". Then `taskkill /IM
+  AnimatLab2.exe /F` — NEVER save from the GUI (it overwrites the file with stale memory).
+  **Never deploy while Ben may have AnimatLab open** — his open session can't see file
+  changes and a save from it clobbers the deployed fixes.
+- Run headless sims via `bin\AnimatSimulator.exe <path>\file.asim` (.asim only, never
+  .aproj). Chart files (e.g. "Rhythm Generator.txt") land in the sim file's folder; chart
+  `<EndTime>` caps collection independently of SimEndTime.
+
+## Background
+
+The .aproj is Deng 2019 (Biomimetics 4(1):21) two-layer CPG (RG→PF→MN, Ia/Ib/II
+afferents, Renshaw) ported onto the Li biped biomech; Ben+Connor's walker paper documents
+the lineage. The old `_Standalone.asim` exports are stale; Ben exported a fresh
+`Biped_2xCPG_wSubs_Standalone.asim` on 2026-09-09 (runs clean headless; contains a
+Rhythm Generator chart with RH_RG columns + L Hip charts). Tuning ladder: kinematics →
+virtual-walker ground walking → stable walking → transitions (details in AGENTS.md and
+the animatlab skill's walker-cpg-architecture.md).
+
+
 
 ## Latest completed session — dissertation simulation figures, 2026-09-09
 
@@ -26,6 +171,43 @@ Overleaf compile counts do not apply to these new edits.
   not update Overleaf, the dissertation ZIP, or the full dissertation PDF.
 - No new dynamics/optimization runs or scientific model changes. No commit or push.
   Preserve unrelated working-tree changes from other sessions.
+
+## Latest completed session — Gait2392→MuJoCo conversion + SNS-Toolbox connection, 2026-09-08/09 (easteregg2)
+
+This is the session ACTIVE WORK B builds on: it produced the converted MJCF that
+`Code\MuJoCo_SNS\spinal\` drives, plus the `myo` env it runs in. Full environment
+detail and Windows pitfalls live in `AGENTS.md` → "OpenSim / MyoConverter /
+SNS-Toolbox on easteregg2". Highlights:
+
+- **Stock `gait2392_simbody.osim` fully converted to MyoSuite/MuJoCo** — outputs in
+  `Solid_Models\OpenSim\myosuite_gait2392_simbody\`: `gait2392_simbody_cvt3.xml`
+  (vehicle of record), `gait2392_simbody.pdf` (per-muscle validation report),
+  cvt1/cvt2 intermediates. Regenerate via `D:\GitHub\myoconverter\convert_gait2392.py`
+  (~90 min). `gait2392_cvt3_pelvispinned.xml` (same folder) = pelvis joints +
+  keyframe stripped, joint limits enabled — use for leg-swing demos.
+- **`gait2392_robotbody.osim` is NOT convertible as-is**: right leg carries
+  placeholder muscle paths (15 muscles with changed path-point counts, 19 muscles
+  disabled) over stock Thelen parameters → path lengths off 7–480%; OpenSim
+  `computeInitialFiberEquilibrium` fails (tfl_r) and force maps would be wrong
+  (Ben: "wacky answers"). Conversion needs retuned fiber/tendon lengths first —
+  Ben's modeling decision. `gait2327.osim` (GENERATED by
+  `D:\GitHub\myoconverter\build_gait2327.py`) = stock params + robotbody paths,
+  all 92 enabled, for path-only studies; robotbody's left leg is byte-identical
+  to stock (it is a left-leg reference model).
+- **SNS-Toolbox 1.5.2 installed in `myo`** (needs `--no-deps` + CPU torch +
+  graphviz; the wheel mixes two class trees — use legacy `sns_toolbox.neurons`/
+  `connections` classes with `Network.compile()`; details in AGENTS.md).
+  `D:\GitHub\myoconverter\sns_gait2392_cosim.py` proves the co-sim loop
+  (Nourse 2023 two-layer CPG → sigmoid → `mj_data.act` → `mj_step` → tension
+  Ib feedback; ~4x real time, MNs antiphase −0.97; outputs
+  `sns_gait2392_cosim.npz/.png`).
+- **Three Windows pitfalls fixed** (documented in AGENTS.md, do not relearn):
+  conda-MKL numpy native crash 0xc06d007e in np.dot (use pip OpenBLAS numpy
+  1.21.6); `if __name__ == "__main__":` required in every MyoConverter driver
+  (step-3 multiprocessing spawn re-imports the main script); zombie child
+  processes hold the output log open (WinError 32) — kill before rerunning.
+- No commits/pushes; new files live outside the repo (`D:\GitHub\myoconverter`,
+  `D:\GitHub\Two_layer_CPG_SNS_Toolbox`) or in gitignored output folders.
 
 ## The person you are helping
 
@@ -78,6 +260,33 @@ changes the identified stiffness dramatically (one 4 cm move swung flexor Xi1 by
   −16 mm). Raising Xi1 above the flexor value monotonically worsens the extensor fit
   (tested to 100x).
 
+## Update (2026-09-09, desktop session — extensor-side deltas)
+
+- **minimizeExt10mmX3.m is re-pointed**: its Xi1/Xi2 lock now loads
+  `minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat` (corrected-encoder 2trans
+  flexor front; pick pair 4.35e4 / 1.70e4), NOT the legacy 20260730 mat. The
+  "Extensor side unchanged" bullet above is thereby outdated.
+- **Extensor Xi0 sign rule (bit once):** extensor Xi0 = NEGATIVE of the flexor value
+  (bounds [−2,0] cm; transfer `-g(1)`). Screens that pass positive flexor Xi0 into the
+  extensor are wrong.
+- **minimizeExtX3.m now has transMode** (arg 6 / env `EXTX3_TRANS`; 1trans = pitch-only
+  Thbr + `[norm(xy),0,z]` origin form; 2trans = two-rotation + `[norm,0,0]`; K =
+  [X2,X1,X2] in both).
+- **Pbr variant test (lower bolt hole vs rib midpoint), 1trans, fronts captured:**
+  essentially IDENTICAL — pick Xi3 0.603 vs 0.621, Xi0 −11.6 vs −10.1 mm, filter 83/90
+  vs 72/90, bio-ext 2.204/2.369/4.727 vs 2.195/2.350/4.727. Extensor Xi identification
+  is robust to the bracket-point choice. Git archaeology: the ORIGINAL "lower bolt hole"
+  is `[-6.26, -29.69, 75.06]` (active through the "results perfect" era); `[-2.65,
+  -54.71, 75.06]` later inherited that comment and is now labeled "lower section".
+- **Extensor front collapse:** with Xi1/Xi2 locked, the 72-row front holds only 4 unique
+  solutions — Xi0 −6..−12 mm, Xi3 0.50–0.78 (all >> 0.02), pinned RMSE 0.96–1.64, bio-ext
+  RMSE 1.99–2.26. Best bio-ext member: Xi0 −6 mm, Xi3 0.504.
+- **Xi3 > 0.35 note:** every screen leader hit my 0.35 grid cap; the extensor CV's own
+  fit chose Xi3 = 0.62. The Xi0↔Xi3 seesaw (both shorten the path) means high Xi3 with
+  large |Xi0| is double-counting — Ben is skeptical of high Xi3; judge on plots.
+- **minimizeExt.m (biomimetic) restored to committed state** — do not add transMode or
+  touch it; Pbr variants are pinned-side only.
+
 ## Active code/model choices (do not silently change)
 
 - `minimizeFlxPin2brk.m` — two-bracket pinned-flexor evaluator; signature
@@ -108,9 +317,15 @@ changes the identified stiffness dramatically (one 4 cm move swung flexor Xi1 by
 - `Dig_*` analysis harnesses (cwd = `Testing_Data\2022_02_Festo`; Functions,
   Functions\ModernRobotics, Robot_Data on the path; outputs to `Dig_out\`):
   `Dig_crossPredict`, `Dig_CVpatterns`, `Dig_ExtPinX3_CV`, `Dig_ExtPinX3_Xi3map`,
-  `Dig_FlxPin_2brkt`, `Dig_FlxPin_2brkt_plots`, plus `Dig_FlxPin_2brkt_picksScan` and
+  `Dig_FlxPin_2brkt`, plus `Dig_FlxPin_2brkt_picksScan` and
   `Dig_allbpaNumHoldScan` (both still UNTESTED end-to-end), and the biomimetic chain
-  `Dig_FlxBio_dubfilt/_handtune/_refine`. Caveat: the Dig_FlxBio_* scripts hardcode
+  `Dig_FlxBio_dubfilt/_handtune/_refine/_refine2` (refine2 STAGED, not yet run). New
+  (desktop, 2026-09-09): `Dig_ExtPinX3_screen` (flexor candidates × Xi3 grid through
+  both extensors), `Dig_ExtPin_frontBio` (extensor front → bio-ext scan), 
+  `Dig_FlxPin_frontScan` (flexor front → bio-flexor), `Dig_FlxPin_cornerCheck` (direct
+  Xi check vs pinned baseline). `Dig_FlxPin_2brkt_plots` was DELETED 2026-09-09 — the
+  driver's RESULTFILE resume path covers plotting (load mat, set PICK, run). Caveat: the
+  Dig_FlxBio_* scripts hardcode
   `D:/GitHub/...` paths (written on easteregg2), and dubfilt pools the pre-archive
   8-front layout (full/noT5 mats have since moved to `old_T3_results\`).
 
@@ -129,6 +344,12 @@ changes the identified stiffness dramatically (one 4 cm move swung flexor Xi1 by
 5. If you change a model constant (bracket point, K order, bounds, angle correction),
    say so loudly and record the OLD and NEW values in your report.
 6. Plot-quality bar: journal-publication ready if you make plots; otherwise make none.
+7. **2brk drivers keep Ben's "%% Pick best solution (later, flexible)" section VERBATIM**
+   (lowercase `pick`, commented `sol_actual` lines, hand-editable hardcoded k1/k2/k3, the
+   two disp tables and two Mean fprintf lines) — only the evaluator call line may carry
+   the extra evaluator arguments. Do not rework it into a strict or mean-of-all-tests
+   version. The driver's `RESULTFILE` line loads a saved mat and skips the CV (set '' to
+   run fresh); `TRANSMODE` must match the loaded file.
 
 ## Open questions you may be asked to work on
 
@@ -163,3 +384,15 @@ work. Before finishing, either tell Ben to paste this to ZCode, or (preferred) w
 Do not commit; Ben handles git. ZCode will verify, re-test, and fold the work in.
 (The current `CHATGPT_REPORT.md` is the 2026-09-08 Overleaf dissertation session — append
 a new dated section rather than overwriting it.)
+- **Front reproducibility (2026-09-09/10):** the noT3newXi-pair extensor CV rerun with a
+  fresh GA seed reproduced the front EXACTLY (same 4 unique members, same ranking) — the
+  collapsed 4-member family is stable. Captured front:
+  `minimizeExt10mmX3_results_20260910_noT3.mat` (scan it with `Dig_ExtPin_frontBio.m`).
+- **noT3 naming:** the desktop's current noT3 pair (new bounds + corrected 47 cm) uses
+  plain `noT3` tags; the old-bounds campaign pair is archived in `Dig_out\old_bounds\`.
+  If the laptop session also produced 20260908 noT3 mats, disambiguate before trusting
+  either.
+- **Results tracking:** Ben will create his own pivot table for tracking Xi results across
+  evaluators/configurations (stated 2026-09-10). Don't build unprompted tooling; when he
+  defines the format, maintain/populate it. Until then: present results as simple tables
+  with all 3 GoF (RMSE, FVU, MaxResidual) and always name the source .mat file.
