@@ -19,7 +19,7 @@ EQS = {
     "lm":      r"$l_m \,=\, l_{LMT} \,-\, 2\,l_{fitting} \,-\, \chi_0 \;[-\, \Delta l]$",
     "kbr":     r"$\mathbf{K}_{br} \,=\, \mathrm{diag}(\chi_1, \chi_2, \chi_1) \qquad k_{\hat{u}} \,=\, \left(\hat{u}^{\,\mathsf{T}} \mathbf{K}_{br}^{-1} \hat{u}\right)^{-1}$",
     "series":  r"$k_{eq} \,=\, \left(k_{\hat{u}}^{-1} + k_{ten}^{-1}\right)^{-1} \qquad F_{620}(l_0)\, F^*\!\left(\varepsilon^*(\delta), P^*\right) - k_{eq}\,\delta \,=\, 0$",
-    "wrap":    r"$\Delta l \,=\, \chi_3\, R\, \left|\theta_{wrap} - \theta_k\right| \zeta^2 \qquad \zeta \,=\, 1 - \varepsilon^* \qquad (\theta_k \leq \theta_{wrap})$",
+    "wrap":    r"$\Delta l \,=\, \chi_3\, R\, \left|\theta_{wrap} - \theta_k\right| \zeta^2$",
     "torque":  r"$M \,=\, r_k \times F \qquad \vec{r} \,=\, \vec{p} - \hat{u}\left(\hat{u} \cdot \vec{p}\right)$",
     "xi_table": r"$\chi_0\ \mathrm{[mm]} \quad \chi_1, \chi_2\ \mathrm{[N/m]} \quad \chi_3\ \mathrm{[-]}$",
 }

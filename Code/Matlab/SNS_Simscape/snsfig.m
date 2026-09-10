@@ -2,14 +2,15 @@ function h = snsfig(cmd, varargin)
 % SNSFIG  Drawing primitives for journal-style SNS circuit diagrams.
 %
 % Diagram language (Szczecinski et al. 2017 Fig. 2 / Rybak & Shevtsova /
-% Animatlab conventions, per Ben 2026-09-09):
-%   neuron      = open circle, black edge, white fill
-%   afferent    = open circle with Ia/Ib label
-%   muscle      = fusiform ellipse (light green, Okabe-Ito tint)
+% Animatlab conventions, per Ben 2026-09-09; restyled 2026-09-10):
+%   neuron      = open circle, heavy black edge, white fill
+%   afferent    = open circle with Ia/Ib label (light green-gray)
+%   muscle      = fusiform ellipse (salmon red, journal muscle convention)
 %   EXCITATORY  = white triangle with black edges, tip pointing into target
 %   INHIBITORY  = solid black circle
-% Shape is the primary code (colorblind-safe by construction); accents use
-% the Okabe-Ito CVD-safe palette. Draw in data units with axis equal.
+% Line weight 1.8 pt (Ben, 2026-09-10: journal-weight strokes).
+% Shape is the primary code (colorblind-safe by construction). Draw in data
+% units with axis equal.
 %
 % Commands:
 %   snsfig('neuron', x, y, r, label)          open circle + centered label
@@ -31,7 +32,7 @@ switch lower(cmd)
         lbl = varargin{4}; sub = '';
         if numel(varargin) >= 5, sub = varargin{5}; end
         th = linspace(0, 2*pi, 73);
-        h = patch(x + r*cos(th), y + r*sin(th), [1 1 1], 'EdgeColor', 'k', 'LineWidth', 1.1);
+        h = patch(x + r*cos(th), y + r*sin(th), [1 1 1], 'EdgeColor', 'k', 'LineWidth', 1.8);
         if ~isempty(lbl)
             text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontWeight', 'bold', 'FontSize', 8);
         end
@@ -43,7 +44,7 @@ switch lower(cmd)
         lbl = varargin{4}; sub = '';
         if numel(varargin) >= 5, sub = varargin{5}; end
         th = linspace(0, 2*pi, 73);
-        h = patch(x + r*cos(th), y + r*sin(th), [0.95 0.95 0.95], 'EdgeColor', 'k', 'LineWidth', 1.1);
+        h = patch(x + r*cos(th), y + r*sin(th), [0.85 0.93 0.85], 'EdgeColor', 'k', 'LineWidth', 1.8);
         text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontWeight', 'bold', 'FontSize', 8);
         if ~isempty(sub)
             text(x, y - r - 1.6, sub, 'HorizontalAlignment', 'center', 'FontSize', 7.5, 'FontAngle', 'italic');
@@ -52,14 +53,14 @@ switch lower(cmd)
         x = varargin{1}; y = varargin{2}; w = varargin{3}; ht = varargin{4};
         lbl = varargin{5};
         th = linspace(0, 2*pi, 73);
-        h = patch(x + (w/2)*cos(th), y + (ht/2)*sin(th), [0.82 0.92 0.87], ...
-            'EdgeColor', 'k', 'LineWidth', 1.1);
+        h = patch(x + (w/2)*cos(th), y + (ht/2)*sin(th), [0.94 0.76 0.74], ...
+            'EdgeColor', 'k', 'LineWidth', 1.8);
         text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontSize', 7.5);
     case 'box'
         x = varargin{1}; y = varargin{2}; w = varargin{3}; ht = varargin{4};
         lbl = varargin{5};
         h = rectangle('Position', [x - w/2, y - ht/2, w, ht], 'Curvature', 0.18, ...
-            'FaceColor', [0.93 0.93 0.93], 'EdgeColor', 'k', 'LineWidth', 1.1);
+            'FaceColor', [0.93 0.93 0.93], 'EdgeColor', 'k', 'LineWidth', 1.8);
         if contains(lbl, newline)
             text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontSize', 8);
         else
@@ -69,11 +70,11 @@ switch lower(cmd)
         x1 = varargin{1}; y1 = varargin{2}; x2 = varargin{3}; y2 = varargin{4};
         st = '-';
         if numel(varargin) >= 5, st = varargin{5}; end
-        h = line([x1 x2], [y1 y2], 'Color', 'k', 'LineStyle', st, 'LineWidth', 1.1);
+        h = line([x1 x2], [y1 y2], 'Color', 'k', 'LineStyle', st, 'LineWidth', 1.8);
     case 'edgeR'
         % segment from source point, stopping at radius r around destination
         xs = varargin{1}; ys = varargin{2}; xd = varargin{3}; yd = varargin{4};
-        r = varargin{5}; st = '-'; lw = 1.1;
+        r = varargin{5}; st = '-'; lw = 1.8;
         if numel(varargin) >= 6, st = varargin{6}; end
         if numel(varargin) >= 7, lw = varargin{7}; end
         d = [xd - xs, yd - ys]; L = norm(d); u = d / L;
@@ -89,7 +90,7 @@ switch lower(cmd)
         b1 = [x, y] + u*(s/2) + n*(s*0.55);
         b2 = [x, y] + u*(s/2) - n*(s*0.55);
         h = patch([tip(1) b1(1) b2(1)], [tip(2) b1(2) b2(2)], [1 1 1], ...
-            'EdgeColor', 'k', 'LineWidth', 1.1);
+            'EdgeColor', 'k', 'LineWidth', 1.8);
     case 'inh'
         x = varargin{1}; y = varargin{2}; s = varargin{3};
         th = linspace(0, 2*pi, 49);
@@ -123,6 +124,6 @@ function h = annotation_ne_arrow(x1, y1, x2, y2, st, col)
 d = [x2 - x1, y2 - y1]; L = norm(d); u = d / L; n = [-u(2), u(1)];
 ah = min(1.8, L/4); aw = ah * 0.55;
 bx = x2 - u(1)*ah; by = y2 - u(2)*ah;
-h = line([x1 bx], [y1 by], 'Color', col, 'LineStyle', st, 'LineWidth', 1.1);
+h = line([x1 bx], [y1 by], 'Color', col, 'LineStyle', st, 'LineWidth', 1.8);
 patch([x2 bx + n(1)*aw bx - n(1)*aw], [y2 by + n(2)*aw by - n(2)*aw], col, 'EdgeColor', col);
 end

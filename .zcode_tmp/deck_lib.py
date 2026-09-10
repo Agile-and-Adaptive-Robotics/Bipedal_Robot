@@ -50,6 +50,8 @@ def _bg(slide):
     slide.background.fill.solid()
     slide.background.fill.fore_color.rgb = WHITE
 
+bg = _bg  # public alias (star-import skips underscore names)
+
 def tx(slide, x, y, w, h, text, size=16, color=TEXT, bold=False, italic=False,
        align=PP_ALIGN.LEFT, font=FONT, anchor=MSO_ANCHOR.TOP, spacing=1.0, wrap=True):
     tb = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
@@ -100,7 +102,7 @@ def card(slide, x, y, w, h, fill=CARD, line=None, radius=0.08, shadow=False):
     sp.text_frame.paragraphs[0].text = ""
     return sp
 
-def pic(slide, path, x, y, w=None, h=None, box=None, align="center", valign="middle"):
+def pic(slide, path, x=0, y=0, w=None, h=None, box=None, align="center", valign="middle"):
     """Fit image by aspect ratio. Give w or h, or box=(bx,by,bw,bh)."""
     if box:
         bx, by, bw, bh = box
@@ -118,7 +120,7 @@ def pic(slide, path, x, y, w=None, h=None, box=None, align="center", valign="mid
         w = h * a
     return slide.shapes.add_picture(path, Inches(x), Inches(y), Inches(w), Inches(h))
 
-def eq(slide, name, x, y, h=0.5, box=None):
+def eq(slide, name, x=0, y=0, h=0.5, box=None):
     p = os.path.join(EQ, f"{name}.png")
     return pic(slide, p, x, y, box=box, h=h if not box else None)
 
