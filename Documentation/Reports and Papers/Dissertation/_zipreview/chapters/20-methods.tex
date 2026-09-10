@@ -1,0 +1,423 @@
+\chapter{Materials and Methods}\label{ch:methods}
+
+{\doublespacing\normalsize\upshape
+\noindent Publication note: Sections~\ref{sec:force_model}--\ref{sec:force_experiment} and the actuator characterization results reported in Chapter~\ref{ch:results} appeared in \citet{bolen_2026} (Bolen, Elzein, Pang, and Hunt, \emph{Actuators}, 2026). Sections~\ref{sec:robot_model}--\ref{sec:improved_model} and the knee torque results reported in Chapter~\ref{ch:results} are also the subject of an unpublished manuscript in preparation by Bolen, Burgess, Morrow, Elzein, Pang, Scharzenberger, and Hunt \citep{bolen_isometric_2025}. This manuscript has not been submitted for publication. For both works, B.B.\ performed the conceptualization, methodology, software, validation, formal analysis, investigation, data curation, visualization, and original draft preparation; M.E., L.P., L.B., and C.M.\ contributed methodology, software, investigation, and data curation; and A.H.\ supervised the work, administered the projects, and acquired funding. All co-authors contributed to writing, review, and editing.\par}
+
+\section{Overview}\label{sec:methods_overview}
+
+The experimental program of this dissertation proceeds from the actuator to the joint. Because the robot joints are driven by braided pneumatic actuators (BPAs), the foundation of any torque prediction is an accurate model of the force produced by a single actuator as a function of its length, pressure, and contraction. To measure artificial muscle force as a function of length and pressure, we built a test jig from extruded aluminum and 3D printed parts. Festo BPAs with \qtylist{10;20}{\mm} uninflated diameters were tested with various resting lengths and different amounts of contraction. These data are used to develop an improved model that more accurately predicts maximum muscle force based on the resting length $l_0$, current muscle length $l_\text{m}$, and pressure $P$ (Sections~\ref{sec:force_model} and~\ref{sec:force_experiment}).
+
+With the actuator model in hand, the focus shifts to the joint. This study begins with building a jig to measure knee torque produced by BPAs at various knee angles ($\theta_\text{k}$). With the expectation that measured torque will be less than that predicted by the model, the robot muscle arrangement and knee design are simplified to elucidate the variables that most affect the results. Two distinct joints are used and tested: a simplified pinned knee joint and a biomimetic knee \citep{steele_biomimetic_2018}. Each joint is driven by a single flexor and a single extensor muscle. Variations were made to the muscle origin/insertion locations, resting lengths, diameters, and whether they used an artificial tendon. The results are compared with two models, and the new data are used to create an improved torque model that accounts for system compliance and muscle wrapping (Sections~\ref{sec:robot_model}--\ref{sec:improved_model}).
+
+\section{Actuator Force Model}\label{sec:force_model}
+
+
+The actuator force model used throughout this dissertation is described here. First, the amount of contraction ${varepsilon}$ in a BPA is calculated as
+
+\begin{equation}
+    {\varepsilon} = \frac{(l_{0}-l_\text{m})}{l_{0}} \label{eq:strain}
+\end{equation}
+
+where $l_{0}$ is uninflated resting length of the BPA measured from hose clamp to hose clamp. Current muscle length is $l_\text{m}$.
+
+Similarly, ${\varepsilon_{620}}$ is the amount of contraction in a BPA without external load when inflated at $\qty{620}{\kPa}$, calculated as 
+
+\begin{equation}
+    \varepsilon_{620} = \frac{(l_{0}-l_{620})}{l_{0}} \label{eq:max_strain}
+\end{equation}
+
+where $l_{620}$ is the muscle length measured at \qty{620}{\kPa} and free from external loads. 
+
+The amount of relative contraction of a BPA $\varepsilon^*$ can then be calculated by dividing equation \eqref{eq:strain} by \eqref{eq:max_strain}, such that
+
+\begin{equation}
+    \varepsilon^* = \frac{\varepsilon}{\varepsilon_{620}} \label{eq:rel_strain}
+\end{equation}
+
+describes the BPA's current contraction as a normalized percentage of it's total.
+
+The amount of normalized isometric force $F^*$ in a Festo BPA is then calculated as
+\begin{equation}
+F^*(\varepsilon^*,P^*)=
+\begin{cases}
+\begin{aligned}
+c_0\cdot\bigl(\exp(-c_1 \cdot \varepsilon^*)-1\bigr)
++ P^*\cdot\exp\!\bigl(-c_2(\varepsilon^*)^{2}\bigr)
+\end{aligned}
+& \text{for } F^*>0\\[10pt]
+0
+& \text{for } F^*\le 0
+\end{cases}\label{eq:Fstar}
+\end{equation}
+
+where $P^*$ is pressure $P$ normalized by \qty{620}{\kPa}. BPA diameter dependent coefficients are determined by the actuator characterization experiments reported in Chapter~\ref{ch:results} (Table~\ref{tab:Fstar}).
+
+The maximum force $F_{max}$ in a BPA is calculated as
+
+\begin{equation}
+    F_{max}(l_{0},P_\text{max}) = a_1 \cdot P \cdot \arctan{(a_2 \cdot P \cdot (l_{0}-0.0075))} \label{eq:Fmax_3D}
+\end{equation}
+
+with coefficients determined by the actuator characterization experiments reported in Chapter~\ref{ch:results} (Table~\ref{tab:Fmax}). When maximum system pressure is set to $P=\qty{620}{\kPa}$, $F_\text{max}(l_{0},620) = F_{620}(l_{0})$. Multiplying \eqref{eq:Fstar} by \eqref{eq:Fmax_3D} yields
+
+ \begin{equation}
+   F(\varepsilon^*,P^*,l_{0}) = F^*(\varepsilon^*,P^*) \cdot F_{620}(l_{0}) \label{eq:force}
+\end{equation}
+
+as the equation for isometric force $F$ in a Festo BPA.
+
+\section{BPA Isometric Force Characterization Experiment}\label{sec:force_experiment}
+
+
+To measure artificial muscle force as a function of length and pressure, we built a test jig from extruded alumnium and 3D printed parts. Festo BPAs with \qtylist{10;20}{\mm} diameter were tested with various resting lengths and different amounts of contraction. These data are used to develop an improved model that more accurately predicts maximum muscle force based on $l_0$, current muscle length $l_{m}$, and pressure $P$. The results are compared with existing models and the new data are used to create an updated model. 
+
+A test jig was made of 80/20 brand 1515 series extruded aluminum (Figure~\ref{fig:testJig}). Artificial muscles were placed vertically in the jig one at a time. The upper end was attached to a load cell.
+Force data was collected using a CALT DYLY-103 100 kg S-shaped load cell for the $\phi$\qty{10}{\mm} BPAs and a Loadstar RAS1-2HKS-S for the $\phi$\qty{20}{\mm} BPAs. The was load cell was used in conjunction with a HX711 Load Cell Amplifier. Pressure data was obtained from a Freescale MPX5700 GP \qty{5}{\volt} pressure sensor. Building air supply pressure was controlled with two pressure regulators in series. The first was a Parker model 20R113GC $0-120\,\text{psi}$ pressure regulator. The second was a Husky $3/8\,\text{in.}$ High Performance Air Regulator HDA72200. A Festo VTUG-10-MRCR-S1T-26V20-T516LA-UL-532S-8K valve manifold VTUG-G was used to deliver air from the pressure regulator to the actuator. This manifold is comprised of eight two-in-one bidirectional normally closed Festo VUVG-S10-T32C-AZT-M5-1T1L valves. 
+
+Pressure and load cell amplifier data were sent to MATLAB 2021b via an Arduino Uno style Sparkfun BlackBoard C microcontroller. The computers that used MATLAB were running either Windows 10 or Windows 11. During phases when the Arduino was collecting force and pressure data to send to MATLAB, the Arduino would also trigger (via MATLAB) an Onsemi 2N4401 NPN transistor to make the valve manifold open or close the valve. For other data collection, the valve was manually opened and closed. %BB: Whole paragraph is new to give specific equipment part numbers, models, and software version.
+
+The inner distance between the hose clamps on each BPA was measured with a FANUC tape measure to determine the muscle's length $l$ and resting length ($l_0$). This is how \citet{festo_2026} defines $l_0$, although in \citet{hunt_modeling_2017} it was measured to also include end cap length. We then inflated each BPA to $P_{620}=\qty{620}{kPa}$, with one end allowed to move freely in the axial Degree of Freedom (DoF), and measured the length $l_{620}$ to calculate maximum contraction at \qty{620}{\kPa} using Equation~(\ref{eq:max_strain}). The distance between the crossmembers was then controlled to obtain different amounts of contraction, the muscles were inflated to various pressures, and the contractile force was recorded at the pressure--contraction pairs. This was done for $\phi$\qty{10}{\mm} BPA resting lengths ($l_0$) of \SIrange[range-phrase=--]{112}{518}{\mm}. For $\phi$\qty{20}{\mm} BPAs, resting lengths ($l_0$) of \SIrange[range-phrase=--]{300}{509}{\mm} were used.
+
+\begin{figure}[htbp]
+   \begin{center}
+   \hspace{-11mm} \includegraphics[width=0.75\textwidth]{01_testJigs1.pdf}
+   \end{center}
+    \caption{A picture of a BPA in the isometric force test stand with components labeled.}\label{fig:testJig}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Robot Leg Model and Knee Test Stands}\label{sec:robot_model}
+
+
+The primary components of the robot leg are the knee joint, femur, tibia, BPA assemblies, and artificial tendons (Fig. \ref{fig:testJigs}\textbf{A--C}). The artificial bone components are 3D printed using a combination of Onyx, carbon fiber, and high-strength high-temperature fiberglass on Markforged Onyx One and Mark Two printers. Onyx is a proprietary Markforged material that consists of chopped carbon fiber in nylon. Artificial tendons are made with Shimano bicycle brake cable. 
+%3/16 inch braided steel wire rope for the $\phi$\qty{40}{\mm} BPAs. 
+
+\begin{figure}[htbp]
+    \begin{center}
+    \includegraphics[width=0.75\textwidth]{testJigs.pdf}
+    \end{center}
+    \caption{\textbf{(A)} CAD solid model assembly of the revolute joint knee in the test stand. \textbf{(B)} 1-DoF pinned-joint robot knee in the test apparatus with important components labeled. Leg is shown with 30 degrees flexion, i.e. $\theta_\text{k} = \ang{-30}$. \textbf{(C)} Picture from isometric torque testing. Setup shows the revolute knee configured for a test of the extensor BPA. The knee is flexed with $\theta_\text{k} = \ang{-120}$. Also note the compressed shape of the inflated BPA on the knee during this high degree of flexion. }\label{fig:testJigs}
+\end{figure}
+
+The leg assembly geometry and dimensions are based on bones scans of a $6 \, \text{ft}$  (\qty{1.83}{\metre}) tall person \citep{bolen_determination_2019,seth_opensim_2018,delp_interactive_1990,delp_opensim_2007}. Two knee joints were tested, one pure rotational joint, and one biomimetic joint with rotation and translation. Each joint is driven by two antagonistic Festo actuators. Both robot joints have the same center of rotation in the femur frame at $\theta_\text{k}=0 \deg$.
+
+Details on the biomimetic robot knee used in this study can be found in \cite{steele_biomimetic_2018,steele_development_2017,steele_biomimetic_2018-1}. In brief, this 1-DoF joint (Fig. \ref{fig:ICR}) uses a four-bar linkage to change the effective moment arm during rotation. The intersection point of the internal crossed links define the instantaneous center of rotation (ICR). This causes the joint ICR location in the femur frame to translate posteriorly in the $X$ direction and distally in the $Y$ direction except for a brief proximal move near full flexion. Reference coordinate frames are given by \citet{wu_for_1995,wu_isb_2002}. This is similar to how the human knee behaves \citep{bolen_determination_2019,morrow_optimization_2020,seth_opensim_2018,delp_opensim_2007,delp_interactive_1990}. The correct location of the ICR is important for both theoretical and experimental torque calculations.
+
+\begin{figure}[htbp]
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{KneeICR.eps}
+    \end{center}
+    \caption{ICR for biomimetic robot knee as a function of knee angle. Measured from $\theta_{1}$ on the tibia. Plot is overlayed on model of the knee at $\theta_\text{k}=0^\circ$ (solid line), and $-60^\circ$ and $-120^\circ$ (dotted dash lines). White circles represent measured points in $-15^\circ$ increments from $-150^\circ$ to $-15^\circ$, $-5^\circ$ increments from $-15^\circ$ to $0^\circ$, and then at $2^\circ$, $5^\circ$, and $10^\circ$.}\label{fig:ICR}
+\end{figure}
+
+One uniarticular knee extensor and one uniarticular knee flexor are used to actuate the joint. Each knee joint type was tested using $\phi$\qty{10}{\mm} Festo BPAs. Additionally, the biomimetic knee joint was tested using a $\phi$\qty{20}{\mm} Festo BPA. Each artificial muscle was pinned at the muscle origin location on the femur while the other end was either pinned or attached to the muscle insertion location on the tibia via an artificial tendon.
+
+Moment arms are calculated using vector components between muscle locations and the joint's instantaneous center of rotation (ICR). Given a vector $\Vec{d}$ from a joint to the line of action of the force vector $\Vec{F}$, the moment arm $\Vec{r}$ is the shortest distance to this line of action. In this study, it is calculated using the method specified by \citet{young_analyzing_2019}. The scalar moment arm, $r_{k}$, about the $z_{k}$ axis (i.e., the $Z$ axis in the knee frame) is calculated as 
+
+\begin{equation}
+    r_{k} = \Vec{p_{proj,xy}} \cdot \frac{\Vec{p_f} \times \hat{z_{k}}} { \norm{\Vec{p_f} \times \hat{z_{k}} }} \label{eq:project_ma}
+\end{equation}
+
+where $\Vec{p_{proj,xy}}$ is the free muscle segment projected onto the $XY$--plane, which is normal to the joint axis. $\Vec{p_f}$ is the projected muscle segment vector. Moment arm is calculated in the tibial body frame.
+
+Details of the existing model and the torque calculation methodology in the modeled robot are given by \citet{bolen_determination_2019, morrow_optimization_2020}.
+
+
+\section{Knee Torque Data Collection and Equipment}\label{sec:torque_equipment}
+
+
+A test jig was built to collect knee torque measurements at different knee angles over its range of motion. The test stand frame is made predominantly out of 80/20 1515 series extruded aluminum components. The knee joint is free to rotate the tibia while the femur is fixed to the frame. A force sensor has one end connected to the tibia and the other is connected to a swing arm. The swing arm is tied to a winch with $3/16\; \text{inch}$ Kevlar rope from Quality Nylon Rope routed over intermediate idler pulleys (see Fig. \ref{fig:testJigs}\textbf{B} and \ref{fig:testJigs}\textbf{C}). At each measured position of $\theta_{k}$ the winch would be locked and the BPA would be inflated and then deflated. This test procedure kept the measured results as isometric as possible.  The knee joint is co-axial with gravity to eliminate gravitational torque (see Fig. \ref{fig:testJigs}\textbf{A} and Fig. \ref{fig:testJigs}\textbf{C}).
+
+Force data was collected using one of two different sensors. The first is a MODERN STEP $\qty{300}{\kilo\gram}$ digital crane scale. The second force sensor is a CALT DYLY-103 $\qty{100}{\kilo\gram}$ S shaped load cell. The load cell is used in conjunction with a HX711 Load Cell Amplifier. Pressure is measured with a Freescale MPX5700 GP $\qty{5}{\volt}$ pressure sensor. Building air supply pressure is controlled with two pressure regulators in series. The first is a Parker model 20R113GC $0-120\; \text{psi}$ pressure regulator. The second is a Husky $3/8 \; \text{inch}$ High Performance Air Regulator HDA72200. A Festo VTUG-10-MRCR-S1T-26V20-T516LA-UL-T532S-8K valve manifold was used to supply air to the actuator. Pressure and load cell amplifier data are sent to MATLAB via an Arduino Uno style Sparkfun BlackBoard C microcontroller. 
+
+%The computers that used MATLAB were running either Windows 10 and Windows 11.During phases when the Arduino was collecting $F$ and $P$ data to send to MATLAB, the Arduino would also trigger (via MATLAB) an Onsemi 2N4401 NPN transistor to make valve manifold open or close the valve. For other data collection the valve was manually opened and closed.
+
+The length measurements were made using a tape measure. When there was sufficient curvature in the BPA during knee extensor torque tests, a flexible piece of string was used to mark the axial length and then transferred to the tape measure. Angle measurements were taken with a Medigauge digital electronic goniometer or with MALENOO analog goniometers of 6, 8, or 12 inch lengths.  
+
+
+\section{Hybrid Torque Calculation Method}\label{sec:hybrid_method}
+
+
+A Hybrid Torque calculation method was developed to help uncover inconsistencies between the model and recorded torque values. This method measures the actual muscle length and angles of the robot to calculate force and joint torque. With this method, it is easier to determine which parts of the torque equation did not achieve their predicted value and provide a correction to that part of the equation. The classical mechanics way to calculate the torque $\Vec{M}$, about a joint is to take the cross product of distance, $\Vec{d}$, and force, $\Vec{F}$
+
+\begin{equation}
+    \Vec{M} = \Vec{d} \times \Vec{F} \label{eq:M_vec}
+\end{equation}
+
+where distance $\Vec{d}$ and force $\Vec{F}$ are described in the previous section. Knee torque is the scalar torque $M$ about the $Z$ axis, which can simplify Eq. \ref{eq:M_vec} to
+
+\begin{equation}
+    M = r \times F \label{eq:M_scalar}
+\end{equation}
+
+where $r$ is the moment arm measured by a tape measure, and $F$ is the scalar force, calculated by measuring the BPA's $P$, $l_{0}$, $l_{620}$ and $l_\text{m}$ values and using the model fit equations determined in the following section.
+
+
+
+\section{Improved Torque Model}\label{sec:improved_model}
+
+The classical kinematic torque model assumed rigid links and inextensible muscle paths. Data collected during the first flexor experiments (Chapter~\ref{ch:results}) showed that this assumption does not hold for a pneumatic system: measured muscle lengths were consistently shorter than predicted, and measured torque deviated from prediction in a load-dependent manner. This section describes the corrections that were developed to account for a constant length offset, series compliance in the attachment hardware and artificial tendons, and the loss of usable muscle length when a BPA wraps around the joint.
+
+Analysis of measured muscle length data shows that it was consistently shorter than the predicted muscle length at all joint angles. This shorter length results in less muscle force, a shifted RoM, and less torque in the experimental setup. That this shorter length occurs when $\varepsilon=1$ and $F=0$ indicates that a constant length offset should be used. Therefore, to produce an improved torque prediction model, $l_\text{m}$ was recalculated as
+
+\begin{equation}
+    l_\text{m} = l_{LMT} - 2\;l_{fitting} - \chi_{0} 
+    \label{eq:Lm}
+\end{equation}
+
+where $l_{LMT}$ is the path length of the musculotendon from origin to insertion point, $l_{fitting}$ is the length of the end caps, and $\chi_{0}$ is a constant length offset. 
+
+Additionally, as the muscles produce more force, compliant components in the limb segments and attachment hardware deform. This deformation changes the effective braided pneumatic actuator (BPA) length, which alters contraction and therefore changes the force predicted by the BPA model. This effect is most apparent at high forces and low contractions. To correct this error, we approximated the combined hardware compliance using Hooke's law in the bracket's principal directions.
+
+A local bracket frame was established at the attachment bracket. The $\hat{x}_{br}$ direction was aligned with the vector from the bracket reference point to the BPA attachment point and represents the stiffest direction of the bracket. The $\hat{y}_{br}$ direction was chosen to point in the posterior direction with respect to the tibia frame, corresponding to the primary cantilever bending direction (see Fig.~\ref{fig:bktFrame}), while the $\hat{z}_{br}$ direction completes the right-handed frame. The bracket stiffness matrix is modeled as a diagonal matrix to reflect independent stiffness components along its principal axes:
+
+\begin{equation}
+\mathbf{K}_{br} = 
+\begin{bmatrix}
+\chi_{1} & 0   & 0 \\
+0   & \chi_{2} & 0 \\
+0   & 0   & \chi_{1} \\
+\end{bmatrix}
+\label{eq:bktstiffness}
+\end{equation}
+
+The corresponding local compliance matrix is 
+
+\begin{equation}
+\mathbf{C}_{br} = \mathbf{K}_{br}^{-1}
+\label{eq:bktcompliance}
+\end{equation}
+
+Force that doesn't account for deformation is $\mathbf{F}$. The force applied to the bracket was expressed in the bracket frame as $\mathbf{F}'$. This force vector can be written in terms of its magnitude and unit direction as
+
+\begin{equation}
+\mathbf{F}' = \left\| \mathbf{F}' \right\| \hat{\mathbf{u}}
+\label{eq:bktforcevector}
+\end{equation}
+
+where $\hat{\mathbf{u}} = [u_{x}, u_{y}, u_{z}]^{T}$ is the BPA force direction expressed in the bracket frame. The bracket deflection vector, $\boldsymbol{\epsilon}_{br}$, was calculated from Hooke's law as 
+
+\begin{equation} \mathbf{F}' = \mathbf{K}_{br} \: \boldsymbol{\epsilon}_{br}
+\label{eq:bktvectorhooke}
+\end{equation}
+
+Solving Eq. \ref{eq:bktvectorhooke} for the bracket deflection gives
+
+\begin{equation}
+\boldsymbol{\epsilon}_{br} = \mathbf{K}_{br}^{-1} \: \mathbf{F}' = \mathbf{C}_{br} \: \mathbf{F}'
+\label{eq:bktdeflection}
+\end{equation}
+
+Substituting Eq. \ref{eq:bktforcevector} into Eq. \ref{eq:bktdeflection} gives
+
+\begin{equation}
+\boldsymbol{\epsilon}_{br} = \left\| \mathbf{F}' \right\| \mathbf{K}_{br}^{-1} \,\hat{\mathbf{u}}
+\label{eq:bktdeflectionforceunit}
+\end{equation}
+
+For the diagonal stiffness matrix in Eq. \ref{eq:bktstiffness}, Eq. \ref{eq:bktdeflection} is equivalent to the component-wise expression
+
+\begin{equation}
+\boldsymbol{\epsilon}_{br} = \begin{bmatrix} F'_{x,br}/\chi_{1} \\ F'_{y,br}/\chi_{2} \\ F'_{z,br}/\chi_{1} \end{bmatrix}
+\label{eq:bktcomponentdeflection}
+\end{equation}
+
+Although $\boldsymbol{\epsilon}_{br}$ is a three-dimensional deflection vector, the BPA force model depends on the scalar change in effective BPA length ($\delta$). Therefore, only the component of $\boldsymbol{\epsilon}_{br}$ along the BPA line of action directly changes the effective BPA length. This scalar bracket deflection is the projection of $\boldsymbol{\epsilon}_{br}$ onto $\hat{\mathbf{u}}$:
+
+\begin{equation}
+{\delta}_{br} = \hat{\mathbf{u}}^{T} \boldsymbol{\epsilon}_{br}
+\label{eq:bktprojecteddeflection}
+\end{equation}
+
+Substituting Eq. \ref{eq:bktdeflection} into Eq. \ref{eq:bktprojecteddeflection} gives
+
+\begin{equation}
+{\delta}_{br} = \hat{\mathbf{u}}^{T} \, \mathbf{K}_{br}^{-1} \, \mathbf{F}'
+\label{eq:bktprojecteddeflection2}
+\end{equation}
+
+Using Eq. \ref{eq:bktforcevector}, Eq. \ref{eq:bktprojecteddeflection2} becomes
+
+\begin{equation}
+\delta_{br} = \left\| \mathbf{F}' \right\| \hat{\mathbf{u}}^{T} \, \mathbf{K}_{br}^{-1} \, \hat{\mathbf{u}}
+\label{eq:bktprojectedcompliance}
+\end{equation}
+
+The scalar stiffness along the BPA line of action due to the bracket compliance is therefore
+
+\begin{equation}
+k_{\hat{u},br} = \frac{\left\| \mathbf{F}' \right\|}{\delta_{br}} = \left( \hat{\mathbf{u}}^{T} \mathbf{K}_{br}^{-1} \hat{\mathbf{u}} \right)^{-1}
+\label{eq:keff}
+\end{equation}
+
+This projected-compliance form is used because the force is applied along $\hat{\mathbf{u}}$, while the bracket is allowed to deflect independently along its local $\hat{x}$, $\hat{y}$, and $\hat{z}$ directions. The reduced-order Hooke's law expression for the bracket deflection along the BPA line of action is therefore
+
+\begin{equation} \left\| \mathbf{F}' \right\| = k_{eq} \: \delta
+\label{eq:hookereduced}
+\end{equation}
+
+where $k_{eq}$ is calculated with \eqref{eq:keff} when there is no artificial tendon. When an artificial tendon was used, it was modeled as an axial spring with stiffness $k_{ten}$. Since both bracket deflection and tendon stretch reduce the effective BPA length along the actuator line of action, their scalar compliances were added in series:
+
+\begin{equation} k_{eq} = \left( \frac{1}{k_{br}} + \frac{1}{k_{ten}} \right)^{-1}
+\label{eq:equivalentstiffness}
+\end{equation}
+
+Since $\delta$ is the scalar compliance displacement along the BPA line of action, then the compliance-corrected active BPA length used in the force balance is
+
+\begin{equation} l_m(\delta) = l_m^{(0)} - \delta
+\label{eq:activelengthcorrected}
+\end{equation}
+
+where $l_m^{(0)}$ is calculated from \eqref{eq:Lm}.
+
+The corresponding relative contraction is $\varepsilon^*(\delta)$. Since the BPA force depends on contraction, and contraction depends on the compliance displacement, $\delta$ was found using the Newton-Raphson method to solve the nonlinear force-balance equation
+
+\begin{equation} F_{\mathrm{max}} \cdot F_{\mathrm{BPA}}\!\left(\varepsilon^*(\delta),P^*\right) - k_{eq}\,\delta = 0
+\label{eq:complianceforcebalance}
+\end{equation}
+
+After solving Eq. \ref{eq:complianceforcebalance}, the corresponding force magnitude was used in Eq. \ref{eq:bktdeflection} to compute the vector bracket deflection. This deflection was transformed back into the limb reference frame and used to update the BPA attachment location. The routed BPA length, force direction, moment arm, and torque were then recalculated using the updated attachment location. In the present implementation, the optimized stiffness terms $\chi_{1}$ and $\chi_{2}$ were treated as effective compliance parameters for the attachment system rather than direct measurements of an isolated bracket. This allowed unmodeled compliance in the surrounding hardware to be represented by the reduced-order stiffness model.
+
+
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1\textwidth]{bktFrame.pdf}
+\end{center}
+\caption{Bracket frame orientations for: \textbf{(A)} Flexor configuration on the pinned knee, \textbf{(B)} extensor configuration on the pinned knee, \textbf{(C)} flexor and extensor configurations on the biomimetic knee with $\phi$\qty{10}{\mm} BPAs, and \textbf{(D)} flexor configuration on the biomimetic knee with the $\phi$\qty{20}{\mm} BPA.}
+\label{fig:bktFrame}
+\end{figure}
+
+Multiobjective optimization using \texttt{gamultiobj} in MATLAB was used to determine the length offset ($\chi_{0}$) and the stiffness terms ($\chi_{1}$ and $\chi_{2}$) until the error between the model and the experimental data was minimized for the $l_{0}=\qty{48.5}{\cm}$ flexor BPA (Fig.~\ref{fig:FlxPin_group}\textbf{C}). Because the bracket forms an arch shape and extends for \qty{75}{\mm} in the $Z$ direction, the extensor configuration required an additional correction. The inner side of a BPA that bends over the joint experiences less tensile stress than the outer side, creating a force imbalance and a loss of part of the arc length of the BPA as usable length. An additional optimization term $\chi_{3}$ was introduced to capture this wrapping loss, such that
+\begin{equation}
+    \Delta l = \begin{cases}
+     \chi_{3}\;R\;\abs{ \theta_\text{wrap}-\theta_\text{k}}\;\zeta^2 & \theta_\text{k} \leq      \theta_\text{wrap} \\
+      0 & \theta_\text{k} \geq \theta_\text{wrap}
+     \end{cases}\label{eq:deltaL}
+\end{equation}
+
+where $\Delta l$ is the change in usable length of the BPA, $R$ is the wrapping radius. $\theta_\text{wrap}$ is the knee flexion angle when the BPA starts to bend over the knee joint, determined from solid modeling. $\zeta$ is the additive complement to relative strain, such that
+
+\begin{equation}
+    \zeta = 1-\varepsilon^*  \\
+\label{eq:comp}
+\end{equation}
+
+Combining \eqref{eq:comp} into \eqref{eq:deltaL}, and subtracting $\Delta l$ from  \eqref{eq:Lm} yields
+
+\begin{equation}
+    l_\text{m} = l_{LMT} - 2\;l_{fitting}  - \chi_{0} - \Delta l\label{eq:x3}
+\end{equation}
+
+The optimization algorithm was again \texttt{gamultiobj} in MATLAB. This time, the muscle origins bracket was chosen. The bracket frame is shown in Fig. \ref{fig:bktFrame}\textbf{B}. Since the bracket forms an arch shape and extends for \qty{75}{\mm} in the $Z$ direction, for this configuration only we set $K_{2}$ in the $X_{br}$ direction, and $K_{1}$ in the $Y_{br}$ and $Z_{br}$ directions. The optimization algorithm for this set solves for the best average goodness-of-fit (GoF) measures RMSE, FVU, and maximum absolute residual for two BPAs, while the third one was held out. Three independent rounds of optimization were performed, so that one of each of the BPAs could be held out as validation. Then we picked the solution with the shortest distance between the average normalized GoF and the validation data, while also requiring improved GoF values for all the individual BPAs, with the exception of maximum absolute residual on the $l_{0}=\qty{48.0}{\cm}$ BPA.
+
+The goodness-of-fit metrics used to judge the optimization results are the root mean square error (RMSE), the fraction of variance unexplained (FVU), and the maximum absolute residual, each computed between the measured and predicted isometric torque over the tested range of motion.
+
+\section{Optimization Algorithms and Cost Functions}\label{sec:optimization}
+
+Two distinct optimization problems underpin the results of this dissertation and the design framework built on them. The first is the identification of the correction terms of Section~\ref{sec:improved_model} ($\chi_{0}$, $\chi_{1}$, $\chi_{2}$, and $\chi_{3}$) from the pinned-knee test data. The second is the redesign of the biomimetic knee route geometry --- the BPA origin $\mathbf{p}_{1}$, insertion $\mathbf{p}_{\text{end}}$, resting length, and tendon length (Appendix~\ref{app:model_geometry}) --- so that the flexor and extensor configurations meet or exceed human knee torque capability over the range of motion. Both are carried out in MATLAB \citep{mathworks_optimization_2025}.
+
+The correction-term identification is a genuine multiobjective problem: candidate parameter sets are judged simultaneously on RMSE, FVU, and maximum absolute residual (Section~\ref{sec:improved_model}). It is solved with the genetic multiobjective solver \texttt{gamultiobj}, an implementation of the elitist nondominated-sorting genetic algorithm NSGA-II \citep{deb_nsga2_2002, mathworks_optimization_2025}, which returns a Pareto front of parameter sets from which the adopted solution is selected by the holdout-validation procedure described above. The optimizer parameterization (length offsets in centimeters, stiffnesses on a logarithmic scale) and its bounds are recorded in Appendix~\ref{app:model_geometry}.
+
+The route redesign replaces the multiobjective formulation with a single scalar cost assembled from weighted penalty terms, because the route prediction (contact activation, wrapping, and compliance correction) is expensive to evaluate and only moderately smooth. The cost has the form
+\begin{equation}
+    J = w_{w}\,J_{\text{worst}} + w_{t}\,J_{\text{torque}} + \textstyle\sum_{a} J_{a} + J_{\text{geom}} + J_{\text{len}},
+    \label{eq:opt_cost}
+\end{equation}
+where $J_{\text{worst}}$ is the largest fraction by which robot torque falls short of the human target at any angle across the range of motion, weighted heavily ($w_{w} = 10^{5}$); $J_{\text{torque}}$ is the mean-squared shortfall fraction ($w_{t} = 10^{3}$); the $J_{a}$ are configuration-specific auxiliary penalties described below; and $J_{\text{geom}}$ and $J_{\text{len}}$ are regularizers that keep the endpoints and actuator lengths near their seed values. Human torque targets are computed from the Gait2392 lower-extremity model \citep{delp_opensim_2007, seth_opensim_2018}: the flexor is graded against the biceps femoris short head and the extensor against vastus medialis. Hard constraints (bone clearance, wrap feasibility, actuator strain and contraction limits, tendon geometry) are enforced alongside the cost, and any candidate whose prediction fails is rejected with a prohibitive penalty.
+
+The solution pipeline is common to both configurations. Each run begins with a full sanity evaluation of the seed design and a small smoke test of the solver setup, then executes \texttt{surrogateopt} --- MATLAB's surrogate-assisted global solver for expensive black-box objectives, which builds a spatial interpolation surrogate over sampled candidate points and searches it adaptively \citep{mathworks_optimization_2025} --- for 7,000 evaluations in parallel, and finally refines the best feasible point with \texttt{patternsearch}, a derivative-free mesh-adaptive direct search method \citep{audet_mads_2006, mathworks_optimization_2025}, for 15,000 further evaluations. The entry scripts and their cost functions are archived with the code (\texttt{Opt\_run.m}, \texttt{Opt\_run\_Ext.m}).
+
+Although both configurations share this pipeline, their cost functions differ in ways that reflect the mechanics. The flexor BPA routes around a single moving wrap point, so clearance from the tibia and femoral condyles is enforced by continuous signed-distance constraints, and its cost adds an off-axis torque penalty (torques about the joint axes other than the knee axis, relative to the original single-BPA route) and a penalty if the wrap fails to release cleanly as the knee extends. The extensor BPA wraps over the front of the joint through as many as seven sequential contacts, so clearance is enforced instead by the contact-elimination rule that governs the route, and its cost penalizes torque overshoot above the human curve and excessive actuator contraction, which risks bottoming out at high flexion. The flexor target also carries a required torque margin of 1\% above the human curve, whereas the extensor target is the raw human curve. With two BPAs per joint, the flexor route is mirrored about the mid-sagittal plane and the two actuator forces are summed, while the extensor model scales the force of a single shared route by the actuator count.
+
+\section{Prior Neuromechanical Simulation: The AnimatLab Bipedal Walker}\label{sec:prior_walker}
+
+Before the simulation pipeline of Chapter~\ref{ch:futurework} was defined, the author and Morrow built a neuromechanical model of a bipedal walker in AnimatLab, a 3D graphics environment for constructing biomechanical systems actuated by synthetic neural systems \citep{cofer_animatlab_2010}. The course report describing that model \citep{bolen_design_2020} is summarized here because its biomechanics and network architecture are the direct ancestors of both the current AnimatLab walker model, whose neuron and synapse parameters are documented in Appendix~\ref{app:neuron_equations}, and the two-layer CPG controller planned in Chapter~\ref{ch:futurework}.
+
+The biomechanical plant consisted of nine rigid bodies --- pelvis, thigh, shank, foot, and toe segments --- connected by sagittal-plane hinge joints with human-like rotational capabilities and actuated by antagonistic pairs of Hill-type muscles at the hip, knee, and ankle. The toe joint, the author's addition to the Li design, carried a passive spring instead of a muscle pair, increasing foot compliance and conserving energy; its contribution to push-off would make an interesting study in its own right once the model walks on the ground. The mechanics followed the suspended bipedal walking model of \citet{li_bipedal_2017}, whose CPGs were entrained by heel and toe mechanosensory receptors and hip-angle position sensors standing in for the group-I loading, cutaneous, and hip-joint afferents of the biological scheme --- muscle afferents were not modeled --- and it is worth noting that the Li model required support against falling: a system with only planar joints cannot balance side to side, so lateral stabilization falls to the vestibular layer and hardware design of Chapter~\ref{ch:futurework}.
+
+The synthetic nervous network was built from non-spiking, leaky-integrator neurons and followed the two-layer CPG organization of \citet{deng_neuromechanical_2019}. A rhythm-generator layer set the timing of the system; a pattern-formation layer reshaped the timing signals into phase-appropriate activation of antagonist muscle groups; and a sensorimotor layer containing Renshaw-cell-like recurrent inhibition drove the motor neurons. The sensorimotor layer received Ia (length and velocity) and Ib (tension) afferent feedback from the muscles, but the feedback gains were never systematically tuned, and no ground-contact signals were modeled. Every applied current, synaptic weight, and muscle-tension parameter was set by hand: each was adjusted by trial and error, one at a time, until the three layers oscillated in phase and the motor neurons produced stepping-like activation of the muscle pairs. That hand-tuning consumed the bulk of the project's effort, left no record of the sensitivity of the behavior to individual parameters, and did not generalize when new feedback pathways were added --- limitations that directly motivated the systematic, verification-first tuning approach of Chapter~\ref{ch:futurework}.
+
+\section{Preliminary Neuromechanical Simulation Workflows}\label{sec:preliminary_sim_methods}
+
+Preliminary simulation workflows were assembled to support future integration of the BPA mechanics and synthetic nervous system (SNS). The figures in this section document the biomechanical representations, controller organization, and software implementation. Their purpose is to identify what was constructed; quantitative validation remains separate.
+
+\subsection{AnimatLab Body and Controller Organization}
+
+The walker representation and controller hierarchy are shown in Figures~\ref{fig:animatlab_model_architecture} and~\ref{fig:animatlab_working_gui}. The hierarchy separates rhythm generation, hip control, and knee--ankle pattern formation within left- and right-side neural subsystems. The current AnimatLab working model was instrumented for a new \qty{10}{\second} phase-1 run recording joint, neural, contact-sensory, and body-motion channels. This run was used to inspect recorded signals and simulation behavior, without treating it as evidence of stable walking or effective ground-contact gating. It is distinct from the earlier walker study described in Section~\ref{sec:prior_walker}. Preliminary joint-motion results are reported in Section~\ref{sec:preliminary_sim_results}.
+
+Figure~\ref{fig:animatlab_controller_motifs} illustrates the rhythm-generator, pattern-formation, and sensorimotor organization at the neuron and synapse level. These reference schematics complement the subsystem view by making the antagonist pathways and sensory connections visible.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.64\textwidth,height=0.30\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/OurWalker.png}
+\par\medskip
+\includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/2layerImprove.png}
+\caption[AnimatLab walker and controller hierarchy]{AnimatLab model and architecture illustrations. Top: the segmented walker and labeled hip, knee, ankle, and toe joints. Bottom: the left/right subsystem organization and an expanded view of the left-side rhythm-generator, hip, and knee--ankle modules. These architectural views describe model organization and are not snapshots of the phase-1 trajectory.}
+\label{fig:animatlab_model_architecture}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\begin{minipage}[t]{0.47\textwidth}\centering
+\textbf{(A) Rhythm generator}\par\smallskip
+\includegraphics[width=\linewidth,height=0.20\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/RGnetwork.PNG}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.47\textwidth}\centering
+\textbf{(B) Pattern formation}\par\smallskip
+\includegraphics[width=\linewidth,height=0.20\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/PFnetwork.PNG}
+\end{minipage}
+\par\medskip
+\textbf{(C) Sensorimotor organization}\par\smallskip
+\includegraphics[width=0.76\textwidth,height=0.39\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/sensoryMotor_Network.PNG}
+\caption[AnimatLab controller reference schematics]{Reference schematics of \textbf{(A)} rhythm generation, \textbf{(B)} pattern formation, and \textbf{(C)} sensorimotor organization. Ext and Flx identify antagonist extensor and flexor pathways; IN denotes interneurons, MN motor neurons, and Ia and Ib muscle afferent pathways. Open triangles and filled circles distinguish excitatory and inhibitory synaptic connections. These schematics illustrate controller architecture and are not readouts from the phase-1 run.}
+\label{fig:animatlab_controller_motifs}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]{figs/Preliminary/animatlab_body_gui.png}
+\par\medskip
+\includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]{figs/Preliminary/animatlab_network_gui.png}
+\caption[AnimatLab working-project interface]{The saved AnimatLab working project opened in the application: the biomechanical body at initialization (top) and the expanded left-side controller subsystem (bottom). The workspace tree and property inspector expose the relationship between the body, sensory pathways, and neural modules. These interface captures were acquired without running a new simulation.}
+\label{fig:animatlab_working_gui}
+\end{figure}
+
+\subsection{MuJoCo Conversion and Synthetic BPA Knee}
+
+A reproducible OpenSim-to-MuJoCo conversion workflow was assembled using scripted model repair, MyoConverter, and a documented software environment. Separately, a custom quasi-static BPA model was ported from MATLAB to Python and coupled to MuJoCo tendon kinematics to compute actuator forces and their joint contributions. A minimal SNS with reciprocal inhibition drove a synthetic knee with antagonistic flexor and extensor BPAs. Figure~\ref{fig:mujoco_model_views} distinguishes the converted robot from this separate knee demonstration. The demonstration establishes a controller--actuator--joint interface; it does not establish SNS control of the converted Gait2392 robot or validation of correction-factor-based MuJoCo torque predictions.
+
+\begin{figure}[p]
+\centering
+\begin{minipage}[t]{0.48\textwidth}\centering
+\textbf{(A) Converted robot}\par\smallskip
+\includegraphics[width=\linewidth,height=0.53\textheight,keepaspectratio]{figs/Preliminary/mujoco_converted_robot.png}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.48\textwidth}\centering
+\textbf{(B) Synthetic BPA knee}\par\smallskip
+\includegraphics[width=\linewidth,height=0.53\textheight,keepaspectratio]{figs/Preliminary/mujoco_synthetic_knee.png}
+\end{minipage}
+\caption[MuJoCo model representations]{Native MuJoCo renders of \textbf{(A)} the converted Gait2392 robot at its saved reference pose, with muscle paths visible, and \textbf{(B)} the independent synthetic antagonist-BPA knee at an illustrative static angle of \ang{-35}. Cyan and gold identify its named flexor and extensor tendon routes; transparency exposes the routes through the view. The models are not shown to the same scale. These views document model construction, not SNS control of the converted robot or validated torque predictions.}
+\label{fig:mujoco_model_views}
+\end{figure}
+
+\subsection{Simulink SNS Library and Reflex Topology}
+
+A seven-block Simulink SNS library was also created, comprising a non-spiking neuron, a graded chemical synapse, a spiking leaky integrate-and-fire neuron, Ia and Ib afferents, activation dynamics, and a placeholder BPA force block (Figure~\ref{fig:simulink_sns_implementation}). These components were connected in a reduced-order knee-reflex topology with antagonist actuation, stretch feedback, autogenic inhibition, and reciprocal inhibition (Figure~\ref{fig:simulink_reflex_topology}). The plant used provisional mechanical parameters and was not a completed CAD-coupled Simscape Multibody model. The current saved run was not used to establish quantitative knee-regulation performance.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.95\textwidth,height=0.42\textheight,keepaspectratio]{figs/Preliminary/simulink_sns_library_grid.png}
+\par\medskip
+\includegraphics[width=\textwidth,height=0.21\textheight,keepaspectratio]{figs/Preliminary/simulink_neuron_detail.png}
+\caption[Simulink SNS library and neuron implementation]{Native Simulink diagram exports showing the seven masked library blocks (top) and the internal implementation of the non-spiking neuron (bottom). The library blocks are arranged in a compact display grid for legibility. The BPA force block remains a placeholder. These implementation views do not establish quantitative knee regulation or a completed CAD-coupled Simscape Multibody plant.}
+\label{fig:simulink_sns_implementation}
+\end{figure}
+
+\begin{sidewaysfigure}[p]
+\centering
+\includegraphics[width=\textheight,height=0.79\textwidth,keepaspectratio]{figs/Preliminary/simulink_knee_reflex_arranged.png}
+\caption[Complete Simulink knee-reflex topology]{The complete reduced-order knee-reflex model exported from Simulink. The diagram connects Ia and Ib sensory pathways, excitatory and inhibitory synapses, antagonist motor neurons, activation and BPA force blocks, and the joint dynamics. Blocks and wires were arranged for display; source and destination ports were checked to confirm unchanged connectivity. Mechanical parameters and the BPA force block remain provisional.}
+\label{fig:simulink_reflex_topology}
+\end{sidewaysfigure}

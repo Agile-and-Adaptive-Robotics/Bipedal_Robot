@@ -439,3 +439,30 @@ Scale first — the bundled IK setup consumes its `subject01_simbody.osim` outpu
   results across evaluators/configurations. Do NOT build unprompted tracking tooling for
   it. When he defines the format, future sessions maintain/populate it; until then,
   present results as simple tables with all 3 GoF and always name the source .mat.
+- **Opt_run_Ext with the new Xi pair (2026-09-10, desktop):** completed feasible —
+  ctx (Xi0 -10.1mm, Xi1 4.354e4, Xi2 1.701e4, Xi3 0.621 from the 20260910_noT3 front).
+  Pick: Xi0 -12.3mm, Xi3 0.281 (locked pair 1.448e4/1.355e4 = pass-1 wide-search match).
+  Max path length 0.832 m, contraction 0.69 KMAX, torque margin met (thinnest +0.063% at
+  -18.9 deg), shortfall penalty 0, binding constraint -0.000442 (near-active at optimum).
+  Results: Mesh_Optimization\Results\Vas_Pam_20mm_Result_20260910_{0446,0528}.mat
+  (XiUsed recorded inside). Log: 2022_02_Festo\Dig_out\Opt_run_Ext_newXipair_20260910.log.
+  Launch recipe needs cwd = 2022_02_Festo (OpenSim Vasti txt) AND Code\Matlab on path
+  (Colors.m) AND Mesh_Optimization on path.
+
+## Xi values for the dissertation text (SETTLED 2026-09-10, Ben-approved picks — verified by direct .mat loads)
+
+A separate chat is updating the dissertation text with these. Sources (Testing_Data\2022_02_Festo\):
+
+- **Flexor, pinned 2brk**: minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat, pick 107
+  Xi0 = +8.9 mm (0.0089 m), Xi1 = 5.62e4 N/m, Xi2 = 1.85e4 N/m
+  Pinned per-test RMSE 1.98/1.36/2.22/1.47/1.23 (48/46/47/40cm-t/41cm), all FVU < 0.16
+  1trans twin (minimizeFlxPin10_results_20260908_2brkt_1trans_noT3.mat): Xi0 +5.95 mm, Xi1 4.36e5, Xi2 2e4
+- **Extensor, pinned**: minimizeExt10mmX3_results_20260910_noT3.mat, pick 1
+  Xi0 = -10.1 mm (-0.0101 m), Xi3 = 0.621; Xi1/Xi2 LOCKED to the flexor pair 4.354e4/1.701e4 (never searched)
+  Held-out RMSE 1.04-1.64 vs baselines 2.44-3.62 (72/90 filter pass)
+- **Signs matter**: flexor Xi0 positive, extensor Xi0 negative. Extensor Pbr = rib midpoint
+  [-3.84,-46.44,62.5] (lower bolt hole [-6.26,-29.69,75.06] tested: equivalent, pick Xi3 0.60 vs 0.62).
+- Mesh optimizations with these values: Opt_run_Ext completed feasible
+  (Mesh_Optimization\Results\Vas_Pam_20mm_Result_20260910_0528.mat, XiUsed inside);
+  Opt_run launched with buildKneeFlexorContext20mm.m re-pointed to the 2trans_noT3 pick 107.
+- **FVU caveat**: bio-ext 52cm FVU 2.35 > 1 at this pick — improved vs baseline 4.49 but do not overclaim.

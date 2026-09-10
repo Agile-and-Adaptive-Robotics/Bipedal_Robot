@@ -147,12 +147,14 @@ ctx.wrapReleasePenaltyWeight = 1e3;
 
 ctx.torqueScale = max(1, max(ctx.humanTorqueAbs));
 
-% Two-bracket pinned-flexor fit (origin-side Pbr2), candidate 1 of
-% minimizeFlxPin10_2brk_results_20260907.mat. Xi1/Xi2 are effective
-% system-stiffness parameters; crossPredict_20260907 measured biomimetic
-% flexor RMSE 7.45 -> 3.17 vs the 20260730 single-bracket fit.
-load minimizeFlxPin10_2brk_results_20260907.mat filtered_results xCols
-pick = 1;
+% Two-bracket pinned-flexor fit (Ben, 2026-09-10): 2trans noT3 front (corrected
+% 47cm, new bounds), row 107 -- Xi0 8.9 mm, Xi1 5.62e4, Xi2 1.85e4.
+% Prior 20260907 full-set candidate 1 kept below for reference.
+% load minimizeFlxPin10_2brk_results_20260907.mat filtered_results xCols
+% pick = 1;
+% g = filtered_results(pick,xCols);
+load minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat filtered_results xCols
+pick = 107;
 g = filtered_results(pick,xCols);
 Xi0 = g(1);
 Xi1 = g(2);

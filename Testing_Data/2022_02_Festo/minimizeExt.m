@@ -349,7 +349,7 @@ function [e_axial, e_bendY, e_bendZ, e_cable] = fortz(klass,Fbr,X1,X2,kSpr,delta
     u_hat_all = normalize(Fbr);
     
     % Vectorized k_b computation
-    K = [X1, X2, X2];       %bracket stiffness array
+    K = [X1, X2, X1];       %bracket stiffness array (changed from [X1,X2,X2] per Ben 2026-09-10)
     K_bracket = diag(K);       %bracket stiffness matrix
     C_bracket = diag([1/K(1), 1/K(2), 1/K(3)]);       %project bracket compliance onto force direction
     u_hat = permute(u_hat_all, [3, 2, 1]);  % [1x3xN]

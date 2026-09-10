@@ -396,3 +396,27 @@ a new dated section rather than overwriting it.)
   evaluators/configurations (stated 2026-09-10). Don't build unprompted tooling; when he
   defines the format, maintain/populate it. Until then: present results as simple tables
   with all 3 GoF (RMSE, FVU, MaxResidual) and always name the source .mat file.
+
+## Xi values for the dissertation text (SETTLED 2026-09-10, Ben-approved picks — verified by direct .mat loads)
+
+- Flexor, pinned 2brk: minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat, pick 107
+  (Xi0 = +8.9 mm, Xi1 = 5.62e4 N/m, Xi2 = 1.85e4 N/m; per-test RMSE 1.98/1.36/2.22/1.47/1.23,
+  all FVU < 0.16; 1trans twin = ..._1trans_noT3.mat, Xi0 +5.95 mm, Xi1 4.36e5, Xi2 2e4)
+- Extensor, pinned: minimizeExt10mmX3_results_20260910_noT3.mat, pick 1
+  (Xi0 = -10.1 mm, Xi3 = 0.621; Xi1/Xi2 locked to the flexor pair 4.354e4/1.701e4, never searched;
+  held-out RMSE 1.04-1.64 vs baselines 2.44-3.62; bio-ext 52cm 2.195/2.350/4.727 vs baseline
+  3.032/4.486/5.587 — FVU 2.35 > 1 there, do not overclaim)
+- Signs matter: flexor Xi0 positive, extensor Xi0 negative. Lower-bolt-hole Pbr
+  [-6.26,-29.69,75.06] tested equivalent (Xi3 0.60 vs 0.62). Mesh optimizations
+  Opt_run/Opt_run_Ext ran with these values (Opt_run_Ext results:
+  Vas_Pam_20mm_Result_20260910_0528.mat). Everything above verified by direct .mat loads.
+
+## Rules for the dissertation-text chat (2026-09-10)
+
+1. The dissertation lives in `Documentation\Reports and Papers\Dissertation\ProofFinal\`
+   (LaTeX; main.tex + chapters). Compile via its own setup if asked; do not restructure.
+2. Xi values in the text must match the SETTLED block above exactly, including signs
+   (flexor Xi0 positive, extensor Xi0 negative) and units as written in the text.
+3. If Ben asks about fit quality, the honest summary is: flexor all-5 FVU < 0.16;
+   extensor held-out ~2x better than baseline; bio-ext better than baseline but FVU 2.35 > 1.
+4. Do not run optimizers. Values are settled; text updates only.

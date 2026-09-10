@@ -147,17 +147,22 @@ ctx.KMAX = 0.255;          % KMAX = (rest - kmax)/rest at 620 kPa
 ctx.maxRelStrain = 1.0;    % allow relative strain up to KMAX
 ctx.minStrain = -0.03;
 
-% Cross-validated combo from crossPredict_20260907: Xi1/Xi2 locked to the
-% flexor 2brk fit (advisor requirement: one (Xi1,Xi2) across all four
-% configurations); Xi0/Xi3 refit on the pinned pool {1,2,5,6,7,8}.
-% Beat the published 20260819 fit on the biomimetic extensor
-% (RMSE 1.22 -> 0.74, FVU 0.73 -> 0.26).
-load crossPredict_20260907.mat refit flexor
+% Extensor CV pick (Ben, 2026-09-10): minimizeExt10mmX3 noT3 front, pick 1.
+% Xi1/Xi2 locked to the flexor 2brk pick (4.35e4/1.7e4); Xi0/Xi3 searched on
+% the pinned pool {1,2,5,6,8}. Prior combo kept below for reference.
+% load crossPredict_20260907.mat refit flexor
+% ctx.Xi0 = refit(1);
+% ctx.Xi1 = flexor(2);
+% ctx.Xi2 = flexor(3);
+% ctx.Xi3 = refit(2);
+load minimizeExt10mmX3_results_20260910_noT3.mat filtered_results xCols
+pick = 1;
+g = filtered_results(pick,xCols);
 
-ctx.Xi0 = refit(1);
-ctx.Xi1 = flexor(2);
-ctx.Xi2 = flexor(3);
-ctx.Xi3 = refit(2);
+ctx.Xi0 = g(1);
+ctx.Xi1 = g(2);
+ctx.Xi2 = g(3);
+ctx.Xi3 = g(4);
 
 ctx.wraps = 3;
 

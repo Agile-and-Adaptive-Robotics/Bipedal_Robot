@@ -204,12 +204,12 @@ end % if RESUME == false -- the CV/filter/save run only for a fresh results file
 
 pick = 1;
 sol_actual = filtered_results(pick, xCols);
-% k1 = sol_actual(1);
-% k2 = sol_actual(2);
-% k3 = sol_actual(3);
-k1 = 0.01;
-k2 = 2e4;
-k3 = 0.8e4;
+k1 = sol_actual(1);
+k2 = sol_actual(2);
+k3 = sol_actual(3);
+% k1 = 0.01;
+% k2 = 2e4;
+% k3 = 0.8e4;
 [f, bpa] = minimizeFlxPin2brk(k1, k2, k3, [], USE_BRACKET2, TRANSMODE);  % [f: 5x3], [bpa: full struct]
 
 disp(array2table([k1, k2, k3], 'VariableNames', {'X0', 'X1', 'X2'}));
