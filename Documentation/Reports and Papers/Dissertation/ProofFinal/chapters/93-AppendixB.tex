@@ -1,12 +1,6 @@
 \chapter{Appendix B: Neuron Model Equations}\label{app:neuron_equations}
 
-% TODO: This appendix will contain the neuron and synapse model equations
-% used by SNS-Toolbox (Chapter 6): the non-spiking and spiking neuron
-% membrane equations, synapse conductance models, and the parameter values
-% used for the rhythm generator, pattern formation, and feedback circuits.
-
-
-This appendix documents the neuron and synapse models used by the synthetic nervous systems in this project, both in the current AnimatLab walker models and as they will be instantiated in SNS-Toolbox for the MuJoCo pipeline of Chapter~\ref{ch:futurework}. The current file of record is the instrumented phase-1 walker model (\texttt{Biped\_2xCPG\_wSubs/walk new new tester added 2 axis\_phase1.asim}); the older \texttt{\_Standalone.asim} exports predate the subsystem reorganization and are not used here as the authoritative model state.
+This appendix documents the neuron and synapse models used by the synthetic nervous systems in this project, both in the AnimatLab walker model and in the SNS-Toolbox implementation of the MuJoCo pipeline (Chapter~\ref{ch:futurework}). The authoritative model state is the working AnimatLab project file (\texttt{Biped\_2xCPG\_wSubs/Biped\_2xCPG\_wSubs.aproj}); after the network reorganization described in Section~\ref{sec:preliminary_sim_methods}, a fresh standalone export (\texttt{Biped\_2xCPG\_wSubs\_Standalone.asim}) runs headless and carries the rhythm-generator charts, and the earlier phase-1 instrumented export (\texttt{walk new new tester added 2 axis\_phase1.asim}) records the run reported in Section~\ref{sec:preliminary_sim_results}.
 
 \section{Spiking Neuron Model}
 
@@ -72,5 +66,5 @@ Spiking chemical synapses and electrical synapses (rectifying coupling weight 0.
 
 \section{Relation to the SNS-Toolbox Implementation}
 
-These are the standard AnimatLab firing-rate/conductance models. SNS-Toolbox \citep{nourse_sns_2023} implements corresponding classes of non-spiking and spiking neurons with conductance-based synapses. The AnimatLab parameters therefore provide physically motivated initialization candidates for the rhythm-generator, pattern-formation, and feedback circuits of the MuJoCo pipeline (Chapter~\ref{ch:futurework}), but they require an explicit parameter mapping and validation before the two implementations can be considered equivalent. The tonic stimulation tests of Section~\ref{sec:fw_cpg} correspond to constant $I_{\text{app}}$ injections into Equation~(\ref{eq:app_membrane}) at the motoneuron, pattern-formation, and rhythm-generator layers respectively.
+These are the standard AnimatLab firing-rate/conductance models. SNS-Toolbox \citep{nourse_sns_2023} implements corresponding classes of non-spiking and spiking neurons with conductance-based synapses, and the AnimatLab parameters above served as the physically motivated initialization for the first SNS-Toolbox instantiation of the spinal network: a 406-neuron network with per-leg rhythm-generator half-centers, phase-shifted pattern-formation groups, motoneuron pools for all 92 muscle-tendon actuators of the converted model, and Ia, Ib, and II afferent populations. In that implementation the non-spiking membrane and graded-synapse equations take the same forms as Equations~(\ref{eq:app_membrane}) and~(\ref{eq:app_nonsyn}) with the spiking threshold and accommodation terms removed, and the afferent resting-tone offsets are zeroed so that Ia and Ib signals are pure activity measures; the rhythm-generator layer has been verified to oscillate at a human-like period with the two legs in antiphase under tonic drive (Section~\ref{sec:fw_cpg}). An explicit parameter-mapping and validation campaign between the two implementations remains future work; the tonic stimulation tests of Section~\ref{sec:fw_cpg} correspond to constant $I_{\text{app}}$ injections into Equation~(\ref{eq:app_membrane}) at the motoneuron, pattern-formation, and rhythm-generator layers respectively.
 
