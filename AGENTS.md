@@ -142,6 +142,15 @@ Loaded automatically at session start. Keep it current; keep it lean.
     (minimizeExtX3, minimizeExt) have their own independent bracket offsets; do not port Pbr2.
     + driver `minimizeFlxPin10mm_2brk.m` (env `FLX2BRK_MODE`
     = smoke|full, `FLX2BRK_SOLVER` = gamultiobj|surrogateopt, `FLX2BRK_TRANS` = 2trans|1trans),
+    **compile-loop bug fixed 2026-09-09** (`for i = 1:numBPA` → `1:numel(results_cv)`): with ALLBPA
+    overrides the old loop silently dropped fully-computed folds from the pooled front (noT3 runs
+    kept 4 of 6 folds, full-5-test runs 5 of 10; harmless in the legacy 2-test era where
+    numBPA == #folds). Existing mats can be recompiled post-hoc from stored `results_cv` — no rerun
+    needed. Fold-structure findings: `Dig_foldLeverage.m` + log/mat in `Dig_out\` (2026-09-09):
+    all folds land on the same score plateau (fold choice doesn't change conclusions); pooled
+    fronts are ~80% cross-fold duplicates; predictability 46cm≈41cm < 40cm-tendon < 48cm≈47cm
+    (47cm now normal after the encoder fix); Xi2 binds at ub=2e4 in recentered-bounds mats;
+    1trans-vs-2trans and old-vs-new-bounds pooled fronts barely overlap in x-space (~0-3%).
     harnesses renamed to Ben's Collect/Dig scheme (2026-09-08): `Dig_crossPredict.m`
     (flexor→biomimetic/extensor cross-prediction), `Collect_ExtPinX3_sweep.m` (high-Xi1/Xi3
     hunt, pool {1,2,5,6,7,8}; tests 3/4/9 EXCLUDED per Ben),
@@ -225,12 +234,24 @@ Loaded automatically at session start. Keep it current; keep it lean.
   pass; each broken page throws one dialog) and never save from the GUI (taskkill /F).
   Full brief: `CHATGPT_HANDOFF.md` AnimatLab section.
 - `Code\Matlab\SNS_Simscape\` — SNS neuron block library (`SNS_Library.slx`: non-spiking RC
-  neurons, E/I synapses, Ia/Ib afferents) + `KneeReflexDemo.slx` (antagonist BPA knee reflex
-  demo; runs in plain Simulink). See its README for the two open blockers: the LAPTOP's
-  MATLAB license lacks **Simscape Multibody**, and the "Simscape Multibody Link" SolidWorks
-  add-in is not installed — `import_simscape_when_ready.m` finishes the CAD→Simscape import
-  once both exist. Tendon parts (`Tendon_Extensor/Flexor.SLDPRT`) are built but NOT yet
-  inserted into `09_BA_003`; GUI steps in the README.
+  neurons, E/I synapses with AUTO E/I icons, Ia/Ib afferents) + `KneeReflexDemo.slx`
+  (antagonist BPA knee reflex demo; runs in plain Simulink). **Diagram conventions
+  (Ben, 2026-09-09):** open circle = neuron, white triangle = excitatory, solid black
+  circle = inhibitory, ellipse = muscle; tints = Okabe-Ito CVD-safe; markers auto-draw
+  from the sign of Esyn. Journal figures regenerate via `sns_draw_circuit.m` (circuit
+  redraw) and `sns_function_subnetworks.m` (Szczecinski 2017 arithmetic primitives:
+  add/sub/div/mul/diff/integrate) into `figures\`. **CAD route is now URDF** (Ben's
+  choice): SolidWorks → sw2urdf add-in → .urdf → `smimport`. The old "Simscape
+  Multibody not licensed" blocker was FALSE — the license carries it as legacy feature
+  `SimMechanics` (=1) and `sns_urdf_smoke.m` proved smimport works (2026-09-09).
+  sw2urdf v1.6.1 NOT yet installed (installer in Downloads; official build targets
+  SW2021, so on SW2025 watch for the vanishing-dialog issue, issue #147); fallback:
+  Simscape Multibody Link IS installed+registered (disabled — enable in SW Tools >
+  Add-Ins). `import_simscape_when_ready.m` takes URDF or XML. Tendon parts
+  (`Tendon_Extensor/Flexor.SLDPRT`) are built but NOT yet inserted into `09_BA_003`;
+  GUI steps in the README. Gotchas: mask icon drawing commands take numbers only
+  (no LineSpec/name-value; `color('black')` not RGB), and keep masked blocks square
+  so circle icons stay round.
 - Repo root: `CHATGPT_HANDOFF.md` (brief for other AI assistants when ZCode is unavailable)
   and `CHATGPT_REPORT.md` (their report back; 2026-09-08 edition covers Overleaf
   manuscript-status edits) — keep both current when work is handed off.

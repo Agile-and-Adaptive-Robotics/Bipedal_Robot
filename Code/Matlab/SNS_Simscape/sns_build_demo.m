@@ -12,6 +12,13 @@
 % Sensory neurons (SN_*) convert afferent currents into graded presynaptic voltage.
 % Synapse saturation: ThrPre=-45 mV (above rest -52), SlopePre=0.5/mV -> graded, off at rest.
 %
+% APPEARANCE (Szczecinski 2017 / Rybak / Animatlab diagram language):
+%   neurons = circles, afferents labeled Ia/Ib, muscles = ellipses,
+%   synapse icon shows SOLID BLACK CIRCLE = inhibitory (Esyn<0),
+%   WHITE TRIANGLE w/ black edges = excitatory (Esyn>=0), auto from Esyn sign.
+%   Tints are Okabe-Ito (colorblind-safe); shape is the primary code.
+%   All neural blocks are SQUARE so mask-icon circles render round.
+%
 % Plant (reduced-order 1-DOF knee, stand-in for the Simscape Multibody import):
 %   I*thdd = Tflex - Text + Tload - b*thd - K*(th - th0)
 %   theta = 0 deg full extension, +90 deg full flexion.
@@ -22,7 +29,7 @@ if bdIsLoaded(mdl), close_system(mdl, 0); end
 if exist([mdl '.slx'], 'file'), delete([mdl '.slx']); end
 new_system(mdl);
 load_system(mdl);
-set_param(mdl, 'Solver', 'ode45', 'StopTime', '5');
+set_param(mdl, 'Solver', 'ode45', 'StopTime', '5', 'ScreenColor', 'white');
 
 %% ---- parameters stored in model PreLoadFcn (so the model opens runnable) ----
 paramCmd = strjoin({ ...
@@ -85,47 +92,47 @@ add_line(mdl, 'thd_norm/1', 'vel_flip/1', 'autorouting', 'on');
 add_line(mdl, 'th_norm/1', 'strain_ext_g/1', 'autorouting', 'on');
 add_line(mdl, 'flex_stretch/1', 'strain_flex_g/1', 'autorouting', 'on');
 
-%% ---- afferents (sensory currents, nA) ----
-snsInst(mdl, 'SNS_Library/IaMuscleSpindle', 'Ia_ext', [120 80 200 130], 'Imax', '10', 'Wl', '6', 'Wv', '8');
-snsInst(mdl, 'SNS_Library/IaMuscleSpindle', 'Ia_flex', [120 220 200 270], 'Imax', '10', 'Wl', '6', 'Wv', '8');
-snsInst(mdl, 'SNS_Library/IbGolgiTendon', 'Ib_ext', [120 380 200 430], 'Imax', '10', 'Kf', '0.02');
-snsInst(mdl, 'SNS_Library/IbGolgiTendon', 'Ib_flex', [120 480 200 530], 'Imax', '10', 'Kf', '0.0222');
+%% ---- afferents (sensory currents, nA) — square blocks so circle icons stay round ----
+snsInst(mdl, 'SNS_Library/IaMuscleSpindle', 'Ia_ext', [120 60 200 140], 'Imax', '10', 'Wl', '6', 'Wv', '8');
+snsInst(mdl, 'SNS_Library/IaMuscleSpindle', 'Ia_flex', [120 200 200 280], 'Imax', '10', 'Wl', '6', 'Wv', '8');
+snsInst(mdl, 'SNS_Library/IbGolgiTendon', 'Ib_ext', [120 360 200 440], 'Imax', '10', 'Kf', '0.02');
+snsInst(mdl, 'SNS_Library/IbGolgiTendon', 'Ib_flex', [120 460 200 540], 'Imax', '10', 'Kf', '0.0222');
 add_line(mdl, 'th_norm/1', 'Ia_ext/1', 'autorouting', 'on');
 add_line(mdl, 'thd_norm/1', 'Ia_ext/2', 'autorouting', 'on');
 add_line(mdl, 'flex_stretch/1', 'Ia_flex/1', 'autorouting', 'on');
 add_line(mdl, 'vel_flip/1', 'Ia_flex/2', 'autorouting', 'on');
 
 %% ---- sensory neurons: afferent current -> graded presynaptic voltage ----
-snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'SN_Ia_ext', [250 80 330 180], 'Vrest', '-52', 'Gm', '0.4', 'Cm', '2', 'Thr', '-55', 'Slope', '1');
-snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'SN_Ia_flex', [250 220 330 320], 'Vrest', '-52', 'Gm', '0.4', 'Cm', '2', 'Thr', '-55', 'Slope', '1');
-snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'SN_Ib_ext', [250 380 330 480], 'Vrest', '-52', 'Gm', '0.4', 'Cm', '2', 'Thr', '-55', 'Slope', '1');
-snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'SN_Ib_flex', [250 520 330 620], 'Vrest', '-52', 'Gm', '0.4', 'Cm', '2', 'Thr', '-55', 'Slope', '1');
+snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'SN_Ia_ext', [250 40 350 140], 'Vrest', '-52', 'Gm', '0.4', 'Cm', '2', 'Thr', '-55', 'Slope', '1');
+snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'SN_Ia_flex', [250 190 350 290], 'Vrest', '-52', 'Gm', '0.4', 'Cm', '2', 'Thr', '-55', 'Slope', '1');
+snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'SN_Ib_ext', [250 350 350 450], 'Vrest', '-52', 'Gm', '0.4', 'Cm', '2', 'Thr', '-55', 'Slope', '1');
+snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'SN_Ib_flex', [250 490 350 590], 'Vrest', '-52', 'Gm', '0.4', 'Cm', '2', 'Thr', '-55', 'Slope', '1');
 add_line(mdl, 'Ia_ext/1', 'SN_Ia_ext/1', 'autorouting', 'on');
 add_line(mdl, 'Ia_flex/1', 'SN_Ia_flex/1', 'autorouting', 'on');
 add_line(mdl, 'Ib_ext/1', 'SN_Ib_ext/1', 'autorouting', 'on');
 add_line(mdl, 'Ib_flex/1', 'SN_Ib_flex/1', 'autorouting', 'on');
 
 %% ---- motoneurons (non-spiking LIF / RC) ----
-snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'MN_ext', [560 80 660 180], 'Vrest', '-52', 'Gm', '0.5', 'Cm', '2.5', 'Thr', '-45', 'Slope', '1');
-snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'MN_flex', [560 240 660 340], 'Vrest', '-52', 'Gm', '0.5', 'Cm', '2.5', 'Thr', '-45', 'Slope', '1');
+snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'MN_ext', [560 80 670 190], 'Vrest', '-52', 'Gm', '0.5', 'Cm', '2.5', 'Thr', '-45', 'Slope', '1');
+snsInst(mdl, 'SNS_Library/NonSpikingNeuron', 'MN_flex', [560 260 670 370], 'Vrest', '-52', 'Gm', '0.5', 'Cm', '2.5', 'Thr', '-45', 'Slope', '1');
 
 %% ---- synapse summing nodes ----
 add_block('simulink/Math Operations/Sum', [mdl '/sumMN_ext'], 'Inputs', '++++', 'Position', [480 95 510 155]);
 add_block('simulink/Math Operations/Sum', [mdl '/sumMN_flex'], 'Inputs', '++++', 'Position', [480 255 510 315]);
-add_block('simulink/Sources/Constant', [mdl '/desc_ext_c'], 'Value', 'desc_ext', 'Position', [400 100 430 130]);
-add_block('simulink/Sources/Constant', [mdl '/desc_flex_c'], 'Value', 'desc_flex', 'Position', [400 260 430 290]);
+add_block('simulink/Sources/Constant', [mdl '/desc_ext_c'], 'Value', 'desc_ext', 'Position', [470 165 500 195]);
+add_block('simulink/Sources/Constant', [mdl '/desc_flex_c'], 'Value', 'desc_flex', 'Position', [470 325 500 355]);
 add_line(mdl, 'desc_ext_c/1', 'sumMN_ext/1', 'autorouting', 'on');
 add_line(mdl, 'desc_flex_c/1', 'sumMN_flex/1', 'autorouting', 'on');
 add_line(mdl, 'sumMN_ext/1', 'MN_ext/1', 'autorouting', 'on');
 add_line(mdl, 'sumMN_flex/1', 'MN_flex/1', 'autorouting', 'on');
 
-%% ---- synapses: [pre V, post V] -> current (Esyn sets E vs I) ----
-snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaext_exc', [420 70 500 120], 'gmax', '0.18', 'Esyn', '0', 'ThrPre', '-45', 'SlopePre', '0.5');
-snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Ibext_inh', [420 150 500 200], 'gmax', '0.20', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '0.5');
-snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaflex_inh_on_ext', [420 350 500 400], 'gmax', '0.15', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '0.5');
-snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaflex_exc', [420 230 500 280], 'gmax', '0.18', 'Esyn', '0', 'ThrPre', '-45', 'SlopePre', '0.5');
-snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Ibflex_inh', [420 430 500 480], 'gmax', '0.20', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '0.5');
-snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaext_inh_on_flex', [420 510 500 560], 'gmax', '0.15', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '0.5');
+%% ---- synapses: [pre V, post V] -> current (Esyn sets E vs I; icon auto-draws marker) ----
+snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaext_exc', [380 60 450 130], 'gmax', '0.18', 'Esyn', '0', 'ThrPre', '-45', 'SlopePre', '0.5');
+snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Ibext_inh', [380 150 450 220], 'gmax', '0.20', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '0.5');
+snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaflex_exc', [380 240 450 310], 'gmax', '0.18', 'Esyn', '0', 'ThrPre', '-45', 'SlopePre', '0.5');
+snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaflex_inh_on_ext', [380 330 450 400], 'gmax', '0.15', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '0.5');
+snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Ibflex_inh', [380 420 450 490], 'gmax', '0.20', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '0.5');
+snsInst(mdl, 'SNS_Library/NonSpikingSynapse', 'syn_Iaext_inh_on_flex', [380 510 450 580], 'gmax', '0.15', 'Esyn', '-72', 'ThrPre', '-45', 'SlopePre', '0.5');
 % afferent neuron V -> synapse pre
 add_line(mdl, 'SN_Ia_ext/1', 'syn_Iaext_exc/1', 'autorouting', 'on');
 add_line(mdl, 'SN_Ib_ext/1', 'syn_Ibext_inh/1', 'autorouting', 'on');
@@ -187,10 +194,29 @@ add_line(mdl, 'BPA_flex/1', 'log_F_flex/1', 'autorouting', 'on');
 add_line(mdl, 'Ia_ext/1', 'log_Ia_ext_c/1', 'autorouting', 'on');
 add_line(mdl, 'Ib_ext/1', 'log_Ib_ext_c/1', 'autorouting', 'on');
 
+%% ---- annotations: title + diagram-language legend ----
 try
-    anno = Simulink.Annotation(mdl, 'SNS knee reflex demo: non-spiking RC neurons + E/I synapses + antagonist BPAs on 1-DOF knee');
-    anno.Position = [40 20 900 40];
+    anno = Simulink.Annotation(mdl, ...
+        'SNS knee reflex demo: non-spiking RC neurons + E/I synapses + antagonist BPAs on 1-DOF knee');
+    anno.Position = [40 -75 900 -35];
 catch
+end
+try
+    legend_txt = ['Diagram language (Szczecinski 2017 / Rybak / Animatlab): ' ...
+        'open circle = neuron; circle "Ia"/"Ib" = afferent; ellipse = muscle.  ' ...
+        'Connection markers: solid black circle = INHIBITORY (Esyn < 0), ' ...
+        'open triangle = EXCITATORY (Esyn >= 0). Tints: Okabe-Ito (colorblind-safe).'];
+    anno2 = Simulink.Annotation(mdl, legend_txt);
+    anno2.Position = [40 -25 1150 5];
+    anno2.FontSize = 10;
+catch
+end
+% keep flagged block labels out of autorouted wires
+for nm = {'muscleT', 'netTorque2', 'spr_defl', 'strain_ext_g', 'sumMN_ext', 'sumMN_flex'}
+    try
+        set_param([mdl '/' nm{1}], 'NamePlacement', 'alternate');
+    catch
+    end
 end
 
 save_system(mdl);
