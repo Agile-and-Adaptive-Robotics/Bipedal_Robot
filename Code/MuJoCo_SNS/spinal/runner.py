@@ -324,11 +324,12 @@ def patch_xml(xml_text: str, model, data, kxy=2.0e5, kz=2.0e5, ky=5.0e5,
     # freely spins about vertical - measured 40-68 rad/s at t=1.4 s on the
     # ground, ending in friction-force blowup. This is a support rig; the
     # springs are the rig's torso stabilize. Softer than the air pin.
-    # Air mode (pin_rot) pins HARD: at 150 N·m/rad the trunk piked 30 deg
-    # and masqueraded as hip flexion (air-tune run 4: pelvis_tilt 0..30 deg
-    # with psoas at 0.04 - the "65 deg hip flexion" was mostly pelvis).
-    rot_k = 800.0 if pin_rot else 400.0
-    rot_c = 60.0 if pin_rot else 40.0
+    # Air mode (pin_rot) effectively RIGID-clamps the trunk (Ben
+    # 2026-09-11: "clamp the head so the whole trunk stops falling"):
+    # 150 N·m/rad let the trunk pike 30 deg, 800 still gave 13 deg;
+    # 5000 + heavy damping = a clamp. Ground mode stays springy (400).
+    rot_k = 5000.0 if pin_rot else 400.0
+    rot_c = 300.0 if pin_rot else 40.0
     specs.update({"pelvis_tilt": (rot_k, rot_c),
                   "pelvis_list": (rot_k, rot_c),
                   "pelvis_rotation": (rot_k, rot_c)})
@@ -340,20 +341,26 @@ def patch_xml(xml_text: str, model, data, kxy=2.0e5, kz=2.0e5, ky=5.0e5,
     # pattern does not yet). hip_rotation was free-spinning the legs too.
     # These are RIG elements - wean them alongside the pelvis springs
     # when balance is solved.
-    lumb_k = 400.0 if pin_rot else 300.0
-    hipr_k = 150.0 if pin_rot else 100.0
+    lumb_k = 3000.0 if pin_rot else 300.0
+    hipr_k = 300.0 if pin_rot else 100.0
+    lumc = 150.0 if pin_rot else 25.0
     for jn in ("lumbar_extension", "lumbar_bending", "lumbar_rotation",
                "hip_rotation_r", "hip_rotation_l"):
         if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, jn) >= 0:
-            specs.update({jn: (lumb_k if "lumbar" in jn else hipr_k, 25.0)})
-    # subtalar + mtp passive ligament surrogate: the converted model has NO
-    # passive stiffness on the foot joints (OpenSim coordinate stops did
-    # not survive conversion) - the foot flopped to 128 deg of subtalar
-    # in the air runs. Weak spring + damping = ligament restraint.
+            specs.update({jn: (lumb_k if "lumbar" in jn else hipr_k, lumc)})
+    # subtalar + mtp + ANKLE passive ligament surrogate: the converted model
+    # has NO passive stiffness on the foot joints (OpenSim coordinate stops
+    # did not survive conversion) - the foot flopped to 128 deg of subtalar
+    # and -97 deg of ankle in the air runs. Weak spring + damping =
+    # ligament restraint (human ankle passive stiffness ~ 5-15 N·m/rad).
     for side in ("r", "l"):
-        for jn in (f"subtalar_angle_{side}", f"mtp_angle_{side}"):
+        for jn in (f"subtalar_angle_{side}", f"mtp_angle_{side}",
+                   f"ankle_angle_{side}",
+                   f"hip_adduction_{side}"):   # capsule stiffness: the
+                    # frontal plane was a free pendulum (legs splayed
+                    # +-25 deg adduction in air - Ben 2026-09-11)
             if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, jn) >= 0:
-                specs.update({jn: (10.0, 1.0)})
+                specs.update({jn: (10.0 if "hip" not in jn else 30.0, 3.0)})
     for jn, (k, c) in specs.items():
         ref = data.qpos[model.joint(jn).qposadr[0]]
         pat = rf'<joint name="{jn}"[^/]*?/>'

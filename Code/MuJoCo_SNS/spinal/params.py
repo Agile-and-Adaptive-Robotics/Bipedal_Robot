@@ -101,19 +101,22 @@ MOD = dict(ia=0.8, ii=0.6, ib=0.5)
 # F2 only preps extension late in swing, E1 drops its knee-flex/ankle-DF
 # co-contraction (stance DF drive fights the E2 push-off).
 W_PF_MN: dict[str, dict[str, float]] = {
-    "E1": dict(hip_ext=0.45, knee_ext=0.10, hip_abd=0.35, ankle_df=0.10,
+    "E1": dict(hip_ext=0.45, knee_ext=0.10, hip_abd=0.05, ankle_df=0.10,
                knee_flex=0.05, trunk_ext=0.20),
-    "E2": dict(ankle_pf=0.35, hip_ext=0.50, knee_ext=0.15, hip_abd=0.30,
+    "E2": dict(ankle_pf=0.25, hip_ext=0.50, knee_ext=0.15, hip_abd=0.05,
                trunk_ext=0.20),
-    "F1": dict(hip_flex=0.45, knee_flex=1.80, ankle_df=0.45, hip_add=0.10),
-    "F2": dict(knee_ext=0.0, ankle_df=0.45, hip_flex=0.05, trunk_flex=0.05),
+    "F1": dict(hip_flex=0.75, knee_flex=1.80, ankle_df=0.55, hip_add=0.0),
+    "F2": dict(knee_ext=0.0, ankle_df=0.55, hip_flex=0.15, trunk_flex=0.05),
 }
 
 # Posture (standing) tonic drive: {functional_group: weight}. Ankle_df gets
 # a co-contraction term so the ankle is bidirectional impedance (a one-sided
-# PF-held hinge tips backward freely).
+# PF-held hinge tips backward freely). hip_add/hip_flex/knee_flex tones
+# added 2026-09-11: without them the frontal plane was a free pendulum
+# (legs splayed +-25 deg of adduction in air).
 W_POSTURE = dict(hip_ext=0.22, knee_ext=0.62, ankle_pf=0.30, ankle_df=0.15,
-                 hip_abd=0.35, trunk_ext=0.30)
+                 hip_abd=0.05, trunk_ext=0.30,
+                 hip_add=0.05, hip_flex=0.10, knee_flex=0.08)
 
 # Per-muscle posture overrides (base name, no side suffix): quiet standing
 # holds the ankle with the MONOarticular plantarflexors - gastrocnemii also

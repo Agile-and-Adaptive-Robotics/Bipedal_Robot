@@ -1,0 +1,63 @@
+CPG air-stepping figures for the dissertation - generated 2026-09-11
+=====================================================================
+
+Simulation configuration for ALL figures:
+  Full 92-muscle OpenSim gait2392 model converted to MuJoCo, driven by a
+  synthetic spinal cord (406 non-spiking neurons: bilateral RG half-centers
+  with slow adaptation, 4 phase-grouped PF cells per side, 92 motoneuron
+  pools). Deafferented (no proprioceptive feedback), no interleg loading,
+  body suspended (no ground contact), trunk clamped. Descending drive
+  1.5 nA -> cycle period ~1.7 s (0.58 Hz), within the instructed range for
+  human air-stepping (Ivanenko et al. 2002: preferred 0.3 Hz; ~2x slower
+  than grounded walking). Joint ranges: hip -16..+58 deg, knee -85..+16 deg
+  (flexion negative, OpenSim convention).
+
+Suggested captions
+------------------
+
+render_walk_phases.png
+  "Skeleton-muscle rendering of the spinal-CPG-driven model at four phases
+  of the air-stepping gait cycle (stance-like extension, early swing, peak
+  swing flexion, terminal swing). The model is suspended with the trunk
+  clamped; motion is produced entirely by the 406-neuron spinal network."
+
+fig6_limbs_timecourse.png
+  "Hip, knee, and ankle angles of both legs during deafferented air-stepping.
+  After descending drive ramps up (t = 3-5 s), the legs alternate in
+  antiphase with knee flexion reaching approximately 85 deg during swing.
+  Shaded bands mark right-leg extensor-phase bursts. After drive ramps down
+  (t > 15 s) the rhythm decays."
+
+fig1_joints_over_neural.png
+  "Right-leg joint angles over the full neural stack: rhythm generator
+  (RG) half-centers, pattern-formation (PF) phase groups, and motoneuron
+  (MN) activations. Shaded bands mark RG extensor-phase bursts."
+
+fig3_neural_over_stimulus.png
+  "RG, PF, and mean MN activity over the descending drive stimulus
+  (grey dashed). Cycle frequency and burst amplitude respond to drive
+  level; stance-gating of the pattern-formation output organizes the
+  flexion-extension alternation."
+
+fig4_gait_cycles.png
+  "Cycle-normalized joint trajectories over six consecutive gait cycles
+  (thin lines: individual cycles; thick line: mean). Zero percent = onset
+  of the right-leg extensor burst; shaded region approximates the
+  extensor phase. Joint trajectories are near-sinusoidal, consistent with
+  human air-stepping kinematics (Ivanenko et al. 2002)."
+
+spinal_circuit.png
+  "Schematic of one side of the spinal network: DRIVE/POSTURE descending
+  inputs; RG-E/RG-F half-center with mutual inhibition and slow adaptation
+  interneurons (ADAP); four pattern-formation groups (PF-E1/E2/F1/F2) with
+  adaptation (PFA) and reciprocal inhibition; motoneuron pools wired by
+  phase-weighted PF projections (conductances shown); proprioceptive Ia/II/Ib
+  afferent paths with stance load-sharing (IB-EXC). The opposite side is
+  identical, with cross-side inhibitory coupling producing left-right
+  alternation."
+
+Regenerating: figures come from Code\MuJoCo_SNS\spinal (myo env):
+  runner.py --no-afferents --no-ground --drive 1.5 --time 4   (the run)
+  plot_run.py                                                  (figs 1-4, 6)
+  render_frames.py                                             (renders)
+  draw_circuit.py                                              (schematic)

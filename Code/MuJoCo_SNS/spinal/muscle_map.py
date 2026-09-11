@@ -35,11 +35,18 @@ _GROUPS_BY_NAME: dict[str, tuple[str, ...]] = {
     "bifemlh": ("knee_flex", "hip_ext"),
     "bifemsh": ("knee_flex",),
     # --- hip flexors ---
-    "sar": ("hip_flex", "knee_flex"),          # sartorius, bi
+    "sar": ("hip_flex",),                      # biarticular in anatomy; its
+                                               # knee-flex ride-along on the
+                                               # strong F1 drive over-drove it
+                                               # (peak 0.84, abduction component
+                                               # splaying the swing leg)
     "iliacus": ("hip_flex",),
     "psoas": ("hip_flex",),
     "rect_fem": ("knee_ext", "hip_flex"),      # bi
-    "tfl": ("hip_flex", "hip_abd"),            # fascia lata
+    "tfl": ("hip_flex",),                      # fascia lata; its hip_abd
+                                               # ride-along on the F1 flexor
+                                               # drive abducted the swing leg
+                                               # every cycle (2026-09-11)
     # --- hip adductors ---
     "add_long": ("hip_add",),
     "add_brev": ("hip_add",),
@@ -47,7 +54,11 @@ _GROUPS_BY_NAME: dict[str, tuple[str, ...]] = {
     "add_mag2": ("hip_add",),
     "add_mag3": ("hip_ext", "hip_add"),        # extensor (vertical) fibers
     "pect": ("hip_add",),
-    "grac": ("hip_add", "knee_flex"),          # bi
+    "grac": ("hip_add",),                      # biarticular in anatomy, but
+                                               # its knee-flex ride-along on
+                                               # the strong F1 drive splayed
+                                               # the legs +-20 deg in the
+                                               # frontal plane (2026-09-11)
     # --- hip extensors (glutes + short rotators) ---
     "glut_max1": ("hip_ext",),
     "glut_max2": ("hip_ext",),

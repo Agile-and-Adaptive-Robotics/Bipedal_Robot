@@ -275,6 +275,29 @@ def load_benchmark(side):
     return out
 
 
+# ---------------------------------------------------------------- fig 6
+def fig6(t, j, side, spans):
+    """Ben's Figure-8 style: hip/knee/ankle time series, left (black) vs
+    right (magenta), one panel per joint."""
+    other = "l" if side == "r" else "r"
+    d2 = load("spinal_run.npz", other)
+    fig, ax = plt.subplots(3, 1, figsize=(11, 8), sharex=True)
+    fig.subplots_adjust(hspace=0.16, left=0.08, right=0.97, top=0.93)
+    labels = {"hip": "Hip", "knee": "Knee", "ankle": "Ankle"}
+    for i, k in enumerate(("hip", "knee", "ankle")):
+        ax[i].plot(t, j[k], lw=1.3, color="m", label="right")
+        ax[i].plot(d2[1], d2[2][k], lw=1.3, color="k", label="left")
+        ax[i].set_ylabel(f"{labels[k]} [deg]")
+        for a, b in spans:
+            ax[i].axvspan(a, b, color=C_STANCE, zorder=0, lw=0)
+    ax[0].legend(fontsize=9, ncol=2, loc="upper right")
+    ax[0].set_title("limb joint motion, both legs (shaded = right RG-E "
+                    "stance)", fontsize=11)
+    ax[-1].set_xlabel("t [s]")
+    fig.savefig(HERE / "fig6_limbs_timecourse.png", dpi=140)
+    plt.close(fig)
+
+
 def main(argv):
     path = "spinal_run.npz"
     side = "r"
@@ -291,8 +314,10 @@ def main(argv):
     fig23(t, j, neuro, ncol, act, acols, drive, side, spans)
     bench = load_benchmark(side)
     fig45(t, j, neuro, ncol, side, bench)
+    fig6(t, j, side, spans)
     print("saved fig1_joints_over_neural.png, fig2_joints_over_stimulus.png,")
-    print("      fig3_neural_over_stimulus.png, fig4_gait_cycles.png")
+    print("      fig3_neural_over_stimulus.png, fig4_gait_cycles.png,")
+    print("      fig6_limbs_timecourse.png")
 
 
 if __name__ == "__main__":
