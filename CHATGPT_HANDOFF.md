@@ -3,8 +3,10 @@
 This file briefs any AI assistant (ChatGPT or otherwise) working on this project while the
 primary assistant (ZCode) is unavailable. Read it fully before doing anything. The repo-wide
 `AGENTS.md` next to this file has additional standing context — both are plain markdown.
-**TWO ACTIVE WORK THREADS (both 2026-09-09): (A) AnimatLab .aproj arrow audit — section
-below; (B) MuJoCo gait2392 spinal cord network in `Code\MuJoCo_SNS\spinal\` (read its
+**THREE ACTIVE WORK THREADS: (0) AnimatLab .aproj wiring repair — PAUSED MID-FIX, read
+`Neuromechanical_Models\Biped_2xCPG_wSubs\tools\CONTINUE_HERE.md` FIRST for exact state,
+fix spec, and the GUI-verification protocol; (A) AnimatLab arrow audit — section below;
+(B) MuJoCo gait2392 spinal cord network in `Code\MuJoCo_SNS\spinal\` (read its
 `DESIGN.md` first — rhythm layer verified; leg-DoF NaN blocker open with prioritized
 suspects).** Also: laptop-session mining findings in `Testing_Data\2022_02_Festo\HANDOFF_laptop_20260908.md`.
 
