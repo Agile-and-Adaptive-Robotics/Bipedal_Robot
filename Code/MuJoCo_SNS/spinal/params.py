@@ -31,7 +31,9 @@ TAU = dict(
     mn=0.03,        # motoneuron pool membrane (30 ms)
     afferent=0.02,  # afferent encoders (20 ms filter on the raw signal)
     rg=0.05,        # rhythm-generator half-center cells (50 ms)
-    rg_adapt=0.9,   # slow adaptation interneuron (burst termination, ~0.9 s)
+    rg_adapt=1.9,   # slow adaptation interneuron (burst termination; slow
+                     # for slow air-stepping rhythm - frequency knob that
+                     # does NOT shrink burst amplitudes, unlike low DRIVE)
     pf=0.08,        # pattern-formation cells
     pf_adapt=0.5,   # PF burst self-adaptation
     ib_exc=0.05,    # group Ib load-sharing interneuron
@@ -44,9 +46,10 @@ G = dict(
     # half-center rhythm: mutual inhibition + slow self-adaptation
     rg_mutual_inh=4.0,       # RG-E <-> RG-F
     rg_adapt_inh=2.5,        # RG -> ADAP -> RG (slow negative feedback)
-    rg_to_pf=1.2,            # half-center -> its two PF groups
-    pf_recip_inh=2.0,        # conflicting PF groups (E2<->F1, F2<->E1)
-    pf_to_mn=1.0,            # PF cell -> MN (scaled per-muscle by W_PF_MN)
+    rg_to_pf=2.4,            # half-center -> its two PF groups (2x: slow
+                              # DRIVE keeps amplitudes saturated)
+    pf_recip_inh=4.0,        # conflicting PF groups (E2<->F1, F2<->E1)
+    pf_to_mn=2.0,            # PF cell -> MN (scaled per-muscle by W_PF_MN)
     posture_to_mn=1.0,       # POSTURE -> MN (scaled by W_POSTURE)
     ia_to_mn=0.6,            # Ia excitation, homonymous (nA-gain knob below)
     ia_to_antagonist=0.4,    # Ia reciprocal inhibition
@@ -54,10 +57,18 @@ G = dict(
     ib_to_mn_inh=0.35,       # Ib autogenic inhibition (swing)
     ib_group_exc=0.5,        # Ib afferent -> group load-sharing IN
     ib_exc_to_mn=0.6,        # group IN -> extensor MNs (stance)
-    descend_to_rg_e=0.9,     # DRIVE -> RG-E (stance side; stronger = longer stance)
-    descend_to_rg_f=0.7,     # DRIVE -> RG-F
+    bal_lat_to_abd=0.8,      # BAL_LAT -> stance-side hip abductor MNs
+    bal_trunk=1.0,           # IMU trunk controller -> ercspn / obliques
+    descend_to_rg_e=1.7,     # DRIVE -> RG-E (2x with slow ADAP: amplitude
+                              # saturated at low DRIVE; E-duty knob - NOTE
+                              # raising this SHORTENS the E burst via
+                              # stronger adaptation-triggering)
+    descend_to_rg_f=1.4,     # DRIVE -> RG-F
     posture_to_rg_e=0.8,     # POSTURE -> RG-E (standing stance bias)
-    drive_to_pf=0.4,         # DRIVE -> PF cells (pattern gain with speed)
+    drive_to_pf=0.05,        # DRIVE -> PF cells (was 0.4: the tonic term
+                             # kept all PF cells partially on through their
+                             # OFF phase - constant co-contraction, no knee
+                             # swing; 0.2 lets the windows close)
     posture_gain=1.0,
 )
 
@@ -84,13 +95,18 @@ MOD = dict(ia=0.8, ii=0.6, ib=0.5)
 # ------------------------------------------------------------- PF -> MN weights
 # Per phase group: {functional_group: weight}. MN weight = primary-group value
 # + 0.5 * secondary-group value (biarticular muscles get both).
+# Tuning note (2026-09-10, deafferented air run): knee EXTensors receive
+# E1+E2+F2 (sum 1.15) vs flexors F1(+E1 0.15) -> co-contration standoff,
+# joints pinned at +-2 deg in air. Sharpened: flexors carry F1 strongly,
+# F2 only preps extension late in swing, E1 drops its knee-flex/ankle-DF
+# co-contraction (stance DF drive fights the E2 push-off).
 W_PF_MN: dict[str, dict[str, float]] = {
-    "E1": dict(hip_ext=0.35, knee_ext=0.45, hip_abd=0.35, ankle_df=0.30,
-               knee_flex=0.15, trunk_ext=0.20),
-    "E2": dict(ankle_pf=0.70, hip_ext=0.45, knee_ext=0.25, hip_abd=0.30,
+    "E1": dict(hip_ext=0.45, knee_ext=0.10, hip_abd=0.35, ankle_df=0.10,
+               knee_flex=0.05, trunk_ext=0.20),
+    "E2": dict(ankle_pf=0.35, hip_ext=0.50, knee_ext=0.15, hip_abd=0.30,
                trunk_ext=0.20),
-    "F1": dict(hip_flex=0.60, knee_flex=0.55, ankle_df=0.25, hip_add=0.10),
-    "F2": dict(knee_ext=0.45, ankle_df=0.40, hip_flex=0.25, trunk_flex=0.05),
+    "F1": dict(hip_flex=0.45, knee_flex=1.80, ankle_df=0.45, hip_add=0.10),
+    "F2": dict(knee_ext=0.0, ankle_df=0.45, hip_flex=0.05, trunk_flex=0.05),
 }
 
 # Posture (standing) tonic drive: {functional_group: weight}. Ankle_df gets
@@ -110,9 +126,9 @@ POSTURE_OVERRIDE = {
 }
 
 # PF cells whose windows are phase-shifted: (tau multiplier, adapt multiplier).
-# E1 fast/short, E2 slower onset, F1 mid, F2 slow/long -> staggered bursts
-# within the half-cycle (the "similar but phase-shifted" family Ben observed).
-PF_SHAPE = dict(E1=(0.6, 0.7), E2=(1.3, 1.1), F1=(0.9, 0.9), F2=(1.6, 1.4))
+# E1 fast/short, E2 slower onset + HARD adaptation (its tail was feeding the
+# quads/gastrocs through swing - knee never swung), F1 mid, F2 slow/long
+PF_SHAPE = dict(E1=(0.6, 0.7), E2=(0.9, 1.7), F1=(0.9, 0.9), F2=(1.6, 1.4))
 
 # ------------------------------------------------------------- balance (standing)
 # Supraspinal surrogate: ankle-strategy feedback from pelvis COM offset.
@@ -124,6 +140,15 @@ BAL = dict(
     ff=1.0,             # nA initial forward (PF) shove, decays after release
     ff_tau=0.8,         # s, decay constant of the feedforward shove
     fade_with_drive=True,  # balance FB fades out as DRIVE rises (walking)
+    ky_lat=400.0,       # nA per m of lateral CoG error (abductor strategy)
+    kv_lat=120.0,       # lateral damping term coefficient
+    # IMU/vestibular surrogate for trunk pitch (Ben 2026-09-10): PD on the
+    # torso up-vector lean (+ = backward limbo lean), drives abdominals
+    # when leaning back, erector spinae when leaning forward
+    kp_trk=250.0,       # nA per rad of trunk lean
+    kd_trk=60.0,        # nA per rad/s of trunk lean rate
+    max_trk=10.0,       # nA clamp
+    trk_ref=0.06,       # rad, slight forward-lean reference (gait posture)
 )
 
 # ------------------------------------------------------------- schedule (seconds)

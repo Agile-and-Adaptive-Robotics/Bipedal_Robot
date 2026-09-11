@@ -99,6 +99,7 @@ def _group_weight(muscle: MuscleInfo, table: dict[str, float],
 class SpinalNetwork:
     muscles: dict[str, MuscleInfo]                  # actuator name -> info
     sides: tuple[str, ...]
+    interleg: bool = True                           # cross-side RG coupling
     net: Network = field(init=False)
     compiled: object = field(init=False, default=None)
     idx: dict[str, int] = field(default_factory=dict)
@@ -114,7 +115,11 @@ class SpinalNetwork:
 
         # ---- descending / balance cells (shared, one each) ----
         for name, tau in (("DRIVE", TAU["descend"]), ("POSTURE", TAU["descend"]),
-                          ("BAL_PF", TAU["descend"]), ("BAL_DF", TAU["descend"])):
+                          ("BAL_PF", TAU["descend"]), ("BAL_DF", TAU["descend"]),
+                          ("BAL_TRK_EXT", TAU["descend"]),
+                          ("BAL_TRK_FLX", TAU["descend"]),
+                          ("BAL_LAT_R", TAU["descend"]),
+                          ("BAL_LAT_L", TAU["descend"])):
             n.add_neuron(_neu(tau), name=name)
             self.idx[name] = len(self.idx)
             n.add_input(name)
@@ -133,12 +138,15 @@ class SpinalNetwork:
             self._wire_muscle(n, act, mi)
         self._wire_balance(n)
 
-        # ---- cross-side coordination (F cells strongly, E cells weakly) ----
-        for a, b in (("r", "l"), ("l", "r")):
-            n.add_connection(_syn(G["rg_mutual_inh"], exc=False),
-                             f"RG_F_{a}", f"RG_F_{b}")
-            n.add_connection(_syn(0.5 * G["rg_mutual_inh"], exc=False),
-                             f"RG_E_{a}", f"RG_E_{b}")
+        # ---- cross-side coordination (F cells strongly, E cells weakly).
+        # interleg=False removes it entirely: independent left/right
+        # rhythm generators (deafferented air-stepping preparation).
+        if self.interleg:
+            for a, b in (("r", "l"), ("l", "r")):
+                n.add_connection(_syn(G["rg_mutual_inh"], exc=False),
+                                 f"RG_F_{a}", f"RG_F_{b}")
+                n.add_connection(_syn(0.5 * G["rg_mutual_inh"], exc=False),
+                                 f"RG_E_{a}", f"RG_E_{b}")
 
     # ------------------------------------------------------------------ parts
     def _add(self, name: str, tau: float, n: Network):
@@ -249,6 +257,10 @@ class SpinalNetwork:
 
         BAL_PF active = body swaying backward -> plantarflexion push + hip
         flexion pull the COM forward; BAL_DF = the opposite.
+        BAL_LAT_R / BAL_LAT_L: frontal-plane strategy - lateral COM error
+        drives the STANCE-side hip abductors (glut_med/min), pulling the
+        CoG toward the stance foot (Trendelenburg mechanics; opensim +z =
+        mujoco -y per Ben).
         Called once after all MNs exist.
         """
         for act, mi in self.muscles.items():
@@ -259,6 +271,17 @@ class SpinalNetwork:
             elif g in ("ankle_df", "hip_ext"):
                 n.add_connection(_syn(0.5 * G["posture_to_mn"] * 0.5, exc=True),
                                  "BAL_DF", f"MN_{act}")
+            elif g == "hip_abd":
+                n.add_connection(_syn(G["bal_lat_to_abd"], exc=True),
+                                 f"BAL_LAT_{mi.side.upper()}", f"MN_{act}")
+            elif g == "trunk_ext":
+                # IMU/vestibular surrogate -> erector spinae (Ben's trunk
+                # stability plan; the trunk was doing the limbo without it)
+                n.add_connection(_syn(G["bal_trunk"], exc=True),
+                                 "BAL_TRK_EXT", f"MN_{act}")
+            elif g == "trunk_flex":
+                n.add_connection(_syn(G["bal_trunk"], exc=True),
+                                 "BAL_TRK_FLX", f"MN_{act}")
 
     # ------------------------------------------------------------------ run
     def compile(self, dt: float = DT):
@@ -283,8 +306,13 @@ class SpinalNetwork:
         return np.zeros(len(self.inputs))
 
 
-def build(model_actuators: list[str], dt: float = DT) -> SpinalNetwork:
-    """Classify actuators and build + compile the spinal network."""
+def build(model_actuators: list[str], dt: float = DT,
+          interleg: bool = True) -> SpinalNetwork:
+    """Classify actuators and build + compile the spinal network.
+
+    interleg=False removes all cross-side RG coupling (independent
+    half-centers per leg - the deafferented air-stepping preparation).
+    """
     muscles: dict[str, MuscleInfo] = {}
     for act in model_actuators:
         mi = classify(act)
@@ -292,6 +320,6 @@ def build(model_actuators: list[str], dt: float = DT) -> SpinalNetwork:
             raise ValueError(f"actuator {act!r} not in muscle_map")
         muscles[act] = mi
     sides = tuple(sorted({mi.side for mi in muscles.values()}))
-    net = SpinalNetwork(muscles=muscles, sides=sides)
+    net = SpinalNetwork(muscles=muscles, sides=sides, interleg=interleg)
     net.compile(dt=dt)
     return net

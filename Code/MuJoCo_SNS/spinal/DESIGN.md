@@ -59,49 +59,110 @@ control" knob.
 
 ## Verified status (this session)
 
-- `check_rhythm.py`: half-centers oscillate; DRIVE=4 nA → period 0.885 s,
-  E duty 0.36, left–right antiphase corr −0.88; PF E/F windows alternate;
-  within-arcade staggering small (v1).
-- Network builds/compiles/steps at dt=5 ms in ~3 ms/step (numpy backend).
-- Runner closes the loop on the full 92-muscle model with logging/summary.
+- `check_rhythm.py`: half-centers oscillate; DRIVE=4 nA → period 0.844 s,
+  E duty 0.29-0.33, left–right antiphase corr −0.74; PF windows alternate
+  (E cluster ~0.08, F cluster ~0.72 of the cycle).
+- Network builds/compiles/steps; runner closes the loop on the full
+  92-muscle model with logging/summary/NaN forensics.
 
-## Open problems (in priority order)
+## BREAKTHROUGH 2026-09-10 (machine EB475WS4 session): the NaN blocker is DEAD
 
-Progress 2026-09-09 (session 2): `audit_signs.py` now audits the model
-DYNAMICALLY (full muscle activation -> joint acceleration sign, which sees
-the pathpoint equality couplings that static `actuator_moment` misses).
-Findings + fixes applied in `runner.apply_harness` (all verified by audit):
-  - hip_flexion + hip_adduction hinge axes WERE flipped vs OpenSim
-    conventions (glut_max pulled flexion, iliacus/psoas extension) -> axes
-    negated, both sides; all hip anchors now pass.
-  - rect_fem drove the knee into FLEXION (no patella wrap, unlike the
-    vastii) -> rerouted over the vastii's patella-tracking via point
-    (vas_med-P4: origin -> patella path -> tuberosity); now knee-EXTENSOR.
-    A true patella BODY (slides on distal femur, fixed patellar-tendon
-    length to the tibia, per Ben) is the fuller fix if the via-point
-    proves inadequate at large knee angles.
-  - tiny short rotators quad_fem/gem/peri pruned (gainprm/biasprm[2]=0;
-    Ben's list - extend as needed).
-  - pathpoint couplings KEPT (reverted the earlier weld: welding froze
-    moment arms and zeroed several knee moments, e.g. semimem). Massless
-    bodies handled via boundmass/boundinertia (same structure as
-    MyoSuite's own conversion).
+Root causes, in the order they were found (all fixed in `runner.patch_xml`
++ `apply_harness`; every fix is asserted at build time):
 
-REMAINING BLOCKER: ankle/knee DoFs still go NaN during simulation even at
-dt=2 ms with a rigid pelvis rig, while the network keeps rhythm and audit
-is clean. The static audit is now correct, so this is a simulation-dynamics
-problem, not kinematics. Next suspects, in order:
-  1. contact solref/solimp for the foot meshes at small timestep (huge
-     normal forces when mesh contacts engage); try primitive collision
-     (capsule/box feet) instead of mesh-mesh contact;
-  2. equality-coupling forces on the boundmass(0.01 kg) pathpoint bodies
-     (accelerations ~ F/0.01 are violent; try boundmass 0.05-0.1 with
-     matching joint damping, or densify the couplings' tolerance);
-  3. hip/ankle hinge damping (currently 0.05) - add explicit damping ~0.5-2;
-  4. ctrl slew limiting on MN outputs (rate-limit activation commands).
-Diagnostic: diag_nan.py (finds first NaN + which joints), audit_signs.py
-(static-sign ground truth).
+1. **boundmass 0.01 is too small at human muscle forces.** With 92 muscles
+   pulling on the equality-coupled pathpoint DoFs the mass matrix goes
+   singular ("Inertia matrix too close to singular" → NaN) at as little as
+   0.3 whole-body co-activation. → `boundmass=0.1` (survives 1.0
+   co-contraction for 6 s in diag_stab.py).
+2. **The equality-coupled "conditional pathpoint" slide joints carried
+   range limits sampled only around the keyframe** (MyoConverter artifact).
+   The equality drives them exactly along their polycoef curves, which
+   leave those boxes within 10-30 deg of knee flexion (14 of 36 coupled
+   dofs outside their range at knee=10 deg, 31 at 30 deg) → range-vs-
+   equality fight = huge constraint forces + jammed joints. → strip the
+   ranges, `limited="false"` (NOTE: default class sets limited="true"
+   explicitly, so dropping `range` alone errors out at compile) and add
+   `armature="0.5"` to the followers (0.1 was not enough: rect_fem P3_y
+   went singular at t=8.9 s with the CPG co-contraction).
+3. **knee_angle driver range: NO FLIP — Ben was right (2026-09-10 PM).**
+   The converter PRESERVED OpenSim's flexion-negative convention: real-
+   actuator tests (unjammed followers, `_muscle_direction_test.py`) show
+   gravity buckling the standing knee NEGATIVE (flexion), semimem/
+   bifemsh/med_gas driving NEGATIVE (to -77 deg), vas_lat/rect_fem
+   driving POSITIVE (extension). The converted range [-2.094, 0.1745]
+   (= -120 deg flexion / +10 deg extension) is CORRECT as shipped.
+   Moreover knee_angle ships `limited="false"` — the range is INERT, so
+   an earlier "range flip" (2g, applied and then REVERTED the same
+   evening) changed nothing dynamically. CAUTION: a kinematics sweep that
+   rotates knee_angle WITHOUT letting the coupled translation dofs follow
+   (the tibia's rolling center) mirrors the apparent foot path and
+   "proves" the wrong convention — don't repeat that. Related: the
+   audit_signs moment-injection method reports moment-arm signs that are
+   SIGN-INVERTED vs real activation (docstring caveat added); the hip
+   "axis flips" from the previous session were physical no-ops (axis
+   negation only relabels qpos signs).
+4. **collision="predefined" + 19 explicit ground <pair> lines**: predefined
+   pairs IGNORE contype/conaffinity, so muting the ground geom does
+   nothing (the first "air" runs dragged on an invisible floor). → patch
+   surgery on the <contact> section: remove it entirely for suspended
+   tests; keep only the 6 foot pairs on the ground (OpenSim gait2392 has
+   no self-collision either).
+5. **The pelvis rig springs were landing** (they always had been in the
+   original code — a mid-session refactor briefly broke them, caught by
+   _rig_check). Rig now also writes its damping (was accepted but never
+   written before: undamped rig spring) and the 3 pelvis ROTATION hinges
+   get springs too (150/25 ground, 400/40 air): with zero yaw damping the
+   pelvis freely spun about vertical at 40-68 rad/s on the ground
+   (foot-friction spin-up from left-right standing-solve asymmetries).
+6. **Standing solve fixes**: always solve on a GROUND-ON model copy (in
+   air the solve degenerates: nothing carries gravity → all activations
+   <=0.2, wrong muscles); fit only DoF rows with nonzero muscle moment
+   (pelvis translation rows carry the full body weight but no muscle can
+   act on them → the ridge smeared everything to mush); stronger
+   co-contraction preloads (hip -40, knee -60, ankle +40 N·m), lam 0.25.
 
-Then rerun: `runner.py` (stand -> walk -> stand under the rig), tune stance
-duty (0.36 vs human ~0.6; load-receptor prolongation helps in closed loop),
-and fit W_PF_MN from OpenSim SO activations (fit_synapses.py).
+Results after the fix stack (myo env on EB475WS4):
+- **Deafferented + suspended in air: 22 s, zero warnings, 11 alternating
+  RG_F bursts, COM stable on the rig.** knee range still only ~-1..1 deg
+  in air: quads (9.2 kN total Fmax) vs hamstrings (5.5 kN) co-contract —
+  at PF-cell current levels the net knee torque never crosses zero. The
+  tonic DRIVE->PF term was halved (drive_to_pf 0.4→0.2) and PF reciprocal
+  inhibition raised (2.0→3.0) to narrow the windows; W_PF_MN retuned
+  (F1 knee_flex 1.2, F2 knee_ext 0, E1 knee_ext 0.25/ankle_df 0.10).
+- **Ground walk with afferents (default runner config): 22 s, stayed up,
+  11 bursts, contacts 3-11.** After gating the II-afferent BASELINE with
+  the stance gate (runner.py; the ungated i0_ii=1.0 nA was a global ~0.2
+  co-contraction floor on every extensor MN - found via diag_phase.py),
+  joint motion appears: knee range 0..+17 deg, ankle -87..0 deg. NOTE ON
+  SIGNS: with the true flexion-NEGATIVE knee convention, that +17 deg is
+  EXTENSION/hyperextension-side motion, not flexion - the swing knee
+  still does not flex in the walk; the ankle sweep is dominated by
+  plantarflexion (toe-pointing). Same observation, correct labels.
+- NEXT (in order): (1) swing-knee FLEXION (negative excursion) - the
+  flexors have full range now; the co-contraction standoff is the
+  remaining foe (phase table: quads 0.25 vs hams 0.27 in swing); consider
+  stance-gating the quad drive harder + the PFA clamp 1.5->2.5;
+  (2) ankle plantarflexion overshoot (-61 deg after the rig fix, was
+  -87 = toe-pointing; raise the gated II floor / tib_ant swing drive or
+  lower E2 ankle_pf);
+  (3) COM bounce/drift - BAL gains (kx=150 saturates max_current=6 at
+  com_x -0.3) and stance duty 0.29 vs human 0.6; (4) wean rig springs
+  (tx tether 1500 N/m, pelvis rotations 150 N·m/rad, NEW 2026-09-10 PM
+  after Ben watched the viewer: lumbar_extension/bending/rotation
+  150 N·m/rad + hip_rotation 50 N·m/rad - the torso was flipping upside
+  down over the free lumbar hinge and the legs free-spinning on their
+  long axes; bounce min-COM improved 0.62->0.71) toward true balance;
+  (5) then vestibular/ocular (Ben) and cerebellum/BG layers. Tools:
+  diag_stab.py (plant A/B), diag_phase.py (phase-aligned activations),
+  _muscle_direction_test.py (per-muscle real-activation direction test).
+  runner.py --view now plays in REAL TIME with an initial side-view
+  camera (orbit: left-drag, zoom: scroll, pan: right-drag, double-click
+  a body to track it).
+
+## 2026-09-10/11 night session (Ben staged tuning plan)
+1. Literature (Ivanenko 2002 JN air-stepping): preferred cadence at 100 percent BWS = 36+-8 steps/min ~ 0.3 Hz cycles - air stepping is ~3x SLOWER than walking, not 5x faster. Extensor duty 53+-3 percent, joints near-sinusoidal.
+2. Deafferented air, no interleg (--no-afferents --no-ground --no-interleg): WORKING. 21 s clean, 0.58 Hz, knee -75..+15 deg true swing flexion, hip -10..+60. Keys: decouple amplitude from frequency (low DRIVE shrank all amplitudes to sub-mV - doubled rg_to_pf/pf_to_mn/descend conductances, slow ADAP tau 1.9 s); subtalar/mtp ligament surrogate springs 10 N-m/rad (OpenSim stops lost in conversion - foot flopped to 128 deg); follower armature 1.0. Remaining: ankle PF-heavy, E-duty 0.16 vs 0.53.
+3. Afferented ground + interleg (--drive 2.5): 21 s, stayed up, 6 bursts, COM y +-2-3 cm, adduction +-8 deg (BAL_LAT abductors engaging under load). PELVIS LIMBO: pelvis_tilt still 36 deg with 400 N-m/rad rig + IMU trunk controller - the IMU levels the TORSO (lumbar counter-tilts) but pelvis pitch is driven by SATURATED hip extensors (glut_max 0.94, semimem 1.0) pitching the planted-leg pelvis backward. Trunk muscles cannot fight hip torques - needs the IK back-solve.
+4. New pieces: interleg toggle (--no-interleg); BAL_LAT_R/L stance-gated abductor strategy (mujoco -y = opensim +z); BAL_TRK_EXT/FLX IMU vestibular surrogate (torso up-vector PD -> ercspn/obliques). W_PF_MN: E1 knee_ext 0.10, E2 ankle_pf 0.35, F1 knee_flex 1.80, F2 ankle_df 0.45.
+5. NEXT - IK/SO back-solve (Ben plan): OpenSim IK walking kinematics -> map to MuJoCo joints -> per-timestep NNLS back-solve along trajectory -> fit W_PF_MN, extract human hip/pelvis torque balance (pelvis_tilt +-5 deg), EMG ordering. Then ground duty 0.6, ankle balance, wean rig springs.

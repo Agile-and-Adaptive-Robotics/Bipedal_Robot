@@ -4,9 +4,22 @@ correct direction in the converted MJCF?
 Method: at the keyframe pose, MuJoCo's actuator_moment[m, dof] gives the
 generalized torque per unit muscle force. A positive torque on a hinge DoF
 drives the joint in its positive direction. We compare that sign against the
-anatomical expectation (OpenSim gait2392 conventions: hip_flexion + = flexion,
-knee_angle + = flexion, ankle_angle + = plantarflexion, hip_adduction + =
-adduction) for muscles whose action is unambiguous.
+anatomical expectation (per this file's table) for muscles whose action is
+unambiguous.
+
+!! CAVEAT (2026-09-10, after _muscle_direction_test.py): this method
+injects +moment*Fmax as qfrc_applied, which measures the MOMENT-ARM sign
+(dL/dq), NOT the direction the joint turns under real muscle activation -
+the two come out SIGN-INVERTED here (e.g. it reports vas_lat pulling
+knee_angle negative, while real activation of vas_lat drives knee_angle
+POSITIVE). The table's expected signs are calibrated to this method, so
+the audit stays internally consistent for catching routing flips, but the
+signs are NOT OpenSim coordinate conventions. Ground truth for the knee
+(real ctrl=1 activation tests, unjammed followers): knee_angle NEGATIVE =
+flexion (OpenSim flexion-negative convention, preserved by the converter;
+gravity buckles the standing knee negative, semimem/bifemsh/med_gas drive
+negative, vas_lat/rect_fem drive positive = extension, +10 deg limit).
+The converted knee_angle joint also ships limited="false" (range inert).
 
 Verdict per joint: which fraction of anchor muscles agree; a flipped joint
 shows up as near-total disagreement.

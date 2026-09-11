@@ -1,0 +1,39 @@
+﻿standing solve: nnls x in [0.00, 0.61], >0.1: 26 muscles
+  top: tib_ant_r=0.61, tib_ant_l=0.60, ext_dig_r=0.40, ext_dig_l=0.40, glut_min1_l=0.19, glut_min1_r=0.19, glut_min3_l=0.18, glut_min3_r=0.18
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=     159.5 max|qvel|=   3.89 ncon=  6 com_z=0.940 com_x=-0.127
+t=  1.50 max|qacc|=     111.7 max|qvel|=   5.77 ncon=  8 com_z=0.747 com_x=-0.234
+t=  2.00 max|qacc|=     441.6 max|qvel|=   3.07 ncon= 10 com_z=0.836 com_x=+0.002
+t=  2.50 max|qacc|=     230.6 max|qvel|=   7.71 ncon= 11 com_z=0.652 com_x=-0.072
+t=  3.00 max|qacc|=    1062.1 max|qvel|=   6.44 ncon=  4 com_z=0.787 com_x=-0.280
+t=  3.50 max|qacc|=     294.6 max|qvel|=   4.73 ncon= 11 com_z=0.695 com_x=-0.056
+t=  4.00 max|qacc|=     162.2 max|qvel|=   5.43 ncon= 10 com_z=0.670 com_x=-0.070
+t=  4.50 max|qacc|=     330.2 max|qvel|=   3.47 ncon= 10 com_z=0.734 com_x=-0.302
+t=  5.00 max|qacc|=     152.4 max|qvel|=   4.72 ncon=  6 com_z=0.667 com_x=-0.081
+
+!! qacc/qvel non-finite at t=5.224, dofs: [ 0  1  2  3  4  5  6  7  8  9 10 11]
+   dof 0: joint pelvis_tx
+   dof 1: joint pelvis_ty
+   dof 2: joint pelvis_tz
+   dof 3: joint pelvis_tilt
+   dof 4: joint pelvis_list
+   dof 5: joint pelvis_rotation
+   dof 6: joint hip_flexion_r
+   dof 7: joint hip_adduction_r
+   dof 8: joint hip_rotation_r
+   dof 9: joint knee_r_translation1
+   dof 10: joint knee_r_translation2
+   dof 11: joint knee_angle_r
+   ncon=5
+
+== summary ==
+pelvis/COM height: start 0.96 m, min 0.00 m, final 0.00 m  (FELL at t=0.0 s)
+COM x: min -0.30 max 0.01 final 0.00 m
+RG_F_r bursts during walk window: 0
+peak ctrl: [0.56 0.53 0.59 0.82 0.37 0.37 0.55 0.49 0.55 0.6  0.64 0.81 0.38 0.46
+ 0.63 0.55] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l'))
+knee_r range: -1..1 deg, ankle_r: -2..0 deg
+saved spinal_run.npz
+saved spinal_run.png
+WARNING: Inertia matrix is too close to singular at DOF 66. Check model. Time = 4.6240.
+

@@ -4,6 +4,30 @@ Loaded automatically at session start. Keep it current; keep it lean.
 
 ## Machines
 
+- **EB475WS4 (third machine, added 2026-09-10)** — repo at `D:\Github\Bipedal_Robot`,
+  has a D: drive but **no `D:\Anaconda`** (the easteregg2 notes below don't apply here).
+  Anaconda base = `C:\ProgramData\anaconda3` (conda 26.5.3; NOT writable — env creation
+  fails under ProgramData and `D:\Users\...`). Spinal SNS env = **conda env `myo` at
+  `C:\Users\Ben Bolen\.conda\envs\myo`** (py3.10.21; pip numpy **1.22.4** — scipy 1.9.3
+  needs the 1.22 ABI, the easteregg2 pin 1.21.6 fails with "compiled against API version
+  0xf"; + mujoco 2.3.7 + sns-toolbox 1.5.2 --no-deps + torch 2.14 cpu --no-deps +
+  filelock/typing-extensions/sympy/networkx/jinja2/fsspec/graphviz/tqdm + scipy 1.9.3 +
+  matplotlib 3.7.5). Call as `C:\Users\Ben Bolen\.conda\envs\myo\python.exe`. Second env
+  `MyoSuite` (py3.9, mujoco 3.1.2, MyoSuite 2.8.5, NO sns_toolbox) at
+  `D:\Users\Ben Bolen\.anaconda3\envs\MyoSuite`. No git CLI on PATH (Ben uses GitHub
+  Desktop). **Inline `python -c "multi-line"` gets EATEN by this shell — write script
+  files instead.** Hardware/installs (from the Sept-9 stash, still true): 12 logical
+  cores, 32 GB RAM — **not a heavy-runs box** (cap `parpool` ~6–8; long optimization
+  runs still belong on easteregg2). MATLAB **R2025a Update 1** at
+  `D:\Program Files\MATLAB\R2025a` (on PATH); PSU network license: `license('test')`
+  readings are unreliable here — trust a runtime test (Simulink/Simscape/Optimization/
+  Parallel/CurveFitting/Statistics and gamultiobj/surrogateopt/patternsearch all verified
+  RUNNING). **Simscape Multibody (`smimport`) is BLOCKED here** — the license server
+  reserves all SimMechanics seats (error 101.2), so the URDF→smimport CAD route cannot
+  run on this machine (it works on the laptop). SOLIDWORKS 2025 SP3 (33.3.0) at
+  `D:\Program Files\SOLIDWORKS Corp` (contains a duplicate `SOLIDWORKS (2)` folder, same
+  version); SW2URDF add-in registered (enable via Tools > Add-Ins); Simscape Multibody
+  Link NOT installed.
 - **DESKTOP-5Q16KE9 (laptop), the main workstation** — newest/premium
   MATLAB + SolidWorks, but modest hardware (6 cores, 16 GB RAM). MATLAB **R2025b** at
   `C:\Program Files\MATLAB\R2025b`; SOLIDWORKS **2025 SP4.1** (33.4.1) at
@@ -19,11 +43,13 @@ Loaded automatically at session start. Keep it current; keep it lean.
   `myoconv` is the laptop's copy of the same toolchain). Other envs: `opensim`
   (py3.11 + opensim 4.6), `d2l`. PyCharm: Add Interpreter → Conda → executable
   `D:\Anaconda\condabin\conda.bat` → existing env `myo` (never let PyCharm create a venv).
-- Custom skills (`matlab`, `solidworks`, `latex-overleaf`, `myoconverter`) are version-controlled in
-  `Documents\GitHub\ZCode_Skills`. On this machine `C:\Users\Ben\.zcode\skills\` holds
-  **directory junctions** into that repo — edit the repo copy, then Ben commits via GitHub
-  Desktop. On easteregg2 skills are copied folders under
-  `C:\Users\Ben Bolen\.agents\skills\`.
+- Custom skills (`matlab`, `solidworks`, `latex-overleaf`, `opensim`, `animatlab` — the
+  old `myoconverter` skill is gone; `opensim` replaced it and `animatlab` was added) are
+  version-controlled in `Documents\GitHub\ZCode_Skills`. On the laptop
+  `C:\Users\Ben\.zcode\skills\` holds **directory junctions** into that repo — edit the
+  repo copy, then Ben commits via GitHub Desktop. On this machine (EB475WS4) skills are
+  junctions too (`C:\Users\Ben Bolen\.zcode\skills\`, created 2026-09-09). On easteregg2
+  skills are copied folders under `C:\Users\Ben Bolen\.agents\skills\`.
 
 ## Project purpose (priority order)
 
@@ -101,9 +127,53 @@ Loaded automatically at session start. Keep it current; keep it lean.
     muscle Fmax = `actuator_gainprm[:,2]`; Ia/Ib afferents must be
     pure-signal (resting tone drove constant reciprocal inhibition);
     speed = DRIVE + presynaptic reflex-gain modulation (`params.MOD`).
-    **Open blocker:** leg-DoF NaNs during sim (dt=2 ms, rigid pelvis rig) —
-    dynamics not kinematics; suspects + order in DESIGN.md (mesh foot
-    contacts first). Lit grounding: Rybak/McCrea RG+PF, Bunz 2026 (reflex
+    **Blocker RESOLVED 2026-09-10 (EB475WS4 session; full chain in
+    DESIGN.md):** pathpoint followers' keyframe-sampled range limits
+    fought their equality couplings (knees jammed AND huge constraint
+    forces → the NaNs; stripped + `limited="false"` + follower
+    `armature="0.5"`), boundmass 0.01 was too light at human muscle
+    forces (singular mass matrix → 0.1), predefined contact pairs ignore
+    contype (patch the <contact> section instead), pelvis yaw had zero
+    damping (rig now springs all 3 rotations), the standing solve was
+    degenerate (solve on a ground-on model, joint rows only, preloads
+    hip -40/knee -60/ankle +40), and the II-afferent BASELINE needed the
+    stance gate (ungated i0_ii was a global ~0.2 co-contraction floor).
+    **Knee convention (Ben-corrected, real-actuator-verified): the
+    converter PRESERVED OpenSim's flexion-negative knee; knee_angle
+    NEGATIVE = flexion, and the joint ships `limited="false"` (range
+    inert). An earlier "knee range flip" was reverted the same evening.**
+    audit_signs.py's moment-injection signs are inverted vs real
+    activation (docstring caveat); use `_muscle_direction_test.py`
+    (ctrl=1 per muscle) as ground truth. After the stack: deafferented
+    suspended-air 22 s clean AND full ground stand→walk→stand 22 s with
+    afferents, stayed up. **Night 2026-09-10/11 (Ben's staged plan):**
+    (1) air-stepping lit (Ivanenko 2002): preferred 0.3 Hz cycles (3×
+    SLOWER than walking, not 5× faster), E-duty 53%, sinusoidal joints;
+    (2) deafferented air + `--no-interleg` WORKS: 21 s clean, knee
+    −75..+15° true swing flexion (amplitude/frequency DECOUPLED: low
+    DRIVE had shrunk all network amplitudes to sub-mV — doubled
+    rg_to_pf/pf_to_mn/descend conductances + slow ADAP τ=1.9 s for
+    rhythm), subtalar/mtp ligament-surrogate springs (OpenSim coordinate
+    stops lost in conversion; foot flopped to 128°), follower armature
+    1.0; (3) afferented ground + interleg at --drive 2.5: 21 s up, COM y
+    ±2–3 cm, adduction ±8° (stance-gated BAL_LAT abductors working,
+    mujoco −y = opensim +z). PELVIS-LIMBO DIAGNOSED: pelvis_tilt 36°
+    despite 400 N·m/rad rig + new IMU trunk controller (BAL_TRK_EXT/FLX,
+    torso up-vector PD → ercspn/obliques) — the IMU levels the TORSO
+    (lumbar counter-tilts) but saturated hip extensors (glut_max 0.94,
+    semimem 1.0) pitch the planted-leg pelvis backward; only balanced
+    activation patterns fix it → **NEXT: IK/SO back-solve** (raw markers +
+    GRF `subject01_walk1.mot` are IN the repo; IK chain via `D:\OpenSim
+    4.3` locally, processed `subject01_walk1_ik.mot` on easteregg2) →
+    per-timestep NNLS back-solve → fit W_PF_MN + human hip/pelvis torque
+    balance, then ground duty 0.6, ankle balance, wean rig springs. New
+    tools: `diag_stab.py`, `diag_phase.py` (adaptive thresholds),
+    `_muscle_direction_test.py`, `draw_circuit.py` (Rybak-style schematic
+    PNG), `neuro_scope.py`; runner flags `--no-ground`, `--no-interleg`,
+    `--leg-damping X`, `--time N`, `--view` (3D window, full speed),
+    `--scope` (live neural traces), `--realtime`; per-0.5 s
+    forensics + NaN dof dump; `diag_nan.py` superseded. Lit grounding:
+    Rybak/McCrea RG+PF, Bunz 2026 (reflex
     speed control), Ben's Zotero "Sensory Afferent Database" collection;
     read Di Russo/Ijspeert/Bouri 2023 JNE before any novelty claims.
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
