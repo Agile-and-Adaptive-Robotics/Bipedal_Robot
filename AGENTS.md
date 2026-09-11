@@ -474,6 +474,22 @@ A separate chat is updating the dissertation text with these. Sources (Testing_D
 - Mesh optimizations with these values: Opt_run_Ext completed feasible
   (Mesh_Optimization\Results\Vas_Pam_20mm_Result_20260910_0528.mat, XiUsed inside);
   Opt_run launched with buildKneeFlexorContext20mm.m re-pointed to the 2trans_noT3 pick 107.
+- **Display-script rehydration (2026-09-10):** dated `Vas_Pam_20mm_Result_*.mat` (rework
+  onward) originally saved xBest/XiUsed but NOT ctx. NOW FIXED BOTH WAYS: (1) both drivers
+  save `ctx` in their dated captures (`Opt_run_Ext` adds ctx; `Opt_run` adds ctx + a new
+  `XiUsed` record alongside its legacy `Xi3` field); (2) the two current mats were
+  rehydrated IN PLACE with verified fresh-built ctx — `Vas_Pam_20mm_Result_20260910_0528.mat`
+  and `Bifemsh_20mm_Result_20260910_1234.mat` (gate before each write: builder Xi ==
+  XiUsed and fBest/constraints reproduced exactly; temp backups + rehydrate script in
+  `%LOCALAPPDATA%\Temp\rehydrate_backup`). `Vas_Pam_20mm_Result_20260910_0446.mat` was
+  deliberately NOT rehydrated (its pass-1 Xi pair -12.3mm/0.281 differs from the current
+  builder; attach an Xi-overridden ctx only if it ever needs displaying).
+  `Results\Knee_Extensor_20mm.m` still rebuilds ctx via buildKneeExtContext20mm() with a
+  builder-Xi == XiUsed guard (could now load mat ctx instead, but rebuild+guard also
+  catches builder drift). The old Sep-1 `Vas_Pam_20mm_Result.mat` still carries a
+  pre-rework ctx.geo — loading it with the current builder is what produced the original
+  `bypassTol` error. `AnimateKneeBoneMuscle` writes its GIF next to the script folder
+  regardless of cwd.
 - **FVU caveat**: bio-ext 52cm FVU 2.35 > 1 at this pick — improved vs baseline 4.49 but do not overclaim.
 - **Opt_run runtime reality check (Ben, 2026-09-10):** configured eval budgets (surrogateopt
   ~7000 + patternsearch ~15000) are MAXIMA — actual stages exit early on FunctionTolerance;

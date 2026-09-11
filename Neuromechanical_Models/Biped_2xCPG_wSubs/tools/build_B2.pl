@@ -159,7 +159,7 @@ my %cfg = (
   n2p_hip=>'d81b03a8', p2nIa_hip=>'a21975cb', p2nIb_hip=>'7086c1b0',
   affIa_hip=>'0a7518d5', iaE_hip=>'3a622fba', iaF_hip=>'3ee81205', ib_hip=>'1abd3af9',
   pfE_hip_real=>'116ae90c', pfF_hip_real=>'f519d63a',
-  kaE_real=>'9ceb5a3d', kaF_real=>'5f4c2b51', kaF_offpage_anklepg=>'dfc28c45',
+  kaE_real=>'9ceb5a3d', kaF_real=>'5f4c2b51', kaF_offpage_anklepg=>"dfc28c45", kaE_offpage_anklepg=>"548c27d1",
   kneeMNE=>'e7f0f45b', kneeMNF=>'8b3d2c0c',
   offpageTmpl=>'256160de',
   phys=>{
@@ -178,7 +178,7 @@ my %cfg = (
   n2p_hip=>'904b97eb', p2nIa_hip=>'c3d700cd', p2nIb_hip=>'653f6f6e',
   affIa_hip=>'d4c4ff77', iaE_hip=>'be4136ad', iaF_hip=>'ce567ed6', ib_hip=>'77da980e',
   pfE_hip_real=>'a422e14f', pfF_hip_real=>'dcff5f3e',
-  kaE_real=>'b86372f3', kaF_real=>'58a2e50e', kaF_offpage_anklepg=>'e19f57dd',
+  kaE_real=>'b86372f3', kaF_real=>'58a2e50e', kaF_offpage_anklepg=>"e19f57dd", kaE_offpage_anklepg=>"f7eed3a5",
   kneeMNE=>'22970258', kneeMNF=>'716e9049',
   offpageTmpl=>'256160de',
   phys=>{
@@ -214,9 +214,9 @@ for my $S (values %cfg) {
 # ---------------- muscle specs ----------------
 # role: 'ext' (extends hip/ankle: Gas,BFlh,Semimem) or 'flx' (RF at hip)
 my @muscles = (
-  { key=>'Gas',     ss=>'ankle', role=>'ext', maxT=>1500, rest=>44, drive=>'KAF',   sameAg=>'mnF_ankle', iaXJoint=>'kneeMNE' },
-  { key=>'BFlh',    ss=>'hip',   role=>'ext', maxT=>1500, rest=>34, drive=>'hipE',  sameAg=>'mnF_hip',   iaXJoint=>'kneeMNE' },
-  { key=>'Semimem', ss=>'hip',   role=>'ext', maxT=>1500, rest=>34, drive=>'hipE',  sameAg=>'mnF_hip',   iaXJoint=>'kneeMNE' },
+  { key=>'Gas',     ss=>'ankle', role=>'ext', maxT=>1500, rest=>44, drive=>"KAE",   sameAg=>'mnF_ankle', iaXJoint=>"kneeMNF" },
+  { key=>"BFlh",    ss=>"hip",   role=>"ext", maxT=>1500, rest=>34, drive=>"hipE",  sameAg=>"mnF_hip",   iaXJoint=>"kneeMNF" },
+  { key=>"Semimem", ss=>"hip",   role=>"ext", maxT=>1500, rest=>34, drive=>"hipE",  sameAg=>"mnF_hip",   iaXJoint=>"kneeMNF" },
   { key=>'RF',      ss=>'hip',   role=>'flx', maxT=>1500, rest=>34, drive=>'hipF',  sameAg=>'mnE_hip',   iaXJoint=>'kneeMNF' },
 );
 
@@ -457,7 +457,9 @@ for my $side ('L','R') {
         # ------- synapses -------
         # drive
         if ($ankle) {
-            my $lid = clone_link(find_syn($S->{kaF_offpage_anklepg}, $S->{mnF_ankle}), $S->{kaF_offpage_anklepg}, $mn);
+            my $srcOff = ($m->{drive} eq "KAE") ? $S->{kaE_offpage_anklepg} : $S->{kaF_offpage_anklepg};
+            my $dstTmpl = ($m->{drive} eq "KAE") ? $S->{mnE_ankle} : $S->{mnF_ankle};
+            my $lid = clone_link(find_syn($srcOff, $dstTmpl), $srcOff, $mn);
             push @newLinks, [$pg, $lid];
         } else {
             my ($srcPF, $dstMNt);

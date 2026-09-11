@@ -1,0 +1,19 @@
+SNS_Library.slx: added BPA_10mm/BPA_20mm/BPA_40mm + BioMuscle (11 blocks total).
+BPA_10mm: length-ramp max |err| = 395.8 N  (Fmax ref 395.8 N)
+BPA_20mm: length-ramp max |err| = 1148 N  (Fmax ref 1148.3 N)
+BPA_40mm: length-ramp max |err| = 6000 N  (Fmax ref 6000.0 N)
+BPA_10mm: pressure-sweep max |err| = 352.1 N
+BPA_20mm: pressure-sweep max |err| = 792.9 N
+BPA_40mm: pressure-sweep max |err| = 3874 N
+BioMuscle isometric (lambda=1, A=1): F = 2000.00 N (expect 1000)
+BioMuscle concentric (v=5 l_opt/s): F = 2000.00 N (expect 166.67)
+BioMuscle passive (lambda=1.3, A=0): F = 2000.00 N (expect 119.20)
+DONE. Overall BPA max err 6000 N; BioMuscle max err 1881 N
+{Error using assert
+actuator validation FAILED
+
+Error in sns_test_actuators (line 141)
+assert(tmaxErr < 1.0 && bmaxErr < 2.0, 'actuator validation FAILED');
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+ERROR: MATLAB error Exit Status: 0x00000001

@@ -5,25 +5,82 @@ figures added 2026-09-09. Goal: wire the knee SNS circuit to a Simscape model of
 `09_BA_003.SLDASM`, with an Animatlab/SNS-toolbox-style neuron library drawn in
 the journal diagram language Ben specified.
 
-## What runs today (all in this folder, MATLAB R2025b)
+**2026-09-10 session (easteregg2, R2025a):** restyled icons (heavy strokes,
+Animatlab colors), added REAL BPA actuator blocks (10/20/40 mm, Ben's Festo
+equations) + a Thelen-style biological muscle block, new demos
+(BPACPGLegDemo, BeerCupReflexDemo), and a working OpenSim → Simscape route
+(`osim_import/mjcf2urdf.py` + `sns_osim_import.m`).
+
+## Folder layout (reorganized 2026-09-10)
+
+```
+SNS_Simscape\
+  SNS_Library.slx            generated library (11 blocks, R2025a-native)
+  sns_build_library.m        builds the library
+  sns_build_actuators.m      adds BPA_10/20/40mm + BioMuscle blocks
+  sns_test_actuators.m       validates actuator blocks vs Ben's equations
+  snsfig.m, sns_draw_circuit.m, sns_function_subnetworks.m   journal figures
+  sns_export_diagram.m, sns_osim_import.m, sns_cpg_gait2392.m, sns_urdf_smoke.m
+  import_simscape_when_ready.m, check_env.m
+  demos\                     demo builders/runners + generated demo .slx
+    KneeReflexDemo.slx  BPACPGLegDemo.slx  BeerCupReflexDemo.slx
+    sns_build_demo.m / sns_run_demo.m
+    sns_build_cpg_demo.m / sns_run_cpg_demo.m
+    sns_build_beer_demo.m / sns_run_beer_demo.m
+    sns_animate_demo.m (2D mechanism animations)
+  results\                   run outputs (.mat)
+    pictures\                signal plots + diagnostics
+    animations\              GIF mechanism animations
+  figures\                   journal figures (PNG/PDF/SVG for LaTeX)
+  logs\                      run logs
+  dev\                       tuning/debug scratch (tune_cpg*.m, dump_wiring*.m, ...)
+  osim_import\               OpenSim -> Simscape (mjcf2urdf.py, gait2392 URDF)
+  sw_import\                 SolidWorks COM probes
+  urdf_smoke\, simscape_sources\   smoke test + legacy Simscape-lib route
+```
+
+The `_R2025a` export copies were deleted 2026-09-10: everything is rebuilt
+R2025a-native (verified on easteregg2 R2025a), and R2025b (laptop) opens
+R2025a files directly.
+
+## Run order (from `SNS_Simscape\`, or run any script by full path)
+
+```matlab
+sns_build_library      % 7 neural/mechanical blocks
+sns_build_actuators    % + BPA_10mm/20mm/40mm + BioMuscle  -> 11 blocks
+sns_build_demo         % KneeReflexDemo.slx
+sns_run_demo           % -> results\pictures\sns_demo_results.png
+sns_build_cpg_demo     % BPACPGLegDemo.slx
+sns_run_cpg_demo       % -> results\pictures\sns_cpg_results.png
+sns_build_beer_demo    % BeerCupReflexDemo.slx
+sns_run_beer_demo      % -> results\pictures\sns_beer_results.png
+sns_draw_circuit       % -> figures\KneeReflex_circuit.{png,pdf,svg}
+sns_function_subnetworks
+sns_animate_demo       % -> results\animations\*.gif  (in demos\)
+```
+
+## What runs today (MATLAB R2025a and R2025b)
 
 | File | What it is |
 |---|---|
 | `sns_build_library.m` | builds **`SNS_Library.slx`** — 7 masked blocks with diagram-language icons |
-| `sns_build_demo.m` | builds **`KneeReflexDemo.slx`** — reflex circuit + 1-DOF knee plant |
-| `sns_run_demo.m` | simulates 5 s, saves `sns_demo_results.png` + `.mat` |
+| `sns_build_actuators.m` | adds **BPA_10mm / BPA_20mm / BPA_40mm** (Ben's real Festo equations) + **BioMuscle** (Thelen-style) → 11 blocks |
+| `sns_test_actuators.m` | validates the actuator blocks against `festo4.m`/`maxBPAforce.m` + Thelen references |
+| `demos\sns_build_demo.m` | builds **`KneeReflexDemo.slx`** — reflex circuit + 1-DOF knee plant |
+| `demos\sns_run_demo.m` | simulates 5 s, saves results into `results\` |
+| `demos\sns_build_cpg_demo.m` + `sns_run_cpg_demo.m` | **`BPACPGLegDemo.slx`** — half-center CPG (mutual inhibition + adaptive inhibition) driving antagonist BPAs on the 1-DOF knee |
+| `demos\sns_build_beer_demo.m` + `sns_run_beer_demo.m` | **`BeerCupReflexDemo.slx`** — elbow holds a cup level via Ia/Ib reflex while beer pours in; runs reflex ON vs OFF |
+| `demos\sns_animate_demo.m` | replays logged joint motion as 2D mechanism GIFs (`results\animations\`) |
 | `sns_draw_circuit.m` | **journal figure**: redraws the demo circuit reader-facing (`figures/KneeReflex_circuit.{png,pdf,svg}`) |
 | `sns_function_subnetworks.m` | **journal figure**: 6 arithmetic subnetwork panels (`figures/SNS_function_subnetworks.{png,pdf,svg}`) |
 | `snsfig.m` | drawing primitives shared by both figure scripts (neuron/triangle/dot/muscle/box/arrow) |
 | `sns_export_diagram.m` | prints Simulink models to `figures/<model>_simulink.{png,pdf}` (300 dpi; optional auto-arrange) |
-| `sns_urdf_smoke.m` | proves the URDF → `smimport` pipeline works on this license (uses `urdf_smoke/knee_smoke.urdf`) |
+| `sns_urdf_smoke.m` | minimal URDF → `smimport` smoke test (fails on easteregg2 license, see below) |
+| `osim_import/mjcf2urdf.py` + `sns_osim_import.m` | **OpenSim → Simscape**: MyoConverter MJCF (cvt3) → URDF → `smimport`; saves `osim_import/Gait2392_simbody_simscape.slx` |
+| `sw_import/sw_probe.py`, `sw_probe2.py`, `sw_mate_probe.m` | SolidWorks COM probes of `09_BA_003.SLDASM` (components + transforms work; mate entities blocked by pywin32 byref bug) |
 | `import_simscape_when_ready.m` | one-command `smimport` of the real CAD (URDF **or** Multibody-Link XML) |
-| `SNS_Library.slx`, `KneeReflexDemo.slx` | generated models (open in Simulink, blocks are double-click editable) |
-| `sns_demo_results.png`, `sns_demo_results.mat` | latest run output |
-| `figures\` | all generated figures (PNG for review, PDF/SVG vector for LaTeX) |
-
-Run order: `sns_build_library` → `sns_build_demo` → `sns_run_demo` →
-`sns_draw_circuit` → `sns_function_subnetworks` → `sns_export_diagram`.
+| `SNS_Library.slx`, `demos\*.slx` | generated models (open in Simulink, blocks are double-click editable) |
+| `figures\`, `results\`, `logs\` | figures, run outputs + animations, run logs |
 
 ## Block appearance conventions (Ben, 2026-09-09)
 
@@ -123,15 +180,72 @@ model limit cycle. Its physiological significance has not been evaluated. Tune:
 Plant params (inertia, moment arm, Fmax) are placeholder rig estimates — replace
 from CAD mass properties and the Xi-corrected BPA predictions.
 
-## CAD → Simscape: the URDF route (Ben's choice, 2026-09-09)
+## Real BPA actuator blocks (2026-09-10, Ben's equations)
 
-`smimport` consumes URDF natively, so the pipeline is
-**SolidWorks → (sw2urdf add-in) → .urdf → `smimport`** — no MathWorks CAD
-plugin needed. **The Simscape Multibody "license blocker" was false**: the
-license reports `license('test','Simscape_Multibody') = 0` but carries the
-product under the legacy feature name `SimMechanics` (= 1), and R2025b
-`smimport` runs — proven 2026-09-09 by `sns_urdf_smoke.m` (imported a
-femur+tibia revolute-knee URDF, 22 blocks).
+`SNS_Library.slx` now has 11 blocks: the 7 neural/mechanical blocks plus
+**BPA_10mm / BPA_20mm / BPA_40mm** and **BioMuscle**.
+
+- **BPA_xx mm** — inputs P [kPa], L [m]; output F [N]. Ben's Festo sfit
+  surfaces (from `Functions\festo_lookup_coeffs.json`, same surface
+  `festo4.m` evaluates): `Fn = a0*(exp(-a1*rel) - 1) + (P/620)*exp(-a3*rel^2)`,
+  rel = contraction/KMAX, F = Fn*Fmax, zero force for rel>=1 and F<0.
+  Fmax = `maxBPAforce(Rest,620)` (atan expression) is baked into the internal
+  gain — double-click into the block to override. 40 mm default 6000 N (the
+  class value; `maxBPAforce.m` says 6398.4 — unverified which Ben wants).
+- **BioMuscle** — OpenSim Thelen2003-style Hill muscle, rigid tendon:
+  active FL `exp(-(lambda-1)^2/0.45)`, Hill force-velocity
+  (A_hill=0.25, v_max in l_opt/s), exponential passive FL (kpe=4, e_pas=0.6).
+  Inputs Act, Lmt, Vmt; elementary blocks only (no codegen).
+- **Validation** (`sns_test_actuators.m`): BPA blocks match `festo4()*maxBPAforce()`
+  to ~1e-10 N over length and pressure sweeps; BioMuscle matches the Thelen
+  references to ~1e-14 N (isometric / concentric / passive).
+- Gotcha learned the hard way: mask-param DEFAULT strings that reference
+  sibling mask params (Fmax referencing Rest) do NOT resolve at sim time —
+  block params *inside* the masked subsystem do. And a library must be LOCKED
+  for its blocks to be instance-able.
+
+## Demos
+
+| Demo | File | What it shows |
+|---|---|---|
+| `KneeReflexDemo.slx` | `sns_build_demo.m` / `sns_run_demo.m` | Ia/Ib reflex circuit + antagonist BPAs on a 1-DOF knee (theta settles 42.7°) |
+| `BPACPGLegDemo.slx` | `sns_build_cpg_demo.m` / `sns_run_cpg_demo.m` | half-center CPG (mutual inhibition + adaptive inhibition via slow Adp neurons) driving antagonist BPAs on the knee; full-amplitude alternating bursts, knee cycles ~10-48° |
+| `BeerCupReflexDemo.slx` | `sns_build_beer_demo.m` / `sns_run_beer_demo.m` | elbow holds a cup level while beer pours (0→0.62 kg); biceps = real BPA_20mm pressure-driven; Ia stretch reflex + Ib autogenic inhibition. Reflex ON halves the peak deviation (5.1° vs 9.7°) and settles near level |
+
+CPG tuning was done in ODE prototypes first (`tune_cpg.m`, `tune_cpg2.m`):
+mutual inhibition 0.8, adaptive current = g_adp(15 nA) x S_adp (LINEAR gain on
+the Adp neuron's S output — a synapse there LATCHES the winner because its
+driving force collapses at high RG voltage), asymmetric drives 4.0/3.6 nA.
+Symmetric drives latch (same symptom as the AnimatLab RG latch).
+
+## OpenSim -> Simscape (WORKS, pending license on THIS machine)
+
+Route: OpenSim gait2392_simbody --MyoConverter--> MJCF (`mjc\gait2392_simbody\
+gait2392_simbody_cvt3.xml`) --`osim_import/mjcf2urdf.py`--> URDF -->
+`smimport`. The converter handles MuJoCo's default-type hinges, joint anchor
+offsets (via `_pre`/`_anchor`/`-jpos` fixed-link chains), the massless muscle
+pathpoint slide bodies (kept as links so BPAs can attach at the same points),
+and writes proper URDF `<mass>` child elements. Output:
+`osim_import/gait2392_simbody.urdf` (149 links / 149 joints).
+
+**BLOCKER on easteregg2 (2026-09-10):** `sns_osim_import.m` fails inside
+smimport at the Mechanism Configuration block's PreCopyFcn — root cause is the
+LICENSE: `license('test','SimMechanics') = 0` on this R2025a install (the
+smoke URDF fails identically, so it is not the model). Base Simscape IS
+licensed; Simscape Multibody is not. Re-run `sns_osim_import.m` once the
+license carries SimMechanics/Simscape_Multibody (e.g. after the planned
+R2025b upgrade + CECS license repoint). `sns_cpg_gait2392.m` is the skeleton
+for CPG+BPA actuation of the imported knee.
+
+## SolidWorks -> Simscape status
+
+`sw_import/sw_probe.py` (root-Anaconda python — it has pywin32; the myo env
+does NOT) opens `09_BA_003.SLDASM` READ-ONLY via COM and enumerates all 15
+components + transforms (ground = `04_02_KB_R_003`, confirmed). SolidWorks
+zero-arg methods come back as pywin32 PROPERTIES (use the zcall helper).
+Blockers: transforms/mates need typed dispatch (EnsureDispatch refuses
+makepy for SW — needs a one-time manual `makepy`), and the sw2urdf GUI export
+dialog remains the 2-minute manual path (Ben: File > Export as URDF).
 
 Status of the sw2urdf add-in on this laptop (SW 2025 SP4.1):
 - **Not installed.** Installer downloaded: `C:\Users\Ben\Downloads\sw2urdfSetup_1.6.1.exe`.

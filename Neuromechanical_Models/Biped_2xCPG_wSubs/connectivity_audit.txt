@@ -25,219 +25,237 @@
  25. LH_Knee-Ext Ia                   => LH_Knee Ia E                     G=0.5
  26. LH_Knee MN E                     => LH_Knee R E                      G=0.5
  27. LH_Knee Ia E                     => LH_Knee Ia F                     G=0.5
- 28. LH_AnkleZ MN F                   => LH_AnkleZ R F                    G=0.5
- 29. OffPage:LH_K&A PF F              => LH_AnkleZ Ia F                   G=0.5
- 30. LH_AnkleZ MN E                   => LH_AnkleZ R E                    G=0.5
- 31. OffPage:LH_K&A PF F              => LH_AnkleZ- Ext Ib                G=0.5
- 32. LH_AnkleZ R F                    => LH_AnkleZ Ia F                   G=0.5
- 33. OffPage:LH_K&A PF E              => LH_AnkleZ MN E                   G=0.5
- 34. LH_AnkleZ- Flx Ib                => LH_AnkleZ MN F                   G=0.5
- 35. OffPage:LH_K&A PF F              => LH_AnkleZ MN F                   G=0.5
- 36. OffPage:LH_K&A PF E              => LH_AnkleZ Ia E                   G=0.5
- 37. LH_AnkleZ Ia F                   => LH_AnkleZ MN E                   G=0.5
- 38. LH_AnkleZ Ia E                   => LH_AnkleZ MN F                   G=0.5
- 39. LH_AnkleZ R E                    => LH_AnkleZ R F                    G=0.5
- 40. LH_AnkleZ Ia E                   => LH_AnkleZ Ia F                   G=0.5
- 41. LH_AnkleZ R F                    => LH_AnkleZ R E                    G=0.5
- 42. LH_AnkleZ Ia F                   => LH_AnkleZ Ia E                   G=0.5
- 43. LH_AnkleZ-Ext Ia                 => LH_AnkleZ Ia E                   G=0.5
- 44. LH_AnkleZ R E                    => LH_AnkleZ MN E                   G=0.5
- 45. LH_AnkleZ-FLX II                 => LH_AnkleZ MN F                   G=0.5
- 46. OffPage:LH_K&A PF F              => L_Gas MN                         G=0.5
- 47. L_Gas-Ext Ia                     => L_Gas Ia E                       G=0.5
- 48. L_Gas Ia E                       => LH_AnkleZ MN F                   G=0.5
- 49. L_Gas Ia E                       => LH_AnkleZ Ia F                   G=0.5
- 50. LH_AnkleZ Ia F                   => L_Gas MN                         G=0.5
- 51. L_Gas- Ext Ib                    => L_Gas MN                         G=0.5
- 52. OffPage:LH_K&A PF E              => LH_AnkleZ- Flx Ib                G=0.5
- 53. LH_AnkleZ R F                    => LH_AnkleZ MN F                   G=0.5
- 54. LH_AnkleZ R E                    => LH_AnkleZ Ia E                   G=0.5
- 55. LH_AnkleZ-FLX Ia                 => LH_AnkleZ Ia F                   G=0.5
- 56. LH_AnkleZ- Ext Ib                => LH_AnkleZ MN E                   G=0.5
- 57. L RG ext                         => L RG flx                         G=0.5
- 58. L RG ext IN                      => L RG flx                         G=0.5
- 59. L RG flx                         => L RG ext                         G=0.5
- 60. L RG flx IN                      => L RG ext                         G=0.5
- 61. L RG ext                         => L RG ext IN                      G=0.5
- 62. L RG flx                         => L RG flx IN                      G=0.5
- 63. L Hip flx Ia                     => L Hip flx Ia 2                   G=0.5
- 64. L Hip PF flx                     => L Hip MN flx                     G=0.5
- 65. L Hip MN flx RE                  => L Hip MN ext RE                  G=0.5
- 66. L Hip MN ext RE                  => L Hip MN flx RE                  G=0.5
- 67. L Hip MN flx RE                  => L Hip MN flx                     G=0.5
- 68. L Hip MN ext                     => L Hip MN ext RE                  G=0.5
- 69. L Hip MN ext RE                  => L Hip ext Ia 2                   G=0.5
- 70. OffPage:L Hip PF flx             => L Hip ext Ib                     G=0.5
- 71. L Hip PF ext                     => L Hip ext Ia 2                   G=0.5
- 72. L Hip PF ext                     => L Hip MN ext                     G=0.5
- 73. L Hip PF flx                     => L Hip PF flx IN                  G=0.5
- 74. L Hip PF flx IN                  => L Hip PF ext                     G=0.5
- 75. L Hip ext Ia 2                   => L Hip MN flx                     G=0.5
- 76. L Hip flx Ib                     => L Hip MN flx                     G=0.5
- 77. L Hip PF ext IN                  => L Hip PF flx                     G=0.5
- 78. OffPage:L Hip PF ext             => L Hip flx Ib                     G=0.5
- 79. L Hip MN flx RE                  => L Hip flx Ia 2                   G=0.5
- 80. L Hip ext Ia                     => L Hip ext Ia 2                   G=0.5
- 81. L Hip flx Ia 2                   => L Hip ext Ia 2                   G=0.5
- 82. L Hip MN flx                     => L Hip MN flx RE                  G=0.5
- 83. L Hip ext Ia 2                   => L Hip flx Ia 2                   G=0.5
- 84. L Hip PF ext                     => L_BFlh MN                        G=0.5
- 85. L_BFlh-Ext Ia                    => L_BFlh Ia E                      G=0.5
+ 28. OffPage:L_Gas Ia E               => LH_Knee MN F                     G=0.5
+ 29. OffPage:L_BFlh Ia E              => LH_Knee MN F                     G=0.5
+ 30. OffPage:L_Semimem Ia E           => LH_Knee MN F                     G=0.5
+ 31. OffPage:L_RF Ia E                => LH_Knee MN F                     G=0.5
+ 32. LH_AnkleZ MN F                   => LH_AnkleZ R F                    G=0.5
+ 33. OffPage:LH_K&A PF F              => LH_AnkleZ Ia F                   G=0.5
+ 34. LH_AnkleZ MN E                   => LH_AnkleZ R E                    G=0.5
+ 35. OffPage:LH_K&A PF F              => LH_AnkleZ- Ext Ib                G=0.5
+ 36. LH_AnkleZ R F                    => LH_AnkleZ Ia F                   G=0.5
+ 37. OffPage:LH_K&A PF E              => LH_AnkleZ MN E                   G=0.5
+ 38. OffPage:LH_K&A PF E              => L_Gas MN                         G=0.5
+ 39. LH_AnkleZ- Flx Ib                => LH_AnkleZ MN F                   G=0.5
+ 40. OffPage:LH_K&A PF F              => LH_AnkleZ MN F                   G=0.5
+ 41. OffPage:LH_K&A PF E              => LH_AnkleZ Ia E                   G=0.5
+ 42. LH_AnkleZ Ia F                   => LH_AnkleZ MN E                   G=0.5
+ 43. LH_AnkleZ Ia F                   => L_Gas MN                         G=0.5
+ 44. LH_AnkleZ Ia E                   => LH_AnkleZ MN F                   G=0.5
+ 45. L_Gas Ia E                       => LH_AnkleZ MN F                   G=0.5
+ 46. LH_AnkleZ R E                    => LH_AnkleZ R F                    G=0.5
+ 47. LH_AnkleZ Ia E                   => LH_AnkleZ Ia F                   G=0.5
+ 48. L_Gas Ia E                       => LH_AnkleZ Ia F                   G=0.5
+ 49. LH_AnkleZ R F                    => LH_AnkleZ R E                    G=0.5
+ 50. LH_AnkleZ Ia F                   => LH_AnkleZ Ia E                   G=0.5
+ 51. LH_AnkleZ-Ext Ia                 => LH_AnkleZ Ia E                   G=0.5
+ 52. L_Gas-Ext Ia                     => L_Gas Ia E                       G=0.5
+ 53. LH_AnkleZ R E                    => LH_AnkleZ MN E                   G=0.5
+ 54. LH_AnkleZ-FLX II                 => LH_AnkleZ MN F                   G=0.5
+ 55. OffPage:LH_K&A PF E              => LH_AnkleZ- Flx Ib                G=0.5
+ 56. LH_AnkleZ R F                    => LH_AnkleZ MN F                   G=0.5
+ 57. LH_AnkleZ R E                    => LH_AnkleZ Ia E                   G=0.5
+ 58. LH_AnkleZ-FLX Ia                 => LH_AnkleZ Ia F                   G=0.5
+ 59. LH_AnkleZ- Ext Ib                => LH_AnkleZ MN E                   G=0.5
+ 60. L_Gas- Ext Ib                    => L_Gas MN                         G=0.5
+ 61. L RG ext                         => L RG flx                         G=0.5
+ 62. L RG ext IN                      => L RG flx                         G=0.5
+ 63. L RG flx                         => L RG ext                         G=0.5
+ 64. L RG flx IN                      => L RG ext                         G=0.5
+ 65. L RG ext                         => L RG ext IN                      G=0.5
+ 66. L RG flx                         => L RG flx IN                      G=0.5
+ 67. L Hip flx Ia                     => L Hip flx Ia 2                   G=0.5
+ 68. L Hip PF flx                     => L Hip MN flx                     G=0.5
+ 69. L Hip PF flx                     => L_RF MN                          G=0.5
+ 70. L Hip MN flx RE                  => L Hip MN ext RE                  G=0.5
+ 71. L Hip MN ext RE                  => L Hip MN flx RE                  G=0.5
+ 72. L Hip MN flx RE                  => L Hip MN flx                     G=0.5
+ 73. L Hip MN ext                     => L Hip MN ext RE                  G=0.5
+ 74. L Hip MN ext RE                  => L Hip ext Ia 2                   G=0.5
+ 75. OffPage:L Hip PF flx             => L Hip ext Ib                     G=0.5
+ 76. L Hip PF ext                     => L Hip ext Ia 2                   G=0.5
+ 77. L Hip PF ext                     => L Hip MN ext                     G=0.5
+ 78. L Hip PF ext                     => L_Semimem MN                     G=0.5
+ 79. L Hip PF ext                     => L_BFlh MN                        G=0.5
+ 80. L Hip PF flx                     => L Hip PF flx IN                  G=0.5
+ 81. L Hip PF flx IN                  => L Hip PF ext                     G=0.5
+ 82. L Hip ext Ia 2                   => L Hip MN flx                     G=0.5
+ 83. L Hip ext Ia 2                   => L_RF MN                          G=0.5
+ 84. L_RF Ia E                        => L Hip MN ext                     G=0.5
+ 85. L_Semimem Ia E                   => L Hip MN flx                     G=0.5
  86. L_BFlh Ia E                      => L Hip MN flx                     G=0.5
- 87. L_BFlh Ia E                      => L Hip flx Ia 2                   G=0.5
- 88. L Hip flx Ia 2                   => L_BFlh MN                        G=0.5
- 89. L_BFlh- Ext Ib                   => L_BFlh MN                        G=0.5
- 90. L Hip PF ext                     => L_Semimem MN                     G=0.5
- 91. L_Semimem-Ext Ia                 => L_Semimem Ia E                   G=0.5
- 92. L_Semimem Ia E                   => L Hip MN flx                     G=0.5
- 93. L_Semimem Ia E                   => L Hip flx Ia 2                   G=0.5
- 94. L Hip flx Ia 2                   => L_Semimem MN                     G=0.5
- 95. L_Semimem- Ext Ib                => L_Semimem MN                     G=0.5
- 96. L Hip PF flx                     => L_RF MN                          G=0.5
- 97. L_RF-Ext Ia                      => L_RF Ia E                        G=0.5
- 98. L_RF Ia E                        => L Hip MN ext                     G=0.5
- 99. L_RF Ia E                        => L Hip ext Ia 2                   G=0.5
-100. L Hip ext Ia 2                   => L_RF MN                          G=0.5
-101. L_RF- Ext Ib                     => L_RF MN                          G=0.5
-102. L Hip MN ext RE                  => L Hip MN ext                     G=0.5
-103. L Hip PF ext                     => L Hip PF ext IN                  G=0.5
-104. L Hip flx Ia 2                   => L Hip MN ext                     G=0.5
-105. L Hip PF flx                     => L Hip flx Ia 2                   G=0.5
-106. L Hip ext Ib                     => L Hip MN ext                     G=0.5
-107. OffPage:LH_AnkleZ- Ext Ib        => OffPage:L RG ext                 G=0.5
-108. OffPage:L Hip flx Ia             => OffPage:L Hip PF ext             G=0.5
-109. OffPage:LH_HipZ Ext II           => OffPage:LH_K&A PF F              G=0.5
-110. OffPage:L Hip flx Ia             => OffPage:L RG ext                 G=0.5
-111. OffPage:L RG ext                 => OffPage:L Hip PF flx             G=0.5
-112. OffPage:L RG ext                 => OffPage:L Hip PF ext             G=0.5
-113. OffPage:LH_AnkleZ- Ext Ib        => OffPage:LH_K&A PF E              G=0.5
-114. OffPage:LH_HipZ Ext II           => OffPage:L Hip PF flx             G=0.5
-115. OffPage:L Hip flx Ia             => OffPage:LH_K&A PF E              G=0.5
-116. OffPage:LH_HipZ Ext II           => OffPage:L RG ext                 G=0.5
-117. OffPage:LH_AnkleZ- Ext Ib        => OffPage:L RG ext                 G=0.5
-118. OffPage:L RG ext                 => OffPage:LH_K&A PF F              G=0.5
-119. OffPage:LH_HipZ FLX II           => OffPage:LH_K&A PF E              G=0.5
-120. OffPage:LH_HipZ FLX II           => OffPage:L RG ext                 G=0.5
-121. OffPage:LH_HipZ FLX II           => OffPage:L Hip PF ext             G=0.5
-122. OffPage:L RG ext                 => OffPage:LH_K&A PF E              G=0.5
-123. RH_IN RG E                       => RH_RG F                          G=0.5
-124. RH_RG E                          => RH_RG F                          G=0.5
-125. RH_RG E                          => RH_IN RG E                       G=0.5
-126. RH_IN RG F                       => RH_RG E                          G=0.5
-127. RH_RG F                          => RH_IN RG F                       G=0.5
-128. RH_RG F                          => RH_RG E                          G=0.5
-129. RH_HipZ R E                      => RH_HipZ R F                      G=0.5
-130. RH_HipZ IN PF E                  => RH_HipZ PF F                     G=0.5
-131. RH_HipZ MN F                     => RH_HipZ R F                      G=0.5
-132. RH_HipZ-Ext Ia                   => RH_HipZ Ia E                     G=0.5
-133. RH_HipZ- Ext Ib                  => RH_HipZ MN E                     G=0.5
-134. RH_HipZ PF F                     => RH_HipZ MN F                     G=0.5
-135. RH_HipZ Ia F                     => RH_HipZ MN E                     G=0.5
-136. RH_HipZ PF F                     => RH_HipZ IN PF F                  G=0.5
-137. RH_HipZ MN E                     => RH_HipZ R E                      G=0.5
-138. RH_HipZ PF E                     => RH_HipZ IN PF E                  G=0.5
-139. RH_HipZ R E                      => RH_HipZ MN E                     G=0.5
-140. OffPage:RH_HipZ PF F             => RH_HipZ- Ext Ib                  G=0.5
-141. RH_HipZ R E                      => RH_HipZ Ia E                     G=0.5
-142. RH_HipZ R F                      => RH_HipZ R E                      G=0.5
-143. RH_HipZ PF E                     => RH_BFlh MN                       G=0.5
-144. RH_BFlh-Ext Ia                   => RH_BFlh Ia E                     G=0.5
-145. RH_BFlh Ia E                     => RH_HipZ MN F                     G=0.5
-146. RH_BFlh Ia E                     => RH_HipZ Ia F                     G=0.5
-147. RH_HipZ Ia F                     => RH_BFlh MN                       G=0.5
-148. RH_BFlh- Ext Ib                  => RH_BFlh MN                       G=0.5
-149. RH_HipZ PF E                     => RH_Semimem MN                    G=0.5
-150. RH_Semimem-Ext Ia                => RH_Semimem Ia E                  G=0.5
-151. RH_Semimem Ia E                  => RH_HipZ MN F                     G=0.5
-152. RH_Semimem Ia E                  => RH_HipZ Ia F                     G=0.5
-153. RH_HipZ Ia F                     => RH_Semimem MN                    G=0.5
-154. RH_Semimem- Ext Ib               => RH_Semimem MN                    G=0.5
-155. RH_HipZ PF F                     => RH_RF MN                         G=0.5
-156. RH_RF-Ext Ia                     => RH_RF Ia E                       G=0.5
-157. RH_RF Ia E                       => RH_HipZ MN E                     G=0.5
-158. RH_RF Ia E                       => RH_HipZ Ia E                     G=0.5
-159. RH_HipZ Ia E                     => RH_RF MN                         G=0.5
-160. RH_RF- Ext Ib                    => RH_RF MN                         G=0.5
-161. RH_HipZ R F                      => RH_HipZ MN F                     G=0.5
-162. RH_HipZ R F                      => RH_HipZ Ia F                     G=0.5
-163. RH_HipZ Ia F                     => RH_HipZ Ia E                     G=0.5
-164. RH_HipZ PF F                     => RH_HipZ Ia F                     G=0.5
-165. OffPage:RH_HipZ PF E             => RH_HipZ- Flx Ib                  G=0.5
-166. RH_HipZ PF E                     => RH_HipZ Ia E                     G=0.5
-167. RH_HipZ IN PF F                  => RH_HipZ PF E                     G=0.5
-168. RH_HipZ PF E                     => RH_HipZ MN E                     G=0.5
-169. RH_HipZ Ia E                     => RH_HipZ Ia F                     G=0.5
-170. RH_HipZ Ia E                     => RH_HipZ MN F                     G=0.5
-171. RH_HipZ-FLX Ia                   => RH_HipZ Ia F                     G=0.5
-172. RH_HipZ- Flx Ib                  => RH_HipZ MN F                     G=0.5
-173. RH_K&A PF F                      => RH_K&A IN PF F                   G=0.5
-174. RH_K&A IN PF E                   => RH_K&A PF F                      G=0.5
-175. RH_K&A PF E                      => RH_K&A IN PF E                   G=0.5
-176. RH_K&A IN PF F                   => RH_K&A PF E                      G=0.5
-177. RH_AnkleZ R E                    => RH_AnkleZ R F                    G=0.5
-178. RH_AnkleZ MN F                   => RH_AnkleZ R F                    G=0.5
-179. OffPage:RH_K&A PF F              => RH_AnkleZ Ia F                   G=0.5
-180. RH_AnkleZ- Ext Ib                => RH_AnkleZ MN E                   G=0.5
-181. RH_AnkleZ R F                    => RH_AnkleZ R E                    G=0.5
-182. OffPage:RH_K&A PF F              => RH_AnkleZ MN F                   G=0.5
-183. RH_AnkleZ Ia F                   => RH_AnkleZ Ia E                   G=0.5
-184. RH_AnkleZ Ia E                   => RH_AnkleZ MN F                   G=0.5
-185. OffPage:RH_K&A PF E              => RH_AnkleZ- Flx Ib                G=0.5
-186. RH_AnkleZ R E                    => RH_AnkleZ Ia E                   G=0.5
-187. RH_AnkleZ Ia F                   => RH_AnkleZ MN E                   G=0.5
-188. RH_AnkleZ MN E                   => RH_AnkleZ R E                    G=0.5
-189. RH_AnkleZ Ia E                   => RH_AnkleZ Ia F                   G=0.5
-190. RH_AnkleZ R F                    => RH_AnkleZ Ia F                   G=0.5
-191. OffPage:RH_K&A PF E              => RH_AnkleZ Ia E                   G=0.5
-192. RH_AnkleZ-FLX Ia                 => RH_AnkleZ Ia F                   G=0.5
-193. RH_AnkleZ-Ext Ia                 => RH_AnkleZ Ia E                   G=0.5
-194. OffPage:RH_K&A PF F              => RH_Gas MN                        G=0.5
-195. RH_Gas-Ext Ia                    => RH_Gas Ia E                      G=0.5
+ 87. L Hip flx Ib                     => L Hip MN flx                     G=0.5
+ 88. L Hip PF ext IN                  => L Hip PF flx                     G=0.5
+ 89. OffPage:L Hip PF ext             => L Hip flx Ib                     G=0.5
+ 90. L Hip MN flx RE                  => L Hip flx Ia 2                   G=0.5
+ 91. L Hip ext Ia                     => L Hip ext Ia 2                   G=0.5
+ 92. L_RF-Ext Ia                      => L_RF Ia E                        G=0.5
+ 93. L_Semimem-Ext Ia                 => L_Semimem Ia E                   G=0.5
+ 94. L_BFlh-Ext Ia                    => L_BFlh Ia E                      G=0.5
+ 95. L Hip flx Ia 2                   => L Hip ext Ia 2                   G=0.5
+ 96. L_RF Ia E                        => L Hip ext Ia 2                   G=0.5
+ 97. L Hip MN flx                     => L Hip MN flx RE                  G=0.5
+ 98. L Hip ext Ia 2                   => L Hip flx Ia 2                   G=0.5
+ 99. L_Semimem Ia E                   => L Hip flx Ia 2                   G=0.5
+100. L_BFlh Ia E                      => L Hip flx Ia 2                   G=0.5
+101. L Hip MN ext RE                  => L Hip MN ext                     G=0.5
+102. L Hip PF ext                     => L Hip PF ext IN                  G=0.5
+103. L Hip flx Ia 2                   => L Hip MN ext                     G=0.5
+104. L Hip flx Ia 2                   => L_Semimem MN                     G=0.5
+105. L Hip flx Ia 2                   => L_BFlh MN                        G=0.5
+106. L Hip PF flx                     => L Hip flx Ia 2                   G=0.5
+107. L Hip ext Ib                     => L Hip MN ext                     G=0.5
+108. L_RF- Ext Ib                     => L_RF MN                          G=0.5
+109. L_Semimem- Ext Ib                => L_Semimem MN                     G=0.5
+110. L_BFlh- Ext Ib                   => L_BFlh MN                        G=0.5
+111. OffPage:LH_K&A PF F              => L_BFlh MN                        G=0.5
+112. OffPage:LH_K&A PF F              => L_Semimem MN                     G=0.5
+113. OffPage:LH_K&A PF E              => L_RF MN                          G=0.5
+114. OffPage:LH_AnkleZ- Ext Ib        => OffPage:L RG ext                 G=0.5
+115. OffPage:L Hip flx Ia             => OffPage:L Hip PF ext             G=0.5
+116. OffPage:LH_HipZ Ext II           => OffPage:LH_K&A PF F              G=0.5
+117. OffPage:L Hip flx Ia             => OffPage:L RG ext                 G=0.5
+118. OffPage:L RG ext                 => OffPage:L Hip PF flx             G=0.5
+119. OffPage:L RG ext                 => OffPage:L Hip PF ext             G=0.5
+120. OffPage:LH_AnkleZ- Ext Ib        => OffPage:LH_K&A PF E              G=0.5
+121. OffPage:LH_HipZ Ext II           => OffPage:L Hip PF flx             G=0.5
+122. OffPage:L Hip flx Ia             => OffPage:LH_K&A PF E              G=0.5
+123. OffPage:LH_HipZ Ext II           => OffPage:L RG ext                 G=0.5
+124. OffPage:LH_AnkleZ- Ext Ib        => OffPage:L RG ext                 G=0.5
+125. OffPage:L RG ext                 => OffPage:LH_K&A PF F              G=0.5
+126. OffPage:LH_HipZ FLX II           => OffPage:LH_K&A PF E              G=0.5
+127. OffPage:LH_HipZ FLX II           => OffPage:L RG ext                 G=0.5
+128. OffPage:LH_HipZ FLX II           => OffPage:L Hip PF ext             G=0.5
+129. OffPage:L RG ext                 => OffPage:LH_K&A PF E              G=0.5
+130. RH_IN RG E                       => RH_RG F                          G=0.5
+131. RH_IN RG F                       => RH_RG E                          G=0.5
+132. RH_RG E                          => RH_IN RG E                       G=0.5
+133. RH_RG E                          => RH_RG F                          G=0.5
+134. RH_RG F                          => RH_IN RG F                       G=0.5
+135. RH_RG F                          => RH_RG E                          G=0.5
+136. RH_HipZ R E                      => RH_HipZ R F                      G=0.5
+137. RH_HipZ IN PF E                  => RH_HipZ PF F                     G=0.5
+138. RH_HipZ MN F                     => RH_HipZ R F                      G=0.5
+139. RH_HipZ-Ext Ia                   => RH_HipZ Ia E                     G=0.5
+140. RH_RF-Ext Ia                     => RH_RF Ia E                       G=0.5
+141. RH_Semimem-Ext Ia                => RH_Semimem Ia E                  G=0.5
+142. RH_BFlh-Ext Ia                   => RH_BFlh Ia E                     G=0.5
+143. RH_HipZ- Ext Ib                  => RH_HipZ MN E                     G=0.5
+144. RH_RF- Ext Ib                    => RH_RF MN                         G=0.5
+145. RH_Semimem- Ext Ib               => RH_Semimem MN                    G=0.5
+146. RH_BFlh- Ext Ib                  => RH_BFlh MN                       G=0.5
+147. RH_HipZ PF F                     => RH_HipZ MN F                     G=0.5
+148. RH_HipZ PF F                     => RH_RF MN                         G=0.5
+149. RH_HipZ Ia F                     => RH_HipZ MN E                     G=0.5
+150. RH_HipZ Ia F                     => RH_Semimem MN                    G=0.5
+151. RH_HipZ Ia F                     => RH_BFlh MN                       G=0.5
+152. RH_HipZ PF F                     => RH_HipZ IN PF F                  G=0.5
+153. RH_HipZ MN E                     => RH_HipZ R E                      G=0.5
+154. RH_HipZ PF E                     => RH_HipZ IN PF E                  G=0.5
+155. RH_HipZ R E                      => RH_HipZ MN E                     G=0.5
+156. OffPage:RH_HipZ PF F             => RH_HipZ- Ext Ib                  G=0.5
+157. RH_HipZ R E                      => RH_HipZ Ia E                     G=0.5
+158. RH_HipZ R F                      => RH_HipZ R E                      G=0.5
+159. RH_HipZ R F                      => RH_HipZ MN F                     G=0.5
+160. RH_HipZ R F                      => RH_HipZ Ia F                     G=0.5
+161. RH_HipZ Ia F                     => RH_HipZ Ia E                     G=0.5
+162. RH_RF Ia E                       => RH_HipZ Ia E                     G=0.5
+163. RH_HipZ PF F                     => RH_HipZ Ia F                     G=0.5
+164. OffPage:RH_HipZ PF E             => RH_HipZ- Flx Ib                  G=0.5
+165. RH_HipZ PF E                     => RH_HipZ Ia E                     G=0.5
+166. RH_HipZ IN PF F                  => RH_HipZ PF E                     G=0.5
+167. RH_HipZ PF E                     => RH_HipZ MN E                     G=0.5
+168. RH_HipZ PF E                     => RH_Semimem MN                    G=0.5
+169. RH_HipZ PF E                     => RH_BFlh MN                       G=0.5
+170. RH_HipZ Ia E                     => RH_HipZ Ia F                     G=0.5
+171. RH_Semimem Ia E                  => RH_HipZ Ia F                     G=0.5
+172. RH_BFlh Ia E                     => RH_HipZ Ia F                     G=0.5
+173. RH_HipZ Ia E                     => RH_HipZ MN F                     G=0.5
+174. RH_HipZ Ia E                     => RH_RF MN                         G=0.5
+175. RH_RF Ia E                       => RH_HipZ MN E                     G=0.5
+176. RH_Semimem Ia E                  => RH_HipZ MN F                     G=0.5
+177. RH_BFlh Ia E                     => RH_HipZ MN F                     G=0.5
+178. RH_HipZ-FLX Ia                   => RH_HipZ Ia F                     G=0.5
+179. RH_HipZ- Flx Ib                  => RH_HipZ MN F                     G=0.5
+180. OffPage:RH_K&A PF F              => RH_BFlh MN                       G=0.5
+181. OffPage:RH_K&A PF F              => RH_Semimem MN                    G=0.5
+182. OffPage:RH_K&A PF E              => RH_RF MN                         G=0.5
+183. RH_K&A PF F                      => RH_K&A IN PF F                   G=0.5
+184. RH_K&A IN PF E                   => RH_K&A PF F                      G=0.5
+185. RH_K&A PF E                      => RH_K&A IN PF E                   G=0.5
+186. RH_K&A IN PF F                   => RH_K&A PF E                      G=0.5
+187. RH_AnkleZ R E                    => RH_AnkleZ R F                    G=0.5
+188. RH_AnkleZ MN F                   => RH_AnkleZ R F                    G=0.5
+189. OffPage:RH_K&A PF F              => RH_AnkleZ Ia F                   G=0.5
+190. RH_AnkleZ- Ext Ib                => RH_AnkleZ MN E                   G=0.5
+191. RH_Gas- Ext Ib                   => RH_Gas MN                        G=0.5
+192. RH_AnkleZ R F                    => RH_AnkleZ R E                    G=0.5
+193. OffPage:RH_K&A PF F              => RH_AnkleZ MN F                   G=0.5
+194. RH_AnkleZ Ia F                   => RH_AnkleZ Ia E                   G=0.5
+195. RH_AnkleZ Ia E                   => RH_AnkleZ MN F                   G=0.5
 196. RH_Gas Ia E                      => RH_AnkleZ MN F                   G=0.5
-197. RH_Gas Ia E                      => RH_AnkleZ Ia F                   G=0.5
-198. RH_AnkleZ Ia F                   => RH_Gas MN                        G=0.5
-199. RH_Gas- Ext Ib                   => RH_Gas MN                        G=0.5
-200. RH_AnkleZ R F                    => RH_AnkleZ MN F                   G=0.5
-201. OffPage:RH_K&A PF E              => RH_AnkleZ MN E                   G=0.5
-202. RH_AnkleZ R E                    => RH_AnkleZ MN E                   G=0.5
-203. RH_AnkleZ- Flx Ib                => RH_AnkleZ MN F                   G=0.5
-204. OffPage:RH_K&A PF F              => RH_AnkleZ- Ext Ib                G=0.5
-205. RH_Knee Ia F                     => RH_Knee MN E                     G=0.5
-206. OffPage:RH_K&A PF E              => RH_Knee MN E                     G=0.5
-207. RH_Knee R E                      => RH_Knee R F                      G=0.5
-208. RH_Knee Ia F                     => RH_Knee Ia E                     G=0.5
-209. OffPage:RH_K&A PF F              => RH_Knee MN F                     G=0.5
-210. RH_Knee R F                      => RH_Knee MN F                     G=0.5
-211. OffPage:RH_K&A PF F              => RH_Knee- Ext Ib                  G=0.5
-212. OffPage:RH_K&A PF E              => RH_Knee Ia E                     G=0.5
-213. RH_Knee-FLX Ia                   => RH_Knee Ia F                     G=0.5
-214. OffPage:RH_K&A PF E              => RH_Knee- Flx Ib                  G=0.5
-215. RH_Knee- Flx Ib                  => RH_Knee MN F                     G=0.5
-216. RH_Knee Ia E                     => RH_Knee Ia F                     G=0.5
-217. RH_Knee MN F                     => RH_Knee R F                      G=0.5
-218. RH_Knee Ia E                     => RH_Knee MN F                     G=0.5
-219. RH_Knee R E                      => RH_Knee Ia E                     G=0.5
-220. OffPage:RH_K&A PF F              => RH_Knee Ia F                     G=0.5
-221. OffPage:RH_HipZ MN E             => RH_Knee MN F                     G=0.5
-222. RH_Knee- Ext Ib                  => RH_Knee MN E                     G=0.5
-223. RH_Knee R F                      => RH_Knee Ia F                     G=0.5
-224. RH_Knee-Ext Ia                   => RH_Knee Ia E                     G=0.5
-225. RH_Knee MN E                     => RH_Knee R E                      G=0.5
-226. RH_Knee R F                      => RH_Knee R E                      G=0.5
-227. RH_Knee R E                      => RH_Knee MN E                     G=0.5
-228. OffPage:RH_HipZ-FLX Ia           => OffPage:RH_RG E                  G=0.5
-229. OffPage:RH_RG E                  => OffPage:RH_K&A PF E              G=0.5
-230. OffPage:RH_HipZ-Ext II           => OffPage:RH_K&A PF F              G=0.5
-231. OffPage:RH_HipZ-Ext II           => OffPage:RH_RG F                  G=0.5
-232. OffPage:RH_HipZ-FLX II           => OffPage:RH_K&A PF E              G=0.5
-233. OffPage:RH_AnkleZ- Ext Ib        => OffPage:RH_RG E                  G=0.5
-234. OffPage:RH_AnkleZ- Ext Ib        => OffPage:RH_RG E                  G=0.5
-235. OffPage:RH_RG F                  => OffPage:RH_HipZ PF F             G=0.5
-236. OffPage:RH_HipZ-FLX II           => OffPage:RH_RG E                  G=0.5
-237. OffPage:RH_RG F                  => OffPage:RH_K&A PF F              G=0.5
-238. OffPage:RH_HipZ-FLX Ia           => OffPage:RH_K&A PF E              G=0.5
-239. OffPage:RH_RG E                  => OffPage:RH_HipZ PF E             G=0.5
-240. OffPage:RH_HipZ-Ext II           => OffPage:RH_HipZ PF F             G=0.5
-241. OffPage:RH_HipZ-FLX II           => OffPage:RH_HipZ PF E             G=0.5
-242. OffPage:RH_AnkleZ- Ext Ib        => OffPage:RH_K&A PF E              G=0.5
-243. OffPage:RH_HipZ-FLX Ia           => OffPage:RH_HipZ PF E             G=0.5
+197. OffPage:RH_K&A PF E              => RH_AnkleZ- Flx Ib                G=0.5
+198. RH_AnkleZ R E                    => RH_AnkleZ Ia E                   G=0.5
+199. RH_AnkleZ Ia F                   => RH_AnkleZ MN E                   G=0.5
+200. RH_AnkleZ Ia F                   => RH_Gas MN                        G=0.5
+201. RH_AnkleZ MN E                   => RH_AnkleZ R E                    G=0.5
+202. RH_AnkleZ Ia E                   => RH_AnkleZ Ia F                   G=0.5
+203. RH_Gas Ia E                      => RH_AnkleZ Ia F                   G=0.5
+204. RH_AnkleZ R F                    => RH_AnkleZ Ia F                   G=0.5
+205. OffPage:RH_K&A PF E              => RH_AnkleZ Ia E                   G=0.5
+206. RH_AnkleZ-FLX Ia                 => RH_AnkleZ Ia F                   G=0.5
+207. RH_AnkleZ-Ext Ia                 => RH_AnkleZ Ia E                   G=0.5
+208. RH_Gas-Ext Ia                    => RH_Gas Ia E                      G=0.5
+209. RH_AnkleZ R F                    => RH_AnkleZ MN F                   G=0.5
+210. OffPage:RH_K&A PF E              => RH_AnkleZ MN E                   G=0.5
+211. OffPage:RH_K&A PF E              => RH_Gas MN                        G=0.5
+212. RH_AnkleZ R E                    => RH_AnkleZ MN E                   G=0.5
+213. RH_AnkleZ- Flx Ib                => RH_AnkleZ MN F                   G=0.5
+214. OffPage:RH_K&A PF F              => RH_AnkleZ- Ext Ib                G=0.5
+215. RH_AnkleZ-FLX II                 => RH_AnkleZ MN F                   G=0.5
+216. RH_Knee Ia F                     => RH_Knee MN E                     G=0.5
+217. OffPage:RH_K&A PF E              => RH_Knee MN E                     G=0.5
+218. RH_Knee R E                      => RH_Knee R F                      G=0.5
+219. RH_Knee Ia F                     => RH_Knee Ia E                     G=0.5
+220. OffPage:RH_K&A PF F              => RH_Knee MN F                     G=0.5
+221. RH_Knee R F                      => RH_Knee MN F                     G=0.5
+222. OffPage:RH_K&A PF F              => RH_Knee- Ext Ib                  G=0.5
+223. OffPage:RH_K&A PF E              => RH_Knee Ia E                     G=0.5
+224. RH_Knee-FLX Ia                   => RH_Knee Ia F                     G=0.5
+225. OffPage:RH_K&A PF E              => RH_Knee- Flx Ib                  G=0.5
+226. RH_Knee- Flx Ib                  => RH_Knee MN F                     G=0.5
+227. RH_Knee Ia E                     => RH_Knee Ia F                     G=0.5
+228. RH_Knee MN F                     => RH_Knee R F                      G=0.5
+229. RH_Knee Ia E                     => RH_Knee MN F                     G=0.5
+230. RH_Knee R E                      => RH_Knee Ia E                     G=0.5
+231. OffPage:RH_K&A PF F              => RH_Knee Ia F                     G=0.5
+232. OffPage:RH_HipZ MN E             => RH_Knee MN F                     G=0.5
+233. RH_Knee- Ext Ib                  => RH_Knee MN E                     G=0.5
+234. RH_Knee R F                      => RH_Knee Ia F                     G=0.5
+235. RH_Knee-Ext Ia                   => RH_Knee Ia E                     G=0.5
+236. RH_Knee MN E                     => RH_Knee R E                      G=0.5
+237. RH_Knee R F                      => RH_Knee R E                      G=0.5
+238. RH_Knee R E                      => RH_Knee MN E                     G=0.5
+239. OffPage:RH_Gas Ia E              => RH_Knee MN F                     G=0.5
+240. OffPage:RH_BFlh Ia E             => RH_Knee MN F                     G=0.5
+241. OffPage:RH_Semimem Ia E          => RH_Knee MN F                     G=0.5
+242. OffPage:RH_RF Ia E               => RH_Knee MN F                     G=0.5
+243. OffPage:RH_AnkleZ- Ext Ib        => OffPage:RH_K&A PF E              G=0.5
+244. OffPage:RH_AnkleZ- Ext Ib        => OffPage:RH_RG E                  G=0.5
+245. OffPage:RH_HipZ-Ext II           => OffPage:RH_K&A PF F              G=0.5
+246. OffPage:RH_HipZ-Ext II           => OffPage:RH_HipZ PF F             G=0.5
+247. OffPage:RH_HipZ-Ext II           => OffPage:RH_RG E                  G=0.5
+248. OffPage:RH_HipZ-FLX II           => OffPage:RH_K&A PF E              G=0.5
+249. OffPage:RH_HipZ-FLX II           => OffPage:RH_HipZ PF E             G=0.5
+250. OffPage:RH_HipZ-FLX II           => OffPage:RH_RG E                  G=0.5
+251. OffPage:RH_RG E                  => OffPage:RH_K&A PF E              G=0.5
+252. OffPage:RH_RG E                  => OffPage:RH_K&A PF F              G=0.5
+253. OffPage:RH_RG E                  => OffPage:RH_HipZ PF E             G=0.5
+254. OffPage:RH_RG E                  => OffPage:RH_HipZ PF F             G=0.5
+255. OffPage:RH_HipZ-FLX Ia           => OffPage:RH_K&A PF E              G=0.5
+256. OffPage:RH_HipZ-FLX Ia           => OffPage:RH_HipZ PF E             G=0.5
+257. OffPage:RH_HipZ-FLX Ia           => OffPage:RH_RG E                  G=0.5
+258. OffPage:L RG ext                 => OffPage:RH_RG E                  G=0.5
+259. OffPage:RH_RG E                  => OffPage:L RG ext                 G=0.5
+260. OffPage:L RG flx                 => OffPage:RH_RG F                  G=0.5
+261. OffPage:RH_RG F                  => OffPage:L RG flx                 G=0.5
