@@ -431,7 +431,29 @@ def main(argv):
     scope_on = False
     realtime = False
     interleg = True
+    eval_mode = False
     args = list(argv)
+    if "--best" in args:
+        # load the optimizer's winning parameters (optuna_walk.py output)
+        # before anything reads the params module
+        import json as _json
+        with open(HERE / "best_walk_params.json", encoding="utf-8") as f:
+            best = _json.load(f)["params"]
+        import params as _p
+        _p.TAU["rg_adapt"] = best["rg_adapt"]
+        _p.G["descend_to_rg_e"] = best["desc_e"]
+        _p.G["rg_to_pf"] = best["rg_to_pf"]
+        _p.W_PF_MN["E2"]["ankle_pf"] = best["e2_pf"]
+        _p.W_PF_MN["F1"]["ankle_df"] = best["f1_df"]
+        _p.W_PF_MN["F1"]["knee_flex"] = best["f1_kf"]
+        _p.W_POSTURE["knee_ext"] = best["post_kneext"]
+        if "post_hipext" in best:
+            _p.W_POSTURE["hip_ext"] = best["post_hipext"]
+        _p.BAL["kx"] = best["kx"]
+        args.remove("--best")
+        walk_drive = float(best.get("drive", walk_drive))
+        print(f"loaded best_walk_params.json (drive={walk_drive:.2f})",
+              flush=True)
     while args:
         a = args.pop(0)
         if a == "--drive":
@@ -446,6 +468,14 @@ def main(argv):
             no_ground = True
         elif a == "--no-interleg":
             interleg = False
+        elif a == "--eval":
+            # fast objective evaluation for the optimizer (optuna_walk.py):
+            # 12 s schedule (1.5 stand / 1.5 ramp / 7.5 walk / 1.5 wind-up),
+            # quiet, no npz/png writes; main() returns a metrics dict
+            eval_mode = True
+            SCHEDULE.update(stand1=(0.0, 1.5), ramp_up=(1.5, 3.0),
+                            walk=(3.0, 10.5), ramp_down=(10.5, 11.0),
+                            stand2=(11.0, 12.0))
         elif a == "--leg-damping":
             leg_damping = float(args.pop(0))
         elif a == "--view":
@@ -580,6 +610,7 @@ def main(argv):
     log_t = np.zeros(nsteps)
     log_act = np.zeros((nsteps, len(KEY_ACTS)))
     log_q = np.zeros((nsteps, len(KEY_JOINTS)))
+    log_qfull = np.zeros((nsteps, model.nq))   # full state for renderers
     log_com = np.zeros((nsteps, 3))
     # full neural stack for the plot tool (plot_run.py): descending,
     # RG, all four PF groups (right), balance cells
@@ -731,12 +762,12 @@ def main(argv):
             break
         ma = float(np.max(np.abs(data.qacc)))
         mv = float(np.max(np.abs(data.qvel)))
-        if mv > 30.0 or ma > 1.0e5:
+        if not eval_mode and (mv > 30.0 or ma > 1.0e5):
             j = int(np.argmax(np.abs(data.qvel)))
             print(f"t={t:6.2f} precursor: max|qacc|={ma:.3g} "
                   f"max|qvel|={mv:.3g} (dof {j}), ncon={data.ncon}, "
                   f"max ctrl={float(np.max(data.ctrl)):.2f}")
-        if t >= WARMUP and k % int(0.5 / DT) == 0:
+        if not eval_mode and t >= WARMUP and k % int(0.5 / DT) == 0:
             print(f"t={t:6.2f} max|qacc|={ma:10.1f} max|qvel|={mv:7.2f} "
                   f"ncon={data.ncon:3d} com_z={float(com[2]):.3f} "
                   f"com_x={float(com[0]):+.3f}")
@@ -744,6 +775,7 @@ def main(argv):
         # --- log ---
         log_t[k] = t
         log_com[k] = com
+        log_qfull[k] = data.qpos
         for i, a in enumerate(KEY_ACTS):
             log_act[k, i] = data.ctrl[aid[a]]
         for i, jn in enumerate(KEY_JOINTS):
@@ -759,13 +791,43 @@ def main(argv):
             scope.update(t, log_neuro[k], log_act[k, :8])
 
     np.savez_compressed(HERE / "spinal_run.npz", t=log_t, act=log_act,
-                        q=np.degrees(log_q), com=log_com, neuro=log_neuro,
+                        q=np.degrees(log_q), qfull=log_qfull, com=log_com,
+                        neuro=log_neuro,
                         key_acts=KEY_ACTS, key_joints=KEY_JOINTS,
-                        neuro_names=NEURO_NAMES)
+                        neuro_names=NEURO_NAMES,
+                        cfg=("ground" if not no_ground else "air"))
     if viewer is not None:
         viewer.close()
     if scope is not None:
         scope.close()
+
+    if eval_mode:
+        # objective metrics for optuna_walk.py. Rows after an instability
+        # break are zero-filled, so slice to the valid prefix.
+        n_done = int(np.sum(log_t > 0)) + 1
+        n_done = min(n_done, len(log_t))
+        tt = log_t[:n_done]
+        i_ws = int(np.searchsorted(tt, SCHEDULE["walk"][0]))
+        finite_q = bool(np.all(np.isfinite(log_q[:n_done])))
+        finite_c = bool(np.all(np.isfinite(log_com[:n_done])))
+        def _mn(a):
+            return float(np.nanmin(a)) if finite_q else 0.0
+        def _mx(a):
+            return float(np.nanmax(a)) if finite_q else 0.0
+        metrics = dict(
+            nan=not (finite_q and finite_c),
+            t_end=float(tt[-1]),
+            dx=float(log_com[n_done - 1, 0] - log_com[i_ws, 0]),
+            kz=float(np.min(log_com[:n_done, 2])) if finite_c else 0.0,
+            tilt_max=_mx(np.degrees(log_q[:n_done, 0])),
+            knee_min=_mn(log_q[:n_done, 4]),
+            hip_amp=_mx(log_q[:n_done, 3]) - _mn(log_q[:n_done, 3]),
+            burst_r=int(np.sum(np.diff(
+                (log_neuro[:n_done, 2]
+                 > 0.5 * max(np.max(log_neuro[:n_done, 2]), 1e-6)
+                 ).astype(int)) == 1)),
+        )
+        return metrics
 
     # ---------------- honest summary ----------------
     pelz = log_com[:, 2]

@@ -61,3 +61,8 @@ Regenerating: figures come from Code\MuJoCo_SNS\spinal (myo env):
   plot_run.py                                                  (figs 1-4, 6)
   render_frames.py                                             (renders)
   draw_circuit.py                                              (schematic)
+
+=== GROUND WALKING (Bayesian-optimized, semi-supported) ===
+Parameters tuned by Bayesian optimization (Optuna TPE, 100 trials total, zero instability failures) of 9 spinal-network parameters against a 12-s evaluation: forward progress, alternation, knee-flexion depth, hip range, trunk-lean and height penalties.
+ground_walk.gif / ground_walk_phases.png: full 26-s stand-walk-stand on ground with afferent feedback, semi-supported (vertical rig + light x-tether; identical behavior from 1500 to 80 N/m tether). 0.82 Hz cycles, 9 alternating bursts, lateral CoG sway under 5 mm, hip adduction within +-9 deg. Remaining deficit (visible): backward trunk lean from saturated hip-extensor activation - the motivation for the planned OpenSim IK activation back-solve.
+ground_fig*.png: neural stack, stimulus response, and cycle-normalized overlays for the ground walk.

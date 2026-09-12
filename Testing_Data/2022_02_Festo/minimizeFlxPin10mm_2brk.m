@@ -20,7 +20,7 @@ SOLVER = getenv('FLX2BRK_SOLVER');
 if isempty(SOLVER), SOLVER = 'gamultiobj'; end
 
 USE_BRACKET2 = true;     %false = (d)+(e) ablation: no second bracket
-TRANSMODE = '1trans';    %frame method used by the evaluator: '1trans' (pitch) or '2trans' (two-rotation) -- match RESULTFILE
+TRANSMODE = '2trans';    %frame method used by the evaluator: '1trans' (pitch) or '2trans' (two-rotation) -- match RESULTFILE
 tmv = getenv('FLX2BRK_TRANS');   %env override so batch chains can flip modes without editing this file
 if ~isempty(tmv), TRANSMODE = tmv; end
 DO_PLOTS = ~batchStartupOptionUsed;   %auto: plots when run interactively

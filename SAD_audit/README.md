@@ -1,5 +1,139 @@
 # SAD Audit — Sensory Afferent Database three-way reconciliation
 
+## CURATION SPEC — bulk pass over the 383 uncurated Airtable papers (for a GLM-5.3-Flash session; written 2026-09-11 by the GLM-5.3 session)
+
+### Mission
+The Papers table has 532 records. 99 originals + the demo-50 have the curation
+layer (notes/animals/feedback/reviews/models) at least partially. **383 records
+(imported 2026-09-11 evening, Name/Author/Year/DOI only) need the full curation
+layer.** Work in batches of 10. The pilot batch (below) must be reviewed by Ben
+before continuing to batch 2. Queue source: `airtable_rest_import_clean.csv`
+(zotero_key, title, author, year, DOI). Record-ID resolution: ONE list call
+with filter DOI isAnyOf [the 10 DOIs] per batch; DOI-less rows by exact title.
+
+### Ben's research environment (facts, use them)
+- Machine is on **PSU ethernet**. Two browser windows are open; one is the school
+  profile, **logged into the PSU library**, with tabs for **Google Scholar, Web
+  of Science, WorldCat, Academic Search Premier**.
+- Browser extensions installed: **Zotero connector** plus article-fetch
+  extensions; complete articles can be downloaded. Full texts readable in the
+  library-authenticated window.
+- **PROXY GOTCHA (Ben's note): URLs captured through the PSU library proxy show
+  up in Zotero with "proxy.lib.pdx.edu" injected** (EZProxy form, e.g.
+  `www-sciencedirect-com.proxy.lib.pdx.edu` or `lib.pdx.edu/login?url=...`).
+  RULE: never copy proxied URLs into Airtable. The DOI is the canonical
+  identifier; if a URL is ever needed, use the clean publisher URL. Items saved
+  via the connector through the proxy will have proxy-wrapped URL fields —
+  don't propagate them.
+
+### Where to get each paper's text (grounding is mandatory)
+Notes are written FROM the paper (abstract at minimum, full text when
+available), never from model memory. Preference order:
+1. Zotero attachment in the personal or AARL group library (local API
+   `http://localhost:23119/api/users/0/items?format=json&q=<doi>` then check
+   children; group equivalent under `/api/groups/735051/`).
+2. DOI → PubMed abstract or publisher landing page.
+3. Google Scholar / library databases in the authenticated browser window.
+If no text can be found, write NO note and log the row `no-text` — never guess.
+
+### Field rules (Alex Hunt template; his 2020-12-era records are the gold standard)
+
+**Notes (Papers `Notes` = fld3gPiUIKn26N6ji).** 1–3 sentences of distilled
+insight usable verbatim in a paper with `\citep{}`: mechanism statements, what
+the paper established, and where useful how it feeds models. NOT abstract
+paraphrases. Gold examples to read first (by record id): recJxL69hcXETbH84
+(Gossard Ib), recrOx4g9ML2vRiDP (Conway). Counter-example: rece0GWaNeVWzC8pG
+(Geyer & Herr 2010) is an abstract paste — do not imitate. Style reference for
+newer notes: the 50 written 2026-09-11 (e.g. recEfpqUr9aBwNnv4 Shik MLR,
+recaHgeOwaaT9XnUu Jankowska DOPA). Write the sentences only; no prefixes.
+
+**Animals (fld1x2BXLKIdA2dCw, multipleSelects).** ALL relevant preparations,
+ONLY these existing options (exact names): Cat, Dog, Frog, Hexapod, Human,
+Insects, Lamprey, Mammals, Mice, Rat, Salamander, Stick Insect, Vertebrates,
+Zebrafish, Arthropods, Cockroach, Turtle. ("Mice", not "Mouse", on Papers.)
+Blank when genuinely unclear; never invent options.
+
+**Feedback links (Papers `Feedback` = fldK2H6RfaSdLLLM7).** Link EXISTING
+records when the paper's contribution is explicit; stay conservative.
+Vocabulary (id → name):
+recVAxf4i8eprMZ5X Ib stance to swing | recfRtpyUZxlj2uPR Ia or II stance to swing |
+reccCKGYD25TyvP6J Ia or II swing to stance | recEPorguw5zdPLKo Ib swing to stance |
+recDXR9byrukMo0lF Ia stance to swing | rectSMmkeC4JCR9es Ia swing to stance |
+recJO7dgwZJ5Dkdla Ib disynaptic excitation | recsaUPV6EKpf08tO Ib disynaptic inhibition |
+recznPoxFR6AVN36u Ib disynaptic excitation (DUP of recJO7… — use recJO7) |
+recq8ZV6Hzoj67kGb Ib inhibition | recNAdWaQ2dwT3EOL Ib excitatory |
+recdWs6wNZ9DktXQg Ia monosynaptic excitation | recsqGlPgBJriilg4 Ia monosynaptic |
+rechILwVdJoicEwlS Ia disynaptic inhibition | recnisTNCzgtMHKdY Ia reciprocal inhibition |
+recUqTlvFcVVmHbHH Ia inhibitory | recr1iQtfAugFJttG II inhibitory |
+recpoICcHdsjDSDF7 type II excitatory | rec0Yt5F3JDknnUIU Type 1 swing to stance |
+rec7tcBisuoPBmAzy type 1 stance to swing | rec53hnd4poAuHfoN Cutaneous stance modification |
+recFryDgdDl0wuvH9 Cutaneous flexor excitation | recSGzGtFGFEtxdpk Fictive locomotion without sensory feedback |
+recW6gizpqmgImdOZ Total afferent inhibition | recYmnMYSoAFHD0zd group III/IV fatigue |
+recqoRNGqojuOUM5O Mechanosensory monosynaptic excitation | recHgCCnutKn95ODd Biomechanically mediated preflexive feedback |
+rec5KWVxNawyhpmfz / recOXXF8jhpvQs7Na trochanteral hair plate exc/inh |
+recZCTtDpMMOAHRxd trochanteral campaniform sensilla load→MN magnitude |
+recU0CrMurhk28WHK / recCE6p6nCWpnSZQP Chordotonal organ exc/inh |
+recjksQ59skuTStVb large diameter spinal afferent stimulation |
+rec2uSKIvzoT6tszs / recIXfJZUYWQ0HNyJ swimming edge cells |
+(recmmxPL2uZaMON2N is an EMPTY junk record — never link it.)
+New Feedback entries: only when a paper demonstrates a pathway that clearly
+doesn't fit, named pathway+function+phase in Ben's diagram style ("Ib positive
+force feedback prolonging stance", "type II contralateral stance-to-swing
+inhibition"). Set Sensory System + Within-leg selects if clear. NEVER assign
+Recorders (unassigned = Ben, his rule).
+
+**Review Papers (tblSEubKcRId4wYMK).** Literature review / synthetic review
+chapter / review essay → create a record (Name = "Author Year", Paper link =
+fldF2F714aLZPexcv → the paper). Existing examples: "Prochazka 1999",
+"Kiehn 2006", "Grillner and Kozlov 2021". Reference-monograph books
+(Pierrot-Deseilligny & Burke) do NOT go here.
+
+**Models (tblsBq9IEv7dZe6fn).** Paper IS a model (core contribution is a
+computational/conceptual model) → create "Author Year" + Paper link
+(fldfZB5ZwOaZKWFF8); this auto-populates the paper's Models 2. Paper merely
+USES models → link the existing Models record on the paper's `Models` field
+(fldR641pV7rYou7jA). Existing: Geyer and Herr 2010, Hunt 2015, Rybak CPG 2006,
+Deng 2018/2022, Lyttle 2017, Danner 2016, others; Taga will be new.
+
+### Batch workflow (repeat per 10 papers)
+1. Next 10 uncurated rows from `airtable_rest_import_clean.csv` (or filter
+   Papers for empty Notes among records created 2026-09-11T20:xx).
+2. Resolve record ids (DOI isAnyOf filter, one call; title fallback).
+3. Fetch text per paper (grounding sources above). Draft all fields.
+4. Create Review/Models records first (so paper-side links resolve), then ONE
+   update call for the 10 papers (Notes, Animal, Feedback).
+5. Verify: re-pull the 10 by id; every field echo must match.
+6. Append the batch to `SAD_audit\curation_log.csv` (date, batch #, record
+   ids, notes written, flags).
+7. Every 5th batch: spawn a read-only audit subagent to re-verify the last 50
+   records against the queue CSV (same pattern as this session's audits);
+   fix failures before proceeding.
+
+### Pilot batch of 10 (do these FIRST; Ben reviews before batch 2)
+| # | Paper (zotero_key) | Expected minimum |
+|---|---|---|
+| 1 | Pearson 1995, Proprioceptive regulation of locomotion (9KAXASMM) | review → "Pearson 1995"; note on afferent regulation of cycle timing; Feedback: Ib stance to swing + Ia or II stance to swing; Cat |
+| 2 | Sherrington 1910, flexion/crossed extension (ZMLZC8RV) | classic primary; phase-dependent reflex fractionation note; Feedback: Cutaneous flexor excitation; Cat, Dog |
+| 3 | Brown 1911, intrinsic factors (H7FU2J6M) | primary/theory; note = origin of the half-center concept; Mammals, Cat; no feedback link |
+| 4 | Grillner & Zangger 1975, How detailed… (C825GTPT) | deafferented fictive locomotion note; Feedback: Fictive locomotion without sensory feedback; Cat |
+| 5 | Duysens 1977, premammillary cutaneous (23ZX8RAS) | phase-dependent cutaneous modulation during real walking; Feedback: Cutaneous stance modification; Cat |
+| 6 | McCrea et al. 1980, Renshaw in fictive locomotion (RYXH6JSP) | recurrent-inhibition phase-dependence note; Cat |
+| 7 | Jankowska et al. 1981, common Ia/Ib interneurones (MZQZRLAD) | Ia/Ib convergence note; Feedback: Ib disynaptic inhibition + Ib disynaptic excitation (recsaUPV6EKpf08tO, recJO7dgwZJ5Dkdla); Cat |
+| 8 | Taga 1995, neuro-musculo-skeletal model (8VKY3MVB) | MODEL → "Taga 1995"; global entrainment CPG↔body note; Human |
+| 9 | Marder & Bucher 2001, CPGs & rhythmic movements (NUQ2JRWH) | review → "Marder and Bucher 2001"; Vertebrates + Insects/Arthropods as text supports |
+| 10 | Dietz & Duysens 2000, load receptor review (89WM8PFQ) | review → "Dietz and Duysens 2000"; load-receptor stance note; Feedback: Ib stance to swing; Human, Cat |
+Expected = minimum; expand if the text supports more. If the full text
+contradicts an expectation, FOLLOW THE TEXT and flag it in the log.
+
+### Hard rules (do not cross)
+- NEVER delete records; NEVER edit the 99 originals' existing notes; never
+  edit Recorders; never rename Models/Feedback records.
+- AARL Zotero duplicates are off-limits (Ben's .bib rule).
+- No proxied URLs anywhere. No new Animal options. No notes without grounding.
+- Ambiguity → flag in the log for Ben; never decide silently.
+
+---
+
 Purpose: compare the Sensory Afferent Database across (1) Ben's personal Zotero
 library, (2) the AARL Zotero group library (group id **735051**), and
 (3) the Airtable base that is supposed to host it (https://airtable.com).
@@ -92,6 +226,34 @@ an extra corpus.
 3. Fix 4 Airtable title typos (stick inspect→insect, walkde→walker, truncated
    Hiebert title, Akay dropped words) — one-line edits, need his OK.
 4. Zotero-side cleanup of the ~11 Biology internal duplicates — his call.
+
+## Full execution round (2026-09-11 night, same session) — Ben's go on all three
+
+1. **2 over-purged PDFs RESTORED to Zotero** (AnimatLab = item A924UV2P + att
+   HMU7XHUC; Büschges 1995 = 7M7SRMUQ + 5JNA8S9B). Both files already existed in
+   Zotero's S3 ({exists:1} on auth) → registered via file-API POST; local desktop
+   synced (md5+mtime visible). Traps: POST /items/KEY/file needs If-None-Match: *
+   on auth; body params must go via --data-binary @file (& in args gets split);
+   only `*` is a valid If-None-Match value (md5 is NOT); local API shows md5 only
+   after sync. Scripts: zotero_restore2*.ps1.
+2. **PDF links attached to the demo-50**: OpenAlex pdf_url lookups found 14 OA
+   candidates (2 junk) → 12 URL-attachments written; **Airtable's server-side
+   fetcher kept only the 2 fully-open ones (Frontiers: Gosgnach 2022, Krouchev
+   2013) and silently dropped the 10 paywalled/bot-blocked URLs** (jneurosci, oup,
+   wiley, mdpi, springer). Lesson: {url} attach works only for anonymously
+   fetchable PDFs. Files-in-Airtable-table = 100 (98 original + 2). The remaining
+   48 need Ben-local uploads (drag from Zotero storage) — no public URL exists.
+3. **Full personal-SAD import DONE**: 390 remaining gap rows → 7 dropped as
+   preprint/edition dups of already-imported titles (4FP5J2EP, UKRVAS3Q, AX2HXFG5,
+   MNUYRC9U, 3B9KKRVM, MA5R8WXG, 2EPW6XI7) → 383 created in 8 batches. One
+   transcription slip (Houldin scrambled dup) created + deleted immediately.
+   **Papers table = 532 records.** Known Zotero-side data problems carried over
+   (imported as-is, flag for later fixes): scrambled-title items 3D3FLH8A
+   (Donelan/McVea family — near-dup of rec8WdUONYgfvw1zw), VQ7F2KNP (Lemay),
+   4T74U33I (Dambreville), XVTZ5QE2 (Nichols), U4KVP3DV/NC7ETD46 (fused words),
+   KM9WZR6N (Smith); "Selionov" is Cyrillic Селионов in Zotero (G7X8E86M → Latinized).
+   The 383 have Name/Author/Year/DOI only — no notes/animals/feedback/review tags
+   yet (that's the standing curation backlog).
 
 ## Second correction round (2026-09-11 evening, same session)
 

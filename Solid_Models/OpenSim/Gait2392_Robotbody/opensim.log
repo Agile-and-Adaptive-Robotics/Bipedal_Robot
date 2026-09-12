@@ -735,3 +735,218 @@
 [2026-09-08 09:29:55.058] [warning] Couldn't find file 'hat_jaw.vtp'.
 [2026-09-08 09:29:55.058] [warning] Couldn't find file 'hat_skull.vtp'.
 [2026-09-08 09:29:55.058] [warning] Couldn't find file 'hat_ribs.vtp'.
+[2026-09-11 18:24:48.181] [info] Preparing to run ScaleTool.
+[2026-09-11 18:24:48.182] [info] Processing subject subject01...
+[2026-09-11 18:24:48.182] [info] Step 1: Loading generic model
+[2026-09-11 18:24:48.223] [info] Loaded model 3DGaitModel2392 from file gait2392_simbody.osim
+[2026-09-11 18:24:48.223] [warning] Couldn't find file 'treadmill.vtp'.
+[2026-09-11 18:24:48.223] [warning] Couldn't find file 'sacrum.vtp'.
+[2026-09-11 18:24:48.223] [warning] Couldn't find file 'pelvis.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'femur_r.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'tibia_r.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'fibula.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'talus.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'foot.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'bofoot.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'femur_l.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'tibia_l.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'l_fibula.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'l_talus.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'l_foot.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'hat_spine.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2026-09-11 18:24:48.224] [warning] Couldn't find file 'hat_skull.vtp'.
+[2026-09-11 18:24:48.225] [warning] Couldn't find file 'hat_ribs.vtp'.
+[2026-09-11 18:24:48.248] [info] Loading marker set from 'gait2392_Scale_MarkerSet.xml'.
+[2026-09-11 18:24:48.361] [info] Updated markers in model 3DGaitModel2392
+[2026-09-11 18:24:48.361] [info] Step 2: Scaling generic model
+[2026-09-11 18:24:48.390] [info] Loaded marker file subject01_static.trc (49 markers, 300 frames)
+[2026-09-11 18:24:48.390] [info] Measurement 'torso'
+[2026-09-11 18:24:48.390] [info] 	pair 0 (V.Sacral, Top.Head): model = 0.701084, experimental = 0.756975
+[2026-09-11 18:24:48.390] [info] 	overall scale factor = 1.07972
+[2026-09-11 18:24:48.390] [info] Measurement 'pelvis'
+[2026-09-11 18:24:48.390] [info] 	pair 0 (R.ASIS, L.ASIS): model = 0.256, experimental = 0.262292
+[2026-09-11 18:24:48.390] [info] 	overall scale factor = 1.02458
+[2026-09-11 18:24:48.390] [info] Measurement 'thigh'
+[2026-09-11 18:24:48.390] [info] 	pair 0 (R.ASIS, R.Knee.Lat): model = 0.508288, experimental = 0.538738
+[2026-09-11 18:24:48.390] [info] 	pair 1 (L.ASIS, L.Knee.Lat): model = 0.508288, experimental = 0.549642
+[2026-09-11 18:24:48.390] [info] 	overall scale factor = 1.07063
+[2026-09-11 18:24:48.390] [info] Measurement 'shank'
+[2026-09-11 18:24:48.390] [info] 	pair 0 (R.Knee.Lat, R.Ankle.Lat): model = 0.401944, experimental = 0.458672
+[2026-09-11 18:24:48.390] [info] 	pair 1 (L.Knee.Lat, L.Ankle.Lat): model = 0.401944, experimental = 0.436842
+[2026-09-11 18:24:48.390] [info] 	overall scale factor = 1.11398
+[2026-09-11 18:24:48.390] [info] Measurement 'foot'
+[2026-09-11 18:24:48.390] [info] 	pair 0 (R.Heel, R.Toe.Tip): model = 0.280401, experimental = 0.291576
+[2026-09-11 18:24:48.390] [info] 	pair 1 (L.Heel, L.Toe.Tip): model = 0.280401, experimental = 0.284416
+[2026-09-11 18:24:48.390] [info] 	overall scale factor = 1.02708
+[2026-09-11 18:24:48.439] [info] Wrote model file 'subject01_scaledOnly.osim' from model.
+[2026-09-11 18:24:48.440] [info] Wrote scale file 'subject01_scaleSet_applied.xml' for model subject01.
+[2026-09-11 18:24:48.440] [info] Step 3: Placing markers on model
+[2026-09-11 18:24:48.470] [info] Loaded marker file subject01_static.trc (49 markers, 300 frames)
+[2026-09-11 18:24:48.470] [info] Averaged frames from time 1.0 to 2.0 in subject01_static.trc (frames 61 to 121)
+[2026-09-11 18:24:48.470] [info] Deleted 0 unused markers from model subject01.
+[2026-09-11 18:24:48.492] [info] Frame at (t = 1.0):	 total squared error = 0.0430720, marker error: RMS = 0.0332327, max = 0.0930729 (Top.Head)
+[2026-09-11 18:24:48.492] [info] Moved markers in model subject01 to match locations in marker file 'subject01_static.trc'.
+[2026-09-11 18:24:48.509] [info] Wrote model file 'subject01_simbody.osim' from model subject01.
+[2026-09-11 18:24:48.592] [info] Preparing to run InverseKinematicsTool.
+[2026-09-11 18:24:48.616] [info] Loaded model subject01 from file subject01_simbody.osim
+[2026-09-11 18:24:48.617] [warning] Couldn't find file 'treadmill.vtp'.
+[2026-09-11 18:24:48.617] [warning] Couldn't find file 'sacrum.vtp'.
+[2026-09-11 18:24:48.617] [warning] Couldn't find file 'pelvis.vtp'.
+[2026-09-11 18:24:48.617] [warning] Couldn't find file 'l_pelvis.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'femur_r.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'tibia_r.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'fibula.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'talus.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'foot.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'bofoot.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'femur_l.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'tibia_l.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'l_fibula.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'l_talus.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'l_foot.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'l_bofoot.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'hat_spine.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'hat_jaw.vtp'.
+[2026-09-11 18:24:48.618] [warning] Couldn't find file 'hat_skull.vtp'.
+[2026-09-11 18:24:48.619] [warning] Couldn't find file 'hat_ribs.vtp'.
+[2026-09-11 18:24:48.625] [cout] [info] 
+               MODEL: subject01
+         coordinates: 23
+              forces: 92
+           actuators: 92
+             muscles: 92
+            analyses: 0
+              probes: 0
+              bodies: 12
+              joints: 12
+         constraints: 0
+             markers: 39
+         controllers: 0
+  contact geometries: 0
+misc modelcomponents: 0
+[2026-09-11 18:24:48.625] [info] Running tool subject01.
+[2026-09-11 18:24:48.663] [info] Frame 30 (t = 0.5):	 total squared error = 0.0143065, marker error: RMS = 0.0214826, max = 0.0788963 (R.Acromium)
+[2026-09-11 18:24:48.669] [info] Frame 31 (t = 0.517):	 total squared error = 0.014123, marker error: RMS = 0.0213444, max = 0.0788565 (R.Acromium)
+[2026-09-11 18:24:48.676] [info] Frame 32 (t = 0.533):	 total squared error = 0.0140401, marker error: RMS = 0.0212816, max = 0.0788035 (R.Acromium)
+[2026-09-11 18:24:48.684] [info] Frame 33 (t = 0.55):	 total squared error = 0.0139933, marker error: RMS = 0.0212461, max = 0.0790607 (R.Acromium)
+[2026-09-11 18:24:48.693] [info] Frame 34 (t = 0.567):	 total squared error = 0.0142001, marker error: RMS = 0.0214025, max = 0.0789944 (R.Acromium)
+[2026-09-11 18:24:48.698] [info] Frame 35 (t = 0.583):	 total squared error = 0.0145677, marker error: RMS = 0.0216778, max = 0.0788346 (R.Acromium)
+[2026-09-11 18:24:48.700] [info] Frame 36 (t = 0.6):	 total squared error = 0.0149507, marker error: RMS = 0.0219609, max = 0.0793472 (R.Acromium)
+[2026-09-11 18:24:48.705] [info] Frame 37 (t = 0.617):	 total squared error = 0.0157911, marker error: RMS = 0.0225697, max = 0.0803989 (R.Acromium)
+[2026-09-11 18:24:48.710] [info] Frame 38 (t = 0.633):	 total squared error = 0.0167195, marker error: RMS = 0.0232237, max = 0.0817205 (R.Acromium)
+[2026-09-11 18:24:48.715] [info] Frame 39 (t = 0.65):	 total squared error = 0.0172453, marker error: RMS = 0.023586, max = 0.0829184 (R.Acromium)
+[2026-09-11 18:24:48.720] [info] Frame 40 (t = 0.667):	 total squared error = 0.0172397, marker error: RMS = 0.0235822, max = 0.0838539 (R.Acromium)
+[2026-09-11 18:24:48.724] [info] Frame 41 (t = 0.683):	 total squared error = 0.0172678, marker error: RMS = 0.0236014, max = 0.08446 (R.Acromium)
+[2026-09-11 18:24:48.728] [info] Frame 42 (t = 0.7):	 total squared error = 0.0173237, marker error: RMS = 0.0236395, max = 0.0839114 (R.Acromium)
+[2026-09-11 18:24:48.734] [info] Frame 43 (t = 0.717):	 total squared error = 0.0173879, marker error: RMS = 0.0236833, max = 0.0836562 (R.Acromium)
+[2026-09-11 18:24:48.758] [info] Frame 44 (t = 0.733):	 total squared error = 0.0171901, marker error: RMS = 0.0235482, max = 0.0825087 (R.Acromium)
+[2026-09-11 18:24:48.772] [info] Frame 45 (t = 0.75):	 total squared error = 0.0168458, marker error: RMS = 0.0233112, max = 0.0830813 (R.Acromium)
+[2026-09-11 18:24:48.778] [info] Frame 46 (t = 0.767):	 total squared error = 0.0160008, marker error: RMS = 0.0227191, max = 0.0813796 (R.Acromium)
+[2026-09-11 18:24:48.781] [info] Frame 47 (t = 0.783):	 total squared error = 0.0144241, marker error: RMS = 0.0215706, max = 0.0802486 (R.Acromium)
+[2026-09-11 18:24:48.787] [info] Frame 48 (t = 0.8):	 total squared error = 0.0133143, marker error: RMS = 0.0207242, max = 0.0792382 (R.Acromium)
+[2026-09-11 18:24:48.793] [info] Frame 49 (t = 0.817):	 total squared error = 0.0125309, marker error: RMS = 0.0201053, max = 0.0786394 (R.Acromium)
+[2026-09-11 18:24:48.801] [info] Frame 50 (t = 0.833):	 total squared error = 0.0122546, marker error: RMS = 0.0198824, max = 0.0778174 (R.Acromium)
+[2026-09-11 18:24:48.808] [info] Frame 51 (t = 0.85):	 total squared error = 0.0127341, marker error: RMS = 0.0202677, max = 0.0777366 (R.Acromium)
+[2026-09-11 18:24:48.816] [info] Frame 52 (t = 0.867):	 total squared error = 0.0134639, marker error: RMS = 0.0208403, max = 0.0773649 (R.Acromium)
+[2026-09-11 18:24:48.823] [info] Frame 53 (t = 0.883):	 total squared error = 0.0137898, marker error: RMS = 0.0210911, max = 0.0772778 (R.Acromium)
+[2026-09-11 18:24:48.828] [info] Frame 54 (t = 0.9):	 total squared error = 0.0133451, marker error: RMS = 0.0207482, max = 0.0768 (R.Acromium)
+[2026-09-11 18:24:48.831] [info] Frame 55 (t = 0.917):	 total squared error = 0.0131634, marker error: RMS = 0.0206064, max = 0.0774118 (R.Acromium)
+[2026-09-11 18:24:48.836] [info] Frame 56 (t = 0.933):	 total squared error = 0.0130251, marker error: RMS = 0.0204979, max = 0.0763132 (R.Acromium)
+[2026-09-11 18:24:48.842] [info] Frame 57 (t = 0.95):	 total squared error = 0.0131127, marker error: RMS = 0.0205667, max = 0.0753823 (R.Acromium)
+[2026-09-11 18:24:48.845] [info] Frame 58 (t = 0.967):	 total squared error = 0.0133747, marker error: RMS = 0.0207712, max = 0.0753065 (R.Acromium)
+[2026-09-11 18:24:48.850] [info] Frame 59 (t = 0.983):	 total squared error = 0.0136661, marker error: RMS = 0.0209962, max = 0.0759862 (R.Acromium)
+[2026-09-11 18:24:48.854] [info] Frame 60 (t = 1.0):	 total squared error = 0.0135722, marker error: RMS = 0.0209240, max = 0.0746975 (R.Acromium)
+[2026-09-11 18:24:48.856] [info] Frame 61 (t = 1.017):	 total squared error = 0.0137112, marker error: RMS = 0.0210308, max = 0.0744562 (R.Acromium)
+[2026-09-11 18:24:48.862] [info] Frame 62 (t = 1.033):	 total squared error = 0.0139868, marker error: RMS = 0.0212411, max = 0.0741022 (R.Acromium)
+[2026-09-11 18:24:48.868] [info] Frame 63 (t = 1.05):	 total squared error = 0.013997, marker error: RMS = 0.0212489, max = 0.0737646 (R.Acromium)
+[2026-09-11 18:24:48.872] [info] Frame 64 (t = 1.067):	 total squared error = 0.0141628, marker error: RMS = 0.0213744, max = 0.0727086 (R.Acromium)
+[2026-09-11 18:24:48.877] [info] Frame 65 (t = 1.083):	 total squared error = 0.0146015, marker error: RMS = 0.0217029, max = 0.0723391 (R.Acromium)
+[2026-09-11 18:24:48.885] [info] Frame 66 (t = 1.1):	 total squared error = 0.0144254, marker error: RMS = 0.0215717, max = 0.071948 (R.Acromium)
+[2026-09-11 18:24:48.889] [info] Frame 67 (t = 1.117):	 total squared error = 0.0142465, marker error: RMS = 0.0214375, max = 0.0719679 (R.Acromium)
+[2026-09-11 18:24:48.894] [info] Frame 68 (t = 1.133):	 total squared error = 0.0137584, marker error: RMS = 0.0210670, max = 0.0716 (R.Acromium)
+[2026-09-11 18:24:48.902] [info] Frame 69 (t = 1.15):	 total squared error = 0.0131056, marker error: RMS = 0.0205611, max = 0.0705953 (R.Acromium)
+[2026-09-11 18:24:48.908] [info] Frame 70 (t = 1.167):	 total squared error = 0.0129811, marker error: RMS = 0.0204633, max = 0.0713593 (R.Acromium)
+[2026-09-11 18:24:48.915] [info] Frame 71 (t = 1.183):	 total squared error = 0.0129524, marker error: RMS = 0.0204406, max = 0.0709042 (R.Acromium)
+[2026-09-11 18:24:48.922] [info] Frame 72 (t = 1.2):	 total squared error = 0.0130692, marker error: RMS = 0.0205326, max = 0.0714616 (R.Acromium)
+[2026-09-11 18:24:48.927] [info] Frame 73 (t = 1.217):	 total squared error = 0.0132399, marker error: RMS = 0.0206662, max = 0.0717795 (R.Acromium)
+[2026-09-11 18:24:48.933] [info] Frame 74 (t = 1.233):	 total squared error = 0.0135127, marker error: RMS = 0.0208780, max = 0.073256 (R.Acromium)
+[2026-09-11 18:24:48.939] [info] Frame 75 (t = 1.25):	 total squared error = 0.0137983, marker error: RMS = 0.0210976, max = 0.0737026 (R.Acromium)
+[2026-09-11 18:24:48.944] [info] Frame 76 (t = 1.267):	 total squared error = 0.014432, marker error: RMS = 0.0215766, max = 0.0750044 (R.Acromium)
+[2026-09-11 18:24:48.949] [info] Frame 77 (t = 1.283):	 total squared error = 0.0149309, marker error: RMS = 0.0219463, max = 0.0764135 (R.Acromium)
+[2026-09-11 18:24:48.952] [info] Frame 78 (t = 1.3):	 total squared error = 0.015534, marker error: RMS = 0.0223852, max = 0.0776579 (R.Acromium)
+[2026-09-11 18:24:48.959] [info] Frame 79 (t = 1.317):	 total squared error = 0.0162587, marker error: RMS = 0.0229014, max = 0.0795158 (R.Acromium)
+[2026-09-11 18:24:48.964] [info] Frame 80 (t = 1.333):	 total squared error = 0.0164794, marker error: RMS = 0.0230563, max = 0.0798806 (R.Acromium)
+[2026-09-11 18:24:48.969] [info] Frame 81 (t = 1.35):	 total squared error = 0.0166119, marker error: RMS = 0.0231488, max = 0.0812072 (R.Acromium)
+[2026-09-11 18:24:48.972] [info] Frame 82 (t = 1.367):	 total squared error = 0.016252, marker error: RMS = 0.0228967, max = 0.0811745 (R.Acromium)
+[2026-09-11 18:24:48.975] [info] Frame 83 (t = 1.383):	 total squared error = 0.0153859, marker error: RMS = 0.0222782, max = 0.0801986 (R.Acromium)
+[2026-09-11 18:24:48.980] [info] Frame 84 (t = 1.4):	 total squared error = 0.0142493, marker error: RMS = 0.0214396, max = 0.0795047 (R.Acromium)
+[2026-09-11 18:24:48.984] [info] Frame 85 (t = 1.417):	 total squared error = 0.0132846, marker error: RMS = 0.0207011, max = 0.0789605 (R.Acromium)
+[2026-09-11 18:24:48.990] [info] Frame 86 (t = 1.433):	 total squared error = 0.0130003, marker error: RMS = 0.0204784, max = 0.0781905 (R.Acromium)
+[2026-09-11 18:24:48.995] [info] Frame 87 (t = 1.45):	 total squared error = 0.0129573, marker error: RMS = 0.0204445, max = 0.0776377 (R.Acromium)
+[2026-09-11 18:24:49.002] [info] Frame 88 (t = 1.467):	 total squared error = 0.0133396, marker error: RMS = 0.0207439, max = 0.0781268 (R.Acromium)
+[2026-09-11 18:24:49.008] [info] Frame 89 (t = 1.483):	 total squared error = 0.0138119, marker error: RMS = 0.0211080, max = 0.0782053 (R.Acromium)
+[2026-09-11 18:24:49.014] [info] Frame 90 (t = 1.5):	 total squared error = 0.0138891, marker error: RMS = 0.0211669, max = 0.0781573 (R.Acromium)
+[2026-09-11 18:24:49.021] [info] Frame 91 (t = 1.517):	 total squared error = 0.0139111, marker error: RMS = 0.0211836, max = 0.0782505 (R.Acromium)
+[2026-09-11 18:24:49.026] [info] Frame 92 (t = 1.533):	 total squared error = 0.0138624, marker error: RMS = 0.0211465, max = 0.0779573 (R.Acromium)
+[2026-09-11 18:24:49.031] [info] Frame 93 (t = 1.55):	 total squared error = 0.0136983, marker error: RMS = 0.0210209, max = 0.0781612 (R.Acromium)
+[2026-09-11 18:24:49.037] [info] Frame 94 (t = 1.567):	 total squared error = 0.0137181, marker error: RMS = 0.0210362, max = 0.0787979 (R.Acromium)
+[2026-09-11 18:24:49.041] [info] Frame 95 (t = 1.583):	 total squared error = 0.0136656, marker error: RMS = 0.0209959, max = 0.0791776 (R.Acromium)
+[2026-09-11 18:24:49.044] [info] Frame 96 (t = 1.6):	 total squared error = 0.013624, marker error: RMS = 0.0209639, max = 0.0793588 (R.Acromium)
+[2026-09-11 18:24:49.048] [info] Frame 97 (t = 1.617):	 total squared error = 0.013811, marker error: RMS = 0.0211073, max = 0.0803521 (R.Acromium)
+[2026-09-11 18:24:49.050] [info] Frame 98 (t = 1.633):	 total squared error = 0.0139966, marker error: RMS = 0.0212486, max = 0.0800338 (R.Acromium)
+[2026-09-11 18:24:49.052] [info] Frame 99 (t = 1.65):	 total squared error = 0.0140527, marker error: RMS = 0.0212911, max = 0.0801013 (R.Acromium)
+[2026-09-11 18:24:49.055] [info] Frame 100 (t = 1.667):	 total squared error = 0.0144717, marker error: RMS = 0.0216062, max = 0.0798667 (R.Acromium)
+[2026-09-11 18:24:49.057] [info] Frame 101 (t = 1.683):	 total squared error = 0.0150818, marker error: RMS = 0.0220570, max = 0.0797192 (R.Acromium)
+[2026-09-11 18:24:49.061] [info] Frame 102 (t = 1.7):	 total squared error = 0.0159339, marker error: RMS = 0.0226715, max = 0.0794669 (R.Acromium)
+[2026-09-11 18:24:49.065] [info] Frame 103 (t = 1.717):	 total squared error = 0.0159415, marker error: RMS = 0.0226769, max = 0.0793007 (R.Acromium)
+[2026-09-11 18:24:49.072] [info] Frame 104 (t = 1.733):	 total squared error = 0.0149883, marker error: RMS = 0.0219885, max = 0.079417 (R.Acromium)
+[2026-09-11 18:24:49.080] [info] Frame 105 (t = 1.75):	 total squared error = 0.0143491, marker error: RMS = 0.0215145, max = 0.0791378 (R.Acromium)
+[2026-09-11 18:24:49.088] [info] Frame 106 (t = 1.767):	 total squared error = 0.0143287, marker error: RMS = 0.0214992, max = 0.079657 (R.Acromium)
+[2026-09-11 18:24:49.096] [info] Frame 107 (t = 1.783):	 total squared error = 0.0144668, marker error: RMS = 0.0216026, max = 0.0794143 (R.Acromium)
+[2026-09-11 18:24:49.103] [info] Frame 108 (t = 1.8):	 total squared error = 0.0148477, marker error: RMS = 0.0218851, max = 0.0798173 (R.Acromium)
+[2026-09-11 18:24:49.109] [info] Frame 109 (t = 1.817):	 total squared error = 0.0155922, marker error: RMS = 0.0224271, max = 0.0809965 (R.Acromium)
+[2026-09-11 18:24:49.115] [info] Frame 110 (t = 1.833):	 total squared error = 0.0159692, marker error: RMS = 0.0226966, max = 0.0815845 (R.Acromium)
+[2026-09-11 18:24:49.120] [info] Frame 111 (t = 1.85):	 total squared error = 0.0164168, marker error: RMS = 0.0230125, max = 0.0831867 (R.Acromium)
+[2026-09-11 18:24:49.127] [info] Frame 112 (t = 1.867):	 total squared error = 0.0168495, marker error: RMS = 0.0233138, max = 0.0827412 (R.Acromium)
+[2026-09-11 18:24:49.131] [info] Frame 113 (t = 1.883):	 total squared error = 0.0173616, marker error: RMS = 0.0236654, max = 0.0836535 (R.Acromium)
+[2026-09-11 18:24:49.136] [info] Frame 114 (t = 1.9):	 total squared error = 0.01786, marker error: RMS = 0.0240027, max = 0.0844771 (R.Acromium)
+[2026-09-11 18:24:49.141] [info] Frame 115 (t = 1.917):	 total squared error = 0.0182617, marker error: RMS = 0.0242711, max = 0.0844895 (R.Acromium)
+[2026-09-11 18:24:49.147] [info] Frame 116 (t = 1.933):	 total squared error = 0.0188833, marker error: RMS = 0.0246808, max = 0.084742 (R.Acromium)
+[2026-09-11 18:24:49.152] [info] Frame 117 (t = 1.95):	 total squared error = 0.0190170, marker error: RMS = 0.024768, max = 0.0836412 (R.Acromium)
+[2026-09-11 18:24:49.158] [info] Frame 118 (t = 1.967):	 total squared error = 0.0191529, marker error: RMS = 0.0248563, max = 0.0832341 (R.Acromium)
+[2026-09-11 18:24:49.162] [info] Frame 119 (t = 1.983):	 total squared error = 0.0190464, marker error: RMS = 0.0247871, max = 0.0819651 (R.Acromium)
+[2026-09-11 18:24:49.167] [info] Frame 120 (t = 2.0):	 total squared error = 0.0180404, marker error: RMS = 0.0241236, max = 0.0809260 (R.Acromium)
+[2026-09-11 18:24:49.170] [info] Frame 121 (t = 2.017):	 total squared error = 0.0168309, marker error: RMS = 0.0233009, max = 0.0796746 (R.Acromium)
+[2026-09-11 18:24:49.176] [info] Frame 122 (t = 2.033):	 total squared error = 0.0155193, marker error: RMS = 0.0223746, max = 0.0791634 (R.Acromium)
+[2026-09-11 18:24:49.183] [info] Frame 123 (t = 2.05):	 total squared error = 0.0146388, marker error: RMS = 0.0217306, max = 0.0782994 (R.Acromium)
+[2026-09-11 18:24:49.191] [info] Frame 124 (t = 2.067):	 total squared error = 0.0144661, marker error: RMS = 0.0216021, max = 0.0788515 (R.Acromium)
+[2026-09-11 18:24:49.199] [info] Frame 125 (t = 2.083):	 total squared error = 0.014357, marker error: RMS = 0.0215204, max = 0.0771493 (R.Acromium)
+[2026-09-11 18:24:49.206] [info] Frame 126 (t = 2.1):	 total squared error = 0.0143425, marker error: RMS = 0.0215096, max = 0.0771815 (R.Acromium)
+[2026-09-11 18:24:49.213] [info] Frame 127 (t = 2.117):	 total squared error = 0.0143867, marker error: RMS = 0.0215427, max = 0.0773402 (R.Acromium)
+[2026-09-11 18:24:49.218] [info] Frame 128 (t = 2.133):	 total squared error = 0.0144814, marker error: RMS = 0.0216135, max = 0.0762471 (R.Acromium)
+[2026-09-11 18:24:49.223] [info] Frame 129 (t = 2.15):	 total squared error = 0.0146866, marker error: RMS = 0.0217661, max = 0.0759407 (R.Acromium)
+[2026-09-11 18:24:49.226] [info] Frame 130 (t = 2.167):	 total squared error = 0.0149946, marker error: RMS = 0.0219931, max = 0.0757652 (R.Acromium)
+[2026-09-11 18:24:49.228] [info] Frame 131 (t = 2.183):	 total squared error = 0.0152674, marker error: RMS = 0.0221922, max = 0.0752674 (R.Acromium)
+[2026-09-11 18:24:49.230] [info] Frame 132 (t = 2.2):	 total squared error = 0.0155477, marker error: RMS = 0.022395, max = 0.0746835 (R.Acromium)
+[2026-09-11 18:24:49.236] [info] Frame 133 (t = 2.217):	 total squared error = 0.0158611, marker error: RMS = 0.0226196, max = 0.0744379 (R.Acromium)
+[2026-09-11 18:24:49.241] [info] Frame 134 (t = 2.233):	 total squared error = 0.0162977, marker error: RMS = 0.0229289, max = 0.0743895 (R.Acromium)
+[2026-09-11 18:24:49.246] [info] Frame 135 (t = 2.25):	 total squared error = 0.0166427, marker error: RMS = 0.0231703, max = 0.0740714 (R.Acromium)
+[2026-09-11 18:24:49.251] [info] Frame 136 (t = 2.267):	 total squared error = 0.0170020, marker error: RMS = 0.0234191, max = 0.0738632 (R.Acromium)
+[2026-09-11 18:24:49.257] [info] Frame 137 (t = 2.283):	 total squared error = 0.0172791, marker error: RMS = 0.0236091, max = 0.0741030 (R.Acromium)
+[2026-09-11 18:24:49.263] [info] Frame 138 (t = 2.3):	 total squared error = 0.0176715, marker error: RMS = 0.0238757, max = 0.0732222 (R.Acromium)
+[2026-09-11 18:24:49.267] [info] Frame 139 (t = 2.317):	 total squared error = 0.0174943, marker error: RMS = 0.0237557, max = 0.0722884 (R.Acromium)
+[2026-09-11 18:24:49.273] [info] Frame 140 (t = 2.333):	 total squared error = 0.0173556, marker error: RMS = 0.0236613, max = 0.0717868 (R.Acromium)
+[2026-09-11 18:24:49.276] [info] Frame 141 (t = 2.35):	 total squared error = 0.0170370, marker error: RMS = 0.0234431, max = 0.0713253 (R.Acromium)
+[2026-09-11 18:24:49.281] [info] Frame 142 (t = 2.367):	 total squared error = 0.0171033, marker error: RMS = 0.0234887, max = 0.0712371 (R.Acromium)
+[2026-09-11 18:24:49.287] [info] Frame 143 (t = 2.383):	 total squared error = 0.016942, marker error: RMS = 0.0233777, max = 0.0711868 (R.Acromium)
+[2026-09-11 18:24:49.294] [info] Frame 144 (t = 2.4):	 total squared error = 0.0169917, marker error: RMS = 0.0234119, max = 0.0706507 (R.Acromium)
+[2026-09-11 18:24:49.299] [info] Frame 145 (t = 2.417):	 total squared error = 0.0171758, marker error: RMS = 0.0235385, max = 0.0707777 (R.Acromium)
+[2026-09-11 18:24:49.305] [info] Frame 146 (t = 2.433):	 total squared error = 0.0175006, marker error: RMS = 0.0237599, max = 0.0713157 (R.Acromium)
+[2026-09-11 18:24:49.310] [info] Frame 147 (t = 2.45):	 total squared error = 0.0180164, marker error: RMS = 0.0241075, max = 0.0718536 (R.Acromium)
+[2026-09-11 18:24:49.316] [info] Frame 148 (t = 2.467):	 total squared error = 0.0185153, marker error: RMS = 0.0244391, max = 0.0728499 (R.Acromium)
+[2026-09-11 18:24:49.320] [info] Frame 149 (t = 2.483):	 total squared error = 0.0189276, marker error: RMS = 0.0247097, max = 0.0737366 (R.Acromium)
+[2026-09-11 18:24:49.324] [info] Frame 150 (t = 2.5):	 total squared error = 0.0198518, marker error: RMS = 0.0253057, max = 0.0754372 (R.Acromium)
+[2026-09-11 18:24:49.326] [info] InverseKinematicsTool completed 121 frames in 663 millisecond(s).
