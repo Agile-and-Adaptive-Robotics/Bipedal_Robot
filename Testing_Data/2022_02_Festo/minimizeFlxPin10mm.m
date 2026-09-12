@@ -146,12 +146,12 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
  
 pick = 1;
 sol_actual = filtered_results(pick, xCols);
-% k1 = sol_actual(1);
-% k2 = sol_actual(2);
-% k3 = sol_actual(3);
-k1 = 0.01;
-k2 = 2e4;
-k3 = 0.8e4;
+k1 = sol_actual(1);
+k2 = sol_actual(2);
+k3 = sol_actual(3);
+% k1 = 0.01;
+% k2 = 2e4;
+% k3 = 0.8e4;
 [f, bpa] = minimizeFlxPin(k1, k2, k3);  % [f: 4x3], [bpa: full struct]
 
 disp(array2table([k1, k2, k3], 'VariableNames', {'X0', 'X1', 'X2'}));
