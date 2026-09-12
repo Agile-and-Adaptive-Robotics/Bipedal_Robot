@@ -10,11 +10,11 @@ each of Gait2392's 92 muscles, driving the MyoConverter MJCF of
 descending drive AND reflex-gain modulation, with PF→MN weights back-solvable
 from OpenSim IK/SO activation patterns.
 
-## Architecture (per side; ~406 neurons total, 368 inputs)
+## Architecture (per side; 410 neurons total = 201/side + 8 shared, 376 inputs)
 
 | layer | cells | notes |
 |---|---|---|
-| descending | DRIVE, POSTURE, BAL_PF, BAL_DF | MLR/postural surrogates, external inputs |
+| descending | DRIVE, POSTURE, BAL_PF, BAL_DF, BAL_TRK_EXT, BAL_TRK_FLX, BAL_LAT_R, BAL_LAT_L | MLR/postural surrogates, external inputs (the 4 later balance cells are why this is 410, not the stale 406) |
 | RG | RG-E, RG-F + ADAP-E, ADAP-F | half-center: mutual inhib. + slow (0.9 s) self-adaptation; frequency rises with DRIVE; stance-biased drive split (E stronger) sets duty |
 | PF | PF-E1, PF-E2, PF-F1, PF-F2 + PFA-* | forced mode (no own rhythm); (tau, adapt) shape multipliers stagger their windows; reciprocal inhib. on conflicting pairs |
 | MN+afferents | per muscle: MN, Ia, II, Ib | Ia ~ tendon velocity (pure-signal: no resting tone — baseline drove constant reciprocal inhibition and crushed flexors); II ~ length (small baseline); Ib ~ force |
@@ -360,3 +360,53 @@ Dissertation\CPG_airstepping_figs\ as circuit_*.
   patch_xml (like the prune patch), re-run the standing solve, refit,
   v4. Until then, trunk-control claims about ercspn/obliques are
   placeholders.
+
+## 2026-09-12: v4 kinematics-matching campaign (Ben: "fine-tune until the
+kinematics are similar to OpenSim")
+
+New tool: kine_ref.py - reference cycle from subject01_walk1_ik.mot
+phased by measured GRF onsets (right cycle 0.63-1.86 s = 1.23 s /
+0.81 Hz, stance duty 0.61, knee_min -69.7 deg, hip range 43.3, ankle
+range 23.1; careful: the mot parser index excludes the time column -
+bit twice in one day). runner --eval now reports metrics["kine"] +
+kine_score: cycle-normalized hip/knee/ankle shape RMSE (mean RG-E cycle
+vs reference, offset removed) + peak-knee + range + duty errors, single
+number, 0 = perfect match.
+
+Campaign: optuna_walk v4 (study ground_walk_v4_kine) had a BROKEN
+landscape - the -25 no-rhythm sentinel beat every genuine walker
+(-40..-64), TPE collapsed onto that plateau in 18 trials; killed. v4b
+(study ground_walk_v4b_kine) rescaled: no-rhythm = -65 (what a frozen
+model truly scores), NaN -80+t_end, falls -10, tilt>40 -5. 60 trials ->
+best kine_score -61.17 (trial 49; barely above baseline -63.6). Winner
+params (saved in best_walk_params.json, study v4b): drive 2.59,
+rg_adapt 0.88, desc_e 1.52, desc_f 1.08, rg_to_pf 1.96, pf_gain 2.18,
+e2_pf 0.49, f1_df 1.78, f1_kf 1.79, e2_adapt 1.38, post_kneext 0.61,
+post_hipext 0.79, kx 106. Full 22 s run: stayed up, 13 cycles at
+1.18 Hz, hip -9..+25 deg, knee -14..+26, ankle -43..0, E-duty 0.27.
+runner --best now also applies desc_f and e2_adapt when present.
+
+HONEST DIAGNOSIS: scalar knobs on the current architecture CANNOT reach
+OpenSim kinematics - the optimizer converged to ~-61 twice. The gap is
+architectural, in priority order:
+1. E-DUTY 0.27 vs 0.61 - the half-center + adaptation tops out ~0.3.
+   Levers: hip-extension/loaded sensory phase-reset into the RG
+   (Rybak-style Ia/II hip signals switching E->F), stance-biased PF
+   windows, Ib load-sharing gain as stance prolonger.
+2. SWING KNEE still extension-dominant (+26/-14 vs -70/+1) - the quad
+   co-contraction standoff again; F1 knee_flex gains saturate. Needs
+   phase-specific quad SUPPRESSION (F1 -> reciprocal inhibition onto
+   knee_ext MNs), not more flexor drive.
+3. ANKLE PF-dominant (-43 deg vs -9..+16) - POSTURE_OVERRIDE keeps
+   soleus/tib_post tonically high (0.55/0.35) and the stand_frac floor
+   carries it into gait; tib_ant swing drive (f1_df 1.78) loses.
+4. CADENCE 1.18 vs 0.81 Hz - rg_adapt already at the range edge (0.88).
+5. Cycle-to-cycle phase jitter: mean-cycle ranges collapse (hip 2.6 deg
+   of a 34 deg raw range) - the rhythm is not stereotyped; sensory
+   phase resetting (1) is also the fix here.
+6. The 8 one-Newton trunk muscles (night addendum above) make BAL_TRK
+   cosmetic - the Fmax fix is on the model list (needs Ben's go).
+BEST CURRENT CONFIG = v4b winner (reproduce: runner --fitted --best);
+the v3 winner remains better on the STABILITY-shaped objective (its
+study is untouched in the db). kine_ref.py is the acceptance metric for
+any future kinematics-matching campaign.

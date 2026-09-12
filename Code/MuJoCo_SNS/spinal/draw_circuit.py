@@ -7,12 +7,13 @@ Style follows Ben's reference pictures (Rybak / SNS-hierarchy style,
     LIVE from muscle_map.py (never hardcoded)
   * size hierarchy: half-centers big, pattern cells medium, sensors and
     local interneurons small; small loop cells for adaptation
-  * strict rows in the dense panel, mirrored left/right around a dashed
-    midline, commissural wires gathered in one pale central corridor
+  * strict rows, mirrored left/right around a dashed midline in the
+    "full" panel, commissural wires gathered in one pale central corridor
   * wires colored by source (Okabe-Ito CVD-safe); synapse markers keep
     Ben's conventions: white triangle with its BASE flat against the
     excited cell (snsfig.m 2026-09-09 inversion), solid black dot =
-    inhibitory
+    inhibitory. Triangle bases are aligned with the wire's ARRIVAL
+    TANGENT so curved wires stay attached.
   * clean wires: no conductance numbers on schematics -- numbers live in
     the weights figure
 
@@ -150,6 +151,7 @@ R_SMALL = 0.18                  # ADAP/PFA/IB-EXC
 R_BIG = 0.44                    # RG half-centers
 R_POOL = 0.14                   # circles inside an MN pool cluster
 R_SENS = 0.16                   # Ia/II/Ib
+POOL_GAP = 0.34                 # pitch between pool circles
 LBL_BBOX = dict(boxstyle="round,pad=0.15", fc="white", ec="none", alpha=0.85)
 
 
@@ -181,11 +183,11 @@ def neuron(cv, x, y, label, sub=None, fc="white", r=R_MED, ghost=False,
                            lw=lw, zorder=3))
     if ghost:
         return (x, y, r)
-    fs = fs if fs else max(6.0, 10.0 * r / R_MED)
+    fs = fs if fs else min(11.0, max(6.0, 9.5 * r / R_MED))
     cv.ax.text(x, y, label, ha="center", va="center", fontsize=fs, zorder=4)
     if sub:
-        cv.ax.text(x, y - r - 0.16, sub, ha="center", va="center",
-                   fontsize=fs - 1.0, style="italic", color="0.35", zorder=4)
+        cv.ax.text(x, y - r - 0.17, sub, ha="center", va="center",
+                   fontsize=fs - 0.8, style="italic", color="0.35", zorder=4)
     return (x, y, r)
 
 
@@ -197,53 +199,61 @@ def input_box(cv, x, y, w, h, label, sub=None):
                va="center", fontsize=7.8, zorder=4)
     if sub:
         cv.ax.text(x, y - 0.13, sub, ha="center", va="center",
-                   fontsize=6.6, style="italic", color="0.35", zorder=4)
-    return (x, y, min(w, h) / 2)
+                   fontsize=6.4, style="italic", color="0.35", zorder=4)
+    return (x, y, max(w, h) * 0.55)
 
 
-def muscle(cv, x, y, w=0.72, h=0.26, label=None):
+def muscle(cv, x, y, w=0.72, h=0.26):
     cv.ax.add_patch(Ellipse((x, y), w, h, fc=_tint(OI_SKY), ec="black",
                             lw=1.0, zorder=3))
-    if label:
-        cv.ax.text(x, y, label, ha="center", va="center", fontsize=6.0,
-                   zorder=4)
     return (x, y, h / 2)
 
 
-def pool_cluster(cv, x, y, group, cap=5):
+def cluster_hw(group, cap=4):
+    k = min(len(CNT["prim"][group]), cap)
+    return (k - 1) / 2 * POOL_GAP + R_POOL
+
+
+def pool_cluster(cv, x, y, group, cap=4):
     """MN pool cluster: small circles = real motoneuron pools (primary
-    members), + a small pale ellipse per biarticular secondary member.
-    Returns anchor dict (top/left/right/bottom points)."""
+    members). Biarticular secondary members are summarized in the count
+    text "(+n)". Returns anchor dict."""
     n_prim = len(CNT["prim"][group])
     n_sec = len(CNT["sec"][group])
     k = min(n_prim, cap)
-    xs = [x + (i - (k - 1) / 2) * (2 * R_POOL + 0.055) for i in range(k)]
+    xs = [x + (i - (k - 1) / 2) * POOL_GAP for i in range(k)]
     for xc in xs:
         cv.ax.add_patch(Circle((xc, y), R_POOL, fc=_tint(OI_SKY),
                                ec="black", lw=0.9, zorder=3))
-    # secondary (biarticular) pools: one shared pale ellipse to the right
-    if n_sec:
-        cv.ax.add_patch(Ellipse((xs[-1] + 0.42, y), 0.34, 0.20,
-                                fc="white", ec="0.45", lw=0.8, zorder=3))
-    lbl = ABBREV[group]
-    cnt_txt = f"x{n_prim}" + (f" (+{n_sec})" if n_sec else "")
-    cv.ax.text(x, y - 0.42, f"{lbl}  {cnt_txt}", ha="center", va="center",
-               fontsize=6.8, zorder=4)
-    half_w = (k - 1) / 2 * (2 * R_POOL + 0.055) + R_POOL + (0.5 if n_sec else 0)
-    return dict(c=(x, y), top=(x, y + R_POOL + 0.06),
-                left=(x - half_w, y), right=(x + half_w, y),
-                bot=(x, y - R_POOL - 0.06), hw=half_w)
+    cnt_txt = f"x{n_prim}" + (f"\n(+{n_sec})" if n_sec else "")
+    cv.ax.text(x, y - 0.48, f"{ABBREV[group]}\n{cnt_txt}", ha="center",
+               va="center", fontsize=6.4, zorder=4)
+    hw = cluster_hw(group, cap)
+    return dict(c=(x, y), top=(x, y + R_POOL + 0.05),
+                left=(x - hw, y), right=(x + hw, y),
+                bot=(x, y - R_POOL - 0.05), hw=hw)
 
 
-def layer_band(cv, x0, x1, y0, y1, hex_color, label, lab_x=None,
-               lab_above=True, fs=8.0):
+def layout_pools(cv, x0, y, groups, cap=4, gap=0.24, min_pitch=1.05):
+    """Width-aware single-row pool layout with a minimum pitch so
+    two-line labels never collide; returns {group: anchors}."""
+    pools, x = {}, x0 + cluster_hw(groups[0], cap)
+    for i, g in enumerate(groups):
+        pools[g] = pool_cluster(cv, x, y, g, cap=cap)
+        if i + 1 < len(groups):
+            x += max(cluster_hw(g, cap) + gap + cluster_hw(groups[i + 1], cap),
+                     min_pitch)
+    return pools
+
+
+def layer_band(cv, x0, x1, y0, y1, hex_color, label, lab_dx=0.18,
+               lab_dy=0.22, fs=8.0):
     cv.ax.add_patch(FancyBboxPatch((x0, y0), x1 - x0, y1 - y0,
                                    boxstyle="round,pad=0.02,rounding_size=0.18",
                                    fc=_tint(hex_color), ec="none", zorder=0.5))
-    lx = lab_x if lab_x is not None else x0 + 0.15
-    ly = y1 + 0.14 if lab_above else y1 - 0.20
-    cv.ax.text(lx, ly, label, fontsize=fs, ha="left", va="center",
-               color="0.30", style="italic", zorder=1)
+    if label:
+        cv.ax.text(x0 + lab_dx, y1 - lab_dy, label, fontsize=fs, ha="left",
+                   va="top", color="0.30", style="italic", zorder=1)
 
 
 def syn(cv, p, q, exc: bool, label=None, lpos=0.5, loff=(0.1, 0.1), lw=1.4,
@@ -252,9 +262,10 @@ def syn(cv, p, q, exc: bool, label=None, lpos=0.5, loff=(0.1, 0.1), lw=1.4,
     """Edge p->q. Excitatory: WHITE TRIANGLE WITH ITS BASE FLAT AGAINST THE
     TARGET CELL, apex pointing back along the wire (Ben's snsfig.m
     convention, 2026-09-09). Inhibitory: solid black dot at the target.
-    p/q may be (x, y) or the (x, y, r) tuple returned by the glyph
-    helpers; shrink_a/shrink_b override the source/target radii."""
-    col = "0.55" if ghost else (color if color else ("0.15" if exc else "0.15"))
+    The base/dot are aligned with the wire's arrival tangent (arc3
+    control point geometry), so curved wires stay attached. p/q may be
+    (x, y) or the (x, y, r) tuples returned by glyph helpers."""
+    col = "0.55" if ghost else (color if color else "0.15")
     ra = p[2] if len(p) > 2 and shrink_a is None else (shrink_a if shrink_a
                                                        is not None else 0.0)
     rb = q[2] if len(q) > 2 and shrink_b is None else (shrink_b if shrink_b
@@ -265,23 +276,28 @@ def syn(cv, p, q, exc: bool, label=None, lpos=0.5, loff=(0.1, 0.1), lw=1.4,
     u = d / L
     perp = np.array([-u[1], u[0]])
     a = pa + u * (ra + 0.02)
+    # arrival tangent of the arc3 bezier at q (matplotlib bulges the arc
+    # to the CW side of the chord for positive rad -- verified against
+    # the over-the-top arcs note in the previous revision)
+    ctrl = 0.5 * (pa + qa) - perp * (rad * L)
+    ut = qa - ctrl
+    ut = ut / max(np.linalg.norm(ut), 1e-9)
+    pt = np.array([-ut[1], ut[0]])
     if exc:
-        # base plane just off the target edge; triangle extends back along
-        # the wire; the wire stops at the apex
-        base = qa - u * (rb + 0.02)
-        tri = min(0.20, max(0.08, 0.45 * (L - ra - rb)))
-        apex = base - u * tri
+        base = qa - ut * (rb + 0.02)
+        tri = min(0.20, max(0.09, 0.45 * (L - ra - rb)))
+        apex = base - ut * tri
         cv.ax.add_patch(FancyArrowPatch(
             tuple(a), tuple(apex), arrowstyle="-", lw=lw, color=col, zorder=2,
             connectionstyle=f"arc3,rad={rad}",
             linestyle=(0, (3, 2)) if dashed else "solid"))
         if not ghost:
             cv.ax.add_patch(Polygon(
-                [tuple(base + perp * 0.095), tuple(base - perp * 0.095),
+                [tuple(base + pt * 0.095), tuple(base - pt * 0.095),
                  tuple(apex)], closed=True, fc="white", ec=col, lw=1.2,
                 zorder=3))
     else:
-        dot = qa - u * (rb + 0.09)
+        dot = qa - ut * (rb + 0.10)
         cv.ax.add_patch(FancyArrowPatch(
             tuple(a), tuple(dot), arrowstyle="-", lw=lw, color=col, zorder=2,
             connectionstyle=f"arc3,rad={rad}",
@@ -299,9 +315,16 @@ def syn(cv, p, q, exc: bool, label=None, lpos=0.5, loff=(0.1, 0.1), lw=1.4,
                    bbox=LBL_BBOX if lbox else None)
 
 
-def tag(cv, x, y, text, fs=6.6, color="0.30", ha="center"):
+def lane(cv, x, y_top, y_bot, color=W_DESC):
+    """A quiet dashed margin lane (vertical) for descending/bias wires."""
+    cv.ax.plot([x, x], [y_bot, y_top], ls=(0, (3, 2)), color=color, lw=1.0,
+               zorder=1.5)
+
+
+def tag(cv, x, y, text, fs=6.6, color="0.30", ha="center", box=False):
     cv.ax.text(x, y, text, fontsize=fs, ha=ha, va="center", style="italic",
-               color=color, zorder=4)
+               color=color, zorder=6 if box else 4,
+               bbox=LBL_BBOX if box else None)
 
 
 def legend_row(cv, y, x0=0.6):
@@ -309,7 +332,6 @@ def legend_row(cv, y, x0=0.6):
     ax.add_patch(Circle((x0, y), 0.16, fc="white", ec="black", lw=1.3))
     ax.text(x0 + 0.26, y, "neuron", fontsize=7.4, va="center")
     x = x0 + 1.35
-    # excitatory: wire ending in a triangle whose base faces the target
     ax.add_patch(FancyArrowPatch((x, y), (x + 0.55, y), arrowstyle="-",
                                  lw=1.3, color=W_EXC))
     ax.add_patch(Polygon([(x + 0.85, y + 0.085), (x + 0.85, y - 0.085),
@@ -333,7 +355,6 @@ def legend_row(cv, y, x0=0.6):
 
 
 def wire_color_key(cv, x, y):
-    """Small colored-wire key: source/sign colors."""
     ax = cv.ax
     items = [(W_E, "extensor-half drive"), (W_F, "flexor-half drive"),
              (W_EXC, "other excitatory"), (W_INH, "inhibitory"),
@@ -345,16 +366,25 @@ def wire_color_key(cv, x, y):
         ax.text(xx + 0.6, y, name, fontsize=6.6, va="center", color="0.25")
 
 
-def key_box(cv, x, y):
-    """Group key: abbreviation -> real member muscles (live)."""
-    lines = []
+def key_box(cv, x, y, width=50):
+    """Group key: abbreviation -> real member muscles (live), wrapped."""
+    lines = ["MN pool key (live from muscle_map.py)"]
     for g in GROUP_ORDER:
-        prim = ", ".join(CNT["prim"][g])
-        extra = f"  (+{', '.join(CNT['sec'][g])} secondary)" if CNT["sec"][g] else ""
-        lines.append(f"{ABBREV[g]} ({len(CNT['prim'][g])}): {prim}{extra}")
-    txt = "MN pool key (live from muscle_map.py)\n" + "\n".join(lines)
-    cv.ax.text(x, y, txt, fontsize=5.9, va="top", ha="left", color="0.25",
-               family="monospace", zorder=4,
+        head = f"{ABBREV[g]} ({len(CNT['prim'][g])}): "
+        words = (", ".join(CNT["prim"][g])
+                 + (f" (+{', '.join(CNT['sec'][g])} sec)"
+                    if CNT["sec"][g] else "")).split(" ")
+        line = head
+        for wd in words:
+            if len(line) + len(wd) > width:
+                lines.append(line)
+                line = " " * (len(head) + 2) + wd
+            else:
+                line += wd + " "
+        lines.append(line)
+    txt = "\n".join(lines)
+    cv.ax.text(x, y, txt, fontsize=5.5, va="top", ha="left", color="0.25",
+               family="monospace", zorder=4, linespacing=1.15,
                bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="0.75",
                          lw=0.7))
 
@@ -378,23 +408,25 @@ def rg_block(cv, x, y, suffix="", big=True, mirror=False):
     rgf = neuron(cv, x + dx, y - 0.78, f"RG-F{suffix}", fc=_tint(OI_BLUE), r=r)
     syn(cv, rge, rgf, False, rad=0.25, color=W_INH)
     syn(cv, rgf, rge, False, rad=0.25, color=W_INH)
-    tag(cv, x + dx + 0.55, y - 0.08, "mutual\ninhibition", fs=6.0)
-    # adaptation loop cells (fatigue/adaptation onto each half-center)
     sgn = 1 if not mirror else -1
-    ade = neuron(cv, x + dx - sgn * 1.45, y + 0.62, "ADAP-E", r=R_SMALL, fs=6.0)
-    adf = neuron(cv, x + dx - sgn * 1.45, y - 0.78, "ADAP-F", r=R_SMALL, fs=6.0)
-    syn(cv, rge, ade, True, rad=-0.3, lw=1.0, color=W_E)
-    syn(cv, ade, rge, False, rad=-0.3, lw=1.0, color=W_INH)
-    syn(cv, rgf, adf, True, rad=0.3, lw=1.0, color=W_F)
-    syn(cv, adf, rgf, False, rad=0.3, lw=1.0, color=W_INH)
+    tag(cv, x + dx + sgn * 1.25, y - 0.08, "mutual\ninhibition", fs=6.0,
+        box=True)
+    adap_x = x + dx - sgn * 1.75
+    ade = neuron(cv, adap_x, y + 0.62, "ADAP-E", r=R_SMALL, fs=6.0)
+    adf = neuron(cv, adap_x, y - 0.78, "ADAP-F", r=R_SMALL, fs=6.0)
+    syn(cv, rge, ade, True, rad=-0.35, lw=1.0, color=W_E)
+    syn(cv, ade, rge, False, rad=-0.35, lw=1.0, color=W_INH)
+    syn(cv, rgf, adf, True, rad=0.35, lw=1.0, color=W_F)
+    syn(cv, adf, rgf, False, rad=0.35, lw=1.0, color=W_INH)
+    tag(cv, adap_x, y - 0.08, "adaptation\n(fatigue)", fs=5.8, box=True)
     return rge, rgf
 
 
 def pf_block(cv, x, y, suffix="", mirror=False):
     """Four PF phase cells + PFA loop cells + reciprocal inhibition.
     Returns dict of PF cells."""
-    names = (("E1", 1.5, OI_VERM), ("E2", 0.5, OI_VERM),
-             ("F1", -0.6, OI_BLUE), ("F2", -1.6, OI_BLUE))
+    names = (("E1", 1.35, OI_VERM), ("E2", 0.45, OI_VERM),
+             ("F1", -0.5, OI_BLUE), ("F2", -1.35, OI_BLUE))
     out = {}
     for nm, dy, c in names:
         out[nm] = neuron(cv, x, y + dy, f"PF-{nm}{suffix}", fc=_tint(c))
@@ -403,20 +435,20 @@ def pf_block(cv, x, y, suffix="", mirror=False):
     syn(cv, out["F2"], out["E2"], False, color=W_INH, rad=-0.35)
     syn(cv, out["E2"], out["F2"], False, color=W_INH, rad=-0.35)
     syn(cv, out["E1"], out["F1"], False, color=W_INH, rad=-0.3)
-    # PFA adaptation loop cells under each PF cell (small)
     sgn = 1 if not mirror else -1
     for nm in out:
-        pfa = neuron(cv, x + sgn * 1.05, out[nm][1], f"", r=0.13,
+        pfa = neuron(cv, x + sgn * 1.05, out[nm][1], "", r=0.13,
                      fc="white", lw=0.9)
-        cv.ax.text(pfa[0], pfa[1] - 0.32, f"PFA-{nm}", fontsize=5.6,
-                   ha="center", color="0.35", zorder=4)
+        cv.ax.text(pfa[0] + sgn * 0.42, pfa[1], f"PFA-{nm}",
+                   fontsize=5.4, ha="center", va="center", color="0.35",
+                   zorder=6, bbox=LBL_BBOX)
         syn(cv, out[nm], pfa, True, lw=0.8,
             color=W_E if nm[0] == "E" else W_F)
         syn(cv, pfa, out[nm], False, lw=0.8, color=W_INH, rad=0.25)
     return out
 
 
-def sensor_triplet(cv, x, y, suffix=""):
+def sensor_triplet(cv, x, y, suffix="", sub=True):
     """Ia/II/Ib population circles (x46 each per side)."""
     ia = neuron(cv, x - 1.5, y, f"Ia{suffix}", f"x{N_PER_SIDE}", r=R_SENS,
                 fc=_tint(OI_ORANGE), fs=6.6)
@@ -424,225 +456,237 @@ def sensor_triplet(cv, x, y, suffix=""):
                 fc=_tint(OI_ORANGE), fs=6.6)
     ib = neuron(cv, x + 1.5, y, f"Ib{suffix}", f"x{N_PER_SIDE}", r=R_SENS,
                 fc=_tint(OI_ORANGE), fs=6.6)
-    tag(cv, x, y - 0.62, "muscle sensors: one Ia, II, Ib per pool "
-        f"({N_PER_SIDE} each per side)", fs=6.0)
+    if sub:
+        tag(cv, x, y - 0.72, f"one Ia, II, Ib per pool "
+            f"({N_PER_SIDE} of each per side)", fs=6.0, box=True)
     return dict(ia=ia, ii=ii, ib=ib)
 
 
-def ibexc_cluster(cv, x, y, suffix=""):
-    """The five load-sharing interneurons (one per extensor-stance group)."""
+def ibexc_cluster(cv, x, y, short=False):
+    """The five load-sharing interneurons (one per extensor-stance group).
+    Stance-gated by the RG-E signal (noted in tag; wire omitted for
+    clarity)."""
     xs = [x + (i - 2) * 0.42 for i in range(N_IBEXC)]
     for xc in xs:
         cv.ax.add_patch(Circle((xc, y), R_SMALL, fc=_tint(OI_GREEN),
                                ec="black", lw=0.9, zorder=3))
     cv.ax.text(x, y, "IB-EXC", ha="center", va="center", fontsize=5.4,
                zorder=4)
-    tag(cv, x, y - 0.42, f"{N_IBEXC} cells: one per extensor-stance group\n"
-        "(stance-gated Ib reversal, load sharing)", fs=6.0)
+    if short:
+        tag(cv, x, y - 0.36, "x5: one per extensor-stance group",
+            fs=5.8, box=True)
+    else:
+        tag(cv, x, y - 0.46, f"{N_IBEXC} cells: one per extensor-stance "
+            "group;\nRG-E stance-gated Ib reversal (load sharing)", fs=6.0,
+            box=True)
     return (x, y, R_SMALL)
 
 
 # ------------------------------------------------------------ fig: core
 def fig_core(t, fmts):
     W = t["W"]
-    cv = Canvas(14.0, 13.6)
+    cv = Canvas(15.6, 14.0)
 
-    # ---------------- inputs ----------------
-    drv = input_box(cv, 1.25, 12.9, 1.7, 0.6, "DRIVE", "MLR surrogate")
-    pos = input_box(cv, 3.85, 12.9, 1.7, 0.6, "POSTURE", "tonic")
-    post_i = input_box(cv, 6.45, 12.9, 1.75, 0.6, "POST$_i$",
-                       "solved standing bias")
+    # ---------------- inputs (top-left) ----------------
+    drv = input_box(cv, 1.35, 12.75, 1.9, 0.62, "DRIVE", "MLR surrogate")
+    pos = input_box(cv, 4.05, 12.75, 1.9, 0.62, "POSTURE", "tonic")
+    post_i = input_box(cv, 13.9, 12.75, 1.9, 0.62, "POST$_i$",
+                       "standing bias")
+
+    # POST_i margin lane down the right side (outside all bands)
+    lane(cv, 14.35, 12.55, 4.30)
 
     # ---------------- rhythm generator ----------------
-    layer_band(cv, 0.5, 8.3, 9.35, 11.95, OI_ORANGE,
-               "RHYTHM GENERATOR (RG)  --  half-centers set timing & duty")
-    rge, rgf = rg_block(cv, 4.0, 10.65)
+    layer_band(cv, 0.5, 8.6, 9.6, 12.0, OI_ORANGE,
+               "RHYTHM GENERATOR (RG)")
+    rge, rgf = rg_block(cv, 4.3, 10.85)
     syn(cv, drv, rge, True, color=W_DESC, rad=0.1)
     syn(cv, drv, rgf, True, color=W_DESC, rad=-0.15)
     syn(cv, pos, rge, True, color=W_DESC, rad=-0.2)
-    tag(cv, 7.6, 11.5, "frequency rises with DRIVE;\nstance-biased drive +\n"
-        "adaptation set the duty")
+    tag(cv, 7.3, 11.55, "frequency rises with DRIVE;\nstance-biased drive +\n"
+        "adaptation set the duty", box=True)
 
     # ---------------- pattern formation ----------------
-    layer_band(cv, 0.5, 8.3, 5.7, 9.1, OI_SKY,
-               "PATTERN FORMATION (PF)  --  four phase-window cells per side")
-    pfs = pf_block(cv, 2.6, 7.4)
-    syn(cv, rge, pfs["E1"], True, color=W_E, rad=-0.1)
-    syn(cv, rge, pfs["E2"], True, color=W_E, rad=-0.2)
-    syn(cv, rgf, pfs["F1"], True, color=W_F, rad=-0.1)
-    syn(cv, rgf, pfs["F2"], True, color=W_F, rad=-0.2)
+    layer_band(cv, 0.5, 8.6, 6.05, 9.45, OI_SKY,
+               "PATTERN FORMATION (PF)  --  phase-window cells")
+    pfs = pf_block(cv, 4.3, 7.75)
+    syn(cv, rge, pfs["E1"], True, color=W_E, rad=-0.08)
+    syn(cv, rge, pfs["E2"], True, color=W_E, rad=-0.12)
+    syn(cv, rgf, pfs["F1"], True, color=W_F, rad=-0.08)
+    syn(cv, rgf, pfs["F2"], True, color=W_F, rad=-0.12)
     syn(cv, drv, pfs["E1"], True, color=W_DESC, rad=0.3, dashed=True)
-    tag(cv, 6.9, 7.4, "PF cells = phase windows;\n(tau, adaptation) stagger\n"
-        "their bursts; PFA loops\nshape each cell")
-    # interneurons row
-    ib = ibexc_cluster(cv, 6.9, 6.35, "")
-    syn(cv, rge, ib, True, color=W_E, rad=0.25, dashed=True,
-        label="stance gate", lpos=0.45, loff=(-0.3, 0.25))
+    tag(cv, 7.3, 8.05, "PF cells = phase windows;\n"
+        "(tau, adaptation) stagger\ntheir bursts", box=True)
 
-    # ---------------- sensors ----------------
-    sens = sensor_triplet(cv, 3.4, 4.55)
+    # ---------------- interneurons + sensors (flanks) ----------------
+    ib = ibexc_cluster(cv, 10.0, 5.35)
+    sens = sensor_triplet(cv, 12.6, 5.5)
 
     # ---------------- motoneuron pools ----------------
-    layer_band(cv, 0.5, 13.5, 1.7, 3.5, OI_GREEN,
-               "MOTONEURON POOLS  --  one cluster per functional group "
-               "(real pool counts)")
-    pools, x = {}, 1.55
-    for g in GROUP_ORDER:
-        pools[g] = pool_cluster(cv, x, 2.75, g)
-        x += 1.30 if len(CNT["prim"][g]) <= 5 else 1.42
-    # PF -> MN fan (color by phase family, thickness by weight, no numbers)
+    layer_band(cv, 0.5, 15.1, 1.6, 3.95, OI_GREEN,
+               "MOTONEURON POOLS  --  one cluster per functional group, "
+               "real pool counts")
+    pools = layout_pools(cv, 0.7, 3.0, GROUP_ORDER, cap=4, gap=0.26)
     for ph, node in pfs.items():
         for g, w in W[ph].items():
             if g in pools and w >= W_MIN:
                 syn(cv, node, pools[g]["top"], True,
-                    lw=0.7 + min(w, 0.25) * 6, shrink_b=0.06,
+                    lw=0.7 + min(w, 0.25) * 6, shrink_b=0.05,
                     color=W_E if ph[0] == "E" else W_F)
-    # POST_i dashed standing bias into every pool (one drawn + tag)
-    syn(cv, post_i, pools["HIP-E"]["bot"], True, color=W_DESC, dashed=True,
-        rad=0.18, shrink_b=0.04)
-    syn(cv, post_i, pools["ANK-DF"] if "ANK-DF" in pools else
-        pools[list(pools)[-1]]["bot"], True, color=W_DESC, dashed=True,
-        rad=-0.1, shrink_b=0.04)
-    tag(cv, 9.6, 4.1, "dashed: POST$_i$ standing bias into every pool",
-        ha="left")
+    # POST_i lane arrows into the right-end pools + tag
+    syn(cv, (14.35, 4.30), pools["ankle_df"]["top"], True, color=W_DESC,
+        dashed=True, rad=-0.25, shrink_a=0.0)
+    syn(cv, (14.35, 4.30), pools["trunk_ext"]["top"], True, color=W_DESC,
+        dashed=True, rad=0.1, shrink_a=0.0)
+    tag(cv, 12.1, 4.55, "POST$_i$: solved standing bias\ninto every pool "
+        "(dashed)", ha="center", box=True)
     # reflex pathways (representative; every pool has Ia/II/Ib)
-    syn(cv, sens["ia"], pools["KNEE-E"]["top"], True, color=W_EXC, rad=0.15,
-        label="Ia homonymous", lpos=0.4, loff=(-0.45, 0.15))
-    syn(cv, sens["ia"], pools["KNEE-F"]["top"], False, color=W_INH, rad=-0.2,
-        label="Ia reciprocal", lpos=0.4, loff=(-0.5, -0.1))
-    syn(cv, sens["ii"], pools["HIP-E"]["top"], True, color=W_EXC, rad=0.25,
-        label="II (stance-gated)", lpos=0.5, loff=(0.5, 0.2))
-    syn(cv, sens["ib"], pools["ANK-PF"]["top"], False, color=W_INH, rad=0.12,
-        label="Ib autogenic", lpos=0.35, loff=(0.55, 0.0))
-    syn(cv, sens["ib"], ib, True, color=W_EXC, rad=-0.25, lw=1.0)
-    syn(cv, ib, pools["HIP-E"]["top"], True, color=W_EXC, rad=0.3, lw=1.0,
-        label="Ib reversal -> extensors", lpos=0.6, loff=(0.7, 0.15))
+    syn(cv, sens["ia"], pools["knee_ext"]["top"], True, color=W_EXC,
+        rad=-0.25, label="Ia homonymous", lpos=0.45, loff=(0.0, 0.55))
+    syn(cv, sens["ia"], (pools["knee_flex"]["c"][0] + 0.30,
+                         pools["knee_flex"]["c"][1] + 0.28), False,
+        color=W_INH, rad=0.2, shrink_b=0.0,
+        label="Ia reciprocal", lpos=0.55, loff=(0.3, 0.5))
+    syn(cv, sens["ii"], pools["hip_ext"]["top"], True, color=W_EXC,
+        rad=0.25, label="II (stance-gated)", lpos=0.45, loff=(0.0, 0.6))
+    syn(cv, sens["ib"], (pools["ankle_pf"]["c"][0] + 0.32,
+                         pools["ankle_pf"]["c"][1] + 0.26), False,
+        color=W_INH, rad=-0.2, shrink_b=0.0,
+        label="Ib autogenic", lpos=0.5, loff=(0.35, 0.55))
+    syn(cv, sens["ib"], ib, True, color=W_EXC, rad=-0.15, lw=1.0)
+    syn(cv, ib, pools["hip_ext"]["top"], True, color=W_EXC, rad=0.2, lw=1.0,
+        label="Ib reversal $\\rightarrow$ extensors", lpos=0.55,
+        loff=(-0.1, 0.5))
     # muscles row
-    mx = 1.55
-    for g in GROUP_ORDER:
-        muscle(cv, mx, 1.15)
-        syn(cv, pools[g]["bot"], (mx, 1.30), True, color="0.4", lw=0.8,
+    mx = 0.7 + cluster_hw(GROUP_ORDER[0], 4)
+    for i, g in enumerate(GROUP_ORDER):
+        muscle(cv, mx, 1.1)
+        syn(cv, pools[g]["bot"], (mx, 1.24), True, color="0.4", lw=0.8,
             shrink_a=0.04, shrink_b=0.10)
-        mx += 1.30 if len(CNT["prim"][g]) <= 5 else 1.42
+        if i + 1 < len(GROUP_ORDER):
+            mx += (cluster_hw(g, 4) + 0.26
+                   + cluster_hw(GROUP_ORDER[i + 1], 4))
 
     # ---------------- legend / key / source ----------------
-    legend_row(cv, 0.55)
-    wire_color_key(cv, 0.7, 0.02)
-    key_box(cv, 0.6, 12.75)
-    source_note(cv, 0.55, 13.35, f"source: {t['note']}")
+    legend_row(cv, 0.68)
+    wire_color_key(cv, 0.7, 0.25)
+    key_box(cv, 9.6, 8.7)
+    source_note(cv, 0.55, 13.42, f"source: {t['note']}")
     return cv.save("circuit_core", fmts)
 
 
 # ------------------------------------------------------------ fig: full
+ROW1 = ("hip_ext", "hip_flex", "knee_ext", "knee_flex", "ankle_pf")
+ROW2 = ("ankle_df", "hip_abd", "hip_add", "trunk_ext", "trunk_flex")
+
+
 def fig_full(t, fmts):
     W = t["W"]
     cv = Canvas(19.0, 13.4)
     MID = 9.5
 
-    # midline + commissural corridor
-    cv.ax.plot([MID, MID], [1.4, 11.7], ls=(0, (4, 3)), color="0.6", lw=1.0,
+    # midline + commissural corridor (RG row height only)
+    cv.ax.plot([MID, MID], [1.4, 11.9], ls=(0, (4, 3)), color="0.6", lw=1.0,
                zorder=1)
-    layer_band(cv, MID - 0.55, MID + 0.55, 6.0, 11.7, OI_PURPLE, "", )
-    cv.ax.text(MID, 11.95, "interleg commissural inhibition",
+    layer_band(cv, MID - 0.55, MID + 0.55, 8.6, 11.4, OI_PURPLE, "")
+    cv.ax.text(MID, 11.65, "interleg commissural inhibition",
                fontsize=7.0, ha="center", va="center", color="0.35",
                style="italic", zorder=1)
-    tag(cv, MID, 6.3, "F$\\leftrightarrow$F strong\nE$\\leftrightarrow$E weak",
-        fs=6.2)
+    tag(cv, MID, 9.3, "F$\\leftrightarrow$F strong\nE$\\leftrightarrow$E weak",
+        fs=5.8, box=True)
 
-    # ---------------- shared inputs (top) ----------------
+    # shared inputs (top)
     drv = input_box(cv, MID - 1.9, 12.9, 1.6, 0.6, "DRIVE", "MLR surrogate")
     pos = input_box(cv, MID + 1.9, 12.9, 1.6, 0.6, "POSTURE", "+ POST$_i$")
 
-    # ---------------- per-side stacks ----------------
-    sides = {"r": dict(x0=10.4, x1=18.6, mirror=False, sfx="$_r$"),
-             "l": dict(x0=0.4, x1=8.6, mirror=True, sfx="$_l$")}
+    sides = {"r": dict(x0=10.4, x1=18.6, mirror=False, sfx="$_r$",
+                       lane=18.8),
+             "l": dict(x0=0.4, x1=8.6, mirror=True, sfx="$_l$", lane=0.2)}
     rg, pfs, sens, ib, pools = {}, {}, {}, {}, {}
     for sd, cfg in sides.items():
-        cx = (cfg["x0"] + cfg["x1"]) / 2          # side center
-        # balance inputs at the outer edge
-        bx = cfg["x1"] if not cfg["mirror"] else cfg["x0"]
-        b1 = input_box(cv, bx - (0.95 if not cfg["mirror"] else -0.95),
-                       12.05, 1.55, 0.55, "BAL$_{PF/DF}$", "sagittal COM")
-        b2 = input_box(cv, bx - (0.95 if not cfg["mirror"] else -0.95),
-                       11.25, 1.55, 0.55, "BAL$_{LAT}$/TRK",
-                       "abduct / trunk")
+        cx = (cfg["x0"] + cfg["x1"]) / 2
+        outer = cfg["x1"] if not cfg["mirror"] else cfg["x0"]
+        # balance bus lane: OUTSIDE the side bands
+        lane(cv, cfg["lane"], 12.6, 4.3)
+        b1 = input_box(cv, outer - (1.05 if not cfg["mirror"] else -1.05),
+                       12.75, 1.6, 0.55, "BAL$_{PF/DF}$", "sagittal COM PD")
+        b2 = input_box(cv, outer - (1.05 if not cfg["mirror"] else -1.05),
+                       12.1, 1.6, 0.55, "BAL$_{LAT}$/TRK", "abduct/trunk")
         # RG
-        layer_band(cv, cfg["x0"], cfg["x1"], 8.55, 10.45, OI_ORANGE,
+        layer_band(cv, cfg["x0"], cfg["x1"], 9.35, 11.75, OI_ORANGE,
                    f"RHYTHM GENERATOR {sd.upper()}")
-        rge, rgf = rg_block(cv, cx, 9.5, suffix=cfg["sfx"],
+        rge, rgf = rg_block(cv, cx, 10.6, suffix=cfg["sfx"],
                             mirror=cfg["mirror"])
         rg[sd] = (rge, rgf)
         syn(cv, drv, rge, True, color=W_DESC, rad=0.15)
-        syn(cv, drv, rgf, True, color=W_DESC, rad=-0.2)
+        syn(cv, drv, rgf, True, color=W_DESC, rad=-0.1)
         syn(cv, pos, rge, True, color=W_DESC, rad=-0.25)
         # PF
-        layer_band(cv, cfg["x0"], cfg["x1"], 6.35, 8.35, OI_SKY,
+        layer_band(cv, cfg["x0"], cfg["x1"], 5.85, 9.25, OI_SKY,
                    f"PATTERN FORMATION {sd.upper()}")
-        pf = pf_block(cv, cx - (0.9 if not cfg["mirror"] else -0.9), 7.35,
+        pf = pf_block(cv, cx - (0.9 if not cfg["mirror"] else -0.9), 7.55,
                       suffix=cfg["sfx"], mirror=cfg["mirror"])
         pfs[sd] = pf
         syn(cv, rge, pf["E1"], True, color=W_E)
-        syn(cv, rge, pf["E2"], True, color=W_E, rad=-0.15)
+        syn(cv, rge, pf["E2"], True, color=W_E, rad=-0.08)
         syn(cv, rgf, pf["F1"], True, color=W_F)
-        syn(cv, rgf, pf["F2"], True, color=W_F, rad=-0.15)
-        # interneurons + sensors
-        layer_band(cv, cfg["x0"], cfg["x1"], 4.55, 6.15, OI_GREEN,
-                   f"LOAD-SHARING IN + SENSORS {sd.upper()}")
-        ib[sd] = ibexc_cluster(cv, cx - (1.7 if not cfg["mirror"] else -1.7),
-                               5.55, suffix=cfg["sfx"])
-        sens[sd] = sensor_triplet(
-            cv, cx + (1.7 if not cfg["mirror"] else -1.7), 5.55,
-            suffix=cfg["sfx"])
-        syn(cv, rge, ib[sd], True, color=W_E, dashed=True, rad=0.2, lw=1.0)
-        syn(cv, sens[sd]["ib"], ib[sd], True, color=W_EXC, lw=1.0)
-        # MN pools
-        layer_band(cv, cfg["x0"], cfg["x1"], 1.75, 4.35, OI_SKY,
-                   f"MOTONEURON POOLS {sd.upper()} (real counts)")
-        pools[sd], x = {}, cfg["x0"] + 0.85
-        for g in GROUP_ORDER:
-            pools[sd][g] = pool_cluster(cv, x, 3.35, g, cap=4)
-            x += 0.98 if len(CNT["prim"][g]) <= 4 else 1.06
+        syn(cv, rgf, pf["F2"], True, color=W_F, rad=-0.08)
+        # interneurons + sensors: outer flank of the side
+        layer_band(cv, cfg["x0"], cfg["x1"], 4.3, 5.75, OI_GREEN,
+                   f"IN + SENSORS {sd.upper()}")
+        x_in = outer - (2.2 if not cfg["mirror"] else -2.2)
+        ib[sd] = ibexc_cluster(cv, x_in, 5.5, short=True)
+        sens[sd] = sensor_triplet(cv, x_in - (0.9 if not cfg["mirror"]
+                                              else -0.9), 4.85,
+                                  suffix=cfg["sfx"], sub=False)
+        tag(cv, x_in - (0.9 if not cfg["mirror"] else -0.9), 4.5,
+            f"Ia/II/Ib x{N_PER_SIDE} each", fs=5.8, box=True)
+        # MN pools: two rows of five per side
+        layer_band(cv, cfg["x0"], cfg["x1"], 1.35, 4.15, OI_SKY,
+                   f"MOTONEURON POOLS {sd.upper()}")
+        pools[sd] = {}
+        pools[sd].update(layout_pools(cv, cfg["x0"] + 0.2, 3.5, ROW1,
+                                      cap=4, gap=0.24))
+        pools[sd].update(layout_pools(cv, cfg["x0"] + 0.2, 2.1, ROW2,
+                                      cap=4, gap=0.24))
         for ph, node in pf.items():
             for g, w in W[ph].items():
                 if g in pools[sd] and w >= W_MIN:
+                    row = 0 if g in ROW1 else 1
                     syn(cv, node, pools[sd][g]["top"], True,
                         lw=0.7 + min(w, 0.25) * 6, shrink_b=0.05,
+                        rad=0.0 if row == 0 else -0.12,
                         color=W_E if ph[0] == "E" else W_F)
-        # representative reflex + balance wiring
-        syn(cv, sens[sd]["ia"], pools[sd]["KNEE-E"]["top"], True,
-            color=W_EXC, lw=0.9, rad=0.1)
-        syn(cv, sens[sd]["ia"], pools[sd]["KNEE-F"]["top"], False,
-            color=W_INH, lw=0.9, rad=-0.15)
-        syn(cv, sens[sd]["ib"], pools[sd]["ANK-PF"]["top"], False,
-            color=W_INH, lw=0.9, rad=0.1)
-        syn(cv, ib[sd], pools[sd]["HIP-E"]["top"], True, color=W_EXC,
-            lw=0.9, rad=0.25)
-        syn(cv, b1, pools[sd]["ANK-PF"]["top"], True, color=W_DESC,
-            dashed=True, rad=0.3, lw=1.0)
-        syn(cv, b2, pools[sd]["HIP-AB"]["top"], True, color=W_DESC,
-            dashed=True, rad=0.35, lw=1.0)
-        syn(cv, b2, pools[sd]["TRK-E"]["top"], True, color=W_DESC,
-            dashed=True, rad=0.25, lw=1.0)
-        syn(cv, pos, pools[sd]["TRK-F"]["top"], True, color=W_DESC,
-            dashed=True, rad=-0.3, lw=0.9)
+        # representative reflex wiring
+        syn(cv, sens[sd]["ia"], pools[sd]["knee_ext"]["top"], True,
+            color=W_EXC, lw=0.9, rad=-0.15)
+        syn(cv, sens[sd]["ia"], pools[sd]["knee_flex"]["top"], False,
+            color=W_INH, lw=0.9, rad=0.12)
+        syn(cv, sens[sd]["ib"], pools[sd]["ankle_pf"]["top"], False,
+            color=W_INH, lw=0.9, rad=-0.12)
+        syn(cv, ib[sd], pools[sd]["hip_ext"]["top"], True, color=W_EXC,
+            lw=0.9, rad=0.15)
+        # balance bus: boxes feed the outer lane; lane feeds pools
+        syn(cv, b1, (cfg["lane"], 12.55), True, color=W_DESC, dashed=True,
+            shrink_a=0.0, rad=0.0)
+        syn(cv, b2, (cfg["lane"], 12.4), True, color=W_DESC, dashed=True,
+            shrink_a=0.0, rad=0.0)
+        syn(cv, (cfg["lane"], 12.3), pools[sd]["ankle_pf"]["top"], True,
+            color=W_DESC, dashed=True, rad=-0.3, shrink_a=0.0)
+        syn(cv, (cfg["lane"], 4.3), pools[sd]["hip_abd"]["right"], True,
+            color=W_DESC, dashed=True, rad=0.1, shrink_a=0.0)
+        syn(cv, (cfg["lane"], 4.3), pools[sd]["trunk_ext"]["right"], True,
+            color=W_DESC, dashed=True, rad=0.1, shrink_a=0.0)
 
     # commissural wires through the corridor
-    syn(cv, rg["r"][1], rg["l"][1], False, color=W_INH, lw=2.0, rad=-0.18)
-    syn(cv, rg["r"][0], rg["l"][0], False, color=W_INH, lw=1.1, rad=0.15)
-
-    # muscles row
-    for sd, cfg in sides.items():
-        mx = cfg["x0"] + 0.85
-        for g in GROUP_ORDER:
-            muscle(cv, mx, 1.25, w=0.5, h=0.2)
-            syn(cv, pools[sd][g]["bot"], (mx, 1.39), True, color="0.4",
-                lw=0.7, shrink_a=0.03, shrink_b=0.09)
-            mx += 0.98 if len(CNT["prim"][g]) <= 4 else 1.06
+    syn(cv, rg["r"][1], rg["l"][1], False, color=W_INH, lw=2.0, rad=-0.12)
+    syn(cv, rg["r"][0], rg["l"][0], False, color=W_INH, lw=1.1, rad=0.08)
 
     # legend / key / source
     legend_row(cv, 0.55)
     wire_color_key(cv, 9.0, 0.02)
-    key_box(cv, 15.0, 12.75)
+    tag(cv, 15.3, 1.1, "pool abbreviations & member muscles:\n"
+        "see the circuit_core key", fs=6.0, box=True)
     source_note(cv, 0.55, 13.15, f"source: {t['note']}")
     return cv.save("circuit_full", fmts)
 

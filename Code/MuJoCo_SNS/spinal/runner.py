@@ -496,6 +496,10 @@ def main(argv):
                 _p.W_PF_MN[key[0]][key[1]] = best[kn]
             _p.W_POSTURE["knee_ext"] = best["post_kneext"]
             _p.W_POSTURE["hip_ext"] = best["post_hipext"]
+        if "desc_f" in best:
+            _p.G["descend_to_rg_f"] = float(best["desc_f"])
+        if "e2_adapt" in best:
+            _p.PF_SHAPE["E2"] = (_p.PF_SHAPE["E2"][0], float(best["e2_adapt"]))
         _p.BAL["kx"] = best["kx"]
         args.remove("--best")
         walk_drive = float(best.get("drive", walk_drive))
@@ -868,6 +872,14 @@ def main(argv):
         def _mx(a):
             return float(np.nanmax(a)) if finite_q else 0.0
         walk_slice = log_neuro[i_ws:n_done, 2]
+        try:
+            import kine_ref
+            k = kine_ref.compare(log_t[:n_done],
+                                 np.degrees(log_q[:n_done]),
+                                 log_neuro[:n_done], SCHEDULE["walk"][0],
+                                 ref=kine_ref.ref_cached())
+        except Exception:
+            k = None
         metrics = dict(
             nan=not (finite_q and finite_c),
             t_end=float(tt[-1]),
@@ -880,6 +892,8 @@ def main(argv):
             duty=float(np.mean(walk_slice > 0.5 * max(np.max(walk_slice),
                                                       1e-6)))
             if walk_slice.size else 0.0,
+            kine=k,
+            kine_score=(k["kine_score"] if k else -25.0),
             burst_r=int(np.sum(np.diff(
                 (log_neuro[:n_done, 2]
                  > 0.5 * max(np.max(log_neuro[:n_done, 2]), 1e-6)
