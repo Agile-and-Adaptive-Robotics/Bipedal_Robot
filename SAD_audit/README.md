@@ -414,3 +414,57 @@ via web API (see above). Personal SAD ∩ Airtable = 96/538 (post-fix).
   needs the web API with an API key.
 - `group_items_full.json` is 21 MB — keep this folder out of git, or gitignore the
   big JSONs (Ben commits via GitHub Desktop; folder is currently untracked).
+
+## CURATION STATE (2026-09-12, EB475WS4 session) — batches 1-2 DONE, 20/383; continue on laptop
+
+Status: pilot batch (10 classics) AND batch 2 (queue CSV rows 1-10) curated, written in ONE
+update call per batch, and verified by record-id re-pull (every field echo matched). Papers
+table = 532. 363 of the 383 rest-import records remain. **Batch 3 = CSV rows 11-20**
+(LWWSHR63 Sivertsen 2016 … WA46PM2Y Duysens 2013 flexion synergy). Audit subagent due after
+batch 5. Per-row details, judgment calls, and verification lines: `curation_log.csv`
+(one row per paper + WORKFLOW rows; field meanings in its header row).
+
+Tag records created (8, with ids so future batches can cross-link):
+- Review Papers: Pearson 1995 = recc5MpXPbbHBwo6w, Marder and Bucher 2001 = recEUToBYWLaLlvcP,
+  Dietz and Duysens 2000 = rec5vMNlT9CNvVFNG, Zholudeva 2021 = recbkUF5KT5igD7Q5,
+  Duysens and Forner-Cordero 2019 = receYefj0vcqJJNkN, Dubuc 2008 = recqrjdjYMrGSceUN
+- Models: Taga 1995 = recNDXiHGWiRS2tAL, Li 2017 = recbMOCs7pz3fGlnn
+
+Flags awaiting Ben (details in curation_log.csv): Zehr 1997 linked "Cutaneous stance
+modification" (human cutaneous tagging policy?), Gosgnach 2000 linked "Ia monosynaptic
+excitation" (recdWs6wNZ9DktXQg) vs alternative recsqGlPgBJriilg4, Zhang 2022 extends the
+Danner 2017 model (no Models link made — create "Zhang 2022" or a "Danner 2017" record?),
+Herman 1976 edited volume (no Review Papers record per monograph rule; Animals blank),
+Zholudeva 2021 tagged Mammals (Ben may prefer Mice). RESOLVED 2026-09-12: Grillner &
+Zangger 1975 grounding — Ben added it to AARL Biology (group item 69B9ZVYN, PDF child
+YFGAZUZV), note re-grounded from full text and reworded (treadmill-walking mesencephalic
+cats, not strictly fictive; pattern more variable after bilateral deafferentation).
+
+Workflow knowledge for future batches:
+- Zotero local API `q=` does NOT match the DOI field — use `&qmode=everything`
+  (Zotero desktop must be running; personal library syncs across machines).
+- Grounding ladder that worked: Zotero abstract → PubMed esearch/efetch by [DOI]
+  → Europe PMC core record → APS free-first-page PNG
+  (journals.physiology.org/na101/home/literatum/...fp.png_v03 — old abstracts are
+  images) → archive.org `sim_...` volume scans `*_djvu.txt` OCR (Sherrington 1910)
+  → Zotero storage PDF; attachment children expose `.zotero-ft-cache` = extracted
+  full text, no PDF parsing needed.
+- pypdf for local PDFs lives at %TEMP%\pdfx (installed via myo env
+  `pip --target`; recreate if TEMP is cleaned — pure-Python, no env change).
+- MCP Airtable writes are UTF-8-safe (em-dashes etc. round-trip exactly); the
+  PS-5.1 mojibake traps only apply to console/CSV round-trips.
+- DOI-less rows: resolve by exact title (none needed yet — rows 1-20 all had DOIs
+  except row 17 YJVT4HJU Horchler 2004, not reached).
+- Keep: ONE batched update per 10 papers, verify re-pull, append the log row,
+  keep evidence files named `batch<N>_*` / `pilot_*` in this folder.
+
+Parked for the next session (Ben's requests, 2026-09-12):
+1. Batch 3 (rows 11-20), then 4, then audit after 5.
+2. Check Ben's screen for ResearchRabbit open in a Chrome tab (two Chrome windows;
+   active tabs seen 2026-09-12 were the ScienceDirect G&Z page and a Noba
+   "Vestibular System" page — background tabs uncheckable from titles alone).
+3. Bubble-chart question: how to build Research-Rabbit-style graphs for his own
+   corpus. Recipe sketched for Ben: VOSviewer (one-click bibliometric bubble maps,
+   takes CSV) or pyvis/networkx (scriptable interactive HTML); edges/bubble size
+   can come from OpenAlex `referenced_works` + `cited_by_count` per DOI, and
+   shared-Feedback-pathway links from the Airtable corpus itself.

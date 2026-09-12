@@ -211,9 +211,32 @@ Loaded automatically at session start. Keep it current; keep it lean.
     conversion; fig4 legend renamed "SNS sim mean"); ground figs +
     ground_walk.gif refreshed in Dissertation\CPG_airstepping_figs from
     the post-v3 S=1.0 run.
-    **NEXT: ground duty 0.6 (E-duty still 0.16–0.34 vs human 0.6),
-    ankle balance, the pelvis-balance piece to wean below S=0.8, then
-    vestibular/ocular (Ben) and cerebellum/BG layers.** New
+    **v4 KINEMATICS CAMPAIGN (2026-09-12, Ben: "fine-tune until the
+    kinematics are similar to OpenSim"):** `kine_ref.py` is the
+    acceptance metric — reference cycle from subject01_walk1_ik.mot
+    phased by GRF onsets (1.23 s / 0.81 Hz, duty 0.61, knee −69.7°, hip
+    43°, ankle 23°); runner --eval now reports `kine` + `kine_score`
+    (cycle-normalized hip/knee/ankle shape RMSE + peak-knee + range +
+    duty; 0 = perfect). optuna_walk v4b (study ground_walk_v4b_kine; a
+    first v4 died to a broken −25 no-rhythm sentinel plateau —
+    no-rhythm must score ≈ −65, what a frozen model really costs) ran
+    60 trials with 2 new knobs (`desc_f` = DRIVE→RG-F,
+    `e2_adapt` = PF_SHAPE["E2"] adapt; runner --best applies both):
+    best kine_score −61.2 vs baseline −63.6 — converged. HONEST
+    DIAGNOSIS (details + priority list in spinal\DESIGN.md 2026-09-12):
+    the remaining gap is ARCHITECTURAL, not scalar — (1) E-duty 0.27 vs
+    0.61 (half-center+adaptation tops out ~0.3 → needs sensory phase
+    reset into the RG, which also fixes cycle-to-cycle phase jitter),
+    (2) swing knee still extension-dominant (needs phase-specific quad
+    SUPPRESSION, not more flexor drive), (3) ankle PF-dominant
+    (POSTURE_OVERRIDE soleus/tib_post tone rides into gait), (4)
+    cadence 1.18 vs 0.81 Hz (rg_adapt at range edge). Current best
+    config = the v4b winner (runner --fitted --best reproduces); the v3
+    winner is still better on the stability-shaped objective (its study
+    remains in the db). **NEXT: ground duty 0.6 (E-duty still 0.16–0.34
+    vs human 0.6), ankle balance, the pelvis-balance piece to wean
+    below S=0.8, then vestibular/ocular (Ben) and cerebellum/BG
+    layers.** New
     tools: `diag_stab.py`, `diag_phase.py` (adaptive thresholds),
     `_muscle_direction_test.py`, `draw_circuit.py` (Rybak-style schematic
     PNG), `neuro_scope.py`; runner flags `--no-ground`, `--no-interleg`,
@@ -378,9 +401,27 @@ Loaded automatically at session start. Keep it current; keep it lean.
   `simscape_sources\SNS_lib.slx` (not exported — if needed on R2025a, rebuild there
   from the `+SNS` sources via `sns_build_simscape_lib.m`). On R2025a machines, open
   the `_R2025a` copies, not the originals (R2025b format won't load).
+  **MuJoCo↔Simulink bridge — OPTIONAL, PARKED (2026-09-12):** `mujoco_bridge\`
+  holds a half-done spike of mathworks-robotics/mujoco-simulink-blockset on this
+  machine. Key findings already banked in `mujoco_bridge\BRIDGE_REPORT.md`: the
+  blockset steps MuJoCo with mj_step (muscle ctrl stimulus works — the data.act
+  trap does NOT apply), sensor outputs follow the MJCF `<sensor>` section (our
+  cvt3.xml has none — a sensor-patched copy was planned), plant sample time is
+  read from the MJCF timestep, and MuJoCo 3.3.6 CANNOT load our model
+  (`collision="predefined"` schema error) so MJ_VER must be 2.3.7. Parked before
+  the 2.3.7 install/compile + the 3 pass/fail tests (fire one muscle / two
+  clocks / sensor readback). Downloaded binaries are gitignored; resume by
+  re-running install.m with MJ_VER='2.3.7'. Nothing here is wired into any
+  pipeline — safe to ignore entirely.
 - Repo root: `CHATGPT_HANDOFF.md` (brief for other AI assistants when ZCode is unavailable)
   and `CHATGPT_REPORT.md` (their report back; 2026-09-08 edition covers Overleaf
   manuscript-status edits) — keep both current when work is handed off.
+- `SAD_audit\` — Sensory Afferent Database reconciliation (Zotero personal / AARL group /
+  Airtable "Sensory Feedback" base) + the standing curation backlog: the 383 rest-imported
+  Papers get the full curation layer (Notes/Animals/Feedback/Review/Models) 10 per batch.
+  Spec + live state in `SAD_audit\README.md` (CURATION STATE section), per-batch details in
+  `curation_log.csv`. 20/383 done 2026-09-12 (pilot + batch 2); next = batch 3 = queue CSV
+  rows 11-20; audit subagent after batch 5.
 
 ## OpenSim / MyoConverter / SNS-Toolbox on easteregg2 (Sept 2026)
 
