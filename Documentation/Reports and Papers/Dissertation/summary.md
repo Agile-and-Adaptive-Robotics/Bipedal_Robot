@@ -1158,3 +1158,8 @@ Net for the night: heavily negative. The base draft's habits to unlearn: em-dash
 2. July main.tex comments (big-paper structure, background chapter, "To be removed" on 40-discussion): the first two look satisfied by the current structure; "To be removed" conflicts with the merged-discussion idea. Resolve in the panel, or ask ajh26?
 3. Advisor wanted a full paragraph per chapter in Dissertation Organization, possibly merged with Research Objectives; entry 6 does summary sentences per Ben's lighter spec. Which way for the next pass?
 4. Want the 5 draft .tex files copied into the repo (e.g. a `ZCode_drafts/` subfolder) so they survive Temp cleanup? Not doing it unprompted.
+
+## Ledger update (Ben's direct feedback, 2026-09-12)
+
+- **B- overall on "combining my papers and research into something coherent"** — a draft, not finalized. Logged as a global grade: none of the 66 advisor items address this dimension directly, so this is signal item-level scoring cannot produce. Reading: skeleton and chapter ordering work; what costs the grade is the seams — voice consistency across text merged from different sources, uneven section depth, placeholder-heavy results. Next-pass targets: one voice across merged sections, deepen thin sections, human-torque flags resolve with data.
+- Ben asked whether the scoring conception helps. Answer recorded here: yes. The value is the labeled examples (which text drew which judgment), which is what generalizes to unwritten text; the numeric totals are bookkeeping. His instinct — praise = add, deletions/replacements = minus, uncommented = slight add, and only assume the reviewer has read as far as the comments extend — is sound reward-shaping practice, not naive.
