@@ -162,11 +162,58 @@ Loaded automatically at session start. Keep it current; keep it lean.
     torso up-vector PD → ercspn/obliques) — the IMU levels the TORSO
     (lumbar counter-tilts) but saturated hip extensors (glut_max 0.94,
     semimem 1.0) pitch the planted-leg pelvis backward; only balanced
-    activation patterns fix it → **NEXT: IK/SO back-solve** (raw markers +
-    GRF `subject01_walk1.mot` are IN the repo; IK chain via `D:\OpenSim
-    4.3` locally, processed `subject01_walk1_ik.mot` on easteregg2) →
-    per-timestep NNLS back-solve → fit W_PF_MN + human hip/pelvis torque
-    balance, then ground duty 0.6, ankle balance, wean rig springs. New
+    activation patterns fix it. **LIMBO FIXED at the source 2026-09-11
+    night — the IK/NNLS chain RAN END TO END (details + traps in
+    spinal\DESIGN.md night section):** `bsolve_ik.py` validates the
+    converted model vs OpenSim along subject01_walk1_ik.mot (lengths
+    median r 0.89, moment arms sign-exact after folding in MuJoCo's
+    transmission minus) and back-solves per-timestep activations
+    (SO-style ridge + [0,1] bounds via lsq_linear — plain NNLS explodes;
+    measured GRF applied at the CoP; 6 Hz filtering like SO);
+    `fit_pf.py` refits W_PF_MN/W_POSTURE from the back-solved group
+    profiles → `fitted_walk_params.json`; hip_ext stance drive stack
+    1.17 → 0.27 vs human peak 0.34. `optuna_walk.py` v3 (study
+    ground_walk_v3; winner in best_walk_params.json with pf_gain) adds a
+    global pf_gain dimension — back-solved weights are ~10× SMALLER than
+    the old hand-tuned table the gain structure was tuned against (at
+    gain 1 the sim barely moves) — plus a duty-0.6 reward (runner --eval
+    reports duty). v3 winner score 1.521 vs v2's 1.091. FULL 22 s ground
+    walk at rig 1.0 with `--fitted --best`: knee −22° REAL flexion, hip
+    amp 38°, tilt 29°, stays up. Weaning ladder (`wean_rig.py`;
+    `--rig-scale S` = rig stiffness×S, damping×√S): S=0.8 completes and
+    keeps stepping (knee −23°, hip 37°) but leans to 37° — the support
+    boundary is S≈0.8–1.0 until the pelvis-balance piece exists.
+    **THREE SILENT TRAPS (probes diag_force/diag_frontal/diag_knee/
+    diag_trans.py):** (1) pelvis slides load IDENTITY — the converter
+    preserved OpenSim's coordinate values (keyframe
+    qpos[pelvis_ty]=0.95 ↔ pelvis world z 0.95); the z-up remap lives in
+    body frames; GRF VECTORS still remap os(x,y,z)→mj(x,−z,y). (2)
+    Equalities MUST be disabled for INVERSE dynamics — at deep knee
+    flexion the polyfit followers generate ~890 N·m of spurious
+    knee-row wrench (forward sim still needs them). (3) data.act drives
+    muscle force under mj_forward; data.ctrl is inert there
+    (dyntype=muscle; ctrl only feeds act dynamics in mj_step).
+    **Ben's night addendum (verified, see spinal\DESIGN.md):**
+    MuJoCo's actuator_moment does NOT propagate through the eq couplers
+    — at the knee use bsolve_ik.py's fd_moments (central-difference
+    dl/dθ with followers re-projected = OpenSim's definition). ALL 36
+    knee couplers are the vastii pathpoints — vastii→tibia actuation
+    verified (mean arm −0.047 m vs OpenSim −0.045 m; the small AC
+    anti-correlation = coupler-polyfit artifact, same family as the
+    peronei/subtalar SO mismatches). "78 muscles" = 92 minus 14 with
+    Fmax ≤ 5 N: the 6 intentional prunes PLUS 8 the converter shipped
+    at 1 N — ercspn/intobl/extobl/ext_hal r/l — so the IMU trunk
+    controller currently drives 1-newton muscles; fix = set those Fmax
+    from stock gait2392 in patch_xml, then refit + v4 (needs Ben's go,
+    invalidates current v3 tuning). plot_run.py load_benchmark now
+    honors the .mot inDegrees header (subject01_walk1_ik.mot is
+    DEGREES — the np.degrees() there was Ben's suspected double
+    conversion; fig4 legend renamed "SNS sim mean"); ground figs +
+    ground_walk.gif refreshed in Dissertation\CPG_airstepping_figs from
+    the post-v3 S=1.0 run.
+    **NEXT: ground duty 0.6 (E-duty still 0.16–0.34 vs human 0.6),
+    ankle balance, the pelvis-balance piece to wean below S=0.8, then
+    vestibular/ocular (Ben) and cerebellum/BG layers.** New
     tools: `diag_stab.py`, `diag_phase.py` (adaptive thresholds),
     `_muscle_direction_test.py`, `draw_circuit.py` (Rybak-style schematic
     PNG), `neuro_scope.py`; runner flags `--no-ground`, `--no-interleg`,

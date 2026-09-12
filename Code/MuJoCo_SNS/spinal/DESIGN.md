@@ -178,3 +178,185 @@ runner --best loads best_walk_params.json (drive included). runner npz now saves
 2. Rename the sim legend entry in fig4 to SNS sim mean (distinct from OpenSim IK).
 3. ground_fig4_gait_cycles.png (dissertation folder) should ALSO carry the OpenSim overlay (plot_run was run before the benchmark file existed for that variant).
 4. OpenSim 4.3 CLI works locally (Scale+IK in 90 s, artifacts committed in Gait2392_Robotbody); stay on 4.3 unless Python-API scripting is needed (then 4.6 into a py3.11 env, side-by-side, nothing on PATH).
+
+RESOLVED same evening: (1) subject01_walk1_ik.mot says inDegrees=yes - values
+are degrees, the np.degrees() in load_benchmark was the double conversion
+(plot_run.py now honors the header flag); (2) legend renamed "SNS sim mean";
+(3) rerun plot_run.py on a ground run and refresh the ground_fig* copies in
+Dissertation\CPG_airstepping_figs (NOT yet done - do it on the post-v3 run).
+
+## 2026-09-11 night session (EB475WS4): the IK/NNLS back-solve chain
+
+Ben's staged chain EXECUTED: MuJoCo-vs-OpenSim muscle validation ->
+per-timestep NNLS activation back-solve along the IK trajectory ->
+W_PF_MN/W_POSTURE refit (limbo fix) -> v3 optimizer rerun with the
+balanced pattern -> rig weaning.
+
+New tools (spinal/): `bsolve_ik.py` (validation + back-solve, writes
+bsolve_out.npz/.png/report), `fit_pf.py` (refit -> fitted_walk_params.json),
+`wean_rig.py` (--rig-scale ladder), `optuna_walk.py` v3 (study
+ground_walk_v3), probes `diag_force/diag_frontal/diag_knee/diag_trans.py`
+(keep - they are the regression tests for the traps below). runner.py
+gained --fitted (load fitted_walk_params.json), --rig-scale S (all RIG
+stiffness*S, damping*sqrt(S); ligament surrogates untouched), --best
+pf_gain support, and an eval `duty` metric.
+
+VALIDATION (subject01_walk1_ik.mot: 121 frames 0.5-2.5 s, cycle 1.23 s,
+duty 0.70; OpenSim reference via opensim-cmd 4.3 AnalyzeTool on
+subject01_simbody.osim - NOTE 4.x has NO standalone StaticOptimization
+tool, SO runs as an ANALYSIS inside Analyze, and the lengths file is
+`*_MuscleAnalysis_Length.sto`):
+- Muscle lengths: median r 0.89, all 78 muscles r>=0.81, 45/78 r>0.9.
+  Large RMSE on thigh biarticulars (~5.8 cm at r=0.96) is the
+  subject01-vs-generic-gait2392 SCALE offset, not shape error - r is the
+  metric. Moment arms r 0.74-0.95 with 100% sign agreement after folding
+  in MuJoCo's transmission sign (qfrc = -F dl/dtheta). Conversion sound.
+- NNLS activations vs OpenSim SO: glut max/med 0.7-0.93, tib_ant 0.70,
+  lat_gas 0.73; peronei/tib_post negative (subtalar geometry + scale);
+  median r 0.22, mean torque residual 0.33. Group profiles:
+  bsolve_groups.png.
+
+THREE SILENT TRAPS (each verified by a probe script; do not relearn):
+1. PELVIS SLIDES LOAD IDENTITY. The converter preserved OpenSim's
+   coordinate VALUES (keyframe qpos[pelvis_ty]=0.95 <-> pelvis world z
+   0.95; qpos[pelvis_tz]=+0.1 moves the pelvis to world y=-0.1). The z-up
+   remap lives in the BODY FRAMES/AXES. A y/z swap in the loading code
+   puts the pelvis 2 cm above ground and 1 m lateral (diag_trans.py).
+   GRF VECTORS still remap os(x,y,z) -> mj(x,-z,y).
+2. EQUALITY COUPLERS POISON INVERSE DYNAMICS. At deep knee flexion the
+   polyfit pathpoint followers (fitted near the straight keyframe)
+   generate ~890 N*m of spurious constraint wrench at the knee row
+   (diag_knee.py). The bsolve ID model zeroes follower armature AND
+   disables equalities (mjDSBL_EQUALITY): clean tree ID along the
+   measured trajectory (follower dofs are excluded rows anyway; their
+   boundmass inertia is virtual). FORWARD SIM STILL NEEDS the
+   equalities - ID only.
+3. ACTUATOR FORCE CHANNEL: the actuators are dyntype=muscle -
+   data.act IS the activation and drives actuator_force under
+   mj_forward; data.ctrl is the excitation target and is INERT under
+   mj_forward (only feeds act dynamics in mj_step). ctrl=1 force 0,
+   act=1 force -2655 N on soleus_r (diag_force.py).
+
+Back-solve formulation: per IK frame, tau = mj_inverse(q, v, a) with
+measured GRF subtracted via mj_jac at the CoP on calcn_r/l (forces
+remapped, see trap 1); solve lsq_linear with the SO-style ridge
+(lam = 0.05 * median column norm) and bounds [0,1]. Plain NNLS is
+FORBIDDEN here - it dumps a~1000 into muscles whose FL~0 (near-zero
+columns soak residual). 6 Hz zero-phase filtering of the kinematics
+matches SO's lowpass_cutoff_frequency_for_coordinates=6. Frontal
+signs (adduction/subtalar/list/rotation) are UNSEEABLE by muscle-length
+matching - bsolve_ik sweeps them against ID+GRF consistency (frontal
+residual 627 -> 30 N*m; found hip_adduction_l -1, subtalar_l -1,
+hip_rotation_r -1, hip_rotation_l +1; signs stored in bsolve_out.npz).
+
+REFIT (fit_pf.py): per functional group, NNLS of the back-solved
+activation profile over the four recorded PF-cell phase windows (from
+spinal_run.npz; only right-side PF cells are logged - windows are
+identical per side). THE LIMBO FIX, at the source: hip_ext stance drive
+stack 1.17 -> 0.27 vs human peak 0.34 (the old W_POSTURE hip_ext 0.22
+alone was ~2/3 of the human PEAK, and E1+E2 stacked on top -> glut_max
+0.94/semimem 1.0 saturation -> pelvis limbo). Output:
+fitted_walk_params.json (full W_PF_MN/W_POSTURE + pf_gain=1.0).
+
+V3 OPTIMIZER (optuna_walk.py, study ground_walk_v3): new pf_gain
+dimension (log 0.5-8) - the back-solved weights carry honest human
+amplitudes ~10x SMALLER than the hand-tuned table the network's gain
+structure was tuned against (old F1 knee_flex 1.80 vs fitted 0.148); at
+gain 1 the sim barely moves (hip_amp 0.85 deg). Plus the 5 phase
+multipliers [0.5,1.8], drive/rg/kx ranges, and a duty-0.60 reward.
+CAUTION: do NOT pass --fitted inside the optuna eval call - the reload
+wipes the trial's mutations (verified: identical metrics with and
+without gain). The final config reproduces with `runner --fitted --best`
+(--best applies pf_gain to the whole table; the 5 knob values in the
+json are already effective and are written AFTER the gain to avoid
+double-apply).
+
+WEANING (wean_rig.py): runs the ladder rig-scale 1.0 -> 0.6 -> 0.4 ->
+0.25 -> 0.15 with --fitted --best; a stage passes when the full schedule
+completes, COM height > 0.62, pelvis tilt < 35 deg; stops at first fail,
+keeps wean_stage*_S*.npz per stage.
+
+## 2026-09-11 night RESULTS (v3 winner + weaning verdict)
+
+- v3 study ground_walk_v3, 40 trials: best score 1.521 (trial 37) vs
+  v2's 1.091. Winner: pf_gain 0.52 (the optimizer went DOWN from the
+  seed - human-shaped patterns need LESS brute-force gain, the opposite
+  of the hand-tuned table's direction), drive 1.49, rg_adapt 0.83,
+  desc_e 1.33, rg_to_pf 1.98, kx 220. Saved in best_walk_params.json
+  (effective values + pf_gain + multipliers; reproduce with
+  `runner --fitted --best`).
+- v3 winner 12 s eval: no NaN, kz 0.877, tilt 27.1 deg, dx 0.151 m,
+  9 bursts - but knee_min -0.6/hip_amp 0.9 deg on the SHORT window.
+- FULL 22 s ground run at rig-scale 1.0 (wean_stage0_S1.npz): PASS -
+  knee -22.4 deg REAL swing flexion, hip amp 37.7 deg, tilt 29 deg,
+  kz 0.87, dx 0.15 m. The v2-era "knees 0..+13 ext-side stiff shuffle"
+  is GONE at full rig.
+- Weaning ladder: S=0.8 completes 22 s and keeps stepping (knee -22.7,
+  hip 37.4) but tilt 36.7 deg = progressive lean; S=0.6 tilt 46.3 deg.
+  VERDICT: support boundary S~0.8-1.0. The pelvis rotation assist is
+  what the weaned rig misses - the BAL_TRK IMU levels the TORSO, the
+  (now human-scaled) hip extensors hold the legs, but nothing yet holds
+  the PELVIS pitch in the frontal-sagittal sense. Next lever per Ben's
+  plan: ground duty 0.6 + ankle balance, then the pelvis-balance piece,
+  THEN wean below 0.8.
+- Figures: plot_run.py rerun on wean_stage0_S1.npz (spinal_run.npz
+  currently holds that run) with the inDegrees fix - fig4 now carries
+  the OpenSim IK overlay with the "SNS sim mean" legend; ground_fig1/3/4
+  + ground_walk.gif refreshed in Dissertation\CPG_airstepping_figs.
+
+## 2026-09-11 late night: publication circuit figures (draw_circuit.py rewrite)
+
+draw_circuit.py is now a figure SUITE (Ben asked for paper figures of the
+circuit): `python draw_circuit.py [--which core|full|weights|all]
+[--source params|fitted|best] [--fmt pdf,svg,png]` -> figures/.
+  - circuit_core: one side, DRIVE/POSTURE/POST_i -> RG+ADAP -> PF(+PFA)
+    -> MN ellipses; reflex block; each MN pool carries ONE label (its
+    dominant W_PF_MN entry); edges drawn for w >= 0.03; full table =
+    the weights figure.
+  - circuit_full: both sides (left ghost) + interleg commissurals as
+    arcs over the top + BAL family; rig marked external.
+  - circuit_weights: W_PF_MN x groups heatmap + W_POSTURE column.
+CRITICAL PROPERTY: numbers are never hardcoded - --source composites
+params.py -> fitted_walk_params.json -> (best) pf_gain x knobs exactly
+like `runner --fitted --best` (verified by spot-check vs the jsons), and
+each figure prints a gray source note. RERUN THIS AFTER ANY RETUNE
+(e.g. the v4 trunk-Fmax fix) so figures never drift from the sim.
+Gotcha recorded the hard way: matplotlib arc3 with a +x chord bulges
+DOWN for positive rad - over-the-top arcs need negative rad. Old
+spinal_circuit.png is superseded (its weights were the stale pre-refit
+hand-tuned table). Copies of all 9 files (pdf/svg/png x 3) live in
+Dissertation\CPG_airstepping_figs\ as circuit_*.
+
+## 2026-09-11 night, addendum: Ben's knee/patella + muscle-count notes
+
+- MOMENT-ARM DEFINITION (Ben): OpenSim's arm = dl/dtheta with the whole
+  geometry following. MuJoCo's data.actuator_moment is the RAW Jacobian
+  and does NOT propagate through the eq couplers - at the knee it misses
+  the 36 vastii pathpoint followers, at hip_flexion 5 more. bsolve_ik.py
+  now computes moment arms by CENTRAL DIFFERENCE dl/dtheta with the
+  followers re-projected at every perturbed pose (fd_moments), which is
+  the matching quantity AND the right B matrix for the back-solve.
+  Keep this in mind anywhere knee moments matter.
+- VASTII -> TIBIA VERIFIED (Ben: "the opensim model has no patella"):
+  all 36 knee eq couplers drive the vas_med/vas_int/vas_lat pathpoint
+  bodies (P3-P5) on both sides - the vastii actuate the knee/tibia
+  through them (rect_fem rides vas_med's P4 since the patella reroute).
+  Quantitatively (fd_moments vs OpenSim MuscleAnalysis knee arms):
+  vas_med/lat/int mean arm -0.047 m vs OpenSim -0.045 m, same sign, but
+  the small AC fluctuations anti-correlate (r -0.67..-0.81) -> the knee
+  coupler polys deviate from OpenSim's true pathpoint trajectories away
+  from the keyframe (polyfit artifact, same family as the range-limit
+  and ID-wrench issues). Same likely explains the residual peronei/
+  tib_post SO mismatches (subtalar couplers) and knee median arm r 0.31.
+- "ALL 78 MUSCLES" RESOLVED: the comparison table = 92 actuators MINUS
+  14 with Fmax (gainprm[2]) <= 5 N. Only 6 are the intentional prunes
+  (quad_fem/gem/peri r/l). THE OTHER 8 SHIP AT Fmax = 1 N FROM THE
+  CONVERTER: ercspn r/l, intobl r/l, extobl r/l, ext_hal r/l. That
+  means the IMU trunk controller (BAL_TRK_FLX/EXT -> ercspn/obliques)
+  has been driving muscles with 1 newton of capacity - the torso is
+  held by the rig springs alone. diag_fmax.py prints the audit.
+  RECOMMENDED FIX (needs Ben's go - it invalidates the current v3
+  tuning): set the 8 Fmax values from stock gait2392_thelen2003 in
+  patch_xml (like the prune patch), re-run the standing solve, refit,
+  v4. Until then, trunk-control claims about ercspn/obliques are
+  placeholders.

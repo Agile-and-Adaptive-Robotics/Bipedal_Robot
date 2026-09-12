@@ -145,7 +145,7 @@ def solve_standing_activations(model, data, Fmax: np.ndarray) -> np.ndarray:
 
 def patch_xml(xml_text: str, model, data, kxy=2.0e5, kz=2.0e5, ky=5.0e5,
               dxy=2000.0, dy=3000.0, no_ground=False, leg_damping=None,
-              boundmass=0.1, pp_contact=False, pin_rot=False):
+              boundmass=0.1, pp_contact=False, pin_rot=False, rig_scale=1.0):
     """All XML repairs/patches, as one function over the raw MJCF text.
 
     Returns the patched text; the caller must compile it from a file inside
@@ -361,6 +361,20 @@ def patch_xml(xml_text: str, model, data, kxy=2.0e5, kz=2.0e5, ky=5.0e5,
                     # +-25 deg adduction in air - Ben 2026-09-11)
             if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, jn) >= 0:
                 specs.update({jn: (10.0 if "hip" not in jn else 30.0, 3.0)})
+    # weaning (--rig-scale S): scale every RIG element (pelvis support +
+    # rotation stabilizers + lumbar/hip-rotation rig), stiffness by S and
+    # damping by sqrt(S) (constant damping ratio). The ligament surrogates
+    # (subtalar/mtp/ankle/hip_adduction) are MODEL properties, not rig -
+    # they stay.
+    if rig_scale != 1.0:
+        rs, rc = rig_scale, rig_scale ** 0.5
+        for jn in ("pelvis_tx", "pelvis_ty", "pelvis_tz",
+                   "pelvis_tilt", "pelvis_list", "pelvis_rotation",
+                   "lumbar_extension", "lumbar_bending", "lumbar_rotation",
+                   "hip_rotation_r", "hip_rotation_l"):
+            if jn in specs:
+                k, c = specs[jn]
+                specs[jn] = (k * rs, c * rc)
     for jn, (k, c) in specs.items():
         ref = data.qpos[model.joint(jn).qposadr[0]]
         pat = rf'<joint name="{jn}"[^/]*?/>'
@@ -377,7 +391,8 @@ def patch_xml(xml_text: str, model, data, kxy=2.0e5, kz=2.0e5, ky=5.0e5,
 
 def apply_harness(model, data, kxy=2.0e5, kz=2.0e5, ky=5.0e5,
                   dxy=2000.0, dy=3000.0, no_ground=False, leg_damping=None,
-                  boundmass=0.1, pp_contact=False, pin_rot=False):
+                  boundmass=0.1, pp_contact=False, pin_rot=False,
+                  rig_scale=1.0):
     """Rigid pelvis rig (v1 default): the pelvis is spring-locked at the
     keyframe pose in all three translations - the classic biped walker test
     rig. Legs swing under it with ground contact; balance is NOT solved.
@@ -388,7 +403,7 @@ def apply_harness(model, data, kxy=2.0e5, kz=2.0e5, ky=5.0e5,
                          kxy=kxy, kz=kz, ky=ky, dxy=dxy, dy=dy,
                          no_ground=no_ground, leg_damping=leg_damping,
                          boundmass=boundmass, pp_contact=pp_contact,
-                         pin_rot=pin_rot)
+                         pin_rot=pin_rot, rig_scale=rig_scale)
     # mesh files are referenced relative to the model dir -> must load the
     # patched XML from a file in that directory, not from a string
     import tempfile, os
@@ -432,7 +447,22 @@ def main(argv):
     realtime = False
     interleg = True
     eval_mode = False
+    rig_scale = 1.0
     args = list(argv)
+    if "--fitted" in args:
+        # load the IK/NNLS back-solve refit (fit_pf.py output) BEFORE any
+        # params read: full W_PF_MN + W_POSTURE tables from human data
+        import json as _json
+        with open(HERE / "fitted_walk_params.json", encoding="utf-8") as f:
+            fit = _json.load(f)
+        import params as _p
+        for ph, tbl in fit["W_PF_MN"].items():
+            for g, w in tbl.items():
+                _p.W_PF_MN[ph][g] = float(w)
+        for g, w in fit["W_POSTURE"].items():
+            _p.W_POSTURE[g] = float(w)
+        args.remove("--fitted")
+        print("loaded fitted_walk_params.json (back-solve refit)", flush=True)
     if "--best" in args:
         # load the optimizer's winning parameters (optuna_walk.py output)
         # before anything reads the params module
@@ -448,6 +478,23 @@ def main(argv):
         _p.W_PF_MN["F1"]["knee_flex"] = best["f1_kf"]
         _p.W_POSTURE["knee_ext"] = best["post_kneext"]
         if "post_hipext" in best:
+            _p.W_POSTURE["hip_ext"] = best["post_hipext"]
+        if "pf_gain" in best and best["pf_gain"] != 1.0:
+            # v3 winners store a global gain on the fitted table (the 5
+            # knob values above are ALREADY effective - gain must not
+            # double-apply to them, so it only scales the other entries)
+            gain = float(best["pf_gain"])
+            for ph, tbl in _p.W_PF_MN.items():
+                for g in tbl:
+                    tbl[g] *= gain
+            for g in _p.W_POSTURE:
+                _p.W_POSTURE[g] *= gain
+            for kn in ("e2_pf", "f1_df", "f1_kf"):
+                key = {"e2_pf": ("E2", "ankle_pf"),
+                       "f1_df": ("F1", "ankle_df"),
+                       "f1_kf": ("F1", "knee_flex")}[kn]
+                _p.W_PF_MN[key[0]][key[1]] = best[kn]
+            _p.W_POSTURE["knee_ext"] = best["post_kneext"]
             _p.W_POSTURE["hip_ext"] = best["post_hipext"]
         _p.BAL["kx"] = best["kx"]
         args.remove("--best")
@@ -478,6 +525,9 @@ def main(argv):
                             stand2=(11.0, 12.0))
         elif a == "--leg-damping":
             leg_damping = float(args.pop(0))
+        elif a == "--rig-scale":
+            # wean the support rig: stiffness *S, damping *sqrt(S)
+            rig_scale = float(args.pop(0))
         elif a == "--view":
             view = True
         elif a == "--scope":
@@ -510,14 +560,17 @@ def main(argv):
         # tips the assembly head-over)
         model = apply_harness(model, data, kxy=harness,
                               no_ground=no_ground, leg_damping=leg_damping,
-                              pin_rot=no_ground)
-    elif no_ground or leg_damping is not None:
-        # no rig, but XML patches needed (suspended-air / damping sweep):
-        # zero-stiffness springs with negligible damping = free pelvis
-        model = apply_harness(model, data, kxy=0, kz=0, ky=0,
-                              dxy=1.0, dy=1.0,
+                              pin_rot=no_ground, rig_scale=rig_scale)
+    elif no_ground or leg_damping is not None or rig_scale != 1.0:
+        # no rig, but XML patches needed (suspended-air / damping sweep /
+        # full wean): zero-stiffness springs with negligible damping =
+        # free pelvis; --rig-scale<1 keeps a scaled support instead
+        s = rig_scale
+        model = apply_harness(model, data, kxy=harness * s, kz=2.0e5 * s,
+                              ky=5.0e5 * s, dxy=2000.0 * s ** 0.5,
+                              dy=3000.0 * s ** 0.5,
                               no_ground=no_ground, leg_damping=leg_damping,
-                              pin_rot=no_ground)
+                              pin_rot=no_ground, rig_scale=rig_scale)
     data = mujoco.MjData(model)
     seed_pose(model, data, key_pose)
     mujoco.mj_forward(model, data)
@@ -814,14 +867,19 @@ def main(argv):
             return float(np.nanmin(a)) if finite_q else 0.0
         def _mx(a):
             return float(np.nanmax(a)) if finite_q else 0.0
+        walk_slice = log_neuro[i_ws:n_done, 2]
         metrics = dict(
             nan=not (finite_q and finite_c),
             t_end=float(tt[-1]),
-            dx=float(log_com[n_done - 1, 0] - log_com[i_ws, 0]),
+            dx=float(log_com[n_done - 1, 0] - log_com[i_ws, 0])
+            if n_done > i_ws else 0.0,
             kz=float(np.min(log_com[:n_done, 2])) if finite_c else 0.0,
             tilt_max=_mx(np.degrees(log_q[:n_done, 0])),
             knee_min=_mn(log_q[:n_done, 4]),
             hip_amp=_mx(log_q[:n_done, 3]) - _mn(log_q[:n_done, 3]),
+            duty=float(np.mean(walk_slice > 0.5 * max(np.max(walk_slice),
+                                                      1e-6)))
+            if walk_slice.size else 0.0,
             burst_r=int(np.sum(np.diff(
                 (log_neuro[:n_done, 2]
                  > 0.5 * max(np.max(log_neuro[:n_done, 2]), 1e-6)

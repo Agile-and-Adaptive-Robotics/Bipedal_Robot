@@ -1,0 +1,95 @@
+coverage: 92 MJCF actuators, 14 pruned (quad_fem_r, gem_r, peri_r, ext_hal_r, quad_fem_l, gem_l, peri_l, ext_hal_l, ercspn_r, ercspn_l, intobl_r, intobl_l, extobl_r, extobl_l), 0 with no name match in the OpenSim lengths file (92 columns): none
+muscle              r  RMSE cm   nRMSE
+med_gas_r       0.909    0.458   0.106
+lat_gas_r       0.910    0.469   0.108
+tib_ant_r       0.891    0.195   0.120
+soleus_r        0.883    0.268   0.142
+med_gas_l       0.882    0.647   0.145
+lat_gas_l       0.882    0.655   0.146
+tib_ant_l       0.830    0.263   0.159
+per_brev_r      0.875    0.048   0.174
+soleus_l        0.819    0.359   0.186
+per_brev_l      0.809    0.055   0.195
+tib_post_r      0.881    0.116   0.211
+tib_post_l      0.815    0.133   0.237
+per_tert_l      0.827    0.256   0.254
+ext_dig_l       0.829    0.379   0.258
+per_tert_r      0.889    0.266   0.268
+ext_dig_r       0.891    0.395   0.273
+glut_max3_r     0.988    1.901   0.307
+glut_max3_l     0.960    2.028   0.324
+per_long_r      0.881    0.164   0.400
+per_long_l      0.816    0.174   0.416
+iliacus_r       0.948    1.305   0.436
+glut_max2_l     0.957    1.763   0.449
+glut_max2_r     0.923    1.815   0.454
+iliacus_l       0.957    1.372   0.454
+psoas_r         0.951    1.353   0.456
+glut_max1_l     0.956    1.352   0.457
+psoas_l         0.957    1.438   0.478
+vas_med_r       0.904    2.717   0.502
+glut_max1_r     0.858    1.559   0.504
+vas_med_l       0.882    2.783   0.522
+vas_lat_r       0.905    3.017   0.557
+vas_int_r       0.904    3.046   0.562
+glut_med1_l     0.906    0.684   0.576
+vas_lat_l       0.882    3.079   0.577
+vas_int_l       0.881    3.110   0.584
+glut_med3_l     0.898    0.675   0.603
+glut_med2_l     0.928    0.732   0.612
+glut_med3_r     0.502    1.000   0.646
+bifemsh_r       0.912    2.655   0.736
+bifemsh_l       0.886    2.683   0.747
+glut_med2_r     0.518    1.162   0.755
+semiten_l       0.921    5.485   0.799
+rect_fem_r      0.945    5.525   0.804
+semiten_r       0.962    5.729   0.834
+rect_fem_l      0.914    5.738   0.844
+glut_min2_l     0.831    0.705   0.903
+pect_l          0.939    1.235   0.905
+add_mag1_l      0.952    1.533   0.908
+glut_min3_l     0.826    0.731   0.919
+glut_min1_l     0.818    0.668   0.928
+glut_med1_r     0.315    1.309   0.944
+flex_hal_r      0.881    0.670   0.955
+flex_hal_l      0.816    0.685   0.956
+pect_r          0.681    1.363   0.965
+semimem_l       0.930    5.649   0.981
+bifemlh_l       0.949    5.601   1.003
+semimem_r       0.964    5.851   1.007
+bifemlh_r       0.970    5.714   1.011
+glut_min3_r    -0.186    1.018   1.034
+add_mag1_r     -0.833    1.790   1.085
+flex_dig_l      0.813    0.581   1.091
+flex_dig_r      0.879    0.576   1.104
+add_mag2_l      0.961    3.129   1.218
+glut_min2_r    -0.575    1.106   1.226
+sar_r           0.981    5.726   1.258
+add_mag2_r      0.161    3.297   1.281
+sar_l           0.949    6.022   1.291
+add_mag3_l      0.960    5.449   1.303
+grac_l          0.858    5.548   1.317
+add_mag3_r      0.991    5.687   1.381
+glut_min1_r    -0.834    1.164   1.401
+add_long_l      0.927    3.010   1.424
+grac_r          0.679    5.613   1.425
+add_brev_l      0.902    1.629   1.437
+add_brev_r     -0.823    1.943   1.478
+add_long_r      0.538    3.255   1.494
+tfl_l           0.959    6.356   1.712
+tfl_r           0.927    6.410   1.803
+
+median r 0.890 | median nRMSE 0.742 | muscles r>0.9: 36/78 | nRMSE>0.2: 68
+
+NNLS vs OpenSim SO: median r 0.231 | r>0.7: 7/78
+best:  glut_max1_l(0.93), glut_med2_l(0.83), glut_med1_l(0.82), glut_min3_l(0.82), lat_gas_l(0.73), glut_min1_l(0.71), tib_ant_r(0.71), glut_min2_l(0.69)
+worst: semimem_r(-0.17), flex_dig_l(-0.19), semiten_r(-0.24), ext_dig_r(-0.25), tib_post_r(-0.39), per_tert_r(-0.48), per_brev_r(-0.63), per_long_r(-0.71)
+
+moment arms vs OpenSim (median r; MuJoCo transmission sign folded in):
+  knee_angle_r     median r  0.311 (r>0.8: 2/13, sign-agree 69%)
+  ankle_angle_r    median r  0.896 (r>0.8: 10/11, sign-agree 100%)
+  hip_flexion_r    median r  0.916 (r>0.8: 15/24, sign-agree 75%)
+  hip_flexion_l    median r  0.948 (r>0.8: 19/24, sign-agree 100%)
+  vastii check vas_med_r    r -0.666  mean FD arm -0.0473 m vs OS -0.0454 m
+  vastii check vas_int_r    r -0.689  mean FD arm -0.0471 m vs OS -0.0455 m
+  vastii check vas_lat_r    r -0.808  mean FD arm -0.0475 m vs OS -0.0451 m
