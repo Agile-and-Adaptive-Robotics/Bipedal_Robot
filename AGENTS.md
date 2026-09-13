@@ -416,10 +416,10 @@ Loaded automatically at session start. Keep it current; keep it lean.
 - Repo root: `CHATGPT_HANDOFF.md` (brief for other AI assistants when ZCode is unavailable)
   and `CHATGPT_REPORT.md` (their report back; 2026-09-08 edition covers Overleaf
   manuscript-status edits) — keep both current when work is handed off.
-- `SAD_audit\` — Sensory Afferent Database reconciliation (Zotero personal / AARL group /
+- `SADb_audit\` — Sensory Afferent Database reconciliation (Zotero personal / AARL group /
   Airtable "Sensory Feedback" base) + the standing curation backlog: the 383 rest-imported
   Papers get the full curation layer (Notes/Animals/Feedback/Review/Models) 10 per batch.
-  Spec + live state in `SAD_audit\README.md` (CURATION STATE section), per-batch details in
+  Spec + live state in `SADb_audit\README.md` (CURATION STATE section), per-batch details in
   `curation_log.csv`. 20/383 done 2026-09-12 (pilot + batch 2); next = batch 3 = queue CSV
   rows 11-20; audit subagent after batch 5.
 
