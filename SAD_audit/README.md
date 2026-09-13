@@ -424,6 +424,39 @@ table = 532. 363 of the 383 rest-import records remain. **Batch 3 = CSV rows 11-
 batch 5. Per-row details, judgment calls, and verification lines: `curation_log.csv`
 (one row per paper + WORKFLOW rows; field meanings in its header row).
 
+## LAPTOP SESSION 2026-09-12 (DESKTOP-5Q16KE9) — batch 3 READY but NOT WRITTEN; RR digest built
+
+- **Batch 3 grounded + drafted, zero writes.** All 10 papers grounded (Zotero local API +
+  PubMed; PMIDs in curation_log.csv). Drafts: `batch3_draft.md`; payload struct:
+  `batch3/payloads.json` (Notes/Animals/Feedback + 3 new Review Papers "Whelan 1996",
+  "Tresch and Jarc 2009", "Frigon and Rossignol 2006" + 1 new Models "Rybak 2013").
+  Judgment calls to surface to Ben: Kaliyamoorthy linked CS load→MN (own-work review),
+  Duysens 2013 linked "Ib stance to swing" from "suppression by load afferent input",
+  Tresch&Jarc/Pearson-2000 Animals blank from abstract, Horchler record carries a
+  PATENT-style abstract in Zotero (record-type question).
+- **AIRTABLE ACCESS GAP on the laptop:** the Airtable MCP server is not connected in this
+  client (it was EB475WS4-only), no PAT exists anywhere, and airtable.com was not logged
+  in in Chrome. Mid-session the computer-use broker ALSO died ("broker_not_accepting";
+  ZCode client restart revives it), which froze the browser route (Airtable Google login
+  → scoped PAT creation). NEXT SESSION OPTIONS: (a) restart ZCode client, drive Chrome to
+  log in to Airtable and create a scoped PAT (data.records read/write on the Sensory
+  Feedback base), then run the writes via REST like the MCP pattern; (b) Ben creates the
+  PAT himself and pastes it. Either way: batch 3 first (create Review/Models, ONE batched
+  update for the 10, verify by re-pull), then the 20 digest Airtable creates below.
+- **Research Rabbit:** Ben's RR collection WAS observed live (Chrome window; selected
+  paper Shevtsova 2026 eLife 10.7554/elife.107480; recs Mari 2023, Audet 2023, Rybak 2024,
+  Zhang 2022=already in SAD, Harrison 2023=judged out of scope). Deep click-through died
+  with the broker; replaced by **OpenAlex citation mining** seeded from the observed
+  collection + lab model family: 137 candidates 2023+, **19 shortlisted and
+  Crossref-verified** — `rr_digest_2023plus.md` (human-readable) +
+  `batch3/rr_digest_shortlist.json` (import fields). Zotero add ready:
+  `python zotero_add_digest.py --key <BEN_KEY> --post` (payload
+  `batch3/zotero_digest_items.json`; Shinohara bioRxiv + Shevtsova 2026 already in his
+  Zotero — Airtable only for those two).
+- **Private-RR tool plan written:** `corpus_discovery_plan.md` (OpenAlex enrichment →
+  VOSviewer bubble map and/or pyvis tag-colored HTML → weekly scored digest +
+  human-in-loop Airtable import).
+
 Tag records created (8, with ids so future batches can cross-link):
 - Review Papers: Pearson 1995 = recc5MpXPbbHBwo6w, Marder and Bucher 2001 = recEUToBYWLaLlvcP,
   Dietz and Duysens 2000 = rec5vMNlT9CNvVFNG, Zholudeva 2021 = recbkUF5KT5igD7Q5,
