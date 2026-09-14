@@ -42,7 +42,14 @@ labels = ["52cm", "52cm", "52cm", "52cm"];
 tileIdxs = [1, 5, 10];  % A, B, C
 tileSpans = [1 1];      % Span: [rows cols]
 tileOrder = [1, 2, 3, 4];
-tileLabels = {'(A)', '(B)', '(C)', '(D)'};
+% allBPA = allBPA;    %Plot only the train and validation BPAs
+allBPA = [1]; %Plot all tests (52 cm extensor)
+numBPA = numel(allBPA); %recalculate if allBPA has changed
+
+% Auto panel letters (A), (B), ... journal caption style; letters advance across
+% the separate single-tile figures (figL, figMA, ...). The (1,1) layouts have no
+% empty tile for the legend, so each figure keeps its legend inside at 'best'.
+tileLabels = arrayfun(@(k) sprintf('(%c)', 'A' + k - 1), 1:4, 'UniformOutput', false);
 % Annotation positions [x, y] in normalized figure units
 % xAnn = [0.035, 0.51, 0.035, 0.51];  % (A), (B), (C), (D)
 % yAnn = [0.89, 0.89, 0.41, 0.41];    % (A), (B), (C), (D)

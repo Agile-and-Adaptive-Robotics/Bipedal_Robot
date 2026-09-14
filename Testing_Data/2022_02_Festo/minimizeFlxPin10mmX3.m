@@ -183,7 +183,12 @@ c{6} = '#9D02D7'; % magenta 2
 c{7} = '#0000FF'; % indigo → Measured
 c{8} = '#000000'; % black
 
-tileLabels = {'(A)', '(B)', '(C)', '(D)'};
+% allBPA = allBPA;    %Plot only the train and validation BPAs
+allBPA = [1, 2, 3, 4, 5]; %Plot all tests
+numBPA = numel(allBPA); %recalculate if allBPA has changed
+
+% Auto panel letters (A), (B), ... one per plotted test, journal caption style
+tileLabels = arrayfun(@(k) sprintf('(%c)', 'A' + k - 1), 1:numBPA, 'UniformOutput', false);
 % Annotation positions [x, y] in normalized figure units
 xAnn = [0, 0.48, 0, 0.48];
 yAnn = [0.94, 0.94, 0.45, 0.45];
@@ -201,7 +206,7 @@ figTpre.Position = [100 100 950 700];
 tTpre = tiledlayout(ceil(numBPA/2),2,'TileSpacing','loose','Padding','loose');
 
 % titles = ["\bf 48.5 cm", "\bf 45.7 cm","\bf 47.9 cm", "\bf 40.6 cm", "\bf 41.7 cm"];
-titles = validLabels;
+titles = labels(allBPA); %follows the allBPA override above (= validLabels when unchanged), k-indexed
 subtitles = ["\bf Pre-optimized","\bf Pre-optimized","\bf Pre-optimized","\bf Pre-optimized","\bf Optimized","\bf Optimized","\bf Optimized","\bf Optimized"];
 
 for k = 1:numBPA
@@ -224,7 +229,9 @@ for k = 1:numBPA
 
     clear Vq Fold Fq Mold
     title(titles(k), 'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
-    
+    text(ax, 0.002, 1.03, tileLabels{k}, 'Units', 'normalized', 'Clipping', 'off', ...
+        'FontSize', 14, 'FontWeight', 'bold', 'FontName', 'Arial', 'VerticalAlignment', 'bottom');
+
     % ylabel('\bf Torque, N \cdot m', 'Interpreter', 'tex', ...
     %         'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
     % xlabel('\bf \theta_{k}, \circ', 'Interpreter', 'tex', ...
@@ -252,9 +259,11 @@ for k = 1:numBPA
     scatter(bpa(j).Aexp, bpa(j).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7}, 'DisplayName', 'Measured');
     plot(bpa(j).Ak, bpa(j).M, '-.', 'Color', c{3}, 'LineWidth', 2.5, 'DisplayName', 'Improved BPA model');
     plot(bpa(j).Ak, bpa(j).M_p(:,3), '-', 'Color', c{5}, 'LineWidth', 2.5, 'DisplayName', 'Optimized prediction');
-    
+
     title(titles(k), 'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
-    
+    text(ax, 0.002, 1.03, tileLabels{k}, 'Units', 'normalized', 'Clipping', 'off', ...
+        'FontSize', 14, 'FontWeight', 'bold', 'FontName', 'Arial', 'VerticalAlignment', 'bottom');
+
     % ylabel('\bf Torque, N \cdot m', 'Interpreter', 'tex', ...
     %         'FontSize', 12, 'FontName', 'Arial', 'FontWeight', 'bold');
     % xlabel('\bf \theta_{k}, \circ', 'Interpreter', 'tex', ...
@@ -281,12 +290,23 @@ xlabel(tTpost,'\bf \theta_{k} , \circ','Interpreter','tex');
 % annotation(gcf, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
 %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 
-% Legends in 2nd and 4th tile
-lg = legend(tTpre.Children(end-1));
+% Legend placement: even number of tests -> legend inside tile (1,2);
+% odd -> the first empty tile of the (ceil(n/2),2) grid (e.g. tile 6 for 5 tests)
+if mod(numBPA,2) == 0
+    lg = legend(tTpre.Children(numBPA-1)); %tile (1,2) series
+else
+    lg = legend(tTpre.Children(end));      %tile 1 series, moved to the empty tile
+    lg.Layout.Tile = 2*ceil(numBPA/2);
+end
 lg.Location = 'best';
 lg.FontSize = 8;
 
-lg2 = legend(tTpost.Children(end-1));
+if mod(numBPA,2) == 0
+    lg2 = legend(tTpost.Children(numBPA-1)); %tile (1,2) series
+else
+    lg2 = legend(tTpost.Children(end));      %tile 1 series, moved to the empty tile
+    lg2.Layout.Tile = 2*ceil(numBPA/2);
+end
 lg2.Location = 'best';
 lg2.FontSize = 8;
 
@@ -303,6 +323,8 @@ for k = 1:numBPA
     else
         title(sprintf('\\bf l_0 = %0.1f cm',bpa(j).rest*100),'Interpreter','tex')
     end
+    text(ax, 0.002, 1.03, tileLabels{k}, 'Units', 'normalized', 'Clipping', 'off', ...
+        'FontSize', 14, 'FontWeight', 'bold', 'FontName', 'Arial', 'VerticalAlignment', 'bottom');
     hold on
     
     % Calculate predicted
@@ -335,7 +357,12 @@ xlabel(tL,'\bf \theta_{k} , \circ','Interpreter','tex');
 % annotation(figL, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
 %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 
-lg = legend(tL.Children(end-1));
+if mod(numBPA,2) == 0
+    lg = legend(tL.Children(numBPA-1)); %tile (1,2) series
+else
+    lg = legend(tL.Children(end));      %tile 1 series, moved to the empty tile
+    lg.Layout.Tile = 2*ceil(numBPA/2);
+end
 lg.Location = 'best';
 lg.FontSize = 8;
 
@@ -357,6 +384,8 @@ for k = 1:numBPA
     else
         title(sprintf('\\bf l_0 = %0.1f cm',bpa(j).rest*100),'Interpreter','tex')
     end
+    text(ax, 0.002, 1.03, tileLabels{k}, 'Units', 'normalized', 'Clipping', 'off', ...
+        'FontSize', 14, 'FontWeight', 'bold', 'FontName', 'Arial', 'VerticalAlignment', 'bottom');
     hold on
     
     G_p = hypot(bpa(j).mA_p(:,1), bpa(j).mA_p(:,2));
@@ -380,7 +409,14 @@ xlabel(tMA,'\bf \theta_{k} , \circ','Interpreter','tex');
 %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 % annotation(figMA, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
 %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
-legend(tMA.Children(end-1),'Location','best','FontSize',8);
+if mod(numBPA,2) == 0
+    lg = legend(tMA.Children(numBPA-1)); %tile (1,2) series
+else
+    lg = legend(tMA.Children(end));      %tile 1 series, moved to the empty tile
+    lg.Layout.Tile = 2*ceil(numBPA/2);
+end
+lg.Location = 'best';
+lg.FontSize = 8;
 % legend(tMA.Children(end-(numBPA-1)),'Location','best','FontSize',8);
 
 %% Plot relative strain, optimization and validation
@@ -396,6 +432,8 @@ for k = 1:numBPA
     else
         title(sprintf('\\bf l_0 = %0.1f cm',bpa(j).rest*100),'Interpreter','tex')
     end
+    text(ax, 0.002, 1.03, tileLabels{k}, 'Units', 'normalized', 'Clipping', 'off', ...
+        'FontSize', 14, 'FontWeight', 'bold', 'FontName', 'Arial', 'VerticalAlignment', 'bottom');
     hold on
     
     strain_h = (bpa(j).rest - bpa(j).Lm_h)/bpa(j).rest;
@@ -423,7 +461,14 @@ xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex');
 %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
 % annotation(figS, 'textbox', [0.7, 0.95, 0.1, 0.05], 'String', '\bf Validation', ...
 %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment', 'center');
-legend(tS.Children(end-1),'Location','best','FontSize',8);
+if mod(numBPA,2) == 0
+    lg = legend(tS.Children(numBPA-1)); %tile (1,2) series
+else
+    lg = legend(tS.Children(end));      %tile 1 series, moved to the empty tile
+    lg.Layout.Tile = 2*ceil(numBPA/2);
+end
+lg.Location = 'best';
+lg.FontSize = 8;
 % legend(tS.Children(end-(numBPA+1)),'Location','best','FontSize',8);
 
 

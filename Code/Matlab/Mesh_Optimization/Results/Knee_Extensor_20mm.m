@@ -3,7 +3,30 @@ clc
 clear
 close all
 
-%% Load the Opt_run_Ext result
+%% Repo root and path setup (derived from this file's location)
+scriptDir = fileparts(mfilename('fullpath'));
+root = scriptDir;
+for k = 1:8
+    [parent, name] = fileparts(root);
+    if strcmpi(name, 'Bipedal_Robot')
+        break
+    end
+    if strcmp(parent, root)
+        error('Could not locate the Bipedal_Robot repo root from %s', scriptDir)
+    end
+    root = parent;
+end
+
+addpath(genpath(fullfile(root, 'Code', 'Matlab')));
+% Mesh_Optimization must win any shadowing contest against data subfolders.
+addpath(fullfile(root, 'Code', 'Matlab', 'Mesh_Optimization'));
+
+% buildKneeExtContext20mm reads OpenSim_Vasti_Results.txt and its Xi-pick
+% mat by bare name; both live in Testing_Data\2022_02_Festo. Append (do not
+% prepend) so Code\Matlab keeps winning any name collisions.
+addpath(fullfile(root, 'Testing_Data', '2022_02_Festo'), '-end');
+
+%% Load the Opt_run_Ext result and rebuild its context
 % ctx is a struct built by buildKneeExtContext20mm(), called from both
 % Opt_run_Ext.m and Opt_sanity_Ext.m. It stores:
 %   N, phi, phiD, pos      sample count, radians/degrees, zero-angle index
@@ -21,17 +44,29 @@ close all
 % The extensor builder constructs geo locally and uses tendonLimit20mm,
 % buildDistalRingLocation20mm and its local muscleLengthNormal helper to
 % initialize the original design. It does not use buildGeoExclusion.
-% Load ctx saved WITH xBest; rebuilding it here could change your bounds,
-% model parameters or original reference. See README.md for the full map.
-% Only these two variables are required from Opt_run_Ext. Do not load old
-% Location/bendMeasure arrays or expect separate saved endpoint variables.
-S = load('Vas_Pam_20mm_Result.mat', 'ctx', 'xBest');
-if ~isfield(S,'ctx') || ~isfield(S,'xBest')
+%
+% Dated Opt_run_Ext results (2026-09-10 route-elimination rework onward)
+% save xBest and the XiUsed record but NOT ctx. Rebuild the context fresh
+% and require its Xi block to equal the run's XiUsed; a mismatch means the
+% builder's Xi pick moved on since the run and the display would mislabel
+% the design. Do not load old Location/bendMeasure arrays or expect
+% separate saved endpoint variables.
+resultFile = fullfile(scriptDir, 'Vas_Pam_20mm_Result_20260910_0528.mat');
+S = load(resultFile, 'xBest', 'XiUsed');
+if ~isfield(S,'xBest') || ~isfield(S,'XiUsed')
     error('Knee_Extensor_20mm:MissingResult', ...
-        'Vas_Pam_20mm_Result.mat must contain ctx and xBest from the same run.')
+        '%s must contain xBest and XiUsed from Opt_run_Ext.', resultFile)
 end
 
-ctx = S.ctx;
+ctx = buildKneeExtContext20mm();
+
+xiBuilt = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
+if ~isequal(xiBuilt, S.XiUsed)
+    error('Knee_Extensor_20mm:XiMismatch', ...
+        'Builder Xi [%.6g %.6g %.6g %.6g] does not equal run XiUsed [%.6g %.6g %.6g %.6g]. Update buildKneeExtContext20mm or repoint resultFile.', ...
+        xiBuilt, S.XiUsed)
+end
+
 xBest = reshape(S.xBest,1,[]);
 validateattributes(xBest,{'numeric'},{'real','finite','numel',8});
 p1 = xBest(1:3);
