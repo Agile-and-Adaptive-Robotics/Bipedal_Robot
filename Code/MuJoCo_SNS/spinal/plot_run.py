@@ -211,7 +211,8 @@ def fig45(t, j, neuro, ncol, side, bench):
         if traces:
             mean_cyc[k] = np.mean(traces, axis=0)
             ax[i].plot(np.linspace(0, 100, 200), mean_cyc[k], lw=2.2,
-                       color=C_JOINTS[k], label=f"sim mean ({len(traces)} cyc)")
+                       color=C_JOINTS[k],
+                       label=f"SNS sim mean ({len(traces)} cyc)")
             if k in bench:
                 ax[i].plot(bench[k][0], bench[k][1], lw=1.8, color="k",
                            ls="--", label="OpenSim IK")
@@ -234,34 +235,43 @@ def fig45(t, j, neuro, ncol, side, bench):
 
 def load_benchmark(side):
     """Find an OpenSim IK .mot and extract hip/knee/ankle cycle curves.
-    Returns {} if absent."""
+    Returns {} if absent. Units are honored via the header's inDegrees
+    flag - subject01_walk1_ik.mot says inDegrees=yes, so values are used
+    AS-IS (an earlier np.degrees() here double-converted, Ben 2026-09-11)."""
     cands = list((REPO / "Solid_Models" / "OpenSim").rglob("*_ik.mot"))
     if not cands:
         return {}
     f = cands[0]
     print(f"benchmark: {f.name}")
-    rows, headers, names = [], None, []
-    with open(f, "r", encoding="utf-8", errors="ignore") as fh:
-        for line in fh:
-            line = line.strip()
-            if line == "endheader":
-                headers = True
-                continue
-            if headers and not names:
-                names = line.split()
-                continue
-            if names:
-                try:
-                    rows.append([float(x) for x in line.split()])
-                except ValueError:
-                    break
+    lines = f.read_text(encoding="utf-8", errors="ignore").splitlines()
+    in_deg, end = True, None
+    for i, ln in enumerate(lines):
+        s = ln.strip()
+        if s.startswith("inDegrees"):
+            in_deg = s.split("=")[1].strip().lower() == "yes"
+        if s == "endheader":
+            end = i
+            break
+    names, rows = None, []
+    for ln in lines[end + 1:]:
+        s = ln.strip()
+        if not s:
+            continue
+        if names is None:
+            names = s.split()
+            continue
+        try:
+            rows.append([float(x) for x in s.split()])
+        except ValueError:
+            break
     data = np.array(rows)
     col = {n: i for i, n in enumerate(names)}
     out = {}
     for k, v in JOINT_KEYS.items():
         cn = v.format(s=side)
         if cn in col:
-            out[k] = (None, np.degrees(data[:, col[cn]]))
+            y = data[:, col[cn]]
+            out[k] = (None, y if in_deg else np.degrees(y))
     # cycle-normalize by time column (assume steady walking, full file =
     # integer cycles; simple fixed split at equal chunks)
     if "time" in col:

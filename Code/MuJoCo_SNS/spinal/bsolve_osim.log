@@ -1,0 +1,3690 @@
+=== zz_bsolve_analyze rc=0
+[info] Preparing to run AnalyzeTool.
+[info] AbstractTool zz_bsolve loading model subject01_simbody.osim
+[info] Loaded model subject01 from file subject01_simbody.osim
+[warning] Couldn't find file 'treadmill.vtp'.
+[warning] Couldn't find file 'sacrum.vtp'.
+[warning] Couldn't find file 'pelvis.vtp'.
+[warning] Couldn't find file 'l_pelvis.vtp'.
+[warning] Couldn't find file 'femur_r.vtp'.
+[warning] Couldn't find file 'tibia_r.vtp'.
+[warning] Couldn't find file 'fibula.vtp'.
+[warning] Couldn't find file 'talus.vtp'.
+[warning] Couldn't find file 'foot.vtp'.
+[warning] Couldn't find file 'bofoot.vtp'.
+[warning] Couldn't find file 'femur_l.vtp'.
+[warning] Couldn't find file 'tibia_l.vtp'.
+[warning] Couldn't find file 'l_fibula.vtp'.
+[warning] Couldn't find file 'l_talus.vtp'.
+[warning] Couldn't find file 'l_foot.vtp'.
+[warning] Couldn't find file 'l_bofoot.vtp'.
+[warning] Couldn't find file 'hat_spine.vtp'.
+[warning] Couldn't find file 'hat_jaw.vtp'.
+[warning] Couldn't find file 'hat_skull.vtp'.
+[warning] Couldn't find file 'hat_ribs.vtp'.
+[info] ExternalLoads 'Ex2' was renamed and is being reset to 'externalloads'.
+[info] Storage: read data file = subject01_walk1_grf.mot (nr=1501 nc=19)
+[info] ExternalForce::ExternalForce_1 Data source being set to subject01_walk1_grf.mot
+[info] ExternalForce::ExternalForce_2 Data source being set to subject01_walk1_grf.mot
+[info] Loading coordinates from file 'subject01_walk1_ik.mot'.
+[info] Storage: read data file = subject01_walk1_ik.mot (nr=121 nc=24)
+[info] Low-pass filtering coordinates data with a cutoff frequency of 6.0...
+[info] Found 250 state vectors with time stamps ranging from -0.5 to 3.484.
+[info] Executing the analyses from 0.492 to 2.492...
+[info] Storage: read data file = subject01_walk1_grf.mot (nr=1501 nc=19)
+[info] ExternalForce::ExternalForce_1 Data source being set to subject01_walk1_grf.mot
+[info] ExternalForce::ExternalForce_2 Data source being set to subject01_walk1_grf.mot
+[info] Storage: read data file = subject01_walk1_grf.mot (nr=1501 nc=19)
+[info] ExternalForce::ExternalForce_1 Data source being set to subject01_walk1_grf.mot
+[info] ExternalForce::ExternalForce_2 Data source being set to subject01_walk1_grf.mot
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.492.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.62554
+   pelvis_tilt: constraint violation = 1.08382
+   pelvis_tilt: constraint violation = -0.802042
+   pelvis_tilt: constraint violation = -0.00297979
+   pelvis_tilt: constraint violation = 0.782274
+   pelvis_tilt: constraint violation = -0.221728
+   pelvis_tilt: constraint violation = 4.99337
+   pelvis_tilt: constraint violation = 1.11789
+   pelvis_tilt: constraint violation = -0.37438
+   pelvis_tilt: constraint violation = -1.65604
+   pelvis_tilt: constraint violation = -1.96896
+   pelvis_tilt: constraint violation = -0.0484321
+   pelvis_tilt: constraint violation = 4.89416
+   pelvis_tilt: constraint violation = -3.24641
+   pelvis_tilt: constraint violation = 0.0781703
+   pelvis_tilt: constraint violation = 0.88781
+   pelvis_tilt: constraint violation = -0.752323
+   pelvis_tilt: constraint violation = 89.4912
+   pelvis_tilt: constraint violation = 143.157
+   pelvis_tilt: constraint violation = 3.51553
+   pelvis_tilt: constraint violation = -7.26476
+   pelvis_tilt: constraint violation = 53.6985
+   pelvis_tilt: constraint violation = 56.7555
+
+time = 0.492 Performance = 1.30041 Constraint violation = 186.404
+[info] Bounds for 'glut_med1_r': 0.01 to 1.0.
+[info] Bounds for 'glut_med2_r': 0.01 to 1.0.
+[info] Bounds for 'glut_med3_r': 0.01 to 1.0.
+[info] Bounds for 'glut_min1_r': 0.01 to 1.0.
+[info] Bounds for 'glut_min2_r': 0.01 to 1.0.
+[info] Bounds for 'glut_min3_r': 0.01 to 1.0.
+[info] Bounds for 'semimem_r': 0.01 to 1.0.
+[info] Bounds for 'semiten_r': 0.01 to 1.0.
+[info] Bounds for 'bifemlh_r': 0.01 to 1.0.
+[info] Bounds for 'bifemsh_r': 0.01 to 1.0.
+[info] Bounds for 'sar_r': 0.01 to 1.0.
+[info] Bounds for 'add_long_r': 0.01 to 1.0.
+[info] Bounds for 'add_brev_r': 0.01 to 1.0.
+[info] Bounds for 'add_mag1_r': 0.01 to 1.0.
+[info] Bounds for 'add_mag2_r': 0.01 to 1.0.
+[info] Bounds for 'add_mag3_r': 0.01 to 1.0.
+[info] Bounds for 'tfl_r': 0.01 to 1.0.
+[info] Bounds for 'pect_r': 0.01 to 1.0.
+[info] Bounds for 'grac_r': 0.01 to 1.0.
+[info] Bounds for 'glut_max1_r': 0.01 to 1.0.
+[info] Bounds for 'glut_max2_r': 0.01 to 1.0.
+[info] Bounds for 'glut_max3_r': 0.01 to 1.0.
+[info] Bounds for 'iliacus_r': 0.01 to 1.0.
+[info] Bounds for 'psoas_r': 0.01 to 1.0.
+[info] Bounds for 'quad_fem_r': 0.01 to 1.0.
+[info] Bounds for 'gem_r': 0.01 to 1.0.
+[info] Bounds for 'peri_r': 0.01 to 1.0.
+[info] Bounds for 'rect_fem_r': 0.01 to 1.0.
+[info] Bounds for 'vas_med_r': 0.01 to 1.0.
+[info] Bounds for 'vas_int_r': 0.01 to 1.0.
+[info] Bounds for 'vas_lat_r': 0.01 to 1.0.
+[info] Bounds for 'med_gas_r': 0.01 to 1.0.
+[info] Bounds for 'lat_gas_r': 0.01 to 1.0.
+[info] Bounds for 'soleus_r': 0.01 to 1.0.
+[info] Bounds for 'tib_post_r': 0.01 to 1.0.
+[info] Bounds for 'flex_dig_r': 0.01 to 1.0.
+[info] Bounds for 'flex_hal_r': 0.01 to 1.0.
+[info] Bounds for 'tib_ant_r': 0.01 to 1.0.
+[info] Bounds for 'per_brev_r': 0.01 to 1.0.
+[info] Bounds for 'per_long_r': 0.01 to 1.0.
+[info] Bounds for 'per_tert_r': 0.01 to 1.0.
+[info] Bounds for 'ext_dig_r': 0.01 to 1.0.
+[info] Bounds for 'ext_hal_r': 0.01 to 1.0.
+[info] Bounds for 'glut_med1_l': 0.01 to 1.0.
+[info] Bounds for 'glut_med2_l': 0.01 to 1.0.
+[info] Bounds for 'glut_med3_l': 0.01 to 1.0.
+[info] Bounds for 'glut_min1_l': 0.01 to 1.0.
+[info] Bounds for 'glut_min2_l': 0.01 to 1.0.
+[info] Bounds for 'glut_min3_l': 0.01 to 1.0.
+[info] Bounds for 'semimem_l': 0.01 to 1.0.
+[info] Bounds for 'semiten_l': 0.01 to 1.0.
+[info] Bounds for 'bifemlh_l': 0.01 to 1.0.
+[info] Bounds for 'bifemsh_l': 0.01 to 1.0.
+[info] Bounds for 'sar_l': 0.01 to 1.0.
+[info] Bounds for 'add_long_l': 0.01 to 1.0.
+[info] Bounds for 'add_brev_l': 0.01 to 1.0.
+[info] Bounds for 'add_mag1_l': 0.01 to 1.0.
+[info] Bounds for 'add_mag2_l': 0.01 to 1.0.
+[info] Bounds for 'add_mag3_l': 0.01 to 1.0.
+[info] Bounds for 'tfl_l': 0.01 to 1.0.
+[info] Bounds for 'pect_l': 0.01 to 1.0.
+[info] Bounds for 'grac_l': 0.01 to 1.0.
+[info] Bounds for 'glut_max1_l': 0.01 to 1.0.
+[info] Bounds for 'glut_max2_l': 0.01 to 1.0.
+[info] Bounds for 'glut_max3_l': 0.01 to 1.0.
+[info] Bounds for 'iliacus_l': 0.01 to 1.0.
+[info] Bounds for 'psoas_l': 0.01 to 1.0.
+[info] Bounds for 'quad_fem_l': 0.01 to 1.0.
+[info] Bounds for 'gem_l': 0.01 to 1.0.
+[info] Bounds for 'peri_l': 0.01 to 1.0.
+[info] Bounds for 'rect_fem_l': 0.01 to 1.0.
+[info] Bounds for 'vas_med_l': 0.01 to 1.0.
+[info] Bounds for 'vas_int_l': 0.01 to 1.0.
+[info] Bounds for 'vas_lat_l': 0.01 to 1.0.
+[info] Bounds for 'med_gas_l': 0.01 to 1.0.
+[info] Bounds for 'lat_gas_l': 0.01 to 1.0.
+[info] Bounds for 'soleus_l': 0.01 to 1.0.
+[info] Bounds for 'tib_post_l': 0.01 to 1.0.
+[info] Bounds for 'flex_dig_l': 0.01 to 1.0.
+[info] Bounds for 'flex_hal_l': 0.01 to 1.0.
+[info] Bounds for 'tib_ant_l': 0.01 to 1.0.
+[info] Bounds for 'per_brev_l': 0.01 to 1.0.
+[info] Bounds for 'per_long_l': 0.01 to 1.0.
+[info] Bounds for 'per_tert_l': 0.01 to 1.0.
+[info] Bounds for 'ext_dig_l': 0.01 to 1.0.
+[info] Bounds for 'ext_hal_l': 0.01 to 1.0.
+[info] Bounds for 'ercspn_r': 0.01 to 1.0.
+[info] Bounds for 'ercspn_l': 0.01 to 1.0.
+[info] Bounds for 'intobl_r': 0.01 to 1.0.
+[info] Bounds for 'intobl_l': 0.01 to 1.0.
+[info] Bounds for 'extobl_r': 0.01 to 1.0.
+[info] Bounds for 'extobl_l': 0.01 to 1.0.
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.508000.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.80889
+   pelvis_tilt: constraint violation = 1.03566
+   pelvis_tilt: constraint violation = -0.997518
+   pelvis_tilt: constraint violation = -0.00300373
+   pelvis_tilt: constraint violation = 0.763201
+   pelvis_tilt: constraint violation = -0.161146
+   pelvis_tilt: constraint violation = 3.6205
+   pelvis_tilt: constraint violation = 0.746533
+   pelvis_tilt: constraint violation = -0.198681
+   pelvis_tilt: constraint violation = -1.68601
+   pelvis_tilt: constraint violation = -1.79953
+   pelvis_tilt: constraint violation = -0.0256479
+   pelvis_tilt: constraint violation = 4.11744
+   pelvis_tilt: constraint violation = -1.92088
+   pelvis_tilt: constraint violation = -0.0652819
+   pelvis_tilt: constraint violation = 1.36368
+   pelvis_tilt: constraint violation = -1.0446
+   pelvis_tilt: constraint violation = 70.4482
+   pelvis_tilt: constraint violation = 109.224
+   pelvis_tilt: constraint violation = 1.97982
+   pelvis_tilt: constraint violation = -5.97094
+   pelvis_tilt: constraint violation = 43.5328
+   pelvis_tilt: constraint violation = 47.9275
+
+time = 0.508000 Performance = 1.5186 Constraint violation = 145.512
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.524.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.92663
+   pelvis_tilt: constraint violation = 0.815272
+   pelvis_tilt: constraint violation = -1.32725
+   pelvis_tilt: constraint violation = -0.00264903
+   pelvis_tilt: constraint violation = 0.536846
+   pelvis_tilt: constraint violation = -0.0865205
+   pelvis_tilt: constraint violation = 2.42589
+   pelvis_tilt: constraint violation = 0.31047
+   pelvis_tilt: constraint violation = -0.0793169
+   pelvis_tilt: constraint violation = -1.24185
+   pelvis_tilt: constraint violation = -1.36269
+   pelvis_tilt: constraint violation = 0.0118125
+   pelvis_tilt: constraint violation = 3.21165
+   pelvis_tilt: constraint violation = -0.440187
+   pelvis_tilt: constraint violation = -0.255581
+   pelvis_tilt: constraint violation = 1.67631
+   pelvis_tilt: constraint violation = -0.763281
+   pelvis_tilt: constraint violation = 68.2932
+   pelvis_tilt: constraint violation = 89.9412
+   pelvis_tilt: constraint violation = -0.254018
+   pelvis_tilt: constraint violation = -4.58316
+   pelvis_tilt: constraint violation = 31.8587
+   pelvis_tilt: constraint violation = 36.2105
+
+time = 0.524 Performance = 1.8478 Constraint violation = 123.006
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.54.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.71405
+   pelvis_tilt: constraint violation = 0.529015
+   pelvis_tilt: constraint violation = -1.71675
+   pelvis_tilt: constraint violation = -0.00268176
+   pelvis_tilt: constraint violation = 0.326045
+   pelvis_tilt: constraint violation = -0.00935606
+   pelvis_tilt: constraint violation = 0.487048
+   pelvis_tilt: constraint violation = -0.3377
+   pelvis_tilt: constraint violation = -0.0645237
+   pelvis_tilt: constraint violation = -0.540225
+   pelvis_tilt: constraint violation = -0.988479
+   pelvis_tilt: constraint violation = 0.0663712
+   pelvis_tilt: constraint violation = 1.99892
+   pelvis_tilt: constraint violation = 0.980939
+   pelvis_tilt: constraint violation = -0.496014
+   pelvis_tilt: constraint violation = 0.854287
+   pelvis_tilt: constraint violation = -0.293208
+   pelvis_tilt: constraint violation = 52.9501
+   pelvis_tilt: constraint violation = 56.363
+   pelvis_tilt: constraint violation = -3.7866
+   pelvis_tilt: constraint violation = -3.0421
+   pelvis_tilt: constraint violation = 17.4402
+   pelvis_tilt: constraint violation = 22.3294
+
+time = 0.54 Performance = 2.31863 Constraint violation = 82.588
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.556.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.63109
+   pelvis_tilt: constraint violation = 0.218904
+   pelvis_tilt: constraint violation = -1.83785
+   pelvis_tilt: constraint violation = -0.00188019
+   pelvis_tilt: constraint violation = 0.179756
+   pelvis_tilt: constraint violation = 0.0561017
+   pelvis_tilt: constraint violation = -0.96904
+   pelvis_tilt: constraint violation = -1.09855
+   pelvis_tilt: constraint violation = -0.14234
+   pelvis_tilt: constraint violation = 0.274599
+   pelvis_tilt: constraint violation = -0.542015
+   pelvis_tilt: constraint violation = 0.122299
+   pelvis_tilt: constraint violation = 0.988773
+   pelvis_tilt: constraint violation = 2.13096
+   pelvis_tilt: constraint violation = -0.628312
+   pelvis_tilt: constraint violation = -0.238952
+   pelvis_tilt: constraint violation = 0.402479
+   pelvis_tilt: constraint violation = 44.0124
+   pelvis_tilt: constraint violation = 32.6295
+   pelvis_tilt: constraint violation = -7.6959
+   pelvis_tilt: constraint violation = -1.56465
+   pelvis_tilt: constraint violation = 5.59167
+   pelvis_tilt: constraint violation = 12.944
+
+time = 0.556 Performance = 2.79799 Constraint violation = 57.2456
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.572.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   glut_med1_l approaching upper bound of 1
+
+time = 0.572 Performance = 3.38374 Constraint violation = 54.279
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.588.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   glut_med1_l approaching upper bound of 1
+   med_gas_l approaching upper bound of 1
+
+time = 0.588 Performance = 3.71383 Constraint violation = 61.6965
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.604000.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   glut_med1_l approaching upper bound of 1
+   med_gas_l approaching upper bound of 1
+
+time = 0.604000 Performance = 3.75181 Constraint violation = 71.8752
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.62.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   glut_med1_l approaching upper bound of 1
+   med_gas_l approaching upper bound of 1
+
+time = 0.62 Performance = 3.65008 Constraint violation = 67.3285
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.636.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.955175
+   pelvis_tilt: constraint violation = -0.419559
+   pelvis_tilt: constraint violation = -2.11573
+   pelvis_tilt: constraint violation = -0.00284819
+   pelvis_tilt: constraint violation = 0.123254
+   pelvis_tilt: constraint violation = 0.0812735
+   pelvis_tilt: constraint violation = -1.90952
+   pelvis_tilt: constraint violation = -1.77172
+   pelvis_tilt: constraint violation = -0.213418
+   pelvis_tilt: constraint violation = 0.490839
+   pelvis_tilt: constraint violation = -0.504592
+   pelvis_tilt: constraint violation = 0.199949
+   pelvis_tilt: constraint violation = 1.57979
+   pelvis_tilt: constraint violation = 2.12888
+   pelvis_tilt: constraint violation = -0.708591
+   pelvis_tilt: constraint violation = -0.464179
+   pelvis_tilt: constraint violation = 0.305994
+   pelvis_tilt: constraint violation = 18.227
+   pelvis_tilt: constraint violation = 16.026
+   pelvis_tilt: constraint violation = -5.80795
+   pelvis_tilt: constraint violation = -1.08005
+   pelvis_tilt: constraint violation = 0.27191
+   pelvis_tilt: constraint violation = 5.41426
+
+time = 0.636 Performance = 3.29017 Constraint violation = 25.9641
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.652.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.190317
+   pelvis_tilt: constraint violation = 0.926919
+   pelvis_tilt: constraint violation = -1.16596
+   pelvis_tilt: constraint violation = -0.00477774
+   pelvis_tilt: constraint violation = -0.356487
+   pelvis_tilt: constraint violation = -0.011263
+   pelvis_tilt: constraint violation = -5.43756
+   pelvis_tilt: constraint violation = -0.0806123
+   pelvis_tilt: constraint violation = -0.0766233
+   pelvis_tilt: constraint violation = 0.157592
+   pelvis_tilt: constraint violation = -0.979998
+   pelvis_tilt: constraint violation = 0.106745
+   pelvis_tilt: constraint violation = -0.197078
+   pelvis_tilt: constraint violation = 0.52044
+   pelvis_tilt: constraint violation = -0.266863
+   pelvis_tilt: constraint violation = -2.3235
+   pelvis_tilt: constraint violation = -0.204904
+   pelvis_tilt: constraint violation = -19.0006
+   pelvis_tilt: constraint violation = -25.3441
+   pelvis_tilt: constraint violation = -0.449467
+   pelvis_tilt: constraint violation = -1.10888
+   pelvis_tilt: constraint violation = -6.13589
+   pelvis_tilt: constraint violation = -14.6142
+
+time = 0.652 Performance = 2.86421 Constraint violation = 35.9831
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.668.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 1.74231
+   pelvis_tilt: constraint violation = 1.88981
+   pelvis_tilt: constraint violation = -0.369721
+   pelvis_tilt: constraint violation = -0.00251653
+   pelvis_tilt: constraint violation = -0.591087
+   pelvis_tilt: constraint violation = -0.0940793
+   pelvis_tilt: constraint violation = -5.30377
+   pelvis_tilt: constraint violation = 1.30753
+   pelvis_tilt: constraint violation = -0.145621
+   pelvis_tilt: constraint violation = 0.75266
+   pelvis_tilt: constraint violation = -1.30839
+   pelvis_tilt: constraint violation = 0.0476923
+   pelvis_tilt: constraint violation = -1.87146
+   pelvis_tilt: constraint violation = -0.850639
+   pelvis_tilt: constraint violation = 0.0974279
+   pelvis_tilt: constraint violation = -2.2436
+   pelvis_tilt: constraint violation = 0.214694
+   pelvis_tilt: constraint violation = -40.2331
+   pelvis_tilt: constraint violation = -27.0155
+   pelvis_tilt: constraint violation = 3.40888
+   pelvis_tilt: constraint violation = -1.16159
+   pelvis_tilt: constraint violation = -10.109
+   pelvis_tilt: constraint violation = -16.5424
+
+time = 0.668 Performance = 2.46748 Constraint violation = 52.7817
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.684.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 1.91229
+   pelvis_tilt: constraint violation = 1.9041
+   pelvis_tilt: constraint violation = -0.731252
+   pelvis_tilt: constraint violation = -0.00138747
+   pelvis_tilt: constraint violation = -0.482251
+   pelvis_tilt: constraint violation = -0.126288
+   pelvis_tilt: constraint violation = -3.68256
+   pelvis_tilt: constraint violation = 1.47064
+   pelvis_tilt: constraint violation = -0.223833
+   pelvis_tilt: constraint violation = 1.12637
+   pelvis_tilt: constraint violation = -1.65451
+   pelvis_tilt: constraint violation = 0.131497
+   pelvis_tilt: constraint violation = -1.77349
+   pelvis_tilt: constraint violation = -1.35509
+   pelvis_tilt: constraint violation = 0.0324111
+   pelvis_tilt: constraint violation = -1.55014
+   pelvis_tilt: constraint violation = 0.401603
+   pelvis_tilt: constraint violation = -38.8324
+   pelvis_tilt: constraint violation = -12.9818
+   pelvis_tilt: constraint violation = 3.56957
+   pelvis_tilt: constraint violation = -1.58434
+   pelvis_tilt: constraint violation = -9.46131
+   pelvis_tilt: constraint violation = -9.95107
+
+time = 0.684 Performance = 2.09379 Constraint violation = 43.7685
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.7.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 1.42243
+   pelvis_tilt: constraint violation = 1.64547
+   pelvis_tilt: constraint violation = -1.16572
+   pelvis_tilt: constraint violation = 0.000276409
+   pelvis_tilt: constraint violation = -0.276145
+   pelvis_tilt: constraint violation = -0.134055
+   pelvis_tilt: constraint violation = -1.71294
+   pelvis_tilt: constraint violation = 1.2937
+   pelvis_tilt: constraint violation = -0.235377
+   pelvis_tilt: constraint violation = 1.18278
+   pelvis_tilt: constraint violation = -1.79955
+   pelvis_tilt: constraint violation = 0.217095
+   pelvis_tilt: constraint violation = -1.27995
+   pelvis_tilt: constraint violation = -1.45398
+   pelvis_tilt: constraint violation = -0.0904178
+   pelvis_tilt: constraint violation = -0.822008
+   pelvis_tilt: constraint violation = 0.480628
+   pelvis_tilt: constraint violation = -29.5047
+   pelvis_tilt: constraint violation = -2.98077
+   pelvis_tilt: constraint violation = 3.44978
+   pelvis_tilt: constraint violation = -2.06994
+   pelvis_tilt: constraint violation = -6.2857
+   pelvis_tilt: constraint violation = -4.30664
+
+time = 0.7 Performance = 1.86165 Constraint violation = 31.2067
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.716.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 1.06395
+   pelvis_tilt: constraint violation = 1.25938
+   pelvis_tilt: constraint violation = -1.4911
+   pelvis_tilt: constraint violation = 0.00280866
+   pelvis_tilt: constraint violation = -0.126976
+   pelvis_tilt: constraint violation = -0.118295
+   pelvis_tilt: constraint violation = -0.346178
+   pelvis_tilt: constraint violation = 0.905656
+   pelvis_tilt: constraint violation = -0.192201
+   pelvis_tilt: constraint violation = 1.38545
+   pelvis_tilt: constraint violation = -1.69728
+   pelvis_tilt: constraint violation = 0.24247
+   pelvis_tilt: constraint violation = -1.09448
+   pelvis_tilt: constraint violation = -1.17755
+   pelvis_tilt: constraint violation = -0.224495
+   pelvis_tilt: constraint violation = -0.256734
+   pelvis_tilt: constraint violation = 0.585197
+   pelvis_tilt: constraint violation = -20.2434
+   pelvis_tilt: constraint violation = 0.861276
+   pelvis_tilt: constraint violation = 3.04896
+   pelvis_tilt: constraint violation = -2.49012
+   pelvis_tilt: constraint violation = -3.89038
+   pelvis_tilt: constraint violation = -1.59598
+
+time = 0.716 Performance = 1.6862 Constraint violation = 21.3908
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.732.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.904396
+   pelvis_tilt: constraint violation = 0.98759
+   pelvis_tilt: constraint violation = -1.27821
+   pelvis_tilt: constraint violation = 0.00332274
+   pelvis_tilt: constraint violation = -0.172096
+   pelvis_tilt: constraint violation = -0.0929471
+   pelvis_tilt: constraint violation = -0.742056
+   pelvis_tilt: constraint violation = 0.675043
+   pelvis_tilt: constraint violation = -0.151686
+   pelvis_tilt: constraint violation = 1.32425
+   pelvis_tilt: constraint violation = -1.29676
+   pelvis_tilt: constraint violation = 0.183539
+   pelvis_tilt: constraint violation = -1.48062
+   pelvis_tilt: constraint violation = -0.788004
+   pelvis_tilt: constraint violation = -0.204548
+   pelvis_tilt: constraint violation = -0.386688
+   pelvis_tilt: constraint violation = 0.72314
+   pelvis_tilt: constraint violation = -28.9295
+   pelvis_tilt: constraint violation = 0.0206772
+   pelvis_tilt: constraint violation = 2.98782
+   pelvis_tilt: constraint violation = -2.08045
+   pelvis_tilt: constraint violation = -8.26297
+   pelvis_tilt: constraint violation = -1.27289
+
+time = 0.732 Performance = 1.47931 Constraint violation = 30.5215
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.748.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.438985
+   pelvis_tilt: constraint violation = 0.416759
+   pelvis_tilt: constraint violation = -1.0856
+   pelvis_tilt: constraint violation = 0.00287628
+   pelvis_tilt: constraint violation = -0.417325
+   pelvis_tilt: constraint violation = -0.0341385
+   pelvis_tilt: constraint violation = -0.671045
+   pelvis_tilt: constraint violation = 0.175562
+   pelvis_tilt: constraint violation = -0.0527339
+   pelvis_tilt: constraint violation = 0.949649
+   pelvis_tilt: constraint violation = -0.661384
+   pelvis_tilt: constraint violation = 0.0861675
+   pelvis_tilt: constraint violation = -1.65539
+   pelvis_tilt: constraint violation = -0.198046
+   pelvis_tilt: constraint violation = -0.161154
+   pelvis_tilt: constraint violation = -0.586949
+   pelvis_tilt: constraint violation = 0.641802
+   pelvis_tilt: constraint violation = -19.2333
+   pelvis_tilt: constraint violation = -1.23566
+   pelvis_tilt: constraint violation = 1.2866
+   pelvis_tilt: constraint violation = -0.838139
+   pelvis_tilt: constraint violation = -16.9077
+   pelvis_tilt: constraint violation = -1.54286
+
+time = 0.748 Performance = 1.47605 Constraint violation = 25.8683
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Infeasible problem detected (status 2)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.764.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.0262371
+   pelvis_tilt: constraint violation = 0.0718279
+   pelvis_tilt: constraint violation = -0.55306
+   pelvis_tilt: constraint violation = 0.000794781
+   pelvis_tilt: constraint violation = -0.37653
+   pelvis_tilt: constraint violation = -0.00149047
+   pelvis_tilt: constraint violation = -1.46836
+   pelvis_tilt: constraint violation = -0.0396655
+   pelvis_tilt: constraint violation = 0.0152908
+   pelvis_tilt: constraint violation = 0.0525503
+   pelvis_tilt: constraint violation = -0.0871749
+   pelvis_tilt: constraint violation = 0.021036
+   pelvis_tilt: constraint violation = -1.58356
+   pelvis_tilt: constraint violation = 0.0874453
+   pelvis_tilt: constraint violation = -0.0627145
+   pelvis_tilt: constraint violation = -0.277078
+   pelvis_tilt: constraint violation = 0.131627
+   pelvis_tilt: constraint violation = -0.380564
+   pelvis_tilt: constraint violation = -0.750232
+   pelvis_tilt: constraint violation = 0.0889752
+   pelvis_tilt: constraint violation = 0.0917358
+   pelvis_tilt: constraint violation = -8.90772
+   pelvis_tilt: constraint violation = -1.17038
+
+time = 0.764 Performance = 1.42776 Constraint violation = 9.31004
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.78.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.569279
+   pelvis_tilt: constraint violation = 0.0623564
+   pelvis_tilt: constraint violation = -0.100877
+   pelvis_tilt: constraint violation = -0.000111963
+   pelvis_tilt: constraint violation = -0.0569337
+   pelvis_tilt: constraint violation = -0.00223932
+   pelvis_tilt: constraint violation = -0.727438
+   pelvis_tilt: constraint violation = 0.0168607
+   pelvis_tilt: constraint violation = -0.00283631
+   pelvis_tilt: constraint violation = -0.111454
+   pelvis_tilt: constraint violation = -0.0559753
+   pelvis_tilt: constraint violation = 0.0131757
+   pelvis_tilt: constraint violation = -0.613176
+   pelvis_tilt: constraint violation = 0.04274
+   pelvis_tilt: constraint violation = -0.0266794
+   pelvis_tilt: constraint violation = -0.420642
+   pelvis_tilt: constraint violation = 0.0349476
+   pelvis_tilt: constraint violation = -11.4069
+   pelvis_tilt: constraint violation = -0.550479
+   pelvis_tilt: constraint violation = 0.136313
+   pelvis_tilt: constraint violation = -0.0685946
+   pelvis_tilt: constraint violation = -4.06652
+   pelvis_tilt: constraint violation = -0.339038
+
+time = 0.78 Performance = 1.23914 Constraint violation = 12.1877
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.796.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.1939
+   pelvis_tilt: constraint violation = 0.232071
+   pelvis_tilt: constraint violation = 0.103194
+   pelvis_tilt: constraint violation = -0.000986978
+   pelvis_tilt: constraint violation = 0.0661813
+   pelvis_tilt: constraint violation = -0.0219249
+   pelvis_tilt: constraint violation = 0.0496976
+   pelvis_tilt: constraint violation = 0.320318
+   pelvis_tilt: constraint violation = -0.0509674
+   pelvis_tilt: constraint violation = -0.669707
+   pelvis_tilt: constraint violation = -0.139456
+   pelvis_tilt: constraint violation = 0.0130717
+   pelvis_tilt: constraint violation = 0.116497
+   pelvis_tilt: constraint violation = -0.215458
+   pelvis_tilt: constraint violation = 0.106616
+   pelvis_tilt: constraint violation = -0.261797
+   pelvis_tilt: constraint violation = -0.318156
+   pelvis_tilt: constraint violation = 2.08843
+   pelvis_tilt: constraint violation = -0.379837
+   pelvis_tilt: constraint violation = 1.42326
+   pelvis_tilt: constraint violation = -0.193207
+   pelvis_tilt: constraint violation = 5.79662
+   pelvis_tilt: constraint violation = 0.0958094
+
+time = 0.796 Performance = 1.23174 Constraint violation = 6.51848
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.812.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.69949
+   pelvis_tilt: constraint violation = 0.296752
+   pelvis_tilt: constraint violation = 0.295339
+   pelvis_tilt: constraint violation = -0.00231348
+   pelvis_tilt: constraint violation = 0.0465228
+   pelvis_tilt: constraint violation = -0.0351503
+   pelvis_tilt: constraint violation = -0.454288
+   pelvis_tilt: constraint violation = 0.545142
+   pelvis_tilt: constraint violation = -0.0674875
+   pelvis_tilt: constraint violation = -1.26348
+   pelvis_tilt: constraint violation = -0.164267
+   pelvis_tilt: constraint violation = 0.0018933
+   pelvis_tilt: constraint violation = 0.35427
+   pelvis_tilt: constraint violation = -0.464212
+   pelvis_tilt: constraint violation = 0.212869
+   pelvis_tilt: constraint violation = -0.657077
+   pelvis_tilt: constraint violation = -0.360097
+   pelvis_tilt: constraint violation = -6.07664
+   pelvis_tilt: constraint violation = -2.89989
+   pelvis_tilt: constraint violation = 2.44465
+   pelvis_tilt: constraint violation = 0.0347415
+   pelvis_tilt: constraint violation = 5.75264
+   pelvis_tilt: constraint violation = -0.635103
+
+time = 0.812 Performance = 1.0633 Constraint violation = 9.53703
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.828.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.79206
+   pelvis_tilt: constraint violation = 0.244765
+   pelvis_tilt: constraint violation = 0.238856
+   pelvis_tilt: constraint violation = -0.0020036
+   pelvis_tilt: constraint violation = 0.022514
+   pelvis_tilt: constraint violation = -0.0339405
+   pelvis_tilt: constraint violation = -0.720393
+   pelvis_tilt: constraint violation = 0.543555
+   pelvis_tilt: constraint violation = -0.0518454
+   pelvis_tilt: constraint violation = -1.29438
+   pelvis_tilt: constraint violation = -0.192972
+   pelvis_tilt: constraint violation = 0.0107378
+   pelvis_tilt: constraint violation = 0.230129
+   pelvis_tilt: constraint violation = -0.520116
+   pelvis_tilt: constraint violation = 0.178612
+   pelvis_tilt: constraint violation = -0.807703
+   pelvis_tilt: constraint violation = -0.266828
+   pelvis_tilt: constraint violation = -9.7793
+   pelvis_tilt: constraint violation = -6.92013
+   pelvis_tilt: constraint violation = 2.30615
+   pelvis_tilt: constraint violation = 0.0413242
+   pelvis_tilt: constraint violation = 4.14509
+   pelvis_tilt: constraint violation = -2.02685
+
+time = 0.828 Performance = 0.944098 Constraint violation = 13.3068
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.844.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.62707
+   pelvis_tilt: constraint violation = 0.125526
+   pelvis_tilt: constraint violation = -0.186392
+   pelvis_tilt: constraint violation = -0.000930347
+   pelvis_tilt: constraint violation = 0.0209591
+   pelvis_tilt: constraint violation = -0.0245443
+   pelvis_tilt: constraint violation = -0.844006
+   pelvis_tilt: constraint violation = 0.319904
+   pelvis_tilt: constraint violation = -0.02894
+   pelvis_tilt: constraint violation = -0.683929
+   pelvis_tilt: constraint violation = -0.293456
+   pelvis_tilt: constraint violation = 0.0792524
+   pelvis_tilt: constraint violation = -0.162926
+   pelvis_tilt: constraint violation = -0.381995
+   pelvis_tilt: constraint violation = -0.031512
+   pelvis_tilt: constraint violation = -0.839505
+   pelvis_tilt: constraint violation = -0.245007
+   pelvis_tilt: constraint violation = -6.0654
+   pelvis_tilt: constraint violation = -6.29161
+   pelvis_tilt: constraint violation = 0.945434
+   pelvis_tilt: constraint violation = -0.979024
+   pelvis_tilt: constraint violation = 2.76281
+   pelvis_tilt: constraint violation = -2.9626
+
+time = 0.844 Performance = 0.895815 Constraint violation = 9.98242
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.86.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.48345
+   pelvis_tilt: constraint violation = -0.0855218
+   pelvis_tilt: constraint violation = -0.607568
+   pelvis_tilt: constraint violation = -0.000243671
+   pelvis_tilt: constraint violation = 0.0597558
+   pelvis_tilt: constraint violation = -0.00831411
+   pelvis_tilt: constraint violation = -0.843515
+   pelvis_tilt: constraint violation = -0.0966999
+   pelvis_tilt: constraint violation = -0.009225
+   pelvis_tilt: constraint violation = -0.0031697
+   pelvis_tilt: constraint violation = -0.217602
+   pelvis_tilt: constraint violation = 0.124262
+   pelvis_tilt: constraint violation = -0.322785
+   pelvis_tilt: constraint violation = -0.137959
+   pelvis_tilt: constraint violation = -0.230003
+   pelvis_tilt: constraint violation = -0.818042
+   pelvis_tilt: constraint violation = -0.225295
+   pelvis_tilt: constraint violation = 6.11924
+   pelvis_tilt: constraint violation = 8.70504
+   pelvis_tilt: constraint violation = -1.19497
+   pelvis_tilt: constraint violation = -2.57289
+   pelvis_tilt: constraint violation = 3.68589
+   pelvis_tilt: constraint violation = 2.35297
+
+time = 0.86 Performance = 0.840507 Constraint violation = 12.0272
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.876.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.33492
+   pelvis_tilt: constraint violation = -0.360061
+   pelvis_tilt: constraint violation = -1.10062
+   pelvis_tilt: constraint violation = 0.000108231
+   pelvis_tilt: constraint violation = 0.0946642
+   pelvis_tilt: constraint violation = 0.0142835
+   pelvis_tilt: constraint violation = -0.955736
+   pelvis_tilt: constraint violation = -0.43453
+   pelvis_tilt: constraint violation = 0.00544158
+   pelvis_tilt: constraint violation = 0.573567
+   pelvis_tilt: constraint violation = -0.0583594
+   pelvis_tilt: constraint violation = 0.174487
+   pelvis_tilt: constraint violation = -0.323299
+   pelvis_tilt: constraint violation = 0.213499
+   pelvis_tilt: constraint violation = -0.500267
+   pelvis_tilt: constraint violation = -0.906934
+   pelvis_tilt: constraint violation = -0.170143
+   pelvis_tilt: constraint violation = 14.4927
+   pelvis_tilt: constraint violation = 22.9994
+   pelvis_tilt: constraint violation = -2.8386
+   pelvis_tilt: constraint violation = -3.29589
+   pelvis_tilt: constraint violation = 4.15857
+   pelvis_tilt: constraint violation = 8.5387
+
+time = 0.876 Performance = 0.788413 Constraint violation = 29.223
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.892.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.24262
+   pelvis_tilt: constraint violation = -0.514265
+   pelvis_tilt: constraint violation = -1.99515
+   pelvis_tilt: constraint violation = 2.18398e-05
+   pelvis_tilt: constraint violation = 0.0346739
+   pelvis_tilt: constraint violation = 0.0265404
+   pelvis_tilt: constraint violation = -0.791606
+   pelvis_tilt: constraint violation = -0.639573
+   pelvis_tilt: constraint violation = -0.000239628
+   pelvis_tilt: constraint violation = 0.66994
+   pelvis_tilt: constraint violation = 0.0453751
+   pelvis_tilt: constraint violation = 0.1268
+   pelvis_tilt: constraint violation = -0.30688
+   pelvis_tilt: constraint violation = 0.601181
+   pelvis_tilt: constraint violation = -0.467927
+   pelvis_tilt: constraint violation = -0.435026
+   pelvis_tilt: constraint violation = 0.0810379
+   pelvis_tilt: constraint violation = 6.00956
+   pelvis_tilt: constraint violation = 11.6738
+   pelvis_tilt: constraint violation = -2.05444
+   pelvis_tilt: constraint violation = -1.94229
+   pelvis_tilt: constraint violation = 0.214183
+   pelvis_tilt: constraint violation = 6.03522
+
+time = 0.892 Performance = 0.7648 Constraint violation = 15.0006
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.908000.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.685217
+   pelvis_tilt: constraint violation = -0.326429
+   pelvis_tilt: constraint violation = -1.47999
+   pelvis_tilt: constraint violation = -0.000277089
+   pelvis_tilt: constraint violation = -0.0795234
+   pelvis_tilt: constraint violation = 0.0240632
+   pelvis_tilt: constraint violation = -1.67578
+   pelvis_tilt: constraint violation = -0.354624
+   pelvis_tilt: constraint violation = -0.0200365
+   pelvis_tilt: constraint violation = 0.69596
+   pelvis_tilt: constraint violation = 0.0628905
+   pelvis_tilt: constraint violation = 0.191314
+   pelvis_tilt: constraint violation = -0.846288
+   pelvis_tilt: constraint violation = 0.565729
+   pelvis_tilt: constraint violation = -0.692602
+   pelvis_tilt: constraint violation = -1.11542
+   pelvis_tilt: constraint violation = 0.328817
+   pelvis_tilt: constraint violation = -7.36791
+   pelvis_tilt: constraint violation = 10.8112
+   pelvis_tilt: constraint violation = -2.05107
+   pelvis_tilt: constraint violation = -2.21049
+   pelvis_tilt: constraint violation = -5.41299
+   pelvis_tilt: constraint violation = -2.84383
+
+time = 0.908000 Performance = 0.755394 Constraint violation = 15.0582
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.924.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.289423
+   pelvis_tilt: constraint violation = -0.269498
+   pelvis_tilt: constraint violation = -1.59771
+   pelvis_tilt: constraint violation = -0.000631844
+   pelvis_tilt: constraint violation = -0.160277
+   pelvis_tilt: constraint violation = 0.0179103
+   pelvis_tilt: constraint violation = -2.3963
+   pelvis_tilt: constraint violation = -0.23926
+   pelvis_tilt: constraint violation = -0.0311352
+   pelvis_tilt: constraint violation = 0.342591
+   pelvis_tilt: constraint violation = 0.0762221
+   pelvis_tilt: constraint violation = 0.12786
+   pelvis_tilt: constraint violation = -1.33379
+   pelvis_tilt: constraint violation = 0.622516
+   pelvis_tilt: constraint violation = -0.499464
+   pelvis_tilt: constraint violation = -0.804482
+   pelvis_tilt: constraint violation = 0.278727
+   pelvis_tilt: constraint violation = -10.3136
+   pelvis_tilt: constraint violation = -0.0683985
+   pelvis_tilt: constraint violation = -1.16502
+   pelvis_tilt: constraint violation = -1.11368
+   pelvis_tilt: constraint violation = -7.07674
+   pelvis_tilt: constraint violation = -7.42655
+
+time = 0.924 Performance = 0.791955 Constraint violation = 15.0341
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.94.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.355393
+   pelvis_tilt: constraint violation = -0.167745
+   pelvis_tilt: constraint violation = -1.18304
+   pelvis_tilt: constraint violation = -0.000278004
+   pelvis_tilt: constraint violation = -0.189396
+   pelvis_tilt: constraint violation = 0.0150241
+   pelvis_tilt: constraint violation = -1.59387
+   pelvis_tilt: constraint violation = -0.174334
+   pelvis_tilt: constraint violation = -0.0355978
+   pelvis_tilt: constraint violation = 0.195537
+   pelvis_tilt: constraint violation = 0.097794
+   pelvis_tilt: constraint violation = 0.124503
+   pelvis_tilt: constraint violation = -1.23633
+   pelvis_tilt: constraint violation = 0.473028
+   pelvis_tilt: constraint violation = -0.583706
+   pelvis_tilt: constraint violation = -1.0935
+   pelvis_tilt: constraint violation = 0.339543
+   pelvis_tilt: constraint violation = -19.1194
+   pelvis_tilt: constraint violation = -7.52795
+   pelvis_tilt: constraint violation = -0.898729
+   pelvis_tilt: constraint violation = -0.580977
+   pelvis_tilt: constraint violation = -9.19575
+   pelvis_tilt: constraint violation = -10.5221
+
+time = 0.94 Performance = 0.864088 Constraint violation = 25.0254
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.956.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.305732
+   pelvis_tilt: constraint violation = 0.138891
+   pelvis_tilt: constraint violation = -0.332963
+   pelvis_tilt: constraint violation = 0.000428671
+   pelvis_tilt: constraint violation = -0.209012
+   pelvis_tilt: constraint violation = -0.00208405
+   pelvis_tilt: constraint violation = -0.877107
+   pelvis_tilt: constraint violation = 0.029187
+   pelvis_tilt: constraint violation = -0.0186853
+   pelvis_tilt: constraint violation = -0.3115
+   pelvis_tilt: constraint violation = -0.0128733
+   pelvis_tilt: constraint violation = 0.0625043
+   pelvis_tilt: constraint violation = -1.27035
+   pelvis_tilt: constraint violation = 0.167638
+   pelvis_tilt: constraint violation = -0.122108
+   pelvis_tilt: constraint violation = -0.454908
+   pelvis_tilt: constraint violation = 0.140583
+   pelvis_tilt: constraint violation = -11.3031
+   pelvis_tilt: constraint violation = -7.14368
+   pelvis_tilt: constraint violation = 0.276381
+   pelvis_tilt: constraint violation = -0.078259
+   pelvis_tilt: constraint violation = -7.3521
+   pelvis_tilt: constraint violation = -9.86102
+
+time = 0.956 Performance = 0.946505 Constraint violation = 18.2535
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.972.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.157389
+   pelvis_tilt: constraint violation = 0.367697
+   pelvis_tilt: constraint violation = 0.0662648
+   pelvis_tilt: constraint violation = 0.000276831
+   pelvis_tilt: constraint violation = -0.194386
+   pelvis_tilt: constraint violation = -0.012771
+   pelvis_tilt: constraint violation = -0.366508
+   pelvis_tilt: constraint violation = 0.156498
+   pelvis_tilt: constraint violation = -0.00487086
+   pelvis_tilt: constraint violation = -0.902082
+   pelvis_tilt: constraint violation = -0.1274
+   pelvis_tilt: constraint violation = 0.0664493
+   pelvis_tilt: constraint violation = -1.2841
+   pelvis_tilt: constraint violation = 0.075325
+   pelvis_tilt: constraint violation = 0.0945138
+   pelvis_tilt: constraint violation = -0.289191
+   pelvis_tilt: constraint violation = 0.123888
+   pelvis_tilt: constraint violation = -22.4127
+   pelvis_tilt: constraint violation = -18.129
+   pelvis_tilt: constraint violation = 1.02347
+   pelvis_tilt: constraint violation = -0.173595
+   pelvis_tilt: constraint violation = -8.33903
+   pelvis_tilt: constraint violation = -12.5042
+
+time = 0.972 Performance = 1.02293 Constraint violation = 32.5718
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 0.988.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.0261027
+   pelvis_tilt: constraint violation = 0.651144
+   pelvis_tilt: constraint violation = 0.31971
+   pelvis_tilt: constraint violation = 9.0835e-06
+   pelvis_tilt: constraint violation = -0.228473
+   pelvis_tilt: constraint violation = -0.0240065
+   pelvis_tilt: constraint violation = -0.0392026
+   pelvis_tilt: constraint violation = 0.255225
+   pelvis_tilt: constraint violation = 0.00610137
+   pelvis_tilt: constraint violation = -1.7617
+   pelvis_tilt: constraint violation = -0.261156
+   pelvis_tilt: constraint violation = 0.0852875
+   pelvis_tilt: constraint violation = -1.20168
+   pelvis_tilt: constraint violation = -0.0260955
+   pelvis_tilt: constraint violation = 0.225594
+   pelvis_tilt: constraint violation = -0.0520351
+   pelvis_tilt: constraint violation = 0.0557239
+   pelvis_tilt: constraint violation = -7.42209
+   pelvis_tilt: constraint violation = -4.63884
+   pelvis_tilt: constraint violation = 1.29507
+   pelvis_tilt: constraint violation = -0.590727
+   pelvis_tilt: constraint violation = -7.30193
+   pelvis_tilt: constraint violation = -10.148
+
+time = 0.988 Performance = 1.08222 Constraint violation = 15.5003
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.00400.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.143371
+   pelvis_tilt: constraint violation = 0.808654
+   pelvis_tilt: constraint violation = 0.507911
+   pelvis_tilt: constraint violation = 0.000228586
+   pelvis_tilt: constraint violation = -0.167535
+   pelvis_tilt: constraint violation = -0.0290843
+   pelvis_tilt: constraint violation = 0.367342
+   pelvis_tilt: constraint violation = 0.34423
+   pelvis_tilt: constraint violation = 0.0144137
+   pelvis_tilt: constraint violation = -1.3966
+   pelvis_tilt: constraint violation = -0.415427
+   pelvis_tilt: constraint violation = 0.129994
+   pelvis_tilt: constraint violation = -0.950327
+   pelvis_tilt: constraint violation = -0.122259
+   pelvis_tilt: constraint violation = 0.367397
+   pelvis_tilt: constraint violation = 0.317817
+   pelvis_tilt: constraint violation = 0.0140994
+   pelvis_tilt: constraint violation = -22.5954
+   pelvis_tilt: constraint violation = -12.6127
+   pelvis_tilt: constraint violation = 2.09912
+   pelvis_tilt: constraint violation = -1.1414
+   pelvis_tilt: constraint violation = -7.11612
+   pelvis_tilt: constraint violation = -10.092
+
+time = 1.00400 Performance = 1.08357 Constraint violation = 28.8503
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.02.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.148939
+   pelvis_tilt: constraint violation = 0.729115
+   pelvis_tilt: constraint violation = 0.0944117
+   pelvis_tilt: constraint violation = 0.000353799
+   pelvis_tilt: constraint violation = -0.106132
+   pelvis_tilt: constraint violation = -0.0230592
+   pelvis_tilt: constraint violation = 0.21545
+   pelvis_tilt: constraint violation = 0.345604
+   pelvis_tilt: constraint violation = -0.000957366
+   pelvis_tilt: constraint violation = -0.714537
+   pelvis_tilt: constraint violation = -0.358227
+   pelvis_tilt: constraint violation = 0.115758
+   pelvis_tilt: constraint violation = -0.6643
+   pelvis_tilt: constraint violation = -0.0542475
+   pelvis_tilt: constraint violation = 0.144632
+   pelvis_tilt: constraint violation = 0.171509
+   pelvis_tilt: constraint violation = 0.0263821
+   pelvis_tilt: constraint violation = -16.75
+   pelvis_tilt: constraint violation = -4.71491
+   pelvis_tilt: constraint violation = 1.78554
+   pelvis_tilt: constraint violation = -1.07687
+   pelvis_tilt: constraint violation = -4.587
+   pelvis_tilt: constraint violation = -5.62272
+
+time = 1.02 Performance = 1.09684 Constraint violation = 19.018
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.036.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.0156804
+   pelvis_tilt: constraint violation = 0.638316
+   pelvis_tilt: constraint violation = -0.466884
+   pelvis_tilt: constraint violation = 0.000375074
+   pelvis_tilt: constraint violation = -0.074706
+   pelvis_tilt: constraint violation = -0.0177389
+   pelvis_tilt: constraint violation = -0.177013
+   pelvis_tilt: constraint violation = 0.546649
+   pelvis_tilt: constraint violation = -0.0298048
+   pelvis_tilt: constraint violation = 0.0325152
+   pelvis_tilt: constraint violation = -0.094601
+   pelvis_tilt: constraint violation = 0.0462314
+   pelvis_tilt: constraint violation = -0.514572
+   pelvis_tilt: constraint violation = 0.0106487
+   pelvis_tilt: constraint violation = -0.0278917
+   pelvis_tilt: constraint violation = -0.230093
+   pelvis_tilt: constraint violation = 0.040518
+   pelvis_tilt: constraint violation = -6.9349
+   pelvis_tilt: constraint violation = -0.593174
+   pelvis_tilt: constraint violation = 0.472594
+   pelvis_tilt: constraint violation = -0.396476
+   pelvis_tilt: constraint violation = -2.23994
+   pelvis_tilt: constraint violation = -2.28038
+
+time = 1.036 Performance = 1.13263 Constraint violation = 7.76773
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.052.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.11624
+   pelvis_tilt: constraint violation = 0.521989
+   pelvis_tilt: constraint violation = -1.17478
+   pelvis_tilt: constraint violation = 0.000587235
+   pelvis_tilt: constraint violation = -0.0176091
+   pelvis_tilt: constraint violation = -0.0120036
+   pelvis_tilt: constraint violation = -0.14684
+   pelvis_tilt: constraint violation = 0.339089
+   pelvis_tilt: constraint violation = -0.0525826
+   pelvis_tilt: constraint violation = 0.147971
+   pelvis_tilt: constraint violation = -0.0681386
+   pelvis_tilt: constraint violation = 0.074421
+   pelvis_tilt: constraint violation = -0.578395
+   pelvis_tilt: constraint violation = 0.0947696
+   pelvis_tilt: constraint violation = -0.0980863
+   pelvis_tilt: constraint violation = -0.318414
+   pelvis_tilt: constraint violation = 0.0819302
+   pelvis_tilt: constraint violation = -5.21286
+   pelvis_tilt: constraint violation = 1.03567
+   pelvis_tilt: constraint violation = 0.949728
+   pelvis_tilt: constraint violation = -0.208838
+   pelvis_tilt: constraint violation = -0.356987
+   pelvis_tilt: constraint violation = -0.713478
+
+time = 1.052 Performance = 1.15941 Constraint violation = 5.66814
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.068.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.49195
+   pelvis_tilt: constraint violation = 0.203386
+   pelvis_tilt: constraint violation = -1.22186
+   pelvis_tilt: constraint violation = 0.000629738
+   pelvis_tilt: constraint violation = 0.0293579
+   pelvis_tilt: constraint violation = -0.00972724
+   pelvis_tilt: constraint violation = -0.682786
+   pelvis_tilt: constraint violation = 0.463571
+   pelvis_tilt: constraint violation = -0.0818098
+   pelvis_tilt: constraint violation = 0.979282
+   pelvis_tilt: constraint violation = 0.129896
+   pelvis_tilt: constraint violation = 0.00189662
+   pelvis_tilt: constraint violation = -0.43026
+   pelvis_tilt: constraint violation = 0.323484
+   pelvis_tilt: constraint violation = -0.460645
+   pelvis_tilt: constraint violation = -0.893531
+   pelvis_tilt: constraint violation = 0.119258
+   pelvis_tilt: constraint violation = -1.25815
+   pelvis_tilt: constraint violation = 2.00414
+   pelvis_tilt: constraint violation = 0.659853
+   pelvis_tilt: constraint violation = 0.526599
+   pelvis_tilt: constraint violation = 2.74399
+   pelvis_tilt: constraint violation = 1.59348
+
+time = 1.068 Performance = 1.18225 Constraint violation = 4.59744
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.084.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.859824
+   pelvis_tilt: constraint violation = -0.0746804
+   pelvis_tilt: constraint violation = -1.43082
+   pelvis_tilt: constraint violation = 0.000150055
+   pelvis_tilt: constraint violation = 0.0566029
+   pelvis_tilt: constraint violation = 0.00563595
+   pelvis_tilt: constraint violation = -1.11236
+   pelvis_tilt: constraint violation = 0.390354
+   pelvis_tilt: constraint violation = -0.100558
+   pelvis_tilt: constraint violation = 1.07192
+   pelvis_tilt: constraint violation = 0.350024
+   pelvis_tilt: constraint violation = -0.0791936
+   pelvis_tilt: constraint violation = -0.26979
+   pelvis_tilt: constraint violation = 0.494042
+   pelvis_tilt: constraint violation = -0.592065
+   pelvis_tilt: constraint violation = -1.37415
+   pelvis_tilt: constraint violation = 0.101777
+   pelvis_tilt: constraint violation = 2.54111
+   pelvis_tilt: constraint violation = 0.673028
+   pelvis_tilt: constraint violation = 0.152285
+   pelvis_tilt: constraint violation = 1.29218
+   pelvis_tilt: constraint violation = 4.48521
+   pelvis_tilt: constraint violation = 2.86512
+
+time = 1.084 Performance = 1.22262 Constraint violation = 6.70583
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.1.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.01782
+   pelvis_tilt: constraint violation = -0.290695
+   pelvis_tilt: constraint violation = -1.31488
+   pelvis_tilt: constraint violation = -0.000604088
+   pelvis_tilt: constraint violation = 0.0405352
+   pelvis_tilt: constraint violation = 0.0187439
+   pelvis_tilt: constraint violation = -1.3349
+   pelvis_tilt: constraint violation = 0.238016
+   pelvis_tilt: constraint violation = -0.104363
+   pelvis_tilt: constraint violation = 0.717784
+   pelvis_tilt: constraint violation = 0.49704
+   pelvis_tilt: constraint violation = -0.106579
+   pelvis_tilt: constraint violation = -0.157178
+   pelvis_tilt: constraint violation = 0.589684
+   pelvis_tilt: constraint violation = -0.580586
+   pelvis_tilt: constraint violation = -1.64843
+   pelvis_tilt: constraint violation = 0.00397353
+   pelvis_tilt: constraint violation = 0.949212
+   pelvis_tilt: constraint violation = -2.98833
+   pelvis_tilt: constraint violation = -0.190791
+   pelvis_tilt: constraint violation = 1.95357
+   pelvis_tilt: constraint violation = 3.45595
+   pelvis_tilt: constraint violation = 2.71494
+
+time = 1.1 Performance = 1.28496 Constraint violation = 6.473
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.116.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.05695
+   pelvis_tilt: constraint violation = -0.513938
+   pelvis_tilt: constraint violation = -1.09633
+   pelvis_tilt: constraint violation = -0.00157964
+   pelvis_tilt: constraint violation = 0.0209848
+   pelvis_tilt: constraint violation = 0.0315189
+   pelvis_tilt: constraint violation = -1.51707
+   pelvis_tilt: constraint violation = 0.0142605
+   pelvis_tilt: constraint violation = -0.0993773
+   pelvis_tilt: constraint violation = 0.290957
+   pelvis_tilt: constraint violation = 0.657054
+   pelvis_tilt: constraint violation = -0.104172
+   pelvis_tilt: constraint violation = 0.064806
+   pelvis_tilt: constraint violation = 0.636301
+   pelvis_tilt: constraint violation = -0.524728
+   pelvis_tilt: constraint violation = -1.83223
+   pelvis_tilt: constraint violation = -0.226947
+   pelvis_tilt: constraint violation = -0.687175
+   pelvis_tilt: constraint violation = -7.36283
+   pelvis_tilt: constraint violation = -0.621294
+   pelvis_tilt: constraint violation = 2.6324
+   pelvis_tilt: constraint violation = 2.00243
+   pelvis_tilt: constraint violation = 2.7546
+
+time = 1.116 Performance = 1.37942 Constraint violation = 9.11663
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.132.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.10885
+   pelvis_tilt: constraint violation = -0.564606
+   pelvis_tilt: constraint violation = -1.15195
+   pelvis_tilt: constraint violation = -0.00207329
+   pelvis_tilt: constraint violation = 0.0372529
+   pelvis_tilt: constraint violation = 0.0303339
+   pelvis_tilt: constraint violation = -1.86244
+   pelvis_tilt: constraint violation = 0.0553942
+   pelvis_tilt: constraint violation = -0.11086
+   pelvis_tilt: constraint violation = 0.34133
+   pelvis_tilt: constraint violation = 0.849926
+   pelvis_tilt: constraint violation = -0.0618795
+   pelvis_tilt: constraint violation = 0.333747
+   pelvis_tilt: constraint violation = 0.635348
+   pelvis_tilt: constraint violation = -0.489381
+   pelvis_tilt: constraint violation = -1.90267
+   pelvis_tilt: constraint violation = -0.365113
+   pelvis_tilt: constraint violation = 0.415004
+   pelvis_tilt: constraint violation = -8.02514
+   pelvis_tilt: constraint violation = -0.58342
+   pelvis_tilt: constraint violation = 3.26527
+   pelvis_tilt: constraint violation = 3.24221
+   pelvis_tilt: constraint violation = 4.54356
+
+time = 1.132 Performance = 1.56923 Constraint violation = 10.8833
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.148.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.34195
+   pelvis_tilt: constraint violation = -0.417792
+   pelvis_tilt: constraint violation = -1.06932
+   pelvis_tilt: constraint violation = -0.00299448
+   pelvis_tilt: constraint violation = 0.0602728
+   pelvis_tilt: constraint violation = 0.0190366
+   pelvis_tilt: constraint violation = -2.05114
+   pelvis_tilt: constraint violation = 0.230941
+   pelvis_tilt: constraint violation = -0.111556
+   pelvis_tilt: constraint violation = 0.17696
+   pelvis_tilt: constraint violation = 0.739391
+   pelvis_tilt: constraint violation = -0.00206705
+   pelvis_tilt: constraint violation = 0.738539
+   pelvis_tilt: constraint violation = 0.509506
+   pelvis_tilt: constraint violation = -0.473067
+   pelvis_tilt: constraint violation = -2.47281
+   pelvis_tilt: constraint violation = -0.632744
+   pelvis_tilt: constraint violation = 0.310681
+   pelvis_tilt: constraint violation = -7.51478
+   pelvis_tilt: constraint violation = -0.118116
+   pelvis_tilt: constraint violation = 4.02269
+   pelvis_tilt: constraint violation = 5.27474
+   pelvis_tilt: constraint violation = 6.88694
+
+time = 1.148 Performance = 1.81761 Constraint violation = 12.7881
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.164.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.58716
+   pelvis_tilt: constraint violation = -0.0914466
+   pelvis_tilt: constraint violation = -0.642128
+   pelvis_tilt: constraint violation = -0.00396812
+   pelvis_tilt: constraint violation = 0.0823759
+   pelvis_tilt: constraint violation = -0.0011848
+   pelvis_tilt: constraint violation = -2.35883
+   pelvis_tilt: constraint violation = 0.304421
+   pelvis_tilt: constraint violation = -0.0756012
+   pelvis_tilt: constraint violation = -0.310811
+   pelvis_tilt: constraint violation = 0.354175
+   pelvis_tilt: constraint violation = 0.0367356
+   pelvis_tilt: constraint violation = 1.12224
+   pelvis_tilt: constraint violation = 0.152459
+   pelvis_tilt: constraint violation = -0.242759
+   pelvis_tilt: constraint violation = -2.11549
+   pelvis_tilt: constraint violation = -0.886388
+   pelvis_tilt: constraint violation = 0.755965
+   pelvis_tilt: constraint violation = 0.588241
+   pelvis_tilt: constraint violation = 0.38017
+   pelvis_tilt: constraint violation = 2.38216
+   pelvis_tilt: constraint violation = 7.01481
+   pelvis_tilt: constraint violation = 8.42713
+
+time = 1.164 Performance = 2.11997 Constraint violation = 11.933
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.18.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.91914
+   pelvis_tilt: constraint violation = 0.459066
+   pelvis_tilt: constraint violation = -0.279534
+   pelvis_tilt: constraint violation = -0.00485332
+   pelvis_tilt: constraint violation = 0.110403
+   pelvis_tilt: constraint violation = -0.0293264
+   pelvis_tilt: constraint violation = -1.91002
+   pelvis_tilt: constraint violation = 0.540337
+   pelvis_tilt: constraint violation = -0.02686
+   pelvis_tilt: constraint violation = -0.952545
+   pelvis_tilt: constraint violation = -0.279896
+   pelvis_tilt: constraint violation = 0.0157324
+   pelvis_tilt: constraint violation = 1.53892
+   pelvis_tilt: constraint violation = -0.318325
+   pelvis_tilt: constraint violation = -0.0678299
+   pelvis_tilt: constraint violation = -2.1732
+   pelvis_tilt: constraint violation = -1.13851
+   pelvis_tilt: constraint violation = 1.71965
+   pelvis_tilt: constraint violation = 16.219
+   pelvis_tilt: constraint violation = 0.997922
+   pelvis_tilt: constraint violation = -1.47808
+   pelvis_tilt: constraint violation = 8.84918
+   pelvis_tilt: constraint violation = 7.83636
+
+time = 1.18 Performance = 2.44428 Constraint violation = 20.6474
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.196.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -2.10151
+   pelvis_tilt: constraint violation = 1.02249
+   pelvis_tilt: constraint violation = 0.02928
+   pelvis_tilt: constraint violation = -0.00477764
+   pelvis_tilt: constraint violation = 0.152496
+   pelvis_tilt: constraint violation = -0.0626058
+   pelvis_tilt: constraint violation = -1.68808
+   pelvis_tilt: constraint violation = 0.753275
+   pelvis_tilt: constraint violation = 0.00957207
+   pelvis_tilt: constraint violation = -1.11883
+   pelvis_tilt: constraint violation = -0.925301
+   pelvis_tilt: constraint violation = -0.0411273
+   pelvis_tilt: constraint violation = 1.78347
+   pelvis_tilt: constraint violation = -0.744989
+   pelvis_tilt: constraint violation = 0.0866617
+   pelvis_tilt: constraint violation = -1.77093
+   pelvis_tilt: constraint violation = -0.705093
+   pelvis_tilt: constraint violation = 4.63454
+   pelvis_tilt: constraint violation = 30.581
+   pelvis_tilt: constraint violation = 1.49864
+   pelvis_tilt: constraint violation = -4.88215
+   pelvis_tilt: constraint violation = 10.9962
+   pelvis_tilt: constraint violation = 6.76387
+
+time = 1.196 Performance = 2.7628 Constraint violation = 34.1733
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.212.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   med_gas_r approaching upper bound of 1
+
+time = 1.212 Performance = 2.95488 Constraint violation = 15.3274
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.228.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   med_gas_r approaching upper bound of 1
+
+time = 1.228 Performance = 3.09145 Constraint violation = 52.144
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.244.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   med_gas_r approaching upper bound of 1
+
+time = 1.244 Performance = 3.08475 Constraint violation = 45.9707
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.26.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.19578
+   pelvis_tilt: constraint violation = 0.891119
+   pelvis_tilt: constraint violation = 0.319245
+   pelvis_tilt: constraint violation = -0.00304682
+   pelvis_tilt: constraint violation = 0.0722784
+   pelvis_tilt: constraint violation = -0.0494157
+   pelvis_tilt: constraint violation = -0.995369
+   pelvis_tilt: constraint violation = 0.39071
+   pelvis_tilt: constraint violation = 0.0136812
+   pelvis_tilt: constraint violation = -1.27138
+   pelvis_tilt: constraint violation = -0.781157
+   pelvis_tilt: constraint violation = -0.0135156
+   pelvis_tilt: constraint violation = 1.26232
+   pelvis_tilt: constraint violation = -0.219338
+   pelvis_tilt: constraint violation = 0.188837
+   pelvis_tilt: constraint violation = -0.658401
+   pelvis_tilt: constraint violation = -0.561231
+   pelvis_tilt: constraint violation = 0.117577
+   pelvis_tilt: constraint violation = 8.32551
+   pelvis_tilt: constraint violation = 0.738062
+   pelvis_tilt: constraint violation = -2.42904
+   pelvis_tilt: constraint violation = 4.06795
+   pelvis_tilt: constraint violation = 1.26464
+
+time = 1.26 Performance = 3.09905 Constraint violation = 10.1020
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.276.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.0866098
+   pelvis_tilt: constraint violation = -0.288039
+   pelvis_tilt: constraint violation = -0.728113
+   pelvis_tilt: constraint violation = -0.00536405
+   pelvis_tilt: constraint violation = -0.393603
+   pelvis_tilt: constraint violation = 0.0430049
+   pelvis_tilt: constraint violation = -1.10725
+   pelvis_tilt: constraint violation = 0.0633513
+   pelvis_tilt: constraint violation = -0.0790756
+   pelvis_tilt: constraint violation = -4.29316
+   pelvis_tilt: constraint violation = 0.730515
+   pelvis_tilt: constraint violation = 0.0111434
+   pelvis_tilt: constraint violation = -0.708258
+   pelvis_tilt: constraint violation = 0.752142
+   pelvis_tilt: constraint violation = -0.288528
+   pelvis_tilt: constraint violation = -0.393061
+   pelvis_tilt: constraint violation = -2.1644
+   pelvis_tilt: constraint violation = -25.9161
+   pelvis_tilt: constraint violation = -27.163
+   pelvis_tilt: constraint violation = 0.776807
+   pelvis_tilt: constraint violation = 2.4703
+   pelvis_tilt: constraint violation = -10.2991
+   pelvis_tilt: constraint violation = -5.81132
+
+time = 1.276 Performance = 3.07834 Constraint violation = 39.7868
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.292.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 1.87112
+   pelvis_tilt: constraint violation = -0.775733
+   pelvis_tilt: constraint violation = -1.26599
+   pelvis_tilt: constraint violation = -0.00186149
+   pelvis_tilt: constraint violation = -0.602575
+   pelvis_tilt: constraint violation = 0.0944072
+   pelvis_tilt: constraint violation = 0.285349
+   pelvis_tilt: constraint violation = -0.0523997
+   pelvis_tilt: constraint violation = -0.105702
+   pelvis_tilt: constraint violation = -3.66048
+   pelvis_tilt: constraint violation = 1.44416
+   pelvis_tilt: constraint violation = -0.0586588
+   pelvis_tilt: constraint violation = -2.73764
+   pelvis_tilt: constraint violation = 1.24779
+   pelvis_tilt: constraint violation = -0.512057
+   pelvis_tilt: constraint violation = 0.381246
+   pelvis_tilt: constraint violation = -1.65662
+   pelvis_tilt: constraint violation = -23.8721
+   pelvis_tilt: constraint violation = -40.9453
+   pelvis_tilt: constraint violation = 0.837545
+   pelvis_tilt: constraint violation = 4.55165
+   pelvis_tilt: constraint violation = -11.7722
+   pelvis_tilt: constraint violation = -10.2338
+
+time = 1.292 Performance = 2.94239 Constraint violation = 50.4479
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.30800.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 2.4749
+   pelvis_tilt: constraint violation = -0.796766
+   pelvis_tilt: constraint violation = -1.26248
+   pelvis_tilt: constraint violation = 0.0013582
+   pelvis_tilt: constraint violation = -0.529813
+   pelvis_tilt: constraint violation = 0.113011
+   pelvis_tilt: constraint violation = 0.865819
+   pelvis_tilt: constraint violation = -0.126366
+   pelvis_tilt: constraint violation = -0.090522
+   pelvis_tilt: constraint violation = -1.83374
+   pelvis_tilt: constraint violation = 1.59774
+   pelvis_tilt: constraint violation = -0.131535
+   pelvis_tilt: constraint violation = -3.04435
+   pelvis_tilt: constraint violation = 1.47408
+   pelvis_tilt: constraint violation = -0.535341
+   pelvis_tilt: constraint violation = 0.819443
+   pelvis_tilt: constraint violation = -0.757944
+   pelvis_tilt: constraint violation = -12.6641
+   pelvis_tilt: constraint violation = -39.4657
+   pelvis_tilt: constraint violation = 0.635709
+   pelvis_tilt: constraint violation = 4.75424
+   pelvis_tilt: constraint violation = -6.96139
+   pelvis_tilt: constraint violation = -10.0259
+
+time = 1.30800 Performance = 2.69579 Constraint violation = 43.7977
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.324.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 2.09789
+   pelvis_tilt: constraint violation = -0.670907
+   pelvis_tilt: constraint violation = -1.31482
+   pelvis_tilt: constraint violation = 0.00149725
+   pelvis_tilt: constraint violation = -0.460078
+   pelvis_tilt: constraint violation = 0.117055
+   pelvis_tilt: constraint violation = 0.54037
+   pelvis_tilt: constraint violation = -0.0639657
+   pelvis_tilt: constraint violation = -0.0892784
+   pelvis_tilt: constraint violation = -1.14709
+   pelvis_tilt: constraint violation = 1.62364
+   pelvis_tilt: constraint violation = -0.175037
+   pelvis_tilt: constraint violation = -2.82242
+   pelvis_tilt: constraint violation = 1.59346
+   pelvis_tilt: constraint violation = -0.568525
+   pelvis_tilt: constraint violation = 0.785758
+   pelvis_tilt: constraint violation = -0.448571
+   pelvis_tilt: constraint violation = -7.12078
+   pelvis_tilt: constraint violation = -41.4837
+   pelvis_tilt: constraint violation = 0.83482
+   pelvis_tilt: constraint violation = 5.27892
+   pelvis_tilt: constraint violation = -3.88165
+   pelvis_tilt: constraint violation = -10.0448
+
+time = 1.324 Performance = 2.56504 Constraint violation = 44.0326
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.34.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 1.95756
+   pelvis_tilt: constraint violation = -0.0806307
+   pelvis_tilt: constraint violation = -1.32139
+   pelvis_tilt: constraint violation = 0.00418238
+   pelvis_tilt: constraint violation = -0.383245
+   pelvis_tilt: constraint violation = 0.0779745
+   pelvis_tilt: constraint violation = 0.713198
+   pelvis_tilt: constraint violation = 0.29329
+   pelvis_tilt: constraint violation = -0.0978988
+   pelvis_tilt: constraint violation = -0.350362
+   pelvis_tilt: constraint violation = 1.06646
+   pelvis_tilt: constraint violation = -0.113035
+   pelvis_tilt: constraint violation = -2.92263
+   pelvis_tilt: constraint violation = 1.33218
+   pelvis_tilt: constraint violation = -0.470578
+   pelvis_tilt: constraint violation = 0.927411
+   pelvis_tilt: constraint violation = 0.0534689
+   pelvis_tilt: constraint violation = -3.76463
+   pelvis_tilt: constraint violation = -39.4433
+   pelvis_tilt: constraint violation = 1.48986
+   pelvis_tilt: constraint violation = 4.76275
+   pelvis_tilt: constraint violation = -1.98005
+   pelvis_tilt: constraint violation = -12.0728
+
+time = 1.34 Performance = 2.50232 Constraint violation = 41.9945
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.356.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 1.02422
+   pelvis_tilt: constraint violation = 0.409326
+   pelvis_tilt: constraint violation = -1.54044
+   pelvis_tilt: constraint violation = 0.00288484
+   pelvis_tilt: constraint violation = -0.23466
+   pelvis_tilt: constraint violation = 0.041673
+   pelvis_tilt: constraint violation = -0.00873563
+   pelvis_tilt: constraint violation = 0.681823
+   pelvis_tilt: constraint violation = -0.1226
+   pelvis_tilt: constraint violation = 0.174477
+   pelvis_tilt: constraint violation = 0.605302
+   pelvis_tilt: constraint violation = -0.0422631
+   pelvis_tilt: constraint violation = -2.08067
+   pelvis_tilt: constraint violation = 1.17588
+   pelvis_tilt: constraint violation = -0.467118
+   pelvis_tilt: constraint violation = 0.451534
+   pelvis_tilt: constraint violation = 0.384342
+   pelvis_tilt: constraint violation = -2.91848
+   pelvis_tilt: constraint violation = -31.9493
+   pelvis_tilt: constraint violation = 2.27269
+   pelvis_tilt: constraint violation = 3.98014
+   pelvis_tilt: constraint violation = -1.02202
+   pelvis_tilt: constraint violation = -9.71262
+
+time = 1.356 Performance = 2.30395 Constraint violation = 34.0069
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.372.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.138322
+   pelvis_tilt: constraint violation = 1.2286
+   pelvis_tilt: constraint violation = -2.185
+   pelvis_tilt: constraint violation = 0.00197042
+   pelvis_tilt: constraint violation = -0.0980593
+   pelvis_tilt: constraint violation = -0.00751127
+   pelvis_tilt: constraint violation = -0.149742
+   pelvis_tilt: constraint violation = 0.111654
+   pelvis_tilt: constraint violation = -0.0804668
+   pelvis_tilt: constraint violation = 0.189207
+   pelvis_tilt: constraint violation = -0.0587998
+   pelvis_tilt: constraint violation = 0.0705982
+   pelvis_tilt: constraint violation = -1.24573
+   pelvis_tilt: constraint violation = 0.616561
+   pelvis_tilt: constraint violation = -0.0766325
+   pelvis_tilt: constraint violation = 0.0611
+   pelvis_tilt: constraint violation = 0.326917
+   pelvis_tilt: constraint violation = -1.32554
+   pelvis_tilt: constraint violation = -6.01953
+   pelvis_tilt: constraint violation = 1.01617
+   pelvis_tilt: constraint violation = 0.317076
+   pelvis_tilt: constraint violation = -0.327981
+   pelvis_tilt: constraint violation = -5.53685
+
+time = 1.372 Performance = 1.95496 Constraint violation = 8.85075
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.388.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.35738
+   pelvis_tilt: constraint violation = 1.43614
+   pelvis_tilt: constraint violation = -1.19717
+   pelvis_tilt: constraint violation = 0.00162893
+   pelvis_tilt: constraint violation = -0.0193928
+   pelvis_tilt: constraint violation = -0.0513984
+   pelvis_tilt: constraint violation = -0.314146
+   pelvis_tilt: constraint violation = 1.08479
+   pelvis_tilt: constraint violation = -0.17784
+   pelvis_tilt: constraint violation = 0.065487
+   pelvis_tilt: constraint violation = -0.710505
+   pelvis_tilt: constraint violation = 0.165005
+   pelvis_tilt: constraint violation = -0.924182
+   pelvis_tilt: constraint violation = 0.496034
+   pelvis_tilt: constraint violation = -0.112081
+   pelvis_tilt: constraint violation = -0.100851
+   pelvis_tilt: constraint violation = 0.226697
+   pelvis_tilt: constraint violation = -1.84342
+   pelvis_tilt: constraint violation = 7.76422
+   pelvis_tilt: constraint violation = 3.03023
+   pelvis_tilt: constraint violation = -3.49105
+   pelvis_tilt: constraint violation = 0.118715
+   pelvis_tilt: constraint violation = -3.65629
+
+time = 1.388 Performance = 1.65913 Constraint violation = 10.2507
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.40400.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.906122
+   pelvis_tilt: constraint violation = 1.18259
+   pelvis_tilt: constraint violation = -1.65703
+   pelvis_tilt: constraint violation = -0.00125871
+   pelvis_tilt: constraint violation = 0.0654378
+   pelvis_tilt: constraint violation = -0.0148206
+   pelvis_tilt: constraint violation = -1.18533
+   pelvis_tilt: constraint violation = 0.587785
+   pelvis_tilt: constraint violation = -0.185718
+   pelvis_tilt: constraint violation = 0.439472
+   pelvis_tilt: constraint violation = -0.131889
+   pelvis_tilt: constraint violation = 0.075603
+   pelvis_tilt: constraint violation = 0.067723
+   pelvis_tilt: constraint violation = 0.732593
+   pelvis_tilt: constraint violation = -0.271343
+   pelvis_tilt: constraint violation = -0.430469
+   pelvis_tilt: constraint violation = 0.287334
+   pelvis_tilt: constraint violation = -2.03075
+   pelvis_tilt: constraint violation = 9.83697
+   pelvis_tilt: constraint violation = 2.46024
+   pelvis_tilt: constraint violation = -0.47243
+   pelvis_tilt: constraint violation = 0.16907
+   pelvis_tilt: constraint violation = 4.77005
+
+time = 1.40400 Performance = 1.6765 Constraint violation = 11.7389
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Infeasible problem detected (status 2)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.42.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.395131
+   pelvis_tilt: constraint violation = 0.368421
+   pelvis_tilt: constraint violation = -2.62791
+   pelvis_tilt: constraint violation = -0.000519555
+   pelvis_tilt: constraint violation = 0.145992
+   pelvis_tilt: constraint violation = 0.00122885
+   pelvis_tilt: constraint violation = -3.3742
+   pelvis_tilt: constraint violation = 0.0337685
+   pelvis_tilt: constraint violation = -0.0152925
+   pelvis_tilt: constraint violation = 0.00791432
+   pelvis_tilt: constraint violation = 0.0205087
+   pelvis_tilt: constraint violation = -0.00257768
+   pelvis_tilt: constraint violation = 0.014652
+   pelvis_tilt: constraint violation = 1.78644
+   pelvis_tilt: constraint violation = -0.0112353
+   pelvis_tilt: constraint violation = -0.0363674
+   pelvis_tilt: constraint violation = 0.0513495
+   pelvis_tilt: constraint violation = -0.286889
+   pelvis_tilt: constraint violation = 1.1187
+   pelvis_tilt: constraint violation = 0.180304
+   pelvis_tilt: constraint violation = 0.193349
+   pelvis_tilt: constraint violation = -0.269472
+   pelvis_tilt: constraint violation = 2.60942
+
+time = 1.42 Performance = 1.90888 Constraint violation = 5.48518
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.436.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.08469
+   pelvis_tilt: constraint violation = 0.671336
+   pelvis_tilt: constraint violation = -2.08364
+   pelvis_tilt: constraint violation = -0.00406203
+   pelvis_tilt: constraint violation = 0.0226317
+   pelvis_tilt: constraint violation = 0.0253376
+   pelvis_tilt: constraint violation = -3.45547
+   pelvis_tilt: constraint violation = 0.426428
+   pelvis_tilt: constraint violation = -0.233865
+   pelvis_tilt: constraint violation = 0.250555
+   pelvis_tilt: constraint violation = 0.539149
+   pelvis_tilt: constraint violation = -0.00164387
+   pelvis_tilt: constraint violation = 0.98622
+   pelvis_tilt: constraint violation = 1.63506
+   pelvis_tilt: constraint violation = -0.375228
+   pelvis_tilt: constraint violation = -0.472599
+   pelvis_tilt: constraint violation = -0.126179
+   pelvis_tilt: constraint violation = -9.09502
+   pelvis_tilt: constraint violation = -7.48026
+   pelvis_tilt: constraint violation = 2.63169
+   pelvis_tilt: constraint violation = 3.83009
+   pelvis_tilt: constraint violation = -2.66949
+   pelvis_tilt: constraint violation = 7.66956
+
+time = 1.436 Performance = 1.42575 Constraint violation = 15.7716
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.452.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.823372
+   pelvis_tilt: constraint violation = 0.676106
+   pelvis_tilt: constraint violation = -1.86914
+   pelvis_tilt: constraint violation = -0.00296853
+   pelvis_tilt: constraint violation = -0.0047831
+   pelvis_tilt: constraint violation = 0.0227322
+   pelvis_tilt: constraint violation = -3.11012
+   pelvis_tilt: constraint violation = 0.424722
+   pelvis_tilt: constraint violation = -0.251637
+   pelvis_tilt: constraint violation = 0.198295
+   pelvis_tilt: constraint violation = 0.46309
+   pelvis_tilt: constraint violation = 0.0122848
+   pelvis_tilt: constraint violation = 0.76599
+   pelvis_tilt: constraint violation = 1.66538
+   pelvis_tilt: constraint violation = -0.36328
+   pelvis_tilt: constraint violation = -0.491961
+   pelvis_tilt: constraint violation = -0.0566872
+   pelvis_tilt: constraint violation = -30.2442
+   pelvis_tilt: constraint violation = -9.45936
+   pelvis_tilt: constraint violation = 3.48897
+   pelvis_tilt: constraint violation = 3.54046
+   pelvis_tilt: constraint violation = -7.33747
+   pelvis_tilt: constraint violation = 4.94788
+
+time = 1.452 Performance = 1.4629 Constraint violation = 33.5523
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.468.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.722817
+   pelvis_tilt: constraint violation = 0.835108
+   pelvis_tilt: constraint violation = -1.46616
+   pelvis_tilt: constraint violation = -0.00132451
+   pelvis_tilt: constraint violation = 0.00806717
+   pelvis_tilt: constraint violation = 0.0174325
+   pelvis_tilt: constraint violation = -1.58227
+   pelvis_tilt: constraint violation = 0.490015
+   pelvis_tilt: constraint violation = -0.299101
+   pelvis_tilt: constraint violation = 0.201419
+   pelvis_tilt: constraint violation = 0.237581
+   pelvis_tilt: constraint violation = 0.038828
+   pelvis_tilt: constraint violation = 0.400086
+   pelvis_tilt: constraint violation = 1.33838
+   pelvis_tilt: constraint violation = -0.498594
+   pelvis_tilt: constraint violation = -0.718127
+   pelvis_tilt: constraint violation = 0.06421
+   pelvis_tilt: constraint violation = -49.6581
+   pelvis_tilt: constraint violation = -2.5628
+   pelvis_tilt: constraint violation = 6.115
+   pelvis_tilt: constraint violation = 1.66262
+   pelvis_tilt: constraint violation = -8.18186
+   pelvis_tilt: constraint violation = 3.15961
+
+time = 1.468 Performance = 1.42846 Constraint violation = 50.9765
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.484.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.721885
+   pelvis_tilt: constraint violation = 1.07544
+   pelvis_tilt: constraint violation = -1.13749
+   pelvis_tilt: constraint violation = -0.000404557
+   pelvis_tilt: constraint violation = 0.0426838
+   pelvis_tilt: constraint violation = -0.00996809
+   pelvis_tilt: constraint violation = -0.880965
+   pelvis_tilt: constraint violation = 0.473481
+   pelvis_tilt: constraint violation = -0.294954
+   pelvis_tilt: constraint violation = 0.228968
+   pelvis_tilt: constraint violation = -0.22697
+   pelvis_tilt: constraint violation = 0.0642794
+   pelvis_tilt: constraint violation = -0.0916433
+   pelvis_tilt: constraint violation = 0.900151
+   pelvis_tilt: constraint violation = -0.293432
+   pelvis_tilt: constraint violation = -0.564521
+   pelvis_tilt: constraint violation = 0.165647
+   pelvis_tilt: constraint violation = -33.2495
+   pelvis_tilt: constraint violation = 9.36273
+   pelvis_tilt: constraint violation = 5.17246
+   pelvis_tilt: constraint violation = -0.834335
+   pelvis_tilt: constraint violation = -1.23746
+   pelvis_tilt: constraint violation = 3.20135
+
+time = 1.484 Performance = 1.35415 Constraint violation = 35.183
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.5.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.846675
+   pelvis_tilt: constraint violation = 1.3316
+   pelvis_tilt: constraint violation = -1.09771
+   pelvis_tilt: constraint violation = 0.000792358
+   pelvis_tilt: constraint violation = 0.08215
+   pelvis_tilt: constraint violation = -0.0202048
+   pelvis_tilt: constraint violation = -0.295706
+   pelvis_tilt: constraint violation = 0.288782
+   pelvis_tilt: constraint violation = -0.237669
+   pelvis_tilt: constraint violation = 0.339469
+   pelvis_tilt: constraint violation = -0.211292
+   pelvis_tilt: constraint violation = 0.0684424
+   pelvis_tilt: constraint violation = -0.346216
+   pelvis_tilt: constraint violation = 0.400378
+   pelvis_tilt: constraint violation = -0.156857
+   pelvis_tilt: constraint violation = -0.384968
+   pelvis_tilt: constraint violation = 0.308438
+   pelvis_tilt: constraint violation = -13.7137
+   pelvis_tilt: constraint violation = 12.4276
+   pelvis_tilt: constraint violation = 3.43435
+   pelvis_tilt: constraint violation = -1.56179
+   pelvis_tilt: constraint violation = 4.96938
+   pelvis_tilt: constraint violation = 4.24364
+
+time = 1.5 Performance = 1.2539 Constraint violation = 20.1020
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.516.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.841263
+   pelvis_tilt: constraint violation = 1.06225
+   pelvis_tilt: constraint violation = -0.778464
+   pelvis_tilt: constraint violation = 0.00171457
+   pelvis_tilt: constraint violation = 0.0805978
+   pelvis_tilt: constraint violation = -0.0286278
+   pelvis_tilt: constraint violation = -0.0837078
+   pelvis_tilt: constraint violation = 0.36443
+   pelvis_tilt: constraint violation = -0.27571
+   pelvis_tilt: constraint violation = 0.429708
+   pelvis_tilt: constraint violation = -0.369966
+   pelvis_tilt: constraint violation = 0.060721
+   pelvis_tilt: constraint violation = -0.653561
+   pelvis_tilt: constraint violation = 0.469339
+   pelvis_tilt: constraint violation = -0.122704
+   pelvis_tilt: constraint violation = -0.312702
+   pelvis_tilt: constraint violation = 0.365847
+   pelvis_tilt: constraint violation = -10.6416
+   pelvis_tilt: constraint violation = 15.7113
+   pelvis_tilt: constraint violation = 3.38549
+   pelvis_tilt: constraint violation = -1.75096
+   pelvis_tilt: constraint violation = 6.35036
+   pelvis_tilt: constraint violation = 3.59278
+
+time = 1.516 Performance = 1.14246 Constraint violation = 20.7782
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.532.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.744518
+   pelvis_tilt: constraint violation = 0.797555
+   pelvis_tilt: constraint violation = -0.778703
+   pelvis_tilt: constraint violation = 0.00216974
+   pelvis_tilt: constraint violation = 0.0504313
+   pelvis_tilt: constraint violation = -0.0139743
+   pelvis_tilt: constraint violation = -0.126831
+   pelvis_tilt: constraint violation = 0.250472
+   pelvis_tilt: constraint violation = -0.241834
+   pelvis_tilt: constraint violation = 0.509355
+   pelvis_tilt: constraint violation = -0.227928
+   pelvis_tilt: constraint violation = 0.0479583
+   pelvis_tilt: constraint violation = -0.864893
+   pelvis_tilt: constraint violation = 0.531809
+   pelvis_tilt: constraint violation = -0.202002
+   pelvis_tilt: constraint violation = -0.17876
+   pelvis_tilt: constraint violation = 0.46952
+   pelvis_tilt: constraint violation = -9.75785
+   pelvis_tilt: constraint violation = 9.82311
+   pelvis_tilt: constraint violation = 2.62973
+   pelvis_tilt: constraint violation = -0.939996
+   pelvis_tilt: constraint violation = 3.57914
+   pelvis_tilt: constraint violation = 2.05619
+
+time = 1.532 Performance = 1.07562 Constraint violation = 14.8365
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.548.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.636471
+   pelvis_tilt: constraint violation = 0.575858
+   pelvis_tilt: constraint violation = -0.928231
+   pelvis_tilt: constraint violation = 0.00193357
+   pelvis_tilt: constraint violation = 0.0305325
+   pelvis_tilt: constraint violation = 0.0019972
+   pelvis_tilt: constraint violation = -0.378137
+   pelvis_tilt: constraint violation = 0.135041
+   pelvis_tilt: constraint violation = -0.216446
+   pelvis_tilt: constraint violation = 0.632941
+   pelvis_tilt: constraint violation = -0.0992304
+   pelvis_tilt: constraint violation = 0.0454615
+   pelvis_tilt: constraint violation = -0.834871
+   pelvis_tilt: constraint violation = 0.682235
+   pelvis_tilt: constraint violation = -0.352849
+   pelvis_tilt: constraint violation = -0.133833
+   pelvis_tilt: constraint violation = 0.628209
+   pelvis_tilt: constraint violation = -11.3549
+   pelvis_tilt: constraint violation = 5.85949
+   pelvis_tilt: constraint violation = 2.07983
+   pelvis_tilt: constraint violation = -0.177486
+   pelvis_tilt: constraint violation = 0.885392
+   pelvis_tilt: constraint violation = 1.42219
+
+time = 1.548 Performance = 1.06651 Constraint violation = 13.2042
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.564.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.576429
+   pelvis_tilt: constraint violation = 0.318779
+   pelvis_tilt: constraint violation = -1.71878
+   pelvis_tilt: constraint violation = 0.00101816
+   pelvis_tilt: constraint violation = 0.0192492
+   pelvis_tilt: constraint violation = 0.0148441
+   pelvis_tilt: constraint violation = -0.573058
+   pelvis_tilt: constraint violation = 0.0112352
+   pelvis_tilt: constraint violation = -0.174155
+   pelvis_tilt: constraint violation = 0.554649
+   pelvis_tilt: constraint violation = 0.0185148
+   pelvis_tilt: constraint violation = 0.0562694
+   pelvis_tilt: constraint violation = -0.573496
+   pelvis_tilt: constraint violation = 1.0448
+   pelvis_tilt: constraint violation = -0.400583
+   pelvis_tilt: constraint violation = -0.139883
+   pelvis_tilt: constraint violation = 0.652312
+   pelvis_tilt: constraint violation = -10.6577
+   pelvis_tilt: constraint violation = 3.37412
+   pelvis_tilt: constraint violation = 1.50836
+   pelvis_tilt: constraint violation = 0.568782
+   pelvis_tilt: constraint violation = -1.5111
+   pelvis_tilt: constraint violation = 1.71956
+
+time = 1.564 Performance = 1.11167 Constraint violation = 11.7853
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.58.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.505512
+   pelvis_tilt: constraint violation = 0.332856
+   pelvis_tilt: constraint violation = -1.76721
+   pelvis_tilt: constraint violation = 3.19289e-05
+   pelvis_tilt: constraint violation = 0.000397277
+   pelvis_tilt: constraint violation = 0.0240881
+   pelvis_tilt: constraint violation = -1.55602
+   pelvis_tilt: constraint violation = -0.079894
+   pelvis_tilt: constraint violation = -0.201603
+   pelvis_tilt: constraint violation = 0.962013
+   pelvis_tilt: constraint violation = 0.0254808
+   pelvis_tilt: constraint violation = 0.0772875
+   pelvis_tilt: constraint violation = -0.391198
+   pelvis_tilt: constraint violation = 1.04491
+   pelvis_tilt: constraint violation = -0.87375
+   pelvis_tilt: constraint violation = -0.169477
+   pelvis_tilt: constraint violation = 1.09635
+   pelvis_tilt: constraint violation = -18.8128
+   pelvis_tilt: constraint violation = 0.709775
+   pelvis_tilt: constraint violation = 1.37915
+   pelvis_tilt: constraint violation = 0.945949
+   pelvis_tilt: constraint violation = -4.07251
+   pelvis_tilt: constraint violation = 0.770366
+
+time = 1.58 Performance = 1.16748 Constraint violation = 19.6094
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.596.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.427317
+   pelvis_tilt: constraint violation = 0.241468
+   pelvis_tilt: constraint violation = -2.39316
+   pelvis_tilt: constraint violation = -0.000640192
+   pelvis_tilt: constraint violation = -0.004365
+   pelvis_tilt: constraint violation = 0.0322769
+   pelvis_tilt: constraint violation = -2.3165
+   pelvis_tilt: constraint violation = -0.239058
+   pelvis_tilt: constraint violation = -0.173322
+   pelvis_tilt: constraint violation = 1.35712
+   pelvis_tilt: constraint violation = 0.0133317
+   pelvis_tilt: constraint violation = 0.104985
+   pelvis_tilt: constraint violation = -0.168436
+   pelvis_tilt: constraint violation = 1.24583
+   pelvis_tilt: constraint violation = -1.22444
+   pelvis_tilt: constraint violation = -0.211036
+   pelvis_tilt: constraint violation = 1.67317
+   pelvis_tilt: constraint violation = -19.7065
+   pelvis_tilt: constraint violation = 0.531498
+   pelvis_tilt: constraint violation = 0.800122
+   pelvis_tilt: constraint violation = 1.37683
+   pelvis_tilt: constraint violation = -5.3362
+   pelvis_tilt: constraint violation = 0.829744
+
+time = 1.596 Performance = 1.19449 Constraint violation = 20.9649
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.612.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.340871
+   pelvis_tilt: constraint violation = 0.206729
+   pelvis_tilt: constraint violation = -2.77892
+   pelvis_tilt: constraint violation = -0.000783933
+   pelvis_tilt: constraint violation = -0.0192055
+   pelvis_tilt: constraint violation = 0.034783
+   pelvis_tilt: constraint violation = -2.91481
+   pelvis_tilt: constraint violation = -0.401592
+   pelvis_tilt: constraint violation = -0.110184
+   pelvis_tilt: constraint violation = 1.71358
+   pelvis_tilt: constraint violation = -0.0878031
+   pelvis_tilt: constraint violation = 0.126808
+   pelvis_tilt: constraint violation = -0.151231
+   pelvis_tilt: constraint violation = 1.33531
+   pelvis_tilt: constraint violation = -1.42665
+   pelvis_tilt: constraint violation = -0.231459
+   pelvis_tilt: constraint violation = 2.27244
+   pelvis_tilt: constraint violation = -18.3306
+   pelvis_tilt: constraint violation = 0.0296558
+   pelvis_tilt: constraint violation = 0.0435091
+   pelvis_tilt: constraint violation = 1.43839
+   pelvis_tilt: constraint violation = -6.34048
+   pelvis_tilt: constraint violation = -0.164881
+
+time = 1.612 Performance = 1.19696 Constraint violation = 20.1713
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.628.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.154603
+   pelvis_tilt: constraint violation = 0.119262
+   pelvis_tilt: constraint violation = -3.2208
+   pelvis_tilt: constraint violation = -0.000228325
+   pelvis_tilt: constraint violation = -0.0571119
+   pelvis_tilt: constraint violation = 0.0303507
+   pelvis_tilt: constraint violation = -2.94561
+   pelvis_tilt: constraint violation = -0.60883
+   pelvis_tilt: constraint violation = -0.0270142
+   pelvis_tilt: constraint violation = 1.8578
+   pelvis_tilt: constraint violation = -0.183855
+   pelvis_tilt: constraint violation = 0.139271
+   pelvis_tilt: constraint violation = -0.454805
+   pelvis_tilt: constraint violation = 1.40135
+   pelvis_tilt: constraint violation = -1.16499
+   pelvis_tilt: constraint violation = -0.18387
+   pelvis_tilt: constraint violation = 2.33419
+   pelvis_tilt: constraint violation = -12.055
+   pelvis_tilt: constraint violation = -1.96532
+   pelvis_tilt: constraint violation = -0.745416
+   pelvis_tilt: constraint violation = 1.162
+   pelvis_tilt: constraint violation = -6.76769
+   pelvis_tilt: constraint violation = -2.71071
+
+time = 1.628 Performance = 1.14408 Constraint violation = 15.3694
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.644.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.116411
+   pelvis_tilt: constraint violation = 0.0601484
+   pelvis_tilt: constraint violation = -2.90912
+   pelvis_tilt: constraint violation = 0.000351964
+   pelvis_tilt: constraint violation = -0.0675628
+   pelvis_tilt: constraint violation = 0.0187935
+   pelvis_tilt: constraint violation = -2.80928
+   pelvis_tilt: constraint violation = -0.67175
+   pelvis_tilt: constraint violation = 0.0349924
+   pelvis_tilt: constraint violation = 2.07071
+   pelvis_tilt: constraint violation = -0.238535
+   pelvis_tilt: constraint violation = 0.13342
+   pelvis_tilt: constraint violation = -0.676679
+   pelvis_tilt: constraint violation = 1.31529
+   pelvis_tilt: constraint violation = -0.760506
+   pelvis_tilt: constraint violation = -0.155834
+   pelvis_tilt: constraint violation = 2.08277
+   pelvis_tilt: constraint violation = -6.76322
+   pelvis_tilt: constraint violation = -1.32332
+   pelvis_tilt: constraint violation = -1.21734
+   pelvis_tilt: constraint violation = 0.666448
+   pelvis_tilt: constraint violation = -6.03423
+   pelvis_tilt: constraint violation = -3.80277
+
+time = 1.644 Performance = 1.11394 Constraint violation = 11.3407
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Infeasible problem detected (status 2)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.66.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.017843
+   pelvis_tilt: constraint violation = -0.0405667
+   pelvis_tilt: constraint violation = -3.83555
+   pelvis_tilt: constraint violation = 0.000365573
+   pelvis_tilt: constraint violation = -0.0823903
+   pelvis_tilt: constraint violation = 0.0062249
+   pelvis_tilt: constraint violation = -0.447804
+   pelvis_tilt: constraint violation = -1.19003
+   pelvis_tilt: constraint violation = 0.031318
+   pelvis_tilt: constraint violation = 0.182908
+   pelvis_tilt: constraint violation = 0.000718776
+   pelvis_tilt: constraint violation = 0.0250258
+   pelvis_tilt: constraint violation = -0.871697
+   pelvis_tilt: constraint violation = 1.37401
+   pelvis_tilt: constraint violation = -0.000906748
+   pelvis_tilt: constraint violation = -0.0218947
+   pelvis_tilt: constraint violation = 0.0418185
+   pelvis_tilt: constraint violation = -0.705435
+   pelvis_tilt: constraint violation = -0.697187
+   pelvis_tilt: constraint violation = -0.255156
+   pelvis_tilt: constraint violation = 0.250818
+   pelvis_tilt: constraint violation = -2.20365
+   pelvis_tilt: constraint violation = -2.06296
+
+time = 1.66 Performance = 0.995145 Constraint violation = 5.40791
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.676.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.353856
+   pelvis_tilt: constraint violation = -0.137077
+   pelvis_tilt: constraint violation = -1.95003
+   pelvis_tilt: constraint violation = 0.000409476
+   pelvis_tilt: constraint violation = -0.0184747
+   pelvis_tilt: constraint violation = 0.0243675
+   pelvis_tilt: constraint violation = -1.85324
+   pelvis_tilt: constraint violation = -0.608895
+   pelvis_tilt: constraint violation = 0.147146
+   pelvis_tilt: constraint violation = 1.45652
+   pelvis_tilt: constraint violation = -0.331564
+   pelvis_tilt: constraint violation = 0.125547
+   pelvis_tilt: constraint violation = -0.498094
+   pelvis_tilt: constraint violation = 1.0421
+   pelvis_tilt: constraint violation = -0.789633
+   pelvis_tilt: constraint violation = -0.1802
+   pelvis_tilt: constraint violation = 1.93944
+   pelvis_tilt: constraint violation = 0.617189
+   pelvis_tilt: constraint violation = 1.41336
+   pelvis_tilt: constraint violation = -2.1505
+   pelvis_tilt: constraint violation = 0.197619
+   pelvis_tilt: constraint violation = -3.45594
+   pelvis_tilt: constraint violation = -1.72385
+
+time = 1.676 Performance = 1.07241 Constraint violation = 6.14251
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.692.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.538407
+   pelvis_tilt: constraint violation = -0.0375274
+   pelvis_tilt: constraint violation = -1.92423
+   pelvis_tilt: constraint violation = -0.00048348
+   pelvis_tilt: constraint violation = 0.0243738
+   pelvis_tilt: constraint violation = 0.0147298
+   pelvis_tilt: constraint violation = -1.45005
+   pelvis_tilt: constraint violation = -0.490605
+   pelvis_tilt: constraint violation = 0.119555
+   pelvis_tilt: constraint violation = 0.878445
+   pelvis_tilt: constraint violation = -0.388468
+   pelvis_tilt: constraint violation = 0.104563
+   pelvis_tilt: constraint violation = 0.0380388
+   pelvis_tilt: constraint violation = 0.915731
+   pelvis_tilt: constraint violation = -0.62183
+   pelvis_tilt: constraint violation = -0.23065
+   pelvis_tilt: constraint violation = 1.09682
+   pelvis_tilt: constraint violation = 4.19597
+   pelvis_tilt: constraint violation = 7.4491
+   pelvis_tilt: constraint violation = -1.96825
+   pelvis_tilt: constraint violation = -0.4673
+   pelvis_tilt: constraint violation = -0.979059
+   pelvis_tilt: constraint violation = 1.47708
+
+time = 1.692 Performance = 1.08735 Constraint violation = 9.49193
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.70800.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.758912
+   pelvis_tilt: constraint violation = 0.271618
+   pelvis_tilt: constraint violation = -1.9159
+   pelvis_tilt: constraint violation = -0.00195433
+   pelvis_tilt: constraint violation = 0.0740795
+   pelvis_tilt: constraint violation = -0.00484384
+   pelvis_tilt: constraint violation = -1.47496
+   pelvis_tilt: constraint violation = -0.369173
+   pelvis_tilt: constraint violation = 0.0553682
+   pelvis_tilt: constraint violation = 0.438734
+   pelvis_tilt: constraint violation = -0.82172
+   pelvis_tilt: constraint violation = 0.0999856
+   pelvis_tilt: constraint violation = 0.724293
+   pelvis_tilt: constraint violation = 0.767319
+   pelvis_tilt: constraint violation = -0.667575
+   pelvis_tilt: constraint violation = -0.4006
+   pelvis_tilt: constraint violation = 0.458221
+   pelvis_tilt: constraint violation = 7.62479
+   pelvis_tilt: constraint violation = 16.9774
+   pelvis_tilt: constraint violation = -1.93011
+   pelvis_tilt: constraint violation = -1.62097
+   pelvis_tilt: constraint violation = 1.68527
+   pelvis_tilt: constraint violation = 4.68691
+
+time = 1.70800 Performance = 1.1328 Constraint violation = 19.6718
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.724.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.972563
+   pelvis_tilt: constraint violation = 0.692624
+   pelvis_tilt: constraint violation = -2.09739
+   pelvis_tilt: constraint violation = -0.00347839
+   pelvis_tilt: constraint violation = 0.108395
+   pelvis_tilt: constraint violation = -0.0253218
+   pelvis_tilt: constraint violation = -1.3597
+   pelvis_tilt: constraint violation = -0.173735
+   pelvis_tilt: constraint violation = -0.0291699
+   pelvis_tilt: constraint violation = -0.0940257
+   pelvis_tilt: constraint violation = -1.15126
+   pelvis_tilt: constraint violation = 0.0769211
+   pelvis_tilt: constraint violation = 1.39618
+   pelvis_tilt: constraint violation = 0.585045
+   pelvis_tilt: constraint violation = -0.512372
+   pelvis_tilt: constraint violation = -0.619159
+   pelvis_tilt: constraint violation = -0.260835
+   pelvis_tilt: constraint violation = 9.52458
+   pelvis_tilt: constraint violation = 22.1135
+   pelvis_tilt: constraint violation = -1.4456
+   pelvis_tilt: constraint violation = -2.5613
+   pelvis_tilt: constraint violation = 3.86509
+   pelvis_tilt: constraint violation = 6.1003
+
+time = 1.724 Performance = 1.29298 Constraint violation = 25.5458
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.74.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.01721
+   pelvis_tilt: constraint violation = 0.871355
+   pelvis_tilt: constraint violation = -1.88709
+   pelvis_tilt: constraint violation = -0.00394414
+   pelvis_tilt: constraint violation = 0.160532
+   pelvis_tilt: constraint violation = -0.0356646
+   pelvis_tilt: constraint violation = -1.05127
+   pelvis_tilt: constraint violation = -0.0920325
+   pelvis_tilt: constraint violation = -0.0505018
+   pelvis_tilt: constraint violation = -0.337496
+   pelvis_tilt: constraint violation = -1.40822
+   pelvis_tilt: constraint violation = 0.0788855
+   pelvis_tilt: constraint violation = 1.83807
+   pelvis_tilt: constraint violation = 0.591016
+   pelvis_tilt: constraint violation = -0.54449
+   pelvis_tilt: constraint violation = -0.750399
+   pelvis_tilt: constraint violation = -0.490936
+   pelvis_tilt: constraint violation = 16.5721
+   pelvis_tilt: constraint violation = 32.4444
+   pelvis_tilt: constraint violation = -1.6246
+   pelvis_tilt: constraint violation = -3.38721
+   pelvis_tilt: constraint violation = 7.40445
+   pelvis_tilt: constraint violation = 9.73797
+
+time = 1.74 Performance = 1.43252 Constraint violation = 38.7875
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.756.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.03388
+   pelvis_tilt: constraint violation = 0.862308
+   pelvis_tilt: constraint violation = -1.7628
+   pelvis_tilt: constraint violation = -0.00377614
+   pelvis_tilt: constraint violation = 0.191076
+   pelvis_tilt: constraint violation = -0.0280152
+   pelvis_tilt: constraint violation = -0.757637
+   pelvis_tilt: constraint violation = -0.142432
+   pelvis_tilt: constraint violation = -0.0565261
+   pelvis_tilt: constraint violation = -0.380858
+   pelvis_tilt: constraint violation = -1.35348
+   pelvis_tilt: constraint violation = 0.0764379
+   pelvis_tilt: constraint violation = 2.00416
+   pelvis_tilt: constraint violation = 0.717658
+   pelvis_tilt: constraint violation = -0.502361
+   pelvis_tilt: constraint violation = -0.664889
+   pelvis_tilt: constraint violation = -0.491021
+   pelvis_tilt: constraint violation = 24.7568
+   pelvis_tilt: constraint violation = 36.2943
+   pelvis_tilt: constraint violation = -2.20771
+   pelvis_tilt: constraint violation = -3.4275
+   pelvis_tilt: constraint violation = 9.61151
+   pelvis_tilt: constraint violation = 11.3832
+
+time = 1.756 Performance = 1.74479 Constraint violation = 46.7093
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.772.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.37524
+   pelvis_tilt: constraint violation = 0.716849
+   pelvis_tilt: constraint violation = -2.66668
+   pelvis_tilt: constraint violation = -0.00388573
+   pelvis_tilt: constraint violation = 0.172284
+   pelvis_tilt: constraint violation = -0.0075494
+   pelvis_tilt: constraint violation = -0.987611
+   pelvis_tilt: constraint violation = -0.208719
+   pelvis_tilt: constraint violation = -0.084307
+   pelvis_tilt: constraint violation = -0.327347
+   pelvis_tilt: constraint violation = -0.727225
+   pelvis_tilt: constraint violation = 0.0943893
+   pelvis_tilt: constraint violation = 2.29419
+   pelvis_tilt: constraint violation = 1.06205
+   pelvis_tilt: constraint violation = -0.149149
+   pelvis_tilt: constraint violation = -0.806719
+   pelvis_tilt: constraint violation = -0.535007
+   pelvis_tilt: constraint violation = 11.6001
+   pelvis_tilt: constraint violation = 13.0345
+   pelvis_tilt: constraint violation = -2.53416
+   pelvis_tilt: constraint violation = -2.21691
+   pelvis_tilt: constraint violation = 8.0134
+   pelvis_tilt: constraint violation = 8.90755
+
+time = 1.772 Performance = 2.24615 Constraint violation = 21.8614
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.788.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   glut_med1_l approaching upper bound of 1
+
+time = 1.788 Performance = 2.75172 Constraint violation = 54.1355
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.80400.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   glut_med1_l approaching upper bound of 1
+
+time = 1.80400 Performance = 3.32697 Constraint violation = 64.6183
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.82.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   glut_med1_l approaching upper bound of 1
+
+time = 1.82 Performance = 3.83663 Constraint violation = 67.4367
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.836.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   glut_med1_l approaching upper bound of 1
+
+time = 1.836 Performance = 4.16468 Constraint violation = 25.94
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.852.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   glut_med1_l approaching upper bound of 1
+
+time = 1.852 Performance = 4.15805 Constraint violation = 22.4121
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.868.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   glut_med1_l approaching upper bound of 1
+
+time = 1.868 Performance = 3.80632 Constraint violation = 27.0047
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.884.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.132533
+   pelvis_tilt: constraint violation = 0.84654
+   pelvis_tilt: constraint violation = -1.15907
+   pelvis_tilt: constraint violation = -0.00197462
+   pelvis_tilt: constraint violation = -0.263731
+   pelvis_tilt: constraint violation = 0.0101982
+   pelvis_tilt: constraint violation = -4.09797
+   pelvis_tilt: constraint violation = -0.29058
+   pelvis_tilt: constraint violation = -0.0670415
+   pelvis_tilt: constraint violation = 0.419511
+   pelvis_tilt: constraint violation = -0.828542
+   pelvis_tilt: constraint violation = 0.101694
+   pelvis_tilt: constraint violation = -0.295886
+   pelvis_tilt: constraint violation = 0.958066
+   pelvis_tilt: constraint violation = -0.309488
+   pelvis_tilt: constraint violation = -1.6633
+   pelvis_tilt: constraint violation = -0.00937945
+   pelvis_tilt: constraint violation = -12.5068
+   pelvis_tilt: constraint violation = -13.1888
+   pelvis_tilt: constraint violation = -0.91119
+   pelvis_tilt: constraint violation = -1.00542
+   pelvis_tilt: constraint violation = -4.81796
+   pelvis_tilt: constraint violation = -8.3286
+
+time = 1.884 Performance = 3.27469 Constraint violation = 21.1791
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.9.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 1.72411
+   pelvis_tilt: constraint violation = 1.81908
+   pelvis_tilt: constraint violation = 0.176339
+   pelvis_tilt: constraint violation = -0.000223762
+   pelvis_tilt: constraint violation = -0.465682
+   pelvis_tilt: constraint violation = -0.067983
+   pelvis_tilt: constraint violation = -3.3043
+   pelvis_tilt: constraint violation = 1.19284
+   pelvis_tilt: constraint violation = -0.110781
+   pelvis_tilt: constraint violation = 0.86156
+   pelvis_tilt: constraint violation = -0.800623
+   pelvis_tilt: constraint violation = -0.00398781
+   pelvis_tilt: constraint violation = -1.91156
+   pelvis_tilt: constraint violation = -0.234581
+   pelvis_tilt: constraint violation = 0.257534
+   pelvis_tilt: constraint violation = -1.3537
+   pelvis_tilt: constraint violation = 0.259717
+   pelvis_tilt: constraint violation = -32.189
+   pelvis_tilt: constraint violation = -17.6761
+   pelvis_tilt: constraint violation = 3.48046
+   pelvis_tilt: constraint violation = -0.651345
+   pelvis_tilt: constraint violation = -7.91023
+   pelvis_tilt: constraint violation = -10.8108
+
+time = 1.9 Performance = 2.65349 Constraint violation = 39.5791
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.916.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 1.91237
+   pelvis_tilt: constraint violation = 1.82615
+   pelvis_tilt: constraint violation = 0.405826
+   pelvis_tilt: constraint violation = 0.000651571
+   pelvis_tilt: constraint violation = -0.420975
+   pelvis_tilt: constraint violation = -0.0949025
+   pelvis_tilt: constraint violation = -2.12117
+   pelvis_tilt: constraint violation = 1.53943
+   pelvis_tilt: constraint violation = -0.189157
+   pelvis_tilt: constraint violation = 0.8417
+   pelvis_tilt: constraint violation = -0.782786
+   pelvis_tilt: constraint violation = -0.014935
+   pelvis_tilt: constraint violation = -1.95124
+   pelvis_tilt: constraint violation = -0.753399
+   pelvis_tilt: constraint violation = 0.375321
+   pelvis_tilt: constraint violation = -0.858439
+   pelvis_tilt: constraint violation = 0.40897
+   pelvis_tilt: constraint violation = -35.6684
+   pelvis_tilt: constraint violation = -10.9408
+   pelvis_tilt: constraint violation = 4.39248
+   pelvis_tilt: constraint violation = -0.561137
+   pelvis_tilt: constraint violation = -8.00607
+   pelvis_tilt: constraint violation = -7.14246
+
+time = 1.916 Performance = 2.22017 Constraint violation = 39.3401
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.932.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 1.33698
+   pelvis_tilt: constraint violation = 1.29215
+   pelvis_tilt: constraint violation = -0.195016
+   pelvis_tilt: constraint violation = 0.0012058
+   pelvis_tilt: constraint violation = -0.27311
+   pelvis_tilt: constraint violation = -0.0823895
+   pelvis_tilt: constraint violation = -1.27813
+   pelvis_tilt: constraint violation = 1.0638
+   pelvis_tilt: constraint violation = -0.165207
+   pelvis_tilt: constraint violation = 0.844185
+   pelvis_tilt: constraint violation = -0.866004
+   pelvis_tilt: constraint violation = 0.0838228
+   pelvis_tilt: constraint violation = -1.42196
+   pelvis_tilt: constraint violation = -0.714983
+   pelvis_tilt: constraint violation = 0.141537
+   pelvis_tilt: constraint violation = -0.503168
+   pelvis_tilt: constraint violation = 0.462757
+   pelvis_tilt: constraint violation = -28.332
+   pelvis_tilt: constraint violation = -3.93164
+   pelvis_tilt: constraint violation = 3.3521
+   pelvis_tilt: constraint violation = -0.918749
+   pelvis_tilt: constraint violation = -6.6796
+   pelvis_tilt: constraint violation = -3.32315
+
+time = 1.932 Performance = 1.9927 Constraint violation = 29.9459
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.948.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.952401
+   pelvis_tilt: constraint violation = 0.777355
+   pelvis_tilt: constraint violation = -0.926079
+   pelvis_tilt: constraint violation = 0.00278527
+   pelvis_tilt: constraint violation = -0.16489
+   pelvis_tilt: constraint violation = -0.0604358
+   pelvis_tilt: constraint violation = -0.820985
+   pelvis_tilt: constraint violation = 0.449455
+   pelvis_tilt: constraint violation = -0.0954285
+   pelvis_tilt: constraint violation = 1.21225
+   pelvis_tilt: constraint violation = -0.985955
+   pelvis_tilt: constraint violation = 0.209315
+   pelvis_tilt: constraint violation = -1.25374
+   pelvis_tilt: constraint violation = -0.486052
+   pelvis_tilt: constraint violation = -0.164042
+   pelvis_tilt: constraint violation = -0.308621
+   pelvis_tilt: constraint violation = 0.606603
+   pelvis_tilt: constraint violation = -20.6276
+   pelvis_tilt: constraint violation = -0.505454
+   pelvis_tilt: constraint violation = 1.70036
+   pelvis_tilt: constraint violation = -1.52587
+   pelvis_tilt: constraint violation = -6.83005
+   pelvis_tilt: constraint violation = -1.42888
+
+time = 1.948 Performance = 1.7991 Constraint violation = 22.0846
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.964.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.607279
+   pelvis_tilt: constraint violation = 0.651881
+   pelvis_tilt: constraint violation = -1.15517
+   pelvis_tilt: constraint violation = 0.00256891
+   pelvis_tilt: constraint violation = -0.18843
+   pelvis_tilt: constraint violation = -0.0545927
+   pelvis_tilt: constraint violation = -1.41352
+   pelvis_tilt: constraint violation = 0.29407
+   pelvis_tilt: constraint violation = -0.0766923
+   pelvis_tilt: constraint violation = 1.18235
+   pelvis_tilt: constraint violation = -1.01098
+   pelvis_tilt: constraint violation = 0.232539
+   pelvis_tilt: constraint violation = -1.43325
+   pelvis_tilt: constraint violation = -0.400212
+   pelvis_tilt: constraint violation = -0.257934
+   pelvis_tilt: constraint violation = -0.66646
+   pelvis_tilt: constraint violation = 0.64787
+   pelvis_tilt: constraint violation = -28.6706
+   pelvis_tilt: constraint violation = -0.423312
+   pelvis_tilt: constraint violation = 1.32485
+   pelvis_tilt: constraint violation = -1.79953
+   pelvis_tilt: constraint violation = -10.8022
+   pelvis_tilt: constraint violation = -1.10415
+
+time = 1.964 Performance = 1.60237 Constraint violation = 30.9024
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.98.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.336815
+   pelvis_tilt: constraint violation = 0.512788
+   pelvis_tilt: constraint violation = -0.987171
+   pelvis_tilt: constraint violation = 0.00207833
+   pelvis_tilt: constraint violation = -0.258682
+   pelvis_tilt: constraint violation = -0.0398271
+   pelvis_tilt: constraint violation = -2.14931
+   pelvis_tilt: constraint violation = 0.196306
+   pelvis_tilt: constraint violation = -0.0564947
+   pelvis_tilt: constraint violation = 1.01308
+   pelvis_tilt: constraint violation = -0.77962
+   pelvis_tilt: constraint violation = 0.163278
+   pelvis_tilt: constraint violation = -1.85025
+   pelvis_tilt: constraint violation = -0.20941
+   pelvis_tilt: constraint violation = -0.239827
+   pelvis_tilt: constraint violation = -1.02188
+   pelvis_tilt: constraint violation = 0.724876
+   pelvis_tilt: constraint violation = -42.7711
+   pelvis_tilt: constraint violation = -1.15041
+   pelvis_tilt: constraint violation = 1.19927
+   pelvis_tilt: constraint violation = -1.45138
+   pelvis_tilt: constraint violation = -17.1285
+   pelvis_tilt: constraint violation = -1.47189
+
+time = 1.98 Performance = 1.40451 Constraint violation = 46.2885
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 1.996.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.0924704
+   pelvis_tilt: constraint violation = 0.227104
+   pelvis_tilt: constraint violation = -0.753485
+   pelvis_tilt: constraint violation = 0.00224204
+   pelvis_tilt: constraint violation = -0.216701
+   pelvis_tilt: constraint violation = -0.0138809
+   pelvis_tilt: constraint violation = -1.89945
+   pelvis_tilt: constraint violation = -0.0521446
+   pelvis_tilt: constraint violation = -0.00790075
+   pelvis_tilt: constraint violation = 0.799641
+   pelvis_tilt: constraint violation = -0.444273
+   pelvis_tilt: constraint violation = 0.0988725
+   pelvis_tilt: constraint violation = -1.87764
+   pelvis_tilt: constraint violation = 0.0449812
+   pelvis_tilt: constraint violation = -0.236872
+   pelvis_tilt: constraint violation = -0.847058
+   pelvis_tilt: constraint violation = 0.583402
+   pelvis_tilt: constraint violation = -35.1586
+   pelvis_tilt: constraint violation = -0.836783
+   pelvis_tilt: constraint violation = -0.123874
+   pelvis_tilt: constraint violation = -1.01752
+   pelvis_tilt: constraint violation = -16.22
+   pelvis_tilt: constraint violation = -1.15756
+
+time = 1.996 Performance = 1.25892 Constraint violation = 38.8855
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.012.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.68434
+   pelvis_tilt: constraint violation = 0.271028
+   pelvis_tilt: constraint violation = -0.301034
+   pelvis_tilt: constraint violation = 0.00153568
+   pelvis_tilt: constraint violation = -0.0814483
+   pelvis_tilt: constraint violation = -0.0232918
+   pelvis_tilt: constraint violation = -0.609625
+   pelvis_tilt: constraint violation = 0.237491
+   pelvis_tilt: constraint violation = -0.0496653
+   pelvis_tilt: constraint violation = 0.157788
+   pelvis_tilt: constraint violation = -0.299474
+   pelvis_tilt: constraint violation = 0.0476362
+   pelvis_tilt: constraint violation = -1.31998
+   pelvis_tilt: constraint violation = -0.137856
+   pelvis_tilt: constraint violation = -0.0480258
+   pelvis_tilt: constraint violation = -0.315011
+   pelvis_tilt: constraint violation = 0.124512
+   pelvis_tilt: constraint violation = -18.1985
+   pelvis_tilt: constraint violation = -0.279916
+   pelvis_tilt: constraint violation = 1.32155
+   pelvis_tilt: constraint violation = -0.67551
+   pelvis_tilt: constraint violation = -5.54225
+   pelvis_tilt: constraint violation = -0.47531
+
+time = 2.012 Performance = 1.35155 Constraint violation = 19.1696
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.028.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.22062
+   pelvis_tilt: constraint violation = 0.366093
+   pelvis_tilt: constraint violation = 0.117564
+   pelvis_tilt: constraint violation = 8.96411e-05
+   pelvis_tilt: constraint violation = 0.0025934
+   pelvis_tilt: constraint violation = -0.0369609
+   pelvis_tilt: constraint violation = 0.165976
+   pelvis_tilt: constraint violation = 1.34667
+   pelvis_tilt: constraint violation = -0.105945
+   pelvis_tilt: constraint violation = -0.343098
+   pelvis_tilt: constraint violation = -0.172369
+   pelvis_tilt: constraint violation = 0.0127574
+   pelvis_tilt: constraint violation = -0.628453
+   pelvis_tilt: constraint violation = -0.458835
+   pelvis_tilt: constraint violation = 0.129628
+   pelvis_tilt: constraint violation = -0.0163429
+   pelvis_tilt: constraint violation = -0.150248
+   pelvis_tilt: constraint violation = -10.5977
+   pelvis_tilt: constraint violation = -0.661188
+   pelvis_tilt: constraint violation = 2.40963
+   pelvis_tilt: constraint violation = -0.190977
+   pelvis_tilt: constraint violation = 3.3331
+   pelvis_tilt: constraint violation = -0.278442
+
+time = 2.028 Performance = 1.32466 Constraint violation = 11.5785
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.044.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.69195
+   pelvis_tilt: constraint violation = 0.478112
+   pelvis_tilt: constraint violation = 0.408546
+   pelvis_tilt: constraint violation = -0.00165761
+   pelvis_tilt: constraint violation = 0.0120804
+   pelvis_tilt: constraint violation = -0.0525829
+   pelvis_tilt: constraint violation = -0.0450828
+   pelvis_tilt: constraint violation = 1.01459
+   pelvis_tilt: constraint violation = -0.129685
+   pelvis_tilt: constraint violation = -1.45173
+   pelvis_tilt: constraint violation = -0.253023
+   pelvis_tilt: constraint violation = -0.0219823
+   pelvis_tilt: constraint violation = -0.0929292
+   pelvis_tilt: constraint violation = -0.755881
+   pelvis_tilt: constraint violation = 0.321367
+   pelvis_tilt: constraint violation = -0.32512
+   pelvis_tilt: constraint violation = -0.295511
+   pelvis_tilt: constraint violation = -16.1734
+   pelvis_tilt: constraint violation = -3.35217
+   pelvis_tilt: constraint violation = 5.07278
+   pelvis_tilt: constraint violation = 0.380796
+   pelvis_tilt: constraint violation = 5.24232
+   pelvis_tilt: constraint violation = -0.935706
+
+time = 2.044 Performance = 1.17363 Constraint violation = 18.2869
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.06.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.6118
+   pelvis_tilt: constraint violation = 0.400548
+   pelvis_tilt: constraint violation = 0.186887
+   pelvis_tilt: constraint violation = -0.00154565
+   pelvis_tilt: constraint violation = -0.013477
+   pelvis_tilt: constraint violation = -0.0379413
+   pelvis_tilt: constraint violation = -0.576848
+   pelvis_tilt: constraint violation = 0.811951
+   pelvis_tilt: constraint violation = -0.0854515
+   pelvis_tilt: constraint violation = -1.34104
+   pelvis_tilt: constraint violation = -0.30064
+   pelvis_tilt: constraint violation = 0.00688493
+   pelvis_tilt: constraint violation = 0.00407611
+   pelvis_tilt: constraint violation = -0.627965
+   pelvis_tilt: constraint violation = 0.190434
+   pelvis_tilt: constraint violation = -0.557931
+   pelvis_tilt: constraint violation = -0.18572
+   pelvis_tilt: constraint violation = -17.7211
+   pelvis_tilt: constraint violation = -7.35139
+   pelvis_tilt: constraint violation = 3.83682
+   pelvis_tilt: constraint violation = 0.100534
+   pelvis_tilt: constraint violation = 2.67388
+   pelvis_tilt: constraint violation = -2.64742
+
+time = 2.06 Performance = 1.05775 Constraint violation = 20.0856
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.076.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.47917
+   pelvis_tilt: constraint violation = 0.162964
+   pelvis_tilt: constraint violation = -0.178065
+   pelvis_tilt: constraint violation = -0.000925899
+   pelvis_tilt: constraint violation = 0.0224212
+   pelvis_tilt: constraint violation = -0.0169319
+   pelvis_tilt: constraint violation = -0.886546
+   pelvis_tilt: constraint violation = 0.244094
+   pelvis_tilt: constraint violation = -0.0252881
+   pelvis_tilt: constraint violation = -0.628736
+   pelvis_tilt: constraint violation = -0.24514
+   pelvis_tilt: constraint violation = 0.0575968
+   pelvis_tilt: constraint violation = 0.120527
+   pelvis_tilt: constraint violation = -0.269889
+   pelvis_tilt: constraint violation = -0.031001
+   pelvis_tilt: constraint violation = -0.650365
+   pelvis_tilt: constraint violation = -0.266746
+   pelvis_tilt: constraint violation = -4.40652
+   pelvis_tilt: constraint violation = -6.30925
+   pelvis_tilt: constraint violation = 0.710303
+   pelvis_tilt: constraint violation = -0.986546
+   pelvis_tilt: constraint violation = 2.66024
+   pelvis_tilt: constraint violation = -3.00232
+
+time = 2.076 Performance = 0.998888 Constraint violation = 8.99594
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.092.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.36686
+   pelvis_tilt: constraint violation = -0.170759
+   pelvis_tilt: constraint violation = -0.984429
+   pelvis_tilt: constraint violation = -0.000936165
+   pelvis_tilt: constraint violation = 0.103333
+   pelvis_tilt: constraint violation = 0.0110254
+   pelvis_tilt: constraint violation = -1.50708
+   pelvis_tilt: constraint violation = -0.487798
+   pelvis_tilt: constraint violation = 0.0121196
+   pelvis_tilt: constraint violation = 0.0405127
+   pelvis_tilt: constraint violation = -0.0428379
+   pelvis_tilt: constraint violation = 0.0645491
+   pelvis_tilt: constraint violation = 0.203397
+   pelvis_tilt: constraint violation = 0.229789
+   pelvis_tilt: constraint violation = -0.161482
+   pelvis_tilt: constraint violation = -0.157957
+   pelvis_tilt: constraint violation = -0.15544
+   pelvis_tilt: constraint violation = 6.14981
+   pelvis_tilt: constraint violation = 4.42618
+   pelvis_tilt: constraint violation = -1.33313
+   pelvis_tilt: constraint violation = -1.07498
+   pelvis_tilt: constraint violation = 3.65351
+   pelvis_tilt: constraint violation = 3.36907
+
+time = 2.092 Performance = 0.887298 Constraint violation = 9.51875
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.10800.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.30604
+   pelvis_tilt: constraint violation = -0.39506
+   pelvis_tilt: constraint violation = -1.29881
+   pelvis_tilt: constraint violation = -0.00152623
+   pelvis_tilt: constraint violation = 0.0954468
+   pelvis_tilt: constraint violation = 0.03631
+   pelvis_tilt: constraint violation = -1.47854
+   pelvis_tilt: constraint violation = -0.597668
+   pelvis_tilt: constraint violation = 0.0209031
+   pelvis_tilt: constraint violation = 0.427182
+   pelvis_tilt: constraint violation = 0.0480132
+   pelvis_tilt: constraint violation = 0.181073
+   pelvis_tilt: constraint violation = 0.271098
+   pelvis_tilt: constraint violation = 0.629088
+   pelvis_tilt: constraint violation = -0.613477
+   pelvis_tilt: constraint violation = -1.01509
+   pelvis_tilt: constraint violation = -0.235827
+   pelvis_tilt: constraint violation = 13.3418
+   pelvis_tilt: constraint violation = 19.0036
+   pelvis_tilt: constraint violation = -3.28662
+   pelvis_tilt: constraint violation = -3.50458
+   pelvis_tilt: constraint violation = 3.45174
+   pelvis_tilt: constraint violation = 7.46183
+
+time = 2.10800 Performance = 0.781529 Constraint violation = 25.26
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.124.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.07852
+   pelvis_tilt: constraint violation = -0.299448
+   pelvis_tilt: constraint violation = -1.41188
+   pelvis_tilt: constraint violation = -0.00173489
+   pelvis_tilt: constraint violation = 0.0288499
+   pelvis_tilt: constraint violation = 0.0349585
+   pelvis_tilt: constraint violation = -1.55556
+   pelvis_tilt: constraint violation = -0.432576
+   pelvis_tilt: constraint violation = -0.00261679
+   pelvis_tilt: constraint violation = 0.443467
+   pelvis_tilt: constraint violation = 0.0564138
+   pelvis_tilt: constraint violation = 0.187233
+   pelvis_tilt: constraint violation = 0.0273264
+   pelvis_tilt: constraint violation = 0.718531
+   pelvis_tilt: constraint violation = -0.651317
+   pelvis_tilt: constraint violation = -0.957046
+   pelvis_tilt: constraint violation = 0.0132417
+   pelvis_tilt: constraint violation = 3.75129
+   pelvis_tilt: constraint violation = 15.0216
+   pelvis_tilt: constraint violation = -2.36703
+   pelvis_tilt: constraint violation = -3.01904
+   pelvis_tilt: constraint violation = -0.124007
+   pelvis_tilt: constraint violation = 3.04088
+
+time = 2.124 Performance = 0.706567 Constraint violation = 16.4818
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.14.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.715993
+   pelvis_tilt: constraint violation = -0.204502
+   pelvis_tilt: constraint violation = -1.57586
+   pelvis_tilt: constraint violation = -0.00177087
+   pelvis_tilt: constraint violation = -0.0680275
+   pelvis_tilt: constraint violation = 0.0275525
+   pelvis_tilt: constraint violation = -2.25903
+   pelvis_tilt: constraint violation = -0.295246
+   pelvis_tilt: constraint violation = -0.0273649
+   pelvis_tilt: constraint violation = 0.370219
+   pelvis_tilt: constraint violation = 0.0526164
+   pelvis_tilt: constraint violation = 0.196481
+   pelvis_tilt: constraint violation = -0.548779
+   pelvis_tilt: constraint violation = 0.725066
+   pelvis_tilt: constraint violation = -0.676339
+   pelvis_tilt: constraint violation = -0.990206
+   pelvis_tilt: constraint violation = 0.244598
+   pelvis_tilt: constraint violation = -6.88476
+   pelvis_tilt: constraint violation = 7.40592
+   pelvis_tilt: constraint violation = -1.62025
+   pelvis_tilt: constraint violation = -2.48785
+   pelvis_tilt: constraint violation = -4.44418
+   pelvis_tilt: constraint violation = -4.454
+
+time = 2.14 Performance = 0.662618 Constraint violation = 12.7039
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.156.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.588687
+   pelvis_tilt: constraint violation = -0.121013
+   pelvis_tilt: constraint violation = -1.48512
+   pelvis_tilt: constraint violation = -0.00146527
+   pelvis_tilt: constraint violation = -0.171945
+   pelvis_tilt: constraint violation = 0.0194608
+   pelvis_tilt: constraint violation = -2.08519
+   pelvis_tilt: constraint violation = -0.204975
+   pelvis_tilt: constraint violation = -0.0432206
+   pelvis_tilt: constraint violation = 0.186407
+   pelvis_tilt: constraint violation = 0.05763
+   pelvis_tilt: constraint violation = 0.210915
+   pelvis_tilt: constraint violation = -0.898814
+   pelvis_tilt: constraint violation = 0.584783
+   pelvis_tilt: constraint violation = -0.744802
+   pelvis_tilt: constraint violation = -1.26614
+   pelvis_tilt: constraint violation = 0.381035
+   pelvis_tilt: constraint violation = -17.6411
+   pelvis_tilt: constraint violation = -3.09569
+   pelvis_tilt: constraint violation = -1.10177
+   pelvis_tilt: constraint violation = -1.91177
+   pelvis_tilt: constraint violation = -8.13477
+   pelvis_tilt: constraint violation = -11.2002
+
+time = 2.156 Performance = 0.689171 Constraint violation = 22.9739
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.172.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.369812
+   pelvis_tilt: constraint violation = -0.0621183
+   pelvis_tilt: constraint violation = -1.01054
+   pelvis_tilt: constraint violation = -0.000312472
+   pelvis_tilt: constraint violation = -0.210442
+   pelvis_tilt: constraint violation = 0.00713931
+   pelvis_tilt: constraint violation = -1.60173
+   pelvis_tilt: constraint violation = -0.0831745
+   pelvis_tilt: constraint violation = -0.0360885
+   pelvis_tilt: constraint violation = -0.135392
+   pelvis_tilt: constraint violation = 0.0470208
+   pelvis_tilt: constraint violation = 0.126864
+   pelvis_tilt: constraint violation = -1.25495
+   pelvis_tilt: constraint violation = 0.313314
+   pelvis_tilt: constraint violation = -0.481275
+   pelvis_tilt: constraint violation = -0.954448
+   pelvis_tilt: constraint violation = 0.310472
+   pelvis_tilt: constraint violation = -20.2137
+   pelvis_tilt: constraint violation = -11.8865
+   pelvis_tilt: constraint violation = -0.357985
+   pelvis_tilt: constraint violation = -0.647157
+   pelvis_tilt: constraint violation = -9.25699
+   pelvis_tilt: constraint violation = -13.1086
+
+time = 2.172 Performance = 0.774361 Constraint violation = 28.5427
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.188.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.748236
+   pelvis_tilt: constraint violation = 0.144585
+   pelvis_tilt: constraint violation = -0.512922
+   pelvis_tilt: constraint violation = 0.000589432
+   pelvis_tilt: constraint violation = -0.283037
+   pelvis_tilt: constraint violation = -0.0140954
+   pelvis_tilt: constraint violation = -0.451786
+   pelvis_tilt: constraint violation = 0.10181
+   pelvis_tilt: constraint violation = -0.022591
+   pelvis_tilt: constraint violation = -0.19561
+   pelvis_tilt: constraint violation = -0.0667805
+   pelvis_tilt: constraint violation = 0.0822021
+   pelvis_tilt: constraint violation = -0.912955
+   pelvis_tilt: constraint violation = -0.00475553
+   pelvis_tilt: constraint violation = -0.11107
+   pelvis_tilt: constraint violation = -0.383439
+   pelvis_tilt: constraint violation = 0.129821
+   pelvis_tilt: constraint violation = -12.5813
+   pelvis_tilt: constraint violation = -7.05504
+   pelvis_tilt: constraint violation = 0.544172
+   pelvis_tilt: constraint violation = -0.325655
+   pelvis_tilt: constraint violation = -7.09443
+   pelvis_tilt: constraint violation = -9.8375
+
+time = 2.188 Performance = 0.841912 Constraint violation = 18.9148
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.20400.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.12844
+   pelvis_tilt: constraint violation = 0.416814
+   pelvis_tilt: constraint violation = 0.0129149
+   pelvis_tilt: constraint violation = 0.00138961
+   pelvis_tilt: constraint violation = -0.217842
+   pelvis_tilt: constraint violation = -0.0343624
+   pelvis_tilt: constraint violation = -0.186422
+   pelvis_tilt: constraint violation = 0.286845
+   pelvis_tilt: constraint violation = -0.00896883
+   pelvis_tilt: constraint violation = -0.982441
+   pelvis_tilt: constraint violation = -0.257403
+   pelvis_tilt: constraint violation = 0.122161
+   pelvis_tilt: constraint violation = -1.5997
+   pelvis_tilt: constraint violation = -0.280254
+   pelvis_tilt: constraint violation = 0.123796
+   pelvis_tilt: constraint violation = -0.114169
+   pelvis_tilt: constraint violation = 0.129621
+   pelvis_tilt: constraint violation = -26.5077
+   pelvis_tilt: constraint violation = -16.8408
+   pelvis_tilt: constraint violation = 1.68431
+   pelvis_tilt: constraint violation = -0.654276
+   pelvis_tilt: constraint violation = -9.51115
+   pelvis_tilt: constraint violation = -13.2448
+
+time = 2.20400 Performance = 0.871669 Constraint violation = 35.4896
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.22.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.00216361
+   pelvis_tilt: constraint violation = 0.647312
+   pelvis_tilt: constraint violation = 0.24701
+   pelvis_tilt: constraint violation = 0.00145469
+   pelvis_tilt: constraint violation = -0.209668
+   pelvis_tilt: constraint violation = -0.0249328
+   pelvis_tilt: constraint violation = 0.248504
+   pelvis_tilt: constraint violation = 0.20486
+   pelvis_tilt: constraint violation = 0.00343902
+   pelvis_tilt: constraint violation = -1.05361
+   pelvis_tilt: constraint violation = -0.257722
+   pelvis_tilt: constraint violation = 0.0889381
+   pelvis_tilt: constraint violation = -1.70685
+   pelvis_tilt: constraint violation = -0.58592
+   pelvis_tilt: constraint violation = 0.190878
+   pelvis_tilt: constraint violation = 0.251
+   pelvis_tilt: constraint violation = 0.0589857
+   pelvis_tilt: constraint violation = -16.3224
+   pelvis_tilt: constraint violation = -7.98926
+   pelvis_tilt: constraint violation = 1.37818
+   pelvis_tilt: constraint violation = -0.603455
+   pelvis_tilt: constraint violation = -6.70321
+   pelvis_tilt: constraint violation = -7.40574
+
+time = 2.22 Performance = 0.904960 Constraint violation = 20.9156
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.236.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.00469549
+   pelvis_tilt: constraint violation = 0.51063
+   pelvis_tilt: constraint violation = 0.0259234
+   pelvis_tilt: constraint violation = 0.00210174
+   pelvis_tilt: constraint violation = -0.163327
+   pelvis_tilt: constraint violation = -0.0350789
+   pelvis_tilt: constraint violation = 0.374934
+   pelvis_tilt: constraint violation = 0.349246
+   pelvis_tilt: constraint violation = -0.00424135
+   pelvis_tilt: constraint violation = -0.637335
+   pelvis_tilt: constraint violation = -0.354512
+   pelvis_tilt: constraint violation = 0.135193
+   pelvis_tilt: constraint violation = -1.71476
+   pelvis_tilt: constraint violation = -0.290837
+   pelvis_tilt: constraint violation = 0.136068
+   pelvis_tilt: constraint violation = 0.42564
+   pelvis_tilt: constraint violation = 0.076946
+   pelvis_tilt: constraint violation = -23.9795
+   pelvis_tilt: constraint violation = -7.36249
+   pelvis_tilt: constraint violation = 2.0665
+   pelvis_tilt: constraint violation = -0.87853
+   pelvis_tilt: constraint violation = -8.43241
+   pelvis_tilt: constraint violation = -7.48825
+
+time = 2.236 Performance = 0.868172 Constraint violation = 27.6727
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.252.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.0319868
+   pelvis_tilt: constraint violation = 0.492092
+   pelvis_tilt: constraint violation = -0.296329
+   pelvis_tilt: constraint violation = 0.0013974
+   pelvis_tilt: constraint violation = -0.168936
+   pelvis_tilt: constraint violation = -0.0263095
+   pelvis_tilt: constraint violation = 0.0926125
+   pelvis_tilt: constraint violation = 0.493512
+   pelvis_tilt: constraint violation = -0.0263424
+   pelvis_tilt: constraint violation = 0.0243932
+   pelvis_tilt: constraint violation = -0.201171
+   pelvis_tilt: constraint violation = 0.0628754
+   pelvis_tilt: constraint violation = -1.83745
+   pelvis_tilt: constraint violation = -0.127063
+   pelvis_tilt: constraint violation = -0.0436415
+   pelvis_tilt: constraint violation = 0.187852
+   pelvis_tilt: constraint violation = 0.0628964
+   pelvis_tilt: constraint violation = -1.30675
+   pelvis_tilt: constraint violation = -1.14876
+   pelvis_tilt: constraint violation = 0.91229
+   pelvis_tilt: constraint violation = -0.4544
+   pelvis_tilt: constraint violation = -5.59002
+   pelvis_tilt: constraint violation = -3.94514
+
+time = 2.252 Performance = 0.891271 Constraint violation = 7.41418
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.268.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.0510135
+   pelvis_tilt: constraint violation = 0.414088
+   pelvis_tilt: constraint violation = -1.07228
+   pelvis_tilt: constraint violation = 0.0018629
+   pelvis_tilt: constraint violation = -0.121178
+   pelvis_tilt: constraint violation = -0.00925618
+   pelvis_tilt: constraint violation = -0.0945297
+   pelvis_tilt: constraint violation = 0.290303
+   pelvis_tilt: constraint violation = -0.0666468
+   pelvis_tilt: constraint violation = 0.649977
+   pelvis_tilt: constraint violation = -0.0162531
+   pelvis_tilt: constraint violation = 0.0577932
+   pelvis_tilt: constraint violation = -1.82115
+   pelvis_tilt: constraint violation = 0.0949687
+   pelvis_tilt: constraint violation = -0.0709105
+   pelvis_tilt: constraint violation = -0.0818058
+   pelvis_tilt: constraint violation = 0.122634
+   pelvis_tilt: constraint violation = -5.9181
+   pelvis_tilt: constraint violation = -1.70052
+   pelvis_tilt: constraint violation = 1.17577
+   pelvis_tilt: constraint violation = 0.0644802
+   pelvis_tilt: constraint violation = -5.92762
+   pelvis_tilt: constraint violation = -2.95616
+
+time = 2.268 Performance = 0.940933 Constraint violation = 9.40173
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.284.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.0508293
+   pelvis_tilt: constraint violation = 0.272013
+   pelvis_tilt: constraint violation = -1.3319
+   pelvis_tilt: constraint violation = 0.00177344
+   pelvis_tilt: constraint violation = -0.0824311
+   pelvis_tilt: constraint violation = -0.00781325
+   pelvis_tilt: constraint violation = -0.594632
+   pelvis_tilt: constraint violation = 0.523653
+   pelvis_tilt: constraint violation = -0.118535
+   pelvis_tilt: constraint violation = 1.30192
+   pelvis_tilt: constraint violation = 0.207493
+   pelvis_tilt: constraint violation = 0.00554048
+   pelvis_tilt: constraint violation = -1.5677
+   pelvis_tilt: constraint violation = 0.412163
+   pelvis_tilt: constraint violation = -0.558283
+   pelvis_tilt: constraint violation = -0.607362
+   pelvis_tilt: constraint violation = 0.236586
+   pelvis_tilt: constraint violation = -16.8894
+   pelvis_tilt: constraint violation = -2.4976
+   pelvis_tilt: constraint violation = 1.44062
+   pelvis_tilt: constraint violation = 0.809437
+   pelvis_tilt: constraint violation = -4.39894
+   pelvis_tilt: constraint violation = -1.44254
+
+time = 2.284 Performance = 1.03208 Constraint violation = 17.9793
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.3.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.249614
+   pelvis_tilt: constraint violation = 0.284907
+   pelvis_tilt: constraint violation = -1.43502
+   pelvis_tilt: constraint violation = 0.0008615
+   pelvis_tilt: constraint violation = -0.0724109
+   pelvis_tilt: constraint violation = -0.0078894
+   pelvis_tilt: constraint violation = -0.921872
+   pelvis_tilt: constraint violation = 0.651765
+   pelvis_tilt: constraint violation = -0.127552
+   pelvis_tilt: constraint violation = 0.919304
+   pelvis_tilt: constraint violation = 0.251231
+   pelvis_tilt: constraint violation = -0.00965463
+   pelvis_tilt: constraint violation = -1.10436
+   pelvis_tilt: constraint violation = 0.493784
+   pelvis_tilt: constraint violation = -0.599122
+   pelvis_tilt: constraint violation = -1.03466
+   pelvis_tilt: constraint violation = 0.204125
+   pelvis_tilt: constraint violation = -17.4372
+   pelvis_tilt: constraint violation = -4.5923
+   pelvis_tilt: constraint violation = 1.58389
+   pelvis_tilt: constraint violation = 1.06785
+   pelvis_tilt: constraint violation = -3.11191
+   pelvis_tilt: constraint violation = -1.24465
+
+time = 2.3 Performance = 1.13042 Constraint violation = 18.6378
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.316.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.574303
+   pelvis_tilt: constraint violation = 0.198446
+   pelvis_tilt: constraint violation = -1.40502
+   pelvis_tilt: constraint violation = -0.000984409
+   pelvis_tilt: constraint violation = -0.0649332
+   pelvis_tilt: constraint violation = -0.00332696
+   pelvis_tilt: constraint violation = -1.49112
+   pelvis_tilt: constraint violation = 0.659472
+   pelvis_tilt: constraint violation = -0.128596
+   pelvis_tilt: constraint violation = 0.243276
+   pelvis_tilt: constraint violation = 0.341104
+   pelvis_tilt: constraint violation = -0.0289562
+   pelvis_tilt: constraint violation = -0.413502
+   pelvis_tilt: constraint violation = 0.556885
+   pelvis_tilt: constraint violation = -0.606087
+   pelvis_tilt: constraint violation = -1.70551
+   pelvis_tilt: constraint violation = 0.0462577
+   pelvis_tilt: constraint violation = -17.8088
+   pelvis_tilt: constraint violation = -7.72239
+   pelvis_tilt: constraint violation = 1.40664
+   pelvis_tilt: constraint violation = 1.4912
+   pelvis_tilt: constraint violation = -1.8997
+   pelvis_tilt: constraint violation = -0.858385
+
+time = 2.316 Performance = 1.2617 Constraint violation = 19.8568
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.332.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.897887
+   pelvis_tilt: constraint violation = 0.0789794
+   pelvis_tilt: constraint violation = -1.1791
+   pelvis_tilt: constraint violation = -0.00306983
+   pelvis_tilt: constraint violation = -0.0523299
+   pelvis_tilt: constraint violation = 0.00402577
+   pelvis_tilt: constraint violation = -2.00685
+   pelvis_tilt: constraint violation = 0.536275
+   pelvis_tilt: constraint violation = -0.115807
+   pelvis_tilt: constraint violation = -0.504187
+   pelvis_tilt: constraint violation = 0.416487
+   pelvis_tilt: constraint violation = -0.0313129
+   pelvis_tilt: constraint violation = 0.329654
+   pelvis_tilt: constraint violation = 0.604963
+   pelvis_tilt: constraint violation = -0.536919
+   pelvis_tilt: constraint violation = -2.24822
+   pelvis_tilt: constraint violation = -0.307719
+   pelvis_tilt: constraint violation = -16.3741
+   pelvis_tilt: constraint violation = -10.3026
+   pelvis_tilt: constraint violation = 1.02167
+   pelvis_tilt: constraint violation = 1.82804
+   pelvis_tilt: constraint violation = -0.606721
+   pelvis_tilt: constraint violation = 0.00284166
+
+time = 2.332 Performance = 1.37955 Constraint violation = 19.796
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.348.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.14059
+   pelvis_tilt: constraint violation = 0.0296194
+   pelvis_tilt: constraint violation = -0.887172
+   pelvis_tilt: constraint violation = -0.00408893
+   pelvis_tilt: constraint violation = -0.0163686
+   pelvis_tilt: constraint violation = 0.0100854
+   pelvis_tilt: constraint violation = -2.18619
+   pelvis_tilt: constraint violation = 0.386622
+   pelvis_tilt: constraint violation = -0.0944601
+   pelvis_tilt: constraint violation = -0.819552
+   pelvis_tilt: constraint violation = 0.446246
+   pelvis_tilt: constraint violation = -0.0158496
+   pelvis_tilt: constraint violation = 0.891994
+   pelvis_tilt: constraint violation = 0.645299
+   pelvis_tilt: constraint violation = -0.427271
+   pelvis_tilt: constraint violation = -2.41227
+   pelvis_tilt: constraint violation = -0.73018
+   pelvis_tilt: constraint violation = -11.1183
+   pelvis_tilt: constraint violation = -9.40223
+   pelvis_tilt: constraint violation = 0.641713
+   pelvis_tilt: constraint violation = 2.03526
+   pelvis_tilt: constraint violation = 1.62819
+   pelvis_tilt: constraint violation = 2.03601
+
+time = 2.348 Performance = 1.55402 Constraint violation = 15.46
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.364.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.38661
+   pelvis_tilt: constraint violation = 0.0162057
+   pelvis_tilt: constraint violation = -0.56462
+   pelvis_tilt: constraint violation = -0.00435154
+   pelvis_tilt: constraint violation = 0.0383649
+   pelvis_tilt: constraint violation = 0.0153124
+   pelvis_tilt: constraint violation = -2.08142
+   pelvis_tilt: constraint violation = 0.208038
+   pelvis_tilt: constraint violation = -0.070682
+   pelvis_tilt: constraint violation = -0.745585
+   pelvis_tilt: constraint violation = 0.447703
+   pelvis_tilt: constraint violation = 0.00122988
+   pelvis_tilt: constraint violation = 1.22957
+   pelvis_tilt: constraint violation = 0.668458
+   pelvis_tilt: constraint violation = -0.297487
+   pelvis_tilt: constraint violation = -2.31114
+   pelvis_tilt: constraint violation = -1.04495
+   pelvis_tilt: constraint violation = -3.1271
+   pelvis_tilt: constraint violation = -4.48216
+   pelvis_tilt: constraint violation = 0.215177
+   pelvis_tilt: constraint violation = 2.15369
+   pelvis_tilt: constraint violation = 4.40955
+   pelvis_tilt: constraint violation = 5.32366
+
+time = 2.364 Performance = 1.80064 Constraint violation = 9.90956
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.38.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -1.75546
+   pelvis_tilt: constraint violation = 0.190321
+   pelvis_tilt: constraint violation = -0.0746678
+   pelvis_tilt: constraint violation = -0.00460405
+   pelvis_tilt: constraint violation = 0.0860568
+   pelvis_tilt: constraint violation = 0.00834198
+   pelvis_tilt: constraint violation = -1.81294
+   pelvis_tilt: constraint violation = 0.0633354
+   pelvis_tilt: constraint violation = -0.0249283
+   pelvis_tilt: constraint violation = -0.941345
+   pelvis_tilt: constraint violation = 0.146707
+   pelvis_tilt: constraint violation = 0.0120328
+   pelvis_tilt: constraint violation = 1.36477
+   pelvis_tilt: constraint violation = 0.457331
+   pelvis_tilt: constraint violation = -0.0716235
+   pelvis_tilt: constraint violation = -1.97018
+   pelvis_tilt: constraint violation = -1.31659
+   pelvis_tilt: constraint violation = 3.55559
+   pelvis_tilt: constraint violation = 6.46443
+   pelvis_tilt: constraint violation = -0.0213607
+   pelvis_tilt: constraint violation = 0.471632
+   pelvis_tilt: constraint violation = 6.55958
+   pelvis_tilt: constraint violation = 7.55612
+
+time = 2.38 Performance = 2.08224 Constraint violation = 13.0307
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.396.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -2.27623
+   pelvis_tilt: constraint violation = 0.504391
+   pelvis_tilt: constraint violation = 0.341107
+   pelvis_tilt: constraint violation = -0.00386566
+   pelvis_tilt: constraint violation = 0.174418
+   pelvis_tilt: constraint violation = -0.00953107
+   pelvis_tilt: constraint violation = -1.31887
+   pelvis_tilt: constraint violation = 0.0359088
+   pelvis_tilt: constraint violation = 0.0304164
+   pelvis_tilt: constraint violation = -0.783813
+   pelvis_tilt: constraint violation = -0.467593
+   pelvis_tilt: constraint violation = -0.032945
+   pelvis_tilt: constraint violation = 1.42412
+   pelvis_tilt: constraint violation = -0.00529882
+   pelvis_tilt: constraint violation = 0.137232
+   pelvis_tilt: constraint violation = -1.39361
+   pelvis_tilt: constraint violation = -0.657779
+   pelvis_tilt: constraint violation = 14.1522
+   pelvis_tilt: constraint violation = 27.9929
+   pelvis_tilt: constraint violation = -0.0987633
+   pelvis_tilt: constraint violation = -3.21834
+   pelvis_tilt: constraint violation = 10.5588
+   pelvis_tilt: constraint violation = 9.04788
+
+time = 2.396 Performance = 2.43885 Constraint violation = 34.6437
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.412.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -3.02512
+   pelvis_tilt: constraint violation = 0.718893
+   pelvis_tilt: constraint violation = 0.365127
+   pelvis_tilt: constraint violation = -0.00253826
+   pelvis_tilt: constraint violation = 0.379322
+   pelvis_tilt: constraint violation = -0.0251189
+   pelvis_tilt: constraint violation = -0.631455
+   pelvis_tilt: constraint violation = 0.167712
+   pelvis_tilt: constraint violation = 0.0514011
+   pelvis_tilt: constraint violation = 0.226096
+   pelvis_tilt: constraint violation = -1.17899
+   pelvis_tilt: constraint violation = -0.0861682
+   pelvis_tilt: constraint violation = 1.82907
+   pelvis_tilt: constraint violation = -0.415966
+   pelvis_tilt: constraint violation = 0.153656
+   pelvis_tilt: constraint violation = -0.742768
+   pelvis_tilt: constraint violation = 0.698155
+   pelvis_tilt: constraint violation = 7.6107
+   pelvis_tilt: constraint violation = 28.2607
+   pelvis_tilt: constraint violation = 0.0213439
+   pelvis_tilt: constraint violation = -3.60382
+   pelvis_tilt: constraint violation = 14.7106
+   pelvis_tilt: constraint violation = 10.613
+
+time = 2.412 Performance = 2.92449 Constraint violation = 34.8571
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.428.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   med_gas_r approaching upper bound of 1
+
+time = 2.428 Performance = 3.4417 Constraint violation = 69.1899
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.444.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   med_gas_r approaching upper bound of 1
+
+time = 2.444 Performance = 3.85104 Constraint violation = 65.453
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.46.
+[warning] The model appears too weak for static optimization.
+Try increasing the strength and/or range of the following force(s):
+   med_gas_r approaching upper bound of 1
+
+time = 2.46 Performance = 4.03014 Constraint violation = 17.5312
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.476.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = -0.0873372
+   pelvis_tilt: constraint violation = -0.0317612
+   pelvis_tilt: constraint violation = -1.9402
+   pelvis_tilt: constraint violation = -0.00659991
+   pelvis_tilt: constraint violation = -0.287147
+   pelvis_tilt: constraint violation = 0.0311407
+   pelvis_tilt: constraint violation = -7.89375
+   pelvis_tilt: constraint violation = 0.254706
+   pelvis_tilt: constraint violation = -0.153334
+   pelvis_tilt: constraint violation = -6.40252
+   pelvis_tilt: constraint violation = 1.74166
+   pelvis_tilt: constraint violation = 0.194734
+   pelvis_tilt: constraint violation = 0.586669
+   pelvis_tilt: constraint violation = 1.85453
+   pelvis_tilt: constraint violation = -0.228744
+   pelvis_tilt: constraint violation = -0.479387
+   pelvis_tilt: constraint violation = -0.405345
+   pelvis_tilt: constraint violation = -8.13274
+   pelvis_tilt: constraint violation = -5.68684
+   pelvis_tilt: constraint violation = 1.56211
+   pelvis_tilt: constraint violation = 2.82224
+   pelvis_tilt: constraint violation = -7.39096
+   pelvis_tilt: constraint violation = -0.269552
+
+time = 2.476 Performance = 4.01272 Constraint violation = 16.6774
+[warning] SimTK Exception thrown at InteriorPointOptimizer.cpp:264:
+  Optimizer failed: Ipopt: Maximum iterations exceeded (status -1)
+[warning] OPTIMIZATION FAILED...
+[warning] StaticOptimization.record: The optimizer could not find a solution at time = 2.492.
+[warning] The model appears unsuitable for static optimization.
+Try appending the model with additional force(s) or locking joint(s) to reduce the following acceleration constraint violation(s):
+   pelvis_tilt: constraint violation = 0.921591
+   pelvis_tilt: constraint violation = -0.754228
+   pelvis_tilt: constraint violation = -3.99733
+   pelvis_tilt: constraint violation = -0.0143602
+   pelvis_tilt: constraint violation = -1.44584
+   pelvis_tilt: constraint violation = 0.129381
+   pelvis_tilt: constraint violation = -8.02687
+   pelvis_tilt: constraint violation = 0.508554
+   pelvis_tilt: constraint violation = -0.328339
+   pelvis_tilt: constraint violation = -11.5574
+   pelvis_tilt: constraint violation = 5.59665
+   pelvis_tilt: constraint violation = 0.136237
+   pelvis_tilt: constraint violation = 0.818997
+   pelvis_tilt: constraint violation = 3.66318
+   pelvis_tilt: constraint violation = -0.996529
+   pelvis_tilt: constraint violation = -1.7868
+   pelvis_tilt: constraint violation = -1.6228
+   pelvis_tilt: constraint violation = -23.3947
+   pelvis_tilt: constraint violation = -16.1062
+   pelvis_tilt: constraint violation = 3.09726
+   pelvis_tilt: constraint violation = 8.56508
+   pelvis_tilt: constraint violation = -31.5647
+   pelvis_tilt: constraint violation = -8.57694
+
+time = 2.492 Performance = 3.20639 Constraint violation = 47.2197
+[info] Printing results of investigation zz_bsolve to ./ResultsBSolve
+
