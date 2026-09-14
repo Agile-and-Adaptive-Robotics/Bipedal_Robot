@@ -3,19 +3,24 @@ clear functions
 clc
 rehash
 
+
 ctx = buildKneeFlexorContext20mm();
 geo = ctx.geo;
 idxP2 = 4:6;
+
 
 obj = @(x) objective_KneeFlexor20mm(x, ctx);
 objconstr = @(x) objconstrExclusion(x, obj, geo, ctx, idxP2);
 nonlcon = @(x) nonlconExclusion(x, geo, ctx, idxP2);
 
+
 rng default
+
 
 if isempty(gcp('nocreate'))
     parpool;
 end
+
 
 %% Global search
 optsG = optimoptions('surrogateopt', ...
@@ -25,8 +30,10 @@ optsG = optimoptions('surrogateopt', ...
     'MinSampleDistance', 0.001, ...
     'ConstraintTolerance', 1e-6);
 
+
 [xG, fG, exitflagG, outputG] = surrogateopt( ...
     objconstr, ctx.lb, ctx.ub, optsG);
+
 
 %% Pattern-search refinement
 optsP = optimoptions('patternsearch', ...
@@ -42,11 +49,14 @@ optsP = optimoptions('patternsearch', ...
                 @psplotmaxconstr}, ...
     'OutputFcn', @patternProgress);
 
+
 [xBest, fBest, exitflagP, outputP] = patternsearch( ...
     obj, xG, [], [], [], [], ctx.lb, ctx.ub, nonlcon, optsP);
 
+
 %% Run with adjusted seed
 % Section commented out if unused.
+
 
 %Listing constraints (can put this before or after the xSeed ... cSeed
 %block)
@@ -109,26 +119,47 @@ predBest = predictKneeFlexor20mm(xBest, ctx);
 relativeContractionBest = predBest.relativeContraction;
 
 %% Evaluate original and optimized designs
+% Display-from-mat workflow: load a dated result mat (xBest, ctx, fBest,
+% predBest, ...) then run this section. The guards below supply the
+% run-setup variables this section reads that the mat does not carry;
+% each is a no-op during a full Opt_run.
+if ~exist('geo', 'var')
+    geo = ctx.geo;
+end
+if ~exist('idxP2', 'var')
+    idxP2 = 4:6;
+end
+
+
 predOriginal = predictOriginalKneeFlexor20mm(ctx);
 predX0 = predictKneeFlexor20mm(ctx.x0, ctx);
 predBest = predictKneeFlexor20mm(xBest, ctx);
 [cCollision, ~, collisionInfo] = nonlconExclusion( ...
     xBest, geo, ctx, idxP2);
 
+
 if ~predOriginal.ok
     error('Original-design prediction failed: %s', predOriginal.failReason)
 end
+
 
 if ~predX0.ok
     error('Original optimizer-guess prediction failed: %s', predX0.failReason)
 end
 
+
 if ~predBest.ok
     error('Optimized-design prediction failed: %s', predBest.failReason)
 end
 
-constraintTolerance = optsP.ConstraintTolerance;
+
+if exist('optsP', 'var')
+    constraintTolerance = optsP.ConstraintTolerance;
+else
+    constraintTolerance = 1e-6;  % display-from-mat run: options not loaded
+end
 collisionFeasible = all(cCollision <= constraintTolerance);
+
 
 % Do not present an infeasible final iterate as an optimized solution.
 if ~collisionFeasible
@@ -137,13 +168,16 @@ if ~collisionFeasible
         max(cCollision), constraintTolerance)
 end
 
+
 % Three-row design matrices: p1 is in femur; pWrap and pEnd are in t1.
 pInitialWrapped = [predX0.p1; predX0.pWrap; predX0.pEnd];
 pOptimized = [predBest.p1; predBest.pWrap; predBest.pEnd];
 pChanged = pOptimized - pInitialWrapped;
 
+
 % Save every optimizer-specific input consumed by Knee_Flexor_Data_20mm.
 routeCtx = struct;
+
 
 routeCtx.N = ctx.N;
 routeCtx.phiD = ctx.phiD;
@@ -154,35 +188,45 @@ routeCtx.wrapAngleToleranceD = ctx.wrapAngleToleranceD;
 routeCtx.BPAcount = ctx.BPAcount;
 routeCtx.bpaRadiusMode = ctx.bpaRadiusMode;
 
+
 % Save the exact scalar radii or converged per-frame bpaR arrays used by
 % the optimized prediction. wRap remains the independent Xi3 bend radius.
 routeCtx.geo = predBest.geo;
 
+
 Xi3 = ctx.Xi3;
+
 
 % Dated result capture into Results; does not overwrite prior results.
 % (Replaces the old copy/paste save block; pOriginal never existed as a
 % variable -- the initial design matrix is pInitialWrapped.)
-stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
-resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
-resultFile = fullfile(resDir, sprintf('Bifemsh_20mm_Result_%s.mat', stamp));
-save(resultFile, ...
-    'xBest', 'pInitialWrapped', 'pOptimized', 'pChanged', ...
-    'routeCtx', 'Xi3', 'fBest', 'exitflagG', 'exitflagP', ...
-    'outputG', 'outputP', 'predBest', 'cCollision')
-fprintf('Saved %s\n', resultFile)
+% ctx and the XiUsed record make the mat self-contained for display:
+% display sections can load ctx straight from the result mat.
+% stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
+% resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
+% resultFile = fullfile(resDir, sprintf('Bifemsh_20mm_Result_%s.mat', stamp));
+% XiUsed = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
+% save(resultFile, ...
+%     'xBest', 'pInitialWrapped', 'pOptimized', 'pChanged', ...
+%     'routeCtx', 'Xi3', 'XiUsed', 'fBest', 'exitflagG', 'exitflagP', ...
+%     'outputG', 'outputP', 'predBest', 'cCollision', 'ctx')
+% fprintf('Saved %s\n', resultFile)
+
 
 %% Full-extension/full-flexion muscle-length and travel calculations
 [~, idxFullExtension] = max(ctx.phiD);  % +10 deg normal calculation limit
 [~, idxFullFlexion] = min(ctx.phiD);    % -120 deg normal calculation limit
+
 
 LmExtension = predBest.activeLength(idxFullExtension);
 LmFlexion = predBest.activeLength(idxFullFlexion);
 deltaLmSigned = LmFlexion - LmExtension;
 deltaLmAbsolute = abs(deltaLmSigned);
 
+
 % Maximum physical BPA shortening from resting to fully contracted length.
 maxContractionTravel = predBest.rest - predBest.kmax;
+
 
 %% Display results
 fprintf('\n========== OPTIMIZED DESIGN VALUES ==========\n')
@@ -190,23 +234,31 @@ fprintf('surrogateopt exitflag    = %d\n', exitflagG)
 fprintf('patternsearch exitflag   = %d\n', exitflagP)
 fprintf('surrogate evaluations   = %d\n', outputG.funccount)
 fprintf('pattern evaluations     = %d\n', outputP.funccount)
-fprintf('fG                       = %.9g\n', fG)
+if exist('fG', 'var')
+    fprintf('fG                       = %.9g\n', fG)
+else
+    fprintf('fG                       = (not in result mat)\n')
+end
 fprintf('fBest                    = %.9g\n', fBest)
+
 
 fprintf('\np (original), m; rows = [p1; pWrap; pEnd]:\n')
 fprintf('[% .6f, % .6f, % .6f;\n', pInitialWrapped(1,:))
 fprintf(' % .6f, % .6f, % .6f;\n', pInitialWrapped(2,:))
 fprintf(' % .6f, % .6f, % .6f]\n', pInitialWrapped(3,:))
 
+
 fprintf('\np (optimized), m; rows = [p1; pWrap; pEnd]:\n')
 fprintf('[% .6f, % .6f, % .6f;\n', pOptimized(1,:))
 fprintf(' % .6f, % .6f, % .6f;\n', pOptimized(2,:))
 fprintf(' % .6f, % .6f, % .6f]\n', pOptimized(3,:))
 
+
 fprintf('\np (changed), m; optimized minus original:\n')
 fprintf('[%+.6f, %+.6f, %+.6f;\n', pChanged(1,:))
 fprintf(' %+.6f, %+.6f, %+.6f;\n', pChanged(2,:))
 fprintf(' %+.6f, %+.6f, %+.6f]\n', pChanged(3,:))
+
 
 fprintf('wrap y-z line fraction at extension  = %.6f\n', ...
     predBest.routeInfo.wrapYZFraction)
@@ -218,6 +270,7 @@ if predBest.routeInfo.releaseFound
 else
     fprintf('first inactive wrap angle           = NONE IN MODELED RANGE\n')
 end
+
 
 fprintf('\nBPA and tendon lengths:\n')
 fprintf('number of parallel BPAs             = %d\n', predBest.BPAcount)
@@ -238,6 +291,7 @@ fprintf('maximum contraction fraction, KMAX  = %.6f\n', predBest.KMAX)
 fprintf('maximum BPA contraction travel      = %.6f m\n', maxContractionTravel)
 fprintf('tendon length                       = %.6f m\n', predBest.tendon)
 
+
 fprintf('\nMuscle length over normal RoM:\n')
 fprintf('Lm at full extension (%+.6f deg) = %.6f m\n', ...
     ctx.phiD(idxFullExtension), LmExtension)
@@ -246,11 +300,13 @@ fprintf('Lm at full flexion   (%+.6f deg) = %.6f m\n', ...
 fprintf('Lm flexion minus extension         = %+.6f m\n', deltaLmSigned)
 fprintf('absolute Lm difference             = %.6f m\n', deltaLmAbsolute)
 
+
 fprintf('\nRest-length check:\n')
 fprintf('restLmt           = %.6f m\n', predBest.restLmt)
 fprintf('extensionDistance = %.6f m\n', predBest.extensionDistance)
 fprintf('cRestLength       = %.6f m\n', predBest.cRestLength)
 fprintf('max Contraction/KMAX = %.6f\n', max(predBest.relativeContraction))
+
 
 offAxisExcessX = max(0, ...
     abs(predBest.TorqueX) - abs(ctx.originalTorqueX));
@@ -269,6 +325,7 @@ fprintf('maximum |optimized Ty|       = %.6f N m\n', ...
     max(abs(predBest.TorqueY)))
 fprintf('maximum pointwise |Ty| excess= %.6f N m\n', ...
     max(offAxisExcessY))
+
 
 fprintf('\nCollision check at %.6f deg:\n', collisionInfo.angleD)
 fprintf('constraint tolerance       = %.9g m\n', constraintTolerance)
@@ -305,13 +362,16 @@ fprintf('worst femur center, femur  = [%.6f, %.6f, %.6f] m\n', ...
     collisionInfo.worstFemurCenterFemur)
 fprintf('=============================================\n')
 
+
 fprintf('min Contraction/KMAX = %+.6f\n', ...
     min(predBest.Contraction)/predBest.KMAX);
 fprintf('max Contraction/KMAX = %+.6f\n', ...
     max(predBest.Contraction)/predBest.KMAX);
 
+
 %% Plot original and optimized results in separate figure windows
 humanTorque = -ctx.humanTorqueAbs;  % Flexor torque remains negative.
+
 
 % Use the established accessible project palette.  Colors.m supplies c for
 % line colors and d for RGB scatter-marker colors; these figures use c.
@@ -320,6 +380,7 @@ originalColor = [0.4 0.4 0.4];
 optimizedColor = c{5};
 humanColor = '#000000';
 limitColor = c{7};
+
 
 fontName = 'Arial';
 axesFontSize = 10;
@@ -332,6 +393,7 @@ humanLineWidth = 4;
 tickLength = [0.025 0.05];
 figurePosition = [2 2 14 10.5];  % centimeters; 14 cm publication width
 xLimits = [min(ctx.phiD), max(ctx.phiD)];
+
 
 %% Flexor torque
 figure('Name', 'Flexor Torque', 'Color', 'w', ...
@@ -363,6 +425,7 @@ set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...
     'FontWeight', 'bold', 'Box', 'off')
 grid(ax, 'off')
 
+
 %% Muscle length
 figure('Name', 'Muscle Length', 'Color', 'w', ...
     'Units', 'centimeters', 'Position', figurePosition)
@@ -389,6 +452,7 @@ lg = legend(ax, 'Location', 'best');
 set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...
     'FontWeight', 'bold', 'Box', 'off')
 grid(ax, 'off')
+
 
 %% Strain definitions
 figure('Name', 'Flexor Strain', 'Color', 'w', ...
@@ -428,6 +492,7 @@ set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...
     'FontWeight', 'bold', 'Box', 'off')
 grid(ax, 'off')
 
+
 %% Moment arm
 figure('Name', 'Moment Arm', 'Color', 'w', ...
     'Units', 'centimeters', 'Position', figurePosition)
@@ -454,6 +519,7 @@ lg = legend(ax, 'Location', 'best');
 set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...
     'FontWeight', 'bold', 'Box', 'off')
 grid(ax, 'off')
+
 
 %% X-axis torque relative to the original no-wrap BPA
 figure('Name', 'X-axis Torque', 'Color', 'w', ...
@@ -482,6 +548,7 @@ set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...
     'FontWeight', 'bold', 'Box', 'off')
 grid(ax, 'off')
 
+
 %% Y-axis torque relative to the original no-wrap BPA
 figure('Name', 'Y-axis Torque', 'Color', 'w', ...
     'Units', 'centimeters', 'Position', figurePosition)
@@ -509,6 +576,7 @@ set(lg, 'FontName', fontName, 'FontSize', legendFontSize, ...
     'FontWeight', 'bold', 'Box', 'off')
 grid(ax, 'off')
 
+
 %% Torque margin fraction
 % Positive means the BPA exceeds the required human flexor-torque
 % magnitude. Negative means a remaining torque shortfall. The flexor
@@ -522,6 +590,7 @@ torqueMarginFraction(validHumanTorque) = ...
     abs(predBest.TorqueZ(validHumanTorque)) ./ ...
     humanAbsAtRobotAngles(validHumanTorque) - 1;
 
+
 fprintf('\nTorque margin relative to human target:\n')
 fprintf('minimum margin fraction = %+.6f (%+.2f%%)\n', ...
     min(torqueMarginFraction(validHumanTorque)), ...
@@ -529,6 +598,7 @@ fprintf('minimum margin fraction = %+.6f (%+.2f%%)\n', ...
 fprintf('mean remaining shortfall = %.6f (%.2f%%)\n', ...
     mean(max(0, -torqueMarginFraction(validHumanTorque))), ...
     100*mean(max(0, -torqueMarginFraction(validHumanTorque))))
+
 
 figure('Name', 'Torque Margin Fraction', 'Color', 'w', ...
     'Units', 'centimeters', 'Position', figurePosition)
@@ -556,12 +626,15 @@ title(ax, 'BPA Torque Margin Relative to Human', ...
     'FontName', fontName, 'FontSize', titleFontSize, 'FontWeight', 'bold')
 grid(ax, 'off')
 
+
 %% Local output function: concise pattern-search progress in Command Window
 function [stop, options, optchanged] = patternProgress( ...
         optimValues, options, flag)
 
+
 stop = false;
 optchanged = false;
+
 
 if strcmp(flag, 'init')
     fprintf(['\nPattern search progress:\n' ...
@@ -570,15 +643,18 @@ if strcmp(flag, 'init')
     return
 end
 
+
 if ~strcmp(flag, 'iter') && ~strcmp(flag, 'done')
     return
 end
+
 
 maxConstraint = 0;
 if isfield(optimValues, 'nonlinineq') && ...
         ~isempty(optimValues.nonlinineq)
     maxConstraint = max([0; optimValues.nonlinineq(:)]);
 end
+
 
 fprintf('%10d %23d %12.6g %15.6g %18.6g\n', ...
     optimValues.iteration, ...
@@ -587,8 +663,10 @@ fprintf('%10d %23d %12.6g %15.6g %18.6g\n', ...
     optimValues.meshsize, ...
     maxConstraint)
 
+
 if strcmp(flag, 'done')
     fprintf('Pattern search finished.\n')
 end
+
 
 end
