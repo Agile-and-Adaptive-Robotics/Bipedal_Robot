@@ -38,6 +38,7 @@ TAU = dict(
     pf_adapt=0.5,   # PF burst self-adaptation
     ib_exc=0.05,    # group Ib load-sharing interneuron
     descend=0.10,   # descending drive smoothing
+    preset=0.04,    # v5 phase-reset interneurons (hip-signal input stage)
 )
 
 # ------------------------------------------------------------- synapse conductances
@@ -70,6 +71,40 @@ G = dict(
                              # OFF phase - constant co-contraction, no knee
                              # swing; 0.2 lets the windows close)
     posture_gain=1.0,
+    # ---- v5 sensory phase-reset (2026-09-12 night): hip afferent signals
+    # resetting the RG phase (the #1 lever from the v4 diagnosis: E-duty
+    # 0.27 vs 0.61, cadence 1.18 vs 0.81 Hz, cycle-to-cycle jitter).
+    # HIP_EXT_SIG (hip-extensor group length, stance-gated) EXCITES RG-E and
+    # INHIBITS RG-F (prolongs stance); HIP_FLEX_SIG (hip-flexor group
+    # positive shortening velocity) EXCITES RG-F and INHIBITS RG-E
+    # (triggers swing). Wired through per-side PRESET_E/F interneurons.
+    # DEFAULTS 0.0 = network behavior-identical to v4b (regression-gated).
+    phase_reset_e=0.0,       # HIP_EXT_SIG gain (nA signal -> conductance)
+    phase_reset_f=0.0,       # HIP_FLEX_SIG gain (nA signal -> conductance)
+    # v5b/phase-3 swing-knee quad suppression (lever #2 from the v4
+    # diagnosis: swing knee stays extension-dominant because F1 knee-flex
+    # gains saturate against quad tone): F1 -> KINH inhibitory interneuron
+    # -> knee_ext MN pools, phase-gated by F1 itself (F1 IS the swing
+    # window). Default 0.0 = absent (conditional topology, v4-identical).
+    f1_kneext_inh=0.0,       # KINH -> knee_ext MN inhibition
+    # v6b: same swing-gated suppression applied to the ankle plantar-
+    # flexor pools (reuses the F1-driven KINH interneuron). Motivated by
+    # the air-stepping ankle test 2026-09-14: boosting swing DF drive
+    # (x3-x5) does NOT produce dorsiflexion (9 PF muscles ~10 kN vs 3 DF
+    # ~1.6 kN), but suppressing PF tone in swing should - the mechanism
+    # that fixed the swing knee.
+    f1_anklepf_inh=0.0,      # KINH -> ankle_pf MN inhibition
+    # Renshaw recurrent inhibition (Ben's go, 2026-09-13; Deng Table A6:
+    # MN->RC 0.5 exc, RC->MN 0.5 inh, RC<->RC 0.5 inh). Gain applies to
+    # RC->homonymous-MN and RC<->RC; topology built only when > 0.
+    renshaw=0.0,
+)
+
+# Extra gains for the phase-reset pathways (not searched by default; the
+# two search dimensions are params.G phase_reset_e / phase_reset_f).
+PHASE_RESET = dict(
+    inh=1.0,             # inhibitory branch scale relative to excitatory
+    stance_gate=(0.3, 0.7),  # ext-signal gate = a + b * stance (II-style)
 )
 
 # ------------------------------------------------------------- afferent encoding gains

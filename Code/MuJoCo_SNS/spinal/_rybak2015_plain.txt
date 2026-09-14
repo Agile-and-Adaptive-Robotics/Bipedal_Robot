@@ -1,0 +1,1616 @@
+Sensory and Motor Systems
+Organization of the Mammalian Locomotor CPG:
+Review of Computational Model and Circuit
+Architectures Based on Genetically Identified
+Spinal Interneurons
+Ilya A. Rybak, Kimberly J. Dougherty, and Natalia A. Shevtsova
+DOI:http://dx.doi.org/10.1523/ENEURO.0069-15.2015
+Department of Neurobiology and Anatomy, Drexel University College of Medicine, Philadelphia, Pennsylvania 19129
+Abstract
+The organization of neural circuits that form the locomotor central pattern generator (CPG) and provide flexor– extensor and
+left–right coordination of neuronal activity remains largely unknown. However, significant progress has been made in the
+molecular/genetic identification of several types of spinal interneurons, including V0 (V0D and V0V subtypes), V1, V2a, V2b,
+V3, and Shox2, among others. The possible functional roles of these interneurons can be suggested from changes in the
+locomotor pattern generated in mutant mice lacking particular neuron types. Computational modeling of spinal circuits may
+complement these studies by bringing together data from different experimental studies and proposing the possible
+connectivity of these interneurons that may define rhythm generation, flexor– extensor interactions on each side of the cord,
+and commissural interactions between left and right circuits. This review focuses on the analysis of potential architectures
+of spinal circuits that can reproduce recent results and suggest common explanations for a series of experimental data on
+genetically identified spinal interneurons, including the consequences of their genetic ablation, and provides important
+insights into the organization of the spinal CPG and neural control of locomotion.
+Key words: central pattern generator; computational modeling; flexor– extensor coordination; genetically iden-
+tified neurons; left–right coordination; locomotion; spinal cord
+Received June 23, 2015; accepted August 29, 2015; First published September 8, 2015.
+The authors declare no competing financial interests.
+Author Contributions: I.A.R., K.J.D., and N.A.S. designed research; I.A.R., K.J.D., and N.A.S. performed research; I.A.R., K.J.D., and N.A.S. wrote the paper.
+This study was supported by National Institutes of Health Grants NS081713 and NS090919 to I.A.R.; and NS095366 to K.J.D.
+Correspondence should be addressed to Dr. Ilya A. Rybak, Department of Neurobiology and Anatomy, Drexel University College of Medicine, 2900 Queen L ane,
+Philadelphia, PA 19129. E-mail: rybak@drexel.edu.
+DOI:http://dx.doi.org/10.1523/ENEURO.0069-15.2015
+Copyright © 2015 Rybak et al.
+This is an open-access article distributed under the terms of the Creative Commons Attribution 4.0 International , which permits unrestricted use, distribution and
+reproduction in any medium provided that the original work is properly attributed.
+Significance Statement
+We review and analyze together (1) the currently proposed architectures of the central pattern generator
+(CPG) in the mammalian spinal cord and (2) different classes of genetically identified spinal interneurons. We
+suggest the possible roles of these interneurons, and their connectivity and functions within the spinal
+circuitry and the CPG, which can simultaneously explain multiple experimental data and provide important
+insights into the organization and operation of neural circuits in the spinal cord during locomotion.
+Review
+September/October 2015, 2(5) e0069-15.2015 1–20
+Introduction
+The nervous systems of vertebrates contain neural net-
+works representing central pattern generators (CPGs) that
+generate neural oscillations and control rhythmic move-
+ments. These CPGs are involved in many important func-
+tions, including different forms of locomotion, such as
+swimming, walking, running, and flying. Interplay between
+modeling and experimental studies has been valuable in
+advancing our understandings of different vertebrate
+CPGs ( Lansner et al., 1998 ; Ijspeert, 2001 ; Grillner, 2006 ;
+Rybak et al., 2006a ,b; Grillner et al., 2007; McCrea and
+Rybak, 2008 ; Wolf et al., 2009 ; Zhong et al., 2012 ; for
+review, see Rybak, 2014 ). Computational modeling pro-
+vides powerful tools through which experimental findings
+and current hypotheses from different laboratories can be
+incorporated together in a common computational frame-
+work allowing the generation of plausible predictions for
+future experimental studies. In this review, we focus on
+the mammalian locomotor CPG, and merge recent exper-
+imental and computational findings to produce a more
+complete common framework.
+The vertebrate locomotor CPGs are located in the spi-
+nal cord. The first schematic of the locomotor CPG, called
+the “half-center” model, was proposed by Graham Brown
+(1914) and elaborated on by Lundberg (1981 ; for review,
+see McCrea and Rybak, 2008 ; Stuart and Hultborn, 2008 ).
+This model included two (flexor and extensor) half-centers
+reciprocally inhibiting each other. The mutual inhibitory
+interactions between the half-centers were mediated by
+inhibitory interneurons that ensured that only one half-
+center could be active at a time. The activity of the active
+half-center gradually reduced due to some fatigue or
+adaptation mechanism, leading to the activation of the
+antagonistic half-center. The antagonistic half-center then
+inhibited the active half-center, hence switching the loco-
+motor phase. It was suggested that the flexor and exten-
+sor half-centers directly project to and activate the flexor
+and extensor motoneurons, respectively. Studies on the
+immobilized decerebrate cat demonstrated that continu-
+ous electrical stimulation of the midbrain locomotor region
+(MLR) can produce “fictive locomotion”—the rhythmic
+pattern of motoneuron activity that is characterized by
+alternating activation of flexor and extensor motoneurons
+similar to that observed during normal locomotion in the
+intact animal ( Rossignol, 1996 ; Markin et al., 2012 ). A
+similar pattern of locomotor activity can also be produced
+by systemic administration of the noradrenergic precur-
+sor, L-DOPA (Jankowska et al., 1967a ,b). The demonstra-
+tion that both MLR stimulation and neuroactive drug
+application can evoke fictive locomotion provided strong
+evidence for the existence of locomotor CPG in the mam-
+malian spinal cord.
+In contrast to many other neural networks in the brain,
+whose architecture, neuron types, and connectivity have
+been mainly or partly determined, the spinal cord circuitry
+does not exhibit a clear spatial organization, which makes
+it difficult to distinguish network elements with specific
+functions using traditional electrophysiological methods
+in order to reconstruct and suggest a realistic circuit
+organization from these data. Significant progress in this
+direction has been recently achieved due to the identifi-
+cation of several types of spinal interneurons during de-
+velopment based on the expression of transcription
+factors and the use of isolated spinal cord preparations
+from genetically modified mice lacking particular neuron
+types (Jessell, 2000; Lanuza et al., 2004 ; Gosgnach et al.,
+2006; Kiehn, 2006, 2011; Zhang et al., 2008 , 2014; Gould-
+ing, 2009 ; Gosgnach, 2011 ; Kiehn, 2011 ; Kiehn and
+Dougherty, 2013 ; Talpalar et al., 2013 ).
+To date, a series of spinal interneurons has been ge-
+netically identified and functionally characterized using
+these approaches. At the same time, the exact functional
+roles of these neurons remain purely understood, and
+their possible location, connectivity, and functions within
+the currently considered computational architectures of
+spinal and CPG circuits have not been considered and
+analyzed so far. In this review, we have made an attempt
+to include these neurons, and their potential interactions
+and functions, in a common logical and computational
+framework to propose explanations for multiple experi-
+mental data and provide important insights into the orga-
+nization and operation of neural circuits in the spinal cord
+during locomotion.
+Models of the locomotor CPG
+The classical half-center concept initially proposed by
+Graham Brown and Lundberg represents only a general,
+simplified CPG organization and cannot reproduce and
+explain many features of the real locomotor pattern gen-
+erated in the mammalian spinal cord. The actual locomo-
+tor pattern does not exhibit strictly alternating flexor and
+extensor activities with all motoneurons clearly belonging
+to one of these two groups. The real pattern is more
+complicated and includes motoneuron pools (e.g., the
+ones controlling biarticular muscles) that exhibit bursts in
+each locomotor phase or only a very short burst within
+one phase. There are also noticeable differences in the
+timing of burst onset and/or offset between different
+flexor and/or between different extensor motor pools. To
+overcome these and other limitations of the classical
+half-center model, Grillner (1981) proposed a unit burst
+generator (UBG) concept of CPG organization that sug-
+gested the existence of several separate rhythmogenic
+modules (or unit burst generators) controlling each joint of
+the limb and interacting with each other as coupled neural
+oscillators. The other solution, proposed by Rybak et al.
+(2006a,b) and McCrea and Rybak (2007 , 2008 ), sug-
+gested that the spinal CPG has a two-level functional
+organization consisting of a bipartite half-center rhythm
+generator (RG) and pattern formation (PF) circuits ( Fig.
+1A,B). In this organization, the PF circuits mediate RG
+control of motoneuron activity and distribute RG activity
+to functionally distinct populations of interneurons pro-
+jecting to groups of synergist motoneuron pools. The
+motoneuron pools controlled by a common source at the
+PF level display a synchronized activity and represent
+motor synergies controlled by the CPG. During locomo-
+tion, these synergies may be refined by both descending
+signals from higher centers and peripheral afferent feed-
+back. The potential advantages and disadvantages, and
+Review 2 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+the plausibility of the UBG and two-level concepts are still
+debated in the literature ( McCrea and Rybak, 2008 ; Stuart
+and Hultborn, 2008 ; Zhong et al., 2012 ; Hägglund et al.,
+2013; Wiggin et al., 2012 ; Grillner and Manira, 2015 ;
+McLean and Dougherty, 2015 ). Independent of CPG or-
+ganization, there is also a lower motoneuron level in the
+spinal cord that contains multiple circuits of local reflexes
+defined by special interactions between the populations
+Figure 1. Two-level model of locomotor CPG and left–right commissural interactions. A, A two-level functional organization is
+suggested to include bipartite half-center RG and PF circuits that mediate RG control of motoneuron activity and distribute RG inputs
+to functionally synergist motoneuron pools. Different perturbations and afferent stimuli affecting the system at the RG level may reset
+the rhythm (produce resetting deletions), whereas perturbations and afferent signals acting at the PF or motoneuron level cannot reset
+the rhythm and can only produce non-resetting deletions. B, Organization of interactions at the lower, motoneuron level, including
+flexor and extensor motoneurons (Mn), Ia interneurons, and Renshaw cells (R). C, Organization of bilateral left–right interactions in the
+spinal cord mediated by inhibitory and excitatory CINs. E, Extensor; F, flexor; l, left; r, right.
+Review 3 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+of particular motoneurons, Renshaw cells, and interneu-
+rons involved in nonreciprocal and reciprocal antagonist
+interactions and processing of afferent feedback (Ia, Ib,
+and other types; Fig. 1B). In the framework of a multilevel
+CPG, any spontaneous perturbation or an afferent or
+supraspinal signal affecting spinal circuitry below the RG
+level (i.e., at the PF or motoneuron levels) may produce a
+non-resetting deletion (i.e., the omission of one or more
+bursts in the output motor activity) or may cause a delay
+or earlier onset of the next burst without a general phase
+shift in the post-perturbation or post-deletion rhythm rel-
+ative to the pre-perturbation or pre-deletion rhythm (i.e.,
+without rhythm resetting). Resetting perturbations and
+deletions can only happen at the RG level (Rybak et al.,
+2006a,b; McCrea and Rybak, 2007 , 2008 ; Zhong et al.,
+2012; Fig. 1A,B). Therefore, the analysis of burst deletions
+in the activity of different spinal neurons may suggest the
+level of their operation.
+It is generally accepted that in limbed vertebrates, in-
+cluding mammals, there is a separate CPG controlling
+each limb, whose rhythmic movements are coordinated
+with the movements of other limbs via neural pathways
+within the cord and supraspinal and afferent signals (Grill-
+ner, 1981 , 2006 ; Orlovsky et al., 1999 ; McCrea and Ry-
+bak, 2008). Specifically, the left–right limb coordination is
+mediated by inhibitory and excitatory commissural in-
+terneurons (CINs), whose axons cross the midline and
+affect neurons located in the contralateral side of the cord
+(Kjaerulff and Kiehn, 1997 ; Butt and Kiehn, 2003 ; Kiehn
+and Butt, 2003 ; Lanuza et al., 2004 ; Quinlan and Kiehn,
+2007; Jankowska, 2008 ; Kiehn, 2011 ; Talpalar et al.,
+2013). The identified CINs were shown to provide inhibi-
+tory and excitatory synaptic inputs to contralateral mo-
+toneurons ( Butt and Kiehn, 2003 ; Kiehn and Butt, 2003 ;
+Quinlan and Kiehn, 2007 ). However, the effects of synap-
+tic inputs from the CINs to contralateral motoneurons are
+supposed to be weaker than the effects of inputs that
+these motoneurons receive from the ipsilateral CPG, so
+that under normal conditions the contralateral signals do
+not override the ipsilateral drives to the corresponding
+motoneurons. To coordinate left and right rhythmic activ-
+ities (e.g., alternate or synchronize them), CINs should not
+only project to contralateral motoneurons, but should pri-
+marily mediate mutual interactions between the left and
+right rhythm generators ( Fig. 1 C). The effects of the CINs
+on either RG interneurons or motoneurons cannot be
+significant since the genetic ablation or silencing of CINs
+(e.g., V0 and V3 types) did not exhibit obvious changes in
+the frequency or amplitude of locomotor activity recorded
+from ventral roots, even when left–right alternation of
+activity was changed to left–right synchrony ( Lanuza
+et al., 2004 ; Zhang et al., 2008 ; Talpalar et al., 2013 ). This
+means that, although left–right interactions mediated by
+inhibitory and excitatory CINs do not affect the amplitude
+and frequency of locomotor oscillations, they are suffi-
+cient to coordinate phase relationships between rhythmic
+activities generated by left and right RGs, and hence to
+define the gait of locomotion.
+Spinal interneurons identified from
+developmental and genetic studies
+Over the past decade, a novel experimental approach
+incorporating genetic and molecular techniques enabled
+the determination of key neural elements of the spinal
+circuits and locomotor CPG (Jessell, 2000; Goulding,
+2009). Molecular genetic experiments have shown that
+the developing neural tube in the embryonic mouse can
+be divided into distinct populations of spinal neurons
+based on the expression of transcription factors. Specif-
+ically, transcription factors were used to identify several
+classes of ventral horn interneurons, including V0 –V3
+types, some of which were further divided into subtypes
+(Fig. 2 ; for review, see Goulding, 2009 ; Gosgnach, 2011 ;
+Kiehn, 2011 ; Kiehn and Dougherty, 2013 ).
+The V0 neurons settle in the ventromedial spinal cord.
+They can be identified by the expression of the transcrip-
+tion factor Dbx1 ( Pierani et al., 2001 ; Lanuza et al., 2004 ;
+Talpalar et al., 2013 ). The subdivision of V0 neurons into
+subtypes is based on transmitter phenotype, and these
+subtypes include dorsally located inhibitory V0 D neurons
+(Pax7, Evx1 /H11002), ventrally located glutamatergic V0 V neu-
+rons (Evx1), and cholinergic V0 C neurons (Pitx2) located
+near the central canal. Both V0 D and V0V subtypes project
+their axons contralaterally ( Pierani et al., 2001 ) and repre-
+sent major types of CINs involved in left–right alternation
+of neuronal activity in the spinal cord ( Lanuza et al., 2004 ;
+Talpalar et al., 2013 ). Moreover, the selective genetic
+ablation of these neurons has shown that these types of
+CINs are involved in left–right alternation in a speed-
+dependent manner ( Talpalar et al., 2013 ). The V0 D neu-
+rons are essential for left–right alternation at slow
+locomotor speeds, and their ablation has little effect on
+locomotion at higher speeds. In contrast, the V0 V ablated
+mice show normal left–right alternation at slow speeds but
+switch to left–right synchronous activity at higher locomo-
+tor speeds ( Talpalar et al., 2013 ).
+The V1 neurons, expressing En1, are a heterogeneous
+group of inhibitory, ipsilaterally projecting interneurons
+(Fig. 2 ). Different subtypes of these neurons are involved
+in different inhibitory functions in the spinal cord, such as
+reciprocal (Ia interneurons) and recurrent (Renshaw cells)
+inhibition. A subpopulation of these neurons was found
+necessary for generating fast locomotor activity and,
+hence, can play a role in regulating the locomotor speed
+(Gosgnach et al., 2006 ; Zhang et al., 2014 ). These neu-
+rons, along with V2b neurons (see below), are involved in
+securing flexor– extensor alternation in the spinal cord.
+Abrogating neurotransmission in both V1 and V2b neuron
+types in the isolated spinal cord resulted in a synchronous
+flexor and extensor locomotor activity ( Goulding et al.,
+2014; Zhang et al., 2014 ).
+The V2 neurons express Lhx3 and are all ipsilaterally
+projecting. Two major subtypes of V2 neurons include
+(Fig. 2 ): excitatory V2a, expressing Chx10; and inhibitory
+V2b, expressing Gata2 or Gata3 ( Al-Mosawie et al., 2007 ;
+Lundfald et al., 2007 ). During drug-induced fictive loco-
+motion in isolated spinal cord, about half of the V2a
+interneurons receive rhythmic synaptic drive, which in-
+creases with locomotor frequency, recruiting additional
+Review 4 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+V2a neurons at higher locomotor frequencies ( Zhong
+et al., 2011 ). Genetic ablation of V2a neurons results in
+changes similar to those produced by the ablation of V0 V
+neurons, as follows: mutant mice maintain left–right alter-
+nating activity at low locomotor speeds and switch to
+left–right synchrony at high speeds ( Crone et al., 2008,
+2009). The similarity in the locomotor patterns seen fol-
+lowing V2a and V0 V neuronal ablations suggests that a
+subpopulation of V2a neurons provides excitatory drive to
+the V0 V commissural pathway ( Kiehn, 2011 ; Shevtsova
+et al., 2015 ). This is further supported by the demonstra-
+tion of V2a terminals on V0 V somata ( Crone et al., 2008 ).
+As mentioned above, the V2b neurons, along with V1
+neurons, support flexor– extensor alternation in the intact
+cord, which can be disturbed only by silencing both of
+these neuron types ( Zhang et al., 2014 ; Goulding et al.,
+2014). Flexor– extensor alternation is also maintained in a
+hemisected spinal cord, where this alternation is entirely
+supported by V2b neurons. Synaptic silencing of V2b
+neurons in hemicords results in flexor– extensor syn-
+chrony ( Zhang et al., 2014 ). Therefore, in contrast to V1
+neurons, the activity of V2b neurons depends on inputs
+from ipsilateral circuits.
+The V3 neurons express Sim1 and are mainly excitatory
+commissural neurons ( Zhang et al., 2008 ). Silencing of
+these neurons does not affect left–right or flexor– extensor
+alternation. It is suggested that V3 neurons participate in
+maintaining a stable, symmetrical rhythm; silencing of
+these neurons increases the variability of bursting ampli-
+tude and durations ( Zhang et al., 2008 ).
+Spinal interneurons involved in locomotor
+rhythm generation: Shox2 cells
+The excitatory, ipsilaterally projecting V2a neurons
+could be considered potential candidates for the rhythm-
+generating neurons in the mammalian spinal cord. How-
+ever, ablation of these neurons does not affect the rhythm
+(Crone et al., 2008 ). Difficulties in the identification of
+specific rhythm-generating neurons may occur because
+these neurons come from dorsal progenitors that migrate
+ventrally or because they are spread sparsely across
+known ventral neuron classes. Shox2 expression was
+found in a subset of Chx10-expressing V2a neurons, and
+in non-V2a neurons coming from various dorsal and ven-
+tral progenitors ( Fig. 3 A). All of these neurons are excit-
+atory and ipsilaterally projecting ( Dougherty et al., 2013 ).
+Most Shox2 /H11001neurons are rhythmically active during lo-
+comotion, and they show heterogeneity in target projec-
+tions, projecting to other Shox2 /H11001neurons, CINs, and/or
+motoneurons ( Fig. 3 A). Either short-term or long-term
+silencing of the Shox2 population resulted in a reduction
+in the locomotor frequency measured from ventral root
+recordings during both drug-evoked and brainstem
+stimulation-evoked locomotion, suggesting that they play
+a role in rhythm generation. Ablation of the Shox2 /H11001
+Chx10/H11001(V2a) subset resulted in an increase in the vari-
+ability of burst amplitude and cycle period but had no
+effect on locomotor frequency. Therefore, only the
+Shox2/H11001Chx10/H11002(non-V2a) neurons were concluded to be
+part of the rhythm generator for locomotion ( Fig. 3 A).
+However, a rhythm remained, albeit slower, after Shox2
+silencing, demonstrating that Shox2 /H11001neurons are not the
+Figure 2. Molecular code determines the identity of ventral spinal neurons. Morphogens secreted from the floor plate and roof plate
+set up concentration gradients in the ventricular zone to specify progenitor domains p0 –p3 and pMN, characterized by their
+differential expression of transcription factors. When the progenitor cells mature, they migrate laterally and are called V0 –V3, Hb9, and
+motor neurons. The table on the right depicts the main transcription factors in the five cardinal classes of ventrally located neurons
+(V0 –V3, Hb9) and motor neurons, the projection pattern, and the transmitter phenotype of these neurons. Dbx1, developing brain
+homeobox 1; Evx1, even-skipped homeobox; En1, engrailed 1; Chx10, Ceh-10 homeodomain-containing homolog; Gata2/3, GATA
+binding proteins 2 and 3; Sim 1, single-minded homolog 1; Hb9, homeobox 9; FP, floor plate. Reproduced from Kiehn and Dougherty
+(2013), their Figure 38.8, with permission.
+Review 5 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+Figure 3. Shox2/H11001neurons and two types of V2a (Chx10/H11001) cells.A, The suggested different functional roles of Shox2/H11001(non-V2a), Shox2/H11001Chx10/H11001
+(V2a), and Shox2off Chx10/H11001(V2a) neurons. Reproduced fromDougherty et al. (2013), their Figure 8A, with permission.B, Different roles of V2a
+type I (Chx10/H11001Shox2off) and V2a type II (Chx10/H11001Shox2/H11001) neurons.C1, V2a type I neuron continued to receive rhythmic excitatory synaptic inputs
+and fired rhythmic bursts during a non-resetting ipsilateral flexor deletion (iL2) occurring during NMDA/5-HT-induced fictive locomotion (current-
+clamp recording). Deletion is indicated by the pink bar. Recordings on the right show that this neuron did not receive any synaptic drive during
+a spontaneous nonlocomotor activity observed in the ipsilateral motor output (iL2).C2, V2a type II neuron was silent and lost synaptic drive during
+a non-resetting flexor (iL2) deletion. This neuron was excited and fired a prolonged burst of action potentials during a spontaneous nonlocomotor
+iL2 burst of activity (right).C3, Activity of a flexor-related CIN during a non-resetting flexor deletion. One can see rhythmic membrane potential
+oscillations in phase with the iL2 root activity, and the neuron continued to oscillate during flexor deletion.C1, C2, and C3 are reproduced from
+Zhong et al. (2012), their Figures 5D,E, 6C,D, and 4B, respectively, with permission.D, Intracellular recording from V2a neuron exhibiting an
+increased firing activity with increased drug (NMDA/5-HT) concentration. Insets 1, 2, and 3 show expanded recordings indicated in the top
+diagram. The iL2 trace represents smoothed and filtered ventral root activity. Reproduced fromZhong et al. (2011), their Figure 4a–d, with
+permission.
+Review 6 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+only rhythm-generating neurons. Other components of
+the rhythm generator are not known at this time. The only
+current candidate is the Hb9 interneuron population ( Fig.
+2), which is also suggested to be involved in rhythm
+generation ( Wilson et al., 2005 ; Hinckley and Ziskind-
+Conhaim, 2006; Brocard et al., 2010, 2013 ). It was shown
+that their activity does not precede burst initiation in
+motor outputs, suggesting that they may contribute to
+maintenance of the locomotor rhythm but cannot repre-
+sent the sole rhythm-generating kernel ( Kwan et al., 2009).
+Whether they are another constituent population of the
+rhythm generator remains to be directly tested.
+The intrinsic neuronal properties involved in generating
+rhythmic bursting in Shox2 cells are currently unknown. A
+series of previous models of the mammalian spinal rhythm
+generator suggested that this rhythmic activity is based
+on the persistent sodium current, INaP (Rybak et al.,
+2006a,b,2014; McCrea and Rybak, 2007; Sherwood et al.,
+2011; Zhong et al., 2012 ; Brocard et al., 2013 ). This
+suggestion was indirectly supported by a series of exper-
+imental studies performed in different laboratories ( Zhong
+et al., 2007 ; Tazerart et al., 2007, 2008 ; Ziskind-Conhaim
+et al., 2008 ; Brocard et al., 2010, 2013 ). Moreover, the
+presence and involvement of INaP for rhythm generation in
+spinal Hb9 neurons has been explicitly demonstrated
+(Brocard et al., 2013 ).
+Ipsilaterally projecting, excitatory V2a
+interneurons
+Based on Shox2 expression, the population of V2a
+(Chx10) neurons can be divided into the following two
+groups: Shox2 /H11001and Shox2 /H11002(Fig. 3 A; Dougherty et al.,
+2013). When Shox2-expressing V2a neurons were ab-
+lated, there was no effect on left–right coordination. The
+only observable phenotype was an increase in the vari-
+ability of burst amplitude and cycle period, which was
+also seen in the complete Shox2 mutants and the V2a
+mutants. This, together with the study by Crone et al.
+(2008, 2009 ), indicates that the V2a neurons that do not
+express Shox2 (Chx10 /H11001and Shox2 /H11002) are the neurons
+responsible for left–right deficits seen in the V2a ablated
+mice, and the Shox2 /H11001V2a neurons provide input to mo-
+toneurons ( Fig. 3 A,B).
+The functional separation of Shox2 /H11001Chx10/H11001and
+Shox2/H11002Chx10/H11001neurons fits very well with the results of
+a previous study, Zhong et al. (2012) , which also identified
+two different subtypes of V2a interneurons. In that study,
+the neurons were classified based on analysis of their
+activity during non-resetting deletions. According to that
+classification, the V2a type I neurons maintained rhythmic
+activity at the times when bursts in the motor output
+(ipsilateral ventral root) were missed ( Fig. 3 C1), whereas
+the V2a type II neurons had missing activation consistent
+with the burst deletions seen in the motor output ( Fig.
+3C2). In addition, during nonlocomoting conditions
+(NMDA and 5-HT washed out), the V2a type I neurons did
+not show activation together with ventral root “nonloco-
+motor” bursts (Fig. 3C1), whereas the V2a type II neurons
+did exhibit activation consistent with such nonlocomotor
+activity in the motor output ( Fig. 3 C2). Interestingly, the
+commissural neurons identified in this study also main-
+tained bursts during non-resetting deletions in the motor
+output (Fig. 3C3), similar to V2a type I. All of these data are
+consistent with the different roles of V2a type I (Chx10 /H11001
+Shox2/H11002) neurons and V2a type II (Chx10 /H11001Shox2/H11001) neu-
+rons in the spinal circuitry suggested above. The former
+neurons project to CINs and contribute to left–right alter-
+nation, whereas the latter neurons may belong to PF and
+mediate RG input to ipsilateral motoneurons ( Fig. 3 A,B).
+There are some other important properties of V2a neu-
+rons. Some of these neurons show a strong increase in
+activity and recruitment as NMDA/5-HT concentrations,
+and therefore locomotor frequency, are increased ( Zhong
+et al., 2011 ; Fig. 3 D). Additionally, genetic ablation of
+these neurons disturbed left–right alternation at high lo-
+comotor frequencies (Crone et al., 2008 , 2009 ), suggest-
+ing that these neurons play a critical role in the support of
+left–right alternation in the spinal cord at high locomotor
+frequencies.
+Flexor– extensor asymmetry in the
+organization of locomotor activity
+Most bipartite models, from the first model of Graham
+Brown (1914) to the two-level model of McCrea and Ry-
+bak (2008) , assumed a symmetrical organization of the
+rhythm generators in regard to flexor and extensor half-
+centers and their interactions. Nevertheless, asymmetric,
+flexor-dominated architectures of rhythm generation have
+been also proposed (Pearson and Duysens, 1976; Duysens,
+1977; Zhong et al., 2012 ; Duysens et al., 2013 ; Machado
+et al., 2015). Two recent findings from studies in the isolated
+rodent spinal cord with drug-induced fictive locomotion
+have recently provided indirect support of the asymmetric
+flexor-dominated organization. First, the analysis of non-
+resetting deletions in these preparations revealed only the
+following two types of deletions: missing bursts in the
+flexor-dominated ventral root (L2) were accompanied by
+sustained activity in the ipsilateral extensor-dominated
+root (L5); whereas missing extensor bursts usually oc-
+curred without obvious disturbances of the ipsilateral
+flexor rhythmic activity ( Zhong et al., 2012 ; Fig. 4 A). Sec-
+ond, the analysis of changes in the duration of flexor and
+extensor phases with an increase in oscillation frequency
+during NMDA/5-HT-evoked fictive locomotion in the iso-
+lated mouse spinal cord has shown that the duration of
+flexor phase changes much less than the duration of the
+extensor phase ( Talpalar et al., 2013 ; Shevtsova et al.,
+2015; Fig. 4B), which also fits with similar phase measure-
+ments performed in cats in vivo (Halbertsma, 1983; Frigon
+and Gossard, 2009 ). Therefore, one can suggest that
+extensor-related neurons in the spinal rhythm generator
+do not generate intrinsic rhythmic activity themselves but
+exhibit rhythmic bursting due to inhibition from the corre-
+sponding flexor-related rhythm-generating neurons. In
+this case, extensor phases may represent intervals of
+tonic activity between inhibitory states corresponding to
+flexor bursts. The potential dominance and evolutionary
+primacy of flexor activity have been confirmed recently by
+Machado et al. (2015) .
+Review 7 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+The above suggestion, however, looks contradictory to
+multiple data showing that extensor rhythmic activity can,
+under certain conditions, be generated without flexor ac-
+tivity. Specifically, using an optogenetic approach, Häg-
+glund et al. (2013) have demonstrated that a locomotor-
+like rhythmic bursting can be induced unilaterally and
+independently in flexor and extensor networks. A resolu-
+tion of this contradiction could be achieved based on a
+suggestion that both flexor-related and extensor-related
+centers are intrinsically rhythmogenic, but the expression
+of their intrinsic rhythmicity may depend on various fac-
+tors, such as general neuronal excitability or external drive
+to neurons in these populations ( Shevtsova et al., 2015 ;o r
+Molkov et al., 2015 ). The other important suggestion here
+is that, during locomotor activity, intrinsic rhythmicity is
+always present in flexor RG circuits, but the rhythmicity of
+extensor RG circuits is conditional and may depend on,
+for example, the type of experimental preparations (vari-
+ous in vivo preparations, isolated spinal cord in vitro )o r
+the methods used to evoke the rhythm (neuroactive drug
+application, electrical stimulation of brainstem, afferent/
+dorsal root stimulation; Shevtsova et al., 2015 ).
+This idea was explicitly implemented in the models of
+Shevtsova et al. (2015) and Molkov et al (2015) , in which
+both flexor and extensor rhythm-generating populations
+(representing the corresponding locomotor centers or
+half-centers) could generate rhythmic bursting depending
+on conditions, but normally only flexor populations (cen-
+ters) on each side operated in the intrinsic bursting regime
+while the extensor populations operated in a state of tonic
+activity and exhibited bursting due to the rhythmic inhibi-
+tion from the ipsilateral flexor centers.
+Each RG population in the model of Shevtsova et al.
+(2015), representing either flexor or extensor centers, con-
+sisted of 200 neurons modeled on the Hodgkin–Huxley
+style. The intrinsic rhythmic bursting in each population
+was based on a persistent (slowly inactivating) sodium
+current, INaP, incorporated into each neuron, and sparse
+mutual excitatory synaptic interactions within the popula-
+tion. Figure 5 A–D shows the results of modeling a single
+isolated RG population during a slow ramp increase of
+neuronal excitation, defined by the average neuronal leak-
+age reversal potential E/H6126
+L. At low values of E/H6126
+L, the popu-
+lation was silent ( Fig. 5 A,B). Bursting emerged as E/H6126
+L
+depolarized ( Fig. 5 A,B; see also Fig. 5 G, blue area). With
+a further increase of E/H6126
+L, the burst frequency monotonically
+increased (Fig. 5B,C). The burst amplitude initially went up
+(Fig. 5 B,D), because of the increasing synchronization of
+bursts generated by individual neurons. Then, with further
+depolarization, the amplitude progressively decreased
+(Fig. 5B,D) due to INaP inactivation in each neuron, leading
+Figure 4. Flexor– extensor asymmetry. A1, A2, Flexor and ex-
+tensor deletions during NMDA/5-HT-induced fictive locomotion
+in the isolated rat spinal cord. Smoothed and rectified traces of
+motoneuron activity recorded from the left (lL2, lL5) and right
+(rL2, rL5) lumbar ventral roots. L2 recordings show predomi-
+nantly flexor motoneuron activity, while L5 recordings show
+predominantly extensor activity. The bars above each set of
+traces show the expected timing of the bursts if the rhythm were
+unperturbed during the deletion. A1 shows an example of a
+non-resetting flexor deletion recorded from the lL2 root (indi-
+cated by the pink bar) accompanied by tonic activity in the
+ipsilateral extensor (lL5) root, but with no obvious effects on
+flexor or extensor activity on the opposite side of the cord. A2
+shows non-resetting extensor deletions (marked by blue bars)
+and a flexor deletion (marked by pink bar). During extensor
+deletions in lL5, the ipsilateral flexor activity (lL2) and contralat-
+eral activities were not perturbed, while the flexor deletion in rL2
+was accompanied by tonic activity in the rL5 ventral root. Re-
+produced from Zhong et al. (2012) , their Figure 1Aa,Ba, with
+Figure 4. continued
+permission. B, Changes in flexor and extensor phase durations
+during NMDA/5-HT-induced fictive locomotion in the isolated
+mouse spinal cord as a function of locomotor frequency. Red
+filled squares and blue filled circles show average flexor and
+extensor phase durations, respectively. Reproduced from
+Shevtsova et al. (2015) , their Figure 9C, with permission.
+Review 8 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+to a reduction of spike frequency in neuronal bursts
+(Butera et al., 1999 ; Rybak et al., 2004 ). Finally, for the
+larger (most depolarized) values of E/H6126
+L, bursting switched
+into sustained or tonic activity ( Fig. 5A,B; see also Fig. 5G,
+yellow area). A similar transition from a silent state to
+bursting and tonic spiking with a progressive increase of
+E/H6126
+L was shown in models of other neural oscillators ( Cym-
+balyuk et al., 2002 ). The simulated effects of the increase
+of neuronal excitation on the population burst frequency
+and amplitude ( Fig. 5 C,D) are qualitatively similar to the
+reported effects of increased concentrations of neuroac-
+tive drugs, such as NMDA, on the frequency and ampli-
+tude of locomotor oscillations in the isolated spinal cord
+(Talpalar and Kiehn, 2010 ). In these experiments, the
+bursting frequency recorded from the flexor ventral root
+(L2) increased with increased drug concentration, while the
+amplitude initially increased and then decreased (Fig. 5E,F).
+This correspondence between the experimental and mod-
+eling data allowed the suggestion that the experimentally
+observed increase of locomotor frequency with increasing
+NMDA concentration resulted from a drug-induced increase
+in the average neuronal excitability defined in the model by
+E/H6126
+L. Therefore, changes in were used in the model as a tool
+for changing locomotor frequency to fit different speeds of
+drug-evoked locomotion (Shevtsova et al. 2015).
+As shown in Figure 5, A and B, a population of neurons
+with INaP-dependent bursting properties and mutually ex-
+citatory synaptic interconnections can be silent, generate
+intrinsic bursting, or exhibit sustained (tonic) activity, de-
+pending on the average level of neuronal excitation (see
+also Butera et al., 1999 ; Smith et al., 2000 ; Rybak et al.,
+2003, 2004, 2014 ; Jasinski et al., 2013 ). In the model of
+Shevtsova et al. (2015) , the rhythm-generating population
+was used for the simulation of both flexor and extensor
+centers. Therefore, under certain conditions, for example
+at a particular range of neuronal excitation, each flexor
+and extensor RG center can generate rhythmic bursting.
+However, it was assumed that, under the experimental
+conditions considered, only flexor centers operate in a
+bursting mode, whereas the extensor centers, if isolated,
+are tonically active. This was reproduced in the model of
+Shevtsova et al. (2015) by extensor RG centers with a
+higher level of excitation ( Fig. 5 G, yellow area) compared
+with the flexor RG centers ( Fig. 5G, blue area). To provide
+alternating flexor– extensor activity, the flexor and exten-
+sor RG centers were connected reciprocally via inhibitory
+neural populations ( Fig. 6 A,B). Therefore, each extensor
+RG center also exhibited rhythmic bursting, but this was
+entirely due to the rhythmic inhibition by the correspond-
+ing ipsilateral flexor center. Such asymmetric operation of
+flexor and extensor RG centers allowed the model to
+reproduce the specific patterns of motor activity in the
+spinal cord observed during spontaneous, non-resetting
+burst deletions, showing that missing flexor bursts were
+always accompanied by a sustained ipsilateral extensor
+activity, whereas missing extensor bursts occurred with-
+out an effect on flexor bursting ( Fig. 4A1, A2 , see also
+Zhong et al., 2012 ).
+Figure 5. Modeling of an isolated rhythm-generating population.A,
+Raster plot of the activity of 50 neurons from the 200-neuron popula-
+tion. Each horizontal line represents a neuron, and each dot represents
+a spike. B, Integrated population activity represented by the average
+histogram of population activity [spikes/(neuron/H11003s), bin/H11005100 ms]. In
+A and B, the average leakage reversal potential ( E/H6126
+L) defining the
+average level of neuronal excitation was linearly increased from/H1100270 to
+/H1100258 mV for 400 s. Voltage regions of silence, bursting, and tonic
+activity are denoted at the bottom. Bursting emerges at lower values of
+E/H6126
+L in a limited number of neurons. With increasingE/H6126
+L, more neurons
+become involved and the population bursting becomes strongly syn-
+chronized. A further increase ofE/H6126
+L leads to a transition to tonic activity.
+C and D, respectively, show the frequency of and amplitude of pop-
+ulation activity as functions of E/H6126
+L. E and F, respectively, show the
+frequency and amplitude of NMDA/5-HT-evoked locomotor activity in
+the isolated mouse spinal cord recordedin vitrofrom the flexor ventral
+root as a function of NMDA (red circles) orD-glutamate (black squares)
+concentration (the amplitude was normalized with respect to the max-
+imal amplitude). Graphs display the mean /H11006SD (n /H1100520 each). G
+shows changes ofE/H6126
+L for flexor (E/H6126
+LF, red line) and extensor (E/H6126
+LE, blue
+line) RG centers during increasing neuronal excitation with an increase
+in drug concentration [defined by parameter/H9251,( E/H6126
+Li /H11005E/H6126
+LiO ·( 1 /H11002/H9251))]
+across areas for silence (white), bursting (blue), and tonic (yellow)
+population activity. This figure is reproduced fromShevtsova et al.
+(2015), their Figure 2, with permission.
+Review 9 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+Left–right coordination of activity in the
+spinal cord: frequency-dependent role of
+V0D and V0 V CINs
+The following types of CINs have been genetically iden-
+tified in the spinal cord so far: the inhibitory V0 D, the
+excitatory V0 V, and the excitatory V3 CINs ( Fig. 2 ). There
+are also dI6 neurons ( Dyck et al., 2012 ), which are not
+considered here. The simplest connectivity schematic for
+the excitatory CIN pathways supporting left–right syn-
+chrony could be that in which these CINs (e.g., V3) would
+receive excitation from ipsilateral flexor centers and excite
+the contralateral flexor centers ( Fig. 6 A). In contrast, the
+V0 CINs, both the inhibitory V0 D and the excitatory V0 V
+types, support left–right alternation ( Talpalar et al., 2013 ).
+The inhibitory V0 D CIN pathway could receive excitation
+from ipsilateral flexor centers and inhibit the contralateral
+flexor center ( Fig. 6 A).
+The organization of the commissural pathways involv-
+ing the excitatory V0 V CINs promoting left–right alterna-
+tion is expected to be more complicated. As described
+above (see Spinal interneurons identified from develop-
+mental and genetic studies; Crone et al., 2008 ; Kiehn,
+2011), inputs to V0 V CINs can be mediated by the ipsilat-
+erally projected V2a neurons. Two possible organizations
+of V2a–V0V pathways promoting left–right alternation can
+be considered. One potential configuration suggests that
+the V2a neurons from these pathways receive excitatory
+inputs from the ipsilateral flexor centers and excite V0 V
+CINs, whereas the V0 V CINs inhibit the contralateral flexor
+centers via some inhibitory interneurons ( Kiehn, 2011 ,
+Talpalar et al., 2013 ; Shevtsova et al., 2015 ; Fig. 6B). The
+other possible configuration of V2a–V0 V pathways is
+based on excitatory inputs to the V2a neurons from the
+ipsilateral extensor centers and direct excitatory input
+from the corresponding V0 V CINs to the contralateral
+flexor centers ( Shevtsova et al., 2015 ; Fig. 6 C).
+The frequency-dependent role of V0 D and V0 V neurons
+in left–right alternation of neural activity in the spinal cord
+was studied by Talpalar et al. (2013) . They have shown
+that the ablation of both these types of CINs leads to
+left–right synchronized, hopping-like activity at all loco-
+motor frequencies. Selective ablation of the inhibitory V0 D
+CINs disturbs left–right alternation at low frequencies, yet
+maintains alternation at high frequencies. In contrast, ab-
+lation of the excitatory V0 V CINs maintains alternation at
+low frequencies and switches to synchronized activity at
+high frequencies.
+To reproduce and explain these findings using compu-
+tational modeling, Shevtsova et al. (2015) developed two
+slightly different models, Model 1 and Model 2 ( Fig. 7A,B).
+Each model contained left (l) and right (r) RGs consisting
+of flexor (RG-F) and extensor (RG-E) rhythm-generating
+centers reciprocally inhibiting each other via Inrg-E and
+Inrg-F, respectively. In both models, the inhibitory left
+(l-CINi-F) and right (r-CINi-F) CIN populations, simulating
+the V0 D CINs, mediate mutual inhibition between left and
+right flexor centers ( Fig. 6 A). Also, the excitatory left CIN
+flexor (l-CINe-F) and right CIN flexor (r-CINe-F) popula-
+tions, simulating excitatory CINs, which are conditionally
+associated with the V3 neurons, mediate mutual excita-
+Figure 6. The proposed organization of the excitatory and inhib-
+itory commissural pathways involved in left–right coordination of
+activity in the spinal cord. The RG centers and other neural
+populations are shown by spheres. Excitatory and inhibitory
+synaptic connections are represented by arrows and circles,
+respectively. A, Organization of the excitatory (mediated by the
+V3 CINs) and inhibitory (mediated by the V0 D CINs) pathways. B,
+C, Two possible organizations of commissural pathways medi-
+ated by V2a interneurons and V0 V CINs.
+Review 10 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+Figure 7. Modeling the coordination of left and right rhythm generators in the spinal cord via several parallel CIN pathways.A and B show
+schematics of Model 1 and Model 2, respectively. Neural populations are shown by spheres. Each RG population (representing the flexor or
+extensor centers) contained 200 neurons; all other populations consisted of 50 neurons each. All neurons were modeled in the Hodgkin–Huxley
+style. Excitatory and inhibitory synaptic connections are represented by arrows and circles, respectively. Prefix l- or r- in population name indicates
+left or right. The RG on each side of the cord includes flexor and extensor RG centers (RG-F and RG-E, respectively) interacting via the inhibitory
+Inrg-F and Inrg-E populations. Suffix F- or E- in population name indicates that the population is coactive with the flexor or extensor RG center,
+respectively. The left and right rhythm generators interact via CINs: CINe-F (V3), CINi-F (V0D), and CINe1-F (V0V) in Model 1 (A); and CINe-F (V3),
+CINi-F (V0D), and CINe-E (V0V) in Model 2 (B). The full mathematical description of the model can be found in the study byShevtsova et al. 2015.
+Reproduced fromShevtsova et al. (2015), their Figure 1, with permission.C1 andD1 show the performances of Model 1 and Model 2, respectively,
+in response to a slow ramp increase of neuronal excitation. The activity of all four RG centers (left and right RG-F and RG-E populations) and left
+CIN populations are shown as average histograms of population activity [spikes/(neuron/H11003s), bin/H11005100 ms] in response to a slow ramp increase
+of neuronal excitation/H9251(/H9251increased for 100 s). Note the maintenance of left–right and flexor– extensor alternation and acceleration of rhythmic
+activity in both models. The vertical dashed lines indicate the beginning of the left flexor phases at lower (the left lines) and higher (the right lines)
+values of/H9251. Reproduced fromShevtsova et al. (2015), their Figure 4, with permission.C2 and D2 show changes of the key model characteristics
+in Model 1 and Model 2, respectively, in response to a slow ramp increase of neuronal excitation. In both panels, the top diagram shows changes
+in the frequency of oscillation; the middle diagram represents changes in the amplitude of the activity of l-RG-F (red) and l-RG-E (blue) centers;
+and the bottom diagram shows changes in the amplitude of activity of V3 (green), V0D (purple), and V0V (brown) CIN populations. Reproduced
+from Shevtsova et al. (2015), their Figure 5, with permission.
+Review 11 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+tion between these centers ( Fig. 6 A). In addition, both
+models have commissural pathways that include the se-
+quentially connected V2a and V0 V populations. The only
+difference between the models is in the organization of
+the V2a–V0 V pathways. In Model 1, these pathways are
+organized as in Figure 6 B, so that the left V2a flexor and
+right V2a flexor populations receive excitatory inputs from
+the ipsilateral flexor centers (l-RG-F and r-RG-F), and
+excite the corresponding V0 V extensor populations (l-
+CINe1-F and r-CINe1-F) which project to the contralateral
+populations of inhibitory interneurons that inhibit the con-
+tralateral flexor centers ( Fig. 7 A). In Model 2, these path-
+ways are organized as in Figure 6 C, so that the left and
+right V2a populations receive excitatory inputs from the
+ipsilateral extensor centers (l-RG-E and r-RG-E), and the
+corresponding V0 V populations (l-CINe-E and r-CINe-E)
+directly project to and excite the contralateral flexor cen-
+ters (Fig. 7B). Separate consideration of these two models
+allowed independent investigation of each of the two
+V2a–V0V pathways suggested. However, the authors have
+not excluded the possibility that both pathways are pres-
+ent in the real spinal cord network, which would result in
+a simple merging of both models into a single united
+model ( Shevtsova et al., 2015 ).
+To evaluate the performance of both models at different
+locomotor speeds, and the speed-dependent contribu-
+tion of different CIN pathways and neuron types to the
+maintenance of left–right coordination, the locomotor
+frequency was progressively increased by increasing the
+parameter /H9251that characterized an increase of average
+neuronal excitation ( E/H6126
+L) in all neuron populations of the
+model ( Fig. 5 G and legend). Hence, the increase in /H9251
+values simulated the increase in NMDA concentration that
+was used in the experiments in the study by Talpalar et al.
+(2013) to increase the frequency of locomotor oscillations.
+The results of simulations using Model 1 and Model 2
+are shown in Figure 7 , C1 and D1, respectively. For each
+model, the integrated activity of all four RG centers (l-
+RG-E, l-RG-F, r-RG-F, and r-RG-E) and all left CIN pop-
+ulations [l-CINe-F (V3), l-CINi-F (V0 D), and l-CINe1-F (V0 V)
+for Model 1; and l-CINe-F (V3), l-CINi-F (V0 D), and
+l-CINe-E (V0 V) for Model 2] are shown while the average
+neuronal excitation ( /H9251) was slowly increased. In each
+panel, the right CIN populations behaved similarly to the
+left ones and are not shown. In both models, increasing
+neuronal excitation resulted in the acceleration of rhyth-
+mic bursting with maintenance of left–right and flexor–
+extensor alternation throughout the whole range of /H9251
+values.
+The amplitude of activity of the RG-F centers in both
+models initially goes up and then decreases, resembling
+the amplitude changes in the isolated population ( Fig. 5D)
+as well as in experimental recordings from the flexor (L2)
+ventral root ( Fig. 5 F,7 C2,D2, middle diagrams, red
+curves). Analysis of the activity of the three CIN popula-
+tions in the models allows evaluation of the relative con-
+tribution of each population to left–right coordination at
+different levels of neuronal excitation. With an increase in
+/H9251values, the amplitude of activity of each CIN population
+in both models is affected by two opposing processes. On
+one hand, the increase of intrinsic neuronal excitation per
+se should increase the amplitude of each CIN activity. On
+the other hand, the reduction of the amplitudes of activity
+of RG centers providing synaptic inputs to these popula-
+tions should decrease the amplitude of CIN activity.
+In the inhibitory V0 D CIN populations, the synaptic pro-
+cess dominates, due to the relatively low leakage conduc-
+tance in these neurons in the models defining the low
+sensitivity of their membrane potentials to changes in /H9251
+(imitating drug concentration). Therefore, the amplitude of
+their activity reduces similarly to that of the ipsilateral
+flexor RG centers that provide direct synaptic inputs to
+these populations ( Fig. 7 C2,D2, bottom diagrams, purple
+curves). As a consequence, V0D populations strongly con-
+tribute to left–right alternation at low levels of excitation in
+the network when flexor RG output is maximal, whereas at
+high levels of excitation their role is significantly reduced
+as flexor RG amplitude decreases.
+In the excitatory V3 CIN populations, the two opposing
+processes partly compensate for each other, and hence
+the amplitude of their activity (after an initial increase)
+remains relatively constant and does not depend much on
+/H9251and oscillation frequency ( Fig.7C2,D2, bottom dia-
+grams, green curves).
+The amplitudes of activity of the excitatory V0 V popu-
+lations (CINe1-F in Model 1 and CINe-E in Model 2) are
+zero at small values of /H9251and monotonically increase with
+/H9251, despite the reduction in the amplitudes of activity in the
+corresponding RG centers ( Fig. 7 C2,D2, bottom dia-
+grams, brown curves). The increase in V0 V activity is due
+to the strong activation and recruitment of V2a neurons
+mediating the RG inputs to V0 V CINs ( Fig. 7 A,B). There-
+fore, in both models, the excitatory V0 V CINs contribute
+more strongly to left–right alternation at higher levels of /H9251.
+In Model 1, this contribution occurs because V0 V CINs
+inhibit the contralateral flexor centers via inhibitory in-
+terneurons ( Fig. 7 A). In Model 2, this contribution occurs
+because the V0 V CINs mediate excitation from each ex-
+tensor center to the contralateral flexor center ( Fig. 7 B).
+Hence, in both of our models, both V2a and V0 V popula-
+tions are critically involved in providing left–right alterna-
+tion at high levels of excitation and high oscillation
+frequencies.
+In the intact models, left–right alternation is maintained
+at all levels of excitation ( Fig. 7 C1,D1), because the syn-
+chronizing action of V3 CINs is overcome by alternating
+the actions of V0 D CINs at lower levels of excitation with
+those of V0 V CINs at higher levels of excitation. This is
+illustrated in the bottom diagrams of Figure 7, C2 and D2,
+which show that the amplitude of V3 population activity
+(green) is less than the amplitude of V0 D population ac-
+tivity (purple) at low levels of /H9251, and less than the ampli-
+tude of V0 V population activity (brown) at high levels of /H9251.
+Let us now consider how these models behave follow-
+ing a removal of all V0 CIN populations, only the V0 V or
+V2a populations, or only the V0 D populations ( Fig. 8 ).
+When both types of V0 populations are deleted ( Fig.
+8A), the only remaining commissural pathways in both
+models are mediated by the excitatory V3 populations
+(Fig. 8 A, right column, bottom diagram). In this case, V3
+Review 12 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+Figure 8. Frequency-dependent changes in left–right coordination of activity following selective removal of particular CIN pathways.
+A, Performance of both models after removal of both V0 (V0 V and V0D) CIN populations. B, Performance of both models after selective
+removal of V0 V CIN or V2a populations. C, D, Performance of Model 1 and Model 2, respectively, after selective removal of V0 D CIN
+populations. The left column in each panel shows the activity of all centers and the remaining (left) CIN populations. In all panels, /H9251
+was increased for 200 s. The vertical dashed lines indicate the beginning of the left flexor phases at lower and higher values of /H9251(and
+oscillation frequency). The right column in each panel shows changes of the key model characteristics in response to a slow ramp
+increase of neuronal excitation: the top diagram shows changes in the frequency of oscillation; the middle diagram represents
+changes in the amplitude of activity of l-RG-F (red) and l-RG-E (blue) centers; and the bottom diagram shows changes in the amplitude
+of activity of V3 (green), V0 D (purple), and V0 V (brown) CIN populations. The dash-dotted vertical lines in right panels indicate
+transitions between left–right alternation and left–right synchronization. The regions of left–right synchronized activity are highlighted
+by pink rectangles. Modified from Shevtsova et al. (2015) , their Figures 7 and 8, with permission.
+Review 13 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+CINs synchronize oscillations of the left and right flexor
+RG populations at all levels of neuronal excitation and any
+locomotor frequency, resulting in a “hopping” pattern.
+If only V2a-V0 V-mediated ( Fig. 8 B) or only V0 D-
+mediated (Fig. 8C,D) pathways are selectively deleted, the
+model behavior depends on the interplay between the
+V3-mediated left–right synchronization and the remaining
+V0 populations that support left–right alternation. Figure
+8B shows that when either the V0 V or the V2a populations
+are deleted from either model, the left and right flexor RG
+centers, as well as the left and right extensor RG centers,
+exhibit alternating activity at lower values of /H9251(low loco-
+motor speeds) and synchronous activity at higher values
+of /H9251(higher locomotor speed). The bottom diagram in the
+right column of Figure 8 B shows that the amplitude of
+activity of the remaining inhibitory V0 D CIN populations
+decreases with increasing /H9251. In contrast, the amplitude of
+the excitatory V3 CIN populations (l-CINe-F and r-CINe-F)
+after an initial increase remains relatively constant. As a
+result, at some value of excitation, the activity of the V3
+populations becomes stronger than the activity of the V0 D
+populations, leading to the cross-cord synchronization of
+activity of the left and right flexor and of the left and right
+extensor RG centers. In summary, removal of V0 V CIN or
+V2a populations results in left–right alternation of neuronal
+activity at lower levels of neuronal excitation (low locomo-
+tor speeds) and left–right synchronization at higher levels
+of neuronal excitation (higher locomotor speeds).
+Figure 8 , C and D, demonstrates the results of simula-
+tions using Model 1 and Model 2, respectively, after re-
+moval of V0 D populations. In both models, left and right
+homonymous RG centers exhibit synchronous activity at
+lower values of /H9251and switch to alternating activity at
+higher values of /H9251. In both models, the amplitude of
+activity of the V0 V CIN populations increases with increas-
+ing /H9251(Fig. 8 C,D, right column, bottom diagram in both)
+because of the dramatic increase in the activity of V2a
+populations exciting these V0 V CIN populations ( Fig.
+7A,B). At the same time, the amplitude of the V3 CIN
+populations (l-CINe-F and r-CINe-F) remains relatively
+constant. Eventually, the amplitude of activity of the V0 V
+CIN populations promoting alternation becomes stronger
+than the amplitude of V3 CIN populations promoting syn-
+chronization. Therefore, in both our models, the removal
+of V0D CIN populations leads to left–right synchronization
+of neuronal activity at lower levels of neuronal excitation
+(low locomotor speeds) and left–right alternation at higher
+levels of excitation (higher locomotor speeds).
+The simulation results of Shevtsova et al. (2015) de-
+scribed above closely reproduce the experimental data of
+Talpalar et al. (2013) . They support the earlier suggestion
+that left–right alternation is provided by dual commissural
+pathways involving the inhibitory V0 D and excitatory V0 V
+CINs, and that the contribution of the V0 D pathway to
+left–right alternation is dominant at low frequencies and
+reduces as locomotor frequency increases, whereas the
+contribution of the V2a–V0 V pathway is weak at low
+frequencies but is enhanced as frequency increases. The
+models suggest that these important features may be
+based on the following: (1) a relatively weak dependence
+of excitation of the V0 CINs on neuroactive drug concen-
+tration, which leads to a net reduction of V0 D activity due
+to the reduction in the amplitude of rhythm-generating
+activity when the frequency increases; and (2) a strong
+dependence of V2a neuron activity and recruitment on the
+neuroactive drug concentration ( Crone et al., 2009 ; Zhong
+et al., 2011 ); these neurons mediate input to V0 V CINs,
+hence providing a net increase of their activity with fre-
+quency. A more detailed explanation of this suggestion
+can be found in the study by Shevtsova et al. (2015) .
+The two models described in this study show very
+similar behavior. In both models, the V0 D populations
+receive input from the flexor RG center and inhibit the
+contralateral flexor RG center. Based on this, our models
+predict that V0 D CINs should exhibit flexor-related rhyth-
+mic activity, which can be tested in future experiments.
+The two models differ by the organization of V2a–V0 V
+pathways and the phase of activity of these neurons.
+Specifically, the V2a–V0 V neurons may (1) coordinate left
+and right flexor centers via inhibitory interneurons as pre-
+dicted by Model 1, (2) mediate connections from each
+extensor center to the contralateral flexor center as pre-
+dicted by Model 2, or (3) include both of these pathways
+(Shevtsova et al., 2015 ). The choice between these mod-
+els can be made in the future based on recording from V0 V
+neurons, and may depend on whether their activity is
+mostly in phase with the flexors (confirming Model 1), with
+extensors (confirming Model 2), or with both types (con-
+firming option 3). It is certainly possible that the two
+V2a–V0V pathways are both present in the spinal network,
+because V2a neurons with both flexor- and extensor-
+related rhythmic activity have been previously described
+(Dougherty and Kiehn, 2010 ; Zhong et al., 2010 ). More-
+over, other, possibly more complicated constructions of
+commissural pathways, mediated by V0 D,V 0 V, V3 CINs,
+their unknown subtypes, or other CINs, could be consid-
+ered and represent a subject of future studies.
+Axon guidance and left–right
+coordination: role of Netrin-1, DCC, and
+EphA4
+As described above, the coordination of left–right ac-
+tivity in the spinal cord is provided by multiple commis-
+sural pathways mediated by different CIN types, whose
+axons cross midline and affect neurons on the contralat-
+eral side of the cord. During spinal cord development, this
+process is directed by axon-guiding molecules such as
+Netrin-1 that bind to and activate the axonal receptor
+DCC (Kennedy et al., 1994 ; Kaprielian et al., 2001; Rabe
+et al., 2009 ; Rabe Bernhardt et al., 2012 ; Vallstedt and
+Kullander, 2013 ). The other axon-guidance molecule in-
+volved in the development of connectivity across the
+midline of the spinal cord is EphA4 (Dottori et al., 1998 ;
+Kullander et al., 2003 ).
+Modeling of the spinal cord reorganizations following
+the genetic removal of axon-guidance molecules, such as
+Netrin-1, DCC, and EphA4 was performed by Rybak et al.
+(2013) using a reduced model of left and right flexor
+rhythm generators interacting via unnamed inhibitory and
+excitatory CINs involved in left–right coordination of ac-
+Review 14 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+tivity. This model was then used by Shevtsova et al. (2015)
+as a basis for developing the more elaborated and com-
+plicated models that explicitly incorporated genetically
+identified V0 D,V 0 V, and V3 CINs (Models 1 and 2 de-
+scribed in the previous section). Similar to the basic model
+of Rybak et al. (2013) , these later models can simulate
+spinal circuit reorganizations following genetic removal of
+the above axon-guiding molecules and reproduce the
+corresponding experimental data (N. A. Shevtsova and
+I. A. Rybak, unpublished results). Below, we interpret the
+above circuit reorganizations using the network architec-
+ture of Model 1 ( Fig. 7 A), although the slightly different
+schematic of Model 2 could be used as well.
+Netrin-1 is found in the floor plate and neuroepithelial
+cells of the ventral region of the spinal cord and is involved
+in attracting CIN axons and directing them to the con-
+tralateral side of the cord. Figure 9A2 (modified from Rabe
+et al., 2009 , with permission) shows that the loss of
+Netrin-1 in the knockout (KO) mice significantly reduces
+the number of axons crossing the midline for V0 D (Lbx1/H11002
+Pax2/H11001) and V0V (Lbx1/H11002Pax2/H11001) CINs without changing the
+number of V3 (Nkx2.2) axons crossing the midline. This
+reduction in the number of midline-crossing axons is
+shown in the model schematic in Figure 9 A1 by dashed
+lines, illustrating that, although some V0 D and V0 V con-
+nections still go to the contralateral side (as in the intact
+model), some of their connections stay on the ipsilateral
+side ( Fig. 9 A1, curved dashed arrows). These changes in
+commissural interactions should reduce mutual inhibition
+between left and right RGs mediated by V0 D and V0 V
+CINs, and allow domination of the V3-mediated pathways
+synchronizing the activity of left and right RGs leading to
+a hopping pattern, similar to that in the fully V0 removed
+case ( Fig. 8 A). This shift in the left–right commissural
+interactions to domination by left–right excitation provides
+a clear explanation of the experimental data on left–right
+synchronous activity and hopping gate in Netrin-1 KO
+mice ( Rabe et al., 2009 ; Vallstedt and Kullander, 2013 ).
+In DCC KO mice, the number of midline-crossing axons
+becomes reduced for both the CIN types supporting left–
+right alternation: V0 D (Lbx1/H11002Pax2/H11001) and V0 V (Lbx1/H11002
+Pax2/H11001), and the V3 (Nkx2.2) CINs promoting left–right
+synchrony [Fig. 9B2 (reprinted with permission from Rabe
+Bernhardt et al., 2012 )]. This is shown in the model sche-
+matic in Figure 9 B1 by the dashed lines, illustrating that
+some of the V0 D,V 0 V and V3 connections do not cross
+midline and stay ipsilaterally. These should strongly re-
+duce all left–right interactions, leading to an uncoordi-
+nated left–right activity (Rybak et al., 2013 ). This reduction
+of commissural interactions that is responsible for the
+coordination of left and right activities provides an expla-
+nation of the experimental data on uncoordinated left–
+right activity in DCC KO mice (Rabe Bernhardt et al., 2012;
+Vallstedt and Kullander, 2013 ).
+EphA4/H11001neurons are repelled by ephrin-B3 expressed
+at the midline of the spinal cord. In EphA4 KO mice, the
+regular left–right alternating walking pattern is replaced
+with a rabbit-like left–right synchronized hopping gait
+(Dottori et al., 1998 ; Kullander et al., 2003 ; Akay et al.,
+2006). It has been initially suggested that in the EphA4 KO
+mice, the normal left–right alternating activity, which usu-
+ally results from crossed net inhibition, is overridden by
+the abnormal crossed excitatory interactions ( Butt et al.,
+2005; Kiehn, 2006 ; Restrepo et al., 2009 , Rybak et al.,
+2013). Studies in spinal cords isolated from EphA4 KO
+mice have confirmed that switching to the synchronized
+hopping pattern is accompanied by, and supposedly re-
+sults from, an abnormal midline crossing of axons of
+some excitatory neurons that normally stay ipsilateral to
+the spinal cord ( Restrepo et al., 2009 ). However, based on
+the information that V2a neurons, projecting to V0 V CINs
+(Figs. 7 A,B,9 C), are EphA4/H11001(Lundfald et al., 2007 ), it is
+reasonable to suggest that switching to left–right synchro-
+nous hopping-like activity in EphA4 KO mice may result
+from a reduction of the number of V2a axons projecting to
+the ipsilateral V0 V CINs, because some of these axons—
+due to the lack of EphA4 molecules— cross the midline
+and project to the other side of the cord ( Borgius et al.,
+2014). This redirection of V2a axons in EphA4 KO mice is
+illustrated in Figure 9 C by the double dashed arrows out
+of V2a neurons, one of which crosses the midline. This
+redirection of V2a axons reduces the inhibitory commis-
+sural interactions mediated by the V2a–V0 V pathways that
+secure left–right alternation in the intact mice and allows
+their action to be overcome by the V3 pathways, promot-
+ing left–right synchronizing, leading to the left–right syn-
+chronized hopping behavior.
+Flexor– extensor alternation: role of V1
+and V2b interneurons
+Reciprocal activation of flexor and extensor muscles
+represents the fundamental mechanism involved in any
+motor behaviors, including locomotion. The spinal cord
+circuits providing flexor– extensor alternation have been
+studied recently by Zhang et al. (2014 ; see also Goulding
+et al., 2014 ). They have shown that the alternating flexor–
+extensor activity during locomotion depends on two
+classes of ventrally located inhibitory neurons: V1 and
+V2b. Abrogating V1 and V2b interneuron-derived neu-
+rotransmission in the isolated spinal cord results in a
+synchronous pattern of flexor-related (L2) and extensor-
+related (L5) locomotor activity. Mice lacking V1 and V2b
+inhibition are unable to move their limb joints and display
+marked deficits in limb-driven reflex movements.
+Note that the population of V1 interneurons is com-
+posed of multiple functionally different cell types, includ-
+ing Ia inhibitory interneurons and Renshaw cells
+mediating different forms of inhibition at the level of mo-
+toneurons ( Goulding, 2009 ). Here, we use the term “V1
+neurons” only for the subpopulation of V1 neurons that
+are potentially involved in flexor– extensor and left–right
+interactions at the CPG (not motoneuron) level (i.e., for V1
+cells not representing Ia or Renshaw cells).
+The recent study by Zhang et al. (2014) has shown that,
+although both V1 and V2b interneurons are involved in
+flexor– extensor alternation, their functional roles are dif-
+ferent, and their selective removal from the intact cord
+and isolated hemicord produces different effects on loco-
+motor pattern. The major findings of the study by Zhang
+et al. (2014) are summarized as follows: (1) removal of V1
+Review 15 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+neurons results in a significant reduction in the frequency
+of drug-induced locomotor activity in the isolated intact
+cord (two to three times and more), which is similar to the
+frequency reduction observed after cord hemisection, and
+a lack of V1 neurons has no observed effects on the
+hemicord rhythmic activity; and (2) both interneuron
+types, V1 and V2b, secure flexor– extensor alternation in
+the intact cord, so that only removal/silencing of both
+Figure 9. Potential changes in left–right coordination in models of mutants lacking particular axon-guiding molecules Netrin-1 ,
+DCC,o r EphA4 . A1, Model of circuits in Netrin-1 KO mice. The majority of axons of V0 D and V0 V CINs do not cross the midline
+(dashed lines), hence reducing mutual inhibition between left and right RGs. A2, Quantification of transcription factor phenotype
+in different traced CINs that shows significant differences in affected V0 D and V0 V CIN (but not V3) populations in Netrin-1 KO
+mice. Modified from Rabe et al. (2009) , their Figure 5L, with permission. B1, Model of circuits in DCC KO mice: significant
+portions of axons of V0 D and V0 V, and V3 CINs do not cross the midline (dashed lines), hence reducing both mutual inhibition
+and mutual excitation between left and right RGs. B2, Quantification of transcription factor phenotype in different traced CINs
+that shows significant differences in affected V0 D,V 0 V, and V3 CIN populations in DCC KO mice. Modified from Rabe Bernhardt
+et al. (2012) , their Figure 4I, with permission. C, Model of circuits in EphA4 KO mice: many axons of EphA4 /H11001V2a populations
+do not activate V0 V CINs, hence reducing mutual inhibition between left and right RGs. In A1, B1, and C, both the right
+connections with reduced numbers of axons and the redirected axons in the corresponding mutant circuits are shown by dashed
+lines.
+Review 16 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+types leads to flexor– extensor synchrony. In contrast,
+flexor– extensor alternation in the isolated hemicord is
+entirely supported by V2b neurons, whose silencing re-
+sults in flexor– extensor synchrony.
+Based on the data from the study by Zhang et al. (2014),
+the following features of organization of V2b and V1 cir-
+cuits involved in flexor– extensor alternation and locomo-
+tor frequency control can be hypothesized:
+(1) The V2b neurons mediate mutual inhibition between
+flexor and extensor half-centers on each side of the cord
+(Fig. 10 A,B).
+(2) The V1 neurons (involved in interactions between
+rhythm-generating centers) receive excitation only from
+the contralateral side of the cord, and hence they should
+not be active and operate in isolated hemicords (i.e. after
+hemisection; Fig. 10 A,B).
+(3) The excitatory input to V1 neurons from the con-
+tralateral side of the cord includes tonic excitatory drive
+(Fig. 10 A–C) that maintains sustained activity of V1 neu-
+rons in the intact cord. This tonic drive can be provided by
+separate types of commissural interneurons that are ac-
+tivated by drugs in this preparation, but they are normally
+activated by input from the mesencephalic and cerebellar
+locomotor regions and send their axons to the contralat-
+eral side of the spinal cord ( Jankowska and Noga, 1990 ;
+Matsuyama and Mori, 1998 ; Bannatyne et al., 2003 ;
+Jankowska et al., 2003, 2005 ).
+(4) When active (in the intact cord), these V1 neurons
+provide an additional inhibition of the ipsilateral extensor
+half-center and may disinhibit the ipsilateral flexor half-
+center (Fig. 10A–C), hence allowing the generation of high
+locomotor frequencies in the intact cord. Therefore, re-
+moval/inactivation of these neurons in the intact cord or
+hemisection should lead to slowing the locomotor fre-
+quency. These V1 neurons may also serve as targets for
+Figure 10. Role of V1 and V2b interneurons in flexor– extensor alternation. A, B, V2b neurons mediate mutual inhibition between flexor
+and extensor half-centers on each side of the cord. V1 neurons (involved in interactions between rhythm-generating centers) receive
+excitation from the contralateral side of the cord. This excitatory input should include tonic excitatory drive. These V1 neurons provide
+an additional inhibition of the ipsilateral extensor center and may disinhibit the ipsilateral flexor half-center. B, The activity of the above
+V1 cells is negatively modulated (reduced) in phase with the contralateral flexor activity via inhibition from the contralateral V0 D CINs.
+C, The above modulation of V1 neuron activity allows them to secure flexor– extensor alternation after removing V2b neurons in the
+intact cord. D, The full schematic of bilaterally interacting rhythm generators in the spinal card with incorporated V1 and V2b circuits.
+Review 17 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+the supraspinal control of locomotor speed in the intact
+system ( Gosgnach et al., 2006 ; Zhang et al., 2014 ).
+(5) The activity of the V1 cells is negatively modulated
+(reduced) in phase with the contralateral flexor activity, for
+example via inhibition from the contralateral V0 D CINs
+(Fig. 10 B,C). This rhythmic reduction of V1 inhibition in
+phase with contralateral flexor activity allows these neu-
+rons to secure flexor– extensor alternation after removing
+V2b neurons in the intact cord ( Fig 10 C).
+Figure 10 D shows an updated schematic of the
+model of Shevtsova et al., 2015 ; Fig. 7 A, Model 1, that
+incorporates the V1 and V2b circuits hypothesized
+above (a similar modification can be applied for Model 2). In
+this architecture, a removal of V1 population in the intact
+cord or a hemisection (which removes the contralateral ex-
+citatory drive to V1 populations) would lead to a disinhibition
+of extensor centers and additional inhibition of flexor centers
+(via a disinhibition of interposed inhibitory interneurons),
+leading to slowing down the locomotor oscillations. This
+would be consistent with point 1 above. Also in this archi-
+tecture, both V2b (explicitly) and V1 populations (due to
+inhibitory modulation of its activity by the contralateral V0D
+population) would secure flexor– extensor alternation in the
+intact cord, but only V2a populations would be able to do
+this after hemisection silencing V1 neurons. This would pro-
+vide point 2 above.
+It is expected that this united architecture will be able both to
+maintain all the features of the locomotor network described
+above and to reproduce the major findings of the study by
+Zhang et al. (2014)concerning the role of V1 and V2b neurons
+for flexor– extensor alternation and frequency control.
+Conclusions
+Our analysis has focused on using some logical and mod-
+eling approaches that allowed us to explicitly incorporate
+several known genetically identified neuron types into a
+hypothesized network architecture, representing a connec-
+tome of spinal circuits that includes the left and right CPGs
+interacting via several distinct CIN types (V0D,V 0V, V3) and
+ipsilaterally projecting neurons (V1, V2a, V2b). We realize
+that other, currently unknown classes of spinal interneurons
+with different properties and connectivity patterns can be
+found in the future, and that some of the currently identified
+classes can be subdivided into functionally different sub-
+classes. Nevertheless, we believe that the network architec-
+tures considered here could serve as a basis for future, more
+elaborated models of the spinal circuits. These network
+architectures propose plausible explanations for multiple
+experimental data obtained in different laboratories under
+different experimental conditions. The predictions of this
+study include the following: (1) flexor– extensor asymmetry in
+the organization of rhythm-generating locomotor network;
+(2) organization and frequency-dependent interactions of
+commissural pathways supporting left–right alternation (V0D,
+V2a/V0V, V3) and synchronization (V3) of spinal cord activity,
+which are potentially involved in locomotor gait control; and
+(3) organization of circuits of ipsilaterally projecting V1 and
+V2b neurons providing flexor– extensor alteration and loco-
+motor frequency control. These predictions provide impor-
+tant insights into the organization of spinal locomotor CPGs
+and neural control of locomotion, and await experimental
+testing and validation.
+References
+Akay T, Acharya HJ, Fouad K, Pearson KG (2006) Behavioral and
+electromyographic characterization of mice lacking EphA4 recep-
+tors. J Neurophysiol 96:642–651. CrossRef Medline
+Al-Mosawie A, Wilson JM, Brownstone RM (2007) Heterogeneity of
+V2-derived interneurons in the adult mouse spinal cord. Eur J
+Neurosci 26:3003–3015. CrossRef Medline
+Bannatyne BA, Edgley SA, Hammar I, Jankowska E, Maxwell DJ
+(2003) Networks of inhibitory and excitatory commissural interneu-
+rons mediating crossed reticulospinal actions. Eur J Neurosci
+18:2273–2284. Medline
+Borgius L, Nishimaru, H, Caldeira V, Kunugise Y, Löw P, Reig R,
+Itohara S, Iwasato T, Kiehn O (2014) Spinal glutamatergic neurons
+defined by EphA4 signaling are essential components of normal
+locomotor circuits. J Neurosci 34:3841-3853. CrossRef Medline
+Brocard F, Tazerart S, Vinay L (2010) Do pacemakers drive the
+central pattern generator for locomotion in mammals? Neurosci-
+entist 16:139 –155. CrossRef Medline
+Brocard F, Shevtsova NA, Bouhadfane M, Tazerart S, Heinemann U,
+Rybak IA, Vinay L (2013) Activity-dependent changes in extracel-
+lular Ca 2/H11001and K /H11001reveal pacemakers in the spinal locomotor-
+related network. Neuron 77:1047-1054. CrossRef Medline
+Butera RJ, Rinzel JR, Smith JC (1999) Models of respiratory rhythm
+generation in the pre-Bötzinger complex: II. Populations of cou-
+pled pacemaker neurons. J Neurophysiol 82:398-415.
+Butt SJ, Kiehn O (2003) Functional identification of interneurons
+responsible for left–right coordination of hindlimbs in mammals.
+Neuron 38:953–963. Medline
+Butt SJ, Lundfald L, Kiehn O (2005) EphA4 defines a class of
+excitatory locomotor-related interneurons. Proc Natl Acad Sci U S
+A 102:14098 –14103. CrossRef Medline
+Crone SA, Quinlan KA, Zagoraiou L, Droho S, Restrepo CE, Lundfald
+L, Endo T, Setlak J, Jessell TM, Kiehn O, Sharma K (2008) Genetic
+ablation of V2a ipsilateral interneurons disrupts left-right locomo-
+tor coordination in mammalian spinal cord. Neuron 60:70-83.
+CrossRef Medline
+Crone SA, Zhong G, Harris-Warrick R, Sharma K (2009) In mice
+lacking V2a interneurons, gait depends on speed of locomotion. J
+Neurosci 29:7098-7109. CrossRef
+Cymbalyuk GS, Gaudry Q, Masino MA, Calabrese RL (2002) Bursting
+in leech heart interneurons: cell-autonomous and network-based
+mechanisms. J Neurosci 22:10580-10592. Medline
+Dottori M, Hartley L, Galea M, Paxinos G, Polizzotto M, Kilpatrick T, Bartlett
+PF, Murphy M, Köntgen F, Boyd AW (1998) EphA4 (Sek1) receptor
+tyrosine kinase is required for the development of the corticospinal tract.
+Proc Natl Acad Sc iUSA 95:13248 –13253. Medline
+Dougherty KJ, Kiehn O (2010) Functional organization of V2a-related
+locomotor circuits in the rodent spinal cord. An n N Y Acad Sci
+1198:85-93. CrossRef Medline
+Dougherty KJ, Zagoraiou L, Satoh D, Rozani I, Doobar S, Arber S,
+Jessell TM, Kiehn O (2013) Locomotor rhythm generation linked to
+the output of spinal shox2 excitatory interneurons. Neuron 80:920-
+933. CrossRef Medline
+Duysens J (1977) Reflex control of locomotion as revealed by stim-
+ulation of cutaneous afferents in spontaneously walking premam-
+millary cats. J Neurophysiol 40:737-751. Medline
+Duysens J, De Groote F, Jonkers I (2013) The flexion synergy, mother
+of all synergies and father of new models of gait. Front Comput
+Neurosci 7;14. CrossRef Medline
+Dyck J, Lanuza GM, Gosgnach S (2012) Functional characterization
+of dI6 interneurons in the neonatal mouse spinal cord. J Neuro-
+physiol 107:3256-3266. CrossRef Medline
+Frigon A, Gossard JP (2009) Asymmetric control of cycle period by
+the spinal locomotor rhythm genera-tor in the adult cat. J Physiol
+587:4617–4628. CrossRef Medline
+Review 18 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+Gosgnach S (2011) The role of genetically-defined interneurons in
+generating the mammalian locomotor rhythm. Integr Comp Biol
+51:903-912. CrossRef Medline
+Gosgnach S, Lanuza GM, Butt SJ, Saueressig H, Zhang Y,
+Velasquez T, Riethmacher D, Callaway EM, Kiehn O, Goulding M
+(2006) V1 spinal neurons regulate the speed of vertebrate locomo-
+tor outputs. Nature 440:215–219. CrossRef Medline
+Goulding M (2009) Circuits controlling vertebrate locomotion: mov-
+ing in a new direction. Nat Rev Neurosci 10:507–518. CrossRef
+Medline
+Goulding M, Bourane S, Garcia-Campmany L, Dalet A, Koch S (2014)
+Inhibition downunder: an update from the spinal cord. Curr Opin
+Neurobiol 26:161–166. CrossRef Medline
+Graham Brown T (1914) On the nature of the fundamental activity of
+the nervous centres; together with an analysis of the conditioning
+of rhythmic activity in progression, and a theory of the evolution of
+function in the nervous system. J Physiol 48:18-46. CrossRef
+Grillner S (1981) Control of locomotion in bipeds, tetrapods, and fish.
+In: Handbook of physiology. the nervous system; motor control
+(Brookhart JM, Mountcastle VB, eds), vol II, pp 1179-1236.
+Bethesda, MD: American Physiological Society.
+Grillner S (2006) Biological pattern generation: the cellular and com-
+putational logic of networks in motion. Neuron 52:751-766. Cross-
+Ref Medline
+Grillner S, Manira AE (2015) The intrinsic operation of the networks
+that make us locomote. Curr Opin Neurobiol 31:244-249. Cross-
+Ref Medline
+Grillner S, Kozlov A, Dario P, Stefanini C, Menciassi A, Lansner A,
+Hellgren KJ (2007) Modeling a vertebrate motor system: pattern
+generation, steering and control of body orientation. Prog Brain
+Res 165:221–234. CrossRef Medline
+Hägglund M, Dougherty KJ, Borgius L, Itohara S, Iwasato T, Kiehn O
+(2013) Optogenetic dissection reveals multiple rhythmogenic mod-
+ules underlying locomotion. Proc Natl Acad Sc iUSA 110:11589-
+11594. CrossRef Medline
+Halbertsma JM (1983) The stride cycle of the cat: the modelling of
+locomotion by computerized analysis of automatic recordings.
+Acta Physiol Scand Suppl 521:1-75. Medline
+Hinckley CA, Ziskind-Conhaim L (2006) Electrical coupling between
+locomotor-related excitatory interneurons in the mammalian spinal
+cord. J Neurosci 26:8477–8483. CrossRef Medline
+Ijspeert AJ (2001) A connectionist central pattern generator for the
+aquatic and terrestrial gaits of a simulated salamander. Biol Cy-
+bern 84:331–348. Medline
+Jankowska E (2008) Spinal interneuronal networks in the cat: ele-
+mentary components. Brain Res Rev 57:46 –55. CrossRef Medline
+Jankowska E, Noga BR (1990) Contralaterally projecting lamina VIII
+interneurones in middle lumbar segments in the cat. Brain Res
+535:327–333. Medline
+Jankowska E, Jukes MGM, Lund S, Lundberg A (1967a) The effect of
+DOPA on the spinal cord. 5. Reciprocal organization of pathways
+transmitting excitatory action to alpha motoneurones of flexors
+and extensors. Acta Physiol Scand 70:369 –388. CrossRef Medline
+Jankowska E, Jukes MGM, Lund S, Lundberg A (1967b) The effect of
+DOPA on the spinal cord. 6. Half-centre organization of interneu-
+rones transmitting effects from the flexor reflex afferents. Acta
+Physiol Scand 70:389 –402. CrossRef Medline
+Jankowska E, Hammar I, Slawinska U, Maleszak K, Edgley SA (2003)
+Neuronal basis of crossed actions from the reticular formation on
+feline hindlimb motoneurons. J Neurosci 23:1867–1878. Medline
+Jankowska E, Edgley SA, Krutki P, Hammar I (2005) Functional
+differentiation and organization of feline midlumbar commissural
+interneurones. J Physiol 565:645–658 CrossRef Medline
+Jasinski PE, Molkov YI, Shevtsova NA, Smith JC, Rybak IA (2013)
+Sodium and calcium mechanisms of rhythmic bursting in excit-
+atory neural networks of the pre-Bötzinger complex: a computa-
+tional modelling study. Eur J Neurosci 37:212-230. CrossRef
+Medline
+Jessell TM (2000) Neuronal specification in the spinal cord: inductive
+signals and transcriptional codes. Nat Rev Genet 1:20 –29. Cross-
+Ref Medline
+Kaprielian Z, Runko E, Imondi R (2001) Axon guidance at the midline
+choice point. Dev Dyn 221:154-181. CrossRef Medline
+Kennedy TE, Serafini T, de la Torre JR, Tessier-Lavigne M (1994)
+Netrins are diffusible chemotropic factors for commissural axons
+in the embryonic spinal cord. Cell 78:425–435. Medline
+Kiehn O (2006) Locomotor circuits in the mammalian spinal cord.
+Annu Rev Neurosci 29:279 –306. CrossRef Medline
+Kiehn O (2011) Development and functional organization of spinal
+locomotor circuits. Curr Opin Neurobiol 21:100-109. CrossRef
+Medline
+Kiehn O, Butt SJ (2003) Physiological, anatomical and genetic iden-
+tification of CPG neurons in the developing mammalian spinal
+cord. Prog Neurobiol 70:347–361. Medline
+Kiehn O, Dougherty KJ (2013) Locomotion: circuits and physiology.
+In: Neuroscience in the 21st century (Pfaff DW, ed), pp 1209-1236.
+New York, NY: Springer.
+Kjaerulff O, Kiehn O (1997) Crossed rhythmic synaptic input to
+motoneurons during selective activation of the contralateral spinal
+locomotor network. J Neurosci 17:9433-9447. Medline
+Kullander K, Butt SJ, Lebret JM, Lundfald L, Restrepo CE, Rydström
+A, Klein R, Kiehn O (2003) Role of EphA4 and EphrinB3 in local
+neuronal circuits that control walking. Science 299:1889 –1892.
+CrossRef Medline
+Kwan AC, Dietz SB, Webb WW, Harris-Warrick RM (2009) Activity of
+Hb9 interneurons during fictive locomotion in mouse spinal cord. J
+Neurosci 29:11601-11613. CrossRef Medline
+Lansner A, Kotaleski JH, Grillner S (1998) Modeling of the spinal
+neuronal circuitry underlying locomotion in a lower vertebrate. Ann
+N Y Acad Sci 860:239-49. Medline
+Lanuza GM, Gosgnach S, Pierani A, Jessell TM, Goulding M (2004)
+Genetic identification of spinal interneurons that coordinate left-
+right locomotor activity necessary for walking movements. Neuron
+42:375–386. Medline
+Lundberg A (1981) Half-centres revisited. In: Regulatory functions of
+the CNS. Motion and organization principles (Szentagothai J,
+Palkovits M, Hamori J, eds), pp 155–167. Budapest, Hungary:
+Pergamon Akadem Kiado.
+Lundfald L, Restrepo CE, Butt SJ, Peng CY, Droho S, Endo T,
+Zeilhofer HU, Sharma K, Kiehn O (2007) Phenotype of V2-derived
+interneurons and their relationship to the axon guidance molecule
+EphA4 in the developing mouse spinal cord. Eur J Neurosci 26:
+2989 –3002. CrossRef Medline
+Machado TA, Pnevmatikakis E, Paninski L, Jessell TM, Miri M (2015)
+Primacy of flexor locomotor pattern revealed by ancestral rever-
+sion of motor neuron identity. Cell 162:338 –350. CrossRef Medline
+Markin SN, Lemay MA, Prilutsky BI, Rybak IA (2012) Motoneuronal
+and muscle synergies involved in cat hindlimb control during fictive
+and real locomotion: a comparison study. J Neurophysiol 107:
+2057-2071. CrossRef Medline
+Matsuyama K, Mori S (1998) Lumbar interneurons involved in the
+generation of fictive locomotion in cats. Ann N Y Acad Sci 860:
+441–443. Medline
+McCrea DA, Rybak IA (2007) Modeling the mammalian locomotor
+CPG: insights from mistakes and perturbations. Prog Brain Res
+165:235–253. CrossRef Medline
+McCrea DA, Rybak IA (2008) Organization of mammalian locomotor
+rhythm and pattern generation. Brain Res Rev 57:134 –146. Cross-
+Ref Medline
+McLean DL, Dougherty KJ (2015) Peeling back the layers of loco-
+motor control in the spinal cord. Curr Opin Neurobiol 33:63-70.
+CrossRef Medline
+Molkov YI, Bacak BJ, Talpalar AE, Rybak IA (2015) Mechanisms of
+left-right coordination in Mammalian locomotor pattern generation
+circuits: a mathematical modeling view. PLoS Comput Biol 11:
+e1004270. CrossRef Medline
+Orlovsky GN, Deliagina TG, Grillner S (1999) Neuronal control of
+locomotion. New York: Oxford UP.
+Review 19 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org
+Pearson KG, Duysens J (1976) Function of segmental reflexes in the
+control of stepping in cockroaches and cats. In: Neural control of
+locomotion (Herman RM, Grillner S, Stein PSG, Stuart DG, eds), pp
+519 –537. New York, NY: Plenum.
+Pierani A, Moran-Rivard L, Sunshine MJ, Littman DR, Goulding M,
+Jessell TM (2001) Control of interneuron fate in the developing
+spinal cord by the progenitor homeodomain protein Dbx1. Neuron
+29:367–384. Medline
+Quinlan KA, Kiehn O (2007) Segmental, synaptic actions of commis-
+sural interneurons in the mouse spinal cord. J Neurosci 27:6521–
+6530. CrossRef Medline
+Rabe Bernhardt N, Memic F, Gezelius H, Thiebes AL, Vallstedt A,
+Kullander K (2012) DCC mediated axon guidance of spinal in-
+terneurons is essential for normal locomotor central pattern gen-
+erator function. Dev Biol 366:279-289. CrossRef Medline
+Rabe N, Gezelius H, Vallstedt A, Memic F, Kullander K (2009)
+Netrin-1- dependent spinal interneuron subtypes are required for
+the formation of left– right alternating locomotor circuitry. J Neu-
+rosci 29:15642–15649. CrossRef Medline
+Restrepo CE, Lundfald L, Szabó G, Erdélyi F, Zeilhofer HU, Glover
+JC, Kiehn O (2009) Transmitter-phenotypes of commissural in-
+terneurons in the lumbar spinal cord of newborn mice. J Comp
+Neurol 517:177-192. CrossRef Medline
+Rossignol S (1996) Neural control of stereotypic limb movements. In:
+Handbook of physiology, Sect. 12: exercise: regulation and inte-
+gration of multiple systems (Rowell LB, Shepherd J, eds), pp
+173–216. Bethesda, MD: American Physiological Society.
+Rybak IA (2014) Vertebrate pattern generation: overview. In: Ency-
+clopedia of Computational Neuroscience (Jaeger D, Jung R, eds.),
+pp 1-13. New York, NY: Springer.
+Rybak IA, Shevtsova NA, St-John WM, Paton JF, Pierrefiche O
+(2003) Endogenous rhythm generation in the pre-Bötzinger com-
+plex and ionic currents: modelling and in vitro studies. Eur J
+Neurosci 18:239-257. Medline
+Rybak IA, Shevtsova NA, Ptak K, McCrimmon DR (2004) Intrinsic
+bursting activity in the pre-Bötzinger complex: role of persistent
+sodium and potassium currents. Biol Cyber 90:59-74. CrossRef
+Medline
+Rybak IA, Shevtsova NA, Lafreniere-Roula M, McCrea DA (2006a)
+Modelling spinal circuitry involved in locomotor pattern generation:
+insights from deletions during fictive locomotion. J Physiol 577:
+617–639. CrossRef Medline
+Rybak IA, Stecina K, Shevtsova NA, McCrea DA (2006b) Modelling
+spinal circuitry involved in locomotor pattern generation: insights
+from the effects of afferent stimulation. J Physiol 577:641-658.
+Rybak IA, Shevtsova NA, Kiehn O (2013) Modelling genetic reorga-
+nization in the mouse spinal cord affecting left–right coordination
+during locomotion. J Physiol 591:5491–5508. CrossRef Medline
+Rybak IA, Molkov YI, Jasinski PE, Shevtsova NA, Smith JC (2014).
+Rhythmic bursting in the pre-Bötzinger complex: mechanisms and
+models. Prog Brain Res 209:1-25. CrossRef Medline
+Sherwood WE, Harris-Warrick R, Guckenheimer J (2011) Synaptic
+patterning of left-right alternation in a computational model of the
+rodent hindlimb central pattern generator. J Comput Neurosci
+30:323-360. CrossRef Medline
+Shevtsova NA, Talpalar AE, Markin SN, Harris-Warrick RM, Kiehn O,
+Rybak IA (2015) Organization of left-right coordination of neuronal
+activity in the mammalian spinal cord: insights from computational
+modelling. J Physiol 593:2403-2426. CrossRef Medline
+Smith JC, Butera RJ, Koshiya N, Del Negro C, Wilson CG, Johnson
+SM (2000) Respiratory rhythm generation in neonatal and adult
+mammals: the hybrid pacemaker-network model. Respir Physiol
+122:131-147. Medline
+Stuart DG, Hultborn H (2008) Thomas Graham Brown (1882–1965),
+Anders Lundberg (1920-), and the neural control of stepping. Brain
+Res Rev 59:74-95. CrossRef Medline
+Talpalar AE, Kiehn O (2010) Glutamatergic mechanisms for speed
+control and network operation in the rodent locomotor CPG. Front
+Neural Circuits 4:3. CrossRef Medline
+Talpalar AE, Bouvier J, Borgius L, Fortin G, Pierani A, Kiehn O (2013)
+Dual-mode operation of neuronal networks involved in left-right
+alternation. Nature 500:85-88. CrossRef Medline
+Tazerart S, Viemari J-C, Darbon P, Vinay L, Brocard F (2007) Con-
+tribution of persistent sodium current to locomotor pattern gener-
+ation in neonatal rats. J Neurophysiol 98:613–628. CrossRef
+Medline
+Tazerart S, Vinay L, Brocard F (2008) The persistent sodium current
+generates pacemaker activities in the central pattern generator for
+locomotion and regulates the locomotor rhythm. J Neurosci 28:
+8577–8589. CrossRef Medline
+Vallstedt A, Kullander K (2013) Dorsally derived spinal interneurons in
+locomotor circuits. An n N Y Acad Sci 1279:32-42. CrossRef Med-
+line
+Wiggin TD, Anderson TM, Eian J, Peck JH, Masino MA (2012)
+Episodic swimming in the larval zebrafish is generated by a spa-
+tially distributed spinal network with modular functional organiza-
+tion. J Neurophysiol 108:925-934. CrossRef Medline
+Wilson JM, Hartley R, Maxwell DJ, Todd AJ, Lieberam I, Kaltschmidt
+JA, Yoshida Y, Jessell T. M, Brownstone RM (2005) Conditional
+rhythmicity of ventral spinal interneurons defined by expression of
+the Hb9 homeodomain protein. J Neurosci 25:5710 –5719. Cross-
+Ref Medline
+Wolf E, Soffe S, Roberts A (2009) Longitudinal neuronal organization
+and coordination in a simple vertebrate: a continuous, semi-
+quantitative computer model of the central pattern generator for
+swimming in young frog tadpoles. J Comput Neurosci 27:291–308.
+CrossRef
+Zhang Y, Narayan S, Geiman E, Lanuza GM, Velasquez T, Shanks B,
+Akay T, Dyck J, Pearson K, Gosgnach S, Fan CM, Goulding M
+(2008) V3 spinal neurons establish a robust and balanced locomo-
+tor rhythm during walking. Neuron 60:84 –96. CrossRef Medline
+Zhang J, Lanuza GM, Britz O, Wang Z, Siembab VC, Zhang Y,
+Velasquez T, Alvarez FJ, Frank E, Goulding M (2014) V1 and V2b
+interneurons secure the alternating flexor-extensor motor activity
+mice require for limbed locomotion. Neuron 82:138-150. CrossRef
+Medline
+Zhong G, Masino MA, Harris-Warrick RM (2007) Persistent sodium
+currents participate in fictive locomotion generation in neonatal
+mouse spinal cord. J Neurosci 27:4507–4518. CrossRef Medline
+Zhong G, Droho S, Crone SA, Dietz S, Kwan AC, Webb WW, Sharma
+K, Harris-Warrick RM (2010) Electrophysiological characterization
+of V2a interneurons and their locomotor-related activity in the
+neonatal mouse spinal cord. J Neurosci 30:170-182. CrossRef
+Medline
+Zhong G, Sharma K, Harris-Warrick RM (2011) Frequency-
+dependent recruitment of V2a interneurons during fictive locomo-
+tion in the mouse spinal cord. Nat Commun 2:274. CrossRef
+Medline
+Zhong G, Shevtsova NA, Rybak IA, Harris-Warrick RM (2012) Neu-
+ronal activity in the isolated mouse spinal cord during spontaneous
+deletions in fictive locomotion: insights into locomotor central
+pattern generator organization. J Physiol 590:4735-4759. Cross-
+Ref Medline
+Ziskind-Conhaim L, Wu L, Wiesner EP (2008) Persistent sodium
+current contributes to induced voltage oscillations in locomotor-
+related Hb9 interneurons in the mouse spinal cord. J Neurophysiol
+100:2254 –2264. CrossRef Medline
+Review 20 of 20
+September/October 2015, 2(5) e0069-15.2015 eNeuro.sfn.org

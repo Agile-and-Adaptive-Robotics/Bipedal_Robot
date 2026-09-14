@@ -1,0 +1,1434 @@
+Citation: Nourse, W.R.P .; Jackson, C.;
+Szczecinski, N.S.; Quinn, R.D.
+SNS-Toolbox: An Open Source Tool
+for Designing Synthetic Nervous
+Systems and Interfacing Them with
+Cyber–Physical Systems. Biomimetics
+2023, 8, 247. https://doi.org/
+10.3390/biomimetics8020247
+Academic Editor: Mingguo Zhao
+and Biao Hu
+Received: 21 April 2023
+Revised: 2 June 2023
+Accepted: 9 June 2023
+Published: 10 June 2023
+Copyright: © 2023 by the authors.
+Licensee MDPI, Basel, Switzerland.
+This article is an open access article
+distributed under the terms and
+conditions of the Creative Commons
+Attribution (CC BY) license (https://
+creativecommons.org/licenses/by/
+4.0/).
+biomimetics 
+Article
+SNS-Toolbox: An Open Source Tool for Designing Synthetic
+Nervous Systems and Interfacing Them with
+Cyber–Physical Systems
+William R. P . Nourse1,*
+ , Clayton Jackson 2
+ , Nicholas S. Szczecinski 3
+ and Roger D. Quinn 2
+1 Department of Electrical, Computer, and Systems Engineering, Case Western Reserve University,
+Cleveland, OH 44106, USA
+2 Department of Mechanical and Aerospace Engineering, Case Western Reserve University,
+Cleveland, OH 44106, USA
+3 Department of Mechanical and Aerospace Engineering, West Virginia University,
+Morgantown, WV 26506, USA
+* Correspondence: nourse@case.edu
+Abstract: One developing approach for robotic control is the use of networks of dynamic neurons
+connected with conductance-based synapses, also known as Synthetic Nervous Systems (SNS). These
+networks are often developed using cyclic topologies and heterogeneous mixtures of spiking and
+non-spiking neurons, which is a difﬁcult proposition for existing neural simulation software. Most
+solutions apply to either one of two extremes, the detailed multi-compartment neural models in small
+networks, and the large-scale networks of greatly simpliﬁed neural models. In this work, we present
+our open-source Python package SNS-Toolbox, which is capable of simulating hundreds to thousands
+of spiking and non-spiking neurons in real-time or faster on consumer-grade computer hardware.
+We describe the neural and synaptic models supported by SNS-Toolbox, and provide performance on
+multiple software and hardware backends, including GPUs and embedded computing platforms. We
+also showcase two examples using the software, one for controlling a simulated limb with muscles in
+the physics simulator Mujoco, and another for a mobile robot using ROS. We hope that the availability
+of this software will reduce the barrier to entry when designing SNS networks, and will increase the
+prevalence of SNS networks in the ﬁeld of robotic control.
+Keywords: synthetic nervous system; conductance-based modeling; neural simulator; GPU; CUDA;
+neurorobotics; Python; software; open-source
+1. Introduction
+A common goal of neuroscientists and roboticists is to understand how animal ner-
+vous systems interact with biomechanics and their environment and generate adaptive
+behavior [1]. By understanding and modeling aspects of the nervous system, it is hoped
+that robots will be able to exhibit embodied intelligence [2] and exhibit animal-like robust-
+ness and adaptability [3]. One approach is to design Synthetic Nervous Systems (SNS),
+networks of conductance-based neurons and synapses which can be used to model an-
+imal nervous systems [ 4,5] and control robots [ 6–8]. Some strengths of SNS networks
+include that they can be tuned using analytic design rules [9,10] and that results obtained
+controlling robotic hardware can propose neurobiological hypotheses [11,12].
+In order to design SNS networks for robotic control, software tools are needed. Soft-
+ware for simulating SNS networks should support conductance-based modeling of neurons
+and synapses, as there are elements of neural behavior in conductance-based models which
+are incompatible with current-based models [9,13]. Bidirectional synaptic links, such as
+electrical synapses, should also be supported [14]. Simulators should also support networks
+with heterogeneous neural models, potentially containing both spiking and non-spiking
+Biomimetics 2023, 8, 247. https://doi.org/10.3390/biomimetics8020247 https://www.mdpi.com/journal/biomimetics
+Biomimetics 2023, 8, 247 2 of 24
+neurons [7]. While individual spiking neurons can be more computationally powerful
+than non-spiking neurons [ 15], non-spiking neurons are capable of capturing much of
+the dynamics of populations of spiking neurons while being more amenable to real-time
+simulation [16]. Networks should be able to be constructed in a programmatic way, in order
+to aid the design of large but formulaic networks [17]. SNS networks should be able to be
+simulated with faster than real-time performance using CPUs and GPUs, and the same
+networks should be easily interfaced with physics simulation engines and robotic hardware.
+Additionally, for accessibility and ease of use in laboratory and educational settings, a
+simulator software should be cross-platform compatible with the Windows (trademark
+Microsoft Corporation, Redmond, WA, USA), MacOS (trademark Apple Corporation, Cu-
+pertino, CA, USA), and Linux operating systems. A selected survey of available simulation
+software is presented in Table 1.
+Table 1. Neural Simulator∗ Feature Comparison.
+Software Animat-
+Lab NRP Nengo SnnTorch Spyke-
+Torch
+Binds-
+NET Brian2 NEU-
+RON NEST ANN-
+Archy
+SNS-
+Toolbox
+GUI
+Required X X
+Real-Time
+Capable X X X X X X X
+Synaptic
+Reversal
+Potentials
+X X † X † X X X X
+Non-
+Spiking
+and
+Spiking
+X X X X X X X
+Electrical
+Synapses X X † X † X X X X X
+GPU
+Support X † X † X X X X X ‡ X ‡ X
+Cross
+Platform
+§
+X X X X X X X X X
+* Due to the many simulators available, not all are presented in this table. † To implement some features, custom
+code must be implemented which is incompatible with the rest of the Nengo ecosystem. ‡ Limited GPU support
+is currently available. § To be considered cross-platform compatible, the software must be easily run on Linux,
+MacOS, and Windows.
+Software for simulating conductance-based neural dynamics have long been avail-
+able, with the most popular options being NEURON [18], NEST [19], GENESIS [20], and
+Brian [21]. These simulators are capable of simulating highly detailed and biologically accu-
+rate neural models, however they were originally designed for the purpose of performing
+digital experiments and collecting data over a long simulation run. As such, interfacing
+with external software and systems can be challenging [22] and often requires dedicated
+software for memory management [23]. Additionally, these simulators are limited to be-
+ing run on conventional CPUs, although some have begun to be adapted for use with
+GPUs [24].
+Other simulators are capable of designing large networks of neurons using principles
+from machine learning, such as snnTorch [25], SpykeTorch [26], and BindsNET [27]. These
+simulators are capable of executing at high speed on both CPUs and GPUs, but they do so
+at the cost of limiting simulations to reduced models of spiking neurons and current-based
+synapses. Simulators have also been designed to simulate the Izhikevich neuron [28] and
+other spiking neurons at scale, including CARLSim [29], NEMO [30], GeNN [31], CNS [32],
+and NCS6 [33]; however they typically do not support hybrid networks of spiking and
+non-spiking neurons.
+Multiple solutions have been developed which combine a neural dynamics simulator
+with a physics engine. One approach is to combine an existing neural simulator with an
+Biomimetics 2023, 8, 247 3 of 24
+existing physics engine using a middleware memory management software. This has been
+used to combine Brian [21] and SOFA [34] using CLONES [35], as well as NEST [19] with
+Gazebo [36] using MUSIC [23]. This approach allows users who are comfortable with a
+speciﬁc neural simulator to interface their networks with physics objects. However, it leads
+to complicated software dependencies which are difﬁcult to translate to other systems.
+The ﬁrst integrated system was AnimatLab [37], which allows networks consisting of either
+a non-spiking or spiking neural model to control user-deﬁnable physics bodies. It also
+comes with an integrated plotting engine, allowing users to run experiments and analyze
+data within a single application. Numerous models have successfully been controlled with
+AnimatLab, both in simulation [4,38,39] and with robotic hardware [6,7], however networks
+cannot be designed in a programmatic way and are difﬁcult to scale to larger networks [17].
+The Neurorobotics Platform (NRP) is a large software suite which integrates multiple
+neural simulators, including Nengo [40] and NEST [19], with Gazebo [36] in a cloud-based
+simulation environment. The NRP is a comprehensive toolbox which comes with a variety
+of advanced visualization tools, and has been used successfully for multiple neurorobotic
+controllers in simulation [41,42]. However, the NRP comes with much overhead and, as
+such, is unsuited for real-time control of robotic hardware.
+In recent years, high-performance robots have been developed which are controlled
+using networks of spiking neurons [43,44]. These networks achieve state-of-the-art perfor-
+mance, but rely on specialized neuromorphic hardware, such as Intel’s Loihi processors [45],
+which are not yet widely available. Lava [46] is a relatively recent and promising software
+solution for designing spiking networks, but it is primarily designed for use with CPUs
+and Loihi. Currently, the most widely used software for implementing spiking networks
+and controlling real hardware is Nengo [40], which has achieved impressive results [44].
+However, Nengo is optimized for networks designed using the Neural Engineering Frame-
+work [47], and can have reduced performance without the use of neuromorphic hardware.
+One simulator which can simulate networks with a mixture of spiking and non-spiking
+neurons in real-time or faster is ANNarchy [16], which does so using a C++ code generation
+system. However, this code generation system which enables high performance comes at
+the cost of incompatibility with the Microsoft Windows operating system, which reduces
+its level of accessibility.
+Here, we present SNS-Toolbox, an open-source Python package for the design and
+simulation of synthetic nervous systems. SNS-Toolbox allows users to design SNS networks
+with a simple interface and simulate them using established numerical processing libraries
+on consumer-grade hardware. We focus on simulating a speciﬁed set of neural and synaptic
+dynamics, without dedicated ties to a GUI or a physics simulator. This focus allows the SNS-
+Toolbox to be easily interfaced with other systems, and for a given network design to be able
+to be reused without modiﬁcation in multiple contexts. In previous work [48], we presented
+an initial version of SNS-Toolbox with reduced functionality. Here we explain in detail
+the expanded neural and synaptic dynamics supported in the toolbox, and describe the
+workﬂow for designing and simulating networks. We provide results which demonstrate
+comparative performance with other neural simulators, and we showcase the use of SNS-
+Toolbox in two different applications, motor control of a muscle-actuated biomimetic
+system in Mujoco [49], and navigation control of a robotic system in simulation using the
+Robotic Operating System (ROS) [50].
+2. Materials and Methods
+Herein we describe the internal functionality of the SNS-Toolbox, how different neu-
+rons and synapses are simulated, designed, and compiled by the user. Section 2.1 deﬁnes
+the neural models which are supported in the toolbox, and Section 2.2 does the same for
+connection types. Section 3.2.3 describes the design process using SNS-Toolbox, and how a
+network is compiled and simulated.
+All software described is written in Python [51], which was chosen due to its ease of
+development and wide compatibility. Unless otherwise speciﬁed, the units for all quantities
+Biomimetics 2023, 8, 247 4 of 24
+are as follows, current (nA), voltage (mV), conductance (µS), capacitance (nF), and time
+(ms).
+2.1. Neural Models
+SNS-Toolbox is designed to simulate a small selection of neural models, which are
+variations of a standard leaky integrator. In this section, we present the parameters and
+dynamics of each neural model which can be simulated using SNS-Toolbox.
+2.1.1. Non-Spiking Neuron
+The base model for all neurons in SNS-Toolbox is the non-spiking leaky integrator,
+as has been used in continuous-time recurrent neural networks [ 52]. This neural model
+can be used to model non-spiking interneurons, as well as approximate the rate-coding
+behavior of a population of spiking neurons [ 9]. The membrane potential V behaves
+according to the differential equation
+Cm· dV
+dt =−Gm· (V− Vrest ) + ∑ Isyn + Ibias + Iapp , (1)
+where Cm is the membrane capacitance, Gm the membrane conductance, and Vrest is the
+resting potential of the neuron. Ibias is an injected current of constant magnitude, and Iapp
+is any external applied current. Isyn is the current induced via synapses from presynaptic
+neurons, the forms of which are deﬁned in Section 2.2.
+During simulation, the vector of membrane potentials ⃗V is updated at each step t by
+representing Equation (1) in a forward-Euler step:
+⃗V[t]← ⃗V[t− ∆t] + ⃗Tm⊙
+(
+−⃗Gm⊙
+(
+⃗V[t− ∆t]− ⃗Vrest
+)
++ ⃗Ib + ⃗Isyn + ⃗Iapp
+)
+, (2)
+where⊙ denotes the element-wise Hadamard product, and ∆t represents the simulation
+timestep. Tm is the membrane time factor, which is set as Tm← Gm·∆t
+Cm .
+2.1.2. Spiking Neuron
+Spiking neurons in SNS-Toolbox are represented as expanded leaky integrate-and-ﬁre
+neurons [53], with the membrane depolarization dynamics described in Equation (1) and
+an additional dynamical variable for a ﬁring threshold θ [10],
+τθ
+dθ
+dt =−θ + θ0 + m· (V− Vrest ) (3)
+where τθ is a threshold time constant, and θ0 is the initial threshold voltage. m is a propor-
+tionality constant which describes how changes in V affect the behavior of θ, with m = 0
+causing θ to always equal θ0. When the neuron is subjected to a constant stimulus, m > 0
+results in a ﬁring rate which decreases over time, and m < 0 causes a ﬁring rate which
+increases over time. Spikes are represented using a spiking variable δ,
+δ =
+{
+1, V≥ θ
+0, otherwise,
+(4)
+which also triggers the membrane potential to return to rest:
+if δ = 1, V←← Vrest. (5)
+The vector of ﬁring thresholds ⃗θ is updated as
+⃗θ[t]← ⃗θ[t− ∆t] + ⃗Tθ[t]⊙
+(
+−⃗θ[t− ∆t] + ⃗θ0 + ⃗m⊙
+(
+⃗V[t− ∆t]− ⃗Vrest
+))
+, (6)
+Biomimetics 2023, 8, 247 5 of 24
+where Tθ = ∆t
+τθ
+is the threshold time factor. Based on the threshold states, the spiking states
+are updated as
+⃗δ[t]← sign
+(
+min
+(
+0,⃗θ− ⃗V
+))
+. (7)
+Note that for simpliﬁed implementation, all spikes with SNS-Toolbox are internally
+represented as impulses of magnitude−1. Using these spike states, the membrane potential
+of each neuron which spiked is reset to Vrest
+⃗V[t]←
+(
+⃗V[t]− ⃗Vrest
+)
+⊙
+(
+⃗δ[t] + 1
+)
++ ⃗Vrest. (8)
+2.1.3. Neuron with Voltage-Gated Ion Channels
+The other neural model available within SNS-Toolbox is a non-spiking neuron with ad-
+ditional Hodgkin–Huxley [54] style voltage-gated ion channels. The membrane dynamics
+are similar to Equation (1), with the addition of an ionic current Iion [55]:
+Cm· dV
+dt =−Gm· (V− Vrest ) + ∑ Isyn + Ibias + Iapp + Iion. (9)
+This ionic current is the sum of multiple voltage-gated ion channels, all obeying the
+following structure:
+Iion = ∑
+j
+Gion,j· a
+pa,j
+∞,j(V)· b
+pb,j
+j · c
+pc,j
+j ·
+(
+Eion,j− V
+)
+. (10)
+Any neuron within a network can have any number of ion channels. Gion,j is the
+maximum ionic conductance of the jth ion channel, and Eion,j is the ionic reversal potential.
+b and c are dynamical gating variables, and have the following dynamics
+dzj
+dt = z∞,j(V)− zj
+τz,j(V) , (11)
+where functions of the form z∞,j are a voltage-dependent steady-state
+z∞,j(V) = 1
+1 + Kz,j· exp
+(
+Sz,j·
+(
+Ez,j− V
+)) , (12)
+and τz,j is a voltage-dependent time constant
+τz,j(V) = τmax,z,j· z∞,j(V)·
+√
+Kz,j· exp
+(
+Sz,j·
+(
+Ez,j− V
+))
+. (13)
+p denotes an exponent, and Ez,j is the gate reversal potential. Kz,j and Sz,j are parameters
+which shape the z∞,j and τz,j functions. τmax,z,j is the maximum value of τz,j. Note that
+depending on the desired ion channel, the exponent for various sections can be set to 0 in
+order to effectively remove it from Equation (10). One particular example of this is a neuron
+with a persistent sodium current, which is also available as a preset in SNS-Toolbox,
+Iion = ∑
+j
+GNa,j· m∞,j(V)· hj·
+(
+ENa,j− V
+)
+, (14)
+which is the same as Equation (10) with one dynamic variable disabled and some vari-
+able renaming.
+2.2. Connection Models
+Within SNS-Toolbox, neurons are connected using connection objects. These can either
+deﬁne links between individual neurons, or structures of connectivity between neural
+populations (see Section 2.2.4).
+Biomimetics 2023, 8, 247 6 of 24
+2.2.1. Non-Spiking Chemical Synapse
+When connecting non-spiking neurons, non-spiking chemical synapses are typically
+used. The amount of synaptic current Iji
+syn to post-synaptic neuron i from presynaptic
+neuron j is
+Iji
+syn = Gji
+syn (Vj)·
+(
+Eji
+syn− Vi
+)
+, (15)
+where Eji
+syn is the synaptic reversal potential. Gji
+syn (Vj) is the instantaneous synaptic con-
+ductance, which is a function of the presynaptic voltage Vj:
+Gji
+syn (Vj) = max
+(
+0, min
+(
+Gji
+max,non· Vj− Elo
+Ehi− Elo
+, Gji
+max,non
+))
+. (16)
+Gji
+max,non is the maximum synaptic conductance, and voltagesElo and Ehi deﬁne the range of
+presynaptic voltages where the synaptic conductance depends linearly on the presynaptic
+neuron’s voltage.
+When simulating, Equation (15) is expanded to use matrices of synaptic parameters
+(denoted in bold),
+⃗Isyn [t]← ∑
+j
+Gsyn i,j[t]· Ei,j− ⃗V[t− ∆t]⊙ ∑
+j
+Gsyn i,j, (17)
+and each term is summed column-wise to generate the presynaptic current for each neuron.
+Synaptic parameter matrices have an NxN structure, with the columns corresponding to the
+presynaptic neurons and the rows corresponding to the postsynaptic neurons. Equation (16)
+is also expanded to use parameter matrices,
+Gnon [t]← max
+(
+0, min
+(
+Gmax,non·
+⃗U[t− ∆t]− Elo
+Ehi− Elo
+, Gmax,non
+))
+. (18)
+2.2.2. Spiking Chemical Synapse
+Spiking chemical synapses produce a similar synaptic current as non-spiking chemical
+synapses (Equation (15)), but a key difference is that Gji
+syn is a dynamical variable deﬁned
+as
+τji
+syn
+dGji
+syn
+dt =−Gji
+syn. (19)
+if δ = 1, Gji
+max,spike← Gji
+syn. (20)
+The conductance is reset to Gji
+max,spike , the maximum value, whenever the presynaptic
+neuron spikes. Otherwise, it decays to zero with a time constant of τji
+syn. When simulated,
+these dynamics are represented as
+Gspike [t]← Gspike [t− 1]·
+(
+1− Tsyn
+)
+, (21)
+where Gspike is the matrix of spiking synaptic conductances, and Tsyn is the synaptic time
+factor matrix.
+An additional feature available with spiking synapses is a synaptic propagation delay.
+This sets the number of simulation steps it takes for a spike to travel from one neuron to
+another using a speciﬁc synapse, a feature which is useful for performing some aspects
+of temporal computation [ 17]. If the synapse between neurons j and i has a delay of d
+timesteps, the delayed spike is represented as
+δji
+delay [t] = δji[t− d· ∆t]. (22)
+Biomimetics 2023, 8, 247 7 of 24
+For simulation, this propagation delay is implemented using a buffer matrix δbuffer
+with N columns and D rows, where D is the longest delay within the network. The rows
+of δbuffer are shifted down at each timestep, and the ﬁrst row is replaced with current
+spike state vector ⃗δ[t]. δbuffer is then transformed into a matrix of delayed spikes δdelay
+by rearranging based on the delay of each synapse in the network. δdelay is then used to
+simulate the synaptic reset dynamics from Equation (20),
+Gspike [t]← max
+(
+Gspike [t],−δdelay [t]⊙ Gmax,spike
+)
+. (23)
+2.2.3. Electrical Synapses
+Electrical synapses, or gap junctions, are resistive connections between neurons that do
+not use synaptic neurotransmitters. As a result, the neurons exchange current proportional
+to the difference between their voltage values. Their current is deﬁned as
+Iji
+syn = Gsyn,electrical·
+(
+Vj− Vi
+)
+, (24)
+where Gsyn,electrical is the synaptic conductance. Electrical synapses are simulated in SNS-
+Toolbox using a similar formulation as Equation (17),
+⃗Isyn [t]← ∑
+j
+Gelec
+i,j· ⃗Vj
+last− ⃗V[t− ∆t]⊙ ∑
+j
+Gelec
+i,j. (25)
+SNS-Toolbox simulates electrical synapses as bidirectional by default, where current
+can ﬂow in either direction between the connected neurons. Rectiﬁed connections are also
+supported, where current only ﬂows from the presynaptic to the postsynaptic neuron and
+only if Vpre > Vpost. When simulating with rectiﬁed electrical synapses, a binary mask M
+is generated,
+M← H
+((
+⃗Vlast⊖ ⃗Vlast
+)T)
+, (26)
+where⊖ denotes outer subtraction. The voltage of each neuron is subtracted in a pairwise
+fashion, with the result processed by the heaviside step function H. This generates a matrix
+where each element is 1 if current is allowed to ﬂow in that direction, and 0 otherwise. This
+binary mask is then applied to a synaptic conductivity matrix Grec to obtain the masked
+conductance MG,
+MG← M⊙ Grec. (27)
+To generate the opposite current ﬂow in rectiﬁed synapses, the masked conductance is
+then added to its transpose with the diagonal entries removed,
+MD← MG + MGT− diag(MG). (28)
+This ﬁnal masked, transformed conductance matrix MD is substituted for Gelec
+in Equation (25)
+⃗Isyn [t]← ∑
+j
+MDi,j· ⃗Vj
+last− ⃗V[t− ∆t]⊙ ∑
+j
+MDi,j. (29)
+2.2.4. Matrix and Pattern Connections
+In their base form, each of the preceding connection models deﬁnes the connection
+between two individual neurons. However, the connections’ behavior can be extended
+to deﬁning connections between populations of neurons. Following the model presented
+in [10], in the simplest form of population-to-population connection all neurons become
+fully connected and the synaptic conductance is automatically scaled such that the total
+conductance into each postsynaptic neuron is the same as the original synapse.
+Biomimetics 2023, 8, 247 8 of 24
+For more complex desired behavior, more types of population-to-population connec-
+tions are available. Matrix connections allow the user to specify the exact matrices for
+each synaptic parameter, and one-to-one connections result in each presynaptic neuron
+to be connected to exactly one postsynaptic neuron, with all synapses sharing the same
+properties. Pattern connections are also available, modeled after convolutional connections
+in ANNs [56]. In pattern connections, a kernel matrix K can be given,
+K =
+
+
+a b c
+d e f
+g h i
+
+, (30)
+where the indices are values for a single synaptic parameter (Gmax , Esyn, etc.). If K describes
+the connection pattern between two 3x3 neural populations, then the resulting synaptic
+parameter matrix P will present the following structure:
+P =
+
+
+e f 0 h i 0 0 0 0
+d e f g h i 0 0 0
+0 d e 0 g h 0 0 0
+b c 0 e f 0 h i 0
+a b c d e f g h i
+0 a b 0 d e 0 g h
+0 0 0 b c 0 e f 0
+0 0 0 a b c d e f
+0 0 0 0 a b 0 d e
+
+
+(31)
+2.3. Inputs and Outputs
+In order for an SNS to interact with external systems, it must be capable of receiving
+inputs and sending outputs. For applying external stimulus to a network, input sources
+can be added. These sources can be either individual elements or a one-dimensional vector,
+and are applied to the network via ⃗Iapp ,
+⃗Iapp [t]← Cin· ⃗Iext [t], (32)
+where Cin is an LxN binary masking matrix which routes each input to the correct target
+neuron. L is the number of input elements, and N is the number of neurons in the network.
+This external input vector is varied from step to step and could come from any source
+(e.g., static data, real-time sensors).
+Output monitors can also be added, both for sending signals to other systems and
+for observing neural states during simulation. These outputs are assigned one-to-one to
+each desired neuron, meaning one output applied to a population of ﬁve neurons results
+in ﬁve individual outputs. Output monitors can be voltage-based or spike-based, where
+the output is the direct voltage or spiking state of the source neuron. During simulation,
+the output vector is computed as
+⃗Out[t]← Cout,voltage· ⃗V[t] + Cout,spike· ⃗δ[t], (33)
+where Cout,voltage and Cout,spike are connectivity matrices for the voltage and spike-based
+monitors, respectively.
+2.4. Software Design and Workﬂow
+Using SNS-Toolbox, the design and implementation of an SNS is split across three
+phases, a design phase, a compilation phase, and a simulation phase.
+Biomimetics 2023, 8, 247 9 of 24
+2.4.1. Design
+To design a network, users ﬁrst deﬁne neuron and connection types. These describe
+the parameter values of the various neural and synaptic models in the network, which can
+be subsequently reused. Once the neuron and connection presets are deﬁned, they can be in-
+corporated into a Network object (for a complete inventory of the different elements which
+can be added to a Network, refer to Sections 2.1–2.3). First, the user can add populations of
+neurons by giving the neuron type, the size or shape of the population, and a name to refer
+to the population. When simulated, all populations will be ﬂattened into a one-dimensional
+vector, but during the design process they can be represented as a two-dimensional matrix
+for ease of interpretation (e.g., working with two-dimensional image data). After popula-
+tions are deﬁned and labeled, the user can add synapses or patterns of synapses between
+neurons/populations, giving an index or character-string corresponding to the source and
+destination neurons or populations and the connection preset.
+Once a network is designed, it can also be used as an element within another net-
+work. In this way, a large network can be designed using large collections of predeﬁned
+subnetworks, in a methodology referred to as the Functional Subnetwork Approach (FSA).
+Available within the SNS-Toolbox is a collection of subnetworks which perform simple
+arithmetic and dynamic functions. For a complete explanation of these networks, as well
+as the FSA, please refer to [9].
+2.4.2. Compilation
+While it describes the full structure of an SNS, a Network object is merely a dictionary
+which contains all of the network parameters. In order to be simulated, it must be compiled
+into an executable state. Given a Network, the SNS-Toolbox can compile a model capable
+of being simulated using one of the four software backends, NumPy [ 57], PyTorch [58],
+a PyTorch-based sparse matrix library (torch.sparse), and an iterative evaluator which
+evaluates each synapse individually. These backends are all built on well-established
+numerical processing libraries, with PyTorch bringing native and simple GPU support.
+Each backend has different strengths and weaknesses, which are illustrated in Section 3.2.2.
+Although each is different, all backends are compiled following the general procedure
+described in Algorithm 1. Once a network is compiled, it can either be immediately used
+for simulation or saved to disk for later use.
+Algorithm 1 General compilation procedure.
+function COMPILE (net, ∆t)
+Get network parameters
+Initialize state and parameter vectors and matrices
+Set parameter values of each neuron in each population
+Set input mapping and connectivity parameter values
+Set connection synaptic parameter values
+Calculate time factors
+Initialize propagation delay buffer
+Set output mapping and connectivity parameter values
+return model
+end function
+2.4.3. Simulation
+Since the SNS-Toolbox focuses on smaller networks which are connected with varying
+levels of feedback loops [6,7,52,59,60] instead of multiple massively connected layers [61],
+we optimize our computations by representing all networks as single-layer, fully-connected
+recurrent networks. During simulation, the neural dynamics are evaluated by unfolding
+the network through time. This is similar to the method developed by Werbos et al., for
+training recurrent ANNs [ 62]. See Figure 1 for a visual representation of this strategy.
+At each timestep, every neuron can receive input from any neuron at the previous step
+Biomimetics 2023, 8, 247 10 of 24
+(including itself via an autapse [ 63]). Although the SNS-Toolbox only acts as a neural
+dynamics simulator, it is extensible to interact with other systems for controlling robot
+(Section 3.3) or musculoskeletal (Section 3.4) dynamics.
+0
+1 2 O0
+O1 O2
+IappA. B.
+t
+t-dt
+t+dt
+Iapp
+Iapp
+Iapp
+Figure 1. Simulation method for a small example network using the SNS-Toolbox. ( A) Overall
+network diagram generated within the toolbox. (B) Diagram of the general computational ﬂow when
+simulating the network. The network is unfolded in time, and neural voltages are propagated in
+feedforward layers from one time-step to another.
+3. Results
+In this Section, we provide results showcasing the capabilities of SNS-Toolbox. We
+ﬁrst provide quantitative benchmarks which characterize the performance of the software,
+and conclude with two application examples.
+3.1. Speciﬁcations
+Unless otherwise speciﬁed, all of the following results were obtained using the soft-
+ware and hardware presented in Table 2.
+Table 2. Software and hardware speciﬁcations.
+Item CPU GPU RAM Python NumPy PyTorch CUDA
+Version
+AMD
+Ryzen 9
+3900X
+NVIDIA
+RTX2060
+32 GB
+DDR4
+2400
+MHz
+3.8.10 1.21.1 1.9.0 11.5
+3.2. Performance Benchmarking
+For evaluating the performance of the SNS-Toolbox, we present benchmarking results
+for varying network size, structure, and type. In these benchmarks, networks consist
+entirely of either spiking or non-spiking neurons, and are either densely or sparsely con-
+nected. In densely connected networks, every neuron is synaptically connected to every
+other neuron. For sparse networks, the neurons are connected with the following structure;
+8% of neurons receive external input, 12% of neurons are recorded for output, and the
+number of neurons and synapses is equal. This structure is based on general principles
+observed in previous large-scale synthetic nervous systems [6,7].
+Biomimetics 2023, 8, 247 11 of 24
+3.2.1. Maximum Network Size
+Networks were constructed following the structure described in Section 3.2, and in-
+creased in size until one of the following two termination conditions were met, either the
+network parameter matrices could not ﬁt in memory or network synthesis took an excessive
+amount of time (≥10 h). These experimental results are shown in Table 3. The limiting
+factors of whether a network can successfully be synthesized are the synaptic parameter
+matrices, as these increase in size quadratically as the size of the network increases. CPU-
+based backends are able to achieve the highest network sizes, which is expected due to
+the increased volume of memory available to the CPU. The iterative backend is able to
+achieve the highest sizes of network, since its neural and synaptic dynamics are computed
+by iterating over one-dimensional arrays instead of vector and matrix operations on two-
+dimensional arrays. All of the sparse networks took signiﬁcantly longer to synthesize,
+resulting in termination of their testing before running out of memory.
+Table 3. Maximum network size.
+Backend Iterative NumPy Torch
+(CPU)
+Torch
+(GPU)
+Sparse
+(CPU)
+Sparse
+(GPU)
+Max
+Dense 11,010 20,010 22,000 7865 151 ∗ 2510∗
+Max
+Sparse 15,8010 23,010 24,010 7639 17,510 ∗ 11,120∗
+* Larger networks can be simulated, but compilation takes excessive time.
+3.2.2. Backend Performance
+We show that SNS-Toolbox is capable of simulating thousands of non-spiking neurons
+in real-time or faster, with slower performance when simulating spiking neurons. In total,
+100 networks, which varied in size from 10 to 5000 neurons in a logarithmic spacing, were
+generated and simulated for 1000 steps in each backend. A simulation step of ∆t = 0.1 ms
+was used. The elapsed time to simulate each step was recorded, and the results are shown
+in Figure 2. Each of the available backends exhibit different strengths and weaknesses.
+For networks with less than 100 neurons, the Numpy [57] backend runs the fastest, followed
+by the PyTorch [58] backend running on the CPU. Once networks increase in size beyond
+200–300 neurons, the PyTorch backend running on a GPU becomes the fastest. While
+this backend is the fastest, the exchange of data between the CPU and GPU results in a
+higher degree of temporal variability than the CPU-based backends. Further investigation
+is needed to reduce this variability in performance.
+The exact threshold for what could be considered real-time performance is dependent
+on the simulation step size, which, in turn, is dependent on the membrane properties of
+neurons within the network. While all networks in this test were simulated with the same
+step size for consistency, accurately simulating spiking networks will generally require a
+ﬁner simulation step than non-spiking networks. In this test, an elapsed time of 0.1 ms per
+step is considered real-time for the spiking networks. A step size of 1 ms would sufﬁce for
+the non-spiking networks tested in this section, so their real-time limit is 1 ms. For non-
+spiking networks, this means that networks up to about 3000 neurons can be simulated in
+real-time, and for spiking networks the threshold is about 100–200 neurons.
+Biomimetics 2023, 8, 247 12 of 24
+101 102 103
+10 1
+101
+103
+105
+Step Time (ms)
+Dense Non-SpikingA
+Numpy
+T orch (CPU)
+T orch (GPU)
+Iterative
+Real-Time
+101 102 103
+10 1
+100
+101
+102
+Step Time (ms)
+Sparse Non-SpikingB
+101 102 103
+Number of Neurons
+10 1
+100
+101
+102
+103
+104
+Step Time (ms)
+Dense SpikingC
+101 102 103
+Number of Neurons
+10 1
+100
+101
+102
+Step Time (ms)
+Sparse SpikingD
+Figure 2. Comparison of wall-clock times to simulate a network for one simulation time-step over
+varying network sizes, using the six software backends provided in SNS-Toolbox. (A,B): Networks of
+non-spiking neurons, (C,D): networks of spiking neurons. Left: Fully-connected networks, Right:
+Sparsely connected networks, following the structure described in Section 3.2. Lines denote the
+mean over 1000 steps, shaded region denotes the area between the ﬁfth and ninety-ﬁfth percentiles.
+The real-time limit is denoted with a horizontal dashed black line.
+3.2.3. Benchmarking Alternative Software
+The SNS-Toolbox is faster than the majority of similar neural simulators. We perform
+the same testing procedure presented in Section 3.2.2, and compare against the behavior of
+similar simulators, namely Brian2 [21], Nengo [40], and ANNarchy [16]. For these other
+simulators, the neural and synaptic dynamics for basic spiking and non-spiking neurons
+within SNS-Toolbox (see Sections 2.1 and 2.2) were implemented and veriﬁed to match the
+behavior in SNS-Toolbox. In Brian2 and ANNarchy, this was completed via their built-in
+interfaces for interpreting custom behavioral strings. This process was less straightforward
+in Nengo, requiring a custom Nengo process object which re-implemented the equations
+as performed in SNS-Toolbox. As such, while the networks are able to successfully run in
+Nengo, they are not fully compatible with the rest of the Nengo ecosystem. Since these
+benchmarks are not being compared against biological recordings, validation is completed
+by comparing the behavior of the neural models across simulators and verifying that the
+simulation recordings are identical.
+Results are shown in Figure 3. For clarity, simulators with multiple backends or vari-
+ants are condensed to show the best performing version for each network size. The variants
+tested in Brian2 are the normal version on CPU, and the GPU-accelerated Brian2CUDA [24],
+and ANNarchy was compiled using the CPU and GPU paradigms. All SNS-Toolbox back-
+ends were tested. Across all network sizes and structures, SNS-Toolbox is faster or within
+performance variance of Brian2 and Nengo. SNS-Toolbox is faster than ANNarchy for
+some densely-connected non-spiking networks, but, in general, is slower but competitive
+across the test suite. Suggestions for improving this speed discrepancy will be explored in
+the Discussion.
+Biomimetics 2023, 8, 247 13 of 24
+Figure 3. Comparison of wall-clock times for SNS-Toolbox to simulate a network for one simula-
+tion time-step over varying network sizes, using SNS-Toolbox and three other neural simulators
+(Brian2 [21], Nengo [40], and ANNarchy [16]). For the following simulators, the time data presented
+are chosen as the best-performing backend variant, Brian2, standard Brian2, and the GPU-accelerated
+Brian2CUDA; SNS-Toolbox, all available variants; and ANNarchy, CPU-based compilation, and
+GPU-based compilation. (A,B): Networks of non-spiking neurons, (C,D): networks of spiking neu-
+rons. Left: Fully-connected networks, Right: Sparsely connected networks, following the structure
+described in Section 3.2. Lines denote the mean over 1000 steps, shaded region denotes the area
+between the ﬁfth and ninety-ﬁfth percentiles. The real-time limit is denoted with a horizontal dashed
+black line.
+3.2.4. Performance on Embedded Hardware
+The testing procedure presented in Section 3.2.2 is again repeated, testing the per-
+formance of SNS-Toolbox on various embedded computing platforms. These included
+a Raspberry Pi Model 3B (trademark Raspberry Pi Limited, Cambridge, UK), Jetson
+Nano 4GB (trademark NVIDIA Corporation, Santa Clara, CA, USA), and an Intel NUC
+SWNUC11PHKi7c00 (trademark Intel Corporation, Santa Clara, CA, USA) with 32 GB
+of RAM. Due to the reduced available memory available on the Raspberry Pi and Jetson,
+network size is varied logarithmically from 10 to 1000 neurons, instead of the 10–5000 neu-
+rons in Sections 3.2.2 and 3.2.3. Results are shown in Figure 4; for clarity, all backends are
+condensed for each device such that the best performing solution at each network size is
+presented. The Raspberry Pi performs comparably with a Jetson Nano, with the Jetson
+exhibiting slightly better performance across all network sizes. The amount of memory
+available on the Raspberry Pi is the smallest of the three devices, so it is unable to simulate
+densely-connected networks over approximately 900 neurons in size. The Intel NUC is a
+signiﬁcantly more powerful computing platform than the Raspberry Pi or the Jetson Nano,
+and accordingly behaves more closely to desktop-level performance.
+Biomimetics 2023, 8, 247 14 of 24
+101 102 103
+10 1
+100
+101
+Step Time (ms)
+Dense Non-SpikingA
+101 102 103
+10 1
+100
+101
+Step Time (ms)
+Sparse Non-SpikingB
+NUC
+Jetson Nano
+Rpi 3B
+Real-Time
+101 102 103
+Number of Neurons
+10 1
+100
+101
+Step Time (ms)
+Dense SpikingC
+101 102 103
+Number of Neurons
+10 1
+100
+101
+Step Time (ms)
+Sparse SpikingD
+Figure 4. Comparison of wall-clock times to simulate a network for one simulation time-step over
+varying network sizes, using SNS-Toolbox on three different embedded computing platforms (Intel
+NUC, Raspberry Pi version 3b, and an NVIDIA Jetson Nano). The time data presented are chosen as
+the best-performing backend variant at each network size, with GPU-based backends excluded on
+the Raspberry Pi. (A,B): Networks of non-spiking neurons, (C,D): networks of spiking neurons. Left:
+Fully-connected networks, Right: Sparsely connected networks, following the structure described in
+Section 3.2. Lines denote the mean over 1000 steps, shaded region denotes the area between the ﬁfth
+and ninety-ﬁfth percentiles. The real-time limit is denoted with a horizontal dashed black line.
+3.3. Mobile Robot Control
+As a toy application example, we use SNS-Toolbox to control a simulated mobile robot.
+A skid-steer Jackal robot (trademark Clearpath Robotics, Kitchener, ON, USA) is placed
+in a navigational course resembling a ﬁgure-eight in the Gazebo physics simulator [ 36]
+(Figure 5B), with the goal being to drive the robot around the course without colliding with
+any of the walls or barriers. The simulated robot is equipped with a planar LiDAR unit,
+and is controlled and operated using the ROS software ecosystem [50]. We implement the
+neural control system as a ROS node which subscribes to the angular distance readings
+from the laser scanner, and publishes to the velocity controller onboard the robot.
+The control network, shown in Figure 5A, implements a Braitenberg-inspired [ 64]
+steering algorithm. The laser scan sends distance measurements for 720 points in a 270◦ arc
+around the front of the robot, and each neuron in a population of 720 non-spiking neurons
+receives external current from a corresponding directional distance scan. These currents
+are scaled and mapped by the following relationship,
+Iapp (D) = D−1− D−1
+max
+D−1
+min− D−1max
+, (34)
+such that each neuron has a steady-state voltage of 0 when the sensor distance D is at its
+maximum value Dmax , and increases to 1 when the distance is at its minimum Dmin. This
+population then excites two heading control neurons, with the left 360 neurons exciting
+the clockwise rotation neuron, and the right 360 exciting the counter-clockwise rotation
+neuron. All synapses between the sensory and heading control neurons share the same
+synaptic conductance. The difference between the potentials of these two neurons is taken
+and scaled to generate the desired angular velocity of the robot,
+νang = Kang· (VCW− VCCW ). (35)
+Biomimetics 2023, 8, 247 15 of 24
+B
+C
+A
+CCW CW
+Speed1.0
+5000 10,000 15,000 20,000 25,000 30,000 35,0000
+Figure 5. LiDAR-based steering algorithm for a simulated mobile robot using ROS. ( A): Network
+diagram of the control network. Each distance measurement angle of a simulated LiDAR is inverted,
+scaled, and mapped as the input to a single input processing neuron. These are then summed onto
+directional neurons corresponding to clockwise or counter-clockwise rotation, depending on which
+half of the scanning ﬁeld the neuron represents. All sensory neurons also connect to a speed control
+neuron. The difference between the directional neurons is taken as the rotational velocity, and the
+speed control neuron is scaled by the maximum speed to control the linear velocity. (B): Overhead
+view of the simulation environment in Gazebo [36]. Orange and white barriers act as boundaries of
+the course, the robot trajectory is superimposed on top with a dashed blue line. (C): Neural activity
+of the three command neurons during the generation of the trajectory shown above.
+As the robot approaches a barrier, the system generates stronger rotational commands
+to move away from the obstacle. All 720 sensory neurons also inhibit a speed control
+neuron, which scales the linear velocity of the robot as
+νlin = νlin,max· VSpeed . (36)
+The speed control neuron also has a constant applied bias current of 1 nA. This has
+the effect of dynamically slowing the robot as it becomes closer to obstacles, allowing the
+rotational commands to correctly orient the robot. This controller results in successful
+navigation of the driving course in 133.24 s, with minimal tuning. Neural parameter
+values can be found in Table A1, synaptic parameter values in Table A2, and mapping and
+simulation parameter values in Table A3. Currently the velocity is updated with every
+neural step, however for improved speed performance the velocity can be updated after
+multiple neural steps. This allows the neural states to converge to a steady-state for each
+scan distance, and reduces the amount of communication trafﬁc.
+Braitenberg-inspired [64] networks have been widely used for steering and lane-
+keeping tasks in the past [65–67] to great success. The network designed in this section is
+intended as a proof of concept to showcase the ability to interface SNS-Toolbox with ROS
+simulations, not as a state-of-the-art steering algorithm.
+3.4. Musculoskeletal Dynamics
+In Deng et al. [68], an SNS was designed to control a biomechanical simulation of rat
+hindlimbs, with the network and body dynamics simulated using AnimatLab [37]. Here
+we reimplement this SNS using SNS-Toolbox and interface it with a new biomechanical
+model implemented in the physics simulator Mujoco [49].
+Biomimetics 2023, 8, 247 16 of 24
+3.4.1. Neural Model
+An overall network diagram can be found in Figure 6A. The general network structure
+consists of a two-layer CPG with separate rhythm generation (RG) and pattern formation
+(PF) layers [69], with each layer comprising of half-center (HC) oscillators [ 70]. The RG
+network has two HC neurons which contain voltage-gated ion channels (Equation (14)),
+which mutually inhibit one another via two non-spiking interneurons (Equation (1)). This
+network generates the overall rhythmic activity of the legs, and the global speed can be
+controlled via the level of mutual synaptic inhibition [55].
+Hip PF Knee/Ankle PF
+Rhythm Generator
+Knee Motor
+Circuit
+Ankle Motor
+Circuit
+Ext
+IN
+Ext
+IN
+Flx
+IN
+Flx
+IN
+Ib Flx Muscle
+Feedback
+Hip Motor Circuit
+IaIN IaIN
+IbIN
+IbIN
+IaExt IaFlx
+MNFlx
+RCFlx
+MNExt
+RCExt
+Ia Ext Muscle
+Feedback Ia Flx Muscle
+Feedback
+Ib Ext MuscleFeedback
+Ext Muscle
+Activation
+Flx Muscle
+Activation
+Inhibitory
+Excitatory
+T o/From Muscle
+Motor Circuit
+Ext
+HC
+Ext
+HCFlx
+HC
+Flx
+HC
+Ext
+HCFlxHC
+Ext
+INFlx
+IN
+Figure 6. SNS-Toolbox controls a musculoskeletal model of a rat hindlimb. ( A): Diagram of the
+neural control network. ( B): Relationship between motor neuron voltage and muscle activation.
+(C): The musculoskeletal model used in Mujoco [ 49]. ( D): Neural activity from the half-center
+neurons in the central rhythm generator. (E,F): Neural activity from the hip and knee/ankle pattern
+formation circuits. ( G–I): Motor neuron activity in the motor circuits for the hip, knee, and ankle.
+(J–L): Joint angles of the hip, knee, and ankle. All recordings are shown for a period of 1000 ms,
+after the model has ﬁnished initialization. Pictured are recordings from the elements within the left
+leg. Right leg recordings are similar, and shown in Figure A1.
+The HC neurons of the RG network excite the corresponding HC neurons in the PF
+networks, which are constructed in a similar manner to the RG network. Each PF network
+shapes the phase from the RG network into the appropriate joint position for a speciﬁc joint,
+with the knee and ankle joints sharing a PF network. The PF networks are also presynaptic
+to a motor control network for each joint [59,71], where motoneurons (MN) drive the ﬂexor
+and extensor muscles for each joint and are adjusted by Ia and Ib feedback from the muscles.
+Neural and synaptic parameter values for the network can be found in Tables A4–A6.
+3.4.2. Biomechanical Model
+In Deng et al. [68], the rat hindlimbs were modeled in AnimatLab [37] using simpliﬁed
+box geometry and a pair of linear Hill muscles for each joint. We replicate this model in
+Mujoco [49] using a three-dimensional model of bone geometry [72] and non-linear Hill
+muscles (shown in Figure 6C). Mujoco was chosen due to its open-source availability, and its
+robust internal support for complex muscle-based actuation with a lower computational
+overhead than OpenSim [73].
+Biomimetics 2023, 8, 247 17 of 24
+All muscles in the model share the same sigmoidal activation curve which converts
+motoneuron activity to a muscle activation between 0 and 1. This is calculated in the same
+manner as [74], with the activation sigmoid deﬁned as
+act = 1
+1 + es(xo f f set−stim) + yo f f set, (37)
+where s is the steepness of the sigmoid and stim is the motoneuron potential. All muscle
+activation parameter values can be found in Table A7, with the resulting curve shown
+in Figure 6B.
+3.4.3. Simulation Results
+The network and mechanical model are simulated for 5000 ms, with data shown
+in Figure 6. On each step, muscle tensions from Mujoco are ﬁrst formatted as Ia and Ib
+feedback for the SNS, then the outputs of the SNS are mapped via Equation (37) into muscle
+activations for the Mujoco model. The network parameters are exactly the same in this
+work as in Deng et al. [ 68], and result in oscillatory motor behavior (the original joint
+angles from AnimatLab can be seen in Figure A2). The overall leg oscillation occurs at half
+the frequency of the original model, and the joints exhibit scaled and shifted trajectories.
+The hip joint oscillates in the range of{−0.94, 0.07} radians instead of{−0.09, 0.17} radians
+in the original model, with the knee in {0.19, 0.84} radians instead of {−0.47,−0.09}
+radians and the ankle in{−1.76,−0.97} radians instead of{−0.92,−0.26} radians. Further
+investigation is needed to determine the sources of these discrepancies in behavior, however
+a difference is to be expected given the difference in muscle modeling.
+4. Discussion
+In this work, we present SNS-Toolbox, an open-source Python package for simulating
+synthetic nervous systems. We focus on simulating a speciﬁc subset of neural and synaptic
+models, which allows for improved performance over many existing neural simulators.
+To the best of our knowledge, the SNS-Toolbox is the only neural simulator available
+which meets all of the desired functionality for designing synthetic nervous systems. The
+SNS-Toolbox is not tied to a dedicated graphical user interface, allowing networks to be
+designed and simulated on embedded systems. Heterogeneous networks of both spiking
+and non-spiking neurons, as well as chemical and electrical synapses, can also be simulated
+in real-time on both CPU and GPU hardware. All of these capabilities are also fully available
+across all major operating systems, including Windows (trademark Microsoft Corporation),
+MacOS (trademark Apple Corporation), and Linux-based systems.
+We ﬁnd that SNS-Toolbox can simulate networks with hundreds to thousands of
+neurons in real-time on desktop hardware, and low hundreds of neurons on embedded
+hardware. The performance is also competitive with other popular neural simulators.
+Through a simple programming interface, it is relatively simple to combine networks made
+in SNS-Toolbox with other software. Using ROS [ 50], we implemented a Braitenberg-
+inspired [64] neural steering algorithm and controlled navigation of a simulated mobile
+robot through an environment in Gazebo [36]. We also take an existing SNS network which
+controlled a musculoskeletal model [68] implemented in AnimatLab [37], and achieved
+cyclical limb motion after reimplementing the network in SNS-Toolbox and interfacing
+with Mujoco [49].
+One decision we made early in the design process was to provide a simpliﬁed design
+and compilation interface, as well as to build SNS-Toolbox on top of widely used Python
+numerical processing libraries in order to facilitate use across all computing platforms.
+This has allowed multiple researchers with varying degrees of programming experience
+within our laboratories to begin using SNS-Toolbox successfully, as well as an instructional
+tool in pilot classes on neurorobotics. While other tools, such as ANNarchy [16], achieve
+higher performance by direct code generation in C++, they do so at the expense of easy
+Biomimetics 2023, 8, 247 18 of 24
+cross-platform support. Future work may explore adding additional build systems for
+different operating systems in order to achieve comparable performance.
+In order to allow network simulation on GPUs, multiple backends in SNS-Toolbox
+are built on top of PyTorch [58]. However, PyTorch has a large infrastructure of features
+which are currently not supported by the structure of the SNS-Toolbox backend, such as
+layer-based organization of networks and gradient-based optimization using automatic
+differentiation. Additionally, models built using the formal PyTorch style are able to be
+compiled into the C++-adjacent Torchscript, allowing improved simulation performance.
+Work is currently underway to restructure the PyTorch backend within SNS-Toolbox to
+allow these beneﬁts.
+Previous SNS models have often been made using the software AnimatLab [4,6,7,37],
+which uses a different workﬂow than SNS-Toolbox. Within AnimatLab, users have an
+integrated GUI that contains a rigid-body modeler, canvas for dragging and dropping
+neurons and synapses into a network, and a plotting window for viewing simulation
+results. The SNS-Toolbox is designed to focus on the design and simulation of the neural
+and synaptic dynamics, with the physics simulation and plotting being relegated to external
+libraries. While this may be less convenient for a user who is either a beginner or is
+migrating from AnimatLab, we feel that this separation is beneﬁcial as it allows networks
+made using the SNS-Toolbox to be more extensible to interfacing with other systems. When
+transitioning from AnimatLab, the primary difference in workﬂow is that networks in
+the SNS-Toolbox are described via code instead of drawn. If the transitioning user is
+familiar with writing code in Python or another similar language, this change is easily
+managed. The other difﬁculty when converting from AnimatLab to SNS-Toolbox is when
+using MuJoCo [49] for physics simulation. As the native muscle model within MuJoCo is
+different than AnimatLab, we show in Section 3.4 and Figure A2 that the same network
+with the same parameter values will exhibit different behavior if not tuned to use the new
+muscle model.
+Throughout the design process of SNS-Toolbox, we chose to focus on implementing
+speciﬁc sets of neural and synaptic dynamics. This brings enhanced performance, however
+it does mean that there is no method for a user to add a new neural or synaptic model
+to a network which has not been previously deﬁned, without editing the source code for
+the toolbox itself. One workaround to this issue is to create more complicated models by
+treating individual non-spiking or spiking neurons as compartments which are connected
+together as a multi-compartment model, however, in general, we ﬁnd that this is a limitation
+for the SNS-Toolbox at this time.
+The SNS-Toolbox is currently available as open-source software on GitHub (trademark
+GitHub incorporated), and has an extensive suite of documentation freely available online.
+In addition to installing from source, the SNS-Toolbox is also available to install from the
+Python Package Index (PyPi). All of the features within the toolbox are built on top of
+standard, widely used Python libraries. As long as these libraries maintain backwards
+compatibility as they update, or the current versions remain available, the functionality of
+SNS-Toolbox should remain into the future.
+Examples were shown using the SNS-Toolbox to interface with external software
+systems, particularly ROS [50] and Mujoco [49]. While the primary goal of SNS-Toolbox is
+a simpliﬁed interface which focuses on neural dynamics, other users may ﬁnd our interface
+mappings between SNS-Toolbox and other software useful. As such, we intend to release
+supplementary Python packages which contain helper logic to interface the SNS-Toolbox
+with other software as we develop them.
+Many robots have been built which use SNS networks for control, although these
+are usually tethered to an off-board computer [ 6,7] or require non-traditional computer
+hardware [8] to operate. With the release of SNS-Toolbox, we have two forward-looking
+hopes. Firstly, that more researchers design and implement synthetic nervous systems
+for robotic control, and that members of the robotics community will ﬁnd value in neural
+simulators which are capable of simulating heterogeneous networks of dynamic neurons.
+Biomimetics 2023, 8, 247 19 of 24
+Author Contributions: Conceptualization, W.R.P .N., N.S.S. and R.D.Q.; methodology, W.R.P .N. and
+C.J.; software, W.R.P .N.; validation, W.R.P .N. and C.J.; formal analysis, W.R.P .N.; investigation,
+W.R.P .N.; resources, N.S.S. and R.D.Q.; data curation, W.R.P .N.; writing—original draft preparation,
+W.R.P .N.; writing—review and editing, W.R.P .N., C.J., N.S.S. and R.D.Q.; visualization, W.R.P .N. and
+C.J.; supervision, R.D.Q.; project administration, W.R.P .N. and R.D.Q.; funding acquisition, N.S.S.
+and R.D.Q. All authors have read and agreed to the published version of the manuscript.
+Funding: This research was funded by National Science Foundation (NSF) RI 1704436, as well as by
+NSF DBI 2015317 as part of the NSF/CIHR/DFG/FRQ/UKRI-MRC Next Generation Networks for
+Neuroscience Program.
+Institutional Review Board Statement: Not applicable.
+Data Availability Statement: The software and data presented in this study are openly available
+https://github.com/wnourse05/SNS-Toolbox (accessed on 9 June 2023), with documentation and
+detailed instructions provided at https://sns-toolbox.readthedocs.io/en/latest/index.html (accessed
+on 9 June 2023).
+Acknowledgments: Special thanks to Ian Adams, who assisted with conﬁguring ROS and setting up
+the simulation environment presented in Section 3.3, as well as providing some of the embedded
+hardware for testing. We also thank Kaiyu Deng, for their original work in implementing the neural
+controller for rat hindlimb locomotion in AnimatLab.
+Conﬂicts of Interest: The authors declare no conﬂict of interest.
+Abbreviations
+The following abbreviations are used in this manuscript:
+SNS Synthetic Nervous System
+ANN Artiﬁcial Neural Network
+FSA Functional Subnetwork Approach
+ROS Robotic Operating System
+CPU Central Processing Unit
+GPU Graphics Processing Unit
+RG Rhythm Generation
+PF Pattern Formation
+HC Half-Center
+MN Motoneuron
+Appendix A
+Table A1. Mobile robot neural parameter values.
+Parameter Vrest Cm Gm
+Value 0 mV 5 nF 1 µS
+Table A2. Mobile robot synaptic parameter values.
+Parameter Ein Eex Elo Ehi Gmax,angle Gmax,speed
+Value −2.0 5 mV 0 mV 1 mV 0.005 µS 0.0028 µS
+Table A3. Mobile robot mapping and simulation parameter values.
+Parameter ∆t D min Dmax Kang νmax,lin
+Value 1 ms 0.1 m 30 m 5/ π 1 m/s
+Biomimetics 2023, 8, 247 20 of 24
+Table A4. Rat hindlimb neural parameter values.
+Parameter Cm Gm Vrest Vrest,M N
+Value 5 nF 1 µS −60 mV −100 mV
+Table A5. Rat hindlimb sodium channel parameter values.
+Parameter EN a Sm Sh Km Kh Em Eh τh.max GN a
+Value 50 mV 0.2 −0.6 1 0.5 −40 mV −60 mV 350 ms 1.5 µS
+Table A6. Rat hindlimb synaptic parameter values.
+Synapse G max Esyn Elo Ehi
+HC→ IN 2.749 µS −40 mV −60 mV −25 mV
+IN→ HC 2.749 µS −70 mV −60 mV −25 mV
+RGHC→ PFHC 0.100 µS −40 mV −60 mV −40 mV
+PF→ MNhip,ext 2.565 µS −10 mV −60 mV −50 mV
+PF→ MNhip, f lx 3.632 µS −10 mV −60 mV −50 mV
+PF→ MNknee,ext 4.930 µS −10 mV −60 mV −50 mV
+PF→ MNknee, f lx 1.516 µS −10 mV −60 mV −50 mV
+PF→ MNankle ,ext 4.054 µS −10 mV −60 mV −50 mV
+PF→ MNhip,ext 4.522 µS −10 mV −60 mV −50 mV
+PF→ Ia 0.500 µS −40 mV −60 mV −40 mV
+Ia→ Ia 0.500 µS −70 mV −60 mV −40 mV
+Ia→ MN 2.000 µS −100 mV −60 mV −40 mV
+MN→ RC 0.500 µS −40 mV −10 mV −100 mV
+RC→ RC 0.500 µS −70 mV −60 mV −40 mV
+RC→ MN 0.500 µS −100 mV −60 mV −40 mV
+RC→ Ia 0.500 µS −70 mV −60 mV −40 mV
+Ia IN→ Ia 0.500 µS −40 mV −60 mV −40 mV
+Ib IN→ MN 0.590 µS −10 mV −60 mV −40 mV
+PF→ Ib 2.000 µS −60 mV −60 mV −59 mV
+Table A7. Rat hindlimb muscle activation and simulation parameter values.
+Parameter yo f f set Stim x o f f set s ∆t
+Value −0.01 [−100,−40] mV −70 mV 0.1532 0.1 ms
+Biomimetics 2023, 8, 247 21 of 24
+4000 4250 4500 4750 5000
+60
+58
+56
+Potential (mV)
+RGA
+HC_ext
+HC_flx
+4000 4250 4500 4750 5000
+62
+60
+58
+56
+Potential (mV)
+Hip PFB
+HC_ext
+HC_flx
+4000 4250 4500 4750 5000
+62
+60
+58
+56
+Potential (mV)
+Knee/Ankle PFC
+HC_ext
+HC_flx
+4000 4250 4500 4750 5000
+100
+80
+60
+Potential (mV)
+Hip MND
+Extensor
+Flexor
+4000 4250 4500 4750 5000
+100
+80
+60
+40
+Potential (mV)
+Knee MNE
+Extensor
+Flexor
+4000 4250 4500 4750 5000
+100
+80
+60
+40
+Potential (mV)
+Ankle MNF
+Extensor
+Flexor
+4000 4250 4500 4750 5000
+Time (ms)
+0.8
+0.6
+0.4
+0.2
+0.0
+Angle (rad)
+Hip AngleG
+4000 4250 4500 4750 5000
+Time (ms)
+0.2
+0.4
+0.6
+0.8Angle (rad)
+Knee AngleH
+4000 4250 4500 4750 5000
+Time (ms)
+1.8
+1.6
+1.4
+1.2
+1.0
+Angle (rad)
+Ankle AngleI
+Figure A1. Recordings of elements within the right hindlimb. (A): Neural activity from the half-center
+neurons in the central rhythm generator. (B,C): Neural activity from the hip and knee/ankle pattern
+formation circuits. (D–F): Motor neuron activity in the motor circuits for the hip, knee, and ankle.
+(G–I): Joint angles of the hip, knee, and ankle. All recordings are shown for a period of 1000 ms,
+after the model has ﬁnished initialization.
+4000 4250 4500 4750 5000
+Time (ms)
+0.8
+0.6
+0.4
+0.2
+0.0
+0.2
+Angle (rad)
+Hip AngleA
+SNS-T oolbox
+AnimatLab
+4000 4250 4500 4750 5000
+Time (ms)
+0.50
+0.25
+0.00
+0.25
+0.50
+0.75
+Angle (rad)
+Knee AngleB
+SNS-T oolbox
+AnimatLab
+4000 4250 4500 4750 5000
+Time (ms)
+1.75
+1.50
+1.25
+1.00
+0.75
+0.50
+0.25
+Angle (rad)
+Ankle AngleC
+SNS-T oolbox
+AnimatLab
+Figure A2. Comparison between simulated motion of the left hindlimb in AnimatLab [ 37] (solid
+blue) and Mujoco [49] (dashed grey). (A): Hip joint angle. (B): Knee joint angle. (C): Ankle joint angle.
+All recordings are shown for a period of 1000 ms, after the model has ﬁnished initialization.
+References
+1. Chiel, H.J.; Beer, R.D. The brain has a body: Adaptive behavior emerges from interactions of nervous system, body and
+environment. Trends Neurosci. 1997, 20, 553–557. https://doi.org/10.1016/S0166-2236(97)01149-1.
+2. Bartolozzi, C.; Indiveri, G.; Donati, E. Embodied neuromorphic intelligence. Nat. Commun. 2022, 13, 1024.
+https://doi.org/10.1038/s41467-022-28487-2.
+3. Szczecinski, N.S.; Goldsmith, C.; Nourse, W.; Quinn, R.D. A perspective on the neuromorphic control of legged locomotion in past,
+present, and future insect-like robots. Neuromorphic Comput. Eng. 2023, 3, 023001. https://doi.org/10.1088/2634-4386/acc04f.
+4. Szczecinski, N.S.; Brown, A.E.; Bender, J.A.; Quinn, R.D.; Ritzmann, R.E. A neuromechanical simulation of insect walking and
+transition to turning of the cockroach Blaberus discoidalis. Biol. Cybern. 2014, 108, 1–21.
+5. Schilling, M.; Cruse, H. neuroWalknet, a controller for hexapod walking allowing for context dependent behavior. PLoS Comput.
+Biol. 2023, 19, 1–27. https://doi.org/10.1371/journal.pcbi.1010136.
+Biomimetics 2023, 8, 247 22 of 24
+6. Hunt, A.; Szczecinski, N.; Quinn, R. Development and training of a neural controller for hind leg walking in a dog robot. Front.
+Neurorobot. 2017, 11, 18.
+7. Goldsmith, C.A.; Szczecinski, N.S.; Quinn, R.D. Neurodynamic modeling of the fruit ﬂy Drosoph. Melanogaster. Bioinspiration
+Biomimetics 2020, 15, 065003.
+8. Ayers, J.; Witting, J. Biomimetic approaches to the control of underwater walking machines. Philos. Trans. R. Soc. A Math. Phys.
+Eng. Sci. 2007, 365, 273–295. https://doi.org/10.1098/rsta.2006.1910.
+9. Szczecinski, N.S.; Hunt, A.J.; Quinn, R.D. A functional subnetwork approach to designing synthetic nervous systems that control
+legged robot locomotion. Front. Neurorobot. 2017, 11, 37.
+10. Szczecinski, N.S.; Quinn, R.D.; Hunt, A.J. Extending the Functional Subnetwork Approach to a Generalized Linear Integrate-and-
+Fire Neuron Model. Front. Neurorobot. 2020, 14, 577804.
+11. Mangan, M.; Floreano, D.; Yasui, K.; Trimmer, B.A.; Gravish, N.; Hauert, S.; Webb, B.; Manoonpong, P .; Szczecinski, N.S. A
+virtuous cycle between invertebrate and robotics research: Perspective on a decade of Living Machines research. Bioinspiration
+Biomimetics 2023, 18, 035005. https://doi.org/10.1088/1748-3190/acc223.
+12. Webb, B. Robots in invertebrate neuroscience. Nature 2002, 417, 359–363. https://doi.org/10.1038/417359a.
+13. Richardson, M.J. Effects of synaptic conductance on the voltage distribution and ﬁring rate of spiking neurons. Phys. Rev. E-Stat.
+Phys. Plasmas Fluids Relat. Interdiscip. Top. 2004, 69, 8. https://doi.org/10.1103/PhysRevE.69.051918.
+14. Guie, C.K.; Szczecinski, N.S. Direct Assembly and Tuning of Dynamical Neural Networks for Kinematics; Springer Science and Business
+Media Deutschland GmbH: Berlin, Germany, 2022; Volume 13548 LNAI, pp. 321–331. https://doi.org/10.1007/978-3-031-20470-
+8_32.
+15. Maass, W. Networks of Spiking Neurons: The Third Generation of Neural Network Models. Neural Netw. 1997, 10, 1659–1671.
+16. Vitay, J.; Dinkelbach, H.; Hamker, F.H. ANNarchy: A code generation approach to neural simulations on parallel hardware.Front.
+Neuroinform. 2015, 9. https://doi.org/10.3389/fninf.2015.00019.
+17. Sedlackova, A.; Szczecinski, N.S.; Quinn, R.D. A Synthetic Nervous System Model of the Insect Optomotor Response ; Springer
+International Publishing: Berlin, Germany, 2020; pp. 312–324.
+18. Hines, M.L.; Carnevale, N.T. NEURON: A Tool for Neuroscientists. Neuroscientist 2001, 7, 123–135.
+19. Gewaltig, M.O.; Diesmann, M. Nest (neural simulation tool). Scholarpedia 2007, 2, 1430.
+20. Bower, J.M.; Beeman, D. The Book of GENESIS: Exploring Realistic Neural Models with the GEneral NEural SImulation System; Springer
+Science & Business Media: Berlin, Germany, 2012.
+21. Goodman, D.; Brette, R. Brian: A simulator for spiking neural networks in python. Front. Neuroinform. 2008, 2, 5.
+22. Strohmer, B.; Manoonpong, P .; Larsen, L.B. Flexible Spiking CPGs for Online Manipulation During Hexapod Walking.Front.
+Neurorobot. 2020, 14, 41.
+23. Djurfeldt, M.; Hjorth, J.; Eppler, J.M.; Dudani, N.; Helias, M.; Potjans, T.C.; Bhalla, U.S.; Diesmann, M.; Kotaleski, J.H.; Ekeberg, Ö.
+Run-time interoperability between neuronal network simulators based on the MUSIC framework. Neuroinformatics 2010, 8, 43–60.
+https://doi.org/10.1007/s12021-010-9064-z.
+24. Alevi, D.; Stimberg, M.; Sprekeler, H.; Obermayer, K.; Augustin, M. Brian2CUDA: Flexible and Efﬁcient Simulation of Spiking
+Neural Network Models on GPUs. Front. Neuroinform. 2022, 16. https://doi.org/10.3389/fninf.2022.883700.
+25. Eshraghian, J.K.; Ward, M.; Neftci, E.; Wang, X.; Lenz, G.; Dwivedi, G.; Bennamoun, M.; Jeong, D.S.; Lu, W.D. Training Spiking
+Neural Networks Using Lessons From Deep Learning. arXiv 2021, arXiv:2109.12894.
+26. Mozafari, M.; Ganjtabesh, M.; Nowzari-Dalini, A.; Masquelier, T. SpykeTorch: Efﬁcient simulation of convolutional spiking
+neural networks with at most one spike per neuron. Front. Neurosci. 2019, 13, 625.
+27. Hazan, H.; Saunders, D.J.; Khan, H.; Patel, D.; Sanghavi, D.T.; Siegelmann, H.T.; Kozma, R. BindsNET: A machine learning-
+oriented spiking neural networks library in python. Front. Neuroinform. 2018, 12, 89.
+28. Izhikevich, E.M. Dynamical Systems in Neuroscience: The Geometry of Excitability and Burtsing ; Cambridge University Press:
+Cambridge, UK, 2007; p. 441. https://doi.org/10.1017/S0143385704000173.
+29. Niedermeier, L.; Chen, K.; Xing, J.; Das, A.; Kopsick, J.; Scott, E.; Sutton, N.; Weber, K.; Dutt, N.; Krichmar, J.L. CARLsim 6: An
+Open Source Library for Large-Scale, Biologically Detailed Spiking Neural Network Simulation; Institute of Electrical and Electronics
+Engineers Inc.: New York, NY, USA, 2022; Volume 2022-July. https://doi.org/10.1109/IJCNN55064.2022.9892644.
+30. Fidjeland, A.K.; Roesch, E.B.; Shanahan, M.P .; Luk, W. NeMo: A platform for neural modelling of spiking neurons using GPUs.
+In Proceedings of the 2009 20th IEEE International Conference on Application-speciﬁc Systems, Architectures and Processors,
+Boston, MA, USA, 7–9 July 2009; pp. 137–144. https://doi.org/10.1109/ASAP .2009.24.
+31. Yavuz, E.; Turner, J.; Nowotny, T. GeNN: A code generation framework for accelerated brain simulations. Sci. Rep. 2016, 6, 18854.
+https://doi.org/10.1038/srep18854.
+32. Mutch, J. CNS: A GPU-based framework for simulating cortically-organized networks. In CNS: A GPU-Based Framework for
+Simulating Cortically-Organized Networks; Computer Science and Artiﬁcial Intelligence Laboratory: Cambridge, MA, USA, 2010.
+33. Hoang, R.V .; Tanna, D.; Bray, L.C.J.; Dascalu, S.M.; Harris, F.C. A novel CPU/GPU simulation environment for large-scale
+biologically realistic neural modeling. Front. Neuroinform. 2013, 7. https://doi.org/10.3389/fninf.2013.00019.
+34. Allard, J.; Cotin, S.; Faure, F.; Bensoussan, P .J.; Poyer, F.; Duriez, C.; Delingette, H.; Grisoni, L.; Allard, J.; Cotin, S.; et al.SOFA—An
+Open Source Framework for Medical Simulation; IOP Press: Bristol, UK, 2007; Volume 125, pp. 13–18.
+Biomimetics 2023, 8, 247 23 of 24
+35. Voegtlin, T. CLONES : A closed-loop simulation framework for body, muscles and neurons. BMC Neurosci. 2011, 12, P363.
+https://doi.org/10.1186/1471-2202-12-s1-p363.
+36. Koenig, N.; Howard, A. Design and use paradigms for Gazebo, an open-source multi-robot simulator. In Proceedings of the
+2004 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (IEEE Cat. No.04CH37566), Sendai, Japan, 28
+September–2 October 2004; Volume 3, pp. 2149–2154. https://doi.org/10.1109/iros.2004.1389727.
+37. Cofer, D.; Cymbalyuk, G.; Reid, J.; Zhu, Y.; Heitler, W.J.; Edwards, D.H. AnimatLab: A 3D graphics environment for neurome-
+chanical simulations. J. Neurosci. Methods 2010, 187, 280–288.
+38. Cofer, D.; Cymbalyuk, G.; Heitler, W.J.; Edwards, D.H. Control of tumbling during the locust jump. J. Exp. Biol. 2010,
+213, 3378–3387. https://doi.org/10.1242/jeb.046367.
+39. Issa, F.A.; Drummond, J.; Cattaert, D.; Edwards, D.H. Neural circuit reconﬁguration by social status. J. Neurosci. 2012,
+32, 5638–5645. https://doi.org/10.1523/JNEUROSCI.5668-11.2012.
+40. Bekolay, T.; Bergstra, J.; Hunsberger, E.; DeWolf, T.; Stewart, T.C.; Rasmussen, D.; Choo, X.; Voelker, A.R.; Eliasmith, C. Nengo: A
+Python tool for building large-scale functional brain models. Front. Neuroinform. 2014, 7, 48.
+41. Capolei, M.C.; Angelidis, E.; Falotico, E.; Lund, H.H.; Tolu, S. A biomimetic control method increases the adaptability of a
+humanoid robot acting in a dynamic environment. Front. Neurorobot. 2019, 13. https://doi.org/10.3389/fnbot.2019.00070.
+42. Massi, E.; Vannucci, L.; Albanese, U.; Capolei, M.C.; Vandesompele, A.; Urbain, G.; Sabatini, A.M.; Dambre, J.; Laschi, C.; Tolu,
+S.; et al. Combining evolutionary and adaptive control strategies for quadruped robotic locomotion. Front. Neurorobotics 2019,
+13, 1–19. https://doi.org/10.3389/fnbot.2019.00071.
+43. Cohen, G. Gooaall!!!: Why we Built a Neuromorphic Robot to Play Foosball. IEEE Spectr. 2022, 59, 44–50.
+44. DeWolf, T.; Patel, K.; Jaworski, P .; Leontie, R.; Hays, J.; Eliasmith, C. Neuromorphic control of a simulated 7-DOF arm using Loihi.
+Neuromorphic Comput. Eng. 2023, 3, 014007. https://doi.org/10.1088/2634-4386/acb286.
+45. Davies, M.; Srinivasa, N.; Lin, T.H.; Chinya, G.; Cao, Y.; Choday, S.H.; Dimou, G.; Joshi, P .; Imam, N.; Jain, S.; et al. Loihi: A
+neuromorphic manycore processor with on-chip learning. IEEE Micro 2018, 38, 82–99.
+46. Lava. Lava Software Framework; Lava: Santa Clara, CA, USA, 2021.
+47. Eliasmith, C.; Anderson, C.H. Neural Engineering: Computation, Representation, and Dynamics in Neurobiological Systems; MIT Press:
+Cambridge, MA, USA, 2003.
+48. Nourse, W.R.P .; Szczecinski, N.S.; Quinn, R.D. SNS-Toolbox: A Tool for Efﬁcient Simulation of Synthetic Nervous Systems. In
+Biomimetic and Biohybrid Systems; Hunt, A., Vouloutsi, V ., Moses, K., Quinn, R., Mura, A., Prescott, T., Verschure, P .F.M.J., Eds.;
+Springer International Publishing: Cham, Switzerland, 2022; pp. 32–43.
+49. Todorov, E.; Erez, T.; Tassa, Y. MuJoCo: A physics engine for model-based control. In Proceedings of the 2012 IEEE/RSJ
+International Conference on Intelligent Robots and Systems, Vilamoura-Algarve, Portugal, 7–12 October 2012; pp. 5026–5033.
+https://doi.org/10.1109/IROS.2012.6386109.
+50. Quigley, M.; Gerkey, B.; Conley, K.; Faust, J.; Foote, T.; Leibs, J.; Berger, E.; Wheeler, R.; Ng, A. ROS: An open-source Robot
+Operating System. In ICRA Workshop on Open Source Software; ICRA: London, UK, 2009; Volume 3, p. 5..
+51. Rossum, G.V .Python Programming Language; CWI (Centre for Mathematics and Computer Science): Amsterdam, The Netherlands,
+2007; Volume 41, pp. 1–36.
+52. Beer, R.D.; Gallagher, J.C. Evolving Dynamical Neural Networks for Adaptive Behavior. Adapt. Behav. 1992, 1, 91–122.
+53. Mihala¸ s, ¸ S.; Niebur, E. A generalized linear integrate-and-ﬁre neural model produces diverse spiking behaviors.Neural Comput.
+2009, 21, 704–718.
+54. Hodgkin, A.L.; Huxley, A.F. A quantitative description of membrane current and its application to conduction and excitation in
+nerve. J. Physiol. 1952, 117, 500–544. https://doi.org/10.1113/jphysiol.1952.sp004764.
+55. Szczecinski, N.S.; Hunt, A.J.; Quinn, R.D. Design process and tools for dynamic neuromechanical models and robot controllers.
+Biol. Cybern. 2017, 111, 105–127.
+56. LeCun, Y.; Bottou, L.; Bengio, Y.; Haffner, P . Gradient-based learning applied to document recognition. Proc. IEEE 1998,
+86, 2278–2323. https://doi.org/10.1109/5.726791.
+57. Harris, C.R.; Millman, K.J.; van der Walt, S.J.; Gommers, R.; Virtanen, P .; Cournapeau, D.; Wieser, E.; Taylor, J.; Berg, S.; Smith,
+N.J.; et al. Array programming with NumPy. Nature 2020, 585, 357–362.
+58. Paszke, A.; Gross, S.; Massa, F.; Lerer, A.; Google, J.B.; Chanan, G.; Killeen, T.; Lin, Z.; Gimelshein, N.; Antiga, L.; et al.PyTorch:
+An Imperative Style, High-Performance Deep Learning Library; Curran Associates, Inc.: New York, NY, USA, 2019.
+59. Hultborn, H.; Lindstr6m, S.; Wigstr6m, H. On the Function of Recurrent Inhibition in the Spinal Cord. Brain Res. 1979, 37, 399403.
+60. Perkel, D.H.; Mulloney, B. Motor Pattern Production in Reciprocally Inhibitory Neurons Exhibiting Postinhibitory Rebound.
+Science 1974, 185, 181–183. https://doi.org/10.1126/science.185.4146.181.
+61. Fitzpatrick, D. The Functional Organization of Local Circuits in Visual Cortex: Insights from the Study of Tree Shrew Striate
+Cortex. Cereb. Cortex 1996, 6, 329–341. https://doi.org/10.1093/cercor/6.3.329.
+62. Werbos, P .J. Bacpropagation Through Time: WHat It Does and How to Do It. Proc. IEEE 1990, 78, 1550–1560.
+63. Seung, H.S.; Lee, D.D.; Reis, B.Y.; Tank, D.W. The Autapse: A Simple Illustration of Short-Term Analog Memory Storage by
+Tuned Synaptic Feedback. J. Comput. Neurosci. 2000, 9, 171–185. https://doi.org/10.1023/A:1008971908649.
+64. Braitenberg, V . Vehicles: Experiments in Synthetic Psychology; MIT Press: Cambridge, MA, USA, 1986.
+Biomimetics 2023, 8, 247 24 of 24
+65. Wang, C.; Yang, Z.; Wang, S.; Wang, P .; Wang, C.Y.; Pan, C.; Cheng, B.; Liang, S.J.; Miao, F. A Braitenberg vehicle based on
+memristive neuromorphic circuits. Adv. Intell. Syst. 2020, 2, 1900103.
+66. Weidel, P .; Djurfeldt, M.; Duarte, R.C.; Morrison, A. Closed loop interactions between spiking neural network and robotic
+simulators based on MUSIC and ROS. Front. Neuroinform. 2016, 10, 31.
+67. Kaiser, J.; Tieck, J.C.V .; Hubschneider, C.; Wolf, P .; Weber, M.; Hoff, M.; Friedrich, A.; Wojtasik, K.; Roennau, A.; Kohlhaas, R.; et al.
+Towards a framework for end-to-end control of a simulated vehicle with spiking neural networks. In Proceedings of the 2016
+IEEE International Conference on Simulation, Modeling, and Programming for Autonomous Robots (SIMPAR), San Francisco,
+CA, USA, 13–16 December 2016; IEEE: New York, NY, USA, 2016; pp. 127–134.
+68. Deng, K.; Szczecinski, N.S.; Arnold, D.; Andrada, E.; Fischer, M.; Quinn, R.D.; Hunt, A.J. Neuromechanical Model of Rat Hind Limb
+Walking with Two Layer CPGs and Muscle Synergies; Springer: Berlin, Germany, 2018; Volume 10928 LNAI, pp. 134–144.
+69. Rybak, I.A.; Shevtsova, N.A.; Lafreniere-Roula, M.; McCrea, D.A. Modelling spinal circuitry involved in locomotor pattern generation:
+Insights from deletions during fictive locomotion.J. Physiol.2006, 577, 617–639. https://doi.org/10.1113/jphysiol.2006.118703.
+70. Brown, T.G. The intrinsic factors in the act of progression in the mammal. Proc. R. Soc. Lond. Ser. B Contain. Pap. A Biol. Character
+1911, 84, 308–319.
+71. Jackson, C.; Nourse, W.R.; Heckman, C.J.; Tresch, M.; Quinn, R.D. Canonical Motor Microcircuit for Control of a Rat Hindlimb ;
+Springer Science and Business Media Deutschland GmbH: Berlin, Germany, 2022; Volume 13548 LNAI, pp. 309–320.
+https://doi.org/10.1007/978-3-031-20470-8_31.
+72. Johnson, W.L.; Jindrich, D.L.; Roy, R.R.; Edgerton, V .R. A three-dimensional model of the rat hindlimb: Musculoskeletal geometry
+and muscle moment arms. J. Biomech. 2008, 41, 610–619. https://doi.org/10.1016/j.jbiomech.2007.10.004.
+73. Delp, S.L.; Anderson, F.C.; Arnold, A.S.; Loan, P .; Habib, A.; John, C.T.; Guendelman, E.; Thelen, D.G. OpenSim: Open-Source
+Software to Create and Analyze Dynamic Simulations of Movement. IEEE Trans. Biomed. Eng. 2007, 54, 1940–1950.
+74. Young, F. Design and Analysis of a Biomechanical Model of the Rat Hindlimb with a Complete Musculature. Ph.D. Thesis, Case
+Western Reserve University: Cleveland, OH, USA, 2022.
+Disclaimer/Publisher’s Note: The statements, opinions and data contained in all publications are solely those of the individual
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to
+people or property resulting from any ideas, methods, instructions or products referred to in the content.

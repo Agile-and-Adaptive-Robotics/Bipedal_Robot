@@ -1,0 +1,6 @@
+digraph {
+	0 [label="Neuron 1" fillcolor=blue fontcolor=white shape=ellipse style=filled]
+	1 [label="Neuron 2" fillcolor=black fontcolor=white shape=ellipse style=filled]
+	0 -> 1 [arrowhead=invempty arrowtail=invempty dir=forward]
+	1 -> 0 [arrowhead=dot arrowtail=dot dir=forward]
+}

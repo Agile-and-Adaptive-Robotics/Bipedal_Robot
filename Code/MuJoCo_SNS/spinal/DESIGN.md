@@ -2,6 +2,327 @@
 
 Built 2026-09-09. Files in `Code\MuJoCo_SNS\spinal\`.
 
+## MORNING REPORT — overnight 2026-09-12/13 (v5 phase-reset + Shevtsova
+## figure + v6 quad suppression) — READ THIS FIRST
+
+**TL;DR: the swing-knee quad suppression (lever #2) is the lever that
+works: best kine_score improved −61.18 → −59.43 (eval) and −62.7 →
+−60.6 (full 22 s), all runs stayed up. The tonic phase-reset (lever #1
+as formulated) is effectively inert — the optimizer avoids it. Also:
+the regression gate caught a REAL pre-existing bug — `--best` never
+applied pf_gain (silent since v3).**
+
+1. **BEST CONFIG = the v6 winner** (study ground_walk_v6_kneext, trial
+   106): `python runner.py --fitted --best6` (full 22 s) or add
+   `--eval` (12 s, scores −59.426). Reproduction verified:
+   −59.4xx bit-consistent. v5 winner (no suppression): `--fitted
+   --best5`. Old v4b: `--fitted --best`.
+   Key values: f1_kneext_inh 0.590, phase_reset_e 0.388,
+   phase_reset_f 0.035, drive 2.85, pf_gain 2.13, rg_adapt 1.10,
+   desc_e 1.75, e2_adapt 1.90, kx 121.
+2. **Numbers (full 22 s, winner)**: kine −60.591, duty 0.473 (ref 0.61),
+   knee_min +10.1 deg (ref −69.7 — still extension-dominant mean
+   cycle), cadence 1.4 Hz (ref 0.81), tilt 35.3 deg, stayed up.
+   Eval-window: kine −59.426, n_cycles 8, rmse_knee ~19.5.
+3. **WHAT MOVED THE NEEDLE**: v6's F1→KINH→knee_ext-MN inhibition
+   (phase-gated by F1 = swing-only). TPE engaged it immediately (top
+   trials f1_kneext_inh 0.4-0.6), buying knee-shape RMSE (20.9 → ~19.5)
+   and a large full-run jump. v5's HIP_EXT_SIG/HIP_FLEX_SIG →
+   PRESET → RG tonic gated inputs: sign-audited PASS but the optimizer
+   drives those gains toward 0-0.25 — a ≤1 nA gated tonic input cannot
+   move an RG running on ~4 nA of DRIVE.
+4. **WHAT FAILED / SURPRISES**:
+   - **`--best` pf_gain bug (PRE-EXISTING, FIXED)**: `if "pf_gain" in
+     best["params"]` was always False (pf_gain lives at the JSON top
+     level) → the gain-scaling branch NEVER ran → every `--fitted
+     --best` "reproduction" since v3 silently evaluated a pf_gain=1.0
+     config. The recorded v4b/v3 full-run numbers (E-duty 0.27, knee
+     −14..+26, −63.3) describe gain-1.0 configs, not the true winners.
+     Fixed (scale only fitted-file entries; pf_gain from doc root);
+     gate now BIT-EXACT: `--fitted --best --eval --drive 2.5868` =
+     −61.1741850610298 on the v5 code at gains 0.
+   - phase_reset_e ≈ 0.6-0.75 + weak drive LATCHES RG-E on (no rhythm;
+     the stance-gated ext-signal is positive feedback) — stability
+     constraint for any future sensory→RG pathway.
+   - drive sensitivity is small (4-dp rounding ≈ 0.005 kine) — v5/v6
+     evaluate with repr(drive) so their jsons reproduce exactly.
+5. **DELIVERABLES**: `draw_circuit.py --vclasses` →
+   `circuit_full_vclasses.{pdf,svg,png}` in Dissertation\
+   CPG_airstepping_figs (Shevtsova-2026/Rybak-2015 V-class strip + tags;
+   class-by-class mapping table in the section below); circuit_*
+   figures REGENERATED (their pf_gain composite was fixed too — weights
+   figure numbers changed slightly); v5/v6 sweeps + trials CSVs
+   (v5_sweep.csv, v5_results.csv, v6_results.csv); per-global-best full
+   runs v5_best_trial*.npz (9) and v6_best_trial*.npz (10); audits
+   _phase_reset_audit.py PASS, _kinh_audit.py PASS; RUNNER_DUMP_STATE
+   env hook in runner.py for config diffing.
+6. **NEXT SESSION (priority order)**:
+   a. The RG duty/cadence structure is THE remaining bottleneck (duty
+      0.47 vs 0.61, cadence 1.4 vs 0.81 — suppression sped the cycle
+      up). Try: transient phase-ONSET reset (flexion-velocity PULSE
+      into PRESET_F, not tonic), stance-biased PF windows, or
+      weaning-relevant pelvis-balance work per the v4 list.
+   b. knee_min still +10: consider a stronger KINH range (searched 0-2,
+      winner 0.59 — not boundary-pinned; maybe search 0-4 with E-duty
+      shaped reward) or ankle-PF override retune (v4 item 3).
+   c. plot_run.py on v6_best_trial106.npz + refresh ground figs/gifs in
+      the Dissertation folder (NOT done tonight).
+   d. ~~The trunk Fmax fix (8 one-newton muscles) still needs Ben's
+      go~~ — DONE same day, see the postscript below.
+   Nothing committed (per standing rule); sqlite has both studies for
+   resume (`python optuna_walk_v5.py 50` continues v5).
+
+## 2026-09-13 (day): trunk Fmax fix (Ben's go received), torque budget,
+## v6 render + dissertation draft
+
+- **Fmax audit** (`_fmax_audit.py`): every actuator's gainprm[2] vs
+  stock `gait2392_simbody.osim` max_isometric_force. The 84 leg/active
+  muscles all match within the converter's RoM normalization
+  (≤15%, both directions — Ben: "use OpenSim muscle max force over
+  human RoM as the benchmark", which is what the converter does).
+  **8 trunk actuators shipped at 1 N active** vs stock ercspn 2500,
+  intobl/extobl 900, ext_hal 162 (the passive slot already carried the
+  stock value; lengthrange "0.01 1" is also converter garbage —
+  flagged, not fixed). `_fmax_audit.py` re-runs the check any time.
+- **Fix** (patch_xml repair 2c, build-asserted to exactly 8 tags):
+  gainprm[2] := stock values. **Post-fix the v6 winner IMPROVES**:
+  eval kine −59.241 (was −59.426), tilt_max 27.4 (was 33.3), kz 0.909,
+  dx halved — the BAL_TRK trunk controller finally has real muscles
+  (measured ercspn act=1 force 1637 N = 65% of Fmax at the standing
+  pose despite the bad lengthrange). Standing solve now engages 16
+  muscles >0.1 (was 8). No retune required; old `--best`/`--best5`
+  numbers were pre-fix and remain valid AS RECORDED.
+- **Torque budget** (`_torque_budget.py` + `_torque_demand_walk.py`):
+  mass 78.5 kg (770 N); fd moment arms at the standing pose × stock
+  Fmax: hip_ext 251 N·m/side, knee_ext 277, ankle_pf 296, trunk_ext
+  213. Demand from the bsolve ID residuals (subject01 + measured GRF):
+  hip 74, knee 98, ankle 212, lumbar 100 N·m. MARGINS: hip 3.4x,
+  knee 2.8x, trunk 2.1x, ankle 1.4x (tightest; optimistic end — the
+  PF arm shrinks in late-stance dorsiflexion; the 2.7 N·m/kg ankle
+  demand also runs hot vs ~1.5 literature, likely the known subtalar/
+  CoP residuals). Pre-fix trunk supply was 0.09 N·m — the rig was
+  doing 100% of the trunk work.
+- **v6 render**: ground_walk_v6_trial106.gif + fig1..5 PNGs rendered
+  from v6_best_trial106.npz (spinal_run.npz now holds that run);
+  copies in Dissertation\CPG_airstepping_figs.
+- **Dissertation draft**:
+  `Documentation\Reports and Papers\Dissertation\CPG_spinal_section_draft.tex`
+  — architecture, V-class correspondence (table), v5/v6 refinement,
+  plant audit + torque budget, honest limitations (rigid tendon,
+  no V3). Ready to adapt; figures referenced from
+  CPG_airstepping_figs/.
+
+## 2026-09-13 (Ben's critique): Deng-style circuit figure, drawn FROM
+## the compiled network (circuit_dengstyle)
+
+Ben rejected the hand-laid-out circuit_full ("pile of garbage") and set
+the standard: the Deng/Nourse Fig-6A schematic — layered RG/PF/motor
+circuit with EVERY IN and connection explicit, red conversion-map
+circles at the muscle interface, Renshaw + IaIN + IbIN visible.
+
+**The reference, exactly** (Nourse et al. 2023 Fig 6A + Table A6 — the
+image Ben sent; paper PDF pulled from MDPI, full synapse table
+extracted; also _nourse2023.txt kept here):
+
+RG layer: 2 half-center neurons (voltage-gated fast-Na, endogenous
+bursting; Table A5) that **mutually inhibit via TWO dedicated
+non-spiking INs** — HC_ext→(exc 2.749 µS) Ext-IN→(inh 2.749) HC_flx and
+mirror. NO direct HC↔HC synapses and NO mutually excitatory RG synapses
+anywhere in this circuit (if you remember "mutually excitatory", that
+is not this figure — the mutual coupling is entirely inhibitory, and
+speed is set by its level). PF layer: one HC pair PER JOINT (hip; knee+
+ankle share one), "constructed in a similar manner" (same IN-laminated
+mutual inhibition); RG HC→ same-half PF HC, weak exc 0.1 µS. Motor
+circuit per joint: PF→MN exc (1.5–4.9 µS per muscle); Ia afferent
+(formatted from muscle TENSION) → IaIN (PF-gated 0.5 exc — phase
+control of reciprocal inhibition; IaIN→antagonist MN 2.0 inh;
+IaIN↔IaIN 0.5 inh); MN→RC 0.5 exc, RC→MN 0.5 inh, RC↔RC 0.5 inh,
+RC→IaIN 0.5 inh (disinhibition); Ib afferent→IbIN→MN 0.59 µS
+**EXCITATORY** (positive force feedback), PF→Ib 2.0 µS near-rest shunt
+(graded presynaptic control). Interface: act = 1/(1+e^{s(x0−V)})+y0,
+s=0.153, x0=−70 mV, MN Vrest −100 mV (Fig 6B); feedback = muscle
+tension formatted as Ia and Ib input currents. No II afferents, no
+interleg, no balance cells in Deng.
+
+**Ours, exactly** (_net_edges.py dumps every connection from the
+COMPILED network object — 118 edges in the 4-muscle representative
+build; the full net scales to 92 muscles):
+
+- RG: RG-E↔RG-F mutual inhibition DIRECT g=4.0 (Deng's IN lamination
+  LUMPED — drawn as ghost Ext-IN/Flx-IN in the figure); ADAP-E/F
+  adaptation INs (RG→ADAP exc 2.5, ADAP→RG inh 2.5) — burst
+  termination setting cycle period, the non-spiking substitute for
+  Deng's persistent-Na; DRIVE→E 1.7/F 1.4, POSTURE→E 0.8; commissural
+  RG-F_r↔RG-F_l inh 4.0, RG-E_r↔RG-E_l inh 2.0 (Deng has none);
+  v5 PRESET_E/F INs (hip ext/flex signals; E↑F↓ / F↑E↓).
+- PF: 4 phase cells E1/E2/F1/F2 + PFA self-adaptation INs (Deng: HC
+  pairs per joint); RG→PF exc 2.4; DRIVE→PF 0.05; PF↔PF reciprocal
+  inh 4.0 (4 pairs); v6 KINH (F1→KINH 1.5, KINH→knee-ext MNs 0.59,
+  swing-gated).
+- Motor circuit per muscle (×92): Ia→MN homonymous EXC 0.6 (Deng has
+  NO monosynaptic Ia→MN — ours is closer to biology); Ia→antagonist MN
+  INH 0.4 DIRECT (Deng: via IaIN with PF phase-gating + RC
+  disinhibition — ghost in the figure); II→MN exc 0.4 (not in Deng);
+  Ib→MN autogenic INH 0.35 (Deng: IbIN→MN EXCITATORY — opposite sign;
+  our positive-force pathway is the stance-gated IB-EXC reversal:
+  Ib→IBEXC 0.5, RG-E gate 1.0, IBEXC→extensor MNs 0.6);
+  PF→MN × W_PF_MN; POSTURE/POST_i; BAL family (full net only).
+- **Renshaw: NOT IMPLEMENTED** (ghost in the figure, Deng's exact
+  wiring quoted). One-line add in _wire_muscle if wanted
+  (MN→RC→same-pool MN, conditional gain like KINH).
+- Interface maps (runner.py, now drawn as red circles): a =
+  clip(V/5 mV, 0, 1) linear-saturating (Deng: sigmoid); feedback
+  len/vel/force-normalized encoders (L−Lmid)/Lhalf, L̇/0.6 m/s, F/Fmax
+  with presynaptic phase/speed gating (Deng: tension-based Ia/Ib only).
+
+**Figure**: `draw_circuit.py --which deng` → circuit_dengstyle.{pdf,
+svg,png} (figures/ + Dissertation\CPG_airstepping_figs). STRUCTURE-
+DRIVEN: it builds the representative network, reads every connection
+from the compiled SNS object, and ASSERTS each (src,dst,sign) group is
+drawn — the figure cannot drift from the code again. Deng's Table A6
+is quoted in the figure footer for side-by-side comparison. The old
+circuit_full/_vclasses stay (both-sides + commissural view + V-class
+strip) but the dengstyle figure is the one that shows the full
+connection grammar.
+
+## 2026-09-14: RoM limits + Renshaw (Ben's go), toolbox-native diagram,
+## tutorials + skill
+
+- **JOINT RoM LIMITS ON (patch_xml repair 2f2, unconditional)**: all 14
+  driver hinges shipped limited="false" (ranges inert). Flipped to
+  limited="true" with the CONVERTED/stock ranges (knee [-120,+10] deg
+  is the true stock RoM; hips +-120; ankle/subtalar/mtp +-90 - stock
+  gait2392 itself uses wide ranges, verified by
+  _parse_osim_ranges.py). Followers stay unlimited (repair 2f).
+  **Result: knee hyperextension GONE** (ground walk knee now
+  -0.3..+11.4 deg vs -14..+26 before; the +10 cap visibly enforced).
+- **RENSHAW CELLS IMPLEMENTED** (Ben's go): per-pool RC with MN->RC exc
+  1.0, RC->homonymous MN inh G["renshaw"], RC<->RC inh (each pair
+  once); conditional topology, default 0, `--renshaw X` / json key
+  "renshaw". Deng A6: 0.5/0.5/0.5 - we ran 0.5.
+- **Ground walk (limits + Renshaw 0.5, `runner --fitted --best6
+  --renshaw 0.5`)**: stayed up, COM min 0.90 (best yet), tilt 30.5,
+  hip -0.9..+18.3, knee -0.3..+11.4, ankle -40..0, 15 cyc at 1.32 Hz,
+  E-duty 0.15. HONEST: gait re-timed around the limits (the old
+  hyperextended knee was load-bearing) - kinematics retune (v7) needed
+  for duty/cadence; the ARTIFACT is fixed. Run saved v6_rom_ground.npz.
+- **AIR-STEPPING TRANSFORMED** (`--no-ground --no-afferents
+  --no-interleg`, v6_rom_air.npz): knee -97..+10 deg TRUE deep swing
+  flexion (cap respected), hip -21..+50, 0.41 Hz (5 cycles in window)
+  - right at the Ivanenko air-stepping regime (~0.3 Hz preferred; we
+  were 0.58 Hz with a pinned knee). Pelvis tilt +-2.5 deg in air.
+  THIS is the dissertation air-stepping result.
+- Figures: `hindlimb_style_{ground,air}.png/.pdf` (_figure_hindlimb_
+  style.py; SNS-Toolbox figure_hindlimb layout: RG / PF / MN rows over
+  knee + hip angle rows) + ground_rom.gif / air_rom.gif (all in
+  Dissertation\CPG_airstepping_figs).
+- **Toolbox-native diagram** (`_render_diagram.py` + `spinal_layers.py`):
+  the circuit rebuilt as Tutorial-4-style Network SUBCLASSES
+  (RhythmGeneratorNetwork / PatternFormationNetwork / MotorColumnNetwork,
+  conductances live from params) composed with add_network and rendered
+  by the OFFICIAL sns_toolbox.renderer -> sns_diagram_spinal.png
+  (Dissertation folder too). This is the sns_diagram.png style: colored
+  layer groups, invhouse inputs, house outputs. 1.5.2 has NO RG/PF
+  presets (only the 5 arithmetic ones) - our layer classes are the
+  reusable pattern. NOTE: add_network flattens; per-layer colors carry
+  through.
+- **test_max_realistic_net_size.py** (Ben Q): upstream benchmark,
+  master API, default Torch - does NOT run unmodified on 1.5.2
+  (backends take the compiled params dict via net.compile there).
+  Bounded numpy version `_test_max_net_numpy.py`: 8000-neuron spiking
+  net compiles + steps in 4.4 s (~N^2; memory wall ~25-30k on 32 GB).
+  Our 410-neuron net is nowhere near limits.
+- **TUTORIALS DONE + SKILL WRITTEN**: all 9 official tutorial notebooks
+  fetched to spinal\sns_tutorials\; 1/2/4/8 executed clean after
+  installing the graphviz BINARY (conda install -n myo graphviz; pip
+  graphviz is bindings-only; dot.exe lives in <env>\Library\bin, not on
+  PATH unless activated). Skill at
+  C:\Users\Ben Bolen\.zcode\skills\sns-toolbox\SKILL.md (junction into
+  ZCode_Skills repo - Ben commits): env, API traps (shape arg, compiled
+  params, two class trees, connections-dict schema, flattening
+  add_network), Tutorial-4 pattern, rendering, net sizing, our MuJoCo
+  interface conventions.
+- Trunk lean (Ben: "fix the femurs, trunk supporting itself"): ground
+  tilt 30.5 deg post-limits (was 33-35). The lean is hip-extensor
+  saturation pitching the pelvis backward (v4 diagnosis); with real
+  trunk muscles (Fmax fix) BAL_TRK now has authority but its gains are
+  pre-fix. Next: retune kp_trk/kd_trk + hip-ext posture bias with
+  limits+Renshaw in place, THEN wean the pelvis-pitch rig spring.
+
+## 2026-09-14 (Simulink session cross-report): Deng CPG verified, tau_h
+## collapse CONFIRMED, constant-DRIVE validated
+
+The MuJoCo-Simulink bridge session (see README_SNS_Simscape.md + the
+AGENTS.md bridge section for their full write-up) built Deng's RG and
+PF layers as Simulink .slx (persistent-Na HCs, IN-laminated mutual
+inhibition, params from Nourse Tables A4-A7) and verified them against
+an independent numpy ODE reference (`spinal\deng_cpg_ode.py`): ONE
+10 nA / 20 ms pulse -> self-sustained 1.938 s alternation (numpy:
+1.94 s), RG ext/flx correlation -0.86. It runs indefinitely on constant
+DRIVE.
+
+- **tau_h(V) collapse CONFIRMED numerically** (_tau_h_check.py, this
+  session): with Deng's h-gate (S=-0.6, E=-60, tau_max=350 ms),
+  sns_toolbox's tau formula tau(V) = tau_max * z_inf(V) *
+  sqrt(K*exp(S*(E-V))) peaks at only ~140 ms near -50 mV (K=0.01) and
+  collapses to <0.5 ms at V >= -30 mV, -> 0 at 0 mV, for every K. The
+  slow burst-terminating process is destroyed exactly where the
+  neuron spends its burst -> the oscillator quenches. Fixed
+  tau_h = 350 ms restores clean bursting (their verified fix).
+  IMPLICATION FOR OUR NETWORK: this is WHY the ADAP adaptation loop is
+  mandatory in our non-spiking RG - the toolbox has no working slow
+  intrinsic process in either its non-spiking neurons or its
+  persistent-Na implementation. Any future toolbox port of
+  Deng/persistent-Na cells needs the fixed-tau patch (or a custom
+  neuron). Also from that session: SNS_Library vs toolbox use OPPOSITE
+  synapse-saturation conventions (ThrPre/Elo) - keep straight when
+  porting values.
+- **Constant DRIVE validated**: the tuned 410-neuron net self-sustains
+  at constant DRIVE = 2.5 nA for 20 s (1.21 s alternation, constant
+  amplitude). The Simulink copy's tonic settling was an integrator
+  summation-order artifact (same chaos family as our fp-drift findings)
+  - the network sits near a bifurcation. Constant descending drive is
+  the correct operating mode; and for the future basal-ganglia layer,
+  descending control should be modeled as a bias RELEASED
+  (disinhibition), not commanded - Ben + session agreed.
+- **Animatlab latch cross-pointer**: the ~0.1 ms tau_h collapse is the
+  prime suspect for the Animatlab RG latch (Animatlab treats
+  tau_h.max as a fixed constant, which is why the Simulink port
+  works). First thing to check in the laptop .aproj: how the
+  LinearHill Na h-gate time constant is implemented.
+
+## 2026-09-14: v7 retune under corrected physics (RoM + Renshaw + ANH)
+
+- **Ankle dorsiflexion (Ben's complaint) — solved mechanism**: boosting
+  swing DF drive x3-x5 does NOTHING (max stays -14 deg: 9 PF muscles
+  ~10 kN vs 3 DF ~1.6 kN + ligament spring). What works is SWING-PHASE
+  PF SUPPRESSION: `params.G["f1_anklepf_inh"]` routes the F1-driven
+  KINH IN onto the ankle_pf MNs (same pattern as the knee). At 1.0 the
+  air-stepping ankle sweeps **-55..+7.1 deg — true dorsiflexion**
+  (range 62 vs ref 23; overshoot = tunable). Tests:
+  _ankle_test.py / _ankle_anh_test.py.
+- **v7 study** (`ground_walk_v7_rom`, optuna_walk_v7.py, 140 trials,
+  seeded v6 winner, RENSHAW 0.5 FIXED, f1_anklepf_inh searched): best
+  **-62.523 (trial 100)**, plateaued from ~trial 100 (100-137 flat).
+  Reproduces BIT-EXACT via `runner --fitted --best7` after a json fix
+  (below). Winner full-22s: stayed up, tilt 28.6 (best yet), duty
+  0.18-0.20, knee pinned AT the +10 cap (mean-cycle knee range 0.3
+  deg!), cadence ~0.4 Hz. HONEST: under corrected physics the walk is
+  a slow stiff-kneed shuffle — the unlimited-model crutch (-59.4) cost
+  ~3 points and 140 trials recovered half. Scalar tuning has CONVERGED
+  again; duty/cadence/knee-flexion are architecture-level (transient
+  phase reset, FSA-analytic seeding of PF/RG timing).
+- **Interesting**: under the capped knee, phase_reset_f IS engaged
+  (0.5-0.8 in the top trials; it was avoided in v5) — swing-trigger
+  feedback matters once flexion is physically cheap.
+- **NEW JSON LESSON (same family as pf_gain)**: the generated v7 set
+  renshaw=0.5 in set_params but never wrote it into the json params ->
+  `--best7` silently ran Renshaw-less (kine off by 0.14, caught by the
+  reproduction check). Fixed: script writes renshaw into eff dict +
+  json patched. RULE going forward: EVERY new params.G knob a study
+  uses must appear in the saved json AND have an `if key in best`
+  branch in the --best loader — the repro check is what proves it.
+
 ## Goal
 
 Two-level spinal cord network (McCrea–Rybak RG + PF) with proprioceptors for
@@ -410,3 +731,211 @@ BEST CURRENT CONFIG = v4b winner (reproduce: runner --fitted --best);
 the v3 winner remains better on the STABILITY-shaped objective (its
 study is untouched in the db). kine_ref.py is the acceptance metric for
 any future kinematics-matching campaign.
+
+## 2026-09-12/13 night: Shevtsova-comparable circuit figure (--vclasses)
+
+Source papers (Ben's Zotero, read from the local full-text caches):
+**Shevtsova, Lockhart, Rybak, Magnuson, Danner, Smith, Poirazi 2026,
+"Linking spinal circuit reorganization to recovery after thoracic spinal
+cord injury", eLife 14:RP107480** (item TABLDVVC; the model = Danner-2017
+four-RG architecture, Fig. 2 schematic + Table 1 weights), and **Rybak,
+Shevtsova, Kiehn 2015 eNeuro review** (item BMB659JG; the V0/V1/V2a/V2b/
+V3/dI6 class definitions). NOTE: the 2026 paper itself draws only
+InF/InE (RG mutual-inhibition populations IniF/IniE), V2a, V0V, V0D,
+V3-E/V3-F, Ini, InE1 + the LPN interlimb set — V1/V2b/dI6 come from the
+2015 review framework; the 2026 connectivity is: RG-F→InF(0.4)→RG-E(−1),
+RG-E→InE(0.4)→RG-F(−0.1), RG-F→V0D(0.7)⇢c-RG-F(−0.07), RG-F→V2a(1)→
+V0V(1)⇢c-Ini(0.6)→i-RG-F(−0.04/−0.07), RG-F→V3-F(0.4)→c-RG-F(+0.03),
+RG-E→V3-E(0.35)→c-RG-E(+0.02), V3-E→InE1(1)→c-RG-E(−0.045).
+
+`draw_circuit.py --vclasses` (new flag) renders **circuit_full** with the
+V-class annotation strip (4 columns: V0D(V0c)/dI6, V1/V2b, V2a, V3) plus
+in-figure tags at the annotated elements. Glyphs unchanged (Ben's
+conventions: open circle, open triangle = exc, filled dot = inh, ellipse
+= muscle, Okabe-Ito tints). Output: figures/circuit_full.{pdf,svg,png},
+copied to Dissertation\CPG_airstepping_figs as
+**circuit_full_vclasses.\*** (the un-annotated circuit_full.\* stays).
+Rerun with `--source best` after any retune, like the rest of the suite.
+
+CLASS-BY-CLASS MAPPING (our element <-> V-class <-> Shevtsova 2026
+element) — feeds the dissertation discussion:
+
+| our circuit (gait2392 spinal SNS) | V-class (Rybak 2015) | Shevtsova 2026 element (weight) | comment |
+|---|---|---|---|
+| cross-side RG inhibition: RG_F↔RG_F (g 4.0), RG_E↔RG_E (g 2.0), all INHIBITORY | **V0D** (V0c in Shevtsova-2015 naming; dI6 is the 3rd inhibitory CIN class) | RG-F→V0D (0.7) ⇢ contra RG-F (−0.07) | alternation; ours is a direct lumped synapse, theirs via a CIN population |
+| RG-E↔RG-F half-center mutual inhibition (g 4.0, direct) | **V1/V2b** (ipsilateral inhibitory; also Ia-IN/Renshaw family) | RG-F→InF (0.4)→RG-E (−1); RG-E→InE (0.4)→RG-F (−0.1) | theirs is routed through explicit IniF/IniE populations, ours is a direct lumped synapse |
+| PF reciprocal inhibition E2↔F1, F2↔E1, E1↔F1, E2↔F2 (g 4.0) | **V1/V2b** | (same InF/InE family, pattern layer) | keeps PF windows mutually exclusive |
+| Ia reciprocal inhibition onto antagonist MN pools (g 0.4) | **V1** (classic Ia inhibitory interneuron) | (not drawn in 2026 fig) | textbook reciprocal pathway |
+| RG→PF excitation (g rg_to_pf) and PF→MN excitation (g pf_to_mn × W_PF_MN) | **V2a** (ipsilateral excitatory, Chx10) | RG-F→V2a (1)→V0V (1); V2a rhythmically recruits with frequency | in the full 2015 models V2a also excites MN pools — our PF→MN fan is the analogous excitatory relay |
+| **NO analog — every cross-side connection we have is inhibitory** | **V3** (commissural excitatory, synchrony) | RG-F→V3-F (0.4)→c-RG-F (+0.03); RG-E→V3-E (0.35)→c-RG-E (+0.02); V3-E→InE1 (1)→c-RG-E (−0.045) | **we cannot express left–right SYNCHRONY gaits**; adding an excitatory commissural class is the architectural answer if ever needed |
+| ADAP-E/F burst-termination loop | (none — intrinsic INaP adaptation in Shevtsova) | slow inactivation of the centers | ours is an explicit slow inhibitory interneuron |
+| v5 PRESET_E/F phase-reset interneurons (hip ext/flex signals → RG) | (none of the named classes; group I/II position/velocity pathways) | afferent phase reset (Rybak 2006b; hip-reset experiments) | new in v5, gains default 0 |
+
+Also noted for the dissertation text: in the 2026 model the FLEXOR center
+is the driven/bursting one and frequency rises by SHORTENING the
+extensor phase — the opposite drive allocation of our RG (our DRIVE
+biases E, and our problem is a too-SHORT E phase, duty 0.27 vs 0.61).
+
+## 2026-09-12/13 overnight: v5 sensory phase-reset (+ the --best pf_gain
+## bug it caught) and phase-3 swing-knee quad suppression
+
+Implements the v4 diagnosis's lever #1 (hip afferent phase-reset into the
+RG: duty 0.27 vs 0.61, cadence 1.18 vs 0.81 Hz, cycle jitter) and, if
+time allowed, lever #2 (swing-knee quad suppression).
+
+### Implementation (all off-by-default; v4b behavior preserved exactly)
+
+- `params.G` gained `phase_reset_e`, `phase_reset_f` (default 0.0) +
+  `PHASE_RESET = dict(inh=1.0, stance_gate=(0.3,0.7))`; `params.TAU`
+  gained `preset=0.04`. Phase 3 added `G["f1_kneext_inh"]` (default 0.0).
+- `build_network.py`: per side, input ports HIP_EXT_SIG/HIP_FLEX_SIG drive
+  PRESET_E/PRESET_F interneurons; PRESET_E excites RG-E and inhibits
+  RG-F (prolongs stance), PRESET_F excites RG-F and inhibits RG-E
+  (triggers swing). Phase 3: PF_F1 -> KINH inhibitory IN -> every primary
+  knee_ext MN of the side (phase-gated by F1 itself = swing-only).
+  **CONDITIONAL TOPOLOGY**: the new neurons/synapses are built ONLY when
+  the corresponding gain > 0. At gains 0 the compiled network is
+  byte-identical to v4b. REASON (learned the hard way, reggate_v5_0/2):
+  zero-conductance synapses still change the dense-matrix BLAS summation
+  order, and the chaotic 12 s sim amplifies the 1e-16 drift into visible
+  kine_score shifts (~0.004-0.6 depending on what else changed).
+- `runner.py`: computes both signals from EXISTING afferent data —
+  `ext_sig = clip(-mean(len_norm[hip_ext group r/l]), 0, ...) * (0.3 +
+  0.7*stance)` (hip-extensor group mean normalized length INVERTED: it
+  rises as the hip extends; stance-gated II-style) and `flex_sig =
+  clip(-mean(vel_norm[hip_flex group]), 0, ...)` (hip-flexor group mean
+  shortening velocity — positive in flexion). Group membership is
+  primary OR secondary (hamstrings' hip_ext arm, rect_fem's hip_flex arm
+  count). Feeds the ports (gain * signal), logs RAW signals to
+  log_neuro columns 14-17 (HIP_{EXT,FLEX}_SIG_{r,l} — appended, old
+  column indices unchanged for kine_ref/plot_run). CLI: `--phase-reset
+  E F`, `--kneext-inh X`, `--best5`/`--best6` (load best_walk_params_
+  v5/v6.json through the same loader as --best).
+- v5 signal magnitudes in gait: ext_sig ~0.1-0.4 nA, flex_sig ~0.3-1 nA
+  at swing onset; RG-E/F receive ~1.5-4 nA from DRIVE — a weak
+  perturbation at gain <= 1 (matters for reading the sweep below).
+
+### THE REGRESSION-GATE SAGA — a real pre-existing bug found (fix first,
+### as Ben's orders said)
+
+Gate requirement: `runner --fitted --best --eval` must reproduce v4b
+trial 49 (−61.1741850610298). It initially returned −61.82.
+
+1. First suspect (fp drift from added topology) — fixed by conditional
+   topology, but the gap remained.
+2. State-dump hook added (RUNNER_DUMP_STATE=<file> env var dumps every
+   mutable param right after arg parsing) and the study path
+   (optuna_walk set_params) vs the --best path diffed numerically.
+3. ROOT CAUSE: `--best` tested `if "pf_gain" in best` where
+   `best = json["params"]` — but pf_gain lives at the JSON TOP LEVEL.
+   The gain-scaling branch NEVER RAN: **every `--fitted --best`
+   "reproduction" since the v3 pf_gain feature silently evaluated a
+   pf_gain=1.0 config.** The recorded v4b full-22 s numbers (12 bursts,
+   E-duty 0.27, knee −14..+26, kine −63.3) and the v3 weaning runs
+   describe gain-1.0 configs, NOT the true study winners. Historical v3
+   "verified: identical metrics with and without gain" was wrong.
+4. Fix: read `doc.get("pf_gain")` from the document root; scale ONLY the
+   fitted-file entries (the fitted JSON lacks the 4 trunk keys — E1/E2
+   trunk_ext, F2 trunk_flex, W_POSTURE trunk_ext — scaling params
+   defaults for those was also wrong, though inert: the 8 trunk muscles
+   ship at 1 N and never move the sim). Same composite fix applied in
+   draw_circuit.effective_tables (weights figure numbers change slightly
+   — regenerate+recopy done 2026-09-13 night).
+5. GATE NOW PASSES BIT-EXACT: `runner --fitted --best --eval --drive
+   2.5868` (the study eval's 4-dp-rounded drive) = −61.1741850610298 on
+   the v5 code at gains 0. With the json's full-precision drive the same
+   config gives −61.181 (Δ0.007 = the :.4f rounding in optuna_walk.py's
+   eval call — NOT chaos; drive sensitivity is ~0.005 per 3e-5 nA).
+   v5/v6 evaluate trials with repr(drive) so their jsons reproduce
+   bit-exactly via --best5/--best6 with no --drive override.
+6. DETERMINISM verified: identical reruns are bit-identical
+   (−61.817683226763805 twice, det_a/det_b).
+
+### Sign audits (dynamic, no static actuator_moment anywhere)
+
+- `_phase_reset_audit.py` = PASS. Part A: tonic 1 nA into each new port
+  on the compiled network — EXT_SIG: RG-E +0.34 mV / RG-F −0.36 mV;
+  FLEX_SIG: RG-F +0.21 / RG-E −0.10; signs correct at gains 1 and 2.
+  Part B (static MuJoCo kinematics — lengths are pure transmission
+  kinematics, the static-moment trap does not apply): ext_sig peaks at
+  hip extension (+0.302 at −30 deg, monotonic to −0.492 at +60 deg
+  flexion); flex-velocity signal positive at EVERY angle (4-8 nA per
+  1 deg/s of flexion — length-dependent sensitivity, not a sign error;
+  an earlier FAIL here was a bug in the audit's own condition).
+- `_kinh_audit.py` = PASS: with f1_kneext_inh 1.5, KINH_r peaks 3.3 mV
+  during PF-F1 bursts and pulls MN_vas_lat_r from 1.02 mV (gain 0) to
+  −1.30 mV during swing (drop 0.99 -> 2.59). Real suppression, bounded.
+
+### Hand sweep (v5_sweep.csv, 16 rows, 4x4 grid at the frozen v4b point)
+
+At gains (0, 0.25, 0.5, 1.0)² with ALL other knobs held at the v4b
+winner: kine −61.18 -> −61.62 (no improvement), duty 0.467 -> 0.38-0.46
+(flatt-to-down, AWAY from 0.61), knee_min pinned ~+11 deg, cadence
+1.067 unchanged, all stayed up. HONEST READING: a <= 1 nA gated input
+cannot move a RG running on ~4 nA of saturated DRIVE — the sweep is the
+LEAST favorable testbed (all other knobs frozen); the joint search is
+the real test. Brief's rule stands: if the study plateaus at the 2.0
+gain boundary, widen ONLY the phase-reset ranges and continue.
+
+### Study ground_walk_v5_phase (optuna_walk_v5.py; sqlite, resumable)
+
+Search space = v4b's 13 dims + phase_reset_e/f in [0, 2]; seed = v4b
+winner (trial 0, gains 0, scored −61.181 eval = matches the sweep and
+the fixed --best path bit-for-bit); per-trial rows -> v5_results.csv
+(trial, gains, kine_score, duty, knee_min, rmse_hip/knee/ankle, cadence,
+tilt_max, stayed_up); every NEW GLOBAL BEST triggers the full 22 s run ->
+v5_best_trial<N>.npz + a run=full22 CSV row. walk_drive is runner-local
+— full22 passes repr(drive) explicitly (bug caught before it bit).
+Startup crashes fixed: study.best_value raises on queued-only studies
+(guard: completed trials only) and the enum is optuna.trial.TrialState.
+
+RESULTS (150 trials, COMPLETE): best kine_score **−60.987 (trial 137**,
+phase_reset_e 0.222, phase_reset_f 0.219, drive 2.52, rg_adapt 1.28,
+desc_e 1.64, desc_f 0.86, pf_gain 2.40, e2_adapt 1.61, post_hipext
+0.99). Saved best_walk_params_v5.json; `runner --fitted --best5 --eval`
+reproduces −60.98655543758134 (verified). Gain trajectory across the
+top trials: TPE first latched ~0 gains, ended accepting ~0.22 — the
++0.19 over the v4b seed came mostly from drive/rg_adapt/e2_adapt
+fine-tuning, NOT from the phase-reset. 9 new-global-best full-22 s
+captures (v5_best_trial{0,20,42,59,63,105,124,131,137}.npz), all stayed
+up; full-22s kine −62.6..−63.1, duty 0.44-0.48, knee_min ~+10 (still
+extension-dominant), cadence 1.1-1.2 Hz — the duty/cadence/knee PLATEAU
+DID NOT MOVE. HONEST VERDICT: tonic stance-gated position + velocity
+inputs into the RG (this formulation) is effectively INERT at gains the
+optimizer will accept — lever #1 needs a different formulation
+(transient phase-ONSET reset — a flexion-velocity PULSE triggering the
+F transition, not tonic excitation — or the v4 list's alternative:
+stance-biased PF windows / Ib load-sharing as stance prolonger). The
+no-rhythm trials clustered at phase_reset_e ~0.6-0.75 with weak random
+drive: the stance-gated ext-signal is positive feedback that can LATCH
+RG-E on (worth remembering as a stability constraint on any future
+sensory-RG pathway). Per Ben's widen rule: gains never pinned at the
+2.0 boundary — they were AVOIDED, so widening upward was not justified
+and the ranges were left as briefed.
+
+### Phase 3 (lever #2): ground_walk_v6_kneext (optuna_walk_v6.py)
+
+v5 space + f1_kneext_inh in [0, 2]; KINH topology conditional (above);
+seeded with the v5 winner (falls back to v4b defaults if the v5 json is
+absent); writes best_walk_params_v6.json (runner --best6), CSV
+v6_results.csv, full22 captures v6_best_trial<N>.npz. Launch ONLY after
+v5 finishes (seed needs the v5 json; and both studies write
+spinal_run.npz — never run concurrently).
+
+RESULTS (110 trials, COMPLETE): best kine_score **−59.426 (trial 106**,
+f1_kneext_inh 0.590, phase_reset_e 0.388, phase_reset_f 0.035, drive
+2.85, rg_adapt 1.10, desc_e 1.75, desc_f 0.83, pf_gain 2.13, e2_adapt
+1.90). Saved best_walk_params_v6.json (`runner --fitted --best6`
+reproduces; verified). 10 full-22 s captures
+(v6_best_trial{0,15,16,17,21,54,86,101,102,106}.npz), all stayed up;
+winner full22 kine −60.591, duty 0.473, knee_min +10.1, cadence 1.4 Hz,
+tilt 35.3. THE LEVER THAT WORKED: unlike the phase-reset gains (v5),
+TPE ENGAGED the suppression dimension immediately and monotonically —
+top trials all carry f1_kneext_inh 0.4-0.6, and the improvement
+(−60.99 -> −59.43 eval) is carried by the knee-shape RMSE term
+(20.9 -> ~19.5) with the full-22 s score jumping to −60.4..−60.8 (v5's
+best full run was −62.6..−63.1). Swing-knee quad suppression is the
+real architectural lever so far; knee_min is still ~+10 deg
+(extension-dominant mean cycle) and cadence rose to ~1.4 Hz (ref 0.81)
+— the NEXT bottleneck is now clearly the RG duty/cadence structure, not
+the knee musculature.

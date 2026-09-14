@@ -1,0 +1,20 @@
+== A. SNS pathway-sign audit (dynamic) ==
+  baseline       : RG-E 0.643 mV  RG-F 0.011 mV  E-amp 2.93  period nan s
+  EXT_SIG=1 (g_e=1)       : RG-E 0.985 (+0.342)  RG-F -0.352 (-0.364)  period nan s
+    -> OK (expect EXT: E up / other down)
+  FLEX_SIG=1 (g_f=1)      : RG-E 0.540 (-0.103)  RG-F 0.222 (+0.210)  period nan s
+    -> OK (expect FLEX: E up / other down)
+  both g=2, EXT=1 FLEX=0.5: RG-E 0.952 (+0.310)  RG-F -0.157 (-0.169)  period nan s
+    -> OK (expect EXT: E up / other down)
+== A result: PASS ==
+== B. muscle-length sign audit (static kinematics) ==
+  group sizes r-side: hip_ext 10, hip_flex 5
+  hip=-30 deg: ext_sig +0.302  flex_vel_sig@+1deg/s +3.842
+  hip=-15 deg: ext_sig +0.211  flex_vel_sig@+1deg/s +5.135
+  hip= +0 deg: ext_sig +0.090  flex_vel_sig@+1deg/s +6.282
+  hip=+15 deg: ext_sig -0.050  flex_vel_sig@+1deg/s +7.227
+  hip=+30 deg: ext_sig -0.199  flex_vel_sig@+1deg/s +7.893
+  hip=+45 deg: ext_sig -0.350  flex_vel_sig@+1deg/s +8.100
+  hip=+60 deg: ext_sig -0.492  flex_vel_sig@+1deg/s +6.981
+== B result: PASS ==
+OVERALL: PASS
