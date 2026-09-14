@@ -201,13 +201,40 @@ Loaded automatically at session start. Keep it current; keep it lean.
     `minimizeFlxPin10mmX3.m`, `minimizeExt10mmX3.m`) call inner evaluators (`minimizeFlxPin`,
     `minimizeFlxPinX3`, `minimizeExtX3`, `minimizeExt`, `minimizeFlx`) that each carry their own
     `computeForceVector`/`Lok`/`fortz`. New (Sept 2026): two-bracket flexor method —
-    `minimizeFlxPin2brk.m` (evaluator; the 6th `transMode` arg / the driver's
-    `FLX2BRK_TRANS` env selects the convention — the laptop session's separate-file 1trans
-    evaluator was DELETED 2026-09-08 at Ben's ruling: transMode is the vehicle of record.
-    Insertion bracket: two-rotation (Z then Y) frame, K = [X1,X2,X1] (Sept-8-morning arm-1
-    runs used [X1,X2,X2]). Origin bracket at `Pbr2` (current: [-52.61, 0, 75.06]/1000,
-    Ben-set): 1trans pitch-only frame → K2 = [X2,X1,X2]; 2trans two-rotation frame →
-    K2 = [X1,X1,X2] (Ben, late 2026-09-08). `USE_BRACKET2` flag).
+    **`minimizeFlxPin.m` is the evaluator of record (2026-09-11)**: Ben's original
+    evaluator re-worked in place with the full 2brk mechanics. **Convention since
+    2026-09-13: MIXED — insertion/tibia bracket ONE-TRANSFORM (pitch-only)
+    `Tkbr = RpToTrans(RkbrZ, Pbri')` with K = [X1,X2,X1] and the 1-rotation
+    pbrBnew reconstruction; origin/hip bracket TWO-ROTATION with
+    K2 = [X1,X1,X2]** (supersedes the 2026-09-12 isotropic-K2 test and the
+    all-2trans port; the y-symmetry proof makes the tibia 1trans switch
+    numerically neutral — it is Ben's structural preference). Pbri =
+    [-48.11,-107.81,13.8]/1000, Pbr2 = [-52.61, 0, 75.06]/1000, `persistent kf`
+    data cache, +5.3° encoder offset on kf(3) (47cm; Ben moved it back from
+    kf(4) on 2026-09-12 — see data-concern note below).
+    **Test-5 pB shift (2026-09-13): env `FLX_T5_YMM`** = millimeters of permanent
+    +y offset in the INSERTION-BRACKET frame for the 42 cm BPA only
+    (`pbrBnew = [norm(pkbrB(1:2)), t5y, pkbrB(3)] + eB`). A pure knee-frame +5 mm
+    y is UNREACHABLE by thetabrB rotation (point B sits nearly straight above the
+    bracket, θ=91.8°, asin-arg 1.079); the bracket-y offset is equivalent to
+    thetabrB +4.56° ("a few degrees more") and models a permanent ~5 mm bend of
+    the bracket arm along the bending axis. Unset/0 = off. Commented 1trans
+    alternatives for the Tkbr/Thbr frames AND the pbrBnew/pbrAnew reconstructions are
+    kept in Lok (restored 2026-09-12 after Ben's pitch-only toggle experiment hit the
+    missing lines) — toggle frame AND reconstruction together. Signature unchanged
+    `(Xi0,Xi1,Xi2,idx_val)`; escape paths kept (X1=X2=kSpr=Inf → rigid; X1=X2=Inf +
+    tendon → cable-only). Port verified vs minimizeFlxPin2brk 2trans: M_p identical on
+    all 5 tests (finite Xi and escape), GoF identical on tests 1/2/5, differs only on
+    3/4 via the offset move (smoke_FlxPin2brk_port_20260911.m in Dig_out).
+    `minimizeFlxPin2brk.m` (the previous evaluator; 6th `transMode` arg / driver's
+    `FLX2BRK_TRANS` env selects 1trans|2trans — the laptop session's separate-file 1trans
+    evaluator was DELETED 2026-09-08 at Ben's ruling: transMode is the vehicle of record)
+    is now STALE: pre-mixed-convention (2trans both brackets, pre-isotropic-K2
+    [X1,X1,X2] 2trans / [X2,X1,X2] 1trans) — do not re-run it as-is. Mechanically it matches the
+    port: insertion bracket two-rotation frame K = [X1,X2,X1] (Sept-8-morning arm-1
+    runs used [X1,X2,X2]); origin bracket at `Pbr2`: 1trans pitch-only frame →
+    K2 = [X2,X1,X2]; 2trans two-rotation frame → K2 = [X1,X1,X2] (Ben, late 2026-09-08).
+    `USE_BRACKET2` flag).
     **Pbr2 applies ONLY to the pinned-knee flexor configuration** — the extensor evaluators
     (minimizeExtX3, minimizeExt) have their own independent bracket offsets; do not port Pbr2.
     + driver `minimizeFlxPin10mm_2brk.m` (env `FLX2BRK_MODE`
@@ -391,6 +418,20 @@ Scale first — the bundled IK setup consumes its `subject01_simbody.osim` outpu
   `pick`, commented `sol_actual` lines, hand-editable hardcoded k1/k2/k3, the two disp tables and
   two Mean fprintf lines) — only the evaluator call line may carry the extra evaluator arguments.
   Do not rework it into a PICK-strict or mean-of-all-tests version.
+- **Result-mat saves are FULL-WORKSPACE (Ben directive, 2026-09-12)**: bare `save(file)` — he
+  loads the mat and runs any driver section from it; figures inside the mat are accepted.
+  Every `*FlxPin10_results_202609*.mat` (root + Dig_out archives) now carries lowercase
+  `allBPA` + `numBPA` (patched 2026-09-12 via `Dig_out\patch_FlxPin10mats_allBPA_20260912.m`;
+  noT3 vintages: allBPA = [1 2 4 5], the training pool of that era).
+- **Plotting convention (Ben, 2026-09-12)** in `minimizeFlxPin10mm` / `minimizeFlxPin10mmX3`
+  color-scheme sections: his 3-line override block
+  (`% allBPA = allBPA;` / `allBPA = [1, 2, 3, 4, 5];` / `numBPA = numel(allBPA);`),
+  auto tileLabels (A),(B),… drawn bold at each tile's top-left, and the legend rule:
+  even numBPA → legend in tile (1,2); odd → first empty tile (`lg.Layout.Tile =
+  2*ceil(numBPA/2)`, e.g. tile 6 of 3×2). `minimizeFlx10mm` (1×2, different series per
+  tile) and `minimizeExt10mm` (separate 1×1 figures) keep per-tile legends — no empty
+  tile exists there; letters are auto tileLabels. Verified renders in
+  `Dig_out\plotcheck_*_20260912.png`.
 - Never casually re-run entry scripts; ask/state intent first — runs are long and results get
   overwritten.
 
@@ -436,21 +477,44 @@ Scale first — the bundled IK setup consumes its `subject01_simbody.osim` outpu
 - `Code\Matlab\Mesh_Optimization\Knee_Torque_revision_3\Knee_Torque_revision_3\README_revision_3.md`
   — detailed flexor BPA/route model doc (modes, how to run tests).
 
-- Known data concern RESOLVED (Ben, 2026-09-08): the angle-shifted test was the **flexor
-  47 cm test** — its encoder read ~5.3° low. `minimizeFlxPin2brk.m` adds +5.3° to that
-  test's experimental angles at build time (**Angle only — phiD is NOT shifted**; an
-  earlier version mistakenly shifted both, fixed late 2026-09-08). Any other script that
-  refits the 47 cm test must apply the same Angle-only shift; pre-2026-09-08 fit results
-  predate the correction.
+- Known data concern FINAL (Ben, 2026-09-12): the angle-shifted test is **#3, the
+  flexor 47 cm (kf(3))** — its encoder read ~5.3° low; correction is
+  **Angle-only (phiD NOT shifted)**, applied at build time in `minimizeFlxPin.m`
+  (Ben moved the shift back to kf(3) himself on 2026-09-12, after briefly assigning
+  it to test 4 / 40cm-tendon on 2026-09-11). HISTORY: the 2026-09-08 2brk campaign,
+  dissertation flexor pick 107, and the extensor Xi1/Xi2 lock were all fit with the
+  kf(3) shift; the 2026-09-11/12 `offT4` / `Xi1gtXi2` / `K2allX1_2folds` mats were
+  run with the kf(4) shift — remember which shift a mat carries when re-picking.
+  `minimizeFlxPin2brk.m` happens to carry the shift on kf(3) but is STALE re: the
+  2026-09-13 mixed convention (tibia 1trans + hip 2trans K2=[X1,X1,X2]).
+
+### Mixed-convention campaign COMPLETE (2026-09-13)
+
+- Config: tibia 1trans K=[X1,X2,X1] / hip 2trans K2=[X1,X1,X2]; folds holdout
+  {1,5} and {3,4} (nothing left out); Xi1>Xi2 constraint live; encoder shift on
+  kf(3). Runner `Dig_out\run_FlxPin10mm_mixT_20260913.m` (first launch lost run 1
+  at the save line to the driver-`clear`-wipes-runner-vars trap — fixed, rerun
+  deterministic). Readout: `Dig_out\Dig_FlxPin_mixT_readout_20260913.m`.
+- **Run 1 `..._20260913_2brkt_mixT_2folds.mat` (no T5 shift)**: fold 1 (train
+  {2,3,4}) best Xi0 1.279 mm / 2.551e4 / 2.556e4 ratio 0.998 (boundary); fold 2
+  (train {1,2,5}) Xi0 2.465 mm / 3.389e4 / 1.748e4 ratio 1.94 INTERIOR; pooled
+  106 rows, median ratio 1.53. pick=1 per-test RMSE 2.196/1.363/2.281/1.187/1.499,
+  FVU ≤ 0.177 — 40cm-tendon best-ever 1.187/0.023.
+- **Run 2 `..._mixT_T5y5mm_2folds.mat` (T5 +5 mm bracket-y)**: pick=1 Xi0 1.572 mm
+  / 2.695e4 / 2.434e4 ratio 1.107; fold-2 winner Xi0 pushed to 7.1 mm. Per-test
+  RMSE 2.181/1.315/2.253/1.168/**1.556**.
+- **T5-shift verdict (fixed-Xi isolation, tests 1–4 bit-identical both ways): the
+  +5 mm bracket-y offset HURTS test 5** (1.499→1.602 at run-1's pick; 1.440→1.556
+  at run-2's). Sign sweep: −2 → 1.69, −5 → 2.17 — monotonic degradation in BOTH
+  directions from zero. Test 5's residual is NOT explained by an insertion-point
+  bracket-y offset; the un-shifted pB is optimal for it. Plastic-deformation
+  allowance in that axis is unsupported by the torque data.
 
 ## Hazards — do NOT open these as source
 
-- Known data concern RESOLVED (Ben, 2026-09-08): the angle-shifted test was the **flexor
-  47 cm test** — its encoder read ~5.3° low. `minimizeFlxPin2brk.m` adds +5.3° to that
-  test's experimental angles at build time (**Angle only — phiD is NOT shifted**; an
-  earlier version mistakenly shifted both, fixed late 2026-09-08). Any other script that
-  refits the 47 cm test must apply the same Angle-only shift; pre-2026-09-08 fit results
-  predate the correction.
+- Known data concern FINAL (Ben, 2026-09-12): the angle-shifted test is **#3, the
+  flexor 47 cm (kf(3))**; +5.3° Angle-only at build time in `minimizeFlxPin.m`.
+  2026-09-11/12 offT4-family mats carry the kf(4) shift instead.
 - `Solid_Models\Biomimetics_2022-Knee_Test\Point_cloud\Tibia_copy.txt` (7.1 MB point cloud);
   `Spine_Mesh_Points.txt` (172 KB, duplicated in 3 places); `HX711*sempio.txt` (1 MB);
   any `.mat` in `Previous Optimization Code\Trial Results\` (up to 95 MB).
@@ -529,6 +593,21 @@ Scale first — the bundled IK setup consumes its `subject01_simbody.osim` outpu
   (Colors.m) AND Mesh_Optimization on path.
 
 ## Xi values for the dissertation text (SETTLED 2026-09-10, Ben-approved picks — verified by direct .mat loads)
+
+**CAVEAT (2026-09-11):** the flexor pick below (and everything downstream of it, incl. the
+extensor Xi1/Xi2 lock) was fit with the +5.3° encoder offset on the WRONG test (47 cm
+instead of 40 cm-tendon). Ben ordered a corrected re-run — `minimizeFlxPin10_results_
+20260911_2brkt_2trans_offT4.mat` (legacy minimizeFlxPin10mm driver) — which supersedes
+these for future work once Ben re-picks. Section kept as the record of what the
+dissertation text used.
+**offT4 campaign outcome (completed 2026-09-12 01:47; ran 3× deterministic — identical
+tables):** pick=1 = Xi0 ≈ 0 (1.1e-6 m) / Xi1 2.42e4 / Xi2 2.11e4 N/m, 265/265 filter pass,
+per-test RMSE 2.21/1.37/2.61/1.65/1.49 (48/46/47/40cm-t/41), all FVU ≤ 0.214. Fold 1 =
+Ben's preferred split (train {3,4,5} / holdout {1,2}): 53 candidates, Xi0 0.01–0.95 mm,
+Xi1 2.11–2.23e4, Xi2 2.41–2.95e4; best-distance candidate VALIDATES better than it trains
+(raw held-out 48cm 2.28/0.19, 46cm 1.60/0.064). Readout: `Dig_out\Dig_FlxPin_offT4_readout_
+20260912.m`. minimizeFlxPin.m restored to Ben's kf() naming (kfCache persistent wrapper),
+baseline+pick verified identical post-restore.
 
 A separate chat is updating the dissertation text with these. Sources (Testing_Data\2022_02_Festo\):
 

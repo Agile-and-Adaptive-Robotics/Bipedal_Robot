@@ -161,7 +161,7 @@ Xi1 = g(2);
 Xi2 = g(3);
 
 clear filtered_results xCols pick
-load minimizeExtPin10_results_20260819_2transforms_Z2.mat filtered_results xCols
+load minimizeExt10mmX3_results_20260910_noT3.mat filtered_results xCols
 pick = 1;
 g(4) = filtered_results(pick,xCols(4));
 Xi3 = g(4);
@@ -211,7 +211,7 @@ lb(1:3) = p1_0 + [-0.075, -0.100, -0.075];
 ub(1:3) = p1_0 + [0.030,  0.100,  0];
 
 lb(4:6) = p2_0 + [-0.100, -0.200, -0.008];
-ub(4:6) = p2_0 + [ 0.025,  0.012,  0.015];
+ub(4:6) = p2_0 + [ 0.025, -0.038,  0.015];
 
 % BPA / tendon bounds
 lb(7) = 0.415;    ub(7) = 1.200;    % rest length, m

@@ -11,7 +11,7 @@ nonlcon = @(x) nonlconExt20mm(x, ctx);
 
 objconstr = @(x) objconstrExt20mm(x, obj, nonlcon);
 
-rng default
+% rng default
 
 if isempty(gcp('nocreate'))
     parpool;
@@ -56,64 +56,84 @@ predBest = predictKneeExt20mm(xBest, ctx);
 [cBest, ~] = nonlconExt20mm(xBest, ctx);
 relativeContractionBest = predBest.bpa.Contraction(:)/predBest.KMAX;
 
-%% Run with adjusted seed
-% Section commented out if unused.
-% Earlier design, reconstructed from rounded printed values.
-% This is a trial seed, not an exact recovery of that solution.
-xSeed = [xBest(1:3), ...
-         xBest(4:6), ...
-         xBest(7), xBest(8)];
-
-Jseed = objective_KneeExt20mm(xSeed, ctx);
-cSeed = nonlconExt20mm(xSeed, ctx);
-
-boundViolation = max([ ...
-    ctx.lb(:) - xSeed(:); ...
-    xSeed(:) - ctx.ub(:)]);
-
-fprintf('Earlier-design objective = %.6g\n', Jseed);
-fprintf('Maximum nonlinear constraint = %.6g\n', max(cSeed));
-fprintf('Maximum bound violation = %.6g\n', boundViolation);
-
-% Adjust only coordinates outside the existing bounds.
-xStart = min(max(xSeed(:), ctx.lb(:)), ctx.ub(:)).';
-
-% Use the current context and objective.
-objRefine = @(x) objective_KneeExt20mm(x, ctx);
-conRefine = @(x) nonlconExt20mm(x, ctx);
-
-% Keep the new result separate from your current xBest.
-[xRefined, fRefined, exitRefined] = patternsearch( ...
-    objRefine, xStart, ...
-    [], [], [], [], ctx.lb, ctx.ub, conRefine, optsP);
-
-cRefined = conRefine(xRefined);
-
-fprintf('Refined objective = %.6g\n', fRefined);
-fprintf('Maximum nonlinear constraint = %.6g\n', max(cRefined));
-fprintf('Maximum bound violation = %.6g\n', max([ ...
-    ctx.lb(:) - xRefined(:); ...
-    xRefined(:) - ctx.ub(:)]));
-fprintf('Exit flag = %d\n', exitRefined);
-
-xBest = xRefined;
-fBest = fRefined;
-
-predBest = predictKneeExt20mm(xBest, ctx);
-[cBest, ~] = nonlconExt20mm(xBest, ctx);
-relativeContractionBest = predBest.bpa.Contraction(:)/predBest.KMAX;
-
-% Dated result capture into Results; does not overwrite prior results.
-stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
-resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
-resultFile = fullfile(resDir, sprintf('Vas_Pam_20mm_Result_%s.mat', stamp));
-XiUsed = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
-save(resultFile, ...
-    'xBest', 'xSeed', 'fBest', 'fRefined', 'exitRefined', 'exitflagG', ...
-    'outputG', 'predBest', 'cBest', 'XiUsed')
-fprintf('Saved %s\n', resultFile)
+% %% Run with adjusted seed
+% % Section commented out if unused.
+% % Earlier design, reconstructed from rounded printed values.
+% % This is a trial seed, not an exact recovery of that solution.
+% xSeed = [xBest(1:3), ...
+%          xBest(4:6), ...
+%          xBest(7), xBest(8)];
+% 
+% Jseed = objective_KneeExt20mm(xSeed, ctx);
+% cSeed = nonlconExt20mm(xSeed, ctx);
+% 
+% boundViolation = max([ ...
+%     ctx.lb(:) - xSeed(:); ...
+%     xSeed(:) - ctx.ub(:)]);
+% 
+% fprintf('Earlier-design objective = %.6g\n', Jseed);
+% fprintf('Maximum nonlinear constraint = %.6g\n', max(cSeed));
+% fprintf('Maximum bound violation = %.6g\n', boundViolation);
+% 
+% % Adjust only coordinates outside the existing bounds.
+% xStart = min(max(xSeed(:), ctx.lb(:)), ctx.ub(:)).';
+% 
+% % Use the current context and objective.
+% objRefine = @(x) objective_KneeExt20mm(x, ctx);
+% conRefine = @(x) nonlconExt20mm(x, ctx);
+% 
+% % Keep the new result separate from your current xBest.
+% [xRefined, fRefined, exitRefined] = patternsearch( ...
+%     objRefine, xStart, ...
+%     [], [], [], [], ctx.lb, ctx.ub, conRefine, optsP);
+% 
+% cRefined = conRefine(xRefined);
+% 
+% fprintf('Refined objective = %.6g\n', fRefined);
+% fprintf('Maximum nonlinear constraint = %.6g\n', max(cRefined));
+% fprintf('Maximum bound violation = %.6g\n', max([ ...
+%     ctx.lb(:) - xRefined(:); ...
+%     xRefined(:) - ctx.ub(:)]));
+% fprintf('Exit flag = %d\n', exitRefined);
+% 
+% xBest = xRefined;
+% fBest = fRefined;
+% 
+% predBest = predictKneeExt20mm(xBest, ctx);
+% [cBest, ~] = nonlconExt20mm(xBest, ctx);
+% relativeContractionBest = predBest.bpa.Contraction(:)/predBest.KMAX;
+% 
+% % Dated result capture into Results; does not overwrite prior results.
+% % Only a full Opt_run_Ext saves (optsP exists only when the optimizer
+% % stages ran in this workspace); loading a result mat and running the
+% % display section must not mint a new dated mat from an old design.
+% if exist('optsP', 'var')
+%     stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
+%     resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
+%     resultFile = fullfile(resDir, sprintf('Vas_Pam_20mm_Result_%s.mat', stamp));
+%     XiUsed = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
+%     % ctx makes the mat self-contained for display: Knee_Extensor_20mm can
+%     % load it instead of rebuilding (it still guards Xi against XiUsed).
+%     save(resultFile, ...
+%         'xBest', 'xSeed', 'fBest', 'fRefined', 'exitRefined', 'exitflagG', ...
+%         'outputG', 'predBest', 'cBest', 'XiUsed', 'ctx')
+%     fprintf('Saved %s\n', resultFile)
+%     clear optsP   % re-running the sections below must not save twice
+% end
 
 %% display results
+% Display-from-mat workflow: load a dated result mat (xBest, ctx, fBest,
+% predBest, cBest, ...) then run this section. The guard below supplies
+% the one run variable this section reads that the mat does not carry;
+% no-op during a full Opt_run_Ext.
+if ~exist('relativeContractionBest', 'var')
+    contractionForMargin = predBest.bpa.Contraction;
+    if iscell(contractionForMargin)
+        contractionForMargin = contractionForMargin{1};
+    end
+    relativeContractionBest = contractionForMargin(:)/predBest.KMAX;
+end
+
 fprintf('\n========== OPTIMIZED DESIGN VALUES ==========\n')
 
 fprintf('\nObjective value:\n')
