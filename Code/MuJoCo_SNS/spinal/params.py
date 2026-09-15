@@ -39,6 +39,9 @@ TAU = dict(
     ib_exc=0.05,    # group Ib load-sharing interneuron
     descend=0.10,   # descending drive smoothing
     preset=0.04,    # v5 phase-reset interneurons (hip-signal input stage)
+    preset_adapt=0.08,  # v10 fast adaptation on PRESET (onset detection:
+                        # tau ~ 2x the step dt*25 -> brief pulse at signal
+                        # onset instead of a tonic bias)
 )
 
 # ------------------------------------------------------------- synapse conductances
@@ -98,6 +101,13 @@ G = dict(
     # MN->RC 0.5 exc, RC->MN 0.5 inh, RC<->RC 0.5 inh). Gain applies to
     # RC->homonymous-MN and RC<->RC; topology built only when > 0.
     renshaw=0.0,
+    # Ankle standing-tone trim during walking (2026-09-14): the soleus/
+    # tib_post posture overrides held a ~-45 deg PF ankle set-point
+    # through gait (the tiptoe offset in the v9 overlay). This factor
+    # multiplies the POST bias of ankle_pf-group muscles as drive rises:
+    # 1.0 = v9 behavior (identical), 0 = no standing PF tone while
+    # walking (physiologic: soleus tonic EMG drops with locomotor drive).
+    ankle_post_walk_trim=1.0,
 )
 
 # Extra gains for the phase-reset pathways (not searched by default; the
@@ -105,6 +115,8 @@ G = dict(
 PHASE_RESET = dict(
     inh=1.0,             # inhibitory branch scale relative to excitatory
     stance_gate=(0.3, 0.7),  # ext-signal gate = a + b * stance (II-style)
+    adapt_g=1.5,         # v10 PRESET fast-adaptation loop gain (onset
+                         # detection: PRESET -> PREA -> PRESET, fast tau)
 )
 
 # ------------------------------------------------------------- afferent encoding gains

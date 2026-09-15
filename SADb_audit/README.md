@@ -422,7 +422,11 @@ update call per batch, and verified by record-id re-pull (every field echo match
 table = 532. 363 of the 383 rest-import records remain. **Batch 3 = CSV rows 11-20**
 (LWWSHR63 Sivertsen 2016 … WA46PM2Y Duysens 2013 flexion synergy). Audit subagent due after
 batch 5. Per-row details, judgment calls, and verification lines: `curation_log.csv`
-(one row per paper + WORKFLOW rows; field meanings in its header row).
+(one row per paper + WORKFLOW rows; field meanings in its header row)
+
+### How to read curation_log.csv (for Ben)
+
+Each row is one paper. Left to right: date, batch number (1-5 = curation batches; RR = Research-Rabbit discovery; VV = VOSviewer; PDFS/AUTHORS/RULINGS = maintenance passes), the Zotero key, the Airtable record id, a short title, then yes/no "note written", the Animal tags, the Feedback links, and a free-text column saying where the paper's text came from and anything Ben must rule on. Rows whose zotero_key is WORKFLOW are not papers - they are milestone/verification notes and your rulings. For the current backlog state, read only the WORKFLOW rows..
 
 ## LAPTOP SESSION 2026-09-12 (DESKTOP-5Q16KE9) — batch 3 READY but NOT WRITTEN; RR digest built
 

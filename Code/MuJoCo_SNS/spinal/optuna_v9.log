@@ -1,0 +1,744 @@
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+seeded v8 hand-pose winner into v8b (normal.mot pose, 16 s eval)
+enqueued seed trial
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.72], >0.1: 15 muscles
+  top: add_long_l=0.72, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.36, glut_min2_l=0.34, pect_l=0.34, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=0 run=eval kine_score=-94.562 duty=0.205 knee_min=-49.66 cadence=0.364 stayed_up=True
+NEW GLOBAL BEST -94.562 (trial 0) - running full 22 s capture
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.72], >0.1: 15 muscles
+  top: add_long_l=0.72, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.36, glut_min2_l=0.34, pect_l=0.34, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=     125.4 max|qvel|=   1.85 ncon=  8 com_z=0.910 com_x=-0.157
+t=  1.50 max|qacc|=     409.0 max|qvel|=   1.46 ncon=  5 com_z=0.906 com_x=-0.146
+t=  2.00 max|qacc|=     134.5 max|qvel|=   0.95 ncon=  5 com_z=0.894 com_x=-0.137
+t=  2.50 max|qacc|=      81.4 max|qvel|=   0.74 ncon=  5 com_z=0.909 com_x=-0.139
+t=  3.00 max|qacc|=      44.7 max|qvel|=   0.76 ncon=  5 com_z=0.912 com_x=-0.144
+t=  3.50 max|qacc|=     102.8 max|qvel|=   1.36 ncon=  2 com_z=0.912 com_x=-0.142
+t=  4.00 max|qacc|=      18.2 max|qvel|=   0.47 ncon=  2 com_z=0.906 com_x=-0.139
+t=  4.50 max|qacc|=      67.1 max|qvel|=   0.35 ncon=  3 com_z=0.895 com_x=-0.135
+t=  5.00 max|qacc|=      37.6 max|qvel|=   0.73 ncon=  6 com_z=0.906 com_x=-0.142
+t=  5.50 max|qacc|=      11.1 max|qvel|=   0.83 ncon=  4 com_z=0.917 com_x=-0.158
+t=  6.00 max|qacc|=      54.5 max|qvel|=   2.07 ncon=  5 com_z=0.911 com_x=-0.168
+t=  6.50 max|qacc|=      15.5 max|qvel|=   0.84 ncon=  6 com_z=0.902 com_x=-0.134
+t=  7.00 max|qacc|=     166.5 max|qvel|=   2.33 ncon=  6 com_z=0.901 com_x=-0.130
+t=  7.50 max|qacc|=      30.3 max|qvel|=   0.97 ncon=  4 com_z=0.918 com_x=-0.147
+t=  8.00 max|qacc|=     137.0 max|qvel|=   4.62 ncon=  3 com_z=0.907 com_x=-0.152
+t=  8.50 max|qacc|=     217.8 max|qvel|=   1.79 ncon=  3 com_z=0.919 com_x=-0.150
+t=  9.00 max|qacc|=       2.9 max|qvel|=   0.59 ncon=  6 com_z=0.897 com_x=-0.123
+t=  9.50 max|qacc|=      16.5 max|qvel|=   0.58 ncon=  5 com_z=0.902 com_x=-0.141
+t= 10.00 max|qacc|=      29.7 max|qvel|=   0.73 ncon=  3 com_z=0.919 com_x=-0.144
+t= 10.50 max|qacc|=      67.9 max|qvel|=   1.96 ncon=  5 com_z=0.903 com_x=-0.158
+t= 11.00 max|qacc|=      29.9 max|qvel|=   0.91 ncon=  7 com_z=0.915 com_x=-0.144
+t= 11.50 max|qacc|=      84.2 max|qvel|=   5.17 ncon=  7 com_z=0.896 com_x=-0.120
+t= 12.00 max|qacc|=      83.5 max|qvel|=   0.75 ncon=  4 com_z=0.902 com_x=-0.153
+t= 12.50 max|qacc|=      23.6 max|qvel|=   0.72 ncon=  3 com_z=0.918 com_x=-0.145
+t= 13.00 max|qacc|=      15.1 max|qvel|=   1.60 ncon=  6 com_z=0.913 com_x=-0.153
+t= 13.50 max|qacc|=      25.6 max|qvel|=   0.45 ncon=  6 com_z=0.908 com_x=-0.125
+t= 14.00 max|qacc|=     121.2 max|qvel|=   1.91 ncon=  5 com_z=0.901 com_x=-0.125
+t= 14.50 max|qacc|=      28.1 max|qvel|=   0.66 ncon=  4 com_z=0.917 com_x=-0.146
+t= 15.00 max|qacc|=     484.0 max|qvel|=   3.55 ncon=  6 com_z=0.904 com_x=-0.146
+t= 15.50 max|qacc|=      13.3 max|qvel|=   1.14 ncon=  5 com_z=0.920 com_x=-0.140
+t= 16.00 max|qacc|=     380.8 max|qvel|=   5.11 ncon=  3 com_z=0.903 com_x=-0.125
+t= 16.50 max|qacc|=     105.7 max|qvel|=   0.58 ncon=  5 com_z=0.912 com_x=-0.123
+t= 17.00 max|qacc|=      29.6 max|qvel|=   0.41 ncon=  5 com_z=0.915 com_x=-0.114
+t= 17.50 max|qacc|=      53.4 max|qvel|=   0.22 ncon=  6 com_z=0.912 com_x=-0.114
+t= 18.00 max|qacc|=      51.7 max|qvel|=   0.72 ncon=  5 com_z=0.912 com_x=-0.108
+t= 18.50 max|qacc|=      87.3 max|qvel|=   0.28 ncon=  6 com_z=0.908 com_x=-0.109
+t= 19.00 max|qacc|=      74.6 max|qvel|=   0.81 ncon=  5 com_z=0.909 com_x=-0.109
+t= 19.50 max|qacc|=     163.7 max|qvel|=   1.83 ncon=  7 com_z=0.910 com_x=-0.108
+t= 20.00 max|qacc|=      79.6 max|qvel|=   0.89 ncon=  6 com_z=0.914 com_x=-0.112
+t= 20.50 max|qacc|=       8.4 max|qvel|=   0.63 ncon=  6 com_z=0.913 com_x=-0.112
+t= 21.00 max|qacc|=     139.2 max|qvel|=   0.79 ncon=  5 com_z=0.910 com_x=-0.110
+t= 21.50 max|qacc|=      36.7 max|qvel|=   1.06 ncon=  6 com_z=0.915 com_x=-0.111
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.89 m, final 0.91 m  (stayed up)
+COM x: min -0.17 max -0.11 final -0.11 m
+COM y: min -0.093 max +0.044 m
+RG_F_r bursts during walk window: 5
+RG_r: cycles in window 5, period 2.31 s (0.43 Hz), E-duty 0.12
+RG_l: cycles in window 5, period 2.31 s (0.43 Hz), E-duty 0.05
+peak ctrl: [0.36 0.71 0.69 0.71 0.5  0.64 0.45 0.44 0.5  0.22 0.39 0.78 0.75 0.64
+ 0.5  0.61 0.56 0.46 0.51 0.2 ] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r         16.8 ..    56.5 deg
+  knee_angle_r         -49.6 ..    10.1 deg
+  ankle_angle_r        -64.5 ..     7.9 deg
+  hip_adduction_r       -7.9 ..    13.2 deg
+  subtalar_angle_r      -2.5 ..    43.3 deg
+  hip_flexion_l        -16.6 ..     4.9 deg
+  knee_angle_l         -19.2 ..    13.3 deg
+  ankle_angle_l        -51.0 ..     9.8 deg
+  hip_adduction_l      -11.9 ..     9.2 deg
+  subtalar_angle_l      -3.5 ..    40.0 deg
+  pelvis_tilt           -2.0 ..    16.9 deg
+  pelvis_list           -5.5 ..    14.9 deg
+  pelvis_rotation        1.4 ..     5.6 deg
+saved spinal_run.npz
+saved spinal_run.png
+csv: trial=0 run=full22 kine_score=-94.745 duty=0.183 knee_min=-48.95 cadence=0.400 stayed_up=True
+full22 capture: trial 0 kine_score -94.745 -> v9_best_trial0.npz
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.74], >0.1: 16 muscles
+  top: add_long_l=0.74, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.39, glut_min1_l=0.39, glut_min2_l=0.37, pect_l=0.35, ext_dig_l=0.27
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=1 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.79], >0.1: 25 muscles
+  top: add_long_l=0.79, tib_ant_r=0.62, tib_ant_l=0.47, glut_min1_l=0.47, glut_min2_l=0.46, ext_dig_r=0.42, pect_l=0.39, glut_min3_l=0.32
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=2 run=eval kine_score=-82.691 duty=0.444 knee_min=-83.09 cadence=0.818 stayed_up=True
+NEW GLOBAL BEST -82.691 (trial 2) - running full 22 s capture
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.79], >0.1: 25 muscles
+  top: add_long_l=0.79, tib_ant_r=0.62, tib_ant_l=0.47, glut_min1_l=0.47, glut_min2_l=0.46, ext_dig_r=0.42, pect_l=0.39, glut_min3_l=0.32
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      86.4 max|qvel|=   0.87 ncon=  9 com_z=0.903 com_x=-0.170
+t=  1.50 max|qacc|=      25.0 max|qvel|=   1.37 ncon=  7 com_z=0.878 com_x=-0.144
+t=  2.00 max|qacc|=      26.5 max|qvel|=   1.22 ncon=  5 com_z=0.877 com_x=-0.134
+t=  2.50 max|qacc|=      26.2 max|qvel|=   1.34 ncon=  7 com_z=0.904 com_x=-0.135
+t=  3.00 max|qacc|=      51.1 max|qvel|=   0.68 ncon=  7 com_z=0.904 com_x=-0.146
+t=  3.50 max|qacc|=      61.9 max|qvel|=   3.50 ncon=  5 com_z=0.896 com_x=-0.144
+t=  4.00 max|qacc|=      42.2 max|qvel|=   4.56 ncon=  7 com_z=0.898 com_x=-0.157
+t=  4.50 max|qacc|=      35.2 max|qvel|=   1.58 ncon=  6 com_z=0.900 com_x=-0.155
+t=  5.00 max|qacc|=     192.1 max|qvel|=   0.87 ncon=  7 com_z=0.893 com_x=-0.161
+t=  5.50 max|qacc|=      23.0 max|qvel|=   1.49 ncon=  4 com_z=0.909 com_x=-0.161
+t=  5.78 precursor: max|qacc|=736 max|qvel|=30.7 (dof 14), ncon=4, max ctrl=0.71
+t=  5.78 precursor: max|qacc|=103 max|qvel|=30.9 (dof 14), ncon=4, max ctrl=0.71
+t=  5.79 precursor: max|qacc|=486 max|qvel|=30.1 (dof 14), ncon=4, max ctrl=0.72
+t=  6.00 max|qacc|=      61.5 max|qvel|=   1.47 ncon=  4 com_z=0.905 com_x=-0.132
+t=  6.50 max|qacc|=      11.6 max|qvel|=   0.86 ncon=  4 com_z=0.903 com_x=-0.153
+t=  6.93 precursor: max|qacc|=529 max|qvel|=30 (dof 14), ncon=4, max ctrl=0.75
+t=  7.00 max|qacc|=     153.9 max|qvel|=   6.32 ncon=  4 com_z=0.902 com_x=-0.129
+t=  7.50 max|qacc|=      54.7 max|qvel|=   3.33 ncon=  4 com_z=0.899 com_x=-0.140
+t=  8.00 max|qacc|=     240.5 max|qvel|=   3.76 ncon=  4 com_z=0.906 com_x=-0.123
+t=  8.05 precursor: max|qacc|=1.13e+03 max|qvel|=31.8 (dof 14), ncon=3, max ctrl=0.75
+t=  8.06 precursor: max|qacc|=460 max|qvel|=32.7 (dof 14), ncon=3, max ctrl=0.75
+t=  8.06 precursor: max|qacc|=180 max|qvel|=32.5 (dof 14), ncon=3, max ctrl=0.75
+t=  8.06 precursor: max|qacc|=759 max|qvel|=31.2 (dof 14), ncon=3, max ctrl=0.75
+t=  8.50 max|qacc|=      38.3 max|qvel|=   6.51 ncon=  4 com_z=0.896 com_x=-0.123
+t=  9.00 max|qacc|=     411.6 max|qvel|=   0.95 ncon=  3 com_z=0.906 com_x=-0.116
+t=  9.50 max|qacc|=     163.0 max|qvel|=   4.71 ncon=  6 com_z=0.893 com_x=-0.107
+t= 10.00 max|qacc|=       5.3 max|qvel|=   0.73 ncon=  3 com_z=0.899 com_x=-0.117
+t= 10.50 max|qacc|=      50.2 max|qvel|=   1.00 ncon=  3 com_z=0.898 com_x=-0.089
+t= 11.00 max|qacc|=       8.0 max|qvel|=   0.67 ncon=  3 com_z=0.893 com_x=-0.117
+t= 11.50 max|qacc|=      71.3 max|qvel|=   5.35 ncon=  3 com_z=0.900 com_x=-0.086
+t= 12.00 max|qacc|=      52.5 max|qvel|=   3.21 ncon=  3 com_z=0.891 com_x=-0.112
+t= 12.50 max|qacc|=     141.3 max|qvel|=   5.35 ncon=  4 com_z=0.905 com_x=-0.090
+t= 12.55 precursor: max|qacc|=281 max|qvel|=30.3 (dof 14), ncon=3, max ctrl=0.75
+t= 13.00 max|qacc|=      25.0 max|qvel|=   6.76 ncon=  4 com_z=0.892 com_x=-0.100
+t= 13.50 max|qacc|=     141.1 max|qvel|=   0.88 ncon=  4 com_z=0.904 com_x=-0.093
+t= 13.66 precursor: max|qacc|=3.17e+03 max|qvel|=30 (dof 14), ncon=3, max ctrl=0.75
+t= 13.67 precursor: max|qacc|=1.86e+03 max|qvel|=31.1 (dof 14), ncon=3, max ctrl=0.75
+t= 13.67 precursor: max|qacc|=1.15e+03 max|qvel|=33.3 (dof 14), ncon=3, max ctrl=0.75
+t= 13.67 precursor: max|qacc|=447 max|qvel|=34.2 (dof 14), ncon=3, max ctrl=0.75
+t= 13.67 precursor: max|qacc|=220 max|qvel|=33.9 (dof 14), ncon=3, max ctrl=0.75
+t= 13.67 precursor: max|qacc|=825 max|qvel|=32.5 (dof 14), ncon=3, max ctrl=0.75
+t= 13.68 precursor: max|qacc|=1.35e+03 max|qvel|=30.1 (dof 14), ncon=3, max ctrl=0.75
+t= 14.00 max|qacc|=     241.6 max|qvel|=   2.96 ncon=  5 com_z=0.891 com_x=-0.089
+t= 14.50 max|qacc|=       5.3 max|qvel|=   0.69 ncon=  3 com_z=0.897 com_x=-0.101
+t= 14.78 precursor: max|qacc|=3.18e+03 max|qvel|=30 (dof 14), ncon=3, max ctrl=0.75
+t= 14.79 precursor: max|qacc|=1.87e+03 max|qvel|=31.1 (dof 14), ncon=3, max ctrl=0.75
+t= 14.79 precursor: max|qacc|=1.16e+03 max|qvel|=33.3 (dof 14), ncon=3, max ctrl=0.75
+t= 14.79 precursor: max|qacc|=455 max|qvel|=34.2 (dof 14), ncon=3, max ctrl=0.75
+t= 14.79 precursor: max|qacc|=214 max|qvel|=33.9 (dof 14), ncon=3, max ctrl=0.75
+t= 14.80 precursor: max|qacc|=820 max|qvel|=32.5 (dof 14), ncon=3, max ctrl=0.75
+t= 14.80 precursor: max|qacc|=1.34e+03 max|qvel|=30.2 (dof 14), ncon=3, max ctrl=0.75
+t= 15.00 max|qacc|=      47.1 max|qvel|=   1.51 ncon=  2 com_z=0.897 com_x=-0.076
+t= 15.50 max|qacc|=      14.7 max|qvel|=   1.09 ncon=  3 com_z=0.893 com_x=-0.106
+t= 16.00 max|qacc|=      42.9 max|qvel|=   3.49 ncon=  5 com_z=0.901 com_x=-0.081
+t= 16.50 max|qacc|=      26.6 max|qvel|=   0.93 ncon=  5 com_z=0.905 com_x=-0.090
+t= 17.00 max|qacc|=       7.0 max|qvel|=   0.32 ncon=  6 com_z=0.905 com_x=-0.089
+t= 17.50 max|qacc|=       5.7 max|qvel|=   0.18 ncon=  6 com_z=0.904 com_x=-0.092
+t= 18.00 max|qacc|=      14.3 max|qvel|=   0.53 ncon=  5 com_z=0.903 com_x=-0.098
+t= 18.50 max|qacc|=      36.8 max|qvel|=   1.76 ncon=  7 com_z=0.903 com_x=-0.098
+t= 19.00 max|qacc|=       5.9 max|qvel|=   0.79 ncon=  7 com_z=0.905 com_x=-0.101
+t= 19.50 max|qacc|=      25.0 max|qvel|=   0.78 ncon=  6 com_z=0.903 com_x=-0.108
+t= 20.00 max|qacc|=      15.0 max|qvel|=   0.54 ncon=  6 com_z=0.901 com_x=-0.113
+t= 20.50 max|qacc|=      86.2 max|qvel|=   1.69 ncon=  6 com_z=0.902 com_x=-0.110
+t= 21.00 max|qacc|=      17.3 max|qvel|=   0.76 ncon=  6 com_z=0.904 com_x=-0.109
+t= 21.50 max|qacc|=      16.2 max|qvel|=   0.75 ncon=  6 com_z=0.903 com_x=-0.114
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.87 m, final 0.90 m  (stayed up)
+COM x: min -0.17 max -0.07 final -0.12 m
+COM y: min -0.108 max -0.003 m
+RG_F_r bursts during walk window: 0
+RG_r: cycles in window 9, period 1.12 s (0.89 Hz), E-duty 0.18
+RG_l: cycles in window 10, period 1.13 s (0.89 Hz), E-duty 0.08
+peak ctrl: [0.36 0.76 0.64 0.85 0.53 0.75 0.66 0.5  0.53 0.29 0.31 0.75 0.64 0.77
+ 0.49 0.74 0.64 0.46 0.5  0.26] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r         10.3 ..    48.6 deg
+  knee_angle_r         -89.4 ..    -3.9 deg
+  ankle_angle_r        -52.4 ..     1.3 deg
+  hip_adduction_r       -2.4 ..    13.3 deg
+  subtalar_angle_r       0.0 ..    40.7 deg
+  hip_flexion_l        -16.6 ..    10.4 deg
+  knee_angle_l          -8.2 ..    12.1 deg
+  ankle_angle_l        -46.5 ..     9.8 deg
+  hip_adduction_l      -13.1 ..     7.2 deg
+  subtalar_angle_l      -0.3 ..    12.7 deg
+  pelvis_tilt           -1.9 ..    23.1 deg
+  pelvis_list           -0.5 ..    13.8 deg
+  pelvis_rotation        2.4 ..     6.5 deg
+saved spinal_run.npz
+saved spinal_run.png
+csv: trial=2 run=full22 kine_score=-82.340 duty=0.268 knee_min=-82.75 cadence=0.800 stayed_up=True
+full22 capture: trial 2 kine_score -82.340 -> v9_best_trial2.npz
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.33, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=3 run=eval kine_score=-81.370 duty=0.182 knee_min=-77.63 cadence=0.636 stayed_up=True
+NEW GLOBAL BEST -81.370 (trial 3) - running full 22 s capture
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.33, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      15.7 max|qvel|=   1.08 ncon=  5 com_z=0.917 com_x=-0.142
+t=  1.50 max|qacc|=     492.4 max|qvel|=   0.68 ncon=  5 com_z=0.929 com_x=-0.123
+t=  2.00 max|qacc|=     121.6 max|qvel|=   0.67 ncon=  5 com_z=0.927 com_x=-0.123
+t=  2.50 max|qacc|=      95.0 max|qvel|=   0.56 ncon=  5 com_z=0.924 com_x=-0.126
+t=  3.00 max|qacc|=      32.4 max|qvel|=   0.77 ncon=  5 com_z=0.918 com_x=-0.142
+t=  3.50 max|qacc|=     129.4 max|qvel|=   1.18 ncon=  4 com_z=0.916 com_x=-0.139
+t=  4.00 max|qacc|=     238.5 max|qvel|=   2.41 ncon=  1 com_z=0.921 com_x=-0.127
+t=  4.50 max|qacc|=     518.4 max|qvel|=   8.32 ncon=  2 com_z=0.925 com_x=-0.127
+t=  5.00 max|qacc|=      84.4 max|qvel|=   2.84 ncon=  2 com_z=0.924 com_x=-0.077
+t=  5.50 max|qacc|=      30.5 max|qvel|=   1.17 ncon=  1 com_z=0.920 com_x=-0.089
+t=  6.00 max|qacc|=     136.7 max|qvel|=   3.69 ncon=  3 com_z=0.915 com_x=-0.088
+t=  6.50 max|qacc|=      38.1 max|qvel|=   1.18 ncon=  4 com_z=0.924 com_x=-0.074
+t=  7.00 max|qacc|=     158.1 max|qvel|=   1.99 ncon=  1 com_z=0.920 com_x=-0.077
+t=  7.50 max|qacc|=     435.4 max|qvel|=   6.93 ncon=  2 com_z=0.919 com_x=-0.078
+t=  8.00 max|qacc|=      47.1 max|qvel|=   1.18 ncon=  4 com_z=0.921 com_x=-0.062
+t=  8.50 max|qacc|=     167.7 max|qvel|=   0.88 ncon=  4 com_z=0.921 com_x=-0.068
+t=  9.00 max|qacc|=    1559.5 max|qvel|=   6.21 ncon=  2 com_z=0.921 com_x=-0.073
+t=  9.50 max|qacc|=     287.0 max|qvel|=   2.07 ncon=  3 com_z=0.920 com_x=-0.060
+t= 10.00 max|qacc|=     181.3 max|qvel|=   1.16 ncon=  3 com_z=0.920 com_x=-0.066
+t= 10.50 max|qacc|=    2313.6 max|qvel|=  25.74 ncon=  2 com_z=0.921 com_x=-0.072
+t= 11.00 max|qacc|=      17.6 max|qvel|=   1.98 ncon=  3 com_z=0.920 com_x=-0.060
+t= 11.50 max|qacc|=      24.1 max|qvel|=   1.26 ncon=  1 com_z=0.919 com_x=-0.064
+t= 12.00 max|qacc|=      73.1 max|qvel|=   8.94 ncon=  3 com_z=0.924 com_x=-0.072
+t= 12.50 max|qacc|=      13.8 max|qvel|=   0.65 ncon=  3 com_z=0.921 com_x=-0.059
+t= 13.00 max|qacc|=      24.3 max|qvel|=   0.97 ncon=  1 com_z=0.917 com_x=-0.065
+t= 13.50 max|qacc|=     131.1 max|qvel|=   9.93 ncon=  2 com_z=0.923 com_x=-0.071
+t= 14.00 max|qacc|=      47.0 max|qvel|=   0.31 ncon=  3 com_z=0.921 com_x=-0.059
+t= 14.50 max|qacc|=      23.2 max|qvel|=   1.14 ncon=  1 com_z=0.917 com_x=-0.065
+t= 15.00 max|qacc|=     277.5 max|qvel|=   4.21 ncon=  1 com_z=0.923 com_x=-0.071
+t= 15.50 max|qacc|=      65.2 max|qvel|=   0.89 ncon=  2 com_z=0.922 com_x=-0.060
+t= 16.00 max|qacc|=     325.0 max|qvel|=   1.82 ncon=  1 com_z=0.918 com_x=-0.069
+t= 16.50 max|qacc|=     156.2 max|qvel|=   2.70 ncon=  2 com_z=0.922 com_x=-0.077
+t= 17.00 max|qacc|=      18.5 max|qvel|=   1.64 ncon=  3 com_z=0.922 com_x=-0.091
+t= 17.50 max|qacc|=     121.4 max|qvel|=   1.47 ncon=  3 com_z=0.920 com_x=-0.100
+t= 18.00 max|qacc|=     117.0 max|qvel|=   1.66 ncon=  3 com_z=0.921 com_x=-0.108
+t= 18.50 max|qacc|=     289.6 max|qvel|=   1.45 ncon=  4 com_z=0.921 com_x=-0.113
+t= 19.00 max|qacc|=     551.5 max|qvel|=   1.26 ncon=  4 com_z=0.921 com_x=-0.118
+t= 19.50 max|qacc|=      18.8 max|qvel|=   2.02 ncon=  5 com_z=0.922 com_x=-0.121
+t= 20.00 max|qacc|=      30.1 max|qvel|=   1.90 ncon=  5 com_z=0.921 com_x=-0.124
+t= 20.50 max|qacc|=      25.4 max|qvel|=   1.40 ncon=  5 com_z=0.923 com_x=-0.126
+t= 21.00 max|qacc|=      22.7 max|qvel|=   2.46 ncon=  5 com_z=0.924 com_x=-0.130
+t= 21.50 max|qacc|=      22.0 max|qvel|=   2.10 ncon=  5 com_z=0.925 com_x=-0.132
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.91 m, final 0.92 m  (stayed up)
+COM x: min -0.14 max -0.06 final -0.13 m
+COM y: min -0.050 max +0.028 m
+RG_F_r bursts during walk window: 7
+RG_r: cycles in window 8, period 1.51 s (0.66 Hz), E-duty 0.10
+RG_l: cycles in window 8, period 1.51 s (0.66 Hz), E-duty 0.06
+peak ctrl: [0.34 0.63 0.62 0.67 0.44 0.38 0.44 0.37 0.45 0.14 0.33 0.62 0.62 0.6
+ 0.43 0.4  0.48 0.36 0.44 0.13] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r         -5.4 ..    54.1 deg
+  knee_angle_r         -84.8 ..    10.5 deg
+  ankle_angle_r        -62.1 ..    -1.7 deg
+  hip_adduction_r        0.6 ..    10.0 deg
+  subtalar_angle_r       0.0 ..    29.7 deg
+  hip_flexion_l        -26.2 ..    22.2 deg
+  knee_angle_l         -79.5 ..    10.9 deg
+  ankle_angle_l        -72.7 ..    14.4 deg
+  hip_adduction_l       -5.1 ..    14.1 deg
+  subtalar_angle_l      -3.1 ..    41.2 deg
+  pelvis_tilt           -2.8 ..    14.4 deg
+  pelvis_list           -6.9 ..     8.0 deg
+  pelvis_rotation        0.6 ..     4.6 deg
+saved spinal_run.npz
+saved spinal_run.png
+csv: trial=3 run=full22 kine_score=-81.488 duty=0.155 knee_min=-77.68 cadence=0.700 stayed_up=True
+full22 capture: trial 3 kine_score -81.488 -> v9_best_trial3.npz
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.75], >0.1: 18 muscles
+  top: add_long_l=0.75, tib_ant_r=0.61, tib_ant_l=0.47, glut_min1_l=0.41, ext_dig_r=0.40, glut_min2_l=0.39, pect_l=0.36, ext_dig_l=0.27
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=4 run=eval kine_score=-91.983 duty=0.188 knee_min=-79.66 cadence=0.909 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 15 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=5 run=eval kine_score=-67.530 duty=0.213 knee_min=-78.61 cadence=0.455 stayed_up=True
+NEW GLOBAL BEST -67.530 (trial 5) - running full 22 s capture
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 15 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=     294.1 max|qvel|=   1.23 ncon=  9 com_z=0.914 com_x=-0.155
+t=  1.50 max|qacc|=      45.9 max|qvel|=   1.08 ncon=  5 com_z=0.910 com_x=-0.147
+t=  2.00 max|qacc|=      75.3 max|qvel|=   0.84 ncon=  5 com_z=0.905 com_x=-0.139
+t=  2.50 max|qacc|=      70.5 max|qvel|=   0.93 ncon=  5 com_z=0.911 com_x=-0.137
+t=  3.00 max|qacc|=      17.5 max|qvel|=   0.70 ncon=  5 com_z=0.917 com_x=-0.143
+t=  3.50 max|qacc|=      12.3 max|qvel|=   0.39 ncon=  4 com_z=0.910 com_x=-0.134
+t=  4.00 max|qacc|=      16.0 max|qvel|=   0.46 ncon=  4 com_z=0.915 com_x=-0.148
+t=  4.50 max|qacc|=     722.4 max|qvel|=   3.77 ncon=  4 com_z=0.915 com_x=-0.144
+t=  5.00 max|qacc|=      13.6 max|qvel|=   2.16 ncon=  3 com_z=0.917 com_x=-0.155
+t=  5.50 max|qacc|=      70.0 max|qvel|=   5.89 ncon=  3 com_z=0.901 com_x=-0.140
+t=  5.54 precursor: max|qacc|=2.09e+03 max|qvel|=31.9 (dof 14), ncon=2, max ctrl=0.76
+t=  5.54 precursor: max|qacc|=1.33e+03 max|qvel|=34.4 (dof 14), ncon=2, max ctrl=0.76
+t=  5.54 precursor: max|qacc|=578 max|qvel|=35.6 (dof 14), ncon=2, max ctrl=0.75
+t=  5.55 precursor: max|qacc|=154 max|qvel|=35.4 (dof 14), ncon=2, max ctrl=0.75
+t=  5.55 precursor: max|qacc|=768 max|qvel|=34.1 (dof 14), ncon=2, max ctrl=0.75
+t=  5.55 precursor: max|qacc|=1.32e+03 max|qvel|=31.8 (dof 14), ncon=2, max ctrl=0.75
+t=  6.00 max|qacc|=      55.2 max|qvel|=   4.04 ncon=  4 com_z=0.913 com_x=-0.101
+t=  6.50 max|qacc|=      37.0 max|qvel|=   5.01 ncon=  4 com_z=0.898 com_x=-0.111
+t=  7.00 max|qacc|=       6.0 max|qvel|=   1.02 ncon=  2 com_z=0.922 com_x=-0.114
+t=  7.47 precursor: max|qacc|=2.22e+03 max|qvel|=30.7 (dof 14), ncon=1, max ctrl=0.74
+t=  7.47 precursor: max|qacc|=1.46e+03 max|qvel|=33.5 (dof 14), ncon=1, max ctrl=0.74
+t=  7.48 precursor: max|qacc|=711 max|qvel|=34.8 (dof 14), ncon=1, max ctrl=0.74
+t=  7.48 precursor: max|qacc|=328 max|qvel|=34.9 (dof 14), ncon=1, max ctrl=0.74
+t=  7.48 precursor: max|qacc|=649 max|qvel|=33.8 (dof 14), ncon=1, max ctrl=0.75
+t=  7.48 precursor: max|qacc|=1.22e+03 max|qvel|=31.7 (dof 14), ncon=1, max ctrl=0.75
+t=  7.50 max|qacc|=    1873.9 max|qvel|=   6.29 ncon=  1 com_z=0.908 com_x=-0.092
+t=  8.00 max|qacc|=     349.2 max|qvel|=   4.24 ncon=  1 com_z=0.914 com_x=-0.075
+t=  8.50 max|qacc|=     106.5 max|qvel|=   5.08 ncon=  5 com_z=0.902 com_x=-0.084
+t=  9.00 max|qacc|=       6.9 max|qvel|=   0.97 ncon=  2 com_z=0.922 com_x=-0.090
+t=  9.47 precursor: max|qacc|=1.24e+03 max|qvel|=31.9 (dof 14), ncon=1, max ctrl=0.65
+t=  9.47 precursor: max|qacc|=531 max|qvel|=32.9 (dof 14), ncon=1, max ctrl=0.65
+t=  9.48 precursor: max|qacc|=135 max|qvel|=32.7 (dof 14), ncon=1, max ctrl=0.65
+t=  9.48 precursor: max|qacc|=730 max|qvel|=31.5 (dof 14), ncon=1, max ctrl=0.65
+t=  9.50 max|qacc|=    1435.4 max|qvel|=   6.64 ncon=  1 com_z=0.907 com_x=-0.069
+t= 10.00 max|qacc|=     350.8 max|qvel|=   3.47 ncon=  1 com_z=0.918 com_x=-0.060
+t= 10.50 max|qacc|=      30.6 max|qvel|=   4.62 ncon=  4 com_z=0.902 com_x=-0.074
+t= 11.00 max|qacc|=      35.8 max|qvel|=   1.13 ncon=  2 com_z=0.922 com_x=-0.077
+t= 11.50 max|qacc|=     466.1 max|qvel|=   5.59 ncon=  1 com_z=0.902 com_x=-0.062
+t= 12.00 max|qacc|=     650.2 max|qvel|=   1.46 ncon=  1 com_z=0.918 com_x=-0.057
+t= 12.50 max|qacc|=      42.8 max|qvel|=   4.66 ncon=  4 com_z=0.904 com_x=-0.073
+t= 13.00 max|qacc|=      34.7 max|qvel|=   1.30 ncon=  2 com_z=0.923 com_x=-0.073
+t= 13.50 max|qacc|=     596.8 max|qvel|=   4.35 ncon=  1 com_z=0.899 com_x=-0.061
+t= 14.00 max|qacc|=     147.4 max|qvel|=   0.90 ncon=  1 com_z=0.918 com_x=-0.058
+t= 14.50 max|qacc|=      48.2 max|qvel|=   4.52 ncon=  4 com_z=0.905 com_x=-0.074
+t= 15.00 max|qacc|=     294.6 max|qvel|=   1.26 ncon=  2 com_z=0.922 com_x=-0.071
+t= 15.50 max|qacc|=     618.9 max|qvel|=   3.24 ncon=  1 com_z=0.896 com_x=-0.062
+t= 16.00 max|qacc|=     149.6 max|qvel|=   0.82 ncon=  3 com_z=0.917 com_x=-0.064
+t= 16.50 max|qacc|=     128.6 max|qvel|=   1.43 ncon=  2 com_z=0.920 com_x=-0.071
+t= 17.00 max|qacc|=      23.0 max|qvel|=   0.57 ncon=  3 com_z=0.918 com_x=-0.078
+t= 17.50 max|qacc|=       5.5 max|qvel|=   0.25 ncon=  3 com_z=0.908 com_x=-0.083
+t= 18.00 max|qacc|=      66.8 max|qvel|=   0.63 ncon=  3 com_z=0.907 com_x=-0.087
+t= 18.50 max|qacc|=      19.8 max|qvel|=   0.50 ncon=  4 com_z=0.909 com_x=-0.093
+t= 19.00 max|qacc|=      29.2 max|qvel|=   0.65 ncon=  4 com_z=0.913 com_x=-0.099
+t= 19.50 max|qacc|=      74.9 max|qvel|=   1.08 ncon=  4 com_z=0.914 com_x=-0.098
+t= 20.00 max|qacc|=      17.4 max|qvel|=   0.63 ncon=  4 com_z=0.909 com_x=-0.101
+t= 20.50 max|qacc|=      31.6 max|qvel|=   1.30 ncon=  4 com_z=0.913 com_x=-0.103
+t= 21.00 max|qacc|=      14.2 max|qvel|=   1.20 ncon=  4 com_z=0.913 com_x=-0.105
+t= 21.50 max|qacc|=      17.1 max|qvel|=   0.69 ncon=  3 com_z=0.910 com_x=-0.105
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.90 m, final 0.91 m  (stayed up)
+COM x: min -0.16 max -0.05 final -0.11 m
+COM y: min -0.089 max +0.060 m
+RG_F_r bursts during walk window: 6
+RG_r: cycles in window 5, period 1.98 s (0.50 Hz), E-duty 0.15
+RG_l: cycles in window 5, period 1.98 s (0.50 Hz), E-duty 0.05
+peak ctrl: [0.36 0.66 0.66 0.65 0.43 0.38 0.44 0.4  0.41 0.16 0.3  0.67 0.67 0.59
+ 0.41 0.42 0.43 0.34 0.44 0.15] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r         -5.9 ..    52.9 deg
+  knee_angle_r         -86.2 ..    10.9 deg
+  ankle_angle_r        -73.9 ..     0.1 deg
+  hip_adduction_r       -2.4 ..    16.6 deg
+  subtalar_angle_r      -0.3 ..    41.2 deg
+  hip_flexion_l        -32.6 ..     2.2 deg
+  knee_angle_l         -27.4 ..    11.9 deg
+  ankle_angle_l        -63.4 ..     9.8 deg
+  hip_adduction_l       -6.7 ..    18.8 deg
+  subtalar_angle_l      -6.7 ..    14.4 deg
+  pelvis_tilt           -2.2 ..    16.5 deg
+  pelvis_list           -9.0 ..    11.5 deg
+  pelvis_rotation        1.7 ..     5.3 deg
+saved spinal_run.npz
+saved spinal_run.png
+csv: trial=5 run=full22 kine_score=-67.205 duty=0.241 knee_min=-79.01 cadence=0.400 stayed_up=True
+full22 capture: trial 5 kine_score -67.205 -> v9_best_trial5.npz
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.75], >0.1: 18 muscles
+  top: add_long_l=0.75, tib_ant_r=0.61, tib_ant_l=0.47, glut_min1_l=0.40, ext_dig_r=0.40, glut_min2_l=0.38, pect_l=0.35, ext_dig_l=0.27
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=6 run=eval kine_score=-83.901 duty=0.477 knee_min=-86.48 cadence=0.909 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 14 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=7 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.77], >0.1: 19 muscles
+  top: add_long_l=0.77, tib_ant_r=0.62, tib_ant_l=0.47, glut_min1_l=0.44, glut_min2_l=0.43, ext_dig_r=0.41, pect_l=0.37, ext_dig_l=0.29
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=8 run=eval kine_score=-83.419 duty=0.268 knee_min=-87.90 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.75], >0.1: 19 muscles
+  top: add_long_l=0.75, tib_ant_r=0.62, tib_ant_l=0.47, glut_min1_l=0.41, ext_dig_r=0.40, glut_min2_l=0.40, pect_l=0.36, ext_dig_l=0.28
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=9 run=eval kine_score=-85.924 duty=0.492 knee_min=-81.91 cadence=0.909 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=10 run=eval kine_score=-94.473 duty=0.085 knee_min=-72.75 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.72], >0.1: 16 muscles
+  top: add_long_l=0.72, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.37, glut_min2_l=0.34, pect_l=0.34, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=11 run=eval kine_score=-105.961 duty=0.098 knee_min=-91.74 cadence=0.455 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 14 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=12 run=eval kine_score=-71.363 duty=0.216 knee_min=-70.58 cadence=0.182 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 15 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=13 run=eval kine_score=-73.037 duty=0.208 knee_min=-61.88 cadence=0.455 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 14 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=14 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=15 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.72], >0.1: 16 muscles
+  top: add_long_l=0.72, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.37, glut_min2_l=0.34, pect_l=0.34, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=16 run=eval kine_score=-69.539 duty=0.233 knee_min=-86.78 cadence=0.455 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.74], >0.1: 18 muscles
+  top: add_long_l=0.74, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.39, glut_min1_l=0.39, glut_min2_l=0.37, pect_l=0.35, ext_dig_l=0.27
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=17 run=eval kine_score=-68.860 duty=0.204 knee_min=-86.24 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.72], >0.1: 16 muscles
+  top: add_long_l=0.72, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.36, pect_l=0.33, glut_min2_l=0.33, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=18 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.73], >0.1: 15 muscles
+  top: add_long_l=0.73, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.39, glut_min1_l=0.38, glut_min2_l=0.36, pect_l=0.34, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=19 run=eval kine_score=-73.109 duty=0.241 knee_min=-90.06 cadence=0.455 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.73], >0.1: 15 muscles
+  top: add_long_l=0.73, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.39, glut_min1_l=0.37, glut_min2_l=0.35, pect_l=0.34, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=20 run=eval kine_score=-69.273 duty=0.207 knee_min=-83.83 cadence=0.455 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=21 run=eval kine_score=-90.868 duty=0.201 knee_min=-86.20 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.33, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=22 run=eval kine_score=-70.070 duty=0.201 knee_min=-72.59 cadence=0.455 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.75], >0.1: 25 muscles
+  top: add_long_l=0.75, tib_ant_r=0.62, tib_ant_l=0.47, glut_min1_l=0.42, ext_dig_r=0.40, glut_min2_l=0.40, pect_l=0.36, ext_dig_l=0.28
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=23 run=eval kine_score=-73.142 duty=0.226 knee_min=-85.93 cadence=0.182 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.33, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=24 run=eval kine_score=-67.987 duty=0.198 knee_min=-78.63 cadence=0.455 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=25 run=eval kine_score=-91.889 duty=0.210 knee_min=-84.53 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.72], >0.1: 16 muscles
+  top: add_long_l=0.72, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.36, glut_min2_l=0.34, pect_l=0.34, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=26 run=eval kine_score=-72.578 duty=0.224 knee_min=-58.85 cadence=0.545 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.72], >0.1: 15 muscles
+  top: add_long_l=0.72, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.37, glut_min2_l=0.34, pect_l=0.34, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=27 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.72], >0.1: 16 muscles
+  top: add_long_l=0.72, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.36, pect_l=0.33, glut_min2_l=0.33, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=28 run=eval kine_score=-69.930 duty=0.195 knee_min=-80.27 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=29 run=eval kine_score=-69.159 duty=0.226 knee_min=-74.95 cadence=0.455 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 15 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=30 run=eval kine_score=-67.659 duty=0.195 knee_min=-77.29 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=31 run=eval kine_score=-73.037 duty=0.197 knee_min=-73.65 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.33, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=32 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 15 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=33 run=eval kine_score=-83.655 duty=0.186 knee_min=-63.82 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 14 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=34 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 15 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=35 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 15 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=36 run=eval kine_score=-65.402 duty=0.184 knee_min=-78.08 cadence=0.364 stayed_up=True
+NEW GLOBAL BEST -65.402 (trial 36) - running full 22 s capture
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 15 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=       5.7 max|qvel|=   0.75 ncon=  7 com_z=0.921 com_x=-0.158
+t=  1.50 max|qacc|=      33.8 max|qvel|=   0.50 ncon=  5 com_z=0.916 com_x=-0.150
+t=  2.00 max|qacc|=     444.8 max|qvel|=   1.38 ncon=  5 com_z=0.911 com_x=-0.144
+t=  2.50 max|qacc|=      50.1 max|qvel|=   2.08 ncon=  5 com_z=0.914 com_x=-0.142
+t=  3.00 max|qacc|=      76.5 max|qvel|=   0.48 ncon=  6 com_z=0.917 com_x=-0.143
+t=  3.50 max|qacc|=      20.5 max|qvel|=   0.51 ncon=  4 com_z=0.911 com_x=-0.133
+t=  4.00 max|qacc|=      26.8 max|qvel|=   0.45 ncon=  5 com_z=0.912 com_x=-0.142
+t=  4.50 max|qacc|=      47.5 max|qvel|=   0.67 ncon=  3 com_z=0.915 com_x=-0.142
+t=  5.00 max|qacc|=     149.9 max|qvel|=   2.68 ncon=  4 com_z=0.915 com_x=-0.158
+t=  5.50 max|qacc|=      42.0 max|qvel|=   0.72 ncon=  3 com_z=0.907 com_x=-0.145
+t=  6.00 max|qacc|=      84.1 max|qvel|=   4.89 ncon=  2 com_z=0.905 com_x=-0.113
+t=  6.50 max|qacc|=     337.4 max|qvel|=   4.66 ncon=  2 com_z=0.909 com_x=-0.096
+t=  7.00 max|qacc|=      60.3 max|qvel|=   5.87 ncon=  2 com_z=0.896 com_x=-0.097
+t=  7.50 max|qacc|=     230.4 max|qvel|=   1.17 ncon=  2 com_z=0.922 com_x=-0.105
+t=  8.00 max|qacc|=      28.0 max|qvel|=   1.46 ncon=  2 com_z=0.911 com_x=-0.085
+t=  8.34 precursor: max|qacc|=234 max|qvel|=30.4 (dof 14), ncon=1, max ctrl=0.75
+t=  8.50 max|qacc|=      65.7 max|qvel|=   2.30 ncon=  2 com_z=0.913 com_x=-0.068
+t=  9.00 max|qacc|=      44.8 max|qvel|=   0.68 ncon=  2 com_z=0.904 com_x=-0.064
+t=  9.50 max|qacc|=     125.4 max|qvel|=   7.13 ncon=  3 com_z=0.900 com_x=-0.070
+t= 10.00 max|qacc|=      95.5 max|qvel|=   1.12 ncon=  2 com_z=0.919 com_x=-0.078
+t= 10.50 max|qacc|=       9.5 max|qvel|=   0.94 ncon=  2 com_z=0.900 com_x=-0.058
+t= 10.80 precursor: max|qacc|=2.12e+03 max|qvel|=30.5 (dof 14), ncon=1, max ctrl=0.75
+t= 10.80 precursor: max|qacc|=1.37e+03 max|qvel|=33 (dof 14), ncon=1, max ctrl=0.75
+t= 10.80 precursor: max|qacc|=629 max|qvel|=34.2 (dof 14), ncon=1, max ctrl=0.75
+t= 10.80 precursor: max|qacc|=145 max|qvel|=34.2 (dof 14), ncon=1, max ctrl=0.75
+t= 10.81 precursor: max|qacc|=701 max|qvel|=33 (dof 14), ncon=1, max ctrl=0.75
+t= 10.81 precursor: max|qacc|=1.25e+03 max|qvel|=30.8 (dof 14), ncon=1, max ctrl=0.75
+t= 11.00 max|qacc|=      47.9 max|qvel|=   1.33 ncon=  1 com_z=0.911 com_x=-0.051
+t= 11.50 max|qacc|=     151.6 max|qvel|=   0.59 ncon=  2 com_z=0.905 com_x=-0.059
+t= 12.00 max|qacc|=     120.1 max|qvel|=   6.09 ncon=  2 com_z=0.900 com_x=-0.065
+t= 12.50 max|qacc|=      80.1 max|qvel|=   1.21 ncon=  2 com_z=0.922 com_x=-0.079
+t= 13.00 max|qacc|=      40.2 max|qvel|=   0.90 ncon=  2 com_z=0.906 com_x=-0.061
+t= 13.31 precursor: max|qacc|=1.65e+03 max|qvel|=32.8 (dof 14), ncon=1, max ctrl=0.75
+t= 13.31 precursor: max|qacc|=899 max|qvel|=34.5 (dof 14), ncon=1, max ctrl=0.75
+t= 13.32 precursor: max|qacc|=184 max|qvel|=34.9 (dof 14), ncon=1, max ctrl=0.75
+t= 13.32 precursor: max|qacc|=474 max|qvel|=34.1 (dof 14), ncon=1, max ctrl=0.75
+t= 13.32 precursor: max|qacc|=1.06e+03 max|qvel|=32.2 (dof 14), ncon=1, max ctrl=0.75
+t= 13.50 max|qacc|=      60.8 max|qvel|=   1.79 ncon=  1 com_z=0.912 com_x=-0.050
+t= 14.00 max|qacc|=      13.0 max|qvel|=   0.57 ncon=  2 com_z=0.906 com_x=-0.054
+t= 14.50 max|qacc|=      66.9 max|qvel|=   6.91 ncon=  3 com_z=0.903 com_x=-0.062
+t= 15.00 max|qacc|=      94.5 max|qvel|=   1.11 ncon=  2 com_z=0.919 com_x=-0.073
+t= 15.50 max|qacc|=     146.4 max|qvel|=   1.97 ncon=  2 com_z=0.900 com_x=-0.056
+t= 16.00 max|qacc|=      31.4 max|qvel|=   3.47 ncon=  3 com_z=0.909 com_x=-0.052
+t= 16.50 max|qacc|=     212.0 max|qvel|=   1.36 ncon=  2 com_z=0.914 com_x=-0.069
+t= 17.00 max|qacc|=      27.5 max|qvel|=   0.49 ncon=  3 com_z=0.916 com_x=-0.075
+t= 17.50 max|qacc|=     101.7 max|qvel|=   0.35 ncon=  4 com_z=0.910 com_x=-0.081
+t= 18.00 max|qacc|=     134.8 max|qvel|=   0.26 ncon=  4 com_z=0.904 com_x=-0.082
+t= 18.50 max|qacc|=      20.3 max|qvel|=   1.85 ncon=  5 com_z=0.909 com_x=-0.086
+t= 19.00 max|qacc|=      14.8 max|qvel|=   0.82 ncon=  4 com_z=0.913 com_x=-0.095
+t= 19.50 max|qacc|=     109.7 max|qvel|=   0.66 ncon=  4 com_z=0.913 com_x=-0.099
+t= 20.00 max|qacc|=      18.0 max|qvel|=   0.89 ncon=  5 com_z=0.911 com_x=-0.096
+t= 20.50 max|qacc|=      18.4 max|qvel|=   0.58 ncon=  5 com_z=0.913 com_x=-0.104
+t= 21.00 max|qacc|=      18.0 max|qvel|=   1.07 ncon=  5 com_z=0.910 com_x=-0.103
+t= 21.50 max|qacc|=      21.6 max|qvel|=   1.37 ncon=  5 com_z=0.913 com_x=-0.103
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.89 m, final 0.91 m  (stayed up)
+COM x: min -0.16 max -0.04 final -0.11 m
+COM y: min -0.096 max +0.079 m
+RG_F_r bursts during walk window: 5
+RG_r: cycles in window 4, period 2.49 s (0.40 Hz), E-duty 0.14
+RG_l: cycles in window 4, period 2.49 s (0.40 Hz), E-duty 0.04
+peak ctrl: [0.37 0.67 0.67 0.65 0.4  0.37 0.44 0.41 0.41 0.16 0.33 0.64 0.65 0.59
+ 0.4  0.4  0.4  0.34 0.43 0.14] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r         -8.4 ..    52.7 deg
+  knee_angle_r         -84.7 ..    10.5 deg
+  ankle_angle_r        -71.4 ..    -1.7 deg
+  hip_adduction_r       -2.8 ..    17.1 deg
+  subtalar_angle_r      -1.6 ..    33.1 deg
+  hip_flexion_l        -33.4 ..     2.6 deg
+  knee_angle_l         -28.2 ..    12.1 deg
+  ankle_angle_l        -62.1 ..     9.8 deg
+  hip_adduction_l       -6.2 ..    18.6 deg
+  subtalar_angle_l      -5.7 ..    14.3 deg
+  pelvis_tilt           -2.5 ..    16.1 deg
+  pelvis_list          -10.2 ..    11.6 deg
+  pelvis_rotation        1.2 ..     5.1 deg
+saved spinal_run.npz
+saved spinal_run.png
+csv: trial=36 run=full22 kine_score=-71.527 duty=0.198 knee_min=-80.74 cadence=0.200 stayed_up=True
+full22 capture: trial 36 kine_score -71.527 -> v9_best_trial36.npz
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 15 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=37 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 14 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=38 run=eval kine_score=-74.539 duty=0.224 knee_min=-72.04 cadence=0.545 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 15 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=39 run=eval kine_score=-67.289 duty=0.178 knee_min=-72.78 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 14 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=40 run=eval kine_score=-72.881 duty=0.168 knee_min=-71.05 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=41 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=42 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 14 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=43 run=eval kine_score=-67.636 duty=0.175 knee_min=-72.86 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 14 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=44 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 14 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=45 run=eval kine_score=-73.901 duty=0.085 knee_min=-71.23 cadence=0.455 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 15 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=46 run=eval kine_score=-67.298 duty=0.177 knee_min=-74.64 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=47 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.72], >0.1: 16 muscles
+  top: add_long_l=0.72, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.33, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=48 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.72], >0.1: 16 muscles
+  top: add_long_l=0.72, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.36, glut_min2_l=0.34, pect_l=0.34, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=49 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 14 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=50 run=eval kine_score=-75.759 duty=0.172 knee_min=-74.90 cadence=0.182 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 15 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=51 run=eval kine_score=-67.325 duty=0.175 knee_min=-73.97 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=52 run=eval kine_score=-71.485 duty=0.166 knee_min=-71.97 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 14 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.34, pect_l=0.33, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=53 run=eval kine_score=-72.052 duty=0.178 knee_min=-70.64 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=54 run=eval kine_score=-67.418 duty=0.178 knee_min=-82.36 cadence=0.364 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=55 run=eval kine_score=-66.020 duty=0.160 knee_min=-79.21 cadence=0.273 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=56 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.72], >0.1: 16 muscles
+  top: add_long_l=0.72, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.33, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=57 run=eval kine_score=-79.406 duty=0.186 knee_min=-79.83 cadence=0.182 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=58 run=eval kine_score=-25.000 duty=nan knee_min=nan cadence=0.000 stayed_up=True
+start pose (normal.mot): applied 20 coordinates as given; IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 16 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.38, glut_min1_l=0.35, pect_l=0.33, glut_min2_l=0.32, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+csv: trial=59 run=eval kine_score=-68.528 duty=0.092 knee_min=-73.51 cadence=0.545 stayed_up=True
+
+== best kine_score -65.402 (trial 36)
+  drive           2.5873
+  rg_adapt        1.7734
+  desc_e          1.0814
+  desc_f          2.1667
+  rg_to_pf        2.0276
+  pf_gain         0.6515
+  e2_pf           1.9401
+  f1_df           0.9103
+  f1_kf           0.7233
+  e2_adapt        1.7032
+  post_kneext     1.2490
+  post_hipext     1.5343
+  kx              223.2343
+  phase_reset_e   0.0032
+  phase_reset_f   1.1864
+  f1_kneext_inh   0.4225
+  f1_anklepf_inh  0.2509
+saved best_walk_params_v9.json (runner --best9 reproduces)

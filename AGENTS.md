@@ -526,6 +526,47 @@ Loaded automatically at session start. Keep it current; keep it lean.
   (Animatlab treats tau_h.max as a fixed constant, which is why the Simulink Deng
   port works). Related trap: SNS_Library vs sns_toolbox use OPPOSITE synapse
     saturation conventions (ThrPre/Elo) — keep straight when porting values.**
+    **2026-09-14b: START POSE = normal.mot** (Ben supplied the gait2392
+    "normal" Coordinates values — pelvis_tilt −1.87, knees −3.9/−8.2,
+    hips R+24.6/L−16.6, ankle_l +9.8 dorsi, lumbar set, ty 0.96;
+    `START_POSE_DEG` in runner.py, applied AS GIVEN — an auto-sign-flip
+    heuristic was REMOVED after it mangled the canonical values; applied
+    before standing solve + rig so springs/solve hold it; 21-22 muscles
+    engage). **v8 (hand pose) BREAKTHROUGH: −47.9 eval in 60 trials**
+    (v7 plateau was −62.5) — pose quality is a first-order lever; winner
+    used quad suppression 1.0 + phase_reset_f 1.72. v8b on normal.mot
+    FIRST LAUNCH COLLAPSED onto the −65 frozen sentinel (real walkers
+    score −76..−86 on the pose) — sentinels recalibrated (−100 frozen /
+    −110 NaN), eval schedule lengthened to 16 s (11 s walk window) so
+    0.3–0.9 Hz gaits yield ≥3 countable cycles, seeded with the v8
+    winner; fresh study `ground_walk_v8b_normal` (optuna_walk_v8b.py,
+    --best8b). RULE: when plant/pose/objective change, sentinels must
+    sit BELOW the worst genuine walker. **v9 (flat-foot height +
+    amplitude objective): −65.4/60 trials → −62.24/120 trials**
+    (reproduced bit-exact); **amplitude now MATCHES OpenSim** (hip
+    46.4/43.3, knee 66.9/70.5, ankle 24.1/23.1, knee_min −78/−69.7);
+    remaining = hip phase (inverted vs RG anchor), ankle −45° PF
+    OFFSET (posture tone), duty 0.17, cadence 0.3 Hz — regenerated
+    overlay in the Dissertation folder. **2026-09-14 evening: ankle
+    trim + TRANSIENT reset** — `ankle_post_walk_trim` (POST bias of
+    ankle_pf group scales toward 0 with drive; 1.0 = v9-identical);
+    PRESET_E/F now have a FAST adaptation loop (PREA τ0.08, gain 1.5)
+    = high-pass ONSET detector (tonic ≤1 nA proven inert; rectifying
+    synapses pass only the onset pulse); **v10 study
+    `ground_walk_v10_transient` running** (seeded v9, +trim searched,
+    --best10). **ENV INCIDENT: the conda graphviz install clobbered
+    myo\python.exe (repaired via --force-reinstall python=3.10.21;
+    pip pins survived) — verify python.exe after any conda
+    transaction in this env.** **v10 (transient reset + trim): −65.375
+    (trial 56, 60 trials), reproduced bit-exact via `runner --fitted
+    --best10`** after TWO catches: the --best10 flag branch was lost in
+    successive same-anchor edits (chain silently ended at --best9 —
+    state-dump diff + missing loader print caught it), and the trim
+    loader branch was missing (JSON RULE again). Winner = knee −75,
+    tilt 15.7, amplitudes hold (45/62/25 vs 43/70/23), trim winner
+    0.097 (near-zero standing PF tone wanted in gait — confirms the
+    set-point diagnosis). Duty/cadence/hip-phase remain
+    architecture-level; study resumable.
     **2026-09-14 (v7 retune under corrected physics): ANKLE DORSIFLEXION
     MECHANISM FOUND** — boosting swing DF drive does nothing (9 PF
     muscles ~10 kN vs 3 DF ~1.6 kN); `params.G["f1_anklepf_inh"]`

@@ -216,6 +216,18 @@ class SpinalNetwork:
             n.add_connection(_syn(g_e * inh, exc=False), pre_e, rg_f)
             n.add_connection(_syn(g_f, exc=True), pre_f, rg_f)
             n.add_connection(_syn(g_f * inh, exc=False), pre_f, rg_e)
+            # v10 TRANSIENT conversion: fast self-adaptation makes each
+            # PRESET a high-pass (onset) detector - a sustained hip
+            # signal emits a brief pulse at its onset instead of a tonic
+            # bias (tonic <= 1 nA was provably inert vs ~4 nA DRIVE, and
+            # the literature reset works via phase ONSET events). The
+            # rectifying synapses transmit only the onset (rising) pulse.
+            ad_g = PHASE_RESET.get("adapt_g", 1.5)
+            for pre in (pre_e, pre_f):
+                pre_a = pre.replace("PRESET", "PREA")
+                self._add(pre_a, TAU["preset_adapt"], n)
+                n.add_connection(_syn(ad_g, exc=True), pre, pre_a)
+                n.add_connection(_syn(ad_g, exc=False), pre_a, pre)
 
     def _build_pf(self, n: Network, side: str):
         rg_of = {"E1": f"RG_E_{side}", "E2": f"RG_E_{side}",

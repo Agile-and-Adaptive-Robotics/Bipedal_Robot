@@ -323,6 +323,175 @@ DRIVE.
   uses must appear in the saved json AND have an `if key in best`
   branch in the --best loader — the repro check is what proves it.
 
+## 2026-09-14 (Ben's start-pose directive): THE POSE WAS THE UNLOCK
+
+Ben: start the model leaning FORWARD ~5 deg, knees 5-15 deg flexed,
+ankles dorsiflexed, legs in different stance phases (L hip flexed, R
+extended) - the old keyframe started dead-straight, trunk already back.
+
+- `apply_start_pose()` in runner.py (default on; `--straight-start`
+  reverts): pelvis_tilt -5 (sign auto-checked against the torso
+  up-vector: reports "torso lean -5.0 deg"), knees -10, ankles +5,
+  hip_flexion_l +25 / hip_flexion_r -15, pelvis_ty 0.90, followers
+  re-projected (local copy of bsolve's apply_eq_followers; runner
+  imports bsolve circularly). Applied BEFORE capture_pose (now reads
+  data.qpos, not model.key_qpos), the standing solve, and the rig (so
+  springref holds the new pose). Standing solve now engages 21 muscles.
+- **v8 study** (`ground_walk_v8_pose`, seeded v7, 60 trials): best
+  **-47.889 (trial 55)** - a 14.6-point jump over the v7 plateau
+  (-62.5) and far past every earlier result. The tuned winner leans on
+  the new machinery: f1_kneext_inh 1.00, phase_reset_f 1.72, drive 3.0.
+  First full-22s capture at trial 24 already -49.6.
+- Winner full-22s: stayed up, knee_min -92.9 deg (deep flexion IN RoM),
+  tilt 16.9 deg (best trunk yet), duty 0.24, cadence 0.3 Hz, full-run
+  kine -62.5. CAVEAT: eval (12 s window) vs full (22 s incl. ramp-down)
+  diverge - the slow 0.3 Hz cadence means few cycles late; extending
+  the study (+80 trials, running) to shape cadence/duty.
+- Panel diagram: `_render_panels.py` renders each spinal_layers
+  subnetwork separately via the official renderer and composes ->
+  sns_diagram_panels.png (RG / PF / motor panels, tuned gains labeled).
+  THE tidy layered look Ben asked for, still 100% code-driven.
+
+## 2026-09-14 (Ben): start pose replaced by the model's own normal.mot
+
+Ben supplied the gait2392 Coordinates-panel values for the "normal"
+pose (normal.mot; degrees) and asked why we don't use THAT as the start
+pose. Correct - it replaces my hand-invented numbers. Now in
+START_POSE_DEG (runner.py): pelvis_tilt -1.87, list -0.47, rotation
++2.43, hips R +24.6/-1.35 add/rot +1.09, knee_r -3.94, ankle_r -1.7,
+hips L -16.6/+2.68/+1.28, knee_l -8.2, ankle_l +9.8 (DORSIFLEXED),
+lumbar +1.87/+0.47/-2.43, pelvis_ty 0.96. Sign mapping is direct: our
+repair-1 hip axis flips exist precisely so OpenSim +flexion/+adduction
+== MuJoCo +qpos. **AUTO-SIGN-FLIP REMOVED**: my IMU-lean heuristic
+flipped -1.87 -> +1.87 (measured IMU lean at the OpenSim values is
+-0.0 deg = upright, which is what "normal" means) - the pose is now
+applied AS GIVEN, IMU lean only reported. 20 coordinates applied.
+- v8 (hand-pose) continuation STOPPED mid-run; fresh study
+  **ground_walk_v8b_normal** (optuna_walk_v8b.py, seeded v7 winner)
+  running on the canonical pose; writes best_walk_params_v8b.json
+  (`--best8b`), v8b_results.csv, v8b_best_trial*.npz.
+- The v8 hand-pose breakthrough stands as the finding (pose quality is
+  a first-order lever: -62.5 plateau -> -47.9 in 60 trials); v8b gives
+  the canonical-pose numbers. Hand pose vs normal.mot are qualitatively
+  close (forward lean, knees slightly flexed, split hips) so the v8
+  tuned direction carries as the v8b seed.
+- **v8b first launch COLLAPSED onto the frozen plateau (-65.000 best,
+  every trial) — SECOND sentinel-calibration lesson** (the first was
+  v4's -25): the normal.mot pose is nearly upright, its genuine walkers
+  score **-76..-86** on the 12-s eval, so the -65 no-rhythm sentinel
+  and -80 NaN gate sat ABOVE real walking -> frozen models outscored
+  walkers and TPE had nothing to learn. Fixes: (1) eval schedule
+  lengthened (1 s stand / 1 s ramp / 11 s walk / wind-up = 16 s total)
+  so 0.3-0.9 Hz gaits yield >= 3 countable cycles; (2) gates lowered to
+  -100 (frozen) and -110 + t_end (NaN); (3) seed = the v8 hand-pose
+  winner (a demonstrated stepper). Fresh study running
+  (ground_walk_v8b_normal; the poisoned one deleted from the db).
+  RULE: whenever the plant, pose, or objective changes, re-check that
+  the no-rhythm/NaN sentinels sit BELOW the worst genuine walker.
+
+## 2026-09-14 (Ben): TIPTOE ROOT CAUSE + amplitude-honest objective
+
+Ben (looking at opensim_overlay_gait_cycles.png): the sim curves are
+flat lines (hip ~25, knee ~+10 pinned, ankle ~-33) vs OpenSim's full
+sinusoids — "you're fitting a flat line to a cosine curve and calling
+it better", and the model walks on TIPTOES; check the talus/calcaneus/
+MTP angles in OpenSim.
+
+- **TIPTOE ROOT CAUSE (measured, _foot_flat_check.py)**: the FOOT
+  angles I took from normal.mot were correct (ankle -1.7, subtalar 0,
+  mtp 0 = flat), but I also took pelvis_ty = 0.96 from that table.
+  With MESH-VERTEX foot bottoms measured in OUR converted model, the
+  soles sit 6.3 cm (right) / 3.0 cm (left) ABOVE ground at ty 0.96 —
+  the rig held the pelvis there, the feet dangled into passive PF
+  (ankle -33 constant = the tiptoe). OpenSim's 0.96 does not match our
+  converted foot geometry. Right sole touches at ty 0.903, left (back
+  leg) at ~0.925 -> START_PELVIS_HEIGHT = 0.92 (contact compromise the
+  knees + soft contact absorb). Foot angles STAY from normal.mot.
+- **OBJECTIVE FIX (kine_ref.py)**: amplitude terms strengthened — range
+  errors now cost 0.5 (hip) / 0.3 (knee, NEW - knee range previously
+  only entered via knee_min so a knee pinned at the RoM cap scored the
+  same as real flexion) / 0.5 (ankle), up from 0.10/none/0.10. A
+  flat-line gait now totals ~-121 while real steppers land
+  -45..-75. The old v8b winner re-scored -74.4 under the honest
+  objective+height (and its knee range went 0.3 -> 41 deg at the
+  flat-foot height - the tiptoe support was loading the walk).
+- Both changes invalidate prior tuning -> fresh study
+  **ground_walk_v9_flat** (optuna_walk_v9.py, seeded v8b winner,
+  `--best9`, v9_results.csv, 60 trials running). Sentinel gates
+  (-100/-110) re-checked: still below the -95-band of genuine walkers.
+- Air-stepping "stationary bicycle" (Ben): hip/knee are already
+  roughly there (hindlimb_style_air: hip -21..+50, knee -97..+10
+  quasi-sinusoidal); the ankle PF hang was the passive-bias issue -
+  f1_anklepf_inh now gives dorsiflexion, and amplitude tuning should
+  finish the bicycle look.
+- **v9 RESULT (60 trials)**: best **-65.402 (trial 36)**, reproduced
+  bit-exact (`runner --fitted --best9`). AMPLITUDE SOLVED — the
+  winner's mean cycle: range_hip 46.4 (ref 43.3), range_knee 66.9
+  (ref 70.5), range_ankle 24.1 (ref 23.1), knee_min -78.1 (ref
+  -69.7), tilt 15.7. What REMAINS is phase/timing, not amplitude:
+  rmse_hip 30.6 with full excursion (hip phase roughly inverted vs
+  the RG-anchored cycle), stance starts crouched (knee -67 at
+  contact), ankle oscillates around a -45 deg PF OFFSET (set-point,
+  from POSTURE_OVERRIDE soleus/tib_post + balance PD), duty 0.18,
+  cadence 0.36 Hz. Overlay regenerated from v9_best_trial36.npz
+  (Dissertation folder). NEXT: the remaining gaps are exactly the
+  transient phase-reset / FSA-analytic-seeding items + an ankle
+  set-point trim; extension +60 trials running (optuna_v9b.log).
+- **v9 extension (+60, 120 total)**: best **-62.243 (trial 119)**,
+  still climbing but decelerating (~3 pts / 60 trials). Winner full-22s
+  (v9_best_trial119.npz, also copied to spinal_run.npz + Dissertation
+  folder): stayed up, tilt 16.6, knee -81.4 (RoM-respecting), duty
+  0.167, cadence 0.3 Hz. 4-cycle overlay regenerated: knee/hip
+  waveforms real, ankle rides a -50 deg PF OFFSET with small
+  oscillation. The study is resumable (`python optuna_walk_v9.py 60`);
+  stopped extending here - the remaining deficits (duty, ankle
+  set-point, hip phase vs RG anchor) are the architecture items, not
+  scalar-tuning items.
+
+## 2026-09-14 (evening): ankle set-point trim + TRANSIENT phase reset
+## + ENV INCIDENT (repaired)
+
+- **ENV INCIDENT (self-inflicted, repaired)**: the `conda install -n
+  myo graphviz` transaction CLOBBERED `<env>\python.exe` (only
+  pythonw.exe + python310.dll survived; conda-meta still listed
+  python-3.10.21). Repaired with `conda install -n myo --force-reinstall
+  -y python=3.10.21`; numpy 1.22.4 / scipy 1.9.3 / pip packages all
+  intact, dot.exe survived. LESSON for the skill: on this conda stack,
+  install graphviz with care and verify python.exe after ANY conda
+  transaction in this env.
+- **Ankle set-point trim**: `params.G["ankle_post_walk_trim"]`
+  (default 1.0 = v9-identical) scales the POST bias of ankle_pf-group
+  muscles toward 0 as drive rises — the soleus/tib_post standing tone
+  held the -45 deg PF offset through gait; real soleus tonic EMG drops
+  with locomotor drive. Search range 0.05-1.0.
+- **TRANSIENT phase reset (the lever, implemented)**: PRESET_E/F now
+  carry a FAST self-adaptation loop (PRESET -> PREA(tau 0.08) ->
+  PRESET, gain PHASE_RESET["adapt_g"]=1.5), making them high-pass
+  ONSET detectors: a sustained hip signal emits a brief pulse at its
+  onset instead of a tonic bias (tonic <= 1 nA was proven inert vs
+  ~4 nA DRIVE). Rectifying synapses pass only the onset pulse. Active
+  whenever phase_reset gains > 0 (v9 winner reload now uses it by
+  design). Audit (_phase_reset_audit.py re-run): signs PASS, mean
+  effect +0.34 -> +0.10 mV as expected for high-pass.
+- **v10 study** (`ground_walk_v10_transient`, optuna_walk_v10.py,
+  seeded v9 winner, +ankle_post_walk_trim searched, `--best10`,
+  v10_results.csv, 60 trials RUNNING).
+- **v10 RESULT (60 trials)**: best **-65.375 (trial 56)**, reproduced
+  BIT-EXACT (`runner --fitted --best10`) after TWO loader catches:
+  (1) the `--best10` flag branch was LOST in my successive same-anchor
+  edits (the chain silently ended at --best9 — a variation on the
+  parallel-edit hazard; the state-dump diff + the missing
+  "loaded best_walk_params_v10.json" print caught it), and (2) the
+  ankle_post_walk_trim loader branch was missing (the JSON RULE
+  again). Winner full-22s: knee -75, tilt 15.7, duty 0.19, stayed up;
+  eval amplitudes hold (hip 45.4/43.3, knee 62.0/70.5, ankle
+  25.4/23.1, knee_min -77.1/-69.7). The transient reset + trim
+  re-tuned to parity with v9's tonic plateau; the trim winner value
+  0.097 confirms the PF standing-tone diagnosis (near-zero standing
+  soleus tone wanted during gait). Remaining: duty/cadence/hip-phase
+  (architecture). Study resumable
+  (`python optuna_walk_v10.py 60`).
+
 ## Goal
 
 Two-level spinal cord network (McCrea–Rybak RG + PF) with proprioceptors for
