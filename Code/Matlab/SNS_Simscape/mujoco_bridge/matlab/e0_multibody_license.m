@@ -36,28 +36,25 @@ new_system(mdl);
 add_block(wf{1}, [mdl '/WF'], 'Position', [100 100 130 130]);
 add_block(rj{1}, [mdl '/RJ'], 'Position', [200 100 250 150]);
 add_block(cyl{1}, [mdl '/Body'], 'Position', [320 100 390 160]);
-% conserving connections by port index (B/F ordering is library-dependent,
-% so try both orders)
+% conserving connections: Simscape frame ports are LConn/RConn port handles,
+% NOT Simulink 'blk/1' ports. World -> Joint base(B), Joint follower(F) -> Solid.
 ok = false; err = '';
-    for pr = {{'WF/1','RJ/1','RJ/2','Body/1'}, ...
-              {'WF/1','RJ/2','RJ/1','Body/1'}}
-        for prl = {{'WF/1','RJ/1'}, {'WF/1','RJ/2'}, ...
-                   {'RJ/1','Body/1'}, {'RJ/2','Body/1'}}
-            try
-                delete_line(mdl, prl{1}, prl{2});
-            catch
-            end
-        end
-        add_line(mdl, pr{1}, pr{2}, 'autorouting', 'on');
-        add_line(mdl, pr{3}, pr{4}, 'autorouting', 'on');
-        set_param(mdl, 'StopTime', '0.1');
-        try
-            sim(mdl);
-            ok = true; break
-        catch e
-            err = e.message;
-        end
-    end
+try
+    wf = get_param([mdl '/WF'], 'PortHandles');
+    rj = get_param([mdl '/RJ'], 'PortHandles');
+    bd = get_param([mdl '/Body'], 'PortHandles');
+    pWorld = [wf.RConn(1) wf.LConn(1)]; pWorld = pWorld(1);
+    pB     = [rj.LConn(1) rj.RConn(1)]; pB = pB(1);      % joint base
+    pF     = [rj.RConn(1) rj.LConn(1)]; pF = pF(end);    % joint follower
+    pSolid = [bd.RConn(1) bd.LConn(1)]; pSolid = pSolid(1);
+    add_line(mdl, pWorld, pB, 'autorouting', 'on');
+    add_line(mdl, pF, pSolid, 'autorouting', 'on');
+    set_param(mdl, 'StopTime', '0.1');
+    sim(mdl);
+    ok = true;
+catch e
+    err = e.message;
+end
 if ok
     fprintf(['E0 VERDICT: PASS - hand-built Simscape Multibody RUNS on this ' ...
              'machine (World+Revolute+Cylinder, 0.1 s clean)\n']);

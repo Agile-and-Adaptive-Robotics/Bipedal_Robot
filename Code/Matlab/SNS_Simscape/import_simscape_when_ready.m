@@ -17,7 +17,11 @@
 %
 % Usage: set inputPath below, then run this script.
 
-inputPath = 'C:\Users\Ben\Documents\GitHub\Bipedal_Robot\Solid_Models\Biomimetics_2022-Knee_Test\Knee assembly\09_BA_003.URDF';  % <-- edit
+% sw2urdf writes a FOLDER named 09_BA_003.URDF; smimport wants the inner file.
+% NOTE (2026-09-16): the current export is a 1-link skeleton (base_link only,
+% zero joints) — it proves the pipe + mesh resolution; a full re-export with
+% links/joints defined in the exporter wizard is still needed.
+inputPath = 'C:\Users\Ben\Documents\GitHub\Bipedal_Robot\Solid_Models\Biomimetics_2022-Knee_Test\Knee assembly\09_BA_003.URDF\urdf\09_BA_003.URDF.urdf';  % <-- edit
 outDir = fileparts(mfilename('fullpath'));
 
 % --- 0. license gate (either feature name counts) ----------------------------
