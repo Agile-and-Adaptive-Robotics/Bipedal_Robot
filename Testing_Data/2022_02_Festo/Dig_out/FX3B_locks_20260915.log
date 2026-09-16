@@ -1,0 +1,1889 @@
+Lock pairs: L1trans = (436088.3216, 19995.79594) | L107 = (56237.84753, 18542.25769)
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 8 workers.
+
+Performance with no length offset and infinite stiffness:
+                    RMSE       FVU      MaxResidual
+                   ______    _______    ___________
+
+    48cm           7.6174     2.1278      25.531   
+    46cm           8.8026      1.938      26.264   
+    47cm           7.6699     1.8463       21.65   
+    40cm-tendon    6.3725    0.59349      16.859   
+    42cm           9.6944     2.1149      21.076   
+
+Mean baseline training: RMSE 8.0314, FVU 1.7241, Max. Residual 22.2760
+
+FX3B LOCK: Xi1=56237.8 Xi2=18542.3 locked; GA searches Xi0 [0 2] cm, Xi3 [5e+03 5e+07] N/m
+
+---- Cross-validation: Holding out BPA #2 (46cm) ----
+
+---- Cross-validation: Holding out BPA #3 (47cm) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300                 0                 0
+    3           450                 0                 0
+    4           600                 0                 0
+    5           750                 0                 0
+    6           900                 0                 0
+    7          1050                 0                 0
+    8          1200                 0                 0
+    9          1350                 0                 0
+   10          1500                 0                 0
+   11          1650                 0                 0
+   12          1800                 0                 0
+   13          1950                 0                 0
+   14          2100                 0                 0
+   15          2250                 0                 0
+   16          2400                 0                 0
+   17          2550                 0                 0
+   18          2700                 0                 0
+   19          2850                 0                 0
+   20          3000                 0                 0
+   21          3150                 0                 0
+   22          3300                 0                 0
+   23          3450                 0                 0
+   24          3600                 0                 0
+   25          3750                 0                 0
+   26          3900                 0                 0
+   27          4050                 0                 0
+   28          4200                 0                 0
+   29          4350                 0                 0
+   30          4500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650                 0                 0
+   32          4800                 0                 0
+   33          4950                 0                 0
+   34          5100                 0                 0
+   35          5250                 0                 0
+   36          5400                 0                 0
+   37          5550                 0                 0
+   38          5700                 0                 0
+   39          5850                 0                 0
+   40          6000                 0                 0
+   41          6150                 0                 0
+   42          6300                 0                 0
+   43          6450                 0                 0
+   44          6600                 0                 0
+   45          6750                 0                 0
+   46          6900                 0                 0
+   47          7050                 0                 0
+   48          7200                 0                 0
+   49          7350                 0                 0
+   50          7500                 0                 0
+   51          7650                 0                 0
+   52          7800                 0                 0
+   53          7950                 0                 0
+   54          8100                 0                 0
+   55          8250                 0                 0
+   56          8400                 0                 0
+   57          8550                 0                 0
+   58          8700                 0                 0
+   59          8850                 0                 0
+   60          9000                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150                 0                 0
+   62          9300                 0                 0
+   63          9450                 0                 0
+   64          9600                 0                 0
+   65          9750                 0                 0
+   66          9900                 0                 0
+   67         10050                 0                 0
+   68         10200                 0                 0
+   69         10350                 0                 0
+   70         10500                 0                 0
+   71         10650                 0                 0
+   72         10800                 0                 0
+   73         10950                 0                 0
+   74         11100                 0                 0
+   75         11250                 0                 0
+   76         11400                 0                 0
+   77         11550                 0                 0
+   78         11700                 0                 0
+   79         11850                 0                 0
+   80         12000                 0                 0
+   81         12150                 0                 0
+   82         12300                 0                 0
+   83         12450                 0                 0
+   84         12600                 0                 0
+   85         12750                 0                 0
+   86         12900                 0                 0
+   87         13050                 0                 0
+   88         13200                 0                 0
+   89         13350                 0                 0
+   90         13500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650                 0                 0
+   92         13800                 0                 0
+   93         13950                 0                 0
+   94         14100                 0                 0
+   95         14250                 0                 0
+   96         14400                 0                 0
+   97         14550                 0                 0
+   98         14700                 0                 0
+   99         14850                 0                 0
+  100         15000                 0                 0
+  101         15150                 0                 0
+  102         15300                 0                 0
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+---- Cross-validation: Holding out BPA #2 (46cm) ----
+
+---- Cross-validation: Holding out BPA #4 (40cm-tendon) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300                 0                 0
+    3           450                 0                 0
+    4           600                 0                 0
+    5           750                 0                 0
+    6           900                 0                 0
+    7          1050                 0                 0
+    8          1200                 0                 0
+    9          1350                 0                 0
+   10          1500                 0                 0
+   11          1650                 0                 0
+   12          1800                 0                 0
+   13          1950                 0                 0
+   14          2100                 0                 0
+   15          2250                 0                 0
+   16          2400                 0                 0
+   17          2550                 0                 0
+   18          2700                 0                 0
+   19          2850                 0                 0
+   20          3000                 0                 0
+   21          3150                 0                 0
+   22          3300                 0                 0
+   23          3450                 0                 0
+   24          3600                 0                 0
+   25          3750                 0                 0
+   26          3900                 0                 0
+   27          4050                 0                 0
+   28          4200                 0                 0
+   29          4350                 0                 0
+   30          4500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650                 0                 0
+   32          4800                 0                 0
+   33          4950                 0                 0
+   34          5100                 0                 0
+   35          5250                 0                 0
+   36          5400                 0                 0
+   37          5550                 0                 0
+   38          5700                 0                 0
+   39          5850                 0                 0
+   40          6000                 0                 0
+   41          6150                 0                 0
+   42          6300                 0                 0
+   43          6450                 0                 0
+   44          6600                 0                 0
+   45          6750                 0                 0
+   46          6900                 0                 0
+   47          7050                 0                 0
+   48          7200                 0                 0
+   49          7350                 0                 0
+   50          7500                 0                 0
+   51          7650                 0                 0
+   52          7800                 0                 0
+   53          7950                 0                 0
+   54          8100                 0                 0
+   55          8250                 0                 0
+   56          8400                 0                 0
+   57          8550                 0                 0
+   58          8700                 0                 0
+   59          8850                 0                 0
+   60          9000                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150                 0                 0
+   62          9300                 0                 0
+   63          9450                 0                 0
+   64          9600                 0                 0
+   65          9750                 0                 0
+   66          9900                 0                 0
+   67         10050                 0                 0
+   68         10200                 0                 0
+   69         10350                 0                 0
+   70         10500                 0                 0
+   71         10650                 0                 0
+   72         10800                 0                 0
+   73         10950                 0                 0
+   74         11100                 0                 0
+   75         11250                 0                 0
+   76         11400                 0                 0
+   77         11550                 0                 0
+   78         11700                 0                 0
+   79         11850                 0                 0
+   80         12000                 0                 0
+   81         12150                 0                 0
+   82         12300                 0                 0
+   83         12450                 0                 0
+   84         12600                 0                 0
+   85         12750                 0                 0
+   86         12900                 0                 0
+   87         13050                 0                 0
+   88         13200                 0                 0
+   89         13350                 0                 0
+   90         13500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650                 0                 0
+   92         13800                 0                 0
+   93         13950                 0                 0
+   94         14100                 0                 0
+   95         14250                 0                 0
+   96         14400                 0                 0
+   97         14550                 0                 0
+   98         14700                 0                 0
+   99         14850                 0                 0
+  100         15000                 0                 0
+  101         15150                 0                 0
+  102         15300                 0                 0
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+---- Cross-validation: Holding out BPA #2 (46cm) ----
+
+---- Cross-validation: Holding out BPA #5 (42cm) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300                 0                 0
+    3           450                 0                 0
+    4           600                 0                 0
+    5           750                 0                 0
+    6           900                 0                 0
+    7          1050                 0                 0
+    8          1200                 0                 0
+    9          1350                 0                 0
+   10          1500                 0                 0
+   11          1650                 0                 0
+   12          1800                 0                 0
+   13          1950                 0                 0
+   14          2100                 0                 0
+   15          2250                 0                 0
+   16          2400                 0                 0
+   17          2550                 0                 0
+   18          2700                 0                 0
+   19          2850                 0                 0
+   20          3000                 0                 0
+   21          3150                 0                 0
+   22          3300                 0                 0
+   23          3450                 0                 0
+   24          3600                 0                 0
+   25          3750                 0                 0
+   26          3900                 0                 0
+   27          4050                 0                 0
+   28          4200                 0                 0
+   29          4350                 0                 0
+   30          4500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650                 0                 0
+   32          4800                 0                 0
+   33          4950                 0                 0
+   34          5100                 0                 0
+   35          5250                 0                 0
+   36          5400                 0                 0
+   37          5550                 0                 0
+   38          5700                 0                 0
+   39          5850                 0                 0
+   40          6000                 0                 0
+   41          6150                 0                 0
+   42          6300                 0                 0
+   43          6450                 0                 0
+   44          6600                 0                 0
+   45          6750                 0                 0
+   46          6900                 0                 0
+   47          7050                 0                 0
+   48          7200                 0                 0
+   49          7350                 0                 0
+   50          7500                 0                 0
+   51          7650                 0                 0
+   52          7800                 0                 0
+   53          7950                 0                 0
+   54          8100                 0                 0
+   55          8250                 0                 0
+   56          8400                 0                 0
+   57          8550                 0                 0
+   58          8700                 0                 0
+   59          8850                 0                 0
+   60          9000                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150                 0                 0
+   62          9300                 0                 0
+   63          9450                 0                 0
+   64          9600                 0                 0
+   65          9750                 0                 0
+   66          9900                 0                 0
+   67         10050                 0                 0
+   68         10200                 0                 0
+   69         10350                 0                 0
+   70         10500                 0                 0
+   71         10650                 0                 0
+   72         10800                 0                 0
+   73         10950                 0                 0
+   74         11100                 0                 0
+   75         11250                 0                 0
+   76         11400                 0                 0
+   77         11550                 0                 0
+   78         11700                 0                 0
+   79         11850                 0                 0
+   80         12000                 0                 0
+   81         12150                 0                 0
+   82         12300                 0                 0
+   83         12450                 0                 0
+   84         12600                 0                 0
+   85         12750                 0                 0
+   86         12900                 0                 0
+   87         13050                 0                 0
+   88         13200                 0                 0
+   89         13350                 0                 0
+   90         13500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650                 0                 0
+   92         13800                 0                 0
+   93         13950                 0                 0
+   94         14100                 0                 0
+   95         14250                 0                 0
+   96         14400                 0                 0
+   97         14550                 0                 0
+   98         14700                 0                 0
+   99         14850                 0                 0
+  100         15000                 0                 0
+  101         15150                 0                 0
+  102         15300                 0                 0
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+---- Cross-validation: Holding out BPA #3 (47cm) ----
+
+---- Cross-validation: Holding out BPA #4 (40cm-tendon) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300                 0                 0
+    3           450                 0                 0
+    4           600                 0                 0
+    5           750                 0                 0
+    6           900                 0                 0
+    7          1050                 0                 0
+    8          1200                 0                 0
+    9          1350                 0                 0
+   10          1500                 0                 0
+   11          1650                 0                 0
+   12          1800                 0                 0
+   13          1950                 0                 0
+   14          2100                 0                 0
+   15          2250                 0                 0
+   16          2400                 0                 0
+   17          2550                 0                 0
+   18          2700                 0                 0
+   19          2850                 0                 0
+   20          3000                 0                 0
+   21          3150                 0                 0
+   22          3300                 0                 0
+   23          3450                 0                 0
+   24          3600                 0                 0
+   25          3750                 0                 0
+   26          3900                 0                 0
+   27          4050                 0                 0
+   28          4200                 0                 0
+   29          4350                 0                 0
+   30          4500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650                 0                 0
+   32          4800                 0                 0
+   33          4950                 0                 0
+   34          5100                 0                 0
+   35          5250                 0                 0
+   36          5400                 0                 0
+   37          5550                 0                 0
+   38          5700                 0                 0
+   39          5850                 0                 0
+   40          6000                 0                 0
+   41          6150                 0                 0
+   42          6300                 0                 0
+   43          6450                 0                 0
+   44          6600                 0                 0
+   45          6750                 0                 0
+   46          6900                 0                 0
+   47          7050                 0                 0
+   48          7200                 0                 0
+   49          7350                 0                 0
+   50          7500                 0                 0
+   51          7650                 0                 0
+   52          7800                 0                 0
+   53          7950                 0                 0
+   54          8100                 0                 0
+   55          8250                 0                 0
+   56          8400                 0                 0
+   57          8550                 0                 0
+   58          8700                 0                 0
+   59          8850                 0                 0
+   60          9000                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150                 0                 0
+   62          9300                 0                 0
+   63          9450                 0                 0
+   64          9600                 0                 0
+   65          9750                 0                 0
+   66          9900                 0                 0
+   67         10050                 0                 0
+   68         10200                 0                 0
+   69         10350                 0                 0
+   70         10500                 0                 0
+   71         10650                 0                 0
+   72         10800                 0                 0
+   73         10950                 0                 0
+   74         11100                 0                 0
+   75         11250                 0                 0
+   76         11400                 0                 0
+   77         11550                 0                 0
+   78         11700                 0                 0
+   79         11850                 0                 0
+   80         12000                 0                 0
+   81         12150                 0                 0
+   82         12300                 0                 0
+   83         12450                 0                 0
+   84         12600                 0                 0
+   85         12750                 0                 0
+   86         12900                 0                 0
+   87         13050                 0                 0
+   88         13200                 0                 0
+   89         13350                 0                 0
+   90         13500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650                 0                 0
+   92         13800                 0                 0
+   93         13950                 0                 0
+   94         14100                 0                 0
+   95         14250                 0                 0
+   96         14400                 0                 0
+   97         14550                 0                 0
+   98         14700                 0                 0
+   99         14850                 0                 0
+  100         15000                 0                 0
+  101         15150                 0                 0
+  102         15300                 0                 0
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+---- Cross-validation: Holding out BPA #3 (47cm) ----
+
+---- Cross-validation: Holding out BPA #5 (42cm) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300                 0                 0
+    3           450                 0                 0
+    4           600                 0                 0
+    5           750                 0                 0
+    6           900                 0                 0
+    7          1050                 0                 0
+    8          1200                 0                 0
+    9          1350                 0                 0
+   10          1500                 0                 0
+   11          1650                 0                 0
+   12          1800                 0                 0
+   13          1950                 0                 0
+   14          2100                 0                 0
+   15          2250                 0                 0
+   16          2400                 0                 0
+   17          2550                 0                 0
+   18          2700                 0                 0
+   19          2850                 0                 0
+   20          3000                 0                 0
+   21          3150                 0                 0
+   22          3300                 0                 0
+   23          3450                 0                 0
+   24          3600                 0                 0
+   25          3750                 0                 0
+   26          3900                 0                 0
+   27          4050                 0                 0
+   28          4200                 0                 0
+   29          4350                 0                 0
+   30          4500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650                 0                 0
+   32          4800                 0                 0
+   33          4950                 0                 0
+   34          5100                 0                 0
+   35          5250                 0                 0
+   36          5400                 0                 0
+   37          5550                 0                 0
+   38          5700                 0                 0
+   39          5850                 0                 0
+   40          6000                 0                 0
+   41          6150                 0                 0
+   42          6300                 0                 0
+   43          6450                 0                 0
+   44          6600                 0                 0
+   45          6750                 0                 0
+   46          6900                 0                 0
+   47          7050                 0                 0
+   48          7200                 0                 0
+   49          7350                 0                 0
+   50          7500                 0                 0
+   51          7650                 0                 0
+   52          7800                 0                 0
+   53          7950                 0                 0
+   54          8100                 0                 0
+   55          8250                 0                 0
+   56          8400                 0                 0
+   57          8550                 0                 0
+   58          8700                 0                 0
+   59          8850                 0                 0
+   60          9000                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150                 0                 0
+   62          9300                 0                 0
+   63          9450                 0                 0
+   64          9600                 0                 0
+   65          9750                 0                 0
+   66          9900                 0                 0
+   67         10050                 0                 0
+   68         10200                 0                 0
+   69         10350                 0                 0
+   70         10500                 0                 0
+   71         10650                 0                 0
+   72         10800                 0                 0
+   73         10950                 0                 0
+   74         11100                 0                 0
+   75         11250                 0                 0
+   76         11400                 0                 0
+   77         11550                 0                 0
+   78         11700                 0                 0
+   79         11850                 0                 0
+   80         12000                 0                 0
+   81         12150                 0                 0
+   82         12300                 0                 0
+   83         12450                 0                 0
+   84         12600                 0                 0
+   85         12750                 0                 0
+   86         12900                 0                 0
+   87         13050                 0                 0
+   88         13200                 0                 0
+   89         13350                 0                 0
+   90         13500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650                 0                 0
+   92         13800                 0                 0
+   93         13950                 0                 0
+   94         14100                 0                 0
+   95         14250                 0                 0
+   96         14400                 0                 0
+   97         14550                 0                 0
+   98         14700                 0                 0
+   99         14850                 0                 0
+  100         15000                 0                 0
+  101         15150                 0                 0
+  102         15300                 0                 0
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+---- Cross-validation: Holding out BPA #4 (40cm-tendon) ----
+
+---- Cross-validation: Holding out BPA #5 (42cm) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300                 0                 0
+    3           450                 0                 0
+    4           600                 0                 0
+    5           750                 0                 0
+    6           900                 0                 0
+    7          1050                 0                 0
+    8          1200                 0                 0
+    9          1350                 0                 0
+   10          1500                 0                 0
+   11          1650                 0                 0
+   12          1800                 0                 0
+   13          1950                 0                 0
+   14          2100                 0                 0
+   15          2250                 0                 0
+   16          2400                 0                 0
+   17          2550                 0                 0
+   18          2700                 0                 0
+   19          2850                 0                 0
+   20          3000                 0                 0
+   21          3150                 0                 0
+   22          3300                 0                 0
+   23          3450                 0                 0
+   24          3600                 0                 0
+   25          3750                 0                 0
+   26          3900                 0                 0
+   27          4050                 0                 0
+   28          4200                 0                 0
+   29          4350                 0                 0
+   30          4500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650                 0                 0
+   32          4800                 0                 0
+   33          4950                 0                 0
+   34          5100                 0                 0
+   35          5250                 0                 0
+   36          5400                 0                 0
+   37          5550                 0                 0
+   38          5700                 0                 0
+   39          5850                 0                 0
+   40          6000                 0                 0
+   41          6150                 0                 0
+   42          6300                 0                 0
+   43          6450                 0                 0
+   44          6600                 0                 0
+   45          6750                 0                 0
+   46          6900                 0                 0
+   47          7050                 0                 0
+   48          7200                 0                 0
+   49          7350                 0                 0
+   50          7500                 0                 0
+   51          7650                 0                 0
+   52          7800                 0                 0
+   53          7950                 0                 0
+   54          8100                 0                 0
+   55          8250                 0                 0
+   56          8400                 0                 0
+   57          8550                 0                 0
+   58          8700                 0                 0
+   59          8850                 0                 0
+   60          9000                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150                 0                 0
+   62          9300                 0                 0
+   63          9450                 0                 0
+   64          9600                 0                 0
+   65          9750                 0                 0
+   66          9900                 0                 0
+   67         10050                 0                 0
+   68         10200                 0                 0
+   69         10350                 0                 0
+   70         10500                 0                 0
+   71         10650                 0                 0
+   72         10800                 0                 0
+   73         10950                 0                 0
+   74         11100                 0                 0
+   75         11250                 0                 0
+   76         11400                 0                 0
+   77         11550                 0                 0
+   78         11700                 0                 0
+   79         11850                 0                 0
+   80         12000                 0                 0
+   81         12150                 0                 0
+   82         12300                 0                 0
+   83         12450                 0                 0
+   84         12600                 0                 0
+   85         12750                 0                 0
+   86         12900                 0                 0
+   87         13050                 0                 0
+   88         13200                 0                 0
+   89         13350                 0                 0
+   90         13500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650                 0                 0
+   92         13800                 0                 0
+   93         13950                 0                 0
+   94         14100                 0                 0
+   95         14250                 0                 0
+   96         14400                 0                 0
+   97         14550                 0                 0
+   98         14700                 0                 0
+   99         14850                 0                 0
+  100         15000                 0                 0
+  101         15150                 0                 0
+  102         15300                 0                 0
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+RUN L107_DIAG raised: Dimensions of arrays being concatenated are not consistent.
+    at: minimizeFlxPin10mmX3_2brkt L113 | run L112 | runOne L47 | run_FlxFrX3_2brkt_locks_20260915 L29 | run L112
+
+SAVED FULL WORKSPACE: minimizeFlxPin10mmX3_2brkt_results_20260915_L107_DIAG.mat
+
+Performance with no length offset and infinite stiffness:
+                    RMSE       FVU      MaxResidual
+                   ______    _______    ___________
+
+    48cm           7.6174     2.1278      25.531   
+    46cm           8.8026      1.938      26.264   
+    47cm           7.6699     1.8463       21.65   
+    40cm-tendon    6.3725    0.59349      16.859   
+    42cm           9.6944     2.1149      21.076   
+
+Mean baseline training: RMSE 8.0314, FVU 1.7241, Max. Residual 22.2760
+
+FX3B LOCK: Xi1=436088 Xi2=19995.8 locked; GA searches Xi0 [0 2] cm, Xi3 [5e+03 5e+07] N/m
+
+---- Cross-validation: Holding out BPA #2 (46cm) ----
+
+---- Cross-validation: Holding out BPA #3 (47cm) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300                 0                 0
+    3           450                 0                 0
+    4           600                 0                 0
+    5           750                 0                 0
+    6           900                 0                 0
+    7          1050                 0                 0
+    8          1200                 0                 0
+    9          1350                 0                 0
+   10          1500                 0                 0
+   11          1650                 0                 0
+   12          1800                 0                 0
+   13          1950                 0                 0
+   14          2100                 0                 0
+   15          2250                 0                 0
+   16          2400                 0                 0
+   17          2550                 0                 0
+   18          2700                 0                 0
+   19          2850                 0                 0
+   20          3000                 0                 0
+   21          3150                 0                 0
+   22          3300                 0                 0
+   23          3450                 0                 0
+   24          3600                 0                 0
+   25          3750                 0                 0
+   26          3900                 0                 0
+   27          4050                 0                 0
+   28          4200                 0                 0
+   29          4350                 0                 0
+   30          4500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650                 0                 0
+   32          4800                 0                 0
+   33          4950                 0                 0
+   34          5100                 0                 0
+   35          5250                 0                 0
+   36          5400                 0                 0
+   37          5550                 0                 0
+   38          5700                 0                 0
+   39          5850                 0                 0
+   40          6000                 0                 0
+   41          6150                 0                 0
+   42          6300                 0                 0
+   43          6450                 0                 0
+   44          6600                 0                 0
+   45          6750                 0                 0
+   46          6900                 0                 0
+   47          7050                 0                 0
+   48          7200                 0                 0
+   49          7350                 0                 0
+   50          7500                 0                 0
+   51          7650                 0                 0
+   52          7800                 0                 0
+   53          7950                 0                 0
+   54          8100                 0                 0
+   55          8250                 0                 0
+   56          8400                 0                 0
+   57          8550                 0                 0
+   58          8700                 0                 0
+   59          8850                 0                 0
+   60          9000                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150                 0                 0
+   62          9300                 0                 0
+   63          9450                 0                 0
+   64          9600                 0                 0
+   65          9750                 0                 0
+   66          9900                 0                 0
+   67         10050                 0                 0
+   68         10200                 0                 0
+   69         10350                 0                 0
+   70         10500                 0                 0
+   71         10650                 0                 0
+   72         10800                 0                 0
+   73         10950                 0                 0
+   74         11100                 0                 0
+   75         11250                 0                 0
+   76         11400                 0                 0
+   77         11550                 0                 0
+   78         11700                 0                 0
+   79         11850                 0                 0
+   80         12000                 0                 0
+   81         12150                 0                 0
+   82         12300                 0                 0
+   83         12450                 0                 0
+   84         12600                 0                 0
+   85         12750                 0                 0
+   86         12900                 0                 0
+   87         13050                 0                 0
+   88         13200                 0                 0
+   89         13350                 0                 0
+   90         13500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650                 0                 0
+   92         13800                 0                 0
+   93         13950                 0                 0
+   94         14100                 0                 0
+   95         14250                 0                 0
+   96         14400                 0                 0
+   97         14550                 0                 0
+   98         14700                 0                 0
+   99         14850                 0                 0
+  100         15000                 0                 0
+  101         15150                 0                 0
+  102         15300                 0                 0
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+---- Cross-validation: Holding out BPA #2 (46cm) ----
+
+---- Cross-validation: Holding out BPA #4 (40cm-tendon) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300                 0                 0
+    3           450                 0                 0
+    4           600                 0                 0
+    5           750                 0                 0
+    6           900                 0                 0
+    7          1050                 0                 0
+    8          1200                 0                 0
+    9          1350                 0                 0
+   10          1500                 0                 0
+   11          1650                 0                 0
+   12          1800                 0                 0
+   13          1950                 0                 0
+   14          2100                 0                 0
+   15          2250                 0                 0
+   16          2400                 0                 0
+   17          2550                 0                 0
+   18          2700                 0                 0
+   19          2850                 0                 0
+   20          3000                 0                 0
+   21          3150                 0                 0
+   22          3300                 0                 0
+   23          3450                 0                 0
+   24          3600                 0                 0
+   25          3750                 0                 0
+   26          3900                 0                 0
+   27          4050                 0                 0
+   28          4200                 0                 0
+   29          4350                 0                 0
+   30          4500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650                 0                 0
+   32          4800                 0                 0
+   33          4950                 0                 0
+   34          5100                 0                 0
+   35          5250                 0                 0
+   36          5400                 0                 0
+   37          5550                 0                 0
+   38          5700                 0                 0
+   39          5850                 0                 0
+   40          6000                 0                 0
+   41          6150                 0                 0
+   42          6300                 0                 0
+   43          6450                 0                 0
+   44          6600                 0                 0
+   45          6750                 0                 0
+   46          6900                 0                 0
+   47          7050                 0                 0
+   48          7200                 0                 0
+   49          7350                 0                 0
+   50          7500                 0                 0
+   51          7650                 0                 0
+   52          7800                 0                 0
+   53          7950                 0                 0
+   54          8100                 0                 0
+   55          8250                 0                 0
+   56          8400                 0                 0
+   57          8550                 0                 0
+   58          8700                 0                 0
+   59          8850                 0                 0
+   60          9000                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150                 0                 0
+   62          9300                 0                 0
+   63          9450                 0                 0
+   64          9600                 0                 0
+   65          9750                 0                 0
+   66          9900                 0                 0
+   67         10050                 0                 0
+   68         10200                 0                 0
+   69         10350                 0                 0
+   70         10500                 0                 0
+   71         10650                 0                 0
+   72         10800                 0                 0
+   73         10950                 0                 0
+   74         11100                 0                 0
+   75         11250                 0                 0
+   76         11400                 0                 0
+   77         11550                 0                 0
+   78         11700                 0                 0
+   79         11850                 0                 0
+   80         12000                 0                 0
+   81         12150                 0                 0
+   82         12300                 0                 0
+   83         12450                 0                 0
+   84         12600                 0                 0
+   85         12750                 0                 0
+   86         12900                 0                 0
+   87         13050                 0                 0
+   88         13200                 0                 0
+   89         13350                 0                 0
+   90         13500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650                 0                 0
+   92         13800                 0                 0
+   93         13950                 0                 0
+   94         14100                 0                 0
+   95         14250                 0                 0
+   96         14400                 0                 0
+   97         14550                 0                 0
+   98         14700                 0                 0
+   99         14850                 0                 0
+  100         15000                 0                 0
+  101         15150                 0                 0
+  102         15300                 0                 0
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+---- Cross-validation: Holding out BPA #2 (46cm) ----
+
+---- Cross-validation: Holding out BPA #5 (42cm) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300                 0                 0
+    3           450                 0                 0
+    4           600                 0                 0
+    5           750                 0                 0
+    6           900                 0                 0
+    7          1050                 0                 0
+    8          1200                 0                 0
+    9          1350                 0                 0
+   10          1500                 0                 0
+   11          1650                 0                 0
+   12          1800                 0                 0
+   13          1950                 0                 0
+   14          2100                 0                 0
+   15          2250                 0                 0
+   16          2400                 0                 0
+   17          2550                 0                 0
+   18          2700                 0                 0
+   19          2850                 0                 0
+   20          3000                 0                 0
+   21          3150                 0                 0
+   22          3300                 0                 0
+   23          3450                 0                 0
+   24          3600                 0                 0
+   25          3750                 0                 0
+   26          3900                 0                 0
+   27          4050                 0                 0
+   28          4200                 0                 0
+   29          4350                 0                 0
+   30          4500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650                 0                 0
+   32          4800                 0                 0
+   33          4950                 0                 0
+   34          5100                 0                 0
+   35          5250                 0                 0
+   36          5400                 0                 0
+   37          5550                 0                 0
+   38          5700                 0                 0
+   39          5850                 0                 0
+   40          6000                 0                 0
+   41          6150                 0                 0
+   42          6300                 0                 0
+   43          6450                 0                 0
+   44          6600                 0                 0
+   45          6750                 0                 0
+   46          6900                 0                 0
+   47          7050                 0                 0
+   48          7200                 0                 0
+   49          7350                 0                 0
+   50          7500                 0                 0
+   51          7650                 0                 0
+   52          7800                 0                 0
+   53          7950                 0                 0
+   54          8100                 0                 0
+   55          8250                 0                 0
+   56          8400                 0                 0
+   57          8550                 0                 0
+   58          8700                 0                 0
+   59          8850                 0                 0
+   60          9000                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150                 0                 0
+   62          9300                 0                 0
+   63          9450                 0                 0
+   64          9600                 0                 0
+   65          9750                 0                 0
+   66          9900                 0                 0
+   67         10050                 0                 0
+   68         10200                 0                 0
+   69         10350                 0                 0
+   70         10500                 0                 0
+   71         10650                 0                 0
+   72         10800                 0                 0
+   73         10950                 0                 0
+   74         11100                 0                 0
+   75         11250                 0                 0
+   76         11400                 0                 0
+   77         11550                 0                 0
+   78         11700                 0                 0
+   79         11850                 0                 0
+   80         12000                 0                 0
+   81         12150                 0                 0
+   82         12300                 0                 0
+   83         12450                 0                 0
+   84         12600                 0                 0
+   85         12750                 0                 0
+   86         12900                 0                 0
+   87         13050                 0                 0
+   88         13200                 0                 0
+   89         13350                 0                 0
+   90         13500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650                 0                 0
+   92         13800                 0                 0
+   93         13950                 0                 0
+   94         14100                 0                 0
+   95         14250                 0                 0
+   96         14400                 0                 0
+   97         14550                 0                 0
+   98         14700                 0                 0
+   99         14850                 0                 0
+  100         15000                 0                 0
+  101         15150                 0                 0
+  102         15300                 0                 0
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+---- Cross-validation: Holding out BPA #3 (47cm) ----
+
+---- Cross-validation: Holding out BPA #4 (40cm-tendon) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300                 0                 0
+    3           450                 0                 0
+    4           600                 0                 0
+    5           750                 0                 0
+    6           900                 0                 0
+    7          1050                 0                 0
+    8          1200                 0                 0
+    9          1350                 0                 0
+   10          1500                 0                 0
+   11          1650                 0                 0
+   12          1800                 0                 0
+   13          1950                 0                 0
+   14          2100                 0                 0
+   15          2250                 0                 0
+   16          2400                 0                 0
+   17          2550                 0                 0
+   18          2700                 0                 0
+   19          2850                 0                 0
+   20          3000                 0                 0
+   21          3150                 0                 0
+   22          3300                 0                 0
+   23          3450                 0                 0
+   24          3600                 0                 0
+   25          3750                 0                 0
+   26          3900                 0                 0
+   27          4050                 0                 0
+   28          4200                 0                 0
+   29          4350                 0                 0
+   30          4500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650                 0                 0
+   32          4800                 0                 0
+   33          4950                 0                 0
+   34          5100                 0                 0
+   35          5250                 0                 0
+   36          5400                 0                 0
+   37          5550                 0                 0
+   38          5700                 0                 0
+   39          5850                 0                 0
+   40          6000                 0                 0
+   41          6150                 0                 0
+   42          6300                 0                 0
+   43          6450                 0                 0
+   44          6600                 0                 0
+   45          6750                 0                 0
+   46          6900                 0                 0
+   47          7050                 0                 0
+   48          7200                 0                 0
+   49          7350                 0                 0
+   50          7500                 0                 0
+   51          7650                 0                 0
+   52          7800                 0                 0
+   53          7950                 0                 0
+   54          8100                 0                 0
+   55          8250                 0                 0
+   56          8400                 0                 0
+   57          8550                 0                 0
+   58          8700                 0                 0
+   59          8850                 0                 0
+   60          9000                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150                 0                 0
+   62          9300                 0                 0
+   63          9450                 0                 0
+   64          9600                 0                 0
+   65          9750                 0                 0
+   66          9900                 0                 0
+   67         10050                 0                 0
+   68         10200                 0                 0
+   69         10350                 0                 0
+   70         10500                 0                 0
+   71         10650                 0                 0
+   72         10800                 0                 0
+   73         10950                 0                 0
+   74         11100                 0                 0
+   75         11250                 0                 0
+   76         11400                 0                 0
+   77         11550                 0                 0
+   78         11700                 0                 0
+   79         11850                 0                 0
+   80         12000                 0                 0
+   81         12150                 0                 0
+   82         12300                 0                 0
+   83         12450                 0                 0
+   84         12600                 0                 0
+   85         12750                 0                 0
+   86         12900                 0                 0
+   87         13050                 0                 0
+   88         13200                 0                 0
+   89         13350                 0                 0
+   90         13500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650                 0                 0
+   92         13800                 0                 0
+   93         13950                 0                 0
+   94         14100                 0                 0
+   95         14250                 0                 0
+   96         14400                 0                 0
+   97         14550                 0                 0
+   98         14700                 0                 0
+   99         14850                 0                 0
+  100         15000                 0                 0
+  101         15150                 0                 0
+  102         15300                 0                 0
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+---- Cross-validation: Holding out BPA #3 (47cm) ----
+
+---- Cross-validation: Holding out BPA #5 (42cm) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300                 0                 0
+    3           450                 0                 0
+    4           600                 0                 0
+    5           750                 0                 0
+    6           900                 0                 0
+    7          1050                 0                 0
+    8          1200                 0                 0
+    9          1350                 0                 0
+   10          1500                 0                 0
+   11          1650                 0                 0
+   12          1800                 0                 0
+   13          1950                 0                 0
+   14          2100                 0                 0
+   15          2250                 0                 0
+   16          2400                 0                 0
+   17          2550                 0                 0
+   18          2700                 0                 0
+   19          2850                 0                 0
+   20          3000                 0                 0
+   21          3150                 0                 0
+   22          3300                 0                 0
+   23          3450                 0                 0
+   24          3600                 0                 0
+   25          3750                 0                 0
+   26          3900                 0                 0
+   27          4050                 0                 0
+   28          4200                 0                 0
+   29          4350                 0                 0
+   30          4500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650                 0                 0
+   32          4800                 0                 0
+   33          4950                 0                 0
+   34          5100                 0                 0
+   35          5250                 0                 0
+   36          5400                 0                 0
+   37          5550                 0                 0
+   38          5700                 0                 0
+   39          5850                 0                 0
+   40          6000                 0                 0
+   41          6150                 0                 0
+   42          6300                 0                 0
+   43          6450                 0                 0
+   44          6600                 0                 0
+   45          6750                 0                 0
+   46          6900                 0                 0
+   47          7050                 0                 0
+   48          7200                 0                 0
+   49          7350                 0                 0
+   50          7500                 0                 0
+   51          7650                 0                 0
+   52          7800                 0                 0
+   53          7950                 0                 0
+   54          8100                 0                 0
+   55          8250                 0                 0
+   56          8400                 0                 0
+   57          8550                 0                 0
+   58          8700                 0                 0
+   59          8850                 0                 0
+   60          9000                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150                 0                 0
+   62          9300                 0                 0
+   63          9450                 0                 0
+   64          9600                 0                 0
+   65          9750                 0                 0
+   66          9900                 0                 0
+   67         10050                 0                 0
+   68         10200                 0                 0
+   69         10350                 0                 0
+   70         10500                 0                 0
+   71         10650                 0                 0
+   72         10800                 0                 0
+   73         10950                 0                 0
+   74         11100                 0                 0
+   75         11250                 0                 0
+   76         11400                 0                 0
+   77         11550                 0                 0
+   78         11700                 0                 0
+   79         11850                 0                 0
+   80         12000                 0                 0
+   81         12150                 0                 0
+   82         12300                 0                 0
+   83         12450                 0                 0
+   84         12600                 0                 0
+   85         12750                 0                 0
+   86         12900                 0                 0
+   87         13050                 0                 0
+   88         13200                 0                 0
+   89         13350                 0                 0
+   90         13500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650                 0                 0
+   92         13800                 0                 0
+   93         13950                 0                 0
+   94         14100                 0                 0
+   95         14250                 0                 0
+   96         14400                 0                 0
+   97         14550                 0                 0
+   98         14700                 0                 0
+   99         14850                 0                 0
+  100         15000                 0                 0
+  101         15150                 0                 0
+  102         15300                 0                 0
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+---- Cross-validation: Holding out BPA #4 (40cm-tendon) ----
+
+---- Cross-validation: Holding out BPA #5 (42cm) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300                 0                 0
+    3           450                 0                 0
+    4           600                 0                 0
+    5           750                 0                 0
+    6           900                 0                 0
+    7          1050                 0                 0
+    8          1200                 0                 0
+    9          1350                 0                 0
+   10          1500                 0                 0
+   11          1650                 0                 0
+   12          1800                 0                 0
+   13          1950                 0                 0
+   14          2100                 0                 0
+   15          2250                 0                 0
+   16          2400                 0                 0
+   17          2550                 0                 0
+   18          2700                 0                 0
+   19          2850                 0                 0
+   20          3000                 0                 0
+   21          3150                 0                 0
+   22          3300                 0                 0
+   23          3450                 0                 0
+   24          3600                 0                 0
+   25          3750                 0                 0
+   26          3900                 0                 0
+   27          4050                 0                 0
+   28          4200                 0                 0
+   29          4350                 0                 0
+   30          4500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650                 0                 0
+   32          4800                 0                 0
+   33          4950                 0                 0
+   34          5100                 0                 0
+   35          5250                 0                 0
+   36          5400                 0                 0
+   37          5550                 0                 0
+   38          5700                 0                 0
+   39          5850                 0                 0
+   40          6000                 0                 0
+   41          6150                 0                 0
+   42          6300                 0                 0
+   43          6450                 0                 0
+   44          6600                 0                 0
+   45          6750                 0                 0
+   46          6900                 0                 0
+   47          7050                 0                 0
+   48          7200                 0                 0
+   49          7350                 0                 0
+   50          7500                 0                 0
+   51          7650                 0                 0
+   52          7800                 0                 0
+   53          7950                 0                 0
+   54          8100                 0                 0
+   55          8250                 0                 0
+   56          8400                 0                 0
+   57          8550                 0                 0
+   58          8700                 0                 0
+   59          8850                 0                 0
+   60          9000                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150                 0                 0
+   62          9300                 0                 0
+   63          9450                 0                 0
+   64          9600                 0                 0
+   65          9750                 0                 0
+   66          9900                 0                 0
+   67         10050                 0                 0
+   68         10200                 0                 0
+   69         10350                 0                 0
+   70         10500                 0                 0
+   71         10650                 0                 0
+   72         10800                 0                 0
+   73         10950                 0                 0
+   74         11100                 0                 0
+   75         11250                 0                 0
+   76         11400                 0                 0
+   77         11550                 0                 0
+   78         11700                 0                 0
+   79         11850                 0                 0
+   80         12000                 0                 0
+   81         12150                 0                 0
+   82         12300                 0                 0
+   83         12450                 0                 0
+   84         12600                 0                 0
+   85         12750                 0                 0
+   86         12900                 0                 0
+   87         13050                 0                 0
+   88         13200                 0                 0
+   89         13350                 0                 0
+   90         13500                 0                 0
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650                 0                 0
+   92         13800                 0                 0
+   93         13950                 0                 0
+   94         14100                 0                 0
+   95         14250                 0                 0
+   96         14400                 0                 0
+   97         14550                 0                 0
+   98         14700                 0                 0
+   99         14850                 0                 0
+  100         15000                 0                 0
+  101         15150                 0                 0
+  102         15300                 0                 0
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+RUN L1trans_DIAG raised: Dimensions of arrays being concatenated are not consistent.
+    at: minimizeFlxPin10mmX3_2brkt L113 | run L112 | runOne L47 | run_FlxFrX3_2brkt_locks_20260915 L29 | run L112
+
+SAVED FULL WORKSPACE: minimizeFlxPin10mmX3_2brkt_results_20260915_L1trans_DIAG.mat
+
+Performance with no length offset and infinite stiffness:
+                    RMSE       FVU      MaxResidual
+                   ______    _______    ___________
+
+    48cm           7.6174     2.1278      25.531   
+    46cm           8.8026      1.938      26.264   
+    47cm           7.6699     1.8463       21.65   
+    40cm-tendon    6.3725    0.59349      16.859   
+    42cm           9.6944     2.1149      21.076   
+
+Mean baseline training: RMSE 8.0314, FVU 1.7241, Max. Residual 22.2760
+
+FX3B LOCK: Xi1=56237.8 Xi2=18542.3 locked; GA searches Xi0 [0 2] cm, Xi3 [5e+03 5e+07] N/m
+
+---- Cross-validation: Holding out BPA #2 (46cm) ----
+
+---- Cross-validation: Holding out BPA #3 (47cm) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300        0.00534124          0.147414
+    3           450         0.0050888          0.132249
+    4           600        0.00507089           0.13521
+    5           750        0.00452852          0.120155
+    6           900        0.00454972          0.119191
+    7          1050        0.00457654          0.117078
+    8          1200        0.00439398          0.116756
+    9          1350        0.00440364          0.113758
+   10          1500        0.00431393          0.112729
+   11          1650        0.00374979          0.100572
+   12          1800        0.00385082           0.10025
+   13          1950         0.0040581          0.104487
+   14          2100        0.00383462          0.100231
+   15          2250        0.00384963         0.0997666
+   16          2400        0.00356993         0.0925181
+   17          2550        0.00445146          0.111545
+   18          2700        0.00474393          0.117721
+   19          2850        0.00431248          0.109179
+   20          3000        0.00375034         0.0955905
+   21          3150        0.00366589         0.0906028
+   22          3300        0.00361097         0.0906225
+   23          3450        0.00404823         0.0973117
+   24          3600        0.00376004         0.0940309
+   25          3750        0.00350784         0.0877179
+   26          3900        0.00386229         0.0957084
+   27          4050        0.00386796         0.0975705
+   28          4200        0.00367491          0.094377
+   29          4350        0.00366979         0.0926917
+   30          4500        0.00363612         0.0914469
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650         0.0040267          0.100442
+   32          4800        0.00424649          0.107457
+   33          4950        0.00397964          0.100522
+   34          5100        0.00373614         0.0944102
+   35          5250        0.00361756         0.0914332
+   36          5400        0.00418442           0.10217
+   37          5550         0.0038962         0.0986212
+   38          5700        0.00402348          0.101185
+   39          5850        0.00391746         0.0958478
+   40          6000        0.00412067          0.102313
+   41          6150        0.00414564          0.102401
+   42          6300        0.00428502          0.105186
+   43          6450        0.00407878          0.100933
+   44          6600        0.00382557         0.0960598
+   45          6750        0.00375129         0.0931415
+   46          6900        0.00388107         0.0973466
+   47          7050        0.00408312          0.101514
+   48          7200        0.00396436         0.0978016
+   49          7350        0.00461716          0.113027
+   50          7500        0.00384188         0.0964247
+   51          7650        0.00425486          0.102824
+   52          7800        0.00422806          0.104982
+   53          7950        0.00402432         0.0995745
+   54          8100         0.0037857         0.0954785
+   55          8250        0.00383867         0.0940008
+   56          8400        0.00391205         0.0974248
+   57          8550         0.0040024          0.100317
+   58          8700        0.00380662         0.0937777
+   59          8850        0.00388582         0.0953356
+   60          9000        0.00429212          0.105229
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150        0.00411125         0.0994712
+   62          9300        0.00415442          0.100777
+   63          9450        0.00387665         0.0951686
+   64          9600        0.00422625          0.103316
+   65          9750        0.00396096         0.0959104
+   66          9900        0.00387114         0.0953655
+   67         10050        0.00413638          0.102647
+   68         10200         0.0038637         0.0954305
+   69         10350         0.0041394          0.102415
+   70         10500         0.0043803          0.107175
+   71         10650        0.00432016          0.106322
+   72         10800        0.00380397         0.0957502
+   73         10950        0.00392667         0.0961666
+   74         11100        0.00425319           0.10362
+   75         11250        0.00356678         0.0883727
+   76         11400        0.00420647           0.10051
+   77         11550        0.00386792         0.0951126
+   78         11700        0.00389792         0.0966265
+   79         11850        0.00418718          0.101476
+   80         12000        0.00374568         0.0932607
+   81         12150        0.00401923         0.0983328
+   82         12300        0.00341868         0.0874139
+   83         12450        0.00420433          0.102899
+   84         12600        0.00382899          0.094394
+   85         12750        0.00388477         0.0962444
+   86         12900        0.00347804         0.0859963
+   87         13050        0.00361393         0.0886453
+   88         13200        0.00445005          0.106612
+   89         13350        0.00379491         0.0931794
+   90         13500        0.00423464          0.101982
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650        0.00377554         0.0939522
+   92         13800        0.00381332         0.0938007
+   93         13950        0.00392017         0.0949988
+   94         14100        0.00370138          0.091262
+   95         14250        0.00391653         0.0946688
+   96         14400        0.00402977         0.0969345
+   97         14550        0.00387757         0.0957312
+   98         14700        0.00378639          0.093153
+   99         14850        0.00331563          0.083061
+  100         15000        0.00398949         0.0972446
+  101         15150        0.00351082         0.0872552
+  102         15300        0.00318719         0.0792974
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+---- Cross-validation: Holding out BPA #2 (46cm) ----
+
+---- Cross-validation: Holding out BPA #4 (40cm-tendon) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300         0.0046839           0.12875
+    3           450        0.00476087          0.124847
+    4           600        0.00402557          0.106336
+    5           750        0.00445953           0.11909
+    6           900        0.00452143          0.118359
+    7          1050        0.00430447          0.110612
+    8          1200        0.00412831          0.109897
+    9          1350        0.00383201          0.100618
+   10          1500        0.00396578          0.105621
+   11          1650         0.0040184          0.106288
+   12          1800         0.0040503          0.104333
+   13          1950         0.0038544           0.10137
+   14          2100        0.00372732         0.0964644
+   15          2250        0.00402243          0.103573
+   16          2400        0.00431353          0.113142
+   17          2550        0.00395127          0.101376
+   18          2700        0.00395627          0.102562
+   19          2850        0.00389846          0.102637
+   20          3000        0.00371807         0.0964986
+   21          3150        0.00372903         0.0976546
+   22          3300        0.00372069         0.0979757
+   23          3450        0.00318438         0.0850887
+   24          3600        0.00339648         0.0905395
+   25          3750        0.00302279         0.0789455
+   26          3900        0.00329704         0.0875982
+   27          4050        0.00336379         0.0888759
+   28          4200         0.0034415          0.091239
+   29          4350        0.00365648          0.097316
+   30          4500        0.00331538         0.0900066
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   31          4650         0.0039988          0.104877
+   32          4800        0.00363598         0.0971872
+   33          4950        0.00340924          0.091414
+   34          5100         0.0034721         0.0916324
+   35          5250        0.00355414         0.0938979
+   36          5400        0.00335547         0.0892278
+   37          5550        0.00341861         0.0899291
+   38          5700        0.00366501          0.096378
+   39          5850        0.00360862         0.0940704
+   40          6000        0.00332813         0.0877338
+   41          6150        0.00315097         0.0824956
+   42          6300        0.00335104         0.0865302
+   43          6450        0.00298559         0.0787743
+   44          6600        0.00334063         0.0898442
+   45          6750        0.00361478         0.0961324
+   46          6900        0.00360226         0.0947784
+   47          7050        0.00341206          0.091125
+   48          7200        0.00346073         0.0913632
+   49          7350        0.00276797         0.0736517
+   50          7500        0.00381795          0.099312
+   51          7650        0.00359384          0.094503
+   52          7800        0.00336906         0.0890678
+   53          7950        0.00347376         0.0896665
+   54          8100        0.00348842         0.0945588
+   55          8250        0.00380486         0.0973262
+   56          8400        0.00334318         0.0885896
+   57          8550        0.00312202         0.0811406
+   58          8700        0.00289667         0.0782694
+   59          8850        0.00344477         0.0882155
+   60          9000         0.0032869         0.0842442
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   61          9150        0.00335778         0.0873313
+   62          9300        0.00344391          0.089923
+   63          9450        0.00363371         0.0939941
+   64          9600        0.00328948         0.0869113
+   65          9750        0.00378025         0.0991665
+   66          9900        0.00332484         0.0890767
+   67         10050        0.00397626          0.100388
+   68         10200        0.00390164         0.0997598
+   69         10350        0.00354446         0.0923939
+   70         10500        0.00299073          0.077242
+   71         10650        0.00349683         0.0903417
+   72         10800        0.00361678          0.092545
+   73         10950        0.00330516         0.0854755
+   74         11100         0.0030071         0.0797886
+   75         11250        0.00288946         0.0759341
+   76         11400        0.00324794         0.0855057
+   77         11550        0.00318132         0.0829603
+   78         11700        0.00384072          0.100259
+   79         11850        0.00337789         0.0875285
+   80         12000        0.00317321         0.0827441
+   81         12150        0.00372234          0.094413
+   82         12300        0.00326998         0.0850622
+   83         12450        0.00364389         0.0930621
+   84         12600          0.003228           0.08452
+   85         12750        0.00371436         0.0952266
+   86         12900        0.00360001           0.09304
+   87         13050        0.00307932         0.0808257
+   88         13200        0.00349742         0.0918123
+   89         13350        0.00386191          0.100852
+   90         13500        0.00377039         0.0985546
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+   91         13650        0.00355594           0.09089
+   92         13800        0.00392714          0.101257
+   93         13950        0.00379215         0.0996985
+   94         14100        0.00351916         0.0939717
+   95         14250        0.00370127         0.0954838
+   96         14400         0.0034688         0.0888879
+   97         14550        0.00418848          0.105969
+   98         14700        0.00381963         0.0953536
+   99         14850        0.00371708         0.0951693
+  100         15000        0.00380899         0.0959454
+  101         15150        0.00373799          0.100199
+  102         15300        0.00429056          0.106447
+  103         15450        0.00341401         0.0881643
+gamultiobj stopped because the average change in the spread of Pareto solutions is less than options.FunctionTolerance.
+
+---- Cross-validation: Holding out BPA #2 (46cm) ----
+
+---- Cross-validation: Holding out BPA #5 (42cm) ----
+
+Multi-objective optimization:
+4 Variables
+
+Options:
+CreationFcn:       @gacreationuniform
+CrossoverFcn:      @crossoverscattered
+SelectionFcn:      @selectiontournament
+MutationFcn:       @mutationadaptfeasible
+
+                              Average            Average
+Generation   Func-count    Pareto distance    Pareto spread
+    1           150                 1                 1
+    2           300        0.00405234          0.111904
+    3           450        0.00402771          0.106951
+    4           600        0.00392357          0.104788
+    5           750        0.00419758          0.111348
+    6           900        0.00344674         0.0907894
+    7          1050        0.00338673         0.0894428
+    8          1200        0.00348441         0.0933636
+    9          1350        0.00377582           0.10036
+   10          1500        0.00392306          0.102843
+   11          1650        0.00355516         0.0953433
+   12          1800        0.00377542          0.100559
+   13          1950        0.00383766          0.100887
+   14          2100        0.00368676         0.0977303
+   15          2250        0.00363115         0.0958586
+   16          2400        0.00391796          0.100714
+   17          2550        0.00379202          0.100572
+   18          2700        0.00365949         0.0957694
+   19          2850        0.00353539          0.093259
+   20          3000         0.0037362         0.0990683
+   21          3150        0.00352851         0.0933895
+   22          3300        0.00328955         0.0884215
+   23          3450         0.0034659         0.0921237
+   24          3600        0.00380714           0.10047
+   25          3750        0.00376636         0.0997561

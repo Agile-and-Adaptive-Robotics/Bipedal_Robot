@@ -1,0 +1,30 @@
+=== (1) E0 hand-built Simscape Multibody ===
+no generic Force Element found in top-3 library levels
+E0 VERDICT: FAIL - sim error:
+Index exceeds array bounds.
+=== (2) MEX compiler configuration ===
+MEX C++ selected: MinGW64 Compiler (C++) 8.1.0
+MW_MINGW64_LOC: "C:\ProgramData\MATLAB\SupportPackages\R2025b\3P.instrset\mingw_w64.instrset"
+=== (3) smimport of the real knee-assembly URDF ===
+[Warning: The XML file name '09_BA_003.URDF' is an invalid Simulink model name. The modified name 'x09_BA_003_URDF' will be used as the imported model name.] 
+Imported model: 1.540002e+02
+[Warning: gravity tweak failed: Brace indexing is not supported for variables of this type.] 
+[> In import_simscape_when_ready (line 48)
+In run (line 112)
+In laptop_step1_license_import (line 28)] 
+{Error using save_system (line 48)
+'09_BA_003.URDF_imported' is not a valid model name because it is not a valid MATLAB function name.
+
+Error in import_simscape_when_ready (line 53)
+save_system(model, savePath);
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error in run (line 112)
+evalin('caller', strcat(scriptStem, ';'));
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error in laptop_step1_license_import (line 28)
+run(fullfile(snsDir, 'import_simscape_when_ready.m'));
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+[Warning: Unable to close the model 'x09_BA_003_URDF' because it has been changed. To save changes, use close_system('x09_BA_003_URDF',1). To discard changes, use
+close_system('x09_BA_003_URDF',0).] 
+ERROR: MATLAB error Exit Status: 0x00000001
