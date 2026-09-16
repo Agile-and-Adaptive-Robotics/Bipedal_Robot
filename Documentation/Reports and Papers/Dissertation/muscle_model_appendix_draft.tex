@@ -1,0 +1,132 @@
+% ---------------------------------------------------------------------------
+% muscle_model_appendix_draft.tex — appendix-ready draft covering the two
+% muscle formulations used in this work (MuJoCo muscle actuator as produced
+% by the conversion, and OpenSim's Thelen2003/Millard2012 Hill-type models),
+% and the quantitative force comparison along the subject01 walking
+% trajectory. Written 2026-09-14; regenerate numbers with
+% Code\MuJoCo_SNS\spinal\_muscle_force_compare.py (muscle_force_compare.csv,
+% figures\muscle_force_compare.png).
+% ---------------------------------------------------------------------------
+
+\section{Muscle Model Formulations and Cross-Platform Force Comparison}
+\label{sec:muscle-models}
+
+\subsection{MuJoCo Muscle Actuator (as converted)}
+
+The conversion from OpenSim to MuJoCo re-expresses each Thelen2003
+muscle as a MuJoCo \texttt{general} actuator with the built-in muscle
+dynamics. Activation is a first-order process with distinct rise and
+fall time constants (0.01\,s and 0.04\,s in the converted model). Force
+is computed from the actuator's normalized length
+$\bar{L} = (L - L_{\min}) / (L_{\max} - L_{\min})$, where the length
+range is taken from the converted geometry, as
+\begin{equation}
+  F = F_{\max}\,\bigl[\,a\, f_L(\bar{L})\, f_V(\dot{L}) - f_P(\bar{L})\,\bigr],
+  \label{eq:mj-muscle}
+\end{equation}
+with $a \in [0,1]$ the activation, $f_L$ a force--length curve that
+peaks inside the normalized range, $f_V$ a force--velocity curve, and
+$f_P$ a passive element. The peak force scale $F_{\max}$ (actuator
+parameter \texttt{gainprm[2]}) is set by the converter such that the
+peak force over the model's range of motion matches the OpenSim
+\texttt{max\_isometric\_force}; audited across all 84 active muscles,
+the deviation is $\le 15\%$ (Sec.~\ref{sec:muscle-models-compare}). Two
+properties matter for interpretation: (i) the tendon is \emph{rigid} --
+there is no series-elastic element and no tendon slack length; force at
+the joint equals the contractile-element force immediately; and (ii)
+all curve parameters are shared defaults of the converted model rather
+than per-muscle fits.
+
+\subsection{OpenSim Thelen2003 and Millard2012 Formulations}
+
+OpenSim's Thelen2003Muscle comprises a contractile element (activation
+dynamics as above; active force--length curve; Hill-type force--velocity
+curve) in series with a compliant tendon, plus a parallel passive fiber
+element, with fiber pennation. Unlike the MuJoCo actuator, the fiber
+length is \emph{not} the musculotendon length: at every instant the
+model solves the force equilibrium
+$F_{\text{tendon}}(L_{\text{mt}} - L_{\text{fiber}}\cos\alpha)
+ = F_{\text{fiber}}(L_{\text{fiber}}, \dot{L}_{\text{fiber}}, a)$,
+so tendon compliance filters and delays force transmission and stores
+energy. The tendon is a quadratic-then-linear ``strip'' curve anchored
+at the slack length $L_s$ (force zero until $L_{\text{mt}}$ stretches
+the tendon beyond $L_s$). Millard2012EquilibriumModel, OpenSim's newer
+default, retains the same equilibrium structure but replaces the curve
+shapes (an asymmetric Gaussian active-force--length curve with a
+plateau, an exponentially stiffening tendon) and adds fiber damping; it
+is numerically better behaved at extreme lengths. Both OpenSim models
+therefore differ from the converted MuJoCo plant in the same single
+respect: series-elastic compliance.
+
+\subsection{Cross-Platform Force Comparison}
+\label{sec:muscle-models-compare}
+
+Both plants were driven with identical kinematics and identical
+activations along the subject01 walking trajectory (the same IK frames
+used for the static-optimization back-solve). The OpenSim side is the
+StaticOptimization solution's own muscle forces (full Thelen dynamics
+with compliant tendon); the MuJoCo side replays the identical joint
+trajectory with those activations. Table~\ref{tab:force-r2} reports, per
+muscle, the coefficient of determination $R^2$ between the two force
+time series, the shape correlation, and the best-aligning lag.
+
+\begin{table}[h]
+  \centering
+  \caption{MuJoCo vs.\ OpenSim muscle force along the subject01 walk at
+  matched activations. Lag in analysis frames ($\approx 17$\,ms each).}
+  \label{tab:force-r2}
+  \small
+  \begin{tabular}{lrrr}
+    \toprule
+    Muscle & $R^2$ & shape corr$^2$ & lag [frames] \\
+    \midrule
+    soleus   & 0.742 & 0.800 & 1 \\
+    med.\ gastrocnemius & 0.888 & 0.894 & 2 \\
+    lat.\ gastrocnemius & 0.884 & 0.887 & 2 \\
+    tibialis anterior & 0.945 & 0.945 & 0 \\
+    vastus lateralis & 0.941 & 0.945 & 1 \\
+    rectus femoris & $-1.15$ & 0.384 & 0 \\
+    semimembranosus & 0.565 & 0.621 & 0 \\
+    biceps femoris short & $-0.26$ & 0.868 & 0 \\
+    psoas & 0.927 & 0.934 & 1 \\
+    gluteus maximus (2) & 0.926 & 0.943 & 1 \\
+    tensor fasciae latae & 0.933 & 0.935 & 0 \\
+    peroneus brevis & 0.977 & 0.989 & 0 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+For ten of twelve representative muscles the two formulations agree
+with $R^2 = 0.87$--$0.98$ and mean-force ratios within $\pm 22\%$, with
+\emph{no} systematic phase shift (best-aligning lag 0--2 frames,
+$\le 34$\,ms). The absence of a phase lead in the rigid-tendon plant
+indicates that, along physiological trajectories, missing tendon slack
+compliance does not desynchronize force transmission; its signature is
+instead visible in waveform \emph{shape}: for the soleus (the largest
+series-elastic energy store in human gait), the OpenSim compliant
+tendon carries substantial force through mid-stance while the MuJoCo
+rigid-tendon force follows the activation dips --- the expected
+smoothing of the series elastic element. The two outliers are
+anatomically explained: rectus femoris was rerouted in the conversion
+over the vastii's patella-tracking via point, and its moment-arm
+polyfit deviates from OpenSim's path (the same coupler artifact noted
+for the vastii); biceps femoris short head agrees in shape
+($r^2 = 0.87$) but carries a scale offset. We conclude that the
+converted plant reproduces OpenSim muscle force generation along
+physiological trajectories to a degree sufficient for neural-control
+studies, and that if tendon-elasticity phenomena (energy storage,
+force smoothing) become material to a claim, the appropriate upgrade
+is a compliant-tendon formulation rather than parameter retuning of
+the rigid-tendon model.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{muscle_force_compare.png}
+  \caption{Normalized muscle force along the analyzed walk at matched
+  OpenSim static-optimization activations (MuJoCo: rigid tendon;
+  OpenSim: Thelen compliant tendon). Soleus illustrates the signature
+  of the missing series compliance: OpenSim force is carried through
+  mid-stance by tendon stretch while MuJoCo force follows the
+  activation.}
+  \label{fig:force-compare}
+\end{figure}

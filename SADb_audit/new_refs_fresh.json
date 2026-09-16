@@ -1,0 +1,389 @@
+[
+ {
+  "key": "JMJIQ9ZZ",
+  "itemType": "preprint",
+  "doi": "10.64898/2026.06.09.731213",
+  "title": "Unified comparison of spinal locomotion control architectures in neuromechanical simulations",
+  "surname": "Ton",
+  "year": "2026-06-12",
+  "pub": "",
+  "url": "https://www.biorxiv.org/content/10.64898/2026.06.09.731213v1",
+  "abstract": "Neuromechanical simulations provide a powerful framework for investigating how neural control architectures generate and regulate human locomotion. Numerous biologically inspired locomotion controllers have been proposed, including reflex-based, central pattern generator (CPG)-based, and muscle synergy-based models. However, direct comparison across studies remains difficult because of differences in musculoskeletal models, optimization methods, and evaluation protocols. Here, we implemented four representative locomotion control architectures, reflex-based, CPG-reflex-based, muscle synergy-based, and CPG-reflex-synergy-based controllers, within a unified neuromechanical simulation framework to enable controlled comparisons under shared biomechanical and computational conditions. Performance was assessed in terms of (1) agreement with experimentally observed gait characteristics, including kinematics, kinetics, muscle activations, and biomechanical trends across speeds and slopes, and (2) locomotor versatility across speed–slope conditions. The reflex-based and CPG-reflex-synergy-based controllers most closely reproduced experimentally observed gait characteristics, while the CPG-reflex-synergy controller achieved the broadest range of stable walking behaviors across speeds and slopes, followed closely by the reflex-based controller. These findings should be interpreted as comparisons of specific model implementations rather than definitive evaluations of the underlying biological hypotheses. Moreover, because the investigated controllers primarily focused on spinal-level mechanisms for nominal steady-state locomotion, the limited versatility observed in some of the models across broader speed and slope conditions suggests the importance of integrating spinal locomotor mechanisms with supraspinal modulation when modeling locomotion beyond nominal steady gait. To facilitate further investigation, we publicly share the simulation framework and controller implementations.\nKey pointsExisting neuromechanical locomotion controllers have been difficult to compare directly because of differences in simulation frameworks.We implemented four representative spinal locomotion control models (reflex-based, central pattern generator (CPG)-reflex-based, muscle synergy-based, and CPG-reflex-synergy-based) within a unified simulation framework and compared their human-likeness and versatility.The reflex-based and CPG-reflex-synergy-based controllers best reproduced human-like gait characteristics, while the CPG-reflex-synergy-based controller demonstrated the greatest locomotor versatility across speed–slope conditions, followed closely by the reflex-based controller.Because the investigated controllers primarily modeled spinal-level mechanisms associated with steady-state locomotion, their reduced adaptability across broader speed and slope conditions highlights the importance of incorporating supraspinal modulation when modeling locomotion beyond nominal gait.We publicly share the simulation framework and controller implementations to support further investigation of human locomotion control.",
+  "numChildren": 1,
+  "creators": [
+   "Ton",
+   "Song"
+  ]
+ },
+ {
+  "key": "6CEVM6YE",
+  "itemType": "journalArticle",
+  "doi": "10.1016/j.isci.2025.112203",
+  "title": "Emergence of natural and robust bipedal walking by learning from biologically plausible objectives",
+  "surname": "Schumacher",
+  "year": "2025-04-18",
+  "pub": "iScience",
+  "url": "https://www.cell.com/iscience/abstract/S2589-0042(25)00464-X",
+  "abstract": "",
+  "numChildren": 2,
+  "creators": [
+   "Schumacher",
+   "Geijtenbeek",
+   "Caggiano",
+   "Kumar",
+   "Schmitt",
+   "Martius",
+   "Haeufle"
+  ]
+ },
+ {
+  "key": "6NIJ7VIE",
+  "itemType": "journalArticle",
+  "doi": "10.1016/j.engappai.2025.111811",
+  "title": "A multi-Layered neural control framework: Combining central pattern generators utilizing muscle synergy Theory and incorporating proprioceptors",
+  "surname": "Mo",
+  "year": "2025-11-15",
+  "pub": "Engineering Applications of Artificial Intelligence",
+  "url": "https://www.sciencedirect.com/science/article/pii/S0952197625018135",
+  "abstract": "Understanding human control strategy can promote the application of neuroscience in rehabilitation medicine, and drive the development of bionic robotics. The current research is to develop a bionic human control framework including both upper-level control signal from the central nervous system and lower feedback control loop. The upper-level control strategy is a combination of Central pattern generators (CPGs) signals based on the principle of muscle synergy, the weight of which is adaptively adjusted by reinforcement learning. The lower-level control involves feedback signals from primary proprioceptors. A neuromuscular arm model was established by integrating the bionic control strategy in an upper limb musculoskeletal dynamics model. The model feasibility was evaluated by elbow flexion experiments in the human sagittal plane and trajectory planning experiments in three-dimensional (3D) space. The indices such as joint rotation angles, muscle activation levels, and co-correlation index (CCI) were adopted. The simulated joint angles are well correlated with the experimental results of the two types, while the acceptable results for muscle activation levels and CCI values can only be obtained in the elbow flexion experiment. The proprioceptive feedback loop is also indicated to be necessary for accurate and stable human movement prediction. In summary, the current control strategy can well accommodate complex joint kinematics, and be further improved by addressing coordination issues of multiple muscle activations.",
+  "numChildren": 1,
+  "creators": [
+   "Mo",
+   "Yang",
+   "Cui",
+   "Ma",
+   "Wang"
+  ]
+ },
+ {
+  "key": "8YCE28D9",
+  "itemType": "preprint",
+  "doi": "10.1101/2025.02.05.636668",
+  "title": "A simple network of proprioceptive reflexes can produce a variety of bipedal gaits",
+  "surname": "Bunz",
+  "year": "2025-02-08",
+  "pub": "",
+  "url": "https://www.biorxiv.org/content/10.1101/2025.02.05.636668v1",
+  "abstract": "Proprioception is crucial for movement, yet the role of proprioceptive reflexes in legged locomotion is still poorly understood. While previous simulation studies have shown great potential for reflex-based control strategies, these controllers are typically catered to specific gaits, using hand-crafted feedback pathways that are linked to specific gait phases. In this work, we explore the control capabilities of a simple reflex controller that consists of only monosynaptic and antagonistic length and force feedback pathways with constant gains. Despite its simplicity, we found our control framework capable of producing a wide variety of natural gaits, including walking and hopping, forwards and backwards, and running in different variations and at different velocities – without requiring any rhythmic inputs or high-level state machines modulating the feedback gains. Our work highlights the important role and flexibility of proprioceptive reflexes and suggests a necessary re-evaluation of their role in locomotion. Due to its simplicity and flexibility, our control framework provides a solid basis for the development of higher level neuromuscular control systems.\nAuthor summary Human locomotion is characterized by an impressive versatility and humans transition naturally between different gaits. However, the neural mechanisms underlying human motor control are not fully understood and remain controversial. The two widely accepted basic components of the neural circuitry involved in locomotion are central pattern generators (CPG) and spinal reflexes, leading to a long-standing debate on their respective roles. Neuromusculoskeletal models can be employed to study the role of these neural control structures in simulation. Until now, these models mostly focus on walking and require an additional component like a state-machine or CPG besides reflexes to generate rhythmic activation of muscles. In this work, we propose a controller that can generate different rhythmic gaits like walking and hopping, forwards and backwards, as well as running, based solely on simple reflexes known to exist in the mammalian spinal cord. We challenge the current view of the role of rhythm-generating components and show the remarkable potential of reflexes for locomotion control. To our knowledge, this is the first work showing that versatile locomotion can be achieved solely based on reflexes without the need of a CPG. Our results contribute to the understanding of human motor control and are relevant for the control of robots, exoskeletons, prostheses and ortheses.",
+  "numChildren": 1,
+  "creators": [
+   "Bunz",
+   "Haeufle",
+   "Schmitt",
+   "Geijtenbeek"
+  ]
+ },
+ {
+  "key": "4HP4LJDQ",
+  "itemType": "preprint",
+  "doi": "10.48550/arXiv.2606.11034",
+  "title": "A Spiking Neural Architecture for Coordinating Arm and Locomotor Control",
+  "surname": "Steffen",
+  "year": "2026-06-09",
+  "pub": "",
+  "url": "http://arxiv.org/abs/2606.11034",
+  "abstract": "Spiking Neural Networks (SNNs) coupled with neuromorphic hardware offer energy-efficient solutions for humanoid robot control. However, existing SNN-based motor control systems address bipedal locomotion and arm control in isolation, leaving integrated control of both unaddressed. We present a spiking architecture that coordinates force-based arm control and bipedal locomotion in a simulated humanoid, using the Neural Engineering Framework (NEF) and Semantic Pointer Architecture (SPA). High-level action selection between locomotor and arm control is mediated by a biologically grounded spiking basal ganglia model. We validate the system through co-simulation of Nengo, for the neural control, and Isaac Sim, demonstrating successful target reaching, continuous digit drawing, path-following locomotion, and finally, switching between walking and arm control via basal ganglia disinhibition. To our knowledge, this is the first integrated spiking controller to combine bipedal locomotion and arm control on a full-scale humanoid platform. The full spike-based implementation enables future deployment on low-power neuromorphic hardware.",
+  "numChildren": 2,
+  "creators": [
+   "Steffen",
+   "Simone",
+   "Damberger",
+   "DeWolf",
+   "Ly",
+   "Eliasmith"
+  ]
+ },
+ {
+  "key": "6Z7RBVRC",
+  "itemType": "journalArticle",
+  "doi": "10.3390/robotics14060084",
+  "title": "Neural Adaptive Nonlinear MIMO Control for Bipedal Walking Robot Locomotion in Hazardous and Complex Task Applications",
+  "surname": "Bekhiti",
+  "year": "2025-06-16",
+  "pub": "Robotics",
+  "url": "https://www.mdpi.com/2218-6581/14/6/84",
+  "abstract": "This paper introduces a robust neural adaptive MIMO control strategy to improve the stability and adaptability of bipedal locomotion amid uncertainties and external disturbances. The control combines nonlinear dynamic inversion, finite-time convergence, and radial basis function (RBF) neural networks for fast, accurate trajectory tracking. The main novelty of the presented control strategy lies in unifying instantaneous feedback, real-time learning, and dynamic adaptation within a multivariable feedback framework, delivering superior robustness, precision, and real-time performance under extreme conditions. The control scheme is implemented on a 5-DOF underactuated R A B B I T robot using a d S P A C E D S 1103 platform with a sampling rate of ∆ t = 1.5 m s ( 667 H z ) . The experimental results show excellent performance with the following: The robot achieved stable cyclic gaits while keeping the tracking error within e = ± 0.04 r a d under nominal conditions. Under severe uncertainties of trunk mass variations ∆ m t r u n k = + 100 % , limb inertia changes ∆ I l i m b = ± 30 % , and actuator torque saturation at τ = ± 150 N m , the robot maintains stable limit cycles with smooth control. The performance of the proposed controller is compared with classical nonlinear decoupling, non-adaptive finite-time, neural-fuzzy learning, and deep learning controls. The results demonstrate that the proposed method outperforms the four benchmark strategies, achieving the lowest errors and fastest convergence with the following: I A E = 1.36 , I T A E = 2.43 , I S E = 0.68 , t s s = 1.24 s , and M p = 2.21 % . These results demonstrate evidence of high stability, rapid convergence, and robustness to disturbances and foot-slip.",
+  "numChildren": 1,
+  "creators": [
+   "Bekhiti",
+   "Iqbal",
+   "Hariche",
+   "Fragulis"
+  ]
+ },
+ {
+  "key": "PXUSZ7NR",
+  "itemType": "journalArticle",
+  "doi": "",
+  "title": "Bipedal Robots: A Systematic Review of Dynamical Models, Balance Control Strategies, and Locomotion Methods | Journal of Robotics and Control (JRC)",
+  "surname": "Al-Tameemi",
+  "year": "2025-05-13",
+  "pub": "",
+  "url": "https://journal.umy.ac.id/index.php/jrc/article/view/25595",
+  "abstract": "Bipedal robots, designed to replicate human locomotion, face significant balance challenges due to instability and high degrees of freedom. This study examines dynamical models, balance control strategies, and locomotion methodologies. Dynamical models are categorized into simplified, centroidal dynamics, and whole-body dynamics models. Simplified models, such as the Linear Inverted Pendulum Model (LIPM), approximate the robot as a point mass at the Center of Mass (CoM) but neglect upper-body dynamics and complex terrain interactions. Centroidal dynamics models incorporate CoM motion, contact forces, and angular momentum for improved disturbance rejection but require extensive computational resources. Whole-body models achieve high fidelity by integrating joint torques and external forces but are constrained by computational complexity. Balance control methods for standing bipedal robots are classified into joint-specific and whole-body approaches. Ankle and hip strategies address small perturbations but are insufficient for real-world disturbances. Whole-body control utilizes all body segments to modulate contact forces and regulate momentum, enhancing stability against external disturbances, though challenges remain in force modeling and state estimation. Locomotion control is divided into model-based and learning-based approaches. Model-based strategies include LIPM and its extensions-based methods, Zero Moment Point (ZMP)-based methods, which ensure dynamic stability by maintaining moments within the support polygon; Capture Point (CP)-based methods, which predict foot placement to prevent falls; and Divergent Component of Motion (DCM)-based approaches, which adjust footsteps based on CoM divergence. While learning-based methods leverage Reinforcement Learning (RL) and human motion data for adaptive and energy-efficient gait generation. This study highlights challenges in energy efficiency, terrain adaptation, and scalability, proposing sensor fusion, energy-aware RL reward functions, and hierarchical control architectures as potential solutions.",
+  "numChildren": 1,
+  "creators": [
+   "Al-Tameemi",
+   "Amanuel"
+  ]
+ },
+ {
+  "key": "ZYA3GGJF",
+  "itemType": "journalArticle",
+  "doi": "10.1098/rsif.2025.0662",
+  "title": "Human-inspired bipedal locomotion: from neuromechanics to mathematical modelling and robotic applications",
+  "surname": "Koseki",
+  "year": "2026-02-01",
+  "pub": "Journal of The Royal Society Interface",
+  "url": "https://doi.org/10.1098/rsif.2025.0662",
+  "abstract": "Human bipedal locomotion arises from continuous, closed-loop interactions between neural control and biomechanical structure—collectively referred to as neuromechanics. The relationship between human locomotion and robotic locomotion is deeply interconnected through shared principles of neuromechanics, thereby providing a comprehensive framework for understanding human movement and informing robotic system design. In this review, we synthesize insights from neuroscience, biomechanics, computational modelling and robotics to establish a cohesive perspective on human-inspired bipedal locomotion. We begin by outlining essential anatomical and physiological principles, such as spinal circuits, supraspinal coordination and musculoskeletal structure. Next, we analyse mathematical models—ranging from simplified neural oscillators to complex musculoskeletal simulations—that formalize these mechanisms. Finally, we discuss the embodiment of these models in bipedal robots, which promotes reciprocal advancements in both biological understanding and engineering innovation. Rather than offering a comprehensive literature survey, we focus on pivotal developments, emerging trends and unresolved questions that shape this interdisciplinary domain. By integrating diverse fields, this review aims to enhance the design of agile, energy-efficient robots and deepen our understanding of human locomotion.",
+  "numChildren": 2,
+  "creators": [
+   "Koseki",
+   "Hayashibe",
+   "Owaki"
+  ]
+ },
+ {
+  "key": "SUEWLVPW",
+  "itemType": "journalArticle",
+  "doi": "10.64898/2026.02.11.705376",
+  "title": "Neuromuscular Basis of Kinematic Adaptations During Bidirectional Walking",
+  "surname": "Mojtabavi",
+  "year": "2026-2-13",
+  "pub": "bioRxiv",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12918788/",
+  "abstract": "Background\nHuman locomotion is a highly adaptive motor skill that adjusts to new environmental demands through learning. Split-belt treadmill paradigms have advanced our understanding of gait adaptation. Most studies have examined gait when the belts move at different speeds in the same direction. We are studying muscle activation patterns during an asymmetric gait, when the treadmill belts move at equal speed in opposite directions, i.e., bidirectional walking (BDW).\n\nMethods\nTwelve healthy volunteers performed a single session on a split-belt treadmill. We simultaneously collected ground reaction forces via treadmill force plates, joint kinematics via motion capture, and surface electromyography (EMG) from bilateral soleus (SOL) and tibialis anterior (TA) muscles. Participants started with 2 min of forward walking (FW), followed with four 5-min blocks of BDW separated by 1-min standing rest intervals, and finished the session with 2 min of FW (washout).\n\nResults\nAll participants successfully completed the protocol. We analyzed EMG signals for temporal activation patterns (rhythm generation) and amplitude characteristics (pattern formation). EMG recordings revealed antiphasic activation of SOL and TA muscles bilaterally throughout all trials. During BDW, the backward-moving leg’s TA showed prolonged activation patterns that persisted during washout FW, suggesting retention of adaptive changes. Burst-to-cycle duration ratios showed transient changes during early adaptation but remained relatively stable across conditions, demonstrating robust rhythm generation despite adaptive modulation of activation patterns during BDW.\n\nDiscussion\nThese findings demonstrate that BDW induces asymmetric adjustments in muscle activation patterns. Rhythm generation (timing) did not significantly differ between BDW and FW. However, we did observe changes in pattern formation (i.e., EMG profiles) during FW pre- and post-BDW training. Burst-to-cycle duration ratios, as a measure of rhythm generation, showed changes during early adaptation, particularly the increase in right SOL and right TA during block 1, though these changes did not reach statistical significance and largely returned to baseline during washout. The underlying pattern formation structure, was maintained across all conditions, with selective amplitude modulations rather than fundamental reorganization of activation patterns. The substantial temporal adjustments in the backward-moving leg’s SOL and phase shifts in TA provide the neuromuscular mechanism driving the bilateral step-length reduction, altered inter-limb phasing, and asymmetric double stance timing. These results extend our understanding of locomotor control by suggesting how the central nervous system (CNS) dynamically recalibrates muscle timing and amplitude to maintain satisfactory locomotion under new environmental demands.",
+  "numChildren": 2,
+  "creators": [
+   "Mojtabavi",
+   "Ajdari",
+   "Rueda-Parra",
+   "Gemoets",
+   "Wolpaw",
+   "Hardesty"
+  ]
+ },
+ {
+  "key": "E3U29CXK",
+  "itemType": "preprint",
+  "doi": "10.18910/92326",
+  "title": "An integrated neuromechanical model of the mouse to study neural control of locomotion",
+  "surname": "Ramalingasetty",
+  "year": "June 2023",
+  "pub": "",
+  "url": "https://doi.org/10.18910/92326",
+  "abstract": "",
+  "numChildren": 1,
+  "creators": [
+   "Ramalingasetty",
+   "Markin",
+   "Lockhart",
+   "Arreguit",
+   "Shevtsova",
+   "Ijspeert",
+   "Rybak",
+   "Danner"
+  ]
+ },
+ {
+  "key": "R29RM7JI",
+  "itemType": "preprint",
+  "doi": "10.18910/92264",
+  "title": "Comparative investigation of control mechanisms for turning during quadrupedal robot locomotion",
+  "surname": "Lockhart",
+  "year": "June 2023",
+  "pub": "",
+  "url": "https://doi.org/10.18910/92264",
+  "abstract": "",
+  "numChildren": 1,
+  "creators": [
+   "Lockhart",
+   "Parrilla",
+   "Markin",
+   "Ramalingasetty",
+   "Shevtsova",
+   "Molkov",
+   "Ausborn",
+   "Aoi",
+   "Rybak",
+   "Danner"
+  ]
+ },
+ {
+  "key": "WGZSJTQH",
+  "itemType": "journalArticle",
+  "doi": "10.1101/2025.05.17.654682",
+  "title": "Reorganization of spinal neural connectivity following recovery after thoracic spinal cord injury: insights from computational modelling",
+  "surname": "Shevtsova",
+  "year": "2025-5-22",
+  "pub": "bioRxiv",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12139758/",
+  "abstract": "Rats exhibit significant recovery of locomotor function following incomplete spinal cord injuries, albeit with altered gait expression and reduced speed and stepping frequency. These changes likely result from and give insight into the reorganization within spared and injured spinal circuitry. Previously, we developed computational models of the mouse spinal locomotor circuitry controlling speed-dependent gait expression (; ). Here, we adapted these models to the rat and used the adapted model to explore potential circuit-level changes underlying altered gait expression observed after recovery from two different thoracic spinal cord injuries (lateral hemisection and contusion) that have roughly comparable levels of locomotor recovery (). The model reproduced experimentally observed gait expression before injury and after recovery from lateral hemisection and contusion, and suggests two distinct, injury-specific mechanisms of recovery. First, recovery after lateral hemisection required substantial functional restoration of damaged descending drive and long propriospinal connections, suggesting compensatory plasticity through formation of detour pathways. Second, recovery after a moderate midline contusion predominantly relied on reorganization of spared sublesional networks and altered control of supralesional cervical circuits, compensating for weakened propriospinal and descending pathways. These observations suggest that symmetrical (contusion) and asymmetrical (lateral hemisection) injuries induce distinct types of plasticity in different regions of the spinal cord, indicating that effective therapeutic strategies may benefit from targeting specific circuits according to injury symmetry.",
+  "numChildren": 2,
+  "creators": [
+   "Shevtsova",
+   "Lockhart",
+   "Rybak",
+   "Magnuson",
+   "Danner"
+  ]
+ },
+ {
+  "key": "TQYBQQUG",
+  "itemType": "journalArticle",
+  "doi": "10.1113/JP287448",
+  "title": "Role of forelimb morphology in muscle sensorimotor functions during locomotion in the cat",
+  "surname": "Rahmati",
+  "year": "2025",
+  "pub": "The Journal of Physiology",
+  "url": "https://onlinelibrary.wiley.com/doi/abs/10.1113/JP287448",
+  "abstract": "Previous studies established strong links between morphological characteristics of mammalian hindlimb muscles and their sensorimotor functions during locomotion. Less is known about the role of forelimb morphology in motor outputs and generation of sensory signals. Here, we measured morphological characteristics of 46 forelimb muscles from six cats. These characteristics included muscle attachments, physiological cross-sectional area (PCSA) and fascicle length. We also recorded full-body mechanics and EMG activity of forelimb muscles during level overground and treadmill locomotion in seven and 16 adult cats of either sex, respectively. We computed forelimb muscle forces along with force- and length-dependent sensory signals mapped onto corresponding cervical spinal segments. We found that patterns of computed muscle forces and afferent activities were strongly affected by the muscle's moment arm, PCSA and fascicle length. Morphology of the shoulder muscles suggests distinct roles of the forelimbs in lateral force production and movements. Patterns of length-dependent sensory activity of muscles with long fibres (brachioradialis, extensor carpi radialis) closely matched patterns of overall forelimb length, whereas the activity pattern of biceps brachii length afferents matched forelimb orientation. We conclude that cat forelimb muscle morphology contributes substantially to locomotor function, particularly to control lateral stability and turning, rather than propulsion. Key points Little is known about the role of forelimb muscle morphology in producing motor outputs and generating somatosensory signals. This information is needed to understand the contributions of forelimbs in locomotor control. We measured morphological characteristics of 46 muscles from cat forelimbs, recorded cat walking mechanics and electromyographic activity, and computed patterns of moment arms, length, velocity, activation, and force of forelimb muscles, as well as length- and force-dependent afferent activity during walking. We demonstrated that moment arms, physiological cross-sectional area and fascicle length of forelimb muscles contribute substantially to muscle force production and proprioceptive activity, to the regulation of locomotor cycle phase transitions and to control of lateral stability. The obtained information can guide the development of biologically accurate neuromechanical models of quadrupedal locomotion for exploring and testing novel methods of treatments of central nervous system pathologies by modulating activities in neural pathways controlling forelimbs/arms.",
+  "numChildren": 1,
+  "creators": [
+   "Rahmati",
+   "Klishko",
+   "Martin",
+   "Bunderson",
+   "Meslie",
+   "Nichols",
+   "Rybak",
+   "Frigon",
+   "Burkholder",
+   "Prilutsky"
+  ]
+ },
+ {
+  "key": "TBHKUUAK",
+  "itemType": "journalArticle",
+  "doi": "10.1113/JP288089",
+  "title": "Effects of spinal transection and locomotor speed on muscle synergies of the cat hindlimb",
+  "surname": "Klishko",
+  "year": "2025",
+  "pub": "The Journal of Physiology",
+  "url": "https://onlinelibrary.wiley.com/doi/abs/10.1113/JP288089",
+  "abstract": "It has been suggested that during locomotion, the nervous system controls movement by activating groups of muscles, or muscle synergies. Analysis of muscle synergies can reveal the organization of spinal locomotor networks and how it depends on the state of the nervous system, such as before and after spinal cord injury, and on different locomotor conditions, including a change in speed. The goal of this study was to investigate the effects of spinal transection and locomotor speed on hindlimb muscle synergies and their time-dependent activity patterns in adult cats. EMG activities of 15 hindlimb muscles were recorded in nine adult cats of either sex during tied-belt treadmill locomotion at speeds of 0.4, 0.7 and 1.0 m/s before and after recovery from a low thoracic spinal transection. We determined EMG burst groups using cluster analysis of EMG burst onset and offset times and muscle synergies using non-negative matrix factorization (NNMF). We found five major EMG burst groups and five muscle synergies in each of six experimental conditions (2 states × 3 speeds). In each case, the synergies accounted for at least 90% of muscle EMG variance. Both spinal transection and locomotion speed modified subgroups of EMG burst groups and the composition and activation patterns of selected synergies. However, these changes did not modify the general organization of muscle synergies. Based on the obtained results, we propose an organization for a pattern formation network of a two-level central pattern generator that can be tested in neuromechanical simulations of spinal circuits controlling cat locomotion. Key points Analysis of muscle synergies during locomotion can reveal the organization of spinal locomotor networks. We recorded EMG activity of 15 hindlimb muscles in cats locomoting on a treadmill at speeds 0.4, 0.7 and 1.0 m/s before and after recovery from spinal cord transection at low thoracic level. We found five muscle synergies in all six experimental conditions (2 spinal states x 3 speeds) that include two flexor synergies operating in the swing phase and three extensor synergies operating in the stance phase. Major features of found synergies (the number, muscle composition and activation patterns) were not substantially affected by spinal transection and locomotion speed, suggesting that spinal control mechanism operates muscle synergies. Based on the obtained results, we proposed an organization of a pattern formation network of a two-level central pattern generator controlling locomotor activity of hindlimb muscles.",
+  "numChildren": 1,
+  "creators": [
+   "Klishko",
+   "Harnie",
+   "Hanson",
+   "Rahmati",
+   "Rybak",
+   "Frigon",
+   "Prilutsky"
+  ]
+ },
+ {
+  "key": "FNQCAAU7",
+  "itemType": "conferencePaper",
+  "doi": "",
+  "title": "On All Fours: A 3D Framework to Study Closed-loop Control of Quadrupedal Mouse Locomotion",
+  "surname": "Ramalingasetty",
+  "year": "",
+  "pub": "",
+  "url": "https://dx.doi.org/10.1162/isal_a_00788",
+  "abstract": "Abstract. Quadrupedal locomotion arises from a complex interplay between spinal neuronal circuits, descending brain signals, musculoskeletal interactions, and sensory feedback, enabling adaptive speed and terrain-dependent gait transitions. However, the underlying neural mechanisms involved in limb coordination are poorly understood. Here, we present a proof-of-concept 3D closed-loop neuromechanical model of a mouse that can be used to study interactions between the spinal circuitry and afferent feedback and their role in limb coordination during quadrupedal locomotion. The spinal circuit model includes four rhythm generators, each controlling one limb, that define the locomotor frequency and flexor–extensor alternation. The rhythm generators control pattern formation circuits that generate muscle synergies and create muscle-specific activation patterns. Commissural and long propriospinal interneurons mediate (fore-hind and leftright) interlimb coordination. Afferent feedback (muscle spindle Ia and II, Golgi tendon Ib, and cutaneous) signals interact with the rhythm generators (affecting the timing of phase-transitions), the pattern formation circuits (affecting muscle synergies), and directly with the motoneurons and premotor interneurons, forming basic reflex circuits. Motoneurons activate the muscles to generate locomotor behaviors. Using evolutionary strategies, the model was successfully optimized to locomote over flat ground at different speeds. Acute removal of feedback caused the model to fall and illustrates the capabilities of the model to study neural manipulations. We envision this neuromechanical mouse model to serve as an open testbed to study neural mechanisms for control of complex locomotor behavior in 3D environment.",
+  "numChildren": 1,
+  "creators": [
+   "Ramalingasetty",
+   "Markin",
+   "Lockhart",
+   "Arreguit",
+   "Shevtsova",
+   "Ijspeert",
+   "Rybak",
+   "Danner"
+  ]
+ },
+ {
+  "key": "4S96Y3FG",
+  "itemType": "journalArticle",
+  "doi": "10.3389/fbioe.2026.1787167",
+  "title": "Speed-dependent turning strategies in quadrupedal locomotion: insights from computational modeling",
+  "surname": "Molkov",
+  "year": "2026-05-22",
+  "pub": "Frontiers in Bioengineering and Biotechnology",
+  "url": "https://www.frontiersin.org/journals/bioengineering-and-biotechnology/articles/10.3389/fbioe.2026.1787167/full",
+  "abstract": "Quadrupedal animals like mice navigate their environments through complex coordination of neural signals and biomechanical movements, enabling stable and directed locomotion. While many computational models simplify this process by assuming left-right symmetrical body movements and focusing on straight-line paths, real animals rely heavily on asymmetrical body movements to execute turns and adjust speed effectively. This study builds upon a previously developed model of quadrupedal locomotion proposed by (Molkov et al., Royal Society Open Science, 2024, 11(8)) in which forward movement of the body was driven by central neural interactions, biomechanics, and proprioceptive feedback. We extended this model to comparatively investigate possible mechanisms of steering by introducing three distinct asymmetrical strategies–body bending, lateral force application, and lateral limb shifting as well as their combinations–to explore their potential involvement in turning performance. By simulating these strategies across a walking speed range, we measured and compared their impact on turning curvature (the sharpness of the turn) and limb coordination. The latter was quantified through ratios of duty factors representing the relative time that a limb spent in contact with the ground compared to its counterpart on the opposite side. Our findings reveal that each strategy excels at different speeds: body bending allows sharp turns at low speeds, lateral force is most effective at medium speeds, and lateral shifting performs best at higher speeds. Our results suggest that animals select or combine turning strategies based on their locomotor speed or adjust speed to use a specific strategy. We also show that the forelimbs consistently play a primary role in steering, while the hindlimbs adjust propulsion and stability in ways that depend on the specific turning strategy. These results provide valuable insights into how spinal circuits and mechanical asymmetries work together to produce flexible, adaptive movement patterns, offering a robust framework for understanding locomotion in both biological organisms and robotic systems designed to mimic such behaviors.",
+  "numChildren": 1,
+  "creators": [
+   "Molkov",
+   "Mohammed",
+   "Stell",
+   "Harralson",
+   "Jeter",
+   "Rybak"
+  ]
+ },
+ {
+  "key": "BLL4S52K",
+  "itemType": "journalArticle",
+  "doi": "10.1523/ENEURO.0191-23.2023",
+  "title": "Spinal Sensorimotor Circuits Play a Prominent Role in Hindlimb Locomotor Recovery after Staggered Thoracic Lateral Hemisections but Cannot Restore Posture and Interlimb Coordination during Quadrupedal Locomotion in Adult Cats",
+  "surname": "Audet",
+  "year": "2023/06/01",
+  "pub": "eNeuro",
+  "url": "https://www.eneuro.org/content/10/6/ENEURO.0191-23.2023",
+  "abstract": "Spinal sensorimotor circuits interact with supraspinal and peripheral inputs to generate quadrupedal locomotion. Ascending and descending spinal pathways ensure coordination between the forelimbs and hindlimbs. Spinal cord injury (SCI) disrupts these pathways. To investigate the control of interlimb coordination and hindlimb locomotor recovery, we performed two lateral thoracic hemisections on opposite sides of the cord (right T5–T6 and left T10–T11) at an interval of approximately two months in eight adult cats. In three cats, the spinal cord was transected at T12–T13. We collected electromyography (EMG) and kinematic data during quadrupedal and hindlimb-only locomotion before and after spinal lesions. We show that (1) cats spontaneously recover quadrupedal locomotion following staggered hemisections but require balance assistance after the second one, (2) coordination between the forelimbs and hindlimbs displays 2:1 patterns (two cycles of one forelimb within one hindlimb cycle) and becomes weaker and more variable after both hemisections, (3) left-right asymmetries in hindlimb stance and swing durations appear after the first hemisection and reverse after the second, and (4) support periods reorganize after staggered hemisections to favor support involving both forelimbs and diagonal limbs. Cats expressed hindlimb locomotion the day following spinal transection, indicating that lumbar sensorimotor circuits play a prominent role in hindlimb locomotor recovery after staggered hemisections. These results reflect a series of changes in spinal sensorimotor circuits that allow cats to maintain and recover some level of quadrupedal locomotor functionality with diminished motor commands from the brain and cervical cord, although the control of posture and interlimb coordination remains impaired.",
+  "numChildren": 2,
+  "creators": [
+   "Audet",
+   "Yassine",
+   "Lecomte",
+   "Mari",
+   "Soucy",
+   "Morency",
+   "Merlet",
+   "Harnie",
+   "Beaulieu",
+   "Gendron",
+   "Rybak",
+   "Prilutsky",
+   "Frigon"
+  ]
+ },
+ {
+  "key": "IZ2IA2ML",
+  "itemType": "journalArticle",
+  "doi": "10.3389/fncel.2025.1710893",
+  "title": "Ionic mechanisms underlying bistability in spinal motoneurons: insights from a computational model",
+  "surname": "Molkov",
+  "year": "2025-11-11",
+  "pub": "Frontiers in Cellular Neuroscience",
+  "url": "https://www.frontiersin.org/journals/cellular-neuroscience/articles/10.3389/fncel.2025.1710893/full",
+  "abstract": "Spinal motoneurons are the final output of spinal circuits that engage skeletal muscles to generate motor behaviors. Many motoneurons exhibit bistable behavior, alternating between a quiescent resting state and a self-sustained firing mode, classically attributed to plateau potentials driven by persistent inward currents. This intrinsic property is important for normal movement control, but can become dysregulated, causing motor function deficits, like spasticity. Here we use a conductance-based single-compartment model, together with mouse spinal slice recordings, to investigate the ionic interactions underlying motoneuron bistability. We show that synergistic interactions among high-voltage-activated L-type Ca2+ current (ICaL), calcium-induced calcium release (CICR) and the Ca2+-activated non-specific cation current (ICAN) constitute a minimal mechanistic core that produces plateau potentials and bistable firing. Within this framework, the persistent sodium current (INaP) promotes plateau generation, in contrast to the Ca2+-dependent K+ current (IKCa) which opposes it. These results delineate ionic dependencies at the level of interactions rather than spatial localization and provide a tractable basis for interpreting altered motoneuron excitability in disease.",
+  "numChildren": 1,
+  "creators": [
+   "Molkov",
+   "Krust",
+   "Jeter",
+   "Stell",
+   "Mohammed",
+   "Brocard",
+   "Rybak"
+  ]
+ },
+ {
+  "key": "7ZJV4GTK",
+  "itemType": "journalArticle",
+  "doi": "10.1152/jn.00950.2009",
+  "title": "Processing of Horizontal Optic Flow in Three Visual Interneurons of the Drosophila Brain",
+  "surname": "Schnell",
+  "year": "2010/03/01",
+  "pub": "Journal of Neurophysiology",
+  "url": "http://jn.physiology.org/content/103/3/1646",
+  "abstract": "<p>Motion vision is essential for navigating through the environment. Due to its genetic amenability, the fruit fly <i>Drosophila</i> has been serving for a lengthy period as a model organism for studying optomotor behavior as elicited by large-field horizontal motion. However, the neurons underlying the control of this behavior have not been studied in <i>Drosophila</i> so far. Here we report the first whole cell recordings from three cells of the horizontal system (HSN, HSE, and HSS) in the lobula plate of <i>Drosophila.</i> All three HS cells are tuned to large-field horizontal motion in a direction-selective way; they become excited by front-to-back motion and inhibited by back-to-front motion in the ipsilateral field of view. The response properties of HS cells such as contrast and velocity dependence are in accordance with the correlation-type model of motion detection. Neurobiotin injection suggests extensive coupling among ipsilateral HS cells and additional coupling to tangential cells that have their dendrites in the contralateral hemisphere of the brain. This connectivity scheme accounts for the complex layout of their receptive fields and explains their sensitivity both to ipsilateral and to contralateral motion. Thus the main response properties of <i>Drosophila</i> HS cells are strikingly similar to the responses of their counterparts in the blowfly <i>Calliphora</i>, although we found substantial differences with respect to their dendritic structure and connectivity. This long-awaited functional characterization of HS cells in <i>Drosophila</i> provides the basis for the future dissection of optomotor behavior and the underlying neural circuitry by combining genetics, physiology, and behavior.</p>",
+  "numChildren": 4,
+  "creators": [
+   "Schnell",
+   "Joesch",
+   "Forstner",
+   "Raghu",
+   "Otsuna",
+   "Ito",
+   "Borst",
+   "Reiff"
+  ]
+ }
+]

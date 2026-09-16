@@ -373,7 +373,14 @@ Loaded automatically at session start. Keep it current; keep it lean.
     (`spinal\deng_cpg_ode.py`: toolbox-tau flatlines, fixed-350 ms
     self-runs at 1.94 s; Simulink files `SNS_Simscape\demos\SNS_Deng_*.slx`
     reproduce). Same transfer risk if tuned candidates are ever ported to
-    Animatlab/Simulink realizations.
+    Animatlab/Simulink realizations. (5) **CORRECTION 2026-09-16 (Ben)**:
+    sns_toolbox 1.5.2 DOES ship `NonSpikingNeuronWithPersistentSodiumChannel`
+    (Tutorial 8, executed in `spinal\sns_tutorials` 2026-09-14) — earlier
+    "toolbox can't express NaP / ADAP is the only burst-termination
+    substitute" claims were WRONG. The spinal RG can be built as literal
+    Deng persistent-Na HC neurons; FIRST test the real class's tau_h(V)
+    with tau_max_h at depolarized V (the quenching result in (4) was
+    measured on the hand-coded formula in deng_cpg_ode.py, not the class).
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the
@@ -525,7 +532,13 @@ Loaded automatically at session start. Keep it current; keep it lean.
   when opening the .aproj, FIRST check how LinearHill implements the Na h-gate tau
   (Animatlab treats tau_h.max as a fixed constant, which is why the Simulink Deng
   port works). Related trap: SNS_Library vs sns_toolbox use OPPOSITE synapse
-    saturation conventions (ThrPre/Elo) — keep straight when porting values.**
+    saturation conventions (ThrPre/Elo) — keep straight when porting values.
+    **2026-09-16 update: sns_toolbox DOES ship
+    `NonSpikingNeuronWithPersistentSodiumChannel` (Tutorial 8) — "toolbox
+    can't express NaP" was wrong; if the MuJoCo-side RG moves to that
+    class, verify its tau_max_h semantics against the quenching result
+    before assuming cross-platform consistency (see
+    SNS_Simscape\README_SNS_Simscape.md correction note).****
     **2026-09-14b: START POSE = normal.mot** (Ben supplied the gait2392
     "normal" Coordinates values — pelvis_tilt −1.87, knees −3.9/−8.2,
     hips R+24.6/L−16.6, ankle_l +9.8 dorsi, lumbar set, ty 0.96;
@@ -566,7 +579,34 @@ Loaded automatically at session start. Keep it current; keep it lean.
     tilt 15.7, amplitudes hold (45/62/25 vs 43/70/23), trim winner
     0.097 (near-zero standing PF tone wanted in gait — confirms the
     set-point diagnosis). Duty/cadence/hip-phase remain
-    architecture-level; study resumable.
+    architecture-level; study resumable. **2026-09-15: CURRICULUM +
+    mechanosensory stance feedback + IaIN (Ben's methodology question
+    became the plan)** — (a) heel/toe contact mechanosensors (per-foot
+    MuJoCo contact normal forces → HEEL_c/TOE_c ports → HEEL_IN→RG-E
+    S2W trigger + TOE_IN→RG-E late-stance prolongation; gains
+    heel_rge/toe_rge default 0); (b) LBIN stance-Ib group IN (per
+    Dominguez 2020: INs in the rhythm-generating layer) → RG-E
+    prolonger (gain ib_rge default 0); (c) IaIN population replacing
+    direct Ia→antagonist when G["ia_in"]>0 (PF_F1 phase gate +
+    RC→IaIN disinhibition per Hultborn); (d) mutual Renshaw fix (was
+    one-directional). ALL conditional topology, defaults 0 =
+    v10-identical at renshaw=0. **Regression gate now measures the
+    DELIBERATE mutual-RC change**: v10 winner re-scores −79.9 (was
+    −65.4 on lopsided wiring) — retune needed, not a bug. Staged
+    curriculum (_curriculum.py): s1 air-deaff (25 trials, best 104.6
+    objective = 3×rises + swing depth), s2 air-aff (+heel/toe, 25
+    trials, kine −68.1), s3 ground (+ib_rge/ia_in/trim, 30 trials,
+    kine −72.5). All new pathways tuned nonzero (heel 0.91, toe 0.63,
+    ib 0.68, ia_in 0.62, trim 0.63). Final v11 run: stayed up, knee
+    −78.8..+12.7 INSIDE RoM (deep swing flexion), hip −24..+58, tilt
+    −2..+19, ankle −90..−0.8. Gaps remain: duty 0.14, cadence 0.46 Hz,
+    ankle PF bias. START POSE = normal.mot values (see
+    START_POSE_DEG in runner.py). Zotero Web API access (AARL group
+    735051) verified for full-text PDF retrieval; credentials in
+    D:\Github\api_credentials_local.txt (outside repo). Musculoskeletal
+    audit script: _muscle_force_compare.py (R² 0.87–0.98 matched
+    activation). Literature audit report:
+    LIT_CIRCUIT_AUDIT.md (P1a/P1b IMPLEMENTED; P2a/P2b/P3 open).
     **2026-09-14 (v7 retune under corrected physics): ANKLE DORSIFLEXION
     MECHANISM FOUND** — boosting swing DF drive does nothing (9 PF
     muscles ~10 kN vs 3 DF ~1.6 kN); `params.G["f1_anklepf_inh"]`
@@ -693,6 +733,67 @@ Loaded automatically at session start. Keep it current; keep it lean.
   Spec + live state in `SADb_audit\README.md` (CURATION STATE section), per-batch details in
   `curation_log.csv`. 20/383 done 2026-09-12 (pilot + batch 2); next = batch 3 = queue CSV
   rows 11-20; audit subagent after batch 5.
+
+## REPO SIZE REDUCTION (standing objective — Ben, 2026-09-15)
+
+Ben wants the repository size reduced ACROSS THE BOARD (folder currently
+~13.8 GB) and is wary of any operation that forces a re-clone. ANY AI
+session working on this MUST present the safeguard checklist below and
+get Ben's explicit go PER STEP before running anything destructive
+(filter-repo, push --force, gc/prune, bulk deletions). Do not fold these
+steps into unrelated work.
+
+**Measured composition (2026-09-15, EB475WS4):**
+- `SADb_audit\pdf_staging\` = **5.8 GB, UNTRACKED** (another session's
+  PDF-staging area for its Zotero upload workflow). Disk-only: deleting
+  or archiving it involves NO git operation — but it is that session's
+  working data: confirm with Ben/that chat before removing. This is the
+  single biggest disk item.
+- `.git` = 6.17 GB: history carries large CAD binaries (Solid_Models
+  SLDPRT/STL/STEP across many commits) + the ~500 MB npz commit
+  a8746f9 (HEAD of branch `KneeTestSetup_BenBo_stw`, PUSHED — so it is
+  on GitHub; branch is otherwise in sync with origin).
+- Tracked worktree ≈ 1.8 GB (Solid_Models 1.06 GB dominates).
+
+**Phased plan (nothing executed yet — Phase A/B safe, C/D need the
+checklist + go):**
+- Phase A (disk, no git): decide pdf_staging (archive vs delete) —
+  frees 5.8 GB immediately once the owning session's upload is done.
+- Phase B (prevention): extend .gitignore (npz, __pycache__,
+  SADb_audit/pdf_staging/, large binaries by policy) — Ben commits.
+- Phase C (history, branch-scoped): strip `*.npz` from
+  KneeTestSetup_BenBo_stw (the npz commits are unique to this branch —
+  verify with `git log --all -- '*.npz'` first), via amend of a8746f9
+  (tip) if that covers all of it, else git-filter-repo on that ref
+  only; then `push --force` that branch; then reflog expire + gc.
+  Requires: GitHub Desktop git at
+  `C:\Users\Ben Bolen\AppData\Local\GitHubDesktop\app-3.6.5\resources\app\git\cmd\git.exe`,
+  git-filter-repo (pip) for the multi-commit variant.
+- Phase D (policy, biggest long-term lever): CAD-binary history
+  (Solid_Models revisions, Unused_Parts duplicates) — decide LFS vs
+  external storage vs pruning duplicate-geometry commits. Most
+  invasive; separate explicit go.
+
+**MANDATORY SAFEGUARDS (any session, any step of Phase C/D):**
+1. Backup FIRST, outside the repo: full `git bundle create
+   <path>\pre_rewrite.bundle --all` + a copy of the dirty working-tree
+   files (list from `git status --short`; 117+ entries as of
+   2026-09-15). Verify both exist before proceeding.
+2. filter-repo/reset does HARD RESETS — uncommitted tracked-file work
+   is destroyed unless backed up and restored afterward. Re-apply
+   intentional working-tree deletions after restore.
+3. Always PROMPT Ben with this checklist + the specific commands before
+   executing; he is wary of re-clone-requiring operations (his words).
+4. After any force push: EVERY other clone (laptop DESKTOP-5Q16KE9,
+   easteregg2) must re-clone or `fetch + reset --hard` + expire reflogs,
+   or it will re-push the old history. Tell Ben explicitly each time.
+5. filter-repo removes the `origin` remote — re-add
+   `https://github.com/Agile-and-Adaptive-Robotics/Bipedal_Robot.git`.
+6. Verify afterward: `git log --all -- '*.npz'` empty (Phase C), .git
+   size reduced, `git status` matches the pre-rewrite dirty list,
+   unaffected branches/colleagues' refs untouched.
+7. GitHub-side full shrink may need GitHub's gc (contact support or
+   wait for their maintenance) — local + push results are immediate.
 
 ## OpenSim / MyoConverter / SNS-Toolbox on easteregg2 (Sept 2026)
 

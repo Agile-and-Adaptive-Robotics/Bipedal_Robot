@@ -90,6 +90,30 @@ debugging why the Animatlab RG latches instead of oscillating, check its
 Na-channel h time-constant handling first. Same lesson applies to the
 h-inf/+1 terms: the reciprocal-divider blocks MUST include the +1.
 
+**CORRECTION (2026-09-16, Ben caught it): sns_toolbox 1.5.2 DOES ship
+`NonSpikingNeuronWithPersistentSodiumChannel`** (Tutorial 8; constructor:
+membrane_capacitance, membrane_conductance, g_ion, e_ion, k_m/slope_m/e_m,
+k_h/slope_h/e_h, tau_max_h, name, color). Earlier claims that "the toolbox
+can't express persistent-Na dynamics, so the ADAP loop is the only
+burst-termination substitute" were WRONG — Tutorial 8 was even executed in
+`spinal\sns_tutorials` (2026-09-14). Implications for the ports:
+
+- The numpy/MuJoCo spinal RG half-centers CAN be built as literal Deng-style
+  persistent-Na HC neurons with intrinsic burst termination (replacing or
+  re-testing the ADAP-loop workaround) — this is the cross-platform
+  consistency route: Simulink `SNS_Deng_Library.slx` (fixed tau_h 350 ms)
+  and AnimatLab LinearHill (tau_h.max as fixed constant) already work this
+  way, so one neuron family could span all three platforms.
+- CAVEAT before trusting it: the quenching result above was measured against
+  the toolbox tau_h(V) FORMULA as hand-coded in `deng_cpg_ode.py` — not the
+  class. Test how the real class's tau_h(V) behaves with tau_max_h at
+  depolarized V in the actual Deng circuit first; if it collapses the same
+  way, check whether the class allows the fixed-tau_h semantics the working
+  ports rely on.
+- When porting values across platforms, the standing trap still applies:
+  SNS_Library (Simulink/AnimatLab side) vs sns_toolbox (python side) use
+  OPPOSITE synapse saturation conventions (ThrPre/Elo).
+
 Solver: fixed-step ode1 @ 0.1 ms (Table A7 dt). The numpy ODE reference is
 `deng_cpg_ode.py` (results saved to `results\deng_cpg_ref.mat`); the pointwise
 comparison to Simulink is phase-sensitive (onset timing differs), so compare
