@@ -1,0 +1,11 @@
+digraph {
+	0 [label=AddSum fillcolor=blue fontcolor=white shape=ellipse style=filled]
+	1 [label=AddSrc0 fillcolor=blue fontcolor=white shape=ellipse style=filled]
+	2 [label=AddSrc1 fillcolor=blue fontcolor=white shape=ellipse style=filled]
+	3 [label=AddSrc2 fillcolor=blue fontcolor=white shape=ellipse style=filled]
+	4 [label=AddSrc3 fillcolor=blue fontcolor=white shape=ellipse style=filled]
+	1 -> 0 [arrowhead=invempty arrowtail=invempty dir=forward]
+	2 -> 0 [arrowhead=dot arrowtail=dot dir=forward]
+	3 -> 0 [arrowhead=dot arrowtail=dot dir=forward]
+	4 -> 0 [arrowhead=invempty arrowtail=invempty dir=forward]
+}

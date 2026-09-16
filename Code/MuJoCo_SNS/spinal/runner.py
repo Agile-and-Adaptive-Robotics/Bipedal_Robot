@@ -33,7 +33,7 @@ import numpy as np
 
 import build_network as bn
 from muscle_map import EXTENSOR_STANCE_GROUPS, classify
-from params import AFF, BAL, DT, E_HI, MOD, SCHEDULE
+from params import AFF, BAL, DT, E_HI, G, MOD, PHASE_RESET, SCHEDULE
 
 import mujoco
 
@@ -208,6 +208,40 @@ def patch_xml(xml_text: str, model, data, kxy=2.0e5, kz=2.0e5, ky=5.0e5,
     xml_text = re.sub(r'<general name="[^"]+" class="muscle"[^/]*/>',
                       _zero_fmax, xml_text)
 
+    # ---- repair 2c (Ben's go 2026-09-13): the converter shipped 8 trunk
+    # muscles with ACTIVE Fmax = 1 newton (gainprm[2]) while stock
+    # gait2392 has ercspn 2500 N, intobl/extobl 900 N, ext_hal 162 N
+    # (verified against gait2392_simbody.osim by _fmax_audit.py; the
+    # passive slot biasprm[2] already carries the stock value — only the
+    # active scale is broken). Before this fix the IMU trunk controller
+    # (BAL_TRK -> ercspn) drove 1-newton muscles and the rig springs did
+    # all the trunk work. NOTE: lengthrange="0.01 1" on these 8 is also
+    # converter garbage (healthy muscles get their true RoM) - flagged,
+    # not fixed here; the realized force is measured in _torque_budget.py.
+    TRUNK_FMAX_FIX = {"ercspn": 2500.0, "intobl": 900.0, "extobl": 900.0,
+                      "ext_hal": 162.0}   # stock gait2392_thelen2003
+
+    def _fix_fmax(match):
+        nonlocal n_fmax_fix
+        tag = match.group(0)
+        name = re.search(r'name="([^"]+)"', tag).group(1)
+        base = name.rsplit("_", 1)[0]
+        if base in TRUNK_FMAX_FIX:
+            def _sub(p):
+                vals = p.group(1).split()
+                vals[2] = repr(float(TRUNK_FMAX_FIX[base]))
+                return 'gainprm="' + " ".join(vals) + '"'
+            new = re.sub(r'gainprm="([^"]+)"', _sub, tag, count=1)
+            if new != tag:
+                n_fmax_fix += 1
+            tag = new
+        return tag
+
+    n_fmax_fix = 0
+    xml_text = re.sub(r'<general name="[^"]+" class="muscle"[^/]*/>',
+                      _fix_fmax, xml_text)
+    assert n_fmax_fix == 8, f"trunk Fmax fix matched only {n_fmax_fix}"
+
     # ---- repair 3: patella mechanism for rect_fem (Ben). Dynamic audit:
     # rect_fem drives the knee into FLEXION (+894 rad/s^2 at full act) - its
     # route lacks the patella wrap the vastii kept. Route it over the
@@ -260,6 +294,28 @@ def patch_xml(xml_text: str, model, data, kxy=2.0e5, kz=2.0e5, ky=5.0e5,
             xml_text = new_text
             n_eq += 1
     assert n_eq >= 30, f"pathpoint range strip matched only {n_eq} joints"
+
+    # ---- repair 2f2 (Ben, 2026-09-13): ENFORCE the driver-joint RoM.
+    # All 14 driver hinges shipped limited="false" (ranges inert), so the
+    # swing knee hyperextended to +26 deg against the stock +10 deg cap
+    # (flexion-negative convention). Flip limited="true" with the
+    # CONVERTED/stock ranges (knee [-120,+10], hips +-120, ankle/subtalar/
+    # mtp +-90 - the stock gait2392 values themselves). The equality-
+    # coupled pathpoint followers stay limited="false" (repair 2f): they
+    # are driven along their polycoefs and their sampled ranges are only
+    # valid near the keyframe.
+    rom_joints = ("knee_angle", "hip_flexion", "ankle_angle",
+                  "subtalar_angle", "mtp_angle", "hip_adduction",
+                  "hip_rotation")
+    n_lim = 0
+    for side in ("r", "l"):
+        for jn in rom_joints:
+            pat = rf'<joint name="{jn}_{side}"([^/>]*?) limited="false"'
+            xml_text, k = re.subn(
+                pat, rf'<joint name="{jn}_{side}"\1 limited="true"',
+                xml_text, count=1)
+            n_lim += k
+    assert n_lim == 14, f"RoM limit patch matched only {n_lim}/14"
 
     # ---- repair 2g: knee DRIVER range — KEEP AS CONVERTED. REVERTED
     # 2026-09-10 evening after Ben's correction + direct measurement: the
@@ -416,14 +472,93 @@ def apply_harness(model, data, kxy=2.0e5, kz=2.0e5, ky=5.0e5,
         os.unlink(tmp)
 
 
-def capture_pose(model) -> dict[str, np.ndarray]:
-    """Joint name -> keyframe qpos values (for re-seeding reduced models)."""
+def capture_pose(model, data=None) -> dict[str, np.ndarray]:
+    """Joint name -> starting qpos values (for re-seeding reduced models).
+    Reads data.qpos when given (the applied start pose), else the model's
+    stored keyframe."""
     pose = {}
     for j in range(model.njnt):
         name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, j)
         adr, narange = model.jnt_qposadr[j], 7 if model.jnt_type[j] == 0 else 1
-        pose[name] = model.key_qpos[0][adr:adr + narange].copy()
+        src = data.qpos if data is not None else model.key_qpos[0]
+        pose[name] = np.asarray(src[adr:adr + narange]).copy()
     return pose
+
+
+# ---- Ben (2026-09-14): START POSE = the model's own "normal"
+# experimental pose (gait2392_simbody Coordinates panel / normal.mot;
+# values in DEGREES, OpenSim conventions). Our repair-1 hip axis flips
+# make OpenSim +flexion/+adduction == MuJoCo +qpos, so these map
+# directly. Slight forward tilt, knees slightly flexed, right leg
+# forward (hip +24.6), left leg back (hip -16.6, ankle +9.8 dorsi).
+START_POSE_DEG = {
+    "pelvis_tilt": -1.870,
+    "pelvis_list": -0.470,
+    "pelvis_rotation": 2.430,
+    "hip_flexion_r": 24.610,
+    "hip_adduction_r": 1.090,
+    "hip_rotation_r": -1.350,
+    "knee_angle_r": -3.940,
+    "ankle_angle_r": -1.700,
+    "subtalar_angle_r": 0.000,
+    "mtp_angle_r": 0.000,
+    "hip_flexion_l": -16.560,
+    "hip_adduction_l": 2.680,
+    "hip_rotation_l": 1.280,
+    "knee_angle_l": -8.200,
+    "ankle_angle_l": 9.810,
+    "subtalar_angle_l": 0.000,
+    "mtp_angle_l": 0.000,
+    "lumbar_extension": 1.870,
+    "lumbar_bending": 0.470,
+    "lumbar_rotation": -2.430,
+}
+START_PELVIS_HEIGHT = 0.92   # m. NOT the OpenSim 0.96: measured with
+# mesh-vertex foot bottoms (_foot_flat_check.py), our converted foot
+# geometry leaves the soles 3-6 cm ABOVE ground at 0.96 (rig-locked ->
+# feet dangle in passive plantarflexion = the tiptoe posture). Right
+# sole touches at ty 0.903, left (back leg) at ~0.925; 0.92 = contact
+# compromise the knees/soft contact absorb.
+
+
+def _project_followers(model, data):
+    """Re-project equality-coupled pathpoint dofs onto their driver polycoefs
+    (copy of bsolve_ik.apply_eq_followers; kept local to avoid a circular
+    import - bsolve_ik imports runner)."""
+    for i in range(model.neq):
+        if model.eq_type[i] != mujoco.mjtEq.mjEQ_JOINT:
+            continue
+        j_dep = int(model.eq_obj1id[i])
+        j_ind = int(model.eq_obj2id[i])
+        adr_d = model.jnt_qposadr[j_ind]
+        adr_p = model.jnt_qposadr[j_dep]
+        x = data.qpos[adr_d] - float(model.qpos0[adr_d])
+        c = model.eq_data[i][:4]
+        data.qpos[adr_p] = float(model.qpos0[adr_p]) + c[0] + c[1] * x \
+            + c[2] * x * x + c[3] * x * x * x
+
+
+def apply_start_pose(model, data) -> None:
+    """Overwrite the keyframe with the model's own 'normal' pose
+    (normal.mot values, degrees; drivers + lumbar + pelvis orientation,
+    then re-project the equality followers). Applied AS GIVEN - no sign
+    auto-correction: these are the OpenSim model's own values, and the
+    IMU-lean heuristic's sign convention is not the coordinate's."""
+    jadr = {jn: model.joint(jn).qposadr[0] for jn in START_POSE_DEG
+            if model.joint(jn).id >= 0}
+    mujoco.mj_resetDataKeyframe(model, data, 0)
+    for jn, deg in START_POSE_DEG.items():
+        if jn in jadr:
+            data.qpos[jadr[jn]] = np.radians(deg)
+    data.qpos[model.joint("pelvis_ty").qposadr[0]] = START_PELVIS_HEIGHT
+    _project_followers(model, data)
+    mujoco.mj_forward(model, data)
+    torso = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, "torso")
+    up = data.xmat[torso].reshape(3, 3)[:, 1]
+    lean = float(np.degrees(np.arctan2(-up[0], max(up[2], 1e-6))))
+    print(f"start pose (normal.mot): applied {len(jadr)} coordinates as "
+          f"given; IMU-metric torso lean {lean:+.1f} deg (+ = back)",
+          flush=True)
 
 
 def seed_pose(model, data, pose: dict[str, np.ndarray]):
@@ -448,7 +583,9 @@ def main(argv):
     interleg = True
     eval_mode = False
     rig_scale = 1.0
+    straight_start = False
     args = list(argv)
+    fit_keys = None
     if "--fitted" in args:
         # load the IK/NNLS back-solve refit (fit_pf.py output) BEFORE any
         # params read: full W_PF_MN + W_POSTURE tables from human data
@@ -461,14 +598,65 @@ def main(argv):
                 _p.W_PF_MN[ph][g] = float(w)
         for g, w in fit["W_POSTURE"].items():
             _p.W_POSTURE[g] = float(w)
+        # which entries came from the fitted file: --best's pf_gain must
+        # scale ONLY these (the params-default trunk entries the json
+        # lacks - E1/E2 trunk_ext, F2 trunk_flex, W_POSTURE trunk_ext -
+        # are NOT part of the back-solved table and scaling them silently
+        # diverged --best from the study's set_params config by kine 0.64;
+        # found by the v5 regression gate 2026-09-12)
+        fit_keys = ({ph: set(tbl) for ph, tbl in fit["W_PF_MN"].items()},
+                    set(fit["W_POSTURE"]))
         args.remove("--fitted")
         print("loaded fitted_walk_params.json (back-solve refit)", flush=True)
-    if "--best" in args:
-        # load the optimizer's winning parameters (optuna_walk.py output)
-        # before anything reads the params module
+    if "--best10" in args:
+        # v10 winner file (transient PRESET + ankle trim); same loader
+        best_path = HERE / "best_walk_params_v10.json"
+        args.remove("--best10")
+    elif "--best9" in args:
+        # v9 winner file (flat-foot height + amplitude objective);
+        # same loader as --best
+        best_path = HERE / "best_walk_params_v9.json"
+        args.remove("--best9")
+    elif "--best8b" in args:
+        # v8b winner file (normal.mot start pose retune); same loader
+        best_path = HERE / "best_walk_params_v8b.json"
+        args.remove("--best8b")
+    elif "--best8" in args:
+        # v8 winner file (post start-pose retune); same loader as --best
+        best_path = HERE / "best_walk_params_v8.json"
+        args.remove("--best8")
+    elif "--best7" in args:
+        # v7 winner file (post-RoM-limit retune); same loader as --best
+        best_path = HERE / "best_walk_params_v7.json"
+        args.remove("--best7")
+    elif "--best6" in args:
+        # v6 winner file (optuna_walk_v6.py output); same loader as --best
+        best_path = HERE / "best_walk_params_v6.json"
+        args.remove("--best6")
+    elif "--best5" in args:
+        # v5 winner file (optuna_walk_v5.py output); same loader as --best
+        best_path = HERE / "best_walk_params_v5.json"
+        args.remove("--best5")
+    elif "--best" in args:
+        best_path = HERE / "best_walk_params.json"
+        args.remove("--best")
+    else:
+        best_path = None
+    if best_path is not None:
+        # load the optimizer's winning parameters (optuna output) before
+        # anything reads the params module
         import json as _json
-        with open(HERE / "best_walk_params.json", encoding="utf-8") as f:
-            best = _json.load(f)["params"]
+        with open(best_path, encoding="utf-8") as f:
+            _doc = _json.load(f)
+        best = _doc["params"]
+        # pf_gain lives at the DOCUMENT TOP LEVEL, not in params. The old
+        # `if "pf_gain" in best` tested the params dict (which never has
+        # it) so the gain-scaling branch NEVER ran: every --fitted --best
+        # "reproduction" since v3 silently evaluated a pf_gain=1.0 config
+        # (caught by the v5 regression gate 2026-09-12 - the study path
+        # scored -61.174, the --best path -61.82, and the state dump
+        # showed the raw unscaled fitted tables).
+        gain = float(_doc.get("pf_gain", 1.0))
         import params as _p
         _p.TAU["rg_adapt"] = best["rg_adapt"]
         _p.G["descend_to_rg_e"] = best["desc_e"]
@@ -479,15 +667,19 @@ def main(argv):
         _p.W_POSTURE["knee_ext"] = best["post_kneext"]
         if "post_hipext" in best:
             _p.W_POSTURE["hip_ext"] = best["post_hipext"]
-        if "pf_gain" in best and best["pf_gain"] != 1.0:
-            # v3 winners store a global gain on the fitted table (the 5
+        if gain != 1.0:
+            # v3+ winners store a global gain on the fitted table (the 5
             # knob values above are ALREADY effective - gain must not
-            # double-apply to them, so it only scales the other entries)
-            gain = float(best["pf_gain"])
+            # double-apply to them, so it only scales the other entries).
+            # Scale ONLY the fitted-file entries (see fit_keys above):
+            # the params-default trunk keys are not part of the table.
+            fk = fit_keys if fit_keys is not None else (
+                {ph: set(tbl) for ph, tbl in _p.W_PF_MN.items()},
+                set(_p.W_POSTURE))
             for ph, tbl in _p.W_PF_MN.items():
-                for g in tbl:
+                for g in fk[0].get(ph, ()):
                     tbl[g] *= gain
-            for g in _p.W_POSTURE:
+            for g in fk[1]:
                 _p.W_POSTURE[g] *= gain
             for kn in ("e2_pf", "f1_df", "f1_kf"):
                 key = {"e2_pf": ("E2", "ankle_pf"),
@@ -500,11 +692,23 @@ def main(argv):
             _p.G["descend_to_rg_f"] = float(best["desc_f"])
         if "e2_adapt" in best:
             _p.PF_SHAPE["E2"] = (_p.PF_SHAPE["E2"][0], float(best["e2_adapt"]))
+        if "phase_reset_e" in best:
+            _p.G["phase_reset_e"] = float(best["phase_reset_e"])
+        if "phase_reset_f" in best:
+            _p.G["phase_reset_f"] = float(best["phase_reset_f"])
+        if "f1_kneext_inh" in best:
+            _p.G["f1_kneext_inh"] = float(best["f1_kneext_inh"])
+        if "f1_anklepf_inh" in best:
+            _p.G["f1_anklepf_inh"] = float(best["f1_anklepf_inh"])
+        if "renshaw" in best:
+            _p.G["renshaw"] = float(best["renshaw"])
+        if "ankle_post_walk_trim" in best:
+            _p.G["ankle_post_walk_trim"] = float(best["ankle_post_walk_trim"])
         _p.BAL["kx"] = best["kx"]
-        args.remove("--best")
         walk_drive = float(best.get("drive", walk_drive))
-        print(f"loaded best_walk_params.json (drive={walk_drive:.2f})",
-              flush=True)
+        print(f"loaded {best_path.name} (drive={walk_drive:.2f}, "
+              f"phase_reset {_p.G['phase_reset_e']:.2f}/"
+              f"{_p.G['phase_reset_f']:.2f})", flush=True)
     while args:
         a = args.pop(0)
         if a == "--drive":
@@ -521,17 +725,39 @@ def main(argv):
             interleg = False
         elif a == "--eval":
             # fast objective evaluation for the optimizer (optuna_walk.py):
-            # 12 s schedule (1.5 stand / 1.5 ramp / 7.5 walk / 1.5 wind-up),
-            # quiet, no npz/png writes; main() returns a metrics dict
+            # 16 s schedule (1.0 stand / 1.0 ramp / 11.0 walk / 1.5
+            # wind-up / 1.5 stand), quiet, no npz/png writes; main()
+            # returns a metrics dict. The long walk window matters: slow
+            # gaits (0.3-0.4 Hz) need >= 3 RG-E cycles in-window or
+            # kine_ref returns None and the optimizer sees the frozen
+            # sentinel (the ground_walk_v8b collapse, 2026-09-14).
             eval_mode = True
-            SCHEDULE.update(stand1=(0.0, 1.5), ramp_up=(1.5, 3.0),
-                            walk=(3.0, 10.5), ramp_down=(10.5, 11.0),
-                            stand2=(11.0, 12.0))
+            SCHEDULE.update(stand1=(0.0, 1.0), ramp_up=(1.0, 2.0),
+                            walk=(2.0, 13.0), ramp_down=(13.0, 14.5),
+                            stand2=(14.5, 16.0))
         elif a == "--leg-damping":
             leg_damping = float(args.pop(0))
         elif a == "--rig-scale":
             # wean the support rig: stiffness *S, damping *sqrt(S)
             rig_scale = float(args.pop(0))
+        elif a == "--phase-reset":
+            # v5 sensory phase-reset gains: HIP_EXT_SIG -> RG-E exc / RG-F
+            # inh; HIP_FLEX_SIG -> RG-F exc / RG-E inh (0 0 = v4 behavior)
+            import params as _p
+            _p.G["phase_reset_e"] = float(args.pop(0))
+            _p.G["phase_reset_f"] = float(args.pop(0))
+        elif a == "--kneext-inh":
+            # phase-3 swing-knee quad suppression gain (0 = absent)
+            import params as _p
+            _p.G["f1_kneext_inh"] = float(args.pop(0))
+        elif a == "--renshaw":
+            # Renshaw recurrent inhibition gain (0 = absent, Deng A6)
+            import params as _p
+            _p.G["renshaw"] = float(args.pop(0))
+        elif a == "--straight-start":
+            # revert to the converted straight keyframe (no walking start
+            # pose override)
+            straight_start = True
         elif a == "--view":
             view = True
         elif a == "--scope":
@@ -542,10 +768,27 @@ def main(argv):
             SCHEDULE["stand2"] = (SCHEDULE["ramp_down"][1],
                                   SCHEDULE["ramp_down"][1] + float(args.pop(0)))
 
+    # state-dump hook (debug): RUNNER_DUMP_STATE=<file> writes every
+    # mutable param right after arg parsing - diff two paths to find
+    # config divergence (found the v4b --best/set_params split this way)
+    import os as _os
+    if _os.environ.get("RUNNER_DUMP_STATE"):
+        import json as _js
+        import params as _pp
+        _js.dump(dict(
+            W_PF_MN=_pp.W_PF_MN, W_POSTURE=_pp.W_POSTURE, TAU=_pp.TAU,
+            G=_pp.G, PF_SHAPE=_pp.PF_SHAPE, BAL=_pp.BAL, AFF=_pp.AFF,
+            MOD=_pp.MOD, walk_drive=walk_drive,
+            SCHEDULE={k: list(v) for k, v in _pp.SCHEDULE.items()},
+        ), open(_os.environ["RUNNER_DUMP_STATE"], "w", encoding="utf-8"),
+            indent=1, default=float)
+
     model = mujoco.MjModel.from_xml_path(str(MODEL))
     data = mujoco.MjData(model)
     mujoco.mj_resetDataKeyframe(model, data, 0)
-    key_pose = capture_pose(model)
+    if not straight_start:
+        apply_start_pose(model, data)
+    key_pose = capture_pose(model, data)
 
     # standing-activation solve ALWAYS runs on a ground-contact copy of the
     # model: in suspended-air configs there is no contact force to carry
@@ -674,13 +917,26 @@ def main(argv):
     NEURO_NAMES = ("DRIVE", "POSTURE",
                    "RG_E_r", "RG_F_r", "RG_E_l", "RG_F_l",
                    "PF_E1_r", "PF_E2_r", "PF_F1_r", "PF_F2_r",
-                   "BAL_TRK_FLX", "BAL_TRK_EXT", "BAL_LAT_R", "BAL_LAT_L")
+                   "BAL_TRK_FLX", "BAL_TRK_EXT", "BAL_LAT_R", "BAL_LAT_L",
+                   "HIP_EXT_SIG_r", "HIP_FLEX_SIG_r",
+                   "HIP_EXT_SIG_l", "HIP_FLEX_SIG_l")
     log_neuro = np.zeros((nsteps, len(NEURO_NAMES)))
     bal_neurons = ("BAL_PF", "BAL_DF")
 
     u = net.make_inputs()
     stance_ext = np.array([muscles[a].groups[0] in EXTENSOR_STANCE_GROUPS
                            for a in acts])
+    # v5 phase-reset signal groups (primary OR secondary membership: the
+    # hamstrings' hip_ext arm and rect_fem's hip_flex arm count)
+    hipext_idx, hipflex_idx = {}, {}
+    for s in net.sides:
+        hipext_idx[s] = np.array([i for i, a in enumerate(acts)
+                                  if muscles[a].side == s
+                                  and "hip_ext" in muscles[a].groups], dtype=int)
+        hipflex_idx[s] = np.array([i for i, a in enumerate(acts)
+                                   if muscles[a].side == s
+                                   and "hip_flex" in muscles[a].groups], dtype=int)
+    hip_sig = {s: (0.0, 0.0) for s in net.sides}   # (ext_sig, flex_sig)
     for k in range(nsteps):
         t = k * DT
         drive, posture = drive_posture(t, walk_drive)
@@ -727,6 +983,27 @@ def main(argv):
                         [stance[muscles[a].side] for a in acts]))[i]
                     + g_ii[i] * len_norm[i], 0.0)
                 u[iport[f"Ib_{a}"]] = max(0.5 * g_ib[i] * force_norm[i], 0.0)
+            # --- v5 sensory phase-reset signals (per side) ---
+            # extension: hip-extensor group mean normalized length INVERTED
+            # (extensors shorten as the hip extends -> positive signal),
+            # rectified + stance-gated (prolongs stance: excites RG-E,
+            # inhibits RG-F). flexion velocity: hip-flexor group mean
+            # normalized shortening velocity, rectified (triggers swing:
+            # excites RG-F, inhibits RG-E).
+            ga, gb = PHASE_RESET.get("stance_gate", (0.3, 0.7))
+            for s in net.sides:
+                ie, ifl = hipext_idx[s], hipflex_idx[s]
+                ext_sig, flex_sig = 0.0, 0.0
+                if ie.size:
+                    ext_raw = -float(np.mean(len_norm[ie]))
+                    ext_sig = max(ext_raw, 0.0) * (ga + gb * stance[s])
+                if ifl.size:
+                    flex_raw = -float(np.mean(vel_norm[ifl]))
+                    flex_sig = max(flex_raw, 0.0)
+                hip_sig[s] = (ext_sig, flex_sig)
+                if net.phase_reset:
+                    u[iport[f"HIP_EXT_SIG_{s}"]] = G["phase_reset_e"] * ext_sig
+                    u[iport[f"HIP_FLEX_SIG_{s}"]] = G["phase_reset_f"] * flex_sig
         # --- balance feedback (standing only; fades with drive) ---
         fade = (1.0 - drive) / max(walk_drive, 1e-6) if BAL["fade_with_drive"] else 1.0
         com = data.subtree_com[0]
@@ -775,8 +1052,18 @@ def main(argv):
         # a 0.2 floor kept knee-extensor tone high enough to pin the knees
         # straight in the air-stepping test)
         stand_frac = 0.05 + 0.95 * (1.0 - min(drive / max(walk_drive, 1e-6), 1.0))
+        # ankle standing-tone trim: the soleus/tib_post posture bias held
+        # a ~-45 deg PF ankle set-point through gait (v9 overlay tiptoe
+        # offset) - real soleus tonic EMG drops with locomotor drive, so
+        # scale that group's POST bias toward ankle_post_walk_trim as
+        # drive rises (1.0 = v9 behavior, unchanged)
+        walk_frac = min(drive / max(walk_drive, 1e-6), 1.0)
+        trim = 1.0 - (1.0 - G["ankle_post_walk_trim"]) * walk_frac
         for i, a in enumerate(acts):
-            u[iport[f"POST_{a}"]] = 6.0 * act_stand[i] * stand_frac
+            sf = stand_frac
+            if muscles[a].groups[0] == "ankle_pf":
+                sf *= trim
+            u[iport[f"POST_{a}"]] = 6.0 * act_stand[i] * sf
 
         # --- neural step + motor mapping ---
         v = net.step(u)
@@ -843,7 +1130,9 @@ def main(argv):
                         v[net.idx["PF_E1_r"]], v[net.idx["PF_E2_r"]],
                         v[net.idx["PF_F1_r"]], v[net.idx["PF_F2_r"]],
                         u[iport["BAL_TRK_FLX"]], u[iport["BAL_TRK_EXT"]],
-                        u[iport["BAL_LAT_R"]], u[iport["BAL_LAT_L"]])
+                        u[iport["BAL_LAT_R"]], u[iport["BAL_LAT_L"]],
+                        hip_sig["r"][0], hip_sig["r"][1],
+                        hip_sig["l"][0], hip_sig["l"][1])
         if scope is not None:
             scope.update(t, log_neuro[k], log_act[k, :8])
 

@@ -62,6 +62,7 @@ def effective_tables(source: str) -> dict:
     WPOST = dict(params.W_POSTURE)
     TAU = dict(params.TAU)
     note = "params.py defaults"
+    fit_keys = None
     if source in ("fitted", "best"):
         fit = json.loads((HERE / "fitted_walk_params.json").read_text("utf-8"))
         for ph, tbl in fit["W_PF_MN"].items():
@@ -69,15 +70,19 @@ def effective_tables(source: str) -> dict:
                 W[ph][g] = float(w)
         for g, w in fit["W_POSTURE"].items():
             WPOST[g] = float(w)
+        # pf_gain scales ONLY fitted-file entries (params-default trunk
+        # keys are not part of the back-solved table; matching runner)
+        fit_keys = ({ph: set(tbl) for ph, tbl in fit["W_PF_MN"].items()},
+                    set(fit["W_POSTURE"]))
         note = "fitted_walk_params.json (IK/NNLS back-solve refit)"
     if source == "best":
         best = json.loads((HERE / "best_walk_params.json").read_text("utf-8"))
         gain = float(best.get("pf_gain", 1.0))
         if gain != 1.0:
-            for tbl in W.values():
-                for g in tbl:
-                    tbl[g] *= gain
-            for g in WPOST:
+            for ph in W:
+                for g in fit_keys[0].get(ph, ()):
+                    W[ph][g] *= gain
+            for g in fit_keys[1]:
                 WPOST[g] *= gain
         p = best["params"]
         W["E2"]["ankle_pf"] = p["e2_pf"]
@@ -399,6 +404,54 @@ def source_note(cv, x, y, t, extra=True):
                ha="left", va="center", color="0.40", style="italic")
 
 
+# ------------------------------------------------- V-class annotations
+# Correspondence of our circuit elements to the genetically identified
+# locomotor-CPG interneuron classes, grounded in Shevtsova et al. 2026
+# (eLife RP107480, Fig. 2 schematic: InF/InE, V2a, V0V, V0D, V3-E/F, Ini,
+# InE1) and Rybak et al. 2015 (eNeuro review: V0D/V0V/V0C, V1, V2a, V2b,
+# V3, dI6 roles). OUR circuit has NO V3 analog: every cross-side
+# connection is inhibitory.
+VCLASS_REF = ("Shevtsova et al. 2026 eLife RP107480 Fig. 2; "
+              "Rybak et al. 2015 eNeuro")
+
+
+def vclass_strip(cv):
+    """Top strip: class-by-class mapping, one column per V-class."""
+    y0 = 14.05
+    cv.ax.plot([0.55, 18.45], [y0 + 0.52, y0 + 0.52], color="0.75", lw=0.7)
+    cv.ax.text(0.55, y0 + 0.74, "V-class correspondence of this circuit "
+               "(--vclasses; cf. " + VCLASS_REF + ")",
+               fontsize=7.0, ha="left", va="center", color="0.25",
+               style="italic")
+    cols = [
+        (0.55, "V0$_D$ (V0$_c$) / dI6  —  CIN, inhibitory",
+         "cross-side RG inhibition (F$\\leftrightarrow$F strong,\n"
+         "E$\\leftrightarrow$E weak): left–right alternation\n"
+         "= Shevtsova '26 RG-F$\\to$V0D$\\dashrightarrow$c-RG-F (−0.07)"),
+        (5.05, "V1 / V2b  —  ipsilateral, inhibitory",
+         "RG-E$\\leftrightarrow$RG-F half-center + PF reciprocal\n"
+         "inhibition + Ia reciprocal inhibition onto MNs\n"
+         "(flexor–extensor alternation; Renshaw-like)"),
+        (10.05, "V2$_a$  —  ipsilateral, excitatory",
+         "RG$\\to$PF and PF$\\to$MN excitatory relay\n"
+         "= Shevtsova '26 RG-F$\\to$V2a$\\to$V0V chain\n"
+         "(also drives MN pools in the full models)"),
+        (14.55, "V3  —  CIN, excitatory",
+         "ABSENT in this circuit: every cross-side\n"
+         "connection is inhibitory (their model uses\n"
+         "V3-E/F for left–right synchrony at speed)"),
+    ]
+    for x, head, body in cols:
+        cv.ax.text(x, y0 + 0.30, head, fontsize=7.2, ha="left", va="center",
+                   color="black", family="sans-serif", weight="bold")
+        cv.ax.text(x, y0 - 0.18, body, fontsize=6.3, ha="left", va="top",
+                   color="0.30")
+    note_txt = ("we have NO V3 analog — all cross-side connections are "
+                "inhibitory (alternation only, no synchrony pathway)")
+    cv.ax.text(18.45, y0 + 0.74, note_txt, fontsize=6.6, ha="right",
+               va="center", color="0.45", style="italic")
+
+
 # ------------------------------------------------------- shared blocks
 def rg_block(cv, x, y, suffix="", big=True, mirror=False):
     """Half-centers + adaptation loop cells. Returns (rg_e, rg_f)."""
@@ -580,9 +633,9 @@ ROW1 = ("hip_ext", "hip_flex", "knee_ext", "knee_flex", "ankle_pf")
 ROW2 = ("ankle_df", "hip_abd", "hip_add", "trunk_ext", "trunk_flex")
 
 
-def fig_full(t, fmts):
+def fig_full(t, fmts, vc=False):
     W = t["W"]
-    cv = Canvas(19.0, 13.4)
+    cv = Canvas(19.0, 14.95 if vc else 13.4)
     MID = 9.5
 
     # midline + commissural corridor (RG row height only)
@@ -682,6 +735,19 @@ def fig_full(t, fmts):
     syn(cv, rg["r"][1], rg["l"][1], False, color=W_INH, lw=2.0, rad=-0.12)
     syn(cv, rg["r"][0], rg["l"][0], False, color=W_INH, lw=1.1, rad=0.08)
 
+    # V-class annotations (--vclasses): tags adjacent to the annotated
+    # elements + the class-by-class mapping strip at the top
+    if vc:
+        vclass_strip(cv)
+        tag(cv, MID, 8.78, "V0$_D$/dI6 analog", fs=6.4, box=True)
+        tag(cv, MID, 8.30, "no V3 analog:\nall cross-side inhibitory",
+            fs=5.9, box=True)
+        tag(cv, 16.55, 10.52, "V1/V2b analog", fs=6.6, box=True)
+        tag(cv, 16.55, 8.55, "V2$_a$ analog\nRG$\\to$PF · PF$\\to$MN exc.",
+            fs=6.2, box=True)
+        tag(cv, 11.85, 6.45, "V1/V2b analog\n(PF recip. inhib.)", fs=6.2,
+            box=True)
+
     # legend / key / source
     legend_row(cv, 0.55)
     wire_color_key(cv, 9.0, 0.02)
@@ -689,6 +755,338 @@ def fig_full(t, fmts):
         "see the circuit_core key", fs=6.0, box=True)
     source_note(cv, 0.55, 13.15, f"source: {t['note']}")
     return cv.save("circuit_full", fmts)
+
+
+# ------------------------------------------------------- fig: deng-style
+def map_circle(cv, x, y, text, sub=None, r=0.52):
+    """Red conversion-map circle: continuous quantity <-> neuron signal
+    (Deng/Nourse Fig 6 red circles; here with the ACTUAL formula)."""
+    cv.ax.add_patch(plt.Circle((x, y), r, fc="#fde3e0", ec=OI_VERM,
+                               lw=1.4, zorder=3))
+    cv.ax.text(x, y + (0.13 if sub else 0), text, ha="center", va="center",
+               fontsize=6.2, zorder=4, family="monospace", linespacing=1.2)
+    if sub:
+        cv.ax.text(x, y - 0.24, sub, ha="center", va="center",
+                   fontsize=5.4, zorder=4, style="italic", color="0.35")
+    return (x, y, r)
+
+
+def ghost(cv, x, y, label, sub=None, r=0.30):
+    """Dashed ghost cell: exists in Deng et al./Nourse 2023, lumped or
+    absent in ours."""
+    cv.ax.add_patch(plt.Circle((x, y), r, fc="white", ec="0.55",
+                               lw=1.1, ls=(0, (3, 2)), zorder=3))
+    cv.ax.text(x, y, label, ha="center", va="center", fontsize=6.0,
+               color="0.45", zorder=4)
+    if sub:
+        cv.ax.text(x, y - r - 0.15, sub, ha="center", va="center",
+                   fontsize=5.4, color="0.45", style="italic", zorder=4)
+    return (x, y, r)
+
+
+def _edge_groups(net):
+    """(src_kind, dst_kind, sign) -> count, from the COMPILED network
+    object (structure-driven figure contract: every group must be drawn)."""
+    from collections import defaultdict
+    names = [p["name"] for p in net.net.populations]
+
+    def kind(nm):
+        for pre, k in (("PRESET_E", "PRESET_E"), ("PRESET_F", "PRESET_F"),
+                       ("KINH", "KINH"), ("IBEXC", "IBEXC"),
+                       ("ADAP", "ADAP"), ("RG_E", "RG-E"), ("RG_F", "RG-F"),
+                       ("PF_", "PF"), ("PFA", "PFA"), ("MN_", "MN"),
+                       ("Ia_", "Ia"), ("II_", "II"), ("Ib_", "Ib")):
+            if nm.startswith(pre):
+                return k
+        return nm
+
+    g = defaultdict(int)
+    for c in net.net.connections:
+        g[(kind(names[c["source"]]), kind(names[c["destination"]]),
+           "exc" if c["params"].get("reversal_potential", 0) > -1e-6
+           else "inh")] += 1
+    return dict(g)
+
+
+DENG_A6 = (
+    "Deng et al./Nourse 2023 Table A6 (rat hindlimb SNS) - reference values:\n"
+    "  HC->IN 2.75 uS exc | IN->HC 2.75 uS inh   (RG+PF mutual inhibition IS LAMINATED\n"
+    "  through dedicated INs; no direct HC<->HC synapses, no mutual excitation)\n"
+    "  RGHC->PFHC 0.10 uS exc | PF->MN 1.5-4.9 uS exc (per joint)\n"
+    "  PF->Ia 0.50 uS exc (phase gate) | IaIN->MN 2.0 uS inh | IaIN<->IaIN 0.5 inh\n"
+    "  MN->RC 0.50 uS exc | RC->MN 0.50 uS inh | RC<->RC 0.5 inh | RC->IaIN 0.5 inh\n"
+    "  IbIN->MN 0.59 uS EXCITATORY (positive force feedback) | PF->Ib 2.0 uS shunt\n"
+    "  MN->muscle: act = 1/(1+exp(s(x0-V)))+y0, s=0.153, x0=-70 mV (Fig 6B)\n"
+    "  feedback: MuJoCo muscle TENSION formatted as Ia and Ib input (no II)"
+)
+
+
+def fig_deng(t, fmts):
+    """Deng/Nourse-style layered schematic, STRUCTURE-DRIVEN: builds the
+    representative network (knee extensor + flexor column per side, v5/v6
+    gains > 0 so PRESET/KINH exist), reads every connection from the
+    compiled SNS object, and asserts each edge group is drawn."""
+    import build_network as bn
+    import params as _P
+    _P.G["phase_reset_e"] = 0.22
+    _P.G["phase_reset_f"] = 0.22
+    _P.G["f1_kneext_inh"] = 0.59
+    ACTS = ["vas_lat_r", "semimem_r", "vas_lat_l", "semimem_l"]
+    net = bn.build(ACTS, interleg=True)
+    _P.G["phase_reset_e"] = 0.0     # restore defaults (v4-identical)
+    _P.G["phase_reset_f"] = 0.0
+    _P.G["f1_kneext_inh"] = 0.0
+    Gc = _edge_groups(net)
+    drawn = set()
+
+    def edge(sk, dk, sign):
+        drawn.add((sk, dk, sign))
+
+    cv = Canvas(13.8, 18.6)
+
+    # ---------------- band 0: supraspinal ----------------
+    layer_band(cv, 0.5, 13.3, 16.6, 18.2, OI_SKY, "SUPRASPINAL (inputs)")
+    drv = input_box(cv, 2.6, 17.4, 2.0, 0.6, "DRIVE", "MLR speed cmd")
+    pos = input_box(cv, 6.0, 17.4, 2.0, 0.6, "POSTURE", "tonic")
+    hip_e = input_box(cv, 10.4, 17.4, 2.1, 0.6, "HIP_EXT_SIG",
+                      "hip afferents (v5)")
+    hip_f = input_box(cv, 10.4, 16.9, 2.1, 0.6, "HIP_FLEX_SIG", "")
+    tag(cv, 2.6, 16.85, "BAL family (COM PD, IMU trunk, lateral ->\n"
+        "ankle/hip/abd/trunk MNs in the full net) omitted here",
+        fs=5.6, box=True)
+
+    # ---------------- band 1: rhythm generator ----------------
+    layer_band(cv, 0.5, 13.3, 12.7, 16.45, OI_ORANGE,
+               "RHYTHM GENERATOR (per side; right shown)")
+    rge = neuron(cv, 3.6, 15.35, "RG-E", fc=_tint(OI_VERM), r=R_BIG)
+    rgf = neuron(cv, 3.6, 13.55, "RG-F", fc=_tint(OI_BLUE), r=R_BIG)
+    syn(cv, rge, rgf, False, rad=0.3, color=W_INH, lw=1.8)
+    syn(cv, rgf, rge, False, rad=0.3, color=W_INH, lw=1.8)
+    edge("RG-E", "RG-F", "inh"); edge("RG-F", "RG-E", "inh")
+    tag(cv, 5.15, 14.45, "mutual inhibition g=4.0\n(direct, lumped)", fs=6.2,
+        box=True)
+    ghost(cv, 1.55, 15.35, "Ext IN", "")
+    ghost(cv, 1.55, 13.55, "Flx IN", "")
+    syn(cv, (1.9, 15.35), rge, True, ghost=True, dashed=True, color="0.55")
+    syn(cv, (1.9, 13.55), rgf, True, ghost=True, dashed=True, color="0.55")
+    tag(cv, 1.55, 14.45, "Deng: HC->IN->HC\n(via INs)", fs=5.6, box=True,
+        color="0.45")
+    ade = neuron(cv, 6.6, 15.55, "ADAP-E", r=R_SMALL, fs=6.0)
+    adf = neuron(cv, 6.6, 13.35, "ADAP-F", r=R_SMALL, fs=6.0)
+    syn(cv, rge, ade, True, lw=0.9, color=W_E, rad=-0.2)
+    syn(cv, ade, rge, False, lw=0.9, color=W_INH, rad=-0.2)
+    syn(cv, rgf, adf, True, lw=0.9, color=W_F, rad=0.2)
+    syn(cv, adf, rgf, False, lw=0.9, color=W_INH, rad=0.2)
+    edge("RG-E", "ADAP", "exc"); edge("ADAP", "RG-E", "inh")
+    edge("RG-F", "ADAP", "exc"); edge("ADAP", "RG-F", "inh")
+    tag(cv, 8.75, 14.45, "adaptation IN\n(burst termination,\nsets period -\n"
+        "NOT fatigue)", fs=5.8, box=True)
+    syn(cv, drv, rge, True, color=W_DESC, rad=0.1, label="1.7", lfs=5.4)
+    syn(cv, drv, rgf, True, color=W_DESC, rad=-0.12, label="1.4", lfs=5.4)
+    syn(cv, pos, rge, True, color=W_DESC, rad=-0.2, label="0.8", lfs=5.4)
+    edge("DRIVE", "RG-E", "exc"); edge("DRIVE", "RG-F", "exc")
+    edge("POSTURE", "RG-E", "exc")
+    # v5 phase-reset INs
+    pre = neuron(cv, 10.4, 15.55, "PRE-E", r=R_SMALL, fs=6.0)
+    prf = neuron(cv, 10.4, 13.35, "PRE-F", r=R_SMALL, fs=6.0)
+    syn(cv, (10.4, 17.1), pre, True, ghost=False, color=W_EXC, lw=0.9)
+    syn(cv, (10.4, 17.0), prf, True, ghost=False, color=W_EXC, lw=0.9)
+    tag(cv, 11.9, 15.55, "v5 hip-signal INs\n(stance-gated)", fs=5.6,
+        box=True)
+    syn(cv, pre, rge, True, lw=1.0, color=W_EXC, rad=-0.25)
+    syn(cv, pre, rgf, False, lw=0.9, color=W_INH, rad=0.15)
+    syn(cv, prf, rgf, True, lw=1.0, color=W_EXC, rad=0.25)
+    syn(cv, prf, rge, False, lw=0.9, color=W_INH, rad=-0.15)
+    edge("PRESET_E", "RG-E", "exc"); edge("PRESET_E", "RG-F", "inh")
+    edge("PRESET_F", "RG-F", "exc"); edge("PRESET_F", "RG-E", "inh")
+    # commissural stubs (right margin)
+    syn(cv, rgf, (13.15, 13.55), False, color=W_INH, lw=2.0, shrink_b=0.0)
+    syn(cv, rge, (13.15, 15.35), False, color=W_INH, lw=1.1, shrink_b=0.0)
+    tag(cv, 12.4, 12.95, "to RG-F_l (g=4.0)\nto RG-E_l (g=2.0)\ncommissural",
+        fs=5.8, box=True)
+    edge("RG-F", "RG-F", "inh"); edge("RG-E", "RG-E", "inh")
+
+    # ---------------- band 2: pattern formation ----------------
+    layer_band(cv, 0.5, 13.3, 9.5, 12.55, OI_SKY,
+               "PATTERN FORMATION (4 phase-window cells + self-adaptation INs)")
+    pfx = {"E1": 2.3, "E2": 4.4, "F1": 6.9, "F2": 9.0}
+    pfs = {}
+    for nm, x in pfx.items():
+        c = OI_VERM if nm[0] == "E" else OI_BLUE
+        pfs[nm] = neuron(cv, x, 11.7, f"PF-{nm}", fc=_tint(c))
+        pfa = neuron(cv, x, 10.35, "", r=0.13, fc="white", lw=0.9)
+        cv.ax.text(x + 0.42, 10.35, f"PFA-{nm}", fontsize=5.4, ha="left",
+                   va="center", color="0.35", zorder=6,
+                   bbox=LBL_BBOX)
+        syn(cv, pfs[nm], pfa, True, lw=0.8,
+            color=W_E if nm[0] == "E" else W_F)
+        syn(cv, pfa, pfs[nm], False, lw=0.8, color=W_INH, rad=0.2)
+    edge("PF", "PFA", "exc"); edge("PFA", "PF", "inh")
+    syn(cv, rge, pfs["E1"], True, color=W_E, rad=-0.06)
+    syn(cv, rge, pfs["E2"], True, color=W_E, rad=0.1)
+    syn(cv, rgf, pfs["F1"], True, color=W_F, rad=-0.1)
+    syn(cv, rgf, pfs["F2"], True, color=W_F, rad=0.06)
+    edge("RG-E", "PF", "exc"); edge("RG-F", "PF", "exc")
+    lane(cv, 11.7, 17.0, 10.6, color=W_DESC)
+    syn(cv, (11.7, 16.9), pfs["E1"], True, color=W_DESC, dashed=True,
+        shrink_a=0.0, rad=0.0)
+    tag(cv, 11.9, 11.9, "DRIVE->PF 0.05\n(weak tonic)", fs=5.4, box=True)
+    edge("DRIVE", "PF", "exc")
+    for a, b in (("E2", "F1"), ("F2", "E1"), ("E1", "F1"), ("E2", "F2")):
+        syn(cv, pfs[a], pfs[b], False, color=W_INH, lw=1.0,
+            rad=0.1 if abs(pfx[a] - pfx[b]) < 3 else -0.12)
+        syn(cv, pfs[b], pfs[a], False, color=W_INH, lw=1.0,
+            rad=-0.1 if abs(pfx[a] - pfx[b]) < 3 else 0.12)
+    edge("PF", "PF", "inh")
+    tag(cv, 5.6, 9.85, "PF<->PF reciprocal inhibition g=4.0 (4 pairs)",
+        fs=5.8, box=True)
+    kinh = neuron(cv, 11.6, 10.5, "KINH", r=R_SMALL, fs=6.0)
+    syn(cv, pfs["F1"], kinh, True, lw=1.0, color=W_F, rad=-0.15)
+    edge("PF", "KINH", "exc")
+    tag(cv, 11.6, 9.7, "v6 swing quad-\nsuppression IN", fs=5.6, box=True)
+
+    # ---------------- band 3: motor circuit (knee representative) ----------------
+    layer_band(cv, 0.5, 13.3, 4.9, 9.35, OI_GREEN,
+               "MOTOR CIRCUIT - knee column (representative; x46 muscle"
+               " columns per side)")
+    mne = neuron(cv, 3.0, 8.5, "MN\nknee-ext", fc="white", r=0.42, fs=6.6)
+    mnf = neuron(cv, 9.6, 8.5, "MN\nknee-flx", fc="white", r=0.42, fs=6.6)
+    syn(cv, pfs["E1"], mne, True, color=W_E, rad=0.15, lw=1.2)
+    syn(cv, pfs["E2"], mne, True, color=W_E, rad=-0.1, lw=1.2)
+    syn(cv, pfs["F1"], mnf, True, color=W_F, rad=0.12, lw=1.2)
+    syn(cv, pfs["F2"], mnf, True, color=W_F, rad=-0.08, lw=0.8)
+    edge("PF", "MN", "exc")
+    tag(cv, 4.9, 9.0, "PF->MN x W_PF_MN(group)\n(F2 = late-swing prep)",
+        fs=5.8, box=True)
+    lane(cv, 1.0, 17.4, 8.5, color=W_DESC)
+    syn(cv, (1.0, 17.2), mne, True, color=W_DESC, dashed=True, shrink_a=0.0)
+    syn(cv, (1.0, 17.2), mnf, True, color=W_DESC, dashed=True, shrink_a=0.0,
+        rad=-0.1)
+    edge("POSTURE", "MN", "exc")
+    tag(cv, 1.0, 8.95, "POSTURE (+ per-MN\nPOST_i standing bias)", fs=5.6,
+        box=True)
+    syn(cv, kinh, mne, False, color=W_INH, lw=1.4, rad=0.18)
+    edge("KINH", "MN", "inh")
+    # afferents (extensor column fully labeled; flexor mirrored)
+    aff_y = 6.55
+    ia_e = neuron(cv, 2.0, aff_y, "Ia", r=R_SENS, fc=_tint(OI_ORANGE))
+    ii_e = neuron(cv, 3.0, aff_y, "II", r=R_SENS, fc=_tint(OI_ORANGE))
+    ib_e = neuron(cv, 4.0, aff_y, "Ib", r=R_SENS, fc=_tint(OI_ORANGE))
+    ia_f = neuron(cv, 8.6, aff_y, "Ia", r=R_SENS, fc=_tint(OI_ORANGE))
+    ii_f = neuron(cv, 9.6, aff_y, "II", r=R_SENS, fc=_tint(OI_ORANGE))
+    ib_f = neuron(cv, 10.6, aff_y, "Ib", r=R_SENS, fc=_tint(OI_ORANGE))
+    tag(cv, 2.55, 7.1, "per-muscle afferent\nencoders (x92)", fs=5.6,
+        box=True)
+    syn(cv, ia_e, mne, True, color=W_EXC, rad=-0.1)
+    syn(cv, ii_e, mne, True, color=W_EXC, rad=0.0)
+    syn(cv, ib_e, mne, False, color=W_INH, rad=0.12)
+    edge("Ia", "MN", "exc"); edge("II", "MN", "exc"); edge("Ib", "MN", "inh")
+    syn(cv, ia_f, mnf, True, color=W_EXC, rad=-0.1)
+    syn(cv, ii_f, mnf, True, color=W_EXC)
+    syn(cv, ib_f, mnf, False, color=W_INH, rad=0.12)
+    tag(cv, 2.0, 5.9, "Ia homonymous exc\nII length exc\nIb autogenic inh",
+        fs=5.6, box=True)
+    # reciprocal: Ia_ext -> MN_flex (direct; ghost IaIN alongside)
+    syn(cv, ia_e, mnf, False, color=W_INH, lw=1.6, rad=-0.22)
+    syn(cv, ia_f, mne, False, color=W_INH, lw=1.6, rad=-0.22)
+    edge("Ia", "MN", "inh")
+    tag(cv, 6.3, 7.6, "Ia reciprocal inhibition g=0.4 (DIRECT -\n"
+        "biology & Deng route via IaIN, ghost)", fs=5.8, box=True)
+    ia_in = ghost(cv, 6.3, 6.55, "IaIN", "Deng: PF-gated 0.5,\n->MN 2.0 inh")
+    # Ib load sharing
+    ibx = neuron(cv, 5.2, 7.6, "IB-EXC", r=R_SMALL, fs=6.0,
+                 fc=_tint(OI_GREEN))
+    syn(cv, ib_e, ibx, True, color=W_EXC, rad=-0.1, lw=1.0)
+    edge("Ib", "IBEXC", "exc")
+    syn(cv, ibx, mne, True, color=W_EXC, rad=0.15, lw=1.0)
+    edge("IBEXC", "MN", "exc")
+    # RG-E stance gate: route down the far-left lane (below the POSTURE
+    # lane) so the long wire does not slash across the PF band
+    lane(cv, 0.72, 15.1, 8.15, color=W_E)
+    syn(cv, (2.95, 15.1), (0.72, 15.1), True, color=W_E, dashed=True,
+        shrink_a=0.0, shrink_b=0.0, lw=0.8)
+    syn(cv, (0.72, 8.3), ibx, True, color=W_E, dashed=True, shrink_a=0.0,
+        rad=0.0, lw=0.8)
+    tag(cv, 5.2, 8.25, "RG-E stance gate g=1.0\n(loaded extensor groups "
+        "only; x5 groups)", fs=5.6, box=True)
+    edge("RG-E", "IBEXC", "exc")
+    tag(cv, 5.2, 6.9, "stance load sharing\n(reflex reversal)", fs=5.6,
+        box=True)
+    # Renshaw ghost (not implemented)
+    rc = ghost(cv, 12.0, 8.5, "RC", "NOT IMPLEMENTED\n(Deng: MN->RC 0.5,\n"
+               "RC->MN 0.5 inh, RC<->RC,\nRC->IaIN 0.5 inh)", r=0.36)
+    syn(cv, mnf, rc, True, ghost=True, dashed=True)
+    syn(cv, rc, mnf, False, ghost=True, dashed=True, rad=0.3)
+    syn(cv, rc, ia_in, False, ghost=True, dashed=True, rad=0.2)
+
+    # ---------------- band 4: neuromuscular interface ----------------
+    layer_band(cv, 0.5, 13.3, 2.2, 4.75, OI_VERM,
+               "NEUROMUSCULAR INTERFACE (conversion maps: red circles)")
+    m1 = muscle(cv, 3.0, 3.1, w=0.9, h=0.3)
+    m2 = muscle(cv, 9.6, 3.1, w=0.9, h=0.3)
+    cv.ax.text(3.0, 2.62, "knee-ext muscle\n(MuJoCo Hill F-L-V,\nrigid tendon,\n"
+               "Fmax = OpenSim)", ha="center", va="center", fontsize=5.6,
+               zorder=4)
+    cv.ax.text(9.6, 2.62, "knee-flx muscle", ha="center", va="center",
+               fontsize=5.6, zorder=4)
+    # MN -> activation map -> muscle
+    syn(cv, (3.62, 8.02), (3.62, 6.5), True, color="0.4", lw=1.2,
+        shrink_a=0.0, shrink_b=0.0, rad=0.0)
+    map_circle(cv, 3.62, 5.85, "a=clip(V/5mV,\n    0,1)",
+               "MN voltage -> activation", r=0.62)
+    syn(cv, (3.62, 5.2), m1, True, color="0.4", lw=1.2, shrink_a=0.0)
+    syn(cv, (10.22, 8.02), (10.22, 6.5), True, color="0.4", lw=1.2,
+        shrink_a=0.0, shrink_b=0.0)
+    map_circle(cv, 10.22, 5.85, "a=clip(V/5mV,\n    0,1)",
+               "same map, x92 muscles", r=0.62)
+    # feedback maps: muscle L, Ldot, F -> afferent currents
+    map_circle(cv, 1.7, 4.9, "clip(Ldot/0.6)", "-> Ia current")
+    map_circle(cv, 3.0, 4.9, "(L-Lmid)/Lhalf", "-> II current")
+    map_circle(cv, 4.3, 4.9, "clip(F/Fmax)", "-> Ib current")
+    syn(cv, m1, (1.7, 5.45), True, color=OI_VERM, lw=0.9, shrink_a=0.0)
+    syn(cv, m1, (3.0, 5.45), True, color=OI_VERM, lw=0.9, shrink_a=0.0)
+    syn(cv, m1, (4.3, 5.45), True, color=OI_VERM, lw=0.9, shrink_a=0.0)
+    syn(cv, (1.7, 4.35), ia_e, True, color=OI_VERM, lw=0.9, shrink_a=0.0)
+    syn(cv, (3.0, 4.35), ii_e, True, color=OI_VERM, lw=0.9, shrink_a=0.0)
+    syn(cv, (4.3, 4.35), ib_e, True, color=OI_VERM, lw=0.9, shrink_a=0.0)
+    tag(cv, 7.6, 4.55, "pure-signal encoders; gains phase- and\n"
+        "speed-gated presynaptically (runner)", fs=5.8, box=True)
+    tag(cv, 7.6, 3.35, "muscle -> tendon: MuJoCo reads back\n"
+        "L (length), Ldot (velocity), F (force)", fs=5.8, box=True)
+
+    # ---------------- legend + Deng reference strip ----------------
+    ax = cv.ax
+    y = 1.55
+    ax.add_patch(Circle((0.9, y), 0.16, fc="white", ec="black", lw=1.3))
+    ax.text(1.15, y, "neuron", fontsize=7.0, va="center")
+    ax.add_patch(FancyArrowPatch((2.2, y), (2.75, y), arrowstyle="-",
+                                 lw=1.3, color=W_EXC))
+    ax.add_patch(Polygon([(3.05, y + 0.085), (3.05, y - 0.085), (2.82, y)],
+                         closed=True, fc="white", ec=W_EXC, lw=1.2))
+    ax.text(3.15, y, "excitatory", fontsize=7.0, va="center")
+    ax.add_patch(FancyArrowPatch((4.6, y), (5.22, y), arrowstyle="-",
+                                 lw=1.3, color=W_INH))
+    ax.add_patch(Circle((5.32, y), 0.085, fc="black"))
+    ax.text(5.45, y, "inhibitory", fontsize=7.0, va="center")
+    ax.add_patch(Circle((6.9, y), 0.2, fc="#fde3e0", ec=OI_VERM, lw=1.2))
+    ax.text(7.2, y, "conversion map\n(continuous <-> neural)", fontsize=6.4,
+            va="center")
+    ax.add_patch(Circle((9.6, y), 0.2, fc="white", ec="0.55", lw=1.1,
+                        ls=(0, (3, 2))))
+    ax.text(9.9, y, "ghost: in Deng et al./Nourse 2023,\nlumped or absent "
+            "here", fontsize=6.4, va="center")
+    ax.text(0.6, 0.35, DENG_A6, fontsize=5.6, va="bottom", ha="left",
+            family="monospace", color="0.30", linespacing=1.25,
+            bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="0.75",
+                      lw=0.7))
+    source_note(cv, 0.55, 18.0, f"source: {t['note']} - edges drawn from "
+                 "the COMPILED network object (build_network.py), "
+                 "representative knee column x46/side")
+
+    # ---------------- structure-driven contract ----------------
+    missing = set(Gc) - drawn
+    assert not missing, f"undrawn edge groups: {sorted(missing)}"
+    return cv.save("circuit_dengstyle", fmts)
 
 
 # --------------------------------------------------------- fig: weights
@@ -746,10 +1144,13 @@ def fig_weights(t, fmts):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--which", default="all",
-                    choices=["core", "full", "weights", "all"])
+                    choices=["core", "full", "deng", "weights", "all"])
     ap.add_argument("--source", default="best",
                     choices=["params", "fitted", "best"])
     ap.add_argument("--fmt", default="pdf,svg,png")
+    ap.add_argument("--vclasses", action="store_true",
+                    help="annotate circuit_full with the V-class "
+                         "correspondence (Shevtsova 2026 / Rybak 2015)")
     args = ap.parse_args()
     fmts = [f.strip() for f in args.fmt.split(",") if f.strip()]
     OUT.mkdir(exist_ok=True)
@@ -757,7 +1158,10 @@ def main():
     print(f"source: {t['note']}")
     print(f"network: {N_TOTAL} neurons ({N_SIDE}/side + {N_SHARED} shared), "
           f"{N_INPUTS} inputs, pools live from muscle_map.py")
-    builders = dict(core=fig_core, full=fig_full, weights=fig_weights)
+    builders = dict(core=fig_core, full=fig_full, deng=fig_deng,
+                    weights=fig_weights)
+    if args.vclasses:
+        builders["full"] = lambda tt, ff: fig_full(tt, ff, vc=True)
     which = list(builders) if args.which == "all" else [args.which]
     for nm in which:
         outs = builders[nm](t, fmts)

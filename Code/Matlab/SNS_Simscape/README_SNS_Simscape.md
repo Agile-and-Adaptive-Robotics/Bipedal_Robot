@@ -59,6 +59,85 @@ sns_function_subnetworks
 sns_animate_demo       % -> results\animations\*.gif  (in demos\)
 ```
 
+## Deng 2019 RG/PF layers as separate Simulink files (2026-09-13, VERIFIED)
+
+Per Ben's request: the Deng 2019 (Biomimetics 4(1):21) two-layer CPG — the
+architecture of the Animatlab biped port — as separate editable files, with
+parameters from Nourse 2023 Tables A4–A7 (`Code\MuJoCo_SNS\spinal\
+_nourse2023.txt` is the extracted paper text):
+
+- `SNS_Deng_Library.slx` — **HCNeuron**: persistent-Na half-center neuron
+  (Cm 5 nF, Gm 1 µS, Vrest −60 mV, GNa 1.5 µS, ENa 50 mV, m: S 0.2 / E −40 /
+  K 1, h: S −0.6 / E −60 / K 0.5, **tau_h FIXED 350 ms**). Rebuild via
+  `demos\sns_build_deng_cpg.m` after any change.
+- `demos\SNS_Deng_RG.slx` — RG layer: HC_ext/HC_flx + IN-laminated mutual
+  inhibition (HC −2.749→ IN −2.749→ HC, Esyn −40/−70 mV, window −60..−25);
+  `I_stim` inport; V_ext/V_flx outports.
+- `demos\SNS_Deng_PF.slx` — PF layer: hip pair + knee/ankle pair, same
+  construction; RG→PF weak exc 0.1 µS; 2 in / 4 out.
+- `demos\SNS_Deng_CPGDemo.slx` + `sns_run_deng_demo.m` — ONE 10 nA / 20 ms
+  pulse at t = 0.1 s → **continuous oscillation, period 1.938 s (matches the
+  numpy ODE reference 1.94 s), RG ext/flx correlation −0.86**, hip MN
+  activation alternating via the Deng Fig 6B sigmoid
+  (act = 1/(1+e^{0.1532(−70−V)}) − 0.01, MN Vrest −100 mV, PF→MN hip
+  2.565/3.632 µS).
+
+**tau_h is the load-bearing choice**: sns_toolbox's tau_h(V) collapses at
+depolarized V and QUENCHES this circuit (verified `Code\MuJoCo_SNS\spinal\
+deng_cpg_ode.py`: toolbox-tau → flatline, fixed-tau → self-sustained 1.94 s
+bursting). Animatlab's port uses tau_h.max as a fixed constant — when
+debugging why the Animatlab RG latches instead of oscillating, check its
+Na-channel h time-constant handling first. Same lesson applies to the
+h-inf/+1 terms: the reciprocal-divider blocks MUST include the +1.
+
+Solver: fixed-step ode1 @ 0.1 ms (Table A7 dt). The numpy ODE reference is
+`deng_cpg_ode.py` (results saved to `results\deng_cpg_ref.mat`); the pointwise
+comparison to Simulink is phase-sensitive (onset timing differs), so compare
+periods, not samples.
+
+## Tuned spinal network → editable Simulink model (2026-09-12, VERIFIED)
+
+Pipeline that turns the tuned `runner --fitted --best` gait2392 spinal network
+(the v4b winner) into an editable Simulink model built from SNS_Library blocks:
+
+1. **Export** (myo env, from `Code\MuJoCo_SNS\spinal\`):
+   `python export_network_json.py` → `spinal_net_export.json`
+   (410 neurons, 1392 synapses, 376 input ports, 92 MN→actuator outputs,
+   composited exactly like `runner --fitted --best`). Companion refs:
+   `export_units_ref_2n.py` (2-neuron units test reference) and
+   `export_verify_ref.py` (full-network reference, coarse 2 ms Euler + fine
+   0.1 ms).
+2. **Units test**: `sns_units_test_2n.m` builds the same 2-neuron + synapse
+   circuit from `SNS_Library` blocks and matches the SNS-Toolbox numpy
+   backend. **PASS: max dev 6.07e-04 mV.** Mapping:
+   toolbox `C = tau uF` → block `Cm = 1000*tau nF`; `Gm = 1 uS`; `Vrest = 0`;
+   synapse `e_lo/e_hi = 0/5 mV` → `ThrPre = 0 / SlopePre = 5`; `g` uS,
+   `Esyn` mV, currents nA.
+3. **Generate**: `sns_build_from_json.m` → `results\SNS_SpinalNetwork.slx`
+   (~2600 blocks: one NonSpikingNeuron per cell, one NonSpikingSynapse per
+   connection, per-neuron Sum blocks, 376-way Demux off the `u` inport, and a
+   92-wide Mux of MN `S(V)` outputs → outport `S`, ordered by MuJoCo
+   actuator id = ctrl order). All values live in block masks — double-click
+   to edit. Regenerate any time the tuning changes.
+4. **Verify**: `sns_verify_from_json.m` — **PASS: 4.2e-06 mV** max deviation,
+   ALL 410 neurons at t = 0.3 s vs the numpy 2 ms Euler reference
+   (DRIVE = 2.5 nA; V_DRIVE Euler-exact to 9 decimals).
+
+**Solver guidance (measured, important):** the network is CHAOTIC — any two
+integrators agree only to ~0.4 s (1e-9 @ 0.1 s → 1e-6 @ 0.3 s → O(1) @ 0.5 s;
+same effect build_network.py documents as the "reggate_v5_0 lesson"). To
+reproduce the tuned production trajectories, run the model **fixed-step
+ode1 (Euler) at exactly 0.002 s** — that is bit-compatible with the runner's
+numpy stepping. Variable-step ode45 integrates the "true" dynamics but its
+trajectory departs from the tuned one after ~0.4 s (and the fine-dt numpy
+reference shows the RG period itself shifts ~35% between 0.1 ms and 2 ms
+stepping — the v4b tuning is a property of the 2 ms semantics).
+
+Gotchas: `ExternalInput` on `sim` proved unreliable in `-batch` — inject via
+a Constant into the demux instead; port-level `DataLogging` (not To
+Workspace, which rejects the bus) for logging; Simulink subsystem ports are
+referenced numerically (`blk/1`), not by inner port-block names.
+
 ## What runs today (MATLAB R2025a and R2025b)
 
 | File | What it is |

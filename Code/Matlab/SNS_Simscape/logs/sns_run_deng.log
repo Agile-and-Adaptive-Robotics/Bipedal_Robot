@@ -1,0 +1,14 @@
+[Warning: Unrecognized command line option: NoProfile.] 
+[Warning: Unrecognized command line option: Command.] 
+DENG CPG DEMO: 0 RG_ext bursts over 20 s from ONE pulse; period NaN s; V range [-60.6, -58.2] mV
+RG ext-vs-flx correlation: -0.422 (negative = alternation)
+{Error using load
+Unable to find file or directory 'D:\Github\Bipedal_Robot\Code\Matlab\results\deng_cpg_ref.mat'.
+
+Error in sns_run_deng_demo (line 32)
+ref = load(fullfile(here, '..', '..', 'results', 'deng_cpg_ref.mat'));
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+[Warning: Unable to close the model 'SNS_Deng_CPGDemo' because it has been changed. To save changes, use
+close_system('SNS_Deng_CPGDemo',1). To discard changes, use close_system('SNS_Deng_CPGDemo',0).] 
+ERROR: MATLAB error Exit Status: 0x00000001

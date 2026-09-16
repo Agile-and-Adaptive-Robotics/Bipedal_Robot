@@ -11,6 +11,11 @@ Architecture (one instance per side, plus shared descending cells):
   (ADAP-E/F, tau ~0.9 s) which feeds back inhibition - a relaxation
   oscillator whose frequency rises with DRIVE. Cross-side mutual inhibition
   of the F cells (and weaker between E cells) gives left-right alternation.
+  Sensory phase-reset (v5, gains default 0): the runner encodes per-side
+  hip-extension (stance-prolonging) and hip-flexion-velocity (swing-
+  triggering) signals into input ports HIP_EXT_SIG / HIP_FLEX_SIG; they
+  reach the RG through PRESET_E / PRESET_F interneurons (ext: E up / F down;
+  flex: F up / E down).
 
   Pattern formation (PF), per side: PF-E1/E2 driven by RG-E, PF-F1/F2 driven
   by RG-F. The four cells share the same drive but differ in membrane and
@@ -41,8 +46,8 @@ import numpy as np
 
 from muscle_map import (GROUPS, EXTENSOR_STANCE_GROUPS, MuscleInfo,
                         classify)
-from params import (AFF, DT, E_HI, G, MOD, PF_SHAPE, POSTURE_OVERRIDE, TAU,
-                    W_PF_MN, W_POSTURE)
+from params import (AFF, DT, E_HI, G, MOD, PF_SHAPE, PHASE_RESET,
+                    POSTURE_OVERRIDE, TAU, W_PF_MN, W_POSTURE)
 
 from sns_toolbox.connections import NonSpikingSynapse
 from sns_toolbox.neurons import NonSpikingNeuron
@@ -107,11 +112,25 @@ class SpinalNetwork:
     mn_names: dict[str, str] = field(default_factory=dict)
     aff_names: dict[str, dict[str, str]] = field(default_factory=dict)
     ib_exc_groups: dict[str, tuple[str, ...]] = field(default_factory=dict)
+    phase_reset: bool = field(init=False, default=False)
+    f1_kneext_inh: bool = field(init=False, default=False)
 
     # ------------------------------------------------------------------ build
     def __post_init__(self):
         self.net = Network(name="gait2392 spinal")
         n = self.net
+        # v5 phase-reset topology is built ONLY when a gain is nonzero:
+        # at gains 0 the compiled network must be BYTE-IDENTICAL to v4b
+        # (same neurons, same matrix size -> bit-identical trajectory;
+        # zero-conductance synapses alone still change the BLAS summation
+        # order and chaos amplifies the 1e-16 drift - reggate_v5_0 lesson)
+        self.phase_reset = bool(G["phase_reset_e"] > 0.0
+                                or G["phase_reset_f"] > 0.0)
+        # same pattern for the phase-3 swing-knee quad suppression
+        self.f1_kneext_inh = bool(G["f1_kneext_inh"] > 0.0
+                                  or G["f1_anklepf_inh"] > 0.0)
+        # Renshaw recurrent inhibition (Deng Table A6)
+        self.renshaw = bool(G["renshaw"] > 0.0)
 
         # ---- descending / balance cells (shared, one each) ----
         for name, tau in (("DRIVE", TAU["descend"]), ("POSTURE", TAU["descend"]),
@@ -132,6 +151,7 @@ class SpinalNetwork:
 
         # ---- muscles: create all neurons first, then wire (reciprocal
         # Ia inhibition references antagonist MNs across muscles) ----
+        self._order = {a: i for i, a in enumerate(self.muscles)}
         for act, mi in self.muscles.items():
             self._add_muscle_neurons(n, act, mi)
         for act, mi in self.muscles.items():
@@ -174,6 +194,41 @@ class SpinalNetwork:
         # posture tonic bias keeps the E cell (load-bearing side) ready
         n.add_connection(_syn(G["posture_to_rg_e"], exc=True), "POSTURE", rg_e)
 
+        # ---- v5 sensory phase-reset (Rybak-style hip afferents switching
+        # the half-centers): per-side input ports HIP_EXT_SIG / HIP_FLEX_SIG
+        # drive PRESET_E / PRESET_F interneurons; PRESET_E excites RG-E and
+        # inhibits RG-F (prolongs stance), PRESET_F excites RG-F and
+        # inhibits RG-E (triggers swing). Topology is CONDITIONAL on the
+        # gains (self.phase_reset): at 0/0 nothing is added and the
+        # compiled network is byte-identical to v4b (regression-gated by
+        # runner --fitted --best --eval).
+        if self.phase_reset:
+            pre_e, pre_f = f"PRESET_E_{side}", f"PRESET_F_{side}"
+            self._add(pre_e, TAU["preset"], n)
+            self._add(pre_f, TAU["preset"], n)
+            n.add_input(pre_e)
+            self.inputs.append("HIP_EXT_SIG_" + side)
+            n.add_input(pre_f)
+            self.inputs.append("HIP_FLEX_SIG_" + side)
+            g_e, g_f = G["phase_reset_e"], G["phase_reset_f"]
+            inh = PHASE_RESET.get("inh", 1.0)
+            n.add_connection(_syn(g_e, exc=True), pre_e, rg_e)
+            n.add_connection(_syn(g_e * inh, exc=False), pre_e, rg_f)
+            n.add_connection(_syn(g_f, exc=True), pre_f, rg_f)
+            n.add_connection(_syn(g_f * inh, exc=False), pre_f, rg_e)
+            # v10 TRANSIENT conversion: fast self-adaptation makes each
+            # PRESET a high-pass (onset) detector - a sustained hip
+            # signal emits a brief pulse at its onset instead of a tonic
+            # bias (tonic <= 1 nA was provably inert vs ~4 nA DRIVE, and
+            # the literature reset works via phase ONSET events). The
+            # rectifying synapses transmit only the onset (rising) pulse.
+            ad_g = PHASE_RESET.get("adapt_g", 1.5)
+            for pre in (pre_e, pre_f):
+                pre_a = pre.replace("PRESET", "PREA")
+                self._add(pre_a, TAU["preset_adapt"], n)
+                n.add_connection(_syn(ad_g, exc=True), pre, pre_a)
+                n.add_connection(_syn(ad_g, exc=False), pre_a, pre)
+
     def _build_pf(self, n: Network, side: str):
         rg_of = {"E1": f"RG_E_{side}", "E2": f"RG_E_{side}",
                  "F1": f"RG_F_{side}", "F2": f"RG_F_{side}"}
@@ -204,6 +259,10 @@ class SpinalNetwork:
                           (ia, TAU["afferent"]), (ii, TAU["afferent"]),
                           (ib, 2.0 * TAU["afferent"])):
             self._add(name, tau, n)
+        # Renshaw cell per pool (Deng Table A6: recurrent inhibition +
+        # RC<->RC mutual inhibition). Wired in _wire_muscle.
+        if self.renshaw:
+            self._add(f"RC_{act}", TAU["mn"], n)
         # MNs take one external current: the solved/standing posture bias
         n.add_input(mn)
         self.inputs.append("POST_" + act)
@@ -232,6 +291,23 @@ class SpinalNetwork:
         n.add_connection(_syn(G["ii_to_mn"], exc=True), ii, mn)
         n.add_connection(_syn(G["ib_to_mn_inh"], exc=False), ib, mn)
 
+        # ---- Renshaw recurrent inhibition (Deng Table A6: MN->RC 0.5
+        # exc; RC->MN 0.5 inh; RC<->RC 0.5 inh), gain-scaled by
+        # G["renshaw"]; topology present only when that gain > 0.
+        if self.renshaw:
+            rc = f"RC_{act}"
+            g_r = G["renshaw"]
+            n.add_connection(_syn(1.0, exc=True), mn, rc)
+            n.add_connection(_syn(g_r, exc=False), rc, mn)
+            # RC<->RC: wire each unordered same-side pair once (adding
+            # both directions here would double the conductance)
+            for act2, mi2 in self.muscles.items():
+                if mi2.side == mi.side and act2 != act \
+                        and f"RC_{act2}" in self.idx \
+                        and self._order[act2] > self._order[act]:
+                    n.add_connection(_syn(g_r, exc=False), rc,
+                                     f"RC_{act2}")
+
         # Ia reciprocal inhibition of antagonist MN pools
         for ant in ANTAGONIST.get(mi.groups[0], ()):
             for act2, mi2 in self.muscles.items():
@@ -251,6 +327,29 @@ class SpinalNetwork:
             n.add_connection(_syn(G["ib_exc_to_mn"], exc=True), gname, mn)
             if mi.groups[0] not in self.ib_exc_groups.get(mi.side, ()):
                 self.ib_exc_groups[mi.side] = self.ib_exc_groups.get(mi.side, ()) + (mi.groups[0],)
+
+        # ---- phase-3 swing-knee quad suppression (gain default 0 =
+        # topology absent): F1 (the swing flexor window) -> KINH
+        # inhibitory interneuron -> every primary knee_ext MN of the side.
+        # The suppression is phase-gated BY F1 itself - it can only act
+        # during the swing window, releasing the quads so the knee can
+        # flex (v4 diagnosis lever #2: swing knee extension-dominant).
+        if self.f1_kneext_inh and mi.groups[0] == "knee_ext":
+            kname = f"KINH_{mi.side}"
+            if kname not in self.idx:
+                self._add(kname, TAU["ib_exc"], n)
+                n.add_connection(_syn(1.5, exc=True), f"PF_F1_{mi.side}",
+                                 kname)
+            n.add_connection(_syn(G["f1_kneext_inh"], exc=False), kname, mn)
+        # v6b: same swing-gated suppression onto ankle PF pools (reuses
+        # the KINH IN; separate gain)
+        if self.f1_kneext_inh and mi.groups[0] == "ankle_pf":
+            kname = f"KINH_{mi.side}"
+            if kname not in self.idx:
+                self._add(kname, TAU["ib_exc"], n)
+                n.add_connection(_syn(1.5, exc=True), f"PF_F1_{mi.side}",
+                                 kname)
+            n.add_connection(_syn(G["f1_anklepf_inh"], exc=False), kname, mn)
 
     def _wire_balance(self, n: Network):
         """Balance inputs reach ankle + hip MNs (ankle + hip strategy).

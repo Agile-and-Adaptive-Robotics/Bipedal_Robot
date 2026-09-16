@@ -249,6 +249,134 @@ Loaded automatically at session start. Keep it current; keep it lean.
     Rybak/McCrea RG+PF, Bunz 2026 (reflex
     speed control), Ben's Zotero "Sensory Afferent Database" collection;
     read Di Russo/Ijspeert/Bouri 2023 JNE before any novelty claims.
+    **2026-09-12/13 overnight (v5/v6 + a CRITICAL pre-existing fix —
+    morning report at TOP of spinal\DESIGN.md):** (1) **`--best` pf_gain
+    bug FIXED**: it tested `json["params"]` for pf_gain (pf_gain lives at
+    the JSON TOP level) so the gain-scaling branch NEVER ran — every
+    pre-fix `--fitted --best` reproduction since v3 silently evaluated a
+    pf_gain=1.0 config (the recorded v4b/v3 full-run numbers — E-duty
+    0.27, knee −14..+26, −63.3 — are gain-1.0 configs, NOT the true
+    study winners). Fix scales ONLY fitted-file entries (trunk keys are
+    not in the fitted json; scaling them was also wrong but inert — 1-N
+    trunk muscles). Regression gate now BIT-EXACT:
+    `runner --fitted --best --eval --drive 2.5868` = −61.1741850610298
+    on current code; draw_circuit composites fixed identically
+    (circuit_* weights numbers changed slightly — regenerated + recopied
+    2026-09-13). (2) **v5 sensory phase-reset**: HIP_EXT_SIG/HIP_FLEX_SIG
+    ports → PRESET_E/F INs → RG (ext: E↑F↓ prolongs stance; flex:
+    F↑E↓ triggers swing), params.G phase_reset_e/f + PHASE_RESET dict,
+    defaults 0. **CONDITIONAL TOPOLOGY: new neurons are built only when
+    their gain > 0** — zero-g synapses alone change BLAS summation order
+    and chaos turns the 1e-16 drift into real kine shifts (byte-identity
+    at 0 is the regression contract). v5 study ground_walk_v5_phase
+    (150 trials, seeded v4b): best −60.987 (trial 137, gains 0.22/0.22)
+    — TPE AVOIDS the gains; tonic stance-gated position/velocity input
+    (≤1 nA vs ~4 nA DRIVE) is effectively inert; phase_reset_e ~0.6-0.75
+    + weak drive LATCHES RG-E on (stability constraint). (3) **v6
+    swing-knee quad suppression — THE LEVER THAT WORKS**: PF_F1 → KINH
+    inhibitory IN → knee_ext MNs (phase-gated by F1 = swing-only;
+    params.G f1_kneext_inh). Study ground_walk_v6_kneext (110 trials,
+    seeded v5): best −59.426 (trial 106, f1_kneext_inh 0.59), full-22s
+    −60.59, duty 0.47, knee_min still +10, cadence rose to 1.4 Hz —
+    next bottleneck = RG duty/cadence architecture. Reproduce: `runner
+    --fitted --best6` (v5: --best5; old v4b: --best) — v5/v6 evals use
+    repr(drive) so their jsons reproduce bit-exactly (4-dp rounding
+    costs only ~0.005). Audits _phase_reset_audit.py / _kinh_audit.py
+    PASS; hand sweep v5_sweep.csv; per-trial CSVs v5_results.csv /
+    v6_results.csv; global-best full runs v5_best_trial*.npz (9) /
+    v6_best_trial*.npz (10); runner flags --phase-reset E F,
+    --kneext-inh X, --best5/--best6; RUNNER_DUMP_STATE=<file> env dumps
+    all mutable params after arg-parsing for config diffing. (4)
+    **Phase 1 deliverable**: `draw_circuit.py --vclasses` renders
+    circuit_full with a Shevtsova-2026-eLife-RP107480 / Rybak-2015
+    V-class strip + tags (our circuit: V0D/V0c+dI6 analog = commissural
+    inhibition, V1/V2b = half-center+PF+Ia inhibition, V2a = RG→PF/PF→MN
+    excitation, **NO V3 analog** — all cross-side connections
+    inhibitory) → circuit_full_vclasses.{pdf,svg,png} in
+    Dissertation\CPG_airstepping_figs; full class-by-class mapping table
+    in spinal\DESIGN.md. **2026-09-13 (day, Ben's go received): trunk
+    Fmax fix APPLIED** — `_fmax_audit.py` (every actuator gainprm[2] vs
+    stock osim; the 84 active muscles match within the converter's
+    RoM normalization ≤15%; ONLY ercspn/intobl/extobl/ext_hal r/l were
+    1 N vs stock 2500/900/900/162) + patch_xml repair 2c (build-asserted
+    8 tags). Post-fix the v6 winner IMPROVES (eval −59.241, tilt 27.4 —
+    BAL_TRK finally drives real muscles); no retune needed; old
+    --best/--best5 recorded numbers remain pre-fix values. Torque
+    budget (`_torque_budget.py`, fd arms × stock Fmax vs bsolve ID
+    demand): hip 3.4x, knee 2.8x, trunk 2.1x, ankle 1.4x (tightest;
+    ankle demand 2.7 N·m/kg runs hot vs ~1.5 literature — known
+    subtalar/CoP residuals). MuJoCo-muscle fidelity note (Ben Q):
+    converted actuators = rigid-tendon simplified Thelen (activation +
+    F-L-V, NO series elasticity); options = tendon stiffness
+    (approximate) or custom Millard/Thelen plugin (full). v6 render
+    ground_walk_v6_trial106.gif + v6_trial106_fig1..6.png in
+    Dissertation\CPG_airstepping_figs (spinal_run.npz now holds the v6
+    winner run). Dissertation-ready draft section:
+    Dissertation\CPG_spinal_section_draft.tex. **2026-09-13 (Ben's
+    circuit-figure critique): `draw_circuit.py --which deng` →
+    circuit_dengstyle.\*** (figures/ + Dissertation folder) — the
+    Deng/Nourse-Fig-6A-style layered schematic, STRUCTURE-DRIVEN: it
+    builds the representative network, reads every connection from the
+    compiled SNS object (`_net_edges.py` is the standalone inventory
+    dump) and ASSERTS each (src,dst,sign) edge group is drawn — the
+    figure cannot drift from the code. Deng Table A6 quoted in the
+    footer. Honest accounting built in: Renshaw NOT implemented
+    (ghost), RG mutual inhibition + Ia reciprocal are direct/lumped
+    (Deng's Ext/Flx-IN and IaIN drawn as ghosts), Ib = autogenic-inh +
+    stance-gated IBEXC reversal (Deng's IbIN→MN is EXCITATORY —
+    opposite sign), ours adds II afferents, monosynaptic Ia→MN,
+    commissurals, PRESET/KINH INs, and the real conversion-map
+    formulas (a=clip(V/5mV,0,1); (L−Lmid)/Lhalf, L̇/0.6, F/Fmax →
+    afferent currents). ADAP cells = burst termination, NOT fatigue.
+    Full Deng/Nourse connection table in spinal\DESIGN.md 2026-09-13
+    section. **2026-09-14: JOINT RoM LIMITS ON** (patch_xml repair 2f2:
+    all 14 driver hinges limited="true" with stock ranges — knee
+    [-120,+10] deg enforced; hyperextension artifact GONE, ground knee
+    now -0.3..+11.4). **RENSHAW CELLS IN** (per-pool RC, MN→RC 1.0
+    exc / RC→MN inh G["renshaw"] / RC↔RC once per pair, default 0,
+    --renshaw X, ran 0.5). Post-limits+Renshaw: ground stays up, knee
+    -0.3..+11.4, tilt 30.5, but gait re-timed (E-duty 0.15, 1.32 Hz —
+    v7 retune needed); **AIR-STEPPING now 0.41 Hz, knee -97..+10, hip
+    -21..+50** (Ivanenko regime; v6_rom_{ground,air}.npz +
+    hindlimb_style_{ground,air}.png/pdf + {ground,air}_rom.gif in the
+    Dissertation folder). **Toolbox-native diagram**: spinal_layers.py
+    (Tutorial-4 Network subclasses RG/PF/motor) + _render_diagram.py →
+    sns_diagram_spinal.png via the OFFICIAL sns_toolbox.renderer
+    (graphviz BINARY installed into the myo env — <env>\Library\bin,
+    NOT on PATH unless the env is activated). **Tutorials 1/2/4/8
+    executed** (all 9 notebooks in spinal\sns_tutorials); **NEW SKILL:
+    C:\Users\Ben Bolen\.zcode\skills\sns-toolbox\SKILL.md** (junction
+    into ZCode_Skills — Ben commits; env, 1.5.2 API traps:
+    add_population needs shape=[1], backends take net.compile() params
+    not the Network, two class trees, connections-dict schema,
+    add_network flattens; net-sizing: numpy backend fine at 8k neurons
+    tested, practical wall ~25-30k dense-matrix memory — our
+    410-neuron net nowhere near limits).
+    **OPTIMIZER-RELEVANT INSIGHTS (2026-09-13, Simulink-realization
+    session — read before interpreting v7+ trials):** (1) The network IS
+    a self-sustaining limit cycle at CONSTANT DRIVE in numpy — 20 s clean
+    alternation at bare DRIVE=2.5, period 1.21 s, amplitude constant
+    (`spinal\check_selfsustain.py`). Tonic collapse in an eval means the
+    CANDIDATE PARAMS killed the cycle (adaptation/drive balance), not
+    that constant-drive testing is invalid. (2) **The network sits near a
+    bifurcation**: an EXACT Simulink port (wiring verified to 4.2e-6 mV
+    at t=0.3 s, same 2 ms Euler) settles to the TONIC fixed point where
+    numpy oscillates — the reggate_v5_0 summation-order chaos tips
+    marginal limit cycles either way. Winners that oscillate with only a
+    small basin (drive/adaptation at the edge of the oscillatory range)
+    will NOT transfer to Simulink/co-sim or survive BLAS-order changes;
+    consider a basin-robustness gate on finalists: perturb params ±1 %
+    (or shuffle a summation order) and require the cycle to persist 20 s;
+    report the basin margin alongside the score. (3) Pointwise agreement
+    between ANY two integrators dies at ~0.4 s (1e-9 @ 0.1 s → 1e-6 @
+    0.3 s → O(1) @ 0.5 s) — eval-vs-eval differences late in a cycle are
+    PHASE, not signal; only seeded identical binaries reproduce
+    bit-exactly (existing contract). (4) Deng-style persistent-Na
+    half-centers need tau_h FIXED — sns_toolbox's tau_h(V) quenches them
+    (`spinal\deng_cpg_ode.py`: toolbox-tau flatlines, fixed-350 ms
+    self-runs at 1.94 s; Simulink files `SNS_Simscape\demos\SNS_Deng_*.slx`
+    reproduce). Same transfer risk if tuned candidates are ever ported to
+    Animatlab/Simulink realizations.
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the
@@ -393,7 +521,72 @@ Loaded automatically at session start. Keep it current; keep it lean.
   audit drawn arrows vs the standard section FIRST.** Also open: RG does not oscillate
   (latches ≤10 nA; sweep 20–40 nA / pulse / Deng Table A2 conductances), 16 placeholder
   attachments (then RestingLength = TSL+OFL), no Renshaw/II on new muscles, TFL needs an
-  abduction DOF, LH_HipZ→LH_Hip rename pending. **Toolchain + format traps:**
+  abduction DOF, LH_HipZ→LH_Hip rename pending. **LATCH PRIME SUSPECT (Simulink
+  session, 2026-09-13, verified in `spinal\_tau_h_check.py`): the Na h-gate time
+  constant. sns_toolbox's tau_h(V) formula collapses to ~0.1 ms at depolarized V
+  (removes burst termination, quenches the oscillator; fixed τh=350 ms self-runs) —
+  when opening the .aproj, FIRST check how LinearHill implements the Na h-gate tau
+  (Animatlab treats tau_h.max as a fixed constant, which is why the Simulink Deng
+  port works). Related trap: SNS_Library vs sns_toolbox use OPPOSITE synapse
+    saturation conventions (ThrPre/Elo) — keep straight when porting values.**
+    **2026-09-14b: START POSE = normal.mot** (Ben supplied the gait2392
+    "normal" Coordinates values — pelvis_tilt −1.87, knees −3.9/−8.2,
+    hips R+24.6/L−16.6, ankle_l +9.8 dorsi, lumbar set, ty 0.96;
+    `START_POSE_DEG` in runner.py, applied AS GIVEN — an auto-sign-flip
+    heuristic was REMOVED after it mangled the canonical values; applied
+    before standing solve + rig so springs/solve hold it; 21-22 muscles
+    engage). **v8 (hand pose) BREAKTHROUGH: −47.9 eval in 60 trials**
+    (v7 plateau was −62.5) — pose quality is a first-order lever; winner
+    used quad suppression 1.0 + phase_reset_f 1.72. v8b on normal.mot
+    FIRST LAUNCH COLLAPSED onto the −65 frozen sentinel (real walkers
+    score −76..−86 on the pose) — sentinels recalibrated (−100 frozen /
+    −110 NaN), eval schedule lengthened to 16 s (11 s walk window) so
+    0.3–0.9 Hz gaits yield ≥3 countable cycles, seeded with the v8
+    winner; fresh study `ground_walk_v8b_normal` (optuna_walk_v8b.py,
+    --best8b). RULE: when plant/pose/objective change, sentinels must
+    sit BELOW the worst genuine walker. **v9 (flat-foot height +
+    amplitude objective): −65.4/60 trials → −62.24/120 trials**
+    (reproduced bit-exact); **amplitude now MATCHES OpenSim** (hip
+    46.4/43.3, knee 66.9/70.5, ankle 24.1/23.1, knee_min −78/−69.7);
+    remaining = hip phase (inverted vs RG anchor), ankle −45° PF
+    OFFSET (posture tone), duty 0.17, cadence 0.3 Hz — regenerated
+    overlay in the Dissertation folder. **2026-09-14 evening: ankle
+    trim + TRANSIENT reset** — `ankle_post_walk_trim` (POST bias of
+    ankle_pf group scales toward 0 with drive; 1.0 = v9-identical);
+    PRESET_E/F now have a FAST adaptation loop (PREA τ0.08, gain 1.5)
+    = high-pass ONSET detector (tonic ≤1 nA proven inert; rectifying
+    synapses pass only the onset pulse); **v10 study
+    `ground_walk_v10_transient` running** (seeded v9, +trim searched,
+    --best10). **ENV INCIDENT: the conda graphviz install clobbered
+    myo\python.exe (repaired via --force-reinstall python=3.10.21;
+    pip pins survived) — verify python.exe after any conda
+    transaction in this env.** **v10 (transient reset + trim): −65.375
+    (trial 56, 60 trials), reproduced bit-exact via `runner --fitted
+    --best10`** after TWO catches: the --best10 flag branch was lost in
+    successive same-anchor edits (chain silently ended at --best9 —
+    state-dump diff + missing loader print caught it), and the trim
+    loader branch was missing (JSON RULE again). Winner = knee −75,
+    tilt 15.7, amplitudes hold (45/62/25 vs 43/70/23), trim winner
+    0.097 (near-zero standing PF tone wanted in gait — confirms the
+    set-point diagnosis). Duty/cadence/hip-phase remain
+    architecture-level; study resumable.
+    **2026-09-14 (v7 retune under corrected physics): ANKLE DORSIFLEXION
+    MECHANISM FOUND** — boosting swing DF drive does nothing (9 PF
+    muscles ~10 kN vs 3 DF ~1.6 kN); `params.G["f1_anklepf_inh"]`
+    (KINH→ankle_pf MNs, swing-gated, same pattern as knee) at 1.0 gives
+    air-stepping ankle **−55..+7.1° true dorsiflexion** (tests
+    `_ankle_test.py`/`_ankle_anh_test.py`). **v7 study**
+    `ground_walk_v7_rom` (140 trials, Renshaw 0.5 fixed, anklepf gain
+    searched): best **−62.523 (trial 100)**, plateaued; reproduces
+    bit-exact via `runner --fitted --best7`. Winner = slow stiff shuffle
+    (duty 0.18, knee pinned AT the +10 cap, 0.4 Hz, tilt 28.6) — scalar
+    tuning CONVERGED; duty/cadence/flexion gaps are architecture-level
+    (transient reset / FSA-analytic seeding next). **JSON RULE**: every
+    new params.G knob a study uses MUST be saved in the json params AND
+    have an `if key in best` branch in the --best loader — v7's renshaw
+    omission cost a silent 0.14 kine delta, caught only by the
+    reproduction check.
+  **Toolchain + format traps:**
   `Biped_2xCPG_wSubs\tools\` (build_A2→build_B2→repair_dup_ids2→fix_gas_ia3→
   rebuild_pages_v3→move_links_by_page→set_fmax2; pipeline from pristine git 6437441
   backup — re-run the WHOLE chain, never patch a patched file). Traps: page CDATAs are
@@ -448,18 +641,69 @@ Loaded automatically at session start. Keep it current; keep it lean.
   `simscape_sources\SNS_lib.slx` (not exported — if needed on R2025a, rebuild there
   from the `+SNS` sources via `sns_build_simscape_lib.m`). On R2025a machines, open
   the `_R2025a` copies, not the originals (R2025b format won't load).
-  **MuJoCo↔Simulink bridge — OPTIONAL, PARKED (2026-09-12):** `mujoco_bridge\`
-  holds a half-done spike of mathworks-robotics/mujoco-simulink-blockset on this
-  machine. Key findings already banked in `mujoco_bridge\BRIDGE_REPORT.md`: the
-  blockset steps MuJoCo with mj_step (muscle ctrl stimulus works — the data.act
-  trap does NOT apply), sensor outputs follow the MJCF `<sensor>` section (our
-  cvt3.xml has none — a sensor-patched copy was planned), plant sample time is
-  read from the MJCF timestep, and MuJoCo 3.3.6 CANNOT load our model
-  (`collision="predefined"` schema error) so MJ_VER must be 2.3.7. Parked before
-  the 2.3.7 install/compile + the 3 pass/fail tests (fire one muscle / two
-  clocks / sensor readback). Downloaded binaries are gitignored; resume by
-  re-running install.m with MJ_VER='2.3.7'. Nothing here is wired into any
-  pipeline — safe to ignore entirely.
+  **MuJoCo↔Simulink bridge — INSTALLED & PROVEN (2026-09-12, same-day resume):**
+  `mujoco_bridge\` = mathworks-robotics/mujoco-simulink-blockset on this machine,
+  MJ_VER 2.3.7 (3.3.6 cannot parse `collision="predefined"`), mex-compiled with
+  MinGW gcc 8.1 (README's 12.2+ requirement is NOT binding). All 3 prove-it
+  tests PASS (`matlab\run_bridge_tests.m`, log `logs\test_abc.log`): fire-one-
+  muscle (ctrl→force, knee extends 88°), two clock rates (0.001 s ctrl source →
+  Rate Transition → 0.005 s plant), sensor readback BIT-EXACT vs Python myo-env
+  ground truth. **One LOCAL PATCH to upstream `src\mj.cpp` is REQUIRED and
+  applied**: upstream initData() zero-fills qpos (no mj_resetData) — our model
+  starts 0.95 m underground and explodes; patch = `mj_resetDataKeyframe(m,d,0)`
+  when nkey>0 (marked AARL LOCAL PATCH; rebuild via tools\setupBuild[MINghW]+build).
+  Sensor-patched model `gait2392_simbody_cvt3_simbridge.xml` (cvt3.xml itself
+  NEVER touched) generated by `matlab\make_simbridge_xml.py` — 2.3.7 sensor
+  elements are `jointpos/jointvel/actuatorpos/actuatorvel/actuatorfrc` (the
+  old report's "actuator_length" was wrong). Simulink gotchas banked in
+  BRIDGE_REPORT.md (xmlFileRel needs an ABSOLUTE path; log the sensor bus via
+  port DataLogging, not To Workspace; Rate Transition lives in Signal
+  Attributes). Downloaded binaries are gitignored. Not yet wired into any
+  pipeline — the SNS-side counterpart (Part 3) now exists, below.
+  **Part 3 — tuned spinal network as an EDITABLE Simulink model (2026-09-12,
+  same session, all VERIFIED):** `spinal\export_network_json.py` (myo env)
+  dumps the tuned `--fitted --best` network (v4b winner) to `spinal\
+  spinal_net_export.json` (410 neurons / 1392 synapses / 376 inputs / 92
+  MN→actuator outputs; the SNS Network object names every input port
+  "Input" — real names come from SpinalNetwork.inputs order).
+  `SNS_Simscape\sns_units_test_2n.m` proves the units mapping (PASS 6e-4 mV:
+  C=tau µF → Cm=1000·tau nF, Gm=1 uS, Vrest=0, synapse e_lo/e_hi=(0,5 mV) →
+  ThrPre=0/SlopePre=5, g µS, Esyn mV, currents nA). `sns_build_from_json.m`
+  generates `results\SNS_SpinalNetwork.slx` (~2600 SNS_Library blocks; u
+  [376×1] input currents nA, S [92×1] MN drives in MuJoCo ctrl order;
+  REGENERATE after any retuning — values live in block masks).
+  `sns_verify_from_json.m` = wiring proof: **PASS, 4.2e-6 mV max dev over
+  ALL 410 neurons at t=0.3 s** vs the numpy 2 ms Euler reference
+  (`export_verify_ref.py` → verify_ref.mat; scipy string lists load in
+  MATLAB as padded char rows — strtrim). **The network is CHAOTIC: any two
+  integrators agree only to ~0.4 s** (1e-9 @ 0.1 s → O(1) @ 0.5 s; the
+  same "reggate_v5_0" summation-order effect), and the RG period itself
+  shifts ~35% between 0.1 ms and 2 ms stepping — **the v4b tuning is a
+  property of the 2 ms Euler semantics; reproduce it in Simulink with
+  fixed-step ode1 @ 0.002 s** (bit-compatible with the runner's numpy
+  stepping). Extra Simulink gotchas banked in README_SNS_Simscape.md
+  (ExternalInput unreliable under -batch — inject a Constant into the
+  demux; log buses via port DataLogging; subsystem ports are numeric
+  blk/1, never inner port-block names).
+  **Deng RG/PF layers as separate Simulink files (2026-09-13):** `SNS_Deng_Library.slx`
+  (persistent-Na HCNeuron, Nourse 2023 Tables A4-A7, tau_h FIXED 350 ms) +
+  `demos\SNS_Deng_RG.slx` + `SNS_Deng_PF.slx` (IN-laminated half-centers) +
+  `SNS_Deng_CPGDemo.slx`/`sns_run_deng_demo.m`: ONE 10 nA/20 ms pulse ->
+  continuous 1.938 s alternation (matches `spinal\deng_cpg_ode.py` 1.94 s).
+  KEY: toolbox tau_h(V) QUENCHES this circuit; fixed tau_h bursts. Same
+  suspicion for the Animatlab RG latch. See README_SNS_Simscape.md.
+  **First closed-loop experiments (2026-09-13, scripts `mujoco_bridge\
+  matlab\e{0,1,2}_*.m`, results in `exp_out\`, details in BRIDGE_REPORT.md):
+  E0 — hand-built Simscape Multibody (primitives, no CAD) FAILS on this
+  machine; the license blocks at block-ADD time, so Ben's cylinder-elbow
+  idea must run on the laptop. E1 — first CLOSED-LOOP SNS↔MuJoCo sim
+  (Ia/II/Ib from vas_med_r sensors → tuned synapses → MN → ctrl): reflex ON
+  bounds the post-collapse transient (469 N vs 43 kN, knee ~80° straighter,
+  S recruits 0.40→0.97). E2 — full 410-neuron net → all 92 muscles via a
+  Model block, single-rate 2 ms (new `simbridge2.xml` = the runner's
+  timestep/implicitfast rewrite), 5 s clean — but bare DRIVE=2.5 lands on a
+  TONIC fixed point (no rhythm): the production rhythm needs the runner's
+  full input schedule (POSTURE/BAL/afferent gating), not DRIVE alone.**
 - Repo root: `CHATGPT_HANDOFF.md` (brief for other AI assistants when ZCode is unavailable)
   and `CHATGPT_REPORT.md` (their report back; 2026-09-08 edition covers Overleaf
   manuscript-status edits) — keep both current when work is handed off.

@@ -13,10 +13,14 @@ Comparison (all on the MEAN cycle, shape = mean-offset removed):
     knee_min    [deg]   peak flexion (ref ~ -60)
     *_range     [deg]   hip / ankle excursions of the mean cycle
     duty                fraction of the cycle RG-E (stance) is on
-    kine_score          single number, HIGHER IS BETTER (0 = perfect):
+    kine_score          single number, HIGHER IS BETTER (0 = perfect match):
         -(1.2 rmse_knee + 1.0 rmse_hip + 0.8 rmse_ankle)
-        -0.15 |knee_min err| - 0.10 (|hip range err| + |ankle range err|)
-        -3.0 |duty err|
+        -0.5 |hip range err| - 0.5 |ankle range err|
+        -0.3 |knee range err|      <- amplitude terms strengthened
+        -0.15 |knee_min err| - 3.0 |duty err|
+        (2026-09-14: amplitude coefficients raised from 0.10/0.10/none
+        - the optimizer had converged to stiff near-flat gaits because
+        matching peaks/valleys is hard and going flat was cheap)
 
 Used by runner --eval (metrics["kine"]) and optuna_walk v4. No
 matplotlib here - safe to import inside the sim loop.
@@ -137,8 +141,18 @@ def compare(t, q_deg, neuro, walk_start, ref=None):
         out[f"range_{j}"] = float(np.ptp(mean[j]))
         out[f"range_{j}_ref"] = ref[f"{j}_range"]
         total += w * rmse
-        if j in ("hip", "ankle"):
-            total += 0.10 * abs(out[f"range_{j}"] - out[f"range_{j}_ref"])
+        # AMPLITUDE terms (Ben 2026-09-14: "you're trying to fit a flat
+        # line to a cosine curve" - the optimizer had tuned stiff
+        # near-flat gaits because matching peaks/valleys is hard and the
+        # amplitude penalties were tiny). Range mismatch now costs ~5x
+        # more, and the KNEE range is penalized too (it previously only
+        # entered via knee_min, so a knee pinned at the RoM cap scored
+        # the same as one that actually flexes):
+        #   flat-line example (trial 41): +0.5*39.9 (hip) +0.3*70.1
+        #   (knee) +0.5*16.2 (ankle) = +42 -> flat totals ~-121 while
+        #   real steppers land -45..-75.
+        amp_w = dict(hip=0.5, knee=0.3, ankle=0.5)[j]
+        total += amp_w * abs(out[f"range_{j}"] - out[f"range_{j}_ref"])
     total += 0.15 * abs(out["knee_min"] - ref["knee_min"])
     total += 3.0 * abs(duty - ref["duty"])
     out["kine_score"] = float(-total)
