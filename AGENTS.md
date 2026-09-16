@@ -45,11 +45,14 @@ Loaded automatically at session start. Keep it current; keep it lean.
   `D:\Anaconda\condabin\conda.bat` → existing env `myo` (never let PyCharm create a venv).
 - Custom skills (`matlab`, `solidworks`, `latex-overleaf`, `opensim`, `animatlab` — the
   old `myoconverter` skill is gone; `opensim` replaced it and `animatlab` was added) are
-  version-controlled in `Documents\GitHub\ZCode_Skills`. On the laptop
+  version-controlled in the `ZCode_Skills` repo (this machine and easteregg2:
+  `D:\GitHub\ZCode_Skills`; laptop: `Documents\GitHub\ZCode_Skills`). On the laptop
   `C:\Users\Ben\.zcode\skills\` holds **directory junctions** into that repo — edit the
-  repo copy, then Ben commits via GitHub Desktop. On this machine (EB475WS4) skills are
-  junctions too (`C:\Users\Ben Bolen\.zcode\skills\`, created 2026-09-09). On easteregg2
-  skills are copied folders under `C:\Users\Ben Bolen\.agents\skills\`.
+  repo copy, then Ben commits via GitHub Desktop. On THIS machine (EB475WS4) and
+  easteregg2 the live skills are PLAIN COPIES under `C:\Users\Ben Bolen\.agents\skills\`
+  — NOT junctions (EB475WS4 verified 2026-09-14: no reparse points, and
+  `C:\Users\Ben Bolen\.zcode\skills\` does not exist) — so repo edits do NOT propagate
+  here; refresh by copying repo → live.
 
 ## Project purpose (priority order)
 
@@ -399,7 +402,24 @@ Loaded automatically at session start. Keep it current; keep it lean.
   `<Version>` + closing tags; cloned blocks need child-object GUIDs re-rolled; **NEVER
   hand Ben an .aproj without opening it in AnimatLab2.exe first** (zero Error dialogs =
   pass; each broken page throws one dialog) and never save from the GUI (taskkill /F).
-  Full brief: `CHATGPT_HANDOFF.md` AnimatLab section.
+  Full brief: `CHATGPT_HANDOFF.md` AnimatLab section. **RG oscillation root cause
+  (2026-09-15; full map in `Biped_2xCPG_wSubs\tools\RG_contact_drive_notes_20260915.md`):**
+  the working reference is `origin/AddingStepSensor_CoMorrow_stw:...Walker_2_Layer_CPG/
+  Walker_2_Layer_CPG.aproj` — its RG is CONTACT-driven (spiking foot-contact neurons →
+  own RG ext G=6 + contralateral RG flx G=6, SpikingChemical Equil −50; NO tonic anywhere;
+  NonSpiking RG InitialThreshold +50 mV; connexion G 0.5 where ours is 5). Proven on our
+  standalone .asim: a tonic-driven half-center CANNOT oscillate at any drive/G/threshold
+  (latches; the Ca plateau holds the ON cell). The "-55 mV RG fix" was a class mix-up
+  (−55 belongs to W2L's SPIKING contact neurons) — reverted same day. **The standalone
+  .asim's Root (pelvis) ships `<Freeze>True</Freeze>`** (31 kg box at y=1.02) → the biped
+  hangs, feet never touch ground, ContactCount=0 on all 41 bodies; Freeze→False + generic
+  PhysicalToNode adapters (`SourceDataType=ContactCount`, source=toe body GUID,
+  TargetDataType=ExternalCurrent, Gain C = amps/contact) makes contact drive WORK headless.
+  Harness builder: `%TEMP%\build_contact.pl <gainC> <ve> <vf>`. AnimatLab traps: chart
+  DataColumns need valid GUIDs (invalid → that chart silently writes 0 bytes);
+  SimEndTime == chart EndTime kills the end-of-sim flush (keep sim end longer); an
+  adapter's Gain child object needs its own fresh GUID. Next: standing tone →
+  contact-asymmetry stepping → G rescale toward W2L values → port via tools pipeline.
 - `Code\Matlab\SNS_Simscape\` — SNS neuron block library (`SNS_Library.slx`: non-spiking RC
   neurons, E/I synapses with AUTO E/I icons, Ia/Ib afferents) + `KneeReflexDemo.slx`
   (antagonist BPA knee reflex demo; runs in plain Simulink). **Diagram conventions

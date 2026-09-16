@@ -1,0 +1,15 @@
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+Extensor front: 72 rows | pick=1: Xi0=-0.0090 Xi1=5.62e+04 Xi2=1.85e+04 Xi3=0.654
+Bio-ext baseline: RMSE 3.032 FVU 4.486 MaxR 5.587
+Dedup: 72 -> 5 unique candidates
+===== Bio-extensor results for the extensor front (best 12) =====
+rank front   Xi0(m)       Xi1       Xi2    Xi3 |     R   FVU  MaxR |  score
+1    44     -0.0046  5.62e+04  1.85e+04  0.583 |  2.09  2.12  4.73 |  0.581
+2    1      -0.0090  5.62e+04  1.85e+04  0.654 |  2.20  2.35  4.73 |  0.624
+3    5      -0.0078  5.62e+04  1.85e+04  0.694 |  2.20  2.36  4.73 |  0.626
+4    37     -0.0101  5.62e+04  1.85e+04  0.743 |  2.22  2.41  4.73 |  0.636
+5    13     -0.0112  5.62e+04  1.85e+04  0.782 |  2.25  2.47  4.73 |  0.646
+Of the top 5 shown, 5 have Xi3 > 0.02
+Saved to Dig_out\Dig_ExtPin_frontBio_results.mat
+SAVED FULL WORKSPACE: Dig_out/Dig_ExtPin_frontBio_pk107lock_20260914.mat

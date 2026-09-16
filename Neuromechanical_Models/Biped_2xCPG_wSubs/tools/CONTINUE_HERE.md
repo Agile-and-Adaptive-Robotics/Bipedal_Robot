@@ -110,3 +110,51 @@ For each of the three fragments — `LH_Knee Motoneuron`, `RH_Knee Motoneuron`,
   once already (both fixed in the tools/ scripts).
 - If a fix adds objects: re-GUID block id AND every child-object id; strip inherited
   InLinks/OutLinks; escape & as &amp;; patch Value AND Actual attributes together.
+## SESSION FINDINGS (2026-09-10, ZCode 3-hour tuning session)
+
+### Wiring is now structurally complete
+- All 261 synapses verified present, 0 dangling, L/R symmetric, placement correct
+- Cross-joint Ia links added (Gas/BFlh/Semimem Ia -> Knee MN F; RF Ia -> Knee MN F)
+- Commissural RG links re-added (L RG ext/flx <-> RH_RG E/F, both directions)
+- RH knee/ankle adapters repointed from Renshaw to MN (done earlier)
+- Ankle labels renamed Ext/Flx -> Planta/Dorsi (56 labels)
+- Gait2392 Fmax on all 8 new muscles (2241/896/1288/1169 N)
+- All page drawings regenerated from standard endpoints, all validated as XML
+- AnimatLab GUI opens the file with ZERO error dialogs
+
+### RG oscillation: THE BLOCKER
+The RG half-center does NOT oscillate. Finding:
+- L RG ext with 2-10 nA tonic: membrane reaches only -52 to -46 mV
+- InitialThresh = 50 on NonSpiking neurons (AnimatLab: threshold above resting
+  potential for synaptic output activation). So synaptic output requires
+  V > RestingPot + 50 = -10 mV, which tonic current cannot reach.
+- At 40 nA tonic: V still only reaches -46 mV (membrane input resistance too low)
+- Even with RG internal synapses boosted from 0.5 to 5 uS: no oscillation
+- The half-center mutual inhibition works (L ext on -> L flx + R side suppressed)
+  but there is NO escape/adaptation mechanism to flip the state
+
+### Why this matters and what to try next
+1. InitialThresh on RG neurons is the key parameter. Lowering it to 5-10 mV
+   (above rest) would allow tonic drive to activate synaptic output at
+   physiologically reasonable depolarizations. The original phase1 asim used
+   InitialThresh=-55 (absolute mV), which is a different parameterization.
+2. The synapse signs/types need verification. The RG mutual inhibition uses
+   SynapseTypeID 9abe0492 ("Depolarizing IPSP/SpikingChemical" per the palette).
+   Verify this is actually inhibitory in the C++ sim.
+3. The Ca activation/deactivation channels on RG neurons (MidPoint -30/-90,
+   tau=20 ms/7500 ms) may need tuning for burst termination. Currently they
+   don't produce the slow adaptation needed for half-center oscillation.
+4. PF-to-MN conductances are all 0.5 uS. Deng A2: hip 2.565/3.632, knee
+   4.93/1.516, ankle 4.054/4.522 uS. These should be applied once the RG works.
+5. Drive pattern: Original LH has RG ext -> both PF layers. Ben rewired RH to
+   same-phase (RG F->PF F). Literature (Rybak 2006, Markin 2010) supports
+   same-phase (RG-E -> PF-E, RG-F -> PF-F). LH should be converted to match RH.
+6. Ben's manual edits to preserve: Gas drive on PF E; cross-joint Ia ->
+   Knee MN F (not MN E); RH same-phase RG-to-PF drive wiring.
+
+### Key parameter values in current file
+- RG neurons: RestingPot=-60 mV, InitialThresh=50, TimeConst=5 ms,
+  RelativeAccom=0.3, CaAct(Mid=-30,tau=20ms), CaDeact(Mid=-90,tau=7500ms)
+- All synapses: G=0.5 uS default (RG internal now boosted to 5 uS in asim only,
+  .aproj still has 0.5 - re-apply from .aproj after export)
+- Tonic: L RG ext = 2 nA (original Deng value, too low for thresh=50)

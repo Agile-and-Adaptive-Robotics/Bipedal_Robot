@@ -227,14 +227,14 @@ c{6} = '#9D02D7'; % magenta 2
 c{7} = '#0000FF'; % indigo → Measured
 c{8} = '#000000'; % black
 
-tileIdxs = [1, 5, 8, 12, 15, 19, 22, 26, 29]; 
-% tileIdxs = [1, 5, 8, 12];  % A, B, C, D
+% tileIdxs = [1, 5, 8, 12, 15, 19, 22, 26, 29]; 
+tileIdxs = [1, 5, 8, 12, 15];  % A, B, C, D
 % tileIdxs = [1, 5, 10];  % A, B, C
 el = numel(tileIdxs);
 tileSpans = [1 3];      % Span: [rows cols]
 % tileSpans = [1 1];      % Span: [rows cols]
-tileOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-% tileOrder = [4, 3, 1, 2];
+% tileOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+tileOrder = allBPA;
 % tileLabels = {'(A)', '(B)', '(C)', '(D)'};
 % Annotation positions [x, y] in normalized figure units
 % xAnn = [0.035, 0.51, 0.035, 0.51];  % (A), (B), (C), (D)

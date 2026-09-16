@@ -7,7 +7,7 @@ addpath('D:/GitHub/Bipedal_Robot/Code/Matlab/Functions');
 addpath('D:/GitHub/Bipedal_Robot/Code/Matlab/Functions/ModernRobotics');
 addpath('D:/GitHub/Bipedal_Robot/Code/Matlab/Robot_Data');
 
-MATFILE = 'minimizeExt10mmX3_results_20260910_noT3.mat';
+MATFILE = 'minimizeExt10mmX3_results_20260914_pk107lock.mat';
 S = load(MATFILE, 'filtered_results', 'xCols', 'sol_actual', 'f');
 F = S.filtered_results; xC = S.xCols; N = size(F,1);
 be0 = minimizeExt(0, Inf, Inf, 0, 1);
