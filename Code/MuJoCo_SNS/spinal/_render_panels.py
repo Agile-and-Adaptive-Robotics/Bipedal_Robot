@@ -30,10 +30,47 @@ from spinal_layers import (MotorColumnNetwork, PatternFormationNetwork,
 HERE = Path(__file__).parent
 OUT = HERE / "figures"
 G = P.G
-# render the TUNED configuration (v7 winner) so edge labels are honest
-G["f1_kneext_inh"] = 0.421
-G["f1_anklepf_inh"] = 0.579
-G["renshaw"] = 0.5
+
+
+def tuned_gains():
+    """Merged tuned config for the representative render: v10 winner
+    multipliers (base) + stage-3 curriculum winner (searched keys
+    override). Falls back to params.py defaults when neither exists."""
+    import json
+    g = dict(f1_kneext_inh=0.0, f1_anklepf_inh=0.0, phase_reset_e=0.0,
+             phase_reset_f=0.0, ia_in=0.0, heel_rge=0.0, toe_rge=0.0,
+             ib_rge=0.0, renshaw=0.5)
+    try:
+        v10 = json.loads(
+            (HERE / "best_walk_params_v10.json").read_text("utf-8"))
+        for k in ("f1_kneext_inh", "f1_anklepf_inh", "phase_reset_e",
+                  "phase_reset_f"):
+            if k in v10.get("multipliers", {}):
+                g[k] = float(v10["multipliers"][k])
+        for k in ("renshaw",):
+            if k in v10.get("params", {}):
+                g[k] = float(v10["params"][k])
+        print("base multipliers: best_walk_params_v10.json")
+    except FileNotFoundError:
+        print("base multipliers: params.py defaults (no v10 json)")
+    try:
+        s3 = json.loads(
+            (HERE / "curriculum_stage3.json").read_text("utf-8"))
+        for k in ("phase_reset_e", "phase_reset_f", "heel_rge", "toe_rge",
+                  "ib_rge", "ia_in"):
+            if k in s3.get("params", {}):
+                g[k] = float(s3["params"][k])
+        print(f"stage-3 winner applied: curriculum_stage3.json "
+              f"(score {s3.get('score')})")
+    except FileNotFoundError:
+        print("no curriculum_stage3.json - laminated defaults only")
+    return g
+
+
+APPLIED = tuned_gains()
+G.update(APPLIED)
+print("representative gains: " +
+      " ".join(f"{k}={APPLIED[k]:.3f}" for k in sorted(APPLIED)))
 
 
 def add_drive(net, targets):
@@ -107,9 +144,12 @@ def main():
         x += im.width + pad
     d.text((pad, h - 26),
            "gait2392 spinal SNS - subnetwork panels, rendered from the "
-           "compiled Network objects (sns_toolbox.renderer). Left-right "
+           "compiled Network objects (sns_toolbox.renderer). LAMINATED "
+           "architecture: RG-E->InE->RG-F, PF-E->PF_IN_E->PF-F "
+           "(Shevtsova/Deng; no direct HC<->HC synapses). Left-right "
            "commissurals and the mirrored left layers omitted for "
-           "clarity; conductances live from params.py.",
+           "clarity; conductances live from params.py + the tuned "
+           "curriculum winner.",
            fill=(120, 120, 120))
     out = OUT / "sns_diagram_panels.png"
     canvas.save(out)
