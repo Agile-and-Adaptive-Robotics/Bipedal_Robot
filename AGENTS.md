@@ -1156,3 +1156,49 @@ A separate chat is updating the dissertation text with these. Sources (Testing_D
   ~7000 + patternsearch ~15000) are MAXIMA — actual stages exit early on FunctionTolerance;
   Ben's observed patternsearch stages wrap in ~5 min, not 1.5-2.5 h. Extrapolate ETAs from
   measured rates and his historical runtimes, not from configured caps.
+
+## Extensor K=[X1,X2,X2] single-bracket campaign + flexor 2brkt (2026-09-14/16, EB475WS4)
+
+- **minimizeExtX3.m K is now [X1, X2, X2]** (was [X2,X1,X2]; old line commented in fortz) —
+  Ben-directed, LIVE for all future extensor runs. Single bracket (no useB2 in this evaluator;
+  arg 6 = transMode). **minimizeExt10mmX3.m** gained env hooks `EXTX3_HOLD` ('1,8' etc. =
+  ONE custom fold) and `EXTX3_ALLTESTS=1` (allBPA = all 9 tests), fold-row loop fixes
+  (`size(list,1)` not `length(list)` — a 1xN row list re-ran folds; `ind = (1:size(x2,1)).'`
+  — `1:length(x2)` breaks on 1x4 single-row fronts; the latent length() bug is STILL in
+  minimizeFlxPin10mmX3.m), and reworked plot sections: 2 figures per metric (Training /
+  Validation, tiles subtitled "Training"/"Validation"). The same latent length() bug was
+  fixed in minimizeFlxPin10mmX3_2brkt.m; minimizeFlxPin10mmX3.m untouched.
+- **Four single-fold lock runs saved** (EXTX3_PASS=2; mats minimizeExt10mmX3_results_20260916_*):
+  pick1_h18 (lock 4.354e4/1.701e4, holdout {1,8}: Xi0 −1.60mm, Xi3 0.797, mean RMSE 1.448/FVU 0.650),
+  pick107_h18 (5.624e4/1.854e4, {1,8}: −1.55mm, 0.796, 1.457/0.653),
+  pick1_all_h3479 / pick107_all_h3479 (allBPA = all 9, holdout {3,4,7,9}: Xi3 0.446/0.480,
+  mean RMSE 1.195/1.163). **Both lock pairs converge to near-identical picks** — the locked
+  pair barely matters in this configuration. Also `_20260916_1translock.mat` (full 10-fold CV,
+  1trans pair: Xi0 −0.91cm, Xi3 0.842, mean RMSE 1.638). Runner/log: Dig_out\run_ExtPinX3_x122_fourcases_20260916.m.
+  **Lock-pair provenance (spelled out): the runner read the pairs from TWO different mats** —
+  pick1 pair (4.354e4/1.701e4) from minimizeExt10mmX3_results_20260910_noT3.mat sol_actual,
+  pick107 pair (5.624e4/1.854e4) from minimizeExt10mmX3_results_20260914_pk107lock.mat
+  sol_actual. Both originate in the same flexor front minimizeFlxPin10_results_20260908_
+  2brkt_2trans_noT3.mat (filtered_results rows 1 and 107); each extensor mat carries its pair
+  unchanged because the extensor never searches Xi1/Xi2 (EXTX3_PASS=2 lock input).
+  **Ben's note (2026-09-16): he will still probably USE the two-bracket `_noT3` flexor front
+  results — minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat at pick 1 or pick 107
+  (the dissertation-settled line). The K=[X1,X2,X2] extensor runs and the flexor x3u runs are
+  comparisons, NOT a replacement of that line unless Ben says so.**
+- **minimizeExt10mmX3_results_20260910_noT3.mat rehydrated in place** (labels/allBPA/numHold/
+  baselineScores added — pick/plot sections now run from it; pre-fix backup in
+  Dig_out\..._BACKUP_20260916.mat; gates verified: pick = −10.12mm/0.621 settled row).
+- **minimizeExt10mmX3.m plot sections**: truncation at strain < −0.03 is INTENTIONAL (Tor NaN
+  rule; stretch-side festo4 unvalidated — manufacturer 2-3% limit, never characterized) —
+  do NOT relax it, fake Go_OfF values, or plot extrapolation (Ben ruled 2026-09-16).
+- **Flexor 2brkt (companion)**: minimizeFlxPinX3.m = original restored bit-exact;
+  minimizeFlxPinX3_2brkt.m = two-bracket evaluator (bracket 2 at Pbri2 = [30.5,−103.41,0]mm
+  tibia frame, K2t = [X1,X2,X1], compliance-only; screw-head CLAMP at −3.5mm tibia-X with
+  contact force Nc in bpa; Xi3 = UNITLESS wrap-loss delta_L = Xi3·15mm·theta_wrap·comp²;
+  30mm-circle tangency check, FLXPX3_TANGENCY=DIAG = store-not-enforce; FLXPX3_NOSHIFT=1 =
+  legacy unshifted). Driver minimizeFlxPin10mmX3_2brkt.m (FX3B_LOCK1/2 env lock). x3u lock-CV
+  mats 20260915: L107 DIAG = Xi0 ≈ 0.1mm / Xi3 0.150 / mean RMSE 1.587 / FVU 0.077 (best
+  pinned-flexor fit on record); L1trans = Xi3 0.291. Non-_x3u 20260915 mats = superseded
+  series-stiffness Xi3. Gotchas: pool workers never see client setenv after spawn (env-gated
+  evaluator branches silently run the wrong mode in parfor — set env BEFORE parpool); wrap
+  the Xi-factor handoff details: CHATGPT_HANDOFF.md ACTIVE WORK F (2026-09-14/16).

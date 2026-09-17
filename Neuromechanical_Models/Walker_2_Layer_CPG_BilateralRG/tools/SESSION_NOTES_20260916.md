@@ -38,6 +38,22 @@ Backups: `tools/backup_v0` (pristine copy) → `v1_bilateralRG` → `v2_commissu
 
 ## Hard-won mechanics (do not relearn)
 
+- **AddFlow drawing format (decoded 2026-09-16 evening, verify_handles.pl):**
+  a page drawing `<Link Org="N" Dst="M">`'s Org/Dst = **0-based index of the
+  endpoint NODE entry in the CDATA's interleaved (nodes+links) file order**.
+  Verified: all 208 original synapse drawings match exactly. Consequences:
+  (a) appending shapes at the END never shifts existing indexes (safe);
+  (b) deleting a mid-file drawing shifts everything after it and silently
+  re-docks all later arrows (the original "MyLink cast" disaster and a second
+  20-arrow drift both came from this — fix_drawings.pl now normalizes every
+  drawing's Org/Dst after any structural change);
+  (c) cloning a template drawing without recomputing Org/Dst renders the new
+  arrow ON TOP of the template's arrow (Ben's "no links visible" bug — the
+  new functional links showed in the tree, but their drawings duplicated old
+  arrows). fix_drawings.pl rebuilds all appended drawings with computed
+  endpoints: final state 296/296 endpoint-exact (208 synapses + 88 adapters).
+- Physical bodies (muscles, SRs, foot/toe contact boxes) ARE drawn as page
+  nodes — adapter links dock to them like any node.
 - **Effective synaptic strength in the ASIM = SynapseType SynAmp.** The
   per-connexion `<G>` is IGNORED by AnimatSimulator (G=1e-4 vs 0.15 gave
   bit-identical runs). In the APROJ the per-Link `<SynapticConductance>` and
@@ -63,6 +79,19 @@ Backups: `tools/backup_v0` (pristine copy) → `v1_bilateralRG` → `v2_commissu
   dialogs — enumerate by title.
 - Analysis helpers (in %TEMP%): rganalyze.pl (burst/period/antiphase),
   vmean.pl, connmap.pl (full connexion map). Repo copies could be made later.
+
+## Final page layout (after fix_drawings.pl, 2026-09-16 evening)
+
+- R RG half-center mirrors the L RG block exactly, shifted down 150 px
+  (L RG at x≈13-94 / y≈578-654; R RG at the same x, y≈728-804).
+- c1/V3: 2×2 block in the empty right band (x≈1580-1760, y≈200-320).
+- II chains: 4 rows in the right band (y≈400-680): adapter at x≈1580,
+  II relay at x≈1670 (L Hip / R Hip / L Knee / R Knee top to bottom).
+- Contact groups: bottom row (y≈1354), each a body→adapter→neuron triplet:
+  L heel (80/170/260), L toe (340/430/520), R heel (600/690/780),
+  R toe (860/950/1040).
+- The 4 stale crossed-arrow drawings are DELETED (safe once every drawing's
+  Org/Dst is recomputed afterwards, which the fixer does).
 
 ## Behavior summary (5.1 s runs)
 

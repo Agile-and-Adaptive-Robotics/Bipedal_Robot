@@ -16,7 +16,7 @@ destructive git operations unprompted; do not assume the ~500 MB npz commit
 backup + force push + all-other-clones-re-clone coordination, and pdf_staging
 belongs to another session's upload workflow.
 
-**FIVE ACTIVE WORK THREADS: (0) AnimatLab .aproj wiring repair — PAUSED MID-FIX, read
+**SEVEN ACTIVE WORK THREADS: (0) AnimatLab .aproj wiring repair — PAUSED MID-FIX, read
 `Neuromechanical_Models\Biped_2xCPG_wSubs\tools\CONTINUE_HERE.md` FIRST for exact state,
 fix spec, and the GUI-verification protocol; (A) AnimatLab arrow audit — section below;
 (B) MuJoCo gait2392 spinal cord network in `Code\MuJoCo_SNS\spinal\` (read its
@@ -24,7 +24,10 @@ fix spec, and the GUI-verification protocol; (A) AnimatLab arrow audit — secti
 (C) Sensory Afferent Database curation in `SADb_audit\` — section at the END of this
 file, and the thread Ben wants worked while ZCode is on peak billing (Mon–Fri
 23:00–03:00 Pacific).** **NEW (2026-09-16, laptop): (D) SolidWorks → Simscape Multibody
-knee-rig import + native BPA muscles — see the ACTIVE WORK D section below.** Also:
+knee-rig import + native BPA muscles — see the ACTIVE WORK D section below;
+(E) AnimatLab bilateral-RG walker in `Neuromechanical_Models\Walker_2_Layer_CPG_BilateralRG\`
+(read its `tools\SESSION_NOTES_20260916.md` first) and (F) Knee Xi-factor
+extensor/flexor evaluator work — both 2026-09-14/16, sections below.** Also:
 laptop-session mining findings in `Testing_Data\2022_02_Festo\HANDOFF_laptop_20260908.md`.
 (For the spinal/SNS thread, `AGENTS.md` is MORE CURRENT than this file — read it too.)
 
@@ -101,6 +104,194 @@ check + import), full list in `mujoco_bridge\BRIDGE_REPORT.md` "LAPTOP PORT". Th
 sw2urdf-route plan (`...\Knee assembly\09_BA_003_URDF_export_plan.md`) is superseded by
 this Multibody Link route — keep for reference only.
 
+
+# ACTIVE WORK E — Walker_2_Layer_CPG_BilateralRG (built 2026-09-16, easteregg2)
+
+Ben's 8-step list: copy Connor's Walker_2_Layer_CPG, verify it runs, build bilateral RGs,
+asymmetric start poses, Shinohara commissural wiring, ground test, afferents to the
+half-centers, heel/toe contact drive, RG/PF/MN subnetwork pages. **Steps 1–4, 6–8 DONE
+and verified; step 5 (subnetwork pages) REMAINS.** Read
+`Neuromechanical_Models\Walker_2_Layer_CPG_BilateralRG\tools\SESSION_NOTES_20260916.md`
+FIRST — full state, layout map, complete gotcha list.
+
+**Standing rules for this folder:** the original `..\Walker_2_Layer_CPG` is UNTOUCHABLE
+(Ben's rule). Every neural change must land in BOTH `Walker_2_Layer_CPG_BilateralRG.aproj`
+(Ben's GUI-visible vehicle of record) and `Walker_2_Layer_CPG_BilateralRG_Standalone_modern.asim`
+(the headless test vehicle), in lockstep, sharing deterministic GUIDs (prefix `cafe…`).
+Never deploy while Ben has AnimatLab open; never save from the GUI.
+
+## Current state (all GUI-verified, zero error dialogs)
+
+1. **Bilateral RG**: R RG ext/ext IN/flx/flx IN (clones of L's) wired ipsilateral to R
+   Hip/Knee PF; the 4 crossed L-RG→R-PF connexions removed. Stimulus_1 (10 nA, 0–10 ms)
+   → L RG ext and Stimulus_2 → R RG flx = antiphase kickoff. Start pose: femur_L Z=+12°,
+   femur_R Z=−12°, both tibiae Y=−28° (DEGREES in .aproj, RADIANS in .asim).
+2. **Shinohara commissural** (Shinohara et al. 2025, bioRxiv 2025.11.11.687930,
+   Aoi/Rybak/Danner — Ben's "like the Shinohara paper"): S RG flx → `S c1` → (inh) contra
+   RG flx; S RG ext → `S V3` → (exc, WEAK) contra RG ext IN. Types: "c1 Commissural
+   Inhibit" (Equil −70, SynAmp 2.749), "V3 Commissural Excite" (Equil −40, SynAmp 0.1 —
+   with RG-Excite strength 2.749 the V3 path LATCHES both half-centers).
+3. **Afferents**: flexor Ia + NEW II chains (stretch receptor → PhysicalToNodeAdapter
+   `DataTypeID=II` → "L/R Hip|Knee flx II" relay) → exc flexor HCs of PF and RG;
+   extensor Ib → exc extensor HCs (24 links). Type "Afferent HC Excite" (Equil −40,
+   **SynAmp 0.01** = air operating point; 0.05 slows to ~0.8 s, 0.1 latches).
+4. **Contact drive**: `L/R heel contact` (foot_*_contact body) + `L/R toe contact`
+   (toe_*_contact body) neurons via PhysicalToNodeAdapters (SourceDataType=ContactCount,
+   Target ExternalCurrent, Gain C=20) exciting ipsilateral extensor RG/Hip PF/Knee PF/
+   Hip MN/Knee MN (20 links). Inert in air, active on ground.
+5. **Ground variant**: `Walker_2_Layer_CPG_BilateralRG_Ground_Standalone.asim` — Root
+   unfrozen (y=−0.15) + pelvis shelf box (top y=−0.28) = partial support; plus a
+   `Contact.txt` diagnostic chart. Regenerate with `tools\ground_test.pl`.
+6. **Rhythm** (5.1 s headless): air 0.466 s, 11/11 bursts, clean antiphase with all
+   feedback live; ground rhythm survives contact (toe duty L 16%/R 38%; walker leans
+   right on the shelf — no balance layer exists, expected, out of scope until Ben asks).
+
+## Hard-won format facts (each cost hours — do not relearn)
+
+- **Effective synapse strength in the ASIM = the SynapseType's SynAmp; the per-connexion
+  `<G>` is IGNORED by AnimatSimulator** (proved: G=1e-4 vs 0.15 → bit-identical run). In
+  the APROJ the mirrored fields are the type's `<MaxSynapticConductance>` and per-Link
+  `<SynapticConductance>`. Tune through the TYPE, keep all three consistent.
+- **AddFlow page drawings: a drawn `<Link Org="n" Dst="m">`'s Org/Dst = 0-based index of
+  the endpoint NODE entry in the CDATA's interleaved (nodes+links) file order.** All 208
+  original synapse drawings match this rule exactly. Consequences: (a) appending shapes
+  at the file END never shifts existing indexes (safe); (b) deleting a MID-FILE drawing
+  shifts everything after it and silently re-docks all later arrows (this caused both the
+  "Unable to cast MyLink to Lassalle.Flow.Node" GUI error and a 20-arrow drift);
+  (c) cloning a drawing without recomputing Org/Dst renders the new arrow INVISIBLE on
+  top of the template's arrow — this is the "links in tree but not on the page" bug Ben
+  found 2026-09-16 evening. `tools\fix_drawings.pl` is the vehicle of record: deletes
+  orphans, rebuilds all appended drawings with computed endpoints, normalizes every
+  drawing, re-places nodes with collision checks; `tools\verify_handles.pl` re-audits any
+  edit (final state: 296/296 endpoint-exact).
+- Physical bodies (muscles, stretch receptors, foot/toe contact boxes) ARE drawn as page
+  nodes; adapter links dock to them like any node.
+- APROJ vs ASIM schema: `<SynapticTypeID>`/`<Text>`/`Value/Scale/Actual` attribute
+  triplets/degrees vs `<SynapseTypeID>`/`<Name>`/plain values/radians. Cloned blocks must
+  re-roll EVERY child `<ID>` (CaActivation/CaDeactivation/Gain) or the sim throws
+  "same ID twice". Perl `s///` never writes `"".expr.""` (literal text — corrupted the
+  CDATA once). Validate each page CDATA as its own XML document.
+- GUI check loop: `powershell -File tools\gui_err_text.ps1 <aproj>` launches AnimatLab2,
+  dumps any Error-window text, kills the app. WinForms error windows are NOT #32770
+  dialogs — match by title. Headless: `bin\AnimatSimulator.exe <asim>`; charts land in
+  the asim's folder. Analyzers (copies in %TEMP%, specs in SESSION_NOTES): rganalyze.pl
+  (bursts/period/antiphase vs −60 mV), vmean.pl, connmap.pl (full connexion map).
+- Backups per milestone: `tools\backup_v0` (pristine copy) → v1_bilateralRG →
+  v2_commissural → v3_preafferent → v4_precontact → v5_predrawingfix.
+
+## REMAINING work (next session)
+
+1. **RG/PF/MN subnetwork pages** (Ben's step 5 — "no connection changes, just how they
+   are represented"). Recipe discovered from Biped_2xCPG_wSubs.aproj (15 pages): each
+   page belongs to a child subsystem `<Node>` inside `<NervousSystem>` that owns its own
+   `<Links>` collection + `<DiagramXml>` CDATA page; the neurons stay in ONE flat
+   `<Nodes>` list (not nested). W2L currently has a single NeuralModule Node (flat
+   neurons + links + one page). Port = create 3 child subsystem nodes ("RG Layer", "PF
+   Layer", "MN Layer"), partition the flat neuron Nodes + Links among them, build each
+   page's CDATA from the existing drawing entries, then GUI-verify + headless re-run.
+2. **Chart columns**: Rhythm_Generator.aform (+ the asim's RG chart) has RG + c1/V3
+   traces only; add II relay and contact neuron columns (clone an existing DataColumn).
+3. **Tuning** knobs: "Afferent HC Excite" type SynAmp (air point 0.01), contact Gain C
+   (=20), commissural V3 SynAmp (0.1). Ground walking/balance is a later architecture
+   task — do not start it unprompted.
+
+# ACTIVE WORK F — Knee Xi-factor: extensor single-bracket K=[X1,X2,X2] runs + flexor two-bracket evaluator (2026-09-14/16, EB475WS4)
+
+**Evaluator change (Ben-directed, LIVE — all future extensor runs use it):**
+`minimizeExtX3.m` insertion-bracket stiffness is now `K = [X1, X2, X2]`
+(was `[X2, X1, X2]`, old line kept commented in `fortz`). Single bracket — the
+evaluator has NO useB2; its 6th arg is transMode (default 2trans via
+`EXTX3_TRANS`). Xi3 here is the UNITLESS wrap-loss factor in [0,1] (linear in
+the driver's x(4), NOT log10; the flexor X3 family's log10 series-stiffness Xi3
+does not apply).
+
+**Driver changes (`minimizeExt10mmX3.m`):** new env hooks in the Solver
+section — `EXTX3_HOLD='1,8'` (comma list) = ONE custom fold with those holdouts
+(skips nchoosek); `EXTX3_ALLTESTS=1` = allBPA becomes all nine tests. Empty =
+original 10-fold CV. Latent loop bugs fixed (same `length()`-on-a-row family as
+the flexor driver): CV loop and compile loop now iterate `size(list,1)` fold
+ROWS (the old `length(list)` re-ran folds when list was a 1xN row — a
+single-fold `[1 8]` list ran the fold twice and crashed), and the front index is
+`ind = (1:size(x2,1)).';` (the old `1:length(x2)` + transpose broke on 1x4
+single-row fronts). Plot sections reworked: each of the four sections (torque,
+length, moment arm, strain) makes TWO figures — TRAINING (allBPA minus fold
+holdouts) and VALIDATION (the fold holdouts), tiles subtitled simply
+"Training"/"Validation". Ben's pick section (L199-216) untouched.
+
+**Four completed runs** (all `EXTX3_PASS=2`: Xi1/Xi2 LOCKED to the pair, GA
+solves Xi0 and Xi3; single bracket; full-workspace mats in
+`2022_02_Festo\`; runners + log in `Dig_out\`):
+- `minimizeExt10mmX3_results_20260916_pick1_h18.mat` — lock = 20260910 front
+  pick-1 pair (4.354e4/1.701e4), one fold holdout {1,8}: pick Xi0 −1.60 mm,
+  Xi3 0.797, mean RMSE 1.448 / FVU 0.650, filtered 18/18.
+- `minimizeExt10mmX3_results_20260916_pick107_h18.mat` — lock = pick-107 pair
+  (5.624e4/1.854e4), holdout {1,8}: Xi0 −1.55 mm, Xi3 0.796, 1.457/0.653.
+- `minimizeExt10mmX3_results_20260916_pick1_all_h3479.mat` — pick-1 lock,
+  allBPA = all 9 tests, one fold holdout {3,4,7,9}: Xi0 −1.20 mm, Xi3 0.446,
+  1.195/0.533.
+- `minimizeExt10mmX3_results_20260916_pick107_all_h3479.mat` — pick-107 lock,
+  allBPA = all 9, holdout {3,4,7,9}: Xi0 −1.08 mm, Xi3 0.480, 1.163/0.484.
+**Lock-pair provenance, spelled out:** the runner read each pair from a
+DIFFERENT mat — the pick-1 pair (4.354e4/1.701e4) from
+`minimizeExt10mmX3_results_20260910_noT3.mat` sol_actual, and the pick-107 pair
+(5.624e4/1.854e4) from `minimizeExt10mmX3_results_20260914_pk107lock.mat`
+sol_actual. Both pairs originate in the same flexor front
+`minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat` (rows 1 and 107 of
+filtered_results); each extensor mat preserves its pair unchanged because the
+extensor never searches Xi1/Xi2 (they are its lock input, `EXTX3_PASS=2`).
+**Finding:** within each case the two lock pairs converge to nearly identical
+picks — with one bracket and K=[X1,X2,X2] the fitted Xi0/Xi3 barely depend on
+the locked pair. all-tests cases fit better with lower Xi3 (0.45-0.48 vs 0.80).
+**Ben's note (2026-09-16): despite all of the above, he will still probably USE
+the two-bracket `_noT3` flexor front results —
+`minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat` at pick 1 or pick 107
+(the dissertation-settled line, "like we talked about"). The K=[X1,X2,X2]
+single-bracket extensor runs and the flexor x3u runs are comparisons; they do
+NOT replace that line unless Ben says so.**
+Plots: `Dig_out\plot_x122_fourcases.m` (+ `plotblock_ext_x122.m`) re-creates
+all 32 figures from the mats. Also this session:
+`minimizeExt10mmX3_results_20260916_1translock.mat` (FULL 10-fold CV with
+Xi1/Xi2 locked to the 1trans pair — pick Xi0 −0.91 cm, Xi3 0.842, mean RMSE
+1.638/FVU 0.746), and `minimizeExt10mmX3_results_20260910_noT3.mat` was
+REHYDRATED in place (labels/allBPA/numHold/baselineScores added so the pick +
+plot sections run from it; pre-fix backup in `Dig_out\..._BACKUP_20260916.mat`).
+
+**Flexor two-bracket evaluator (same sessions, companion work):**
+`minimizeFlxPinX3.m` is the ORIGINAL single-bracket flexor X3 evaluator,
+restored bit-exact (baseline verified). `minimizeFlxPinX3_2brkt.m` is the
+two-bracket variant: bracket 2 in the tibia frame at
+Pbri2 = [30.5, −103.41, 0] mm from the knee ICR with K2t = [X1, X2, X1]
+(shared Xi1/Xi2), compliance-only (no path row); screw-head CLAMP (tibia-frame
+X deflection pinned at −3.5 mm by contact normal force Nc, chain equilibrium
+re-solved — bpa.screw2_N/screw2_hit); Xi3 = UNITLESS wrap-loss
+delta_L = Xi3 · 15 mm · theta_wrap · comp² (theta_wrap = pi minus the angle
+between the class force direction and the bracket2→insertion line — straight
+through = no wrap); 30 mm-circle tangency check with env
+`FLXPX3_TANGENCY=DIAG` to store-but-not-enforce (with today's 2-row paths the
+check rejects everything — needs the wrapped ≥3-row path from Ben's CAD);
++5.3° 47 cm encoder shift ON by default (`FLXPX3_NOSHIFT=1` = legacy).
+Driver variant `minimizeFlxPin10mmX3_2brkt.m` (calls the 2brkt evaluator;
+`FX3B_LOCK1/2` env pins Xi1/Xi2 — GA solves Xi0/Xi3; its compile-loop
+`ind = 1:length(x2)` bug FIXED — the SAME bug is still LATENT in
+`minimizeFlxPin10mmX3.m`, untouched). Flexor x3u lock-CV mats
+(20260915, DIAG): `minimizeFlxPin10mmX3_2brkt_results_20260915_L107_DIAG_x3u.mat`
+= pick Xi0 ≈ 0.1 mm / Xi3 0.150 / mean RMSE 1.587 / FVU 0.077 (best
+pinned-flexor fit on record) and `_L1trans_DIAG_x3u.mat` (Xi3 0.291). The
+same-named 20260915 mats WITHOUT `_x3u` used the old series-stiffness Xi3 and
+are superseded.
+
+**Gotchas hit (do not relearn):** (1) pool workers never see the client's
+`setenv` after spawn — env-gated evaluator branches (FLXPX3_TANGENCY) silently
+run the wrong mode inside parfor; set env BEFORE parpool or evaluate
+client-side. (2) `for k = 1:length(list)` on a 1xN row list re-runs folds;
+iterate `size(list,1)`. (3) A 1x4 single-row GA front breaks
+`ind = 1:length(x2)` row assembly — use `(1:size(x2,1)).'` (fixed in the two
+drivers named above; still latent in `minimizeFlxPin10mmX3.m` and
+`minimizeExt10mmX3.m`'s siblings). (4) Do not relax the strain < −0.03 NaN
+cutoff or fake its values in Go_OfF — the stretch-side festo4 continuation is
+unvalidated (manufacturer 2-3% limit; stretch characterization never done —
+antagonist pairs + fatigue); curve truncation past the measured domain is
+INTENTIONAL (Ben ruled 2026-09-16).
 
 ## ACTIVE WORK B — MuJoCo gait2392 spinal network (started 2026-09-09, easteregg2)
 
