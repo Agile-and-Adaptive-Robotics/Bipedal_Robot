@@ -171,6 +171,51 @@ sensors out, two-rate SNS-style control compatible, physics identical to the
 Python myo-env ground truth (bit-exact, same mujoco 2.3.7). Ready to carry
 the SNS network (Part 3) once that exists as a Simulink model.
 
+## LAPTOP PORT — DESKTOP-5Q16KE9, R2025b (2026-09-16): BUILD + ALL TESTS PASS
+
+The bridge now also runs natively on the laptop (R2025b + its own mex build).
+The repo carries everything needed; `blockset\` itself is still gitignored.
+
+1. **Build** (`matlab\laptop_build_bridge.m`, log `logs\build_237_laptop.log`):
+   unzip `blockset.zip` -> `blockset\`; edit install.m MJ_VER='2.3.7'; setupBuild
+   switched to MINGW; **AARL LOCAL PATCH re-applied to src\mj.cpp** — note the
+   correct call is `mj_resetData(m, d)` (two args); this report's older
+   shorthand "else `mj_resetData`" cost one failed compile. MinGW64 8.1 was
+   ALREADY configured on the laptop (MEX support package under
+   `C:\ProgramData\MATLAB\SupportPackages\R2025b\...mingw_w64.instrset`) — no
+   install needed. All 4 mexw64 targets built.
+2. **Tests a/b/c PASS BIT-EXACT on R2025b** (log `logs\test_abc_laptop.log`):
+   a: frc 0 -> -549.9 N, knee 0 -> 87.83 deg; b: dt 0.005 s, 81 samples, knee
+   range 138.7 deg; c: all 5 sensors 0.00e+00 deviation — identical numbers to
+   the EB475WS4 run above.
+3. **E1 + E2 reproduced on R2025b** (log `logs\e12_laptop.log`, refreshed
+   exp_out\): E1 OFF 43 kN / knee -253 deg vs ON 469 N / S 0.40->0.97 (same as
+   before); E2 5 s clean, 96% muscles recruited, knee peak -107.9 deg. NOTE:
+   E2 re-saves `results\SNS_SpinalNetwork.slx` in R2025b format — the original
+   R2025a copy is kept as `SNS_SpinalNetwork.slx.r2025a`; R2025a machines must
+   use the backup or regenerate via sns_build_from_json.m.
+4. **E0 now PASSES on the laptop** (hand-built Simscape Multibody runs here —
+   the EB475WS4 license block does not exist on this machine). Ben's
+   cylinder-elbow idea is buildable HERE. Fixes made to e0_multibody_license.m
+   while proving it (all banked gotchas):
+   - Simscape frame ports are LConn/RConn PORT HANDLES, not 'blk/1' ports.
+   - find_system option pairs ('LookUnderMasks','FollowLinks') MUST precede
+     the 'Type','Block' parameter pair, else the search silently returns 0.
+   - Mechanism Configuration = `sm_lib/Utilities/Mechanism Configuration`,
+     resolves by direct path but is INVISIBLE to find_system (protected
+     Utilities sublibrary) — use the direct path.
+   - Simscape Multibody DOES require a Solver Configuration block (nesl_utility)
+     — even though smimport's own output carries none.
+   - Gravity mask param on Mechanism Configuration is 'GravityVector'
+     ('UniformGravity' is a mode dropdown; 'Gravity' does not exist).
+   - launch driver: `matlab\laptop_step1_license_import.m` (E0 + MEX check +
+     real-URDF smimport); log `matlab\laptop_step1.log`.
+5. **smimport model-name traps** (import_simscape_when_ready.m rewritten):
+   smimport's return value is NOT the model name in R2025b (a double); the
+   model name comes from the FILE name — import a sanitized temp copy in the
+   SAME folder (keeps package:// mesh resolution), and remember save_system
+   renames the model to the new file's basename.
+
 ## EXPERIMENTS (2026-09-13, same machine): first closed-loop SNS x MuJoCo runs
 
 Scripts in `matlab\` (logs in `logs\`, artifacts in `matlab\exp_out\`):

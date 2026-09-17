@@ -32,7 +32,16 @@ Loaded automatically at session start. Keep it current; keep it lean.
   MATLAB + SolidWorks, but modest hardware (6 cores, 16 GB RAM). MATLAB **R2025b** at
   `C:\Program Files\MATLAB\R2025b`; SOLIDWORKS **2025 SP4.1** (33.4.1) at
   `C:\Program Files\SOLIDWORKS Corp`. Its GitHub repos live under
-  `C:\Users\Ben\Documents\GitHub\` — **no D: drive on this machine**.
+  `C:\Users\Ben\Documents\GitHub\` — **no D: drive on this machine**. Conda =
+  `C:\Users\Ben\.anaconda3` — env `myoconv` (py3.10.21, mujoco 2.3.7,
+  sns-toolbox 1.5.2, numpy 1.25.2), call
+  `C:\Users\Ben\.anaconda3\envs\myoconv\python.exe`; also `snsenv`.
+  **MuJoCo↔Simulink bridge BUILT + PROVEN on R2025b here (2026-09-16; tests
+  a/b/c bit-exact, E1/E2 reproduced — BRIDGE_REPORT.md "LAPTOP PORT" section;
+  rebuild driver `mujoco_bridge\matlab\laptop_build_bridge.m`)**.
+  Simscape Multibody license WORKS on the laptop for smimport AND hand-built
+  models (E0 PASSES here; the block-ADD failure is EB475WS4-only) — Ben's
+  cylinder-elbow plant belongs on THIS machine.
 - **easteregg2 (desktop; sessions there read this file too)** — 10 cores, 128 GB RAM; older
   installs (MATLAB R2025a, SOLIDWORKS 2025 SP03). Repos live under `D:\GitHub\`.
   **Heavy parallel optimization runs belong on easteregg2**;
@@ -48,7 +57,12 @@ Loaded automatically at session start. Keep it current; keep it lean.
   version-controlled in the `ZCode_Skills` repo (this machine and easteregg2:
   `D:\GitHub\ZCode_Skills`; laptop: `Documents\GitHub\ZCode_Skills`). On the laptop
   `C:\Users\Ben\.zcode\skills\` holds **directory junctions** into that repo — edit the
-  repo copy, then Ben commits via GitHub Desktop. On THIS machine (EB475WS4) and
+  repo copy, then Ben commits via GitHub Desktop. (2026-09-16: laptop live set =
+  latex-overleaf, matlab, solidworks, myoconverter, animatlab, opensim — the
+  last two added as junctions; note the `sns-toolbox` skill referenced in the
+  spinal section is NOT in the ZCode_Skills repo — commit it from whichever
+  machine holds it to make it available here. The repo still carries
+  `myoconverter/` even though the text above says it's replaced.) On THIS machine (EB475WS4) and
   easteregg2 the live skills are PLAIN COPIES under `C:\Users\Ben Bolen\.agents\skills\`
   — NOT junctions (EB475WS4 verified 2026-09-14: no reparse points, and
   `C:\Users\Ben Bolen\.zcode\skills\` does not exist) — so repo edits do NOT propagate
@@ -377,6 +391,21 @@ Loaded automatically at session start. Keep it current; keep it lean.
     self-runs at 1.94 s; Simulink files `SNS_Simscape\demos\SNS_Deng_*.slx`
     reproduce). Same transfer risk if tuned candidates are ever ported to
     Animatlab/Simulink realizations.
+    **(5) Basin gate IMPLEMENTED (2026-09-16, laptop): `spinal\basin_gate.py`**
+    (myoconv env) operationalizes this: loads a RUNNER_DUMP_STATE json
+    (`state_v10_best.json` / `state_v10_study.json`), perturbs every scalar
+    param ±1% (seeded), runs the network-only constant-DRIVE rhythm 20 s (as
+    check_selfsustain.py), PASS = last-5 s swing ≥ max(0.1 mV, ½ baseline
+    first window). RESULT: **v10-best (drive 2.929) is basin-robust — 12/12
+    perturbations persist, final swing 0.98× baseline, ~6.5 mV, period ~2 s
+    (5 peaks/10 s — don't impose a fixed peak floor, slow winners mislabel);
+    `state_v10_study` does NOT self-sustain at constant drive (baseline decays
+    to 0 — it depends on the runner input schedule, consistent with E2's
+    tonic collapse)**. Caveat logged: an identical-seed trial EXPLODED (1e164)
+    in a 2 s smoke run but was stable in the 20 s run — multithreaded-BLAS
+    summation-order nondeterminism is real even between processes; treat
+    single borderline trials as noise. Results: `spinal\basin_gate_results.json`
+    + `basin_gate_full.log`.
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the
@@ -624,6 +653,16 @@ Loaded automatically at session start. Keep it current; keep it lean.
   choice): SolidWorks → sw2urdf add-in → .urdf → `smimport`. The old "Simscape
   Multibody not licensed" blocker was FALSE — the license carries it as legacy feature
   `SimMechanics` (=1) and `sns_urdf_smoke.m` proved smimport works (2026-09-09).
+  **2026-09-16: ACTIVE on the SECOND route too — Simscape Multibody Link add-in v7.4
+  export of `09_BA_003.SLDASM` → `Knee assembly\09_BA_003.xml` (+`09_BA_003_error.txt`).
+  Exporter DROPPED the 4 Hinge mates (Ben: make them revolute — replace each Hinge with
+  Concentric+Coincident in SW, re-export) and the 6 BPA1/BPA2 mates to the assembly root
+  (Ben: ignore; BPAs will be built NATIVELY in Multibody — expanding-diameter force law
+  + N-segment sleeve with Spatial Contact Force vs the STL meshes — not imported from
+  CAD); PathMate drops = patella, ignore. CORRECTION (Ben): the KB_R_003↔TI_R_006
+  Concentric set is the tibial head BOLTED to the shank = rigid group, NOT the knee
+  joint. Import inventory (which joints smimport made) still to run.
+  Full brief for any assistant: `CHATGPT_HANDOFF.md` "ACTIVE WORK C".**
   sw2urdf v1.6.1 INSTALLED on the laptop (Ben, 2026-09-10; official build targets
   SW2021, so on SW2025 watch for the vanishing-dialog issue, issue #147); fallback:
   Simscape Multibody Link IS installed+registered (disabled — enable in SW Tools >
@@ -660,6 +699,18 @@ Loaded automatically at session start. Keep it current; keep it lean.
   port DataLogging, not To Workspace; Rate Transition lives in Signal
   Attributes). Downloaded binaries are gitignored. Not yet wired into any
   pipeline — the SNS-side counterpart (Part 3) now exists, below.
+  **LAPTOP PORT DONE (2026-09-16, R2025b):** blockset re-extracted from
+  `mujoco_bridge\blockset.zip`, MJ_VER 2.3.7, AARL patch re-applied (correct
+  signature is `mj_resetData(m, d)` — two args), MinGW 8.1 support package
+  already configured, all 4 mexw64 built; tests a/b/c PASS **bit-exact** and
+  E1/E2 reproduce (logs `logs\*_laptop.log`). E2 re-saved
+  `results\SNS_SpinalNetwork.slx` in R2025b format — R2025a machines use the
+  kept `SNS_SpinalNetwork.slx.r2025a` backup or regenerate. New Simulink/
+  smimport gotchas (find_system option ORDER matters; Mechanism Configuration
+  only reachable by direct path `sm_lib/Utilities/Mechanism Configuration`;
+  gravity param is `GravityVector`; a Solver Configuration block IS required
+  for Multibody nets; smimport's return value is not the model name — import
+  a sanitized temp copy) all banked in BRIDGE_REPORT.md "LAPTOP PORT".
   **Part 3 — tuned spinal network as an EDITABLE Simulink model (2026-09-12,
   same session, all VERIFIED):** `spinal\export_network_json.py` (myo env)
   dumps the tuned `--fitted --best` network (v4b winner) to `spinal\

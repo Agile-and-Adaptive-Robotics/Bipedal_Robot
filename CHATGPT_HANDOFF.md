@@ -8,7 +8,84 @@ primary assistant (ZCode) is unavailable. Read it fully before doing anything. T
 fix spec, and the GUI-verification protocol; (A) AnimatLab arrow audit — section below;
 (B) MuJoCo gait2392 spinal cord network in `Code\MuJoCo_SNS\spinal\` (read its
 `DESIGN.md` first — rhythm layer verified; leg-DoF NaN blocker open with prioritized
-suspects).** Also: laptop-session mining findings in `Testing_Data\2022_02_Festo\HANDOFF_laptop_20260908.md`.
+suspects).** **NEW (2026-09-16, laptop): (C) SolidWorks → Simscape Multibody knee-rig
+import + native BPA muscles — see the ACTIVE WORK C section below.** Also:
+laptop-session mining findings in `Testing_Data\2022_02_Festo\HANDOFF_laptop_20260908.md`.
+(For the spinal/SNS thread, `AGENTS.md` is MORE CURRENT than this file — read it too.)
+
+## ACTIVE WORK C — SolidWorks → Simscape Multibody: knee-rig import + NATIVE BPA muscles (2026-09-16, laptop; Ben: "add to writeup for chatgpt so it can work on this")
+
+**Laptop-only thread** (DESKTOP-5Q16KE9): repo `C:\Users\Ben\Documents\GitHub\Bipedal_Robot`,
+MATLAB R2025b. Simscape Multibody license WORKS here — smimport AND hand-built
+models (`e0_multibody_license.m` PASSES); the same thing is license-blocked on EB475WS4.
+
+**Where it stands.** Ben exported the knee assembly from SolidWorks 2025 SP4.1 with the
+Simscape Multibody Link add-in v7.4: `Solid_Models\Biomimetics_2022-Knee_Test\Knee
+assembly\09_BA_003.xml` (730 lines) + `09_BA_003_error.txt`. The exporter flagged 18
+constraints; the XML "is valid but may not reflect the original assembly". Exactly what
+dropped:
+- **Hinge1/2/5/6** — "constraint not supported, ignored". These are the BPA LINKAGE
+  hinges: Hinge1 `04_05_BL_001-1`↔`04_02_KB_R_003-1`, Hinge2 `04_06_FL_001-1`↔KB_R_003,
+  Hinge6 `04_05_BL_001-1`↔`04_01_KT_R_003-1`, Hinge5 `04_06_FL_002-1`↔KB_R_003.
+- **Coincident10/13/18/19 + Parallel1/2** — "constrained components are not resolved";
+  all involve the `BPA1-1`/`BPA2-1` parts mated to the assembly ROOT.
+- **PathMate1/2/3/5** — patella template path mates, exported as unknown constraint.
+  Expected; ignore.
+- Survived: 13 parts and 24 primitive constraint pairs (Concentric/Coincident) in the
+  XML `<Constraints>` section.
+
+**Ben's rulings (2026-09-16, follow them):**
+1. **Do NOT chase the BPA Coincident/Parallel drops** ("don't worry about the BPA
+   constraints") and **do NOT chase the PathMates** ("the path mates are for a patella").
+2. **The 4 Hinge mates should become REVOLUTE joints.** Cleanest fix: in SolidWorks,
+   replace each Hinge mate with its two primitives — Concentric (pin/hole) + Coincident
+   (shoulder face) — and re-export; the Multibody Link exporter translates those
+   primitives into revolute joints. Alternative (if Ben prefers not to touch mates):
+   hand-edit the XML to add revolute joints — requires each hinge's axis (point +
+   direction) in BOTH components' frames, readable from the SW mate definition.
+3. **CRITICAL correction (Ben):** the Concentric1/2 + Coincident1 set between
+   `04_02_KB_R_003-1` (ground knee bracket) and `05_01_TI_R_006-1` is the **tibial HEAD
+   bolted to the tibia SHANK — a RIGID group, NOT the knee joint.** Do not mislabel it
+   as the knee revolute. Whether the actual knee DOF survived anywhere in the export is
+   UNKNOWN until the import inventory runs.
+
+**Next steps, in order:**
+1. Import + inventory: run `import_simscape_when_ready.m` in `Code\Matlab\SNS_Simscape\`
+   (inputPath already points at `09_BA_003.xml`; it imports a sanitized temp copy in the
+   same folder and saves `mdl_knee_rig_import_tmp_imported.slx`), then inventory the
+   model: joint blocks (ReferenceBlock under jointlib), composite bodies, and which
+   frame pairs they connect. Question to answer: does ANY knee revolute exist, or is the
+   tibia welded to everything?
+2. Apply the hinge fix (Ben GUI, or XML surgery), re-export, re-import, re-inventory.
+3. **The real goal (Ben's direction): build the BPAs NATIVELY in Simscape Multibody —
+   NOT imported from CAD.** Requirements: muscles that **expand in diameter as length
+   contracts** (constant-volume braid kinematics: L → braid angle θ → D(L) →
+   F = (P−P_atm)·πD²/4·(3cos²θ−1), pressure as input signal) and that **contact
+   complicated geometry** (bone/bracket meshes). Recipe: Force Element block or custom
+   Simscape component between two attachment frames for the force law; model the
+   expanding sheath as N≈10–20 short rigid segments spanning the endpoints, each with
+   diameter D(L) and its own **Spatial Contact Force** block against file-solid STL
+   geometry (the repo has the tibia/bracket STLs). Suppress/exclude the BPA solids from
+   the SW export — their mates are the broken ones and the muscles live in the
+   Multibody layer now.
+4. Prototype (when Ben says go): single-segment expanding BPA — two frames, force law,
+   contact against one tibia STL — as an E0b-style demo script next to
+   `mujoco_bridge\matlab\e0_multibody_license.m`.
+
+**Toolchain gotchas already paid for on 2026-09-16 (do not rediscover):** Simscape frame
+ports are LConn/RConn PORT HANDLES, not 'blk/1'; find_system search-option pairs
+('LookUnderMasks','FollowLinks') must precede 'Type','Block' or the search silently
+returns 0; Mechanism Configuration is reachable ONLY by direct path
+`sm_lib/Utilities/Mechanism Configuration` (find_system cannot enumerate it); its
+gravity param is `GravityVector`; a Simscape Multibody network REQUIRES a Solver
+Configuration block (`nesl_utility/Solver Configuration`) even though smimport's own
+output carries none; smimport's return value is NOT the model name in R2025b (import a
+sanitized temp copy; save_system renames the model to the file base). Driver scripts:
+`Code\Matlab\SNS_Simscape\mujoco_bridge\matlab\laptop_step1_license_import.m` (E0 + MEX
+check + import), full list in `mujoco_bridge\BRIDGE_REPORT.md` "LAPTOP PORT". The older
+sw2urdf-route plan (`...\Knee assembly\09_BA_003_URDF_export_plan.md`) is superseded by
+this Multibody Link route — keep for reference only.
+
 
 ## ACTIVE WORK B — MuJoCo gait2392 spinal network (started 2026-09-09, easteregg2)
 

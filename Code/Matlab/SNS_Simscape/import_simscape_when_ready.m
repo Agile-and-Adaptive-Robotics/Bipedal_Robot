@@ -17,11 +17,16 @@
 %
 % Usage: set inputPath below, then run this script.
 
-% sw2urdf writes a FOLDER named 09_BA_003.URDF; smimport wants the inner file.
-% NOTE (2026-09-16): the current export is a 1-link skeleton (base_link only,
-% zero joints) — it proves the pipe + mesh resolution; a full re-export with
-% links/joints defined in the exporter wizard is still needed.
-inputPath = 'C:\Users\Ben\Documents\GitHub\Bipedal_Robot\Solid_Models\Biomimetics_2022-Knee_Test\Knee assembly\09_BA_003.URDF\urdf\09_BA_003.URDF.urdf';  % <-- edit
+% Simscape Multibody Link export (Ben, 2026-09-16 17:59): 09_BA_003.xml —
+% exports fine but DROPS the 4 SW Hinge mates (Hinge1/2/5/6, "not supported")
+% and the 6 BPA mates to the assembly root ("components not resolved"); the
+% PathMate drops are expected (patella paths). The knee DOF itself survives
+% as primitive Concentric+Coincident mates between 04_02_KB_R_003 and
+% 05_01_TI_R_006. Replace the SW Hinge mates with Concentric+Coincident and
+% re-export to get the four link hinges as revolute joints.
+% sw2urdf folder route (kept for reference):
+%   ...\Knee assembly\09_BA_003.URDF\urdf\09_BA_003.URDF.urdf  (1-link skeleton)
+inputPath = 'C:\Users\Ben\Documents\GitHub\Bipedal_Robot\Solid_Models\Biomimetics_2022-Knee_Test\Knee assembly\09_BA_003.xml';  % <-- edit
 outDir = fileparts(mfilename('fullpath'));
 
 % --- 0. license gate (either feature name counts) ----------------------------
@@ -31,26 +36,54 @@ assert(licensed, ['Simscape Multibody is not licensed on this machine — but se
 
 % --- 1. import URDF or Multibody-Link XML -> Simulink model ------------------
 assert(isfile(inputPath), 'Input file not found: %s', inputPath);
-model = smimport(inputPath);
-[~, modelBase, ~] = fileparts(inputPath);
+% smimport derives the model name from the file name; '09_BA_003.URDF' has a
+% dot (invalid) so MATLAB silently renames the model and smimport's return
+% value is unusable. Import a sanitized COPY in the SAME folder — package://
+% mesh paths resolve relative to the file, so the copy keeps its meshes.
+srcDir = fileparts(inputPath);
+[~, inExt, ~] = fileparts(inputPath);
+tmpFile = fullfile(srcDir, ['mdl_knee_rig_import_tmp' inExt]);  % keep extension: smimport dispatches on it
+if bdIsLoaded('mdl_knee_rig_import_tmp')
+    close_system('mdl_knee_rig_import_tmp', 0);   % stale copy from a crashed run
+end
+copyfile(inputPath, tmpFile, 'f');
+cleanup = onCleanup(@() delete(tmpFile));
+% R2025b smimport's return value is NOT the model name (observed: a double),
+% but with a sanitized file name the created model name is deterministic.
+smimport(tmpFile);
+model = 'mdl_knee_rig_import_tmp';
+assert(bdIsLoaded(model), 'smimport did not create the expected model');
 fprintf('Imported model: %s\n', model);
 
 % --- 2. orientation / gravity ------------------------------------------------
 % The CAD Z axis is up in 09_BA_003 (knee axis ~ Z, tibia pointing -Y).
 set_param(model, 'StopTime', '2');
 try
-    gBlk = find_system(model, 'LookUnderMasks', 'all', 'MaskType', 'Mechanism Configuration');
-    if ~isempty(gBlk)
-        set_param(gBlk{1}, 'Gravity', '[0 0 -9.80665]');   % -Z if Z up in CAD
-        fprintf('gravity set to -Z on %s\n', gBlk{1});
+    gBlk = find_system(model, 'LookUnderMasks', 'all', ...
+        'MaskType', 'Mechanism Configuration');
+    if iscell(gBlk) && ~isempty(gBlk)
+        % param is 'GravityVector' on R2025b (verified; 'Gravity' and
+        % 'UniformGravity' are NOT settable — the latter is a mode dropdown)
+        try
+            cur = get_param(gBlk{1}, 'GravityVector');
+        catch
+            cur = '';
+        end
+        if ~strcmp(strtrim(cur), '[0 0 -9.80665]')
+            set_param(gBlk{1}, 'GravityVector', '[0 0 -9.80665]');  % -Z if Z up in CAD
+        end
+        fprintf('gravity -Z confirmed on %s\n', gBlk{1});
+    else
+        fprintf('no Mechanism Configuration block found; gravity left at default\n');
     end
 catch ME
     warning('gravity tweak failed: %s', ME.message);
 end
 
-% --- 3. save next to the SNS work -------------------------------------------
-savePath = fullfile(outDir, [modelBase '_imported.slx']);
+% --- 3. save next to the SNS work --------------------------------------------
+savePath = fullfile(outDir, [model '_imported.slx']);
 save_system(model, savePath);
+close_system(model, 0);
 fprintf('Saved %s\n', savePath);
 
 % --- 4. next steps (manual, in the GUI) --------------------------------------

@@ -1,0 +1,60 @@
+--- install() (downloads mujoco 2.3.7 + glfw) ---
+ 
+Download URL is:
+https://github.com/deepmind/mujoco/releases/download/2.3.7/mujoco-2.3.7-windows-x86_64.zip
+ 
+folder exists already. it will be overwritten
+[Warning: Directory already exists.] 
+[> In install/downloader (line 122)
+In install (line 20)
+In laptop_build_bridge (line 27)] 
+ 
+mujoco downloaded and extracted to this path:
+C:\Users\Ben\Documents\GitHub\Bipedal_Robot\Code\Matlab\SNS_Simscape\mujoco_bridge\blockset\mujoco-simulink-blockset-main\lib\win64\mujoco
+ 
+Download URL is:
+https://github.com/glfw/glfw/releases/download/3.3.7/glfw-3.3.7.bin.WIN64.zip
+ 
+folder exists already. it will be overwritten
+[Warning: Directory already exists.] 
+[> In install/downloader (line 122)
+In install (line 29)
+In laptop_build_bridge (line 27)] 
+ 
+glfw downloaded and extracted to this path:
+C:\Users\Ben\Documents\GitHub\Bipedal_Robot\Code\Matlab\SNS_Simscape\mujoco_bridge\blockset\mujoco-simulink-blockset-main\lib\win64\glfw
+ 
+MuJoCo block library and examples added to MATLAB path and saved
+--- setupBuild (MINGW) ---
+compiler selection and GLFW inc/import path setup done
+--- mex -setup c++ ---
+MEX configured to use 'MinGW64 Compiler (C++)' for C++ language compilation.
+--- build (gmake) ---
+echo --------------------------------------; 
+--------------------------------------
+"C:/Program Files/MATLAB/R2025b/bin/mex.bat" ../src/mj.cpp -I../lib/win64/mujoco/include/mujoco -I../lib/win64/mujoco/include -I../src -IC:/Users/Ben/Documents/GitHub/Bipedal_Robot/Code/Matlab/SNS_Simscape/mujoco_bridge/blockset/mujoco-simulink-blockset-main/lib/win64/glfw/glfw-3.3.7.bin.WIN64/include -outdir ../blocks CXXFLAGS="-std=c++17" C:/Users/Ben/Documents/GitHub/Bipedal_Robot/Code/Matlab/SNS_Simscape/mujoco_bridge/blockset/mujoco-simulink-blockset-main/lib/win64/glfw/glfw-3.3.7.bin.WIN64/lib-static-ucrt/glfw3dll.lib ../lib/win64/mujoco/lib/mujoco.lib LINKFLAGS="-Wl,--no-undefined" ../src/mj_depth_near_far.cpp -g -output mj_depth_near_far 
+Building with 'MinGW64 Compiler (C++)'. 
+MEX completed successfully. 
+echo --------------------------------------; 
+--------------------------------------
+"C:/Program Files/MATLAB/R2025b/bin/mex.bat" ../src/mj.cpp -I../lib/win64/mujoco/include/mujoco -I../lib/win64/mujoco/include -I../src -IC:/Users/Ben/Documents/GitHub/Bipedal_Robot/Code/Matlab/SNS_Simscape/mujoco_bridge/blockset/mujoco-simulink-blockset-main/lib/win64/glfw/glfw-3.3.7.bin.WIN64/include -outdir ../blocks CXXFLAGS="-std=c++17" C:/Users/Ben/Documents/GitHub/Bipedal_Robot/Code/Matlab/SNS_Simscape/mujoco_bridge/blockset/mujoco-simulink-blockset-main/lib/win64/glfw/glfw-3.3.7.bin.WIN64/lib-static-ucrt/glfw3dll.lib ../lib/win64/mujoco/lib/mujoco.lib LINKFLAGS="-Wl,--no-undefined" ../src/mj_initbus_mex.cpp -g -output mj_initbus_mex 
+Building with 'MinGW64 Compiler (C++)'. 
+MEX completed successfully. 
+echo --------------------------------------; 
+--------------------------------------
+"C:/Program Files/MATLAB/R2025b/bin/mex.bat" ../src/mj.cpp -I../lib/win64/mujoco/include/mujoco -I../lib/win64/mujoco/include -I../src -IC:/Users/Ben/Documents/GitHub/Bipedal_Robot/Code/Matlab/SNS_Simscape/mujoco_bridge/blockset/mujoco-simulink-blockset-main/lib/win64/glfw/glfw-3.3.7.bin.WIN64/include -outdir ../blocks CXXFLAGS="-std=c++17" C:/Users/Ben/Documents/GitHub/Bipedal_Robot/Code/Matlab/SNS_Simscape/mujoco_bridge/blockset/mujoco-simulink-blockset-main/lib/win64/glfw/glfw-3.3.7.bin.WIN64/lib-static-ucrt/glfw3dll.lib ../lib/win64/mujoco/lib/mujoco.lib LINKFLAGS="-Wl,--no-undefined" ../src/mj_sampletime.cpp -g -output mj_sampletime 
+Building with 'MinGW64 Compiler (C++)'. 
+MEX completed successfully. 
+echo --------------------------------------; 
+--------------------------------------
+"C:/Program Files/MATLAB/R2025b/bin/mex.bat" ../src/mj.cpp -I../lib/win64/mujoco/include/mujoco -I../lib/win64/mujoco/include -I../src -IC:/Users/Ben/Documents/GitHub/Bipedal_Robot/Code/Matlab/SNS_Simscape/mujoco_bridge/blockset/mujoco-simulink-blockset-main/lib/win64/glfw/glfw-3.3.7.bin.WIN64/include -outdir ../blocks CXXFLAGS="-std=c++17" C:/Users/Ben/Documents/GitHub/Bipedal_Robot/Code/Matlab/SNS_Simscape/mujoco_bridge/blockset/mujoco-simulink-blockset-main/lib/win64/glfw/glfw-3.3.7.bin.WIN64/lib-static-ucrt/glfw3dll.lib ../lib/win64/mujoco/lib/mujoco.lib LINKFLAGS="-Wl,--no-undefined" ../src/mj_sfun.cpp -g -output mj_sfun 
+Building with 'MinGW64 Compiler (C++)'. 
+MEX completed successfully. 
+{Error using assert
+gmake did not produce blocks\mj.mexw64 - see the gmake output above.
+
+Error in laptop_build_bridge (line 36)
+assert(~isempty(blks) && any(strcmp({blks.name}, 'mj.mexw64')), ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+ERROR: MATLAB error Exit Status: 0x00000001
