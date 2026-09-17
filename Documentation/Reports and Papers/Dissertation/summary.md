@@ -10,6 +10,33 @@
 
 ---
 
+# Handoff for ChatGPT (2026-09-16)
+
+You (ChatGPT) made the original 66-item review inventory and summary.md. ZCode has since restructured this file: every ajh26 item now has problem + response in the same entry below. Read this section first, then the entries.
+
+**Current state**
+- Overleaf was restored (History, version before Sep 12 02:40) after ZCode mistakenly pasted drafts directly. Authoritative text = Overleaf History; the repo zip `Bolen_Dissertation.zip` is only the Sep 12 00:37 snapshot. Ben's editor mode dropdown may read "Edit" (ZCode switched it; he can switch back to Reviewing).
+- Review panel: 49 ajh26 comments unresolved; 16 of 17 tracked changes accepted; one tracked deletion still pending ("spinal ", background L42 — recommendation at entry B14 is to reject it).
+- This file: working doc, one entry per item, statuses DONE / PROPOSED / OPEN. Full verbatim inventory (your original): `summary_inventory_ajh26.md` beside this file. Full-file drafts with every PROPOSED text in place: `ZCode_drafts/chapters/`.
+
+**Ground rules (Ben's, enforced after the incident)**
+1. NEVER modify Overleaf — not files, not tracked changes, not comment resolves — unless Ben names the exact action in that message. Suggested edits go into this file as PROPOSED entries. Ben applies everything himself.
+2. Problem and solution in the same entry; never make Ben scroll to match them.
+3. Every entry you write or revise carries a score marker (add score / minus score) and, where possible, the specific words that earned it — the labeled example is the part that teaches.
+4. Style rules now standing: no em-dashes in new prose (split into two sentences instead); the last sentence of a section bridges to the next and states the dissertation's stake; completed-work framing only ("these tools let researchers do X", never "planned/future work"); quantitative over qualitative.
+5. FLAG-BEN placeholders mark values only Ben can supply (human knee torque results). Never fill them by guessing.
+6. Append or edit entries in place; do not renumber, reorder, or rewrite other sections' entries. Note what you changed at the bottom of the ledger.
+
+**Work available for you now**
+- Draft the remaining OPEN prose items that do not need Ben first: the X1 motivation expansion (2-3 pages, scientific framing) and the full-paragraph Dissertation Organization variant ajh26 asked for (so Ben can compare against the summary-sentence version in I5).
+- The B- global grade targets a voice-consistency pass: read the merged sections (background 2.6-2.8 after B15's distribution, results R1) and flag seams where source papers show through, as new entries.
+- After ajh26's next review pass: refresh the inventory from Overleaf's Review panel (read-only — your browser access is the designated route), append new items as entries, and update resolved ones.
+- The AI-writing-check rubric (learning log item 9) is unclaimed: em-dash density, hedge stacking, uniform sentence rhythm, AI lexicon, rule-of-three overuse. If you build the checker, run it on all PROPOSED text in this file and log findings as entry updates.
+
+**Division of labor with ZCode:** you handle prose and the Overleaf review panel (read-only); ZCode handles the code side (pulling the Newton-Raphson stop conditions from `minimizeFlxPin.m` for M5, equation cross-checks for M4, the MATLAB evaluators) and maintains `ZCode_drafts/`. Do not edit `ZCode_drafts/` — your text goes into entries here.
+
+---
+
 ## 02-abstract.tex
 
 ### A1 — one page, move extras out — PROPOSED
