@@ -1,0 +1,409 @@
+[
+ {
+  "att_key": "D9NYJVGY",
+  "doi": "10.1152/physrev.1964.44.2.219",
+  "title": "Muscle Spindles and Their Motor Control",
+  "surname_csv": "Matthews",
+  "year": "1964",
+  "creators": [
+   "Matthews"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "KWFW7CZ7",
+  "staged_path": "D:\\sadb_pdf_staging\\Matthews_1964__D9NYJVGY.pdf",
+  "text": "Muscle Spindles and Their Motor Control I?. B. C. MATTHEWS University Laborntory of Physiology, Oxford, England Amphibian Muscle Spindle. ................................................ 220 Mammalian Muscle Spindle. ............................................... 226 Structure. ............................................................. 226 Electrophysiological investigation of the spindle. ............................. 240 Physiological study of afferent endings. .................................... 241 Physiological study of fusimotor fibers. ..................................... 251 Pharmacological and other agents acting peripherally. ....................... 263 Reflex and central control of fusimotor neurons. ............................. 266 Possible functions. ....................................................... 272 THE IMPORTANCE OF MAMMALIAN muscle spindles may be judged from the large number of nerve fibers supplying them. In many muscles of the cat the total number of spindle nerve fibers, including both afferent and efferent, is consider- ably greater than the number of the ordinary alpha motor nerve fibers which supply the extrafusal muscle fibers. That the muscle spindles are stretch receptors which can also be excited by stimulation of their motor fibers is now well known, but their precise functions are still far from being understood, which is hardly surprising in view of their histological complexity. Sometimes they have been talked about in terms of an oversimplified model containing a single type of re- ceptor and controlled by a single type of motor fiber. The existence of two distinct types of afferent nerve ending, however, has been widely suspected since Ruflini described the histologically distinct primary and secondary endings, while very recent histological work strongly suggests the existence of two distinct types of intrafusal muscle fiber with independent motor nerve supplies. Thus the spindle may be considered as a device signalin, m mechanical events by means of two differ- ent outputs (the afferent fibers) and which is controlled by two additional inputs (the efferent fibers). Physiological experimentation is only just beginning to ex- plore the quantitative relationships between these numerous variables, but such knowledge of the information sent from the spindle to the central nervous system is clearly needed for a full understanding of their function. Most physiological work has been of necessity concerned with establishing the existence of, and the qualitative differences between, the various pathways shown histologically. In- deed the histological evidence for the existence of two motor systems within the spindle is so recent that agreement has not yet been reached either on the histologi- cal details or on the physiological differences between the systems. Thus the present review occurs at a turning point; much previous work was planned, analyzed, and described in terms of a single system of motor fibers to the spindle (the gamma efferents), while future work will presumably be concerned with understanding the separate effects and interactions of the two systems. Granit’s well known re- Downloaded from journals.physiology.org/journal/physrev at Portland State Univ (131.252.218.122) on November 7, 2024. 220 P. B. C. MATTHEWS view (,I 29) was written before this new complication appeared, while that of Cooper (75) covers the beginning of the present transitional phase. The symposium on muscle r"
+ },
+ {
+  "att_key": "CPWAEC5K",
+  "doi": "10.1162/neco.2008.12-07-680",
+  "title": "A Generalized Linear Integrate-and-Fire Neural Model Produces Diverse Spiking Behaviors",
+  "surname_csv": "Mihalaş",
+  "year": "2009",
+  "creators": [
+   "Mihalaş",
+   "Niebur"
+  ],
+  "folders": "Proprioceptive Feedback;Maybe Read?;references_Lutz_thesis",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "ZHSH5K3Z",
+  "staged_path": "D:\\sadb_pdf_staging\\Mihalaş_2009__CPWAEC5K.pdf",
+  "text": "A Generalized Linear Integrate-and-Fire Neural Model Produces Diverse Spiking Behaviors Ştefan Mihalaş and Ernst Niebur Zanvyl Krieger Mind/Brain Institute and Department of Neuroscience, Johns Hopkins University, Baltimore, MD 21218, U.S.A Ştefan Mihalaş: mihalas@jhu.edu; Ernst Niebur: niebur@jhu.edu Abstract For simulations of neural networks, there is a trade-off between the size of the network that can be simulated and the complexity of the model used for individual neurons. In this study, we describe a generalization of the leaky integrate-and-fire model that produces a wide variety of spiking behaviors while still being analytically solvable between firings. For different parameter values, the model produces spiking or bursting, tonic, phasic or adapting responses, depolarizing or hyperpolarizing after potentials and so forth. The model consists of a diagonalizable set of linear differential equations describing the time evolution of membrane potential, a variable threshold, and an arbitrary number of firing-induced currents. Each of these variables is modified by an update rule when the potential reaches threshold. The variables used are intuitive and have biological significance. The model’s rich behavior does not come from the differential equations, which are linear, but rather from complex update rules. This single-neuron model can be implemented using algorithms similar to the standard integrate-and-fire model. It is a natural match with event-driven algorithms for which the firing times are obtained as a solution of a polynomial equation. 1 Introduction The leaky integrate-and-fire model for neurons is often used to model spiking neuronal networks as it captures some fundamental properties of neurons (integration, spikes), the model parameters are intuitive, and it can be implemented easily and efficiently in simulations. However, there are many properties of biological neurons that this model does not reproduce. Many generalizations of the integrate-and-fire model have been proposed (for a review, see Izhikevich, 2004). Like the original integrate-and-fire model, these generalizations are hybrid systems that consist of a set of ordinary differential equations together with a set of update rules. A well-known example (Izhikevich, 2003) increases the complexity of the differential equations, which, by generating several types of bifurcations, results in a model that reproduces a large number of observed spiking patterns. However, the introduction of these features comes at a cost: it is computationally more expensive to implement in clock-driven simulators than the standard integrate-and-fire model, and it is not easily integrated in event-driven simulators. Event-driven algorithms (e.g., Mattia & Giudice, 2000) provide an efficient way to simulate spiking neuronal networks exactly (without approximation) if the state variables of a neuron can be computed from an arbitrary time in the past in the absence of events. Previous models have generally used integrate-and-fire neurons, since the time dependence of the state variable is analytically solvable. Once state variables are propagated, the solutions are used to compute the time of the next spike (event). This solution for event times depends on the model for synapses. Recently, Brette (2007) showed that for integrate-and-fire neurons with current synapses, the event times can be obtained from the solutions of a polynomial equation. It is possible to implement more complex n"
+ },
+ {
+  "att_key": "4EMAIY84",
+  "doi": "10.3389/frvir.2021.557783",
+  "title": "Proprioceptive Stimulation Added to a Walking Self-Avatar Enhances the Illusory Perception of Walking in Static Participants",
+  "surname_csv": "Labbe",
+  "year": "2021",
+  "creators": [
+   "Labbe",
+   "Kouakoua",
+   "Aissaoui",
+   "Nadeau",
+   "Duclos"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "7UT34VUA",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "FG6SXTAX",
+  "doi": "10.1152/jn.00551.2015",
+  "title": "Hip proprioceptive feedback influences the control of mediolateral stability during human walking",
+  "surname_csv": "Roden-Reynolds",
+  "year": "10/2",
+  "creators": [
+   "Roden-Reynolds",
+   "Walker",
+   "Wasserman",
+   "Dean"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "KN4HQ3T8",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "C5ZKWUUK",
+  "doi": "10.1016/j.jbiomech.2015.04.024",
+  "title": "Proprioceptive feedback contributes to the adaptation toward an economical gait pattern",
+  "surname_csv": "Hubbuch",
+  "year": "08/2",
+  "creators": [
+   "Hubbuch",
+   "Bennett",
+   "Dean"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "KRU85SG6",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "9BRRW9JI",
+  "doi": "10.7554/eLife.00231",
+  "title": "Quantification of gait parameters in freely walking wild type and sensory deprived Drosophila melanogaster",
+  "surname_csv": "Mendes",
+  "year": "2013",
+  "creators": [
+   "Mendes",
+   "Bartos",
+   "Akay",
+   "Márka",
+   "Mann"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "DL24USDE",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "RI68M9LY",
+  "doi": "10.1145/3290605.3300905",
+  "title": "Adding Proprioceptive Feedback to Virtual Reality Experiences Using Galvanic Vestibular Stimulation",
+  "surname_csv": "Sra",
+  "year": "2019",
+  "creators": [
+   "Sra",
+   "Jain",
+   "Maes"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "7JT2DYJW",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "YDL8YIDS",
+  "doi": "10.1162/PRES_a_00190",
+  "title": "Multisensory Feedback Can Enhance Embodiment Within an Enriched Virtual Walking Scenario",
+  "surname_csv": "Leonardis",
+  "year": "2014",
+  "creators": [
+   "Leonardis",
+   "Frisoli",
+   "Barsotti",
+   "Carrozzino",
+   "Bergamasco"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "WNTBWC33",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "TSTXZGW7",
+  "doi": "10.1109/MHS.2012.6492480",
+  "title": "Pseudo-proprioceptive motion feedback by electric stimulation",
+  "surname_csv": "Hasegawa",
+  "year": "04/2",
+  "creators": [
+   "Hasegawa",
+   "Sasaki",
+   "Tsukahara"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "KIHPNJPQ",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "VZ9F38IZ",
+  "doi": "10.1242/jeb.067488",
+  "title": "Proprioceptive feedback reinforces centrally generated stepping patterns in the cockroach",
+  "surname_csv": "Fuchs",
+  "year": "2012",
+  "creators": [
+   "Fuchs",
+   "Holmes",
+   "David",
+   "Ayali"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "M49TBF5M",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "R4J2XKXT",
+  "doi": "10.3389/fnbot.2011.00003",
+  "title": "Sensory feedback plays a significant role in generating walking gait and in gait transition in salamanders: a simulation study",
+  "surname_csv": "Harischandra",
+  "year": "2011",
+  "creators": [
+   "Harischandra"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "M2WKUMPB",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "7DF6JYJW",
+  "doi": "10.1016/j.jphysparis.2012.06.001",
+  "title": "Central drive and proprioceptive control of antennal movements in the walking stick insect",
+  "surname_csv": "Krause",
+  "year": "1/20",
+  "creators": [
+   "Krause",
+   "Winkler",
+   "Dürr"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "5YIDLULC",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "XI89DIYM",
+  "doi": "10.1097/JES.0b013e3182724bb0",
+  "title": "Proprioceptive Feedback and Preferred Patterns of Human Movement",
+  "surname_csv": "Dean",
+  "year": "01/2",
+  "creators": [
+   "Dean"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "Q8DDFPLP",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "QD6TP8D5",
+  "doi": "10.2522/ptj.20110206",
+  "title": "Use of Visual and Proprioceptive Feedback to Improve Gait Speed and Spatiotemporal Symmetry Following Chronic Stroke: A Case Series",
+  "surname_csv": "Lewek",
+  "year": "2012",
+  "creators": [
+   "Lewek",
+   "Feasel",
+   "Wentz",
+   "Brooks",
+   "Whitton"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "CNTQYPTR",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "IRX5WUBK",
+  "doi": "10.1186/1471-2202-12-S1-P158",
+  "title": "Effects of muscle dynamics and proprioceptive feedback on the kinematics and CPG activity of salamander stepping",
+  "surname_csv": "Knuesel",
+  "year": "12/2",
+  "creators": [
+   "Knuesel",
+   "Ijspeert"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "8XPVJXQJ",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "UDU4DVIN",
+  "doi": "10.1007/s00221-007-0938-8",
+  "title": "The effects of self-reinnervation of cat medial and lateral gastrocnemius muscles on hindlimb kinematics in slope walking",
+  "surname_csv": "Maas",
+  "year": "8/20",
+  "creators": [
+   "Maas",
+   "Prilutsky",
+   "Nichols",
+   "Gregor"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "22VVYMX8",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "RIN8JZM4",
+  "doi": "10.1007/s00221-006-0451-5",
+  "title": "Afferent-mediated modulation of the soleus muscle activity during the stance phase of human walking",
+  "surname_csv": "Mazzaro",
+  "year": "9/20",
+  "creators": [
+   "Mazzaro",
+   "Grey",
+   "do Nascimento",
+   "Sinkjær"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "6VPR2DQK",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "NCSIFLYR",
+  "doi": "10.1016/0006-8993(93)91131-B",
+  "title": "Peripheral proprioceptive modulation in crayfish walking leg by serotonin",
+  "surname_csv": "Rossi-Durand",
+  "year": "12/1",
+  "creators": [
+   "Rossi-Durand"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "Z7SRYA2R",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "BNJN4GIA",
+  "doi": "10.1113/jphysiol.2007.130088",
+  "title": "Positive force feedback in human walking: Positive force feedback in human walking",
+  "surname_csv": "Grey",
+  "year": "2007",
+  "creators": [
+   "Grey",
+   "Nielsen",
+   "Mazzaro",
+   "Sinkjaer"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "LHCQR7T2",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "22RM4EQK",
+  "doi": "10.1152/jn.1992.67.3.530",
+  "title": "Identified proprioceptive afferents and motor rhythm entrainment in the crayfish walking system",
+  "surname_csv": "Elson",
+  "year": "1992",
+  "creators": [
+   "Elson",
+   "Sillar",
+   "Bush"
+  ],
+  "folders": "Proprioceptive Feedback",
+  "folder_bucket": "Proprioceptive Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "9RXRTJTI",
+  "staged_path": "",
+  "text": "NO-STAGED-PDF"
+ },
+ {
+  "att_key": "TAZUXF69",
+  "doi": "10.1088/1748-3190/10/6/065005",
+  "title": "Neuromechanical model of praying mantis explores the role of descending commands in pre-strike pivots.",
+  "surname_csv": "Szczecinski",
+  "year": "2015",
+  "creators": [
+   "Szczecinski",
+   "Szczecinski",
+   "Martin",
+   "Martin",
+   "Bertsch",
+   "Bertsch",
+   "Ritzmann",
+   "Ritzmann",
+   "Quinn",
+   "Quinn"
+  ],
+  "folders": "Mantasha;Sensory Feedback;Mantasha",
+  "folder_bucket": "Sensory Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "FNZWRT8W",
+  "staged_path": "D:\\sadb_pdf_staging\\Szczecinski_2015__TAZUXF69.pdf",
+  "text": "This content has been downloaded from IOPscience. Please scroll down to see the full text. Download details: IP Address: 194.27.18.18 This content was downloaded on 20/03/2016 at 23:56 Please note that terms and conditions apply. Neuromechanical model of praying mantis explores the role of descending commands in pre- strike pivots View the table of contents for this issue, or go to the journal homepage for more 2015 Bioinspir. Biomim. 10 065005 (http://iopscience.iop.org/1748-3190/10/6/065005) Home Search Collections Journals About Contact us My IOPscience Bioinspir. Biomim. 10 (2015) 065005 doi:10.1088/1748-3190/10/6/065005 PAPER Neuromechanical model of praying mantis explores the role of descending commands in pre-strike pivots Nicholas S Szczecinski, Joshua P Martin, David J Bertsch, Roy E Ritzmann and Roger D Quinn Case Western Reserve University, 10900 Euclid Ave., Cleveland, Ohio, USA 44106 E-mail: nss36@case.edu Keywords: neuromechanical modeling, neuromorphic control, descending commands, praying mantis Abstract Praying mantises hunt by standing on their meso- and metathoracic legs and using them to rotate and translate (together, ‘pivot’) their bodies toward prey. We have developed a neuromechanical software model of the praying mantisTenodera sinensis to use as a platform for testing postural controllers that the animal may use while hunting. Previous results showed that a feedforward model was insufﬁcient for capturing the diversity of posture observed in the animal(Szczecinski et al 2014 Biomimetic and Biohybrid Syst. 3 296–307). Therefore we have expanded upon this model to make aﬂexible controller with feedback that more closely mimics the animal. The controller actuates 24 joints in the legs of a dynamical model to orient the head and translate the thorax toward prey. It is controlled by a simulation of nonspiking neurons assembled as a highly simpliﬁed version of networks that may exist in the mantid central complex and thoracic ganglia. Because of the distributed nature of these networks, we hypothesize that descending commands that orient the mantis toward prey may be simple direction-of-intent signals, which are turned into motor commands by the structure of low- level networks in the thoracic ganglia. We verify this through a series of experiments with the model. It captures the speed and range of mantid pivots as reported in other work(Yamawaki et al 2011 J. Insect Physiol. 57 1010–6). It is capable of pivoting toward prey from a variety of initial postures, as seen in the animal. Finally, we compare the model’s joint kinematics during pivots to preliminary 3D kinematics collected fromTenodera. Introduction Praying mantises use visual feedback to orient their heads toward prey while keeping their feet stationary using a highly mobile neck, mesothorax –prothorax joint, and legs. When pivoting (i.e. rotating and translating their bodies and heads ) toward static prey, mantises actuate their body segments (Yamawaki et al 2011) and legs (Cleal and Prete 1996) in coordinated ways to locate prey in the center of their visual ﬁeld before striking. Early cybernetic models described the control system that converts an error signal, the distance of the prey from the center of the visual ﬁeld, into precise head saccades that center the target (Lassig and Kirmse 1972, Mittelstaedt 1957). However, these models did not address the types of commands that are necessary to coordinate all the joints in each leg into a coordinated mo"
+ },
+ {
+  "att_key": "ZMS66V28",
+  "doi": "10.1113/EP089826",
+  "title": "Secondary endings of muscle spindles: Structure, reflex action, role in motor control and proprioception",
+  "surname_csv": "Banks",
+  "year": "2021",
+  "creators": [
+   "Banks",
+   "Ellaway",
+   "Prochazka",
+   "Proske"
+  ],
+  "folders": "Sensory Feedback",
+  "folder_bucket": "Sensory Feedback",
+  "zot_scope": "groups/735051",
+  "zot_parent": "MAIJXHSE",
+  "staged_path": "D:\\sadb_pdf_staging\\Banks_2021__ZMS66V28.pdf",
+  "text": "Received: 12 July 2021 Accepted: 11 October 2021 DOI: 10.1113/EP089826 REVIEW ARTICLE Secondary endings of muscle spindles: Structure, reflex action, role in motor control and proprioception Robert W. Banks1,2 Peter H. Ellaway3 Arthur Prochazka4 Uwe Proske5 1 Department of Biosciences, Durham University, Durham, UK 2 Biophysical Sciences Institute, Durham University, Durham, UK 3 Department of Brain Sciences, Imperial College London, London, UK 4 Division of Neuroscience, University of Alberta, Edmonton, Alberta, Canada 5 School of Biomedical Sciences, Monash University, Clayton, Victoria, Australia Correspondence Robert W. Banks, Department of Biosciences, Durham University, South Road, Durham DH13LE, UK. Email: r.w.banks@durham.ac.uk Edited by: Jeremy Ward Abstract Kinaesthesia and the control of bodily movement rely heavily on the sensory input from muscle spindles. Hundreds of these sensory structures are embedded in mammalian muscles. Each spindle has one or more sensory endings and its own complement of small muscle fibres that are activated by the CNS via fusimotor neurons, providing efferent control of sensory responses. Exactly how the CNS wields this influence remains the subject of much fascination and debate. There are two types of sensory endings, primary and secondary, with differing development, morphology, distribution and responsiveness. Spindle primary endings have received more attention than secondaries, although the latter usually outnumber them. This review focuses on the secondary endings. Their location within the spindle, their response properties, the projection of their afferents within the CNS and their reflex actions all suggest that secondaries have certain separate roles from the primaries in proprioception and motor control. Specifically, spindle secondaries seem more adapted than primaries to signalling slow and maintained changes in the relative position of bodily segments, thereby contributing to position sense, postural control and static limb positioning. By highlighting, in this way, the roles of secondary endings, a final aim of the review is to broaden understanding of muscle spindles more generally and of the important contributions they make to both sensory and motor mechanisms. KEYWORDS group II afferent, kinaesthesia, motor control, muscle spindle, position sense, spindle secondary ending 1 INTRODUCTION The mammalian muscle spindle was recognized as a sensory organ towards the end of the 19th century. Despite numerous reviews on its structure and function and on its roles in posture, locomotion and kinaesthesia (i.e., sense of position and movement), our knowledge remains at best fragmentary. One component of the muscle spindle that consistently receives little attention is the secondary ending. The dominant presence of the primary ending in response to muscle © 2021 The Authors. Experimental Physiology © 2021 The Physiological Society stretch, in eliciting the monosynaptic stretch reflex and in vibration illusions are some reasons that have led to the focus on primaries. By directing attention to secondary endings in this review, we aim to redress the balance, draw attention to what is not known and stimulate future research. The structure, function, distribution and abundance of the secondaries, their central connections, reflex actions and roles in posture, locomotion and kinaesthesia are reviewed. In writing the review, we were motivated and inspired by Peter Matthews who, while attending "
+ }
+]

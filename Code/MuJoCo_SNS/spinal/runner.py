@@ -704,6 +704,9 @@ def main(argv):
             _p.G["renshaw"] = float(best["renshaw"])
         if "ankle_post_walk_trim" in best:
             _p.G["ankle_post_walk_trim"] = float(best["ankle_post_walk_trim"])
+        for _k in ("heel_rge", "toe_rge", "ib_rge", "ia_in"):
+            if _k in best:
+                _p.G[_k] = float(best[_k])
         _p.BAL["kx"] = best["kx"]
         walk_drive = float(best.get("drive", walk_drive))
         print(f"loaded {best_path.name} (drive={walk_drive:.2f}, "
@@ -914,12 +917,13 @@ def main(argv):
     log_com = np.zeros((nsteps, 3))
     # full neural stack for the plot tool (plot_run.py): descending,
     # RG, all four PF groups (right), balance cells
+    # full neural stack for the plot tool (plot_run.py): descending,
+    # RG, all four PF groups (right), balance cells (the HIP_*_SIG
+    # channels left with the PRESET removal 2026-09-16)
     NEURO_NAMES = ("DRIVE", "POSTURE",
                    "RG_E_r", "RG_F_r", "RG_E_l", "RG_F_l",
                    "PF_E1_r", "PF_E2_r", "PF_F1_r", "PF_F2_r",
-                   "BAL_TRK_FLX", "BAL_TRK_EXT", "BAL_LAT_R", "BAL_LAT_L",
-                   "HIP_EXT_SIG_r", "HIP_FLEX_SIG_r",
-                   "HIP_EXT_SIG_l", "HIP_FLEX_SIG_l")
+                   "BAL_TRK_FLX", "BAL_TRK_EXT", "BAL_LAT_R", "BAL_LAT_L")
     log_neuro = np.zeros((nsteps, len(NEURO_NAMES)))
     bal_neurons = ("BAL_PF", "BAL_DF")
 
@@ -936,7 +940,20 @@ def main(argv):
         hipflex_idx[s] = np.array([i for i, a in enumerate(acts)
                                    if muscles[a].side == s
                                    and "hip_flex" in muscles[a].groups], dtype=int)
-    hip_sig = {s: (0.0, 0.0) for s in net.sides}   # (ext_sig, flex_sig)
+    # v11 mechanosensory stance feedback: per-foot heel/toe contact normal
+    # forces (N), computed from MuJoCo contacts each step
+    foot_regions = ("calcn", "toes")
+    BW = float(model.body_mass.sum()) * 9.81
+    bodyid_region = {}
+    for b in range(model.nbody):
+        nm = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_BODY, b)
+        if nm:
+            for reg in foot_regions:
+                if nm == f"{reg}_r":
+                    bodyid_region[b] = reg + "_r"
+                elif nm == f"{reg}_l":
+                    bodyid_region[b] = reg + "_l"
+    con_force = np.zeros(6)  # contact force buffer (mj_contactForce)
     for k in range(nsteps):
         t = k * DT
         drive, posture = drive_posture(t, walk_drive)
@@ -983,27 +1000,9 @@ def main(argv):
                         [stance[muscles[a].side] for a in acts]))[i]
                     + g_ii[i] * len_norm[i], 0.0)
                 u[iport[f"Ib_{a}"]] = max(0.5 * g_ib[i] * force_norm[i], 0.0)
-            # --- v5 sensory phase-reset signals (per side) ---
-            # extension: hip-extensor group mean normalized length INVERTED
-            # (extensors shorten as the hip extends -> positive signal),
-            # rectified + stance-gated (prolongs stance: excites RG-E,
-            # inhibits RG-F). flexion velocity: hip-flexor group mean
-            # normalized shortening velocity, rectified (triggers swing:
-            # excites RG-F, inhibits RG-E).
-            ga, gb = PHASE_RESET.get("stance_gate", (0.3, 0.7))
-            for s in net.sides:
-                ie, ifl = hipext_idx[s], hipflex_idx[s]
-                ext_sig, flex_sig = 0.0, 0.0
-                if ie.size:
-                    ext_raw = -float(np.mean(len_norm[ie]))
-                    ext_sig = max(ext_raw, 0.0) * (ga + gb * stance[s])
-                if ifl.size:
-                    flex_raw = -float(np.mean(vel_norm[ifl]))
-                    flex_sig = max(flex_raw, 0.0)
-                hip_sig[s] = (ext_sig, flex_sig)
-                if net.phase_reset:
-                    u[iport[f"HIP_EXT_SIG_{s}"]] = G["phase_reset_e"] * ext_sig
-                    u[iport[f"HIP_FLEX_SIG_{s}"]] = G["phase_reset_f"] * flex_sig
+            # (PRESET hip-signal ports removed with the pathway 2026-09-16;
+            # sensory phase reset now travels the per-muscle afferent ->
+            # central edges inside the network - nothing to inject here)
         # --- balance feedback (standing only; fades with drive) ---
         fade = (1.0 - drive) / max(walk_drive, 1e-6) if BAL["fade_with_drive"] else 1.0
         com = data.subtree_com[0]
@@ -1047,6 +1046,59 @@ def main(argv):
                 BAL["max_trk"]))
         u[iport["DRIVE"]] = drive
         u[iport["POSTURE"]] = posture
+        # --- v11 heel/toe contact mechanosensors (audit P1a) ---
+        if net.stance_fb:
+            heel_n = {"r": 0.0, "l": 0.0}
+            toe_n = {"r": 0.0, "l": 0.0}
+            for ci in range(data.ncon):
+                c = data.contact[ci]
+                for g in (c.geom1, c.geom2):
+                    b = model.geom_bodyid[g]
+                    reg = bodyid_region.get(b)
+                    if reg:
+                        mujoco.mj_contactForce(model, data, ci, con_force)
+                        if reg.endswith("_r"):
+                            heel_n["r"] += max(con_force[0], 0.0)
+                            toe_n["r"] += max(con_force[0], 0.0)
+                        else:
+                            heel_n["l"] += max(con_force[0], 0.0)
+                            toe_n["l"] += max(con_force[0], 0.0)
+                        break
+            heel_sig = {"r": min(heel_n["r"] / (0.35 * BW), 1.5),
+                        "l": min(heel_n["l"] / (0.35 * BW), 1.5)}
+            toe_sig = {"r": min(toe_n["r"] / (0.50 * BW), 1.5),
+                       "l": min(toe_n["l"] / (0.50 * BW), 1.5)}
+            load_sig = {"r": min((heel_n["r"] + toe_n["r"])
+                                 / (0.60 * BW), 1.5),
+                        "l": min((heel_n["l"] + toe_n["l"])
+                                 / (0.60 * BW), 1.5)}
+            for s in net.sides:
+                u[iport[f"HEEL_c_{s}"]] = G["heel_rge"] * heel_sig[s]
+                u[iport[f"TOE_c_{s}"]] = G["toe_rge"] * toe_sig[s]
+                u[iport[f"LOAD_c_{s}"]] = G["ib_rge"] * load_sig[s]
+        # --- v11b semi-closed loops: per-side afferent relay currents ---
+        if net.aff_loops:
+            ga, gb = PHASE_RESET.get("stance_gate", (0.3, 0.7))
+            for s in net.sides:
+                ie = hipext_idx[s]
+                ifl = hipflex_idx[s]
+                # extensor afferent drive (force + length components)
+                ext_drive = 0.0
+                if ie.size:
+                    ext_force = float(np.mean(
+                        [min(F[aid[a]] / max(Fmax[aid[a]], 1e-9), 1.0)
+                         for a in np.array(acts)[ie]]))
+                    ext_len = float(np.mean(len_norm[ie]))
+                    ext_drive = max(ext_force, 0.0) + max(ext_len, 0.0) * 0.5
+                    ext_drive *= (ga + gb * stance[s])
+                u[iport[f"AFF_E_{s}"]] = G["aff_e_rg"] * max(ext_drive, 0.0)
+                # flexor afferent drive (velocity + length components)
+                flex_drive = 0.0
+                if ifl.size:
+                    flex_vel = float(np.mean(vel_norm[ifl]))
+                    flex_len = float(np.mean(len_norm[ifl]))
+                    flex_drive = max(-flex_vel, 0.0) + max(-flex_len, 0.0) * 0.5
+                u[iport[f"AFF_F_{s}"]] = G["aff_f_rg"] * max(flex_drive, 0.0)
         # solved standing pattern -> motoneuron posture bias (fades to a
         # small floor during walking so the stepping pattern can take over;
         # a 0.2 floor kept knee-extensor tone high enough to pin the knees
@@ -1130,9 +1182,7 @@ def main(argv):
                         v[net.idx["PF_E1_r"]], v[net.idx["PF_E2_r"]],
                         v[net.idx["PF_F1_r"]], v[net.idx["PF_F2_r"]],
                         u[iport["BAL_TRK_FLX"]], u[iport["BAL_TRK_EXT"]],
-                        u[iport["BAL_LAT_R"]], u[iport["BAL_LAT_L"]],
-                        hip_sig["r"][0], hip_sig["r"][1],
-                        hip_sig["l"][0], hip_sig["l"][1])
+                        u[iport["BAL_LAT_R"]], u[iport["BAL_LAT_L"]])
         if scope is not None:
             scope.update(t, log_neuro[k], log_act[k, :8])
 

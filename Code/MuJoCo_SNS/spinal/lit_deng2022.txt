@@ -1,0 +1,826 @@
+ 
+ 
+ 
+ 
+Biomimetics 2022, 7, 226. https://doi.org/10.3390/biomimetics7040226 www.mdpi.com/journal/biomimetics 
+Article 
+Biomechanical and Sensory Feedback Regularize the Behavior 
+of Different Locomotor Central Pattern Generators 
+Kaiyu Deng 1,*, Alexander J. Hunt 2, Nicholas S. Szczecinski 3, Matthew C. Tresch 4, Hillel J. Chiel 5,6,7,  
+C. J. Heckman 8 and Roger D. Quinn 1 
+1 Department of Mechanical and Aerospace Engineering, Case Western Reserve University,  
+Cleveland, OH 44106, USA 
+2 Department of Mechanical and Materials Engineering, Portland State University, Portland, OR 97207, USA 
+3 Department of Mechanical and Aerospace Engineering, West Virginia University,  
+Morgantown, WV 26506, USA 
+4 Departments of Biomedical Engi neering, Physical Medicine and Rehabilitation, Neuroscience,  
+Shirley Ryan AbilityLab and Northwestern University, Chicago, IL 60611, USA 
+5 Department of Biology, Case Western Reserve University, Cleveland, OH 44106, USA 
+6 Department of Neurosciences, Case Western Reserve University, Cleveland, OH 44106, USA  
+7 Department of Biomedical Engineering, Case Western Reserve University, Cleveland, OH 44106, USA 
+8 Departments of Neuroscience, Physical Medicine and Rehabilitation, Physical Therapy and Human  
+Movement Sciences, Shirley Ryan AbilityLab and Northwestern University, Chicago, IL 60611, USA 
+* Correspondence: kxd194@case.edu; Tel.: +1-216-544-0278 
+Abstract: This work presents an in-dep th numerical investigation into a hypothesized two-layer 
+central pattern generator (CPG) that controls mammalian walking and how different parameter 
+choices might affect the stepping of a simulated neuromechanical model. Particular attention is paid 
+to the functional role of features that have not re ceived a great deal of attention in previous work: 
+the weak cross-excitatory connectivity within th e rhythm generator and the synapse strength be-
+tween the two layers. Sensitivity evaluations of deafferented CPG models and the combined neu-
+romechanical model are performed. Locomotion fr equency is increased in two different ways for 
+both models to investigate whether the model’s st ability can be predicted by trends in the CPG’s 
+phase response curves (PRCs). Our results show that the weak cross-excitatory connection can make 
+the CPG more sensitive to perturbations and that increasing the synaptic strength between the two 
+layers results in a trade-off between forced phas e locking and the amount of phase delay that can 
+exist between the two layers. Additionally, although the models exhibit these differences in behav-
+ior when disconnected from the biomechanical model, these differences seem to disappear with the 
+full neuromechanical model and result in similar behavior despite a variety of parameter combina-
+tions. This indicates that the neural variables do not have to be fixed precisely for stable walking; 
+the biomechanical entrainment and sensory feedback  may cancel out the strengths of excitatory 
+connectivity in the neural circuit and play a critical role in shaping locomotor behavior. Our results 
+support the importance of including biomechanical models in the development of computational 
+neuroscience models that control mammalian locomotion. 
+Keywords: synthetic nervous system; rat; rhythm generator; pattern formation;  
+perturbation analysis 
+ 
+1. Introduction 
+Mammals can swiftly react to terrain changes during locomotion by dynamically 
+adapting their limb movements. Although th e strategies and neural systems that legged 
+animals use to produce stepping motions are still not fully understood, many experiments 
+suggest that the spinal cord and associated pe ripheral nervous system contribute to the 
+generation and adaptation of gaits [1–3]. It is widely believed that neural circuits located 
+Citation: Deng, K.; Hunt, A.J.;  
+Szczecinski, N.S.; Tresch, M.C.; 
+Chiel, H.J.; Heckman, C.J.; Quinn, 
+R.D. Biomechanical and Sensory 
+Feedback Regularize the Behavior of  
+Different Locomotor Central Pattern 
+Generators. Biomimetics 2022, 7, 226. 
+https://doi.org/10.3390/ 
+biomimetics7040226 
+Academic Editor: Dario Izzo 
+Received: 4 November 2022 
+Accepted: 1 December 2022 
+Published: 4 December 2022 
+Publisher’s Note: MDPI stays neu-
+tral with regard to jurisdictional 
+claims in published maps and institu-
+tional affiliations. 
+ 
+Copyright: © 2022 by the authors. Li-
+censee MDPI, Basel, Switzerland. 
+This article is an open access article 
+distributed under the terms and con-
+ditions of the Creative Commons At-
+tribution (CC BY) license (https://cre-
+ativecommons.org/licenses/by/4.0/). 
+
+Biomimetics 2022, 7, 226 2 of 18 
+ 
+ 
+in the spinal cord called central pattern gene rators (CPGs) are important for repetitive 
+motions in animal locomotion, such as those seen in swimming or walking [4–6]. These 
+neural circuits can produce patterned output either with or without input from a descend-
+ing system. However, how the CPG is organized and how descending commands influ-
+ence its behavior is still not well understood. 
+Many earlier models of rhythm-generating spinal circuitry assumed a half-center or-
+ganization for the network, in which two neuronal groups mutually inhibit each other [7–
+9]. The dynamics of the half-center structur e have been well studied [10–13], and some 
+models were successfully applied as robot controllers [14–17]. However, it is difficult for 
+the half-center model to independently modify both the timing and magnitude of moto-
+neuron activity [18]. Additionally, the half-center model cannot replicate the non-resetting 
+deletions that have been observed in spinal  animal preparations [19] in which motoneu-
+ron bursts were absent and then subsequent motoneuron bursts reappear at the time they 
+would be expected, had the deletion not occurred. 
+To enable separate control of CPG timing and MN patterning, Rybak and colleagues 
+introduced a two-layer CPG model [20]. It is composed of a half-center rhythm generator 
+that regulates rhythmic timing and a pattern formation network that distributes and 
+shapes the timing signals to the motoneuron pools. This model provides a degree of sep-
+aration between the behavior of the frequency control network and the motor patterning 
+network, providing a means for more flexibi lity in motor activations while maintaining 
+coordinated locomotion. We demonstrated in previous work that when the CPG fre-
+quency is increased through a descending drive, the activity level of the pattern formation 
+layer is less affected than that of the rhyt hm generator layer [21]. Additionally, the two-
+layer CPG is more adaptive to perturbations, allowing for small timing adaptations at the 
+pattern formation layer that are not experienced at the rhythm generator layer. 
+The two-layer CPG model has continued to evolve and has been further refined to 
+capture a range of experimental observations through the inclusion of additional struc-
+tural elements and modeling parameters. For example, recent modeling work has in-
+cluded weak mutual excitation between oscillators in the rhythm generator level of the 
+classic half-center CPG model [21,22]. This connectivity is hypothesized to match obser-
+vations from several experimental studies [23] . For example, when the inhibition of v1 
+and v2b interneurons is absent, the flexor and extensor motoneurons can still be synchro-
+nously and rhythmically excited [24–26]. Although the introduction of this connection in-
+creases the explanatory power of this model, how the strength of this connection impacts 
+overall network performance is not clear. Additionally, the sensitivity of the network per-
+formance to variations in the strength of  the connection between the rhythm-generating 
+and pattern-formation layers, which is fundamental to the performance of this two-layer 
+CPG, has not been examined systematically. 
+In the present study, we investigate how variations in these connection strengths af-
+fect the overall CPG network function. We us e a perturbation analysis, evaluating how 
+the phase changes in response to perturbati ons under different modeling conditions ap-
+plied at different times in the gait cycle. We  employ a similar approach to the phase re-
+sponse analyses used previously to characterize oscillators’ performance in experimental 
+[27,28] and modeling studies [29,30]. Our analysis begins with the examination of the 
+phase response curves of the deafferented CPG, then examines the consequences of cou-
+pling the CPG with a simulated biomechanical model that incorporates sensory feedback. 
+The addition of limb mechanics can have important consequences for model performance, 
+either amplifying or suppressing the response of the system to perturbations [31]. 
+We examine several aspects of the performa nce of this two-layer CPG. We first ex-
+amine the influence of the hypothesized cros s-excitatory connection on the rhythm-gen-
+erating behavior. Specifically, we analyze how changes in this connection affect the loco-
+motor frequency and phase adjustments in response to perturbations. After that, we vary 
+the synapse strength between the two layers and evaluate the rhythm generator’s ability 
+to phase lock with the pattern formation network at different intrinsic frequencies. The 
+Biomimetics 2022, 7, 226 3 of 18 
+ 
+ 
+two-layer CPG is then connected to motoneur on pools and used to actuate a simulated 
+biomechanical rat hindlimb, which provides the CPG with sensory feedback. The move-
+ment speed is increased through two methods: (1) adding an external drive to stimulate 
+the rhythm generator, as from a direct connection between the midbrain locomotor region 
+(MLR) and the rhythm generator; and (2) increasing the conductance of the mutually ex-
+citatory connections between the rhythm ge nerator oscillators, as if neuromodulation 
+were used to increase the synaptic strength. Our results show that, despite trends in dif-
+ferences between the two models during deafferented and air walking, no discernible dif-
+ference in locomotor behavior is found during ground walking experiments. 
+2. Methods 
+2.1. Neuromechanical Model 
+The development of the rat hindlimb model was completed in Animatlab [32], a sim-
+ulation platform for designing neural model s and actuating biomechanical bodies with 
+proprioceptive feedback. The configuration and parameter va lues of the biomechanical 
+model (Figure 1A) are the same as reported in  our previous model [21] and the model’s 
+motion is still constrained in the sagittal plane with hinge joints. 
+ 
+Figure 1. (A) Biomechanical model of a rat hind limb from our previous work [21]. Each leg segment 
+is modeled as a rigid body (pelvis in red; femur in green; tibia in yellow; and tarsus in purple). 
+Muscles are indicated by blue lines, and yellow do ts are the origin, insertion, and intermediate 
+points. (B) Joint control network; parameters labeled in red font were those investigated in the pre-
+sent study. D: Supra-spinal drive; E: Extensor; F: Flexor; IN: Interneuron; RG: Rhythm generator; 
+PF: Pattern formation; RE: Renshaw cell; and MN: Motoneuron. 
+To inspect how the simulated models’ reacti ons to perturbation are influenced by 
+different two-layer CPG designs, the hip joint control network from the previous synthetic 
+nervous system (SNS) was isolated, as shown in Figure 1B. In this network, extensor and 
+flexor Ia feedback, which signals the rate of a stretch of the muscle, synapse onto the Ia 
+interneurons. The flexor and extensor Ib feedback, which signals the tension developed in 
+the muscle, synapses onto the corresponding motoneurons. To eliminate other influences 
+and simplify the problem for this study, only type II feedback was applied directly to the 
+two-layer CPG to coordinate the extensor-flexo r timing. This is similar to how increased 
+
+Biomimetics 2022, 7, 226 4 of 18 
+ 
+ 
+stretching of hip flexors encourages the initiation of swing in animals, and increased 
+stretching of extensors encourages the initiation of stance [33–35]. 
+2.2. Neural Model 
+All neurons in the SNS are non-spiking neur ons, where each neuron represents the 
+mean activity of a population of spiking neurons [36,37]. Each node in the network func-
+tions as a leaky integrator [29]. Neglecting action potentials increases computational effi-
+ciency and greatly reduces runtime [37]. Our model explores how signals propagate 
+through the network and how groups of neuron s activate, deactivate, and contribute to 
+network behavior. The dynamics of the neurons are governed by the following differential 
+equations: 
+𝐶௠
+𝑑𝑉
+𝑑𝑡 =𝐺 ௠ ∙ (𝐸௥ −𝑉 ) +𝐼 ௔௣௣ +෍𝐺 ௦௬௡,௜ ∙൫ 𝐸௦,௜ −𝑉 ൯+𝐺ே௔ ⋅ (𝐸ே௔ −𝑉 ) ∙𝑚 ஶ ∙ℎ   
+𝐺௦௬௡,௜ =𝑔 ௦௬௡,௜ ∙𝑚 𝑖 𝑛൬ 𝑚 𝑎 𝑥൬𝑉௣௥௘ −𝐸 ௟௢
+𝐸௛௜ −𝐸 ௟௢
+,0 ൰,1 ൰  
+𝑧ஶ = 1
+1+ 𝐴௭ ∙e x p  ൫ − 𝑆௭ (𝑉−𝐸 ௭)൯  
+𝑑ℎ
+𝑑𝑡 = ℎஶ(𝑉) − ℎ
+𝜏௛(𝑉) ,𝜏 ௛(𝑉) =𝜏 ௛ ∙ℎ ஶ(𝑉) ∙ ට𝐴௛ ∙e x p ൫ − 𝑆௛ (𝑉−𝐸 ௛)൯  
+where V is the membrane potential, Cm is the membrane capacitance, t is the time variable, 
+Er is the resting potential of the neuron, and Gm is the leak conductance. Iapp is an externally 
+applied current. ∑ 𝐺௦௬௡,௜ ∙൫ 𝐸௦,௜ −𝑉 ൯ are currents from synaptic connections, where Es is 
+the reversal potential of the ith synapse, 𝑔௦௬௡ is the maximum conductance of the synapse, 
+and Elo and Ehi are the lower and the upper thresholds of the synapse, respectively. Vpre is 
+the presynaptic neuron voltage. 𝐺ே௔ ⋅ (𝐸ே௔ −𝑉 ) is the persistent sodium current in CPG 
+neurons, which are gated by activation and inactivation of voltage-dependent channels 
+𝑚 and ℎ, respectively. The variable z represents either 𝑚 or ℎ, as their equations have 
+the same form, except that 𝑚 increases monotonically with 𝑉 but ℎ decreases mono-
+tonically with 𝑉. Details of all neuronal and synaptic parameters can be found in Appen-
+dix A (Tables A1 and A2). 
+2.3. Bifurcation Parameter 
+Szczecinski et al. used a bifurcation parameter, 𝛿, to analyze the behavior of half-
+center CPGs [29]. The bifurcation parameter is defined as: 
+𝛿=𝑉 ஶ,௜௡௛ −𝐸 ௟௢  
+where 𝑉ஶ,௜௡௛ is the equilibrium potential of the inhibited half of the CPG and Elo is the 
+synaptic threshold it must cross to begin inhibiting the other half. When 𝛿<0 , the inhib-
+ited half will remain below the resting threshold for all time, establishing a stable equilib-
+rium. When 𝛿>0 , the inhibited half can escape from its lower equilibrium and the CPG 
+oscillates. As 𝛿 grows larger, the CPG oscillates faster. This previous work showed that 
+the strength of mutual inhibition was related to the value of 𝛿, suggesting a biophysical 
+meaning for this parameter. Thus, Szczecinski’s study [29] explained why 𝛿 is effective 
+at predicting the frequency and the phase response to stimuli for half-center oscillators. 
+The present study expands the analysis from Szczecinski’s work with two additional 
+variables as shown in Figure 2A: (1) the weak excitations conductance 𝐺௪ between the 
+two halves of the rhythm generator; and (2) the descending drive 𝐷 from the MLR. 
+Biomimetics 2022, 7, 226 5 of 18 
+ 
+ 
+ 
+Figure 2. (A) Schematic of the detailed neural connections for the inhibited rhythm generator exten-
+sor neuron in Figure 1b. ( B) 𝛿 in the phase space of the rhythm generator. The red dashed line is 
+the V-nullcline and the green dashed line is the h-nullcline. 
+The equilibrium potential 𝑉ஶ occurs when there is no change to the membrane volt-
+age. Thus, when 𝑑𝑉 𝑑𝑡⁄ =0 , one can solve the neuron dynamics equation for 𝑉ஶ,𝑖 𝑛 ℎ: 
+𝑉ஶ,௜௡௛ = 𝐸௥ +𝐷+𝐺 ௪ ∙𝐸 ௪ +𝐺 ௛௬௣ ∙𝐸 ௛௬௣ +𝐺 ே௔ ∙𝐸 ே௔ ∙𝑚 ஶ ∙ℎ
+1+𝐺 ௪ +𝐺 ௛௬௣ +𝐺 ே௔ ∙𝑚 ஶ ∙ℎ   
+where 𝑚ஶ and ℎ are both dependent on the value of 𝑉ஶ,௜௡௛, as shown above in Section 
+2.2. 
+When modeling the CPG circuit, usually the synaptic threshold Elo is set to equal the 
+resting potential of the neuron, Er. Hence, the bifurcation parameter 𝛿 in this study is 
+described by the following equation, in which each of the potentials has Er subtracted from 
+it: 
+𝛿= 𝐷+𝐺 ௪ ∙ (𝐸௪ −𝐸 ௥) +𝐺 ௛௬௣ ∙( 𝐸௛௬௣ −𝐸 ௥)+𝐺 ே௔ ∙( 𝐸ே௔ −𝐸 ௥)∙𝑚 ஶ ∙ℎ
+1+𝐺 ௪ +𝐺 ௛௬௣ +𝐺 ே௔ ∙𝑚 ஶ ∙ℎ   
+2.4. Overview of Analysis 
+All analysis of the two-layer CPG in this work is performed through MATLAB 
+(MATLAB 2021a, The MathWorks, Inc., Natick, MA, USA). 
+First, the experiment in Szczecinski et al.’s study was replicated, with 𝛿, the bifurca-
+tion parameter, being modified by varying 𝐺௪, the conductance of the cross-excitatory 
+synapse between the oscillators in the rhythm generator, and 𝐷, the descending drive. 
+After that, the effect of the connection strength 𝐺௖ between the two layers was investi-
+gated. The two-layer CPG was deafferented with  no external inputs and the strength of 
+mutual excitation was adjusted until the rhythm generator oscillated at 1 Hz. The 1 Hz 
+frequency is close to a slow stride frequency of a rat, making comparisons to in vivo data 
+easier. The intrinsic frequency of the patte rn formation layer was varied between 0.5 Hz 
+and 2.3 Hz by adjusting the mutual inhibition strength. Different connection strengths 
+were then tested for phase locking and phase shift between the two layers. 
+Phase response analysis was performed on  the deafferented two-layer CPG neural 
+model and used to predict the behavior of the mechanical model when integrated, i.e., the 
+neural model generates muscle contractions and receives sensory feedback from the re-
+sulting motion. In the deafferented neural mo del, the rhythm generator’s response to 
+changes in the external drive and the synaptic conductance between the rhythm genera-
+tors was studied. Then, phase response curv es (PRCs) of two rhythm generators, one 
+driven entirely by the external drive and one driven entirely by mutual excitation, were 
+numerically calculated by applying a square pulse stimulus to the RG flexor interneuron. 
+
+Biomimetics 2022, 7, 226 6 of 18 
+ 
+ 
+The advancement or delay of the cycle was measured and normalized to the entire cycle. 
+The perturbation current was either −0.5 nA or 0.5 nA with a duration of 5 percent of the 
+oscillation period, which is consistent with the stimulus in Szczecinski et al.’s study; keep-
+ing the same duration here allowed us to co mpare our results to those described in that 
+previous study. After that, for a two-layer CPG, external stimuli were applied to different 
+layers of the CPG, and the corresponding PRCs were analyzed and compared. 
+Frequencies of the two-layer CPGs were then increased to 2 Hz through (1) adding 
+an external drive to stimulate the rhythm generator; and (2) increasing the conductance of 
+the mutual excitatory connections between the rhythm generator oscillators. PRCs and 
+the phase shift between the two layers were calculated and compared. The faster fre-
+quency (2 Hz) was chosen to compare how a baseline CPG responds to two different types 
+of stimulation, as though the animal is modulating its speed. In addition, 2 Hz is closer to 
+the locomotion frequency of rats observed in previous X-ray treadmill experiments per-
+formed by our collaborators [21]. A similar frequency has also been reported in other stud-
+ies [38]. 
+Finally, each configuration of the network model was incorporated with the biome-
+chanical model. The response of each model to perturbations was tested, and the implica-
+tions with respect to future and past modeling work are discussed. 
+3. Results 
+3.1. The Effect of Variations in the Strength of Reciprocal Excitatory Connections and 
+Descending Drive on the Performance of the Rhythm-Generating Layer 
+In Szczecinski’s study [29], the half-center CPG’s oscillation frequency was found to 
+depend on the strength of mutual inhibition . However, this was the case when all other 
+parameters were held constant. The oscillation frequency is actually dependent on every-
+thing that sets each neuron’s equilibrium voltage, which includes persistent sodium cur-
+rent parameters, rest voltage, membrane conductance, and other parameters (Section 2.2). 
+In the present study, we expanded Szczecinski’s results by exploring two additional 
+variables: (1) the weak excitatory conductance 𝐺௪ between the rhythm generator half-
+centers and (2) the descending drive 𝐷 from the MLR. We investigated how these param-
+eters influence the behavior of the rhythm generator. For instance, the frequency of 1 Hz 
+can be obtained by a rhythm generator with no mutual excitation (𝐺௪ equal to zero) and 
+external drive equal to 5.86 nA, or with a mutual excitation conductance equal to 0.57 uS 
+(reversal potential Es = −40 mV) and no external drive. However, the shape of each neural 
+burst underlying these oscillations with similar frequencies is substantially different. As 
+seen in Figure 3, the membrane voltages un derlying these two oscillations are different 
+between the two networks, i.e., the rhythm generator that oscillates because of an external 
+drive (Figure 3A) has a larger voltage range and sharper peaks than the rhythm generator 
+that oscillates because of a weak mutual excitation (Figure 3B). 
+The sensitivity of the two networks to external inputs is also different. Figure 3C,D 
+present the phase response of rhythm generators oscillating at 1 Hz (with the same pa-
+rameters as in Figure 3A,B) when the external current Is was applied at different phases of 
+the oscillation cycle. As shown in Figure 3C,D, the magnitude and timing of the phase 
+shift differ between these two rhythm genera tors. To quantify the differences in phase 
+response, the PRCs were numerically calculated by applying a square pulse perturbation 
+current to the RG flexor interneuron and measuring the advancement or delay of the sub-
+sequent cycle, normalized to the duration of one unperturbed cycle. The perturbation cur-
+rent Is was either −0.5 nA (Figure 3E) or 0.5 nA (Figure 3F) with a duration of 5 percent of 
+the oscillation period. The rhythm generato r which was driven by direct stimulus 𝐷 = 
+5.86 displays a smaller phase advancement and, thus, is less sensitive to external inputs 
+compared to the other model. 
+Biomimetics 2022, 7, 226 7 of 18 
+ 
+ 
+ 
+Figure 3. (A) Rhythm generators oscillating at 1 Hz driven by a descending drive, 𝐷 = 5.86. ( B) 
+Rhythm generators oscillating at 1 Hz driven by weak excitatory connections, 𝐺௪  = 0.57. ( C,D) 
+Comparisons between perturbed (dashed lines) and nominal (solid lines) membrane voltages for 
+rhythm generator extensors are shown in A (red lines) and B (purple lines); ( C) the inhibitory per-
+turbation current Is = 0.5 nA was applied to the RG flexor interneuron at 𝜑 = 0.2 with a duration of 
+5 percent of the oscillation period (arrow); ( D) the excitatory perturbation current Is = 0.5 nA was 
+applied to the RG flexor interneuron at 𝜑 = 0.4 with a duration of 5 percent of the oscillation period 
+(arrow). (E) PRCs for the rhythm generator driven by 𝐷 = 5.86 or 𝐺௪ = 0.57 at 1 Hz when perturbed 
+by inhibitory stimuli of the same magnitude and duration as shown in part ( C). (F) PRCs for the 
+rhythm generator driven by 𝐷 = 5.86 or 𝐺௪ = 0.57 at 1 Hz when perturbed by excitatory stimuli of 
+the same magnitude and duration as shown in part (D). 
+There are further differences in circuit function on the bifurcation parameter 𝛿 be-
+tween changing the strength of the descending drive or the weak excitatory connections. 
+For the rhythm generator driven by constant drive 𝐷, 𝛿 equals 0.07, whereas, for the net-
+work oscillating by mutual excitation 𝐺௪, the 𝛿 value is 0.03. As 𝛿 represents the sensi-
+tivity to phase advancement/delay, it tells us  how close the system’s equilibrium state is 
+to the threshold needed to disrupt the equilib rium (and thus start another cycle). For a 
+small 𝛿, the CPG responds immediately to the inputs, and the phase advancement is di-
+rectly related to when the stimulus current is applied. However, for larger values of 𝛿, 
+the rhythm generator’s sensitivity to inputs is reduced [29]. 
+Figure 4A shows the oscillation frequency of the rhythm generator can be controlled 
+by both reciprocal connections and descending drive, showing that the two parameters 
+(𝐺௪ and 𝐷) have similar effects. For a given descending drive 𝐷, an increase in reciprocal 
+connection strength 𝐺௪ will increase the frequency until the neurons’ only equilibrium 
+state is for both neurons to have equal membrane voltage (and thus, they do not oscillate; 
+blue regions in Figure 4A). When 𝐷 and 𝐺௪ are too large, the system does not oscillate 
+E. F.
+A. B.
+C. D.
+C D
+
+Biomimetics 2022, 7, 226 8 of 18 
+ 
+ 
+(blue regions in Figure 4A). Figure 4B shows that although different combinations of pa-
+rameter values might result in the same 𝛿 values, the frequencies of the resulting circuits 
+are not equal. Figure 4C shows PRCs for three different parameter combinations for which 
+𝛿 = 0.1. The curves exhibit the same general shape, but their details certainly differ at 
+some locations, especially at the phase delay portion of the curves. In the system driven 
+by descending command 𝐷, the phase delay timing is postponed compared to the model 
+driven by reciprocal excitation (i.e., less sensitive). 
+ 
+Figure 4. The frequency of the rhythm generator and phas e response curves vary as a function of 
+neural parameters (descending drive D or coupling conductance 𝐺௪). (A) Various combinations of 
+𝐷 and 𝐺௪ can control the oscillation frequency (presented as a color map) of the rhythm generator. 
+(B) Different combinations of parameters might result in the same 𝛿 values, but the frequencies 
+will be different. (C) The phase response curves for 𝛿 = 0.1 with different parameter combinations. 
+The phase response curves are relatively similar, however, differences clearly exist. 
+In summary, a specific oscillation frequency can be obtained for the rhythm generator 
+by different combinations of parameter values but the resulting networks will possess 
+different bifurcation 𝛿 values. Since the sensitivity of the network to incoming perturba-
+tions is determined by 𝛿, which represents how close the system’s equilibrium state is to 
+the threshold that must be crossed for the CPG to switch states, the networks will have 
+different responses to perturbations. 
+3.2. The Effect of Variations in the Connection Strength between Rhythm Generating and 
+Pattern Formation Layers 
+In the previous section, it was shown that the synaptic conductances ( Gw and Ghyp in 
+Figure 2A) and external drive 𝐷 influence the rhythm generator’s frequency and phase 
+response to stimuli. Different combinations of parameter values and stimuli lead to PRCs 
+with different shapes and sizes. In the followi ng section, to evaluate the performance of 
+the system, unless otherwise noted, the pattern formation layers are tuned (by varying 
+Ghyp) to the same intrinsic frequencies as the rhythm generators. 
+  
+0 0.2 0.4 0.6 0.8 1
+Conductance of Gw (uS)
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+00 . 511 . 522 . 5
+f, Oscillation frequency (Hz)
+C.
+A. B.
+Different timing on 
+phase delay
+Biomimetics 2022, 7, 226 9 of 18 
+ 
+ 
+3.2.1. Effect of Signal Transmission Strength between Two Layers 
+When an excitatory synapse ( Gc in Figures 1 and 5) connects the rhythm generator 
+(RG) to the pattern formation (PF) layer, the PF layer can become phase locked to the RG 
+layer even when the intrinsic frequency of the PF layer is different than that of the RG 
+layer (Figure 5A). For example, when Gc = 0.05 uS, PF layers with intrinsic frequencies 
+ranging from 0.73 to 1.1 Hz can be phase locked to an RG that has an intrinsic frequency 
+of 1 Hz. When the connection strength Gc is increased, PF layers with a wider range of 
+intrinsic frequencies can become entrained and phase locked to the RG’s frequency. Ad-
+ditionally, different intrinsic frequencies of the PF network result in different phase shifts 
+between the two layers, even when there are no  perturbations to the system (Figure 5B). 
+For example, when Gc = 0.1 uS, the phase shift between the two layers ranges from 0.1% 
+to 4%. In contrast to the trends seen in the frequency range, the range of phase difference 
+between the two layers is reduced when the Gc connection strength increases. However, 
+when the connection strength is too weak (Gc = 0.05), the system is less likely to phase lock, 
+and therefore, the range of phase differences is also reduced. 
+ 
+Figure 5. The rhythm generator phase locks with the pattern formation layer. (A) The range of pat-
+tern formation layer frequencies that phase locked to the rhythm generator is related to the connec-
+tion strength of Gc. (The top number reflects the maximum frequency that could phase lock, whereas 
+the bottom number reflects the mi nimum frequency that could phase lock.) Outside of the ranges 
+indicated by the bars, the two layers could not phase lock. (B) As connection strength increases, the 
+range of phase differences between the pattern fo rmation layer and rhythm generator is reduced. 
+(The top number represents the maximum phase sh ift as a percentage of the normalized cycle, 
+whereas the bottom number represents the minimum phase shift as a percentage of the normalized 
+cycle.) However, when the connection strength is too weak ( Gc = 0.05), the system is less likely to 
+phase lock, and therefore, the range of phase differences is also reduced. 
+Additionally, the coupling strength between the RG and the PF layers affects the re-
+sponse of the network to perturbations. Stro ng coupling causes the PF layer to strictly 
+follow the signal pattern from the RG, even when the system is perturbed (Figure 6, brown 
+lines). When the connection between the layers is strong ( Gc = 0.1 uS) and an inhibitory 
+
+Biomimetics 2022, 7, 226 10 of 18 
+ 
+ 
+perturbation current Is is applied at the RG or the PF layer, the phase shift difference be-
+tween the layers is effectively zero (Figure 6C,D). The PF layer is less affected when the 
+connection strength is reduced (Figure 6, green dashed lines), especially for those stimuli 
+applied at the PF layer. This leads to phas e shifts between the RG and the PF layer as 
+shown in Figure 6C,D. These phase shifts reflect how much flexibility the neural system 
+has during perturbed motion. There are no significant differences in the maximum phase 
+shifts when comparing RG perturbations vs. PF  perturbations, indicating that the maxi-
+mum phase shift is primarily related to the connection strength. 
+While stronger connections can explain th e smaller phase shift difference between 
+the two layers, the ratio between the perturba tion current and the direct connection con-
+ductance (Is/Gc) also becomes smaller as the connections strengthen. One could surmise 
+that increasing the magnitude of the perturbation in relation to Gc could produce similar 
+phase responses as reducing the coupling strength Gc. To examine this, the PRCs of the 
+same ratio Is/Gc were also calculated for different Gc (Figure 6E). The results show that the 
+phase response difference for the same Is/Gc ratio is different, and the reduction in the 
+range of phase difference is largely due to the increase in Gc. 
+ 
+Figure 6. PRCs of the two-layer CPGs when perturbed with the stimulus of different magnitudes or 
+at different phases. ( A) PRCs of the two-layer CPG when the i nhibitory stimulus is applied to the 
+
+Biomimetics 2022, 7, 226 11 of 18 
+ 
+ 
+RG flexor interneuron. ( B) PRCs of the two-layer CPG when the inhibitory stimulus is applied to 
+the PF flexor interneuron. ( C) Maximum possible phase shifts between the two layers when the 
+stimulus is applied to the RG layer. ( D) Maximum possible phase shifts between the two layers 
+when the stimulus is applied to the PF layer. ( E) Range of possible phase shifts between the two 
+layers for different 𝐼௦ 𝐺௖⁄  ratios when the stimulus is applied to the RG layer. 
+3.2.2. Speed Modulation 
+Descending commands from the high-level midbrain locomotor region (MLR) have 
+been reported to be responsible for changing gait and posture while an animal is in motion 
+[39]. Our analysis of the rhythm generator examines two mechanisms that could be used 
+to increase the CPG frequency: direct stimulus 𝐷 of the RG neurons, or neuromodulation 
+of the weak excitatory synapse conductivity 𝐺௪. Further analysis of these two mecha-
+nisms on the two-layer CPG indicates that increasing CPG frequency through either 
+mechanism makes the system less sensitive to perturbations (Figure 7A). The maximum 
+range of the phase shift between the two layers for a CPG operating at 2 Hz driven by the 
+direct stimulus 𝐷 is around 32.4% smaller than the one driven through neuromodulation 
+(Figure 7B). This demonstrates that the two-layer CPG driven by the direct stimulus 𝐷 is 
+less sensitive to perturbation than the one driven by neuromodulation, which is consistent 
+with what we found for the deafferented rhythm generator above, as shown in Figure 3. 
+ 
+Figure 7. PRCs and maximum phase shift for the rhythm generator as frequency increases. (A) PRCs 
+for the rhythm generator at 2 Hz driven by 𝐷 or neuromodulation of 𝐺௪. (B) Range of phase shift 
+between the two layers when oscillation frequency is increased. 
+3.3. Performance of Two-Layer CPG with Simulated Mechanical Model 
+In previous sections, the experiments were  performed by simulating a deafferented 
+two-layer CPG without a simulated mechanic al model or sensory feedback. However, 
+feedback plays an important role throughout locomotion, and it is unclear if the inclusion 
+of feedback would give different results in re sponse to perturbations. Therefore, a single 
+joint (hip) model actuated by pairs of anta gonistic muscles (Figure 8A) was created to 
+investigate the CPG’s performance under different combinations of parameters during air 
+walking. Type II afferent feedback from the muscles is connected to the RG and PF CPG 
+interneurons through inhibitory connections (Figure 8B). This feedback reduces the cross-
+inhibition within the CPG, enabling the suppressed half to escape sooner. The leg model 
+is suspended in the air, and parameters are set to produce ‘air-walking’ movements of the 
+hip joint. Synapse properties were hand-tuned to produce similar maximum joint angles 
+as seen in the walking rat (approximately 20 degrees in the flexion direction and 40 de-
+grees in the extension direction). 
+A. B.
+Biomimetics 2022, 7, 226 12 of 18 
+ 
+ 
+ 
+Figure 8. Schematics for the single jo int biomechanical model. (A) Single joint (hip) physics model 
+shown in the neutral position (θ = 0). (B) Type II afferent feedback of the muscles was connected to 
+CPG interneurons (CPG part of Figure 1B) on the opposite side through inhibitory connections. 
+We then recorded the response of the neuromechanical system to external torque 
+perturbations applied to the joint at different points of the locomotor cycle. Figure 9 pre-
+sents the joint angle vs. time for the single joint model with a frequency of 2 Hz. The torque 
+perturbation is applied at 0.5 s and ends at 1 s. When the external torque is small (Figure 
+9A), both models recover after the perturbati on ends. However, the model driven by di-
+rect stimulus recovers slightly sooner and returns more closely to its unperturbed step 
+timing. When a large perturbation torque is applied, one step cycle is deleted (Figure 9B), 
+and the simulated hip joint receiving the external drive recovers joint motion faster (blue 
+line, Figure 9B) than the network with weak excitatory connections (red line, Figure 9B). 
+The simulated hip joints in Figure 9 do not fully recover to their original step timing due 
+to limited feedback and alteration of the rhythm generator timing. 
+ 
+Figure 9. Hip joint angles vs. time during stepping with an external perturbation torque applied to 
+the joint during ‘air-walking’ in which the leg does not touch the ground. The torque is applied on 
+the femur at the start of the second stance phase at 0.5 s and ends at 1 s, with a duration of one step 
+cycle. The blue 2 Hz D line indicates that the CPG is operating at 2 Hz and driven by the direct 
+stimulus 𝐷. The red 2 Hz Gw line indicates that the CPG is operating at 2 Hz by neuromodulation of 
+the weak excitatory synapse conductivity 𝐺௪. Dashed lines indicate when the transition from ex-
+tension to flexion would occur if there was no perturbation. ( A) Given a small torque perturbation 
+(−0.02 Nm), both models recover after the perturbation ends. ( B) A large torque perturbation ( −0.1 
+Nm) causes the deletion of an entire step cycle. 
+A. B.
+T T
+Biomimetics 2022, 7, 226 13 of 18 
+ 
+ 
+In the next experiment, we investigated if the simulated air-walking results above 
+would translate to simulated locomotion with  ground contact. Therefore, we used the 
+same neural parameters in the walking simulation model with two hindlimbs described 
+above (Figure 1A). We then placed the simulated hindlimb model on the ground and ap-
+plied Ib feedback from the ankle extensor to  the RG and PF CPG extensor interneurons. 
+Figure 10 shows the perturbed motions for the hip joint in our ground walking model 
+walking at 2 Hz. For both models, 𝐷 excitation or 𝐺௪  neuromodulation, the hip joint 
+quickly recovers to its original step timing after both small and large perturbations. Neu-
+ral models using either mechanism exhibit powerful stability against the disturbance, and 
+it is difficult to distinguish the difference in kinematic offset for these two mechanisms 
+(Figure 10D). 
+ 
+Figure 10. Hip joint angle vs. time during stepping with an external torque applied to the joint dur-
+ing ground walking. The blue 2 Hz D line indicates that the CPG is operating at 2 Hz and driven by 
+the direct stimulus 𝐷. The red 2 Hz Gw line indicates that the CPG is operating at 2 Hz by neuro-
+modulation of the weak excitatory synapse conductivity 𝐺௪. The torque is applied on the left femur 
+at the start of the second stance phase with a duration of one step cycle. Dashed lines indicate when 
+the transition from extension to flexion would occur if there was no perturbation. (A) Small torque 
+perturbation (−0.02 Nm) as in Figure 9A. ( B) Large torque perturbation ( −0.1 Nm) as in Figure 9B. 
+(C) Bars present the range of joint offset from the nominal profile during and after applying a small 
+external torque as in (A). (D) Bars present the range of joint offs et from the nominal profile during 
+and after applying a large external torque as in (B). 
+4. Discussion 
+This work investigates some of the details of the hypothesized two-layer CPG model 
+thought to underlie mammalian-legged locomotion [18,20,22] and how the two-layer CPG 
+and its associated biomechanical model react to perturbations when the locomotion fre-
+quency is changed. This study builds upon our previous work [21] and investigates how 
+neural parameters in the CPG cooperatively generate patterned signals needed for loco-
+motion. These analyses provide guidelines for future computational neuroscience designs 
+for mammalian locomotion modeling studies. 
+The sensitivity analysis of the rhythm generator reveals that both the external drive 
+(e.g., from the MLR) and the weak excitatory strength between oscillators influence the 
+A. B.
+T T
+C. D.
+Biomimetics 2022, 7, 226 14 of 18 
+ 
+ 
+oscillation frequency. Increasing the excitatory strength proportionally alters the bifurca-
+tion parameter, 𝛿, similar to previous work that demonstrated increases in 𝛿 due to in-
+creases in direct stimulus [29]. However, the neural activity for these two mechanisms is 
+different even when the oscillation frequency is the same. Half-centers in the model driven 
+by the direct drive have a stronger onset of activity and a flatter plateau when compared 
+to the model driven by mutual excitation. The phase response curves of the rhythm gen-
+erators in response to perturbations are also different; the model driven by the direct stim-
+ulus is less sensitive to external perturbations as it has a higher value of 𝛿 given the same 
+intrinsic frequency. 
+The connection strength between the two layers determines whether the two layers 
+will lock phases and if so, the phase delay between the layers. A high connection strength 
+forces the pattern formation network to replicate all phase shifts and phase resetting that 
+occur in the rhythm generator. This replicates the type of connection that has been ob-
+served at the hip joint, where the joint position is closely related to the swing-stance tran-
+sition [33–35]. However, this behavior does not apply to all the joints as it is not very flex-
+ible when it is necessary to adapt patterned signals in response to perturbations (e.g., sen-
+sory feedback altered by uneven terrain) and can lead to stability problems during loco-
+motion. For example, the ankle joint is known to have a more flexible pattern as foot place-
+ment relies significantly on feedback from muscle spindles during walking [35]. The re-
+sults here show that a weaker connection strength can provide this additional phase shift 
+flexibility between the two layers. 
+Increasing the frequency of the two-layer CPG generally decreases the system’s sen-
+sitivity to external inputs. This holds true for both the deafferented neural circuit, as well 
+as for the neuromechanical model performing air walking. When connecting the CPG 
+with a physical body and type II feedback, trends in the PRCs analyzed in the deafferented 
+model are directly reflected in the behavior of the neuromechanical model. The simulated 
+hip joint driven by the direct stimulus is less disturbed during a small torque perturbation 
+and recovers faster when a step cycle is totally deleted during air walking. 
+In contrast, when either model is implemented in a neuromechanical model of two 
+hindlimbs walking on the ground, most of these differences disappear. Both neural mod-
+els exhibit powerful stability against the disturbance and there is no functional difference 
+in step timing for these two mechanisms. Thes e results suggest that the precise behavior 
+of the deafferented neural circuit may be of  little importance to how the whole system 
+performs in the real world. This finding is consistent with observations based on sea slug 
+feeding behaviors [40], where the isolated ganglia motor patterns are very individualized 
+and sensory feedback reduces individuality. Indeed, for any controller, neural or artificial, 
+to be robust and capable, it must not be highly sensitive to internal parameters, and must 
+properly incorporate sensory feedback to shape and coordinate overall behavior. 
+Moreover, biomechanics plays a significant role in stabilization. A study from 
+Matrangola et al. [41] suggests that musculoskeletal properties might be important in per-
+turbation corrections: increases in body mass  and inertia are beneficial to balance recov-
+ery, as it increases the resistance to a perturbation. Additionally, mechanical interactions, 
+such as the stretching of elastic tissue, start instantaneously after a perturbation. These so-
+called ‘preflexes’ [42] occur much faster than sensory information can be processed and 
+usually serve as the first line of defense against perturbations [43]. These previous studies 
+clearly demonstrate that peripheral biomechanics can significantly improve stability, and 
+our work provides further support for this important observation. Finally, our results also 
+show that sensory feedback pathways within the spinal cord can provide further stabili-
+zation of locomotor gaits, demonstrating that locomotor stability is not strictly a feature 
+of central neural circuits but likely results from the combined contributions from several 
+elements in the peripheral motor system [44]. 
+What causes the air-walking and ground-walking models to behave differently? 
+There are two changes made from air walking to ground walking: the ground contact and 
+Ib feedback from the ankle extensor, which is the load sensory feedback. We tried to build 
+Biomimetics 2022, 7, 226 15 of 18 
+ 
+ 
+a ground walking model without Ib afferent. However, as the inclusion of Ib feedback 
+makes ground walking more stable, we still do not know the answer. More attention 
+should be paid to investigating the influence of load feedback in the future. Would the 
+system become more sensitive to perturbations if the feedback strengths were reduced? 
+Or is it the shape of the load feedback or the ground contact timing that stabilizes the 
+phase transition from swing to stance? Furt her experiments exploring a range of pertur-
+bations to investigate time-torque relationsh ips and the strength of sensory feedback 
+might help resolve some of these issues. 
+There is another limitation in this study that may be important. We only imple-
+mented II and Ib feedback into the CPG. As joint motion profiles are used to tune the 
+neural parameters, presumably, the strong velocity sensitivity afferent would be similar 
+for air-walking and ground-walking models . However, the Ia feedback might also 
+strongly affect CPG phase relations. Hence, the air-walking and ground-walking models 
+might be expected to perform differently. Therefore, further inspection of how Ia feedback 
+influences CPG phase relations is also necessary for future studies. 
+The results of this study suggest that the strengths of excitatory connectivity do not 
+have to be fixed precisely for stable walking. This suggests focusing on more detailed bio-
+mechanical models to investigate whether additional muscles or muscle groups provide 
+benefits to the stability of the model as suggested by some previous work with biarticular 
+muscles [45]. Biarticular models require a more complex neural system than monoarticu-
+lar models. This present study suggests how parameters might be set in the CPG of a 
+biarticular muscle model. This work also provides guidelines for future mammalian loco-
+motor modeling by constraining parameter value ranges and reducing computational 
+costs during parameter searches. 
+Author Contributions: Conceptualization, A.J.H., N.S.S., and K.D.; methodology, K.D. and A.J.H.; 
+software, K.D.; validation, K.D. and A.J.H.; formal analysis, K.D., A.J.H., M.C.T., H.J.C., C.J.H., and 
+R.D.Q.; investigation, K.D.; resources, R.D.Q.; data curation, K.D.; writing—original draft prepara-
+tion, K.D.; writing—review and editing, N.S.S., A.J.H., M.C.T., H.J.C., C.J.H., and R.D.Q.; visualiza-
+tion, K.D.; supervision, R.D.Q., M.C.T., and H.J.C.; project administration, R.D.Q. and H.J.C.; fund-
+ing acquisition, R.D.Q. All authors have read and agreed to the published version of the manuscript. 
+Funding: This work was supported by NSF DBI 2015317 as part of the NSF/CIHR/DFG/FRQ/UKRI-
+MRC Next Generation Networks for Neuroscience Program and the NSF US-German Collaborative 
+Grant 1608111; and NSF 1943483. 
+Institutional Review Board Statement: Not applicable. 
+Data Availability Statement: Not applicable. 
+Conflicts of Interest: The authors declare no conflict of interest. 
+Appendix A 
+Table A1. Neural parameters. 
+Neuron 𝑪𝒎 
+(nF) 
+𝑮𝒎 
+(μS) 
+𝑬𝒓 
+(mV) 
+𝑮𝑵𝒂 
+(μS) 𝑨𝒉 𝑺𝒉 𝑬𝒉 
+(mV) 
+𝝉𝒉 
+(ms) 𝑨𝒎 𝑺𝒎 𝑬𝒎 
+(mV) 
+𝝉𝒎 
+(ms) 
+RG  5 1 −60 1.5 0.5 −0.6 −60 0.35 1 0.2 −40 2 
+PF 5 1 −60 1.5 0.5 −0.6 −60 0.35 1 0.2 −40 2 
+MN 5 1 −100 0 - - - - - - - - 
+IN 5 1 -60 0 - - - - - - - - 
+  
+Biomimetics 2022, 7, 226 16 of 18 
+ 
+ 
+Table A2. Synapse parameters for 1 Hz. 
+Synapse 𝒈 
+(μS) 
+𝒈𝒆𝒙𝒕 
+(μS) 
+𝒈𝒇𝒍𝒙 
+(μS) 
+𝑬𝒔 
+(mV) 
+𝑬𝒍𝒐 
+(mV) 
+𝑬𝒉𝒊 
+(mV) 
+RG to IN 1.625 - - −40 −60 −25 
+IN to RG 1.625 - - −70 −60 −25 
+Between RG 0.01 - - −40 −65 −40 
+PF to IN 1.613 - - −40 −60 −25 
+IN to PF 1.613 - - −70 −60 −25 
+RG to PF 0.1 - - −40 −60 −40 
+PF to MN - - - −10 −60 −50 
+Hip - 2.546 3.722 - −60 −40 
+Knee - 1.6 2 - −60 −40 
+Ankle - 3.2 4.5 - −60 −40 
+PF to Ia 0.5 - - −40 −60 −55 
+Between Ia 0.5 - - −70 −60 −40 
+Ia to MN 2 - - −100 −60 −40 
+MN to RE 0.5 - - −40 −100 −10 
+Between R 0.5 - - −70 −60 −40 
+R to MN 0.5 - - −100 −60 −40 
+R to Ia 0.5 - - −70 −60 −40 
+References 
+1. Forssberg, H.; Grillner, S.; Halbertsma, J.; Rossignol, S. The Locomotion of the Low Spinal Cat. II. Interlimb Coordination. Acta 
+Physiol. Scand. 1980, 108, 283–295. https://doi.org/10.1111/j.1748-1716.1980.tb06534.x. 
+2. Frigon, A.; Hurteau, M.-F.; Thibaudier, Y.; Leblond, H.; Telonio, A.; D’Angelo, G. Split-Belt Walking Alters the Relationship 
+between Locomotor Phases and Cycle Duration across Speeds in Intact and Chronic Spinalized Adult Cats. J. Neurosci. 2013, 33, 
+8559–8566. https://doi.org/10.1523/JNEUROSCI.3931-12.2013. 
+3. Frigon, A.; Thibaudier, Y.; Hurteau, M.-F. Modulation of Forelimb and Hindlimb Muscle Activity during Quadrupedal Tied-
+Belt and Split-Belt Locomotion in Intact Cats. Neuroscience 2015, 290, 266–278. https://doi.org/10.1016/j.neuroscience.2014.12.084. 
+4. Grillner, S.; McCLELLAN, A.; Sigvardt, K.; Wallén, P.; Wilén, M. Activation of NMDA-Receptors Elicits “Fictive Locomotion” 
+in Lamprey Spinal Cord in Vitro. Acta Physiol. Scand. 1981, 113, 549–551. https://doi.org/10.1111/j.1748-1716.1981.tb06937.x. 
+5. Brown, T.G. On the Nature of the Fundamental Activity of the Nervous Centres; Together with an Analysis of the Conditioning 
+of Rhythmic Activity in Progression, and a Theory of the Evolution of Function in the Nervous System. J. Physiol. 1914, 48, 18–
+46. https://doi.org/10.1113/jphysiol.1914.sp001646. 
+6. Hägglund, M.; Dougherty, K.J.; Borgius, L.; Itohara, S.; Iwasato, T.; Kiehn, O. Optogenetic Dissection Reveals Multiple 
+Rhythmogenic Modules Underlying Locomotion. Proc. Natl. Acad. Sci. USA 2013, 110 , 11589–11594. 
+https://doi.org/10.1073/pnas.1304365110. 
+7. Ekeberg, Ö. A Combined Neuronal and Mechanical Model of Fish Swimming. Biol. Cybern. 1993, 69 , 363–374. 
+https://doi.org/10.1007/BF01185408. 
+8. Szczecinski, N.S.; Brown, A.E.; Bender, J.A.; Quinn, R.D.; Ritzmann, R.E. A Neuromechanical Simulation of Insect Walking and 
+Transition to Turning of the Cockroach Blaberus Discoidalis. Biol Cybern 2014, 108, 1–21. https://doi.org/10.1007/s00422-013-
+0573-3. 
+9. Hunt, A.J.; Szczecinski, N.S.; Andrada, E.; Fischer, M.; Quinn, R.D. Using Animal Data and Neural Dynamics to Reverse 
+Engineer a Neuromechanical Rat Model. In Proceedings of the Biomimetic and Biohybrid Systems; Wilson, S.P., Verschure, P.F.M.J., 
+Mura, A., Prescott, T.J., Eds.; Springer International Publishing: Cham, Switzerland, 2015; pp. 211–222. 
+10. Daun, S.; Rubin, J.E.; Rybak, I.A. Control of Oscillation Periods and Phase Durations in Half-Center Central Pattern Generators: 
+A Comparative Mechanistic Analysis. J. Comput. Neurosci. 2009, 27, 3–36. https://doi.org/10.1007/s10827-008-0124-4. 
+11. Spardy, L.E.; Markin, S.N.; Shevtsova, N.A.; Prilutsky, B.I.; Rybak, I.A.; Rubin, J.E. A Dynamical Systems Analysis of Afferent 
+Control in a Neuromechanical Model of Locomotion: I. Rhythm Generation. J .  N e u r a l  E n g .  2011, 8 , 065003. 
+https://doi.org/10.1088/1741-2560/8/6/065003. 
+12. Ausborn, J.; Snyder, A.C.; Shevtsova, N.A.; Rybak, I.A.; Rubin, J.E. State-Dependent Rhythmogenesis and Frequency Control 
+in a Half-Center Locomotor CPG. J. Neurophysiol. 2018, 119, 96–117. https://doi.org/10.1152/jn.00550.2017. 
+13. Fujiki, S.; Aoi, S.; Tsuchiya, K.; Danner, S.M.; Rybak, I.A.; Yanagihara, D. Phase-Dependent Response to Afferent Stimulation 
+During Fictive Locomotion: A Computational Modeling Study. Front. Neurosci. 2019, 13 , 1288. 
+https://doi.org/10.3389/fnins.2019.01288. 
+Biomimetics 2022, 7, 226 17 of 18 
+ 
+ 
+14. Hunt, A.; Szczecinski, N.; Quinn, R. Development and Training of a Neural Controller for Hind Leg Walking in a Dog Robot. 
+Front. Neurorobot. 2017, 11, 18. https://doi.org/10.3389/fnbot.2017.00018. 
+15. Ijspeert, A.J.; Crespi, A.; Ryczko, D.; Cabelguen, J.-M. From Swimming to Walking with a Salamander Robot Driven by a Spinal 
+Cord Model. Science 2007, 315, 1416–1420. https://doi.org/10.1126/science.1138353. 
+16. Kimura, H.; Fukuoka, Y.; Cohen, A.H. Adaptive Dynamic Walking of a Quadruped Robot on Natural Ground Based on 
+Biological Concepts. Int. J. Robot. Res. 2016, 26, 475–490 https://doi.org/10.1177/0278364907078089. 
+17. Szczecinski, N.S.; Chrzanowski, D.M.; Cofer, D.W.; Terrasi, A.S.; Moore, D.R.; Martin, J.P.; Ritzmann, R.E.; Quinn, R.D. 
+Introducing MantisBot: Hexapod Robot Controlled by a High-Fidelity, Real-Time Neural Simulation. In Proceedings of the 2015 
+IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), Hamburg, Germany, 28 September–3 October 
+2015; IEEE: Hamburg, Germany, September 2015; pp. 3875–3881. 
+18. McCrea, D.A.; Rybak, I.A. Organization of Mammalian Locomotor Rhythm and Pattern Generation. Brain Res. Rev. 2008, 57, 
+134–146. https://doi.org/10.1016/j.brainresrev.2007.08.006. 
+19. Grillner, S.; Zangger, P. On the Central Generation of Locomotion in the Low Spinal Cat. Exp. Brain Res. 1979, 34, 241–261. 
+20. Rybak, I.A.; Shevtsova, N.A.; Lafreniere-Roula, M.; McCrea, D.A. Modelling Spinal Circuitry Involved in Locomotor Pattern 
+Generation: Insights from Deletions during Fictive Locomotion. J. Physiol. 2006, 577 , 617–639. 
+https://doi.org/10.1113/jphysiol.2006.118703. 
+21. Deng, K.; Szczecinski, N.S.; Arnold, D.; Andrada, E.; Fischer, M.S.; Quinn, R.D.; Hunt, A.J. Neuromechanical Model of Rat 
+Hindlimb Walking with Two-Layer CPGs. Biomimetics 2019, 4, 21. 
+22. Markin, S.N.; Klishko, A.N.; Shevtsova, N.A.; Lemay, M.A.; Prilutsky, B.I.; Rybak, I.A. A Neuromechanical Model of Spinal 
+Control of Locomotion. In Neuromechanical Modeling of Posture and Locomotion ; Prilutsky, B.I., Edwards, D.H., Eds.; Springer 
+Series in Computational Neuroscience; Springer: New York, NY, USA, 2016; pp. 21–65, ISBN 978-1-4939-3267-2. 
+23. Shevtsova, N.A. Two-Level Model of Mammalian Locomotor CPG. In Encyclopedia of Computational Neuroscience ; Jaeger, D., 
+Jung, R., Eds.; Springer New York: New York, NY, USA, 2013; pp. 1–21, ISBN 978-1-4614-7320-6. 
+24. Cowley, K.C.; Schmidt, B.J. Effects of Inhibitory Amino Acid Antagonists on Reciprocal Inhibitory Interactions during Rhythmic 
+Motor Activity in the in Vitro Neonatal Rat Spinal Cord. J. Neurophysiol. 1995, 74 , 1109–1117. 
+https://doi.org/10.1152/jn.1995.74.3.1109. 
+25. Beato, M.; Nistri, A. Interaction Between Disinhibited Bursting and Fictive Locomotor Patterns in the Rat Isolated Spinal Cord. 
+J. Neurophysiol. 1999, 82, 2029–2038. https://doi.org/10.1152/jn.1999.82.5.2029. 
+26. Zhang, J.; Lanuza, G.M.; Britz, O.; Wang, Z.; Siembab, V.C.; Zhang, Y.; Velasquez, T.; Alvarez, F.J.; Frank, E.; Goulding, M. V1 
+and V2b Interneurons Secure the Alternating Flexor-Extensor Motor Activity Mice Require for Limbed Locomotion. Neuron 
+2014, 82, 138–150. https://doi.org/10.1016/j.neuron.2014.02.013. 
+27. Pinsker, H.M. Aplysia Bursting Neurons as Endogenous Oscillators. I. Phase-Response Curves for Pulsed Inhibitory Synaptic 
+Input. J. Neurophysiol. 1977, 40, 527–543. https://doi.org/10.1152/jn.1977.40.3.527. 
+28. Ayers, J.L.; Selverston, A.I. Monosynaptic Entrainment of an Endogenous Pacemaker Network: A Cellular Mechanism for von 
+Holst’s Magnet Effect. J. Comp. Physiol. 1979, 129, 5–17. https://doi.org/10.1007/BF00679907. 
+29. Szczecinski, N.S.; Hunt, A.J.; Quinn, R.D. Design Process and Tools for Dynamic Neuromechanical Models and Robot 
+Controllers. Biol Cybern 2017, 111, 105–127. https://doi.org/10.1007/s00422-017-0711-4. 
+30. Tamura, D.; Aoi, S.; Funato, T.; Fujiki, S.; Senda, K.; Tsuchiya, K. Contribution of Phase Resetting to Adaptive Rhythm Control 
+in Human Walking Based on the Phase Response Curves of a Neuromusculoskeletal Model. Front Neurosci 2020, 14 , 17. 
+https://doi.org/10.3389/fnins.2020.00017. 
+31. Serrancolí, G.; Alessandro, C.; Tresch, M.C. The Effects of Mechanical Scale on Neural Control and the Regulation of Joint 
+Stability. Int. J. Mol. Sci. 2021, 22, 2018. https://doi.org/10.3390/ijms22042018. 
+32. Cofer, D.; Cymbalyuk, G.; Reid, J.; Zhu, Y.; Heitler, W.J.; Edwards, D.H. AnimatLab: A 3D Graphics Environment for 
+Neuromechanical Simulations. J Neurosci Methods 2010, 187, 280–288. https://doi.org/10.1016/j.jneumeth.2010.01.005. 
+33. McVea, D.A.; Donelan, J.M.; Tachibana, A.; Pearson, K.G. A Role for Hip Position in Initiating the Swing-to-Stance Transition 
+in Walking Cats. J. Neurophysiol. 2005, 94, 3497–3508. https://doi.org/10.1152/jn.00511.2005. 
+34. Pearson, K.G. Role of Sensory Feedback in the Control of Stance Duration in Walking Cats. Brain Res Rev 2008, 57, 222–227. 
+https://doi.org/10.1016/j.brainresrev.2007.06.014. 
+35. Akay, T.; Tourtellotte, W.G.; Arber, S.; Jessell, T.M. Degradation of Mouse Locomotor Pattern in the Absence of Proprioceptive 
+Sensory Feedback. PNAS 2014, 111, 16877–16882. https://doi.org/10.1073/pnas.1419045111. 
+36. Wilson, H.R.; Cowan, J.D. Excitatory and Inhibitory Interactions in Localized Populations of Model Neurons. Biophys J 1972, 12, 
+1–24. https://doi.org/10.1016/S0006-3495(72)86068-5. 
+37. Szczecinski, N.S.; Quinn, R.D.; Hunt, A.J. Extending the Functional Subnetwork Approach to a Generalized Linear Integrate-
+and-Fire Neuron Model. Front. Neurorobotics 2020, 14, 577804. 
+38. Clarke, K.A.; Parker, A.J. A Quantitative Study of Normal Locomotion in the Rat. Physiol Behav 1986, 38 , 345–351. 
+https://doi.org/10.1016/0031-9384(86)90105-8. 
+39. Takakusaki, K. Functional Neuroanatomy for Posture and Gait Control. J Mov Disord 2017, 10 , 1–17. 
+https://doi.org/10.14802/jmd.16062. 
+40. Cullins, M.J.; Gill, J.P.; McManus, J.M.; Lu, H.; Shaw, K.M.; Chiel, H.J. Sensory Feedback Reduces Individuality by Increasing 
+Variability within Subjects. Curr. Biol. 2015, 25, 2672–2676. https://doi.org/10.1016/j.cub.2015.08.044. 
+Biomimetics 2022, 7, 226 18 of 18 
+ 
+ 
+41. Matrangola, S.L.; Madigan, M.L. The Effects of Obesity on Balance Recovery Using an Ankle Strategy. Hum. Mov. Sci. 2011, 30, 
+584–595. https://doi.org/10.1016/j.humov.2010.11.007. 
+42. Brown, I.E.; Loeb, G.E. A Reductionist Approach to Creating and Using Neuromusculoskeletal Models. In Biomechanics and 
+Neural Control of Posture and Movement; Winters, J.M., Crago, P.E., Eds.; Springer: New York, NY, USA, 2000; pp. 148–163, ISBN 
+978-1-4612-2104-3. 
+43. Tytell, E.; Holmes, P.; Cohen, A. Spikes Alone Do Not Behavior Make: Why Neuroscience Needs Biomechanics. Curr. Opin. 
+Neurobiol. 2011, 21, 816–822. https://doi.org/10.1016/j.conb.2011.05.017. 
+44. Loeb, G.E.; Brown, I.E.; Cheng, E.J. A Hierarchical Foundation for Models of Sensorimotor Control. Exp Brain Res 1999, 126, 1–
+18. https://doi.org/10.1007/s002210050712. 
+45. Deng, K.; Szczecinski, N.S.; Hunt, A.J.; Chiel, H.J.; Quinn, R.D. Kinematic and Kinetic Analysis of a Biomechanical Model of Rat 
+Hind Limb with Biarticular Muscles. In Proceedings of the Biomimetic and Biohybrid Systems ; Vouloutsi, V., Mura, A., Tauber, F., 
+Speck, T., Prescott, T.J., Verschure, P.F.M.J., Eds.; Springer International Publishing: Cham, Switzerland, 2020; pp. 55–67. 
+ 

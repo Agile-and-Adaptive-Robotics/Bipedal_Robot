@@ -1,0 +1,808 @@
+ORIGINAL RESEARCH
+published: 14 March 2017
+doi: 10.3389/fncom.2017.00015
+Frontiers in Computational Neuroscience | www.frontiersi n.org 1 March 2017 | Volume 11 | Article 15
+Edited by:
+Manish Sreenivasa,
+Heidelberg University, Germany
+Reviewed by:
+Boris Prilutsky,
+Georgia Institute of Technology, USA
+Jacques Duysens,
+KU Leuven, Belgium
+*Correspondence:
+Seungmoon Song
+smsong@cs.cmu.edu
+Received: 23 December 2016
+Accepted: 28 February 2017
+Published: 14 March 2017
+Citation:
+Song S and Geyer H (2017) Evaluation
+of a Neuromechanical Walking Control
+Model Using Disturbance
+Experiments.
+Front. Comput. Neurosci. 11:15.
+doi: 10.3389/fncom.2017.00015
+Evaluation of a Neuromechanical
+Walking Control Model Using
+Disturbance Experiments
+Seungmoon Song * and Hartmut Geyer
+Robotics Institute, Carnegie Mellon University, Pittsburg h, PA, USA
+Neuromechanical simulations have been used to study the spi nal control of human
+locomotion which involves complex mechanical dynamics. So far, most neuromechanical
+simulation studies have focused on demonstrating the capab ility of a proposed control
+model in generating normal walking. As many of these models w ith competing
+control hypotheses can generate human-like normal walking behaviors, a more
+in-depth evaluation is required. Here, we conduct the more i n-depth evaluation on a
+spinal-reﬂex-based control model using ﬁve representativ e gait disturbances, ranging
+from electrical stimulation to mechanical perturbation at individual leg joints and at the
+whole body. The immediate changes in muscle activations of t he model are compared to
+those of humans across different gait phases and disturbanc e magnitudes. Remarkably
+similar response trends for the majority of investigated mu scles and experimental
+conditions reinforce the plausibility of the reﬂex circuit s of the model. However, the
+model’ s responses lack in amplitude for two experiments wit h whole body disturbances
+suggesting that in these cases the proposed reﬂex circuits n eed to be ampliﬁed by
+additional control structures such as location-speciﬁc cu taneous reﬂexes. A model
+that captures these selective ampliﬁcations would be able t o explain both steady
+and reactive spinal control of human locomotion. Neuromech anical simulations that
+investigate hypothesized control models are complementary to gait experiments in better
+understanding the control of human locomotion.
+Keywords: neuromechanical simulation, human locomotion, spinal control, model evaluation, spinal reﬂex, central
+pattern generator
+1. INTRODUCTION
+Understanding the control that underlies human locomotion r emains a challenging problem. One
+reason for this is that many experimental techniques provide o nly incomplete access to the control
+circuits, making it impossible to directly probe the entire con trol involving millions of neurons in
+complex animals (Vogelstein et al., 2014 ). Another reason is that the control mechanism seems to
+vary across species ( Orlovski˘ı et al., 1999; Capaday, 2002 ), which limits our ability to extrapolate
+control circuits identiﬁed with direct methods in other ani mals to humans ( Arshavsky et al., 1985;
+Zehr and Stein, 1999; Moraud et al., 2016 ). Yet a third reason is that theoretical results from
+modeling studies of the control circuitry remain inconclus ive (Ijspeert, 2014; Sartori et al., 2016 ).
+Neuromechanical simulations are used as a theoretical tool to study human locomotion control.
+Since bipedal locomotion emerges from the interaction between the legs and the ground by utilizing
+Song and Geyer Evaluation of Neuromechanical Walking Model
+and resisting gravitational force ( Mochon and McMahon, 1980;
+McGeer, 1990; Perry and Burnﬁeld, 1992 ), accounting for
+the mechanical dynamics as well as the neural control is
+essential. This integrative approach of simulating the neura l
+control with the biomechanical dynamics allowed researche rs
+to investigate the spinal control layer where a large portion
+of locomotion control is conducted ( Enoka, 2008; Dietz, 2010;
+Kiehn, 2016 ). Previously proposed spinal control models range
+from central pattern generators (CPGs; Aoi et al., 2010 ) to
+reﬂexes (Günther and Ruder, 2003; Geyer and Herr, 2010; Song
+and Geyer, 2015a ) and to a mix of both ( Taga et al., 1991;
+Ogihara and Y amazaki, 2001; Hase and Y amazaki, 2002; Jo and
+Massaquoi, 2007; Dzeladini et al., 2014 ). Many of these models
+with competing control structures are plausible candidates f or
+human control, since they produce locomotion with kinematic s,
+kinetics, or muscle activations similar to the ones observe d in
+humans. Therefore, to genuinely evaluate the plausibility of these
+models a more in-depth comparison to experimental results is
+required.
+Disturbance reactions provide such a more in-depth
+comparison. Studying the reaction to disturbances is a commo n
+approach to establish system models and to identify controlle rs
+(Ogata and Y ang, 1970 ). Speciﬁcally for human locomotion,
+several walking experiments have been conducted that report
+on the immediate responses of the human spinal control to
+diﬀerent types of unexpected disturbances including electric al
+stimulation ( Simonsen and Dyhre-Poulsen, 1999; Courtine
+et al., 2007 ), mechanical perturbation at individual leg joints
+(Dietz et al., 1990; Sinkjaer et al., 1996; Faist et al., 1999 ),
+and more natural mechanical perturbation of the whole body
+FIGURE 1 | Spinal reﬂex-control model of human locomotion. The sagittal plane components of a 3-D model ( Song and Geyer, 2015a ) are adopted for the
+current study. The model mainly uses proprioceptive reﬂexes to control nine major muscle groups per leg, including hamst rings (HAM), rectus femoris (RF), vasti (VAS),
+gastrocnemius (GAS), soleus (SOL), and tibialis anterior ( TA). The activations of these muscles during normal walking of the model (black lines) and of humans (gray
+lines) are shown in the right panel. MN, motor neuron; IN, inte rneuron.
+(Schillings et al., 1999; Sloot et al., 2015 ). Although external
+disturbances have been used in neuromechanical human walking
+models to either test the robustness of control models ( Aoi
+et al., 2010; Kim et al., 2011; Song and Geyer, 2015a ) or to
+study speciﬁc high-level recovery strategies ( Jo, 2007; Murai
+and Y amane, 2011 ), comparisons of the reference data on
+the reactions of the human spinal control to the reactions
+predicted by the diﬀerent walking models have so far not been
+performed.
+Here, we perform the in-depth comparison of disturbance
+reactions for one neuromechanical spinal control model of
+human locomotion ( Song and Geyer, 2015a ). In previous
+work, we have shown that this model, which consists of
+primarily proprioceptive spinal reﬂexes ( Figure 1), can explain
+undisturbed locomotion behaviors. The model not only produces
+kinematics, dynamics, and muscle activations similar to hum ans
+during normal walking ( Figure 1 and Video S1) but also
+generates other locomotion behaviors such as running, walk ing
+on slopes and stairs, and avoiding obstacles. We investigate
+the plausibility of the model by comparing its reactions
+against disturbances to those of humans and discuss its
+implications in better understanding the control of human
+locomotion.
+2. METHODS
+We select a range of unexpected disturbances used in human gait
+studies from the literature, replicate them in simulation wi th the
+neuromechanical model, and compare the models reactions to
+the reported human experimental data.
+Frontiers in Computational Neuroscience | www.frontiersi n.org 2 March 2017 | Volume 11 | Article 15
+Song and Geyer Evaluation of Neuromechanical Walking Model
+2.1. Experiment Selection
+Five disturbance experiments are selected from the literatu re:
+electrical stimulation of the lumbar spinal cord to evoke
+multisegmental monosynaptic responses (MMR; Courtine et al.,
+2007), mechanical tap of tendons to induce tendon tap reﬂexes
+(TR; Dietz et al., 1990; Faist et al., 1999 ), actuation of the ankle
+joint to induce stretch reﬂexes (SR; Sinkjaer et al., 1996 ), and
+tripping (TRIP) of the swing leg ( Schillings et al., 1999 ), and
+slipping (SLIP) of the stance leg (Sloot et al., 2015; refer Video S2
+for visual guidance). In these experiments, the reactions of the
+spinal control are assessed through the changes that occur in the
+leg muscle activations within a short time after the disturb ances.
+Speciﬁcally, the activation changes are measured by surface
+electromyograms (EMGs) and their trend with respect to gait
+phase or disturbance magnitude is used to estimate the activi ty
+of spinal reﬂexes.
+The ﬁve experiments are selected to cover a broad range of
+disturbances and responses. For instance, from several repor ts
+of studies using similar types of disturbances, the ones that
+include the EMG changes for more leg muscles and across more
+conditions are selected. Speciﬁcally, while both MMR ( Courtine
+et al., 2007 ) and H-reﬂex ( Capaday and Stein, 1986; Simonsen
+and Dyhre-Poulsen, 1999 ) experiments disturb aﬀerent signals
+using electrical stimulations, the former was selected sin ce MMR
+disturbs multiple aﬀerents and, as a result, induces responses
+in more muscles. Similarly, the SR ( Sinkjaer et al., 1996 ), TRIP
+(Schillings et al., 1999 ), SLIP ( Sloot et al., 2015 ), and TR ( Dietz
+et al., 1990; Faist et al., 1999 ) experiments were chosen over
+similar ones that apply disturbances for fewer conditions ( Berger
+et al., 1984; Y ang et al., 1991; Eng et al., 1994; V an de Cromme rt
+et al., 1996; Cronin et al., 2009; Chvatal and Ting, 2012; Villarreal
+et al., 2016 ). Note that the SLIP experiment by Sloot et al.
+(2015) reports on muscle responses with latencies of about 150
+ms, which are longer than usual for spinal reﬂexes. Although
+it is acknowledged that one cannot completely exclude that
+these responses are long-latency reﬂexes, we still included the
+study, as the authors clarify that these apparent latencies ar e in
+part an outcome of their experimental protocol for detecting
+disturbances, and as we could not ﬁnd an alternative study
+reporting responses against a range of disturbance intensiti es.
+However, to further support our analysis on the response
+amplitudes in the SLIP experiment (compare Section 3.2), we
+have veriﬁed the consistency of our model results for a simil ar
+experiment by Berger et al. (1984) , in which the reported
+responses are clearly within the time window of spinal reﬂexes .
+2.2. Replication in Simulation
+We adapt the original neuromechanical model ( Song and Geyer,
+2015a) for each of the ﬁve experiments ( Table 1). Since all the
+experiments reported on sagittal plane disturbances, the model is
+ﬁrst reduced to its sagittal plane musculoskeletal architecture and
+spinal control. Then, the musculoskeletal properties are scal ed
+(Winter, 2009 ) to match the average height and weight of the
+subjects in each experiment ( Courtine et al., 2007; Sloot et al.,
+2015). If this information is not reported ( Dietz et al., 1990;
+Sinkjaer et al., 1996; Faist et al., 1999; Schillings et al., 1 999), the
+height and weight are set to 1.8 m and 80 kg. Finally, the model’ s
+TABLE 1 | Experimental setup as described in the human subject s tudies and as replicated in simulation.
+MMR (%) TR (%) SR (%) TRIP SLIP
+Height (m), weight (kg),
+walking speed (ms −1)
+exp
+sim 1.75, 64, 0.97 −, −, 0.83
+1.8, 80, 0.83
+−, −, 0.97
+1.8, 80, 0.97
+−, −, 1.11
+1.8, 80, 1.11
+BMI = 23, 1.20
+1.8, 75, 1.20
+Disturbance exp
+sim
+1 ms electrical square pulse
+percutaneously at lumbar spinal cord
+10 ms square pulse at afferent signals
+T endon tap with 90 g, 1.5 ms −1 hammer
+Muscle length change induced by hammer tap Ankle ﬂexion of 8 ◦ with
+velocity of 250 ◦s−1
+2.2 kg obstacle bumped by
+swing leg
+Speed change of split-belt
+treadmill at 150 ms after heel
+strike
+conditions exp
+sim 16 equal phases over stride Various phases over stride
+16 equal phases over stride 8 equal phases over
+stride
+Various phases over 5 ∼75% of
+swing
+Speed changes of 0.1 to 0.5
+with increments of 0.1 ms −1
+exp: human experiment; sim: simulation replication.
+Frontiers in Computational Neuroscience | www.frontiersi n.org 3 March 2017 | Volume 11 | Article 15
+Song and Geyer Evaluation of Neuromechanical Walking Model
+control parameters are optimized with the cost function
+J = CE + cv
+‖‖vavg − vtgt
+‖‖ , (1)
+which encourages energy eﬃcient walking at a target walking
+speed. In this equation, CE is the metabolic energy consumed
+by the muscles, cv = 100 is a weighting factor, and vavg and vtgt
+are the average and target walking speeds. The target walking
+speed, vtgt, is set to the reported speed in each experiment. A
+demonstration of the simulation model can be found inVideo S2.
+More details about the original model and the optimization
+procedure to obtain control parameters for stable and steady
+walking are given in ( Song and Geyer, 2015a).
+The disturbances were simulated for the reported conditions
+in each experiment, which either included diﬀerent gait phases
+(for MMR, TR, SR, and TRIP) or diﬀerent disturbance intensities
+(for SLIP). The mechanical disturbances of the SR, TRIP , and
+SLIP experiments were directly replicated in the simulation
+by modeling an unexpected ankle ﬂexion, the encounter of
+the tripping obstacle, and the shift of the supporting ground
+with the same parameters as reported in each experiment,
+respectively.
+The MMR and TR experiments were less straightforward
+to replicate in simulation, as the neuromechanical model doe s
+not include the corresponding physiological detail. In the MMR
+experiment (Courtine et al., 2007), muscle responses (spikes with
+about 20 ms durations) are induced by percutaneous electrica l
+stimulation (1 ms square pulses) at the lumbar spinal cord,
+which disturbs the aﬀerent pathways from the legs. Instead
+of modeling the electrophysiological dynamics such as the
+ﬁltering eﬀects of the skin layer, the MMR disturbance was
+simulated as 10 ms square pulses that were simultaneously
+added to the aﬀerent signals from all muscles. The duration of
+10 ms was chosen because it created similar muscle responses
+(spikes with about 20 ms durations) in the model. The
+amplitudes of the square pulses were set to be arbitrarily
+large (maximum isometric forces, Fm, for force aﬀerents;
+optimum length, lce, for length aﬀerents; and maximum-
+contraction-velocity value, |vmax|, for velocity aﬀerents) to
+evoke responses much larger than the normal activations
+seen during walking, as reported in the MMR experiment
+(Courtine et al., 2007).
+For the TR experiment, it is generally observed that the
+tendon tap reﬂex amplitude is proportional to the tapping force
+(Mildren et al., 2016 ), although the neurophysiological process
+behind this observation is not well understood ( Zhang et al.,
+1999). The eﬀect of tendon taps was modeled by simulating
+the length changes in the muscle tendon unit aﬀected by the
+tapping. Speciﬁcally, we simulated the length change based on
+the tension of the muscle and the kinetic energy of the tapping
+hammer. As a result, the eﬀect of the taps on length change
+varied over the gait cycle according to the variation of the m uscle
+tension.
+2.3. Reaction Comparisons
+The response trends and amplitudes were compared separately
+for each experiment and muscle. While the model has nine
+muscles per leg, data for only six muscles was available in the
+literature (compare Figure 1). Similarities of the response trends
+were quantiﬁed as the % of the model responses that lie within±1
+standard deviation (s.d.) of human responses when linearly scaled
+to maximize overlap. For example, 12 out of 16 of the model’s
+SOL responses in the MMR experiment lie within ±1 s.d. of the
+corresponding human responses and thus the similarity is 12/1 6
+= 75% (Figure 2).
+The response amplitudes are only compared for the SR,
+TRIP , and SLIP experiments. The MMR and TR disturbances
+induce synchronous and artiﬁcially exaggerated muscle
+activation responses, which is not observed in normal
+voluntary activations ( Y ang et al., 1991 ). As the model does
+not include these artiﬁcially synchronized muscle activations, the
+response amplitudes are not meaningful to compare for these
+studies.
+3. RESUL TS
+3.1. Response Trends
+The neuromechanical control model and humans react to
+disturbances with a similar trend for the majority of invest igated
+muscles and experimental conditions. Figure 2 summarizes
+the changes in muscle activation organized by disturbance
+experiment and leg muscle. The changes observed in humans
+(gray lines and shaded areas indicating ±1 s.d.) are normalized
+to their peak value and overlaid by the corresponding
+changes of the model (scaled to maximize overlap and
+compare trends as described in Section 2.3, black lines).
+While some of the response trends do not match well ( ≤50%
+overlap within one s.d., comparisons marked with ∗), for
+the majority of the investigated muscles and experimental
+conditions the scaled model responses lie within one s.d.
+of the human responses (78% average overlap for unmarked
+comparisons).
+For several of the marked comparisons, simple modiﬁcations
+of either the reﬂex control or the model tuning could improve
+the overlap. First, in the model, the rectus femoris muscle (RF)
+is used mainly for sensing but not actuation. As a result, it
+cannot change activation except during swing. In the human
+experiments, by contrast, RF shows response trends similar to
+the synergistic vasti muscle group (V AS) throughout stride,
+although careful interpretation of these RF responses is neede d,
+since surface EMGs of RF , which are used in the disturbance
+experiments, are prone to crosstalk from V AS ( Nene et al.,
+2004). If ﬁne wire EMG of RF reveal response trends similar
+to those of V AS, these trends can be reproduced by modifying
+the model to control RF with the same reﬂex pathways as
+V AS. Such modiﬁcation is tenable in the functional point
+of view, since RF and V AS share a common role of knee
+extension.
+Second, the diﬀerence between human and model responses
+of the vasti and the gastrocnemius muscles (GAS) during late
+swing may be an artifact of the model tuning process, which
+only considered undisturbed walking. The late swing reﬂexe s
+that control V AS and GAS in the model do not engage during
+undisturbed locomotion ( Song and Geyer, 2015a ), and thus the
+Frontiers in Computational Neuroscience | www.frontiersi n.org 4 March 2017 | Volume 11 | Article 15
+Song and Geyer Evaluation of Neuromechanical Walking Model
+FIGURE 2 | Response trends. The responses of the model and human subjects in all ﬁve distur bance experiments are shown. Human responses (gray lines) a re
+normalized with respect to their maximum value in each exper iment and for each muscle. The model responses (black lines) are linearly scaled to place as many of the
+responses as possible within ±1 s.d. of the human responses (gray shaded area). The % of the model r esponses within ±1 s.d. of human responses are shown at the
+top of each graph, and those which are ≤50% are marked with *.
+optimization process sets their parameters to arbitrary value s as
+far as they do not eﬀect normal walking. In other words, these
+control parameters could be further tuned to improve the overlap
+with human responses for the two muscles without changing the
+undisturbed walking behavior.
+Finally, the weak overlap for the soleus muscle (SOL)
+in the late swing phase of the SR experiment may be the
+result of natural variability in humans. It is known from
+human experiments using the H-reﬂex, the electrically elici ted
+equivalent of the stretch reﬂex, that the swing phase response s
+in SOL vary among subjects between no responses (similar
+to the trend predicted by the model) and the responses
+shown in the SR experiment ( Simonsen and Dyhre-Poulsen,
+1999).
+Frontiers in Computational Neuroscience | www.frontiersi n.org 5 March 2017 | Volume 11 | Article 15
+Song and Geyer Evaluation of Neuromechanical Walking Model
+3.2. Response Amplitudes
+Whereas, the model captures the majority of the human response
+trends, it clearly underestimates the response amplitudes for the
+more natural, whole body disturbances. In the SR experiments ,
+the model reacts with amplitudes in the muscle activation
+changes that are similar to the ones reported for humans (abou t
+90% of human amplitudes). Yet in the more natural TRIP
+and SLIP experiments, the response amplitudes are very small
+in the model (about 20 and 4%, respectively, and 8% for the
+experiment in Berger et al., 1984 as noted in Section 2.1). The
+diﬀerence occurs as the reﬂexes of the model only respond to
+changes in the muscle lengths, velocities and forces, and th e
+SR disturbance induces much larger changes (up to about 100
+times) in these proprioceptive signals than the TRIP and SLIP
+disturbances, which act on the muscles through the entire bo dy
+and its mechanical inertia.
+One explanation for the shortfall in the model’s response
+amplitudes could be the missing integration of reﬂex pathways
+from skin receptors. Experimental studies have shown that
+cutaneous reﬂexes evoke muscle responses with diﬀerent trend s
+across the gait cycle depending on the location of the skin
+receptors (V an Wezel et al., 1997; Duysens et al., 2000; Nakajima
+et al., 2016 ). Additional modulation of the model’s current
+proprioceptive reﬂexes by location-speciﬁc cutaneous reﬂexes
+(Figure 3), which have been observed in cat experiments
+(Lundberg et al., 1987 ), could produce human-like muscle
+response amplitudes in all experiments without altering the
+response trends. Such additional modulation against speciﬁc
+disturbances, such as those in SLIP and TRIP experiments, is
+also in agreement with previous observations that cutaneous
+stimulations are not accountable for the responses against certain
+FIGURE 3 | Example of proposed cutaneous ampliﬁcation of
+proprioceptive reﬂex control during tripping. Location speciﬁc skin
+sensors at the foot detect an obstacle encounter. Cutaneous reﬂex pathways
+return this information to the spinal cord and amplify the pr oprioceptive reﬂex
+control of locomotion.
+joint speciﬁc disturbances (for example, in SR experiment;
+Grey et al., 2001 ) but do evoke muscle responses during
+human walking ( Nakajima et al., 2016 ). However, the functional
+relevance of this ampliﬁcation remains open for speculation. Fo r
+instance, it could promote the recovery strategies seen duri ng
+human tripping (elevating and lowering strategies in early an d
+late swing; Eng et al., 1994) and slipping (ankle and hip strategies
+for anterior-posterior and medial-lateral perturbations; Oliveira
+et al., 2012).
+4. DISCUSSION
+A neuromechanical model of human locomotion has been
+evaluated by comparing its reactions to disturbances with tho se
+of humans during walking. The comparison of the response
+trends reinforces the plausibility of the majority of the mod el’s
+reﬂex circuits. However, the observation of smaller respons e
+amplitudes of the model for the whole body disturbances suggests
+that these circuits are selectively ampliﬁed in humans.
+An extension of the current control model with additional
+circuits that modulate the current reﬂex gains would likely be
+able to better reproduce both the human response trends and
+amplitudes ( Figure 4A). For example, instead of the abrupt
+switches in the reﬂex gains in the current model, either
+the supraspinal control ( Jo and Massaquoi, 2007; Song and
+Geyer, 2015a ) or CPGs can gradually change these reﬂex
+gains ( Figures 4A-a,b) and shape the response trends closer to
+humans (for example, during the transitions between stance a nd
+swing phases in V AS, GAS, and SOL, Figure 2). In addition,
+selective ampliﬁcations of response amplitudes for particular
+disturbances can be realized through additional reﬂex pathw ays
+that modulate the reﬂex gains based on the detection of those
+particular disturbances ( Figure 4A-c). These additional reﬂex
+gain modulations would be able to reproduce the human control
+during steady walking as well as its reactions against unexpect ed
+disturbances.
+On the other hand, it remains open whether other types of
+models, where CPGs generate motor outputs, can reproduce
+steady and reactive human walking behaviors with a similar
+level of agreement. It is often hypothesized that CPGs genera te
+some portion or most of the normal (background) muscle
+activations while reﬂexes in parallel generate the remainin g
+portion (Duysens and V an de Crommert, 1998; Dominici et al.,
+2011; Kiehn, 2016 ; Figure 4B). However, it is less likely that
+the previously proposed human walking models based on this
+hypothesis ( Ogihara and Y amazaki, 2001; Jo and Massaquoi,
+2007; Dzeladini et al., 2014 ) can explain human responses
+observed in the disturbance experiments, because the more of
+the normal activations is generated in a feed-forward manne r by
+CPGs the smaller the response amplitudes will be, which standsin
+contrast to the large reactions observed in humans. For example ,
+in a model that generates 90% of the normal activations with
+CPGs and the remaining 10% with the reﬂex pathways of the
+reﬂex-based model ( Dzeladini et al., 2014 ), the response trends
+will remain the same but the response amplitudes will only be
+a tenth of the reﬂex-based model. Alternatively, the respons ive
+activations could also be partially generated by CPGs as they get
+Frontiers in Computational Neuroscience | www.frontiersi n.org 6 March 2017 | Volume 11 | Article 15
+Song and Geyer Evaluation of Neuromechanical Walking Model
+FIGURE 4 | Spinal control hypotheses of the generation of musc le
+activations. Each block diagram represents a spinal mechanism of
+generating muscle activations, where the spinal control ca n potentially consist
+of serial and parallel combinations of the each mechanism. O utputs of reﬂex
+circuits and CPGs are marked in blue and green, respectively , afferent signals
+(Continued)
+FIGURE 4 | Continued
+during normal walking are marked in yellow, and those signal s in response to
+disturbances are marked in red. (A-a) Responses through the supraspinal
+system appears with larger time delays than the spinal respo nses. This holds
+true for supraspinal modulations of any spinal control (not shown for B,C).
+(A-b) Modulation of reﬂex circuits by pure CPGs does not change the
+responsive activations. (A-c) Response activations of reﬂexes can be
+selectively modulated by additional reﬂex circuits. (B) If muscle activations are
+generated mostly by CPGs, in other words, if the reﬂex circuit s generate only a
+small portion of the activation signals, the response to the change in afferent
+signals would be small as well. (C-a) Phase resetting of CPGs results in
+persistent phase shift of the muscle activation signals. (C-b) If CPGs are
+continuously modulated by sensory feedback, all afferent s ignals, including the
+disturbance signals, get modulated by CPG dynamics.
+modulated by sensory feedback ( Figure 4C). For example, phase
+shifts in CPG activations in response to perturbations, which is
+called phase resetting ( Figure 4C-a), have been observed in cats
+(Conway et al., 1987; Schomburg et al., 1998 ) and have been
+proposed to increase the robustness of human walking (Y amasaki
+et al., 2003; Aoi et al., 2010 ). However, the responses observed
+in the disturbance experiments considered in this study do not
+seem to originate from phase resetting of CPGs since they are
+transient responses rather than persistent phase shifts. Final ly,
+CPGs have also been proposed to be continuously modulated by
+sensory feedback in many models, where the muscle responses
+result from more complicated CPG dynamics ( Taga et al., 1991;
+Ogihara and Y amazaki, 2001; Hase and Y amazaki, 2002; McCrea
+and Rybak, 2008 ; Figure 4C-b). CPGs are usually modeled to
+consist of mutually inhibiting neurons with internal dynami cs
+(Matsuoka, 1985), and many human walking models ( Taga et al.,
+1991; Ogihara and Y amazaki, 2001; Hase and Y amazaki, 2002 )
+incorporate continuous sensory feedback modulation of CPGs by
+adding aﬀerent signals to this internal dynamics (for example,
+in the form of τ ˙u = − u + other-terms + feedback, where τ
+is a time constant and u is the neural output). In this case,
+the muscle responses are likely to be slower and smaller, since
+the disturbance signals need to be integrated to appear in the
+neural outputs of the CPGs. Therefore, in order to explain
+both steady and reactive behaviors during human walking wit h
+control structures in which CPGs generate muscle activation s,
+more complicated reﬂex circuits may be necessary that selectively
+amplify the responses not only for the whole body disturbances
+but also for the other disturbances.
+Still, there is clear evidence that CPGs are highly involved
+in locomotion of many animals including mammals, and it
+is reasonable to expect human locomotion involves a similar
+control structure if the functional role of CPGs remained va lid in
+the course of evolution to upright bipedal locomotion ( Capaday,
+2002; MacKay-Lyons, 2002; Ijspeert, 2008 ). One functional role
+that has been proposed to be realized by CPGs is the generation
+of transitional behaviors such as changing gait, as well as
+locomotion speed and direction. This view is supported by
+observations on decerebrate animals, where simple supraspinal
+stimulations control locomotion by modulating the frequen cy
+and amplitude of CPGs ( Armstrong, 1988; Stein et al., 1997;
+Sirota et al., 2000 ). It has been shown with a neuromechanical
+model that human locomotion speed can be controlled in a
+Frontiers in Computational Neuroscience | www.frontiersi n.org 7 March 2017 | Volume 11 | Article 15
+Song and Geyer Evaluation of Neuromechanical Walking Model
+similar way by modulating CPGs of the hip muscles ( V an der
+Noot et al., 2015 ). On the other hand, transitional behaviors
+including speed and directional changes also can be realized
+in the absence of CPGs by changing the reﬂex gains directly
+through the supraspinal control (Song and Geyer, 2012, 2015a,b).
+Therefore, the role of CPGs in transitional locomotion beha viors
+of humans calls for further experimental studies. To this end ,
+investigating the responses of the hip muscles ( Hof and Duysens,
+2013), which lack in previous gait disturbance experiments, can
+be crucial.
+Our results also show that solely relying on indirect
+experimental observations can be misleading when assessing the
+role of reﬂexes. First, the changes in muscle responses do not
+necessarily indicate modulation of reﬂex gains. For example , in
+the TR experiment the changes in the model’s HAM and V AS
+responses during stance ( Figure 2) result from the changes in
+muscle conﬁgurations while the reﬂex gains remain constant .
+Second, the correlation between the muscle states and muscl e
+responses is not suﬃcient to explain the underlying muscle
+reﬂexes. For instance, in a gait experiment similar to the SR
+experiment, Y ang et al. (1991) suggested velocity feedback to
+contribute about 45% in the generation of SOL activations
+during the stance phase. The suggested contribution is based on
+the correlation between the changes in ankle velocity and th e
+responses in SOL activation. However, as noted by the authors of
+the study, this quantiﬁcation neglects the potential contri butions
+of diﬀerent aﬀerent pathways. Performing the same correlation -
+based analysis in our model suggests a contribution of about 40%
+of velocity feedback in the stance control of SOL, even though the
+model uses no velocity feedback but 100% force feedback.
+Although, the ﬁndings of our study may help to construct
+a model that can explain the steady and reactive spinal control
+of human walking, it will take further research to settle the
+actual circuitries in humans. First, neuromechanical simu lations
+with more physiological details will be needed to incorporate
+other types of experimental studies in the evaluation of contr ol
+models. For instance, we would be able to compare the
+response amplitudes of our control model to human responses
+in MMR and TR experiments if our simulations could more
+faithfully describe the relationship between cutaneous el ectrical
+stimulation and synchronous muscle activation as well as
+the related neurophysiology. Second, other models which can
+explain normal human walking should also be subjected to gait
+disturbance experiments to genuinely evaluate their plausibi lity
+and arrive at a consensus about what the human circuitry
+might be. Finally, the resulting control model should be ver iﬁed
+by direct probing of the proposed neural circuits in human
+experiments. Although, it is currently impossible to probe the
+entire control of humans that involves millions of neurons, a
+control model that is thoroughly evaluated and speciﬁed may
+substantially reduce the search space. Evaluation beyond ste ady
+behavior will play an important role in this quest.
+AUTHOR CONTRIBUTIONS
+SS and HG designed the research. SS developed the
+computational model, conducted the simulation studies,
+and analyzed the data. SS and HG drafted the manuscript and
+approved the ﬁnal version of the manuscript.
+FUNDING
+This work is supported in part by the National Science
+Foundation (grant no. 1527140), and the Richard King Mellon
+Foundation Presidential Fellowship in the Life Sciences at
+Carnegie Mellon University.
+ACKNOWLEDGMENTS
+The authors thank R. Gregg, D. Villarreal, and B. M. Oh for the
+discussion in the early stage of this study and L. Sloot for the
+clariﬁcations on the SLIP experiment. The authors would also like
+to thank the reviewers whose comments and suggestions lead to
+substantial improvements of the paper.
+SUPPLEMENTARY MATERIAL
+The Supplementary Material for this article can be found
+online at: http://journal.frontiersin.org/article/10.3 389/fncom.
+2017.00015/full#supplementary-material
+Video S1 | Spinal-reﬂex-based neuromuscular model of human
+locomotion.
+Video S2 | Simulation replications of the human disturbance ex periments.
+REFERENCES
+Aoi, S., Ogihara, N., Funato, T., Sugimoto, Y., and Tsuchiya, K . (2010). Evaluating
+functional roles of phase resetting in generation of adaptive human bipedal
+walking with a physiologically based model of the spinal pattern generator. Biol.
+Cybern. 102, 373–387. doi: 10.1007/s00422-010-0373-y
+Armstrong, D. M. (1988). The supraspinal control of mammalian locomotion. J.
+Physiol. 405:1. doi: 10.1113/jphysiol.1988.sp017319
+Arshavsky, Y. I., Beloozerova, I., Orlovsky, G., Panchin, Y. V., and Pavlova, G.
+(1985). Control of locomotion in marine mollusc clione limacina I. Eﬀeren t
+activity during actual and ﬁctitious swimming. Exp. Brain Res. 58, 255–262.
+doi: 10.1007/BF00235307
+Berger, W., Dietz, V., and Quintern, J. (1984). Corrective react ions to stumbling
+in man: neuronal co-ordination of bilateral leg muscle activity durin g gait. J.
+Physiol. 357:109. doi: 10.1113/jphysiol.1984.sp015492
+Capaday, C. (2002). The special nature of human walking and its neu ral control.
+Trends Neurosci. 25, 370–376. doi: 10.1016/S0166-2236(02)02173-2
+Capaday, C., and Stein, R. (1986). Amplitude modulation of the soleu s
+h-reﬂex in the human during walking and standing. J. Neurosci. 6,
+1308–1313.
+Chvatal, S. A., and Ting, L. H. (2012). Voluntary and reactive recrui tment
+of locomotor muscle synergies during perturbed walking. J. Neurosci. 32,
+12237–12250. doi: 10.1523/JNEUROSCI.6344-11.2012
+Conway, B., Hultborn, H., and Kiehn, O. (1987). Proprioceptive input re sets
+central locomotor rhythm in the spinal cat. Exp. Brain Res. 68, 643–656.
+doi: 10.1007/BF00249807
+Courtine, G., Harkema, S. J., Dy, C. J., Gerasimenko, Y. P., and Dyh re-Poulsen, P.
+(2007). Modulation of multisegmental monosynaptic responses in a va riety of
+leg muscles during walking and running in humans. J. Physiol. 582, 1125–1139.
+doi: 10.1113/jphysiol.2007.128447
+Frontiers in Computational Neuroscience | www.frontiersi n.org 8 March 2017 | Volume 11 | Article 15
+Song and Geyer Evaluation of Neuromechanical Walking Model
+Cronin, N. J., Ishikawa, M., Grey, M. J., Af Klint, R., Komi, P. V., Avela,
+J., et al. (2009). Mechanical and neural stretch responses of the h uman
+soleus muscle at diﬀerent walking speeds. J. Physiol. 587, 3375–3382.
+doi: 10.1113/jphysiol.2008.162610
+Dietz, V. (2010). Behavior of spinal neurons deprived of supraspina l input. Nat.
+Rev. Neurol. 6, 167–174. doi: 10.1038/nrneurol.2009.227
+Dietz, V., Bischer, M., Faist, M., and Trippel, M. (1990). Amplitude modulation
+of the human quadriceps tendon jerk reﬂex during gait. Exp. Brain Res. 82,
+211–213. doi: 10.1007/BF00230854
+Dominici, N., Ivanenko, Y. P., Cappellini, G., D’Avella, A., Mondì,V., Cicchese, M.,
+et al. (2011). Locomotor primitives in newborn babies and their dev elopment.
+Science 334, 997–999. doi: 10.1126/science.1210617
+Duysens, J., Clarac, F., and Cruse, H. (2000). Load-regulating mech anisms in gait
+and posture: comparative aspects. Physiol. Rev. 80, 83–133.
+Duysens, J., and V an de Crommert, H. W. (1998). Neural control of locomo tion;
+part 1: the central pattern generator from cats to humans. Gait Posture 7,
+131–141. doi: 10.1016/S0966-6362(97)00042-8
+Dzeladini, F., V an Den Kieboom, J., and Ijspeert, A. (2014). The c ontribution of a
+central pattern generator in a reﬂex-based neuromuscular model. Front. Hum
+Neurosci. 8:371. doi: 10.3389/fnhum.2014.00371
+Eng, J. J., Winter, D. A., and Patla, A. E. (1994). Strategies fo r recovery from a trip
+in early and late swing during human walking. Exp. Brain Res. 102, 339–349.
+doi: 10.1007/BF00227520
+Enoka, R. M. (2008). Neuromechanics of Human Movement . Champaign, IL:
+Human Kinetics.
+Faist, M., Blahak, C., Duysens, J., and Berger, W. (1999). Mod ulation of the biceps
+femoris tendon jerk reﬂex during human locomotion. Exp. Brain Res. 125,
+265–270. doi: 10.1007/s002210050682
+Geyer, H., and Herr, H. (2010). A muscle-reﬂex model that encodes
+principles of legged mechanics produces human walking dynamics and
+muscle activities. IEEE Trans. Neural Syst. Rehabil. Eng. 18, 263–273.
+doi: 10.1109/TNSRE.2010.2047592
+Grey, M. J., Ladouceur, M., Andersen, J. B., Nielsen, J. B., and Sinkjær, T.
+(2001). Group II muscle aﬀerents probably contribute to the medium late ncy
+soleus stretch reﬂex during walking in humans. J. Physiol. 534, 925–933.
+doi: 10.1111/j.1469-7793.2001.00925.x
+Günther, M., and Ruder, H. (2003). Synthesis of two-dimensional human walking:
+a test of the λ-model. Biol. Cybern. 89, 89–106. doi: 10.1007/s00422-003-0414-x
+Hase, K., and Y amazaki, N. (2002). Computer simulation study of hu man
+locomotion with a three-dimensional entire-body neuro-musculo-sk eletal
+model. I. Acquisition of normal walking. JSME Int. J. C Mech. Syst. Mach. Elem.
+Manufact. 45, 1040–1050. doi: 10.1299/jsmec.45.1040
+Hof, A., and Duysens, J. (2013). Responses of human hip abductor muscles to
+lateral balance perturbations during walking. Exp. Brain Res. 230, 301–310.
+doi: 10.1007/s00221-013-3655-5
+Ijspeert, A. J. (2008). Central pattern generators for locomotion
+control in animals and robots: a review. Neural Netw. 21, 642–653.
+doi: 10.1016/j.neunet.2008.03.014
+Ijspeert, A. J. (2014). Biorobotics: using robots to emulate and in vestigate agile
+locomotion. Science 346, 196–203. doi: 10.1126/science.1254486
+Jo, S. (2007). A neurobiological model of the recovery strategies f rom perturbed
+walking. Biosystems 90, 750–768. doi: 10.1126/science.1254486
+Jo, S., and Massaquoi, S. G. (2007). A model of cerebrocerebello-spi nomuscular
+interaction in the sagittal control of human walking. Biol. Cybern. 96, 279–307.
+doi: 10.1007/s00422-006-0126-0
+Kiehn, O. (2016). Decoding the organization of spinal circui ts that control
+locomotion. Nat. Rev. Neurosci. 17, 224–238. doi: 10.1038/nrn.2016.9
+Kim, Y., Tagawa, Y., Obinata, G., and Hase, K. (2011). Robust c ontrol of CPG-
+based 3D neuromusculoskeletal walking model. Biol. Cybern. 105, 269–282.
+doi: 10.1007/s00422-011-0464-4
+Lundberg, A., Malmgren, K., and Schomburg, E. (1987). Reﬂex pathw ays
+from group II muscle aﬀerents. 3. Secondary spindle aﬀerents and the
+FRA: a new hypothesis. Exp. Brain Res. 65, 294–306. doi: 10.1007/BF00
+236301
+MacKay-Lyons, M. (2002). Central pattern generation of locomotio n: a review of
+the evidence. Phys. Ther. 82, 69–83. doi: 10.1093/ptj/82.1.69
+Matsuoka, K. (1985). Sustained oscillations generated by mutua lly inhibiting
+neurons with adaptation. Biol. Cybern. 52, 367–376. doi: 10.1007/BF00449593
+McCrea, D. A., and Rybak, I. A. (2008). Organization of mammalian
+locomotor rhythm and pattern generation. Brain Res. Rev. 57, 134–146.
+doi: 10.1016/j.brainresrev.2007.08.006
+McGeer, T. (1990). Passive dynamic walking. Int. J. Robot. Res. 9, 62–82.
+doi: 10.1177/027836499000900206
+Mildren, R. L., Zaback, M., Adkin, A. L., Frank, J. S., and Bent,
+L. R. (2016). Reliability of the achilles tendon tap reﬂex evoked
+during stance using a pendulum hammer. Gait Posture 43, 182–186.
+doi: 10.1016/j.gaitpost.2015.09.020
+Mochon, S., and McMahon, T. A. (1980). Ballistic walking. J. Biomech. 13, 49–57.
+doi: 10.1016/0021-9290(80)90007-X
+Moraud, E. M., Capogrosso, M., Formento, E., Wenger, N., DiGiovan na, J.,
+Courtine, G., et al. (2016). Mechanisms underlying the neuromodulat ion of
+spinal circuits for correcting gait and balance deﬁcits after spi nal cord injury.
+Neuron 89, 814–828. doi: 10.1016/j.neuron.2016.01.009
+Murai, A., and Y amane, K. (2011). “A neuromuscular locomotion contro ller
+that realizes human-like responses to unexpected disturbances, ” i n IEEE
+International Conference onRobotics and Automation (ICRA) , 1997–2002.
+doi: 10.1109/icra.2011.5979965
+Nakajima, T., Suzuki, S., Futatsubashi, G., Ohtsuska, H., Mez zarane, R. A., Barss,
+T. S., et al. (2016). Regionally distinct cutaneous aﬀerent populations contribute
+to reﬂex modulation evoked by stimulation of the tibial nerve durin g walking.
+J. Neurophysiol. 116, 183–190. doi: 10.1152/jn.01011.2015
+Nene, A., Byrne, C., and Hermens, H. (2004). Is rectus femoris really a part o f
+quadriceps?: Assessment of rectus femoris function during gait in a ble-bodied
+adults. Gait Posture 20, 1–13. doi: 10.1016/S0966-6362(03)00074-2
+Ogata, K., and Y ang, Y. (1970). Modern Control Engineering . Upper Saddle River,
+NJ: Prentice-Hall Englewood Cliﬀs.
+Ogihara, N., and Y amazaki, N. (2001). Generation of human bipedal locomotion
+by a bio-mimetic neuro-musculo-skeletal model. Biol. Cybern. 84, 1–11.
+doi: 10.1007/PL00007977
+Oliveira, A. S. C., Gizzi, L., Kersting, U. G., and Farina, D. (201 2). Modular
+organization of balance control following perturbations during wa lking. J.
+Neurophysiol. 108, 1895–1906. doi: 10.1152/jn.00217.2012
+Orlovski˘ı, G. N., Deliagina, T., and Grillner, S. (1999). Neuronal Control of
+Locomotion: From Mollusc to Man . Stockholm: Oxford University Press.
+doi: 10.1093/acprof:oso/9780198524052.001.0001
+Perry, J., and Burnﬁeld, J. M. (1992). Gait Analysis: Normal and
+Pathological Function . Thorofare, NJ: SLACK Incorporated.
+doi: 10.1097/01241398-199211000-00023
+Sartori, M., Llyod, D. G., and Farina, D. (2016). Neural data-driven musculoskeletal
+modeling for personalized neurorehabilitation technologies. IEEE Trans.
+Biomed. Eng. 63, 879–893. doi: 10.1109/TBME.2016.2538296
+Schillings, A., V an Wezel, B., Mulder, T., and Duysens, J. (1999). Widespread short-
+latency stretch reﬂexes and their modulation during stumbling over o bstacles.
+Brain Res. 816, 480–486. doi: 10.1016/S0006-8993(98)01198-6
+Schomburg, E., Petersen, N., Barajon, I., and Hultborn, H. (1998). Flexor reﬂex
+aﬀerents reset the step cycle during ﬁctive locomotion in the cat. Exp. Brain
+Res. 122, 339–350. doi: 10.1007/s002210050522
+Simonsen, E., and Dyhre-Poulsen, P. (1999). Amplitude of the human
+soleus H reﬂex during walking and running. J. Physiol. 515, 929–939.
+doi: 10.1007/s002210050522
+Sinkjaer, T., Andersen, J. B., and Larsen, B. (1996). Soleus stretch reﬂex modulation
+during gait in humans. J. Neurophysiol. 76, 1112–1120.
+Sirota, M. G., Di Prisco, G. V., and Dubuc, R. (2000). Stimulation of
+the mesencephalic locomotor region elicits controlled swimming
+in semi-intact lampreys. Eur. J. Neurosci. 12, 4081–4092.
+doi: 10.1046/j.1460-9568.2000.00301.x
+Sloot, L. H., van den Noort, J. C., van der Krogt, M. M., Bruijn, S. M. , and Harlaar,
+J. (2015). Can treadmill perturbations evoke stretch reﬂexes in the calf muscles?
+PLoS ONE 10:e0144815. doi: 10.1371/journal.pone.0144815
+Song, S., and Geyer, H. (2012). “Regulating speed and generating large speed
+transitions in a neuromuscular human walking model, ” in 2012 IEEE
+International Conference on Robotics and Automation (ICRA) (Saint Paul, MN:
+IEEE), 511–516. doi: 10.1109/ICRA.2012.6225307
+Song, S., and Geyer, H. (2015a). A neural circuitry that emphasizes spinal feedback
+generates diverse behaviours of human locomotion. J. Physiol. 593, 3493–3511.
+doi: 10.1113/JP270228
+Frontiers in Computational Neuroscience | www.frontiersi n.org 9 March 2017 | Volume 11 | Article 15
+Song and Geyer Evaluation of Neuromechanical Walking Model
+Song, S., and Geyer, H. (2015b). “Regulating speed in a neuromuscu lar
+human running model, ” in 2015 IEEE-RAS 15th International
+Conference on Humanoid Robots (Humanoids) (Seoul: IEEE), 217–222.
+doi: 10.1109/humanoids.2015.7363554
+Stein, P. S. G., Grillner, S., Selverston, A. I., and Stuart, D. G. ( 1997). Neurons,
+Networks, and Motor Behavior. Cambridge, MA: The MIT Press.
+Taga, G., Y amaguchi, Y., and Shimizu, H. (1991). Self-organizedcontrol of bipedal
+locomotion by neural oscillators in unpredictable environment. Biol. Cybern.
+65, 147–159. doi: 10.1007/BF00198086
+V an de Crommert, H., Faist, M., Berger, W., and Duysens, J. (1996).Biceps femoris
+tendon jerk reﬂexes are enhanced at the end of the swing phase in hu mans.
+Brain Res. 734, 341–344. doi: 10.1016/0006-8993(96)00885-2
+V an der Noot, N., Ijspeert, A. J., and Ronsse, R. (2015). “Biped g ait
+controller for large speed variations, combining reﬂexes and a centra l pattern
+generator in a neuromuscular model, ” in 2015 IEEE International Conference
+on Robotics and Automation (ICRA) , (Seattle, WA: IEEE), 6267–6274.
+doi: 10.1109/ICRA.2015.7140079
+V an Wezel, B. M., Ottenhoﬀ, F. A., and Duysens, J. (1997). Dyna mic control of
+location-speciﬁc information in tactile cutaneous reﬂexes from th e foot during
+human walking. J. Neurosci. 17, 3804–3814.
+Villarreal, D., Quintero, D., and Gregg, R. (2016). A perturbation mech anism for
+investigations of phase-dependent behavior in human locomotion. Access IEEE
+4, 893–904. doi: 10.1109/ACCESS.2016.2535661
+Vogelstein, J. T., Park, Y., Ohyama, T., Kerr, R. A., Truman, J. W., P riebe,
+C. E., et al. (2014). Discovery of brainwide neural-behavioral maps v ia
+multiscale unsupervised structure learning. Science 344, 386–392. doi: 10.1126/
+science.1250298
+Winter, D. A. (2009). Biomechanics and Motor Control of Human
+Movement. Hoboken, NJ: John Wiley & Sons. doi: 10.1002/97804705
+49148
+Y amasaki, T., Nomura, T., and Sato, S. (2003). Possible function al
+roles of phase resetting during walking. Biol. Cybern. 88, 468–496.
+doi: 10.1007/s00422-003-0402-1
+Y ang, J., Stein, R., and James, K. (1991). Contribution of peripheral aﬀerents to the
+activation of the soleus muscle during walking in humans. Exp. Brain Res. 87,
+679–687. doi: 10.1007/BF00227094
+Zehr, E. P., and Stein, R. B. (1999). What functions do reﬂexes
+serve during human locomotion? Progr. Neurobiol. 58, 185–205.
+doi: 10.1016/S0301-0082(98)00081-1
+Zhang, L.-Q., Huang, H., Sliwa, J. A., and Rymer, W. Z. (1999). Sys tem
+identiﬁcation of tendon reﬂex dynamics. IEEE Trans. Rehabil. Eng. 7, 193–203.
+doi: 10.1109/86.769410
+Conﬂict of Interest Statement: The authors declare that the research was
+conducted in the absence of any commercial or ﬁnancial relations hips that could
+be construed as a potential conﬂict of interest.
+Copyright © 2017 Song and Geyer. This is an open-access article dis tributed
+under the terms of the Creative Commons Attribution License (CC BY). The
+use, distribution or reproduction in other forums is permitt ed, provided the
+original author(s) or licensor are credited and that the ori ginal publication in
+this journal is cited, in accordance with accepted academic practice. No use,
+distribution or reproduction is permitted which does not co mply with these
+terms.
+Frontiers in Computational Neuroscience | www.frontiersi n.org 10 March 2017 | Volume 11 | Article 15

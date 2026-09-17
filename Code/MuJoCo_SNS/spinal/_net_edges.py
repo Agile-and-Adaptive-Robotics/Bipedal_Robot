@@ -27,7 +27,10 @@ def kind(name: str, sides=None) -> str:
     if name.startswith(("DRIVE", "POSTURE", "BAL")):
         return name
     for pre, k in (("PRESET_E", "PRESET_E_IN"), ("PRESET_F", "PRESET_F_IN"),
+                   ("PREA_E", "PREA_IN"), ("PREA_F", "PREA_IN"),
                    ("KINH", "KINH_IN"), ("IBEXC", "IBEXC_IN"),
+                   ("HEEL", "HEEL_IN"), ("TOE", "TOE_IN"),
+                   ("LBIN", "LBIN_IN"), ("IaIN", "IaIN_IN"),
                    ("ADAP", "ADAP_IN"), ("RG_E", "RG-E"), ("RG_F", "RG-F"),
                    ("PF_", "PF"), ("PFA", "PFA_IN"), ("MN_", "MN"),
                    ("Ia_", "Ia-aff"), ("II_", "II-aff"), ("Ib_", "Ib-aff")):

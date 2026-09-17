@@ -1,0 +1,2419 @@
+Mechanisms
+of adaptive interlimb coordination to
+sudden ground loss: a neuromusculoskeletal modeling
+study
+Kota Shinoharaa, Y uichi Ambeb,a, Y ongi Kimc, Fu Mano a, Shravan Tata
+Ramalingasettyd, Andrew B. Lockhart d, Sergey N. Markin d, Jessica Ausborn d,
+Ilya A. Rybak d, Simon M. Danner d, Shinya Aoi a,∗
+aDepartment of Mechanical Science and Bioengineering, Graduate School of Engineering
+Science, The University of Osaka, 1-3 Machikaneyama, Toyonaka, 560-8531, Osaka, Japan
+bSmart Innovation Program, Graduate School of Advanced Science and Engineering, Hiroshima
+University, 1-4-1 Kagamiyama, Higashi-Hiroshima, 739-8527, Hiroshima, Japan
+cDepartment of Aeronautics and Astronautics, Graduate School of Engineering, Kyoto
+University, Kyoto Daigaku-Katsura, Nishikyo-ku, 615-8540, Kyoto, Japan
+dDepartment of Neurobiology and Anatomy, Drexel University College of Medicine, 2900 W.
+Queen Lane, Philadelphia, 19129, PA, USA
+Abstract
+Mammals
+exhibit robust walking across diverse environments, a capability
+largely attributed to central pattern generators (CPGs) in the spinal cord. Affer-
+ent feedback modulates CPG output and plays a critical role in adaptive loco-
+motion, yet its speciﬁc contributions remain poorly understood. To investigate
+this, we used a neuromusculoskeletal model to simulate hindlimb locomotion in
+spinalized cats encountering a hole and experiencing a sudden loss of ground sup-
+port, as described in prior experimental studies. The model couples a trunk-and-
+hindlimb musculoskeletal system to a pair of two-level, half-center CPGs—one
+for each hindlimb. The model reproduced the observed adaptive interlimb co-
+ordination that allows cats to maintain walking after the sudden loss of ground
+∗aoi.shin
+ya.es@osaka-u.ac.jp
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+support.
+Notably, the adaptive response emerged without re-optimizing parame-
+ters, which were tuned for steady walking in an environment without holes. Null-
+cline analysis based on dynamical systems theory revealed that afferent feedback
+mechanisms controlling the transitions between fast and slow neuronal dynamics
+facilitated adaptive interlimb coordination. These ﬁndings provide mechanistic
+insight into how spinal feedback circuits support robust locomotion through dy-
+namic interactions between the nervous system, the musculoskeletal system, and
+the environment.
+Keywords: central pattern generator, adaptive walking, cat, interlimb
+coordination, afferent feedback, neuromusculoskeletal model
+1.
+Introduction
+Mammals skillfully control their complex musculoskeletal systems, enabling
+robust locomotion across diverse environments. This ability relies on spinal neu-
+ral circuits that generate rhythmic motor patterns in response to descending com-
+mands and adapt them through afferent feedback integration. These circuits are
+commonly referred to as central pattern generators (CPGs) [18, 22, 46, 40, 47].
+The CPGs are capable of autonomous activity even in the absence of sensory
+feedback. When continuous electrical stimulation is applied to the mesencephalic
+locomotor region in immobilized decerebrate cats, alternating activity of ﬂexor
+and extensor motoneurons (MNs) is observed, similar to that during walking in
+intact cats, and is called ﬁctive locomotion [46]. Fictive locomotor preparations,
+combined with sensory nerve stimulation have been used to investigate the adap-
+tive regulation of locomotor patterns by somatosensory afferent feedback [23, 43,
+37, 55]. To elucidate the regulation mechanism mathematically, a two-level half-
+2
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+center
+CPG model comprising a rhythm generator (RG) layer and a pattern forma-
+tion (PF) layer has been proposed [48, 49]. This model was later reﬁned to study
+speed-dependent gait regulation in mammals [3, 5, 6, 7, 32, 38, 50, 51, 52, 64].
+Mammalian locomotion is a complex behavior resulting from dynamic inter-
+actions among the nervous system, musculoskeletal system, and environment.
+Understanding adaptive locomotion requires studying these systems in concert,
+including the role of sensory feedback and biomechanical context. Decerebrate
+and spinal cat models have been instrumental in revealing how afferent feedback
+from body dynamics modulates neural control. In addition, perturbations such as
+unexpected holes [25], obstacles [65], and external forces [31], as well as split-belt
+treadmills [33, 15, 16, 17, 30, 62, 63] have helped characterize the principles of
+adaptive motor control of locomotion. These studies have shown that mammals
+exhibit robust adaptive responses to environmental perturbations. However, the
+mechanisms of adaptation through the dynamic interactions between the nervous
+system, the musculoskeletal system, and the environment remain poorly under-
+stood.
+Experimental studies in spinal cats have shown that a sudden loss of ground
+support—such as stepping into a hole during treadmill walking—elicits a rapid,
+adaptive motor response [25]. When the foot entered the hole during locomotion
+and the hindlimb becomes hyperextended, ﬂexor muscle activity is initiated early
+to lift the foot out of the hole and resume walking [25]. Critically, this recovery
+also requires sustained extensor activity in the contralateral hindlimb to support
+body weight. As a result, two ﬂexions occur on the affected side-one before enter-
+ing the hole and one during recovery-while the opposite limb maintains extension.
+This disruption of the typical left-right alternation underscores the importance of
+3
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+interlimb
+coordination in adaptive locomotion.
+Despite these insights, the dynamic mechanisms that enable such coordinated
+responses remain poorly understood. We previously investigated the mechanism
+underlying the rapid ﬂexion of the ipsilateral hindlimb using a neuromusculoskele-
+tal model of a single hindlimb [28]. In the present study, we built on this frame-
+work by developing a bilateral neuromusculoskeletal model that incorporates struc-
+tured afferent feedback and physiologically-inspired spinal circuitry controlling
+both hindlimbs and their coordination. Using simulation and dynamical systems
+analysis, we examined how spinal circuits leverage sensory input to ﬂexibly re-
+organize motor output following perturbation. Our approach provides mechanis-
+tic insight into how spinal feedback circuits support stable locomotion through
+context-dependent modulation of interlimb coordination.
+2. Model
+2.1. Musculoskeletal model
+We have modiﬁed the cat neuromusculoskeletal model from our previous study [28],
+as shown in Fig. 1. The skeletal model is two-dimensional and consists of seven
+rigid links representing a trunk and both hindlimbs. Each hindlimb consists of
+a thigh, crus, and foot connected by hip, knee, and ankle joints. The forelimbs
+are ﬁxed to the trunk and the tips are constrained to a stationary platform 2 cm
+above the treadmill through horizontal viscoelastic elements. The model walks
+on the treadmill with a belt speed of 20 cm/s. When the trunk is parallel to the
+belt and the thigh, crus, and foot are in a straight line and perpendicular to the
+trunk, the hip angle is 135◦ and the knee and ankle angles are both 180◦. The joint
+angles increase as the joints are extending. The contact between the hindlimb tip
+4
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+Gluteus
+maxiums (GM)
+Supraspinal drive
+GA 
+GA 
+Iliopsoas
+(IP)
+Vastus
+lateralis (VL)
+Tibialis
+anterior (TA)
+Biceps
+femoris (BF)
+Gastrocnemius
+(GA)
+Soleus
+(SO)
+Hip
+Thigh
+Knee
+Ankle
+Trunk
+Foot
+Crus
+platform
+Stationary
+GM 
+GM 
+BF 
+BF 
+TA 
+TA 
+SO 
+SO 
+VL 
+VL 
+IP 
+IP 
+GA 
+GA 
+GM 
+GM 
+BF 
+BF 
+TA 
+TA 
+SO 
+SO 
+VL 
+VL 
+IP 
+IP 
+RG-E 
+RG-F 
+RG-E 
+RG-F 
+IN-E IN-F IN-E IN-F 
+PF-E PF-F PF-E PF-F 
+V3 V3 
+C1 C1 
+Commisural
+interneurons
+(CINs)
+Rythm
+generator
+(RG)
+Pattern
+formation
+(PF)
+Moto-
+neurons
+(MNs)
+Musculo-
+skeletal
+system
+Left CPG Right CPG
+Left hindlimb Right hindlimb
+Treadmill
+velocity, length
+force
+velocity, length
+force
+Figure
+1: Neuromusculoskeletal model of a cat walking on a treadmill using only the hindlimbs,
+with the forelimbs stabilized on a stationary platform.
+and treadmill was modeled using viscoelastic elements. We derived the equations
+of motion using Lagrangian equations with the same physical parameters for the
+skeletal model as those in [13] and solved the equations numerically using the
+fourth-order Runge-Kutta method with a time step of 0.04 ms.
+We used seven Hill-type muscles for each hindlimb, where ﬁve muscles are
+uni-articular: hip ﬂexor (iliopsoas, IP), hip extensor (gluteus maximus, GM),
+knee extensor (vastus lateralis, VL), ankle ﬂexor (tibialis anterior, TA), ankle ex-
+5
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+tensor
+(soleus, SO), and two muscles are bi-articular: hip extensor/knee ﬂexor
+(biceps femoris, BF) and knee ﬂexor/ankle extensor (gastrocnemius, GA). We
+assumed that the moment arms of the muscles are constant. We used the same
+muscle model to generate tension through contractile and passive elements as
+in [13]. Speciﬁcally, the muscle force F i
+m (i ∈ {left, right}, m ∈ {M} =
+{IP, GM, VL, TA,SO, BF, GA}) is given by
+F i
+m = F max
+m (ai
+mF i
+l,mF i
+v,m + F i
+p,m) (1)
+where F max
+m is the maximum force, ai
+m is the muscle activation (0 ≤ ai
+m ≤ 1),
+F i
+l,m is the force-length relationship, F i
+v,m is the force-velocity relationship, and
+F i
+p,m is the passive component. The muscle lengths were normalized by lmax
+m ,
+which was set so that the uni-articular muscles had a length of 85% of lmax
+m and
+bi-articular muscles were at 75% at a neutral posture with the hip joint at 60◦,
+the knee joint at 90◦, and the ankle joint at 100◦. In addition, 2◦ of joint motion
+corresponded to 1% of muscle length change, except for the GA muscle, where
+1.5◦ at the ankle joint or 4.5◦ at the knee joint was required. The muscle velocities
+were normalized by lmax
+m .
+The muscle activation ai
+m (i ∈ {left, right}, m ∈ {M}) is determined through
+a low-pass ﬁlter [61] given by
+˙ai
+m + 1
+τact
+{ τact
+τdact
++
+(
+1 − τact
+τdact
+)
+ui
+m
+}
+ai
+m = 1
+τact
+ui
+m (2)
+where τact (=
+20 ms) and τdact (= 32 ms) are activation and deactivation time
+constants, respectively, and ui
+m is the motor command determined from the corre-
+sponding motoneuron activity of the motor control model.
+6
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+2.2.
+Motor control model
+It has been suggested that the locomotor behavior is controlled by the CPG,
+which consists of hierarchical networks with rhythm generator (RG) and pattern
+formation (PF) networks [48, 49]. The RG network produces the rhythmic activity
+and the PF network produces the spatiotemporal patterns of motor commands. We
+developed a motor control model based on our previous two-level half-center CPG
+model for a single cat hindlimb, comprising RG and PF networks [28]. Specif-
+ically, we integrated two CPG models that control the left and right hindlimbs,
+as shown in Fig. 1. The RG of each CPG model has two neuronal populations
+that represent the ﬂexor and extensor centers (RG-F and RG-E), which receive a
+supraspinal drive, and two populations of inhibitory interneurons (IN-F and IN-E),
+which provide mutual inhibition between the RG-F and RG-E. The RGs of the left
+and right CPG models are connected through commissural interneurons (CINs)
+based on [38]. The CINs have the population of C1 neurons, which mediate the
+inhibition of the contralateral RG-F by the ipsilateral RG-F, and the population
+of V3 neurons, which mediate the inhibition of the contralateral RG-F by the ip-
+silateral RG-E through the contralateral IN-E. Like the RG, the PF also has two
+neuronal populations that represent the ﬂexor and extensor centers (PF-F and PF-
+E), which receive the excitatory input from the RG neurons and inhibitory input
+from the INs. Each CPG model has seven populations of motoneurons (MNs) that
+provide the motor command for the corresponding muscle (MN-m , m ∈ {M}).
+The MNs of ﬂexor muscles MN-IP, MN-TA, and MN-BF receive excitatory input
+from the PF-F, while those of extensor muscles MN-GM, MN-VL, MN-SO, and
+MN-GA receive the excitatory input from the PF-E. Each CPG model receives
+afferent feedback from the ipsilateral muscles.
+7
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+W
+e used the activity-based (non-spiking) neuron model [14, 34, 38, 5, 6]
+for each population. The state of each neuron is characterized by the mem-
+brane potential V i
+j (i ∈ {left, right}, j ∈ {RG}, {IN}, {CIN}, {PF}, {MN}),
+where {RG} = {RG-F, RG-E}, {IN} = {IN-F, IN-E}, {CIN} = {C1, V3},
+{PF} = {PF-F, PF-E}, and {MN} = {MN-m | m ∈ {M}}. In RG, PF, and MN,
+a persistent (slowly inactivating) sodium current determines the intrinsic rhythmo-
+genic properties of these neurons. Therefore, the RG, PF, and MN use the variable
+hi
+j (i ∈ {left, right}, j ∈ {RG}, {PF}, {MN}) that deﬁnes the slow inactivation
+of the persistent sodium channel. The RG-F and RG-E produce rhythmic activity.
+However, when they are uncoupled, the RG-E is in the tonic regime due to the
+supraspinal drive and produces sustained activity. Rhythmic oscillation of the RG
+is deﬁned by the RG-F, which provides rhythmic inhibition of the RG-E through
+the IN-F. The oscillation frequency is determined by the supraspinal drive to the
+RG-F. When the PF and MN are uncoupled, they do not show rhythmic activ-
+ity due to the relatively low maximum conductance of the sodium current. They
+produce rhythmic activity through the excitatory inputs from the RG.
+For the state variable, we used V = [V i
+{RG}, V i
+{IN}, V i
+{CIN}, V i
+{PF}, V i
+{MN}]T and
+h = [h i
+{RG}, hi
+{PF}, hi
+{MN}]T . The dynamics of the membrane potential V i
+j is given
+by
+C ˙V i
+j =
+
+
+
+−INaP(V i
+j , hi
+j) − ILeak(V i
+j ) − I i,j
+SynE(V) − I i,j
+SynI(V) j ∈ {RG}, {PF}, {MN}
+−ILeak(V i
+j ) − I i,j
+SynE(V) − I i,j
+SynI(V) j ∈ {IN}, {CIN}
+(3)
+where C is the membrane capacitance, INaP is the persistent sodium current, ILeak
+is the leakage current, and I i,j
+SynE and I i,j
+SynI are the currents from excitatory and
+inhibitory synapses, respectively. The ionic current INaP and leakage current ILeak
+8
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+are
+given by
+INaP(V i
+j , hi
+j) = ˆ gj
+NaPmNaP(V i
+j )hi
+j{V i
+j − ENa} j ∈ {RG}, {PF}, {MN} (4)
+ILeak(V i
+j ) = ˆ gj
+Leak{V i
+j − Ej
+Leak} j ∈ {RG}, {IN}, {CIN}, {PF}, {MN}(5)
+where ˆgj
+NaP and ˆgj
+Leak are the maximum conductances, and ENa and Ej
+Leak are the
+reversal potentials. mNaP is the activation of the sodium channel of the RG, PF,
+and MN and is given by
+mNaP
+(
+V i
+j
+)
+= 1
+1
++ exp
+(
+−
+V i
+j +40.0
+6.0
+) j ∈
+{RG} , {PF} , {MN}
+The dynamics of the inactivation of the sodium channel hi
+j of the RG, PF, and MN
+is given by
+τ
+(
+V i
+j
+) ˙hi
+j = h∞
+(
+V i
+j
+)
+− hi
+j j ∈ {RG} , {PF} , {MN} (6)
+where
+h∞
+(
+V i
+j
+)
+= 1
+1
++ exp
+( V i
+j +45.0
+4.0
+)
+τ
+(
+V i
+j
+)
+=
+320 + 320
+cosh
+( V i
+j +35.0
+15.0
+) ms j ∈
+{RG} , {PF} , {MN}
+The currents induced by the synapses I i,j
+SynE and I i,j
+SynI are given by
+I i,j
+SynE(V) = ˆ gSynE{V i
+j − ESynE}
+
+
+
+∑
+k∈{left,right}
+∑
+l∈{L}
+αk,l
+i,j f (V k
+l ) + γjd + si
+j
+
+
+
+I i,j
+SynI(V) = ˆ gSynI{V i
+j − Ej
+SynI}
+
+
+
+∑
+k∈{left,right}
+∑
+l∈{L}
+βk,l
+i,j f (V k
+l )
+
+
+
+j ∈ {RG}, {IN}, {CIN}, {PF}, {MN}(7)
+9
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+where {L} = {{R
+G}, {IN}, {CIN}, {PF}}, ˆgSynE and ˆgSynI are the maximum
+conductances, ESynE and Ej
+SynI are the reversal potentials, d is the tonic drive from
+the supraspinal region, and si
+j is the afferent feedback from the musculoskeletal
+model, as described below. αk,l
+i,j , βk,l
+i,j , and γj are the weight coefﬁcients of the
+excitatory, inhibitory, and supraspinal connections, respectively, where βk,l
+i,j = 0
+for j ∈ {CIN}, {MN} and γj = 0 for j ∈ {IN}, {CIN}, {PF}, {MN}. The
+output function f translates V into the integrated population activity and is given
+by
+f (V ) =
+
+
+
+0 V < V th
+V − Vth
+Vmax − Vth
+Vth <
+V < V max
+1 Vmax < V
+(8)
+where Vth and Vmax are the lower and upper threshold potentials, respectively. The
+motor command ui
+m (i ∈ {left, right}, m ∈ {M}) is given by ui
+m = f (V i
+MN-m).
+Based on [20, 28, 34], we determined the parameters for the motor control model
+(see Appendix A) except for αk,l
+i,j for j ∈ {MN} and l ∈ {PF}, which we deter-
+mined through optimization, as described below.
+The afferent feedback si
+j is given by
+si
+j =
+∑
+m∈{M}
+{
+kv
+j,m(ˆvi
+m)0.6 + kl
+j,mˆli
+m + kf
+j,m ˆF i
+m
+}
+j ∈ {RG}, {IN}, {CIN}, {PF}, {MN} (9)
+10
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+where
+ˆvi
+m =
+
+
+
+vi
+m/lmax
+m vi
+m > 0
+0 otherwise
+ˆli
+m =
+
+
+
+(li
+m − lth)/lmax
+m li
+m >
+lth
+0 otherwise
+ˆF i
+m =
+
+
+
+F i
+m/F max
+m F i
+m > 0
+0 otherwise
+lth = 0.9l max
+m
+vi
+m, li
+m, and F i
+m are the velocity, length, and force of muscle m, respectively, and
+kv
+j,m, kl
+j,m, and kf
+j,m are the corresponding weight coefﬁcients. The ﬁrst, second,
+and third terms of (9) represent the velocity, length, and force feedback from
+muscle m, respectively. In particular, we used the velocity and length feedback
+only for the ﬂexor muscles and the force feedback only for the extensor muscles to
+focus on the adaptation to the loss of ground support during walking. Speciﬁcally,
+the coefﬁcients kv
+j,m, kl
+j,m, and kf
+j,m for the ﬂexor muscles (m ∈ {IP , TA, BF}) are
+given by
+(kv
+j,m, kl
+j,m, kf
+j,m) =
+
+
+
+(kv
+F, kl
+F, 0) j ∈ {RG-F, IN-F, PF-F}
+(ηvkv
+F, ηlkl
+F, 0) j ∈ {MN-m}
+(0, 0, 0) otherwise
+(10)
+Those for the extensor muscles (m ∈ {GM, VL, SO, GA}) are given by
+(kv
+j,m, kl
+j,m, kf
+j,m) =
+
+
+
+(0, 0, kf
+E) j ∈ {RG-E, IN-E, PF-E}
+(0, 0, ηfkf
+E) j ∈ {MN-m}
+(0, 0, 0) otherwise
+(11)
+11
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+W
+e determined kv
+F, kl
+F, kf
+E, ηv, ηl, and ηf through the optimization as described
+below.
+2.3. Parameter determination by optimization
+We determined the parameters of the motor control model by optimization. To
+investigate the general role of sensory feedback in the response to perturbations,
+we used a walking environment without any holes, but with randomized stepping
+surface, where the ground level of the treadmill belt of each hindlimb changes
+randomly among -2, 0, and 2 cm in each step (Fig. 2A).
+We determined the parameters of the motor control model by optimization us-
+ing a walking environment, where the ground level of the treadmill belt of each
+hindlimb changes randomly among -2, 0, and 2 cm in each step (Fig. 2A). Specif-
+ically, we determined 13 parameters (seven parameters αk,l
+i,j for j ∈ {MN} and
+l ∈ {PF} to determine the connections from the PFs to the MNs and six param-
+eters kv
+F, kl
+F, kf
+E, ηv, ηl, and ηf to determine the gains of the afferent feedback)
+using the covariance matrix adaptation evolution strategy (CMA-ES) [24] as the
+optimization method. To walk for a long time with low muscle activity in the
+environment, we minimized the following cost function:
+ε =
+κ
+∫ T ∑
+i∈{left,right}
+∑
+m∈{M}
+(ai
+m)2dt
+vbeltT − T (12)
+where κ =
+20, vbelt (= 20 cm/s) is the belt speed, and T is the amount of time
+the model is able to walk without falling (maximum is 100 s), where we deﬁned
+falling as when the hip height is below 5 cm and when the foot never touches the
+belt within one step.
+12
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+A B
+C D
+E
+-80
+-40
+0
+40 
+80 
+0 500 1000 1500 2000 2500
+Cost function 
+/g72
+Number of trialsTreadmill
+Stationary
+platform
+C
+D
+E
+Figure
+2: Parameter optimization in an environment with step-to-step random variations in belt
+height. A. Schematic diagram. B. Cost function for the trials during the optimization pro-
+cess. Stick diagrams at the initial (C), intermediate (D), and ﬁnal (E) stages of optimization (see
+Movies 1-3).
+Figure 2B shows the values of the cost function for the trials in the optimiza-
+tion process. The model is initially unable to walk, as shown in Fig. 2C (see
+Movie 1). However, as optimization progresses, the model can walk for longer
+durations (Fig. 2D, see Movie 2). Finally, it becomes able to walk stably without
+falling even in the environment with randomized steps (Fig. 2E, see Movie 3).
+Appendix B shows the parameters determined in this optimization.
+13
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+3.
+Simulation results
+3.1. Reproduction of ﬂat-surface treadmill walking
+We performed walking simulations in which the belt level did not change,
+using the parameters determined by the above optimization (see Movie 4). Fig-
+ures 3A and B show the membrane potentials of the RG, IN, CIN, PF, and MN,
+and the velocity, length, and force feedback from the ﬂexor and extensor muscles.
+The rhythmic activity of the RG was transmitted to the MN via the PF. Figures 3C
+and D show the joint angles and muscle activities, respectively, compared with the
+measured data in cats [44]. Although the left and right hindlimbs show slightly
+different patterns, the simulated joint angles and muscle activities show similar
+patterns to the measured data, despite the fact that no measured data were used in
+the parameter optimization at any stage.
+3.2. Response to loss of ground support during walking
+We used our model with the parameters determined by the above optimization
+to perform simulation of locomotion when a hole appeared on the left side of the
+treadmill as in [25]. In our simulation, when a foot entered a hole, it was quickly
+lifted out of the hole and the model continued to walk on the treadmill without
+falling (see Movie 5). We compared the simulation results with the measured data
+in cats [25]. Figure 4A compares the response of the ipsilateral side that fell into
+the hole. The hip, knee, and ankle joints were ﬁrst extended and then quickly
+ﬂexed to lift the foot above the belt for landing. In addition, the onset of the
+ﬂexor IP muscle activity was advanced. Figure 4B compares the response of the
+contralateral side. The liftoff position of the foot was further back than during
+ﬂat-surface walking. In addition, the extensor VL muscle activity was prolonged.
+14
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+-60
+-40
+-20
+ 0 
+Left
+RightRG-F
+RG-E
+[mV]A
+RG 
+0.08
+ 0 
+FB 
+Vth 
+-60
+-40IN IN-F
+IN-E
+Vth 
+-60
+-40
+-20
+CIN C1 V3 
+Vth 
+-60
+-40
+-20
+PF 
+PF-F PF-EVth 
+-60
+-40
+MN 
+MN-F(IP)
+MN-E(GA) Vth 
+0 20 40 60 80 100
+Gait cycle [%]
+80 
+100
+120
+ 140
+[deg]
+Hip
+80 
+100
+120
+ 140
+60 
+Knee
+80 
+100
+120
+ 140
+60 
+Ankle
+C Simulated Measured
+Hip
+Knee
+Ankle
+D 0.3
+0
+IP 
+0.02
+0
+GM 
+0.4
+0
+VL 
+0.2
+0
+TA 
+0.12
+0
+SO 
+0.1
+0
+BF 
+0.4
+0
+GA 
+0 20 40 60 80 100
+Gait cycle [%]
+IP 
+GM 
+VL 
+TA 
+SO 
+BF 
+GA 
+0 20 40 60 80 100
+Gait cycle [%]
+Left
+Right
+Left
+Right
+B
+FB 
+FB 
+Velocity
+Force
+Length
+0.05
+ 0 
+0.004
+ 0 
+Left
+Right
+Figure
+3: Simulation results for ﬂat-surface treadmill walking using the parameters determined by
+optimization (see Movie 4). A. Membrane potentials of CPG neurons and B. afferent feedback
+from ﬂexor and extensor muscles. C. Joint angles and D. muscle activities compared with mea-
+sured data in cats (adapted from [44]). Liftoffs are represented by 0% and 100% in the gait cycle.
+V ertical lines indicate touchdowns.
+These responses on the ipsilateral and contralateral sides were qualitatively similar
+between the simulation results and the measured cat data.
+When we used a level surface instead of a randomized stepping surface for
+the optimization, the model fell over after entering a hole and could not recover
+from the perturbation. To clarify the role of afferent feedback in responses to the
+sudden loss of ground support, we performed simulations with afferent feedback
+removed from the model. Speciﬁcally, we tested models lacking velocity feedback
+15
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+A
+B
+Simulated
+Measured
+Simulated
+Measured
+holeflat-surface
+IP 
+shortened
+shortened
+entering hole
+IP 
+Contralateral VL
+Contralateral VL
+extended
+extended
+entering hole
+Figure
+4: Comparison of response after a foot enters a hole between simulation results (see
+Movie 5) and cat measured data (adapted from [25]). A. Response on the ipsilateral side that
+fell into the hole: Stick diagram and IP muscle activity for a few steps before and after entering
+a hole. The stick diagram of the measured data shows only one step from liftoff to touchdown.
+B. Response on the contralateral side: Stick diagram and VL muscle activity. The stick diagram
+compares the posture at liftoff between ﬂat-surface walking and response to entering a hole.
+from ﬂexor muscles, length feedback from ﬂexor muscles, or force feedback from
+extensor muscles. We re-optimized the parameters of each model on a randomized
+stepping surface, as performed above for the model with all feedback intact. We
+then examined the response of each model when entering a hole. We found that
+removing any single type of feedback from the model had almost no effect on
+ﬂat-surface treadmill walking (see Appendix C). However, the models without
+length or without force feedback fell after entering a hole. Speciﬁcally, the model
+16
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+A B
+C
+Figure
+5: Response after a foot enters a hole for the models without sensory feedback. A. Model
+without length feedback from the ﬂexor muscles (see Movie 6). The affected hindlimb is not ﬂexed
+to pull the foot out of the hole. B. Model without force feedback from the extensor muscles (see
+Movie 7). The contralateral hindlimb cannot support the body weight. C. Model without velocity
+feedback from the ﬂexor muscles (see Movie 8). This recovers walking after entering the hole.
+without length feedback could not lift the foot after entering the hole (Fig. 5A,
+see Movie 6). The model without force feedback exhibited early ﬂexion of the
+affected hindlimb, but could not support the body weight with the contralateral
+hindlimb (Fig. 5B, see Movie 7). In contrast, the model without velocity feedback
+recovered walking after entering the hole in the same way as the model with all
+feedback (Fig. 5C, see Movie 8).
+4. Adaptation mechanism
+The neuromusculoskeletal simulation showed that the length feedback of the
+ﬂexor muscles of the left hindlimb (upon entering a hole) and the force feedback
+of the extensor muscles of the contralateral right hindlimb play an important role
+in the response to recovery after entering a hole. We, therefore, performed a
+17
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+nullcline
+analysis to elucidate the mechanism of the CPG responses based on our
+previous works [20, 28, 54]. Speciﬁcally, we investigated the dynamics of the
+CPG models by focusing on the nullclines of the left RG-F and the right RG-
+E using the simulation results with all afferent feedback during the response in
+Fig. 4 and compared them with those during ﬂat-surface walking in Fig. 3.
+4.1. Calculation of nullcline
+The nullcline is a set of points at which the derivative of a differential equation
+is zero and reﬂects the structure of the solution of the differential equation. Since
+we found that the length feedback of the ﬂexor muscles of the left hindlimb that
+entered a hole and the force feedback of the extensor muscles of the contralateral
+right hindlimb play an important role in the response to recovery after entering a
+hole from neuromusculoskeletal simulations, we focused on the nullclines of the
+left RG-F and the right RG-E to clarify the mechanism of the CPG responses and
+investigated them based on our previous works [20, 28, 54].
+The state of the CPG model is given by (V , h), and the nullclines for the left
+RG-F and right RG-E are given by
+
+
+N i
+V,j = {(V, h) | ˙V i
+j = 0}
+N i
+h,j = {(V, h) | ˙hi
+j = 0}
+(i, j) = (left, RG-F), (right, RG-E) (13)
+To clarify the dynamics of each left RG-F and right RG-E, only V i
+j and hi
+j for
+(i, j) = (left, RG-F), (right, RG-E) were derived to calculate the nullclines,
+while the other variables were derived using the variables during walking. Specif-
+ically, N i
+V,j and N i
+h,j were modiﬁed as
+
+
+
+ˆN i
+V,j = {(V i
+j , hi
+j) | ˙V i
+j = 0, V l
+k = ˆV l
+k , hl
+k = ˆhl
+k}
+ˆN i
+h,j = {(V i
+j , hi
+j) | ˙hi
+j = 0, V l
+k = ˆV l
+k , hl
+k = ˆhl
+k}
+(i, j) = (left, RG-F), (right, RG-E), (k, l) ̸= (i, j ) (14)
+18
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+where ˆV l
+k and ˆhl
+k indicate V l
+k and hl
+k during
+walking.
+While ˆN i
+h,j has a sigmoid shape and does not change over time, ˆN i
+V,j has a
+cubic curve shape and changes over time due to afferent feedback and input from
+other neurons. Speciﬁcally, ˆN i
+V,j has two different situations with and without two
+extremes, as shown in Figs. 6A and B. When ˆN i
+V,j has two extremes (Fig. 6A), the
+sign of the slope changes and the intersection of ˆN i
+V,j and ˆN i
+h,j is a saddle. Since
+the time constant for the dynamics of V i
+j is smaller than that for hi
+j, close to where
+ˆN i
+V,j has a positive slope, the state (V i
+j , hi
+j) is slowly attracted to the extreme
+along ˆN i
+V,j (slow dynamics). Near the extreme, the state jumps to the opposite
+part of ˆN i
+V,j with a positive slope (fast dynamics). When ˆN i
+V,j does not have two
+extremes (Fig. 6B), it changes monotonically and the intersection of ˆN i
+V,j and ˆN i
+h,j
+is a stable node. When the state is away from ˆN i
+V,j, it is quickly attracted to ˆN i
+V,j
+(fast dynamics). Near ˆN i
+V,j, the state is slowly attracted to the stable node along
+ˆN i
+V,j (slow dynamics). Adaptive responses are achieved by switching between
+fast and slow dynamics depending on the relationship between the state and the
+nullcline.
+4.2. Adaptation mechanism based on nullcline analysis
+Figure 7A shows the time proﬁles of the membrane potentials of the left RG-
+F (ipsilateral, i.e., affected side) and right RG-E (contralateral side) and afferent
+feedback from the ﬂexor and extensor muscles. Figures 7B and C show the tra-
+jectories of the state (V left
+RG-F, hleft
+RG-F) and nullclines ˆN left
+V,RG-F and ˆN left
+h,RG-F of the left
+RG-F, and the trajectories of the state (V right
+RG-E, hright
+RG-E) and nullclines ˆN right
+V,RG-E and
+ˆN right
+h,RG-E of the right RG-E, respectively. Although the trajectories show a closed
+loop during ﬂat-surface walking due to a stable limit cycle, they are disturbed after
+a foot enters a hole (indicated by ’a’).
+19
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+saddle 
+fast 
+slow 
+fast 
+slow 
+fast 
+slow 
+fast slow 
+node 
+N i
+h, j
+^
+N i
+V, j
+^
+0
+0.2 
+0.4 
+0.6 
+0.8 
+1
+hj
+0
+0.2 
+0.4 
+0.6 
+0.8 
+1
+-80 -60 -40 -20 0
+hj
+Vj  [mV] 
+A
+B ii
+i
+Figure
+6: Nullclines ˆN i
+V,j and ˆN i
+h,j in (V i
+j , hi
+j) for (i, j) = (left, RG-F) and (right, RG-E). A.
+ˆN i
+V,j has two extremes and intersection with ˆN i
+h,j is saddle. B. ˆN i
+V,j changes monotonically and
+intersection with ˆN i
+h,j is stable node. Bold and thin arrows represent fast and slow dynamics,
+respectively.
+On the ipsilateral side that fell into the hole, the length feedback increased and
+the nullcline ˆN left
+V,RG-F shifted to the right (indicated by ’b’). This means that the
+hyperextension of the hindlimb was sensed by the length feedback of the ﬂexor
+muscles which excited the ﬂexor center and thereby shifted the nullcline. As a
+result, the state switched to fast dynamics, which rapidly increased V left
+RG-F. The
+trajectory shows a shortcut compared to the closed loop during ﬂat-surface walk-
+ing. These changes explain the early onset of ﬂexor muscle activity in Fig. 4A,
+which allowed early hindlimb ﬂexion to lift the foot out of the hole. These results
+are consistent with those of our previous work [28].
+On the contralateral side, the force feedback increased and the nullcline ˆN right
+V,RG-E
+20
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+remained
+on the right side until the ipsilateral foot touched the belt (indicated by
+’b’ and ’c’). This means that the loading was sensed by the force feedback of the
+extensor muscles which excited the extensor center and thereby maintained the
+nullcline. As a result, the state remained in slow dynamics, which maintained a
+large value of V right
+RG-E. These changes explain the prolonged extensor muscle activ-
+ity in Fig. 4B, which allowed the body weight to continue to be supported by the
+contralateral hindlimb.
+We also performed a nullcline analysis on the models without length feedback
+from the ﬂexor muscles or without force feedback from the extensor muscles that
+failed to recover from entering a hole in Figs. 5A and B (see details in Appendix
+D). In the model without length feedback, the nullcline ˆN right
+V,RG-E on the contralat-
+eral side remained on the right side and extensor muscle activity was prolonged
+(Fig. SD.10), as in Fig. 7. However, the nullcline ˆN left
+V,RG-F on the ipsilateral side
+did not shift to the right and early ﬂexor activity did not occur, unlike in Fig. 7.
+This explains why the model without length feedback from the ﬂexor muscles
+failed to recover.
+In the model without force feedback, the nullcline ˆN left
+V,RG-F on the ipsilateral
+side shifted to the right due to an increase in length feedback from the ﬂexor mus-
+cles, resulting in a shortcut in the trajectory and early ﬂexor activity (Figs. 8A
+and SD.11), as in Fig. 7. In addition, despite the absence of force feedback, the
+nullcline ˆN right
+V,RG-E on the contralateral side remained on the right side and exten-
+sor muscle activity was prolonged (Figs. 8A and SD.11), as in Fig. 7. In fact,
+the maintenance of the nullcline and the prolongation of extensor activity on the
+contralateral side were caused by the early ﬂexor activity on the ipsilateral side.
+Speciﬁcally, length feedback from the ipsilateral ﬂexor muscles excited the ip-
+21
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+silateral
+ﬂexor center, which in turn excited the contralateral extensor center via
+commissural interneuron (C1) (Fig. 8B). In other words, this reﬂects interlimb co-
+ordination via reciprocal movement, in which ﬂexion of one hindlimb induces ex-
+tension of the contralateral hindlimb. This reciprocal mechanism also contributed
+to the model with all feedback in Fig. 7. However, the prolongation of extensor
+activity on the contralateral side due to reciprocal coordination alone was insuf-
+ﬁcient to produce the level of muscle activity required to support body weight;
+additional contributions from force feedback to the contralateral PF and MN were
+also necessary (Fig. 8C).
+22
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+-80
+-40
+ 0 
+Left (Hole side)
+Velocity
+FB 
+0
+0.005
+0
+0.16
+0.08
+0
+0.08
+0.04
+Length
+FB 
+Force
+FB 
+entering holeflat surface
+shortened
+LO TD LO a b c
+Vth 
+TD 
+TD 
+-60
+-30
+Velocity
+FB 
+0
+0.005
+0
+0.16
+0.08
+0
+0.08
+0.04
+Length
+FB 
+Force
+FB 
+Vth 
+21.2 21.4 21.6 21.8 22 22.2 22.4 22.6 22.8 
+Right (Contralateral side)
+Time [s]
+extended
+0.4
+0.6
+0.8
+1
+-80 -60 -40 -20 0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+-60 -50 -40 -30 -20
+Left RG-F
+Right RG-E
+VRG-F 
+hRG-F 
+[mV]
+a
+b
+c
+b
+c
+VRG-E 
+hRG-E 
+[mV]
+ab
+c
+bc
+A B
+C
+0.4
+0.6
+0.8
+1
+-80 -60 -40 -20 0
+VRG-F 
+hRG-F 
+[mV]
+RG-F
+a b c
+fast
+NV
+^
+Nh
+^
+-80 -60 -40 -20 0
+VRG-F [mV]
+-80 -60 -40 -20 0
+VRG-F [mV]
+Left
+0.3
+0.6
+0.5
+-60 -50 -40 -30 -20
+VRG-E 
+hRG-E 
+[mV]
+RG-E
+a b c
+NV
+^
+Nh
+^
+-60 -50 -40 -30 -20
+VRG-E [mV]
+-60 -50 -40 -30 -20
+VRG-E [mV]
+Right
+stay stay
+entering holeflat surface
+(flat surface)NV
+^
+(entering hole)NV
+^
+(flat surface, 
+       entering hole)
+Nh
+^
+NV
+^
+NV
+^
+RG-F
+[mV]VRG-F
+RG-E
+[mV]VRG-E
+0.4
+0.2
+0.1
+Figure
+7: Nullcline analysis of CPG dynamics by comparing the response to the left foot entering
+a hole with the steady oscillation during ﬂat-surface walking. A. Time proﬁles of RG membrane
+potentials and afferent feedback from ﬂexor and extensor muscles. ’a’, ’b’, and ’c’ indicate the
+times at which the left foot enters a hole (touchdown in ﬂat-surface walking), at which the foot is
+lifted (early stance phase in ﬂat-surface walking), and just before the foot touches the belt (mid-
+stance phase in ﬂat-surface walking), respectively. TD and LO indicate the touchdown and liftoff
+of the left hindlimb, respectively. B. Trajectories of state (V left
+RG-F, hleft
+RG-F) and nullclines ˆN left
+V,RG-F
+and ˆN left
+h,RG-F of left RG-F. C. Trajectories of state (V right
+RG-E, hright
+RG-E) and nullclines ˆN right
+V,RG-E and
+ˆN right
+h,RG-E of right RG-E.
+23
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+-80
+-40
+ 0 
+Left (Hole side) entering holeflat surface
+shortened
+LO TD LO a b c
+Vth 
+TD 
+-60
+-30
+0
+0.08
+0.04Force
+FB 
+Vth 
+21.6 21.8 22 22.2 22.4 22.6 22.8 23 23.2 
+Right (Contralateral side)
+extended
+A
+RG-F
+[mV]VRG-F
+RG-E
+[mV]VRG-E
+None
+0
+0.08
+0.04Length
+FB 
+21.6 21.8 22 22.2 22.4 22.6 22.8 23 23.2 
+Time [s]
+Time [s]
+0
+0.4
+21.2 21.4 21.6 21.8 22 22.2 22.4 22.6 22.8 
+0
+0.4
+LO TD LO a b c
+TD 
+entering holeflat surface
+LO TD LO a b c TD 
+with
+all FB
+C
+B
+without
+force FB
+Right VL
+Right VL
+TD 
+Supraspinal drive
+RG-E
+RG-F
+RG-E
+RG-F
+IN-E IN-F IN-EIN-F
+PF-E PF-F PF-E PF-F 
+V3 V3 
+C1 C1 
+CINs
+RG 
+PF 
+Left CPG Right CPG
+Length FB
+Figure
+8: Reciprocal interlimb coordination during the response to the left foot entering a hole. A.
+Time proﬁles of RG membrane potentials and afferent feedback from ﬂexor and extensor muscles
+of the model without force feedback. ’a’, ’b’, and ’c’ indicate the times at which the left foot
+enters a hole (touchdown in ﬂat-surface walking), at which the hindlimb is hyperextended (early
+stance phase in ﬂat-surface walking), and at which the hip drops (midstance phase in ﬂat-surface
+walking), respectively. TD and LO indicate the touchdown and liftoff of the left hindlimb, respec-
+tively. B. Reciprocal network in which length feedback from the ipsilateral ﬂexor muscles excites
+the contralateral extensor center via commissural interneuron (C1). C. Muscle activity of the con-
+tralateral VL muscle compared between the model with all feedback and the model without force
+feedback.
+24
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+5.
+Discussion
+When a foot falls into a hole while walking on a treadmill, it must be quickly
+pulled out and returned to the treadmill belt to continue walking. Meanwhile, the
+contralateral hindlimb needs to support the body weight to prevent falling. To
+achieve such an adaptive response to this environmental disturbance, spinal CPGs
+should modify motor commands based on sensory feedback. Since the hindlimb
+that falls into the hole and loses ground contact becomes hyperextended, ﬂexor ac-
+tivity must begin early. On the contralateral side, extensor activity must continue
+until the foot is pulled out of the hole. In cat locomotion, it has been suggested
+that sensing stretch of the ﬂexor muscles via Ia and II sensory afferents [21, 26]
+and limb unloading via Ib sensory afferents of extensor muscles [12, 42, 60] play
+an important role in the transition from extensor activity during the stance phase
+to ﬂexor activity during the swing phase. In our model, the velocity- and length-
+dependent (Ia, II) feedback of ﬂexor muscles and the force-dependent (Ib) feed-
+back of extensor muscles were involved in this phase transition and contributed to
+the adaptive response to the loss of ground support. Speciﬁcally, increasing the
+length feedback from the ﬂexor muscles caused the ﬂexor activity to begin just
+after the foot entered the hole (’b’ in Fig. 7A). This enabled the foot to be quickly
+pulled out of the hole and placed back onto the treadmill belt. Simultaneously,
+increasing the force feedback from the extensor muscles on the contralateral side,
+along with the reciprocal contribution from the ipsilateral ﬂexor center (Fig. 8)
+maintained the contralateral extensor activity (’b’ and ’c’ in Fig. 7A). This en-
+abled the body weight to be supported until the foot was pulled out of the hole.
+In contrast, the model without these afferent feedbacks failed to continue walking
+once a foot stepped into a hole (Movies 6 and 7). These results are consistent with
+25
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+pre
+vious neurophysiological ﬁndings [12, 21, 26, 42, 60].
+In general, stepping movements consist of ﬂexion in the swing phase and ex-
+tension in the stance phase that alternate between the left and right hindlimbs
+during walking. However, the adaptive response to the loss of ground support
+requires this alternating relationship to be broken temporarily. Speciﬁcally, while
+two ﬂexions occur on the affected (hole) side before and after entering the hole,
+it is necessary to prolong extension on the contralateral side. In addition to sim-
+ulation of the neuromusculoskeletal model, the nullcline analysis based on the
+dynamic systems theory revealed that, on the side of the hole, the change in the
+nullcline due to increased length feedback from the ﬂexor muscles caused the
+RG neuron to switch to fast dynamics, resulting in a shortcut in the trajectory
+(Fig. 7C). This led to early ﬂexor activity, i.e. two consecutive ﬂexions occurred
+on the side of the hole. Furthermore, it was revealed that, on the contralateral
+side, increased force feedback from the extensor muscles, along with the recipro-
+cal contribution from the ipsilateral ﬂexor center (Fig. 8), maintained the nullcline,
+enabling the RG neuron to remain in slow dynamics (Fig. 7C). This allowed the
+extensor activity to continue. By controlling transitions between fast and slow
+CPG dynamics through sensory feedback, the system selectively disrupted left-
+right alternation in a context-dependent manner, an insight that would be difﬁcult
+to extract without this dynamical systems perspective. This active disruption of
+the left-right alternation has also been observed during split-belt treadmill walk-
+ing in cats [15, 16, 17], suggesting that this is an important function for adaptive
+locomotion.
+The two-level half-center CPG model used in this study has played a key role
+in previous works [3, 5, 6, 7, 32, 38, 50, 51, 52, 64] and helped extend our under-
+26
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+standing
+of the neural networks involved in interlimb coordination in mammalian
+gait generation. However, these studies did not incorporate a mechanical model of
+the body, ignoring the mechanisms of interlimb coordination based on interactions
+between the nervous system, the musculoskeletal system, and the environment. In
+the present study, we incorporated a musculoskeletal model and employed af-
+ferent feedback to gain information on body dynamics. This allowed us to un-
+derstand and suggest the role of these interactions. The afferent feedback was
+projected exclusively to the ipsilateral CPG and not directly to the contralateral
+CPG. Y et, coordinated interlimb responses still emerged, suggesting that physical
+coupling of the hindlimbs and commissural connections were sufﬁcient to trans-
+mit information across sides. In this way, adaptive responses to the loss of ground
+support were achieved through a combination of local information processing in
+each hindlimb and global system dynamics mediated by body movements. These
+ﬁndings were made possible for the ﬁrst time through the incorporation of the
+musculoskeletal model.
+So far, various neuromechanical models incorporating a musculoskeletal model
+have been used to understand the mechanisms of adaptive locomotion through
+sensory feedback in mammals [2, 1, 8, 9, 13, 19, 27, 36, 39, 45, 53, 56, 61].
+However, these neural models have been limited to abstract representations using
+simpliﬁed reﬂex loops or neural oscillators, which limited comparisons with real
+experimental data [4]. Unlike previous models, our model integrated a two-level
+physiologically-inspired CPG with structured afferent feedback from a biome-
+chanically realistic musculoskeletal system. This architecture enabled us to mech-
+anistically explain how the loss of ground support on one side drives an early
+ﬂexor transition, while extensor activity is preserved on the contralateral side, not
+27
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+through
+hardwired transitions, but via dynamic modulation of the CPGs’ operat-
+ing regime. This provides a conceptual advancement over prior neuromechanical
+studies, which often could not account for such transient asymmetric behaviors
+with high biological plausibility. A particularly notable feature is that our model
+was optimized using a randomized stepping surface but not explicitly trained on
+the hole condition. Nevertheless, it successfully generated adaptive interlimb re-
+sponses when encountering a sudden loss of ground support. This generalization
+suggests that the modeled afferent feedback architecture, together with the intrin-
+sic properties of the CPG, can support a repertoire of adaptive behaviors without
+context-speciﬁc tuning. Such robustness is a hallmark of biological systems and
+highlights the capacity of spinal circuits to reorganize their dynamics through lo-
+cal sensory signals.
+Although we clariﬁed the mechanism underlying the adaptive interlimb re-
+sponse to the sudden loss of ground support, our model has limitations. For ex-
+ample, it is a two-dimensional model constrained to the sagittal plane, whereas
+adaptive locomotion also requires lateral balancing [41]. Moreover, although
+our model used a simple PF model that generates basic alternating activity be-
+tween ﬂexors and extensors, actual muscle activity exhibits more complex pat-
+terns [10, 11, 29, 35] that could facilitate adaptive motor control. In addition, the
+simulation results of joint angles and muscle activity do not perfectly match ex-
+perimental data (Figs. 3 and 4). In particular, the simulation results show greater
+vertical hip movement when the foot falls into the hole than the measured data.
+This discrepancy is largely due to the simpliﬁcation of our model, in which the
+forelimbs are ﬁxed to the trunk. This causes the model to rotate around the tips
+of the forelimbs, which exaggerates the vertical movement of the hip. Further-
+28
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+more,
+while length and force feedback played important roles in the adaptive re-
+sponse to the loss of ground support and in ﬂat-surface walking, velocity feedback
+contributed little to this study. These limitations suggest directions for future im-
+provement, including full-body 3D mechanics [57, 58], more detailed PF circuitry,
+and context-sensitive feedback integration.
+Our results also generate testable predictions. The nullcline-based mechanism
+implies that afferent-driven changes in network dynamics, and not just input am-
+plitude, govern adaptive transitions. In this context, experimental strategies that
+selectively block length feedback are expected to delay or impede the initiation of
+ﬂexor activity, while disruption of contralateral Ib input is likely to compromise
+weight support.
+In this study, we focused on adaptive response to the loss of ground support
+during treadmill cat locomotion. However, our model and analysis could also be
+applied to other environmental changes and perturbations. In particular, the hole
+used in this study induced left-right asymmetric movements, requiring appropri-
+ate interlimb coordination. Therefore, our model could also contribute to our
+understanding of the adaptation mechanism in walking under asymmetric con-
+ditions, such as split-belt treadmill walking. Although we used a model with
+only hindlimbs and ﬁxed forelimbs, we have already developed four-limb mus-
+culoskeletal models that incorporate both forelimbs and hindlimbs [57, 58, 59].
+Incorporating the two-level half-center CPGs used in this study into the four-limb
+models will allow us to examine the formation and transition mechanisms of var-
+ious gaits, such as walking, trotting, and galloping, through interlimb coordina-
+tion across all four limbs. More broadly, our ﬁndings support a view of spinal
+locomotor circuits as ﬂexible dynamical substrates shaped by continuous sensory
+29
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+input,
+rather than rigid pattern generators. Adaptive control emerges not from pre-
+programmed switches, but from feedback-induced transitions between dynamical
+regimes. This principle may underlie robustness in both natural and engineered
+locomotion systems.
+30
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+A
+ppendix A. Parameters for the motor control model
+Based on [5, 6, 20, 28, 34, 38], we determined the parameters for the synaptic
+connections αk,l
+i,j , βk,l
+i,j , and γj (j ∈ {RG} , {IN} , {CIN} , {PF} , l ∈ {RG} , {IN} , {CIN})
+and those for the currents ˆgi
+Leak, ˆgi
+NaP, Ei
+SynI, and Ei
+Leak (i ∈ {RG} , {IN} , {CIN} , {PF} , {MN})
+as shown in Tables A.1 and A.2, respectively. We used the following parameters:
+ˆgSynE = 10 nS, ˆgSynI = 10 nS, ESynE = −10 mV ,ENa = 55 mV ,C = 20 pF,
+Vth = −50 mV ,Vmax = 0 mV , andd = 1.0.
+Table A.1: Parameters for synaptic connections.
+Source
+neuron l T
+arget neuron j
+RG-F
+RG-E IN-F IN-E C1 V3 PF-F PF-E
+Excitatory
+connection αk,l
+i,j
+RG-F -
+- 0.4 - 1 - 0.7 -
+RG-E -
+- - 0.4 - 0.5 0.7 -
+Contralateral V3 -
+- - 0.15 - - - -
+Inhibitory connection βk,l
+i,j
+IN-F -
+0.7 - - - - - 2.1
+IN-E 0.6
+- - - - - 0.3 -
+Contralateral C1 1
+- - - - - - -
+Supraspinal connection γj 0.02
+0.15 - - - - - -
+31
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+T
+able A.2: Parameters for currents.
+Neuron i
+i ∈
+{RG} i ∈ {IN} i ∈ {CIN} i ∈ {PF} i ∈ {MN}
+ˆgi
+Leak 4.5 2.8 2.8 1.6 1.6
+ˆgi
+NaP 4.5 - - 0.5 0.3
+Ei
+SynI -75 -75 -75 -70 -70
+Ei
+Leak -62.5 -60 -60 -64 -64
+A
+ppendix B. Parameters determined by optimization
+Table B.3 shows the excitatory connection αk,l
+i,j (j ∈ {MN}) for the ipsilateral
+side ( i = k) ( αk,l
+i,j = 0 for the contralateral side (i ̸= k)) and the parameters
+for the afferent feedback kv
+F, kl
+F, kf
+E, ηv, ηl, and ηf, which were determined by
+optimization.
+Table B.3: CPG Parameters determined by optimization.
+αk
+,l
+i,j T
+arget neuron j
+Source neuron l MN-IP
+MN-GM MN-VL MN-TA MN-SO MN-BF MN-GA
+PF-F 0.09 - - 0.10 - 0.08 -
+PF-E - 0.07
+0.12 - 0.08 - 0.12
+kv
+F kl
+F kf
+E ηv ηl ηf
+0.0007
+0.53 0.16 1.0 1.1 1.1
+32
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+A
+ppendix C. Reproduction of ﬂat-surface treadmill walking without affer-
+ent feedback
+We determined the parameters of the model without velocity feedback, the
+model without length feedback, and the model without force feedback by opti-
+mization with the walking environment (Fig. 2A), where the belt level changes
+in each step, in the same way as the model with all afferent feedback. Table C.4
+shows the parameters of each model determined by optimization.
+Figure C.9 shows the simulation results of ﬂat-surface treadmill walking for
+each model without changing the belt level, compared with the results for the
+model with all afferent feedback in Fig. 3. Even without any afferent feedback,
+ﬂat-surface walking was almost the same as with all afferent feedback.
+Appendix D. Nullcline analysis on the model without afferent feedback
+We performed a nullcline analysis on the models without length feedback
+from the ﬂexor muscles or without force feedback from the extensor muscles,
+in the same way as the analysis in Fig. 7 for the model with all afferent feedback.
+Speciﬁcally, we investigated the dynamics of the CPG models by focusing on the
+the nullclines of the left RG-F and the right RG-E using the simulation results
+during the response in Fig. 5 and compared them with those during ﬂat-surface
+walking in Fig. C.9.
+Figure D.10A shows the time proﬁles of the membrane potentials of the left
+RG-F (ipsilateral, i.e., affected side) and right RG-E (contralateral side) and affer-
+ent feedback from the ﬂexor and extensor muscles, for the model without length
+feedback. Figures D.10B and C show the trajectories of the state (V left
+RG-F, hleft
+RG-F)
+and nullclines ˆN left
+V,RG-F and ˆN left
+h,RG-F of the left RG-F, and the trajectories of the
+33
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+T
+able C.4: CPG parameters of the models without afferent feedback determined by optimization.
+αk
+,l
+i,j T
+arget neuron j
+Source neuron l MN-IP
+MN-GM MN-VL MN-TA MN-SO MN-BF MN-GA
+without
+velocity FB
+PF-F 0.10 - - 0.09 - 0.08 -
+PF-E - 0.07
+0.12 - 0.08 - 0.12
+without length FB
+PF-F 0.09 - - 0.09 - 0.07 -
+PF-E - 0.08
+0.13 - 0.08 - 0.12
+without force FB
+PF-F 0.10 - - 0.09 - 0.08 -
+PF-E - 0.07
+0.18 - 0.10 - 0.16
+kv
+F kl
+F kf
+E ηv ηl ηf
+without
+velocity FB - 0.45
+0.16 - 1.2 1.0
+without length FB 0.026
+- 0.10 1.3 - 1.3
+without force FB 0.012
+0.28 - 1.7 1.4 -
+state (V righ
+t
+RG-E, hright
+RG-E) and nullclines ˆN right
+V,RG-E and ˆN right
+h,RG-E of the right RG-E, re-
+spectively, for the model without length feedback. Figures D.11A, B, and C show
+the same ﬁgures for the model without force feedback. Although the trajectories
+show a closed loop during ﬂat-surface walking due to a stable limit cycle, they are
+disturbed after a foot enters a hole (indicated by ’a’).
+When the model did not receive length feedback of the ﬂexor muscles, the
+nullcline ˆN left
+V,RG-F on the ipsilateral side that fell into the hole did not shift to the
+34
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+right,
+unlike in Fig. 7. As a result, the state remained in slow dynamics (’b’ and
+’c’) and early ﬂexor activity did not occur. On the contralateral side, the force
+feedback of the extensor muscles increased and the nullcline ˆN right
+V,RG-E remained
+on the right side (’b’ and ’c’), as in Fig. 7. As a result, the state remained in
+slow dynamics, which maintained a large value of V right
+RG-E and prolonged extensor
+muscle activity.
+For the model without force feedback of the extensor muscles, the length feed-
+back increased on the ipsilateral side and the nullcline ˆN left
+V,RG-F shifted to the right
+(’b’), as in Fig. 7. As a result, the state switched to fast dynamics, which rapidly
+increased V left
+RG-F. The trajectory showed a shortcut, resulting in early ﬂexor ac-
+tivity. On the contralateral side, the nullcline ˆN right
+V,RG-E remained on the right side
+as in Fig. 7, despite the absence of force feedback (’b’ and ’c’). As a result, the
+state remained in slow dynamics, which maintained a large value of V right
+RG-E and
+prolonged extensor muscle activity.
+35
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+-60
+-40
+-20
+ 0 
+RG-F RG-E
+[mV]A
+RG 
+Velocity
+0.12
+ 0 
+FB 
+Vth 
+-60
+-40IN IN-F IN-E
+Vth 
+-60
+-40
+-20
+CIN C1 V3 
+Vth 
+-60
+-40
+-20
+PF 
+PF-F PF-EVth 
+-60
+-40
+MN 
+MN-F(IP)
+MN-E(GA) Vth 
+80 
+100
+120
+ 140
+[deg]
+Hip
+80 
+100
+120
+ 140
+60 
+Knee
+80 
+100
+120
+ 140
+60 
+Ankle
+C
+D 0.3
+0
+IP 
+0
+GM 
+0.4
+0
+VL 
+0.2
+0
+TA 
+0.14
+0
+SO 
+0
+BF 
+0.4
+0
+GA 
+0 20 40 60 80 100
+Gait cycle [%]
+Force
+0.12
+ 0 
+FB 
+0 20 40 60 80 100
+Gait cycle [%]
+Length
+0.12
+ 0 
+FB 
+0.06
+0.12
+without force FBwithout length FBwithout velocity FBwith all FB
+B
+Figure
+C.9: Simulation results for ﬂat-surface walking of the models without afferent feedback
+compared with those of the model with all afferent feedback. A. Membrane potentials of CPG
+neurons and B. afferent feedback from ﬂexor and extensor muscles. C. Joint angles and D. muscle
+activities. Liftoffs are represented by 0% and 100% in the gait cycle. V ertical lines indicate
+touchdowns.
+36
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+-80
+-40
+ 0 
+Left (Hole side)
+Velocity
+FB 
+0
+0.16
+0.08
+0
+0.08
+0.04
+Length
+FB 
+Force
+FB 
+entering holeflat surface
+LO TD LO a b c
+Vth 
+TD 
+-60
+-30
+Velocity
+FB 
+0
+0.16
+0.08
+0
+0.08
+0.04
+Length
+FB 
+Force
+FB 
+Vth 
+20.8 21 21.2 21.4 21.6 21.8 22 22.2 
+Right (Contralateral side)
+Time [s]
+0.4
+0.6
+0.8
+1
+-80 -60 -40 -20 0
+0.1
+0.2
+0.3
+0.4
+0.5
+0.6
+-60 -50 -40 -30 -20
+Left RG-F
+Right RG-E
+VRG-F 
+hRG-F 
+[mV]
+a
+b
+c
+b
+c
+VRG-E 
+hRG-E 
+[mV]
+ab
+c
+b
+c
+A B
+C
+0.4
+0.6
+0.8
+1
+-80 -60 -40 -20 0
+VRG-F 
+hRG-F 
+[mV]
+RG-F
+a b c
+NV
+^
+Nh
+^
+-80 -60 -40 -20 0
+VRG-F [mV]
+-80 -60 -40 -20 0
+VRG-F [mV]
+Left
+-60 -50 -40 -30 -20
+VRG-E 
+hRG-E 
+[mV]
+RG-E
+a b c
+NV
+^
+Nh
+^
+-60 -50 -40 -30 -20
+VRG-E [mV]
+-60 -50 -40 -30 -20
+VRG-E [mV]
+Right
+stay stay
+entering holeflat surface
+(flat surface)NV
+^
+(entering hole)NV
+^
+(flat surface, 
+       entering hole)
+Nh
+^
+NV
+^
+NV
+^
+RG-F
+[mV]VRG-F
+RG-E
+[mV]VRG-E
+None
+None
+0
+0.16
+0.08
+0
+0.16
+0.08
+0.3
+0.6
+0.5
+0.4
+0.2
+0.1
+extended
+Figure
+D.10: Nullcline analysis of CPG dynamics for the model without length feedback of the
+ﬂexor muscles by comparing the response to left foot entering a hole with the steady oscillation
+during ﬂat-surface walking. A. Time proﬁles of RG membrane potentials and afferent feedback
+from ﬂexor and extensor muscles. ’a’, ’b’, and ’c’ indicate the times at which left foot enters a hole
+(touchdown in ﬂat-surface walking), at which the hindlimb is hyperextended (early stance phase
+in ﬂat-surface walking), and at which the hip drops (midstance phase in ﬂat-surface walking),
+respectively. TD and LO indicate the touchdown and liftoff of the left hindlimb, respectively.
+B. Trajectories of state (V left
+RG-F, hleft
+RG-F) and nullclines ˆN left
+V,RG-F and ˆN left
+h,RG-F of left RG-F. C.
+Trajectories of state (V right
+RG-E, hright
+RG-E) and nullclines ˆN right
+V,RG-E and ˆN right
+h,RG-E of right RG-E.
+37
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+-80
+-40
+ 0 
+Left (Hole side)
+Velocity
+FB 
+0
+0.08
+0.04
+0
+0.08
+0.04
+Length
+FB 
+Force
+FB 
+entering holeflat surface
+shortened
+LO TD LO a b c
+Vth 
+TD 
+-60
+-30
+Velocity
+FB 
+0
+0
+0.08
+0.04
+0
+0.08
+0.04
+Length
+FB 
+Force
+FB 
+Vth 
+21.6 21.8 22 22.2 22.4 22.6 22.8 23 23.2 
+Right (Contralateral side)
+Time [s]
+extended
+0.4
+0.6
+0.8
+1
+-80 -60 -40 -20 0
+0.2
+0.3
+0.4
+0.5
+0.6
+-60 -50 -40 -30 -20
+Left RG-F
+Right RG-E
+VRG-F 
+hRG-F 
+[mV]
+a
+b
+c
+b
+c
+VRG-E 
+hRG-E 
+[mV]
+ab
+c
+bc
+A B
+C
+0.4
+0.6
+0.8
+1
+-80 -60 -40 -20 0
+VRG-F 
+hRG-F 
+[mV]
+RG-F
+a b c
+fast
+NV
+^
+Nh
+^
+-80 -60 -40 -20 0
+VRG-F [mV]
+-80 -60 -40 -20 0
+VRG-F [mV]
+Left
+0.3
+0.6
+0.5
+-60 -50 -40 -30 -20
+VRG-E 
+hRG-E 
+[mV]
+RG-E
+a b c
+NV
+^
+Nh
+^
+-60 -50 -40 -30 -20
+VRG-E [mV]
+-60 -50 -40 -30 -20
+VRG-E [mV]
+Right
+stay stay
+entering holeflat surface
+(flat surface)NV
+^
+(entering hole)NV
+^
+(flat surface, 
+       entering hole)
+Nh
+^
+NV
+^
+NV
+^
+RG-F
+[mV]VRG-F
+RG-E
+[mV]VRG-E
+0.4
+0.2
+None
+0
+0.08
+0.04
+0.08
+0.04
+None
+Figure
+D.11: Nullcline analysis of CPG dynamics for the model without force feedback of the
+extensor muscles by comparing the response to left foot entering a hole with the steady oscillation
+during ﬂat-surface walking. A. Time proﬁles of RG membrane potentials and afferent feedback
+from ﬂexor and extensor muscles. ’a’, ’b’, and ’c’ indicate the times at which left foot enters a hole
+(touchdown in ﬂat-surface walking), at which the hindlimb is hyperextended (early stance phase
+in ﬂat-surface walking), and at which the hip drops (midstance phase in ﬂat-surface walking),
+respectively. TD and LO indicate the touchdown and liftoff of the left hindlimb, respectively.
+B. Trajectories of state (V left
+RG-F, hleft
+RG-F) and nullclines ˆN left
+V,RG-F and ˆN left
+h,RG-F of left RG-F. C.
+Trajectories of state (V right
+RG-E, hright
+RG-E) and nullclines ˆN right
+V,RG-E and ˆN right
+h,RG-E of right RG-E.
+38
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+Ackno
+wledgments
+This study was supported in part by JSPS KAKENHI Grant Numbers JP24H00297
+and JP19KK0377 and JST FOREST Program Grant Number JPMJFR2021 to SA,
+NIH Grant Numbers R01NS112304 and R01NS115900 to SMD, R01NS130799
+and R01NS110550 to IAR, and T32NS121768 to ABL, and NSF CRCNS/DARE
+Grant Number 2113069 to JA and IAR.
+Data availability
+Data will be made available on request.
+Competing interests
+The authors have no conﬂicting ﬁnancial interests.
+Author contributions
+SA developed the study design. KS, Y A, YK, and SA developed the cat neuro-
+musculoskeletal model in consultation with STR, ABL, SNM, JA, IAR, and SMD.
+KS, Y A, YK, and FM performed computer simulation and analyzed the data. KS
+and SA wrote the manuscript and all the authors reviewed, edited, and approved
+it.
+References
+[1] Aoi, S., Ogihara, N., Funato, T., Sugimoto, Y ., and Tsuchiya, K. Evaluating
+functional roles of phase resetting in generation of adaptive human bipedal
+walking with a physiologically based model of the spinal pattern generator.
+Biol. Cybern 102:373-387 (2010).
+39
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+[2] Aoi,
+S., Kondo, T., Hayashi, N., Y anagihara, D., Aoki, S., Y amaura, H.,
+Ogihara, N., Funato, T., Tomita, N., Senda, K., and Tsuchiya, K. Contribu-
+tions of phase resetting and interlimb coordination to the adaptive control of
+hindlimb obstacle avoidance during locomotion in rats: a simulation study.
+Biol. Cybern. 107:201-216 (2013).
+[3] Ausborn, J., Shevtsova, N.A., Caggiano, V ., Danner, S.M., and Rybak, I.A.
+Computational modeling of brainstem circuits controlling locomotor fre-
+quency and gait. Elife 8:e43587 (2019).
+[4] Ausborn, J., Shevtsova, N.A., and Danner, S.M. Computational modeling of
+spinal locomotor circuitry in the age of molecular genetics. Int. J. Mol. Sci.
+22:6835 (2021).
+[5] Danner, S.M., Wilshin, S.D., Shevtsova, N.A., and Rybak, I.A. Central
+control of interlimb coordination and speed-dependent gait expression in
+quadrupeds. J. Physiol. 594:6947-6967 (2016).
+[6] Danner, S.M., Shevtsova, N.A., Frigon, A., and Rybak, I.A. Computa-
+tional modeling of spinal circuits controlling limb coordination and gaits
+in quadrupeds. Elife 6:e31050 (2017).
+[7] Danner, S.M., Zhang, H., Shevtsova, N.A., Borowska-Fielding, J., Deska-
+Gauthier, D., Rybak, I.A., and Zhang, Y . Spinal V3 interneurons and left-
+right coordination in mammalian locomotion. Front. Cell. Neurosci. 13:516
+(2019).
+[8] Di Russo, A., Stanev, D., Armand, S., and Ijspeert, A. Sensory modulation of
+40
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+g
+ait characteristics in human locomotion: A neuromusculoskeletal modeling
+study. PLoS Comput. Biol. 17:e1008594 (2021).
+[9] Di Russo, A., Stanev, D., Sabnis, A., Danner, S.M., Ausborn, J., Armand, S.,
+and Ijspeert, A. Investigating the roles of reﬂexes and central pattern gener-
+ators in the control and modulation of human locomotion using a physiolog-
+ically plausible neuromechanical model. J. Neural Eng. 20:066006 (2023).
+[10] Dominici, N., Ivanenko, Y .P ., Cappellini, G., d’Avella, A., Mond `ı, V ., Cic-
+chese, M., Fabiano, A., Silei, T., Di Paolo, A., Giannini, C., Poppele, R.E.,
+and Lacquaniti, F. Locomotor primitives in newborn babies and their devel-
+opment. Science 334:997-999 (2011).
+[11] Drew, T., Kalaska, J., and Krouchev, N. Muscle synergies during locomo-
+tion in the cat: a model for motor cortex control. J. Physiol. 586:1239-1245
+(2008).
+[12] Duysens, J. and Pearson, K.G. Inhibition of ﬂexor burst generation by load-
+ing ankle extensor muscles in walking cats, Brain Res. 187:321-332 (1980).
+[13] Ekeberg, ¨O. and Pearson, K. Computer simulation of stepping in the hind
+legs of the cat: An examination of mechanisms regulating the stance-to-
+swing transition. J. Neurophysiol. 94:4256-4268 (2005).
+[14] Ermentrout, B. Reduction of conductance-based models with slow synapses
+to neural nets. Neural Comput. 6:679-695 (1994).
+[15] Forssberg, H., Grillner, S., Halbertsma, J., and Rossignol, S. The locomo-
+tion of the low spinal cat. II. Interlimb coordination. Acta. Physiol. Scand.
+108:283-295 (1980).
+41
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+[16] Frigon,
+A., Hurteau, M.F., Thibaudier, Y ., Leblond, H., Telonio, A., and
+D’Angelo, G. Split-belt walking alters the relationship between locomotor
+phases and cycle duration across speeds in intact and chronic spinalized adult
+cats. J. Neurosci. 33:8559-8566 (2013).
+[17] Frigon, A., Desrochers, ´E., Thibaudier, Y ., Hurteau, M.F., and Dambre-
+ville, C. Left-right coordination from simple to extreme conditions during
+split-belt locomotion in the chronic spinal adult cat. J. Physiol. 595:341-361
+(2017).
+[18] Frigon, A., Akay, T., and Prilutsky, B.I. Control of mammalian locomotion
+by somatosensory feedback. Compr . Physiol.12:2877-2947 (2021).
+[19] Fujiki, S., Aoi, S., Funato, T., Sato, Y ., Tsuchiya, K., and Y anagihara, D.
+Adaptive hindlimb split-belt treadmill walking in rats by controlling basic
+muscle activation patterns via phase resetting. Sci. Rep. 8:17341 (2018).
+[20] Fujiki, S., Aoi, S., Tsuchiya, K., Danner, S.M., Rybak, I.A., and Y anag-
+ihara, D. Phase-dependent response to afferent stimulation during ﬁctive
+locomotion: A computational modeling study. Front. Neurosci. 13:1288
+(2019).
+[21] Grillner, S. and Rossignol, S. On the initiation of the swing phase of loco-
+motion in chronic spinal cats, Brain Res. 146:269-277 (1978).
+[22] Grillner, S. Control of locomotion in bipeds, tetrapods, and ﬁsh. In Hand-
+book of physiology, Sect. 1. The nervous system: Motor control. V ol. II, Pt.
+2, ed. Brooks, V .B. (Bethesda, MD: American Physiological Society), 1179-
+1236 (1981).
+42
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+[23] Guertin,
+P ., Angel, M.J., Perreault, M.C., and McCrea, D.A. Ankle exten-
+sor group i afferents excite extensors throughout the hindlimb during ﬁctive
+locomotion in the cat. J. Physiol. 487:197-209 (1995).
+[24] Hansen, N., M ¨uller, S.D., and Koumoutsakos, P . Reducing the time complex-
+ity of the derandomized evolution strategy with covariance matrix adaptation
+(CMA-ES). Evol. Comput. 11:1-18 (2003).
+[25] Hiebert, G.W., Gorassini, M.A., Jiang, W., Prochazka, A., and Pearson, K.G.
+Corrective responses to loss of ground support during walking. ii. compari-
+son of intact and chronic spinal cats. J. Neurophysiol. 71:611-622 (1994).
+[26] Hiebert, G.W., Whelan, P .J., Prochazka, A., and Pearson, K.G. Contribution
+of hindlimb ﬂexor muscle afferents to the timing of phase transitions in the
+cat step cycle, J. Neurophysiol. 75:1126-1137 (1996).
+[27] Ijspeert, A.J. Central pattern generators for locomotion control in animals
+and robots: A review. Neural Netw. 21:667-681 (2008).
+[28] Kim, Y ., Aoi, S., Fujiki, S., Danner, S.M., Markin, S.N., Ausborn, J., Ry-
+bak, I.A., Y anagihara, D., Senda, K., and Tsuchiya, K. Contribution of affer-
+ent feedback to adaptive hindlimb walking in cats: A neuromusculoskeletal
+modeling study. Front. Bioeng. Biotechnol. 10:825149 (2022).
+[29] Klishko, A.N., Akyildiz, A., Mehta-Desai, R., and Prilutsky, B.I. Common
+and distinct muscle synergies during level and slope locomotion in the cat.
+J. Neurophysiol. 126:493-515 (2021).
+[30] Kuczynski, V ., Telonio, A., Thibaudier, Y ., Hurteau, M.F., Dambreville, C.,
+Desrochers, E., Doelman, A., Ross, D., and Frigon, A. Lack of adaptation
+43
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+during
+prolonged split-belt locomotion in the intact and spinal cat. J. Physiol.
+595:5987-6006 (2017).
+[31] Lam, T. and Pearson, K.G. Proprioceptive modulation of hip ﬂexor activity
+during the swing phase of locomotion in decerebrate cats. J. Neurophysiol.
+86:1321-1332 (2001).
+[32] Latash, E.M., Lecomte, C.G., Danner, S.M., Frigon, A., Rybak, I.A., and
+Molkov, Y .I. On the organization of the locomotor CPG: Insights from split-
+belt locomotion and mathematical modeling. Front. Neurosci. 14:598888
+(2020).
+[33] Lecomte, C.G., Mari, S., Audet, J., Merlet, A.N., Harnie, J., Beaulieu, C.,
+Abdallah, K., Gendron, L., Rybak, I.A., Prilutsky, B.I., and Frigon, A. Mod-
+ulation of the gait pattern during split-belt locomotion after lateral spinal
+cord hemisection in adult cats. J. Neurophysiol. 128:1593-1616 (2022).
+[34] Markin, S.N., Klishko, A.N., Shevtsova, N.A., Lemay, M.A., Prilutsky, B.I.,
+and Rybak, I.A. Afferent control of locomotor cpg: Insights from a simple
+neuromechanical model. Ann. N. Y. Acad. Sci. 1198:21-34 (2010).
+[35] Markin, S.N., Lemay, M.A., Prilutsky, B.I., and Rybak, I.A. Motoneuronal
+and muscle synergies involved in cat hindlimb control during ﬁctive and real
+locomotion: a comparison study. J. Neurophysiol. 107:2057-2071 (2012).
+[36] Maufroy, C., Kimura, H., and Takase, K. Towards a general neural controller
+for quadrupedal locomotion. Neural Netw. 21:667-681 (2008).
+[37] McCrea, D.A. Spinal circuitry of sensorimotor control of locomotion. J.
+Physiol. 533:41-50 (2001).
+44
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+[38] Molk
+ov, Y .I., Bacak, B.J., Talpalar, A.E., and Rybak, I.A. Mechanisms of
+left-right coordination in mammalian locomotor pattern generation circuits:
+A mathematical modeling view. PLoS Comput. Biol. 11:1-40 (2015).
+[39] Ong, C.F., Geijtenbeek, T., Hicks, J.L., and Delp, S.L. Predicting gait
+adaptations due to ankle plantarﬂexor muscle weakness and contrac-
+ture using physics-based musculoskeletal simulations. PLoS Comput. Biol.
+15:e1006993 (2019).
+[40] Orlovsky, G., Deliagina, T.G., and Grillner, S. Neuronal control of locomo-
+tion from mollusc to man , Oxford University Press (1999).
+[41] Park, H., Latash, E.M., Molkov, Y .I., Klishko, A.N., Frigon, A., De-
+Weerth, S.P ., and Prilutsky, B.I. Cutaneous sensory feedback from paw pads
+affects lateral balance control during split-belt locomotion in the cat. J. Exp.
+Biol. 222:jeb198648 (2019).
+[42] Pearson, K.G., Ramirez, J.M., and Jiang, W. Entrainment of the locomotor
+rhythm by group ib afferents from ankle extensor muscles in spinal cats. Exp.
+Brain Res. 90:557-566 (1992).
+[43] Perreault, M.C., Angel, M.J., Guertin, P ., and McCrea, D.A. Effects of stim-
+ulation of hindlimb ﬂexor group ii afferents during ﬁctive locomotion in the
+cat. J. Physiol. 487:211-220 (1995).
+[44] Prilutsky, B.I., Klishko, A.N., Weber, D.J., and Lemay, M.A. Computing
+motion dependent afferent activity during cat locomotion using a forward
+dynamics musculoskeletal model. In Neuromechanical modeling of posture
+45
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+and
+locomotion, eds. Prilutsky, B.I. and Edwards, D.H. (New Y ork: Springer
+Science), 273-307 (2016).
+[45] Ramadan, R., Geyer, H., Jeka, J., Sch ¨oner, G., and Reimann, H. A neuro-
+muscular model of human locomotion combines spinal reﬂex circuits with
+voluntary movements. Sci. Rep. 12:8189 (2022).
+[46] Rossignol, S. Neural control of stereotypic limb movements. In Handbook
+of physiology, Sect. 12. Exercise: Regulation and integration of multiple sys-
+tems, eds. Rowell, L.B. and Sheperd, J.T. (Oxford: American Physiological
+Society), 173-216 (1996).
+[47] Rossignol, S., Dubuc, R., and Gossard, J.P . Dynamic sensorimotor interac-
+tions in locomotion. Physiol. Rev. 86:89-154 (2006).
+[48] Rybak, I.A., Shevtsova, N.A., Lafreniere-Roula, M., and McCrea, D.A.
+Modelling spinal circuitry involved in locomotor pattern generation: Insights
+from deletions during ﬁctive locomotion. J. Physiol. 577:617-639 (2006).
+[49] Rybak, I.A., Stecina, K., Shevtsova, N.A., and McCrea, D.A. Modelling
+spinal circuitry involved in locomotor pattern generation: insights from the
+effects of afferent stimulation. J. Physiol. 577:641-658 (2006).
+[50] Rybak, I.A., Shevtsova, N.A., Markin, S.N., Prilutsky, B.I., and Frigon, A.
+Operation regimes of spinal circuits controlling locomotion and the role of
+supraspinal drives and sensory feedback. Elife 13:RP98841 (2024).
+[51] Rybak, I.A., Shevtsova, N.A., Audet, J., Y assine, S., Markin, S.N., Prilut-
+sky, B.I., and Frigon, A. Operation of spinal sensorimotor circuits control-
+46
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+ling
+phase durations during tied-belt and split-belt locomotion after a lateral
+thoracic hemisection. ELife 13:RP103504 (2024).
+[52] Shevtsova, N.A., Talpalar, A.E., Markin, S.N., Harris-Warrick, R.M.,
+Kiehn, O., and Rybak, I.A. Organization of left-right coordination of neu-
+ronal activity in the mammalian spinal cord: Insights from computational
+modelling. J. Physiol. 593:2403-2426 (2015).
+[53] Song, S. and Geyer, H. A neural circuitry that emphasizes spinal feedback
+generates diverse behaviours of human locomotion. J. Physiol. 593:3493-
+3511 (2015).
+[54] Spardy, L.E., Markin, S.N., Shevtsova, N.A., Prilutsky, B.I., Rybak, I.A., and
+Rubin, J.E. A dynamical systems analysis of afferent control in a neurome-
+chanical model of locomotion: I. rhythm generation. J. Neural Eng. 8:1-31
+(2011).
+[55] Stecina, K., Quevedo, J., and McCrea, D.A. Parallel reﬂex pathways from
+ﬂexor muscle afferents evoking resetting and ﬂexion enhancement during
+ﬁctive locomotion and scratch in the cat. J. Physiol. 569:275-290 (2005).
+[56] Tamura, D., Aoi, S., Funato, T., Fujiki, S., Senda, K., and Tsuchiya, K. Con-
+tribution of phase resetting to adaptive rhythm control in human walking
+based on the phase response curves of a neuromusculoskeletal model. Front.
+Neurosci. 14:17 (2020).
+[57] Tata Ramalingasetty, S., Danner, S.M., Arreguit, J., Markin, S.N., Ro-
+darie, D., Kathe, C., Courtine, G., Rybak, I.A., and Ijspeert, A.J. A whole-
+47
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+body
+musculoskeletal model of the mouse. IEEE Access 9:163861-163881
+(2021).
+[58] Tata Ramalingasetty, S., Markin, S.N., Lockhart, A.B., Arreguit, J.,
+Shevtsova, N.A., Ijspeert, A.J., Rybak, I.A. and Danner, S.M. On all fours: a
+3D framework to study closed-loop control of quadrupedal mouse locomo-
+tion. in Proc. Artif. Life Conf. (2024).
+[59] Toeda, M., Aoi, S., Fujiki, S., Funato, T., Tsuchiya, K., and Y anagihara, D.
+Gait generation and its energy efﬁciency based on rat neuromusculoskeletal
+model. Front. Neurosci. 13:1337 (2020).
+[60] Whelan, P .J., Hiebert, G.W., and Pearson, K.G. Stimulation of the group
+I extensor afferents prolongs the stance phase in walking cats, Brain Res.
+103:20-30 (1995).
+[61] Y akovenko, S., Gritsenko, V ., and Prochazka, A. Contribution of stretch re-
+ﬂexes to locomotor control: A modeling study. Biol. Cybern. 90:146-155
+(2004).
+[62] Y anagihara, D., Udo, M., Kondo, I., and Y oshida, T. A new learning
+paradigm: adaptive changes in interlimb coordination during perturbed lo-
+comotion in decerebrate cats. Neurosci. Res. 18:241-244 (1993).
+[63] Y anagihara, D. and Kondo, I. Nitric oxide plays a key role in adaptive control
+of locomotion in cat. Proc. Natl. Acad. Sci. USA 93:13292-13297 (1996).
+[64] Zhang, H., Shevtsova, N.A., Deska-Gauthier, D., Mackay, C.,
+Dougherty, K.J., Danner, S.M., Zhang, Y ., and Rybak, I.A. The role
+48
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 
+of
+V3 neurons in speed-dependent interlimb coordination during locomo-
+tion in mice. Elife 11:e73424 (2022).
+[65] Zhong, H., Roy, R.R., Nakada, K.K., Zdunowski, S., Khalili, N., de
+Leon, R.D., and Edgerton, V .R. Accommodation of the spinal cat to a trip-
+ping perturbation. Front. Physiol. 3:112 (2012).
+49
+.CC-BY 4.0 International licenseavailable under a
+(which was not certified by peer review) is the author/funder, who has granted bioRxiv a license to display the preprint in perpetuity. It is made 
+The copyright holder for this preprintthis version posted November 12, 2025. ; https://doi.org/10.1101/2025.11.11.687930doi: bioRxiv preprint 

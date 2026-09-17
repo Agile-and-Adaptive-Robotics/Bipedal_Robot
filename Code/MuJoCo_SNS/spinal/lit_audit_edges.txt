@@ -1,0 +1,69 @@
+neurons 60, inputs 28, connections attr type: <class 'list'>
+total connections: 126
+INH ADAP_IN      -> RG-E          x  2  g=2.5
+INH ADAP_IN      -> RG-F          x  2  g=2.5
+EXC DRIVE        -> PF            x  8  g=0.05
+EXC DRIVE        -> RG-E          x  2  g=1.7
+EXC DRIVE        -> RG-F          x  2  g=1.4
+EXC IBEXC_IN     -> MN            x  2  g=0.6
+EXC II-aff       -> MN            x  4  g=0.4
+EXC Ia-aff       -> MN            x  4  g=0.6
+INH Ia-aff       -> MN            x  4  g=0.4
+EXC Ib-aff       -> IBEXC_IN      x  2  g=0.5
+INH Ib-aff       -> MN            x  4  g=0.35
+INH KINH_IN      -> MN            x  2  g=0.59
+EXC PF           -> KINH_IN       x  2  g=1.5
+EXC PF           -> MN            x 10  g=0.2
+INH PF           -> PF            x 16  g=4
+EXC PF           -> PFA_IN        x  8  g=1.5
+INH PFA_IN       -> PF            x  8  g=1.5
+EXC POSTURE      -> MN            x  4  g=0.62
+EXC POSTURE      -> RG-E          x  2  g=0.8
+INH PREA_E_l     -> PRESET_E_IN   x  1  g=1.5
+INH PREA_E_r     -> PRESET_E_IN   x  1  g=1.5
+INH PREA_F_l     -> PRESET_F_IN   x  1  g=1.5
+INH PREA_F_r     -> PRESET_F_IN   x  1  g=1.5
+EXC PRESET_E_IN  -> PREA_E_l      x  1  g=1.5
+EXC PRESET_E_IN  -> PREA_E_r      x  1  g=1.5
+EXC PRESET_E_IN  -> RG-E          x  2  g=0.22
+INH PRESET_E_IN  -> RG-F          x  2  g=0.22
+EXC PRESET_F_IN  -> PREA_F_l      x  1  g=1.5
+EXC PRESET_F_IN  -> PREA_F_r      x  1  g=1.5
+INH PRESET_F_IN  -> RG-E          x  2  g=0.22
+EXC PRESET_F_IN  -> RG-F          x  2  g=0.22
+EXC RG-E         -> ADAP_IN       x  2  g=2.5
+EXC RG-E         -> IBEXC_IN      x  2  g=1
+EXC RG-E         -> PF            x  4  g=2.4
+INH RG-E         -> RG-E          x  2  g=2
+INH RG-E         -> RG-F          x  2  g=4
+EXC RG-F         -> ADAP_IN       x  2  g=2.5
+EXC RG-F         -> PF            x  4  g=2.4
+INH RG-F         -> RG-E          x  2  g=4
+INH RG-F         -> RG-F          x  2  g=4
+
+name examples:
+  DRIVE        DRIVE
+  POSTURE      POSTURE
+  BAL_PF       BAL_PF
+  BAL_DF       BAL_DF
+  BAL_TRK_EXT  BAL_TRK_EXT
+  BAL_TRK_FLX  BAL_TRK_FLX
+  BAL_LAT_R    BAL_LAT_R
+  BAL_LAT_L    BAL_LAT_L
+  RG-E         RG_E_l
+  RG-F         RG_F_l
+  ADAP_IN      ADAP_E_l
+  PRESET_E_IN  PRESET_E_l
+  PRESET_F_IN  PRESET_F_l
+  PREA_E_l     PREA_E_l
+  PREA_F_l     PREA_F_l
+  PF           PF_E1_l
+  PFA_IN       PFA_E1_l
+  PREA_E_r     PREA_E_r
+  PREA_F_r     PREA_F_r
+  MN           MN_vas_lat_r
+  Ia-aff       Ia_vas_lat_r
+  II-aff       II_vas_lat_r
+  Ib-aff       Ib_vas_lat_r
+  IBEXC_IN     IBEXC_knee_ext_r
+  KINH_IN      KINH_r

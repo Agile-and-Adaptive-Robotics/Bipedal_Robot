@@ -30,18 +30,34 @@ DT = 0.002          # s, matches the MJCF timestep (2 ms for stability)
 TAU = dict(
     mn=0.03,        # motoneuron pool membrane (30 ms)
     afferent=0.02,  # afferent encoders (20 ms filter on the raw signal)
-    rg=0.05,        # rhythm-generator half-center cells (50 ms)
-    rg_adapt=1.9,   # slow adaptation interneuron (burst termination; slow
-                     # for slow air-stepping rhythm - frequency knob that
-                     # does NOT shrink burst amplitudes, unlike low DRIVE)
+    rg=0.05,        # rhythm-generator half-center membrane (50 ms)
+    rg_nap_h=0.35,  # RG persistent-Na h-gate time constant (FIXED,
+                     # Deng semantics; ~3.2x this = cycle period: 0.35 s
+                     # -> ~1.2 s. The PERIOD knob, measured 2026-09-16)
     pf=0.08,        # pattern-formation cells
-    pf_adapt=0.5,   # PF burst self-adaptation
+    pf_adapt=0.5,   # (legacy: PFA removed 2026-09-16; kept for record)
     ib_exc=0.05,    # group Ib load-sharing interneuron
     descend=0.10,   # descending drive smoothing
-    preset=0.04,    # v5 phase-reset interneurons (hip-signal input stage)
-    preset_adapt=0.08,  # v10 fast adaptation on PRESET (onset detection:
-                        # tau ~ 2x the step dt*25 -> brief pulse at signal
-                        # onset instead of a tonic bias)
+    preset=0.04,    # (legacy: PRESET removed 2026-09-16; HEEL/TOE INs
+                     # still use this value)
+    preset_adapt=0.08,  # (legacy: PREA removed 2026-09-16)
+    rg_adapt=1.9,   # (legacy: ADAP retired 2026-09-16; inert, kept so
+                     # old jsons/studies still load without KeyError)
+)
+
+# ------------------------------------------------------------- RG NaP neurons
+# Persistent-Na half-center parameters (Deng 2022 / Shinohara 2025 /
+# Rybak 2024-25 conditional bursters), rescaled to OUR 0..5 mV operating
+# range (e_ion near the plateau instead of ENa +50; slope_m/e_m set the
+# activation threshold ~2 mV). tau_max_h is the burst-termination /
+# PERIOD knob (fixed-tau semantics; tau_h ~0.35 s -> cycle ~1.2 s,
+# ~2x tau_h scaling, measured _nap_fixed_test.py 2026-09-16).
+NAP = dict(
+    g_ion=12.0,        # NaP conductance (uS-scale on our range)
+    e_ion=8.0,         # NaP reversal (plateau ceiling, mV)
+    k_m=1.0, slope_m=0.8, e_m=2.0,    # fast activation gate
+    k_h=1.0, slope_h=-2.0, e_h=3.5,   # slow inactivation gate
+    tau_max_h=0.35,    # s, FIXED h time constant (Deng semantics)
 )
 
 # ------------------------------------------------------------- synapse conductances
@@ -108,6 +124,57 @@ G = dict(
     # 1.0 = v9 behavior (identical), 0 = no standing PF tone while
     # walking (physiologic: soleus tonic EMG drops with locomotor drive).
     ankle_post_walk_trim=1.0,
+    # ---- v11 mechanosensory stance feedback (Ben's go 2026-09-15;
+    # implements audit P1a + P1b, LIT_CIRCUIT_AUDIT.md rows 7/11/27/28/29).
+    # ALL DEFAULTS 0 = topology absent = v10-identical (regression-gated).
+    # P1a: heel/toe contact mechanosensors + stance-Ib prolonger.
+    #   HEEL contact -> RG-E exc + RG-F inh (S2W trigger, Conway 1987)
+    #   TOE contact -> RG-E exc (late-stance prolongation)
+    #   LBIN (RG-layer stance-Ib group IN, per Dominguez 2020 "INs belong
+    #   to the rhythm-generating layer") -> RG-E exc (duty prolonger;
+    #   Gossard 1994/Pearson 1998 stance-duration regulation)
+    heel_rge=0.0,            # heel contact -> RG-E exc / RG-F inh
+    toe_rge=0.0,             # loaded toe -> RG-E exc
+    ib_rge=0.0,              # stance-Ib group IN (LBIN) -> RG-E exc
+    # P1b: IaIN population replaces the direct Ia->antagonist edge when
+    # > 0 (Deng A6: Ia->IaIN->MN with PF_F1 phase gate; RC->IaIN inh
+    # = recurrent disinhibition, Hultborn 1971).
+    ia_in=0.0,
+    # ---- 2026-09-16 (Ben, from Deng 2022 / Shinohara 2025 figures):
+    # weak MUTUAL EXCITATION between the RG half-centers (Deng 2022 G_W;
+    # raises the inhibited neuron's equilibrium = escape mode, and
+    # neuromodulation of it raises frequency). Direct RG-E<->RG-F edges.
+    rg_weak_exc=0.0,
+    # per-muscle afferent -> central feedback (Deng 2022 / Shinohara 2025
+    # wiring): extensor muscles' Ib afferents project EXCITATORY to the
+    # ipsilateral E-centers (PF_E1/E2, RG_E, InE) - force feedback
+    # shifts the V-nullcline (Shinohara 4.2); flexor muscles' Ia+II
+    # afferents project to the F-centers (PF_F1/F2, RG_F, InF) - length
+    # feedback (same escape logic). Foot mechanosensors share the
+    # extensor pathway (Ben). DEFAULTS 0 = absent.
+    ib_e_central=0.0,        # extensor Ib -> PF_E / RG_E / InE (exc)
+    ia_f_central=0.0,        # flexor Ia -> PF_F / RG_F / InF (exc)
+    ii_f_central=0.0,        # flexor II -> PF_F / RG_F / InF (exc)
+    ii_e_central=0.0,        # extensor II -> PF_E / RG_E / InE (exc,
+                              # same-group; Ben 2026-09-16)
+    # Rybak 2025 SF-E1 contralateral half: hip-flexor stretch afferents
+    # also INHIBIT the CONTRALATERAL F half-center (promotes the E->F
+    # transition + interleg coordination; grows with speed). Per-muscle
+    # flexor Ia -> contralateral RG_F inhibition.
+    ia_f_contra_f=0.0,
+    # Rybak 2025 SF-E2 / audit P2a: the E-side commissural (V3) also
+    # reinforces the CONTRALATERAL extensor MN groups (crossed-extensor
+    # weight support): V3 IN -> contralateral IBEXC group INs.
+    v3_to_ibexc=0.0,
+    # ---- v11b semi-closed sensory loops (Shevtsova central principle):
+    # afferent relay INs create three-layer positive feedback: muscle ->
+    # afferent -> PF -> RG -> MN -> muscle. AFF_E receives extensor-side
+    # afferent drive (force); AFF_F receives flexor-side (velocity/length).
+    # ALL DEFAULTS 0 = absent.
+    aff_e_rg=0.0,            # AFF_E -> RG-E exc (extensor afferent -> RG)
+    aff_f_rg=0.0,            # AFF_F -> RG-F exc (flexor afferent -> RG)
+    aff_e_pf=0.0,            # AFF_E -> PF-E exc (extensor afferent -> PF)
+    aff_f_pf=0.0,            # AFF_F -> PF-F exc (flexor afferent -> PF)
 )
 
 # Extra gains for the phase-reset pathways (not searched by default; the

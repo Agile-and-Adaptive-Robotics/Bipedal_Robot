@@ -3,6 +3,19 @@
 This file briefs any AI assistant (ChatGPT or otherwise) working on this project while the
 primary assistant (ZCode) is unavailable. Read it fully before doing anything. The repo-wide
 `AGENTS.md` next to this file has additional standing context — both are plain markdown.
+
+## REPO SIZE REDUCTION OBJECTIVE (Ben, 2026-09-15) — READ BEFORE ANY GIT OPERATION
+Ben wants the repo shrunk across the board (~13.8 GB on disk) and is WARY of
+re-clone-requiring operations. If your task involves ANY git history operation
+(filter-repo, amend, push --force, gc/prune, bulk deletion): read the
+"REPO SIZE REDUCTION" section in `AGENTS.md` FIRST, present its MANDATORY
+SAFEGUARD CHECKLIST to Ben, and get his explicit go PER STEP. Never run
+destructive git operations unprompted; do not assume the ~500 MB npz commit
+(a8746f9, branch KneeTestSetup_BenBo_stw, pushed) or the 5.8 GB UNTRACKED
+`SADb_audit\pdf_staging\` folder may simply be deleted — the npz strip needs
+backup + force push + all-other-clones-re-clone coordination, and pdf_staging
+belongs to another session's upload workflow.
+
 **THREE ACTIVE WORK THREADS: (0) AnimatLab .aproj wiring repair — PAUSED MID-FIX, read
 `Neuromechanical_Models\Biped_2xCPG_wSubs\tools\CONTINUE_HERE.md` FIRST for exact state,
 fix spec, and the GUI-verification protocol; (A) AnimatLab arrow audit — section below;
@@ -81,6 +94,16 @@ section is the FIRST task of the next session.**
    everything else suppressed, even over 20 s). Sweep drive 20–40 nA; try the paper's
    10 nA 1 ms pulse; apply Deng Table A2 PF→MN conductances (hip 2.565/3.632, knee
    4.93/1.516, ankle 4.054/4.522 µS) instead of the 0.5 µS defaults.
+   **Update 2026-09-16 (ZCode session)**: prime suspect remains the Na h-gate tau
+   (AnimatLab LinearHill treats tau_h.max as a FIXED constant, which is what makes
+   the verified Simulink Deng port oscillate; a voltage-dependent tau_h that
+   collapses at depolarized V quenches this circuit — see
+   `Code\Matlab\SNS_Simscape\README_SNS_Simscape.md`, Deng section). Also note the
+   python side's toolbox DOES ship a persistent-Na neuron class
+   (`NonSpikingNeuronWithPersistentSodiumChannel`, Tutorial 8) — if the MuJoCo-side
+   spinal RG is rebuilt on it, all three platforms can share one Deng-style
+   burst-termination mechanism (mind the ThrPre/Elo opposite-saturation trap when
+   porting values).
 3. **16 placeholder attachments** — new-muscle origin/insertion points were copied from
    anatomically similar sites; Ben must position them. Then set RestingLength = TSL + OFL
    (Gait2392: Gas 0.45 m, BFlh 0.435 m, Semimem 0.439 m, RF 0.424 m), LengthTension
