@@ -886,6 +886,13 @@ def fig_deng(t, fmts):
     _P.G["heel_rge"] = tg["heel_rge"]
     _P.G["toe_rge"] = tg["toe_rge"]
     _P.G["ib_rge"] = tg["ib_rge"]
+    _P.G["rg_weak_exc"] = tg["rg_weak_exc"]
+    _P.G["ib_e_central"] = tg["ib_e_central"]
+    _P.G["ia_f_central"] = tg["ia_f_central"]
+    _P.G["ii_f_central"] = tg["ii_f_central"]
+    _P.G["ii_e_central"] = tg["ii_e_central"]
+    _P.G["ia_f_contra_f"] = tg["ia_f_contra_f"]
+    _P.G["v3_to_ibexc"] = tg["v3_to_ibexc"]
     ACTS = ["vas_lat_r", "semimem_r", "vas_lat_l", "semimem_l"]
     net = bn.build(ACTS, interleg=True)
     _P.G["phase_reset_e"] = 0.0     # restore defaults
@@ -1010,8 +1017,10 @@ def fig_deng(t, fmts):
             shrink_a=0.0)
         syn(cv, (3.3, 12.82), pfs["E2"], True, color=W_E, lw=0.7,
             rad=0.12, shrink_a=0.0)
+        syn(cv, (3.3, 15.1), ine, True, color=W_E, lw=0.7, rad=-0.1,
+            shrink_a=0.0)
         edge("HEEL", "PF", "exc"); edge("HEEL", "RG-IN", "exc")
-        edge("TOE", "PF", "exc")
+        edge("TOE", "PF", "exc"); edge("TOE", "RG-IN", "exc")
     # (DRIVE->PF weak tonic edge REMOVED 2026-09-16, audit #23:
     # EXTRA-NOTSUPPORTED - PF is driven by RG only, per Deng/Shevtsova)
     # direct PF<->PF inhibition REMOVED (laminated 2026-09-15)

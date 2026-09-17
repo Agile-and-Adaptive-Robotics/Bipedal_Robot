@@ -44,10 +44,12 @@ assert not cond, f"conditional populations present at stage-1 gains: {cond}"
 print(f"stage-1 config: {len(names)} populations, conditional blocks "
       "ABSENT (stage-1 study stays valid)")
 
-# --- (1)+(2) tuned gains: heel once, IaIN fed
+# --- (1)+(2) tuned gains: heel once, IaIN fed, ALL new central pathways
 tuned = dict(phase_reset_e=0.5, phase_reset_f=0.5, f1_kneext_inh=0.6,
              f1_anklepf_inh=0.6, renshaw=0.5, ia_in=0.6, heel_rge=0.6,
-             toe_rge=0.4, ib_rge=0.6)
+             toe_rge=0.4, ib_rge=0.6, rg_weak_exc=0.4,
+             ib_e_central=0.5, ia_f_central=0.5, ii_f_central=0.3,
+             ii_e_central=0.3, ia_f_contra_f=0.4, v3_to_ibexc=0.4)
 names, g = groups(tuned)
 heel_e = [(k, v) for k, v in g.items()
           if k[0].startswith("HEEL") and k[2] == "exc"]
@@ -61,6 +63,19 @@ iain_aff = [(k, v) for k, v in g.items()
 assert len(iain_aff) == 4 and all(v == 1 for _, v in iain_aff), \
     f"Ia->IaIN afferent edges wrong: {iain_aff}"
 print(f"Ia->IaIN afferent edges (x4 pools, once each): {iain_aff}")
-n_iain = sum(1 for n in names if n.startswith("IaIN"))
-print(f"IaIN populations: {n_iain} (expect 4)")
+# new central-pathway groups present exactly once per pair
+for want in (("Ib_vas_lat_r", "PF_E1_r", "exc"),
+             ("Ib_vas_lat_r", "RG_E_r", "exc"),
+             ("Ib_vas_lat_r", "InE_r", "exc"),
+             ("II_vas_lat_r", "RG_E_r", "exc"),
+             ("Ia_semimem_r", "PF_F1_r", "exc"),
+             ("II_semimem_r", "RG_F_r", "exc"),
+             ("Ia_semimem_r", "RG_F_l", "inh"),
+             ("HEEL_r", "PF_E1_r", "exc"),
+             ("TOE_l", "PF_E2_l", "exc"),
+             ("CIN_E_r", "IBEXC_knee_ext_l", "exc")):
+    assert g.get(want) == 1, f"missing/duplicated central edge {want}: " \
+        f"{g.get(want)}"
+print("all NEW central-pathway edges verified (Ib/II->E-centers, "
+      "Ia/II->F-centers, Ia->contra-F, HEEL/TOE->PF_E, V3->contra-IBEXC)")
 print("ALL FIX CHECKS PASS")

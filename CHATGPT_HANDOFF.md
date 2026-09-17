@@ -16,12 +16,14 @@ destructive git operations unprompted; do not assume the ~500 MB npz commit
 backup + force push + all-other-clones-re-clone coordination, and pdf_staging
 belongs to another session's upload workflow.
 
-**THREE ACTIVE WORK THREADS: (0) AnimatLab .aproj wiring repair — PAUSED MID-FIX, read
+**FOUR ACTIVE WORK THREADS: (0) AnimatLab .aproj wiring repair — PAUSED MID-FIX, read
 `Neuromechanical_Models\Biped_2xCPG_wSubs\tools\CONTINUE_HERE.md` FIRST for exact state,
 fix spec, and the GUI-verification protocol; (A) AnimatLab arrow audit — section below;
 (B) MuJoCo gait2392 spinal cord network in `Code\MuJoCo_SNS\spinal\` (read its
-`DESIGN.md` first — rhythm layer verified; leg-DoF NaN blocker open with prioritized
-suspects).** Also: laptop-session mining findings in `Testing_Data\2022_02_Festo\HANDOFF_laptop_20260908.md`.
+`DESIGN.md` first — well past the rhythm layer now, DESIGN.md top is authoritative);
+(C) Sensory Afferent Database curation in `SADb_audit\` — section at the END of this
+file, and the thread Ben wants worked while ZCode is on peak billing (Mon–Fri
+23:00–03:00 Pacific).** Also: laptop-session mining findings in `Testing_Data\2022_02_Festo\HANDOFF_laptop_20260908.md`.
 
 ## ACTIVE WORK B — MuJoCo gait2392 spinal network (started 2026-09-09, easteregg2)
 
@@ -499,3 +501,105 @@ reproducible numbers. Xi values themselves confirmed identical to the settled bl
 Also deleted the tracked-but-junk _zipreview/ folder (unstaged deletions; include in next commit).
 No commits made. Ben uploads the 8 changed chapters/ files to Overleaf (built from his 11:50 zip,
 so advisor text edits are preserved).
+
+# ACTIVE WORK C — Sensory Afferent Database (SADb), `SADb_audit\` — THE THREAD FOR PEAK-HOUR COVERAGE
+
+Ben's request (2026-09-16): work this thread while the primary assistant (ZCode) is on
+peak billing (Mon–Fri 23:00–03:00 Pacific). The corpus is Ben's Sensory Afferent
+Database — ~940 locomotor sensory-feedback papers in the Airtable base "Sensory
+Feedback", curated against his Zotero libraries. **Read `SADb_audit\README.md` (the
+CURATION SPEC section is the detailed rulebook) and the WORKFLOW rows of
+`SADb_audit\curation_log.csv` (the running state) before doing anything.**
+
+## Measured state (2026-09-16, direct Airtable counts + logs)
+
+- Papers table = **943 records**, **500 with empty Notes**. A Sept-15/16 "task5"
+  auto-curation pass (`SADb_audit\task5_progress\`) created ~390 new records and
+  auto-curated many; its `task5_insufficient.json` lists **108 Zotero keys** whose
+  auto-curation was judged insufficient (manual curation needed). Before curating ANY
+  paper, reconcile `task5_classified.json` / `task5_created.json` against the live
+  table — task5 coverage overlaps the older batch queue in ways not yet fully mapped.
+- The original 383-record rest-import campaign: batches 1–5 DONE (50 papers) +
+  independent audit PASS; Ben's 2026-09-15 rulings applied (see the curation_log
+  RULINGS row). Batch 6 = queue CSV rows 41–50 of `airtable_rest_import_clean.csv` —
+  but CHECK task5 coverage of those rows first.
+- PDFs: 232/456 DOI-bearing records had attachments at last count (2026-09-15);
+  `author_fix\remaining_no_pdf.csv` lists the 224 without (doi,state columns).
+  Zotero-local PDF inventory: `pdf_inventory.csv`; staged copies live at
+  `D:\sadb_pdf_staging` (OUTSIDE the repo on purpose — never move them in).
+- Author normalization DONE table-wide (2026-09-15): Primary Author = ONE surname
+  (no "et al."), remaining surnames in the new `Secondary Authors` multi-select.
+- VOSviewer citation bubble map BUILT: `SADb_audit\vosviewer\` (`sadb_map.txt` +
+  `sadb_network.txt`; open at app.vosviewer.com; regenerate with `vos_build.py`).
+
+## Work menu (Ben assigns; suggested order)
+
+1. **Curation batches** (10 papers per batch) for whichever records are still bare.
+   Follow the README spec EXACTLY: grounding ladder (Zotero → PubMed → Europe PMC →
+   publisher/archived full text), field rules (Notes style, Animal vocabulary,
+   Feedback link vocabulary), Review Papers / Models twin-record creation BEFORE the
+   paper update, ONE batched update per 10 papers, verify by re-pulling those ids and
+   diffing every field echo, append one row per paper to `curation_log.csv`. Audit
+   every 5th batch (read-only re-verification of the last 50 records).
+2. **Task-5 manual curation**: the 108 `task5_insufficient.json` keys. These failed
+   auto-curation because grounding was thin — they need the full treatment and the
+   no-grounding-no-note rule is MOST important here.
+3. **PDF hunt** on `remaining_no_pdf.csv`: find OpenAlex/publisher OA candidates,
+   verify each URL with a range-GET checking the `%PDF` magic BEFORE attaching (an
+   earlier session's unverified URL attaches were silently dropped by Airtable), then
+   URL-attach. Local files cannot be uploaded by token — they go in via Ben's
+   drag-drop or the tunnel bridge (`author_fix\tunnel_attach.py`, Ben runs it).
+4. **Viz/app builds** if Ben asks: VOSviewer map refresh after batches land; a
+   single-file HTML pivot/search/bubble app fed by an Airtable export. New artifacts
+   stay small and text-only under `SADb_audit\` — the repo is in a size-reduction
+   campaign, so NO PDFs or binaries into the repo, ever.
+
+## Credentials + rotation (read them, never copy them)
+
+- Keys live in **`D:\Github\api_credentials_local.txt`**, outside the repo. Read
+  them from that file; NEVER write a key into any repo file, a chat message, or
+  CHATGPT_REPORT.md. Airtable REST: `https://api.airtable.com/v0/appMQTnobUNRytIp7/<Table>`
+  with `Authorization: Bearer <PAT>`; working script patterns in
+  `SADb_audit\author_fix\*.py` and `task5_progress\auto_curate.py` (reads env AT_PAT).
+- **Rotation is PENDING**: both keys appeared in AI chat transcripts. The plan is a
+  fine-grained Airtable PAT scoped to this base only (data.records read+write) and a
+  read-only Zotero key, with the old keys revoked after all processes migrate. If Ben
+  has rotated by the time you read this, use the new keys from the file.
+- **Zotero is STRICTLY READ-ONLY** (Ben's standing note in the credentials file).
+  The web-API DELETE bypasses the Zotero trash and is PERMANENT — one 107-attachment
+  purge already happened, on Ben's explicit per-item criterion. No Zotero writes,
+  deletes, or file uploads without Ben's explicit per-action go.
+
+## Hard rules (each prevents a failure that already cost real repair time)
+
+- NEVER delete an Airtable record; never edit the 99 original papers' existing notes;
+  never touch Recorders; never rename Feedback/Models records; no new Animal options;
+  no proxied (`proxy.lib.pdx.edu`) URLs anywhere; the DOI is the canonical identifier.
+- Grounding is MANDATORY. Notes are written FROM the paper's text (abstract minimum),
+  never from model memory. **Output contract: every field value carries a verbatim
+  quote + source locator, or the field stays empty and gets flagged. No text found →
+  NO note, log row says `no-text`. Never guess; ambiguity → flag for Ben in
+  `curation_log.csv`.**
+- Grid views and interfaces are Airtable UI objects — NOT creatable via the API. When
+  Ben asks about views (search/sort/filter/group-by are per-view, saved in the UI),
+  give him click-paths; don't attempt API calls for it.
+- Airtable attachment sizes populate asynchronously — never re-attach because an
+  early size check read 0.
+- Do NOT touch threads (0)/(A)/(B) (MATLAB, MuJoCo, AnimatLab) or any git operation.
+
+## Machine traps that bit earlier sessions (details in AGENTS.md + README.md)
+
+- This box's shell is cmd, not bash. PowerShell 5.1 misreads non-ASCII literals in
+  UTF-8-WITHOUT-BOM .ps1 files (use `[char]0xNNNN` codepoint literals). Author JSON
+  payloads from `-Raw` file reads, never console echoes (cp437 mojibake corrupted a
+  CSV once). Inline multi-line `python -c "..."` gets eaten by this shell — write
+  script files. Zotero LOCAL API (port 23119) is read-only and needs `&qmode=everything`
+  for `q=` to match DOIs. Airtable REST writes are UTF-8-safe.
+
+## When done
+
+Append a dated section to `CHATGPT_REPORT.md` (never overwrite old sections): batches
+done with record ids, flags awaiting Ben, counts before/after, files created. The real
+state file is `SADb_audit\curation_log.csv` — keep it current and any later session
+(ZCode or ChatGPT) picks up cleanly. Leave `AGENTS.md` and this handoff file to ZCode
+sessions.

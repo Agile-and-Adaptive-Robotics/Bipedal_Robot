@@ -261,7 +261,11 @@ class SpinalNetwork:
         # ---- cross-side coordination, laminated through commissural INs
         # (Shinohara 2025 wiring): RG_F -> exc -> c1 IN -> INHIBIT ->
         # contralateral RG_F (flexor antiphase lock); RG_E -> exc -> V3
-        # IN -> EXCITE -> contralateral RG_E (extensor synchronization).
+        # IN -> EXCITE -> contralateral InE (the RG-E interneuron, per
+        # Ben's figure reading - NOT RG_E itself: V3->contra-RG_E direct
+        # excitation forms a bilateral E<->E positive-feedback loop that
+        # latches both NaP plateaus; the InE target supports the partner
+        # leg's extensor side indirectly by suppressing its flexor).
         # interleg=False removes it entirely: independent left/right
         # rhythm generators (deafferented air-stepping preparation).
         if self.interleg:
@@ -269,14 +273,17 @@ class SpinalNetwork:
                 cf, ce = f"CIN_F_{a}", f"CIN_E_{a}"
                 self._add(cf, TAU["rg"], n)
                 self._add(ce, TAU["rg"], n)
-                n.add_connection(_syn(G["rg_mutual_inh"], exc=True),
-                                 f"RG_F_{a}", cf)
-                n.add_connection(_syn(G["rg_mutual_inh"], exc=False),
-                                 cf, f"RG_F_{b}")
-                n.add_connection(_syn(0.5 * G["rg_mutual_inh"], exc=True),
-                                 f"RG_E_{a}", ce)
-                n.add_connection(_syn(0.5 * G["rg_mutual_inh"], exc=True),
-                                 ce, f"RG_E_{b}")
+                n.add_connection(_syn(G["c1_gain"] * G["rg_mutual_inh"],
+                                      exc=True), f"RG_F_{a}", cf)
+                n.add_connection(_syn(G["c1_gain"] * G["rg_mutual_inh"],
+                                      exc=False), cf, f"RG_F_{b}")
+                if G["v3_gain"] > 0.0:
+                    n.add_connection(
+                        _syn(G["v3_gain"] * G["rg_mutual_inh"], exc=True),
+                        f"RG_E_{a}", ce)
+                    n.add_connection(
+                        _syn(G["v3_gain"] * G["rg_mutual_inh"], exc=True),
+                        ce, f"InE_{b}")
                 # audit P2a / Rybak 2025 crossed-extensor reinforcement:
                 # the V3 commissural also excites the CONTRALATERAL
                 # extensor MN group INs (weight support on the partner
@@ -384,16 +391,11 @@ class SpinalNetwork:
                                   exc=False), heel_in, rg_f)
             n.add_connection(_syn(G["toe_rge"], exc=True), toe_in, rg_e)
             n.add_connection(_syn(G["ib_rge"], exc=True), lbin, rg_e)
-            # mechanosensors ride the extensor central pathway (same
-            # gain as extensor Ib -> central, per Ben's figure reading)
-            if G["ib_e_central"] > 0.0:
-                for src in (heel_in, toe_in):
-                    n.add_connection(_syn(G["ib_e_central"], exc=True),
-                                     src, f"PF_E1_{side}")
-                    n.add_connection(_syn(G["ib_e_central"], exc=True),
-                                     src, f"PF_E2_{side}")
-                    n.add_connection(_syn(G["ib_e_central"], exc=True),
-                                     src, ine)
+            # NOTE: the heel/toe -> PF_E/InE central-pathway extensions
+            # are wired in _build_pf (the PF cells are created there,
+            # AFTER this function runs - wiring them here was the
+            # stage-2 crash of 2026-09-16 18:58, 'Population not found
+            # by name PF_E1_l')
 
         # ---- v11b semi-closed sensory loops (Shevtsova central principle):
         # the active phase's afferents excite that phase's PF and RG cells
@@ -447,6 +449,20 @@ class SpinalNetwork:
         for ph in ("E1", "E2"):
             n.add_connection(_syn(G["pf_recip_inh"], exc=False),
                              pf_in_f, f"PF_{ph}_{side}")
+
+        # mechanosensors ride the extensor central pathway (same gain as
+        # extensor Ib -> central, per Ben's figure reading 2026-09-16):
+        # HEEL/TOE -> PF_E1/E2 + InE. Wired HERE because the PF cells are
+        # created in this function (the 2026-09-16 stage-2 crash was this
+        # block living in _build_rg before the PF populations existed).
+        if (self.stance_fb or self.aff_loops) and G["ib_e_central"] > 0.0:
+            for src in (f"HEEL_{side}", f"TOE_{side}"):
+                n.add_connection(_syn(G["ib_e_central"], exc=True),
+                                 src, f"PF_E1_{side}")
+                n.add_connection(_syn(G["ib_e_central"], exc=True),
+                                 src, f"PF_E2_{side}")
+                n.add_connection(_syn(G["ib_e_central"], exc=True),
+                                 src, f"InE_{side}")
 
         # v11b Shevtsova semi-closed loops: AFF relay → PF cells
         # (afferent → PF excitation, completing the three-layer loop)

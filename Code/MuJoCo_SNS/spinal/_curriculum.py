@@ -43,6 +43,8 @@ def set_stage(stage, p):
         P.G["ia_f_central"] = float(p.get("ia_f_central", 0.0))
         P.G["ii_f_central"] = float(p.get("ii_f_central", 0.0))
         P.G["ii_e_central"] = float(p.get("ii_e_central", 0.0))
+        P.G["c1_gain"] = float(p.get("c1_gain", 1.0))
+        P.G["v3_gain"] = float(p.get("v3_gain", 0.0))
     if stage >= 3:
         P.G["ib_rge"] = float(p.get("ib_rge", 0.0))
         P.G["ia_in"] = float(p.get("ia_in", 0.0))
@@ -70,6 +72,8 @@ def objective(stage):
                                                       0.0, 1.0)
             sug["ii_e_central"] = trial.suggest_float("ii_e_central",
                                                       0.0, 1.0)
+            sug["c1_gain"] = trial.suggest_float("c1_gain", 0.1, 1.5)
+            sug["v3_gain"] = trial.suggest_float("v3_gain", 0.0, 0.5)
         if stage >= 3:
             sug["ib_rge"] = trial.suggest_float("ib_rge", 0.0, 1.0)
             sug["ia_in"] = trial.suggest_float("ia_in", 0.0, 1.2)
@@ -82,9 +86,16 @@ def objective(stage):
         # searched keys override; everything else pinned at v10 winner
         p = {**BASE_MUL, **sug}
         set_stage(stage, p)
-        if stage == 1:
-            m = R.main(["--no-ground", "--no-afferents", "--no-interleg",
-                        "--time", "14", "--drive", repr(p["drive"])])
+        if stage <= 2:
+            # stages 1-2: AIR stepping (stage 1 deafferented + interleg
+            # off; stage 2 AFFERENTED + interleg ON, exercising the c1/V3
+            # commissurals in the Ivanenko air-stepping prep)
+            args = ["--no-ground", "--no-afferents", "--no-interleg",
+                    "--time", "14", "--drive", repr(p["drive"])]
+            if stage == 2:
+                args = ["--no-ground", "--time", "14",
+                        "--drive", repr(p["drive"])]
+            m = R.main(args)
             import numpy as np
             z = __import__("numpy").load("spinal_run.npz", allow_pickle=True)
             t, q, neuro = z["t"], z["q"], z["neuro"]
@@ -146,6 +157,7 @@ def main():
                 if k in ("drive", "rg_nap_h", "desc_e", "desc_f", "rg_to_pf",
                          "heel_rge", "toe_rge", "ib_e_central",
                          "ia_f_central", "ii_f_central", "ii_e_central",
+                         "c1_gain", "v3_gain",
                          "ib_rge", "ia_in", "ia_f_contra_f", "v3_to_ibexc",
                          "ankle_post_walk_trim")}
         study.enqueue_trial(seed)

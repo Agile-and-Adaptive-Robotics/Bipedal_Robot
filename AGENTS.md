@@ -748,11 +748,19 @@ Loaded automatically at session start. Keep it current; keep it lean.
   and `CHATGPT_REPORT.md` (their report back; 2026-09-08 edition covers Overleaf
   manuscript-status edits) — keep both current when work is handed off.
 - `SADb_audit\` — Sensory Afferent Database reconciliation (Zotero personal / AARL group /
-  Airtable "Sensory Feedback" base) + the standing curation backlog: the 383 rest-imported
-  Papers get the full curation layer (Notes/Animals/Feedback/Review/Models) 10 per batch.
-  Spec + live state in `SADb_audit\README.md` (CURATION STATE section), per-batch details in
-  `curation_log.csv`. 20/383 done 2026-09-12 (pilot + batch 2); next = batch 3 = queue CSV
-  rows 11-20; audit subagent after batch 5.
+  Airtable "Sensory Feedback" base `appMQTnobUNRytIp7`) + the standing curation backlog.
+  Spec + live state in `SADb_audit\README.md`, per-batch details in `curation_log.csv`
+  (WORKFLOW rows = current state). **State 2026-09-16: Papers table = 943 records, 500 with
+  empty Notes; the 383 rest-import campaign has batches 1–5 DONE + audit PASS (50/383;
+  batch 6 = queue CSV rows 41–50) with Ben's 09-15 rulings applied; the Sept-15/16 "task5"
+  auto-curation pass created ~390 more records and flagged 108 as insufficient
+  (`task5_progress\task5_insufficient.json` — manual curation needed); PDFs attached to
+  232/456 DOI-bearing records (224 remain, `author_fix\remaining_no_pdf.csv`); author
+  normalization done (Primary Author = one surname + Secondary Authors multi-select);
+  VOSviewer citation map built (`SADb_audit\vosviewer\`).** SADb work is DELEGATED TO
+  CHATGPT during GLM peak hours (Mon–Fri 23:00–03:00 Pacific) — its brief is the SADb
+  section of `CHATGPT_HANDOFF.md`; keys live in `D:\Github\api_credentials_local.txt`
+  (rotation to scoped keys pending; Zotero key is READ-ONLY per Ben).
 
 ## REPO SIZE REDUCTION (standing objective — Ben, 2026-09-15)
 

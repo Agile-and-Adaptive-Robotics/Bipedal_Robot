@@ -2,6 +2,62 @@
 
 Built 2026-09-09. Files in `Code\MuJoCo_SNS\spinal\`.
 
+## 2026-09-16 NIGHT (CURRICULUM STATE + INTERLEG LATCH DIAGNOSIS —
+## READ FIRST if resuming; handed to ChatGPT for off-peak work)
+
+**Stage 1 DONE: best 137.254 @ trial 78** (winner in
+curriculum_stage1.json; 100 trials; ADAP-era all-time best was 57.4).
+Winner is a FAST air rhythm (29 cycles / 0.37 s / duty 0.19 at
+rg_nap_h=0.17, drive 3.15) — the air objective rewards rise count;
+stage 2/3 must slow it toward the 1.2 s human cycle (rg_nap_h is
+searched; stage 3's kine objective enforces cadence).
+
+**Stages 2-3 RAN AND FLATLINED: best -100 @ trial 0 in BOTH (every
+trial -100 = no-countable-cycles sentinel).** Two root causes, both
+diagnosed empirically (isolation matrix below):
+
+1. (FIXED) heel/toe->PF_E edges were wired in _build_rg BEFORE the PF
+   cells exist -> hard crash on the first stage-2 trial with
+   ib_e_central > 0. Moved into _build_pf. _fix_check.py now asserts
+   every new central pathway at the compiled-net level (PASSES).
+2. (KNOBS ADDED, TUNING PENDING) **interleg latch**: with interleg ON,
+   the network bilateral-E-latches on ground (E-duty 0.90-1.00, knees
+   pinned -4..+11, RG_F 0.11 s chatter, tilt 31) — IDENTICAL with
+   v3_gain 0 and 0.5, and identical with afferents ON/OFF, so the
+   driver is the c1 cross-side F-F inhibition at full rg_mutual_inh
+   strength against NaP plateau neurons. Isolation matrix
+   (_diag_gait.py, stage-1 winner config):
+     air, no-interleg, deaff   : 29 cycles, 0.37 s, duty 0.19  (alive)
+     air, no-interleg, afferents: 29 cycles, 0.37 s             (alive)
+     ground, NO-interleg        : 29 cycles, 0.37 s, knee -85   (alive)
+     ground, interleg (c1 1.0)  : LATCHED (v3 0 and 0.5 identical)
+   FIXES SHIPPED: G["c1_gain"] (default 1.0) and G["v3_gain"]
+   (default 0.0 = pathway absent) multiply rg_mutual_inh; V3 now
+   targets the CONTRALATERAL InE (per Ben's Shinohara reading:
+   "v3 -> excite -> contralateral RG_E IN" — V3->contra-RG_E direct
+   was my error and is also a bilateral E-E positive loop); both are
+   searched in stages 2-3 (c1 [0.1,1.5], v3 [0,0.5]). ALSO: the
+   stage-2 objective was mislabeled from the start — it ran the GROUND
+   eval; now stage 2 is truly air-afferented (--no-ground, interleg
+   ON, air rises+knee objective) and only stage 3 runs the ground
+   kine eval.
+
+**RESUME RECIPE (next session, off-peak):**
+1. Optional 30-s characterization: air + interleg c1=1.0 (the cancelled
+   test) — tells you whether stage-2's seed region latches in air too.
+2. Purge the garbage studies: curr_s2_air_aff, curr_s3_ground
+   (all -100; 0 informative trials). KEEP curr_s1_air_deaff (complete).
+3. Relaunch: `resume_curriculum_lam.bat` (stage 1 no-ops through with
+   its saved winner, stages 2-3 fresh at 100 trials each).
+4. On completion: `post_curriculum_deliverables.bat` (stage-3 winner
+   22 s run + GIF + hindlimb + overlay + winner-gain figures).
+5. Fill the `\fillme{}` slots in
+   `Documentation\...\Dissertation\CPG_spinal_section_draft.tex`
+   (copy-paste map in CPG_DISSERTATION_UPDATE_NOTES.md; the stage-1
+   air numbers in PART B are already final).
+6. Second commit (results), then push both commits (1fb515f = the
+   architecture commit, local-only as of tonight).
+
 ## 2026-09-16 EVENING (NaP ARCHITECTURE OVERHAUL — LIVES NOW; answers
 ## the toolbox-correction section directly below)
 

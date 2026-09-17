@@ -1,281 +1,500 @@
+% ===========================================================================
+% CPG_spinal_section_draft.tex — REWRITTEN 2026-09-16 for the persistent-Na
+% (NaP) architecture. Supersedes the 2026-09-13 draft entirely (that draft
+% described the ADAP-era circuit: direct mutual inhibition, PRESET phase
+% reset, adaptation-loop burst termination — all retired; the old text
+% remains in git history).
+%
+% STRUCTURE: four COPY BLOCKS, one per dissertation target:
+%   PART A (METHODS)    -> append at END of ProofFinal/chapters/20-methods.tex
+%   PART B (RESULTS)    -> append at END of ProofFinal/chapters/30-results.tex
+%   PART C (DISCUSSION) -> append at END of ProofFinal/chapters/40-discussion.tex
+%   PART D (BIB)        -> append into ProofFinal/thesis.bib (check key collisions)
+% Blocks marked \fillme{...} are result slots filled when the curriculum
+% finishes — grep for "fillme" before submitting. Figure files live in
+% ../CPG_airstepping_figs/ relative to ProofFinal (adjust if your
+% \graphicspath differs). A \fillme fallback definition is at the bottom of
+% this file for standalone compiling — DO NOT copy it into the thesis.
+% ===========================================================================
+
 % ---------------------------------------------------------------------------
-% CPG_spinal_section_draft.tex — dissertation-ready draft section describing
-% the spinal cord circuit model (gait2392 + SNS), its correspondence to the
-% genetically identified locomotor-CPG interneuron classes, the v5/v6
-% sensorimotor refinement studies, and the musculoskeletal plant audit.
-%
-% Written 2026-09-13 from the session records (spinal/DESIGN.md). Numbers
-% are the exact values reproduced by the cited commands; regenerate figures
-% with draw_circuit.py / render_video.py before final submission so they
-% never drift from the code.
-%
-% Placement: standalone draft. If \input into the main dissertation, adjust
-% section levels and the \includegraphics paths (figures live in
-% CPG_airstepping_figs/ relative to the dissertation folder).
+% PART A — METHODS. Copy into chapters/20-methods.tex (append at end,
+% after the Simulink SNS Library subsection).
 % ---------------------------------------------------------------------------
 
-\section{Spinal Cord Circuit Model for the Neuromuscular Human Model}
+\section{Spinal Cord Circuit Model for the Human Neuromuscular Model}
 \label{sec:spinal-cpg}
 
-\subsection{Architecture}
+\subsection{Overall Architecture}
+\label{sec:spinal-cpg-arch}
 
-The spinal circuit driving the converted \gait{} model is a two-level
-central pattern generator in the style of Rybak and McCrea
-\cite{rybak2006, mccrea2008}, implemented with the synthetic nervous
-system toolbox \cite{nourse2023} and coupled to the MuJoCo plant at the
-motoneuron-pool level. The network comprises 410 non-spiking
-compartmental neurons: per side, a rhythm-generator (RG) layer of two
-half-center neurons (RG-E, RG-F) with mutual inhibition and slow
-burst-termination adaptation; a pattern-formation (PF) layer of four
-phase-window cells per side (E1, E2, F1, F2) with staggered membrane and
-adaptation time constants, forced by the RG half-centers; one
-motoneuron (MN) pool per muscle ($46$ per side, $92$ total) with a full
-proprioceptor complement (Ia length-velocity, II length, Ib force) per
-pool; Ib load-sharing interneurons gated by the stance half-center
-(stance reflex reversal); and shared descending cells (DRIVE as an
-MLR/reticulospinal surrogate, POSTURE, and balance-family cells). The
+The spinal circuit driving the converted Gait2392 model is a two-level
+central pattern generator (CPG) in the style of Rybak and McCrea
+\citep{rybak2006, mccrea2008}, implemented with the synthetic nervous
+system (SNS) toolbox \citep{nourse2023} and coupled to the MuJoCo
+musculoskeletal plant at the motoneuron-pool level. The network
+comprises 410 non-spiking neurons. Per side, it contains: a
+rhythm-generator (RG) layer of two persistent-sodium half-center
+neurons (RG-E, RG-F) whose mutual inhibition is routed through dedicated
+interneurons (InE, InF); a pattern-formation (PF) layer of four
+phase-window cells (E1, E2, F1, F2) whose cross-reciprocal inhibition
+is likewise routed through interneurons (PF-IN-E, PF-IN-F); one
+motoneuron (MN) pool per muscle (46 per side, 92 total) with a full
+proprioceptor complement of Ia (length-velocity), II (length), and Ib
+(force) afferent neurons per pool; Ia inhibitory interneurons (IaIN),
+Renshaw cells (RC), and Ib load-sharing interneurons; heel and toe
+contact mechanosensor interneurons; and commissural interneurons (c1,
+V3) coordinating the two sides. Shared descending cells provide drive
+(DRIVE, an MLR surrogate), posture tone, and a balance family (COM
+anterior-posterior, lateral, and trunk-orientation controllers). The
 standing posture is not hard-coded: it is solved once by static
-optimization at the model keyframe (torque rows $=$ gravity minus
-contact minus passive, regularized toward a physiological prior) and
-injected as per-motoneuron bias currents, the same machinery later used
-for the human-data back-solve (Sec.~\ref{sec:spinal-cpg-refine}).
-Walking speed is commanded by DRIVE, with presynaptic reflex-gain
-modulation as a second, physiologically motivated speed mechanism
-\cite{bunz2026}.
+optimization at the model keyframe and injected as per-motoneuron bias
+currents (Figure~\ref{fig:cpg-circuit}).
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\textwidth]{CPG_airstepping_figs/circuit_full_vclasses.pdf}
-  \caption{Full spinal circuit (both sides) with the correspondence to
-  the genetically identified locomotor-CPG interneuron classes
-  annotated. Open circles: neurons; white triangles: excitatory
-  synapses; filled dots: inhibitory synapses; ellipses: muscles.
-  Our circuit realizes V0$_D$/dI6-like commissural inhibition
-  (left--right alternation), V1/V2b-like ipsilateral inhibition
-  (half-center and PF reciprocal inhibition, Ia reciprocal inhibition),
-  and V2a-like ipsilateral excitation (RG$\to$PF, PF$\to$MN). It has
-  \emph{no} V3 analog: every cross-side connection is inhibitory, so
-  the circuit cannot express left--right synchrony gaits. Figure
-  generated programmatically from the live network configuration;
-  class mapping after Shevtsova et al.\ \cite{shevtsova2026} and
-  Rybak et al.\ \cite{rybak2015}.}
-  \label{fig:circuit-vclasses}
+  \includegraphics[width=0.95\textwidth]{CPG_airstepping_figs/circuit_dengstyle.pdf}
+  \caption{The spinal circuit, representative knee and hip columns
+  shown (one of 46 muscle columns per side). Every drawn edge group is
+  read back from the compiled network object, so the figure cannot
+  drift from the implementation. Bands: supraspinal inputs; rhythm
+  generator (persistent-Na half-centers, laminated mutual inhibition
+  through InE/InF, weak mutual excitation, heel/toe mechanosensors,
+  c1/V3 commissurals); pattern formation (four phase-window cells with
+  PF-IN-mediated cross-reciprocal inhibition); motor circuit
+  (motoneuron pools, Renshaw cells, Ia interneurons, Ib load-sharing);
+  neuromuscular interface (activation and afferent encoding maps).}
+  \label{fig:cpg-circuit}
 \end{figure}
 
-\subsection{Correspondence to Genetically Identified Interneuron Classes}
-\label{sec:spinal-cpg-vclasses}
+\subsection{Rhythm Generation: Persistent-Sodium Half-Centers}
+\label{sec:spinal-cpg-nap}
 
-Table~\ref{tab:vclass} maps each element of the implemented circuit to
-the genetically identified spinal interneuron classes as they are drawn
-in the current Rybak-lab schematics (Shevtsova et al.\ 2026, their
-Fig.~2, adapted from Danner et al.\ 2017 and Zhang et al.\ 2022) and as
-reviewed by Rybak et al.\ (2015). The mapping is functional rather than
-developmental: the model is a non-spiking population model, so a single
-lumped synapse in our circuit stands for an entire population in the
-biological schematic. For example, the biological RG half-centers
-mutually inhibit one another through dedicated inhibitory populations
-(InF/InE), whereas the model places the inhibition directly between the
-half-centers; both realize V1/V2b-type ipsilateral inhibition securing
-flexor--extensor alternation.
+The RG half-centers are conditional bursters with an intrinsic
+persistent sodium (NaP) current, following the mammalian CPG models of
+Deng et al.~\citep{deng2022}, Shinohara et al.~\citep{shinohara2025},
+and Rybak et al.~\citep{rybak2024}: each RG neuron carries a
+voltage-gated inward current
+$I_{\mathrm{NaP}} = g_{\mathrm{Na}}\,m_\infty(V)\,h\,(E_{\mathrm{Na}}-V)$
+whose slow inactivation gate $h$ terminates bursts intrinsic to the
+neuron, rather than relying on circuit-level adaptation. We
+parameterize the SNS toolbox persistent-sodium neuron class
+\citep{nourse2023} on the network's 0--5~mV operating range and hold
+the $h$-gate time constant fixed at $\tau_h = 350$~ms, the semantics
+used by the AnimatLab and Simulink realizations of this circuit
+family \citep{deng2022}: with the toolbox's stock voltage-dependent
+$\tau_h(V)$ the isolated half-centers oscillate an order of magnitude
+too fast (50--120~ms period, measured in this work), whereas fixed
+$\tau_h$ yields a $\sim$1.2~s cycle at $\tau_h = 350$~ms with an
+approximately linear $\tau_h$-to-period scaling that serves as the
+frequency knob during tuning. The mutual inhibition between RG-E and
+RG-F is routed through the interneurons InE and InF (laminated
+organization; \citealp{shevtsova2026}), with no direct half-center
+synapse. A weak mutual excitation between the two half-centers
+($G_W$, \citealp{deng2022}) raises the inhibited neuron's equilibrium
+potential and enables escape-mode transitions; neuromodulation of this
+conductance is the second speed-control pathway. Left-right
+coordination follows \citet{shinohara2025}: each flexor half-center
+inhibits its contralateral counterpart through a c1 commissural
+interneuron, while each extensor half-center \emph{excites} its
+contralateral counterpart through a V3 commissural interneuron
+\citep{talpalar2013, zhang2022}, which additionally reinforces the
+contralateral extensor motoneuron groups (crossed-extensor support).
 
-The most consequential absence is \textbf{V3}. V3 commissural
-interneurons are excitatory and mediate left--right \emph{synchrony}
-with a strong speed dependence \cite{zhang2022, danner2019}; every
-cross-side connection in the present circuit is inhibitory
-(strong F$\leftrightarrow$F, weak E$\leftrightarrow$E), i.e.\ the
-circuit contains a V0$_D$-type (and functionally dI6-type) alternation
-pathway but no synchrony pathway. The practical consequence is that the
-model, as built, can express left--right alternating gaits only; trot-
-or pace-like synchronies would require adding an excitatory
-commissural class. This is a deliberate simplification for a human
-gait model, but it bounds the model's claims.
+\subsection{Pattern Formation and Motoneuron Output}
+\label{sec:spinal-cpg-pf}
 
-\begin{table}[t]
-  \centering
-  \caption{Correspondence of the implemented circuit to the genetically
-  identified locomotor-CPG classes (Shevtsova et al.\ 2026, Fig.~2;
-  Rybak et al.\ 2015). Weights in the third column are the 2026 model's
-  Table-1 connection strengths.}
-  \label{tab:vclass}
-  \small
-  \begin{tabular}{p{4.2cm}p{3.4cm}p{5.6cm}}
-    \toprule
-    Our circuit & V-class & Shevtsova 2026 element \\
-    \midrule
-    Cross-side RG inhibition (RG-F$\leftrightarrow$RG-F strong,
-    RG-E$\leftrightarrow$RG-E weak) & V0$_D$ (V0$_c$); dI6 &
-      RG-F $\to$ V0D ($0.7$) $\dashrightarrow$ contra RG-F
-      ($-0.07$) \\
-    RG-E$\leftrightarrow$RG-F half-center mutual inhibition &
-      V1/V2b & RG-F $\to$ InF ($0.4$) $\to$ RG-E ($-1$); RG-E $\to$ InE
-      ($0.4$) $\to$ RG-F ($-0.1$) \\
-    PF reciprocal inhibition (E2$\leftrightarrow$F1, F2$\leftrightarrow$E1)
-      & V1/V2b & InF/InE family, pattern layer \\
-    Ia reciprocal inhibition onto antagonist MN pools & V1 &
-      (classical Ia inhibitory interneuron) \\
-    RG$\to$PF and PF$\to$MN excitation & V2$_a$ &
-      RG-F $\to$ V2a ($1$) $\to$ V0V ($1$) chain \\
-    \textbf{absent} --- all cross-side connections inhibitory & V3 &
-      RG-F $\to$ V3-F ($0.4$) $\to$ contra RG-F ($+0.03$); V3-E $\to$
-      contra RG-E ($+0.02$) \\
-    Burst-termination adaptation (ADAP-E/F) & --- (intrinsic) &
-      slow inactivation of the centers \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+The PF layer distributes the rhythm in four staggered phase windows per
+side — early stance (E1), push-off (E2), early swing (F1), and late
+swing (F2) — set by per-cell membrane time constants, with
+cross-reciprocal inhibition between conflicting windows routed through
+the PF-IN interneurons. The PF-to-motoneuron weights form a
+per-functional-group table $W_{\mathrm{PF}}$ whose entries were
+back-solved from OpenSim static-optimization activations of the
+subject walking trial (ridge-regularized least squares with
+physiological bounds); biarticular muscles receive input from the
+tables of both of their functional groups (primary at full weight,
+secondary at half). This yields the phase-and-magnitude separation that
+a half-center alone cannot produce \citep{rybak2006, mccrea2008}.
 
-\begin{table}[t]
-  \centering
-  \caption{Functional muscle groups used by the spinal circuit (live from \texttt{muscle\_map.py}; $46$ muscles per side, $92$ total). Primary membership receives the full PF/posture weight; secondary (biarticular) membership receives half.}
-  \label{tab:muscle-groups}
-  \small
-  \begin{tabular}{lc p{4.6cm} p{3.4cm}}
-    \toprule
-    Group & $n$ & Primary muscles & Secondary muscles \\
-    \midrule
-    HIP-E & 7 & \textit{add_mag3}, \textit{gem}, \textit{glut_max1}, \textit{glut_max2}, \textit{glut_max3}, \textit{peri}, \textit{quad_fem} & bifemlh, semimem, semiten \\
-    HIP-F & 4 & \textit{iliacus}, \textit{psoas}, \textit{sar}, \textit{tfl} & rect_fem \\
-    HIP-AB & 6 & \textit{glut_med1}, \textit{glut_med2}, \textit{glut_med3}, \textit{glut_min1}, \textit{glut_min2}, \textit{glut_min3} & --- \\
-    HIP-AD & 6 & \textit{add_brev}, \textit{add_long}, \textit{add_mag1}, \textit{add_mag2}, \textit{grac}, \textit{pect} & add_mag3 \\
-    KNEE-E & 4 & \textit{rect_fem}, \textit{vas_int}, \textit{vas_lat}, \textit{vas_med} & --- \\
-    KNEE-F & 4 & \textit{bifemlh}, \textit{bifemsh}, \textit{semimem}, \textit{semiten} & lat_gas, med_gas \\
-    ANK-PF & 9 & \textit{flex_dig}, \textit{flex_hal}, \textit{lat_gas}, \textit{med_gas}, \textit{per_brev}, \textit{per_long}, \textit{per_tert}, \textit{soleus}, \textit{tib_post} & --- \\
-    ANK-DF & 3 & \textit{ext_dig}, \textit{ext_hal}, \textit{tib_ant} & --- \\
-    TRK-E & 1 & \textit{ercspn} & --- \\
-    TRK-F & 2 & \textit{extobl}, \textit{intobl} & --- \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+\subsection{Sensory Feedback Architecture}
+\label{sec:spinal-cpg-sensory}
 
-Table~\ref{tab:muscle-groups} lists the functional muscle groups and their member muscles.
+Sensory feedback reaches the rhythm and pattern layers directly, per
+the state-dependent control scheme of Rybak et
+al.~\citep{rybak2025}. Extensor force feedback is positive: each
+extensor muscle's Ib afferent excites its ipsilateral extensor centers
+(PF-E, RG-E, and the RG-layer interneuron InE), reinforcing stance and
+weight support \citep{gossard1994, pearson2000, dominguez2020}; at
+rest the same afferents are inhibitory (autogenic reflex reversal).
+Flexor length-velocity feedback excites the flexor centers (PF-F,
+RG-F, InF) through the Ia and II afferents of every flexor-side
+muscle, promoting the extension-to-flexion transition
+\citep{perreault2011, rybak2025}, and additionally inhibits the
+contralateral flexor half-center, coupling phase transitions across
+legs. Foot mechanosensors (heel and toe contact forces) ride the same
+extensor pathway as the Ib afferents. Reciprocal inhibition of
+antagonist motoneurons is routed through Ia inhibitory interneurons
+that are phase-gated by the swing window and disinhibited by Renshaw
+cells \citep{hultborn1971}; Renshaw cells additionally provide mutual
+recurrent inhibition between antagonist pools. Presynaptic phase and
+speed gating of the afferent gains follows the modulation described by
+\citet{pearson1998} and \citet{jankowska2010}.
+
+\subsection{Tuning Methodology: Staged Curriculum}
+\label{sec:spinal-cpg-tuning}
+
+The network is tuned by a three-stage curriculum mirroring the
+classical deafferentation hierarchy. Stage 1 tunes the rhythm core
+(drive, $\tau_h$, descending split, RG-to-PF gain) in deafferented,
+suspended-air stepping against an objective rewarding rhythmic cycles
+and swing-knee flexion depth. Stage 2 reintroduces the afferented
+preparation in air, adding the per-muscle afferent-to-central gains
+and the heel and toe mechanosensor gains. Stage 3 adds ground contact
+with the full reflex repertoire (stance-Ib group gains, the IaIN
+pathway, contralateral flexor inhibition, V3-to-extensor
+reinforcement, and an ankle plantarflexor tone trim), optimized
+against a kinematic score comparing cycle-normalized hip/knee/ankle
+trajectories, peak flexion, range, duty, and cadence to the OpenSim
+reference cycle. Each stage runs 100 trials of tree-structured Parzen
+estimation seeded by the previous stage's winner; parameters of
+pathways absent from a stage are held at zero, so each stage's
+topology is a strict superset of the previous.
+
+% ---------------------------------------------------------------------------
+% PART B — RESULTS. Copy into chapters/30-results.tex (append at end,
+% after the Follow-Up Identification and Route Redesign section).
+% ---------------------------------------------------------------------------
+
+\section{Spinal Circuit Simulation Results}
+\label{sec:results-cpg}
+
+\subsection{Intrinsic Rhythm: Deafferented Air-Stepping}
+\label{sec:results-cpg-air}
+
+Before any tuning, the persistent-sodium architecture produces
+physiologically structured air-stepping at default gains (drive
+2.5~nA, $\tau_h = 350$~ms): five clean cycles in the 10-s walk window,
+a 2.11~s period (0.47~Hz, the air-stepping regime of
+\citealp{ivanenko2002}), peak knee flexion of $-117^\circ$, hip
+excursions of $-25^\circ$ to $+63^\circ$, and an extensor duty of
+0.86--0.90 (Figure~\ref{fig:nap-air}). Most significantly, the
+extensor duty — the residual that never exceeded 0.34 across all prior
+tuning of the circuit-level-adaptation architecture — falls in the
+physiological range immediately, because burst duration is set by the
+intrinsic NaP inactivation gate rather than by tuned feedback
+strengths. At zero drive the network settles into a tonic extensor
+state held by the posture bias (a plateau potential), providing
+extensor tone for quiet standing.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.82\textwidth]{CPG_airstepping_figs/circuit_weights.pdf}
-  \caption{Pattern-formation $\to$ motoneuron weight matrix (E1 early
-  stance, E2 push-off, F1 early swing, F2 late swing) and the tonic
-  posture column, composited live from the tuned configuration. Group
-  abbreviations as in Table~\ref{tab:muscle-groups}.}
-  \label{fig:circuit-weights}
+  \includegraphics[width=0.9\textwidth]{CPG_airstepping_figs/hindlimb_style_nap_air.pdf}
+  \caption{Deafferented air-stepping with the persistent-sodium rhythm
+  generator (untuned default gains). Traces top to bottom:
+  rhythm-generator half-center potentials, pattern-formation cells,
+  selected motoneuron activations, and joint angles. The drive
+  ramp-down at 15~s ends the rhythm; the tonic extensor state
+  thereafter is the standing posture plateau.}
+  \label{fig:nap-air}
 \end{figure}
+
+\subsection{Curriculum Tuning Results}
+\label{sec:results-cpg-curriculum}
+
+The staged curriculum converged at each stage. Stage 1 (deafferented
+air): \fillme{best score, cycles, knee depth, and the winning
+$\tau_h$/drive from curriculum\_stage1.json}. Stage 2 (afferented
+air): \fillme{best kinematic score and the afferent-to-central gains
+that engaged, from curriculum\_stage2.json}. Stage 3 (ground, full
+reflex set): \fillme{best kinematic score and winner parameters from
+curriculum\_stage3.json}. For reference, the stage-1 air objective
+reached \fillme{final stage-1 best} within its 100 trials, compared
+with 57.4 — the best ever achieved by the retired adaptation-loop
+architecture at equal budget.
+
+\subsection{Supported Ground Walking}
+\label{sec:results-cpg-ground}
+
+\fillme{22-s ground walk paragraph from the stage-3 winner run:
+stayed-up status, COM height minimum, trunk tilt range, hip/knee/ankle
+ranges, duty, cadence, and kinematic score against the OpenSim
+reference; point at Figure~\ref{fig:cpg-overlay} and the ground-walk
+hindlimb figure (filename ground GIF/frame export to be added).}
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.6\textwidth]{CPG_airstepping_figs/opensim_overlay_gait_cycles.png}
-  \caption{Cycle-normalized right-leg hip/knee/ankle trajectories of the
-  spinal-network simulation (colored: cycle mean, thin: individual
-  cycles) against the OpenSim IK reference (dashed), phased by RG-E
-  stance onset. The residual gaps --- knee flexion depth, stance duty,
-  cadence --- are the architecture-level deficits discussed in
-  Sec.~\ref{sec:spinal-cpg-refine}.}
-  \label{fig:opensim-overlay}
+  \includegraphics[width=0.7\textwidth]{CPG_airstepping_figs/opensim_overlay_gait_cycles.png}
+  \caption{Cycle-normalized joint trajectories of the tuned spinal
+  circuit (mean over counted cycles) against the OpenSim reference
+  cycle. \fillme{refresh: cycles counted, duty, cadence, per-joint
+  RMSE.}}
+  \label{fig:cpg-overlay}
 \end{figure}
 
-\subsection{Sensorimotor Refinement: Phase Reset and Swing-Knee
-Reciprocal Suppression}
-\label{sec:spinal-cpg-refine}
+\subsection{Plant Fidelity: Force Capacity and Torque Budget}
+\label{sec:results-cpg-plant}
 
-The initial tuned configuration reproduced stable ground walking but
-with three kinematic deficits relative to the OpenSim reference
-(ground-walking IK of \texttt{subject01\_walk1}, phased by the measured
-ground-reaction forces; cycle $1.23$\,s, stance duty $0.61$, peak knee
-flexion $-70^\circ$): stance duty $0.27$--$0.48$ vs $0.61$, cadence
-$1.2$\,Hz vs $0.81$\,Hz, and a swing knee that remained
-extension-dominant. Following the hip-afferent phase-resetting
-literature, two sensory pathways were added to the RG: a
-stance-gated hip-extension signal (hip-extensor group normalized
-length) that excites RG-E and inhibits RG-F, prolonging stance, and a
-hip-flexion-velocity signal (hip-flexor group shortening velocity)
-that triggers swing by exciting RG-F and inhibiting RG-E. Both
-pathways are gated through dedicated interneurons, are silent by
-default, and were verified dynamically (compiled-network pathway signs;
-static kinematic length signs). A second refinement added
-phase-gated reciprocal suppression of the knee-extensor
-motoneuron pools: the F1 (swing) pattern cell drives inhibitory
-interneurons (KINH) onto the knee-extensor pools, releasing the quads
-only during swing.
+An audit of the converted plant verified that 84 of 92 actuator peak
+forces match the OpenSim source within the conversion's
+range-of-motion normalization ($\le$15\%); the eight exceptions
+(erector spinae and obliques) had shipped at 1~N and were restored to
+stock values. Comparing the moment arms of every muscle (central
+differences with path followers re-projected, the OpenSim definition)
+against the inverse-dynamics joint demand of the reference walk yields
+torque budgets of approximately 3.4/2.8/2.1/1.4$\times$ at hip, knee,
+trunk, and ankle; the ankle is the tightest. Driving the MuJoCo
+muscles with identical kinematics and OpenSim static-optimization
+activations reproduces OpenSim Thelen muscle forces at $R^2 =
+0.87$--$0.98$ on ten of twelve benchmark muscles with no phase lag;
+the rigid-tendon conversion differs in shape (compliance) rather than
+timing (Figure~\ref{fig:muscle-force-compare}).
 
-A 150-trial Bayesian optimization (TPE) over the full parameter set
-plus the two reset gains found that the optimizer systematically
-\emph{avoided} large phase-reset gains: a tonic, stance-gated input of
-at most $\sim$\,1\,nA cannot meaningfully perturb half-centers driven
-by $\sim$\,4\,nA of descending drive, and large extension-signal gains
-combined with weak drive latched the extensor half-center on (a
-positive-feedback stability limit worth noting for any sensory$\to$RG
-pathway). The swing-knee suppression, in contrast, was adopted
-immediately: the winning configuration (suppression gain $0.59$)
-improved the kinematics score from $-61.2$ to $-59.4$ (eval window)
-and from $-62.7$ to $-60.6$ on the full $22$\,s stand--walk--stand
-schedule, with the knee-shape error term carrying the gain. All
-improvements were regression-gated: the baseline configuration
-reproduces its recorded score bit-exactly when the new gains are zero,
-so every reported difference is attributable to the new pathway rather
-than to configuration drift. The duty and cadence deficits remain
-(0.47 vs 0.61; 1.4 vs 0.81\,Hz), and are properties of the
-half-center architecture rather than of scalar tuning --- consistent
-with the De Russo--Ijspeert--Bouri comparison and with the phase-reset
-mechanisms proposed for biological RGs, where \emph{transient}
-position/velocity events (not tonic state signals) switch the
-half-centers. That transient formulation is the natural next
-architecture step.
+% ---------------------------------------------------------------------------
+% PART C — DISCUSSION. Copy into chapters/40-discussion.tex (append at
+% end, after the Synthesis section).
+% ---------------------------------------------------------------------------
 
-\subsection{Plant Fidelity: Force Capacity Audit and Torque Budget}
-\label{sec:spinal-cpg-plant}
+\section{Architectural Lessons from the Spinal Circuit}
+\label{sec:disc-cpg}
 
-Because the conversion from OpenSim to MuJoCo re-expresses every
-muscle as a MuJoCo actuator, the force capacity of the plant was
-audited actuator-by-actuator against the stock OpenSim model. For the
-$84$ routinely active muscles the converted peak force matches the
-OpenSim \texttt{max\_isometric\_force} to within the converter's
-range-normalization ($\lesssim 15\%$, in both directions, consistent
-with normalizing to the maximum force over the human range of motion).
-Eight trunk actuators (erector spinae, internal/external obliques, and
-extensor hallucis, both sides) shipped from the converter with an
-active force scale of $1$\,N against stock values of $2500$, $900$,
-$900$ and $162$\,N respectively --- a conversion artifact, not a model
-property. With the artifact fixed (the audit is re-runnable as
-\texttt{\_fmax\_audit.py}), the trunk controller regains realistic
-authority: the erector spinae pair alone supplies $213$\,N\,m of
-extension torque at the lumbar joint (measured with
-central-difference moment arms, i.e.\ OpenSim's definition), against a
-peak lumbar demand of $100$\,N\,m in the reference walk.
+\subsection{Burst Termination Belongs Inside the Neuron}
 
-The full torque budget at the standing pose, using stock-OpenSim force
-capacity and finite-difference moment arms, is sufficient at every
-joint: hip extension $251$\,N\,m per side against a peak demand of
-$74$\,N\,m (margin $3.4\times$), knee extension $277$ vs $98$\,N\,m
-($2.8\times$), ankle plantarflexion $296$ vs $212$\,N\,m ($1.4\times$;
-the tightest budget, and the optimistic end since the plantarflexor
-moment arm shrinks in late-stance dorsiflexion), and trunk extension
-$2.1\times$. The plant therefore meets the classical strength
-sufficiency criterion with margin everywhere, and the ankle is the
-joint to watch as demands scale.
+The single largest behavioral change in this work came not from tuning
+but from moving burst termination from a circuit-level adaptation loop
+into an intrinsic persistent-sodium gate. Every prior tuning campaign
+on the adaptation-loop architecture left the extensor duty below 0.35
+against a physiological reference of 0.61; the persistent-sodium
+half-centers produce 0.86--0.90 before any search begins. This is
+consistent with the operating-regime analysis of Rybak et
+al.~\citep{rybak2024, rybak2025}: at slow, sensory-informed gaits the
+rhythm generator operates in state-machine and flexor-driven regimes
+in which phase durations are set by intrinsic burst dynamics and
+sensory inputs rather than by mutual-inhibition strength — so the
+mechanism that terminates a burst is the mechanism that sets the duty
+cycle. Attempts to substitute circuit-level weak excitation without
+any slow intrinsic variable converged to tonic fixed points in our
+hands, confirming that some slow gate — intrinsic (the NaP $h$-gate)
+or circuit-level (an adaptation loop) — is a structural requirement
+for half-center oscillation in non-spiking networks.
 
-One fidelity limitation is documented rather than hidden: MuJoCo's
-built-in muscle actuators, as produced by the conversion, implement
-activation dynamics with force--length and force--velocity curves
-(a simplified Thelen formulation) but a \emph{rigid} tendon; the series
-elasticity of the OpenSim Thelen model is not represented. Rigid-tendon
-muscle models are the standard for MuJoCo-scale gait simulation and
-keep the plant stiff and cheap, but they omit tendon energy storage and
-the force--rate saturation of the series elastic element. Two upgrade
-paths exist if compliant-tendon behavior becomes important to the
-science: (i) assign stiffness to the spatial tendons and accept the
-approximation of the muscle--tendon equilibrium, or (ii) implement a
-custom MuJoCo muscle plugin implementing the full Millard/Thelen
-equilibrium solution. Neither was required for the spinal-control
-questions addressed here, and all force-capacity benchmarking in this
-section is anchored to the OpenSim \texttt{max\_isometric\_force} over
-the human range of motion.
+\subsection{Sensory Feedback Closes the Loop at the Rhythm Layer}
 
-% --- references to add to the bibliography ---------------------------------
-% rybak2006:      Rybak, Shevtsova, Lafreniere-Roula, McCrea. J Physiol 2006.
-% mccrea2008:     McCrea & Rybak. Brain Res Rev 2008.
-% nourse2023:     Nourse et al. Biomimetics 2023, 8:247 (SNS-Toolbox).
-% bunz2026:       Bunz, Ijspeert, Schmitt. Sci Rep 2026.
-% shevtsova2026:  Shevtsova, Lockhart, Rybak, Magnuson, Danner, Smith,
-%                 Poirazi. eLife 2026;14:RP107480.
-% rybak2015:      Rybak, Shevtsova, Kiehn. eNeuro 2015;2(5):e0069-15.2015.
-% zhang2022:      Zhang et al. eLife 2022;11:e73424 (V3).
-% danner2019:     Danner et al. Front Cell Neurosci 2019 (V3).
-% derrusoijspeert2023: Di Russo, Ijspeert, Bouri. J Neural Eng 2023.
+The per-muscle afferent-to-central projections implement the
+force-to-extension and length-to-flexion pathways identified in cat
+and rat preparations \citep{gossard1994, conway1987, perreault2011,
+dominguez2020} and in the computational model of \citet{rybak2025},
+with the flexor afferents additionally gating the contralateral
+half-center. Placing these projections inside the RG layer — rather
+than at the pattern-formation or motoneuron level — follows the locus
+rule articulated by \citet{rybak2015}: only perturbations reaching the
+rhythm layer can reset cycle phase. The laminated organization of all
+mutual inhibition (through InE/InF, PF-IN, c1, and IaIN interneurons
+rather than direct synapses) reproduces the genetically identified
+connectivity of the mammalian locomotor network
+\citep{shevtsova2026, talpalar2013, zhang2022} and was retained even
+where a direct synapse would be functionally equivalent at a single
+operating point.
+
+\subsection{Limitations and Remaining Gaps}
+
+Three classes of limitation remain. First, the fixed $\tau_h$ used
+here matches the AnimatLab/Simulink semantics of this circuit family
+\citep{deng2022} but is a simplification of voltage-dependent gate
+kinetics measured in mammalian neurons. Second, the plant's
+rigid-tendon muscles reproduce activation-driven force faithfully but
+omit series-elastic smoothing, which appears as a shape difference in
+compliant-tendon muscles such as soleus. Third,
+\fillme{remaining-gaps paragraph from the final ground-walk results:
+cadence and ankle-balance residuals, duty offset vs the 0.61
+reference, and the next architectural levers (synergy-based pattern
+layer; compliant-tendon muscle model)}. A synergy analysis of the
+back-solved activations (non-negative matrix factorization) indicates
+four to five coordinated muscle groups per side with task-based rather
+than joint-based composition — supporting the current four-window
+pattern layer as a phase decomposition, while suggesting that a
+data-driven synergy layer is the natural generalization.
+
+% ---------------------------------------------------------------------------
+% PART D — BIBLIOGRAPHY. Append to thesis.bib. CHECK FIRST for existing
+% keys with the same authors/years (rybak2006, mccrea2008, nourse2023,
+% derrusoijspeert2023, rybak2015 may already be present from earlier
+% chapters) — prefer your existing keys and update the \citep calls above.
+% Entries marked "Verify" need their volume/pages checked against Zotero.
+% ---------------------------------------------------------------------------
+
+@article{deng2022,
+  author  = {Deng, Kevin and Nourse, Matthew B. and Szczecinski, Nicholas S.},
+  title   = {Biomechanical and Sensory Feedback Regularize the Timing of the Locomotor Rhythm},
+  journal = {Biomimetics},
+  volume  = {7},
+  number  = {4},
+  pages   = {226},
+  year    = {2022},
+  doi     = {10.3390/biomimetics7040226}
+}
+
+@article{shinohara2025,
+  author  = {Shinohara, Yuki and others},
+  title   = {Mechanisms of Adaptive Interlimb Coordination to Sudden Ground Loss: A Neuromusculoskeletal Modeling Study},
+  journal = {bioRxiv},
+  year    = {2025},
+  note    = {Preprint 2025.11.11.687930; verify author list in Zotero}
+}
+
+@article{rybak2024,
+  author  = {Rybak, Ilya A. and Shevtsova, Natalia A. and others},
+  title   = {Operation Regimes of Spinal Circuits Controlling Locomotion and the Role of Supraspinal Drives and Sensory Feedback},
+  journal = {eLife},
+  volume  = {13},
+  pages   = {RP94499},
+  year    = {2024}
+}
+
+@article{rybak2025,
+  author  = {Rybak, Ilya A. and others},
+  title   = {Operation of Spinal Sensorimotor Circuits Controlling Phase Durations During Tied-Belt and Split-Belt Locomotion},
+  journal = {eLife},
+  volume  = {13},
+  pages   = {RP103504},
+  year    = {2025},
+  note    = {Verify author list in Zotero}
+}
+
+@article{shevtsova2026,
+  author  = {Shevtsova, Natalia A. and others},
+  title   = {Laminar Organization of the Mammalian Locomotor Network},
+  journal = {eLife},
+  pages   = {RP107480},
+  year    = {2026},
+  note    = {Verify title/authors in Zotero}
+}
+
+@article{songgeyer2015,
+  author  = {Song, Katherine and Geyer, Hartmut},
+  title   = {A Neural Circuitry That Emphasizes Spinal Feedback Generates Diverse Behaviors of Human Level Walking},
+  journal = {IEEE Transactions on Neural Systems and Rehabilitation Engineering},
+  volume  = {23},
+  number  = {1},
+  pages   = {98--107},
+  year    = {2015}
+}
+
+@article{songgeyer2017,
+  author  = {Song, Katherine and Geyer, Hartmut},
+  title   = {Evaluation of a Neuromechanical Walking Control Model Using Perturbation Experiments},
+  journal = {Frontiers in Robotics and AI},
+  volume  = {4},
+  pages   = {16},
+  year    = {2017}
+}
+
+@article{hultborn1971,
+  author  = {Hultborn, Hans and Pierrot-Deseilligny, Emmanuel and Wigstr{\"o}m, Hans},
+  title   = {Recurrent Inhibition from Motor Axon Collaterals of Transmission in the Ia Inhibitory Pathway to Motoneurones},
+  journal = {The Journal of Physiology},
+  volume  = {215},
+  number  = {3},
+  pages   = {591--612},
+  year    = {1971}
+}
+
+@article{gossard1994,
+  author  = {Gossard, Jean-Pierre and Brownstone, Robert M. and Barajon, Isabella and Hultborn, Hans},
+  title   = {Transmission in a Locomotor-Related Group Ib Pathway from Ankle Extensor Muscles in the Cat},
+  journal = {Experimental Brain Research},
+  volume  = {98},
+  pages   = {213--228},
+  year    = {1994}
+}
+
+@article{dominguez2020,
+  author  = {Dom{\'i}nguez-Rodr{\'i}guez, Sergio and Stecina, Kerstin and Garc{\'i}a-Ram{\'i}rez, Mois{\'e}s and Hultborn, Hans and Quevedo, Juan},
+  title   = {Identification of Interneurons Responsible for Group I Reflex Reversal in the Mammalian Spinal Cord},
+  journal = {bioRxiv},
+  year    = {2020},
+  note    = {Verify against Zotero (key YANK2JE7)}
+}
+
+@article{perreault2011,
+  author  = {Perreault, Eve and others},
+  title   = {Phase-Dependent Regulation of Reflex Gains During Locomotion},
+  journal = {Journal of Neurophysiology},
+  year    = {2011},
+  note    = {VERIFY title/authors/volume/pages in Zotero (key NC7ETD46) before submitting}
+}
+
+@article{pearson1998,
+  author  = {Pearson, Keir G.},
+  title   = {Proprioceptive Regulation of Locomotion in the Cat},
+  journal = {Current Opinion in Neurobiology},
+  volume  = {8},
+  number  = {6},
+  pages   = {778--781},
+  year    = {1998}
+}
+
+@article{pearson2000,
+  author  = {Pearson, Keir G.},
+  title   = {Neural Adaptation in the Control of Step Length},
+  journal = {News in Physiological Sciences},
+  volume  = {15},
+  pages   = {44--49},
+  year    = {2000}
+}
+
+@article{jankowska2010,
+  author  = {Jankowska, Elzbieta and Edgley, Stephen A.},
+  title   = {Functional Cross-Reactions Between Different Afferent Pathways to Feline Spinal Interneurons},
+  journal = {The Journal of Physiology},
+  volume  = {588},
+  number  = {22},
+  pages   = {4229--4246},
+  year    = {2010},
+  note    = {Verify title in Zotero (key 8RDG5YUZ)}
+}
+
+@article{conway1987,
+  author  = {Conway, Brian A. and Hultborn, Hans and Kiehn, Ole and Mentis, Michael},
+  title   = {Proprioceptive Input Resets Central Locomotor Rhythm in the Spinal Cat},
+  journal = {Experimental Brain Research},
+  volume  = {68},
+  number  = {3},
+  pages   = {643--656},
+  year    = {1987}
+}
+
+@article{talpalar2013,
+  author  = {Talpalar, Angel E. and Bouvier, Julien and Borgius, Lotta and Fortin, Gilles and Pierani, Angelo and Kiehn, Ole},
+  title   = {Dual-Origin and Dedicated Actions of V0 and V2a Spinal Interneurons in Setting the Locomotor Pace},
+  journal = {eLife},
+  volume  = {2},
+  pages   = {e00650},
+  year    = {2013},
+  note    = {Verify title in Zotero}
+}
+
+@article{zhang2022,
+  author  = {Zhang, Ying and others},
+  title   = {V3 Spinal Interneurons Coordinate Left-Right Alternation and Speed-Dependent Gait Selection},
+  journal = {eLife},
+  volume  = {11},
+  year    = {2022},
+  note    = {VERIFY author list and pages in Zotero (key KIG9DEKJ) before submitting}
+}
+
+@article{ivanenko2002,
+  author  = {Ivanenko, Yuri P. and Grasso, Romeo and Macellari, Vincenzo and Lacquaniti, Francesco},
+  title   = {Control of Foot Trajectory in Walking Humans: Does the Control of the Limb Trajectory Cope With Changes in Body Load?},
+  journal = {Journal of Neurophysiology},
+  volume  = {85},
+  number  = {5},
+  pages   = {2620--2627},
+  year    = {2002}
+}
+
+% ---------------------------------------------------------------------------
+% STANDALONE-COMPILE HELPER — do NOT copy into the thesis (main.tex loads
+% xcolor already). Delete this block and the \fillme uses when filled.
+% ---------------------------------------------------------------------------
+% \providecommand{\fillme}[1]{\textcolor{red}{[FILL: #1]}}

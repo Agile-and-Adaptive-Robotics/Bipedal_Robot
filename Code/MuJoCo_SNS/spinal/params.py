@@ -140,6 +140,13 @@ G = dict(
     # > 0 (Deng A6: Ia->IaIN->MN with PF_F1 phase gate; RC->IaIN inh
     # = recurrent disinhibition, Hultborn 1971).
     ia_in=0.0,
+    # ---- 2026-09-16 interleg gain knobs (Shinohara c1/V3 commissurals).
+    # Measured: at full strength (c1 1.0 / V3 0.5 of rg_mutual_inh) the
+    # NaP network bilateral E-latches on ground (E-duty 1.0, knees pinned
+    # -4..+11) - both commissurals are searched in stages 2-3 instead.
+    c1_gain=1.0,              # RG_F -> c1 -> contra RG_F (antiphase lock)
+    v3_gain=0.0,              # RG_E -> V3 -> contra InE (extensor sync;
+                              # 0 = pathway absent - the latch culprit)
     # ---- 2026-09-16 (Ben, from Deng 2022 / Shinohara 2025 figures):
     # weak MUTUAL EXCITATION between the RG half-centers (Deng 2022 G_W;
     # raises the inhibited neuron's equilibrium = escape mode, and
