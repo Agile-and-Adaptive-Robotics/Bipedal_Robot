@@ -779,3 +779,86 @@ these converted ankle paths even though their tendon lengths change with
 ankle angle, so raw actuator moments cannot be used for this audit.
 Reproducible JSON/NPZ data, a markdown table, and PNG/PDF force/torque plots
 are under `Code/MuJoCo_SNS/spinal/ankle_df_results/`.
+
+## 2026-09-17 — Bilateral architecture visual-audit stop point
+
+Ben's annotated screenshot identifies four unresolved presentation defects in
+panel A of `circuit_literature`. No diagram code or generated figure was
+changed in this stop-point pass, so there is no partially completed repair.
+
+### 1. Mirror the right-side RG/PF/motor columns
+
+Both limbs currently use
+`ext_x = cx - 0.78; flx_x = cx + 0.78`. This correctly puts the left
+RG-F on the medial/inside edge, but puts the right RG-F on the lateral/outside
+edge. The right limb should be mirrored so both RG-F half-centers face the
+midline. The complete right functional columns—not only the RG circles—must
+be mirrored together: RG-F, PF-F, MN-F, and flexor muscle on the inside;
+RG-E, PF-E, MN-E, and extensor muscle on the outside. The associated InE/InF
+positions and commissural routes must then be rerouted rather than allowed to
+cross through the group.
+
+### 2. Pastel-yellow: PF-box connections appear unattached
+
+The intended code paths are RG-E->PF-E, RG-F->PF-F, PF-E/F->MN-E/F, and the
+cross-inhibitory PF-IN paths. The generic glyph-to-glyph edge helper does not
+give the rectangular PF boxes explicit top/bottom/inner ports. Consequently,
+some arrow stems and terminal glyphs stop beside a box or appear to pass
+behind it. This is a geometry failure even when the collapsed semantic edge
+class passes the compiled-network contract.
+
+Repair plan: give every PF rectangle explicit named anchors (RG input at
+top-center, MN output at bottom-center, PF-IN excitation at bottom-inner, and
+cross-inhibition at the opposite inner edge). Route each connection between
+those anchors and clip it exactly at the rectangle boundary.
+
+### 3. Grass-green: PF interneurons appear self-exciting
+
+The intended edges in code are PF-E->IN-E excitation and PF-F->IN-F
+excitation, followed by IN-E -| PF-F and IN-F -| PF-E. The close geometry,
+curvature, and excitatory triangle placement make the first two lines look as
+though they originate on the interneuron itself. This must be treated as a
+failed drawing even though the source/target tuple is correct in the Python
+edge registry.
+
+Repair plan: draw the PF-HC-to-PF-IN excitatory stems from the PF box's
+bottom-inner port to the interneuron perimeter, place the excitatory triangle
+immediately before the interneuron target, and route the inhibitory return
+paths on a visibly separate curve. Add instance-level assertions for all four
+per-side paths and explicitly forbid an excitatory PF-IN self-edge.
+
+### 4. Indigo: feedback lines appear to originate from nowhere
+
+The dashed aggregate sensory-feedback edges are currently made by direct
+`dc.syn(sens, ...)` calls from the shared “Ia / II / Ib + foot contact”
+rectangle. They bypass the `neural()` registry used by the compiled-edge
+contract, and their overlapping fan-out makes their lower endpoints look
+like unattached lines between the muscles. This explains how they survived
+the previous contract checks.
+
+Repair plan: connect the sensory rectangle to one explicit, labeled fan-out
+bus/port, then branch that bus to PF-E, PF-F, RG-E, and RG-F. Register these
+four aggregate visual paths in a separate contract (they intentionally
+represent several compiled sensory populations) and ensure the two
+muscle-to-sensory encoder paths terminate visibly on the sensory box.
+
+### Safe implementation and verification sequence for the next session
+
+1. Add rectangle-port and feedback-bus primitives without regenerating the
+   promoted figure.
+2. Mirror the entire right E/F column and reroute its local and commissural
+   paths.
+3. Replace all PF and aggregate-feedback panel-A edges with named-port routes.
+4. Add instance-level contracts containing side, exact source glyph, exact
+   target glyph, and sign; retain the existing compiled semantic contract.
+5. Add geometry assertions that every path begins on its registered source
+   boundary, ends on its target boundary, has nonzero length, and cannot be
+   interpreted as a self-edge.
+6. Render a temporary review PNG/SVG and inspect all four annotated regions
+   before replacing any source or dissertation artifact.
+7. Run `_fix_check.py` and the figure contracts, then regenerate PNG/PDF/SVG,
+   synchronize the dissertation copies, and verify byte-identical hashes.
+
+Until this sequence is completed, the current `circuit_literature` should
+not be described as visually final even though its compiled neural edge-class
+contract passes.
