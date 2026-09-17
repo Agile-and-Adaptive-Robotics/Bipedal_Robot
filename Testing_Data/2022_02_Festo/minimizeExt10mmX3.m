@@ -77,7 +77,23 @@ clear sol_actual
 %% Solver
 numHold = 3;                        %Number of BPAs held out for validation
 list = nchoosek(allBPA,numHold);          %Choose how many BPAs to hold out, the others for training
-for k = 1:length(list)
+% EXTX3_HOLD (Ben 2026-09-16): comma list of holdouts = ONE custom fold
+% (e.g. '1,8'); with EXTX3_ALLTESTS=1, allBPA becomes all nine tests.
+exthold = getenv('EXTX3_HOLD');
+if ~isempty(exthold)
+    holdCustom = str2double(strsplit(exthold, ','));
+    numHold = numel(holdCustom);
+    list = reshape(holdCustom, 1, []);
+    fprintf('EXTX3_HOLD: single fold, holdouts [%s]\n', exthold);
+end
+if strcmpi(getenv('EXTX3_ALLTESTS'), '1')
+    allBPA = 1:numel(labels);
+    validLabels = labels(allBPA);
+    numBPA = numel(allBPA);
+    results_cv = cell(1, numBPA);
+    fprintf('EXTX3_ALLTESTS: allBPA = all %d tests\n', numBPA);
+end
+for k = 1:size(list,1)              %fold ROWS (length() on a 1xN row list re-runs folds)
     holdoutIdx = list(k,:);
     for n = 1:size(holdoutIdx,2)
         fprintf('\n---- Cross-validation: Holding out BPA #%d (%s) ----\n', ...
@@ -135,14 +151,13 @@ end
 %% === Compile All Pareto Candidates from Cross-Validation ===
 all_candidates = [];  % Will collect [foldIdx, x(3), fvals(3), valF(3), dist]
 
-for i = 1:numBPA
+for i = 1:size(list,1)              %fold ROWS
     fold = results_cv{i}.foldIdx;           % NxnumHold
     x2 = results_cv{i}.optParams_all;        % Nx4
     train = results_cv{i}.trainScores_all;  % Nx3
     val = results_cv{i}.validation_all;     % Nx3
     dist = results_cv{i}.distance_all;      % Nx1
-    ind = 1:length(x2);                         %create an index
-    ind = ind';                                 %Make Nx1 column array to show original results order
+    ind = (1:size(x2,1)).';                     %index by FRONT ROWS (length() breaks on a 1x4 front)
     rows = [ind, fold, x2, train, val, dist];   % Nx(12+numHold)
     all_candidates = [all_candidates; rows];
 end
@@ -198,7 +213,7 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 1;
+pick = 11;
 sol_actual = filtered_results(pick, xCols);
 [f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4));  % [f: 4x3], [bpa: full struct]
 
@@ -214,9 +229,8 @@ fprintf('Mean GoF: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n\n', mean(f(:,1)),me
 
 disp(array2table(sol_actual, 'VariableNames', {'X0', 'X1', 'X2','X3'}, ...
 'RowNames', {'Solution'}))
-%% Plot results
-
-%% --- Define color scheme and labels ---
+%% Plot results (2026-09-16: two figures per metric -- one for the TRAINING tests
+% and one for the VALIDATION (held-out) tests of the fold)
 c = cell(8,1);
 c{1} = '#FFD700'; % gold → Hybrid
 c{2} = '#FFB14E'; % orange
@@ -226,32 +240,28 @@ c{5} = '#CD34B5'; % magenta → Predicted
 c{6} = '#9D02D7'; % magenta 2
 c{7} = '#0000FF'; % indigo → Measured
 c{8} = '#000000'; % black
-
-% tileIdxs = [1, 5, 8, 12, 15, 19, 22, 26, 29]; 
-tileIdxs = [1, 5, 8, 12, 15];  % A, B, C, D
-% tileIdxs = [1, 5, 10];  % A, B, C
-el = numel(tileIdxs);
-tileSpans = [1 3];      % Span: [rows cols]
-% tileSpans = [1 1];      % Span: [rows cols]
-% tileOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-tileOrder = allBPA;
-% tileLabels = {'(A)', '(B)', '(C)', '(D)'};
-% Annotation positions [x, y] in normalized figure units
-% xAnn = [0.035, 0.51, 0.035, 0.51];  % (A), (B), (C), (D)
-% yAnn = [0.89, 0.89, 0.41, 0.41];    % (A), (B), (C), (D)
-% xAnn = [0.035, 0.51, 0.265];  % (A), (B), (C)
-% yAnn = [0.89, 0.89, 0.41];    % (A), (B), (C)
 sz = 60;
 
-%for plotting 
+% --- figure groups: training tests vs validation (held-out) tests ---
+holdTests = results_cv{1}.foldIdx(1,:);
+trainTests = setdiff(allBPA, holdTests);
+grpTests = {trainTests, holdTests};
+grpNames = {'Training', 'Validation'};
+tileIdxsFor = @(n) arrayfun(@(j) (ceil(j/2)-1)*7 + 1 + 4*mod(j-1,2), 1:n);
 
-%% --- Torque Figure with tiles ---
-figT = figure('Name','Torque','Color','w');
+for g = 1:2
+idxs = grpTests{g};
+el = numel(idxs);
+tileIdxs = tileIdxsFor(el);
+tileSpans = [1 3];      % Span: [rows cols]
+
+%% --- Torque ---
+figT = figure('Name', ['Torque - ' grpNames{g}], 'Color','w');
 figT.Position = [100 100 950 700];
 tT = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
 for j = 1:el
-    i = tileOrder(j);
+    i = idxs(j);
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
 
@@ -265,12 +275,10 @@ for j = 1:el
     plot(bpa(i).Ak, bpa(i).M_p(:,3), '-', 'Color', c{5}, 'LineWidth', 2.5, ...
         'DisplayName', 'Predicted');
 
-    % Tile-specific title and annotation label
+    % Tile-specific title and train/validation subtitle
     title(['\bf ' labels(i)], 'Interpreter','tex');
-    % ylabel('\bf Torque, N\cdotm','Interpreter','tex')
-    % xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
-    % annotation(figT, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-    %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    subT = subtitle(grpNames{g});
+    subT.FontSize = 9;
 
     % Axis config
     set(gca, ...
@@ -294,13 +302,13 @@ lg = legend(tT.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
-%% --- Muscle Length Figure with tiles---
-figL = figure('Name','Muscle Length','Color','w');
+%% --- Muscle Length ---
+figL = figure('Name', ['Muscle Length - ' grpNames{g}], 'Color','w');
 figL.Position = [100 100 950 700];
 tL = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
 for j = 1:el
-    i = tileOrder(j);
+    i = idxs(j);
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
 
@@ -309,16 +317,14 @@ for j = 1:el
     Lm   = bpa(i).Lmt   - 2 * bpa(i).fitn - bpa(i).ten;
 
     scatter(bpa(i).A_h, bpa(i).Lm_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-        'MarkerFaceColor', c{7},'DisplayName', 'Measured'); % Hybrid (gold)
-    plot(bpa(i).Ak, Lm, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');      % Original
-    plot(bpa(i).Ak, Lm_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');            % Predicted
-    % ylabel('\bf Length','Interpreter','tex')
-    % xlabel('\bf \theta_{k} , \circ','Interpreter','tex')
+        'MarkerFaceColor', c{7},'DisplayName', 'Measured');
+    plot(bpa(i).Ak, Lm, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');
+    plot(bpa(i).Ak, Lm_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');
 
-    % Tile-specific title and annotation label
+    % Tile-specific title and train/validation subtitle
     title(['\bf ' labels(i)], 'Interpreter','tex');
-    % annotation(figL, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-    %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    subT = subtitle(grpNames{g});
+    subT.FontSize = 9;
 
     % Axis config
     set(gca, ...
@@ -330,7 +336,6 @@ for j = 1:el
         'YMinorTick', 'on', ...
         'TickLength', [0.025 0.05], ...
         'GridLineStyle','none');
-
 end
 
 %shared axes labels
@@ -342,13 +347,13 @@ lg = legend(tL.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
-%% --- Moment Arm Figure with tiles ---
-figMA = figure('Name','Moment Arm','Color','w');
+%% --- Moment Arm ---
+figMA = figure('Name', ['Moment Arm - ' grpNames{g}], 'Color','w');
 figMA.Position = [100 100 950 700];
 tMA = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
 for j = 1:el
-    i = tileOrder(j);
+    i = idxs(j);
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
 
@@ -356,16 +361,13 @@ for j = 1:el
 
     scatter(bpa(i).A_h, bpa(i).mA_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
         'MarkerFaceColor', c{7},'DisplayName', 'Measured');  % Hybrid
-    plot(bpa(i).Ak, bpa(i).mA, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');      % Original
-    plot(bpa(i).Ak, G_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');                   % Predicted
+    plot(bpa(i).Ak, bpa(i).mA, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');
+    plot(bpa(i).Ak, G_p, '-', 'Color', c{5}, 'LineWidth', 2.5,'DisplayName', 'Predicted');
 
-    % ylabel(ax,'\bf Moment arm, m','Interpreter','tex')
-    % xlabel(ax,'\bf \theta_{k} , \circ','Interpreter','tex')
-
-    % Tile-specific title and annotation label
+    % Tile-specific title and train/validation subtitle
     title(['\bf ' labels(i)], 'Interpreter','tex');
-    % % annotation(figMA, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-    % %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    subT = subtitle(grpNames{g});
+    subT.FontSize = 9;
 
     % Axis config
     set(gca, ...
@@ -388,28 +390,26 @@ lg = legend(tMA.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
 
-%% --- Strain Figure with tiles ---
-figS = figure('Name','Relative Strain','Color','w');
+%% --- Strain ---
+figS = figure('Name', ['Strain - ' grpNames{g}], 'Color','w');
 figS.Position = [100 100 950 700];
 tS = tiledlayout(ceil(el/2),7,'TileSpacing','tight','Padding','tight');
 
 for j = 1:el
-    i = tileOrder(j);
+    i = idxs(j);
     ax = nexttile(tileIdxs(j), tileSpans);
     hold on
-    
+
     strain_h = (bpa(i).rest - bpa(i).Lm_h)/bpa(i).rest;
     kmax = (bpa(i).rest - bpa(i).Kmax)/bpa(i).rest;
     scatter(bpa(i).A_h, strain_h/kmax, 60, 'filled', 'MarkerFaceAlpha', 0.75, 'MarkerFaceColor', c{7},'DisplayName', 'Measured');
     plot(bpa(i).Ak, bpa(i).strain/kmax, '--', 'Color', [0.4 0.4 0.4], 'LineWidth', 2,'DisplayName', 'Original');
     plot(bpa(i).Ak, bpa(i).strain_p/kmax, '-', 'Color', '#CD34B5', 'LineWidth', 2.5,'DisplayName', 'Predicted');
-    % ylabel(tS,'\bf \epsilon^*','Interpreter','tex')
-    % xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
 
-    % Tile-specific title and annotation label
+    % Tile-specific title and train/validation subtitle
     title(['\bf ' labels(i)], 'Interpreter','tex');
-    % annotation(figS, 'textbox', [xAnn(j) yAnn(j) 0.05 0.05], 'String', ['\bf ' tileLabels{j}], ...
-    %     'FontSize', 12, 'FontName', 'Arial', 'EdgeColor', 'none', 'HorizontalAlignment','center');
+    subT = subtitle(grpNames{g});
+    subT.FontSize = 9;
 
     % Axis config
     set(gca, ...
@@ -431,6 +431,8 @@ xlabel(tS,'\bf \theta_{k} , \circ','Interpreter','tex')
 lg = legend(tS.Children(1));
 lg.Location = 'northeast';
 lg.FontSize = 8;
+
+end
 %% Helper functions
 function ff = min1(x, trainIdx, kompare)
     if numel(x) == 4 && size(x,1) == 1

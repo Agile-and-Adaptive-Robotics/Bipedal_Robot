@@ -2,6 +2,279 @@
 
 Built 2026-09-09. Files in `Code\MuJoCo_SNS\spinal\`.
 
+## 2026-09-16 NIGHT (CURRICULUM STATE + INTERLEG LATCH DIAGNOSIS —
+## READ FIRST if resuming; handed to ChatGPT for off-peak work)
+
+**Stage 1 DONE: best 137.254 @ trial 78** (winner in
+curriculum_stage1.json; 100 trials; ADAP-era all-time best was 57.4).
+Winner is a FAST air rhythm (29 cycles / 0.37 s / duty 0.19 at
+rg_nap_h=0.17, drive 3.15) — the air objective rewards rise count;
+stage 2/3 must slow it toward the 1.2 s human cycle (rg_nap_h is
+searched; stage 3's kine objective enforces cadence).
+
+**Stages 2-3 RAN AND FLATLINED: best -100 @ trial 0 in BOTH (every
+trial -100 = no-countable-cycles sentinel).** Two root causes, both
+diagnosed empirically (isolation matrix below):
+
+1. (FIXED) heel/toe->PF_E edges were wired in _build_rg BEFORE the PF
+   cells exist -> hard crash on the first stage-2 trial with
+   ib_e_central > 0. Moved into _build_pf. _fix_check.py now asserts
+   every new central pathway at the compiled-net level (PASSES).
+2. (KNOBS ADDED, TUNING PENDING) **interleg latch**: with interleg ON,
+   the network bilateral-E-latches on ground (E-duty 0.90-1.00, knees
+   pinned -4..+11, RG_F 0.11 s chatter, tilt 31) — IDENTICAL with
+   v3_gain 0 and 0.5, and identical with afferents ON/OFF, so the
+   driver is the c1 cross-side F-F inhibition at full rg_mutual_inh
+   strength against NaP plateau neurons. Isolation matrix
+   (_diag_gait.py, stage-1 winner config):
+     air, no-interleg, deaff   : 29 cycles, 0.37 s, duty 0.19  (alive)
+     air, no-interleg, afferents: 29 cycles, 0.37 s             (alive)
+     ground, NO-interleg        : 29 cycles, 0.37 s, knee -85   (alive)
+     ground, interleg (c1 1.0)  : LATCHED (v3 0 and 0.5 identical)
+   FIXES SHIPPED: G["c1_gain"] (default 1.0) and G["v3_gain"]
+   (default 0.0 = pathway absent) multiply rg_mutual_inh; V3 now
+   targets the CONTRALATERAL InE (per Ben's Shinohara reading:
+   "v3 -> excite -> contralateral RG_E IN" — V3->contra-RG_E direct
+   was my error and is also a bilateral E-E positive loop); both are
+   searched in stages 2-3 (c1 [0.1,1.5], v3 [0,0.5]). ALSO: the
+   stage-2 objective was mislabeled from the start — it ran the GROUND
+   eval; now stage 2 is truly air-afferented (--no-ground, interleg
+   ON, air rises+knee objective) and only stage 3 runs the ground
+   kine eval.
+
+**RESUME RECIPE (next session, off-peak):**
+1. Optional 30-s characterization: air + interleg c1=1.0 (the cancelled
+   test) — tells you whether stage-2's seed region latches in air too.
+2. Purge the garbage studies: curr_s2_air_aff, curr_s3_ground
+   (all -100; 0 informative trials). KEEP curr_s1_air_deaff (complete).
+3. Relaunch: `resume_curriculum_lam.bat` (stage 1 no-ops through with
+   its saved winner, stages 2-3 fresh at 100 trials each).
+4. On completion: `post_curriculum_deliverables.bat` (stage-3 winner
+   22 s run + GIF + hindlimb + overlay + winner-gain figures).
+5. Fill the `\fillme{}` slots in
+   `Documentation\...\Dissertation\CPG_spinal_section_draft.tex`
+   (copy-paste map in CPG_DISSERTATION_UPDATE_NOTES.md; the stage-1
+   air numbers in PART B are already final).
+6. Second commit (results), then push both commits (1fb515f = the
+   architecture commit, local-only as of tonight).
+
+## 2026-09-16 EVENING (NaP ARCHITECTURE OVERHAUL — LIVES NOW; answers
+## the toolbox-correction section directly below)
+
+The RG is **real persistent-Na conditional bursters in production**
+(this section resolves the caveat in the "TOOLBOX CORRECTION" section
+below — the real class WAS tested, in the real half-center):
+
+- **Measurements** (`_nap_test.py`, `_nap_fixed_test.py`): the stock
+  voltage-dependent tau_h(V) oscillates WITHOUT ADAP but ~10x too fast
+  (period 0.05-0.12 s in every swept region); **FIXED tau_h** gives
+  period 1.17 s at tau 0.35 s (~3.2x tau scaling; 0.70 -> 2.2-2.4 s).
+- **Implementation**: `SNS_NumpyFixedTau(SNS_Numpy)` in build_network.py
+  — verbatim forward() copy with ONE changed line (tau_b = tau_max_b);
+  `compile()` swaps the class in. TRAP: sns_toolbox 1.5.2 puts
+  everything in `SNS_Numpy.forward` (no `__forward_pass__`); a subclass
+  override under the mangled name silently never runs (bit me once).
+  Re-diff the forward body on any toolbox upgrade.
+- **Params**: `params.NAP` (rescaled to our 0..5 mV range: e_ion 8 =
+  plateau ceiling, e_m 2, s_h -2 / e_h 3.5) + `TAU["rg_nap_h"]` (0.35 s)
+  = THE period knob, searched by the curriculum.
+
+**Architecture changes shipped the same day (build_network.py):**
+ADAP retired; PRESET/PREA pathway REMOVED (Ben circled it; replaced by
+per-muscle afferent->central wiring); DRIVE->PF tonic edge removed
+(audit #23); G_W weak mutual excitation RG-E<->RG-F (Deng 2022,
+conditional); commissurals per Shinohara 2025 (RG_F->c1 IN->INHIBIT
+contra RG_F; RG_E->V3 IN->EXCITE contra RG_E — sign flipped — plus
+V3->contra IBEXC extensor MNs = audit P2a, G v3_to_ibexc); per-muscle
+afferent->CENTRAL same-group excitation (Rybak 2025 SF-E1/SF-E2 +
+Ben's spec): extensor Ib+II -> PF_E/RG_E/InE (ib_e_central,
+ii_e_central), flexor Ia+II -> PF_F/RG_F/InF (ia_f_central,
+ii_f_central), flexor Ia also INHIBITS contra RG_F (ia_f_contra_f),
+heel/toe ride the extensor pathway. Runner: HIP_*_SIG ports removed
+(NEURO_NAMES lost 4 channels — mind old npz neuro column indices).
+
+**Untuned results** (drive 2.5, tau_h 0.35, `nap_air_walk.npz` /
+air_nap.gif): 5 cycles, 2.11 s period (0.47 Hz), **E-duty 0.86-0.90** —
+duty never exceeded 0.34 across all ADAP-era tuning. NaP plateau at
+zero drive + POSTURE bias = tonic extensor stand state (Ben OK'd).
+**Curriculum relaunched fresh on this architecture**: stage 1 search =
+drive / rg_nap_h / desc_e / desc_f / rg_to_pf; 21 trials in, best
+109.8 (ADAP-era stage-1 all-time best: 57.4).
+
+**Figures regenerated + copied to Dissertation\CPG_airstepping_figs:**
+circuit_dengstyle.{pdf,svg,png} (NaP RG, G_W, c1/V3 excitatory + P2a
+arm, afferent->central arrows, HIP COLUMN added, no ADAP/PRESET/PREA/
+DRIVE->PF; edge-contract assert passes), sns_diagram_panels.png
+(spinal_layers.py rebuilt: NaP RG + InE/InF + G_W only),
+hindlimb_style_nap_air.png, air_nap.gif. `_panels_check.py` = the
+NaP-wiring assert suite. NOTE `_fix_check.py` predates the ADAP/PRESET
+removal — refresh before rerunning it.
+
+## 2026-09-16 (TOOLBOX CORRECTION, Ben caught it): persistent-Na class EXISTS
+
+**`sns_toolbox` 1.5.2 ships `NonSpikingNeuronWithPersistentSodiumChannel`**
+(Tutorial 8; constructor: membrane_capacitance, membrane_conductance,
+g_ion, e_ion, k_m/slope_m/e_m, k_h/slope_h/e_h, tau_max_h, name, color —
+Tutorial 8 was executed in `sns_tutorials` 2026-09-14). Earlier claims in
+this file's history that "the toolbox can't express persistent-Na / NaP
+dynamics, so the ADAP loop is the only burst-termination substitute" were
+WRONG. Consequences:
+
+- The RG half-centers CAN be rebuilt as literal Deng-2022-style HC neurons
+  with intrinsic NaP burst termination (m/h gates, tau_max_h) instead of
+  the ADAP-loop workaround — the cross-platform-consistency route, since
+  the Simulink `SNS_Deng_Library.slx` (fixed tau_h 350 ms) and AnimatLab
+  LinearHill (tau_h.max fixed) ports already work that way.
+- CAVEAT before trusting the class: the quenching result (toolbox tau_h(V)
+  collapses at depolarized V and kills the Deng oscillator;
+  `deng_cpg_ode.py`) was measured on the HAND-CODED formula, not the
+  class. Test the real class in the actual Deng circuit first — if its
+  tau_h(V) collapses the same way, check whether fixed-tau_h semantics are
+  expressible via tau_max_h before assuming the port transfers.
+- When porting values: SNS_Library vs sns_toolbox use OPPOSITE synapse
+  saturation conventions (ThrPre/Elo) — standing trap, still applies.
+- Also logged in `Code\Matlab\SNS_Simscape\README_SNS_Simscape.md`
+  (Deng section correction note) and AGENTS.md (spinal insights (5) +
+  AnimatLab latch note).
+
+## 2026-09-16 (CONNECTION FIXES — Ben: "the architecture is not correct,
+## modify it" — READ THIS FIRST)
+
+Two wiring bugs confirmed by the compiled-network audit (found while
+verifying the diagrams against build_network.py) and **FIXED in
+build_network.py**:
+
+1. **HEEL pathway was wired TWICE** — `heel_in -> RG-E` (exc) and
+   `heel_in -> RG-F` (inh) were each added twice, verbatim (duplicate
+   lines 270-275), doubling the effective heel contact conductance.
+   Now wired ONCE per target (`_fix_check.py` asserts count == 1).
+2. **IaIN had NO Ia afferent input** — the docstring claimed
+   "Ia -> IaIN -> antagonist MN" but the built IaIN received only the
+   PF_F1 phase gate (0.5 exc) and RC->IaIN disinhibition; the antagonist
+   pathway was swing-gated but not stretch-driven. FIX: Ia -> IaIN exc
+   at G["ia_to_mn"] (same conductance as the homonymous Ia->MN arc; no
+   new tunable knob). All 4 representative pools verified.
+
+**Contamination consequences (important for re-picking):**
+- Stage 1 (deafferented air) is UNAFFECTED: both fixed blocks live
+  behind `stance_fb` / `ia_in` conditionals that are False at stage-1
+  gains — the compiled stage-1 network is byte-identical pre/post fix
+  (`_fix_check.py` section 3). The in-flight 100-trial laminated stage-1
+  study stayed valid and was NOT re-run.
+- Stages 2-3 imported the FIXED code (heel now 1x, IaIN afferent live),
+  so their winners are the first tuned on correct wiring.
+- ALL pre-2026-09-16 stage-2/3-equivalent tunings (v7-v11 studies,
+  deleted 2026-09-16) carried the heel-2x bug + afferentless IaIN.
+
+**Diagrams rebuilt to match the fixed architecture** (Ben's staleness
+complaint confirmed: the Dissertation copies were from 09-12/09-13/09-15
+and showed DIRECT RG<->RG + PF<->PF inhibition with RC/IaIN as
+"NOT IMPLEMENTED" ghosts — the laminated inverse of the real circuit):
+- `spinal_layers.py` (panels source) + `draw_circuit.py fig_deng` now
+  draw the true laminated architecture with REAL InE/InF, PF_IN_E/F,
+  mutual Renshaw, IaIN (afferent + gate + disinhibition), heel/toe/LBIN,
+  PREA onset loops; fig_deng's edge contract (every compiled group must
+  be drawn) PASSES; gain labels load live from the winner jsons.
+  Network-size metadata corrected 410 -> 418 (laminated INs).
+- OLD FIGURES/GIFS DELETED (Ben directive): all pre-fix run outputs from
+  spinal root (7 gifs, fig1-6, spinal_circuit, check_rhythm,
+  walk-phases pngs) and ALL stale SNS figures in
+  Dissertation\CPG_airstepping_figs (deng/vclasses/weights/panels/
+  spinal/hindlimb/overlay/gif sets) — only architecture-independent
+  muscle_force_compare.png kept. New post-curriculum set regenerates
+  into the same filenames (circuit_dengstyle, sns_diagram_panels,
+  ground_v11_curriculum.gif, hindlimb_style_v11_curriculum,
+  opensim_overlay_gait_cycles). NOT auto-regenerated (need fig_full
+  laminated surgery if wanted back): circuit_full_vclasses.*,
+  circuit_weights.*, sns_diagram_spinal.png, hindlimb_style_{air,ground,
+  ground_pose}.
+- Laminated curriculum re-run (Ben 2026-09-16): contaminated studies
+  deleted (curr_s1/s2/s3 mixed + v7/v8/v9/v10; v1-v6 kept as pure
+  pre-lamination history; per-trial histories dumped to
+  `curriculum_prelam_history_20260916.json`), 100 trials/stage via
+  `_curriculum.py` chain (`run_curriculum_laminated.bat`, log
+  `curriculum_lam_20260916.log`). Stage-1 best reproduced the 25-trial
+  laminated run exactly (57.436 @ trial 22, seeded determinism) and
+  extended it. Final deliverables chain: `post_curriculum_deliverables.bat`
+  (_final_run_lam.py applies the stage-3 winner via _curriculum.set_stage
+  — bit-faithful, unlike old _final_run.py which skipped v10 multiplier
+  overrides).
+
+## 2026-09-16 later (Ben: "there are incorrect connections at the RG and
+## PF layers" — PFA removed, commissurals laminated, ADAP proven required)
+
+**RG/PF layer corrections (build_network.py):**
+- **PFA self-adaptation loops REMOVED** from the PF layer (Ben flagged
+  09-15 "don't exist in Shevtsova"; kept then; flagged again 09-16 —
+  now gone). PF cells keep their PF_SHAPE tau_m; the tau_a half of
+  PF_SHAPE is INERT (kept in params for the record). Consequence: E2's
+  burst is no longer hard-truncated (its tail decays with the 72 ms
+  membrane tau instead) — stage-1 winner config re-scored 57.4 -> 43.9
+  (rhythm intact, 2 rises, knee -75.8); full re-tune required.
+- **Cross-side commissurals LAMINATED**: the direct RG-F_r->RG-F_l and
+  RG-E_r->RG-E_l inhibitions are now routed through per-side commissural
+  INs CIN-F_side / CIN-E_side (tau = TAU.rg; same effective gains
+  rg_mutual_inh and 0.5x; Shevtsova V0 analog — no direct synapse
+  between pattern-generating pools across the midline either).
+  Network counts: 203/side + 8 shared = 414 neurons (was 418).
+- **ADAP loops KEPT — proven load-bearing** (`_repro_s1.py`): with
+  rg_adapt_inh=0 the rhythm dies completely (0 bursts, objective
+  57.4 -> -4.2, joints freeze tonic). The plain NonSpikingNeuron
+  half-center has no intrinsic burst termination; ADAP is the
+  toolbox-native substitute for Deng's persistent-Na h-gate (which
+  sns_toolbox 1.5.2 neurons cannot express; consistent with
+  _tau_h_check.py: toolbox tau_h(V) quenches Deng oscillators). If Ben
+  wants literal Deng neurons, that is the Simulink SNS_Deng_Library
+  route — his call.
+- End-to-end proof recorded en route: the heel/IaIN fixes left stage-1
+  dynamics BIT-EXACT (trial-22 re-evaluated 57.436 on the fixed code,
+  pre-PFA-removal).
+
+**Per-muscle reflex audit vs Ben's spec** ("each flexor should have Ia
+and II feedback; each extensor type II and mechanosensory feedback") —
+ALREADY SATISFIED, no change needed: every muscle has its own MN + Ia +
+II + Ib neurons (x92) in build_network; the runner's presynaptic gates
+differentiate: flexors get FULL Ia gain (swing stretch-velocity reflex)
++ 0.5x II; extensors get stance-BOOSTED II (0.3+0.7*stance) and their
+autogenic Ib is stance-SUPPRESSED (1-0.7*stance) so extensor force
+routes through the IBEXC stance load-sharing group + LBIN instead
+(mechanosensory), plus heel/toe contact mechanosensors at the RG.
+
+**Synergy -> PF-layer study** (`_synergy_pf_study.py`, NMF on the
+subject01 SO backsolve): explained var 0.72@3 / 0.89@4 / 0.92@5 /
+0.95@6 — no sharp elbow, BIC keeps improving to 8. Caveat: the SO file
+covers only ~1.6 gait cycles (126 frames, 2 s), so phase-folds are
+coarse and the leading variance direction is LEFT-vs-RIGHT split (one
+stance synergy per leg) — classic with short records. The windows at
+4-5 synergies: push-off (plantarflexor+hip-ext burst, wrapping the
+cycle boundary), contralateral stance, hip-abductor tone spanning
+stance (10-55%), late-stance/knee-ext prep (60-85%), early swing
+(5-15%). ANSWER: the data supports 4-5 phase windows per side — the
+CURRENT 4-cell PF (E1/E2/F1/F2) has the RIGHT COUNT as a phase
+decomposition, but the data reshuffles composition: hip ABDUCTORS
+belong to EARLY/mid-stance (weight acceptance) while the fitted table
+puts them mostly in F2 (0.301!) — that column is contradicted by the
+data and is a retune target. A full synergy-based PF (task-defined
+cells crossing joints) remains the bigger redesign option.
+
+**Biarticular hip+knee muscles — which PF layer?** Currently BOTH:
+W_PF_MN weight = primary group FULL + secondary group 0.5x, per phase.
+From the fitted table: rect_fem (knee_ext+hip_flex) = 0.5x of each;
+hamstrings bifemlh/semiten/semimem (knee_flex+hip_ext) E1 = 0.129 +
+0.5x0.083 = 0.170; gastrocs (ankle_pf+knee_flex) = 0.068+0.5x0.129.
+Physiologically defensible per the synergy data (hamstrings appear in
+both the push-off AND swing synergies) — keep, it is a tunable table.
+
+**Curriculum on the corrected architecture:** curr_s1_air_deaff
+PURGED (its 86 trials were tuned with PFA present — unconditional
+topology, so PFA removal contaminates ALL stages, unlike the heel/IaIN
+fixes). Full re-run relaunched 2026-09-16 evening:
+stage1->stage2->stage3 x 100 trials (`resume_curriculum_lam.bat`, log
+`curriculum_lam_20260916.log`). Diagrams (panels + deng) regenerated to
+match; stale old figures/gifs already deleted (earlier 2026-09-16
+section).
+
+
 ## MORNING REPORT — overnight 2026-09-12/13 (v5 phase-reset + Shevtsova
 ## figure + v6 quad suppression) — READ THIS FIRST
 
@@ -446,7 +719,216 @@ MTP angles in OpenSim.
   oscillation. The study is resumable (`python optuna_walk_v9.py 60`);
   stopped extending here - the remaining deficits (duty, ankle
   set-point, hip phase vs RG anchor) are the architecture items, not
-  scalar-tuning items.
+## 2026-09-15 (Ben's architecture critique): LAMINATED IN-mediated mutual
+## inhibition — the REAL Shevtsova/Deng architecture
+
+Ben's critique (with Shevtsova Fig 2 and his own Animatlab diagram as
+evidence): our RG had DIRECT RG-E↔RG-F inhibition (no INs), and our PF
+had DIRECT PF↔PF reciprocal inhibition with PFA SELF-adaptation loops.
+Shevtsova/Deng use IN-LAMINATED architecture: RG-E excites InE, InE
+inhibits RG-F (never direct); PF-E excites PF_IN_E, PF_IN_E inhibits
+PF-F (never direct). PFA self-loops don't exist in Shevtsova.
+
+**FIXED in build_network.py:**
+- _build_rg: added InE_<side> and InF_<side> INs (tau = TAU["rg"]).
+  RG-E → InE exc (g=rg_mutual_inh) → RG-F inh (g=rg_mutual_inh);
+  RG-F → InF exc → RG-E inh. Direct RG↔RG edges REMOVED.
+- _build_pf: added PF_IN_E_<side> and PF_IN_F_<side> INs (tau = TAU["pf"]).
+  E1+E2 → PF_IN_E exc → F1+F2 inh; F1+F2 → PF_IN_F exc → E1+E2 inh.
+  Direct PF↔PF inhibition edges REMOVED.
+- PFA kept (documented: our window-shaping addition, not in Shevtsova).
+- ADAP kept (burst termination, separate from mutual-inhibition routing).
+- Mutual Renshaw fix applied (both directions between distinct RCs).
+- IaIN population added (Ia → IaIN → antagonist MN, PF_F1 phase-gated,
+  RC→IaIN inh) — replaces direct Ia→antagonist when G["ia_in"] > 0.
+- AFF_E/AFF_F semi-closed sensory loop relays added (Shevtsova principle:
+  active phase's afferents excite that phase's PF and RG through relay
+  INs — three-layer loop: muscle → afferent → PF → RG → MN → muscle).
+  Gains: aff_e_rg, aff_f_rg, aff_e_pf, aff_f_pf (all default 0).
+
+**Architecture is now CORRECT per Shevtsova/Deng.** All prior tuning
+invalidated (different wiring = different dynamics). Curriculum stages
+1-3 must be re-run. Stage 1 laminated: best 57.4 (trial 22) — lower
+score expected because the laminated path has two synapses per
+inhibition vs one direct, halving effective inhibition at same g; the
+optimizer compensates with higher rg_adapt and desc_f.
+
+**NMF synergy analysis** (_synergy_nmf.py on backsolved activations):
+3 synergies = 82% var (left stance, right stance, transition — classic
+Ivanenko). 5 synergies = 92% (separates hip abductors, knee extensors,
+plantarflexors). KEY FINDING: synergies CROSS joint boundaries — no
+clean "hip PF" vs "knee PF" decomposition. The natural grouping is
+task-based (stance push-off, swing initiation), not joint-based. The
+current 4-cell phase-based PF is a simplification; a synergy-based PF
+would be data-driven but requires full redesign.
+
+## 2026-09-15 (Ben's curriculum directive): staged tuning + mechanosensory
+## stance feedback + IaIN — the honest state
+
+Ben's question ("do you start fully deafferented in air, tune, then do
+supported walking and tuning cycles while reintroducing connections?")
+exposed that we didn't. His directive became the new methodology, and
+the following were implemented and tuned in a staged curriculum:
+
+### What was implemented (all off-by-default conditional topology)
+
+1. **Heel/toe contact mechanosensors** (audit P1a): per-foot normal
+   contact forces from MuJoCo contacts on calcn/toes geoms, normalized
+   to BW fractions, fed as HEEL_c / TOE_c / LOAD_c input ports.
+   HEEL_IN → RG-E exc + RG-F inh (S2W trigger, Conway/Hultborn 1987);
+   TOE_IN → RG-E exc (late-stance prolongation). Gains: heel_rge,
+   toe_rge (both default 0).
+2. **LBIN stance-Ib group IN** (audit #15/P1a): per side, receives the
+   stance-group IBEXC outputs (RG-E-gated Ib) and contact load → RG-E
+   excitation (G["ib_rge"], default 0). Dominguez 2020 full text places
+   these INs INSIDE the rhythm-generating layer.
+3. **IaIN population** (audit #7/P1b): when G["ia_in"] > 0, Ia → IaIN →
+   antagonist MN replaces the direct edge; PF_F1 → IaIN phase gate
+   (Deng A6 0.5); RC → IaIN inh (Hultborn recurrent disinhibition)
+   when Renshaw is on.
+4. **Mutual Renshaw fix** (audit #12): RC↔RC between distinct pools,
+   both directions (was one-directional). No self-synapse.
+
+### The curriculum (staged tuning, Ben's methodology)
+
+- **Stage 1 (air, deafferented)**: rhythm core only (drive, rg_adapt,
+  desc_e, desc_f, rg_to_pf). Objective: 3×cycle-rises + swing knee
+  flexion depth. 25 trials → best 104.6.
+- **Stage 2 (air, afferented)**: + phase_reset_e/f, heel_rge, toe_rge.
+  Seeded stage 1. 25 trials → best −68.1 kine. Heel 0.63, toe 0.38
+  engaged.
+- **Stage 3 (ground, full P1a/P1b)**: + ib_rge, ia_in,
+  ankle_post_walk_trim. Seeded stage 2. 30 trials → best −72.5 kine
+  (trial 16). Heel 0.91, toe 0.63, ib 0.68, ia_in 0.62, trim 0.63 —
+  ALL new pathways tuned to nonzero.
+- Final v11 run (full 22 s): stayed up, COM min 0.87, tilt −2..+18.6,
+  hip −23.6..+58.3, knee −78.8..+12.7 (INSIDE RoM, deep swing
+  flexion), ankle −89.9..−0.8, no hyperextension. All artifacts
+  regenerated: ground_v11_curriculum.gif,
+  hindlimb_style_v11_curriculum.png, opensim_overlay_gait_cycles.png
+  (14 cycles), curriculum_final.npz.
+
+### HONEST state vs OpenSim
+
+Amplitudes are now in the right ballpark (hip 58 vs 43, knee 79 vs 70,
+ankle range within bounds). The three named gaps are:
+1. **Duty** ~0.14–0.2 vs 0.61 — the RG E-burst is still too short;
+   P1a's ib_rge tuned to 0.68 but the prolongation mechanism needs
+   more stance-Ib gain or a different integrator.
+2. **Cadence** 0.46 Hz vs 0.81 — the curriculum model walks slower
+   than OpenSim; rg_adapt tuned to 1.27 (was 0.88 pre-curriculum).
+3. **Ankle** −90..−0.8 vs −10..+14 — still PF-dominant; the ankle trim
+   (0.63) helped but tib_ant swing drive still loses to 9 PF muscles.
+These are the architecture items, not scalar-tuning items. The next
+levers are: (a) FSA-analytic seeding of PF/RG timing from the
+backsolve, (b) transient onset-triggered reset INSIDE the RG layer
+(now correctly placed per Rybak 2015 + Dominguez 2020), (c) MyoSim-
+style compliant tendons.
+
+## 2026-09-15 (LAMINATED architecture + curriculum results — HONEST)
+
+The laminated IN-mediated architecture (InE/InF in RG, PF_IN_E/F in PF,
+matching Shevtsova/Deng) was implemented and tuned through the
+curriculum. RESULTS ARE MIXED:
+
+- **Stage 1 (air, deafferented, 25 laminated trials):** best 57.4.
+  Lower than pre-lamination 104.6 — expected: two synapses per
+  inhibition path halve effective inhibition at the same g. The
+  circuit oscillates but needs re-tuning for the new architecture.
+- **Stage 2 (air, afferented, 25+25=50 mixed trials):** best −68.1
+  (trial 16, pre-lamination). Laminated trials (25–49) did not beat
+  it. The study mixes architectures — TPE learning is confounded.
+- **Stage 3 (ground, 30+30=60 mixed trials):** best −72.53 (trial 16,
+  pre-lamination). Same issue. The laminated trials scored worse,
+  expected from the two-synapse inhibition path.
+
+**HONEST CONCLUSION:** the laminated architecture is CORRECT per
+Shevtsova/Deng and is the right long-term architecture. But the 30
+laminated trials were insufficient for convergence on the new
+architecture — the study is confounded by mixing architectures in one
+TPE history. TO PROPERLY TUNE: delete the contaminated studies, re-run
+the full curriculum (stage 1→2→3) with laminated-only trials and
+ENOUGH budget (100+ trials per stage, since the two-synapse path
+changes the effective gain scale). The alternative — reverting to
+direct synapses — would be architecturally wrong per Shevtsova 2026
+and would defeat the purpose of the exercise.
+
+**NMF synergy analysis** (_synergy_nmf.py on backsolved activations
+from the SO file): 3 synergies = 82% var (left stance, right stance,
+transition — classic Ivanenko). 5 synergies = 92% (separates hip
+abductors, knee extensors, plantarflexors). KEY FINDING: synergies
+CROSS joint boundaries — no clean "hip PF" vs "knee PF" decomposition.
+The natural grouping is task-based (stance push-off, swing
+initiation), not joint-based. The current 4-cell phase-based PF is a
+simplification; a synergy-based PF would be data-driven but requires
+full redesign.
+
+### Env incident (repaired)
+conda graphviz install clobbered myo\python.exe — repaired via
+--force-reinstall python=3.10.21; all pip pins survived; dot.exe OK.
+WARNING: verify python.exe after any conda transaction in this env.
+
+## 2026-09-14 (Ben Q): MuJoCo vs OpenSim MUSCLE FORCE comparison
+## (answers "what spring" + "does force/torque match, R^2 + phase")
+
+- `_muscle_force_compare.py` (+ `muscle_force_compare.csv`,
+  `figures\muscle_force_compare.png`, dissertation copies +
+  `muscle_model_appendix_draft.tex` in the Dissertation folder):
+  MuJoCo (rigid-tendon actuator) vs OpenSim Thelen2003 (compliant
+  tendon) forces along the subject01 walk, driven with IDENTICAL
+  kinematics + IDENTICAL OpenSim SO activations (first attempt compared
+  act=1 vs SO-driven — apples/oranges, fixed).
+- RESULT: matched-activation R^2 **0.87-0.98 on 10/12 muscles**
+  (tib_ant 0.95, per_brev 0.98, vas_lat 0.94, psoas 0.93, glut_max2
+  0.93, tfl 0.93, med/lat_gas 0.89/0.88, soleus 0.74, semimem 0.57;
+  rect_fem -1.15 and bifemsh -0.26 the outliers — patella reroute +
+  scale offset), mean-force ratios within +/-22%, and **NO phase
+  shift** (best lag 0-2 frames = 0-34 ms) -> Ben's tendon-slack
+  hypothesis is NOT supported as a timing issue: the rigid-vs-compliant
+  signature is SHAPE not phase (OpenSim compliant tendon carries soleus
+  force through mid-stance while rigid MuJoCo follows activation dips
+  — the missing series-elastic smoothing).
+- The "spring" in my earlier note = patch_xml ligament surrogates
+  (ankle/subtalar/mtp joint stiffness 10 N-m/rad added because the
+  conversion lost OpenSim coordinate stops) — a JOINT spring, not a
+  tendon element; it does not give the ankle a muscle-force path.
+- MJCF muscle class (for the appendix): dyntype=muscle,
+  dynprm 0.01/0.04 s (activation rise/fall), force = Fmax*[a*FL(Ln)*FV
+  - FP(Ln)], Ln normalized to the actuator lengthrange, gainprm[2] =
+  Fmax (RoM-peak-normalized to OpenSim, <=15% dev).
+
+## 2026-09-14 (late): npz deletion (other session), RC wiring fixes,
+## v10 overlay verdict on hip phase + ankle offset
+
+- **npz deletion (other chat, NOT ours)**: 83 npz (986 MB) removed from
+  the working tree incl. all *_best_trial*.npz captures; figures/gifs/
+  jsons intact; blobs remain in git history (commit a8746f9). NOTHING
+  of ours is blocked: every capture is REGENERABLE from its winner
+  json via runner --fitted --bestN (fresh v10 winner run regenerated;
+  spinal_run.npz now = v10 trial 56 run). Cleanup of OUR dead files:
+  404-stub tutorial notebooks (bad cmd download), one-off probe/generator
+  scripts, state dumps — done; utilities/logs kept.
+- **RENSHAW WIRING FIXED (Ben caught both)**: (a) the DIAGRAM network
+  (spinal_layers.py) had RC->RC SELF-loops — an autapse is not standard
+  connectivity; (b) the real build wired each RC pair ONE-DIRECTIONALLY
+  (order-condition in the pair loop) — lopsided. Both now MUTUAL between
+  different pools (Hultborn's cat data; Deng A6 "RC->RC" is between the
+  ext/flx RCs), no self-synapse. Panels diagram regenerated. NOTE:
+  v10's numbers were tuned with the lopsided wiring — the mutual fix
+  lands in the next retune (v11).
+- **v10 overlay verdict** (regenerated from the fresh winner run):
+  KNEE now close (swing flexion -75 at ~62 pct vs OpenSim -70 at 60
+  pct; our stance starts -12 crouched and lacks the stance-extension
+  wave). HIP still phase-inverted (ours flexes to +40 mid-"cycle"
+  while OpenSim extends) — with E-duty at 0.08-0.2, the RG-E-anchored
+  cycle is dominated by F-phase motion, so the inversion is largely a
+  DUTY/ANCHOR symptom: until stance is >40 pct of the cycle, the
+  anchored mean cannot look like OpenSim's. ANKLE: the trim tuned to
+  its floor (0.097) yet the mean ankle still rides -52 deg — the
+  offset is NOT primarily the standing POST tone; remaining carriers =
+  passive ankle spring equilibrium + E2 PF drive + PF-side reflex
+  load + contact. Next diagnostic: a stance-phase DF hold (angle-PD
+  or DF-biased reflex gains) rather than more tone trimming.
 
 ## 2026-09-14 (evening): ankle set-point trim + TRANSIENT phase reset
 ## + ENV INCIDENT (repaired)
