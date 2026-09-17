@@ -52,21 +52,22 @@ Loaded automatically at session start. Keep it current; keep it lean.
   `myoconv` is the laptop's copy of the same toolchain). Other envs: `opensim`
   (py3.11 + opensim 4.6), `d2l`. PyCharm: Add Interpreter → Conda → executable
   `D:\Anaconda\condabin\conda.bat` → existing env `myo` (never let PyCharm create a venv).
-- Custom skills (`matlab`, `solidworks`, `latex-overleaf`, `opensim`, `animatlab` — the
-  old `myoconverter` skill is gone; `opensim` replaced it and `animatlab` was added) are
-  version-controlled in the `ZCode_Skills` repo (this machine and easteregg2:
-  `D:\GitHub\ZCode_Skills`; laptop: `Documents\GitHub\ZCode_Skills`). On the laptop
-  `C:\Users\Ben\.zcode\skills\` holds **directory junctions** into that repo — edit the
-  repo copy, then Ben commits via GitHub Desktop. (2026-09-16: laptop live set =
-  latex-overleaf, matlab, solidworks, myoconverter, animatlab, opensim — the
-  last two added as junctions; note the `sns-toolbox` skill referenced in the
-  spinal section is NOT in the ZCode_Skills repo — commit it from whichever
-  machine holds it to make it available here. The repo still carries
-  `myoconverter/` even though the text above says it's replaced.) On THIS machine (EB475WS4) and
-  easteregg2 the live skills are PLAIN COPIES under `C:\Users\Ben Bolen\.agents\skills\`
-  — NOT junctions (EB475WS4 verified 2026-09-14: no reparse points, and
-  `C:\Users\Ben Bolen\.zcode\skills\` does not exist) — so repo edits do NOT propagate
-  here; refresh by copying repo → live.
+- Custom skills are version-controlled in the `ZCode_Skills` repo. **EB475WS4: the repo is
+  at `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills`** (NOT `D:\GitHub\` — corrected
+  2026-09-16; easteregg2: `D:\GitHub\ZCode_Skills`; laptop: `Documents\GitHub\ZCode_Skills`).
+  On EB475WS4 `C:\Users\Ben Bolen\.zcode\skills\` holds **directory junctions** into that
+  repo (verified 2026-09-16 23:24 — the earlier "plain copies under `.agents\skills\`"
+  note was wrong/stale; `.agents\skills` does not exist here). Live set, ALL junctions:
+  animatlab, latex-overleaf, matlab, mujoco, neuroscience, opensim, python,
+  sns-toolbox, solidworks. **NEW skills added 2026-09-16**: `neuroscience` (CPG circuit
+  design: NaP half-centers/τh, laminated inhibition, commissural latch trap, curriculum
+  tuning), `mujoco` (converted-model pitfalls: contact pairs ignore contype, ligament
+  surrogates, muscle actuators), `python` (AARL workflow: inline-python trap, stdout
+  wrappers, background chains, optuna hygiene) — and `sns-toolbox` is now IN the repo
+  (updated with the backend-override trap + fixed-τh NaP measurements) and junctioned
+  like the rest. `opensim` gained a .sto/synergy-analysis section. The repo still carries
+  the retired `myoconverter/` folder (superseded by `opensim`). Edit the repo copy, then
+  Ben commits via GitHub Desktop.
 
 ## Project purpose (priority order)
 

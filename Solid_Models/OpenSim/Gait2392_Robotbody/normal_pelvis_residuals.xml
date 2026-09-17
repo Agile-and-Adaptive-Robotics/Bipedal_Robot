@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSimDocument Version="20302">
+  <!--
+    Six whole-body residual actuators for normal.mot, copied in form from the
+    project's gait2392_RRA_Actuators.xml. They expose the support wrench that
+    is missing because normal.mot has no matching GRF/COP measurements.
+    No joint reserve actuators are included: limb/trunk torques remain the
+    responsibility of the muscle set.
+  -->
+  <ForceSet name="normal_pelvis_residuals">
+    <objects>
+      <PointActuator name="normal_residual_FX">
+        <isDisabled>false</isDisabled><min_control>-infinity</min_control><max_control>infinity</max_control>
+        <body>pelvis</body><point>-0.0724376 0 0</point><point_is_global>false</point_is_global>
+        <direction>1 0 0</direction><force_is_global>true</force_is_global><optimal_force>4</optimal_force>
+      </PointActuator>
+      <PointActuator name="normal_residual_FY">
+        <isDisabled>false</isDisabled><min_control>-infinity</min_control><max_control>infinity</max_control>
+        <body>pelvis</body><point>-0.0724376 0 0</point><point_is_global>false</point_is_global>
+        <direction>0 1 0</direction><force_is_global>true</force_is_global><optimal_force>8</optimal_force>
+      </PointActuator>
+      <PointActuator name="normal_residual_FZ">
+        <isDisabled>false</isDisabled><min_control>-infinity</min_control><max_control>infinity</max_control>
+        <body>pelvis</body><point>-0.0724376 0 0</point><point_is_global>false</point_is_global>
+        <direction>0 0 1</direction><force_is_global>true</force_is_global><optimal_force>4</optimal_force>
+      </PointActuator>
+      <TorqueActuator name="normal_residual_MX">
+        <isDisabled>false</isDisabled><min_control>-infinity</min_control><max_control>infinity</max_control>
+        <bodyA>pelvis</bodyA><bodyB>ground</bodyB><torque_is_global>true</torque_is_global>
+        <axis>1 0 0</axis><optimal_force>2</optimal_force>
+      </TorqueActuator>
+      <TorqueActuator name="normal_residual_MY">
+        <isDisabled>false</isDisabled><min_control>-infinity</min_control><max_control>infinity</max_control>
+        <bodyA>pelvis</bodyA><bodyB>ground</bodyB><torque_is_global>true</torque_is_global>
+        <axis>0 1 0</axis><optimal_force>2</optimal_force>
+      </TorqueActuator>
+      <TorqueActuator name="normal_residual_MZ">
+        <isDisabled>false</isDisabled><min_control>-infinity</min_control><max_control>infinity</max_control>
+        <bodyA>pelvis</bodyA><bodyB>ground</bodyB><torque_is_global>true</torque_is_global>
+        <axis>0 0 1</axis><optimal_force>2</optimal_force>
+      </TorqueActuator>
+    </objects>
+    <groups/>
+  </ForceSet>
+</OpenSimDocument>

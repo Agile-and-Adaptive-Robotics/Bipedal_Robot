@@ -270,6 +270,9 @@ class SpinalNetwork:
         # rhythm generators (deafferented air-stepping preparation).
         if self.interleg:
             for a, b in (("r", "l"), ("l", "r")):
+                # Names are indexed by SOURCE side: these are four distinct
+                # directional cells (C1_r->l, C1_l->r, V3_r->l, V3_l->r),
+                # never one shared bidirectional relay.
                 cf, ce = f"CIN_F_{a}", f"CIN_E_{a}"
                 self._add(cf, TAU["rg"], n)
                 self._add(ce, TAU["rg"], n)

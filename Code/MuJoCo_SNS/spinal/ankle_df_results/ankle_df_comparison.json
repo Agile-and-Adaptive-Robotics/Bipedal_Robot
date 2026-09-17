@@ -1,0 +1,203 @@
+{
+  "method": {
+    "activation": 1.0,
+    "velocity": 0.0,
+    "force": "MuJoCo tension = -data.actuator_force",
+    "torque": "central-difference d(tendon length)/d(OpenSim ankle angle) times MuJoCo actuator_force",
+    "raw_transmission_crosscheck": "diagnostic only; actuator_moment is zero for these converted paths, so the FD tendon derivative is required",
+    "coordinate_sign_mujoco_per_opensim": 1.0,
+    "input_header_note": "OpenSim tables say inDegrees=no, but the -90..+90 values are interpreted as degrees by magnitude and sweep intent"
+  },
+  "angle_deg": [
+    -90.00000018,
+    90.00000018
+  ],
+  "opensim_ik_gait_range_deg": [
+    -8.83862353,
+    16.01920208
+  ],
+  "mujoco_joint_range_deg": [
+    -90.01166961505233,
+    90.01166961505233
+  ],
+  "raw_vs_fd_torque_max_abs_difference_nm": 34.547069248921716,
+  "raw_actuator_torque_max_abs_nm": 0.0,
+  "muscles": {
+    "ext_dig_r": {
+      "mujoco_Fmax_N": 488.555,
+      "force_full_sweep": {
+        "peak_abs_opensim": 513.28394841,
+        "peak_abs_mujoco": 489.78012494230165,
+        "peak_ratio_mujoco_over_opensim": 0.9542089256044219,
+        "median_abs_ratio_on_nonzero_reference": 0.9919861408086577,
+        "normalized_rmse": 0.026718957867408914,
+        "correlation": 0.9685897136269355,
+        "sign_agreement_on_nonzero_reference": 1.0
+      },
+      "torque_full_sweep": {
+        "peak_abs_opensim": 18.71300095,
+        "peak_abs_mujoco": 19.079626405449986,
+        "peak_ratio_mujoco_over_opensim": 1.0195920182139457,
+        "median_abs_ratio_on_nonzero_reference": 1.0038677217640628,
+        "normalized_rmse": 0.0291461417485404,
+        "correlation": 0.9994113357383501,
+        "sign_agreement_on_nonzero_reference": 1.0
+      },
+      "force_gait_range": {
+        "peak_abs_opensim": 502.31665174,
+        "peak_abs_mujoco": 488.5625877180438,
+        "peak_ratio_mujoco_over_opensim": 0.9726187376542011,
+        "median_abs_ratio_on_nonzero_reference": 1.0066793770944769,
+        "normalized_rmse": 0.01809603781353454,
+        "correlation": 0.9530498085969583,
+        "sign_agreement_on_nonzero_reference": 1.0
+      },
+      "torque_gait_range": {
+        "peak_abs_opensim": 18.71300095,
+        "peak_abs_mujoco": 19.07840643838041,
+        "peak_ratio_mujoco_over_opensim": 1.019526824658255,
+        "median_abs_ratio_on_nonzero_reference": 1.021202569366634,
+        "normalized_rmse": 0.027309370355526913,
+        "correlation": -0.199846911938385,
+        "sign_agreement_on_nonzero_reference": 1.0
+      }
+    },
+    "ext_hal_r": {
+      "mujoco_Fmax_N": 162.0,
+      "force_full_sweep": {
+        "peak_abs_opensim": 162.40164645,
+        "peak_abs_mujoco": 163.53599121723894,
+        "peak_ratio_mujoco_over_opensim": 1.0069848107579882,
+        "median_abs_ratio_on_nonzero_reference": 0.9980713458709709,
+        "normalized_rmse": 0.023721751209892446,
+        "correlation": 0.9708215894220517,
+        "sign_agreement_on_nonzero_reference": 1.0
+      },
+      "torque_full_sweep": {
+        "peak_abs_opensim": 6.25150279,
+        "peak_abs_mujoco": 6.084476098169874,
+        "peak_ratio_mujoco_over_opensim": 0.9732821535171823,
+        "median_abs_ratio_on_nonzero_reference": 1.0060004538474776,
+        "normalized_rmse": 0.017917822296087665,
+        "correlation": 0.9996665407884339,
+        "sign_agreement_on_nonzero_reference": 1.0
+      },
+      "force_gait_range": {
+        "peak_abs_opensim": 159.52869219,
+        "peak_abs_mujoco": 154.07742679308612,
+        "peak_ratio_mujoco_over_opensim": 0.9658289344563712,
+        "median_abs_ratio_on_nonzero_reference": 0.966401200865934,
+        "normalized_rmse": 0.030983776075181723,
+        "correlation": 0.998983058918807,
+        "sign_agreement_on_nonzero_reference": 1.0
+      },
+      "torque_gait_range": {
+        "peak_abs_opensim": 6.25150279,
+        "peak_abs_mujoco": 6.084476098169874,
+        "peak_ratio_mujoco_over_opensim": 0.9732821535171823,
+        "median_abs_ratio_on_nonzero_reference": 0.9739719085062619,
+        "normalized_rmse": 0.024426827518802485,
+        "correlation": 0.856742967160023,
+        "sign_agreement_on_nonzero_reference": 1.0
+      }
+    },
+    "per_tert_r": {
+      "mujoco_Fmax_N": 172.326,
+      "force_full_sweep": {
+        "peak_abs_opensim": 180.45049416,
+        "peak_abs_mujoco": 182.8842983741292,
+        "peak_ratio_mujoco_over_opensim": 1.0134873790479688,
+        "median_abs_ratio_on_nonzero_reference": 0.9478944725097411,
+        "normalized_rmse": 0.045019492258947476,
+        "correlation": 0.8373002104546212,
+        "sign_agreement_on_nonzero_reference": 1.0
+      },
+      "torque_full_sweep": {
+        "peak_abs_opensim": 4.72305582,
+        "peak_abs_mujoco": 4.602945830593956,
+        "peak_ratio_mujoco_over_opensim": 0.9745694325911982,
+        "median_abs_ratio_on_nonzero_reference": 0.9922096413204282,
+        "normalized_rmse": 0.019067245896173493,
+        "correlation": 0.9992571066108954,
+        "sign_agreement_on_nonzero_reference": 1.0
+      },
+      "force_gait_range": {
+        "peak_abs_opensim": 180.35929101,
+        "peak_abs_mujoco": 171.82933905063473,
+        "peak_ratio_mujoco_over_opensim": 0.9527057801591584,
+        "median_abs_ratio_on_nonzero_reference": 0.9454896108120169,
+        "normalized_rmse": 0.053249893494330895,
+        "correlation": 0.9878883381668883,
+        "sign_agreement_on_nonzero_reference": 1.0
+      },
+      "torque_gait_range": {
+        "peak_abs_opensim": 4.72305582,
+        "peak_abs_mujoco": 4.602945830593956,
+        "peak_ratio_mujoco_over_opensim": 0.9745694325911982,
+        "median_abs_ratio_on_nonzero_reference": 0.9732398606851245,
+        "normalized_rmse": 0.02569781422161354,
+        "correlation": 0.996513826001807,
+        "sign_agreement_on_nonzero_reference": 1.0
+      }
+    },
+    "tib_ant_r": {
+      "mujoco_Fmax_N": 840.09,
+      "force_full_sweep": {
+        "peak_abs_opensim": 907.26943301,
+        "peak_abs_mujoco": 877.6563401153786,
+        "peak_ratio_mujoco_over_opensim": 0.9673601999393107,
+        "median_abs_ratio_on_nonzero_reference": 0.968127435804099,
+        "normalized_rmse": 0.04295644879012839,
+        "correlation": 0.9832943743421162,
+        "sign_agreement_on_nonzero_reference": 1.0
+      },
+      "torque_full_sweep": {
+        "peak_abs_opensim": 34.01449925,
+        "peak_abs_mujoco": 34.547069248921716,
+        "peak_ratio_mujoco_over_opensim": 1.0156571465305848,
+        "median_abs_ratio_on_nonzero_reference": 0.9772754477162406,
+        "normalized_rmse": 0.03800327792304156,
+        "correlation": 0.9953601622791053,
+        "sign_agreement_on_nonzero_reference": 1.0
+      },
+      "force_gait_range": {
+        "peak_abs_opensim": 846.41928359,
+        "peak_abs_mujoco": 837.4180543960913,
+        "peak_ratio_mujoco_over_opensim": 0.9893655197035081,
+        "median_abs_ratio_on_nonzero_reference": 1.0332934029032064,
+        "normalized_rmse": 0.03529703985810102,
+        "correlation": 0.99140875399644,
+        "sign_agreement_on_nonzero_reference": 1.0
+      },
+      "torque_gait_range": {
+        "peak_abs_opensim": 34.01449925,
+        "peak_abs_mujoco": 34.547069248921716,
+        "peak_ratio_mujoco_over_opensim": 1.0156571465305848,
+        "median_abs_ratio_on_nonzero_reference": 1.0406877836400106,
+        "normalized_rmse": 0.044022192293799056,
+        "correlation": 0.8109454521481476,
+        "sign_agreement_on_nonzero_reference": 1.0
+      }
+    }
+  },
+  "combined_torque": {
+    "full_sweep": {
+      "peak_abs_opensim": 63.575609650000004,
+      "peak_abs_mujoco": 64.21302630579535,
+      "peak_ratio_mujoco_over_opensim": 1.0100261194395852,
+      "median_abs_ratio_on_nonzero_reference": 1.008402663641779,
+      "normalized_rmse": 0.02697794517652439,
+      "correlation": 0.9986453782964816,
+      "sign_agreement_on_nonzero_reference": 1.0
+    },
+    "gait_range": {
+      "peak_abs_opensim": 63.575609650000004,
+      "peak_abs_mujoco": 64.21302630579535,
+      "peak_ratio_mujoco_over_opensim": 1.0100261194395852,
+      "median_abs_ratio_on_nonzero_reference": 1.0231710795104887,
+      "normalized_rmse": 0.028298982389460506,
+      "correlation": 0.6484471866397589,
+      "sign_agreement_on_nonzero_reference": 1.0
+    }
+  }
+}

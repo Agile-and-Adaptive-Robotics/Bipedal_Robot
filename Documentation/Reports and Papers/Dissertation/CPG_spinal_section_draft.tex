@@ -49,15 +49,42 @@ V3) coordinating the two sides. Shared descending cells provide drive
 anterior-posterior, lateral, and trunk-orientation controllers). The
 standing posture is not hard-coded: it is solved once by static
 optimization at the model keyframe and injected as per-motoneuron bias
-currents (Figure~\ref{fig:cpg-circuit}).
+currents. Figure~\ref{fig:cpg-overview} introduces the three principal
+network levels; Figure~\ref{fig:cpg-circuit} retains the full compiled-edge
+accounting used to verify the implementation.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.95\textwidth]{CPG_airstepping_figs/circuit_dengstyle.pdf}
-  \caption{The spinal circuit, representative knee and hip columns
-  shown (one of 46 muscle columns per side). Every drawn edge group is
-  read back from the compiled network object, so the figure cannot
-  drift from the implementation. Bands: supraspinal inputs; rhythm
+  \includegraphics[width=\textwidth]{CPG_airstepping_figs/circuit_literature.pdf}
+  \caption{Reader-level organization of the implemented spinal network.
+  (A) Bilateral descending-input, rhythm-generator, pattern-formation,
+  motoneuron-pool, and musculoskeletal layers, with c1 and V3 commissural
+  relays centered at the midline. Extensor populations are blue and flexor
+  populations orange. (B) One complete right-knee antagonist motif showing
+  PF drive, conditional swing-phase knee-extensor inhibition (KINH),
+  Renshaw recurrence,
+  monosynaptic Ia and II excitation, autogenic Ib inhibition, Ia-mediated
+  reciprocal inhibition, stance-extensor Ib load sharing, motor activation,
+  RG-E stance gating of that load-sharing pathway, recurrent Renshaw
+  inhibition of Ia interneurons, and muscle-to-afferent feedback. Every solid
+  neural pathway shown is
+  asserted against a freshly compiled SNS network; activation and afferent
+  paths, which lie outside the SNS connection list, are checked by a separate
+  figure-interface contract. Dashed arrows in panel A intentionally aggregate
+  phase-dependent sensory projections to both RG and PF; panel B expands the
+  local spinal reflex paths.}
+  \label{fig:cpg-overview}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=0.98\textwidth]{CPG_airstepping_figs/circuit_dengstyle.pdf}
+  \caption{Compiled-edge audit schematic of the spinal circuit,
+  with one complete representative knee antagonist pair shown; its motif
+  repeats across the 46 muscle columns per side. Every drawn SNS synaptic
+  edge class is read back from the compiled network object, while a separate
+  contract requires both displayed motoneuron--activation--muscle paths and
+  both sets of muscle--Ia/II/Ib encoder paths. Bands: supraspinal inputs; rhythm
   generator (persistent-Na half-centers, laminated mutual inhibition
   through InE/InF, weak mutual excitation, heel/toe mechanosensors,
   c1/V3 commissurals); pattern formation (four phase-window cells with
@@ -174,11 +201,12 @@ topology is a strict superset of the previous.
 
 Before any tuning, the persistent-sodium architecture produces
 physiologically structured air-stepping at default gains (drive
-2.5~nA, $\tau_h = 350$~ms): five clean cycles in the 10-s walk window,
-a 2.11~s period (0.47~Hz, the air-stepping regime of
-\citealp{ivanenko2002}), peak knee flexion of $-117^\circ$, hip
-excursions of $-25^\circ$ to $+63^\circ$, and an extensor duty of
-0.86--0.90 (Figure~\ref{fig:nap-air}). Most significantly, the
+2.5~nA, $\tau_h = 350$~ms): five extensor-burst onsets (four complete
+cycle intervals) in the 10-s walk window, a 2.108~s period (0.47~Hz,
+the air-stepping regime of \citealp{ivanenko2002}), a cycle-mean
+extensor duty of 0.691, peak knee flexion of $-106.1^\circ$, and hip
+excursions of $-19.9^\circ$ to $+50.0^\circ$
+(Figure~\ref{fig:nap-air}). Most significantly, the
 extensor duty — the residual that never exceeded 0.34 across all prior
 tuning of the circuit-level-adaptation architecture — falls in the
 physiological range immediately, because burst duration is set by the
@@ -202,25 +230,32 @@ extensor tone for quiet standing.
 \subsection{Curriculum Tuning Results}
 \label{sec:results-cpg-curriculum}
 
-The staged curriculum converged at each stage. Stage 1 (deafferented
-air): \fillme{best score, cycles, knee depth, and the winning
-$\tau_h$/drive from curriculum\_stage1.json}. Stage 2 (afferented
-air): \fillme{best kinematic score and the afferent-to-central gains
-that engaged, from curriculum\_stage2.json}. Stage 3 (ground, full
-reflex set): \fillme{best kinematic score and winner parameters from
-curriculum\_stage3.json}. For reference, the stage-1 air objective
-reached \fillme{final stage-1 best} within its 100 trials, compared
-with 57.4 — the best ever achieved by the retired adaptation-loop
-architecture at equal budget.
+The curriculum has not yet converged at all three stages. Stage 1
+(deafferented air) reached a score of 137.254 at trial 78, with 29
+counted cycles, a 0.37~s period, drive 3.154~nA, and
+$\tau_h=170$~ms. This exceeds 57.4, the best score reached by the
+retired adaptation-loop architecture at equal budget, although the
+result is substantially faster than the 1.2~s reference cycle. The
+first stage-2 and stage-3 campaigns did not produce valid winners:
+every trial returned the $-100$ no-countable-cycles sentinel. Isolation
+tests traced this failure to bilateral extensor latching under the
+interleg commissural pathway; the c1 and V3 gains have now been exposed
+as search variables, but the corrected stage-2/3 campaigns remain to be
+run. Therefore the saved stage-2/3 parameter files are diagnostic
+records, not tuned solutions.
 
 \subsection{Supported Ground Walking}
 \label{sec:results-cpg-ground}
 
-\fillme{22-s ground walk paragraph from the stage-3 winner run:
-stayed-up status, COM height minimum, trunk tilt range, hip/knee/ankle
-ranges, duty, cadence, and kinematic score against the OpenSim
-reference; point at Figure~\ref{fig:cpg-overlay} and the ground-walk
-hindlimb figure (filename ground GIF/frame export to be added).}
+No supported-ground result from the persistent-sodium curriculum is
+reported yet because the current stage-3 file contains only the
+$-100$ sentinel trial. The earlier adaptation-loop walking runs remain
+useful development evidence, but they are not substituted here as a
+result of the revised architecture. \fillme{After the corrected
+stage-2/3 campaigns: add the 22-s stayed-up status, COM height minimum,
+trunk tilt range, hip/knee/ankle ranges, duty, cadence, and kinematic
+score against the OpenSim reference; point at
+Figure~\ref{fig:cpg-overlay} and the ground-walk hindlimb figure.}
 
 \begin{figure}[t]
   \centering
@@ -235,11 +270,13 @@ hindlimb figure (filename ground GIF/frame export to be added).}
 \subsection{Plant Fidelity: Force Capacity and Torque Budget}
 \label{sec:results-cpg-plant}
 
-An audit of the converted plant verified that 84 of 92 actuator peak
-forces match the OpenSim source within the conversion's
-range-of-motion normalization ($\le$15\%); the eight exceptions
-(erector spinae and obliques) had shipped at 1~N and were restored to
-stock values. Comparing the moment arms of every muscle (central
+An audit of the patched simulation plant verified that the eight
+actuators shipped at 1~N by the converter (bilateral erector spinae,
+internal and external obliques, and extensor hallucis) are restored
+exactly to their OpenSim peak forces. Of the 86 non-pruned active
+actuators, 78 are within 15\% of the OpenSim source value after the
+converter's range-of-motion normalization; eight exceed that tolerance,
+with the largest differences in gluteal paths. Comparing the moment arms of every muscle (central
 differences with path followers re-projected, the OpenSim definition)
 against the inverse-dynamics joint demand of the reference walk yields
 torque budgets of approximately 3.4/2.8/2.1/1.4$\times$ at hip, knee,
@@ -265,7 +302,7 @@ but from moving burst termination from a circuit-level adaptation loop
 into an intrinsic persistent-sodium gate. Every prior tuning campaign
 on the adaptation-loop architecture left the extensor duty below 0.35
 against a physiological reference of 0.61; the persistent-sodium
-half-centers produce 0.86--0.90 before any search begins. This is
+half-centers produce 0.69 before any search begins. This is
 consistent with the operating-regime analysis of Rybak et
 al.~\citep{rybak2024, rybak2025}: at slow, sensory-informed gaits the
 rhythm generator operates in state-machine and flexor-driven regimes

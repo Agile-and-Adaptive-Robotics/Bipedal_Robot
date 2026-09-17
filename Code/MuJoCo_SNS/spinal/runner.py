@@ -1245,8 +1245,11 @@ def main(argv):
     xcom = log_com[:, 0]
     fall = pelz.min() < 0.55
     ifall = np.argmax(pelz < 0.55) if fall else -1
-    walk_mask = log_t > SCHEDULE["walk"][0]
-    n_steps = int(np.sum(np.diff((log_neuro[walk_mask, 3] > 0.8).astype(int)) == 1))
+    walk_mask = ((log_t >= SCHEDULE["walk"][0]) &
+                 (log_t <= SCHEDULE["walk"][1]))
+    neuro_col = {name: i for i, name in enumerate(NEURO_NAMES)}
+    n_steps = int(np.sum(np.diff(
+        (log_neuro[walk_mask, neuro_col["RG_F_r"]] > 0.8).astype(int)) == 1))
     print(f"\n== summary ==")
     print(f"pelvis/COM height: start {pelz[0]:.2f} m, min {pelz.min():.2f} m, "
           f"final {pelz[-1]:.2f} m  ({'FELL at t=%.1f s' % log_t[ifall] if fall else 'stayed up'})")
@@ -1255,7 +1258,9 @@ def main(argv):
     print(f"RG_F_r bursts during walk window: {n_steps}")
     # per-leg rhythm metrics during the walk window (cycle period, E duty)
     if walk_mask.sum() > 100:
-        for leg, (e_col, f_col) in (("r", (2, 3)), ("l", (6, 7))):
+        for leg in ("r", "l"):
+            e_col = neuro_col[f"RG_E_{leg}"]
+            f_col = neuro_col[f"RG_F_{leg}"]
             rge = log_neuro[walk_mask, e_col]
             rgf = log_neuro[walk_mask, f_col]
             on = rge > 0.5 * max(rge.max(), 1e-6)
@@ -1289,16 +1294,18 @@ def main(argv):
                        label=a if i < 8 or a.endswith("_l") else None)
         ax[0].set_ylabel("activation")
         for i, jn in enumerate(KEY_JOINTS):
-            ax[1].plot(log_t, log_q[:, i], lw=0.8,
+            ax[1].plot(log_t, np.degrees(log_q[:, i]), lw=0.8,
                        label=jn if i < 3 else None)
         ax[1].set_ylabel("joint angle [deg]")
         ax[1].legend(fontsize=7, ncol=3)
         ax[2].plot(log_t, log_com[:, 0], label="com x")
         ax[2].plot(log_t, log_com[:, 2], label="com z")
         ax[2].set_ylabel("COM [m]"); ax[2].legend(fontsize=7)
-        for j, nm in enumerate(("DRIVE", "POSTURE", "RG_E_r", "RG_F_r",
-                                "PF_E2_r", "PF_F1_r", "RG_E_l", "RG_F_l")):
-            ax[3].plot(log_t, log_neuro[:, j], lw=0.8, label=nm)
+        plot_neuro = ("DRIVE", "POSTURE", "RG_E_r", "RG_F_r",
+                      "PF_E2_r", "PF_F1_r", "RG_E_l", "RG_F_l")
+        for nm in plot_neuro:
+            ax[3].plot(log_t, log_neuro[:, neuro_col[nm]], lw=0.8,
+                       label=nm)
         ax[3].set_ylabel("neural [mV]"); ax[3].legend(fontsize=7, ncol=4)
         ax[3].set_xlabel("t [s]")
         for a in ax:

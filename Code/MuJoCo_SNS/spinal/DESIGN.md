@@ -2,6 +2,161 @@
 
 Built 2026-09-09. Files in `Code\MuJoCo_SNS\spinal\`.
 
+## 2026-09-17 VERIFICATION (EB475WS4: model, figures, and draft audited)
+
+The documented local interpreter works:
+`C:\Users\Ben Bolen\.conda\envs\myo\python.exe` (Python 3.10.21,
+NumPy 1.22.4, SciPy 1.9.3, MuJoCo 2.3.7, SNS-Toolbox 1.5.2).
+`_fix_check.py`, `_panels_check.py`, `audit_signs.py`, and the new
+`_live_plant_audit.py` pass. `_smoke_nap.py` ran the full patched
+MuJoCo--SNS loop at 2 ms and passed: finite dynamics, five RG bursts per
+leg in the 5--15 s walk window, 2.11 s period, E-duty 0.67, right knee
+-106.3..+11.6 deg, right hip -20.1..+50.9 deg. `spinal_run.npz/.png`
+now contain that verified air smoke run.
+
+Figure audit found and fixed four concrete problems:
+
+1. `runner.py` plotted radian joint data under a degree label and used
+   pre-NaP hard-coded neural column positions (including PF columns for
+   the left RG summary). Plots and summaries now resolve channels by
+   `NEURO_NAMES`, plot degrees, and restrict rhythm metrics to the true
+   5--15 s walk window.
+2. `_render_panels.py` still drew the retired tonic DRIVE->PF edge and
+   called a stage-3 `score=-100` sentinel a tuned winner. The edge is
+   removed; failed stages are ignored and representative gains are
+   labelled as such.
+3. `draw_circuit.py` checked only compiled-but-undrawn edge groups, so
+   extra fictional arrows could pass. The contract is now two-way. It
+   immediately caught the V3 target drawn/labeled as contra RG-E; the
+   compiled circuit targets contra InE. The figure and conductance label
+   are corrected, and the missing/extra edge-group contract passes.
+4. `_figure_hindlimb_style.py` now resolves RG/PF columns from the NPZ's
+   `neuro_names` instead of positional constants.
+
+The live Fmax repair is confirmed: bilateral ercspn/intobl/extobl/ext_hal
+are exactly 2500/900/900/162 N after `apply_harness`. The broader draft
+claim was too strong: among 86 non-pruned active actuators, 78 are within
+15% of stock OpenSim and eight exceed 15% (worst gluteal paths about
+31--34%). `CPG_spinal_section_draft.tex` now reports that result, the
+verified air metrics (four complete intervals/five onsets, 2.108 s,
+cycle duty 0.691), and the honest curriculum state: stage 1 valid;
+stages 2--3 remain `-100` sentinel diagnostics, not winners.
+
+Regenerated and synchronized: `circuit_dengstyle.{pdf,svg,png}`,
+`circuit_literature.{pdf,svg,png}`, `sns_diagram_panels.{pdf,png}`, and
+`hindlimb_style_nap_air.{pdf,png}` in the
+spinal `figures/` and dissertation `CPG_airstepping_figs/` folders.
+
+Visual follow-up against the local historical AnimatLab figures and the
+Shinohara-2025, Shevtsova-2026, Rybak-2024/2025, Deng-2019, Di-Russo-2023,
+Jankowska, Rahmati, and Klishko PDFs: the detailed circuit is retained as the
+zoomable compiled-edge audit figure; the toolbox-native figure is now a
+page-readable A/B (RG/PF) over C (representative knee motor/reflex circuit)
+composition with duplicate rendering ports removed. Air traces show only the
+settled 6--15 s commanded-walk interval. All current figures now follow the
+recent literature convention extensor=blue, flexor=vermillion/orange. This is
+presentation-only. Final source/dissertation copies are hash-identical.
+After Ben's annotated visual review, the preliminary dissertation draft now
+uses `circuit_literature.pdf` first: a bilateral RG--PF--MN--muscle hierarchy
+with centered c1/V3 relays, plus one complete antagonist/reflex knee motif.
+The toolbox panels remain a software-native artifact. `circuit_dengstyle.pdf`
+remains on a dedicated page as the compiled-edge audit.
+
+The annotated review exposed genuine audit-figure defects: orphaned
+hard-coded MN-to-activation starts, no activation-map-to-flexor-muscle edge,
+and no flexor muscle-to-Ia/II/Ib encoder paths. Heel/toe-to-InE and
+PF-F1-to-IaIN also used unconnected raw start coordinates. These are fixed.
+The dense audit now shows complete extensor and flexor interfaces, omits
+partial hip glyphs, and separately asserts the plant-interface paths because
+they do not exist in SNS-Toolbox's `net.connections`. The new reader figure
+asserts every displayed solid neural edge against a freshly compiled network.
+Its final visual pass also restored RC->IaIN recurrent disinhibition, RG-E
+stance gating of IB-EXC, and aggregate sensory projections to both RG and PF.
+
+### 2026-09-17 directional commissural + activation/FSA correction
+
+Ben caught one remaining literature-figure abstraction error. The compiled
+network already had four distinct directional commissural cells, but the
+reader figure collapsed them into a shared C1 and a shared V3. The corrected
+paths are:
+
+- RG-E_l -> V3_l-to-r -> InE_r and RG-E_r -> V3_r-to-l -> InE_l
+  (both synapses excitatory);
+- RG-F_l -> C1_l-to-r -| RG-F_r and RG-F_r -> C1_r-to-l -| RG-F_l.
+
+`draw_literature_circuit.py` now draws the four cells separately and
+`_fix_check.py` asserts every compiled source/sign/destination. The
+representative diagram build sets `rg_weak_exc=0`; direct ipsilateral
+RG-E<->RG-F excitation is absent from the audited graph.
+
+Activation provenance was also corrected. The surviving
+`ResultsBSolve/zz_bsolve_StaticOptimization_activation.sto` does not match
+`bsolve_out.npz['acts']` (RMSE 0.3924, correlation -0.0119 on common
+frames). Therefore the circuit backsolve uses the unambiguous converted-
+MuJoCo ridge/NNLS `acts` array. Earlier four/five-component NMF values from
+the STO do not validate the converted-model PF count.
+
+`fsa_backsolve.py` implements the nonspiking leaky-integrator Function
+Subnetwork Approach target mapping (`V_MN=5 mV*activation`) and exports the
+rank scan, PF time courses/muscle weights, MN reconstructions, and inverse PF
+current requirements to `fsa_results/`. Held-out interleaved-frame VAF at
+four PFs is only 0.852 right/0.823 left. Six is the smallest shared count
+above 0.90 (0.924 right/0.912 left); in-sample centered VAF is 0.926/0.913.
+Ten-seed robustness is tight in VAF, but one right sixth component is
+spatially unstable and the record contains only about 1.6 cycles. Treat six
+as the engineering target for this dataset, not a universal biological
+primitive count, until longer/multiple trials confirm it.
+
+The dynamic excitatory PF->MN fit reaches centered VAF 0.863/0.835. About
+16--17% of MN samples require net negative current, so higher-fidelity closure
+needs explicit phase-specific inhibition (or an equivalent negative-current
+pathway), not only excitatory PF conductances plus membrane leak.
+
+The OpenSim-4.6 `normal.mot` experiment is quarantined from this inference.
+It required an analysis-only model derivative disabling failed-equilibrium
+`lat_gas_r` plus six pelvis residuals; the vertical residual averaged
+739.4 N. It is a reproducible kinematics-only, residual-supported solve in
+`ResultsNormalSO/`, not a ground-contact walking activation target.
+
+### 2026-09-17 phase/PF semantics + ankle-capacity audit
+
+Do not conflate the existing E1/E2/F1/F2 early/late stance/swing
+pattern-formation channels with the six NMF synergies. Figures call the
+latter S1--S6 only. A synergy is an observed temporal coefficient plus muscle
+weight vector; it is not a PF neuron or layer. A joint/functional PF layer
+may contain extensor and flexor half-centers whose outputs express two
+synergy-like patterns, while one synergy may combine multiple PF layers.
+MN pools may receive convergent drive from several layers; this is expected
+to matter most for biarticular hip+knee and knee+ankle muscles. The current
+FSA fit already permits all six unconstrained sources to project to every MN,
+but it does not identify an anatomical PF-layer decomposition.
+
+Their stance-rescaled peaks are approximately S1=96%, S2=40%, S3=10%,
+S4=82%, while S5/S6 are not bilaterally phase-stable. Next interpretation
+work should test S3<->S6 weight reassignment with a PF-informed constrained
+factorization, not hand edits, and overlay synergy/PF contributions on both
+the early-stance and swing-phase knee-flexion episodes (the classic
+double-knee pattern). Preserve monoarticular/biarticular identity so the same
+MN pool can receive appropriate hip+knee or knee+ankle PF drive.
+
+`gait_phase.py` uses measured GRF heel strike/toe-off and maps stance to
+0--50%, swing to 50--100%. The current 2-s activation record contains only
+one complete stride per side (measured duty 0.622/0.615), so these are
+cycle-normalized traces, not a multi-cycle statistical average.
+`plot_gait_joint_angles.py` adds the requested 5x2 OpenSim-coordinate
+kinematic figure (sagittal column; YZ-plane column with intentionally blank
+knee/MTP panels).
+
+`compare_ankle_df.py` compares Ben's OpenSim right-dorsiflexor force/torque
+sweeps with the patched converted MuJoCo model at activation 1 and zero
+velocity. In the IK gait range (-8.84..+16.02 deg), MJ/OS force ratios are
+1.007 ext_dig, 0.966 ext_hal, 0.945 per_tert, 1.033 tib_ant; torque ratios
+are 1.021, 0.974, 0.973, and 1.041. Summed torque is 1.023x OpenSim.
+Therefore static force/moment-arm capacity is not the dorsiflexion deficit;
+inspect recruitment timing/magnitude, antagonist activity, and dynamic
+force-velocity effects. As at the knee, use equality-aware FD tendon moments:
+raw MuJoCo `actuator_moment` is zero for these converted ankle paths.
+
 ## 2026-09-16 NIGHT (CURRICULUM STATE + INTERLEG LATCH DIAGNOSIS —
 ## READ FIRST if resuming; handed to ChatGPT for off-peak work)
 

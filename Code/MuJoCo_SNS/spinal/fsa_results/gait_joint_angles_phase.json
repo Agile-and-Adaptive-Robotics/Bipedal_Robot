@@ -1,0 +1,48 @@
+{
+  "source": "D:\\Github\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\subject01_walk1_ik.mot",
+  "phase_convention": "heel strike=0, toe off=50, next heel strike=100",
+  "coordinates": {
+    "sagittal": [
+      "lumbar_extension",
+      "hip_flexion_{side}",
+      "knee_angle_{side}",
+      "ankle_angle_{side}",
+      "mtp_angle_{side}"
+    ],
+    "openSim_YZ_plane": [
+      "lumbar_bending",
+      "hip_adduction_{side}",
+      null,
+      "subtalar_angle_{side}",
+      null
+    ]
+  },
+  "sides": {
+    "r": {
+      "n_complete_cycles": 1,
+      "events_s": [
+        [
+          0.63,
+          1.3967,
+          1.8633
+        ]
+      ],
+      "measured_duty": [
+        0.6216654504175789
+      ]
+    },
+    "l": {
+      "n_complete_cycles": 1,
+      "events_s": [
+        [
+          1.2567,
+          2.0033,
+          2.47
+        ]
+      ],
+      "measured_duty": [
+        0.6153465754553694
+      ]
+    }
+  }
+}

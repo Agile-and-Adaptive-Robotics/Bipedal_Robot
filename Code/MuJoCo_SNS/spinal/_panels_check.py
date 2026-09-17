@@ -50,12 +50,16 @@ assert not any("ADAP" in x or "PRESET" in x or "PREA" in x
                for x in rgi), "retired pathway present in RG"
 rg_pops = [p["name"] for p in RhythmGeneratorNetwork("r").populations]
 assert not any("ADAP" in n or "PRESET" in n for n in rg_pops)
-pfi = inv(PatternFormationNetwork("r"))
+pfn = PatternFormationNetwork("r")
+pfi = inv(pfn)
 assert "PF_E1_r -inh-> PF_F1_r" not in pfi, "direct PF edge still present"
 assert "PF_E1_r -exc-> PF_IN_E_r" in pfi and \
     "PF_IN_E_r -inh-> PF_F1_r" in pfi
 pf_pops = [p["name"] for p in PatternFormationNetwork("r").populations]
 assert not any("PFA" in n for n in pf_pops), "PFA still present"
+pf_inputs = [p["name"] for p in pfn.inputs]
+assert not any("DRIVE->PF" in n for n in pf_inputs), \
+    f"retired DRIVE->PF input still rendered: {pf_inputs}"
 moi = inv(MotorColumnNetwork("r"))
 assert "IaIN_knee_ext_r -inh-> MN_knee_flex_r" in moi
 assert "Ia_knee_ext_r -exc-> IaIN_knee_ext_r" in moi
