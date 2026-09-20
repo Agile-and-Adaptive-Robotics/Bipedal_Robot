@@ -20,7 +20,12 @@ belongs to another session's upload workflow.
 `Neuromechanical_Models\Biped_2xCPG_wSubs\tools\CONTINUE_HERE.md` FIRST for exact state,
 fix spec, and the GUI-verification protocol; (A) AnimatLab arrow audit — section below;
 (B) MuJoCo gait2392 spinal cord network in `Code\MuJoCo_SNS\spinal\` (read its
-`DESIGN.md` first — well past the rhythm layer now, DESIGN.md top is authoritative);
+`DESIGN.md` first — NaP/laminated architecture, air walk verified 2026-09-17;
+NEXT TASK = the bilateral figure repair, see ACTIVE WORK B below);
+(G) NEW 2026-09-18: convert the SCALED subject01_simbody.osim on EASTEREGG2
+(Ben GO) — runbook inside
+`Solid_Models\OpenSim\Gait2392_Robotbody\convert_subject01.py` (10-20 min;
+then `_validate_subject_model.py` must PASS before any tuning touches it);
 (C) Sensory Afferent Database curation in `SADb_audit\` — section at the END of this
 file, and the thread Ben wants worked while ZCode is on peak billing (Mon–Fri
 23:00–03:00 Pacific).** **NEW (2026-09-16, laptop): (D) SolidWorks → Simscape Multibody
@@ -293,42 +298,102 @@ unvalidated (manufacturer 2-3% limit; stretch characterization never done —
 antagonist pairs + fatigue); curve truncation past the measured domain is
 INTENTIONAL (Ben ruled 2026-09-16).
 
-## ACTIVE WORK B — MuJoCo gait2392 spinal network (started 2026-09-09, easteregg2)
+## ACTIVE WORK B — MuJoCo gait2392 spinal network (started 2026-09-09; state below verified 2026-09-17, EB475WS4)
 
-Two-level RG+PF spinal network (SNS-Toolbox 1.5.2) for the converted
-`gait2392_simbody` MJCF: 92 MN pools + Ia/II/Ib afferents each, per-leg
-half-center RG, 4 phase-shifted PF groups/leg, stance-gated Ib load sharing,
-descending DRIVE + balance inputs, static-opt standing posture injected as
-per-MN bias. **Rhythm layer VERIFIED** (0.885 s period, antiphase −0.88);
-closed-loop walk still NaNs in the leg joints.
+Two-level RG+PF spinal network (SNS-Toolbox 1.5.2) driving all 92 muscles of
+the converted `gait2392_simbody` MJCF, now on the persistent-Na (NaP) RG +
+laminated-PF architecture with curriculum tuning, mechanosensory heel/toe +
+stance-gated Ib/II feedback, IaIN + Renshaw, conditional KINH swing
+suppression. **Air walk VERIFIED** (`_smoke_nap.py`, full MuJoCo–SNS loop at
+2 ms: 5 RG bursts/leg in the 5--15 s window, period 2.11 s, E-duty 0.67,
+knee −106..+12°, hip −20..+51°; `spinal_run.npz/.png` = that run). Ground
+walk awaits a valid NaP stage-3 curriculum winner.
 
-- Run with `D:\Anaconda\envs\myo\python.exe` (Anaconda at `D:\Anaconda`,
-  NOT on PATH; env `myo`, not `myoconv`), cwd `Code\MuJoCo_SNS\spinal`.
-  Read `spinal\DESIGN.md` first: architecture, verified/unverified split,
-  open problems. `audit_signs.py` (anatomical sign audit — must stay all-OK
-  after ANY model change), `check_rhythm.py`, `runner.py`, `diag_nan.py`
-  (first-NaN finder), `fit_synapses.py` (IK/SO → synergy NMF + per-phase
-  NNLS back-solve scaffold).
-- Model repairs are applied on the fly in `apply_harness()` (runner.py):
-  hip_flexion/hip_adduction MJCF hinge axes WERE flipped vs OpenSim
-  (negated, both sides); rect_fem lacked a patella wrap and pulled the knee
-  into FLEXION (rerouted over the vastii's vas_med-P4 patella-tracking via
-  point); quad_fem/gem/peri pruned (`PRUNE_MUSCLES`, Ben's list).
-- **Do NOT weld the conditional pathpoints** (massless slide bodies with
-  equality couplings): an earlier weld froze several muscle moment arms to
-  zero. They stay coupled; massless bodies handled via compiler
-  `boundmass`/`boundinertia`. The sign audit must run DYNAMICALLY (full
-  activation → joint acceleration) — static `actuator_moment` misses the
-  coupling paths and misdiagnoses.
-- Remaining blocker (dynamics, not kinematics — audit is clean): NaNs at
-  2 ms even under a rigid pelvis rig. Suspects in order: mesh foot contacts
-  (try primitive collision), equality forces on the 0.01 kg pathpoint
-  bodies, near-zero hinge damping, MN-command slew limiting.
-- Speed-control design: descending DRIVE + presynaptic reflex-gain
-  modulation (`params.MOD`); grounded in Bunz/Ijspeert/Schmitt 2026 Sci Rep
-  and Ben's Zotero "Sensory Afferent Database" collection. Read Di Russo/
-  Ijspeert/Bouri 2023 J Neural Eng before any novelty claims. MuJoCo gotcha:
-  muscle Fmax = `actuator_gainprm[:,2]`.
+**NEXT SESSION'S FIRST TASK — the bilateral architecture figure repair.**
+Ben's annotated screenshot found four presentation defects in
+`circuit_literature` panel A: right E/F columns not mirrored about the
+midline, PF-box connections that look unattached, PF interneurons that look
+self-exciting, and sensory-feedback lines that look unanchored. The full
+defect list and the 7-step SAFE implementation/verification sequence are at
+the END of `CHATGPT_REPORT.md` (section "2026-09-17 — Bilateral architecture
+visual-audit stop point"). Render a temporary review PNG first; do NOT touch
+the promoted figure or its dissertation copies until the review render
+passes all four annotated regions.
+
+**Changed-design facts every future edit must respect (Ben-corrected
+2026-09-17):**
+- Commissurals are FOUR directional cells: RG-E_l -> V3_l-to-r -> InE_r
+  (both synapses excitatory, mirrored r-to-l) and RG-F_l -> C1_l-to-r -|
+  RG-F_r (mirrored). Never collapse them into one shared V3 or C1 — the
+  compiled network carries CIN_E_r/l and CIN_F_r/l. The representative
+  figure builds `rg_weak_exc=0`: no direct ipsilateral RG-E<->RG-F
+  excitation.
+- The E1/E2/F1/F2 PF cells are PHASE CHANNELS (effective temporal rank ~2;
+  corr(E1,E2)=0.998), NOT validated synergies. NMF synergies are labeled
+  S1–S6 only. Six is the smallest shared bilateral PF count clearing 90%
+  held-out VAF (0.924 R / 0.912 L) on the converted-model activations — an
+  engineering target for this ~1.6-cycle record, not a biology claim; one
+  right sixth component is spatially unstable.
+- FSA backsolve (`fsa_backsolve.py` -> `fsa_results\`): the
+  excitatory-only dynamic PF->MN fit leaves ~16–17% of MN samples requiring
+  net negative current, so closure needs phase-specific inhibition, not
+  just membrane leak.
+- Activation target of record = `bsolve_out.npz['acts']` (converted-MuJoCo
+  ridge/NNLS from `bsolve_ik.py`). The surviving
+  `ResultsBSolve\zz_bsolve_*_activation.sto` is RULED OUT (RMSE 0.39, corr
+  −0.01). The `normal.mot` OpenSim SO experiment is QUARANTINED in
+  `ResultsNormalSO\` (pelvis residuals carry ~739 N vertical — not a
+  walking target; never use it to tune PF counts or synapses).
+- Ankle dorsiflexors are NOT underpowered: summed DF torque 1.023× OpenSim
+  in the IK gait range (`compare_ankle_df.py`, `ankle_df_results\`). Any DF
+  deficit is recruitment timing/magnitude, co-contraction, or
+  force-velocity — NOT Fmax or static moment arms. Use equality-aware FD
+  tendon moments; raw `actuator_moment` is exactly 0 for the converted
+  ankle (and knee) paths.
+- KINH is a conditional swing-phase knee-extensor inhibitory IN
+  (`f1_kneext_inh`, default 0 = absent). Always label it conditional; it is
+  not a V-class or literature-named population.
+- Figures: extensor = blue, flexor = vermillion/orange (literature
+  convention). `draw_literature_circuit.py` asserts every displayed solid
+  neural edge against a freshly compiled network; `draw_circuit.py`'s
+  compiled-edge contract is two-way (missing AND extra edge groups fail).
+
+**Env + tools:** on EB475WS4 run
+`C:\Users\Ben Bolen\.conda\envs\myo\python.exe` (py3.10.21, numpy 1.22.4,
+scipy 1.9.3, mujoco 2.3.7, SNS-Toolbox 1.5.2), cwd `Code\MuJoCo_SNS\spinal`.
+(`D:\Anaconda\envs\myo` is the easteregg2 twin — use it only there.) Gates
+that must stay green after ANY change: `_fix_check.py`, `_panels_check.py`,
+`audit_signs.py` (DYNAMIC sign audit), `_live_plant_audit.py`. Analysis
+chain: `bsolve_ik.py`, `fsa_backsolve.py`, `_fsa_rank_robustness.py`,
+`_pf_basis_audit.py`, `_synergy_count_audit.py`,
+`_activation_provenance_audit.py`, `_normal_so_audit.py`,
+`compare_ankle_df.py`, `gait_phase.py`, `plot_gait_joint_angles.py`,
+`_smoke_nap.py`. `runner.py` summaries now resolve channels by
+`NEURO_NAMES`, plot degrees, and restrict rhythm metrics to the 5--15 s walk
+window; `_figure_hindlimb_style.py` renders beside the target and replaces
+atomically (Windows preview locks).
+
+**Open after the figure repair:** (1) re-run curriculum stages 2–3 — their
+current files hold −100 no-countable-cycles sentinels (decide retain vs
+purge of those studies first; stage-1 winner 137.254 / trial 78 is valid);
+(2) the supported-ground figure and `opensim_overlay_gait_cycles.png` wait
+for a valid NaP stage-3 winner; (3) the six-synergy PF-layer decomposition
+(hip/knee/ankle × ext/flex half-centers, convergent drive for biarticular
+MN pools) is DESIGNED but not implemented — see the report's
+"Phase-normalized synergies, joint kinematics, and ankle capacity" section.
+
+**Standing model facts (unchanged — do not rediscover):** repairs live in
+`apply_harness()`: hip_flexion/hip_adduction hinge axes negated vs OpenSim;
+rect_fem rerouted over the vastii vas_med-P4 patella point;
+quad_fem/gem/peri pruned; 8 trunk-Fmax repairs to stock, verified live
+(ercspn 2500 N, intobl/extobl 900 N, ext_hal 162 N; 78/86 actuators within
+15% of stock, worst gluteal ~31–34% — the draft now says exactly that).
+**Do NOT weld the conditional pathpoints** (equality couplings +
+`boundmass` 0.1; welding froze moment arms). The sign audit must run
+DYNAMICALLY — static `actuator_moment` misses the coupler paths. MuJoCo
+muscle Fmax = `actuator_gainprm[:,2]`. Full detail: `spinal\DESIGN.md` top
+(2026-09-17 sections are authoritative) and the five 2026-09-17 sections of
+`CHATGPT_REPORT.md`.
 
 # ACTIVE WORK A — AnimatLab .aproj neural surgery (started 2026-09-09, CONTINUES at 8am PT session)
 
@@ -789,11 +854,16 @@ CURATION SPEC section is the detailed rulebook) and the WORKFLOW rows of
   table — task5 coverage overlaps the older batch queue in ways not yet fully mapped.
 - The original 383-record rest-import campaign: batches 1–5 DONE (50 papers) +
   independent audit PASS; Ben's 2026-09-15 rulings applied (see the curation_log
-  RULINGS row). Batch 6 = queue CSV rows 41–50 of `airtable_rest_import_clean.csv` —
-  but CHECK task5 coverage of those rows first.
-- PDFs: 232/456 DOI-bearing records had attachments at last count (2026-09-15);
-  `author_fix\remaining_no_pdf.csv` lists the 224 without (doi,state columns).
-  Zotero-local PDF inventory: `pdf_inventory.csv`; staged copies live at
+  RULINGS row). Batches 6–7 DONE (2026-09-18/20, 16 more papers, 4 logged no-text
+  chapters) — **batch 8 = queue CSV rows 62–70** (grounding already fetched in
+  `batch6\ground_*.txt`; running total 66/383; audit due after batch 10).
+- PDFs: 318/886 DOI-bearing records carry attachments (2026-09-20). THE definitive
+  no-PDF hunt list is `author_fix\remaining_no_pdf.csv` (581 records, columns
+  doi/record_id/title/hunt_status; rebuilt by `rebuild_no_pdf_list.py`; every DOI
+  in the corpus has been hunted once — 488 have no OA copy anywhere, 88 have
+  candidate URLs that fail %PDF verification). The Sept-15 intermediate lists were
+  deleted 2026-09-20. Zotero-local PDF inventory: `pdf_inventory.csv` +
+  `author_fix\pdfs_from_zotero.csv`; staged copies live at
   `D:\sadb_pdf_staging` (OUTSIDE the repo on purpose — never move them in).
 - Author normalization DONE table-wide (2026-09-15): Primary Author = ONE surname
   (no "et al."), remaining surnames in the new `Secondary Authors` multi-select.

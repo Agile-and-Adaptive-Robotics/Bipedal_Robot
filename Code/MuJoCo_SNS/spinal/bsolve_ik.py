@@ -1,4 +1,4 @@
-"""IK trajectory -> MuJoCo: muscle validation vs OpenSim + NNLS back-solve.
+﻿"""IK trajectory -> MuJoCo: muscle validation vs OpenSim + NNLS back-solve.
 
 Implements Ben's staged plan (DESIGN.md 2026-09-11 "NEXT"):
 OpenSim IK walking kinematics -> map onto the converted MJCF joints ->
@@ -35,6 +35,7 @@ Usage: python bsolve_ik.py [--skip-osim] [--subsample N]
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -399,6 +400,25 @@ def main(argv):
     print(f"IK: {T} frames {t_ik[0]:.2f}..{t_ik[-1]:.2f} s "
           f"({t_ik[1] - t_ik[0]:.4f} s step); GRF {len(t_g)} rows")
 
+    # ------------------------------------------------ pelvis re-target
+    # (2026-09-18, Ben-approved cheap fix for the anthropometry mismatch:
+    # audit_ik_ground.py showed the scaled subject's IK replay leaves the
+    # stance foot ~8.7 cm above our MJCF floor because the subject's legs
+    # are ~8% longer than stock gait2392. Keep the measured JOINT angles,
+    # re-solve only the pelvis height per frame so the GRF-loaded foot
+    # sits on the model floor - closed-form dty from _retarget_pelvis.py,
+    # which also validates the correction. BSOLVE_RETARGET=1 enables it;
+    # unset = the historical unscaled-replay behavior.)
+    out_name = os.environ.get("BSOLVE_OUT", "bsolve_out.npz")
+    if os.environ.get("BSOLVE_RETARGET", "") not in ("", "0"):
+        r = np.load(HERE / "bsolve_retarget.npz", allow_pickle=True)
+        dty = np.asarray(r["retarget_dty"], float)
+        assert len(dty) == T, "retarget dty/frame mismatch"
+        ik["pelvis_ty"] = ik["pelvis_ty"] + dty
+        print(f"pelvis re-target ACTIVE: dty mean {dty.mean():+.4f} m "
+              f"[{dty.min():+.4f}, {dty.max():+.4f}]; output -> {out_name}",
+              flush=True)
+
     model, data = build_air_model(id_mode=True)
     acts = act_names_of(model)
     Fmax = np.maximum(model.actuator_gainprm[:, 2], 5.0)
@@ -454,6 +474,20 @@ def main(argv):
     signs.update(zip(FRONTAL, best_combo))
     print(f"frontal sign sweep: best {dict(zip(FRONTAL, best_combo))} "
           f"(frontal residual {best_cost:.1f} N*m)", flush=True)
+    if os.environ.get("BSOLVE_PIN_SIGNS", "") not in ("", "0"):
+        # 2026-09-18: at the retargeted (lower) pelvis the muscle-length
+        # signatures vs the SCALED-subject reference are weak (~0.62) and
+        # the sagittal search flipped hip_flexion/tilt into a MIRRORED
+        # motion (corr -1.00 vs the validated replay). The original sign
+        # set is the one validated by the dynamic sign audits + moment-arm
+        # comparisons - pin it.
+        ref = json.loads(str(np.load(
+            HERE / "bsolve_out_unscaled_backup.npz",
+            allow_pickle=True)["signs"]))
+        signs.update(ref)
+        print(f"signs PINNED to validated original set "
+              f"(frontal residual would have been {best_cost:.1f})",
+              flush=True)
 
     # ----------------------------------------------- full MuJoCo kinematics
     L_mj = np.zeros((T, model.nu))
@@ -569,7 +603,7 @@ def main(argv):
                     [a_sol[keep][bins == b][:, lm].mean() for b in range(20)])
 
     np.savez_compressed(
-        HERE / "bsolve_out.npz",
+        HERE / out_name,
         t=t_ik, qpos=qd, signs=json.dumps(signs),
         acts=a_sol, act_names=np.array(acts), Fmax=Fmax,
         tau_fit=tau_fit, fit_joints=np.array(FIT_JOINTS),
@@ -709,10 +743,19 @@ def compare_and_plot(L_mj, L_os, a_sol, acts_os, acts, Fmax, t_ik,
             ax.plot(t_ik[:T], L_os["data"][:T, col_os[kn]], "--", label="OpenSim")
         ax.set_title(kn, fontsize=9)
         ax.grid(alpha=0.3)
+    def _safe_save(fig, name):
+        # 2026-09-18: the pinned rerun died at the LAST line of main on a
+        # transient Windows Errno 22 opening an existing png - figures are
+        # decorations, the npz is the product. Never let them kill a run.
+        try:
+            fig.savefig(HERE / name, dpi=130)
+        except OSError as _e:
+            print(f"figure save skipped (Windows lock): {_e}")
+
     axes[0, 0].legend(fontsize=7)
     fig.suptitle("muscle-tendon length along subject01 IK: MuJoCo vs OpenSim")
     fig.tight_layout()
-    fig.savefig(HERE / "bsolve_lengths.png", dpi=130)
+    _safe_save(fig, "bsolve_lengths.png")
     plt.close(fig)
 
     # activations: NNLS vs SO + group profiles
@@ -729,7 +772,7 @@ def compare_and_plot(L_mj, L_os, a_sol, acts_os, acts, Fmax, t_ik,
     axes[0, 0].legend(fontsize=7)
     fig.suptitle("back-solved activations: per-frame NNLS vs OpenSim SO")
     fig.tight_layout()
-    fig.savefig(HERE / "bsolve_activations.png", dpi=130)
+    _safe_save(fig, "bsolve_activations.png")
     plt.close(fig)
 
     fig, ax = plt.subplots(1, 2, figsize=(13, 4.5))
@@ -745,7 +788,7 @@ def compare_and_plot(L_mj, L_os, a_sol, acts_os, acts, Fmax, t_ik,
     for a in ax:
         a.grid(alpha=0.3)
     fig.tight_layout()
-    fig.savefig(HERE / "bsolve_groups.png", dpi=130)
+    _safe_save(fig, "bsolve_groups.png")
     plt.close(fig)
 
     (HERE / "bsolve_report.txt").write_text("\n".join(report),
@@ -755,3 +798,4 @@ def compare_and_plot(L_mj, L_os, a_sol, acts_os, acts, Fmax, t_ik,
 
 if __name__ == "__main__":
     main(sys.argv[1:])
+
