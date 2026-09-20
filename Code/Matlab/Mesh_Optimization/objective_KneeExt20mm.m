@@ -34,7 +34,9 @@ function J = objective_KneeExt20mm(x, ctx)
 
     %% Torque requirement
 
-    torqueDeficit = max(0, humanAbs(:) - robotAbs(:));
+    requiredTorque = (1 + ctx.requiredTorqueMargin)*humanAbs(:);
+
+    torqueDeficit = max(0, requiredTorque(:) - robotAbs(:));
     shortfallFraction = torqueDeficit ./ ctx.torqueScale;
 
     Jworst = max(shortfallFraction);

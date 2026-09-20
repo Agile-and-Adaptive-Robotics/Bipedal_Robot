@@ -61,8 +61,9 @@ elseif strcmp(p1, '2')
     xi1lock = sscanf(getenv('EXTX3_XI1'), '%g');
     xi2lock = sscanf(getenv('EXTX3_XI2'), '%g');
     lb = [-0.02 * 100, log10(xi1lock), log10(xi2lock), 0];
-    ub = [ 0.00 * 100, log10(xi1lock), log10(xi2lock), 1];
-    fprintf('PASS 2 (locked): Xi1=%.3g Xi2=%.3g, Xi0 [-2 0] cm\n', xi1lock, xi2lock);
+    ub = [ 0.005 * 100, log10(xi1lock), log10(xi2lock), 1];   % Xi0 ub +0.5 cm (Ben 2026-09-20)
+    % ub = [ 0.00 * 100, log10(xi1lock), log10(xi2lock), 1];
+    fprintf('PASS 2 (locked): Xi1=%.3g Xi2=%.3g, Xi0 [-2 0.5] cm\n', xi1lock, xi2lock);
 else
     lb = [-0.02 * 100, log10(g(2)), log10(g(3)), 0];   % [cm, log10(N/m), log10(N/m), unitless]
     ub = [ 0.00 * 100, log10(g(2)), log10(g(3)), 1];
@@ -203,7 +204,7 @@ for ii = 1:N
     pass8 = all( f_all(8,:) <= baselineScores(8,:) );
     pass9 = all( f_all(9,:) <= baselineScores(9,:) );
 
-    keep(ii) = pass1 && pass2 && pass5 && pass6;
+    keep(ii) = pass1 && pass2 && pass5 && pass6 && pass8;
 end
 
 % keep only the rows that passed all desired checks
@@ -213,7 +214,7 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 11;
+pick = 1;
 sol_actual = filtered_results(pick, xCols);
 [f, bpa] = minimizeExtX3(sol_actual(1), sol_actual(2), sol_actual(3), sol_actual(4));  % [f: 4x3], [bpa: full struct]
 
