@@ -8,7 +8,7 @@ clear; clc; close all
 baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
-load minimizeExtPin10_results_20260819_2transforms_Z2.mat filtered_results xCols
+load GitHub\Bipedal_Robot\Testing_Data\2022_02_Festo\minimizeExt10mmX3_results_20260916_pick107_all_h3479.mat filtered_results xCols
 pick = 1;
 sol_actual = filtered_results(pick, xCols);
 sol_actual1 = sol_actual;
@@ -17,8 +17,8 @@ k1 = sol_actual1(1);
 k2 = sol_actual1(2);
 k3 = sol_actual1(3);
 k4 = sol_actual1(4);
-% k4 = 0.15;
-[f, bpa] = minimizeExt(k1, k2, k3, k4, 1);   % Use solution from Flexor bracket, and compare results
+% k4 = 0.2;
+[f, bpa] = minimizeExt(k1, k2, k3, k4, 1);   % Use solution from Extensor tests on the pinned knee, and compare results
 % clear sol_actual
 baselineScores1 = f;  % RMSE, FVU, Max Residual
 fprintf('Baseline using previous opt: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores1(:,1)),mean(baselineScores1(:,2)),mean(baselineScores1(:,3)));

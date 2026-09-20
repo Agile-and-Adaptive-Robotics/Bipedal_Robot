@@ -110,19 +110,40 @@ on the shelf (R-loaded asymmetry); stepping is irregular without balance —
 expected, no posture/balance layer exists. Contact gain C=20 and the
 "Afferent HC Excite" SynAmp are the tuning knobs for stance reinforcement.
 
-## REMAINING (Ben's task list item 5) — RG/PF/MN subnetwork pages
+## SESSION 2026-09-18 (EB475WS4) — verification + item-5 staging
 
-Structure discovered: `<NervousSystem>` holds ONE `<Node>` = NeuralModule
-("Neural Subsystem") containing SynapseTypes + flat neuron `<Node>`s + Links +
-one `<DiagramXml>` CDATA page. The Biped (`Biped_2xCPG_wSubs.aproj`) has 15
-pages: each page belongs to a child subsystem Node carrying its OWN `<Links>`
-+ `<DiagramXml>` (page names LH_RG, LH_HipZ, LH_K&A Pattern Formation, …MH
-Motoneuron, etc.). Recipe: create 3 subsystem child Nodes ("RG Layer", "PF
-Layer", "MN Layer"), partition the flat neuron Nodes + Links into them, give
-each a page CDATA built from the existing drawing entries (keep node
-Left/Top; rebuild link entries fresh with template Org/Dst — stale endpoints
-are tolerated). GUI-check after. Neurons are NOT nested in subsystems in the
-Biped (they stay in one flat `<Nodes>`); subsystems own links + pages.
+- **Build re-verified headless today**: `_Ground_Standalone.asim` runs clean;
+  flexor HCs cross −55 mV 11×(L, P=0.483 s) / 12×(R, P=0.417 s), extensor HCs
+  tonic (1 crossing each) — the Rybak regime, consistent with the 09-16 results.
+  NOTE: count FLEXOR crossings for rhythm health; naive burst counters that
+  filter bursts <0.05 s or miss tonic cells report false zeros. Trailing
+  zero-fill chart rows must be popped before analysis.
+- `_Standalone_modern.asim` (air) also runs; its cells swing −62..−52 mV
+  (weaker-looking in mV than ground but same regime).
+- **Item 5 (subnetwork pages) STAGED, not executed** — decided against surgery
+  with limited session context (this is the pure-representation task; wiring
+  untouched). Discovery so far:
+  - Biped: 15 × `AnimatGUI.DataObjects.Behavior.Nodes.Subsystem` nodes.
+  - First Subsystem ("Neural Subsystem", the NeuralModule) carries a nested
+    `<Nodes>` right after its drawing props — subsystems are NESTED, and the
+    earlier "neurons stay in one flat `<Nodes>`" assumption needs re-checking
+    against a correct nesting-aware parse.
+  - **Parser trap**: `</Node>` is a substring of `</Nodes>` — any nesting walk
+    using index("</Node>") miscounts (this produced a truncated 33 KB "block"
+    dump). Match with `/<\/Node>/` vs `/<\/Nodes>/` regexes (word boundary via
+    trailing `>`), never index().
+  - Template captured: Subsystem header = AnimatGUI.dll + Nodes.Subsystem +
+    full drawing-prop block + `<Text>NAME</Text>` + InLinks/OutLinks + child
+    `<Nodes>`; per-page `<Links>` + `<DiagramXml>` live in each subsystem.
+- AnimatLab literature: Cofer et al. 2010 "AnimatLab: a 3D graphics
+  environment for neuromechanical simulations" (the original) and Szczecinski
+  et al. 2017 "Design process and tools for dynamic neuromechanical models and
+  robot controllers" (AnimatLab 2 + functional subnetworks). Zotero local API
+  returned nothing (Zotero not running at query time).
+- Skill updated (live .agents copy) with: CDATA-per-page validation, Org/Dst
+  index convention, SynAmp-vs-G, zero-fill analysis trap, tonic-HC counting,
+  "Error"-titled WinForms windows, s///e interpolation trap, missing-closer
+  repair recipe. Repo sync pending (repo path lacks animatlab/ on this box).
 
 Also open: II + contact-neuron columns are not in the .aform charts (they are
 not charted; add clones of an RG column if wanted); the 4 stale crossed-link

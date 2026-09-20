@@ -21,7 +21,7 @@ end
 optsG = optimoptions('surrogateopt', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 7000, ...
+    'MaxFunctionEvaluations', 3000, ...
     'MinSampleDistance', 0.001, ...
     'ConstraintTolerance', 1e-6);
 
@@ -55,6 +55,26 @@ end
 predBest = predictKneeExt20mm(xBest, ctx);
 [cBest, ~] = nonlconExt20mm(xBest, ctx);
 relativeContractionBest = predBest.bpa.Contraction(:)/predBest.KMAX;
+
+% Dated result capture into Results; does not overwrite prior results.
+% Only a full Opt_run_Ext saves (optsP exists only when the optimizer
+% stages ran in this workspace); loading a result mat and running the
+% display section must not mint a new dated mat from an old design.
+% Sits before the (currently commented) adjusted-seed section; move it
+% below that section if it is ever re-enabled, so the mat captures the
+% seed-refined xBest instead.
+if exist('optsP', 'var')
+    stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
+    resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
+    resultFile = fullfile(resDir, sprintf('Vas_Pam_20mm_Result_%s.mat', stamp));
+    XiUsed = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
+    % ctx makes the mat self-contained for display: Knee_Extensor_20mm can
+    % load it instead of rebuilding (it still guards Xi against XiUsed).
+    save(resultFile, ...
+        'xBest', 'fBest', 'exitflagG', 'outputG', ...
+        'predBest', 'cBest', 'XiUsed', 'ctx')
+    fprintf('Saved %s\n', resultFile)
+end
 
 % %% Run with adjusted seed
 % % Section commented out if unused.
