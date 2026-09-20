@@ -807,9 +807,22 @@ Loaded automatically at session start. Keep it current; keep it lean.
   batch 6 = queue CSV rows 41–50) with Ben's 09-15 rulings applied; the Sept-15/16 "task5"
   auto-curation pass created ~390 more records and flagged 108 as insufficient
   (`task5_progress\task5_insufficient.json` — manual curation needed); PDFs attached to
-  232/456 DOI-bearing records (224 remain, `author_fix\remaining_no_pdf.csv`); author
+  PDFs attached to 318/886 DOI-bearing records; THE definitive no-PDF hunt list =
+  `author_fix\remaining_no_pdf.csv` (581 records, doi/record_id/title/hunt_status;
+  rebuilt by `rebuild_no_pdf_list.py`; the Sept-15 intermediate lists were deleted
+  2026-09-20); author
   normalization done (Primary Author = one surname + Secondary Authors multi-select);
-  VOSviewer citation map built (`SADb_audit\vosviewer\`).** SADb work is DELEGATED TO
+  VOSviewer citation map built (`SADb_audit\vosviewer\`; full-corpus rebuilder =
+  `vos_build2.py`). **2026-09-18: batch 6 DONE (8 curated + echo-verified, 2 Elsevier
+  chapters logged no-text pending Ben's library pass; twins Fujiki 2018 / Ekeberg 2004
+  Models + Côté 2018 / Prochazka and Ellaway 2012 Review) — 451/943 records have notes;
+  task5 did NOT cover the rest-import queue (`reconcile_queue.py` proves it); next =
+  batch 7 = rows 52–60 (pre-grounded in `batch6\ground_*.txt`). Airtable-independent
+  stack: `export_corpus.py` → `export\sadb_export.{json,csv}` (943 records, Excel-ready),
+  `app\build_app.py` → `app\sadb_app.html` single-file OFFLINE explorer (Table
+  search/sort/filter, Pivot with drill-through, bubble map; Airtable GET 422s on a
+  fields[] filter because two fields share the name "Models copy" — fetch full records).**
+  SADb work is DELEGATED TO
   CHATGPT during GLM peak hours (Mon–Fri 23:00–03:00 Pacific) — its brief is the SADb
   section of `CHATGPT_HANDOFF.md`; keys live in `D:\Github\api_credentials_local.txt`
   (rotation to scoped keys pending; Zotero key is READ-ONLY per Ben).

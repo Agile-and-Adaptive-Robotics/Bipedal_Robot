@@ -40,7 +40,9 @@ Architecture (one instance per side, plus shared descending cells):
 """
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
+from pathlib import Path
 
 import numpy as np
 
@@ -153,6 +155,37 @@ E_REV_INH = -E_HI                # mV, inhibitory reversal
 
 PF_PHASES = ("E1", "E2", "F1", "F2")
 
+# ---- 2026-09-18 joint-layer PF (G["joint_pf"] > 0; default 0 = the
+# phase-cell PF is built instead).  Three joint/functional half-center
+# pairs replace the four phase-window cells; PF->MN weights come from
+# the structured T1 fit (fsa_jointlayers.py -> joint_pf_weights.json,
+# held-out centered VAF 0.747/0.713 vs 0.934/0.925 unconstrained).
+JPF_HCS = ("HIP-E", "HIP-F", "KNEE-E", "KNEE-F", "ANK-E", "ANK-F")
+JPF_GROUP2HC = {"hip_ext": ("HIP-E",), "hip_abd": ("HIP-E",),
+                "hip_add": ("HIP-E", "HIP-F"), "hip_flex": ("HIP-F",),
+                "knee_ext": ("KNEE-E",), "knee_flex": ("KNEE-F",),
+                "ankle_pf": ("ANK-E",), "ankle_df": ("ANK-F",)}
+JPF_CROSS = {"rect_fem": ("HIP-F",), "semimem": ("HIP-E",),
+             "semiten": ("HIP-E",), "bifemsh": ("HIP-E",),
+             "gas_med": ("KNEE-F",), "gas_lat": ("KNEE-F",),
+             "grac": ("HIP-F",), "sart": ("KNEE-F",)}
+_JPF_W = None
+
+
+def _jpf_weights():
+    """Muscle-level PF weights per joint-layer HC (fitted where the SO
+    had signal, anatomical 1.0 fallback otherwise)."""
+    global _JPF_W
+    if _JPF_W is None:
+        try:
+            data = json.loads(
+                (Path(__file__).parent / "joint_pf_weights.json")
+                .read_text(encoding="utf-8"))
+            _JPF_W = data["w"]
+        except (FileNotFoundError, KeyError, ValueError):
+            _JPF_W = {}
+    return _JPF_W
+
 # functional group -> antagonist group(s)
 ANTAGONIST = {
     "hip_ext": ("hip_flex",), "hip_flex": ("hip_ext",),
@@ -231,6 +264,10 @@ class SpinalNetwork:
         self.ia_in = bool(G["ia_in"] > 0.0)
         self.aff_loops = bool(G["aff_e_rg"] > 0.0 or G["aff_f_rg"] > 0.0
                               or G["aff_e_pf"] > 0.0 or G["aff_f_pf"] > 0.0)
+        # 2026-09-18 joint-layer PF (T1/T3 experiment; 0 = phase cells)
+        self.joint_pf = bool(G.get("joint_pf", 0.0) > 0.0)
+        if self.joint_pf:
+            _jpf_weights()
 
         # ---- descending / balance cells (shared, one each) ----
         for name, tau in (("DRIVE", TAU["descend"]), ("POSTURE", TAU["descend"]),
@@ -421,6 +458,9 @@ class SpinalNetwork:
             n.add_connection(_syn(G["aff_f_rg"], exc=True), aff_f, rg_f)
 
     def _build_pf(self, n: Network, side: str):
+        if self.joint_pf:
+            self._build_pf_layers(n, side)
+            return
         rg_of = {"E1": f"RG_E_{side}", "E2": f"RG_E_{side}",
                  "F1": f"RG_F_{side}", "F2": f"RG_F_{side}"}
         for phase in PF_PHASES:
@@ -479,6 +519,50 @@ class SpinalNetwork:
                 n.add_connection(_syn(G["aff_f_pf"], exc=True),
                                  aff_f, f"PF_{ph}_{side}")
 
+    def _build_pf_layers(self, n: Network, side: str):
+        """Joint-layer PF (G["joint_pf"] > 0, 2026-09-18): three
+        joint/functional half-center pairs (HIP/KNEE/ANK x E/F) instead
+        of four phase windows.  Same RG drive, IN lamination, and
+        central-pathway attachments as the phase cells; MN weights come
+        from the structured T1 fit (joint_pf_weights.json)."""
+        for hc in JPF_HCS:
+            tau_m, _ = PF_SHAPE["E1" if hc.endswith("E") else "F1"]
+            pf = f"PF_{hc}_{side}"
+            self._add(pf, TAU["pf"] * tau_m, n)
+            n.add_connection(_syn(G["rg_to_pf"], exc=True),
+                             f"RG_{'E' if hc.endswith('E') else 'F'}_{side}",
+                             pf)
+        pf_in_e = f"PF_IN_E_{side}"
+        pf_in_f = f"PF_IN_F_{side}"
+        self._add(pf_in_e, TAU["pf"], n)
+        self._add(pf_in_f, TAU["pf"], n)
+        for hc in JPF_HCS:
+            n.add_connection(_syn(G["pf_recip_inh"], exc=True),
+                             f"PF_{hc}_{side}",
+                             pf_in_e if hc.endswith("E") else pf_in_f)
+        for hc in JPF_HCS:
+            n.add_connection(_syn(G["pf_recip_inh"], exc=False),
+                             pf_in_e if hc.endswith("F")
+                             else pf_in_f, f"PF_{hc}_{side}")
+        # mechanosensors + afferent loops ride the same E/F families
+        if (self.stance_fb or self.aff_loops) and G["ib_e_central"] > 0.0:
+            for src in (f"HEEL_{side}", f"TOE_{side}"):
+                for hc in ("HIP-E", "KNEE-E", "ANK-E"):
+                    n.add_connection(_syn(G["ib_e_central"], exc=True),
+                                     src, f"PF_{hc}_{side}")
+                n.add_connection(_syn(G["ib_e_central"], exc=True),
+                                 src, f"InE_{side}")
+        if self.aff_loops:
+            aff_e = f"AFF_E_{side}"
+            aff_f = f"AFF_F_{side}"
+            for hc in JPF_HCS:
+                if hc.endswith("E"):
+                    n.add_connection(_syn(G["aff_e_pf"], exc=True),
+                                     aff_e, f"PF_{hc}_{side}")
+                else:
+                    n.add_connection(_syn(G["aff_f_pf"], exc=True),
+                                     aff_f, f"PF_{hc}_{side}")
+
     def _add_muscle_neurons(self, n: Network, act: str, mi: MuscleInfo):
         mn, ia, ii, ib = (f"MN_{act}", f"Ia_{act}", f"II_{act}", f"Ib_{act}")
         self.mn_names[act] = mn
@@ -502,13 +586,30 @@ class SpinalNetwork:
         mn, ia, ii, ib = (f"MN_{act}", f"Ia_{act}", f"II_{act}", f"Ib_{act}")
 
         # ---- PF -> MN (per phase groups covering this muscle) + POSTURE ----
-        for phase in PF_PHASES:
-            w = _group_weight(mi, W_PF_MN[phase])
-            if w > 0.0:
-                for side in self.sides:
-                    if mi.side == side:
-                        n.add_connection(_syn(G["pf_to_mn"] * w, exc=True),
-                                         f"PF_{phase}_{side}", mn)
+        if self.joint_pf:
+            # 2026-09-18: joint-layer routing; weight = fitted (T1) or
+            # anatomical-mapping 1.0 fallback
+            base = act.rsplit("_", 1)[0]
+            jw = _jpf_weights()
+            grp_hcs = JPF_GROUP2HC.get(mi.groups[0], ())
+            cross = JPF_CROSS.get(base, ())
+            for hc in JPF_HCS:
+                w = jw.get(hc, {}).get(base)
+                if w is None:
+                    w = 1.0 if (hc in grp_hcs or hc in cross) else 0.0
+                if w > 0.0:
+                    n.add_connection(
+                        _syn(G["pf_to_mn"] * w, exc=True),
+                        f"PF_{hc}_{mi.side}", mn)
+        else:
+            for phase in PF_PHASES:
+                w = _group_weight(mi, W_PF_MN[phase])
+                if w > 0.0:
+                    for side in self.sides:
+                        if mi.side == side:
+                            n.add_connection(
+                                _syn(G["pf_to_mn"] * w, exc=True),
+                                f"PF_{phase}_{side}", mn)
         w_post = _group_weight(mi, W_POSTURE, POSTURE_OVERRIDE)
         if w_post > 0.0:
             n.add_connection(_syn(G["posture_to_mn"] * w_post, exc=True),

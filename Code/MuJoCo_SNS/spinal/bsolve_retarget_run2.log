@@ -1,0 +1,68 @@
+IK: 121 frames 0.50..2.50 s (0.0170 s step); GRF 1501 rows
+pelvis re-target ACTIVE: dty mean -0.0845 m [-0.1060, -0.0632]; output -> bsolve_out_retarget.npz
+ID model: 82 follower armatures zeroed, equalities disabled
+reusing existing ResultsBSolve outputs
+OpenSim reference: lengths True, SO True, moment arms 23 joints
+  sign pelvis_tilt            -> +1 (err 0.9356 vs 0.9356)
+  sign pelvis_list            -> -1 (err 0.9356 vs 0.9356)
+  sign pelvis_rotation        -> +1 (err 0.9356 vs 0.9356)
+  sign hip_flexion_r          -> -1 (err 0.9356 vs 0.8114)
+  sign hip_adduction_r        -> -1 (err 0.8114 vs 0.7966)
+  sign hip_rotation_r         -> +1 (err 0.7966 vs 0.8166)
+  sign knee_angle_r           -> -1 (err 0.7966 vs 0.7604)
+  sign ankle_angle_r          -> +1 (err 0.7604 vs 0.7784)
+  sign hip_flexion_l          -> -1 (err 0.7604 vs 0.7187)
+  sign hip_adduction_l        -> -1 (err 0.7187 vs 0.6292)
+  sign hip_rotation_l         -> +1 (err 0.6292 vs 0.7219)
+  sign knee_angle_l           -> +1 (err 0.6292 vs 0.6994)
+  sign ankle_angle_l          -> +1 (err 0.6292 vs 0.6661)
+  sign lumbar_extension       -> +1 (err 0.6292 vs 0.7132)
+  sign lumbar_bending         -> +1 (err 0.6292 vs 0.7132)
+  sign lumbar_rotation        -> +1 (err 0.6292 vs 0.6634)
+  sign pelvis_tilt            -> -1 (err 0.6292 vs 0.6292)
+  sign pelvis_list            -> -1 (err 0.6292 vs 0.6292)
+  sign pelvis_rotation        -> +1 (err 0.6292 vs 0.6292)
+  sign hip_flexion_r          -> -1 (err 0.7658 vs 0.6292)
+  sign hip_adduction_r        -> -1 (err 0.7114 vs 0.6292)
+  sign hip_rotation_r         -> +1 (err 0.6292 vs 0.6747)
+  sign knee_angle_r           -> +1 (err 0.6229 vs 0.6292)
+  sign ankle_angle_r          -> +1 (err 0.6229 vs 0.7064)
+  sign hip_flexion_l          -> -1 (err 0.7945 vs 0.6229)
+  sign hip_adduction_l        -> -1 (err 0.7207 vs 0.6229)
+  sign hip_rotation_l         -> +1 (err 0.6229 vs 0.7238)
+  sign knee_angle_l           -> +1 (err 0.6229 vs 0.6781)
+  sign ankle_angle_l          -> +1 (err 0.6229 vs 0.6292)
+  sign lumbar_extension       -> +1 (err 0.6229 vs 0.6854)
+  sign lumbar_bending         -> +1 (err 0.6229 vs 0.6854)
+sign search done: median normalized length err 0.6229
+GRF vertical peaks: right 803 N, left 810 N
+frontal sign sweep: best {'hip_adduction_r': 1.0, 'hip_adduction_l': 1.0, 'subtalar_angle_r': 1.0, 'subtalar_angle_l': -1.0, 'pelvis_list': -1.0, 'hip_rotation_r': -1.0, 'hip_rotation_l': -1.0} (frontal residual 29.7 N*m)
+signs PINNED to validated original set (frontal residual would have been 29.7)
+back-solve: mean residual 0.328, entries a>1: 0, act range [0.00, 1.00]
+ID torque medians (N*m): hip_flexion_r=41.7, hip_adduction_r=19.0, hip_rotation_r=8.4, knee_angle_r=73.3, ankle_angle_r=138.6, subtalar_angle_r=21.1, mtp_angle_r=0.1, lumbar_extension=71.8, lumbar_bending=59.5, lumbar_rotation=21.8
+GRF vertical peaks: right 803 N, left 810 N
+gait: right-stance fraction 0.70, left 0.53, 2 right HS onsets at [0.62 1.85]
+cycle period 1.233+-0.000 s (0.81 Hz)
+saved bsolve_out.npz
+Traceback (most recent call last):
+  File "D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\bsolve_ik.py", line 791, in <module>
+    main(sys.argv[1:])
+  File "D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\bsolve_ik.py", line 626, in main
+    compare_and_plot(L_mj, L_os, a_sol, acts_os, acts, Fmax,
+  File "D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\bsolve_ik.py", line 782, in compare_and_plot
+    fig.savefig(HERE / "bsolve_groups.png", dpi=130)
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\matplotlib\figure.py", line 3378, in savefig
+    self.canvas.print_figure(fname, **kwargs)
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\matplotlib\backend_bases.py", line 2366, in print_figure
+    result = print_method(
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\matplotlib\backend_bases.py", line 2232, in <lambda>
+    print_method = functools.wraps(meth)(lambda *args, **kwargs: meth(
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\matplotlib\backends\backend_agg.py", line 509, in print_png
+    self._print_pil(filename_or_obj, "png", pil_kwargs, metadata)
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\matplotlib\backends\backend_agg.py", line 458, in _print_pil
+    mpl.image.imsave(
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\matplotlib\image.py", line 1689, in imsave
+    image.save(fname, **pil_kwargs)
+  File "C:\Users\Ben Bolen\.conda\envs\myo\lib\site-packages\PIL\Image.py", line 2706, in save
+    fp = builtins.open(filename, "w+b")
+OSError: [Errno 22] Invalid argument: 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\bsolve_groups.png'

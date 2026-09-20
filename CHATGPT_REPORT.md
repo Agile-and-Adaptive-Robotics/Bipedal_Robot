@@ -1,8 +1,11 @@
 # ChatGPT report for ZCode — 2026-09-08
 
-> Latest handoff: the **2026-09-09 dissertation neuromechanical figures** session
-> is appended below. The compilation status in this older section is historical
-> and does not verify the new local edits.
+> Latest handoff: the **2026-09-17 MuJoCo/SNS spinal-model sessions** — five appended
+> sections ending at the "Bilateral architecture visual-audit stop point", which carries
+> the four annotated figure defects and the 7-step safe implementation/verification
+> sequence the next session should execute. The 2026-09-08/09 Overleaf and
+> dissertation-figure sections below are historical; their compilation status does not
+> verify the newer local edits.
 
 ## Final handoff status
 

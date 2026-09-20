@@ -40,8 +40,14 @@ import mujoco
 from scipy.optimize import nnls
 
 HERE = Path(__file__).parent
-MODEL = Path(r"D:\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody"
-             r"\mjc\gait2392_simbody\gait2392_simbody_cvt3.xml")
+# AARL_MODEL env override (2026-09-18): point the whole chain at a new
+# converted model (e.g. the scaled subject01 MJCF once it lands) without
+# editing code. Unset = the proven default.
+import os as _os
+MODEL = Path(_os.environ.get(
+    "AARL_MODEL",
+    r"D:\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody"
+    r"\mjc\gait2392_simbody\gait2392_simbody_cvt3.xml"))
 
 KEY_ACTS = ("vas_lat_r", "med_gas_r", "soleus_r", "tib_ant_r", "psoas_r",
             "semimem_r", "glut_max2_r", "rect_fem_r", "sar_r", "grac_r",
@@ -704,9 +710,15 @@ def main(argv):
             _p.G["renshaw"] = float(best["renshaw"])
         if "ankle_post_walk_trim" in best:
             _p.G["ankle_post_walk_trim"] = float(best["ankle_post_walk_trim"])
-        for _k in ("heel_rge", "toe_rge", "ib_rge", "ia_in"):
+        for _k in ("heel_rge", "toe_rge", "ib_rge", "ia_in",
+                   "contact_onset"):  # JSON RULE (2026-09-20)
             if _k in best:
                 _p.G[_k] = float(best[_k])
+        if "joint_pf" in best:
+            # 2026-09-18 JSON RULE: joint-layer PF knob reproduces from
+            # the winner json (searched only by later studies; default
+            # studies leave it 0 = phase-cell PF)
+            _p.G["joint_pf"] = float(best["joint_pf"])
         _p.BAL["kx"] = best["kx"]
         walk_drive = float(best.get("drive", walk_drive))
         print(f"loaded {best_path.name} (drive={walk_drive:.2f}, "
@@ -716,6 +728,12 @@ def main(argv):
         a = args.pop(0)
         if a == "--drive":
             walk_drive = float(args.pop(0))
+        elif a == "--joint-pf":
+            # 2026-09-18: build the joint-layer PF (T1 fit) instead of
+            # the phase cells; value 0/absent = phase cells
+            import params as _p
+            _p.G["joint_pf"] = float(args.pop(0)) if args and \
+                args[0].replace(".", "").replace("-", "").isdigit() else 1.0
         elif a == "--harness":
             harness = float(args.pop(0)) if args and args[0].replace(".", "").isdigit() else 1500.0
         elif a == "--no-harness":
@@ -954,6 +972,13 @@ def main(argv):
                 elif nm == f"{reg}_l":
                     bodyid_region[b] = reg + "_l"
     con_force = np.zeros(6)  # contact force buffer (mj_contactForce)
+    # contact-onset kick state (G["contact_onset"] > 0 only; 2026-09-20):
+    # per-side decaying transient set at the loading/unloading EDGES of
+    # each foot's contact signal. All gating is runner-side - the network
+    # topology is untouched, gain 0 changes no numbers.
+    onset_prev_loaded = {"r": False, "l": False}
+    onset_kick = {"r": 0.0, "l": 0.0}
+    onset_decay = float(np.exp(-DT / 0.25))  # 0.25 s transient
     for k in range(nsteps):
         t = k * DT
         drive, posture = drive_posture(t, walk_drive)
@@ -1076,6 +1101,24 @@ def main(argv):
                 u[iport[f"HEEL_c_{s}"]] = G["heel_rge"] * heel_sig[s]
                 u[iport[f"TOE_c_{s}"]] = G["toe_rge"] * toe_sig[s]
                 u[iport[f"LOAD_c_{s}"]] = G["ib_rge"] * load_sig[s]
+            # contact-EVENT transients (G["contact_onset"] > 0 only):
+            # heel strike (load edge) = brief +kick on HEEL_c/TOE_c (E
+            # trigger, F suppression); toe-off (unload edge) = brief
+            # -kick (E release, F disinhibition). Replaces the tonic
+            # contact level as the rhythm carrier under load.
+            if G["contact_onset"] > 0.0:
+                for s in net.sides:
+                    loaded = load_sig[s] > 0.05
+                    if loaded and not onset_prev_loaded[s]:
+                        onset_kick[s] = 1.0
+                    elif not loaded and onset_prev_loaded[s]:
+                        onset_kick[s] = -1.0
+                    else:
+                        onset_kick[s] *= onset_decay
+                    onset_prev_loaded[s] = loaded
+                    kick = G["contact_onset"] * onset_kick[s]
+                    u[iport[f"HEEL_c_{s}"]] += kick
+                    u[iport[f"TOE_c_{s}"]] += kick
         # --- v11b semi-closed loops: per-side afferent relay currents ---
         if net.aff_loops:
             ga, gb = PHASE_RESET.get("stance_gate", (0.3, 0.7))
@@ -1186,12 +1229,30 @@ def main(argv):
         if scope is not None:
             scope.update(t, log_neuro[k], log_act[k, :8])
 
-    np.savez_compressed(HERE / "spinal_run.npz", t=log_t, act=log_act,
-                        q=np.degrees(log_q), qfull=log_qfull, com=log_com,
-                        neuro=log_neuro,
-                        key_acts=KEY_ACTS, key_joints=KEY_JOINTS,
-                        neuro_names=NEURO_NAMES,
-                        cfg=("ground" if not no_ground else "air"))
+    # atomic-replace save (2026-09-18): stage-3 trial 0 died with
+    # OSError 22 opening spinal_run.npz - transient Windows lock on the
+    # just-replaced file (same family as the preview-lock problem the
+    # figure renderer already solves). Write beside + os.replace retry.
+    import time as _time
+    _tmp = HERE / f"spinal_run.{_os.getpid()}.tmp.npz"
+    with open(_tmp, "wb") as _fh:
+        np.savez_compressed(_fh, t=log_t, act=log_act,
+                            q=np.degrees(log_q), qfull=log_qfull,
+                            com=log_com, neuro=log_neuro,
+                            key_acts=KEY_ACTS, key_joints=KEY_JOINTS,
+                            neuro_names=NEURO_NAMES,
+                            cfg=("ground" if not no_ground else "air"))
+    _err = None
+    for _ in range(20):
+        try:
+            _os.replace(_tmp, HERE / "spinal_run.npz")
+            _err = None
+            break
+        except OSError as _e:
+            _err = _e
+            _time.sleep(0.15)
+    if _err is not None:
+        raise _err
     if viewer is not None:
         viewer.close()
     if scope is not None:

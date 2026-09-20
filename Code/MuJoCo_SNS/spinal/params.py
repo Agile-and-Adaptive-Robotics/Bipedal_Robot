@@ -136,6 +136,16 @@ G = dict(
     heel_rge=0.0,            # heel contact -> RG-E exc / RG-F inh
     toe_rge=0.0,             # loaded toe -> RG-E exc
     ib_rge=0.0,              # stance-Ib group IN (LBIN) -> RG-E exc
+    # ---- 2026-09-20 contact-EVENT (onset/offset) shaping of the same
+    # heel/toe ports (runner-side; DESIGN.md stage-3 latch hypothesis:
+    # a tonic-driven half-center will not oscillate under load - the
+    # working reference RG is CONTACT-driven, AnimatLab lesson). 0 = off
+    # (bit-identical); > 0 adds a decaying transient to HEEL_c/TOE_c at
+    # the LOADING edge (heel strike, +) and UNLOADING edge (toe-off, -)
+    # of each foot: brief E trigger at strike, brief E release + F
+    # disinhibition at lift, instead of a tonic contact level that holds
+    # the half-center. Units: nA of peak port current per unit gain.
+    contact_onset=0.0,
     # P1b: IaIN population replaces the direct Ia->antagonist edge when
     # > 0 (Deng A6: Ia->IaIN->MN with PF_F1 phase gate; RC->IaIN inh
     # = recurrent disinhibition, Hultborn 1971).
@@ -152,6 +162,14 @@ G = dict(
     # raises the inhibited neuron's equilibrium = escape mode, and
     # neuromodulation of it raises frequency). Direct RG-E<->RG-F edges.
     rg_weak_exc=0.0,
+    # ---- 2026-09-18 (T1/T3 joint-layer PF experiment, fsa_jointlayers.py):
+    # replace the 4 phase-window PF cells (E1/E2/F1/F2) with 3 JOINT-layer
+    # PF half-center pairs (HIP-E/F, KNEE-E/F, ANK-E/F; 6 HCs) whose
+    # PF->MN weights come from the structured joint-layer fit
+    # (joint_pf_weights.json). 0 = absent topology (bit-identical build);
+    # 1 = layer HCs built. Fitted held-out centered VAF 0.747/0.713 vs
+    # 0.934/0.925 unconstrained 6-synergy (T1 > merged-layer variants).
+    joint_pf=0.0,
     # per-muscle afferent -> central feedback (Deng 2022 / Shinohara 2025
     # wiring): extensor muscles' Ib afferents project EXCITATORY to the
     # ipsilateral E-centers (PF_E1/E2, RG_E, InE) - force feedback

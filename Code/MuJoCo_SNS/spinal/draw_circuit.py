@@ -283,13 +283,15 @@ def layer_band(cv, x0, x1, y0, y1, hex_color, label, lab_dx=0.18,
 
 def syn(cv, p, q, exc: bool, label=None, lpos=0.5, loff=(0.1, 0.1), lw=1.4,
         rad=0.0, ghost=False, dashed=False, shrink_a=None, shrink_b=None,
-        color=None, lbox=True, lfs=6.4):
+        color=None, lbox=True, lfs=6.4, record=None):
     """Edge p->q. Excitatory: WHITE TRIANGLE WITH ITS BASE FLAT AGAINST THE
     TARGET CELL, apex pointing back along the wire (Ben's snsfig.m
     convention, 2026-09-09). Inhibitory: solid black dot at the target.
     The base/dot are aligned with the wire's arrival tangent (arc3
     control point geometry), so curved wires stay attached. p/q may be
-    (x, y) or the (x, y, r) tuples returned by glyph helpers."""
+    (x, y) or the (x, y, r) tuples returned by glyph helpers.
+    record: optional list; the wire's true geometric start/end points
+    (after shrink) are appended as dicts for boundary-contract checks."""
     col = "0.55" if ghost else (color if color else "0.15")
     ra = p[2] if len(p) > 2 and shrink_a is None else (shrink_a if shrink_a
                                                        is not None else 0.0)
@@ -308,6 +310,7 @@ def syn(cv, p, q, exc: bool, label=None, lpos=0.5, loff=(0.1, 0.1), lw=1.4,
     ut = qa - ctrl
     ut = ut / max(np.linalg.norm(ut), 1e-9)
     pt = np.array([-ut[1], ut[0]])
+    base = dot = None
     if exc:
         base = qa - ut * (rb + 0.02)
         tri = min(0.20, max(0.09, 0.45 * (L - ra - rb)))
@@ -330,6 +333,10 @@ def syn(cv, p, q, exc: bool, label=None, lpos=0.5, loff=(0.1, 0.1), lw=1.4,
         if not ghost:
             cv.ax.add_patch(Circle(tuple(dot), 0.085, fc="black", ec="black",
                                    zorder=3))
+    if record is not None and not ghost:
+        record.append(dict(start=a.copy(), end=(base if exc else dot).copy(),
+                           exc=bool(exc), rad=float(rad),
+                           dashed=bool(dashed)))
     if label and not ghost:
         mid = pa + (qa - pa) * lpos
         if rad:
