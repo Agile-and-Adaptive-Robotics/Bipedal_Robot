@@ -781,6 +781,64 @@ a new dated section rather than overwriting it.)
    extensor held-out ~2x better than baseline; bio-ext better than baseline but FVU 2.35 > 1.
 4. Do not run optimizers. Values are settled; text updates only.
 
+## DISSERTATION CPG SECTION — DECONFLICTION (2026-09-20, ZCode on EB475WS4). READ FIRST if editing the CPG/spinal material
+
+Another session (ZCode, EB475WS4) filled the curriculum result slots in
+`Documentation\Reports and Papers\Dissertation\CPG_spinal_section_draft.tex`
+on 2026-09-20. If you are editing that file (or copying its blocks into
+ProofFinal chapters), FIRST `git pull` (Ben pushes from EB475WS4 via GitHub
+Desktop), then grep the file for `ZCODE 2026-09-20` — every block added or
+rewritten by that session is fenced with `% >>> [ZCODE 2026-09-20]` ...
+`% <<< [ZCODE 2026-09-20]` (9 pairs). Rebase your edits around those
+fences; do not overwrite them blind.
+
+What changed there: (1) Methods/architecture: conditional-population count
+clarified (510 neurons / 382 inputs with stage-2/3 sensory populations
+active); (2) Methods/tuning: rewritten — full-dict seeding, real trial
+counts, the rhythm-gate and small-gain-entry objective rules, and the new
+contact-event drive (heel-strike/toe-off transients on the heel/toe ports,
+Conway 1987 reset-to-extension); (3) Results/curriculum: the old "corrected
+campaigns remain to be run" paragraph replaced by the static-pose-exploit
+diagnosis + stage-2b (seed wins, afferents tolerated not additive) and
+stage-3b (first supported-ground gaits, 11/60 trials) outcomes; (4)
+Results/ground-walking: the \fillme stub FILLED with the stage-3b winner
+(trial 52, score −85.22): 20 counted cycles, duty 0.69 vs 0.61, knee
+−53.5° cycle / −76..+10° raw, hip excursion 16.9°, ankle 34°, tilt 29.7°,
+COM 0.80, 0.12 m progress; (5) Results overlay figure repointed to
+`curr3b_ground_cycles.png` + two new figures (`curr3b_ground_traces.png`,
+`curr3b_ground_limbs.png` — generated from the winner run by
+`Code\MuJoCo_SNS\spinal\plot_run.py`; old v9 overlay file kept untouched);
+(6) Discussion: new subsection "Scalar Tuning Converges; the Remaining
+Gaps Are Architectural" + the Limitations \fillme filled. No .bib changes
+(all cites use existing keys). PART D bib block untouched.
+
+Provenance if numbers are questioned: full session log =
+`Code\MuJoCo_SNS\spinal\DESIGN.md` section "2026-09-20"; winner params =
+`curriculum_stage3.json` (trial 52) and `curriculum_stage2.json`; rerun any
+figure via `_diag_stage3.py` then `plot_run.py` (env + steps:
+`Code\MuJoCo_SNS\HowToRunCode.md`). Files this session created/changed
+beyond the tex: the three `curr3b_ground_*.png` figures, `HowToRunCode.md`,
+`_curriculum.py`/`runner.py`/`params.py` (rhythm gate, contact_onset),
+DESIGN.md 2026-09-20 section, and this note.
+
+**AMENDMENT (later the same evening, ZCode):** Ben's figure audit showed the
+stage-3b "winner" was a ONE-LEGGED gait (left foot planted 100% of frames —
+the v1 objective scored the right leg only, removed joint means, and took
+duty from the neural rhythm). The kinematic objective was REBUILT
+(kine_ref v2: both legs, mean/amplitude/phase/periodicity vs each leg's own
+OpenSim reference, cycles from per-foot contact onsets, frozen-leg guards;
+runner now logs per-foot contact/foot height every ground step and takes
+`AARL_PELVIS_TY`). A fresh 80-trial ground study (curr_s3c) ran under it;
+corrected re-ranking shows its ENTIRE front is the frozen-left family
+(best −181.6, trial 54). The tex fences were REWRITTEN to this corrected
+story (grep `ZCODE 2026-09-20`; the ground/results/discussion blocks now
+carry the evening version), the curr3b_* figures were DELETED from
+CPG_airstepping_figs, and `curr3c_gait_isb.png` / `curr3c_gait_contact.png`
+(t54, OpenSim/ISB conventions) are the current figure set. If you already
+copied the earlier (pre-correction) numbers anywhere, replace them from the
+current fences only. Details: DESIGN.md "2026-09-20 EVENING" + "s3c
+OUTCOME" blocks.
+
 ## Dissertation text session 2026-09-10 (ZCode, easteregg2) — DONE, local only, NOT uploaded
 
 Synced Ben's 11:50 AM Overleaf zip into ProofFinal (advisor edits preserved: abstract wording +

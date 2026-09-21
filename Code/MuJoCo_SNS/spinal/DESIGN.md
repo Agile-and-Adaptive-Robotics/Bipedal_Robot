@@ -2,6 +2,111 @@
 
 Built 2026-09-09. Files in `Code\MuJoCo_SNS\spinal\`.
 
+## 2026-09-20 EVENING (ZCode, EB475WS4): BEN'S FIGURE CRITIQUE → kine_ref v2
+**(BOTH legs, mean/amplitude/phase/periodicity vs OpenSim, real-contact
+cycles) + pelvis-height knob + s3c retune running. The s3b "winner" is
+re-characterized: it was a ONE-LEGGED gait.**
+
+**Ben's critique of the curr3b figures (correct, all verified):** "the
+legs are split, one always flexed at the hip, the other not
+alternating, the left side fairly static, both ankles dragging; lower
+the walker enough to make contact; I want ISB/OpenSim axes; I'll be
+happy if BOTH legs' gait cycles match OpenSim (mean, amplitude, phase,
+periodicity)." Measured on the s3b winner run
+(`_diag_ben_critique.py` + the new contact logging):
+hip_flexion_r mean **+37.9°** (ref mean +4.3), knee_angle_l range
+**2.0°** pinned at the +10° extension stop, ankle means **−59/−56°**
+(both plantarflexed/dragging; right sweeps −93..+20), and — the key
+correction to the morning's note — **the left foot IS in contact the
+whole time: heel+toe force mean 583 N, contact fraction 1.000** (right
+0.714). So the walker was NOT hanging: the LEFT leg stood planted
+(100% stance) while the right leg cycled around it. The neural RG
+alternates bilaterally (R/L corr −0.53); the left leg's mechanics
+never unload it.
+
+**Why the objective allowed this (kine_ref v1, all fixed in v2):**
+right-leg-only columns; mean-offset REMOVED before comparing (the +38°
+hip cost nothing); duty = NEURAL RG-E fraction (0.69 "duty" while the
+left foot never unloaded); no phase or periodicity terms; no contact
+requirement. Under v2 the s3b winner scores **−279.2** (vs "−85.2"
+under v1) — the one-legged gait is now the WORST real walker, not the
+best.
+
+**kine_ref v2 (rewritten in place; API compatible):** reference = BOTH
+legs' cycles from their own GRF loading onsets (right
+`ground_force_vy`, left `1_ground_force_vy`; T 1.233/1.250 s, duty
+0.61/0.60, interleg lag 0.51, double support 0.23). Sim side: per-leg
+cycles from the runner's NEW per-foot contact logging (fallback = that
+side's RG-E onsets). Score terms per leg: shape RMSE (hip 1.0/knee
+1.2/ankle 0.8) + range err (0.5/0.3/0.5) + **MEAN (DC) err ×0.3** +
+**per-joint cycle PHASE lag (circular xcorr) + INTERLEG lag vs 0.51**
++ **PERIODICITY (period err ×4, cycle CV ×4)** + contact duty err ×1.5
++ per-foot guards (contact frac <0.05 → +20, <0.15 → +12) + double-
+support err ×4. Legacy right-leg keys kept for old readers.
+
+**Runner changes (all logged/gated):** (1) `AARL_PELVIS_TY` env
+override for the pelvis height (the rig anchors at whatever it reads —
+Ben's "lower the walker"; default unchanged 0.92); (2) per-side
+heel+toe contact force (N) + foot body height logged EVERY ground step
+into npz (`contact` (n,2), `footz` (n,2)) — sensors unchanged;
+(3) eval passes contact to kine_ref. NOTE for old npz readers: files
+before 2026-09-20 evening lack `contact`/`footz`.
+
+**Curriculum s3c (study `curr_s3c_ground`, 40 trials,
+`run_s3c_20260920.bat`, log `curriculum_s3c_20260920.log`):** searches
+pelvis_ty ∈ [0.88,0.93] (per-trial env) and f1_anklepf_inh ∈ [0,1.2]
+(v7's swing-dorsiflexion lever) on top of the s3b space; seeded FULL
+DICT from the s3b winner + pelvis 0.905 + anklepf 0.3. SENTINELS
+RE-ANCHORED (v1-lesson rule): NaN → −400, no-kine → −320, kine_score
+floored at −315 — the worst genuine walker (−279) must outrank the
+frozen/no-rhythm sentinels. Stage ≤2 (air) objective untouched.
+
+**Figures:** `_fig_isb_gait.py` renders BOTH-leg mean cycles vs OpenSim
+(`*_gait_isb.png`) + walk-window time series with per-foot contact
+(`*_gait_contact.png`), OpenSim/ISB conventions stated on the figure
+(hip +flexion, knee −flexion, ankle +dorsi; global X anterior, Y up,
+Z right). s3b-era test renders kept in spinal\ only.
+
+**s3c OUTCOME (80 trials, 2 chains, done 23:52): 24 real walkers,
+plateau −119.3 (trial 26) under the holed score — then the FROZEN-LEG
+HOLE was found and closed, and the honest picture is sobering.**
+(1) The runner's eval walk window is (2.0, 13.0) — runner.py line ~768
+rewrites SCHEDULE for --eval; params' 5.0 is the FULL-run window.
+Diag/figure scripts must use 2.0 on eval npz. (2) kine_ref v2 round-1
+had a hole: a leg with NO cycles hit `continue` and skipped ALL its
+joint penalties — a FROZEN leg scored better than a trying one. FIXED:
+cycle-less legs are scored from walk-window mean/range vs ref
+(+8 no-cycles). (3) Corrected re-ranking of the top-8
+(`_rescore_top.py`, deterministic reruns): **ALL of them are
+frozen-left** (`frozen_l=True`, 0 left cycles, left duty 1.0).
+Corrected best = trial 54 at −181.6 (t26 −185.5, t39 −182.1...). The
+s3c search NEVER unloaded the left foot — 80 trials × 20 dims incl.
+contact_onset/pelvis_ty/f1_anklepf_inh. That is ARCHITECTURAL: the
+stance leg's release into swing under load has no pathway
+(contact_onset only reinforces E on loading; it does subtract on
+UNLOADING edges but the loaded threshold never falls because the foot
+never unloads — chicken-and-egg). NEXT LEVER (design sketch): a
+force-FALL/toe-off trigger that actively terminates the stance
+half-center (Hultborn/DiCapairla swing-trigger family), or flexor-side
+central drive gated by the CONTRALATERAL loading onset (crossed
+initiation of swing), before any more scalar search.
+(4) Honest corrected-winner state (t54, `_run_t54.py` + figures):
+kz 0.83, tilt 29, both feet loaded (contact frac 1.0/1.0), right knee
+−52..−17 with 2 contact cycles, right ankle mean +17.5 (dorsiflexed —
+the drag is FIXED), left frozen (duty 1.0). Score −181.6.
+(5) Windows traps tonight: **np.load on an .npz returns a LAZY NpzFile
+that keeps the file handle open — an in-process loop that np.loads
+between runs blocks the runner's os.replace (WinError 5)**. Close it
+(z.close()) or copy arrays. Runner npz save: 40×0.5 s retry + env
+`AARL_NPZ=<name>` redirect for batch scripts. (6) The s3c study db +
+curriculum_stage3.json still record the HOLED scores (json = t26;
+corrected best t54 lives in `_rescore_top_out.json`); a fresh study
+(curr_s3d) is required for real further search under the FIXED
+objective. (7) tex: ground/results/discussion fences updated to the
+corrected story; curr3b_* figures DELETED from the Dissertation folder
+(discredited one-legged renders), replaced by curr3c_gait_{isb,
+contact}.png (t54).
+
 ## 2026-09-20 (ZCode, EB475WS4): CURRICULUM ROOT CAUSE — stage-2 "winner"
 **was a static-pose exploit, not a rhythm. Objective now rhythm-gated;
 studies purged and relaunched (curr_s2b/s3b); contact_onset added.**
@@ -106,10 +211,17 @@ PLATEAUED, scalar tuning converged; stopping point.**
 - **s3b 60 trials: −85.22 (trial 52) marginal over −86.57; 11/60 real
   gaits.** The −85.2 winner is a HIGH-drive shuffle (3.62) that barely
   uses the contact pathway (contact_onset 0.05, heel 0.011; largest
-  new gain ia_f_contra_f 0.27), while −86.57 used contact_onset 0.51 —
-  the front is flat between −85 and −88 across different mechanisms.
-  Counted-cycle kine gaps unchanged (knee_min −33 vs −69.7 ref, hip
-  range 32 vs 43, duty 0.82 vs 0.61).
+  new gain ia_f_contra_f 0.27), while −86.57 (trial 8) used
+  contact_onset 0.51 — the front is flat between −85 and −88 across
+  different mechanisms. Winner trial-52 metrics (diag reproduced
+  exactly, −85.2208): **20 counted cycles / 23 RG-E bursts in the
+  11 s window (1.8 Hz vs 0.81 ref), duty 0.686 vs 0.61 ref, cycle
+  knee_min −53.5 (ref −69.7), hip range 16.9 (43.3), knee range 44.3
+  (70.5), ankle range 34.0 OVER ref (23.1), RMSE hip 10.6/knee
+  30.1/ankle 11.7 deg, raw knee −76.0..+10.4, hip 0.6..65.4, tilt_max
+  29.7, kz 0.80, dx +0.123 m, no NaN** — much better than the
+  trial-8-era numbers recorded above (knee −33/hip 32/duty 0.82 were
+  TRIAL 8; don't reuse them).
 - **CONCLUSION (for the next session): stop searching scalars.** The
   duty/cadence/kine gaps need the architecture levers already on the
   books (sensory phase reset INTO the RG — the 09-12 diagnosis;

@@ -15,6 +15,14 @@
 % ../CPG_airstepping_figs/ relative to ProofFinal (adjust if your
 % \graphicspath differs). A \fillme fallback definition is at the bottom of
 % this file for standalone compiling — DO NOT copy it into the thesis.
+%
+% 2026-09-20 UPDATE (ZCode, EB475WS4): the curriculum \fillme slots are now
+% FILLED with real stage-2/3 results (first supported-ground gait). Every
+% block added or rewritten today is fenced with
+%   % >>> [ZCODE 2026-09-20]  ...  % <<< [ZCODE 2026-09-20]
+% — if you are the dissertation-text chat, grep those fences before editing
+% and rebase rather than overwrite. Coordination: CHATGPT_HANDOFF.md
+% "Dissertation CPG section" section (2026-09-20).
 % ===========================================================================
 
 % ---------------------------------------------------------------------------
@@ -49,7 +57,15 @@ V3) coordinating the two sides. Shared descending cells provide drive
 anterior-posterior, lateral, and trunk-orientation controllers). The
 standing posture is not hard-coded: it is solved once by static
 optimization at the model keyframe and injected as per-motoneuron bias
-currents. Figure~\ref{fig:cpg-overview} introduces the three principal
+currents.
+% >>> [ZCODE 2026-09-20] EB475WS4 — conditional-population count
+% (510/382 verified by _debug_rhythm_tuned.py on the stage-2 winner)
+With the stage-2/3 sensory populations active (heel and toe
+mechanosensor interneurons, the stance-Ib group interneuron, and the
+per-side afferent relays), the compiled network comprises 510 neurons
+and 382 inputs.
+% <<< [ZCODE 2026-09-20]
+Figure~\ref{fig:cpg-overview} introduces the three principal
 network levels; Figure~\ref{fig:cpg-circuit} retains the full compiled-edge
 accounting used to verify the implementation.
 
@@ -171,6 +187,8 @@ speed gating of the afferent gains follows the modulation described by
 \subsection{Tuning Methodology: Staged Curriculum}
 \label{sec:spinal-cpg-tuning}
 
+% >>> [ZCODE 2026-09-20] EB475WS4 — rewritten: full-dict seeding, actual
+% trial counts, rhythm-gate + small-gain-entry rules, contact-event drive
 The network is tuned by a three-stage curriculum mirroring the
 classical deafferentation hierarchy. Stage 1 tunes the rhythm core
 (drive, $\tau_h$, descending split, RG-to-PF gain) in deafferented,
@@ -180,13 +198,51 @@ preparation in air, adding the per-muscle afferent-to-central gains
 and the heel and toe mechanosensor gains. Stage 3 adds ground contact
 with the full reflex repertoire (stance-Ib group gains, the IaIN
 pathway, contralateral flexor inhibition, V3-to-extensor
-reinforcement, and an ankle plantarflexor tone trim), optimized
-against a kinematic score comparing cycle-normalized hip/knee/ankle
-trajectories, peak flexion, range, duty, and cadence to the OpenSim
-reference cycle. Each stage runs 100 trials of tree-structured Parzen
-estimation seeded by the previous stage's winner; parameters of
-pathways absent from a stage are held at zero, so each stage's
-topology is a strict superset of the previous.
+reinforcement, an ankle plantarflexor tone trim, and a contact-event
+drive described below), optimized against a kinematic score comparing
+cycle-normalized hip/knee/ankle trajectories, peak flexion, range,
+duty, and cadence to the OpenSim reference cycle. Each stage is seeded
+by the previous stage's winner with every not-yet-searched gain pinned
+at zero, so trial 0 of each stage reproduces the previous winner
+exactly and each stage's topology is a strict superset of the
+previous; stages run 25--60 trials of tree-structured Parzen
+estimation and are resumable.
+
+Two objective-design rules proved necessary. First, the air objective
+must be rhythm-gated: without an explicit minimum of three extensor
+bursts, the optimizer exploits a static deep-flexion pose whose
+knee-depth term alone outranks slow genuine rhythms --- the first
+stage-2 campaign was won by such a pose, its score equal to the
+knee-depth term with zero extensor bursts. Second, sensory gains new
+to a stage must enter the search at small ranges: sampled at full
+strength they extinguish the inherited rhythm in every trial, leaving
+the optimizer no gradient back to oscillation.
+
+The stage-3 contact-event drive implements the loading-edge trigger
+motivated by the contact-driven rhythm generator of the AnimatLab
+walker family and by the reset-to-extension reflex of
+\citet{conway1987}: the heel and toe contact ports, which otherwise
+carry the tonic contact level, additionally receive a brief current
+transient at the loading edge (heel strike: reinforcing the extensor
+half-center and suppressing the flexor) and an opposite transient at
+the unloading edge (toe-off: releasing the extensor center), decaying
+with a 0.25-s time constant. Its gain is searched in stage 3.
+% <<< [ZCODE 2026-09-20]
+% >>> [ZCODE 2026-09-20 EVENING] both-leg kinematic objective (v2)
+The ground-stage objective itself was rebuilt after a figure audit
+invalidated its first form: each leg's mean gait cycle is cut at that
+foot's own ground-contact loading onsets (per-foot heel-plus-toe
+normal force, logged every step) and compared to that leg's own
+OpenSim reference cycle on four families of terms — shape error,
+excursion (amplitude), joint \emph{mean} offset, and per-joint cycle
+phase lag — plus interleg antiphase lag, cadence and cycle-to-cycle
+periodicity errors, per-foot contact-duty error, double-support
+error, and guards that fail any foot which never loads or never
+cycles (a frozen leg is scored from its walk-window statistics so
+that staying still cannot dodge its penalties). The pelvis height the
+support rig anchors to is searched per trial, as is a swing-phase
+ankle plantarflexor inhibition providing swing dorsiflexion.
+% <<< [ZCODE 2026-09-20]
 
 % ---------------------------------------------------------------------------
 % PART B — RESULTS. Copy into chapters/30-results.tex (append at end,
@@ -235,37 +291,103 @@ The curriculum has not yet converged at all three stages. Stage 1
 counted cycles, a 0.37~s period, drive 3.154~nA, and
 $\tau_h=170$~ms. This exceeds 57.4, the best score reached by the
 retired adaptation-loop architecture at equal budget, although the
-result is substantially faster than the 1.2~s reference cycle. The
-first stage-2 and stage-3 campaigns did not produce valid winners:
-every trial returned the $-100$ no-countable-cycles sentinel. Isolation
-tests traced this failure to bilateral extensor latching under the
-interleg commissural pathway; the c1 and V3 gains have now been exposed
-as search variables, but the corrected stage-2/3 campaigns remain to be
-run. Therefore the saved stage-2/3 parameter files are diagnostic
-records, not tuned solutions.
+result is substantially faster than the 1.2~s reference cycle.
+% >>> [ZCODE 2026-09-20] EB475WS4 — rewritten: exploit diagnosis, then
+% the rhythm-gated rerun outcomes (studies curr_s2b_air_aff/curr_s3b_ground)
+The first post-architecture stage-2/3 campaigns exposed an objective-
+design failure rather than a tuning failure. Every stage-3 trial
+returned the $-100$ no-countable-cycles sentinel, and re-running the
+stored stage-2 winner reproduced its score bit-exactly with
+\emph{zero} extensor bursts: the objective had been maximized by a
+static deep-flexion pose (the knee-depth term alone), so the ground
+stage had been seeded from a network that had never stepped. With the
+rhythm gate and the small-gain entry ranges of
+Section~\ref{sec:spinal-cpg-tuning} in place, both stages were re-run
+from the valid stage-1 winner. Stage 2 (afferented air, 50 trials) was
+still won by its seed --- the deafferented rhythm at drive 3.15~nA and
+$\tau_h=170$~ms --- with the best afferented trial within 1\% of it at
+gains an order of magnitude below their search ranges: the
+afferent-to-central projections tolerate the inherited rhythm but do
+not improve it in the suspended-air preparation. Stage 3 (ground, 60
+trials) produced the first supported-ground gaits of this
+architecture: 11 of 60 trials cleared the frozen-model sentinel.
+% <<< [ZCODE 2026-09-20]
+% >>> [ZCODE 2026-09-20 EVENING] figure-audit correction: the v1 score
+% was right-leg-only, DC-removed, and duty-from-neural-RG — the stage-3b
+% "winner" was a ONE-LEGGED gait (planted left leg, cycling right leg).
+% The objective was rebuilt (kine_ref v2, Sec.~tuning) and the ground
+% stage re-run; see the ground-walking section for the corrected result.
+A subsequent audit of that winner's figures (one hip permanently
+flexed, the contralateral leg static, both ankles dragged) exposed the
+final objective deficiency: the score had compared the right leg only,
+removed joint means before comparing, and taken duty from the neural
+rhythm rather than from foot contact — so a one-legged gait with its
+left foot permanently planted scored as the best walker. The kinematic
+objective was therefore rebuilt to compare \emph{both} legs against
+their own reference cycles on mean, amplitude, phase, and periodicity,
+with cycles cut at each foot's own ground-contact loading onsets and
+guards requiring both feet to load (Section~\ref{sec:spinal-cpg-tuning});
+under that corrected objective the same winner scores $-185$ of a
+possible 0, and a re-run of the ground stage produced only further
+members of the same family (best $-182$): the deficiency was in the
+measurement, and the frozen-leg gait family is the honest state of the
+scalar search (Section~\ref{sec:results-cpg-ground}).
+% <<< [ZCODE 2026-09-20]
 
 \subsection{Supported Ground Walking}
 \label{sec:results-cpg-ground}
 
-No supported-ground result from the persistent-sodium curriculum is
-reported yet because the current stage-3 file contains only the
-$-100$ sentinel trial. The earlier adaptation-loop walking runs remain
-useful development evidence, but they are not substituted here as a
-result of the revised architecture. \fillme{After the corrected
-stage-2/3 campaigns: add the 22-s stayed-up status, COM height minimum,
-trunk tilt range, hip/knee/ankle ranges, duty, cadence, and kinematic
-score against the OpenSim reference; point at
-Figure~\ref{fig:cpg-overlay} and the ground-walk hindlimb figure.}
+% >>> [ZCODE 2026-09-20] EB475WS4 — \fillme slot FILLED, then corrected
+% the same evening after the figure audit (see curriculum section): the
+% reported gait is the corrected-objective best (s3c trial 54,
+% reproduced exactly by _run_t54.py; metrics from kine_ref v2).
+Under the corrected both-leg objective, the ground-stage search (80
+trials, 20 search dimensions including pelvis height and the swing
+dorsiflexion inhibition) converges on an honest but incomplete gait
+(Figure~\ref{fig:cpg-ground-traces}). The best configuration keeps the
+model upright with no non-finite states (center-of-mass height minimum
+0.83 of standing, peak trunk tilt $29^\circ$), loads BOTH feet
+(heel-plus-toe contact fraction 1.0 bilaterally), swings the right
+knee through $-52^\circ$ to $-17^\circ$ with dorsiflexed ankles
+(cycle mean $+17^\circ$, versus the $-59^\circ$ dragging plantarflexion
+of the pre-correction winner), and contacts $0.96$ duty on the right.
+But the LEFT leg never unloads: its contact duty is 1.0, it produces
+no countable cycles, and its knee stays near extension — every member
+of the search front shares this frozen-left family, and the best
+corrected score is $-182$ where the right leg alone scores far better
+than the pair. The gap to the reference walk (contralateral duty
+0.60, interleg lag 0.51, knee excursion $70^\circ$, period $1.23$~s)
+is therefore dominated by one architectural failure — releasing the
+stance leg into swing under load — rather than by tunable gains
+(Figure~\ref{fig:cpg-overlay}).
+% <<< [ZCODE 2026-09-20]
+
+% >>> [ZCODE 2026-09-20] figures (curr3c_* = corrected-objective best,
+% s3c trial 54; OpenSim/ISB conventions stated on-figure)
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.95\textwidth]{CPG_airstepping_figs/curr3c_gait_contact.png}
+  \caption{Walk window of the corrected-objective ground-walk best
+  (s3c trial 54). Hip, knee, and ankle angles of both legs (right
+  red, left blue) and per-foot vertical contact force; the left foot
+  remains loaded throughout (the frozen-leg limitation). OpenSim/ISB
+  conventions: hip flexion positive, knee flexion negative, ankle
+  dorsiflexion positive; global X anterior, Y up, Z right.}
+  \label{fig:cpg-ground-traces}
+\end{figure}
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.7\textwidth]{CPG_airstepping_figs/opensim_overlay_gait_cycles.png}
-  \caption{Cycle-normalized joint trajectories of the tuned spinal
-  circuit (mean over counted cycles) against the OpenSim reference
-  cycle. \fillme{refresh: cycles counted, duty, cadence, per-joint
-  RMSE.}}
+  \includegraphics[width=0.95\textwidth]{CPG_airstepping_figs/curr3c_gait_isb.png}
+  \caption{Mean gait cycles of the corrected-objective best against
+  the OpenSim reference, both legs (columns; black = reference).
+  The right leg flexes and dorsiflexes through its two countable
+  cycles; the left leg produces no cycles (frozen). Duty right/left
+  $0.96$/1.00 (reference $0.61$/$0.60$). Same OpenSim/ISB conventions
+  as Figure~\ref{fig:cpg-ground-traces}.}
   \label{fig:cpg-overlay}
 \end{figure}
+% <<< [ZCODE 2026-09-20]
 
 \subsection{Plant Fidelity: Force Capacity and Torque Budget}
 \label{sec:results-cpg-plant}
@@ -333,6 +455,36 @@ connectivity of the mammalian locomotor network
 where a direct synapse would be functionally equivalent at a single
 operating point.
 
+% >>> [ZCODE 2026-09-20] EB475WS4 — new discussion subsection
+\subsection{Scalar Tuning Converges; the Remaining Gaps Are
+Architectural}
+
+Both post-fix search fronts plateaued. In the air stage the
+deafferented seed remained unbeaten, with the best afferented trial
+tying it at gains an order of magnitude below range; on the ground the
+front is flat within three score points across mechanistically
+different winners --- one leaning on the contact-event drive at
+mid-range gain, the eventual winner on elevated descending drive with
+the contact pathway nearly off. Two lessons follow. First, reward-
+shaped kinematic objectives must gate the phenomenon they presuppose:
+an ungated rhythm reward is maximized by the best static pose, and the
+failure is invisible in the score itself (it was caught only by
+re-running the winner and counting bursts). Second, once the rhythm
+is intrinsic, feedback-gain search saturates: under the corrected
+both-leg objective the entire converged front shares a single
+architectural failure — the stance leg never releases into swing
+under load (left-foot duty 1.0, no countable cycles on that side) —
+which no combination of the twenty searched gains, including the
+contact-event drive, pelvis height, and swing dorsiflexion,
+unlocked in 80 trials. The identified next mechanism is the
+swing-release side of the contact pathway: a load-DECREASING
+(toe-off/force-fall) trigger that actively terminates the stance
+half-center rather than the loading-edge reinforcement alone, i.e.,
+sensory phase reset entering the rhythm layer proper, for which the
+edge-triggered drive built here is the vehicle; a data-driven
+synergy pattern layer remains the second lever.
+% <<< [ZCODE 2026-09-20]
+
 \subsection{Limitations and Remaining Gaps}
 
 Three classes of limitation remain. First, the fixed $\tau_h$ used
@@ -341,11 +493,21 @@ here matches the AnimatLab/Simulink semantics of this circuit family
 kinetics measured in mammalian neurons. Second, the plant's
 rigid-tendon muscles reproduce activation-driven force faithfully but
 omit series-elastic smoothing, which appears as a shape difference in
-compliant-tendon muscles such as soleus. Third,
-\fillme{remaining-gaps paragraph from the final ground-walk results:
-cadence and ankle-balance residuals, duty offset vs the 0.61
-reference, and the next architectural levers (synergy-based pattern
-layer; compliant-tendon muscle model)}. A synergy analysis of the
+compliant-tendon muscles such as soleus. % >>> [ZCODE 2026-09-20] EB475WS4 — \fillme slot FILLED (corrected
+% evening version: frozen-left characterization replaces the first
+% fast-and-shallow numbers)
+Third, the corrected both-leg objective exposes the true state of the
+ground gait: both feet load, the right leg steps with dorsiflexed
+ankles, but the left leg never unloads (duty 1.0, no cycles), and
+every member of the 80-trial search front shares this frozen-stance
+family. The residuals against the reference walk (contralateral duty
+0.60, knee excursion $70^\circ$, period $1.23$~s) are attributable to
+the missing stance-to-swing release pathway rather than to feedback
+gains; the next levers are a force-fall (toe-off) trigger into the
+rhythm generator, a synergy-based pattern layer, and a
+compliant-tendon muscle model.
+% <<< [ZCODE 2026-09-20]
+A synergy analysis of the
 back-solved activations (non-negative matrix factorization) indicates
 four to five coordinated muscle groups per side with task-based rather
 than joint-based composition — supporting the current four-window

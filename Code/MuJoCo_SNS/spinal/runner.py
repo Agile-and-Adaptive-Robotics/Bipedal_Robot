@@ -556,14 +556,26 @@ def apply_start_pose(model, data) -> None:
     for jn, deg in START_POSE_DEG.items():
         if jn in jadr:
             data.qpos[jadr[jn]] = np.radians(deg)
-    data.qpos[model.joint("pelvis_ty").qposadr[0]] = START_PELVIS_HEIGHT
+    # 2026-09-20 (Ben: "lower the walker enough to make contact with the
+    # ground"): env override for the pelvis height. The 0.92 default is a
+    # compromise that left the LEFT sole ~5 mm short -> the left foot
+    # never loaded (0% contact in the s3b winner) and its knee pinned at
+    # the +10 extension stop. The rig anchors at whatever height is set
+    # here (apply_harness reads it from data), so this single knob sets
+    # the standing height the whole run is sprung to.
+    import os as _os
+    _ty = _os.environ.get("AARL_PELVIS_TY")
+    ty = float(_ty) if _ty is not None else START_PELVIS_HEIGHT
+    data.qpos[model.joint("pelvis_ty").qposadr[0]] = ty
     _project_followers(model, data)
     mujoco.mj_forward(model, data)
     torso = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, "torso")
     up = data.xmat[torso].reshape(3, 3)[:, 1]
     lean = float(np.degrees(np.arctan2(-up[0], max(up[2], 1e-6))))
     print(f"start pose (normal.mot): applied {len(jadr)} coordinates as "
-          f"given; IMU-metric torso lean {lean:+.1f} deg (+ = back)",
+          f"given; pelvis ty {ty:.3f} m (env override"
+          f"{'=' + _ty if _ty is not None else ' unset'}); "
+          f"IMU-metric torso lean {lean:+.1f} deg (+ = back)",
           flush=True)
 
 
@@ -943,6 +955,14 @@ def main(argv):
                    "PF_E1_r", "PF_E2_r", "PF_F1_r", "PF_F2_r",
                    "BAL_TRK_FLX", "BAL_TRK_EXT", "BAL_LAT_R", "BAL_LAT_L")
     log_neuro = np.zeros((nsteps, len(NEURO_NAMES)))
+    # 2026-09-20: per-side ground-truth contact (heel+toe normal force, N)
+    # and foot height (min body-origin z of calcn/toes, m), logged EVERY
+    # step in ground mode. Ben's critique: the eval objective and the
+    # figures must see real contact - the old duty was neural and the
+    # s3b "winner" never loaded its left foot (0% contact frames).
+    log_contact = np.zeros((nsteps, 2))
+    log_footz = np.zeros((nsteps, 2))
+    foot_body = {"r": [], "l": []}
     bal_neurons = ("BAL_PF", "BAL_DF")
 
     u = net.make_inputs()
@@ -969,8 +989,10 @@ def main(argv):
             for reg in foot_regions:
                 if nm == f"{reg}_r":
                     bodyid_region[b] = reg + "_r"
+                    foot_body["r"].append(b)
                 elif nm == f"{reg}_l":
                     bodyid_region[b] = reg + "_l"
+                    foot_body["l"].append(b)
     con_force = np.zeros(6)  # contact force buffer (mj_contactForce)
     # contact-onset kick state (G["contact_onset"] > 0 only; 2026-09-20):
     # per-side decaying transient set at the loading/unloading EDGES of
@@ -1072,7 +1094,11 @@ def main(argv):
         u[iport["DRIVE"]] = drive
         u[iport["POSTURE"]] = posture
         # --- v11 heel/toe contact mechanosensors (audit P1a) ---
-        if net.stance_fb:
+        # 2026-09-20: forces computed EVERY step in ground mode (the eval
+        # objective and figures consume them); sensor ports fed only when
+        # stance_fb built them.
+        heel_n = toe_n = None
+        if (not no_ground) or net.stance_fb:
             heel_n = {"r": 0.0, "l": 0.0}
             toe_n = {"r": 0.0, "l": 0.0}
             for ci in range(data.ncon):
@@ -1089,6 +1115,14 @@ def main(argv):
                             heel_n["l"] += max(con_force[0], 0.0)
                             toe_n["l"] += max(con_force[0], 0.0)
                         break
+            if not no_ground:
+                log_contact[k, 0] = heel_n["r"] + toe_n["r"]
+                log_contact[k, 1] = heel_n["l"] + toe_n["l"]
+                for si, s in enumerate(("r", "l")):
+                    if foot_body[s]:
+                        log_footz[k, si] = min(
+                            data.xpos[b, 2] for b in foot_body[s])
+        if net.stance_fb:
             heel_sig = {"r": min(heel_n["r"] / (0.35 * BW), 1.5),
                         "l": min(heel_n["l"] / (0.35 * BW), 1.5)}
             toe_sig = {"r": min(toe_n["r"] / (0.50 * BW), 1.5),
@@ -1234,23 +1268,29 @@ def main(argv):
     # just-replaced file (same family as the preview-lock problem the
     # figure renderer already solves). Write beside + os.replace retry.
     import time as _time
-    _tmp = HERE / f"spinal_run.{_os.getpid()}.tmp.npz"
+    # 2026-09-20: AARL_NPZ redirects the run output (default
+    # spinal_run.npz) - external locks (Spyder indexer/AV) on the default
+    # name killed WinError-5 loops; point batch scripts at a side name.
+    _npz_name = _os.environ.get("AARL_NPZ", "spinal_run.npz")
+    _tmp = HERE / f"{_npz_name}.{_os.getpid()}.tmp.npz"
     with open(_tmp, "wb") as _fh:
         np.savez_compressed(_fh, t=log_t, act=log_act,
                             q=np.degrees(log_q), qfull=log_qfull,
                             com=log_com, neuro=log_neuro,
+                            contact=log_contact, footz=log_footz,
                             key_acts=KEY_ACTS, key_joints=KEY_JOINTS,
                             neuro_names=NEURO_NAMES,
                             cfg=("ground" if not no_ground else "air"))
     _err = None
-    for _ in range(20):
+    for _ in range(40):   # 2026-09-20: 20x0.15s was not enough - WinError 5
+        # (AV/indexer lock) killed a rescore run; 40x0.5s = 20 s backoff
         try:
-            _os.replace(_tmp, HERE / "spinal_run.npz")
+            _os.replace(_tmp, HERE / _npz_name)
             _err = None
             break
         except OSError as _e:
             _err = _e
-            _time.sleep(0.15)
+            _time.sleep(0.5)
     if _err is not None:
         raise _err
     if viewer is not None:
@@ -1277,7 +1317,8 @@ def main(argv):
             k = kine_ref.compare(log_t[:n_done],
                                  np.degrees(log_q[:n_done]),
                                  log_neuro[:n_done], SCHEDULE["walk"][0],
-                                 ref=kine_ref.ref_cached())
+                                 ref=kine_ref.ref_cached(),
+                                 contact=log_contact[:n_done])
         except Exception:
             k = None
         metrics = dict(

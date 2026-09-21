@@ -1,0 +1,23 @@
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal.mot): applied 20 coordinates as given; pelvis ty 0.924 m (env override=0.9235239042369963); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.61], >0.1: 12 muscles
+  top: tib_ant_r=0.61, add_long_l=0.59, tib_ant_l=0.48, ext_dig_r=0.37, glut_min1_l=0.28, pect_l=0.27, ext_dig_l=0.26, glut_min2_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+
+=== eval metrics ===
+  nan: False
+  t_end: 15.998000000000001
+  dx: 0.08229470906609779
+  kz: 0.8279180509840472
+  tilt_max: 29.072804221891573
+  knee_min: -1.0719016978546199
+  hip_amp: 0.6531343095279016
+  duty: 1.0
+  kine: {'contact_frac_r': 1.0, 'contact_frac_l': 1.0, 'n_cycles_r': 4, 'duty_r': 0.7368571428571429, 'duty_r_ref': 0.61, 'knee_min_r': -42.89697943224355, 'knee_min_r_ref': -69.68811020650568, 'rmse_hip_r': 11.840665434341835, 'range_hip_r': 13.756648038028985, 'range_hip_r_ref': 43.29319243218895, 'mean_hip_r': 35.75268105331384, 'mean_hip_r_ref': 4.340491323383044, 'rmse_knee_r': 23.990023931708045, 'range_knee_r': 25.723669945428348, 'range_knee_r_ref': 70.4553257620587, 'mean_knee_r': -32.30054098922947, 'mean_knee_r_ref': -25.052680635143876, 'rmse_ankle_r': 6.3207752858169455, 'range_ankle_r': 2.490871466528663, 'range_ankle_r_ref': 23.106608540532818, 'mean_ankle_r': 16.292412605396542, 'mean_ankle_r_ref': 4.204590041315454, 'T_r': 0.5560000000000003, 'T_r_ref': 1.2334, 'period_cv_r': 0.17973017173171793, 'ds': 0.7368571428571429, 'ds_ref': 0.23243243243243245, 'kine_score': -119.31774273769221, 'n_cycles': 4, 'duty': 0.7368571428571429, 'duty_ref': 0.61, 'knee_min': -42.89697943224355, 'knee_min_ref': -69.68811020650568, 'rmse_hip': 11.840665434341835, 'range_hip': 13.756648038028985, 'range_hip_ref': 43.29319243218895, 'rmse_knee': 23.990023931708045, 'range_knee': 25.723669945428348, 'range_knee_ref': 70.4553257620587, 'rmse_ankle': 6.3207752858169455, 'range_ankle': 2.490871466528663, 'range_ankle_ref': 23.106608540532818}
+  kine_score: -119.31774273769221
+  burst_r: 2
+RG_E_r: 2.98..3.18 mV
+RG_F_r: 2.47..3.08 mV
+PF_E1_r: -0.51..-0.29 mV
+PF_F1_r: 5.51..5.78 mV
+knee_r: -51.6..-16.6 deg, hip_r: 24.3..45.7 deg

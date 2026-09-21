@@ -28,6 +28,22 @@ Loaded automatically at session start. Keep it current; keep it lean.
   `D:\Program Files\SOLIDWORKS Corp` (contains a duplicate `SOLIDWORKS (2)` folder, same
   version); SW2URDF add-in registered (enable via Tools > Add-Ins); Simscape Multibody
   Link NOT installed.
+  **2026-09-20 rebuild notes (after Ben replaced the C: drive; registry links to
+  D:-installed software were wiped):** VS Code 1.138 at `D:\Program Files\Microsoft VS
+  Code` — extensions (python/jupyter/matlab/latex-workshop/cpptools/xml) + settings
+  rebuilt; project `.vscode\` (untracked) + Desktop shortcut "Bipedal_Robot (VS Code)";
+  python interpreter = the myo env. **SW COM was broken** (LocalServer32 used 8.3 short
+  paths; 8.3 generation is disabled on D:) — fixed per-user via
+  `HKCU\Software\Classes\CLSID\{6AF263BB-EB9F-4176-89E9-4F892EB0CA3D}` → real path; API
+  verified (33.3.0) through the solidworks skill with **pywin32 now pip-installed in the
+  myo env**; `sw_session.py` gen_py fix (pip pywin32 caches in %TEMP%\gen_py — the old
+  site-packages guess failed; REPO COPY EDITED, awaiting Ben's commit). MiKTeX 22.1
+  (`D:\Program Files\MiKTeX`) was dead (its config died with the old registry) — removed;
+  complete package set installed **user-scope at `D:\MiKTeX`** (pdflatex
+  `D:\MiKTeX\miktex\bin\x64`, on user PATH; Ben declined the all-users/admin install for
+  now — staged one-click: `D:\temp\miktex_setup\elevated_install2.ps1` + local repo
+  `D:\temp\miktex-repo`). MATLAB R2025a U1 re-verified headless (Optimization + Simulink
+  license OK).
 - **DESKTOP-5Q16KE9 (laptop), the main workstation** — newest/premium
   MATLAB + SolidWorks, but modest hardware (6 cores, 16 GB RAM). MATLAB **R2025b** at
   `C:\Program Files\MATLAB\R2025b`; SOLIDWORKS **2025 SP4.1** (33.4.1) at
@@ -414,6 +430,32 @@ Loaded automatically at session start. Keep it current; keep it lean.
     summation-order nondeterminism is real even between processes; treat
     single borderline trials as noise. Results: `spinal\basin_gate_results.json`
     + `basin_gate_full.log`.
+    **2026-09-20 (EB475WS4) — CURRICULUM FIXED + FIRST GROUND GAIT; full
+    chain in spinal\DESIGN.md "2026-09-20" section:** the 09-18 stage-2
+    "winner" was a STATIC-POSE EXPLOIT (rises=0; score 36.906 = knee term
+    alone; bit-exact repro) — the air objective now RHYTHM-GATES (rises<3
+    → ≈−10), new gains enter at [0,0.5] (full-range sampling killed the
+    stage-1 rhythm in all 25 trials), seeds are full-dicts (missing keys
+    get SAMPLED — JSON-rule lesson), exploited studies archived
+    (curriculum_exploit_archive_20260920.json) and rerun as curr_s2b/s3b.
+    NEW KNOB `contact_onset` (params.G, runner-side edge-triggered heel/
+    toe transients, default 0 = bit-identical, JSON-RULE loader updated).
+    OUTCOMES: s2b 50 trials — seed (stage-1 winner, drive 3.15) still
+    best 129.05; best afferented 128.3 ties it with all new gains ≈0
+    (afferents tolerated, not additive). s3b 60 trials — 11/60 real
+    gaits, winner trial 52 = −85.22: 20 cycles, duty 0.69 (ref 0.61),
+    knee −53.5° cycle / −76..+10 raw, hip range 16.9° (43.3 ref), ankle
+    34° OVER ref, tilt 29.7°, no NaN. Scalar search PLATEAUED — remaining
+    duty/cadence/hip-range gaps are ARCHITECTURAL (sensory phase reset
+    into RG). Also: runner npz q = named KEY_JOINTS already in degrees
+    (the old "q[m,4] is a quat" bug is resolved; _diag_stage3's double
+    np.degrees fixed); tuned-config constant-DRIVE self-sustain is LOST
+    (schedule-sustained; `_debug_rhythm_tuned.py`). Run instructions for
+    Ben's Spyder: `Code\MuJoCo_SNS\HowToRunCode.md`. Dissertation
+    CPG_spinal_section_draft.tex \fillme slots FILLED (ZCODE 2026-09-20
+    fenced blocks) + 3 new figs curr3b_ground_* — deconfliction note for
+    the other dissertation chat is in CHATGPT_HANDOFF.md "DISSERTATION
+    CPG SECTION — DECONFLICTION".
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the

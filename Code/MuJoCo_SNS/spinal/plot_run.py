@@ -45,6 +45,7 @@ def load(path: str, side: str):
     q = d["q"]                      # degrees, saved by runner
     act = d["act"]
     neuro = d["neuro"]
+    contact = d["contact"] if "contact" in d.files else None
     names = list(d["key_joints"])
     neuro_names = (list(d["neuro_names"]) if "neuro_names" in d
                    else ["DRIVE", "POSTURE", "RG_E_r", "RG_F_r",
@@ -55,7 +56,8 @@ def load(path: str, side: str):
     ncol = {nm: i for i, nm in enumerate(neuro_names)}
     j = {k: q[:, cols[v.format(s=side)]] for k, v in JOINT_KEYS.items()}
     drive = neuro[:, ncol["DRIVE"]]
-    return d, t, j, act, acols, neuro, ncol, drive, side
+    d.close()   # NpzFile keeps the handle open (WinError-5 trap)
+    return d, t, q, j, act, acols, neuro, ncol, drive, side, contact
 
 
 def stance_spans(neuro, ncol, t, side="r"):
