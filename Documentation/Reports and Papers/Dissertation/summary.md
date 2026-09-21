@@ -182,7 +182,7 @@ This dissertation uses OpenSim, an open-source platform for building and simulat
 
 **minus score** (unexpanded tool name on first use).
 
-### B9 — L38: Steele knee paragraph + figure — PROPOSED
+### B9 — L38: Steele knee paragraph + figure — FIGURE BUILT 2026-09-20 (paragraph still pending in Overleaf)
 ajh26: "Turn this into a whole paragraph with figure." Replacement paragraph:
 
 ```latex
@@ -375,3 +375,7 @@ Tension: X3 asks for a merged discussion chapter; X4 says remove this one. If X3
 6. M9: move the prior-walker section to Background, or wait for the structural pass?
 7. X4: confirm with ajh26 before removing 40-discussion.
 8. Drafts now live at `ZCode_drafts/chapters/` in this folder (regenerated 2026-09-16 after the Temp wipe).
+
+## Ledger changes
+
+- 2026-09-20 (ZCode): B9 figure built and saved beside this file as `steeleknee.pdf` / `steeleknee.png`; build script `Notes/build_steele_knee_figure.py` (panel A = crossed four-bar schematic drawn from the link lengths in Steele's 2018 PSU thesis Fig. 52; panel B = ICR migration, robot femur-frame curves from `buildKneeFlexorContext20mm.m` vs human computed from the Gait2392/Yamaguchi-Zajac knee splines; panel C = placeholder for Ben's test-stand photo). Ready-to-paste LaTeX block in the session handoff. No Overleaf edits made.

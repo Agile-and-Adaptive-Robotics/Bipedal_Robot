@@ -751,6 +751,40 @@ Loaded automatically at session start. Keep it current; keep it lean.
   gravity param is `GravityVector`; a Solver Configuration block IS required
   for Multibody nets; smimport's return value is not the model name — import
   a sanitized temp copy) all banked in BRIDGE_REPORT.md "LAPTOP PORT".
+  **2026-09-20 SNS_Simscape session (laptop, all details in
+  README_SNS_Simscape.md):** (1) ALL FOUR demos verified on R2025b —
+  KneeReflex 42.72°, CPG 9.7-48°, Beer 5.13°/9.66°, Deng 1.938 s r −0.857;
+  fixed sns_run_deng_demo.m corr() (no Statistics Toolbox on laptop →
+  base-MATLAB Pearson). (2) **SNS_Library.slx REBUILT with Rybak-style
+  synapse icons** (pass-through axon + E-triangle/I-ball terminal at the
+  postsynaptic edge; restyle in sns_build_library.m>synapseIconCode) — now
+  R2025b-native, demos' links still resolve, SNS_Library_R2025a.slx
+  exported; R2025a machines regenerate via the two build scripts. Actuator
+  validation re-PASSED (4.9e-10 N). (3) **Dissertation exports**:
+  sns_export_diagram.m upgraded — per-block 12 pt (R2025b has NO model-level
+  FontSize param), synapse names hidden, white canvas, styling in-memory
+  only; EPS = MiKTeX pdfcrop + mgs.exe eps2write chain (print -depsc is
+  REFUSED for Simulink systems; R2025b bundles NO ghostscript; pdfcrop
+  cannot write to C:\ root). NEW `demos\sns_build_circuit_view.m` →
+  `demos\KneeReflexCircuit.slx` = print-only neural-circuit view (blocks
+  COPIED from the demo, mask values 1:1). snsfig/sns_draw_circuit fonts
+  9.5-11 pt on a 16.5 cm canvas (= text width, no LaTeX downscale).
+  (4) **OpenSim→Simscape COMPLETE on the laptop**: Gait2392_simbody_simscape.slx
+  (osim_import\) imports (1446 blocks), COMPILES + sims after patching the 19
+  File Solids to absolute STL paths — **mesh param is `ExtGeomFileName`**
+  ('FileName' doesn't exist); `osim_import\Geometry` is a gitignored junction
+  into the cvt3 Geometry; a junction created AFTER import does NOT fix an
+  already-saved model. Joint inventory: 85 Prismatic (pathpoint slides) +
+  20 Revolute + 44 Weld = 149. (5) **09_BA_003 Multibody-Link XML imported**
+  (`mdl_knee_rig_xml_imported.slx`, runner dev\imports2_20260920.m): 96
+  blocks, joints = 2 Cylindrical + 3 6-DOF, ZERO revolute — **knee DOF
+  missing** (dropped Hinge mates → welds); Ben's SW re-export (Hinge →
+  Concentric+Coincident) still required. The older
+  mdl_knee_rig_import_tmp_imported.slx = 1-link sw2urdf stub. (6) CRASH
+  HAZARD: a FAILED `SimulationCommand update` leaves Simscape's GUI tree
+  poisoned — physmod_sm_gui_app_tree.dll access-violation at ANY later touch
+  incl. process teardown; make the compile succeed or expect crash-at-exit
+  (log survives). .gitignore gained `Code/Matlab/SNS_Simscape/osim_import/Geometry/`.
   **Part 3 — tuned spinal network as an EDITABLE Simulink model (2026-09-12,
   same session, all VERIFIED):** `spinal\export_network_json.py` (myo env)
   dumps the tuned `--fitted --best` network (v4b winner) to `spinal\

@@ -34,10 +34,10 @@ switch lower(cmd)
         th = linspace(0, 2*pi, 73);
         h = patch(x + r*cos(th), y + r*sin(th), [1 1 1], 'EdgeColor', 'k', 'LineWidth', 1.8);
         if ~isempty(lbl)
-            text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontWeight', 'bold', 'FontSize', 8);
+            text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontWeight', 'bold', 'FontSize', 11);
         end
         if ~isempty(sub)
-            text(x, y - r - 1.6, sub, 'HorizontalAlignment', 'center', 'FontSize', 7.5, 'FontAngle', 'italic');
+            text(x, y - r - 1.6, sub, 'HorizontalAlignment', 'center', 'FontSize', 9.5, 'FontAngle', 'italic');
         end
     case 'afferent'
         x = varargin{1}; y = varargin{2}; r = varargin{3};
@@ -45,9 +45,9 @@ switch lower(cmd)
         if numel(varargin) >= 5, sub = varargin{5}; end
         th = linspace(0, 2*pi, 73);
         h = patch(x + r*cos(th), y + r*sin(th), [0.85 0.93 0.85], 'EdgeColor', 'k', 'LineWidth', 1.8);
-        text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontWeight', 'bold', 'FontSize', 8);
+        text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontWeight', 'bold', 'FontSize', 11);
         if ~isempty(sub)
-            text(x, y - r - 1.6, sub, 'HorizontalAlignment', 'center', 'FontSize', 7.5, 'FontAngle', 'italic');
+            text(x, y - r - 1.6, sub, 'HorizontalAlignment', 'center', 'FontSize', 9.5, 'FontAngle', 'italic');
         end
     case 'muscle'
         x = varargin{1}; y = varargin{2}; w = varargin{3}; ht = varargin{4};
@@ -55,16 +55,16 @@ switch lower(cmd)
         th = linspace(0, 2*pi, 73);
         h = patch(x + (w/2)*cos(th), y + (ht/2)*sin(th), [0.94 0.76 0.74], ...
             'EdgeColor', 'k', 'LineWidth', 1.8);
-        text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontSize', 7.5);
+        text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontSize', 9.5);
     case 'box'
         x = varargin{1}; y = varargin{2}; w = varargin{3}; ht = varargin{4};
         lbl = varargin{5};
         h = rectangle('Position', [x - w/2, y - ht/2, w, ht], 'Curvature', 0.18, ...
             'FaceColor', [0.93 0.93 0.93], 'EdgeColor', 'k', 'LineWidth', 1.8);
         if contains(lbl, newline)
-            text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontSize', 8);
+            text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontSize', 10.5);
         else
-            text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontWeight', 'bold', 'FontSize', 8);
+            text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontWeight', 'bold', 'FontSize', 11);
         end
     case 'edge'
         x1 = varargin{1}; y1 = varargin{2}; x2 = varargin{3}; y2 = varargin{4};

@@ -1,0 +1,122 @@
+=== MATLAB 25.2.0.2998904 (R2025b) ===
+[Warning: An unknown constraint exists between 'Patella_v3_template_1_RIGID' and 'x04_01_KT_R_003_1_RIGID'. A rigid connection has been added between port 'F' of
+'Patella_v3_template_1_RIGID' and port 'F' of 'x04_01_KT_R_003_1_RIGID' for this constraint.] 
+[Warning: An unknown constraint exists between 'x04_01_KT_R_003_1_RIGID' and 'Patella_v5_1_RIGID'. A rigid connection has been added between port 'F3' of 'x04_01_KT_R_003_1_RIGID'
+and port 'F' of 'Patella_v5_1_RIGID' for this constraint.] 
+
+RIG XML IMPORT: 96 blocks
+  JOINT  Cylindrical                                  <- sm_lib/Joints/Cylindrical
+Joint
+  JOINT  Cylindrical1                                 <- sm_lib/Joints/Cylindrical
+Joint
+  JOINT  SixDOF                                       <- sm_lib/Joints/6-DOF Joint
+  JOINT  SixDOF1                                      <- sm_lib/Joints/6-DOF Joint
+  JOINT  SixDOF2                                      <- sm_lib/Joints/6-DOF Joint
+rig XML: 5 joint blocks, 0 solid elements
+gravity -Z set
+RIG XML IMPORT SAVED
+
+OSIM PATCH: 19 File Solids
+  could not resolve Gait2392_simbody_simscape/calcn_l/Visual (param was "")
+  could not resolve Gait2392_simbody_simscape/calcn_r/Visual (param was "")
+  could not resolve Gait2392_simbody_simscape/femur_l/Visual (param was "")
+  could not resolve Gait2392_simbody_simscape/femur_r/Visual (param was "")
+  could not resolve Gait2392_simbody_simscape/pelvis/Visual (param was "")
+  could not resolve Gait2392_simbody_simscape/pelvis/Visual1 (param was "")
+  could not resolve Gait2392_simbody_simscape/pelvis/Visual2 (param was "")
+  could not resolve Gait2392_simbody_simscape/talus_l/Visual (param was "")
+  could not resolve Gait2392_simbody_simscape/talus_r/Visual (param was "")
+  could not resolve Gait2392_simbody_simscape/tibia_l/Visual (param was "")
+  could not resolve Gait2392_simbody_simscape/tibia_l/Visual1 (param was "")
+  could not resolve Gait2392_simbody_simscape/tibia_r/Visual (param was "")
+  could not resolve Gait2392_simbody_simscape/tibia_r/Visual1 (param was "")
+  could not resolve Gait2392_simbody_simscape/toes_l/Visual (param was "")
+  could not resolve Gait2392_simbody_simscape/toes_r/Visual (param was "")
+  could not resolve Gait2392_simbody_simscape/torso/Visual (param was "")
+  could not resolve Gait2392_simbody_simscape/torso/Visual1 (param was "")
+  could not resolve Gait2392_simbody_simscape/torso/Visual2 (param was "")
+  could not resolve Gait2392_simbody_simscape/torso/Visual3 (param was "")
+patched 0/19 File Solids to C:\Users\Ben\Documents\GitHub\Bipedal_Robot\Code\Matlab\SNS_Simscape\osim_import\Geometry
+OSIM PATCH/COMPILE FAILED: ['Gait2392_simbody_simscape']: The following errors were found in the model Gait2392_simbody_simscape.
+CAUSE 1: ['Gait2392_simbody_simscape/calcn_l/Visual']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+CAUSE 2: ['Gait2392_simbody_simscape/calcn_r/Visual']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+CAUSE 3: ['Gait2392_simbody_simscape/femur_l/Visual']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+CAUSE 4: ['Gait2392_simbody_simscape/femur_r/Visual']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+CAUSE 5: ['Gait2392_simbody_simscape/pelvis/Visual']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to 
+CAUSE 6: ['Gait2392_simbody_simscape/pelvis/Visual1']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+CAUSE 7: ['Gait2392_simbody_simscape/pelvis/Visual2']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+CAUSE 8: ['Gait2392_simbody_simscape/talus_l/Visual']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+CAUSE 9: ['Gait2392_simbody_simscape/talus_r/Visual']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+CAUSE 10: ['Gait2392_simbody_simscape/tibia_l/Visual']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+CAUSE 11: ['Gait2392_simbody_simscape/tibia_l/Visual1']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order t
+CAUSE 12: ['Gait2392_simbody_simscape/tibia_r/Visual']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+CAUSE 13: ['Gait2392_simbody_simscape/tibia_r/Visual1']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order t
+CAUSE 14: ['Gait2392_simbody_simscape/toes_l/Visual']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to 
+CAUSE 15: ['Gait2392_simbody_simscape/toes_r/Visual']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to 
+CAUSE 16: ['Gait2392_simbody_simscape/torso/Visual']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to s
+CAUSE 17: ['Gait2392_simbody_simscape/torso/Visual1']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to 
+CAUSE 18: ['Gait2392_simbody_simscape/torso/Visual2']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to 
+CAUSE 19: ['Gait2392_simbody_simscape/torso/Visual3']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to 
+=== ALL DONE ===
+
+--------------------------------------------------------------------------------
+             Access violation detected at 2026-09-20 05:05:38 -0700
+--------------------------------------------------------------------------------
+
+Configuration:
+  Crash Decoding           : Disabled - No sandbox or build area path
+  Crash Mode               : continue (default)
+  Default Encoding         : UTF-8
+  Deployed                 : false
+  Graphics Driver          : Uninitialized hardware 
+  Graphics card 1          : Intel Corporation ( 0x8086 ) Intel(R) UHD Graphics Version 27.20.100.9749 (2021-6-24)
+  Graphics card 2          : NVIDIA ( 0x10de ) NVIDIA GeForce GTX 1650 Ti with Max-Q Design Version 32.0.15.9282 (2026-6-3)
+  Java Version             : Java 1.8.0_202-b08 with Oracle Corporation Java HotSpot(TM) 64-Bit Server VM mixed mode
+  MATLAB Architecture      : win64
+  MATLAB Entitlement ID    : 12509936
+  MATLAB Root              : C:\Program Files\MATLAB\R2025b
+  MATLAB Version           : 25.2.0.2998904 (R2025b)
+  OpenGL                   : hardware
+  Operating System         : Microsoft Windows 11 Pro
+  Process ID               : 21344
+  Processor ID             : x86 Family 6 Model 165 Stepping 2, GenuineIntel
+  Session Key              : aw1lbuq3g7ne2ou91n9ety3kh
+  Window System            : Version 10.0 (Build 26200)
+
+Fault Count: 1
+
+
+Abnormal termination:
+Access violation
+
+Current Thread: '' id 27840
+
+Register State (from fault):
+  RAX = 00000247e4626d40  RBX = 00000247e3c2fcf0
+  RCX = 0000000000000000  RDX = 000000ac174ffb90
+  RSP = 000000ac174ffa00  RBP = 000000ac174ffb70
+  RSI = 00000247e4626d40  RDI = 00000247f11062b8
+ 
+   R8 = 000000ac174ffab8   R9 = 00000247d8e09fc0
+  R10 = 2aaaaaaaaaaaaaab  R11 = 000000ac174ffa68
+  R12 = 00000247f11094a0  R13 = 00000247e4626d50
+  R14 = 0000000000000000  R15 = 00000247f100fa60
+ 
+  RIP = 00007ffc9d77fe51  EFL = 00010206
+ 
+   CS = 0033   FS = 0053   GS = 002b
+
+Stack Trace (from fault):
+[  0] 0x00007ffc9d77fe51 C:\Program Files\MATLAB\R2025b\bin\win64\physmod_sm_gui_app_tree.dll+00065105
+[  1] 0x00007ffc9d7abfa7 C:\Program Files\MATLAB\R2025b\bin\win64\physmod_sm_gui_app_tree.dll+00245671 mech2::ValueNotSizeT::operator=+00008263
+[  2] 0x00007ffc9d78170e C:\Program Files\MATLAB\R2025b\bin\win64\physmod_sm_gui_app_tree.dll+00071438
+[  3] 0x00007ffe74efcd30                   C:\WINDOWS\System32\ucrtbase.dll+00183600 wcsrchr+00000336
+[  4] 0x00007ffe7724cd87                   C:\WINDOWS\System32\KERNEL32.DLL+00183687 BaseThreadInitThunk+00000023
+[  5] 0x00007ffe77cecaec                      C:\WINDOWS\SYSTEM32\ntdll.dll+00707308 RtlUserThreadStart+00000044
+
+** This crash report has been saved to disk as C:\Users\Ben\AppData\Local\Temp\matlab_crash_dump.21344-1 **
+
+
+
+MATLAB is exiting because of fatal error
+ERROR: MATLAB error Exit Status: 0xc0000005, Access violation
