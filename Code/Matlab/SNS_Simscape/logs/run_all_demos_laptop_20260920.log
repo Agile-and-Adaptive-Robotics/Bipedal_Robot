@@ -1,0 +1,18 @@
+=== MATLAB 25.2.0.2998904 (R2025b) on PCWIN64 ===
+sim OK: theta final = 42.72 deg, A_ext = 0.34, A_flex = 0.73
+DEMO 1 KneeReflexDemo: OK
+CPG: 435 half-cycles in 10 s (period ~ 0.046 s, freq ~ 21.88 Hz)
+CPG run OK: theta range 9.7..48.0 deg
+DEMO 2 BPACPGLegDemo: OK
+reflex ON: theta final = -3.64 deg, biceps F = 88.1 N (m_cup 0.62 kg)
+reflex OFF: theta final = +2.92 deg, biceps F = 100.8 N (m_cup 0.62 kg)
+max sag: reflex ON 5.13 deg, reflex OFF 9.66 deg
+BEER DEMO RUN OK
+DEMO 3 BeerCupReflexDemo: OK
+DENG CPG DEMO: 10 RG_ext bursts over 20 s from ONE pulse; period 1.938 s; V range [-65.1, 3.7] mV
+DEMO 4 SNS_Deng_CPGDemo: FAILED  Undefined function 'corr' for input arguments of type 'double'.
+=== run_all_demos DONE ===
+[Warning: Unable to close the model 'BeerCupReflexDemo' because it has been changed. To save changes, use close_system('BeerCupReflexDemo',1). To discard changes, use
+close_system('BeerCupReflexDemo',0).] 
+[Warning: Unable to close the model 'SNS_Deng_CPGDemo' because it has been changed. To save changes, use close_system('SNS_Deng_CPGDemo',1). To discard changes, use
+close_system('SNS_Deng_CPGDemo',0).] 
