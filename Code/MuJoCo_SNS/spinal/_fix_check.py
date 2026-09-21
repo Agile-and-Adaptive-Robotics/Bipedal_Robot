@@ -4,6 +4,9 @@
 (3) stage-1 equivalence: with all conditional gains 0 the conditional
     blocks (HEEL/TOE/LBIN/IaIN/RC/PRESET/PREA) are entirely absent, so
     the running stage-1 study is bit-identical under the fixed code.
+(4) commissural paths use four directional cells: RG-E -> V3 ->
+    contralateral InE and RG-F -> C1 -| contralateral RG-F. No optional
+    ipsilateral RG-E<->RG-F excitation is present in this architecture.
 """
 import io
 import sys
@@ -47,9 +50,10 @@ print(f"stage-1 config: {len(names)} populations, conditional blocks "
 # --- (1)+(2) tuned gains: heel once, IaIN fed, ALL new central pathways
 tuned = dict(phase_reset_e=0.5, phase_reset_f=0.5, f1_kneext_inh=0.6,
              f1_anklepf_inh=0.6, renshaw=0.5, ia_in=0.6, heel_rge=0.6,
-             toe_rge=0.4, ib_rge=0.6, rg_weak_exc=0.4,
+             toe_rge=0.4, ib_rge=0.6, rg_weak_exc=0.0,
              ib_e_central=0.5, ia_f_central=0.5, ii_f_central=0.3,
-             ii_e_central=0.3, ia_f_contra_f=0.4, v3_to_ibexc=0.4)
+             ii_e_central=0.3, ia_f_contra_f=0.4, v3_to_ibexc=0.4,
+             c1_gain=0.6, v3_gain=0.25)
 names, g = groups(tuned)
 heel_e = [(k, v) for k, v in g.items()
           if k[0].startswith("HEEL") and k[2] == "exc"]
@@ -78,4 +82,21 @@ for want in (("Ib_vas_lat_r", "PF_E1_r", "exc"),
         f"{g.get(want)}"
 print("all NEW central-pathway edges verified (Ib/II->E-centers, "
       "Ia/II->F-centers, Ia->contra-F, HEEL/TOE->PF_E, V3->contra-IBEXC)")
+# Exact source-indexed paths: two V3 cells and two C1 cells.
+for want in (("RG_E_r", "CIN_E_r", "exc"),
+             ("CIN_E_r", "InE_l", "exc"),
+             ("RG_E_l", "CIN_E_l", "exc"),
+             ("CIN_E_l", "InE_r", "exc"),
+             ("RG_F_r", "CIN_F_r", "exc"),
+             ("CIN_F_r", "RG_F_l", "inh"),
+             ("RG_F_l", "CIN_F_l", "exc"),
+             ("CIN_F_l", "RG_F_r", "inh")):
+    assert g.get(want) == 1, f"wrong commissural path {want}: {g.get(want)}"
+for absent in (("RG_E_r", "RG_F_r", "exc"),
+               ("RG_F_r", "RG_E_r", "exc"),
+               ("RG_E_l", "RG_F_l", "exc"),
+               ("RG_F_l", "RG_E_l", "exc")):
+    assert g.get(absent, 0) == 0, f"retired ipsilateral edge present: {absent}"
+print("directional commissural audit PASS: two V3 + two C1 cells; "
+      "no ipsilateral RG-E<->RG-F excitation")
 print("ALL FIX CHECKS PASS")

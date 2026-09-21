@@ -147,6 +147,10 @@ ctx.KMAX = 0.255;          % KMAX = (rest - kmax)/rest at 620 kPa
 ctx.maxRelStrain = 1.0;    % allow relative strain up to KMAX
 ctx.minStrain = -0.03;
 
+% Required pointwise torque overshoot vs the human target, consumed by
+% objective_KneeExt20mm (same knob/meaning as the flexor builder's 0.05).
+ctx.requiredTorqueMargin = 0.05;
+
 % Extensor CV pick (Ben, 2026-09-10): minimizeExt10mmX3 noT3 front, pick 1.
 % Xi1/Xi2 locked to the flexor 2brk pick (4.35e4/1.7e4); Xi0/Xi3 searched on
 % the pinned pool {1,2,5,6,8}. Prior combo kept below for reference.
@@ -158,6 +162,13 @@ ctx.minStrain = -0.03;
 load minimizeExt10mmX3_results_20260910_noT3.mat filtered_results xCols
 pick = 1;
 g = filtered_results(pick,xCols);
+
+% Campaign-B alternative (Ben, 2026-09-17): pk107lock front, pick 1 --
+% Xi0/Xi3 searched with Xi1/Xi2 LOCKED to the flexor 2brk row-107 pair
+% (5.6238e4/1.8542e4). Reached min margin +5.060% at the 5% target.
+% load minimizeExt10mmX3_results_20260914_pk107lock.mat filtered_results xCols
+% pick = 1;
+% g = filtered_results(pick,xCols);
 
 ctx.Xi0 = g(1);
 ctx.Xi1 = g(2);

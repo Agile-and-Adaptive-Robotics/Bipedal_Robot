@@ -24,7 +24,7 @@ from sns_toolbox.networks import Network
 import params as P
 
 E_HI = P.E_HI
-C_ORANGE, C_BLUE = "orange", "cornflowerblue"
+C_EXT, C_FLEX = "cornflowerblue", "orangered"
 C_GREEN, C_RED = "lightgreen", "lightpink"
 C_AFF, C_IN = "gold", "plum"
 
@@ -65,8 +65,8 @@ class RhythmGeneratorNetwork(Network):
             slope_h=np.array([P.NAP["slope_h"]]),
             e_h=np.array([P.NAP["e_h"]]),
             tau_max_h=np.array([P.TAU["rg_nap_h"]]))
-        n.add_population(nap, shape=[1], name=f"RG-E_{side}", color=C_ORANGE)
-        n.add_population(nap, shape=[1], name=f"RG-F_{side}", color=C_BLUE)
+        n.add_population(nap, shape=[1], name=f"RG-E_{side}", color=C_EXT)
+        n.add_population(nap, shape=[1], name=f"RG-F_{side}", color=C_FLEX)
         n.add_population(_neu(P.TAU["rg"]), shape=[1], name=f"InE_{side}",
                          color=C_IN)
         n.add_population(_neu(P.TAU["rg"]), shape=[1], name=f"InF_{side}",
@@ -102,8 +102,8 @@ class PatternFormationNetwork(Network):
         super().__init__(name=f"Pattern Formation {side.upper()}")
         G = P.G
         n = self
-        for ph, col in (("E1", C_ORANGE), ("E2", C_ORANGE),
-                        ("F1", C_BLUE), ("F2", C_BLUE)):
+        for ph, col in (("E1", C_EXT), ("E2", C_EXT),
+                        ("F1", C_FLEX), ("F2", C_FLEX)):
             tau_m, _tau_a = P.PF_SHAPE[ph]
             n.add_population(_neu(P.TAU["pf"] * tau_m), shape=[1],
                              name=f"PF_{ph}_{side}", color=col)
@@ -130,7 +130,6 @@ class PatternFormationNetwork(Network):
         n.add_connection(_syn(1.5, True), f"PF_F1_{side}", f"KINH_{side}")
         n.add_input(f"PF_E1_{side}", name=f"RG-E->PF_{side}")
         n.add_input(f"PF_F1_{side}", name=f"RG-F->PF_{side}")
-        n.add_input(f"PF_E1_{side}", name=f"DRIVE->PF_{side}")
         n.add_output(f"KINH_{side}", name=f"KINH out {side}")
 
 

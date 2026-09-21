@@ -2,6 +2,505 @@
 
 Built 2026-09-09. Files in `Code\MuJoCo_SNS\spinal\`.
 
+## 2026-09-20 (ZCode, EB475WS4): CURRICULUM ROOT CAUSE — stage-2 "winner"
+**was a static-pose exploit, not a rhythm. Objective now rhythm-gated;
+studies purged and relaunched (curr_s2b/s3b); contact_onset added.**
+
+**The exploit (bit-exact repro today).** Re-running the stage-2 winner
+config (drive 1.569, `--no-ground --time 14`) reproduced the study score
+**bit-exactly (36.906)** — but decomposed it is `rises = 0` RG_E bursts
++ the knee term alone: 0.5 × 73.81 = 36.906. The air objective
+`3*rises + 0.5*(-knee_min)` is maximized by a STATIC deep-flexion pose
+(knee held −68..−74°, hip amp ~3-6°); RG_E_r sits tonic 2.9-3.4 mV and
+only RG_F flutters (~1 Hz, the runner's "12 bursts" counter is F-side).
+The 09-18 note "genuine afferented air rhythm" was wrong. Downstream:
+stage-3 seeded from this non-rhythmic network → all 50 trials −100
+(tg "ground latch" = upright tonic-F hold, duty 1.0, knee −57..−42,
+tilt 18.3 — real phenomenon, but its SEED never stepped). Stage-2
+trial 0 (stage-1 winner params + afferent gains sampled 0.2-0.95)
+scored −4.2 static: full-range new-gain sampling KILLED the stage-1
+rhythm in every one of 25 trials. NOTE the runner itself is
+deterministic across processes (bit-exact 36.906 twice today).
+
+**Also settled today:**
+- The 09-18 "`q[m,4]` is a quat" bug note is RESOLVED for current code:
+  runner npz now has `q` = (n,13) named KEY_JOINTS in DEGREES (q[4] =
+  knee_angle_r verified in the npz) + separate raw `qfull`. The real
+  bug of that vintage migrated into `_diag_stage3.py`, which
+  double-applied `np.degrees` (its "knee −3250°" = −57° real) — fixed.
+- Default-`check_rhythm.py` is NOT a meaningful gate (bare defaults,
+  no fitted baseline: tonic at DRIVE 2 — expected). The meaningful
+  probe is `_debug_rhythm_tuned.py` (fitted + v10 multipliers + stage-2
+  winner, network-only constant DRIVE): **self-sustainment is LOST on
+  this config** — decays to a tonic fixed point within ~5 s (E pinned
+  4.77 / F −2.00 mV). Current curriculum-config rhythm is
+  schedule/afferent-sustained, NOT a constant-drive limit cycle.
+  Simulink-constant-drive portability and the basin-gate rule apply to
+  FUTURE finalists: dump state + run basin_gate before trusting one.
+
+**Fixes applied 2026-09-20 (`_curriculum.py`):** (1) RHYTHM GATE in the
+stage≤2 air objective: rises<3 OR RG_E window swing<1 mV → return
+−10 + 0.05*(-knee_min) (static poses order below every genuine rhythm);
+rises>30 → −200 kept. (2) New gains enter SMALL: heel/toe/central
+gains [0,0.5] (was [0,1]), c1 [0.1,0.8], v3 [0,0.3]; drive ub 3.2→4.0
+(stage-1 winner sits at the old bound). (3) FULL-dict seed (missing
+enqueue keys get SAMPLED by optuna — same JSON-rule lesson): seed =
+prev-stage winner + all not-yet-searched keys 0.0, so trial 0 of s2b
+reproduces stage-1 rhythm exactly. (4) Fresh study names
+curr_s2b_air_aff / curr_s3b_ground; exploited studies archived to
+`curriculum_exploit_archive_20260920.json` (25 + 50 trials) and
+deleted; stage 1 untouched (137.254, genuine).
+
+**`contact_onset` (params.G, default 0; stage-3 search dim [0,1]):**
+runner-side contact-EVENT transients on the HEEL_c/TOE_c ports —
+loading edge (heel strike) = +kick, unloading edge (toe-off) = −kick,
+0.25 s exp decay, searched gain = peak nA. Implements the
+AnimatLab/CONTACT-driven-RG hypothesis for the ground latch without
+touching network topology (kick needs the HEEL/TOE ports, i.e.
+stance_fb/aff_loops built). JSON-RULE loader tuple now includes
+contact_onset. Gates PASSED: gain 0 bit-identical to the pre-change
+diag (kz 0.89409222828536006, dx 0.018379781063227019); gain 0.6
+finite (`_onset_smoke.py`).
+
+**Relaunch running:** `run_curriculum_20260920.bat` = `_curriculum.py
+2 25` then `3 30`, log `curriculum_rerun_20260920.log`; winners land
+in curriculum_stage2.json / curriculum_stage3.json. Watch: if NO s2b
+trial reaches rhythm in 25 trials, the next lever is an intermediate
+gain ramp (e.g. heel/toe ≤ 0.15 first) or smaller desc_f range — the
+stage-1 rhythm at drive ~3.15 is the asset to protect.
+
+**Rerun OUTCOMES (chain completed 17:38-19:01, 83 min).**
+- **Stage 2b (25 trials): seed wins, 129.05 = trial 0** (stage-1
+  winner + zeros). 11/25 trials genuine rhythm, 14 static — the metric
+  orders correctly now and late TPE trials (15/20/21/23/24) found
+  rhythm WITH afferent gains (84.7/75.3/69.4...), but 24 trials were
+  not enough to beat the afferent-free seed. Afferented-air value-add
+  still unproven; top-up resumable (`_curriculum.py 2 N` continues the
+  study).
+- **Stage 3b (30 trials): FIRST REAL GROUND GAIT of the curriculum —
+  6/30 trials above the −100 frozen sentinel (was 0/50).** Winner
+  trial 8 = −86.57, REPRODUCED by `_diag_stage3.py` (the json winner
+  re-scores exactly): duty 0.87 (latch was 1.0), burst_r 6, 4 countable
+  cycles, knee −73.9..+11.0 deg, hip −14..+71, tilt_max 33.7, kz 0.794,
+  PF_E1_r active (−3.3..+5.8 mV; was suppressed), RG_E swings
+  (−0.75..4.64). **contact_onset 0.51 in the winner** — the edge-
+  triggered pathway was picked up by the optimizer mid-range. Gaps vs
+  reference: counted-cycle knee_min −32.9 (ref −69.7), hip range 31.7
+  (43.3), knee range 43 (70), duty 0.82 (0.61) — a small slow
+  duty-heavy shuffle with real alternation. Historical context: v10
+  winner scored −79.9 under the corrected mutual-RC wiring; −86.6 is
+  the same league but from a config the FIXED curriculum found on its
+  own. Next levers: top-up trials (both studies resumable), then the
+  kine gaps are again architecture-level (RG duty/cadence), not
+  scalar.
+
+**Top-up OUTCOMES (second chain 19:04-20:27; 55 more trials) — fronts
+PLATEAUED, scalar tuning converged; stopping point.**
+- **s2b 50 trials: seed 129.05 still best; trial 47 = 128.3 ties it
+  with afferent gains ON but ALL NEAR ZERO** (heel 0.014, toe 0.145,
+  centrals 0.07-0.12, c1 0.24, v3 0.005, drive 2.68). Verdict: the
+  v11 afferent central pathways (heel/toe/LBIN + ia/ii/ib central
+  projections) can now TOLERATE the rhythm (couldn't before the gate +
+  small-gain ranges) but do not yet ADD to it — their value is an open
+  design question, not a tuning question.
+- **s3b 60 trials: −85.22 (trial 52) marginal over −86.57; 11/60 real
+  gaits.** The −85.2 winner is a HIGH-drive shuffle (3.62) that barely
+  uses the contact pathway (contact_onset 0.05, heel 0.011; largest
+  new gain ia_f_contra_f 0.27), while −86.57 used contact_onset 0.51 —
+  the front is flat between −85 and −88 across different mechanisms.
+  Counted-cycle kine gaps unchanged (knee_min −33 vs −69.7 ref, hip
+  range 32 vs 43, duty 0.82 vs 0.61).
+- **CONCLUSION (for the next session): stop searching scalars.** The
+  duty/cadence/kine gaps need the architecture levers already on the
+  books (sensory phase reset INTO the RG — the 09-12 diagnosis;
+  contact-event pathways are now available as `contact_onset` when
+  that redesign lands). Winner configs: curriculum_stage2.json (trial
+  0 = stage-1 winner) / curriculum_stage3.json (trial 52).
+
+## 2026-09-18 (ZCode, EB475WS4): PF-layer hypothesis tests + IK ground audit + `joint_pf` wiring
+
+**IK ground-consistency audit (Ben: "is it walking on the ground or in
+the air?") — `audit_ik_ground.py` → `fsa_results/ik_ground_audit.json`.**
+The subject01_walk1 data is REAL ground walking: all joint ranges inside
+textbook walking ranges; measured peak vGRF 1.09/1.10 BW; vertical
+impulse over one stride 879 N·s vs 909 N·s = BW×duration (ratio 0.97).
+BUT the replay check found an ANTHROPOMETRY MISMATCH: the IK/GRF are
+from the marker-SCALED subject01 (pelvis ~1.02 m) while our MJCF
+(`gait2392_simbody_cvt3.xml`) is the DEFAULT unscaled gait2392 (75.16 kg,
+standing pelvis 0.95 m) — replayed IK qpos put the stance foot +8.7 cm
+above the model floor during GRF-loaded windows.  This plausibly
+explains the acts-vs-STO provenance mismatch (RMSE 0.39): two different
+bodies.  RECOMMENDED FIX (needs Ben's go; easteregg2 job): convert
+`subject01_simbody.osim` with MyoConverter and redo the backsolve chain.
+Joint-ANGLE results and PF-layer TIMING conclusions are unaffected
+(angles are scale-free); muscle-length magnitudes carry the caveat.
+
+**PF-layer hypothesis tests (T1–T3) — `fsa_jointlayers.py` →
+`fsa_results/joint_layers.json` + `_jointlayer_waveforms.py` →
+`fsa_results/joint_layer_hcs.{png,pdf}`.**  Protocol matches
+fsa_backsolve (6 Hz lowpass+clip, sklearn NMF nndsvda, global-mean
+centered VAF, interleaved-frame frozen-H held-out, 10 seeds).  Held-out
+centered VAF (R/L): FREE6 0.934/0.925 (reproduces the published
+numbers); **T1 three joint layers × {E,F} = 6 HCs: 0.747/0.713**;
+T3 knee+ankle merged 0.557/0.596 and hip+knee merged 0.602/0.533 (both
+merges cost); +TRUNK identical to T1 (trunk muscles silent ≤0.05 in
+this SO — dataset cannot test the trunk layer); T2 RF routing:
+hip-F-only 0.738/0.695 vs knee-E/both 0.747/0.713.  Verdicts: (1) the
+joint-layer skeleton is viable and BEATS merged variants — knee and
+ankle need separate HCs with cross-terms (Ben's knee-ankle coupling
+lives in the gastrocs→KNEE-F cross-term); (2) fitted HC waveforms show
+textbook double bursts (HIP-E, HIP-F bimodal; KNEE-F loading burst +
+0.28/0.47-amplitude swing second burst — the double-knee is a
+re-triggered KNEE-F/HIP-E pair, not a separate layer); (3) RF wired
+from KNEE-E + HIP-F (both) — costs nothing here and keeps the
+EMG-supported pre-swing pathway; sartorius is ~silent in the SO, its
+hip-F routing stays a literature call; (4) the fitted ankle HCs inherit
+the known SO artifact (ANKLE-E peak 11%, ANKLE-F 30-34% — tib_ant
+mid-stance 1.0, soleus loading-only) — reconcile the ankle solve before
+final tuning.
+
+**`joint_pf` wiring — default-off conditional topology.**  `params.G`
+gained `joint_pf` (default 0.0); `build_network.py` gained
+`_build_pf_layers` (6 joint-layer HCs/side, same RG drive + PF_IN
+lamination + heel/toe/aff central-pathway attachments) and joint-layer
+MN routing via `joint_pf_weights.json` (muscle-level, T1-fitted,
+max-normalized; anatomical 1.0 fallback; rect_fem: KNEE-E 0.61 +
+HIP-F 1.00 = the convergent routing).  Flag on: 54 pops (-8 phase
+cells, +12 layer HCs); `_jpf_smoke.py` finite, layer HCs track RG,
+RG bit-identical flag on/off in the 3-s window (PF is feed-forward).
+Flag off: `_fix_check.py` + `_panels_check.py` PASS, build counts
+identical (50/78/24), `_reg_fingerprint.py` now deterministic (v1 had
+unstable repr hashing — fixed to names+tau+connections).  v1
+SIMPLIFICATIONS, next steps: all E-HCs share one tau shape (fitted
+per-layer phase offsets not yet shaped in-sim — differentiate via
+per-layer PF_SHAPE/tau or per-layer aff loop gains); runner has no
+`--joint-pf` CLI yet (set `params.G["joint_pf"]=1` programmatically);
+lunge/terrain trials should test generalization, not retune the weights.
+
+**Plans written:** `SPIKING_MIRROR_PLAN.md` (hybrid spiking twin:
+LIF+adapting RG/INs with spike-train afferents, MN layer stays
+non-spiking via SpikingNonSpikingSynapse; dt 0.1-0.5 ms; gates mirror
+fix-check/selfsustain/basin/air-smoke) and `GAIT_VARIANTS_PLAN.md`
+(terrain first: seeded heightfield tiers, heel/toe sensing, stays-up
+metrics, curriculum hook after a valid ground winner; walking lunges
+second — CONTINUOUS cyclic gait per Ben's correction, ~0.3 Hz = IN the
+demonstrated 2.1 s NaP period regime; hard parts are RoM amplitude, the
+long double-support transfer (frontal plane), and swing clearance, not
+timing).
+
+**Ia/II-antagonist question (Ben, answered 2026-09-18):** non-spiking
+neurons are NOT a sign limitation — a synapse's sign is its reversal
+potential, so any afferent can inhibit any pool.  What exists: Ia
+homonymous exc, Ia→IaIN→antagonist-MN reciprocal INHIBITION
+(`ia_in`>0), II homonymous exc, flexor Ia/II→F-centers (`ia/ii_f_central`),
+extensor Ib/II→E-centers.  Recommendation: do NOT add a direct
+II→antagonist-MN inhibitory pathway — literature grounds Ia reciprocal
+inhibition (IaIN), not II; if antagonist co-contraction shows up in
+sim, add a phase-gated inhibitory IN (the KINH pattern) rather than a
+direct sign-flipped afferent.
+
+**Curriculum rerun (2026-09-18/19, background): stage 2 REAL, stage 3
+tonic-F ground latch — precisely characterized.** Purged the 2×100
+sentinel trials (archive json), reran with the hardened runner save
+(spinal_run.npz atomic-replace after a Windows Errno 22 killed stage-3
+trial 0 mid-write). STAGE 2: best 36.906 (trial 19; drive 1.569,
+rg_nap_h 0.478, desc_e 1.643, desc_f 1.692, rg_to_pf 2.667) — genuine
+afferented air rhythm (RG-burst count is a named-channel metric).
+STAGE 3: all 30 trials −100 sentinel. Diagnostic
+(`_diag_stage3.py`): NO NaN, stays upright the full 16 s (kz 0.894,
+tilt_max 18.3), but **tonic F-side dominance**: burst_r=1, duty=1.0
+(right foot never unloads), PF_F1_r 4.7..6.2 mV while PF_E1_r is
+suppressed (−0.3..−0.1 mV), RG_E_r flat 3.1..3.4 mV. That is the known
+NaP ground latch (09-16 night interleg diagnosis), now with a clean
+fingerprint. LEADING HYPOTHESIS for the next session: the AnimatLab
+lesson — a tonic-driven half-center will not oscillate under load; the
+working reference RG is CONTACT-driven. Our heel/toe→RG-E pathway
+exists and was searched nonzero (heel 0.47, toe 0.46, ib_rge 0.96) yet
+F still latches — try contact-EVENT-triggered (onset/edge) drive rather
+than tonic contact level, and/or E-side bias on ground entry.
+**BUG FOUND (fix before next stage-2/3 run): `_curriculum.py` reads
+`q[m, 4]` as "knee" but the npz `q` is the FULL qpos with np.degrees
+applied blindly — index 4 is a pelvis-quaternion component (and the
+slides are meters mislabeled as degrees). The stage-2 selection rode
+the real `rises` term so the winner stands, but the knee term was a
+quat component. Use the named knee channel (KEY_JOINTS index or
+neuro_names-style lookup) and stop applying degrees to slides/quats.**
+The eval-mode metrics (duty/kine/tilt from KEY_JOINTS by name) are
+unaffected.
+
+**PELVIS RE-TARGET (Ben's "run our own IK on gait2392") — DONE, VALIDATED,
+and the conversion is DEMOTED to optional.** Ben questioned why scale at
+all ("gait2392 is already a 6-ft person") — right call: instead of
+converting the scaled subject model, keep the measured JOINT angles and
+re-solve only the pelvis HEIGHT on our own MJCF.
+`_retarget_pelvis.py`: closed-form per-frame Δty (pelvis_ty is a
+world-vertical slide — dz/dty = 1 verified exactly), weighted by each
+foot's measured vGRF, targeting the standing-keyframe foot height.
+Result: Δty mean −0.0845 m [−0.106, −0.063]; right-foot z during
+GRF-contact +0.089 → +0.014 m = exactly the floor reference (PASS).
+Saved `bsolve_retarget.npz` (qpos corrected + retarget_dty).
+Retargeted backsolve: `BSOLVE_RETARGET=1` in bsolve_ik.main patches
+`ik["pelvis_ty"]` (one injection point feeds kinematics, FD moments,
+ID, NNLS); `BSOLVE_OUT` overrides the output name.
+TWO CATCHES: (1) the re-discovered sagittal signs (weak ~0.62 length
+signatures at the corrected height — the old floating-foot replay
+accidentally stretched muscles to subject-like lengths) flipped
+pelvis_tilt + both hip_flexions into a MIRRORED motion (corr −1.00,
+residual 0.013 — meaningless consistency of a wrong trajectory);
+`BSOLVE_PIN_SIGNS=1` pins the validated original set — use it for all
+future retargeted runs. (2) the run died saving a decorative PNG at the
+last line (transient Windows Errno 22, same family as the runner
+spinal_run.npz race) — bsolve figures now `_safe_save`-wrapped, and
+runner's spinal_run.npz save is atomic-replace + retry.
+RESULTS (pinned, validated): acts vs original pooled corr **0.990**,
+every mean/peak-phase within noise (tib_ant still peaks 35%, soleus 6.7%
+— the ankle SO artifact is NOT caused by the pelvis mismatch, it
+survives the correction); ID residual 0.328 ≈ original 0.323 (the
+0.013 belonged to the mirrored basin). Joint-layer fit on corrected
+acts: T1 0.750/0.713, same ordering/routing verdicts (joint_layers_retarget.json).
+CONSEQUENCE: the SO reference is robust to the anthropometry mismatch —
+current tuning and the T1 wiring stand unchanged; `bsolve_retarget.npz`
+is the kinematically-correct qpos source for anything contact-related;
+the scaled-subject01 CONVERSION (thread G) is demoted to OPTIONAL —
+only needed for subject-matched muscle GEOMETRY/inertia claims.
+Original npz preserved as `bsolve_out_unscaled_backup.npz`.
+
+**Ben's 2026-09-18 GOs, executed (ZCode, EB475WS4):**
+1. **Conversion prepared for easteregg2** (no MyoConverter/opensim env
+   exists on EB475WS4; base python 3.14 has no opensim wheel):
+   `Solid_Models\OpenSim\Gait2392_Robotbody\convert_subject01.py` —
+   easteregg2-ready driver modeled verbatim on the proven
+   `convert_to_mujoco.py` kwargs (validation/PDF off, 10-20 min),
+   `__main__`-guarded (multiprocessing-spawn trap), auto-detects the
+   clone's Geometry folder, converts the repo's SCALED
+   subject01_simbody.osim to `mjc\subject01_simbody\`.  Runbook is in
+   the script docstring + CHATGPT_HANDOFF thread (G).  Post-conversion
+   gate: `_validate_subject_model.py` (self-tested against the OLD
+   model: fails exactly on standing height 0.95 vs scaled 0.98-1.10
+   required; 92 actuators, leg-drop, zero-ctrl NaN checks PASS) — the
+   new model must PASS it, then re-run `audit_ik_ground.py` with
+   AARL_MODEL pointed at it (stance-foot height should go +0.087 -> ~0).
+   `runner.py` gained an `AARL_MODEL` env override (unset = proven
+   default) so the whole chain can point at the new MJCF without edits.
+2. **Curriculum sentinel purge + relaunch (running).**
+   `_curriculum_reset.py` archived 100 + 100 all-sentinel trials
+   (best −100.0 both) to `curriculum_sentinel_archive_20260918.json`
+   and deleted studies curr_s2_air_aff / curr_s3_ground (stage 1
+   untouched, still valid).  Rerun launched in background:
+   `_curriculum.py 2 25` then `3 30`, log
+   `curriculum_rerun_20260918.log`.  NOTE for whoever reads the db: the
+   studies are NEW (fresh seeds; stage 2 seeds from the valid stage-1
+   winner; stage 3 chains after).
+3. **`--joint-pf` plumbing (for the LATER joint_pf study — NOT searched
+   now, Ben: current model first).**  runner.py: `--joint-pf [X]` CLI
+   (0/absent = phase cells) + JSON-rule loader branch
+   (`if "joint_pf" in best`).  Syntax-checked; additive only — the
+   running curriculum is unaffected.
+4. **Roadmap logged** in `GAIT_VARIANTS_PLAN.md`: Ben's
+   balance→walk→run→walk→stand composition target — DRIVE scheduling
+   for regime, PF-layer gain scheduling for pattern (the joint-layer
+   structure is the mechanism), sensor-triggered transitions; running
+   (~2.5-3 Hz + flight) flagged as the hard regime.  Walking lunges
+   corrected to CONTINUOUS cyclic gait per Ben (0.3 Hz is IN the
+   demonstrated 2.1 s NaP regime; hard parts = RoM, double-support
+   transfer, swing clearance).
+
+## 2026-09-17 VERIFICATION (EB475WS4: model, figures, and draft audited)
+
+The documented local interpreter works:
+`C:\Users\Ben Bolen\.conda\envs\myo\python.exe` (Python 3.10.21,
+NumPy 1.22.4, SciPy 1.9.3, MuJoCo 2.3.7, SNS-Toolbox 1.5.2).
+`_fix_check.py`, `_panels_check.py`, `audit_signs.py`, and the new
+`_live_plant_audit.py` pass. `_smoke_nap.py` ran the full patched
+MuJoCo--SNS loop at 2 ms and passed: finite dynamics, five RG bursts per
+leg in the 5--15 s walk window, 2.11 s period, E-duty 0.67, right knee
+-106.3..+11.6 deg, right hip -20.1..+50.9 deg. `spinal_run.npz/.png`
+now contain that verified air smoke run.
+
+Figure audit found and fixed four concrete problems:
+
+1. `runner.py` plotted radian joint data under a degree label and used
+   pre-NaP hard-coded neural column positions (including PF columns for
+   the left RG summary). Plots and summaries now resolve channels by
+   `NEURO_NAMES`, plot degrees, and restrict rhythm metrics to the true
+   5--15 s walk window.
+2. `_render_panels.py` still drew the retired tonic DRIVE->PF edge and
+   called a stage-3 `score=-100` sentinel a tuned winner. The edge is
+   removed; failed stages are ignored and representative gains are
+   labelled as such.
+3. `draw_circuit.py` checked only compiled-but-undrawn edge groups, so
+   extra fictional arrows could pass. The contract is now two-way. It
+   immediately caught the V3 target drawn/labeled as contra RG-E; the
+   compiled circuit targets contra InE. The figure and conductance label
+   are corrected, and the missing/extra edge-group contract passes.
+4. `_figure_hindlimb_style.py` now resolves RG/PF columns from the NPZ's
+   `neuro_names` instead of positional constants.
+
+The live Fmax repair is confirmed: bilateral ercspn/intobl/extobl/ext_hal
+are exactly 2500/900/900/162 N after `apply_harness`. The broader draft
+claim was too strong: among 86 non-pruned active actuators, 78 are within
+15% of stock OpenSim and eight exceed 15% (worst gluteal paths about
+31--34%). `CPG_spinal_section_draft.tex` now reports that result, the
+verified air metrics (four complete intervals/five onsets, 2.108 s,
+cycle duty 0.691), and the honest curriculum state: stage 1 valid;
+stages 2--3 remain `-100` sentinel diagnostics, not winners.
+
+Regenerated and synchronized: `circuit_dengstyle.{pdf,svg,png}`,
+`circuit_literature.{pdf,svg,png}`, `sns_diagram_panels.{pdf,png}`, and
+`hindlimb_style_nap_air.{pdf,png}` in the
+spinal `figures/` and dissertation `CPG_airstepping_figs/` folders.
+
+Visual follow-up against the local historical AnimatLab figures and the
+Shinohara-2025, Shevtsova-2026, Rybak-2024/2025, Deng-2019, Di-Russo-2023,
+Jankowska, Rahmati, and Klishko PDFs: the detailed circuit is retained as the
+zoomable compiled-edge audit figure; the toolbox-native figure is now a
+page-readable A/B (RG/PF) over C (representative knee motor/reflex circuit)
+composition with duplicate rendering ports removed. Air traces show only the
+settled 6--15 s commanded-walk interval. All current figures now follow the
+recent literature convention extensor=blue, flexor=vermillion/orange. This is
+presentation-only. Final source/dissertation copies are hash-identical.
+After Ben's annotated visual review, the preliminary dissertation draft now
+uses `circuit_literature.pdf` first: a bilateral RG--PF--MN--muscle hierarchy
+with centered c1/V3 relays, plus one complete antagonist/reflex knee motif.
+The toolbox panels remain a software-native artifact. `circuit_dengstyle.pdf`
+remains on a dedicated page as the compiled-edge audit.
+
+The annotated review exposed genuine audit-figure defects: orphaned
+hard-coded MN-to-activation starts, no activation-map-to-flexor-muscle edge,
+and no flexor muscle-to-Ia/II/Ib encoder paths. Heel/toe-to-InE and
+PF-F1-to-IaIN also used unconnected raw start coordinates. These are fixed.
+The dense audit now shows complete extensor and flexor interfaces, omits
+partial hip glyphs, and separately asserts the plant-interface paths because
+they do not exist in SNS-Toolbox's `net.connections`. The new reader figure
+asserts every displayed solid neural edge against a freshly compiled network.
+Its final visual pass also restored RC->IaIN recurrent disinhibition, RG-E
+stance gating of IB-EXC, and aggregate sensory projections to both RG and PF.
+
+### 2026-09-17 directional commissural + activation/FSA correction
+
+Ben caught one remaining literature-figure abstraction error. The compiled
+network already had four distinct directional commissural cells, but the
+reader figure collapsed them into a shared C1 and a shared V3. The corrected
+paths are:
+
+- RG-E_l -> V3_l-to-r -> InE_r and RG-E_r -> V3_r-to-l -> InE_l
+  (both synapses excitatory);
+- RG-F_l -> C1_l-to-r -| RG-F_r and RG-F_r -> C1_r-to-l -| RG-F_l.
+
+`draw_literature_circuit.py` now draws the four cells separately and
+`_fix_check.py` asserts every compiled source/sign/destination. The
+representative diagram build sets `rg_weak_exc=0`; direct ipsilateral
+RG-E<->RG-F excitation is absent from the audited graph.
+
+Activation provenance was also corrected. The surviving
+`ResultsBSolve/zz_bsolve_StaticOptimization_activation.sto` does not match
+`bsolve_out.npz['acts']` (RMSE 0.3924, correlation -0.0119 on common
+frames). Therefore the circuit backsolve uses the unambiguous converted-
+MuJoCo ridge/NNLS `acts` array. Earlier four/five-component NMF values from
+the STO do not validate the converted-model PF count.
+
+`fsa_backsolve.py` implements the nonspiking leaky-integrator Function
+Subnetwork Approach target mapping (`V_MN=5 mV*activation`) and exports the
+rank scan, PF time courses/muscle weights, MN reconstructions, and inverse PF
+current requirements to `fsa_results/`. Held-out interleaved-frame VAF at
+four PFs is only 0.852 right/0.823 left. Six is the smallest shared count
+above 0.90 (0.924 right/0.912 left); in-sample centered VAF is 0.926/0.913.
+Ten-seed robustness is tight in VAF, but one right sixth component is
+spatially unstable and the record contains only about 1.6 cycles. Treat six
+as the engineering target for this dataset, not a universal biological
+primitive count, until longer/multiple trials confirm it.
+
+The dynamic excitatory PF->MN fit reaches centered VAF 0.863/0.835. About
+16--17% of MN samples require net negative current, so higher-fidelity closure
+needs explicit phase-specific inhibition (or an equivalent negative-current
+pathway), not only excitatory PF conductances plus membrane leak.
+
+The OpenSim-4.6 `normal.mot` experiment is quarantined from this inference.
+It required an analysis-only model derivative disabling failed-equilibrium
+`lat_gas_r` plus six pelvis residuals; the vertical residual averaged
+739.4 N. It is a reproducible kinematics-only, residual-supported solve in
+`ResultsNormalSO/`, not a ground-contact walking activation target.
+
+### 2026-09-17 phase/PF semantics + ankle-capacity audit
+
+Do not conflate the existing E1/E2/F1/F2 early/late stance/swing
+pattern-formation channels with the six NMF synergies. Figures call the
+latter S1--S6 only. A synergy is an observed temporal coefficient plus muscle
+weight vector; it is not a PF neuron or layer. A joint/functional PF layer
+may contain extensor and flexor half-centers whose outputs express two
+synergy-like patterns, while one synergy may combine multiple PF layers.
+MN pools may receive convergent drive from several layers; this is expected
+to matter most for biarticular hip+knee and knee+ankle muscles. The current
+FSA fit already permits all six unconstrained sources to project to every MN,
+but it does not identify an anatomical PF-layer decomposition.
+
+Their stance-rescaled peaks are approximately S1=96%, S2=40%, S3=10%,
+S4=82%, while S5/S6 are not bilaterally phase-stable. Next interpretation
+work should test S3<->S6 weight reassignment with a PF-informed constrained
+factorization, not hand edits, and overlay synergy/PF contributions on both
+the early-stance and swing-phase knee-flexion episodes (the classic
+double-knee pattern). Preserve monoarticular/biarticular identity so the same
+MN pool can receive appropriate hip+knee or knee+ankle PF drive.
+
+`gait_phase.py` uses measured GRF heel strike/toe-off and maps stance to
+0--50%, swing to 50--100%. The current 2-s activation record contains only
+one complete stride per side (measured duty 0.622/0.615), so these are
+cycle-normalized traces, not a multi-cycle statistical average.
+`plot_gait_joint_angles.py` adds the requested 5x2 OpenSim-coordinate
+kinematic figure (sagittal column; YZ-plane column with intentionally blank
+knee/MTP panels).
+
+`compare_ankle_df.py` compares Ben's OpenSim right-dorsiflexor force/torque
+sweeps with the patched converted MuJoCo model at activation 1 and zero
+velocity. In the IK gait range (-8.84..+16.02 deg), MJ/OS force ratios are
+1.007 ext_dig, 0.966 ext_hal, 0.945 per_tert, 1.033 tib_ant; torque ratios
+are 1.021, 0.974, 0.973, and 1.041. Summed torque is 1.023x OpenSim.
+Therefore static force/moment-arm capacity is not the dorsiflexion deficit;
+inspect recruitment timing/magnitude, antagonist activity, and dynamic
+force-velocity effects. As at the knee, use equality-aware FD tendon moments:
+raw MuJoCo `actuator_moment` is zero for these converted ankle paths.
+
+### 2026-09-17 (ZCode session): bilateral figure repair DONE (the stop-point work)
+
+The four annotated `circuit_literature` panel-A defects are fixed and the
+7-step safe sequence from the report's stop point is COMPLETE:
+
+1. Mirror: the whole RIGHT functional column is mirrored
+   (`med = +1` L / `-1` R; `ext_x = cx - med*0.78`, `flx_x = cx + med*0.78`,
+   InE/IN-E on the extensor side) so BOTH RG-F half-centers face the
+   midline; InE/InF and the commissural routes rerouted accordingly.
+2. Named ports: every box edge now starts/ends at an explicit boundary
+   port (`bport(name, fx, fy)`: RG input top-center, MN output
+   bottom-center, PF-IN excitation bottom-inner, cross-inhibition and
+   aggregate feedback on the inner side edge, encoder arrivals on the
+   sensory-box top edge). No more glyph-shrink guessing.
+3. Feedback bus: the four sweeping dashed arcs are replaced by one
+   explicit bus per side (sensory box top-center -> vertical bus through
+   the limb midline -> JPF junction at y 5.20 -> JRG junction at y 7.40)
+   with four short labeled branches; the RG branches arrive at the
+   circle BOTTOM so the excitatory triangles cannot collide with the
+   InE/InF inhibitory dots.
+4. V3 -> contra-InE now runs through a gray waypoint below the In row
+   (the mirrored InF glyph sits on the direct chord); the RG-E -> V3
+   arcs bow at rad -0.22*med so they clear the RG-F circles (the R->L
+   arc previously passed BEHIND RG-F_R).
+5. Contracts: instance-level (source glyph, target glyph, sign) set for
+   all per-side + commissural paths, a separate 4-branch/side aggregate
+   contract, and a GEOMETRY contract -- `dc.syn(..., record=...)` now
+   records each wire's true endpoints (backward compatible; deng figure
+   unaffected) and every endpoint is asserted on its registered glyph
+   boundary (boxes: <=0.04 of the surface, ends allowed one marker
+   setback 0.16; circles: r-0.03..r+0.34 at the arrival end; waypoints:
+   0.04) with nonzero length and no self-edge. The compiled semantic
+   two-way contract is retained.
+
+Verified: `_fix_check.py` PASS, `_panels_check.py` PASS (dc.syn change
+backward-compatible), render inspected at native resolution via
+`_crop_review.py` region crops (kept as a tool: fraction-arg cropper for
+reviewing big renders -- Read downscales whole figures, crops do not).
+Regenerated `circuit_literature.{png,pdf,svg}`; dissertation copies
+SHA-256 identical (png 4B0087BE...).
+
 ## 2026-09-16 NIGHT (CURRICULUM STATE + INTERLEG LATCH DIAGNOSIS —
 ## READ FIRST if resuming; handed to ChatGPT for off-peak work)
 

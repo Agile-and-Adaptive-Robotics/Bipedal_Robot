@@ -3,7 +3,9 @@ neural activity (RG half-centers, PF cells, MN output) over joint angles
 for one recorded run. Usage: _figure_hindlimb_style.py <run.npz> <tag>
 """
 import io
+import os
 import sys
+import time
 from pathlib import Path
 
 import matplotlib
@@ -23,12 +25,16 @@ act = z["act"]        # KEY_ACTS order in z["key_acts"]
 neuro = z["neuro"]
 acts = [str(a) for a in z["key_acts"]]
 joints = [str(a) for a in z["key_joints"]]
+neuro_names = [str(a) for a in z["neuro_names"]]
 
 ai = {a: i for i, a in enumerate(acts)}
 ji = {a: i for i, a in enumerate(joints)}
-# window: walk phase for ground runs, steady window for air
+ni = {a: i for i, a in enumerate(neuro_names)}
+# Window: show only the commanded walk phase.  Air runs discard the first
+# second after DRIVE reaches its plateau so the panel emphasizes the settled
+# limit cycle without including the intentional ramp-down/holding phase.
 kind = "ground" if "ground" in npz else "air"
-w0, w1 = (5.0, 15.0) if kind == "ground" else (6.0, 20.0)
+w0, w1 = (5.0, 15.0) if kind == "ground" else (6.0, 15.0)
 m = (t >= w0) & (t <= w1)
 
 fig, ax = plt.subplots(5, 1, figsize=(9.0, 8.2), sharex=True,
@@ -36,13 +42,19 @@ fig, ax = plt.subplots(5, 1, figsize=(9.0, 8.2), sharex=True,
 fig.subplots_adjust(hspace=0.13, left=0.09, right=0.985, top=0.95,
                     bottom=0.07)
 
-ax[0].plot(t[m], neuro[m, 2], color="#d55e00", lw=1.2, label="RG-E (ext)")
-ax[0].plot(t[m], neuro[m, 3], color="#0072b2", lw=1.2, label="RG-F (flx)")
+ax[0].plot(t[m], neuro[m, ni["RG_E_r"]], color="#0072b2", lw=1.2,
+           label="RG-E (ext)")
+ax[0].plot(t[m], neuro[m, ni["RG_F_r"]], color="#d55e00", lw=1.2,
+           label="RG-F (flx)")
 ax[0].set_ylabel("RG\npotential [mV]", fontsize=8)
-ax[1].plot(t[m], neuro[m, 6], color="#d55e00", lw=0.9, label="PF-E1")
-ax[1].plot(t[m], neuro[m, 7], color="#e69f00", lw=0.9, label="PF-E2")
-ax[1].plot(t[m], neuro[m, 8], color="#0072b2", lw=0.9, label="PF-F1")
-ax[1].plot(t[m], neuro[m, 9], color="#56b4e9", lw=0.9, label="PF-F2")
+ax[1].plot(t[m], neuro[m, ni["PF_E1_r"]], color="#0072b2", lw=0.9,
+           label="PF-E1")
+ax[1].plot(t[m], neuro[m, ni["PF_E2_r"]], color="#56b4e9", lw=0.9,
+           label="PF-E2")
+ax[1].plot(t[m], neuro[m, ni["PF_F1_r"]], color="#d55e00", lw=0.9,
+           label="PF-F1")
+ax[1].plot(t[m], neuro[m, ni["PF_F2_r"]], color="#e69f00", lw=0.9,
+           label="PF-F2")
 ax[1].set_ylabel("PF\npotential [mV]", fontsize=8)
 ax[2].plot(t[m], act[m, ai["vas_lat_r"]], color="#009e73", lw=1.2,
            label="MN knee-ext (vas_lat, activation)")
@@ -63,6 +75,20 @@ for a in ax[:3]:
     a.legend(fontsize=6.2, ncol=4, loc="upper right", framealpha=0.85)
 fig.suptitle(f"gait2392 spinal SNS - right leg ({tag}, RoM limits + "
              f"Renshaw 0.5)", fontsize=9.5)
-fig.savefig(HERE / "figures" / f"hindlimb_style_{tag}.png", dpi=200)
-fig.savefig(HERE / "figures" / f"hindlimb_style_{tag}.pdf")
+def save_replace(path, **kwargs):
+    """Render beside the target, then replace it after transient preview locks."""
+    tmp = path.with_name(path.stem + ".rendering" + path.suffix)
+    fig.savefig(tmp, **kwargs)
+    for attempt in range(12):
+        try:
+            os.replace(tmp, path)
+            return
+        except OSError:
+            if attempt == 11:
+                raise
+            time.sleep(0.25)
+
+
+save_replace(HERE / "figures" / f"hindlimb_style_{tag}.png", dpi=200)
+save_replace(HERE / "figures" / f"hindlimb_style_{tag}.pdf")
 print(f"saved figures/hindlimb_style_{tag}.png/.pdf")

@@ -154,6 +154,9 @@ ctx.torqueScale = max(1, max(ctx.humanTorqueAbs));
 % pick = 1;
 % g = filtered_results(pick,xCols);
 load minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat filtered_results xCols
+% Ben, 2026-09-18: pick 1 vs pick 107 comparison with a seeded surrogate
+% (pick 1 run hit +5.01% at the 5% target -- Bifemsh_20mm_Result_20260918_1052).
+% pick = 1;
 pick = 107;
 g = filtered_results(pick,xCols);
 Xi0 = g(1);

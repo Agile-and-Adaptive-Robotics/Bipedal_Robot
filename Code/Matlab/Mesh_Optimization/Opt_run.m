@@ -23,12 +23,32 @@ end
 
 
 %% Global search
+% Seed the surrogate construction phase with known-good designs (2026-09-17:
+% identical-config runs landed at -39% vs -4.3% margin depending on which
+% basin the quasi-random initial phase found). Rows are full 8-variable
+% points from Results, clipped into [lb, ub] for safety.
+seedFiles = { ...
+    'Bifemsh_20mm_Result_20260910_1234.mat', ...  % +1.02% record (Xi3 0.294 ctx)
+    'Bifemsh_20mm_Result_20260917_1927.mat', ...  % A1 run
+    'Bifemsh_20mm_Result_20260917_2004.mat', ...  % B1 run, -4.29% basin
+    'Bifemsh_20mm_Result_20260918_1052.mat', ...  % seeded pick-1 run, +5.01%
+    'Bifemsh_20mm_Result_20260918_1138.mat'};     % seeded pick-107 run, +3.61%
+initPts = ctx.x0(:).';
+for kSeed = 1:numel(seedFiles)
+    Sseed = load(fullfile(fileparts(mfilename('fullpath')), ...
+        'Results', seedFiles{kSeed}), 'xBest');
+    initPts = [initPts; Sseed.xBest(:).']; %#ok<AGROW>
+end
+initPts = min(max(initPts, ctx.lb(:).'), ctx.ub(:).');
+fprintf('Seeding surrogateopt with %d initial points.\n', size(initPts,1))
+
 optsG = optimoptions('surrogateopt', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
     'MaxFunctionEvaluations', 7000, ...
     'MinSampleDistance', 0.001, ...
-    'ConstraintTolerance', 1e-6);
+    'ConstraintTolerance', 1e-6, ...
+    'InitialPoints', initPts);
 
 
 [xG, fG, exitflagG, outputG] = surrogateopt( ...
@@ -202,15 +222,15 @@ Xi3 = ctx.Xi3;
 % variable -- the initial design matrix is pInitialWrapped.)
 % ctx and the XiUsed record make the mat self-contained for display:
 % display sections can load ctx straight from the result mat.
-% stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
-% resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
-% resultFile = fullfile(resDir, sprintf('Bifemsh_20mm_Result_%s.mat', stamp));
-% XiUsed = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
-% save(resultFile, ...
-%     'xBest', 'pInitialWrapped', 'pOptimized', 'pChanged', ...
-%     'routeCtx', 'Xi3', 'XiUsed', 'fBest', 'exitflagG', 'exitflagP', ...
-%     'outputG', 'outputP', 'predBest', 'cCollision', 'ctx')
-% fprintf('Saved %s\n', resultFile)
+stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
+resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
+resultFile = fullfile(resDir, sprintf('Bifemsh_20mm_Result_%s.mat', stamp));
+XiUsed = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
+save(resultFile, ...
+    'xBest', 'pInitialWrapped', 'pOptimized', 'pChanged', ...
+    'routeCtx', 'Xi3', 'XiUsed', 'fBest', 'exitflagG', 'exitflagP', ...
+    'outputG', 'outputP', 'predBest', 'cCollision', 'ctx')
+fprintf('Saved %s\n', resultFile)
 
 
 %% Full-extension/full-flexion muscle-length and travel calculations
