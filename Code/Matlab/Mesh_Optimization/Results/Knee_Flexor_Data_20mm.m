@@ -30,9 +30,28 @@ set(groot, ...
     'defaultLegendBox','off')
 
 %% Add paths to the muscle and pam calculators
-% current_dir = cd;
-% all_code = fullfile(current_dir,'../..');
-% addpath(genpath(all_code));
+% Repo root and path setup (same block as Knee_Extensor_20mm.m): resolves
+% MuscleBonePlotting/AnimateKneeBoneMuscle (Bone_Mesh_Plots), the bone
+% meshes in Open_Sim_Bone_Geometry, Colors.m, and the
+% minimizeFlxPin10_results_20260730 mat + OpenSim_Bifem txt files in
+% Testing_Data\2022_02_Festo, regardless of cwd.
+scriptDir = fileparts(mfilename('fullpath'));
+root = scriptDir;
+for k = 1:8
+    [parent, name] = fileparts(root);
+    if strcmpi(name, 'Bipedal_Robot')
+        break
+    end
+    if strcmp(parent, root)
+        error('Could not locate the Bipedal_Robot repo root from %s', scriptDir)
+    end
+    root = parent;
+end
+addpath(genpath(fullfile(root, 'Code', 'Matlab')));
+% Mesh_Optimization must win any shadowing contest against data subfolders.
+addpath(fullfile(root, 'Code', 'Matlab', 'Mesh_Optimization'));
+% Append (do not prepend) so Code\Matlab keeps winning name collisions.
+addpath(fullfile(root, 'Testing_Data', '2022_02_Festo'), '-end');
 
 %% Joint rotation transformation matrices
 positions = 100;
@@ -162,11 +181,15 @@ for i = 1:positions
 end
 bendMeasure0 = zeros(positions,1);
 
-% Existing comparison geometries now use the same three-point route.
-[Location2, bendMeasure2] = ...
-    buildKneeFlexorRoute20mm(p1-[0.015,0,0], p2, xBest(8), routeCtx);
-[Location3, bendMeasure3] = ...
-    buildKneeFlexorRoute20mm(p1+[0,0.012,0], p2, xBest(8), routeCtx);
+% BPA 2 (Ben, 2026-09-21 asymmetric routing): pEnd{2} keeps the mirrored
+% distal attachment and p1{2} shares BPA 1's side of the knee
+% (flexorBpa2Endpoints20mm).  Every optimized curve below is the PAIR
+% through MonoPam_mult, matching predictKneeFlexor20mm / Opt_run.
+[p1B, p2B] = flexorBpa2Endpoints20mm(p1, p2);
+[LocationB, bendMeasureB] = ...
+    buildKneeFlexorRoute20mm(p1B, p2B, xBest(8), routeCtx);
+LocationPair = {Location; LocationB};
+bendMeasurePair = {bendMeasure; bendMeasureB};
 
 %20 mm Festo
 Dia = 20;
@@ -189,35 +212,43 @@ pres2 = 325;         %average pressure, first test
 %pres3 = 606.4926;         %average pressure, first test
 pres3 = 620;
 
-% Load optimized stiffness parameters
-% Replace these with your best current estimates if desired
-load minimizeFlxPin10_results_20260730_2transforms_Z2.mat filtered_results xCols
-pick = 1;
-g = filtered_results(pick,xCols);
-Xi0 = g(1);
-Xi1 = g(2);
-Xi2 = g(3);
+% Load optimized stiffness parameters.
+% Prefer the run's own Xi block (XiUsed = [Xi0 Xi1 Xi2 Xi3], saved by
+% Opt_run alongside the displayed design) so the curves match the
+% optimization that produced xBest.  Mats without XiUsed fall back to
+% the legacy 2026-07-30 pick below.
+try
+    resultXi = load('Bifemsh_20mm_Result.mat', 'XiUsed');
+    XiUsed = resultXi.XiUsed;
+    Xi0 = XiUsed(1);
+    Xi1 = XiUsed(2);
+    Xi2 = XiUsed(3);
+    Xi3 = XiUsed(4);
+    fprintf(['Stiffness from the result mat XiUsed: ' ...
+        'Xi0=%.6g, Xi1=%.6g, Xi2=%.6g, Xi3=%.6g\n'], Xi0, Xi1, Xi2, Xi3)
+catch
+    load minimizeFlxPin10_results_20260730_2transforms_Z2.mat filtered_results xCols
+    pick = 1;
+    g = filtered_results(pick,xCols);
+    Xi0 = g(1);
+    Xi1 = g(2);
+    Xi2 = g(3);
+    Xi3 = resultData.Xi3;
+    fprintf(['Stiffness from legacy 20260730 pick (mat has no XiUsed): ' ...
+        'Xi0=%.6g, Xi1=%.6g, Xi2=%.6g, Xi3=%.6g\n'], Xi0, Xi1, Xi2, Xi3)
+end
 
 wraps = 6;
-BPAcount = 1;
+BPAcount = 2;   % optimized curves = the BPA PAIR (BPA 2 = derived route)
 
 % Original work: correct two-point Location and exactly zero X3 bend.
-Bifemsh_Pam0 = MonoPamDataExplicit_balanceX3(Name, Location0, CrossPoint, Dia, T_Pam, rest0, kmax0, tendon0, fitting, pres3, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure0);
+% Single-BPA comparator, same as predictOriginalKneeFlexor20mm.
+Bifemsh_Pam0 = MonoPamDataExplicit_balanceX3(Name, Location0, CrossPoint, Dia, T_Pam, rest0, kmax0, tendon0, fitting, pres3, Xi0, Xi1, Xi2, Xi3, wraps, phiD, 1, bendMeasure0);
 
-%Optimizer results
-Bifemsh_Pam1 = MonoPamDataExplicit_balanceX3(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure);
-Bifemsh_Pam2 = MonoPamDataExplicit_balanceX3(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure);
-Bifemsh_Pam3 = MonoPamDataExplicit_balanceX3(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure);
-
-% shift left; 
-Bifemsh_Pam1u = MonoPamDataExplicit_balanceX3(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure2);
-Bifemsh_Pam2u = MonoPamDataExplicit_balanceX3(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure2);
-Bifemsh_Pam3u = MonoPamDataExplicit_balanceX3(Name, Location2, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure2);
-
-% shift left; 
-Bifemsh_Pam1w = MonoPamDataExplicit_balanceX3(Name, Location3, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure3);
-Bifemsh_Pam2w = MonoPamDataExplicit_balanceX3(Name, Location3, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure3);
-Bifemsh_Pam3w = MonoPamDataExplicit_balanceX3(Name, Location3, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure3);
+%Optimizer results: BOTH BPAs through MonoPam_mult, as in Opt_run
+Bifemsh_Pam1 = MonoPam_mult(Name, LocationPair, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres1, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasurePair);
+Bifemsh_Pam2 = MonoPam_mult(Name, LocationPair, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres2, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasurePair);
+Bifemsh_Pam3 = MonoPam_mult(Name, LocationPair, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres3, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasurePair);
 
 %% Create strings for later plots
 %First pressure
@@ -544,7 +575,7 @@ hold off
 bpa = Bifemsh_Pam3;
 bpa0 = Bifemsh_Pam0;
 
-Lm = bpa.RestingL .* (1 - bpa.strain_p);
+Lm = bpa.RestingL .* (1 - bpa.strain_p{1});
 Lm = Lm(:);
 
 Lm0 = bpa0.RestingL .* (1 - bpa0.strain_p);
@@ -567,9 +598,9 @@ ylabel('Length, m')
 %% X3 strain definitions
 figure
 hold on
-plot(phiD(:), Bifemsh_Pam3.strain_f, 'LineWidth', 2)
-plot(phiD(:), Bifemsh_Pam3.strain_p, '--', 'LineWidth', 2)
-plot(phiD(:), Bifemsh_Pam3.Contraction, '-.', 'LineWidth', 2)
+plot(phiD(:), Bifemsh_Pam3.strain_f{1}, 'LineWidth', 2)
+plot(phiD(:), Bifemsh_Pam3.strain_p{1}, '--', 'LineWidth', 2)
+plot(phiD(:), Bifemsh_Pam3.Contraction{1}, '-.', 'LineWidth', 2)
 yline(0, ':k', 'Minimum strain')
 yline(KMAX, ':', 'KMAX')
 hold off
@@ -584,53 +615,68 @@ title('BPA strain definitions')
 
 %% Muscle Bone Plotting
 
-% Pick one knee pose to plot.
-% pos is the index where phi was forced to 0 earlier in the script.
-plotIdx = pos;
+% Static + animated muscle/bone plots use the SAME route-aware interface
+% as Knee_Extensor_20mm.m: one bonePlotArgs cell list, MuscleBonePlotting
+% for the static pose, AnimateKneeBoneMuscle for the animation. Location
+% rows before CrossPoint are femur-frame; rows CrossPoint:end are already
+% in ICR coordinates (exactly what buildKneeFlexorRoute20mm returns and
+% what MonoPamDataExplicit_balanceX3 consumes).
 
-% Human muscle path at one pose only.
-% Bifemsh.Location is points x xyz x positions, but MuscleBonePlotting
-% expects points x xyz.
-HLoc = Bifemsh.Location(:,:,plotIdx);
+% plotIdxUse = pos (phi was forced to 0 there). One pose per route list.
+plotIdxUse = pos;
 
-HMuscleLocation = {HLoc};
-HMuscleCross = {Bifemsh.Cross};
+% Robot BPA-1 route for the bone plots is the saved Location itself: p1 is
+% in the femur frame; the intermediate wrap and p2 rows are in ICR
+% coordinates. Do NOT use Bifemsh_Pam3.Location here, because that stores
+% v2 after transforming p2 into the knee/ICR frame for the torque
+% calculation.
 
-% Robot BPA path for plotting the bracket design.  p1 is in the femur
-% frame; the intermediate wrap and p2 are in the tibia/theta1 frame.
-%
-% Do NOT use Bifemsh_Pam3.Location here, because that stores v2 after
-% transforming p2 into the knee/ICR frame for the torque calculation.
-if routeInfo.active(plotIdx)
-    RLoc = [p1; routeInfo.pWrapT1; p2];
-else
-    RLoc = [p1; p2; p2];
-end
+% Robot BPA-2 route (Ben, 2026-09-21): pEnd{2} keeps the mirrored distal
+% attachment, but p1{2} shares BPA 1's side of the knee:
+%   p1{2}z = p1{1}z - (pEnd{1}z - pEnd{2}z)
+% (flexorBpa2Endpoints20mm). The route is solved, not mirrored, so its
+% wrap point follows this asymmetric path.
+[p1B, p2B] = flexorBpa2Endpoints20mm(p1, p2);
+[LocationB, ~, routeInfoB] = ...
+    buildKneeFlexorRoute20mm(p1B, p2B, tendon, routeCtx);
 
-RMuscleLocation = {RLoc};
-RMuscleCross = {CrossPoint};
+fprintf(['BPA 2 route: p1{2} = [%.6f %.6f %.6f] m (femur), ' ...
+    'pEnd{2} = [%.6f %.6f %.6f] m (t1); wrap active at home pose = %d\n'], ...
+    p1B, p2B, routeInfoB.active(plotIdxUse))
 
-Bones = {'Femur', 'Tibia'};
+bonePlotArgs = {T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
+    'DisplayRotation',eye(3), ...
+    'DisplayAxisMap',eye(3), ...
+    'Location',Location,'CrossPoint',CrossPoint,'T_Pam',T_Pam, ...
+    'Location2',LocationB, ...
+    'HumanLabels',{'Biceps Femoris (Short Head)'}, ...
+    'XLim',[], 'YLim',[], 'ZLim',[]};
 
 %Static display
-MuscleBonePlotting
+run('MuscleBonePlotting.m')
 
 %Animated continous loop
-% AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
-% 'PauseTime', 0.18, ...
-% 'FrameStep', 1, ...
-% 'Loop', true);
+% AnimateKneeBoneMuscle(bonePlotArgs{:}, ...
+%     'PauseTime', 0.18, ...
+%     'FrameStep', 1, ...
+%     'Loop', true);
 
-%Export as GIF
-AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
-    'PauseTime', 0.02, ...
-    'Loop', false, ...
-    'ExportGif', true, ...
-    'GifFile', 'Knee_Flexor_20mm.gif', ...
-    'FrameRate', 20)
+%Export as GIF (zero -> full flexion -> full extension -> zero, same
+%frame order as Knee_Extensor_20mm.m; empty limits fit both BPA routes)
+AnimateKneeBoneMuscle(bonePlotArgs{:}, ...
+    'FullSkeleton',true, ... % false = femur and tibia only
+    'FrameIndices',[pos:-1:1, 2:positions, positions-1:-1:pos], ...
+    'PauseTime',0.02, ...
+    'Loop',false, ...
+    'ExportGif',true, ...
+    'GifFile','Knee_Flexor_20mm.gif', ...
+    'FrameRate',20, ...
+    'CameraOrbitDeg', -90, ...
+    'XLim',[],'YLim',[],'ZLim',[])
+clear bonePlotArgs
 
 %Export as MP4
-% AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
+% AnimateKneeBoneMuscle(bonePlotArgs{:}, ...
 %     'PauseTime', 0.02, ...
 %     'Loop', false, ...
 %     'ExportVideo', true, ...
@@ -638,5 +684,5 @@ AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
 %     'FrameRate', 20)
 
 %To pause at a specific frame (for example frame 50)
-% AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, ...
+% AnimateKneeBoneMuscle(bonePlotArgs{:}, ...
 %     'PauseAtFrames', 50)

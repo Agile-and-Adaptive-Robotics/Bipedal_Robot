@@ -88,9 +88,24 @@ function J = objective_KneeFlexor20mm(x, ctx)
     Jgeom = 1e-2 * sum((dx(1:6)./geomScale).^2);
     Jlen  = 1e-3 * ((x(7) - x0(7))/0.040).^2;
 
+    % Soft BPA-2 anchor (Ben, 2026-09-21): prefer keeping the second
+    % BPA's DERIVED endpoints near their targets -- the Q-angle / aLDFA
+    % build line of the loaded design.  Score term only, never a
+    % constraint.  Weight 10 with a 1 cm norm: 1 cm drift on both ends
+    % costs 20, while 1 N m of worst-angle torque shortfall costs ~4300,
+    % so torque always wins when they conflict.
+    if isfield(ctx, 'bpa2TargetP1') && ~isempty(ctx.bpa2TargetP1) && ...
+            isfield(pred, 'p1B')
+        anchorScale1 = norm(pred.p1B(:) - ctx.bpa2TargetP1(:))/ctx.bpa2AnchorNorm;
+        anchorScale2 = norm(pred.p2B(:) - ctx.bpa2TargetP2(:))/ctx.bpa2AnchorNorm;
+        Jbpa2Anchor = ctx.bpa2AnchorWeight*(anchorScale1^2 + anchorScale2^2);
+    else
+        Jbpa2Anchor = 0;
+    end
+
     J = 1e5*Jworst + 1e3*Jtorque + 1e-2*Jshape + ...
         JoffAxis + JrestLength + JstrainHi + JstrainLo + ...
-        JwrapRelease + Jgeom + Jlen;
+        JwrapRelease + Jgeom + Jlen + Jbpa2Anchor;
 
     if ~isfinite(J)
         J = 1e12;

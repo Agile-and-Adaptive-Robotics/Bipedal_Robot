@@ -236,19 +236,18 @@ for s = 1:Ns
                 continue
             end
 
-            % Cascade guard, matching the reference release order
-            % p5, p6, p4, p3, p7: a femur candidate is only tested once
-            % every more distal femur candidate is already gone (p2 is
-            % exempt, it is the bridge test), and a tibia candidate only
-            % once every more proximal tibia candidate is gone. The old
-            % triplet tests were always evaluated with the deeper chain
-            % points absent, so this reproduces their thresholds.
-            if j >= 3 && j <= 5 && any(activeState(j+1:5))
-                continue
-            end
-            if j >= 6 && any(activeState(6:j-1))
-                continue
-            end
+            % Ben's rule (restated 2026-09-21): EVERY optional row is
+            % tested at EVERY pose against its nearest ACTIVE neighbors
+            % (repeating rows and femur/tibia frame transforms handled
+            % by the anchor selection inside candidateEliminationTest) --
+            % no cascade wait, no p7-triplet redirect. Femur rows:
+            % compare p_i - p_{i-1} vs p_{i+1} - p_{i-1} rotated +90 deg;
+            % tibia rows: p_j - p_{j+1} vs p_{j-1} - p_{j+1} rotated
+            % -90 deg. One elimination per pose (best margin wins; the
+            % first-pose fixpoint may settle several). If the rotation
+            % rule opens but the bypass chord collides, the SEED
+            % placement is what needs fixing (seeds stay within a
+            % tolerance zone of the hard geometry), not the gate.
 
             [remove, angleFrame] = candidateEliminationTest( ...
                 j, Pfixed, activeState, ...
@@ -551,13 +550,10 @@ iNext = j + find(activeState(j+1:9), 1, 'first');
 
 % p3 and p4 are tested against the tibia wall contact p7 when it is
 % available (the validated reference triplets). Once p6 has been
-% eliminated its row repeats p7 anyway, so this matches the "p1 to p6*
-% with row repetition" window: the bypass target is the first unique
-% tibia point past the femur chain.
-if (j == 3 || j == 4) && activeState(7)
-    iNext = 7;
-end
-
+% Ben, 2026-09-21: no p7-triplet redirect -- his rule tests each row
+% between its nearest ACTIVE neighbors only (repeating rows and frame
+% transforms handled below). iPrev/iNext are the nearest active rows on
+% each side of j.
 remove = false;
 
 if isempty(iPrev) || isempty(iNext)

@@ -6,16 +6,28 @@ function [c, ceq, info] = nonlconExclusion(x, geo, ctx, idxP2, predRadius)
 % When it is a pred struct, this function reuses pred.Location, pred.routeInfo
 % and pred.geo instead of rebuilding the radius-coupled route.
 %
-% c(1) <= 0: p2 clears the simplified proximal-tibia solid.
-% c(2) <= 0: at +5 deg, the straight route stays outside the hard tibia by
-%              bpaRs for BPA/fittings and tendonRadius for the tendon.
-% c(3) <= 0: the BPA/fittings and tendon clear the femoral ellipse using
-%              bpaRs for BPA/fittings and tendonRadius for the tendon.
-% c(4) <= 0: tendon + two fittings leave nonnegative current BPA length.
-% c(5) <= 0: while wrap is active, the prescribed pWrap y-z line reaches
-%              the nominal bpaRb standoff surface used to place pWrap.
-% c(6) <= 0: tendon does not extend proximally beyond pWrap.
-% c(7) <= 0: relatives strain between 0 and 1 for robot range of motion
+% Ben, 2026-09-21 asymmetric routing: with ctx.BPAcount = 2 every
+% constraint below is evaluated for BOTH BPA routes (BPA 1 = optimizer
+% design; BPA 2 = same-side origin with mirrored pEnd, built by
+% flexorBpa2Endpoints20mm + buildKneeFlexorRoute20mm). Each reported c(i)
+% is the WORST violation of the two routes, so both paths must clear the
+% tibia and the femoral condyle independently.
+%
+% c(1) <= 0: p2 (each route) clears the simplified proximal-tibia solid.
+% c(2) <= 0: at +5 deg, each straight route stays outside the hard tibia
+%              by bpaRs for BPA/fittings and tendonRadius for the tendon.
+% c(3) <= 0: each route's BPA/fittings and tendon clear the femoral
+%              ellipse using bpaRs for BPA/fittings and tendonRadius for
+%              the tendon.
+% c(4) <= 0: tendon + two fittings leave nonnegative current BPA length
+%              on each route.
+% c(5) <= 0: while wrap is active, each route's prescribed pWrap y-z line
+%              reaches the nominal bpaRb standoff surface used to place
+%              pWrap.
+% c(6) <= 0: tendon does not extend proximally beyond pWrap on either
+%              route.
+% c(7) <= 0: relative strain between 0 and 1 for the robot range of
+%              motion on each route.
 
 % The complete series path follows the same p1-wrap-p2 polyline used by the
 % predictor.  At +5 deg the wrap is normally active.  The tendon occupies
@@ -31,7 +43,6 @@ p2 = x(idxP2);
 p1 = p1(:).';
 p2 = p2(:).';
 
-rest = x(7);
 tendon = x(8);
 
 ceq = [];
@@ -54,6 +65,10 @@ if nargin < 5
     end
 end
 
+routeP2 = {p2};
+routeLocation = {};
+routeInfo = {};
+
 if isstruct(predRadius)
     pred = predRadius;
     if ~pred.ok
@@ -61,9 +76,20 @@ if isstruct(predRadius)
         info = struct('failReason', pred.failReason);
         return
     end
-    Location = pred.Location;
-    routeInfo = pred.routeInfo;
+    routeLocation{1} = pred.Location;
+    routeInfo{1} = pred.routeInfo;
     geo = pred.geo;
+    if ctx.BPAcount == 2
+        if ~isfield(pred, 'Location2')
+            error('nonlconExclusion:StalePrediction', ...
+                ['The supplied prediction predates the 2026-09-21 ' ...
+                 'asymmetric two-route model and has no Location2. ' ...
+                 'Rebuild it with predictKneeFlexor20mm.'])
+        end
+        routeP2{2} = pred.p2B;
+        routeLocation{2} = pred.Location2;
+        routeInfo{2} = pred.routeInfo2;
+    end
 else
     if ~isempty(predRadius)
         if ~isfield(geo,'bpaRbOffset'), geo.bpaRbOffset = 0; end
@@ -74,9 +100,62 @@ else
         geo.bpaRs = predRadius(:) + geo.bpaRsOffset;
     end
     ctx.geo = geo;
-    [Location, ~, routeInfo] = ...
+    [routeLocation{1}, ~, routeInfo{1}] = ...
         buildKneeFlexorRoute20mm(p1, p2, tendon, ctx);
+    if ctx.BPAcount == 2
+        [p1B, p2B] = flexorBpa2Endpoints20mm(p1, p2);
+        routeP2{2} = p2B;
+        [routeLocation{2}, ~, routeInfo{2}] = ...
+            buildKneeFlexorRoute20mm(p1B, p2B, tendon, ctx);
+    end
 end
+
+nRoutes = numel(routeLocation);
+cRoutes = zeros(7, nRoutes);
+infoRoutes = cell(1, nRoutes);
+
+for r = 1:nRoutes
+    [cRoutes(:,r), infoRoutes{r}] = routeConstraints( ...
+        routeP2{r}, routeLocation{r}, routeInfo{r}, ...
+        x, geo, ctx, idxCollision);
+    % "" is a 1x1 string (not isempty); test the text length instead.
+    if isfield(infoRoutes{r}, 'failReason') && ...
+            strlength(string(infoRoutes{r}.failReason)) > 0
+        c = ones(7,1);
+        info = infoRoutes{r};
+        info.failedRoute = r;
+        return
+    end
+end
+
+% Worst violation of the two routes for every constraint. idxBinding(r)
+% names the route that sets each constraint.
+[c, idxBinding] = max(cRoutes, [], 2);
+
+% Top-level info describes the route with the single worst constraint;
+% per-route values remain available for diagnostics.
+[~, idxWorstRoute] = max(max(cRoutes, [], 1));
+info = infoRoutes{idxWorstRoute};
+info.bindingRoute = idxWorstRoute;
+info.routeOfConstraint = idxBinding;
+info.cByRoute = cRoutes;
+info.routeCount = nRoutes;
+info.minClearanceTibiaByRoute = cellfun( ...
+    @(s) s.minClearanceTibia, infoRoutes);
+info.minClearanceFemurByRoute = cellfun( ...
+    @(s) s.minClearanceFemur, infoRoutes);
+info.constraintMargin = -max(cRoutes(2,:), cRoutes(3,:));
+
+end
+
+function [c, info] = routeConstraints(p2, Location, routeInfo, ...
+        x, geo, ctx, idxCollision)
+%ROUTECONSTRAINTS One-route constraint block. Identical logic to the
+% pre-2026-09-21 single-route evaluation; called once per BPA route.
+% p1-in-t1 at the collision pose comes from routeInfo.p1T1.
+
+rest = x(7);
+tendon = x(8);
 
 N = ctx.N;  %number of increments
 M = size(Location,1)-1;         %Number of rows minus 1 since we're taking the difference
@@ -319,8 +398,8 @@ x = points(:,1);
 y = points(:,2);
 z = points(:,3);
 
-% The original radial definition is exactly the polygon formed by the
-% origin, the ordered outer profile, and the origin again.
+% The original radial definition is exactly the polygon formed by
+% the origin, the ordered outer profile, and the origin again.
 polyX = [0; geo.xProf(:); 0];
 polyZ = [0; geo.zProf(:); 0];
 sdProfile2D = signedDistanceToPolygon(x, z, polyX, polyZ);

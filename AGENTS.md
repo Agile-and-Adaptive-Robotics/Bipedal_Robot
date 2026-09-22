@@ -4,6 +4,15 @@ Loaded automatically at session start. Keep it current; keep it lean.
 
 ## Machines
 
+**2026-09-21 machine-ID guard (from a side-chat correction — read before the bullets):** check
+`hostname` FIRST and read only that machine's bullet. This checkout is on **easteregg2**; the
+EB475WS4 paths (`C:\ProgramData\anaconda3`, `C:\Users\Ben Bolen\.conda\envs\myo`) do NOT exist
+here — that is a different machine, NOT staleness. easteregg2 Python = `D:\Anaconda`
+(base 3.11.5; envs `myo` 3.10.21 / `opensim` 3.11.16 / `d2l` / `gs`), NOT on PATH — call by FULL
+path. Bare `python` on PATH = Microsoft-Store stub (runs nothing — a PATH check falsely reads
+"no Python"). Ghostscript = `D:\Anaconda\envs\gs\Library\bin\gswin64c.exe` (conda env, NOT
+MATLAB-bundled). The env notes below are current — do not "fix" them over a machine mix-up.
+
 - **EB475WS4 (third machine, added 2026-09-10)** — repo at `D:\Github\Bipedal_Robot`,
   has a D: drive but **no `D:\Anaconda`** (the easteregg2 notes below don't apply here).
   Anaconda base = `C:\ProgramData\anaconda3` (conda 26.5.3; NOT writable — env creation
@@ -75,7 +84,10 @@ Loaded automatically at session start. Keep it current; keep it lean.
    `Documentation\Reports and Papers\Dissertation\` (repo-tracked as of 2026-09-08; the
    `ProofFinal\` folder is the working copy and `upload\` mirror is the canonical Overleaf
    copy). Use the `latex-overleaf` skill for Overleaf work (installed on this machine via the
-   ZCode_Skills repo junction).
+   ZCode_Skills repo junction). 2026-09-21: three Xi-methods figures (`xiFrameGeo` /
+   `xiBalance` / `xiWrapLoss.pdf`, in both figs/Aim2 dirs) wired into 20-methods.tex
+   (fig:xiFrames/xiBalance/xiWrapLoss); generator = `Dissertation\Notes\make_xi_method_figures.m`
+   (draws from FlxPinBPASet/ExtPinBPASet; details + open items in summary.md).
 2. Design and control of bipedal humanoid robot legs with artificial muscles (PAMs/BPAs)
    controlled by a synthetic nervous system. Lab: AARL (Agile and Adaptive Robotics Lab), PSU.
 3. **Xi-correction-factor program** — run minimizers against pinned-knee test data in
@@ -944,8 +956,16 @@ Scale first — the bundled IK setup consumes its `subject01_simbody.osim` outpu
   `pick`, commented `sol_actual` lines, hand-editable hardcoded k1/k2/k3, the two disp tables and
   two Mean fprintf lines) — only the evaluator call line may carry the extra evaluator arguments.
   Do not rework it into a PICK-strict or mean-of-all-tests version.
-- **Result-mat saves are FULL-WORKSPACE (Ben directive, 2026-09-12)**: bare `save(file)` — he
-  loads the mat and runs any driver section from it; figures inside the mat are accepted.
+- **Result-mat saves are FULL-WORKSPACE (Ben directive, 2026-09-12; re-stated 2026-09-20 for the
+  Opt_run family)**: bare `save(file)` — he loads the mat and runs any driver section from it;
+  figures inside the mat are accepted. This applies to the `Bifemsh_20mm_Result_*` /
+  `Vas_Pam_20mm_Result_*` mats too: since 2026-09-20 both drivers save bare behind a `liveRun`
+  flag (set at the top of a full run, `clear`ed immediately before the save) so section reruns
+  from a loaded mat can never mint a new dated mat — a variable-list save or an
+  `exist('optsP')`-style guard is a BUG in these drivers. Ben keeps the save blocks commented in
+  his resting state; uncomment before a real run. The drivers' adjusted-seed + display sections
+  carry `~exist` guards (incl. rebuilding `nonlcon`/`optsP` from the mat's ctx) so the
+  load-mat→run-section workflow works; keep them intact when editing.
   Every `*FlxPin10_results_202609*.mat` (root + Dig_out archives) now carries lowercase
   `allBPA` + `numBPA` (patched 2026-09-12 via `Dig_out\patch_FlxPin10mats_allBPA_20260912.m`;
   noT3 vintages: allBPA = [1 2 4 5], the training pool of that era).
@@ -963,8 +983,35 @@ Scale first — the bundled IK setup consumes its `subject01_simbody.osim` outpu
 
 ## Current state (Sept 2026)
 
-- Flexor: **solved and feasible** with 2 BPAs, but currently assumes double force at the same
-  attachment points instead of mirrored routes (commit 0453a2f caveat — still true).
+- Flexor: **solved and feasible** with 2 BPAs. **2026-09-21 asymmetric two-route rework
+  (Ben's CAD-picture routing)**: `Location{2}` is no longer the z-mirror of `Location{1}`.
+  Instead `flexorBpa2Endpoints20mm.m` keeps the mirrored distal attachment
+  (`pEnd{2}z = -pEnd{1}z`) and anchors the origin on BPA 1's side of the knee via
+  `p1{2}z = p1{1}z - (pEnd{1}z - pEnd{2}z)` (z is frame-invariant here: knee rotates about z,
+  all translations carry z=0). `predictKneeFlexor20mm` SOLVES the second route through
+  `buildKneeFlexorRoute20mm` (own wrap point + own bendMeasure — `MonoPam_mult` now accepts a
+  per-route bendMeasure cell) and `nonlconExclusion` checks BOTH routes (all 7 constraints,
+  worst-of-both; femoral-condyle check included — pred structs predating 2026-09-21 are
+  rejected with a clear error). The standing `Bifemsh_20mm_Result.mat` xBest violates the
+  femur constraint on the NEW BPA-2 route by 1.6 mm → **Opt_run re-run pending** (torque is NOT
+  short: min margin vs the 1.05×human requirement is +1.06% under the new model, worst angle
+  −104°). **Soft BPA-2 anchor (same evening, Ben's Q-angle/aLDFA request)**: the refinement
+  pattern search (Opt_run "Run with adjusted seed" section) sets `ctx.bpa2TargetP1/P2` from
+  the loaded design's derived BPA-2 endpoints, and `objective_KneeFlexor20mm` adds
+  `bpa2AnchorWeight * ((|p1{2}-t1|/norm)² + (|pEnd{2}-t2|/norm)²)` — a SCORE punishment only,
+  never a constraint. Weight 10 / norm 1 cm (knobs in buildKneeFlexorContext20mm;
+  weight 0 = off): 1 cm drift on both ends costs 20 vs ~4300 for 1 N·m of worst-angle torque
+  shortfall, so torque always wins. Opt_run prints the targets + post-refinement drift.
+  Verified: anchor cost 0 at seed, exactly 12.5 at a +5 mm p2z probe; a 40-eval capped
+  refinement (mechanics smoke, not converged) reached feasible with p1{2} drift 0.0 mm /
+  pEnd{2} 0.18 mm. The old
+  commit-0453a2f "double force at same points" caveat no longer describes the code.
+  `Knee_Flexor_Data_20mm.m` bone plots/animation FIXED same day: now uses the
+  `bonePlotArgs` interface like `Knee_Extensor_20mm.m` (root-derived addpath added; both BPA
+  routes drawn via the new `'Location2'` option in `AnimateKneeBoneMuscle`; GIF verified
+  199 frames headless). Verification harnesses for this pipeline MUST be function files,
+  not scripts — `MonoPam_mult` (L557) and `MonoPamDataExplicit_balanceX3` (L657) contain
+  parfor, and a script caller gets replayed on the workers.
 - Radius controls (commit fd5963d): `ctx.bpaRadiusMode` = "scalar" (geo.bpaRb / geo.bpaRs) or
   "bpaR" (candidate-dependent physical radii); `geo.bpaRbOffset` / `geo.bpaRsOffset` defaults 0.
   Three-radius scheme: `bpaRb` = 20 mm nominal pWrap standoff, `bpaRs` = 16 mm min tibia
@@ -986,6 +1033,52 @@ Scale first — the bundled IK setup consumes its `subject01_simbody.osim` outpu
     lower, p7 = (tibiaWallX, mid-y); knobs `geo.seedP6AngleD/seedP8AngleD/seedP7X`.
   - Verified x0 schedule: p5@−91.1°, p4@−50.4°, p6@−47.8°, p7@−20.2°, p3@+6.1°, one per step,
     min moment arm +45.2 mm, max torque step 0.53 N·m (jog eliminated).
+    NOTE: schedules are NOT hardcoded — candidateEliminationTest derives them per design at
+    sweep time. **2026-09-21 gate fixes (Ben's rulings): (a) geo.seedColinearTolD = 0 — p7
+    STAYS: the wall connecting the two tibia cylinders (vertical at tibiaWallX) is REAL
+    (original introduction in git d9df68b7/1cd2c062); the old 1.0° guard had let the
+    optimized low pEnd (pEndy −0.173) eliminate p7 at sweep start, routing the BPA straight
+    across the wall. (b) geo.bypassRelaxTibia 3→6 mm — at 3 mm the inflated upper-tibia
+    circle held the p3*→p8 chord to −34.7°, overriding the rotation rule (opens −42.5°).**
+    Design-of-record schedule after the fixes (Vas_Pam_20mm_Result = 20260920_1519):
+    p5@−91.11, p4@−50.40, p6@−47.78, p7@−20.20 (wall lift-off), p3@+6.06, p8@+7.37 — back on
+    the validated x0-family pattern; minMargin +5.252%, max arm step 1.87 mm (p3 release),
+    wrap constraint grazes +18 µm. Full-precision schedule + drift check hardcoded in
+    Knee_Extensor_20mm.m (constants are a RECORD, not inputs — the route derives the
+    schedule every build). **SEEDS REWORKED per Ben's fcec-ray rule (same evening): p3 on
+    the ray femoral-condyle-ellipse-center → hard-ellipse/hard-wall junction, p5 on the
+    distal semi-minor axis, p4 the angular midpoint; each at 19 mm clearance to the hard
+    ellipse (p3 clears the wall line 17.2 mm). Values live as HAND-EDITABLE routeSeed rows
+    in buildKneeExtContext20mm (SW rows kept commented); Knee_Extensor_20mm gained a
+    handSeed override block (p2:p8 [x y], femur frame p2:p5 / t1 frame p6:p8) so Ben can
+    hand-shape routes in the display.** FINAL 9/21 NIGHT STATE — Ben's rule RESTATED VERBATIM
+    and implemented exactly: femur rows compare p_i−p_{i−1} vs p_{i+1}−p_{i−1} rotated +90°;
+    tibia rows p_j−p_{j+1} vs p_{j−1}−p_{j+1} rotated −90° (rotation avoids the atan2 ±pi seam);
+    EVERY optional row tested at EVERY pose between its nearest ACTIVE neighbors (repeating
+    rows + frame transforms) — the CASCADE WAIT and the p7-TRIPLET anchor are REMOVED, and the
+    same-day relax experiments (tibia 6 mm, femur 9 mm) were REVERTED to the verified 3 mm per
+    his ruling: "if collision occurs when a p_i or p_j is eliminated, the seed route could have
+    been better — seeds need to stay within a certain tolerance zone from the hard geometry."
+    Schedule (standing xBest, ray seeds, exact rule): p5@−79.29, p6@−50.40, p7@−25.46, p4@+4.75,
+    p3@+6.06, p8@+7.37; minMargin +7.486%; arm step 2.06 mm; xBest also +1.23 mm over the
+    series rest-length constraint (stale design — Opt_run_Ext re-run pending). **SEED SIGNALS
+    (rule open, chord blocked = seed to improve): p3 blocked −120..+4.75° (margin +1.55°, the
+    p2→p4 chord crosses the femur-wall clearance band ~3.7 mm — p3's ray placement clears the
+    ellipse 19 mm but the wall only 17.2 mm); p8 blocked −120..+6.06° (hysteresis range,
+    −0.25°).** GIF replay: Results\Replay_Route_Gif.m (plays once + Replay button). p6 pending
+    Ben's re-think: the upper tibia head circle sits mid-part with the two BPAs straddling it
+    in z, which the planar model doesn't represent.
+    **SEED CORRECTION (same night, Ben: "put p3 where p4 is; p4 halfway between p3 and p5,
+    angularly, from fcec") + route-figure port:** p3 [0.06406,−0.42680] (old SW-p3 spot, local
+    ray −44.88°), p4 [0.05283,−0.44188] (midpoint ray −67.44°, 18.9 mm), p5 [0.03777,−0.45214]
+    (semi-minor); the wall-junction ray is NOT used. Schedule: p5@−89.80, p4@−55.66, p6@−47.78,
+    p7@−20.20, p3@+6.06, p8@+7.37 — the validated release ORDER is back; minMargin +5.220% on
+    the stale xBest; arm step 2.19 mm; rest-length overshoot down to 35 µm. Seed signals now:
+    p3 blocked only −4.44..+4.75° (margin +0.51°, near hysteresis noise — was 96 poses); p8
+    unchanged. Opt_run_Ext re-run still pending. The '%% Plot full optimized geometry and
+    p1:p9 route' section is now IN Knee_Extensor_20mm.m (R-suffixed helper ports of the
+    driver's plotStyle/styleAxis/styleLegend/makeRouteLegend); rendered smell-test PNG at
+    Results\Knee_Extensor_20mm_route_check_20260921.png.
   - `Debug_RouteElim_Ext.m` (tracked) = ~1 min verifier: elimination table, gate audit, p1/pEnd
     bound scans. Tiled route figures in Opt_sanity_Ext/Opt_run_Ext: 4 poses per row, legend in
     a 5th column spanning all rows.
