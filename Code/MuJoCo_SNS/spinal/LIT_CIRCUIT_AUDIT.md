@@ -278,3 +278,85 @@ lit_aarl_enum.txt). Phase-role taxonomy per Ben:
 phase-difference IN pair, AFF-gain literature fit, Rybak-2025 phase-
 duration reading), the rest are P3/cite-only. NO model code was touched;
 implementation still awaits Ben's go per item.
+
+## 10. Di Russo et al. 2023 JNE — reference-spec extraction (Ben 2026-09-21:
+## "note the 5 motor primitives and her rules for proprioceptive feedback,
+## interneurons, and Renshaw cells"; PDF = Zotero group 735051 key 7E7F6Q7I,
+## local copy spinal\_dirusso_2023.pdf)
+
+Paper: Di Russo, Ijspeert, Bouri 2023, J. Neural Eng. 20 066006,
+"Investigating the roles of reflexes and central pattern generators in
+the control and modulation of human locomotion using a physiologically
+plausible neuromechanical model" (DOI 10.1088/1741-2552/acfdcc).
+Model: 9 Hill-type muscles/leg, 3 rotational DoFs/leg (hip/knee/ankle —
+planar), ground contact = 3 spheres/leg (one r=5 cm at the calcaneus,
+two r=2.5 cm at the toes/MTP — the FIGURE places the forefoot pair at
+the metatarsal line; the text says only "at the toes").
+
+### 10.1 RG + PF: phase oscillator + FIVE raised-cosine motor primitives
+
+- RG: two coupled phase oscillators (Aoi family), phi_dot = omega −
+  gamma·sin(phi_L − phi_R − pi) per side; omega is an optimized
+  parameter; PHASE RESETTING on foot-contact (heel-strike) events.
+- PF: five primitives p(phi; mu, sigma) = 0.5·(1+cos((phi−mu)/(sigma·pi)))
+  inside |phi−mu| ≤ sigma, else 0 (raised cosine, eq 8), ALL sigma = 0.2,
+  EQUALLY spaced: P0 mu=0.1, P1 0.3, P2 0.5, P3 0.7, P4 0.9.
+- Each MN m receives u_CPG = sum_k w_m,k·p_k, weights SIGNED
+  (excitation or inhibition), w in [−1,1], optimized (eq 9).
+- The equal spacing is deliberate: Ivanenko/Lacquaniti's experimental 5
+  locomotor primitives are NOT equally spaced, but they capture TOTAL
+  MN activity (reflex + CPG mixed); Di Russo spreads the CPG
+  subcomponent evenly and lets the reflex layer supply the phasing.
+
+### 10.2 The five spinal reflex rules (SN/IN/MN leaky integrators;
+### agonist-antagonist + extensor/flexor classification drives topology)
+
+Receptors (eq 11, all normalized, delays by receptor proximity):
+  rIa = (65/200)·sqrt(max(0, v~m))   [Prochazka-inspired, LENGTHENING
+                                      only; no length/activity terms]
+  rII = l~m ; rIb = f~m ; rf = f~f   [cutaneous foot contact force]
+
+1. Ia: MONOsynaptic excitation to same-muscle MN + DISynaptic
+   inhibition to antagonist MN via Ia inhibitory IN (stretch/velocity).
+2. II: disynaptic EXCITATION to same-muscle MN (via excitatory IN) +
+   disynaptic inhibition to antagonist (length).
+3. Ib: disynaptic AUTogenic inhibition via inhibitory INs that
+   reciprocally inhibit the antagonist Ib-IN (protective force reflex).
+4. Ib+ (reversal): ADDITIONAL disynaptic EXCITATION to same-muscle
+   EXTENSOR MNs = positive force feedback (Geyer 2003 family); applied
+   only to muscles classified extensor (biarticulars may be both).
+5. Renshaw: RC inhibits the same-muscle MN AND the same-muscle Ia-IN;
+   RC ↔ antagonist-RC mutual inhibition; RC driven by same-muscle MN
+   collaterals. (Their Table 1 caption phrases the RC-antagonist link
+   as "reciprocal excitation connections of RC"; the methods bullet and
+   Fig 4(e) describe mutual INHIBITION between antagonistic RCs.)
+Their agonist/antagonist table (Table 1): ILPSO−GMAX/HAMS (flexor),
+GMAX−ILPSO (ext), HAMS−VAS/RF, RF−HAMS/BFSH, BFSH−VAS/RF (flexor),
+VAS−HAMS/BFSH (ext), GAS−TA, SOL−TA (ext), TA−GAS/SOL (flexor).
+NO gait-phase gating of any reflex gain (deliberate contrast to
+state-machine controllers).
+
+### 10.3 What modulation their optimizer found (correlation table)
+
+Speed/step-length leaders: P0→GMAX.MN and P2→SOL.MN (CPG weights);
+omega dominates cadence; TA.SNIa→TA.MN is the only EXCITATORY reflex
+correlated (negatively) with speed; speed raises reciprocal-IN tuning
+(GAS.INIa→TA.INIa, RF.INRC→HAMS.INRC); II LENGTH OFFSETS
+(ILPSO.SNII.w0, GMAX.SNII.w0) raise hip excursion/step length; higher
+speed decreases VAS II length feedback; soleus speed gain comes from
+CPG, not reflexes.
+
+### 10.4 Mapping to OUR circuit (status notes, no changes made)
+
+- Our PF = 4 phase-window cells (E1/E2/F1/F2, adaptation-shaped) vs
+  their 5 equal raised cosines → the joint_pf/synergy layer (fsa work
+  2026-09-18) is the direct analog; their eq-9 SIGNED primitive→MN
+  weights are what joint_pf_weights.json approximates.
+- Our Ia/II/Ib/Ib-reversal/IaIN/RC wiring matches rules 1–5 closely
+  (incl. RC→IaIN inhibition and mutual RC pairs); our II→antagonist
+  inhibition is NOT implemented (their rule 2 has it — see audit rows).
+- Their RG phase-reset on heel strike = our contact_onset loading-edge
+  kick; the swing side of the same event family = the contra_swing
+  crossed trigger built 2026-09-21.
+- Our foot sensing = 2 regions (calcn/toes) vs their 3 spheres; the
+  forefoot pair's medial/lateral split matters only for CoP work.

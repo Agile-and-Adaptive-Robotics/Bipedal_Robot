@@ -2,6 +2,185 @@
 
 Built 2026-09-09. Files in `Code\MuJoCo_SNS\spinal\`.
 
+## 2026-09-21 day (ZCode, EB475WS4): PER-SIDE CONTACT-RESET PHASE MACHINE
+**built + tuned (s3f): best −164.4 — the biggest honest jump of the
+campaign; right leg truly cycles; left STILL frozen. Plus: Ben's
+figure corrections (circuit_rules v12 PASS) + SNS-vs-literature IN
+audit.**
+
+**Ben's redirect: "iterate = the mujoco SNS testing and tuning."**
+
+**The build (`params.G`: pm_gain default 0, pm_T 1.2):** runner-side
+per-side phase variable advanced at 1/pm_T, RESET to 0 at that foot's
+own heel strike (loading onset >20 N rising), gentle antiphase pull
+(Di Russo eq-7 style, 0.8/s); during each side's swing window
+(phi 0.62-0.95, raised-cosine edges) extensor ctrl scales DOWN by
+pm_gain and flexor ctrl UP by 0.6*pm_gain. JSON-rule loader +
+curriculum KEYS3 extended (pm_gain [0,1], pm_T [0.8,2]). Smoke gates
+PASS (pm_gain 0 bit-exact vs the s3e seed −191.8067; **the first
+UNTTUNED dose 0.5 already scored −180.97, beating the whole previous
+night**).
+
+**s3f (study curr_s3f_ground, 40 trials, log curriculum_s3f): best
+−164.4 (trial 32: pm 0.35, T 1.43; t14 −168.1 pm 0.38 T 1.76).**
+Verified by rerun: the RIGHT leg now does genuine stance/swing
+cycling — contact duty 0.70-0.80 (ref 0.61), 4-6 contact-based
+cycles, near-reference cadence. **The left leg remains FROZEN at
+every dose the search chose** (winners converge on moderate pm
+0.35-0.38 — higher pm_gain presumably collapses the model by
+suppressing the only load-bearing leg without the right accepting
+weight). Score trajectory under the corrected objective:
+s3c −181.6 → s3d −192.0 → s3e −191.8 → **s3f −164.4**.
+
+**What releasing the left leg now requires (next build):** the left
+unloads only if (a) its swing-window suppression is strong enough to
+beat soleus/gas/vasti 0.5-0.8 + Ib reversal, AND (b) the right leg
+ACCEPTS the load at that moment — i.e., a WEIGHT-SHIFT signal (CoP /
+lateral COM into the stance leg before swing). Concrete next: gate
+the phase machine's suppression on the CONTRALATERAL foot being
+LOADED (only swing the left when the right bears weight) + a lateral
+balance bias during swing; and/or port the phase machine into SNS
+topology (phase-oscillator neurons driving PF/MN gates) so the
+network's own KINH/IaIN machinery can act on it.
+
+**Figure (Ben's five corrections, circuit_rules v12 ACCEPTED after 12
+visual-gate passes):** (a) PF windows relabeled early/late
+stance/swing; (b) IaIN-antagonist-IaIN mutual inhibition added
+(flagged absent in ours); (c) II panel redrawn as the literature
+two-collateral-IN rule (IN exc → agonist MN, IN inh → antagonist MN)
+with our direct shortcut dashed + flagged; (d) Ib panel notes the
+literature Ib-IN mutual inhibition (absent); (f) heel chain now has
+the SOMATOSENSORY NEURON (HEEL_c port → heel SN → IN → RG; contra
+chain mirrors; SN glossed as the runner-side encoder). Arial
+confirmed sans-serif. Files: figures\circuit_rules.{png,pdf} +
+_alt.txt (+ Dissertation copies); draw_circuit_rules.py is the source.
+
+## 2026-09-21 small hours (ZCode, EB475WS4): t54 PASSIVE-FLAIL diagnosis →
+**pf_gain + contra_swing levers; s3d running; Di Russo reference spec
+extracted.**
+
+**Ben's go: "keep working on debugging and tuning the model."**
+
+**The t54 "gait" decomposed further (`_diag_left_drive.py`):** every key
+RIGHT-leg muscle sits at EXACTLY 0.000 activation — the right leg's
+−46..−3.5° knee swing is a PASSIVE pendulum flail under the rig (its
+foot grazes at a constant 39–70 N, which is where the "2 contact
+cycles" came from). ALL neural-motor activity is on the LEFT: soleus
+0.75 / gas 0.78 / vasti 0.51 max — jammed into the +10° extension stop
+carrying 257–1426 N, never releasing (its flexors DO fire: rect_fem
+0.57, semimem 0.46 — they lose). Mechanism of the asymmetry: MN ctrl =
+clip(V_mn/5 mV, 0, 1); with pf_gain 0.41 (v10 winner) the fitted
+PF→MN tables leave PF drive BELOW threshold for an unloaded leg — no
+load → no afferent assist → MNs silent → no step → no load. VICIOUS
+CIRCLE. (PF_F1_r sits at +4.4..6.0 mV yet right MNs ≤ rest.)
+
+**Two levers built (both runner-side, gated):**
+1. **`pf_gain` into the stage-3 search** [0.3, 3.0] log — the v10
+   top-level multiplier (also scales W_POSTURE) was never searched by
+   any curriculum; raising it makes PF drive alone sufficient for an
+   unloaded leg.
+2. **`contra_swing`** [0, 1.5] — crossed swing trigger: when side A's
+   foot LOADS (heel strike), side B gets a decaying (0.25 s) NEGATIVE
+   kick on its HEEL port → less heel_in_B excitation of RG-E_B + less
+   inhibition of RG-F_B = reset-to-swing for the stance leg (the
+   frozen foot's own unloading edge never fires; the opposite foot's
+   loading edge does — Aoi/Di Russo heel-strike phase-reset family).
+   params.G default 0; JSON loader tuple updated; smoke gates PASS
+   (0 bit-identical to t54's −181.58612797682238; 0.5 finite but
+   rhythm-disrupting at that dose in this config — magnitude is a
+   search dim, not a hand-pick).
+
+**s3d running** (`run_s3d_20260921.bat`, study curr_s3d_ground, 40
+trials, log curriculum_s3d_20260921.log): KEYS3 + pf_gain + contra_swing;
+curriculum_stage3.json re-pointed at the CORRECTED best t54 (score
+field = corrected −181.586; the study's recorded t26 −119.3 was under
+the holed score — `_update_stage3_t54.py`).
+
+**Di Russo 2023 reference spec extracted** (Ben: "note the 5 motor
+primitives and her rules for proprioceptive feedback, interneurons,
+and Renshaw cells") → **LIT_CIRCUIT_AUDIT.md section 10** (PDF from
+Zotero group 735051 via `?key=` query auth — the X-Zotero-API-Key
+HEADER gets stripped on this network; `_dirusso_pdf*.py`, local copy
+`_dirusso_2023.pdf`). Key points: 5 EQUALLY-spaced raised-cosine
+primitives (σ=0.2, μ=0.1..0.9) with SIGNED optimized MN weights;
+receptor set rIa=√lengthening/Prochazka, rII=length, rIb=force,
+rf=cutaneous foot force; five reflex rules incl. Ib+ extensor force
+reversal and RC→(same MN, same Ia-IN) + mutual antagonist-RC
+inhibition; NO phase gating of reflex gains; foot = 3 contact spheres
+(5 cm calcaneus + 2×2.5 cm at the toes — the figure places the pair at
+the MTP line, per Ben). Their heel-strike phase reset = our
+contact_onset; contra_swing is the swing side of the same family.
+
+**fig4 fixed** (Ben caught the stale render): plot_run.py fig4 was the
+v1 right-leg-only neural-phased logic — rewritten to kine_ref v2
+(both legs, contact-phased, FROZEN legs annotated, not dropped);
+load() returns contact + closes the NpzFile; suite regenerated from
+the t54 npz.
+
+**NEW RULE-PANEL FIGURE (Ben's Di Russo-Fig-3-style request +
+project figure standards, 2026-09-21):** `draw_circuit_rules.py` →
+`figures\circuit_rules.{png,pdf}` + `circuit_rules_alt.txt` (also in
+Dissertation\CPG_airstepping_figs). Six panels (A architecture /
+B Ia / C II / D Ib / E Renshaw / F contact+KINH), each showing the
+somatosensory neurons WITH their interneurons, numbered magenta
+markers on the wires flagging every place OUR wiring skips an
+interneuron or deviates (II→MN direct, Ib→MN autogenic direct,
+afferent→central direct) + absent paths drawn dashed (II antagonist).
+Accepted after NINE visual-judge passes (the visual gate earns its
+keep: v1 all-collide, v2 caption clipping, v3 line leading < text
+height, v4-v8 label whack-a-mole, v9 PASS). Standards now in AGENTS.md
+"Figure standards — PROJECT-WIDE": 7.5x10 in, Arial >=10 pt, NO
+italics, Colors.m (Paul Tol) palette, colorblind shape coding, alt
+text per figure. TERMINOLOGY (Ben): say Ib, not "LB" (code symbol
+LBIN = stance-group Ib IN); KINH = swing-gated inhibitory IN.
+Ben's structural hypothesis RECORDED as the audit's headline: our
+afferents mostly skip interneurons (direct afferent→MN/RG/PF), where
+Di Russo/Deng/Rybak route everything except Ia-homonymous through
+INs — prime suspect for the rhythm failure; the IN-mediated afferent
+layer is a candidate next build alongside the per-side contact-reset
+phase machine.
+
+**s3d OUTCOME (40 trials, done 02:52): best −192.0 (trial 33: pf_gain
+0.70, contra_swing 0.94, pelvis 0.895).** The two new levers ARE used
+by the optimizer (leaders: pelvis 0.88–0.90 — the walker is lowered;
+contra_swing 0.3–1.2; pf_gain 0.3–0.8) and the mechanism moved: the
+right leg now TRULY SWINGS (contact duty 0.08–0.11, real loading
+edges) instead of passively flailing. **BUT the left leg remains
+frozen** (duty 1.0, no cycles) — the crossed heel-port kick cannot
+break a loaded extensor jam.
+
+**s3e OUTCOME (40 trials, done 03:50): best −191.8 = its own SEED**
+(t33 + contra_kinh 0.5; nothing beat it). The crossed KINH edge
+(HEEL_contra → KINH → knee_ext/ankle_pf MN suppression, gain ≤2.0
+searched) did NOT unlock the left either. Note: overall corrected
+best remains s3c t54 (−181.6); the s3d seed's pf_gain jump to 1.0
+disrupted the t54 basin and TPE never recovered it — s3c-t54 still
+the best-scoring config, s3d-t33 the best MECHANISM config (driven
+swing leg).
+
+**POSE-LATCH TEST (`_pose_experiment.py`, AARL_POSE=symmetric,
+START_POSE_DEG_SYMMETRIC in runner): from a SYMMETRIC double-stance
+start, NEITHER leg cycles** (both runs: no kine, kz 0.80–0.85, tilt
+25–30, no NaN). The asymmetric normal.mot pose is not the cause of
+the frozen leg — it is the only SYMMETRY BREAKER the gait has; remove
+it and no stepping emerges at all.
+
+**NIGHT VERDICT (three studies + the pose test):** (1) the gait needs
+a symmetry-breaking seed (asymmetric pose supplies it); (2) the
+planted leg NEVER releases — load → extensor-afferent reinforcement
+(Ib+ reversal + heel/toe stance paths + vasti/soleus at 0.5–0.8) beats
+every crossed trigger tried at RG level (contra_swing), MN level
+(contra_kinh ≤2.0), and port level (contact_onset); (3) from
+symmetry, nothing starts. THE NEXT DESIGN (Di Russo §10 lesson): stop
+relying on the neural half-centers + patches — drive each side's
+pattern from its OWN contact events with an explicit antiphase
+constraint (their two-oscillator eq with sin(φ_L−φ_R−π) coupling +
+per-side heel-strike phase reset); in our SNS realization that means
+a per-side phase variable reset by that foot's loading edge, gating
+PF output and extensor MN bias per side (a runner-side phase machine
+first, then port into SNS topology if it works). This is the first
+build of the next session, not another search dimension.
+
 ## 2026-09-20 EVENING (ZCode, EB475WS4): BEN'S FIGURE CRITIQUE → kine_ref v2
 **(BOTH legs, mean/amplitude/phase/periodicity vs OpenSim, real-contact
 cycles) + pelvis-height knob + s3c retune running. The s3b "winner" is

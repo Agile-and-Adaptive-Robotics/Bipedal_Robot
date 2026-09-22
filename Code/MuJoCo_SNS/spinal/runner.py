@@ -78,6 +78,20 @@ def find_foot(model) -> tuple[int, int]:
     return r[0], l[0]
 
 
+def _pm_window(phi, lo=0.62, hi=0.95, edge=0.05):
+    """Raised-cosine swing window of the contact-reset phase machine
+    (1 inside [lo, hi], cosine ramps in the edge bands, 0 outside)."""
+    if phi < lo - edge or phi > hi + edge:
+        return 0.0
+    if phi < lo:
+        return float(0.5 * (1.0 - np.cos(np.pi
+                                         * (phi - (lo - edge)) / edge)))
+    if phi > hi:
+        return float(0.5 * (1.0 - np.cos(np.pi
+                                         * ((hi + edge) - phi) / edge)))
+    return 1.0
+
+
 def drive_posture(t: float, walk_drive: float) -> tuple[float, float]:
     """Piecewise stand->walk->stand schedule -> (DRIVE nA, POSTURE nA).
 
@@ -526,6 +540,35 @@ START_PELVIS_HEIGHT = 0.92   # m. NOT the OpenSim 0.96: measured with
 # sole touches at ty 0.903, left (back leg) at ~0.925; 0.92 = contact
 # compromise the knees/soft contact absorb.
 
+# 2026-09-21: symmetric double-stance variant (AARL_POSE=symmetric).
+# Hypothesis under test: the s3c/s3d/s3e "frozen left leg" is a POSE
+# LATCH - normal.mot starts asymmetric (right hip +24.6 FORWARD, left
+# -16.6 BACK = pre-planted), and the planted leg's load->extensor-
+# afferent->more-extensor loop is unbreakable by any crossed trigger
+# searched. Symmetric start gives neither leg the planted role.
+START_POSE_DEG_SYMMETRIC = {
+    "pelvis_tilt": -1.870,
+    "pelvis_list": -0.470,
+    "pelvis_rotation": 2.430,
+    "hip_flexion_r": 0.0,
+    "hip_adduction_r": 1.090,
+    "hip_rotation_r": -1.350,
+    "knee_angle_r": -10.0,
+    "ankle_angle_r": -1.700,
+    "subtalar_angle_r": 0.0,
+    "mtp_angle_r": 0.0,
+    "hip_flexion_l": 0.0,
+    "hip_adduction_l": 2.680,
+    "hip_rotation_l": 1.280,
+    "knee_angle_l": -10.0,
+    "ankle_angle_l": -1.700,
+    "subtalar_angle_l": 0.0,
+    "mtp_angle_l": 0.0,
+    "lumbar_extension": 1.870,
+    "lumbar_bending": 0.470,
+    "lumbar_rotation": -2.430,
+}
+
 
 def _project_followers(model, data):
     """Re-project equality-coupled pathpoint dofs onto their driver polycoefs
@@ -552,8 +595,12 @@ def apply_start_pose(model, data) -> None:
     IMU-lean heuristic's sign convention is not the coordinate's."""
     jadr = {jn: model.joint(jn).qposadr[0] for jn in START_POSE_DEG
             if model.joint(jn).id >= 0}
+    import os as _os
+    _pose = _os.environ.get("AARL_POSE", "normal")
+    pose_src = (START_POSE_DEG_SYMMETRIC if _pose == "symmetric"
+                else START_POSE_DEG)
     mujoco.mj_resetDataKeyframe(model, data, 0)
-    for jn, deg in START_POSE_DEG.items():
+    for jn, deg in pose_src.items():
         if jn in jadr:
             data.qpos[jadr[jn]] = np.radians(deg)
     # 2026-09-20 (Ben: "lower the walker enough to make contact with the
@@ -572,7 +619,7 @@ def apply_start_pose(model, data) -> None:
     torso = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, "torso")
     up = data.xmat[torso].reshape(3, 3)[:, 1]
     lean = float(np.degrees(np.arctan2(-up[0], max(up[2], 1e-6))))
-    print(f"start pose (normal.mot): applied {len(jadr)} coordinates as "
+    print(f"start pose ({_pose}): applied {len(jadr)} coordinates as "
           f"given; pelvis ty {ty:.3f} m (env override"
           f"{'=' + _ty if _ty is not None else ' unset'}); "
           f"IMU-metric torso lean {lean:+.1f} deg (+ = back)",
@@ -723,7 +770,8 @@ def main(argv):
         if "ankle_post_walk_trim" in best:
             _p.G["ankle_post_walk_trim"] = float(best["ankle_post_walk_trim"])
         for _k in ("heel_rge", "toe_rge", "ib_rge", "ia_in",
-                   "contact_onset"):  # JSON RULE (2026-09-20)
+                   "contact_onset", "contra_swing",
+                   "contra_kinh", "pm_gain", "pm_T"):  # JSON RULE
             if _k in best:
                 _p.G[_k] = float(best[_k])
         if "joint_pf" in best:
@@ -1001,6 +1049,18 @@ def main(argv):
     onset_prev_loaded = {"r": False, "l": False}
     onset_kick = {"r": 0.0, "l": 0.0}
     onset_decay = float(np.exp(-DT / 0.25))  # 0.25 s transient
+    # crossed swing-trigger state (G["contra_swing"] > 0 only;
+    # 2026-09-21): contra_prev[a] = was side a loaded last step;
+    # contra_kick[b] = decaying swing trigger applied to side b's HEEL
+    # port when the OPPOSITE foot a loads
+    contra_prev = {"r": False, "l": False}
+    contra_kick = {"r": 0.0, "l": 0.0}
+    # per-side contact-reset phase machine (G["pm_gain"] > 0 only;
+    # 2026-09-21): phase per leg, reset at that foot's loading onset,
+    # antiphase-coupled; gates extensor/flexor ctrl in the swing window
+    pm_on = G["pm_gain"] > 0.0 and not no_ground
+    pm_phase = {"r": 0.0, "l": 0.5}
+    pm_prev_loaded = {"r": False, "l": False}
     for k in range(nsteps):
         t = k * DT
         drive, posture = drive_posture(t, walk_drive)
@@ -1153,6 +1213,38 @@ def main(argv):
                     kick = G["contact_onset"] * onset_kick[s]
                     u[iport[f"HEEL_c_{s}"]] += kick
                     u[iport[f"TOE_c_{s}"]] += kick
+            # crossed swing trigger (G["contra_swing"] > 0 only): when
+            # side A's foot loads (heel strike), the CONTRALATERAL side
+            # B gets a decaying NEGATIVE kick on its HEEL port -> less
+            # heel_in_B excitation of RG-E_B and less inhibition of
+            # RG-F_B = reset-to-swing for the stance leg. Breaks the
+            # frozen-stance latch (the frozen foot's own unloading edge
+            # never fires; the opposite foot's loading edge does).
+            if G["contra_swing"] > 0.0:
+                for s in net.sides:
+                    o = "l" if s == "r" else "r"
+                    loaded_a = load_sig[s] > 0.05
+                    if loaded_a and not contra_prev[s]:
+                        contra_kick[o] = -1.0
+                    else:
+                        contra_kick[o] *= onset_decay
+                    contra_prev[s] = loaded_a
+                    u[iport[f"HEEL_c_{o}"]] += G["contra_swing"] * \
+                        contra_kick[o]
+        # per-side contact-reset phase machine (G["pm_gain"] > 0 only;
+        # needs the contact forces, computed above in ground mode)
+        if pm_on and heel_n is not None:
+            for s in ("r", "l"):
+                loaded = (heel_n[s] + toe_n[s]) > 20.0
+                if loaded and not pm_prev_loaded[s]:
+                    pm_phase[s] = 0.0      # heel-strike phase reset
+                else:
+                    pm_phase[s] = (pm_phase[s]
+                                   + DT / max(G["pm_T"], 0.3)) % 1.0
+                pm_prev_loaded[s] = loaded
+            # gentle antiphase pull (Di Russo eq-7 coupling)
+            err = ((pm_phase["l"] - pm_phase["r"]) % 1.0) - 0.5
+            pm_phase["l"] = (pm_phase["l"] - 0.8 * DT * err) % 1.0
         # --- v11b semi-closed loops: per-side afferent relay currents ---
         if net.aff_loops:
             ga, gb = PHASE_RESET.get("stance_gate", (0.3, 0.7))
@@ -1197,7 +1289,21 @@ def main(argv):
         # --- neural step + motor mapping ---
         v = net.step(u)
         for i, a in enumerate(acts):
-            data.ctrl[aid[a]] = np.clip(v[net.idx[net.mn_names[a]]] / E_HI, 0.0, 1.0)
+            c = float(np.clip(v[net.idx[net.mn_names[a]]] / E_HI,
+                              0.0, 1.0))
+            # per-side contact-reset phase machine (G["pm_gain"] > 0
+            # only): during this side's swing window, scale extensor
+            # ctrl DOWN and flexor ctrl UP — guarantees every leg a
+            # swing phase each cycle (the frozen-stance fix)
+            if pm_on and heel_n is not None:
+                w = _pm_window(pm_phase[a[-1]])
+                if w > 0.0:
+                    g0 = muscles[a].groups[0]
+                    if g0 in ("knee_ext", "ankle_pf"):
+                        c *= (1.0 - G["pm_gain"] * w)
+                    elif g0 in ("knee_flex", "ankle_df", "hip_flex"):
+                        c = min(1.0, c * (1.0 + 0.6 * G["pm_gain"] * w))
+            data.ctrl[aid[a]] = c
 
         if t < WARMUP:
             # hold the keyframe pose while activations build (qpos untouched,

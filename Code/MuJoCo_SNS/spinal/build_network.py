@@ -744,6 +744,19 @@ class SpinalNetwork:
                 self._add(kname, TAU["ib_exc"], n)
                 n.add_connection(_syn(1.5, exc=True), f"PF_F1_{mi.side}",
                                  kname)
+                # 2026-09-21 crossed KINH drive (gain G["contra_kinh"],
+                # default 0 = edge absent): the CONTRALATERAL heel-load
+                # IN also excites this side's KINH - opposite heel
+                # strike suppresses THIS side's extensor MNs = forced
+                # stance->swing transition. s3c/s3d verdict: RG-level
+                # nudges (contra_swing) do not release a loaded jammed
+                # leg; the suppression must reach the MN pools.
+                if G["contra_kinh"] > 0.0:
+                    other = "l" if mi.side == "r" else "r"
+                    if f"HEEL_{other}" in self.idx:
+                        n.add_connection(
+                            _syn(G["contra_kinh"], exc=True),
+                            f"HEEL_{other}", kname)
             n.add_connection(_syn(G["f1_kneext_inh"], exc=False), kname, mn)
         # v6b: same swing-gated suppression onto ankle PF pools (reuses
         # the KINH IN; separate gain)

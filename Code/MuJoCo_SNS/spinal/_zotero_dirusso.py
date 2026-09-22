@@ -12,8 +12,10 @@ KEY = "34tQExoeiKS1yRe3Z1fbTF5z"
 
 
 def get(url, key=KEY):
-    req = urllib.request.Request(url, headers={
-        "X-Zotero-API-Key": key, "Accept": "application/json"})
+    sep = "&" if "?" in url else "?"
+    req = urllib.request.Request(f"{url}{sep}key={key}&v=3",
+                                 headers={"Zotero-API-Version": "3",
+                                          "Accept": "application/json"})
     with urllib.request.urlopen(req, timeout=30) as r:
         return json.loads(r.read().decode("utf-8"))
 

@@ -167,20 +167,24 @@ def first_surname(s):
     return a.split(" et al")[0].split(" and ")[0].split(",")[0].split(";")[0].strip()
 
 
-with open(os.path.join(VOS, "sadb_map.txt"), "w", encoding="utf-8", newline="\n") as f:
-    f.write("\t".join(["id", "label", "doi", "year", "first_author", "weight", "source"]) + "\n")
-    for r in records:
-        d = norm_doi(r["doi"])
-        if d and d in oa:
-            nid = oa[d]["oa_id"].rsplit("/", 1)[-1]
-        elif d:
-            nid = "doi:" + d
-        else:
-            nid = "nodoi:" + r["id"]
-        f.write("\t".join([nid, (r["title"] or "")[:120], d, str(r["year"] or ""),
-                           first_surname(r["primary"]),
-                           str(oa[d]["cited_by_count"]) if d and d in oa else "0",
-                           r["src"]]) + "\n")
+def ws(s):
+    """collapse tabs/newlines -> single spaces (a raw newline in a title
+    splits a map row and kills the VOSviewer parser — the Ivashko 2003 trap)"""
+    return " ".join(str(s or "").split())
+
+
+def first_surname(s):
+    a = " ".join((s or "").split())
+    return a.split(" et al")[0].split(" and ")[0].split(",")[0].split(";")[0].strip()
+
+
+def ws(s):
+    """collapse tabs/newlines -> single spaces (a raw newline in a title
+    splits a map row and kills the VOSviewer parser — the Ivashko 2003 trap)"""
+    return " ".join(str(s or "").split())
+
+
+# (sadb_map.txt is written AFTER the layout section below, so it can carry x/y/cluster)
 
 with open(os.path.join(VOS, "sadb_network.txt"), "w", encoding="utf-8", newline="\n") as f:
     f.write("source\ttarget\tweight\n")
@@ -257,6 +261,40 @@ for r in records:
     }
 json.dump(layout, open(os.path.join(EXPORT, "sadb_layout.json"), "w"))
 print("wrote export/sadb_layout.json")
+
+# --- VOSviewer map, now SELF-CONTAINED: x/y + cluster baked in (no "create map
+# from network" prompt, no dialog ordering traps; the network file stays optional,
+# for drawing the citation links on top) ---
+xs = [p[0] for p in pos.values()] or [0]
+ys = [p[1] for p in pos.values()] or [0]
+minx, maxx = min(xs), max(xs)
+miny, maxy = min(ys), max(ys)
+spanx = (maxx - minx) or 1.0
+spany = (maxy - miny) or 1.0
+
+with open(os.path.join(VOS, "sadb_map.txt"), "w", encoding="utf-8", newline="\n") as f:
+    f.write("\t".join(["id", "label", "doi", "year", "first_author", "weight",
+                       "x", "y", "cluster", "source"]) + "\n")
+    for r in records:
+        d = ws(norm_doi(r["doi"]))
+        if d and d in oa:
+            nid = oa[d]["oa_id"].rsplit("/", 1)[-1]
+        elif d:
+            nid = "doi:" + d
+        else:
+            nid = "nodoi:" + r["id"]
+        px, py = pos.get(r["id"], (minx, miny))
+        cl = cl_of.get(r["id"], -1)
+        f.write("\t".join([
+            ws(nid), ws(r["title"])[:120], d, ws(r["year"]),
+            ws(first_surname(r["primary"])),
+            str(oa[d]["cited_by_count"]) if d and d in oa else "0",
+            "%.6f" % ((px - minx) / spanx),
+            "%.6f" % ((py - miny) / spany),
+            str(cl + 1) if cl >= 0 else "",
+            r["src"],
+        ]) + "\n")
+print("wrote sadb_map.txt with x/y/cluster (self-contained)")
 
 # --- static preview PNG ---
 try:

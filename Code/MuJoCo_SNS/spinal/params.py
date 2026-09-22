@@ -146,6 +146,37 @@ G = dict(
     # disinhibition at lift, instead of a tonic contact level that holds
     # the half-center. Units: nA of peak port current per unit gain.
     contact_onset=0.0,
+    # ---- 2026-09-21 crossed swing trigger (t54 diagnosis: the left
+    # stance leg never releases - its own unloading edge never fires
+    # because the foot never unloads; meanwhile the v10 pf_gain 0.41
+    # leaves PF drive below MN threshold for an unloaded leg). When
+    # side A's foot LOADS (heel strike), the CONTRALATERAL side B gets
+    # a decaying NEGATIVE kick on its HEEL port: heel_in_B -> rg_e exc
+    # / rg_f inh, so -kick inhibits B's extensor half-center and
+    # disinhibits its flexor = reset-to-swing (Aoi/Di Russo phase-
+    # resetting family; the loading edge of the moving foot is the
+    # reliable event). 0 = off (bit-identical).
+    contra_swing=0.0,
+    # ---- 2026-09-21 crossed KINH drive: contralateral heel-load IN ->
+    # this side's KINH -> knee_ext/ankle_pf MN suppression (opposite
+    # heel strike forces THIS leg's stance->swing transition at the MN
+    # level). Needs f1_kneext_inh > 0 (the KINH cell's own-MN synapses
+    # carry the f1 gains). 0 = edge absent (bit-identical build).
+    contra_kinh=0.0,
+    # ---- 2026-09-21 per-side CONTACT-RESET PHASE MACHINE (the Di
+    # Russo eq-7 analog; the build the s3c/s3d/s3e verdicts point to):
+    # a runner-side phase variable per leg, advanced at 1/pm_T cycles/s,
+    # RESET to 0 at that foot's own heel strike (loading onset), with a
+    # gentle antiphase pull toward a half-cycle offset between legs.
+    # The phase gates the MN OUTPUTS: inside the swing window
+    # (phi 0.62-0.95, raised-cosine edges) extensor ctrl scales DOWN
+    # by pm_gain and flexor ctrl scales UP by 0.6*pm_gain. This
+    # guarantees every leg a swing window each cycle — the thing the
+    # frozen stance leg never gets from the SNS half-centers alone.
+    # pm_gain = 0 = OFF (bit-identical). If it works, port into SNS
+    # topology (phase-oscillator neurons) per DESIGN.md 2026-09-21.
+    pm_gain=0.0,
+    pm_T=1.2,                # s per cycle (searched)
     # P1b: IaIN population replaces the direct Ia->antagonist edge when
     # > 0 (Deng A6: Ia->IaIN->MN with PF_F1 phase gate; RC->IaIN inh
     # = recurrent disinhibition, Hultborn 1971).

@@ -1,47 +1,43 @@
-# VOSviewer integration — SADb corpus (built 2026-09-14, EB475WS4)
+# VOSviewer integration — SADb corpus (full-corpus rebuild 2026-09-18; self-contained map 2026-09-21)
 
 Research-Rabbit-style bubble map of the whole Papers corpus, built from
-OpenAlex citation data. Files here (regenerable, all small):
+OpenAlex citation data. Rebuilt by `SADb_audit\vos_build2.py` (the older
+`vos_build.py` covered only 552 papers and is superseded). Files here:
 
 | file | what it is |
 |---|---|
-| `sadb_map.txt` | VOSviewer MAP: 552 papers — id (OpenAlex W-id), label, doi, year, first_author, weight = cited_by_count, source (originals99/demo50/rest383/digest20) |
-| `sadb_network.txt` | VOSviewer NETWORK: 9,400 citation edges between corpus members (OpenAlex referenced_works, deduped, weight = reciprocal-citation count) |
-| `openalex_enrichment.csv` | per-DOI: oa_id, cited_by_count, n_refs, in-corpus refs (sorted by citations) |
-| `openalex_misses.txt` | DOIs OpenAlex could not resolve (0 on first build — all 502 DOIs resolved) |
+| `sadb_map.txt` | VOSviewer MAP: 943 papers — id (OpenAlex W-id), label, doi, year, first_author, weight = cited_by_count, **x, y, cluster** (built-in layout + 18 Louvain clusters, same as the HTML app), source. SELF-CONTAINED: loads with no prompts. |
+| `sadb_network.txt` | VOSviewer NETWORK: 11,108 citation edges (optional — only draws links on top of the map layout) |
+| `openalex_enrichment.csv` | per-DOI: oa_id, cited_by_count, n_refs, in-corpus refs |
+| `openalex_misses.txt` | DOIs OpenAlex could not resolve (6 of 892) |
 | `sadb_preview.png` | static matplotlib preview (NOT a VOSviewer product) |
-| `vos_build.py` | rebuilds all of the above from the local CSVs + OpenAlex |
-| `vos_preview.py` | rebuilds the PNG (networkx spring layout) |
 
 ## How to open in VOSviewer
 
 Desktop (vosviewer.com, free, needs Java) **or** the web app `https://app.vosviewer.com`:
 
-1. **File → Open → VOSviewer map file…** → pick `sadb_map.txt`.
-   If it asks, choose to create the map based on a network.
-2. **File → Open → VOSviewer network file…** → pick `sadb_network.txt`.
-3. In the right panel: **Size by = weight (citations)**; **Color by = cluster**
-   (VOSviewer computes its own topic clusters from the citation network) or
-   by weight for a citation-density heat view. Zoom/pan freely; search box
-   matches labels/authors.
+**Easiest: drag `sadb_map.txt` onto the page by itself.** It carries its own
+positions and clusters, so it renders immediately — no "create map based on a
+network" prompt, no x/y warning. Then set **Size by = weight** (citations) and
+**Color by = cluster** (our 18 topic clusters, matching the HTML app).
 
-The web app also accepts both files dragged in together.
+**Optional: add `sadb_network.txt`** to draw the citation links on top. Drop it
+onto the page second, or in the Open dialog put the MAP in the map-file slot
+and the NETWORK in the network-file slot — swapping them throws
+"line 1 missing or incorrect" (the network header is not a map header).
 
 ## Reading it
 
-- The big central component (495/552 papers) is the citation-connected literature;
-  57 singletons are mostly 2023-2026 papers too new to have accumulated in-corpus
-  citing links (orange digest20 dots sit near the core they were mined from).
+- 816/943 papers are in the citation-connected component; 127 singletons are
+  mostly 2023-2026 papers too new to have in-corpus citing links (they sit on
+  the outer ring).
 - Bubble size = OpenAlex cited_by_count (all-citations, not in-corpus).
 
-## Regenerating after future curation batches
+## Regenerating
 
-1. `vos_build.py` reads four local CSVs (originals99, demo-50 via personal_SAD_items_slim,
-   rest-import 383) plus **the inline `DIGEST20` list** — extend that list (or replace it
-   with an Airtable export) as new papers are created. Then rerun:
-   `"C:\Users\Ben Bolen\.conda\envs\myo\python.exe" vos_build.py`
-2. `python vos_preview.py` for the PNG.
+Run the standard chain (reads a fresh `export/sadb_export.json`, OpenAlex
+results are cached in `export/openalex_raw.json`):
 
-Known cosmetic issue: a few `originals99` labels carry cp437 mojibake from the legacy
-slim CSV (e.g. "BA¼schges"); Airtable holds the correct characters — re-export labels
-from Airtable if it bothers you.
+```
+"C:\Users\Ben Bolen\.conda\envs\myo\python.exe" SADb_audit\vos_build2.py
+```

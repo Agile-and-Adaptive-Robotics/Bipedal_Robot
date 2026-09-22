@@ -1071,6 +1071,44 @@ Scale first — the bundled IK setup consumes its `subject01_simbody.osim` outpu
   term kept + ONE unified R×(total polyline turn) term for p3–p8, plateau-calibrated so the
   Xi3·bend product stays consistent; prototype behind `ctx.bendModel` flag. Ben hasn't decided.
 
+## Figure standards — PROJECT-WIDE (Ben, 2026-09-21)
+
+Every figure produced for this project (MATLAB, Python, Illustrator
+exports) must follow these rules; reference examples: the
+Plot_KneeFlxPin family + `Documentation\Reports and Papers\
+Knee_Torque_Test\Figures\Figure components\FlxPin_group\FlxPin_group.fig`.
+
+1. **Page/size**: sized for regular letter paper, usable area
+   7.5 x 10 in (8.5x11 with margins). Nothing smaller.
+2. **Type**: minimum 10 pt everywhere (axis labels, ticks, legends,
+   annotations). **No italic text** (set font.style normal; avoid
+   mathtext italics — use \mathrm or plain text).
+3. **Font**: Arial only (freely available in MATLAB, Adobe Illustrator,
+   and Python/matplotlib on all three machines). MATLAB:
+   set(groot,'defaultAxesFontName','Arial'); Python:
+   rcParams["font.family"]="Arial", "mathtext.fontset":"custom" with
+   rm/it/bf all Arial.
+4. **Colors**: use the accessible palette from `Code\Matlab\Colors.m`
+   (Paul Tol 7: #FFD700 gold, #FFB14E orange, #FA8775 coral,
+   #EA5F94 pink, #CD34B5 magenta, #9D02D7 magenta2, #0000FF indigo) as
+   the series palette, in that order. Greys #B0B0B0 (context) and
+   light lavender (inactive circuit context) for de-emphasized
+   structure, Di-Russo-style.
+5. **Accessibility**: colorblind-safe by construction (Tol palette +
+   distinct line styles/markers/shapes so no information is carried by
+   hue alone); every figure ships with **alt text** (one file per
+   figure set, e.g. <figure>_alt.txt, one block per panel: panel
+   letter, what is plotted, key takeaway).
+6. **Synapse/element shapes in circuit diagrams** (Ben's SNS
+   convention, 2026-09-09): open circle = neuron, open triangle =
+   excitatory synapse, filled circle = inhibitory synapse,
+   ellipse = muscle; afferent/interneuron classes distinguished by
+   Colors.m hue + label.
+7. **Terminology**: refer to afferent pathways as Ia / II / Ib
+   (e.g. "stance-group Ib interneuron" — the code symbol LBIN means
+   exactly that; do not write "LB"). KINH = swing-gated inhibitory IN
+   (PF_F1 -> KINH -> knee_ext/ankle_pf MN suppression).
+
 ## Readmes
 
 - `Code\Matlab\Mesh_Optimization\Mesh_Optimization_Readme.md`, `Code\Matlab\Functions\Functions_Readme.md`,
