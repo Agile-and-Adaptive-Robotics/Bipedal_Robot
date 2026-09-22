@@ -426,10 +426,24 @@ class SpinalNetwork:
             self.inputs.append("TOE_c_" + side)
             n.add_input(lbin)
             self.inputs.append("LOAD_c_" + side)
-            n.add_connection(_syn(G["heel_rge"], exc=True), heel_in, rg_e)
-            n.add_connection(_syn(G["heel_rge"] * PHASE_RESET.get("inh", 1.0),
-                                  exc=False), heel_in, rg_f)
-            n.add_connection(_syn(G["toe_rge"], exc=True), toe_in, rg_e)
+            # 2026-09-21 FULL RULES: reach the RG through the laminated
+            # IN layer (heel -> InE excitation strengthens E's
+            # suppression of F; heel -> InF inhibition releases RG-E),
+            # not direct heel-IN -> half-center edges
+            if G["full_rules"] > 0.0:
+                n.add_connection(_syn(G["heel_rge"], exc=True),
+                                 heel_in, ine)
+                n.add_connection(_syn(G["heel_rge"], exc=False),
+                                 heel_in, inf)
+                n.add_connection(_syn(G["toe_rge"], exc=True),
+                                 toe_in, ine)
+            else:
+                n.add_connection(_syn(G["heel_rge"], exc=True),
+                                 heel_in, rg_e)
+                n.add_connection(_syn(G["heel_rge"] * PHASE_RESET.get(
+                    "inh", 1.0), exc=False), heel_in, rg_f)
+                n.add_connection(_syn(G["toe_rge"], exc=True),
+                                 toe_in, rg_e)
             n.add_connection(_syn(G["ib_rge"], exc=True), lbin, rg_e)
             # NOTE: the heel/toe -> PF_E/InE central-pathway extensions
             # are wired in _build_pf (the PF cells are created there,
@@ -616,9 +630,39 @@ class SpinalNetwork:
                              "POSTURE", mn)
 
         # ---- proprioceptive pathways ----
+        # 2026-09-21 FULL LITERATURE RULES (G["full_rules"] > 0; Ben:
+        # "how does the working Deng model connect things"). Deng A6 /
+        # Di Russo rules 1-3: ONLY Ia homonymous is monosynaptic;
+        # II and Ib reach their MNs through dedicated interneurons, and
+        # the inhibitory INs mutually inhibit their antagonists.
+        fr = G["full_rules"] > 0.0
         n.add_connection(_syn(G["ia_to_mn"], exc=True), ia, mn)
-        n.add_connection(_syn(G["ii_to_mn"], exc=True), ii, mn)
-        n.add_connection(_syn(G["ib_to_mn_inh"], exc=False), ib, mn)
+        if fr:
+            # II -> (IIX exc IN) -> same MN   [rule 2a, disynaptic exc]
+            iix = f"IIX_{act}"
+            if iix not in self.idx:
+                self._add(iix, TAU["afferent"], n)
+                n.add_connection(_syn(1.0, exc=True), ii, iix)
+            n.add_connection(_syn(G["ii_to_mn"], exc=True), iix, mn)
+            # Ib -> (IBIN inh IN) -> same MN [rule 3, disynaptic autogenic]
+            ibin = f"IBIN_{act}"
+            if ibin not in self.idx:
+                self._add(ibin, TAU["afferent"], n)
+                n.add_connection(_syn(1.0, exc=True), ib, ibin)
+            n.add_connection(_syn(G["ib_to_mn_inh"], exc=False),
+                             ibin, mn)
+            # Ib-IN <-> antagonist Ib-IN mutual inhibition [rule 3]
+            # (IIIN -> antagonist MN wired in the antagonist loop below)
+            for act2, mi2 in self.muscles.items():
+                if mi2.side == mi.side and act2 != act and \
+                        mi2.groups[0] in ANTAGONIST.get(mi.groups[0], ()) \
+                        and f"IBIN_{act2}" in self.idx:
+                    n.add_connection(_syn(0.5, exc=False), ibin,
+                                     f"IBIN_{act2}")
+        else:
+            n.add_connection(_syn(G["ii_to_mn"], exc=True), ii, mn)
+            n.add_connection(_syn(G["ib_to_mn_inh"], exc=False),
+                             ib, mn)
 
         # ---- per-muscle afferent -> CENTRAL feedback (Deng 2022 /
         # Shinohara 2025 wiring, Ben 2026-09-16): force/length feedback
@@ -631,15 +675,29 @@ class SpinalNetwork:
         # Foot mechanosensors share the extensor pathway (see _build_rg).
         # Conditional on the gains (default 0 = topology absent).
         grp = mi.groups[0]
+        # joint-layer mode: route central projections to this muscle's
+        # own joint half-center (PF_HIP-E_r etc.) instead of the absent
+        # phase cells (the 09-18 build wired heel/toe but missed this
+        # section - found 2026-09-21, "Population not found PF_E1_r")
+        if self.joint_pf:
+            tgt_e = ([f"PF_{h}_{mi.side}" for h in
+                      JPF_GROUP2HC.get(grp, ()) if h.endswith("E")]
+                     or [f"PF_{h}_{mi.side}" for h in
+                         ("HIP-E", "KNEE-E", "ANK-E")])
+            tgt_f = ([f"PF_{h}_{mi.side}" for h in
+                      JPF_GROUP2HC.get(grp, ()) if h.endswith("F")]
+                     or [f"PF_{h}_{mi.side}" for h in
+                         ("HIP-F", "KNEE-F", "ANK-F")])
+        else:
+            tgt_e = [f"PF_E1_{mi.side}", f"PF_E2_{mi.side}"]
+            tgt_f = [f"PF_F1_{mi.side}", f"PF_F2_{mi.side}"]
         if G["ib_e_central"] > 0.0 and grp in EXTENSOR_STANCE_GROUPS:
-            for tgt in (f"PF_E1_{mi.side}", f"PF_E2_{mi.side}",
-                        f"RG_E_{mi.side}", f"InE_{mi.side}"):
+            for tgt in (*tgt_e, f"RG_E_{mi.side}", f"InE_{mi.side}"):
                 n.add_connection(_syn(G["ib_e_central"], exc=True),
                                  ib, tgt)
         if grp in ("hip_flex", "knee_flex", "ankle_df", "hip_add",
                    "trunk_flex"):
-            for tgt in (f"PF_F1_{mi.side}", f"PF_F2_{mi.side}",
-                        f"RG_F_{mi.side}", f"InF_{mi.side}"):
+            for tgt in (*tgt_f, f"RG_F_{mi.side}", f"InF_{mi.side}"):
                 if G["ia_f_central"] > 0.0:
                     n.add_connection(_syn(G["ia_f_central"], exc=True),
                                      ia, tgt)
@@ -656,8 +714,7 @@ class SpinalNetwork:
         # extensor II same-group excitation (Ben 2026-09-16: type II is
         # same-group excitatory, like the flexor-side Ia/II routing)
         if G["ii_e_central"] > 0.0 and grp in EXTENSOR_STANCE_GROUPS:
-            for tgt in (f"PF_E1_{mi.side}", f"PF_E2_{mi.side}",
-                        f"RG_E_{mi.side}", f"InE_{mi.side}"):
+            for tgt in (*tgt_e, f"RG_E_{mi.side}", f"InE_{mi.side}"):
                 n.add_connection(_syn(G["ii_e_central"], exc=True),
                                  ii, tgt)
 
@@ -693,13 +750,22 @@ class SpinalNetwork:
                 # afferent leg of "Ia -> IaIN -> antagonist MN"; same
                 # conductance as the homonymous Ia->MN arc, Deng A6)
                 n.add_connection(_syn(G["ia_to_mn"], exc=True), ia, iain)
-                # phase gate: PF_F1 excites the IaIN (Deng A6 PF->IaIN 0.5)
-                n.add_connection(_syn(0.5, exc=True), f"PF_F1_{mi.side}",
-                                 iain)
+                # phase gate: PF_F1 excites the IaIN (Deng A6 PF->IaIN
+                # 0.5); joint-layer mode gates by the muscle's own F HC
+                gate_f1 = (tgt_f[0] if self.joint_pf
+                           else f"PF_F1_{mi.side}")
+                n.add_connection(_syn(0.5, exc=True), gate_f1, iain)
                 # recurrent disinhibition (RC -> IaIN inh)
                 if self.renshaw and f"RC_{act}" in self.idx:
                     n.add_connection(_syn(G["renshaw"], exc=False),
                                      f"RC_{act}", iain)
+        # II -> (IIIN inh IN) -> antagonist MN [rule 2b]: created once,
+        # edges to the antagonist MNs in the loop below
+        if fr:
+            iiin = f"IIIN_{act}"
+            if iiin not in self.idx:
+                self._add(iiin, TAU["afferent"], n)
+                n.add_connection(_syn(1.0, exc=True), ii, iiin)
         for ant in ANTAGONIST.get(mi.groups[0], ()):
             for act2, mi2 in self.muscles.items():
                 if mi2.side == mi.side and mi2.groups[0] == ant:
@@ -707,10 +773,20 @@ class SpinalNetwork:
                         n.add_connection(
                             _syn(G["ia_to_antagonist"], exc=False),
                             f"IaIN_{act}", f"MN_{act2}")
+                        # rule 1 addendum: IaIN <-> antagonist IaIN
+                        # mutual inhibition (Deng A6)
+                        if fr and f"IaIN_{act2}" in self.idx:
+                            n.add_connection(_syn(0.5, exc=False),
+                                             f"IaIN_{act}",
+                                             f"IaIN_{act2}")
                     else:
                         n.add_connection(
                             _syn(G["ia_to_antagonist"], exc=False),
                             ia, f"MN_{act2}")
+                    if fr and f"IIIN_{act}" in self.idx:
+                        n.add_connection(
+                            _syn(G["ia_to_antagonist"], exc=False),
+                            f"IIIN_{act}", f"MN_{act2}")
 
         # ---- stance load sharing (extensor groups only) ----
         if mi.groups[0] in EXTENSOR_STANCE_GROUPS:
@@ -740,19 +816,36 @@ class SpinalNetwork:
         # flex (v4 diagnosis lever #2: swing knee extension-dominant).
         if self.f1_kneext_inh and mi.groups[0] == "knee_ext":
             kname = f"KINH_{mi.side}"
+            # swing-gate source: the F1 phase cell, or in joint-layer
+            # mode the knee flexor half-center (swing gate for the knee)
+            gate = (f"PF_KNEE-F_{mi.side}" if self.joint_pf
+                    else f"PF_F1_{mi.side}")
             if kname not in self.idx:
                 self._add(kname, TAU["ib_exc"], n)
-                n.add_connection(_syn(1.5, exc=True), f"PF_F1_{mi.side}",
-                                 kname)
+                n.add_connection(_syn(1.5, exc=True), gate, kname)
+                # 2026-09-21 crossed KINH drive (gain G["contra_kinh"],
+                # default 0 = edge absent): the CONTRALATERAL heel-load
+                # IN also excites this side's KINH - opposite heel
+                # strike suppresses THIS side's extensor MNs = forced
+                # stance->swing transition. s3c/s3d verdict: RG-level
+                # nudges (contra_swing) do not release a loaded jammed
+                # leg; the suppression must reach the MN pools.
+                if G["contra_kinh"] > 0.0:
+                    other = "l" if mi.side == "r" else "r"
+                    if f"HEEL_{other}" in self.idx:
+                        n.add_connection(
+                            _syn(G["contra_kinh"], exc=True),
+                            f"HEEL_{other}", kname)
             n.add_connection(_syn(G["f1_kneext_inh"], exc=False), kname, mn)
         # v6b: same swing-gated suppression onto ankle PF pools (reuses
         # the KINH IN; separate gain)
         if self.f1_kneext_inh and mi.groups[0] == "ankle_pf":
             kname = f"KINH_{mi.side}"
+            gate = (f"PF_ANK-F_{mi.side}" if self.joint_pf
+                    else f"PF_F1_{mi.side}")
             if kname not in self.idx:
                 self._add(kname, TAU["ib_exc"], n)
-                n.add_connection(_syn(1.5, exc=True), f"PF_F1_{mi.side}",
-                                 kname)
+                n.add_connection(_syn(1.5, exc=True), gate, kname)
             n.add_connection(_syn(G["f1_anklepf_inh"], exc=False), kname, mn)
 
     def _wire_balance(self, n: Network):

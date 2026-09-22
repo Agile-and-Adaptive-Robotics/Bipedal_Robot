@@ -45,6 +45,7 @@ def load(path: str, side: str):
     q = d["q"]                      # degrees, saved by runner
     act = d["act"]
     neuro = d["neuro"]
+    contact = d["contact"] if "contact" in d.files else None
     names = list(d["key_joints"])
     neuro_names = (list(d["neuro_names"]) if "neuro_names" in d
                    else ["DRIVE", "POSTURE", "RG_E_r", "RG_F_r",
@@ -55,7 +56,8 @@ def load(path: str, side: str):
     ncol = {nm: i for i, nm in enumerate(neuro_names)}
     j = {k: q[:, cols[v.format(s=side)]] for k, v in JOINT_KEYS.items()}
     drive = neuro[:, ncol["DRIVE"]]
-    return d, t, j, act, acols, neuro, ncol, drive, side
+    d.close()   # NpzFile keeps the handle open (WinError-5 trap)
+    return d, t, q, j, act, acols, neuro, ncol, drive, side, contact
 
 
 def stance_spans(neuro, ncol, t, side="r"):
@@ -181,8 +183,9 @@ def fig23(t, j, neuro, ncol, act, acols, drive, side, spans):
 
 # ---------------------------------------------------------------- fig 4/5
 def gait_cycles(t, neuro, ncol, side="r"):
-    """Index ranges of full gait cycles: RG_E rise -> next RG_E rise,
-    within the walk window (DRIVE > 0.8*max)."""
+    """(kept for reference/back-compat) RG_E-rise cycles. fig45 no
+    longer uses this - the v1 neural phasing is what let the one-legged
+    s3b 'winner' look like a walk (Ben 2026-09-21)."""
     drive = neuro[:, ncol["DRIVE"]]
     walk = drive > 0.8 * drive.max()
     rge = neuro[:, ncol[f"RG_E_{side}"]]
@@ -194,42 +197,52 @@ def gait_cycles(t, neuro, ncol, side="r"):
     return [(rises[i], rises[i + 1]) for i in range(len(rises) - 1)]
 
 
-def fig45(t, j, neuro, ncol, side, bench):
-    cycles = gait_cycles(t, neuro, ncol, side)
-    fig, ax = plt.subplots(3, 1, figsize=(8, 10), sharex=True)
-    fig.subplots_adjust(hspace=0.13, left=0.1, right=0.97, top=0.95)
+def fig45(t, q, neuro, ncol, contact, side="r"):
+    """fig4 v2 (2026-09-21, after Ben's critique of the stale render):
+    BOTH legs, cycles cut at each foot's own CONTACT loading onsets
+    (kine_ref v2), against that leg's OpenSim reference cycle. A leg
+    with no cycles is annotated FROZEN - never silently dropped."""
+    import kine_ref as KR
+
+    drive = neuro[:, ncol["DRIVE"]]
+    wmask = drive > 0.8 * drive.max()
+    t0 = float(t[np.flatnonzero(wmask)[0]]) if wmask.any() else 0.0
+    ref = KR.ref_cached()
+    fig, ax = plt.subplots(3, 2, figsize=(11, 10), sharex=True)
+    fig.subplots_adjust(hspace=0.14, left=0.09, right=0.97, top=0.93)
+    labels = {"hip": "Hip flexion [deg]", "knee": "Knee angle [deg]",
+              "ankle": "Ankle angle [deg]"}
     mean_cyc = {}
-    for i, k in enumerate(("hip", "knee", "ankle")):
-        traces = []
-        for a, b in cycles:
-            x = j[k][a:b]
-            if len(x) < 10:
-                continue
-            ph = np.linspace(0, 100, len(x))
-            traces.append(np.interp(np.linspace(0, 100, 200), ph, x))
-            ax[i].plot(ph, x, lw=0.5, color=C_JOINTS[k], alpha=0.35)
-        if traces:
-            mean_cyc[k] = np.mean(traces, axis=0)
-            ax[i].plot(np.linspace(0, 100, 200), mean_cyc[k], lw=2.2,
-                       color=C_JOINTS[k],
-                       label=f"SNS sim mean ({len(traces)} cyc)")
-            if k in bench:
-                ax[i].plot(bench[k][0], bench[k][1], lw=1.8, color="k",
-                           ls="--", label="OpenSim IK")
-                ax[i].set_ylim(min(ax[i].get_ylim()[0], bench[k][1].min() - 5),
-                               max(ax[i].get_ylim()[1], bench[k][1].max() + 5))
-        ax[i].set_ylabel(f"{k} [deg]")
-        ax[i].legend(fontsize=8, loc="upper right")
-        ax[i].axvspan(0, 60, color=C_STANCE, zorder=0, lw=0)
-    ax[0].set_title(f"gait cycles, cycle-normalized ({side} leg; 0 = RG-E "
-                    "rise ~ stance start)", fontsize=11)
-    ax[-1].set_xlabel("gait cycle [%]")
+    for col_i, s in enumerate(("r", "l")):
+        mean, per, duty_c, cfrac, used_c, n_cyc, on = KR.sim_side(
+            t, q, neuro, t0, s, contact)
+        note = (f"{n_cyc} cycles, contact duty {duty_c:.2f} "
+                f"(ref {ref[f'duty_{s}']:.2f})" if mean is not None
+                else f"FROZEN - no cycles (contact frac {cfrac:.2f})")
+        for row, k in enumerate(("hip", "knee", "ankle")):
+            a = ax[row, col_i]
+            a.plot(KR.GRID, ref[s][k], "k--", lw=1.8,
+                   label="OpenSim ref")
+            if mean is not None:
+                a.plot(KR.GRID, mean[k], lw=2.2, color=C_JOINTS[k],
+                       label=f"SNS sim mean ({note})")
+            else:
+                a.text(0.5, 0.5, note, transform=a.transAxes,
+                       ha="center", va="center", fontsize=10,
+                       color="#B2182B", fontweight="bold")
+            a.set_ylabel(labels[k], fontsize=9)
+            if row == 0:
+                a.set_title(f"{'Right' if s == 'r' else 'Left'} leg",
+                            fontsize=11, fontweight="bold")
+                a.legend(fontsize=8, loc="upper right")
+            if row == 2:
+                a.set_xlabel("gait cycle [%]  (0 = loading onset)")
+        if mean is not None:
+            mean_cyc[s] = mean
+    fig.suptitle("Mean gait cycles vs OpenSim (contact-phased, both "
+                 "legs)", fontsize=12)
     fig.savefig(HERE / "fig4_gait_cycles.png", dpi=140)
     plt.close(fig)
-    if not bench:
-        print("(fig4: no OpenSim benchmark file found - sim-only overlay. "
-              "Drop subject01_walk1_ik.mot under Solid_Models\\OpenSim\\ "
-              "and rerun for fig5 comparison.)")
     return mean_cyc
 
 
@@ -291,12 +304,13 @@ def fig6(t, j, side, spans):
     right (magenta), one panel per joint."""
     other = "l" if side == "r" else "r"
     d2 = load("spinal_run.npz", other)
+    t2, j2 = d2[1], d2[3]   # new 11-tuple: [1]=t, [3]=j dict
     fig, ax = plt.subplots(3, 1, figsize=(11, 8), sharex=True)
     fig.subplots_adjust(hspace=0.16, left=0.08, right=0.97, top=0.93)
     labels = {"hip": "Hip", "knee": "Knee", "ankle": "Ankle"}
     for i, k in enumerate(("hip", "knee", "ankle")):
         ax[i].plot(t, j[k], lw=1.3, color="m", label="right")
-        ax[i].plot(d2[1], d2[2][k], lw=1.3, color="k", label="left")
+        ax[i].plot(t2, j2[k], lw=1.3, color="k", label="left")
         ax[i].set_ylabel(f"{labels[k]} [deg]")
         for a, b in spans:
             ax[i].axvspan(a, b, color=C_STANCE, zorder=0, lw=0)
@@ -318,15 +332,16 @@ def main(argv):
             side = args.pop(0)
         elif not a.startswith("--"):
             path = a
-    d, t, j, act, acols, neuro, ncol, drive, side = load(path, side)
+    d, t, q, j, act, acols, neuro, ncol, drive, side, contact = \
+        load(path, side)
     spans = stance_spans(neuro, ncol, t, side)
     fig1(t, j, neuro, ncol, act, acols, side, spans)
     fig23(t, j, neuro, ncol, act, acols, drive, side, spans)
-    bench = load_benchmark(side)
-    fig45(t, j, neuro, ncol, side, bench)
+    fig45(t, q, neuro, ncol, contact, side)
     fig6(t, j, side, spans)
     print("saved fig1_joints_over_neural.png, fig2_joints_over_stimulus.png,")
-    print("      fig3_neural_over_stimulus.png, fig4_gait_cycles.png,")
+    print("      fig3_neural_over_stimulus.png, fig4_gait_cycles.png "
+          "(v2: both legs, contact-phased),")
     print("      fig6_limbs_timecourse.png")
 
 

@@ -24,8 +24,10 @@ fprintf(['DENG CPG DEMO: %d RG_ext bursts over 20 s from ONE pulse; ' ...
          'period %.3f s; V range [%.1f, %.1f] mV\n'], numel(tp), per, ...
         min(min(yE), min(yF)), max(max(yE), max(yF)));
 
-% antiphase check: correlation of ext vs flx
-r = corr(yE, yF);
+% antiphase check: correlation of ext vs flx (base-MATLAB Pearson — the
+% laptop license has no Statistics Toolbox, corr() is not defined there)
+za = yE - mean(yE); zb = yF - mean(yF);
+r = sum(za.*zb) / sqrt(sum(za.^2) * sum(zb.^2));
 fprintf('RG ext-vs-flx correlation: %.3f (negative = alternation)\n', r);
 
 % compare with the numpy reference

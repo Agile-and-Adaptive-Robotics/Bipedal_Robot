@@ -37,6 +37,22 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   `D:\Program Files\SOLIDWORKS Corp` (contains a duplicate `SOLIDWORKS (2)` folder, same
   version); SW2URDF add-in registered (enable via Tools > Add-Ins); Simscape Multibody
   Link NOT installed.
+  **2026-09-20 rebuild notes (after Ben replaced the C: drive; registry links to
+  D:-installed software were wiped):** VS Code 1.138 at `D:\Program Files\Microsoft VS
+  Code` — extensions (python/jupyter/matlab/latex-workshop/cpptools/xml) + settings
+  rebuilt; project `.vscode\` (untracked) + Desktop shortcut "Bipedal_Robot (VS Code)";
+  python interpreter = the myo env. **SW COM was broken** (LocalServer32 used 8.3 short
+  paths; 8.3 generation is disabled on D:) — fixed per-user via
+  `HKCU\Software\Classes\CLSID\{6AF263BB-EB9F-4176-89E9-4F892EB0CA3D}` → real path; API
+  verified (33.3.0) through the solidworks skill with **pywin32 now pip-installed in the
+  myo env**; `sw_session.py` gen_py fix (pip pywin32 caches in %TEMP%\gen_py — the old
+  site-packages guess failed; REPO COPY EDITED, awaiting Ben's commit). MiKTeX 22.1
+  (`D:\Program Files\MiKTeX`) was dead (its config died with the old registry) — removed;
+  complete package set installed **user-scope at `D:\MiKTeX`** (pdflatex
+  `D:\MiKTeX\miktex\bin\x64`, on user PATH; Ben declined the all-users/admin install for
+  now — staged one-click: `D:\temp\miktex_setup\elevated_install2.ps1` + local repo
+  `D:\temp\miktex-repo`). MATLAB R2025a U1 re-verified headless (Optimization + Simulink
+  license OK).
 - **DESKTOP-5Q16KE9 (laptop), the main workstation** — newest/premium
   MATLAB + SolidWorks, but modest hardware (6 cores, 16 GB RAM). MATLAB **R2025b** at
   `C:\Program Files\MATLAB\R2025b`; SOLIDWORKS **2025 SP4.1** (33.4.1) at
@@ -426,6 +442,32 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     summation-order nondeterminism is real even between processes; treat
     single borderline trials as noise. Results: `spinal\basin_gate_results.json`
     + `basin_gate_full.log`.
+    **2026-09-20 (EB475WS4) — CURRICULUM FIXED + FIRST GROUND GAIT; full
+    chain in spinal\DESIGN.md "2026-09-20" section:** the 09-18 stage-2
+    "winner" was a STATIC-POSE EXPLOIT (rises=0; score 36.906 = knee term
+    alone; bit-exact repro) — the air objective now RHYTHM-GATES (rises<3
+    → ≈−10), new gains enter at [0,0.5] (full-range sampling killed the
+    stage-1 rhythm in all 25 trials), seeds are full-dicts (missing keys
+    get SAMPLED — JSON-rule lesson), exploited studies archived
+    (curriculum_exploit_archive_20260920.json) and rerun as curr_s2b/s3b.
+    NEW KNOB `contact_onset` (params.G, runner-side edge-triggered heel/
+    toe transients, default 0 = bit-identical, JSON-RULE loader updated).
+    OUTCOMES: s2b 50 trials — seed (stage-1 winner, drive 3.15) still
+    best 129.05; best afferented 128.3 ties it with all new gains ≈0
+    (afferents tolerated, not additive). s3b 60 trials — 11/60 real
+    gaits, winner trial 52 = −85.22: 20 cycles, duty 0.69 (ref 0.61),
+    knee −53.5° cycle / −76..+10 raw, hip range 16.9° (43.3 ref), ankle
+    34° OVER ref, tilt 29.7°, no NaN. Scalar search PLATEAUED — remaining
+    duty/cadence/hip-range gaps are ARCHITECTURAL (sensory phase reset
+    into RG). Also: runner npz q = named KEY_JOINTS already in degrees
+    (the old "q[m,4] is a quat" bug is resolved; _diag_stage3's double
+    np.degrees fixed); tuned-config constant-DRIVE self-sustain is LOST
+    (schedule-sustained; `_debug_rhythm_tuned.py`). Run instructions for
+    Ben's Spyder: `Code\MuJoCo_SNS\HowToRunCode.md`. Dissertation
+    CPG_spinal_section_draft.tex \fillme slots FILLED (ZCODE 2026-09-20
+    fenced blocks) + 3 new figs curr3b_ground_* — deconfliction note for
+    the other dissertation chat is in CHATGPT_HANDOFF.md "DISSERTATION
+    CPG SECTION — DECONFLICTION".
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the
@@ -764,6 +806,40 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   gravity param is `GravityVector`; a Solver Configuration block IS required
   for Multibody nets; smimport's return value is not the model name — import
   a sanitized temp copy) all banked in BRIDGE_REPORT.md "LAPTOP PORT".
+  **2026-09-20 SNS_Simscape session (laptop, all details in
+  README_SNS_Simscape.md):** (1) ALL FOUR demos verified on R2025b —
+  KneeReflex 42.72°, CPG 9.7-48°, Beer 5.13°/9.66°, Deng 1.938 s r −0.857;
+  fixed sns_run_deng_demo.m corr() (no Statistics Toolbox on laptop →
+  base-MATLAB Pearson). (2) **SNS_Library.slx REBUILT with Rybak-style
+  synapse icons** (pass-through axon + E-triangle/I-ball terminal at the
+  postsynaptic edge; restyle in sns_build_library.m>synapseIconCode) — now
+  R2025b-native, demos' links still resolve, SNS_Library_R2025a.slx
+  exported; R2025a machines regenerate via the two build scripts. Actuator
+  validation re-PASSED (4.9e-10 N). (3) **Dissertation exports**:
+  sns_export_diagram.m upgraded — per-block 12 pt (R2025b has NO model-level
+  FontSize param), synapse names hidden, white canvas, styling in-memory
+  only; EPS = MiKTeX pdfcrop + mgs.exe eps2write chain (print -depsc is
+  REFUSED for Simulink systems; R2025b bundles NO ghostscript; pdfcrop
+  cannot write to C:\ root). NEW `demos\sns_build_circuit_view.m` →
+  `demos\KneeReflexCircuit.slx` = print-only neural-circuit view (blocks
+  COPIED from the demo, mask values 1:1). snsfig/sns_draw_circuit fonts
+  9.5-11 pt on a 16.5 cm canvas (= text width, no LaTeX downscale).
+  (4) **OpenSim→Simscape COMPLETE on the laptop**: Gait2392_simbody_simscape.slx
+  (osim_import\) imports (1446 blocks), COMPILES + sims after patching the 19
+  File Solids to absolute STL paths — **mesh param is `ExtGeomFileName`**
+  ('FileName' doesn't exist); `osim_import\Geometry` is a gitignored junction
+  into the cvt3 Geometry; a junction created AFTER import does NOT fix an
+  already-saved model. Joint inventory: 85 Prismatic (pathpoint slides) +
+  20 Revolute + 44 Weld = 149. (5) **09_BA_003 Multibody-Link XML imported**
+  (`mdl_knee_rig_xml_imported.slx`, runner dev\imports2_20260920.m): 96
+  blocks, joints = 2 Cylindrical + 3 6-DOF, ZERO revolute — **knee DOF
+  missing** (dropped Hinge mates → welds); Ben's SW re-export (Hinge →
+  Concentric+Coincident) still required. The older
+  mdl_knee_rig_import_tmp_imported.slx = 1-link sw2urdf stub. (6) CRASH
+  HAZARD: a FAILED `SimulationCommand update` leaves Simscape's GUI tree
+  poisoned — physmod_sm_gui_app_tree.dll access-violation at ANY later touch
+  incl. process teardown; make the compile succeed or expect crash-at-exit
+  (log survives). .gitignore gained `Code/Matlab/SNS_Simscape/osim_import/Geometry/`.
   **Part 3 — tuned spinal network as an EDITABLE Simulink model (2026-09-12,
   same session, all VERIFIED):** `spinal\export_network_json.py` (myo env)
   dumps the tuned `--fitted --best` network (v4b winner) to `spinal\
@@ -824,16 +900,24 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   rebuilt by `rebuild_no_pdf_list.py`; the Sept-15 intermediate lists were deleted
   2026-09-20); author
   normalization done (Primary Author = one surname + Secondary Authors multi-select);
-  VOSviewer citation map built (`SADb_audit\vosviewer\`; full-corpus rebuilder =
-  `vos_build2.py`). **2026-09-18: batch 6 DONE (8 curated + echo-verified, 2 Elsevier
-  chapters logged no-text pending Ben's library pass; twins Fujiki 2018 / Ekeberg 2004
-  Models + Côté 2018 / Prochazka and Ellaway 2012 Review) — 451/943 records have notes;
-  task5 did NOT cover the rest-import queue (`reconcile_queue.py` proves it); next =
-  batch 7 = rows 52–60 (pre-grounded in `batch6\ground_*.txt`). Airtable-independent
-  stack: `export_corpus.py` → `export\sadb_export.{json,csv}` (943 records, Excel-ready),
-  `app\build_app.py` → `app\sadb_app.html` single-file OFFLINE explorer (Table
-  search/sort/filter, Pivot with drill-through, bubble map; Airtable GET 422s on a
-  fields[] filter because two fields share the name "Models copy" — fetch full records).**
+  citation-graph tooling = `build_citation_graph.py` (**VOSviewer RETIRED
+  2026-09-22 as a dead end — `vosviewer\` folder + map/network files deleted; do
+  not resurrect**). **2026-09-18/21: batches 6–7 DONE (16 curated + echo-verified,
+  4 Elsevier/CRC chapters logged no-text pending Ben's library pass; twins Fujiki
+  2018 / Ekeberg 2004 / Bondy 2016 Models + Côté 2018 / Prochazka and Ellaway 2012 /
+  Ziskind-Conhaim and Hochman 2017 / Duysens and Forner-Cordero 2018 Review) —
+  459/943 records have notes; task5 did NOT cover the rest-import queue
+  (`reconcile_queue.py` proves it); next = batch 8 = rows 62–70 (pre-grounded in
+  `batch6\ground_*.txt`). Airtable-independent stack:
+  `export_corpus.py` → `export\sadb_export.{json,csv}` (943 records, Excel-ready),
+  `build_citation_graph.py` → `export\sadb_cites.json` (directed adjacency) +
+  `export\sadb_layout.json` (layout + clusters), `app\build_app.py` →
+  `app\sadb_app.html` single-file OFFLINE explorer (Table search/sort/filter,
+  Pivot with drill-through, bubble map with year×citations AND topic-landscape
+  layouts, neuron styling + excitatory/inhibitory citation links; roadmap for
+  online mode + WoS/Scholar + Zotero-like extension in `app\README.md`; Airtable
+  GET 422s on a fields[] filter because two fields share the name "Models copy"
+  — fetch full records).**
   SADb work is DELEGATED TO
   CHATGPT during GLM peak hours (Mon–Fri 23:00–03:00 Pacific) — its brief is the SADb
   section of `CHATGPT_HANDOFF.md`; keys live in `D:\Github\api_credentials_local.txt`
@@ -1087,6 +1171,65 @@ Scale first — the bundled IK setup consumes its `subject01_simbody.osim` outpu
 - Open design question: replace the 4 per-contact wrap terms (geometricBendMeasure) with p2's
   term kept + ONE unified R×(total polyline turn) term for p3–p8, plateau-calibrated so the
   Xi3·bend product stays consistent; prototype behind `ctx.bendModel` flag. Ben hasn't decided.
+
+## DISSERTATION .TEX — NEVER EDIT WITHOUT BEN'S EXPLICIT OK (Ben, 2026-09-21)
+
+Do NOT edit `CPG_spinal_section_draft.tex` or any ProofFinal chapter file
+without Ben's explicit per-edit approval. This holds even for ZCODE-fenced
+blocks, figure-pointer fixes, and number refreshes. If a change is needed
+(figure renamed, numbers stale), ASK with the exact diff proposed and wait.
+Deleting/renaming a figure file that the tex references is NOT license to
+edit the tex — leave the tex pointer alone and tell Ben both sides.
+
+## SUPERVISOR AGENT — spawn at milestones (Ben, 2026-09-21)
+
+Walker sessions MUST spawn a general-purpose agent gated by
+`Code\MuJoCo_SNS\spinal\SUPERVISOR_AGENT.md` (use its full text as the
+spawn prompt) at: M1 before declaring results, M2 before any
+figure/tex/circuit edit, M3 before calling wiring "literature-faithful".
+Act on BLOCK verdicts before proceeding. Also standing: Ben owns the
+connectome (edit only via his connectome spec /
+`spinal\connectome_editor.html` + `CONNECTOME.md`); replication of
+Shinohara / Shevtsova / Di Russo connectomes lives in
+`spinal\replication\` (first pass by the session, then Ben edits).
+
+## Figure standards — PROJECT-WIDE (Ben, 2026-09-21)
+
+Every figure produced for this project (MATLAB, Python, Illustrator
+exports) must follow these rules; reference examples: the
+Plot_KneeFlxPin family + `Documentation\Reports and Papers\
+Knee_Torque_Test\Figures\Figure components\FlxPin_group\FlxPin_group.fig`.
+
+1. **Page/size**: sized for regular letter paper, usable area
+   7.5 x 10 in (8.5x11 with margins). Nothing smaller.
+2. **Type**: minimum 10 pt everywhere (axis labels, ticks, legends,
+   annotations). **No italic text** (set font.style normal; avoid
+   mathtext italics — use \mathrm or plain text).
+3. **Font**: Arial only (freely available in MATLAB, Adobe Illustrator,
+   and Python/matplotlib on all three machines). MATLAB:
+   set(groot,'defaultAxesFontName','Arial'); Python:
+   rcParams["font.family"]="Arial", "mathtext.fontset":"custom" with
+   rm/it/bf all Arial.
+4. **Colors**: use the accessible palette from `Code\Matlab\Colors.m`
+   (Paul Tol 7: #FFD700 gold, #FFB14E orange, #FA8775 coral,
+   #EA5F94 pink, #CD34B5 magenta, #9D02D7 magenta2, #0000FF indigo) as
+   the series palette, in that order. Greys #B0B0B0 (context) and
+   light lavender (inactive circuit context) for de-emphasized
+   structure, Di-Russo-style.
+5. **Accessibility**: colorblind-safe by construction (Tol palette +
+   distinct line styles/markers/shapes so no information is carried by
+   hue alone); every figure ships with **alt text** (one file per
+   figure set, e.g. <figure>_alt.txt, one block per panel: panel
+   letter, what is plotted, key takeaway).
+6. **Synapse/element shapes in circuit diagrams** (Ben's SNS
+   convention, 2026-09-09): open circle = neuron, open triangle =
+   excitatory synapse, filled circle = inhibitory synapse,
+   ellipse = muscle; afferent/interneuron classes distinguished by
+   Colors.m hue + label.
+7. **Terminology**: refer to afferent pathways as Ia / II / Ib
+   (e.g. "stance-group Ib interneuron" — the code symbol LBIN means
+   exactly that; do not write "LB"). KINH = swing-gated inhibitory IN
+   (PF_F1 -> KINH -> knee_ext/ankle_pf MN suppression).
 
 ## Readmes
 

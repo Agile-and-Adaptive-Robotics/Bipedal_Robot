@@ -182,7 +182,7 @@ This dissertation uses OpenSim, an open-source platform for building and simulat
 
 **minus score** (unexpanded tool name on first use).
 
-### B9 — L38: Steele knee paragraph + figure — PROPOSED
+### B9 — L38: Steele knee paragraph + figure — FIGURE BUILT 2026-09-20 (paragraph still pending in Overleaf)
 ajh26: "Turn this into a whole paragraph with figure." Replacement paragraph:
 
 ```latex
@@ -423,3 +423,9 @@ Tension: X3 asks for a merged discussion chapter; X4 says remove this one. If X3
 **Captions:** unchanged in 20-methods.tex (still accurate; pose descriptors moved from in-figure text into the xiWrapLoss caption).
 
 **Known residuals (documented, Ben's call):** knee-cluster density in xiWrapLoss panel A (R/B'/w_2 share a small region with the routes — the geometry there is genuinely dense); at \textwidth the 11pt in-figure fonts render ~10pt effective.
+
+---
+
+## Ledger changes
+
+- 2026-09-20 (ZCode): B9 figure built and saved beside this file as `steeleknee.pdf` / `steeleknee.png`; build script `Notes/build_steele_knee_figure.py` (panel A = crossed four-bar schematic drawn from the link lengths in Steele's 2018 PSU thesis Fig. 52; panel B = ICR migration, robot femur-frame curves from `buildKneeFlexorContext20mm.m` vs human computed from the Gait2392/Yamaguchi-Zajac knee splines; panel C = placeholder for Ben's test-stand photo). Ready-to-paste LaTeX block in the session handoff. No Overleaf edits made.

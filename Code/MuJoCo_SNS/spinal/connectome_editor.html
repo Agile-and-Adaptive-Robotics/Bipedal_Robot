@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Spinal Connectome Editor - Ben owns the wiring</title>
+<style>
+  :root { --ink:#1a1a1a; --mag:#CD34B5; --blue:#0000FF; --grey:#777; }
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 14px;
+         color: var(--ink); margin: 0; background: #f7f7f7; }
+  header { background: #fff; border-bottom: 2px solid #ddd;
+           padding: 10px 16px; }
+  h1 { font-size: 18px; margin: 0 0 4px; }
+  .sub { color: var(--grey); font-size: 12px; }
+  main { display: flex; gap: 12px; padding: 12px; align-items:
+         flex-start; }
+  #rules { width: 560px; background: #fff; border: 1px solid #ddd;
+           padding: 10px; }
+  .rule { border: 1px solid #ccc; border-radius: 4px; padding: 8px;
+          margin-bottom: 8px; background: #fcfcfc; }
+  .rule.off { opacity: 0.45; }
+  .rule h3 { margin: 0 0 6px; font-size: 14px; }
+  .rule .desc { color: #555; font-size: 12px; margin-bottom: 6px; }
+  .row { display: flex; align-items: center; gap: 8px; margin: 4px 0;
+         flex-wrap: wrap; }
+  .row label { min-width: 90px; font-size: 12px; color: #444; }
+  input[type=number] { width: 90px; }
+  select { font-size: 12px; }
+  .flag { font-weight: bold; }
+  .flag.exc { color: #0072B2; } .flag.inh { color: #B2182B; }
+  #preview { position: sticky; top: 12px; background: #fff;
+             border: 1px solid #ddd; padding: 8px; }
+  #actions { padding: 10px 16px; }
+  button { font-size: 13px; padding: 6px 12px; margin-right: 8px;
+           cursor: pointer; }
+  textarea { width: 100%; height: 140px; font-family: Consolas,
+             monospace; font-size: 11px; }
+  .note { color: #555; font-size: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Spinal Connectome Editor</h1>
+  <div class="sub">You decide the wiring. Each rule below is drawn from
+  Deng A6 / Di Russo rules 1-5. HOPS = how many interneurons sit
+  between the afferent and its target (0 = direct, literature = 1-2).
+  Export writes connectome_gains.json; the builder wires exactly this.
+  Sign convention: + excitatory, - inhibitory.</div>
+</header>
+<div id="actions">
+  <button id="export">Export connectome_gains.json</button>
+  <button id="copy">Copy to clipboard</button>
+  <span class="note">Save next to build_network.py, set G full_rules
+  mode per rule. The builder reads: rules, hops, gains.</span>
+</div>
+<main>
+  <div id="rules"></div>
+  <div id="preview">
+    <b>Motif preview</b> (rule under cursor)
+    <svg id="svg" width="460" height="260" viewBox="0 0 460 260">
+    </svg>
+    <div class="note">open triangle = excitatory,
+    filled dot = inhibitory, circle = neuron/IN,
+    ellipse = muscle, rectangle = afferent/input</div>
+    <textarea id="json" readonly></textarea>
+  </div>
+</main>
+<script>
+// Rule catalog. hops=0 means a DIRECT afferent->target edge (legacy);
+// hops>=1 inserts the literature interneuron layer. "mutual" adds the
+// reciprocal-IN inhibition Di Russo rule / Deng A6 specify.
+const RULES = [
+ { id:"ia_homo", name:"R1a  Ia homonymous excitation",
+   desc:"Ia -> agonist MN (velocity/stretch). Literature: MONOsynaptic.",
+   hops_def:0, hops_opts:[0,1], gain:"ia_to_mn", def:1.0, sign:"+",
+   motif:["SN","MN"] },
+ { id:"ia_recip", name:"R1b  Ia reciprocal inhibition",
+   desc:"Ia -> IaIN -> antagonist MN; IaIN <-> antagonist IaIN mutual inhibition.",
+   hops_def:1, hops_opts:[0,1], gain:"ia_to_antagonist", def:-0.5,
+   sign:"-", mutual:true, motif:["SN","IN","MN"] },
+ { id:"ii_exc", name:"R2a  II homonymous (agonist)",
+   desc:"II -> exc IN -> agonist MN. NEVER direct.",
+   hops_def:1, hops_opts:[1], gain:"ii_to_mn", def:0.5, sign:"+",
+   motif:["SN","IN","MN"] },
+ { id:"ii_inh", name:"R2b  II antagonist inhibition",
+   desc:"II -> inh IN -> antagonist MN.",
+   hops_def:1, hops_opts:[0,1], gain:"ia_to_antagonist", def:-0.5,
+   sign:"-", motif:["SN","IN","MN"] },
+ { id:"ib_auto", name:"R3   Ib autogenic inhibition",
+   desc:"Ib -> IbIN -> same MN; IbIN <-> antagonist IbIN mutual inhibition.",
+   hops_def:1, hops_opts:[0,1], gain:"ib_to_mn_inh", def:-0.5,
+   sign:"-", mutual:true, motif:["SN","IN","MN"] },
+ { id:"ib_rev", name:"R4   Ib+ extensor force reversal",
+   desc:"Ib -> excitatory IN -> extensor MN, stance-gated (positive force feedback).",
+   hops_def:1, hops_opts:[1], gain:"ib_group_exc", def:0.5, sign:"+",
+   motif:["SN","IN","MN"] },
+ { id:"heel", name:"R5a  Heel contact (cutaneous)",
+   desc:"heel SN -> IN -> RG via lamination (InE exc / InF inh). Cutaneous SN REQUIRED.",
+   hops_def:1, hops_opts:[0,1], gain:"heel_rge", def:0.5, sign:"+/-",
+   motif:["PORT","SN","IN","RG"] },
+ { id:"toe", name:"R5b  Toe contact (cutaneous)",
+   desc:"toe SN -> IN -> RG via lamination (late-stance prolongation).",
+   hops_def:1, hops_opts:[0,1], gain:"toe_rge", def:0.3, sign:"+",
+   motif:["PORT","SN","IN","RG"] },
+ { id:"ib_load", name:"R5c  Stance-Ib load sharing",
+   desc:"Ib -> group IN (LBIN) -> RG-E, stance-gated (Dominguez 2020).",
+   hops_def:1, hops_opts:[1], gain:"ib_rge", def:0.5, sign:"+",
+   motif:["SN","IN","RG"] },
+ { id:"rc", name:"R6   Renshaw cells",
+   desc:"MN -> RC -> (own MN, IaIN); RC <-> antagonist RC.",
+   hops_def:1, hops_opts:[0,1], gain:"renshaw", def:0.5, sign:"-",
+   motif:["MN","IN"] },
+ { id:"cross", name:"R7   Crossed commissurals (c1/V3/contra)",
+   desc:"c1: F -> contra F (inh); V3: E -> contra E (exc); contralateral swing triggers. DANGER: as-built these jammed the contralateral leg (s3g matrix). Gains small.",
+   hops_def:1, hops_opts:[1], gain:"c1_gain", def:0.1, sign:"-",
+   motif:["RG","IN","RG"] },
+];
+
+const DEFAULTS = {};
+RULES.forEach(r => DEFAULTS[r.id] = { on:true, hops:r.hops_def,
+                                     gain:r.def });
+
+function drawRule(container, r) {
+  const st = DEFAULTS[r.id];
+  const div = document.createElement("div");
+  div.className = "rule" + (st.on ? "" : " off");
+  div.innerHTML = `<h3>${r.name}</h3><div class="desc">${r.desc}</div>
+    <div class="row">
+      <label>enabled</label>
+      <input type="checkbox" ${st.on ? "checked" : ""} data-id="${r.id}" data-k="on">
+      <label>hops (interneurons)</label>
+      <select data-id="${r.id}" data-k="hops">
+        ${r.hops_opts.map(h => `<option value="${h}"
+          ${h === st.hops ? "selected" : ""}>${h}</option>`).join("")}
+      </select>
+      <label>gain</label>
+      <input type="number" step="0.05" value="${st.gain}"
+             data-id="${r.id}" data-k="gain">
+      <span class="flag ${r.sign.includes("-") ? "inh" : "exc"}">${r.sign}</span>
+    </div>`;
+  container.appendChild(div);
+  div.querySelectorAll("input,select").forEach(el => {
+    el.addEventListener("change", () => {
+      const id = el.dataset.id, k = el.dataset.k;
+      DEFAULTS[id][k] = (k === "on") ? el.checked : parseFloat(el.value);
+      div.className = "rule" + (DEFAULTS[id].on ? "" : " off");
+      preview(r);
+      export();
+    });
+    el.addEventListener("input", () => {
+      const id = el.dataset.id, k = el.dataset.k;
+      if (k === "gain") DEFAULTS[id].gain = parseFloat(el.value) || 0;
+      preview(r);
+      export();
+    });
+    div.addEventListener("mouseenter", () => preview(r));
+  });
+}
+
+function preview(r) {
+  const st = DEFAULTS[r.id];
+  const svg = document.getElementById("svg");
+  svg.innerHTML = "";
+  const chain = r.motif.slice(0, 2 + (st.hops > 0 ? 1 : 0));
+  const n = chain.length;
+  const W = 460, x0 = 40, dx = (W - 80) / Math.max(n - 1, 1);
+  const y = 110;
+  const inh = String(st.gain).startsWith("-");
+  for (let i = 0; i < n; i++) {
+    const kind = chain[i];
+    const x = x0 + i * dx;
+    if (kind === "PORT") {
+      svg.innerHTML += `<rect x="${x-24}" y="${y-14}" width="48"
+        height="28" fill="#E8E4F8" stroke="#FFB14E" stroke-width="2"/>
+        <text x="${x}" y="${y+4}" text-anchor="middle"
+        font-size="12">aff</text>`;
+    } else if (kind === "MN" || kind === "RG") {
+      svg.innerHTML += `<circle cx="${x}" cy="${y}" r="20" fill="#fff"
+        stroke="#0000FF" stroke-width="3"/><text x="${x}" y="${y+36}"
+        text-anchor="middle" font-size="12">${kind}</text>`;
+    } else if (kind === "IN") {
+      svg.innerHTML += `<circle cx="${x}" cy="${y}" r="20" fill="#fff"
+        stroke="#FA8775" stroke-width="2.5"/><text x="${x}" y="${y+36}"
+        text-anchor="middle" font-size="12">IN</text>`;
+    } else { // SN
+      svg.innerHTML += `<circle cx="${x}" cy="${y}" r="20" fill="#fff"
+        stroke="#FFD700" stroke-width="2.5"/><text x="${x}" y="${y+36}"
+        text-anchor="middle" font-size="12">SN</text>`;
+    }
+    if (i > 0) {
+      const px = x0 + (i - 1) * dx + 20, cx = x - 22;
+      const mx = px + (cx - px) * 0.55;
+      svg.innerHTML += `<line x1="${px}" y1="${y}" x2="${cx}" y2="${y}"
+        stroke="#1a1a1a" stroke-width="1.6"/>`;
+      if (inh && i === n - 1) {
+        svg.innerHTML += `<circle cx="${mx}" cy="${y}" r="6"
+          fill="#1a1a1a"/>`;
+      } else {
+        svg.innerHTML += `<polygon points="${mx},${y-8} ${mx-7},${y+6}
+          ${mx+7},${y+6}" fill="#fff" stroke="#1a1a1a"
+          stroke-width="1.4"/>`;
+      }
+      svg.innerHTML += `<polygon points="${cx+2},${y} ${cx-8},${y-6}
+        ${cx-8},${y+6}" fill="#1a1a1a"/>`;
+    }
+  }
+  svg.innerHTML += `<text x="${x0}" y="230" font-size="12"
+    fill="#555">hops = ${st.hops} | gain = ${st.gain} | rule
+    ${st.on ? "ENABLED" : "OFF"}</text>`;
+  export();
+}
+
+function export() {
+  const out = { _comment: "Ben's connectome. The builder wires these "
+     + "rules exactly; hops=0 is a DIRECT edge (legacy), hops>=1 "
+     + "inserts the interneuron layer.", rules: {} };
+  RULES.forEach(r => {
+    out.rules[r.id] = { enabled: DEFAULTS[r.id].on,
+        hops: DEFAULTS[r.id].hops, gain: DEFAULTS[r.id].gain,
+        gain_key: r.gain };
+  });
+  document.getElementById("json").value =
+    JSON.stringify(out, null, 2);
+  return out;
+}
+
+const list = document.getElementById("rules");
+RULES.forEach(r => drawRule(list, r));
+preview(RULES[0]);
+document.getElementById("export").addEventListener("click", () => {
+  const blob = new Blob([document.getElementById("json").value],
+                        { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "connectome_gains.json";
+  a.click();
+});
+document.getElementById("copy").addEventListener("click", () => {
+  navigator.clipboard.writeText(document.getElementById("json").value);
+});
+</script>
+</body>
+</html>

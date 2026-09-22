@@ -13,7 +13,9 @@ cd(cdto);
 outDir = fullfile(cdto, 'figures');
 if ~exist(outDir, 'dir'), mkdir(outDir); end
 
-fig = figure('Visible', 'off', 'Units', 'centimeters', 'Position', [2 2 18 11.5], 'Color', 'w');
+% Canvas = 16.5 cm (dissertation text width) so LaTeX includes it at 100%
+% scale and the 9.5-11 pt fonts print at face value (Ben 2026-09-20).
+fig = figure('Visible', 'off', 'Units', 'centimeters', 'Position', [2 2 16.5 10.4], 'Color', 'w');
 ax = axes(fig);
 hold(ax, 'on');
 axis(ax, 'equal');
@@ -51,23 +53,23 @@ end
 % ---- descending drive (bias) ----
 snsfig('arrow', 46, 49.5, 46, 46.6);
 snsfig('arrow', 46, 26.3, 46, 23.6);
-snsfig('label', 52.5, 51.5, 'descending drive', 7.5, 'gi');
+snsfig('label', 52.5, 51.5, 'descending drive', 10, 'gi');
 
 % ---- muscles + activation arrows ----
 snsfig('arrow', 50.4, 43.0, 60.6, 44.7);
 snsfig('arrow', 50.4, 18.0, 60.6, 16.3);
-snsfig('label', 55.6, 45.4, 'A', 7.5, 'gi');
-snsfig('label', 55.6, 14.6, 'A', 7.5, 'gi');
-snsfig('muscle', 66, 45, 10, 4.6, 'BPA ext');
-snsfig('muscle', 66, 16, 10, 4.6, 'BPA flex');
+snsfig('label', 55.6, 45.4, 'A', 10, 'gi');
+snsfig('label', 55.6, 14.6, 'A', 10, 'gi');
+snsfig('muscle', 66, 45, 12, 4.8, 'BPA ext');
+snsfig('muscle', 66, 16, 12, 4.8, 'BPA flex');
 
 % ---- knee joint plant ----
 snsfig('box', 86, 31, 11, 14, sprintf('knee\njoint'));
 snsfig('arrow', 71.3, 44.2, 80.4, 34.6);
 snsfig('arrow', 71.3, 16.8, 80.4, 27.4);
-snsfig('label', 77.3, 41.4, 'T_{ext}', 7.5, 'gi');
-snsfig('label', 77.3, 19.6, 'T_{flex}', 7.5, 'gi');
-snsfig('label', 86, 22.2, '\theta  (1-DOF)', 7.5, 'gi');
+snsfig('label', 77.3, 41.4, 'T_{ext}', 10, 'gi');
+snsfig('label', 77.3, 19.6, 'T_{flex}', 10, 'gi');
+snsfig('label', 86, 22.2, '\theta  (1-DOF)', 10, 'gi');
 
 % ---- sensory feedback (dashed) ----
 snsfig('edge', 86, 24, 86, 6.5, '--');
@@ -81,17 +83,17 @@ snsfig('arrow', 8, 24, 9.6, 24, '--');
 snsfig('edge', 13, 6.5, 4, 6.5, '--');
 snsfig('edge', 4, 6.5, 4, 38, '--');
 snsfig('arrow', 4, 38, 9.6, 38, '--');
-snsfig('label', 55, 7.9, 'sensory feedback  (\theta, \theta'', F)', 7.5, 'gi');
+snsfig('label', 55, 7.9, 'sensory feedback  (\theta, \theta'', F)', 10, 'gi');
 
 % ---- key (top right) ----
-rectangle('Position', [64 50.5 34.5 10], 'EdgeColor', [0.6 0.6 0.6], ...
+rectangle('Position', [62 50.5 37 10.6], 'EdgeColor', [0.6 0.6 0.6], ...
     'FaceColor', 'w', 'LineWidth', 0.6);
 snsfig('exc', 67.3, 57.9, 0, 2.4);
-snsfig('label', 79, 57.9, 'excitatory', 7.5, 'n');
+snsfig('label', 79, 57.9, 'excitatory', 10, 'n');
 snsfig('inh', 67.3, 55.2, 2.4);
-snsfig('label', 79, 55.2, 'inhibitory', 7.5, 'n');
+snsfig('label', 79, 55.2, 'inhibitory', 10, 'n');
 snsfig('edge', 65.3, 52.5, 69.3, 52.5, '--');
-snsfig('label', 79, 52.5, 'sensory feedback', 7.5, 'n');
+snsfig('label', 79, 52.5, 'sensory feedback', 10, 'n');
 
 exportgraphics(fig, fullfile(outDir, 'KneeReflex_circuit.png'), 'Resolution', 600);
 exportgraphics(fig, fullfile(outDir, 'KneeReflex_circuit.pdf'));

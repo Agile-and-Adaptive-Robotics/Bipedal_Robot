@@ -34,8 +34,20 @@ BASE_MUL = None  # v10 winner multipliers; loaded in main, merged per trial
 KEYS1 = ("drive", "rg_nap_h", "desc_e", "desc_f", "rg_to_pf")
 KEYS2 = KEYS1 + ("heel_rge", "toe_rge", "ib_e_central", "ia_f_central",
                  "ii_f_central", "ii_e_central", "c1_gain", "v3_gain")
+# 2026-09-20 v3-objective additions (Ben's critique): pelvis height
+# (AARL_PELVIS_TY env; lower the walker so BOTH feet work) and the
+# swing-phase ankle-PF inhibition (dorsiflexion in swing - the toe drag).
+# 2026-09-21 (t54 diagnosis): pf_gain (v10 left it at 0.41 - PF drive
+# alone sits below MN threshold, so an UNLOADED leg's muscles go silent:
+# the t54 right leg was a passive flail) and contra_swing (crossed swing
+# trigger: opposite foot's heel strike inhibits this side's RG-E /
+# disinhibits RG-F; breaks the frozen-stance latch).
 KEYS3 = KEYS2 + ("ib_rge", "ia_in", "ia_f_contra_f", "v3_to_ibexc",
-                 "ankle_post_walk_trim", "contact_onset")
+                 "ankle_post_walk_trim", "contact_onset",
+                 "pelvis_ty", "f1_anklepf_inh",
+                 "pf_gain", "contra_swing", "contra_kinh",
+                 "pm_gain", "pm_T", "pm_ws", "ky_scale", "pm_add",
+                 "pm_aff")
 STAGE_KEYS = {1: KEYS1, 2: KEYS2, 3: KEYS3}
 
 
@@ -62,6 +74,31 @@ def set_stage(stage, p):
         # contact-EVENT transients on the heel/toe ports (runner-side;
         # 2026-09-20 stage-3 latch hypothesis)
         P.G["contact_onset"] = float(p.get("contact_onset", 0.0))
+        # 2026-09-20 v3 knobs: swing-phase ankle-PF inhibition (toe-drag)
+        P.G["f1_anklepf_inh"] = float(p.get("f1_anklepf_inh", 0.0))
+        # 2026-09-21 knobs: crossed swing trigger (runner-side)
+        P.G["contra_swing"] = float(p.get("contra_swing", 0.0))
+        # crossed KINH drive (build_network conditional edge)
+        P.G["contra_kinh"] = float(p.get("contra_kinh", 0.0))
+        # per-side contact-reset phase machine (runner-side)
+        P.G["pm_gain"] = float(p.get("pm_gain", 0.0))
+        P.G["pm_T"] = float(p.get("pm_T", 1.2))
+        P.G["pm_ws"] = float(p.get("pm_ws", 0.0))
+        P.G["pm_add"] = float(p.get("pm_add", 0.0))
+        P.G["pm_aff"] = float(p.get("pm_aff", 0.0))
+        # lateral rig spring scale (runner env AARL_KY)
+        import os
+        if "ky_scale" in p:
+            os.environ["AARL_KY"] = repr(float(p["ky_scale"]))
+        else:
+            os.environ.pop("AARL_KY", None)
+        # pelvis height: runner env (lower the walker onto the ground;
+        # the rig anchors at this height)
+        import os
+        if "pelvis_ty" in p:
+            os.environ["AARL_PELVIS_TY"] = repr(float(p["pelvis_ty"]))
+        else:
+            os.environ.pop("AARL_PELVIS_TY", None)
 
 
 def objective(stage):
@@ -104,6 +141,31 @@ def objective(stage):
                 "ankle_post_walk_trim", 0.05, 1.0)
             sug["contact_onset"] = trial.suggest_float("contact_onset",
                                                        0.0, 1.0)
+            sug["pelvis_ty"] = trial.suggest_float("pelvis_ty",
+                                                   0.88, 0.93)
+            sug["f1_anklepf_inh"] = trial.suggest_float(
+                "f1_anklepf_inh", 0.0, 1.2)
+            # 2026-09-21: PF->MN gain (log-sampled; v10 pinned it at
+            # 0.41 which leaves unloaded-leg MNs silent) and the
+            # crossed swing trigger
+            sug["pf_gain"] = trial.suggest_float("pf_gain", 0.3, 3.0,
+                                                 log=True)
+            sug["contra_swing"] = trial.suggest_float("contra_swing",
+                                                      0.0, 1.5)
+            sug["contra_kinh"] = trial.suggest_float("contra_kinh",
+                                                     0.0, 2.0)
+            # 2026-09-21: per-side contact-reset phase machine
+            sug["pm_gain"] = trial.suggest_float("pm_gain", 0.0, 1.0)
+            sug["pm_T"] = trial.suggest_float("pm_T", 0.8, 2.0)
+            sug["pm_ws"] = trial.suggest_float("pm_ws", 0.0, 1.0)
+            # v3: ADDITIVE flexor burst in the swing window
+            sug["pm_add"] = trial.suggest_float("pm_add", 0.0, 1.0)
+            # v4: afferent disfacilitation in the swing window
+            sug["pm_aff"] = trial.suggest_float("pm_aff", 0.0, 1.0)
+            # lateral rig compliance: ky=5e5 anchors the pelvis and
+            # blocks weight transfer (s3g diagnosis) - scale it
+            sug["ky_scale"] = trial.suggest_float("ky_scale", 0.02,
+                                                  1.0, log=True)
         # searched keys override; everything else pinned at v10 winner
         p = {**BASE_MUL, **sug}
         set_stage(stage, p)
@@ -149,14 +211,19 @@ def objective(stage):
             return float(score)
         m = R.main(["--eval", "--drive", repr(p["drive"])])
         if m["nan"]:
-            return -110.0 + m["t_end"]
+            return -400.0
         if m.get("kine") is None:
-            return -100.0
-        score = float(m["kine_score"])
+            # no cycles on either leg. MUST sit below the worst genuine
+            # walker: under kine_ref v2 (both legs + guards) the s3b
+            # one-legged "winner" scores -279, and a frozen walker is
+            # worse than a bad stepper but must still beat this sentinel.
+            return -320.0
+        # clip so pathological walkers stay above the sentinels
+        score = max(float(m["kine_score"]), -315.0)
         if m["kz"] < 0.62:
-            score -= 10.0
+            score -= 20.0
         if m["tilt_max"] > 40.0:
-            score -= 5.0
+            score -= 10.0
         return score
     return obj
 
@@ -169,8 +236,31 @@ def main():
     # by the static-pose exploit (best 36.906 = 0.5*73.81, rises 0) and
     # curr_s3_ground (50 trials, all -100) seeded from it; both archived
     # to curriculum_exploit_archive_20260920.json and deleted.
+    # curr_s3b_ground was then won under the v1 (right-leg, DC-removed,
+    # neural-duty) objective by a ONE-LEGGED gait (left foot planted
+    # 100% of frames - Ben's critique); it scores -279 under kine_ref
+    # v2. curr_s3c_ground = the both-leg objective retune (80 trials;
+    # corrected best t54 -181.6, ALL trials frozen-left). curr_s3d adds
+    # pf_gain + contra_swing after the t54 passive-flail diagnosis
+    # (best -192.0, still frozen-left: RG-level crossed kicks do not
+    # release a loaded jammed leg). curr_s3e adds contra_kinh (crossed
+    # KINH; best -191.8 = its seed, still frozen-left). curr_s3f adds
+    # the per-side CONTACT-RESET PHASE MACHINE (heel-strike reset,
+    # antiphase coupling, swing-window MN gating) - the Di Russo
+    # the per-side CONTACT-RESET PHASE MACHINE (heel-strike reset,
+    # antiphase coupling, swing-window MN gating) - the Di Russo
+    # eq-7 analog (s3f best -164.4 t32, right leg cycles, left frozen).
+    # curr_s3g added WEIGHT-SHIFT (pm_ws + load-gated window +
+    # ky_scale lateral rig compliance): seed still best (-182.4), left
+    # frozen. curr_s3h adds pm_add: ADDITIVE flexor burst in the swing
+    # window - the v2 multiplicative boost multiplied a ~0 ctrl (MNs
+    # below threshold) and never actually drove anything. s3h: search
+    # picked pm_add 0.12 only, right leg 12 cycles, left frozen.
+    # curr_s3i adds pm_aff: AFFERENT DISFACILITATION - silence the
+    # swing leg's load-afferent inputs during its own swing window
+    # (break the re-latch loop at the source).
     name = {1: "curr_s1_air_deaff", 2: "curr_s2b_air_aff",
-            3: "curr_s3b_ground"}[stage]
+            3: "curr_s3i_ground"}[stage]
     prev = json.loads(open("best_walk_params_v10.json",
                            encoding="utf-8").read())
     BASE_MUL = dict(prev["multipliers"])
@@ -189,11 +279,33 @@ def main():
         sk = STAGE_KEYS[stage]
         seed = {k: 0.0 for k in sk}
         seed["c1_gain"] = 0.1  # floor of its range
+        # sensible mid-range defaults for keys the previous winner
+        # cannot carry (a 0.0 pelvis_ty would put the walker at ground
+        # level!)
+        seed["pelvis_ty"] = 0.905
+        seed["f1_anklepf_inh"] = 0.3
+        seed["pf_gain"] = 1.0      # 2026-09-21: raise from v10's 0.41
+        seed["contra_swing"] = 0.5
+        seed["contra_kinh"] = 0.5
+        seed["pm_gain"] = 0.5
+        seed["pm_T"] = 1.23
+        seed["pm_ws"] = 0.4
+        seed["pm_add"] = 0.4
+        seed["pm_aff"] = 0.8
+        seed["ky_scale"] = 0.05
         try:
-            prevw = json.loads(open(f"curriculum_stage{stage-1}.json",
-                                    encoding="utf-8").read())["params"]
+            # stage-3 retunes chain from the previous GROUND winner when
+            # one exists (s3b); fresh chains fall back to the prior stage
+            prevw = json.loads(open(
+                f"curriculum_stage{stage}.json",
+                encoding="utf-8").read())["params"]
         except FileNotFoundError:
-            prevw = {}
+            try:
+                prevw = json.loads(open(
+                    f"curriculum_stage{stage-1}.json",
+                    encoding="utf-8").read())["params"]
+            except FileNotFoundError:
+                prevw = {}
         for k in sk:
             if k in prevw:
                 seed[k] = float(prevw[k])

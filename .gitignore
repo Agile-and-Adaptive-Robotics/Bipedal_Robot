@@ -54,3 +54,17 @@ Code/Matlab/SNS_Simscape/demos/slprj/
 # staged Zotero PDFs (moved to D:\sadb_pdf_staging 2026-09-15; never commit)
 SADb_audit/pdf_staging/
 pdf_staging/
+
+# osim_import mesh junction -> cvt3 Geometry (STLs live in the gitignored mjc tree)
+Code/Matlab/SNS_Simscape/osim_import/Geometry/
+
+# local LaTeX build of the dissertation zip snapshot (regenerable; never commit)
+Documentation/Reports and Papers/Dissertation/LocalBuild/
+Documentation/Reports and Papers/Dissertation/.vscode/
+*.aux
+*.bbl
+*.blg
+*.synctex.gz
+
+# per-machine VSCode overrides (each machine keeps its own; never commit)
+.vscode/settings.local.json

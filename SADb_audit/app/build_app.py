@@ -73,6 +73,7 @@ for r in records:
         "md": r["models2"], "mr": r["models_ref"], "rv": r["reviews"],
         "pdf": 1 if r["has_pdf"] else 0, "n": 1 if r["has_notes"] else 0,
         "nt": r["notes"], "src": _classify(r), "c": 0, "cl": -1,
+        "lx": 0.0, "ly": 0.0,
     })
 
 layout_path = os.path.join(SAD, "export", "sadb_layout.json")
@@ -82,8 +83,10 @@ if os.path.exists(layout_path):
         L = _lay.get(r["id"], {})
         r["c"] = L.get("c", 0)
         r["cl"] = L.get("cl", -1)
+        r["lx"] = L.get("x", 0.0)
+        r["ly"] = L.get("y", 0.0)
 else:
-    print("WARNING: sadb_layout.json missing — citation counts will be 0")
+    print("WARNING: sadb_layout.json missing — citation counts/clusters/landscape coords will be 0")
 
 payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 cites_payload = json.dumps(cites, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
@@ -141,7 +144,7 @@ HTML = r"""<!DOCTYPE html>
 <body>
 <header>
   <h1>SADb Explorer — Sensory Afferent Database <span class="sub" id="stats"></span></h1>
-  <div class="sub">Offline snapshot of the Airtable "Sensory Feedback" corpus. Rebuild: <code>myo python SADb_audit/export_corpus.py &amp;&amp; SADb_audit/vos_build2.py &amp;&amp; SADb_audit/app/build_app.py</code></div>
+  <div class="sub">Offline snapshot of the Airtable "Sensory Feedback" corpus. Rebuild: <code>myo python SADb_audit/export_corpus.py &amp;&amp; SADb_audit/build_citation_graph.py &amp;&amp; SADb_audit/app/build_app.py</code></div>
   <div class="tabs">
     <button id="tab-table" class="on" onclick="show('table')">Table</button>
     <button id="tab-pivot" onclick="show('pivot')">Pivot</button>
@@ -168,6 +171,14 @@ HTML = r"""<!DOCTYPE html>
 </div>
 
 <div class="bar" id="bar-map" style="display:none">
+  <label>Layout <select id="m-layout">
+    <option value="year">Year × citations</option>
+    <option value="land">Topic landscape (citation network)</option>
+  </select></label>
+  <label>Style <select id="m-style">
+    <option value="neurons">Neurons</option>
+    <option value="plain">Plain bubbles</option>
+  </select></label>
   <label>View <select id="m-view">
     <option value="all">All papers</option>
     <option value="refs">References</option>
@@ -180,7 +191,7 @@ HTML = r"""<!DOCTYPE html>
     <option value="focus">Focus paper</option>
     <option value="details">Show details</option>
   </select></label>
-  <label class="sub">Left-click = focus (in References/Cited-by: make that paper the map; otherwise spotlight it). Right-click, Ctrl+click (Mac) or Shift+Enter = details. Tab/arrow keys + Enter also work; Esc = back. Wheel = zoom, drag = pan.</label>
+  <label class="sub">Neuron style: papers = neurons; focusing one draws its synapses — <span style="color:#2e7d32">excitatory (open triangles) from papers that cite it</span>, <span style="color:#b03040">inhibitory (filled circles) onto papers it cites</span>. Left-click = focus (in References/Cited-by: make that paper the map). Right-click, Ctrl+click (Mac) or Shift+Enter = details. Tab/arrows + Enter work; Esc = back. Wheel = zoom, drag = pan.</label>
 </div>
 
 <main id="view-table">
@@ -351,23 +362,46 @@ let drag = null, dragMoved = 0, hover = null, kfocus = -1;
 const ms = { mode:'all', focus:null, spot:null };
 
 function hashId(s){ let h = 2166136261; for (let i=0;i<s.length;i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h>>>0; }
-const POS = {}, RAD = {};
+const POS = {}, RAD = {}, LPOS = {};
 DATA.forEach(r => {
   const jh = hashId(r.id);
   POS[r.id] = [
     (r.y || 1970) + ((jh % 1000)/1000 - 0.5) * 1.8,
     Math.log10((r.c||0) + 1) + (((jh>>>10) % 1000)/1000 - 0.5) * 0.16,
   ];
+  LPOS[r.id] = [r.lx, r.ly];
   RAD[r.id] = Math.min(24, 1.7 + 5.5*Math.pow((r.c||0)/MAXC, 0.25)*Math.pow(MAXC, 0.12));
 });
 function bx(x){ return PAD.l + (x - X0)/(X1 - X0) * (cv.width - PAD.l - PAD.r); }
 function by(y){ return cv.height - PAD.b - (y - Y0)/(Y1 - Y0) * (cv.height - PAD.t - PAD.b); }
 function radOf(r){ return RAD[r.id]; }
 
+// PX: canvas-pixel position per paper, per layout mode
+let curLayout = 'year';
+const PX = {};
+function recomputePX(){
+  if (curLayout === 'land'){
+    let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+    DATA.forEach(r => { const [a,b] = LPOS[r.id];
+      if(a<x0)x0=a; if(a>x1)x1=a; if(b<y0)y0=b; if(b>y1)y1=b; });
+    const sx = (x1-x0)||1, sy = (y1-y0)||1, m = 30;
+    DATA.forEach(r => {
+      PX[r.id] = [ m + (LPOS[r.id][0]-x0)/sx*(cv.width-2*m),
+                   cv.height - m - (LPOS[r.id][1]-y0)/sy*(cv.height-2*m) ];
+    });
+  } else {
+    DATA.forEach(r => { PX[r.id] = [bx(POS[r.id][0]), by(POS[r.id][1])]; });
+  }
+}
+
 function nodesNow(){
   if ((ms.mode==='refs' || ms.mode==='citedby') && ms.focus){
     const nb = ms.mode==='refs' ? (CITES[ms.focus]||[]) : (citedBy[ms.focus]||[]);
     const set = new Set([ms.focus, ...nb]);
+    return DATA.filter(r => set.has(r.id));
+  }
+  if (ms.spot){
+    const set = new Set([ms.spot, ...(CITES[ms.spot]||[]), ...(citedBy[ms.spot]||[])]);
     return DATA.filter(r => set.has(r.id));
   }
   return DATA;
@@ -389,37 +423,44 @@ function drawMap(){
   sizeCanvas();
   ctx.setTransform(1,0,0,1,0,0);
   ctx.fillStyle = '#fff'; ctx.fillRect(0,0,cv.width,cv.height);
-  // axes (fixed frame)
-  ctx.strokeStyle = '#e3e3e3'; ctx.fillStyle = '#777';
-  ctx.font = '11px system-ui'; ctx.lineWidth = 1;
-  for (let yr = 1920; yr <= 2020; yr += 20){
-    const X = bx(yr);
-    ctx.beginPath(); ctx.moveTo(X, PAD.t); ctx.lineTo(X, cv.height-PAD.b); ctx.stroke();
-    ctx.textAlign = 'center'; ctx.fillText(String(yr), X, cv.height-PAD.b+16);
+  // axes (fixed frame) — year×citations layout only
+  if (curLayout === 'year'){
+    ctx.strokeStyle = '#e3e3e3'; ctx.fillStyle = '#777';
+    ctx.font = '11px system-ui'; ctx.lineWidth = 1;
+    for (let yr = 1920; yr <= 2020; yr += 20){
+      const X = bx(yr);
+      ctx.beginPath(); ctx.moveTo(X, PAD.t); ctx.lineTo(X, cv.height-PAD.b); ctx.stroke();
+      ctx.textAlign = 'center'; ctx.fillText(String(yr), X, cv.height-PAD.b+16);
+    }
+    const ylab = ['1','10','100','1k','10k','100k'];
+    for (let i = 0; i <= 5; i++){
+      const Y = by(i);
+      ctx.beginPath(); ctx.moveTo(PAD.l, Y); ctx.lineTo(cv.width-PAD.r, Y); ctx.stroke();
+      ctx.textAlign = 'right'; ctx.fillText(ylab[i], PAD.l-8, Y+4);
+    }
+    ctx.textAlign = 'center'; ctx.fillStyle = '#444';
+    ctx.fillText('Publication year', cv.width/2, cv.height-6);
+    ctx.save(); ctx.translate(14, cv.height/2); ctx.rotate(-Math.PI/2);
+    ctx.fillText('Citations (log scale)', 0, 0); ctx.restore();
+  } else {
+    ctx.fillStyle = '#888'; ctx.font = '12px system-ui'; ctx.textAlign = 'center';
+    ctx.fillText('Topic landscape — proximity ≈ citation similarity (18 clusters)', cv.width/2, 14);
   }
-  const ylab = ['1','10','100','1k','10k','100k'];
-  for (let i = 0; i <= 5; i++){
-    const Y = by(i);
-    ctx.beginPath(); ctx.moveTo(PAD.l, Y); ctx.lineTo(cv.width-PAD.r, Y); ctx.stroke();
-    ctx.textAlign = 'right'; ctx.fillText(ylab[i], PAD.l-8, Y+4);
-  }
-  ctx.textAlign = 'center'; ctx.fillStyle = '#444';
-  ctx.fillText('Publication year', cv.width/2, cv.height-6);
-  ctx.save(); ctx.translate(14, cv.height/2); ctx.rotate(-Math.PI/2);
-  ctx.fillText('Citations (log scale)', 0, 0); ctx.restore();
 
-  // bubbles: large first so small ones sit on top and stay clickable
+  // bubbles/processes: large first so small ones sit on top and stay clickable
   const shown = nodesNow();
   const searchSet = state.q ? new Set(filtered().map(r=>r.id)) : null;
   const inSpot = ms.spot ? new Set([ms.spot, ...(CITES[ms.spot]||[]), ...(citedBy[ms.spot]||[])]) : null;
   const ordered = [...shown].sort((a,b) => RAD[b.id]-RAD[a.id]);
+  const dimmed = r => (searchSet && !searchSet.has(r.id)) || (inSpot && !inSpot.has(r.id));
+  const neuronStyle = $('m-style').value === 'neurons';
   ctx.setTransform(view.k,0,0,view.k,view.tx,view.ty);
+  if (neuronStyle) ordered.forEach(r => { if (!dimmed(r)) drawNeuronParts(r); });
   ordered.forEach(r => {
-    const [X,Y] = POS[r.id]; const sx = bx(X), sy = by(Y);
+    const [sx, sy] = PX[r.id];
     ctx.beginPath(); ctx.arc(sx, sy, RAD[r.id], 0, 6.2832);
     let alpha = 0.85;
-    if (searchSet && !searchSet.has(r.id)) alpha = 0.10;
-    if (inSpot && !inSpot.has(r.id)) alpha = 0.10;
+    if (dimmed(r)) alpha = 0.10;
     ctx.globalAlpha = alpha;
     ctx.fillStyle = colorOf(r); ctx.fill();
     if (r.id === (ms.focus||'')){ ctx.globalAlpha = 1; ctx.lineWidth = 2.5/view.k; ctx.strokeStyle = '#111'; ctx.stroke(); }
@@ -428,9 +469,85 @@ function drawMap(){
       ctx.globalAlpha = 1; ctx.lineWidth = 2/view.k; ctx.strokeStyle = '#000'; ctx.setLineDash([4/view.k,3/view.k]); ctx.stroke(); ctx.setLineDash([]);
     }
   });
+  if (neuronStyle) drawSynapses();
   ctx.globalAlpha = 1;
   ctx.setTransform(1,0,0,1,0,0);
   renderLegend(); updateCrumb();
+}
+
+// --- neuron morphology (dendrites + axon stub), deterministic per paper ---
+function drawNeuronParts(r){
+  const [sx, sy] = PX[r.id], rad = RAD[r.id];
+  const h = hashId(r.id), col = colorOf(r);
+  ctx.strokeStyle = col; ctx.globalAlpha = 0.5; ctx.lineWidth = 1.0/view.k;
+  const nd = 4 + (h % 3);                       // dendrites
+  for (let i = 0; i < nd; i++){
+    const a = (h % 628)/100 + i * 6.2832/nd + ((h>>>(4+i))%100)/300;
+    const L1 = rad*(1.4 + ((h>>>(8+i))%100)/100);
+    const x1 = sx + Math.cos(a)*(rad+L1), y1 = sy + Math.sin(a)*(rad+L1);
+    const a2 = a + (((h>>>(12+i))%100)/100 - 0.5);
+    ctx.beginPath();
+    ctx.moveTo(sx + Math.cos(a)*rad*0.9, sy + Math.sin(a)*rad*0.9);
+    ctx.lineTo(x1, y1);
+    ctx.lineTo(x1 + Math.cos(a2)*L1*0.4, y1 + Math.sin(a2)*L1*0.4);
+    ctx.stroke();
+  }
+  const aa = ((h>>>20)%628)/100;                // axon stub with growth cone
+  const ax = sx + Math.cos(aa)*rad*2.6, ay = sy + Math.sin(aa)*rad*2.6;
+  const mx = (sx+ax)/2 + Math.cos(aa+1.2)*rad*0.4, my = (sy+ay)/2 + Math.sin(aa+1.2)*rad*0.4;
+  ctx.beginPath(); ctx.moveTo(sx + Math.cos(aa)*rad, sy + Math.sin(aa)*rad);
+  ctx.quadraticCurveTo(mx, my, ax, ay); ctx.stroke();
+  ctx.beginPath(); ctx.arc(ax, ay, Math.max(1.2/view.k, rad*0.18), 0, 6.2832); ctx.stroke();
+  ctx.globalAlpha = 1;
+}
+
+// --- synapses of the focused/spotlighted paper (Ben's convention: open triangle
+// = excitatory, filled circle = inhibitory) ---
+// incoming citations arrive EXCITATORY onto the focus; outgoing references leave
+// INHIBITORY onto the cited papers (Ben's semantic assignment, 2026-09-22)
+function pathBetween(A, rA, B, rB){
+  const d = Math.hypot(B[0]-A[0], B[1]-A[1]) || 1;
+  const ux = (B[0]-A[0])/d, uy = (B[1]-A[1])/d;
+  const px = -uy, py = ux;
+  ctx.beginPath();
+  ctx.moveTo(A[0]+ux*(rA+2), A[1]+uy*(rA+2));
+  ctx.quadraticCurveTo((A[0]+B[0])/2 + px*d*0.10, (A[1]+B[1])/2 + py*d*0.10,
+                       B[0]-ux*(rB+6), B[1]-uy*(rB+6));
+  ctx.stroke();
+}
+function drawSynapses(){
+  const fid = ms.focus || ms.spot; if (!fid || !PX[fid]) return;
+  const F = PX[fid];
+  const inc = (citedBy[fid]||[]).filter(id => PX[id]).slice(0, 400);
+  const out = (CITES[fid]||[]).filter(id => PX[id]).slice(0, 400);
+  ctx.lineWidth = 1.4/view.k; ctx.globalAlpha = 0.75;
+  ctx.strokeStyle = '#2e7d32';
+  inc.forEach(id => pathBetween(PX[id], RAD[id], F, RAD[fid]));
+  ctx.strokeStyle = '#b03040';
+  out.forEach(id => pathBetween(F, RAD[fid], PX[id], RAD[id]));
+  const t = Math.max(3.5, 7/view.k);
+  inc.forEach(id => triangleAt(F, PX[id], t));
+  out.forEach(id => {
+    const P = PX[id];
+    const d = Math.hypot(F[0]-P[0], F[1]-P[1]) || 1;
+    ctx.beginPath();
+    ctx.arc(P[0] + (F[0]-P[0])/d*(RAD[id]+t*0.9), P[1] + (F[1]-P[1])/d*(RAD[id]+t*0.9),
+            t*0.7, 0, 6.2832);
+    ctx.fillStyle = '#b03040'; ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+}
+function triangleAt(F, P, t){
+  const d = Math.hypot(F[0]-P[0], F[1]-P[1]) || 1;
+  const ux = (F[0]-P[0])/d, uy = (F[1]-P[1])/d;
+  const bx = F[0] - ux*(t*1.6), by = F[1] - uy*(t*1.6);
+  ctx.beginPath();
+  ctx.moveTo(F[0] - ux*1.2, F[1] - uy*1.2);          // apex touches the soma
+  ctx.lineTo(bx - uy*t, by + ux*t);
+  ctx.lineTo(bx + uy*t, by - ux*t);
+  ctx.closePath();
+  ctx.fillStyle = '#fff'; ctx.fill();
+  ctx.strokeStyle = '#2e7d32'; ctx.lineWidth = 1.1/view.k; ctx.stroke();
 }
 function kFocused(){ return kfocus >= 0 ? nodesSorted()[kfocus] : null; }
 function nodesSorted(){ // keyboard order: by year then citations
@@ -477,14 +594,15 @@ function updateCrumb(){
   const back = $('map-back');
   if (back) back.onclick = () => {
     if (ms.mode==='refs'||ms.mode==='citedby'){ ms.focus = null; } else { ms.spot = null; }
-    kfocus = -1; nodesSorted._c = null; drawMap();
+    kfocus = -1; nodesSorted._c = null; resetView();
   };
 }
 function resetView(){
   sizeCanvas();               // fit must be computed in the live canvas frame
+  recomputePX();
   view = {k:1, tx:0, ty:0};
   const ns = nodesNow();
-  const xs = ns.map(r=>bx(POS[r.id][0])), ys = ns.map(r=>by(POS[r.id][1]));
+  const xs = ns.map(r=>PX[r.id][0]), ys = ns.map(r=>PX[r.id][1]);
   const x0=Math.min(...xs), x1=Math.max(...xs), y0=Math.min(...ys), y1=Math.max(...ys);
   view.k = Math.max(0.4, Math.min(cv.width/(x1-x0+80), cv.height/(y1-y0+80), 4));
   view.tx = cv.width/2 - (x0+x1)/2*view.k; view.ty = cv.height/2 - (y0+y1)/2*view.k;
@@ -493,7 +611,7 @@ function resetView(){
 function primaryAct(r){
   if (ms.mode==='refs'){ ms.focus = r.id; ms.spot = null; kfocus = -1; nodesSorted._c = null; resetView(); return; }
   if (ms.mode==='citedby'){ ms.focus = r.id; ms.spot = null; kfocus = -1; nodesSorted._c = null; resetView(); return; }
-  ms.spot = r.id; nodesSorted._c = null; drawMap();
+  ms.spot = r.id; nodesSorted._c = null; kfocus = -1; resetView();   // fit the neighborhood
 }
 function secondaryAct(r){ showDetail(r); }
 function act(r, primary){
@@ -504,7 +622,7 @@ function act(r, primary){
 function hitTest(mx, my){
   const ordered = [...nodesNow()].sort((a,b)=>RAD[a.id]-RAD[b.id]); // small first = topmost first
   for (const r of ordered){
-    const sx = bx(POS[r.id][0])*view.k + view.tx, sy = by(POS[r.id][1])*view.k + view.ty;
+    const sx = PX[r.id][0]*view.k + view.tx, sy = PX[r.id][1]*view.k + view.ty;
     const rad = RAD[r.id]*view.k + 4;
     if ((mx-sx)**2 + (my-sy)**2 <= rad*rad) return r;
   }
@@ -565,11 +683,16 @@ cv.addEventListener('keydown', e => {
   const r = kFocused();
   if (r){
     $('map-live').textContent = r.t + ', ' + (r.y||'') + ', ' + r.c + ' citations';
-    const [X,Y] = POS[r.id]; const sx = bx(X)*view.k+view.tx, sy = by(Y)*view.k+view.ty;
+    const sx = PX[r.id][0]*view.k+view.tx, sy = PX[r.id][1]*view.k+view.ty;
     if (sx < 40 || sx > cv.width-40 || sy < 40 || sy > cv.height-40) resetView();
     else drawMap();
   }
 });
+$('m-layout').addEventListener('change', () => {
+  curLayout = $('m-layout').value;
+  resetView();
+});
+$('m-style').addEventListener('change', drawMap);
 $('m-view').addEventListener('change', () => {
   ms.mode = $('m-view').value; ms.focus = null; ms.spot = null; kfocus = -1;
   nodesSorted._c = null; resetView();

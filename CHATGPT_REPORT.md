@@ -1,5 +1,81 @@
 # ChatGPT report for ZCode — 2026-09-08
 
+## ZCode 2026-09-20 — VS Code + toolchain rebuild on EB475WS4 (after C:-drive replacement)
+
+Ben replaced the C: drive; registry/PATH links to software installed on D: were wiped and
+VS Code was reinstalled fresh. This session verified and re-linked everything the
+Bipedal_Robot toolchain needs. No model/scientific code was changed.
+
+### 1. Files created or modified
+
+- `C:\Users\Ben Bolen\AppData\Roaming\Code\User\settings.json` — created (fresh VS Code):
+  python.defaultInterpreterPath = myo env; matlab.installPath = R2025a; LaTeX Workshop
+  tools/recipes pointed at `D:\MiKTeX\miktex\bin\x64`; file associations (.osim/.urdf/
+  .asim/.aproj/.aform→xml, .ino→cpp); NoProfile PowerShell default terminal.
+- `D:\Github\Bipedal_Robot\.vscode\settings.json` + `.vscode\extensions.json` — created
+  (UNTRACKED in git; Ben decides commit vs ignore). Recommend + same interpreter config.
+- `C:\Users\Ben Bolen\Desktop\Bipedal_Robot (VS Code).lnk` — one-click project shortcut.
+- `C:\Users\Ben Bolen\.zcode\skills\solidworks\scripts\sw_session.py` (junction = repo
+  copy in ZCode_Skills, **needs Ben's commit**): GEN_PY now uses
+  `win32com.__gen_path__` (pip pywin32 caches in %TEMP%\gen_py; the old
+  site-packages hardcode failed on pip installs and read-only conda bases).
+- Registry (this user, HKCU): CLSID {6AF263BB-…}\LocalServer32 → real SLDWORKS.exe path
+  (SW COM was broken: 8.3 short path unresolvable, 8.3 disabled on D:); TypeLib
+  {83A33D31-…}\1.0\0\win64 polish entry.
+- User PATH: `D:\MiKTeX\miktex\bin\x64` added (by the installer); stale C:-user-MiKTeX
+  entries removed with that install's uninstall.
+- `AGENTS.md` EB475WS4 bullet — 2026-09-20 rebuild notes appended.
+
+### 2. Model changes
+
+None. No Xi factors, brackets, evaluators, or neural-model parameters touched.
+
+### 3. Runs performed (verification only, no long optimizer runs)
+
+- myo env imports: numpy 1.22.4 / scipy 1.9.3 / matplotlib 3.7.5 / mujoco 2.3.7 /
+  torch 2.14 cpu / sns_toolbox / ipykernel 6.31.0 present; **pywin32 pip-installed**.
+  MyoSuite env: mujoco 3.1.2 OK.
+- MATLAB `matlab -batch` headless smoke (script file): R2025a Update 1, surrogateopt ran,
+  Simulink license test = 1. (Inline `-batch "x.^2"` fails — caret eaten by shell; the
+  AGENTS.md write-script-files rule applies to MATLAB too.)
+- SolidWorks via the solidworks skill (`sw_session.py status`, myo env): **SOLIDWORKS
+  33.3.0, visible, default part/assembly/drawing templates resolved.** Instance closed
+  cleanly afterwards (0 SLDWORKS processes left).
+- OpenSim 4.3 CLI, AnimatLab 2.0 (`AnimatLab2.exe` + `AnimatSimulator.exe` at
+  `D:\Program Files (x86)\NeuroRobotic Technologies\AnimatLab\bin`), Arduino IDE 1.x
+  (`D:\Arduino\arduino.exe`), GitHub Desktop git 2.53.0, graphviz (myo env
+  `Library\bin\dot.exe`) — all present; not executed beyond version checks.
+- MiKTeX: old 22.1 (`D:\Program Files\MiKTeX`) was DEAD (post-C:-wipe guard blocked all
+  compiles; verified twice) → removed. Complete set (9,105 packages, 5.8 GB repo →
+  ~10.4 GB installed) installed **user-scope at `D:\MiKTeX`** (MiKTeX 26.5). Guard
+  cleared via `miktex packages check-update` + `packages update`. Smoke test:
+  **test.pdf compiled OK (1 page)** from `D:\temp\latex_smoke`.
+
+### 4. Results / state
+
+VS Code 1.138 + 13 extensions (python, pylance, debugpy, jupyter suite, MATLAB,
+LaTeX Workshop, cpptools, xml). Everything in the repo now runs: MATLAB (verified),
+Python (both envs), SolidWorks API (verified), SW2URDF v1.6 (DLL + registration intact),
+OpenSim/AnimatLab/Arduino present, git via GitHub Desktop, LaTeX compiles locally
+(Overleaf remains the primary dissertation path per the latex-overleaf skill).
+
+### 5. Unfinished / deferred (Ben's calls)
+
+- **MiKTeX is user-scope, not all-users.** Ben declined the admin UAC on 2026-09-20.
+  One-click staged for later: approve UAC for `D:\temp\miktex_setup\elevated_install2.ps1`
+  (installs shared to `D:\Program Files\MiKTeX`, fixes SW COM machine-wide). The 5.8 GB
+  local repo `D:\temp\miktex-repo` + staging dir stay until decided; delete both if
+  staying user-scope. NOTE: elevated script #2's step D (COM sweep) was superseded by the
+  HKCU fix already in place; its MiKTeX step is still valid if re-run.
+- MinGW gcc absent (mujoco_bridge mexw64 files are prebuilt — only needed for REBUILDS;
+  install via MATLAB Support Package "MinGW-w64" if a rebuild is ever needed).
+- VS Code Arduino extension no longer exists in the marketplace; .ino files get C++
+  highlighting via files.associations; uploads still via Arduino IDE 1.x.
+- `.vscode\` folder in repo is untracked — Ben to commit or gitignore.
+- In fresh VS Code: if "invalid Python interpreter" persists after reload, Ctrl+Shift+P
+  → Python: Select Interpreter → `C:\Users\Ben Bolen\.conda\envs\myo\python.exe`.
+
+
 > Latest handoff: the **2026-09-17 MuJoCo/SNS spinal-model sessions** — five appended
 > sections ending at the "Bilateral architecture visual-audit stop point", which carries
 > the four annotated figure defects and the 7-step safe implementation/verification

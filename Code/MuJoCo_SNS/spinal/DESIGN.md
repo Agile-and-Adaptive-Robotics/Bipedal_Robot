@@ -2,6 +2,380 @@
 
 Built 2026-09-09. Files in `Code\MuJoCo_SNS\spinal\`.
 
+## 2026-09-21 day (ZCode, EB475WS4): PER-SIDE CONTACT-RESET PHASE MACHINE
+**built + tuned (s3f): best −164.4 — the biggest honest jump of the
+campaign; right leg truly cycles; left STILL frozen. Plus: Ben's
+figure corrections (circuit_rules v12 PASS) + SNS-vs-literature IN
+audit.**
+
+**Ben's redirect: "iterate = the mujoco SNS testing and tuning."**
+
+**The build (`params.G`: pm_gain default 0, pm_T 1.2):** runner-side
+per-side phase variable advanced at 1/pm_T, RESET to 0 at that foot's
+own heel strike (loading onset >20 N rising), gentle antiphase pull
+(Di Russo eq-7 style, 0.8/s); during each side's swing window
+(phi 0.62-0.95, raised-cosine edges) extensor ctrl scales DOWN by
+pm_gain and flexor ctrl UP by 0.6*pm_gain. JSON-rule loader +
+curriculum KEYS3 extended (pm_gain [0,1], pm_T [0.8,2]). Smoke gates
+PASS (pm_gain 0 bit-exact vs the s3e seed −191.8067; **the first
+UNTTUNED dose 0.5 already scored −180.97, beating the whole previous
+night**).
+
+**s3f (study curr_s3f_ground, 40 trials, log curriculum_s3f): best
+−164.4 (trial 32: pm 0.35, T 1.43; t14 −168.1 pm 0.38 T 1.76).**
+Verified by rerun: the RIGHT leg now does genuine stance/swing
+cycling — contact duty 0.70-0.80 (ref 0.61), 4-6 contact-based
+cycles, near-reference cadence. **The left leg remains FROZEN at
+every dose the search chose** (winners converge on moderate pm
+0.35-0.38 — higher pm_gain presumably collapses the model by
+suppressing the only load-bearing leg without the right accepting
+weight). Score trajectory under the corrected objective:
+s3c −181.6 → s3d −192.0 → s3e −191.8 → **s3f −164.4**.
+
+**What releasing the left leg now requires (next build):** the left
+unloads only if (a) its swing-window suppression is strong enough to
+beat soleus/gas/vasti 0.5-0.8 + Ib reversal, AND (b) the right leg
+ACCEPTS the load at that moment — i.e., a WEIGHT-SHIFT signal (CoP /
+lateral COM into the stance leg before swing). Concrete next: gate
+the phase machine's suppression on the CONTRALATERAL foot being
+LOADED (only swing the left when the right bears weight) + a lateral
+balance bias during swing; and/or port the phase machine into SNS
+topology (phase-oscillator neurons driving PF/MN gates) so the
+network's own KINH/IaIN machinery can act on it.
+
+**s3g (pm v2 WEIGHT-SHIFT, Ben's decision tree step 1):** pm v2 adds
+(a) LOAD-GATED swing window — the phase HOLDS at 0.55 until the
+contralateral foot carries >=15% BW (was 25% — unreachable, see
+below) — and (b) `pm_ws` abductor prep: during the other side's
+stance-prep ramp (phi 0.42-0.62) the upcoming-swing side's hip
+abductors scale down, upcoming-stance side's up (lateral hip
+strategy). Smoke gates PASS (pm_ws 0 bit-exact vs s3f t32).
+**FIRST s3g attempt DIAGNOSED AND PURGED (15 trials archived to
+curriculum_s3g_rigidrig_archive_20260921.json): the RIGHT foot never
+reached even 25% BW (max ~180 N) — the swing gate could never open —
+because the RIG's lateral spring (ky = 5e5 N/m) anchors the pelvis
+and physically blocks weight transfer.** Fixes: `AARL_KY` env /
+`ky_scale` search dim (log [0.02, 1] — lateral rig compliance now a
+tunable), gate lowered to 15% BW, joint-layer-PF crash FIXED
+(build_network _wire_muscle central projections + IaIN/KINH gates
+now route to the joint HCs when joint_pf=1 — the 09-18 gap; runner
+NEURO_NAMES watch list is joint-aware). Plan-B probe: joint_pf=1 at
+the t32 operating point = NO countable cycles (needs its own tuning
+if we go there). s3g RELAUNCHED (soft-rig vintage, 40 trials, seed
+ky_scale 0.05). Score so far: s3f −164.4 remains the bar.
+
+**s3g soft-rig RESULT: seed still best (−182.4 t0), left frozen.**
+**s3h (pm v3 ADDITIVE flexor burst, `pm_add`): the v2 flexor boost
+was MULTIPLICATIVE on ctrl and the swing-side flexor ctrl is ~0
+(MNs below threshold) — multiplying ~0 drove nothing. Best −184.1
+(t39, pm_add only 0.12 chosen), right leg 12 contact cycles, left
+frozen.** **s3i (pm v4 AFFERENT DISFACILITATION, `pm_aff`: silence
+the swing leg's HEEL/TOE/LOAD/AFF inputs during its own swing
+window): best −148.7 (trial 20, pm_aff 0.27 pm_add 0.11 pm 0.49
+ky 0.20) — the LARGEST single-mechanism gain of the campaign
+(−164.4 → −148.7) — but the reproduced winner is still frozen-left
+(9 right cycles duty 0.87, left duty 1.0, 0 cycles, contact frac
+1.0).**
+
+## 2026-09-21 NIGHT VERDICT — DECISION TREE COMPLETE (~300 trials,
+6 mechanisms): the output- and input-level release levers are
+EXHAUSTED. Record under the corrected both-leg objective: s3c
+−181.6 (baseline) / s3d −192.0 (pf_gain + crossed RG kick) / s3e
+−191.8 (crossed KINH at MN) / s3g −182.4 (weight-shift + load-gate +
+soft lateral rig) / s3h −184.1 (ADDITIVE flexor burst) / **s3i
+−148.7 (afferent disfacilitation)**. Every mechanism improves the
+RIGHT leg's walking (9-12 real contact cycles, duty to 0.87); NOT
+ONE flips the left leg out of its planted latch in any trial of any
+study. The left's load-afferent positive loop (load → heel/toe/Ib →
+RG-E/InE/PF_E/MN) survives output suppression, additive bursts,
+RG-level crossed inhibition, MN-level crossed suppression, input
+disfacilitation, and rig compliance changes.
+
+**FORMAL CONCLUSION (Ben): within this architecture, bilateral
+stepping does not emerge from gating — the pattern layer itself must
+change.** Decision tree status: weight-shift (done, insufficient) →
+joint-layer PF (build bug FIXED 2026-09-21 — _wire_muscle central
+projections + IaIN/KINH gates now route to the joint HCs when
+joint_pf=1, runner NEURO watch list joint-aware; at the phase-cell
+operating point joint_pf yields NO cycles — needs its OWN full
+tuning) → **motor primitives with antagonist groups = the remaining
+and RECOMMENDED option**: replace the PF output stage with
+phase-driven signed primitives per side (phase = the contact-reset
+machine already built; primitives = Di Russo eq-8 raised cosines;
+weights signed, per antagonist GROUP pair, searched; reflex circuit
++ afferents stay). That is Di Russo's actual controller shape — it
+removes the half-center "decision" that load feedback keeps winning
+against. Build spec: LIT_CIRCUIT_AUDIT.md §10; the pm_* phase
+machine is its ready-made phase source. NEXT SESSION: implement the
+primitive layer runner-side (mirroring the pm pattern), tune, then
+port into SNS topology.
+
+**FULL_RULES CONNECTOME wired + first test (2026-09-21 night):**
+`full_rules` (params.G; JSON-rule loader) adds the missing layer:
+II→IIX(exc IN)→same MN, II→IIIN(inh IN)→antagonist MN, Ib→IBIN(inh
+IN)→same MN (direct II/Ib→MN removed when on), Ib-IN↔Ib-IN and
+IaIN↔IaIN mutual inhibition, heel/toe routed via InE/InF lamination.
+Gates: off = bit-identity PASS; on = network finite, air rhythm
+survives (7.71 mV swings) BUT **R/L RG corr +1.00 = bilateral
+SYNCHRONY at the s3i operating point** (the new laminated heel route
+appears to strengthen bilateral locking), ground −173.0 right-only
+(7 cycles, left frozen). Verdict: correct topology, un-retuned
+operating point → s3j study (retune under full_rules) is the next
+run; synchrony vs antiphase is the diagnostic to watch. GUI:
+`connectome_editor.html` + `CONNECTOME.md` (Ben's exported
+connectome_gains.json is applied by runner before build — rule
+on/off, hops, gains; Ben owns wiring, machine tunes). Supervisor
+agent: `SUPERVISOR_AGENT.md` (spawn at M1/M2/M3 milestones per
+AGENTS.md). Replication first-passes: `replication\README.md` +
+`dirusso_connectome_draft.json` (concrete) +
+`shevtsova_laminar_draft.md` + `shinohara_draft.md` (skeletons, Ben
+edits). Unilateral deafferentation: `AARL_DEAFF=l|r` env
+(zero that side's afferent + mechanosensor inputs) +
+`_deaff_matrix.py`.
+
+**Figure (Ben's five corrections, circuit_rules v12 ACCEPTED after 12
+visual-gate passes):** (a) PF windows relabeled early/late
+stance/swing; (b) IaIN-antagonist-IaIN mutual inhibition added
+(flagged absent in ours); (c) II panel redrawn as the literature
+two-collateral-IN rule (IN exc → agonist MN, IN inh → antagonist MN)
+with our direct shortcut dashed + flagged; (d) Ib panel notes the
+literature Ib-IN mutual inhibition (absent); (f) heel chain now has
+the SOMATOSENSORY NEURON (HEEL_c port → heel SN → IN → RG; contra
+chain mirrors; SN glossed as the runner-side encoder). Arial
+confirmed sans-serif. Files: figures\circuit_rules.{png,pdf} +
+_alt.txt (+ Dissertation copies); draw_circuit_rules.py is the source.
+
+## 2026-09-21 small hours (ZCode, EB475WS4): t54 PASSIVE-FLAIL diagnosis →
+**pf_gain + contra_swing levers; s3d running; Di Russo reference spec
+extracted.**
+
+**Ben's go: "keep working on debugging and tuning the model."**
+
+**The t54 "gait" decomposed further (`_diag_left_drive.py`):** every key
+RIGHT-leg muscle sits at EXACTLY 0.000 activation — the right leg's
+−46..−3.5° knee swing is a PASSIVE pendulum flail under the rig (its
+foot grazes at a constant 39–70 N, which is where the "2 contact
+cycles" came from). ALL neural-motor activity is on the LEFT: soleus
+0.75 / gas 0.78 / vasti 0.51 max — jammed into the +10° extension stop
+carrying 257–1426 N, never releasing (its flexors DO fire: rect_fem
+0.57, semimem 0.46 — they lose). Mechanism of the asymmetry: MN ctrl =
+clip(V_mn/5 mV, 0, 1); with pf_gain 0.41 (v10 winner) the fitted
+PF→MN tables leave PF drive BELOW threshold for an unloaded leg — no
+load → no afferent assist → MNs silent → no step → no load. VICIOUS
+CIRCLE. (PF_F1_r sits at +4.4..6.0 mV yet right MNs ≤ rest.)
+
+**Two levers built (both runner-side, gated):**
+1. **`pf_gain` into the stage-3 search** [0.3, 3.0] log — the v10
+   top-level multiplier (also scales W_POSTURE) was never searched by
+   any curriculum; raising it makes PF drive alone sufficient for an
+   unloaded leg.
+2. **`contra_swing`** [0, 1.5] — crossed swing trigger: when side A's
+   foot LOADS (heel strike), side B gets a decaying (0.25 s) NEGATIVE
+   kick on its HEEL port → less heel_in_B excitation of RG-E_B + less
+   inhibition of RG-F_B = reset-to-swing for the stance leg (the
+   frozen foot's own unloading edge never fires; the opposite foot's
+   loading edge does — Aoi/Di Russo heel-strike phase-reset family).
+   params.G default 0; JSON loader tuple updated; smoke gates PASS
+   (0 bit-identical to t54's −181.58612797682238; 0.5 finite but
+   rhythm-disrupting at that dose in this config — magnitude is a
+   search dim, not a hand-pick).
+
+**s3d running** (`run_s3d_20260921.bat`, study curr_s3d_ground, 40
+trials, log curriculum_s3d_20260921.log): KEYS3 + pf_gain + contra_swing;
+curriculum_stage3.json re-pointed at the CORRECTED best t54 (score
+field = corrected −181.586; the study's recorded t26 −119.3 was under
+the holed score — `_update_stage3_t54.py`).
+
+**Di Russo 2023 reference spec extracted** (Ben: "note the 5 motor
+primitives and her rules for proprioceptive feedback, interneurons,
+and Renshaw cells") → **LIT_CIRCUIT_AUDIT.md section 10** (PDF from
+Zotero group 735051 via `?key=` query auth — the X-Zotero-API-Key
+HEADER gets stripped on this network; `_dirusso_pdf*.py`, local copy
+`_dirusso_2023.pdf`). Key points: 5 EQUALLY-spaced raised-cosine
+primitives (σ=0.2, μ=0.1..0.9) with SIGNED optimized MN weights;
+receptor set rIa=√lengthening/Prochazka, rII=length, rIb=force,
+rf=cutaneous foot force; five reflex rules incl. Ib+ extensor force
+reversal and RC→(same MN, same Ia-IN) + mutual antagonist-RC
+inhibition; NO phase gating of reflex gains; foot = 3 contact spheres
+(5 cm calcaneus + 2×2.5 cm at the toes — the figure places the pair at
+the MTP line, per Ben). Their heel-strike phase reset = our
+contact_onset; contra_swing is the swing side of the same family.
+
+**fig4 fixed** (Ben caught the stale render): plot_run.py fig4 was the
+v1 right-leg-only neural-phased logic — rewritten to kine_ref v2
+(both legs, contact-phased, FROZEN legs annotated, not dropped);
+load() returns contact + closes the NpzFile; suite regenerated from
+the t54 npz.
+
+**NEW RULE-PANEL FIGURE (Ben's Di Russo-Fig-3-style request +
+project figure standards, 2026-09-21):** `draw_circuit_rules.py` →
+`figures\circuit_rules.{png,pdf}` + `circuit_rules_alt.txt` (also in
+Dissertation\CPG_airstepping_figs). Six panels (A architecture /
+B Ia / C II / D Ib / E Renshaw / F contact+KINH), each showing the
+somatosensory neurons WITH their interneurons, numbered magenta
+markers on the wires flagging every place OUR wiring skips an
+interneuron or deviates (II→MN direct, Ib→MN autogenic direct,
+afferent→central direct) + absent paths drawn dashed (II antagonist).
+Accepted after NINE visual-judge passes (the visual gate earns its
+keep: v1 all-collide, v2 caption clipping, v3 line leading < text
+height, v4-v8 label whack-a-mole, v9 PASS). Standards now in AGENTS.md
+"Figure standards — PROJECT-WIDE": 7.5x10 in, Arial >=10 pt, NO
+italics, Colors.m (Paul Tol) palette, colorblind shape coding, alt
+text per figure. TERMINOLOGY (Ben): say Ib, not "LB" (code symbol
+LBIN = stance-group Ib IN); KINH = swing-gated inhibitory IN.
+Ben's structural hypothesis RECORDED as the audit's headline: our
+afferents mostly skip interneurons (direct afferent→MN/RG/PF), where
+Di Russo/Deng/Rybak route everything except Ia-homonymous through
+INs — prime suspect for the rhythm failure; the IN-mediated afferent
+layer is a candidate next build alongside the per-side contact-reset
+phase machine.
+
+**s3d OUTCOME (40 trials, done 02:52): best −192.0 (trial 33: pf_gain
+0.70, contra_swing 0.94, pelvis 0.895).** The two new levers ARE used
+by the optimizer (leaders: pelvis 0.88–0.90 — the walker is lowered;
+contra_swing 0.3–1.2; pf_gain 0.3–0.8) and the mechanism moved: the
+right leg now TRULY SWINGS (contact duty 0.08–0.11, real loading
+edges) instead of passively flailing. **BUT the left leg remains
+frozen** (duty 1.0, no cycles) — the crossed heel-port kick cannot
+break a loaded extensor jam.
+
+**s3e OUTCOME (40 trials, done 03:50): best −191.8 = its own SEED**
+(t33 + contra_kinh 0.5; nothing beat it). The crossed KINH edge
+(HEEL_contra → KINH → knee_ext/ankle_pf MN suppression, gain ≤2.0
+searched) did NOT unlock the left either. Note: overall corrected
+best remains s3c t54 (−181.6); the s3d seed's pf_gain jump to 1.0
+disrupted the t54 basin and TPE never recovered it — s3c-t54 still
+the best-scoring config, s3d-t33 the best MECHANISM config (driven
+swing leg).
+
+**POSE-LATCH TEST (`_pose_experiment.py`, AARL_POSE=symmetric,
+START_POSE_DEG_SYMMETRIC in runner): from a SYMMETRIC double-stance
+start, NEITHER leg cycles** (both runs: no kine, kz 0.80–0.85, tilt
+25–30, no NaN). The asymmetric normal.mot pose is not the cause of
+the frozen leg — it is the only SYMMETRY BREAKER the gait has; remove
+it and no stepping emerges at all.
+
+**NIGHT VERDICT (three studies + the pose test):** (1) the gait needs
+a symmetry-breaking seed (asymmetric pose supplies it); (2) the
+planted leg NEVER releases — load → extensor-afferent reinforcement
+(Ib+ reversal + heel/toe stance paths + vasti/soleus at 0.5–0.8) beats
+every crossed trigger tried at RG level (contra_swing), MN level
+(contra_kinh ≤2.0), and port level (contact_onset); (3) from
+symmetry, nothing starts. THE NEXT DESIGN (Di Russo §10 lesson): stop
+relying on the neural half-centers + patches — drive each side's
+pattern from its OWN contact events with an explicit antiphase
+constraint (their two-oscillator eq with sin(φ_L−φ_R−π) coupling +
+per-side heel-strike phase reset); in our SNS realization that means
+a per-side phase variable reset by that foot's loading edge, gating
+PF output and extensor MN bias per side (a runner-side phase machine
+first, then port into SNS topology if it works). This is the first
+build of the next session, not another search dimension.
+
+## 2026-09-20 EVENING (ZCode, EB475WS4): BEN'S FIGURE CRITIQUE → kine_ref v2
+**(BOTH legs, mean/amplitude/phase/periodicity vs OpenSim, real-contact
+cycles) + pelvis-height knob + s3c retune running. The s3b "winner" is
+re-characterized: it was a ONE-LEGGED gait.**
+
+**Ben's critique of the curr3b figures (correct, all verified):** "the
+legs are split, one always flexed at the hip, the other not
+alternating, the left side fairly static, both ankles dragging; lower
+the walker enough to make contact; I want ISB/OpenSim axes; I'll be
+happy if BOTH legs' gait cycles match OpenSim (mean, amplitude, phase,
+periodicity)." Measured on the s3b winner run
+(`_diag_ben_critique.py` + the new contact logging):
+hip_flexion_r mean **+37.9°** (ref mean +4.3), knee_angle_l range
+**2.0°** pinned at the +10° extension stop, ankle means **−59/−56°**
+(both plantarflexed/dragging; right sweeps −93..+20), and — the key
+correction to the morning's note — **the left foot IS in contact the
+whole time: heel+toe force mean 583 N, contact fraction 1.000** (right
+0.714). So the walker was NOT hanging: the LEFT leg stood planted
+(100% stance) while the right leg cycled around it. The neural RG
+alternates bilaterally (R/L corr −0.53); the left leg's mechanics
+never unload it.
+
+**Why the objective allowed this (kine_ref v1, all fixed in v2):**
+right-leg-only columns; mean-offset REMOVED before comparing (the +38°
+hip cost nothing); duty = NEURAL RG-E fraction (0.69 "duty" while the
+left foot never unloaded); no phase or periodicity terms; no contact
+requirement. Under v2 the s3b winner scores **−279.2** (vs "−85.2"
+under v1) — the one-legged gait is now the WORST real walker, not the
+best.
+
+**kine_ref v2 (rewritten in place; API compatible):** reference = BOTH
+legs' cycles from their own GRF loading onsets (right
+`ground_force_vy`, left `1_ground_force_vy`; T 1.233/1.250 s, duty
+0.61/0.60, interleg lag 0.51, double support 0.23). Sim side: per-leg
+cycles from the runner's NEW per-foot contact logging (fallback = that
+side's RG-E onsets). Score terms per leg: shape RMSE (hip 1.0/knee
+1.2/ankle 0.8) + range err (0.5/0.3/0.5) + **MEAN (DC) err ×0.3** +
+**per-joint cycle PHASE lag (circular xcorr) + INTERLEG lag vs 0.51**
++ **PERIODICITY (period err ×4, cycle CV ×4)** + contact duty err ×1.5
++ per-foot guards (contact frac <0.05 → +20, <0.15 → +12) + double-
+support err ×4. Legacy right-leg keys kept for old readers.
+
+**Runner changes (all logged/gated):** (1) `AARL_PELVIS_TY` env
+override for the pelvis height (the rig anchors at whatever it reads —
+Ben's "lower the walker"; default unchanged 0.92); (2) per-side
+heel+toe contact force (N) + foot body height logged EVERY ground step
+into npz (`contact` (n,2), `footz` (n,2)) — sensors unchanged;
+(3) eval passes contact to kine_ref. NOTE for old npz readers: files
+before 2026-09-20 evening lack `contact`/`footz`.
+
+**Curriculum s3c (study `curr_s3c_ground`, 40 trials,
+`run_s3c_20260920.bat`, log `curriculum_s3c_20260920.log`):** searches
+pelvis_ty ∈ [0.88,0.93] (per-trial env) and f1_anklepf_inh ∈ [0,1.2]
+(v7's swing-dorsiflexion lever) on top of the s3b space; seeded FULL
+DICT from the s3b winner + pelvis 0.905 + anklepf 0.3. SENTINELS
+RE-ANCHORED (v1-lesson rule): NaN → −400, no-kine → −320, kine_score
+floored at −315 — the worst genuine walker (−279) must outrank the
+frozen/no-rhythm sentinels. Stage ≤2 (air) objective untouched.
+
+**Figures:** `_fig_isb_gait.py` renders BOTH-leg mean cycles vs OpenSim
+(`*_gait_isb.png`) + walk-window time series with per-foot contact
+(`*_gait_contact.png`), OpenSim/ISB conventions stated on the figure
+(hip +flexion, knee −flexion, ankle +dorsi; global X anterior, Y up,
+Z right). s3b-era test renders kept in spinal\ only.
+
+**s3c OUTCOME (80 trials, 2 chains, done 23:52): 24 real walkers,
+plateau −119.3 (trial 26) under the holed score — then the FROZEN-LEG
+HOLE was found and closed, and the honest picture is sobering.**
+(1) The runner's eval walk window is (2.0, 13.0) — runner.py line ~768
+rewrites SCHEDULE for --eval; params' 5.0 is the FULL-run window.
+Diag/figure scripts must use 2.0 on eval npz. (2) kine_ref v2 round-1
+had a hole: a leg with NO cycles hit `continue` and skipped ALL its
+joint penalties — a FROZEN leg scored better than a trying one. FIXED:
+cycle-less legs are scored from walk-window mean/range vs ref
+(+8 no-cycles). (3) Corrected re-ranking of the top-8
+(`_rescore_top.py`, deterministic reruns): **ALL of them are
+frozen-left** (`frozen_l=True`, 0 left cycles, left duty 1.0).
+Corrected best = trial 54 at −181.6 (t26 −185.5, t39 −182.1...). The
+s3c search NEVER unloaded the left foot — 80 trials × 20 dims incl.
+contact_onset/pelvis_ty/f1_anklepf_inh. That is ARCHITECTURAL: the
+stance leg's release into swing under load has no pathway
+(contact_onset only reinforces E on loading; it does subtract on
+UNLOADING edges but the loaded threshold never falls because the foot
+never unloads — chicken-and-egg). NEXT LEVER (design sketch): a
+force-FALL/toe-off trigger that actively terminates the stance
+half-center (Hultborn/DiCapairla swing-trigger family), or flexor-side
+central drive gated by the CONTRALATERAL loading onset (crossed
+initiation of swing), before any more scalar search.
+(4) Honest corrected-winner state (t54, `_run_t54.py` + figures):
+kz 0.83, tilt 29, both feet loaded (contact frac 1.0/1.0), right knee
+−52..−17 with 2 contact cycles, right ankle mean +17.5 (dorsiflexed —
+the drag is FIXED), left frozen (duty 1.0). Score −181.6.
+(5) Windows traps tonight: **np.load on an .npz returns a LAZY NpzFile
+that keeps the file handle open — an in-process loop that np.loads
+between runs blocks the runner's os.replace (WinError 5)**. Close it
+(z.close()) or copy arrays. Runner npz save: 40×0.5 s retry + env
+`AARL_NPZ=<name>` redirect for batch scripts. (6) The s3c study db +
+curriculum_stage3.json still record the HOLED scores (json = t26;
+corrected best t54 lives in `_rescore_top_out.json`); a fresh study
+(curr_s3d) is required for real further search under the FIXED
+objective. (7) tex: ground/results/discussion fences updated to the
+corrected story; curr3b_* figures DELETED from the Dissertation folder
+(discredited one-legged renders), replaced by curr3c_gait_{isb,
+contact}.png (t54).
+
 ## 2026-09-20 (ZCode, EB475WS4): CURRICULUM ROOT CAUSE — stage-2 "winner"
 **was a static-pose exploit, not a rhythm. Objective now rhythm-gated;
 studies purged and relaunched (curr_s2b/s3b); contact_onset added.**
@@ -106,10 +480,17 @@ PLATEAUED, scalar tuning converged; stopping point.**
 - **s3b 60 trials: −85.22 (trial 52) marginal over −86.57; 11/60 real
   gaits.** The −85.2 winner is a HIGH-drive shuffle (3.62) that barely
   uses the contact pathway (contact_onset 0.05, heel 0.011; largest
-  new gain ia_f_contra_f 0.27), while −86.57 used contact_onset 0.51 —
-  the front is flat between −85 and −88 across different mechanisms.
-  Counted-cycle kine gaps unchanged (knee_min −33 vs −69.7 ref, hip
-  range 32 vs 43, duty 0.82 vs 0.61).
+  new gain ia_f_contra_f 0.27), while −86.57 (trial 8) used
+  contact_onset 0.51 — the front is flat between −85 and −88 across
+  different mechanisms. Winner trial-52 metrics (diag reproduced
+  exactly, −85.2208): **20 counted cycles / 23 RG-E bursts in the
+  11 s window (1.8 Hz vs 0.81 ref), duty 0.686 vs 0.61 ref, cycle
+  knee_min −53.5 (ref −69.7), hip range 16.9 (43.3), knee range 44.3
+  (70.5), ankle range 34.0 OVER ref (23.1), RMSE hip 10.6/knee
+  30.1/ankle 11.7 deg, raw knee −76.0..+10.4, hip 0.6..65.4, tilt_max
+  29.7, kz 0.80, dx +0.123 m, no NaN** — much better than the
+  trial-8-era numbers recorded above (knee −33/hip 32/duty 0.82 were
+  TRIAL 8; don't reuse them).
 - **CONCLUSION (for the next session): stop searching scalars.** The
   duty/cadence/kine gaps need the architecture levers already on the
   books (sensory phase reset INTO the RG — the 09-12 diagnosis;

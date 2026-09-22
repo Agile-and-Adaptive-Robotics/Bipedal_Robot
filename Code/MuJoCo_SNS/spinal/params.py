@@ -146,6 +146,72 @@ G = dict(
     # disinhibition at lift, instead of a tonic contact level that holds
     # the half-center. Units: nA of peak port current per unit gain.
     contact_onset=0.0,
+    # ---- 2026-09-21 crossed swing trigger (t54 diagnosis: the left
+    # stance leg never releases - its own unloading edge never fires
+    # because the foot never unloads; meanwhile the v10 pf_gain 0.41
+    # leaves PF drive below MN threshold for an unloaded leg). When
+    # side A's foot LOADS (heel strike), the CONTRALATERAL side B gets
+    # a decaying NEGATIVE kick on its HEEL port: heel_in_B -> rg_e exc
+    # / rg_f inh, so -kick inhibits B's extensor half-center and
+    # disinhibits its flexor = reset-to-swing (Aoi/Di Russo phase-
+    # resetting family; the loading edge of the moving foot is the
+    # reliable event). 0 = off (bit-identical).
+    contra_swing=0.0,
+    # ---- 2026-09-21 crossed KINH drive: contralateral heel-load IN ->
+    # this side's KINH -> knee_ext/ankle_pf MN suppression (opposite
+    # heel strike forces THIS leg's stance->swing transition at the MN
+    # level). Needs f1_kneext_inh > 0 (the KINH cell's own-MN synapses
+    # carry the f1 gains). 0 = edge absent (bit-identical build).
+    contra_kinh=0.0,
+    # ---- 2026-09-21 FULL LITERATURE CONNECTOME (G["full_rules"] > 0;
+    # Ben: "wire it the way the working Deng model does"). Adds the
+    # missing interneuron layer: II -> IIX (exc IN) -> same MN;
+    # II -> IIIN (inh IN) -> antagonist MNs; Ib -> IBIN (inh IN) -> same
+    # MN (direct II/Ib->MN edges REMOVED when on); Ib-IN <-> antagonist
+    # Ib-IN and IaIN <-> antagonist IaIN mutual inhibition; heel/toe
+    # routed through the laminated InE/InF layer instead of direct
+    # half-center edges. 0 = legacy direct wiring (bit-identical).
+    full_rules=0.0,
+    # ---- 2026-09-21 per-side CONTACT-RESET PHASE MACHINE (the Di
+    # Russo eq-7 analog; the build the s3c/s3d/s3e verdicts point to):
+    # a runner-side phase variable per leg, advanced at 1/pm_T cycles/s,
+    # RESET to 0 at that foot's own heel strike (loading onset), with a
+    # gentle antiphase pull toward a half-cycle offset between legs.
+    # The phase gates the MN OUTPUTS: inside the swing window
+    # (phi 0.62-0.95, raised-cosine edges) extensor ctrl scales DOWN
+    # by pm_gain and flexor ctrl scales UP by 0.6*pm_gain. This
+    # guarantees every leg a swing window each cycle — the thing the
+    # frozen stance leg never gets from the SNS half-centers alone.
+    # pm_gain = 0 = OFF (bit-identical). If it works, port into SNS
+    # topology (phase-oscillator neurons) per DESIGN.md 2026-09-21.
+    pm_gain=0.0,
+    pm_T=1.2,                # s per cycle (searched)
+    # ---- 2026-09-21 pm v2 WEIGHT-SHIFT: (a) the swing window is
+    # LOAD-GATED - the phase HOLDS at 0.55 until the CONTRALATERAL
+    # foot carries >= 25% BW (only swing the left once the right
+    # actually bears weight - real gait's lateral weight transfer);
+    # (b) during stance prep (phi 0.42-0.62) the upcoming-swing side's
+    # hip abductors scale DOWN and the upcoming-stance side's scale UP
+    # by pm_ws (the lateral hip strategy that moves the CoP over the
+    # next stance foot). 0 = off (v1-identical).
+    pm_ws=0.0,
+    # ---- 2026-09-21 pm v3 ADDITIVE flexor drive: the v2 flexor boost
+    # was MULTIPLICATIVE on ctrl, and the swing-side flexor ctrl is ~0
+    # (MNs below threshold - the original passive-flail diagnosis), so
+    # multiplying ~0 stayed ~0: the "swing drive" never drove. pm_add
+    # ADDS pm_add * w to flexor ctrl during the swing window (a real
+    # flexor burst, forceful enough to break the loaded jam). The
+    # multiplicative extensor cut (pm_gain) stays - it works on large
+    # values. 0 = legacy v2 (bit-identical).
+    pm_add=0.0,
+    # ---- 2026-09-21 pm v4 AFFERENT DISFACILITATION: during a side's
+    # swing window, scale that side's load-afferent INPUT channels
+    # (HEEL_c, TOE_c, LOAD_c, AFF_E, AFF_F) by (1 - pm_aff*w). The
+    # s3c..s3h verdict: swing commands (suppression + bursts) lose to
+    # the leg's own load afferents re-latching RG-E/InE/MNs - a real
+    # swing leg is UNLOADED, so its afferents should be silent; enforce
+    # sensory consistency with the commanded swing. 0 = off.
+    pm_aff=0.0,
     # P1b: IaIN population replaces the direct Ia->antagonist edge when
     # > 0 (Deng A6: Ia->IaIN->MN with PF_F1 phase gate; RC->IaIN inh
     # = recurrent disinhibition, Hultborn 1971).

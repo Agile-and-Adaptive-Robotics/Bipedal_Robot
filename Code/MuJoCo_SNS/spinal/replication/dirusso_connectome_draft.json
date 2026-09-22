@@ -1,0 +1,56 @@
+{
+  "_comment": "Di Russo et al. 2023 JNE 20 066006 - EXACT replication draft (first pass by ZCode 2026-09-21; Ben edits). Sources: extracted full text (spinal/_dirusso_2023.pdf), LIT_CIRCUIT_AUDIT.md section 10. Gains marked null are optimized by their CMA-ES - our optimizer searches them.",
+  "plant": {
+    "muscles_per_leg": ["GMAX", "HAMS", "BFSH", "RF", "ILPSO", "VAS", "GAS", "SOL", "TA"],
+    "dofs_per_leg": ["hip_flexion", "knee_flexion", "ankle_dorsiflexion"],
+    "foot_contact": "3 spheres/leg: calcaneus r=0.05 m; two r=0.025 m at the MTP line",
+    "note": "our Gait2392 conversion covers these muscles; MTP contact split is the one plant delta"
+  },
+  "cpg": {
+    "type": "phase_oscillator_pair",
+    "equations": "phi_dot_L = omega - gamma*sin(phi_L - phi_R - pi); phi_dot_R likewise",
+    "phase_reset": "phi_side = 0 when that leg touches ground (heel strike)",
+    "omega": null,
+    "gamma": null,
+    "pattern": {
+      "type": "raised_cosine_primitives",
+      "count": 5,
+      "sigma": 0.2,
+      "mu": [0.1, 0.3, 0.5, 0.7, 0.9],
+      "weights_w_m_k": "null = optimized, signed [-1,1], one row per muscle, one col per primitive"
+    }
+  },
+  "receptors": {
+    "rIa": "65/200 * sqrt(max(0, v_muscle_norm))   [lengthening only]",
+    "rII": "l_muscle_norm",
+    "rIb": "f_muscle_norm",
+    "rf_cutaneous": "f_foot_contact_norm",
+    "delays": "by receptor proximity"
+  },
+  "reflex_rules": {
+    "Ia": {"homonymous": "MONOsynaptic excitation to same MN",
+           "reciprocal": "Ia -> IaIN (exc) -> antagonist MN (inh)",
+           "IaIN_mutual": "IaIN <-> antagonist IaIN inhibition"},
+    "II": {"collateral_1": "II -> excitatory IN -> same MN",
+           "collateral_2": "II -> inhibitory IN -> antagonist MN"},
+    "Ib": {"autogenic": "Ib -> inhibitory IN -> same MN",
+           "IbIN_mutual": "IbIN <-> antagonist IbIN inhibition",
+           "reversal": "Ib -> excitatory IN -> SAME EXTENSOR MN (positive force feedback; extensor-classified muscles only; biarticulars may be both)"},
+    "renshaw": {"drive": "MN collateral -> RC (exc)",
+                "targets": "RC inhibits own MN and own IaIN",
+                "mutual": "RC <-> antagonist RC inhibition"},
+    "cutaneous_rf": "foot contact force input (drives rf receptor)",
+    "phase_gating_of_reflex_gains": "NONE by design"
+  },
+  "antagonist_table": {
+    "ILPSO": ["GMAX", "HAMS"], "GMAX": ["ILPSO"],
+    "HAMS": ["VAS", "RF"], "RF": ["HAMS", "BFSH"],
+    "BFSH": ["VAS", "RF"], "VAS": ["HAMS", "BFSH"],
+    "GAS": ["TA"], "SOL": ["TA"], "TA": ["GAS", "SOL"]
+  },
+  "roles": {"ILPSO": "F", "GMAX": "E", "HAMS": "E/F", "RF": "E/F",
+            "BFSH": "F", "VAS": "E", "GAS": "E/F", "SOL": "E",
+            "TA": "F"},
+  "neuron_model": "leaky integrator tau=0.01 s; MN activation f=min(max(0,x),1); SN rectifier max(0,x)",
+  "balance": "Ong 2019 PD trunk controller on ILPSO/GMAX/HAMS during stance (kept as-is in their paper; state machine retained ONLY there)"
+}

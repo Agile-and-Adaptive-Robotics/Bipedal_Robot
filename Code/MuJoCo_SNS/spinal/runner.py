@@ -78,6 +78,20 @@ def find_foot(model) -> tuple[int, int]:
     return r[0], l[0]
 
 
+def _pm_window(phi, lo=0.62, hi=0.95, edge=0.05):
+    """Raised-cosine swing window of the contact-reset phase machine
+    (1 inside [lo, hi], cosine ramps in the edge bands, 0 outside)."""
+    if phi < lo - edge or phi > hi + edge:
+        return 0.0
+    if phi < lo:
+        return float(0.5 * (1.0 - np.cos(np.pi
+                                         * (phi - (lo - edge)) / edge)))
+    if phi > hi:
+        return float(0.5 * (1.0 - np.cos(np.pi
+                                         * ((hi + edge) - phi) / edge)))
+    return 1.0
+
+
 def drive_posture(t: float, walk_drive: float) -> tuple[float, float]:
     """Piecewise stand->walk->stand schedule -> (DRIVE nA, POSTURE nA).
 
@@ -526,6 +540,35 @@ START_PELVIS_HEIGHT = 0.92   # m. NOT the OpenSim 0.96: measured with
 # sole touches at ty 0.903, left (back leg) at ~0.925; 0.92 = contact
 # compromise the knees/soft contact absorb.
 
+# 2026-09-21: symmetric double-stance variant (AARL_POSE=symmetric).
+# Hypothesis under test: the s3c/s3d/s3e "frozen left leg" is a POSE
+# LATCH - normal.mot starts asymmetric (right hip +24.6 FORWARD, left
+# -16.6 BACK = pre-planted), and the planted leg's load->extensor-
+# afferent->more-extensor loop is unbreakable by any crossed trigger
+# searched. Symmetric start gives neither leg the planted role.
+START_POSE_DEG_SYMMETRIC = {
+    "pelvis_tilt": -1.870,
+    "pelvis_list": -0.470,
+    "pelvis_rotation": 2.430,
+    "hip_flexion_r": 0.0,
+    "hip_adduction_r": 1.090,
+    "hip_rotation_r": -1.350,
+    "knee_angle_r": -10.0,
+    "ankle_angle_r": -1.700,
+    "subtalar_angle_r": 0.0,
+    "mtp_angle_r": 0.0,
+    "hip_flexion_l": 0.0,
+    "hip_adduction_l": 2.680,
+    "hip_rotation_l": 1.280,
+    "knee_angle_l": -10.0,
+    "ankle_angle_l": -1.700,
+    "subtalar_angle_l": 0.0,
+    "mtp_angle_l": 0.0,
+    "lumbar_extension": 1.870,
+    "lumbar_bending": 0.470,
+    "lumbar_rotation": -2.430,
+}
+
 
 def _project_followers(model, data):
     """Re-project equality-coupled pathpoint dofs onto their driver polycoefs
@@ -552,18 +595,34 @@ def apply_start_pose(model, data) -> None:
     IMU-lean heuristic's sign convention is not the coordinate's."""
     jadr = {jn: model.joint(jn).qposadr[0] for jn in START_POSE_DEG
             if model.joint(jn).id >= 0}
+    import os as _os
+    _pose = _os.environ.get("AARL_POSE", "normal")
+    pose_src = (START_POSE_DEG_SYMMETRIC if _pose == "symmetric"
+                else START_POSE_DEG)
     mujoco.mj_resetDataKeyframe(model, data, 0)
-    for jn, deg in START_POSE_DEG.items():
+    for jn, deg in pose_src.items():
         if jn in jadr:
             data.qpos[jadr[jn]] = np.radians(deg)
-    data.qpos[model.joint("pelvis_ty").qposadr[0]] = START_PELVIS_HEIGHT
+    # 2026-09-20 (Ben: "lower the walker enough to make contact with the
+    # ground"): env override for the pelvis height. The 0.92 default is a
+    # compromise that left the LEFT sole ~5 mm short -> the left foot
+    # never loaded (0% contact in the s3b winner) and its knee pinned at
+    # the +10 extension stop. The rig anchors at whatever height is set
+    # here (apply_harness reads it from data), so this single knob sets
+    # the standing height the whole run is sprung to.
+    import os as _os
+    _ty = _os.environ.get("AARL_PELVIS_TY")
+    ty = float(_ty) if _ty is not None else START_PELVIS_HEIGHT
+    data.qpos[model.joint("pelvis_ty").qposadr[0]] = ty
     _project_followers(model, data)
     mujoco.mj_forward(model, data)
     torso = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, "torso")
     up = data.xmat[torso].reshape(3, 3)[:, 1]
     lean = float(np.degrees(np.arctan2(-up[0], max(up[2], 1e-6))))
-    print(f"start pose (normal.mot): applied {len(jadr)} coordinates as "
-          f"given; IMU-metric torso lean {lean:+.1f} deg (+ = back)",
+    print(f"start pose ({_pose}): applied {len(jadr)} coordinates as "
+          f"given; pelvis ty {ty:.3f} m (env override"
+          f"{'=' + _ty if _ty is not None else ' unset'}); "
+          f"IMU-metric torso lean {lean:+.1f} deg (+ = back)",
           flush=True)
 
 
@@ -711,7 +770,10 @@ def main(argv):
         if "ankle_post_walk_trim" in best:
             _p.G["ankle_post_walk_trim"] = float(best["ankle_post_walk_trim"])
         for _k in ("heel_rge", "toe_rge", "ib_rge", "ia_in",
-                   "contact_onset"):  # JSON RULE (2026-09-20)
+                   "contact_onset", "contra_swing",
+                   "contra_kinh", "pm_gain", "pm_T",
+                   "pm_ws", "pm_add", "pm_aff",
+                   "full_rules"):  # JSON RULE
             if _k in best:
                 _p.G[_k] = float(best[_k])
         if "joint_pf" in best:
@@ -793,6 +855,30 @@ def main(argv):
     # mutable param right after arg parsing - diff two paths to find
     # config divergence (found the v4b --best/set_params split this way)
     import os as _os
+    # ---- Ben's connectome spec (connectome_editor.html export) ----
+    # Applied BEFORE the network build: rule enabled -> its gain key
+    # gets |gain|, disabled -> 0.0; any rule with hops >= 1 sets
+    # full_rules (the interneuron-layer topology). You own the wiring;
+    # the machine tunes.
+    _cg = HERE / "connectome_gains.json"
+    if _cg.exists():
+        import json as _js
+        spec = _js.loads(_cg.read_text(encoding="utf-8")).get(
+            "rules", {})
+        _any_in = False
+        for _rid, rr in spec.items():
+            if not rr.get("enabled", False):
+                continue
+            _gk = rr.get("gain_key")
+            if _gk and _gk in _p.G:
+                _p.G[_gk] = abs(float(rr.get("gain", 0.0)))
+            if rr.get("hops", 0) >= 1:
+                _any_in = True
+        if _any_in:
+            _p.G["full_rules"] = 1.0
+        print(f"connectome_gains.json applied "
+              f"({sum(1 for r in spec.values() if r.get('enabled'))} "
+              f"rules, full_rules={_p.G['full_rules']})", flush=True)
     if _os.environ.get("RUNNER_DUMP_STATE"):
         import json as _js
         import params as _pp
@@ -826,7 +912,12 @@ def main(argv):
         # y/z lock (apply_harness defaults kz=2e5, ky=5e5); in air the
         # pelvis ORIENTATION is pinned too (otherwise asymmetric CPG drive
         # tips the assembly head-over)
-        model = apply_harness(model, data, kxy=harness,
+        # 2026-09-21: AARL_KY scales the LATERAL rig spring only - the
+        # s3g diagnosis: ky=5e5 anchors the pelvis laterally and
+        # physically blocks the weight transfer the swing gate needs
+        # (right foot never reached 25% BW). ky_scale searched per trial.
+        _ky = 5.0e5 * float(_os.environ.get("AARL_KY", "1.0"))
+        model = apply_harness(model, data, kxy=harness, ky=_ky,
                               no_ground=no_ground, leg_damping=leg_damping,
                               pin_rot=no_ground, rig_scale=rig_scale)
     elif no_ground or leg_damping is not None or rig_scale != 1.0:
@@ -934,15 +1025,27 @@ def main(argv):
     log_qfull = np.zeros((nsteps, model.nq))   # full state for renderers
     log_com = np.zeros((nsteps, 3))
     # full neural stack for the plot tool (plot_run.py): descending,
-    # RG, all four PF groups (right), balance cells
-    # full neural stack for the plot tool (plot_run.py): descending,
-    # RG, all four PF groups (right), balance cells (the HIP_*_SIG
-    # channels left with the PRESET removal 2026-09-16)
+    # RG, PF group cells (right; phase cells OR joint-layer HCs),
+    # balance cells (the HIP_*_SIG channels left with the PRESET
+    # removal 2026-09-16)
+    if G.get("joint_pf", 0.0) > 0.0:
+        _pf_watch = ("PF_HIP-E_r", "PF_KNEE-E_r",
+                     "PF_KNEE-F_r", "PF_ANK-F_r")
+    else:
+        _pf_watch = ("PF_E1_r", "PF_E2_r", "PF_F1_r", "PF_F2_r")
     NEURO_NAMES = ("DRIVE", "POSTURE",
                    "RG_E_r", "RG_F_r", "RG_E_l", "RG_F_l",
-                   "PF_E1_r", "PF_E2_r", "PF_F1_r", "PF_F2_r",
+                   *_pf_watch,
                    "BAL_TRK_FLX", "BAL_TRK_EXT", "BAL_LAT_R", "BAL_LAT_L")
     log_neuro = np.zeros((nsteps, len(NEURO_NAMES)))
+    # 2026-09-20: per-side ground-truth contact (heel+toe normal force, N)
+    # and foot height (min body-origin z of calcn/toes, m), logged EVERY
+    # step in ground mode. Ben's critique: the eval objective and the
+    # figures must see real contact - the old duty was neural and the
+    # s3b "winner" never loaded its left foot (0% contact frames).
+    log_contact = np.zeros((nsteps, 2))
+    log_footz = np.zeros((nsteps, 2))
+    foot_body = {"r": [], "l": []}
     bal_neurons = ("BAL_PF", "BAL_DF")
 
     u = net.make_inputs()
@@ -969,8 +1072,10 @@ def main(argv):
             for reg in foot_regions:
                 if nm == f"{reg}_r":
                     bodyid_region[b] = reg + "_r"
+                    foot_body["r"].append(b)
                 elif nm == f"{reg}_l":
                     bodyid_region[b] = reg + "_l"
+                    foot_body["l"].append(b)
     con_force = np.zeros(6)  # contact force buffer (mj_contactForce)
     # contact-onset kick state (G["contact_onset"] > 0 only; 2026-09-20):
     # per-side decaying transient set at the loading/unloading EDGES of
@@ -979,6 +1084,24 @@ def main(argv):
     onset_prev_loaded = {"r": False, "l": False}
     onset_kick = {"r": 0.0, "l": 0.0}
     onset_decay = float(np.exp(-DT / 0.25))  # 0.25 s transient
+    # crossed swing-trigger state (G["contra_swing"] > 0 only;
+    # 2026-09-21): contra_prev[a] = was side a loaded last step;
+    # contra_kick[b] = decaying swing trigger applied to side b's HEEL
+    # port when the OPPOSITE foot a loads
+    contra_prev = {"r": False, "l": False}
+    contra_kick = {"r": 0.0, "l": 0.0}
+    # per-side contact-reset phase machine (G["pm_gain"] > 0 only;
+    # 2026-09-21): phase per leg, reset at that foot's loading onset,
+    # antiphase-coupled; gates extensor/flexor ctrl in the swing window
+    pm_on = (G["pm_gain"] > 0.0 or G["pm_ws"] > 0.0) and not no_ground
+    pm_phase = {"r": 0.0, "l": 0.5}
+    pm_prev_loaded = {"r": False, "l": False}
+    # unilateral deafferentation set (AARL_DEAFF=l|r|l,r; 2026-09-21):
+    # muscle actuators of these sides get ZERO afferent drive; their
+    # heel/toe/load channels are also zeroed in the stance_fb block
+    import os as _os2
+    _deaff = set(_os2.environ.get("AARL_DEAFF", "").split(",")) - {""}
+    deaff_acts = {a for a in acts if muscles[a].side in _deaff}
     for k in range(nsteps):
         t = k * DT
         drive, posture = drive_posture(t, walk_drive)
@@ -1015,6 +1138,15 @@ def main(argv):
                             AFF["ib_gain"])
             for i, a in enumerate(acts):
                 s = muscles[a].side
+                # 2026-09-21 unilateral deafferentation (AARL_DEAFF=l|r,
+                # Ben's architecture question: is the stepping side
+                # dependent on the frozen side's afferents, or vice
+                # versa?): zero ALL afferent drive from the listed side.
+                if a in deaff_acts:
+                    u[iport[f"Ia_{a}"]] = 0.0
+                    u[iport[f"II_{a}"]] = 0.0
+                    u[iport[f"Ib_{a}"]] = 0.0
+                    continue
                 u[iport[f"Ia_{a}"]] = max(g_ia[i] * vel_norm[i], 0.0)
                 # II baseline is phase-gated with its gain: an ungated
                 # i0_ii=1.0 nA tonic excites every extensor MN ~0.2 ctrl
@@ -1072,7 +1204,11 @@ def main(argv):
         u[iport["DRIVE"]] = drive
         u[iport["POSTURE"]] = posture
         # --- v11 heel/toe contact mechanosensors (audit P1a) ---
-        if net.stance_fb:
+        # 2026-09-20: forces computed EVERY step in ground mode (the eval
+        # objective and figures consume them); sensor ports fed only when
+        # stance_fb built them.
+        heel_n = toe_n = None
+        if (not no_ground) or net.stance_fb:
             heel_n = {"r": 0.0, "l": 0.0}
             toe_n = {"r": 0.0, "l": 0.0}
             for ci in range(data.ncon):
@@ -1089,6 +1225,14 @@ def main(argv):
                             heel_n["l"] += max(con_force[0], 0.0)
                             toe_n["l"] += max(con_force[0], 0.0)
                         break
+            if not no_ground:
+                log_contact[k, 0] = heel_n["r"] + toe_n["r"]
+                log_contact[k, 1] = heel_n["l"] + toe_n["l"]
+                for si, s in enumerate(("r", "l")):
+                    if foot_body[s]:
+                        log_footz[k, si] = min(
+                            data.xpos[b, 2] for b in foot_body[s])
+        if net.stance_fb:
             heel_sig = {"r": min(heel_n["r"] / (0.35 * BW), 1.5),
                         "l": min(heel_n["l"] / (0.35 * BW), 1.5)}
             toe_sig = {"r": min(toe_n["r"] / (0.50 * BW), 1.5),
@@ -1119,6 +1263,47 @@ def main(argv):
                     kick = G["contact_onset"] * onset_kick[s]
                     u[iport[f"HEEL_c_{s}"]] += kick
                     u[iport[f"TOE_c_{s}"]] += kick
+            # crossed swing trigger (G["contra_swing"] > 0 only): when
+            # side A's foot loads (heel strike), the CONTRALATERAL side
+            # B gets a decaying NEGATIVE kick on its HEEL port -> less
+            # heel_in_B excitation of RG-E_B and less inhibition of
+            # RG-F_B = reset-to-swing for the stance leg. Breaks the
+            # frozen-stance latch (the frozen foot's own unloading edge
+            # never fires; the opposite foot's loading edge does).
+            if G["contra_swing"] > 0.0:
+                for s in net.sides:
+                    o = "l" if s == "r" else "r"
+                    loaded_a = load_sig[s] > 0.05
+                    if loaded_a and not contra_prev[s]:
+                        contra_kick[o] = -1.0
+                    else:
+                        contra_kick[o] *= onset_decay
+                    contra_prev[s] = loaded_a
+                    u[iport[f"HEEL_c_{o}"]] += G["contra_swing"] * \
+                        contra_kick[o]
+        # per-side contact-reset phase machine (G["pm_gain"]/pm_ws > 0;
+        # needs the contact forces, computed above in ground mode).
+        # v2: the swing window is LOAD-GATED - the phase holds at 0.55
+        # until the contralateral foot carries >= 25% BW, so a leg only
+        # "opens" its swing once the other leg actually bears weight.
+        if pm_on and heel_n is not None:
+            for s in ("r", "l"):
+                o = "l" if s == "r" else "r"
+                loaded = (heel_n[s] + toe_n[s]) > 20.0
+                other_load = heel_n[o] + toe_n[o]
+                if loaded and not pm_prev_loaded[s]:
+                    pm_phase[s] = 0.0      # heel-strike phase reset
+                elif (G["pm_ws"] > 0.0
+                      and 0.55 <= pm_phase[s] < 0.62
+                      and other_load < 0.15 * BW):
+                    pm_phase[s] = 0.55     # wait at the gate
+                else:
+                    pm_phase[s] = (pm_phase[s]
+                                   + DT / max(G["pm_T"], 0.3)) % 1.0
+                pm_prev_loaded[s] = loaded
+            # gentle antiphase pull (Di Russo eq-7 coupling)
+            err = ((pm_phase["l"] - pm_phase["r"]) % 1.0) - 0.5
+            pm_phase["l"] = (pm_phase["l"] - 0.8 * DT * err) % 1.0
         # --- v11b semi-closed loops: per-side afferent relay currents ---
         if net.aff_loops:
             ga, gb = PHASE_RESET.get("stance_gate", (0.3, 0.7))
@@ -1142,6 +1327,30 @@ def main(argv):
                     flex_len = float(np.mean(len_norm[ifl]))
                     flex_drive = max(-flex_vel, 0.0) + max(-flex_len, 0.0) * 0.5
                 u[iport[f"AFF_F_{s}"]] = G["aff_f_rg"] * max(flex_drive, 0.0)
+        # pm v4 afferent disfacilitation (G["pm_aff"] > 0): during a
+        # side's swing window, scale its load-afferent input channels
+        # by (1 - pm_aff*w) - the re-latch loop (load -> heel/toe/Ib ->
+        # RG-E -> MN) must be broken for the swing to actually happen.
+        if pm_on and G["pm_aff"] > 0.0:
+            for s in net.sides:
+                w = _pm_window(pm_phase[s])
+                if w > 0.0:
+                    f = 1.0 - G["pm_aff"] * w
+                    for ch in (f"HEEL_c_{s}", f"TOE_c_{s}",
+                               f"LOAD_c_{s}", f"AFF_E_{s}",
+                               f"AFF_F_{s}"):
+                        if ch in iport:
+                            u[iport[ch]] *= f
+        # unilateral deafferentation: zero the side's mechanosensor and
+        # afferent-relay channels AFTER all injections (wins over kicks)
+        if _deaff:
+            for s in net.sides:
+                if s in _deaff:
+                    for ch in (f"HEEL_c_{s}", f"TOE_c_{s}",
+                               f"LOAD_c_{s}", f"AFF_E_{s}",
+                               f"AFF_F_{s}"):
+                        if ch in iport:
+                            u[iport[ch]] = 0.0
         # solved standing pattern -> motoneuron posture bias (fades to a
         # small floor during walking so the stepping pattern can take over;
         # a 0.2 floor kept knee-extensor tone high enough to pin the knees
@@ -1163,7 +1372,39 @@ def main(argv):
         # --- neural step + motor mapping ---
         v = net.step(u)
         for i, a in enumerate(acts):
-            data.ctrl[aid[a]] = np.clip(v[net.idx[net.mn_names[a]]] / E_HI, 0.0, 1.0)
+            c = float(np.clip(v[net.idx[net.mn_names[a]]] / E_HI,
+                              0.0, 1.0))
+            # per-side contact-reset phase machine (G["pm_gain"] > 0
+            # only): during this side's swing window, scale extensor
+            # ctrl DOWN and flexor ctrl UP — guarantees every leg a
+            # swing phase each cycle (the frozen-stance fix)
+            if pm_on and heel_n is not None:
+                w = _pm_window(pm_phase[a[-1]])
+                if w > 0.0:
+                    g0 = muscles[a].groups[0]
+                    if g0 in ("knee_ext", "ankle_pf"):
+                        c *= (1.0 - G["pm_gain"] * w)
+                    elif g0 in ("knee_flex", "ankle_df", "hip_flex"):
+                        # v3 (2026-09-21): ADD the burst - the old
+                        # multiplicative boost on a ~0 ctrl did nothing
+                        # (MNs below threshold on the unloaded side)
+                        if G["pm_add"] > 0.0:
+                            c = min(1.0, c + G["pm_add"] * w)
+                        else:
+                            c = min(1.0,
+                                    c * (1.0 + 0.6 * G["pm_gain"] * w))
+                # weight-shift prep (pm_ws): during the OTHER side's
+                # stance-prep ramp, the upcoming-swing side's abductors
+                # scale DOWN and the upcoming-stance side's scale UP
+                if G["pm_ws"] > 0.0 and muscles[a].groups[0] == "hip_abd":
+                    o = "l" if a[-1] == "r" else "r"
+                    wp = min(max((pm_phase[o] - 0.42) / 0.20, 0.0), 1.0)
+                    if wp > 0.0 and 0.42 <= pm_phase[o] < 0.62:
+                        if a[-1] == o:
+                            c *= (1.0 - G["pm_ws"] * wp)
+                        else:
+                            c = min(1.0, c * (1.0 + G["pm_ws"] * wp))
+            data.ctrl[aid[a]] = c
 
         if t < WARMUP:
             # hold the keyframe pose while activations build (qpos untouched,
@@ -1222,8 +1463,7 @@ def main(argv):
         log_neuro[k] = (drive, posture,
                         v[net.idx["RG_E_r"]], v[net.idx["RG_F_r"]],
                         v[net.idx["RG_E_l"]], v[net.idx["RG_F_l"]],
-                        v[net.idx["PF_E1_r"]], v[net.idx["PF_E2_r"]],
-                        v[net.idx["PF_F1_r"]], v[net.idx["PF_F2_r"]],
+                        *(v[net.idx[c]] for c in _pf_watch),
                         u[iport["BAL_TRK_FLX"]], u[iport["BAL_TRK_EXT"]],
                         u[iport["BAL_LAT_R"]], u[iport["BAL_LAT_L"]])
         if scope is not None:
@@ -1234,23 +1474,29 @@ def main(argv):
     # just-replaced file (same family as the preview-lock problem the
     # figure renderer already solves). Write beside + os.replace retry.
     import time as _time
-    _tmp = HERE / f"spinal_run.{_os.getpid()}.tmp.npz"
+    # 2026-09-20: AARL_NPZ redirects the run output (default
+    # spinal_run.npz) - external locks (Spyder indexer/AV) on the default
+    # name killed WinError-5 loops; point batch scripts at a side name.
+    _npz_name = _os.environ.get("AARL_NPZ", "spinal_run.npz")
+    _tmp = HERE / f"{_npz_name}.{_os.getpid()}.tmp.npz"
     with open(_tmp, "wb") as _fh:
         np.savez_compressed(_fh, t=log_t, act=log_act,
                             q=np.degrees(log_q), qfull=log_qfull,
                             com=log_com, neuro=log_neuro,
+                            contact=log_contact, footz=log_footz,
                             key_acts=KEY_ACTS, key_joints=KEY_JOINTS,
                             neuro_names=NEURO_NAMES,
                             cfg=("ground" if not no_ground else "air"))
     _err = None
-    for _ in range(20):
+    for _ in range(40):   # 2026-09-20: 20x0.15s was not enough - WinError 5
+        # (AV/indexer lock) killed a rescore run; 40x0.5s = 20 s backoff
         try:
-            _os.replace(_tmp, HERE / "spinal_run.npz")
+            _os.replace(_tmp, HERE / _npz_name)
             _err = None
             break
         except OSError as _e:
             _err = _e
-            _time.sleep(0.15)
+            _time.sleep(0.5)
     if _err is not None:
         raise _err
     if viewer is not None:
@@ -1277,7 +1523,8 @@ def main(argv):
             k = kine_ref.compare(log_t[:n_done],
                                  np.degrees(log_q[:n_done]),
                                  log_neuro[:n_done], SCHEDULE["walk"][0],
-                                 ref=kine_ref.ref_cached())
+                                 ref=kine_ref.ref_cached(),
+                                 contact=log_contact[:n_done])
         except Exception:
             k = None
         metrics = dict(

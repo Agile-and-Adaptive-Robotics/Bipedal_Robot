@@ -43,6 +43,14 @@ The `_R2025a` export copies were deleted 2026-09-10: everything is rebuilt
 R2025a-native (verified on easteregg2 R2025a), and R2025b (laptop) opens
 R2025a files directly.
 
+**2026-09-20 Rybak restyle:** `SNS_Library.slx` was REBUILT on the laptop
+(Rybak pass-through synapse icons, below) and is now R2025b-NATIVE; the
+demos' library links still resolve (unchanged block paths), and
+`SNS_Library_R2025a.slx` is exported alongside for inspection. R2025a
+machines that need to open the demos should simply re-run
+`sns_build_library.m` + `sns_build_actuators.m` locally (they regenerate an
+R2025a-native library; validation = `sns_test_actuators.m`, PASS 4.9e-10 N).
+
 ## Run order (from `SNS_Simscape\`, or run any script by full path)
 
 ```matlab
@@ -177,7 +185,7 @@ referenced numerically (`blk/1`), not by inner port-block names.
 | `sns_draw_circuit.m` | **journal figure**: redraws the demo circuit reader-facing (`figures/KneeReflex_circuit.{png,pdf,svg}`) |
 | `sns_function_subnetworks.m` | **journal figure**: 6 arithmetic subnetwork panels (`figures/SNS_function_subnetworks.{png,pdf,svg}`) |
 | `snsfig.m` | drawing primitives shared by both figure scripts (neuron/triangle/dot/muscle/box/arrow) |
-| `sns_export_diagram.m` | prints Simulink models to `figures/<model>_simulink.{png,pdf}` (300 dpi; optional auto-arrange) |
+| `sns_export_diagram.m` | prints Simulink models to `figures/<model>_simulink.{eps,pdf,png}` **as dissertation figures**: per-block 12 pt fonts, annotations normalized 10–12 pt, synapse names hidden (Rybak: a synapse is a connection, not a labelled component), white canvas; styling is applied in-memory only — the .slx files are never modified. EPS = color vector (painters) for `\includegraphics{*.eps}`; Overleaf handles it, but the twin .pdf is the zero-friction option for local pdflatex. |
 | `sns_urdf_smoke.m` | minimal URDF → `smimport` smoke test (fails on easteregg2 license, see below) |
 | `osim_import/mjcf2urdf.py` + `sns_osim_import.m` | **OpenSim → Simscape**: MyoConverter MJCF (cvt3) → URDF → `smimport`; saves `osim_import/Gait2392_simbody_simscape.slx` |
 | `sw_import/sw_probe.py`, `sw_probe2.py`, `sw_mate_probe.m` | SolidWorks COM probes of `09_BA_003.SLDASM` (components + transforms work; mate entities blocked by pywin32 byref bug) |
@@ -192,12 +200,12 @@ subnetwork paper), Rybak/Shevtsova CPG diagrams, and Animatlab:
 
 | Element | Icon |
 |---|---|
-| neuron (non-spiking RC) | open circle, black edge, white fill, "NS" |
+| neuron (non-spiking RC) | open circle, black edge, pale-yellow fill, "NS" |
 | spiking LIF neuron | open circle with spike glyph |
 | Ia / Ib afferent | light-gray circle labeled "Ia" / "Ib" |
 | muscle (activation, BPA force) | light-green fusiform ellipse |
-| **EXCITATORY connection** | **white triangle, black edges — tip points back toward the presynaptic side, flat base at the postsynaptic side (inverted per Ben 2026-09-09)** (+ light-orange backdrop) |
-| **INHIBITORY connection** | **solid black circle** (+ light-blue backdrop) |
+| **EXCITATORY connection** | **white triangle, black edges — drawn as a PASS-THROUGH AXON (Rybak restyle 2026-09-20): heavy horizontal bar enters from the presynaptic (left) side and terminates in the triangle at the postsynaptic (right) edge; tip points back toward the presynaptic side, flat base at the postsynaptic membrane** (+ light-green backdrop) |
+| **INHIBITORY connection** | **same pass-through axon ending in a SOLID BLACK CIRCLE at the postsynaptic edge** (+ light-red backdrop). A thin gray lower bar is the Vpost (postsynaptic-voltage) sense wire. |
 
 - The `NonSpikingSynapse` icon picks its marker **automatically from the sign of
   `Esyn`** (`Esyn >= 0` → triangle, `< 0` → black dot), so the icon always tells
@@ -307,6 +315,49 @@ from CAD mass properties and the Xi-corrected BPA predictions.
   block params *inside* the masked subsystem do. And a library must be LOCKED
   for its blocks to be instance-able.
 
+## Demos verified on the LAPTOP R2025b (2026-09-20)
+
+All four demo models re-run headless (`dev/run_all_demos_laptop_20260920.m`,
+log `logs/run_all_demos_laptop_20260920.log`) — all behave exactly as
+documented from easteregg2 R2025a:
+
+| Demo | Result on R2025b |
+|---|---|
+| KneeReflexDemo | theta final 42.72 deg, A_ext 0.34, A_flex 0.73 (matches doc) |
+| BPACPGLegDemo | theta range 9.7..48.0 deg (matches doc ~10-48) |
+| BeerCupReflexDemo | max sag ON 5.13 deg vs OFF 9.66 deg (matches doc 5.1/9.7) |
+| SNS_Deng_CPGDemo | 10 RG_ext bursts / 20 s, period 1.938 s, ext-vs-flx r = −0.857 |
+
+Fix shipped: `sns_run_deng_demo.m` used `corr()` (Statistics Toolbox — not on
+the laptop license); replaced with base-MATLAB Pearson. The Deng sim itself
+was always fine — only the check crashed.
+
+## Dissertation figure pipeline (2026-09-20, Ben's 10–12 pt / EPS / Rybak ask)
+
+- **`sns_export_diagram.m`** (upgraded): per model writes
+  `figures/<model>_simulink.{eps,pdf,png}`. Styling applied in-memory only
+  (never saved): every block FontSize → 12 pt (R2025b has NO model-level
+  font param — the model `FontSize` set_param errors; blocks carry their
+  own), annotations normalized to 10–12 pt, synapse names hidden (Rybak: a
+  synapse is a connection, not a labelled component), white canvas.
+- **EPS**: `print -depsc` is REFUSED for Simulink systems on R2025b
+  ("'epsc' format is not supported with Simulink or Stateflow printing") and
+  R2025b ships no ghostscript. Working chain = `print -dpdf -bestfit` →
+  **MiKTeX pdfcrop** (user install, `%LOCALAPPDATA%\Programs\MiKTeX\...`) →
+  **MiKTeX mgs.exe** (`-sDEVICE=eps2write`) → tight vector EPS. pdfcrop
+  cannot write to `C:\` root — the temp crop file lives in the output folder.
+  In Overleaf, `\includegraphics{file.eps}` works as-is; locally, prefer the
+  twin `.pdf` (identical vector content).
+- **`demos/sns_build_circuit_view.m`** builds **`KneeReflexCircuit.slx`** — a
+  PRINT-ONLY view of the KneeReflexDemo neural circuit (afferent encoders →
+  sensory neurons → synapses → MNs → activation → BPA, Ib feedback closed
+  inside). Blocks are COPIED from the demo, so mask values (gmax/Esyn/taus)
+  match the runnable model 1:1. The full KneeReflexDemo export stays
+  available as the "faithful model" appendix figure.
+- **`snsfig.m` / `sns_draw_circuit.m`** (vector circuit figure): fonts raised
+  to 9.5–11 pt and the canvas set to 16.5 cm = dissertation text width, so
+  LaTeX includes it at 100 % scale and the fonts print at face value.
+
 ## Demos
 
 | Demo | File | What it shows |
@@ -321,7 +372,7 @@ the Adp neuron's S output — a synapse there LATCHES the winner because its
 driving force collapses at high RG voltage), asymmetric drives 4.0/3.6 nA.
 Symmetric drives latch (same symptom as the AnimatLab RG latch).
 
-## OpenSim -> Simscape (WORKS, pending license on THIS machine)
+## OpenSim -> Simscape (COMPLETE + VERIFIED on the laptop, 2026-09-20)
 
 Route: OpenSim gait2392_simbody --MyoConverter--> MJCF (`mjc\gait2392_simbody\
 gait2392_simbody_cvt3.xml`) --`osim_import/mjcf2urdf.py`--> URDF -->
@@ -331,14 +382,47 @@ pathpoint slide bodies (kept as links so BPAs can attach at the same points),
 and writes proper URDF `<mass>` child elements. Output:
 `osim_import/gait2392_simbody.urdf` (149 links / 149 joints).
 
-**BLOCKER on easteregg2 (2026-09-10):** `sns_osim_import.m` fails inside
-smimport at the Mechanism Configuration block's PreCopyFcn — root cause is the
-LICENSE: `license('test','SimMechanics') = 0` on this R2025a install (the
-smoke URDF fails identically, so it is not the model). Base Simscape IS
-licensed; Simscape Multibody is not. Re-run `sns_osim_import.m` once the
-license carries SimMechanics/Simscape_Multibody (e.g. after the planned
-R2025b upgrade + CECS license repoint). `sns_cpg_gait2392.m` is the skeleton
-for CPG+BPA actuation of the imported knee.
+**STATUS (laptop R2025b, 2026-09-20): `osim_import/Gait2392_simbody_simscape.slx`
+IMPORTS, COMPILES, AND SIMULATES.** smimport built 1446 blocks; joint inventory:
+85 Prismatic (the massless pathpoint slides) + 20 Revolute Joint (anatomical)
++ 44 Weld (the `_pre`/`_anchor` offset chains) = 149 total. The easteregg2
+license blocker no longer applies anywhere that carries SimMechanics.
+
+Two traps fixed on the way (both cost a debugging cycle):
+
+1. **Mesh resolution**: the URDF references `Geometry/*.stl` for the 19
+   anatomical Visual blocks. smimport froze those paths at import time, and
+   `update` failed with "Geometry/File Name is a file that does not exist"
+   for all 19 (a junction created AFTER import does NOT fix an already-saved
+   model — the params must be patched). Fix shipped: `osim_import\Geometry`
+   is a junction into the cvt3 Geometry folder (gitignored), and the 19 File
+   Solid blocks were patched to ABSOLUTE paths via
+   `set_param(blk,'ExtGeomFileName',absPath)` — **the mesh param is
+   `ExtGeomFileName`** (probed; 'FileName' does not exist).
+2. **Crash hazard**: a model whose `set_param('SimulationCommand','update')`
+   FAILED leaves Simscape's GUI tree in a state that crashes MATLAB
+   (physmod_sm_gui_app_tree.dll access violation) at ANY later touch,
+   including process teardown. Always make the compile succeed, or expect the
+   crash-at-exit (the log up to that point survives).
+
+Muscles/tendons themselves are NOT imported (URDF has no muscle element) —
+they become SNS_Library blocks driving the joints
+(`sns_cpg_gait2392.m` is the skeleton for that wiring).
+
+## SolidWorks knee rig -> Simscape (XML route inventoried, 2026-09-20)
+
+`dev/imports2_20260920.m` ran the REAL Multibody-Link XML import
+(`Solid_Models\Biomimetics_2022-Knee_Test\Knee assembly\09_BA_003.xml`) →
+**`mdl_knee_rig_xml_imported.slx`**: 96 blocks; joint inventory =
+**2 Cylindrical + 3 6-DOF and ZERO Revolute joints — the knee DOF is
+MISSING.** The dropped SW Hinge mates (exporter "not supported") became
+rigid welds ("unknown constraint" warnings at import), and the KB↔TI
+Concentric+Coincident pair did NOT translate into a revolute. Ben's planned
+fix (replace the 4 Hinge mates with Concentric+Coincident pairs in SW and
+re-export) is still REQUIRED before this route yields a usable plant — the
+knee angle mate carries the joint state target.
+NOTE: the older `mdl_knee_rig_import_tmp_imported.slx` (12 blocks, 0 joints)
+is the 1-link sw2urdf STUB from 2026-09-16, not this import.
 
 ## SolidWorks -> Simscape status
 

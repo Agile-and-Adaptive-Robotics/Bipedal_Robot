@@ -1,0 +1,67 @@
+Alt text - circuit_rules figure (spinal circuit rules:
+implementation vs literature).
+
+Panel A - Architecture. Signals flow left to right: descending DRIVE
+and POSTURE inputs excite the rhythm generator, a pair of
+persistent-sodium half-center neurons RG-E and RG-F whose mutual
+inhibition is routed through interneurons InE and InF. The rhythm
+generator drives four phase-window pattern-formation cells per side:
+E1 early stance, E2 late stance, F1 early swing, F2 late swing, which
+excite the motoneuron pool of the muscle. The muscle feeds three
+somatosensory afferent neurons, Ia, II, and Ib, back into the cord. A
+joint-layer pattern-formation variant (hip, knee, and ankle
+half-center pairs) exists but is default-off. Commissural
+interneurons c1 and V3 couple the two sides at the midline.
+
+Panel B - Ia pathways. The agonist muscle excites its Ia afferent,
+which monosynaptically excites the agonist motoneuron (matching the
+literature) and also excites the agonist Ia inhibitory interneuron,
+which inhibits the antagonist motoneuron (disynaptic reciprocal
+inhibition, matching); symmetrically, the antagonist Ia interneuron
+inhibits the agonist motoneuron. The two Ia interneurons mutually
+inhibit each other in the literature rule (marker 2) - NOT
+implemented in our circuit. The Ia interneuron is phase-gated by the
+PF F1 swing window and disinhibited by the Renshaw cell (panel E).
+Note 1: at gain ia_in = 0 (untuned configurations only) Ia connects
+directly to the antagonist motoneuron.
+
+Panel C - II pathways, literature rule. The agonist muscle excites
+its II afferent, which drives TWO collateral interneurons: an
+excitatory interneuron to the agonist motoneuron and an inhibitory
+interneuron to the antagonist motoneuron. In our implementation
+(marker 1) the II afferent excites the agonist motoneuron DIRECTLY
+(shown dashed), and (marker 2) both interneurons of the rule are
+absent. II afferents also project directly to flexor pattern and
+rhythm cells.
+
+Panel D - Ib pathways. The extensor muscle excites its Ib afferent.
+Autogenic inhibition onto its own motoneuron is direct (marker 1);
+the literature rule is disynaptic via Ib interneurons, which also
+mutually inhibit antagonistic Ib interneurons (absent in ours). The
+positive force reversal is interneuron-mediated: Ib excites the
+stance-gated IBEXC interneuron, which excites the extensor
+motoneuron and the stance-group Ib interneuron (code symbol LBIN),
+which excites RG-E and prolongs stance. Ib additionally projects
+directly to the extensor centers.
+
+Panel E - Renshaw cells. The motoneuron collateral excites its
+Renshaw cell, which inhibits that same motoneuron, is mutually
+inhibited with the antagonist-pool Renshaw cell RC2, and inhibits the
+Ia inhibitory interneuron (recurrent disinhibition, Hultborn 1971).
+Matches Di Russo rule 5; the topology is conditional on the renshaw
+gain.
+
+Panel F - Foot mechanosensors, KINH, and crossed edges. The heel
+contact port (a runner-side transducer/encoder standing in for the
+somatosensory neuron) feeds the heel somatosensory neuron, which
+excites the heel interneuron; the interneuron excites RG-E and
+inhibits RG-F (reset-to-extension, Conway 1987). The contralateral
+chain mirrors it: heel SN (contra) to heel IN (contra), which excites
+KINH (marker 3), an inhibitory interneuron suppressing the
+knee-extensor and ankle-plantarflexor motoneurons of this side: the
+opposite heel strike forces this leg's stance-to-swing transition
+(contra_kinh, added 2026-09-21). KINH is gated by the own-side PF F1
+swing window. Runner-side mechanisms, not SNS topology:
+contact_onset adds current kicks at foot loading and unloading edges;
+contra_swing applies a crossed kick at the rhythm generator. The toe
+chain follows the heel pattern.
