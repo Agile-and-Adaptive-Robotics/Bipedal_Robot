@@ -888,16 +888,24 @@ Loaded automatically at session start. Keep it current; keep it lean.
   rebuilt by `rebuild_no_pdf_list.py`; the Sept-15 intermediate lists were deleted
   2026-09-20); author
   normalization done (Primary Author = one surname + Secondary Authors multi-select);
-  VOSviewer citation map built (`SADb_audit\vosviewer\`; full-corpus rebuilder =
-  `vos_build2.py`). **2026-09-18: batch 6 DONE (8 curated + echo-verified, 2 Elsevier
-  chapters logged no-text pending Ben's library pass; twins Fujiki 2018 / Ekeberg 2004
-  Models + Côté 2018 / Prochazka and Ellaway 2012 Review) — 451/943 records have notes;
-  task5 did NOT cover the rest-import queue (`reconcile_queue.py` proves it); next =
-  batch 7 = rows 52–60 (pre-grounded in `batch6\ground_*.txt`). Airtable-independent
-  stack: `export_corpus.py` → `export\sadb_export.{json,csv}` (943 records, Excel-ready),
-  `app\build_app.py` → `app\sadb_app.html` single-file OFFLINE explorer (Table
-  search/sort/filter, Pivot with drill-through, bubble map; Airtable GET 422s on a
-  fields[] filter because two fields share the name "Models copy" — fetch full records).**
+  citation-graph tooling = `build_citation_graph.py` (**VOSviewer RETIRED
+  2026-09-22 as a dead end — `vosviewer\` folder + map/network files deleted; do
+  not resurrect**). **2026-09-18/21: batches 6–7 DONE (16 curated + echo-verified,
+  4 Elsevier/CRC chapters logged no-text pending Ben's library pass; twins Fujiki
+  2018 / Ekeberg 2004 / Bondy 2016 Models + Côté 2018 / Prochazka and Ellaway 2012 /
+  Ziskind-Conhaim and Hochman 2017 / Duysens and Forner-Cordero 2018 Review) —
+  459/943 records have notes; task5 did NOT cover the rest-import queue
+  (`reconcile_queue.py` proves it); next = batch 8 = rows 62–70 (pre-grounded in
+  `batch6\ground_*.txt`). Airtable-independent stack:
+  `export_corpus.py` → `export\sadb_export.{json,csv}` (943 records, Excel-ready),
+  `build_citation_graph.py` → `export\sadb_cites.json` (directed adjacency) +
+  `export\sadb_layout.json` (layout + clusters), `app\build_app.py` →
+  `app\sadb_app.html` single-file OFFLINE explorer (Table search/sort/filter,
+  Pivot with drill-through, bubble map with year×citations AND topic-landscape
+  layouts, neuron styling + excitatory/inhibitory citation links; roadmap for
+  online mode + WoS/Scholar + Zotero-like extension in `app\README.md`; Airtable
+  GET 422s on a fields[] filter because two fields share the name "Models copy"
+  — fetch full records).**
   SADb work is DELEGATED TO
   CHATGPT during GLM peak hours (Mon–Fri 23:00–03:00 Pacific) — its brief is the SADb
   section of `CHATGPT_HANDOFF.md`; keys live in `D:\Github\api_credentials_local.txt`
@@ -1070,6 +1078,27 @@ Scale first — the bundled IK setup consumes its `subject01_simbody.osim` outpu
 - Open design question: replace the 4 per-contact wrap terms (geometricBendMeasure) with p2's
   term kept + ONE unified R×(total polyline turn) term for p3–p8, plateau-calibrated so the
   Xi3·bend product stays consistent; prototype behind `ctx.bendModel` flag. Ben hasn't decided.
+
+## DISSERTATION .TEX — NEVER EDIT WITHOUT BEN'S EXPLICIT OK (Ben, 2026-09-21)
+
+Do NOT edit `CPG_spinal_section_draft.tex` or any ProofFinal chapter file
+without Ben's explicit per-edit approval. This holds even for ZCODE-fenced
+blocks, figure-pointer fixes, and number refreshes. If a change is needed
+(figure renamed, numbers stale), ASK with the exact diff proposed and wait.
+Deleting/renaming a figure file that the tex references is NOT license to
+edit the tex — leave the tex pointer alone and tell Ben both sides.
+
+## SUPERVISOR AGENT — spawn at milestones (Ben, 2026-09-21)
+
+Walker sessions MUST spawn a general-purpose agent gated by
+`Code\MuJoCo_SNS\spinal\SUPERVISOR_AGENT.md` (use its full text as the
+spawn prompt) at: M1 before declaring results, M2 before any
+figure/tex/circuit edit, M3 before calling wiring "literature-faithful".
+Act on BLOCK verdicts before proceeding. Also standing: Ben owns the
+connectome (edit only via his connectome spec /
+`spinal\connectome_editor.html` + `CONNECTOME.md`); replication of
+Shinohara / Shevtsova / Di Russo connectomes lives in
+`spinal\replication\` (first pass by the session, then Ben edits).
 
 ## Figure standards — PROJECT-WIDE (Ben, 2026-09-21)
 

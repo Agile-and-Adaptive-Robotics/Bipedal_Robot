@@ -43,6 +43,96 @@ balance bias during swing; and/or port the phase machine into SNS
 topology (phase-oscillator neurons driving PF/MN gates) so the
 network's own KINH/IaIN machinery can act on it.
 
+**s3g (pm v2 WEIGHT-SHIFT, Ben's decision tree step 1):** pm v2 adds
+(a) LOAD-GATED swing window — the phase HOLDS at 0.55 until the
+contralateral foot carries >=15% BW (was 25% — unreachable, see
+below) — and (b) `pm_ws` abductor prep: during the other side's
+stance-prep ramp (phi 0.42-0.62) the upcoming-swing side's hip
+abductors scale down, upcoming-stance side's up (lateral hip
+strategy). Smoke gates PASS (pm_ws 0 bit-exact vs s3f t32).
+**FIRST s3g attempt DIAGNOSED AND PURGED (15 trials archived to
+curriculum_s3g_rigidrig_archive_20260921.json): the RIGHT foot never
+reached even 25% BW (max ~180 N) — the swing gate could never open —
+because the RIG's lateral spring (ky = 5e5 N/m) anchors the pelvis
+and physically blocks weight transfer.** Fixes: `AARL_KY` env /
+`ky_scale` search dim (log [0.02, 1] — lateral rig compliance now a
+tunable), gate lowered to 15% BW, joint-layer-PF crash FIXED
+(build_network _wire_muscle central projections + IaIN/KINH gates
+now route to the joint HCs when joint_pf=1 — the 09-18 gap; runner
+NEURO_NAMES watch list is joint-aware). Plan-B probe: joint_pf=1 at
+the t32 operating point = NO countable cycles (needs its own tuning
+if we go there). s3g RELAUNCHED (soft-rig vintage, 40 trials, seed
+ky_scale 0.05). Score so far: s3f −164.4 remains the bar.
+
+**s3g soft-rig RESULT: seed still best (−182.4 t0), left frozen.**
+**s3h (pm v3 ADDITIVE flexor burst, `pm_add`): the v2 flexor boost
+was MULTIPLICATIVE on ctrl and the swing-side flexor ctrl is ~0
+(MNs below threshold) — multiplying ~0 drove nothing. Best −184.1
+(t39, pm_add only 0.12 chosen), right leg 12 contact cycles, left
+frozen.** **s3i (pm v4 AFFERENT DISFACILITATION, `pm_aff`: silence
+the swing leg's HEEL/TOE/LOAD/AFF inputs during its own swing
+window): best −148.7 (trial 20, pm_aff 0.27 pm_add 0.11 pm 0.49
+ky 0.20) — the LARGEST single-mechanism gain of the campaign
+(−164.4 → −148.7) — but the reproduced winner is still frozen-left
+(9 right cycles duty 0.87, left duty 1.0, 0 cycles, contact frac
+1.0).**
+
+## 2026-09-21 NIGHT VERDICT — DECISION TREE COMPLETE (~300 trials,
+6 mechanisms): the output- and input-level release levers are
+EXHAUSTED. Record under the corrected both-leg objective: s3c
+−181.6 (baseline) / s3d −192.0 (pf_gain + crossed RG kick) / s3e
+−191.8 (crossed KINH at MN) / s3g −182.4 (weight-shift + load-gate +
+soft lateral rig) / s3h −184.1 (ADDITIVE flexor burst) / **s3i
+−148.7 (afferent disfacilitation)**. Every mechanism improves the
+RIGHT leg's walking (9-12 real contact cycles, duty to 0.87); NOT
+ONE flips the left leg out of its planted latch in any trial of any
+study. The left's load-afferent positive loop (load → heel/toe/Ib →
+RG-E/InE/PF_E/MN) survives output suppression, additive bursts,
+RG-level crossed inhibition, MN-level crossed suppression, input
+disfacilitation, and rig compliance changes.
+
+**FORMAL CONCLUSION (Ben): within this architecture, bilateral
+stepping does not emerge from gating — the pattern layer itself must
+change.** Decision tree status: weight-shift (done, insufficient) →
+joint-layer PF (build bug FIXED 2026-09-21 — _wire_muscle central
+projections + IaIN/KINH gates now route to the joint HCs when
+joint_pf=1, runner NEURO watch list joint-aware; at the phase-cell
+operating point joint_pf yields NO cycles — needs its OWN full
+tuning) → **motor primitives with antagonist groups = the remaining
+and RECOMMENDED option**: replace the PF output stage with
+phase-driven signed primitives per side (phase = the contact-reset
+machine already built; primitives = Di Russo eq-8 raised cosines;
+weights signed, per antagonist GROUP pair, searched; reflex circuit
++ afferents stay). That is Di Russo's actual controller shape — it
+removes the half-center "decision" that load feedback keeps winning
+against. Build spec: LIT_CIRCUIT_AUDIT.md §10; the pm_* phase
+machine is its ready-made phase source. NEXT SESSION: implement the
+primitive layer runner-side (mirroring the pm pattern), tune, then
+port into SNS topology.
+
+**FULL_RULES CONNECTOME wired + first test (2026-09-21 night):**
+`full_rules` (params.G; JSON-rule loader) adds the missing layer:
+II→IIX(exc IN)→same MN, II→IIIN(inh IN)→antagonist MN, Ib→IBIN(inh
+IN)→same MN (direct II/Ib→MN removed when on), Ib-IN↔Ib-IN and
+IaIN↔IaIN mutual inhibition, heel/toe routed via InE/InF lamination.
+Gates: off = bit-identity PASS; on = network finite, air rhythm
+survives (7.71 mV swings) BUT **R/L RG corr +1.00 = bilateral
+SYNCHRONY at the s3i operating point** (the new laminated heel route
+appears to strengthen bilateral locking), ground −173.0 right-only
+(7 cycles, left frozen). Verdict: correct topology, un-retuned
+operating point → s3j study (retune under full_rules) is the next
+run; synchrony vs antiphase is the diagnostic to watch. GUI:
+`connectome_editor.html` + `CONNECTOME.md` (Ben's exported
+connectome_gains.json is applied by runner before build — rule
+on/off, hops, gains; Ben owns wiring, machine tunes). Supervisor
+agent: `SUPERVISOR_AGENT.md` (spawn at M1/M2/M3 milestones per
+AGENTS.md). Replication first-passes: `replication\README.md` +
+`dirusso_connectome_draft.json` (concrete) +
+`shevtsova_laminar_draft.md` + `shinohara_draft.md` (skeletons, Ben
+edits). Unilateral deafferentation: `AARL_DEAFF=l|r` env
+(zero that side's afferent + mechanosensor inputs) +
+`_deaff_matrix.py`.
+
 **Figure (Ben's five corrections, circuit_rules v12 ACCEPTED after 12
 visual-gate passes):** (a) PF windows relabeled early/late
 stance/swing; (b) IaIN-antagonist-IaIN mutual inhibition added

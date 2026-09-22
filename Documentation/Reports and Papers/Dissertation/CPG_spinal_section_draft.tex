@@ -341,34 +341,34 @@ scalar search (Section~\ref{sec:results-cpg-ground}).
 % the same evening after the figure audit (see curriculum section): the
 % reported gait is the corrected-objective best (s3c trial 54,
 % reproduced exactly by _run_t54.py; metrics from kine_ref v2).
-Under the corrected both-leg objective, the ground-stage search (80
-trials, 20 search dimensions including pelvis height and the swing
-dorsiflexion inhibition) converges on an honest but incomplete gait
-(Figure~\ref{fig:cpg-ground-traces}). The best configuration keeps the
-model upright with no non-finite states (center-of-mass height minimum
-0.83 of standing, peak trunk tilt $29^\circ$), loads BOTH feet
-(heel-plus-toe contact fraction 1.0 bilaterally), swings the right
-knee through $-52^\circ$ to $-17^\circ$ with dorsiflexed ankles
-(cycle mean $+17^\circ$, versus the $-59^\circ$ dragging plantarflexion
-of the pre-correction winner), and contacts $0.96$ duty on the right.
-But the LEFT leg never unloads: its contact duty is 1.0, it produces
-no countable cycles, and its knee stays near extension — every member
-of the search front shares this frozen-left family, and the best
-corrected score is $-182$ where the right leg alone scores far better
-than the pair. The gap to the reference walk (contralateral duty
-0.60, interleg lag 0.51, knee excursion $70^\circ$, period $1.23$~s)
-is therefore dominated by one architectural failure — releasing the
-stance leg into swing under load — rather than by tunable gains
-(Figure~\ref{fig:cpg-overlay}).
+Under the corrected both-leg objective, the ground-stage search (five
+studies, ~300 trials, 25 search dimensions including pelvis height,
+swing dorsiflexion, crossed spinal triggers, weight-shift gating, and
+lateral rig compliance) converges on an honest but incomplete gait
+(Figure~\ref{fig:cpg-ground-traces}). The best configuration adds
+afferent disfacilitation --- the swing leg's load-afferent inputs are
+silenced during its own swing window --- and keeps the model upright
+with no non-finite states while the RIGHT leg walks: nine
+contact-detected stance--swing cycles in the 12-s window at a 1.29~s
+period (reference 1.23~s) and duty 0.87 (reference 0.61), with both
+feet loaded throughout. But the LEFT leg never unloads: its contact
+duty is 1.0, it produces no countable cycles, and its knee stays near
+extension --- every member of every search front shares this
+frozen-left family, and the best corrected score is $-149$ where a
+two-legged walk would approach zero. The gap to the reference walk
+(contralateral duty 0.60, interleg lag 0.51, knee excursion
+$70^\circ$) is therefore dominated by one architectural failure ---
+releasing the stance leg into swing under load --- rather than by
+tunable gains (Figure~\ref{fig:cpg-overlay}).
 % <<< [ZCODE 2026-09-20]
 
-% >>> [ZCODE 2026-09-20] figures (curr3c_* = corrected-objective best,
-% s3c trial 54; OpenSim/ISB conventions stated on-figure)
+% >>> [ZCODE 2026-09-20] figures (curr3i_* = disfacilitation winner,
+% s3i trial 20; OpenSim/ISB conventions stated on-figure)
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.95\textwidth]{CPG_airstepping_figs/curr3c_gait_contact.png}
-  \caption{Walk window of the corrected-objective ground-walk best
-  (s3c trial 54). Hip, knee, and ankle angles of both legs (right
+  \includegraphics[width=0.95\textwidth]{CPG_airstepping_figs/curr3i_gait_contact.png}
+  \caption{Walk window of the disfacilitation ground-walk best
+  (s3i trial 20). Hip, knee, and ankle angles of both legs (right
   red, left blue) and per-foot vertical contact force; the left foot
   remains loaded throughout (the frozen-leg limitation). OpenSim/ISB
   conventions: hip flexion positive, knee flexion negative, ankle
@@ -378,13 +378,14 @@ stance leg into swing under load — rather than by tunable gains
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=0.95\textwidth]{CPG_airstepping_figs/curr3c_gait_isb.png}
-  \caption{Mean gait cycles of the corrected-objective best against
-  the OpenSim reference, both legs (columns; black = reference).
-  The right leg flexes and dorsiflexes through its two countable
-  cycles; the left leg produces no cycles (frozen). Duty right/left
-  $0.96$/1.00 (reference $0.61$/$0.60$). Same OpenSim/ISB conventions
-  as Figure~\ref{fig:cpg-ground-traces}.}
+  \includegraphics[width=0.95\textwidth]{CPG_airstepping_figs/curr3i_gait_isb.png}
+  \caption{Mean gait cycles of the disfacilitation best against the
+  OpenSim reference, both legs (columns; black = reference). The
+  right leg flexes and dorsiflexes through its nine countable cycles
+  at a 1.29~s period (reference 1.23~s); the left leg produces no
+  cycles (frozen). Duty right/left $0.87$/1.00 (reference
+  $0.61$/$0.60$). Same OpenSim/ISB conventions as
+  Figure~\ref{fig:cpg-ground-traces}.}
   \label{fig:cpg-overlay}
 \end{figure}
 % <<< [ZCODE 2026-09-20]
@@ -496,11 +497,11 @@ omit series-elastic smoothing, which appears as a shape difference in
 compliant-tendon muscles such as soleus. % >>> [ZCODE 2026-09-20] EB475WS4 — \fillme slot FILLED (corrected
 % evening version: frozen-left characterization replaces the first
 % fast-and-shallow numbers)
-Third, the corrected both-leg objective exposes the true state of the
-ground gait: both feet load, the right leg steps with dorsiflexed
-ankles, but the left leg never unloads (duty 1.0, no cycles), and
-every member of the 80-trial search front shares this frozen-stance
-family. The residuals against the reference walk (contralateral duty
+Third, the corrected both-leg objective exposes the true state of
+the ground gait: both feet load and the right leg steps with
+dorsiflexed ankles, but the left leg never unloads (duty 1.0, no
+cycles), and every member of the five-study, roughly 300-trial
+search shares this frozen-stance family. The residuals against the reference walk (contralateral duty
 0.60, knee excursion $70^\circ$, period $1.23$~s) are attributable to
 the missing stance-to-swing release pathway rather than to feedback
 gains; the next levers are a force-fall (toe-off) trigger into the

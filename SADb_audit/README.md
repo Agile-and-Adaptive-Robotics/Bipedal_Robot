@@ -540,20 +540,18 @@ Parked for the next session (Ben's requests, 2026-09-12):
   fetched into `batch6/ground_*.txt`.
 - **Corpus snapshot + viz tooling (the Airtable-independent stack)**:
   `export_corpus.py` → `export/sadb_export.{json,csv}` (all 943 records, flat, Excel-ready);
-  `vos_build2.py` → full-corpus `vosviewer/sadb_map.txt` + `sadb_network.txt`
-  (943 nodes, 11,108 in-corpus citation edges, 18 Louvain clusters, 886/892 DOIs
-  resolved) + `export/sadb_cites.json` (DIRECTED citation adjacency for the app's
-  References/Cited-by views; OpenAlex raw cached in `export/openalex_raw.json`) +
-  `export/sadb_layout.json`; `app/build_app.py` →
-  `app/sadb_app.html` — single-file OFFLINE explorer (double-click, no network):
-  Table tab (search/sort/filters + drill-through), Pivot tab (any two dimensions,
-  click a cell to drill through), Bubble-map tab on PUBLICATION YEAR (x) vs
-  CITATIONS log-scale (y) with a View dropdown: All papers / References /
-  Cited by / Research review / Animal studies / Models — in References/Cited-by a
-  left-click makes that paper the map (its in-corpus neighborhood); left-click =
-  focus vs right-click/Ctrl-click (Mac)/Shift+Enter = details is swappable, and
-  keyboard (Tab/arrows/Enter/Esc) is fully supported; bubble colors = Ben's
-  accessible 7-color set from `Code\Matlab\Colors.m`. Rebuild chain: export →
-  vos_build2 → build_app.
+  `build_citation_graph.py` → `export/sadb_cites.json` (DIRECTED citation adjacency
+  for References/Cited-by + synapse links; OpenAlex cached in
+  `export/openalex_raw.json`) + `export/sadb_layout.json` (spring layout +
+  18 Louvain clusters per record);
+  `app/build_app.py` → `app/sadb_app.html` — single-file OFFLINE explorer
+  (double-click, no network): Table tab (search/sort/filters + drill-through),
+  Pivot tab (any two dimensions, click a cell to drill through), Bubble-map tab
+  on PUBLICATION YEAR (x) vs CITATIONS log-scale (y) or TOPIC LANDSCAPE
+  (citation-network layout), with neuron-styled nodes and excitatory/inhibitory
+  synapse links (see app/README.md). VOSviewer export RETIRED 2026-09-22
+  (generic viewer, no drill-through; `vosviewer\` folder + map/network files
+  deleted — a dead end, do not resurrect). Rebuild chain: export →
+  build_citation_graph → build_app.
   Note: Airtable's GET keys responses by FIELD NAME, and a `fields[]` filter 422s
   on Papers because two fields share the name "Models copy" — export fetches full records.

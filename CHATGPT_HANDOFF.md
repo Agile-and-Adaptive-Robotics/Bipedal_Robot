@@ -925,8 +925,13 @@ CURATION SPEC section is the detailed rulebook) and the WORKFLOW rows of
   `D:\sadb_pdf_staging` (OUTSIDE the repo on purpose — never move them in).
 - Author normalization DONE table-wide (2026-09-15): Primary Author = ONE surname
   (no "et al."), remaining surnames in the new `Secondary Authors` multi-select.
-- VOSviewer citation bubble map BUILT: `SADb_audit\vosviewer\` (`sadb_map.txt` +
-  `sadb_network.txt`; open at app.vosviewer.com; regenerate with `vos_build.py`).
+- VOSviewer export RETIRED (2026-09-22): generic viewer, no drill-through — the
+  `vosviewer\` folder was DELETED, do not resurrect it. The citation landscape
+  lives in the offline HTML app `app\sadb_app.html` (Topic-landscape layout with
+  neuron-styled nodes and excitatory/inhibitory citation links). Graph builder =
+  `SADb_audit\build_citation_graph.py` (writes `export\sadb_cites.json` directed
+  adjacency + `export\sadb_layout.json` layout/clusters; OpenAlex cache in
+  `export\openalex_raw.json`).
 
 ## Work menu (Ben assigns; suggested order)
 
@@ -945,10 +950,13 @@ CURATION SPEC section is the detailed rulebook) and the WORKFLOW rows of
    earlier session's unverified URL attaches were silently dropped by Airtable), then
    URL-attach. Local files cannot be uploaded by token — they go in via Ben's
    drag-drop or the tunnel bridge (`author_fix\tunnel_attach.py`, Ben runs it).
-4. **Viz/app builds** if Ben asks: VOSviewer map refresh after batches land; a
-   single-file HTML pivot/search/bubble app fed by an Airtable export. New artifacts
-   stay small and text-only under `SADb_audit\` — the repo is in a size-reduction
-   campaign, so NO PDFs or binaries into the repo, ever.
+4. **Viz/app builds** if Ben asks: rebuild the app snapshot after batches land
+   (`export_corpus.py` → `build_citation_graph.py` → `app\build_app.py`); the
+   roadmap (online mode, Web of Science / Google Scholar integration, a
+   Zotero-like browser extension for metadata + PDF capture, multi-lab
+   deployment) is in `app\README.md`. New artifacts stay small and text-only
+   under `SADb_audit\` — the repo is in a size-reduction campaign, so NO PDFs or
+   binaries into the repo, ever.
 
 ## Credentials + rotation (read them, never copy them)
 

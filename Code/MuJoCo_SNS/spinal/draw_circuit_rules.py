@@ -181,11 +181,19 @@ connect(a, (8.9, 5.44), (8.9, 4.71), GREY, "exc", t=0.45)
 for i, nm in enumerate(("Ia", "II", "Ib")):
     neuron(a, 3.7 + 1.1 * i, 4.0, nm, GOLD, bold=True)
 connect(a, (8.15, 4.2), (4.85, 4.05), GOLD, "exc", t=0.55)
+# commissurals to the contralateral side (drawn, not just captioned):
+neuron(a, 5.4, 6.1, "c1", CORAL, below=True)
+neuron(a, 6.4, 6.1, "V3", CORAL, below=True)
+neuron(a, 8.2, 6.1, "RG (contra)", GREY, below=True)
+connect(a, (4.05, 6.5), (5.05, 6.2), MAG2, "exc", t=0.4)
+connect(a, (5.75, 6.2), (7.75, 6.1), CORAL, "inh", t=0.6)
+connect(a, (4.16, 7.9), (6.0, 6.5), MAG2, "exc", t=0.5)
+connect(a, (6.75, 6.2), (7.85, 5.6), CORAL, "exc", t=0.6)
 caption(a, [
     (0, "RG: persistent-Na half-centers, mutual"),
     (0, "inhibition via InE/InF. PF: E1 early/E2"),
     (0, "late stance, F1 early/F2 late swing."),
-    (0, "Joint PF variant OFF. c1/V3 at midline."),
+    (0, "c1/V3 cross to the contralateral RG."),
 ])
 
 # ============================ B: Ia ===========================
@@ -323,10 +331,10 @@ connect(a, (7.06, 4.7), (8.7, 4.25), PINK, "inh", t=0.55)
 neuron(a, 1.6, 4.4, "PF F1", MAG2, below=True)
 connect(a, (2.06, 4.35), (6.35, 4.85), MAG2, "exc", t=0.3)
 caption(a, [
-    (0, "Heel SN to IN: RG-E exc, RG-F inh (reset-"),
-    (0, "to-extension). SN = runner-side encoder."),
-    (3, "Crossed drive (contra_kinh): opposite"),
-    (0, "strike forces swing. KINH gated by PF F1."),
+    (0, "Heel SN to IN: RG-E exc, RG-F inh (reset)."),
+    (3, "RUNNER-SIDE PM (pm_*): heel-strike reset"),
+    (0, "per side; swing window cuts extensor ctrl,"),
+    (0, "adds flexor burst, gates afferents."),
 ])
 
 for out in (FIGS, DISS):

@@ -46,7 +46,8 @@ KEYS3 = KEYS2 + ("ib_rge", "ia_in", "ia_f_contra_f", "v3_to_ibexc",
                  "ankle_post_walk_trim", "contact_onset",
                  "pelvis_ty", "f1_anklepf_inh",
                  "pf_gain", "contra_swing", "contra_kinh",
-                 "pm_gain", "pm_T")
+                 "pm_gain", "pm_T", "pm_ws", "ky_scale", "pm_add",
+                 "pm_aff")
 STAGE_KEYS = {1: KEYS1, 2: KEYS2, 3: KEYS3}
 
 
@@ -82,6 +83,15 @@ def set_stage(stage, p):
         # per-side contact-reset phase machine (runner-side)
         P.G["pm_gain"] = float(p.get("pm_gain", 0.0))
         P.G["pm_T"] = float(p.get("pm_T", 1.2))
+        P.G["pm_ws"] = float(p.get("pm_ws", 0.0))
+        P.G["pm_add"] = float(p.get("pm_add", 0.0))
+        P.G["pm_aff"] = float(p.get("pm_aff", 0.0))
+        # lateral rig spring scale (runner env AARL_KY)
+        import os
+        if "ky_scale" in p:
+            os.environ["AARL_KY"] = repr(float(p["ky_scale"]))
+        else:
+            os.environ.pop("AARL_KY", None)
         # pelvis height: runner env (lower the walker onto the ground;
         # the rig anchors at this height)
         import os
@@ -147,6 +157,15 @@ def objective(stage):
             # 2026-09-21: per-side contact-reset phase machine
             sug["pm_gain"] = trial.suggest_float("pm_gain", 0.0, 1.0)
             sug["pm_T"] = trial.suggest_float("pm_T", 0.8, 2.0)
+            sug["pm_ws"] = trial.suggest_float("pm_ws", 0.0, 1.0)
+            # v3: ADDITIVE flexor burst in the swing window
+            sug["pm_add"] = trial.suggest_float("pm_add", 0.0, 1.0)
+            # v4: afferent disfacilitation in the swing window
+            sug["pm_aff"] = trial.suggest_float("pm_aff", 0.0, 1.0)
+            # lateral rig compliance: ky=5e5 anchors the pelvis and
+            # blocks weight transfer (s3g diagnosis) - scale it
+            sug["ky_scale"] = trial.suggest_float("ky_scale", 0.02,
+                                                  1.0, log=True)
         # searched keys override; everything else pinned at v10 winner
         p = {**BASE_MUL, **sug}
         set_stage(stage, p)
@@ -228,9 +247,20 @@ def main():
     # KINH; best -191.8 = its seed, still frozen-left). curr_s3f adds
     # the per-side CONTACT-RESET PHASE MACHINE (heel-strike reset,
     # antiphase coupling, swing-window MN gating) - the Di Russo
-    # eq-7 analog the three failed studies point to.
+    # the per-side CONTACT-RESET PHASE MACHINE (heel-strike reset,
+    # antiphase coupling, swing-window MN gating) - the Di Russo
+    # eq-7 analog (s3f best -164.4 t32, right leg cycles, left frozen).
+    # curr_s3g added WEIGHT-SHIFT (pm_ws + load-gated window +
+    # ky_scale lateral rig compliance): seed still best (-182.4), left
+    # frozen. curr_s3h adds pm_add: ADDITIVE flexor burst in the swing
+    # window - the v2 multiplicative boost multiplied a ~0 ctrl (MNs
+    # below threshold) and never actually drove anything. s3h: search
+    # picked pm_add 0.12 only, right leg 12 cycles, left frozen.
+    # curr_s3i adds pm_aff: AFFERENT DISFACILITATION - silence the
+    # swing leg's load-afferent inputs during its own swing window
+    # (break the re-latch loop at the source).
     name = {1: "curr_s1_air_deaff", 2: "curr_s2b_air_aff",
-            3: "curr_s3f_ground"}[stage]
+            3: "curr_s3i_ground"}[stage]
     prev = json.loads(open("best_walk_params_v10.json",
                            encoding="utf-8").read())
     BASE_MUL = dict(prev["multipliers"])
@@ -259,6 +289,10 @@ def main():
         seed["contra_kinh"] = 0.5
         seed["pm_gain"] = 0.5
         seed["pm_T"] = 1.23
+        seed["pm_ws"] = 0.4
+        seed["pm_add"] = 0.4
+        seed["pm_aff"] = 0.8
+        seed["ky_scale"] = 0.05
         try:
             # stage-3 retunes chain from the previous GROUND winner when
             # one exists (s3b); fresh chains fall back to the prior stage
