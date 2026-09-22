@@ -1,5 +1,23 @@
 # CPG dissertation update — copy/paste map for Ben
 
+> **STATE ADDENDUM 2026-09-21 (laptop ZCode, after the EB475WS4 pulls):**
+> The draft below was updated on the other machine (commits 4086acb, a83b865,
+> a4738b9): `\fillme` count is down 12 → **8**; a new reader-level overview
+> figure `fig:cpg-overview` (`circuit_literature.pdf`) now precedes the
+> edge-audit `circuit_dengstyle.pdf`; air-stepping numbers were corrected
+> (2.108 s period, knee −106.1°, cycle-mean extensor duty 0.691); the
+> Curriculum Results subsection carries real stage-1 numbers (137.254 at
+> trial 78, 29 cycles, drive 3.154 nA, τh 170 ms) and states honestly that
+> the curriculum has not converged at all three stages; new ground-walk
+> figures `curr3c_gait_isb.png` / `curr3c_gait_contact.png` are referenced
+> and exist. **Every figure the draft references now exists in
+> `CPG_airstepping_figs/`** — the old "overlay STALE-ABSENT" item is dead
+> (replaced by the curr3c/ISB figures). The PART A–D paste map below is
+> unchanged and still valid; the remaining blockers are the 8 fillmes and
+> PART D's key-collision check. The draft's paste targets say
+> `ProofFinal/`, but ProofFinal is stale (Sep 8) vs Overleaf — paste into
+> Overleaf, not ProofFinal.
+
 Everything lives in **`CPG_spinal_section_draft.tex`** (Dissertation
 root, next to this file). It is organized as four labeled blocks.
 The `\fillme{...}` slots are result numbers I fill when the curriculum
