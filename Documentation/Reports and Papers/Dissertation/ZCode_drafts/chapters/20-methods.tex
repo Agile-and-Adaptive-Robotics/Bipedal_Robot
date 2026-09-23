@@ -162,15 +162,15 @@ The classical kinematic torque model assumed rigid links and inextensible muscle
 Analysis of measured muscle length data shows that it was consistently shorter than the predicted muscle length at all joint angles. This shorter length results in less muscle force, a shifted RoM, and less torque in the experimental setup. That this shorter length occurs when $\varepsilon=1$ and $F=0$ indicates that a constant length offset should be used. Therefore, to produce an improved torque prediction model, $l_\text{m}$ was recalculated as
 
 \begin{equation}
-    l_\text{m} = l_{LMT} - 2\;l_{fitting} - \chi_{0} 
+    l_\text{m} = l_{LMT} - l_{ten} - 2\;l_{fitting} - \chi_{0} 
     \label{eq:Lm}
 \end{equation}
 
-where $l_{LMT}$ is the path length of the musculotendon from origin to insertion point, $l_{fitting}$ is the length of the end caps, and $\chi_{0}$ is a constant length offset. 
+where $l_{LMT}$ is the path length of the musculotendon from origin to insertion point, $l_{ten}$ is the artificial tendon length ($l_{ten}=0$ for the tendonless tests), $l_{fitting}$ is the length of the end caps, and $\chi_{0}$ is a constant length offset. 
 
 Additionally, as the muscles produce more force, compliant components in the limb segments and attachment hardware deform. This deformation changes the effective braided pneumatic actuator (BPA) length, which alters contraction and therefore changes the force predicted by the BPA model. This effect is most apparent at high forces and low contractions. To correct this error, we approximated the combined hardware compliance using Hooke's law in the bracket's principal directions.
 
-A local bracket frame was established at the attachment bracket. The $\hat{x}_{br}$ direction was aligned with the vector from the bracket reference point to the BPA attachment point and represents the stiffest direction of the bracket. The $\hat{y}_{br}$ direction was chosen to point in the posterior direction with respect to the tibia frame, corresponding to the primary cantilever bending direction (see Fig.~\ref{fig:bktFrame}), while the $\hat{z}_{br}$ direction completes the right-handed frame. The bracket stiffness matrix is modeled as a diagonal matrix to reflect independent stiffness components along its principal axes:
+A local bracket frame was established at the attachment bracket. The $\hat{x}_{br}$ direction was aligned with the vector from the bracket reference point to the BPA attachment point and represents the stiffest direction of the bracket. The $\hat{y}_{br}$ direction was chosen to point in the posterior direction with respect to the tibia frame, corresponding to the primary cantilever bending direction (see Fig.~\ref{fig:bktFrame}; the mathematical construction of the frames and their in-situ locations are shown in Fig.~\ref{fig:xiFrames}), while the $\hat{z}_{br}$ direction completes the right-handed frame. The bracket stiffness matrix is modeled as a diagonal matrix to reflect independent stiffness components along its principal axes:
 
 \begin{equation}
 \mathbf{K}_{br} = 
@@ -257,7 +257,7 @@ This projected-compliance form is used because the force is applied along $\hat{
 \label{eq:hookereduced}
 \end{equation}
 
-where $k_{eq}$ is calculated with \eqref{eq:keff} when there is no artificial tendon. When an artificial tendon was used, it was modeled as an axial spring with stiffness $k_{ten}$. Since both bracket deflection and tendon stretch reduce the effective BPA length along the actuator line of action, their scalar compliances were added in series:
+where $k_{eq}$ is calculated with \eqref{eq:keff} when there is no artificial tendon. When an artificial tendon was used, it was modeled as an axial spring with stiffness $k_{ten}$. Since both bracket deflection and tendon stretch reduce the effective BPA length along the actuator line of action, their scalar compliances were added in series (Fig.~\ref{fig:xiBalance}\textbf{A}):
 
 \begin{equation} k_{eq} = \left( \frac{1}{k_{br}} + \frac{1}{k_{ten}} \right)^{-1}
 \label{eq:equivalentstiffness}
@@ -271,13 +271,37 @@ Since $\delta$ is the scalar compliance displacement along the BPA line of actio
 
 where $l_m^{(0)}$ is calculated from \eqref{eq:Lm}.
 
-The corresponding relative contraction is $\varepsilon^*(\delta)$. Since the BPA force depends on contraction, and contraction depends on the compliance displacement, $\delta$ was found using the Newton-Raphson method to solve the nonlinear force-balance equation
+The corresponding relative contraction is $\varepsilon^*(\delta)$. Since the BPA force depends on contraction, and contraction depends on the compliance displacement, $\delta$ was found by bracketed numerical root-finding of the nonlinear force-balance equation, illustrated graphically in Fig.~\ref{fig:xiBalance}\textbf{B},
 
 \begin{equation} F_{\mathrm{max}} \cdot F_{\mathrm{BPA}}\!\left(\varepsilon^*(\delta),P^*\right) - k_{eq}\,\delta = 0
 \label{eq:complianceforcebalance}
 \end{equation}
 
 After solving Eq. \ref{eq:complianceforcebalance}, the corresponding force magnitude was used in Eq. \ref{eq:bktdeflection} to compute the vector bracket deflection. This deflection was transformed back into the limb reference frame and used to update the BPA attachment location. The routed BPA length, force direction, moment arm, and torque were then recalculated using the updated attachment location. In the present implementation, the optimized stiffness terms $\chi_{1}$ and $\chi_{2}$ were treated as effective compliance parameters for the attachment system rather than direct measurements of an isolated bracket. This allowed unmodeled compliance in the surrounding hardware to be represented by the reduced-order stiffness model.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1\textwidth]{xiWrapLoss.pdf}
+\end{center}
+\caption{Extensor wrap-loss model of the $\chi_{3}$ term. \textbf{(A)} Usable-length loss $\Delta l(\theta_\text{k})$ computed with the identified $\chi_{3}$ for the $l_{0}=\qty{40}{\cm}$ extensor BPA: the implemented model resolves two wrap bands --- $\kappa_{1}$ (first contact, radius $R_{1}$) and $\kappa_{2}$ (deep flexion, radius $R_{2}$, carrying the $\kappa_{1}$ term at its maximum as a constant) --- each scaled by $\zeta^{2}$ (inset), with $\zeta=1-\varepsilon^{*}$ restricted to the valid contraction range $[0,1]$; consistent with the single-radius abstraction of Eq.~\eqref{eq:deltaL}. \textbf{(B)} Extensor BPA path on the pinned knee at three knee angles (straight at $\theta_\text{k}=\ang{+35}$, intermediate at $\theta_\text{k}=\ang{0}$, wrapped at $\theta_\text{k}=\ang{-89}$), drawn from the archived path data: past the contact onset angle $\theta_\text{wrap}\approx\ang{+27}$ the BPA progressively bends over the distal-femur contact guides ($w_{1}$--$w_{3}$) at the wrap radius $R$, so the inner (contact) side of the actuator follows a shorter arc than its outer side and part of the actuator's arc length is lost as usable length. Anatomical frame $\{s\}$: $\hat{x}$ anterior, $\hat{y}$ superior.}
+\label{fig:xiWrapLoss}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1\textwidth]{xiBalance.pdf}
+\end{center}
+\caption{Series-compliance reduction and one-dimensional force balance along the BPA line of action. \textbf{(A)} Each attachment bracket --- and the artificial tendon, which sits between the insertion bracket and the BPA when present --- acts as a scalar compliance in series; the projected compliances sum to $c_{eq}$, where $\hat{u}_{1}$ and $\hat{u}_{2}$ are the BPA force directions expressed in their respective bracket frames and $c_{ten}=1/k_{ten}$. \textbf{(B)} Graphical solution of the force balance of Eq.~\eqref{eq:complianceforcebalance} for the $l_{0}=\qty{48.5}{\cm}$ pinned-knee flexor BPA at $\theta_\text{k}=\ang{0}$ (tendonless test): as $\delta$ releases length the actuator force falls along its force--contraction curve, while the series compliance resists with $\delta/c_{eq}$; the intersection is the operating point $(\delta^{*},F^{*})$. The rigid model corresponds to $\delta=0$.}
+\label{fig:xiBalance}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1\textwidth]{xiFrameGeo.pdf}
+\end{center}
+\caption{Bracket stiffness frames of the correction model. \textbf{(A)} In-situ configuration at $\theta_\text{k}\approx\ang{-60}$, drawn from the archived pinned-knee path data: the flexor BPA (black route) carries compliant brackets at both ends --- origin bracket at $\mathbf{P}_{br2}$ (hip frame, $\mathbf{K}_{2}=\mathrm{diag}(\chi_{1},\chi_{1},\chi_{2})$) and insertion bracket at $\mathbf{P}_{bri}$ (tibia frame, $\mathbf{K}=\mathrm{diag}(\chi_{1},\chi_{2},\chi_{1})$) --- while the extensor BPA (gray route) wraps over the joint with a single rib bracket at $\mathbf{P}_{br}$ ($\mathbf{K}=\mathrm{diag}(\chi_{1},\chi_{2},\chi_{2})$). \textbf{(B)} Frame construction and deflection geometry at the insertion bracket: the frame is anchored at the bracket reference point with $\hat{x}_{br}$ along the bracket-to-attachment vector $\mathbf{p}$, obtained by the single rotation $\theta_{br}=\mathrm{atan2}(p_{y},p_{x})$ about the bone $\hat{z}$ axis (a second rotation about $\hat{y}_{br}$ is applied when the attachment carries an out-of-plane offset). The deflection $\boldsymbol{\epsilon}_{br}=\mathbf{C}_{br}\|\mathbf{F}\|\hat{u}$ resolves into axial and bending components, of which only the projection $\delta=\hat{u}^{T}\boldsymbol{\epsilon}_{br}$ changes the effective BPA length.}
+\label{fig:xiFrames}
+\end{figure}
 
 
 
@@ -289,7 +313,7 @@ After solving Eq. \ref{eq:complianceforcebalance}, the corresponding force magni
 \label{fig:bktFrame}
 \end{figure}
 
-Multiobjective optimization using \texttt{gamultiobj} in MATLAB was used to determine the length offset ($\chi_{0}$) and the stiffness terms ($\chi_{1}$ and $\chi_{2}$) until the error between the model and the experimental data was minimized for the $l_{0}=\qty{48.5}{\cm}$ flexor BPA (Fig.~\ref{fig:FlxPin_group}\textbf{C}). Because the bracket forms an arch shape and extends for \qty{75}{\mm} in the $Z$ direction, the extensor configuration required an additional correction. The inner side of a BPA that bends over the joint experiences less tensile stress than the outer side, creating a force imbalance and a loss of part of the arc length of the BPA as usable length. An additional optimization term $\chi_{3}$ was introduced to capture this wrapping loss, such that
+Multiobjective optimization using \texttt{gamultiobj} in MATLAB was used to determine the length offset ($\chi_{0}$) and the stiffness terms ($\chi_{1}$ and $\chi_{2}$) until the error between the model and the experimental data was minimized for the $l_{0}=\qty{48.5}{\cm}$ flexor BPA (Fig.~\ref{fig:FlxPin_group}\textbf{C}). Because the bracket forms an arch shape and extends for \qty{75}{\mm} in the $Z$ direction, the extensor configuration required an additional correction. The inner side of a BPA that bends over the joint experiences less tensile stress than the outer side, creating a force imbalance and a loss of part of the arc length of the BPA as usable length (Fig.~\ref{fig:xiWrapLoss}). An additional optimization term $\chi_{3}$ was introduced to capture this wrapping loss, such that
 \begin{equation}
     \Delta l = \begin{cases}
      \chi_{3}\;R\;\abs{ \theta_\text{wrap}-\theta_\text{k}}\;\zeta^2 & \theta_\text{k} \leq      \theta_\text{wrap} \\
@@ -307,14 +331,18 @@ where $\Delta l$ is the change in usable length of the BPA, $R$ is the wrapping 
 Combining \eqref{eq:comp} into \eqref{eq:deltaL}, and subtracting $\Delta l$ from  \eqref{eq:Lm} yields
 
 \begin{equation}
-    l_\text{m} = l_{LMT} - 2\;l_{fitting}  - \chi_{0} - \Delta l\label{eq:x3}
+    l_\text{m} = l_{LMT} - l_{ten} - 2\;l_{fitting}  - \chi_{0} - \Delta l\label{eq:x3}
 \end{equation}
 
-The optimization algorithm was again \texttt{gamultiobj} in MATLAB. This time, the muscle origins bracket was chosen. The bracket frame is shown in Fig. \ref{fig:bktFrame}\textbf{B}. Since the bracket forms an arch shape and extends for \qty{75}{\mm} in the $Z$ direction, for this configuration, we set $K_{2}$ in the $X_{br}$ direction, and $K_{1}$ in the $Y_{br}$ and $Z_{br}$ directions. The optimization algorithm for this set solves for the best average goodness-of-fit (GoF) measures RMSE, FVU, and maximum absolute residual for two BPAs, while the third one was held out. Three independent rounds of optimization were performed, so that one of each of the BPAs could be held out as validation. Then we picked the solution with the shortest distance between the average normalized GoF and the validation data, while also requiring improved GoF values for all the individual BPAs, with the exception of maximum absolute residual on the $l_{0}=\qty{48.0}{\cm}$ BPA.
+The optimization algorithm was again \texttt{gamultiobj} in MATLAB. This time, the muscle origins bracket was chosen. The bracket frame is shown in Fig. \ref{fig:bktFrame}\textbf{B}. Since the bracket forms an arch shape and extends for \qty{75}{\mm} in the $Z$ direction, for this configuration, we set $\chi_{1}$ in the $X_{br}$ direction, and $\chi_{2}$ in the $Y_{br}$ and $Z_{br}$ directions. The optimization algorithm for this set solves for the best average goodness-of-fit (GoF) measures RMSE, FVU, and maximum absolute residual for two BPAs, while the third one was held out. Three independent rounds of optimization were performed, so that one of each of the BPAs could be held out as validation. Then we picked the solution with the shortest distance between the average normalized GoF and the validation data, while also requiring improved GoF values for all the individual BPAs, with the exception of maximum absolute residual on the $l_{0}=\qty{48.0}{\cm}$ BPA.
 
 This initial identification was subsequently extended to the full archived test sets in two stages. First, the flexor model was given a second compliant bracket at the origin-side attachment (a hip-frame cantilever carrying the BPA origin), so that the compliance of both ends of the actuator path is represented; the stiffness pair $(\chi_{1}, \chi_{2})$ is shared by the two brackets in fixed axis assignments (Appendix~\ref{app:model_geometry}, Table~\ref{tab:app_stiffness_arrays}), leaving a three-term fit $(\chi_{0}, \chi_{1}, \chi_{2})$. The flexor fit was cross-validated over the five pinned-knee flexor tests, holding out the encoder-corrected \qty{47}{\cm} test as validation. Second, the extensor refit locked $(\chi_{1}, \chi_{2})$ to the flexor front values --- enforcing a single stiffness pair across the flexor and extensor configurations --- and solved only the extensor-specific terms $(\chi_{0}, \chi_{3})$ on the six-test extensor validation pool, with the extensor length offset allowed to take negative values. The bounds and the adopted values of both stages are recorded in Appendix~\ref{app:model_geometry} (Tables~\ref{tab:app_opt_bounds} and~\ref{tab:app_xi_values}); the fit outcomes are summarized in Section~\ref{sec:ongoing}.
 
 The goodness-of-fit metrics used to judge the optimization results are the root mean square error (RMSE), the fraction of variance unexplained (FVU), and the maximum absolute residual, each computed between the measured and predicted isometric torque over the tested range of motion.
+
+Each metric isolates a different aspect of disagreement between the two curves. RMSE reports the overall magnitude of the error and, when the curve shapes already agree, is dominated by the remaining level (mean) offset. FVU normalizes the error variance by the variance of the measured torque, making it scale-free: it asks whether the prediction reproduces the variation of the measurement rather than whether it is close in absolute units, is the complement of the Nash--Sutcliffe model efficiency \citep{nash_river_1970}, and takes values below one when the prediction outperforms the mean of the measurement itself. The maximum absolute residual is a worst-case local measure. A small shift of the predicted curve along the knee-angle axis produces large pointwise residuals precisely where the torque gradient is steep and small ones elsewhere, so this metric is sensitive to phase misalignment while responding only weakly to uniform level offsets.
+
+This reading of the three metrics follows the standard decomposition of curve-comparison error into offset, amplitude, and pattern components \citep{taylor_summarizing_2001}: the mean square error between two curves separates exactly into the squared mean offset, an amplitude (standard deviation) mismatch, and a residual shape (correlation) term. An equivalent three-term formulation, splitting waveform similarity into offset, amplitude, and shape, underlies the linear fit method developed for clinical gait waveform comparison \citep{iosa_assessment_2014}. The metrics used here map onto this decomposition, with RMSE carrying the offset, FVU the shape and amplitude agreement, and the maximum absolute residual serving as the phase-sensitive worst case. FVU is treated as the primary criterion throughout, since it is the only one of the three that is comparable across tests with different torque scales.
 
 \section{Optimization Algorithms and Cost Functions}\label{sec:optimization}
 

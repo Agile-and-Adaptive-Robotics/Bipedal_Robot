@@ -1,0 +1,67 @@
+=== loading D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\Vas_Pam_20mm_Result.mat ===
+loaded: fBest = 0.0976994, XiUsed = [-0.00637802 39978.7 14733.8 0.158289]
+=== running Opt_run_Ext adjusted-seed section -> EOF from mat ===
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+Earlier-design objective = 0.0976994
+Maximum nonlinear constraint = -0.000446121
+Maximum bound violation = 0
+
+                                      Max
+  Iter   Func-count       f(x)      Constraint   MeshSize      Method
+    0         1    0.0976994            0            1    
+    1         7    0.0976994            0     0.009772   Update multipliers
+    2        50    0.0976994            0     0.000955   Update multipliers
+Maximum number of function evaluations exceeded: increase options.MaxFunctionEvaluations.
+Refined objective = 0.0976994
+Maximum nonlinear constraint = -0.000446121
+Maximum bound violation = 0
+Exit flag = 0
+
+========== OPTIMIZED DESIGN VALUES ==========
+
+Objective value:
+fBest = 0.0976994
+
+Endpoint coordinates, m:
+Point set       |      x, m |      y, m |      z, m
+----------------+-----------+-----------+----------
+p1 original     |     0.040 |     0.035 |     0.000
+p1 optimized    |     0.040 |     0.146 |     0.000
+pEnd original   |     0.034 |    -0.067 |     0.000
+pEnd optimized  |     0.034 |    -0.173 |     0.000
+p1 change       |    +0.000 |    +0.111 |    +0.000
+pEnd change     |    +0.000 |    -0.106 |    +0.000
+
+BPA/tendon lengths:
+Quantity        |   Value, m
+----------------+------------
+rest            |      0.824
+tendon          |      0.025
+
+KMAX/kmax:
+Quantity        |      Value
+----------------+------------
+KMAX            |      0.255
+kmax            |      0.614 m
+
+Constraint check:
+Quantity        |   Value, m
+----------------+------------
+maxPathLength0  |      0.885
+restLmt         |      0.885
+cRestLength     |     -0.000
+max constraint  |  -0.000446
+max Contr/KMAX  |   0.622596
+=============================================
+
+BPA travel check:
+Quantity          |   Value, m
+------------------+------------
+restcheck         |      0.824
+distanceChange    |      0.124
+distancePossible  |      0.210
+Minimum torque margin = +5.043% at -20.202 deg
+Weighted worst-shortfall penalty = 0
+Re-evaluated objective = 0.0976994
+FROMMAT EXT PASS (50-eval cap): section ran clean; no new dated mat minted.

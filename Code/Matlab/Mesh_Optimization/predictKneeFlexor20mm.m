@@ -61,16 +61,26 @@ function pred = predictKneeFlexor20mm(x, ctx)
 
             % routeInfo.pWrapT1 is the moving t1-frame wrap-point array.
             % When active, its transformed value becomes Location(2,:,i).
-            [Location1, bendMeasure, routeInfo] = ...
+            [Location1, bendMeasure1, routeInfo1] = ...
                 buildKneeFlexorRoute20mm(p1, p2, tendon, ctxUsed);
 
             if BPAcount == 2
-                % The exclusion geometry is symmetric about z=0, so build
-                % the expensive moving route once and mirror the completed
-                % route for the second BPA. No second route solve is needed.
-                Location2 = Location1;
-                Location2(:,3,:) = -Location1(:,3,:);
+                % Ben, 2026-09-21: BPA 2 keeps its mirrored distal
+                % attachment (pEnd{2}z = -pEnd{1}z) but its origin is no
+                % longer the xy-plane mirror of BPA 1.  Instead the two
+                % BPAs share the same p1-to-pEnd z offset:
+                %   p1{2}z = p1{1}z - (pEnd{1}z - pEnd{2}z)
+                % (see flexorBpa2Endpoints20mm), so both origins sit off
+                % the same side of the knee like the proposed CAD routing.
+                % The second route is SOLVED by buildKneeFlexorRoute20mm,
+                % not mirrored: its wrap point and tibia/femur collision
+                % state are resolved for this asymmetric path.
+                [p1B, p2B] = flexorBpa2Endpoints20mm(p1, p2);
+                [Location2, bendMeasure2, routeInfo2] = ...
+                    buildKneeFlexorRoute20mm(p1B, p2B, tendon, ctxUsed);
+
                 Location = {Location1; Location2};
+                bendMeasure = {bendMeasure1; bendMeasure2};
                 bpa = MonoPam_mult( ...
                     ctx.Name, Location, ctx.CrossPoint, ctx.Dia, ctx.T_Pam, ...
                     rest, kmax, tendon, ctx.fitting, ctx.targetPressure, ...
@@ -96,7 +106,7 @@ function pred = predictKneeFlexor20mm(x, ctx)
                 ctx.wraps, ...
                 ctx.phiD, ...
                 BPAcount, ...
-                bendMeasure);
+                bendMeasure1);
             else
                 error('predictKneeFlexor20mm:BPAcount', ...
                     'BPAcount must be 1 or 2 for the current flexor model.')
@@ -109,10 +119,11 @@ function pred = predictKneeFlexor20mm(x, ctx)
             % strain_p excludes Xi3 and is the physical BPA contraction.
             % bpaR therefore returns the physical outer radius at each pose.
             if BPAcount == 2
-                % Mirrored routes should have equal physical contraction.
-                % Average the two arrays for the one symmetric radius used
-                % to rebuild the nominal route; forceMismatch remains a
-                % diagnostic of any loss of mechanical symmetry.
+                % The two routes now wrap differently (asymmetric
+                % routing).  Average the two strain arrays for the one
+                % shared radius used to rebuild both routes;
+                % forceMismatch remains the diagnostic of the mechanical
+                % asymmetry between the two paths.
                 strainRadius = mean([bpa.strain_p{1},bpa.strain_p{2}],2);
             else
                 strainRadius = bpa.strain_p(:);
@@ -150,13 +161,20 @@ function pred = predictKneeFlexor20mm(x, ctx)
     end
 
     pred.bpa = bpa;
-    pred.Location = Location1; % route checked once because exclusion is z-symmetric
+    pred.Location = Location1;  % BPA 1 route; nonlcon checks both routes
     pred.LocationAll = Location;
-    pred.bendMeasure = bendMeasure;
-    pred.routeInfo = routeInfo;
+    pred.bendMeasure = bendMeasure1;         % BPA 1 bend history
+    if BPAcount == 2
+        pred.Location2 = Location2;          % BPA 2 (same-side origin)
+        pred.bendMeasure2 = bendMeasure2;
+        pred.routeInfo2 = routeInfo2;
+        pred.p1B = p1B;                      % femur frame
+        pred.p2B = p2B;                      % t1 frame
+    end
+    pred.routeInfo = routeInfo1;
     pred.geo = geoUsed;
     pred.bpaRadiusMode = radiusMode;
-    pred.bpaRadius = routeInfo.bpaRs;
+    pred.bpaRadius = routeInfo1.bpaRs;
     pred.bpaRadiusIteration = radiusIteration;
     pred.bpaRadiusConverged = radiusConverged;
     pred.bpaRadiusChange = radiusChange;
@@ -202,7 +220,7 @@ function pred = predictKneeFlexor20mm(x, ctx)
     pred.p1 = p1;
     pred.p2 = p2;
     pred.pEnd = p2;
-    pred.pWrap = routeInfo.pWrapT1(ctx.idxExtension,:);
+    pred.pWrap = routeInfo1.pWrapT1(ctx.idxExtension,:);
     pred.rest = rest;
     pred.tendon = tendon;
     pred.KMAX = KMAX;

@@ -51,7 +51,7 @@ addpath(fullfile(root, 'Testing_Data', '2022_02_Festo'), '-end');
 % builder's Xi pick moved on since the run and the display would mislabel
 % the design. Do not load old Location/bendMeasure arrays or expect
 % separate saved endpoint variables.
-resultFile = fullfile(scriptDir, 'Vas_Pam_20mm_Result_20260910_0528.mat');
+resultFile = fullfile(scriptDir, 'Vas_Pam_20mm_Result.mat');
 S = load(resultFile, 'xBest', 'XiUsed');
 if ~isfield(S,'xBest') || ~isfield(S,'XiUsed')
     error('Knee_Extensor_20mm:MissingResult', ...
@@ -76,12 +76,66 @@ tendon = xBest(8);
 KMAX = ctx.KMAX;
 kmax = rest*(1-KMAX);
 
+%% Hand-adjustment block (Ben): override the route seed rows here.
+% Leave empty to use the builder's seeds (ctx.routeSeed, set by the
+% 2026-09-21 fcec-ray rule in buildKneeExtContext20mm). To hand-shape a
+% route, enter ALL SEVEN rows p2:p8 as [x y] pairs -- FEMUR frame for
+% p2:p5, T1 frame for p6:p8 (z is redistributed along the route
+% automatically). Example:
+% handSeed = [ ...
+%     0.0839, -0.2748; ...   % p2
+%     0.0653, -0.3880; ...   % p3
+%     0.0641, -0.4268; ...   % p4
+%     0.0378, -0.4521; ...   % p5
+%     0.0699,  0.0343; ...   % p6
+%     0.0735,  0.0191; ...   % p7
+%     0.0720, -0.0122];      % p8
+handSeed = [];
+if ~isempty(handSeed)
+    ctx.routeSeed(2:8,1:2) = handSeed;
+end
+
 % Rebuild the same route as predictKneeExt20mm, for every knee position.
 % The first/last NATIVE rows are p1 and pEnd from xBest. The builder supplies
 % p2:p8 and repeated rows for eliminated points, then converts tibia-side
 % rows to ICR coordinates. Do not overwrite Location(end,:,:) with raw pEnd.
 [Location,bendMeasure,routeInfo] = ...
     buildDistalRingLocation20mm(p1,pEnd,tendon,ctx);
+
+%% Hardcoded release schedule (Ben, 2026-09-21)
+% Actual point-release angles for this design (Vas_Pam_20mm_Result.mat
+% = the 2026-09-20 15:19 xBest) under Ben's restated rule: every
+% optional row tested at every pose between its nearest ACTIVE
+% neighbors (repeating rows + frame transforms, +90/-90 deg rotations),
+% NO cascade wait, NO p7-triplet anchor, bypass gates at the verified
+% 3 mm relaxations, p7 stays (real wall), p3:p5 by the fcec-ray rule.
+% Each angle is the first swept pose at which the row is OFF (pose
+% spacing 1.31 deg); p1/p2/p9 are always active. The route above still
+% derives the schedule at runtime; the loop below reports any drift
+% (hand-tuning xBest or handSeed, or moving a geo knob, will show here
+% and these constants need re-recording).
+% KNOWN SEED SIGNALS under this state (rule open but bypass chord
+% collides = seed placement to improve, not the gate): p3 blocked only
+% -4.44..+4.75 deg (worst margin +0.51 deg, near the hysteresis noise);
+% p8 blocked -120..+6.06 deg (hysteresis range, worst -0.62 deg).
+releaseRows   = [5;  4;  6;  7;  3;  8];
+releaseAngleD = [-89.797979628815; -55.656565451176; ...
+                 -47.777777564029; -20.202019959013; ...
+                 6.060606331479; 7.373737646003];   % deg
+for iRel = 1:numel(releaseRows)
+    row = releaseRows(iRel);
+    trans = find(routeInfo.active(row,1:end-1) ...
+        & ~routeInfo.active(row,2:end), 1);
+    if isempty(trans)
+        derivedD = NaN;   % never released (inactive from the start)
+    else
+        derivedD = ctx.phiD(trans+1);
+    end
+    fprintf('p%d release: hardcoded %+.2f deg, derived %+.2f deg\n', ...
+        row, releaseAngleD(iRel), derivedD);
+end
+fprintf('p7 active anywhere (hardcoded: yes until wall lift-off): %d\n', ...
+    any(routeInfo.active(7,:)));
 
 positions = ctx.N;
 phi = ctx.phi;
@@ -342,10 +396,190 @@ requiredLine.FontName = fontName;
 requiredLine.FontSize = legendFontSize;
 requiredLine.FontWeight = 'bold';
 formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
-xlabel(ax,'\theta_k, °','Interpreter','tex','FontWeight','bold')
+xlabel(ax,'\theta_k, °','FontWeight','bold')
 ylabel(ax,'Torque Margin, %','FontWeight','bold')
 title(ax,'BPA Torque Margin Relative to Human','FontName',fontName,'FontSize',titleFontSize,'FontWeight','bold')
 formatLegend(ax,fontName,legendFontSize)
+
+%% Plot full optimized geometry and p1:p9 route
+% Port of Opt_run_Ext's route-geometry figure (Ben, 2026-09-21: "so I
+% can see if it passes the smell test"). Draws full flexion, the pose
+% immediately before each unique elimination event, and full extension,
+% with the clearance geometry and the active route in one frame.
+plt = plotStyleR();
+c = plt.hexclr;
+
+transitionIdx = find(any( ...
+    routeInfo.active(:,1:end-1) & ~routeInfo.active(:,2:end), 1));
+plotIdx = unique([1, transitionIdx, numel(phiD)], 'stable');
+nPoseTiles = numel(plotIdx);
+
+% Pose tiles flow four per row; the legend gets its own fifth column
+% spanning all tile rows instead of consuming a pose tile.
+nPosesPerRow = 4;
+nTileRows = ceil(nPoseTiles/nPosesPerRow);
+nTileCols = nPosesPerRow + 1;
+
+if nPoseTiles > nTileRows*nPosesPerRow
+    error('Too many route poses for the requested tiled layout.')
+end
+
+thPlot = linspace(0,2*pi,200).';
+
+figure( ...
+    'Name','Optimized 9-point extensor route geometry', ...
+    'Color','w', ...
+    'Position', [40, 40, 1900, 250+560*nTileRows])
+
+tGeo = tiledlayout( ...
+    nTileRows, nTileCols, ...
+    'TileSpacing','compact', ...
+    'Padding','compact');
+hGeoLegend = gobjects(9,1);
+
+for qPlot = 1:nPoseTiles
+
+    ii = plotIdx(qPlot);
+
+    % Native route; p6:p9 are native t1 coordinates -- convert
+    % t1 -> ICR -> femur so everything is drawn in one frame.
+    Praw = routeInfo.raw(:,:,ii);
+    P = Praw;
+    for j = 6:9
+        qICR = RowVecTrans(T_ICR_t1(:,:,ii), P(j,:));
+        P(j,:) = RowVecTrans(T_Pam(:,:,ii), qICR);
+    end
+
+    ax = nexttile(tGeo,qPlot);
+    hold(ax, 'on')
+    colororder(ax, plt.rgbclr)
+    hGeo = gobjects(9,1);
+
+    % Femur cylinder clearance
+    C = ctx.geo.femurCylCenter;
+    R = ctx.geo.femurCylClearRadius;
+    hGeo(1) = plot(ax, C(1)+R*cos(thPlot), C(2)+R*sin(thPlot), ...
+        '-', 'Color', c{1}, 'LineWidth', plt.lineW);
+
+    % Femur straight-wall clearance
+    hGeo(2) = plot(ax, [ctx.geo.femurLineX ctx.geo.femurLineX], ...
+        ctx.geo.femurLineY, '-', 'Color', c{2}, 'LineWidth', plt.lineW);
+
+    % True normal-offset condyle clearance
+    Q = ctx.geo.femurOffsetBoundary;
+    hGeo(3) = plot(ax, [Q(:,1);Q(1,1)], [Q(:,2);Q(1,2)], ...
+        '-', 'Color', c{3}, 'LineWidth', plt.lineW);
+    if isfield(ctx.geo, 'femurCondyleClipY')
+        plot(ax, [ctx.geo.femurCondyleClipX ctx.geo.femurCondyleClipX], ...
+            ctx.geo.femurCondyleClipY, '-', 'Color', hGeo(3).Color, ...
+            'LineWidth', plt.lineW, 'HandleVisibility', 'off')
+    end
+
+    % Lower tibia clearance circle -> femur frame
+    L = [ ...
+        ctx.geo.tibiaLowerCenter(1) + ...
+            ctx.geo.tibiaLowerClearRadius*cos(thPlot), ...
+        ctx.geo.tibiaLowerCenter(2) + ...
+            ctx.geo.tibiaLowerClearRadius*sin(thPlot), ...
+        zeros(numel(thPlot),1)];
+    Lf = zeros(size(L));
+    for kk = 1:size(L,1)
+        qICR = RowVecTrans(T_ICR_t1(:,:,ii), L(kk,:));
+        Lf(kk,:) = RowVecTrans(T_Pam(:,:,ii), qICR);
+    end
+    hGeo(4) = plot(ax, Lf(:,1), Lf(:,2), '-', ...
+        'Color', c{4}, 'LineWidth', plt.lineW);
+
+    % Upper tibia clearance circle -> femur frame
+    U = [ ...
+        ctx.geo.tibiaUpperCenter(1) + ...
+            ctx.geo.tibiaUpperClearRadius*cos(thPlot), ...
+        ctx.geo.tibiaUpperCenter(2) + ...
+            ctx.geo.tibiaUpperClearRadius*sin(thPlot), ...
+        zeros(numel(thPlot),1)];
+    Uf = zeros(size(U));
+    for kk = 1:size(U,1)
+        qICR = RowVecTrans(T_ICR_t1(:,:,ii), U(kk,:));
+        Uf(kk,:) = RowVecTrans(T_Pam(:,:,ii), qICR);
+    end
+    hGeo(5) = plot(ax, Uf(:,1), Uf(:,2), '-', ...
+        'Color', c{5}, 'LineWidth', plt.lineW);
+
+    % Local p2/p8 bend radius lines
+    tibiaLowerCenter = [ctx.geo.tibiaLowerCenter, 0];
+    tibiaLowerCenter = RowVecTrans(T_ICR_t1(:,:,ii), tibiaLowerCenter);
+    tibiaLowerCenter = RowVecTrans(T_Pam(:,:,ii), tibiaLowerCenter);
+
+    radiusLineX = NaN;
+    radiusLineY = NaN;
+
+    if routeInfo.active(2,ii)
+        radiusLineX = [radiusLineX, ...
+            ctx.geo.femurCylCenter(1), P(2,1), NaN];
+        radiusLineY = [radiusLineY, ...
+            ctx.geo.femurCylCenter(2), P(2,2), NaN];
+    end
+    if routeInfo.active(8,ii)
+        radiusLineX = [radiusLineX, tibiaLowerCenter(1), P(8,1)];
+        radiusLineY = [radiusLineY, tibiaLowerCenter(2), P(8,2)];
+    end
+    hGeo(6) = plot(ax, radiusLineX, radiusLineY, '--', ...
+        'Color', c{6}, 'LineWidth', plt.lineW);
+
+    % Optimized route
+    hGeo(7) = plot(ax, P(:,1), P(:,2), 'o-', ...
+        'Color', c{5}, 'LineWidth', plt.lineW, ...
+        'MarkerSize', plt.markersz, ...
+        'MarkerFaceColor', c{5}, 'MarkerEdgeColor', 'none');
+
+    % Label active route points
+    for j = 1:9
+        if routeInfo.active(j,ii)
+            text(ax, P(j,1), P(j,2), sprintf(' p%d',j), ...
+                'FontName', plt.fontN, 'FontSize', plt.lgdFontsz, ...
+                'FontWeight', 'bold', 'Interpreter','none')
+        end
+    end
+
+    % Highlight optimized design endpoints
+    hGeo(8) = scatter(ax, P(1,1), P(1,2), plt.scattersz, ...
+        'Marker', 's', 'MarkerFaceColor', c{1}, ...
+        'MarkerEdgeColor', 'none');
+    hGeo(9) = scatter(ax, P(9,1), P(9,2), plt.scattersz, ...
+        'Marker', 'd', 'MarkerFaceColor', c{2}, ...
+        'MarkerEdgeColor', 'none');
+
+    if qPlot == 1
+        hGeoLegend = hGeo;
+    end
+
+    axis(ax, 'equal')
+    xlabel(ax, 'Femur-frame x, m')
+    ylabel(ax, 'Femur-frame y, m')
+
+    if qPlot == 1 || qPlot == nPoseTiles
+        tileTitle = sprintf('\\theta_k = %.1f^\\circ', phiD(ii));
+    else
+        removedNext = find(routeInfo.active(:,ii) & ~routeInfo.active(:,ii+1));
+        removedText = strjoin(cellstr(compose('-p%d', removedNext)), ', ');
+        tileTitle = sprintf('%s, \\theta_k = %.1f^\\circ', removedText, phiD(ii));
+    end
+    title(ax, tileTitle, 'Interpreter', 'tex')
+    styleAxisR(ax, plt)
+end
+
+% Legend occupies the fifth column, spanning every tile row.
+axLeg = nexttile(tGeo, nPosesPerRow+1, [nTileRows, 1]);
+makeRouteLegendR(axLeg, hGeoLegend, { ...
+    'Femur cylinder clr', ...
+    'Femur line clr', ...
+    'Corrected condyle clr', ...
+    'Tibia lower clr', ...
+    'Tibia upper clr', ...
+    'Local bend radii', ...
+    'p1:p9 optimized route', ...
+    'Optimized p1', ...
+    'Optimized pEnd'}, plt);
 
 %% Static muscle/bone plot at exactly zero knee angle
 % One common input list prevents static/animated frame conventions diverging.
@@ -386,4 +620,108 @@ end
 function formatLegend(ax,fontName,fontSize)
 lg = legend(ax,'Location','best');
 set(lg,'FontName',fontName,'FontSize',fontSize,'FontWeight','bold','Box','off')
+end
+
+% Route-plot helpers (port of Opt_run_Ext's plotStyle/loadColors/
+% styleAxis/styleLegend/makeRouteLegend, R-suffixed to avoid collisions).
+function plt = plotStyleR()
+[plt.hexclr, plt.rgbclr] = loadColorsR();
+plt.lineW = 2;
+plt.scattersz = 60;
+plt.markersz = 6;
+plt.fontN = 'Arial';
+plt.axFontsz = 12;
+plt.rulerFontsz = 10;
+plt.lgdFontsz = 8;
+plt.tickL = [0.025, 0.05];
+end
+
+function [hexclr, rgbclr] = loadColorsR()
+Colors
+hexclr = { ...
+    c{1}; ... % gold
+    c{2}; ... % orange
+    c{3}; ... % light orange
+    c{4}; ... % pink
+    c{5}; ... % magenta
+    c{6}; ... % purple (magenta 2 in Colors.m)
+    c{7}};    % indigo
+rgbclr = d;   % matching RGB rows, in the same color order
+end
+
+function styleAxisR(ax, plt)
+grid(ax, 'off')
+box(ax, 'off')
+set(ax, ...
+    'FontName', plt.fontN, ...
+    'FontSize', plt.rulerFontsz, ...
+    'FontWeight', 'bold', ...
+    'LineWidth', plt.lineW, ...
+    'XMinorTick', 'on', ...
+    'YMinorTick', 'on', ...
+    'TickLength', plt.tickL)
+for k = 1:numel(ax.XAxis)
+    ax.XAxis(k).LineWidth = plt.lineW;
+    ax.XAxis(k).FontSize = plt.rulerFontsz;
+    set(ax.XAxis(k).Label, 'FontName', plt.fontN, ...
+        'FontSize', plt.axFontsz, 'FontWeight', 'bold')
+end
+for k = 1:numel(ax.YAxis)
+    ax.YAxis(k).LineWidth = plt.lineW;
+    ax.YAxis(k).FontSize = plt.rulerFontsz;
+    set(ax.YAxis(k).Label, 'FontName', plt.fontN, ...
+        'FontSize', plt.axFontsz, 'FontWeight', 'bold')
+end
+set(ax.Title, 'FontName', plt.fontN, ...
+    'FontSize', plt.axFontsz, 'FontWeight', 'bold')
+end
+
+function styleLegendR(lgd, plt)
+if isempty(lgd) || ~isgraphics(lgd)
+    return
+end
+set(lgd, 'FontName', plt.fontN, 'FontSize', plt.lgdFontsz, ...
+    'FontWeight', 'bold', 'Box', 'off')
+end
+
+function makeRouteLegendR(axLeg, hTemplate, labels, plt)
+axis(axLeg, 'off')
+hold(axLeg, 'on')
+hLegend = gobjects(numel(labels),1);
+for k = 1:numel(labels)
+    hLegend(k) = plot(axLeg, NaN, NaN, 'MarkerEdgeColor', 'none');
+    if k <= numel(hTemplate) && isgraphics(hTemplate(k))
+        if isprop(hTemplate(k), 'Color')
+            hLegend(k).Color = hTemplate(k).Color;
+        elseif isprop(hTemplate(k), 'CData')
+            hLegend(k).Color = hTemplate(k).CData(1,:);
+            hLegend(k).LineStyle = 'none'; % scatter symbols have no line
+        end
+        if isprop(hTemplate(k), 'LineStyle')
+            hLegend(k).LineStyle = hTemplate(k).LineStyle;
+        end
+        if isprop(hTemplate(k), 'LineWidth')
+            hLegend(k).LineWidth = hTemplate(k).LineWidth;
+        end
+        if isprop(hTemplate(k), 'Marker')
+            hLegend(k).Marker = hTemplate(k).Marker;
+        end
+        if isprop(hTemplate(k), 'MarkerSize')
+            hLegend(k).MarkerSize = hTemplate(k).MarkerSize;
+        elseif isprop(hTemplate(k), 'SizeData')
+            hLegend(k).MarkerSize = sqrt(hTemplate(k).SizeData(1));
+        end
+        if isprop(hTemplate(k), 'MarkerFaceColor')
+            faceColor = hTemplate(k).MarkerFaceColor;
+            if isequal(faceColor, 'flat') || isequal(faceColor, 'auto')
+                faceColor = hLegend(k).Color;
+            end
+            hLegend(k).MarkerFaceColor = faceColor;
+        end
+        hLegend(k).MarkerEdgeColor = 'none';
+    end
+end
+lgd = legend(axLeg, hLegend, labels, ...
+    'Location', 'northwest', 'NumColumns', 1, 'AutoUpdate', 'off');
+styleLegendR(lgd, plt)
 end

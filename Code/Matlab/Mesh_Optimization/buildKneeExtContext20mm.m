@@ -159,9 +159,16 @@ ctx.requiredTorqueMargin = 0.05;
 % ctx.Xi1 = flexor(2);
 % ctx.Xi2 = flexor(3);
 % ctx.Xi3 = refit(2);
-load minimizeExt10mmX3_results_20260910_noT3.mat filtered_results xCols
-pick = 1;
+% Ben, 2026-09-20: flxr77 front, pick 32 -- Xi0/Xi3 searched with Xi1/Xi2
+% LOCKED to the flexor 2brk row-77 pair (3.998e4/1.473e4).
+load minimizeExt10mmX3_results_20260920_flxr77.mat filtered_results xCols
+pick = 32;
 g = filtered_results(pick,xCols);
+
+% Prior default (Ben, 2026-09-10): noT3 front, pick 1, lock pair 4.35e4/1.7e4.
+% load minimizeExt10mmX3_results_20260910_noT3.mat filtered_results xCols
+% pick = 1;
+% g = filtered_results(pick,xCols);
 
 % Campaign-B alternative (Ben, 2026-09-17): pk107lock front, pick 1 --
 % Xi0/Xi3 searched with Xi1/Xi2 LOCKED to the flexor 2brk row-107 pair
@@ -270,14 +277,24 @@ geo.bypassTol = 0.0005;   % 0.5 mm required bypass clearance
 
 % p7 seed colinearity guard: if p7 lies within this angle of the pEnd->p8
 % tangent ray at full flexion, it starts the sweep already eliminated.
-geo.seedColinearTolD = 1.0;
+% Ben, 2026-09-21: set to 0 -- p7 STAYS. There is a real wall connecting
+% the two tibia cylinders (vertical at tibiaWallX spanning tibia y; see
+% the original wall introduction in git history d9df68b7/1cd2c062), so
+% the wall contact is a legitimate route point even when a low pEnd puts
+% the pEnd->p8 ray near it; eliminating it at the sweep start routed the
+% BPA straight across the wall.
+geo.seedColinearTolD = 0;
 
 % Tibia bypass relaxation: the clearance circles use the fully inflated
 % BPA radius (k = 0, 19.25 mm), but the routed BPA is contracted at these
 % angles (bpaR gives 15-17 mm), so tibia-side bypass chords may graze the
 % inflated circles by up to this much. Floored at bone + 0.5 mm in the
-% gate. Covers the CAD-observed p7 wall lift-off and the p6 pre-release
-% grazing.
+% gate.
+% Ben, 2026-09-21 ruling: keep the VERIFIED 3 mm. If the rotation rule
+% opens but the bypass chord still collides, the SEED placement is what
+% to fix (seeds stay within a tolerance zone of the hard geometry) --
+% not the gate relaxation. (Same-day experiments at 6 mm were reverted
+% under this ruling.)
 geo.bypassRelaxTibia = 0.003;
 
 % Release hysteresis for the elimination margin: a contact is removed once
@@ -296,6 +313,10 @@ gateOffsetLocal = ellipseLocal + (geo.bpaRadius + geo.bypassTol)*normalLocal;
 % the routed BPA is contracted (bpaR gives 12.6-17.6 mm vs 19.25 mm).
 % Pre-release bypass chords may graze the inflated envelope by up to this
 % much; the offset stays far above the physical ellipse.
+% Ben, 2026-09-21 ruling: keep the VERIFIED 3 mm. A rule-open
+% elimination blocked by chord collision means the SEED belongs closer
+% to the hard geometry (tolerance zone), not a looser gate. (Same-day
+% experiment at 9 mm was reverted under this ruling.)
 geo.bypassRelaxFemur = 0.003;
 
 relaxedOffsetLocal = ellipseLocal + ...
@@ -388,12 +409,31 @@ geo.tendonMin = 0.025;
 %     0.03406, -0.06687,  0.00000];    % p8 patellar ligament ring, distal
 
 %Improved, keeps 9 points.
+% Ben, 2026-09-21: p3:p5 by his fcec-ray rule (corrected same evening:
+% "put p3 where p4 is; p4 halfway between p3 and p5, angularly, from
+% fcec") -- p5 on the distal semi-minor axis; p3 at the previous
+% midpoint position; p4 at the angular midpoint of the p3 and p5 rays.
+% Each ~19 mm clearance to the hard ellipse (radial construction;
+% local ray angles -44.88 / -67.44 / -90.00 deg from the semi-major).
+% These rows are HAND-EDITABLE -- nudge them here; the conditional
+% chain repair still guards the result. Prior SolidWorks rows kept
+% commented below.
+% ctx.routeSeed = [ ...
+%     0.04000,  0.03500,  0.00000; ... % p1 Origin
+%     0.08390, -0.27476,  0.00000; ... % p2 BPA contacts mounting base
+%     0.06634, -0.42724,  0.00000; ... % p3 femoral contact, updated
+%     0.05152, -0.44674,  0.00000; ... % p4 femoral condyle contact, updated
+%     0.03826, -0.45301,  0.00000; ... % p5 femoral condyle contact, updated
+%     0.06985,  0.03433,  0.00000; ... % p6 Tibia contact initial
+%     0.07350,  0.01913,  0.00000; ... % p7 Tibia contact, updated
+%     0.07198, -0.01223,  0.00000; ... % p8 Tibia contact, updated
+%     0.03406, -0.06687,  0.00000];    % p9 patellar ligament ring, distal
 ctx.routeSeed = [ ...
     0.04000,  0.03500,  0.00000; ... % p1 Origin
     0.08390, -0.27476,  0.00000; ... % p2 BPA contacts mounting base
-    0.06634, -0.42724,  0.00000; ... % p3 femoral contact, updated
-    0.05152, -0.44674,  0.00000; ... % p4 femoral condyle contact, updated
-    0.03826, -0.45301,  0.00000; ... % p5 femoral condyle contact, updated
+    0.06406, -0.42680,  0.00000; ... % p3 fcec-ray rule (first condyle contact)
+    0.05283, -0.44188,  0.00000; ... % p4 fcec-ray rule (angular midpoint p3-p5)
+    0.03777, -0.45214,  0.00000; ... % p5 fcec-ray rule (semi-minor axis)
     0.06985,  0.03433,  0.00000; ... % p6 Tibia contact initial
     0.07350,  0.01913,  0.00000; ... % p7 Tibia contact, updated
     0.07198, -0.01223,  0.00000; ... % p8 Tibia contact, updated

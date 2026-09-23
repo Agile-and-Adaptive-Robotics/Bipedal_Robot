@@ -147,6 +147,21 @@ ctx.wrapReleasePenaltyWeight = 1e3;
 
 ctx.torqueScale = max(1, max(ctx.humanTorqueAbs));
 
+% Soft BPA-2 anchor (Ben, 2026-09-21): a REFINEMENT-stage score term that
+% keeps the second BPA's DERIVED endpoints near the loaded design's values
+% (the Q-angle / aLDFA build line -- easier to build).  It is a score
+% punishment only, never a violation constraint.  The targets themselves
+% are set by Opt_run's "Run with adjusted seed" section from the current
+% design; empty targets (or weight 0) disable the term.
+%   cost = weight * ((|p1{2}-target|/norm)^2 + (|pEnd{2}-target|/norm)^2)
+% Scale check at weight 10 / norm 1 cm: a 1 cm drift on BOTH ends costs
+% 20, a 5 cm drift on both costs 500 -- still below ONE N m of worst-angle
+% torque shortfall (~4300 from the 1e5*Jworst term).
+ctx.bpa2AnchorWeight = 10;
+ctx.bpa2AnchorNorm   = 0.01;   % m
+ctx.bpa2TargetP1     = [];     % femur frame, set by Opt_run refinement
+ctx.bpa2TargetP2     = [];     % t1 frame, set by Opt_run refinement
+
 % Two-bracket pinned-flexor fit (Ben, 2026-09-10): 2trans noT3 front (corrected
 % 47cm, new bounds), row 107 -- Xi0 8.9 mm, Xi1 5.62e4, Xi2 1.85e4.
 % Prior 20260907 full-set candidate 1 kept below for reference.
@@ -157,17 +172,27 @@ load minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat filtered_results xC
 % Ben, 2026-09-18: pick 1 vs pick 107 comparison with a seeded surrogate
 % (pick 1 run hit +5.01% at the 5% target -- Bifemsh_20mm_Result_20260918_1052).
 % pick = 1;
-pick = 107;
+% Ben, 2026-09-20: pick 77 (Xi0 3.94 mm, Xi1 3.998e4, Xi2 1.473e4) at the 5%
+% target; the extensor flxr77 front is locked to this same row-77 pair.
+% pick = 107;
+pick = 77;
 g = filtered_results(pick,xCols);
 Xi0 = g(1);
 Xi1 = g(2);
 Xi2 = g(3);
 
 clear filtered_results xCols pick
-load minimizeExt10mmX3_results_20260910_noT3.mat filtered_results xCols
-pick = 1;
+% Ben, 2026-09-20: Xi3 follows the extensor front the campaign uses --
+% flxr77 row 32 (Xi3 0.158, locked to this flexor row-77 pair). The prior
+% 20260910_noT3 pick-1 Xi3 (0.621) kept commented below.
+load minimizeExt10mmX3_results_20260920_flxr77.mat filtered_results xCols
+pick = 32;
 g(4) = filtered_results(pick,xCols(4));
 Xi3 = g(4);
+% load minimizeExt10mmX3_results_20260910_noT3.mat filtered_results xCols
+% pick = 1;
+% g(4) = filtered_results(pick,xCols(4));
+% Xi3 = g(4);
 
 % Fixed stiffness / compliance parameters.
 % These are already identified and are NOT optimization variables.
@@ -210,8 +235,8 @@ lb = x0;
 ub = x0;
 
 % Attachment search box, meters
-lb(1:3) = p1_0 + [-0.075, -0.100, -0.075];
-ub(1:3) = p1_0 + [0.030,  0.100,  0];
+lb(1:3) = p1_0 + [-0.075, -0.100, -0.015];
+ub(1:3) = p1_0 + [0.030,  0.100,  0.025];
 
 lb(4:6) = p2_0 + [-0.100, -0.200, -0.008];
 ub(4:6) = p2_0 + [ 0.025, 0.012,  0.015];
