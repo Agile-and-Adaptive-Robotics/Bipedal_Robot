@@ -86,7 +86,11 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   repo (verified 2026-09-16 23:24 — the earlier "plain copies under `.agents\skills\`"
   note was wrong/stale; `.agents\skills` does not exist here). Live set, ALL junctions:
   animatlab, latex-overleaf, matlab, mujoco, neuroscience, opensim, python,
-  sns-toolbox, solidworks. **NEW skills added 2026-09-16**: `neuroscience` (CPG circuit
+  sns-toolbox, solidworks, **scone** (added 2026-09-23: SCONE 2.4.4 at
+  `C:\Program Files\SCONE` — predictive neuromuscular sim, Geyer-Herr reflex gait,
+  CMA-ES; OpenSim3/4 backends verified headless, Hyfydy needs a free license key,
+  SconePy = py3.9-only → dedicated conda env `scone` at
+  `C:\Users\Ben Bolen\.conda\envs\scone`). **NEW skills added 2026-09-16**: `neuroscience` (CPG circuit
   design: NaP half-centers/τh, laminated inhibition, commissural latch trap, curriculum
   tuning), `mujoco` (converted-model pitfalls: contact pairs ignore contype, ligament
   surrogates, muscle actuators), `python` (AARL workflow: inline-python trap, stdout

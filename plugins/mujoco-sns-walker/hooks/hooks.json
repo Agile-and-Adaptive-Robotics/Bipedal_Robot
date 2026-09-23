@@ -1,0 +1,24 @@
+{
+  "UserPromptSubmit": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/offpeak_directive.ps1\"",
+          "timeout": 15
+        }
+      ]
+    }
+  ],
+  "PreCompact": [
+    {
+      "hooks": [
+        {
+          "type": "command",
+          "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/notify.ps1\" -Title 'ZCode: context compaction starting' -Message 'Session context is high (compacting now). Consider starting a fresh chat - hand off via CHATGPT_HANDOFF.md / a summary note.'",
+          "timeout": 25
+        }
+      ]
+    }
+  ]
+}

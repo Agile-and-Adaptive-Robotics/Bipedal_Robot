@@ -63,7 +63,7 @@
   <div id="tabs"></div>
   <div id="topbar">
     <button id="bSave">Export JSON</button>
-    <button id="bLoad">Load JSON</button>
+    <button id="bLoad">Load JSON from file…</button>
     <button id="bUndo">Undo</button>
     <button id="bRedo">Redo</button>
     <button id="bDel">Delete sel</button>
@@ -73,9 +73,10 @@
       <option value="lit">Literature full model (one side)</option>
       <option value="bilateral">BILATERAL literature model (+c1/V3)</option>
       <option value="w2l">W2L contact-driven RG (bilateral)</option>
+      <option value="w2lfile">W2L from w2l_equivalent_draft.json</option>
       <option value="blank">Blank</option>
     </select>
-    <button id="bLoad">Load JSON</button>
+    <button id="bClear">Clear tab</button>
     <input type="file" id="fileIn" accept=".json" style="display:none">
   </div>
 </header>
@@ -130,6 +131,27 @@ const TYPES = {
 const svg = document.getElementById("svg");
 const NS = "http://www.w3.org/2000/svg";
 const status = m => document.getElementById("status").textContent = m;
+
+// ---------- palette (was dropped in the v2.1 rewrite — restored) ----
+const pal = document.getElementById("palette");
+const palGroups = {};
+Object.entries(TYPES).forEach(([t, d]) => {
+  (palGroups[d.grp] = palGroups[d.grp] || []).push([t, d]);
+});
+Object.entries(palGroups).forEach(([g, items]) => {
+  const h = document.createElement("h3");
+  h.textContent = g;
+  pal.appendChild(h);
+  items.forEach(([t, d]) => {
+    const el = document.createElement("div");
+    el.className = "pitem";
+    el.style.borderColor = d.color;
+    el.textContent = t;
+    el.onclick = () => addNode(t, 220 + Math.random() * 300,
+                               90 + Math.random() * 380);
+    pal.appendChild(el);
+  });
+});
 
 // ---------------- tabs / models ----------------
 let models = [{ name: "Ben", data: { nodes: [], edges: [] } }];
@@ -553,17 +575,29 @@ function loadSpec(spec, keepUndo) {
   edges.forEach(e => e.el && e.el.remove());
   nodes = []; edges = []; sel = null; linkFrom = null;
   const byLabel = {};
-  (spec.nodes || []).forEach(nd => {
-    const n = addNode(nd.type, nd.x, nd.y, nd.label, true);
-    byLabel[nd.label] = n.id;
-  });
-  (spec.synapses || []).forEach(sn => {
-    if (byLabel[sn.from] && byLabel[sn.to]) {
-      edges.push({ id: "e" + (uid++), from: byLabel[sn.from],
-                   to: byLabel[sn.to], sign: sn.sign,
-                   gain: sn.gain, tag: sn.tag || "" });
-    }
-  });
+  try {
+    (spec.nodes || []).forEach(nd => {
+      if (!TYPES[nd.type]) {
+        status("UNKNOWN TYPE: " + nd.type + " (" + nd.label + ")");
+        return;
+      }
+      const n = addNode(nd.type, nd.x, nd.y, nd.label, true);
+      byLabel[nd.label] = n.id;
+    });
+    // accept both key names (templates use `edges`, files use `synapses`)
+    const syn = spec.synapses || spec.edges || [];
+    syn.forEach(sn => {
+      if (byLabel[sn.from] && byLabel[sn.to]) {
+        edges.push({ id: "e" + (uid++), from: byLabel[sn.from],
+                     to: byLabel[sn.to], sign: sn.sign,
+                     gain: sn.gain, tag: sn.tag || "" });
+      } else {
+        status("edge skipped: " + sn.from + " -> " + sn.to);
+      }
+    });
+  } catch (err) {
+    status("ERROR loading: " + err.message);
+  }
   redrawEdges();
   persist();
 }
@@ -791,13 +825,31 @@ const TEMPLATES = {
   w2l: buildW2L,
   blank: () => ({ nodes: [], edges: [] }),
 };
+// w2l_equivalent_draft.json: loaded from disk via a synchronous
+// XMLHttpRequest (works on file:// in most browsers)
+TEMPLATES["w2lfile"] = () => {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "w2l_equivalent_draft.json", false);
+  xhr.send();
+  if (xhr.status === 200 || xhr.status === 0) {
+    return JSON.parse(xhr.responseText);
+  }
+  throw new Error("cannot load w2l_equivalent_draft.json (status " +
+                  xhr.status + ")");
+};
 document.getElementById("tplSel").addEventListener("change", ev => {
   const k = ev.target.value;
   ev.target.value = "";
-  if (!k || !TEMPLATES[k]) return;
-  if (!confirm("Replace the current tab with this template?")) return;
-  snapshot();
-  loadSpec(TEMPLATES[k]());
+  if (!k || !TEMPLATES[k]) { status("no template selected"); return; }
+  try {
+    snapshot();
+    loadSpec(TEMPLATES[k]());
+    status("template loaded: " + k + " (" +
+           cur().nodes.length + " nodes, " +
+           cur().edges.length + " synapses)");
+  } catch (err) {
+    status("template ERROR: " + err.message);
+  }
 });
 
 
