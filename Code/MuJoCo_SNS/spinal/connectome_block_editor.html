@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Connectome Block Editor v2.1 — tabs, undo, body-anchored synapses</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 13px;
+         margin: 0; background: #f2f2f2; color: #1a1a1a;
+         user-select: none; }
+  header { background: #fff; border-bottom: 2px solid #ddd;
+           padding: 6px 14px; }
+  h1 { font-size: 15px; margin: 0 0 2px; }
+  .sub { color: #666; font-size: 12px; }
+  #tabs { display: flex; align-items: center; gap: 4px;
+          margin-top: 6px; flex-wrap: wrap; }
+  .tab { border: 1.5px solid #999; border-bottom: none; border-radius:
+         6px 6px 0 0; padding: 3px 10px; cursor: pointer; font-size:
+         12px; background: #e8e8e8; }
+  .tab.active { background: #fff; border-color: #1a1a1a;
+                font-weight: bold; }
+  .tab .x { color: #999; margin-left: 6px; }
+  .tab .x:hover { color: #B2182B; }
+  #newtab { font-size: 12px; padding: 2px 8px; cursor: pointer; }
+  #topbar button { font-size: 12px; padding: 4px 10px; margin: 6px 6px
+                   0 0; cursor: pointer; }
+  main { display: flex; height: calc(100vh - 130px); }
+  #palette { width: 180px; background: #fff; border-right: 2px solid
+             #ddd; padding: 8px; overflow-y: auto; }
+  #palette h3 { font-size: 11px; margin: 10px 0 4px; color: #555;
+                text-transform: uppercase; }
+  .pitem { border: 1.5px solid; border-radius: 14px; padding: 4px 8px;
+           margin: 4px 0; cursor: grab; font-size: 12px;
+           background: #fff; }
+  .pitem:hover { background: #eef4ff; }
+  #canvaswrap { flex: 1; position: relative; }
+  svg { background: #fff; cursor: crosshair; }
+  #panel { width: 235px; background: #fff; border-left: 2px solid
+           #ddd; padding: 10px; }
+  #panel h3 { margin: 0 0 8px; font-size: 13px; }
+  #panel label { display: block; font-size: 11px; color: #555;
+                 margin-top: 8px; }
+  #panel input, #panel select { width: 95%; font-size: 12px; }
+  #panel button { margin-top: 10px; font-size: 12px; padding: 4px 10px;
+                  cursor: pointer; }
+  .edge { cursor: pointer; }
+  .edge.sel line { stroke-width: 4; }
+  .node text { font-size: 11px; pointer-events: none; }
+  .node { cursor: move; }
+  .node.sel circle, .node.sel ellipse, .node.sel rect {
+     stroke-width: 4; }
+  #status { color: #B2182B; font-size: 12px; min-height: 16px;
+            padding: 2px 0; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Connectome Block Editor v2.1</h1>
+  <div class="sub">Click palette type, then click canvas = place. Drag
+  nodes to move. SHIFT/ALT-drag from a node to another = synapse (or
+  SHIFT-click A then B). Every synapse has its own sign, gain, and
+  tuning tag. Del/Backspace deletes selection. Ctrl+Z / Ctrl+Y =
+  undo/redo. Tabs = different models; auto-saved in this browser.</div>
+  <div id="tabs"></div>
+  <div id="topbar">
+    <button id="bSave">Export JSON</button>
+    <button id="bLoad">Load JSON</button>
+    <button id="bUndo">Undo</button>
+    <button id="bRedo">Redo</button>
+    <button id="bDel">Delete sel</button>
+    <select id="tplSel" style="font-size:12px">
+      <option value="">Templates…</option>
+      <option value="deng">Deng A6 full pair (ag + ant)</option>
+      <option value="lit">Literature full model (one side)</option>
+      <option value="bilateral">BILATERAL literature model (+c1/V3)</option>
+      <option value="w2l">W2L contact-driven RG (bilateral)</option>
+      <option value="blank">Blank</option>
+    </select>
+    <button id="bLoad">Load JSON</button>
+    <input type="file" id="fileIn" accept=".json" style="display:none">
+  </div>
+</header>
+<main>
+  <div id="palette"></div>
+  <div id="canvaswrap">
+    <div id="status"></div>
+    <svg id="svg" width="100%" height="100%"></svg>
+  </div>
+  <div id="panel">
+    <h3 id="pTitle">Nothing selected</h3>
+    <div id="pBody"><span class="sub">Click a node or synapse.</span></div>
+    <button id="bDel2">Delete selected</button>
+  </div>
+</main>
+<script>
+"use strict";
+// ---------------- type catalog ----------------
+const TYPES = {
+  "SN-Ia":      {shape:"circle", color:"#FFD700", w:2.5, grp:"Afferents"},
+  "SN-II":      {shape:"circle", color:"#FFD700", w:2.5, grp:"Afferents"},
+  "SN-Ib":      {shape:"circle", color:"#FFD700", w:2.5, grp:"Afferents"},
+  "SN-heel":    {shape:"circle", color:"#FFD700", w:2.5, grp:"Afferents"},
+  "SN-toe":     {shape:"circle", color:"#FFD700", w:2.5, grp:"Afferents"},
+  "PORT-load":  {shape:"rect",   color:"#FFB14E", w:2,   grp:"Afferents"},
+  "IN-V0D":     {shape:"circle", color:"#FA8775", w:2,   grp:"V/C INs"},
+  "IN-V0V":     {shape:"circle", color:"#FA8775", w:2,   grp:"V/C INs"},
+  "IN-V1":      {shape:"circle", color:"#FA8775", w:2,   grp:"V/C INs"},
+  "IN-V2a":     {shape:"circle", color:"#FA8775", w:2,   grp:"V/C INs"},
+  "IN-V2b":     {shape:"circle", color:"#FA8775", w:2,   grp:"V/C INs"},
+  "IN-V3":      {shape:"circle", color:"#FA8775", w:2,   grp:"V/C INs"},
+  "IN-C":       {shape:"circle", color:"#FA8775", w:2,   grp:"V/C INs"},
+  "HC-RG-E":    {shape:"circle", color:"#9D02D7", w:2.5, grp:"Rhythm"},
+  "HC-RG-F":    {shape:"circle", color:"#9D02D7", w:2.5, grp:"Rhythm"},
+  "IN-InE":     {shape:"circle", color:"#FA8775", w:2,   grp:"Rhythm"},
+  "IN-InF":     {shape:"circle", color:"#FA8775", w:2,   grp:"Rhythm"},
+  "HC-PF-E":    {shape:"circle", color:"#9D02D7", w:2,   grp:"Pattern"},
+  "HC-PF-F":    {shape:"circle", color:"#9D02D7", w:2,   grp:"Pattern"},
+  "IN-PF":      {shape:"circle", color:"#FA8775", w:2,   grp:"Pattern"},
+  "IN-IaIN":    {shape:"circle", color:"#FA8775", w:2,   grp:"Reflex INs"},
+  "IN-IbIN":    {shape:"circle", color:"#FA8775", w:2,   grp:"Reflex INs"},
+  "IN-IIe":     {shape:"circle", color:"#FA8775", w:2,   grp:"Reflex INs"},
+  "IN-IIi":     {shape:"circle", color:"#FA8775", w:2,   grp:"Reflex INs"},
+  "IN-Ib+":     {shape:"circle", color:"#FA8775", w:2,   grp:"Reflex INs"},
+  "IN-LBIN":    {shape:"circle", color:"#EA5F94", w:2,   grp:"Reflex INs"},
+  "IN-KINH":    {shape:"circle", color:"#EA5F94", w:2,   grp:"Reflex INs"},
+  "RC":         {shape:"circle", color:"#FA8775", w:2,   grp:"Reflex INs"},
+  "MN":         {shape:"circle", color:"#0000FF", w:3,   grp:"Output"},
+  "MUSCLE":     {shape:"ellipse",color:"#FFB14E", w:2,   grp:"Output"},
+};
+
+const svg = document.getElementById("svg");
+const NS = "http://www.w3.org/2000/svg";
+const status = m => document.getElementById("status").textContent = m;
+
+// ---------------- tabs / models ----------------
+let models = [{ name: "Ben", data: { nodes: [], edges: [] } }];
+let activeTab = 0;
+try {
+  const saved = JSON.parse(localStorage.getItem("cme_models_v1"));
+  if (saved && saved.models && saved.models.length) {
+    models = saved.models;
+    activeTab = Math.min(saved.active || 0, models.length - 1);
+  }
+} catch (e) {}
+
+function cur() { return models[activeTab].data; }
+function persist() {
+  try {
+    localStorage.setItem("cme_models_v1", JSON.stringify(
+      { models, active: activeTab }));
+  } catch (e) {}
+}
+function renderTabs() {
+  const t = document.getElementById("tabs");
+  t.innerHTML = "";
+  models.forEach((m, i) => {
+    const el = document.createElement("span");
+    el.className = "tab" + (i === activeTab ? " active" : "");
+    el.textContent = m.name;
+    el.onclick = () => switchTab(i);
+    el.ondblclick = () => {
+      const nm = prompt("Model name:", m.name);
+      if (nm) { m.name = nm; renderTabs(); persist(); }
+    };
+    const x = document.createElement("span");
+    x.className = "x"; x.textContent = "×";
+    x.onclick = ev => {
+      ev.stopPropagation();
+      if (models.length === 1) return;
+      models.splice(i, 1);
+      activeTab = Math.min(activeTab, models.length - 1);
+      loadIntoCanvas(cur()); renderTabs(); persist();
+    };
+    el.appendChild(x);
+    t.appendChild(el);
+  });
+  const b = document.createElement("button");
+  b.id = "newtab"; b.textContent = "+";
+  b.onclick = () => {
+    const nm = prompt("New model name:", "model " + (models.length + 1));
+    if (!nm) return;
+    switchTab(models.length);
+    models[activeTab] = { name: nm,
+      data: { nodes: [], edges: [] } };
+    loadIntoCanvas(cur()); renderTabs(); persist();
+  };
+  t.appendChild(b);
+}
+function switchTab(i) {
+  if (i === activeTab) return;
+  models[activeTab].data = serialize();
+  activeTab = i;
+  loadIntoCanvas(cur());
+  renderTabs(); persist();
+}
+
+// ---------------- state ----------------
+let nodes = [], edges = [];
+let sel = null, linkFrom = null, drag = null, linkDrag = null;
+let uid = 1;
+let undoStack = [], redoStack = [];
+
+function serialize() {
+  return JSON.parse(JSON.stringify({ nodes: nodes.map(n => ({
+    id: n.id, type: n.type, label: n.label, x: Math.round(n.x),
+    y: Math.round(n.y) })), edges: edges.map(e => ({
+    from: nodeById(e.from).label, to: nodeById(e.to).label,
+    sign: e.sign, gain: e.gain, tag: e.tag })) }));
+}
+function snapshot() {
+  undoStack.push(JSON.stringify(serialize()));
+  if (undoStack.length > 100) undoStack.shift();
+  redoStack.length = 0;
+  persist();
+}
+function undo() {
+  if (!undoStack.length) { status("nothing to undo"); return; }
+  redoStack.push(JSON.stringify(serialize()));
+  loadIntoCanvas(JSON.parse(undoStack.pop()), true);
+  status("undo");
+}
+function redo() {
+  if (!redoStack.length) { status("nothing to redo"); return; }
+  undoStack.push(JSON.stringify(serialize()));
+  loadIntoCanvas(JSON.parse(redoStack.pop()), true);
+  status("redo");
+}
+
+function nodeById(id) { return nodes.find(n => n.id === id); }
+function edgeById(id) { return edges.find(e => e.id === id); }
+
+// ---------------- node rendering ----------------
+function nodeRadius() { return 18; }
+function anchor(nd, tx, ty) {
+  // point on the node body boundary toward (tx,ty)
+  const dx = tx - nd.x, dy = ty - nd.y;
+  const L = Math.hypot(dx, dy) || 1;
+  const r = nodeRadius() + 2;
+  return { x: nd.x + dx / L * r, y: nd.y + dy / L * r };
+}
+function renderNode(nd, keepSel) {
+  const d = TYPES[nd.type];
+  const g = document.createElementNS(NS, "g");
+  g.setAttribute("class", "node");
+  g.dataset.id = nd.id;
+  let shape;
+  if (d.shape === "rect") {
+    shape = document.createElementNS(NS, "rect");
+    shape.setAttribute("x", nd.x - 26); shape.setAttribute("y", nd.y - 13);
+    shape.setAttribute("width", 52); shape.setAttribute("height", 26);
+  } else if (d.shape === "ellipse") {
+    shape = document.createElementNS(NS, "ellipse");
+    shape.setAttribute("cx", nd.x); shape.setAttribute("cy", nd.y);
+    shape.setAttribute("rx", 30); shape.setAttribute("ry", 13);
+  } else {
+    shape = document.createElementNS(NS, "circle");
+    shape.setAttribute("cx", nd.x); shape.setAttribute("cy", nd.y);
+    shape.setAttribute("r", 18);
+  }
+  shape.setAttribute("fill", "#fff");
+  shape.setAttribute("stroke", d.color);
+  shape.setAttribute("stroke-width", d.w);
+  g.appendChild(shape);
+  const txt = document.createElementNS(NS, "text");
+  txt.setAttribute("x", nd.x); txt.setAttribute("y", nd.y - 24);
+  txt.setAttribute("text-anchor", "middle");
+  txt.textContent = nd.label;
+  g.appendChild(txt);
+  g.addEventListener("mousedown", ev => startDrag(ev, nd.id));
+  g.addEventListener("click", ev => {
+    ev.stopPropagation();
+    if (drag && drag.moved) return;
+    onClickNode(nd.id, ev.shiftKey);
+  });
+  nd.el = g;
+  svg.appendChild(g);
+  if (keepSel && sel && sel.kind === "node" && sel.id === nd.id)
+    g.classList.add("sel");
+}
+
+function addNode(type, x, y, label, silent) {
+  const nd = { id: "n" + (uid++), type, x, y,
+               label: label || (type + "_" + uid) };
+  nodes.push(nd);
+  renderNode(nd);
+  if (!silent) snapshot();
+  return nd;
+}
+
+// ---------------- edges ----------------
+function renderEdge(e) {
+  const a = nodeById(e.from), b = nodeById(e.to);
+  if (!a || !b) return;
+  const p1 = anchor(a, b.x, b.y), p2 = anchor(b, a.x, a.y);
+  const g = document.createElementNS(NS, "g");
+  g.setAttribute("class", "edge");
+  g.dataset.id = e.id;
+  const line = document.createElementNS(NS, "line");
+  line.setAttribute("x1", p1.x); line.setAttribute("y1", p1.y);
+  line.setAttribute("x2", p2.x); line.setAttribute("y2", p2.y);
+  line.setAttribute("stroke", e.sign === "inh" ? "#B2182B" : "#0072B2");
+  line.setAttribute("stroke-width", 2);
+  g.appendChild(line);
+  const mx = p1.x + (p2.x - p1.x) * 0.55;
+  const my = p1.y + (p2.y - p1.y) * 0.55;
+  if (e.sign === "inh") {
+    const dot = document.createElementNS(NS, "circle");
+    dot.setAttribute("cx", mx); dot.setAttribute("cy", my);
+    dot.setAttribute("r", 6); dot.setAttribute("fill", "#1a1a1a");
+    g.appendChild(dot);
+  } else {
+    const tri = document.createElementNS(NS, "polygon");
+    tri.setAttribute("points", `${mx},${my - 8} ${mx - 7},${my + 6} ` +
+      `${mx + 7},${my + 6}`);
+    tri.setAttribute("fill", "#fff");
+    tri.setAttribute("stroke", "#1a1a1a");
+    tri.setAttribute("stroke-width", "1.4");
+    g.appendChild(tri);
+  }
+  const head = document.createElementNS(NS, "polygon");
+  const dx = p2.x - p1.x, dy = p2.y - p1.y;
+  const L = Math.hypot(dx, dy) || 1;
+  const ux = dx / L, uy = dy / L;
+  head.setAttribute("points",
+    `${p2.x},${p2.y} ${p2.x - ux * 9 - uy * 4},${p2.y - uy * 9 + ux * 4}` +
+    ` ${p2.x - ux * 9 + uy * 4},${p2.y - uy * 9 - ux * 4}`);
+  head.setAttribute("fill", "#1a1a1a");
+  g.appendChild(head);
+  const lab = document.createElementNS(NS, "text");
+  lab.setAttribute("x", mx); lab.setAttribute("y", my - 10);
+  lab.setAttribute("text-anchor", "middle");
+  lab.setAttribute("font-size", "10");
+  lab.textContent = (e.tag ? e.tag + " " : "") + e.gain;
+  g.appendChild(lab);
+  g.addEventListener("click", ev => {
+    ev.stopPropagation();
+    selectEdge(e.id);
+  });
+  e.el = g;
+  svg.appendChild(g);
+}
+function redrawEdges() {
+  edges.forEach(e => { if (e.el) e.el.remove(); e.el = null; });
+  edges.forEach(renderEdge);
+}
+
+// ---------------- selection / panel ----------------
+function clearSel() {
+  nodes.forEach(n => n.el && n.el.classList.remove("sel"));
+  edges.forEach(e => e.el && e.el.classList.remove("sel"));
+  sel = null;
+}
+function selectNode(id) {
+  clearSel();
+  sel = { kind: "node", id };
+  nodeById(id).el.classList.add("sel");
+  showNodePanel(nodeById(id));
+}
+function selectEdge(id) {
+  clearSel();
+  sel = { kind: "edge", id };
+  edgeById(id).el.classList.add("sel");
+  showEdgePanel(edgeById(id));
+}
+function showNodePanel(nd) {
+  document.getElementById("pTitle").textContent = nd.type;
+  document.getElementById("pBody").innerHTML =
+    `<label>label</label><input id="pLabel" value="${nd.label}">` +
+    `<div class="sub">SHIFT/ALT-drag to another node = synapse.</div>`;
+  document.getElementById("pLabel").addEventListener("change", ev => {
+    snapshot();
+    nd.label = ev.target.value;
+    nd.el.remove(); renderNode(nd, true); redrawEdges();
+  });
+}
+function showEdgePanel(e) {
+  document.getElementById("pTitle").textContent = "Synapse";
+  document.getElementById("pBody").innerHTML =
+    `<label>sign</label><select id="pSign">
+       <option value="exc"${e.sign === "exc" ? " selected" : ""}>
+       excitatory</option>
+       <option value="inh"${e.sign === "inh" ? " selected" : ""}>
+       inhibitory</option></select>
+     <label>gain (this synapse only)</label>
+     <input id="pGain" type="number" step="0.05" value="${e.gain}">
+     <label>tuning tag (group synapses that share one gain)</label>
+     <input id="pTag" value="${e.tag}" placeholder="e.g. ib_inh">`;
+  const upd = () => {
+    snapshot();
+    e.sign = document.getElementById("pSign").value;
+    e.gain = parseFloat(document.getElementById("pGain").value) || 0;
+    e.tag = document.getElementById("pTag").value;
+    redrawEdges();
+  };
+  ["pSign", "pGain", "pTag"].forEach(id =>
+    document.getElementById(id).addEventListener("change", upd));
+}
+
+// ---------------- interactions ----------------
+svg.addEventListener("click", () => { if (!linkFrom) clearSel(); });
+
+function startDrag(ev, id) {
+  const nd = nodeById(id);
+  if (ev.shiftKey || ev.altKey) {
+    linkDrag = { from: id };
+    snapshot();
+    status("drawing synapse from " + nd.label +
+           " — release on the target");
+    return;
+  }
+  drag = { id, moved: false,
+           dx: ev.offsetX - nd.x, dy: ev.offsetY - nd.y };
+  window.addEventListener("mousemove", onMove);
+  window.addEventListener("mouseup", endDrag);
+}
+let tempLine = null;
+function onMove(ev) {
+  if (linkDrag) {
+    if (!tempLine) {
+      tempLine = document.createElementNS(NS, "line");
+      tempLine.setAttribute("stroke", "#B2182B");
+      tempLine.setAttribute("stroke-width", "2");
+      tempLine.setAttribute("stroke-dasharray", "6,4");
+      svg.appendChild(tempLine);
+    }
+    const a = nodeById(linkDrag.from);
+    tempLine.setAttribute("x1", a.x); tempLine.setAttribute("y1", a.y);
+    tempLine.setAttribute("x2", ev.offsetX);
+    tempLine.setAttribute("y2", ev.offsetY);
+    return;
+  }
+  if (!drag) return;
+  const nd = nodeById(drag.id);
+  nd.x = ev.offsetX - drag.dx;
+  nd.y = ev.offsetY - drag.dy;
+  drag.moved = true;
+  nd.el.remove(); renderNode(nd, true); redrawEdges();
+}
+function endDrag(ev) {
+  window.removeEventListener("mousemove", onMove);
+  window.removeEventListener("mouseup", endDrag);
+  if (linkDrag) {
+    const tgt = nodes.find(n =>
+      n.id !== linkDrag.from &&
+      Math.hypot(ev.offsetX - n.x, ev.offsetY - n.y) < 24);
+    if (tempLine) { tempLine.remove(); tempLine = null; }
+    if (tgt) {
+      const e = { id: "e" + (uid++), from: linkDrag.from, to: tgt.id,
+                  sign: "exc", gain: 0.5, tag: "" };
+      edges.push(e);
+      redrawEdges();
+      selectEdge(e.id);
+      status("synapse " + nodeById(linkDrag.from).label + " -> " +
+             tgt.label);
+    } else {
+      linkFrom = linkDrag.from;
+      status("release missed a node — click the target to finish");
+      undoStack.pop();   // no mutation happened
+    }
+    linkDrag = null;
+    return;
+  }
+  if (drag && drag.moved) snapshot();
+  drag = null;
+}
+function onClickNode(id, shift) {
+  if (shift && !linkFrom) {
+    linkFrom = id;
+    status("linking from " + nodeById(id).label +
+           " — SHIFT-click the target");
+    return;
+  }
+  if (linkFrom && linkFrom !== id) {
+    const e = { id: "e" + (uid++), from: linkFrom, to: id,
+                sign: "exc", gain: 0.5, tag: "" };
+    edges.push(e);
+    redrawEdges();
+    status("synapse " + nodeById(linkFrom).label + " -> " +
+           nodeById(id).label);
+    linkFrom = null;
+    selectEdge(e.id);
+    snapshot();
+    return;
+  }
+  selectNode(id);
+}
+
+// ---------------- delete / keyboard ----------------
+function deleteSel() {
+  if (!sel) return;
+  snapshot();
+  if (sel.kind === "node") {
+    edges.filter(e => e.from === sel.id || e.to === sel.id)
+      .forEach(e => { e.el && e.el.remove();
+                      edges.splice(edges.indexOf(e), 1); });
+    const nd = nodeById(sel.id);
+    nd.el.remove();
+    nodes.splice(nodes.indexOf(nd), 1);
+  } else {
+    const e = edgeById(sel.id);
+    e.el.remove();
+    edges.splice(edges.indexOf(e), 1);
+  }
+  clearSel();
+}
+document.getElementById("bDel").onclick = deleteSel;
+document.getElementById("bDel2").onclick = deleteSel;
+window.addEventListener("keydown", ev => {
+  const tag = (ev.target.tagName || "").toLowerCase();
+  if (tag === "input" || tag === "select" || tag === "textarea") return;
+  if (ev.key === "Delete" || ev.key === "Backspace") {
+    ev.preventDefault();
+    deleteSel();
+  } else if ((ev.ctrlKey || ev.metaKey) && !ev.shiftKey &&
+             ev.key.toLowerCase() === "z") {
+    ev.preventDefault(); undo();
+  } else if ((ev.ctrlKey || ev.metaKey) &&
+             (ev.key.toLowerCase() === "y" ||
+              (ev.shiftKey && ev.key.toLowerCase() === "z"))) {
+    ev.preventDefault(); redo();
+  }
+});
+document.getElementById("bUndo").onclick = undo;
+document.getElementById("bRedo").onclick = redo;
+
+// ---------------- save / load ----------------
+document.getElementById("bSave").onclick = () => {
+  const data = serialize();
+  const blob = new Blob([JSON.stringify(data, null, 1)],
+                        { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = models[activeTab].name.replace(/\W+/g, "_") +
+               "_connectome.json";
+  a.click();
+};
+document.getElementById("bLoad").onclick = () =>
+  document.getElementById("fileIn").click();
+document.getElementById("fileIn").addEventListener("change", ev => {
+  const f = ev.target.files[0];
+  if (!f) return;
+  f.text().then(txt => {
+    snapshot();
+    loadSpec(JSON.parse(txt));
+  });
+});
+document.getElementById("bClear").onclick = () => {
+  snapshot();
+  loadIntoCanvas({ nodes: [], edges: [] });
+};
+function loadSpec(spec, keepUndo) {
+  if (!keepUndo) snapshot();
+  nodes.forEach(n => n.el && n.el.remove());
+  edges.forEach(e => e.el && e.el.remove());
+  nodes = []; edges = []; sel = null; linkFrom = null;
+  const byLabel = {};
+  (spec.nodes || []).forEach(nd => {
+    const n = addNode(nd.type, nd.x, nd.y, nd.label, true);
+    byLabel[nd.label] = n.id;
+  });
+  (spec.synapses || []).forEach(sn => {
+    if (byLabel[sn.from] && byLabel[sn.to]) {
+      edges.push({ id: "e" + (uid++), from: byLabel[sn.from],
+                   to: byLabel[sn.to], sign: sn.sign,
+                   gain: sn.gain, tag: sn.tag || "" });
+    }
+  });
+  redrawEdges();
+  persist();
+}
+function loadIntoCanvas(data, keepUndo) {
+  loadSpec(data, keepUndo);
+}
+
+// ---------------- TEMPLATES (full models, literature gains) --------
+// One complete side of the literature model (circuit_dengstyle /
+// circuit_literature equivalent): rhythm + lamination + PF +
+// cross-reciprocal PF-INs + full reflex layer with INs + Renshaw +
+// heel/toe + KINH + stance-Ib. Everything present, nothing direct.
+function litSide(S) {
+  const N = [], E = [];
+  const nd = (t, l, x, y) => { N.push({ type: t, label: l, x, y });
+                              return l; };
+  const e = (f, t, sg, g, tag) =>
+    E.push({ from: f, to: t, sign: sg, gain: g, tag: tag || S });
+  const X = 400;
+  // descending inputs
+  nd("PORT-load", "DRIVE", 70, 150);
+  nd("PORT-load", "POSTURE", 70, 240);
+  // heel/toe cutaneous SN -> IN (R5)
+  nd("SN-heel", "heel_SN_" + S, 170, 40);
+  nd("SN-toe", "toe_SN_" + S, 170, 95);
+  nd("IN-C", "heel_IN_" + S, 265, 60);
+  // rhythm layer + lamination
+  nd("HC-RG-E", "RG_E_" + S, 350, 170);
+  nd("HC-RG-F", "RG_F_" + S, 350, 270);
+  nd("IN-InE", "InE_" + S, 265, 190);
+  nd("IN-InF", "InF_" + S, 265, 250);
+  e("DRIVE", "RG_E_" + S, "exc", 1.0);
+  e("DRIVE", "RG_F_" + S, "exc", 0.8);
+  e("POSTURE", "RG_E_" + S, "exc", 0.6);
+  e("RG_E_" + S, "InE_" + S, "exc", 1.0);
+  e("InE_" + S, "RG_F_" + S, "inh", 1.0);
+  e("RG_F_" + S, "InF_" + S, "exc", 1.0);
+  e("InF_" + S, "RG_E_" + S, "inh", 1.0);
+  e("heel_IN_" + S, "InE_" + S, "exc", 0.5, "heel_reset");
+  e("heel_IN_" + S, "InF_" + S, "inh", 0.5, "heel_release");
+  e("heel_SN_" + S, "heel_IN_" + S, "exc", 1.0);
+  e("toe_SN_" + S, "heel_IN_" + S, "exc", 0.6, "toe_prolong");
+  // pattern formation + cross-reciprocal PF-INs
+  const pf = {};
+  [["E1", 480, 130], ["E2", 480, 180], ["F1", 480, 240],
+   ["F2", 480, 290]].forEach(([w, x, y]) =>
+    pf[w] = nd("HC-PF-" + w[0], "PF_" + w + "_" + S, x, y));
+  nd("IN-PF", "PF_IN_E_" + S, 575, 155);
+  nd("IN-PF", "PF_IN_F_" + S, 575, 265);
+  e("RG_E_" + S, "PF_E1_" + S, "exc", 1.0);
+  e("RG_E_" + S, "PF_E2_" + S, "exc", 0.9);
+  e("RG_F_" + S, "PF_F1_" + S, "exc", 1.0);
+  e("RG_F_" + S, "PF_F2_" + S, "exc", 0.8);
+  e("PF_E1_" + S, "PF_IN_E_" + S, "exc", 1.0);
+  e("PF_E2_" + S, "PF_IN_E_" + S, "exc", 0.8);
+  e("PF_F1_" + S, "PF_IN_F_" + S, "exc", 1.0);
+  e("PF_F2_" + S, "PF_IN_F_" + S, "exc", 0.7);
+  e("PF_IN_E_" + S, "PF_F1_" + S, "inh", 0.8);
+  e("PF_IN_E_" + S, "PF_F2_" + S, "inh", 0.6);
+  e("PF_IN_F_" + S, "PF_E1_" + S, "inh", 0.8);
+  e("PF_IN_F_" + S, "PF_E2_" + S, "inh", 0.6);
+  // motoneuron pools + muscles (extensor / flexor antagonist pair)
+  nd("MN", "MN_ext_" + S, 720, 150);
+  nd("MN", "MN_flex_" + S, 720, 260);
+  nd("MUSCLE", "extensor_" + S, 850, 150);
+  nd("MUSCLE", "flexor_" + S, 850, 260);
+  e("PF_E1_" + S, "MN_ext_" + S, "exc", 1.0);
+  e("PF_E2_" + S, "MN_ext_" + S, "exc", 0.9);
+  e("PF_F1_" + S, "MN_flex_" + S, "exc", 1.0);
+  e("PF_F2_" + S, "MN_flex_" + S, "exc", 0.7);
+  e("MN_ext_" + S, "extensor_" + S, "exc", 1.0);
+  e("MN_flex_" + S, "flexor_" + S, "exc", 1.0);
+  // proprioceptive SNs
+  nd("SN-Ia", "Ia_ext_" + S, 170, 350);
+  nd("SN-Ia", "Ia_flex_" + S, 170, 470);
+  nd("SN-II", "II_ext_" + S, 170, 395);
+  nd("SN-II", "II_flex_" + S, 170, 515);
+  nd("SN-Ib", "Ib_ext_" + S, 170, 440);
+  nd("SN-Ib", "Ib_flex_" + S, 170, 560);
+  // Ia: mono + reciprocal + IaIN mutual (rules 1)
+  e("Ia_ext_" + S, "MN_ext_" + S, "exc", 1.0, "ia_mono");
+  nd("IN-IaIN", "IaIN_ext_" + S, 640, 340);
+  nd("IN-IaIN", "IaIN_flex_" + S, 640, 470);
+  e("Ia_ext_" + S, "IaIN_ext_" + S, "exc", 1.0);
+  e("Ia_flex_" + S, "IaIN_flex_" + S, "exc", 1.0);
+  e("IaIN_ext_" + S, "MN_flex_" + S, "inh", 0.5, "ia_recip");
+  e("IaIN_flex_" + S, "MN_ext_" + S, "inh", 0.5, "ia_recip");
+  e("IaIN_ext_" + S, "IaIN_flex_" + S, "inh", 0.5, "iaIN_mutual");
+  e("IaIN_flex_" + S, "IaIN_ext_" + S, "inh", 0.5, "iaIN_mutual");
+  // II: two collateral INs (rule 2)
+  nd("IN-IIe", "IIe_ext_" + S, 640, 395);
+  nd("IN-IIi", "IIi_flex_" + S, 640, 515);
+  e("II_ext_" + S, "IIe_ext_" + S, "exc", 1.0);
+  e("IIe_ext_" + S, "MN_ext_" + S, "exc", 0.5, "ii_ag");
+  e("II_flex_" + S, "IIi_flex_" + S, "exc", 1.0);
+  e("IIi_flex_" + S, "MN_ext_" + S, "inh", 0.5, "ii_ant");
+  // Ib: autogenic via IbIN + mutual (rule 3); reversal via IBEXC (4)
+  nd("IN-IbIN", "IbIN_ext_" + S, 640, 440);
+  nd("IN-IbIN", "IbIN_flex_" + S, 640, 560);
+  e("Ib_ext_" + S, "IbIN_ext_" + S, "exc", 1.0);
+  e("IbIN_ext_" + S, "MN_ext_" + S, "inh", 0.5, "ib_auto");
+  e("IbIN_ext_" + S, "IbIN_flex_" + S, "inh", 0.5, "ibIN_mutual");
+  e("IbIN_flex_" + S, "IbIN_ext_" + S, "inh", 0.5, "ibIN_mutual");
+  nd("IN-Ib+", "IBEXC_" + S, 700, 200);
+  e("Ib_ext_" + S, "IBEXC_" + S, "exc", 1.0);
+  e("RG_E_" + S, "IBEXC_" + S, "exc", 1.0, "stance_gate");
+  e("IBEXC_" + S, "MN_ext_" + S, "exc", 0.5, "ib_reversal");
+  nd("IN-LBIN", "LBIN_" + S, 700, 245);
+  e("IBEXC_" + S, "LBIN_" + S, "exc", 0.5);
+  e("LBIN_" + S, "RG_E_" + S, "exc", 0.5, "stance_prolong");
+  // Renshaw set (rule 5) + recurrent disinhibition
+  nd("RC", "RC_ext_" + S, 800, 40);
+  nd("RC", "RC_flex_" + S, 800, 330);
+  e("MN_ext_" + S, "RC_ext_" + S, "exc", 1.0);
+  e("RC_ext_" + S, "MN_ext_" + S, "inh", 0.5, "rc_own");
+  e("MN_flex_" + S, "RC_flex_" + S, "exc", 1.0);
+  e("RC_flex_" + S, "MN_flex_" + S, "inh", 0.5, "rc_own");
+  e("RC_ext_" + S, "RC_flex_" + S, "inh", 0.5, "rc_mutual");
+  e("RC_flex_" + S, "RC_ext_" + S, "inh", 0.5, "rc_mutual");
+  e("RC_ext_" + S, "IaIN_ext_" + S, "inh", 0.5, "rc_disinhib");
+  e("RC_flex_" + S, "IaIN_flex_" + S, "inh", 0.5, "rc_disinhib");
+  // KINH swing suppression
+  nd("IN-KINH", "KINH_" + S, 660, 90);
+  e("PF_F1_" + S, "KINH_" + S, "exc", 1.0);
+  e("KINH_" + S, "MN_ext_" + S, "inh", 0.5, "swing_suppress");
+  return { nodes: N, edges: E };
+}
+
+// bilateral assembly: two mirrored sides + c1/V3 commissurals
+function buildBilateral() {
+  const R = litSide("R");
+  const L = litSide("L");
+  L.nodes.forEach(n => { n.x = 940 - n.x; });   // mirror layout
+  // labels already carry the correct side suffix from litSide(S)
+  const N = R.nodes.concat(L.nodes), E = R.edges.concat(L.edges);
+  const c1r = { type: "IN-C", label: "c1_R", x: 520, y: 360 };
+  const c1l = { type: "IN-C", label: "c1_L", x: 420, y: 360 };
+  const v3r = { type: "IN-V3", label: "V3_R", x: 520, y: 30 };
+  const v3l = { type: "IN-V3", label: "V3_L", x: 420, y: 30 };
+  N.push(c1r, c1l, v3r, v3l);
+  const x = (f, t, sg, g, tag) => E.push({ from: f, to: t, sign: sg,
+    gain: g, tag: tag || "commissural" });
+  x("RG_F_R", "c1_R", "exc", 1.0);
+  x("c1_R", "RG_F_L", "inh", 0.1);
+  x("RG_F_L", "c1_L", "exc", 1.0);
+  x("c1_L", "RG_F_R", "inh", 0.1);
+  x("RG_E_R", "V3_R", "exc", 1.0);
+  x("V3_R", "RG_E_L", "exc", 0.1);
+  x("RG_E_L", "V3_L", "exc", 1.0);
+  x("V3_L", "RG_E_R", "exc", 0.1);
+  return { nodes: N, edges: E };
+}
+
+// W2L contact-driven equivalent (from the documented working wiring)
+function buildW2L() {
+  return { nodes: [
+    { type: "SN-heel", label: "ContactFoot_R", x: 100, y: 120 },
+    { type: "SN-heel", label: "ContactFoot_L", x: 100, y: 260 },
+    { type: "HC-RG-E", label: "RG_E_R", x: 300, y: 90 },
+    { type: "HC-RG-F", label: "RG_F_R", x: 300, y: 160 },
+    { type: "HC-RG-E", label: "RG_E_L", x: 300, y: 230 },
+    { type: "HC-RG-F", label: "RG_F_L", x: 300, y: 300 },
+    { type: "HC-PF-E", label: "PF_E_R", x: 480, y: 90 },
+    { type: "HC-PF-F", label: "PF_F_R", x: 480, y: 160 },
+    { type: "HC-PF-E", label: "PF_E_L", x: 480, y: 230 },
+    { type: "HC-PF-F", label: "PF_F_L", x: 480, y: 300 },
+    { type: "MN", label: "ext MN_R", x: 640, y: 100 },
+    { type: "MN", label: "flx MN_R", x: 640, y: 170 },
+    { type: "MN", label: "ext MN_L", x: 640, y: 240 },
+    { type: "MN", label: "flx MN_L", x: 640, y: 310 },
+    { type: "MUSCLE", label: "extensor_R", x: 780, y: 100 },
+    { type: "MUSCLE", label: "flexor_R", x: 780, y: 170 },
+    { type: "MUSCLE", label: "extensor_L", x: 780, y: 240 },
+    { type: "MUSCLE", label: "flexor_L", x: 780, y: 310 } ],
+    synapses: [
+      { from: "ContactFoot_R", to: "RG_E_R", sign: "exc", gain: 6.0,
+        tag: "w2l_contact" },
+      { from: "ContactFoot_R", to: "RG_F_L", sign: "exc", gain: 6.0,
+        tag: "w2l_contact_contra" },
+      { from: "ContactFoot_L", to: "RG_E_L", sign: "exc", gain: 6.0,
+        tag: "w2l_contact" },
+      { from: "ContactFoot_L", to: "RG_F_R", sign: "exc", gain: 6.0,
+        tag: "w2l_contact_contra" },
+      { from: "RG_E_R", to: "PF_E_R", sign: "exc", gain: 0.5,
+        tag: "w2l" },
+      { from: "RG_F_R", to: "PF_F_R", sign: "exc", gain: 0.5,
+        tag: "w2l" },
+      { from: "RG_E_L", to: "PF_E_L", sign: "exc", gain: 0.5,
+        tag: "w2l" },
+      { from: "RG_F_L", to: "PF_F_L", sign: "exc", gain: 0.5,
+        tag: "w2l" },
+      { from: "PF_E_R", to: "ext MN_R", sign: "exc", gain: 0.5,
+        tag: "w2l" },
+      { from: "PF_F_R", to: "flx MN_R", sign: "exc", gain: 0.5,
+        tag: "w2l" },
+      { from: "PF_E_L", to: "ext MN_L", sign: "exc", gain: 0.5,
+        tag: "w2l" },
+      { from: "PF_F_L", to: "flx MN_L", sign: "exc", gain: 0.5,
+        tag: "w2l" },
+      { from: "ext MN_R", to: "extensor_R", sign: "exc", gain: 1.0,
+        tag: "w2l" },
+      { from: "flx MN_R", to: "flexor_R", sign: "exc", gain: 1.0,
+        tag: "w2l" },
+      { from: "ext MN_L", to: "extensor_L", sign: "exc", gain: 1.0,
+        tag: "w2l" },
+      { from: "flx MN_L", to: "flexor_L", sign: "exc", gain: 1.0,
+        tag: "w2l" } ] };
+}
+
+// Deng A6 full pair: the reflex-layer template (agonist + antagonist,
+// every IN present, mutual inhibitions, Renshaw)
+function buildDengPair() {
+  const s = litSide("R");
+  // trim to the reflex core: keep SN/IN/MN/RC/IBEXC nodes only
+  const keep = /^(Ia_|II_|Ib_|IaIN_|IbIN_|IIe_|IIi_|IBEXC_|RC_|MN_|extensor_|flexor_)/;
+  return { nodes: s.nodes.filter(n => keep.test(n.label)),
+           edges: s.edges.filter(e =>
+             keep.test(e.from) && keep.test(e.to)) };
+}
+
+const TEMPLATES = {
+  deng: buildDengPair,
+  lit: () => litSide("R"),
+  bilateral: buildBilateral,
+  w2l: buildW2L,
+  blank: () => ({ nodes: [], edges: [] }),
+};
+document.getElementById("tplSel").addEventListener("change", ev => {
+  const k = ev.target.value;
+  ev.target.value = "";
+  if (!k || !TEMPLATES[k]) return;
+  if (!confirm("Replace the current tab with this template?")) return;
+  snapshot();
+  loadSpec(TEMPLATES[k]());
+});
+
+
+// ---------------- boot ----------------
+renderTabs();
+loadIntoCanvas(cur(), true);
+status("ready — v2.1: Del key, SHIFT/ALT-drag synapses, Ctrl+Z/Y, " +
+       "body-anchored arrows, tabs auto-saved in this browser");
+</script>
+</body>
+</html>

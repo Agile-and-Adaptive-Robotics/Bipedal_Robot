@@ -49,6 +49,14 @@ cannot fix a mis-wired circuit, and architecture decisions are Ben's.
 
 ## Notes
 
+- **Block editor**: `connectome_block_editor.html` (v2, Ben-requested
+  block coding) — palette of prebuilt types (V/C INs, SNs, HC RG/PF,
+  reflex INs, Renshaw, MN, muscle), drag-place, SHIFT-click pairs to
+  draw a synapse, per-synapse sign/gain/tuning-tag, Save/Load JSON,
+  "Load Deng A6 motif" seed. `w2l_equivalent_draft.json` loads the
+  Walker-2-Layer BilateralRG equivalent (contact-driven RG per the
+  09-15 notes) for editing. Delete/Backspace deletes the selection;
+  undo/redo + arrowhead-on-body are queued (v2.1).
 - `hops = 0` on any rule reproduces the legacy direct wiring; the
   09-21 deafferentation matrix
   (`_deaff_matrix.py` -> `_deaff_matrix_out.json`) is the evidence

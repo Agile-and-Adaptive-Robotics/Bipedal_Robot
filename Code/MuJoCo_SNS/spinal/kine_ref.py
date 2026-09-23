@@ -294,6 +294,23 @@ def compare(t, q_deg, neuro, walk_start, ref=None, contact=None):
         out["ds_ref"] = ref["ds"]
         total += 4.0 * min(abs(ds - ref["ds"]), 0.6)
 
+    # BILATERAL BONUS (2026-09-22, the s3k discovery): every tuned
+    # study converged one-leg-dominant because messy two-legged walking
+    # scores worse than clean one-legged walking — the objective paid
+    # the optimizer to abandon bilaterality. Fix: BOTH legs cycling
+    # (>=3 cycles each) earns a large bonus that no one-legged gait can
+    # match; a frozen leg's penalty is also raised to match.
+    BILATERAL_BONUS = 40.0
+    FROZEN_COST = 30.0
+    n_r = out.get("n_cycles_r", 0)
+    n_l = out.get("n_cycles_l", 0)
+    if n_r >= 3 and n_l >= 3:
+        total -= BILATERAL_BONUS
+        out["bilateral"] = True
+    else:
+        out["bilateral"] = False
+        total += FROZEN_COST
+
     out["kine_score"] = float(-total)
     # legacy keys (right leg) so older readers keep working
     if "n_cycles_r" in out:

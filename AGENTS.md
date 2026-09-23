@@ -37,7 +37,9 @@ Loaded automatically at session start. Keep it current; keep it lean.
   `HKCU\Software\Classes\CLSID\{6AF263BB-EB9F-4176-89E9-4F892EB0CA3D}` → real path; API
   verified (33.3.0) through the solidworks skill with **pywin32 now pip-installed in the
   myo env**; `sw_session.py` gen_py fix (pip pywin32 caches in %TEMP%\gen_py — the old
-  site-packages guess failed; REPO COPY EDITED, awaiting Ben's commit). MiKTeX 22.1
+  site-packages guess failed; committed 2026-09-22 as f24322e in ZCode_Skills). NOTE
+  2026-09-22: the latex-overleaf SKILL.md MiKTeX note briefly credited DESKTOP-5Q16KE9 —
+  wrong machine (cross-machine mix-up); corrected in ZCode_Skills to EB475WS4. MiKTeX 22.1
   (`D:\Program Files\MiKTeX`) was dead (its config died with the old registry) — removed;
   complete package set installed **user-scope at `D:\MiKTeX`** (pdflatex
   `D:\MiKTeX\miktex\bin\x64`, on user PATH; Ben declined the all-users/admin install for
@@ -1137,6 +1139,9 @@ Knee_Torque_Test\Figures\Figure components\FlxPin_group\FlxPin_group.fig`.
    (e.g. "stance-group Ib interneuron" — the code symbol LBIN means
    exactly that; do not write "LB"). KINH = swing-gated inhibitory IN
    (PF_F1 -> KINH -> knee_ext/ankle_pf MN suppression).
+8. **Say "neuromechanical model" / "musculoskeletal model" — not
+   "plant"** (Ben, 2026-09-21): the musculoskeletal side is part of
+   the coupled model its reflexes loop through, not passive plumbing.
 
 ## Readmes
 

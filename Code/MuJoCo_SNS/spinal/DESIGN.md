@@ -2,6 +2,69 @@
 
 Built 2026-09-09. Files in `Code\MuJoCo_SNS\spinal\`.
 
+## 2026-09-22 (ZCode, EB475WS4): s3k BILATERAL-OBJECTIVE VERDICT +
+**ROOT CAUSE chain complete: the objective, the circuit, and the
+runner machinery have ALL been fixed — and the left leg STILL won't
+step. The bilateral stepping seen in the deaff matrix exists at
+exactly ONE parameter point and the architecture has no antiphase
+mechanism to hold it.**
+
+**s3k (bilateral objective, severed-L/R + full_rules): best −159.5
+old-objective / −189.5 re-probed under the new scoring (frozen cost
++30 applied), left frozen in every one of 80 trials (40
+old-objective + 40 new-objective — the purge didn't fully separate
+them, but every new trial also failed to produce a bilateral gait).
+The bilateral bonus (+40 for both legs ≥3 cycles) was never
+collected by ANY trial — the optimizer couldn't find bilateral
+stepping even when paid 40 points to do so.**
+
+**THE HONEST ARCHITECTURAL CONCLUSION (supported by ~400 trials
+across 9 studies, 4 objective revisions, and every mechanism listed
+above): the SNS half-center architecture with our wiring does not
+produce self-sustaining antiphase bilateral stepping. Each side
+independently latches into stance or swings; there is no coupling
+that ENFORCES alternation. The deaff-matrix bilateral result was a
+fragile boundary state, not a stable attractor.**
+
+**WHAT'S MISSING (the W2L lesson, confirmed by Di Russo's oscillator
+coupling): a CROSSED FLEXOR-EXCITATORY pathway — foot R's contact
+excites foot L's flexor half-center (W2L: SpikingChemical at G=6).
+Our severed config removed the harmful crossed paths but left
+NOTHING to couple the two sides' timing. The deaff matrix's "both
+cycle" result at ONE parameter point was two independent
+oscillators accidentally antiphase — not locked alternation. The
+block editor's W2L template shows the missing edges:
+ContactFoot_R → RG_F_L (exc) and ContactFoot_L → RG_F_R (exc),
+i.e., each heel strike KICKS the other leg into flexion. These
+edges do not exist in our build (the heel IN excites own-side
+RG-E/InE only; the contralateral chain suppresses rather than
+excites).**
+
+**NEXT SESSION (first build, before any more tuning): add the W2L
+crossed flexor-excitatory edges — new G key `contra_flex` (build_network:
+heel IN of side A → RG-F of side B, exc; + optionally toe IN of A →
+RG-F of B). This is the ONE structural edge class we've never tried.
+Evidence: W2L walks with exactly this wiring; Di Russo's eq-6
+coupling term is the continuous analog (sin(φL−φR−π) = each side's
+phase pushes the other toward antiphase); the deaff matrix shows
+severing alone isn't enough (the sides need to be COUPLED, not just
+isolated). Then: tune with the bilateral objective (kine_ref v3,
+already correct). The contact-reset phase machine (pm_*) is
+available as the phase source if the neural coupling alone is
+insufficient.**
+
+**ALSO 2026-09-22: kine_ref v3 (bilateral bonus 40 / frozen cost 30)
+in kine_ref.py; objective now rewards bilateral stepping that no
+one-legged gait can match. connectome_block_editor.html v2.1
+(Ben's UX fixes: Del key, SHIFT/ALT-drag, undo/redo,
+body-anchored arrows, model tabs with browser autosave) +
+FULL-MODEL templates (Deng A6 pair, literature one-side,
+BILATERAL +c1/V3, W2L contact-RG). Shevtsova full text staged
+(shevtsova_2026_fulltext.txt; eLife 107480 = rat SCI reorganization,
+Danner/Zhang lineage); Shinohara full text staged
+(shinohara_2025_biophiv687930_fulltext.txt, 49 pages).
+Replication drafts await Ben's edit before build.**
+
 ## 2026-09-21 day (ZCode, EB475WS4): PER-SIDE CONTACT-RESET PHASE MACHINE
 **built + tuned (s3f): best −164.4 — the biggest honest jump of the
 campaign; right leg truly cycles; left STILL frozen. Plus: Ben's

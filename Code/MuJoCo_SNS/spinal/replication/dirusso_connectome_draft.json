@@ -1,10 +1,11 @@
 {
   "_comment": "Di Russo et al. 2023 JNE 20 066006 - EXACT replication draft (first pass by ZCode 2026-09-21; Ben edits). Sources: extracted full text (spinal/_dirusso_2023.pdf), LIT_CIRCUIT_AUDIT.md section 10. Gains marked null are optimized by their CMA-ES - our optimizer searches them.",
-  "plant": {
+  "musculoskeletal_model": {
     "muscles_per_leg": ["GMAX", "HAMS", "BFSH", "RF", "ILPSO", "VAS", "GAS", "SOL", "TA"],
     "dofs_per_leg": ["hip_flexion", "knee_flexion", "ankle_dorsiflexion"],
     "foot_contact": "3 spheres/leg: calcaneus r=0.05 m; two r=0.025 m at the MTP line",
-    "note": "our Gait2392 conversion covers these muscles; MTP contact split is the one plant delta"
+    "note": "our Gait2392 conversion shares the Delp skeleton lineage (1.8 m, 75.16 kg, Thelen muscles); MTP contact split is the one delta. NEUROMECHANICAL MODEL: controller + musculoskeletal side are coupled - their results emerge from CMA-ES optimizing controller params against THIS musculoskeletal model with effort/stability objectives, so replication includes the coupled optimization, not a bolt-on",
+    "deltas_from_ours": ["MTP contact split (ours: one toes region)", "their muscle list is 9/leg (ours is the full 92 - map or restrict)"]
   },
   "cpg": {
     "type": "phase_oscillator_pair",

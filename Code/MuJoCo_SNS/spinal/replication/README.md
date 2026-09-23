@@ -8,10 +8,16 @@ edit. Nothing is authoritative until Ben signs it off.
 
 The s3c-s3i verdict showed hand-built wiring does not produce bilateral
 stepping. Replicating published, WORKING connectomes exactly removes
-our wiring choices as a variable: if a published connectome walks in
-our plant, we have a validated substrate; if it does not, the
-difference is in the plant/rig, which is then a clean, publishable
-finding.
+our wiring choices as a variable: if a published neuromechanical model
+(connectome + musculoskeletal model, coupled) walks here, we have a
+validated substrate; if it does not, the difference is isolated to our
+musculoskeletal model/rig, which is then a clean, publishable finding.
+NOTE (Ben): these are NEUROMECHANICAL MODELS, not "plants" - the
+musculoskeletal side is part of the coupled system its reflexes loop
+through, not passive plumbing. Replication therefore carries the
+paper's musculoskeletal parameters (Di Russo: Delp skeleton, 1.8 m,
+75.16 kg, Thelen muscles - gait2392 lineage, which our conversion
+shares) AND its coupled controller-optimization loop, not a bolt-on.
 
 ## Targets (in build order)
 

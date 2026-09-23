@@ -1,0 +1,41 @@
+{
+  "_comment": "Walker-2-Layer BilateralRG EQUIVALENT (draft, 2026-09-22) built from the DOCUMENTED working wiring (AGENTS.md + Biped_2xCPG_wSubs/tools/RG_contact_drive_notes_20260915.md), NOT yet the exact .aproj extraction (AddFlow index decode unfinished - _w2l_to_connectome.py). Ben edits freely. Key facts from the notes: the working W2L RG is CONTACT-driven (no tonic anywhere), foot-contact spiking neurons excite own-side RG extensor (G=6) AND contralateral RG flexor (G=6) via SpikingChemical synapses (Equil -50 mV), NonSpiking RG InitialThreshold +50 mV, connection G 0.5 where ours had 5.",
+  "nodes": [
+    { "id": "n1",  "type": "SN-heel",  "label": "ContactFoot_R", "x": 100, "y": 120 },
+    { "id": "n2",  "type": "SN-heel",  "label": "ContactFoot_L", "x": 100, "y": 260 },
+    { "id": "n3",  "type": "HC-RG-E",  "label": "RG_E_R (+50 thr)", "x": 300, "y": 90 },
+    { "id": "n4",  "type": "HC-RG-F",  "label": "RG_F_R", "x": 300, "y": 160 },
+    { "id": "n5",  "type": "HC-RG-E",  "label": "RG_E_L (+50 thr)", "x": 300, "y": 230 },
+    { "id": "n6",  "type": "HC-RG-F",  "label": "RG_F_L", "x": 300, "y": 300 },
+    { "id": "n7",  "type": "HC-PF-E",  "label": "PF_E_R", "x": 480, "y": 90 },
+    { "id": "n8",  "type": "HC-PF-F",  "label": "PF_F_R", "x": 480, "y": 160 },
+    { "id": "n9",  "type": "HC-PF-E",  "label": "PF_E_L", "x": 480, "y": 230 },
+    { "id": "n10", "type": "HC-PF-F",  "label": "PF_F_L", "x": 480, "y": 300 },
+    { "id": "n11", "type": "MN",       "label": "ext MN_R", "x": 640, "y": 100 },
+    { "id": "n12", "type": "MN",       "label": "flx MN_R", "x": 640, "y": 170 },
+    { "id": "n13", "type": "MN",       "label": "ext MN_L", "x": 640, "y": 240 },
+    { "id": "n14", "type": "MN",       "label": "flx MN_L", "x": 640, "y": 310 },
+    { "id": "n15", "type": "MUSCLE",   "label": "extensor_R", "x": 780, "y": 100 },
+    { "id": "n16", "type": "MUSCLE",   "label": "flexor_R", "x": 780, "y": 170 },
+    { "id": "n17", "type": "MUSCLE",   "label": "extensor_L", "x": 780, "y": 240 },
+    { "id": "n18", "type": "MUSCLE",   "label": "flexor_L", "x": 780, "y": 310 }
+  ],
+  "synapses": [
+    { "from": "ContactFoot_R", "to": "RG_E_R", "sign": "exc", "gain": 6.0, "tag": "w2l_contact" },
+    { "from": "ContactFoot_R", "to": "RG_F_L", "sign": "exc", "gain": 6.0, "tag": "w2l_contact_contra" },
+    { "from": "ContactFoot_L", "to": "RG_E_L", "sign": "exc", "gain": 6.0, "tag": "w2l_contact" },
+    { "from": "ContactFoot_L", "to": "RG_F_R", "sign": "exc", "gain": 6.0, "tag": "w2l_contact_contra" },
+    { "from": "RG_E_R", "to": "PF_E_R", "sign": "exc", "gain": 0.5, "tag": "w2l" },
+    { "from": "RG_F_R", "to": "PF_F_R", "sign": "exc", "gain": 0.5, "tag": "w2l" },
+    { "from": "RG_E_L", "to": "PF_E_L", "sign": "exc", "gain": 0.5, "tag": "w2l" },
+    { "from": "RG_F_L", "to": "PF_F_L", "sign": "exc", "gain": 0.5, "tag": "w2l" },
+    { "from": "PF_E_R", "to": "ext MN_R", "sign": "exc", "gain": 0.5, "tag": "w2l" },
+    { "from": "PF_F_R", "to": "flx MN_R", "sign": "exc", "gain": 0.5, "tag": "w2l" },
+    { "from": "PF_E_L", "to": "ext MN_L", "sign": "exc", "gain": 0.5, "tag": "w2l" },
+    { "from": "PF_F_L", "to": "flx MN_L", "sign": "exc", "gain": 0.5, "tag": "w2l" },
+    { "from": "ext MN_R", "to": "extensor_R", "sign": "exc", "gain": 1.0, "tag": "w2l" },
+    { "from": "flx MN_R", "to": "flexor_R", "sign": "exc", "gain": 1.0, "tag": "w2l" },
+    { "from": "ext MN_L", "to": "extensor_L", "sign": "exc", "gain": 1.0, "tag": "w2l" },
+    { "from": "flx MN_L", "to": "flexor_L", "sign": "exc", "gain": 1.0, "tag": "w2l" }
+  ]
+}

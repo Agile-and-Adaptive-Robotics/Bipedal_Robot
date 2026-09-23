@@ -47,7 +47,7 @@ KEYS3 = KEYS2 + ("ib_rge", "ia_in", "ia_f_contra_f", "v3_to_ibexc",
                  "pelvis_ty", "f1_anklepf_inh",
                  "pf_gain", "contra_swing", "contra_kinh",
                  "pm_gain", "pm_T", "pm_ws", "ky_scale", "pm_add",
-                 "pm_aff")
+                 "pm_aff", "full_rules", "no_cross")
 STAGE_KEYS = {1: KEYS1, 2: KEYS2, 3: KEYS3}
 
 
@@ -86,6 +86,15 @@ def set_stage(stage, p):
         P.G["pm_ws"] = float(p.get("pm_ws", 0.0))
         P.G["pm_add"] = float(p.get("pm_add", 0.0))
         P.G["pm_aff"] = float(p.get("pm_aff", 0.0))
+        P.G["full_rules"] = float(p.get("full_rules", 0.0))
+        # s3k: SEVERED-L/R switch (the only config that walked
+        # bilaterally) - pin ALL crossed communication off
+        if float(p.get("no_cross", 0.0)) > 0.0:
+            P.G["contra_swing"] = 0.0
+            P.G["contra_kinh"] = 0.0
+            P.G["ia_f_contra_f"] = 0.0
+            P.G["c1_gain"] = 0.1
+            P.G["v3_gain"] = 0.0
         # lateral rig spring scale (runner env AARL_KY)
         import os
         if "ky_scale" in p:
@@ -162,6 +171,13 @@ def objective(stage):
             sug["pm_add"] = trial.suggest_float("pm_add", 0.0, 1.0)
             # v4: afferent disfacilitation in the swing window
             sug["pm_aff"] = trial.suggest_float("pm_aff", 0.0, 1.0)
+            # s3j: FULL Deng-style connectome FIXED on (topology, not a
+            # free parameter)
+            sug["full_rules"] = trial.suggest_categorical(
+                "full_rules", [1.0])
+            # s3k: SEVERED-L/R fixed on - tune the bilateral config
+            sug["no_cross"] = trial.suggest_categorical("no_cross",
+                                                        [1.0])
             # lateral rig compliance: ky=5e5 anchors the pelvis and
             # blocks weight transfer (s3g diagnosis) - scale it
             sug["ky_scale"] = trial.suggest_float("ky_scale", 0.02,
@@ -255,12 +271,14 @@ def main():
     # frozen. curr_s3h adds pm_add: ADDITIVE flexor burst in the swing
     # window - the v2 multiplicative boost multiplied a ~0 ctrl (MNs
     # below threshold) and never actually drove anything. s3h: search
-    # picked pm_add 0.12 only, right leg 12 cycles, left frozen.
-    # curr_s3i adds pm_aff: AFFERENT DISFACILITATION - silence the
-    # swing leg's load-afferent inputs during its own swing window
-    # (break the re-latch loop at the source).
+    # (break the re-latch loop at the source). curr_s3j: FULL
+    # Deng-style connectome FIXED ON (full_rules=1) - retune the
+    # operating point for the corrected topology: best -164.9 (t7),
+    # left frozen in EVERY trial. curr_s3k: SEVERED-L/R (no_cross
+    # fixed on, full_rules kept on) - retune the ONLY configuration
+    # that produced bilateral stepping.
     name = {1: "curr_s1_air_deaff", 2: "curr_s2b_air_aff",
-            3: "curr_s3i_ground"}[stage]
+            3: "curr_s3k_nocross"}[stage]
     prev = json.loads(open("best_walk_params_v10.json",
                            encoding="utf-8").read())
     BASE_MUL = dict(prev["multipliers"])
@@ -310,6 +328,13 @@ def main():
             if k in prevw:
                 seed[k] = float(prevw[k])
         seed["c1_gain"] = max(seed["c1_gain"], 0.1)
+        # full_rules is a FIXED topology switch in s3j: force the seed
+        # to match the categorical even when the previous winner
+        # predates the connectome change
+        if "full_rules" in sk:
+            seed["full_rules"] = 1.0
+        if "no_cross" in sk:
+            seed["no_cross"] = 1.0
         study.enqueue_trial(seed)
         print("seeded", json.dumps(seed), flush=True)
     study.optimize(objective(stage), n_trials=n, gc_after_trial=True)
