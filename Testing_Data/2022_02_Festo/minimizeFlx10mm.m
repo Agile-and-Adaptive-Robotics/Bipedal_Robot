@@ -11,7 +11,7 @@ clc;
 
 load minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat results_sort_actual filtered_results xCols
 
-pick = 91;
+pick = 77;
 g = filtered_results(pick,xCols);
 [u, v, w, bpa] = minimizeFlx(g(1),g(2),g(3));           % Now pull bpa structures out
 

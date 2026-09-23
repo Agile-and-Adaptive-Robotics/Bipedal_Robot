@@ -3,6 +3,11 @@ clear functions
 clc
 rehash
 
+% Marks a full optimizer pass. The result save clears it just before
+% saving, so rerunning sections from a loaded result mat (which therefore
+% lacks liveRun) cannot mint a new dated mat from an old design.
+liveRun = true;
+
 
 ctx = buildKneeFlexorContext20mm();
 geo = ctx.geo;
@@ -37,15 +42,41 @@ initPts = ctx.x0(:).';
 for kSeed = 1:numel(seedFiles)
     Sseed = load(fullfile(fileparts(mfilename('fullpath')), ...
         'Results', seedFiles{kSeed}), 'xBest');
-    initPts = [initPts; Sseed.xBest(:).']; %#ok<AGROW>
+    initPts = [initPts; Sseed.xBest(:).']; 
 end
+
+% Ben, 2026-09-21: additional corner seed targeting a LOWER-TIBIA p2 --
+% p1x = lb, p1y = ub, p2x = lb, p2y = lb, tendon = lb, and rest sized
+% from the 5-deg extension pose so the series-length constraint starts
+% satisfied: rest = pathLength0(idxExtension) - tendon - 2*fitting.
+% (With Xi0 > 0 this seed sits Xi0 inside the cRestLength boundary.)
+% p1z/p2z keep the x0 values. Rest does not affect route geometry, so
+% the placeholder rest (lb) only has to let the predictor return
+% pathLength0.
+xCorner = [ctx.lb(1), ctx.ub(2), ctx.x0(3), ...
+           ctx.lb(4), ctx.lb(5), ctx.x0(6), ctx.lb(7), ctx.lb(8)];
+try
+    predCorner = predictKneeFlexor20mm(xCorner, ctx);
+    dCorner = predCorner.pathLength0(ctx.idxExtension);
+    xCorner(7) = dCorner - xCorner(8) - 2*ctx.fitting;
+    initPts = [initPts; xCorner(:).']; 
+    fprintf(['Corner seed (lower-tibia p2): rest = %.4f m from ' ...
+        'pathLength0(5 deg) = %.4f m.\n'], xCorner(7), dCorner)
+catch
+    fprintf(['Corner seed SKIPPED: predictor failed at the corner ' ...
+        'geometry.\n'])
+end
+
 initPts = min(max(initPts, ctx.lb(:).'), ctx.ub(:).');
 fprintf('Seeding surrogateopt with %d initial points.\n', size(initPts,1))
 
+% Ben, 2026-09-21: 7000 evals was too many -- runs plateau by ~200
+% function evaluations. 1000 leaves ample room past the plateau;
+% patternsearch below still refines the winner.
 optsG = optimoptions('surrogateopt', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 7000, ...
+    'MaxFunctionEvaluations', 1000, ...
     'MinSampleDistance', 0.001, ...
     'ConstraintTolerance', 1e-6, ...
     'InitialPoints', initPts);
@@ -78,6 +109,30 @@ optsP = optimoptions('patternsearch', ...
 % Section commented out if unused.
 
 
+% Display-from-mat workflow: this section is often rerun after loading a
+% dated result mat (xBest, ctx, fBest, predBest, ...). The run-setup
+% variables below exist only after the optimizer stages of a full run;
+% rebuild them from the mat's ctx so the section is self-sufficient.
+% Each guard is a no-op during a full Opt_run.
+if ~exist('geo', 'var')
+    geo = ctx.geo;
+end
+if ~exist('idxP2', 'var')
+    idxP2 = 4:6;
+end
+if ~exist('nonlcon', 'var')
+    nonlcon = @(x) nonlconExclusion(x, geo, ctx, idxP2);
+end
+if ~exist('optsP', 'var')
+    optsP = optimoptions('patternsearch', ...
+        'Display', 'iter', ...
+        'UseParallel', true, ...
+        'MaxFunctionEvaluations', 15000, ...
+        'MeshTolerance', 1e-4, ...
+        'StepTolerance', 1e-4, ...
+        'ConstraintTolerance', 1e-6);
+end
+
 %Listing constraints (can put this before or after the xSeed ... cSeed
 %block)
 constraintNames = { ...
@@ -93,10 +148,34 @@ xSeed = [xBest(1:3), ...
          xBest(4:6), ...
          xBest(7), xBest(8)];
 
+% Result mats saved before 2026-09-21 carry a ctx WITHOUT the soft
+% BPA-2 anchor knobs (that is what "Unrecognized field name
+% bpa2AnchorWeight" below used to mean).  Backfill the builder defaults
+% so this section runs from any mat; keep values in sync with
+% buildKneeFlexorContext20mm.
+if ~isfield(ctx, 'bpa2AnchorWeight')
+    ctx.bpa2AnchorWeight = 10;
+    ctx.bpa2AnchorNorm   = 0.01;
+    ctx.bpa2TargetP1     = [];
+    ctx.bpa2TargetP2     = [];
+end
+
+% Soft BPA-2 anchor for this refinement (Ben, 2026-09-21): pull the
+% search toward keeping the second BPA's DERIVED endpoints near this
+% design's values -- the Q-angle / aLDFA build line, easier to build.
+% Score punishment only (ctx.bpa2AnchorWeight, 0 disables), never a
+% constraint; scaled so a 1 cm drift on both ends (20) stays far below
+% 1 N m of worst-angle torque shortfall (~4300).
+[ctx.bpa2TargetP1, ctx.bpa2TargetP2] = ...
+    flexorBpa2Endpoints20mm(xSeed(1:3), xSeed(4:6));
+fprintf(['BPA-2 anchor targets (soft, weight %g): ' ...
+    'p1{2} = [% .6f % .6f % .6f] m, pEnd{2} = [% .6f % .6f % .6f] m\n'], ...
+    ctx.bpa2AnchorWeight, ctx.bpa2TargetP1, ctx.bpa2TargetP2)
+
 Jseed = objective_KneeFlexor20mm(xSeed, ctx);
 cSeed = nonlcon(xSeed);
 
-fprintf('\nMirrored +z constraint values:\n');
+fprintf('\nTwo-route constraint values (BPA 1 + BPA 2, worst of both):\n');
 for i = 1:numel(cSeed)
     fprintf('%-22s = %+0.9f\n', constraintNames{i}, cSeed(i));
 end
@@ -133,6 +212,16 @@ fprintf('Exit flag = %d\n', exitRefined);
 
 xBest = xRefined;
 fBest = fRefined;
+
+% How far the refinement moved the second BPA's endpoints from the
+% anchor targets above.
+if isfield(ctx, 'bpa2TargetP1') && ~isempty(ctx.bpa2TargetP1)
+    [p1Bfinal, p2Bfinal] = flexorBpa2Endpoints20mm(xBest(1:3), xBest(4:6));
+    fprintf(['BPA-2 anchor drift after refinement: p1{2} moved %.1f mm, ' ...
+        'pEnd{2} moved %.1f mm\n'], ...
+        100*norm(p1Bfinal(:) - ctx.bpa2TargetP1(:)), ...
+        100*norm(p2Bfinal(:) - ctx.bpa2TargetP2(:)));
+end
 
 predBest = predictKneeFlexor20mm(xBest, ctx);
 [cBest, ~] = nonlcon(xBest);
@@ -217,20 +306,22 @@ routeCtx.geo = predBest.geo;
 Xi3 = ctx.Xi3;
 
 
-% Dated result capture into Results; does not overwrite prior results.
-% (Replaces the old copy/paste save block; pOriginal never existed as a
-% variable -- the initial design matrix is pInitialWrapped.)
-% ctx and the XiUsed record make the mat self-contained for display:
-% display sections can load ctx straight from the result mat.
-stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
-resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
-resultFile = fullfile(resDir, sprintf('Bifemsh_20mm_Result_%s.mat', stamp));
-XiUsed = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
-save(resultFile, ...
-    'xBest', 'pInitialWrapped', 'pOptimized', 'pChanged', ...
-    'routeCtx', 'Xi3', 'XiUsed', 'fBest', 'exitflagG', 'exitflagP', ...
-    'outputG', 'outputP', 'predBest', 'cCollision', 'ctx')
-fprintf('Saved %s\n', resultFile)
+% Dated FULL-WORKSPACE result capture into Results (Ben directive,
+% 2026-09-20: bare save so any driver section reruns from the loaded
+% mat); does not overwrite prior results. liveRun is set only by a full
+% Opt_run pass and cleared before saving, so rerunning this section from
+% a loaded result mat cannot mint a new dated mat from an old design.
+% XiUsed documents the Xi the run used (redundant with ctx; kept for the
+% display loaders). Uncomment for a real run.
+if exist('liveRun', 'var')
+    stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
+    resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
+    resultFile = fullfile(resDir, sprintf('Bifemsh_20mm_Result_%s.mat', stamp));
+    XiUsed = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
+    clear liveRun
+    save(resultFile)
+    fprintf('Saved %s\n', resultFile)
+end
 
 
 %% Full-extension/full-flexion muscle-length and travel calculations
@@ -289,6 +380,22 @@ if predBest.routeInfo.releaseFound
         predBest.routeInfo.releaseAngleD)
 else
     fprintf('first inactive wrap angle           = NONE IN MODELED RANGE\n')
+end
+
+if predBest.BPAcount == 2
+    fprintf('\nBPA 2 route (same-side p1, mirrored pEnd, 2026-09-21):\n')
+    fprintf('p1{2}, femur frame          = [% .6f, % .6f, % .6f] m\n', ...
+        predBest.p1B)
+    fprintf('pEnd{2}, t1 frame           = [% .6f, % .6f, % .6f] m\n', ...
+        predBest.p2B)
+    fprintf('BPA 2 wrap release found    = %d\n', ...
+        predBest.routeInfo2.releaseFound)
+    if predBest.routeInfo2.releaseFound
+        fprintf('BPA 2 first inactive wrap angle = %+.6f deg\n', ...
+            predBest.routeInfo2.releaseAngleD)
+    else
+        fprintf('BPA 2 first inactive wrap angle = NONE IN MODELED RANGE\n')
+    end
 end
 
 
@@ -354,6 +461,13 @@ fprintf('p2 exclusion constraint    = %.6f m\n', cCollision(1))
 fprintf('tibia collision constraint = %.6f m\n', cCollision(2))
 fprintf('femur collision constraint = %.6f m\n', cCollision(3))
 fprintf('series-length constraint   = %.6f m\n', cCollision(4))
+fprintf('routes checked             = %d (BPA 2 = same-side p1, mirrored pEnd)\n', ...
+    collisionInfo.routeCount)
+fprintf('binding route (worst)      = BPA %d\n', collisionInfo.bindingRoute)
+fprintf('min tibia clearance by route = %.6f / %.6f m\n', ...
+    collisionInfo.minClearanceTibiaByRoute)
+fprintf('min femur clearance by route = %.6f / %.6f m\n', ...
+    collisionInfo.minClearanceFemurByRoute)
 fprintf('radius source              = %s\n', collisionInfo.bpaRadiusMode)
 fprintf('pWrap radius bpaRb         = %.6f m\n', collisionInfo.bpaRb)
 fprintf('collision radius bpaRs     = %.6f m\n', collisionInfo.bpaRs)

@@ -8,8 +8,8 @@ clear; clc; close all
 baselineScores = a0;  % RMSE, FVU, Max Residual
 fprintf('Baseline: RMSE %.4f, FVU %.4f, Max. Residual %.4f\n', mean(baselineScores(:,1)),mean(baselineScores(:,2)),mean(baselineScores(:,3)));
 
-load GitHub\Bipedal_Robot\Testing_Data\2022_02_Festo\minimizeExt10mmX3_results_20260916_pick107_all_h3479.mat filtered_results xCols
-pick = 1;
+load minimizeExtPin10_results.mat filtered_results xCols
+pick = 32;
 sol_actual = filtered_results(pick, xCols);
 sol_actual1 = sol_actual;
 k1 = sol_actual1(1);

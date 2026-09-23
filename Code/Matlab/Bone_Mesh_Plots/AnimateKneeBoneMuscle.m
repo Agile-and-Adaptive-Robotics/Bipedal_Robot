@@ -56,6 +56,7 @@ function fig = AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, var
     addParameter(p,'YLim',[-0.225,0.0348]);
     addParameter(p,'ZLim',[-1,0.04]);
     addParameter(p,'Location',[]);
+    addParameter(p,'Location2',[]);   % optional second BPA route (flexor pair)
     addParameter(p,'CrossPoint',[]);
     addParameter(p,'T_Pam',[]);
     addParameter(p,'HumanLabels',{});
@@ -68,6 +69,7 @@ function fig = AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, var
     addParameter(p,'AnimationPaddingX',0.10);
     addParameter(p,'AnimationPaddingZ',0.05);
     addParameter(p,'RobotColor','#CD34B5'); % c{5}: magenta PAM
+    addParameter(p,'RobotColor2','#9D02D7'); % c{6}: second BPA route
     addParameter(p,'HumanColor','#FA8775'); % c{3}: light orange muscle
     addParameter(p,'EndColor','#9D02D7');   % c{6}
     parse(p,varargin{:});
@@ -125,6 +127,14 @@ function fig = AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, var
         validateTransforms(T_ICR_t1,N,'T_ICR_t1');
         v2 = transformPoints(T_ICR_t1(:,:,pos),p2);
         endLabel = 'p2';
+    end
+    hasRoute2 = ~isempty(opt.Location2);
+    if hasRoute2 && ~hasRoute
+        error('AnimateKneeBoneMuscle:Location2', ...
+            'Location2 requires the route inputs Location/CrossPoint/T_Pam.')
+    end
+    if hasRoute2
+        validateRoute(opt.Location2,opt.CrossPoint,N,'Location2');
     end
 
     if iscell(Bifemsh)
@@ -184,6 +194,7 @@ function fig = AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, var
     % Cache the small route arrays, not the large transformed bone meshes.
     % Static and moving plots use these exact same per-frame coordinates.
     robotPaths = cell(1,N);
+    robotPaths2 = cell(1,N);
     humanPaths = cell(nHuman,N);
     limits = [min(femurPlot,[],1);max(femurPlot,[],1)];
     for b = 1:numel(extraBones)
@@ -197,6 +208,10 @@ function fig = AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, var
             robotPaths{i} = [p1;transformPoints(T(:,:,i),v2)];
         end
         limits = includePoints(limits,(robotPaths{i}+opt.Hip)*Rplot);
+        if hasRoute2
+            robotPaths2{i} = routeFrame(opt.Location2,opt.CrossPoint,opt.T_Pam(:,:,i),i);
+            limits = includePoints(limits,(robotPaths2{i}+opt.Hip)*Rplot);
+        end
         for h = 1:nHuman
             humanPaths{h,i} = routeFrame(humans{h}.Location,humans{h}.Cross,T(:,:,i),i);
             limits = includePoints(limits,(humanPaths{h,i}+opt.Hip)*Rplot);
@@ -258,6 +273,21 @@ function fig = AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, var
     hBPA = plot3(ax,NaN,NaN,NaN,'o-','Color',opt.RobotColor, ...
         'LineWidth',2,'MarkerSize',5,'MarkerFaceColor',opt.RobotColor, ...
         'MarkerEdgeColor','none','Tag','RobotRoute');
+    if hasRoute2
+        hBPA2 = plot3(ax,NaN,NaN,NaN,'o-','Color',opt.RobotColor2, ...
+            'LineWidth',2,'MarkerSize',5,'MarkerFaceColor',opt.RobotColor2, ...
+            'MarkerEdgeColor','none','Tag','RobotRoute2');
+        hP1B = plot3(ax,NaN,NaN,NaN,'o','Color',opt.RobotColor2, ...
+            'MarkerFaceColor',opt.RobotColor2,'MarkerSize',8, ...
+            'MarkerEdgeColor','none','Tag','RobotOrigin2');
+        hP2B = plot3(ax,NaN,NaN,NaN,'o','Color',opt.RobotColor2, ...
+            'MarkerFaceColor',opt.RobotColor2,'MarkerSize',8, ...
+            'MarkerEdgeColor','none','Tag','RobotEnd2');
+    else
+        hBPA2 = gobjects(0);
+        hP1B = gobjects(0);
+        hP2B = gobjects(0);
+    end
     hHuman = gobjects(nHuman,1);
     for h = 1:nHuman
         hHuman(h) = plot3(ax,NaN,NaN,NaN,'o-','Color',opt.HumanColor, ...
@@ -281,8 +311,15 @@ function fig = AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, var
         'LineStyle','none','MarkerSize',8, ...
         'MarkerFaceColor',hTibia.MarkerFaceColor, ...
         'MarkerEdgeColor','none');
-    lgd = legend(ax,[hFemurLegend;hTibiaLegend;hExtraLegend;hBPA;hHuman;hP1;hP2], ...
-        [{'Femur','Tibia'}, {extraBones.Label}, {'Optimized BPA path'}, ...
+    routeHandles = [hBPA];
+    routeLabels = {'Optimized BPA path'};
+    if hasRoute2
+        routeHandles = [routeHandles; hBPA2; hP1B; hP2B];
+        routeLabels = [routeLabels, ...
+            {'Optimized BPA 2 path','p1 (BPA 2)','pEnd (BPA 2)'}];
+    end
+    lgd = legend(ax,[hFemurLegend;hTibiaLegend;hExtraLegend;routeHandles;hHuman;hP1;hP2], ...
+        [{'Femur','Tibia'}, {extraBones.Label}, routeLabels, ...
         humanLabels(:).',{'p1',endLabel}], ...
         'Location','best','AutoUpdate','off');
     xlim(ax,plotLimits(opt.XLim,limits(:,1)));
@@ -430,6 +467,12 @@ function fig = AnimateKneeBoneMuscle(T, T_ICR_t1, phi, pos, p1, p2, Bifemsh, var
             setPath(hFoot,(transformPoints(T(:,:,i),footTibia)+opt.Hip)*Rplot);
         end
         setPath(hBPA,robotPlot);
+        if hasRoute2
+            robotPlot2 = (robotPaths2{i}+opt.Hip)*Rplot;
+            setPath(hBPA2,robotPlot2);
+            setPath(hP1B,robotPlot2(1,:));
+            setPath(hP2B,robotPlot2(end,:));
+        end
         for h = 1:nHuman
             setPath(hHuman(h),(humanPaths{h,i}+opt.Hip)*Rplot);
         end

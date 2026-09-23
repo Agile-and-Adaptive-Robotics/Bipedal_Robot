@@ -376,6 +376,56 @@ Tension: X3 asks for a merged discussion chapter; X4 says remove this one. If X3
 7. X4: confirm with ajh26 before removing 40-discussion.
 8. Drafts now live at `ZCode_drafts/chapters/` in this folder (regenerated 2026-09-16 after the Temp wipe).
 
+---
+
+# ZCode addition (2026-09-20, NOT an ajh26 item) — PROPOSED
+
+**Where:** `ZCode_drafts/chapters/20-methods.tex`, in the Improved Torque Model section, immediately after the GoF definition sentence at the end of the section (before the Optimization Algorithms and Cost Functions section).
+
+**What:** Two new paragraphs interpreting the three GoF metrics, per Ben's level/shape/phase reading and the 2026-09-20 discussion: RMSE carries the level (mean) offset; FVU (scale-free, complement of the Nash--Sutcliffe efficiency) carries shape/amplitude agreement; maximum absolute residual is the phase-sensitive worst case (steep-gradient transitions amplify small angular shifts). Grounded in Taylor (2001) offset/amplitude/pattern decomposition and Iosa et al. (2014) linear fit method (offset/amplitude/shape for clinical gait waveforms). Also states FVU as the primary criterion (comparable across torque scales) — Ben's stated position, new to the draft text, flag for his OK.
+
+**Bib:** three new keys added to `Bibliography/thesis.bib` (repo copy): `nash_river_1970`, `taylor_summarizing_2001`, `iosa_assessment_2014` (Iosa verified: BioMed Research International 2014:214156). The Overleaf project's bib needs the same three entries when this text is ported, or they will render as [?].
+
+**Status:** PROPOSED (nothing applied to ProofFinal/upload/Overleaf).
+
+---
+
+# ZCode addition (2026-09-21, NOT an ajh26 item) — APPLIED (figures + captions)
+
+**What:** Three mathematical methods figures for the Improved Torque Model section, drawn programmatically from the archived pinned-knee data (FlxPinBPASet/ExtPinBPASet) with the evaluator math ported line-for-line:
+- `xiFrameGeo.pdf` — (A) in-situ bracket frames at theta_k ~ -60 deg (flexor 2-bracket: Pbr2 diag(chi1,chi1,chi2) + Pbri diag(chi1,chi2,chi1); extensor 1-bracket: Pbr diag(chi1,chi2,chi2)); (B) generic frame construction (atan2 rotation, triad, epsilon_br decomposition, delta projection).
+- `xiBalance.pdf` — (A) series-compliance chain (k_br,1 + k_ten + k_br,2 -> k_eq along u); (B) graphical solution of the 1-D force balance (eq:complianceforcebalance) at theta_k=0 for the 48.5 cm flexor: k_eq=28.1 kN/m, delta*=10.8 mm, F*=303 N at the settled chi pair (5.62e4/1.85e4).
+- `xiWrapLoss.pdf` — (A) extensor route at +35/0/-89 deg with wrap points w1-w3 (contact onset +27 deg, R=R2=40 mm to w2 verified); (B) delta_l(theta_k) two-band model (R1=12 mm band -23..+27 deg, R2=40 mm below) with zeta^2, at chi3=0.621 / chi0=-10.1 mm.
+
+**Where:** `ZCode_drafts/chapters/20-methods.tex` — floats + captions (fig:xiFrames, fig:xiBalance, fig:xiWrapLoss) and in-text refs at the frame-definition paragraph, the series-compliance sentence, the force-balance sentence, and the wrapping-loss sentence. PDFs in `ProofFinal/figs/Aim2/` AND `Figures/Aim2/` (both graphicspath dirs). Generator: `Notes/make_xi_method_figures.m` (re-run via matlab -batch; regenerates all three + review PNGs).
+
+**Text fixes applied alongside (audit findings):** "Newton-Raphson" -> bracketed numerical root-finding (code uses fzero); extensor K-assignment sentence now chi1 on X_br, chi2 on Y/Z_br (matches live code [X1,X2,X2] + caption; the old sentence matched no code version); eq:Lm and eq:x3 now subtract l_ten (matches code line mL = Lmt - X0 - tendon - 2*fitn and appendix A).
+
+**Verification:** visual gate (documents:visual-judge) PASS after 3 layout rounds (springs, label collisions); independent audit subagent reproduced EVERY figure number from the mats (thetabrB 91.82 deg, c1/c2/keq/delta*/F*, dL/zeta^2 samples, band seam continuity at -23 deg) and confirmed all text ORIGINAL (no plagiarism; conventions generic FBD/series-spring/PAM-equilibrium idioms, no citation needed).
+
+**Open items flagged for Ben (NOT changed):**
+1. `94-AppendixC.tex:~165` extensor row still lists K=[X2,X1,X2] citing minimizeExtX3.m:575, which now reads [X1,X2,X2] (Ben's 2026-09-16 change). The settled chi3=0.621/chi0=-10.1 mm were identified under the older [X2,X1,X2]; K does not enter delta_l, so the wrap figure is unaffected either way — decide: update row to [X1,X2,X2] or add a dated note.
+2. `minimizeFlxPin.m` currently has the ORIGIN-bracket frame toggled pitch-only (line ~306 active, two-rotation ~305 commented) while its header/AGENTS.md say hip=2trans — numerically irrelevant for planar data (audit: keq agrees to 5e-6) but comments and active lines disagree; reconcile when convenient.
+3. When porting to Overleaf: upload the three xi*.pdf files + the updated 20-methods.tex (no new bib keys needed).
+
+---
+
+# ZCode rework (2026-09-21 evening, after Ben's C- grade) — MR-style redraw APPLIED
+
+**What:** All three Xi figures redrawn in the Modern Robotics visual language (Ben's reference: MR-largefont-v2.pdf figures 3.1/3.6/3.9/3.14/3.15/3.21/3.23/3.27/3.28/3.31/4.6/4.7 — Lynch & Park largefont preprint, extracted via D:\Anaconda base python + PyMuPDF to Temp\mr_figs): strict monochrome ink (black + grays), line-weight hierarchy (2.4pt protagonist routes/u-arrow > 1.4 structure > 1.0 annotation > 0.7 construction), uniform filled arrowheads, flat light-gray capsule bones with thin outlines, curly-brace frame labels ({hip},{br2},{bri},{br}), K-array assignments consolidated in panel B's inset, hatched fixed supports, coil springs, bounded band-edge lines, yyaxis forced black/dark-gray, grayscale-print-safe. EPS twins of every PDF now exported (Ben's request).
+
+**Tooling that made it possible (the "better at viewing/drawing images" answer):** D:\Anaconda base python has PyMuPDF 1.28.2 (search captions, render/crop pages at any DPI); the Read tool uploads local PNGs to a CDN URL which the 4.5v analyze_image MCP accepts for detailed vision analysis; the documents:visual-judge subagent judges local PNGs against the reference figures; MATLAB's text 'Extent' powers a pixel-accurate label-overlap checker now built into the generator (checkTextOverlaps prints any colliding label pair to the log — ZERO across all six panels as of the final render).
+
+**Process:** 5 visual-gate rounds against the actual reference figures (D -> C -> C -> C+/C-) plus programmatic overlap iterations from the checker log. Style spec extracted per-reference via analyze_image (monochrome discipline, one protagonist stroke, label isolation, embedded math, flat fills).
+
+**Files:** same names (xiFrameGeo/xiBalance/xiWrapLoss .pdf + .eps in both figs/Aim2 dirs); generator Notes/make_xi_method_figures.m now carries the MR style engine (arrowMR/capsule/springMR/frameTriadMR/checkTextOverlaps helpers) + safeExport for locked staging files.
+
+**Captions:** unchanged in 20-methods.tex (still accurate; pose descriptors moved from in-figure text into the xiWrapLoss caption).
+
+**Known residuals (documented, Ben's call):** knee-cluster density in xiWrapLoss panel A (R/B'/w_2 share a small region with the routes — the geometry there is genuinely dense); at \textwidth the 11pt in-figure fonts render ~10pt effective.
+
+---
+
 ## Ledger changes
 
 - 2026-09-20 (ZCode): B9 figure built and saved beside this file as `steeleknee.pdf` / `steeleknee.png`; build script `Notes/build_steele_knee_figure.py` (panel A = crossed four-bar schematic drawn from the link lengths in Steele's 2018 PSU thesis Fig. 52; panel B = ICR migration, robot femur-frame curves from `buildKneeFlexorContext20mm.m` vs human computed from the Gait2392/Yamaguchi-Zajac knee splines; panel C = placeholder for Ben's test-stand photo). Ready-to-paste LaTeX block in the session handoff. No Overleaf edits made.

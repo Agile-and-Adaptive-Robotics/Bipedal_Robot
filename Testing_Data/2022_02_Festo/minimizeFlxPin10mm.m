@@ -146,7 +146,7 @@ fprintf('Filtered %d → %d candidates.\n', N, sum(keep));
 
 %% Pick best solution (later, flexible)
  
-pick = 1;
+pick = 77;
 sol_actual = filtered_results(pick, xCols);
 k1 = sol_actual(1);
 k2 = sol_actual(2);

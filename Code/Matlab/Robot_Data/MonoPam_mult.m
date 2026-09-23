@@ -119,9 +119,25 @@ classdef MonoPam_mult < handle
                 error('MonoPam_mult:TransformSize', ...
                     'TransformationMat needs one page per joint position.')
             end
-            if ~isempty(bendMeasure) && numel(bendMeasure) ~= N
+            % BendMeasure: one shared N-vector (symmetric/mirrored routes)
+            % or a BPAcount-cell of N-vectors when the two routes wrap
+            % differently (asymmetric 2026-09-21 flexor routing).
+            if ~isempty(bendMeasure) && ~iscell(bendMeasure) && ...
+                    numel(bendMeasure) ~= N
                 error('MonoPam_mult:BendMeasureSize', ...
                     'BendMeasure needs one value per joint position.')
+            end
+            if iscell(bendMeasure)
+                if numel(bendMeasure) ~= PD.BPAcount
+                    error('MonoPam_mult:BendMeasureCell', ...
+                        'Cell BendMeasure needs one entry per BPA route.')
+                end
+                for j = 1:PD.BPAcount
+                    if numel(bendMeasure{j}) ~= N
+                        error('MonoPam_mult:BendMeasureSize', ...
+                            'BendMeasure{%d} needs one value per joint position.', j)
+                    end
+                end
             end
             PD = PD.updateStiffnessGeometry();
         end
@@ -419,11 +435,17 @@ delta_L = cell(obj.BPAcount,1);
 for j = 1:obj.BPAcount
     deltaRoute = zeros(N,1);
     if ~isempty(X3)
+        % Per-route bend history when a cell was supplied; otherwise
+        % the one shared history applies to both routes.
+        if iscell(obj.BendMeasure)
+            bendMeasure = obj.BendMeasure{j}(:);
+        else
+            bendMeasure = obj.BendMeasure(:);
+        end
         Lm0 = Lmt{j}-tendon-2*fitn-X0-gama{j};
         strain0 = (rest-Lm0)/rest;
         comp = max(0,1-strain0/KMAX);
-        if ~isempty(obj.BendMeasure)
-            bendMeasure = obj.BendMeasure(:);
+        if ~isempty(bendMeasure)
             deltaRoute = X3.*bendMeasure.*comp.^2;
         else
             ang = -9.19;

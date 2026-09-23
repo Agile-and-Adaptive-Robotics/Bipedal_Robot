@@ -4,6 +4,9 @@ function sns_units_test_2n()
 % Circuit (identical to spinal/export_units_ref_2n.py):
 %   5 nA constant -> neuron A (tau 0.2 s) -E synapse (g 0.3 uS, Esyn 8 mV,
 %   ThrPre 0, SlopePre 5 mV)-> neuron B (tau 0.5 s)
+% 2026-09-22 architecture: the 5 nA lands on A's Iapp port; the synapse takes
+% ONLY Vpre (A's V output) and its [g; g*Esyn] output lands on B's syn1 port
+% (port 2). B's Iapp port stays unconnected (auto-grounds to 0).
 % Mapping under test (toolbox -> SNS_Library):
 %   C = tau uF  ->  Cm = 1000*tau nF ; Gm = 1 uS ; Vrest = 0 mV
 %   e_lo/e_hi = 0/5 mV  ->  ThrPre 0 / SlopePre 5
@@ -17,30 +20,31 @@ if exist(fullfile(here, 'results', [mdl '.slx']), 'file')
 end
 new_system(mdl);
 
-LIB = 'SNS_Library';   % this machine's copy loads on R2025a (verified)
+LIB = 'SNS_Library';   % loads the local rebuilt library
 add_block([LIB '/NonSpikingNeuron'], [mdl '/A'], ...
     'Vrest', '0', 'Gm', '1', 'Cm', '200', 'Thr', '0', 'Slope', '5', ...
-    'Position', [200 80 300 180]);
+    'Position', [200 80 290 170]);
 add_block([LIB '/NonSpikingNeuron'], [mdl '/B'], ...
     'Vrest', '0', 'Gm', '1', 'Cm', '500', 'Thr', '0', 'Slope', '5', ...
-    'Position', [200 300 300 400]);
+    'Position', [200 300 290 390]);
 add_block([LIB '/NonSpikingSynapse'], [mdl '/AtoB'], ...
     'gmax', '0.3', 'Esyn', '8', 'ThrPre', '0', 'SlopePre', '5', ...
-    'Position', [60 180 160 280]);
+    'Position', [120 210 170 260]);
 add_block('simulink/Sources/Constant', [mdl '/Iext'], 'Value', '5', ...
     'Position', [60 60 120 100]);
 
-add_line(mdl, 'Iext/1', 'A/1', 'autorouting', 'on');
-add_line(mdl, 'A/1', 'AtoB/1', 'autorouting', 'on');    % V -> Vpre
-add_line(mdl, 'B/1', 'AtoB/2', 'autorouting', 'on');    % V -> Vpost
-add_line(mdl, 'AtoB/1', 'B/1', 'autorouting', 'on');    % Isyn -> B
+add_line(mdl, 'Iext/1', 'A/1', 'autorouting', 'on');    % 5 nA -> A Iapp
+add_line(mdl, 'A/1', 'AtoB/1', 'autorouting', 'on');    % A V -> Vpre (only input)
+add_line(mdl, 'AtoB/1', 'B/2', 'autorouting', 'on');    % [g; g*Esyn] -> B syn1
+% B port 1 (Iapp) deliberately unconnected -> grounds to 0 nA
 
 logv = @(nm, blk, prt) logport(mdl, nm, blk, prt);
 logv('va', [mdl '/A'], 1);
 logv('vb', [mdl '/B'], 1);
 
 set_param(mdl, 'Solver', 'ode45', 'RelTol', '1e-6', 'AbsTol', '1e-8', ...
-          'StopTime', '3', 'SignalLogging', 'on', 'SignalLoggingName', 'sigs');
+    'StopTime', '3', 'SignalLogging', 'on', 'SignalLoggingName', 'sigs', ...
+    'UnconnectedInputMsg', 'none');
 out = sim(mdl, 'ReturnWorkspaceOutputs', 'on');
 va = squeeze(out.sigs.get('va').Values.Data);
 ta = out.sigs.get('va').Values.Time;

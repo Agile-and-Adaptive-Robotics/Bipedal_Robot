@@ -3,6 +3,11 @@ clc
 close all
 rehash
 
+% Marks a full optimizer pass. The result save clears it just before
+% saving, so rerunning sections from a loaded result mat (which therefore
+% lacks liveRun) cannot mint a new dated mat from an old design.
+liveRun = true;
+
 ctx = buildKneeExtContext20mm();
 
 obj = @(x) objective_KneeExt20mm(x, ctx);
@@ -21,7 +26,7 @@ end
 optsG = optimoptions('surrogateopt', ...
     'Display', 'iter', ...
     'UseParallel', true, ...
-    'MaxFunctionEvaluations', 3000, ...
+    'MaxFunctionEvaluations', 7000, ...
     'MinSampleDistance', 0.001, ...
     'ConstraintTolerance', 1e-6);
 
@@ -56,30 +61,43 @@ predBest = predictKneeExt20mm(xBest, ctx);
 [cBest, ~] = nonlconExt20mm(xBest, ctx);
 relativeContractionBest = predBest.bpa.Contraction(:)/predBest.KMAX;
 
-% Dated result capture into Results; does not overwrite prior results.
-% Only a full Opt_run_Ext saves (optsP exists only when the optimizer
-% stages ran in this workspace); loading a result mat and running the
-% display section must not mint a new dated mat from an old design.
-% Sits before the (currently commented) adjusted-seed section; move it
-% below that section if it is ever re-enabled, so the mat captures the
-% seed-refined xBest instead.
-if exist('optsP', 'var')
-    stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
-    resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
-    resultFile = fullfile(resDir, sprintf('Vas_Pam_20mm_Result_%s.mat', stamp));
-    XiUsed = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
-    % ctx makes the mat self-contained for display: Knee_Extensor_20mm can
-    % load it instead of rebuilding (it still guards Xi against XiUsed).
-    save(resultFile, ...
-        'xBest', 'fBest', 'exitflagG', 'outputG', ...
-        'predBest', 'cBest', 'XiUsed', 'ctx')
-    fprintf('Saved %s\n', resultFile)
-end
+% Dated FULL-WORKSPACE result capture into Results (Ben directive,
+% 2026-09-20: bare save so any driver section reruns from the loaded
+% mat); does not overwrite prior results. liveRun is set only by a full
+% Opt_run_Ext pass and cleared before saving, so rerunning sections from
+% a loaded result mat cannot mint a new dated mat from an old design.
+% Sits before the adjusted-seed section; the duplicate block below it
+% captures the seed-refined xBest if that section runs first. Uncomment
+% ONE of the two for a real run.
+% if exist('liveRun', 'var')
+%     stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
+%     resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
+%     resultFile = fullfile(resDir, sprintf('Vas_Pam_20mm_Result_%s.mat', stamp));
+%     XiUsed = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
+%     clear liveRun
+%     save(resultFile)
+%     fprintf('Saved %s\n', resultFile)
+% end
 
-% %% Run with adjusted seed
-% % Section commented out if unused.
-% % Earlier design, reconstructed from rounded printed values.
-% % This is a trial seed, not an exact recovery of that solution.
+%% Run with adjusted seed
+% Section commented out if unused.
+% Earlier design, reconstructed from rounded printed values.
+% This is a trial seed, not an exact recovery of that solution.
+
+% Display-from-mat workflow: optsP exists only after the optimizer stages
+% of a full run; rebuild a default when refining from a loaded result
+% mat. No-op during a full Opt_run_Ext.
+
+% if ~exist('optsP', 'var')
+%     optsP = optimoptions('patternsearch', ...
+%         'Display', 'iter', ...
+%         'UseParallel', true, ...
+%         'MaxFunctionEvaluations', 15000, ...
+%         'MeshTolerance', 1e-4, ...
+%         'StepTolerance', 1e-4, ...
+%         'ConstraintTolerance', 1e-6);
+% end
+% 
 % xSeed = [xBest(1:3), ...
 %          xBest(4:6), ...
 %          xBest(7), xBest(8)];
@@ -122,31 +140,32 @@ end
 % predBest = predictKneeExt20mm(xBest, ctx);
 % [cBest, ~] = nonlconExt20mm(xBest, ctx);
 % relativeContractionBest = predBest.bpa.Contraction(:)/predBest.KMAX;
-% 
-% % Dated result capture into Results; does not overwrite prior results.
-% % Only a full Opt_run_Ext saves (optsP exists only when the optimizer
-% % stages ran in this workspace); loading a result mat and running the
-% % display section must not mint a new dated mat from an old design.
-% if exist('optsP', 'var')
+
+% % Dated FULL-WORKSPACE result capture into Results (Ben directive,
+% % 2026-09-20: bare save so any driver section reruns from the loaded
+% % mat); does not overwrite prior results. liveRun is set only by a full
+% % Opt_run_Ext pass and cleared before saving, so rerunning this section
+% % from a loaded result mat cannot mint a new dated mat from an old
+% % design. This block captures the seed-refined xBest (section above).
+% if exist('liveRun', 'var')
 %     stamp = char(string(datetime('now'),'yyyyMMdd_HHmm'));
 %     resDir = fullfile(fileparts(mfilename('fullpath')), 'Results');
 %     resultFile = fullfile(resDir, sprintf('Vas_Pam_20mm_Result_%s.mat', stamp));
 %     XiUsed = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
-%     % ctx makes the mat self-contained for display: Knee_Extensor_20mm can
-%     % load it instead of rebuilding (it still guards Xi against XiUsed).
-%     save(resultFile, ...
-%         'xBest', 'xSeed', 'fBest', 'fRefined', 'exitRefined', 'exitflagG', ...
-%         'outputG', 'predBest', 'cBest', 'XiUsed', 'ctx')
+%     clear liveRun
+%     save(resultFile)
 %     fprintf('Saved %s\n', resultFile)
-%     clear optsP   % re-running the sections below must not save twice
 % end
 
 %% display results
 % Display-from-mat workflow: load a dated result mat (xBest, ctx, fBest,
 % predBest, cBest, ...) then run this section. The guard below supplies
 % the one run variable this section reads that the mat does not carry;
-% no-op during a full Opt_run_Ext.
-if ~exist('relativeContractionBest', 'var')
+% no-op during a full Opt_run_Ext. The iscell arm also recovers when a
+% flexor Opt_run session left a cell relativeContractionBest in the base
+% workspace.
+if ~exist('relativeContractionBest', 'var') || ...
+        iscell(relativeContractionBest)
     contractionForMargin = predBest.bpa.Contraction;
     if iscell(contractionForMargin)
         contractionForMargin = contractionForMargin{1};

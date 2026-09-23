@@ -5,6 +5,40 @@ figures added 2026-09-09. Goal: wire the knee SNS circuit to a Simscape model of
 `09_BA_003.SLDASM`, with an Animatlab/SNS-toolbox-style neuron library drawn in
 the journal diagram language Ben specified.
 
+**2026-09-22 LIBRARY REDESIGN (Ben's circuit-language rules, breaking change):**
+`SNS_Library.slx` was rebuilt around ONE-INPUT synapses and INTERNAL neuronal
+summation (details in "Block appearance conventions" and "The blocks" below):
+
+- `NonSpikingSynapse` = **one input (Vpre) → one output**: it emits the 2-wide
+  synaptic signal `[g; g*Esyn]`, and the **postsynaptic neuron** evaluates the
+  driving force (`Isyn = sum(g*Esyn) - V*sum(g)` — algebraically identical to
+  the old `gmax*Sat(Vpre)*(Esyn-Vpost)`, so all tuning and the numpy units
+  reference stay valid). No Vpost sense wire, no Sum block in front of any
+  neuron: the neuron has port 1 = `Iapp` [nA] (scalar or vector, summed
+  element-wise) and ports `syn1..syn6` for synapses; **unconnected syn ports
+  auto-ground to zero** (model diagnostic `UnconnectedInputMsg='none'`, the
+  default). Synapse blocks are SMALL and belong right against the neuron they
+  synapse onto.
+- New `SynSum` junction block sums up to 8 synapse signals into one line, for
+  generated big models where a neuron receives >6 synapses (spinal MNs get up
+  to 17).
+- Icons per Ben: non-spiking neuron = circle + **graded-potential waveform**;
+  spiking neuron = circle + **spike-train waveform**; `IaMuscleSpindle` =
+  **spindle-shaped capsule**; `IbGolgiTendon` = capsule with braided strands;
+  muscles/BPAs = fusiform **with striations**; `MuscleActivation` =
+  **pink pentagon**.
+- Rebuilt + re-verified on top of it: `sns_units_test_2n` (PASS 6.07e-04 mV,
+  same as before), `KneeReflexDemo`, `KneeReflexCircuit` (now a RUNNABLE 1:1
+  twin of the demo — the old print-only stub could not run), `BPACPGLegDemo`,
+  `BeerCupReflexDemo`, and `SNS_SpinalNetwork.slx` regenerated via the updated
+  `sns_build_from_json.m` (network verify PASS 4.2e-06 mV, same as before).
+- **Terminology (Ben, 2026-09-22): call things MODELS, not "plants".**
+- Fixed the same day: knee animation drew the shank UP alongside the femur
+  (leg read as folded 180°) — now flexion swings the shank posteriorly with
+  body-fixed muscle insertions; beer animation's biceps origin was floating
+  10 cm lateral to the shoulder — now shoulder → forearm; triceps added
+  everywhere (model, circuit, animation).
+
 **2026-09-10 session (easteregg2, R2025a):** restyled icons (heavy strokes,
 Animatlab colors), added REAL BPA actuator blocks (10/20/40 mm, Ben's Festo
 equations) + a Thelen-style biological muscle block, new demos
@@ -146,9 +180,12 @@ Pipeline that turns the tuned `runner --fitted --best` gait2392 spinal network
    synapse `e_lo/e_hi = 0/5 mV` → `ThrPre = 0 / SlopePre = 5`; `g` uS,
    `Esyn` mV, currents nA.
 3. **Generate**: `sns_build_from_json.m` → `results\SNS_SpinalNetwork.slx`
-   (~2600 blocks: one NonSpikingNeuron per cell, one NonSpikingSynapse per
-   connection, per-neuron Sum blocks, 376-way Demux off the `u` inport, and a
-   92-wide Mux of MN `S(V)` outputs → outport `S`, ordered by MuJoCo
+   (~2400 blocks: one NonSpikingNeuron per cell, one one-input
+   NonSpikingSynapse per connection landing on the postsynaptic neuron's
+   syn1..syn6 port, per-neuron input Muxes onto the Iapp port for the 376
+   external input currents, chained SynSum junctions for the neurons with
+   more than 6 incoming synapses (146 junctions; MN in-degree reaches 17),
+   and a 92-wide Mux of MN `S(V)` outputs → outport `S`, ordered by MuJoCo
    actuator id = ctrl order). All values live in block masks — double-click
    to edit. Regenerate any time the tuning changes.
 4. **Verify**: `sns_verify_from_json.m` — **PASS: 4.2e-06 mV** max deviation,
@@ -177,7 +214,7 @@ referenced numerically (`blk/1`), not by inner port-block names.
 | `sns_build_library.m` | builds **`SNS_Library.slx`** — 7 masked blocks with diagram-language icons |
 | `sns_build_actuators.m` | adds **BPA_10mm / BPA_20mm / BPA_40mm** (Ben's real Festo equations) + **BioMuscle** (Thelen-style) → 11 blocks |
 | `sns_test_actuators.m` | validates the actuator blocks against `festo4.m`/`maxBPAforce.m` + Thelen references |
-| `demos\sns_build_demo.m` | builds **`KneeReflexDemo.slx`** — reflex circuit + 1-DOF knee plant |
+| `demos\sns_build_demo.m` | builds **`KneeReflexDemo.slx`** — reflex circuit + 1-DOF knee model |
 | `demos\sns_run_demo.m` | simulates 5 s, saves results into `results\` |
 | `demos\sns_build_cpg_demo.m` + `sns_run_cpg_demo.m` | **`BPACPGLegDemo.slx`** — half-center CPG (mutual inhibition + adaptive inhibition) driving antagonist BPAs on the 1-DOF knee |
 | `demos\sns_build_beer_demo.m` + `sns_run_beer_demo.m` | **`BeerCupReflexDemo.slx`** — elbow holds a cup level via Ia/Ib reflex while beer pours in; runs reflex ON vs OFF |
@@ -193,27 +230,31 @@ referenced numerically (`blk/1`), not by inner port-block names.
 | `SNS_Library.slx`, `demos\*.slx` | generated models (open in Simulink, blocks are double-click editable) |
 | `figures\`, `results\`, `logs\` | figures, run outputs + animations, run logs |
 
-## Block appearance conventions (Ben, 2026-09-09)
+## Block appearance conventions (Ben, 2026-09-09 + 2026-09-22)
 
 Diagram language follows **Szczecinski et al. 2017 Fig. 2** (the functional
 subnetwork paper), Rybak/Shevtsova CPG diagrams, and Animatlab:
 
 | Element | Icon |
 |---|---|
-| neuron (non-spiking RC) | open circle, black edge, pale-yellow fill, "NS" |
-| spiking LIF neuron | open circle with spike glyph |
-| Ia / Ib afferent | light-gray circle labeled "Ia" / "Ib" |
-| muscle (activation, BPA force) | light-green fusiform ellipse |
-| **EXCITATORY connection** | **white triangle, black edges — drawn as a PASS-THROUGH AXON (Rybak restyle 2026-09-20): heavy horizontal bar enters from the presynaptic (left) side and terminates in the triangle at the postsynaptic (right) edge; tip points back toward the presynaptic side, flat base at the postsynaptic membrane** (+ light-green backdrop) |
-| **INHIBITORY connection** | **same pass-through axon ending in a SOLID BLACK CIRCLE at the postsynaptic edge** (+ light-red backdrop). A thin gray lower bar is the Vpost (postsynaptic-voltage) sense wire. |
+| neuron (non-spiking RC) | open circle with a **graded-potential waveform** (smooth depolarizing hump) |
+| spiking LIF neuron | open circle with a **spike-train waveform** |
+| Ia afferent | **spindle-shaped capsule** (fusiform, tapered ends) labeled "Ia" |
+| Ib afferent | capsule with braided collagen strands, labeled "Ib" |
+| muscle / BPA / BioMuscle | light-salmon fusiform **with striations** across the belly |
+| MuscleActivation | **pink pentagon** (new mask param `A0` = initial activation) |
+| **EXCITATORY connection** | synapse block: pass-through axon bar terminating in a **WHITE TRIANGLE, black edges** at the output edge (tip points back toward the presynaptic side) |
+| **INHIBITORY connection** | same axon ending in a **SOLID BLACK CIRCLE** at the output edge |
 
 - The `NonSpikingSynapse` icon picks its marker **automatically from the sign of
   `Esyn`** (`Esyn >= 0` → triangle, `< 0` → black dot), so the icon always tells
   the truth about the connection. An un-evaluable `Esyn` expression draws "E?".
+- Synapse blocks are SMALL (draw ~40×32) and are placed **immediately left of
+  the neuron they synapse onto**, wired into its next free `syn1..syn6` port.
 - Shape is the primary code — figures stay readable in grayscale and for
   colorblind readers. Tints are the redundant cue, from the **Okabe-Ito
   CVD-safe palette** (orange = excitatory, blue = inhibitory, green = muscle).
-- Keep every masked block **square** (width == height): mask icons autoscale to
+- Keep CIRCLE-icon blocks **square** (width == height): mask icons autoscale to
   the block rectangle, so non-square blocks turn circles into ellipses.
 - Simulink gotcha (cost us a debug cycle): mask drawing commands accept
   **numbers only** — no LineSpec strings (`'k-'`), no name-value pairs
@@ -224,21 +265,29 @@ subnetwork paper), Rybak/Shevtsova CPG diagrams, and Animatlab:
 ## The blocks (SNS_Library.slx)
 
 Neuron = **non-spiking leaky integrate-and-fire, literally an RC membrane**:
-`Cm·dV/dt = Gm·(Vrest − V) + Σ Isyn`, τ_m = Cm/Gm (nF/µS = ms).
-Outputs membrane `V [mV]` and normalized drive `S = clip((V−Thr)/Slope, 0, 1)`.
+`Cm·dV/dt = Gm·(Vrest − V) + Iapp + Σ g_k·(Esyn_k − V)` — the neuron does the
+synaptic summation INTERNALLY. τ_m = Cm/Gm (nF/µS = ms).
+Port 1 `Iapp` [nA]: injected current — descending drives and afferent currents
+(vector inputs are summed element-wise, so several currents can share it).
+Ports `syn1..syn6`: synapse inputs `[g; g·Esyn]` from `NonSpikingSynapse`
+blocks; unconnected ports count as zero, so a neuron with fewer synapses needs
+no dummy wiring. Outputs membrane `V [mV]` and normalized drive
+`S = clip((V−Thr)/Slope, 0, 1)`.
 
-Synapse (Animatlab + SNS-toolbox convention):
-`Isyn = gmax·Sat(Vpre)·(Esyn − Vpost) [nA]`, presyn saturation
-`Sat = clip((Vpre−ThrPre)/SlopePre, 0, 1)`.
+Synapse = **one input, one output**: in = presynaptic `V` [mV]; out =
+`[g; g·Esyn]` with `g = gmax·Sat(Vpre)`, `Sat = clip((Vpre−ThrPre)/SlopePre, 0, 1)`.
 **Excitatory = Esyn 0 mV, inhibitory = Esyn −72 mV** — an E vs I connection
-differs only by the Esyn mask value (and now by the icon marker).
+differs only by the Esyn mask value (and by the icon marker).
+`SynSum` = junction for generated models: sums up to eight synapse outputs into
+one `[Σg; Σg·Esyn]` line (chainable), for neurons receiving more than 6 synapses.
 
-- `NonSpikingNeuron` — RC membrane (defaults Vrest −52 mV, Gm 0.1 µS, Cm 5 nF ⇒ τ=50 ms; SNS-toolbox conventions)
-- `NonSpikingSynapse` — E/I chemical synapse with auto E/I icon (ThrPre −45 mV, SlopePre 0.5/mV ⇒ off at rest, graded above)
-- `SpikingLIFNeuron` — spiking LIF with threshold reset (Animatlab-style spiking neuron)
+- `NonSpikingNeuron` — RC membrane with internal synaptic summation (defaults Vrest −52 mV, Gm 0.1 µS, Cm 5 nF ⇒ τ=50 ms; SNS-toolbox conventions)
+- `NonSpikingSynapse` — one-in/one-out E/I chemical synapse with auto E/I icon (ThrPre −55 mV, SlopePre 1/mV ⇒ off at rest, graded above)
+- `SynSum` — synapse-summing junction (up to 8 inputs, grounded-unused)
+- `SpikingLIFNeuron` — spiking LIF with threshold reset (Animatlab-style spiking neuron; scalar/vector Iapp input)
 - `IaMuscleSpindle` — stretch + velocity afferent → current (peak 10 nA)
 - `IbGolgiTendon` — force afferent → current
-- `MuscleActivation` — first-order activation dynamics (τ_act 50 ms)
+- `MuscleActivation` — first-order activation dynamics (τ_act 50 ms; A0 initial activation)
 - `BPAForce` — `F = Fmax·A·max(0, epsMax − strain)` placeholder; swap in the Xi-corrected
   MonoPam prediction from Mesh_Optimization when ready
 
@@ -274,22 +323,27 @@ natural follow-up; the figures + this table are the current documentation.)
 
 ## KneeReflexDemo.slx
 
-Antagonist BPA pair on a reduced-order knee (`I·θ̈ = T_flex − T_ext + T_load − b·θ̇ − K(θ−θ0)`),
-with sensory neurons between afferents and synapses:
+Antagonist BPA pair on a reduced-order 1-DOF knee model (mechanics grouped
+into one masked `KneeModel` subsystem; all parameters unchanged from the
+2026-09-10 build), with sensory neurons between afferents and synapses:
 
 - Ia(ext) → **Exc** → MN_ext (stretch reflex)
 - Ib(ext) → **Inh** → MN_ext (autogenic inhibition)
 - Ia(flex) → **Inh** → MN_ext, Ia(ext) → **Inh** → MN_flex (reciprocal inhibition)
 - Ia(flex) → **Exc** → MN_flex, Ib(flex) → **Inh** → MN_flex
 
-Demo behavior after correcting the BPA force block to apply activation once
-(`F = Fmax*A*max(0, epsMax - strain)`): the knee rises from 15° and reaches
-~42.7° against the 0.5 N·m load with graded co-contraction at the final sample
-(A_ext≈0.34, A_flex≈0.73). The antagonist loop shows a ~9 Hz alternating
-model limit cycle. Its physiological significance has not been evaluated. Tune:
-`gmax` (loop gain), SN `Cm` (loop delay), `b_knee`, `tauAct`.
-Plant params (inertia, moment arm, Fmax) are placeholder rig estimates — replace
-from CAD mass properties and the Xi-corrected BPA predictions.
+2026-09-22 architecture rebuild, verified against an independent MATLAB ODE of
+the same circuit math (rise 15.8° @ 0.05 s identical; settle band 38–45° with
+means within 3°; same antagonist activation alternation): the knee rises from
+15° and settles around **43.5° mean (range ~41.6–44.9°)** against the 0.5 N·m
+load, with a mild irregular antagonist alternation (~0.5–2 Hz dominant peak
+depending on the window; A_ext/A_flex both sweep ~0.26–0.78 around 0.53).
+The final SAMPLE of A_ext/A_flex depends on the alternation phase — the
+old "~9 Hz limit cycle" note overstated the frequency; compare windowed
+means, not final samples. Its physiological significance has not been
+evaluated. Tune: `gmax` (loop gain), SN `Cm` (loop delay), `b_knee`, `tauAct`.
+Model params (inertia, moment arm, Fmax) are placeholder rig estimates —
+replace from CAD mass properties and the Xi-corrected BPA predictions.
 
 ## Real BPA actuator blocks (2026-09-10, Ben's equations)
 
@@ -315,22 +369,32 @@ from CAD mass properties and the Xi-corrected BPA predictions.
   block params *inside* the masked subsystem do. And a library must be LOCKED
   for its blocks to be instance-able.
 
-## Demos verified on the LAPTOP R2025b (2026-09-20)
+## Demos verified on the LAPTOP R2025b (2026-09-20, and RE-VERIFIED 2026-09-22 on the redesigned library)
 
-All four demo models re-run headless (`dev/run_all_demos_laptop_20260920.m`,
-log `logs/run_all_demos_laptop_20260920.log`) — all behave exactly as
-documented from easteregg2 R2025a:
+2026-09-20 originals (`dev/run_all_demos_laptop_20260920.m`, log
+`logs/run_all_demos_laptop_20260920.log`); 2026-09-22 column = rebuilt on the
+one-input-synapse architecture:
 
-| Demo | Result on R2025b |
-|---|---|
-| KneeReflexDemo | theta final 42.72 deg, A_ext 0.34, A_flex 0.73 (matches doc) |
-| BPACPGLegDemo | theta range 9.7..48.0 deg (matches doc ~10-48) |
-| BeerCupReflexDemo | max sag ON 5.13 deg vs OFF 9.66 deg (matches doc 5.1/9.7) |
-| SNS_Deng_CPGDemo | 10 RG_ext bursts / 20 s, period 1.938 s, ext-vs-flx r = −0.857 |
+| Demo | 2026-09-20 | 2026-09-22 rebuild |
+|---|---|---|
+| KneeReflexDemo | theta final 42.72 deg | settle mean 43.5° (range 41.6–44.9°), same rise/settle/alternation vs independent ODE of the same math |
+| BPACPGLegDemo | theta range 9.7..48.0 deg | theta range 9.7..48.0 deg (identical to committed results) |
+| BeerCupReflexDemo | max sag ON 5.13 / OFF 9.66 deg — both were STARTUP transients at t≈0.12–0.2 s | starts in equilibrium: ON settles 2.0° vs OFF 7.9°; triceps 0.40→0.32 |
+| SNS_Deng_CPGDemo | 10 RG_ext bursts / 20 s, period 1.938 s | unchanged (separate library) |
+| sns_units_test_2n | PASS 6.07e-04 mV | PASS 6.07e-04 mV |
+| SNS_SpinalNetwork verify | PASS 4.2e-06 mV | PASS 4.2e-06 mV (regenerated) |
 
-Fix shipped: `sns_run_deng_demo.m` used `corr()` (Statistics Toolbox — not on
-the laptop license); replaced with base-MATLAB Pearson. The Deng sim itself
-was always fine — only the check crashed.
+**The old beer "max sag" numbers WERE the model settling, not the pour**:
+measured from the committed results mat, the 5.13°/9.66° peaks occur at
+t = 0.12–0.20 s with activation starting at 0 while the descending drive was
+a step sized for the FULL cup — force ramped through the balance point and
+overshot. The 2026-09-22 build starts in equilibrium (activation initialized
+at the hold value via `MuscleActivation.A0`, drive sized for the empty cup),
+so the plotted transient is the pour itself.
+
+Fix shipped (2026-09-20): `sns_run_deng_demo.m` used `corr()` (Statistics
+Toolbox — not on the laptop license); replaced with base-MATLAB Pearson. The
+Deng sim itself was always fine — only the check crashed.
 
 ## Dissertation figure pipeline (2026-09-20, Ben's 10–12 pt / EPS / Rybak ask)
 
@@ -348,12 +412,12 @@ was always fine — only the check crashed.
   cannot write to `C:\` root — the temp crop file lives in the output folder.
   In Overleaf, `\includegraphics{file.eps}` works as-is; locally, prefer the
   twin `.pdf` (identical vector content).
-- **`demos/sns_build_circuit_view.m`** builds **`KneeReflexCircuit.slx`** — a
-  PRINT-ONLY view of the KneeReflexDemo neural circuit (afferent encoders →
-  sensory neurons → synapses → MNs → activation → BPA, Ib feedback closed
-  inside). Blocks are COPIED from the demo, so mask values (gmax/Esyn/taus)
-  match the runnable model 1:1. The full KneeReflexDemo export stays
-  available as the "faithful model" appendix figure.
+- **`demos/sns_build_circuit_view.m`** builds **`KneeReflexCircuit.slx`** —
+  since the 2026-09-22 redesign the demo's top level is already print-clean,
+  so the circuit view is simply a runnable 1:1 TWIN of KneeReflexDemo (same
+  blocks, mask values, wiring — simulates standalone). The full
+  KneeReflexDemo export stays available as the "faithful model" appendix
+  figure.
 - **`snsfig.m` / `sns_draw_circuit.m`** (vector circuit figure): fonts raised
   to 9.5–11 pt and the canvas set to 16.5 cm = dissertation text width, so
   LaTeX includes it at 100 % scale and the fonts print at face value.
@@ -362,9 +426,10 @@ was always fine — only the check crashed.
 
 | Demo | File | What it shows |
 |---|---|---|
-| `KneeReflexDemo.slx` | `sns_build_demo.m` / `sns_run_demo.m` | Ia/Ib reflex circuit + antagonist BPAs on a 1-DOF knee (theta settles 42.7°) |
-| `BPACPGLegDemo.slx` | `sns_build_cpg_demo.m` / `sns_run_cpg_demo.m` | half-center CPG (mutual inhibition + adaptive inhibition via slow Adp neurons) driving antagonist BPAs on the knee; full-amplitude alternating bursts, knee cycles ~10-48° |
-| `BeerCupReflexDemo.slx` | `sns_build_beer_demo.m` / `sns_run_beer_demo.m` | elbow holds a cup level while beer pours (0→0.62 kg); biceps = real BPA_20mm pressure-driven; Ia stretch reflex + Ib autogenic inhibition. Reflex ON halves the peak deviation (5.1° vs 9.7°) and settles near level |
+| `KneeReflexDemo.slx` | `sns_build_demo.m` / `sns_run_demo.m` | Ia/Ib reflex circuit + antagonist BPAs on a 1-DOF knee model (theta settles ~43° mean with mild antagonist alternation) |
+| `KneeReflexCircuit.slx` | `sns_build_circuit_view.m` | RUNNABLE 1:1 circuit view of KneeReflexDemo (identical blocks/values/wiring; simulates standalone) |
+| `BPACPGLegDemo.slx` | `sns_build_cpg_demo.m` / `sns_run_cpg_demo.m` | half-center CPG (mutual inhibition + adaptive inhibition via slow Adp neurons) driving antagonist BPAs on the knee; theta sweeps 10-48° (verified identical to the committed 2026-09-20 results) |
+| `BeerCupReflexDemo.slx` | `sns_build_beer_demo.m` / `sns_run_beer_demo.m` | elbow holds a cup level while beer pours (0→0.5 kg); BICEPS + TRICEPS BPA_20mm pair; starts in EQUILIBRIUM (no startup transient); Ia stretch reflex + Ib autogenic inhibition + reciprocal Ia inhibition. Reflex ON settles at 2.0° sag vs OFF 7.9°; biceps activation rises 0.39→0.42 while TRICEPS activation FALLS 0.40→0.32 (antagonist inhibition, plotted) |
 
 CPG tuning was done in ODE prototypes first (`tune_cpg.m`, `tune_cpg2.m`):
 mutual inhibition 0.8, adaptive current = g_adp(15 nA) x S_adp (LINEAR gain on
@@ -419,7 +484,7 @@ MISSING.** The dropped SW Hinge mates (exporter "not supported") became
 rigid welds ("unknown constraint" warnings at import), and the KB↔TI
 Concentric+Coincident pair did NOT translate into a revolute. Ben's planned
 fix (replace the 4 Hinge mates with Concentric+Coincident pairs in SW and
-re-export) is still REQUIRED before this route yields a usable plant — the
+re-export) is still REQUIRED before this route yields a usable model — the
 knee angle mate carries the joint state target.
 NOTE: the older `mdl_knee_rig_import_tmp_imported.slx` (12 blocks, 0 joints)
 is the 1-link sw2urdf STUB from 2026-09-16, not this import.
