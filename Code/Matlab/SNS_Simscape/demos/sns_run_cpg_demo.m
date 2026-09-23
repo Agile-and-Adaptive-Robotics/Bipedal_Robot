@@ -14,19 +14,21 @@ Vex = out.log_V_RG_ext; Vfl = out.log_V_RG_flex;
 Fe  = out.log_F_ext;    Ff  = out.log_F_flex;
 t = th.Time;
 
-% oscillation check: sign changes of the RG voltage difference
+% oscillation check: HYSTERESIS state switches of the RG voltage difference
+% (plain zero-crossing counts boundary chatter as extra half-cycles)
 dV = Vex.Data - Vfl.Data;
-s = sign(dV); s(s == 0) = 1;
-switches = sum(abs(diff(s)) > 0);
-period = 0;
-if switches >= 2
-    % mean half-period from crossing times
-    idx = find(abs(diff(s)) > 0);
-    tc = t(idx);
-    period = 2*mean(diff(tc));
+hyst = 0.1*max(dV) - 0.1*min(dV);          % 10% of the dV swing
+upLvl = max(dV) - hyst;  dnLvl = min(dV) + hyst;
+state = 1*(dV(1) >= 0);  tsw = [];
+for i = 2:numel(dV)
+    if state == 0 && dV(i) > upLvl, state = 1; tsw(end+1) = t(i); %#ok<SAGROW>
+    elseif state == 1 && dV(i) < dnLvl, state = 0; tsw(end+1) = t(i); %#ok<SAGROW>
+    end
 end
-fprintf('CPG: %d half-cycles in %g s', switches, t(end));
-if period > 0
+switches = numel(tsw);
+period = 2*mean(diff(tsw));
+fprintf('CPG: %d hysteresis switches in %g s', switches, t(end));
+if switches >= 2
     fprintf(' (period ~ %.3f s, freq ~ %.2f Hz)\n', period, 1/period);
 else
     fprintf('\n');

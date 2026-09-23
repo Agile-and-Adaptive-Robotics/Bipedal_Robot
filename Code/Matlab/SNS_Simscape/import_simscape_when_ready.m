@@ -92,5 +92,5 @@ fprintf('Saved %s\n', savePath);
 % * XML route: Hinge mates (Hinge1/2/5/6) become revolute joints; the
 %   "Knee Angle" angle mate carries the joint state target.
 % * Add Joint Actuation (torque) to the knee revolute joint, driven by the
-%   BPAForce outputs in KneeReflexDemo (replacing the reduced-order plant).
+%   BPAForce outputs in KneeReflexDemo (replacing the reduced-order model).
 % * Check the Tibia / Theta1 Coordinate System frames for sensor frames.

@@ -17,7 +17,7 @@ function h = snsfig(cmd, varargin)
 %   snsfig('neuron', x, y, r, label, sub)     + sublabel below circle
 %   snsfig('afferent', x, y, r, 'Ia'|'Ib', sub)
 %   snsfig('muscle', x, y, w, ht, label)      fusiform ellipse
-%   snsfig('box', x, y, w, ht, label)         rounded rectangle (plant etc.)
+%   snsfig('box', x, y, w, ht, label)         rounded rectangle (mechanical model etc.)
 %   snsfig('edge', x1,y1, x2,y2, style)       plain segment, style '-','--'
 %   snsfig('edgeR', xs,ys, xd,yd, r)          segment trimmed at circle radius r
 %   snsfig('exc', x, y, angDeg, s)            open triangle pointing angDeg

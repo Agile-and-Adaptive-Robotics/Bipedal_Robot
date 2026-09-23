@@ -17,8 +17,9 @@ close_system('SNS_Library', 0);
 fprintf('EXPORTED_OK: SNS_Library_R2025a.slx\n');
 
 % 2) Demo: relink to the renamed library copy, then export.
+% (demos live in demos\ since the 2026-09-10 reorg)
 load_system('SNS_Library_R2025a');   % keep loaded so the relink resolves
-load_system('KneeReflexDemo.slx');
+load_system(fullfile(thisDir, 'demos', 'KneeReflexDemo.slx'));
 blks = find_system('KneeReflexDemo', 'LookUnderMasks', 'all', 'Type', 'Block');
 nLink = 0; nRelink = 0; nFail = 0;
 for h = 1:numel(blks)

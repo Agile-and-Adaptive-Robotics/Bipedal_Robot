@@ -63,7 +63,7 @@ snsfig('label', 55.6, 14.6, 'A', 10, 'gi');
 snsfig('muscle', 66, 45, 12, 4.8, 'BPA ext');
 snsfig('muscle', 66, 16, 12, 4.8, 'BPA flex');
 
-% ---- knee joint plant ----
+% ---- knee joint model ----
 snsfig('box', 86, 31, 11, 14, sprintf('knee\njoint'));
 snsfig('arrow', 71.3, 44.2, 80.4, 34.6);
 snsfig('arrow', 71.3, 16.8, 80.4, 27.4);

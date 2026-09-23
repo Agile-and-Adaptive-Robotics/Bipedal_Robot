@@ -570,7 +570,32 @@ Loaded automatically at session start. Keep it current; keep it lean.
     and the HX711 apps.
 - `Solid_Models\Biomimetics_2022-Knee_Test\` — the knee test setup (CAD, STLs, point clouds).
 - `Solid_Models\OpenSim\Gait2392_Robotbody\` — OpenSim human reference models/data (incl.
-  Bifemsh/Vastus-adjusted variants used for muscle torque targets). `gait2327.osim` there is
+  Bifemsh/Vastus-adjusted variants used for muscle torque targets). **Master's-robot
+  provenance (2026-09-22, packaging-study session): `ConnorBipedal.osim` (+ `_Bifemsh_Adjusted`,
+  `_Vastus_Adjusted`) = Ben's UNTOUCHED master's-era robot** (repo import May 2023; Connor =
+  Connor Morrow, PamData author 2020); `gait2392_robotbody.osim` is the 2026-evolved copy
+  (last touched Sep 8 2026). The "27 actuators" = the PamData instantiations in
+  `Code\Matlab\Previous Optimization Code\RobotPAMCalculationOptimization.m` (3 trunk + 8
+  thigh/knee + 3 ankle PF + 5 subtalar incl. TWO Tibialis-Posterior routes + 4 toes + 4 hip;
+  ΣMIF 36,557 N). Full table extracted to
+  `Gait2392_Robotbody\bpa_actuators_27.json` (2026-09-22; conventions + anomalies inside —
+  incl. 'Psoas X' call whose `PLocation` is UNDEFINED in the script (presumed `Location4`),
+  the 2nd 'Tibialis Posterior' likely misnamed Tibialis Anterior (TAMIF 905, comment
+  "Tibialis Anterior t2 -> a3"), and a stray `9hi` token on PamData.m line 271 that breaks
+  MATLAB parsing). **`ConnorBipedal_symmetric.osim` = GENERATED 2026-09-22** by
+  `mirror_connor_left.py` (same mirror rules as repair_robotbody_muscles.py: z-negation,
+  socket _r→_l, MovingPathPoint z-spline negation; all 46 pairs validated; appliesForce
+  flags KEPT as-is — 16 RH-off). ConnorBipedal has 12 custom-vs-stock RH paths
+  (mostly via-point DROPS), disjoint-ish from robotbody's 25 custom paths. OPEN FOR BEN:
+  add_mag3_r differs repo-vs-thumb-drive (`D:\Bipedal humanoid\Gait2392_Robotbody\` — the
+  only path difference; thumb P2 = full-precision original (−0.1357, −0.0929, +0.0591),
+  repo = rounded (−0.059, −0.108, −0.03) == P2_0's coords). Thumb drive = `D:\Bipedal
+  humanoid` (master's data: RobotAssembly2019 SLDPRT bone-with-attachments parts, LM2020
+  knee STLs, Matlab code incl. AttachPoints_Robot.mat + PAM_Prop.mat + Modern-Robotics lib,
+  Living Machines 2019/2020 paper + PAM-placement drafts). Bone geometry for packaging:
+  repo `Code\Matlab\Bone_Mesh_Plots\Open_Sim_Bone_Geometry\` point clouds (Femur, Tibia,
+  Pelvis_R, Calcaneus, Talus, Toes, Sacrum, Spine .txt/.xlsx) + the MyoConverter Geometry
+  STLs already wired into `Gait2392_simbody_simscape.slx`. `gait2327.osim` there is
   **GENERATED** (2026-09-08, `D:\GitHub\myoconverter\build_gait2327.py`): stock gait2392_simbody
   with muscle GeometryPaths (points+wraps) ported from robotbody via XML surgery — stock Thelen
   params, all 92 muscles enabled; verified paths == robotbody 92/92. Key finding behind it:
@@ -727,7 +752,51 @@ Loaded automatically at session start. Keep it current; keep it lean.
   contact-asymmetry stepping → G rescale toward W2L values → port via tools pipeline.
 - `Code\Matlab\SNS_Simscape\` — SNS neuron block library (`SNS_Library.slx`: non-spiking RC
   neurons, E/I synapses with AUTO E/I icons, Ia/Ib afferents) + `KneeReflexDemo.slx`
-  (antagonist BPA knee reflex demo; runs in plain Simulink). **Diagram conventions
+  (antagonist BPA knee reflex demo; runs in plain Simulink).
+  **2026-09-22 LIBRARY REDESIGN (laptop, Ben's circuit rules — BREAKING):**
+  `SNS_Library.slx` rebuilt around ONE-INPUT synapses + INTERNAL neuronal
+  summation. `NonSpikingSynapse` = Vpre-in → `[g; g·Esyn]`-out (the POSTSYNAPTIC
+  neuron forms `Isyn = ΣgE − VΣg` — algebraically identical to the old 2-input
+  `gmax·Sat(Vpre)·(Esyn−Vpost)`, so all tuning + numpy references stay valid).
+  `NonSpikingNeuron` ports: 1 = `Iapp` [nA] (scalar OR vector, element-summed),
+  2..7 = `syn1..syn6` 2-wide synapse inputs; UNCONNECTED syn ports auto-ground
+  (model diag `UnconnectedInputMsg='none'`, the default) — NO Sum block before
+  any neuron, synapses are small and sit against the neuron they synapse onto.
+  New `SynSum` junction block (sums ≤8 synapse lines, chainable) for >6-synapse
+  neurons. Icons per Ben: graded-potential waveform (non-spiking) / spike-train
+  (spiking) neurons, spindle-shaped Ia capsule, striated muscle/BPA fusiforms,
+  pink PENTAGON MuscleActivation (new mask param `A0` = initial activation).
+  TERMINOLOGY (Ben): call things MODELS not "plants". Rebuilt + re-verified on
+  the new architecture: units test PASS 6.07e-4 mV (same); KneeReflexDemo
+  (verified vs an independent MATLAB ODE of the same math: rise 15.8°@0.05 s
+  identical, settle mean 43.5°; the old "~9 Hz limit cycle" note was wrong —
+  mild 0.5–2 Hz alternation, compare windowed means not final samples);
+  KneeReflexCircuit = RUNNABLE 1:1 twin of the demo (the old print-only stub
+  could not run — Ben flagged "neither work"); BPACPGLegDemo (theta range
+  9.7..48.0 IDENTICAL to the committed results; single sweep, corr(Ae,Af)
+  = +0.09 — it never cycled continuously); BeerCupReflexDemo reworked:
+  BICEPS + TRICEPS BPA_20mm pair with reciprocal Ia inhibition (triceps
+  activation FALLS 0.40→0.32 over the pour, plotted; biceps rises 0.39→0.42),
+  STARTS IN EQUILIBRIUM (A0 init + descending drive sized for the EMPTY cup) —
+  the old ON 5.13°/OFF 9.66° "max sag" numbers were STARTUP transients at
+  t = 0.12–0.2 s (measured from the committed mat: activation started at 0
+  under a full-cup step drive); new numbers: ON settles 2.0° vs OFF 7.9°.
+  `c_len` 0.02 (series/tendon compliance) is what leaves real work for the
+  reflex. SNS_SpinalNetwork regenerated via the updated sns_build_from_json.m
+  (per-neuron input Muxes onto Iapp + syn ports + 146 chained SynSums for
+  in-degrees up to 17; network verify PASS 4.2e-6 mV, V_DRIVE Euler-exact).
+  sns_animate_demo REWRITTEN: the knee shank was drawn UP alongside the femur
+  (leg read as folded 180° at θ≈0 — Ben's "leg starts out at 180 degrees");
+  now flexion swings the shank POSTERIORLY (shankA = −(90+θ)), quad = belly →
+  fixed patella + tendon → rotating tuberosity, hamstring → rotating posterior
+  tibia insertion, foot anterior; it animates KneeReflexDemo AND CPG results
+  separately. Beer animation: biceps origin was floating 10 cm lateral of the
+  shoulder → now shoulder → forearm insertion; triceps drawn posterior;
+  frames visually verified. export_slx_to_R2025a fixed for the demos\ folder
+  (was written pre-reorg). Traps banked: BPA force explodes for rel<0 (length
+  > Rest — sfit valid only in [0, KMAX]); a double-negated damping Sum port
+  caused runaway to 1e95 deg in the first beer rebuild (fixed).
+  **Diagram conventions
   (Ben, 2026-09-09):** open circle = neuron, white triangle = excitatory, solid black
   circle = inhibitory, ellipse = muscle; tints = Okabe-Ito CVD-safe; markers auto-draw
   from the sign of Esyn. Journal figures regenerate via `sns_draw_circuit.m` (circuit
