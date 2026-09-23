@@ -40,17 +40,24 @@ shares) AND its coupled controller-optimization loop, not a bolt-on.
      1.17 m/s: step length 0.79 m, step duration 0.67 s, stance 60%,
      knee flexion peaks matching Bovi 2011 shaded ranges.
 2. **Shevtsova 2026 (eLife RP107480)** — laminated rhythm generator.
-   Source: full text held locally (see LIT audit). Draft skeleton:
-   `shevtsova_laminar_draft.md` (V-class IN-mediated lamination;
-   V1/V2b-mediated mutual inhibition, V2a RG->PF excitation, V0/V3
-   commissurals). SUCCESS: half-center rhythm with laminated
+   Source: full text held locally (see LIT audit). Draft:
+   `shevtsova_laminar_draft.md` (FULL EXTRACTION 2026-09-23: Table 1
+   weights verified, lumbar-only biped reduction) + machine-readable
+   rules `shevtsova_rules.json`. SUCCESS: half-center rhythm with laminated
    inhibition survives deafferentation at matching drive; period and
    duty in their reported range.
-3. **Shinohara 2025** — interlimb/load adaptation model. Source:
-   locate exact item in Zotero (search "Shinohara"); known anchor:
-   force feedback excites the extensor center (their sec 4.2).
-   Draft: `shinohara_draft.md`. SUCCESS: split-belt/treadmill
-   adaptation behavior they report.
+3. **Shinohara 2025** — interlimb/load adaptation model. RESOLVED
+   2026-09-23: bioRxiv 2025.11.11.687930 (cat hindlimb + Danner-lineage
+   CPG + per-muscle afferents INTO the centers), full text local
+   (`shinohara_2025_biophiv687930_fulltext.txt`). Draft:
+   `shinohara_draft.md` (full extraction incl. Tables A.1/A.2/B.3 +
+   eqs 9-11 afferent wiring) + `shinohara_rules.json`. SUCCESS:
+   split-belt/treadmill adaptation behavior they report.
+4. **Rybak 2006a/2015/2024** — two-level RG/PF rhythm model. Draft
+   `rybak_draft.md` + `rybak_rules.json` (2026-09-23; 2006a Table 2
+   extracted from PMC1890439 — full text now local as
+   `spinal\lit_rybak2006_fulltext.txt`; companion 2006b is paywalled,
+   NOT read).
 
 ## How the replications plug into our stack
 

@@ -474,6 +474,56 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     fenced blocks) + 3 new figs curr3b_ground_* — deconfliction note for
     the other dissertation chat is in CHATGPT_HANDOFF.md "DISSERTATION
     CPG SECTION — DECONFLICTION".
+    **2026-09-23 (EB475WS4) — SEVEN-GOAL WORKFLOW (all reports in
+    `spinal\reports_20260923\`, EXEC_SUMMARY_20260923.md is the index;
+    workflow dwfrun-cfd949f1, supervisor GO):** (1) editor rubber-band
+    multi-select + group drag landed in `connectome_block_editor.html`
+    (NOT connectome_editor.html — that one is the rules form, no canvas;
+    ALT+click now arms synapses; node --check + 37/37 DOM-stub suite;
+    browser-confirm still pending). (2) curriculum stage 4 "balance"
+    (SCONE-Tutorial-3a analog): VEST vestibular-analog cells + II
+    length-loop, runner flags --vest/--vest-flexinh/--vest-prop,
+    --stand-eval; defaults 0 = bit-identical (410/376/1186 unchanged);
+    supervisor-caught bug fixed (contact-symmetry term now abs());
+    new edges await Ben's connectome-spec confirmation. (3) goal-3 MuJoCo
+    fidelity: keep 2.3.7/implicitfast/2 ms through the dissertation (SEE
+    impossible natively; spring-tendon workaround needs ≥1 kg virtual
+    tendon mass or 0.5 ms — recipe in goal3_mujoco_fidelity.md §3.2,
+    Ben-gated); ladder MEASURED (goal3_timestep_ladder.py): 2 ms vs
+    0.5 ms = 0.44° RMS ground / 0.19° air, error halves with step —
+    1-4 s per variant, cheap standing check; runner now has DEFAULT-OFF
+    `--adaptive-tol X` (error-controlled substepping, step-doubling
+    estimate) and `--contact-damp lessviscous|nonlinear` (stable
+    impedance-framework variants; naive negative-solref direct k,b is
+    UNSTABLE at 2 ms) — smokes exit 0, spinal_run.npz untouched.
+    (4) optuna review: ensemble answer YES for seeds + plant jitter, NO
+    for synthetic IK perturbation (only ONE reference cycle exists;
+    subject01_walk1.mot all-zeros placeholder); 22-70% of stage-3 trials
+    sat on the −320 sentinel at 32 params/1.3-2.5 trials-param; next
+    study: TPE multivariate + constraints_func, ~10-param space; ensemble
+    scaffold delivered; **REGRESSION FLAG: v10-era `--fitted --bestN`
+    winners NO LONGER WALK under current physics (100% double-support,
+    zero cycles at any drive — only s3* winners are current).** (5) gait
+    libraries: SimTK downloads login-gated (no mirrors for Arnold data);
+    OPEN substitute staged: Falisse 2022 predictsim_mtp (46 MB,
+    `D:\temp\gait_lib_staging\`, outside repo) with full predicted walking
+    + 92 muscle activations; `gait_lib_loader.py` (subject01 regression
+    <1e-9, GRF auto-detect + periodic-wrap mode); `gait_lib_intake.py` =
+    ONE command after Ben drops SimTK zips into
+    `D:\temp\gait_lib_staging\downloads\`; `gait_lib_score.py` +
+    `gait_lib_pilot2.py`: the s3k winner matches FALISSE BETTER than
+    subject01 (kine −222 vs −241 — the subject01 misfit is the known
+    knee/hip gaps); our six-synergy basis does NOT transfer to Falisse
+    (VAF ≈ 0, R2-vs-0 0.60) — train multi-reference, don't fix one basis.
+    (6) Rybak/Shevtsova/Shinohara first-pass drafts + rules JSONs in
+    `spinal\replication\` (per-edge citations; crossed flexor-excitatory
+    edge EXISTS in Shevtsova T1 + Rybak 2015 Fig 7A, not Shinohara;
+    IaIN↔IaIN + IBIN↔IBIN already exist conditionally at g=0.5 under
+    full_rules, build_network.py:795-800). (7) six-synergy model:
+    `synergy_model.py` + `synergy_basis.npz` (fsa_backsolve rank-6 NMF
+    verbatim; replay VAF 0.945/R2 0.920; NNLS≡H to 1e-6). PENDING BEN:
+    SimTK downloads (then run gait_lib_intake.py) + goal-3 production
+    ruling.
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the

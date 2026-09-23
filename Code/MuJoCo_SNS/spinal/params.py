@@ -266,6 +266,25 @@ G = dict(
     aff_f_rg=0.0,            # AFF_F -> RG-F exc (flexor afferent -> RG)
     aff_e_pf=0.0,            # AFF_E -> PF-E exc (extensor afferent -> PF)
     aff_f_pf=0.0,            # AFF_F -> PF-F exc (flexor afferent -> PF)
+    # ---- 2026-09-23 goal2 STANDING-BALANCE STAGE (Ben's request; modeled
+    # on SCONE Tutorial 3a "Balance" = autogenic length reflexes + a
+    # vestibular torso-point PD; see reports_20260923/goal2_balance_stage.md).
+    # ALL DEFAULTS 0 = VEST cells absent + II loop unchanged = today's
+    # behavior (byte-identity-at-0 contract).
+    # vest_ext: VEST_{r,l} vestibular-analog cells (runner feeds them the
+    #   rectified tilt-deviation/rate current) -> ipsilateral EXTENSOR-
+    #   group MN excitation (antigravity tone; Ben: "vestibular analog =
+    #   pelvis-tilt sensors driving extensor tone"). Directional ankle
+    #   strategy stays with the existing BAL_PF/BAL_DF cells.
+    # vest_flex_inh: same cells -> flexor-group MN inhibition (LVST
+    #   reciprocal flexor inhibition, standard physiology - AWAITING
+    #   Ben's connectome-spec confirmation).
+    # vest_prop: stance-gated boost on the II length loop (SCONE T3a KL
+    #   length-feedback analog; "proprioceptive balance = stance-gated
+    #   Ia/II length-load loops"). Runner-side presynaptic gain, >0 only.
+    vest_ext=0.0,
+    vest_flex_inh=0.0,
+    vest_prop=0.0,
 )
 
 # Extra gains for the phase-reset pathways (not searched by default; the

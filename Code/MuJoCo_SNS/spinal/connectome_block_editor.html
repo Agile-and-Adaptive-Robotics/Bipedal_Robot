@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Connectome Block Editor v2.1 — tabs, undo, body-anchored synapses</title>
+<title>Connectome Block Editor v2.2 — tabs, undo, group select/move</title>
 <style>
   body { font-family: Arial, Helvetica, sans-serif; font-size: 13px;
          margin: 0; background: #f2f2f2; color: #1a1a1a;
@@ -54,12 +54,15 @@
 </head>
 <body>
 <header>
-  <h1>Connectome Block Editor v2.1</h1>
+  <h1>Connectome Block Editor v2.2</h1>
   <div class="sub">Click palette type, then click canvas = place. Drag
-  nodes to move. SHIFT/ALT-drag from a node to another = synapse (or
-  SHIFT-click A then B). Every synapse has its own sign, gain, and
-  tuning tag. Del/Backspace deletes selection. Ctrl+Z / Ctrl+Y =
-  undo/redo. Tabs = different models; auto-saved in this browser.</div>
+  nodes to move. Drag on EMPTY canvas = rubber-band select; drag any
+  selected node = move the whole group. SHIFT+click = add/remove a
+  node from the selection. Click empty canvas or Esc = clear
+  selection. SHIFT/ALT-drag node-to-node = synapse (or ALT-click A
+  then B). Every synapse has its own sign, gain, and tuning tag.
+  Del/Backspace deletes selection. Ctrl+Z / Ctrl+Y = undo/redo.
+  Tabs = different models; auto-saved in this browser.</div>
   <div id="tabs"></div>
   <div id="topbar">
     <button id="bSave">Export JSON</button>
@@ -218,8 +221,23 @@ function switchTab(i) {
 // ---------------- state ----------------
 let nodes = [], edges = [];
 let sel = null, linkFrom = null, drag = null, linkDrag = null;
+// v2.2 group selection: selSet = node ids highlighted + moved
+// together; band = rubber-band gesture in progress; suppressClick
+// eats the click event that follows a completed drag gesture so it
+// cannot clear/replace the selection the drag just produced.
+let selSet = new Set(), band = null, bandRect = null;
+let suppressClick = false;
 let uid = 1;
 let undoStack = [], redoStack = [];
+
+// Pointer position in svg user units. offsetX on SVG children can
+// be target-relative in some browsers; clientX - rect.left is
+// always canvas-relative. Used by the v2.2 gestures (band, group
+// drag); the original single-node drag keeps its offsetX math.
+function svgPoint(ev) {
+  const r = svg.getBoundingClientRect();
+  return { x: ev.clientX - r.left, y: ev.clientY - r.top };
+}
 
 function serialize() {
   return JSON.parse(JSON.stringify({ nodes: nodes.map(n => ({
@@ -290,12 +308,13 @@ function renderNode(nd, keepSel) {
   g.addEventListener("mousedown", ev => startDrag(ev, nd.id));
   g.addEventListener("click", ev => {
     ev.stopPropagation();
+    if (suppressClick) { suppressClick = false; return; }
     if (drag && drag.moved) return;
-    onClickNode(nd.id, ev.shiftKey);
+    onClickNode(nd.id, ev.shiftKey, ev.altKey);
   });
   nd.el = g;
   svg.appendChild(g);
-  if (keepSel && sel && sel.kind === "node" && sel.id === nd.id)
+  if (keepSel && selSet.has(nd.id))
     g.classList.add("sel");
 }
 
@@ -366,28 +385,77 @@ function redrawEdges() {
 }
 
 // ---------------- selection / panel ----------------
+// One place decides the visible highlight: every node in selSet
+// plus (if the primary selection is an edge) that edge.
+function applySelClasses() {
+  nodes.forEach(n => n.el &&
+    n.el.classList.toggle("sel", selSet.has(n.id)));
+  edges.forEach(e => e.el &&
+    e.el.classList.toggle("sel", !!(sel && sel.kind === "edge" &&
+                                    sel.id === e.id)));
+}
 function clearSel() {
-  nodes.forEach(n => n.el && n.el.classList.remove("sel"));
-  edges.forEach(e => e.el && e.el.classList.remove("sel"));
   sel = null;
+  selSet.clear();
+  applySelClasses();
 }
 function selectNode(id) {
-  clearSel();
   sel = { kind: "node", id };
-  nodeById(id).el.classList.add("sel");
+  selSet = new Set([id]);
+  applySelClasses();
   showNodePanel(nodeById(id));
 }
 function selectEdge(id) {
-  clearSel();
   sel = { kind: "edge", id };
-  edgeById(id).el.classList.add("sel");
+  selSet.clear();
+  applySelClasses();
   showEdgePanel(edgeById(id));
+}
+// SHIFT+click: toggle one node in/out of the group selection.
+function toggleNodeSel(id) {
+  if (selSet.has(id)) {
+    selSet.delete(id);
+    if (sel && sel.kind === "node" && sel.id === id) {
+      const next = selSet.size ? [...selSet][selSet.size - 1] : null;
+      sel = next ? { kind: "node", id: next } : null;
+    }
+  } else {
+    selSet.add(id);
+    if (!(sel && sel.kind === "node" && selSet.has(sel.id))) {
+      sel = { kind: "node", id };
+    }
+  }
+  applySelClasses();
+  updatePanel();
+  status(selSet.size ? selSet.size + " node(s) selected — drag one" +
+         " to move the group" : "selection cleared");
+}
+// Panel follows the primary selection; a group of >1 shows a hint.
+function updatePanel() {
+  if (sel && sel.kind === "node" && nodeById(sel.id)) {
+    showNodePanel(nodeById(sel.id));
+  } else if (sel && sel.kind === "edge" && edgeById(sel.id)) {
+    showEdgePanel(edgeById(sel.id));
+  } else if (selSet.size > 1) {
+    document.getElementById("pTitle").textContent =
+      selSet.size + " nodes selected";
+    document.getElementById("pBody").innerHTML =
+      `<div class="sub">Drag any selected node to move the whole ` +
+      `group (relative positions kept). SHIFT+click a node to add ` +
+      `or remove it. Click empty canvas or press Esc to clear.</div>`;
+  } else {
+    document.getElementById("pTitle").textContent = "Nothing selected";
+    document.getElementById("pBody").innerHTML =
+      `<span class="sub">Click a node or synapse.</span>`;
+  }
 }
 function showNodePanel(nd) {
   document.getElementById("pTitle").textContent = nd.type;
   document.getElementById("pBody").innerHTML =
     `<label>label</label><input id="pLabel" value="${nd.label}">` +
-    `<div class="sub">SHIFT/ALT-drag to another node = synapse.</div>`;
+    `<div class="sub">SHIFT/ALT-drag to another node = synapse; ` +
+    `SHIFT+click = group-select toggle; ALT-click A then B = ` +
+    `two-click link.</div>`;
   document.getElementById("pLabel").addEventListener("change", ev => {
     snapshot();
     nd.label = ev.target.value;
@@ -418,25 +486,72 @@ function showEdgePanel(e) {
 }
 
 // ---------------- interactions ----------------
-svg.addEventListener("click", () => { if (!linkFrom) clearSel(); });
+svg.addEventListener("click", () => {
+  if (suppressClick) { suppressClick = false; return; }
+  if (!linkFrom) clearSel();
+});
+// Stale-click guard: a new press always resets suppressClick (e.g.
+// a group drag released outside the canvas never fires a click).
+window.addEventListener("mousedown",
+  () => { suppressClick = false; }, true);
+// Drag from EMPTY canvas = rubber-band select every node the
+// rectangle touches (replaces the current selection).
+svg.addEventListener("mousedown", ev => {
+  if (ev.target !== svg) return;          // node/edge hit: other paths
+  if (ev.shiftKey || ev.altKey) return;   // modifiers stay link tools
+  const p = svgPoint(ev);
+  band = { x0: p.x, y0: p.y, x1: p.x, y1: p.y, moved: false };
+  window.addEventListener("mousemove", onMove);
+  window.addEventListener("mouseup", endDrag);
+});
 
 function startDrag(ev, id) {
   const nd = nodeById(id);
   if (ev.shiftKey || ev.altKey) {
-    linkDrag = { from: id };
+    // pending until real movement: a no-move SHIFT press stays a
+    // click (selection toggle), a no-move ALT press stays a click
+    // (arms the two-click link) — neither creates anything alone.
+    // v2.1 returned here WITHOUT its own listeners, so the link
+    // gesture only completed via a stale linkDrag on the NEXT
+    // gesture (and duplicated edges on the two-click flow); this
+    // gesture is now self-contained.
+    const p = svgPoint(ev);
+    linkDrag = { from: id, x0: p.x, y0: p.y, moved: false };
     snapshot();
     status("drawing synapse from " + nd.label +
            " — release on the target");
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", endDrag);
     return;
   }
-  drag = { id, moved: false,
-           dx: ev.offsetX - nd.x, dy: ev.offsetY - nd.y };
+  if (selSet.has(id) && selSet.size > 1) {
+    // group drag: the grabbed node leads; every other selected
+    // node keeps its offset from it. Positions mutate exactly like
+    // the single-node drag (n.x/n.y), so localStorage, JSON
+    // export and undo all see group moves.
+    const p = svgPoint(ev);
+    drag = { id, moved: false,
+             dx: p.x - nd.x, dy: p.y - nd.y,
+             group: [...selSet].map(gid => {
+               const m = nodeById(gid);
+               return m ? { id: gid, sx: m.x, sy: m.y } : null;
+             }).filter(Boolean) };
+  } else {
+    drag = { id, moved: false,
+             dx: ev.offsetX - nd.x, dy: ev.offsetY - nd.y };
+  }
   window.addEventListener("mousemove", onMove);
   window.addEventListener("mouseup", endDrag);
 }
 let tempLine = null;
 function onMove(ev) {
   if (linkDrag) {
+    if (!linkDrag.moved) {
+      const p0 = svgPoint(ev);
+      if (Math.hypot(p0.x - linkDrag.x0, p0.y - linkDrag.y0) <= 3)
+        return;                      // still within click territory
+      linkDrag.moved = true;
+    }
     if (!tempLine) {
       tempLine = document.createElementNS(NS, "line");
       tempLine.setAttribute("stroke", "#B2182B");
@@ -450,7 +565,43 @@ function onMove(ev) {
     tempLine.setAttribute("y2", ev.offsetY);
     return;
   }
+  if (band) {
+    const p = svgPoint(ev);
+    band.x1 = p.x; band.y1 = p.y;
+    if (Math.hypot(p.x - band.x0, p.y - band.y0) > 3)
+      band.moved = true;
+    if (!bandRect) {
+      bandRect = document.createElementNS(NS, "rect");
+      bandRect.setAttribute("fill", "rgba(205,52,181,0.08)");
+      bandRect.setAttribute("stroke", "#CD34B5");
+      bandRect.setAttribute("stroke-width", "1");
+      bandRect.setAttribute("stroke-dasharray", "5,4");
+      bandRect.setAttribute("pointer-events", "none");
+      svg.appendChild(bandRect);
+    }
+    bandRect.setAttribute("x", Math.min(band.x0, band.x1));
+    bandRect.setAttribute("y", Math.min(band.y0, band.y1));
+    bandRect.setAttribute("width", Math.abs(band.x1 - band.x0));
+    bandRect.setAttribute("height", Math.abs(band.y1 - band.y0));
+    return;
+  }
   if (!drag) return;
+  if (drag.group) {
+    const p = svgPoint(ev);
+    const nx = p.x - drag.dx, ny = p.y - drag.dy;
+    const lead = drag.group.find(m => m.id === drag.id);
+    const ddx = nx - lead.sx, ddy = ny - lead.sy;
+    drag.group.forEach(m => {
+      const n2 = nodeById(m.id);
+      if (!n2) return;
+      n2.x = m.sx + ddx;
+      n2.y = m.sy + ddy;
+      n2.el.remove(); renderNode(n2, true);
+    });
+    drag.moved = true;
+    redrawEdges();
+    return;
+  }
   const nd = nodeById(drag.id);
   nd.x = ev.offsetX - drag.dx;
   nd.y = ev.offsetY - drag.dy;
@@ -461,6 +612,14 @@ function endDrag(ev) {
   window.removeEventListener("mousemove", onMove);
   window.removeEventListener("mouseup", endDrag);
   if (linkDrag) {
+    if (!linkDrag.moved && !tempLine) {
+      // no movement: this was a click, not a drag. Do nothing here
+      // and let the click event decide (SHIFT+click toggles the
+      // selection, ALT+click arms the two-click link).
+      undoStack.pop();   // no mutation happened
+      linkDrag = null;
+      return;
+    }
     const tgt = nodes.find(n =>
       n.id !== linkDrag.from &&
       Math.hypot(ev.offsetX - n.x, ev.offsetY - n.y) < 24);
@@ -481,14 +640,46 @@ function endDrag(ev) {
     linkDrag = null;
     return;
   }
-  if (drag && drag.moved) snapshot();
+  if (band) {
+    if (bandRect) { bandRect.remove(); bandRect = null; }
+    if (band.moved) {
+      suppressClick = true;   // don't let the follow-up click clear it
+      const rx0 = Math.min(band.x0, band.x1),
+            ry0 = Math.min(band.y0, band.y1),
+            rx1 = Math.max(band.x0, band.x1),
+            ry1 = Math.max(band.y0, band.y1);
+      const hits = nodes.filter(nd => {
+        const d = TYPES[nd.type];
+        const hw = d.shape === "ellipse" ? 30 :
+                   d.shape === "rect" ? 26 : 18;
+        const hh = d.shape === "circle" ? 18 : 13;
+        return nd.x + hw > rx0 && nd.x - hw < rx1 &&
+               nd.y + hh > ry0 && nd.y - hh < ry1;
+      });
+      selSet = new Set(hits.map(nd => nd.id));
+      sel = selSet.size === 1 ? { kind: "node",
+                                  id: [...selSet][0] } : null;
+      applySelClasses();
+      updatePanel();
+      status(selSet.size ? selSet.size + " node(s) selected" :
+             "no nodes in selection rectangle");
+    }
+    band = null;
+    return;
+  }
+  if (drag && drag.moved) {
+    snapshot();
+    if (drag.group) suppressClick = true;   // keep group selected
+  }
   drag = null;
 }
-function onClickNode(id, shift) {
-  if (shift && !linkFrom) {
+function onClickNode(id, shift, alt) {
+  if (alt && !linkFrom) {
+    // ALT+click arms the two-click synapse flow (v2.1 used SHIFT
+    // for this; SHIFT now toggles group selection)
     linkFrom = id;
     status("linking from " + nodeById(id).label +
-           " — SHIFT-click the target");
+           " — ALT-click the target");
     return;
   }
   if (linkFrom && linkFrom !== id) {
@@ -501,6 +692,10 @@ function onClickNode(id, shift) {
     linkFrom = null;
     selectEdge(e.id);
     snapshot();
+    return;
+  }
+  if (shift && !linkFrom) {
+    toggleNodeSel(id);
     return;
   }
   selectNode(id);
@@ -532,6 +727,13 @@ window.addEventListener("keydown", ev => {
   if (ev.key === "Delete" || ev.key === "Backspace") {
     ev.preventDefault();
     deleteSel();
+  } else if (ev.key === "Escape") {
+    // cancel any rubber band / armed link and clear the selection
+    if (bandRect) { bandRect.remove(); bandRect = null; }
+    band = null;
+    linkFrom = null;
+    clearSel();
+    status("selection cleared (Esc)");
   } else if ((ev.ctrlKey || ev.metaKey) && !ev.shiftKey &&
              ev.key.toLowerCase() === "z") {
     ev.preventDefault(); undo();
@@ -573,7 +775,9 @@ function loadSpec(spec, keepUndo) {
   if (!keepUndo) snapshot();
   nodes.forEach(n => n.el && n.el.remove());
   edges.forEach(e => e.el && e.el.remove());
-  nodes = []; edges = []; sel = null; linkFrom = null;
+  if (bandRect) { bandRect.remove(); bandRect = null; }
+  band = null;
+  nodes = []; edges = []; sel = null; selSet.clear(); linkFrom = null;
   const byLabel = {};
   try {
     (spec.nodes || []).forEach(nd => {
@@ -856,8 +1060,9 @@ document.getElementById("tplSel").addEventListener("change", ev => {
 // ---------------- boot ----------------
 renderTabs();
 loadIntoCanvas(cur(), true);
-status("ready — v2.1: Del key, SHIFT/ALT-drag synapses, Ctrl+Z/Y, " +
-       "body-anchored arrows, tabs auto-saved in this browser");
+status("ready — v2.2: drag empty canvas = rubber-band select, drag " +
+       "a selected node = group move, SHIFT+click toggle, Esc clear;" +
+       " ALT-click A then B = synapse; Ctrl+Z/Y; tabs auto-saved");
 </script>
 </body>
 </html>

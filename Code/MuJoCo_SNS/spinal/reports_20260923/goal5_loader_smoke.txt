@@ -1,0 +1,7 @@
+## subject01 regression
+REGRESSION PASS (max dev < 1e-9 vs kine_ref)
+
+## Falisse Case_40 (predicted walking)
+: style=falisse T_r=1.113s duty_r=0.57 duty_l=0.57 lag_rl=0.50 ds=0.15 | knee_min r/l -59.2/-59.2 deg hip_range r/l 51.6/51.6
+- our W_r explains Falisse r-leg activations: VAF -0.022, R2 0.596
+- our W_l explains Falisse l-leg activations: VAF -0.024, R2 0.595

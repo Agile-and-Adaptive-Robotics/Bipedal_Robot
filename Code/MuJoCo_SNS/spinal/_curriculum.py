@@ -8,6 +8,15 @@ Stage 2 (air_aff): afferented air (heel/toe + load signals active, feet
     free). Adds: phase_reset_e/f, heel_rge, toe_rge.
 Stage 3 (ground): supported ground walk. Adds: ib_rge (stance-Ib
     prolonger), ia_in (IaIN pathway), ankle_post_walk_trim.
+Stage 4 (balance, 2026-09-23): STANDING-BALANCE stage modeled on SCONE
+    Tutorial 3a "Balance" (proprioceptive autogenic length feedback +
+    vestibular torso-point PD; Ben's request). Adds: vest_ext /
+    vest_flex_inh (vestibular-analog VEST cells -> extensor tone /
+    flexor inhibition) and vest_prop (stance-gated II length-loop
+    boost), plus rig_scale (wean the support rig so the stage measures
+    real balance, not the springs). Objective = COM sway radius + tilt
+    envelope + contact symmetry + no falls over an 8 s standing eval
+    (runner --stand-eval). All new gains default 0 = previous behavior.
 
 Usage: python _curriculum.py <stage> [n_trials]
 Each stage writes curriculum_stage<N>.json (its best) so the next stage
@@ -48,7 +57,12 @@ KEYS3 = KEYS2 + ("ib_rge", "ia_in", "ia_f_contra_f", "v3_to_ibexc",
                  "pf_gain", "contra_swing", "contra_kinh",
                  "pm_gain", "pm_T", "pm_ws", "ky_scale", "pm_add",
                  "pm_aff", "full_rules", "no_cross")
-STAGE_KEYS = {1: KEYS1, 2: KEYS2, 3: KEYS3}
+# 2026-09-23 goal2 stage 4 (balance): vestibular-analog tone + stance-gated
+# II length loop + support-rig wean. vest_* are new params.G knobs (JSON
+# RULE: params default, set_stage loader, runner --best loader branch,
+# suggest surface here); rig_scale is a runner arg, not a G knob.
+KEYS4 = ("vest_ext", "vest_flex_inh", "vest_prop", "rig_scale")
+STAGE_KEYS = {1: KEYS1, 2: KEYS2, 3: KEYS3, 4: KEYS4}
 
 
 def set_stage(stage, p):
@@ -57,7 +71,7 @@ def set_stage(stage, p):
     P.G["renshaw"] = 0.5
     P.G["ankle_post_walk_trim"] = float(p.get("ankle_post_walk_trim", 1.0))
     P.TAU["rg_nap_h"] = float(p.get("rg_nap_h", 0.35))
-    if stage >= 2:
+    if 2 <= stage <= 3:
         P.G["heel_rge"] = float(p.get("heel_rge", 0.0))
         P.G["toe_rge"] = float(p.get("toe_rge", 0.0))
         P.G["ib_e_central"] = float(p.get("ib_e_central", 0.0))
@@ -66,7 +80,7 @@ def set_stage(stage, p):
         P.G["ii_e_central"] = float(p.get("ii_e_central", 0.0))
         P.G["c1_gain"] = float(p.get("c1_gain", 1.0))
         P.G["v3_gain"] = float(p.get("v3_gain", 0.0))
-    if stage >= 3:
+    if stage == 3:
         P.G["ib_rge"] = float(p.get("ib_rge", 0.0))
         P.G["ia_in"] = float(p.get("ia_in", 0.0))
         P.G["ia_f_contra_f"] = float(p.get("ia_f_contra_f", 0.0))
@@ -108,6 +122,12 @@ def set_stage(stage, p):
             os.environ["AARL_PELVIS_TY"] = repr(float(p["pelvis_ty"]))
         else:
             os.environ.pop("AARL_PELVIS_TY", None)
+    if stage == 4:
+        # goal2 balance stage (2026-09-23): JSON-RULE loaders for the
+        # three new vest_* G knobs (defaults 0 = previous behavior).
+        P.G["vest_ext"] = float(p.get("vest_ext", 0.0))
+        P.G["vest_flex_inh"] = float(p.get("vest_flex_inh", 0.0))
+        P.G["vest_prop"] = float(p.get("vest_prop", 0.0))
 
 
 def objective(stage):
@@ -121,7 +141,7 @@ def objective(stage):
             desc_f=trial.suggest_float("desc_f", 0.7, 2.2),
             rg_to_pf=trial.suggest_float("rg_to_pf", 1.8, 3.0),
         )
-        if stage >= 2:
+        if 2 <= stage <= 3:
             # NEW GAINS ENTER SMALL (2026-09-20): the 09-18 s2 study
             # sampled these in [0, 1] and EVERY trial lost the stage-1
             # rhythm (trial 0 = stage-1 winner + gains 0.2-0.95 -> static
@@ -139,7 +159,7 @@ def objective(stage):
                                                       0.0, 0.5)
             sug["c1_gain"] = trial.suggest_float("c1_gain", 0.1, 0.8)
             sug["v3_gain"] = trial.suggest_float("v3_gain", 0.0, 0.3)
-        if stage >= 3:
+        if stage == 3:
             sug["ib_rge"] = trial.suggest_float("ib_rge", 0.0, 1.0)
             sug["ia_in"] = trial.suggest_float("ia_in", 0.0, 1.2)
             sug["ia_f_contra_f"] = trial.suggest_float("ia_f_contra_f",
@@ -182,6 +202,20 @@ def objective(stage):
             # blocks weight transfer (s3g diagnosis) - scale it
             sug["ky_scale"] = trial.suggest_float("ky_scale", 0.02,
                                                   1.0, log=True)
+        if stage == 4:
+            # goal2 balance stage: vestibular-analog tone + reciprocal
+            # flexor inhibition + stance-gated II loop; gains enter SMALL
+            # ([0, 0.5/0.3/1.0] - the 09-18 full-range lesson). rig_scale
+            # weans the support rig so the objective measures the
+            # controllers, not the springs (AGENTS: support boundary
+            # S~0.8-1.0 "until the pelvis-balance piece exists" - this
+            # stage is that piece).
+            sug["vest_ext"] = trial.suggest_float("vest_ext", 0.0, 0.5)
+            sug["vest_flex_inh"] = trial.suggest_float("vest_flex_inh",
+                                                       0.0, 0.3)
+            sug["vest_prop"] = trial.suggest_float("vest_prop", 0.0, 1.0)
+            sug["rig_scale"] = trial.suggest_float("rig_scale", 0.05,
+                                                   1.0)
         # searched keys override; everything else pinned at v10 winner
         p = {**BASE_MUL, **sug}
         set_stage(stage, p)
@@ -225,6 +259,24 @@ def objective(stage):
             if not np.isfinite(score):
                 return -200.0
             return float(score)
+        if stage == 4:
+            # goal2 standing-balance eval (SCONE Tutorial-3a analog):
+            # 8 s standing (--stand-eval 8, DRIVE 0 throughout) at this
+            # trial's rig wean. Sentinels: NaN -200 < fall -150 < any
+            # stander. Terms: COM sway radius (m, 400/m), tilt envelope
+            # (deg, 1/deg), foot-load symmetry deviation from even
+            # (bal_contact_sym = 0.5 = even split; ABS - either side
+            # overloading costs the same; 20 max cost at sym 0 or 1).
+            m = R.main(["--stand-eval", "8",
+                        "--rig-scale", repr(float(p["rig_scale"]))])
+            if m["nan"]:
+                return -200.0
+            if m["bal_fell"]:
+                return -150.0
+            return (100.0
+                    - 400.0 * float(m["bal_sway"])
+                    - 1.0 * float(m["bal_tilt_max"])
+                    - 40.0 * abs(0.5 - float(m["bal_contact_sym"])))
         m = R.main(["--eval", "--drive", repr(p["drive"])])
         if m["nan"]:
             return -400.0
@@ -278,7 +330,7 @@ def main():
     # fixed on, full_rules kept on) - retune the ONLY configuration
     # that produced bilateral stepping.
     name = {1: "curr_s1_air_deaff", 2: "curr_s2b_air_aff",
-            3: "curr_s3k_nocross"}[stage]
+            3: "curr_s3k_nocross", 4: "curr_s4_balance"}[stage]
     prev = json.loads(open("best_walk_params_v10.json",
                            encoding="utf-8").read())
     BASE_MUL = dict(prev["multipliers"])
@@ -296,21 +348,27 @@ def main():
         # with all new pathways OFF).
         sk = STAGE_KEYS[stage]
         seed = {k: 0.0 for k in sk}
-        seed["c1_gain"] = 0.1  # floor of its range
-        # sensible mid-range defaults for keys the previous winner
-        # cannot carry (a 0.0 pelvis_ty would put the walker at ground
-        # level!)
-        seed["pelvis_ty"] = 0.905
-        seed["f1_anklepf_inh"] = 0.3
-        seed["pf_gain"] = 1.0      # 2026-09-21: raise from v10's 0.41
-        seed["contra_swing"] = 0.5
-        seed["contra_kinh"] = 0.5
-        seed["pm_gain"] = 0.5
-        seed["pm_T"] = 1.23
-        seed["pm_ws"] = 0.4
-        seed["pm_add"] = 0.4
-        seed["pm_aff"] = 0.8
-        seed["ky_scale"] = 0.05
+        if stage == 4:
+            # goal2 balance stage: vest gains seed at 0 (defaults-off =
+            # today's standing reproduced exactly); rig_scale seeds FULLY
+            # SUPPORTED (1.0) so trial 0 is the incumbent standing config.
+            seed["rig_scale"] = 1.0
+        else:
+            seed["c1_gain"] = 0.1  # floor of its range
+            # sensible mid-range defaults for keys the previous winner
+            # cannot carry (a 0.0 pelvis_ty would put the walker at ground
+            # level!)
+            seed["pelvis_ty"] = 0.905
+            seed["f1_anklepf_inh"] = 0.3
+            seed["pf_gain"] = 1.0      # 2026-09-21: raise from v10's 0.41
+            seed["contra_swing"] = 0.5
+            seed["contra_kinh"] = 0.5
+            seed["pm_gain"] = 0.5
+            seed["pm_T"] = 1.23
+            seed["pm_ws"] = 0.4
+            seed["pm_add"] = 0.4
+            seed["pm_aff"] = 0.8
+            seed["ky_scale"] = 0.05
         try:
             # stage-3 retunes chain from the previous GROUND winner when
             # one exists (s3b); fresh chains fall back to the prior stage
@@ -327,7 +385,8 @@ def main():
         for k in sk:
             if k in prevw:
                 seed[k] = float(prevw[k])
-        seed["c1_gain"] = max(seed["c1_gain"], 0.1)
+        if "c1_gain" in sk:
+            seed["c1_gain"] = max(seed["c1_gain"], 0.1)
         # full_rules is a FIXED topology switch in s3j: force the seed
         # to match the categorical even when the previous winner
         # predates the connectome change

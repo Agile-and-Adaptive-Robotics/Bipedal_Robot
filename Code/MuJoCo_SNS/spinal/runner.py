@@ -14,7 +14,12 @@ Each step:
 Usage (from Code/MuJoCo_SNS/spinal, myo env):
     python runner.py [--drive N] [--no-afferents] [--harness K] [--time S]
                      [--no-ground] [--leg-damping X] [--view] [--scope]
-                     [--realtime]
+                     [--realtime] [--adaptive-tol X] [--contact-damp V]
+--adaptive-tol X (default 0 = off): error-controlled integration - any
+        2 ms step whose step-doubling error estimate exceeds X deg is
+        refined to 4 x 0.5 ms (goal-3, 2026-09-23).
+--contact-damp V (off by default): V = lessviscous | nonlinear - the two
+        stable impedance-framework contact variants (goal-3, 2026-09-23).
 --view  opens MuJoCo's interactive 3D window (left-drag orbit, scroll
         zoom, double-click a body to track); sim runs at FULL SPEED,
         close the window to end early. --realtime = 1x playback.
@@ -90,6 +95,71 @@ def _pm_window(phi, lo=0.62, hi=0.95, edge=0.05):
         return float(0.5 * (1.0 - np.cos(np.pi
                                          * ((hi + edge) - phi) / edge)))
     return 1.0
+
+
+# --- goal-3 fidelity flags (2026-09-23): error-controlled substepping and
+# contact-damping variants, OFF by default (adaptive_tol = 0 keeps the
+# exact single mj_step call; contact_damp = None leaves solref/solimp
+# untouched) so every recorded winner reproduces bit-identically. See
+# reports_20260923/goal3_fidelity_variants.md for the measured demos.
+_ADAPT_ADR: dict[int, dict[str, int]] = {}
+
+
+def _adaptive_step(model, data, tol_deg: float) -> None:
+    """One 2 ms control step, error-controlled (step doubling): probe
+    one 2 ms step vs two 1 ms half-steps from the same state; when the
+    key-joint discrepancy exceeds tol_deg (deg), take 4 x 0.5 ms instead.
+    ctrl is held across substeps (production ZOH semantics; activation
+    states integrate through the finer steps)."""
+    adr = _ADAPT_ADR.get(id(model))
+    if adr is None:
+        adr = {jn: model.jnt_qposadr[model.joint(jn).id]
+               for jn in KEY_JOINTS}
+        _ADAPT_ADR[id(model)] = adr
+
+    def _save():
+        return (data.qpos.copy(), data.qvel.copy(), data.act.copy(),
+                float(data.time), data.qacc_warmstart.copy())
+
+    def _restore(s):
+        data.qpos[:] = s[0]
+        data.qvel[:] = s[1]
+        data.act[:] = s[2]
+        data.time = s[3]
+        data.qacc_warmstart[:] = s[4]
+
+    def _qkey():
+        return np.array([data.qpos[a] for a in adr.values()])
+
+    buf = _save()
+    model.opt.timestep = DT
+    mujoco.mj_step(model, data)
+    q_coarse = _qkey()
+    _restore(buf)
+    model.opt.timestep = DT / 2
+    for _ in range(2):
+        mujoco.mj_step(model, data)
+    q_probe = _qkey()
+    err = float(np.max(np.abs(np.degrees(q_probe - q_coarse))))
+    if err > tol_deg:
+        _restore(buf)
+        model.opt.timestep = DT / 4
+        for _ in range(4):
+            mujoco.mj_step(model, data)
+
+
+def _apply_contact_damp(model, variant: str) -> None:
+    """Contact-damping variants INSIDE the impedance framework (the
+    demonstrated stable ones; the naive direct-(k, b) negative-solref
+    route is UNSTABLE at 2 ms - see goal3_fidelity_variants.md)."""
+    if variant == "lessviscous":
+        model.pair_solref[:, 0] = 0.01   # timeconst 0.02 -> 0.01
+        model.pair_solref[:, 1] = 0.70   # dampratio 1 -> 0.7
+    elif variant == "nonlinear":
+        model.pair_solimp[:, 1] = 0.90   # midpoint 0.95 -> 0.90
+        model.pair_solimp[:, 3] = 0.003  # width 0.001 -> 0.003
+    else:
+        raise ValueError(f"unknown --contact-damp variant: {variant}")
 
 
 def drive_posture(t: float, walk_drive: float) -> tuple[float, float]:
@@ -649,6 +719,8 @@ def main(argv):
     eval_mode = False
     rig_scale = 1.0
     straight_start = False
+    adaptive_tol = 0.0      # --adaptive-tol X: error-controlled substepping
+    contact_damp = None     # --contact-damp lessviscous|nonlinear
     args = list(argv)
     fit_keys = None
     if "--fitted" in args:
@@ -773,7 +845,9 @@ def main(argv):
                    "contact_onset", "contra_swing",
                    "contra_kinh", "pm_gain", "pm_T",
                    "pm_ws", "pm_add", "pm_aff",
-                   "full_rules"):  # JSON RULE
+                   "full_rules",
+                   # goal2 balance stage (2026-09-23) - JSON RULE
+                   "vest_ext", "vest_flex_inh", "vest_prop"):  # JSON RULE
             if _k in best:
                 _p.G[_k] = float(best[_k])
         if "joint_pf" in best:
@@ -790,6 +864,15 @@ def main(argv):
         a = args.pop(0)
         if a == "--drive":
             walk_drive = float(args.pop(0))
+        elif a == "--adaptive-tol":
+            # goal-3 (2026-09-23): error-controlled integration - 0 (off)
+            # keeps the exact single-step path; > 0 refines any 2 ms step
+            # whose step-doubling error estimate exceeds tol (deg).
+            adaptive_tol = float(args.pop(0))
+        elif a == "--contact-damp":
+            # goal-3 (2026-09-23): impedance-framework contact variant
+            contact_damp = args.pop(0) if args and \
+                not args[0].startswith("--") else "lessviscous"
         elif a == "--joint-pf":
             # 2026-09-18: build the joint-layer PF (T1 fit) instead of
             # the phase cells; value 0/absent = phase cells
@@ -850,6 +933,34 @@ def main(argv):
         elif a == "--time":
             SCHEDULE["stand2"] = (SCHEDULE["ramp_down"][1],
                                   SCHEDULE["ramp_down"][1] + float(args.pop(0)))
+        elif a == "--stand-eval":
+            # goal2 balance-stage eval (2026-09-23; SCONE Tutorial-3a
+            # analog): STANDING ONLY, no walk window. Value = total
+            # duration in s (default 8). eval_mode metrics then carry the
+            # bal_* balance fields (sway radius, tilt envelope, contact
+            # symmetry, fall flag) for the stage-4 objective.
+            eval_mode = True
+            _T = float(args.pop(0)) if args and \
+                args[0].replace(".", "").replace("-", "").isdigit() else 8.0
+            SCHEDULE.update(stand1=(0.0, _T), ramp_up=(_T, _T),
+                            walk=(_T, _T), ramp_down=(_T, _T),
+                            stand2=(_T, _T))
+        elif a == "--vest":
+            # goal2 vestibular-analog tone gain (VEST -> extensor MNs;
+            # 0 / absent = topology absent, bit-identical)
+            import params as _p
+            _p.G["vest_ext"] = float(args.pop(0)) if args and \
+                args[0].replace(".", "").replace("-", "").isdigit() else 0.5
+        elif a == "--vest-flexinh":
+            # goal2 reciprocal flexor inhibition from the VEST cells
+            import params as _p
+            _p.G["vest_flex_inh"] = float(args.pop(0)) if args and \
+                args[0].replace(".", "").replace("-", "").isdigit() else 0.2
+        elif a == "--vest-prop":
+            # goal2 stance-gated II length-loop boost (SCONE T3a KL analog)
+            import params as _p
+            _p.G["vest_prop"] = float(args.pop(0)) if args and \
+                args[0].replace(".", "").replace("-", "").isdigit() else 0.5
 
     # state-dump hook (debug): RUNNER_DUMP_STATE=<file> writes every
     # mutable param right after arg parsing - diff two paths to find
@@ -933,6 +1044,9 @@ def main(argv):
     data = mujoco.MjData(model)
     seed_pose(model, data, key_pose)
     mujoco.mj_forward(model, data)
+    if contact_damp is not None:
+        _apply_contact_damp(model, contact_damp)
+        print(f"contact damping variant applied: {contact_damp}", flush=True)
 
     # interactive 3D viewer (--view): open the window FIRST (right after
     # the model is ready) so it appears within ~2 s of launching - the
@@ -1096,6 +1210,10 @@ def main(argv):
     pm_on = (G["pm_gain"] > 0.0 or G["pm_ws"] > 0.0) and not no_ground
     pm_phase = {"r": 0.0, "l": 0.5}
     pm_prev_loaded = {"r": False, "l": False}
+    # goal2 proprioceptive balance (2026-09-23): stance-gated boost on the
+    # II length loop. Gate flag (not a multiplier-at-0) so the OFF path is
+    # the IDENTICAL code path = bit-identical.
+    vest_prop_on = G["vest_prop"] > 0.0
     # unilateral deafferentation set (AARL_DEAFF=l|r|l,r; 2026-09-21):
     # muscle actuators of these sides get ZERO afferent drive; their
     # heel/toe/load channels are also zeroed in the stance_fb block
@@ -1152,10 +1270,16 @@ def main(argv):
                 # i0_ii=1.0 nA tonic excites every extensor MN ~0.2 ctrl
                 # through swing (phase-aligned means: quads 0.25 in swing,
                 # knee parked at +10 deg - diag_phase.py)
-                u[iport[f"II_{a}"]] = max(
-                    AFF["i0_ii"] * (0.3 + 0.7 * np.array(
-                        [stance[muscles[a].side] for a in acts]))[i]
-                    + g_ii[i] * len_norm[i], 0.0)
+                u_ii = AFF["i0_ii"] * (0.3 + 0.7 * np.array(
+                    [stance[muscles[a].side] for a in acts]))[i] \
+                    + g_ii[i] * len_norm[i]
+                if vest_prop_on:
+                    # goal2 (SCONE T3a KL analog): scale the stance-gated
+                    # II length component (the proprioceptive-balance loop)
+                    u_ii = AFF["i0_ii"] * (0.3 + 0.7 * stance[s]) \
+                        + g_ii[i] * len_norm[i] \
+                        * (1.0 + G["vest_prop"] * stance[s])
+                u[iport[f"II_{a}"]] = max(u_ii, 0.0)
                 u[iport[f"Ib_{a}"]] = max(0.5 * g_ib[i] * force_norm[i], 0.0)
             # (PRESET hip-signal ports removed with the pathway 2026-09-16;
             # sensory phase reset now travels the per-muscle afferent ->
@@ -1201,6 +1325,24 @@ def main(argv):
             u[iport["BAL_TRK_EXT"]] = float(np.clip(
                 -BAL["kp_trk"] * e - BAL["kd_trk"] * lean_dot, 0.0,
                 BAL["max_trk"]))
+            # --- goal2 vestibular-analog cells (2026-09-23; net.vest =
+            # True only when a vest gain > 0). Signal = RECTIFIED tilt
+            # deviation + rate (otolith/canal analog; the directional
+            # correction stays with BAL_TRK/BAL_PF/BAL_DF above). SCONE
+            # Tutorial-3a model: vestibular BodyPointReflex = torso-point
+            # PD with 0.1 s delay driving all major muscles; Di Russo
+            # 2023 JNE eq (5) uses the same kp*(theta-theta0)+kv*theta_dot
+            # trunk-lean PD. Magnitudes reuse the Ben-tuned BAL_TRK
+            # gains + clamp; the VEST cells' 0.1 s membrane tau supplies
+            # the vestibular lag. Bilateral symmetric (SCONE
+            # symmetric = 1). Tone-only: rises with ANY deviation.
+            if net.vest:
+                u_vest = float(np.clip(
+                    BAL["kp_trk"] * abs(e)
+                    + BAL["kd_trk"] * abs(lean_dot),
+                    0.0, BAL["max_trk"]))
+                for s2 in net.sides:
+                    u[iport[f"VEST_c_{s2}"]] = u_vest
         u[iport["DRIVE"]] = drive
         u[iport["POSTURE"]] = posture
         # --- v11 heel/toe contact mechanosensors (audit P1a) ---
@@ -1412,7 +1554,10 @@ def main(argv):
             data.qvel[:] = 0.0
             mujoco.mj_forward(model, data)
         else:
-            mujoco.mj_step(model, data)
+            if adaptive_tol > 0.0:
+                _adaptive_step(model, data, adaptive_tol)
+            else:
+                mujoco.mj_step(model, data)
         if k % 10 == 0:
             if viewer is not None:
                 if not viewer.is_running():
@@ -1527,6 +1672,26 @@ def main(argv):
                                  contact=log_contact[:n_done])
         except Exception:
             k = None
+        # ---- goal2 balance metrics (2026-09-23): always computed over
+        # the post-warmup prefix; consumed by the stage-4 standing
+        # objective (COM sway radius, tilt envelope, contact symmetry,
+        # no falls). Zero-length guard for degenerate runs.
+        i_bal = min(int(np.searchsorted(tt, WARMUP)), n_done - 1)
+        seg_c = log_com[i_bal:n_done]
+        seg_qd = np.degrees(log_q[i_bal:n_done])
+        seg_ct = log_contact[i_bal:n_done]
+        if seg_c.shape[0]:
+            _rad = np.hypot(seg_c[:, 0] - x_ref, seg_c[:, 1] - y_ref)
+            bal_sway = float(np.max(_rad))
+            bal_sway_rms = float(np.sqrt(np.mean(_rad ** 2)))
+            bal_tilt_max = float(np.max(np.abs(seg_qd[:, 0])))
+            bal_com_z_min = float(np.min(seg_c[:, 2]))
+        else:
+            bal_sway = bal_sway_rms = bal_tilt_max = bal_com_z_min = 0.0
+        _cr = float(np.mean(seg_ct[:, 0])) if seg_ct.shape[0] else 0.0
+        _cl = float(np.mean(seg_ct[:, 1])) if seg_ct.shape[0] else 0.0
+        bal_contact_sym = float(_cr / (_cr + _cl)) if (_cr + _cl) > 1e-9 \
+            else 0.25   # no contact at all: score between 0 (one-foot) and 0.5 (even)
         metrics = dict(
             nan=not (finite_q and finite_c),
             t_end=float(tt[-1]),
@@ -1545,6 +1710,13 @@ def main(argv):
                 (log_neuro[:n_done, 2]
                  > 0.5 * max(np.max(log_neuro[:n_done, 2]), 1e-6)
                  ).astype(int)) == 1)),
+            # goal2 balance fields (stage-4 objective consumes these)
+            bal_sway=bal_sway,
+            bal_sway_rms=bal_sway_rms,
+            bal_tilt_max=bal_tilt_max,
+            bal_contact_sym=bal_contact_sym,
+            bal_com_z_min=bal_com_z_min,
+            bal_fell=bool(bal_com_z_min < 0.55),
         )
         return metrics
 

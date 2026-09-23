@@ -264,6 +264,11 @@ class SpinalNetwork:
         self.ia_in = bool(G["ia_in"] > 0.0)
         self.aff_loops = bool(G["aff_e_rg"] > 0.0 or G["aff_f_rg"] > 0.0
                               or G["aff_e_pf"] > 0.0 or G["aff_f_pf"] > 0.0)
+        # 2026-09-23 goal2 standing-balance stage (Ben's request; SCONE
+        # Tutorial-3a analog): VEST_{r,l} vestibular-analog cells, built
+        # ONLY when a vest gain > 0 (zero-gain synapses alone change BLAS
+        # summation order - the v5 lesson; defaults 0 = network identical)
+        self.vest = bool(G["vest_ext"] > 0.0 or G["vest_flex_inh"] > 0.0)
         # 2026-09-18 joint-layer PF (T1/T3 experiment; 0 = phase cells)
         self.joint_pf = bool(G.get("joint_pf", 0.0) > 0.0)
         if self.joint_pf:
@@ -280,6 +285,20 @@ class SpinalNetwork:
             self.idx[name] = len(self.idx)
             n.add_input(name)
             self.inputs.append(name)
+
+        # ---- goal2 vestibular-analog cells (one per side; conditional
+        # topology, defaults 0 = absent). The runner feeds each a current
+        # rectified from the pelvis-tilt deviation + rate (otolith/canal
+        # analog; SCONE T3a vestibular BodyPointReflex: torso-point PD,
+        # 0.1 s delay ~ this 0.1 s membrane tau). Same cell family as the
+        # BAL_* descending cells (brainstem surrogate, not spinal IN).
+        if self.vest:
+            for side in self.sides:
+                vname = f"VEST_{side}"
+                n.add_neuron(_neu(TAU["descend"]), name=vname)
+                self.idx[vname] = len(self.idx)
+                n.add_input(vname)
+                self.inputs.append("VEST_c_" + side)
 
         # ---- per-side circuitry ----
         for side in self.sides:
@@ -878,6 +897,33 @@ class SpinalNetwork:
             elif g == "trunk_flex":
                 n.add_connection(_syn(G["bal_trunk"], exc=True),
                                  "BAL_TRK_FLX", f"MN_{act}")
+
+        # ---- goal2 vestibular-analog tone (2026-09-23; Ben's
+        # standing-balance-stage request). Traces to (a) Ben's request
+        # text ("vestibular analog = pelvis-tilt / COM sensors driving
+        # extensor tone + ankle strategy") and (b) the SCONE Tutorial-3a
+        # balance controller (vestibular BodyPointReflex from torso to
+        # all major muscles; verified local copy in Documents\SCONE\
+        # Tutorials\controllers\ControllerReflexBalance.scone lines
+        # 25-43). Direct VEST->MN edges follow the established BAL_*
+        # balance-cell pattern above (brainstem surrogates wire direct,
+        # not through spinal INs). Each edge gated by ITS OWN gain > 0
+        # (a 0-gain synapse still changes summation order).
+        if self.vest:
+            for act, mi in self.muscles.items():
+                vsrc = f"VEST_{mi.side}"
+                g = mi.groups[0]
+                if G["vest_ext"] > 0.0 and g in ("knee_ext", "ankle_pf",
+                                                 "hip_ext", "trunk_ext"):
+                    # antigravity extensor tone (vestibulospinal)
+                    n.add_connection(_syn(G["vest_ext"], exc=True),
+                                     vsrc, f"MN_{act}")
+                elif G["vest_flex_inh"] > 0.0 and g in (
+                        "hip_flex", "knee_flex", "ankle_df", "trunk_flex"):
+                    # reciprocal flexor inhibition (LVST) - awaiting
+                    # Ben's connectome-spec confirmation
+                    n.add_connection(_syn(G["vest_flex_inh"], exc=False),
+                                     vsrc, f"MN_{act}")
 
     # ------------------------------------------------------------------ run
     def compile(self, dt: float = DT):
