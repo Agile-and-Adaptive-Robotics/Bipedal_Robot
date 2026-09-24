@@ -1,4 +1,10 @@
-# Figures to make — notes for Ben (2026-09-07)
+# Figures to make — notes for Ben (2026-09-07; status pass 2026-09-23)
+
+**STATUS PASS 2026-09-23 (ZCode, easteregg2):** two items are now DONE by existing
+assets (2 and 6A), one partially absorbed (4), one downgraded (5). Still genuinely
+missing and high-value: **item 1 (roadmap) and item 3 (pipeline)**. Note the Xi-figure
+files below live ONLY on EB475WS4 (untracked) — they must be committed/pushed and
+uploaded to Overleaf before the text that references them compiles there.
 
 The monograph currently has figures for Chapters 3–5 (reused from the two papers)
 but **none for Chapters 1, 2, 6, or the appendices**. Below are specs for the
@@ -10,7 +16,7 @@ with existing figures, PNG acceptable.
 
 ---
 
-## 1. Dissertation roadmap (Chapter 1) — HIGH priority
+## 1. Dissertation roadmap (Chapter 1) — HIGH priority — **STILL OPEN**
 
 - **Where:** end of §1.5 Dissertation Organization (p. 6–7). Label `fig:roadmap`.
 - **Content:** left-to-right block diagram of the program:
@@ -20,30 +26,25 @@ with existing figures, PNG acceptable.
   Under the first three blocks: "validated in this dissertation"; under the last
   three: "future work". Optionally a feedback arrow from the robot block back to
   the benchmark labeled "biological insight".
+  2026-09-23 note: the "future work" labels predate the completed-work framing rule
+  (summary.md ground rule 4) — relabel as what the tools let researchers do now vs
+  what they define the path toward, per the I5 organization paragraph.
 - **Form:** clean vector boxes, 1 arrow style, no color needed for print (black
   outlines, minimal fills). Fits single column (\textwidth, ~4–5 cm tall).
 - **Why:** committees read §1.5 first; this is the one-figure summary of the whole
   dissertation.
 
-## 2. Two-level CPG architecture (Chapter 2 / Chapter 6) — HIGH priority
+## 2. Two-level CPG architecture (Chapter 2 / Chapter 6) — HIGH priority — **DONE for Ch. 6; residual for Ch. 2**
 
-- **Where:** §2.6 Neural Control of Locomotion (referenced conceptually now), reused
-  again at §6.2.1 Architecture. Label `fig:cpg` (or `fig:cpg_arch`).
-- **Content:** schematic of the Rybak two-layer CPG for ONE leg plus the
-  left–right link:
-  - Rhythm Generator (RG) half-center: RG-F / RG-E populations with reciprocal inhibition.
-  - Pattern Formation (PF) layer: PF-F / PF-E populations with reciprocal inhibition.
-  - Motoneuron pools (MN-F, MN-E) → two muscles (flexor/extensor BPA symbols).
-  - Commissural pathway to a ghosted mirror RG for the contralateral leg (left–right coordination).
-  - Sensory inputs drawn in color or dashed: Ia, Ib, II onto PF/MN, heel/toe contact onto phase switching.
-- **Form:** redraw after Rybak et al. 2006 / McCrea & Rybak 2008 (their classic
-  figure) but with OUR notation (RG/PF/Σ1–Σ2 names as in those papers), captioned
-  "adapted from \citet{rybak_modelling_2006}". Full \textwidth.
-- **Why:** the CPG architecture is described twice in words; the committee needs
-  the picture. This is the single most important missing figure.
-- **Data source:** none — schematic.
+- **Status 2026-09-23:** built and wired into `CPG_spinal_section_draft.tex`:
+  `CPG_airstepping_figs/circuit_literature.pdf` (reader-level overview, `fig:cpg-overview`,
+  correct shapes per Ben's convention) and `circuit_dengstyle.pdf` (structure-driven,
+  every displayed edge asserted against the compiled network). Both exist in the repo.
+- **Residual:** Background §2.6 (entry B1 in summary.md) may still want the classic
+  "adapted from \citet{rybak_modelling_2006}" borrow for the background chapter —
+  cheap, cited, and distinct from our own circuit figures. Ben's call.
 
-## 3. Simulation-to-robot pipeline (Chapter 6) — HIGH priority
+## 3. Simulation-to-robot pipeline (Chapter 6) — HIGH priority — **STILL OPEN**
 
 - **Where:** §6.1 A Neuromechanical Simulation Pipeline. Label `fig:pipeline`.
 - **Content:** pipeline diagram:
@@ -57,46 +58,47 @@ with existing figures, PNG acceptable.
 - **Why:** §6.1–6.4 is a verbal pipeline today; one figure makes the whole Future
   Work chapter concrete.
 
-## 4. Sensory feedback detail (Chapter 6) — MEDIUM priority
+## 4. Sensory feedback detail (Chapter 6) — MEDIUM priority — **PARTIALLY ABSORBED**
 
-- **Where:** §6.2.2 Sensory Feedback Channels. Label `fig:sensory`.
-- **Content:** single leg (sagittal view of femur/tibia is fine as simple line
-  segments) with the four afferent classes drawn from muscle spindles (Ia, II),
-  GTO (Ib), and heel/toe contact pads, with their projection targets in the
-  PF/MN circuit of figure 2. Could be combined with item 2 as a two-panel figure
-  (A: architecture; B: feedback detail) — your call.
-- **Data source:** schematic; muscle geometry can be traced from the test-stand
-  CAD screenshots (e.g., `Figures/bktFrame` sources).
+- **Status 2026-09-23:** the afferent classes and their projection targets are drawn
+  in the circuit figures of item 2 (Ia/Ib/II/heel-toe edges in `circuit_literature.pdf`).
+  A dedicated single-leg anatomical panel (femur/tibia + spindle/GTO/contact pads) is
+  now OPTIONAL — build only if a reviewer wants the anatomy view.
 
-## 5. Optimization-method schematic for the improved torque model (Chapter 3) — MEDIUM
+## 5. Optimization-method schematic for the improved torque model (Chapter 3) — LOW priority (downgraded 2026-09-23)
 
-- **Where:** §3.7 Improved Torque Model, after eq. (complianceforcebalance). Label `fig:optloop`.
-- **Content:** flowchart of one optimizer evaluation: route geometry →
-  l_LMT, r_k → force-balance solve (δ) → torque prediction → GoF (RMSE, FVU, max
-  residual) → gamultiobj/surrogateopt decision variables (χ0, χ1, χ2, χ3).
-- **Why:** the χ terms' meaning is easier to show than tell, and it documents the
-  surrogateopt upgrade you're planning (you can add a branch "GA (used here) /
-  surrogateopt (in progress)").
-- **Data source:** `minimizeFlxPin.m` / `buildKneeFlexorContext20mm.m` structure
-  (I extracted the full data flow on 2026-09-07; ask if you want the call graph).
+- **Status 2026-09-23:** the force-balance solve and the wrap-loss mechanism now have
+  purpose-built figures (`xiBalance.pdf`, `xiWrapLoss.pdf`; see summary.md 2026-09-21
+  sections — files on EB475WS4, untracked). The remaining unmet piece is only the
+  optimizer-loop flowchart (variables → evaluators → gamultiobj → GoF); build it only
+  if the Methods section still reads confusing after M6's restructure lands.
 
-## 6. Appendix A/B illustrations — LOW priority (nice-to-have)
+## 6. Appendix A/B illustrations — LOW priority
 
-- **A:** small diagram of the bracket frame (x̂_br, ŷ_br, ẑ_br) and force
-  direction û with the projection onto the line of action — supports the
-  compliance appendix. Could reuse/redraw `bktFrame.pdf` annotation.
-- **B:** one-panel neuron/synapse schematic (leaky integrator with Ia/Ib/II and
-  graded synapse symbols, matching Table B.1 values).
+- **A: DONE 2026-09-21** — `xiFrameGeo.pdf` panel B is the generic bracket-frame
+  construction figure this item asked for (plus in-situ frames in panel A). File on
+  EB475WS4 (untracked), wired into `ZCode_drafts/chapters/20-methods.tex`.
+- **B: OPTIONAL** — a one-panel neuron/synapse schematic matching Table B.1; raw
+  material exists (`sns_diagram_panels.png` in `CPG_airstepping_figs/`, SNS_Library
+  figures in `Code\Matlab\SNS_Simscape\figures\`) but nothing dissertation-formatted.
 
 ---
 
-### Already-have list (no action needed)
+### Already-have list (updated 2026-09-23 — no action needed)
 - Test stand photo/figure: `01_testJigs1.pdf` (Ch. 3)
 - Knee test jigs, ICR plot, bracket frames, all torque results figures (Ch. 3–4)
 - Model comparison figure (Ch. 5)
+- Steele knee paragraph figure: `steeleknee.pdf`/`.png` (Dissertation root, B9; panel C still awaits Ben's test-stand photo)
+- Xi methods trio: `xiFrameGeo`/`xiBalance`/`xiWrapLoss` .pdf+.eps (EB475WS4 only, untracked)
+- CPG circuit set + air/ground walk + FSA synergy figures: `CPG_airstepping_figs/`
+  (`circuit_literature`, `circuit_dengstyle`, `hindlimb_style_nap_air`, `curr3i_*`,
+  `fsa_*`)
 
 ### Caption/style reminders (PSU)
 - Every new figure needs a List-of-Figures-quality caption (number, title, page).
 - Schematics adapted from published figures must say "adapted from" + citation in
   the caption.
 - Keep 12 pt equivalent text size inside figures where possible.
+- Project-wide figure standards (Ben, 2026-09-21): Tol palette from
+  `Code\Matlab\Colors.m`, Arial only, 10 pt floor, no italics, CVD-safe
+  markers/line styles, alt-text file per figure set — full rules in `AGENTS.md`.

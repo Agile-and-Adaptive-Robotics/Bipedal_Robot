@@ -16,6 +16,42 @@ destructive git operations unprompted; do not assume the ~500 MB npz commit
 backup + force push + all-other-clones-re-clone coordination, and pdf_staging
 belongs to another session's upload workflow.
 
+## THREAD 1 — DISSERTATION WRITING (TOP PRIORITY; deadline this week, Sept 2026)
+
+Everything else in this file is secondary until the dissertation is submitted. **The live
+brief for this thread is the "Handoff for ChatGPT (2026-09-23)" section at the top of
+`Documentation\Reports and Papers\Dissertation\summary.md`** — read it fully before
+touching dissertation text. It carries the current Overleaf state, the ajh26
+review-response ledger (one entry per comment, statuses DONE/PROPOSED/OPEN), the work
+queue, and the division of labor with ZCode.
+
+Facts that bind any dissertation session:
+
+- **Two hard walls (both Ben's rules, both born of real incidents):**
+  1. NEVER modify Overleaf — not files, not tracked changes, not comment resolves — unless
+     Ben names the exact action in that message. Suggested edits go into summary.md as
+     PROPOSED entries; Ben applies everything himself. (The 2026-09-12 paste incident
+     forced an Overleaf History restore.)
+  2. NEVER edit `CPG_spinal_section_draft.tex` or any ProofFinal chapter file without
+     Ben's explicit per-edit approval — including ZCODE-fenced blocks, figure pointers,
+     and number refreshes. If something is stale, ASK with the exact proposed diff.
+- Authoritative text = Overleaf. Repo `ProofFinal\` = a Sep-8 snapshot, STALE.
+  `ZCode_drafts\chapters\` = full-file drafts with all PROPOSED text in place — read-only
+  for you. The verbatim ajh26 inventory: `Dissertation\summary_inventory_ajh26.md`.
+- The CPG/spinal results section is paste-ready in `CPG_spinal_section_draft.tex`
+  (8 `\fillme` slots remain; every referenced figure exists in `CPG_airstepping_figs\`;
+  the `curr3i_*` set is current). Paste map + bib key-collision cautions:
+  `CPG_DISSERTATION_UPDATE_NOTES.md` — paste into OVERLEAF, not ProofFinal.
+- FLAG-BEN placeholders (human knee torque results) mark values only Ben can supply.
+  Never fill them by guessing; they gate submission.
+- The Xi methods figures (`xiFrameGeo`/`xiBalance`/`xiWrapLoss`) + generator exist ONLY on
+  EB475WS4 as untracked files (as of 2026-09-22) — absent from other clones and Overleaf.
+  Do not write text that assumes they are uploaded.
+- Standing prose style (Ben's): no em-dashes in new prose; last sentence of a section
+  bridges forward and states the dissertation's stake; completed-work framing only;
+  quantitative over qualitative; every ledger entry carries a score marker. Project-wide
+  figure standards (Tol palette, Arial, 10 pt floor, alt text) are in `AGENTS.md`.
+
 **SEVEN ACTIVE WORK THREADS: (0) AnimatLab .aproj wiring repair — PAUSED MID-FIX, read
 `Neuromechanical_Models\Biped_2xCPG_wSubs\tools\CONTINUE_HERE.md` FIRST for exact state,
 fix spec, and the GUI-verification protocol; (A) AnimatLab arrow audit — section below;
@@ -34,7 +70,8 @@ knee-rig import + native BPA muscles — see the ACTIVE WORK D section below;
 (read its `tools\SESSION_NOTES_20260916.md` first) and (F) Knee Xi-factor
 extensor/flexor evaluator work — both 2026-09-14/16, sections below.** Also:
 laptop-session mining findings in `Testing_Data\2022_02_Festo\HANDOFF_laptop_20260908.md`.
-(For the spinal/SNS thread, `AGENTS.md` is MORE CURRENT than this file — read it too.)
+(For the spinal/SNS thread, `AGENTS.md` is MORE CURRENT than this file — read it too.
+All seven threads below are SECONDARY to THREAD 1, the dissertation, until submission.)
 
 ## ACTIVE WORK D — SolidWorks → Simscape Multibody: knee-rig import + NATIVE BPA muscles (2026-09-16, laptop; Ben: "add to writeup for chatgpt so it can work on this")
 

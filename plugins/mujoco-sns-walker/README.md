@@ -27,7 +27,8 @@ on machines without them the plugin provides the servers itself. Auth travels
 via the `${ZAI_API_KEY}` template → set the `ZAI_API_KEY` user environment
 variable (done on EB475WS4; `setx ZAI_API_KEY <key>` elsewhere). **Never
 commit a real key into this folder.** `zai-mcp-server` needs Node ≥ 22 on PATH
-(EB475WS4: `D:\NodeJS\node-v22.23.2-win-x64`, on user PATH).
+(EB475WS4 + easteregg2: `D:\NodeJS\node-v22.23.2-win-x64`, user PATH —
+easteregg2's installed 2026-09-23; laptop: not yet).
 
 ## Hooks
 
@@ -43,7 +44,10 @@ UTF-8 CJK literals — build Chinese phrases from `[char]` codepoints).
 
 All invoked via `scripts\walker.cmd <script.py> [args]`, which resolves the
 SNS env python per machine (EB475WS4 → easteregg2 → laptop; `AARL_PYTHON` /
-`AARL_SPINAL` override) and sets `CONDA_PREFIX`.
+`AARL_SPINAL` override) and sets `CONDA_PREFIX`. Study commands
+(status/study-manage/probe) additionally need `optuna` in that env (5.0.0 on
+EB475WS4 + easteregg2; the shared `optuna_walk.db` is schema 12 — keep the
+optuna major version matched across machines).
 
 ## Maintenance
 
