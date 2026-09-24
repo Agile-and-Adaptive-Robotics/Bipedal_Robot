@@ -1,0 +1,62 @@
+04:42:32 SCONE version 2.4.4.3333
+04:42:32 Successfully initialized OpenSim-3.3-2021-01-28
+04:42:32 Successfully initialized OpenSim-4.4
+
+USAGE: 
+
+   C:\Program Files\SCONE\bin\sconecmd.exe  {-o <*.scone>|-e <*.par>|-b
+                                        <*.scone>|--hyfydy <id|key>|--test
+                                        <>} [-q] [-s] [-l <1-7>] [-r
+                                        <Output file (*.sto)>] [-x <>0>]
+                                        [--] [--version] [-h]
+                                        <<key>=<value>> ...
+
+
+Where: 
+
+   -o <*.scone>,  --optimize <*.scone>
+     (OR required)  Optimize a scenario file
+         -- OR --
+   -e <*.par>,  --evaluate <*.par>
+     (OR required)  Evaluate a result from an optimization
+         -- OR --
+   -b <*.scone>,  --benchmark <*.scone>
+     (OR required)  Benchmark a scenario or parameter file
+         -- OR --
+   --hyfydy <id|key>
+     (OR required)  Hyfydy license key management
+         -- OR --
+   --test <>
+     (OR required)  Perform test (internal use only)
+
+
+   -q,  --quiet
+     Do not output simulation progress
+
+   -s,  --status
+     Output full status updates
+
+   -l <1-7>,  --log <1-7>
+     Set the log level
+
+   -r <Output file (*.sto)>,  --result <Output file (*.sto)>
+     Output file for evaluation result
+
+   -x <>0>,  --benchmarkx <>0>
+     Number of benchmarks to perform
+
+   --,  --ignore_rest
+     Ignores the rest of the labeled arguments following this flag.
+
+   --version
+     Displays version information and exits.
+
+   -h,  --help
+     Displays usage information and exits.
+
+   <<key>=<value>>  (accepted multiple times)
+     Override specific scenario property, using <key>=<value>
+
+
+   SCONE Command Line Utility
+

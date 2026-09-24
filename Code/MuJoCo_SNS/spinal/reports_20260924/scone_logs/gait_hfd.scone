@@ -1,0 +1,238 @@
+CmaOptimizer {
+	signature_prefix = DATE_TIME
+	min_progress = 1e-4
+	SimulationObjective {
+		max_duration = 4
+		ModelHyfydy {
+			model_file = "models/H0918v3.hfd"
+			state_init_file = "init/InitStateH0918Gait10ActA.zml"
+			initial_state_offset = "0~0.01<-0.5,0.5>"
+			initial_state_offset_exclude = *_tx;*_ty;*_u
+			initial_load = 1
+			fixed_control_step_size = 0.005
+			use_opensim_activation_dynamics = 1
+			zero_velocity_equilibration = 1
+		}
+		GaitStateController {
+			signature_postfix = RS2
+			auto_std_factor = 0.02
+			stance_load_threshold = "~0.3<0.001,1>"
+			leg_load_sensor_delay = 0
+			symmetric = 1
+			ConditionalControllers {
+				ConditionalController {
+					states = "EarlyStance LateStance Liftoff Swing Landing"
+					ReflexController {
+						MuscleReflex {
+							target = tib_ant
+							KL = "~0.63<0,10>"
+							L0 = "~0.55<0.5,2>"
+							KF = "~0.5<-10,10>"
+							delay = 0.035
+						}
+						MuscleReflex {
+							target = soleus
+							KL = "~0.66<0,10>"
+							L0 = "~0.87<0.5,2>"
+							KF = "~1.0<-10,10>"
+							delay = 0.035
+						}
+						MuscleReflex {
+							target = gastroc
+							KL = "~0.5<0,10>"
+							L0 = "~0.68<0.5,2>"
+							KF = "~0.76<-10,10>"
+							delay = 0.035
+						}
+						MuscleReflex {
+							target = tib_ant
+							source = soleus
+							KL = "~-0.08<-10,0>"
+							KF = "~-1.0<-2,0>"
+							delay = 0.035
+						}
+						MuscleReflex {
+							target = tib_ant
+							source = gastroc
+							KL = "~-0.05<-10,0>"
+							KF = "~-0.7<-2,0>"
+							delay = 0.035
+						}
+						MuscleReflex {
+							target = soleus
+							source = tib_ant
+							KF = "~-0.64<-2,0>"
+							delay = 0.035
+						}
+						MuscleReflex {
+							target = gastroc
+							source = tib_ant
+							KF = "~-0.77<-2,0>"
+							delay = 0.035
+						}
+					}
+				}
+				ConditionalController {
+					states = "EarlyStance LateStance"
+					ReflexController {
+						MuscleReflex {
+							target = vasti
+							delay = 0.02
+							KF = "~0.8<0,4>"
+							KL = "~2<0,4>"
+							L0 = "~0.6<0,2>"
+						}
+						MuscleReflex {
+							target = iliopsoas
+							delay = 0.01
+							KL = "~2<0,4>"
+							L0 = "~0.9<0,2>"
+						}
+						MuscleReflex {
+							target = rect_fem
+							delay = 0.015
+							KL = "~0.2<0,4>"
+							L0 = "~0.5<0,2>"
+						}
+						MuscleReflex {
+							target = hamstrings
+							delay = 0.015
+							KL = "~0.8<0,4>"
+							L0 = "~0.7<0,2>"
+						}
+						MuscleReflex {
+							target = bifemsh
+							delay = 0.02
+							KF = "~0.2<0,4>"
+						}
+						MuscleReflex {
+							target = glut_max
+							delay = 0.01
+							KL = "~0.5<0,4>"
+							L0 = "~1.1<0,2>"
+						}
+						DofReflex {
+							target = hamstrings
+							source = pelvis_tilt
+							delay = 0.05
+							KP = "~1.3<-10,10>"
+							KV = "~0.2<0,10>"
+							P0 = -0.105
+						}
+						DofReflex {
+							target = glut_max
+							source = pelvis_tilt
+							delay = 0.05
+							KP = "~1.0<-10,10>"
+							P0 = -0.105
+						}
+						DofReflex {
+							target = rect_fem
+							source = pelvis_tilt
+							delay = 0.05
+							KP = "~-1.1<-10,10>"
+							KV = "~-0.02<-10,10>"
+							P0 = -0.105
+						}
+					}
+				}
+				ConditionalController {
+					states = "Liftoff Swing Landing"
+					ReflexController {
+						MuscleReflex {
+							target = iliopsoas
+							delay = 0.01
+							KL = "~1<0,10>"
+							L0 = "~0.7<0,2>"
+						}
+						MuscleReflex {
+							target = rect_fem
+							delay = 0.015
+							KL = "~0.5<0,10>"
+							L0 = "~1.2<0,2>"
+						}
+						DofReflex {
+							target = iliopsoas
+							source = pelvis_tilt
+							delay = 0.05
+							KP = "~1.7<0,10>"
+							KV = "~0.3<0,10>"
+							P0 = -0.105
+						}
+						MuscleReflex {
+							target = iliopsoas
+							source = hamstrings
+							delay = 0.015
+							KL = "~-3<-10,10>"
+							L0 = "~0.7<0,2>"
+						}
+						MuscleReflex {
+							target = hamstrings
+							delay = 0.015
+							KL = "~0.2<-10,10>"
+							L0 = "~1.2<0,2>"
+						}
+						MuscleReflex {
+							target = bifemsh
+							delay = 0.02
+							KF = "~0.2<0,4>"
+						}
+						MuscleReflex {
+							target = glut_max
+							delay = 0.01
+							KL = "~1<-10,10>"
+							L0 = "~0.85<0,2>"
+						}
+					}
+				}
+			}
+		}
+		CompositeMeasure {
+			GaitMeasure {
+				name = Gait
+				weight = 100
+				threshold = 0.05
+				termination_height = 0.85
+				min_velocity = 1.0
+			}
+			EffortMeasure {
+				name = Effort
+				weight = 0.1
+				measure_type = Wang2012
+				use_cost_of_transport = 1
+			}
+			EffortMeasure {
+				name = MuscleActivation
+				weight = 2000
+				measure_type = CubedMuscleActivation
+				use_average_per_muscle = 1
+				use_cost_of_transport = 1
+			}
+			CompositeMeasure {
+				name = DofLimits
+				signature = K1
+				symmetric = 1
+				DofMeasure {
+					weight = 0.1
+					dof = ankle_angle
+					position { min = -60 max = 60 squared_penalty = 1 }
+				}
+				DofMeasure {
+					weight = 0.02
+					threshold = 1
+					threshold_transition = 0.5
+					dof = knee_angle
+					force { min = 0 max = 0 abs_penalty = 1 }
+				}
+			}
+			ReactionForceMeasure {
+				name = GRF
+				signature = G14
+				start_time = 1
+				weight = 10
+				max = 1.4
+				abs_penalty = 1
+			}
+		}
+	}
+}

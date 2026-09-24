@@ -1,8 +1,381 @@
-# Gait-library intake report (2026-09-23)
+# Gait-library intake report (2026-09-24, thumb drive)
 
 - OK Case_40_motion: T_r 1.113 s, duty 0.57/0.57, knee_min -59.2 deg, hip range 51.6 deg
+- OK subject01_Run_20002: T_r 0.767 s, duty 0.42/0.43, knee_min -82.7 deg, hip range 38.8 deg
+- OK subject01_Run_30002: T_r 0.718 s, duty 0.36/0.35, knee_min -98.7 deg, hip range 54.8 deg
+- OK subject01_Run_40002: T_r 0.700 s, duty 0.32/0.32, knee_min -110.2 deg, hip range 64.0 deg
+- OK subject01_Run_50002: T_r 0.598 s, duty 0.33/0.34, knee_min -122.1 deg, hip range 68.5 deg
+- OK subject02_Run_20002: T_r 0.801 s, duty 0.43/0.45, knee_min -90.2 deg, hip range 43.2 deg
+- OK subject02_Run_30002: T_r 0.764 s, duty 0.39/0.39, knee_min -106.4 deg, hip range 57.3 deg
+- OK subject02_Run_40005: T_r 0.714 s, duty 0.35/0.35, knee_min -122.1 deg, hip range 71.1 deg
+- OK subject02_Run_50002: T_r 0.654 s, duty 0.33/0.35, knee_min -128.8 deg, hip range 78.2 deg
+- OK subject04_Run_20002: T_r 0.801 s, duty 0.41/0.44, knee_min -85.8 deg, hip range 39.3 deg
+- OK subject04_Run_30002: T_r 0.739 s, duty 0.38/0.38, knee_min -103.4 deg, hip range 54.5 deg
+- OK subject04_Run_40002: T_r 0.702 s, duty 0.34/0.35, knee_min -119.2 deg, hip range 75.4 deg
+- OK subject04_Run_50004: T_r 0.626 s, duty 0.35/0.33, knee_min -123.0 deg, hip range 82.1 deg
+- OK subject08_Run_20002: T_r 0.723 s, duty 0.39/0.43, knee_min -80.8 deg, hip range 35.0 deg
+- OK subject08_Run_30001: T_r 0.675 s, duty 0.34/0.36, knee_min -101.4 deg, hip range 47.5 deg
+- OK subject08_Run_40002: T_r 0.655 s, duty 0.33/0.31, knee_min -118.6 deg, hip range 53.4 deg
+- OK subject08_Run_50003: T_r 0.610 s, duty 0.31/0.32, knee_min -131.6 deg, hip range 68.2 deg
+- OK subject10_Run_20002: T_r 0.727 s, duty 0.45/0.45, knee_min -84.7 deg, hip range 48.0 deg
+- OK subject10_Run_30002: T_r 0.714 s, duty 0.40/0.38, knee_min -105.5 deg, hip range 62.0 deg
+- OK subject10_Run_40002: T_r 0.704 s, duty 0.35/0.35, knee_min -131.1 deg, hip range 76.2 deg
+- OK subject10_Run_50002: T_r 0.584 s, duty 0.36/0.38, knee_min -140.0 deg, hip range 85.5 deg
+- OK subject11_Run_20002: T_r 0.716 s, duty 0.44/0.46, knee_min -80.3 deg, hip range 41.4 deg
+- OK subject11_Run_30002: T_r 0.679 s, duty 0.39/0.39, knee_min -92.3 deg, hip range 54.0 deg
+- OK subject11_Run_40002: T_r 0.624 s, duty 0.37/0.36, knee_min -99.6 deg, hip range 61.0 deg
+- OK subject11_Run_50002: T_r 0.564 s, duty 0.36/0.36, knee_min -109.6 deg, hip range 72.1 deg
+- OK subject17_Run_20002: T_r 0.796 s, duty 0.38/0.38, knee_min -90.0 deg, hip range 42.4 deg
+- OK subject17_Run_30001: T_r 0.758 s, duty 0.35/0.33, knee_min -112.8 deg, hip range 61.7 deg
+- OK subject17_Run_40001: T_r 0.700 s, duty 0.32/0.32, knee_min -134.5 deg, hip range 80.3 deg
+- OK subject17_Run_50001: T_r 0.672 s, duty 0.32/0.33, knee_min -138.1 deg, hip range 88.0 deg
+- OK subject20_Run_20001: T_r 0.670 s, duty 0.43/0.43, knee_min -87.6 deg, hip range 45.4 deg
+- OK subject20_Run_30001: T_r 0.675 s, duty 0.35/0.37, knee_min -110.6 deg, hip range 57.2 deg
+- OK subject20_Run_40001: T_r 0.649 s, duty 0.32/0.32, knee_min -127.0 deg, hip range 68.5 deg
+- OK subject20_Run_50002: T_r 0.592 s, duty 0.33/0.32, knee_min -139.3 deg, hip range 74.6 deg
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\loaded\loadedwalking_subject05_loaded_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\loaded\free\trial01\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\loaded\free\trial01\ik\loadedwalking_subject05_loaded_free_trial01_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\loaded\free\trial03\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\loaded\free\trial03\ik\loadedwalking_subject05_loaded_free_trial03_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\loaded\free\trial06\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\loaded\free\trial06\ik\loadedwalking_subject05_loaded_free_trial06_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\noload\loadedwalking_subject05_noload_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\noload\free\trial02\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\noload\free\trial02\ik\loadedwalking_subject05_noload_free_trial02_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\noload\free\trial03\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\noload\free\trial03\ik\loadedwalking_subject05_noload_free_trial03_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\noload\free\trial06\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject05\noload\free\trial06\ik\loadedwalking_subject05_noload_free_trial06_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\loaded\loadedwalking_subject07_loaded_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\loaded\free\trial01\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\loaded\free\trial01\ik\loadedwalking_subject07_loaded_free_trial01_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\loaded\free\trial02\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\loaded\free\trial02\ik\loadedwalking_subject07_loaded_free_trial02_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\loaded\free\trial05\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\loaded\free\trial05\ik\loadedwalking_subject07_loaded_free_trial05_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\noload\loadedwalking_subject07_noload_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\noload\free\trial01\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\noload\free\trial01\ik\loadedwalking_subject07_noload_free_trial01_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\noload\free\trial02\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\noload\free\trial02\ik\loadedwalking_subject07_noload_free_trial02_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\noload\free\trial03\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject07\noload\free\trial03\ik\loadedwalking_subject07_noload_free_trial03_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\loaded\loadedwalking_subject09_loaded_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\loaded\free\trial04\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\loaded\free\trial04\ik\loadedwalking_subject09_loaded_free_trial04_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\loaded\free\trial05\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\loaded\free\trial05\ik\loadedwalking_subject09_loaded_free_trial05_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\loaded\free\trial08\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\loaded\free\trial08\ik\loadedwalking_subject09_loaded_free_trial08_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\noload\loadedwalking_subject09_noload_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\noload\free\trial01\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\noload\free\trial01\ik\loadedwalking_subject09_noload_free_trial01_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\noload\free\trial02\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\noload\free\trial02\ik\loadedwalking_subject09_noload_free_trial02_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\noload\free\trial04\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject09\noload\free\trial04\ik\loadedwalking_subject09_noload_free_trial04_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\loaded\loadedwalking_subject10_loaded_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\loaded\free\trial03\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\loaded\free\trial03\ik\loadedwalking_subject10_loaded_free_trial03_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\loaded\free\trial04\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\loaded\free\trial04\ik\loadedwalking_subject10_loaded_free_trial04_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\loaded\free\trial05\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\loaded\free\trial05\ik\loadedwalking_subject10_loaded_free_trial05_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\noload\loadedwalking_subject10_noload_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\noload\free\trial02\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\noload\free\trial02\ik\loadedwalking_subject10_noload_free_trial02_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\noload\free\trial04\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\noload\free\trial04\ik\loadedwalking_subject10_noload_free_trial04_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\noload\free\trial05\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject10\noload\free\trial05\ik\loadedwalking_subject10_noload_free_trial05_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\loaded\loadedwalking_subject11_loaded_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\loaded\free\trial04\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\loaded\free\trial04\ik\loadedwalking_subject11_loaded_free_trial04_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\loaded\free\trial05\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\loaded\free\trial05\ik\loadedwalking_subject11_loaded_free_trial05_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\loaded\free\trial06\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\loaded\free\trial06\ik\loadedwalking_subject11_loaded_free_trial06_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\noload\loadedwalking_subject11_noload_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\noload\loadedwalking_subject11_noload_staticpose_scaledonly.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\noload\free\trial03\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\noload\free\trial03\ik\loadedwalking_subject11_noload_free_trial03_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\noload\free\trial04\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\noload\free\trial04\ik\loadedwalking_subject11_noload_free_trial04_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\noload\free\trial05\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject11\noload\free\trial05\ik\loadedwalking_subject11_noload_free_trial05_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\loaded\loadedwalking_subject12_loaded_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\loaded\free\trial03\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\loaded\free\trial03\ik\loadedwalking_subject12_loaded_free_trial03_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\loaded\free\trial04\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\loaded\free\trial04\ik\loadedwalking_subject12_loaded_free_trial04_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\loaded\free\trial05\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\loaded\free\trial05\ik\loadedwalking_subject12_loaded_free_trial05_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\noload\loadedwalking_subject12_noload_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\noload\free\trial05\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\noload\free\trial05\ik\loadedwalking_subject12_noload_free_trial05_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\noload\free\trial06\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\noload\free\trial06\ik\loadedwalking_subject12_noload_free_trial06_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\noload\free\trial07\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject12\noload\free\trial07\ik\loadedwalking_subject12_noload_free_trial07_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\loaded\loadedwalking_subject14_loaded_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\loaded\free\trial02\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\loaded\free\trial02\ik\loadedwalking_subject14_loaded_free_trial02_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\loaded\free\trial03\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\loaded\free\trial03\ik\loadedwalking_subject14_loaded_free_trial03_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\loaded\free\trial04\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\loaded\free\trial04\ik\loadedwalking_subject14_loaded_free_trial04_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\noload\loadedwalking_subject14_noload_staticpose.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\noload\free\trial02\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\noload\free\trial02\ik\loadedwalking_subject14_noload_free_trial02_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\noload\free\trial04\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\noload\free\trial04\ik\loadedwalking_subject14_noload_free_trial04_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\noload\free\trial05\expdata\ground_reaction.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\assistloadwalk_simulations_of_experiments\assistloadwalk_simulations_of_experiments\experiments\subject14\noload\free\trial05\ik\loadedwalking_subject14_noload_free_trial05_ik_solution.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\ModelWithSampleSimulations-4.0\SimulationDataAndSetupFiles-4.0\ExpData\grf_walk.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\ModelWithSampleSimulations-4.0\SimulationDataAndSetupFiles-4.0\ExpData\grf_run.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\ModelWithSampleSimulations-4.0\SimulationDataAndSetupFiles-4.0\IK\results_run\ik_output_run.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\ModelWithSampleSimulations-4.0\SimulationDataAndSetupFiles-4.0\IK\results_walk\ik_output_walk.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\ModelWithSampleSimulations-4.0\SimulationDataAndSetupFiles-4.0\Scale\scale_output_run.mot
+- UNPAIRED (unreadable): D:\temp\gait_lib_staging\downloads\ModelWithSampleSimulations-4.0\SimulationDataAndSetupFiles-4.0\Scale\scale_output_walk.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\RunningSimulation_simTK\subject02_running_grf.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\RunningSimulation_simTK\CMC\CMC_Results\subject02_running_CMC_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\RunningSimulation_simTK\CMC\CMC_Results\subject02_running_CMC_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\RunningSimulation_simTK\IK\subject02_running_arms_ik.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\RunningSimulation_simTK\RRA\subject02_running_arms_ik.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\RunningSimulation_simTK\RRA\subject02_running_grf.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\RunningSimulation_simTK\RRA\RRA_cycle02_results_07\subject02_running_RRA_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\RunningSimulation_simTK\RRA\RRA_cycle02_results_07\subject02_running_RRA_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\RunningSimulation_simTK\scale\subject02_static_output.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\ExportedData\Run_200 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\ExportedData\Run_300 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\ExportedData\Run_400 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\ExportedData\Run_500 02_newCOP3_v24.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle1\subject01_Run_20002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle1\subject01_Run_20002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject01_Run_20002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject01_Run_20002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle3\subject01_Run_20002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle3\subject01_Run_20002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle1\subject01_Run_30002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle1\subject01_Run_30002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle2\subject01_Run_30002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle2\subject01_Run_30002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle3\subject01_Run_30002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle3\subject01_Run_30002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle1\subject01_Run_40002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle1\subject01_Run_40002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle2\subject01_Run_40002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle2\subject01_Run_40002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle3\subject01_Run_40002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle3\subject01_Run_40002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle1\subject01_Run_50002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle1\subject01_Run_50002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle2\subject01_Run_50002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle2\subject01_Run_50002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle3\subject01_Run_50002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject01-latest\subject01\subject01\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle3\subject01_Run_50002_cycle3_states_degrees.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\ExportedData\Run_200 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\ExportedData\Run_300 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\ExportedData\Run_400 05_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\ExportedData\Run_500 02_newCOP3_v24.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle1\subject02_Run_20002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle1\subject02_Run_20002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject02_Run_20002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject02_Run_20002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle3\subject02_Run_20002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle3\subject02_Run_20002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle2\subject02_Run_30002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle2\subject02_Run_30002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle3\subject02_Run_30002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle3\subject02_Run_30002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle4\subject02_Run_30002_cycle4_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle4\subject02_Run_30002_cycle4_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_40005\RRA_Results_v191_Run_40005_cycle1\subject02_Run_40005_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_40005\RRA_Results_v191_Run_40005_cycle1\subject02_Run_40005_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_40005\RRA_Results_v191_Run_40005_cycle3\subject02_Run_40005_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_40005\RRA_Results_v191_Run_40005_cycle3\subject02_Run_40005_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_40005\RRA_Results_v191_Run_40005_cycle4\subject02_Run_40005_cycle4_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_40005\RRA_Results_v191_Run_40005_cycle4\subject02_Run_40005_cycle4_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle1\subject02_Run_50002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle1\subject02_Run_50002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle2\subject02_Run_50002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle2\subject02_Run_50002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle3\subject02_Run_50002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject02-latest\subject02\subject02\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle3\subject02_Run_50002_cycle3_states_degrees.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\ExportedData\Run_200 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\ExportedData\Run_300 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\ExportedData\Run_400 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\ExportedData\Run_500 04_newCOP3_v24.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle1\subject04_Run_20002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle1\subject04_Run_20002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject04_Run_20002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject04_Run_20002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle3\subject04_Run_20002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle3\subject04_Run_20002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle1\subject04_Run_30002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle1\subject04_Run_30002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle2\subject04_Run_30002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle2\subject04_Run_30002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle3\subject04_Run_30002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle3\subject04_Run_30002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle1\subject04_Run_40002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle1\subject04_Run_40002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle2\subject04_Run_40002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle2\subject04_Run_40002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle3\subject04_Run_40002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle3\subject04_Run_40002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_50004\RRA_Results_v191_Run_50004_cycle1\subject04_Run_50004_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_50004\RRA_Results_v191_Run_50004_cycle1\subject04_Run_50004_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_50004\RRA_Results_v191_Run_50004_cycle2\subject04_Run_50004_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_50004\RRA_Results_v191_Run_50004_cycle2\subject04_Run_50004_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_50004\RRA_Results_v191_Run_50004_cycle3\subject04_Run_50004_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject04-latest\subject04\subject04\rra_multpleSteps\RRA_Results_v191_Run_50004\RRA_Results_v191_Run_50004_cycle3\subject04_Run_50004_cycle3_states_degrees.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\ExportedData\Run_200 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\ExportedData\Run_300 01_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\ExportedData\Run_400 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\ExportedData\Run_500 03_newCOP3_v24.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle1\subject08_Run_20002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle1\subject08_Run_20002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject08_Run_20002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject08_Run_20002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle3\subject08_Run_20002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle3\subject08_Run_20002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle1\subject08_Run_30001_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle1\subject08_Run_30001_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle2\subject08_Run_30001_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle2\subject08_Run_30001_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle3\subject08_Run_30001_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle3\subject08_Run_30001_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle1\subject08_Run_40002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle1\subject08_Run_40002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle2\subject08_Run_40002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle2\subject08_Run_40002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle3\subject08_Run_40002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle3\subject08_Run_40002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_50003\RRA_Results_v191_Run_50003_cycle1\subject08_Run_50003_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_50003\RRA_Results_v191_Run_50003_cycle1\subject08_Run_50003_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_50003\RRA_Results_v191_Run_50003_cycle2\subject08_Run_50003_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_50003\RRA_Results_v191_Run_50003_cycle2\subject08_Run_50003_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_50003\RRA_Results_v191_Run_50003_cycle3\subject08_Run_50003_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject08-latest\subject08\subject08\rra_multipleSteps\RRA_Results_v191_Run_50003\RRA_Results_v191_Run_50003_cycle3\subject08_Run_50003_cycle3_states_degrees.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\ExportedData\Run_200 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\ExportedData\Run_300 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\ExportedData\Run_400 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\ExportedData\Run_500 02_newCOP3_v24.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject10_Run_20002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject10_Run_20002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle5\subject10_Run_20002_cycle5_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle5\subject10_Run_20002_cycle5_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle6\subject10_Run_20002_cycle6_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle6\subject10_Run_20002_cycle6_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle1\subject10_Run_30002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle1\subject10_Run_30002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle2\subject10_Run_30002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle2\subject10_Run_30002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle3\subject10_Run_30002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle3\subject10_Run_30002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle1\subject10_Run_40002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle1\subject10_Run_40002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle2\subject10_Run_40002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle2\subject10_Run_40002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle3\subject10_Run_40002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle3\subject10_Run_40002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle4\subject10_Run_50002_cycle4_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle4\subject10_Run_50002_cycle4_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle5\subject10_Run_50002_cycle5_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle5\subject10_Run_50002_cycle5_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle7\subject10_Run_50002_cycle7_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject10-latest\subject10\subject10\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle7\subject10_Run_50002_cycle7_states_degrees.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\ExportedData\Run_200 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\ExportedData\Run_300 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\ExportedData\Run_400 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\ExportedData\Run_500 02_newCOP3_v24.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject11_Run_20002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject11_Run_20002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle3\subject11_Run_20002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle3\subject11_Run_20002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle4\subject11_Run_20002_cycle4_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle4\subject11_Run_20002_cycle4_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle1\subject11_Run_30002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle1\subject11_Run_30002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle2\subject11_Run_30002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle2\subject11_Run_30002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle3\subject11_Run_30002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_30002\RRA_Results_v191_Run_30002_cycle3\subject11_Run_30002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle1\subject11_Run_40002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle1\subject11_Run_40002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle2\subject11_Run_40002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle2\subject11_Run_40002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle3\subject11_Run_40002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_40002\RRA_Results_v191_Run_40002_cycle3\subject11_Run_40002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle1\subject11_Run_50002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle1\subject11_Run_50002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle2\subject11_Run_50002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle2\subject11_Run_50002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle3\subject11_Run_50002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject11-latest\subject11\subject11\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle3\subject11_Run_50002_cycle3_states_degrees.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\ExportedData\Run_200 02_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\ExportedData\Run_300 01_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\ExportedData\Run_400 01_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\ExportedData\Run_500 01_newCOP3_v24.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle1\subject17_Run_20002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle1\subject17_Run_20002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject17_Run_20002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle2\subject17_Run_20002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle3\subject17_Run_20002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_20002\RRA_Results_v191_Run_20002_cycle3\subject17_Run_20002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle1\subject17_Run_30001_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle1\subject17_Run_30001_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle2\subject17_Run_30001_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle2\subject17_Run_30001_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle3\subject17_Run_30001_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle3\subject17_Run_30001_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_40001\RRA_Results_v191_Run_40001_cycle1\subject17_Run_40001_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_40001\RRA_Results_v191_Run_40001_cycle1\subject17_Run_40001_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_40001\RRA_Results_v191_Run_40001_cycle2\subject17_Run_40001_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_40001\RRA_Results_v191_Run_40001_cycle2\subject17_Run_40001_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_40001\RRA_Results_v191_Run_40001_cycle3\subject17_Run_40001_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_40001\RRA_Results_v191_Run_40001_cycle3\subject17_Run_40001_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_50001\RRA_Results_v191_Run_50001_cycle1\subject17_Run_50001_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_50001\RRA_Results_v191_Run_50001_cycle1\subject17_Run_50001_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_50001\RRA_Results_v191_Run_50001_cycle2\subject17_Run_50001_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_50001\RRA_Results_v191_Run_50001_cycle2\subject17_Run_50001_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_50001\RRA_Results_v191_Run_50001_cycle3\subject17_Run_50001_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject17-latest\subject17\subject17\rra_multipleSteps\RRA_Results_v191_Run_50001\RRA_Results_v191_Run_50001_cycle3\subject17_Run_50001_cycle3_states_degrees.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\ExportedData\Run_200 01_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\ExportedData\Run_300 01_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\ExportedData\Run_400 01_newCOP3_v24.mot
+- UNPAIRED (grf): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\ExportedData\Run_500 02_newCOP3_v24.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_20001\RRA_Results_v191_Run_20001_cycle1\subject20_Run_20001_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_20001\RRA_Results_v191_Run_20001_cycle1\subject20_Run_20001_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_20001\RRA_Results_v191_Run_20001_cycle2\subject20_Run_20001_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_20001\RRA_Results_v191_Run_20001_cycle2\subject20_Run_20001_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_20001\RRA_Results_v191_Run_20001_cycle3\subject20_Run_20001_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_20001\RRA_Results_v191_Run_20001_cycle3\subject20_Run_20001_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle1\subject20_Run_30001_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle1\subject20_Run_30001_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle2\subject20_Run_30001_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle2\subject20_Run_30001_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle3\subject20_Run_30001_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_30001\RRA_Results_v191_Run_30001_cycle3\subject20_Run_30001_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_40001\RRA_Results_v191_Run_40001_cycle1\subject20_Run_40001_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_40001\RRA_Results_v191_Run_40001_cycle1\subject20_Run_40001_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_40001\RRA_Results_v191_Run_40001_cycle2\subject20_Run_40001_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_40001\RRA_Results_v191_Run_40001_cycle2\subject20_Run_40001_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_40001\RRA_Results_v191_Run_40001_cycle3\subject20_Run_40001_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_40001\RRA_Results_v191_Run_40001_cycle3\subject20_Run_40001_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle1\subject20_Run_50002_cycle1_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle1\subject20_Run_50002_cycle1_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle2\subject20_Run_50002_cycle2_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle2\subject20_Run_50002_cycle2_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle3\subject20_Run_50002_cycle3_Kinematics_q.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\downloads\Subject20-latest\subject20\subject20\rra_multipleSteps\RRA_Results_v191_Run_50002\RRA_Results_v191_Run_50002_cycle3\subject20_Run_50002_cycle3_states_degrees.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\falisse\predictsim_mtp-master\OpenSimModel\templates\IK\IK_average_walking_HGC_mtp.mot
+- UNPAIRED (ik): D:\temp\gait_lib_staging\falisse\predictsim_mtp-master\OpenSimModel\templates\MA\dummy_motion.mot
 
-References saved: 1 -> D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\gait_refs
+References saved: 33 -> D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\gait_refs
+Unpaired/leftover .mot listed: 340
 Use: load a .npz and rebuild the dict (arrays r_/l_ + scalar keys) as kine_ref.REF_CACHE for scoring/training against it (see gait_lib_score.py / gait_lib_pilot2.py).
 
-muscfib fiber-length files (no GRF columns) will list as UNPAIRED - they integrate through the F-L-V validation route, not the reference route.
+Predictive .sto libraries (results-speeds / deficits / assistloadwalk states) integrate through a separate states-based route, not this GRF-phased one.

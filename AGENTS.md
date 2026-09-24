@@ -533,8 +533,109 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     full_rules, build_network.py:795-800). (7) six-synergy model:
     `synergy_model.py` + `synergy_basis.npz` (fsa_backsolve rank-6 NMF
     verbatim; replay VAF 0.945/R2 0.920; NNLS≡H to 1e-6). PENDING BEN:
-    SimTK downloads (then run gait_lib_intake.py) + goal-3 production
-    ruling.
+    ~~SimTK downloads~~ (RESOLVED 2026-09-24, see below) + goal-3
+    production ruling.
+    **2026-09-24 OVERNIGHT — THUMB DRIVE = SIMTK HAUL LANDED (Ben
+    supplied `F:\Biomechanics data`, 3.03 GB, READ-ONLY; full report
+    `reports_20260923\goal5_thumbdrive_campaign.md` + EXEC_SUMMARY
+    addendum 5):** staged to `D:\temp\gait_lib_staging\downloads`
+    (17.6 GB extracted). `gait_lib_intake.py` v2 (nested zip-in-zip,
+    NEW "arnold" GRF style in gait_lib_loader — OpenSim plate-2 columns
+    duplicate names positionally, sides by earlier onset; cross-folder
+    trial pairing ik/Results_191 ↔ ExportedData; RRA/CMC derivative
+    de-dup) integrated **33 refs into `spinal\gait_refs\*.npz`**:
+    Falisse predicted WALKING + 8 subjects × 4 RUNNING speeds — **ALL
+    32 Arnold trials are RUNNING** (trial prefix "Run_", duty
+    0.31–0.46, T 0.56–0.80 s, knee_min −80…−140° across the speed
+    sweep; the walking-side expansion needs the Ong/SCONE states route).
+    `gait_lib_score_all.py`: s3k walker = of-record walking −189.5
+    (best) → Falisse −200.5 → slow running −188…−208 → sprint −332,
+    monotone with speed. Also inventoried, not yet integrated: Ong et
+    al. predictive WALKING states 0.5–2.0 m/s + deficit runs
+    (GRF-less single-cycle → needs states-based loader extension),
+    RAW EMG (10 subj × 4 trials, pairs by trial token), SCONE setup
+    files v2 (goal-2 balance reference), Hamner 2010 full-body running
+    model + RunningSimulation subject02 pair (didn't auto-pair; one
+    manual ref if wanted), assistloadwalk experiments (5270 .sto).
+    Multi-reference training corpus is LOCAL; next study awaits Ben.
+    **ADDENDUM (same night): Ong predictive WALKING refs integrated —
+    the states.sto files carry per-leg GRF (Leg1_r/Leg0_l.grf_y,
+    BW-normalized) + gait2392-named angles in radians, so
+    `gait_lib_ong_refs.py` (radians-tolerant reader, GRF×750 N,
+    case-insensitive columns) built 10 more refs: ong_speed_050..200
+    (T 2.10→1.02 s) + 3 self-selected (ong_selfsel_Init200 has a
+    degenerate left cycle — drop if sampled). LIBRARY TOTAL = 43 refs;
+    s3k vs Ong family −203…−224, monotone in speed. Deficit runs NOT
+    integrated (Ben: not yet); same script pattern covers them.**
+    **2026-09-24 NIGHT WORKFLOW (dwfrun-6e655f5f; supervisor SHIP;
+    all reports in `spinal\reports_20260924\`, index =
+    overnight_report_20260924.md):** (1) **SCONE 2.4.4 hands-on**
+    (sconecmd headless): Tutorials 3a Balance + 4a Gait run on the
+    OpenSim engine — gait: 7 steps / 2.5 m / 2.78 s then falls
+    (com_y→84.9% < 0.85 termination, knee DofLimits penalty 7.4);
+    OVERRIDE GOTCHA: scenario-value overrides need the FULL dot-path
+    (`CmaOptimizer.SimulationObjective.max_duration=3` — bare
+    `SimulationObjective.max_duration` silently unused, proven A/B);
+    Hyfydy scenario fails with the exact "no active license key" error
+    until Ben activates (settings zml had NO hyfydy block — never
+    activated; Examples3/Tutorials3 were missing from
+    Documents\SCONE and were COPIED there 09-24; activation = GUI
+    Tools→Preferences→Hyfydy→paste→Enable, trial expires 2026-10-24).
+    SCONE reflex/balance controller idioms read into the report
+    (per-muscle delays $hip_delay 0.01…$ankle 0.035, $ves_delay 0.05,
+    GaitStateController 5-state, tiered 10/20/35 ms). (2)
+    **AnimatLab W2L headless runs WORK on this box** (AnimatSimulator
+    at `D:\Program Files (x86)\NeuroRobotic Technologies\AnimatLab\bin`):
+    modern W2L asim 5.1 s — **flexor HCs NEVER cross −55 mV
+    post-transient** (peaks −55.8/−56.4 mV, sub-threshold; the rhythm
+    rides ext/flx antiphase r=−0.956, joints oscillate 2.22 Hz, neural
+    leads joints 57–89 ms) — nuance vs the "count flexor crossings"
+    09-18 rule; the 2023 asim (14 tonic 5–6 nA neurons) DOES burst
+    (8 bursts each, ~0.77 Hz, survives 40 N push 10 s);
+    BilateralRG ground asim: L 10 / R 11 onsets, period 0.464 s,
+    L/R lag +0.474 cycle antiphase. Chart .txt byproducts rewritten
+    (sizes identical); no model file touched. (3) **`spinal\w2l_cpg\`
+    — the MuJoCo SNS port of Ben's contact-driven bilateral CPG**
+    (his ask: "W2L in MuJoCo SNS with the subnetworks like
+    Biped_2xCPG_wSubs… create the RH RG, wire the RGs together"):
+    build_w2l_net.py = 91 neurons / 214 synapses / 10 inputs,
+    EVERY edge tagged to the bilateralrg editor template (105/226)
+    or the SESSION_NOTES build chain — Ben's wiring transcribed, 6
+    deviations documented in README.md (copy into DESIGN.md at the
+    next DESIGN.md gate); smoke_w2l.py gate = alternating L/R heel
+    pulses: **W2L_SMOKE PASS period 1.000 s, antiphase −0.532,
+    RG-E bursts 22/22** (supervisor reproduced bit-exact); NOT done:
+    connection to the 92-muscle model, muscle map TODO in README
+    (hip ext=glut max, hip flex=iliopsoas, knee ext=vasti,
+    knee flex=hamstrings…). Bit-exactness contract intact —
+    supervisor mtime-swept the repo: nothing modified outside
+    w2l_cpg/ + reports_20260924/ + AnimatLab chart byproducts.
+    (4) **gait2392_muscle_function_pf_assignment.md**: Confluence page
+    + 2 inline PDFs fetched (Gait2392-vs-2354 muscle appendix,
+    MuscleIsometricForces) + John 2012 full text (ML-GRF windows 0–6%
+    lateral lead / 14–30% medial / 40–56% medial trailing; abductors
+    largest medial contributor; adductors late-stance lateral);
+    frontal-plane PF pair DESIGN (PF_ADD_/PF_ABD_ HCs per side both
+    from RG_E staggered, PF_IN_ADD_/ABD_ lamination, 6 adductor vs
+    6 glut_med/min pools, G["front_pf"] default-0) + 3-DoF foot
+    force sensor recipe — DESIGN ONLY, no code touched. (5) balance
+    catalog (awesome-biomechanics) shortlist with licenses
+    (Zenodo 3819630 CC-BY-4.0 verified live). **FOR BEN: activate
+    Hyfydy (1 min), then the -Hyfydy.scone variants + engine A/B
+    become runnable; see overnight report for the full story.**
+    **2026-09-24 MORNING — HYFYDY ACTIVATED (Ben entered the trial
+    license; `hyfydy{enabled=1}`, Hyfydy 1.12.6.1412): both blocked
+    scenarios now run headless — 4a Gait: 7 steps / 2.58 m, DofLimits
+    0.033, **90.5× real-time** (OpenSim engine: 2.50 m, 0.261, 1.17×);
+    3a Balance: 65.2/100 at 1.045 s, 99× RT. Engines use DIFFERENT
+    .par inits → both-work comparison, not same-controller A/B.
+    GOAL-3 HEADLINE: Hyfydy natively ships the three features MuJoCo
+    2.3.7 lacks — `muscle_force_m2012fast` (elastic-tendon muscle),
+    `contact_force_hunt_crossley_sb`, `predictive_integrator_psemtw` —
+    the post-deadline engine option from goal3_mujoco_fidelity.md §3.2
+    is now CONCRETE + licensed to 2026-10-24. Addendum in
+    reports_20260924\scone_hyfydy_hands_on.md; logs
+    scone_logs\{gait,balance}_hfd.log.**
     **2026-09-23 EVENING — CONNECTOME BLOCK EDITOR v3.0 (Ben-requested;
     supervisor SHIP):** `connectome_block_editor.html` v2.2 → v3.0:
     (a) TEMPLATE LIBRARY — 15 sidecar templates in

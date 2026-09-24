@@ -339,3 +339,20 @@ no ground-contact attempt and no SNS wiring.
 - Ben's two items unchanged: SimTK downloads (now a one-command intake) and
   the goal-3 production ruling (SEE conversion per goal3_mujoco_fidelity.md
   3.2 if approved).
+
+
+## ADDENDUM 5 (2026-09-24 overnight): thumb drive landed the SimTK haul - goal 5 corpus complete
+
+Ben supplied F:\Biomechanics data (3.03 GB, read-only). Staged to
+D:\temp\gait_lib_staging\downloads (17.6 GB extracted). Intake v2
+(nested zips, arnold duplicate-plate GRF style, cross-folder trial
+pairing, RRA/CMC de-dup) integrated 33 references: Falisse predicted
+WALKING + 8 subjects x 4 RUNNING speeds (all 32 Arnold trials are
+running: duty 0.31-0.46, knee -80..-140). gait_lib_score_all.py scored
+the s3k walker against all of them: of-record walking -189.5 (best) ->
+Falisse -200.5 -> slow running -188..-208 -> sprint -332 (monotone with
+speed). Also inventoried: Ong/SCONE predictive WALKING states 0.5-2.0
+m/s (needs a states-based loader, GRF-less), RAW EMG 10 subj x 4
+trials, SCONE setup files (goal-2 reference), Hamner full-body running
+model. Report: goal5_thumbdrive_campaign.md. The multi-reference
+training corpus is now local; next study awaits Ben.

@@ -1,0 +1,186 @@
+CmaOptimizer {
+	signature_prefix = DATE_TIME
+	min_progress = 1e-4
+	SimulationObjective {
+		max_duration = 3
+		ModelHyfydy {
+			model_file = "models/H0918v3.hfd"
+			state_init_file = "init/InitStateStand.zml"
+			initial_load = 1
+			use_opensim_activation_dynamics = 1
+			fixed_control_step_size = 0.005
+		}
+		ReflexController {
+			name = Balance
+			symmetric = 1
+			MuscleReflex {
+				target = iliopsoas
+				L0 = ~0.65
+				KL = ~1
+				delay = 0.010
+			}
+			MuscleReflex {
+				target = glut_max
+				L0 = ~0.65
+				KL = ~1
+				delay = 0.010
+			}
+			MuscleReflex {
+				target = rect_fem
+				L0 = ~0.65
+				KL = ~1
+				delay = 0.010
+			}
+			MuscleReflex {
+				target = hamstrings
+				L0 = ~0.65
+				KL = ~1
+				delay = 0.010
+			}
+			MuscleReflex {
+				target = vasti
+				L0 = ~0.65
+				KL = ~1
+				delay = 0.020
+			}
+			MuscleReflex {
+				target = bifemsh
+				L0 = ~0.65
+				KL = ~1
+				delay = 0.020
+			}
+			MuscleReflex {
+				target = gastroc
+				L0 = ~0.65
+				KL = ~1
+				delay = 0.020
+			}
+			MuscleReflex {
+				target = soleus
+				L0 = ~0.65
+				KL = ~1
+				delay = 0.035
+			}
+			MuscleReflex {
+				target = tib_ant
+				L0 = ~0.65
+				KL = ~1
+				delay = 0.035
+			}
+			BodyPointReflex {
+				target = iliopsoas
+				source = torso
+				KP = 0~0.1
+				KV = 0~0.1
+				delay = 0.1
+				offset [ 0 0.5 0 ]
+				direction [ 1 0 0 ]
+			}
+			BodyPointReflex {
+				target = rect_fem
+				source = torso
+				KP = 0~0.1
+				KV = 0~0.1
+				delay = 0.1
+				offset [ 0 0.5 0 ]
+				direction [ 1 0 0 ]
+			}
+			BodyPointReflex {
+				target = vasti
+				source = torso
+				KP = 0~0.1
+				KV = 0~0.1
+				delay = 0.1
+				offset [ 0 0.5 0 ]
+				direction [ 1 0 0 ]
+			}
+			BodyPointReflex {
+				target = tib_ant
+				source = torso
+				KP = 0~0.1
+				KV = 0~0.1
+				delay = 0.1
+				offset [ 0 0.5 0 ]
+				direction [ 1 0 0 ]
+			}
+			BodyPointReflex {
+				target = glut_max
+				source = torso
+				KP = 0~0.1
+				KV = 0~0.1
+				delay = 0.1
+				offset [ 0 0.5 0 ]
+				direction [ 1 0 0 ]
+			}
+			BodyPointReflex {
+				target = hamstrings
+				source = torso
+				KP = 0~0.1
+				KV = 0~0.1
+				delay = 0.1
+				offset [ 0 0.5 0 ]
+				direction [ 1 0 0 ]
+			}
+			BodyPointReflex {
+				target = bifemsh
+				source = torso
+				KP = 0~0.1
+				KV = 0~0.1
+				delay = 0.1
+				offset [ 0 0.5 0 ]
+				direction [ 1 0 0 ]
+			}
+			BodyPointReflex {
+				target = gastroc
+				source = torso
+				KP = 0~0.1
+				KV = 0~0.1
+				delay = 0.1
+				offset [ 0 0.5 0 ]
+				direction [ 1 0 0 ]
+			}
+			BodyPointReflex {
+				target = soleus
+				source = torso
+				KP = 0~0.1
+				KV = 0~0.1
+				delay = 0.1
+				offset [ 0 0.5 0 ]
+				direction [ 1 0 0 ]
+			}
+		}
+		CompositeMeasure {
+			BalanceMeasure { termination_height = 0.6 weight = 100 }
+			EffortMeasure {
+				name = Effort
+				weight = 0.01
+				measure_type = Wang2012
+			}
+			CompositeMeasure {
+				name = JointLimits
+				symmetric = 1
+				DofMeasure {
+					dof = knee_angle
+					force { min = 0 max = 0 abs_penalty = 10 }
+				}
+				DofMeasure {
+					dof = hip_flexion
+					force { min = 0 max = 0 abs_penalty = 10 }
+				}
+				DofMeasure {
+					dof = ankle_angle
+					force { min = 0 max = 0 abs_penalty = 10 }
+				}
+			}
+		}
+	}
+}
+; = ""
+powershell = ""
+-NoProfile = ""
+-Command = ""
+"Select-String -Path 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20260924\\scone_logs\\balance_hfd" {
+	"log' -Pattern 'Terminating|result|BalanceMeasure|performance|com_height' | ForEach-Object { $_" {
+		"Line }" = ""
+	}
+}

@@ -56,6 +56,10 @@ def _detect_grf(names):
     for style, (r, l) in GRF_STYLES.items():
         if r in names and l in names:
             return style, r, l
+    # Arnold ExportedData style: OpenSim writes plate 2 with the SAME
+    # column names (positional duplicates) - "ground_force_vy" twice.
+    if sum(1 for n in names if n == "ground_force_vy") >= 2:
+        return "arnold", None, None
     raise ValueError(f"no known GRF vy column pair in {names[:8]}...")
 
 
@@ -66,8 +70,19 @@ def load_reference_general(ik_path: Path, grf_path: Path,
     col = {n: i for i, n in enumerate(names[1:])}
     t_g, gn, gv = _read_mot(Path(grf_path))
     style, cr, cl = _detect_grf(gn)
-    vy_r = gv[:, gn.index(cr) - 1]
-    vy_l = gv[:, gn.index(cl) - 1]
+    if style == "arnold":
+        # positional duplicates: plate columns share names; assign sides
+        # deterministically by the earlier first loading onset.
+        dups = [i for i, n in enumerate(gn)
+                if n == "ground_force_vy"][:2]
+        v0, v1 = gv[:, dups[0] - 1], gv[:, dups[1] - 1]
+        o0, o1 = KR._loading_onsets(t_g, v0), KR._loading_onsets(t_g, v1)
+        if len(o0) and len(o1) and o1[0] < o0[0]:
+            v0, v1 = v1, v0
+        vy_r, vy_l = v0, v1
+    else:
+        vy_r = gv[:, gn.index(cr) - 1]
+        vy_l = gv[:, gn.index(cl) - 1]
     on_r = KR._loading_onsets(t_g, vy_r)
     on_l = KR._loading_onsets(t_g, vy_l)
     if len(on_r) < 2 or len(on_l) < 2:

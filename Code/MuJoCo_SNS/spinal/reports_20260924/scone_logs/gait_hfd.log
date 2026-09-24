@@ -1,0 +1,32 @@
+10:22:08 SCONE version 2.4.4.3333
+10:22:08 Successfully initialized OpenSim-3.3-2021-01-28
+10:22:08 Successfully initialized OpenSim-4.4
+10:22:08 Successfully initialized Hyfydy-1.12.6.1412
+10:22:08 Successfully initialized Hyfydy-1.12.6.1412-DBL
+10:22:08 Evaluating C:\Users\Ben Bolen\Documents\SCONE\Tutorials3\Tutorial 4a - Gait - Hyfydy.scone
+10:22:08 Adding forces: planar_joint_force_pnld2 simple_collision_detection contact_force_hunt_crossley_sb muscle_force_m2012fast
+10:22:08 Adding integrator: predictive_integrator_psemtw
+10:22:08 Created H0918v3: mass=74.5314 dofs=9 muscles=18
+10:22:08 pooled_evaluator started threads: 12
+10:22:08 Adding forces: planar_joint_force_pnld2 simple_collision_detection contact_force_hunt_crossley_sb muscle_force_m2012fast
+10:22:08 Adding integrator: predictive_integrator_psemtw
+10:22:08 Created H0918v3: mass=74.5314 dofs=9 muscles=18
+10:22:08 Results written to D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\reports_20260924\scone_logs\gait_hfd*
+10:22:08 result                    = 67.7462
+10:22:08   Gait                    = 66.3279 <- 100 * (0.663279 > 0.05)
+10:22:08     step_velocity         = 0.376677
+10:22:08     step_count            = 7
+10:22:08   Effort                  = 0.630673 <- 0.1 * 6.30673
+10:22:08     effort                = 1212.87
+10:22:08     distance              = 2.58029
+10:22:08   MuscleActivation        = 0.540284 <- 2000 * 0.000270142
+10:22:08     effort                = 0.935133
+10:22:08     distance              = 2.58029
+10:22:08   DofLimits               = 0.0328434
+10:22:08     ankle_angle_l         = 0 <- 0.1 * 0
+10:22:08     ankle_angle_r         = 0 <- 0.1 * 0
+10:22:08     knee_angle_l          = 0 <- 0.02 * (0.908138 > 1)
+10:22:08     knee_angle_r          = 0.0328434 <- 0.02 * (1.64217 > 1)
+10:22:08   GRF                     = 0.214558 <- 10 * 0.0214558
+10:22:08 simulation time           = 2.33
+10:22:08 performance (x real-time) = 90.5354
