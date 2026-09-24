@@ -79,9 +79,20 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   `myoconv` is the laptop's copy of the same toolchain). Other envs: `opensim`
   (py3.11 + opensim 4.6), `d2l`. PyCharm: Add Interpreter → Conda → executable
   `D:\Anaconda\condabin\conda.bat` → existing env `myo` (never let PyCharm create a venv).
+  **ZCode tooling parity (2026-09-23):** Node v22.23.2 at `D:\NodeJS\node-v22.23.2-win-x64`
+  (user PATH) so npx-based MCP servers (mujoco-sns-walker's `zai-mcp-server`,
+  chrome-devtools-mcp) run here too; `ZAI_API_KEY` set user-level (never in the repo);
+  optuna 5.0.0 pip-added to `myo` (numpy pin 1.21.6 untouched; shared `optuna_walk.db`
+  is schema 12 — version-matched with EB475WS4). Restart ZCode to pick up new
+  PATH/env entries for MCP servers.
 - Custom skills are version-controlled in the `ZCode_Skills` repo. **EB475WS4: the repo is
   at `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills`** (NOT `D:\GitHub\` — corrected
   2026-09-16; easteregg2: `D:\GitHub\ZCode_Skills`; laptop: `Documents\GitHub\ZCode_Skills`).
+  **easteregg2: ALL repo-backed skills are junctions at `C:\Users\Ben Bolen\.agents\skills\`**
+  into `D:\GitHub\ZCode_Skills` (2026-09-23; mujoco/neuroscience/python/sns-toolbox/scone
+  added then, drift merged; `eiger` + `prusa-slicer` are easteregg2-local plain dirs; this
+  host's loader reads `.agents\skills`, EB475WS4's reads `.zcode\skills` — different names,
+  same junction pattern).
   On EB475WS4 `C:\Users\Ben Bolen\.zcode\skills\` holds **directory junctions** into that
   repo (verified 2026-09-16 23:24 — the earlier "plain copies under `.agents\skills\`"
   note was wrong/stale; `.agents\skills` does not exist here). Live set, ALL junctions:

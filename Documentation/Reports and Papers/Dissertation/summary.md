@@ -10,14 +10,19 @@
 
 ---
 
-# Handoff for ChatGPT (2026-09-16)
+# Handoff for ChatGPT (2026-09-23) — supersedes the 2026-09-16 handoff
 
-You (ChatGPT) made the original 66-item review inventory and summary.md. ZCode has since restructured this file: every ajh26 item now has problem + response in the same entry below. Read this section first, then the entries.
+You (ChatGPT) made the original 66-item review inventory and summary.md. ZCode has since restructured this file: every ajh26 item now has problem + response in the same entry below. Read this section first, then the entries. **The dissertation deadline is this week; dissertation writing is the top-priority thread and everything else (SADb, sim work, code) is secondary until submission.** Pull the repo first if you are on a fresh clone (Ben pushes from three machines via GitHub Desktop).
 
-**Current state**
-- Overleaf was restored (History, version before Sep 12 02:40) after ZCode mistakenly pasted drafts directly. Authoritative text = Overleaf History; the repo zip `Bolen_Dissertation.zip` is only the Sep 12 00:37 snapshot. Ben's editor mode dropdown may read "Edit" (ZCode switched it; he can switch back to Reviewing).
-- Review panel: 49 ajh26 comments unresolved; 16 of 17 tracked changes accepted; one tracked deletion still pending ("spinal ", background L42 — recommendation at entry B14 is to reject it).
-- This file: working doc, one entry per item, statuses DONE / PROPOSED / OPEN. Full verbatim inventory (your original): `summary_inventory_ajh26.md` beside this file. Full-file drafts with every PROPOSED text in place: `ZCode_drafts/chapters/`.
+**Current state (2026-09-23)**
+- Overleaf was restored (History, version before Sep 12 02:40) after the 2026-09-12 paste incident. Authoritative text = Overleaf; the repo `ProofFinal/` is a Sep-8 snapshot and STALE vs Overleaf — never treat ProofFinal as the current text; the repo zip `Bolen_Dissertation.zip` is only the Sep 12 00:37 snapshot. Ben's editor mode dropdown may read "Edit" (ZCode switched it; he can switch back to Reviewing).
+- Review panel: last verified 2026-09-16 — 49 ajh26 comments unresolved; 16 of 17 tracked changes accepted; one tracked deletion still pending ("spinal ", background L42 — recommendation at entry B14 is to reject it). **Ben has been applying PROPOSED items since; your FIRST task is to refresh this from the panel (read-only browser access, the designated route) and record what moved.**
+- This file: working doc, one entry per item, statuses DONE / PROPOSED / OPEN. Full verbatim inventory (your original): `summary_inventory_ajh26.md` beside this file. Full-file drafts with every PROPOSED text in place: `ZCode_drafts/chapters/` (read-only for you).
+- What landed since the last handoff (details in the dated ZCode sections at the BOTTOM of this file):
+  - **B9 Steele-knee figure BUILT** (`steeleknee.pdf`/`.png` beside this file, script `Notes/build_steele_knee_figure.py`); the B9 background paragraph itself is still pending in Overleaf.
+  - **2026-09-20, GoF-metric paragraphs** for 20-methods (RMSE=level, FVU=shape, MaxR=phase; FVU primary) + three new bib keys (`nash_river_1970`, `taylor_summarizing_2001`, `iosa_assessment_2014`) added to the repo `Bibliography/thesis.bib` only — the Overleaf bib still needs them or they render [?].
+  - **2026-09-21, three Xi methods figures** (`xiFrameGeo`/`xiBalance`/`xiWrapLoss`) redrawn Modern-Robotics-style (Ben graded the first pass C-; the redraw passed the visual gate) + wire-in text in `ZCode_drafts/chapters/20-methods.tex` (fig:xiFrames/xiBalance/xiWrapLoss). **CAUTION: the PDF/EPS files and the generator (`Notes/make_xi_method_figures.m`) exist ONLY on EB475WS4 as untracked files — they are not in the easteregg2/laptop clones and not on Overleaf. Never write text that assumes Overleaf already has them.**
+  - **CPG/spinal results section is paste-ready**: `CPG_spinal_section_draft.tex` (Dissertation root) — every referenced figure now exists in `CPG_airstepping_figs/` (the `curr3i_*` set is the current disfacilitation-winner figures, superseding curr3b/curr3c), 8 `\fillme` slots remain, PART D bib needs the key-collision check first. Paste map + cautions: `CPG_DISSERTATION_UPDATE_NOTES.md` — paste into OVERLEAF, not ProofFinal.
 
 **Ground rules (Ben's, enforced after the incident)**
 1. NEVER modify Overleaf — not files, not tracked changes, not comment resolves — unless Ben names the exact action in that message. Suggested edits go into this file as PROPOSED entries. Ben applies everything himself.
@@ -27,11 +32,17 @@ You (ChatGPT) made the original 66-item review inventory and summary.md. ZCode h
 5. FLAG-BEN placeholders mark values only Ben can supply (human knee torque results). Never fill them by guessing.
 6. Append or edit entries in place; do not renumber, reorder, or rewrite other sections' entries. Note what you changed at the bottom of the ledger.
 
-**Work available for you now**
-- Draft the remaining OPEN prose items that do not need Ben first: the X1 motivation expansion (2-3 pages, scientific framing) and the full-paragraph Dissertation Organization variant ajh26 asked for (so Ben can compare against the summary-sentence version in I5).
-- The B- global grade targets a voice-consistency pass: read the merged sections (background 2.6-2.8 after B15's distribution, results R1) and flag seams where source papers show through, as new entries.
-- After ajh26's next review pass: refresh the inventory from Overleaf's Review panel (read-only — your browser access is the designated route), append new items as entries, and update resolved ones.
-- The AI-writing-check rubric (learning log item 9) is unclaimed: em-dash density, hedge stacking, uniform sentence rhythm, AI lexicon, rule-of-three overuse. If you build the checker, run it on all PROPOSED text in this file and log findings as entry updates.
+**Work available for you now (priority order)**
+1. **Refresh the ajh26 inventory from the Overleaf Review panel (read-only)**: append new items as entries, update resolved ones (B14, X2, X3 likely closable), and determine which PROPOSED blocks below Ben has already applied — that decides the upload backlog (see below).
+2. **Help Ben clear the Overleaf upload backlog** (he applies everything himself; your role is assembling exact paste-ready blocks in entries here, then verifying after he applies):
+   - CPG parts A–D (Methods/Results/Discussion/Bib blocks from `CPG_spinal_section_draft.tex`) + the figure files it references; run the PART D key-collision check first.
+   - The 20-methods additions: GoF paragraphs (3 new bib keys!), the Xi-figure wire-in text, and — once Ben commits/pushes the files from EB475WS4 — the `xi*.pdf` figures themselves.
+   - The B9 Steele-knee paragraph + `steeleknee.pdf`.
+3. Draft the remaining OPEN prose items that do not need Ben first: the X1 motivation expansion (2-3 pages, scientific framing) and the full-paragraph Dissertation Organization variant ajh26 asked for (so Ben can compare against the summary-sentence version in I5).
+4. The B- global grade targets a voice-consistency pass: read the merged sections (background 2.6-2.8 after B15's distribution, results R1) and flag seams where source papers show through, as new entries.
+5. The AI-writing-check rubric (learning log item 9) is unclaimed: em-dash density, hedge stacking, uniform sentence rhythm, AI lexicon, rule-of-three overuse. If you build the checker, run it on all PROPOSED text in this file and log findings as entry updates.
+
+**Open items parked with ZCode (not yours):** M4 equation cross-check vs the live MATLAB evaluators; M5 stop-condition values from `minimizeFlxPin.m`; the Appendix C stale `[X2,X1,X2]` extensor row (see the 2026-09-21 section); the `minimizeFlxPin.m` origin-frame toggle discrepancy; committing the xi-figure files from EB475WS4.
 
 **Division of labor with ZCode:** you handle prose and the Overleaf review panel (read-only); ZCode handles the code side (pulling the Newton-Raphson stop conditions from `minimizeFlxPin.m` for M5, equation cross-checks for M4, the MATLAB evaluators) and maintains `ZCode_drafts/`. Do not edit `ZCode_drafts/` — your text goes into entries here.
 
@@ -428,4 +439,5 @@ Tension: X3 asks for a merged discussion chapter; X4 says remove this one. If X3
 
 ## Ledger changes
 
+- 2026-09-23 (ZCode, easteregg2): handoff banner replaced (2026-09-16 edition → 2026-09-23 edition) — refreshed Overleaf/review-panel state, added the upload-backlog work queue, flagged that the `xi*` figure files + generator live only on EB475WS4 (untracked). Ground rules and all ajh26 entries untouched.
 - 2026-09-20 (ZCode): B9 figure built and saved beside this file as `steeleknee.pdf` / `steeleknee.png`; build script `Notes/build_steele_knee_figure.py` (panel A = crossed four-bar schematic drawn from the link lengths in Steele's 2018 PSU thesis Fig. 52; panel B = ICR migration, robot femur-frame curves from `buildKneeFlexorContext20mm.m` vs human computed from the Gait2392/Yamaguchi-Zajac knee splines; panel C = placeholder for Ben's test-stand photo). Ready-to-paste LaTeX block in the session handoff. No Overleaf edits made.
