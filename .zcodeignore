@@ -1,0 +1,104 @@
+*.asv
+
+# --- Global autosave/temp patterns (added 2026-09-07) ---
+# Office/SolidWorks owner + autosave files (~$ prefix), Word temp files
+~$*
+~WRL*.tmp
+# Optimizer/diagnostic run logs dropped in Mesh_Optimization root
+Code/Matlab/Mesh_Optimization/*.log
+Testing_Data/2022_02_Festo/*.log
+# SolidWorks console logs
+Solid_Models/**/console.log
+# --- MyoConverter / run byproducts (added 2026-09-08) ---
+# Python bytecode from plugin/helper scripts (added 2026-09-23, plugins/)
+__pycache__/
+plugins/**/__pycache__/
+# Regenerable MyoConverter conversion outputs (~116 MB; Geometry = stock OpenSim STL copies).
+# Rebuild with the MyoConverter scripts; see opensim skill notes.
+Solid_Models/OpenSim/Gait2392_Robotbody/myosuite_gait2392_robotbody/
+Solid_Models/OpenSim/myosuite_gait2392_simbody/
+# One-off run logs / crash traces dropped at repo root
+/opensim.log
+/convert_gait2392*.log
+/Trace_*.txt
+# ZCode session state
+.zcode/
+Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$*
+Solid_Models/Biomimetics_2022-Knee_Test/Test_Jig/~$*
+Solid_Models/Biomimetics_2022-Knee_Test/AARL_Puppy_18_02_01_000-FLFE/~$*
+Testing_Data/~$*
+Testing_Data/2026_06_Festo/~$*
+Testing_Data/2022_02_Festo/~$*
+Testing_Data/2022_02_Festo/~$Results_table_FullSize.xlsx
+Testing_Data/2022_02_Festo/~$Results_table_10mm.xlsx
+Documentation/Reports and Papers/Knee_Torque_Test/Tables/~$CoefficientTable.xlsx
+Testing_Data/~$StraightForceTest.xlsx
+Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$MuscleOrigins_003.SLDPRT
+Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$MuscleOrigins_002.SLDPRT
+Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$09_BA_001.SLDASM
+Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$05_01_TI_R_003.SLDPRT
+Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$05_01_TI_R_002.SLDPRT
+Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$04_06_FL_001.SLDPRT
+Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$04_05_BL_001.SLDPRT
+Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$04_02_KB_R_002.SLDPRT
+Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$04_01_KT_R_002.SLDPRT
+Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$03_01_FB_R_004_ribLink.SLDPRT
+Solid_Models/Biomimetics_2022-Knee_Test/Knee assembly/~$03_01_FB_R_004.SLDPRT
+Documentation/Reports and Papers/Knee_Torque_Test/Figures/Figure components/testJigs2/~$testJigs.pptx
+Documentation/Reports and Papers/Isometric_Force_Test/Review_round_1/Reviewer_checklist.docx
+Solid Models/Biomimetics_2022-Knee_Test/~$*
+Solid_Models/Biomimetics_2022-Knee_Test/AARL_Puppy_18_02_01_000-FLFE/~$18_02_01_018.SLDPRT
+
+# Simulink caches
+Code/Matlab/SNS_Simscape/slprj/
+Code/Matlab/SNS_Simscape/demos/slprj/
+*.slxc
+
+# staged Zotero PDFs (moved to D:\sadb_pdf_staging 2026-09-15; never commit)
+SADb_audit/pdf_staging/
+pdf_staging/
+
+# osim_import mesh junction -> cvt3 Geometry (STLs live in the gitignored mjc tree)
+Code/Matlab/SNS_Simscape/osim_import/Geometry/
+
+# local LaTeX build of the dissertation zip snapshot (regenerable; never commit)
+Documentation/Reports and Papers/Dissertation/LocalBuild/
+Documentation/Reports and Papers/Dissertation/.vscode/
+*.aux
+*.bbl
+*.blg
+*.synctex.gz
+
+# per-machine VSCode overrides (each machine keeps its own; never commit)
+.vscode/settings.local.json
+
+# ===== ↑ 以上同步自 .gitignore（「从 .gitignore 同步」只重写以上部分）=====
+.git/
+.hg/
+.svn/
+node_modules/
+bower_components/
+jspm_packages/
+site-packages/
+venv/
+coverage/
+htmlcov/
+lcov-report/
+cmakefiles/
+cmake-build-*/
+bazel-*/
+pods/
+deriveddata/
+storybook-static/
+playwright-report/
+test-results/
+allure-results/
+allure-report/
+cdk.out/
+*.egg-info/
+*.dist-info/
+eggs/
+pip-wheel-metadata/
+wheels/
+# ----- ↑ 以上为 ZCode 默认排除规则（自定义规则请写在本行下方，不会被同步/恢复改动）-----
+# 自定义规则写在下方（本行提示可删除）

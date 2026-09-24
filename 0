@@ -1,0 +1,74 @@
+NODES 26
+IN-InF_74      IN-InF   x=  680 y=   38
+IN-InE_73      IN-InE   x=  771 y=   38
+HC-RG-E_72     HC-RG-E  x=  780 y=  130
+HC-RG-F_71     HC-RG-F  x=  666 y=  132
+SN-Ia_83 from HIp SN-Ia    x=  933 y=  172
+SN-Ib_84 from Ankle SN-Ib    x=  933 y=  217
+SN-II_94 from Hip SN-II    x=  508 y=  219
+IN-PF_57       IN-PF    x=  671 y=  221
+IN-PF_58       IN-PF    x=  779 y=  222
+SN-II_88 from hip SN-II    x=  934 y=  273
+HC-PF-F_55     HC-PF-F  x=  657 y=  315
+HC-PF-E_56     HC-PF-E  x=  783 y=  316
+IaIN_ext_R     IN-IaIN  x=  822 y=  407
+Ia_ext_R       SN-Ia    x=  972 y=  407
+IaIN_flex_R    IN-IaIN  x=  601 y=  410
+Ia_flex_R      SN-Ia    x=  444 y=  417
+Ib_ext_R       SN-Ib    x= 1125 y=  515
+MN_ext_R       MN       x=  788 y=  518
+IbIN_ext_R     IN-IbIN  x=  907 y=  520
+MN_flex_R      MN       x=  641 y=  524
+IN-IbIN_85     IN-IbIN  x=  367 y=  534
+flexor_R       MUSCLE   x=  517 y=  615
+extensor_R     MUSCLE   x=  920 y=  647
+Ib_flex_R      SN-Ib    x=  355 y=  683
+RC_ext_R       RC       x=  596 y=  707
+RC_flex_R      RC       x=  810 y=  708
+EDGES 46
+MN_ext_R       - E g=1 R
+MN_flex_R      - E g=1 R
+Ia_ext_R       - E g=1 R
+Ia_flex_R      - E g=1 R
+IaIN_ext_R     - E g=0.5 ia_recip
+IaIN_flex_R    - E g=0.5 ia_recip
+IaIN_ext_R     - E g=0.5 iaIN_mutual
+IaIN_flex_R    - E g=0.5 iaIN_mutual
+Ib_ext_R       - E g=1 R
+IbIN_ext_R     - E g=0.5 ib_auto
+MN_ext_R       - E g=1 R
+RC_ext_R       - E g=0.5 rc_own
+MN_flex_R      - E g=1 R
+RC_flex_R      - E g=0.5 rc_own
+RC_ext_R       - E g=0.5 rc_mutual
+RC_flex_R      - E g=0.5 rc_mutual
+RC_ext_R       - E g=0.5 rc_disinhib
+RC_flex_R      - E g=0.5 rc_disinhib
+flexor_R       - E g=0.5 
+flexor_R       - E g=0.5 
+MN_flex_R      - E g=0.5 
+MN_ext_R       - E g=0.5 
+RC_flex_R      - E g=0.5 
+RC_ext_R       - E g=0.5 
+IN-PF_58       - E g=0.5 
+IN-PF_57       - E g=0.5 
+HC-PF-E_56     - E g=0.5 
+HC-PF-F_55     - E g=0.5 
+HC-PF-E_56     - E g=0.5 
+HC-PF-F_55     - E g=0.5 
+HC-RG-F_71     - E g=0.5 
+HC-RG-E_72     - E g=0.5 
+HC-RG-F_71     - E g=0.5 
+HC-RG-E_72     - E g=0.5 
+HC-RG-F_71     - E g=0.5 
+HC-RG-E_72     - E g=0.5 
+IN-InF_74      - E g=0.5 
+IN-InE_73      - E g=0.5 
+Ib_flex_R      - E g=0.5 
+SN-II_88 from hip - E g=0.5 
+SN-Ib_84 from Ankle - E g=0.5 
+SN-Ia_83 from HIp - E g=0.5 
+SN-II_94 from Hip - E g=0.5 
+IN-IbIN_85     - E g=0.5 
+extensor_R     - E g=0.5 
+extensor_R     - E g=0.5 

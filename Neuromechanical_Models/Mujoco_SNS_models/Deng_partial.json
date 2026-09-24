@@ -1,0 +1,510 @@
+{
+ "nodes": [
+  {
+   "id": "n1",
+   "type": "MN",
+   "label": "MN_ext_R",
+   "x": 788,
+   "y": 518
+  },
+  {
+   "id": "n2",
+   "type": "MN",
+   "label": "MN_flex_R",
+   "x": 641,
+   "y": 524
+  },
+  {
+   "id": "n3",
+   "type": "MUSCLE",
+   "label": "extensor_R",
+   "x": 920,
+   "y": 647
+  },
+  {
+   "id": "n4",
+   "type": "MUSCLE",
+   "label": "flexor_R",
+   "x": 517,
+   "y": 615
+  },
+  {
+   "id": "n5",
+   "type": "SN-Ia",
+   "label": "Ia_ext_R",
+   "x": 972,
+   "y": 407
+  },
+  {
+   "id": "n6",
+   "type": "SN-Ia",
+   "label": "Ia_flex_R",
+   "x": 444,
+   "y": 417
+  },
+  {
+   "id": "n9",
+   "type": "SN-Ib",
+   "label": "Ib_ext_R",
+   "x": 1125,
+   "y": 515
+  },
+  {
+   "id": "n10",
+   "type": "SN-Ib",
+   "label": "Ib_flex_R",
+   "x": 355,
+   "y": 683
+  },
+  {
+   "id": "n11",
+   "type": "IN-IaIN",
+   "label": "IaIN_ext_R",
+   "x": 822,
+   "y": 407
+  },
+  {
+   "id": "n12",
+   "type": "IN-IaIN",
+   "label": "IaIN_flex_R",
+   "x": 601,
+   "y": 410
+  },
+  {
+   "id": "n15",
+   "type": "IN-IbIN",
+   "label": "IbIN_ext_R",
+   "x": 907,
+   "y": 520
+  },
+  {
+   "id": "n18",
+   "type": "RC",
+   "label": "RC_ext_R",
+   "x": 596,
+   "y": 707
+  },
+  {
+   "id": "n19",
+   "type": "RC",
+   "label": "RC_flex_R",
+   "x": 810,
+   "y": 708
+  },
+  {
+   "id": "n54",
+   "type": "HC-PF-F",
+   "label": "HC-PF-F_55",
+   "x": 657,
+   "y": 315
+  },
+  {
+   "id": "n55",
+   "type": "HC-PF-E",
+   "label": "HC-PF-E_56",
+   "x": 783,
+   "y": 316
+  },
+  {
+   "id": "n56",
+   "type": "IN-PF",
+   "label": "IN-PF_57",
+   "x": 671,
+   "y": 221
+  },
+  {
+   "id": "n57",
+   "type": "IN-PF",
+   "label": "IN-PF_58",
+   "x": 779,
+   "y": 222
+  },
+  {
+   "id": "n70",
+   "type": "HC-RG-F",
+   "label": "HC-RG-F_71",
+   "x": 666,
+   "y": 132
+  },
+  {
+   "id": "n71",
+   "type": "HC-RG-E",
+   "label": "HC-RG-E_72",
+   "x": 780,
+   "y": 130
+  },
+  {
+   "id": "n72",
+   "type": "IN-InE",
+   "label": "IN-InE_73",
+   "x": 771,
+   "y": 38
+  },
+  {
+   "id": "n73",
+   "type": "IN-InF",
+   "label": "IN-InF_74",
+   "x": 680,
+   "y": 38
+  },
+  {
+   "id": "n82",
+   "type": "SN-Ia",
+   "label": "SN-Ia_83 from HIp",
+   "x": 933,
+   "y": 172
+  },
+  {
+   "id": "n83",
+   "type": "SN-Ib",
+   "label": "SN-Ib_84 from Ankle",
+   "x": 933,
+   "y": 217
+  },
+  {
+   "id": "n84",
+   "type": "IN-IbIN",
+   "label": "IN-IbIN_85",
+   "x": 367,
+   "y": 534
+  },
+  {
+   "id": "n87",
+   "type": "SN-II",
+   "label": "SN-II_88 from hip",
+   "x": 934,
+   "y": 273
+  },
+  {
+   "id": "n93",
+   "type": "SN-II",
+   "label": "SN-II_94 from Hip",
+   "x": 508,
+   "y": 219
+  }
+ ],
+ "edges": [
+  {
+   "from": "MN_ext_R",
+   "to": "extensor_R",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "R"
+  },
+  {
+   "from": "MN_flex_R",
+   "to": "flexor_R",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "R"
+  },
+  {
+   "from": "Ia_ext_R",
+   "to": "IaIN_ext_R",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "R"
+  },
+  {
+   "from": "Ia_flex_R",
+   "to": "IaIN_flex_R",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "R"
+  },
+  {
+   "from": "IaIN_ext_R",
+   "to": "MN_flex_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "ia_recip"
+  },
+  {
+   "from": "IaIN_flex_R",
+   "to": "MN_ext_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "ia_recip"
+  },
+  {
+   "from": "IaIN_ext_R",
+   "to": "IaIN_flex_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "iaIN_mutual"
+  },
+  {
+   "from": "IaIN_flex_R",
+   "to": "IaIN_ext_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "iaIN_mutual"
+  },
+  {
+   "from": "Ib_ext_R",
+   "to": "IbIN_ext_R",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "R"
+  },
+  {
+   "from": "IbIN_ext_R",
+   "to": "MN_ext_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "ib_auto"
+  },
+  {
+   "from": "MN_ext_R",
+   "to": "RC_ext_R",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "R"
+  },
+  {
+   "from": "RC_ext_R",
+   "to": "MN_ext_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "rc_own"
+  },
+  {
+   "from": "MN_flex_R",
+   "to": "RC_flex_R",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "R"
+  },
+  {
+   "from": "RC_flex_R",
+   "to": "MN_flex_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "rc_own"
+  },
+  {
+   "from": "RC_ext_R",
+   "to": "RC_flex_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "rc_mutual"
+  },
+  {
+   "from": "RC_flex_R",
+   "to": "RC_ext_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "rc_mutual"
+  },
+  {
+   "from": "RC_ext_R",
+   "to": "IaIN_ext_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "rc_disinhib"
+  },
+  {
+   "from": "RC_flex_R",
+   "to": "IaIN_flex_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "rc_disinhib"
+  },
+  {
+   "from": "flexor_R",
+   "to": "Ia_flex_R",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "flexor_R",
+   "to": "Ib_flex_R",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "MN_flex_R",
+   "to": "RC_ext_R",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "MN_ext_R",
+   "to": "RC_flex_R",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "RC_flex_R",
+   "to": "MN_ext_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "RC_ext_R",
+   "to": "MN_flex_R",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "IN-PF_58",
+   "to": "HC-PF-F_55",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "IN-PF_57",
+   "to": "HC-PF-E_56",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "HC-PF-E_56",
+   "to": "IaIN_ext_R",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "HC-PF-F_55",
+   "to": "IaIN_flex_R",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "HC-PF-E_56",
+   "to": "MN_ext_R",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "HC-PF-F_55",
+   "to": "MN_flex_R",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "HC-RG-F_71",
+   "to": "IN-PF_57",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "HC-RG-E_72",
+   "to": "IN-PF_58",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "HC-RG-F_71",
+   "to": "HC-RG-E_72",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "HC-RG-E_72",
+   "to": "HC-RG-F_71",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "HC-RG-F_71",
+   "to": "IN-InF_74",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "HC-RG-E_72",
+   "to": "IN-InE_73",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "IN-InF_74",
+   "to": "HC-RG-E_72",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "IN-InE_73",
+   "to": "HC-RG-F_71",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "Ib_flex_R",
+   "to": "IN-IbIN_85",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "SN-II_88 from hip",
+   "to": "IN-PF_58",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "SN-Ib_84 from Ankle",
+   "to": "IN-PF_58",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "SN-Ia_83 from HIp",
+   "to": "IN-PF_58",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "SN-II_94 from Hip",
+   "to": "IN-PF_57",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "IN-IbIN_85",
+   "to": "MN_flex_R",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "extensor_R",
+   "to": "Ib_ext_R",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  },
+  {
+   "from": "extensor_R",
+   "to": "Ia_ext_R",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": ""
+  }
+ ]
+}

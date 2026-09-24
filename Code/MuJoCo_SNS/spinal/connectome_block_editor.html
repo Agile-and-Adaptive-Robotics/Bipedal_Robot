@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Connectome Block Editor v2.2 — tabs, undo, group select/move</title>
+<title>Connectome Block Editor v3.0 — templates, zoom, copy/paste</title>
 <style>
   body { font-family: Arial, Helvetica, sans-serif; font-size: 13px;
          margin: 0; background: #f2f2f2; color: #1a1a1a;
@@ -54,15 +54,18 @@
 </head>
 <body>
 <header>
-  <h1>Connectome Block Editor v2.2</h1>
-  <div class="sub">Click palette type, then click canvas = place. Drag
-  nodes to move. Drag on EMPTY canvas = rubber-band select; drag any
-  selected node = move the whole group. SHIFT+click = add/remove a
-  node from the selection. Click empty canvas or Esc = clear
-  selection. SHIFT/ALT-drag node-to-node = synapse (or ALT-click A
-  then B). Every synapse has its own sign, gain, and tuning tag.
-  Del/Backspace deletes selection. Ctrl+Z / Ctrl+Y = undo/redo.
-  Tabs = different models; auto-saved in this browser.</div>
+  <h1>Connectome Block Editor v3.0</h1>
+  <div class="sub">Click palette type, then click canvas = place (at the
+  cursor). Drag nodes to move. Drag on EMPTY canvas = rubber-band select;
+  drag any selected node = move the whole group. SHIFT or CTRL+click =
+  add/remove a node from the selection. Click empty canvas or Esc = clear
+  selection. SHIFT/ALT-drag node-to-node = synapse (or ALT-click A then B).
+  Every synapse has its own sign, gain, and tuning tag. Ctrl+C / Ctrl+V =
+  copy / paste the selection (pastes at the cursor, relabeled). Del =
+  delete selection. Ctrl+Z / Ctrl+Y = undo/redo. Wheel = zoom (far out OK);
+  middle-drag or the zoom buttons pan/zoom; Fit frames everything. Tabs =
+  different models, auto-saved in this browser; templates load into a NEW
+  tab so your work is never overwritten.</div>
   <div id="tabs"></div>
   <div id="topbar">
     <button id="bSave">Export JSON</button>
@@ -70,14 +73,27 @@
     <button id="bUndo">Undo</button>
     <button id="bRedo">Redo</button>
     <button id="bDel">Delete sel</button>
+    <button id="bZoomOut">Zoom −</button>
+    <button id="bZoomIn">Zoom +</button>
+    <button id="bZoomFit">Fit</button>
+    <button id="bZoom100">100%</button>
+    <span id="zoomLabel" class="sub" style="margin:6px 4px 0 2px"></span>
     <select id="tplSel" style="font-size:12px">
-      <option value="">Templates…</option>
-      <option value="deng">Deng A6 full pair (ag + ant)</option>
-      <option value="lit">Literature full model (one side)</option>
-      <option value="bilateral">BILATERAL literature model (+c1/V3)</option>
-      <option value="w2l">W2L contact-driven RG (bilateral)</option>
-      <option value="w2lfile">W2L from w2l_equivalent_draft.json</option>
-      <option value="blank">Blank</option>
+      <option value="">Templates (load into new tab)…</option>
+      <optgroup label="Built-in">
+        <option value="deng">Deng A6 full pair (ag + ant)</option>
+        <option value="lit">Literature full model (one side)</option>
+        <option value="bilateral">BILATERAL literature model (+c1/V3)</option>
+        <option value="w2l">W2L contact-driven RG (coarse)</option>
+        <option value="w2lfile">W2L from w2l_equivalent_draft.json</option>
+        <option value="blank">Blank</option>
+      </optgroup>
+      <optgroup label="AnimatLab models (mined 2026-09-23)" id="ogAnimat">
+      </optgroup>
+      <optgroup label="SNS walker versions" id="ogWalker">
+      </optgroup>
+      <optgroup label="Synergy / rules / literature" id="ogLit">
+      </optgroup>
     </select>
     <button id="bClear">Clear tab</button>
     <input type="file" id="fileIn" accept=".json" style="display:none">
@@ -135,6 +151,81 @@ const svg = document.getElementById("svg");
 const NS = "http://www.w3.org/2000/svg";
 const status = m => document.getElementById("status").textContent = m;
 
+// ---------------- world group: pan + zoom (v3.0) ----------------
+// Everything drawn lives in #world; the view is translate+scale on it.
+// Node coordinates stay in world units for localStorage/JSON/undo, so
+// zooming never mutates a model.
+const world = document.createElementNS(NS, "g");
+world.setAttribute("id", "world");
+svg.appendChild(world);
+let view = { x: 0, y: 0, k: 1 };
+function applyView() {
+  world.setAttribute("transform",
+    "translate(" + view.x + "," + view.y + ") scale(" + view.k + ")");
+  document.getElementById("zoomLabel").textContent =
+    Math.round(view.k * 100) + "%";
+}
+function svgPoint(ev) {   // client coords -> world coords
+  const r = svg.getBoundingClientRect();
+  return { x: (ev.clientX - r.left - view.x) / view.k,
+           y: (ev.clientY - r.top - view.y) / view.k };
+}
+function zoomAt(cx, cy, f) {
+  const k2 = Math.min(4, Math.max(0.05, view.k * f));
+  f = k2 / view.k;
+  const r = svg.getBoundingClientRect();
+  const px = cx - r.left, py = cy - r.top;   // screen px in canvas box
+  view.x = px - (px - view.x) * f;
+  view.y = py - (py - view.y) * f;
+  view.k = k2;
+  applyView();
+}
+function fitView() {
+  if (!nodes.length) { view = { x: 0, y: 0, k: 1 }; applyView(); return; }
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  nodes.forEach(n => { x0 = Math.min(x0, n.x - 60); y0 = Math.min(y0, n.y - 50);
+                       x1 = Math.max(x1, n.x + 60); y1 = Math.max(y1, n.y + 50); });
+  const r = svg.getBoundingClientRect();
+  const k = Math.min(4, Math.max(0.05,
+    Math.min(r.width / (x1 - x0), r.height / (y1 - y0))));
+  view = { x: (r.width - (x1 - x0) * k) / 2 - x0 * k,
+           y: (r.height - (y1 - y0) * k) / 2 - y0 * k, k };
+  applyView();
+}
+svg.addEventListener("wheel", ev => {
+  ev.preventDefault();
+  zoomAt(ev.clientX, ev.clientY, Math.exp(-ev.deltaY * 0.0012));
+}, { passive: false });
+document.getElementById("bZoomIn").onclick = () => {
+  const r = svg.getBoundingClientRect();
+  zoomAt(r.left + r.width / 2, r.top + r.height / 2, 1.25);
+};
+document.getElementById("bZoomOut").onclick = () => {
+  const r = svg.getBoundingClientRect();
+  zoomAt(r.left + r.width / 2, r.top + r.height / 2, 1 / 1.25);
+};
+document.getElementById("bZoomFit").onclick = fitView;
+document.getElementById("bZoom100").onclick = () =>
+  { view = { x: 0, y: 0, k: 1 }; applyView(); };
+// middle-button drag pans; left-drag on empty canvas still rubber-bands
+let pan = null, lastMouseWorld = { x: 300, y: 200 };
+svg.addEventListener("mousedown", ev => {
+  if (ev.button !== 1) return;
+  ev.preventDefault();
+  pan = { x: ev.clientX, y: ev.clientY, vx: view.x, vy: view.y };
+  const up = () => { pan = null;
+    window.removeEventListener("mousemove", mv);
+    window.removeEventListener("mouseup", up); };
+  const mv = e2 => { if (!pan) return;
+    view.x = pan.vx + (e2.clientX - pan.x);
+    view.y = pan.vy + (e2.clientY - pan.y);
+    applyView(); };
+  window.addEventListener("mousemove", mv);
+  window.addEventListener("mouseup", up);
+});
+svg.addEventListener("mousemove", ev => { lastMouseWorld = svgPoint(ev); });
+applyView();
+
 // ---------- palette (was dropped in the v2.1 rewrite — restored) ----
 const pal = document.getElementById("palette");
 const palGroups = {};
@@ -150,8 +241,7 @@ Object.entries(palGroups).forEach(([g, items]) => {
     el.className = "pitem";
     el.style.borderColor = d.color;
     el.textContent = t;
-    el.onclick = () => addNode(t, 220 + Math.random() * 300,
-                               90 + Math.random() * 380);
+    el.onclick = () => addNode(t, lastMouseWorld.x, lastMouseWorld.y);
     pal.appendChild(el);
   });
 });
@@ -169,7 +259,12 @@ try {
 
 function cur() { return models[activeTab].data; }
 function persist() {
+  // v3.0 fix: sync the CURRENT tab from the canvas before saving.
+  // (v2.2 only synced on tab-switch, so the active tab's localStorage
+  // copy went stale until you switched away — closing the browser
+  // right after editing lost that tab's latest changes.)
   try {
+    models[activeTab].data = serialize();
     localStorage.setItem("cme_models_v1", JSON.stringify(
       { models, active: activeTab }));
   } catch (e) {}
@@ -193,6 +288,7 @@ function renderTabs() {
       if (models.length === 1) return;
       models.splice(i, 1);
       activeTab = Math.min(activeTab, models.length - 1);
+      undoStack.length = 0; redoStack.length = 0;
       loadIntoCanvas(cur()); renderTabs(); persist();
     };
     el.appendChild(x);
@@ -203,9 +299,10 @@ function renderTabs() {
   b.onclick = () => {
     const nm = prompt("New model name:", "model " + (models.length + 1));
     if (!nm) return;
-    switchTab(models.length);
-    models[activeTab] = { name: nm,
-      data: { nodes: [], edges: [] } };
+    models[activeTab].data = serialize();
+    models.push({ name: nm, data: { nodes: [], edges: [] } });
+    activeTab = models.length - 1;
+    undoStack.length = 0; redoStack.length = 0;
     loadIntoCanvas(cur()); renderTabs(); persist();
   };
   t.appendChild(b);
@@ -214,6 +311,10 @@ function switchTab(i) {
   if (i === activeTab) return;
   models[activeTab].data = serialize();
   activeTab = i;
+  // v3.0 fix: undo history is per-tab in spirit — never let one tab's
+  // snapshots restore into another (the old global stack did exactly
+  // that once tabs multiplied).
+  undoStack.length = 0; redoStack.length = 0;
   loadIntoCanvas(cur());
   renderTabs(); persist();
 }
@@ -230,14 +331,9 @@ let suppressClick = false;
 let uid = 1;
 let undoStack = [], redoStack = [];
 
-// Pointer position in svg user units. offsetX on SVG children can
-// be target-relative in some browsers; clientX - rect.left is
-// always canvas-relative. Used by the v2.2 gestures (band, group
-// drag); the original single-node drag keeps its offsetX math.
-function svgPoint(ev) {
-  const r = svg.getBoundingClientRect();
-  return { x: ev.clientX - r.left, y: ev.clientY - r.top };
-}
+// svgPoint() now lives with the world/view code at the top of the
+// script (v3.0): it converts client coords to WORLD coords through
+// the current zoom/pan. All gestures below use it.
 
 function serialize() {
   return JSON.parse(JSON.stringify({ nodes: nodes.map(n => ({
@@ -310,10 +406,10 @@ function renderNode(nd, keepSel) {
     ev.stopPropagation();
     if (suppressClick) { suppressClick = false; return; }
     if (drag && drag.moved) return;
-    onClickNode(nd.id, ev.shiftKey, ev.altKey);
+    onClickNode(nd.id, ev.shiftKey || ev.ctrlKey, ev.altKey);
   });
   nd.el = g;
-  svg.appendChild(g);
+  world.appendChild(g);
   if (keepSel && selSet.has(nd.id))
     g.classList.add("sel");
 }
@@ -377,7 +473,7 @@ function renderEdge(e) {
     selectEdge(e.id);
   });
   e.el = g;
-  svg.appendChild(g);
+  world.appendChild(g);
 }
 function redrawEdges() {
   edges.forEach(e => { if (e.el) e.el.remove(); e.el = null; });
@@ -537,8 +633,9 @@ function startDrag(ev, id) {
                return m ? { id: gid, sx: m.x, sy: m.y } : null;
              }).filter(Boolean) };
   } else {
+    const p = svgPoint(ev);
     drag = { id, moved: false,
-             dx: ev.offsetX - nd.x, dy: ev.offsetY - nd.y };
+             dx: p.x - nd.x, dy: p.y - nd.y };
   }
   window.addEventListener("mousemove", onMove);
   window.addEventListener("mouseup", endDrag);
@@ -557,12 +654,13 @@ function onMove(ev) {
       tempLine.setAttribute("stroke", "#B2182B");
       tempLine.setAttribute("stroke-width", "2");
       tempLine.setAttribute("stroke-dasharray", "6,4");
-      svg.appendChild(tempLine);
+      world.appendChild(tempLine);
     }
     const a = nodeById(linkDrag.from);
+    const tp = svgPoint(ev);
     tempLine.setAttribute("x1", a.x); tempLine.setAttribute("y1", a.y);
-    tempLine.setAttribute("x2", ev.offsetX);
-    tempLine.setAttribute("y2", ev.offsetY);
+    tempLine.setAttribute("x2", tp.x);
+    tempLine.setAttribute("y2", tp.y);
     return;
   }
   if (band) {
@@ -577,7 +675,7 @@ function onMove(ev) {
       bandRect.setAttribute("stroke-width", "1");
       bandRect.setAttribute("stroke-dasharray", "5,4");
       bandRect.setAttribute("pointer-events", "none");
-      svg.appendChild(bandRect);
+      world.appendChild(bandRect);
     }
     bandRect.setAttribute("x", Math.min(band.x0, band.x1));
     bandRect.setAttribute("y", Math.min(band.y0, band.y1));
@@ -603,8 +701,9 @@ function onMove(ev) {
     return;
   }
   const nd = nodeById(drag.id);
-  nd.x = ev.offsetX - drag.dx;
-  nd.y = ev.offsetY - drag.dy;
+  const dp = svgPoint(ev);
+  nd.x = dp.x - drag.dx;
+  nd.y = dp.y - drag.dy;
   drag.moved = true;
   nd.el.remove(); renderNode(nd, true); redrawEdges();
 }
@@ -620,9 +719,10 @@ function endDrag(ev) {
       linkDrag = null;
       return;
     }
+    const hp = svgPoint(ev);
     const tgt = nodes.find(n =>
       n.id !== linkDrag.from &&
-      Math.hypot(ev.offsetX - n.x, ev.offsetY - n.y) < 24);
+      Math.hypot(hp.x - n.x, hp.y - n.y) < 24);
     if (tempLine) { tempLine.remove(); tempLine = null; }
     if (tgt) {
       const e = { id: "e" + (uid++), from: linkDrag.from, to: tgt.id,
@@ -656,7 +756,10 @@ function endDrag(ev) {
         return nd.x + hw > rx0 && nd.x - hw < rx1 &&
                nd.y + hh > ry0 && nd.y - hh < ry1;
       });
-      selSet = new Set(hits.map(nd => nd.id));
+      if (ev.ctrlKey)          // CTRL+band ADDS to the selection
+        hits.forEach(nd => selSet.add(nd.id));
+      else
+        selSet = new Set(hits.map(nd => nd.id));
       sel = selSet.size === 1 ? { kind: "node",
                                   id: [...selSet][0] } : null;
       applySelClasses();
@@ -701,21 +804,91 @@ function onClickNode(id, shift, alt) {
   selectNode(id);
 }
 
+// ---------------- copy / paste (v3.0) ----------------
+// Internal clipboard in the serialized (label-based) form, so a copy
+// can paste into ANY tab. Paste relabels ("_2", "_3", ... first free
+// suffix), keeps internal edges, drops edges that pointed outside the
+// copied set, lands centered on the cursor, and selects the new group.
+let clip = null;
+function uniqueLabel(base) {
+  const taken = new Set(nodes.map(n => n.label));
+  if (!taken.has(base)) return base;
+  const m = base.match(/^(.*?)(\d+)$/);
+  let i = 2;
+  let stem = base, n = 0;
+  if (m && m[1]) { stem = m[1]; n = parseInt(m[2], 10) || 0; }
+  let cand;
+  do { cand = stem + (n + i); i++; } while (taken.has(cand));
+  return cand;
+}
+function copySel() {
+  if (!selSet.size) { status("nothing selected to copy"); return; }
+  const ids = new Set(selSet);
+  const ns = nodes.filter(n => ids.has(n.id))
+    .map(n => ({ type: n.type, label: n.label, x: n.x, y: n.y }));
+  const es = edges.filter(e => ids.has(e.from) && ids.has(e.to))
+    .map(e => ({ from: nodeById(e.from).label, to: nodeById(e.to).label,
+                 sign: e.sign, gain: e.gain, tag: e.tag }));
+  clip = { nodes: ns, edges: es };
+  status("copied " + ns.length + " node(s), " + es.length +
+         " internal synapse(s) — Ctrl+V to paste");
+}
+function pasteClip() {
+  if (!clip) { status("clipboard empty — select and Ctrl+C first"); return; }
+  const map = {};
+  let x0 = Infinity, y0 = Infinity;
+  clip.nodes.forEach(n => { x0 = Math.min(x0, n.x); y0 = Math.min(y0, n.y); });
+  const ox = lastMouseWorld.x - x0, oy = lastMouseWorld.y - y0;
+  snapshot();
+  const newIds = [];
+  clip.nodes.forEach(n => {
+    const nl = uniqueLabel(n.label);
+    const nd = addNode(n.type, n.x + ox, n.y + oy, nl, true);
+    map[n.label] = nd.id;
+    newIds.push(nd.id);
+  });
+  clip.edges.forEach(se => {
+    if (map[se.from] && map[se.to]) {
+      edges.push({ id: "e" + (uid++), from: map[se.from], to: map[se.to],
+                   sign: se.sign, gain: se.gain, tag: se.tag });
+    }
+  });
+  redrawEdges();
+  persist();
+  sel = null;
+  selSet = new Set(newIds);
+  applySelClasses();
+  updatePanel();
+  status("pasted " + clip.nodes.length + " node(s) at cursor — still on " +
+         "the clipboard for another Ctrl+V");
+}
+
 // ---------------- delete / keyboard ----------------
 function deleteSel() {
-  if (!sel) return;
-  snapshot();
-  if (sel.kind === "node") {
-    edges.filter(e => e.from === sel.id || e.to === sel.id)
-      .forEach(e => { e.el && e.el.remove();
-                      edges.splice(edges.indexOf(e), 1); });
-    const nd = nodeById(sel.id);
-    nd.el.remove();
-    nodes.splice(nodes.indexOf(nd), 1);
-  } else {
+  if (sel && sel.kind === "edge") {
+    snapshot();
     const e = edgeById(sel.id);
     e.el.remove();
     edges.splice(edges.indexOf(e), 1);
+    clearSel();
+    return;
+  }
+  // node selection: the whole group (rubber-band / ctrl+click / paste)
+  const targets = selSet.size ? [...selSet] : (sel ? [sel.id] : []);
+  if (!targets.length) return;
+  snapshot();
+  const tset = new Set(targets);
+  for (let i = edges.length - 1; i >= 0; i--) {
+    if (tset.has(edges[i].from) || tset.has(edges[i].to)) {
+      edges[i].el && edges[i].el.remove();
+      edges.splice(i, 1);
+    }
+  }
+  for (let i = nodes.length - 1; i >= 0; i--) {
+    if (tset.has(nodes[i].id)) {
+      nodes[i].el && nodes[i].el.remove();
+      nodes.splice(i, 1);
+    }
   }
   clearSel();
 }
@@ -727,6 +900,14 @@ window.addEventListener("keydown", ev => {
   if (ev.key === "Delete" || ev.key === "Backspace") {
     ev.preventDefault();
     deleteSel();
+  } else if ((ev.ctrlKey || ev.metaKey) &&
+             ev.key.toLowerCase() === "c") {
+    ev.preventDefault();
+    copySel();
+  } else if ((ev.ctrlKey || ev.metaKey) &&
+             ev.key.toLowerCase() === "v") {
+    ev.preventDefault();
+    pasteClip();
   } else if (ev.key === "Escape") {
     // cancel any rubber band / armed link and clear the selection
     if (bandRect) { bandRect.remove(); bandRect = null; }
@@ -1023,46 +1204,128 @@ function buildDengPair() {
 }
 
 const TEMPLATES = {
-  deng: buildDengPair,
-  lit: () => litSide("R"),
-  bilateral: buildBilateral,
-  w2l: buildW2L,
-  blank: () => ({ nodes: [], edges: [] }),
+  deng: { grp: "builtin", name: "Deng A6 full pair (ag + ant)",
+          build: buildDengPair },
+  lit:  { grp: "builtin", name: "Literature full model (one side)",
+          build: () => litSide("R") },
+  bilateral: { grp: "builtin", name: "BILATERAL literature model",
+               build: buildBilateral },
+  w2l:  { grp: "builtin", name: "W2L contact-driven RG (coarse)",
+          build: buildW2L },
+  blank:{ grp: "builtin", name: "Blank", build: () => ({ nodes: [], edges: [] }) },
 };
 // w2l_equivalent_draft.json: loaded from disk via a synchronous
 // XMLHttpRequest (works on file:// in most browsers)
-TEMPLATES["w2lfile"] = () => {
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", "w2l_equivalent_draft.json", false);
-  xhr.send();
-  if (xhr.status === 200 || xhr.status === 0) {
-    return JSON.parse(xhr.responseText);
+TEMPLATES["w2lfile"] = {
+  grp: "builtin", name: "W2L from w2l_equivalent_draft.json",
+  build: () => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "w2l_equivalent_draft.json", false);
+    xhr.send();
+    if (xhr.status === 200 || xhr.status === 0) {
+      return JSON.parse(xhr.responseText);
+    }
+    throw new Error("cannot load w2l_equivalent_draft.json (status " +
+                    xhr.status + ")");
   }
-  throw new Error("cannot load w2l_equivalent_draft.json (status " +
-                  xhr.status + ")");
 };
+
+// ---- sidecar template library (connectome_templates.json, generated by
+// make_editor_templates.py: AnimatLab mines, SNS walker versions, synergy,
+// rules, replication connectomes). Loaded once at boot, sync, file://-safe.
+const TPL_GROUPS = {
+  animatlab: { el: "ogAnimat", label: "AnimatLab models (mined 2026-09-23)" },
+  walker:    { el: "ogWalker", label: "SNS walker versions (winners)" },
+  lit:       { el: "ogLit",    label: "Synergy / rules / literature" },
+};
+const TPL_JSON_GROUP = {
+  biped2xcpg: "animatlab", w2laproj: "animatlab", bilateralrg: "animatlab",
+  li: "animatlab",
+  walker_v9: "walker", walker_v10: "walker", walker_s1: "walker",
+  walker_s2: "walker", walker_s3: "walker", walker_s3k: "walker",
+  synergy6: "lit", rules: "lit", shevtsova: "lit", shinohara: "lit",
+  rybak: "lit",
+};
+const TPL_JSON_NAMES = {
+  biped2xcpg: "Biped_2xCPG_wSubs (connectivity audit)",
+  w2laproj: "Walker_2_Layer_CPG (aproj mine)",
+  bilateralrg: "Walker_2_Layer_CPG_BilateralRG",
+  li: "Li Model (walk tester rearranged)",
+  walker_v9: "walker v9 winner", walker_v10: "walker v10 winner",
+  walker_s1: "curriculum s1 (air, deaff)",
+  walker_s2: "curriculum s2 (air + aff)",
+  walker_s3: "curriculum s3 (ground)",
+  walker_s3k: "s3k — CURRENT production",
+  synergy6: "6 synergies per leg (rank-6 NMF)",
+  rules: "Circuit rules (CONNECTOME.md)",
+  shevtsova: "Shevtsova 2026 laminar RG",
+  shinohara: "Shinohara 2025 interlimb/load",
+  rybak: "Rybak 2006a two-level RG/PF",
+};
+(function loadTplJson() {
+  try {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "connectome_templates.json", false);
+    xhr.send();
+    if (xhr.status !== 200 && xhr.status !== 0) throw new Error(xhr.status);
+    const data = JSON.parse(xhr.responseText);
+    Object.keys(data).forEach(k => {
+      const spec = data[k];
+      TEMPLATES[k] = { grp: TPL_JSON_GROUP[k] || "lit",
+                       name: TPL_JSON_NAMES[k] || k, build: () => spec };
+    });
+  } catch (e) {
+    status("template library file missing (connectome_templates.json): " +
+           e.message);
+  }
+})();
+(function renderTplOptions() {
+  Object.entries(TPL_GROUPS).forEach(([gid, G]) => {
+    const og = document.getElementById(G.el);
+    if (!og) return;
+    og.label = G.label;
+    Object.entries(TEMPLATES).forEach(([k, T]) => {
+      if ((TPL_JSON_GROUP[k] || (T.grp === "builtin" ? "builtin" : T.grp))
+          !== gid) return;
+      const o = document.createElement("option");
+      o.value = k;
+      o.textContent = T.name || k;
+      og.appendChild(o);
+    });
+  });
+})();
+
+// Templates load into a NEW tab (never clobbers current work) and the
+// view re-fits so the whole model is visible immediately.
 document.getElementById("tplSel").addEventListener("change", ev => {
   const k = ev.target.value;
   ev.target.value = "";
   if (!k || !TEMPLATES[k]) { status("no template selected"); return; }
-  try {
-    snapshot();
-    loadSpec(TEMPLATES[k]());
-    status("template loaded: " + k + " (" +
-           cur().nodes.length + " nodes, " +
-           cur().edges.length + " synapses)");
-  } catch (err) {
-    status("template ERROR: " + err.message);
-  }
+  let spec;
+  try { spec = TEMPLATES[k].build(); }
+  catch (err) { status("template ERROR: " + err.message); return; }
+  const name = (TEMPLATES[k].name || k).replace(/[^\w ()+.-]/g, "").slice(0, 40);
+  models[activeTab].data = serialize();   // park current tab (saves it)
+  models.push({ name: name, data: { nodes: [], edges: [] } });
+  activeTab = models.length - 1;
+  undoStack.length = 0; redoStack.length = 0;   // history is per-tab
+  loadIntoCanvas(spec, true);
+  persist();
+  renderTabs();
+  fitView();
+  status("template loaded into new tab: " + name + " (" +
+         nodes.length + " nodes, " + edges.length + " synapses)" +
+         (spec && spec._note ? " — " + spec._note :
+          " — (no provenance note)"));
 });
 
 
 // ---------------- boot ----------------
 renderTabs();
 loadIntoCanvas(cur(), true);
-status("ready — v2.2: drag empty canvas = rubber-band select, drag " +
-       "a selected node = group move, SHIFT+click toggle, Esc clear;" +
-       " ALT-click A then B = synapse; Ctrl+Z/Y; tabs auto-saved");
+status("ready — v3.0: wheel = zoom (far out OK), middle-drag = pan, Fit " +
+       "frames all; CTRL/SHIFT+click = group select, Ctrl+C / Ctrl+V = " +
+       "copy / paste; templates load into a NEW tab; tabs auto-saved");
 </script>
 </body>
 </html>
