@@ -702,6 +702,23 @@ def main():
     dest = os.path.join(HERE, 'connectome_templates.json')
     json.dump(out, open(dest, 'w', encoding='utf-8'), indent=1)
     print('wrote', dest)
+    # embed the same data into the editor HTML (between the TPL-EMBED
+    # markers) so a plain double-click works — browsers block file://
+    # XHR, so the sidecar alone would not load outside http(s).
+    html_path = os.path.join(HERE, 'connectome_block_editor.html')
+    html = open(html_path, encoding='utf-8').read()
+    blob = ('window.TPL_DATA_EMBED = ' +
+            json.dumps(out, separators=(',', ':')) + ';')
+    m = re.search(r'/\*TPL-EMBED-START\*/.*?/\*TPL-EMBED-END\*/',
+                  html, re.S)
+    if not m:
+        print('ERROR: TPL-EMBED markers not found in ' + html_path)
+        sys.exit(1)
+    html = html[:m.start()] + ('/*TPL-EMBED-START*/\n' + blob +
+                               '\n/*TPL-EMBED-END*/') + html[m.end():]
+    open(html_path, 'w', encoding='utf-8').write(html)
+    print('embedded into connectome_block_editor.html (%d KB)' %
+          (len(blob) // 1024))
     for nm, spec in out.items():
         print('  %-14s %3d nodes %3d edges' %
               (nm, len(spec['nodes']), len(spec.get('edges', []))))

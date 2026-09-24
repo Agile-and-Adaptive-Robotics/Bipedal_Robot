@@ -543,7 +543,13 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     Renshaw/Ia/Ib/II), walker_v9/v10/s1/s2/s3/s3k (winner-param tuning
     maps — v11/v12 don't exist as artifacts; s3k = current production),
     synergy6, rules (the 11 CONNECTOME.md rules), shevtsova/shinohara/
-    rybak (converted replication drafts). Templates load into a NEW tab
+    rybak (converted replication drafts). **2026-09-24: the SAME data
+    is now EMBEDDED in the HTML between /*TPL-EMBED*/ markers (201 KB;
+    generator writes both) — the editor is self-contained for a plain
+    double-click, since browsers block file:// XHR so the sidecar alone
+    would not load; verified by hiding the sidecar and reloading (21
+    templates, src=embedded). The localhost:8642 http.server is only a
+    test convenience, not a dependency.** Templates load into a NEW tab
     (never clobbers Ben's work) + auto-Fit; every template carries a
     _note provenance string shown in the status line. (b) UI: wheel zoom
     5–400% at cursor + Zoom buttons + Fit + middle-drag pan (all pointer
