@@ -38,10 +38,10 @@ const anchor = (nd, tx, ty) => {
 let nodes = [], edges = [];
 const nodeById = id => nodes.find(n => n.id === id);
 
-// ---- extract the edge section + serialize ----
+// ---- extract the edge section + serialize (with its specOf helper) ----
 const region = js.slice(js.indexOf("const HOP_R"),
                         js.indexOf("function applySelClasses"));
-const serFn = js.slice(js.indexOf("function serialize"),
+const serFn = js.slice(js.indexOf("function specOf"),
                        js.indexOf("function snapshot"));
 eval(region);
 eval(serFn);

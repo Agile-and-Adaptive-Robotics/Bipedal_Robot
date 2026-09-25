@@ -198,3 +198,76 @@ heel/toe->RG semantics), not your circuit. Fixed:
   templates 4/4, tree 9/9, static check, node --check); browser check
   loads your drawing with the status line reading "BEN'S drawing...".
 - No supervisor used for this fix, per your message.
+
+## Reply 7 — subsystems (the real containment), your corrected
+## Shevtsova/Shinohara/rules, and stage-5 curriculum tuning
+
+(You were right twice over: "double-click = zoom" was not what you
+asked for, and the Shinohara afferent node needed to OPEN. Fixed
+properly — editor v3.3.)
+
+SUBSYSTEMS, ANIMATLAB-STYLE:
+- A node can now CONTAIN a nested circuit (a full sub-drawing).
+  Double-click a ⊞ node (dashed double-ring) = ENTER it: its
+  constituent nodes/edges become the canvas, fully editable, with a
+  breadcrumb (model ▸ sub ▸ deeper). F4 or double-click empty canvas
+  writes your edits back into the host node and pops you out.
+  Ctrl+G packs the selected nodes into a new subsystem; Ctrl+Shift+G
+  unpacks. Nesting is recursive (a subsystem can contain subsystems);
+  everything survives reload and JSON export.
+- Applied to YOUR corrected Shinohara: the symbolic afferent nodes
+  carry their constituents — "flexor ii/ia" opens into Ia_IP/II_IP/
+  Ia_TA/II_TA/Ia_BF/II_BF, "extensor Ib" opens into Ib_GM/VL/SO/GA —
+  with the READING RULE recorded in the entry's note, exactly as you
+  stated: a muscle's proprioception feeds back to ITSELF; the flexor
+  MNs are not fed Ia/II from all muscles, just themselves; likewise
+  the extensors. The parent-level edges (→ MN-IP/MN-TA/MN-BF and
+  → RG-F/IN-F/PF-F) are that autogenic fan-out + population drive.
+
+YOUR CORRECTED CONNECTOMES ARE NOW THE CANONICAL TEMPLATES:
+- "Circuit rules — Ben" = your 22:46 export (90 nodes / 99 edges —
+  you consolidated the duplicates yourself; the ia_homo g=2 direct
+  Ia→MN, the Ib_A/Ib_N and RC_N second-order chain, and the MN→MUSCLE
+  edges all came through).
+- "Shevtsova 2026 laminar RG" = your 23:09 export (IniF/IniE/V0D/V0V/
+  V2a/V3-E + brainstem alpha/gamma, shev2026_t1 tags).
+- "Shinohara 2025 interlimb/load" = your 23:16 export with the
+  subsystem expansions above (shin2025_a1/b3/eq10/eq11 tags).
+- Tracked copies: ben_rules_20260924.json, ben_shevtsova_20260924.json,
+  ben_shinohara_20260924.json in spinal\; the session drafts remain in
+  replication\ as history. Duplicate-label merge (same-neuron) applies
+  to all three on import.
+
+YOUR FOUR CLARIFICATIONS (settled):
+1. Afferents ARE direct-off-muscle here — the runner's per-muscle
+   Ia/II/Ib neurons fuse the receptor + AD transduction (params.AFF
+   encoders on length/velocity/force). Drop the AnimatLab plumbing
+   INs; keep the ones doing computation (IaIN, IIe/IIi, IbIN/IBEXC/
+   LBIN, PF→IaIN gating — the last one is real in the runner, 0.5).
+2. Label = identity. Same label = same neuron (merged, per your
+   ruling); different label = a different cell. Rename freely.
+3. PORT-load = generic externally-driven input block (runner injects
+   current: DRIVE/POSTURE/balance/contact/load ports).
+4. The PF layer DOES have both E and F lamination INs in the runner
+   (PF_IN_E + PF_IN_F, same symmetry as InE/InF) — the palette just
+   offered one visual type. Your drawing shows one IN-PF per
+   micro-layer (the E-side job); if you want the symmetric pair per
+   micro-layer in build_network (today: one shared pair per side),
+   small extension behind a key.
+
+WORKING MODELS + CURRICULUM TUNING (running):
+- _curriculum.py gains STAGE 5 (curr_s5_pfvariant): ground eval,
+  joint-layer PF fixed ON, ONLY the five new gains searched
+  (heel_pf_layer [0,0.5], toe_df_inh [0,5], heel_in_f_exc [0,0.5],
+  ia_pf_f [0,0.5], ii_pf_f [0,0.5], small-enter ranges), everything
+  else pinned at the s3k production winner
+  (reports_20260923/s3k_trial34_full_params.json). JSON-RULE loaders
+  added in set_stage; trial 0 = s3k operating point + variant OFF.
+- LAUNCHED: 40 TPE trials in the background (study curr_s5_pfvariant
+  in optuna_walk.db, resumable). First launch had a seeding bug (the
+  stage-3 mid-range defaults leaked into the stage-5 seed) — killed,
+  fixed (elif chain), study purged, relaunched clean at 23:5x.
+  Results land in curriculum_stage5.json when the run completes.
+- Runner regression gates re-verified after the curriculum edits:
+  defaults (410, 376, 1186); ground eval bit-exact
+  -160.23425729850192.

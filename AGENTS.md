@@ -804,6 +804,53 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     Ben should relabel + re-export to disambiguate. No supervisor on
     this fix (Ben: "Can you not finish your work without the supervisor
     now?" — yes; spawn only when he asks).
+    **2026-09-24 NIGHT II — EDITOR v3.3 SUBSYSTEMS + BEN'S CORRECTED
+    CONNECTOMES + CURRICULUM STAGE 5 (all Ben-directed; no supervisor,
+    per Ben):**
+    (1) SUBSYSTEMS (Ben: "I did not mean double-click to zoom" — the
+    AnimatLab containment he wanted): node.sub = nested spec; dblclick
+    a ⊞ node (dashed ring) = ENTER (ctxStack push, canvas = sub's
+    nodes/edges, fully editable, breadcrumb in the tree panel); F4 or
+    dblclick-empty = write back + pop; Ctrl+G = pack selection into a
+    SUB node, Ctrl+Shift+G = unpack; nesting recursive; persists in
+    node.sub through reload/export (persist/modelSpec flattens the
+    stack; snapshot/undo stay per-context). loadSpec = tab-level (exits
+    subs); loadIntoCanvas = context-aware (undo/hide inside a sub stay
+    inside). GOTCHA: pack drops edges TOUCHING the packed set
+    (one-endpoint dangling edges crash serialize). TYPES gained "SUB".
+    (2) BEN'S THREE CORRECTED EXPORTS are now the canonical template
+    entries (tracked copies in spinal\): rules (22:46, 90n/99e — he
+    consolidated the dups himself), ben_shevtsova_20260924.json (23:09,
+    IniF/IniE/V0D/V0V/V2a/V3-E + brainstem), ben_shinohara_20260924.json
+    (23:16, per-muscle MNs IP/TA/BF + GM/VL/SO/GA). Shinohara's
+    symbolic afferent nodes ("flexor ii/ia", "extensor Ib") carry SUBS
+    expanding to per-muscle Ia/II (Ia_IP/II_IP/...) — READING RULE
+    (Ben): proprioception feeds back to ITSELF, autogenic per muscle,
+    not group-broadcast. load_ben_export() in the generator merges
+    duplicate labels as same-neuron (Ben-confirmed semantics).
+    (3) CLARIFICATIONS SETTLED: afferents = direct-off-muscle (AFF
+    encoders fuse receptor+AD; drop AnimatLab plumbing INs); label =
+    identity in exports; PORT-load = generic current-input block;
+    runner PF layer HAS PF_IN_E AND PF_IN_F (palette had one visual
+    type only).
+    (4) CURRICULUM STAGE 5 (curr_s5_pfvariant): ground eval,
+    joint_pf categorical fixed ON, KEYS5 = heel_pf_layer/toe_df_inh/
+    heel_in_f_exc/ia_pf_f/ii_pf_f ([0,0.5], toe [0,5]) — everything
+    else pinned at s3k (reports_20260923/s3k_trial34_full_params.json
+    merged into BASE_MUL; set_stage/objective/main stage-5 branches;
+    SEEDING TRAP: the stage-3 else-branch mid-range defaults must stay
+    elif (1,2,3) or they leak into the stage-5 seed). Launched 40 TPE
+    trials in the background; results → curriculum_stage5.json.
+    Runner gates re-verified: (410,376,1186) + bit-exact
+    -160.23425729850192. **(5) REORDER (Ben, same night: "standing
+    should be stage 3 and walking stage 4"): stage 3 = standing
+    balance (study curr_s3_balance, vest/rig keys), stage 4 = ground
+    walk (curr_s4_nocross, the s3 key set seeded from s3k via
+    reports_20260923/s3k_trial34_full_params.json) — FRESH study names
+    so no existing DB study changes meaning (old curr_s4_balance stays
+    as-is); stage 5 unchanged; set_stage/objective/main renumbered,
+    smoke-verified (stage-3 vest loaders, stage-4 walk loaders with
+    joint_pf 0, stage-5 variant loaders).**
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the

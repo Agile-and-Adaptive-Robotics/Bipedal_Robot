@@ -832,11 +832,102 @@ def main():
         'AUTO-GENERATED rule motifs from CONNECTOME.md (2026-09-23) — '
         'reference sketches, NOT Ben\u2019s drawing; see the "Circuit '
         'rules — Ben" entry for the real one.')
-    for nm in ('shevtsova', 'shinohara', 'rybak'):
+    for nm in ('rybak',):
         p = os.path.join(HERE, 'replication', nm + '_rules.json')
         out[nm] = convert_replication(p)
         out[nm]['_note'] = ('replication draft (Ben edits; ' + nm +
                             '_rules.json); weights = paper Table values')
+    # ---- 2026-09-24 night: Shevtsova + Shinohara entries now serve
+    # BEN'S corrected drawings (he exported corrected connectomes from
+    # the block editor; the session drafts remain in replication\).
+    # Pattern = same as the rules entry: tracked copy in spinal\.
+    def load_ben_export(fname, fallback_nm, note):
+        p = os.path.join(HERE, fname)
+        if os.path.exists(p):
+            spec = json.load(open(p, encoding='utf-8'))
+            seen = {}
+            keep = []
+            merged = []
+            for n in spec['nodes']:
+                l = n['label']
+                if l in seen:
+                    merged.append(l)
+                else:
+                    seen[l] = n
+                    keep.append(n)
+            spec['nodes'] = keep       # dup labels = same neuron (Ben)
+            spec['_note'] = note
+            if merged:
+                spec['_note'] += (' NOTE: duplicate labels merged as '
+                                  'same-neuron (Ben): ' +
+                                  ', '.join(sorted(set(merged))) + '.')
+            return spec
+        print('WARN: %s missing -> %s falls back to session draft'
+              % (fname, fallback_nm))
+        spec = convert_replication(os.path.join(
+            HERE, 'replication', fallback_nm + '_rules.json'))
+        spec['_note'] = ('SESSION DRAFT fallback (Ben export missing): '
+                         + fallback_nm + '_rules.json')
+        return spec
+
+    out['shevtsova'] = load_ben_export(
+        'ben_shevtsova_20260924.json', 'shevtsova',
+        "BEN'S corrected Shevtsova 2026 laminar RG (2026-09-24 23:09 "
+        "export): IniF/IniE/V0D/V0V/V2a/V3-E + brainstem alpha/gamma; "
+        "tags shev2026_t1 carry the paper values.")
+    out['shinohara'] = load_ben_export(
+        'ben_shinohara_20260924.json', 'shinohara',
+        "BEN'S corrected Shinohara 2025 interlimb/load (2026-09-24 "
+        "23:16 export): RG/IN/PF layers + per-muscle MNs (IP/TA/BF "
+        "flexors, GM/VL/SO/GA extensors), shin2025_a1/b3/eq10/eq11 "
+        "tags = paper equations. The symbolic afferent nodes expand "
+        "(double-click) into their constituent per-muscle Ia/II afferents.")
+
+    # Shinohara symbolic afferent nodes: attach SUBSYSTEMS with the
+    # constituent per-muscle afferents (Ben: "instead of drawing both a
+    # type ii and ia afferent for each muscle, here is a node" --
+    # double-click enters it). READING RULE (Ben): a muscle's
+    # proprioception feeds back to ITSELF -- the flexor MNs are not fed
+    # Ia/II from all muscles, just themselves; likewise extensors. The
+    # parent-level edges to MN-IP/MN-TA/MN-BF etc. are that autogenic
+    # fan-out, one per muscle's own afferent.
+    def _aff(t, l, x, y):
+        return {'type': t, 'label': l, 'x': x, 'y': y}
+    sh = out.get('shinohara', {})
+    if sh:
+        for n in sh['nodes']:
+            if n['label'] == 'flexor ii/ia':
+                cx, cy = n['x'], n['y']
+                n['sub'] = {
+                    'nodes': [
+                        _aff('SN-Ia', 'Ia_IP', cx - 70, cy - 60),
+                        _aff('SN-II', 'II_IP', cx + 10, cy - 60),
+                        _aff('SN-Ia', 'Ia_TA', cx - 70, cy),
+                        _aff('SN-II', 'II_TA', cx + 10, cy),
+                        _aff('SN-Ia', 'Ia_BF', cx - 70, cy + 60),
+                        _aff('SN-II', 'II_BF', cx + 10, cy + 60)],
+                    'edges': [],
+                    '_note': ('constituents of the flexor ii/ia symbol: '
+                              'each flexor muscle has its own Ia+II '
+                              'afferent, and each feeds ONLY its own MN '
+                              '(IP/TA/BF) -- autogenic, per Ben; the '
+                              'group drive into RG-F/IN-F/PF-F is the '
+                              'population sum (shin2025_eq10).')}
+            if n['label'] == 'extensor Ib':
+                cx, cy = n['x'], n['y']
+                n['sub'] = {
+                    'nodes': [
+                        _aff('SN-Ib', 'Ib_GM', cx - 70, cy - 60),
+                        _aff('SN-Ib', 'Ib_VL', cx + 10, cy - 60),
+                        _aff('SN-Ib', 'Ib_SO', cx - 70, cy),
+                        _aff('SN-Ib', 'Ib_GA', cx + 10, cy)],
+                    'edges': [],
+                    '_note': ('constituents of the extensor Ib symbol: '
+                              'each extensor muscle has its own Ib '
+                              'afferent feeding ONLY its own MN '
+                              '(GM/VL/SO/GA) -- autogenic, per Ben; '
+                              'RG-E/IN-E/PF-E drive is the population '
+                              'sum (shin2025_eq11).')}
 
     for nm, spec in out.items():
         errs += validate(nm, spec)

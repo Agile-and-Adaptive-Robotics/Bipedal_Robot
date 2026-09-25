@@ -1,22 +1,31 @@
 """Staged tuning curriculum (Ben 2026-09-15): deafferented-air ->
-afferented-air -> supported ground, each stage seeded by the previous,
-only the NEW pathway gains searched per stage.
+afferented-air -> STANDING -> ground walk, each stage seeded by the
+previous, only the NEW pathway gains searched per stage.
+(2026-09-24 night, Ben: "standing should be stage 3 and walking
+stage 4" -- the ladder is stand-before-walk.)
 
 Stage 1 (air_deaff): deafferented air-stepping. Tunes: drive/rg_adapt/
     desc_e/rg_to_pf (rhythm core).
 Stage 2 (air_aff): afferented air (heel/toe + load signals active, feet
     free). Adds: phase_reset_e/f, heel_rge, toe_rge.
-Stage 3 (ground): supported ground walk. Adds: ib_rge (stance-Ib
-    prolonger), ia_in (IaIN pathway), ankle_post_walk_trim.
-Stage 4 (balance, 2026-09-23): STANDING-BALANCE stage modeled on SCONE
-    Tutorial 3a "Balance" (proprioceptive autogenic length feedback +
-    vestibular torso-point PD; Ben's request). Adds: vest_ext /
-    vest_flex_inh (vestibular-analog VEST cells -> extensor tone /
-    flexor inhibition) and vest_prop (stance-gated II length-loop
-    boost), plus rig_scale (wean the support rig so the stage measures
-    real balance, not the springs). Objective = COM sway radius + tilt
-    envelope + contact symmetry + no falls over an 8 s standing eval
-    (runner --stand-eval). All new gains default 0 = previous behavior.
+Stage 3 (balance): STANDING-BALANCE stage modeled on SCONE Tutorial 3a
+    "Balance" (proprioceptive autogenic length feedback + vestibular
+    torso-point PD; Ben's request 2026-09-23, MOVED BEFORE WALKING by
+    Ben 2026-09-24 night). Adds: vest_ext / vest_flex_inh (vestibular-
+    analog VEST cells -> extensor tone / flexor inhibition) and
+    vest_prop (stance-gated II length-loop boost), plus rig_scale
+    (wean the support rig so the stage measures real balance, not the
+    springs). Objective = COM sway radius + tilt envelope + contact
+    symmetry + no falls over an 8 s standing eval (runner --stand-eval).
+    All new gains default 0 = previous behavior.
+Stage 4 (ground walk): supported ground walking (the s3b..s3k lineage;
+    renumbered from 3 on 2026-09-24 night). Adds: ib_rge (stance-Ib
+    prolonger), ia_in (IaIN pathway), ankle_post_walk_trim, etc.,
+    with full_rules + no_cross pinned on. Seeds from the s3k winner.
+Stage 5 (pfvariant, 2026-09-24 night): the per-PF-layer contact
+    variant on the ground eval (joint-layer PF fixed ON; only
+    heel_pf_layer / toe_df_inh / heel_in_f_exc / ia_pf_f / ii_pf_f
+    searched; everything else pinned at the s3k winner).
 
 Usage: python _curriculum.py <stage> [n_trials]
 Each stage writes curriculum_stage<N>.json (its best) so the next stage
@@ -62,7 +71,22 @@ KEYS3 = KEYS2 + ("ib_rge", "ia_in", "ia_f_contra_f", "v3_to_ibexc",
 # RULE: params default, set_stage loader, runner --best loader branch,
 # suggest surface here); rig_scale is a runner arg, not a G knob.
 KEYS4 = ("vest_ext", "vest_flex_inh", "vest_prop", "rig_scale")
-STAGE_KEYS = {1: KEYS1, 2: KEYS2, 3: KEYS3, 4: KEYS4}
+# 2026-09-24 night: BEN'S REORDER -- standing balance is stage 3 and
+# ground walking is stage 4 ("standing should be stage 3 and walking
+# stage 4"). The old curr_s4_balance study stays in the DB under its
+# name; the renumbered stages use fresh study names (curr_s3_balance /
+# curr_s4_nocross) so no study name changes meaning.
+KEYS_BAL = KEYS4                      # stage 3: standing balance
+KEYS_WALK = KEYS3                     # stage 4: ground walk (s3 lineage)
+# 2026-09-24 night stage 5 (Ben: "update the working models with the
+# correct rules and run simulations to tune"): PER-PF-LAYER CONTACT
+# VARIANT on the ground eval. joint_pf is a FIXED topology switch
+# (the PF micro-layers the new edges target exist only in that build);
+# the five new gains enter SMALL ([0, 0.5], toe up to the drawn 5).
+# Everything else is pinned at the s3k production winner.
+KEYS5 = ("heel_pf_layer", "toe_df_inh", "heel_in_f_exc",
+         "ia_pf_f", "ii_pf_f", "joint_pf")
+STAGE_KEYS = {1: KEYS1, 2: KEYS2, 3: KEYS_BAL, 4: KEYS_WALK, 5: KEYS5}
 
 
 def set_stage(stage, p):
@@ -71,7 +95,7 @@ def set_stage(stage, p):
     P.G["renshaw"] = 0.5
     P.G["ankle_post_walk_trim"] = float(p.get("ankle_post_walk_trim", 1.0))
     P.TAU["rg_nap_h"] = float(p.get("rg_nap_h", 0.35))
-    if 2 <= stage <= 3:
+    if stage in (2, 4, 5):
         P.G["heel_rge"] = float(p.get("heel_rge", 0.0))
         P.G["toe_rge"] = float(p.get("toe_rge", 0.0))
         P.G["ib_e_central"] = float(p.get("ib_e_central", 0.0))
@@ -80,7 +104,7 @@ def set_stage(stage, p):
         P.G["ii_e_central"] = float(p.get("ii_e_central", 0.0))
         P.G["c1_gain"] = float(p.get("c1_gain", 1.0))
         P.G["v3_gain"] = float(p.get("v3_gain", 0.0))
-    if stage == 3:
+    if stage in (4, 5):
         P.G["ib_rge"] = float(p.get("ib_rge", 0.0))
         P.G["ia_in"] = float(p.get("ia_in", 0.0))
         P.G["ia_f_contra_f"] = float(p.get("ia_f_contra_f", 0.0))
@@ -122,9 +146,20 @@ def set_stage(stage, p):
             os.environ["AARL_PELVIS_TY"] = repr(float(p["pelvis_ty"]))
         else:
             os.environ.pop("AARL_PELVIS_TY", None)
-    if stage == 4:
-        # goal2 balance stage (2026-09-23): JSON-RULE loaders for the
-        # three new vest_* G knobs (defaults 0 = previous behavior).
+    if stage == 5:
+        # 2026-09-24 night per-PF-layer contact variant (Ben's drawing,
+        # Circuit_rules_CONNECTOME_md__connectome.json): joint-layer PF
+        # FIXED ON + the five default-0 keys. JSON-RULE loaders.
+        P.G["joint_pf"] = float(p.get("joint_pf", 0.0))
+        P.G["heel_pf_layer"] = float(p.get("heel_pf_layer", 0.0))
+        P.G["toe_df_inh"] = float(p.get("toe_df_inh", 0.0))
+        P.G["heel_in_f_exc"] = float(p.get("heel_in_f_exc", 0.0))
+        P.G["ia_pf_f"] = float(p.get("ia_pf_f", 0.0))
+        P.G["ii_pf_f"] = float(p.get("ii_pf_f", 0.0))
+    if stage == 3:
+        # goal2 balance stage (2026-09-23; MOVED to stage 3 on
+        # 2026-09-24 night, Ben: stand before walk): JSON-RULE loaders
+        # for the vest_* G knobs (defaults 0 = previous behavior).
         P.G["vest_ext"] = float(p.get("vest_ext", 0.0))
         P.G["vest_flex_inh"] = float(p.get("vest_flex_inh", 0.0))
         P.G["vest_prop"] = float(p.get("vest_prop", 0.0))
@@ -141,7 +176,7 @@ def objective(stage):
             desc_f=trial.suggest_float("desc_f", 0.7, 2.2),
             rg_to_pf=trial.suggest_float("rg_to_pf", 1.8, 3.0),
         )
-        if 2 <= stage <= 3:
+        if stage == 2:
             # NEW GAINS ENTER SMALL (2026-09-20): the 09-18 s2 study
             # sampled these in [0, 1] and EVERY trial lost the stage-1
             # rhythm (trial 0 = stage-1 winner + gains 0.2-0.95 -> static
@@ -159,7 +194,21 @@ def objective(stage):
                                                       0.0, 0.5)
             sug["c1_gain"] = trial.suggest_float("c1_gain", 0.1, 0.8)
             sug["v3_gain"] = trial.suggest_float("v3_gain", 0.0, 0.3)
-        if stage == 3:
+        if stage == 4:
+            # GROUND WALK (renumbered from 3 on 2026-09-24 night):
+            # the s3-lineage key set, seeded from the s3k winner.
+            sug["heel_rge"] = trial.suggest_float("heel_rge", 0.0, 0.5)
+            sug["toe_rge"] = trial.suggest_float("toe_rge", 0.0, 0.5)
+            sug["ib_e_central"] = trial.suggest_float("ib_e_central",
+                                                      0.0, 0.5)
+            sug["ia_f_central"] = trial.suggest_float("ia_f_central",
+                                                      0.0, 0.5)
+            sug["ii_f_central"] = trial.suggest_float("ii_f_central",
+                                                      0.0, 0.5)
+            sug["ii_e_central"] = trial.suggest_float("ii_e_central",
+                                                      0.0, 0.5)
+            sug["c1_gain"] = trial.suggest_float("c1_gain", 0.1, 0.8)
+            sug["v3_gain"] = trial.suggest_float("v3_gain", 0.0, 0.3)
             sug["ib_rge"] = trial.suggest_float("ib_rge", 0.0, 1.0)
             sug["ia_in"] = trial.suggest_float("ia_in", 0.0, 1.2)
             sug["ia_f_contra_f"] = trial.suggest_float("ia_f_contra_f",
@@ -202,9 +251,26 @@ def objective(stage):
             # blocks weight transfer (s3g diagnosis) - scale it
             sug["ky_scale"] = trial.suggest_float("ky_scale", 0.02,
                                                   1.0, log=True)
-        if stage == 4:
-            # goal2 balance stage: vestibular-analog tone + reciprocal
-            # flexor inhibition + stance-gated II loop; gains enter SMALL
+        if stage == 5:
+            # 2026-09-24 night per-PF-layer variant: ONLY the five new
+            # gains searched (curriculum philosophy: new pathways only;
+            # everything else pinned at the s3k winner). Small-enter
+            # ranges per the 09-18/09-20 lesson; toe_df_inh tops at the
+            # drawn g 5. joint_pf FIXED ON (topology, not a parameter).
+            sug["heel_pf_layer"] = trial.suggest_float("heel_pf_layer",
+                                                       0.0, 0.5)
+            sug["toe_df_inh"] = trial.suggest_float("toe_df_inh",
+                                                    0.0, 5.0)
+            sug["heel_in_f_exc"] = trial.suggest_float("heel_in_f_exc",
+                                                       0.0, 0.5)
+            sug["ia_pf_f"] = trial.suggest_float("ia_pf_f", 0.0, 0.5)
+            sug["ii_pf_f"] = trial.suggest_float("ii_pf_f", 0.0, 0.5)
+            sug["joint_pf"] = trial.suggest_categorical("joint_pf",
+                                                        [1.0])
+        if stage == 3:
+            # STANDING BALANCE (moved before walking, Ben 2026-09-24
+            # night): vestibular-analog tone + reciprocal flexor
+            # inhibition + stance-gated II loop; gains enter SMALL
             # ([0, 0.5/0.3/1.0] - the 09-18 full-range lesson). rig_scale
             # weans the support rig so the objective measures the
             # controllers, not the springs (AGENTS: support boundary
@@ -259,8 +325,8 @@ def objective(stage):
             if not np.isfinite(score):
                 return -200.0
             return float(score)
-        if stage == 4:
-            # goal2 standing-balance eval (SCONE Tutorial-3a analog):
+        if stage == 3:
+            # STANDING-BALANCE eval (SCONE Tutorial-3a analog):
             # 8 s standing (--stand-eval 8, DRIVE 0 throughout) at this
             # trial's rig wean. Sentinels: NaN -200 < fall -150 < any
             # stander. Terms: COM sway radius (m, 400/m), tilt envelope
@@ -330,11 +396,21 @@ def main():
     # fixed on, full_rules kept on) - retune the ONLY configuration
     # that produced bilateral stepping.
     name = {1: "curr_s1_air_deaff", 2: "curr_s2b_air_aff",
-            3: "curr_s3k_nocross", 4: "curr_s4_balance"}[stage]
+            3: "curr_s3_balance", 4: "curr_s4_nocross",
+            5: "curr_s5_pfvariant"}[stage]
     prev = json.loads(open("best_walk_params_v10.json",
                            encoding="utf-8").read())
     BASE_MUL = dict(prev["multipliers"])
     BASE_MUL["renshaw"] = 0.5
+    if stage in (4, 5):
+        # pin the non-searched keys at the s3k PRODUCTION winner (the
+        # full_rules/no_cross operating point stages 4-5 retune)
+        s3k = json.loads(open(
+            "reports_20260923/s3k_trial34_full_params.json",
+            encoding="utf-8").read())["params"]
+        BASE_MUL.update({k: v for k, v in s3k.items()})
+        if s3k.get("pf_gain") is None:
+            BASE_MUL.pop("pf_gain", None)
     optuna.logging.set_verbosity(optuna.logging.WARNING)
     study = optuna.create_study(direction="maximize", storage=DB,
                                 study_name=name, load_if_exists=True,
@@ -348,12 +424,17 @@ def main():
         # with all new pathways OFF).
         sk = STAGE_KEYS[stage]
         seed = {k: 0.0 for k in sk}
-        if stage == 4:
-            # goal2 balance stage: vest gains seed at 0 (defaults-off =
+        if stage == 5:
+            # joint-layer PF is a FIXED-ON topology switch in stage 5;
+            # the seed carries ONLY the stage keys -- the s3k operating
+            # point comes from the BASE_MUL merge above
+            seed["joint_pf"] = 1.0
+        elif stage == 3:
+            # balance stage: vest gains seed at 0 (defaults-off =
             # today's standing reproduced exactly); rig_scale seeds FULLY
             # SUPPORTED (1.0) so trial 0 is the incumbent standing config.
             seed["rig_scale"] = 1.0
-        else:
+        elif stage in (1, 2):
             seed["c1_gain"] = 0.1  # floor of its range
             # sensible mid-range defaults for keys the previous winner
             # cannot carry (a 0.0 pelvis_ty would put the walker at ground
@@ -370,11 +451,17 @@ def main():
             seed["pm_aff"] = 0.8
             seed["ky_scale"] = 0.05
         try:
-            # stage-3 retunes chain from the previous GROUND winner when
-            # one exists (s3b); fresh chains fall back to the prior stage
-            prevw = json.loads(open(
-                f"curriculum_stage{stage}.json",
-                encoding="utf-8").read())["params"]
+            # stages 4-5 (walk + pfvariant) chain from the s3k
+            # PRODUCTION winner directly (their numeric predecessors
+            # are the air/balance stages, which carry no walk keys)
+            if stage in (4, 5):
+                prevw = json.loads(open(
+                    "reports_20260923/s3k_trial34_full_params.json",
+                    encoding="utf-8").read())["params"]
+            else:
+                prevw = json.loads(open(
+                    f"curriculum_stage{stage}.json",
+                    encoding="utf-8").read())["params"]
         except FileNotFoundError:
             try:
                 prevw = json.loads(open(
