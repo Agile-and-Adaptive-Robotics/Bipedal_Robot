@@ -1,0 +1,48 @@
+15:30:47 SCONE version 2.4.4.3333
+15:30:47 Successfully initialized OpenSim-3.3-2021-01-28
+15:30:47 Successfully initialized OpenSim-4.4
+15:30:47 Successfully initialized Hyfydy-1.12.6.1412
+15:30:47 Successfully initialized Hyfydy-1.12.6.1412-DBL
+15:30:47 Evaluating C:\Users\BENBOL~1\AppData\Local\Temp\scone_ab\Tutorials3\AB1-osim-nativeOsim4par.scone
+15:30:47 Moved pelvis_ty to 0.907268; force=745.361; goal=730.903
+15:30:47 Created model H0918v3; dofs=9 muscles=18 mass=74.5314
+15:30:47 Ignored parameter /jointset/ground_pelvis/pelvis_tilt/value.offset
+15:30:47 Ignored parameter /jointset/hip_r/hip_flexion_r/value.offset
+15:30:47 Ignored parameter /jointset/knee_r/knee_angle_r/value.offset
+15:30:47 Ignored parameter /jointset/ankle_r/ankle_angle_r/value.offset
+15:30:47 Ignored parameter /jointset/hip_l/hip_flexion_l/value.offset
+15:30:47 Ignored parameter /jointset/knee_l/knee_angle_l/value.offset
+15:30:47 Ignored parameter /jointset/ankle_l/ankle_angle_l/value.offset
+15:30:47 Imported 46 of 53, skipped 7 parameters from C:\Users\BENBOL~1\AppData\Local\Temp\scone_ab\Tutorials3/init/H0918GaitRS2Osim4.par
+15:30:47 pooled_evaluator started threads: 12
+15:30:47 Moved pelvis_ty to 0.907268; force=745.361; goal=730.903
+15:30:47 Created model H0918v3; dofs=9 muscles=18 mass=74.5314
+15:30:50 Terminating simulation at 3.230
+15:30:50 0.460: step=0 vel=1.053 (0.484/0.460) penalty=0.000 norm_vel=1.000 
+15:30:50 1.040: step=1 vel=1.053 (0.611/0.580) penalty=0.000 norm_vel=1.000 
+15:30:50 1.685: step=2 vel=0.961 (0.620/0.645) penalty=-0.039 norm_vel=0.961 *
+15:30:50 1.955: step=3 vel=1.268 (0.342/0.270) penalty=0.000 norm_vel=1.000 *
+15:30:50 2.275: step=4 vel=0.671 (0.215/0.320) penalty=-0.329 norm_vel=0.671 *
+15:30:50 2.580: step=5 vel=0.867 (0.265/0.305) penalty=-0.133 norm_vel=0.867 *
+15:30:50 2.740: step=6 vel=0.973 (0.156/0.160) penalty=-0.027 norm_vel=0.973 *
+15:30:50 3.145: step=7 vel=0.264 (0.107/0.405) penalty=-0.736 norm_vel=0.264 *
+15:30:50 3.230: step=8 vel=0.969 (0.082/0.085) penalty=-0.031 norm_vel=0.969 *
+15:30:50 Results written to D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\reports_20260924\scone_logs\AB1_osim_osim4.sto*
+15:30:50 result                    = 43.3159
+15:30:50   Gait                    = 42.0893 <- 100 * (0.420893 > 0.05)
+15:30:50     step_velocity         = 0.603529
+15:30:50     step_count            = 9
+15:30:50   Effort                  = 0.627179 <- 0.1 * 6.27179
+15:30:50     effort                = 1494.91
+15:30:50     distance              = 3.19805
+15:30:50   MuscleActivation        = 0.425871 <- 2000 * 0.000212935
+15:30:50     effort                = 0.913578
+15:30:50     distance              = 3.19805
+15:30:50   DofLimits               = 0.0812889
+15:30:50     ankle_angle_l         = 0 <- 0.1 * 0
+15:30:50     ankle_angle_r         = 0 <- 0.1 * 0
+15:30:50     knee_angle_l          = 0.0444323 <- 0.02 * (2.22161 > 1)
+15:30:50     knee_angle_r          = 0.0368566 <- 0.02 * (1.84283 > 1)
+15:30:50   GRF                     = 0.0922602 <- 10 * 0.00922602
+15:30:50 simulation time           = 3.23
+15:30:50 performance (x real-time) = 1.26935

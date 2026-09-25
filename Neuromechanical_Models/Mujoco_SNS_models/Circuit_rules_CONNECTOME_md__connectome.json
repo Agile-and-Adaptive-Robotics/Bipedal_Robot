@@ -1,0 +1,1428 @@
+{
+ "nodes": [
+  {
+   "id": "n524",
+   "type": "SN-Ia",
+   "label": "ia: Ia",
+   "x": 70,
+   "y": 150
+  },
+  {
+   "id": "n525",
+   "type": "MN",
+   "label": "ia_homo: MN agonist",
+   "x": 280,
+   "y": 150
+  },
+  {
+   "id": "n526",
+   "type": "PORT-load",
+   "label": "ia_homo: ia_to_mn",
+   "x": 175,
+   "y": 220
+  },
+  {
+   "id": "n527",
+   "type": "MN",
+   "label": "ia_recip: MN antagonist",
+   "x": 580,
+   "y": 150
+  },
+  {
+   "id": "n528",
+   "type": "IN-IaIN",
+   "label": "ia_recip: Ia_A",
+   "x": 377,
+   "y": 83
+  },
+  {
+   "id": "n529",
+   "type": "PORT-load",
+   "label": "ia_recip: ia_to_antagonist",
+   "x": 475,
+   "y": 220
+  },
+  {
+   "id": "n530",
+   "type": "SN-II",
+   "label": "ii_exc: II",
+   "x": 670,
+   "y": 150
+  },
+  {
+   "id": "n531",
+   "type": "MN",
+   "label": "ii_exc: MN agonist",
+   "x": 880,
+   "y": 150
+  },
+  {
+   "id": "n532",
+   "type": "IN-IIe",
+   "label": "ii_exc: II_A2",
+   "x": 775,
+   "y": 90
+  },
+  {
+   "id": "n533",
+   "type": "PORT-load",
+   "label": "ii_exc: ii_to_mn",
+   "x": 775,
+   "y": 220
+  },
+  {
+   "id": "n534",
+   "type": "MN",
+   "label": "ii_inh: MN antagonist",
+   "x": 1180,
+   "y": 150
+  },
+  {
+   "id": "n535",
+   "type": "IN-IIi",
+   "label": "ii_inh: II_A1",
+   "x": 1075,
+   "y": 90
+  },
+  {
+   "id": "n536",
+   "type": "PORT-load",
+   "label": "ii_inh: ia_to_antagonist",
+   "x": 1075,
+   "y": 220
+  },
+  {
+   "id": "n537",
+   "type": "SN-Ib",
+   "label": "ib_auto: Ib",
+   "x": 70,
+   "y": 410
+  },
+  {
+   "id": "n538",
+   "type": "MN",
+   "label": "ib_auto: MN agonist",
+   "x": 232,
+   "y": 423
+  },
+  {
+   "id": "n539",
+   "type": "IN-IbIN",
+   "label": "ib_auto: Ib_A",
+   "x": 175,
+   "y": 350
+  },
+  {
+   "id": "n540",
+   "type": "PORT-load",
+   "label": "ib_auto: ib_to_mn_inh",
+   "x": 175,
+   "y": 480
+  },
+  {
+   "id": "n541",
+   "type": "SN-Ib",
+   "label": "ib_rev: Ib+",
+   "x": 377,
+   "y": 689
+  },
+  {
+   "id": "n542",
+   "type": "MN",
+   "label": "ib_rev: MN ext (stance)",
+   "x": 587,
+   "y": 689
+  },
+  {
+   "id": "n543",
+   "type": "IN-Ib+",
+   "label": "ib_rev: Ib_Ext+",
+   "x": 482,
+   "y": 629
+  },
+  {
+   "id": "n544",
+   "type": "PORT-load",
+   "label": "ib_rev: ib_group_exc",
+   "x": 482,
+   "y": 759
+  },
+  {
+   "id": "n545",
+   "type": "SN-heel",
+   "label": "heel: heel",
+   "x": 651,
+   "y": 1309
+  },
+  {
+   "id": "n546",
+   "type": "PORT-load",
+   "label": "heel: heel_rge",
+   "x": 760,
+   "y": 1385
+  },
+  {
+   "id": "n547",
+   "type": "SN-toe",
+   "label": "toe: toe",
+   "x": 61,
+   "y": 1066
+  },
+  {
+   "id": "n548",
+   "type": "IN-C",
+   "label": "toe: toe IN",
+   "x": 151,
+   "y": 1012
+  },
+  {
+   "id": "n549",
+   "type": "PORT-load",
+   "label": "toe: toe_rge",
+   "x": 119,
+   "y": 1144
+  },
+  {
+   "id": "n550",
+   "type": "SN-Ib",
+   "label": "ib_load: Ib grp",
+   "x": -30,
+   "y": 646
+  },
+  {
+   "id": "n551",
+   "type": "HC-RG-E",
+   "label": "ib_load: RG-E",
+   "x": 137,
+   "y": 572
+  },
+  {
+   "id": "n552",
+   "type": "PORT-load",
+   "label": "ib_load: ib_rge Shinohara",
+   "x": 161,
+   "y": 865
+  },
+  {
+   "id": "n553",
+   "type": "MN",
+   "label": "rc: MN",
+   "x": 378,
+   "y": 388
+  },
+  {
+   "id": "n554",
+   "type": "MN",
+   "label": "rc: MN own+antag",
+   "x": 588,
+   "y": 388
+  },
+  {
+   "id": "n555",
+   "type": "RC",
+   "label": "rc: RC",
+   "x": 429,
+   "y": 319
+  },
+  {
+   "id": "n556",
+   "type": "PORT-load",
+   "label": "rc: renshaw",
+   "x": 490,
+   "y": 499
+  },
+  {
+   "id": "n557",
+   "type": "HC-RG-F",
+   "label": "cross: RG-F",
+   "x": 673,
+   "y": 414
+  },
+  {
+   "id": "n558",
+   "type": "HC-RG-F",
+   "label": "cross: contra RG-F",
+   "x": 883,
+   "y": 414
+  },
+  {
+   "id": "n559",
+   "type": "IN-C",
+   "label": "cross: c1",
+   "x": 778,
+   "y": 354
+  },
+  {
+   "id": "n560",
+   "type": "PORT-load",
+   "label": "cross: c1_gain Shinohara",
+   "x": 778,
+   "y": 484
+  },
+  {
+   "id": "n561",
+   "type": "SN-II",
+   "label": "ii_exc: II (2)",
+   "x": 1007,
+   "y": 143
+  },
+  {
+   "id": "n562",
+   "type": "IN-IbIN",
+   "label": "ib_auto: Ib_N",
+   "x": 250,
+   "y": 315
+  },
+  {
+   "id": "n563",
+   "type": "IN-IaIN",
+   "label": "ia_recip: Ia_N",
+   "x": 585,
+   "y": 75
+  },
+  {
+   "id": "n564",
+   "type": "MN",
+   "label": "ib_auto: MN antagonist",
+   "x": 295,
+   "y": 387
+  },
+  {
+   "id": "n565",
+   "type": "MUSCLE",
+   "label": "MUSCLE_2782",
+   "x": 567,
+   "y": 461
+  },
+  {
+   "id": "n566",
+   "type": "RC",
+   "label": "rc: RC_N",
+   "x": 544,
+   "y": 318
+  },
+  {
+   "id": "n567",
+   "type": "MUSCLE",
+   "label": "MUSCLE_2795",
+   "x": 402,
+   "y": 457
+  },
+  {
+   "id": "n568",
+   "type": "HC-RG-F",
+   "label": "cross: RG-E",
+   "x": 987,
+   "y": 411
+  },
+  {
+   "id": "n569",
+   "type": "IN-C",
+   "label": "cross: V3",
+   "x": 1092,
+   "y": 351
+  },
+  {
+   "id": "n570",
+   "type": "PORT-load",
+   "label": "cross: v3_gain Shinohara2",
+   "x": 1092,
+   "y": 481
+  },
+  {
+   "id": "n571",
+   "type": "IN-InE",
+   "label": "IN-InE_2803",
+   "x": 157,
+   "y": 635
+  },
+  {
+   "id": "n572",
+   "type": "HC-PF-E",
+   "label": "HC-PF-E_2805",
+   "x": 127,
+   "y": 704
+  },
+  {
+   "id": "n573",
+   "type": "IN-PF",
+   "label": "IN-PF_2807",
+   "x": 136,
+   "y": 778
+  },
+  {
+   "id": "n574",
+   "type": "IN-InF",
+   "label": "IN-InF_2808",
+   "x": 221,
+   "y": 639
+  },
+  {
+   "id": "n575",
+   "type": "HC-RG-F",
+   "label": "HC-RG-F_2809",
+   "x": 267,
+   "y": 573
+  },
+  {
+   "id": "n576",
+   "type": "HC-PF-F",
+   "label": "HC-PF-F_2815",
+   "x": 227,
+   "y": 710
+  },
+  {
+   "id": "n577",
+   "type": "IN-PF",
+   "label": "IN-PF_2817",
+   "x": 214,
+   "y": 778
+  },
+  {
+   "id": "n578",
+   "type": "IN-InE",
+   "label": "contra IN-InE",
+   "x": 1183,
+   "y": 408
+  },
+  {
+   "id": "n579",
+   "type": "HC-RG-E",
+   "label": "ib_load: RG-E2",
+   "x": 722,
+   "y": 564
+  },
+  {
+   "id": "n580",
+   "type": "PORT-load",
+   "label": "ia_ii: length and velocity Shinohara",
+   "x": 776,
+   "y": 855
+  },
+  {
+   "id": "n581",
+   "type": "IN-InE",
+   "label": "IN-InE_2805",
+   "x": 742,
+   "y": 626
+  },
+  {
+   "id": "n582",
+   "type": "HC-PF-E",
+   "label": "HC-PF-E_2807",
+   "x": 712,
+   "y": 695
+  },
+  {
+   "id": "n583",
+   "type": "IN-PF",
+   "label": "IN-PF_2809",
+   "x": 721,
+   "y": 769
+  },
+  {
+   "id": "n584",
+   "type": "IN-InF",
+   "label": "IN-InF_2810",
+   "x": 806,
+   "y": 630
+  },
+  {
+   "id": "n585",
+   "type": "HC-RG-F",
+   "label": "HC-RG-F_2811",
+   "x": 853,
+   "y": 565
+  },
+  {
+   "id": "n586",
+   "type": "HC-PF-F",
+   "label": "HC-PF-F_2817",
+   "x": 812,
+   "y": 701
+  },
+  {
+   "id": "n587",
+   "type": "IN-PF",
+   "label": "IN-PF_2819",
+   "x": 799,
+   "y": 769
+  },
+  {
+   "id": "n588",
+   "type": "SN-Ia",
+   "label": "SN-Ia_2843",
+   "x": 1035,
+   "y": 742
+  },
+  {
+   "id": "n589",
+   "type": "SN-II",
+   "label": "SN-II_2844",
+   "x": 1043,
+   "y": 667
+  },
+  {
+   "id": "n590",
+   "type": "HC-PF-E",
+   "label": "HC-PF-E_2809",
+   "x": 235,
+   "y": 1103
+  },
+  {
+   "id": "n591",
+   "type": "IN-PF",
+   "label": "IN-PF_dorsiflexion_inhibit",
+   "x": 238,
+   "y": 1010
+  },
+  {
+   "id": "n592",
+   "type": "HC-PF-F",
+   "label": "HC-PF-Dorsiflexion",
+   "x": 335,
+   "y": 1109
+  },
+  {
+   "id": "n593",
+   "type": "IN-PF",
+   "label": "IN-PF_2821",
+   "x": 318,
+   "y": 1019
+  },
+  {
+   "id": "n594",
+   "type": "HC-RG-E",
+   "label": "HC-RG-E-ipsilateral",
+   "x": 796,
+   "y": 1007
+  },
+  {
+   "id": "n595",
+   "type": "IN-InE",
+   "label": "IN-InE_2806",
+   "x": 769,
+   "y": 926
+  },
+  {
+   "id": "n596",
+   "type": "HC-PF-E",
+   "label": "HC-PF-E_hip",
+   "x": 824,
+   "y": 1114
+  },
+  {
+   "id": "n597",
+   "type": "IN-PF",
+   "label": "IN-PF_2810",
+   "x": 833,
+   "y": 1190
+  },
+  {
+   "id": "n598",
+   "type": "IN-InF",
+   "label": "IN-InF_2811",
+   "x": 895,
+   "y": 928
+  },
+  {
+   "id": "n599",
+   "type": "HC-RG-F",
+   "label": "HC-RG-F_ipsilateral",
+   "x": 927,
+   "y": 1008
+  },
+  {
+   "id": "n600",
+   "type": "HC-PF-F",
+   "label": "HC-PF-F_hip",
+   "x": 924,
+   "y": 1121
+  },
+  {
+   "id": "n601",
+   "type": "IN-PF",
+   "label": "IN-PF_2820",
+   "x": 911,
+   "y": 1190
+  },
+  {
+   "id": "n602",
+   "type": "HC-PF-E",
+   "label": "HC-PF-E_Knee",
+   "x": 1005,
+   "y": 1120
+  },
+  {
+   "id": "n603",
+   "type": "IN-PF",
+   "label": "IN-PF_2812",
+   "x": 1014,
+   "y": 1194
+  },
+  {
+   "id": "n604",
+   "type": "HC-PF-F",
+   "label": "HC-PF-F_Knee",
+   "x": 1105,
+   "y": 1126
+  },
+  {
+   "id": "n605",
+   "type": "IN-PF",
+   "label": "IN-PF_2822",
+   "x": 1092,
+   "y": 1194
+  },
+  {
+   "id": "n606",
+   "type": "HC-PF-E",
+   "label": "HC-PF-E_Ankle",
+   "x": 1226,
+   "y": 1183
+  },
+  {
+   "id": "n607",
+   "type": "IN-PF",
+   "label": "IN-PF_2814",
+   "x": 1235,
+   "y": 1258
+  },
+  {
+   "id": "n608",
+   "type": "HC-PF-F",
+   "label": "HC-PF-F_Ankle",
+   "x": 1308,
+   "y": 1180
+  },
+  {
+   "id": "n609",
+   "type": "IN-PF",
+   "label": "IN-PF_2824",
+   "x": 1313,
+   "y": 1258
+  },
+  {
+   "id": "n610",
+   "type": "HC-RG-E",
+   "label": "HC-RG-F_Contralateral",
+   "x": 509,
+   "y": 935
+  },
+  {
+   "id": "n611",
+   "type": "IN-InE",
+   "label": "IN-InE_2808",
+   "x": 539,
+   "y": 1039
+  },
+  {
+   "id": "n612",
+   "type": "IN-InF",
+   "label": "IN-InF_2813",
+   "x": 612,
+   "y": 1040
+  },
+  {
+   "id": "n613",
+   "type": "HC-RG-F",
+   "label": "HC-RG-E_Contralateral",
+   "x": 635,
+   "y": 940
+  }
+ ],
+ "edges": [
+  {
+   "from": "ia: Ia",
+   "to": "ia_homo: MN agonist",
+   "sign": "exc",
+   "gain": 2,
+   "tag": "ia_homo (0 hops shown)",
+   "pts": []
+  },
+  {
+   "from": "ia: Ia",
+   "to": "ia_recip: Ia_A",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "ia_recip",
+   "pts": []
+  },
+  {
+   "from": "ia_recip: Ia_A",
+   "to": "ia_recip: MN antagonist",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "ia_recip hops=1",
+   "pts": []
+  },
+  {
+   "from": "ii_exc: II",
+   "to": "ii_exc: II_A2",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "ii_exc_1",
+   "pts": []
+  },
+  {
+   "from": "ii_exc: II_A2",
+   "to": "ii_exc: MN agonist",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "ii_exc hops=1",
+   "pts": []
+  },
+  {
+   "from": "ii_inh: II_A1",
+   "to": "ii_inh: MN antagonist",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "ii_inh hops=1",
+   "pts": []
+  },
+  {
+   "from": "ib_auto: Ib",
+   "to": "ib_auto: Ib_A",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "ib_auto",
+   "pts": []
+  },
+  {
+   "from": "ib_auto: Ib_A",
+   "to": "ib_auto: MN agonist",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "ib_auto hops=1",
+   "pts": []
+  },
+  {
+   "from": "ib_rev: Ib+",
+   "to": "ib_rev: Ib_Ext+",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "ib_rev",
+   "pts": []
+  },
+  {
+   "from": "ib_rev: Ib_Ext+",
+   "to": "ib_rev: MN ext (stance)",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "ib_rev hops=1",
+   "pts": []
+  },
+  {
+   "from": "toe: toe",
+   "to": "toe: toe IN",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "toe",
+   "pts": []
+  },
+  {
+   "from": "rc: MN",
+   "to": "rc: RC",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "rc",
+   "pts": []
+  },
+  {
+   "from": "cross: RG-F",
+   "to": "cross: c1",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "cross",
+   "pts": []
+  },
+  {
+   "from": "cross: c1",
+   "to": "cross: contra RG-F",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "cross hops=1",
+   "pts": []
+  },
+  {
+   "from": "ii_exc: II",
+   "to": "ii_inh: II_A1",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "ii_exc_2",
+   "pts": []
+  },
+  {
+   "from": "ib_auto: Ib_A",
+   "to": "ib_auto: Ib_N",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ia_recip: Ia_A",
+   "to": "ia_recip: Ia_N",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ib_auto: Ib_N",
+   "to": "ib_auto: MN antagonist",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ii_inh: ia_to_antagonist",
+   "to": "ii_exc: II",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ib_auto: MN agonist",
+   "to": "ib_auto: ib_to_mn_inh",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ib_auto: ib_to_mn_inh",
+   "to": "ib_auto: Ib",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ib_rev: ib_group_exc",
+   "to": "ib_rev: Ib+",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ib_rev: MN ext (stance)",
+   "to": "ib_rev: ib_group_exc",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "rc: MN own+antag",
+   "to": "MUSCLE_2782",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "rc: MN own+antag",
+   "to": "rc: RC_N",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "rc: RC",
+   "to": "rc: RC_N",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "rc: RC_N",
+   "to": "rc: RC",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "rc: RC_N",
+   "to": "rc: MN own+antag",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "rc: RC",
+   "to": "rc: MN",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "rc: RC",
+   "to": "ia_recip: Ia_N",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "rc: RC_N",
+   "to": "ia_recip: Ia_A",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "rc: MN",
+   "to": "MUSCLE_2795",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "cross: RG-E",
+   "to": "cross: V3",
+   "sign": "exc",
+   "gain": 1,
+   "tag": "cross",
+   "pts": []
+  },
+  {
+   "from": "ib_load: RG-E",
+   "to": "IN-InE_2803",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-F_2809",
+   "to": "IN-InF_2808",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-InE_2803",
+   "to": "HC-RG-F_2809",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-InF_2808",
+   "to": "ib_load: RG-E",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-PF-E_2805",
+   "to": "IN-PF_2807",
+   "sign": "exc",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-PF_2807",
+   "to": "HC-PF-F_2815",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-PF_2817",
+   "to": "HC-PF-E_2805",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-PF-F_2815",
+   "to": "IN-PF_2817",
+   "sign": "exc",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ib_load: RG-E",
+   "to": "HC-PF-E_2805",
+   "sign": "exc",
+   "gain": 0.1,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-F_2809",
+   "to": "HC-PF-F_2815",
+   "sign": "exc",
+   "gain": 0.1,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "cross: V3",
+   "to": "contra IN-InE",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ib_load: RG-E2",
+   "to": "IN-InE_2805",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-F_2811",
+   "to": "IN-InF_2810",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-InE_2805",
+   "to": "HC-RG-F_2811",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-InF_2810",
+   "to": "ib_load: RG-E2",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-PF-E_2807",
+   "to": "IN-PF_2809",
+   "sign": "exc",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-PF_2809",
+   "to": "HC-PF-F_2817",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-PF_2819",
+   "to": "HC-PF-E_2807",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-PF-F_2817",
+   "to": "IN-PF_2819",
+   "sign": "exc",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ib_load: RG-E2",
+   "to": "HC-PF-E_2807",
+   "sign": "exc",
+   "gain": 0.1,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-F_2811",
+   "to": "HC-PF-F_2817",
+   "sign": "exc",
+   "gain": 0.1,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-PF-E_2809",
+   "to": "IN-PF_dorsiflexion_inhibit",
+   "sign": "exc",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-PF_dorsiflexion_inhibit",
+   "to": "HC-PF-Dorsiflexion",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-PF_2821",
+   "to": "HC-PF-E_2809",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-PF-Dorsiflexion",
+   "to": "IN-PF_2821",
+   "sign": "exc",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "toe: toe IN",
+   "to": "IN-PF_dorsiflexion_inhibit",
+   "sign": "exc",
+   "gain": 5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-E-ipsilateral",
+   "to": "IN-InE_2806",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-F_ipsilateral",
+   "to": "IN-InF_2811",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-InE_2806",
+   "to": "HC-RG-F_ipsilateral",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-InF_2811",
+   "to": "HC-RG-E-ipsilateral",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-PF-E_hip",
+   "to": "IN-PF_2810",
+   "sign": "exc",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-PF_2810",
+   "to": "HC-PF-F_hip",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-PF_2820",
+   "to": "HC-PF-E_hip",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-PF-F_hip",
+   "to": "IN-PF_2820",
+   "sign": "exc",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-E-ipsilateral",
+   "to": "HC-PF-E_hip",
+   "sign": "exc",
+   "gain": 0.1,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-F_ipsilateral",
+   "to": "HC-PF-F_hip",
+   "sign": "exc",
+   "gain": 0.1,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-PF-E_Knee",
+   "to": "IN-PF_2812",
+   "sign": "exc",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-PF_2812",
+   "to": "HC-PF-F_Knee",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-PF_2822",
+   "to": "HC-PF-E_Knee",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-PF-F_Knee",
+   "to": "IN-PF_2822",
+   "sign": "exc",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-E-ipsilateral",
+   "to": "HC-PF-E_Knee",
+   "sign": "exc",
+   "gain": 0.1,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-F_ipsilateral",
+   "to": "HC-PF-F_Knee",
+   "sign": "exc",
+   "gain": 0.1,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-PF-E_Ankle",
+   "to": "IN-PF_2814",
+   "sign": "exc",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-PF_2814",
+   "to": "HC-PF-F_Ankle",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-PF_2824",
+   "to": "HC-PF-E_Ankle",
+   "sign": "inh",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-PF-F_Ankle",
+   "to": "IN-PF_2824",
+   "sign": "exc",
+   "gain": 2.749,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-E-ipsilateral",
+   "to": "HC-PF-E_Ankle",
+   "sign": "exc",
+   "gain": 0.1,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-F_ipsilateral",
+   "to": "HC-PF-F_Ankle",
+   "sign": "exc",
+   "gain": 0.1,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-F_Contralateral",
+   "to": "IN-InE_2808",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "HC-RG-E_Contralateral",
+   "to": "IN-InF_2813",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-InF_2813",
+   "to": "HC-RG-F_Contralateral",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "IN-InE_2808",
+   "to": "HC-RG-E_Contralateral",
+   "sign": "inh",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "heel: heel",
+   "to": "IN-InF_2813",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "heel: heel",
+   "to": "IN-InE_2806",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "heel: heel",
+   "to": "IN-PF_2810",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "heel: heel",
+   "to": "IN-PF_2812",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "heel: heel",
+   "to": "IN-PF_2814",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "SN-II_2844",
+   "to": "HC-RG-F_2811",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "SN-II_2844",
+   "to": "IN-InF_2810",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "SN-II_2844",
+   "to": "HC-PF-F_2817",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "SN-Ia_2843",
+   "to": "HC-PF-F_2817",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "SN-Ia_2843",
+   "to": "IN-InF_2810",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "SN-Ia_2843",
+   "to": "HC-RG-F_2811",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ib_load: Ib grp",
+   "to": "ib_load: RG-E",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ib_load: Ib grp",
+   "to": "IN-InE_2803",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  },
+  {
+   "from": "ib_load: Ib grp",
+   "to": "HC-PF-E_2805",
+   "sign": "exc",
+   "gain": 0.5,
+   "tag": "",
+   "pts": []
+  }
+ ]
+}

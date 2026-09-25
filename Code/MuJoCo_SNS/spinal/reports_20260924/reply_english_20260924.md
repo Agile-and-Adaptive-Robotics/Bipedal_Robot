@@ -1,0 +1,200 @@
+# English copy of today's replies (2026-09-24) — safe from any auto-translate
+
+## Reply 3 — the engine A/B (the one you asked to translate)
+
+Same gait tutorial, same controller, both tuned parameter files run on
+both engines — including translated copies of each parameter file into
+the other engine's naming scheme (53 parameters, 1:1 by row):
+
+| par (tuned on) | OpenSim engine | Hyfydy engine |
+|---|---|---|
+| Osim4 par (tuned on OpenSim) | 3.20 m, 9 steps, 0.60 m/s | 1.48 m, 4 steps, fell at 1.23 s |
+| Hfd4 par (tuned on Hyfydy) | 2.40 m, 6 steps, fell at 1.96 s | 4.32 m, 8 steps, 1.09 m/s — survived the full 4 s |
+
+Three takeaways: (1) each controller walks best on the engine it was
+tuned on — parameters do not transfer across engines; (2) the Hyfydy
+native gait was the only one to survive the full window, at a healthy
+1.09 m/s; (3) Hyfydy runs about 77x faster than the OpenSim engine.
+Recorded in reports_20260924/scone_hyfydy_hands_on.md, addendum 2.
+
+## Reply 3b — your rules JSON and the contact rules
+
+I read Circuit_rules_CONNECTOME_md__connectome.json (your block-editor
+export). Your additions: second-order INs (Ib_N, Ia_N, RC_N with RC
+mutual inhibition), two complete per-joint RG+PF micro-layers with
+AnimatLab-lineage gains (lamination 2.749, RG-to-PF 0.1), Ib load
+feedback into InE AND PF-E, and Ia/II afferents through IaIN/IIe onto
+the flexor centers (RG-F, InF, PF-F). All feedback through INs, none
+direct to a half-center — exactly the doctrine from the audit.
+
+Why you couldn't change the contact rules: contact rules exist in three
+layers. (1) The drawing layer — the block editor; fully editable, but
+the runner does not read that JSON. (2) The gain layer — the rules form
+(connectome_editor.html) exports connectome_gains.json, which runner.py
+applies; there you can only change gains and on/off (heel_rge, toe_rge,
+ib_rge, contact_onset). (3) The topology layer — where contact feedback
+ATTACHES (heel -> heel IN -> InE/InF -> RG) is hard-coded in
+build_network.py; no UI can change it. That is the wall you hit.
+
+Fix path: your drawing specifies the new contact topology. On your word
+I will implement it in build_network.py behind default-0 gain keys
+(heel/toe -> PF-E option, Ib -> InE+PF-E), so the topology becomes a
+switchable rule like the gains. Say "build it" and I will.
+
+## Reply 4 — your contact ruling + the block editor v3.1 (same evening)
+
+Your ruling, as I read it out of the updated
+`Neuromechanical_Models\Mujoco_SNS_models\Circuit_rules_CONNECTOME_md__connectome.json`
+(97 nodes / 109 edges, 20:35 export) — correct me if any line is wrong:
+
+- The RG+PF feedback layers are PER PF LAYER, not per joint: one
+  ipsilateral RG pair (HC-RG-E-ipsilateral / HC-RG-F-ipsilateral) drives
+  separate hip, knee, and ankle PF micro-layers (each its own HC-PF-E/F
+  + IN-PF lamination at 2.749, RG drive 0.1) — matching Shinohara.
+- HEEL contact = stance-phase reset of the ipsilateral leg: heel_SN ->
+  heel_IN -> InE + InF (RG lamination, g 0.5) AND -> the hip/knee/ankle
+  PF-layer INs (g 0.5). Nothing contralateral.
+- TOE contact = dorsiflexion inhibition ONLY: toe_SN -> toe_IN ->
+  IN-PF_dorsiflexion_inhibit (g 5) -> inhibits HC-PF-Dorsiflexion. No
+  RG/PF phase effect.
+- Ib load still lands in PF-E (0.5) with the RG-E gate (0.1).
+
+When you say "build it" I will implement exactly this topology in
+build_network.py behind default-0 gain keys (so current tuning stays
+bit-identical until the gains are turned on). One question to settle
+first: does this per-PF-layer drawing REPLACE the earlier per-joint
+layering in that rules JSON, or coexist with it as a second variant?
+
+Block editor v3.1 (your three asks, all browser-verified):
+
+1. Crossing lines now hop in semicircles, circuit-diagram style. The
+   edge created LATER is always the one that hops, so the choice is
+   stable; hops recompute live while you drag nodes. (Bilateral
+   template: 73 of 126 wires carry hops, 228 total.)
+2. Lines are much easier to select: there was actually NO invisible
+   hit layer before — the 2 px visible line was the only target. Each
+   wire now carries a 12 px-wide invisible hit line per segment (pulled
+   in ~7 units from the ends so node rims stay grabbable). Tell me if
+   you want it wider/narrower — it is one constant (HIT_W).
+3. ALT+click a line = bend point at that segment's midpoint; drag the
+   pink handle to reroute the wire; ALT+click any segment again for
+   another bend in THAT segment. Holding ALT cannot machine-gun points
+   — one bend per physical click plus a 250 ms cooldown. Bend points
+   survive undo/redo, tab switches, copy/paste (as `pts`), reload, and
+   JSON export. The synapse panel has a "Remove N bend point(s)"
+   button, and ALT+click on a NODE still arms the two-click synapse
+   (no conflict: nodes vs lines).
+
+Tests: new `_editor_edges_test.js` 17/17 (geometry, hop ownership,
+cooldown, serialize), template suite 4/4, static check clean,
+node --check pass, plus a live-browser pass (hops render, off-center
+clicks select, bend add/drag/undo/reload/straighten all verified).
+Also fixed while re-running them: `_editor_template_test.js` and
+`_editor_static_check.py` still sliced the FIRST <script> block, which
+since this morning's template embedding empties their extraction — they
+now take the last script block (both suites had been silently vacuous).
+
+One process note: your block-editor exports land in
+`Neuromechanical_Models\Mujoco_SNS_models\` (your browser's download
+folder) — that is where I will look first from now on.
+
+## Reply 5 — v3.2 layers tree + the built contact variant (late evening)
+
+RECORD RECONCILIATION (the supervisor BLOCKed the earlier report as
+incomplete, not wrong): after Reply 4 shipped, you asked for — and got —
+a fourth feature set, so the editor is now **v3.2**, frozen as of
+tonight. All of it traces to your messages:
+
+1. LAYERS TREE (your ask: "a tree on the left hand side, with drop
+   down elements"). 13 semantic layers in the walker templates: Drive,
+   and per side Rhythm RG+lamination (6), Pattern formation — 4 cells
+   (4), Motoneurons per muscle (46), Muscles (43), Reflex/phase INs
+   (5), Afferents (11). Templates without explicit layers fall back to
+   type buckets. Click = select, click a row then F2 = hide that layer,
+   F3 = show all hidden (your addition), F4 = back out of a drilled
+   layer (your addition), double-click a row or node = zoom into that
+   layer, double-click empty canvas = zoom out. Hidden state survives
+   reload; the tree lists hidden layers struck-through so you can see
+   what F3 will bring back. Group stamping lives in
+   make_editor_templates.py (stamp_walker_grps) mirrored by
+   stampWalkerGrps() in the HTML; the regen changed ONLY grp/group
+   labels — `_tpl_diff_groups_20260924.py` proves 0 content diffs
+   (edges/notes byte-identical, walkers stamped 233/233).
+   Per-muscle reality you asked about last night: the s3k template
+   HAS 46 MNs + 43 muscles per side (86 muscles total); the tree makes
+   that layer navigable instead of represented.
+2. WIRE HOPS + BEND POINTS (Reply 4's v3.1) unchanged on top.
+3. TEST TABLE (frozen state): `node --check` PASS;
+   `_editor_edges_test.js` 17/17; `_editor_template_test.js` 4/4;
+   `_editor_tree_test.js` 9/9 (stamper rules incl. pruned-MN labels);
+   `_editor_static_check.py` missing/duplicate ids NONE (the
+   "possibly-undefined" list it prints is known method-call regex
+   noise, not missing functions); tpl-diff guard 0 content diffs.
+   Browser sweep (this session, localhost + in-app browser): s3k loads
+   with 13 layers, F2 233->190 nodes exactly, F3 restores, 3 hidden
+   layers survive reload exactly (172 nodes), drill zooms 0.39->2.65x,
+   F4 returns, hops + bend handles render. Final acceptance = your
+   eyeball on the file.
+4. HOUSEKEEPING per the supervisor: one-off scripts deleted
+   (_sup_audit_*, _inspect_ben_rules, _pfvar_toggle, _pfvar_gate3);
+   kept `_tpl_diff_groups_20260924.py` (the regen content guard) and
+   the new standing tests.
+
+THE CONTACT VARIANT IS BUILT ("yes, build it" + coexist, both applied):
+
+- Five new default-0 gain keys in params.py: `heel_pf_layer` (heel IN
+  -> PF_IN_E exc = stance reset AT the PF layer; your g 0.5),
+  `toe_df_inh` (toe IN -> TOEDF IN -> ANK-F inhibition = dorsiflexion
+  inhibition ONLY; your g 5 chain), `heel_in_f_exc` (heel -> InF
+  EXCITATORY — your drawing wires InF excited; the existing full_rules
+  branch wires it inhibitory; both coexist), `ia_pf_f` + `ii_pf_f`
+  (flexor-group IaIN / II-exc-IN -> their own joint's PF-*-F half
+  center; your g 0.5 edges). The per-joint layering is untouched —
+  your two schematics coexist as switchable variants.
+- Honest simplifications, flagged: the runner keeps ONE shared
+  PF_IN_E/F lamination pair per side where your drawing has one IN per
+  micro-layer (widen on your word); ia/ii->PF-F edges run from
+  flexor-group INs to their own joint's F HC (your drawing shows the
+  knee layer; say the word to widen to all groups); heel_pf_layer /
+  toe_df_inh / ia_pf_f / ii_pf_f require joint_pf=1 (the micro-layers
+  only exist there); heel_in_f_exc works in any PF mode.
+- VERIFIED `_pf_layer_variant_test.py` (standing gate): defaults build
+  = (410, 376, 1186) EXACTLY the reference; variant delta on the same
+  base config = +2 neurons (TOEDF r/l), +0 inputs, +52 synapses
+  (= the drawn edge count); ground eval bit-exact at
+  -160.23425729850192.
+- STALE GATE RE-BASELINED: `_fullrules_test.py`'s -148.6878643 no
+  longer reproduces on PRE-VARIANT code either (reverse-patch A/B
+  proven) — the s3 eval moved with the 09-23/24 physics changes, not
+  with this variant. Current baseline recorded above.
+
+SUPERVISOR FLAGS FOR YOU (not this session's, need your one-word
+ruling): ProofFinal chapters 20-methods.tex + 30-results.tex edited
+2:18 PM, 40-discussion.tex 5:37 PM, build 5:52 PM,
+inverted_pendulum_photo.jpg 2:13 PM today — presumably your own
+deadline-week authoring or the other dissertation chat; the supervisor
+asks you to confirm no session edited .tex without per-edit ok.
+
+## Reply 6 — the "Circuit rules" entry now serves YOUR drawing
+
+You were right: the "Circuit rules (CONNECTOME.md)" dropdown entry was
+the auto-generated motif sketches from 09-23 (which even drew the OLD
+heel/toe->RG semantics), not your circuit. Fixed:
+
+- The `rules` library entry is now YOUR export verbatim (97 nodes /
+  109 edges), titled "Circuit rules — Ben (2026-09-24)". Tracked source
+  copy: `spinal\ben_rules_20260924.json` (from your
+  Neuromechanical_Models\Mujoco_SNS_models export). The generated
+  motifs moved to a separate entry, "Rule motifs (auto-generated, old)".
+- One caveat found and handled: your export contains 5 DUPLICATE
+  labels (Ia_A, Ia_N, ia: Ia, ii_exc: II, HC-RG-F_Contralateral appear
+  twice). The editor format keys synapses by label, so the export
+  cannot say which duplicate an edge meant — the later copies are
+  renamed "(2)" and their edges attach to the first copy. If those
+  were meant as separate neurons, relabel them in your drawing and
+  re-export; the entry will pick it up on the next regen.
+- Verified: regen embeds your drawing (rules 97/109, motifs 43/31,
+  all other templates byte-unchanged); all suites re-pass (edges 17/17,
+  templates 4/4, tree 9/9, static check, node --check); browser check
+  loads your drawing with the status line reading "BEN'S drawing...".
+- No supervisor used for this fix, per your message.

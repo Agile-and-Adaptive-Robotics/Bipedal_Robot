@@ -4,7 +4,10 @@ unique. Catches the duplicate-button / missing-palette class of bug."""
 import re
 
 src = open("connectome_block_editor.html", encoding="utf-8").read()
-js = src[src.index("<script>") + 8:src.index("</script>")]
+# NB: the embedded-template <script> (2026-09-24) precedes the main
+# one — slice the LAST script block (index() would grab the embed's
+# closer and hand back an empty js, making every check vacuously pass).
+js = src[src.rindex("<script>") + 8:src.rindex("</script>")]
 ids_in_html = set(re.findall(r'id="([^"]+)"', src))
 get_ids = set(re.findall(r"getElementById\(\"([^\"]+)\"\)", js))
 missing = get_ids - ids_in_html

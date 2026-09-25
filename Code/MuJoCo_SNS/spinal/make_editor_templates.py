@@ -321,6 +321,76 @@ def build_bilateralrg(w2l):
 # ---------------------------------------------------------------- walker v-series
 POOLS = ['hip_ext', 'hip_flex', 'knee_ext', 'knee_flex', 'ankle_pf', 'ankle_df']
 
+# ---- per-muscle template support (2026-09-24, Ben's directive: every one
+# of the 43 muscle-actuators per side gets its own MN in the diagram) ----
+sys.path.insert(0, HERE)
+try:
+    import muscle_map as _mm
+    import params as _params
+    _MUSCLES_BY_GROUP = {}
+    for _m, _grps in _mm._GROUPS_BY_NAME.items():
+        _MUSCLES_BY_GROUP.setdefault(_grps[0], []).append(_m)
+    _PRUNED = {'quad_fem', 'gem', 'peri'}
+    _TRUNK = {'ercspn': 'trunk_ext', 'intobl': 'trunk_flex',
+              'extobl': 'trunk_flex'}
+except Exception as _e:      # pragma: no cover
+    _MUSCLES_BY_GROUP = {}
+    _PRUNED = set()
+    _TRUNK = {}
+    print('WARN: muscle_map/params import failed:', _e)
+
+
+def stamp_walker_grps(spec):
+    """Stamp layer groups onto a walker-style spec (label rules) and
+    attach the pretty-label `groups` dict. MIRROR of stampWalkerGrps()
+    in connectome_block_editor.html — keep the two rulesets identical.
+    Groups give the editor's Layers tree its semantics: one ipsilateral
+    RG pair, a 4-cell PF layer, per-muscle MNs, muscles, afferents and
+    reflex/phase INs per side (Ben: navigate the net layer by layer)."""
+    G = {'drive': 'Drive / posture inputs'}
+    for S in ('R', 'L'):
+        G['rg_' + S] = 'Rhythm RG + lamination (%s)' % S
+        G['pf_' + S] = 'Pattern formation — 4 cells (%s)' % S
+        G['mn_' + S] = 'Motoneurons, per muscle (%s)' % S
+        G['mus_' + S] = 'Muscles (%s)' % S
+        G['aff_' + S] = 'Afferents (%s)' % S
+        G['in_' + S] = 'Reflex / phase INs (%s)' % S
+    for n in spec['nodes']:
+        l = n['label']
+        gid = None
+        if l in ('DRIVE', 'POSTURE') or l.startswith('pf_gain=') or \
+                l.startswith('PM '):
+            gid = 'drive'
+        else:
+            base = n['label']
+            if base.endswith(' (pruned)'):
+                base = base[:-len(' (pruned)')]   # pruned MN labels
+            S = 'R' if base.endswith('_R') else \
+                'L' if base.endswith('_L') else None
+            l = base
+            if S:
+                if l.startswith('RG_') or l in ('InE_' + S, 'InF_' + S) \
+                        or l.startswith('c1_') or l.startswith('V3_') \
+                        or l.startswith('heel_IN_'):
+                    gid = 'rg_' + S
+                elif l.startswith('PF_'):
+                    gid = 'pf_' + S
+                elif l.startswith('MN_') or ' MN_' in l:
+                    gid = 'mn_' + S
+                elif re.match(r'^(KINH_|PRESET_|IaIN_|LBIN_|IBEXC_|RC_'
+                              r'|IIe_|IIi_|IbIN_)', l):
+                    gid = 'in_' + S
+                elif re.match(r'^(Ia_|II_|Ib_|heel_|toe_|ContactFoot_)',
+                              l) or l.endswith('_sig_' + S):
+                    gid = 'aff_' + S
+                else:
+                    gid = 'mus_' + S
+        if gid:
+            n['grp'] = gid
+    spec['groups'] = G
+    return spec
+
+
 def build_walker(name, params, pf_gain=None, note=''):
     p = params
     N, E = [], []
@@ -368,40 +438,61 @@ def build_walker(name, params, pf_gain=None, note=''):
         e(rg_e, pe2, 'exc', g('e2_pf', g('rg_to_pf', 1.0)), 'e2_pf')
         e(rg_f, pf1, 'exc', g('rg_to_pf', 1.0), 'rg_to_pf')
         e(rg_f, pf2, 'exc', g('rg_to_pf', 1.0), 'rg_to_pf')
-        # MN pools + muscles
+        # ---- per-muscle MNs (real topology: W_PF_MN group weights to
+        # EVERY actuator MN; 43 per side + trunk; pruned marked) ----
         mn = {}
-        for j, pool in enumerate(POOLS):
-            mn[pool] = nd('MN', 'MN_' + pool + '_' + S, X + 430, 60 + j * 58)
-            nd('MUSCLE', pool.replace('_', ' ') + '_' + S,
-               X + 600, 60 + j * 58)
-            e(mn[pool], pool.replace('_', ' ') + '_' + S, 'exc', 1.0,
-              'mn_to_muscle')
+        pf_cells = {'E1': pe1, 'E2': pe2, 'F1': pf1, 'F2': pf2}
         pg = pf_gain if pf_gain is not None else 1.0
-        for pool in ('hip_ext', 'knee_ext', 'ankle_pf'):
-            e(pe1, mn[pool], 'exc', pg, 'pf_gain')
-            e(pe2, mn[pool], 'exc', pg, 'pf_gain')
-        for pool in ('hip_flex', 'knee_flex'):
-            e(pf1, mn[pool], 'exc', pg, 'pf_gain')
-            e(pf2, mn[pool], 'exc', pg, 'pf_gain')
-        if g('f1_df') is not None:
-            e(pf1, mn['ankle_df'], 'exc', g('f1_df'), 'f1_df')
-        if g('f1_kf') is not None:
-            e(pf1, mn['knee_flex'], 'exc', g('f1_kf'), 'f1_kf')
-        if g('post_kneext') is not None:
-            e('POSTURE', mn['knee_ext'], 'exc', g('post_kneext'), 'post_kneext')
-        if g('post_hipext') is not None:
-            e('POSTURE', mn['hip_ext'], 'exc', g('post_hipext'), 'post_hipext')
-        # trim knob annotation on ankle PF posture bias
-        if g('ankle_post_walk_trim') is not None:
-            e('POSTURE', mn['ankle_pf'], 'exc', g('ankle_post_walk_trim'),
-              'ankle_post_walk_trim')
-        # KINH swing suppression
+        _row = [0]
+        for grp, members in sorted(_MUSCLES_BY_GROUP.items()):
+            for m in members:
+                pruned = m in _PRUNED
+                _row[0] += 1
+                _y = 40 + _row[0] * 44
+                lbl = m + '_' + S + (' (pruned)' if pruned else '')
+                mn[m] = nd('MN', 'MN_' + lbl, X + 430, _y)
+                if pruned:
+                    continue
+                nd('MUSCLE', m + '_' + S, X + 600, _y)
+                e(mn[m], m + '_' + S, 'exc', 1.0, 'mn_to_muscle')
+                for ph, cell in pf_cells.items():
+                    w = _params.W_PF_MN[ph].get(grp, 0.0)
+                    if not w:
+                        continue
+                    knob = pg
+                    tag = 'W_PF_MN[' + ph + ']'
+                    if ph == 'F1' and grp == 'ankle_df' and \
+                            g('f1_df') is not None:
+                        pass
+                    if ph == 'F1' and grp == 'ankle_df':
+                        knob *= (g('f1_df') or 1.0)
+                    if ph == 'F1' and grp == 'knee_flex':
+                        knob *= (g('f1_kf') or 1.0)
+                    e(cell, mn[m], 'exc', w * knob, tag)
+                pw = _params.W_POSTURE.get(grp, 0.0)
+                if pw:
+                    ov = _params.POSTURE_OVERRIDE.get(m)
+                    if ov is not None:
+                        pw, tag = ov, 'POSTURE_OVERRIDE'
+                    else:
+                        tag = 'W_POSTURE'
+                    if g('ankle_post_walk_trim') is not None and \
+                            grp == 'ankle_pf':
+                        pw *= g('ankle_post_walk_trim')
+                        tag += '*trim'
+                    e('POSTURE', mn[m], 'exc', pw, tag)
+        # KINH swing suppression (per-muscle: knee_ext + ankle_pf groups)
         kinh = nd('IN-KINH', 'KINH_' + S, X + 340, 380)
         e(pf1, kinh, 'exc', 1.0, 'f1_gate')
-        if g('f1_kneext_inh'):
-            e(kinh, mn['knee_ext'], 'inh', g('f1_kneext_inh'), 'f1_kneext_inh')
-        if g('f1_anklepf_inh'):
-            e(kinh, mn['ankle_pf'], 'inh', g('f1_anklepf_inh'), 'f1_anklepf_inh')
+        for grp in ('knee_ext', 'ankle_pf'):
+            kn = (g('f1_kneext_inh') if grp == 'knee_ext'
+                  else g('f1_anklepf_inh'))
+            if kn:
+                for m in _MUSCLES_BY_GROUP.get(grp, []):
+                    if m not in _PRUNED:
+                        e(kinh, mn[m], 'inh', kn,
+                          'f1_' + ('kneext' if grp == 'knee_ext'
+                                   else 'anklepf') + '_inh')
         if g('contra_kinh') is not None:
             e(pf1, 'KINH_' + OS, 'exc', g('contra_kinh'), 'contra_kinh')
         # phase-reset INs (v9/v10 era)
@@ -414,12 +505,19 @@ def build_walker(name, params, pf_gain=None, note=''):
             e(sig_f, prf, 'exc', 1.0, 'hip_flex_sig')
             e(pre, rg_e, 'exc', g('phase_reset_e'), 'phase_reset_e')
             e(prf, rg_f, 'exc', g('phase_reset_f'), 'phase_reset_f')
-        # afferents (per joint, 3 classes); shared IaIN/LBIN created once
+        # afferents (per joint, 3 classes); shared IaIN/LBIN created once.
+        # Group-level afferent edges terminate on the group REPRESENTATIVE
+        # muscle's MN (the real network wires every same-group MN; the
+        # diagram keeps one edge per group for legibility - the W_PF_MN
+        # edges above carry the full per-muscle fan-out).
+        REP = {'hip_ext': 'glut_max1', 'hip_flex': 'psoas',
+               'knee_ext': 'vas_lat', 'knee_flex': 'semimem',
+               'ankle_pf': 'soleus', 'ankle_df': 'tib_ant'}
         iain = None
         if g('ia_in') is not None:
             iain = nd('IN-IaIN', 'IaIN_' + S, X + 200, 470)
-            e(iain, mn['hip_ext'], 'inh', g('ia_in'), 'ia_in')
-            e(iain, mn['hip_flex'], 'inh', g('ia_in'), 'ia_in')
+            e(iain, mn['glut_max1'], 'inh', g('ia_in'), 'ia_in')
+            e(iain, mn['psoas'], 'inh', g('ia_in'), 'ia_in')
         lbin = None
         if g('ib_rge') is not None:
             lbin = nd('IN-LBIN', 'LBIN_' + S, X + 90, 540)
@@ -434,7 +532,7 @@ def build_walker(name, params, pf_gain=None, note=''):
             pref = a.rsplit('_', 2)[0]; joint = a.rsplit('_', 2)[1]
             own = {'hip': ('hip_ext', 'hip_flex'), 'knee': ('knee_ext', 'knee_flex'),
                    'ankle': ('ankle_pf', 'ankle_df')}[joint]
-            ext_mn, flx_mn = mn[own[0]], mn[own[1]]
+            ext_mn, flx_mn = mn[REP[own[0]]], mn[REP[own[1]]]
             if pref == 'Ia':
                 e(a, ext_mn, 'exc', 1.0, 'ia_mono')
                 e(a, flx_mn, 'exc', 1.0, 'ia_mono')
@@ -463,7 +561,7 @@ def build_walker(name, params, pf_gain=None, note=''):
             ibx = nd('IN-Ib+', 'IBEXC_' + S, X + 90, 600)
             e('Ib_ankle_' + S, ibx, 'exc', 1.0, 'ib_to_IBEXC')
             e(rg_e, ibx, 'exc', 1.0, 'stance_gate')
-            e(ibx, mn['ankle_pf'], 'exc', 0.5, 'ib_reversal')
+            e(ibx, mn['soleus'], 'exc', 0.5, 'ib_reversal')
             e(v3, ibx, 'exc', g('v3_to_ibexc'), 'v3_to_ibexc')
         # heel/toe
         if g('heel_rge') is not None:
@@ -472,25 +570,22 @@ def build_walker(name, params, pf_gain=None, note=''):
             e(heel, rg_e, 'exc', g('heel_rge'), 'heel_rge')
             e(toe, rg_e, 'exc', g('toe_rge'), 'toe_rge')
             if g('contact_onset') is not None:
-                e(heel, mn['ankle_pf'], 'exc', g('contact_onset'),
+                e(heel, mn['soleus'], 'exc', g('contact_onset'),
                   'contact_onset')
         # Renshaw
         rc = nd('RC', 'RC_' + S, X + 430, 420)
-        for pool in ('knee_ext', 'hip_ext'):
-            e(mn[pool], rc, 'exc', 1.0, 'mn_to_rc')
-        e(rc, mn['knee_ext'], 'inh', g('renshaw', 0.5), 'renshaw')
-        e(rc, mn['hip_ext'], 'inh', g('renshaw', 0.5), 'renshaw')
-    # shared trunk + phase machine
-    nd('MN', 'MN_trunk', X0, 640)
-    nd('MUSCLE', 'trunk', X0 + 170, 640)
-    e('POSTURE', 'MN_trunk', 'exc', 0.3, 'trunk_IMU_pd')
-    e('MN_trunk', 'trunk', 'exc', 1.0, 'mn_to_muscle')
+        e(mn['vas_lat'], rc, 'exc', 1.0, 'mn_to_rc')
+        e(mn['glut_max1'], rc, 'exc', 1.0, 'mn_to_rc')
+        e(rc, mn['vas_lat'], 'inh', g('renshaw', 0.5), 'renshaw')
+        e(rc, mn['glut_max1'], 'inh', g('renshaw', 0.5), 'renshaw')
+    # trunk is wired per-muscle above (ercspn/intobl/extobl r+l); the
+    # phase-machine annotation node remains shared
     if g('pm_gain') is not None:
         pm = nd('IN-C', 'PM T=%.2f ws=%.2f' % (g('pm_T', 0), g('pm_ws', 0)),
                 X0 + 430, 640)
         e(pm, 'RG_E_R', 'exc', g('pm_gain'), 'pm_gain')
         e(pm, 'RG_E_L', 'exc', g('pm_gain'), 'pm_gain')
-    return {'nodes': N, 'edges': E, '_note': note}
+    return stamp_walker_grps({'nodes': N, 'edges': E, '_note': note})
 
 
 # ---------------------------------------------------------------- synergy6
@@ -685,7 +780,58 @@ def main():
                                 pf_gain=d.get('pf_gain'), note=note)
 
     out['synergy6'] = build_synergy6()
-    out['rules'] = build_rules()
+    # ---- 2026-09-24: the "Circuit rules" entry is BEN'S OWN DRAWING
+    # (his block-editor export; the auto-generated motifs were NOT what
+    # the entry should hold -- Ben: "it pulls up the incorrect one that
+    # you made"). Tracked copy = ben_rules_20260924.json (from
+    # Neuromechanical_Models\Mujoco_SNS_models\
+    # Circuit_rules_CONNECTOME_md__connectome.json, 2026-09-24 20:35,
+    # 97 nodes / 109 edges: per-PF-layer contact variant + heel = stance
+    # reset + toe = dorsiflexion inhibition). The generated motifs stay
+    # available as a separate entry.
+    ben_rules = os.path.join(HERE, 'ben_rules_20260924.json')
+    if os.path.exists(ben_rules):
+        out['rules'] = json.load(open(ben_rules, encoding='utf-8'))
+        # Ben 2026-09-24: duplicate labels in his drawing are
+        # INTENTIONAL -- the nodes are the same neuron. The editor
+        # export keys synapses by label, so merge later copies away
+        # (edges already attach to the first copy by label).
+        seen = {}
+        keep = []
+        merged = []
+        for n in out['rules']['nodes']:
+            l = n['label']
+            if l in seen:
+                merged.append(l)
+            else:
+                seen[l] = n
+                keep.append(n)
+        out['rules']['nodes'] = keep
+        out['rules']['_note'] = (
+            "BEN'S drawing (2026-09-24 20:35 export): per-PF-layer "
+            "contact variant -- one ipsilateral RG pair driving "
+            "hip/knee/ankle PF micro-layers (2.749 lamination, 0.1 RG "
+            "drive); heel = stance-phase reset of the ipsilateral leg "
+            "(heel IN -> InE/InF + PF-layer INs, 0.5); toe = "
+            "dorsiflexion inhibition ONLY (toe 5 -> "
+            "IN-PF_dorsiflexion_inhibit -> HC-PF-Dorsiflexion); Ib load "
+            "-> PF-E 0.5 (RG-E gate 0.1). Implemented in build_network.py "
+            "behind default-0 keys heel_pf_layer/toe_df_inh/"
+            "heel_in_f_exc/ia_pf_f/ii_pf_f (joint_pf required for the "
+            "PF-layer keys).")
+        if merged:
+            out['rules']['_note'] += (
+                ' NOTE: duplicate labels merged as same-neuron (Ben, '
+                '2026-09-24): ' + ', '.join(sorted(set(merged))) + '.')
+    else:
+        print('WARN: ben_rules_20260924.json missing -> rules falls '
+              'back to generated motifs')
+        out['rules'] = build_rules()
+    out['rules_motifs'] = build_rules()
+    out['rules_motifs']['_note'] = (
+        'AUTO-GENERATED rule motifs from CONNECTOME.md (2026-09-23) — '
+        'reference sketches, NOT Ben\u2019s drawing; see the "Circuit '
+        'rules — Ben" entry for the real one.')
     for nm in ('shevtsova', 'shinohara', 'rybak'):
         p = os.path.join(HERE, 'replication', nm + '_rules.json')
         out[nm] = convert_replication(p)

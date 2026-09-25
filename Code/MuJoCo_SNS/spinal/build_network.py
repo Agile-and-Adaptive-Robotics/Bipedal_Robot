@@ -257,10 +257,15 @@ class SpinalNetwork:
         # v11 mechanosensory stance feedback (heel/toe contact + stance-Ib
         # prolonger, audit P1a) and IaIN population (audit P1b);
         # ib_e_central also builds the mechanosensor neurons (they ride
-        # the same extensor central pathway, Ben 2026-09-16)
+        # the same extensor central pathway, Ben 2026-09-16). The
+        # 2026-09-24 per-PF-layer contact variant keys also build the
+        # HEEL/TOE INs (heel_pf_layer / toe_df_inh / heel_in_f_exc).
         self.stance_fb = bool(G["heel_rge"] > 0.0 or G["toe_rge"] > 0.0
                               or G["ib_rge"] > 0.0
-                              or G["ib_e_central"] > 0.0)
+                              or G["ib_e_central"] > 0.0
+                              or G["heel_pf_layer"] > 0.0
+                              or G["toe_df_inh"] > 0.0
+                              or G["heel_in_f_exc"] > 0.0)
         self.ia_in = bool(G["ia_in"] > 0.0)
         self.aff_loops = bool(G["aff_e_rg"] > 0.0 or G["aff_f_rg"] > 0.0
                               or G["aff_e_pf"] > 0.0 or G["aff_f_pf"] > 0.0)
@@ -464,6 +469,14 @@ class SpinalNetwork:
                 n.add_connection(_syn(G["toe_rge"], exc=True),
                                  toe_in, rg_e)
             n.add_connection(_syn(G["ib_rge"], exc=True), lbin, rg_e)
+            # 2026-09-24 per-PF-layer contact variant (Ben's drawing,
+            # heel_in_f_exc): heel IN -> InF EXCITATORY. The full_rules
+            # branch above wires heel -> InF INHIBITORY; Ben's updated
+            # drawing shows both InE and InF excited (g 0.5) - this
+            # gain-gated edge adds the excitatory variant, coexisting.
+            if G["heel_in_f_exc"] > 0.0:
+                n.add_connection(_syn(G["heel_in_f_exc"], exc=True),
+                                 heel_in, inf)
             # NOTE: the heel/toe -> PF_E/InE central-pathway extensions
             # are wired in _build_pf (the PF cells are created there,
             # AFTER this function runs - wiring them here was the
@@ -595,6 +608,33 @@ class SpinalNetwork:
                 else:
                     n.add_connection(_syn(G["aff_f_pf"], exc=True),
                                      aff_f, f"PF_{hc}_{side}")
+        # ---- 2026-09-24 evening PER-PF-LAYER CONTACT VARIANT (Ben:
+        # "build it", coexists with the per-joint layering; source = his
+        # block-editor drawing, 97n/109e). Heel = stance-phase reset of
+        # the IPSILATERAL leg applied AT the PF layer; toe = dorsiflexion
+        # inhibition ONLY. Defaults 0 = edges/neuron absent (bit-identical;
+        # the TOEDF neuron is built ONLY when toe_df_inh > 0 - the v5
+        # lesson: zero-g synapses alone change BLAS summation order).
+        # heel IN -> PF_IN_E exc (drawing: g 0.5 into each micro-layer's
+        # E-lamination IN; the runner keeps ONE shared PF_IN_E per side -
+        # documented lumping, widen to per-joint INs if Ben wants).
+        if self.stance_fb and G["heel_pf_layer"] > 0.0 and \
+                f"HEEL_{side}" in self.idx:
+            n.add_connection(_syn(G["heel_pf_layer"], exc=True),
+                             f"HEEL_{side}", pf_in_e)
+        # toe IN -> TOEDF IN -> ANK-F inhibition (drawing: toe g 5 ->
+        # IN-PF_dorsiflexion_inhibit -> inhib HC-PF-Dorsiflexion; the
+        # runner's dorsiflexor HC is PF_ANK-F). Both path legs scale
+        # with the single toe_df_inh knob.
+        if self.stance_fb and G["toe_df_inh"] > 0.0 and \
+                f"TOE_{side}" in self.idx:
+            toedf = f"TOEDF_{side}"
+            if toedf not in self.idx:
+                self._add(toedf, TAU["preset"], n)
+            n.add_connection(_syn(G["toe_df_inh"], exc=True),
+                             f"TOE_{side}", toedf)
+            n.add_connection(_syn(G["toe_df_inh"], exc=False),
+                             toedf, f"PF_ANK-F_{side}")
 
     def _add_muscle_neurons(self, n: Network, act: str, mi: MuscleInfo):
         mn, ia, ii, ib = (f"MN_{act}", f"Ia_{act}", f"II_{act}", f"Ib_{act}")
@@ -806,6 +846,23 @@ class SpinalNetwork:
                         n.add_connection(
                             _syn(G["ia_to_antagonist"], exc=False),
                             f"IIIN_{act}", f"MN_{act2}")
+
+        # 2026-09-24 per-PF-layer flexion-afferent variant (Ben's
+        # drawing: IN-IaIN -> HC-PF-F g 0.5 and IN-IIe -> HC-PF-F
+        # g 0.5): FLEXOR-group afferent INs reinforce their OWN joint's
+        # F half-center (flexion afference supports the flexion layer).
+        # Requires joint_pf (the target HC exists only there) plus the
+        # IN population that each gain rides on; default 0 = absent.
+        if self.joint_pf and mi.groups[0] in ("hip_flex", "knee_flex",
+                                              "ankle_df"):
+            f_hc = (f"PF_{JPF_GROUP2HC[mi.groups[0]][0]}_{mi.side}")
+            if G["ia_pf_f"] > 0.0 and self.ia_in \
+                    and f"IaIN_{act}" in self.idx:
+                n.add_connection(_syn(G["ia_pf_f"], exc=True),
+                                 f"IaIN_{act}", f_hc)
+            if G["ii_pf_f"] > 0.0 and fr and f"IIX_{act}" in self.idx:
+                n.add_connection(_syn(G["ii_pf_f"], exc=True),
+                                 f"IIX_{act}", f_hc)
 
         # ---- stance load sharing (extensor groups only) ----
         if mi.groups[0] in EXTENSOR_STANCE_GROUPS:

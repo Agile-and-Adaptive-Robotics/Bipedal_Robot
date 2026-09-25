@@ -636,6 +636,46 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     is now CONCRETE + licensed to 2026-10-24. Addendum in
     reports_20260924\scone_hyfydy_hands_on.md; logs
     scone_logs\{gait,balance}_hfd.log.**
+    **2026-09-24 DAY — DENG WALKER ARCHAEOLOGY + PER-MUSCLE TEMPLATES
+    (Ben's bb192d48 tip):** original Deng walker mined read-only from
+    `AddingStepSensor_CoMorrow_stw` @ bb192d48 ("Added two models" =
+    Biped_2xCPG_wSubs.aproj + K_A with RG; parent 407fa01 "Connected
+    RG, PF, and Sensorimotor Layers") via GitHub Desktop git
+    (`C:\Users\Ben Bolen\AppData\Local\GitHubDesktop\app-3.6.5\
+    resources\app\git\cmd\git.exe` — WORKS for show/ls-tree; no branch
+    switch); extracted to %TEMP%\deng_orig\ (aproj + links CSV +
+    summary). **ANSWER to Ben's HC-vs-IN question (audit doc:
+    reports_20260924\deng_feedback_wiring_audit.md): in the ORIGINAL
+    W2L, ZERO afferents reach RG or PF half-centers — RG HCs take only
+    weak mutual EXC (0.1) + laminated IN drive (2.749); PF HCs take RG
+    drive (0.1) + PF-IN inhibition; ALL feedback lands at Ia relay INs
+    (PF→relay EXC 0.5 phase gating, RE→relay INH = recurrent
+    disinhibition) and MNs (Ia reciprocal INH g=2, Ib autogenic
+    EXCITATORY 0.59-1.0). Current-stack deviation: ii/ia_f_central
+    knobs connect DIRECTLY to RG HCs.** Editor templates REDRAWN
+    per-muscle (Ben: "every of the 43 muscle-actuators needs a MN" —
+    the old 6-pool MN drawing was a template simplification, NOT the
+    real net which has 92 per-actuator MNs via W_PF_MN): walker_v9/
+    v10/s1/s2/s3/s3k now 222-233 nodes / 382-420 edges, real
+    W_PF_MN/W_POSTURE/POSTURE_OVERRIDE weights per muscle, pruned
+    quad_fem/gem/peri marked, group afferents shown on representative
+    muscles; generator imports muscle_map+params (embedded blob now
+    388 KB). PF critique fact-check: joint-layer antagonistic PF HCs
+    (HIP-E/F, KNEE-E/F, ANK-E/F) EXIST behind G["joint_pf"] (default 0;
+    s3k runs the 4 phase-cell PF + PF_IN_E/F).
+    **2026-09-24 PM — SAME-CONTROLLER ENGINE A/B (Ben's yes):** the
+    H0918 gait tutorial's two tuned pars (Osim4/Hfd4) use DIFFERENT
+    parameter-name schemes but map 1:1 by order (53 rows, 0 suffix
+    mismatches); translated copies evaluated 2×2
+    (%TEMP%\scone_ab\Tutorials3 scratch, `init_file`+`use_init_file`,
+    max_duration=4): home-engine always wins — Osim4par→OpenSim 3.198 m
+    / 9 steps / 0.60 m/s; Hfd4par→Hyfydy 4.317 m / 8 steps / 1.09 m/s
+    (only cell surviving the full window); cross cells fall early
+    (1.23/1.96 s). Engines NOT interchangeably tuned (m2012fast vs
+    Thelen muscle, contact, integrator). Hyfydy ~95× RT vs OpenSim
+    ~1.2×. Addendum 2 in reports_20260924\scone_hyfydy_hands_on.md;
+    logs scone_logs\AB1..AB4. NOTE: sconecmd needs the FULL scenario
+    path (relative open fails outside its launcher dir).**
     **2026-09-23 EVENING — CONNECTOME BLOCK EDITOR v3.0 (Ben-requested;
     supervisor SHIP):** `connectome_block_editor.html` v2.2 → v3.0:
     (a) TEMPLATE LIBRARY — 15 sidecar templates in
@@ -679,6 +719,91 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     `reports_20260923\vision_review_browser_deng_20260923.md` (5 wiring
     flags for Ben: direct HC↔HC EXC edges, IbIN sign asymmetry, crossed
     Renshaw, label typos, no afferent→RG).
+    **2026-09-24 EVENING — EDITOR v3.1 (Ben's three asks; browser-verified,
+    reply in reports_20260924\reply_english_20260924.md Reply 4):**
+    (1) crossing lines hop in semicircles (circuit-diagram style; the
+    LATER-created edge always hops — stable across renders, recomputed
+    live in redrawEdges via computeHops with AABB culling; HOP_R=7);
+    (2) edge selection = new invisible 12 px hit line per segment
+    (HIT_W; there was NO invisible hit layer before — the 2 px visible
+    line was the only target; HIT_INSET=7 keeps node rims grabbable);
+    (3) ALT+click a LINE = bend point at that segment's midpoint, drag
+    the pink handle to reroute, ALT+click any segment again = another
+    bend in that segment; held ALT can't machine-gun points (one per
+    physical click + 250 ms cooldown, lastBendAt starts at -1e9 so the
+    first click after load is never eaten). Bends serialize as edge
+    `pts` (undo/tabs/copy-paste/reload/JSON export all keep them);
+    panel has "Remove N bend point(s)". ALT+click on a NODE still arms
+    the two-click synapse (no conflict). Edges now render as one
+    `<path>` (pointer-events none) + hit `<line>`s; deleteSel calls
+    redrawEdges so hops recompute. Tests: `_editor_edges_test.js`
+    17/17; ALSO FIXED pre-existing: `_editor_template_test.js` +
+    `_editor_static_check.py` still sliced the FIRST <script> — since
+    the 09-24 template embed that empties the extraction (suites had
+    been silently vacuous); they take the LAST script block now.
+    **Ben's contact ruling (same evening, his updated rules JSON at
+    `Neuromechanical_Models\Mujoco_SNS_models\Circuit_rules_CONNECTOME_md__connectome.json`
+    — his exports ALWAYS land there, browser download dir = look there
+    FIRST): RG+PF feedback is PER PF LAYER not per joint (one
+    ipsilateral RG pair drives separate hip/knee/ankle PF micro-layers,
+    Shinohara-style); HEEL = stance-phase reset of the ipsilateral leg
+    (heel_IN → InE/InF + the three PF-layer INs, g 0.5); TOE =
+    dorsiflexion inhibition ONLY (toe_IN → IN-PF_dorsiflexion_inhibit
+    g 5 → HC-PF-Dorsiflexion); Ib load unchanged (PF-E 0.5, RG-E gate
+    0.1). build_network.py implementation offered behind default-0 gain
+    keys — see the late-evening v3.2 block below for the completed
+    build.
+    **2026-09-24 LATE EVENING — EDITOR v3.2 + CONTACT VARIANT BUILT
+    (Ben's asks; supervisor gate run twice, second BLOCK reconciled in
+    reports_20260924\reply_english_20260924.md Reply 5):**
+    (1) EDITOR v3.2 FROZEN: LAYERS tree column (13 semantic layers in
+    walker templates via stamp_walker_grps in make_editor_templates.py,
+    mirrored by stampWalkerGrps() in the HTML; non-walker templates
+    fall back to type buckets), click row = select, double-click
+    row/node = zoom into that layer, F2 = hide selected layer,
+    F3 = show all hidden, F4 = back out (F3/F4 are Ben's bindings),
+    double-click empty canvas = zoom out; hidden persists in
+    data.hidden; node grp carried through loadSpec/addNode/copy/paste
+    (addNode takes a grp arg — attaching grp AFTER addNode is a bug:
+    renderNode runs inside addNode). Walker templates regenerated with
+    groups ONLY (`_tpl_diff_groups_20260924.py` guard: 0 content diffs,
+    edges/notes byte-identical, walkers stamped 233/233). Tests: edges
+    17/17, templates 4/4, tree 9/9 (_editor_tree_test.js), static
+    check, node --check; browser sweep verified F2 233→190 nodes,
+    3-layer reload persistence (172), drill zoom 0.39→2.65x.
+    (2) PER-PF-LAYER CONTACT VARIANT BUILT (Ben: "yes, build it";
+    per-joint layering COEXISTS): params.py five default-0 keys —
+    heel_pf_layer (heel IN → PF_IN_E exc = stance reset AT the PF
+    layer), toe_df_inh (toe IN → TOEDF IN → ANK-F inh = dorsiflexion
+    inhibition ONLY), heel_in_f_exc (heel → InF EXCITATORY variant;
+    coexists with the full_rules INH branch), ia_pf_f / ii_pf_f
+    (flexor-group IaIN/IIX → same-joint PF-*-F). heel_pf_layer /
+    toe_df_inh / ia_pf_f / ii_pf_f require joint_pf=1; TOEDF built only
+    when toe_df_inh>0. Standing gate `_pf_layer_variant_test.py`:
+    defaults = (410, 376, 1186) EXACT; variant delta = +2 neurons
+    (TOEDF r/l), 0 inputs, +52 synapses; ground eval bit-exact at
+    -160.23425729850192. **STALE GATE: the _fullrules_test.py
+    -148.6878643 reference no longer reproduces on PRE-VARIANT code
+    either (reverse-patch A/B proven) — the s3 eval moved with the
+    09-23/24 physics changes; current baseline = -160.23425729850192.**
+    Ben's exports ALWAYS land in
+    `Neuromechanical_Models\Mujoco_SNS_models\` (browser download dir —
+    look there first). One-off scripts deleted per supervisor
+    (_sup_audit_*, _inspect_ben_rules, _pfvar_*); kept
+    `_tpl_diff_groups_20260924.py` (regen guard) + the standing tests.
+    **2026-09-24 NIGHT — "CIRCUIT RULES" ENTRY = BEN'S DRAWING (Ben:
+    the dropdown "pulls up the incorrect one that you made"):** the
+    `rules` library entry now loads his export verbatim via a tracked
+    copy `spinal\ben_rules_20260924.json` (97n/109e, retitled
+    "Circuit rules — Ben (2026-09-24)"); the generated motifs moved to
+    `rules_motifs` ("Rule motifs (auto-generated, old)"); TPL_JSON_
+    NAMES/GROUP updated in the HTML. EXPORT CAVEAT: the editor format
+    keys synapses by label, and his drawing has 5 duplicate labels
+    (Ia_A, Ia_N, ia: Ia, ii_exc: II, HC-RG-F_Contralateral) — the
+    generator renames later copies "(n)" and edges attach to the first;
+    Ben should relabel + re-export to disambiguate. No supervisor on
+    this fix (Ben: "Can you not finish your work without the supervisor
+    now?" — yes; spawn only when he asks).
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the

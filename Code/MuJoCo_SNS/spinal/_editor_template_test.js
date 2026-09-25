@@ -5,8 +5,11 @@
 // sign,gain,tag}].
 const fs = require("fs");
 const src = fs.readFileSync("connectome_block_editor.html", "utf8");
-const js = src.slice(src.indexOf("<script>") + 8,
-                     src.indexOf("</script>"));
+// NB: since 2026-09-24 the file carries an EMBEDDED template <script>
+// before the main one — slice the LAST script block, not the first
+// closer (indexOf("</script>") lands inside the embed and empties js).
+const js = src.slice(src.lastIndexOf("<script>") + 8,
+                     src.lastIndexOf("</script>"));
 
 // pull out only the template-builder region (from "function litSide"
 // to the tplSel listener; excludes the w2lfile XHR template)
@@ -23,6 +26,16 @@ const TYPES = {};
 TYPES_NAMES.forEach(t => TYPES[t] = {shape:"circle", color:"#000",
                                      w:2, grp:"X"});
 
+// (v3.0 template-library IIFEs now ride along inside the region; give
+// them just enough browser to no-op gracefully under node. MUST be
+// defined before eval — the IIFEs execute during it.)
+global.window = global.window || {};
+global.status = global.status || (() => {});
+global.document = global.document ||
+  { getElementById: () => null };
+global.XMLHttpRequest = global.XMLHttpRequest || function () {
+  this.open = () => {}; this.send = () => { this.status = 404; };
+};
 eval(region);
 
 const results = { deng: buildDengPair(), lit: litSide("R"),

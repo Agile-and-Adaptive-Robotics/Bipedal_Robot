@@ -251,3 +251,24 @@ tendon muscle), `contact_force_hunt_crossley_sb` (exact HC contact),
 - plus HFD model format. The post-deadline engine port option from
 goal3_mujoco_fidelity.md 3.2 is now CONCRETE and licensed until
 2026-10-24. Logs: scone_logs/{gait_hfd,balance_hfd}.log + .sto results.
+
+
+## ADDENDUM 2 (2026-09-24 afternoon): SAME-CONTROLLER A/B (Ben: yes to 4)
+
+Both engines share one controller (H0918RS2v3) and one model (H0918v3 in
+two formats). The two tuned .par files use DIFFERENT parameter-name
+schemes (OpenSim path names vs HFD short names) but map 1:1 by order
+(53 rows, 0 suffix mismatches) - translated copies written and evaluated
+all four cells (sandbox %TEMP%/scone_ab/Tutorials3, max_duration=4):
+
+| par (tuned on) | OpenSim engine | Hyfydy engine |
+|---|---|---|
+| Osim4 par | 3.198 m, 9 steps, 0.60 m/s, 3.23 s | 1.476 m, 4 steps, fell 1.23 s |
+| Hfd4 par | 2.401 m, 6 steps, fell 1.96 s | 4.317 m, 8 steps, 1.09 m/s, FULL 4 s |
+
+Reading: each controller walks best on its home engine (diagonal);
+Hyfydy-native is the only cell that survives the full window and at
+healthy gait speed (1.09 m/s). Cross-tuned controllers degrade on the
+foreign engine - the engines are NOT interchangeably tuned (muscle
+model m2012fast vs Thelen, contact, integrator). Throughput: Hyfydy
+~95x real-time vs OpenSim ~1.2x. Logs: scone_logs/AB1..AB4*.log/.sto.

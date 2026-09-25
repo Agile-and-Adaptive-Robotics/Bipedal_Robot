@@ -236,6 +236,35 @@ G = dict(
     # 1 = layer HCs built. Fitted held-out centered VAF 0.747/0.713 vs
     # 0.934/0.925 unconstrained 6-synergy (T1 > merged-layer variants).
     joint_pf=0.0,
+    # ---- 2026-09-24 evening PER-PF-LAYER CONTACT VARIANT (Ben: "build
+    # it", coexists with the per-joint layering; source = his block-editor
+    # drawing Neuromechanical_Models\Mujoco_SNS_models\
+    # Circuit_rules_CONNECTOME_md__connectome.json, 97n/109e). Semantic
+    # ruling: heel contact = stance-phase reset of the IPSILATERAL leg,
+    # applied AT THE PF LAYER (not only the RG); toe contact ONLY
+    # inhibits dorsiflexion; flexion afferent INs reinforce their own
+    # joint's F half-center. Requires joint_pf > 0 (the micro-layers
+    # these edges target exist only in that build) EXCEPT
+    # heel_in_f_exc, which needs only the RG lamination. ALL DEFAULTS 0
+    # = edges/neurons absent = bit-identical build (410/376/1186).
+    heel_pf_layer=0.0,       # heel IN -> PF_IN_E exc (PF-layer reset;
+                             # Ben's drawing g 0.5 to each micro-layer's
+                             # E-lamination IN — ours is the one shared
+                             # PF_IN_E per side, a documented lumping)
+    toe_df_inh=0.0,          # toe IN -> TOEDF IN exc -> ANK-F inh
+                             # (dorsiflexion inhibition ONLY; drawing:
+                             # toe 5 -> IN-PF_dorsiflexion_inhibit ->
+                             # inhib HC-PF-Dorsiflexion)
+    heel_in_f_exc=0.0,       # heel IN -> InF EXCITATORY (drawing g 0.5;
+                             # the full_rules branch has heel -> InF INH
+                             # — the two coexist, this one adds the exc
+                             # variant Ben drew)
+    ia_pf_f=0.0,             # flexor-group IaIN -> same-joint PF-*-F exc
+                             # (drawing: IN-IaIN -> HC-PF-F g 0.5;
+                             # requires ia_in > 0 + joint_pf)
+    ii_pf_f=0.0,             # flexor-group II exc IN (IIX) -> same-joint
+                             # PF-*-F exc (drawing: IN-IIe -> HC-PF-F
+                             # g 0.5; requires full_rules + joint_pf)
     # per-muscle afferent -> central feedback (Deng 2022 / Shinohara 2025
     # wiring): extensor muscles' Ib afferents project EXCITATORY to the
     # ipsilateral E-centers (PF_E1/E2, RG_E, InE) - force feedback

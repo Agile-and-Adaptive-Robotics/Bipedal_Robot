@@ -1,0 +1,45 @@
+15:31:02 SCONE version 2.4.4.3333
+15:31:02 Successfully initialized OpenSim-3.3-2021-01-28
+15:31:02 Successfully initialized OpenSim-4.4
+15:31:02 Successfully initialized Hyfydy-1.12.6.1412
+15:31:02 Successfully initialized Hyfydy-1.12.6.1412-DBL
+15:31:02 Evaluating C:\Users\BENBOL~1\AppData\Local\Temp\scone_ab\Tutorials3\AB4-osim-Hfd4valuesTranslated.scone
+15:31:02 Moved pelvis_ty to 0.907268; force=745.361; goal=730.903
+15:31:02 Created model H0918v3; dofs=9 muscles=18 mass=74.5314
+15:31:02 Ignored parameter /jointset/ground_pelvis/pelvis_tilt/value.offset
+15:31:02 Ignored parameter /jointset/hip_r/hip_flexion_r/value.offset
+15:31:02 Ignored parameter /jointset/knee_r/knee_angle_r/value.offset
+15:31:02 Ignored parameter /jointset/ankle_r/ankle_angle_r/value.offset
+15:31:02 Ignored parameter /jointset/hip_l/hip_flexion_l/value.offset
+15:31:02 Ignored parameter /jointset/knee_l/knee_angle_l/value.offset
+15:31:02 Ignored parameter /jointset/ankle_l/ankle_angle_l/value.offset
+15:31:02 Imported 46 of 53, skipped 7 parameters from C:\Users\BENBOL~1\AppData\Local\Temp\scone_ab\Tutorials3/init/AB_hfd4values_as_osim.par
+15:31:02 pooled_evaluator started threads: 12
+15:31:02 Moved pelvis_ty to 0.907268; force=745.361; goal=730.903
+15:31:02 Created model H0918v3; dofs=9 muscles=18 mass=74.5314
+15:31:03 Terminating simulation at 1.960
+15:31:03 0.500: step=0 vel=1.018 (0.509/0.500) penalty=0.000 norm_vel=1.000 
+15:31:03 0.685: step=1 vel=1.287 (0.238/0.185) penalty=0.000 norm_vel=1.000 
+15:31:03 0.985: step=2 vel=1.016 (0.305/0.300) penalty=0.000 norm_vel=1.000 *
+15:31:03 1.430: step=3 vel=1.226 (0.545/0.445) penalty=0.000 norm_vel=1.000 *
+15:31:03 1.775: step=4 vel=0.844 (0.291/0.345) penalty=-0.156 norm_vel=0.844 *
+15:31:03 1.960: step=5 vel=0.642 (0.119/0.185) penalty=-0.358 norm_vel=0.642 *
+15:31:03 Results written to D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\reports_20260924\scone_logs\AB4_osim_hfd4translated.sto*
+15:31:03 result                    = 66.9751
+15:31:03   Gait                    = 65.1632 <- 100 * (0.651632 > 0.05)
+15:31:03     step_velocity         = 0.380134
+15:31:03     step_count            = 6
+15:31:03   Effort                  = 0.674103 <- 0.1 * 6.74103
+15:31:03     effort                = 1206.24
+15:31:03     distance              = 2.40086
+15:31:03   MuscleActivation        = 0.596706 <- 2000 * 0.000298353
+15:31:03     effort                = 0.96097
+15:31:03     distance              = 2.40086
+15:31:03   DofLimits               = 0.12651
+15:31:03     ankle_angle_l         = 0 <- 0.1 * 0
+15:31:03     ankle_angle_r         = 0 <- 0.1 * 0
+15:31:03     knee_angle_l          = 0.0578223 <- 0.02 * (2.89111 > 1)
+15:31:03     knee_angle_r          = 0.0686875 <- 0.02 * (3.43438 > 1)
+15:31:03   GRF                     = 0.414603 <- 10 * 0.0414603
+15:31:03 simulation time           = 1.96
+15:31:03 performance (x real-time) = 1.14902
