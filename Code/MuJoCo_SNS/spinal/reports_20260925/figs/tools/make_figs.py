@@ -108,8 +108,8 @@ def fig_overlay(variant):
         cc = C_SIM_R if side == "r" else C_SIM_L
         for row, j in enumerate(("hip", "knee", "ankle")):
             ax = axes[row, col]
-            if cycles:
-                arr = np.vstack([c[j] for c in cycles])
+            if cycles and len(cycles[j]):
+                arr = np.vstack(cycles[j])
                 ax.fill_between(kine_ref.GRID, arr.mean(0) - arr.std(0),
                                 arr.mean(0) + arr.std(0),
                                 color=cc, alpha=0.18, lw=0)
