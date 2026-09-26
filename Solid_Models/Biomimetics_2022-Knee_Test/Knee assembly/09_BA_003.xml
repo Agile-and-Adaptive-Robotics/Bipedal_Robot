@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <SimscapeMultibodyImportXML version="2.0" xmlns="urn:mathworks:SimscapeMultibody:import" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-<Created by="" on="09/16/26||17:59:36" using="Simscape Multibody Link Version 7.4" from="SolidWorks 33.4.1"/>
+<Created by="" on="09/26/26||03:02:48" using="Simscape Multibody Link Version 7.4" from="SolidWorks 33.4.1"/>
 <ModelUnits mass="kilogram" length="millimeter"/>
 <DataUnits mass="kilogram" length="meter"/>
-<RootAssembly name="09_BA_003" uid="09_BA_003" version="3408">
+<RootAssembly name="09_BA_003" uid="09_BA_003" version="3874">
 <AssemblyFile name="09_BA_003.SLDASM" type="SolidWorks Assembly"/>
 <InstanceTree>
-<Instance name="Patella_v5-1" visible="false" uid="Patella_v5-1" entityUid="Patella_v5*:*Default">
+<Instance name="04_01_KT_R_003-1" uid="04_01_KT_R_003-1" entityUid="04_01_KT_R_003*:*Default">
 <Transform>
-<Rotation>0 -8.8262730457699945e-15 1.0000000000000002 0 1.0000000000000002 8.8262730457699945e-15 -1 0 0</Rotation>
-<Translation>0.013290119829295339 -0.47963419018945408 0.028227889152153914</Translation>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-0.035709880170709682 -0.5014017319474291 0.028327889152154714</Translation>
 </Transform>
 </Instance>
-<Instance name="BPA2-2" uid="BPA2-2" entityUid="BPA2*:*Default">
+<Instance name="05_01_TI_R_006-1" uid="05_01_TI_R_006-1" entityUid="05_01_TI_R_006*:*Default">
 <Transform>
-<Rotation>0.10400504982923542 -0.99457676908824799 0 -0.99457676908824821 -0.10400504982923539 0 0 0 -1</Rotation>
-<Translation>-0.0138778658292868 0.053906778951247569 0.053251269431561811</Translation>
-</Transform>
-</Instance>
-<Instance name="04_05_BL_001-1" uid="04_05_BL_001-1" entityUid="04_05_BL_001*:*Default">
-<Transform>
-<Rotation>0.73156362520785811 -0.68177317509032032 -1.0719717796078381e-15 0.68177317509032032 0.73156362520785811 -1.5201145247751647e-15 1.820588867267307e-15 3.8121888868518311e-16 0.99999999999999978</Rotation>
-<Translation>-0.043090179909944695 -0.51796817991516519 0.028227889152153872</Translation>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-0.044733250344097919 -0.55277192788290153 0.028253056975207108</Translation>
 </Transform>
 <VisualProperties>
-<Ambient r="1" g="0.6705882352941176" b="0.50588235294117645" a="0.25"/>
-<Diffuse r="1" g="0.6705882352941176" b="0.50588235294117645" a="0.25"/>
-<Specular r="0.5" g="0.3352941176470588" b="0.25294117647058822" a="0.25"/>
-<Emissive r="0" g="0" b="0" a="0.25"/>
+<Ambient r="1" g="1" b="0.50196078431372548" a="1"/>
+<Diffuse r="1" g="1" b="0.50196078431372548" a="1"/>
+<Specular r="0.5" g="0.5" b="0.25098039215686274" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
 <Shininess>0.40000000596046448</Shininess>
 </VisualProperties>
 </Instance>
@@ -44,10 +38,10 @@
 <Shininess>0.40000000596046448</Shininess>
 </VisualProperties>
 </Instance>
-<Instance name="MuscleOrigins_004-1" uid="MuscleOrigins_004-1" entityUid="MuscleOrigins_004*:*Default">
+<Instance name="MuscleOrigins_004-2" uid="MuscleOrigins_004-2" entityUid="MuscleOrigins_004*:*Default">
 <Transform>
-<Rotation>1 -1.0136336214827679e-13 1.1475508030209908e-12 1.0136336214827679e-13 1 2.806471814169457e-16 -1.14755080302099e-12 -2.8064718130065779e-16 0.99999999999999978</Rotation>
-<Translation>-0.053877865829338345 -0.09110193662403715 0.028204508872772871</Translation>
+<Rotation>1 -1.9999280009841414e-13 2.2952670643218811e-12 1.9997892231060632e-13 0.99999999999999989 1.2203159234271153e-16 -2.2952670643218803e-12 -1.2203159188373078e-16 0.99999999999999967</Rotation>
+<Translation>-0.053877865829338303 -0.091101936624036942 0.028304508872771732</Translation>
 </Transform>
 <VisualProperties>
 <Ambient r="1" g="0.79607843137254897" b="0.75686274509803919" a="1"/>
@@ -57,23 +51,29 @@
 <Shininess>0.40000000596046448</Shininess>
 </VisualProperties>
 </Instance>
-<Instance name="03_01_FB_R_004-1" uid="03_01_FB_R_004-1" entityUid="03_01_FB_R_004*:*Default">
+<Instance name="03_01_FB_R_004_ribLink-1" uid="03_01_FB_R_004_ribLink-1" entityUid="03_01_FB_R_004_ribLink*:*Default">
 <Transform>
-<Rotation>1 0 -1.1520248933664707e-12 -1.0030865027488287e-13 0.99619469809174555 -0.087155742747658124 1.1476495715523839e-12 0.087155742747658124 0.99619469809174555</Rotation>
-<Translation>-0.044183557427777298 -0.42274210686142638 0.030454365268563838</Translation>
+<Rotation>-0.99925507004299208 -0.038591514525539064 1.1518286324729843e-12 -0.038444662161572343 0.99545260281812831 0.087155742747658055 -0.0033634721133769777 0.087090817823915784 -0.99619469809174532</Rotation>
+<Translation>-0.054146769345642567 -0.27540499614294672 0.033406493797650545</Translation>
+</Transform>
+</Instance>
+<Instance name="04_05_BL_001-1" uid="04_05_BL_001-1" entityUid="04_05_BL_001*:*Default">
+<Transform>
+<Rotation>0.731563625207857 -0.68177317509032132 -1.0719717796078405e-15 0.68177317509032132 0.731563625207857 -1.5201145247751647e-15 1.820588867267309e-15 3.8121888868517907e-16 0.99999999999999978</Rotation>
+<Translation>-0.043090179909943314 -0.51796817991516531 0.028227889152154656</Translation>
 </Transform>
 <VisualProperties>
-<Ambient r="0.33725490196078434" g="1" b="0.99215686274509807" a="1"/>
-<Diffuse r="0.33725490196078434" g="1" b="0.99215686274509807" a="1"/>
-<Specular r="0.16862745098039217" g="0.5" b="0.49607843137254903" a="1"/>
-<Emissive r="0" g="0" b="0" a="1"/>
+<Ambient r="1" g="0.6705882352941176" b="0.50588235294117645" a="0.25"/>
+<Diffuse r="1" g="0.6705882352941176" b="0.50588235294117645" a="0.25"/>
+<Specular r="0.5" g="0.3352941176470588" b="0.25294117647058822" a="0.25"/>
+<Emissive r="0" g="0" b="0" a="0.25"/>
 <Shininess>0.40000000596046448</Shininess>
 </VisualProperties>
 </Instance>
-<Instance name="04_06_FL_001-1" visible="false" uid="04_06_FL_001-1" entityUid="04_06_FL_001*:*Default">
+<Instance name="04_06_FL_001-1" uid="04_06_FL_001-1" entityUid="04_06_FL_001*:*Default">
 <Transform>
 <Rotation>0.4534568454092831 0.89127823341056733 0 -0.89127823341056733 0.4534568454092831 0 0 0 1</Rotation>
-<Translation>-0.032108103748896444 -0.50971317991516529 0.022327889152154695</Translation>
+<Translation>-0.032108103748896416 -0.50971317991516518 0.022327889152154695</Translation>
 </Transform>
 <VisualProperties>
 <Ambient r="1" g="0.7803921568627451" b="0.63529411764705879" a="0.25"/>
@@ -83,38 +83,20 @@
 <Shininess>0.40000000596046448</Shininess>
 </VisualProperties>
 </Instance>
-<Instance name="05_01_TI_R_006-1" uid="05_01_TI_R_006-1" entityUid="05_01_TI_R_006*:*Default">
+<Instance name="03_01_FB_R_004-1" uid="03_01_FB_R_004-1" entityUid="03_01_FB_R_004*:*Default">
 <Transform>
-<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
-<Translation>-0.044733250344097919 -0.55277192788290153 0.028253056975207108</Translation>
+<Rotation>1 2.6334662728069489e-16 -1.1520058920663168e-12 -1.0066947275788608e-13 0.99619469809174543 -0.087155742747658027 1.1475993171025366e-12 0.087155742747658027 0.99619469809174543</Rotation>
+<Translation>-0.04418355742777736 -0.42274210686142655 0.030554365268564639</Translation>
 </Transform>
 <VisualProperties>
-<Ambient r="1" g="1" b="0.50196078431372548" a="1"/>
-<Diffuse r="1" g="1" b="0.50196078431372548" a="1"/>
-<Specular r="0.5" g="0.5" b="0.25098039215686274" a="1"/>
+<Ambient r="0.33725490196078434" g="1" b="0.99215686274509807" a="1"/>
+<Diffuse r="0.33725490196078434" g="1" b="0.99215686274509807" a="1"/>
+<Specular r="0.16862745098039217" g="0.5" b="0.49607843137254903" a="1"/>
 <Emissive r="0" g="0" b="0" a="1"/>
 <Shininess>0.40000000596046448</Shininess>
 </VisualProperties>
 </Instance>
-<Instance name="04_01_KT_R_003-1" uid="04_01_KT_R_003-1" entityUid="04_01_KT_R_003*:*Default">
-<Transform>
-<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
-<Translation>-0.03570988017070964 -0.50140173194742899 0.028227889152153914</Translation>
-</Transform>
-</Instance>
-<Instance name="04_06_FL_002-1" uid="04_06_FL_002-1" entityUid="04_06_FL_002*:*Default">
-<Transform>
-<Rotation>0.45345684540928344 0.89127823341056711 0 -0.89127823341056711 0.45345684540928344 0 0 0 1</Rotation>
-<Translation>-0.032108103748896444 -0.50971317991516518 0.022327889152154699</Translation>
-</Transform>
-</Instance>
-<Instance name="03_01_FB_R_004_ribLink-1" uid="03_01_FB_R_004_ribLink-1" entityUid="03_01_FB_R_004_ribLink*:*Default">
-<Transform>
-<Rotation>-0.99925507004299208 -0.038591514525541486 1.151946580156025e-12 -0.03844466216157455 0.99545260281812831 0.08715574274765811 -0.0033634721133773081 0.087090817823915825 -0.99619469809174555</Rotation>
-<Translation>-0.054146769345642443 -0.27540499614294656 0.033306493797649737</Translation>
-</Transform>
-</Instance>
-<Instance name="05_01_TI_R_007-1" visible="false" uid="05_01_TI_R_007-1" entityUid="05_01_TI_R_007*:*Default">
+<Instance name="05_01_TI_R_007-1" uid="05_01_TI_R_007-1" entityUid="05_01_TI_R_007*:*Default">
 <Transform>
 <Rotation>1 0 0 0 1 0 0 0 1</Rotation>
 <Translation>-0.044733250344097926 -0.55277192788290153 0.028253056975207108</Translation>
@@ -122,8 +104,20 @@
 </Instance>
 <Instance name="Patella_v3_template-1" visible="false" uid="Patella_v3_template-1" entityUid="Patella_v3_template*:*Default">
 <Transform>
-<Rotation>-0.65522556125590026 -0.7554332954516173 0 0.7554332954516173 -0.65522556125590026 0 0 0 1</Rotation>
-<Translation>-0.081137895712814323 -0.48312300063829494 0.028227889152153914</Translation>
+<Rotation>0.33761652582592178 0.94128374122218572 0 -0.94128374122218572 0.33761652582592178 0 0 0 0.99999999999999967</Rotation>
+<Translation>0.0011620105798909042 -0.53247138746645217 0.028327889152154714</Translation>
+</Transform>
+</Instance>
+<Instance name="04_06_FL_002-1" uid="04_06_FL_002-1" entityUid="04_06_FL_002*:*Default">
+<Transform>
+<Rotation>0.45345684540928294 0.89127823341056744 0 -0.89127823341056744 0.45345684540928294 0 0 0 0.99999999999999989</Rotation>
+<Translation>-0.032108103748896444 -0.50971317991516496 0.022327889152154713</Translation>
+</Transform>
+</Instance>
+<Instance name="Patella_v5-1" visible="false" uid="Patella_v5-1" entityUid="Patella_v5*:*Default">
+<Transform>
+<Rotation>0 0.99999639983209299 -0.0026833417323822968 0 -0.0026833417323822968 -0.99999639983209299 -1 0 0</Rotation>
+<Translation>-0.039731534567964341 -0.54854886823350768 0.028327889152154718</Translation>
 </Transform>
 </Instance>
 </InstanceTree>
@@ -140,7 +134,7 @@
 <InstancePath>
 <Uid>05_01_TI_R_006-1</Uid>
 </InstancePath>
-<Position>-0.0085010769829852798 -0.028575000000000017 -0.019096401971068371</Position>
+<Position>-0.0085010769829852798 -0.028575000000000017 0.026999999999999996</Position>
 <Axis>0 0 1</Axis>
 </ConstraintGeometry>
 </Concentric>
@@ -156,7 +150,7 @@
 <InstancePath>
 <Uid>05_01_TI_R_006-1</Uid>
 </InstancePath>
-<Position>0 -0.010499999999999954 -0.019096401971068371</Position>
+<Position>0 -0.010499999999999954 0.026999999999999996</Position>
 <Axis>0 0 1</Axis>
 </ConstraintGeometry>
 </Concentric>
@@ -172,8 +166,8 @@
 <InstancePath>
 <Uid>05_01_TI_R_006-1</Uid>
 </InstancePath>
-<Position>-0.019096401971068377 -0.019050000000000011 0.0034605618803735666</Position>
-<Axis>0 2.2765399947202193e-16 -1</Axis>
+<Position>-0.022499999999999992 -0.019050000000000011 0.0034605618803735666</Position>
+<Axis>0 2.2765399947202189e-16 -1</Axis>
 </ConstraintGeometry>
 </Coincident>
 <Coincident name="Coincident2">
@@ -181,8 +175,8 @@
 <InstancePath>
 <Uid>03_01_FB_R_004-1</Uid>
 </InstancePath>
-<Position>0.037646335214005774 0 -0.0020693552921931951</Position>
-<Axis>1.1520229215022935e-12 0 1</Axis>
+<Position>0.037646335214005781 0 -0.0020693552921931813</Position>
+<Axis>1.1520233073374602e-12 0 1</Axis>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="plane">
 <InstancePath>
@@ -197,8 +191,8 @@
 <InstancePath>
 <Uid>03_01_FB_R_004-1</Uid>
 </InstancePath>
-<Position>0.020473658412508099 0.028900000000000037 0.025470127818449748</Position>
-<Axis>-1.1520229215022935e-12 0 -1</Axis>
+<Position>0.020473658412508099 0.028899999999999981 0.025470127818449748</Position>
+<Axis>-1.1520233073374602e-12 0 -1</Axis>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="cylinder">
 <InstancePath>
@@ -213,8 +207,8 @@
 <InstancePath>
 <Uid>03_01_FB_R_004-1</Uid>
 </InstancePath>
-<Position>0.020473658412508103 0.010499999999999954 0.025470127818449748</Position>
-<Axis>-1.1520229215022935e-12 0 -1</Axis>
+<Position>0.020473658412508103 0.010499999999999954 0.025470127818449761</Position>
+<Axis>-1.1520233073374602e-12 0 -1</Axis>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="cylinder">
 <InstancePath>
@@ -229,7 +223,7 @@
 <InstancePath>
 <Uid>03_01_FB_R_004-1</Uid>
 </InstancePath>
-<Position>0.01505985271027644 0.16041607826340776 -0.009999999999999995</Position>
+<Position>0.01505985271027644 0.16041607826340776 -0.0099999999999999881</Position>
 <Axis>0 0 -1</Axis>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="plane">
@@ -237,7 +231,7 @@
 <Uid>03_01_FB_R_004_ribLink-1</Uid>
 </InstancePath>
 <Position>0 0 0</Position>
-<Axis>0 0 -1</Axis>
+<Axis>0 0 -0.99999999999999978</Axis>
 </ConstraintGeometry>
 </Coincident>
 <Concentric name="Concentric5">
@@ -245,7 +239,7 @@
 <InstancePath>
 <Uid>03_01_FB_R_004-1</Uid>
 </InstancePath>
-<Position>-0.0099632119178767811 0.14702502791027056 -0.03068882350211076</Position>
+<Position>-0.0099632119178767881 0.14702502791027044 -0.030688823502110746</Position>
 <Axis>0 0 1</Axis>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="cylinder">
@@ -253,7 +247,7 @@
 <Uid>03_01_FB_R_004_ribLink-1</Uid>
 </InstancePath>
 <Position>0 1.1102230246251565e-16 0.0050000000000000044</Position>
-<Axis>0 0 -1</Axis>
+<Axis>0 0 -0.99999999999999978</Axis>
 </ConstraintGeometry>
 </Concentric>
 <Concentric name="Concentric6">
@@ -261,15 +255,15 @@
 <InstancePath>
 <Uid>03_01_FB_R_004-1</Uid>
 </InstancePath>
-<Position>-0.011715266677336342 0.19239120809022231 -0.03068882350211076</Position>
+<Position>-0.011715266677336342 0.1923912080902222 -0.030688823502110746</Position>
 <Axis>0 0 1</Axis>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="cylinder">
 <InstancePath>
 <Uid>03_01_FB_R_004_ribLink-1</Uid>
 </InstancePath>
-<Position>0 0.045400000000000079 0.0049999999999999906</Position>
-<Axis>0 0 -1</Axis>
+<Position>0 0.045400000000000024 0.0050000000000000044</Position>
+<Axis>0 0 -0.99999999999999978</Axis>
 </ConstraintGeometry>
 </Concentric>
 <Coincident name="Coincident4">
@@ -277,15 +271,15 @@
 <InstancePath>
 <Uid>03_01_FB_R_004-1</Uid>
 </InstancePath>
-<Position>0.037646335214011221 0 0.0026568852742947929</Position>
-<Axis>-1.1520229215022935e-12 0 -1</Axis>
+<Position>0.037646335214011228 0 0.0026568852742947929</Position>
+<Axis>-1.1520233073374602e-12 0 -1</Axis>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="plane">
 <InstancePath>
-<Uid>MuscleOrigins_004-1</Uid>
+<Uid>MuscleOrigins_004-2</Uid>
 </InstancePath>
-<Position>0.030794308401506428 -0.060109819407444795 0.028672718041121127</Position>
-<Axis>-1.1520636060581804e-12 -0.08715574274765861 0.99619469809174543</Axis>
+<Position>0.030794308401506373 -0.044818230942429926 0.03001055867912231</Position>
+<Axis>-1.1519399318493616e-12 -0.087155742747658263 0.99619469809174521</Axis>
 </ConstraintGeometry>
 </Coincident>
 <Concentric name="Concentric7">
@@ -293,15 +287,15 @@
 <InstancePath>
 <Uid>03_01_FB_R_004-1</Uid>
 </InstancePath>
-<Position>-0.0039164001823496983 0.28079999984873205 0.025470127818477864</Position>
-<Axis>-1.1520229215022935e-12 0 -1</Axis>
+<Position>-0.0039164001823496983 0.280799999848732 0.02547012781847785</Position>
+<Axis>-1.1520233073374602e-12 0 -1</Axis>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="cylinder">
 <InstancePath>
-<Uid>MuscleOrigins_004-1</Uid>
+<Uid>MuscleOrigins_004-2</Uid>
 </InstancePath>
-<Position>0.005777908219215748 -0.046643769348151856 -0.033455234218440287</Position>
-<Axis>-1.1520420752781237e-12 -0.08715574274765929 0.99619469809174532</Axis>
+<Position>0.0057779082193245498 -0.043803282331742771 -0.065922149381310705</Position>
+<Axis>-2.3039633528253757e-12 -0.087155742747658166 0.99619469809174532</Axis>
 </ConstraintGeometry>
 </Concentric>
 <Concentric name="Concentric8">
@@ -309,15 +303,15 @@
 <InstancePath>
 <Uid>03_01_FB_R_004-1</Uid>
 </InstancePath>
-<Position>0.0034935948055171834 0.31280000000000013 0.025470127818469329</Position>
-<Axis>-1.1520229215022935e-12 0 -1</Axis>
+<Position>0.0034935948055171764 0.31279999999999997 0.025470127818469329</Position>
+<Axis>-1.1520233073374602e-12 0 -1</Axis>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="cylinder">
 <InstancePath>
-<Uid>MuscleOrigins_004-1</Uid>
+<Uid>MuscleOrigins_004-2</Uid>
 </InstancePath>
-<Position>0.013187903207082616 -0.014765538858524385 -0.030666250437322812</Position>
-<Axis>-1.1520420752781237e-12 -0.08715574274765929 0.99619469809174532</Axis>
+<Position>0.013187903207191425 -0.011925051842116105 -0.063133165600184754</Position>
+<Axis>-2.3039633528253757e-12 -0.087155742747658166 0.99619469809174532</Axis>
 </ConstraintGeometry>
 </Concentric>
 <Concentric name="Concentric12">
@@ -349,7 +343,7 @@
 <Uid>04_06_FL_002-1</Uid>
 </InstancePath>
 <Position>-0.025717500000000004 0 0.005899999999999999</Position>
-<Axis>0 0 -1</Axis>
+<Axis>0 0 -0.99999999999999989</Axis>
 </ConstraintGeometry>
 </Concentric>
 <Coincident name="Coincident6">
@@ -364,7 +358,7 @@
 <InstancePath>
 <Uid>05_01_TI_R_007-1</Uid>
 </InstancePath>
-<Position>-0.019096401971068371 -0.019050000000000011 0.0034605618803735666</Position>
+<Position>-0.019922866572480123 -0.019050000000000011 0.0034605618803735666</Position>
 <Axis>0 0 -1</Axis>
 </ConstraintGeometry>
 </Coincident>
@@ -421,7 +415,7 @@
 <InstancePath>
 <Uid>Patella_v3_template-1</Uid>
 </InstancePath>
-<Position>-0.016300000000000037 -0.037399999999999989 0</Position>
+<Position>-0.016299999999999981 -0.037400000000000044 0</Position>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="Unknown">
 <InstancePath>
@@ -434,7 +428,7 @@
 <InstancePath>
 <Uid>Patella_v3_template-1</Uid>
 </InstancePath>
-<Position>-0.016300000000000037 -0.013349999999999973 0</Position>
+<Position>-0.016299999999999926 -0.013350000000000029 0</Position>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="Unknown">
 <InstancePath>
@@ -455,7 +449,7 @@
 <Uid>Patella_v3_template-1</Uid>
 </InstancePath>
 <Position>0 0 0</Position>
-<Axis>0 0 1</Axis>
+<Axis>0 0 0.99999999999999967</Axis>
 </ConstraintGeometry>
 </Coincident>
 <Coincident name="Coincident9">
@@ -479,7 +473,7 @@
 <InstancePath>
 <Uid>Patella_v5-1</Uid>
 </InstancePath>
-<Position>0 0.0030000000000000027 -0.01900000000000001</Position>
+<Position>0 0.0030000000000000027 -0.018999999999999795</Position>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="Unknown">
 <InstancePath>
@@ -492,7 +486,7 @@
 <InstancePath>
 <Uid>Patella_v5-1</Uid>
 </InstancePath>
-<Position>0 -0.0050000000000000044 -0.019000000000000006</Position>
+<Position>0 -0.0049999999999999975 -0.018999999999999795</Position>
 </ConstraintGeometry>
 <ConstraintGeometry geomType="Unknown">
 <InstancePath>
@@ -500,6 +494,118 @@
 </InstancePath>
 </ConstraintGeometry>
 </UnknownConstraint>
+<Coincident name="Coincident20">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>04_05_BL_001-1</Uid>
+</InstancePath>
+<Position>0.023375000000000035 0 0</Position>
+<Axis>0 0 -0.99999999999999978</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>04_02_KB_R_003-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric16">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>04_05_BL_001-1</Uid>
+</InstancePath>
+<Position>-0.023374999999999979 0 0.0058999999999999955</Position>
+<Axis>0 0 -0.99999999999999978</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>04_02_KB_R_003-1</Uid>
+</InstancePath>
+<Position>-0.015856152322093711 0.0088673000000000224 -0.037873446868514349</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Concentric name="Concentric17">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>04_02_KB_R_003-1</Uid>
+</InstancePath>
+<Position>0.023888000000000003 0.010137300000000016 -0.037873446868514349</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>04_06_FL_002-1</Uid>
+</InstancePath>
+<Position>0.02571750000000006 0 0.005899999999999999</Position>
+<Axis>0 0 -0.99999999999999989</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident21">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>04_02_KB_R_003-1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>04_06_FL_002-1</Uid>
+</InstancePath>
+<Position>0.02571750000000006 0 0.005899999999999999</Position>
+<Axis>0 0 0.99999999999999989</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric18">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>04_01_KT_R_003-1</Uid>
+</InstancePath>
+<Position>-0.0080599999999999977 0.014610000000000012 -0.023200000000000002</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>04_06_FL_002-1</Uid>
+</InstancePath>
+<Position>-0.025717500000000004 0 0.005899999999999999</Position>
+<Axis>0 0 -0.99999999999999989</Axis>
+</ConstraintGeometry>
+</Concentric>
+<Coincident name="Coincident22">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>04_01_KT_R_003-1</Uid>
+</InstancePath>
+<Position>-0.032202845247555192 -0.028369826172087276 -0.0059999999999999984</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>04_06_FL_002-1</Uid>
+</InstancePath>
+<Position>0.02571750000000006 0 0</Position>
+<Axis>0 0 -0.99999999999999989</Axis>
+</ConstraintGeometry>
+</Coincident>
+<Concentric name="Concentric19">
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>04_05_BL_001-1</Uid>
+</InstancePath>
+<Position>0.023375000000000035 0 0.0059000000000000025</Position>
+<Axis>0 0 -0.99999999999999978</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>04_01_KT_R_003-1</Uid>
+</InstancePath>
+<Position>0.0097199999999999995 -0.00063000000000001943 0.037002089527354162</Position>
+<Axis>0 0 -1</Axis>
+</ConstraintGeometry>
+</Concentric>
 </Constraints>
 </RootAssembly>
 <Assemblies>
@@ -528,7 +634,7 @@
 <MassProperties>
 <Mass>0.0097590563218444976</Mass>
 <CenterOfMass>0 0.022700000000000092 0.0019129416737882245</CenterOfMass>
-<Inertia>3.5397175400492569e-06 5.1907330449926702e-07 3.976222068882124e-06 0 0 0</Inertia>
+<Inertia>3.5397175400492574e-06 5.1907330449926713e-07 3.9762220688821248e-06 0 0 0</Inertia>
 </MassProperties>
 <GeometryFile name="03_01_FB_R_004_ribLink_Default_sldprt.STEP" type="STEP"/>
 <VisualProperties>
@@ -556,13 +662,13 @@
 <Shininess>0.40000000596046448</Shininess>
 </VisualProperties>
 </Part>
-<Part name="04_02_KB_R_003" uid="04_02_KB_R_003*:*Default" version="3072">
+<Part name="04_02_KB_R_003" uid="04_02_KB_R_003*:*Default" version="3762">
 <ModelUnits mass="kilogram" length="millimeter"/>
 <PartFile name="04_02_KB_R_003.SLDPRT" type="SolidWorks Part"/>
 <MassProperties>
-<Mass>0.10309201399019402</Mass>
-<CenterOfMass>0.0016663848376604715 -0.0011466159154987095 -0.0010271253361388575</CenterOfMass>
-<Inertia>6.8939113578943382e-05 6.3725896537609347e-05 7.9760388195028377e-05 -4.869183359669772e-06 -4.4804195679567107e-07 -2.368814418119162e-06</Inertia>
+<Mass>0.13861043187617644</Mass>
+<CenterOfMass>0.0038335912027117019 -0.0060735345607320296 -0.00036122396220077997</CenterOfMass>
+<Inertia>0.00012116964593192251 9.431789652635146e-05 0.00013214080908342273 -1.8304774067061205e-05 -1.0327296813112552e-05 -9.9448353763456992e-06</Inertia>
 </MassProperties>
 <GeometryFile name="04_02_KB_R_003_Default_sldprt.STEP" type="STEP"/>
 <VisualProperties>
@@ -624,13 +730,13 @@
 <Shininess>0.40000000596046448</Shininess>
 </VisualProperties>
 </Part>
-<Part name="05_01_TI_R_006" uid="05_01_TI_R_006*:*Default" version="631">
+<Part name="05_01_TI_R_006" uid="05_01_TI_R_006*:*Default" version="1573">
 <ModelUnits mass="kilogram" length="millimeter"/>
 <PartFile name="05_01_TI_R_006.SLDPRT" type="SolidWorks Part"/>
 <MassProperties>
-<Mass>0.10498291055169287</Mass>
-<CenterOfMass>0.0004895831427365443 -0.11383041872133332 0.0012587413706167604</CenterOfMass>
-<Inertia>0.00040045944255858075 1.2551785196541484e-05 0.00040385311207542953 -1.1734180140470149e-05 -3.046677839734342e-08 -2.9214507491958627e-06</Inertia>
+<Mass>0.24353158778490877</Mass>
+<CenterOfMass>-0.0048284825771838149 -0.098752916070570892 0.0016969679385903176</CenterOfMass>
+<Inertia>0.0010721956514892132 0.00014594286418512033 0.001088229463734541 -2.8596091125350252e-05 -1.92551565721107e-06 0.00015412088925205586</Inertia>
 </MassProperties>
 <GeometryFile name="05_01_TI_R_006_Default_sldprt.STEP" type="STEP"/>
 <VisualProperties>
@@ -641,13 +747,13 @@
 <Shininess>0.40000000596046448</Shininess>
 </VisualProperties>
 </Part>
-<Part name="05_01_TI_R_007" uid="05_01_TI_R_007*:*Default" version="702">
+<Part name="05_01_TI_R_007" uid="05_01_TI_R_007*:*Default" version="764">
 <ModelUnits mass="kilogram" length="millimeter"/>
 <PartFile name="05_01_TI_R_007.SLDPRT" type="SolidWorks Part"/>
 <MassProperties>
-<Mass>0.19618116477056896</Mass>
-<CenterOfMass>0.00024137790917331417 -0.16804436742012974 0.00084249667100348312</CenterOfMass>
-<Inertia>0.0015455038627915395 2.5116199481609665e-05 0.0015502107160782386 -2.316168101792875e-05 -6.4172381936656613e-09 -2.0944029156742974e-06</Inertia>
+<Mass>0.23472711881990829</Mass>
+<CenterOfMass>3.0509251626433515e-05 -0.16454474160197277 0.00081501411533159527</CenterOfMass>
+<Inertia>0.0017148137930626378 3.8457612713371347e-05 0.0017239200516273327 -2.5795962436687695e-05 5.164030632882732e-09 -1.8921831634503057e-06</Inertia>
 </MassProperties>
 <GeometryFile name="05_01_TI_R_007_Default_sldprt.STEP" type="STEP"/>
 <VisualProperties>
@@ -658,37 +764,20 @@
 <Shininess>0.40000000596046448</Shininess>
 </VisualProperties>
 </Part>
-<Part name="BPA2" uid="BPA2*:*Default" version="114">
-<ModelUnits mass="kilogram" length="millimeter"/>
-<PartFile name="BPA2.SLDPRT" type="SolidWorks Part"/>
-<MassProperties>
-<Mass>0.37635885670983427</Mass>
-<CenterOfMass>0.14974843105446117 0 0</CenterOfMass>
-<Inertia>7.5271771341966866e-05 0.0028508672304548258 0.0028508672304548258 0 0 0</Inertia>
-</MassProperties>
-<GeometryFile name="BPA2_Default_sldprt.STEP" type="STEP"/>
-<VisualProperties>
-<Ambient r="0.62352941176470589" g="0.70196078431372544" b="1" a="1"/>
-<Diffuse r="0.62352941176470589" g="0.70196078431372544" b="1" a="1"/>
-<Specular r="0.31176470588235294" g="0.35098039215686272" b="0.5" a="1"/>
-<Emissive r="0" g="0" b="0" a="1"/>
-<Shininess>0.3125</Shininess>
-</VisualProperties>
-</Part>
-<Part name="MuscleOrigins_004" uid="MuscleOrigins_004*:*Default" version="2163">
+<Part name="MuscleOrigins_004" uid="MuscleOrigins_004*:*Default" version="4344">
 <ModelUnits mass="kilogram" length="millimeter"/>
 <PartFile name="MuscleOrigins_004.SLDPRT" type="SolidWorks Part"/>
 <MassProperties>
-<Mass>0.23166771296634248</Mass>
-<CenterOfMass>-0.00016681315698123897 0.021231636766724384 0.024182568452972713</CenterOfMass>
-<Inertia>0.00026299202464049817 0.0002411878204272371 0.00029554776689332197 -5.6959209103187504e-07 2.7304774110443022e-05 2.0550683669805452e-05</Inertia>
+<Mass>1.0169056708493014</Mass>
+<CenterOfMass>-0.035807225360135267 0.086872181383619351 0.024528146887657271</CenterOfMass>
+<Inertia>0.0034977256779595454 0.0025276720196350114 0.0048972523929693285 8.7094875136882723e-05 0.00035424463897897924 0.00065897645352846817</Inertia>
 </MassProperties>
 <GeometryFile name="MuscleOrigins_004_Default_sldprt.STEP" type="STEP"/>
 <VisualProperties>
-<Ambient r="1" g="0.79607843137254897" b="0.75686274509803919" a="0.25"/>
-<Diffuse r="1" g="0.79607843137254897" b="0.75686274509803919" a="0.25"/>
-<Specular r="0.5" g="0.39803921568627448" b="0.3784313725490196" a="0.25"/>
-<Emissive r="0" g="0" b="0" a="0.25"/>
+<Ambient r="1" g="0.79607843137254897" b="0.75686274509803919" a="1"/>
+<Diffuse r="1" g="0.79607843137254897" b="0.75686274509803919" a="1"/>
+<Specular r="0.5" g="0.39803921568627448" b="0.3784313725490196" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
 <Shininess>0.40000000596046448</Shininess>
 </VisualProperties>
 </Part>

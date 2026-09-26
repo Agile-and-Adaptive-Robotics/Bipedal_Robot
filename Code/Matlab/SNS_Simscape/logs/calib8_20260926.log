@@ -1,0 +1,12 @@
+conv ports: out=1 lconn=1 | w in=1
+WIRE FAILED: The destination port already has a line connection
+w-in Line=9.020001e+02
+  endpoint parent: EXT_t1
+  endpoint parent: EXT_t1w
+conv-out Line=9.020001e+02
+{Error using calibrate_muscles_20260926 (line 43)
+The destination port already has a line connection
+} 
+[Warning: Unable to close the model 'mdl_leg_rig_ba003_imported' because it has been changed. To save changes, use close_system('mdl_leg_rig_ba003_imported',1). To
+discard changes, use close_system('mdl_leg_rig_ba003_imported',0).] 
+ERROR: MATLAB error Exit Status: 0x00000001

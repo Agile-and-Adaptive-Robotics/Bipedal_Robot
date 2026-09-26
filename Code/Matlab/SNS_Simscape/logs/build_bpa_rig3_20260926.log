@@ -1,0 +1,16 @@
+SNS blocks: neuron=SNS_Library/NonSpikingNeuron synapse=SNS_Library/NonSpikingSynapse bpa=SNS_Library/BPA_20mm
+neuron params: Vrest, Gm, Cm, Thr, Slope
+branch ports resolved
+TS mdl_leg_rig_ba003_imported/EXT_TS params: MeasurementFrame | RotationSequence | SenseAngle | SenseAxis | SenseQ | SenseR | SenseRotationSequence | SenseOmegaX | SenseOmegaY | SenseOmegaZ | SenseOmega | SenseQDot | SenseRDot | SenseRotationSequenceDot | SenseAlphaX | SenseAlphaY | SenseAlphaZ | SenseAlpha | SenseQDDot | SenseRDDot | SenseX | SenseY | SenseZ | SenseXYZ | SenseRad | SenseAzim | SenseDist | SenseInc | SenseXDot | SenseYDot | SenseZDot | SenseXYZDot | SenseRadDot | SenseAzimDot | SenseDistDot | SenseIncDot | SenseXDDot | SenseYDDot | SenseZDDot | SenseXYZDDot | SenseRadDDot | SenseAzimDDot | SenseDistDDot | SenseIncDDot | BlockFunction
+{Unrecognized field name "Out".
+
+Error in build_bpa_sns_rig_20260926>enable_sensor_xyz (line 147)
+fprintf('TS out ports now: %d\n', numel(ph.Out));
+                                        ^^^^^^
+Error in build_bpa_sns_rig_20260926 (line 76)
+    enable_sensor_xyz([mdl '/' pfx '_TS']);
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+[Warning: Unable to close the model 'mdl_leg_rig_ba003_imported' because it has been changed. To save changes, use close_system('mdl_leg_rig_ba003_imported',1). To
+discard changes, use close_system('mdl_leg_rig_ba003_imported',0).] 
+ERROR: MATLAB error Exit Status: 0x00000001

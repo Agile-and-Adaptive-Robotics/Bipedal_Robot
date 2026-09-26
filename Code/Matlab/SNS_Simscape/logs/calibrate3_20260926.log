@@ -1,0 +1,11 @@
+pass 1 EXT: measured [0.0417 0.0383 -0.0020] target [0.0050 -0.1300 0.0000] err 0.1722
+{Error using -
+Arrays have incompatible sizes for this operation.
+
+Error in calibrate_muscles_20260926 (line 62)
+        set_param([mdl '/' pfx{1} '_origT'], 'TranslationCartesianOffset', mat2str(dO - half, 8));
+                                                                                      ^
+} 
+[Warning: Unable to close the model 'mdl_leg_rig_ba003_imported' because it has been changed. To save changes, use close_system('mdl_leg_rig_ba003_imported',1). To
+discard changes, use close_system('mdl_leg_rig_ba003_imported',0).] 
+ERROR: MATLAB error Exit Status: 0x00000001

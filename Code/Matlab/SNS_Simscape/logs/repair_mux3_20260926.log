@@ -1,0 +1,15 @@
+EXT: cut dangling mux-in 1
+EXT: cut dangling mux-in 2
+EXT: cut dangling mux-in 3
+EXT: F1 out -> mux in1
+EXT: F2 out -> mux in2
+EXT: F3 out -> mux in3
+FLX: cut dangling mux-in 1
+FLX: cut dangling mux-in 2
+FLX: cut dangling mux-in 3
+FLX: F1 out -> mux in1
+FLX: F2 out -> mux in2
+FLX: F3 out -> mux in3
+UPDATE FAILED: Error due to multiple causes.
+  CAUSE 1: Invalid setting for output port dimensions of 'mdl_leg_rig_ba003_imported/EXT_Mux'. The dimensions are being set to 1. This is not valid because the total number of input
+  CAUSE 2: Error in port widths or dimensions. 'Input Port 1' of 'mdl_leg_rig_ba003_imported/EXT_sps' is a one dimensional vector with 1 elements.

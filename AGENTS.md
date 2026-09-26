@@ -1987,3 +1987,52 @@ A separate chat is updating the dissertation text with these. Sources (Testing_D
   series-stiffness Xi3. Gotchas: pool workers never see client setenv after spawn (env-gated
   evaluator branches silently run the wrong mode in parfor — set env BEFORE parpool); wrap
   the Xi-factor handoff details: CHATGPT_HANDOFF.md ACTIVE WORK F (2026-09-14/16).
+- **2026-09-26 — Simscape Multibody bring-up: leg rig + lower humanoid, BPAs + SNS (laptop,
+  this session; models + dev scripts in `Code\Matlab\SNS_Simscape\`):** Ben exported BOTH via
+  Simscape Multibody Link v7.4 (`Knee assembly\09_BA_003.xml` re-export + NEW `10_AH_001.xml`
+  = full robot assembly 09_BA_001 wrapped as grounded subassembly; Hinge→Concentric+Coincident
+  fix WORKED — imports have real revolutes now). **`mdl_leg_rig_ba003_imported.slx`** =
+  knee test rig (2 Cyl + 3 Rev + four-bar knee; grounded at KB = correct for bench tests);
+  **`mdl_humanoid_lower_ah001_imported.slx`** = free biped: sealed `x09_BA_001_1` subsystem
+  (own Solver + Mechanism Config, gravity **[0 −9.80665 0]** — CAD is +y UP, not z!), pelvis
+  on 6-DOF (`pelvis_free` + `World_pelvis` inside the sub), hips = Spherical PE↔KNOB with
+  stud/knob hardware WELDED to the femur heads (parasitic stud spins removed), loose root
+  hardware (screws/nuts ~15 g) DELETED, 59 world-tie lines cut. **Masses: skeleton rescaled
+  ×1.2 to Onyx 1200 kg/m³ in `mdl_humanoid_lower_ah001_DataFile.m`** (XML mass ÷
+  SW-COM CreateMassProperty volume = 1000.0 kg/m³ exactly for every part → factor exact;
+  Body2.GetMassProperties UNRELIABLE on this install — negative/volume>bbox garbage; use
+  Extension.CreateMassProperty). Feet = 0.24×0.035×0.09 m bricks (0.907 kg ea) welded at the
+  tibia bottoms (ankle world y ≈ −0.861); spine = r0.06×0.45 m cylinder + 0.1 m cube lump
+  (ρ 61090) at (−0.079, +0.35, 0) → **total 73.0 kg** ✓. **BPA+SNS layer (both models):**
+  muscle = Internal Force block (f input is SCALAR = force along the frame-to-frame line —
+  no vector math needed) + Transform Sensor (SenseDist only) + `SNS_Library/BPA_20mm`
+  (Ben's Festo law; Rest 0.1281/Kmax 0.1057) + antagonistic NonSpikingNeuron pair (mutual
+  inhibition Esyn = Vrest−25, gmax 1.5; antiphase sine 0.5 Hz drive; V−(Vrest+8) → sat 25 →
+  ×620/25 = kPa). Port layouts BANKED: Transform Sensor LConn(1)=base, RConn(1)=follower,
+  RConn(2..n)=enabled PS outputs; Internal Force LConn(1)=frame, LConn(2)=PS f, RConn(1)=frame;
+  World Frame port = RConn(1); PS-Simulink converter: LConn=PS-in, Outport=sim-out;
+  Simulink-PS: Inport=sim-in, RConn=PS-out. GOTCHAS: add_line can mix handle+string args
+  NEVER; string 'blk/N' counts ALL ports (Product out = '/4' for 3-in) — use handles;
+  add_line can THROW "destination already has a line" AFTER successfully connecting —
+  verify Line>0 in the catch before rethrowing; smimport prefixes 'x' only on digit-leading
+  names and collapses ' - ' to one underscore; product-name→STEP map =
+  `dev\instance_step_map_{rig,humanoid}.json`. **Rig status: WORKING antagonistic knee —
+  corr(L_EXT,L_FLX) = −0.17, forces to 999 N, knee travel 0.13 m** (knee reduced to ONE
+  z-revolute `knee_hinge` at the FL_002 crank midpoint; four-bar joints deleted; brackets
+  welded: BL→KB, FL_001/FL_002→KT; muscle points ±2.8–3.3 cm from the pin, 7 cm above /
+  5.8 cm below — the pin frames sit on x-FLIPPED source frames (smiData ang=π [1,0,0]) so
+  their offsets are counter-rotated; original muscle-calibration loop =
+  `dev\calibrate_muscles_20260926.m` (affine correction, sign: origT += err/2, insT −= err/2)).
+  **Humanoid status: both knees SNS-driven and articulating** (L fully antagonistic
+  0.009–0.142 m; R half-range — the R-leg muscle x-offsets likely need mirroring, TODO Ben/
+  next session). Knee four-bar reductions on the humanoid mirror the rig (joints Revolute/
+  Revolute1/Revolute5/Revolute3/Cylindrical/Cylindrical1/Revolute2/Revolute4 per leg; FL_001_1
+  = R crank, FL_001_2 = L crank; the ORIGINAL import welds KT↔KB had to be CUT
+  (`dev\cut_knee_welds_20260926.m`, ports KT_R#8↔KB_R#3, KT_L#4↔KB_L#6) — they were missed
+  in the 09-20-era surgery and lock the knees shut). Runner scripts all in
+  `SNS_Simscape\dev\*20260926*`; logs in `SNS_Simscape\logs\`; results mats in
+  `SNS_Simscape\results\{rig,humanoid}_bpa_sns_20260926.mat`. NOT done: reflex closure
+  (afferents from joint sensors), ground contact for the humanoid, ankle joints (feet are
+  welded blocks), hip adduction/abduction actuation, N-segment BPA sleeve (Ben's full
+  expanding-diameter plan — these are point-force BPAs), muscle route points from Ben's
+  Xi/AttachPoints data (current points are reasonable placeholders ±3 cm off the knee pin).
