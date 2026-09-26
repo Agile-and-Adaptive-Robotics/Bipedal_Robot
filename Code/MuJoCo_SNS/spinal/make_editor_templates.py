@@ -13,6 +13,10 @@ Sources (all read-only):
   - spinal\\best_walk_params_v9/v10.json + curriculum_stage1/2/3.json +
     reports_20260923\\s3k_trial34_full_params.json -> walker_v9/v10/s1/s2/s3/s3k
   - spinal\\synergy_basis.npz (rank-6 NMF per leg) -> synergy6
+  - build_network_{w2lvar,syn6}.py + curriculum_{w2lvar,syn6}_stage5.json
+    (HARVESTED from the real built variant nets, stage-5 winners, via
+    the _curriculum_{variant}.set_stage authoritative loaders)
+                                      -> w2lvar, syn6 (2026-09-25)
   - CONNECTOME.md rule table          -> 'rules'
   - spinal\\replication\\{shevtsova,shinohara,rybak}_rules.json -> converted
 
@@ -689,6 +693,248 @@ def build_rules():
                      'shown where applicable. Ben edits via connectome_editor.'}
 
 
+# ---------------------------------------------------------------- variants
+# 2026-09-25 (goal-4 campaign): the two VARIANT walkers as editor
+# templates, generated from the REAL built networks with their stage-5
+# curriculum winner params. Harvest = the _net_edges.py pattern (every
+# connection read off the built SNS object, sign from the reversal
+# potential); the param merge follows the audit replay
+# (reports_20260925\audit\audit_replay_s1.py): v10 multipliers shell +
+# variant pins + the stage-5 json, applied through the AUTHORITATIVE
+# loaders _curriculum_{variant}.set_stage. The curriculum imports
+# mutate params (OW.set_params rescales the fitted W tables), so params
+# state is snapshotted/restored around each build and these templates
+# are generated LAST in main() — the walker templates above must stay
+# byte-identical.
+VARIANT_META = {
+    'w2lvar': dict(
+        title='w2lvar — W2L-layout s3k variant (2026-09-25)',
+        report='reports_20260925\\goal4_build_w2lvar.md',
+        gate_counts='888/382/7430',
+        extra=''),
+    'syn6': dict(
+        title='syn6 — 6-synergy walker (2026-09-25)',
+        report='reports_20260925\\goal4_build_syn6.md',
+        gate_counts='794/382/3033',
+        extra=' PF_S1..S6 = the six NMF synergy layers per side '
+              '(families E/F assigned from the measured per-channel '
+              'phase profiles, symmetrized across sides).'),
+}
+
+_PRUNED_ACTS = {'quad_fem_r', 'quad_fem_l', 'gem_r', 'gem_l',
+                'peri_r', 'peri_l'}   # runner.PRUNE_MUSCLES (MN arc kept)
+
+_KIND_COL = ['PORT', 'RG', 'PFIN', 'PF', 'COMM', 'MECH', 'MOTIF',
+             'MN', 'RC', 'AFF']
+_W_COL = 170
+
+
+def _v_side(name):
+    return name[-1] if name.endswith(('_r', '_l')) else None
+
+
+def _v_kind(name):
+    """(layout column key, editor type) for one harvested neuron name.
+    Type None = a syn6 synergy cell, resolved by the caller from the
+    network's measured E/F family map."""
+    if name.startswith(('DRIVE', 'POSTURE', 'BAL_', 'BS_')):
+        return 'PORT', 'PORT-load'
+    for pre, kind, t in (
+            ('RG_E', 'RG', 'HC-RG-E'), ('RG_F', 'RG', 'HC-RG-F'),
+            ('InE', 'RG', 'IN-InE'), ('InF', 'RG', 'IN-InF'),
+            ('HEEL', 'MECH', 'SN-heel'),
+            ('TOEDF', 'MECH', 'IN-C'), ('TOE', 'MECH', 'SN-toe'),
+            ('LBIN', 'MECH', 'IN-LBIN'),
+            ('V2a', 'COMM', 'IN-V2a'), ('V0V', 'COMM', 'IN-V0V'),
+            ('V0D', 'COMM', 'IN-V0D'), ('V3E', 'COMM', 'IN-V3'),
+            # INI = the Shevtsova crossed inhibitory IN (V0V-class arm)
+            ('INI', 'COMM', 'IN-V0V'),
+            ('KINH', 'MOTIF', 'IN-KINH'),
+            ('IaIN', 'MOTIF', 'IN-IaIN'),
+            ('IIX', 'MOTIF', 'IN-IIe'),
+            ('IIIN', 'MOTIF', 'IN-IIi'),
+            ('IBIN', 'MOTIF', 'IN-IbIN'),
+            ('IBEXC', 'MOTIF', 'IN-Ib+'),
+            ('MN_', 'MN', 'MN'), ('RC_', 'RC', 'RC'),
+            ('Ia_', 'AFF', 'SN-Ia'), ('Ib_', 'AFF', 'SN-Ib'),
+            ('PF_IN_', 'PFIN', 'IN-PF')):
+        if name.startswith(pre):
+            return kind, t
+    if name.startswith('II_'):
+        return 'AFF', 'SN-II'
+    if name.startswith('PF_S'):        # syn6 synergy layer cells
+        return 'PF', None
+    if name.startswith('PF_'):         # w2lvar HIP/KNEE synergy cells
+        return 'PF', 'HC-PF-E' if '-E_' in name else 'HC-PF-F'
+    return 'OTHER', 'IN-C'
+
+
+def _stamp_variant_grps(nodes, spec):
+    """Layer groups for the variant templates (the walker stamping idea,
+    with the REAL network's label conventions: lowercase _r/_l sides,
+    PF_HIP-E_r / PF_S1_r / MN_vas_lat_r / RC_... / INI_r names). The
+    editor uses spec.groups + per-node grp verbatim for sidecar
+    templates (no stampWalkerGrps re-stamp), so this ruleset lives only
+    here."""
+    G = {'drive': 'Drive / balance inputs'}
+    for S in ('r', 'l'):
+        Su = S.upper()
+        G['rg_' + S] = 'Rhythm RG + lamination (%s)' % Su
+        G['pf_' + S] = 'Pattern formation (%s)' % Su
+        G['comm_' + S] = 'Commissural V-class (%s)' % Su
+        G['mech_' + S] = 'Contact / load mechano (%s)' % Su
+        G['motif_' + S] = 'Reflex motif INs (%s)' % Su
+        G['mn_' + S] = 'Motoneurons, per muscle (%s)' % Su
+        G['rc_' + S] = 'Renshaw (%s)' % Su
+        G['aff_' + S] = 'Afferents (%s)' % Su
+        G['mus_' + S] = 'Muscles (%s)' % Su
+    grp_of_kind = {'RG': 'rg', 'PFIN': 'pf', 'PF': 'pf', 'COMM': 'comm',
+                   'MECH': 'mech', 'MOTIF': 'motif', 'MN': 'mn',
+                   'RC': 'rc', 'AFF': 'aff'}
+    for nd in nodes:
+        if nd['type'] == 'MUSCLE':
+            base = nd['label'][:-len(' (pruned)')] \
+                if nd['label'].endswith(' (pruned)') else nd['label']
+            S = _v_side(base)
+            if S:
+                nd['grp'] = 'mus_' + S
+            continue
+        nm = nd['label']
+        if nm.startswith(('DRIVE', 'POSTURE', 'BAL_', 'BS_')):
+            nd['grp'] = 'drive'
+            continue
+        S = _v_side(nm)
+        kind = _v_kind(nm)[0]
+        gid = grp_of_kind.get(kind)
+        if gid and S:
+            nd['grp'] = gid + '_' + S
+    spec['groups'] = G
+    return spec
+
+
+def build_variant(variant):
+    """Build the variant network with its stage-5 winner params (the
+    exact merge of audit_replay_s1.py + the authoritative set_stage),
+    then harvest nodes + synapses off the built SNS object."""
+    import importlib
+    from collections import Counter
+    meta = VARIANT_META[variant]
+    # snapshot every params container the curriculum loaders touch
+    snap = (dict(_params.G), dict(_params.TAU),
+            {k: dict(v) for k, v in _params.W_PF_MN.items()},
+            dict(_params.W_POSTURE), dict(_params.PF_SHAPE),
+            dict(_params.BAL))
+    env0 = os.environ.get('AARL_NET')
+    try:
+        os.environ['AARL_NET'] = variant
+        prev = json.load(open(os.path.join(HERE,
+                                           'best_walk_params_v10.json'),
+                               encoding='utf-8'))
+        base = dict(prev['multipliers'])
+        base['renshaw'] = 0.5 if variant == 'w2lvar' else 0.0
+        if variant == 'syn6':
+            base['syn6'] = 1.0
+            base['syn6_brainstem'] = 0.0
+        cur = importlib.import_module('_curriculum_' + variant)
+        J = json.load(open(os.path.join(
+            HERE, 'curriculum_%s_stage5.json' % variant),
+            encoding='utf-8'))
+        p = {**base, **J['params']}
+        cur.set_stage(5, p)
+        import build_network as BN
+        import muscle_map as MM
+        acts = []
+        for b in MM._GROUPS_BY_NAME:
+            acts.append(b + '_r')
+            acts.append(b + '_l')
+        net = BN.build(acts)
+        nobj = net.net
+        counts = (nobj.get_num_neurons(), nobj.get_num_inputs_actual(),
+                  nobj.get_num_connections())
+        names = [q['name'] for q in nobj.populations]
+        conns = nobj.connections
+        # syn6 synergy families (E/F) per layer, for cell typing
+        fam = {}
+        for side, fams in (getattr(net, 'syn_families', {}) or {}).items():
+            for k, f in enumerate(fams):
+                fam['PF_S%d_%s' % (k + 1, side)] = f
+    finally:
+        (_params.G.update(snap[0]), _params.TAU.update(snap[1]))
+        for ph, tbl in snap[2].items():
+            _params.W_PF_MN[ph].update(tbl)
+        _params.W_POSTURE.update(snap[3])
+        _params.PF_SHAPE.update(snap[4])
+        _params.BAL.update(snap[5])
+        if env0 is None:
+            os.environ.pop('AARL_NET', None)
+        else:
+            os.environ['AARL_NET'] = env0
+    # ---- layout: per-(side, kind) column bands ----
+    side_x0 = {'s': 60, 'r': 60,          # 's' = shared (DRIVE/POSTURE/BAL)
+               'l': 60 + (len(_KIND_COL) + 1) * _W_COL + 120}
+    col_count = Counter()
+    for nm in names:
+        col_count[(_v_side(nm) or 's', _v_kind(nm)[0])] += 1
+    col_pos = Counter()
+    nodes = []
+    for nm in names:
+        kind, t = _v_kind(nm)
+        if t is None:
+            t = 'HC-PF-E' if fam.get(nm, 'E') == 'E' else 'HC-PF-F'
+        S = _v_side(nm) or 's'
+        key = (S, kind)
+        i = col_pos[key]
+        col_pos[key] += 1
+        cnt = col_count[key]
+        step = 40 if cnt > 24 else 70
+        x = side_x0[S] + (_KIND_COL.index(kind) if kind in _KIND_COL
+                          else len(_KIND_COL)) * _W_COL
+        nodes.append({'type': t, 'label': nm, 'x': x, 'y': 60 + i * step})
+    edges = []
+    for c in conns:
+        src = names[c['source']]
+        dst = names[c['destination']]
+        syn = c['params']
+        er = float(syn.get('reversal_potential', 0.0))
+        edges.append({
+            'from': src, 'to': dst,
+            'sign': 'exc' if er > -1e-6 else 'inh',
+            'gain': round(float(syn.get('max_conductance', 0.0)), 4),
+            'tag': _v_kind(src)[0] + '->' + _v_kind(dst)[0]})
+    # implied muscles (MuJoCo-side): MUSCLE node + mn_to_muscle edge per
+    # actuator; the six runner-pruned carry the walker ' (pruned)' mark
+    row = Counter()
+    for act in acts:
+        S = act[-1]
+        lbl = act + (' (pruned)' if act in _PRUNED_ACTS else '')
+        i = row[S]
+        row[S] += 1
+        nodes.append({'type': 'MUSCLE', 'label': lbl,
+                      'x': side_x0[S] + len(_KIND_COL) * _W_COL + 110,
+                      'y': 60 + i * 40})
+        edges.append({'from': 'MN_' + act, 'to': lbl, 'sign': 'exc',
+                      'gain': 1.0, 'tag': 'mn_to_muscle'})
+    spec = {'nodes': nodes, 'edges': edges, '_note': (
+        'HARVESTED from the REAL %s network (build_network_%s.py) with '
+        'its stage-5 curriculum winner params '
+        '(curriculum_%s_stage5.json trial %d, score %.1f; merged v10 '
+        'multipliers + variant pins through _curriculum_%s.set_stage — '
+        'the authoritative loader). Neurons/inputs/synapses = '
+        '%d/%d/%d (the goal-4 gate-b build counted the default-param '
+        'net at %s; the winner\u2019s rg_weak_exc>0 adds the 4 '
+        'RG<->RG weak-excitation edges). Selector: env '
+        'AARL_NET=%s.%s Edge tags are source->destination kind '
+        '(harvest cannot recover gain keys); MUSCLE nodes + '
+        'mn_to_muscle edges are implied; per-muscle motif fan-out '
+        '(Renshaw RC<->RC, antagonist IaIN/IIIN, autogenic afferents) '
+        'is the real built wiring. Deviations from Ben\u2019s rule '
+        'files: %s.') % (
+        variant, variant, variant, J['trial'], J['score'], variant,
+        counts[0], counts[1], counts[2], meta['gate_counts'], variant,
+        meta['extra'], meta['report'])}
+    return _stamp_variant_grps(nodes, spec)
+
+
 # ---------------------------------------------------------------- validate
 def validate(name, spec):
     errs = []
@@ -928,6 +1174,13 @@ def main():
                               '(GM/VL/SO/GA) -- autogenic, per Ben; '
                               'RG-E/IN-E/PF-E drive is the population '
                               'sum (shin2025_eq11).')}
+
+    # ---- 2026-09-25: the goal-4 VARIANT walkers (w2lvar / syn6) —
+    # generated LAST because their curriculum imports mutate params
+    # (snapshotted/restored inside build_variant): everything above
+    # must stay byte-identical on regeneration.
+    out['w2lvar'] = build_variant('w2lvar')
+    out['syn6'] = build_variant('syn6')
 
     for nm, spec in out.items():
         errs += validate(nm, spec)

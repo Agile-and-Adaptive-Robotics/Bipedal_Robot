@@ -114,3 +114,42 @@ Re-run during this write-up (~21:18–21:30): (a) `Get-ChildItem` stat of the ca
 - New code: `spinal\build_network_w2lvar.py`, `spinal\build_network_syn6.py`, `spinal\_curriculum_w2lvar.py`, `spinal\_curriculum_syn6.py`, `spinal\w2l_mujoco\` (M1–M6: parser, validators, builders, gates, `fix_joint_axes.py`), plan survey in `tmp\ref_survey.py`.
 - Winner jsons: `spinal\curriculum_{w2lvar,syn6}_stage{1..5}.json`; dbs `spinal\optuna_{w2lvar,syn6}.db`; chain npz `spinal\spinal_run_{w2lvar,syn6}.npz`.
 - SCONE results (5 self-contained dirs): `C:\Users\Ben Bolen\Documents\SCONE\results\260925.{130052,130211,130348,130428,130924}.*.R42\`.
+
+---
+
+## ADDENDUM (2026-09-25 late evening → 09-26 morning; Ben's review + figure pass)
+
+**Figures/gifs now exist** (`figs\`, one-line captions + regeneration commands in
+`figs\INDEX.md`): SCONE overfit/balance/tutorial plots; w2lvar + syn6 stage-5 kine
+overlays, traces, and the ten-stage score chart; `w2lvar_s5_walk.gif` (110-frame MuJoCo
+render) plus the W2L-port gifs (`w2l_air_stepping.gif`, `w2l_split_rg.gif`,
+`w2l_afferented_air.gif`, joint-vs-reference and supported-march figures). The variant
+stage-5 replays behind the figures reproduced their recorded scores bit-exactly.
+
+**Correction 1 — the AnimatLab walker protocol (Ben).** All three source models (Ben's
+W2L, Deng's, Li's) run with a **virtual walker** — the aproj's WalkingPath body: held for
+air stepping, then dropped onto the platform where the walker frame supports/guides the
+body (Deng and Li walk; Ben's 2023 model fell because it had no afferent feedback). M6's
+"unrigged stand fails / does not walk" verdict measured against *free* standing was the
+wrong rubric: the harness-supported march IS the walker analog (and the free-run fall
+matches Ben's own model's historical behavior). Still open: mine the WalkingPath params
+from the aproj and redo M6 as air-step → drop under the walker constraint → measure
+progression. The three measured M6 blockers (COM outside support polygon, ankle/heel-off
+latch, heel encoder never firing) stand as the reasons the contact-driven resets stay
+silent today.
+
+**Correction 2 — the frozen LEFT OpenSim reference (Ben caught it).**
+`kine_ref.load_reference()` cuts the left cycle at the first left GRF onset (t = 0.005 s)
+but the IK file starts at 0.50 s, so `np.interp` edge-fill freezes `ref['l']` for the
+first 39.6% of the left cycle. Scope: every `ref['l']`-based score since the per-side
+left reference landed (~`a4738f92`, Sep 21 — curr_s3* → s3k → the two variants). The v1
+(Sep 12) reference was right-leg-only and clean — which is why past overlays looked
+different. Proof: `figs\ref_left_bug_proof.png`; probe `tmp\probe_ref_flat.py`.
+**Open decision (Ben's call):** fix `kine_ref.py` (first onset pair fully inside IK
+coverage + assert) before easteregg2 generations, or keep for comparability with the
+recorded winners. Not yet applied. Full recipe for the easteregg2 continuation:
+`EASTEREGG2_HANDOFF.md` in this folder.
+
+**Editor:** `w2lvar` and `syn6` templates were added to the connectome block editor
+(2026-09-26; the editor is a snapshot of the architecture, not a live view — live traces
+are `neuro_scope.py` / `runner --scope`).
