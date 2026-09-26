@@ -941,3 +941,101 @@ muscle-to-sensory encoder paths terminate visibly on the sensory box.
 Until this sequence is completed, the current `circuit_literature` should
 not be described as visually final even though its compiled neural edge-class
 contract passes.
+
+## 2026-09-26 02:53 PDT — Dissertation organization checkpoint
+
+This is a recovery checkpoint for the active dissertation-editing session.
+The edits described here are local unless explicitly identified as earlier
+Overleaf work. Ben requested surgical changes and review before any further
+live Overleaf edits.
+
+### Completed local source edits
+
+- Expanded `sec:organization` in
+  `Documentation/Reports and Papers/Dissertation/ProofFinal/chapters/10-introduction.tex`
+  from short one-sentence chapter descriptions into full paragraphs.
+- Replaced placeholder-style chapter and appendix references with the actual
+  dissertation structure: Chapters 2--7 and Appendices A--C.
+- Added specific Methods, Results, and Discussion section numbers for the BPA
+  isometric-force characterization, isometric knee-torque tests, Sensory
+  Afferent Database, and neuromechanical modeling/control tools.
+- Reframed Chapter 6 as concrete research opportunities that future unnamed
+  researchers can pursue with the completed models, experimental methods,
+  software, and hardware framework. It no longer describes unfinished or
+  "remaining" dissertation work.
+- Corrected the nearby objective-2 cross-reference spacing with nonbreaking
+  spaces.
+- Preserved a review copy at
+  `Documentation/Reports and Papers/Dissertation/CHATGPT_staging_20260925/organization_proposal.tex`.
+
+The section numbers used in the organization text were verified against a
+fresh full build. The important mappings are Methods 3.2--3.11, Results
+4.1--4.6, and Discussion 5.1--5.8; the prose names the relevant subsets rather
+than pointing only to whole chapters.
+
+### Checks completed
+
+- ChkTeX: 0 findings for the edited introduction chapter.
+- LaCheck: 0 findings for the edited introduction chapter.
+- Full dissertation build completed successfully with MiKTeX using direct
+  `pdflatex`, `bibtex`, and repeated `pdflatex` passes.
+- Final build log contains no LaTeX errors, unresolved citations, unresolved
+  references, or rerun warnings.
+- Review PDF:
+  `Documentation/Reports and Papers/Dissertation/CHATGPT_staging_20260925/organization_check_build/main.pdf`.
+- The wrapper's `latexmk` route could not run because Perl is unavailable on
+  this host; the direct MiKTeX build succeeded, so this is a tooling limitation
+  rather than a source failure.
+
+### Earlier live Overleaf state — do not extend without Ben's approval
+
+- `10-introduction.tex` already has tracked edits from the earlier browser
+  session, including objective wording and references, future-work framing,
+  conclusion wording, and minor typo corrections.
+- `15-background.tex` has partial tracked edits: the SADb closing sentence and
+  simulation-tooling paragraph were revised, and the "State of the Art"
+  heading was commented out while its body remains. This is intentionally
+  recorded as partial, not complete.
+- No tracked changes were accepted or rejected and no comments were resolved.
+- Do not apply the new local organization-section text to Overleaf without an
+  explicit instruction from Ben for that action.
+
+### Deferred and next actions
+
+- Ben explicitly deferred the visual page-break/layout pass until the figures
+  and tables have been added. Do not spend time on final page-flow inspection
+  before that stage.
+- Temporary page renders exist under `tmp/pdfs/organization/`; they were not
+  used for a final visual judgment after the deferral.
+- No scientific model values were changed in this checkpoint.
+- During active work, append another checkpoint here after every meaningful
+  source change or long-running operation, and no less frequently than every
+  five minutes. Prefer roughly two- to three-minute checkpoints when edits are
+  moving quickly so a usage-limit interruption loses minimal context.
+
+## 2026-09-26 03:00 PDT — Chapter-specific figure-tree plan
+
+Ben requested one `figs` subfolder per numbered chapter and appendix, with a
+chapter-local `\graphicspath` declaration at the beginning of every chapter.
+The current figure tree is organized by `Aim1`, `Aim2`, `Balance`, and
+`Preliminary`, and several Methods figures use explicit paths that bypass the
+global `\graphicspath` in `main.tex`.
+
+The planned local-only restructuring is:
+
+- Create `figs/Introduction`, `figs/Background`, `figs/Methods`,
+  `figs/Results`, `figs/Discussion`, `figs/FutureWork`, `figs/Conclusion`,
+  `figs/AppendixA`, `figs/AppendixB`, and `figs/AppendixC`.
+- Move each used figure into the folder for the chapter that includes it;
+  keep companion source/render formats together.
+- Add a declaration such as `\graphicspath{{figs/Background/}}` immediately
+  after each `\chapter` command.
+- Simplify explicit Methods and Results figure paths to basenames so every
+  chapter resolves assets through its own declaration.
+- Remove the global Aim-based `\graphicspath` from `main.tex` after the chapter
+  declarations are in place.
+- Preserve empty chapter folders with `.gitkeep` until figures are added.
+- Compile and check missing-file/reference errors, but defer visual page-flow
+  inspection until figures and tables are complete, as Ben requested.
+
+No files had been moved when this checkpoint was written.
