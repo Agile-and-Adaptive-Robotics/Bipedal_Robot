@@ -172,6 +172,31 @@ Additionally, as the muscles produce more force, compliant components in the lim
 
 A local bracket frame was established at the attachment bracket. The $\hat{x}_{br}$ direction was aligned with the vector from the bracket reference point to the BPA attachment point and represents the stiffest direction of the bracket. The $\hat{y}_{br}$ direction was chosen to point in the posterior direction with respect to the tibia frame, corresponding to the primary cantilever bending direction (see Fig.~\ref{fig:bktFrame}), while the $\hat{z}_{br}$ direction completes the right-handed frame. The bracket stiffness matrix is modeled as a diagonal matrix to reflect independent stiffness components along its principal axes:
 
+For the two-rotation evaluator, the bracket frame was constructed from the vector joining the bracket origin to attachment point $\mathbf{p}_{A}$ or $\mathbf{p}_{B}$. The first rotation, through $\theta_z$ about the fixed space-frame axis $\hat z_s$, points the intermediate axis $\hat x_1$ toward the sagittal-plane projection $\mathbf{p}_{A/B}^{\mathrm{sag}}$. The second rotation, through $-\theta_y$ about the current axis $\hat y_1=\hat y_{br}$, brings the final bracket axis $\hat x_{br}$ into alignment with the full three-dimensional point vector. Figure~\ref{fig:xiFrameTransform} shows these geometric targets. The resulting orientation and homogeneous transform are
+
+\begin{equation}
+\mathbf{R}_{s,br}=\mathbf{R}_z(\theta_z)\mathbf{R}_y(\theta_y)^T,
+\qquad
+{}^{s}\mathbf{T}_{br}=
+\begin{bmatrix}
+\mathbf{R}_{s,br} & \mathbf{p}_{br}\\
+\mathbf{0}^{T} & 1
+\end{bmatrix}.
+\label{eq:bracket_frame_transform}
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[height=0.72\textheight]{xiFrameTransform.pdf}
+% ALT TEXT: Two vertically stacked diagrams construct the local bracket frame.
+% Panel A rotates about the fixed space z axis until the intermediate x axis
+% points toward the sagittal-plane projection of attachment point pA or pB.
+% Panel B rotates about the current y axis until the final bracket x axis points
+% directly toward the full three-dimensional attachment point.
+\caption[Two-rotation construction of the bracket frame]{Two-rotation construction of the bracket frame from attachment point $\mathbf{p}_{A}$ or $\mathbf{p}_{B}$. \textbf{(A)} Rotation through $\theta_z$ about fixed $\hat z_s$ aligns $\hat x_1$ with the point's sagittal-plane projection. \textbf{(B)} Rotation through $-\theta_y$ about current $\hat y_1=\hat y_{br}$ aligns $\hat x_{br}$ with the full point vector.}
+\label{fig:xiFrameTransform}
+\end{figure}
+
 \begin{equation}
 \mathbf{K}_{br} = 
 \begin{bmatrix}
@@ -196,37 +221,62 @@ Force that doesn't account for deformation is $\mathbf{F}$. The force applied to
 \label{eq:bktforcevector}
 \end{equation}
 
-where $\hat{\mathbf{u}} = [u_{x}, u_{y}, u_{z}]^{T}$ is the BPA force direction expressed in the bracket frame. The bracket deflection vector, $\boldsymbol{\epsilon}_{br}$, was calculated from Hooke's law as 
+where $\hat{\mathbf{u}} = [u_{x}, u_{y}, u_{z}]^{T}$ is the BPA force direction expressed in the bracket frame. The bracket deflection vector, $\boldsymbol{\eta}_{br}$, was calculated from Hooke's law as
 
-\begin{equation} \mathbf{F}' = \mathbf{K}_{br} \: \boldsymbol{\epsilon}_{br}
+\begin{equation} \mathbf{F}' = \mathbf{K}_{br} \: \boldsymbol{\eta}_{br}
 \label{eq:bktvectorhooke}
 \end{equation}
 
 Solving Eq. \ref{eq:bktvectorhooke} for the bracket deflection gives
 
 \begin{equation}
-\boldsymbol{\epsilon}_{br} = \mathbf{K}_{br}^{-1} \: \mathbf{F}' = \mathbf{C}_{br} \: \mathbf{F}'
+\boldsymbol{\eta}_{br} = \mathbf{K}_{br}^{-1} \: \mathbf{F}' = \mathbf{C}_{br} \: \mathbf{F}'
 \label{eq:bktdeflection}
 \end{equation}
 
 Substituting Eq. \ref{eq:bktforcevector} into Eq. \ref{eq:bktdeflection} gives
 
 \begin{equation}
-\boldsymbol{\epsilon}_{br} = \left\| \mathbf{F}' \right\| \mathbf{K}_{br}^{-1} \,\hat{\mathbf{u}}
+\boldsymbol{\eta}_{br} = \left\| \mathbf{F}' \right\| \mathbf{K}_{br}^{-1} \,\hat{\mathbf{u}}
 \label{eq:bktdeflectionforceunit}
 \end{equation}
 
 For the diagonal stiffness matrix in Eq. \ref{eq:bktstiffness}, Eq. \ref{eq:bktdeflection} is equivalent to the component-wise expression
 
 \begin{equation}
-\boldsymbol{\epsilon}_{br} = \begin{bmatrix} F'_{x,br}/\chi_{1} \\ F'_{y,br}/\chi_{2} \\ F'_{z,br}/\chi_{1} \end{bmatrix}
+\boldsymbol{\eta}_{br} = \begin{bmatrix} F'_{x,br}/\chi_{1} \\ F'_{y,br}/\chi_{2} \\ F'_{z,br}/\chi_{1} \end{bmatrix}
 \label{eq:bktcomponentdeflection}
 \end{equation}
 
-Although $\boldsymbol{\epsilon}_{br}$ is a three-dimensional deflection vector, the BPA force model depends on the scalar change in effective BPA length ($\delta$). Therefore, only the component of $\boldsymbol{\epsilon}_{br}$ along the BPA line of action directly changes the effective BPA length. This scalar bracket deflection is the projection of $\boldsymbol{\epsilon}_{br}$ onto $\hat{\mathbf{u}}$:
+Figure~\ref{fig:xiProjection} distinguishes the three-dimensional displacement of each bracket from the scalar displacement along the BPA force path. For bracket $j$, the displacement resolves into components $\eta_{1,j}$, $\eta_{2,j}$, and $\eta_{3,j}$ along the local bracket-frame basis, whereas only its projection $\delta_{br,j}$ along the corresponding force direction $\hat{\mathbf{u}}_j$ changes the actuator length. The two bracket projections act in series with the tendon elongation $\delta_{\mathrm{tendon}}$:
 
 \begin{equation}
-{\delta}_{br} = \hat{\mathbf{u}}^{T} \boldsymbol{\epsilon}_{br}
+\begin{aligned}
+\boldsymbol{\eta}_{br,j} &= \sum_{i=1}^{3}\eta_{i,j}\hat{e}_i^{(j)},\\
+\delta_{br,j} &= \hat{\mathbf{u}}_j^T\boldsymbol{\eta}_{br,j}, \qquad j\in\{1,2\},\\
+\delta_{\mathrm{series}} &= \delta_{br,1}+\delta_{\mathrm{tendon}}+\delta_{br,2}.
+\end{aligned}
+\label{eq:bracket_series_projection}
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[height=0.72\textheight]{xiProjection.pdf}
+% ALT TEXT: Two three-dimensional bracket coordinate frames, {br,1} and {br,2}, are
+% separated along a dashed actuator line. Equal-and-opposite force vectors point
+% from each bracket toward the other and satisfy F'_2=-F'_1. Each bracket has a
+% local deflection vector eta and a clearly offset scalar projection delta along
+% its force direction. The bracket-2 projection is shifted to the right of its
+% coordinate axes. Tendon elongation is collinear and contiguous with the
+% bracket-1 projection.
+\caption[Two-bracket deflection and force-path projection]{Two-bracket deflection and projection along the BPA force path. The force vectors at $\{br,1\}$ and $\{br,2\}$ point toward one another and satisfy $\mathbf{F}'_2=-\mathbf{F}'_1$. The bracket projections $\delta_{br,1}$ and $\delta_{br,2}$ are offset from the corresponding coordinate frames for clarity, and tendon elongation $\delta_{\mathrm{tendon}}$ continues collinearly from $\delta_{br,1}$. Colors follow a color-vision-deficiency-safe palette and are redundant with labels and line weights.}
+\label{fig:xiProjection}
+\end{figure}
+
+Although $\boldsymbol{\eta}_{br}$ is a three-dimensional deflection vector, the BPA force model depends on the scalar change in effective BPA length ($\delta$). Therefore, only the component of $\boldsymbol{\eta}_{br}$ along the BPA line of action directly changes the effective BPA length. This scalar bracket deflection is the projection of $\boldsymbol{\eta}_{br}$ onto $\hat{\mathbf{u}}$:
+
+\begin{equation}
+{\delta}_{br} = \hat{\mathbf{u}}^{T} \boldsymbol{\eta}_{br}
 \label{eq:bktprojecteddeflection}
 \end{equation}
 
@@ -315,6 +365,10 @@ The optimization algorithm was again \texttt{gamultiobj} in MATLAB. This time, t
 This initial identification was subsequently extended to the full archived test sets in two stages. First, the flexor model was given a second compliant bracket at the origin-side attachment (a hip-frame cantilever carrying the BPA origin), so that the compliance of both ends of the actuator path is represented; the stiffness pair $(\chi_{1}, \chi_{2})$ is shared by the two brackets in fixed axis assignments (Appendix~\ref{app:model_geometry}, Table~\ref{tab:app_stiffness_arrays}), leaving a three-term fit $(\chi_{0}, \chi_{1}, \chi_{2})$. The flexor fit was cross-validated over the five pinned-knee flexor tests, holding out the encoder-corrected \qty{47}{\cm} test as validation. Second, the extensor refit locked $(\chi_{1}, \chi_{2})$ to the flexor front values --- enforcing a single stiffness pair across the flexor and extensor configurations --- and solved only the extensor-specific terms $(\chi_{0}, \chi_{3})$ on the six-test extensor validation pool, with the extensor length offset allowed to take negative values. The bounds and the adopted values of both stages are recorded in Appendix~\ref{app:model_geometry} (Tables~\ref{tab:app_opt_bounds} and~\ref{tab:app_xi_values}); the fit outcomes are summarized in Section~\ref{sec:ongoing}.
 
 The goodness-of-fit metrics used to judge the optimization results are the root mean square error (RMSE), the fraction of variance unexplained (FVU), and the maximum absolute residual, each computed between the measured and predicted isometric torque over the tested range of motion.
+
+Each metric isolates a different aspect of disagreement between the two curves. RMSE reports the overall magnitude of the error and, when the curve shapes already agree, is dominated by the remaining level offset. FVU normalizes the error variance by the variance of the measured torque, making it scale-free: it asks whether the prediction reproduces the variation of the measurement rather than whether it is close in absolute units, is the complement of the Nash--Sutcliffe model efficiency \citep{nash_river_1970}, and takes values below one when the prediction outperforms the mean of the measurement itself. The maximum absolute residual is a worst-case local measure. A small shift of the predicted curve along the knee-angle axis produces large pointwise residuals where the torque gradient is steep and small residuals elsewhere, so this metric is sensitive to phase misalignment while responding only weakly to uniform level offsets.
+
+This interpretation follows the standard decomposition of curve-comparison error into offset, amplitude, and pattern components \citep{taylor_summarizing_2001}: the mean square error between two curves separates into the squared mean offset, an amplitude mismatch, and a residual shape term. An equivalent three-term formulation, splitting waveform similarity into offset, amplitude, and shape, underlies the linear fit method developed for clinical gait waveform comparison \citep{iosa_assessment_2014}. The metrics used here map onto this decomposition, with RMSE carrying the level disagreement, FVU the shape and amplitude agreement, and the maximum absolute residual serving as the phase-sensitive worst case. FVU is treated as the primary criterion because it is the only one of the three that is directly comparable across tests with different torque scales.
 
 \section{Optimization Algorithms and Cost Functions}\label{sec:optimization}
 

@@ -1,0 +1,34 @@
+== gate 1: model loads under mujoco 2.3.7 ==
+  [PASS] mj_loadXML  nbody=14 nq=8 nu=12 neq=0 ngeom=14
+  [PASS] mujoco version 2.3.7  2.3.7
+  [PASS] body count  nbody=14 (expected 14 incl. world)
+  [PASS] 8 hinge joints  njnt=8
+  [PASS] 12 muscle actuators  nu=12
+  [PASS] 14 tendons (12 muscle + 2 toe springs)  ntendon=14
+== gate 2: 2 s passive drop (timestep 0.001 s) ==
+  [PASS] passive drop finite (2 s, 2000 steps)  max|qpos|=0.3501, min foot height=2.9120 m
+  [FAIL] drop settles on ground (0 <= foot z < 0.1)  min foot z=2.9120 m
+== gate 3: 12 actuators finite resting lengths ==
+  [PASS] actuator_lengthrange finite + lo<hi for all 12  hip_L_flx[0.081,0.259]; hip_R_flx[0.130,0.290]; knee_L_flx[0.245,0.445]; ankle_L_ext[-0.775,1.225]; ankle_L_flx[-0.752,1.248]; knee_L_ext[0.260,0.420]; knee_R_ext[0.260,0.420]; ankle_R_ext[-0.775,1.225]; knee_R_flx[0.245,0.445]; ankle_R_flx[-0.752,1.248]; hip_R_ext[0.081,0.259]; hip_L_ext[0.130,0.290]
+  [PASS] tendon lengths finite at rest  rest lengths: 3.637 3.475 3.557 3.640 3.594 3.662 3.662 3.640 3.557 3.594 3.602 3.513 3.502 3.501
+== gate 4: joint ranges match aproj (deg->rad) ==
+  [PASS] joint ranges match  hip_L mj=[-0.261799,0.401426] src=[-0.261799,0.401426] dev=4.13e-11 | knee_L mj=[0.000000,1.047198] src=[0.000000,1.047198] dev=1.97e-10 | ankle_L mj=[-0.349066,-0.087266] src=[-0.349066,-0.087266] dev=1.13e-12 | toe_L unlimited (mj limited=False) | hip_R mj=[-0.261799,0.401426] src=[-0.261799,0.401426] dev=4.13e-11 | knee_R mj=[0.000000,1.047198] src=[0.000000,1.047198] dev=1.97e-10 | ankle_R mj=[-0.349066,-0.087266] src=[-0.349066,-0.087266] dev=1.13e-12 | toe_R unlimited (mj limited=False)
+== fidelity readback: body masses (aproj vs MJCF) ==
+  Root             aproj= 30.9910 kg  mjcf= 30.9910 kg  dev=0.00e+00
+  femur_L          aproj=  3.5000 kg  mjcf=  3.5000 kg  dev=0.00e+00
+  tibia_L          aproj=  1.5000 kg  mjcf=  1.5000 kg  dev=0.00e+00
+  foot_L           aproj=  0.4000 kg  mjcf=  0.4000 kg  dev=0.00e+00
+  toe_L            aproj=  0.0640 kg  mjcf=  0.0640 kg  dev=0.00e+00
+  femur_R          aproj=  3.5000 kg  mjcf=  3.5000 kg  dev=0.00e+00
+  tibia_R          aproj=  1.5000 kg  mjcf=  1.5000 kg  dev=0.00e+00
+  foot_R           aproj=  0.4000 kg  mjcf=  0.4000 kg  dev=0.00e+00
+  toe_R            aproj=  0.0640 kg  mjcf=  0.0640 kg  dev=0.00e+00
+  toe_L_contact    aproj=  0.0024 kg  mjcf=  0.0024 kg  dev=0.00e+00
+  foot_L_contact   aproj=  0.0096 kg  mjcf=  0.0096 kg  dev=0.00e+00
+  toe_R_contact    aproj=  0.0024 kg  mjcf=  0.0024 kg  dev=0.00e+00
+  foot_R_contact   aproj=  0.0096 kg  mjcf=  0.0096 kg  dev=0.00e+00
+  [PASS] body masses match  worst dev=0.00e+00 kg
+  total            aproj= 41.9430 kg  mjcf= 41.9430 kg
+
+RESULT: 11 passed, 1 failed
+  FAILED: drop settles on ground (0 <= foot z < 0.1)  min foot z=2.9120 m

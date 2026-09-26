@@ -314,6 +314,19 @@ G = dict(
     vest_ext=0.0,
     vest_flex_inh=0.0,
     vest_prop=0.0,
+    # ---- 2026-09-25 goal4 VARIANT SELECTOR (default 0 = stock build,
+    # byte-identical; regression gate 410/376/1186): > 0 routes
+    # build_network.build() to the 6-synergy variant builder
+    # build_network_syn6.py (one RG per side driving six synergy PF
+    # layers, Eq-18 W->conductance mapping). Env AARL_NET=syn6 selects
+    # the same variant without this key.
+    syn6=0.0,
+    # goal4 syn6 sub-key (default 0 = OFF): Shevtsova brainstem
+    # gamma/alpha cells folded onto the single DRIVE port. Measured
+    # E-latch in the full runner air run when ON at fixed 0.5 gains
+    # (reports_20260925/goal4_build_syn6.md) - the runner's
+    # descend_to_rg_e/f edges already carry the descending-drive role.
+    syn6_brainstem=0.0,
 )
 
 # Extra gains for the phase-reset pathways (not searched by default; the

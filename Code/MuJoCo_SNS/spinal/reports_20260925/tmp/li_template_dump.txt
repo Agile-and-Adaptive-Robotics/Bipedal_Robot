@@ -1,0 +1,158 @@
+=== NODES (58) ===
+{"type": "PORT-load", "label": "L tonic drive", "x": 270, "y": 80}
+{"type": "IN-InE", "label": "L_CPG inhabit", "x": 260, "y": 150}
+{"type": "HC-RG-E", "label": "L_CPG stance", "x": 100, "y": 150}
+{"type": "MUSCLE", "label": "L_ankle dorsiflexion", "x": 355, "y": 640}
+{"type": "MUSCLE", "label": "L_ankle plantarflexion", "x": 300, "y": 640}
+{"type": "MN", "label": "L_dorsiflexion MN", "x": 355, "y": 500}
+{"type": "HC-PF-F", "label": "L_dorsiflexion PF", "x": 355, "y": 275}
+{"type": "IN-PF", "label": "L_dorsiflexion inhabit", "x": 325, "y": 345}
+{"type": "SN-heel", "label": "L_foot ground contact", "x": 110, "y": 780}
+{"type": "SN-II", "label": "L_hip middle", "x": 220, "y": 780}
+{"type": "MUSCLE", "label": "L_hip stance", "x": 80, "y": 640}
+{"type": "MN", "label": "L_hip stance MN", "x": 80, "y": 500}
+{"type": "HC-PF-E", "label": "L_hip stance PF", "x": 80, "y": 275}
+{"type": "MUSCLE", "label": "L_hip swing", "x": 135, "y": 640}
+{"type": "IN-PF", "label": "L_hip swing Inhibit", "x": 105, "y": 345}
+{"type": "MN", "label": "L_hip swing MN", "x": 135, "y": 500}
+{"type": "HC-PF-F", "label": "L_hip swing PF", "x": 135, "y": 275}
+{"type": "MUSCLE", "label": "L_knee extension", "x": 190, "y": 640}
+{"type": "MN", "label": "L_knee extension MN", "x": 190, "y": 500}
+{"type": "HC-PF-E", "label": "L_knee extension PF", "x": 190, "y": 275}
+{"type": "IN-PF", "label": "L_knee extension inhabit", "x": 160, "y": 345}
+{"type": "MUSCLE", "label": "L_knee flexion", "x": 245, "y": 640}
+{"type": "MN", "label": "L_knee flexion MN", "x": 245, "y": 500}
+{"type": "HC-PF-F", "label": "L_knee flexion PF", "x": 245, "y": 275}
+{"type": "IN-PF", "label": "L_knee flexion inhibit", "x": 215, "y": 345}
+{"type": "MN", "label": "L_plantarflexion MN", "x": 300, "y": 500}
+{"type": "HC-PF-E", "label": "L_plantarflexion PF", "x": 300, "y": 275}
+{"type": "IN-PF", "label": "L_plantarflexion inhibit", "x": 270, "y": 345}
+{"type": "SN-toe", "label": "L_toe ground contact", "x": 165, "y": 780}
+{"type": "PORT-load", "label": "R tonic drive", "x": 850, "y": 80}
+{"type": "IN-InE", "label": "R_CPG inhabit", "x": 840, "y": 150}
+{"type": "HC-RG-E", "label": "R_CPG stance", "x": 680, "y": 150}
+{"type": "MUSCLE", "label": "R_ankle dorsiflexion", "x": 935, "y": 640}
+{"type": "MUSCLE", "label": "R_ankle plantarflexion", "x": 880, "y": 640}
+{"type": "MN", "label": "R_dorsiflexion MN", "x": 935, "y": 500}
+{"type": "HC-PF-F", "label": "R_dorsiflexion PF", "x": 935, "y": 275}
+{"type": "IN-PF", "label": "R_dorsiflexion inhibit", "x": 905, "y": 345}
+{"type": "SN-heel", "label": "R_foot ground contact", "x": 690, "y": 780}
+{"type": "SN-II", "label": "R_hip middle", "x": 800, "y": 780}
+{"type": "MUSCLE", "label": "R_hip stance", "x": 660, "y": 640}
+{"type": "MN", "label": "R_hip stance MN", "x": 660, "y": 500}
+{"type": "HC-PF-E", "label": "R_hip stance PF", "x": 660, "y": 275}
+{"type": "MUSCLE", "label": "R_hip swing", "x": 715, "y": 640}
+{"type": "IN-PF", "label": "R_hip swing Inhibit", "x": 685, "y": 345}
+{"type": "MN", "label": "R_hip swing MN", "x": 715, "y": 500}
+{"type": "HC-PF-F", "label": "R_hip swing PF", "x": 715, "y": 275}
+{"type": "MUSCLE", "label": "R_knee extension", "x": 770, "y": 640}
+{"type": "MN", "label": "R_knee extension MN", "x": 770, "y": 500}
+{"type": "HC-PF-E", "label": "R_knee extension PF", "x": 770, "y": 275}
+{"type": "IN-PF", "label": "R_knee extension inhibit", "x": 740, "y": 345}
+{"type": "MUSCLE", "label": "R_knee flexion", "x": 825, "y": 640}
+{"type": "MN", "label": "R_knee flexion MN", "x": 825, "y": 500}
+{"type": "HC-PF-F", "label": "R_knee flexion PF", "x": 825, "y": 275}
+{"type": "IN-PF", "label": "R_knee flexion inhibit", "x": 795, "y": 345}
+{"type": "MN", "label": "R_plantarflexion MN", "x": 880, "y": 500}
+{"type": "HC-PF-E", "label": "R_plantarflexion PF", "x": 880, "y": 275}
+{"type": "IN-PF", "label": "R_plantarflexion inhibit", "x": 850, "y": 345}
+{"type": "SN-toe", "label": "R_toe ground contact", "x": 745, "y": 780}
+=== EDGES (98) ===
+{"from": "L_hip stance PF", "to": "L_hip swing PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "R_foot ground contact", "to": "R_knee flexion inhibit", "sign": "exc", "gain": 8.0, "tag": "contact_drive"}
+{"from": "R_knee flexion MN", "to": "R_knee flexion", "sign": "exc", "gain": 8.0, "tag": "mn_to_muscle"}
+{"from": "R_CPG stance", "to": "L_hip swing PF", "sign": "exc", "gain": 1.0, "tag": "rg_commissural"}
+{"from": "R_knee extension PF", "to": "R_knee flexion PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "R_plantarflexion MN", "to": "R_ankle plantarflexion", "sign": "exc", "gain": 5.0, "tag": "mn_to_muscle"}
+{"from": "L_knee extension PF", "to": "L_knee flexion PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L_dorsiflexion inhabit", "to": "L_dorsiflexion PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L_knee flexion PF", "to": "L_knee flexion MN", "sign": "exc", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_hip swing PF", "to": "L_hip stance MN", "sign": "inh", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "R_hip stance PF", "to": "R_hip swing PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "R_plantarflexion inhibit", "to": "R_plantarflexion PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L_CPG inhabit", "to": "L_CPG stance", "sign": "inh", "gain": 1.0, "tag": "rg_laminate"}
+{"from": "L_foot ground contact", "to": "L_knee flexion inhibit", "sign": "exc", "gain": 8.0, "tag": "contact_drive"}
+{"from": "L_dorsiflexion PF", "to": "L_dorsiflexion MN", "sign": "exc", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_hip stance PF", "to": "L_hip stance MN", "sign": "exc", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_plantarflexion PF", "to": "L_plantarflexion MN", "sign": "exc", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_hip stance MN", "to": "L_hip stance", "sign": "exc", "gain": 5.0, "tag": "mn_to_muscle"}
+{"from": "L_plantarflexion MN", "to": "L_ankle plantarflexion", "sign": "exc", "gain": 5.0, "tag": "mn_to_muscle"}
+{"from": "L_CPG stance", "to": "L_hip stance PF", "sign": "exc", "gain": 1.0, "tag": "pf_drive"}
+{"from": "R_plantarflexion PF", "to": "R_dorsiflexion PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L_hip swing PF", "to": "L_hip swing MN", "sign": "exc", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "R_CPG stance", "to": "L_CPG stance", "sign": "inh", "gain": 1.0, "tag": "rg_commissural"}
+{"from": "R_knee flexion inhibit", "to": "R_knee flexion PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "R_knee extension PF", "to": "R_knee extension MN", "sign": "exc", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_knee flexion PF", "to": "L_knee extension PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L_hip stance PF", "to": "L_hip swing MN", "sign": "inh", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "R_hip stance PF", "to": "R_knee extension PF", "sign": "exc", "gain": 2.0, "tag": "pf_drive"}
+{"from": "R_hip stance PF", "to": "R_hip swing MN", "sign": "inh", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "R_plantarflexion PF", "to": "R_dorsiflexion MN", "sign": "inh", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "R_toe ground contact", "to": "R_dorsiflexion inhibit", "sign": "exc", "gain": 5.0, "tag": "contact_drive"}
+{"from": "R_hip stance PF", "to": "R_hip stance MN", "sign": "exc", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_CPG stance", "to": "R_hip swing PF", "sign": "exc", "gain": 1.0, "tag": "rg_commissural"}
+{"from": "R_knee flexion PF", "to": "R_knee flexion MN", "sign": "exc", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_knee extension PF", "to": "L_knee extension MN", "sign": "exc", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_knee extension PF", "to": "L_knee flexion MN", "sign": "inh", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_knee flexion MN", "to": "L_knee flexion", "sign": "exc", "gain": 8.0, "tag": "mn_to_muscle"}
+{"from": "L_toe ground contact", "to": "L_dorsiflexion inhabit", "sign": "exc", "gain": 5.0, "tag": "contact_drive"}
+{"from": "L_dorsiflexion MN", "to": "L_ankle dorsiflexion", "sign": "exc", "gain": 8.0, "tag": "mn_to_muscle"}
+{"from": "L_hip middle", "to": "L_knee flexion inhibit", "sign": "exc", "gain": 8.0, "tag": "ii_aff"}
+{"from": "R_hip swing Inhibit", "to": "R_hip swing PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L_knee flexion inhibit", "to": "L_knee flexion PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "R_plantarflexion PF", "to": "R_plantarflexion MN", "sign": "exc", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "R_hip stance MN", "to": "R_hip stance", "sign": "exc", "gain": 5.0, "tag": "mn_to_muscle"}
+{"from": "L_plantarflexion PF", "to": "L_dorsiflexion PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L_knee extension MN", "to": "L_knee extension", "sign": "exc", "gain": 8.0, "tag": "mn_to_muscle"}
+{"from": "L_foot ground contact", "to": "L_plantarflexion inhibit", "sign": "exc", "gain": 6.0, "tag": "contact_drive"}
+{"from": "R_hip swing MN", "to": "R_hip swing", "sign": "exc", "gain": 3.0, "tag": "mn_to_muscle"}
+{"from": "R_foot ground contact", "to": "R_hip swing Inhibit", "sign": "exc", "gain": 4.0, "tag": "contact_drive"}
+{"from": "R_knee extension MN", "to": "R_knee extension", "sign": "exc", "gain": 8.0, "tag": "mn_to_muscle"}
+{"from": "R_knee extension PF", "to": "R_knee flexion MN", "sign": "inh", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_hip swing Inhibit", "to": "L_hip swing PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "R_dorsiflexion PF", "to": "R_plantarflexion PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "R_dorsiflexion inhibit", "to": "R_dorsiflexion PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "R_knee flexion PF", "to": "R_knee extension PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L_plantarflexion PF", "to": "L_dorsiflexion MN", "sign": "inh", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "R_knee flexion PF", "to": "R_knee extension MN", "sign": "inh", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_foot ground contact", "to": "R_CPG inhabit", "sign": "exc", "gain": 6.0, "tag": "contact_drive"}
+{"from": "L_dorsiflexion PF", "to": "L_plantarflexion PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L_knee flexion PF", "to": "L_knee extension MN", "sign": "inh", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "R_knee extension inhibit", "to": "R_knee extension PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L_hip swing MN", "to": "L_hip swing", "sign": "exc", "gain": 3.0, "tag": "mn_to_muscle"}
+{"from": "R_foot ground contact", "to": "R_plantarflexion inhibit", "sign": "exc", "gain": 6.0, "tag": "contact_drive"}
+{"from": "L_hip swing PF", "to": "L_dorsiflexion PF", "sign": "exc", "gain": 1.0, "tag": "pf_drive"}
+{"from": "R_dorsiflexion MN", "to": "R_ankle dorsiflexion", "sign": "exc", "gain": 8.0, "tag": "mn_to_muscle"}
+{"from": "R_hip swing PF", "to": "R_dorsiflexion PF", "sign": "exc", "gain": 1.0, "tag": "pf_drive"}
+{"from": "R_hip swing PF", "to": "R_hip stance PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L_dorsiflexion PF", "to": "L_plantarflexion MN", "sign": "inh", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "R_dorsiflexion PF", "to": "R_dorsiflexion MN", "sign": "exc", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "R_hip swing PF", "to": "R_knee extension inhibit", "sign": "exc", "gain": 8.0, "tag": "pf_drive"}
+{"from": "R_CPG stance", "to": "R_hip stance PF", "sign": "exc", "gain": 1.0, "tag": "pf_drive"}
+{"from": "R_CPG inhabit", "to": "R_CPG stance", "sign": "inh", "gain": 1.0, "tag": "rg_laminate"}
+{"from": "R_hip swing PF", "to": "R_hip stance MN", "sign": "inh", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_hip swing PF", "to": "L_knee extension inhabit", "sign": "exc", "gain": 8.0, "tag": "pf_drive"}
+{"from": "R_hip swing PF", "to": "R_hip swing MN", "sign": "exc", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_knee extension inhabit", "to": "L_knee extension PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "R_hip middle", "to": "R_knee flexion inhibit", "sign": "exc", "gain": 8.0, "tag": "ii_aff"}
+{"from": "R_dorsiflexion PF", "to": "R_plantarflexion MN", "sign": "inh", "gain": 1.0, "tag": "pf_to_mn"}
+{"from": "L_hip stance PF", "to": "L_knee extension PF", "sign": "exc", "gain": 2.0, "tag": "pf_drive"}
+{"from": "L_CPG stance", "to": "R_CPG stance", "sign": "inh", "gain": 1.0, "tag": "rg_commissural"}
+{"from": "R_foot ground contact", "to": "L_CPG inhabit", "sign": "exc", "gain": 6.0, "tag": "contact_drive"}
+{"from": "L_foot ground contact", "to": "L_hip swing Inhibit", "sign": "exc", "gain": 4.0, "tag": "contact_drive"}
+{"from": "L_hip swing PF", "to": "L_hip stance PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L_plantarflexion inhibit", "to": "L_plantarflexion PF", "sign": "inh", "gain": 1.0, "tag": "pf_cross"}
+{"from": "L tonic drive", "to": "L_hip swing PF", "sign": "exc", "gain": 5.0, "tag": "other"}
+{"from": "R tonic drive", "to": "R_hip swing PF", "sign": "exc", "gain": 5.0, "tag": "other"}
+{"from": "L tonic drive", "to": "L_knee flexion PF", "sign": "exc", "gain": 5.0, "tag": "other"}
+{"from": "R tonic drive", "to": "R_knee flexion PF", "sign": "exc", "gain": 5.0, "tag": "other"}
+{"from": "R tonic drive", "to": "R_CPG stance", "sign": "exc", "gain": 6.0, "tag": "other"}
+{"from": "R tonic drive", "to": "R_plantarflexion PF", "sign": "exc", "gain": 5.0, "tag": "other"}
+{"from": "L tonic drive", "to": "L_knee extension PF", "sign": "exc", "gain": 5.0, "tag": "other"}
+{"from": "L tonic drive", "to": "L_CPG stance", "sign": "exc", "gain": 6.0, "tag": "other"}
+{"from": "L tonic drive", "to": "L_plantarflexion PF", "sign": "exc", "gain": 6.0, "tag": "other"}
+{"from": "R tonic drive", "to": "R_dorsiflexion PF", "sign": "exc", "gain": 5.0, "tag": "other"}
+{"from": "R tonic drive", "to": "R_hip stance PF", "sign": "exc", "gain": 5.0, "tag": "other"}
+{"from": "L tonic drive", "to": "L_dorsiflexion PF", "sign": "exc", "gain": 6.0, "tag": "other"}
+{"from": "R tonic drive", "to": "R_knee extension PF", "sign": "exc", "gain": 5.0, "tag": "other"}
+{"from": "L tonic drive", "to": "L_hip stance PF", "sign": "exc", "gain": 5.0, "tag": "other"}

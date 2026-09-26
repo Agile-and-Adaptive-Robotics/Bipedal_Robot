@@ -271,3 +271,42 @@ WORKING MODELS + CURRICULUM TUNING (running):
 - Runner regression gates re-verified after the curriculum edits:
   defaults (410, 376, 1186); ground eval bit-exact
   -160.23425729850192.
+
+## Reply 8 — the correction Ben is owed, and the editor bug fixes
+
+ON THE ARCHITECTURE CLAIM: Ben is right. What exists in the walker is
+a DEFAULT-OFF side variant (five new gain keys) plus a curriculum stage
+that explores it on top of the s3k winner. The production walker
+architecture is NOT his connectome: the per-micro-layer lamination INs
+of his drawing, the dedicated dorsiflexion chain, and heel -> InF
+excitatory are simplified (one shared PF_IN_E/F per side) or not built.
+Nothing should be phrased as "the working models follow the connectome
+rules" until the architecture itself is rebuilt to his drawing — that
+work is HIS to direct (he scheduled a morning chat for it; nothing was
+scheduled or run on his behalf). The stage-5 tuning run launched last
+night was STOPPED at his instruction; the study (curr_s5_pfvariant) is
+purged of the bad first seed and the curriculum code remains, resumable
+with `python _curriculum.py 5 <n>` if he wants it.
+
+EDITOR FIXES (his three reports, all reproduced and fixed):
+1. AFFERENTS PERSISTING ACROSS TABS: root cause found — entering a
+   subsystem replaced the canvas but leaving it only removed DOM
+   elements still referenced by the current context, so the sub's
+   nodes/wires stayed in the SVG FOREVER, floating over every other
+   tab (that was also the "synapses remain hanging"). Fix: canvas
+   cleanup now removes ALL node/edge elements from the world group
+   (clearCanvasDom / reloadCurrent). Verified: enter (6 nodes) ->
+   switch tab -> 0 stray DOM nodes.
+2. NO REAL WAY TO CLOSE: Esc now backs out of a subsystem, the
+   breadcrumb has an explicit "<- back out (F4)" button, and F4 /
+   double-click empty canvas still work. Regroup = Ctrl+G (pack
+   selection), Ctrl+Shift+G (unpack).
+3. HANGING SYNAPSES: packing no longer drops external wires — edges
+   that touched a packed node are RETARGETED to the subsystem node
+   (AnimatLab-style boundary ports), verified PF-E -> MN-VL becomes
+   PF-E -> TEST_SUB2 with the wire intact.
+Also cleaned the shared browser storage this session's testing had
+polluted (TEST_* models and duplicate pristine template tabs removed;
+his "Ben" and "Circuit rules — Ben" tabs untouched). If any stray
+template tabs remain in his tab bar after a reload, they are safe to
+close.

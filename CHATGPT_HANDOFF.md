@@ -73,6 +73,74 @@ laptop-session mining findings in `Testing_Data\2022_02_Festo\HANDOFF_laptop_202
 (For the spinal/SNS thread, `AGENTS.md` is MORE CURRENT than this file — read it too.
 All seven threads below are SECONDARY to THREAD 1, the dissertation, until submission.)
 
+## STATE UPDATE — 2026-09-25 (ZCode, EB475WS4). READ FIRST — focus: the Overleaf backlog
+
+The dissertation deadline is this week; this update covers ONLY the Overleaf work that still
+needs doing. The live working doc is unchanged: the "Handoff for ChatGPT (2026-09-23)"
+section at the top of `Documentation\Reports and Papers\Dissertation\summary.md` (verified
+still current 09-25), with one entry per ajh26 item below it. Its ground rules bind: NEVER
+modify Overleaf (files, tracked changes, comment resolves) unless Ben names the exact action
+in his message — assemble paste-ready blocks as PROPOSED entries in summary.md, Ben applies
+everything himself; no em-dashes in new prose; completed-work framing; every ledger entry
+carries a score marker; FLAG-BEN placeholders are Ben-only, never guessed.
+
+**First task unchanged — refresh the ajh26 inventory from the Overleaf Review panel
+(read-only).** Last verified 2026-09-16: 49 comments unresolved, 16/17 tracked changes
+accepted, one tracked deletion still pending ("spinal ", background L42 — entry B14
+recommends REJECTING it). Ben has been applying PROPOSED items since 09-16; your job is to
+determine what moved and update the ledger.
+
+**Upload backlog (assemble exact blocks in summary.md entries; Ben pastes and you verify):**
+1. **CPG parts A–D** from `CPG_spinal_section_draft.tex` + the `curr3i_*` figures (current
+   set, 6 files, in `CPG_airstepping_figs\`). The draft still has 8 `\fillme` slots
+   (verified 09-25). Run the PART D bib key-collision check BEFORE pasting the bib block.
+   Paste map + cautions: `CPG_DISSERTATION_UPDATE_NOTES.md`. Paste into OVERLEAF, never
+   ProofFinal (ProofFinal is a stale Sep-8 snapshot).
+2. **20-methods GoF paragraphs** (RMSE = level, FVU = shape, MaxR = phase; FVU primary) +
+   the three new bib keys `nash_river_1970` / `taylor_summarizing_2001` /
+   `iosa_assessment_2014` — present in the repo `Bibliography\thesis.bib` (verified 09-25)
+   but NOT yet in the Overleaf bib: without them the citations render [?].
+3. **B9 Steele-knee paragraph + `steeleknee.pdf`** (figure exists beside summary.md; the
+   paragraph itself is still pending in Overleaf).
+
+**Xi-figure items are DROPPED, not blocked (Ben, 09-25: "those figures were garbage").**
+The `xiFrameGeo`/`xiBalance`/`xiWrapLoss` figures and their generator
+(`make_xi_method_figures.m`) are gone from the repo entirely (repo-wide scan 09-25; they
+were never committed). Do NOT upload the Xi wire-in text from
+`ZCode_drafts\chapters\20-methods.tex` (fig:xiFrames / xiBalance / xiWrapLoss) and do not
+reference those figures anywhere; they get redone only if Ben asks.
+
+**Prose still OPEN to draft (no Ben dependency):** the X1 motivation expansion (2–3 pages,
+scientific framing); the full-paragraph Dissertation Organization variant ajh26 asked for
+(compare against the I5 summary-sentence version); the B- voice-consistency pass over the
+merged sections (background 2.6–2.8 after B15's distribution, results R1), flagging seams
+where source papers show through as new entries; the AI-writing-check rubric (unclaimed):
+em-dash density, hedge stacking, uniform sentence rhythm, AI lexicon, rule-of-three — run it
+over all PROPOSED text in summary.md and log findings as entry updates.
+
+**Submission gates (Ben-only):** the FLAG-BEN human-knee torque values in the chapters (the
+CPG draft itself contains none — verified 09-25); I4 (whole-paper-as-one-section imbalance)
+is Ben's call and affects the Dissertation Organization wording.
+
+**One science caution for any CPG prose (Ben, 09-25):** the simulated walker is NOT built to
+Ben's connectome — what shipped is a default-off five-key contact variant plus a stage-5
+exploration that Ben stopped. Never let dissertation text describe the model as "following
+Ben's connectome rules" until the architecture is rebuilt to his drawing (that rebuild is
+his to direct).
+
+**Everything non-Overleaf is SECONDARY until submission.** The 09-23 → 09-25 sim/editor
+state lives in `Code\MuJoCo_SNS\spinal\reports_20260923\` (index
+`EXEC_SUMMARY_20260923.md`) and `reports_20260924\` (index `overnight_report_20260924.md`)
+and in `AGENTS.md`. Standing flags for when you return to it: standing gate (410, 376, 1186)
+bit-exact at −160.23425729850192 (the old `_fullrules_test.py` −148.68… reference is STALE);
+v10-era `--fitted --bestN` winners no longer walk under current physics (only s3* winners
+current); curriculum renumbered (stage 3 = standing balance, stage 4 = ground walk, stage 5
+= PF variant, stopped at Ben's word, resumable `python _curriculum.py 5 <n>`); the 43-ref
+gait library is in `spinal\gait_refs\`; `w2l_cpg\` is ported but not yet connected to the
+92-muscle walker; Hyfydy is activated (expires 2026-10-24) and engines are NOT
+interchangeably tuned; MuJoCo 2.3.7/implicitfast/2 ms stays through the dissertation. No
+supervisor agents unless Ben asks; don't schedule chats for Ben.
+
 ## ACTIVE WORK D — SolidWorks → Simscape Multibody: knee-rig import + NATIVE BPA muscles (2026-09-16, laptop; Ben: "add to writeup for chatgpt so it can work on this")
 
 **Laptop-only thread** (DESKTOP-5Q16KE9): repo `C:\Users\Ben\Documents\GitHub\Bipedal_Robot`,

@@ -1,0 +1,11 @@
+n_trials=22 COMPLETE=22
+values: [-220.404, -320.0, -320.0, -320.0, -165.041, -275.389, -320.0, -246.082, -272.699, -276.807, -259.932, -259.74, -320.0, -172.106, -221.247, -274.801, -320.0, -320.0, -320.0, -248.248, -320.0, -320.0]
+nan(-400)=0  frozen(-320)=10  clip(-315)=0  real-kine(>-315)=12
+winner params: {'drive': 3.673956464399522, 'rg_nap_h': 0.727481015031494, 'desc_e': 1.0396154296911408, 'desc_f': 0.8557221254400125, 'rg_to_pf': 2.023556785575551, 'ia_to_mn': 0.6774482390030211, 'ia_to_antagonist': 0.5717383355475774, 'ii_to_mn': 0.4743492144141815, 'ib_to_mn_inh': 0.09330462385122945, 'rg_mutual_inh': 4.04818775302861, 'rg_weak_exc': 0.04072454394184721, 'pf_to_mn': 1.8080994357175642, 'contact_onset': 0.13385913776391267, 'contra_swing': 0.29793676986123196, 'ib_group_exc': 0.0865562477798675, 'ib_exc_to_mn': 0.5694527030323655}
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+REPRO: kine_score=-165.041 kz=0.8297 (kz_pen=False) tilt_max=27.72 (tilt_pen=False) duty=0.45971428571428574 recomputed_score=-165.040506 json_score=-165.040506 delta=0.000000
+exploit gate: PASS (real cycle pattern on the ground, not on a sentinel floor)

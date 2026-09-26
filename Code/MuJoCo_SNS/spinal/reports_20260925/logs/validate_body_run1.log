@@ -1,0 +1,10 @@
+== gate 1: model loads under mujoco 2.3.7 ==
+Traceback (most recent call last):
+  File "D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\validate_body.py", line 147, in <module>
+    sys.exit(main())
+  File "D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\validate_body.py", line 41, in main
+    model = mujoco.MjModel.from_xml_path(XML)
+ValueError: XML Error: Schema violation: unrecognized attribute: 'damp'
+
+Element 'muscle', line 122
+

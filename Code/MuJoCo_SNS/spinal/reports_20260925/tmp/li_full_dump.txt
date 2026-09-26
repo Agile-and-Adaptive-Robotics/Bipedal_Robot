@@ -1,0 +1,240 @@
+MODULE timestep(s): 0.0002  AHPeq: -0.07  CaEq: 0.2  SpikeStrength: 1  SpikePeak: 0  Refractory(s): 0.002
+
+=== SYNAPSE TYPES ===
+  18428088  'Non-Rectifying Synapse'         Electrical         eq=None g0=None decay=None
+  20f89ec5  'Hebbian ACh type'               SpikingChemical    eq=-0.01 g0=4e-007 decay=0.003
+  25b543b8  'Hyperpolarizing IPSP'           SpikingChemical    eq=-0.07 g0=1e-006 decay=0.01
+  2a16b385  'Rectifying Synapse'             Electrical         eq=None g0=None decay=None
+  431ab5ad  'Hyperpolarizing IPSP for IN'    SpikingChemical    eq=-0.07 g0=1e-006 decay=0.01
+  5ba94ba7  'Hyperpolarizing IPSP for CPG'   SpikingChemical    eq=-0.07 g0=1e-006 decay=0.01
+  6151f7d5  'Nicotinic ACh type'             NonSpikingChemical eq=-0.01 g0=None decay=None
+  9abe0492  'Depolarizing IPSP'              SpikingChemical    eq=-0.05 g0=5e-007 decay=0.003
+  9d61a511  'Hyperpolarising IPSP'           NonSpikingChemical eq=-0.07 g0=None decay=None
+  d0a1f522  'NMDA type'                      SpikingChemical    eq=-0.01 g0=1e-007 decay=0.05
+  e2f8c8d6  'Hyperpolarizing IPSP for joint' SpikingChemical    eq=-0.07 g0=1e-006 decay=0.01
+  e473b031  'Depolarising IPSP'              NonSpikingChemical eq=-0.055 g0=None decay=None
+  f9f68dc3  'Nicotinic ACh'                  SpikingChemical    eq=-0.01 g0=5e-007 decay=0.003
+
+=== NEURONS ===
+  'L_knee flexion inhibit'       {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_ankle MV2'                  {'cls': 'NonSpiking', 'rest': '-0.1', 'tc': '0.005', 'thr': '0.05', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_hip swing MN'               {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.059', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.09', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_hip  swing PF'              {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '5e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_dorsiflexion MN'            {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.059', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.09', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_knee extension MN'          {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.059', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.09', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_hip  swing PF'              {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '5e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_knee flexion inhibit'       {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_knee  flexion PF'           {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '5e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_foot ground contact'        {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_knee  flexion PF'           {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '5e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_knee MV2'                   {'cls': 'NonSpiking', 'rest': '-0.1', 'tc': '0.005', 'thr': '0.05', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_ankle MV1'                  {'cls': 'NonSpiking', 'rest': '-0.1', 'tc': '0.005', 'thr': '0.05', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_foot ground contact'        {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_hip swing MN'               {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.059', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.09', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_CPG stance'                 {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '6e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_hip MV2'                    {'cls': 'NonSpiking', 'rest': '-0.1', 'tc': '0.005', 'thr': '0.05', 'acc': '0.3', 'acctc': '0.06', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_plantarflexion PF'          {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '5e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_CPG inhabit'                {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_knee extension inhabit'     {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_knee extension inhibit'     {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_dorsiflexion MN'            {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.059', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.09', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_hip middle'                 {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_hip stance MN'              {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.059', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.09', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_knee extension PF'          {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '5e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_hip MV2'                    {'cls': 'NonSpiking', 'rest': '-0.1', 'tc': '0.005', 'thr': '0.05', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_CPG stance'                 {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '6e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_knee MV1'                   {'cls': 'NonSpiking', 'rest': '-0.1', 'tc': '0.005', 'thr': '0.05', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_hip middle'                 {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_toe ground contact'         {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_knee MV2'                   {'cls': 'NonSpiking', 'rest': '-0.1', 'tc': '0.005', 'thr': '0.05', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_plantarflexion PF'          {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '6e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_plantarflexion MN'          {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.059', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.09', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_dorsiflexion PF'            {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '5e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_hip  stance PF'             {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '5e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_ankle MV2'                  {'cls': 'NonSpiking', 'rest': '-0.1', 'tc': '0.005', 'thr': '0.05', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_dorsiflexion PF'            {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '6e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_knee extension PF'          {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '5e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_hip MVstance'               {'cls': 'NonSpiking', 'rest': '-0.1', 'tc': '0.005', 'thr': '0.05', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_hip stance MN'              {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.059', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.09', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_knee  flexion  MN'          {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.059', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.09', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_hip swing Inhibit'          {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_plantarflexion inhibit'     {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_dorsiflexion inhibit'       {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_dorsiflexion inhabit'       {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_knee MV1'                   {'cls': 'NonSpiking', 'rest': '-0.1', 'tc': '0.005', 'thr': '0.05', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_plantarflexion inhibit'     {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_CPG inhabit'                {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_hip MV1'                    {'cls': 'NonSpiking', 'rest': '-0.1', 'tc': '0.005', 'thr': '0.05', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_ankle MV1'                  {'cls': 'NonSpiking', 'rest': '-0.1', 'tc': '0.005', 'thr': '0.05', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_knee  flexion  MN'          {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.059', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.09', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_toe ground contact'         {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_plantarflexion MN'          {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.059', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.09', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_hip  stance PF'             {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0', 'acctc': '0.03', 'ahp_g': '1e-006', 'ahp_tc': '0.005', 'ca_g': '0', 'tonic': '5e-009', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'R_hip swing Inhibit'          {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.055', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.003', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+  'L_knee extension MN'          {'cls': 'Spiking', 'rest': '-0.06', 'tc': '0.005', 'thr': '-0.059', 'acc': '0.3', 'acctc': '0.01', 'ahp_g': '1e-006', 'ahp_tc': '0.09', 'ca_g': '0', 'tonic': '0', 'CaActivation': ('-0.03', '0.1'), 'CaDeactivation': ('-0.09', '-0.1')}
+
+=== CONNEXIONS (resolved, with per-link g) ===
+  'R_knee MV1' -> '4af3b0bb-66ff-48cc-bbd5-03d4fe5b3b8d'  [None] g=None
+  'L_hip  stance PF' -> 'L_hip  swing PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  '05907a42-87c9-482b-a4f5-dc8135f95835' -> 'L_hip middle'  [None] g=None
+  'R_foot ground contact' -> 'R_knee flexion inhibit'  [Depolarizing IPSP] g=8e-006
+  '5382cfb5-395f-4026-9814-4f1182c01359' -> 'R_hip middle'  [None] g=None
+  'R_knee  flexion  MN' -> 'R_knee MV2'  [Nicotinic ACh] g=8e-006
+  'R_CPG stance' -> 'L_hip  swing PF'  [Depolarizing IPSP] g=1e-006
+  'R_knee MV2' -> 'c53da069-ef79-4595-85e6-aff71e98633a'  [None] g=None
+  'R_knee extension PF' -> 'R_knee  flexion PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'R_plantarflexion MN' -> 'R_ankle MV1'  [Nicotinic ACh] g=5e-006
+  'L_knee extension PF' -> 'L_knee  flexion PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'L_dorsiflexion inhabit' -> 'L_dorsiflexion PF'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'L_knee  flexion PF' -> 'L_knee  flexion  MN'  [Nicotinic ACh] g=1e-006
+  'L_hip  swing PF' -> 'L_hip stance MN'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'R_hip  stance PF' -> 'R_hip  swing PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'R_ankle MV1' -> '7101d119-6b35-46e5-8ec9-469670f67900'  [None] g=None
+  'R_plantarflexion inhibit' -> 'R_plantarflexion PF'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'L_CPG inhabit' -> 'L_CPG stance'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'L_foot ground contact' -> 'L_knee flexion inhibit'  [Depolarizing IPSP] g=8e-006
+  'L_dorsiflexion PF' -> 'L_dorsiflexion MN'  [Nicotinic ACh] g=1e-006
+  'L_hip  stance PF' -> 'L_hip stance MN'  [Nicotinic ACh] g=1e-006
+  'L_plantarflexion PF' -> 'L_plantarflexion MN'  [Nicotinic ACh] g=1e-006
+  'L_hip stance MN' -> 'L_hip MVstance'  [Nicotinic ACh] g=5e-006
+  'L_plantarflexion MN' -> 'L_ankle MV1'  [Nicotinic ACh] g=5e-006
+  'L_CPG stance' -> 'L_hip  stance PF'  [Depolarizing IPSP] g=1e-006
+  'R_plantarflexion PF' -> 'R_dorsiflexion PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'L_hip  swing PF' -> 'L_hip swing MN'  [Nicotinic ACh] g=1e-006
+  'R_CPG stance' -> 'L_CPG stance'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'R_ankle MV2' -> 'ae6ce9bc-6ca6-4827-ad16-dc1f53c43ff8'  [None] g=None
+  'R_knee flexion inhibit' -> 'R_knee  flexion PF'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'bb560e30-7dd2-47a1-9aad-9226b8d57262' -> 'L_foot ground contact'  [None] g=None
+  'R_knee extension PF' -> 'R_knee extension MN'  [Nicotinic ACh] g=1e-006
+  'L_knee  flexion PF' -> 'L_knee extension PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'L_hip  stance PF' -> 'L_hip swing MN'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'R_hip  stance PF' -> 'R_knee extension PF'  [Depolarizing IPSP] g=2e-006
+  'R_hip  stance PF' -> 'R_hip swing MN'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'R_plantarflexion PF' -> 'R_dorsiflexion MN'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'R_toe ground contact' -> 'R_dorsiflexion inhibit'  [Depolarizing IPSP] g=5e-006
+  'R_hip  stance PF' -> 'R_hip stance MN'  [Nicotinic ACh] g=1e-006
+  'L_CPG stance' -> 'R_hip  swing PF'  [Depolarizing IPSP] g=1e-006
+  'R_knee  flexion PF' -> 'R_knee  flexion  MN'  [Nicotinic ACh] g=1e-006
+  'ef07ef3b-1b56-413f-b777-2267852a229b' -> 'L_toe ground contact'  [None] g=None
+  'L_knee extension PF' -> 'L_knee extension MN'  [Nicotinic ACh] g=1e-006
+  'L_ankle MV1' -> 'b71d0a02-a659-4e2a-896f-20706e094fb4'  [None] g=None
+  'L_knee extension PF' -> 'L_knee  flexion  MN'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'L_ankle MV2' -> '8e7924c6-16bb-45cb-acbb-be8a2af3e865'  [None] g=None
+  'L_knee  flexion  MN' -> 'L_knee MV2'  [Nicotinic ACh] g=8e-006
+  'L_toe ground contact' -> 'L_dorsiflexion inhabit'  [Depolarizing IPSP] g=5e-006
+  'L_dorsiflexion MN' -> 'L_ankle MV2'  [Nicotinic ACh] g=8e-006
+  'L_hip middle' -> 'L_knee flexion inhibit'  [Depolarizing IPSP] g=8e-006
+  'R_hip swing Inhibit' -> 'R_hip  swing PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'L_knee flexion inhibit' -> 'L_knee  flexion PF'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'R_plantarflexion PF' -> 'R_plantarflexion MN'  [Nicotinic ACh] g=1e-006
+  'R_hip stance MN' -> 'R_hip MV1'  [Nicotinic ACh] g=5e-006
+  'L_plantarflexion PF' -> 'L_dorsiflexion PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'L_knee extension MN' -> 'L_knee MV1'  [Nicotinic ACh] g=8e-006
+  'L_foot ground contact' -> 'L_plantarflexion inhibit'  [Depolarizing IPSP] g=6e-006
+  'L_knee MV2' -> 'bfdd87ed-4184-4481-94d8-6a6969fc27f7'  [None] g=None
+  'R_hip swing MN' -> 'R_hip MV2'  [Nicotinic ACh] g=3e-006
+  'R_foot ground contact' -> 'R_hip swing Inhibit'  [Depolarizing IPSP] g=4e-006
+  'R_knee extension MN' -> 'R_knee MV1'  [Nicotinic ACh] g=8e-006
+  'R_knee extension PF' -> 'R_knee  flexion  MN'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'L_knee MV1' -> '97e6ab65-f3a4-4c55-8974-d79bac9d993f'  [None] g=None
+  'L_hip swing Inhibit' -> 'L_hip  swing PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'R_dorsiflexion PF' -> 'R_plantarflexion PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'R_dorsiflexion inhibit' -> 'R_dorsiflexion PF'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'R_knee  flexion PF' -> 'R_knee extension PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'R_hip MV1' -> '0e755245-af55-4909-b5e4-7772d75bdb44'  [None] g=None
+  '79b63baa-a6ba-459f-8756-2a25e6c9c99e' -> 'R_toe ground contact'  [None] g=None
+  'L_plantarflexion PF' -> 'L_dorsiflexion MN'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'R_knee  flexion PF' -> 'R_knee extension MN'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'L_foot ground contact' -> 'R_CPG inhabit'  [Depolarizing IPSP] g=6e-006
+  'L_dorsiflexion PF' -> 'L_plantarflexion PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'L_knee  flexion PF' -> 'L_knee extension MN'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'R_knee extension inhibit' -> 'R_knee extension PF'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'R_hip MV2' -> '493a9b85-e8a2-4c1a-90a3-91e13ceec1ee'  [None] g=None
+  'L_hip swing MN' -> 'L_hip MV2'  [Nicotinic ACh] g=3e-006
+  'R_foot ground contact' -> 'R_plantarflexion inhibit'  [Depolarizing IPSP] g=6e-006
+  'L_hip  swing PF' -> 'L_dorsiflexion PF'  [Depolarizing IPSP] g=1e-006
+  'R_dorsiflexion MN' -> 'R_ankle MV2'  [Nicotinic ACh] g=8e-006
+  'R_hip  swing PF' -> 'R_dorsiflexion PF'  [Depolarizing IPSP] g=1e-006
+  'R_hip  swing PF' -> 'R_hip  stance PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'L_dorsiflexion PF' -> 'L_plantarflexion MN'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'R_dorsiflexion PF' -> 'R_dorsiflexion MN'  [Nicotinic ACh] g=1e-006
+  'R_hip  swing PF' -> 'R_knee extension inhibit'  [Depolarizing IPSP] g=8e-006
+  'R_CPG stance' -> 'R_hip  stance PF'  [Depolarizing IPSP] g=1e-006
+  'R_CPG inhabit' -> 'R_CPG stance'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'L_hip MVstance' -> '8d0e1d69-2e08-4b55-a4d8-3d4ff49f2749'  [None] g=None
+  'R_hip  swing PF' -> 'R_hip stance MN'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'L_hip  swing PF' -> 'L_knee extension inhabit'  [Depolarizing IPSP] g=8e-006
+  'R_hip  swing PF' -> 'R_hip swing MN'  [Nicotinic ACh] g=1e-006
+  'L_knee extension inhabit' -> 'L_knee extension PF'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'ce1fdf21-5361-4743-8c81-8e21d196614a' -> 'R_foot ground contact'  [None] g=None
+  'R_hip middle' -> 'R_knee flexion inhibit'  [Depolarizing IPSP] g=8e-006
+  'R_dorsiflexion PF' -> 'R_plantarflexion MN'  [Hyperpolarizing IPSP for IN] g=1e-006
+  'L_hip MV2' -> '5005676e-fcb1-48f1-b06a-11d9755de4e1'  [None] g=None
+  'L_hip  stance PF' -> 'L_knee extension PF'  [Depolarizing IPSP] g=2e-006
+  'L_CPG stance' -> 'R_CPG stance'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'R_foot ground contact' -> 'L_CPG inhabit'  [Depolarizing IPSP] g=6e-006
+  'L_foot ground contact' -> 'L_hip swing Inhibit'  [Depolarizing IPSP] g=4e-006
+  'L_hip  swing PF' -> 'L_hip  stance PF'  [Hyperpolarizing IPSP for CPG] g=1e-006
+  'L_plantarflexion inhibit' -> 'L_plantarflexion PF'  [Hyperpolarizing IPSP for IN] g=1e-006
+
+=== ADAPTERS (with subnode gains) ===
+  ADAPTER '1' (PhysicalToNodeAdapter) id=05907a42-87c9-482b-a4f5-dc8135f95835
+    (no subnodes)
+  ADAPTER 'R_hip adaptor 1' (NodeToPhysicalAdapter) id=0e755245-af55-4909-b5e4-7772d75bdb44
+    (no subnodes)
+  ADAPTER 'R_hip adaptor2' (NodeToPhysicalAdapter) id=493a9b85-e8a2-4c1a-90a3-91e13ceec1ee
+    (no subnodes)
+  ADAPTER 'R_knee adaptor 1' (NodeToPhysicalAdapter) id=4af3b0bb-66ff-48cc-bbd5-03d4fe5b3b8d
+    (no subnodes)
+  ADAPTER '5' (NodeToPhysicalAdapter) id=5005676e-fcb1-48f1-b06a-11d9755de4e1
+    (no subnodes)
+  ADAPTER '2' (PhysicalToNodeAdapter) id=5382cfb5-395f-4026-9814-4f1182c01359
+    (no subnodes)
+  ADAPTER '2' (NodeToPhysicalAdapter) id=7101d119-6b35-46e5-8ec9-469670f67900
+    (no subnodes)
+  ADAPTER '10' (PhysicalToNodeAdapter) id=79b63baa-a6ba-459f-8756-2a25e6c9c99e
+    (no subnodes)
+  ADAPTER '6' (NodeToPhysicalAdapter) id=8d0e1d69-2e08-4b55-a4d8-3d4ff49f2749
+    (no subnodes)
+  ADAPTER '1' (NodeToPhysicalAdapter) id=8e7924c6-16bb-45cb-acbb-be8a2af3e865
+    (no subnodes)
+  ADAPTER '4' (NodeToPhysicalAdapter) id=97e6ab65-f3a4-4c55-8974-d79bac9d993f
+    (no subnodes)
+  ADAPTER '1' (NodeToPhysicalAdapter) id=ae6ce9bc-6ca6-4827-ad16-dc1f53c43ff8
+    (no subnodes)
+  ADAPTER '2' (NodeToPhysicalAdapter) id=b71d0a02-a659-4e2a-896f-20706e094fb4
+    (no subnodes)
+  ADAPTER '4' (PhysicalToNodeAdapter) id=bb560e30-7dd2-47a1-9aad-9226b8d57262
+    (no subnodes)
+  ADAPTER '3' (NodeToPhysicalAdapter) id=bfdd87ed-4184-4481-94d8-6a6969fc27f7
+    (no subnodes)
+  ADAPTER 'R_knee adaptor 2' (NodeToPhysicalAdapter) id=c53da069-ef79-4595-85e6-aff71e98633a
+    (no subnodes)
+  ADAPTER '12' (PhysicalToNodeAdapter) id=ce1fdf21-5361-4743-8c81-8e21d196614a
+    (no subnodes)
+  ADAPTER '6' (PhysicalToNodeAdapter) id=ef07ef3b-1b56-413f-b777-2267852a229b
+    (no subnodes)
+
+=== CONTACT SENSOR bodies (RigidBody nodes w/ ContactSensor) ===
+  'L_toe ground' id=7b4a513a-ecb2-489e-b148-c7a4296d4ebb partid=a9e22d9e-86c4-4cdf-a052-bd4f9f26f5e6
+  'R_toe ground' id=ac513411-6de4-4eb2-adce-7bac88aeca36 partid=a5039b39-1b33-46a7-b215-32c7928d9caa
+  'L_foot ground' id=b8d0299a-7557-46ff-bb2e-9eb707a60d3c partid=fd58c11d-cfd1-482f-8f63-73b7193e40c9
+  'R_foot ground' id=bc07a067-2a6a-44c9-9582-6885ec545d43 partid=c640122b-779e-497f-9f0a-7b3667d4c57b
+
+=== JOINT nodes ===
+  'R_hip' id=1e29f8c7-62f7-418e-9f0b-519bec9d34e2 partid=1eb89987-6c6d-4668-ae19-3701b63de615
+  'L_hip' id=a9e0a977-d032-4d66-b7fe-ad749c9cc541 partid=971e98a5-7bf3-4088-ad43-787fd141daed
+
+=== MUSCLE nodes (behavior) ===
+  'R_hip stance' id=0835e5e1-b34c-4d95-b019-26da2424b559 partid=1704710c-9aed-4778-8b5f-e2b2e9ea6080
+  'R_ankle plantarflexion ' id=12691007-738e-4429-a927-9aa8cfd371cf partid=c3311d5c-774a-4a38-a722-820539d28981
+  'L_knee  flexion ' id=2b5c58ce-40fe-4f2a-9a45-74952e00d883 partid=2b4761e8-186c-466b-b5c7-8d9359de0525
+  'L_ankle plantarflexion ' id=3c7d0a82-a0a4-4f8e-aed5-b40165b8c0bc partid=b12ca7b0-7242-417e-9ce0-2fdabb6b56f9
+  'R_knee  flexion ' id=4b0cdf87-2c07-4473-b5a7-1006f0225fa3 partid=ab982010-58ae-423f-8324-ef2041ecc614
+  ' R_hip swing' id=51569df3-a8c4-4fd4-996a-691a5a0eb870 partid=92c80f34-50d1-4e5f-8b4f-c6d7e46e162a
+  ' L_hip swing' id=52f07ede-884c-4aa4-bae0-7623d6f91a0b partid=13a0bcbd-6837-47d0-8a30-f9627b50be9b
+  'L_knee extension' id=5b4fe4db-abba-438f-bf71-8b4887accacd partid=c7d73eb3-943b-4986-9231-2990503447e6
+  'R_ankle dorsiflexion' id=7434c581-a101-4f32-b623-347c636d7814 partid=6014988f-d80a-445e-9479-3fa23c85288b
+  'L_ankle dorsiflexion' id=79351546-b548-492e-8d09-3ad9c65baf39 partid=9765f0b1-f642-4b16-a5aa-348dc1e6228b
+  'R_knee extension' id=a44fe174-a9f1-4911-a987-40e241f1b162 partid=438315cb-1fdf-4e0d-a9b8-1070857b76ac
+  'L_hip stance' id=f3825461-eea7-4f03-9c39-b0acf8cc8c8a partid=aca81da1-fab7-4dfa-be37-01858f75012b

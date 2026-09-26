@@ -1015,6 +1015,20 @@ def build(model_actuators: list[str], dt: float = DT,
     interleg=False removes all cross-side RG coupling (independent
     half-centers per leg - the deafferented air-stepping preparation).
     """
+    # VARIANT SELECTOR (2026-09-25 goal4, default-inert): with the env
+    # var unset the standard build below runs byte-identically to
+    # before; AARL_NET=w2lvar routes to the Walker_2_Layer_CPG-layout
+    # variant (build_network_w2lvar.py); AARL_NET=syn6 (or G["syn6"] > 0,
+    # default 0) routes to the 6-synergy variant (build_network_syn6.py).
+    # The lazy import keeps the default path free of any variant code.
+    import os as _os
+    _aarl_net = _os.environ.get("AARL_NET", "").strip().lower()
+    if _aarl_net == "w2lvar":
+        import build_network_w2lvar as _w2lvar
+        return _w2lvar.build(model_actuators, dt=dt, interleg=interleg)
+    if _aarl_net == "syn6" or G.get("syn6", 0.0) > 0.0:
+        import build_network_syn6 as _syn6
+        return _syn6.build(model_actuators, dt=dt, interleg=interleg)
     muscles: dict[str, MuscleInfo] = {}
     for act in model_actuators:
         mi = classify(act)

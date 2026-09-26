@@ -851,6 +851,31 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     as-is); stage 5 unchanged; set_stage/objective/main renumbered,
     smoke-verified (stage-3 vest loaders, stage-4 walk loaders with
     joint_pf 0, stage-5 variant loaders).**
+    **2026-09-25 EARLY AM — CORRECTION BEN IS OWED + EDITOR LEAK FIX:**
+    (1) Ben called out the architecture claim: the walker is NOT his
+    connectome — what shipped is a default-off five-key variant + a
+    stage-5 exploration on s3k; his per-micro-layer lamination,
+    dorsiflexion chain, heel→InF-exc are simplified or absent. DO NOT
+    phrase the working models as "following his connectome rules" until
+    the architecture itself is rebuilt to his drawing — that work is
+    HIS to direct (he scheduled the morning chat himself; no agent
+    scheduling). The stage-5 tuning run was STOPPED at his word
+    (curr_s5_pfvariant purged of a bad first seed — SEEDING TRAP: the
+    stage-3 else-branch mid-range defaults must stay elif(1,2,3) or
+    they leak into the stage-5 seed; resumable via
+    `python _curriculum.py 5 <n>` against the renumbered stage 5).
+    (2) EDITOR v3.3 leak fix (Ben's reports, root-caused): entering a
+    subsystem orphaned its DOM on exit — its afferents/wires floated
+    over EVERY tab ("afferents persist when I change tabs", "synapses
+    hanging"). clearCanvasDom now removes ALL .node/.edge elements from
+    the world group; reloadCurrent uses it too. Esc + a visible
+    "◀ back out (F4)" crumb button close a subsystem; pack RETARGETS
+    boundary wires to the SUB node (no dropped/hanging edges).
+    Browser-verified: enter→switch tab→0 stray DOM nodes; Esc exits;
+    PF-E→MN-VL retargets to the subsystem node. GOTCHA: editor
+    localStorage is PER-ORIGIN — agent test tabs share the storage
+    Ben's page loads; clean TEST_* artifacts and duplicate pristine
+    template tabs after testing and have Ben reload the page once.
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the

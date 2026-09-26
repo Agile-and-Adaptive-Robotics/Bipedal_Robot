@@ -1,0 +1,1912 @@
+{
+ "aproj": "D:\\Github\\Bipedal_Robot\\Neuromechanical_Models\\Walker_2_Layer_CPG\\Walker_2_Layer_CPG.aproj",
+ "timestep": 0.001,
+ "gravity": -9.8,
+ "materials": {
+  "09bccf17-3f71-4b1b-b397-53550cb1bd6b": {
+   "name": "smooth",
+   "friction_linear_primary": 0.0
+  },
+  "DEFAULTMATERIAL": {
+   "name": "Default",
+   "friction_linear_primary": 1.0
+  },
+  "f9d84949-3fe9-48fd-bade-5e3432c034cd": {
+   "name": "foot",
+   "friction_linear_primary": 100000.0
+  }
+ },
+ "bodies": [
+  {
+   "name": "hip_L_flx_rec",
+   "id": "030c9c8f-00a6-449a-936f-e9026ce88971",
+   "type": "LinearHillStretchReceptor",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4539999999999997,
+    0.99298,
+    0.0
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "hip_L_flx",
+   "id": "13a0bcbd-6837-47d0-8a30-f9627b50be9b",
+   "type": "LinearHillMuscle",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4539999999999997,
+    0.99298,
+    0.0
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "hip_R_flx",
+   "id": "1704710c-9aed-4778-8b5f-e2b2e9ea6080",
+   "type": "LinearHillMuscle",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4539999999999997,
+    0.99298,
+    0.0
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "knee_L_ext_rec",
+   "id": "024b7cd1-58a0-4514-ac88-cf3df9179886",
+   "type": "LinearHillStretchReceptor",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4841768199999996,
+    0.7246715499999999,
+    0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "femur_L_f",
+   "id": "288cd16b-456f-4bc4-93a6-80515d842676",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4386218690243284,
+    0.7861587134565273,
+    0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "femur_L",
+   "pos_local_al": [
+    0.0348804,
+    0.0681122,
+    0.0
+   ]
+  },
+  {
+   "name": "knee_L_flx",
+   "id": "2b4761e8-186c-466b-b5c7-8d9359de0525",
+   "type": "LinearHillMuscle",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4841768199999996,
+    0.7246715499999999,
+    0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "knee_L_flx_rec",
+   "id": "42ac990b-9cff-4ced-80ee-8d45a5ebc465",
+   "type": "LinearHillStretchReceptor",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4841768199999996,
+    0.7246715499999999,
+    0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "femur_L_b",
+   "id": "a056d4c3-dbcd-4528-8fad-1ed12c1fc855",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.506766454043225,
+    0.8016496658304322,
+    0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "femur_L",
+   "pos_local_al": [
+    -0.0348804,
+    0.0722445,
+    0.0
+   ]
+  },
+  {
+   "name": "femur_L_f_low",
+   "id": "be39d02d-fbdd-4ff2-a016-2d3db5eef30a",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4497664617652957,
+    0.7189643807609791,
+    0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "femur_L",
+   "pos_local_al": [
+    0.0348804,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "ankle_L_flx_rec",
+   "id": "07786a9f-16a4-43ac-a412-1ce40deac0cb",
+   "type": "LinearHillStretchReceptor",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5545338908128046,
+    0.3004661498061179,
+    0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "tibia_L_b",
+   "id": "7a174733-54b4-408a-86b3-d045d9c51a89",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5702683295898634,
+    0.39608635899131545,
+    0.060018686587534315
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "tibia_L",
+   "pos_local_al": [
+    -0.0359273,
+    0.0,
+    -0.09
+   ]
+  },
+  {
+   "name": "tibia_L_b_low",
+   "id": "86b34362-4b2a-4689-a334-4e707ec367d0",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.587679054344697,
+    0.3112239209268872,
+    0.059999999866033195
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 6.938893903907228e-18,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "tibia_L",
+   "pos_local_al": [
+    -0.034683000000000005,
+    -1.057e-06,
+    -0.003379
+   ]
+  },
+  {
+   "name": "foot_L_f",
+   "id": "16ea0a45-9831-4736-9345-a3cef8606b70",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5583131401944086,
+    0.0715324405000119,
+    0.06000652940064616
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 2.0,
+   "site_parent": "foot_L",
+   "pos_local_al": [
+    0.03,
+    0.0,
+    -0.0299756
+   ]
+  },
+  {
+   "name": "toe_L_spring",
+   "id": "223b87b7-6fc2-46df-b6fa-0c94d377cd58",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5007765139682596,
+    0.05686849771943865,
+    0.060008187639145186
+   ],
+   "freeze": "False",
+   "collision": "False",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0,
+   "site_parent": "toe_L",
+   "pos_local_al": [
+    0.005,
+    -0.02,
+    0.0
+   ]
+  },
+  {
+   "name": "toe_L_contact",
+   "id": "a9e22d9e-86c4-4cdf-a052-bd4f9f26f5e6",
+   "type": "Box",
+   "mass_kg": 0.0024,
+   "lwh_al": [
+    0.015,
+    0.08,
+    0.002
+   ],
+   "pos_world_al": [
+    -3.4985749987110406,
+    0.02612524975673959,
+    0.05999587660466689
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "foot",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "toe_L",
+   "id": "50be02bd-0254-4762-9d3a-7c204fd6db8a",
+   "type": "Box",
+   "mass_kg": 0.064,
+   "lwh_al": [
+    0.04,
+    0.08,
+    0.02
+   ],
+   "pos_world_al": [
+    -3.506615482995549,
+    0.0370971004693465,
+    0.05999991471947232
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "foot",
+   "pos_check_dev_m": 1.3877787809430044e-17,
+   "rot_check_dev": 5.786508708204333e-06,
+   "joint": {
+    "name": "toe_L",
+    "enable_limits": false,
+    "lower_deg": 0.0,
+    "upper_deg": 0.0,
+    "anchor_world_al": [
+     -3.526597732747118,
+     0.037940507222942066,
+     0.05999927617130041
+    ],
+    "axis_world_al": [
+     -0.00014587817365172722,
+     0.0006160175136714398,
+     -0.9999998825706476
+    ]
+   }
+  },
+  {
+   "name": "foot_L_spring",
+   "id": "673a9b05-a589-4964-8957-6a490b7c7ec1",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.588992354030124,
+    0.06389685547778305,
+    0.06000397305986737
+   ],
+   "freeze": "False",
+   "collision": "False",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0,
+   "site_parent": "foot_L",
+   "pos_local_al": [
+    0.0,
+    0.0,
+    -0.02
+   ]
+  },
+  {
+   "name": "foot_L_b",
+   "id": "720c245f-2e71-4ec6-87bf-6c75e9eb9f90",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.6779569391890847,
+    0.0807744655089907,
+    0.060004399444507805
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 3.469446951953614e-18,
+   "rot_check_dev": 0.0,
+   "site_parent": "foot_L",
+   "pos_local_al": [
+    -0.09,
+    0.0,
+    -0.029976000000000003
+   ]
+  },
+  {
+   "name": "Body_11",
+   "id": "bf9d01d3-2aaa-462e-b6c4-f58067a5b3c5",
+   "type": "Spring",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.590532625062826,
+    0.04395621717776693,
+    0.059999915496499995
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "foot_L_contact",
+   "id": "fd58c11d-cfd1-482f-8f63-73b7193e40c9",
+   "type": "Box",
+   "mass_kg": 0.0096,
+   "lwh_al": [
+    0.06,
+    0.002,
+    0.08
+   ],
+   "pos_world_al": [
+    -3.60671220725015,
+    0.030796150528569897,
+    0.05999673239665717
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "foot",
+   "pos_check_dev_m": 1.734723475976807e-18,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "foot_L",
+   "id": "8b100a2c-ec0b-424e-a71a-21297bffc869",
+   "type": "Box",
+   "mass_kg": 0.4,
+   "lwh_al": [
+    0.12,
+    0.02,
+    0.08
+   ],
+   "pos_world_al": [
+    -3.590532625062826,
+    0.04395621717776693,
+    0.059999915496499995
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "foot",
+   "pos_check_dev_m": 6.776263578034403e-21,
+   "rot_check_dev": 3.8990399345573135e-06,
+   "joint": {
+    "name": "ankle_L",
+    "enable_limits": true,
+    "lower_deg": -20.0,
+    "upper_deg": -5.0,
+    "anchor_world_al": [
+     -3.637402530404687,
+     0.08771987994699981,
+     0.059999915183992066
+    ],
+    "axis_world_al": [
+     -0.0001383585320809513,
+     0.0006226897321552176,
+     -0.9999999209814087
+    ]
+   }
+  },
+  {
+   "name": "tibia_L_f_low",
+   "id": "92d66f34-d794-4f98-acea-8ee0f84b9a95",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5204693657488924,
+    0.29296589543934726,
+    0.05999962823074464
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "tibia_L",
+   "pos_local_al": [
+    0.0348804,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "ankle_L_ext",
+   "id": "9765f0b1-f642-4b16-a5aa-348dc1e6228b",
+   "type": "LinearHillMuscle",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5545338908128046,
+    0.3004661498061179,
+    0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "ankle_L_ext_rec",
+   "id": "a2c5ff85-18c6-42d9-ae2f-9ca7c3f8f571",
+   "type": "LinearHillStretchReceptor",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5545338908128046,
+    0.3004661498061179,
+    0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "tibia_L",
+   "id": "a92f842d-25e0-4c1b-9f3a-8d096bbe509b",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5011168671247552,
+    0.3808607376932229,
+    0.060017931890744634
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "tibia_L",
+   "pos_local_al": [
+    0.0348804,
+    0.0,
+    -0.09
+   ]
+  },
+  {
+   "name": "ankle_L_flx",
+   "id": "b12ca7b0-7242-417e-9ce0-2fdabb6b56f9",
+   "type": "LinearHillMuscle",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5545338908128046,
+    0.3004661498061179,
+    0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "knee_L",
+   "id": "d29f8cfb-30c4-492b-bd24-e0dd2e6dacdd",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4501748188660244,
+    0.5104278221582548,
+    0.06004566047069448
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 2.8609792490763984e-17,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "tibia_L",
+   "pos_local_al": [
+    0.056770299999999996,
+    0.0,
+    -0.22749000000000003
+   ]
+  },
+  {
+   "name": "tibia_L",
+   "id": "c2e413b9-6236-48c5-be28-bf50986e5cfd",
+   "type": "Box",
+   "mass_kg": 1.5,
+   "lwh_al": [
+    0.05,
+    0.42,
+    0.05
+   ],
+   "pos_world_al": [
+    -3.5545338908128046,
+    0.3004661498061179,
+    0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 5.786508708204333e-06,
+   "joint": {
+    "name": "knee_L",
+    "enable_limits": true,
+    "lower_deg": 0.0,
+    "upper_deg": 60.0,
+    "anchor_world_al": [
+     -3.5072277830649132,
+     0.5153202086489251,
+     0.06004474228
+    ],
+    "axis_world_al": [
+     0.00024920641753938097,
+     0.00013517012984173458,
+     1.000000076935363
+    ]
+   }
+  },
+  {
+   "name": "knee_L_ext",
+   "id": "c7d73eb3-943b-4986-9231-2990503447e6",
+   "type": "LinearHillMuscle",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4841768199999996,
+    0.7246715499999999,
+    0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "femur_L_b_low",
+   "id": "cb3c439f-298e-4da6-adf6-a1a3effc929a",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.517705275259018,
+    0.735695995817065,
+    0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 8.673617379884035e-19,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "femur_L",
+   "pos_local_al": [
+    -0.0348804,
+    0.0053899099999999995,
+    0.0
+   ]
+  },
+  {
+   "name": "femur_L",
+   "id": "20eb335a-ab76-41dd-be7d-885c53010b81",
+   "type": "Box",
+   "mass_kg": 3.5,
+   "lwh_al": [
+    0.05,
+    0.05,
+    0.42
+   ],
+   "pos_world_al": [
+    -3.4841768199999996,
+    0.7246715499999999,
+    0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 4.652454261844241e-07,
+   "joint": {
+    "name": "hip_L",
+    "enable_limits": true,
+    "lower_deg": -15.0,
+    "upper_deg": 23.0,
+    "anchor_world_al": [
+     -3.4498163900681647,
+     0.931841629164454,
+     0.06
+    ],
+    "axis_world_al": [
+     -0.0002009086094232471,
+     3.332193124085684e-05,
+     -1.0
+    ]
+   }
+  },
+  {
+   "name": "body_L_f",
+   "id": "399da34b-df09-4fda-8807-e00c410e8a02",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.3607736299999997,
+    0.927147975,
+    0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 6.938893903907228e-18,
+   "rot_check_dev": 0.0,
+   "site_parent": "Root",
+   "pos_local_al": [
+    0.1,
+    -0.05500000000000001,
+    0.06
+   ]
+  },
+  {
+   "name": "hip_R_ext_rec",
+   "id": "7779d96a-ae70-4a26-bff6-a03cc50cfa20",
+   "type": "LinearHillStretchReceptor",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4539999999999997,
+    0.99298,
+    0.0
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "femur_R-f_low",
+   "id": "22aa7dd2-fb39-4f71-9542-de69778bfc24",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4497664617652957,
+    0.7189643807609791,
+    -0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "femur_R",
+   "pos_local_al": [
+    0.0348804,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "femur_R_b",
+   "id": "31967501-695c-4e2a-9229-ad289f58f224",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.506734071509495,
+    0.8018424658604545,
+    -0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "femur_R",
+   "pos_local_al": [
+    -0.03488,
+    0.07244,
+    0.0
+   ]
+  },
+  {
+   "name": "tibia_R_f_low",
+   "id": "10abbad6-5e00-4781-aa56-584c9b5a20ed",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5204693657488924,
+    0.29296589543934726,
+    -0.06000037176925536
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "tibia_R",
+   "pos_local_al": [
+    0.0348804,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "name": "tibia_R_b",
+   "id": "22981cc5-2c46-4a64-8e6f-891caffa52e3",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5702709664351313,
+    0.39608693956627417,
+    -0.059981313383688
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 6.938893903907228e-18,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "tibia_R",
+   "pos_local_al": [
+    -0.035930000000000004,
+    0.0,
+    -0.09
+   ]
+  },
+  {
+   "name": "knee_R",
+   "id": "2bd74d02-24f4-4709-b86b-abf9938bb8ba",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.450175111848832,
+    0.5104278866665835,
+    -0.059954339526108
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 2.7755575615628914e-17,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "tibia_R",
+   "pos_local_al": [
+    0.05677,
+    0.0,
+    -0.22749000000000003
+   ]
+  },
+  {
+   "name": "knee_R_ext",
+   "id": "438315cb-1fdf-4e0d-a9b8-1070857b76ac",
+   "type": "LinearHillMuscle",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5545338908128046,
+    0.3004661498061179,
+    -0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "foot_R_f",
+   "id": "17ee4ac1-ce09-41b2-9cea-3b6cf4eb6259",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.558312801334781,
+    0.07153682744043789,
+    -0.0599934697066899
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 2.0,
+   "site_parent": "foot_R",
+   "pos_local_al": [
+    0.03,
+    0.0,
+    -0.02998
+   ]
+  },
+  {
+   "name": "toe_R_spring",
+   "id": "07cad2c1-3d42-4705-ac40-9656f3c08784",
+   "type": "Spring",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.506615482995549,
+    0.0370971004693465,
+    -0.06000008528052767
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "toe_R",
+   "id": "277271ae-886b-4d9c-9b83-9e00e5dea0d6",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5007765136946123,
+    0.056868499369347326,
+    -0.06000002459565481
+   ],
+   "freeze": "False",
+   "collision": "False",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0,
+   "site_parent": "toe_R",
+   "pos_local_al": [
+    0.005,
+    0.02,
+    0.0
+   ]
+  },
+  {
+   "name": "toe_R_contact",
+   "id": "a5039b39-1b33-46a7-b215-32c7928d9caa",
+   "type": "Box",
+   "mass_kg": 0.0024,
+   "lwh_al": [
+    0.015,
+    0.08,
+    0.002
+   ],
+   "pos_world_al": [
+    -3.4984977719905057,
+    0.02674554533054679,
+    -0.059999919953544464
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "foot",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "toe_R",
+   "id": "6338a594-8f61-42a0-bd50-003b68b6fca0",
+   "type": "Box",
+   "mass_kg": 0.064,
+   "lwh_al": [
+    0.04,
+    0.08,
+    0.02
+   ],
+   "pos_world_al": [
+    -3.506615482995549,
+    0.0370971004693465,
+    -0.06000008528052767
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "foot",
+   "pos_check_dev_m": 1.3877787809430044e-17,
+   "rot_check_dev": 5.786508708204333e-06,
+   "joint": {
+    "name": "toe_R",
+    "enable_limits": false,
+    "lower_deg": 0.0,
+    "upper_deg": 0.0,
+    "anchor_world_al": [
+     -3.526597732756591,
+     0.03794050716582391,
+     -0.060000439529499586
+    ],
+    "axis_world_al": [
+     -0.00019442248638786583,
+     -0.00019702407904358325,
+     -1.0000000446400754
+    ]
+   }
+  },
+  {
+   "name": "foot_R_contact",
+   "id": "c640122b-779e-497f-9f0a-7b3667d4c57b",
+   "type": "Box",
+   "mass_kg": 0.0096,
+   "lwh_al": [
+    0.06,
+    0.002,
+    0.08
+   ],
+   "pos_world_al": [
+    -3.604940219411354,
+    0.03220787933672013,
+    -0.060002924929435646
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "foot",
+   "pos_check_dev_m": 1.734723475976807e-18,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "foot_R_b",
+   "id": "c7e5d460-79ea-4a2d-8267-90c87cbb8004",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.677956631134878,
+    0.08077845363665069,
+    -0.059995599743979514
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0,
+   "site_parent": "foot_R",
+   "pos_local_al": [
+    -0.09,
+    0.0,
+    -0.02998
+   ]
+  },
+  {
+   "name": "foot_R_spring",
+   "id": "fb949f79-f1c9-4fae-a0b5-2bc1f4876a74",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.588992354030124,
+    0.06389685547778305,
+    -0.059996026940132625
+   ],
+   "freeze": "False",
+   "collision": "False",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0,
+   "site_parent": "foot_R",
+   "pos_local_al": [
+    0.0,
+    0.0,
+    -0.02
+   ]
+  },
+  {
+   "name": "foot_R",
+   "id": "54820b02-b14b-46d0-b199-d2beabff7541",
+   "type": "Box",
+   "mass_kg": 0.4,
+   "lwh_al": [
+    0.12,
+    0.02,
+    0.08
+   ],
+   "pos_world_al": [
+    -3.590532625062826,
+    0.04395621717776693,
+    -0.0600000845035
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "foot",
+   "pos_check_dev_m": 6.776263578034403e-21,
+   "rot_check_dev": 3.8990399345573135e-06,
+   "joint": {
+    "name": "ankle_R",
+    "enable_limits": true,
+    "lower_deg": -20.0,
+    "upper_deg": -5.0,
+    "anchor_world_al": [
+     -3.637402530404687,
+     0.08771987994699981,
+     -0.06000008481600793
+    ],
+    "axis_world_al": [
+     -0.0001383585320809513,
+     0.0006226897321552176,
+     -0.9999999209814087
+    ]
+   }
+  },
+  {
+   "name": "ankle_R_ext_rec",
+   "id": "5b878559-e149-4361-84ed-9a9b7ee32c83",
+   "type": "LinearHillStretchReceptor",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5545338908128046,
+    0.3004661498061179,
+    -0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "ankle_R_ext",
+   "id": "6014988f-d80a-445e-9479-3fa23c85288b",
+   "type": "LinearHillMuscle",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5545338908128046,
+    0.3004661498061179,
+    -0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "tibia_R_b_low",
+   "id": "9159ea7c-d1e8-45e4-b71c-735e554ae4a3",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.587679054344697,
+    0.3112239209268872,
+    -0.0600000001339668
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 6.938893903907228e-18,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "tibia_R",
+   "pos_local_al": [
+    -0.034683000000000005,
+    -1.057e-06,
+    -0.003379
+   ]
+  },
+  {
+   "name": "knee_R_flx",
+   "id": "ab982010-58ae-423f-8324-ef2041ecc614",
+   "type": "LinearHillMuscle",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5545338908128046,
+    0.3004661498061179,
+    -0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "ankle_R_flx",
+   "id": "c3311d5c-774a-4a38-a722-820539d28981",
+   "type": "LinearHillMuscle",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5545338908128046,
+    0.3004661498061179,
+    -0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "tibia_R_f",
+   "id": "d94e1693-2448-4127-bae8-333d24a3612d",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5011168671247552,
+    0.3808607376932229,
+    -0.05998206810925536
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "tibia_R",
+   "pos_local_al": [
+    0.0348804,
+    0.0,
+    -0.09
+   ]
+  },
+  {
+   "name": "ankle_R_flx_rec",
+   "id": "f71f558b-e27c-4a87-992c-1092e0a042e9",
+   "type": "LinearHillStretchReceptor",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5545338908128046,
+    0.3004661498061179,
+    -0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "tibia_R",
+   "id": "4c469b4d-caa0-4a0c-bc47-3c3aad72e87e",
+   "type": "Box",
+   "mass_kg": 1.5,
+   "lwh_al": [
+    0.05,
+    0.42,
+    0.05
+   ],
+   "pos_world_al": [
+    -3.5545338908128046,
+    0.3004661498061179,
+    -0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 5.786508708204333e-06,
+   "joint": {
+    "name": "knee_R",
+    "enable_limits": true,
+    "lower_deg": 0.0,
+    "upper_deg": 60.0,
+    "anchor_world_al": [
+     -3.5072277830649132,
+     0.5153202086489251,
+     -0.059955257719999995
+    ],
+    "axis_world_al": [
+     -5.65351773028358e-06,
+     -0.0010223482992990222,
+     0.9999998358879564
+    ]
+   }
+  },
+  {
+   "name": "knee_R_flx_rec",
+   "id": "6939d51b-1c67-4082-b043-79e1d032604f",
+   "type": "LinearHillStretchReceptor",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4841768199999996,
+    0.7246715499999999,
+    -0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "femur_R_f",
+   "id": "c5cb0965-5f47-45d5-b909-e6ce9f6c29ca",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.438622623600412,
+    0.786156608551755,
+    -0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "femur_R",
+   "pos_local_al": [
+    0.03488,
+    0.06811,
+    0.0
+   ]
+  },
+  {
+   "name": "femur_R_b_low",
+   "id": "eb4f0ea6-7ed0-496a-861c-e3bc42c2e49d",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.51770526053312,
+    0.7356960846042417,
+    -0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 8.673617379884035e-19,
+   "rot_check_dev": 0.9999998805899738,
+   "site_parent": "femur_R",
+   "pos_local_al": [
+    -0.0348804,
+    0.005390000000000001,
+    0.0
+   ]
+  },
+  {
+   "name": "knee_R_ext_rec",
+   "id": "f0a20192-d195-47d8-83d3-443975dddd91",
+   "type": "LinearHillStretchReceptor",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4841768199999996,
+    0.7246715499999999,
+    -0.06
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "femur_R",
+   "id": "8e5e2746-c733-4d2f-bd8a-a88329c1f9b5",
+   "type": "Box",
+   "mass_kg": 3.5,
+   "lwh_al": [
+    0.05,
+    0.05,
+    0.42
+   ],
+   "pos_world_al": [
+    -3.4841768199999996,
+    0.7246715499999999,
+    -0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 4.652454261844241e-07,
+   "joint": {
+    "name": "hip_R",
+    "enable_limits": true,
+    "lower_deg": -15.0,
+    "upper_deg": 23.0,
+    "anchor_world_al": [
+     -3.4498163900681647,
+     0.931841629164454,
+     -0.06
+    ],
+    "axis_world_al": [
+     4.091638703318553e-08,
+     -6.7819531544245485e-09,
+     -1.0
+    ]
+   }
+  },
+  {
+   "name": "hip_R_ext",
+   "id": "92c80f34-50d1-4e5f-8b4f-c6d7e46e162a",
+   "type": "LinearHillMuscle",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4539999999999997,
+    0.99298,
+    0.0
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "hip_R_flx_rec",
+   "id": "9315d475-5965-42f4-865a-29985630c51f",
+   "type": "LinearHillStretchReceptor",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4539999999999997,
+    0.99298,
+    0.0
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "body_R_f",
+   "id": "98992d88-b811-40fc-a41a-bc7058080c06",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.3607736299999997,
+    0.927147975,
+    -0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 6.938893903907228e-18,
+   "rot_check_dev": 0.0,
+   "site_parent": "Root",
+   "pos_local_al": [
+    0.1,
+    -0.05500000000000001,
+    -0.06
+   ]
+  },
+  {
+   "name": "Body_R_b",
+   "id": "99f17d0e-cf65-4824-8c45-8579b75b6845",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5595206299999997,
+    0.949501175,
+    -0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 6.938893903907228e-18,
+   "rot_check_dev": 0.0,
+   "site_parent": "Root",
+   "pos_local_al": [
+    -0.1,
+    -0.05500000000000001,
+    -0.06
+   ]
+  },
+  {
+   "name": "hip_L_ext_rec",
+   "id": "ac26380c-2fdd-484b-ba5e-a09ce5bf2d3e",
+   "type": "LinearHillStretchReceptor",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4539999999999997,
+    0.99298,
+    0.0
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "hip_L_ext",
+   "id": "aca81da1-fab7-4dfa-be37-01858f75012b",
+   "type": "LinearHillMuscle",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.4539999999999997,
+    0.99298,
+    0.0
+   ],
+   "freeze": null,
+   "collision": null,
+   "material": null,
+   "pos_check_dev_m": 0.0,
+   "rot_check_dev": 0.0
+  },
+  {
+   "name": "body_L_b",
+   "id": "cd0bdd5e-4c40-4da4-90e5-80fb1b589cee",
+   "type": "Attachment",
+   "mass_kg": 0.0,
+   "lwh_al": null,
+   "pos_world_al": [
+    -3.5595206299999997,
+    0.949501175,
+    0.06
+   ],
+   "freeze": "False",
+   "collision": "True",
+   "material": "Default",
+   "pos_check_dev_m": 6.938893903907228e-18,
+   "rot_check_dev": 0.0,
+   "site_parent": "Root",
+   "pos_local_al": [
+    -0.1,
+    -0.05500000000000001,
+    0.06
+   ]
+  },
+  {
+   "name": "Root",
+   "id": "66aca4dc-cc8d-4b4f-aea5-cceb5a5793be",
+   "type": "Box",
+   "mass_kg": 30.991,
+   "lwh_al": [
+    0.2,
+    0.278,
+    0.2
+   ],
+   "pos_world_al": [
+    -3.4539999999999997,
+    0.99298,
+    0.0
+   ],
+   "freeze": "True",
+   "collision": "True",
+   "material": "smooth",
+   "pos_check_dev_m": 4.440892098500626e-16,
+   "rot_check_dev": 2.2158273221967173e-06
+  }
+ ],
+ "muscles": [
+  {
+   "name": "hip_L_flx",
+   "id": "13a0bcbd-6837-47d0-8a30-f9627b50be9b",
+   "attach_ids": [
+    "399da34b-df09-4fda-8807-e00c410e8a02",
+    "288cd16b-456f-4bc4-93a6-80515d842676"
+   ],
+   "max_tension": 1500.0,
+   "kse": 62850.0,
+   "kpe": 4000.0,
+   "B": 800.0,
+   "resting_length": 0.17,
+   "lwidth": 0.0889,
+   "pe_length": 90.0,
+   "st_a": -0.07,
+   "st_b": 1000.0,
+   "st_c": 100.0,
+   "st_d": 0.0
+  },
+  {
+   "name": "hip_R_flx",
+   "id": "1704710c-9aed-4778-8b5f-e2b2e9ea6080",
+   "attach_ids": [
+    "31967501-695c-4e2a-9229-ad289f58f224",
+    "99f17d0e-cf65-4824-8c45-8579b75b6845"
+   ],
+   "max_tension": 1500.0,
+   "kse": 62000.0,
+   "kpe": 4000.0,
+   "B": 800.0,
+   "resting_length": 0.21,
+   "lwidth": 0.08,
+   "pe_length": 90.0,
+   "st_a": -0.07,
+   "st_b": 1000.0,
+   "st_c": 100.0,
+   "st_d": 0.0
+  },
+  {
+   "name": "knee_L_flx",
+   "id": "2b4761e8-186c-466b-b5c7-8d9359de0525",
+   "attach_ids": [
+    "cb3c439f-298e-4da6-adf6-a1a3effc929a",
+    "7a174733-54b4-408a-86b3-d045d9c51a89"
+   ],
+   "max_tension": 1000.0,
+   "kse": 62500.0,
+   "kpe": 3770.0,
+   "B": 600.0,
+   "resting_length": 0.345,
+   "lwidth": 0.1,
+   "pe_length": 90.0,
+   "st_a": -0.05,
+   "st_b": 1000.0,
+   "st_c": 200.0,
+   "st_d": 0.0
+  },
+  {
+   "name": "ankle_L_ext",
+   "id": "9765f0b1-f642-4b16-a5aa-348dc1e6228b",
+   "attach_ids": [
+    "720c245f-2e71-4ec6-87bf-6c75e9eb9f90",
+    "86b34362-4b2a-4689-a334-4e707ec367d0"
+   ],
+   "max_tension": 1000.0,
+   "kse": 31900.0,
+   "kpe": 4000.0,
+   "B": 400.0,
+   "resting_length": 0.22464,
+   "lwidth": 1.0,
+   "pe_length": 90.0,
+   "st_a": -0.05,
+   "st_b": 500.0,
+   "st_c": 200.0,
+   "st_d": 0.0
+  },
+  {
+   "name": "ankle_L_flx",
+   "id": "b12ca7b0-7242-417e-9ce0-2fdabb6b56f9",
+   "attach_ids": [
+    "16ea0a45-9831-4736-9345-a3cef8606b70",
+    "92d66f34-d794-4f98-acea-8ee0f84b9a95"
+   ],
+   "max_tension": 1500.0,
+   "kse": 74887.0,
+   "kpe": 4493.0,
+   "B": 400.0,
+   "resting_length": 0.2475,
+   "lwidth": 1.0,
+   "pe_length": 90.0,
+   "st_a": -0.05,
+   "st_b": 1000.0,
+   "st_c": 200.0,
+   "st_d": 0.0
+  },
+  {
+   "name": "knee_L_ext",
+   "id": "c7d73eb3-943b-4986-9231-2990503447e6",
+   "attach_ids": [
+    "be39d02d-fbdd-4ff2-a016-2d3db5eef30a",
+    "d29f8cfb-30c4-492b-bd24-e0dd2e6dacdd",
+    "a92f842d-25e0-4c1b-9f3a-8d096bbe509b"
+   ],
+   "max_tension": 1500.0,
+   "kse": 77193.0,
+   "kpe": 4632.0,
+   "B": 600.0,
+   "resting_length": 0.34,
+   "lwidth": 0.08,
+   "pe_length": 90.0,
+   "st_a": -0.05,
+   "st_b": 800.0,
+   "st_c": 200.0,
+   "st_d": 0.0
+  },
+  {
+   "name": "knee_R_ext",
+   "id": "438315cb-1fdf-4e0d-a9b8-1070857b76ac",
+   "attach_ids": [
+    "22aa7dd2-fb39-4f71-9542-de69778bfc24",
+    "2bd74d02-24f4-4709-b86b-abf9938bb8ba",
+    "d94e1693-2448-4127-bae8-333d24a3612d"
+   ],
+   "max_tension": 1500.0,
+   "kse": 77193.0,
+   "kpe": 4632.0,
+   "B": 600.0,
+   "resting_length": 0.34,
+   "lwidth": 0.08,
+   "pe_length": 90.0,
+   "st_a": -0.05,
+   "st_b": 800.0,
+   "st_c": 200.0,
+   "st_d": 0.0
+  },
+  {
+   "name": "ankle_R_ext",
+   "id": "6014988f-d80a-445e-9479-3fa23c85288b",
+   "attach_ids": [
+    "9159ea7c-d1e8-45e4-b71c-735e554ae4a3",
+    "c7e5d460-79ea-4a2d-8267-90c87cbb8004"
+   ],
+   "max_tension": 1000.0,
+   "kse": 31900.0,
+   "kpe": 4000.0,
+   "B": 400.0,
+   "resting_length": 0.22464,
+   "lwidth": 1.0,
+   "pe_length": 90.0,
+   "st_a": -0.05,
+   "st_b": 500.0,
+   "st_c": 200.0,
+   "st_d": 0.0
+  },
+  {
+   "name": "knee_R_flx",
+   "id": "ab982010-58ae-423f-8324-ef2041ecc614",
+   "attach_ids": [
+    "eb4f0ea6-7ed0-496a-861c-e3bc42c2e49d",
+    "22981cc5-2c46-4a64-8e6f-891caffa52e3"
+   ],
+   "max_tension": 1000.0,
+   "kse": 62500.0,
+   "kpe": 3770.0,
+   "B": 600.0,
+   "resting_length": 0.345,
+   "lwidth": 0.1,
+   "pe_length": 90.0,
+   "st_a": -0.05,
+   "st_b": 1000.0,
+   "st_c": 200.0,
+   "st_d": 0.0
+  },
+  {
+   "name": "ankle_R_flx",
+   "id": "c3311d5c-774a-4a38-a722-820539d28981",
+   "attach_ids": [
+    "10abbad6-5e00-4781-aa56-584c9b5a20ed",
+    "17ee4ac1-ce09-41b2-9cea-3b6cf4eb6259"
+   ],
+   "max_tension": 1500.0,
+   "kse": 74887.0,
+   "kpe": 4493.0,
+   "B": 400.0,
+   "resting_length": 0.2475,
+   "lwidth": 1.0,
+   "pe_length": 90.0,
+   "st_a": -0.05,
+   "st_b": 1000.0,
+   "st_c": 200.0,
+   "st_d": 0.0
+  },
+  {
+   "name": "hip_R_ext",
+   "id": "92c80f34-50d1-4e5f-8b4f-c6d7e46e162a",
+   "attach_ids": [
+    "98992d88-b811-40fc-a41a-bc7058080c06",
+    "c5cb0965-5f47-45d5-b909-e6ce9f6c29ca"
+   ],
+   "max_tension": 1500.0,
+   "kse": 62850.0,
+   "kpe": 4000.0,
+   "B": 800.0,
+   "resting_length": 0.17,
+   "lwidth": 0.0889,
+   "pe_length": 90.0,
+   "st_a": -0.07,
+   "st_b": 1500.0,
+   "st_c": 200.0,
+   "st_d": 0.0
+  },
+  {
+   "name": "hip_L_ext",
+   "id": "aca81da1-fab7-4dfa-be37-01858f75012b",
+   "attach_ids": [
+    "cd0bdd5e-4c40-4da4-90e5-80fb1b589cee",
+    "a056d4c3-dbcd-4528-8fad-1ed12c1fc855"
+   ],
+   "max_tension": 1500.0,
+   "kse": 62000.0,
+   "kpe": 4000.0,
+   "B": 800.0,
+   "resting_length": 0.21,
+   "lwidth": 0.08,
+   "pe_length": 90.0,
+   "st_a": -0.07,
+   "st_b": 1500.0,
+   "st_c": 200.0,
+   "st_d": 0.0
+  }
+ ],
+ "receptors": [
+  {
+   "name": "hip_L_flx_rec",
+   "attach_ids": [
+    "cd0bdd5e-4c40-4da4-90e5-80fb1b589cee",
+    "a056d4c3-dbcd-4528-8fad-1ed12c1fc855"
+   ],
+   "apply_tension": "False"
+  },
+  {
+   "name": "knee_L_ext_rec",
+   "attach_ids": [
+    "be39d02d-fbdd-4ff2-a016-2d3db5eef30a",
+    "d29f8cfb-30c4-492b-bd24-e0dd2e6dacdd",
+    "a92f842d-25e0-4c1b-9f3a-8d096bbe509b"
+   ],
+   "apply_tension": "False"
+  },
+  {
+   "name": "knee_L_flx_rec",
+   "attach_ids": [
+    "cb3c439f-298e-4da6-adf6-a1a3effc929a",
+    "7a174733-54b4-408a-86b3-d045d9c51a89"
+   ],
+   "apply_tension": "False"
+  },
+  {
+   "name": "ankle_L_flx_rec",
+   "attach_ids": [
+    "16ea0a45-9831-4736-9345-a3cef8606b70",
+    "92d66f34-d794-4f98-acea-8ee0f84b9a95"
+   ],
+   "apply_tension": "False"
+  },
+  {
+   "name": "ankle_L_ext_rec",
+   "attach_ids": [
+    "86b34362-4b2a-4689-a334-4e707ec367d0",
+    "720c245f-2e71-4ec6-87bf-6c75e9eb9f90"
+   ],
+   "apply_tension": "False"
+  },
+  {
+   "name": "hip_R_ext_rec",
+   "attach_ids": [
+    "98992d88-b811-40fc-a41a-bc7058080c06",
+    "c5cb0965-5f47-45d5-b909-e6ce9f6c29ca"
+   ],
+   "apply_tension": "False"
+  },
+  {
+   "name": "ankle_R_ext_rec",
+   "attach_ids": [
+    "c7e5d460-79ea-4a2d-8267-90c87cbb8004",
+    "9159ea7c-d1e8-45e4-b71c-735e554ae4a3"
+   ],
+   "apply_tension": "False"
+  },
+  {
+   "name": "ankle_R_flx_rec",
+   "attach_ids": [
+    "10abbad6-5e00-4781-aa56-584c9b5a20ed",
+    "17ee4ac1-ce09-41b2-9cea-3b6cf4eb6259"
+   ],
+   "apply_tension": "False"
+  },
+  {
+   "name": "knee_R_flx_rec",
+   "attach_ids": [
+    "eb4f0ea6-7ed0-496a-861c-e3bc42c2e49d",
+    "22981cc5-2c46-4a64-8e6f-891caffa52e3"
+   ],
+   "apply_tension": "False"
+  },
+  {
+   "name": "knee_R_ext_rec",
+   "attach_ids": [
+    "22aa7dd2-fb39-4f71-9542-de69778bfc24",
+    "2bd74d02-24f4-4709-b86b-abf9938bb8ba",
+    "d94e1693-2448-4127-bae8-333d24a3612d"
+   ],
+   "apply_tension": "False"
+  },
+  {
+   "name": "hip_R_flx_rec",
+   "attach_ids": [
+    "99f17d0e-cf65-4824-8c45-8579b75b6845",
+    "31967501-695c-4e2a-9229-ad289f58f224"
+   ],
+   "apply_tension": "False"
+  },
+  {
+   "name": "hip_L_ext_rec",
+   "attach_ids": [
+    "399da34b-df09-4fda-8807-e00c410e8a02",
+    "288cd16b-456f-4bc4-93a6-80515d842676"
+   ],
+   "apply_tension": "False"
+  }
+ ],
+ "springs": [
+  {
+   "name": "Body_11",
+   "attach_ids": [
+    "673a9b05-a589-4964-8957-6a490b7c7ec1",
+    "223b87b7-6fc2-46df-b6fa-0c94d377cd58"
+   ],
+   "natural_length": 0.088,
+   "stiffness": 16000.0,
+   "damping": 20000.0
+  },
+  {
+   "name": "toe_R_spring",
+   "attach_ids": [
+    "277271ae-886b-4d9c-9b83-9e00e5dea0d6",
+    "fb949f79-f1c9-4fae-a0b5-2bc1f4876a74"
+   ],
+   "natural_length": 0.088,
+   "stiffness": 16000.0,
+   "damping": 20000.0
+  }
+ ],
+ "attachments": [],
+ "notes": {
+  "conventions": "column-major LocalMatrix (dm), grams mass, y-up AL world, child-frame joint anchors, hinge about joint local x, MJ(x,y,z)=AL(x,-z,y)"
+ }
+}

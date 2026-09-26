@@ -1,0 +1,20 @@
+== M5 gate: AFFERENTED (Ben's rules) split-RG air walking, 6 s ==
+   knobs: dur=6.0 causal=none amp=4.0 pulse=0.2 ibnA=6.0 te=3.0 tf=4.0 tau=0.25 cap=0.5 damp=3.0 lift=0.3
+   scripted contact pattern: heel ON [onset+0.02, +0.38*T], toe ON [0.62*T, 0.92*T], from t=1.5 s (real contact sensors = milestone 6)
+   ground contacts: 0 (must be 0) | leg-leg self contacts: 12210
+   neural: L RG ext period nan s (nan Hz), R RG-E r +0.102, L/R phase 0.000 cycle, band r +0.997
+   joint flexion ranges (deg): hip L 0.0 R 0.0 | knee L 0.0 R 0.0 | ankle L 0.0 R 0.0
+   afferent evidence: heel SN max 4.00 mV, toe SN max 4.00 mV, Ib grp max 9.62 mV, Ib-vs-extensor-force r L +1.000 / R +1.000
+   [PASS] finite
+   [FAIL] both_hips_swing
+   [FAIL] antiphase
+   [PASS] airborne
+   [PASS] freq_within_2x
+   [FAIL] hip_amp_ok
+   [FAIL] rg_e_antiphase
+   [FAIL] phase_half_cycle
+   [PASS] aff heel driven
+   [PASS] aff toe driven
+   [PASS] aff ib tracks force
+
+VERDICT: FAIL  gate_a_walk=FAIL

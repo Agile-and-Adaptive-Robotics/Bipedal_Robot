@@ -1,0 +1,312 @@
+=== NervousSystem ===
+
+=== NEURONS (Node) ===
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.NeuralModule text=None params={'Cd': 'False', 'HH': 'False'}
+  [None] class=AnimatGUI.DataObjects.Behavior.PhysicsModule text=None params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Subsystem text='Neural Subsystem' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_knee flexion inhibit' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking text='R_ankle MV2' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_hip swing MN' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter text='1' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Muscle text='R_hip stance' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_hip  swing PF' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_dorsiflexion MN' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter text='R_hip adaptor 1' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_knee extension MN' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_hip  swing PF' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_knee flexion inhibit' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Muscle text='R_ankle plantarflexion ' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_knee  flexion PF' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_foot ground contact' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Joint text='R_hip' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_knee  flexion PF' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking text='L_knee MV2' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Muscle text='L_knee  flexion ' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking text='L_ankle MV1' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_foot ground contact' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_hip swing MN' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_CPG stance' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Muscle text='L_ankle plantarflexion ' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking text='R_hip MV2' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_plantarflexion PF' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_CPG inhabit' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter text='R_hip adaptor2' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter text='R_knee adaptor 1' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_knee extension inhabit' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Muscle text='R_knee  flexion ' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter text='5' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Muscle text=' R_hip swing' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Muscle text=' L_hip swing' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_knee extension inhibit' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter text='2' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_dorsiflexion MN' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Muscle text='L_knee extension' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_hip middle' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_hip stance MN' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_knee extension PF' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking text='L_hip MV2' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_CPG stance' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking text='R_knee MV1' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_hip middle' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_toe ground contact' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter text='2' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking text='R_knee MV2' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Muscle text='R_ankle dorsiflexion' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_plantarflexion PF' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Muscle text='L_ankle dorsiflexion' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter text='10' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.RigidBody text='L_toe ground' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_plantarflexion MN' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_dorsiflexion PF' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_hip  stance PF' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking text='L_ankle MV2' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_dorsiflexion PF' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_knee extension PF' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter text='6' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter text='1' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking text='L_hip MVstance' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter text='4' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_hip stance MN' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_knee  flexion  MN' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Muscle text='R_knee extension' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_hip swing Inhibit' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_plantarflexion inhibit' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Joint text='L_hip' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.RigidBody text='R_toe ground' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_dorsiflexion inhibit' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter text='1' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_dorsiflexion inhabit' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking text='L_knee MV1' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter text='2' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_plantarflexion inhibit' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.RigidBody text='L_foot ground' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter text='4' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.RigidBody text='R_foot ground' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_CPG inhabit' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter text='3' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.NodeToPhysicalAdapter text='R_knee adaptor 2' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter text='12' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking text='R_hip MV1' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.NonSpiking text='R_ankle MV1' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_knee  flexion  MN' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_toe ground contact' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_plantarflexion MN' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.PhysicalToNodeAdapter text='6' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_hip  stance PF' params={}
+  [None] class=AnimatGUI.DataObjects.Behavior.Nodes.Muscle text='L_hip stance' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='R_hip swing Inhibit' params={}
+  [None] class=IntegrateFireGUI.DataObjects.Behavior.Neurons.Spiking text='L_knee extension MN' params={}
+
+=== SYNAPSE TYPES ===
+
+=== LINKS (connexions) ===
+  None -> None  type=None g=None delay=None
+  None -> None  type=None g=None delay=None
+  None -> None  type=None g=None delay=None
+  None -> None  type=None g=None delay=None
+  None -> None  type=None g=None delay=None
+  None -> None  type=None g=None delay=None
+  None -> None  type=None g=None delay=None
+  None -> None  type=None g=None delay=None
+  None -> None  type=None g=None delay=None
+  None -> None  type=None g=None delay=None
+  None -> None  type=None g=None delay=None
+  None -> None  type=None g=None delay=None
+  None -> None  type=None g=None delay=None
+  66c9f327-bfed-401f-bc97-9e6796512711 -> 4af3b0bb-66ff-48cc-bbd5-03d4fe5b3b8d  type=None g=None delay=None
+  f31e85a0-f1cb-4451-9f81-89ac51a43656 -> 08b7c815-f27e-441f-b67e-d6c81b79a9f3  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  05907a42-87c9-482b-a4f5-dc8135f95835 -> 68b430dc-b7e5-4f24-a28a-adbe668f110c  type=None g=None delay=None
+  ae6ce9bc-6ca6-4827-ad16-dc1f53c43ff8 -> 7434c581-a101-4f32-b623-347c636d7814  type=None g=None delay=None
+  38050fc6-6f75-46ae-88da-b07f3dcc6bcc -> 114ae39e-9bd5-4b72-9f13-1890eda8b2c7  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  5382cfb5-395f-4026-9814-4f1182c01359 -> 5cd9af0b-75e5-48b9-8640-9214db011811  type=None g=None delay=None
+  a02dbfed-66fb-433a-a95a-00feca89638d -> 72639e4f-0401-4c08-8dcc-7b8b61029811  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  3a40c547-abfe-4b43-8721-49ed0b30d7ca -> 08b7c815-f27e-441f-b67e-d6c81b79a9f3  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  72639e4f-0401-4c08-8dcc-7b8b61029811 -> c53da069-ef79-4595-85e6-aff71e98633a  type=None g=None delay=None
+  7b4a513a-ecb2-489e-b148-c7a4296d4ebb -> ef07ef3b-1b56-413f-b777-2267852a229b  type=None g=None delay=None
+  8a02dcf7-1c59-4fb9-8c2c-4d77ddc793f9 -> 206e8db2-327e-4efc-af5e-21765126f6d5  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  e55140f6-28cb-4f6c-bb02-5ac0c7a098ef -> dc109db2-fefc-44ed-a529-92c3f5bc8fdc  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  bfdd87ed-4184-4481-94d8-6a6969fc27f7 -> 2b5c58ce-40fe-4f2a-9a45-74952e00d883  type=None g=None delay=None
+  612c2125-9cce-4d8d-bfca-2d5e17c10c35 -> 166828ec-ee49-4085-a694-11d1921f2107  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  c53da069-ef79-4595-85e6-aff71e98633a -> 4b0cdf87-2c07-4473-b5a7-1006f0225fa3  type=None g=None delay=None
+  b45e2da9-37cc-444a-a9c7-a7d3d96de98d -> 89a6c08d-0f01-44bf-abba-40c844e27507  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  166828ec-ee49-4085-a694-11d1921f2107 -> e2510b2b-4377-482f-96ae-353701a7c4e6  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  08b7c815-f27e-441f-b67e-d6c81b79a9f3 -> 5df8604d-6c82-4212-8770-c3c11617763d  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  83627a90-1de1-4329-ba31-e2a40b4af61a -> 0f28adac-93ab-4aa0-a313-fbd0dcf45c9e  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  dc109db2-fefc-44ed-a529-92c3f5bc8fdc -> 7101d119-6b35-46e5-8ec9-469670f67900  type=None g=None delay=None
+  b857369a-cc28-4ba8-a11b-521d4cf286d5 -> 45aaa27e-cecb-4fa9-8e50-0da803b0775d  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  47a181bd-a0a1-4d4c-9b8c-634da28e67f6 -> 668789d1-a4b3-4199-b91d-2661182bcbc3  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  1d260c0a-6218-422b-90d5-f0ee8e59c715 -> 00fe5f0c-c724-47bd-a180-2e14ca4dceda  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  89a6c08d-0f01-44bf-abba-40c844e27507 -> 09a3fea2-b307-4c62-9648-3812a9caadc7  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  f31e85a0-f1cb-4451-9f81-89ac51a43656 -> 5df8604d-6c82-4212-8770-c3c11617763d  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  7506ae41-3a84-4a78-a685-22320de60c11 -> 7c0ed003-6768-48b9-91c3-efdf5ac9e507  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  5df8604d-6c82-4212-8770-c3c11617763d -> 93d4d048-7e20-4cf8-ba45-1d886251cd08  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  7c0ed003-6768-48b9-91c3-efdf5ac9e507 -> 34db0142-241a-413f-bba1-83c82cdaba4a  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  668789d1-a4b3-4199-b91d-2661182bcbc3 -> f31e85a0-f1cb-4451-9f81-89ac51a43656  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  45aaa27e-cecb-4fa9-8e50-0da803b0775d -> 7c4ce4cc-4f53-4c54-b643-bd5821cee2a7  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  08b7c815-f27e-441f-b67e-d6c81b79a9f3 -> 0357b311-8113-46a8-a26e-1e8ffa674c02  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  3a40c547-abfe-4b43-8721-49ed0b30d7ca -> 668789d1-a4b3-4199-b91d-2661182bcbc3  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  014e017d-87ce-46c5-8a4f-c7aefdd4db81 -> ae6ce9bc-6ca6-4827-ad16-dc1f53c43ff8  type=None g=None delay=None
+  114ae39e-9bd5-4b72-9f13-1890eda8b2c7 -> 206e8db2-327e-4efc-af5e-21765126f6d5  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  bb560e30-7dd2-47a1-9aad-9226b8d57262 -> 1d260c0a-6218-422b-90d5-f0ee8e59c715  type=None g=None delay=None
+  4af3b0bb-66ff-48cc-bbd5-03d4fe5b3b8d -> a44fe174-a9f1-4911-a987-40e241f1b162  type=None g=None delay=None
+  8a02dcf7-1c59-4fb9-8c2c-4d77ddc793f9 -> 0eec9905-71e9-4e3e-95d5-bf188a048faf  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  166828ec-ee49-4085-a694-11d1921f2107 -> 612c2125-9cce-4d8d-bfca-2d5e17c10c35  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  f31e85a0-f1cb-4451-9f81-89ac51a43656 -> 0357b311-8113-46a8-a26e-1e8ffa674c02  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  83627a90-1de1-4329-ba31-e2a40b4af61a -> 8a02dcf7-1c59-4fb9-8c2c-4d77ddc793f9  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  83627a90-1de1-4329-ba31-e2a40b4af61a -> 380e6814-3448-4ffe-b794-d1eb24f7bc1f  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  45aaa27e-cecb-4fa9-8e50-0da803b0775d -> 548ad1b8-7bb5-4430-b800-218a7b0eef18  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  701e80f0-ad75-4edb-8971-2b3d22b10b89 -> ad11f4ff-e367-4430-876a-9c0a8fdda525  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  83627a90-1de1-4329-ba31-e2a40b4af61a -> 987e0b1c-1391-43db-9803-fd6640fbfc85  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  1e29f8c7-62f7-418e-9f0b-519bec9d34e2 -> 5382cfb5-395f-4026-9814-4f1182c01359  type=None g=None delay=None
+  668789d1-a4b3-4199-b91d-2661182bcbc3 -> 0f28adac-93ab-4aa0-a313-fbd0dcf45c9e  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  206e8db2-327e-4efc-af5e-21765126f6d5 -> a02dbfed-66fb-433a-a95a-00feca89638d  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  ef07ef3b-1b56-413f-b777-2267852a229b -> e33b9cef-491e-4021-97aa-68f241494941  type=None g=None delay=None
+  612c2125-9cce-4d8d-bfca-2d5e17c10c35 -> f7415451-c7f7-4183-9782-1244fd15876e  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  5005676e-fcb1-48f1-b06a-11d9755de4e1 -> 52f07ede-884c-4aa4-bae0-7623d6f91a0b  type=None g=None delay=None
+  34db0142-241a-413f-bba1-83c82cdaba4a -> b71d0a02-a659-4e2a-896f-20706e094fb4  type=None g=None delay=None
+  612c2125-9cce-4d8d-bfca-2d5e17c10c35 -> e2510b2b-4377-482f-96ae-353701a7c4e6  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  84f776d5-3df3-4ceb-8a8f-c702c27966a7 -> 8e7924c6-16bb-45cb-acbb-be8a2af3e865  type=None g=None delay=None
+  e2510b2b-4377-482f-96ae-353701a7c4e6 -> 2a458943-cfe1-4d20-b24e-4b3ea5637e37  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  e33b9cef-491e-4021-97aa-68f241494941 -> b45e2da9-37cc-444a-a9c7-a7d3d96de98d  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  09a3fea2-b307-4c62-9648-3812a9caadc7 -> 84f776d5-3df3-4ceb-8a8f-c702c27966a7  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  68b430dc-b7e5-4f24-a28a-adbe668f110c -> 00fe5f0c-c724-47bd-a180-2e14ca4dceda  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  f498cade-1cb3-4c36-abc9-1fbe51203f2a -> 0f28adac-93ab-4aa0-a313-fbd0dcf45c9e  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  00fe5f0c-c724-47bd-a180-2e14ca4dceda -> 166828ec-ee49-4085-a694-11d1921f2107  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  45aaa27e-cecb-4fa9-8e50-0da803b0775d -> e55140f6-28cb-4f6c-bb02-5ac0c7a098ef  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  987e0b1c-1391-43db-9803-fd6640fbfc85 -> d1621557-3843-46ce-95d8-e1ce69d0ddb0  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  7506ae41-3a84-4a78-a685-22320de60c11 -> 89a6c08d-0f01-44bf-abba-40c844e27507  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  f7415451-c7f7-4183-9782-1244fd15876e -> b6f6ce9f-a312-403f-99f7-630e3a7e0adf  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  1d260c0a-6218-422b-90d5-f0ee8e59c715 -> a760d72c-9818-40be-8155-e370229d85ad  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  8e7924c6-16bb-45cb-acbb-be8a2af3e865 -> 79351546-b548-492e-8d09-3ad9c65baf39  type=None g=None delay=None
+  2a458943-cfe1-4d20-b24e-4b3ea5637e37 -> bfdd87ed-4184-4481-94d8-6a6969fc27f7  type=None g=None delay=None
+  380e6814-3448-4ffe-b794-d1eb24f7bc1f -> 3e3b5571-0063-42bf-ba5e-f550bf8514e8  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  38050fc6-6f75-46ae-88da-b07f3dcc6bcc -> f498cade-1cb3-4c36-abc9-1fbe51203f2a  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  0eec9905-71e9-4e3e-95d5-bf188a048faf -> 66c9f327-bfed-401f-bc97-9e6796512711  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  493a9b85-e8a2-4c1a-90a3-91e13ceec1ee -> 51569df3-a8c4-4fd4-996a-691a5a0eb870  type=None g=None delay=None
+  8a02dcf7-1c59-4fb9-8c2c-4d77ddc793f9 -> a02dbfed-66fb-433a-a95a-00feca89638d  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  b6f6ce9f-a312-403f-99f7-630e3a7e0adf -> 97e6ab65-f3a4-4c55-8974-d79bac9d993f  type=None g=None delay=None
+  a5fecbb6-a562-4c70-bac7-2e4beeb9af97 -> 08b7c815-f27e-441f-b67e-d6c81b79a9f3  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  7c4ce4cc-4f53-4c54-b643-bd5821cee2a7 -> 45aaa27e-cecb-4fa9-8e50-0da803b0775d  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  ad11f4ff-e367-4430-876a-9c0a8fdda525 -> 7c4ce4cc-4f53-4c54-b643-bd5821cee2a7  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  206e8db2-327e-4efc-af5e-21765126f6d5 -> 8a02dcf7-1c59-4fb9-8c2c-4d77ddc793f9  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  d1621557-3843-46ce-95d8-e1ce69d0ddb0 -> 0e755245-af55-4909-b5e4-7772d75bdb44  type=None g=None delay=None
+  79b63baa-a6ba-459f-8756-2a25e6c9c99e -> 701e80f0-ad75-4edb-8971-2b3d22b10b89  type=None g=None delay=None
+  7506ae41-3a84-4a78-a685-22320de60c11 -> 09a3fea2-b307-4c62-9648-3812a9caadc7  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  206e8db2-327e-4efc-af5e-21765126f6d5 -> 0eec9905-71e9-4e3e-95d5-bf188a048faf  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  b71d0a02-a659-4e2a-896f-20706e094fb4 -> 3c7d0a82-a0a4-4f8e-aed5-b40165b8c0bc  type=None g=None delay=None
+  1d260c0a-6218-422b-90d5-f0ee8e59c715 -> bf122047-0158-46a0-9c91-e9382bd55fca  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  89a6c08d-0f01-44bf-abba-40c844e27507 -> 7506ae41-3a84-4a78-a685-22320de60c11  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  166828ec-ee49-4085-a694-11d1921f2107 -> f7415451-c7f7-4183-9782-1244fd15876e  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  53557bec-80c0-4a98-b9cd-37e22615ccee -> 8a02dcf7-1c59-4fb9-8c2c-4d77ddc793f9  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  3e3b5571-0063-42bf-ba5e-f550bf8514e8 -> 493a9b85-e8a2-4c1a-90a3-91e13ceec1ee  type=None g=None delay=None
+  ac513411-6de4-4eb2-adce-7bac88aeca36 -> 79b63baa-a6ba-459f-8756-2a25e6c9c99e  type=None g=None delay=None
+  0357b311-8113-46a8-a26e-1e8ffa674c02 -> 641da686-b19b-4413-a74b-325d30fe811a  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  38050fc6-6f75-46ae-88da-b07f3dcc6bcc -> b857369a-cc28-4ba8-a11b-521d4cf286d5  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  08b7c815-f27e-441f-b67e-d6c81b79a9f3 -> 89a6c08d-0f01-44bf-abba-40c844e27507  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  548ad1b8-7bb5-4430-b800-218a7b0eef18 -> 014e017d-87ce-46c5-8a4f-c7aefdd4db81  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  0f28adac-93ab-4aa0-a313-fbd0dcf45c9e -> 7c4ce4cc-4f53-4c54-b643-bd5821cee2a7  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  0f28adac-93ab-4aa0-a313-fbd0dcf45c9e -> 83627a90-1de1-4329-ba31-e2a40b4af61a  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  a9e0a977-d032-4d66-b7fe-ad749c9cc541 -> 05907a42-87c9-482b-a4f5-dc8135f95835  type=None g=None delay=None
+  89a6c08d-0f01-44bf-abba-40c844e27507 -> 7c0ed003-6768-48b9-91c3-efdf5ac9e507  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  7c4ce4cc-4f53-4c54-b643-bd5821cee2a7 -> 548ad1b8-7bb5-4430-b800-218a7b0eef18  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  0f28adac-93ab-4aa0-a313-fbd0dcf45c9e -> 53557bec-80c0-4a98-b9cd-37e22615ccee  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  3a40c547-abfe-4b43-8721-49ed0b30d7ca -> 83627a90-1de1-4329-ba31-e2a40b4af61a  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  bf122047-0158-46a0-9c91-e9382bd55fca -> 3a40c547-abfe-4b43-8721-49ed0b30d7ca  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  0e755245-af55-4909-b5e4-7772d75bdb44 -> 0835e5e1-b34c-4d95-b019-26da2424b559  type=None g=None delay=None
+  93d4d048-7e20-4cf8-ba45-1d886251cd08 -> 8d0e1d69-2e08-4b55-a4d8-3d4ff49f2749  type=None g=None delay=None
+  7101d119-6b35-46e5-8ec9-469670f67900 -> 12691007-738e-4429-a927-9aa8cfd371cf  type=None g=None delay=None
+  0f28adac-93ab-4aa0-a313-fbd0dcf45c9e -> 987e0b1c-1391-43db-9803-fd6640fbfc85  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  08b7c815-f27e-441f-b67e-d6c81b79a9f3 -> 4b080d9f-285b-48e1-a3b7-bf493b13dd00  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  0f28adac-93ab-4aa0-a313-fbd0dcf45c9e -> 380e6814-3448-4ffe-b794-d1eb24f7bc1f  type=f9f68dc3-c013-4c50-8d9c-fa88763000d1 g=None delay=None
+  4b080d9f-285b-48e1-a3b7-bf493b13dd00 -> 612c2125-9cce-4d8d-bfca-2d5e17c10c35  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  ce1fdf21-5361-4743-8c81-8e21d196614a -> 38050fc6-6f75-46ae-88da-b07f3dcc6bcc  type=None g=None delay=None
+  5cd9af0b-75e5-48b9-8640-9214db011811 -> 114ae39e-9bd5-4b72-9f13-1890eda8b2c7  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  7c4ce4cc-4f53-4c54-b643-bd5821cee2a7 -> e55140f6-28cb-4f6c-bb02-5ac0c7a098ef  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+  8d0e1d69-2e08-4b55-a4d8-3d4ff49f2749 -> f3825461-eea7-4f03-9c39-b0acf8cc8c8a  type=None g=None delay=None
+  bc07a067-2a6a-44c9-9582-6885ec545d43 -> ce1fdf21-5361-4743-8c81-8e21d196614a  type=None g=None delay=None
+  641da686-b19b-4413-a74b-325d30fe811a -> 5005676e-fcb1-48f1-b06a-11d9755de4e1  type=None g=None delay=None
+  f31e85a0-f1cb-4451-9f81-89ac51a43656 -> 612c2125-9cce-4d8d-bfca-2d5e17c10c35  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  b8d0299a-7557-46ff-bb2e-9eb707a60d3c -> bb560e30-7dd2-47a1-9aad-9226b8d57262  type=None g=None delay=None
+  668789d1-a4b3-4199-b91d-2661182bcbc3 -> 3a40c547-abfe-4b43-8721-49ed0b30d7ca  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  38050fc6-6f75-46ae-88da-b07f3dcc6bcc -> 47a181bd-a0a1-4d4c-9b8c-634da28e67f6  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  97e6ab65-f3a4-4c55-8974-d79bac9d993f -> 5b4fe4db-abba-438f-bf71-8b4887accacd  type=None g=None delay=None
+  1d260c0a-6218-422b-90d5-f0ee8e59c715 -> a5fecbb6-a562-4c70-bac7-2e4beeb9af97  type=9abe0492-9552-40b0-afe1-45b8686bc7d5 g=None delay=None
+  08b7c815-f27e-441f-b67e-d6c81b79a9f3 -> f31e85a0-f1cb-4451-9f81-89ac51a43656  type=5ba94ba7-da40-4e64-9e94-9148e69be66e g=None delay=None
+  a760d72c-9818-40be-8155-e370229d85ad -> 7506ae41-3a84-4a78-a685-22320de60c11  type=431ab5ad-8b26-4d2c-9a54-09091c2e02a3 g=None delay=None
+
+=== STIMULUS ===
+  Name = Stimulus_1
+  AlwaysActive = False
+  ValueType = Constant
+  Equation = 0
+
+=== ADAPTER LINKS (DataTypeID...) ===
+
+=== RECEPTIVE FIELD SENSOR ===
+  <ReceptiveFieldSensor>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Physical.ContactSensor</ClassName>
+<ID>0a18f896-6f35-4a8a-b889-8c34528af966</ID>
+<FieldGain>
+<ID>e859f337-fa98-4373-9fc3-f591ba59acbc</ID>
+<Type>Bell</Type>
+<AssemblyFile>AnimatGUI.dll</AssemblyFile>
+<ClassName>AnimatGUI.DataObjects.Gains.Bell</ClassName>
+<UseLimits>False</UseLimits>
+<LimitsReadOnly>False</LimitsReadOnly>
+<LimitOutputsReadOnly>False</LimitOutputsReadOnly>
+<UseParentIncomingDataType>True</UseParentIncomingDataType>
+<LowerLimitScale Value="-1" Scale="None" Actual="-1" />
+<UpperLimitScale Value="1" Scale="None" Actual="1" />
+<LowerOutputScale Value="0" Scale="None" Actual="0" />
+<UpperOutputScale Value="1" Scale="None" Actual="1" />
+<IndependentUnits>Meters</IndependentUnits>
+<D
+
+=== first Node raw ===
+<Node>
+<ID>0e51cbb6-399f-41db-adf0-ec2b9ab08996</ID>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.NeuralModule</ClassName>
+<TimeStep Value="0.2" Scale="milli" Actual="0.0002" />
+<ID>0e51cbb6-399f-41db-adf0-ec2b9ab08996</ID>
+<AHPEquilibriumPotential Value="-70" Scale="milli" Actual="-0.07" />
+<SpikePeak Value="0" Scale="milli" Actual="0" />
+<SpikeStrength>1</SpikeStrength>
+<CaEquilibriumPotential Value="200" Scale="milli" Actual="0.2" />
+<RefractoryPeriod Value="2" Scale="milli" Actual="0.002" />
+<UseCriticalPeriod>False</UseCriticalPeriod>
+<StartCriticalPeriod Value="0" Scale="None" Actual="0" />
+<EndCriticalPeriod Value="5" Scale="None" Actual="5" />
+<TTX>False</TTX>
+<Cd>False</Cd>
+<HH>False</HH>
+<FreezeHebb>False</FreezeHebb>
+<RetainHebbMemory>False</RetainHebbMemory>
+<SynapseTypes>
+<Link>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.SynapseTypes.Electrical</ClassName>
+<ID>18428088-f8f2-4546-869a-2173391bb25f</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashS

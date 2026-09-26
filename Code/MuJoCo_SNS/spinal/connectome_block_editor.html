@@ -1034,16 +1034,22 @@ function materialize(spec) {
   return { nodes: ns, edges: es };
 }
 function clearCanvasDom() {
-  nodes.forEach(n => n.el && n.el.remove());
-  edges.forEach(e => e.el && e.el.remove());
+  // remove ALL node/edge elements from the world group — the current
+  // arrays may not reference everything (a just-exited subsystem's
+  // elements are orphans; the 2026-09-25 tab-leak bug was exactly
+  // this: only referenced els were removed, so entered-subs' DOM
+  // floated over every other tab forever)
+  world.querySelectorAll(".node, .edge").forEach(el => el.remove());
 }
 function updateCrumb() {
   const c = document.getElementById("crumb");
   if (!ctxStack.length) { c.textContent = ""; return; }
-  c.innerHTML = "<b>" + models[activeTab].name + "</b> ▸ " +
+  c.innerHTML = "<button id='crumbBack' style='font-size:11px;" +
+    "padding:1px 6px;cursor:pointer'>◀ back out (F4)</button> " +
+    "<b>" + models[activeTab].name + "</b> ▸ " +
     ctxStack.map(f => "<span class='loc'>" + f.hostNode.label +
-      "</span>").join(" ▸ ") +
-    " &nbsp;(F4 = back out)";
+      "</span>").join(" ▸ ");
+  document.getElementById("crumbBack").onclick = () => exitSub();
   [...c.querySelectorAll(".loc")].forEach((el, i) => {
     el.onclick = () => { while (ctxStack.length > i + 1) exitSub(); };
   });
@@ -1095,20 +1101,30 @@ function packSub() {
   packed.forEach(n => { cx += n.x; cy += n.y; });
   cx /= packed.length; cy /= packed.length;
   packed.forEach(n => { n.el && n.el.remove(); });
-  // drop edges TOUCHING the packed set: internal ones fold into the
-  // sub, one-endpoint ones dangle and must go (boundary is re-drawn
-  // from the subsystem node outward)
-  edges = edges.filter(e => !ids.has(e.from) && !ids.has(e.to));
+  const subNode = { id: "n" + (uid++), type: "SUB", x: cx, y: cy,
+                    label: uniqueLabel(nm), sub };
+  // boundary edges: RETARGET to the subsystem node (AnimatLab-style
+  // ports) instead of dropping -- wires stay connected, none hang
+  edges = edges.map(e => {
+    if (ids.has(e.from) && !ids.has(e.to)) {
+      const r = { ...e, from: subNode.id };
+      return r;
+    }
+    if (ids.has(e.to) && !ids.has(e.from)) {
+      const r = { ...e, to: subNode.id };
+      return r;
+    }
+    return e;
+  });
+  edges = edges.filter(e => !(ids.has(e.from) && ids.has(e.to)));
   nodes = nodes.filter(n => !ids.has(n.id));
-  const node = { id: "n" + (uid++), type: "SUB", x: cx, y: cy,
-                 label: uniqueLabel(nm), sub };
-  nodes.push(node);
-  renderNode(node);
+  nodes.push(subNode);
+  renderNode(subNode);
   redrawEdges(); renderTree(); persist();
-  sel = null; selSet = new Set([node.id]);
+  sel = null; selSet = new Set([subNode.id]);
   applySelClasses(); updatePanel();
-  status("packed " + packed.length + " node(s) into " + node.label +
-         " — double-click to enter; external links were dropped");
+  status("packed " + packed.length + " node(s) into " + subNode.label +
+         " — double-click to enter; boundary wires re-attach to it");
 }
 function unpackSub() {
   const node = sel && sel.kind === "node" && nodeById(sel.id);
@@ -1541,10 +1557,12 @@ window.addEventListener("keydown", ev => {
     ev.preventDefault();
     pasteClip();
   } else if (ev.key === "Escape") {
-    // cancel any rubber band / armed link and clear the selection
+    // cancel any rubber band / armed link and clear the selection;
+    // inside a subsystem Esc backs out of it too
     if (bandRect) { bandRect.remove(); bandRect = null; }
     band = null;
     linkFrom = null;
+    if (ctxStack.length) { exitSub(); return; }
     clearSel();
     status("selection cleared (Esc)");
   } else if ((ev.ctrlKey || ev.metaKey) && !ev.shiftKey &&
@@ -1597,8 +1615,7 @@ function loadIntoCanvas(data, keepUndo) {
 }
 function reloadCurrent(spec, keepUndo) {
   if (!keepUndo) snapshot();
-  nodes.forEach(n => n.el && n.el.remove());
-  edges.forEach(e => e.el && e.el.remove());
+  clearCanvasDom();   // ALL node/edge elements, incl. any orphans
   if (bandRect) { bandRect.remove(); bandRect = null; }
   band = null;
   nodes = []; edges = []; sel = null; selSet.clear(); linkFrom = null;

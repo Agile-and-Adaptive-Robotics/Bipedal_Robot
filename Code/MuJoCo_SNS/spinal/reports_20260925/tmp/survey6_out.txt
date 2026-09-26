@@ -1,0 +1,85 @@
+Root [Box] id=66aca4dc size=(None,None,None) mass=30991g freeze=True matID=09bccf17-3f71-4b1b-b397-53550cb1bd6b pos=(-3.454,0.99298,0) rot=(0,0,-6.417) com=(0.02,0,0)
+  hip_L_flx_rec [LinearHillStretchReceptor] id=030c9c8f applyT=False maxT=100
+  hip_L_flx [LinearHillMuscle] id=13a0bcbd maxT=1500 Kse=62850 Kpe=4000 B=800 applyT=None restLen=0.17 Lwidth=0.0889 attach=['399da34b-df09-4fda-8807-e00c410e8a02', '288cd16b-456f-4bc4-93a6-80515d842676']
+  hip_R_flx [LinearHillMuscle] id=1704710c maxT=1500 Kse=62000 Kpe=4000 B=800 applyT=None restLen=0.21 Lwidth=0.08 attach=['31967501-695c-4e2a-9229-ad289f58f224', '99f17d0e-cf65-4824-8c45-8579b75b6845']
+     >JOINT hip_L pos=(0,0.21,0) rot=(-0.012303,90,0.0123081)
+        EnableLimits=True Lower=None Upper=None
+  femur_L [Box] id=20eb335a size=(None,None,None) mass=3500g freeze=False matID=DEFAULTMATERIAL pos=(0,-0.27,0.06) rot=(0,0,-3) com=(0,0,0)
+    knee_L_ext_rec [LinearHillStretchReceptor] id=024b7cd1 applyT=False maxT=100
+    femur_L_f [Attachment] id=288cd16b pos=(0.0348804,0.0681122,0)
+    knee_L_flx [LinearHillMuscle] id=2b4761e8 maxT=1000 Kse=62500 Kpe=3770 B=600 applyT=None restLen=0.345 Lwidth=0.1 attach=['cb3c439f-298e-4da6-adf6-a1a3effc929a', '7a174733-54b4-408a-86b3-d045d9c51a89']
+    knee_L_flx_rec [LinearHillStretchReceptor] id=42ac990b applyT=False maxT=100
+    femur_L_b [Attachment] id=a056d4c3 pos=(-0.0348804,0.0722445,0)
+    femur_L_f_low [Attachment] id=be39d02d pos=(0.0348804,0,0)
+       >JOINT knee_L pos=(0,0,-0.22) rot=(90.0123,-89.9883,-179.988)
+          EnableLimits=True Lower=None Upper=None
+    tibia_L [Box] id=c2e413b9 size=(None,None,None) mass=1500g freeze=False matID=DEFAULTMATERIAL pos=(0,-0.43,0) rot=(90.012,-3,0) com=(0,0,0)
+      ankle_L_flx_rec [LinearHillStretchReceptor] id=07786a9f applyT=False maxT=100
+      tibia_L_b [Attachment] id=7a174733 pos=(-0.0359273,0,-0.09)
+      tibia_L_b_low [Attachment] id=86b34362 pos=(-0.034683,-1.057e-006,-0.003379)
+         >JOINT ankle_L pos=(-0.050101,-7.231e-006,-0.040024) rot=(180,0,89.9883)
+            EnableLimits=True Lower=None Upper=None
+      foot_L [Box] id=8b100a2c size=(None,None,None) mass=400g freeze=False matID=f9d84949-3fe9-48fd-bade-5e3432c034cd pos=(0.02,5.265e-005,0.25825) rot=(0,8,0) com=(0,0,0)
+        foot_L_f [Attachment] id=16ea0a45 pos=(0.03,0,-0.0299756)
+           >JOINT toe_L pos=(-0.02,0,0) rot=(90,0,90)
+              EnableLimits=False Lower=None Upper=None
+        toe_L [Box] id=50be02bd size=(None,None,None) mass=64g freeze=False matID=f9d84949-3fe9-48fd-bade-5e3432c034cd pos=(0.084196,-1.419e-006,0.000376) rot=(90.012,0,-2) com=(0,0,0)
+          toe_L_spring [Attachment] id=223b87b7 pos=(0.005,-0.02,0)
+          toe_L_contact [Box] id=a9e22d9e size=(None,None,None) mass=2.4g freeze=False matID=f9d84949-3fe9-48fd-bade-5e3432c034cd pos=(0.008496,0.010623,0) rot=(0,0,0) com=(0,0,0)
+        foot_L_spring [Attachment] id=673a9b05 pos=(0,0,-0.02)
+        foot_L_b [Attachment] id=720c245f pos=(-0.09,0,-0.029976)
+        Body_11 [Spring] id=bf9d01d3 len=None
+        foot_L_contact [Box] id=fd58c11d size=(None,None,None) mass=9.6g freeze=False matID=f9d84949-3fe9-48fd-bade-5e3432c034cd pos=(-0.015118,0,0.014367) rot=(0,0,0) com=(0,0,0)
+      tibia_L_f_low [Attachment] id=92d66f34 pos=(0.0348804,0,0)
+      ankle_L_ext [LinearHillMuscle] id=9765f0b1 maxT=1000 Kse=31900 Kpe=4000 B=400 applyT=None restLen=0.22464 Lwidth=1 attach=['720c245f-2e71-4ec6-87bf-6c75e9eb9f90', '86b34362-4b2a-4689-a334-4e707ec367d0']
+      ankle_L_ext_rec [LinearHillStretchReceptor] id=a2c5ff85 applyT=False maxT=100
+      tibia_L [Attachment] id=a92f842d pos=(0.0348804,0,-0.09)
+      ankle_L_flx [LinearHillMuscle] id=b12ca7b0 maxT=1500 Kse=74887 Kpe=4493 B=400 applyT=None restLen=0.2475 Lwidth=1 attach=['16ea0a45-9831-4736-9345-a3cef8606b70', '92d66f34-d794-4f98-acea-8ee0f84b9a95']
+      knee_L [Attachment] id=d29f8cfb pos=(0.0567703,0,-0.22749)
+    knee_L_ext [LinearHillMuscle] id=c7d73eb3 maxT=1500 Kse=77193 Kpe=4632 B=600 applyT=None restLen=0.34 Lwidth=0.08 attach=['be39d02d-fbdd-4ff2-a016-2d3db5eef30a', 'd29f8cfb-30c4-492b-bd24-e0dd2e6dacdd', 'a92f842d-25e0-4c1b-9f3a-8d096bbe509b']
+    femur_L_b_low [Attachment] id=cb3c439f pos=(-0.0348804,0.00538991,0)
+  body_L_f [Attachment] id=399da34b pos=(0.1,-0.055,0.06)
+  hip_R_ext_rec [LinearHillStretchReceptor] id=7779d96a applyT=False maxT=100
+     >JOINT hip_R pos=(0,0.21,0) rot=(90.034,90,-90.036)
+        EnableLimits=True Lower=None Upper=None
+  femur_R [Box] id=8e5e2746 size=(None,None,None) mass=3500g freeze=False matID=DEFAULTMATERIAL pos=(0,-0.27,-0.06) rot=(0,0,-3) com=(0,0,0)
+    femur_R-f_low [Attachment] id=22aa7dd2 pos=(0.0348804,0,0)
+    femur_R_b [Attachment] id=31967501 pos=(-0.03488,0.07244,0)
+       >JOINT knee_R pos=(0,0,-0.22) rot=(89.9877,-89.9883,179.988)
+          EnableLimits=True Lower=None Upper=None
+    tibia_R [Box] id=4c469b4d size=(None,None,None) mass=1500g freeze=False matID=DEFAULTMATERIAL pos=(0,-0.43,0) rot=(90.012,-3,0) com=(0,0,0)
+      tibia_R_f_low [Attachment] id=10abbad6 pos=(0.0348804,0,0)
+      tibia_R_b [Attachment] id=22981cc5 pos=(-0.03593,0,-0.09)
+      knee_R [Attachment] id=2bd74d02 pos=(0.05677,0,-0.22749)
+      knee_R_ext [LinearHillMuscle] id=438315cb maxT=1500 Kse=77193 Kpe=4632 B=600 applyT=None restLen=0.34 Lwidth=0.08 attach=['22aa7dd2-fb39-4f71-9542-de69778bfc24', '2bd74d02-24f4-4709-b86b-abf9938bb8ba', 'd94e1693-2448-4127-bae8-333d24a3612d']
+         >JOINT ankle_R pos=(-0.050101,-7.231e-006,-0.040024) rot=(180,0,89.9883)
+            EnableLimits=True Lower=None Upper=None
+      foot_R [Box] id=54820b02 size=(None,None,None) mass=400g freeze=False matID=f9d84949-3fe9-48fd-bade-5e3432c034cd pos=(0.02,5.265e-005,0.25825) rot=(0,8,0) com=(0,0,0)
+        foot_R_f [Attachment] id=17ee4ac1 pos=(0.03,0,-0.02998)
+           >JOINT toe_R pos=(-0.02,0,0) rot=(-90,0,90)
+              EnableLimits=False Lower=None Upper=None
+        toe_R [Box] id=6338a594 size=(None,None,None) mass=64g freeze=False matID=f9d84949-3fe9-48fd-bade-5e3432c034cd pos=(0.084196,-1.419e-006,0.000376) rot=(-90.012,0,2) com=(0,0,0)
+          toe_R_spring [Spring] id=07cad2c1 len=None
+          toe_R [Attachment] id=277271ae pos=(0.005,0.02,0)
+          toe_R_contact [Box] id=a5039b39 size=(None,None,None) mass=2.4g freeze=False matID=f9d84949-3fe9-48fd-bade-5e3432c034cd pos=(0.008547,-0.01,0) rot=(0,0,0) com=(0,0,0)
+        foot_R_contact [Box] id=c640122b size=(None,None,None) mass=9.6g freeze=False matID=f9d84949-3fe9-48fd-bade-5e3432c034cd pos=(-0.01346,0,0.012823) rot=(0,0,0) com=(0,0,0)
+        foot_R_b [Attachment] id=c7e5d460 pos=(-0.09,0,-0.02998)
+        foot_R_spring [Attachment] id=fb949f79 pos=(0,0,-0.02)
+      ankle_R_ext_rec [LinearHillStretchReceptor] id=5b878559 applyT=False maxT=100
+      ankle_R_ext [LinearHillMuscle] id=6014988f maxT=1000 Kse=31900 Kpe=4000 B=400 applyT=None restLen=0.22464 Lwidth=1 attach=['9159ea7c-d1e8-45e4-b71c-735e554ae4a3', 'c7e5d460-79ea-4a2d-8267-90c87cbb8004']
+      tibia_R_b_low [Attachment] id=9159ea7c pos=(-0.034683,-1.057e-006,-0.003379)
+      knee_R_flx [LinearHillMuscle] id=ab982010 maxT=1000 Kse=62500 Kpe=3770 B=600 applyT=None restLen=0.345 Lwidth=0.1 attach=['eb4f0ea6-7ed0-496a-861c-e3bc42c2e49d', '22981cc5-2c46-4a64-8e6f-891caffa52e3']
+      ankle_R_flx [LinearHillMuscle] id=c3311d5c maxT=1500 Kse=74887 Kpe=4493 B=400 applyT=None restLen=0.2475 Lwidth=1 attach=['10abbad6-5e00-4781-aa56-584c9b5a20ed', '17ee4ac1-ce09-41b2-9cea-3b6cf4eb6259']
+      tibia_R_f [Attachment] id=d94e1693 pos=(0.0348804,0,-0.09)
+      ankle_R_flx_rec [LinearHillStretchReceptor] id=f71f558b applyT=False maxT=100
+    knee_R_flx_rec [LinearHillStretchReceptor] id=6939d51b applyT=False maxT=100
+    femur_R_f [Attachment] id=c5cb0965 pos=(0.03488,0.06811,0)
+    femur_R_b_low [Attachment] id=eb4f0ea6 pos=(-0.0348804,0.00539,0)
+    knee_R_ext_rec [LinearHillStretchReceptor] id=f0a20192 applyT=False maxT=100
+  hip_R_ext [LinearHillMuscle] id=92c80f34 maxT=1500 Kse=62850 Kpe=4000 B=800 applyT=None restLen=0.17 Lwidth=0.0889 attach=['98992d88-b811-40fc-a41a-bc7058080c06', 'c5cb0965-5f47-45d5-b909-e6ce9f6c29ca']
+  hip_R_flx_rec [LinearHillStretchReceptor] id=9315d475 applyT=False maxT=100
+  body_R_f [Attachment] id=98992d88 pos=(0.1,-0.055,-0.06)
+  Body_R_b [Attachment] id=99f17d0e pos=(-0.1,-0.055,-0.06)
+  hip_L_ext_rec [LinearHillStretchReceptor] id=ac26380c applyT=False maxT=100
+  hip_L_ext [LinearHillMuscle] id=aca81da1 maxT=1500 Kse=62000 Kpe=4000 B=800 applyT=None restLen=0.21 Lwidth=0.08 attach=['cd0bdd5e-4c40-4da4-90e5-80fb1b589cee', 'a056d4c3-dbcd-4528-8fad-1ed12c1fc855']
+  body_L_b [Attachment] id=cd0bdd5e pos=(-0.1,-0.055,0.06)

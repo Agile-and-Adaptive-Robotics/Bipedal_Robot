@@ -1,0 +1,23 @@
+[w2lvar] pinned AARL_NET=w2lvar AARL_NPZ=spinal_run_w2lvar.npz DB=sqlite:///optuna_w2lvar.db
+seeded {"drive": 2.5, "rg_nap_h": 0.35, "desc_e": 1.7, "desc_f": 1.4, "rg_to_pf": 2.4, "ia_to_mn": 0.6, "ia_to_antagonist": 0.4, "ii_to_mn": 0.4, "ib_to_mn_inh": 0.35, "rg_mutual_inh": 4.0, "rg_weak_exc": 0.0, "pf_to_mn": 2.0}
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+== stage 4 best -315.000 (trial 0)
+{
+ "drive": 2.5,
+ "rg_nap_h": 0.35,
+ "desc_e": 1.7,
+ "desc_f": 1.4,
+ "rg_to_pf": 2.4,
+ "ia_to_mn": 0.6,
+ "ia_to_antagonist": 0.4,
+ "ii_to_mn": 0.4,
+ "ib_to_mn_inh": 0.35,
+ "rg_mutual_inh": 4.0,
+ "rg_weak_exc": 0.0,
+ "pf_to_mn": 2.0
+}
+saved curriculum_w2lvar_stage4.json

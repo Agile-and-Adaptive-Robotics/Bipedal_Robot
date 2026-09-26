@@ -1,0 +1,11 @@
+n_trials=18 COMPLETE=18
+values: [25.077, -0.994, -150.0, -4.945, 14.458, 0.007, -17.772, -23.843, -4.596, 6.709, -0.701, 11.412, 18.66, 18.283, 1.958, 13.964, 15.199, 21.861]
+nan(-200)=0  fall(-150)=1  standers(>-149.5)=17
+winner params: {'drive': 3.8880484493405714, 'rg_nap_h': 0.6746340374621821, 'desc_e': 1.7998672926238792, 'desc_f': 1.0301009496742777, 'rg_to_pf': 2.2332676247568695, 'ia_to_mn': 0.6658568911884933, 'ia_to_antagonist': 0.5978734350534581, 'ii_to_mn': 0.18980818667436503, 'ib_to_mn_inh': 0.06827228991176232, 'vest_prop': 0.0, 'rig_scale': 1.0}
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+REPRO: sway=0.0996 tilt_max=25.324 contact_sym=0.2562 com_floor_min=0.8867767627242403 recomputed_score=25.077367 json_score=25.077367 delta=0.000000
+exploit gate: PASS (genuine stander, not on a sentinel floor)

@@ -1,0 +1,11 @@
+== M5 gate: AFFERENTED (Ben's rules) split-RG air walking, 6 s ==
+   knobs: dur=6.0 causal=none amp=4.0 pulse=0.2 ibnA=6.0 te=3.0 tf=4.0 tau=0.25 cap=0.5 damp=3.0 lift=0.3
+   scripted contact pattern: heel ON [onset+0.02, +0.38*T], toe ON [0.62*T, 0.92*T], from t=1.5 s (real contact sensors = milestone 6)
+Traceback (most recent call last):
+  File "D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\test_w2l_air_afferented.py", line 382, in <module>
+    sys.exit(main())
+  File "D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\test_w2l_air_afferented.py", line 282, in main
+    A = run_sim()
+  File "D:\Github\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\test_w2l_air_afferented.py", line 83, in run_sim
+    B.NAP["tau_max_h"] = TAU
+AttributeError: module 'build_w2l_aff_net' has no attribute 'NAP'

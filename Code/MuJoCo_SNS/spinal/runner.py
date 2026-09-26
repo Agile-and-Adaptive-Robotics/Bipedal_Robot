@@ -1142,7 +1142,11 @@ def main(argv):
     # RG, PF group cells (right; phase cells OR joint-layer HCs),
     # balance cells (the HIP_*_SIG channels left with the PRESET
     # removal 2026-09-16)
-    if G.get("joint_pf", 0.0) > 0.0:
+    if G.get("syn6", 0.0) > 0.0 or _os.environ.get(
+            "AARL_NET", "").strip().lower() == "syn6":
+        # goal4 syn6 variant: watch the first four synergy PF layers
+        _pf_watch = ("PF_S1_r", "PF_S2_r", "PF_S3_r", "PF_S4_r")
+    elif G.get("joint_pf", 0.0) > 0.0:
         _pf_watch = ("PF_HIP-E_r", "PF_KNEE-E_r",
                      "PF_KNEE-F_r", "PF_ANK-F_r")
     else:

@@ -1,0 +1,25 @@
+== M5 gate: AFFERENTED (Ben's rules) split-RG air walking, 20 s ==
+   knobs: dur=20.0 causal=heel amp=1.5 pulse=0.5 ibnA=1.0 te=3.0 tf=4.0 tau=0.25 cap=0.5 damp=3.0 lift=0.3
+   scripted contact pattern: heel ON [onset+0.02, +0.38*T], toe ON [0.62*T, 0.92*T], from t=1.5 s (real contact sensors = milestone 6)
+   ground contacts: 0 (must be 0) | leg-leg self contacts: 31200
+   neural: L RG ext period 1.389 s (0.72 Hz), R RG-E r -0.755, L/R phase 0.498 cycle, band r -0.868
+   joint flexion ranges (deg): hip L 33.1 R 29.0 | knee L 65.6 R 66.4 | ankle L 25.5 R 23.1
+   afferent evidence: heel SN max 1.50 mV, toe SN max 1.50 mV, Ib grp max 1.81 mV, Ib-vs-extensor-force r L +0.971 / R +0.987
+   [PASS] finite
+   [PASS] both_hips_swing
+   [PASS] antiphase
+   [PASS] airborne
+   [PASS] freq_within_2x
+   [PASS] hip_amp_ok
+   [PASS] rg_e_antiphase
+   [PASS] phase_half_cycle
+   [PASS] aff heel driven
+   [PASS] aff toe driven
+   [PASS] aff ib tracks force
+
+   == gate (b): CAUSAL HEEL TEST (extra 4.0 nA, 0.50 s at t*=6.244 s, mid-flexion) ==
+      T_hat 1.390 s | first post-pulse onset shift +54 ms (+0.039 cycle); next shifts ['+12', '+10', '+12'] ms
+      hip-L traces diverge (>0.5 deg) at t=6.591 s (+347 ms after pulse start); perturbed run finite=True, onsets after t*=10, ground contacts=0
+   [FAIL] causal_heel_reset
+
+VERDICT: FAIL  gate_a_walk=PASS  gate_b_heel_causal=FAIL

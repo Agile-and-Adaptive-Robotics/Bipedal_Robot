@@ -1,0 +1,13 @@
+[figs:w2lvar] json score=-165.0405055213092 trial=4 study=curr_w2lvar_s5_walk_contact
+[figs:w2lvar] pinned AARL_NET=w2lvar AARL_NPZ=reports_20260925/figs/tmp/figs_npz_w2lvar.npz
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+[figs:w2lvar] runner args: ['--eval', '--drive', '3.673956464399522']
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[figs:w2lvar] runner wall time 175.0 s
+[figs:w2lvar] kine_score=-165.0405 kz=0.8297 tilt_max=27.72 duty=0.4597 n_r=3 n_l=3 T_r=1.173 lag_rl=0.545 bilateral=True
+[figs:w2lvar] RECOMPUTED -165.0405055213092 vs json -165.0405055213092 delta +0.000000 (0.0000%)
+[figs:w2lvar] REPLAY: PASS
+[figs:w2lvar] npz kept at reports_20260925/figs/tmp/figs_npz_w2lvar.npz
