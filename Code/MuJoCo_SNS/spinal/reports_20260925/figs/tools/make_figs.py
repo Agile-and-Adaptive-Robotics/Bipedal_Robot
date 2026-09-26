@@ -35,7 +35,8 @@ FIGS = os.path.join("reports_20260925", "figs")
 C_SIM_R = "#0072B2"   # blue
 C_SIM_L = "#D55E00"   # vermillion
 C_REF = "#000000"
-WALK_T0, WALK_T1 = 5.0, 15.0   # params.SCHEDULE["walk"]
+WALK_T0, WALK_T1 = 2.0, 13.0   # runner --eval schedule (runner.py:901-903):
+                               # 1 stand / 1 ramp / 11 walk / 1.5 / 1.5
 SCORES = {"w2lvar": -165.0405055213092, "syn6": -197.21456977796157}
 STAGE_NAMES = ("1 air\ndeaff", "2 air\nafferented", "3 standing\nbalance",
                "4 walk\nno contact", "5 walk\ncontact")
@@ -66,6 +67,26 @@ def kine_metrics(variant):
             out["recomputed"] = float(ln.split("RECOMPUTED")[1]
                                       .split("vs json")[0])
     return out
+
+
+def _savefig(fig, out):
+    """Atomic-replace save with retry - the runner.py pattern: transient
+    Windows locks (AV/indexer) on the just-replaced file kill plain
+    savefig with OSError 22/5."""
+    import time as _time
+    tmp = out + ".tmp.png"
+    fig.savefig(tmp, dpi=150)
+    err = None
+    for _ in range(40):
+        try:
+            os.replace(tmp, out)
+            err = None
+            break
+        except OSError as _e:
+            err = _e
+            _time.sleep(0.5)
+    if err is not None:
+        raise err
 
 
 # ---------------------------------------------------------------- overlay
@@ -137,13 +158,14 @@ def fig_overlay(variant):
     fig.tight_layout(rect=(0, 0.06, 1, 0.94))
     fig.text(0.5, 0.015,
              "Cycles cut at each foot's own contact-loading onsets "
-             "(t >= 5 s walk window); mean +/- 1 sd across cycles. "
-             "OpenSim conventions: hip +flexion, knee -flexion, "
-             "ankle +dorsiflexion. Score = stage-5 objective "
-             "(kine, clipped -315; kz<0.62 -20; tilt>40 deg -10).",
+             "(walk window t >= 2 s, runner --eval schedule); "
+             "mean +/- 1 sd across cycles.\n"
+             "OpenSim conventions: hip +flexion, knee -flexion, ankle "
+             "+dorsiflexion. Score = stage-5 objective (kine, clip -315; "
+             "kz<0.62 -20; tilt>40 deg -10); ref = subject01_walk1.",
              ha="center", fontsize=8, color="0.3")
     out = os.path.join(FIGS, f"{variant}_s5_walk_overlay.png")
-    fig.savefig(out, dpi=150)
+    _savefig(fig, out)
     plt.close(fig)
     print("wrote", out)
 
@@ -161,8 +183,8 @@ def fig_traces(variant):
     ax_c = fig.add_subplot(gs[2], sharex=ax_j)
     ax_n = fig.add_subplot(gs[3], sharex=ax_j)
     axs = (ax_j, ax_p, ax_c, ax_n)
-    ttl = (f"{variant} stage-5 winner - ground walk traces (22 s eval; "
-           f"grey = DRIVE walk window {WALK_T0:.0f}-{WALK_T1:.0f} s)\n"
+    ttl = (f"{variant} stage-5 winner - ground walk traces (16 s --eval "
+           f"schedule; grey = walk window {WALK_T0:.0f}-{WALK_T1:.0f} s)\n"
            f"score {SCORES[variant]:.1f}   kine {km.get('kine_score', float('nan')):.1f}"
            f"   kz {km.get('kz', float('nan')):.2f}"
            f"   tilt_max {km.get('tilt_max', float('nan')):.1f} deg")
@@ -243,7 +265,7 @@ def fig_traces(variant):
             "knee_flex + ankle_df (W2L biarticular synergy; deviation D4).")
     fig.text(0.5, 0.005, note, ha="center", fontsize=8, color="0.3")
     out = os.path.join(FIGS, f"{variant}_s5_traces.png")
-    fig.savefig(out, dpi=150)
+    _savefig(fig, out)
     plt.close(fig)
     print("wrote", out)
 
@@ -289,7 +311,7 @@ def fig_scores():
             transform=ax.transAxes, ha="center", fontsize=8, color="0.3")
     fig.tight_layout()
     out = os.path.join(FIGS, "variant_stage_scores.png")
-    fig.savefig(out, dpi=150)
+    _savefig(fig, out)
     plt.close(fig)
     print("wrote", out)
 
