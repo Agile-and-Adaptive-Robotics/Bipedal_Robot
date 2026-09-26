@@ -876,6 +876,61 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     localStorage is PER-ORIGIN — agent test tabs share the storage
     Ben's page loads; clean TEST_* artifacts and duplicate pristine
     template tabs after testing and have Ben reload the page once.
+    **2026-09-25 CAMPAIGN (workflow dwfrun-52e69ca8; supervisor GO; Ben committed all of
+    it as 5f1890d7 "Figures"; index = `spinal\reports_20260925\EXEC_SUMMARY_20260925.md`,
+    figures/gifs in its `figs\` + INDEX.md):** (1) SCONE: all 15 never-run tutorials
+    evaluated (Hyfydy, no fallbacks) + FIRST optimizations ever on this machine — 3a
+    Balance 300-gen CMA-ES stands the full 30-s horizon (96.56→2.21, BalanceMeasure 0;
+    needed ~300 gens, not 40); 4a Gait optimized at short max_duration=4 OVERFITS (falls
+    at 4.7 s of the native 20-s window) — full-horizon optimization is the recipe
+    (0.883→0.873 keeping the 20-s/36-step walk); 2a jump +13.5% still climbing at cap.
+    (2) **`spinal\w2l_mujoco\` (NEW)** — W2L .aproj → MJCF (M1: 12/12 gate, masses exact,
+    pose 4.5e-7 m) with M3's fix of an M1 transport bug (knee/ankle shipped as
+    VERTICAL-axis yaw joints → `w2l_mjcf_fixed.xml`); W2L air stepping PASS (1.027 s,
+    hip 41.8/knee 68.5/ankle 27.5 deg); **split-RG (Ben's ask) with causal ablation**:
+    coupled lock 1.357 s antiphase −0.75, and with commissurals ablated BOTH legs still
+    oscillate at the intrinsic 1.027 s; afferents per rules (heel = stance reset at the
+    PF layer, toe→TOEDF, Ib autogenic) with causal heel-reset (+54 ms shift); toe gate
+    FAIL-honest (2023 template has no DF layer); M6: harness-supported march stands,
+    free stand structurally impossible (COM 3.09 cm outside support polygon).
+    **BEN'S PROTOCOL CORRECTION: the AnimatLab models run with a VIRTUAL WALKER (the
+    aproj WalkingPath body) — air-step held, then dropped onto the platform; Deng/Li
+    walk supported, Ben's 2023 model fell (no afferents). M6's free-standing rubric was
+    wrong; the harness march IS the walker analog. WalkingPath params NOT yet mined —
+    open: redo M6 as air→drop-under-walker→progression.** Li reproduction: net built
+    (gains verbatim; graded surrogates — toolbox SpikingNeuron g_spike is per-NEURON and
+    would destroy Li's convergent mixed-sign inputs), closed-loop NOT YET (body-side
+    collapse, pre-axis-fix diagnosis); his targets regenerated from his own .asim
+    headless (period 1.305 s, `Li Model\DataTool_7.txt`) — his Trace_2020*.txt files are
+    EMPTY logger byproducts. (3) **TWO new s3k-body variants behind the default-inert
+    AARL_NET selector in build_network.py** (defaults gate 410/376/1186 re-passed
+    throughout; s3k untouched): **w2lvar** (888n/382in/7430syn — 1 RG/leg + HIP PF +
+    ONE merged KNEE+ANKLE synergy PF per side; Shevtsova commissurals; heel@PF-layer;
+    toe→TOEDF) and **syn6** (794/382/3033 — 1 RG/leg + 6 synergy PF layers via
+    Szczecinski Eq-18 from synergy_basis.npz; rhythm fragility documented). Own
+    curricula `_curriculum_w2lvar.py`/`_curriculum_syn6.py`, dbs `optuna_w2lvar.db`/
+    `optuna_syn6.db` (git-tracked), studies curr_w2lvar_s1..s5 / curr_syn6_s1..s5
+    (**s1..s5 = curriculum STAGES**: air-deaff / air-aff / balance / walk-no-contact /
+    walk-contact; 18–23 trials each = SHALLOW — **more generations on easteregg2 is the
+    takeaway; full recipe `reports_20260925\EASTEREGG2_HANDOFF.md`**). Stage-5 winners:
+    w2lvar −165.04 (bilateral, kz 0.83; left leg slower: duty 0.81 vs 0.56), syn6
+    −197.21 (right-leg-only, left planted; winners sit AT the rises=3 gate minimum).
+    Supervisor audit: GO (db census exact, winners argmax, no exploits, bit-exact
+    replays). (4) **OPEN DECISION (Ben): kine_ref.load_reference() left-ref bug** — the
+    left cycle is cut at the first left GRF onset (t=0.005 s) but the IK file starts at
+    0.50 s, so np.interp edge-fill FREEZES ref['l'] for the first 39.6% of the left
+    cycle (proof `figs\ref_left_bug_proof.png`; probe `tmp\probe_ref_flat.py`). Affects
+    every ref['l']-based score since the per-side left ref landed (~a4738f92 Sep 21:
+    curr_s3*→s3k→variants); v1 (Sep 12) was right-leg-only and clean — why past overlays
+    looked different. Fix = first onset pair fully inside IK support + coverage assert;
+    NOT applied (objective change; Ben's call — decide before easteregg2 s4/s5 runs).
+    (5) Connectome editor: **w2lvar + syn6 templates ADDED** (dropdown entries
+    "w2lvar — W2L-layout s3k variant" 980n/7526e and "syn6 — 6-synergy walker"
+    886n/3129e, generated from the real built nets at stage-5 winner params — winner
+    synapse counts 7434/3037 include the 4 rg_weak_exc edges the gate-b default build
+    lacked; pre-existing 16 templates byte-identical; editor tests + defaults gate
+    re-passed). Editor = snapshot of the architecture, NOT live (live = neuro_scope.py /
+    runner --scope).
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the
