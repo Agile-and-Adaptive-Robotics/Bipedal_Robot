@@ -158,7 +158,7 @@ def make_figure(fmts, tag=""):
     dc.layer_band(cv, 0.55, 10.05, 2.70, 4.41, dc.OI_GREEN,
                   "MOTOR POOLS", fs=7.3)
     dc.layer_band(cv, 0.55, 10.05, 0.72, 2.56, dc.OI_VERM,
-                  "MUSCULOSKELETAL PLANT + SENSORY FEEDBACK", fs=7.3)
+                  "MUSCULOSKELETAL MODEL + SENSORY FEEDBACK", fs=7.3)
     cv.ax.plot([5.30, 5.30], [0.78, 8.63], color="0.62", lw=0.9,
                ls=(0, (3, 3)), zorder=1)
     cv.ax.text(2.75, 8.56, "LEFT", ha="center", va="top", fontsize=7.2,
