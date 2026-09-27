@@ -2036,3 +2036,34 @@ A separate chat is updating the dissertation text with these. Sources (Testing_D
   welded blocks), hip adduction/abduction actuation, N-segment BPA sleeve (Ben's full
   expanding-diameter plan — these are point-force BPAs), muscle route points from Ben's
   Xi/AttachPoints data (current points are reasonable placeholders ±3 cm off the knee pin).
+- **2026-09-26 (cont.) — WALKER PROGRAM LAUNCHED (Ben's 5 goals; master doc =
+  `Documentation\Program_Workflow\BPA_Walker_Program.md`):** G1 sagittal uniarticular walker →
+  G2 ah001+27 BPAs/side → G3 design freeze → G4 sim validation (SNS-Simscape AND/OR MuJoCo-SNS)
+  → G5 physical sagittal walker w/ Orin Nano on-board + computer-in-loop (neural deletions +
+  stimulus injection). KEY MAPPING: hardware sensors plug into afferent classes the spinal net
+  ALREADY has — encoder→Ia (θ̇), Liquid Wire→II (length; Leo Micklam), pressure→Ib (festo4(F)),
+  insole→heel/toe contact resets (exists), IMU→VEST (stage-4), 3D camera→drift correction.
+  Sensor→afferent→SNS contract = `Code\Hardware\walker_io\` (SKELETONS, smoke-tested):
+  protocol.py (UDP JSON wire: telemetry 50 Hz Orin→PC, commands PC→Orin — overrides on
+  params.G gains = deletions, stim = current into named neurons, all EPHEMERAL over the best
+  json so every trial replays offline), valves.py (bang_bang + proportional_taped modes,
+  vent-all watchdog), sensors.py (pressure/encoder/LiquidWire/IMU/insole readers with TODO(hw)
+  stubs), afferents.py (Ia/II/Ib formulas verbatim from the conversion map; constants from
+  bpa_actuators_27.json), orin_daemon.py (1 kHz loop budget + watchdogs: sensor-stale 20 ms →
+  vent-all, 650 kPa cap; PC heartbeat loss is NOT a stop), lab_console.py (trial logs →
+  `Testing_Data\walker_trials\<date>_<trial>\`). **OpenSim bones → Simscape PROVEN**:
+  `Solid_Models\Simscape_Part_Library\OpenSim_Bones\` (13 gait2392 bone STLs) +
+  `sns_bone_leg_demo.slx` (hip-ball/knee/ankle leg, File Solid at Onyx 1200, UPDATE+SIM OK;
+  gotchas: UnitType='Custom' for unitless STLs; joint anchors currently at body-frame origins —
+  pull exact offsets from gait2392_robot.mjc when bones enter a real walker). **Ty's foot
+  identified: "final" = `Ty Ankle Foot\Foot and Ankle Design, Newest (7-17-20)` = the renamed
+  `01_00_00_Foot` (part lists match 1:1); two-toe version =
+  `Ty Ankle Foot\Agility Robotics\Foot.SLDASM`; InternFoot has AnkleJointEquations.txt + STLs.**
+  SW CRASH 17:57: FootAnkle.SLDASM save-at-crash was 78% undersized → crash-save preserved as
+  FootAnkle_crashsave_20260926.SLDASM.bak, committed version restored from git, 44 stale locks
+  deleted (cause likely: agent SW probe left 13 parts open in Ben's session — RULE: every
+  script-opened doc gets closed; also Ben has NO AutoRecover backup dir — enable it). Ankle
+  retrofit on the ah001 BLOCK feet BLOCKED ("rigidly connected" despite verified-correct
+  chain — welded feet restored & model UPDATE+SIM OK; do ankles in a FRESH build, e.g. OpenSim
+  foot.stl route or Ty's foot via Multibody-Link export after Ben re-paths links). R-leg
+  muscle mirror asymmetry (half-sweep) also still open.
