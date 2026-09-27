@@ -1,6 +1,6 @@
 # ChatGPT report for ZCode
 
-**Last updated:** 2026-09-26
+**Last updated:** 2026-09-27 15:22 PDT — Corrected linked figure committed; push in progress
 
 **Current priority:** Ben's dissertation review
 
@@ -13,20 +13,32 @@ item is summarized or superseded.
 
 ## Read this first: current state
 
-- The authoritative source for the current review is Ben's downloaded Overleaf archive:
-  `Documentation/Reports and Papers/Dissertation/Bolen_Dissertation (1).zip`.
-- The ZIP itself is unchanged. Its isolated working copy is:
-  `Documentation/Reports and Papers/Dissertation/Overleaf_review_20260926_yellow/`.
-- The live Overleaf project was not modified during this review pass.
-- The review PDF is:
-  `output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`.
-- Yellow material in that PDF is proposed, not approved or merged into the live
-  dissertation.
-- The 160-page review PDF compiles with zero LaTeX errors, undefined citations,
-  undefined references, or rerun warnings. The edited pages and inserted figures were
-  visually inspected.
-- Ben is reviewing the PDF now. Do not produce a clean merge until he identifies the
-  yellow changes he approves.
+- **ACTIVE.** Ben resumed the live Overleaf pass at 15:06 PDT. Update this report before
+  and after every meaningful edit group; use a one-line checkpoint for a single tiny edit.
+- A 10:33 PDT audit found no work recorded after the 10:26 pause checkpoint; the report's
+  filesystem timestamp before this audit was 10:26:51 PDT. No Overleaf changes were made
+  during this status audit.
+- **Checkpoint-cadence failure:** the session-update record jumps from 05:53 PDT to
+  10:26 PDT, a 4-hour-33-minute gap. This did not satisfy Ben's required 2--3 minute
+  reporting cadence. Do not infer that final compilation or validation was completed during
+  that undocumented interval; the explicit pending list below remains authoritative.
+- The live project currently compiles to 166 pages after the restored sections and repaired
+  figure paths are included. The earlier 167-page count was recorded while figures were missing;
+  do not treat it as a required final count.
+- Major approved text, figure, Methods, Results-ordering, terminology, and figure-path
+  changes have been applied directly in Overleaf. See the 10:26 PDT handoff near the end of
+  this report for the exact completed set and stopping point.
+- The Background paragraph boundary, missing figure paths, citation typo, and bad section
+  reference are repaired. Explicit compile pass 1 is clean (0 errors, 0 warnings, no undefined
+  citations or references). Pass 2 is also clean and stable at 166 pages. The prohibited-name
+  and source-text terminology audits are clean. Rendered-PDF QA found one embedded figure label
+  using `MUSCULOSKELETAL PLANT`; that asset needs correction before final spot checks.
+- The review deliverables were moved from the incorrectly placed repository-root `output`
+  directory to `Documentation/Reports and Papers/Dissertation/output/`. The old root-level
+  directory no longer exists.
+- The separate yellow review artifact remains at
+  `Documentation/Reports and Papers/Dissertation/output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`;
+  do not overwrite it.
 
 ## Status vocabulary
 
@@ -39,16 +51,22 @@ item is summarized or superseded.
 - **NOT TOUCHED:** explicitly outside the session scope; no current verification implied.
 - **SUPERSEDED:** preserved for provenance but replaced by a newer item or decision.
 
-## Active dissertation items
+## Dissertation item register
 
-### Item D1.1: Current-Overleaf yellow review build — READY FOR REVIEW
+The D1 entries began as the isolated yellow-review register. Where an item was later
+implemented directly in Overleaf, its heading now says so. The yellow review's successful
+160-page build does **not** constitute validation of the current 167-page live project.
+
+### Item D1.1: Current-Overleaf yellow review build — SUPERSEDED BY LIVE IMPLEMENTATION
 
 Ben requested one PDF based on the current Overleaf source, with proposed changes shown
 in yellow. The downloaded `(1).zip` was extracted to a separate review tree, edited, fully
-compiled, and visually inspected. The live project and source ZIP remain unchanged.
+compiled, and visually inspected. The source ZIP remains unchanged. The live project was
+subsequently edited directly in response to Ben's annotations, so the earlier statement
+that the live project was unchanged is no longer current.
 
 **Primary artifact:**
-`output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`
+`Documentation/Reports and Papers/Dissertation/output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`
 
 **Decision needed:** Ben should approve, reject, or revise each yellow item before a clean
 Overleaf-ready source copy is produced.
@@ -66,7 +84,7 @@ than one page. Retain the original abstract as the base for Ben's revision. Revi
 
 **File:** `chapters/02-abstract.tex` in the isolated review tree.
 
-### Item D1.3: Dissertation organization section — READY FOR REVIEW
+### Item D1.3: Dissertation organization section — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
 
 The one-sentence chapter summaries in `sec:organization` were expanded into full
 paragraphs. The prose points to actual chapter and section labels for the isometric BPA
@@ -76,7 +94,7 @@ completed research rather than unfinished dissertation requirements.
 
 **File:** `chapters/10-introduction.tex` in the isolated review tree.
 
-### Item D1.4: Steele knee mechanism figure — REVISIONS REQUESTED
+### Item D1.4: Steele knee mechanism figure — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
 
 The review copy uses only the two Steele mechanism panels selected by Ben. Panel
 descriptions and the Steele citation are in the caption, not embedded beside replacement
@@ -89,7 +107,7 @@ panel headings. The figure is stored under the Background chapter-specific figur
 - `figs/Background/steeleknee.png`
 - `thesis.bib` (`steele_experimental_2023`)
 
-### Item D1.5: Xi frame and two-bracket figures — REVISIONS REQUESTED
+### Item D1.5: Xi frame and two-bracket figures — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
 
 The two-rotation frame construction and tall two-bracket force-path projection figures
 are included in Methods. The transformation and projection equations remain in the text.
@@ -107,7 +125,7 @@ the Methods figure assets.
 - `figs/Methods/xiProjection.svg`
 - `figs/Methods/xiProjection.pptx`
 
-### Item D1.6: Completed-work neuromechanical framing — REVISIONS REQUESTED
+### Item D1.6: Completed-work neuromechanical framing — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
 
 Methods, Discussion, Future Work, and Conclusion now distinguish completed tools from
 future experiments. The database, model-conversion workflow, BPA coupling, controller
@@ -146,7 +164,7 @@ record, those measurements should strengthen the Abstract, Results, and Discussi
 ## Review round 1: PDF comments 1–44
 
 These comments refer to
-`output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`. Do not overwrite or repaginate
+`Documentation/Reports and Papers/Dissertation/output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`. Do not overwrite or repaginate
 that PDF while Ben continues reviewing it. Implement the accepted corrections in a new
 review round after Ben finishes commenting.
 
@@ -255,7 +273,7 @@ figure after the locomotor-control background, with dissertation captions and al
 comments. Robot, actuator-technology, OpenSim/Steele comparison, and zombie-cat panels
 remain open pending source/permission or new-render work.
 
-### Item D2.7: Caption construction, test-jig figure, and Xi figure order — OVERLEAF SYNC IN PROGRESS
+### Item D2.7: Caption construction, test-jig figure, and Xi figure order — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
 
 **PDF comments:** 8, 18, and 21–23.
 
@@ -282,7 +300,7 @@ projection equations and figure to follow the explicit introduction of the two-b
 identification. The clean `ProofFinal` source has ordinary LaTeX captions, so the yellow
 review wrapper that split the caption label is not carried forward.
 
-### Item D2.8: Chapter and Results structure — OPEN
+### Item D2.8: Chapter and Results structure — PARTIALLY IMPLEMENTED IN OVERLEAF
 
 **PDF comments:** 25, 30, 38, 39, and 41.
 
@@ -328,7 +346,7 @@ beer-cup Simulink export, and the dissertation's `CPG_airstepping_figs/circuit_l
 and `sns_diagram_panels.*`. These are inputs for a publication-quality composite, not an
 automatic final selection; in particular, the raw Simulink wiring export needs redesign.
 
-### Item D2.10: Use “model,” not “plant” — IMPLEMENTED LOCALLY; OVERLEAF SYNC PENDING
+### Item D2.10: Use “model,” not “plant” — IMPLEMENTED IN OVERLEAF; FINAL SEARCH PENDING
 
 **PDF comments:** 40 and 43.
 
@@ -341,11 +359,12 @@ or “plants” in the included chapter files with “model,” “biomechanical
 “musculoskeletal model,” including captions and Future Work. A word-boundary search of
 `chapters/*.tex` now returns no remaining occurrences.
 
-## Items not touched in this session
+## Scope boundaries and current live state
 
 - **Live Overleaf:** the iterative project rationale, BPA graphical overview, literature-synthesis
-  locomotor-circuit figure, and reviewed three-panel knee-test figure have been applied. The Xi
-  figure-order edits are in progress. Uploaded project-root assets are
+  locomotor-circuit figure, reviewed three-panel knee-test figure, Xi frame and projection
+  material, Results restructuring, and terminology edits have been applied. Final compilation,
+  source searches, and rendered-PDF checks remain pending. Uploaded assets are
   `circuit_literature.pdf`, `inverted_pendulum_photo.jpg`, `steeleknee.pdf`,
   `testJigs_reviewed.pdf`, `xiFrameTransform.pdf`, and `xiProjection.pdf`.
 - **Canonical repository copies:** `ProofFinal/`, `upload/`, and `ZCode_drafts/` were not
@@ -356,9 +375,20 @@ or “plants” in the included chapter files with “model,” “biomechanical
   results changed.
 - **Git publication:** no commit, push, rebase, history rewrite, or branch operation was
   performed for this review copy.
-- **Clean dissertation integration:** no yellow proposal has been treated as approved.
+- **Clean dissertation integration:** only annotation-directed changes were applied live;
+  data- and plot-dependent items remain open and must not be represented as completed.
 
-## Verification record
+## Verification record for the isolated yellow review
+
+The V1 checks below apply only to the separate 160-page yellow review artifact. They do not
+validate the subsequently edited 167-page live Overleaf project.
+
+### Live Overleaf validation — PENDING
+
+- The live project has displayed 167 pages after section recovery, but it has not yet received
+  the required explicit two-pass compile and final log audit.
+- Undefined-reference, undefined-citation, prohibited-name, remaining terminology, and rendered-
+  PDF spot checks are still pending.
 
 ### Item V1.1: LaTeX build — PASSED
 
@@ -392,9 +422,118 @@ removed by tightening the proposed prose without changing its substance.
 - `CHATGPT_REPORT_ARCHIVE.md`: byte-for-byte preservation of the former 1,244-line report.
 - `Documentation/Reports and Papers/Dissertation/Overleaf_review_20260926_yellow/`:
   isolated edited source and build tree.
-- `output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`: delivered review PDF.
+- `Documentation/Reports and Papers/Dissertation/output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`: delivered review PDF.
 
 ## Session updates, newest first
+
+### 2026-09-27 15:22 PDT: Corrected linked figure committed in isolation
+
+- Copied the regenerated circuit PDF into the tracked dissertation asset at
+  `Documentation/Reports and Papers/Dissertation/CPG_airstepping_figs/circuit_literature.pdf`;
+  its SHA-256 hash now matches the regenerated source PDF exactly.
+- Created commit `a30fea08` containing only the generator text change, the generated source PDF,
+  and the dissertation PDF copy. Unrelated working-tree changes were not staged or committed.
+- The push to the current `KneeTestSetup_BenBo_stw` branch is still in progress. Do not refresh
+  the imported Overleaf file until the remote update is confirmed.
+
+### 2026-09-27 15:20 PDT: Overleaf upload control rejected the local replacement
+
+- Opened the action menu for the imported `chapters/circuit_literature.pdf` and selected its
+  upload workflow. Overleaf opened the expected file-selection dialog, but the browser upload
+  control refused the local PDF before any transfer or overwrite occurred.
+- The live Overleaf asset is unchanged and still displays `MUSCULOSKELETAL PLANT + SENSORY
+  FEEDBACK`; the corrected local PDF remains ready and verified.
+- Next: use the imported file's linked-source/refresh route or another non-destructive replacement
+  method, then compile and visually verify `MODEL` in the rendered PDF.
+
+### 2026-09-27 15:17 PDT: Locomotor-circuit terminology fixed locally
+
+- Updated `Code/MuJoCo_SNS/spinal/draw_literature_circuit.py` so the layer label reads
+  `MUSCULOSKELETAL MODEL + SENSORY FEEDBACK`.
+- Regenerated `circuit_literature.pdf`, `.svg`, and `.png`; the generator completed normally,
+  and the SVG contains the corrected label.
+- Next: replace the Overleaf `chapters/circuit_literature.pdf` asset, compile, and visually
+  verify the rendered replacement.
+
+### 2026-09-27 15:16 PDT: Embedded figure terminology issue found
+
+- The rendered locomotor-circuit figure on printed page 19 contains the label
+  `MUSCULOSKELETAL PLANT + SENSORY FEEDBACK` inside the imported PDF asset.
+- This text is not searchable by Overleaf's source search, which is why the whole-word audit
+  returned 0 results. The surrounding source prose is clean.
+- Next: locate and regenerate or repair the figure asset with `MODEL`, upload the replacement,
+  then recompile and resume visual QA.
+
+### 2026-09-27 15:16 PDT: `plant` terminology audit clean
+
+- Ran case-insensitive, whole-word Overleaf project searches for `plant` and `plants`.
+- Both searches returned 0 results, so no further terminology replacement was needed.
+- Next: rendered-PDF spot checks of the restored Introduction, Background figures, Methods
+  figures and balance section, Results organization, and the final page.
+
+### 2026-09-27 15:16 PDT: Prohibited-name audit clean
+
+- Ran case-insensitive Overleaf project searches across all source files and comments for the
+  four prohibited assistant/tool/provider names specified for this review.
+- Every search returned 0 results. No prohibited name is present in the Overleaf project.
+- Next: audit standalone `plant`/`plants` usage in context, then inspect rendered pages.
+
+### 2026-09-27 15:15 PDT: Two-pass compile validation complete
+
+- Explicit Overleaf compile pass 2 is stable at 166 pages with 0 errors and 0 warnings.
+- No undefined citations or references appeared; the same 30 legacy overfull/underfull box
+  notices remain as informational typesetting messages.
+- The live source now has two consecutive clean explicit builds. Next: project-wide searches
+  for prohibited assistant/tool names and the requested `plant` terminology audit.
+
+### 2026-09-27 15:13 PDT: Clean-candidate compile pass 1 verified
+
+- Explicit Overleaf compile completed at 166 pages with 0 errors and 0 warnings.
+- The log contains no undefined citations or references. Only 30 legacy typesetting notices
+  remain (overfull/underfull boxes); the former 2.38393 pt oversized-float warning is gone.
+- Next: explicit compile pass 2 and log audit before the project-wide name and terminology
+  searches.
+
+### 2026-09-27 15:11 PDT: Citation and section reference repaired in Overleaf
+
+- Corrected `hitzmann_anthomorphic_2018` to the existing bibliography key
+  `hitzmann_anthropomorphic_2018` in the Introduction.
+- Replaced the nonexistent Methods reference `sec:disc_transmission` with the existing,
+  relevant Discussion label `sec:disc_error`.
+- Each replacement matched exactly once. Next: explicit compile pass 1 and log audit.
+
+### 2026-09-27 15:10 PDT: Missing figure paths repaired in Overleaf
+
+- Background graphical abstract now uses `figs/Aim1/00_GraphicalAbstract.png`.
+- Methods force-test-jig, knee-ICR, and bracket-frame figures now use
+  `figs/Aim1/01_testJigs1.pdf`, `figs/Aim2/KneeICR.eps`, and
+  `figs/Aim2/bktFrame.pdf`, respectively.
+- Each replacement matched exactly once. Next group: citation typo and undefined Discussion
+  section label.
+
+### 2026-09-27 15:08 PDT: Explicit compile pass 1 completed
+
+- Output remains 167 pages, but the live build is not clean: 4 errors and 10 warnings.
+- Missing figure files: `00_GraphicalAbstract.png`, `01_testJigs1.pdf`,
+  `KneeICR-eps-converted-to.pdf` / `KneeICR.eps`, and `bktFrame.pdf`.
+- Citation typo: `hitzmann_anthomorphic_2018` is undefined.
+- Section reference `sec:disc_transmission` is undefined.
+- The log also retains a 2.38393 pt oversized float at Methods line 206 and legacy
+  typesetting warnings. Next: resolve these blockers in small checkpointed edit groups,
+  then run compile passes 1 and 2 again.
+
+### 2026-09-27 15:07 PDT: Background paragraph boundary fixed in Overleaf
+
+- Changed the single `mechanism.\begin{figure}` boundary in `15-background.tex` to
+  `mechanism.\par\begin{figure}` and verified that Overleaf replaced exactly one match.
+- No other source text changed in this edit group. Next group: first explicit compile and
+  log inspection.
+
+### 2026-09-27 15:06 PDT: Live Overleaf work resumed
+
+- Ben requested checkpointing after every edit or concise edit group.
+- No new Overleaf change has been made yet. Next: repair the one known Background paragraph
+  boundary, checkpoint it, then compile and audit as separately checkpointed groups.
 
 ### 2026-09-27 05:33 PDT: Annotated text corrections complete in Overleaf
 
@@ -497,4 +636,36 @@ historical narrative back into this operational report.
 - The dissertation is back to its expected 167-page length.
 - Reduced the reviewed test-jig figure to `0.73\textwidth` to resolve its oversize-float warning, and repaired two insertion boundaries with explicit paragraph breaks.
 - Final work now in progress: one remaining Background insertion-boundary cleanup, two clean compilation passes, project-wide prohibited-name and terminology searches, and spot checks of the rendered PDF.
+
+# 10:26 PDT — PAUSED at user request; exact handoff state
+
+## Safely completed on live Overleaf
+
+- Restored the full reviewed Introduction after discovering that the live file had been truncated. Its Motivation, Biomimetic Humanoid Robot Project, Problem Statement, Research Objectives, and Dissertation Organization sections are present again.
+- Restored the missing Methods section on the balance-platform and inverted-pendulum testbeds (`sec:balance_testbeds`).
+- Recovered the dissertation to the expected 167-page compiled length.
+- Implemented the reviewed-background additions, including the BPA graphical overview, circuit-literature figure, and Steele biomimetic-knee figure and discussion.
+- Implemented the reviewed Methods material for the test jig, Xi frame construction, bracket transform, and two-bracket force-path projection.
+- Reordered and completed the Results material, made the terminology corrections requested in the annotations, and repaired explicit figure paths throughout the affected chapters.
+- Reduced the reviewed test-jig figure to `0.73\textwidth` to address the oversize-float warning.
+
+## Exact stopping point
+
+- The Overleaf editor is open in `15-background.tex` at the Steele knee insertion.
+- One source-boundary cleanup remains there: change `mechanism.\begin{figure}` to `mechanism.\par\begin{figure}`. No edit was made after the user requested the pause.
+- The old commented-out Steele placeholder block remains immediately after the active figure. It is inert and contains none of the prohibited tool names; it can be removed during cleanup if desired.
+
+## Required validation still pending
+
+1. Make the one Background paragraph-boundary cleanup above.
+2. Run two explicit Overleaf recompilation passes.
+3. Confirm zero compile errors, zero undefined references, and zero undefined citations; verify that the test-jig float warning is gone.
+4. Run project-wide searches for the prohibited names `ChatGPT`, `ZCode`, `Codex`, and `OpenAI`, including comments, and remove any matches from Overleaf source. The project has not yet received this final search audit.
+5. Run a project-wide terminology audit for remaining standalone uses of `plant` / `plants` and inspect each match in context.
+6. Spot-check the rendered PDF around the restored Introduction, Background figures, restored balance-testbed section, Xi figures, Results, and final page 167.
+7. Record the final compile/search results in this report, then mark the Overleaf tab as the finished deliverable.
+
+## Items reserved for the external plotting workflow
+
+- Any annotation requiring new or substantially revised data plots should remain logged here for the external plotting workflow rather than being represented as completed in Overleaf. Existing reviewed static figures and text changes listed above were implemented directly.
 

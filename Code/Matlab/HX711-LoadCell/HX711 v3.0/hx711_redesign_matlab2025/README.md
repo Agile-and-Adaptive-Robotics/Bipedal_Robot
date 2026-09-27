@@ -1,5 +1,12 @@
 # HX711 MATLAB 2025 App Redesign
 
+> **SUPERSEDED 2026-09-27.** This draft was completed and shipped as
+> `HX711_BPA` in `Code\Matlab\HX711 v3.0\HX711 v3.0\` (with launcher
+> `Start_HX711_BPA.m`, offline self-test, pressure servo, txt sidecar,
+> portable save paths). Its `HX711.m` was renamed `HX711.m.superseded`
+> so the name `HX711` can no longer shadow anything. See
+> `README_HX711_BPA.md` there.
+
 ## Files
 
 - `HX711.m` - programmatic MATLAB App Designer-compatible class. You can run it with `app = HX711;` or paste/import into App Designer and save as `HX711.mlapp`.

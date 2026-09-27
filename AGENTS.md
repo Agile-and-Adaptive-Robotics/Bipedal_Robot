@@ -159,7 +159,24 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
 - `Code\Matlab\Functions\`, `Code\Matlab\Robot_Data\` — shared helpers; MonoPam classes/data.
 - `Code\Matlab\Human_Data\`, `Code\Matlab\Bone_Mesh_Plots\` — human/bone data and plotting.
 - `Code\Matlab\minimizers\`, `Code\Matlab\Previous Optimization Code\` — **legacy**; don't build on.
-- `Code\Matlab\HX711-LoadCell\` — load-cell apps used with test data.
+- `Code\Matlab\HX711-LoadCell\` — load-cell apps used with test data (File-Exchange
+  originals/archives + superseded redesign draft).
+  **2026-09-27 REBUILD — the live app is `Code\Matlab\HX711 v3.0\HX711 v3.0\HX711_BPA.m`**
+  (programmatic uifigure class, launch via `Start_HX711_BPA` from any folder/machine/clone —
+  the launcher addpaths its own folder so `+arduinoioaddons/+basicHX711` resolves; default save
+  dir found by walking UP from the app file to the repo's `Testing_Data`, never hard-coded).
+  Calibration: original Tare→Scale Factor→Calibration workflow AND known-factor entry
+  (Known LC Cal tab: tare+scale; Pressure Cal tab: a/b or guided 7-point, 0–620 kPa);
+  factors persist in `hx711_bpa_last_cal.mat` next to the app (gitignored, machine-local).
+  Pressure read per-sample (old app froze it at connect); optional pressure servo (setpoint
+  ± deadband → valve pins D11 increase / D6 maintain); KneeAngle/LoadCellAngle metadata into
+  every save; Save = .mat (750×6 + Stats + Metadata + ColumnNames) + .txt sidecar in the
+  original 2-column format; Run spinner auto-increments. `test_HX711_BPA_offline` = hardware-free
+  self-test, run on any machine after pulling. Unique class name = can't be shadowed by any
+  installed File-Exchange HX711 app (none on EB475WS4's MATLAB path — verified `which -all`).
+  Old apps DISABLED by rename: `HX711_customized_original.mlapp.disabled` +
+  `HX711_Pressure.mlapp.disabled` (in the v3.0 folder), LoadCell's `HX711.mlapp.disabled`,
+  redesign `HX711.m.superseded` — rename back to restore; details in `README_HX711_BPA.md`.
 - `Code\MuJoCo_SNS\` — MuJoCo + SNS-Toolbox pipeline (see its README.md):
   custom BPA muscle (`bpa_muscle.py`, exact port of festo4/maxBPAforce/
   balanceX3), MuJoCo glue, SNS demo, `add_bpa_to_mjcf.py`. Env: conda
