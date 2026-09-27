@@ -113,6 +113,8 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
 
 ## Project purpose (priority order)
 
+**Ben's prose preference:** always use the Oxford comma in lists of three or more items.
+
 1. **Dissertation first** (deadline: this week, Sept 2026). LaTeX source lives in
    `Documentation\Reports and Papers\Dissertation\` (repo-tracked as of 2026-09-08; the
    `ProofFinal\` folder is the working copy and `upload\` mirror is the canonical Overleaf
@@ -1736,18 +1738,20 @@ Knee_Torque_Test\Figures\Figure components\FlxPin_group\FlxPin_group.fig`.
    7.5 x 10 in (8.5x11 with margins). Nothing smaller.
 2. **Type**: minimum 10 pt everywhere (axis labels, ticks, legends,
    annotations). **No italic text** (set font.style normal; avoid
-   mathtext italics — use \mathrm or plain text).
+   mathtext italics — use \mathrm or plain text). Leave visible clearance
+   between axis titles and tick-label text, especially on the y axis.
 3. **Font**: Arial only (freely available in MATLAB, Adobe Illustrator,
    and Python/matplotlib on all three machines). MATLAB:
    set(groot,'defaultAxesFontName','Arial'); Python:
    rcParams["font.family"]="Arial", "mathtext.fontset":"custom" with
    rm/it/bf all Arial.
-4. **Colors**: use the accessible palette from `Code\Matlab\Colors.m`
-   (Paul Tol 7: #FFD700 gold, #FFB14E orange, #FA8775 coral,
-   #EA5F94 pink, #CD34B5 magenta, #9D02D7 magenta2, #0000FF indigo) as
-   the series palette, in that order. Greys #B0B0B0 (context) and
-   light lavender (inactive circuit context) for de-emphasized
-   structure, Di-Russo-style.
+4. **Colors**: use the accessible palette from `Code\Matlab\Colors.m`.
+   For ranked result series, the most important or adopted result is indigo
+   (#0000FF), followed by progressively lighter/de-emphasized colors:
+   #9D02D7, #CD34B5, #EA5F94, #FA8775, #FFB14E, and #FFD700. Greys
+   #B0B0B0 (context) and light lavender (inactive circuit context) are for
+   de-emphasized structure, Di-Russo-style. This indigo-to-light hierarchy
+   is Ben's preferred presentation order; do not reverse it.
 5. **Accessibility**: colorblind-safe by construction (Tol palette +
    distinct line styles/markers/shapes so no information is carried by
    hue alone); every figure ships with **alt text** (one file per
