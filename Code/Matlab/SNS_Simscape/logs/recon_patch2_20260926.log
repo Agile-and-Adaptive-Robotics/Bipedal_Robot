@@ -1,0 +1,158 @@
+
+############ mdl_leg_rig_ba003_imported ############
+gravity set to [0 -9.80665 0] on 1 Mechanism Configuration block(s)
+12 File Solid blocks
+File Solid dialog params: ExtGeomFileName, UnitType, ExtGeomFileUnits, ExportConvexHullGeometry, InertiaType, BasedOnType, Density, Density_conf, DensityUnits, Mass, Mass_conf, MassUnits, CenterOfMass, CenterOfMass_conf, CenterOfMassUnits, MomentsOfInertia, MomentsOfInertia_conf, MomentsOfInertiaUnits, ProductsOfInertia, ProductsOfInertia_conf, ProductsOfInertiaUnits, GraphicType, MarkerShape, MarkerSize, MarkerSize_conf, GraphicVisPropType, GraphicDiffuseColor, GraphicDiffuseColor_conf, GraphicOpacity, GraphicOpacity_conf, GraphicSpecularColor, GraphicSpecularColor_conf, GraphicAmbientColor, GraphicAmbientColor_conf, GraphicEmissiveColor, GraphicEmissiveColor_conf, GraphicShininess, GraphicShininess_conf, DoExposeReferenceFrame, SerializedFrames, BlockFunction
+  ExtGeomFileName          = MuscleOrigins_004_Default_sldprt.STEP
+  UnitType                 = FromFile
+  ExtGeomFileUnits         = m
+  ExportConvexHullGeometry = off
+  InertiaType              = Custom
+  BasedOnType              = DensityFromFile
+  Density                  = 1000
+  Density_conf             = compiletime
+  DensityUnits             = kg/m^3
+  Mass                     = smiData.Solid(4).mass
+  Mass_conf                = compiletime
+  MassUnits                = kg
+  CenterOfMass             = smiData.Solid(4).CoM
+  CenterOfMass_conf        = compiletime
+  CenterOfMassUnits        = mm
+  MomentsOfInertia         = smiData.Solid(4).MoI
+  MomentsOfInertia_conf    = compiletime
+  MomentsOfInertiaUnits    = kg*mm^2
+  ProductsOfInertia        = smiData.Solid(4).PoI
+  ProductsOfInertia_conf   = compiletime
+  ProductsOfInertiaUnits   = kg*mm^2
+  GraphicType              = FromGeometry
+  MarkerShape              = Sphere
+  MarkerSize               = 10
+  MarkerSize_conf          = compiletime
+  GraphicVisPropType       = SimpleVisualProperties
+  GraphicDiffuseColor      = smiData.Solid(4).color
+  GraphicDiffuseColor_conf = compiletime
+  GraphicOpacity           = smiData.Solid(4).opacity
+  GraphicOpacity_conf      = compiletime
+  GraphicSpecularColor     = [0.5 0.5 0.5 1.0]
+  GraphicSpecularColor_conf = compiletime
+  GraphicAmbientColor      = [0.15 0.15 0.15 1.0]
+  GraphicAmbientColor_conf = compiletime
+  GraphicEmissiveColor     = [0.0 0.0 0.0 1.0]
+  GraphicEmissiveColor_conf = compiletime
+  GraphicShininess         = 75
+  GraphicShininess_conf    = compiletime
+  DoExposeReferenceFrame   = on
+  SerializedFrames         = <Frames/>
+  BlockFunction            = simmechanics.library.body_elements.external_file_solid
+File Solids patched: 12 OK, 0 unresolved
+
+--- JOINT CONNECTIVITY ---
+JOINT Cylindrical                                    : <unconnected>  --  <unconnected>
+JOINT Cylindrical1                                   : <unconnected>  --  <unconnected>
+JOINT Revolute                                       : <unconnected>  --  <unconnected>
+JOINT Revolute1                                      : <unconnected>  --  <unconnected>
+JOINT Revolute2                                      : <unconnected>  --  <unconnected>
+mdl_leg_rig_ba003_imported: UPDATE OK
+
+############ mdl_humanoid_lower_ah001_imported ############
+gravity set to [0 -9.80665 0] on 1 Mechanism Configuration block(s)
+75 File Solid blocks
+File Solid dialog params: ExtGeomFileName, UnitType, ExtGeomFileUnits, ExportConvexHullGeometry, InertiaType, BasedOnType, Density, Density_conf, DensityUnits, Mass, Mass_conf, MassUnits, CenterOfMass, CenterOfMass_conf, CenterOfMassUnits, MomentsOfInertia, MomentsOfInertia_conf, MomentsOfInertiaUnits, ProductsOfInertia, ProductsOfInertia_conf, ProductsOfInertiaUnits, GraphicType, MarkerShape, MarkerSize, MarkerSize_conf, GraphicVisPropType, GraphicDiffuseColor, GraphicDiffuseColor_conf, GraphicOpacity, GraphicOpacity_conf, GraphicSpecularColor, GraphicSpecularColor_conf, GraphicAmbientColor, GraphicAmbientColor_conf, GraphicEmissiveColor, GraphicEmissiveColor_conf, GraphicShininess, GraphicShininess_conf, DoExposeReferenceFrame, SerializedFrames, BlockFunction
+  ExtGeomFileName          = C:\Users\Ben\Documents\GitHub\Bipedal_Robot\Solid_Models\Biomimetics_2022-Knee_Test\Knee assembly\02_01_PE_001_Default_sldprt.STEP
+  UnitType                 = FromFile
+  ExtGeomFileUnits         = m
+  ExportConvexHullGeometry = off
+  InertiaType              = Custom
+  BasedOnType              = DensityFromFile
+  Density                  = 1000
+  Density_conf             = compiletime
+  DensityUnits             = kg/m^3
+  Mass                     = smiData.Solid(11).mass
+  Mass_conf                = compiletime
+  MassUnits                = kg
+  CenterOfMass             = smiData.Solid(11).CoM
+  CenterOfMass_conf        = compiletime
+  CenterOfMassUnits        = mm
+  MomentsOfInertia         = smiData.Solid(11).MoI
+  MomentsOfInertia_conf    = compiletime
+  MomentsOfInertiaUnits    = kg*mm^2
+  ProductsOfInertia        = smiData.Solid(11).PoI
+  ProductsOfInertia_conf   = compiletime
+  ProductsOfInertiaUnits   = kg*mm^2
+  GraphicType              = FromGeometry
+  MarkerShape              = Sphere
+  MarkerSize               = 10
+  MarkerSize_conf          = compiletime
+  GraphicVisPropType       = SimpleVisualProperties
+  GraphicDiffuseColor      = smiData.Solid(11).color
+  GraphicDiffuseColor_conf = compiletime
+  GraphicOpacity           = smiData.Solid(11).opacity
+  GraphicOpacity_conf      = compiletime
+  GraphicSpecularColor     = [0.5 0.5 0.5 1.0]
+  GraphicSpecularColor_conf = compiletime
+  GraphicAmbientColor      = [0.15 0.15 0.15 1.0]
+  GraphicAmbientColor_conf = compiletime
+  GraphicEmissiveColor     = [0.0 0.0 0.0 1.0]
+  GraphicEmissiveColor_conf = compiletime
+  GraphicShininess         = 75
+  GraphicShininess_conf    = compiletime
+  DoExposeReferenceFrame   = on
+  SerializedFrames         = <Frames/>
+  BlockFunction            = simmechanics.library.body_elements.external_file_solid
+File Solids patched: 75 OK, 0 unresolved
+
+--- JOINT CONNECTIVITY ---
+JOINT Cylindrical                                    : <unconnected>  --  <unconnected>
+JOINT Cylindrical1                                   : <unconnected>  --  <unconnected>
+JOINT Planar                                         : <unconnected>  --  <unconnected>
+JOINT Planar1                                        : <unconnected>  --  <unconnected>
+JOINT Revolute                                       : <unconnected>  --  <unconnected>
+JOINT Revolute1                                      : <unconnected>  --  <unconnected>
+JOINT Revolute10                                     : <unconnected>  --  <unconnected>
+JOINT Revolute11                                     : <unconnected>  --  <unconnected>
+JOINT Revolute12                                     : <unconnected>  --  <unconnected>
+JOINT Revolute13                                     : <unconnected>  --  <unconnected>
+JOINT Revolute14                                     : <unconnected>  --  <unconnected>
+JOINT Revolute15                                     : <unconnected>  --  <unconnected>
+JOINT Revolute16                                     : <unconnected>  --  <unconnected>
+JOINT Revolute17                                     : <unconnected>  --  <unconnected>
+JOINT Revolute18                                     : <unconnected>  --  <unconnected>
+JOINT Revolute19                                     : <unconnected>  --  <unconnected>
+JOINT Revolute2                                      : <unconnected>  --  <unconnected>
+JOINT Revolute20                                     : <unconnected>  --  <unconnected>
+JOINT Revolute21                                     : <unconnected>  --  <unconnected>
+JOINT Revolute22                                     : <unconnected>  --  <unconnected>
+JOINT Revolute23                                     : <unconnected>  --  <unconnected>
+JOINT Revolute24                                     : <unconnected>  --  <unconnected>
+JOINT Revolute25                                     : <unconnected>  --  <unconnected>
+JOINT Revolute26                                     : <unconnected>  --  <unconnected>
+JOINT Revolute27                                     : <unconnected>  --  <unconnected>
+JOINT Revolute28                                     : <unconnected>  --  <unconnected>
+JOINT Revolute3                                      : <unconnected>  --  <unconnected>
+JOINT Revolute4                                      : <unconnected>  --  <unconnected>
+JOINT Revolute5                                      : <unconnected>  --  <unconnected>
+JOINT Revolute6                                      : <unconnected>  --  <unconnected>
+JOINT Revolute7                                      : <unconnected>  --  <unconnected>
+JOINT Revolute8                                      : <unconnected>  --  <unconnected>
+JOINT Revolute9                                      : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Cartesian                         : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Cartesian1                        : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Cylindrical                       : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Cylindrical1                      : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Revolute                          : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Revolute1                         : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Revolute2                         : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Revolute3                         : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Revolute4                         : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Revolute5                         : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Revolute6                         : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Revolute7                         : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Revolute8                         : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Revolute9                         : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Spherical                         : <unconnected>  --  <unconnected>
+JOINT x09_BA_001_1/Spherical1                        : <unconnected>  --  <unconnected>
+mdl_humanoid_lower_ah001_imported: UPDATE FAILED: ['mdl_humanoid_lower_ah001_imported']: The following errors were found in the model mdl_humanoid_lower_ah001_imported.
+  CAUSE 1: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1']: Cartesian Joint 'mdl_humanoid_lower_ah001_imported/x09_BA_001_1/Cartesian' has base and follower ports that 
+  CAUSE 2: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1']: Angle Constraint 'mdl_humanoid_lower_ah001_imported/x09_BA_001_1/Parallel' has base and follower ports that 
+
+=== recon_patch DONE ===

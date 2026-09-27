@@ -1,0 +1,15 @@
+\chapter*{\centerline{Abstract}}
+\markboth{\MakeUppercase{Abstract}}{}
+\iftoggle{fulltoc}{
+  \addcontentsline{toc}{chapter}{Abstract}
+}{}
+
+\begin{reviewchange}
+Biomimetic robots provide repeatable physical and simulated platforms for studying neuromechanical control through experiments that would be impractical or unethical with living subjects. This dissertation advances a long-running effort at Portland State University to develop a humanoid robot, from the trunk down, actuated by pneumatic artificial muscles and controlled by a synthetic nervous system. The work asks whether braided pneumatic actuators (BPAs) can be characterized, routed, and modeled accurately enough for the robot to reproduce human joint-force capabilities and support controlled tests of neural-control hypotheses.
+
+The isometric force of Festo BPAs with uninflated diameters of \qtylist{10;20}{\mm} was characterized over a wide range of resting lengths, contractions, and pressures using a custom test jig. The resulting model includes equations for maximum isometric force as a function of resting length and a three-coefficient nondimensional force surface that predicts force from relative strain and relative pressure. The force surface achieved adjusted $R^2>0.99$ and corrected the large force over-predictions produced by existing tools and single-length empirical models at short actuator lengths.
+
+The actuator model was then evaluated at the joint level through isometric knee-torque experiments on a simplified pinned knee and a biomimetic four-bar knee with a migrating instantaneous center of rotation. A hybrid calculation method isolated constant length offsets, series compliance in brackets and artificial tendons, and loss of usable actuator length when a BPA wraps around the joint. Multiobjective identification of correction terms improved prediction across the archived flexor and extensor tests, and the biomimetic knee with optimized BPA placements met or exceeded the human isometric-torque benchmark over most of its range of motion.
+
+The dissertation also contributes tools for neuromechanical research: the Sensory Afferent Database and its literature-triage workflow; an audited OpenSim-to-MuJoCo conversion pipeline; a BPA-aware controller--plant interface; and an SNS-Toolbox two-level spinal central pattern generator with Ia, Ib, and II proprioceptive channels and heel/toe contact feedback. Together, these experimental methods, models, datasets, and simulation tools establish a reusable actuator-to-controller framework for developing biomimetic robots and for testing how mechanical design, spinal circuitry, and sensory feedback interact to generate movement.
+\end{reviewchange}

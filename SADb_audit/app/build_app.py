@@ -235,7 +235,7 @@ const $ = id => document.getElementById(id);
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 
 // ================= TABLE =================
-function hay(r){ return (r.t+' '+r.a+' '+r.s+' '+r.y+' '+r.d).toLowerCase(); }
+function hay(r){ return (r.t+' '+r.a+' '+r.s+' '+r.y+' '+r.d+' '+r.nt).toLowerCase(); }
 function matches(r){
   const st = state;
   if (st.q && !hay(r).includes(st.q.toLowerCase())) return false;

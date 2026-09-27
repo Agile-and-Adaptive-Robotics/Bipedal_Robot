@@ -1,4 +1,5 @@
 \chapter{Materials and Methods}\label{ch:methods}
+\graphicspath{{figs/Methods/}}
 
 {\doublespacing\normalsize\upshape
 \noindent Publication note: Sections~\ref{sec:force_model}--\ref{sec:force_experiment} and the actuator characterization results reported in Chapter~\ref{ch:results} appeared in \citet{bolen_2026} (Bolen, Elzein, Pang, and Hunt, \emph{Actuators}, 2026). Sections~\ref{sec:robot_model}--\ref{sec:improved_model} and the knee torque results reported in Chapter~\ref{ch:results} are also the subject of an unpublished manuscript in preparation by Bolen, Burgess, Morrow, Elzein, Pang, Scharzenberger, and Hunt \citep{bolen_isometric_2025}. This manuscript has not been submitted for publication. For both works, B.B.\ performed the conceptualization, methodology, software, validation, formal analysis, investigation, data curation, visualization, and original draft preparation; M.E., L.P., L.B., and C.M.\ contributed methodology, software, investigation, and data curation; and A.H.\ supervised the work, administered the projects, and acquired funding. All co-authors contributed to writing, review, and editing.\par}
@@ -7,7 +8,7 @@
 
 The experimental program of this dissertation proceeds from the actuator to the joint. Because the robot joints are driven by braided pneumatic actuators (BPAs), the foundation of any torque prediction is an accurate model of the force produced by a single actuator as a function of its length, pressure, and contraction. To measure artificial muscle force as a function of length and pressure, we built a test jig from extruded aluminum and 3D printed parts. Festo BPAs with \qtylist{10;20}{\mm} uninflated diameters were tested with various resting lengths and different amounts of contraction. These data are used to develop an improved model that more accurately predicts maximum muscle force based on the resting length $l_0$, current muscle length $l_\text{m}$, and pressure $P$ (Sections~\ref{sec:force_model} and~\ref{sec:force_experiment}).
 
-With the actuator model in hand, the focus shifts to the joint. This study begins with building a jig to measure knee torque produced by BPAs at various knee angles ($\theta_\text{k}$). With the expectation that measured torque will be less than that predicted by the model, the robot muscle arrangement and knee design are simplified to elucidate the variables that most affect the results. Two distinct joints are used and tested: a simplified pinned knee joint and a biomimetic knee \citep{steele_biomimetic_2018}. Each joint is driven by a single flexor and a single extensor muscle. Variations were made to the muscle origin/insertion locations, resting lengths, diameters, and whether they used an artificial tendon. The results are compared with two models, and the new data are used to create an improved torque model that accounts for system compliance and muscle wrapping (Sections~\ref{sec:robot_model}--\ref{sec:improved_model}).
+With the actuator model in hand, the study shifted to the joint. A dedicated jig measured knee torque produced by BPAs at multiple knee angles ($\theta_\text{k}$). Because measured torque was expected to be lower than the rigid-model prediction, the robot muscle arrangement and knee design were simplified to isolate the variables that most affected the discrepancy. Two joints were tested: a simplified pinned knee and a biomimetic knee \citep{steele_biomimetic_2018}. Each joint was driven by a single flexor and a single extensor, with variations in muscle origin and insertion, resting length, diameter, and use of an artificial tendon. The measurements were compared with the original and improved models, and the data were used to identify the compliance and wrapping corrections described in Sections~\ref{sec:robot_model}--\ref{sec:improved_model}.
 
 \section{Actuator Force Model}\label{sec:force_model}
 
@@ -197,6 +198,14 @@ For the two-rotation evaluator, the bracket frame was constructed from the vecto
 \label{fig:xiFrameTransform}
 \end{figure}
 
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1\textwidth]{bktFrame.pdf}
+\end{center}
+\caption{Bracket frame orientations for: \textbf{(A)} flexor configuration on the pinned knee, \textbf{(B)} extensor configuration on the pinned knee, \textbf{(C)} flexor and extensor configurations on the biomimetic knee with $\phi$\qty{10}{\mm} BPAs, and \textbf{(D)} flexor configuration on the biomimetic knee with the $\phi$\qty{20}{\mm} BPA.}
+\label{fig:bktFrame}
+\end{figure}
+
 \begin{equation}
 \mathbf{K}_{br} = 
 \begin{bmatrix}
@@ -247,31 +256,6 @@ For the diagonal stiffness matrix in Eq. \ref{eq:bktstiffness}, Eq. \ref{eq:bktd
 \boldsymbol{\eta}_{br} = \begin{bmatrix} F'_{x,br}/\chi_{1} \\ F'_{y,br}/\chi_{2} \\ F'_{z,br}/\chi_{1} \end{bmatrix}
 \label{eq:bktcomponentdeflection}
 \end{equation}
-
-Figure~\ref{fig:xiProjection} distinguishes the three-dimensional displacement of each bracket from the scalar displacement along the BPA force path. For bracket $j$, the displacement resolves into components $\eta_{1,j}$, $\eta_{2,j}$, and $\eta_{3,j}$ along the local bracket-frame basis, whereas only its projection $\delta_{br,j}$ along the corresponding force direction $\hat{\mathbf{u}}_j$ changes the actuator length. The two bracket projections act in series with the tendon elongation $\delta_{\mathrm{tendon}}$:
-
-\begin{equation}
-\begin{aligned}
-\boldsymbol{\eta}_{br,j} &= \sum_{i=1}^{3}\eta_{i,j}\hat{e}_i^{(j)},\\
-\delta_{br,j} &= \hat{\mathbf{u}}_j^T\boldsymbol{\eta}_{br,j}, \qquad j\in\{1,2\},\\
-\delta_{\mathrm{series}} &= \delta_{br,1}+\delta_{\mathrm{tendon}}+\delta_{br,2}.
-\end{aligned}
-\label{eq:bracket_series_projection}
-\end{equation}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[height=0.72\textheight]{xiProjection.pdf}
-% ALT TEXT: Two three-dimensional bracket coordinate frames, {br,1} and {br,2}, are
-% separated along a dashed actuator line. Equal-and-opposite force vectors point
-% from each bracket toward the other and satisfy F'_2=-F'_1. Each bracket has a
-% local deflection vector eta and a clearly offset scalar projection delta along
-% its force direction. The bracket-2 projection is shifted to the right of its
-% coordinate axes. Tendon elongation is collinear and contiguous with the
-% bracket-1 projection.
-\caption[Two-bracket deflection and force-path projection]{Two-bracket deflection and projection along the BPA force path. The force vectors at $\{br,1\}$ and $\{br,2\}$ point toward one another and satisfy $\mathbf{F}'_2=-\mathbf{F}'_1$. The bracket projections $\delta_{br,1}$ and $\delta_{br,2}$ are offset from the corresponding coordinate frames for clarity, and tendon elongation $\delta_{\mathrm{tendon}}$ continues collinearly from $\delta_{br,1}$. Colors follow a color-vision-deficiency-safe palette and are redundant with labels and line weights.}
-\label{fig:xiProjection}
-\end{figure}
 
 Although $\boldsymbol{\eta}_{br}$ is a three-dimensional deflection vector, the BPA force model depends on the scalar change in effective BPA length ($\delta$). Therefore, only the component of $\boldsymbol{\eta}_{br}$ along the BPA line of action directly changes the effective BPA length. This scalar bracket deflection is the projection of $\boldsymbol{\eta}_{br}$ onto $\hat{\mathbf{u}}$:
 
@@ -331,14 +315,6 @@ After solving Eq. \ref{eq:complianceforcebalance}, the corresponding force magni
 
 
 
-\begin{figure}[htbp]
-\begin{center}
-\includegraphics[width=1\textwidth]{bktFrame.pdf}
-\end{center}
-\caption{Bracket frame orientations for: \textbf{(A)} Flexor configuration on the pinned knee, \textbf{(B)} extensor configuration on the pinned knee, \textbf{(C)} flexor and extensor configurations on the biomimetic knee with $\phi$\qty{10}{\mm} BPAs, and \textbf{(D)} flexor configuration on the biomimetic knee with the $\phi$\qty{20}{\mm} BPA.}
-\label{fig:bktFrame}
-\end{figure}
-
 Multiobjective optimization using \texttt{gamultiobj} in MATLAB was used to determine the length offset ($\chi_{0}$) and the stiffness terms ($\chi_{1}$ and $\chi_{2}$) until the error between the model and the experimental data was minimized for the $l_{0}=\qty{48.5}{\cm}$ flexor BPA (Fig.~\ref{fig:FlxPin_group}\textbf{C}). Because the bracket forms an arch shape and extends for \qty{75}{\mm} in the $Z$ direction, the extensor configuration required an additional correction. The inner side of a BPA that bends over the joint experiences less tensile stress than the outer side, creating a force imbalance and a loss of part of the arc length of the BPA as usable length. An additional optimization term $\chi_{3}$ was introduced to capture this wrapping loss, such that
 \begin{equation}
     \Delta l = \begin{cases}
@@ -363,6 +339,31 @@ Combining \eqref{eq:comp} into \eqref{eq:deltaL}, and subtracting $\Delta l$ fro
 The optimization algorithm was again \texttt{gamultiobj} in MATLAB. This time, the muscle origins bracket was chosen. The bracket frame is shown in Fig. \ref{fig:bktFrame}\textbf{B}. Since the bracket forms an arch shape and extends for \qty{75}{\mm} in the $Z$ direction, for this configuration only we set $K_{2}$ in the $X_{br}$ direction, and $K_{1}$ in the $Y_{br}$ and $Z_{br}$ directions. The optimization algorithm for this set solves for the best average goodness-of-fit (GoF) measures RMSE, FVU, and maximum absolute residual for two BPAs, while the third one was held out. Three independent rounds of optimization were performed, so that one of each of the BPAs could be held out as validation. Then we picked the solution with the shortest distance between the average normalized GoF and the validation data, while also requiring improved GoF values for all the individual BPAs, with the exception of maximum absolute residual on the $l_{0}=\qty{48.0}{\cm}$ BPA.
 
 This initial identification was subsequently extended to the full archived test sets in two stages. First, the flexor model was given a second compliant bracket at the origin-side attachment (a hip-frame cantilever carrying the BPA origin), so that the compliance of both ends of the actuator path is represented; the stiffness pair $(\chi_{1}, \chi_{2})$ is shared by the two brackets in fixed axis assignments (Appendix~\ref{app:model_geometry}, Table~\ref{tab:app_stiffness_arrays}), leaving a three-term fit $(\chi_{0}, \chi_{1}, \chi_{2})$. The flexor fit was cross-validated over the five pinned-knee flexor tests, holding out the encoder-corrected \qty{47}{\cm} test as validation. Second, the extensor refit locked $(\chi_{1}, \chi_{2})$ to the flexor front values --- enforcing a single stiffness pair across the flexor and extensor configurations --- and solved only the extensor-specific terms $(\chi_{0}, \chi_{3})$ on the six-test extensor validation pool, with the extensor length offset allowed to take negative values. The bounds and the adopted values of both stages are recorded in Appendix~\ref{app:model_geometry} (Tables~\ref{tab:app_opt_bounds} and~\ref{tab:app_xi_values}); the fit outcomes are summarized in Section~\ref{sec:ongoing}.
+
+Figure~\ref{fig:xiProjection} distinguishes the three-dimensional displacement of each bracket from the scalar displacement along the BPA force path. For bracket $j$, the displacement resolves into components $\eta_{1,j}$, $\eta_{2,j}$, and $\eta_{3,j}$ along the local bracket-frame basis, whereas only its projection $\delta_{br,j}$ along the corresponding force direction $\hat{\mathbf{u}}_j$ changes the actuator length. The two bracket projections act in series with the tendon elongation $\delta_{\mathrm{tendon}}$:
+
+\begin{equation}
+\begin{aligned}
+\boldsymbol{\eta}_{br,j} &= \sum_{i=1}^{3}\eta_{i,j}\hat{e}_i^{(j)},\\
+\delta_{br,j} &= \hat{\mathbf{u}}_j^T\boldsymbol{\eta}_{br,j}, \qquad j\in\{1,2\},\\
+\delta_{\mathrm{series}} &= \delta_{br,1}+\delta_{\mathrm{tendon}}+\delta_{br,2}.
+\end{aligned}
+\label{eq:bracket_series_projection}
+\end{equation}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[height=0.72\textheight]{xiProjection.pdf}
+% ALT TEXT: Two three-dimensional bracket coordinate frames, {br,1} and {br,2}, are
+% separated along a dashed actuator line. Equal-and-opposite force vectors point
+% from each bracket toward the other and satisfy F'_2=-F'_1. Each bracket has a
+% local deflection vector eta and a clearly offset scalar projection delta along
+% its force direction. The bracket-2 projection is shifted to the right of its
+% coordinate axes. Tendon elongation is collinear and contiguous with the
+% bracket-1 projection.
+\caption[Two-bracket deflection and force-path projection]{Two-bracket deflection and projection along the BPA force path. The force vectors at $\{br,1\}$ and $\{br,2\}$ point toward one another and satisfy $\mathbf{F}'_2=-\mathbf{F}'_1$. The bracket projections $\delta_{br,1}$ and $\delta_{br,2}$ are offset from the corresponding coordinate frames for clarity, and tendon elongation $\delta_{\mathrm{tendon}}$ continues collinearly from $\delta_{br,1}$. Colors follow a color-vision-deficiency-safe palette and are redundant with labels and line weights.}
+\label{fig:xiProjection}
+\end{figure}
 
 The goodness-of-fit metrics used to judge the optimization results are the root mean square error (RMSE), the fraction of variance unexplained (FVU), and the maximum absolute residual, each computed between the measured and predicted isometric torque over the tested range of motion.
 
@@ -390,7 +391,7 @@ Although both configurations share this pipeline, their cost functions differ in
 
 \section{Balance Platform and Inverted-Pendulum Testbeds}\label{sec:balance_testbeds}
 
-In parallel with the knee test stands, the author, together with McNeal and Williams, developed a family of hardware testbeds for the balance problem that a walking humanoid must eventually solve: a robotic inverted pendulum actuated by BPAs at the ankle and standing on a motorized oscillating balance platform \citep{bolen_balance_2024, bolen_selfbalancing_2024, bolen_selfbalancing_srs_2024}. The testbeds deliberately reduce the robot to a single actuated joint and a single sensory question --- which measurement of body orientation, fed through which feedback law, will hold the leg upright on a moving support --- so that vestibular and proprioceptive feedback strategies could be exercised in hardware before their adoption in the full humanoid, whose lateral stabilization is future work (Chapter~\ref{ch:futurework}). Three generations were built (Figure~\ref{fig:balance_inverted_pendulum}).
+In parallel with the knee test stands, the author, together with McNeal and Williams, developed a family of hardware testbeds for the balance problem encountered by a walking humanoid: a robotic inverted pendulum actuated by BPAs at the ankle and standing on a motorized oscillating balance platform \citep{bolen_balance_2024, bolen_selfbalancing_2024, bolen_selfbalancing_srs_2024}. The testbeds deliberately reduce the robot to a single actuated joint and a single sensory question: which measurement of body orientation, fed through which feedback law, holds the leg upright on a moving support? This reduction allowed vestibular and proprioceptive feedback strategies to be exercised in hardware and provides a baseline for the full-body comparisons defined in Chapter~\ref{ch:futurework}. Three generations were built (Figure~\ref{fig:balance_inverted_pendulum}).
 
 All three generations share one control template. A microcontroller reads body orientation, compares it against an upright set point, and commands the antagonist BPA pair with a correction proportional to the measured angle error: the command to one muscle of the pair is increased while the command to its antagonist is decreased by the same amount, about an equilibrium at which both valves sit half open, so that one muscle pressurizes as the other vents. Because the valves are on/off solenoid valves supplied from a manifold, the proportional command is realized by time-proportioning --- pulse-width modulation of the valve duty cycle --- with the switched pressure routed to the BPA chambers through a transistor-array driver stage, and with chamber pressures monitored by pneumatic pressure transducers. The pressure--force dynamics that this pulse-modulated scheme excites are modeled in companion work \citep{elzein_pressure_2025}.
 
@@ -402,7 +403,7 @@ The final balance platform stands the inverted pendulum, its ankle driven by an 
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.60\textwidth,height=0.62\textheight,keepaspectratio]{figs/Balance/inverted_pendulum_photo.jpg}
+\includegraphics[width=0.60\textwidth,height=0.62\textheight,keepaspectratio]{inverted_pendulum_photo.jpg}
 \caption[BPA-actuated inverted-pendulum testbed]{The BPA-actuated inverted-pendulum testbed. The pendulum shank rides on a hinge ankle above the foot assembly, and braided pneumatic actuators route down both sides of the shank to the foot, forming the antagonist ankle pair. Photograph from the AARL Inverted Pendulum project repository.}
 \label{fig:balance_inverted_pendulum}
 \end{figure}
@@ -411,27 +412,27 @@ The final balance platform stands the inverted pendulum, its ankle driven by an 
 
 Before the simulation pipeline of Chapter~\ref{ch:futurework} was defined, the author and Morrow built a neuromechanical model of a bipedal walker in AnimatLab, a 3D graphics environment for constructing biomechanical systems actuated by synthetic neural systems \citep{cofer_animatlab_2010}. The course report describing that model \citep{bolen_design_2020} is summarized here because its biomechanics and network architecture are the direct ancestors of both the current AnimatLab walker model, whose neuron and synapse parameters are documented in Appendix~\ref{app:neuron_equations}, and the two-layer CPG controller planned in Chapter~\ref{ch:futurework}.
 
-The biomechanical plant consisted of nine rigid bodies --- pelvis, thigh, shank, foot, and toe segments --- connected by sagittal-plane hinge joints with human-like rotational capabilities and actuated by antagonistic pairs of Hill-type muscles at the hip, knee, and ankle. The toe joint, the author's addition to the Li design, carried a passive spring instead of a muscle pair, increasing foot compliance and conserving energy; its contribution to push-off would make an interesting study in its own right once the model walks on the ground. The mechanics followed the suspended bipedal walking model of \citet{li_bipedal_2017}, whose CPGs were entrained by heel and toe mechanosensory receptors and hip-angle position sensors standing in for the group-I loading, cutaneous, and hip-joint afferents of the biological scheme --- muscle afferents were not modeled --- and it is worth noting that the Li model required support against falling: a system with only planar joints cannot balance side to side, so lateral stabilization falls to the vestibular layer and hardware design of Chapter~\ref{ch:futurework}.
+The biomechanical model consisted of nine rigid bodies representing pelvis, thigh, shank, foot, and toe segments. Sagittal-plane hinge joints provided human-like rotational capabilities, and antagonist pairs of Hill-type muscles actuated the hip, knee, and ankle. The toe joint, the author's addition to the Li design, carried a passive spring instead of a muscle pair, increasing foot compliance and conserving energy. Its contribution to push-off can be isolated in a future comparison using otherwise identical biomechanical-model and controller parameters. The mechanics followed the suspended bipedal walking model of \citet{li_bipedal_2017}, whose CPGs were entrained by heel and toe mechanosensory receptors and hip-angle position sensors standing in for the group-I loading, cutaneous, and hip-joint afferents of the biological scheme; muscle afferents were not modeled. The Li model also required lateral support because its planar joints could not balance side to side, which makes it a useful baseline for the vestibular and hardware extensions defined in Chapter~\ref{ch:futurework}.
 
 The synthetic nervous network was built from non-spiking, leaky-integrator neurons and followed the two-layer CPG organization of \citet{deng_neuromechanical_2019}. A rhythm-generator layer set the timing of the system; a pattern-formation layer reshaped the timing signals into phase-appropriate activation of antagonist muscle groups; and a sensorimotor layer containing Renshaw-cell-like recurrent inhibition drove the motor neurons. The sensorimotor layer received Ia (length and velocity) and Ib (tension) afferent feedback from the muscles, but the feedback gains were never systematically tuned, and no ground-contact signals were modeled. Every applied current, synaptic weight, and muscle-tension parameter was set by hand: each was adjusted by trial and error, one at a time, until the three layers oscillated in phase and the motor neurons produced stepping-like activation of the muscle pairs. That hand-tuning consumed the bulk of the project's effort, left no record of the sensitivity of the behavior to individual parameters, and did not generalize when new feedback pathways were added --- limitations that directly motivated the systematic, verification-first tuning approach of Chapter~\ref{ch:futurework}.
 
 \section{Preliminary Neuromechanical Simulation Workflows}\label{sec:preliminary_sim_methods}
 
-Preliminary simulation workflows were assembled to support future integration of the BPA mechanics and synthetic nervous system (SNS). The figures in this section document the biomechanical representations, controller organization, and software implementation. Their purpose is to identify what was constructed; quantitative validation remains separate.
+Neuromechanical simulation workflows were assembled to integrate the BPA mechanics and synthetic nervous system (SNS). The figures in this section document the resulting biomechanical representations, controller organization, and software implementation. Their purpose is to identify the tools that were constructed and the scope in which each was verified; quantitative outcomes are reported separately in Section~\ref{sec:preliminary_sim_results}.
 
 \subsection{AnimatLab Body and Controller Organization}
 
 The walker representation and controller hierarchy are shown in Figures~\ref{fig:animatlab_model_architecture} and~\ref{fig:animatlab_working_gui}. The hierarchy separates rhythm generation, hip control, and knee--ankle pattern formation within left- and right-side neural subsystems. The current AnimatLab working model was instrumented for a new \qty{10}{\second} phase-1 run recording joint, neural, contact-sensory, and body-motion channels. This run was used to inspect recorded signals and simulation behavior, without treating it as evidence of stable walking or effective ground-contact gating. It is distinct from the earlier walker study described in Section~\ref{sec:prior_walker}. Preliminary joint-motion results are reported in Section~\ref{sec:preliminary_sim_results}.
 
-Since that run, the working model has been reorganized into a complete bilateral network. The right-side rhythm-generator, hip, and knee--ankle subsystems were mirrored from the left, inhibitory commissural pathways were added between the two rhythm generators, and each leg gained four biarticular muscle pathways (gastrocnemius, biceps femoris short head, semimembranosus, and rectus femoris) with human maximum isometric forces from the Gait2392 data set. The reorganized project opens in the AnimatLab environment without errors and exports a standalone simulation that runs headless. Its rhythm-generator half-centers hold a static latch under the tonic drive levels tested so far rather than oscillating, so conductance tuning toward robust oscillation is the active step; no locomotor claim is made for the reorganized model beyond its verified assembly.
+Since that run, the working model has been reorganized into a complete bilateral network. The right-side rhythm-generator, hip, and knee--ankle subsystems were mirrored from the left, inhibitory commissural pathways were added between the two rhythm generators, and each leg gained four biarticular muscle pathways (gastrocnemius, biceps femoris short head, semimembranosus, and rectus femoris) with human maximum isometric forces from the Gait2392 data set. The reorganized project opens in the AnimatLab environment without errors and exports a standalone simulation that runs headless. Under the tonic-drive values examined here, its rhythm-generator half-centers converged to a static latched state rather than a limit cycle. The model is therefore retained as a verified architecture and reproducible comparison condition; no locomotor claim is made for that reorganized AnimatLab configuration.
 
 Figure~\ref{fig:animatlab_controller_motifs} illustrates the rhythm-generator, pattern-formation, and sensorimotor organization at the neuron and synapse level. These reference schematics complement the subsystem view by making the antagonist pathways and sensory connections visible.
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=0.64\textwidth,height=0.30\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/OurWalker.png}
+\includegraphics[width=0.64\textwidth,height=0.30\textheight,keepaspectratio]{AnimatLab_reference/OurWalker.png}
 \par\medskip
-\includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/2layerImprove.png}
+\includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]{AnimatLab_reference/2layerImprove.png}
 \caption[AnimatLab walker and controller hierarchy]{AnimatLab model and architecture illustrations. Top: the segmented walker and labeled hip, knee, ankle, and toe joints. Bottom: the left/right subsystem organization and an expanded view of the left-side rhythm-generator, hip, and knee--ankle modules. These architectural views describe model organization and are not snapshots of the phase-1 trajectory.}
 \label{fig:animatlab_model_architecture}
 \end{figure}
@@ -440,24 +441,24 @@ Figure~\ref{fig:animatlab_controller_motifs} illustrates the rhythm-generator, p
 \centering
 \begin{minipage}[t]{0.47\textwidth}\centering
 \textbf{(A) Rhythm generator}\par\smallskip
-\includegraphics[width=\linewidth,height=0.20\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/RGnetwork.PNG}
+\includegraphics[width=\linewidth,height=0.20\textheight,keepaspectratio]{AnimatLab_reference/RGnetwork.PNG}
 \end{minipage}\hfill
 \begin{minipage}[t]{0.47\textwidth}\centering
 \textbf{(B) Pattern formation}\par\smallskip
-\includegraphics[width=\linewidth,height=0.20\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/PFnetwork.PNG}
+\includegraphics[width=\linewidth,height=0.20\textheight,keepaspectratio]{AnimatLab_reference/PFnetwork.PNG}
 \end{minipage}
 \par\medskip
 \textbf{(C) Sensorimotor organization}\par\smallskip
-\includegraphics[width=0.76\textwidth,height=0.39\textheight,keepaspectratio]{figs/Preliminary/AnimatLab_reference/sensoryMotor_Network.PNG}
+\includegraphics[width=0.76\textwidth,height=0.39\textheight,keepaspectratio]{AnimatLab_reference/sensoryMotor_Network.PNG}
 \caption[AnimatLab controller reference schematics]{Reference schematics of \textbf{(A)} rhythm generation, \textbf{(B)} pattern formation, and \textbf{(C)} sensorimotor organization. Ext and Flx identify antagonist extensor and flexor pathways; IN denotes interneurons, MN motor neurons, and Ia and Ib muscle afferent pathways. Open triangles and filled circles distinguish excitatory and inhibitory synaptic connections. These schematics illustrate controller architecture and are not readouts from the phase-1 run.}
 \label{fig:animatlab_controller_motifs}
 \end{figure}
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]{figs/Preliminary/animatlab_body_gui.png}
+\includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]{animatlab_body_gui.png}
 \par\medskip
-\includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]{figs/Preliminary/animatlab_network_gui.png}
+\includegraphics[width=\textwidth,height=0.31\textheight,keepaspectratio]{animatlab_network_gui.png}
 \caption[AnimatLab working-project interface]{The saved AnimatLab working project opened in the application: the biomechanical body at initialization (top) and the expanded left-side controller subsystem (bottom). The workspace tree and property inspector expose the relationship between the body, sensory pathways, and neural modules. These interface captures were acquired without running a new simulation.}
 \label{fig:animatlab_working_gui}
 \end{figure}
@@ -466,17 +467,17 @@ Figure~\ref{fig:animatlab_controller_motifs} illustrates the rhythm-generator, p
 
 A reproducible OpenSim-to-MuJoCo conversion workflow was assembled using scripted model repair, MyoConverter, and a documented software environment. Separately, a custom quasi-static BPA model was ported from MATLAB to Python and coupled to MuJoCo tendon kinematics to compute actuator forces and their joint contributions. A minimal SNS with reciprocal inhibition drove a synthetic knee with antagonistic flexor and extensor BPAs. Figure~\ref{fig:mujoco_model_views} distinguishes the converted robot from this separate knee demonstration. The demonstration establishes a controller--actuator--joint interface; it does not establish SNS control of the converted Gait2392 robot or validation of correction-factor-based MuJoCo torque predictions.
 
-At the time of writing the conversion stage is complete and verified: the converted model carries all 92 muscle-tendon actuators with attachment geometry audited against the OpenSim source, and the joint sign conventions of the robot's modified paths were audited dynamically (from simulation torques rather than static model tables, because coupled path points move). The BPA port reproduces the MATLAB force calculation, including the correction-factor force balance. An SNS-Toolbox network couples to MuJoCo at a \qty{0.1}{\milli\second} neural step, with muscle force feedback entering as Ib afferent input. On this coupling, a 406-neuron two-layer spinal network has been assembled for the converted model --- per-leg rhythm-generator half-centers, four phase-shifted pattern-formation groups per leg, motoneuron pools for all actuators, and Ia, Ib, and II afferent populations --- and its rhythm generator has been verified in isolation to oscillate at an approximately \qty{0.9}{\second} cycle with the two legs in antiphase under tonic drive. Full-body closed-loop co-simulation is not yet running: leg-joint states develop non-finite values during longer simulations, with the foot-contact meshes the primary suspect under investigation.
+The conversion stage is complete and verified: the converted model carries all 92 muscle-tendon actuators with attachment geometry audited against the OpenSim source, and the joint sign conventions of the robot's modified paths were audited dynamically (from simulation torques rather than static model tables, because coupled path points move). The BPA port reproduces the MATLAB force calculation, including the correction-factor force balance. An SNS-Toolbox network couples to MuJoCo at a \qty{0.1}{\milli\second} neural step, with muscle force feedback entering as Ib afferent input. On this coupling, a 406-neuron two-layer spinal network was assembled for the converted model, comprising per-leg rhythm-generator half-centers, four phase-shifted pattern-formation groups per leg, motoneuron pools for all actuators, and Ia, Ib, and II afferent populations. Its rhythm generator was verified in isolation to oscillate at an approximately \qty{0.9}{\second} cycle with the two legs in antiphase under tonic drive. Initial longer full-body trials developed non-finite leg-joint states associated with the contact configuration. Accordingly, the evidence reported here validates the conversion, interfaces, and isolated rhythm generator, while Chapter~\ref{ch:futurework} treats whole-body robustness as a controlled extension experiment rather than an unfinished dissertation deliverable.
 
 \begin{figure}[p]
 \centering
 \begin{minipage}[t]{0.48\textwidth}\centering
 \textbf{(A) Converted robot}\par\smallskip
-\includegraphics[width=\linewidth,height=0.53\textheight,keepaspectratio]{figs/Preliminary/mujoco_converted_robot.png}
+\includegraphics[width=\linewidth,height=0.53\textheight,keepaspectratio]{mujoco_converted_robot.png}
 \end{minipage}\hfill
 \begin{minipage}[t]{0.48\textwidth}\centering
 \textbf{(B) Synthetic BPA knee}\par\smallskip
-\includegraphics[width=\linewidth,height=0.53\textheight,keepaspectratio]{figs/Preliminary/mujoco_synthetic_knee.png}
+\includegraphics[width=\linewidth,height=0.53\textheight,keepaspectratio]{mujoco_synthetic_knee.png}
 \end{minipage}
 \caption[MuJoCo model representations]{Native MuJoCo renders of \textbf{(A)} the converted Gait2392 robot at its saved reference pose, with muscle paths visible, and \textbf{(B)} the independent synthetic antagonist-BPA knee at an illustrative static angle of \ang{-35}. Cyan and gold identify its named flexor and extensor tendon routes; transparency exposes the routes through the view. The models are not shown to the same scale. These views document model construction, not SNS control of the converted robot or validated torque predictions.}
 \label{fig:mujoco_model_views}
@@ -484,20 +485,20 @@ At the time of writing the conversion stage is complete and verified: the conver
 
 \subsection{Simulink SNS Library and Reflex Topology}
 
-A seven-block Simulink SNS library was also created, comprising a non-spiking neuron, a graded chemical synapse, a spiking leaky integrate-and-fire neuron, Ia and Ib afferents, activation dynamics, and a placeholder BPA force block (Figure~\ref{fig:simulink_sns_implementation}). These components were connected in a reduced-order knee-reflex topology with antagonist actuation, stretch feedback, autogenic inhibition, and reciprocal inhibition (Figure~\ref{fig:simulink_reflex_topology}). The library and the reflex demonstration run in base Simulink without additional toolboxes; the block icons derive their excitatory/inhibitory symbols automatically from the synapse sign, in a color-blind-safe palette, and the journal figures regenerate from scripts. The route for coupling the plant to CAD was settled on URDF export from SolidWorks followed by Simscape Multibody import, and the import path has been verified on a trial knee assembly; the tendon hardware is modeled in CAD but not yet inserted into the assembly. The plant retains provisional mechanical parameters, the BPA force block remains a placeholder, and the saved runs are not used to establish quantitative knee-regulation performance.
+A seven-block Simulink SNS library was also created, comprising a non-spiking neuron, a graded chemical synapse, a spiking leaky integrate-and-fire neuron, Ia and Ib afferents, activation dynamics, and a placeholder BPA force block (Figure~\ref{fig:simulink_sns_implementation}). These components were connected in a reduced-order knee-reflex topology with antagonist actuation, stretch feedback, autogenic inhibition, and reciprocal inhibition (Figure~\ref{fig:simulink_reflex_topology}). The library and the reflex demonstration run in base Simulink without additional toolboxes; the block icons derive their excitatory/inhibitory symbols automatically from the synapse sign, in a color-blind-safe palette, and the journal figures regenerate from scripts. The CAD-coupling route was verified by exporting a trial SolidWorks knee assembly to URDF and importing it into Simscape Multibody. That trial assembly excluded the separately modeled tendon hardware, and the demonstration used provisional biomechanical-model parameters and a placeholder BPA force block. Its evidentiary scope is therefore the executable neural-block library, reflex topology, and CAD-import workflow; the saved runs are not presented as quantitative knee-regulation results.
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=0.95\textwidth,height=0.42\textheight,keepaspectratio]{figs/Preliminary/simulink_sns_library_grid.png}
+\includegraphics[width=0.95\textwidth,height=0.42\textheight,keepaspectratio]{simulink_sns_library_grid.png}
 \par\medskip
-\includegraphics[width=\textwidth,height=0.21\textheight,keepaspectratio]{figs/Preliminary/simulink_neuron_detail.png}
-\caption[Simulink SNS library and neuron implementation]{Native Simulink diagram exports showing the seven masked library blocks (top) and the internal implementation of the non-spiking neuron (bottom). The library blocks are arranged in a compact display grid for legibility. The BPA force block remains a placeholder. These implementation views do not establish quantitative knee regulation or a completed CAD-coupled Simscape Multibody plant.}
+\includegraphics[width=\textwidth,height=0.21\textheight,keepaspectratio]{simulink_neuron_detail.png}
+\caption[Simulink SNS library and neuron implementation]{Native Simulink diagram exports showing the seven masked library blocks (top) and the internal implementation of the non-spiking neuron (bottom). The library blocks are arranged in a compact display grid for legibility. The BPA force block remains a placeholder. These implementation views do not establish quantitative knee regulation or a completed CAD-coupled Simscape Multibody model.}
 \label{fig:simulink_sns_implementation}
 \end{figure}
 
 \begin{sidewaysfigure}[p]
 \centering
-\includegraphics[width=\textheight,height=0.79\textwidth,keepaspectratio]{figs/Preliminary/simulink_knee_reflex_arranged.png}
+\includegraphics[width=\textheight,height=0.79\textwidth,keepaspectratio]{simulink_knee_reflex_arranged.png}
 \caption[Complete Simulink knee-reflex topology]{The complete reduced-order knee-reflex model exported from Simulink. The diagram connects Ia and Ib sensory pathways, excitatory and inhibitory synapses, antagonist motor neurons, activation and BPA force blocks, and the joint dynamics. Blocks and wires were arranged for display; source and destination ports were checked to confirm unchanged connectivity. Mechanical parameters and the BPA force block remain provisional.}
 \label{fig:simulink_reflex_topology}
 \end{sidewaysfigure}

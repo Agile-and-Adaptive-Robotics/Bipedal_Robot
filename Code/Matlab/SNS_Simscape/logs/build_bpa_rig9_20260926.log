@@ -1,0 +1,13 @@
+neuron Vrest = -52 mV
+EXT wired
+FLX wired
+N_E ports: in=7 out=2 | S_EF: in=1 out=1
+{Error using build_bpa_sns_rig_v2_20260926 (line 175)
+Invalid Simulink object name: 'mdl_leg_rig_ba003_imported/E_BPA'.
+Caused by:
+    Error using build_bpa_sns_rig_v2_20260926 (line 175)
+    Unable to find block 'E_BPA'.
+} 
+[Warning: Unable to close the model 'mdl_leg_rig_ba003_imported' because it has been changed. To save changes, use close_system('mdl_leg_rig_ba003_imported',1). To
+discard changes, use close_system('mdl_leg_rig_ba003_imported',0).] 
+ERROR: MATLAB error Exit Status: 0x00000001

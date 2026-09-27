@@ -1,0 +1,18 @@
+Cylindrical: deleted + welded far ports
+Cylindrical1: deleted + welded far ports
+Revolute: deleted + welded far ports
+Revolute2: 1 far ports, skipped
+Revolute: Invalid Simulink object name: 'mdl_leg_rig_ba003_imported/Revolute'.
+{Error using assert
+no line from mdl_leg_rig_ba003_imported/EXT_origT to mdl_leg_rig_ba003_imported/x04_01_KT_R_003_1_RIGID
+
+Error in rig_knee_rebuild_20260926>line_partner_port (line 154)
+assert(~isempty(port), 'no line from %s to %s', jointBlk, bodyBlk);
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error in rig_knee_rebuild_20260926 (line 80)
+ktPort = line_partner_port([mdl '/EXT_origT'], kt);   % EXT_origT B is wired to a KT-side port
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+[Warning: Unable to close the model 'mdl_leg_rig_ba003_imported' because it has been changed. To save changes, use close_system('mdl_leg_rig_ba003_imported',1). To
+discard changes, use close_system('mdl_leg_rig_ba003_imported',0).] 
+ERROR: MATLAB error Exit Status: 0x00000001

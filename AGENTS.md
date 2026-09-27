@@ -113,6 +113,8 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
 
 ## Project purpose (priority order)
 
+**Ben's prose preference:** always use the Oxford comma in lists of three or more items.
+
 1. **Dissertation first** (deadline: this week, Sept 2026). LaTeX source lives in
    `Documentation\Reports and Papers\Dissertation\` (repo-tracked as of 2026-09-08; the
    `ProofFinal\` folder is the working copy and `upload\` mirror is the canonical Overleaf
@@ -157,7 +159,24 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
 - `Code\Matlab\Functions\`, `Code\Matlab\Robot_Data\` — shared helpers; MonoPam classes/data.
 - `Code\Matlab\Human_Data\`, `Code\Matlab\Bone_Mesh_Plots\` — human/bone data and plotting.
 - `Code\Matlab\minimizers\`, `Code\Matlab\Previous Optimization Code\` — **legacy**; don't build on.
-- `Code\Matlab\HX711-LoadCell\` — load-cell apps used with test data.
+- `Code\Matlab\HX711-LoadCell\` — load-cell apps used with test data (File-Exchange
+  originals/archives + superseded redesign draft).
+  **2026-09-27 REBUILD — the live app is `Code\Matlab\HX711 v3.0\HX711 v3.0\HX711_BPA.m`**
+  (programmatic uifigure class, launch via `Start_HX711_BPA` from any folder/machine/clone —
+  the launcher addpaths its own folder so `+arduinoioaddons/+basicHX711` resolves; default save
+  dir found by walking UP from the app file to the repo's `Testing_Data`, never hard-coded).
+  Calibration: original Tare→Scale Factor→Calibration workflow AND known-factor entry
+  (Known LC Cal tab: tare+scale; Pressure Cal tab: a/b or guided 7-point, 0–620 kPa);
+  factors persist in `hx711_bpa_last_cal.mat` next to the app (gitignored, machine-local).
+  Pressure read per-sample (old app froze it at connect); optional pressure servo (setpoint
+  ± deadband → valve pins D11 increase / D6 maintain); KneeAngle/LoadCellAngle metadata into
+  every save; Save = .mat (750×6 + Stats + Metadata + ColumnNames) + .txt sidecar in the
+  original 2-column format; Run spinner auto-increments. `test_HX711_BPA_offline` = hardware-free
+  self-test, run on any machine after pulling. Unique class name = can't be shadowed by any
+  installed File-Exchange HX711 app (none on EB475WS4's MATLAB path — verified `which -all`).
+  Old apps DISABLED by rename: `HX711_customized_original.mlapp.disabled` +
+  `HX711_Pressure.mlapp.disabled` (in the v3.0 folder), LoadCell's `HX711.mlapp.disabled`,
+  redesign `HX711.m.superseded` — rename back to restore; details in `README_HX711_BPA.md`.
 - `Code\MuJoCo_SNS\` — MuJoCo + SNS-Toolbox pipeline (see its README.md):
   custom BPA muscle (`bpa_muscle.py`, exact port of festo4/maxBPAforce/
   balanceX3), MuJoCo glue, SNS demo, `add_bpa_to_mjcf.py`. Env: conda
@@ -1756,18 +1775,20 @@ Knee_Torque_Test\Figures\Figure components\FlxPin_group\FlxPin_group.fig`.
    7.5 x 10 in (8.5x11 with margins). Nothing smaller.
 2. **Type**: minimum 10 pt everywhere (axis labels, ticks, legends,
    annotations). **No italic text** (set font.style normal; avoid
-   mathtext italics — use \mathrm or plain text).
+   mathtext italics — use \mathrm or plain text). Leave visible clearance
+   between axis titles and tick-label text, especially on the y axis.
 3. **Font**: Arial only (freely available in MATLAB, Adobe Illustrator,
    and Python/matplotlib on all three machines). MATLAB:
    set(groot,'defaultAxesFontName','Arial'); Python:
    rcParams["font.family"]="Arial", "mathtext.fontset":"custom" with
    rm/it/bf all Arial.
-4. **Colors**: use the accessible palette from `Code\Matlab\Colors.m`
-   (Paul Tol 7: #FFD700 gold, #FFB14E orange, #FA8775 coral,
-   #EA5F94 pink, #CD34B5 magenta, #9D02D7 magenta2, #0000FF indigo) as
-   the series palette, in that order. Greys #B0B0B0 (context) and
-   light lavender (inactive circuit context) for de-emphasized
-   structure, Di-Russo-style.
+4. **Colors**: use the accessible palette from `Code\Matlab\Colors.m`.
+   For ranked result series, the most important or adopted result is indigo
+   (#0000FF), followed by progressively lighter/de-emphasized colors:
+   #9D02D7, #CD34B5, #EA5F94, #FA8775, #FFB14E, and #FFD700. Greys
+   #B0B0B0 (context) and light lavender (inactive circuit context) are for
+   de-emphasized structure, Di-Russo-style. This indigo-to-light hierarchy
+   is Ben's preferred presentation order; do not reverse it.
 5. **Accessibility**: colorblind-safe by construction (Tol palette +
    distinct line styles/markers/shapes so no information is carried by
    hue alone); every figure ships with **alt text** (one file per
@@ -2007,6 +2028,86 @@ A separate chat is updating the dissertation text with these. Sources (Testing_D
   series-stiffness Xi3. Gotchas: pool workers never see client setenv after spawn (env-gated
   evaluator branches silently run the wrong mode in parfor — set env BEFORE parpool); wrap
   the Xi-factor handoff details: CHATGPT_HANDOFF.md ACTIVE WORK F (2026-09-14/16).
+- **2026-09-26 — Simscape Multibody bring-up: leg rig + lower humanoid, BPAs + SNS (laptop,
+  this session; models + dev scripts in `Code\Matlab\SNS_Simscape\`):** Ben exported BOTH via
+  Simscape Multibody Link v7.4 (`Knee assembly\09_BA_003.xml` re-export + NEW `10_AH_001.xml`
+  = full robot assembly 09_BA_001 wrapped as grounded subassembly; Hinge→Concentric+Coincident
+  fix WORKED — imports have real revolutes now). **`mdl_leg_rig_ba003_imported.slx`** =
+  knee test rig (2 Cyl + 3 Rev + four-bar knee; grounded at KB = correct for bench tests);
+  **`mdl_humanoid_lower_ah001_imported.slx`** = free biped: sealed `x09_BA_001_1` subsystem
+  (own Solver + Mechanism Config, gravity **[0 −9.80665 0]** — CAD is +y UP, not z!), pelvis
+  on 6-DOF (`pelvis_free` + `World_pelvis` inside the sub), hips = Spherical PE↔KNOB with
+  stud/knob hardware WELDED to the femur heads (parasitic stud spins removed), loose root
+  hardware (screws/nuts ~15 g) DELETED, 59 world-tie lines cut. **Masses: skeleton rescaled
+  ×1.2 to Onyx 1200 kg/m³ in `mdl_humanoid_lower_ah001_DataFile.m`** (XML mass ÷
+  SW-COM CreateMassProperty volume = 1000.0 kg/m³ exactly for every part → factor exact;
+  Body2.GetMassProperties UNRELIABLE on this install — negative/volume>bbox garbage; use
+  Extension.CreateMassProperty). Feet = 0.24×0.035×0.09 m bricks (0.907 kg ea) welded at the
+  tibia bottoms (ankle world y ≈ −0.861); spine = r0.06×0.45 m cylinder + 0.1 m cube lump
+  (ρ 61090) at (−0.079, +0.35, 0) → **total 73.0 kg** ✓. **BPA+SNS layer (both models):**
+  muscle = Internal Force block (f input is SCALAR = force along the frame-to-frame line —
+  no vector math needed) + Transform Sensor (SenseDist only) + `SNS_Library/BPA_20mm`
+  (Ben's Festo law; Rest 0.1281/Kmax 0.1057) + antagonistic NonSpikingNeuron pair (mutual
+  inhibition Esyn = Vrest−25, gmax 1.5; antiphase sine 0.5 Hz drive; V−(Vrest+8) → sat 25 →
+  ×620/25 = kPa). Port layouts BANKED: Transform Sensor LConn(1)=base, RConn(1)=follower,
+  RConn(2..n)=enabled PS outputs; Internal Force LConn(1)=frame, LConn(2)=PS f, RConn(1)=frame;
+  World Frame port = RConn(1); PS-Simulink converter: LConn=PS-in, Outport=sim-out;
+  Simulink-PS: Inport=sim-in, RConn=PS-out. GOTCHAS: add_line can mix handle+string args
+  NEVER; string 'blk/N' counts ALL ports (Product out = '/4' for 3-in) — use handles;
+  add_line can THROW "destination already has a line" AFTER successfully connecting —
+  verify Line>0 in the catch before rethrowing; smimport prefixes 'x' only on digit-leading
+  names and collapses ' - ' to one underscore; product-name→STEP map =
+  `dev\instance_step_map_{rig,humanoid}.json`. **Rig status: WORKING antagonistic knee —
+  corr(L_EXT,L_FLX) = −0.17, forces to 999 N, knee travel 0.13 m** (knee reduced to ONE
+  z-revolute `knee_hinge` at the FL_002 crank midpoint; four-bar joints deleted; brackets
+  welded: BL→KB, FL_001/FL_002→KT; muscle points ±2.8–3.3 cm from the pin, 7 cm above /
+  5.8 cm below — the pin frames sit on x-FLIPPED source frames (smiData ang=π [1,0,0]) so
+  their offsets are counter-rotated; original muscle-calibration loop =
+  `dev\calibrate_muscles_20260926.m` (affine correction, sign: origT += err/2, insT −= err/2)).
+  **Humanoid status: both knees SNS-driven and articulating** (L fully antagonistic
+  0.009–0.142 m; R half-range — the R-leg muscle x-offsets likely need mirroring, TODO Ben/
+  next session). Knee four-bar reductions on the humanoid mirror the rig (joints Revolute/
+  Revolute1/Revolute5/Revolute3/Cylindrical/Cylindrical1/Revolute2/Revolute4 per leg; FL_001_1
+  = R crank, FL_001_2 = L crank; the ORIGINAL import welds KT↔KB had to be CUT
+  (`dev\cut_knee_welds_20260926.m`, ports KT_R#8↔KB_R#3, KT_L#4↔KB_L#6) — they were missed
+  in the 09-20-era surgery and lock the knees shut). Runner scripts all in
+  `SNS_Simscape\dev\*20260926*`; logs in `SNS_Simscape\logs\`; results mats in
+  `SNS_Simscape\results\{rig,humanoid}_bpa_sns_20260926.mat`. NOT done: reflex closure
+  (afferents from joint sensors), ground contact for the humanoid, ankle joints (feet are
+  welded blocks), hip adduction/abduction actuation, N-segment BPA sleeve (Ben's full
+  expanding-diameter plan — these are point-force BPAs), muscle route points from Ben's
+  Xi/AttachPoints data (current points are reasonable placeholders ±3 cm off the knee pin).
+- **2026-09-26 (cont.) — WALKER PROGRAM LAUNCHED (Ben's 5 goals; master doc =
+  `Documentation\Program_Workflow\BPA_Walker_Program.md`):** G1 sagittal uniarticular walker →
+  G2 ah001+27 BPAs/side → G3 design freeze → G4 sim validation (SNS-Simscape AND/OR MuJoCo-SNS)
+  → G5 physical sagittal walker w/ Orin Nano on-board + computer-in-loop (neural deletions +
+  stimulus injection). KEY MAPPING: hardware sensors plug into afferent classes the spinal net
+  ALREADY has — encoder→Ia (θ̇), Liquid Wire→II (length; Leo Micklam), pressure→Ib (festo4(F)),
+  insole→heel/toe contact resets (exists), IMU→VEST (stage-4), 3D camera→drift correction.
+  Sensor→afferent→SNS contract = `Code\Hardware\walker_io\` (SKELETONS, smoke-tested):
+  protocol.py (UDP JSON wire: telemetry 50 Hz Orin→PC, commands PC→Orin — overrides on
+  params.G gains = deletions, stim = current into named neurons, all EPHEMERAL over the best
+  json so every trial replays offline), valves.py (bang_bang + proportional_taped modes,
+  vent-all watchdog), sensors.py (pressure/encoder/LiquidWire/IMU/insole readers with TODO(hw)
+  stubs), afferents.py (Ia/II/Ib formulas verbatim from the conversion map; constants from
+  bpa_actuators_27.json), orin_daemon.py (1 kHz loop budget + watchdogs: sensor-stale 20 ms →
+  vent-all, 650 kPa cap; PC heartbeat loss is NOT a stop), lab_console.py (trial logs →
+  `Testing_Data\walker_trials\<date>_<trial>\`). **OpenSim bones → Simscape PROVEN**:
+  `Solid_Models\Simscape_Part_Library\OpenSim_Bones\` (13 gait2392 bone STLs) +
+  `sns_bone_leg_demo.slx` (hip-ball/knee/ankle leg, File Solid at Onyx 1200, UPDATE+SIM OK;
+  gotchas: UnitType='Custom' for unitless STLs; joint anchors currently at body-frame origins —
+  pull exact offsets from gait2392_robot.mjc when bones enter a real walker). **Ty's foot
+  identified: "final" = `Ty Ankle Foot\Foot and Ankle Design, Newest (7-17-20)` = the renamed
+  `01_00_00_Foot` (part lists match 1:1); two-toe version =
+  `Ty Ankle Foot\Agility Robotics\Foot.SLDASM`; InternFoot has AnkleJointEquations.txt + STLs.**
+  SW CRASH 17:57: FootAnkle.SLDASM save-at-crash was 78% undersized → crash-save preserved as
+  FootAnkle_crashsave_20260926.SLDASM.bak, committed version restored from git, 44 stale locks
+  deleted (cause likely: agent SW probe left 13 parts open in Ben's session — RULE: every
+  script-opened doc gets closed; also Ben has NO AutoRecover backup dir — enable it). Ankle
+  retrofit on the ah001 BLOCK feet BLOCKED ("rigidly connected" despite verified-correct
+  chain — welded feet restored & model UPDATE+SIM OK; do ankles in a FRESH build, e.g. OpenSim
+  foot.stl route or Ty's foot via Multibody-Link export after Ben re-paths links). R-leg
+  muscle mirror asymmetry (half-sweep) also still open.
 
 ## 2026-09-27 — easteregg2 generations campaign bring-back (goal4; full report
 `spinal\reports_20260925\easteregg2\goal4_easteregg2_generations.md`; NO commits — all output is uncommitted working tree for GitHub Desktop)

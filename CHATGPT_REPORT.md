@@ -1,943 +1,671 @@
-# ChatGPT report for ZCode — 2026-09-08
-
-## ZCode 2026-09-20 — VS Code + toolchain rebuild on EB475WS4 (after C:-drive replacement)
-
-Ben replaced the C: drive; registry/PATH links to software installed on D: were wiped and
-VS Code was reinstalled fresh. This session verified and re-linked everything the
-Bipedal_Robot toolchain needs. No model/scientific code was changed.
-
-### 1. Files created or modified
-
-- `C:\Users\Ben Bolen\AppData\Roaming\Code\User\settings.json` — created (fresh VS Code):
-  python.defaultInterpreterPath = myo env; matlab.installPath = R2025a; LaTeX Workshop
-  tools/recipes pointed at `D:\MiKTeX\miktex\bin\x64`; file associations (.osim/.urdf/
-  .asim/.aproj/.aform→xml, .ino→cpp); NoProfile PowerShell default terminal.
-- `D:\Github\Bipedal_Robot\.vscode\settings.json` + `.vscode\extensions.json` — created
-  (UNTRACKED in git; Ben decides commit vs ignore). Recommend + same interpreter config.
-- `C:\Users\Ben Bolen\Desktop\Bipedal_Robot (VS Code).lnk` — one-click project shortcut.
-- `C:\Users\Ben Bolen\.zcode\skills\solidworks\scripts\sw_session.py` (junction = repo
-  copy in ZCode_Skills, **needs Ben's commit**): GEN_PY now uses
-  `win32com.__gen_path__` (pip pywin32 caches in %TEMP%\gen_py; the old
-  site-packages hardcode failed on pip installs and read-only conda bases).
-- Registry (this user, HKCU): CLSID {6AF263BB-…}\LocalServer32 → real SLDWORKS.exe path
-  (SW COM was broken: 8.3 short path unresolvable, 8.3 disabled on D:); TypeLib
-  {83A33D31-…}\1.0\0\win64 polish entry.
-- User PATH: `D:\MiKTeX\miktex\bin\x64` added (by the installer); stale C:-user-MiKTeX
-  entries removed with that install's uninstall.
-- `AGENTS.md` EB475WS4 bullet — 2026-09-20 rebuild notes appended.
+# ChatGPT report for ZCode
+
+**Last updated:** 2026-09-27 15:22 PDT — Corrected linked figure committed; push in progress
+
+**Current priority:** Ben's dissertation review
+
+**Detailed historical record:** [`CHATGPT_REPORT_ARCHIVE.md`](CHATGPT_REPORT_ARCHIVE.md)
+
+This is the current operational index. It is organized by durable item number and
+status rather than by an ever-growing chronological transcript. Newest session updates
+appear first. Older detail is retained in the archive and must not be deleted when an
+item is summarized or superseded.
+
+## Read this first: current state
+
+- **ACTIVE.** Ben resumed the live Overleaf pass at 15:06 PDT. Update this report before
+  and after every meaningful edit group; use a one-line checkpoint for a single tiny edit.
+- A 10:33 PDT audit found no work recorded after the 10:26 pause checkpoint; the report's
+  filesystem timestamp before this audit was 10:26:51 PDT. No Overleaf changes were made
+  during this status audit.
+- **Checkpoint-cadence failure:** the session-update record jumps from 05:53 PDT to
+  10:26 PDT, a 4-hour-33-minute gap. This did not satisfy Ben's required 2--3 minute
+  reporting cadence. Do not infer that final compilation or validation was completed during
+  that undocumented interval; the explicit pending list below remains authoritative.
+- The live project currently compiles to 166 pages after the restored sections and repaired
+  figure paths are included. The earlier 167-page count was recorded while figures were missing;
+  do not treat it as a required final count.
+- Major approved text, figure, Methods, Results-ordering, terminology, and figure-path
+  changes have been applied directly in Overleaf. See the 10:26 PDT handoff near the end of
+  this report for the exact completed set and stopping point.
+- The Background paragraph boundary, missing figure paths, citation typo, and bad section
+  reference are repaired. Explicit compile pass 1 is clean (0 errors, 0 warnings, no undefined
+  citations or references). Pass 2 is also clean and stable at 166 pages. The prohibited-name
+  and source-text terminology audits are clean. Rendered-PDF QA found one embedded figure label
+  using `MUSCULOSKELETAL PLANT`; that asset needs correction before final spot checks.
+- The review deliverables were moved from the incorrectly placed repository-root `output`
+  directory to `Documentation/Reports and Papers/Dissertation/output/`. The old root-level
+  directory no longer exists.
+- The separate yellow review artifact remains at
+  `Documentation/Reports and Papers/Dissertation/output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`;
+  do not overwrite it.
+
+## Status vocabulary
+
+- **READY FOR REVIEW:** implemented in the isolated yellow review copy and awaiting Ben.
+- **APPROVED:** Ben explicitly approved the item; safe to place in a clean integration copy.
+- **PROPOSED:** drafted but not yet included in the yellow review PDF.
+- **OPEN:** requires additional work, evidence, or a decision.
+- **REVISIONS REQUESTED:** Ben reviewed the item and specified changes.
+- **REJECTED:** Ben explicitly declined the proposal; retain only for provenance.
+- **NOT TOUCHED:** explicitly outside the session scope; no current verification implied.
+- **SUPERSEDED:** preserved for provenance but replaced by a newer item or decision.
+
+## Dissertation item register
+
+The D1 entries began as the isolated yellow-review register. Where an item was later
+implemented directly in Overleaf, its heading now says so. The yellow review's successful
+160-page build does **not** constitute validation of the current 167-page live project.
+
+### Item D1.1: Current-Overleaf yellow review build — SUPERSEDED BY LIVE IMPLEMENTATION
+
+Ben requested one PDF based on the current Overleaf source, with proposed changes shown
+in yellow. The downloaded `(1).zip` was extracted to a separate review tree, edited, fully
+compiled, and visually inspected. The source ZIP remains unchanged. The live project was
+subsequently edited directly in response to Ben's annotations, so the earlier statement
+that the live project was unchanged is no longer current.
+
+**Primary artifact:**
+`Documentation/Reports and Papers/Dissertation/output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`
+
+**Decision needed:** Ben should approve, reject, or revise each yellow item before a clean
+Overleaf-ready source copy is produced.
+
+### Item D1.2: Abstract replacement — REJECTED
+
+The current abstract was replaced in the review copy with a four-paragraph proposal that
+summarizes the BPA force characterization, knee-torque correction and validation, human
+torque comparison, Sensory Afferent Database, OpenSim-to-MuJoCo workflow, BPA interface,
+and SNS-Toolbox controller tools. It does not invent numerical results for simulations
+whose final configurations and metrics have not been frozen. Ben rejected this replacement
+in review comment 9: the PSU abstract must be one paragraph, double-spaced, and no longer
+than one page. Retain the original abstract as the base for Ben's revision. Review comment
+10 also requests a missing comma in the original wording.
+
+**File:** `chapters/02-abstract.tex` in the isolated review tree.
+
+### Item D1.3: Dissertation organization section — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
+
+The one-sentence chapter summaries in `sec:organization` were expanded into full
+paragraphs. The prose points to actual chapter and section labels for the isometric BPA
+force study, knee-torque study, neuromechanical database, modeling tools, Results,
+Discussion, appendices, and Future Work. Future Work is described as concrete uses of
+completed research rather than unfinished dissertation requirements.
+
+**File:** `chapters/10-introduction.tex` in the isolated review tree.
+
+### Item D1.4: Steele knee mechanism figure — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
+
+The review copy uses only the two Steele mechanism panels selected by Ben. Panel
+descriptions and the Steele citation are in the caption, not embedded beside replacement
+panel headings. The figure is stored under the Background chapter-specific figure folder.
 
-### 2. Model changes
+**Files:**
 
-None. No Xi factors, brackets, evaluators, or neural-model parameters touched.
+- `chapters/15-background.tex`
+- `figs/Background/steeleknee.pdf`
+- `figs/Background/steeleknee.png`
+- `thesis.bib` (`steele_experimental_2023`)
 
-### 3. Runs performed (verification only, no long optimizer runs)
+### Item D1.5: Xi frame and two-bracket figures — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
 
-- myo env imports: numpy 1.22.4 / scipy 1.9.3 / matplotlib 3.7.5 / mujoco 2.3.7 /
-  torch 2.14 cpu / sns_toolbox / ipykernel 6.31.0 present; **pywin32 pip-installed**.
-  MyoSuite env: mujoco 3.1.2 OK.
-- MATLAB `matlab -batch` headless smoke (script file): R2025a Update 1, surrogateopt ran,
-  Simulink license test = 1. (Inline `-batch "x.^2"` fails — caret eaten by shell; the
-  AGENTS.md write-script-files rule applies to MATLAB too.)
-- SolidWorks via the solidworks skill (`sw_session.py status`, myo env): **SOLIDWORKS
-  33.3.0, visible, default part/assembly/drawing templates resolved.** Instance closed
-  cleanly afterwards (0 SLDWORKS processes left).
-- OpenSim 4.3 CLI, AnimatLab 2.0 (`AnimatLab2.exe` + `AnimatSimulator.exe` at
-  `D:\Program Files (x86)\NeuroRobotic Technologies\AnimatLab\bin`), Arduino IDE 1.x
-  (`D:\Arduino\arduino.exe`), GitHub Desktop git 2.53.0, graphviz (myo env
-  `Library\bin\dot.exe`) — all present; not executed beyond version checks.
-- MiKTeX: old 22.1 (`D:\Program Files\MiKTeX`) was DEAD (post-C:-wipe guard blocked all
-  compiles; verified twice) → removed. Complete set (9,105 packages, 5.8 GB repo →
-  ~10.4 GB installed) installed **user-scope at `D:\MiKTeX`** (MiKTeX 26.5). Guard
-  cleared via `miktex packages check-update` + `packages update`. Smoke test:
-  **test.pdf compiled OK (1 page)** from `D:\temp\latex_smoke`.
+The two-rotation frame construction and tall two-bracket force-path projection figures
+are included in Methods. The transformation and projection equations remain in the text.
+The two-bracket figure uses frames `{br,1}` and `{br,2}`, equal-and-opposite force vectors,
+`delta_tendon` along the path, `eta` for three-dimensional bracket displacement, and a
+color-vision-deficiency-safe palette. Editable SVG and PowerPoint versions remain beside
+the Methods figure assets.
 
-### 4. Results / state
+**Files:**
 
-VS Code 1.138 + 13 extensions (python, pylance, debugpy, jupyter suite, MATLAB,
-LaTeX Workshop, cpptools, xml). Everything in the repo now runs: MATLAB (verified),
-Python (both envs), SolidWorks API (verified), SW2URDF v1.6 (DLL + registration intact),
-OpenSim/AnimatLab/Arduino present, git via GitHub Desktop, LaTeX compiles locally
-(Overleaf remains the primary dissertation path per the latex-overleaf skill).
+- `chapters/20-methods.tex`
+- `chapters/92-AppendixA.tex`
+- `figs/Methods/xiFrameTransform.pdf`
+- `figs/Methods/xiProjection.pdf`
+- `figs/Methods/xiProjection.svg`
+- `figs/Methods/xiProjection.pptx`
 
-### 5. Unfinished / deferred (Ben's calls)
+### Item D1.6: Completed-work neuromechanical framing — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
 
-- **MiKTeX is user-scope, not all-users.** Ben declined the admin UAC on 2026-09-20.
-  One-click staged for later: approve UAC for `D:\temp\miktex_setup\elevated_install2.ps1`
-  (installs shared to `D:\Program Files\MiKTeX`, fixes SW COM machine-wide). The 5.8 GB
-  local repo `D:\temp\miktex-repo` + staging dir stay until decided; delete both if
-  staying user-scope. NOTE: elevated script #2's step D (COM sweep) was superseded by the
-  HKCU fix already in place; its MiKTeX step is still valid if re-run.
-- MinGW gcc absent (mujoco_bridge mexw64 files are prebuilt — only needed for REBUILDS;
-  install via MATLAB Support Package "MinGW-w64" if a rebuild is ever needed).
-- VS Code Arduino extension no longer exists in the marketplace; .ino files get C++
-  highlighting via files.associations; uploads still via Arduino IDE 1.x.
-- `.vscode\` folder in repo is untracked — Ben to commit or gitignore.
-- In fresh VS Code: if "invalid Python interpreter" persists after reload, Ctrl+Shift+P
-  → Python: Select Interpreter → `C:\Users\Ben Bolen\.conda\envs\myo\python.exe`.
+Methods, Discussion, Future Work, and Conclusion now distinguish completed tools from
+future experiments. The database, model-conversion workflow, BPA coupling, controller
+interfaces, and two-layer spinal-network implementation are presented as reusable
+research infrastructure. Future Work gives actionable experiments that unnamed
+researchers can perform with those contributions.
 
+**Files:**
 
-> Latest handoff: the **2026-09-17 MuJoCo/SNS spinal-model sessions** — five appended
-> sections ending at the "Bilateral architecture visual-audit stop point", which carries
-> the four annotated figure defects and the 7-step safe implementation/verification
-> sequence the next session should execute. The 2026-09-08/09 Overleaf and
-> dissertation-figure sections below are historical; their compilation status does not
-> verify the newer local edits.
+- `chapters/20-methods.tex`
+- `chapters/40-discussion.tex`
+- `chapters/50-futurework.tex`
+- `chapters/60-conclusion.tex`
 
-## Final handoff status
+### Item D1.7: Chapter-specific figure folders and paths — READY FOR REVIEW
 
-Completed: manuscript-status corrections, publication metadata consistency, 1-inch default left margin, explicit bar unit definition, and missing Festo institution fields. Seven Overleaf files were edited: `chapters/20-methods.tex`, `chapters/30-results.tex`, `chapters/40-discussion.tex`, `thesis.bib`, `BolenFrontiers22.bib`, `psutex.cls`, and `main.tex`.
+Every chapter has a dedicated folder under `figs/`, and every chapter source begins with
+a local `\graphicspath` entry. Existing `Aim1`, `Aim2`, and `Preliminary` paths remain as
+fallbacks so the current document compiles without relocating all legacy figures in this
+review pass.
 
-The last observed Overleaf compilation had **zero errors and one warning**, the subfloat counter advisory. Both subfig and subfloat remain installed, as Ben wishes to retain multiple images within a figure. Detailed layout/typesetting messages still require a separate review. The last page count observed after the margin change was 105; no new page-count check was made after the unit/institution cleanup.
+**Folders:** `Introduction`, `Background`, `Methods`, `Results`, `Discussion`,
+`FutureWork`, `Conclusion`, `AppendixA`, `AppendixB`, and `AppendixC`.
 
-**Commit scope:** this session saved `D:/GitHub/Bipedal_Robot/CHATGPT_REPORT.md` locally but did not download or synchronize the edited Overleaf source files into the repository. Committing this report alone does not commit those LaTeX changes. ZCode should obtain the current Overleaf version before integrating dissertation sources. No commit or push was performed by ChatGPT.
+### Item D1.8: Weight-bearing simulation results — OPEN
 
-**Unfinished:** wide-table and oversized-figure layout work was discussed but not implemented. Ben asked whether wide tables should use rotated pages with minimal interruption to the text; that question remains to be addressed. No tables or figures were rotated, resized, or split in this session. A complete PSU formatting audit and verification of published author contributions were not performed.
+Full-body closed-loop and weight-bearing simulations are running on multiple machines,
+but the yellow review copy deliberately does not invent or freeze their outcomes. A
+yellow Results note requests the final configuration, run duration, gait cycles or time
+to failure, joint ranges of motion, duty factor, trunk and pelvis orientation, contact or
+ground-reaction behavior, and cross-machine reproduction. Once Ben selects the runs of
+record, those measurements should strengthen the Abstract, Results, and Discussion.
 
-The sections below preserve the specific changes and verification history. Earlier warning counts are intermediate observations, superseded by the final count above.
+**File:** `chapters/30-results.tex` in the isolated review tree.
 
-## Work completed
+## Review round 1: PDF comments 1–44
 
-Ben requested correction of false claims that the knee-torque manuscript had been submitted to Frontiers. Ben explicitly confirmed that it remains in preparation and has not been submitted; separately, he confirmed that the actuator force-characterization paper is published.
+These comments refer to
+`Documentation/Reports and Papers/Dissertation/output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`. Do not overwrite or repaginate
+that PDF while Ben continues reviewing it. Implement the accepted corrections in a new
+review round after Ben finishes commenting.
 
-Edits were made directly in the Overleaf project **Bolen-Dissertation**, https://www.overleaf.com/project/644dc82bcd6a5481e3c3a8bb . Repository dissertation source files were not synchronized or changed. The standalone journal-paper Overleaf project was not edited.
+### Item D2.1: Force-characterization figures and tables — REVISIONS REQUESTED
 
-## Files created or modified
+**PDF comments:** 1, 31–35, and 42.
 
-Overleaf paths:
+- Resize the affected figures so their captions remain on the same page.
+- Preserve the accessible ranked-result palette: indigo is the primary result, followed
+  by progressively lighter colors for less important series.
+- Increase the clearance between y-axis titles and tick labels.
+- Figure 4.3 should separate the maximum-force result from maximum contraction. Add the
+  10 mm maximum-contraction-versus-resting-length result and Moe's 20 mm data. The 20 mm
+  result may be a new dissertation result, with an explicit single-production-batch
+  limitation and a batch-number placeholder for Ben.
+- Tables 4.1 and 4.2 need 10 pt text and should share one PSU-compliant sideways page.
+- Table 5.1 is shifted into the left margin; use 10 pt text and move it to a sideways page
+  if it cannot fit correctly at that size.
 
-- `chapters/20-methods.tex`: changed the knee-torque publication note from “appeared in” and “submitted to Frontiers in Robotics and AI” to an unpublished manuscript in preparation, explicitly stating it has not been submitted. Preserved the existing author list and contribution statement.
-- `chapters/30-results.tex`: equivalent correction in the Results note.
-- `chapters/40-discussion.tex`: equivalent correction in the Discussion note.
-- In those three notes, replaced `\singlespacing\small\itshape` with `\doublespacing\normalsize\upshape`; main.tex specifies 12pt and the class loads setspace. No heading pages were added for the unpublished manuscript.
-- `thesis.bib`: retained key `bolen_isometric_2025`, title, authors, year, and `@unpublished` type. Changed note from `Manuscript submitted for publication` to `Unpublished manuscript in preparation; not submitted for publication`.
-- `BolenFrontiers22.bib`: after Ben confirmed publication, replaced the stale `@unpublished{bolen_2026,...}` entry with the existing published `@article` entry from thesis.bib: Actuators 15(5), article 230 (2026), DOI 10.3390/act15050230. This is the actuator paper, not the knee-torque manuscript. Both bibliography replacements were checked by exact full-editor text comparison to their intended content.
+**Dependency:** ZCode should regenerate the figures from the current data and apply the
+project-wide figure standards. Do not merely scale raster images.
 
-Local files:
+### Item D2.2: Current torque-identification and biomimetic-knee results — OPEN
+
+**PDF comments:** 2–7, 24, 36, and 37.
 
-- `C:/Users/Ben Bolen/.codex/.chatgpt-projects/g-p-681bb99d9c088191ad86129c8548cbd9/PROJECT_INSTRUCTIONS.md`: created earlier in this task as reusable custom-instruction text. It is not an installed project-settings change.
-- `D:/GitHub/Bipedal_Robot/CHATGPT_REPORT.md`: this final report; a staging copy also exists in the local ChatGPT project workspace.
+The pinned-knee figure, coefficient table, extensor paragraph, extensor figure, biomimetic
+knee paragraphs, goodness-of-fit table, and complete biomimetic torque figure all contain
+stale results. The Methods statement that the fit used the 48.5 cm flexor BPA has also
+changed. ZCode must rerun or retrieve the current results of record, regenerate every
+affected plot, update table values, and rewrite the associated Results prose together so
+the numbers cannot drift between text, tables, and captions.
+
+**Do not patch isolated numbers from the annotated PDF.** Confirm the current scripts,
+input files, held-out tests, selected solution, and generated artifacts first.
+
+### Item D2.3: Appendix provenance and accuracy audit — OPEN
 
-## Model changes and runs
+**PDF comment:** 11.
 
-No model constants, transforms, stiffness ordering, bounds, flags, scientific results, or MATLAB files changed. No optimizations ran. No commits or pushes.
-
-Overleaf automatically recompiled during edits. After the initial publication-note correction, the PDF had 113 pages (initial preview: 112), zero compilation errors, six warnings, and 23 informational/typesetting messages. Subsequent results are recorded below and in the final status above. Per-compile wall times were not measured. Corrected note content was verified in the editor and compiled preview; all three chapter notes were visually inspected.
-
-## Formatting guidance and limits
-
-Read PSU's live requirements:
-
-- https://www.pdx.edu/gradschool/etd-formatting-requirements
-- https://www.pdx.edu/gradschool/chapter-heading-page
-
-PSU recommends, but does not require, a Chapter Heading Page for unpublished co-authored material. Ben specifically emphasized this distinction. Retaining corrected status text in the existing notes does not mean a heading page is mandatory for the knee-torque manuscript.
-
-This was a targeted status correction, not a full ETD compliance audit. The published Actuators material has separate chapter-heading/citation/contribution requirements, and the existing combined notes should not be represented as having passed a complete audit of those requirements. Existing contribution wording was not independently verified against the published paper. DOI and publisher retrieval attempts returned HTTP 429; published bibliographic metadata came from the existing thesis.bib entry, with publication status confirmed by Ben.
-
-At the initial publication-note verification, diagnostics included a Methods float too large by 16.17862pt, Results overfull vertical boxes, other overfull/underfull boxes, subfloat and deprecated-unit warnings, and missing institution fields for Festo bibliography entries. The bar and institution warnings were later fixed. No diagnostics were reported at the modified note lines. The six-warning count was already present on initial inspection; the individual pre-edit diagnostics were not captured, so do not claim all typesetting messages were proven pre-existing.
-
-## Follow-up for ZCode
-
-Pull or export the current Overleaf sources through Ben's established workflow before making local dissertation changes; this session did not synchronize the repository mirror. Preserve the corrected manuscript status. Review broader ETD formatting separately if requested. The knee manuscript's existing 2025 citation year was retained as draft metadata, not a publication date.
-
-## Subsequent requested margin change — 2026-09-08
-
-Ben authorized changing the class left margin to 1 inch under the updated PSU minimum.
-
-- Modified Overleaf `psutex.cls` only. Added a `1in` option with `@lmarwidth=0in`, `@smarwidth=0in`, and `@texwidth=6.5in` (LaTeX's default origin adds the physical first inch).
-- Changed default options from `12pt,1.7in,double,submission` to `12pt,1in,double,submission`. The old effective left margin was 1.7 inches, not 1.5; text width increased from 5.8 to 6.5 inches, retaining a 1-inch right margin on US Letter. Explicit legacy `1.5in` and `1.7in` options remain available. Updated corresponding class comments.
-- No vertical layout, font size, scientific content, or MATLAB changes. Verified the entire saved class source exactly equals the intended edit.
-- Automatic compilation completed with zero errors, six warnings, and 12 informational/typesetting messages; document reflowed from 113 to 105 pages. Visually inspected a body page with symmetric 1-inch left/right margins.
-- Reflow changes float layout: the existing Methods oversized-float warning at line 101 now reports 54.8025pt instead of 16.17862pt. Other overflow messages remain, so the document still needs a broader float/layout review before final submission. No claim of complete ETD compliance.
-- The Results note was also visually verified after the previous report was first saved.
-
-## Unit and institution cleanup — 2026-09-08
-
-- Ben requested an explicit bar definition and wished to retain multi-image figure support.
-- Overleaf `main.tex`: inserted `\DeclareSIUnit\bar{bar}` immediately after loading siunitx. Left subfig/subfloat packages and counters unchanged.
-- Overleaf `thesis.bib`: added `institution = {Festo AG \& Co. KG}` to `festo_2013`, `festo_2018`, and `festo_2026`, matching the corporate author already recorded in each entry. No citation dates, authors, URLs, or titles changed.
-- Read fresh editor contents before both edits and verified the entire resulting files against intended replacements.
-- Latest compilation UI shows zero errors and one warning, the subfloat counter advisory. Deprecated bar and missing-institution warnings are gone. No figure-size/layout edits were performed in this cleanup; do not attribute other diagnostic changes to it. Typesetting messages were not audited in this pass.
-
-## Handoff — dissertation neuromechanical figures, 2026-09-09
-
-Ben requested this handoff and ended the session. Work was performed locally on
-DESKTOP-5Q16KE9 under `C:/Users/Ben/Documents/GitHub/Bipedal_Robot`.
-
-### Completed scope
-
-Added a preliminary simulation Methods section covering the assembled
-OpenSim-to-MuJoCo conversion workflow, Python quasi-static BPA coupling,
-reciprocal-inhibition SNS on the separate synthetic antagonist knee,
-seven-block Simulink SNS library/reduced-order reflex topology, and the saved
-10-second AnimatLab phase-1 recording. Following Ben's feedback, moved this
-section from the overview to the end of Methods, immediately after the historical
-AnimatLab walker section. The actuator-force section remains first in the
-technical Methods sequence.
-
-Expanded the visual material to show the AnimatLab body, hierarchy and circuit
-schematics, actual AnimatLab GUI views, native MuJoCo model renders, and native
-Simulink implementation diagrams. Replaced the included neural/contact diagnostic
-Results plot with bilateral hip, knee, and ankle angles. The diagnostic remains
-available as a supporting asset. All new results remain explicitly preliminary.
-
-### Files changed or created
-
-All paths below are relative to `Documentation/Reports and Papers/Dissertation/`
-unless otherwise stated.
-
-- `ProofFinal/chapters/20-methods.tex`: new section
-  `sec:preliminary_sim_methods` with AnimatLab, MuJoCo, and Simulink subsections;
-  six Methods figure environments, including a sideways full reflex diagram.
-- `ProofFinal/chapters/30-results.tex`: section `sec:preliminary_sim_results` and
-  figure `fig:animatlab_phase1_preliminary`, now using
-  `figs/Preliminary/animatlab_phase1_joint_angles.pdf`.
-- `ProofFinal/figs/Preliminary/AnimatLab_reference/`: unchanged copies of all nine
-  images Ben supplied. Included architecture assets: `OurWalker.png`,
-  `2layerImprove.png`, `RGnetwork.PNG`, `PFnetwork.PNG`, and
-  `sensoryMotor_Network.PNG`. `jointAngles.PNG`, `CPG_Output_MN.PNG`,
-  `footMechano.png`, and `fullNetwork.PNG` remain reference material; the older
-  supplied plots were not relabeled as new run output. Exact historical image
-  dates were not established.
-- `ProofFinal/figs/Preliminary/animatlab_body_gui.png` and
-  `animatlab_network_gui.png`: real captures of the saved
-  `Neuromechanical_Models/Biped_2xCPG_wSubs/Biped_2xCPG_wSubs.aproj` in AnimatLab Pro.
-- `ProofFinal/figs/Preliminary/mujoco_converted_robot.png` and
-  `mujoco_synthetic_knee.png`: native MuJoCo renders, with settings and source
-  hashes in `mujoco_render_provenance.json` beside them.
-- `ProofFinal/figs/Preliminary/simulink_sns_library_grid.png`,
-  `simulink_neuron_detail.png`, and `simulink_knee_reflex_arranged.png`: included
-  high-resolution native Simulink exports. Vector PDF equivalents and the
-  original unarranged library/reflex exports are retained beside them. PNGs were
-  chosen for inclusion because PDF printouts carry excess page margins and
-  unembedded-font dependencies.
-- `ProofFinal/figs/Preliminary/animatlab_phase1_joint_angles.pdf`: included Results
-  figure. `animatlab_phase1_preliminary.pdf`: original supporting diagnostic.
-- `Notes/build_preliminary_animatlab_figure.py` and
-  `preliminary_animatlab_verification.json`: reproduce and audit both phase-1 plots.
-- `Notes/export_mujoco_models.py`: static native render reproduction; optional
-  `--viewer` opens the native viewer without stepping.
-- `Notes/export_preliminary_simulink_figures.m`, `simulink_figure_export.log`,
-  `simulink_figure_provenance.md`, `simulink_model_hashes_before.json`, and
-  `simulink_model_hash_verification.json`: native export workflow and verification.
-- `Notes/build_neuromechanical_review.py` and `neuromechanical_figure_review.pdf`:
-  seven-page figure-review packet, **not a compiled dissertation**.
-- `Notes/neuromechanical_figure_integration.md`: integration/provenance detail.
-- Repo-root `CHATGPT_HANDOFF.md` and `CHATGPT_REPORT.md`: this handoff, preserving
-  earlier session material.
-
-### Verification and model state
-
-No Xi values, bracket points, transforms, stiffness ordering, bounds, or solver
-flags were changed. No conversion, optimization, or new dynamic simulations ran.
-Total wall-clock time was not recorded; do not infer runtime performance from
-this figure-preparation session.
-
-AnimatLab plotting used the existing `DataTool_7.txt` and `DataTool_8.txt` in
-`Neuromechanical_Models/Biped_2xCPG_wSubs/`, associated with
-`walk new new tester added 2 axis_phase1.asim`. Both exports contain 50,010 rows,
-with aligned, uniformly increasing 0.0002-second timestamps and finite values.
-The configured chart interval is 0 through 10 seconds: retained 50,001 samples
-and excluded nine trailing all-signal-zero padding rows after 10 seconds.
-Within-window zero-voltage samples were retained. Joint channels are explicitly
-`JointRotationDeg`; no sign reversal, smoothing, or resampling was applied.
-Contact-labelled channels are sensory-neuron membrane voltages, not measured
-contact forces or Boolean contact states. The model includes an external
-horizontal force during the first second. Body-position channels were recorded
-but not plotted because their unit convention was not resolved.
-
-MuJoCo 2.3.7 renders load the existing converted robot at keyframe 0 and the
-separate demo knee at an illustrative static -35-degree angle. Camera, lighting,
-color, visual tendon width, and knee transparency were changed in memory only.
-The source geometry and physics files were not edited; no simulation steps ran.
-
-MATLAB R2025b exported the actual saved Simulink blocks. Library grid positioning
-and full-model auto-layout were display-only changes in memory. Every input
-port's source block/port was compared before and after arrangement. Both saved
-`.slx` files remained byte-identical according to SHA-256 checks. The neuron
-interior was re-exported after opening it to populate its native primitive icons.
-
-Visually inspected all seven review pages and the individual figures; enlarged
-the Simulink contents by using the tightly bounded PNG exports. Verified all
-13 included image paths, nine unique new labels, and their references.
-Targeted `git diff --check` passed. Final LaTeX pagination is not verified.
-
-### Claim limits — preserve these
-
-Do not claim SNS control of the converted Gait2392 robot, validated Xi-corrected
-MuJoCo torque, a completed CAD-coupled Simscape Multibody plant, stable AnimatLab
-walking/effective ground-contact gating, or quantitatively valid Simulink knee
-regulation from the current saved run. The diagrams document implementation;
-the phase-1 plot documents recorded joint motion.
-
-### Remaining work and integration
-
-1. Compare the edited local chapters with the current Overleaf project
-   `Bolen-Dissertation` before copying, to preserve changes made in other sessions.
-   Transfer the new sections and referenced `figs/Preliminary/` assets with their
-   relative paths. Compile in Overleaf and inspect float placement, caption fit,
-   and the sideways topology page. No new packages were introduced.
-2. The current review PDF is a separate preview. The full dissertation PDF,
-   `Bolen_Dissertation.zip`, and online project were not updated in this session.
-3. A genuine MuJoCo viewer screenshot was attempted. The viewer opened, but the
-   installed desktop capture tool hung. No GUI PNG was saved; the included
-   images are native renders. The viewer subsequently exited cleanly without
-   stepping. No active viewer remains from that attempt.
-4. Preserve existing/unrelated dirty files. Other sessions already had MATLAB
-   source/model/results, AGENTS, dissertation ZIP, dedication, future-work, and
-   appendix changes. This session did not produce those scientific changes.
-   Python imports also changed two tracked MuJoCo `__pycache__` files; these are
-   runtime byproducts, not intended dissertation changes.
-
-No git commit, amend, merge, or push was performed. Ben handles commit/push in
-GitHub Desktop. This session is finished at Ben's instruction; the Overleaf
-integration above is a handoff, not an active continuation request.
-
-## 2026-09-17 — MuJoCo/SNS model, plot, and dissertation-draft verification
-
-### Files created or modified
-
-- `Code/MuJoCo_SNS/spinal/runner.py`: fixed the built-in summary/PNG to
-  use named neural channels, restrict rhythm metrics to the true walk
-  window, and convert joint radians to degrees before plotting.
-- `Code/MuJoCo_SNS/spinal/draw_circuit.py`: failed curriculum sentinel
-  results are no longer labeled as winners; current stage-1 rhythm gains
-  are combined with explicitly representative feedback gains; the
-  compiled-edge contract now rejects both missing and extra edge groups;
-  the V3 target/label was corrected from contralateral RG-E to InE.
-- `Code/MuJoCo_SNS/spinal/_render_panels.py`: removed the retired
-  DRIVE->PF edge and stopped applying the failed stage-3 `score=-100`
-  parameter file as a tuned winner.
-- `Code/MuJoCo_SNS/spinal/spinal_layers.py` and `_panels_check.py`:
-  removed the retired DRIVE->PF renderer input port and added a regression
-  assertion that it remains absent.
-- `Code/MuJoCo_SNS/spinal/_figure_hindlimb_style.py`: resolves RG/PF
-  channels by `neuro_names` rather than hard-coded column indices.
-- `Code/MuJoCo_SNS/spinal/_live_plant_audit.py`: new reusable check of
-  the plant after `runner.apply_harness`, including the eight Fmax repairs
-  and a stock-OpenSim tolerance summary.
-- `Code/MuJoCo_SNS/spinal/DESIGN.md`: added the verified 2026-09-17
-  status at the top.
-- `Documentation/Reports and Papers/Dissertation/CPG_spinal_section_draft.tex`:
-  corrected curriculum status, air-run metrics, and Fmax fidelity claims.
-- Regenerated `Code/MuJoCo_SNS/spinal/figures/circuit_dengstyle.{pdf,svg,png}`,
-  `sns_diagram_panels.png`, `sns_layer_{rg,pf,motor}.png`, and
-  `hindlimb_style_nap_air.{pdf,png}`; synchronized the dissertation copies
-  under `Documentation/Reports and Papers/Dissertation/CPG_airstepping_figs/`.
-- `Code/MuJoCo_SNS/spinal/spinal_run.npz/.png` now contain the successful
-  NaP air smoke run made during this verification.
-
-### Model changes
-
-No physical model constants, muscle routes, joint ranges, bracket points,
-transform conventions, Xi values, optimizer bounds, or solver settings were
-changed. Changes are audit, reporting, and figure-generation corrections only.
-
-### Runs performed
-
-All Python commands used
-`C:\Users\Ben Bolen\.conda\envs\myo\python.exe` from
-`Code/MuJoCo_SNS/spinal`.
-
-- `_fix_check.py`: PASS (heel edges single, Ia->IaIN present, central
-  pathways present).
-- `_panels_check.py`: PASS (NaP RG, laminated RG/PF, IaIN and mutual RC
-  topology).
-- `audit_signs.py`: PASS for every listed muscle/joint anchor on both sides.
-- `_live_plant_audit.py`: PASS for all eight live Fmax repairs; tolerance
-  exceptions reported.
-- `draw_circuit.py --which deng --source best --fmt pdf,svg,png`: PASS;
-  compiled missing-edge set and extra-edge set both empty.
-- `_render_panels.py`: PASS with the failed stage-3 sentinel ignored.
-- `_smoke_nap.py`: PASS, approximately 85 s wall time; full patched
-  MuJoCo--SNS loop at 2 ms, finite output, five RG rises, no crash.
-- `_figure_hindlimb_style.py nap_air_walk.npz nap_air`: PASS.
-- `plot_run.py spinal_run.npz --side r`: PASS and located
-  `subject01_walk1_ik.mot`; temporary plot-suite PNGs were removed after
-  verification.
-- Python syntax compilation passed for all edited/new Python files.
-
-### Numbers and conclusions
-
-- Environment: Python 3.10.21, NumPy 1.22.4, SciPy 1.9.3, MuJoCo 2.3.7,
-  SNS-Toolbox 1.5.2.
-- Smoke run: 5 RG bursts per leg in the 5--15 s walk window, period
-  2.11 s (0.47 Hz), E-duty 0.67, right knee -106.3..+11.6 deg, right hip
-  -20.1..+50.9 deg; finite throughout.
-- Dissertation air NPZ (`nap_air_walk.npz`): four complete cycle
-  intervals/five onsets, mean period 2.108 s, cycle duty 0.691, mean-cycle
-  knee -106.1..+10.0 deg, hip -19.9..+50.0 deg.
-- Curriculum stage 1 remains valid (score 137.254, trial 78). Stage 2 and
-  stage 3 files both contain the `-100` no-countable-cycles sentinel and
-  are diagnostic records, not converged winners.
-- Live Fmax repairs are exact: ercspn 2500 N, intobl/extobl 900 N,
-  ext_hal 162 N bilaterally. Of 86 non-pruned active actuators, 78 are
-  within 15% of stock; eight exceed 15%.
-- The circuit diagram is now structurally tied to the compiled network in
-  both directions. The previous figure's V3->RG-E target was inaccurate;
-  the implementation and corrected figure use V3->contralateral InE.
-
-### Unfinished business
-
-- Re-run the corrected stage-2 and stage-3 curriculum campaigns after
-  deciding whether to retain/purge the all-sentinel studies. No optimizer
-  or long curriculum run was launched in this session.
-- `opensim_overlay_gait_cycles.png` and a new supported-ground figure must
-  wait for a valid NaP stage-3 winner; the draft now says so explicitly.
-- Compile the dissertation after integration and visually inspect final
-  float placement. The figure generators and PDFs were validated, but a
-  full LaTeX build was outside this request.
-- Tracked and untracked `__pycache__` byproducts created by the verification
-  runs were restored/removed and are not part of this handoff.
-
-No commit or push was performed.
-
-## 2026-09-17 — Follow-up visual review and literature comparison
-
-Ben asked to continue the plot review and supplied the historical AnimatLab
-figures plus recent Zotero PDFs. Work was stopped here at Ben's warning to
-preserve credits; this section records the exact state.
-
-### Additional figure changes completed
-
-- `_figure_hindlimb_style.py`: the air panel now ends at 15 s instead of
-  20 s (`6--15 s` shown). The previous final five seconds were the commanded
-  DRIVE ramp-down/holding phase, but without a phase annotation they looked
-  like an oscillator failure. The corrected figure shows only the settled
-  commanded walk interval. `hindlimb_style_nap_air.{png,pdf}` was regenerated
-  and the source/dissertation copies are SHA-256 identical.
-- `_render_panels.py`: replaced the unreadable single horizontal strip with a
-  two-row dissertation-scale composition: A/B = RG and PF side-by-side;
-  C = the wider right-knee motor/reflex circuit. Added readable subpanel
-  labels, a wrapped provenance note, and `sns_diagram_panels.pdf` output.
-- `_render_panels.py`: removed duplicate visual input ports. The RG panel now
-  shows the actual compiled DRIVE and POSTURE populations rather than those
-  populations plus the reusable subnetwork's direct composition ports. The PF
-  panel keeps one RG-E and one RG-F input and labels their live `rg_to_pf`
-  gain. The motor panel distinguishes the tonic POSTURE population from the
-  per-muscle `POST_i` inputs.
-- `_panels_check.py` was rerun after these changes and all NaP/laminated RG,
-  laminated PF, IaIN, mutual-Renshaw, and Ib assertions still pass.
-
-The newly recomposed `Code/MuJoCo_SNS/spinal/figures/sns_diagram_panels.*`
-files and their dissertation copies are current and SHA-256 identical. A
-transient Windows preview lock initially blocked replacement; after it cleared,
-all final source/dissertation figure pairs synchronized successfully.
-
-### Visual findings
-
-- The corrected hindlimb figure visibly shows four complete settled cycles
-  (five onsets) from 6--15 s. RG/PF switching, knee-extensor release, deep knee
-  flexion, and hip reversal occur in the expected sequence. The flat post-walk
-  phase is no longer mixed into the gait figure.
-- `circuit_dengstyle` is structurally valid and appropriate as a detailed,
-  zoomable audit/reference schematic, but its parameter annotations are too
-  small for it to be the only conceptual figure at ordinary print scale.
-- The recomposed toolbox A/B/C figure is now readable at dissertation scale
-  and is the better explanatory bridge. It remains a representative right-side
-  RG/PF plus right-knee column, not a claim that every one of the 92 muscle
-  columns is drawn.
-- The older `fullNetwork.PNG` has the same reduction-density problem as the
-  detailed current schematic. The older `RGnetwork.PNG`, `PFnetwork.PNG`, and
-  `sensoryMotor_Network.PNG` succeed because they use symmetry, hierarchy, and
-  only one mechanism per panel. The stacked historical activity plots support
-  the organization of the new hindlimb trace figure.
-
-### Reference-PDF review completed
-
-Read-only visual review used local Poppler thumbnails and high-resolution page
-renders. No Zotero files were modified.
-
-- Shinohara et al. 2025 Fig. 1 is the closest conceptual precedent: bilateral
-  RG -> PF -> MN -> musculoskeletal layers, centered C1/V3 commissurals, and
-  sensory paths returning upward.
-- Shevtsova et al. 2026 Fig. 2 and Rybak et al. 2024/2025 show that a dense
-  full-page circuit can work when it is bilaterally symmetric, edge text is
-  minimized, and connection type is encoded by arrowheads/circles and color.
-- Deng et al. 2019 Fig. 2 supports the two-level RG/PF organization plus a
-  separate detailed joint-controller inset.
-- Jankowska's Ib/II schematic supports grouping sensory populations by spinal
-  layer and explicitly separating ipsilateral and contralateral outputs.
-- Rahmati and Klishko were reviewed mainly for kinematic/synergy plot style;
-  they do not supply a better whole-network schematic template.
-
-The modern references consistently map extensor populations to blue and
-flexor populations to red/orange. `_figure_hindlimb_style.py`,
-`spinal_layers.py`, and `draw_circuit.py` now use that convention consistently
-with color-blind-safe blue and vermillion/orange. This is presentation-only;
-labels, channels, weights, and topology did not change.
-
-Di Russo et al. 2023 was reviewed after the credit reset: Fig. 2 separates the
-system-level controller, Fig. 3 isolates phase primitives, Fig. 4 presents one
-reflex motif at a time, and Fig. 5 draws one antagonist pair. This strongly
-supports retaining `circuit_dengstyle` as the audit figure while using the
-toolbox A/B/C panels as the readable conceptual explanation.
-
-### Cleanup and final validation
-
-- Temporary PDF thumbnails/contact sheets and `_preview_*`/`_final_*` visual
-  QA images were removed. Zotero originals were read-only and unchanged.
-- Added a render-beside-and-atomically-replace helper to
-  `_figure_hindlimb_style.py` so transient Windows preview locks do not corrupt
-  or partially overwrite the final PNG/PDF.
-- Final source/dissertation copies of `circuit_dengstyle.{png,pdf,svg}`,
-  `sns_diagram_panels.{png,pdf}`, and
-  `hindlimb_style_nap_air.{png,pdf}` are SHA-256 identical.
-- PNG decode/dimensions: circuit 5482x5559, panels 2828x2628, hindlimb
-  1800x1639. All three PDFs are valid single-page files. Python syntax checks
-  pass for all four affected generators; `_panels_check.py` still passes.
-
-No model constants, network weights, optimizer studies, git commits, or pushes
-were changed/performed during this follow-up.
-
-### Draft figure order
-
-`Documentation/Reports and Papers/Dissertation/CPG_spinal_section_draft.tex`
-now introduces the architecture with `circuit_literature.pdf`, a bilateral
-RG--PF--MN--muscle hierarchy plus one complete right-knee antagonist/reflex
-motif. The toolbox-rendered `sns_diagram_panels.pdf` remains a software-native
-artifact but is no longer the primary explanatory figure. The dense
-`circuit_dengstyle.pdf` follows as a dedicated-page compiled-edge audit rather
-than serving as the reader's first and only circuit explanation. Cross-references
-and captions distinguish what is omitted for legibility from what is verified
-against the compiled network.
-
-### User-identified connection defects and correction
-
-Ben's annotated review correctly identified real drawing defects in
-`circuit_dengstyle`: both MN-to-activation lines began at hard-coded points
-outside the MN glyphs; the flexor activation map had no output to the flexor
-muscle; and the flexor muscle had no L/Ldot/F encoder paths back to its
-Ia/II/Ib afferents. Additional raw-coordinate starts were found in the
-heel/toe-to-InE and PF-F1-to-IaIN paths. The old compiled-edge assertion did
-not catch these because it covered only SNS synapses and collapsed them into
-population classes; MuJoCo plant/conversion paths are not in
-`net.net.connections`.
-
-Corrections:
-
-- all identified raw-coordinate starts now originate at real glyphs or at
-  explicitly connected routing buses;
-- both knee antagonists now have complete MN--activation--muscle and
-  muscle--Ia/II/Ib paths;
-- partial hip MN glyphs were removed rather than left without plant/reflex
-  connections;
-- a separate plant-interface contract now requires all displayed activation
-  and encoder paths, alongside the existing compiled-SNS edge-class contract;
-- `draw_literature_circuit.py` generates the new literature-facing bilateral
-  overview and complete knee motif. Every solid neural edge it displays is
-  asserted against a freshly compiled representative network.
-
-A second pixel-level review of the new figure caught three initially omitted
-implemented relationships before promotion: RC->IaIN recurrent disinhibition,
-RG-E stance gating of IB-EXC, and the overview's sensory projections to RG as
-well as PF. All are now drawn and included in the neural-edge contract.
-
-Both corrected figures were regenerated in the `myo` environment, inspected
-pixel-by-pixel through review-scale renders, and synchronized to the
-dissertation folder. `_panels_check.py` passes, both PDFs are valid one-page
-files, and all PNG/PDF/SVG source/dissertation pairs are SHA-256 identical.
-
-## 2026-09-17 — KINH and the four-PF/synergy question
-
-### What KINH is
-
-`KINH` is a project-local name for a **conditional swing-phase extensor
-inhibitory interneuron**, not a recognized anatomical interneuron class. When
-enabled, PF-F1 excites KINH with conductance 1.5; KINH then inhibits every
-primary knee-extensor MN pool on that side through
-`G["f1_kneext_inh"]`. The same cell can optionally inhibit ankle
-plantarflexor pools through `f1_anklepf_inh`. It was introduced as an
-engineering response to extension-dominant swing: suppress quadriceps during
-the F1 window so the knee can flex. It is functionally compatible with a
-flexor-phase inhibitory pathway but must not be presented as a specifically
-identified V-class or literature-named population.
-
-The topology is conditional: `params.py` defaults `f1_kneext_inh` to 0, in
-which case KINH is absent. The figure audit deliberately builds a
-representative network with gain 0.59 so the available pathway is visible.
-The diagrams now label KINH as conditional.
-
-### Does four PF populations equal four validated muscle synergies?
-
-**No—not in the current implementation.** Ben's intended architecture is one
-PF population per muscle synergy. In that architecture, each PF activity is
-the synergy's temporal recruitment coefficient and its PF-to-MN weight vector
-is the synergy's spatial muscle weighting. The current E1/E2/F1/F2 system was
-constructed in the opposite order: four phase labels were chosen a priori,
-their waveforms were generated from two RG drives, and `fit_pf.py` then used
-those four fixed columns in NNLS to approximate functional-group activation
-profiles. The four PF populations were not obtained from four NMF synergy
-components, and their PF-to-MN weights are not the NMF component weights.
-
-The count **four is plausible as a minimum**, but is not uniquely established:
-
-- Literature commonly reports four or five human walking modules/temporal
-  components, depending on muscles, preprocessing, task, and factorization.
-  Four therefore sounds reasonable, but literature prevalence is not a
-  validation of these four particular cells.
-- The available SO backsolve contains only 126 frames from 0.49--2.49 s
-  (about 1.6 gait cycles). A new per-leg NMF audit gives VAF 0.919 right and
-  0.925 left at four components; five gives 0.949 and 0.952. Thus four clears
-  a conventional 90% VAF threshold, but there is no sharp elbow at four and
-  information criteria do not select four consistently.
-- The older combined-leg NMF was not a valid PF-count test because
-  left-versus-right phase consumed components. Its rerun gives VAF
-  0.819/0.886/0.921/0.948 for 3/4/5/6 components and a continuously improving
-  BIC-like score through eight.
-- Most importantly, `_pf_basis_audit.py` shows that the four actual PF
-  waveforms are effectively only **two temporal degrees of freedom**:
-  corr(E1,E2)=0.998 and corr(F1,F2)=0.990; singular-value energy fractions are
-  0.719, 0.280, 0.001, and approximately 0; the four-column condition number
-  is 55.68. E1/E2 share the same peak and half-maximum duty, as do F1/F2.
-  The matrix is numerically rank four but practically rank two, so individual
-  E1-versus-E2 and F1-versus-F2 weights are poorly identifiable.
-
-### Verdict and required correction
-
-Graphically, four boxes do not justify four synergies. The current E1/E2/F1/F2
-cells should be called **four PF phase channels/windows**, not four validated
-motor primitives or muscle synergies. Their effective two-dimensional
-temporal basis diagnoses redundancy in the present implementation; it does
-not establish that the correct biological/controller architecture contains
-only two PF layers.
-
-**Correction after Ben's PF-layer clarification:** the earlier
-“one-PF-per-synergy” requirement was too literal. Synergy count should be
-estimated from multiple aligned cycles/trials using held-out reconstruction
-and component stability. PF architecture must be evaluated separately:
-joint/functional PF layers may each contain extensor and flexor half-centers,
-several PF layers may converge on one MN pool, and their combinations may
-generate the observed synergies. The reconstruction target is therefore the
-set of synergy and joint-angle patterns—including biarticular contributions
-and both knee-flexion episodes—not an identity map from each NMF component to
-one PF cell. The later 2026-09-17 section gives the corrected architecture and
-Ben's full S1--S6 interpretation.
-
-Reproducible diagnostics added: `_pf_basis_audit.py` and
-`_synergy_count_audit.py`.
-
-## 2026-09-17 — Directional commissural correction and FSA backsolve
-
-### V3/C1 topology and the literature diagram
-
-Ben's correction is anatomically and graphically important. The bilateral
-pathways must not be drawn as one shared V3 cell or one shared C1 cell. Each
-direction uses its own commissural interneuron:
-
-- left RG-E half-center -> excitatory left-to-right V3 -> excitatory right
-  RG-E interneuron (`InE_r`), with a separate mirrored right-to-left V3;
-- left RG-F half-center -> excitatory left-to-right C1 -> inhibitory right
-  RG-F half-center, with a separate mirrored right-to-left C1.
-
-The compiled SNS network already represented these as four source-indexed
-cells (`CIN_E_r/l` and `CIN_F_r/l`); the error was in
-`draw_literature_circuit.py`, which visually collapsed them into one shared
-V3 and one shared C1 population. The figure now draws all four directional
-cells and asserts each displayed source, destination, and sign against a
-freshly compiled network. `_fix_check.py` passes all eight legs of the four
-two-synapse pathways. The representative figure build now sets
-`rg_weak_exc=0`, and the audit verifies that no direct ipsilateral
-RG-E<->RG-F excitatory connection is present. The optional code parameter is
-retained at its default zero for controlled experiments; the change does not
-claim that a tuned forward gait has already been re-optimized without it.
-
-### Activation-source provenance correction
-
-`_activation_provenance_audit.py` demonstrates that
-`ResultsBSolve/zz_bsolve_StaticOptimization_activation.sto` is **not** the
-current converted-MuJoCo ridge/NNLS array in `bsolve_out.npz['acts']`: across
-the 121 common frames the RMSE is 0.3924, maximum absolute difference is
-0.9900, and correlation is -0.0119. The current NPZ contains no parsed
-`so_names`, so the STO cannot be positively reclassified from the surviving
-artifacts, but it can be ruled out as the current `acts` array. Consequently,
-the preceding four/five-component NMF numbers describe the ambiguous STO
-source, not the converted-model activation target requested for the circuit
-backsolve.
-
-The FSA analysis therefore uses the unambiguous
-`bsolve_out.npz['acts']`, produced by `bsolve_ik.py`'s converted-model,
-ridge-regularized bounded least-squares solve along
-`subject01_walk1_ik.mot` with measured GRF/CoP from
-`subject01_walk1_grf.mot`.
-
-### OpenSim `normal.mot` experiment and why it is quarantined
-
-OpenSim 4.6 was run on `gait2392_simbody.osim` with the Tutorial-1
-`normal.mot`. The exact model could not initialize because `lat_gas_r` failed
-muscle equilibrium. An analysis-only OpenSim-updated derivative,
-`gait2392_simbody_normal_so.osim`, disables only that actuator; the source
-model is unchanged. Static optimization remained infeasible until six
-explicit pelvis residual actuators were added, after which all 51 frames
-converged with constraint violations approximately 1e-12--1e-8.
-
-This is not a physiological walking-activation solution: `normal.mot` has no
-measured ground reactions, and the pelvis residuals supply a mean vertical
-force of 739.4 N (peak 782.0 N), essentially supporting body weight. Other
-residual RMS values are 53.4 N fore-aft, 31.3 N transverse, and
-10.3/8.0/40.3 N-m for the three pelvis moments. The resulting activations
-(0.010--0.488) are retained in `ResultsNormalSO` as a reproducible
-kinematics-only/residual-supported experiment and are **not** used to infer
-PF count or FSA synapses. `_normal_so_audit.py` writes the numerical audit.
-
-### Function Subnetwork Approach backsolve
-
-`fsa_backsolve.py` maps each target activation to a nonspiking MN voltage by
-`V_MN = 5 mV * activation` and uses the conductance-based leaky-integrator
-equation
-
-`C_m dV/dt = G_m(E_r-V) + sum[g_i u_i(E_i-V)] + I_bias`.
-
-Analytical PF-to-MN conductances use the Szczecinski, Hunt, and Quinn (2017)
-FSA transmission relation `g = k R G_m / (Delta E_s - k R)`. A separate
-dynamic nonnegative-conductance fit tests the same signals in the implemented
-leaky membranes. The inverse PF excitation/inhibition traces reconstruct the
-six target PF waveforms to numerical precision, but they are requirements on
-an upstream RG/PF realization, not proof that the present two-half-center RG
-already generates those waveforms.
-
-For the converted-MuJoCo activation target, four components fail the held-out
-test: interleaved-frame centered VAF is 0.852 right and 0.823 left. Six is the
-smallest **shared bilateral PF count** that clears 90% held-out VAF:
-
-- right: five is the in-sample minimum; at six, NMF centered VAF is 0.926
-  and held-out VAF is 0.924;
-- left: six is the minimum; at six, NMF centered VAF is 0.913 and held-out
-  VAF is 0.912.
-
-Across ten seeds and both alternating phase-frame splits, the six-component
-held-out standard deviation is about 0.003 per side. The left spatial
-components are fully stable under optimal matching. The right mean matched
-cosine is 0.966, but one matched sixth component has a minimum cosine of
-0.117. Together with the short 2.0-s record (about 1.6 gait cycles), this
-means **six is the justified engineering target for this dataset, not yet a
-claim of six universal biological primitives**. More cycles/trials are
-needed before hard-coding the architecture.
-
-The dynamic excitatory PF-to-MN FSA fit achieves centered VAF 0.863 right and
-0.835 left (activation RMSE 0.125 and 0.133). Approximately 16.1% and 16.8%
-of right/left MN samples require net negative current. Thus an
-excitatory-only PF projection plus leak cannot reproduce every falling phase;
-phase-specific inhibitory pathways (or another explicit negative-current
-mechanism) are needed for higher-fidelity closure.
-
-Reproducible outputs are under `Code/MuJoCo_SNS/spinal/fsa_results/`, including
-rank selection, six PF time courses and muscle weights, MN reconstructions,
-upstream current requirements, JSON/NPZ data, and both PNG and vector PDF
-figures. Robustness results are produced by `_fsa_rank_robustness.py`.
-
-## 2026-09-17 — Phase-normalized synergies, joint kinematics, and ankle capacity
-
-### ZCode PF phase channels versus the six extracted synergies
-
-The existing ZCode PF1--PF4 construction and the six NMF components are
-different levels of description. E1/E2/F1/F2 were designed as early/late
-stance and early/late swing **pattern-formation channels**. S1--S6 are
-empirical muscle-recruitment synergies: each has a temporal coefficient and a
-spatial muscle-weight vector. A synergy is not itself a PF neuron, half-center,
-or layer, and the number of extracted synergies need not equal the number of
-PF layers.
-
-A useful PF layer can contain an extensor and a flexor half-center. Those two
-outputs may correspond to, or combine into, two observed synergies. Conversely,
-one observed synergy may be produced by coordinated outputs from several
-joint-specific PF layers. Motoneuron pools can therefore receive convergent
-signals from multiple PF layers. This is especially appropriate for
-biarticular muscles: their MN pools may combine hip+knee PF drive or
-knee+ankle PF drive instead of being assigned exclusively to one joint.
-Mathematically the useful model is
-`V_MN,m(t) = f(sum_j g[j,m] P_j(t) + sensory + descending bias)`; the NMF
-synergies can emerge from correlated PF outputs and the projection matrix
-`g`, rather than requiring the identity “one synergy = one PF cell.”
-
-The current `fsa_backsolve.py` lets all six extracted temporal coefficients
-project to every MN through fitted conductances. That is a useful unconstrained
-reconstruction benchmark, but it does not yet impose the desired anatomical
-organization into hip, knee, ankle, extensor, and flexor PF half-centers.
-Figures therefore label the factors only S1--S6, not “PF candidates.”
-
-Ben's S1--S6 visual/mechanical interpretation, retained as the working
-hypothesis, is:
-
-- **S1:** hip-extensor muscles, including biarticular knee flexors. Because
-  these muscles also create abduction, adductor recruitment counteracts that
-  action. Trunk muscles provide what is effectively a positive OpenSim-X
-  torque to maintain balance while the ipsilateral leg is in stance and
-  extending and the contralateral leg is in swing.
-- **S2:** slight hip flexion, knee extension, talocrural dorsiflexion, MTP
-  extension, and subtalar muscles counteracting inversion/eversion. Ben's
-  initial timing hypothesis was the second half of swing; the present
-  coefficient's largest peak is instead near 40% on the stance-rescaled axis
-  (late stance), so its phase interpretation remains open.
-- **S3:** hip extension and flexion, with gluteal recruitment probably
-  maintaining sagittal alignment; knee flexion; ankle plantarflexion;
-  possibly MTP flexion; and internal trunk rotation.
-- **S4:** hip flexion, sagittal-plane hip stabilization, slight knee flexion,
-  and internal trunk rotation.
-- **S5:** trunk/pelvis flexion, ankle dorsiflexion, and hip abduction.
-- **S6:** hip extension and knee flexion.
-
-The stance-rescaled timing also shows why these should not be mistaken for
-four chronological ZCode windows. Mean peak phases are approximately S1
-95--97%, S2 40%, S3 10%, and S4 81--84%. S5 peaks at 26% right versus 59%
-left, while S6 peaks at 4% right versus 23% left. The first four are broadly
-bilaterally interpretable; S5/S6 carry residual/asymmetric structure.
-
-`fsa_pf_synergies_r/l` now plots each component on 0--100% gait phase with
-heel strike at 0, measured toe-off rescaled to 50, and the next heel strike
-at 100. Measured duty was retained in metadata (0.622 right, 0.615 left).
-Only one complete stride per side lies inside the activation recording:
-right 0.630--1.863 s and left 1.257--2.470 s. Thus this is correctly
-cycle-normalized but not yet a multi-cycle statistical mean; no artificial
-variability band is shown.
-
-The weight assignment is not final. NMF admits component rotations and can
-split one mechanical pattern or merge two correlated patterns. Visual review
-should explicitly test whether part of S3 belongs in S6 by plotting their
-weighted muscle contributions against joint kinematics and by separating
-monoarticular from biarticular muscles. A PF-informed constrained refit can
-then compare that interpretation quantitatively instead of manually moving
-weights after the fact.
-
-The “double-knee” pattern is a key discriminator. Human walking contains an
-early-stance/load-acceptance knee bend and a later swing-phase knee bend.
-Plotting both bends together with ankle angle and the hip-, knee-, and
-ankle-PF half-center outputs can reveal whether a knee-flexor synergy is being
-generated twice by different combinations of joint PF layers. Gastrocnemius,
-hamstrings, and other biarticular paths make convergence essential: the same
-MN pool can legitimately receive signals from more than one PF layer, and a
-single extracted synergy may combine those signals.
-
-The architecture decision is therefore not “four PFs or six PFs.” It is:
-(1) how many joint/functional PF layers are needed; (2) which extensor/flexor
-half-centers each layer contains; (3) which MN pools receive convergent
-outputs from multiple layers; and (4) whether that structured circuit
-reconstructs S1--S6 and both knee-flexion episodes without arbitrary
-cross-loadings.
-
-### Separate OpenSim joint-angle phase figure
-
-`plot_gait_joint_angles.py` creates `gait_joint_angles_phase.{png,pdf}`.
-It uses the same measured-event normalization and preserves OpenSim
-coordinate signs rather than remapping them to MuJoCo axes. The left column
-contains lumbar extension, hip flexion, knee, talocrural ankle, and MTP.
-The right column contains lumbar bending, hip adduction, a deliberately blank
-knee panel, subtalar angle, and a deliberately blank MTP panel. Both legs are
-shown relative to their own stance/swing cycles. The source IK has no MTP or
-subtalar excursion (both are effectively zero); those flat values are data,
-not plotting failures.
-
-### OpenSim versus MuJoCo right dorsiflexor capacity
-
-`compare_ankle_df.py` reads Ben's extensionless OpenSim force and torque
-tables as whitespace text and evaluates the patched converted MuJoCo model at
-the same ankle angles, activation state 1, and zero velocity. Although the
-tables say `inDegrees=no`, their -90 to +90 coordinate sweep is necessarily
-interpreted as degrees. The measured IK gait range is -8.84 to +16.02 deg.
-
-Within that gait range, the converted MuJoCo dorsiflexors are **not
-underpowered at activation 1**:
-
-| muscle | force capacity MJ/OS | torque capacity MJ/OS |
-|---|---:|---:|
-| ext_dig_r | 1.007 | 1.021 |
-| ext_hal_r | 0.966 | 0.974 |
-| per_tert_r | 0.945 | 0.973 |
-| tib_ant_r | 1.033 | 1.041 |
-
-The summed dorsiflexor torque ratio is 1.023 in the gait range. Across the
-entire -90..+90 sweep it is 1.008, with torque-curve correlation 0.999 and
-100% sign agreement away from zero. Therefore a dorsiflexion deficit in the
-walking simulation should first be sought in recruitment magnitude/timing,
-antagonist co-contraction, or force-velocity dynamics rather than Fmax or
-static ankle moment-arm capacity.
-
-The comparison uses the same equality-aware central-difference tendon moment
-arms as `bsolve_ik.py`. MuJoCo's raw `actuator_moment` is exactly zero for
-these converted ankle paths even though their tendon lengths change with
-ankle angle, so raw actuator moments cannot be used for this audit.
-Reproducible JSON/NPZ data, a markdown table, and PNG/PDF force/torque plots
-are under `Code/MuJoCo_SNS/spinal/ankle_df_results/`.
-
-## 2026-09-17 — Bilateral architecture visual-audit stop point
-
-Ben's annotated screenshot identifies four unresolved presentation defects in
-panel A of `circuit_literature`. No diagram code or generated figure was
-changed in this stop-point pass, so there is no partially completed repair.
-
-### 1. Mirror the right-side RG/PF/motor columns
-
-Both limbs currently use
-`ext_x = cx - 0.78; flx_x = cx + 0.78`. This correctly puts the left
-RG-F on the medial/inside edge, but puts the right RG-F on the lateral/outside
-edge. The right limb should be mirrored so both RG-F half-centers face the
-midline. The complete right functional columns—not only the RG circles—must
-be mirrored together: RG-F, PF-F, MN-F, and flexor muscle on the inside;
-RG-E, PF-E, MN-E, and extensor muscle on the outside. The associated InE/InF
-positions and commissural routes must then be rerouted rather than allowed to
-cross through the group.
-
-### 2. Pastel-yellow: PF-box connections appear unattached
-
-The intended code paths are RG-E->PF-E, RG-F->PF-F, PF-E/F->MN-E/F, and the
-cross-inhibitory PF-IN paths. The generic glyph-to-glyph edge helper does not
-give the rectangular PF boxes explicit top/bottom/inner ports. Consequently,
-some arrow stems and terminal glyphs stop beside a box or appear to pass
-behind it. This is a geometry failure even when the collapsed semantic edge
-class passes the compiled-network contract.
-
-Repair plan: give every PF rectangle explicit named anchors (RG input at
-top-center, MN output at bottom-center, PF-IN excitation at bottom-inner, and
-cross-inhibition at the opposite inner edge). Route each connection between
-those anchors and clip it exactly at the rectangle boundary.
-
-### 3. Grass-green: PF interneurons appear self-exciting
-
-The intended edges in code are PF-E->IN-E excitation and PF-F->IN-F
-excitation, followed by IN-E -| PF-F and IN-F -| PF-E. The close geometry,
-curvature, and excitatory triangle placement make the first two lines look as
-though they originate on the interneuron itself. This must be treated as a
-failed drawing even though the source/target tuple is correct in the Python
-edge registry.
-
-Repair plan: draw the PF-HC-to-PF-IN excitatory stems from the PF box's
-bottom-inner port to the interneuron perimeter, place the excitatory triangle
-immediately before the interneuron target, and route the inhibitory return
-paths on a visibly separate curve. Add instance-level assertions for all four
-per-side paths and explicitly forbid an excitatory PF-IN self-edge.
-
-### 4. Indigo: feedback lines appear to originate from nowhere
-
-The dashed aggregate sensory-feedback edges are currently made by direct
-`dc.syn(sens, ...)` calls from the shared “Ia / II / Ib + foot contact”
-rectangle. They bypass the `neural()` registry used by the compiled-edge
-contract, and their overlapping fan-out makes their lower endpoints look
-like unattached lines between the muscles. This explains how they survived
-the previous contract checks.
-
-Repair plan: connect the sensory rectangle to one explicit, labeled fan-out
-bus/port, then branch that bus to PF-E, PF-F, RG-E, and RG-F. Register these
-four aggregate visual paths in a separate contract (they intentionally
-represent several compiled sensory populations) and ensure the two
-muscle-to-sensory encoder paths terminate visibly on the sensory box.
-
-### Safe implementation and verification sequence for the next session
-
-1. Add rectangle-port and feedback-bus primitives without regenerating the
-   promoted figure.
-2. Mirror the entire right E/F column and reroute its local and commissural
-   paths.
-3. Replace all PF and aggregate-feedback panel-A edges with named-port routes.
-4. Add instance-level contracts containing side, exact source glyph, exact
-   target glyph, and sign; retain the existing compiled semantic contract.
-5. Add geometry assertions that every path begins on its registered source
-   boundary, ends on its target boundary, has nonzero length, and cannot be
-   interpreted as a self-edge.
-6. Render a temporary review PNG/SVG and inspect all four annotated regions
-   before replacing any source or dissertation artifact.
-7. Run `_fix_check.py` and the figure contracts, then regenerate PNG/PDF/SVG,
-   synchronize the dissertation copies, and verify byte-identical hashes.
-
-Until this sequence is completed, the current `circuit_literature` should
-not be described as visually final even though its compiled neural edge-class
-contract passes.
+Audit every appendix for current numerical results, filenames, script callouts, and model
+provenance. In particular, confirm that the recorded workflow calls
+`minimizeFlxPin10mm`, not `minimizeFlxPin10_2bracket`; the experiment used two brackets,
+but the filename must match the actual script of record. Cross-check every appendix table
+against the current Results tables after Item D2.2 is resolved.
+
+### Item D2.4: Abstract constraints and punctuation — IMPLEMENTED LOCALLY; OVERLEAF SYNC PENDING
+
+**PDF comments:** 9 and 10.
+
+Reject the proposed multi-paragraph abstract. Restore Ben's abstract as the base, retain a
+single paragraph, keep it to one double-spaced PSU page, and insert the requested comma.
+Ben will revise the substantive abstract language.
+
+**Implementation, 2026-09-26:** restored Ben's single-paragraph abstract from the current
+Overleaf download, including the parenthetical comma pair around “from the trunk down.”
+Removed the unapproved four-paragraph rewrite. Compile and Overleaf synchronization are
+pending the end of this implementation pass.
+
+### Item D2.5: Biomimetic-project rationale — IMPLEMENTED IN OVERLEAF
+
+**PDF comment:** 12.
+
+Revise the project rationale to express the iterative program explicitly: use knowledge
+from biomechanics and neuroscience to build robots that perform complex tasks in
+unstructured environments with improved efficiency, balance, and related capabilities;
+use biomimetic robots to test, validate, and improve understanding of biological systems;
+iterate between those directions; and translate the resulting knowledge to prosthetic and
+orthotic devices.
+
+**Implementation, 2026-09-26:** rewrote the opening project paragraph in
+`chapters/10-introduction.tex` to state the iterative biomechanics/neuroscience-to-robot,
+robot-to-biological-hypothesis, and translation-to-assistive-devices cycle.
+
+### Item D2.6: Background figure program — PARTIALLY IMPLEMENTED IN OVERLEAF
+
+**PDF comments:** 13–17, 19, and 20.
+
+Add or replace Background figures as follows:
+
+- Section 2.1: Kengoro and Kenshiro, or a more current biomimetic biped from Asano et al.
+- Section 2.2: representative torque motor, BPA, hydraulic, and dielectric-elastomer
+  actuator images.
+- Section 2.3: BPAs from Ben's prior reports, Hunt's work, or Festo.
+- Section 2.4: Ben's isometric-force-study graphical abstract.
+- Section 2.5: a two-panel comparison of Steele's 3D-printed robot skeleton and Ben's
+  `gait2392_robotbody.osim`, showing visible force actuators, the 27 right-side BPAs, and
+  the left-side OpenSim Gait2392 musculature.
+- Section 2.7: a multi-panel synthesis of important neural pathways from Rybak 2006, Deng
+  2019, Shevtsova/Rybak 2016–2026, Shinohara, and Ijspeert.
+- Section 2.9: use an enhanced still from Ben's supplied zombie-cat video rather than a
+  sanitized schematic; document the source and citation/permission basis.
+
+**Dependency:** source, citation, permission, image-quality, and alt-text review are
+required before insertion. Prefer original or author-provided assets over web thumbnails.
+
+**Asset check, 2026-09-26:** Ben's graphical abstract is available as
+`Figures/Aim1/00_GraphicalAbstract.png`. No local Kengoro, Kenshiro, Asano, or Steele
+skeleton source image was found by filename search. Existing `gait2392` screenshots are
+only in deprecated folders, so the OpenSim comparison needs a new render from the current
+model rather than reuse of a legacy screenshot.
+
+**Implementation checkpoint, 2026-09-26:** added Ben's existing BPA graphical abstract
+to the force-model background and added the existing literature-synthesis spinal-circuit
+figure after the locomotor-control background, with dissertation captions and alt-text
+comments. Robot, actuator-technology, OpenSim/Steele comparison, and zombie-cat panels
+remain open pending source/permission or new-render work.
+
+### Item D2.7: Caption construction, test-jig figure, and Xi figure order — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
+
+**PDF comments:** 8, 18, and 21–23.
+
+- The Xi and Steele captions are LaTeX captions, not text embedded in the figures. The
+  current yellow `\colorbox`/`\parbox` wrapper forced “Figure 3.x:” onto a separate line.
+  Remove that wrapper or highlight the complete caption in a way that preserves the normal
+  inline label and first sentence.
+- Replace Figure 3.2 with the correct three-panel `TestJigs` figure from
+  `Documentation/Reports and Papers/Knee_Torque_Test`; check for duplicate filenames
+  before selecting the source.
+- Keep the two-rotation frame explanation, which Ben marked “ok for this I think.” Place
+  the current Figure 3.6 immediately after the new two-panel frame figure.
+- Reconsider the two-bracket projection equations and figure placement because they may
+  precede the point at which the two-bracket model is properly introduced.
+
+**Asset check, 2026-09-26:** the correct three-panel source is
+`Knee_Torque_Test/Figures/Figure components/testJigs2/testJigs.pdf`; the similarly named
+`testJigs1.pdf` files are single-panel force-test-stand figures and are not substitutes.
+
+**Implementation, 2026-09-26:** replaced the dissertation asset with the confirmed
+three-panel `testJigs2/testJigs.pdf` source; placed the bracket-frame orientation figure
+immediately after the two-rotation construction figure; and moved the two-bracket series
+projection equations and figure to follow the explicit introduction of the two-bracket
+identification. The clean `ProofFinal` source has ordinary LaTeX captions, so the yellow
+review wrapper that split the caption label is not carried forward.
+
+### Item D2.8: Chapter and Results structure — PARTIALLY IMPLEMENTED IN OVERLEAF
+
+**PDF comments:** 25, 30, 38, 39, and 41.
+
+- Rewrite the clunky AnimatLab section introduction.
+- Move and rewrite the pasted Sensory Afferent Database, inverted-pendulum, and dynamic-BPA
+  paragraph so it opens the neuromechanical-study Results rather than reading as an
+  Introduction/Methods transplant.
+- Move “Follow-Up Identification and Route Redesign” before the neuromechanical modeling
+  section.
+- Consider placing the Morrow/Bolen optimization-study results before BPA force
+  characterization.
+- Reserve the end of the route-redesign Results for Ben's final biomimetic torque data and
+  plots. Follow it with the inverted-pendulum test results. Discussion should interpret
+  those results alongside the updated `MonoPam_pulley` work.
+
+**Implementation checkpoint, 2026-09-26:** moved “Follow-Up Identification and Route
+Redesign” ahead of the balance and neuromechanical-recording sections. The current clean
+Introduction already places the Morrow/Bolen optimization foundation before force
+characterization, and the AnimatLab introduction has been rewritten. Final torque plots,
+the precise neuromechanical-results opening, and `MonoPam_pulley` synthesis remain tied
+to the current runs-of-record.
+
+### Item D2.9: Neuromechanical figures and completed results — OPEN
+
+**PDF comments:** 26–29 and 44.
+
+- Add schematics for Ben's multiple ongoing neuromechanical models.
+- Replace the poor knee-reflex demonstration image with a visually improved version and
+  include the beer-cup arm reflex model where it supports the narrative.
+- Replace the obsolete Simulink library and reflex figures with ZCode's newer schematics
+  and library implementation.
+- The MuJoCo–SNS Toolbox, SNS Simscape, MuJoCo–Simulink bridge, and related workflows are
+  completed in substantial form. Present verified implementations and results in Results
+  or Discussion instead of describing them only as future benchmark opportunities.
+
+**Dependency:** ZCode must identify the current figures and runs of record and distinguish
+validated results from active tuning.
+
+**Asset check, 2026-09-26:** current source material exists as
+`Code/Matlab/SNS_Simscape/figures/KneeReflex_circuit.*`,
+`Code/Matlab/SNS_Simscape/results/pictures/sns_beer_results.png`, the corresponding
+beer-cup Simulink export, and the dissertation's `CPG_airstepping_figs/circuit_literature.*`
+and `sns_diagram_panels.*`. These are inputs for a publication-quality composite, not an
+automatic final selection; in particular, the raw Simulink wiring export needs redesign.
+
+### Item D2.10: Use “model,” not “plant” — IMPLEMENTED IN OVERLEAF; FINAL SEARCH PENDING
+
+**PDF comments:** 40 and 43.
+
+Replace “plant” with “model” throughout the proposed dissertation prose unless the text is
+quoting a source that specifically requires control-theory terminology. Apply the same
+preference to captions, tables, and figure alt text.
+
+**Implementation, 2026-09-26:** replaced every standalone authored occurrence of “plant”
+or “plants” in the included chapter files with “model,” “biomechanical model,” or
+“musculoskeletal model,” including captions and Future Work. A word-boundary search of
+`chapters/*.tex` now returns no remaining occurrences.
+
+## Scope boundaries and current live state
+
+- **Live Overleaf:** the iterative project rationale, BPA graphical overview, literature-synthesis
+  locomotor-circuit figure, reviewed three-panel knee-test figure, Xi frame and projection
+  material, Results restructuring, and terminology edits have been applied. Final compilation,
+  source searches, and rendered-PDF checks remain pending. Uploaded assets are
+  `circuit_literature.pdf`, `inverted_pendulum_photo.jpg`, `steeleknee.pdf`,
+  `testJigs_reviewed.pdf`, `xiFrameTransform.pdf`, and `xiProjection.pdf`.
+- **Canonical repository copies:** `ProofFinal/`, `upload/`, and `ZCode_drafts/` were not
+  replaced with the yellow review sources.
+- **Simulation and optimization code:** no MATLAB, MuJoCo, SNS-Toolbox, OpenSim,
+  AnimatLab, or Simulink code or parameters changed.
+- **Scientific data:** no experimental data, optimization outputs, or running simulation
+  results changed.
+- **Git publication:** no commit, push, rebase, history rewrite, or branch operation was
+  performed for this review copy.
+- **Clean dissertation integration:** only annotation-directed changes were applied live;
+  data- and plot-dependent items remain open and must not be represented as completed.
+
+## Verification record for the isolated yellow review
+
+The V1 checks below apply only to the separate 160-page yellow review artifact. They do not
+validate the subsequently edited 167-page live Overleaf project.
+
+### Live Overleaf validation — PENDING
+
+- The live project has displayed 167 pages after section recovery, but it has not yet received
+  the required explicit two-pass compile and final log audit.
+- Undefined-reference, undefined-citation, prohibited-name, remaining terminology, and rendered-
+  PDF spot checks are still pending.
+
+### Item V1.1: LaTeX build — PASSED
+
+- MiKTeX `pdflatex` and `bibtex` were run directly because this installation's `latexmk`
+  wrapper requires an unavailable Perl interpreter.
+- Final page count: 160.
+- Final log: zero LaTeX or package errors, undefined citations, undefined references,
+  rerun warnings, or fatal errors.
+- Existing legacy overfull and underfull box messages remain outside the narrow yellow
+  review scope; the build is not represented as a complete ETD typography audit.
+
+### Item V1.2: Visual review — PASSED
+
+Rendered pages were inspected for the Abstract, dissertation organization, Steele knee
+figure, Xi frame figure, Xi projection figure, simulation-status block, Results insertion
+note, Discussion synthesis, Future Work, and Conclusion. A two-line Conclusion orphan was
+removed by tightening the proposed prose without changing its substance.
+
+### Item V1.3: Source-scope checks — PASSED
+
+- Every chapter has a chapter-local `\graphicspath` declaration.
+- Malformed placeholder references such as `\ref(ch}` and `\ref{app}` are absent from the
+  proposed material.
+- Bracket displacement uses `eta`, avoiding conflict with Ben's use of epsilon elsewhere.
+- The source ZIP and delivered review PDF were kept separate.
+
+## Files created or changed by the current review session
+
+- `AGENTS.md`: added Ben's standing Oxford-comma preference.
+- `CHATGPT_REPORT.md`: reorganized current operational index.
+- `CHATGPT_REPORT_ARCHIVE.md`: byte-for-byte preservation of the former 1,244-line report.
+- `Documentation/Reports and Papers/Dissertation/Overleaf_review_20260926_yellow/`:
+  isolated edited source and build tree.
+- `Documentation/Reports and Papers/Dissertation/output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`: delivered review PDF.
+
+## Session updates, newest first
+
+### 2026-09-27 15:22 PDT: Corrected linked figure committed in isolation
+
+- Copied the regenerated circuit PDF into the tracked dissertation asset at
+  `Documentation/Reports and Papers/Dissertation/CPG_airstepping_figs/circuit_literature.pdf`;
+  its SHA-256 hash now matches the regenerated source PDF exactly.
+- Created commit `a30fea08` containing only the generator text change, the generated source PDF,
+  and the dissertation PDF copy. Unrelated working-tree changes were not staged or committed.
+- The push to the current `KneeTestSetup_BenBo_stw` branch is still in progress. Do not refresh
+  the imported Overleaf file until the remote update is confirmed.
+
+### 2026-09-27 15:20 PDT: Overleaf upload control rejected the local replacement
+
+- Opened the action menu for the imported `chapters/circuit_literature.pdf` and selected its
+  upload workflow. Overleaf opened the expected file-selection dialog, but the browser upload
+  control refused the local PDF before any transfer or overwrite occurred.
+- The live Overleaf asset is unchanged and still displays `MUSCULOSKELETAL PLANT + SENSORY
+  FEEDBACK`; the corrected local PDF remains ready and verified.
+- Next: use the imported file's linked-source/refresh route or another non-destructive replacement
+  method, then compile and visually verify `MODEL` in the rendered PDF.
+
+### 2026-09-27 15:17 PDT: Locomotor-circuit terminology fixed locally
+
+- Updated `Code/MuJoCo_SNS/spinal/draw_literature_circuit.py` so the layer label reads
+  `MUSCULOSKELETAL MODEL + SENSORY FEEDBACK`.
+- Regenerated `circuit_literature.pdf`, `.svg`, and `.png`; the generator completed normally,
+  and the SVG contains the corrected label.
+- Next: replace the Overleaf `chapters/circuit_literature.pdf` asset, compile, and visually
+  verify the rendered replacement.
+
+### 2026-09-27 15:16 PDT: Embedded figure terminology issue found
+
+- The rendered locomotor-circuit figure on printed page 19 contains the label
+  `MUSCULOSKELETAL PLANT + SENSORY FEEDBACK` inside the imported PDF asset.
+- This text is not searchable by Overleaf's source search, which is why the whole-word audit
+  returned 0 results. The surrounding source prose is clean.
+- Next: locate and regenerate or repair the figure asset with `MODEL`, upload the replacement,
+  then recompile and resume visual QA.
+
+### 2026-09-27 15:16 PDT: `plant` terminology audit clean
+
+- Ran case-insensitive, whole-word Overleaf project searches for `plant` and `plants`.
+- Both searches returned 0 results, so no further terminology replacement was needed.
+- Next: rendered-PDF spot checks of the restored Introduction, Background figures, Methods
+  figures and balance section, Results organization, and the final page.
+
+### 2026-09-27 15:16 PDT: Prohibited-name audit clean
+
+- Ran case-insensitive Overleaf project searches across all source files and comments for the
+  four prohibited assistant/tool/provider names specified for this review.
+- Every search returned 0 results. No prohibited name is present in the Overleaf project.
+- Next: audit standalone `plant`/`plants` usage in context, then inspect rendered pages.
+
+### 2026-09-27 15:15 PDT: Two-pass compile validation complete
+
+- Explicit Overleaf compile pass 2 is stable at 166 pages with 0 errors and 0 warnings.
+- No undefined citations or references appeared; the same 30 legacy overfull/underfull box
+  notices remain as informational typesetting messages.
+- The live source now has two consecutive clean explicit builds. Next: project-wide searches
+  for prohibited assistant/tool names and the requested `plant` terminology audit.
+
+### 2026-09-27 15:13 PDT: Clean-candidate compile pass 1 verified
+
+- Explicit Overleaf compile completed at 166 pages with 0 errors and 0 warnings.
+- The log contains no undefined citations or references. Only 30 legacy typesetting notices
+  remain (overfull/underfull boxes); the former 2.38393 pt oversized-float warning is gone.
+- Next: explicit compile pass 2 and log audit before the project-wide name and terminology
+  searches.
+
+### 2026-09-27 15:11 PDT: Citation and section reference repaired in Overleaf
+
+- Corrected `hitzmann_anthomorphic_2018` to the existing bibliography key
+  `hitzmann_anthropomorphic_2018` in the Introduction.
+- Replaced the nonexistent Methods reference `sec:disc_transmission` with the existing,
+  relevant Discussion label `sec:disc_error`.
+- Each replacement matched exactly once. Next: explicit compile pass 1 and log audit.
+
+### 2026-09-27 15:10 PDT: Missing figure paths repaired in Overleaf
+
+- Background graphical abstract now uses `figs/Aim1/00_GraphicalAbstract.png`.
+- Methods force-test-jig, knee-ICR, and bracket-frame figures now use
+  `figs/Aim1/01_testJigs1.pdf`, `figs/Aim2/KneeICR.eps`, and
+  `figs/Aim2/bktFrame.pdf`, respectively.
+- Each replacement matched exactly once. Next group: citation typo and undefined Discussion
+  section label.
+
+### 2026-09-27 15:08 PDT: Explicit compile pass 1 completed
+
+- Output remains 167 pages, but the live build is not clean: 4 errors and 10 warnings.
+- Missing figure files: `00_GraphicalAbstract.png`, `01_testJigs1.pdf`,
+  `KneeICR-eps-converted-to.pdf` / `KneeICR.eps`, and `bktFrame.pdf`.
+- Citation typo: `hitzmann_anthomorphic_2018` is undefined.
+- Section reference `sec:disc_transmission` is undefined.
+- The log also retains a 2.38393 pt oversized float at Methods line 206 and legacy
+  typesetting warnings. Next: resolve these blockers in small checkpointed edit groups,
+  then run compile passes 1 and 2 again.
+
+### 2026-09-27 15:07 PDT: Background paragraph boundary fixed in Overleaf
+
+- Changed the single `mechanism.\begin{figure}` boundary in `15-background.tex` to
+  `mechanism.\par\begin{figure}` and verified that Overleaf replaced exactly one match.
+- No other source text changed in this edit group. Next group: first explicit compile and
+  log inspection.
+
+### 2026-09-27 15:06 PDT: Live Overleaf work resumed
+
+- Ben requested checkpointing after every edit or concise edit group.
+- No new Overleaf change has been made yet. Next: repair the one known Background paragraph
+  boundary, checkpoint it, then compile and audit as separately checkpointed groups.
+
+### 2026-09-27 05:33 PDT: Annotated text corrections complete in Overleaf
+
+The remaining terminology corrections are now saved in Conclusion and Appendix A, completing the
+live `plant`-to-`model`/`system` pass. Results now also has the corrected 620-kPa caption spacing,
+the `chi_0, chi_1, chi_2` sequence, the `(B)` panel label, and “achievable” spelling. All requested
+source edits from this finishing pass are live. The next step is a manual recompile, log review,
+targeted PDF-page inspection, and prohibited-name verification.
+
+### 2026-09-27 05:31 PDT: Terminology pass in progress
+
+The live Discussion wording now uses “biomechanical model.” Future Work now uses
+“biomechanical system,” “mechanical model,” “MuJoCo model,” and “feedforward model” in the
+four annotated locations. These edits are saved and Overleaf is recompiling automatically.
+Conclusion and Appendix A are next, followed by the four Results corrections and final QA.
+
+### 2026-09-27 05:30 PDT: Final live-edit and verification pass started
+
+The live Results restructuring and Xi-method insertions remain saved in Overleaf. The current pass
+is applying the remaining narrow terminology corrections in Discussion, Future Work, Conclusion,
+and Appendix A, followed by the four small Results caption/notation corrections. A clean Overleaf
+recompile and targeted PDF inspection will follow immediately. Plot/data items that depend on the
+other coding assistant remain tracked as external dependencies rather than being represented as
+completed edits. No assistant or tool names are being added to the dissertation source or comments.
+
+### 2026-09-27 05:27 PDT: Live Overleaf implementation checkpoint
+
+Overleaf now contains the revised iterative biology--robot--biology rationale, the existing BPA
+graphical abstract placed in Background, the literature-synthesis locomotor-circuit figure, and
+the reviewed three-panel test-jig figure. The new Xi frame-construction text, transformation
+matrix, and frame-orientation figures were inserted next to their defining text. The old duplicate
+bracket-frame float has now been removed, and the two-bracket deflection/projection equations and
+figure were inserted immediately after the two-bracket model description. Results now opens with a
+separate Completed Foundation Studies section, including the completed placement optimization,
+Sensory Afferent Database, balance-platform, and dynamic-BPA studies. A direct source-file upload
+was refused by the browser, so the Results synchronization continued through focused source edits.
+The Results tail is now reordered to place the completed identification and route redesign before
+the balance-platform and preliminary-simulation records; the route status was updated from work in
+progress to the adopted shared-route result, and the balance demonstrations now have their own
+section. Remaining live work is the other `plant` replacements, a clean recompile, and live-PDF
+inspection. No assistant/tool names were added to Overleaf source or comments.
+
+### 2026-09-26: Review round 1 comments captured
+
+Ben supplied 44 annotated PDF comments. They are indexed under Items D2.1–D2.10 with
+their original comment numbers, dependencies, and requested outcomes. The delivered PDF
+was not overwritten or repaginated while review continued. The project-wide figure rules
+now record Ben's preferred indigo-to-lighter importance hierarchy and required y-axis
+title clearance.
+
+### 2026-09-26: Report reorganized
+
+The former chronological report was archived intact. This working report now uses durable
+item numbers, explicit statuses, a current-state summary, verification evidence, an
+explicit not-touched section, and newest-first updates.
+
+### 2026-09-26: Yellow dissertation review delivered
+
+The current Overleaf ZIP was used as the base for an isolated 160-page review PDF. All
+visible proposals are yellow. The PDF compiled cleanly, and the changed pages were visually
+inspected. Ben began reviewing it.
+
+### 2026-09-26: Current Overleaf snapshot adopted
+
+Ben downloaded `Bolen_Dissertation (1).zip`. It superseded stale local dissertation copies
+as the base for this review. The original ZIP remains unchanged.
+
+## Historical record
+
+The detailed September 8 through September 26 chronological history, including earlier
+Overleaf work, toolchain repair, neuromechanical figures, MuJoCo/SNS verification, Xi work,
+figure-tree checkpoints, and prior dissertation consistency passes, is preserved verbatim
+in [`CHATGPT_REPORT_ARCHIVE.md`](CHATGPT_REPORT_ARCHIVE.md).
+
+When an archived item becomes active again, summarize its current state here under a new
+or existing durable item number and link to the archived heading. Do not copy the entire
+historical narrative back into this operational report.
+### 2026-09-27 05:36 PDT: Live compile-path repair in progress
+
+- The clean Overleaf rebuild identified missing-graphic errors rather than prose or equation failures.
+- Confirmed that the four newly uploaded reviewed figures were placed under `chapters/`; their source paths are being corrected accordingly.
+- Confirmed the existing Results artwork remains under `figs/Aim1/`, `figs/Aim2/`, and `figs/Preliminary/`, while the discussion comparison figure remains under `figs/Aim1/`. Restoring those search paths now, then recompiling twice to settle cross-references.
+
+### 2026-09-27 05:40 PDT: Overleaf figure paths repaired
+
+- Restored the Results chapter search paths to `figs/Aim1/`, `figs/Aim2/`, and `figs/Preliminary/` and the Discussion comparison path to `figs/Aim1/`.
+- Added the `chapters/` search path to Background and Methods so the newly uploaded reviewed figures resolve.
+- Reinstated the Steele biomimetic-knee figure with its source attribution and `fig:steele_knee` label; the old commented placeholder remains inert and will be cleaned after the build check.
+- Next: explicit two-pass Overleaf compile, log review, and final project-wide terminology/prohibited-name audit.
+
+### 2026-09-27 05:47 PDT: Recovered two truncated live sections
+
+- Detected that the live Introduction had been reduced to only the revised project paragraph. Restored the complete reviewed Introduction, including Motivation, the labeled project section, Problem Statement, Research Objectives, and Dissertation Organization; the requested iterative biology-to-robot-to-biology rationale remains intact.
+- Detected that the Methods balance-platform section was absent. Restored the full hardware/control-method description, the `sec:balance_testbeds` label, and the uploaded inverted-pendulum photograph using an explicit Overleaf path.
+- All uploaded reviewed figures now resolve in the current build. Remaining work is formatting cleanup, a final compile/log check, and project-wide name/terminology audit.
+
+# 05:53 PDT — Recovery complete; final Overleaf audit underway
+
+- Restored the complete reviewed Introduction and the missing balance-platform / inverted-pendulum methods section after detecting that both live Overleaf files had been truncated during earlier edits.
+- The dissertation is back to its expected 167-page length.
+- Reduced the reviewed test-jig figure to `0.73\textwidth` to resolve its oversize-float warning, and repaired two insertion boundaries with explicit paragraph breaks.
+- Final work now in progress: one remaining Background insertion-boundary cleanup, two clean compilation passes, project-wide prohibited-name and terminology searches, and spot checks of the rendered PDF.
+
+# 10:26 PDT — PAUSED at user request; exact handoff state
+
+## Safely completed on live Overleaf
+
+- Restored the full reviewed Introduction after discovering that the live file had been truncated. Its Motivation, Biomimetic Humanoid Robot Project, Problem Statement, Research Objectives, and Dissertation Organization sections are present again.
+- Restored the missing Methods section on the balance-platform and inverted-pendulum testbeds (`sec:balance_testbeds`).
+- Recovered the dissertation to the expected 167-page compiled length.
+- Implemented the reviewed-background additions, including the BPA graphical overview, circuit-literature figure, and Steele biomimetic-knee figure and discussion.
+- Implemented the reviewed Methods material for the test jig, Xi frame construction, bracket transform, and two-bracket force-path projection.
+- Reordered and completed the Results material, made the terminology corrections requested in the annotations, and repaired explicit figure paths throughout the affected chapters.
+- Reduced the reviewed test-jig figure to `0.73\textwidth` to address the oversize-float warning.
+
+## Exact stopping point
+
+- The Overleaf editor is open in `15-background.tex` at the Steele knee insertion.
+- One source-boundary cleanup remains there: change `mechanism.\begin{figure}` to `mechanism.\par\begin{figure}`. No edit was made after the user requested the pause.
+- The old commented-out Steele placeholder block remains immediately after the active figure. It is inert and contains none of the prohibited tool names; it can be removed during cleanup if desired.
+
+## Required validation still pending
+
+1. Make the one Background paragraph-boundary cleanup above.
+2. Run two explicit Overleaf recompilation passes.
+3. Confirm zero compile errors, zero undefined references, and zero undefined citations; verify that the test-jig float warning is gone.
+4. Run project-wide searches for the prohibited names `ChatGPT`, `ZCode`, `Codex`, and `OpenAI`, including comments, and remove any matches from Overleaf source. The project has not yet received this final search audit.
+5. Run a project-wide terminology audit for remaining standalone uses of `plant` / `plants` and inspect each match in context.
+6. Spot-check the rendered PDF around the restored Introduction, Background figures, restored balance-testbed section, Xi figures, Results, and final page 167.
+7. Record the final compile/search results in this report, then mark the Overleaf tab as the finished deliverable.
+
+## Items reserved for the external plotting workflow
+
+- Any annotation requiring new or substantially revised data plots should remain logged here for the external plotting workflow rather than being represented as completed in Overleaf. Existing reviewed static figures and text changes listed above were implemented directly.
+

@@ -1,0 +1,101 @@
+
+############ mdl_leg_rig_ba003_imported ############
+--- smiData.Solid inventory ---
+  Solid( 1)     0.2179 kg  04_01_KT_R_003*:*Default
+  Solid( 2)     0.2435 kg  05_01_TI_R_006*:*Default
+  Solid( 3)     0.1386 kg  04_02_KB_R_003*:*Default
+  Solid( 4)     1.0169 kg  MuscleOrigins_004*:*Default
+  Solid( 5)     0.0098 kg  03_01_FB_R_004_ribLink*:*Default
+  Solid( 6)     0.0052 kg  04_05_BL_001*:*Default
+  Solid( 7)     0.0057 kg  04_06_FL_001*:*Default
+  Solid( 8)     0.3486 kg  03_01_FB_R_004*:*Default
+  Solid( 9)     0.2347 kg  05_01_TI_R_007*:*Default
+  Solid(10)     0.5342 kg  Patella_v3_template*:*Default
+  Solid(11)     0.0054 kg  04_06_FL_002*:*Default
+  Solid(12)     0.0318 kg  Patella_v5*:*Default
+  SUM (per unique part, not per instance): 2.7924 kg
+--- JOINT CONNECTIVITY (via line handles) ---
+JOINT Cylindrical                                : x04_01_KT_R_003_1_RIGID  -- x04_05_BL_001_1_RIGID 
+JOINT Cylindrical1                               : x04_01_KT_R_003_1_RIGID  -- x04_06_FL_001_1_RIGID 
+WELD/CON Parallel                                   : x04_01_KT_R_003_1_RIGID  -- x04_02_KB_R_003_1_RIGID 
+JOINT Revolute                                   : x04_02_KB_R_003_1_RIGID  -- x04_05_BL_001_1_RIGID 
+JOINT Revolute1                                  : x04_06_FL_002_1_RIGID  -- x04_02_KB_R_003_1_RIGID 
+JOINT Revolute2                                  : x04_06_FL_002_1_RIGID  -- x04_01_KT_R_003_1_RIGID 
+
+############ mdl_humanoid_lower_ah001_imported ############
+--- smiData.Solid inventory ---
+  Solid( 1)     0.0010 kg  91239A330_CLASS 10.9 STL BUTTON-HEAD SOCKET CAP SCREW*:*91239A330
+  Solid( 2)     0.0011 kg  91595A476_METRIC ALLOY STEEL DOWEL PIN*:*91595A476
+  Solid( 3)     0.0004 kg  94645A205_HIGH-STRENGTH STEEL NYLON-INSERT LOCKNUT*:*94645A205
+  Solid( 4)     0.1979 kg  03_01_FB_R_001*:*Default
+  Solid( 5)     0.0057 kg  04_06_FL_001*:*Default
+  Solid( 6)     0.0012 kg  92997A108_CORROSION-RESISTANT SETUP STUD*:*92997A108
+  Solid( 7)     0.0740 kg  03_02_FH_R_001*:*Default
+  Solid( 8)     0.0052 kg  04_05_BL_001*:*Default
+  Solid( 9)     0.1926 kg  05_02_TI_001*:*Default
+  Solid(10)     0.0284 kg  6630T310_METRIC BLACK POLYPROPYLENE BALL KNOB*:*6630T31
+  Solid(11)     1.6877 kg  02_01_PE_001*:*Default
+  Solid(12)     0.2191 kg  04_01_KT_R_001*:*Default
+  Solid(13)     0.2191 kg  04_03_KT_L_001*:*Default
+  Solid(14)     0.1926 kg  05_01_TI_R_001*:*Default
+  Solid(15)     0.0986 kg  04_02_KB_R_001*:*Default
+  Solid(16)     0.0740 kg  03_04_FH_L_001*:*Default
+  Solid(17)     0.0986 kg  04_04_KB_L_001*:*Default
+  Solid(18)     0.1979 kg  03_03_FB_L_001*:*Default
+  Solid(19)     0.0003 kg  94510A255_BRASS SCREW-TO-EXPAND INSERTS*:*94510A255
+  Solid(20)     0.0008 kg  97493A126_ METRIC PARTIALLY THREADED STUDS*:*97493A126
+  Solid(21)     0.0002 kg  90695A038_CLASS 04 STEEL THIN HEX NUT - DIN 439B*:*90695A038
+  SUM (per unique part, not per instance): 3.2963 kg
+--- JOINT CONNECTIVITY (via line handles) ---
+JOINT Cylindrical                                : x90695A038_CLASS_04_STEEL_THIN_HEX_NUT_DIN_439B_1_RIGID  -- x09_BA_001_1 
+JOINT Cylindrical1                               : x90695A038_CLASS_04_STEEL_THIN_HEX_NUT_DIN_439B_2_RIGID  -- x09_BA_001_1 
+JOINT Planar                                     : x90695A038_CLASS_04_STEEL_THIN_HEX_NUT_DIN_439B_1_RIGID  -- x09_BA_001_1 
+JOINT Planar1                                    : x90695A038_CLASS_04_STEEL_THIN_HEX_NUT_DIN_439B_2_RIGID  -- x09_BA_001_1 
+JOINT Revolute                                   : x97493A126_METRIC_PARTIALLY_THREADED_STUDS_12_RIGID  -- x09_BA_001_1 
+JOINT Revolute1                                  : x97493A126_METRIC_PARTIALLY_THREADED_STUDS_14_RIGID  -- x09_BA_001_1 
+JOINT Revolute10                                 : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_16_RIGID  -- x09_BA_001_1 
+JOINT Revolute11                                 : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_18_RIGID  -- x09_BA_001_1 
+JOINT Revolute12                                 : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_20_RIGID  -- x09_BA_001_1 
+JOINT Revolute13                                 : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_30_RIGID  -- x09_BA_001_1 
+JOINT Revolute14                                 : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_1_RIGID  -- x09_BA_001_1 
+JOINT Revolute15                                 : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_2_RIGID  -- x09_BA_001_1 
+JOINT Revolute16                                 : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_4_RIGID  -- x09_BA_001_1 
+JOINT Revolute17                                 : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_6_RIGID  -- x09_BA_001_1 
+JOINT Revolute18                                 : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_8_RIGID  -- x09_BA_001_1 
+JOINT Revolute19                                 : x97493A126_METRIC_PARTIALLY_THREADED_STUDS_4_RIGID  -- x09_BA_001_1 
+JOINT Revolute2                                  : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_22_RIGID  -- x09_BA_001_1 
+JOINT Revolute20                                 : x97493A126_METRIC_PARTIALLY_THREADED_STUDS_2_RIGID  -- x09_BA_001_1 
+JOINT Revolute21                                 : x94510A255_BRASS_SCREW_TO_EXPAND_INSERTS_2_RIGID  -- x09_BA_001_1 
+JOINT Revolute22                                 : x94510A255_BRASS_SCREW_TO_EXPAND_INSERTS_6_RIGID  -- x09_BA_001_1 
+JOINT Revolute23                                 : x94510A255_BRASS_SCREW_TO_EXPAND_INSERTS_1_RIGID  -- x09_BA_001_1 
+JOINT Revolute24                                 : x94510A255_BRASS_SCREW_TO_EXPAND_INSERTS_4_RIGID  -- x09_BA_001_1 
+JOINT Revolute25                                 : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_24_RIGID  -- x09_BA_001_1 
+JOINT Revolute26                                 : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_26_RIGID  -- x09_BA_001_1 
+JOINT Revolute27                                 : x97493A126_METRIC_PARTIALLY_THREADED_STUDS_6_RIGID  -- x09_BA_001_1 
+JOINT Revolute28                                 : x97493A126_METRIC_PARTIALLY_THREADED_STUDS_1_RIGID  -- x09_BA_001_1 
+JOINT Revolute3                                  : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_28_RIGID  -- x09_BA_001_1 
+JOINT Revolute4                                  : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_32_RIGID  -- x09_BA_001_1 
+JOINT Revolute5                                  : x97493A126_METRIC_PARTIALLY_THREADED_STUDS_9_RIGID  -- x09_BA_001_1 
+JOINT Revolute6                                  : x97493A126_METRIC_PARTIALLY_THREADED_STUDS_10_RIGID  -- x09_BA_001_1 
+JOINT Revolute7                                  : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_10_RIGID  -- x09_BA_001_1 
+JOINT Revolute8                                  : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_12_RIGID  -- x09_BA_001_1 
+JOINT Revolute9                                  : x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_14_RIGID  -- x09_BA_001_1 
+JOINT x09_BA_001_1/Cartesian                     : x04_03_KT_L_001_1_RIGID  -- Transform2 
+JOINT x09_BA_001_1/Cartesian1                    : x04_01_KT_R_001_1_RIGID  -- Transform3 
+JOINT x09_BA_001_1/Cylindrical                   : x04_04_KB_L_001_1_RIGID  -- x04_06_FL_001_2_RIGID 
+JOINT x09_BA_001_1/Cylindrical1                  : x04_02_KB_R_001_1_RIGID  -- x04_06_FL_001_1_RIGID 
+WELD/CON x09_BA_001_1/Parallel                      : Transform1  -- Transform 
+JOINT x09_BA_001_1/Revolute                      : x04_02_KB_R_001_1_RIGID  -- x04_05_BL_001_1_RIGID 
+JOINT x09_BA_001_1/Revolute1                     : x04_04_KB_L_001_1_RIGID  -- x04_05_BL_001_2_RIGID 
+JOINT x09_BA_001_1/Revolute2                     : x04_05_BL_001_2_RIGID  -- x04_03_KT_L_001_1_RIGID 
+JOINT x09_BA_001_1/Revolute3                     : x04_06_FL_001_2_RIGID  -- x04_03_KT_L_001_1_RIGID 
+JOINT x09_BA_001_1/Revolute4                     : x04_05_BL_001_1_RIGID  -- x04_01_KT_R_001_1_RIGID 
+JOINT x09_BA_001_1/Revolute5                     : x04_06_FL_001_1_RIGID  -- x04_01_KT_R_001_1_RIGID 
+JOINT x09_BA_001_1/Revolute6                     : x92997A108_CORROSION_RESISTANT_SETUP_STUD_1_RIGID  -- x6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB_1_RIGID 
+JOINT x09_BA_001_1/Revolute7                     : x03_02_FH_R_001_1_RIGID  -- x92997A108_CORROSION_RESISTANT_SETUP_STUD_1_RIGID 
+JOINT x09_BA_001_1/Revolute8                     : x92997A108_CORROSION_RESISTANT_SETUP_STUD_2_RIGID  -- x6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB_2_RIGID 
+JOINT x09_BA_001_1/Revolute9                     : x03_04_FH_L_001_1_RIGID  -- x92997A108_CORROSION_RESISTANT_SETUP_STUD_2_RIGID 
+JOINT x09_BA_001_1/Spherical                     : x6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB_1_RIGID  -- x02_01_PE_001_1_RIGID 
+JOINT x09_BA_001_1/Spherical1                    : x6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB_2_RIGID  -- x02_01_PE_001_1_RIGID 
+
+=== dump_topology DONE ===
