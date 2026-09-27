@@ -69,6 +69,21 @@ def _loading_onsets(t, force):
     return t[np.flatnonzero(np.diff(on) == 1)]
 
 
+def _first_pair_in_ik(onsets, t_ik):
+    """First (onset, next-onset) pair FULLY inside IK support.
+
+    np.interp EDGE-FILLS queries before the first sample, so a cycle
+    cut earlier than t_ik[0] freezes its leading segment at the first
+    IK pose (2026-09-26 left-ref bug, Ben ruling: fix first — the old
+    left cut at t=0.005 s vs IK start 0.50 s froze ref['l'] for the
+    first 39.6% of the cycle)."""
+    t0, t1 = float(t_ik[0]), float(t_ik[-1])
+    for a, b in zip(onsets[:-1], onsets[1:]):
+        if a >= t0 and b <= t1:
+            return float(a), float(b)
+    raise RuntimeError("no gait cycle fully inside IK support")
+
+
 def load_reference():
     """Reference mean cycles for BOTH legs + duties, interleg lag, period.
 
@@ -91,7 +106,9 @@ def load_reference():
                                "ankle_angle_r")),
             ("l", on_l, vy_l, ("hip_flexion_l", "knee_angle_l",
                                "ankle_angle_l"))):
-        t0, t1 = onsets[0], onsets[1]
+        t0, t1 = _first_pair_in_ik(onsets, t_ik)
+        assert t0 >= float(t_ik[0]) and t1 <= float(t_ik[-1]), \
+            "reference cycle not fully inside IK support"
         m = (t_ik >= t0) & (t_ik < t1)
         cyc = {j.split("_")[0]: np.interp(
             GRID, (t_ik[m] - t0) / (t1 - t0) * 100.0, vals[m, col[j]])

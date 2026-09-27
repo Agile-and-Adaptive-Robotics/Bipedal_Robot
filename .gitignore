@@ -71,3 +71,16 @@ Documentation/Reports and Papers/Dissertation/.vscode/
 
 # per-machine VSCode overrides (each machine keeps its own; never commit)
 .vscode/settings.local.json
+
+# hygiene sweep 2026-09-26 (Ben-approved)
+slprj/
+MUJOCO_LOG.TXT
+convert_gait2392*.log
+Trace_2026*.txt
+
+# churn artifacts: never track (files may exist locally; history has old copies)
+__pycache__/
+MUJOCO_LOG.TXT
+scratch_*.npz
+*_replay_tmp.npz
+nul

@@ -1,0 +1,53 @@
+== Opt_sanity_BiPulley ==
+(a) two-hinge 5x5 geometry vs independent recomputation ...
+    PASS (max |seg err| = 0, max |dir err| = 0)
+(b) G=1 reduction vs MonoPam_pulley ...
+    (b1) crossing 1 (joint-2-axis route): PASS (rel err: F 1.36e-15, mA 5.2e-16, T 1.29e-15; analog ref cell 1)
+    (b2) crossing 2 (joint-1-axis route): PASS (rel err: F 2.53e-15, mA 5.28e-16, T 3e-15; analog ref cell 21)
+    PASS (b1)/(b2) full-pipeline matches; (b3) base-balance residual 5.37e-10 N, kinematics match both crossings
+(c) G=2 distal-crossing transmission ...
+    PASS (max F_t residual 0 N; closure 7.49e-18 m; pull-sum 0 N; active crossing 2)
+(d) biPulleySpecsFromOpenSim default list + bundle ...
+    PASS (5 muscles: med_gas_r, soleus_r, tib_ant_r, rect_fem_r, bifemsh_r; 2-BPA bundle centroid on-line)
+(f) bowden routing mode ...
+    PASS (u_t deviation 0; closure residual 7.49e-18 m)
+(e) Opt_run_BiPulley DRY-RUN ...
+MASTER'S BUILDER UNAVAILABLE: Master's attachment data not found at D:\Bipedal humanoid\Matlab code\AttachPoints_Robot.mat
+
+================ BI PULLEY BATCH PLAN ================
+Mode                = DRY-RUN (plan only)
+Orientation grid    = 5 x 5 angles per muscle
+Stiffness defaults  = Xi0 0.005 m, Xi1 500000 N/m, Xi2 10000 N/m, wraps 6
+Torque target       = fmax * 5 cm nominal arm
+Artifacts           = Results\BiPulley_batch_summary.csv + dated mats + checkpoint
+Muscles in manifest = 5
+  med_gas_r   opensim pts=3 cross=[3 3] frames=[femur_r tibia_r calcn_r] Fmax= 1558 N gain=1 mode=moving_via
+    tackleLineParts=1  footprint=20.0 mm  bundle offsets=0
+    joints: [hinge; hinge]  ranges(deg): [-120 10; -50 20]
+    grid 5x5 angles; fmaxSource: gait2392_robotbody.osim max_isometric_force (1558 N)
+    notes: osim route med_gas_r: 3 points, cross = [3 3]; empty middle frame: duplicate crossing, transforms chained; calcn points shifted by the subtalar offset; crossing 1 = knee_r hinge (axis [0 0 1], pivot [0 0 0]); crossing 2 = ankle_r hinge (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0])
+  soleus_r    opensim pts=3 cross=[2 3] frames=[tibia_r calcn_r calcn_r] Fmax= 3549 N gain=1 mode=moving_via
+    tackleLineParts=1  footprint=20.0 mm  bundle offsets=0
+    joints: [hinge; fixed]  ranges(deg): [-50 20; 0 0]
+    grid 5x5 angles; fmaxSource: gait2392_robotbody.osim max_isometric_force (3549 N)
+    notes: osim route soleus_r: 3 points, cross = [2 3]; duplicate insertion row appended; crossing-2 outputs inert; crossing 1 = ankle_r hinge (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 rigid (identity transform)
+  tib_ant_r   opensim pts=4 cross=[3 4] frames=[tibia_r calcn_r calcn_r] Fmax=  905 N gain=1 mode=moving_via
+    tackleLineParts=1  footprint=20.0 mm  bundle offsets=0
+    joints: [hinge; fixed]  ranges(deg): [-50 20; 0 0]
+    grid 5x5 angles; fmaxSource: gait2392_robotbody.osim max_isometric_force (905 N)
+    notes: osim route tib_ant_r: 4 points, cross = [3 4]; duplicate insertion row appended; crossing-2 outputs inert; crossing 1 = ankle_r hinge (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 rigid (identity transform)
+  rect_fem_r  opensim pts=4 cross=[2 3] frames=[pelvis femur_r femur_r] Fmax= 1169 N gain=1 mode=moving_via
+    tackleLineParts=1  footprint=20.0 mm  bundle offsets=0
+    joints: [hinge; fixed]  ranges(deg): [-15 110; 0 0]
+    grid 5x5 angles; fmaxSource: gait2392_robotbody.osim max_isometric_force (1169 N)
+    notes: osim route rect_fem_r: 4 points, cross = [2 3]; slot 3 = rigid clone; crossing-2 outputs inert; crossing 1 = hip_r hinge (axis [0 0 1], pivot [-0.0707 -0.0661 0.0835]); crossing 2 rigid (identity transform)
+  bifemsh_r   opensim pts=3 cross=[2 3] frames=[femur_r tibia_r tibia_r] Fmax=  804 N gain=1 mode=moving_via
+    tackleLineParts=1  footprint=20.0 mm  bundle offsets=0
+    joints: [hinge; fixed]  ranges(deg): [-120 10; 0 0]
+    grid 5x5 angles; fmaxSource: gait2392_robotbody.osim max_isometric_force (804 N)
+    notes: osim route bifemsh_r: 3 points, cross = [2 3]; slot 3 = rigid clone; crossing-2 outputs inert; crossing 1 = knee_r hinge (axis [0 0 1], pivot [0 0 0]); crossing 2 rigid (identity transform)
+======================================================
+DRY-RUN complete: the plan above is fully resolved. Set RUN_BATCH = true to execute (full budgets belong on easteregg2), or OPT_BIPULLEY_SMOKE=1 for a minutes-long smoke.
+    PASS (driver resolved 5 muscles and returned cleanly)
+
+OPT_SANITY_BIPULLEY PASS

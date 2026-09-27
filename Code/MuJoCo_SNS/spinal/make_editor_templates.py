@@ -32,7 +32,7 @@ TMP = os.environ.get('TEMP', r'C:\Users\Ben Bolen\AppData\Local\Temp')
 
 TYPES = set("""SN-Ia SN-II SN-Ib SN-heel SN-toe PORT-load IN-V0D IN-V0V IN-V1
 IN-V2a IN-V2b IN-V3 IN-C HC-RG-E HC-RG-F IN-InE IN-InF HC-PF-E HC-PF-F IN-PF
-IN-IaIN IN-IbIN IN-IIe IN-IIi IN-Ib+ IN-LBIN IN-KINH RC MN MUSCLE""".split())
+IN-IaIN IN-IbIN IN-IIe IN-IIi IN-Ib+ IN-LBIN IN-KINH RC MN MUSCLE SUB""".split())
 
 REPLICATION_TYPEMAP = {
     'DRIVE': 'PORT-load', 'IN-inh': 'IN-C', 'CIN-exh': 'IN-V3',
@@ -215,8 +215,20 @@ def build_bilateralrg(w2l):
                       the 4 crossed L-RG->R-PF connexions REMOVED,
                       Stimulus_2 (10 nA into R RG flx);
       build_comm.pl + patch_comm_types -> Shinohara c1/V3 commissurals;
-      build_aff.pl -> flexor Ia/II + extensor Ib excite their HCs (0.01);
-      build_contact.pl -> heel/toe contact -> ipsilateral extensor layers."""
+      build_aff.pl -> flexor Ia relay + NEW flexor II relay + extensor Ib
+                      excite their OWN JOINT's PF half-center + the RG
+                      half-center (24 links);
+      build_contact.pl -> heel/toe contact -> ipsilateral extensor layers
+                      (RG ext, Hip/Knee PF ext, Hip/Knee MN ext; 20 links).
+    2026-09-26 correction (Ben's "one wrong connection" audit): the
+    template is now transcribed against the REAL
+    Walker_2_Layer_CPG_BilateralRG.aproj / _Standalone_modern.asim
+    (mined by tmp/mine_aproj.py) + the build .pl scripts -- previous
+    generation inventions removed: V3 -> contra RG ext HALF-CENTER
+    (build_comm.pl wires V3 -> contra RG ext IN only), heel/toe ->
+    ANK MN ext (build_contact.pl stops at Hip/Knee MN ext), the
+    cross-joint afferent fan-out, and the missing R-side direct
+    RG<->RG excitation pair."""
     spec = json.loads(json.dumps(w2l))
     N, E = spec['nodes'], spec['edges']
     by = {n['label']: n for n in N}
@@ -251,6 +263,14 @@ def build_bilateralrg(w2l):
         e('R RG ext IN', r_rgf, 'inh', 0.5, 'rg_laminate')
         e(r_rgf, 'R RG flx IN', 'exc', 0.5, 'rg_laminate')
         e('R RG flx IN', r_rge, 'inh', 0.5, 'rg_laminate')
+        # direct HC<->HC escape excitation, R mirror of the L pair: the
+        # real aproj carries BOTH ("RG to RG Excite", per-link G 0.5;
+        # mined 2026-09-26) and SESSION_NOTES line 85: "R RG half-center
+        # mirrors the L RG block exactly". (Was the w2l_cpg DEVIATION #1
+        # live patch; now transcribed in the template itself and the
+        # build_w2l_net mirror block adds 0.)
+        e(r_rge, r_rgf, 'exc', 0.5, 'rg_laminate')
+        e(r_rgf, r_rge, 'exc', 0.5, 'rg_laminate')
         # ipsilateral drives mirror how L RG drives L PF
         for x in list(E):
             f = by.get(x['from'], {})
@@ -266,6 +286,11 @@ def build_bilateralrg(w2l):
                     e(nf, nt, x['sign'], x['gain'], x['tag'])
 
     # --- step 2: commissural c1 / V3 (Shinohara 2025)
+    # build_comm.pl @LINKS verbatim: RG flx -> S c1 -> (inh) CONTRA RG flx;
+    # RG ext -> S V3 -> (exc, weak) CONTRA RG ext IN. V3 has exactly ONE
+    # output per side -- the contralateral RG ext IN (InE), NEVER the
+    # contralateral RG ext half-center (the v3_SynAmp0.1_weak HC edge the
+    # 2026-09-23 generator invented is gone; Ben's "one wrong connection").
     for S in ('L', 'R'):
         O = 'R' if S == 'L' else 'L'
         rgf_s = next((n['label'] for n in N if n['type'] == 'HC-RG-F' and
@@ -274,8 +299,6 @@ def build_bilateralrg(w2l):
                       _side(n['label']) == O), None)
         rge_s = next((n['label'] for n in N if n['type'] == 'HC-RG-E' and
                       _side(n['label']) == S), None)
-        rge_o = next((n['label'] for n in N if n['type'] == 'HC-RG-E' and
-                      _side(n['label']) == O), None)
         ine_o = next((n['label'] for n in N if n['type'] == 'IN-InE' and
                       _side(n['label']) == O), None)
         c1 = add('IN-C', 'c1_' + S, 1180, 60 if S == 'L' else 140)
@@ -283,28 +306,49 @@ def build_bilateralrg(w2l):
         if rgf_s and rgf_o:
             e(rgf_s, c1, 'exc', 1.0, 'comm_c1')
             e(c1, rgf_o, 'inh', 2.749, 'c1_SynAmp2.749')
-        if rge_s and rge_o:
+        if rge_s:
             e(rge_s, v3, 'exc', 1.0, 'comm_v3')
-            e(v3, rge_o, 'exc', 0.1, 'v3_SynAmp0.1_weak')
         if v3 and ine_o:
             e(v3, ine_o, 'exc', 0.1, 'v3_to_contra_InE')
 
     # --- step 3: afferent -> HC excitation ("Afferent HC Excite" SynAmp 0.01)
-    for aff in [n for n in N if n['type'] in ('SN-Ia', 'SN-II', 'SN-Ib')]:
-        if aff['type'] == 'SN-Ib':
-            kind, pat = 'E', r'(ext|Ext|stance|Stance)'
-        else:
-            kind, pat = 'F', r'(flx|Flx|flex|swing|Swing)'
-        ismatch = re.search(pat, aff['label'])
-        s = _side(aff['label'])
-        if not ismatch or not s:
-            continue
-        for tgt in N:
-            if tgt['type'] == 'HC-PF-' + kind and _side(tgt['label']) == s and \
-               re.search(pat if kind == 'F' else pat, tgt['label']):
-                e(aff['label'], tgt['label'], 'exc', 0.01, 'aff_HC_excite')
+    # TRANSCRIBED from build_aff.pl (@AFF table) + the real aproj (mined
+    # 2026-09-26, both sides identical): per side, HIP and KNEE only
+    # (there is no ankle PF layer), the flexor Ia RELAY node ("S J flx
+    # Ia" -- the reciprocal-IaIN node, NOT the "Ia IN" spindle
+    # front-end), the NEW flexor II relay ("S J flx II", added here as
+    # SN-II; build_aff clones it from the Ia relay) and the extensor Ib
+    # afferent ("S J ext Ib") each excite THEIR OWN JOINT's PF
+    # half-center + the RG half-center. 24 links. (The old generator
+    # wired the spindle front-ends CROSS-JOINT to both PFs, missed the
+    # RG targets and the II chains, and invented ankle-afferent edges.)
+    for S in ('L', 'R'):
+        for J in ('Hip', 'Knee'):
+            ia = S + ' ' + J + ' flx Ia'          # the Ia RELAY (IN-IaIN)
+            if ia not in by:                      # front-end label fallback
+                ia = S + ' ' + J + ' flx Ia IN'
+            ib = S + ' ' + J + ' ext Ib'
+            iay = by[ia]['y'] if ia in by else 400
+            iax = by[ia]['x'] if ia in by else 700
+            ii = add('SN-II', S + ' ' + J + ' flx II',
+                     iax + 60, iay + 40)   # NEW II relay (build_aff @II)
+            pfflx = S + ' ' + J + ' PF flx'
+            pfext = S + ' ' + J + ' PF ext'
+            rgflx = S + ' RG flx'
+            rgext = S + ' RG ext'
+            for src, flex in ((ia, True), (ii, True), (ib, False)):
+                if src is None or src not in by:
+                    continue
+                tgts = (pfflx, rgflx) if flex else (pfext, rgext)
+                for t in tgts:
+                    if t in by:
+                        e(src, t, 'exc', 0.01, 'aff_HC_excite')
 
     # --- step 4: contact -> ipsilateral extensor layers (Gain C = 20)
+    # build_contact.pl verbatim (20 links): each contact neuron excites
+    # RG ext, Hip/Knee PF ext and Hip/Knee MN ext ONLY -- the ANK MN ext
+    # targets the old generator added do not exist in the real model
+    # (build_contact.pl header + SESSION_NOTES step 5: "Hip/Knee MN ext").
     for S in ('L', 'R'):
         heel = add('SN-heel', S + ' heel contact', 40 if S == 'L' else 1140, 940)
         toe = add('SN-toe', S + ' toe contact', 140 if S == 'L' else 1240, 940)
@@ -316,7 +360,8 @@ def build_bilateralrg(w2l):
                re.search(r'(ext|Ext|stance)', tgt['label']):
                 e(heel, tgt['label'], 'exc', 20.0, 'contact_C20')
                 e(toe, tgt['label'], 'exc', 20.0, 'contact_C20')
-            elif tgt['type'] == 'MN' and re.search(r'(ext|Ext)', tgt['label']):
+            elif tgt['type'] == 'MN' and \
+                    re.search(r'(Hip|Knee) MN ext', tgt['label']):
                 e(heel, tgt['label'], 'exc', 20.0, 'contact_C20')
                 e(toe, tgt['label'], 'exc', 20.0, 'contact_C20')
     return spec
@@ -935,19 +980,224 @@ def build_variant(variant):
     return _stamp_variant_grps(nodes, spec)
 
 
+# ---------------------------------------------------------------- schematic
+# 2026-09-26 (TASK: "s3k, w2lvar and syn6 visible as a COMPACT SCHEMATIC
+# using the subsystem ability"): collapse a flat walker template into
+# subsystem (SUB) nodes built FROM THE EXISTING grp stamps. The original
+# flat nodes/edges are preserved verbatim inside node.sub (double-click
+# = the true wiring); every boundary wire is RETARGETED to its SUB node
+# (the editor's own Ctrl+G pack semantics -- no edge is dropped or
+# aggregated). The flat pre-restructure specs stay available as the
+# sibling *_flat template entries, so nothing is lost anywhere.
+SCHEMATIC_FAMILIES = {
+    # stamp_walker_grps families (walker_v9..s3k: uppercase sides)
+    'walker': dict(
+        subs={'rg': 'RG + lamination', 'pf': 'PF layer',
+              'aff': 'Afferent relays Ia/II/Ib',
+              'in': 'Reflex/phase INs + RC',
+              'mn': 'Motor pools', 'mus': 'Motor pools'},
+        pools=True),
+    # _stamp_variant_grps families (w2lvar / syn6: lowercase sides;
+    # comm folds into the RG subsystem, mech(contact) into the afferents)
+    'variant': dict(
+        subs={'rg': 'RG + lamination + comm',
+              'comm': 'RG + lamination + comm',
+              'pf': 'PF layer(s)',
+              'aff': 'Afferent relays Ia/II/Ib + contact',
+              'mech': 'Afferent relays Ia/II/Ib + contact',
+              'motif': 'Reflex/phase INs + RC',
+              'rc': 'Reflex/phase INs + RC',
+              'mn': 'Motor pools', 'mus': 'Motor pools'},
+        pools=True),
+}
+_SUB_ROW = {'rg': 0, 'pf': 1, 'aff': 2, 'in': 3, 'mn': 4}
+
+# muscle -> first group (muscle_map order), for the nested pool subsystems
+try:
+    _GROUP_OF = {m: g[0] for m, g in _mm._GROUPS_BY_NAME.items()}
+except NameError:      # pragma: no cover - muscle_map import failed
+    _GROUP_OF = {}
+
+
+def _canon_sub(base):
+    if base.startswith('RG'): return 'rg'
+    if base.startswith('PF'): return 'pf'
+    if base.startswith('Afferent'): return 'aff'
+    if base.startswith('Reflex'): return 'in'
+    if base.startswith('Motor'): return 'mn'
+    return 'x'
+
+
+def _pool_of_label(label):
+    """(pool, side) for a per-muscle MN/MUSCLE node label, else None.
+    Handles 'MN_vas_lat_R', 'vas_lat_r', 'MN_quad_fem_R (pruned)'."""
+    base = label[:-len(' (pruned)')] if label.endswith(' (pruned)') else label
+    if base.startswith('MN_'):
+        base = base[len('MN_'):]
+    if len(base) < 3 or base[-2] != '_':
+        return None
+    mus, side = base[:-2], base[-1]
+    if side not in ('R', 'L', 'r', 'l'):
+        return None
+    return (_GROUP_OF.get(mus, 'misc'), side)
+
+
+def make_schematic(flat, family_key):
+    """Restructure one flat walker spec into the subsystem schematic."""
+    fam = SCHEMATIC_FAMILIES[family_key]
+    subs_map = fam['subs']
+    G = flat.get('groups', {})
+    spec = {'nodes': [], 'edges': [], '_note': flat.get('_note', '')}
+
+    # ---- classify every flat node -> sub instance ('<canon>_<S>') ----
+    cont_of = {}          # label -> sub instance id | None
+    sub_nodes = {}        # instance id -> [flat node, ...]
+    sub_base, sub_side = {}, {}
+    for n in flat['nodes']:
+        grp = n.get('grp') or ''
+        # grp ids carry the side suffix: 'rg_R', 'mus_r', 'drive'
+        base = subs_map.get(grp.rsplit('_', 1)[0]) if '_' in grp else None
+        if base is None:
+            cont_of[n['label']] = None
+            continue
+        S = grp.rsplit('_', 1)[1]
+        inst = _canon_sub(base) + '_' + S
+        cont_of[n['label']] = inst
+        sub_nodes.setdefault(inst, []).append(n)
+        sub_base[inst], sub_side[inst] = base, S
+
+    # ---- pool instances inside each Motor-pools sub ---------------------
+    pool_of, pool_nodes = {}, {}
+    for inst, members in sub_nodes.items():
+        if _canon_sub(sub_base[inst]) != 'mn':
+            continue
+        for n in members:
+            pk = _pool_of_label(n['label']) or ('misc', sub_side[inst])
+            pinst = pk[0] + '_' + pk[1]
+            pool_of[n['label']] = pinst
+            pool_nodes.setdefault(pinst, []).append(n)
+
+    # display labels of the container nodes (edges are label-keyed in the
+    # editor, so boundary wires must retarget to the SUB NODE's label)
+    sub_label = {inst: '%s (%s)' % (sub_base[inst], sub_side[inst].upper())
+                 for inst in sub_nodes}
+    pool_label = {p: '%s pool (%s)' % (p.rsplit('_', 1)[0],
+                                       p.rsplit('_', 1)[1].upper())
+                  for p in pool_nodes}
+
+    def route(edges, use_pools):
+        """Split edges into (here, down): `here` = (mapped_from, mapped_to,
+        edge) triples that stay at THIS level (endpoint retargeted to its
+        subsystem/pool node LABEL), `down` = container id -> edges
+        descending into it."""
+        look = pool_of if use_pools else cont_of
+        names = pool_label if use_pools else sub_label
+        here, down = [], {}
+        for e in edges:
+            ca, cb = look.get(e['from']), look.get(e['to'])
+            if ca is not None and ca == cb:
+                down.setdefault(ca, []).append(e)
+            else:
+                here.append((names[ca] if ca is not None else e['from'],
+                             names[cb] if cb is not None else e['to'], e))
+        return here, down
+
+    def edge_copy(e, f, t):
+        d = {'from': f, 'to': t, 'sign': e['sign'], 'gain': e['gain'],
+             'tag': e.get('tag', '')}
+        if e.get('pts'):
+            d['pts'] = e['pts']
+        return d
+
+    # ---- level 1: build each Motor-pools sub spec (pools nested) -------
+    motor_spec = {}
+    for inst in sorted(sub_nodes):
+        if _canon_sub(sub_base[inst]) != 'mn':
+            continue
+        mem_edges = [e for e in flat['edges']
+                     if cont_of.get(e['from']) == inst and
+                     cont_of.get(e['to']) == inst]
+        here1, down1 = route(mem_edges, use_pools=True)
+        nodes1 = []
+        S = sub_side[inst]
+        my_pools = [p for p in sorted(pool_nodes)
+                    if p.rsplit('_', 1)[1] == S]   # THIS side's pools only
+        for pinst in my_pools:
+            plabel = pool_label[pinst]
+            mem = pool_nodes[pinst]
+            pspec = {'nodes': [dict(n) for n in mem],
+                     'edges': [edge_copy(e, e['from'], e['to'])
+                               for e in down1.get(pinst, [])],
+                     'groups': {k: v for k, v in G.items()
+                                if k.startswith(('mn_', 'mus_'))}}
+            nodes1.append({'type': 'SUB', 'label': plabel,
+                           'x': round(sum(m['x'] for m in mem) / len(mem)),
+                           'y': round(sum(m['y'] for m in mem) / len(mem)),
+                           'grp': 'pool_' + pinst, 'sub': pspec})
+        edges1 = [edge_copy(e, a, b) for a, b, e in here1]
+        pg = {'pool_' + p: 'Motor pool %s (%s)' %
+              (p.rsplit('_', 1)[0], p.rsplit('_', 1)[1].upper())
+              for p in my_pools}
+        motor_spec[inst] = {'nodes': nodes1, 'edges': edges1, 'groups': pg}
+
+    # ---- level 0: top-level schematic -----------------------------------
+    # route ALL flat edges: same-top-subsystem edges descend into their
+    # sub's spec (interior true wiring); crossing edges stay here with
+    # endpoints retargeted to the SUB node labels. (Motor subs re-route
+    # their own members down to pool level via motor_spec below, so their
+    # down0 bucket is intentionally unused.)
+    here0, down0 = route(flat['edges'], use_pools=False)
+    col_x = {}
+    for inst in sorted(sub_nodes):
+        col_x.setdefault(sub_side[inst], len(col_x))
+    for inst in sorted(sub_nodes):
+        base, S = sub_base[inst], sub_side[inst]
+        canon = _canon_sub(base)
+        x = 900 + col_x[S] * 560
+        y = 90 + _SUB_ROW.get(canon, 5) * 170
+        if canon == 'mn':
+            sub = motor_spec[inst]
+        else:
+            sub = {'nodes': [dict(n) for n in sub_nodes[inst]],
+                   'edges': [edge_copy(e, e['from'], e['to'])
+                             for e in down0.get(inst, [])],
+                   'groups': G}
+        spec['nodes'].append({'type': 'SUB',
+                              'label': '%s (%s)' % (base, S.upper()),
+                              'x': x, 'y': y,
+                              'grp': 'sub_' + canon + '_' + S,
+                              'sub': sub})
+    for n in flat['nodes']:
+        if cont_of[n['label']] is None:
+            spec['nodes'].append(dict(n))
+    spec['edges'] = [edge_copy(e, a, b) for a, b, e in here0]
+    spec['groups'] = dict(G)
+    for inst in sorted(sub_nodes):
+        canon, S = _canon_sub(sub_base[inst]), sub_side[inst]
+        spec['groups']['sub_' + canon + '_' + S] = \
+            '%s (%s) - dblclick to enter' % (sub_base[inst], S.upper())
+    return spec
+
+
 # ---------------------------------------------------------------- validate
 def validate(name, spec):
     errs = []
-    labels = set()
-    for n in spec['nodes']:
-        if n['type'] not in TYPES:
-            errs.append('%s: bad type %s' % (name, n['type']))
-        if n['label'] in labels:
-            errs.append('%s: dup label %s' % (name, n['label']))
-        labels.add(n['label'])
-    for e in spec.get('edges', []):
-        if e['from'] not in labels or e['to'] not in labels:
-            errs.append('%s: dangling %s->%s' % (name, e['from'], e['to']))
+
+    def _v(sp, path):
+        labels = set()
+        for n in sp['nodes']:
+            if n['type'] not in TYPES:
+                errs.append('%s%s: bad type %s' % (name, path, n['type']))
+            if n['label'] in labels:
+                errs.append('%s%s: dup label %s' % (name, path, n['label']))
+            labels.add(n['label'])
+            if isinstance(n.get('sub'), dict):
+                _v(n['sub'], path + '/' + n['label'])
+        for e in sp.get('edges', []):
+            if e['from'] not in labels or e['to'] not in labels:
+                errs.append('%s%s: dangling %s->%s'
+                            % (name, path, e['from'], e['to']))
+    _v(spec, '')
     return errs
 
 
@@ -962,9 +1212,13 @@ def main():
         'derivable that way are individually tagged "sign_assumed" — '
         'confirm against the aproj before using as ground truth. Muscle '
         'nodes + mn_to_muscle edges are IMPLIED (audit is neuron-only).')
-    # W2L: prefer subagent mine, fall back to the coarse draft
+    # W2L: prefer the TRACKED subagent mine (the 2026-09-23 %TEMP%/tpl_w2l.json
+    # was cleaned from disk -- its loss silently downgraded this entry to the
+    # coarse 18-node draft on regeneration, caught 2026-09-26), then the
+    # %TEMP% mine, then the coarse draft.
     w2l = None
-    for cand in (os.path.join(TMP, 'tpl_w2l.json'),
+    for cand in (os.path.join(HERE, 'w2l_aproj_mine.json'),
+                 os.path.join(TMP, 'tpl_w2l.json'),
                  os.path.join(HERE, 'w2l_equivalent_draft.json')):
         if os.path.exists(cand):
             w2l = json.load(open(cand, encoding='utf-8'))
@@ -979,6 +1233,11 @@ def main():
                 'typing by role: "Ia IN" = spindle front-end (SN-Ia), '
                 '"Ia" = reciprocal-IN (IN-IaIN). All chemical gains 0.5; '
                 'signs from SynapseType EquilibriumPotential.')
+            if cand.endswith('w2l_aproj_mine.json'):
+                out['w2laproj']['_note'] += (
+                    ' TRACKED copy of the 2026-09-23 subagent mine — '
+                    're-verified 2026-09-26 against a fresh parse of the '
+                    'same .aproj: all 150 functional links match 1:1.')
             break
     if w2l:
         out['bilateralrg'] = build_bilateralrg(w2l)
@@ -986,12 +1245,28 @@ def main():
             'W2L base + documented BilateralRG chain (build_rg/comm/aff/'
             'contact .pl, tools/SESSION_NOTES_20260916.md): crossed L-RG->'
             'R-PF removed, R half-center added ipsilaterally + Stimulus_2 '
-            'antiphase kickoff, Shinohara c1 (2.749) / V3 (0.1) commissurals, '
-            'afferent-HC-excite 0.01, heel/toe contact C=20.')
+            'antiphase kickoff, Shinohara c1 (2.749) commissurals, V3 -> '
+            'contra RG ext IN only (0.1; NO V3->contra-RG-E HC edge), '
+            'afferent-HC-excite 0.01 (flexor Ia relay + NEW II relay + '
+            'extensor Ib -> OWN-JOINT PF + RG half-center, hip/knee), '
+            'heel/toe contact C=20 (RG ext, Hip/Knee PF ext, Hip/Knee MN '
+            'ext; 20 links). Corrected 2026-09-26 against the REAL '
+            'BilateralRG.aproj/_Standalone_modern.asim (mined by '
+            'tmp/mine_aproj.py): V3->contra-RG-E HC, heel/toe->ANK MN ext '
+            'and the cross-joint afferent fan-out were generator '
+            'inventions, now removed; R RG<->RG direct excitation pair '
+            'added (was w2l_cpg DEVIATION #1).')
     else:
         print('WARN: no w2l source yet -> bilateralrg skipped')
-    li = os.path.join(TMP, 'tpl_li.json')
-    if os.path.exists(li):
+    # Li: TRACKED mine first (the %TEMP%/tpl_li.json was cleaned from disk;
+    # its loss silently DROPPED this entry on regeneration, caught 2026-09-26)
+    li = None
+    for li_cand in (os.path.join(HERE, 'li_aproj_mine.json'),
+                    os.path.join(TMP, 'tpl_li.json')):
+        if os.path.exists(li_cand):
+            li = li_cand
+            break
+    if li:
         out['li'] = json.load(open(li, encoding='utf-8'))
         out['li']['_note'] = (
             'source: Li Model\\walk tester rearranged.aproj mine '
@@ -1002,7 +1277,10 @@ def main():
             'stance CPG->contra hip-swing PF. NO Renshaw/Ia/Ib/II chains '
             '(contact + hip-angle receptors only). Signs from SynapseType '
             'EquilibriumPotential; gains = per-synapse conductance (1-8 '
-            'uS, not uniform).')
+            'uS, not uniform).'
+            + (' TRACKED copy (li_aproj_mine.json; %TEMP%/tpl_li.json was '
+               'cleaned — its loss dropped this entry, caught 2026-09-26).'
+               if li.endswith('li_aproj_mine.json') else ''))
     else:
         print('WARN: tpl_li.json not ready yet -> li skipped (rerun later)')
 
@@ -1181,6 +1459,32 @@ def main():
     # must stay byte-identical on regeneration.
     out['w2lvar'] = build_variant('w2lvar')
     out['syn6'] = build_variant('syn6')
+
+    # ---- 2026-09-26: the three production walkers become COMPACT
+    # SUBSYSTEM SCHEMATICS (Ben's ask): top level = SUB nodes per
+    # (side, layer) built from the grp stamps, original flat data
+    # preserved inside node.sub, boundary wires retargeted to the SUB
+    # nodes. The flat specs stay available as the *_flat entries.
+    for key, famkey in (('walker_s3k', 'walker'),
+                        ('w2lvar', 'variant'), ('syn6', 'variant')):
+        flat = out[key]
+        out[key + '_flat'] = json.loads(json.dumps(flat))
+        out[key + '_flat']['_note'] = (
+            flat.get('_note', '') +
+            ' [FLAT copy kept verbatim 2026-09-26 when "' + key +
+            '" was restructured into the subsystem schematic; same nodes, '
+            'same edges, no grp changes.]')
+        out[key] = make_schematic(flat, famkey)
+        out[key]['_note'] += (
+            ' [STRUCTURE 2026-09-26: compact subsystem schematic - top '
+            'level = one boxed subsystem per (side, layer): RG + '
+            'lamination (+c1/V3 commissurals), PF layer(s), afferent '
+            'relays Ia/II/Ib (+heel/toe contact), reflex/phase INs + RC, '
+            'and motor pools with the REAL per-muscle MNs nested one '
+            'level further into per-pool subsystems; DRIVE/POSTURE/drive '
+            'knobs stay top-level; every boundary wire attaches to its '
+            'subsystem node; double-click a subsystem to see the true '
+            'flat wiring; the unchanged flat spec = "' + key + '_flat".]')
 
     for nm, spec in out.items():
         errs += validate(nm, spec)

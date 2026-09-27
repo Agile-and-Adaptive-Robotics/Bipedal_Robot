@@ -1,0 +1,52 @@
+== diag_li_fixed: 20 s on w2l_mjcf_fixed.xml ==
+pelvis z: start -0.000  min -0.639 (t=0.39s)  end 0.751   |  x end 0.423
+
+-- joint limits (fixed xml) vs realized --
+  hip_L   range [-15.0,+23.0]  realized -12.7..+30.2  max violation 7.2 deg  first >1deg breach t=0.10s (q=+24.5, range [-15.0,+23.0])
+  knee_L  range [-60.0,-0.0]  realized -76.1..+18.7  max violation 18.7 deg  first >1deg breach t=0.02s (q=+1.0, range [-60.0,-0.0])
+  ankle_L range [-20.0,-5.0]  realized -36.6..+85.9  max violation 90.9 deg  first >1deg breach t=0.00s (q=-0.0, range [-20.0,-5.0])
+  hip_R   range [-15.0,+23.0]  realized -23.8..+22.3  max violation 8.8 deg  first >1deg breach t=0.04s (q=-16.2, range [-15.0,+23.0])
+  knee_R  range [-60.0,-0.0]  realized -89.3..+3.2  max violation 29.3 deg  first >1deg breach t=0.12s (q=+1.7, range [-60.0,-0.0])
+  ankle_R range [-20.0,-5.0]  realized -41.8..+82.7  max violation 87.7 deg  first >1deg breach t=0.00s (q=-0.0, range [-20.0,-5.0])
+
+-- contacts (normal force > 1e-6), whole run --
+  femur_L          x femur_R           sumF    3776308.7 N  steps 9513 (475.6 s)
+  ground           x toe_R             sumF    1125260.3 N  steps 13984 (699.2 s)
+  ground           x toe_R_contact     sumF    1121147.3 N  steps 13421 (671.0 s)
+  tibia_L          x tibia_R           sumF     427644.5 N  steps 345 (17.2 s)
+  ground           x toe_L             sumF      34711.4 N  steps 310 (15.5 s)
+  ground           x toe_L_contact     sumF      14601.7 N  steps 276 (13.8 s)
+  ground           x foot_R_contact    sumF       5728.7 N  steps 120 (6.0 s)
+  ground           x foot_R            sumF       1664.8 N  steps 40 (2.0 s)
+  monitored-geom total normal force: 6848866.2 N·s·1e-3 units (per-step sums)
+  monitored contact flags ON fraction: L_foot 0.000  L_toe 0.005  R_foot 0.002  R_toe 0.220
+
+-- foot contact-body world z (m), sampled --
+  t=  0.0s  foL:+0.031  toL:+0.026  foR:+0.032  toR:+0.027
+  t=  2.0s  foL:+0.526  toL:+0.455  foR:+0.239  toR:+0.162
+  t=  4.0s  foL:+0.648  toL:+0.560  foR:+0.254  toR:+0.146
+  t=  6.0s  foL:+0.535  toL:+0.463  foR:+0.271  toR:+0.225
+  t=  8.0s  foL:+0.567  toL:+0.469  foR:+0.274  toR:+0.232
+  t= 10.0s  foL:+0.563  toL:+0.493  foR:+0.197  toR:+0.205
+  t= 12.0s  foL:+0.664  toL:+0.580  foR:+0.137  toR:+0.028
+  t= 14.0s  foL:+0.604  toL:+0.540  foR:+0.168  toR:+0.149
+  t= 16.0s  foL:+0.518  toL:+0.418  foR:+0.237  toR:+0.205
+  t= 18.0s  foL:+0.626  toL:+0.567  foR:+0.069  toR:-0.040
+
+-- neural side (is it alive?) --
+  t=  0.0s  top MV: knee_RE=-99.4mV, ankle_RF=-99.4mV, knee_RF=-99.4mV, ankle_LF=-99.5mV
+  t=  2.5s  top MV: ankle_LF=-23.3mV, ankle_RF=-24.1mV, knee_RF=-26.8mV, knee_LE=-27.4mV
+  t=  5.0s  top MV: ankle_LF=-23.3mV, knee_LE=-27.4mV, knee_RE=-27.5mV, ankle_RE=-29.7mV
+  t= 12.5s  top MV: ankle_LF=-23.3mV, ankle_RF=-24.5mV, knee_LE=-27.4mV, knee_RF=-27.4mV
+  t= 15.0s  top MV: ankle_LF=-23.3mV, ankle_RF=-25.6mV, knee_LE=-27.4mV, knee_RF=-35.0mV
+  t= 17.5s  top MV: ankle_LF=-23.3mV, knee_RF=-25.7mV, knee_LE=-27.4mV, ankle_RE=-28.0mV
+  t=  0.0s  ctrl>0.02: {'ankle_R_ext': 0.15, 'hip_L_ext': 0.25, 'ankle_L_ext': 0.15, 'knee_L_ext': 0.35, 'hip_R_ext': 0.25, 'knee_R_ext': 0.35}
+  t=  2.5s  ctrl>0.02: {'knee_R_flx': 0.44, 'hip_L_ext': 0.02, 'ankle_L_flx': 0.56, 'hip_R_flx': 0.02, 'knee_L_ext': 0.42, 'ankle_R_flx': 0.53}
+  t= 15.0s  ctrl>0.02: {'knee_R_flx': 0.17, 'hip_L_ext': 0.02, 'ankle_L_flx': 0.56, 'hip_R_flx': 0.02, 'knee_L_ext': 0.42, 'knee_R_ext': 0.03, 'ankle_R_flx': 0.48}
+  t= 17.5s  ctrl>0.02: {'knee_R_flx': 0.48, 'ankle_R_ext': 0.4, 'hip_L_ext': 0.02, 'ankle_L_flx': 0.56, 'hip_R_flx': 0.02, 'knee_L_ext': 0.42}
+  knee_L_ext    ctrl 0.00..0.42   actuator force      0.0..  1845.4 N  (last 5 s mean  1157.1 N)
+  knee_R_ext    ctrl 0.00..0.67   actuator force      0.0..  2575.5 N  (last 5 s mean   624.4 N)
+  ankle_L_ext   ctrl 0.00..0.48   actuator force      0.0..  1849.4 N  (last 5 s mean     0.0 N)
+  ankle_R_ext   ctrl 0.00..0.50   actuator force      0.0..  1913.4 N  (last 5 s mean   530.9 N)
+  hip_L_ext     ctrl 0.00..0.25   actuator force      0.0..  2365.5 N  (last 5 s mean   178.2 N)
+  hip_R_ext     ctrl 0.00..0.25   actuator force      0.0..  2347.3 N  (last 5 s mean     0.0 N)

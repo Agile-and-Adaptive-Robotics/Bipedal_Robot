@@ -1,0 +1,12 @@
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+rebase args: ['--eval', '--drive', '2.7864122963006754']
+rebase winner params: {"drive": 2.7864122963006754, "rg_nap_h": 0.35255096658083446, "desc_e": 1.4795548178307811, "desc_f": 1.4494480217825445, "rg_to_pf": 2.024962521434292, "heel_rge": 0.12312339160142002, "toe_rge": 0.10178084469071401, "rg_mutual_inh": 4.594286048130957, "rg_weak_exc": 0.17694399639238834, "pf_recip_inh": 3.803773349445341, "contact_onset": 0.0, "contra_swing": 0.0, "ib_rge": 0.0}
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+metrics: {'nan': False, 'kine_score': -200.37955834081458, 'kz': 0.8395951533145384, 'tilt_max': 28.069329512572313, 'duty': 0.4218571428571429, 'contact_frac_r': 0.955, 'contact_frac_l': 1.0, 'n_cycles_r': 4, 'n_cycles_l': 0, 'bilateral': False, 'T_r': 1.8775, 'lag_rl': 0.39474631162288576, 'duty_kine': 0.7445714285714286, 'knee_min': -49.748622735367185, 'ds': 0.7445714285714286}
+REBASE score=-200.3796  OLD json score=-197.2146  delta=-3.1650  (kine_ref left-cycle fix applied 2026-09-26)
+RG_E_r rises(after t=5)=3 span=10.056; knee range -54.5..10.0 deg; cfg=ground
+guard rails: {'nan_false': True, 'kine_not_none': True, 'contact_some': True, 'rises_ge_3': True}
+VERDICT: GENUINE GROUND WALK (rebased)

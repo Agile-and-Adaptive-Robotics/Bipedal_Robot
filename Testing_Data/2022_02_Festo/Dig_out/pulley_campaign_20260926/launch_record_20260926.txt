@@ -1,0 +1,5 @@
+Campaign launch record 2026-09-26
+hostname: easteregg2
+env guard: OPT_PULLEY_SMOKE / OPT_PULLEY_CONFIGS / OPT_BIPULLEY_SMOKE unset
+LAUNCH1 (Opt_run_pulley):    matlab -batch "addpath('D:/GitHub/Bipedal_Robot/Code/Matlab/Mesh_Optimization'); Opt_run_pulley"   (cwd = D:/GitHub/Bipedal_Robot/Testing_Data/2022_02_Festo)
+LAUNCH2 (Opt_run_BiPulley):  matlab -batch "parpool(6); addpath('D:/GitHub/Bipedal_Robot/Code/Matlab/Mesh_Optimization'); Opt_run_BiPulley"   (cwd = D:/GitHub/Bipedal_Robot/Code/Matlab/Mesh_Optimization)

@@ -24,7 +24,11 @@ sys.path.insert(0, HERE)
 import mujoco  # noqa: E402  (CONDA_PREFIX set before import, per the skill)
 from build_li_net import build  # noqa: E402
 
-MJCF = os.path.join(HERE, "w2l_mjcf.xml")
+# M3 RETRY (2026-09-26): the M2 gate's original runs used w2l_mjcf.xml, whose
+# knee/ankle hinges shipped as VERTICAL-axis yaw joints (transport bug,
+# fix_joint_axes.py) - the body-side collapse they showed is not interpretable.
+# The closed loop now runs on the axis-corrected body of record.
+MJCF = os.path.join(HERE, "w2l_mjcf_fixed.xml")
 DT_NET = 0.0002
 N_SUB = 5                      # net substeps per 1 ms physics step
 DUR = 20.0                     # s, the gate asks for >= 20 s

@@ -785,7 +785,22 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     -160.23425729850192. **STALE GATE: the _fullrules_test.py
     -148.6878643 reference no longer reproduces on PRE-VARIANT code
     either (reverse-patch A/B proven) — the s3 eval moved with the
-    09-23/24 physics changes; current baseline = -160.23425729850192.**
+    09-23/24 physics changes; current baseline = -160.23425729850192.
+    UPDATE 2026-09-26 (audit re-run): THIS gate no longer reproduces
+    either — `_pf_layer_variant_test.py` gate 3 still calls
+    `set_stage(3, ...)`, which after the 09-24-night renumber loads the
+    BALANCE stage (vest loaders, no walk params) → gate 3 printed
+    kine -25.0 FAIL (gates 1-2 still PASS, counts (410,376,1186) and
+    (2,0,52) re-verified). With the walk config via `set_stage(4,
+    {**mul, **curriculum_stage3.json params, full_rules:0})` the same
+    eval gives -161.56754173676563 under the 09-26 applied left-ref fix
+    (kine_ref.py working-tree change, Ben's "fix first" ruling); the
+    SAME probe with HEAD (pre-fix) kine_ref reproduces
+    -160.23425729850192 BIT-EXACT — so the recorded baseline was true
+    for committed 09-24 code, and the drift is exactly (stage renumber
+    + left-ref fix). Before relying on gate 3, repoint
+    `_pf_layer_variant_test.py` at stage 4 and re-record the baseline
+    post-fix.**
     Ben's exports ALWAYS land in
     `Neuromechanical_Models\Mujoco_SNS_models\` (browser download dir —
     look there first). One-off scripts deleted per supervisor
@@ -1179,8 +1194,13 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     START_POSE_DEG in runner.py). Zotero Web API access (AARL group
     735051) verified for full-text PDF retrieval; credentials in
     D:\Github\api_credentials_local.txt (outside repo). Musculoskeletal
-    audit script: _muscle_force_compare.py (R² 0.87–0.98 matched
-    activation). Literature audit report:
+    audit script: _muscle_force_compare.py (matched-activation R²
+    0.87–0.98 on 8 of the 12 compared muscles — muscle_force_compare.csv:
+    soleus 0.742, semimem 0.565, rect_fem −1.150, bifemsh −0.261 fall
+    outside; the 8 in-band ratios run 0.910–1.018, lags 0–2 frames.
+    Audit correction 2026-09-26; the old "R² 0.87–0.98 matched
+    activation" read as if all twelve were in band).
+    Literature audit report:
     LIT_CIRCUIT_AUDIT.md (P1a/P1b IMPLEMENTED; P2a/P2b/P3 open).
     **2026-09-14 (v7 retune under corrected physics): ANKLE DORSIFLEXION
     MECHANISM FOUND** — boosting swing DF drive does nothing (9 PF
@@ -1987,3 +2007,72 @@ A separate chat is updating the dissertation text with these. Sources (Testing_D
   series-stiffness Xi3. Gotchas: pool workers never see client setenv after spawn (env-gated
   evaluator branches silently run the wrong mode in parfor — set env BEFORE parpool); wrap
   the Xi-factor handoff details: CHATGPT_HANDOFF.md ACTIVE WORK F (2026-09-14/16).
+
+## 2026-09-27 — easteregg2 generations campaign bring-back (goal4; full report
+`spinal\reports_20260925\easteregg2\goal4_easteregg2_generations.md`; NO commits — all output is uncommitted working tree for GitHub Desktop)
+
+- **kine_ref left-ref fix APPLIED (Ben ruled option a; UNCOMMITTED)**: s3k
+  -160.23425729850192 → -161.56754173676563; w2lvar s5 winner -165.040506 → -165.335963;
+  syn6 s5 seed -197.2146 → -200.3796; syn6 s4 -237.2534 → -234.2860. ALL pre-09-26 kine
+  scores shift once committed; `_pf_layer_variant_test.py` gate 3 stale TWICE (renumber +
+  fixed ref) — repoint at stage 4 and re-record before use.
+- **Convergence (Ben's stop rule = 2 consecutive batches < +0.5)**: w2lvar s5 NEW BEST
+  ground walk -144.464403 (trial 68; batches +1.13/+18.16/+1.28/0/0 over 100 trials;
+  bilateral, kz 0.83) — winner near space edges (drive 3.82/4.0, contact_onset 0.003) →
+  replay-verify before trusting; loop stopped 5/10 batches, resumable. syn6 s4 -180.844766
+  (t109, +140 trials, +53.4 like-for-like); syn6 s5 SEED STILL WINS after 40 more trials
+  (-200.3796 rebased) — architectural, not sampling. Air: w2lvar s1 saturates the rises=30
+  cap (127.752845), s2 94.924507 (t49); syn6 s1 130.238130 / s2 110.517696 (replay
+  bit-exact, REAL RHYTHM); both s3 stages unchanged (below top-up threshold). w2lvar-s4
+  harvest "exploit FAIL" line = stale-ref false positive (genuine walker, -230.860
+  fixed-ref). Protected files untouched; supervisor gate GO (bit-exact rebaseline replay,
+  DB argmax==json on all 10 studies).
+- **Connectome schematic**: walker_s3k/w2lvar/syn6 templates restructured into NESTED
+  SUBSYSTEMS (13n/322e, 18n/2726e, 18n/2123e top-level; +3 _flat entries verbatim==HEAD;
+  conservation verified; subsystem load 42/42); bilateralrg 105n/226e → 109n/222e.
+  Generator wiring errors CORRECTED: V3→contra RG ext IN only (old contra-HC edge was
+  invented); heel/toe→ANK-MN invented → contact_C20 = Hip/Knee targets only; afferent→HC
+  24 edges 1:1 with build_aff.pl; R RG↔RG pair in-template.
+- **Wiring findings (report-only, Ben's files)**: RE clone-type bug is .APROJ-ONLY (.asim
+  clean). NEW: patch_comm_types.pl's aproj link-repoint never landed — 4 commissural
+  out-links still ride strong RG types (2.749 uS) while the dedicated weak types sit
+  unused in the same file → GUI .aproj and runnable .asim differ; one GUI session fixes
+  all 5 links. w2l_mujoco/build_w2l_split_net.py:119/122 still hardcode the old V3 edges
+  (Ben's go pending). w2l_aproj_mine.json + li_aproj_mine.json are UNTRACKED — commit
+  them. Live net 95n/208syn re-verified; smoke PASS period 1.000, antiphase -0.525 HERE
+  (-0.532 was machine-specific — quote the env).
+- **Numbers audit (every quoted Xi/GoF number reproduced from source)**: pick-77 GoF
+  exact (RMSE 2.16465/1.36817/2.28691/1.61102/1.08363); OLD row-107 appendix numbers NOT
+  reproducible (fresh 2.01171/1.49305/2.314/1.73522/1.08103); bio-ext at adopted pair
+  1.17/0.67/2.21 (FVU<1). MATERIAL: minimizeFlxPin.m executes PITCH-ONLY for BOTH flexor
+  brackets (origin Thbr :306 live, two-rotation :305 commented) — header + the 09-13 note
+  say origin two-rotation; K2=[X1,X1,X2] not y-symmetric so it matters; everything since
+  8e3c1b9d inherits it — Ben's fix-code-vs-fix-docs ruling OPEN. Tex owed: '+5.03%'→
+  '+5.02%' (Vas 09-25 minMargin 0.05024928); Appendix C line refs 306/305/326/339/338+327;
+  compile on EB475WS4 + Overleaf sync pending. goal5 'monotone'→near-monotone (ong_100
+  -207.37 beats 075 -208.15); muscle_force_compare.csv header 6 names vs 8 fields;
+  SNS_SpinalNetwork 4.2e-6 mV still has NO in-repo artifact; units test 6.07e-4 mV
+  double-verified; s3c t54 gait numbers still unverified.
+- **add_mag3_r ruled**: Ben's both-axes torque rule = NEITHER-PASSES-BOTH (rounded repo
+  P2 fails flexion 0.63× with a zero-crossing/sign flip; thumb P2 fails adduction 0.82×).
+  Tie-break applied on Ben's behalf (overrulable): repo P2 = corruption artifact
+  (duplicates P2_0, degenerate zero-length via); FULL-PRECISION THUMB P2
+  (-0.1357,-0.0929,+0.0591) APPLIED to gait2392_robotbody.osim (one line; robot.osim
+  regenerated, probe bit-exact). Adduction shortfall → Opt_run sizing item; ~10x
+  passive-overstretch finding needs its own decision; stale one path-point:
+  gait2392_robotbody_hip.osim, gait2327.osim, mjc\ (regeneration Ben-gated).
+- **BiPulley DONE — nothing left running**: sanity gates PASS; Opt_run_pulley 10.7 min
+  exit 0 → Results\Bifemsh_20mm_Result_pulley_20260926_1652.mat (fBest 0.0846509, min
+  torque margin +5.38%, clears 5%); Opt_run_BiPulley 5-muscle OpenSim manifest done
+  (master's builder absent on easteregg2) = first-pass baselines (biarticular margins
+  ~-1; clearances 4.3–19.1 mm vs ≥25 need); pulley pool ran 10 workers not 6 (implicit
+  parpool pre-empted the guard); chain DONE 2026-09-26T17:02:40, no processes remain.
+- **AnimatLab**: the 12 "missing" synapses were PURGED by Ben's Sep-16 GUI re-save (34
+  keys; GUI loader drops links outside fragment <Links>) — restored byte-verbatim into
+  Biped_2xCPG_wSubs.aproj (syn=239, verify_final clean, GUI opens 0 errors); 22 more
+  purged synapses remain; RE-EXPORT the Standalone .asim before any RG re-test (stale
+  asim ≠ edited aproj). **Li**: still collapses — ROOT CAUSE: w2l_mjcf_fixed.xml Root
+  has NO joint (welded base; feet 2.6–3.1 cm above floor; heels never trigger); the old
+  "pelvis to -1.44 m" was a qpos-addressing artifact (ankle_L radians); freejoint A/B
+  crumples <0.5 s (necessary not sufficient; M1 damping/spawn gates); resume recipe in
+  goal2_m2_li_architecture.md §8.
