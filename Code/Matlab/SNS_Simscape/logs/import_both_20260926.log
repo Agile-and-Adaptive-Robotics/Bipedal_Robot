@@ -1,0 +1,216 @@
+=== MATLAB 25.2.0.2998904 (R2025b) | mdl_leg_rig_ba003 ===
+[Warning: An unknown constraint exists between 'Patella_v3_template_1_RIGID' and 'x04_01_KT_R_003_1_RIGID'. A rigid connection has been added between port 'F' of
+'Patella_v3_template_1_RIGID' and port 'F1' of 'x04_01_KT_R_003_1_RIGID' for this constraint.] 
+[Warning: An unknown constraint exists between 'x04_01_KT_R_003_1_RIGID' and 'Patella_v5_1_RIGID'. A rigid connection has been added between port 'F4' of 'x04_01_KT_R_003_1_RIGID'
+and port 'F' of 'Patella_v5_1_RIGID' for this constraint.] 
+
+mdl_leg_rig_ba003: 101 blocks
+  JOINT  Cylindrical                                                <- sm_lib/Joints/Cylindrical
+Joint
+  JOINT  Cylindrical1                                               <- sm_lib/Joints/Cylindrical
+Joint
+  JOINT  Revolute                                                   <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute1                                                  <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute2                                                  <- sm_lib/Joints/Revolute Joint
+inventory: 5 joint blocks, 0 File Solids, 0 other body elements
+file solid sample: 
+  exists: 0
+gravity -Z set
+mdl_leg_rig_ba003_imported: UPDATE FAILED: ['mdl_leg_rig_ba003_imported']: The following errors were found in the model mdl_leg_rig_ba003_imported.
+  CAUSE 1: ['mdl_leg_rig_ba003_imported/MuscleOrigins_004_2_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 2: ['mdl_leg_rig_ba003_imported/Patella_v3_template_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 3: ['mdl_leg_rig_ba003_imported/Patella_v5_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 4: ['mdl_leg_rig_ba003_imported/x03_01_FB_R_004_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 5: ['mdl_leg_rig_ba003_imported/x03_01_FB_R_004_ribLink_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 6: ['mdl_leg_rig_ba003_imported/x04_01_KT_R_003_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 7: ['mdl_leg_rig_ba003_imported/x04_02_KB_R_003_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 8: ['mdl_leg_rig_ba003_imported/x04_05_BL_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 9: ['mdl_leg_rig_ba003_imported/x04_06_FL_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 10: ['mdl_leg_rig_ba003_imported/x04_06_FL_002_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 11: ['mdl_leg_rig_ba003_imported/x05_01_TI_R_006_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 12: ['mdl_leg_rig_ba003_imported/x05_01_TI_R_007_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+=== mdl_leg_rig_ba003 DONE ===
+=== MATLAB 25.2.0.2998904 (R2025b) | mdl_humanoid_lower_ah001 ===
+[Warning: x09_BA_001_1: The set of constraints between 'x04_03_KT_L_001_1_RIGID' and 'x04_04_KB_L_001_1_RIGID' could not be mapped to a joint. A rigid connection has
+been added between port 'F2' of 'x04_03_KT_L_001_1_RIGID' and port 'F3' of 'x04_04_KB_L_001_1_RIGID' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In sm_import_export_20260926 (line 27)] 
+[Warning: x09_BA_001_1: The set of constraints between 'x04_02_KB_R_001_1_RIGID' and 'x04_01_KT_R_001_1_RIGID' could not be mapped to a joint. A rigid connection has
+been added between port 'F3' of 'x04_02_KB_R_001_1_RIGID' and port 'F3' of 'x04_01_KT_R_001_1_RIGID' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In sm_import_export_20260926 (line 27)] 
+[Warning: The set of constraints between 'x09_BA_001_1/x02_01_PE_001_1_RIGID' and 'x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_10_RIGID' could not be mapped to a joint. A
+rigid connection has been added between port 'F21' of 'x09_BA_001_1' and port 'F' of 'x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_10_RIGID' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In sm_import_export_20260926 (line 27)] 
+[Warning: The set of constraints between 'x09_BA_001_1/x02_01_PE_001_1_RIGID' and 'x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_1_RIGID' could not be mapped to a joint. A
+rigid connection has been added between port 'F51' of 'x09_BA_001_1' and port 'F' of 'x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_1_RIGID' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In sm_import_export_20260926 (line 27)] 
+[Warning: The set of constraints between 'x09_BA_001_1/x02_01_PE_001_1_RIGID' and 'x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_2_RIGID' could not be mapped to a joint. A
+rigid connection has been added between port 'F52' of 'x09_BA_001_1' and port 'F' of 'x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_2_RIGID' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In sm_import_export_20260926 (line 27)] 
+[Warning: The set of constraints between 'x09_BA_001_1/x02_01_PE_001_1_RIGID' and 'x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_4_RIGID' could not be mapped to a joint. A
+rigid connection has been added between port 'F53' of 'x09_BA_001_1' and port 'F' of 'x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_4_RIGID' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In sm_import_export_20260926 (line 27)] 
+[Warning: The set of constraints between 'x09_BA_001_1/x02_01_PE_001_1_RIGID' and 'x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_6_RIGID' could not be mapped to a joint. A
+rigid connection has been added between port 'F54' of 'x09_BA_001_1' and port 'F' of 'x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_6_RIGID' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In sm_import_export_20260926 (line 27)] 
+[Warning: The set of constraints between 'x09_BA_001_1/x02_01_PE_001_1_RIGID' and 'x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_8_RIGID' could not be mapped to a joint. A
+rigid connection has been added between port 'F55' of 'x09_BA_001_1' and port 'F' of 'x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_8_RIGID' for these constraints.] 
+[> In smimport_implementation
+In smimport (line 173)
+In sm_import_export_20260926 (line 27)] 
+
+mdl_humanoid_lower_ah001: 674 blocks
+  JOINT  Cylindrical                                                <- sm_lib/Joints/Cylindrical
+Joint
+  JOINT  Cylindrical1                                               <- sm_lib/Joints/Cylindrical
+Joint
+  JOINT  Planar                                                     <- sm_lib/Joints/Planar Joint
+  JOINT  Planar1                                                    <- sm_lib/Joints/Planar Joint
+  JOINT  Revolute                                                   <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute1                                                  <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute10                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute11                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute12                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute13                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute14                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute15                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute16                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute17                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute18                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute19                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute2                                                  <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute20                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute21                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute22                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute23                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute24                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute25                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute26                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute27                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute28                                                 <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute3                                                  <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute4                                                  <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute5                                                  <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute6                                                  <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute7                                                  <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute8                                                  <- sm_lib/Joints/Revolute Joint
+  JOINT  Revolute9                                                  <- sm_lib/Joints/Revolute Joint
+  JOINT  x09_BA_001_1/Cartesian                                     <- sm_lib/Joints/Cartesian
+Joint
+  JOINT  x09_BA_001_1/Cartesian1                                    <- sm_lib/Joints/Cartesian
+Joint
+  JOINT  x09_BA_001_1/Cylindrical                                   <- sm_lib/Joints/Cylindrical
+Joint
+  JOINT  x09_BA_001_1/Cylindrical1                                  <- sm_lib/Joints/Cylindrical
+Joint
+  JOINT  x09_BA_001_1/Revolute                                      <- sm_lib/Joints/Revolute Joint
+  JOINT  x09_BA_001_1/Revolute1                                     <- sm_lib/Joints/Revolute Joint
+  JOINT  x09_BA_001_1/Revolute2                                     <- sm_lib/Joints/Revolute Joint
+  JOINT  x09_BA_001_1/Revolute3                                     <- sm_lib/Joints/Revolute Joint
+  JOINT  x09_BA_001_1/Revolute4                                     <- sm_lib/Joints/Revolute Joint
+  JOINT  x09_BA_001_1/Revolute5                                     <- sm_lib/Joints/Revolute Joint
+  JOINT  x09_BA_001_1/Revolute6                                     <- sm_lib/Joints/Revolute Joint
+  JOINT  x09_BA_001_1/Revolute7                                     <- sm_lib/Joints/Revolute Joint
+  JOINT  x09_BA_001_1/Revolute8                                     <- sm_lib/Joints/Revolute Joint
+  JOINT  x09_BA_001_1/Revolute9                                     <- sm_lib/Joints/Revolute Joint
+  JOINT  x09_BA_001_1/Spherical                                     <- sm_lib/Joints/Spherical
+Joint
+  JOINT  x09_BA_001_1/Spherical1                                    <- sm_lib/Joints/Spherical
+Joint
+inventory: 49 joint blocks, 0 File Solids, 0 other body elements
+file solid sample: 
+  exists: 0
+gravity -Z set
+mdl_humanoid_lower_ah001_imported: UPDATE FAILED: ['mdl_humanoid_lower_ah001_imported']: The following errors were found in the model mdl_humanoid_lower_ah001_imported.
+  CAUSE 1: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1']: Cartesian Joint 'mdl_humanoid_lower_ah001_imported/x09_BA_001_1/Cartesian' has base and follower ports that are rigidly connected; it is ignored. Re
+  CAUSE 2: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1']: Angle Constraint 'mdl_humanoid_lower_ah001_imported/x09_BA_001_1/Parallel' has base and follower ports that are rigidly connected. You can configure
+  CAUSE 3: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x02_01_PE_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 4: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x03_01_FB_R_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 5: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x03_02_FH_R_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 6: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x03_03_FB_L_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 7: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x03_04_FH_L_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 8: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_01_KT_R_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 9: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_02_KB_R_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 10: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_03_KT_L_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 11: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_04_KB_L_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 12: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_05_BL_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 13: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_05_BL_001_2_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 14: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_06_FL_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 15: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x04_06_FL_001_2_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 16: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x05_01_TI_R_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 17: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x05_02_TI_001_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the model.
+  CAUSE 18: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in o
+  CAUSE 19: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x6630T310_METRIC_BLACK_POLYPROPYLENE_BALL_KNOB_2_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in o
+  CAUSE 20: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x92997A108_CORROSION_RESISTANT_SETUP_STUD_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order 
+  CAUSE 21: ['mdl_humanoid_lower_ah001_imported/x09_BA_001_1/x92997A108_CORROSION_RESISTANT_SETUP_STUD_2_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order 
+  CAUSE 22: ['mdl_humanoid_lower_ah001_imported/x90695A038_CLASS_04_STEEL_THIN_HEX_NUT_DIN_439B_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simu
+  CAUSE 23: ['mdl_humanoid_lower_ah001_imported/x90695A038_CLASS_04_STEEL_THIN_HEX_NUT_DIN_439B_2_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simu
+  CAUSE 24: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_10_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order
+  CAUSE 25: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_12_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order
+  CAUSE 26: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_14_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order
+  CAUSE 27: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_16_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order
+  CAUSE 28: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_18_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order
+  CAUSE 29: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order 
+  CAUSE 30: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_20_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order
+  CAUSE 31: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_22_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order
+  CAUSE 32: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_24_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order
+  CAUSE 33: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_26_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order
+  CAUSE 34: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_28_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order
+  CAUSE 35: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_2_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order 
+  CAUSE 36: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_30_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order
+  CAUSE 37: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_32_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order
+  CAUSE 38: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_4_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order 
+  CAUSE 39: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_6_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order 
+  CAUSE 40: ['mdl_humanoid_lower_ah001_imported/x91239A330_CLASS_10_9_STL_BUTTON_HEAD_SOCKET_CAP_SCREW_8_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order 
+  CAUSE 41: ['mdl_humanoid_lower_ah001_imported/x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_10_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate th
+  CAUSE 42: ['mdl_humanoid_lower_ah001_imported/x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the
+  CAUSE 43: ['mdl_humanoid_lower_ah001_imported/x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_2_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the
+  CAUSE 44: ['mdl_humanoid_lower_ah001_imported/x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_4_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the
+  CAUSE 45: ['mdl_humanoid_lower_ah001_imported/x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_6_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the
+  CAUSE 46: ['mdl_humanoid_lower_ah001_imported/x91595A476_METRIC_ALLOY_STEEL_DOWEL_PIN_8_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate the
+  CAUSE 47: ['mdl_humanoid_lower_ah001_imported/x94510A255_BRASS_SCREW_TO_EXPAND_INSERTS_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate th
+  CAUSE 48: ['mdl_humanoid_lower_ah001_imported/x94510A255_BRASS_SCREW_TO_EXPAND_INSERTS_2_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate th
+  CAUSE 49: ['mdl_humanoid_lower_ah001_imported/x94510A255_BRASS_SCREW_TO_EXPAND_INSERTS_4_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate th
+  CAUSE 50: ['mdl_humanoid_lower_ah001_imported/x94510A255_BRASS_SCREW_TO_EXPAND_INSERTS_6_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate th
+  CAUSE 51: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_10_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 52: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_12_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 53: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_14_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 54: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_16_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 55: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_18_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 56: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to 
+  CAUSE 57: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_20_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 58: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_22_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 59: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_24_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 60: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_26_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 61: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_28_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 62: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_2_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to 
+  CAUSE 63: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_30_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 64: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_36_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 65: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_39_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 66: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_41_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to
+  CAUSE 67: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_4_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to 
+  CAUSE 68: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_6_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to 
+  CAUSE 69: ['mdl_humanoid_lower_ah001_imported/x94645A205_HIGH_STRENGTH_STEEL_NYLON_INSERT_LOCKNUT_8_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to 
+  CAUSE 70: ['mdl_humanoid_lower_ah001_imported/x97493A126_METRIC_PARTIALLY_THREADED_STUDS_10_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate
+  CAUSE 71: ['mdl_humanoid_lower_ah001_imported/x97493A126_METRIC_PARTIALLY_THREADED_STUDS_12_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate
+  CAUSE 72: ['mdl_humanoid_lower_ah001_imported/x97493A126_METRIC_PARTIALLY_THREADED_STUDS_14_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate
+  CAUSE 73: ['mdl_humanoid_lower_ah001_imported/x97493A126_METRIC_PARTIALLY_THREADED_STUDS_1_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate 
+  CAUSE 74: ['mdl_humanoid_lower_ah001_imported/x97493A126_METRIC_PARTIALLY_THREADED_STUDS_2_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate 
+  CAUSE 75: ['mdl_humanoid_lower_ah001_imported/x97493A126_METRIC_PARTIALLY_THREADED_STUDS_4_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate 
+  CAUSE 76: ['mdl_humanoid_lower_ah001_imported/x97493A126_METRIC_PARTIALLY_THREADED_STUDS_6_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate 
+  CAUSE 77: ['mdl_humanoid_lower_ah001_imported/x97493A126_METRIC_PARTIALLY_THREADED_STUDS_9_RIGID/Solid']: The parameter Geometry/File Name is a file that does not exist. Resolve this issue in order to simulate 
+=== mdl_humanoid_lower_ah001 DONE ===
+EXIT=0

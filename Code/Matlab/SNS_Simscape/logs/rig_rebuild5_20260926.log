@@ -1,0 +1,14 @@
+5 joints deleted
+{Error using rig_knee_rebuild_v4_20260926>deal_frame
+Too many output arguments.
+
+Error in rig_knee_rebuild_v4_20260926>@(nm,srcPort,dT)deal_frame(nm,srcPort,dT,mdl) (line 41)
+mkFrame = @(nm, srcPort, dT) deal_frame(nm, srcPort, dT, mdl);
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error in rig_knee_rebuild_v4_20260926 (line 49)
+fl2T = mkFrame('fl2T', h_KT, [-0.0178 0.0152 -0.0740]);
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+[Warning: Unable to close the model 'mdl_leg_rig_ba003_imported' because it has been changed. To save changes, use close_system('mdl_leg_rig_ba003_imported',1). To
+discard changes, use close_system('mdl_leg_rig_ba003_imported',0).] 
+ERROR: MATLAB error Exit Status: 0x00000001

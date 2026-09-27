@@ -1,0 +1,14 @@
+leg R: knee reduced + muscles built
+{Error using assert
+pick_single failed for x04_06_FL_001_1_RIGID
+
+Error in build_bpa_sns_humanoid_20260926>pick_single (line 235)
+assert(~isempty(h), 'pick_single failed for %s', bodyA);
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error in build_bpa_sns_humanoid_20260926 (line 50)
+    h_FL   = pick_single(far.(legs(lg).jFLKT), 'x04_06_FL_001_1_RIGID');
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+[Warning: Unable to close the model 'mdl_humanoid_lower_ah001_imported' because it has been changed. To save changes, use
+close_system('mdl_humanoid_lower_ah001_imported',1). To discard changes, use close_system('mdl_humanoid_lower_ah001_imported',0).] 
+ERROR: MATLAB error Exit Status: 0x00000001

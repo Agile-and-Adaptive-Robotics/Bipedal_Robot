@@ -1,0 +1,19 @@
+Revolute far: x04_02_KB_R_003_1_RIGID
+Revolute far: x04_05_BL_001_1_RIGID
+Cylindrical1 far: x04_01_KT_R_003_1_RIGID
+Cylindrical1 far: x04_06_FL_001_1_RIGID
+Revolute2 far: x04_06_FL_002_1_RIGID
+Cylindrical far: x04_01_KT_R_003_1_RIGID
+Cylindrical far: x04_05_BL_001_1_RIGID
+Revolute1 far: x04_06_FL_002_1_RIGID
+{Error using assert
+pick_pair failed for x04_01_KT_R_003_1_RIGID/x04_06_FL_002_1_RIGID
+
+Error in rig_knee_rebuild_v3_20260926>pick_pair (line 129)
+assert(~isempty(ia) && ~isempty(ib), 'pick_pair failed for %s/%s', bodyA, bodyB);
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error in rig_knee_rebuild_v3_20260926 (line 29)
+h_KT_FL2  = pick_pair(far.Revolute2,   'x04_01_KT_R_003_1_RIGID', 'x04_06_FL_002_1_RIGID');
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+ERROR: MATLAB error Exit Status: 0x00000001
