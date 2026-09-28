@@ -96,8 +96,13 @@ time series, the shape correlation, and the best-aligning lag.
   \end{tabular}
 \end{table}
 
-For ten of twelve representative muscles the two formulations agree
-with $R^2 = 0.87$--$0.98$ and mean-force ratios within $\pm 22\%$, with
+% [ZCODE audit 2026-09-26] corrected from "ten of twelve ... ratios within
+% +/-22%": the committed muscle_force_compare.csv has R2_matched in
+% [0.87, 0.98] for EIGHT of twelve (soleus 0.742, semimem 0.565,
+% rect_fem -1.150, bifemsh -0.261 outside); those eight carry mean-force
+% ratios 0.910--1.018 (within +/-10%), and the table above is unchanged.
+For eight of twelve representative muscles the two formulations agree
+with $R^2 = 0.87$--$0.98$ and mean-force ratios within $\pm 10\%$, with
 \emph{no} systematic phase shift (best-aligning lag 0--2 frames,
 $\le 34$\,ms). The absence of a phase lead in the rigid-tendon plant
 indicates that, along physiological trajectories, missing tendon slack
@@ -106,12 +111,14 @@ instead visible in waveform \emph{shape}: for the soleus (the largest
 series-elastic energy store in human gait), the OpenSim compliant
 tendon carries substantial force through mid-stance while the MuJoCo
 rigid-tendon force follows the activation dips --- the expected
-smoothing of the series elastic element. The two outliers are
-anatomically explained: rectus femoris was rerouted in the conversion
+smoothing of the series elastic element. The two sign/scale outliers
+are anatomically explained: rectus femoris was rerouted in the conversion
 over the vastii's patella-tracking via point, and its moment-arm
 polyfit deviates from OpenSim's path (the same coupler artifact noted
 for the vastii); biceps femoris short head agrees in shape
-($r^2 = 0.87$) but carries a scale offset. We conclude that the
+($r^2 = 0.87$) but carries a scale offset; and semimembranosus
+($R^2 = 0.57$, shape $R^2 = 0.62$, force ratio $-22\%$) misses on
+waveform shape as well as scale. We conclude that the
 converted plant reproduces OpenSim muscle force generation along
 physiological trajectories to a degree sufficient for neural-control
 studies, and that if tendon-elasticity phenomena (energy storage,

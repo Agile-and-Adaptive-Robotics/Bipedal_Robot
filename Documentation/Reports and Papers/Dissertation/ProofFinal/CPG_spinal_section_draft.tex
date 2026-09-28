@@ -406,9 +406,13 @@ torque budgets of approximately 3.4/2.8/2.1/1.4$\times$ at hip, knee,
 trunk, and ankle; the ankle is the tightest. Driving the MuJoCo
 muscles with identical kinematics and OpenSim static-optimization
 activations reproduces OpenSim Thelen muscle forces at $R^2 =
-0.87$--$0.98$ on ten of twelve benchmark muscles with no phase lag;
-the rigid-tendon conversion differs in shape (compliance) rather than
-timing (Figure~\ref{fig:muscle-force-compare}).
+0.87$--$0.98$ on eight of twelve benchmark muscles, with best-aligning
+lags of 0--2 frames; the rigid-tendon conversion differs in shape
+(compliance) rather than timing (Figure~\ref{fig:muscle-force-compare}).
+% [ZCODE audit 2026-09-26] corrected from "ten of twelve ... no phase lag":
+% committed muscle_force_compare.csv has R2_matched in [0.87, 0.98] for 8/12
+% (soleus 0.742, semimem 0.565, rect_fem -1.150, bifemsh -0.261 fall outside);
+% lag_frames 0-2 across all twelve. Same counts as the plant-fidelity appendix.
 
 % ---------------------------------------------------------------------------
 % PART C — DISCUSSION. Copy into chapters/40-discussion.tex (append at

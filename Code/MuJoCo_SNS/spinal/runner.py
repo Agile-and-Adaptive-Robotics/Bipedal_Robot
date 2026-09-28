@@ -721,6 +721,10 @@ def main(argv):
     straight_start = False
     adaptive_tol = 0.0      # --adaptive-tol X: error-controlled substepping
     contact_damp = None     # --contact-damp lessviscous|nonlinear
+    push_N = 0.0            # --push N: pelvis force pulse (0/absent = off)
+    push_time = 4.0         # --push-time T: pulse onset (s, post-warmup)
+    push_axis = "+x"        # --push-axis +x|-x|+y|-y (world axes)
+    push_state = [False, None]   # [pulse active, pelvis body id]
     args = list(argv)
     fit_keys = None
     if "--fitted" in args:
@@ -961,6 +965,18 @@ def main(argv):
             import params as _p
             _p.G["vest_prop"] = float(args.pop(0)) if args and \
                 args[0].replace(".", "").replace("-", "").isdigit() else 0.5
+        elif a == "--push":
+            # prune-matrix balance perturbation (2026-09-28): horizontal
+            # force pulse on the pelvis body during
+            # [push_time, push_time + 0.15 s]. Value = newtons. Absent
+            # flag = 0 N = bit-identical (hook guarded by push_N > 0).
+            push_N = float(args.pop(0)) if args and \
+                args[0].replace(".", "").replace("-", "").isdigit() else 40.0
+        elif a == "--push-time":
+            push_time = float(args.pop(0)) if args and \
+                args[0].replace(".", "").replace("-", "").isdigit() else 4.0
+        elif a == "--push-axis":
+            push_axis = args.pop(0) if args else "+x"
 
     # state-dump hook (debug): RUNNER_DUMP_STATE=<file> writes every
     # mutable param right after arg parsing - diff two paths to find
@@ -1552,6 +1568,21 @@ def main(argv):
                             c = min(1.0, c * (1.0 + G["pm_ws"] * wp))
             data.ctrl[aid[a]] = c
 
+        if push_N > 0.0:
+            # prune-matrix push hook: apply/hold/clear the pelvis pulse
+            # (xfrc_applied persists across steps until explicitly zeroed)
+            if not push_state[0] and t >= push_time:
+                _jid = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT,
+                                         "pelvis_tx")
+                _pb = int(model.jnt_bodyid[_jid])
+                _sgn = -1.0 if push_axis.startswith("-") else 1.0
+                _ai = 0 if push_axis.endswith("x") else 1
+                data.xfrc_applied[_pb, _ai] = _sgn * float(push_N)
+                push_state[0] = True
+                push_state[1] = _pb
+            elif push_state[0] and t >= push_time + 0.15:
+                data.xfrc_applied[push_state[1], :] = 0.0
+                push_state[0] = False
         if t < WARMUP:
             # hold the keyframe pose while activations build (qpos untouched,
             # velocities zeroed, activation states integrate via mj_forward)
@@ -1696,6 +1727,20 @@ def main(argv):
         _cl = float(np.mean(seg_ct[:, 1])) if seg_ct.shape[0] else 0.0
         bal_contact_sym = float(_cr / (_cr + _cl)) if (_cr + _cl) > 1e-9 \
             else 0.25   # no contact at all: score between 0 (one-foot) and 0.5 (even)
+        # prune-matrix push recovery (2026-09-28): COM sway radius over
+        # the window AFTER the push pulse ends. Low = good recovery.
+        # 0.0 when no push; -1.0 when the push fired but no post-window
+        # samples exist (degenerate short run).
+        if push_N > 0.0 and seg_c.shape[0]:
+            _pm = tt[i_bal:] >= push_time + 0.15
+            if bool(np.any(_pm)):
+                _pc = seg_c[_pm]
+                bal_push_sway = float(np.max(np.hypot(
+                    _pc[:, 0] - x_ref, _pc[:, 1] - y_ref)))
+            else:
+                bal_push_sway = -1.0
+        else:
+            bal_push_sway = 0.0
         metrics = dict(
             nan=not (finite_q and finite_c),
             t_end=float(tt[-1]),
@@ -1721,6 +1766,7 @@ def main(argv):
             bal_contact_sym=bal_contact_sym,
             bal_com_z_min=bal_com_z_min,
             bal_fell=bool(bal_com_z_min < 0.55),
+            bal_push_sway=bal_push_sway,
         )
         return metrics
 

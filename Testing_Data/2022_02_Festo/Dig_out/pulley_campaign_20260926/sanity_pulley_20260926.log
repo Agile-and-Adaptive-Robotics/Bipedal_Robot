@@ -1,0 +1,31 @@
+OPT_SANITY_PULLEY: building a 92-orientation knee geometry.
+Stiffness from the 20260908 noT3 front, pick 77.
+Route length range = 0.800511 to 0.833071 m; rest = 0.772134 m; kmax = 0.575240 m
+Assertion (a):      F_p relative difference = 2.885e-16
+Assertion (a):     mA_p relative difference = 0.000e+00
+Assertion (a): Torque_p relative difference = 2.839e-16
+Assertion (a) PASSED: nBPA = 1, G = 1 reproduces the balance class (rel tol 1.0e-08).
+Assertion (b): max |kSpr*gama - F_BPA/G| = 1.137e-13 N, max |(G*PulleyTravel - DeltaL) - gama| = 1.772e-17 m
+Assertion (b) PASSED: F_t = F_BPA/G and delta_t = 2*s - DeltaL (tol 1.0e-06).
+Assertion (c): max |kSpr*gama - 2*F_single| = 4.547e-13 N, max |(PulleyTravel - DeltaL) - gama| = 8.579e-18 m
+Assertion (c) PASSED: F_tendon = F_BPA{1} + F_BPA{2} and the travel gain is unchanged (tol 1.0e-06).
+Assertion (d): max | ||ReactionF|| - ||F_BPA*u_bpa + F_t*u_t|| | = 0.000e+00 (G = 2) / 0.000e+00 (nBPA = 2) N
+Assertion (d) PASSED: reaction magnitude identity (tol 1.0e-09).
+Assertion (e): max u_t deviation across orientations = 0.000e+00 (tol 1e-12), max closure residual = 1.772e-17 m (tol 1.0e-06)
+Assertion (e) PASSED: bowden u_t constant in the tibia frame, closure intact.
+Assertion (f): rest = 1.025495 m puts 52 of 92 frames infeasible (condition: DeltaL > G*(KMAX*Rest - s0ref) = 0.016280 m; max DeltaL = 0.032560 m).
+Assertion (f) PASSED: infeasible frames flagged, torque NaN, feasible frames finite, no error.
+
+========== OPT_SANITY_PULLEY SUMMARY ==========
+orientations                = 92
+route rows / Cross / exit   = 3 / 3 / 2
+rest / kmax                 = 0.772134 / 0.575240 m
+Xi0 / Xi1 / Xi2             = 0.00393737 / 39978.7 / 14733.8
+reference frame (longest span) = 1 (-45.000 deg)
+DeltaL range                = 0.000000 to 0.032560 m
+G = 2: gama range           = 4.367e-06 to 4.769e-06 m
+G = 2: |F_ins| range        = 509.028 to 555.878 N
+G = 2: ||ReactionF|| range  = 529.987 to 580.187 N
+nBPA = 2, G = 1: Ftendon range = 1854.285 to 2223.313 N
+===============================================
+OPT_SANITY_PULLEY PASS

@@ -91,3 +91,82 @@ The failure is **body-side, not neural-side**. The diagnostic loop (`tmp\diag_li
 
 - `Li Model\DataTool_7.txt` was CREATED by the headless asim run (AnimatLab chart byproduct — same accepted category as the 2026-09-24 runs; no model file touched). It is Li's reference data and is cited by path above.
 - `reports_20260925\tmp\` holds the read-only miners (`dump_li_*.py`, `li_ref_*.py`, `diag_li_loop.py`, `check_spiking*.py`) and their outputs; all repo writes this session are `w2l_mujoco\{build_li_net.py, test_li_stepping.py}` + this report + logs.
+
+---
+
+## 8. 2026-09-26 (easteregg2) — RETRY ON THE M3-FIXED BODY: loop still does not close; root cause is STRUCTURAL, not neural
+
+Mandate: one bounded retry of the closed loop on `w2l_mjcf_fixed.xml` (the knee/ankle axes are now
+sagittal), ≤2 h diagnosis if it fails, no retuning of Li's gains. **Verdict: still does not walk —
+and the failure is now root-caused to the BODY, in two layers, with a causal A/B.**
+
+Runs (env `D:\Anaconda\envs\myo\python.exe`, CONDA_PREFIX=D:\Anaconda\envs\myo; net census on this
+machine reproduced §3 exactly: 56/84/20/12):
+1. 3 s smoke: `test_li_stepping.py --dur=3` → 0 stance episodes.
+2. **20 s gate** (log `logs\test_li_stepping_fixed_run1_20s.log`): 0 stance episodes, duty 0.00,
+   heel flags ON 0.0% (L) / 0.2% (R). VERDICT "not yet".
+3. 20 s forensics probe `tmp\diag_li_fixed.py` (log `logs\diag_li_fixed_run1.log`).
+4. **Welded-vs-freejoint A/B** `tmp\diag_li_freejoint_ab.py` (log `logs\diag_li_freejoint_ab.log`;
+   probe model `tmp\li_free_probe.xml` = shipped xml + ONLY `<freejoint name="root"/>`).
+
+### Finding 1 — the M2 "ground body" has a WELDED pelvis: the loop is open by construction
+
+`w2l_mjcf_fixed.xml` (and `w2l_mjcf.xml`) ship the Root body with **no joint at all** (mujoco census:
+`njnt = 8`, all leg hinges; Root `body_jntnum = 0`, `body_pos = [-3.454, 0, 0.99298]`). A jointless
+body is bolted to the world: the pelvis sat at exactly z = 0.993 m for all 20 s in probe A while the
+feet hover 2.6–3.1 cm up (M1 §2.8) and **no leg pose can reach the floor** — the same property the
+air gate exploits by lifting the welded Root +0.30 m (`test_w2l_air.py:17,90`). Li's CPG is
+**contact-driven** — its stance trigger is heel contact — so with heels that never touch, the SNs
+never fire (L_foot ON 0.000 of the run) and no stance episode can exist. This contradicts the
+generator's own deviation note, `make_w2l_mjcf.py:49-50`: "Root Freeze=True in the aproj is IGNORED
+(the Freeze trap: pelvis must be FREE in MuJoCo)" — the freejoint was never emitted, and
+`validate_body.py:52` then enshrined `njnt == 8` as the M1 gate.
+
+### Finding 2 — the gate's height/speed metrics were never pelvis height: they are joint angles
+
+`test_li_stepping.py:147` logs `d.qpos[2], d.qpos[0]` as "pelvis z, x". With a welded root, qpos
+holds only the 8 hinge angles (`qposadr` census: 0=hip_L, 1=knee_L, **2=ankle_L**, …) — so every
+"pelvis height" printed since run 2 was **ankle_L in radians**: the old "tunnels to −1.44 m" was
+ankle_L = −82.5° (the −82° limit blow-through already noted in the code comment), today's
+"min −0.639, end 0.988" is ankle_L −36.6°..+56.6°. The body never fell and never translated; the
+"speed vs Li 0.64 m/s" line is likewise hip_L drift and can never pass on a welded root. (Fix when
+resumed: address the pelvis through a freejoint's qposadr, as probe B does.)
+
+### Finding 3 — with the freejoint added (A/B probe B), the body crumples in <0.5 s: the freejoint is necessary but NOT sufficient
+
+Probe B (identical loop, defaults, zero gain changes): pelvis falls to z = 0.100 m and the 31 kg
+Root box RESTS ON THE GROUND (`ground × Root` = 6.6e6 N·steps, the largest contact of the run);
+knee_L −44° by t = 0.5 s; heels still never register (L_foot ON 0.000). This is M1 report §"gate
+behavior" (passive drop → crumpled kneel) and M2 §5's root causes, unchanged by the axis fix:
+- **no muscle damping** (AnimatLab LinearHill B 400–800 N·s/m is what damps Li's body; MuJoCo
+  2.3.7 `<muscle>` has no damping; runtime stand-in is 1.5 N·m·s/rad per DOF — measured ~2 orders
+  short), **rigid tendons**, and
+- **the spawn pose sits OUTSIDE its own limits**: `qpos0 = 0` for every joint vs ankle range
+  [−20,−5]° (aproj limits verified via `w2l_source_dump.json`) → 5° outside at t = 0, first breach
+  at t = 0.00 s; kN-scale muscles (ankle actuators measured to 1.8–1.9 kN) then blow the soft
+  limits through **18.7–99.1°** (ankle 90.9° welded / 99.1° free), the femur boxes grind on each
+  other (`femur_L × femur_R` 3.8e6 N·steps, shins cross 0.3–0.6 s). Open sub-question (not
+  resolvable from the files here): whether the aproj ankle's joint-zero coincides with the
+  assembled rest pose — same family as the knee-range sign M3 had to reconcile by hand
+  (`fix_joint_axes.py` "knee RANGE sign reconciliation").
+
+Neural side checked and ALIVE in all runs: MV relays rest at −99 mV (below MV_ON, zero drive) and
+reach −23…−35 mV once tonics/hip-II load them, with ctrl > 0 on knee-ext/ankle-flx/hip pools — the
+net drives; it just never receives the heel trigger and its body cannot use what it drives.
+
+### What was changed / NOT changed
+- Changed: `test_li_stepping.py` now points `MJCF` at `w2l_mjcf_fixed.xml` (the retry's vehicle;
+  loud comment in place). New byproducts: `logs\test_li_stepping_fixed_run1_20s.log`,
+  `logs\diag_li_fixed_run1.log`, `logs\diag_li_freejoint_ab.log`, `tmp\diag_li_fixed.py`,
+  `tmp\diag_li_freejoint_ab.py`, `tmp\li_free_probe.xml` (temp model, not the model of record).
+- NOT changed: Li's gains/tonics/encoders/MV map (all verbatim defaults), `w2l_mjcf_fixed.xml`,
+  `w2l_mjcf.xml`, `make_w2l_mjcf.py`, `validate_body.py`, any protected path. The W2L air gate was
+  not re-run here (taken as given from the ask).
+
+### Order of work when resumed (Ben's call; not started)
+1. Emit `<freejoint>` for the Root in `make_w2l_mjcf.py` (its own comment already requires it) and
+   fix `validate_body.py`'s `njnt == 8` gate + `test_li_stepping.py`'s qpos addressing together.
+2. M1 open items #2/#4 become hard prerequisites: spawn settled (feet loaded, ~0.99 m like Li's
+   t = 0) and a muscle-damping stand-in sized from ΣB·r² (moment-arm-weighted), NOT a scalar knob.
+3. Reconcile the ankle joint-zero/range at spawn (qpos0 vs [-20,-5]°).
+4. Only then re-attempt the 20 s gate against §1's table.

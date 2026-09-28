@@ -74,10 +74,10 @@
 %     batch resumes; delete it to re-run everything.
 
 % DRY-RUN by default. Set true to execute the batch.
-RUN_BATCH = false;
+RUN_BATCH = true;   % campaign launch 2026-09-26 (easteregg2, sanity gates PASSED)
 
 % Real optimizer budgets belong on easteregg2 (10 cores, 128 GB RAM).
-FULL_RUN = false;
+FULL_RUN = true;    % campaign launch 2026-09-26 (easteregg2, sanity gates PASSED)
 
 smoke = strcmp(getenv('OPT_BIPULLEY_SMOKE'), '1');
 % OPT_BIPULLEY_SMOKE=1 FORCES the one-muscle tiny-budget run regardless of

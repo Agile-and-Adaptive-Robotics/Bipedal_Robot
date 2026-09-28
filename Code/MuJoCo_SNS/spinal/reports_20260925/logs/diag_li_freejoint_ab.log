@@ -1,0 +1,44 @@
+wrote probe model: D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\reports_20260925\tmp\li_free_probe.xml
+[A: shipped (welded Root)] model has 8 joints (welded) - qpos[2] is ankle_L
+
+== [A: shipped (welded Root)] 20s ==
+  pelvis z: min +0.993 (t=0.00s)  end +0.993   pelvis x: start -3.454 end -3.454
+  monitored-geom contact steps: 4517 (225.8 s); flags ON frac L_foot 0.000 L_toe 0.005 R_foot 0.002 R_toe 0.220
+  all-pairs contacts (top 6 by sumF):
+    femur_L          x femur_R          sumF   3776308.7
+    ground           x toe_R            sumF   1125260.3
+    ground           x toe_R_contact    sumF   1121147.3
+    tibia_L          x tibia_R          sumF    427644.5
+    ground           x toe_L            sumF     34711.4
+    ground           x toe_L_contact    sumF     14601.7
+  max joint-limit violation (deg): {'hip_L': 7.2, 'knee_L': 18.7, 'ankle_L': 90.9, 'hip_R': 8.8, 'knee_R': 29.3, 'ankle_R': 87.7}
+  pose census (deg):
+    t=  0.0s {'hip_L': 0.0, 'knee_L': 0.0, 'ankle_L': -0.0, 'hip_R': -0.0, 'knee_R': -0.1, 'ankle_R': -0.0}
+    t=  0.5s {'hip_L': 17.6, 'knee_L': -63.0, 'ankle_L': 33.1, 'hip_R': 3.0, 'knee_R': -62.7, 'ankle_R': 62.3}
+    t=  1.0s {'hip_L': 14.4, 'knee_L': -61.5, 'ankle_L': 66.1, 'hip_R': 4.1, 'knee_R': -15.8, 'ankle_R': 76.2}
+    t=  2.0s {'hip_L': 10.7, 'knee_L': -67.0, 'ankle_L': 65.8, 'hip_R': -11.2, 'knee_R': -60.8, 'ankle_R': -4.0}
+    t=  5.0s {'hip_L': 17.2, 'knee_L': -61.2, 'ankle_L': 62.4, 'hip_R': 4.5, 'knee_R': -22.9, 'ankle_R': -17.6}
+    t= 10.0s {'hip_L': 18.1, 'knee_L': -61.1, 'ankle_L': 66.9, 'hip_R': 4.1, 'knee_R': -34.7, 'ankle_R': -33.4}
+    t= 20.0s {'hip_L': 24.2, 'knee_L': -66.5, 'ankle_L': 43.0, 'hip_R': -16.6, 'knee_R': -61.3, 'ankle_R': 12.1}
+  foot-body z at end (m): {'foot_L_contact': 0.675, 'toe_L_contact': 0.588, 'foot_R_contact': 0.204, 'toe_R_contact': 0.116}
+
+== [B: +freejoint (pelvis free)] 20s ==
+  pelvis z: min +0.092 (t=15.95s)  end +0.100   pelvis x: start -3.454 end -2.893
+  monitored-geom contact steps: 6420 (321.0 s); flags ON frac L_foot 0.000 L_toe 0.005 R_foot 0.000 R_toe 0.316
+  all-pairs contacts (top 6 by sumF):
+    ground           x Root             sumF   6649349.5
+    femur_L          x femur_R          sumF   3766392.1
+    ground           x toe_R_contact    sumF    580100.0
+    ground           x toe_R            sumF    401108.6
+    ground           x femur_R          sumF    218136.1
+    tibia_L          x tibia_R          sumF    178923.0
+  max joint-limit violation (deg): {'hip_L': 22.6, 'knee_L': 14.9, 'ankle_L': 99.1, 'hip_R': 22.2, 'knee_R': 16.8, 'ankle_R': 93.8}
+  pose census (deg):
+    t=  0.0s {'hip_L': 0.0, 'knee_L': 0.0, 'ankle_L': -0.0, 'hip_R': -0.0, 'knee_R': -0.0, 'ankle_R': -0.0}
+    t=  0.5s {'hip_L': 20.1, 'knee_L': -43.9, 'ankle_L': 60.2, 'hip_R': 6.3, 'knee_R': -35.5, 'ankle_R': 78.9}
+    t=  1.0s {'hip_L': 7.5, 'knee_L': -61.2, 'ankle_L': 51.7, 'hip_R': -7.2, 'knee_R': -4.8, 'ankle_R': -41.5}
+    t=  2.0s {'hip_L': 9.2, 'knee_L': -61.9, 'ankle_L': 42.3, 'hip_R': -7.6, 'knee_R': -8.5, 'ankle_R': 24.3}
+    t=  5.0s {'hip_L': 7.5, 'knee_L': -6.7, 'ankle_L': 69.5, 'hip_R': -4.1, 'knee_R': -2.1, 'ankle_R': -26.9}
+    t= 10.0s {'hip_L': 10.3, 'knee_L': -39.5, 'ankle_L': 70.0, 'hip_R': -3.1, 'knee_R': -1.5, 'ankle_R': -26.1}
+    t= 20.0s {'hip_L': 13.1, 'knee_L': -61.5, 'ankle_L': 64.8, 'hip_R': -0.7, 'knee_R': 1.8, 'ankle_R': 58.2}
+  foot-body z at end (m): {'foot_L_contact': 0.745, 'toe_L_contact': 0.811, 'foot_R_contact': 0.142, 'toe_R_contact': 0.103}
