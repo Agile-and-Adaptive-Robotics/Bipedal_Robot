@@ -5,9 +5,10 @@ Loaded automatically at session start. Keep it current; keep it lean.
 ## Machines
 
 **2026-09-21 machine-ID guard (from a side-chat correction — read before the bullets):** check
-`hostname` FIRST and read only that machine's bullet. This checkout is on **easteregg2**; the
-EB475WS4 paths (`C:\ProgramData\anaconda3`, `C:\Users\Ben Bolen\.conda\envs\myo`) do NOT exist
-here — that is a different machine, NOT staleness. easteregg2 Python = `D:\Anaconda`
+`hostname` FIRST and read only that machine's bullet (EB475WS4: `D:\Github\Bipedal_Robot`;
+easteregg2: `D:\GitHub\Bipedal_Robot`). The EB475WS4 paths (`C:\ProgramData\anaconda3`,
+`C:\Users\Ben Bolen\.conda\envs\myo`) do NOT exist on easteregg2 — that is a different
+machine, NOT staleness. easteregg2 Python = `D:\Anaconda`
 (base 3.11.5; envs `myo` 3.10.21 / `opensim` 3.11.16 / `d2l` / `gs`), NOT on PATH — call by FULL
 path. Bare `python` on PATH = Microsoft-Store stub (runs nothing — a PATH check falsely reads
 "no Python"). Ghostscript = `D:\Anaconda\envs\gs\Library\bin\gswin64c.exe` (conda env, NOT
@@ -85,6 +86,13 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   optuna 5.0.0 pip-added to `myo` (numpy pin 1.21.6 untouched; shared `optuna_walk.db`
   is schema 12 — version-matched with EB475WS4). Restart ZCode to pick up new
   PATH/env entries for MCP servers.
+  **SSH access (2026-09-28):** OpenSSH Server installed on easteregg2 (sshd auto-start;
+  key in `C:\ProgramData\ssh\administrators_authorized_keys`; RDP also open on 3389).
+  From EB475WS4: `ssh easteregg2 "..."` just works (config `C:\Users\Ben Bolen\.ssh\config`
+  → easteregg2.local, user `ben bolen`, key `id_ed25519_aarl`; `scp` same way). Verified:
+  repo at `D:\GitHub\Bipedal_Robot`, `optuna_walk.db` present, MATLAB R2025a,
+  `D:\Anaconda\envs\myo\python.exe` 3.10.21, **git CLI 2.54 on PATH there** (unlike
+  EB475WS4). Laptop DESKTOP-5Q16KE9 not SSH-set-up yet.
 - Custom skills are version-controlled in the `ZCode_Skills` repo. **EB475WS4: the repo is
   at `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills`** (NOT `D:\GitHub\` — corrected
   2026-09-16; easteregg2: `D:\GitHub\ZCode_Skills`; laptop: `Documents\GitHub\ZCode_Skills`).
@@ -167,9 +175,22 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   dir found by walking UP from the app file to the repo's `Testing_Data`, never hard-coded).
   Calibration: original Tare→Scale Factor→Calibration workflow AND known-factor entry
   (Known LC Cal tab: tare+scale; Pressure Cal tab: a/b or guided 7-point, 0–620 kPa);
-  factors persist in `hx711_bpa_last_cal.mat` next to the app (gitignored, machine-local).
-  Pressure read per-sample (old app froze it at connect); optional pressure servo (setpoint
-  ± deadband → valve pins D11 increase / D6 maintain); KneeAngle/LoadCellAngle metadata into
+  **Tare updates ONLY the zero offset — the scale factor is deliberately never touched by
+  a tare** (Ben's procedure: hang→zero→tie weight→Scale Factor→unweight→mount horizontally
+  tied to tibia→zero again; Known-Cal fields are TEXT, blank = keep current value, so a
+  tare-only entry cannot wipe the slope; regression check `retareKeepsScale` in the
+  self-test); factors persist in `hx711_bpa_last_cal.mat` next to the app (gitignored,
+  machine-local).
+  Pressure read per-sample (old app froze it at connect); **PID pressure
+  controller (Pressure Ctrl tab)**: Kp/Ki/Kd (valve-duty %/kPa) + control
+  period, time-proportioned onto the fill/hold/vent valve states (FILL
+  D11+D6 High, HOLD D11 Low + D6 High, VENT both Low, ±2% min duty);
+  derivative-on-measurement + conditional-integration anti-windup;
+  "Run Step Test" = dynamic pressure cal on a free BPA (step response
+  plot on Axes2, overshoot/undershoot kPa + % of step, 10-90% rise,
+  settling time, ess; saves DPC_S##_R##.mat traces; Pause aborts); same
+  PID optionally holds setpoint during Get Data; PID gains persist in the
+  cal cache; PID math/duty-map regression-checked offline; KneeAngle/LoadCellAngle metadata into
   every save; Save = .mat (750×6 + Stats + Metadata + ColumnNames) + .txt sidecar in the
   original 2-column format; Run spinner auto-increments. `test_HX711_BPA_offline` = hardware-free
   self-test, run on any machine after pulling. Unique class name = can't be shadowed by any

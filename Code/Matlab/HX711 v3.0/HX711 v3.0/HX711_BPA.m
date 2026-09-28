@@ -12,8 +12,19 @@ classdef HX711_BPA < matlab.apps.AppBase
     %      step needed. A guided 7-point pressure calibration is also
     %      provided on the same tab.
     %
+    % Dynamic pressure calibration ("Pressure Ctrl" tab): a PID pressure
+    % controller drives the valves by time-proportioning - PID duty
+    % u in [-100,100]% becomes a FILL pulse (u>0, D11+D6 High), a VENT
+    % pulse (u<0, both Low), or HOLD (D11 Low, D6 High) each control
+    % period. "Run Step Test" steps a free BPA to the setpoint, plots the
+    % response with the deadband, reports overshoot/undershoot (kPa and
+    % % of step), 10-90% rise time, settling time, and steady-state
+    % error, and saves DPC_S##_R##.mat traces for tuning comparisons.
+    % The same PID (checkbox on) holds pressure during Get Data.
+    %
     % The factors entered (or measured) are remembered across sessions in
-    % hx711_bpa_last_cal.mat next to this file (machine-local, gitignored).
+    % hx711_bpa_last_cal.mat next to this file (machine-local, gitignored),
+    % including the PID gains.
     %
     % Launch with Start_HX711_BPA (adds this folder to the path so the
     % Arduino add-on package +arduinoioaddons/+basicHX711 resolves on any
@@ -90,7 +101,16 @@ classdef HX711_BPA < matlab.apps.AppBase
         DesiredPressure                matlab.ui.control.Spinner
         SetpointkPaLabel               matlab.ui.control.Label
         PressureDeadband               matlab.ui.control.Spinner
-        DeadbandkPaLabel               matlab.ui.control.Label
+        PressureCtrlTab                matlab.ui.container.Tab
+        Kp                             matlab.ui.control.NumericEditField
+        KpLabel                        matlab.ui.control.Label
+        Ki                             matlab.ui.control.NumericEditField
+        KiLabel                        matlab.ui.control.Label
+        Kd                             matlab.ui.control.NumericEditField
+        KdLabel                        matlab.ui.control.Label
+        CtrlPeriod                     matlab.ui.control.Spinner
+        CtrlPeriodLabel                matlab.ui.control.Label
+        RunStepTestButton              matlab.ui.control.Button
         SaveDataTab                    matlab.ui.container.Tab
         Name                           matlab.ui.control.EditField
         NameEditFieldLabel             matlab.ui.control.Label
@@ -135,9 +155,9 @@ classdef HX711_BPA < matlab.apps.AppBase
         NumreadingsLabel               matlab.ui.control.Label
         KnownCalTab                    matlab.ui.container.Tab
         ApplyKnownLoadCellButton       matlab.ui.control.Button
-        KnownTare                      matlab.ui.control.NumericEditField
+        KnownTare                      matlab.ui.control.EditField
         KnownTareLabel                 matlab.ui.control.Label
-        KnownScale                     matlab.ui.control.NumericEditField
+        KnownScale                     matlab.ui.control.EditField
         KnownScaleLabel                matlab.ui.control.Label
         KnownCalHint                   matlab.ui.control.Label
         PressureCalTab                 matlab.ui.container.Tab
@@ -206,6 +226,9 @@ classdef HX711_BPA < matlab.apps.AppBase
         get_true = false
         start_time = []
         appRoot = ''      % folder containing this file (anchoring point)
+        pidI = 0          % PID integrator state [valve duty %]
+        pidPrevP = NaN    % previous pressure [kPa] for derivative-on-measurement
+        dpcRun = 0        % dynamic pressure calibration run counter
     end
 
     properties (Access = public)
@@ -336,19 +359,77 @@ classdef HX711_BPA < matlab.apps.AppBase
             app.Message.Value = msg;
         end
 
-        function servoPressure(app, kPa)
-            % Closed-loop valve servo during acquisition (when enabled).
-            sp = app.DesiredPressure.Value;
-            db = app.PressureDeadband.Value;
-            if kPa < sp - db
-                writeDigitalPin(app.a, app.valveIncPin, 1);
-                writeDigitalPin(app.a, app.valveMaintainPin, 1);
-            elseif kPa > sp + db
-                writeDigitalPin(app.a, app.valveIncPin, 0);
-                writeDigitalPin(app.a, app.valveMaintainPin, 0);
+        function pidReset(app)
+            app.pidI = 0;
+            app.pidPrevP = NaN;
+        end
+
+        function u = pidCompute(app, p, dt, sp)
+            % Discrete PID -> valve duty u in [-100, +100] %.
+            % Positive u fills (FILL), negative u vents, ~0 holds.
+            % Derivative acts on the MEASUREMENT (no setpoint kick);
+            % integrator uses conditional integration (anti-windup).
+            Kp = app.Kp.Value;
+            Ki = app.Ki.Value;
+            Kd = app.Kd.Value;
+            e = sp - p;
+            P = Kp*e;
+            if isfinite(app.pidPrevP)
+                D = -Kd*(p - app.pidPrevP)/max(dt, 1e-3);
             else
-                writeDigitalPin(app.a, app.valveIncPin, 0);
-                writeDigitalPin(app.a, app.valveMaintainPin, 1);
+                D = 0;
+            end
+            Icand = app.pidI + Ki*e*dt;
+            uUnsat = P + Icand + D;
+            u = min(100, max(-100, uUnsat));
+            saturated = (u ~= uUnsat);
+            if ~saturated || (uUnsat > 100 && e < 0) || (uUnsat < -100 && e > 0)
+                app.pidI = Icand;  % only integrate when it helps, not into the rail
+            end
+            app.pidPrevP = p;
+        end
+
+        function [st, tFill, tVent, tHold] = dutyPlan(app, u, Tc)
+            % Map duty [-100,100] % onto one control period Tc:
+            % +: FILL for the fraction, then HOLD; -: VENT, then HOLD.
+            % |u| below MinDutyPct keeps the valves on HOLD (no chatter).
+            minDuty = 2;  % % of the period; shortest useful valve pulse
+            st = 0;
+            tFill = 0;
+            tVent = 0;
+            tHold = Tc;
+            if u >= minDuty
+                st = 1;
+                tFill = (u/100)*Tc;
+                tHold = Tc - tFill;
+            elseif u <= -minDuty
+                st = -1;
+                tVent = (-u/100)*Tc;
+                tHold = Tc - tVent;
+            end
+        end
+
+        function st = applyValveDuty(app, u, Tc)
+            % Pulse the valves for one control period. Returns the state
+            % applied: +1 FILL (both valves open), 0 HOLD, -1 VENT.
+            [st, tFill, tVent, tHold] = dutyPlan(app, u, Tc);
+            switch st
+                case 1
+                    writeDigitalPin(app.a, app.valveIncPin, 1);
+                    writeDigitalPin(app.a, app.valveMaintainPin, 1);
+                    pause(tFill);
+                    writeDigitalPin(app.a, app.valveIncPin, 0);
+                    pause(max(0, tHold));
+                case -1
+                    writeDigitalPin(app.a, app.valveIncPin, 0);
+                    writeDigitalPin(app.a, app.valveMaintainPin, 0);
+                    pause(tVent);
+                    writeDigitalPin(app.a, app.valveMaintainPin, 1);
+                    pause(max(0, tHold));
+                otherwise
+                    writeDigitalPin(app.a, app.valveIncPin, 0);
+                    writeDigitalPin(app.a, app.valveMaintainPin, 1);
+                    pause(max(0, tHold));
             end
         end
 
@@ -443,20 +524,34 @@ classdef HX711_BPA < matlab.apps.AppBase
             if isfield(cal, 'tare') && isfinite(cal.tare)
                 app.tare = cal.tare;
                 app.TareDisp.Value = cal.tare;
-                app.KnownTare.Value = cal.tare;
+                app.KnownTare.Value = num2str(cal.tare, '%.6g');
             end
             if isfield(cal, 'scale') && isfinite(cal.scale) && cal.scale > 0
                 app.scale = cal.scale;
                 app.ScaleDisp.Value = cal.scale;
-                app.KnownScale.Value = cal.scale;
+                app.KnownScale.Value = num2str(cal.scale, '%.12g');
             end
-            app.Message.Value = 'Loaded saved calibration factors from last session.';
+            if isfield(cal, 'pidKp') && isfinite(cal.pidKp) && cal.pidKp >= 0
+                app.Kp.Value = cal.pidKp;
+            end
+            if isfield(cal, 'pidKi') && isfinite(cal.pidKi) && cal.pidKi >= 0
+                app.Ki.Value = cal.pidKi;
+            end
+            if isfield(cal, 'pidKd') && isfinite(cal.pidKd) && cal.pidKd >= 0
+                app.Kd.Value = cal.pidKd;
+            end
+            if isfield(cal, 'pidTc') && isfinite(cal.pidTc) && cal.pidTc >= 0.02
+                app.CtrlPeriod.Value = cal.pidTc;
+            end
+            app.Message.Value = 'Loaded saved calibration factors from last session (re-zero for the current setup).';
         end
 
         function saveCalCache(app)
             try
                 cal = struct('tare', app.tare, 'scale', app.scale, ...
                     'pressureA', app.pressureA, 'pressureB', app.pressureB, ...
+                    'pidKp', app.Kp.Value, 'pidKi', app.Ki.Value, ...
+                    'pidKd', app.Kd.Value, 'pidTc', app.CtrlPeriod.Value, ...
                     'saved', datetime('now'));
                 save(calCachePath(app), 'cal');
             catch ME
@@ -507,6 +602,7 @@ classdef HX711_BPA < matlab.apps.AppBase
                 writeDigitalPin(app.a, app.valveIncPin, 0);
                 writeDigitalPin(app.a, app.valveMaintainPin, 0);
                 app.pressureV = readVoltage(app.a, app.pressurePin);
+                pidReset(app);
                 updateStatusConnected(app, true);
                 app.Message.Value = 'Connected.';
             catch ME
@@ -552,6 +648,9 @@ classdef HX711_BPA < matlab.apps.AppBase
             drawnow;
 
             servoWasOn = app.EnablePressureControl.Value;
+            if servoWasOn
+                pidReset(app);  % fresh step for each acquisition run
+            end
             while (app.r == 0) && (app.time(app.i) < app.session_time) ...
                     && ((app.i - app.last_data) < sampleTarget)
                 loopTimer = tic;
@@ -562,8 +661,12 @@ classdef HX711_BPA < matlab.apps.AppBase
 
                 voltage = readVoltage(app.a, app.pressurePin);
                 p = pressureVoltageToKPa(app, voltage);
-                if app.EnablePressureControl.Value
-                    servoPressure(app, p);
+
+                dutyU = 0;
+                if servoWasOn
+                    % PID tick: derivative dt = actual time since last sample.
+                    dutyU = pidCompute(app, p, max(toc(loopTimer), 0.01), ...
+                        app.DesiredPressure.Value);
                 end
 
                 updateMaxLoadGaugeWithGrams(app, grams);
@@ -583,6 +686,11 @@ classdef HX711_BPA < matlab.apps.AppBase
                 app.DataEditField.Value = app.i - app.last_data;
                 drawnow limitrate;
 
+                if servoWasOn
+                    % Spend the rest of this sample's tick pulsing the
+                    % valves (fill/hold/vent fraction of the PID duty).
+                    applyValveDuty(app, dutyU, max(0.02, app.Add_time.Value - toc(loopTimer)));
+                end
                 pause(max(0, app.Add_time.Value - toc(loopTimer)));
                 app.Rate.Value = toc(loopTimer);
                 Xaxis(app);
@@ -712,11 +820,20 @@ classdef HX711_BPA < matlab.apps.AppBase
                 x(j) = read_HX711(app.HX711_obj);
                 pause(1/1000);
             end
+            % Zero offset ONLY. The scale factor (counts per gram) is a
+            % property of the load cell and is deliberately NOT touched:
+            % the normal procedure re-zeros after mounting (horizontal,
+            % tied to the tibia) and must keep the measured scale.
             app.tare = mean(x);
             app.TareDisp.Value = app.tare;
-            app.KnownTare.Value = app.tare;
+            app.KnownTare.Value = num2str(app.tare, '%.6g');
             saveCalCache(app);
-            app.Message.Value = 'Tare phase is completed.';
+            if isfinite(app.scale) && app.scale > 0
+                app.Message.Value = sprintf(['Tare (zero offset) completed. ', ...
+                    'Scale factor preserved: %.6g counts/g.'], app.scale);
+            else
+                app.Message.Value = 'Tare (zero offset) completed. No scale factor yet - run Scale Factor or enter it on the Known LC Cal tab.';
+            end
             app.Cyan.Color = 'white';
             app.Yellow.Color = 'yellow';
         end
@@ -748,29 +865,65 @@ classdef HX711_BPA < matlab.apps.AppBase
             end
             app.scale = (mean(x) - app.tare)/app.known_weight;
             app.ScaleDisp.Value = app.scale;
-            app.KnownScale.Value = app.scale;
+            app.KnownScale.Value = num2str(app.scale, '%.12g');
             saveCalCache(app);
-            app.Message.Value = 'Scale factor is determined.';
+            app.Message.Value = sprintf('Scale factor determined (%.6g counts/g). Remove the weight, mount the cell, then Tare again - the scale factor is kept.', app.scale);
             app.Cyan.Color = 'white';
             app.Yellow.Color = 'yellow';
         end
 
         % Button pushed function: ApplyKnownLoadCellButton
         function ApplyKnownLoadCellButtonPushed(app, event)
-            if ~isfinite(app.KnownTare.Value) || ~isfinite(app.KnownScale.Value)
-                app.Message.Value = 'Error: tare and scale must be numeric.';
+            % Apply each typed field independently: a blank field keeps the
+            % current value, so entering just a new zero offset can never
+            % erase the calibration slope (and vice versa).
+            tareTxt = strtrim(app.KnownTare.Value);
+            scaleTxt = strtrim(app.KnownScale.Value);
+            wantTare = ~isempty(tareTxt) && ~strcmpi(tareTxt, 'nan');
+            wantScale = ~isempty(scaleTxt) && ~strcmpi(scaleTxt, 'nan');
+            if ~wantTare && ~wantScale
+                app.Message.Value = 'Error: enter a zero offset (tare) and/or a scale factor.';
                 return;
             end
-            if app.KnownScale.Value == 0
-                app.Message.Value = 'Error: load-cell scale cannot be zero.';
-                return;
+            if wantTare
+                tVal = str2double(tareTxt);
+                if ~isfinite(tVal)
+                    app.Message.Value = 'Error: zero offset must be a number (leave blank to keep the current one).';
+                    return;
+                end
             end
-            app.tare = app.KnownTare.Value;
-            app.scale = app.KnownScale.Value;
-            app.TareDisp.Value = app.tare;
-            app.ScaleDisp.Value = app.scale;
+            if wantScale
+                sVal = str2double(scaleTxt);
+                if ~isfinite(sVal)
+                    app.Message.Value = 'Error: scale factor must be a number (leave blank to keep the current one).';
+                    return;
+                end
+                if sVal == 0
+                    app.Message.Value = 'Error: load-cell scale cannot be zero.';
+                    return;
+                end
+            end
+            if wantTare
+                app.tare = tVal;
+                app.TareDisp.Value = app.tare;
+            end
+            if wantScale
+                app.scale = sVal;
+                app.ScaleDisp.Value = app.scale;
+            end
             saveCalCache(app);
-            app.Message.Value = 'Known load-cell tare and scale applied.';
+            switch true
+                case wantTare && wantScale
+                    app.Message.Value = sprintf('Known zero offset and scale applied (tare %.6g, scale %.6g).', app.tare, app.scale);
+                case wantTare
+                    if isfinite(app.scale) && app.scale > 0
+                        app.Message.Value = sprintf('Zero offset applied. Scale factor preserved: %.6g counts/g.', app.scale);
+                    else
+                        app.Message.Value = 'Zero offset applied. No scale factor yet - enter it or run Scale Factor.';
+                    end
+                otherwise
+                    app.Message.Value = sprintf('Scale factor applied (%.6g counts/g); zero offset unchanged (%.6g).', app.scale, app.tare);
+            end
         end
 
         % Button pushed function: PressureCalButton (guided 7-point)
@@ -896,6 +1049,7 @@ classdef HX711_BPA < matlab.apps.AppBase
         function CleanButtonPushed(app, event)
             cla(app.Axes1);
             cla(app.Axes2);
+            pidReset(app);
             app.time = [];
             app.force = [];
             app.forceN = [];
@@ -933,6 +1087,155 @@ classdef HX711_BPA < matlab.apps.AppBase
         function DecreasePressureButtonPushed(app, event)
             setValves(app, 0, 0, 'Valves: pressure decreasing / 0 kPa (Increase Low, Maintain Low).');
         end
+
+        % Button pushed function: RunStepTestButton (dynamic pressure cal)
+        function RunStepTestButtonPushed(app, event)
+            if ~app.check_connection
+                app.Message.Value = 'Error: You are not connected yet.';
+                return;
+            end
+            sp = app.DesiredPressure.Value;
+            db = max(0.5, app.PressureDeadband.Value);
+            Tc = max(0.02, app.CtrlPeriod.Value);
+            settleHold = 2.0;   % s inside the deadband before "settled"
+            maxDur = 60;        % s hard cap; click Pause to abort early
+
+            app.pidReset();
+            v0 = readVoltage(app.a, app.pressurePin);
+            p0 = pressureVoltageToKPa(app, v0);
+            app.Message.Value = sprintf('Dynamic pressure cal: stepping %.1f -> %.0f kPa (PID %.4g/%.4g/%.4g)...', ...
+                p0, sp, app.Kp.Value, app.Ki.Value, app.Kd.Value);
+            app.Cyan.Color = 'cyan';
+            app.Yellow.Color = 'white';
+            drawnow;
+
+            % FILL (+1), HOLD (0), VENT (-1)
+            tLog = [];
+            pLog = [];
+            vLog = [];
+            uLog = [];
+            sLog = [];
+            settleSince = [];
+            settled = false;
+            t0 = tic;
+            while toc(t0) < maxDur && app.r == 0 && ~settled
+                v = readVoltage(app.a, app.pressurePin);
+                p = pressureVoltageToKPa(app, v);
+                u = pidCompute(app, p, Tc, sp);
+                if abs(p - sp) <= db
+                    if isempty(settleSince)
+                        settleSince = toc(t0);
+                    end
+                else
+                    settleSince = [];
+                end
+                if ~isempty(settleSince) && (toc(t0) - settleSince) >= settleHold
+                    settled = true;
+                end
+                if settled
+                    st = applyValveDuty(app, 0, Tc);  % park on HOLD
+                else
+                    st = applyValveDuty(app, u, Tc);
+                end
+                tLog(end+1) = toc(t0);   %#ok<AGROW>
+                pLog(end+1) = p;         %#ok<AGROW>
+                vLog(end+1) = v;         %#ok<AGROW>
+                uLog(end+1) = u;         %#ok<AGROW>
+                sLog(end+1) = st;        %#ok<AGROW>
+                if mod(numel(tLog), 5) == 0 || settled
+                    cla(app.Axes2);
+                    hold(app.Axes2, 'on');
+                    plot(app.Axes2, tLog, pLog, 'b-', 'LineWidth', 1.5);
+                    plot(app.Axes2, [tLog(1) tLog(end)], [sp sp], 'k--');
+                    plot(app.Axes2, [tLog(1) tLog(end)], [sp+db sp+db], 'r:');
+                    plot(app.Axes2, [tLog(1) tLog(end)], [sp-db sp-db], 'r:');
+                    hold(app.Axes2, 'off');
+                    xlabel(app.Axes2, 't [s]');
+                    ylabel(app.Axes2, 'Pressure [kPa]');
+                    title(app.Axes2, sprintf('Step %.1f -> %.0f kPa', p0, sp));
+                    drawnow limitrate;
+                end
+            end
+            app.r = 0;  % a Pause press aborts this test, not the next Get Data
+            writeDigitalPin(app.a, app.valveIncPin, 0);
+            writeDigitalPin(app.a, app.valveMaintainPin, 1);  % park HOLD
+
+            % Metrics relative to the step actually commanded.
+            stepSize = abs(sp - p0);
+            pmax = max(pLog);
+            pmin = min(pLog);
+            if sp >= p0  % upward step
+                ovKPa = max(0, pmax - sp);
+                ic = find(pLog >= sp, 1);
+                if isempty(ic)
+                    unKPa = NaN;
+                else
+                    unKPa = max(0, sp - min(pLog(ic:end)));
+                end
+            else         % downward step
+                ovKPa = max(0, sp - pmin);
+                ic = find(pLog <= sp, 1);
+                if isempty(ic)
+                    unKPa = NaN;
+                else
+                    unKPa = max(0, max(pLog(ic:end)) - sp);
+                end
+            end
+            outIdx = find(abs(pLog - sp) > db, 1, 'last');
+            if isempty(outIdx)
+                settleTime = 0;
+            else
+                settleTime = tLog(min(outIdx + 1, numel(tLog)));
+            end
+            ess = pLog(end) - sp;
+            if isempty(settleSince)
+                settled = false;
+            end
+
+            fprintf(['DPC step %.1f -> %.0f kPa (Kp %.4g, Ki %.4g, Kd %.4g, Tc %.3f s)\n', ...
+                '  reached target: %d   overshoot: %.2f kPa (%.1f%% of step)\n', ...
+                '  undershoot: %.2f kPa (%.1f%% of step)   settling time: %.2f s\n', ...
+                '  steady-state error: %+.2f kPa   duration: %.2f s   settled: %d\n'], ...
+                p0, sp, app.Kp.Value, app.Ki.Value, app.Kd.Value, Tc, ...
+                ~isempty(ic), ovKPa, 100*ovKPa/max(stepSize, eps), ...
+                unKPa, 100*unKPa/max(stepSize, eps), settleTime, ess, tLog(end), settled);
+
+            % Save the trace + gains + metrics for tuning comparisons.
+            DPC_Data = [tLog.', pLog.', vLog.', uLog.', sLog.'];
+            DPC_ColumnNames = {'Time_s','Pressure_kPa','Voltage_V','Duty_pct','ValveState'};
+            DPC_Metrics = struct('StartPressure_kPa', p0, 'Setpoint_kPa', sp, ...
+                'StepSize_kPa', sp - p0, 'Overshoot_kPa', ovKPa, ...
+                'Overshoot_pctStep', 100*ovKPa/max(stepSize, eps), ...
+                'Undershoot_kPa', unKPa, 'Undershoot_pctStep', 100*unKPa/max(stepSize, eps), ...
+                'RiseTime10to90_s', rise10to90(tLog, pLog, p0, sp), ...
+                'SettlingTime_s', settleTime, 'Ess_kPa', ess, ...
+                'Settled', logical(settled), 'Duration_s', tLog(end), ...
+                'Deadband_kPa', db, 'SettleHold_s', settleHold);
+            DPC_PID = struct('Kp', app.Kp.Value, 'Ki', app.Ki.Value, ...
+                'Kd', app.Kd.Value, 'CtrlPeriod_s', Tc, 'MinDuty_pct', 2, ...
+                'ValveStates', 'FILL=+1 (D11 High,D6 High); HOLD=0 (D11 Low,D6 High); VENT=-1 (D11 Low,D6 Low)');
+            try
+                saveDir = strtrim(char(string(app.SaveFolder.Value)));
+                if isempty(saveDir)
+                    saveDir = app.resolveDefaultSaveDir();
+                end
+                if ~isfolder(saveDir)
+                    mkdir(saveDir);
+                end
+                app.dpcRun = app.dpcRun + 1;
+                dpcPath = fullfile(saveDir, sprintf('DPC_S%02d_R%02d.mat', ...
+                    round(app.SeriesSpinner.Value), app.dpcRun));
+                save(dpcPath, 'DPC_Data', 'DPC_Metrics', 'DPC_PID', 'DPC_ColumnNames');
+                saveNote = [' Saved: ', dpcPath];
+            catch ME2
+                saveNote = [' (DPC save failed: ', ME2.message, ')'];
+            end
+            app.Message.Value = sprintf(['Step test done: overshoot %.2f kPa (%.1f%%), undershoot %.2f kPa, ', ...
+                'settle %.2f s, ess %+.2f kPa.%s'], ovKPa, 100*ovKPa/max(stepSize, eps), ...
+                unKPa, settleTime, ess, saveNote);
+            app.Cyan.Color = 'white';
+            app.Yellow.Color = 'yellow';
+        end
     end
 
     % Public: hardware-free self test (used by test_HX711_BPA_offline.m)
@@ -959,7 +1262,7 @@ classdef HX711_BPA < matlab.apps.AppBase
             % 1) Guarded callbacks before Connect must show the error message.
             guarded = {@GetDataButtonPushed, @TareButtonPushed, @ScaleFactorButtonPushed, ...
                 @CalibrationButtonPushed, @RawReadButtonPushed, @IncreasePressureButtonPushed, ...
-                @MaintainPressureButtonPushed, @DecreasePressureButtonPushed};
+                @MaintainPressureButtonPushed, @DecreasePressureButtonPushed, @RunStepTestButtonPushed};
             res.guardsPass = true;
             for k = 1:numel(guarded)
                 guarded{k}(app);
@@ -972,16 +1275,38 @@ classdef HX711_BPA < matlab.apps.AppBase
                 res.guardsPass, numel(guarded));
 
             % 2) Known-factor entry unlocks calibration without hardware.
-            app.KnownTare.Value = 1234;
-            app.KnownScale.Value = 98.7;
+            app.KnownTare.Value = '1234';
+            app.KnownScale.Value = '98.7';
             ApplyKnownLoadCellButtonPushed(app);
             res.knownLC = abs(app.tare - 1234) < 1e-9 && abs(app.scale - 98.7) < 1e-9 ...
                 && isLoadCellCalibrated(app);
             res.allPass = res.allPass && res.knownLC;
             fprintf('apply known LC factors: %d\n', res.knownLC);
 
-            % 3) Conversion math.
-            g1 = rawToGrams(app, 1234 + 98.7*1000);
+            % 2b) Re-zeroing must preserve the scale factor (normal
+            % procedure: hang -> tare -> weight -> scale factor -> mount
+            % horizontally -> tare again).
+            app.KnownTare.Value = '2222';
+            app.KnownScale.Value = '';  % blank slope = keep current scale
+            ApplyKnownLoadCellButtonPushed(app);
+            res.retareKeepsScale = abs(app.tare - 2222) < 1e-9 ...
+                && abs(app.scale - 98.7) < 1e-9 && isLoadCellCalibrated(app);
+            S = load(calCachePath(app), 'cal');
+            res.retareKeepsScale = res.retareKeepsScale ...
+                && abs(S.cal.tare - 2222) < 1e-9 && abs(S.cal.scale - 98.7) < 1e-9;
+            % Garbage in a field must be rejected without touching state.
+            app.KnownScale.Value = 'abc';
+            ApplyKnownLoadCellButtonPushed(app);
+            res.retareKeepsScale = res.retareKeepsScale ...
+                && startsWith(app.Message.Value, 'Error') ...
+                && abs(app.scale - 98.7) < 1e-9;
+            res.allPass = res.allPass && res.retareKeepsScale;
+            fprintf('re-tare keeps scale factor (app state + cache, garbage rejected): %d\n', ...
+                res.retareKeepsScale);
+
+            % 3) Conversion math (relative to the current tare/scale state,
+            % which the re-zero check above intentionally changed).
+            g1 = rawToGrams(app, app.tare + app.scale*1000);
             res.mathPass = abs(g1 - 1000) < 1e-6 && abs(gramsToNewtons(app, 1000) - 9.80665) < 1e-3;
             app.PressureA.Value = 156.04;
             app.PressureB.Value = -128.2;
@@ -989,6 +1314,38 @@ classdef HX711_BPA < matlab.apps.AppBase
             res.mathPass = res.mathPass && abs(pressureVoltageToKPa(app, 1.0) - 27.84) < 1e-6;
             res.allPass = res.allPass && res.mathPass;
             fprintf('conversion math: %d\n', res.mathPass);
+
+            % 3b) PID math: proportional response, saturation, anti-windup,
+            % derivative on measurement, and the duty->valve timing map.
+            app.Kp.Value = 2; app.Ki.Value = 0; app.Kd.Value = 0;
+            pidReset(app);
+            uSat = pidCompute(app, 0, 0.1, 100);   % huge error -> +100 rail
+            uP = pidCompute(app, 60, 0.1, 100);    % (100-60)*2 = 80
+            pidReset(app);
+            app.Kp.Value = 0; app.Ki.Value = 1; app.Kd.Value = 0;
+            uI1 = pidCompute(app, 90, 0.1, 100);   % e=10 -> u = 1*10*0.1 = 1
+            uI2 = pidCompute(app, 90, 0.1, 100);   % integral accumulates -> 2
+            app.pidI = 0;
+            app.Ki.Value = 10;
+            for kk = 1:50
+                uW = pidCompute(app, 0, 0.1, 100); % saturated, e>0: no windup
+            end
+            app.Kp.Value = 0; app.Ki.Value = 0; app.Kd.Value = 1;
+            pidReset(app);
+            uD1 = pidCompute(app, 90, 0.1, 100);   % first tick: no derivative
+            uD2 = pidCompute(app, 95, 0.1, 100);   % dp/dt = +50 -> D = -50
+            [stF, tfF, ~, thF] = dutyPlan(app, 50, 0.1);
+            [stV, ~, tvV, thV] = dutyPlan(app, -30, 0.1);
+            [stH, ~, ~, thH] = dutyPlan(app, 1, 0.1);
+            res.pidPass = (uSat == 100) && abs(uP - 80) < 1e-9 ...
+                && abs(uI1 - 1) < 1e-9 && abs(uI2 - 2) < 1e-9 ...
+                && app.pidI == 0 && abs(uW) <= 100 ...
+                && abs(uD1) < 1e-12 && abs(uD2 + 50) < 1e-9 ...
+                && stF == 1 && abs(tfF - 0.05) < 1e-12 && abs(thF - 0.05) < 1e-12 ...
+                && stV == -1 && abs(tvV - 0.03) < 1e-12 && abs(thV - 0.07) < 1e-12 ...
+                && stH == 0 && abs(thH - 0.1) < 1e-12;
+            res.allPass = res.allPass && res.pidPass;
+            fprintf('PID math + duty map: %d\n', res.pidPass);
 
             % 4) Save path, MAT content, txt sidecar, run auto-increment.
             app.SaveFolder.Value = tmpDir;
@@ -1253,10 +1610,24 @@ classdef HX711_BPA < matlab.apps.AppBase
             app.Add_time = uispinner(app.DataAcquisitionTab, 'Step', 0.1, 'Limits', [0.001 Inf], 'ValueDisplayFormat', '%.3f', 'Position', [96 78 52 22], 'Value', 0.1);
             app.SampleCountSpinnerLabel = uilabel(app.DataAcquisitionTab, 'Text', 'Samples', 'Position', [4 58 44 15]);
             app.Nsamples = uispinner(app.DataAcquisitionTab, 'Limits', [1 750], 'ValueDisplayFormat', '%.0f', 'Position', [84 54 60 22], 'Value', 750);
-            app.EnablePressureControl = uicheckbox(app.DataAcquisitionTab, 'Text', 'Pressure servo', 'Position', [4 32 170 15], 'Value', false);
-            app.SetpointkPaLabel = uilabel(app.DataAcquisitionTab, 'Text', 'Set / +-dB [kPa]', 'Position', [4 10 82 15]);
-            app.DesiredPressure = uispinner(app.DataAcquisitionTab, 'Limits', [0 700], 'ValueDisplayFormat', '%.0f', 'Position', [88 6 40 22], 'Value', 400);
-            app.PressureDeadband = uispinner(app.DataAcquisitionTab, 'Limits', [0 100], 'ValueDisplayFormat', '%.0f', 'Position', [132 6 40 22], 'Value', 5);
+
+            app.PressureCtrlTab = uitab(app.TabGroup);
+            app.PressureCtrlTab.Title = 'Pressure Ctrl';
+            app.EnablePressureControl = uicheckbox(app.PressureCtrlTab, 'Text', 'PID servo during Get Data', 'Position', [4 158 178 15], 'Value', false);
+            app.KpLabel = uilabel(app.PressureCtrlTab, 'Text', 'Kp  [%/kPa]', 'Position', [4 136 70 15]);
+            app.Kp = uieditfield(app.PressureCtrlTab, 'numeric', 'Limits', [0 Inf], 'ValueDisplayFormat', '%.4g', 'Position', [96 132 50 22], 'Value', 2);
+            app.KiLabel = uilabel(app.PressureCtrlTab, 'Text', 'Ki  [%/kPa/s]', 'Position', [4 112 74 15]);
+            app.Ki = uieditfield(app.PressureCtrlTab, 'numeric', 'Limits', [0 Inf], 'ValueDisplayFormat', '%.4g', 'Position', [96 108 50 22], 'Value', 0.5);
+            app.KdLabel = uilabel(app.PressureCtrlTab, 'Text', 'Kd  [%-s/kPa]', 'Position', [4 88 74 15]);
+            app.Kd = uieditfield(app.PressureCtrlTab, 'numeric', 'Limits', [0 Inf], 'ValueDisplayFormat', '%.4g', 'Position', [96 84 50 22], 'Value', 0);
+            app.SetpointkPaLabel = uilabel(app.PressureCtrlTab, 'Text', 'Set / +-dB [kPa]', 'Position', [4 64 84 15]);
+            app.DesiredPressure = uispinner(app.PressureCtrlTab, 'Limits', [0 700], 'ValueDisplayFormat', '%.0f', 'Position', [96 60 40 22], 'Value', 400);
+            app.PressureDeadband = uispinner(app.PressureCtrlTab, 'Limits', [0 100], 'ValueDisplayFormat', '%.0f', 'Position', [140 60 40 22], 'Value', 5);
+            app.CtrlPeriodLabel = uilabel(app.PressureCtrlTab, 'Text', 'Ctrl Period [s]', 'Position', [4 40 80 15]);
+            app.CtrlPeriod = uispinner(app.PressureCtrlTab, 'Limits', [0.02 5], 'Step', 0.01, 'ValueDisplayFormat', '%.2f', 'Position', [96 36 50 22], 'Value', 0.10);
+            app.RunStepTestButton = uibutton(app.PressureCtrlTab, 'push', 'Text', 'Run Step Test (Dynamic Cal)', 'Position', [4 8 176 26]);
+            app.RunStepTestButton.ButtonPushedFcn = createCallbackFcn(app, @RunStepTestButtonPushed, true);
+            app.RunStepTestButton.FontWeight = 'bold';
 
             app.SaveDataTab = uitab(app.TabGroup);
             app.SaveDataTab.Title = 'Save Data';
@@ -1340,19 +1711,21 @@ classdef HX711_BPA < matlab.apps.AppBase
             app.KnownCalTab = uitab(app.TabGroup2);
             app.KnownCalTab.Title = 'Known LC Cal';
             app.KnownTareLabel = uilabel(app.KnownCalTab, 'Text', 'Zero offset / tare [counts]', 'Position', [10 190 180 15]);
-            app.KnownTare = uieditfield(app.KnownCalTab, 'numeric', 'ValueDisplayFormat', '%.6g', 'Position', [200 186 120 22]);
-            app.KnownScaleLabel = uilabel(app.KnownCalTab, 'Text', 'Calibration slope [counts/g]', 'Position', [10 150 190 15]);
-            app.KnownScale = uieditfield(app.KnownCalTab, 'numeric', 'ValueDisplayFormat', '%.12g', 'Position', [200 146 120 22], 'Value', 1);
+            app.KnownTare = uieditfield(app.KnownCalTab, 'text', 'Position', [200 186 120 22]);
+            app.KnownScaleLabel = uilabel(app.KnownCalTab, 'Text', 'Calibration slope [counts/g] (blank = keep)', 'Position', [10 150 250 15]);
+            app.KnownScale = uieditfield(app.KnownCalTab, 'text', 'Position', [200 146 120 22]);
             app.ApplyKnownLoadCellButton = uibutton(app.KnownCalTab, 'push', 'Text', 'Apply Known Load-Cell Cal', 'Position', [70 104 200 28]);
             app.ApplyKnownLoadCellButton.ButtonPushedFcn = createCallbackFcn(app, @ApplyKnownLoadCellButtonPushed, true);
             app.KnownCalHint = uilabel(app.KnownCalTab);
-            app.KnownCalHint.Position = [10 20 324 70];
+            app.KnownCalHint.Position = [10 16 324 78];
             app.KnownCalHint.FontSize = 9;
             app.KnownCalHint.FontColor = [0.35 0.35 0.35];
             app.KnownCalHint.WordWrap = 'on';
-            app.KnownCalHint.Text = ['Type previously measured factors and click Apply - no hardware needed. ', ...
-                'Tare is the mean raw HX711 counts at zero load; slope is counts per gram-equivalent ', ...
-                '(what the Scale Factor button would produce). Factors persist across sessions.'];
+            app.KnownCalHint.Text = ['Normal procedure: hang the cell, Tare; tie on a known weight, Scale Factor; ', ...
+                'remove the weight; mount horizontally tied to the tibia and Tare again. ', ...
+                'Taring only updates the zero offset - the scale factor is kept. ', ...
+                'A field left blank keeps its current value when you click Apply. ', ...
+                'Factors persist across sessions.'];
 
             app.PressureCalTab = uitab(app.TabGroup2);
             app.PressureCalTab.Title = 'Pressure Cal';
@@ -1469,5 +1842,23 @@ classdef HX711_BPA < matlab.apps.AppBase
             end
             delete(app.MatlabArduinoHX711UIFigure);
         end
+    end
+end
+
+function rt = rise10to90(t, p, p0, sp)
+    % 10-90 % rise time of the pressure step response; NaN when the step
+    % size is 0 or the target was not reached. Local function of this
+    % class file (callable from the class methods by plain name).
+    stepSize = sp - p0;
+    if abs(stepSize) < eps
+        rt = NaN;
+        return;
+    end
+    i10 = find((p - p0)*sign(stepSize) >= 0.10*abs(stepSize), 1);
+    i90 = find((p - p0)*sign(stepSize) >= 0.90*abs(stepSize), 1);
+    if isempty(i10) || isempty(i90)
+        rt = NaN;
+    else
+        rt = t(i90) - t(i10);
     end
 end

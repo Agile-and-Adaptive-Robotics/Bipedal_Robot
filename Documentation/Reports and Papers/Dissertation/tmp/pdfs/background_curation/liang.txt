@@ -1,0 +1,1328 @@
+Review
+
+                                                                                                                 Advances in Mechanical Engineering
+                                                                                                                 2020, Vol. 12(6) 1–25
+                                                                                                                 Ó The Author(s) 2020
+Comparative study of robotic artificial                                                                          DOI: 10.1177/1687814020933409
+                                                                                                                 journals.sagepub.com/home/ade
+actuators and biological muscle
+
+Wei Liang1 , Hao Liu1 , Kunyang Wang1, Zhihui Qian1,
+Luquan Ren1 and Lei Ren1,2
+
+
+Abstract
+Biological muscles exhibit a high level of integration, in which actuators, sensors and transmission elements can be
+included in one component. Artificial muscles or actuators refer to intelligent stimuli-responsive materials that could
+reversibly deform with the trigger of various external stimuli. These materials, which have attracted tremendous atten-
+tion, produce natural muscle-like actuation performance and show promising applications in robotics. After an introduc-
+tion of various actuator technologies that contribute to robotic applications, a comparative analysis of the main
+actuation parameter is provided. The comprehensive comparisons of each kind of artificial muscle are summarised, and
+the promising properties that are required in robotics are presented, which highlight the development of their actuation
+performances and the challenges that limit their further employments. Future developmental prospects and perspectives
+of artificial actuators are discussed.
+
+Keywords
+Robotics, artificial actuators, actuation parameters
+
+
+Date received: 14 November 2019; accepted: 19 May 2020
+
+Handling Editor: James Baldwin
+
+
+
+Introduction                                                             ratio, hydraulic actuators have maximum typical values
+                                                                         of 1.6–2 kW/kg, which exceed those of electric motors,
+Actuators have an increasingly important role in                         with a magnitude of 100 W/kg.6 These types of actua-
+robotics. Considerable development in industry and sci-                  tors enable robots to perform diversified and powerful
+entific research has occurred due to the remarkable                      tasks such as handling heavy weights, accurately posi-
+progress and achievements in actuator technologies                       tioning themselves, running, jumping and even per-
+over the past decades. Actuators have been largely                       forming backflips.2,7
+applied to robots such as walking machines, humanoid
+robots, manipulators and biomedical devices.1
+                                                                         1
+    Traditional actuators, such as electric motors, are                   Key Laboratory of Bionic Engineering, Jilin University, Changchun, P.R.
+extensively applied for robotics that rely on propulsion,                 China
+                                                                         2
+                                                                          Department of Mechanical, Aerospace and Civil Engineering, The
+rotation, lifting and positioning and feature high spe-
+                                                                          University of Manchester, Manchester, UK
+cific power. The maximum power per unit mass of elec-
+tric motors that use permanent magnets is 300 W/kg,                      Corresponding authors:
+which is twice higher when actively cooled.2,3                           Zhihui Qian, Key Laboratory of Bionic Engineering, Jilin University,
+Hydraulic and pneumatic cylinder actuators, which                        Changchun 130022, P.R. China.
+                                                                         Email: zhqian@jlu.edu.cn
+enable inherent compliance, have also been proposed.                     Lei Ren, Department of Mechanical, Aerospace and Civil Engineering,
+These actuators exhibit simplicity, compactness and                      The University of Manchester, Manchester M60 1QD, UK.
+high compressibility.3–5 Regarding the power/weight                      Email: lei.ren@manchester.ac.uk
+
+
+                  Creative Commons CC BY: This article is distributed under the terms of the Creative Commons Attribution 4.0 License
+                   (https://creativecommons.org/licenses/by/4.0/) which permits any use, reproduction and distribution of the work
+without further permission provided the original work is attributed as specified on the SAGE and Open Access pages
+(https://us.sagepub.com/en-us/nam/open-access-at-sage).
+2                                                                                     Advances in Mechanical Engineering
+
+
+   Although great progress has been achieved, a large           Therefore, differences in the actuation principle
+gap between conventional robots and natural organ-           between conventional robot actuators and biological
+isms still remains.8,9 Many challenges, such as chal-        muscles still exist. To bridge the gap between conven-
+lenges pertaining to the materials, bio-inspired design      tional robots and biological systems (human and ani-
+and system integration, have appeared during the             mals), the first and primary step is to select an
+development of bio-inspired robots. One main problem         appropriate actuation material that can achieve biolo-
+is how the actuators and their topologies enable seam-       gical muscle performance. The ‘artificial actuators’ that
+less interactions between human beings and robots and        are extensively employed in robotics have been devel-
+between robots and the physical world.10 To under-           oped to realise a light weight, miniaturisation, flexibil-
+stand the versatile functionalities and compliant inter-     ity and can mimic biological muscles, which offers the
+actions of biological mechanisms, the differences            opportunity to improve robots.2
+between conventional actuators and biological muscle            This article identifies the artificial actuators that can
+(actuators of animals) must be distinguished.                perform as biological muscle. First, non-conventional
+   Conventional robots are based on rigid materials for      artificial actuators that are extensively applied in
+actuation and load bearing, which means that human–          robotics, including pneumatic artificial muscles
+robot and robot–environment interactions must be             (PAMs), shape memory alloys (SMAs), electroactive
+monitored and precisely controlled to avoid safety           polymers (EAPs) and newly developed actuators.
+hazards to humans or the robot.11,12 In contrast to con-     Conventional actuators, such as electromagnetic
+ventional actuators, biological muscles feature compli-      motors and hydraulic actuators, and infrequently
+ance, which enables the load distribution on the muscle      employed artificial actuators, such as piezoelectric
+to be spread over a larger area and increases the contact    actuators, shape memory polymers and hydrogel actua-
+time and decreases the maximum impact stresses. The          tors (HGA), have been reviewed or compared with
+compliance originates from the viscoelastic material         muscles elsewhere.18–20 Then, the basic working princi-
+properties of biological muscles, including the ability to   ples, classifications and applications of the extensively
+change their moduli, which enables energy dissipation        applied artificial actuator technologies are introduced
+and the maintenance of stability during dynamic load-        in section ‘Artificial actuator technologies’. In section
+ing. Furthermore, biological muscles can freely vary         ‘Results’, representative actuators of each technology
+their stiffness, which enables them to effectively adjust    are discussed and compared based on their actuation
+their mechanical compliance to interact safely with          parameters. On one hand, the same parameters of these
+humans and adaptively interact with varying physical         actuators are intercompared; on the other hand, the
+environments.13                                              comprehensive actuation performances of these actua-
+   Typically, conventional robots consist of numerous        tors are individually compared to that of biological
+rigid links, which are connected by separate hinge           muscle. The comparison results reveal the advantages
+joints.14 Each joint is actuated and controlled indepen-     and disadvantages of the introduced actuator technolo-
+dently by separate hardware, including motors, sensors       gies. Options for actuation are provided to satisfy dif-
+and controllers. When a fixed trajectory is given to an      ferent robotic application requirements, and
+end effector, the angle of each joint required to follow     suggestions for selecting suitable robotic actuators are
+                                                             offered. In section ‘Future directions’, the prospects of
+this path is computed by the inverse kinematic method.
+                                                             artificial muscles are proposed based on generally
+In addition to the contact force between the end effec-
+                                                             employed artificial actuators, which provide insights
+tor and the human/environment, the output torque of
+                                                             into future biomimetic design.
+each joint is calculated by the inverse dynamic method
+for different situations in real time.15 The strategy of
+biological muscles is different, in which actuation,         Artificial actuator technologies
+transmission elements, proprioceptive sensing and con-
+                                                             In this part, four main artificial actuator technologies –
+trol circuit and viscoelastic properties are integrated
+                                                             PAMs, SMAs and EAPs – and newly developed actua-
+into one material architecture.16 Rather than control-
+                                                             tors will be introduced. This study mainly discusses
+ling the holistic impedance through every joint output
+                                                             actuators that can be employed as actuators in robots,
+torque as controlled in conventional robots, animals
+                                                             while other actuators fall into the categories of PAMs,
+utilise the morphology, material and constraints of the
+                                                             SMAs and EAPs or newly developed actuators are
+entire muscle structure to adapt the stiffness and damp-
+                                                             omitted.
+ing to an unknown environment. This control concept
+is also known as morphological computation.17
+Morphological computation integrates embodied intel-         PAMs
+ligence into robots, which reduces the large amount of       Actuation principles: PAMs can achieve contractile and
+dynamic computation during real-time locomotion.             linear motion by adjusting the gas pressure inside a
+Liang et al.                                                                                                                                 3
+
+
+
+
+Figure 1. PAMs actuating principles and applications: (a) actuation principle of overpressure PAMs, (b) braided PAM structure, (c)
+McKibben PAM-actuated biped robot, (d) plated PAM structure, (e) plated PAM-actuated biped robot – Lucy, (f) netted PAM
+structure, (g) torsional PAM structure and (h) torsional PAM-actuated robot arm.
+(a) and (b) Reprinted with permission from an open access article under CC BY licence;21 (c) reprinted with permission from Taylor & Francis,
+Advanced Robotics, Copyright 2018;22 (d) reprinted with permission from an open access article under CC BY licence;23 (e) reprinted with
+permission from Springer Nature, Autonomous Robots, Copyright 2005;24 (f) reprinted from US patent;25 (g) reprinted with permission from ASME,
+Journal of Mechanisms and Robotics, Copyright 2015;26 and (h) reprinted with permission from ASME, Journal of Mechanisms and Robotics,
+Copyright 2014.27
+
+flexible membrane. PAMs are actuated by the pressure                     Plated PAMs. Plated PAMs have a rearranging-type
+difference between the inside gas and ambient gas, and                   membrane, which means that the membrane does not
+two actuation methods can be applied: overpressure                       stretch when inflated.32 The rearranging-type mem-
+and underpressure. Usually, PAMs operate at an over-                     brane has numerous pleats in the axial direction, which
+pressure: as the membrane is inflated, the PAMs axially                  can expand during inflation and causes the membrane
+contract and exert a force that pulls the load at the end                to unfold without material strain (Figure 1(d)).23 No
+fitting (Figure 1(a)).21                                                 friction exists, and no energy is required to expand the
+    Classifications and applications: Based on the                       membrane in the radial direction during the inflation
+tension-carrying structure of the muscle, either embra-                  process. Therefore, minimal hysteresis occurs, and a
+cing the membrane or being embedded in the mem-                          low threshold pressure is required to actuate plated
+brane, PAMs can be classified as embracing types and                     PAMs. Plated PAMs can be applied in accurate and
+embedded types. Embracing PAMs can be further sub-                       fast positioning devices and compliance actuation
+divided into braided PAMs and plated/netted PAMs                         robots (Figure 1(e)).24,32
+based on how the membrane radially expands, by
+stretching the membrane materials or rearranging the                     Netted PAMs. Netted PAMs have a surrounding mem-
+membrane’s surface when inflated.                                        brane with a low-density network. The low-density net-
+                                                                         work consists of a mesh with relatively large holes and a
+Braided PAMs. Braided PAMs are usually cylindrical in                    tightly woven braid. This membrane is also the rearran-
+shape and composed of a cylindrical tube or bladder                      ging type due to the membrane structure. Netted PAMs
+surrounded by a braided sleeving with a constant pitch                   include the Yarlott PAM, robotic muscle actuator
+angle (Figure 1(b)).21 The McKibben PAM and sleeved                      (ROMAC) PAM and Kukolj Muscle.25,33,34 A higher
+bladder PAM are two basic types of braided muscle, in                    force and negligible hysteresis occur due to the absence of
+which the inner bladder is either attached to the end fit-               friction and membrane stretching. Thus, netted PAMs
+ting or not attached to the end fitting, respectively.28,29              are usually employed in lifting devices (Figure 1(f)).25
+The McKibben PAM is the most extensively applied
+artificial muscle in anthropomorphic robots with low                     Embedded PAMs. Embedded PAMs have a rubber tube
+cost (Figure 1(c)) and can be easily assembled in pros-                  (load-carrying structure) that is embedded in their thin
+theses and orthotics due to the simple design. Its length-               membranes, which can reduce the friction and thresh-
+load curves between this type of PAM and biological                      old pressure due to the absence of friction between the
+muscle are similar.22,30,31                                              rubber tube and the membrane. Embedded PAMs
+4                                                                                     Advances in Mechanical Engineering
+
+
+include the Morin PAM, Baldwin PAM, Paynter                  transition among variants of the tetragonal martensite
+knitted PAM and Kleinwächter PAM.28,35–37 In addi-          phase that formed during cooling from the cubic auste-
+tion to linear motion, embedded PAMs, such as the            nite phase. In three-dimensional (3D) space, the mar-
+PAM shown in Figure 1(g), can also achieve torsional         tensite unit cell has a shorter size along one axis and a
+motion, which can be applied in torsional inflated           longer size along the other two axes than the cubic cell
+robots (Figure 1(h)).26,27,38                                (Figure 2(f)).49 The martensite unit cell can be easily,
+                                                             magnetically and mechanically deformed along its
+                                                             shortest axis (Figure 2(g)).47 Typically, a predefined
+SMAs
+                                                             force is applied in the short axis direction, which com-
+Actuation principles: SMAs are metallic alloys that uti-     presses the FSMA; it can return to its original shape
+lise the shape memory effect and can return to their ori-    when a magnetic field is applied orthogonally to the
+gin shape or size when subject to a memorisation             short axis direction. Due to the fast response and high
+process between two transformation phases. The mem-          specific power, FSMAs have also been employed in
+orisation process that is applied to actuators is usually    small-sized robots such as caudal peduncles for fish
+thermally or magnetically driven.19 Typically, SMAs          robots (Figure 2(h)) and flappers for flying robots.48,50
+are deformed by an external force and can contract or
+recover to their original form when subject to stimuli
+such as heat or a magnetic field.                            EAPs
+    Classifications and applications: Based on the exter-
+                                                             Actuation principles: EAPs are smart materials that are
+nal stimuli that are applied, SMAs mainly fall into two
+                                                             capable of producing mechanical deformation in
+types of actuators: thermal SMAs (TSMAs) and ferro-
+magnetic SMAs (FSMAs).                                       response to electrical stimulation. EAP materials exhi-
+                                                             bit some features that are beneficial for actuation such
+                                                             as great strain, high power density, versatility, scalabil-
+TSMAs. TSMAs return to their original shape if heated        ity and low cost.51 These characteristics allow EAPs to
+after deformation, in which the transformation from          emulate biological muscle more closely as ‘artificial
+martensite to austenite has a central role. At low tem-      muscles’.52
+peratures, a TSMA has a twinned martensite structure,           Classifications and applications: According to their
+which can be easily deformed by an external force and        activation mechanisms, EAPs can be classified into two
+converted into detwinned martensite. When the TSMA           major groups: electronic EAPs (e-EAPs) and ionic
+is heated by external or internal heating (Joule heating),   EAPs (i-EAPs). e-EAPs are activated by electrostatic
+it begins to transform from martensite to austenite at       forces, which exert dimensional changes in response to
+the austenite-start (As) temperature and finishes this       an electric field. This category includes dielectric elasto-
+transformation at the austenite-finish (Af) temperature.     mer actuators (DEAs) and relaxor ferroelectric poly-
+The austenitic phase is a highly ordered state, and the      mers (RFPs). i-EAPs are actuated by an electrically
+TSMA contracts and recovers to the predefined high-          induced shift of ions. An electrolyte phase, in which
+temperature shape. Conversely, the TSMA reverts to           ions are capable of moving, is required for i-EAPs,
+martensite after cooling, which starts at the martensite-    which is often a liquid. This technology mainly includes
+start (Ms) temperature, and is completed at the              conducting polymers (CPs), ionic polymer metal com-
+martensite-finish (Mf) temperature. The TSMA is elon-        posites (IPMCs) and carbon nanotubes (CNTs).
+gated by the defined external force (Figure 2(a)).39–41
+Therefore, the shape memory effect is only observed in
+most TSMAs, when an external stress is applied. This         DEAs. DEAs can generate deformations as a result of
+type of SMA is also known as a one-way SMA. In               electrostatic interactions between two electrodes. DEAs
+addition, some TSMAs display a two-way shape mem-            act as capacitors when an external voltage is applied;
+ory effect, which can act without an external stress.42      opposite charges are attracted in the electric field direc-
+Nickel–titanium (NiTi) alloys are one of the most            tion, while like charges repulse each other in the direc-
+extensively applied TSMAs and have been applied to           tion perpendicular to the electric field. Therefore, the
+small robots such as fish robots (Figure 2(b)), climbing     Maxwell stresses exerted in the dielectric materials
+robots (Figure 2(c)), flying robots (Figure 2(d)) and        squeeze the DEAs along the direction of the voltage
+hand prostheses (Figure 2(e)).43–46                          and expand them in the other two directions (Figure
+                                                             3(a)). A silicone or acrylic material often acts as the
+FSMAs. FSMAs demonstrate the shape memory effect             elastomer of a DEA, with a compliant electrode that is
+in response to a magnetic field, which drives the shape      applied to achieve large deformation. For this reason,
+change faster than relatively slow heating and cooling       DEAs are extensively applied as actuators for robots:
+processes. This phenomenon is generated by the               fish robots (Figure 3(b)), flying robots (Figure 3(c)),
+Liang et al.                                                                                                                                       5
+
+
+
+
+Figure 2. SMAs actuating principles and applications: (a) actuation principle of TSMAs, (b) NiTi SMA-actuated jellyfish robot, (c)
+NiTi SMA-actuated climbing robot, (d) NiTi SMA-steered flying robot, (e) NiTi SMA-actuated hand prosthesis, (f) three kinds of
+martensitic phases of FSMAs, (g) martensitic transformation and twinning of an FSMA and redistribution under a magnetic field in
+two dimensions and (h) FSMA-actuated fish robot.
+(a) Reprinted with permission from Springer Nature, Shape memory alloys: modelling and engineering applications by D.C. Lagoudas, Copyright
+2008;41 (b) reprinted with permission from IOP Science, Bioinspiration and Biomimetics, Copyright 2011;43 (c) reprinted with permission from
+Springer Nature, RoboCup 2010: Robot Soccer World Cup XIV by M.M. Kheirikhah et al., Copyright 2011;44 (d) reprinted with permission from an
+open access website;45 (e) reprinted with permission from IOP Science, Smart Materials and Structures, Copyright 2007;46 (f) drawn by the author;
+(g) reprinted with permission from Elsevier, Materials Science and Engineering: A, Copyright 2004;47 and (h) reprinted with permission from Springer
+Nature, International Journal of Automation and Computing, Copyright 2006.48
+
+robot arms (Figure 3(d)) and legged robots (Figure                          P(VDF-TrFE) are highly polar due to the electronega-
+3(e)–(g)).53–60                                                             tivity of fluorine. The reversible conformational changes
+                                                                            caused by the alignment of polar groups are utilised in
+RFPs. A ferroelectric polymer material that is often used                   actuation.52 As shown in Figure 3(h), when an electric
+as an actuator is poly(vinylidene fluoride-trifluoroethy-                   field is applied perpendicular to the chain, the ferroelec-
+lene), abbreviated P(VDF-TrFE). The backbones of                            tric that is originally in the nonpolar alpha phase
+6                                                                                                           Advances in Mechanical Engineering
+
+
+
+
+Figure 3. e-EAPs actuating principles and applications: (a) actuation principle of DEAs,53 (b) DEA-actuated fish robot, (c) flapping
+wings actuated by a DEA for flying robots, (d) DEA-actuated robot arm, (e) DEA-based six-legged robot, (f) DEA-actuated hexapod
+robot, (g) DEA-actuated quadruped robot, (h) actuation principle of RFPs, (i) RFP-actuated legged robot and (j) RFP-actuated fish
+robot.
+(a), (e) and (h) Reprinted with permission from Elsevier, Materials Today, Copyright 2007;61 (b) reprinted with permission from an open access article
+under CC BY-NC licence;54 (c) reprinted with permission from Springer Nature, Meccanica, Copyright 2015;55 (d) reprinted with permission from
+IOP Science, Smart Materials and Structures, Copyright 2018;56 (f) reprinted with permission from IOP Science, Smart Materials and Structures,
+Copyright 2014;58 (g) reprinted with permission from Elsevier, Sensors and Actuators A: Physical, Copyright 2017;60 and (i) and (j) reprinted with
+permission from an open access article under CC BY licence.62,63
+
+
+switches to the polar beta phase.64 This switching causes                    charge addition to or removal from the electrolyte when
+elongation along the chain length and contraction per-                       a voltage is applied to the two electrodes, which is also
+pendicular to the chain direction. A problem with ferro-                     known as doping. Dimensional changes are caused by
+electric polymers is the existence of a massive hysteresis                   electrochemical doping.68 As shown in Figure 4(a), the
+and substantial energy dissipation during the actuation                      CP expands when it is oxidised as the anions (A-) enter
+process, when a large electric field is applied to reverse                   the electrolyte to balance the charge, and the CP con-
+the polarisation.65 To eliminate the hysteresis behaviour,                   tracts when it returns to the reduced state, in which
+P(VDF-TrFE) can be irradiated or a small mass                                anions have been removed.69 The main advantage of
+fraction of a bulky monomer can be added to disrupt                          CPs over e-EAPs is their low driving voltage, which
+the long-range order to form RFP.66,67 Consequently,                         typically ranges from 1–2 V to 10 V for higher speed
+great reversible electrostriction is obtained in RFPs,                       and response.70 This characteristic combined with high
+which can be applied in millimetre-sized legged robots                       stress renders CPs attractive as actuators. For example,
+(Figure 3(i)) and swimming robots (Figure 3(j)).62,63                        CPs have been applied in rotational motors (Figure
+                                                                             4(b)).71 In addition, CPs have also been employed to
+CPs. CPs are also known as conjugated polymers. The                          actuate micro-grippers (Figure 4(c)) and fish robots
+electrochemically changing oxidation state causes                            (Figure 4(d)).72–75
+Liang et al.                                                                                                                                      7
+
+
+
+
+Figure 4. i-EAPs actuating principles and applications: (a) actuation principle of CPs, (b) CP-actuated rotational motor, (c) CP-
+actuated soft gripper, (d) CP-actuated fish robot, (e) actuation principle of CNTs, (f) CNT-actuated quadruped robot, (g) torsional
+artificial muscle actuated by CNTs, (h) actuation principle of IPMCs, (i) IPMC-actuated manta ray robot, (j) IPMC-actuated fish
+robot, (k) IPMC-actuated joint for a robot manipulator and (l) IPMC-actuated joint for a swimming snake robot.
+(a) Drawn by the author; (b) reprinted with permission from Wiley & Son, Journal of Applied Polymer Science, Copyright 1997;71 (c) reprinted with
+permission from IOP Science, Smart Materials and Structures, Copyright 2015;72 (d) reprinted with permission from IOP Science, Smart Materials
+and Structures, Copyright 2009;74 (e) reprinted with permission from Elsevier, Materials Today, Copyright 2007;61 (f) reprinted with permission from
+an open access article under Copyright Taylor and Francis Group, LLC licence;76 (g) reprinted with permission from AAAS, Science, Copyright
+2012;77 (h) reprinted with permission from Elsevier, Sensors and Actuators A: Physical, Copyright 2003;78 (i) reprinted with permission from an open
+access article under Copyright Taylor and Francis Group, LLC licence;79 (j) reprinted with permission from IOP Science, Smart Materials and
+Structures, Copyright 2013;80 (k) reprinted with permission from an open access article under CC BY-NC licence;81 and (l) reprinted with permission
+from Elsevier, Materials Today: Proceedings, Copyright 2016.82
+
+CNTs. A CNT is a single rolled sheet of graphite with a                    to the electrical method, this type of torsional artificial
+large surface area and high conductivity, whose size is                    muscle can be chemically and thermally driven.77
+on the micrometre scale. The main cause of actuation
+is electrostatic forces. As shown in Figure 4(e), CNTs                     IPMCs. An IPMC is composed of a polymer electrolyte
+act as electrodes and/or counter electrodes when they                      sandwiched by two high-surface area metallic electrode
+are immersed in electrolytes.61 When a potential is                        layers, and the two electrodes interpenetrate the poly-
+applied, ions are attracted to the nanotubes, which                        mer electrolyte.87,88 The polymer electrolytes that are
+cause charging and rearrangement of the electronic                         often applied, such as Nafion, are neutralised with cer-
+structure. The electrostatic repulsive forces between                      tain counterions, which are balanced by the electrical
+two charges on the CNT surface can elongate and                            charge of the anions fixed to their backbone.87 When
+expand the nanotubes.83,84 Typically, actuation is gen-                    an electric field is applied perpendicular to the IPMC
+erated in films or yarns that are composed of many                         layers, the mobile cations in the polyelectrolyte move
+nanotubes. For instance, CNT films that are often                          towards the oppositely charged electrode (Figure 4(h)),
+applied as bending actuators to drive a soft gripper can                   which cause swelling at the negative side and shrinkage
+also be utilised as buckypaper actuators to actuate a                      at the positive side to achieve bending of the entire
+centimetre-sized walking robot (Figure 4(f)).76,85 CNT                     IPMC actuator.78,89 Numerous robotic applications
+yarns perform as artificial muscles that can generate                      that are based on IPMC actuators have been reported.
+torsional and tensile motion (Figure 4(g)).86 In addition                  First, IPMCs can be readily employed as actuators of
+8                                                                                    Advances in Mechanical Engineering
+
+
+soft grippers due to their inherent bending motion.90,91     robotics, where two twisted nylon fibres are inserted
+Second, IPMCs are the preliminary technology for             into the substrate, which is represented by blue lines
+hydrodynamic propulsion such as IPMCs in manta ray           (Figure 5(e)).96
+robots (Figure 4(i)) and fish robots (Figure 4(j)).79,80
+Finally, IPMCs can perform as robotic joints that move
+                                                             HGAs. Actuation principles: hydrogel polymers with
+in parallel such as IPMCs in a millimetre-sized manipu-
+                                                             high water contents ( ø 90 wt%) can switch their sizes
+lator (Figure 4(k)) and a snake robot (Figure 4(l)).81,82
+                                                             and shapes by the uptake and release of water to change
+                                                             the water content in the polymer work, and the polymer
+Newly developed actuators                                    actuators perform deformation and movement in
+                                                             response to various environmental stimuli (Figure
+In recent years, various kinds of promising actuators        5(f)).97 The main branch of the HGA family consists of
+have developed and been employed in robotic applica-         pH-responsive hydrogels, which sensitively respond to
+tions with different smart materials. Representative         pH changes in the ambient environment with swelling
+actuator technologies, including twisted fibre actuators     or shrinking deformation. When experiencing pH varia-
+(TFA), HGA and hydraulically amplified self-healing          tion, the hydrogel polymer backbone will be ionised
+electrostatic (HASEL) actuators, will be discussed.          and the electrostatic repulsion is generated between
+                                                             adjacent polymer chains, which enables the absorption
+TFAs. Actuation principles: high-strength polymer            of water and causes hydrogel swelling.102,103 Some
+fibres are transformed to artificial muscles by twist        hydrogel polymer can undergo reversible shifts in mor-
+insertion. Twisted yarns of polymer fibres can generate      phological and physical phases in response to tempera-
+linear and torsional actuation after volumetric expan-       ture variations. The underlying mechanism of the
+sion, which can be achieved via different mechanisms,        thermally driven hydrogel is attributed to a solubility
+including thermal expansion and volumetric expansion         shift in aqueous solution.104 These two methods are
+of absorption. The heat of thermal actuation is gener-       limited by the uncontrollability on/off state of actua-
+ated via two mechanisms: Joule heating and photo-            tion. Thus, a precisely controllable method is intro-
+thermal heating.92 The absorption actuation employs          duced. Electric-responsive hydrogel can swell/deswell in
+moisture-sensitive silk fibre to exert deformation while     an electric field, which is combined of coulombic, elec-
+changing the relative humidity.93 The one-end-tethered       trophoretic and electro-osmotic interactions.105,106
+twisted yarn responds to the structural volumetric           Electrical-responsive hydrogels are often employed in
+change by untwisting at its free end to form the tor-        an aqueous electrolyte, and the direction migration of
+sional actuator. The two-end-tethered twisted yarn can       mobile ions in the solution occurs in an applied electric
+only change the diameter by translating and contract-        field, which causes contraction of the hydrogel. An
+ing in length instead of untwisting in the end, which        osmotic pressure difference is then exerted due to the
+forms the linear actuator.                                   concentration gradient of ions. The hydrogel polymers
+   A typical feature of this kind of actuator is the         generate swelling and deswelling according to the osmo-
+twisted fishing line (e.g. nylon 6) or sewing thread (e.g.   tic pressure increase and decrease, respectively.
+nylon 6.6). First, this thermally driven artificial muscle       To respond to various stimuli, in this way, the
+can be constructed by inserting an extreme twist into        hydrogel-based actuators could perform deformation
+the fibre. Second, the twist is further inserted to form a   in various environments. HGAs are soft and wet mate-
+self-coiled yarn (Figure 5(a)).94 Finally, an annealing      rials that can interact with the internal constituents of
+process is applied to yarn to avoid untwisting after dis-    the human body in a safe and human-friendly manner.
+engaging the fibre end-fixing. The nylon artificial mus-     Therefore, HGAs are raising tremendous attention and
+cle can achieve large output contraction and generate        showing their potential in applications such as grippers
+super-high mechanical power. The excellent muscle            (Figure 5(g)),98 artificial muscles (Figure 5(h))99 and
+stroke and work capacity are retentive as the fibre dia-     drug delivery.107
+meter changes by orders of magnitude. This near-
+invariance of actuation performance indicates great          HASEL actuators. Actuation principles: two types of
+scaling of structure and properties. Therefore, the          HASEL actuators achieve linear actuation motion.
+nylon muscles can be converted to a two-ply (Figure          First, the planar HASEL actuator, which has an elasto-
+5(b)) configuration and braided structure (Figure            meric shell, is partially covered by a pair of opposing
+5(c)).94,95 The scalable nylon artificial muscle enables a   electrodes outside and filled with a liquid dielectric
+larger strain and stress output, which is applied in         inside.100 An electric field exists through the liquid
+macroscopic applications, such as the light-weight           dielectric when voltage is applied to the electrode. The
+prosthetic hand (Figure 5(d)),95 where the fingers are       resulting electrostatic Maxwell stress presses and dis-
+actuated by a twisted nylon artificial muscle and soft       places the liquid dielectric from between the electrodes
+Liang et al.                                                                                                                                    9
+
+
+
+
+Figure 5. (a) A single twisted coiled nylon fibre, (b) two-ply twisted nylon fibre, (c) braided actuator of twisted nylon, (d) a hand
+prosthesis actuated by nylon artificial muscle, (e) different geometry of robot made from twisted and coiled nylon polymer, (f)
+actuation principle of hydrogel, (g) a small size hydrogel gripper; (h) four-dimensional (4D) printed hydrogel actuator driven by
+temperature, (i) basic structure of planar HASEL actuator, (j) a gripper constructed by multi-layer planar HASEL actuator, (k) basic
+structure of peano-HASEL actuator, (l) parallel configuration of peano HASEL actuator and (m) a lever arm actuated by peano
+HASEL.
+(a)–(c) Reprinted with permission from AAAS, Science, Copyright 2014;94 (d) reprinted with permission from IOP Science, Bioinspiration and
+Biomimetics, Copyright 2016;95 (e) reprinted with permission from Springer Nature, International Journal of Intelligent Robotics and Applications,
+Copyright 2017;96 (f) reprinted with permission from an open access article under CC BY licence;97 (g) reprinted with permission from Springer
+Nature, Nature Communications, Copyright 2013;98 (h) reprinted with permission from Springer Nature, Nature Materials, Copyright 2016;99 (i) and
+(j) reprinted with permission from AAAS, Science, Copyright 2018;100 and (k)–(m) reprinted with permission from AAAS, Science Robotics,
+Copyright 2018.101
+10                                                                                                       Advances in Mechanical Engineering
+
+
+to the surrounding volume. Actuation strain increases                     Results
+with an increase in the input voltage, where the result-
+                                                                          This study selected typical actuators that represent each
+ing hydraulic pressure causes the soft structure to
+                                                                          type of artificial actuator technology. We collected
+deform into a toroidal shape and gain an elongation
+                                                                          parameters of these typical actuators, including their
+actuation movement, and this type of actuator could be
+                                                                          strain, stress, strain rate, work density, specific power
+stacked to achieve higher strain and force (Figure
+                                                                          and efficiency. First, this section successively compares
+5(i)).100 Second, a peano-HASEL actuator is con-
+                                                                          typical actuators that are based on single actuation
+structed with a series of pouches made from a flexible
+and inextensible shell that is filled with a liquid dielec-               parameters, which demonstrates the superior actuators
+tric. Electrodes cover a portion of each pouch on both                    for each actuation property. These comparisons can
+side of the actuator. The electrostatic force causes elec-                serve as references in actuator selection to satisfy cer-
+trodes to progressively close when a voltage is applied.                  tain actuation parameter requirements. Second, this
+The pressure forces dielectric fluid into an uncovered                    section simultaneously compares the six actuation para-
+portion of the pouch, which causes the pouch to transi-                   meters of the typical actuators with those of biological
+tion from a flat cross section towards a circular cross                   muscle to obtain insights into each type of actuator.
+section. This transition causes linear contraction of the                 The merits and insufficiencies of each typical actuator
+actuator as the shell is inextensible (Figure 5(k)).101                   are given, and improvement methods and new ideas are
+Furthermore, the parallel configuration obtained from                     proposed based on the comparison results.
+the peano-HASEL actuator has greatly amplified the
+output force (Figure 5(l)).101
+                                                                          Actuation parameters of representative actuators
+    The HASEL actuator blends soft fluidic actuators
+with muscle-like performance of DEAs to achieve a                         This study reviewed the actuation parameters of skele-
+variety of actuation modes without rigid frames or pre-                   tal muscle, the McKibben PAM, NiTi-based SMA,
+stretched mechanisms. The hydraulic principles enable                     acrylic-based DEA, P(VDF-TrFE)-based RFP, poly-
+HASEL actuators to scale actuation output strain and                      pyrrole (PPy)-based CP, CNT-based actuator, Nafion-
+force. The scalability gives HASEL actuators the capa-                    based IPMC, nylon TFA, poly(vinyl alcohol)-based
+bility to construct a soft gripper that can handle delicate               HGA and liquid dielectrics-based HASEL. These
+objects (Figure 5(j))100 and an artificial muscle that can                actuators are the most prevalent among each type of
+lift more than 200 times their weight (Figure 5(m)).101                   technology and act as samples to assess the actuation
+Unlike traditional solid DEAs, which would be perma-                      capacities of these classifications. The actuation perfor-
+nently damaged due to a high electric field, the use of a                 mances of the biological and artificial muscles based on
+liquid dielectric enables HASEL actuators to self-heal                    the six key parameters are listed in Table 1, where the
+from a dielectric breakdown. The self-healing property                    maximum values of the actuation parameters are given.
+improves the durability and stability of HASEL actua-                     Although some of the maximum values were obtained
+tors, which demonstrates promise for applications in                      from theoretical models or ideal materials, they demon-
+robotics.                                                                 strate the potential upper limit for each actuator
+
+Table 1. Actuation performances of biological and artificial muscles.
+
+Actuators               Parameters
+                        Strain (%)       Stress      Strain           Work         Specific       Efficiency (%)       References
+                                         (MPa)       rate (%/s)       density      power
+                                                                      (kJ/m3)      (kW/kg)
+
+Biological muscle       40               0.35        50               40           0.28           40                   108 and109
+PAM                     25               1.16        800              200          10             49                   18, 32, 38, 110 and 111
+SMA                     10               200         300              10000        50             10                   108 and 112–115
+DEA                     380              7.7         450              3400         3.6            80                   53, 65, and 116–118
+RFP                     7                45          2000             1000         4              80                   66, 67, and 119–122
+CP                      10               34          12               100          0.15           1                    123–127
+CNT                     3                26          19               1000         0.27           0.55                 65, 77, and 128–131
+IPMC                    40               3           3.3              5.5          0.00256        1.5                  88, 132, and 133
+TFA                     49               22          50               5.3          5.3            2                    92 and 94
+HGA                     20               0.005       2                460          0.0002         0.2                  134–137
+HASEL                   170              0.3         2176             64.4         0.6            21                   100 and 138
+
+PAM: pneumatic artificial muscles; SMA: shape memory alloys; DEA: dielectric elastomer actuators; RFP: relaxor ferroelectric polymers; CP:
+conducting polymers; CNT: carbon nanotubes; IPMC: ionic polymer metal composites; TFA: twisted fibre actuators; HGA: hydrogel actuators;
+HASEL: hydraulically amplified self-healing electrostatic actuators.
+Liang et al.                                                                                                                       11
+
+
+technology, which could guide the future development                         body along the direction in which actuation is
+trends of robotic actuators.                                                 being applied; it reflects the deformability of
+                                                                             actuator materials. As shown in Figure 6(a),
+                                                                             due to the low modulus and high dielectric
+Single parameter comparison                                                  strength of the acrylic elastomer of the DEA
+To evaluate these actuators for various purposes or dif-                     and special structure of HASEL, giant strains of
+ferent applications, single actuation parameters were                        380% and 170%, respectively, are achieved at
+compared according to the collected data.                                    high applied fields.100,139 The PAM and IPMC
+                                                                             also exhibit relatively large strains that approxi-
+   1.    Strain is expressed as the ratio of total deforma-                  mate the strain of biological muscle (20%–40%)
+         tion to the initial dimension of the material
+
+
+
+
+Figure 6. Single actuation parameter comparisons between biological and artificial muscles, wherein the breaks on the vertical axes
+and in the bars indicate that the values above the break are higher by at least an order of magnitude than the values below (data are
+all from Table 1). (a) Strain comparison, (b) stress comparison, (c) strain rate comparison, (d) work density comparison, (e) specific
+power comparison, and (f) efficiency comparison.
+12                                                                                        Advances in Mechanical Engineering
+
+
+          due to their soft bladder or electrodes. The                  when the actuator is applied in robotics. In
+          strains of the other actuators are less than 10%.             Figure 6(f), electrically driven actuators, such as
+     2.   Stress is expressed as the ratio of the output                the DEA and RFP, show very high efficiencies
+          force to the cross-sectional area normal to the               to 80%. The PAM demonstrates an actuation
+          actuation direction. The output force scales line-            efficiency that is similar to that of biological
+          arly with the cross-sectional area for all actuator           muscle, while the SMA has only a 10% effi-
+          materials, which implies that higher stress causes            ciency due to heat dissipation. The efficiencies
+          higher output force when actuators have the                   of the i-EAPs do not exceed 1% due to their low
+          same size. In Figure 6(b), the SMA shows ultra-               electromechanical coupling.
+          high stress to 200 MPa, and the RFP, CP and
+          CNT also exhibit relatively high stresses. High          Artificial actuators have better performances than
+          output stresses are rooted in their high elastic      biological muscle from the aspect of single actuation
+          moduli (.1 GPa), while materials with relatively      parameters. However, the comprehensive actuation
+          low elastic moduli have low output stresses such      performances of these actuators compared with biolo-
+          as the PAM, DEA and IPMC.                             gical muscle remain unclear, and further discussion is
+     3.   The strain rate is the change in strain per unit      needed.
+          time and indicates how fast the material can
+          expand or shrink in response to the motion
+          commands delivered from the central controller.       Comprehensive actuation performance comparison
+          Thus, a high strain rate is essential for materials   To understand the benefits and drawbacks of each type
+          or actuators when applied to robots with a high       of actuator, the comprehensive actuation performances
+          actuation bandwidth. In Figure 6(c), the e-           are analysed in this section. Artificial actuator technol-
+          EAPs, that is, the DEA and RFP, exhibit over-         ogies are individually compared with biological muscle
+          whelming superiority due to their high dielectric     to evaluate their actuation advantages and challenges.
+          constants. The HASEL actuator is actuated by
+          the mechanism of DEA and achieves a high
+          strain rate accordingly. The PAM and SMA              PAMs. Of all the PAM technologies, the McKibben
+          also display high strain rates due to pneumati-       PAM is the most prevalent due to its low cost and sim-
+          cally and electrical-heating-driven methods.          ple and compact structure. This muscle is constructed
+          However, ion diffusion and the transport velo-        with an elastic inner tube surrounded by an expandable
+          city limit the strain rate of the i-EAPs, including   braided sleeve. The braided sleeve translates the volu-
+          the CP, CNT and IPMC.                                 metric increase in the inner bladder to axial contrac-
+     4.   Work density is the work that is generated in         tion, which is capable of generating a pulling force. The
+          the actuator per cycle and normalised by the          length and diameter of the braid change as the pitch
+          volume. This parameter indicates the amount of        angle changes. The muscle would contract until a pitch
+          work that can be exerted by the actuator in a         angle of 54.7° is attained,38 which is the critical angle
+          limited space. As shown in Figure 6(d), the           that corresponds to the maximum volume of the inner
+          SMA, DEA and CP present higher work densi-            bladder and a zero contract force, and the muscle
+          ties than the other types of actuators. Actuators     would stretch until the pitch angle decreases to its lower
+          with a high work density are marked by either a       limit, which significantly depends on the braided fibre
+          large actuation strain or a high output stress.       thickness and strand density. However, the tension
+     5.   Specific power is the ratio of the power that is      force that is generated during contraction depends on
+          generated by the actuator to its mass. With an        the muscle diameter and pitch angle at rest, as well as
+          increasing emphasis on the light weight and           the driving air pressure. The generated force decreases
+          miniaturisation of working devices, a lower           greatly with an increase in the initial angle to the critical
+          mass and a higher power are required. With a          angle and then the muscle produces negative forces.140
+          high work density and high strain rate, the           Consequently, the range of contraction–extension (i.e.
+          PAM, SMA, DEA and RFP demonstrate high                strain) and tension force (i.e. stress) is determined by
+          specific power, as shown in Figure 6(e). In           the muscle size, woven pattern and driving pressure. As
+          addition, i-EAPs are still constrained by the         shown in Figure 7(a), the strain and stress of this PAM
+          low strain rates, which generate low specific         are slightly higher than those of biological muscle. The
+          power.                                                strain of the McKibben PAM is typically 25% in prac-
+     6.   Efficiency corresponds to the ability of actuators    tice, and a 1.16 MPa output stress is achieved at an
+          to convert the input energy to output mechani-        input air pressure of 5 bar.18,38 Based on the output
+          cal energy. This parameter determines the power       strain, output stress and ease of assembly, McKibben
+          supply volume and continuous working period           PAMs can be extensively applied in task-based robot
+Liang et al.                                                                                                                      13
+
+
+
+
+Figure 7. Comparisons of the comprehensive actuation performances between different artificial actuators and biological skeletal
+muscle. In these radar charts, each corner represents an actuation parameter. The centre of the radar figure represents the value of
+zero, while the boundaries of the radar chart represent the theoretical maximum value of reviewed actuator technologies, which is
+listed in parentheses. (a) Comparison between PAM, SMA and skeletal muscle; (b) comparison between e-EAPs and skeletal muscle;
+(c) comparison between i-EAPs and skeletal muscle; and (d) comparison between newly developed actuators and skeletal muscle.
+
+
+hands and arms such as the Festo Bionic Soft Hand,                  Thereby, the McKibben PAM is not suitable for appli-
+Shadow Biomorphic Arm, Festo Airic’s Arm and 7                      cation to the scenario in which accurate positioning is
+degrees of freedom (7 DOF) robot arm developed by B.                required. The required compressor in the conventional
+Tondu.141–144                                                       McKibben PAM makes the pneumatic system heavy,
+   The most remarkable advantage of the McKibben                    bulky and unsuitable for use as a micro-actuator, where
+PAM is its high specific power, which is derived from               compact and weight minimisation configurations are
+the light weight of the actuator materials and com-                 desired.
+pressed air, which is typically in the range of 0.5–2 kW/
+kg to a maximum of 10 kW/kg.110–112 The work density                SMAs. The NiTi SMA provides significant displace-
+is approximately 0.2 MJ/m3.38 With the relatively fast              ment as a hard material; the most prevalent method for
+strain rate of approximately 800%/s, the McKibben                   manufacturing SMA is vacuum melting, where NiTi
+PAM performs better in these aspects than biological                alloys are melted by vacuum induction melting in a gra-
+skeletal muscle, and thus, is suitable for biped walking            phite crucible, where the carbon content increases and
+robots, humanoid robots and Kangaroo jumping                        TiC is mixed in the alloy.147 In addition, SMA can be
+robots,22,145,146 where high power actuators are                    produced by many other ways such as the heat treating
+required. The McKibben PAM’s energy efficiency is                   method, powder metallurgy method and thermal spray
+approximately 0.32–0.49; the energy efficiency of                   method.148 The strain is typically 5%, with a maximum
+human muscle is 0.4.38,112                                          value of 10%.108,112,113 This SMA exerts a large force
+   Despite the distinct positives, the McKibben PAM                 per unit area of more than 200 MPa. Therefore, NiTi
+shows nonlinear strain-stress features, which are caused            SMA is extensively employed as a micro-actuator or
+by viscoelastic properties of inner tube materials, the             artificial muscle in robotics. The SMA reacts directly to
+compressibility of air and complex behaviour of the                 an external stimulus, which significantly reduces the
+braided configuration. The nonlinearity in combination              actuator’s complexity and size. Thus, the NiTi SMA
+with inherent dry friction between the sleeving strands             has a very high work density of 10 MJ/m3, which is 25
+and the inner tube causes actuation hysteresis, which               times that of DC motors, and an unmatched specific
+increases the complexity of their model and control.                power of 50 kW/kg, which means that it can lift 100
+14                                                                                        Advances in Mechanical Engineering
+
+
+times its weight.112,113 As shown in Figure 7(a), the            of VHB elastomer is 7.7 MPa at a high voltage;53,114
+stress, work density and specific power of this SMA are          however, high-stress output is challenging with a simple
+the highest among all the actuators. Furthermore, the            film structure. Most DEAs utilise lateral expansion for
+NiTi SMA can act in a fully 3D manner, which allows              force output; thus, the output stress can be amplified
+the actuator to extend, bend and twist, separately or            by stacking or rolling the dielectric elastomer and can
+simultaneously. These excellent characteristics have             be enlarged using them in bundles. As shown in Figure
+enabled application of the NiTi SMA in micro-walking             7(b), the strain surpasses that of biological muscle, and
+robots, climbing robots, flying robots, jumping robots,          the output stress is also higher. This type of DEA has
+swimming robots and hand prostheses.43–46,149,150                been applied as an actuator for a hexapod robot and
+    The main challenge is the low response time and low          even for an arm-wrestling robot that can compete with
+operational frequency of the NiTi SMA, which stem                a human.118,153 The high strain and stress produces a
+from a relative high heat capacity and density of the            high work density of 3.4 MJ/m3 and a high specific
+material. These disadvantages caused difficulties in the         power of 3.6 kW/kg.53,65,114,115 The strain rate of DEAs
+rapid transfer of heat from active elements. The                 is 450%/s due to the charges’ quick response to an elec-
+response time of the NiTi SMA can be reduced to sev-             tric field. Furthermore, due to its simplicity and low
+eral milliseconds, with a maximum strain rate of 300%/s,         modulus, this DEA is suitable for applications where
+when a very large electrical current is used for heat-           mechanical compliancy and compact sizes are essential.
+ing.114 However, the relatively slow cooling process             Thus, DEAs have also been employed as flapping
+still limits the actuation cycle time, even with an              wings in flying robots, where a high actuation fre-
+active or passive cooling method. The response time              quency is essential.118 The actuation efficiency ranges
+is also affected by the size and shape: the smaller dia-         from 60% to 80%; this high efficiency is primarily
+meter actuator heats faster due to higher resistivity            attributed to the direct transformation from electric
+and cools faster due to a higher surface-to-volume               energy to mechanical energy.114,115
+ratio. Another challenge is the low efficiency, which is             However, the high voltage used to drive the DEA is
+approximately 10% theoretically and usually less                 unacceptable in various applications and enforces an
+than 5%, in practice; these values are much lower                external electric source.154,155 A large dielectric constant
+than the efficiency of biological muscle (Figure 7(a)).108,115   that corresponds to a greater capacitance is desired,
+Most SMA actuators are based on a spring configuration           which reduces the actuation electric field. Therefore,
+but the stress distribution is not constant over the spring      components, such as organic dipole molecules, high
+cross section, which require a larger volume of material to      permittivity ceramic fillers or conductive nanofillers,
+be heated or cooled for the same output force and further        are incorporated in the DEA to improve the dielectric
+reduces the actuator’s efficiency. For optimal use of the        constant. However, these methods often cause side
+NiTi SMA, a straight wire configuration is recommended           effects such as decreased dielectric strength, reduced
+due to a greater amount of work generated from less              energy density or stiffening and agglomeration.156–158
+material volume.                                                     The electromechanical instability is the second chal-
+                                                                 lenge for the DEA. The Maxwell stress exerted by the
+                                                                 DEA is above a certain threshold and triggers a feed-
+e-EAPs                                                           back loop of film compression until it breaks down,
+    DEAs. Among the e-EAPs, the acrylic very high                which causes failure of the actuator. Therefore, a rigid
+bond (VHB) elastomer-based DEA is discussed due to               prestretch structure is essential for the DEA to maintain
+its soft material properties, which allow high strain and        tension and surpass the threshold.139 However, the pre-
+stress. The DEA manufacturing process can be subdi-              stretch mechanism produces an additional load, which
+vided into two stages. First, the coating stage: the coat-       reduces the DEA work density and specific power. A
+ing will be applied to a layer of mixture with a                 stress concentration occurs at the interface between the
+controlled thickness on moulds with the desirable con-           rigid frame and the soft elastomer material.
+figurations, which are fabricated using lithography. A               The third obstacle is that the compliant electrodes
+metal electrode will be applied to the corrugated side           are required for the DEA. The DEA’s electrodes must
+of the elastomer film. Second, the assembly stage:               be more compliant and stretchable than elastomer film
+the laminated DE films are stacked or rolled to form             to prevent a stiffness constrain. In addition, the durabil-
+the actuator.151 High strains to 380% are achieved by            ity and reliability of electrodes should be considered;
+the VHB elastomer materials when high electric fields            electrodes have to maintain conductivity across several
+are applied. However, such large deformation cannot              millions of actuation cycles with large deformation.
+be attained with simple linear configuration actuators.
+Topologies of actuators, such as stack or conical topol-             RFPs. The RFP based on P(VDF-TrFE) has a phase
+ogies, are applied to achieve large displacements, which         transition between ferroelectric transition and paraelec-
+typically range from 10% to 100%.53,139,152 The stress           tric transition with an increase in temperature. In the
+Liang et al.                                                                                                            15
+
+
+ferroelectric phase, a reversible molecular change              devices can transfer electrical energy to macroscopic
+between the nonpolar form and the polar form can                mechanical movements and mechanical work via the
+exert polarisation change; this characteristic leads to         electrochemical reactions in polymer films. A bilayer or
+output strain and high stress. Poly(vinylidene fluoride)        bimorph structure is employed to construct a bending
+(PVDF)-based actuators are usually fabricated via the           PPy actuator, which includes a PPy layer and a passive
+layers that formed by gluing two PVDF sheets together;          layer. Macroscopic bending is caused by electrochemi-
+the layers were clamped to a substrate with their polari-       cally driven length variations in the PPy film, which
+sations in opposite directions.159 Recently, the electric       produces a stress gradient across the interface of the
+poling-assisted additive manufacturing (AM) process,            two films. In addition, the linear actuator is usually
+which combines AM and polymeric poling process, has             formed by a freestanding PPy film or yarns. To pro-
+been introduced to PVDF-based actuators.160 The max-            duce larger volume and length changes, other linear
+imum strain of contraction perpendicular to the electric        actuator configurations, such as multi-layered lami-
+field can be 7% in low-frequency driving fields.68              nated films, folded films, bundles of films and roll-up
+Therefore, RFPs have been applied in millimetre-sized           structure, exist.166–169 A work density of 100 kJ/m3 and
+legged robots and fish robots.62,63 Except for the low          a specific power of 150 W/kg can be realised in PPy-
+strain values, the RFP actuation parameters transcend           based CPs due to their high tensile strength and high
+those of biological muscle (Figure 7(b)), with an output        stiffness.122,124 These characteristics render CPs suitable
+stress of 20 MPa during contraction and 45 MPa during           as actuators in grippers and robots.72–75
+the isometric state.66,116,117 Furthermore, the field-              The selection of counterions and the design of struc-
+induced deformation in high-elastic-modulus RFP can             ture have been two main topics: while electrochemome-
+be operated at high frequency, which yields a strain rate       chanical deformation is limited by the counterions
+of 2000%/s, a high work density of 1 MJ/m3, a high              dopant, the structure of the actuator determines the
+specific power of 4 kW/kg and a maximum efficiency of           robustness and actuation efficiency. However, the out-
+80%.66,118,119,161 The configuration of the RFP actuator        put strain of PPy actuators is small as small dopants
+is designed to be a single layer or multi-layer structure       are employed as counterions, even though the enhanced
+as the strain output at high frequency is smaller than          output strain has been gained by replacing these small
+that at low frequency.                                          counterions with larger counterions. A bilayer PPy
+    For RFP actuators, the difficulty stems from the            actuator requires liquid electrolyte media and a metallic
+high level of driving field, which is close to the dielectric   electrode to allow current flow, which increases the
+breakdown point.155 The low sensitivity to the external         complexity and weight of the actuator. A major frac-
+stimulus limits the performance of the actuator and a           tion of input electrical energy is wasted to produce the
+large portion of the input energy will be extracted to          solvent discharge, which causes a low actuation effi-
+match the load rather than act as an output force,              ciency. Moreover, these reactions cause pH variations
+which reduces the efficiency of the actuation system.158        and new chemicals, which promote the progressive
+In addition, the ferroelectric–paraelectric transition          deterioration of the actuation film and reduce the
+occurs over a narrow range and involves a large hyster-         robustness of the actuator.
+esis, which prevents an enhanced response from practi-
+cal and general applications.                                      CNTs. CNT actuators are mainly powered electro-
+                                                                chemically, where an electrical field causes swelling or
+                                                                contraction of the CNT when the mobile ions of sol-
+i-EAPs                                                          vent enter or leave the polymer. CNT actuators are
+    CPs. CPs based on PPy are outstanding in this class         explored in the form of sheets or films that act as bend-
+due to their capability of producing more significant           ing actuators such as buckypaper actuators.77,86 The
+strain and stress, which are commonly employed as               CNT is mainly prepared by the arc-discharged method,
+actuators. The oxidation/reduction reactions, which             where the CNT is synthesised on the electrode when
+induce anionic dopants in PPy exchange for charge               running a DC current of 200 A at 20 V.170 Other meth-
+balance can produce electrochemomechanical deforma-             ods, such as the laser ablation method, chemical vapour
+tion. The PPy-based actuator is fabricated using a two-         deposition method, vapour-phase growth method and
+step method. First, the substrate was coated with a PPy         flame synthesis method, are employed to fabricate the
+layer, which acts as the seed layer in the electrochemical      CNTs.147,171–173 These actuators demonstrate relatively
+deposition step. Second, the electrochemical deposition         small strains between 0.1% and 3%.86,126,174 A process
+was accomplished by polymerizing the pyrrole mono-              for continuous production of CNT yarn fabrication
+mer via electrochemical oxidation.162 The strain pro-           was introduced, which enables the CNT yarn to be
+duced by CPs is 2%–10%, and the maximum stress                  drawn from a multi-wall CNT forest. Compared with
+that is exerted is 34 MPa, even when actuated by a low          the form of sheet or film, the CNT yarn could be
+voltage of approximately 2 V.163–165 The PPy actuator           twisted, bent and knotted without structural failure.
+16                                                                                    Advances in Mechanical Engineering
+
+
+Tensile CNT actuators could be constructed by twisted        conductivity and excellent mechanical properties.
+spun yarns or coiled yarns, and the output strains could     Nafion can be easily formed in any desired shape by
+be improved.130,175 However, torsional CNT actuators         casting or evaporating methods.181,182 IPMCs based on
+could be formed by twist spun yarns, with two ends           Nafion can generate a large strain to 40%, with a stress
+tethered.176,177 Typically, the stress output of single-     of 3 MPa, under a voltage of less than 7 V due to their
+walled CNTs (SWNTs) is approximately 0.75 MPa,               mechanical response. This large strain enables close
+and the maximum observed isometric actuator stress of        emulation of natural muscle. IPMC actuators could use
+SWNT actuators is currently 26 MPa.128 Due to their          water as a solvent when DC voltage is applied. The suc-
+high elastic moduli and giant tensile strength, CNTs         cess of these actuators in aqueous environments is a
+have achieved a work density of 1 MJ/m3 and a specific       major advantage for the extensive use of IPMC actua-
+power of 270 W/kg.127,128 These twisted and coiled           tors in various underwater robots.183,184 IPMCs also
+yarns could be further processed into textiles by weav-      have self-contained encapsulated electrolytes, which
+ing and braiding, which could provide a larger tensile       means that they can operate in dry conditions.
+contraction and output force.178 The CNT yarns of            Commonly, the IPMC actuator is developed using a
+these actuators could also be driven electrothermally.       thin Nafion film. Two polymer films are bonded to the
+Tensile or torsional actuation is achieved by a volume       IPMC actuator in a layered manner. Thus, bending is
+change of the yarn. To accommodate volume changes,           the basic motion of IPMCs, which is usually employed
+guest materials, such as lie wax, are introduced to          to form the cantilever actuator. Some linear actuators
+CNTs and transform a large guest expansion to a yarn         are developed based on IPMC actuators, where many
+expansion.                                                   basic units are connected in parallel or series, and utilise
+   However, an electrolyte or guest material adds more       the buckles of IPMCs to achieve linear motion.185
+volume and weight to the actuator system, which              Therefore, IPMCs are extensively applied in robotic
+reduces the work density and specific power values.          applications, such as micro-grippers and even micro-
+Moreover, the small strains of CNTs require some             biped and small quadruped robots.132,186 The work
+mechanical amplification. For twisted or coiled CNT          density is approximately 5.5 kJ/m3, while the specific
+actuators, small or even no space exists between neigh-      power is typically 2.56 W/kg.187
+bouring turns, and pre-strain mechanisms are essential          When the IPMC actuator is applied in water, a cor-
+due to the lack of space for an actuator to contract.        responding increase in deformation beyond the initial
+These structures further increase the volume or weight       state exists after recovering from the actuation stimu-
+of actuators. In addition, due to poor electromechani-       lus. This phenomenon is referred to as the relaxation
+cal coupling, CNT actuators require substantial energy       effect of IPMC, which causes serious instability of
+recovery to achieve reasonable efficiencies. The band-       actuators. Although the use of ionic liquids instead of
+widths of these actuators are low due to the ion exchan-     water as the solvent can relieve relaxation, the respond
+ging speed, which limits the strain rate.179                 speed will decrease. Controlling the water content could
+Electrochemical driven CNT actuators rely on electro-        eliminate relaxation but a slight variation in the water
+lytes to exchange ions, even though in some applica-         content will cause great difference in performance.
+tions the liquid electrolytes are substituted. For           Furthermore, due to the thickness of Nafion, which is
+example, a textile CNT actuator was driven with an           nearly 180 mm, the output force is low. Apparently, an
+ionically conducting gel instead of liquid electrolyte.      effective way to improve the output force is to fabricate
+                                                             IPMC with a thicker base membrane. Two methods are
+   IPMCs. Manufacturing an IPMC actuator starts with         available to increase the thickness of Nafion film:
+the core part, an ionic polymer membrane and two con-        multi-layer integration by hot pressing and solution
+ductive electrodes on both sides. Generally, IPMC            casting.181,182 However, the multi-layers are easily sepa-
+manufacturing is divided into four steps: first, pretreat-   rated by long-term use, while the casting method will
+ment (surface roughening); second, the initial composit-     decrease the output strain and response rate.
+ing process, including impregnation-reduction and               As shown in Figure 7(c), the strain, stress, work den-
+reductant permeation; third, the surface electroding         sity and specific power parameters are similar to those
+process, including physical deposition and electroplat-      of biological muscle, and some of them even have
+ing; and fourth, the ion exchange.180 The major role of      values that are higher than the values for natural mus-
+ionic polymers is to store the ions in the ion sites and     cle. However, the strain rates of i-EAPs are less than
+maintain the required mobility for counterions across        20%/s, even with a high applied voltage or closely
+the membrane. Furthermore, ionic polymers provide            spaced electrodes.70,124 These slow actuation rates are
+the mechanical stress and force required for the soft        produced by the slow transport of ions in electrolytes.
+IPMC actuators. While numerous polymers have been            Furthermore, the actuation efficiencies of i-EAPs are
+synthesised to achieve high performance, Nafion holds        less than 1.5% due to their low electromechanical
+a place of prominence in the field due to its high proton    coupling.77,88
+Liang et al.                                                                                                        17
+
+
+Newly developed actuators. The newly developed actua-        complex movements are essential. The preparation of
+tors combine the strengths of different technologies to      internal anisotropic hydrogels has become more impor-
+address many of the issues in actuators. As shown in         tant for achieving complex deformation. Four main
+Figure 7(d), these actuators achieve qualified actuation     configurations, including the bilayer structure, gradient
+performances using different principles to linearly con-     structure, patterned structure and oriented structure,
+tract applications in a biological muscle-like fashion.      are employed to build anisotropic actuators.134 The
+                                                             maximum output strain of an actuator could be
+    TFA. Twisted yarns of nano/microfibers, such as          20%,135 and an output force of 1.8 MPa136 can be
+nylon, polyethylene, graphene and silk, can convert the      achieved with a work density of 460 kJ/m3. By utilisa-
+volumetric expansion form to linear or torsional actua-      tion of an adjustable electric stimulation source, HGAs
+tion. Among these twisted fibres, the inexpensive nylon      can achieve a highly controllable actuation state and
+polymer and fibre polymer chains in non-crystalline          tuneable actuation degree. Benefitting from these mer-
+regions are less and have anisotropic thermal expansion      its, these materials have potential for application in
+behaviours, which enable relatively large linear actua-      artificial muscles.
+tion (to 49%) when heated. A single twisted nylon                However, most HGAs depend on an aqueous envi-
+actuator is able to withstand loads that are more than       ronment, which creates two main challenges. First, the
+100 times heavier than human muscle with the same            challenge for an ionic hydrogel is the leakage of solvent,
+length and weight, which causes output stress of             which greatly affects the durability and stability of
+22 MPa and specific work of 5.3 kW/kg. The maximum           the actuator. Second, due to the slow water diffusion-
+mechanical work during contraction is 2.17 kJ/m3.            induced hydrogel volume transition, the actuation
+The bending and multi-directional motion can be              process of a large-scale actuator is too slow to gain a
+achieved in twisted artificial muscle, which is fabricated   real-time response, which caused a low strain rate (2%/s),
+via roller-pressing highly oriented nylon filament           low output power (2 3 10–4 W) and low efficiency
+into rectangular or square cross-sectional beams.92          (0.164%).137
+Furthermore, textile construction is extensively
+employed as an amplifier of twisted actuators, where             HASEL. HASEL actuators have large output strains
+weaving and knitting are the two main textile process-       as fluidic actuators and can contract or elongate line-
+ing methods.188 Weaving has two perpendicular and            arly without relying on aided structures. For a HASEL
+individual tread systems – warp threads and weft             single-unit actuator, the maximum output strain is
+threads – which could scale up force by parallel assem-      170%, and a stress of approximately 0.3 MPa can be
+bly of single twisted yarns. Knitting keeps the yarns        achieved when operating under a load of 1.5 kg.100
+together by loops that give latent potential for being       Furthermore, the Maxwell pressure exerted in a
+easily deformable, which amplify the output strain by        HASEL actuator is independent of the electrode area,
+stretchable patterns. Textile processing permits the         and the actuation strain and output force can be scaled
+twisted yarn to build macroscopic actuation units and        by adjusting the ratio of the electrode area to the total
+enables the potential to design more advanced                area of an elastomeric shell or pouch. The output strain
+architecture.                                                and force could be designed according to the require-
+    The challenge in developing a high-performance           ment based on various HASEL configurations. In con-
+actuator is that actuation rates are limited by thermal      trast to soft fluidic actuators, where inefficiencies and
+transport times to access yarn volume. Usually, an elec-     losses arise from fluid transport through systems of
+trical heating element involves helically wrapping the       channels, and the additional weight of the mechanisms
+twisted muscle for fast heating but passive cooling still    for producing pressurised fluids, the HASEL actuators
+constrains the actuation rate. Even though a passive         generate hydraulic pressure locally via electrostatic
+cooling method is immersed in the twisted muscle in          forces and pump the liquid in reduced distances, which
+water, which enables electrothermal actuation at 5 Hz        yields a fast actuation rate to 2176%/s and high con-
+to produce ;10% stroke, this method could only be            version efficiency of 21% (similar to those achieved by
+employed in special environments.94 Second, the maxi-        DEA actuators).138 Due to the great reduction in the
+mum energy conversion efficiency during contraction is       design complexity, system weight and viscous loss, a
+1.08% for nylon twisted fibre, which needs to be             single-unit HASEL actuator provides peak specific
+improved.94                                                  power of 586 W/kg and generates work of 64.4 kJ/m3
+                                                             during contraction.138
+  HGA. The maximum swelling ratio of some hydrogel               However, the employment of liquid dielectrics in
+materials in deionised water is 8;189 however, these         HASEL actuators increases the response speed and
+materials have isotropic structures, and only homoge-        achieves high positional control. The thick elastomer
+neous deformation can be achieved with uniform sti-          shells (.1 mm) require high voltages to reach electric
+muli. For the actuator constructed with hydrogel,            fields large enough for actuation, which have
+18                                                                                           Advances in Mechanical Engineering
+
+
+magnitudes in unit kV. In addition, the relatively large         of new methods for improving existing technologies, (2)
+spaces for electrodes will be a drawback for certain             application of bio-inspired design to artificial actuators
+applications.                                                    and (3) establishment of bio-hybrid systems.
+
+
+Summary. The comprehensive comparison results are                New methods for improving existing technologies
+summarised as follows:
+                                                                 In the design of actuators for robotics, some methods
+                                                                 have been proposed to eliminate the negative impact of
+     1.   PAMs, such as the McKibben artificial muscle,
+                                                                 actuation challenges. For conventional PAM-based
+          are similar to biological muscle, and the actua-
+                                                                 robots, a power source for actuation, typically a gas
+          tion parameters are superior to those of biologi-
+                                                                 tank, is required; it is often tethered to the robot. For
+          cal muscle, except for a slightly smaller strain.
+                                                                 untethered actuation, combustion-powered gas sources,
+          However, PAMs are limited by the hysteresis
+          and heavy gas tank in practice.                        which can release high amounts of energy and can scale
+     2.   SMAs, such as the NiTi type, have large advan-         with the size of the robot, were proposed. For example,
+          tages in terms of the stress, work density and         ‘Octobot’ has self-contained aqueous hydrogen perox-
+          specific power, which originate from their high        ide (H2O2), which acts as a combustion source to excite
+          elastic moduli. For the same reason, SMAs exhi-        the interior pneumatics (Figure 8(a)).190 For e-EAPs,
+          bit low strain. The relatively low strain rate and     the main drawback is their use of high voltage (.1 kV
+          low efficiency are caused by the thermal actua-        typically) due to the high electric field that is needed.
+          tion method.                                           Using thin layers or creating materials with high dielec-
+     3.   e-EAPs exhibit superiorities in strain rate and        tric constants, the required high voltage can be reduced.
+          efficiency, high work density and specific power.      For i-EAPs, the strain rates are small due to the inter-
+          The strain that is exerted depends on the elastic      nal resistance of the polymers and electrodes and the
+          moduli of the materials. DEA materials with            slow ion diffusion rates inside the polymer. By increas-
+          low elastic moduli have higher strain, while           ing the applied potential, reducing the actuator thick-
+          RFP materials with high elastic moduli have            ness, or closely positioning the electrodes, the resulting
+          lower strain. However, the electric field required     actuation rates can be substantially improved.70,124,191
+          for actuation is high.
+     4.   i-EAPs are actuated by a much lower voltage than
+          e-EAPs and offer performances that are similar to
+          those of biological muscle. However, the strain
+          rate is low due to the slow transport of ions in
+          electrolytes, and the efficiencies of i-EAPs are low
+          due to the low electromechanical coupling.
+     5.   Newly developed actuators display excellent
+          biocompatibility, especially in the HGA, which
+          could be applied to delivering medicine. Newly
+          developed actuators also have excellent scalabil-
+          ity, which could amplify their output strain and
+          force in macro-scale actuators. However, the
+          values of actuation parameters are relatively low
+          compared with the other actuator technologies.
+
+   Artificial actuators have advantages over biological
+muscle in terms of the actuation parameters but chal-
+lenges always exist when these artificial actuator tech-
+nologies are applied in practice. Thus, artificial muscles       Figure 8. Future directions of robotic actuators: (a)
+cannot replace or perform as biological muscle.                  combustion-powered robot–‘Octobot’, (b) self-adaption Yokoi
+Therefore, further exploration of actuators with high            hand, (c) cardiac muscle-based bio-hybrid robotic ray and (d)
+performances is needed.                                          skeletal muscle-based antagonistic actuator. (a) reprinted with
+                                                                 permission from Springer Nature, Nature, Copyright 2016;190
+                                                                 (b) reprinted with permission from Springer Nature, Embodied
+Future directions                                                artificial intelligence by F. Lida et al., Copyright 2004;192 (c)
+                                                                 reprinted with permission from AAAS, Science, Copyright
+The future trends of artificial actuators can be expected        2016;193 and (d) reprinted with permission from AAAS, Science
+to fall into three different categories: (1) development         Robotics, Copyright 2018.194
+Liang et al.                                                                                                             19
+
+
+Bio-inspired design                                          by coupling a monolayer of anisotropic cardiomyocytes
+Unlike conventional actuators, which are composed of         with a soft PDMS elastomer. When phototactically
+separate modular systems for sensing, actuation and          following a light cue, this robot exhibits natural kine-
+control, novel artificial actuators should perform as        matics and locomotion (Figure 8(c)).193 Another bio-
+biological muscle, which is capable of synthesising          hybrid robot consists of an antagonistic pair of skeletal
+these features into its material architecture. Another       muscle tissue that is combined with a flexible hydrogel
+important property of biological muscle is its scalabil-     substrate, which enables large and long-term actuation
+ity, which allows it to actuate large- or small-scale bio-   of the muscle tissue, that is, ;90° rotation of a
+logical mechanisms. Additional actuator specifications,      joint with almost 1-week lifetime (Figure 8(d)).194 Thus,
+such as dynamic responses and morphological compat-          bio-hybrid actuators based on tissue engineering are
+ibility, should be taken into account when designing a       promising candidates for enhancing robot performance.
+robot. Inspiration can be obtained from nature, and
+researchers can apply bio-inspired topology, geometry
+and material to artificial actuator design to achieve ver-   Conclusion
+satile functions and adaptive interactions.                  This study has presented the main differences between
+    Regarding natural mechanisms, in addition to the         biological muscle and conventional actuators in robots.
+actuation function, the body also offers cognition and       These differences indicate that bio-inspired and biomi-
+control functions to offload computation from the            metic robots require more actuator options for repro-
+brain, which is also known as ‘morphological computa-        ducing natural movements. To identify actuators that
+tion’. This process allows embodied agents, such as          can perform as biological muscle, this study has
+muscle, to not only function as actuators but also per-      reviewed the artificial actuator technologies that are
+form the task of sensing the environment and process-        extensively employed in robotics. These actuators are
+ing the information without participation of the             also known as artificial muscles, whose actuation is
+brain.195 For this reason, future artificial actuators       based on pneumatic, thermal, photonic and electrical
+could be combined with morphological computation,            stimuli. No actuator can satisfy all the actuation
+in which mechanical circuits are integrated such that        requirements. The advantages and shortcomings of
+the entire actuator can work as a computational              artificial actuators must be distinguished by comparing
+resource for both perception and action. This actuation      their actuation parameters, not only to provide guide-
+strategy would make the actuators work with rather           lines for choosing appropriate actuator materials but
+than against their dynamics and reduce the complexity        also to provide targets that are aimed at improving
+of the control architecture and the amount of computa-       these actuator technologies. According to the reviewed
+tion, which enables more robust, faster and more effi-       data, this study performed single parameter compari-
+cient artificial actuator designs. In addition, based on     sons and comprehensive performance comparisons,
+the self-perception property, the morphological compu-       which offer new insights into the way actuators were
+tation approach enables artificial actuators to switch       evaluated and selected in this study and indicate future
+their behaviours according to the environmental              possible directions for enhancing artificial actuator
+requirements. Artificial actuators can vary the stiffness
+                                                             performance.
+distribution to satisfy the kinematic and dynamic
+requirements of the task. For example, the ‘Yokoi
+hand’, which is a 13 DOF robotic hand built from elas-       Author contributions
+tic and deformable materials for adjustment of its mor-      L.R. and Zh.Q. were involved in conceptualization; W.L. and
+phology to task requirements, can grasp different            Ky.W. were involved in methodology; W.L. and H.L. were
+objects with the same simple control scheme                  involved in writing—original draft preparation; and Zh.Q.,
+(Figure 8(b)).192                                            L.R. and Lq.R. were involved in funding acquisition.
+
+
+Bio-hybrid systems                                           Declaration of conflicting interests
+Artificial actuators can also be formed by coupling bio-     The author(s) declared no potential conflicts of interest with
+compatible synthetic materials with contractile muscle       respect to the research, authorship and/or publication of this
+                                                             article.
+tissues to form a bio-hybrid system.196 Bio-hybrid
+actuators feature the merits of biological muscle, which
+are capable of self-repair and self-assembly and can per-    Funding
+form actuation the same as in vivo.197,198 However, we       The author(s) disclosed receipt of the following financial sup-
+can control these bio-hybrid systems by external sti-        port for the research, authorship and/or publication of this
+muli. For example, a jellyfish robot can be developed        article: This research was funded by the project of National
+20                                                                                           Advances in Mechanical Engineering
+
+
+Key R&D Programme of China (Nos. 2016YFE0103700 and                   Arlington, VA, 23–26 August 2008, pp.522–527. New
+2018YFC2001300), National Natural Science Foundation of               York: IEEE.
+China (Nos. 91848204 and 51675222) and The Science and            15. Kalouche S. GOAT: a legged robot with 3D agility and
+Technology Development Planning Project of Jilin Province             virtual compliance. In: Proceedings of the 2017 IEEE/
+(No. 20180101068JC).                                                  RSJ international conference on intelligent robots and sys-
+                                                                      tems (IROS), Vancouver, BC, Canada, 24–28 September
+                                                                      2017, pp.4110–4117. New York: IEEE.
+ORCID iDs
+                                                                  16. Dickinson MH. How animals move: an integrative view.
+Wei Liang   https://orcid.org/0000-0002-5328-2545                     Science 2000; 288: 100–106.
+Hao Liu   https://orcid.org/0000-0002-4816-7585                   17. Pfeifer R and Gómez G. Morphological computation –
+                                                                      connecting brain, body, and environment. In: Sendhoff
+                                                                      B, Körner E and Sporns O (eds) Creating brain-like intel-
+References
+                                                                      ligence. Berlin: Springer, 2009, pp.66–83.
+ 1. Taylor AMKP. Science review of internal combustion            18. Hollerbach JM, Hunter IM and Ballentyne J. A compara-
+    engines. Energ Pol 2008; 36: 4657–4667.                           tive analysis of actuator technologies for robotics. Robot
+ 2. Madden JDW. Mobile robots: motor challenges and                   Rev 1991; 2: 299–342.
+    materials solutions. Science 2007; 318: 1094–1097.            19. Mohd JJ, Leary M, Subic A, et al. A review of shape
+ 3. Ehsani M, Gao Y and Gay S. Characterization of elec-              memory alloy research, applications and opportunities.
+    tric motor drives for traction applications. In: Proceed-         Mater Des 2014; 56: 1078–1113.
+    ings of the IECON’03: 29th annual conference of the           20. Liu Z, Toh W and Ng TY. Advances in mechanics of soft
+    IEEE industrial electronics society (IEEE Cat. No.                materials: a review of large deformation behavior of
+    03CH37468), Roanoke, VA, 2–6 November 2003,                       hydrogels. Int J Appl Mech 2015; 7: 1530001.
+    pp.891–896. New York: IEEE.                                   21. Daerden F and Lefeber D. Pneumatic artificial muscles:
+ 4. Amundson K, Raade J, Harding N, et al. Hybrid                     actuators for robotics and automation. Eur J Mech Eng
+    hydraulic-electric power unit for field and service robots.       2000; 47: 11–21.
+    In: Proceedings of the 2005 IEEE/RSJ international con-       22. Shin H, Ikemoto S and Hosoda K. Constructive under-
+    ference on intelligent robots and systems, Edmonton, AB,          standing and reproduction of functions of gluteus medius
+    Canada, 2–6 August 2005, pp.3453–3458. New York:                  by using a musculoskeletal walking robot. Adv Robot
+    IEEE.                                                             2018; 32: 202–214.
+ 5. Amundson K, Raade J, Harding N, et al. Development            23. Daerden F and Lefeber D. The concept and design of
+    of hybrid hydraulic–electric power units for field and ser-       pleated pneumatic artificial muscles. Int J Fluid Power
+    vice robots. Adv Robot 2006; 20: 1015–1034.                       2001; 2: 41–50.
+ 6. Li Y, Li B, Ruan J, et al. Research of mammal bionic          24. Verrelst B, Ham RV, Vanderborght B, et al. The pneu-
+    quadruped robots: a review. In: Proceedings of the 2011           matic biped ‘Lucy’ actuated with pleated pneumatic arti-
+    IEEE 5th international conference on robotics, automation         ficial muscles. Auton Robot 2005; 18: 201–213.
+    and mechatronics (RAM), Qingdao, China, 17–19                 25. Kukolj M. Axially contractable actuator. US4819547 Pat-
+    September 2011, pp.166–171. New York: IEEE.                       ent, 1989.
+ 7. Atlas. The world’s most dynamic humanoid robot,               26. Krishnan G, Bishop-Moser J, Kim C, et al. Kinematics
+    https://www.bostondynamics.com/atlas (2019, accessed              of a generalized class of pneumatic artificial muscles.
+    17 July 2019).                                                    J Mech Robot 2015; 7: 041014.
+ 8. Trivedi D, Rahn CD, Kier WM, et al. Soft robotics: bio-       27. Sanan S, Lynn PS and Griffith ST. Pneumatic torsional
+    logical inspiration, state of the art, and future research.       actuators for inflatable robots. J Mech Robot 2014; 6:
+    Appl Bion Biomech 2008; 5: 99–117.                                031003.
+ 9. Manti M, Cacucciolo V and Cianchetti M. Stiffening in         28. Baldwin HA. Realizable models of muscle function. In:
+    soft robotics: a review of the state of the art. IEEE Robot       Baldwin HA (ed.) Biomechanics. New York: Springer,
+    Autom Mag 2016; 23: 93–106.                                       1969, pp.139–147.
+10. Coyle S, Majidi C, LeDuc P, et al. Bio-inspired soft          29. Winters JM. Braided artificial muscles: mechanical prop-
+    robotics: material selection, actuation, and design.              erties and future uses in prosthetics/orthotics. In: Pro-
+    Extrem Mech Lett 2018; 22: 51–59.                                 ceedings of the RESNA 13th annual conference,
+11. Ewoldt RH. Extremely soft: design with rheologically              Washington, DC, 15–20 June 1990, pp.173–174.
+    complex fluids. Soft Robot 2014; 1: 12–20.                        Washington, DC: RESNA.
+12. Majidi C. Soft robotics: a perspective – current trends       30. Wu M, Driver T, Wu SK, et al. Design and preliminary
+    and prospects for the future. Soft Robot 2014; 1: 5–11.           testing of a pneumatic muscle-actuated transfemoral
+13. Nassar JM, Rojas JP, Hussain AM, et al. From stretch-             prosthesis. J Med Dev 2014; 8: 044502.
+    able to reconfigurable inorganic electronics. Extrem Mech     31. Park YL, Chen B, Pérez-Arancibia NO, et al. Design and
+    Lett 2016; 9: 245–268.                                            control of a bio-inspired soft wearable robotic device for
+14. Heping C, Fuhlbrigge T and Li XZ. Automated indus-                ankle–foot rehabilitation. Bioinspir Biomim 2014; 9:
+    trial robot path planning for spray painting process: a           016007.
+    review. In: Proceedings of the 2008 IEEE international        32. Daerden F. Conception and realization of pleated pneu-
+    conference on automation science and engineering,                 matic artificial muscles and their use as compliant actuation
+Liang et al.                                                                                                                  21
+
+
+    elements. PhD Thesis, Vrije Universiteit Brussel, Brussels,        Albuquerque, NM, 27 February–2 March 2000, pp.188–
+    1999.                                                              196. Bellingham: SPIE.
+33. Yarlott JM. Fluid actuator. US3645173 Patent, 1972.            53. Kornbluh RD, Pelrine R, Pei Q, et al. Ultrahigh strain
+34. Immega G. Tentacle-like manipulators with adjustable ten-          response of field-actuated elastomeric polymers. In: Pro-
+    sion lines. US5317952 Patent, 1994.                                ceedings of the SPIE’s 7th annual international symposium
+35. Henri MA. Elastic diaphragm. US2642091 Patent, 1953.               on smart structures and materials, Newport Beach, CA, 7
+36. Paynter HM. High pressure fluid-driven tension actuators           June 2000, p.51. Bellingham: SPIE.
+    and method for constructing them. US4751869 Patent,            54. Li T, Li G, Liang Y, et al. Fast-moving soft electronic
+    1988.                                                              fish. Sci Adv 2017; 3: e1602045.
+37. Kleinwächter H. Device with a pressurizable variable          55. Zhao J, Niu J, McCoul D, et al. A rotary joint for a flap-
+    capacity chamber for transforming a fluid pressure into a          ping wing actuated by dielectric elastomers: design and
+    motion. US3638536 Patent, 1972.                                    experiment. Meccanica 2015; 50: 2815–2824.
+38. Chou CP and Hannaford B. Measurement and modeling              56. Jung HS, Cho KH, Park JH, et al. Musclelike joint
+    of McKibben pneumatic artificial muscles. IEEE Trans               mechanism driven by dielectric elastomer actuator for
+    Robot Autom 1996; 12: 90–102.                                      robotic applications. Smart Mater Struct 2018; 27:
+39. Sun L and Huang WM. Nature of the multistage trans-                075011.
+    formation in shape memory alloys upon heating. Met Sci         57. Wang S, Huang B, McCoul D, et al. A soft breaststroke-
+    Heat Treat 2009; 51: 573–578.                                      inspired swimming robot actuated by dielectric elasto-
+40. Mihálcz I. Fundamental characteristics and design                 mers. Smart Mater Struct 2019; 28: 045006.
+    method for nickel-titanium shape memory alloy. Period          58. Nguyen CT, Phung H, Nguyen TD, et al. A small biomi-
+    Polytech Mech Eng 2001; 45: 75–86.                                 metic quadruped robot driven by multistacked dielectric
+41. Lagoudas DC. Shape memory alloys: modeling and engi-               elastomer actuators. Smart Mater Struct 2014; 23:
+    neering applications. Berlin: Springer, 2008, pp.54–109.           065005.
+42. Perkins J. Shape memory effects in alloys. Berlin:             59. Gu G, Zou J, Zhao R, et al. Soft wall-climbing robots.
+    Springer, 2012, pp.29–58.                                          Sci Robot 2018; 3: eaat2874.
+43. Villanueva A, Smith C and Priya S. A biomimetic robotic        60. Nguyen CT, Phung H, Nguyen TD, et al. Multiple-
+    jellyfish (Robojelly) actuated by shape memory alloy               degrees-of-freedom dielectric elastomer actuators for soft
+    composite actuators. Bioinspir Biomim 2011; 6: 036004.             printable hexapod robot. Sens Actuat A Phys 2017; 267:
+44. Kheirikhah MM, Rabiee S and Edalat ME. A review of                 505–516.
+    shape memory alloy actuators in robotics. In: Proceedings      61. Mirfakhrai T, Madden JDW and Baughman RH. Poly-
+    of the RoboCup 2010: robot soccer world cup XIV (eds J             mer artificial muscles. Mater Today 2007; 10: 30–38.
+    Ruiz-del-Solar, E Chown and PG Plöger), Singapore, 19–        62. Breguet J, Johansson S, Driesen W, et al. A review on
+    25 June 2010, pp.206–217. Berlin: Springer.                        actuation principles for few cubic millimeter sized mobile
+45. Festo. BionicOpter, https://www.festo.com/PDF_Flip/                micro-robots. In: Proceedings of the 10th international
+    corp/Festo_BionicOpter/en/files/assets/basic-html/page-            conference on new actuators (Actuator 2006), Bremen,
+    1.html (2019, accessed 17 July 2019).                              14–16 June 2006, pp.374–381. Lausanne: INFO Science.
+46. Price AD, Jnifene A and Naguib HE. Design and control          63. Xiao P, Yi N, Zhang T, et al. Construction of a fish-like
+    of a shape memory alloy based dexterous robot hand.                robot based on high performance graphene/PVDF
+    Smart Mater Struct 2007; 16: 1401.                                 bimorph actuation materials. Adv Sci 2016; 3: 1500438.
+47. Enkovaara J, Ayuela A, Zayak AT, et al. Magnetically           64. Zhang Q. Electric EAP. In: Bar-Cohen Y (ed.) Electroac-
+    driven shape memory alloys. Mater Sci Eng A 2004; 378:             tive polymer (EAP) actuators as artificial muscle. 2nd ed.
+    52–60.                                                             Bellingham: SPIE, 2007, p.95.
+48. Tao T, Liang YC and Taya M. Bio-inspired actuating             65. Madden JDW, Vandesteeg NA, Anquetil PA, et al. Arti-
+    system for swimming using shape memory alloy compo-                ficial muscle technology: physical principles and naval
+    sites. Int J Autom Comput 2006; 3: 366–373.                        prospects. IEEE J Ocean Eng 2004; 29: 706–728.
+49. Tickle R, James RD, Shield T, et al. Ferromagnetic shape       66. Cheng ZY, Bharti V, Xu TB, et al. Electrostrictive poly(-
+    memory in the NiMnGa system. IEEE Trans Magn 1999;                 vinylidene fluoride-trifluoroethylene) copolymers. Sens
+    35: 4301–4310.                                                     Actuat A Phys 2001; 90: 138–147.
+50. Kanner OY, Shilo D, Sheng J, et al. Ferromagnetic shape        67. Huang C, Klein R, Xia F, et al. Poly(vinylidene fluoride-
+    memory flapper for remotely actuated propulsion sys-               trifluoroethylene) based high performance electroactive
+    tems. Smart Mater Struct 2013; 22: 085030.                         polymers. IEEE Trans Dielectr Electr Insul 2004; 11:
+51. Carpi F, Kornbluh R, Sommer-Larsen P, et al. Electroac-            299–311.
+    tive polymer actuators as artificial muscles: are they ready   68. Andr JM and Delhalle J. Quantum chemistry aided design
+    for bioinspired applications? Bioinspir Biomim 2011; 6:            of organic polymers: an introduction to the quantum chem-
+    045006.                                                            istry of polymers and its applications. Singapore: World
+52. Bar-Cohen Y. Electroactive polymers as artificial mus-             Scientific, 1991.
+    cles: capabilities, potentials and challenges. In: Proceed-    69. Pei Q and Inganaes O. Electrochemical applications of
+    ings of the Robotics 2000: fourth international conference         the bending beam method. 1. Mass transport and volume
+    and exposition/demonstration on robotics for challenging           changes in polypyrrole during redox. J Phys Chem 1992;
+    situations and environments (ed. CS William),                      96: 10507–10514.
+22                                                                                          Advances in Mechanical Engineering
+
+
+70. Madden JD, Cush RA, Kanigan TS, et al. Fast contract-          88. Kim KJ and Shahinpoor M. Ionic polymer metal com-
+    ing polypyrrole actuators. Synth Met 2000; 113: 185–192.           posites: II. Manufacturing techniques. Smart Mater
+71. Okuzaki H and Kunugi T. Adsorption-induced chemo-                  Struct 2003; 12: 65–79.
+    mechanical behavior of polypyrrole films. J Appl Polym         89. Shahinpoor M. Mechanoelectrical phenomena in ionic
+    Sci 1997; 64: 383–388.                                             polymers. Math Mech Solids 2003; 8: 281–288.
+72. Moghadam AAA, Kouzani A, Torabi K, et al. Develop-             90. Jain RK, Majumder S and Dutta A. SCARA based peg-
+    ment of a novel soft parallel robot equipped with poly-            in-hole assembly using compliant IPMC micro gripper.
+    meric artificial muscles. Smart Mater Struct 2015; 24:             Robot Auton Syst 2013; 61: 297–311.
+    035017.                                                        91. Jain RK, Patkar US and Majumdar S. Micro gripper
+73. Chikhaoui MT, Cot A, Rabenorosoa K, et al. Design                  for micromanipulation using IPMCs (ionic polymer
+    and closed-loop control of a tri-layer polypyrrole based           metal composites). J Sci Ind Res (India) 2009; 68:
+    telescopic soft robot. In: Proceedings of the 2016 IEEE/           23–28.
+    RSJ international conference on intelligent robots and sys-    92. Mirvakili SM and Hunter IW. Multidirectional artificial
+    tems (IROS), Daejeon, Korea, 9–14 October 2016,                    muscles from nylon. Adv Mater 2017; 29: 1604734.
+    pp.1145–1150. New York: IEEE.                                  93. Jia T, Wang Y, Dou Y, et al. Moisture sensitive smart
+74. McGovern S, Alici G, Truong VT, et al. Finding NEMO                yarns and textiles from self-balanced silk fiber muscles.
+    (novel electromaterial muscle oscillator): a polypyrrole           Adv Funct Mater 2019; 29: 1808241.
+    powered robotic fish with real-time wireless speed and         94. Haines CS, Lima MD, Li N, et al. Artificial muscles
+    directional control. Smart Mater Struct 2009; 18: 095009.          from fishing line and sewing thread. Science 2014; 343:
+75. McGovern ST, Abbot M, Emery R, et al. Evaluation of                868–872.
+    thrust force generated for a robotic fish propelled with       95. Wu L, Jung de Andrade M, Saharan LK, et al. Compact
+    polypyrrole actuators. Polym Int 2010; 59: 357–364.                and low-cost humanoid hand powered by nylon artificial
+76. Wang C, Nosaka T, Yost B, et al. Printed carbon nano-              muscles. Bioinspir Biomim 2017; 12: 026004.
+    tubes on polymer films for active origami. Mater Res Lett      96. Almubarak Y and Tadesse Y. Twisted and coiled poly-
+    2013; 1: 13–18.                                                    mer (TCP) muscles embedded in silicone elastomer for
+77. Lima MD, Li N, Jung de Andrade M, et al. Electrically,             use in soft robot. Int J Intell Robot Appl 2017; 1:
+    chemically, and photonically powered torsional and ten-            352–368.
+    sile actuation of hybrid carbon nanotube yarn muscles.         97. Shi Q, Liu H, Tang D, et al. Bioactuators based on
+    Science 2012; 338: 928–932.                                        stimulus-responsive hydrogels and their emerging bio-
+78. Jung K, Nam J and Choi H. Investigations on actuation              medical applications. NPG Asia Mater 2019; 11: 1–21.
+    characteristics of IPMC artificial muscle actuator. Sens       98. Palleau E, Morales D, Dickey MD, et al. Reversible
+    Actuat A Phys 2003; 107: 183–192.                                  patterning and actuation of hydrogels by electrically
+79. Chen Z, Um TI and Bart-Smith H. Bio-inspired robotic               assisted ionoprinting. Nat Commun 2013; 4: 1–7.
+    manta ray powered by ionic polymer–metal composite             99. Sydney Gladman A, Matsumoto EA, Nuzzo RG, et al.
+    artificial muscles. Int J Smart Nano Mater 2012; 3:                Biomimetic 4D printing. Nat Mater 2016; 15: 413–418.
+    296–308.                                                      100. Acome E, Mitchell SK, Morrissey TG, et al. Hydrauli-
+80. Shen Q, Wang T, Liang J, et al. Hydrodynamic perfor-               cally amplified self-healing electrostatic actuators with
+    mance of a biomimetic robotic swimmer actuated by ionic            muscle-like performance. Science 2018; 359: 61–65.
+    polymer–metal composite. Smart Mater Struct 2013; 22:         101. Kellaris N, Venkata VG, Smith GM, et al. Peano-
+    075035.                                                            HASEL actuators: muscle-mimetic, electrohydraulic
+81. Kim MH, Kim KY, Lee JH, et al. An experimental study               transducers that linearly contract on activation. Sci
+    of force control of an IPMC actuated two-link manipula-            Robot 2018; 3: eaar3276.
+    tor using time-delay control. Smart Mater Struct 2016;        102. Gupta P, Vermani K and Garg S. Hydrogels: from con-
+    25: 117001.                                                        trolled release to pH-responsive drug delivery. Drug Dis-
+82. Billah MM, Khan R and Shafie AA. SMARS-I: smart                    cov Today 2002; 7: 569–579.
+    material actuated robotic snake (ver-1). Mater Today          103. Koetting MC, Peters JT, Steichen SD, et al. Stimulus-
+    Proc 2016; 3: 572–577.                                             responsive hydrogels: theory, modern advances, and
+83. Dresselhaus G and Iichiro S. Physical properties of carbon         applications. Mater Sci Eng R Rep 2015; 93: 1–49.
+    nanotubes. Singapore: World Scientific, 1998.                 104. Stoychev G, Puretskiy N and Ionov L. Self-folding all-
+84. Baughman RH. Carbon nanotube actuators. Science                    polymer thermoresponsive microcapsules. Soft Matt
+    1999; 84: 1340–1344.                                               2011; 7: 3277–3279.
+85. Chen L, Liu C, Liu K, et al. High-performance, low-vol-       105. Shiga T and Kurauchi T. Deformation of polyelectrolyte
+    tage, and easy-operable bending actuator based on                  gels under the influence of electric field. J Appl Polym
+    aligned carbon nanotube/polymer composites. ACS Nano               Sci 1990; 39: 2305–2320.
+    2011; 5: 1588–1593.                                           106. Gong JP, Nitta T and Osada Y. Electrokinetic modeling
+86. Foroughi J, Pinks GM, Wallace GG, et al. Torsional car-            of the contractile phenomena of polyelectrolyte gels.
+    bon nanotube artificial muscles. Science 2011; 334:                One-dimensional capillary model. J Phys Chem 1994;
+    494–497.                                                           98: 9583–9587.
+ 87. Shahinpoor M and Kim KJ. Ionic polymer-metal com-            107. Hoare TR and Kohane DS. Hydrogels in drug delivery:
+     posites: I. Fundamentals. Smart Mater Struct 2001; 10:            progress and challenges. Polymer (Guildf) 2008; 49:
+     819–833.                                                          1993–2007.
+Liang et al.                                                                                                                    23
+
+
+108. Hunter IW and Lafontaine S. A comparison of muscle                 of a (VDF/TrFE) (75/25) copolymer film. Solid State
+     with artificial actuators. In: Proceedings of the technical        Commun 2004; 129: 5–8.
+     digest IEEE solid-state sensor and actuator workshop,         121. Nguyen H, Navid A and Pilon L. Pyroelectric energy
+     Hilton Head Island, SC, 22–25 June 1992, pp.178–185.               converter using co-polymer P(VDF-TrFE) and Olsen
+     New York: IEEE.                                                    cycle for waste heat energy harvesting. Appl Therm Eng
+109. Bar-Cohen Y. Electroactive polymers as artificial                  2010; 30: 2127–2137.
+     muscles–reality and challenges. In: Proceedings of the        122. Bauer F. Review on the properties of the ferrorelaxor
+     19th AIAA applied aerodynamics conference, Anaheim,                polymers and some new recent developments. Appl Phys
+     CA, 11–14 June 2001, p.1492. Reston, VA: AIAA.                     A 2012; 107: 567–573.
+110. Caldwell DG, Tsagarakis N and Medrano-Cerda GA.               123. Pei Q, Pelrine R, Stanford S, et al. Electroelastomer rolls
+     Bio-mimetic actuators: polymeric pseudo muscular                   and their application for biomimetic walking robots.
+     actuators and pneumatic muscle actuators for biological            Synth Met 2003; 135: 129–131.
+     emulation. Mechatronics 2000; 10: 499–530.                    124. Zhang R, Lochmatter P, Kunz A, et al. Spring roll
+111. Hannaford B and Winters J. Actuator properties and                 dielectric elastomer actuators for a portable force feed-
+     movement control: biological and technological models.             back glove. In: Proceedings of the smart structures and
+     In Winters JM and Woo SL (eds) Multiple muscle sys-                materials 2006: electroactive polymer actuators and
+     tems. New York: Springer, 1990, pp.101–120.                        devices (EAPAD) (ed. Y Bar-Cohen), San Diego, CA,
+112. Lederlé S. Issues in the design of shape memory alloy             22 March 2006, vol. 6168, p.61681T. Bellingham: SPIE.
+     actuators. PhD Thesis, Massachusetts Institute of Tech-       125. Baughman RH. Conducting polymer artificial muscles.
+     nology, Cambridge, MA, 2002.                                       Synth Met 1996; 78: 339–353.
+113. Tadesse Y. Electroactive polymer and shape memory             126. Madden JDW, Schmid B, Hechinger M, et al. Applica-
+     alloy actuators in biomimetics and humanoids. In: Pro-             tion of polypyrrole actuators: feasibility of variable cam-
+     ceedings of the electroactive polymer actuators and                ber foils. IEEE J Ocean Eng 2004; 29: 738–749.
+     devices (EAPAD) 2013 (ed. Y Bar-Cohen), San Diego,            127. Madden JDW, Madden PG and Hunter IW. Conduct-
+     CA, 9 April 2013, vol. 8687, p.868709. Bellingham:                 ing polymer actuators as engineering materials. In: Pro-
+     SPIE.                                                              ceedings of the smart structures and materials 2002:
+114. Hunter IW, Lafontaine S, Hollerbach JM, et al. Fast                electroactive polymer actuators and devices (EAPAD)
+     reversible NiTi fibers for use in microrobotics. In: Pro-          (ed. Y Bar-Cohen), San Diego, CA, 11 July 2002, vol.
+     ceedings of the IEEE micro electro mechanical systems,             4695, pp.176–190. Bellingham: SPIE.
+     Nara, Japan, 30 January–2 February 1991, pp.166–170.          128. Baughman RH. Carbon nanotubes–the route toward
+     New York: IEEE.                                                    applications. Science 2002; 297: 787–792.
+115. Jun HY, Rediniotis OK and Lagoudas DC. Develop-               129. Spinks GM, Wallace GG, Fifield LS, et al. Pneumatic
+     ment of a fuel-powered shape memory alloy actuator                 carbon nanotube actuators. Adv Mater 2002; 14:
+     system: II. Fabrication and testing. Smart Mater Struct            1728–1732.
+     2007; 16: S95–S107.                                           130. Mirfakhrai T, Oh J, Kozlov M, et al. Electrochemical
+116. Kornbluh RD, Pelrine R, Pei Q, et al. Electroelasto-               actuation of carbon nanotube yarns. Smart Mater Struct
+     mers: applications of dielectric elastomer transducers for         2007; 16: S243–S249.
+     actuation, generation, and smart structures. In: Proceed-     131. Madden JDW, Barisci JN, Anquetil PA, et al. Fast car-
+     ings of the smart structures and materials 2002: industrial        bon nanotube charging and actuation. Adv Mater 2006;
+     and commercial applications of smart structures technolo-          18: 870–873.
+     gies (ed. AY McGowan), San Diego, CA, 9 July 2002,            132. Kamamichi N, Kaneda Y, Yamakita M, et al. Biped
+     vol. 4698, pp.254–270. Bellingham: SPIE.                           walking of passive dynamic walker with IPMC linear
+117. Ha SM, Park IS, Wissler M, et al. High electromechani-             actuator. In: Proceedings of the SICE 2003 annual con-
+     cal performance of electroelastomers based on interpe-             ference, Fukui, Japan, 4–6 August 2003, pp.166–170.
+     netrating polymer networks. In: Proceedings of the                 Indiranagar, India: INFODOC.
+     electroactive polymer actuators and devices (EAPAD)           133. Nemat-Nasser S. Micromechanics of actuation of ionic
+     2008 (ed. Y Bar-Cohen), San Diego, CA, 10 April 2008,              polymer-metal composites. J Appl Phys 2002; 92:
+     vol. 6927, p.69272C. Bellingham: SPIE.                             2899–2915.
+118. Pelrine R, Kornbluh RD, Pei Q, et al. Dielectric elasto-      134. Le X, Lu W, Zhang J, et al. Recent progress in biomi-
+     mer artificial muscle actuators: toward biomimetic                 metic anisotropic hydrogel actuators. Adv Sci 2019; 6:
+     motion. In: Proceedings of the smart structures and                1801584.
+     materials 2002: electroactive polymer actuators and           135. Tang P, Yan H, Chen L, et al. Anisotropic nanocompo-
+     devices (EAPAD) (ed. Y Bar-Cohen), San Diego, CA,                  site hydrogels with enhanced actuating performance
+     11 July 2002, vol. 4695, pp.126–137. Bellingham: SPIE.             through aligned polymer networks. Sci China Mater
+119. Bharti V, Cheng ZY, Gross S, et al. High electrostrictive          2020; 63: 832–841.
+     strain under high mechanical stress in electron-irradiated    136. Bartholome C, Derré A, Roubeau O, et al. Electrome-
+     poly(vinylidene fluoride-trifluoroethylene) copolymer.             chanical properties of nanotube-PVA composite actua-
+     Appl Phys Lett 1999; 75: 2653–2655.                                tor bimorphs. Nanotechnology 2008; 19: 325501.
+120. Sencadas V, Lanceros-Méndez S and Mano J. Effect of          137. Hwang T, Frank Z, Neubauer J, et al. High-perfor-
+     the mechanical stretching on the ferroelectric properties          mance polyvinyl chloride gel artificial muscle actuator
+24                                                                                           Advances in Mechanical Engineering
+
+
+     with graphene oxide and plasticizer. Sci Rep 2019; 9:             materials 2001: electroactive polymer actuators and
+     1–9.                                                              devices (ed. Y Bar-Cohen), San Diego, CA, 16 July
+138. Wang X, Mitchell SK, Rumley EH, et al. High-strain                2001, vol. 4239, pp.106–116. Bellingham: SPIE.
+     Peano-HASEL actuators. Adv Funct Mater 2020; 30:             155. Xu H, Bai Y, Bharti V, et al. High dielectric constant
+     1908821.                                                          composites based on metallophthalocyanine oligomer
+139. Ashley S. Artificial muscles. Sci Am 2003; 289: 52–59.            and poly(vinylidene fluoride-trifluoroethylene) copoly-
+140. Sangian D. New types of McKibben artificial muscles.              mer. J Appl Polym Sci 2001; 82: 70–75.
+     PhD Thesis, University of Wollongong, Wollongong,            156. Carpi F and De Rossi D. Improvement of electromecha-
+     NSW, Australia, 2016.                                             nical actuating performances of a silicone dielectric elas-
+141. Festo. BionicSoftHand, https://www.festo.com/group/               tomer by dispersion of titanium dioxide powder. IEEE
+     en/cms/13508.htm (2019, accessed 17 July 2019).                   Trans Dielectr Electr Insul 2005; 12: 835–843.
+142. Shadow biomorphic arm, https://robots.ieee.org/robots/       157. Molberg M, Crespy D, Rupper P, et al. High break-
+     shadow/?gallery=photo3 (2019, accessed 17 July 2019).             down field dielectric elastomer actuators using encapsu-
+143. Festo. Airic’s_arm, https://www.festo.com/group/en/               lated polyaniline as high dielectric constant filler. Adv
+     cms/10247.htm (2019, accessed 17 July 2019).                      Funct Mater 2010; 20: 3280–3291.
+144. Tondu B, Ippolito S, Guiochet J, et al. A seven-degrees-     158. Zhang QM, Li H, Poh M, et al. An all-organic compo-
+     of-freedom robot-arm driven by pneumatic artificial               site actuator material with a high dielectric constant.
+     muscles for humanoid robots. Int J Robot Res 2005; 24:            Nature 2002; 419: 284–287.
+     257–274.                                                     159. Wiederkehr RS, Salvadori MC, Brugger J, et al. Fabri-
+145. Asano Y, Okada K and Inaba M. Design principles of a              cation and testing of a poly(vinylidene fluoride) (PVDF)
+     human mimetic humanoid: humanoid platform to study                microvalve for gas flow control. Smart Mater Struct
+     human intelligence and internal body system. Sci Robot            2007; 16: 2302.
+     2017; 2: eaaq0899.                                           160. Lee CB and Tarbutton JA. Polyvinylidene fluoride
+146. Festo. BionicKangaroo, https://www.festo.com/net/                 (PVDF) direct printing for sensors and actuators. Int J
+     SupportPortal/Files/334103/Festo_BionicKangaroo_en.               Adv Manuf Technol 2019; 104: 3155–3162.
+     pdf (2019, accessed 17 July 2019).                           161. Pelrine R, Kornbluh R, Joseph J, et al. High-field defor-
+147. Mamalis AG, Vogtländer LOG and Markopoulos A.                    mation of elastomeric dielectrics for actuators. Mater
+     Nanotechnology and nanostructured materials: trends               Sci Eng C 2000; 11: 89–100.
+     in carbon nanotubes. Precis Eng 2004; 28: 16–30.             162. Lee KKC, Munce NR, Shoa T, et al. Fabrication and
+148. Naresh C, Bose PSC and Rao CSP. Shape memory                      characterization of laser-micromachined polypyrrole-
+     alloys: a state of art review. In: Proceedings of the IOP         based artificial muscle actuated catheters. Sens Actuat A
+     conference series: materials science and engineering              Phys 2009; 153: 230–236.
+     (Paper No. 1), Bangalore, India, 14–16 July 2016,            163. Mazzoldi A, Della SA and De-Rossi DE. Conducting
+     p.012054. Bangalore, India: IOP Publishing.                       polymer actuators: properties and modeling In: Osada
+149. Shiotsu A, Yamanaka M, Matsuyama Y, et al. Crawl-                 Y and De Rossi DE (eds) Polymer sensors and actuators.
+     ing and jumping soft robot KOHARO. In: Proceedings                Berlin: Springer, 2000, pp.207–244.
+     of the 2005 international symposium on robotics, Tokyo,      164. Cole M and Madden JD. The effect of temperature
+     Japan, 29 November–1 December 2005, p.134, Tokyo,                 exposure on polypyrrole actuation. MRS Proc 2005;
+     Japan: Fraunhofer IPA.                                            889: 0889-W04-04.
+150. Andrianesis K and Tzes A. Design of an anthropo-             165. Madden JD, Madden PG, Anquetil PA, et al. Load and
+     morphic prosthetic hand driven by shape memory alloy              time dependence of displacement in a conducting poly-
+     actuators. In: Proceedings of the 2008 2nd IEEE RAS &             mer actuator. In: Proceedings of the materials research
+     EMBS international conference on biomedical robotics              society symposium, Warrendale, PA, 1–5 December
+     and biomechatronics, Scottsdale, AZ, 19–22 October                2002, pp.137–144. Boston, MA: Materials Research
+     2008, pp.517–522. New York: IEEE.                                 Society.
+151. Sarban R, Jones RW, MacE BR, et al. A tubular dielec-        166. Ikushima K, John S, Yokoyama K, et al. A practical
+     tric elastomer actuator: fabrication, characterization            multilayered conducting polymer actuator with scal-
+     and active vibration isolation. Mech Syst Signal Pr               able work output. Smart Mater Struct 2009; 18:
+     2011; 25: 2879–2891.                                              095022.
+152. Sommer LP, Kofod G, Shridhar MH, et al. Performance          167. Okuzaki H, Saido T, Suzuki H, et al. A biomorphic ori-
+     of dielectric elastomer actuators and materials. In: Pro-         gami actuator fabricated by folding a conducting paper.
+     ceedings of the smart structures and materials 2002: elec-        J Phys Conf Ser 2008; 127: 012001.
+     troactive polymer actuators and devices (EAPAD) (ed. Y       168. Lu W, Fadeev AG, Qi B, et al. Use of ionic liquids for
+     Bar-Cohen), San Diego, CA, 9 July 2002, vol. 4695,                p-conjugated polymer electrochemical devices. Science
+     pp.158–166. Bellingham: SPIE.                                     2002; 297: 983–987.
+153. Kovacs G, Lochmatter P and Wissler M. An arm wres-           169. Ismail YA, Shin MK and Kim SJ. A nanofibrous hydro-
+     tling robot driven by dielectric elastomer actuators.             gel templated electrochemical actuator: from single mat
+     Smart Mater Struct 2007; 16: S306–S317.                           to a rolled-up structure. Sens Actuat B Chem 2009; 136:
+154. Cheng ZY, Xu H, Mai TX, et al. P(VDF-TrFE)-based                  438–443.
+     electrostrictive co/ter-polymers and their device perfor-    170. Ebbesen TW and Ajayan PM. Large-scale synthesis of
+     mance. In: Proceedings of the smart structures and                carbon nanotubes. Nature 1992; 358: 220–222.
+Liang et al.                                                                                                                     25
+
+
+171. Thess A, Lee R, Nikolaev P, et al. Crystalline ropes of           (Paper No. 7976) (eds Y Bar-Cohen and F Carpi),
+     metallic carbon nanotubes. Science 1996; 273: 483–487.            San Diego, CA, 1 March 2011, p.797637. Bellingham:
+172. Lee CJ, Lyu SC, Kim HW, et al. Large-scale production             SPIE.
+     of aligned carbon nanotubes by the vapor phase growth        185. Yamakita M, Kamamichi N, Kaneda Y, et al. Develop-
+     method. Chem Phys Lett 2002; 359: 109–114.                        ment of an artificial muscle linear actuator using ionic
+173. Hahm G, Hashim DP, Vajtai R, et al. A review: con-                polymer-metal composites. Adv Robot 2004; 18:
+     trolled synthesis of vertically aligned carbon nanotubes.         383–399.
+     Carbon Lett 2011; 12: 185–193.                               186. Tomita N, Takagi K and Asaka K. Development of a
+174. Gartstein YN, Zakhidov AA and Baughman RH.                        quadruped soft robot with fully IPMC body. In: Pro-
+     Mechanical and electromechanical coupling in carbon               ceedings of the SICE annual conference 2011, Tokyo,
+     nanotube distortions. Phys Rev B 2003; 68: 115415.                Japan, 13–18 September 2011, pp.1687–1690, Tokyo,
+175. Di J, Zhang X, Yong Z, et al. Carbon-nanotube fibers              Japan: INFODOC.
+     for wearable devices and smart textiles. Adv Mater 2016;     187. Nemat-Nasser S and Wu Y. Comparative experimental
+     28: 10529–10538.                                                  study of ionic polymer–metal composites with different
+176. Cottinet PJ, Le MQ, Degraff J, et al. Strain phenom-              backbone ionomers and in various cation forms. J Appl
+     enon in carbon nanotube buckpaper actuator: experi-               Phys 2003; 93: 5255–5267.
+     ments and modeling. Sens Actuat A Phys 2013; 194:            188. Maziz A, Concas A, Khaldi A, et al. Knitting and weav-
+     252–258.                                                          ing artificial muscles. Sci Adv 2017; 3: e1600327.
+177. Cottinet PJ, Souders C, Labrador D, et al. Nonlinear         189. Ozay O, Ekici S, Baran Y, et al. Removal of toxic metal
+     strain–electric field relationship of carbon nanotube             ions with magnetic hydrogels. Water Res 2009; 43:
+     buckypaper/Nafion actuators. Sens Actuat A Phys 2011;             4403–4411.
+     170: 164–171.                                                190. Wehner M, Truby RL, Fitzgerald DJ, et al. An inte-
+178. Yang X, Wang W and Miao M. Moisture-responsive                    grated design and fabrication strategy for entirely soft,
+     natural fiber coil-structured artificial muscles. ACS Appl        autonomous robots. Nature 2016; 536: 451–455.
+     Mater Interf 2018; 10: 32256–32264.                          191. Ding J, Liu L, Spinks G, et al. High performance con-
+179. Yang X and Miao M. Carbon nanotube yarn-based                     ducting polymer actuators utilising a tubular geometry
+     actuators. In: Miao M (ed.) Carbon nanotube fibers and            and helical wire interconnects. Synth Met 2003; 138:
+     yarns: production, properties and application in smart            391–398.
+     textiles. Duxford: Woodhead Publishing, 2020, pp.271–        192. Yokoi H, Arieta AH, Katoh R, et al. Mutual adapta-
+     291.                                                              tion in a prosthetics application. In: Lida F, Pfeifer R,
+180. Hao M, Wang Y, Zhu Z, et al. A compact review of                  Steels L, et al. (eds) Embodied artificial intelligence. Ber-
+     IPMC as soft actuator and sensor: current trends, chal-           lin: Springer, 2004, pp.146–159.
+     lenges, and potential solutions from our recent work.        193. Park SJ, Gazzola M, Park KS, et al. Phototactic gui-
+     Front Robot AI 2019; 6: 129.                                      dance of a tissue-engineered soft-robotic ray. Science
+181. Asaka K and Oguro K. Active microcatheter and bio-                2016; 353: 158–162.
+     medical soft devices based on IPMC actuators. In: Carpi      194. Morimoto Y, Onoe H and Takeuchi S. Biohybrid robot
+     F and Smela E (eds) Biomedical applications of electroac-         powered by an antagonistic pair of skeletal muscle tis-
+     tive polymer actuators. Chichester: John Wiley & Sons,            sues. Sci Robot 2018; 3: eaat4440.
+     2009, pp.121–36.                                             195. Pfeifer R, Iida F and Gómez G. Morphological compu-
+182. Kim KJ and Shahinpoor M. A novel method of manu-                  tation for adaptive behavior and cognition. Int Congr
+     facturing three-dimensional ionic polymer-metal com-              Ser 2006; 1291: 22–29.
+     posites (IPMCs) biomimetic sensors, actuators and            196. Anand SV and Saif TA. Emergent dynamics of cardio-
+     artificial muscles. Polymer (Guildf) 2002; 43: 797–802.           myocyte clusters on deformable polymeric substrates.
+183. Palmre V, Hubbard JJ, Fleming M, et al. An IPMC-                  Extrem Mech Lett 2016; 8: 1–5.
+     enabled bio-inspired bending/twisting fin for underwater     197. Ricotti L and Menciassi A. Bio-hybrid muscle cell-based
+     applications. Smart Mater Struct 2012; 22: 014003.                actuators. Biomed Microdev 2012; 14: 987–998.
+184. Chen Z, Um TI and Bart-Smith H. Ionic polymer-metal          198. Ricotti L, Trimmer B, Feinberg AW, et al. Biohybrid
+     composite enabled robotic manta ray. In: Proceedings of           actuators for robotics: a review of devices actuated by
+     the electroactive polymer actuators and devices (EAPAD)           living cells. Sci Robot 2017; 2: eaaq0495.
+

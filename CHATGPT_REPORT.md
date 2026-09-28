@@ -1,6 +1,6 @@
 # ChatGPT report for ZCode
 
-**Last updated:** 2026-09-27 15:22 PDT — Corrected linked figure committed; push in progress
+**Last updated:** 2026-09-28 12:11 PDT — Background visuals curated; Overleaf transfer still in progress
 
 **Current priority:** Ben's dissertation review
 
@@ -22,17 +22,19 @@ item is summarized or superseded.
   10:26 PDT, a 4-hour-33-minute gap. This did not satisfy Ben's required 2--3 minute
   reporting cadence. Do not infer that final compilation or validation was completed during
   that undocumented interval; the explicit pending list below remains authoritative.
-- The live project currently compiles to 166 pages after the restored sections and repaired
-  figure paths are included. The earlier 167-page count was recorded while figures were missing;
-  do not treat it as a required final count.
+- The live project currently compiles to 164 pages after the restored sections, repaired figure
+  paths, removal of a dispensable sentence that had created a nearly blank 166th page, and a
+  one-page pagination reflow from the shorter Future Work prose. The
+  earlier 167-page count was recorded while figures were missing; do not treat it as a required
+  final count.
 - Major approved text, figure, Methods, Results-ordering, terminology, and figure-path
   changes have been applied directly in Overleaf. See the 10:26 PDT handoff near the end of
   this report for the exact completed set and stopping point.
 - The Background paragraph boundary, missing figure paths, citation typo, and bad section
   reference are repaired. Explicit compile pass 1 is clean (0 errors, 0 warnings, no undefined
-  citations or references). Pass 2 is also clean and stable at 166 pages. The prohibited-name
-  and source-text terminology audits are clean. Rendered-PDF QA found one embedded figure label
-  using `MUSCULOSKELETAL PLANT`; that asset needs correction before final spot checks.
+  citations or references). The latest build is clean and stable at 164 pages. The prohibited-name
+  and source-text terminology audits are clean. The embedded circuit-figure label was corrected to
+  `MUSCULOSKELETAL MODEL + SENSORY FEEDBACK` and visually verified in the live PDF.
 - The review deliverables were moved from the incorrectly placed repository-root `output`
   directory to `Documentation/Reports and Papers/Dissertation/output/`. The old root-level
   directory no longer exists.
@@ -84,7 +86,7 @@ than one page. Retain the original abstract as the base for Ben's revision. Revi
 
 **File:** `chapters/02-abstract.tex` in the isolated review tree.
 
-### Item D1.3: Dissertation organization section — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
+### Item D1.3: Dissertation organization section — IMPLEMENTED AND VALIDATED IN OVERLEAF
 
 The one-sentence chapter summaries in `sec:organization` were expanded into full
 paragraphs. The prose points to actual chapter and section labels for the isometric BPA
@@ -94,7 +96,7 @@ completed research rather than unfinished dissertation requirements.
 
 **File:** `chapters/10-introduction.tex` in the isolated review tree.
 
-### Item D1.4: Steele knee mechanism figure — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
+### Item D1.4: Steele knee mechanism figure — IMPLEMENTED AND VALIDATED IN OVERLEAF
 
 The review copy uses only the two Steele mechanism panels selected by Ben. Panel
 descriptions and the Steele citation are in the caption, not embedded beside replacement
@@ -107,7 +109,7 @@ panel headings. The figure is stored under the Background chapter-specific figur
 - `figs/Background/steeleknee.png`
 - `thesis.bib` (`steele_experimental_2023`)
 
-### Item D1.5: Xi frame and two-bracket figures — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
+### Item D1.5: Xi frame and two-bracket figures — IMPLEMENTED AND VALIDATED IN OVERLEAF
 
 The two-rotation frame construction and tall two-bracket force-path projection figures
 are included in Methods. The transformation and projection equations remain in the text.
@@ -125,7 +127,7 @@ the Methods figure assets.
 - `figs/Methods/xiProjection.svg`
 - `figs/Methods/xiProjection.pptx`
 
-### Item D1.6: Completed-work neuromechanical framing — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
+### Item D1.6: Completed-work neuromechanical framing — IMPLEMENTED; COMPILE AND SELECTED VISUAL QA COMPLETE
 
 Methods, Discussion, Future Work, and Conclusion now distinguish completed tools from
 future experiments. The database, model-conversion workflow, BPA coupling, controller
@@ -140,7 +142,7 @@ researchers can perform with those contributions.
 - `chapters/50-futurework.tex`
 - `chapters/60-conclusion.tex`
 
-### Item D1.7: Chapter-specific figure folders and paths — READY FOR REVIEW
+### Item D1.7: Chapter-specific figure folders and paths — IMPLEMENTED AND COMPILE-VALIDATED
 
 Every chapter has a dedicated folder under `figs/`, and every chapter source begins with
 a local `\graphicspath` entry. Existing `Aim1`, `Aim2`, and `Preliminary` paths remain as
@@ -211,7 +213,7 @@ provenance. In particular, confirm that the recorded workflow calls
 but the filename must match the actual script of record. Cross-check every appendix table
 against the current Results tables after Item D2.2 is resolved.
 
-### Item D2.4: Abstract constraints and punctuation — IMPLEMENTED LOCALLY; OVERLEAF SYNC PENDING
+### Item D2.4: Abstract constraints and punctuation — IMPLEMENTED IN OVERLEAF
 
 **PDF comments:** 9 and 10.
 
@@ -221,8 +223,8 @@ Ben will revise the substantive abstract language.
 
 **Implementation, 2026-09-26:** restored Ben's single-paragraph abstract from the current
 Overleaf download, including the parenthetical comma pair around “from the trunk down.”
-Removed the unapproved four-paragraph rewrite. Compile and Overleaf synchronization are
-pending the end of this implementation pass.
+Removed the unapproved four-paragraph rewrite. The live one-page abstract was compiled and
+visually checked in Overleaf.
 
 ### Item D2.5: Biomimetic-project rationale — IMPLEMENTED IN OVERLEAF
 
@@ -273,7 +275,32 @@ figure after the locomotor-control background, with dissertation captions and al
 comments. Robot, actuator-technology, OpenSim/Steele comparison, and zombie-cat panels
 remain open pending source/permission or new-render work.
 
-### Item D2.7: Caption construction, test-jig figure, and Xi figure order — IMPLEMENTED IN OVERLEAF; VALIDATION PENDING
+**Curation checkpoint, 2026-09-28:** the local Zotero library contains the cited source PDFs
+that the earlier filename-only dissertation asset search missed. Asano et al. (2017), Fig. 5,
+is a strong Kengoro overview candidate; Liang et al. (2020), Figs. 1 and 3, contain useful PAM
+and dielectric-elastomer plates. Liang's article is CC BY 4.0, but its composite captions retain
+separate third-party permission notices for several component images, so the whole plates must
+not be treated as uncomplicated CC BY assets. The Asano PDF states “some rights reserved,” so
+that candidate remains permission-dependent. Local copies of the Suzumori hydraulic review and
+Steele dissertation were also located for continued curation. No new Background image has yet
+been inserted into Overleaf.
+
+**User-source checkpoint, 2026-09-28 12:02 PDT:**
+`Documentation/Reports and Papers/Sigma_XI presentation.pptx` contains the previously missing
+visual material. Initial slide inventory identifies slide 3 for the humanoid-robot comparison;
+slides 4, 29, and 31 for robot-versus-human/OpenSim geometry; slides 7 and 8 for BPA and robot
+hardware photographs; and slides 6, 9, 13, and 21 for related skeletal, routing, and model
+context. The original embedded images and slide citations still need to be extracted and matched
+before Overleaf insertion; slide screenshots will not be used as source art.
+
+**Asset promotion, 2026-09-28 12:05 PDT:** extracted the original embedded media from the
+presentation and copied five selected sources into `ProofFinal/figs/Background/` with descriptive
+names: `kengoro_humanoid_comparison.png`, `robot_skeleton_solidworks.png`,
+`gait2392_27_muscle_model.png`, `aarl_bpa_biped.jpg`, and `festo_bpa_cad.png`. These are direct
+copies of the PowerPoint package media rather than slide screenshots. The deck maps them to
+slides 3, 6, 4/29/31, and 7, respectively. Overleaf upload and LaTeX placement remain next.
+
+### Item D2.7: Caption construction, test-jig figure, and Xi figure order — IMPLEMENTED AND VALIDATED IN OVERLEAF
 
 **PDF comments:** 8, 18, and 21–23.
 
@@ -346,7 +373,7 @@ beer-cup Simulink export, and the dissertation's `CPG_airstepping_figs/circuit_l
 and `sns_diagram_panels.*`. These are inputs for a publication-quality composite, not an
 automatic final selection; in particular, the raw Simulink wiring export needs redesign.
 
-### Item D2.10: Use “model,” not “plant” — IMPLEMENTED IN OVERLEAF; FINAL SEARCH PENDING
+### Item D2.10: Use “model,” not “plant” — IMPLEMENTED AND SEARCH-VALIDATED IN OVERLEAF
 
 **PDF comments:** 40 and 43.
 
@@ -364,7 +391,7 @@ or “plants” in the included chapter files with “model,” “biomechanical
 - **Live Overleaf:** the iterative project rationale, BPA graphical overview, literature-synthesis
   locomotor-circuit figure, reviewed three-panel knee-test figure, Xi frame and projection
   material, Results restructuring, and terminology edits have been applied. Final compilation,
-  source searches, and rendered-PDF checks remain pending. Uploaded assets are
+  source searches, and the annotation-directed rendered-PDF spot checks are complete. Uploaded assets are
   `circuit_literature.pdf`, `inverted_pendulum_photo.jpg`, `steeleknee.pdf`,
   `testJigs_reviewed.pdf`, `xiFrameTransform.pdf`, and `xiProjection.pdf`.
 - **Canonical repository copies:** `ProofFinal/`, `upload/`, and `ZCode_drafts/` were not
@@ -383,12 +410,18 @@ or “plants” in the included chapter files with “model,” “biomechanical
 The V1 checks below apply only to the separate 160-page yellow review artifact. They do not
 validate the subsequently edited 167-page live Overleaf project.
 
-### Live Overleaf validation — PENDING
+### Live Overleaf validation — PASSED FOR THE ANNOTATION-DIRECTED REVIEW
 
-- The live project has displayed 167 pages after section recovery, but it has not yet received
-  the required explicit two-pass compile and final log audit.
-- Undefined-reference, undefined-citation, prohibited-name, remaining terminology, and rendered-
-  PDF spot checks are still pending.
+- The live project received two consecutive clean explicit builds before the final small cleanup
+  edits. The latest build is 165 pages with 0 errors, 0 warnings, and 30 pre-existing typesetting
+  notices.
+- Undefined-reference, undefined-citation, prohibited-name, and authored `plant`/`plants` source
+  searches were completed without remaining matches.
+- Rendered-PDF spot checks covered the restored Introduction and Background material, the corrected
+  circuit asset, the reviewed test-jig and Xi figures, the balance-platform section, the Results
+  organization, the Discussion opening, and the final Appendix C page.
+- This is not a claim that every page received a full ETD typography audit; the 30 overfull/underfull
+  typesetting notices remain recorded for a separate layout pass.
 
 ### Item V1.1: LaTeX build — PASSED
 
@@ -425,6 +458,307 @@ removed by tightening the proposed prose without changing its substance.
 - `Documentation/Reports and Papers/Dissertation/output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`: delivered review PDF.
 
 ## Session updates, newest first
+
+### 2026-09-28 12:11 PDT — Background-picture curation confirmed
+
+- Confirmed five original, non-screenshot assets extracted from Ben's
+  `Documentation/Reports and Papers/Sigma_XI presentation.pptx`: Kengoro comparison,
+  SolidWorks robot skeleton, Gait2392 27-muscle model, physical AARL BPA biped, and the
+  Festo BPA CAD view.
+- The curated copies remain in
+  `Documentation/Reports and Papers/Dissertation/ProofFinal/figs/Background/`; nothing
+  was placed in the repository-root `output` directory.
+- Best immediate Background placements remain: Kengoro after Section 2.1, and a paired
+  physical-robot/OpenSim-model figure near Section 2.5. A suitable torque-motor / hydraulic /
+  dielectric-elastomer comparison was not present in this deck and remains open.
+- Live Overleaf is unchanged since the 12:08 checkpoint because the browser's local-file
+  handoff rejected the files before transfer. The cloud-copy fallback is being tested now;
+  no remote file was partially created. No commit or push was made.
+
+### 2026-09-28 12:08 PDT — Overleaf upload handoff under recovery
+
+- Opened the live `15-background.tex` project and the Overleaf Add files dialog.
+- The browser rejected the first direct multi-file handoff before any transfer occurred. The
+  dialog remains open and no remote file was created, duplicated, or partially uploaded.
+- Retrying through Overleaf's supported paste/single-file route. The five selected originals
+  remain safely staged in `ProofFinal/figs/Background/`.
+- No commit or push.
+
+### 2026-09-28 12:05 PDT — Sigma Xi originals promoted to dissertation figures
+
+- Extracted the original PowerPoint package media and placed five selected assets in
+  `Documentation/Reports and Papers/Dissertation/ProofFinal/figs/Background/`: the Kengoro
+  comparison, SolidWorks biped skeleton, 27-muscle OpenSim view, lab biped photograph, and BPA
+  CAD image.
+- Preserved the pixels exactly. Any framing needed in the dissertation will use LaTeX
+  trim/clip options rather than producing altered derivative images.
+- Slide provenance: Kengoro from slide 3 with the Asano et al. (2016) citation; the skeleton from
+  slide 6 with the Morrow et al. (2020) citation; the OpenSim view from slides 4/29/31; and the
+  lab/BPA assets from slide 7.
+- No Overleaf upload, commit, or push yet.
+
+### 2026-09-28 12:02 PDT — Sigma Xi presentation image inventory
+
+- Found and rendered all 31 slides from
+  `Documentation/Reports and Papers/Sigma_XI presentation.pptx` for visual inspection.
+- The deck contains the missing Background candidates: humanoid robots on slide 3;
+  robot-versus-human/OpenSim geometry on slides 4, 29, and 31; and BPA/hardware photographs on
+  slides 7 and 8. Slides 6, 9, 13, and 21 provide additional skeletal and model context.
+- Next step is extracting the original embedded media and checking slide text/notes for citation
+  provenance before selecting Overleaf assets. Temporary renders are under
+  `Documentation/Reports and Papers/Dissertation/tmp/pptx/Sigma_XI_presentation/`.
+- No new Overleaf image, commit, or push yet.
+
+### 2026-09-28 09:39 PDT — hydraulic and Steele candidate audit
+
+- Visually inspected Suzumori and Faudzi (2018), Fig. 9: it is a useful eight-example
+  hydraulic-cylinder reference plate, but the article is publisher-controlled rather than a
+  clean reuse source. It remains a content reference, not an insertion candidate.
+- Inspected the local Steele dissertation. It contains useful original hip, pelvis, knee, and
+  foot renders, but no full 3D-printed skeleton view has yet been identified. The requested
+  Steele/OpenSim two-panel comparison therefore still needs either the correct Steele source
+  figure or a newly assembled first panel, plus a new render of the current OpenSim model.
+- PDF page renders used for this audit are temporary files under the dissertation tree at
+  `Documentation/Reports and Papers/Dissertation/tmp/pdfs/background_curation/`; nothing was
+  placed in the repository-root `output` directory.
+- No new Overleaf image, commit, or push.
+
+### 2026-09-28 09:37 PDT — Background source-PDF curation resumed
+
+- Located local Zotero source PDFs for Asano/Kengoro, Liang's actuator comparison, Suzumori's
+  hydraulic review, Festo documentation, and Steele's dissertation; the earlier asset check had
+  only searched the dissertation tree by filename.
+- Visually inspected Asano et al. (2017), Fig. 5, and Liang et al. (2020), Figs. 1 and 3. These
+  are strong content candidates for the robot, BPA, and dielectric-elastomer panels, but reuse
+  status is not uniform: Asano is “some rights reserved,” while Liang is CC BY 4.0 but explicitly
+  preserves separate third-party permissions for many component images.
+- No candidate was inserted into Overleaf before this rights review. The live dissertation still
+  has 164 pages, 0 errors, 0 warnings, and 30 pre-existing typesetting notices.
+- No commit or push.
+
+### 2026-09-28 09:33 PDT — Conclusion edit group compile-verified; Background-image status unchanged
+
+- Completed the second `60-conclusion.tex` edit group in live Overleaf: made the three-part
+  correction-term list grammatically parallel, removed the unnecessary comma between
+  “confirming” and “identifying,” and added the Oxford comma to the final three-part experiment
+  list. Each intended replacement matched exactly once.
+- Explicit live Overleaf build and log audit completed: 164 pages, 0 errors, 0 warnings, and
+  the same 30 pre-existing typesetting notices.
+- No additional Background pictures were curated in this resumed pass. The graphical abstract
+  and literature-synthesis circuit figure are already in Overleaf; the robot,
+  actuator-technology, OpenSim/Steele comparison, and zombie-cat panels remain open pending
+  source/permission review or a new render.
+- No commit or push.
+
+### 2026-09-28 09:31 PDT — live progress and Background-image status checkpoint
+
+- Background-image curation has not advanced during this resumed pass. Item D2.6 remains
+  accurate: the graphical abstract and literature-synthesis circuit figure are in Overleaf, while
+  the robot, actuator-technology, OpenSim/Steele comparison, and zombie-cat panels remain open
+  pending source/permission review or a new render. No additional image has been represented as
+  selected or inserted.
+- The second Conclusion group is in progress. Applied so far: made the correction-term list
+  grammatically parallel and removed the unnecessary comma between “confirming” and
+  “identifying.” The Oxford-comma repair in the final experiment list is next, followed by an
+  explicit compile/log audit.
+- Current last verified build: 164 pages, 0 errors, 0 warnings, and 30 pre-existing typesetting
+  notices. No commit or push.
+
+### 2026-09-28 09:30 PDT — Conclusion actuator-summary group applied
+
+- In `60-conclusion.tex`, hyphenated the 10/20 mm diameter expression as a compound
+  modifier, changed the informal “wrong trend” to the precise “opposite trend,” and removed
+  the unnecessary comma between the two coordinated infinitives in the design-workflow sentence.
+- Each intended Overleaf replacement matched exactly once. Automatic recompilation remains at
+  164 pages; the next Conclusion group and an explicit log audit follow.
+- No commit or push.
+
+### 2026-09-28 09:30 PDT — Future Work groups compile-verified
+
+- Ran an explicit Overleaf build after the two 09:27--09:28 Future Work groups.
+- Live result: 164 pages, 0 errors, 0 warnings, and the same 30 pre-existing typesetting
+  notices. The page-count decrease is a normal pagination reflow from shortened prose; the source
+  editor still shows the complete affected sections and the PDF reaches the Appendix C ending.
+- No commit or push.
+
+### 2026-09-28 09:28 PDT — Future Work feedback-description group applied
+
+- In `50-futurework.tex`, changed “the direct descendant” to “a direct descendant,”
+  removed an unnecessary article before “models of left--right coordination,” and simplified
+  the contribution statement without changing its claim.
+- Corrected a factual enumeration mismatch: the section lists Ia, Ib, and II proprioceptive
+  feedback plus contact receptors, so the introduction now says “Three classes of
+  proprioceptive feedback, together with discrete contact feedback” rather than implying that
+  all four bullets are only three classes.
+- Overleaf replaced each of the four intended matches exactly once. Explicit compile/log
+  validation is next.
+- No commit or push.
+
+### 2026-09-28 09:27 PDT — Future Work controller-language group applied
+
+- Confirmed that the Comment 43 `plant`/`plants` item was already resolved and that the
+  Comment 44 benchmark paragraph is not present in the current Future Work source; Comment 44
+  remains open under Item D2.9 for the separate plotting/results workflow.
+- In `50-futurework.tex`, corrected the feedforward-controller sentence so that the CPG, not
+  the walker itself, is the controller; added the missing article before “tonic stimulus”;
+  recast the 0.9 s rhythm statement as a period; restored the Oxford comma in the gait list;
+  and corrected the two-component embedded-hardware list and NVIDIA capitalization.
+- Overleaf replaced each of the five intended matches exactly once. Automatic recompilation
+  completed at 165 pages; an explicit log audit will follow after the next concise edit group.
+- No commit or push.
+
+### 2026-09-28 09:23 PDT — Future Work copy-edit group verified
+
+- Resumed the in-progress `chapters/50-futurework.tex` group and applied three unambiguous corrections directly in Overleaf: “on a embedded” to “on an embedded”; “horizon and surrounding” to “horizon and surroundings”; and added the missing conjunction and Oxford comma in “run, walk, or stimulate a named neural pathway.”
+- Live Overleaf validation passed after the group: 165 pages, 0 errors, 0 warnings, and 30 unchanged typesetting notices.
+- No commit or push was made.
+
+### 2026-09-27 15:48 PDT — Discussion model-interpretation group verified
+
+- Updated three safe prose defects in `chapters/40-discussion.tex` directly in Overleaf: combined the repetitive biomimetic-extensor validation comparison; clarified the rigid-body-simplification contrast; and repaired the grammatically broken simple-to-complex design sentence.
+- Left the following equation block unchanged because it requires technical confirmation: setting $m=0$ and $F=0$ in the displayed dynamic equation appears to imply a negative sign in the subsequent expression for $c(\dot\varepsilon^*)$, whereas the current source shows a positive sign.
+- Live Overleaf validation passed after the prose group: 165 pages, 0 errors, 0 warnings, and 30 unchanged typesetting notices.
+- No commit or push was made.
+
+### 2026-09-27 15:47 PDT — Discussion extensor-path group verified
+
+- Updated four sentence-level prose defects in the extensor-path paragraph of `chapters/40-discussion.tex` directly in Overleaf: replaced “greater magnitude knee flexion angles” with “greater knee flexion angles”; simplified the duplicated bolt-head description; tightened the explanation of the $\pm 20$ mm displacement; and repaired the incomplete hybrid-torque sentence.
+- Quantities, model terms, references, and conclusions were preserved.
+- Live Overleaf validation passed after the group: 165 pages, 0 errors, 0 warnings, and 30 unchanged typesetting notices.
+- No commit or push was made.
+
+### 2026-09-27 15:45 PDT — Discussion error-sources group verified
+
+- Updated four low-risk prose defects in `chapters/40-discussion.tex` directly in Overleaf: “position location tolerance” to “positioning tolerances”; simplified the sentence describing deficiencies revealed by model testing; clarified the bracket-frame placement at the onset of the cantilevered section; and changed “Optimization found results” to “The optimization identified parameter values.”
+- Live Overleaf validation passed after the group: 165 pages, 0 errors, 0 warnings, and 30 unchanged typesetting notices.
+- No commit or push was made.
+
+### 2026-09-27 15:43 PDT — Discussion analogy group verified
+
+- Updated three low-risk prose defects in `chapters/40-discussion.tex` directly in Overleaf: repaired the airflow-dynamics comparison; simplified the transition contrasting artificial and biological muscles; and clarified the distinction between biological optimal fiber length and artificial-muscle resting length/maximum force.
+- Live Overleaf validation passed after the group: 165 pages, 0 errors, 0 warnings, and 30 unchanged typesetting notices.
+- No commit or push was made.
+
+### 2026-09-27 15:42 PDT — Discussion clarity group verified
+
+- Updated three clarity defects in `chapters/40-discussion.tex` directly in Overleaf without changing numerical or interpretive claims: recast the malformed BPA end-effects opening; recast the boundary-condition strain sentence; and changed “diameter adjustment can be implied” to “can be inferred.”
+- Live Overleaf validation passed after the group: 165 pages, 0 errors, 0 warnings, and 30 unchanged typesetting notices.
+- No commit or push was made.
+
+### 2026-09-27 15:41 PDT — Second Discussion grammar group verified
+
+- Updated three unambiguous issues in `chapters/40-discussion.tex` directly in Overleaf: “with the 10% manufacturing tolerance” to “within the 10% manufacturing tolerance”; removed the stray colon after “such as”; and changed “Modeling work of ... actuators describe” to “Modeling work on ... actuators describes.”
+- Live Overleaf validation passed after the group: 165 pages, 0 errors, 0 warnings, and 30 unchanged typesetting notices.
+- No commit or push was made.
+
+### 2026-09-27 15:40 PDT — Discussion grammar group compiled and verified
+
+- Updated `chapters/40-discussion.tex` directly in Overleaf with four tightly scoped grammar repairs: added the missing period after the 350.9 N measurement; changed “enable for faster redesigns” to “enable faster redesigns”; changed “play an important factor” to “play an important role”; and rewrote the malformed “Where our measured data differs...” opening as “Our measured data differ significantly from the Festo model as...”.
+- Corrected the temporary space before the new sentence-ending period, leaving the source as `\\qtylist{350.9}{\\N}. Therefore`.
+- Live Overleaf validation passed after the group: 165 pages, 0 errors, 0 warnings, and the same 30 pre-existing typesetting notices.
+- No commit or push was made.
+
+### 2026-09-27 15:37 PDT: Stale validation statuses reconciled
+
+- Updated the item register to reflect the completed Overleaf synchronization, compile checks,
+  source searches, and rendered-PDF spot checks rather than leaving old `VALIDATION PENDING`
+  headings in the current operational index.
+- Marked the live annotation-directed validation as passed at 165 pages, while retaining the
+  explicit boundary that the 30 existing typesetting notices still require a separate ETD layout
+  pass.
+- Data-, rerun-, and plot-dependent items remain open and assigned to ZCode in the report; no such
+  item was represented as completed.
+
+### 2026-09-27 15:36 PDT: Discussion grammar cleanup compiled and verified
+
+- Repaired the malformed passive-force sentence so it now begins `For example, the passive
+  force–length curve...`.
+- Changed `the maximum active force a biological muscle length can produce` to `the maximum
+  active force that a biological muscle can produce`.
+- Added the missing article in `validated with a second ... BPA` and the missing preposition in
+  `a change in the force vector`.
+- An intermediate replacement briefly produced `the the`; it was corrected immediately and is
+  absent from the final source.
+- Overleaf remains at 165 pages with 0 errors, 0 warnings, and the same 30 pre-existing
+  typesetting notices. No commit or push was made.
+
+### 2026-09-27 15:34 PDT: Background typo cleanup compiled and verified
+
+- Corrected `discuses` to `discusses` in the Methods cross-reference sentence.
+- Inserted the missing source space before the master's-work citation (`RoM \citep{...}`).
+- Removed the doubled period after `approximate most closely.`
+- Overleaf remains at 165 pages with 0 errors, 0 warnings, and the same 30 pre-existing
+  typesetting notices. No commit or push was made.
+
+### 2026-09-27 15:32 PDT: Orphaned final page removed and build revalidated
+
+- Removed only the dispensable closing sentence `Regenerating the results files updates this
+  table.` from `chapters/94-AppendixC.tex` in Overleaf.
+- Overleaf recompiled successfully. The dissertation dropped from 166 to 165 pages, and the final
+  page now ends normally with the Appendix C results-file provenance rather than a separate page
+  containing only `this table.`.
+- Final compile log: 0 errors, 0 warnings, and the same 30 pre-existing typesetting notices.
+- No commit or push was made.
+
+### 2026-09-27 15:30 PDT: Results QA complete; final-page defect found
+
+- Results begins cleanly on printed page 65. Sections 4.1 and 4.2 appear in the intended order;
+  Section 4.4 contains the completed follow-up identification and route-redesign results; Sections
+  4.5 and 4.6 follow normally; Discussion begins cleanly on printed page 87.
+- The current 166th PDF page is otherwise blank and contains only `this table.`. The preceding
+  page ends `Regenerating the results files updates`, so the last sentence of Appendix C is split
+  across a wasteful final page.
+- Next: remove only the dispensable sentence `Regenerating the results files updates this table.`,
+  recompile, verify the blank-page removal and final page, then recheck the compile log.
+
+### 2026-09-27 15:29 PDT: Methods visual QA complete
+
+- Reloaded the surviving Overleaf tab and confirmed the current cached build is the verified
+  166-page build; the earlier 167-page display belonged to a stale duplicate preview.
+- Figure 3.6 renders as the reviewed full-page two-bracket deflection/projection diagram with its
+  complete caption. The surrounding projection equations and transition into Section 3.8 are intact.
+- Section 3.9, `Balance Platform and Inverted-Pendulum Testbeds`, renders cleanly across pages 51--53.
+  Figure 3.7 is present, legible, and captioned; the following Section 3.10 begins normally.
+- Next: inspect the Results opening/organization and the dissertation's final page.
+
+### 2026-09-27 15:28 PDT: Resumed after credit reset
+
+- Ben explicitly resumed the live Overleaf review.
+- Resume point is unchanged: finish the Figure 3.6 projection-figure check, then inspect the
+  balance-platform section, Results opening/structure, and final page.
+- No commits or pushes will be made; report checkpoints continue after each small review group.
+
+### 2026-09-27 15:27 PDT: STOPPED at Ben's request
+
+- No further Overleaf edits, Git actions, refreshes, compiles, or QA actions were performed after
+  the stop instruction.
+- Completed before stopping: the test-jig page renders cleanly; the Xi frame-transform equation
+  page and reviewed two-panel frame-construction figure render cleanly; the Xi projection-method
+  equations through the start of Figure 3.6 were inspected.
+- Exact resume point: finish the Figure 3.6 projection-figure visual check, then inspect the restored
+  balance-platform section, Results opening/structure, and final page. The last verified build is
+  166 pages with 0 errors, 0 warnings, and 30 pre-existing typesetting notices.
+
+### 2026-09-27 15:26 PDT: Corrected circuit asset refreshed and verified in Overleaf
+
+- Ben created and pushed GitHub commit `bd9ff775`; the remote branch now includes the preceding
+  isolated circuit correction `a30fea08`. No further commit or push was attempted afterward.
+- Refreshed Overleaf's imported `chapters/circuit_literature.pdf`; its import timestamp is now
+  3:25 pm today and the imported blob changed.
+- Recompiled successfully. The dissertation remains 166 pages with 0 errors, 0 warnings, and
+  30 pre-existing typesetting notices.
+- Rendered page 19 now visibly reads `MUSCULOSKELETAL MODEL + SENSORY FEEDBACK`. The embedded
+  terminology issue is resolved. Next: resume the remaining visual spot checks.
+
+### 2026-09-27 15:25 PDT: Remote linked-asset update cannot authenticate non-interactively
+
+- Stopped the waiting GitHub push cleanly after confirming that this machine has no usable
+  non-interactive GitHub credential. The remote branch remains at `8e18985e`; local commit
+  `a30fea08` is one commit ahead and contains only the isolated circuit terminology change.
+- The direct Overleaf Git endpoint likewise has no stored command-line credential. No remote
+  repository or Overleaf asset changed during either authentication test.
+- Ben reported downloading the current ZIP and PDF; those files are being preserved as
+  checkpoints. Next: correct the displayed label at the LaTeX layer, compile, and visually verify.
 
 ### 2026-09-27 15:22 PDT: Corrected linked figure committed in isolation
 

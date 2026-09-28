@@ -1,0 +1,3066 @@
+Portland State University
+PDXScholar
+Dissertations and Theses                                                                                                  Dissertations and Theses
+
+
+
+6-15-2018
+
+Biomimetic Design and Construction of a Bipedal Walking Robot
+Alexander Gabriel Steele
+Portland State University
+
+
+
+
+Let us know how access to this document benefits you.
+Follow this and additional works at: https://pdxscholar.library.pdx.edu/open_access_etds
+     Part of the Mechanical Engineering Commons
+
+Recommended Citation
+Steele, Alexander Gabriel, "Biomimetic Design and Construction of a Bipedal Walking Robot" (2018). Dissertations and Theses. Paper
+4486.
+
+
+
+
+This Thesis is brought to you for free and open access. It has been accepted for inclusion in Dissertations and Theses by an authorized administrator of
+PDXScholar. For more information, please contact pdxscholar@pdx.edu.
+Biomimetic Design and Construction of a Bipedal Walking Robot
+
+
+
+
+                               by
+
+                   Alexander Gabriel Steele
+
+
+
+
+         A thesis submitted in partial fulfillment of the
+                 requirements for the degree of
+
+
+
+                      Master of Science
+                             in
+                    Mechanical Engineering
+
+
+
+                      Thesis Committee:
+                     Alexander Hunt, Chair
+                         David Turcic
+                       Derek Tretheway
+
+
+
+                   Portland State University
+                             2018
+© 2018 Alexander Gabriel Steele
+                                          Abstract
+
+       Human balance and locomotion control is highly complex and not well
+
+understood. To understand how the nervous system controls balance and locomotion
+
+works, we test how the body responds to controlled perturbations, the results are
+
+analyzed, and control models are developed. However, to recreate this system of control
+
+there is a need for a robot with human-like kinematics. Unfortunately, such a robotic
+
+testbed does not exist despite the numerous applications such a design would have in
+
+mobile robotics, healthcare, and prosthetics.
+
+       This thesis presents a robotic testbed model of human lower legs. By using MRI
+
+and CT scans, I designed joints that require lower force for actuation, are more wear
+
+resistant, and are less prone to catastrophic failure than a traditional revolute (or pinned)
+
+joints. The result of using this process is the design, construction, and performance
+
+analysis of a biologically inspired knee joint for use in bipedal robotics.
+
+       For the knee joint, the design copies the condylar surfaces of the distal end of the
+
+femur and utilizes the same crossed four-bar linkage design the human knee uses. The
+
+joint includes a changing center of rotation, a screw-home mechanism, and patella; these
+
+are characteristics of the knee that are desirable to copy for bipedal robotics. The design
+
+was calculated to have an average sliding to rolling ratio of 0.079, a maximum moment
+
+arm of 2.7 inches and a range of motion of 151 degrees. This should reduce joint wear
+
+and have kinematics similar to the human knee. I also designed and constructed novel,
+
+adjustably-damped hip and ankle joints that use braided pneumatic actuators. These joints
+                                                                                                i
+provide a wide range of motion and exhibit the same change in stiffness that human joints
+
+exhibit as flexion increases, increasing stability, adaptability, and controllability.
+
+       The theoretical behaviors of the joints make them desirable for use in mobile
+
+robotics and should provide a lightweight yet mechanically strong connection that is
+
+resistant to unexpected perturbations and catastrophic failure. The joints also bridge the
+
+gap between completely soft robotics and completely rigid robotics. These joints will
+
+give researchers the ability to test different control schemes and will help to determine
+
+how human balance is achieved. They will also lead to robots that are lighter and have
+
+lower power requirements while increasing the adaptability of the robot. When applying
+
+these design principles to joints used for prosthetics, we reduce the discomfort of the
+
+wearer and reduce the effort needed to move. Both of which are serious issues for
+
+individuals who need to wear a prosthetic device.
+
+
+
+
+                                                                                             ii
+                                      Dedication
+
+       To my Uncle, if I ever became half the man you were I would be proud. Also, to
+
+my cats, without whom I would have been able to finish this work in half the time and
+
+with far less cat hair everywhere.
+
+
+
+
+                                                                                        iii
+                                   Acknowledgements
+
+       The author would like to extend a heartfelt thanks to Derek Tretheway. Whom,
+
+without his understanding, none of this would have been possible. I cannot even imagine
+
+where I would be if he had not taken a chance on me; I will never forget it.
+
+       Thanks to Alexander Hunt, for giving me the freedom to create the things I
+
+imagine, for giving me a chance to work with and learn from him, and for the opportunity
+
+to build something amazing, despite my somewhat embarrassing and awkward first
+
+introduction.
+
+       Finally, to the rest of the lab and specifically Wade Hilts, may the horses of
+
+Nazareth always ride in your favor.
+
+
+
+
+                                                                                        iv
+                                         Contents
+
+
+
+Abstract                                                 i
+
+
+Dedication                                             iii
+
+
+Acknowledgements                                       iv
+
+
+List of Tables                                        vii
+
+
+List of Figures                                       viii
+
+
+Chapter 1 Introduction                                  1
+
+  1.1 - Current robotic joint types and limitations     2
+
+Chapter 2 Objectives                                    7
+
+
+Chapter 3 Background                                    8
+
+  3.1 - Anatomy of Synovial Joints                      8
+  3.2 - Hip joint anatomy and physiology              10
+  3.2 - Knee joint anatomy and physiology             15
+  3.3 - Ankle and foot anatomy and physiology         18
+  3.3.1 - Ankle anatomy and physiology                19
+  3.3.2 - Foot anatomy and physiology                 20
+  3.4 - 3D printing with continuous fiber             21
+
+Chapter 4 Methods and Materials                       23
+
+  4.1 - Medical scans to 3D models                    23
+  4.2 - Obtaining medical scans                       24
+  4.3 - Creating a 3D model                           25
+
+                                                        v
+  4.4 - Hip Joint              30
+  4.5 - Knee Joint             34
+  4.5.1 - Version 1            34
+  4.5.2 - Version 2            39
+  4.5.3 - Version 3            40
+  4.5.4 - Version 4            42
+  4.6 - Ankle Joint and foot   45
+  4.6.1 - Version 1            45
+  4.6.2 - Version 2            47
+
+Chapter 5 Results              49
+
+  5.1 – Hip Joint Results      49
+  5.2 - Knee Joint Results     53
+  5.2.1 - Version 1            53
+  5.2.2 - Version 2            55
+  5.2.3 - Version 3            62
+  5.3 - Ankle and foot         68
+  5.3.1 - Version 1            68
+  5.3.2 - Version 2            70
+
+Chapter 6 Discussion           73
+
+
+Bibliography                   77
+
+
+
+
+                               vi
+                                               List of Tables
+
+
+
+
+Table 1 - Range of motion upper and lower bounds for the human hip joint [16]. .......... 14
+
+Table 2 - Material properties for continuous fiber inlay used in the MarkForged Mark II
+
+3D printer provided from the company. *Measured by a method similar to ASTM D790
+                                                       #
+**Two samples measured instead of five                     6061-T6 ...................................................... 22
+
+Table 3 - Range of motion of the hip joint for the average adult male ............................. 53
+
+Table 4 - Average ankle joint range of motion ................................................................. 75
+
+
+
+
+                                                                                                                        vii
+                                                   List of Figures
+
+
+
+
+Figure 1 - Design of a rolling knee (RK) joint.................................................................... 4
+
+Figure 2 - Cutaway of a ball and socket synovial joint ...................................................... 9
+
+Figure 3 - The three degrees of freedom of the hip joint .................................................. 10
+
+Figure 4 - Anatomy of the hip joint as viewed anteriorly. The femoral head (ball) fits into
+
+the acetabulum (socket), which is held in place by the joint capsule. .............................. 11
+
+Figure 5 - Lateral view of the hip joint showing the ligamentum teres (cut into two
+
+pieces), the only intracapsular joint ligament in the body (green) .................................... 13
+
+Figure 6 - Measuring points used to determine the quadriceps angle (q-angle). .............. 14
+
+Figure 7 - The six degrees of freedom that make up the human knee .............................. 16
+
+Figure 8 - The 4 main ligaments of the human knee (not included the PFL and ALL) ... 16
+
+Figure 9 - The tibia and fibula form a square shaped bracket that fits around the heart-
+
+shaped articular surface of the talus .................................................................................. 19
+
+Figure 10 - Cutaway of a 3D printed part showing the continuous Kevlar fiber inlay
+
+(yellow) inside the nylon and chopped carbon fiber composite (black) ........................... 21
+
+Figure 11 - DICOM library search tool layout via 3D Slicer ........................................... 25
+
+Figure 12 - DICOM files loaded into 3D slicer as viewed in the GUI ............................. 27
+
+Figure 13 - Results of a CT scan (left) vs. an MRI scan (right) notice that the CT scan
+
+shows a much higher contrast for bones than the MRI scan............................................. 28
+
+Figure 14 - Initial attempt as selecting bone exclusively using the software’s selection
+
+algorithm (selection in brown) .......................................................................................... 28
+
+                                                                                                                       viii
+Figure 15 - Bone selection (brown) after manual cleanup and verification of selection .. 29
+
+Figure 16 - Initial result from the extrude operation using 3D Slicer. This operation
+
+creates a "stepped" effect that needs to be later smoothed. .............................................. 29
+
+Figure 17 - (A) The 3D model from 3D Slicer loaded into Mesh Mixer and (B) after the
+
+tangent smooth operation is applied ................................................................................. 30
+
+Figure 18 - Hip Model created using the extrude function in 3D Slicer........................... 31
+
+Figure 19 - Geometric considerations for designing the hip joint and femur ................... 32
+
+Figure 20 - 3D model of the designed femur .................................................................... 33
+
+Figure 21 - Anterior view of the 3D model of the designed hip with vertebrae. .............. 34
+
+Figure 22 - 3D model of the first version of the knee joint .............................................. 36
+
+Figure 23 - MasterCAM GUI showing the tooling path. .................................................. 37
+
+Figure 24 - Machining of the tibial head using a 3-axis CNC machine ........................... 37
+
+Figure 25 - Aluminum slug being machined for the tibial end using a 2-axis CNC
+
+machine. ............................................................................................................................ 38
+
+Figure 26 - Initial completion of the knee joint prior to welding ..................................... 38
+
+Figure 27 - Modification of the femoral end to reduce weight. ........................................ 39
+
+Figure 28 - Tibial head showing the addition of the screw-home mechanism ................. 40
+
+Figure 29 - 3D model of the designed clip ....................................................................... 41
+
+Figure 30 - 3D model showing the addition of locking surfaces on the fibular end......... 41
+
+Figure 31 - The modification of the tibial head to allow for upright locking ................... 43
+
+Figure 32 - Force applied to the knee through the patella as seen laterally ...................... 45
+
+Figure 33 - 3D model of the first version of the foot and ankle ....................................... 46
+
+
+                                                                                                                                     ix
+Figure 34 – 3D rendering of the underside of the designed foot showing the addition of a
+
+lever arm to apply force to the constructed foot the same way the calcaneus does in the
+
+human foot (circled). ......................................................................................................... 46
+
+Figure 35 – 3D model of version 2 of the foot as seen laterally (and without the
+
+pneumatic sleeve, that attaches the joints). ....................................................................... 47
+
+Figure 36 - By combining the talus and calcaneus, the pneumatic spring element used for
+
+the arch is now protected. ................................................................................................. 48
+
+Figure 37 - Lateral view of the pelvis showing several vertebrae and better illustrating the
+
+connecting surfaces between the sacrum and ilium .......................................................... 49
+
+Figure 38 - Parameters for determining the single thread length of the braided sleeve and
+
+the number of turns for that thread. .................................................................................. 51
+
+Figure 39 – Calculated change in stiffness as it relates to joint angle at an initial pressure
+
+of 25 psi............................................................................................................................. 52
+
+Figure 40 - Version one of the knee prototype showing how the pneumatic actuator
+
+changes as the knee rotates Figure 39 shows the assembled joint in different states of
+
+flexion ............................................................................................................................... 54
+
+Figure 41 - Fully assembled second version of the knee joint with the cylinder inflated. 55
+
+Figure 42 - 3D printed femoral end with the clips removed from the end ....................... 56
+
+Figure 43 - 3D printed femoral end with the clips inlayed with Kevlar added back into the
+
+femoral end ....................................................................................................................... 56
+
+Figure 44 - Second version of the 3D printed knee showing locking mechanism (circled)
+
+........................................................................................................................................... 57
+
+
+                                                                                                                                            x
+Figure 45 – Theoretical torque requirement to move a 46-kilogram load over the angle of
+
+rotation (blue solid line) vs the torque required for a pin joint (red dashed line) ............. 58
+
+Figure 46 - Kinematics of sliding to rolling ratio from initial contact point C1 to C2 ..... 59
+
+Figure 47 - Sliding and rolling ratio of the proposed joint. Note, the initially high sliding
+
+ratio settles because the model settles prior to the start of the rotation. ........................... 60
+
+Figure 48 - Radius arm r(θ) changing as a function of the angle of rotation θ plotted
+
+against the radius arm of a pin joint (red-hashed line)...................................................... 61
+
+Figure 49 - Tibial head changes as the prototype testing progressed ............................... 62
+
+Figure 50 - Tibial head seen laterally (A) prior to modification, (B) post modification,
+
+change highlighted in red circle, and (C) tibial head locked with the distal end of the
+
+femur for reference. .......................................................................................................... 63
+
+Figure 51 - Constructed joint (A) rear view, (B) front view, (C) full flexion, and (D) full
+
+extension ........................................................................................................................... 63
+
+Figure 52 - Four-bar linkage used in the proposed design showing link designation, angle
+
+designation, and the coordinate system for the following equations. ............................... 64
+
+Figure 53 - Instantaneous center of rotation plot of proposed joint for the full range of
+
+motion. .............................................................................................................................. 66
+
+Figure 54 - Kinematics of sliding to rolling ratio from initial contact point C1 to C2 ..... 67
+
+Figure 55 - Sliding to rolling ratio over the designed joints range of motion where zero is
+
+a pure rolling condition and one is a pure sliding condition, which increases wear. ........ 68
+
+Figure 56 - 3D printed version 1 of the foot as seen laterally........................................... 69
+
+
+
+
+                                                                                                                                      xi
+Figure 57 - Distal view of version 1 of the 3D printed foot showing the lever arm addition
+
+on the calcaneus ................................................................................................................ 69
+
+Figure 58 - Anterior view of the 3D printed version 1 foot showing the two toes ........... 70
+
+Figure 59 - Foot design version 2 seen laterally after the assembly using the pneumatic
+
+actuators as synovial joints ............................................................................................... 71
+
+Figure 60 – Section view of the talus in SolidWorks showing the tube inside the model
+
+that lets air flow down into the other joints of the foot ..................................................... 71
+
+Figure 61 - 3D Printed foot version 2 with the pneumatic actuator sleeve for the ankle
+
+added ................................................................................................................................. 72
+
+
+
+
+                                                                                                                                      xii
+                                         Chapter 1
+
+                                        Introduction
+
+
+
+
+        When the public thinks about robotics, in particular bipedal humanoid robots,
+
+science fiction movies have taken the forefront. Given the state of technology, it may
+
+even seem that such advanced robots are only years away, if not, already here. However,
+
+in 2015 the DARPA Robotics Challenge destroyed those dreams by highlighting, at the
+
+time, the best and most well-funded robotic teams from around the world.
+
+        These (mostly) bipedal robots, on average, took almost an hour to do what
+
+humans could accomplish in just a few minutes, if the robots could accomplish it at all.
+
+Ironically, these robots performed better than DARPA expected. This public failure to
+
+match expectations set by the movie industry brought to light the reality of robotics in the
+
+current state.
+
+        The reality is that robots are not agile, cannot easily adapt to the environment they
+
+are placed in, and if they fell over, could not recover. The spurious idea of robots
+
+performing, as well as, or better than humans was now replaced with the reality; even the
+
+best robots were close to helpless.
+
+        Robots that easily adapt to their surroundings have numerous applications; in
+
+search and rescue, these robots would be able to save lives of people without risking
+
+more lives in the process. Furthermore, these robots are able to go into environments that
+
+
+                                                                                           1
+humans cannot, such as the Fukushima nuclear disaster, humanoid robots would be able
+
+to interact with the environment without exposing humans to the fatal radiation.
+
+       Robots need to be able to operate in an environment that was designed for human
+
+use. However, current mobile robots are designed like industrial machines and while this
+
+works for situations where extreme precision is needed, it does not allow them to adapt to
+
+changing environments in a way that would make them useful. For this reason, new
+
+designs for robotic joints that are more functional in a mobile platform are needed.
+
+
+
+
+1.1 - Current robotic joint types and limitations
+
+       Currently, in robotics the most common type of joints used are revolute joints,
+
+also known as hinge joints or pin joints. There are several different examples of these
+
+joints, but they all have similar properties. This class of joints has a single degree of
+
+freedom, rotation about the pin. They are typically pinned center of the two joining rigid
+
+members. The single degree of freedom offered by pin joints makes them desirable for
+
+control purposes. Additionally, because of the simplicity of the joint, it is a low cost and
+
+easy to replace option.
+
+       However, due to the high shear stress that is applied to the joint through nor-mal
+
+operations, the joints wear quickly [1]. Clamping forces applied to the pin, or preload,
+
+also causes joint fatigue, which leads to premature wearing as it introduces tensile forces,
+
+and promotes creep. The ratio between the diameter of the hole and the edge of the
+
+material to the edge of the hole has a direct effect on the wear and failure of the joint
+
+                                                                                               2
+because the stress concentration or bearing force is higher at the hole. Furthermore,
+
+failure of the joint is typically catastrophic and causes serious damage because the joint is
+
+a single pin without added supports.
+
+       In recent years, biomimetic design has led to several different attempts to model
+
+and design a mechanical joint similar to the human knee. These designs have looked at
+
+different aspects of the knee and attempted to mimic them. Several of these designs
+
+include screw-home and patellar analogs [2–5].
+
+       These designs often utilize the same simplified 4-bar linkage design created when
+
+modeling the human knee. However, the designs that have been put forth are “floating
+
+designs,” or complex linkage designs that do not have contacting surfaces like those that
+
+the human knee utilizes. This predominately places load onto the pin connections and
+
+while the force profile over the entire range of motion differs, the pin joints have to carry
+
+the weight just as the solitary pin joint design first mentioned.
+
+       Lastly, Hobon et al. [6] modeled the benefits of using what they termed as a
+
+rolling knee joint (RK). This joint, (Fig. 1) consists of two rolling cylinders joined by a
+
+solid link, which has a pin joint at the center of either cylinder. This design eliminates a
+
+portion of the force placed on the pin joint by applying it through the contact point of the
+
+cylinders. The RK joint design reduces energy consumption during a walking gait when
+
+compared to a standard pin joint.
+
+
+
+
+                                                                                               3
+                           Figure 1 - Design of a rolling knee (RK) joint
+
+
+       In the RK joint, the force from the weight of the robot is applied at a one-
+
+dimensional line across the cylinder, this force leads to premature wearing, and
+
+furthermore an impact load of sufficient force causes permanent deformation of the
+
+cylinders.
+
+       Energy is needed to keep the robot upright when standing because the design
+
+lacks an upright locking mechanism. When fully flexed, the weight of the robot is still
+
+applied to the pin joints used to attach the two cylinders.
+
+       In this work, I propose a set of joints that will act as a lightweight, robust, and
+
+compact replacement to pin joints for the hip, knee, and ankle joints. These proposed
+
+designs draw on inspiration from the hip, knee, and ankle joints of humans; they were
+
+designed using MRI scans of the equivalent human joint.
+
+
+
+
+                                                                                             4
+        The joints use biological principles to imbue them with particular qualities that
+
+will offer them superior performance when compared to the standard robotic joint. Some
+
+of these qualities include locking in the upright position, much like the human knee as
+
+well as a changing moment arm that reduces the amount of force needed to create the
+
+same amount of torque using a pin joint.
+
+        In the next chapter, I will cover the objectives that I set out to accomplish in this
+
+thesis. These goals are what drove my research and properly explains the gap in
+
+knowledge that this thesis is filling.
+
+        Chapter 3 covers the anatomy and physiology of the joints in the lower half of the
+
+body. This chapter is an abridgment of what might be covered in biology, however
+
+understanding the main functions of the joints and how they are formed is needed for the
+
+subsequent chapters.
+
+        The fourth chapter discusses how to convert medical scans into 3D models, where
+
+to find medical scans, the capabilities of the MarkForged 3D printer that was used, as
+
+well as the design of the engineered joints. Each joint and, if applicable, the subordinate
+
+revisions to that joint are listed in order from oldest (version 1) to the newest.
+
+        Chapter 5 details the construction and theoretically predicted properties of the
+
+joints that were created which will be used later for testing, verification, and if needed,
+
+revision. As with Chapter 4, each major section covers a different joint, while each minor
+
+section covers the revisions to that joint.
+
+
+
+
+                                                                                                5
+       The final chapter discusses the results and limitations of this work. It also
+
+recommends future work that could be taken at a later time to improve upon the
+
+foundation that this thesis creates.
+
+
+
+
+                                                                                       6
+                                            Chapter 2
+
+                                            Objectives
+
+
+
+
+           The primary objective of this research is to develop a way to determine the in
+
+vivo kinematics of human joints from MRI and CT scans. Limited in vivo joint kinematic
+
+data exists because of the difficulty accurately tracking joint movement using external
+
+sensors. This data is important in the design of human inspired robotic joints because the
+
+human body is incredibly energy efficient and adaptable, however current robot designs
+
+are not.
+
+           The data will then be applied to the design of joints for a bipedal walking robot.
+
+Simulations will be done to determine both how energy efficient the designed joints are
+
+and how effective this new method is in determining human joint kinematics. 3D printed
+
+joints will then be constructed to verify the theoretical behavior and predicted kinematics.
+
+           This work will create a new methodology for designing mobile bipedal robotic
+
+joints that outperform the current designs.
+
+           This thesis breaks the designs into three chapter subsections, the hip joint, the
+
+knee joint, and the ankle joint. For the purposes of this thesis, the pelvis will be covered
+
+in the hip joint section and the foot will be included in the chapter covering the ankle
+
+joint and not separately. Each of these chapters covers the different versions that were
+
+proposed, designed, and/or tested. These chapters also discuss the advantages of each
+
+version, and if applicable, why the version was later modified in favor of its final form.
+                                                                                                7
+                                         Chapter 3
+
+                                       Background
+
+
+
+
+       This chapter covers the gross anatomy and physiology of the human joints that
+
+were used to model the designed robotic joints in this thesis. Understanding the basic
+
+biology of each joint will help clarify design decisions made in later chapters. As such,
+
+information about the biological structure of the joint, range of motion of the joint, and
+
+degrees of freedom of the joint is found here. Included in this chapter is information
+
+about the specialized 3D printer used to develop and test the mechanical joints, this
+
+information includes mechanical properties of the materials used and material testing
+
+results provided by the company.
+
+
+
+
+3.1 - Anatomy of Synovial Joints
+
+       Synovial joints are the most common and most flexible type of joint in the human
+
+body [7]. Synovial joints join bones with a dense and fibrous capsule that is filled with
+
+synovial fluid or synovia. Synovia is a non-Newtonian fluid, which has the consistency of
+
+the white of an egg. This fluid acts as lubrication between the cartilage of the joint during
+
+movement [8].
+
+       There are six different classifications of synovial joints, however, the focus of this
+
+work is on the ball and socket type, such as the hip or shoulder and the hinge type, such
+
+as the ankle or the carpals of the wrist. Both of these joint types have distinct movement
+                                                                                             8
+characteristics that are primarily defined by the articulating surfaces of the bones. The
+
+ball and socket type joint allows for three axes of rotation (flexion/ extension,
+
+abduction/adduction, and lateral/medial rotation), while hinge type joints only allow for
+
+flexion and extension in one plane [8–10].
+
+        All synovial joints are made up of a synovial cavity, a joint capsule, and articular
+
+cartilage (Fig. 2). The synovial cavity is the space between the bones that is filled with
+
+synovia.
+
+
+
+
+                       Figure 2 - Cutaway of a ball and socket synovial joint
+
+
+        The joint capsule is then further broken up into the outer layer and inner layer, the
+
+inner layer is made up of the synovial membrane, which secretes synovia, while the outer
+
+layer is a fibrous membrane that sometimes contains ligaments. The articular cartilage
+
+functions to reduce friction during movement and protects the joint from impact forces
+
+[8, 11, 12].
+
+
+
+
+                                                                                               9
+3.2 - Hip joint anatomy and physiology
+
+        The hip joint has three degrees of freedom, all rotational, (Fig. 3). The hip has no
+
+translational degrees of freedom.
+
+
+
+
+                      Figure 3 - The three degrees of freedom of the hip joint
+
+
+
+
+        The hip joint (Fig. 4) is a ball-and-socket synovial joint where the femoral head is
+
+the ball and the acetabulum creates a cup-like depression in which the femoral head fits
+
+[13].
+
+
+
+
+                                                                                           10
+ Figure 4 - Anatomy of the hip joint as viewed anteriorly. The femoral head (ball) fits into the acetabulum
+
+                           (socket), which is held in place by the joint capsule.
+
+
+        A synovial joint, as previously discussed, is characterized as a joint that is
+
+surrounded by a joint capsule. A joint capsule is a dense and fibrous structure that is
+
+analogous to tendons, but forms a sleeve around the joint. For the hip, the joint capsule is
+
+primarily formed from three ligaments:
+
+    1. Iliofemoral ligament
+    2. Pubofemoral ligament
+    3. ischiofemoral ligament
+
+        Ligaments are fibrous structures that connect bone-to-bone, similar to tendons,
+
+which are fibrous structures that connect muscle to bone. The iliofemoral ligament spans
+
+the distance between the anterior inferior iliac spine and the intertrochanteric line of the
+
+femur. It is “Y” shaped. This ligament prevents the hyperextension of the hip joint [13].
+
+The pubofemoral ligament has a triangular shape and spans between the superior pubic
+                                                                                                         11
+rami and the intertrochanteric line of the femur. This ligament prevents excessive
+
+extension and abduction. Lastly, the ischiofemoral ligament spans between the body of
+
+the ischium and the greater trochanter of the femur. It has a spiral orientation and
+
+prevents excessive extension of the joint. These ligaments completely enclose the hip
+
+joint and form the joint capsule.
+
+       The only intracapsular ligament is the ligamentum teres (Fig. 5), a round ligament
+
+that connects the femoral head with the acetabulum inside of the joint capsule. The
+
+ligament is the strongest ligament in the body; it also contains blood vessels that supply
+
+the femoral head with its blood supply, although this function is less significant after
+
+childhood. The ligamentum teres also plays a role in joint stability while physically
+
+limiting the range of motion of the joint to prevent superior subluxation (dislocation of
+
+the joint) [14]. The Transverse acetabular ligament, which consists of strong flattened
+
+fibers, prevents inferior subluxation and works in conjunction with the ligamentum teres.
+
+Ligament stiffness is thought to be the primary way the body reduces the need to activate
+
+muscles to help remain upright.
+
+
+
+
+                                                                                            12
+   Figure 5 - Lateral view of the hip joint showing the ligamentum teres (cut into two pieces), the only
+
+                             intracapsular joint ligament in the body (green)
+
+
+       The joint capsule is filled with synovial fluid, a non-Newtonian fluid that has the
+
+constancy of the white of an egg. The purpose of the fluid is to reduce friction between
+
+the articular cartilage and joint during movement. This helps give joints their long life
+
+despite the harsh and cyclical loading conditions.
+
+       Range of motion for the hip is different for males and females; this is due to the
+
+differences in size and joint angles. To complicate this even further, age and lifestyle also
+
+have a factor on joint range of motion [15]. However, the range of motion seen in the hip
+
+joint is typically between the values listed in Table 1.
+
+
+
+
+                                                                                                           13
+             Table 1 - Range of motion upper and lower bounds for the human hip joint [16].
+
+
+                                  Lower bound (degrees)           Upper bound (degrees)
+                       Flexion                 90                             135
+                     Extension                 10                             30
+                    Adduction                  10                             30
+                    Abduction                  30                             50
+              Internal rotation                30                             45
+              External rotation                45                             60
+
+
+
+
+       Important to the geometry of the legs, but not specific to the hip joint itself is the
+
+quadriceps angle (q-angle). Q-angle is the angle formed by the femur and the hip relative
+
+to the ground (Fig. 6). Specifically it is the angle between a line formed by the resultant
+
+force of the quadriceps, made by connecting a point between the anterior superior iliac
+
+spine (ASIS) to the mid-point of the patella and a second line from the central patella to
+
+the tibial tubercle [17]. As this angle increases, the risk factor for patellar subluxation
+
+increases.
+
+
+
+
+             Figure 6 - Measuring points used to determine the quadriceps angle (q-angle).
+
+
+
+                                                                                              14
+       While q-angle differs between subjects and age, for males between 18 and 35
+
+years, the average and healthy q-angle is considered 13.5 ± 4.5 degrees. For females, the
+
+q-angle is larger, 18.1 ± 4.5 degrees is considered the healthy range for subjects between
+
+18 and 35 years [18, 19]. Due to the cyclical loading applied to the femoral neck the q-
+
+angle an important design consideration when trying to model human legs because it is a
+
+strong determiner in fracture risk [19].
+
+
+
+
+3.2 - Knee joint anatomy and physiology
+
+       The knee joint is one of the largest and most complex joints in the body. This is
+
+attributed in part to the forces the knee experiences in normal use. Impact loads from
+
+walking or running typically exceeds 4 times bodyweight, the knee joint is responsible
+
+for mitigating some of that load.
+
+       The knee has six degrees of freedom (DOF), three rotational and three
+
+translational (Fig. 5); these degrees of freedom give the knee a complex, but needed
+
+motion for normal function.
+
+
+
+
+                                                                                           15
+                 Figure 7 - The six degrees of freedom that make up the human knee
+
+
+   Coincidently six different ligaments provide stability for the knee (Fig. 8). These
+
+ligaments are:
+
+   1.   Anterior cruciate ligament
+   2.   Posterior cruciate ligament
+   3.   Lateral collateral ligament
+   4.   Medial collateral ligament
+   5.   Popliteofibular ligament
+   6.   Anterolateral ligament
+
+
+
+
+          Figure 8 - The 4 main ligaments of the human knee (not included the PFL and ALL)
+                                                                                             16
+        The primary function of the anterior cruciate ligament (ACL) is to resist
+
+anterolateral displacement of the tibia on the femur (femur sliding backward on the tibia
+
+or the tibia sliding forward on the femur). The posterior cruciate ligament (PCL), has the
+
+primary function of resisting posterior tibial displacement (femur sliding forward on the
+
+tibia or the tibia from sliding backward on the femur), especially at 90 degrees of flexion
+
+[20].
+
+        The primary function of the lateral collateral ligament (LCL) is to resist varus
+
+displacement at 30 degrees of flexion. Serving a similar role, the medial collateral
+
+ligament (MCL) resists valgus angulation (the ligaments work together to prevent the
+
+femur from sliding side to side) [20].
+
+        The last two ligaments manage the rotational stability of the knee. The
+
+popliteofibular ligament (PFL), also known as the Posterior Lateral Corner (PLC),
+
+primary function has only been determined in the past 30 years; it resists posterior
+
+translation, varus, and external rotation [21]. It is not shown in the image above because
+
+it is posterior to the knee while the image above is an anterior view.
+
+        Lastly, the recently (re)discovered anterolateral ligament (ALL) has been shown
+
+to be an important stabilizer of internal rotation at flexion angles greater than 35 degrees.
+
+This means the ALL does not assist the ACL and PCL in stabilization during translation
+
+[22]. Because of its recent rediscovery and its location near the LCL, it too is not labeled
+
+in the diagram above.
+
+
+
+
+                                                                                           17
+        Because the last two of these ligaments deal with the axial rotational aspects of
+
+the knee and in robotics we want to limit the degrees of freedom for control purposes, the
+
+focus of this thesis and subsequently the joint designs, are primarily on the first four
+
+ligaments. These ligaments primarily help stabilize the knee during flexion and extension
+
+while resisting medial and lateral translation; this is the main function of the knee that we
+
+want to mimic. The additional rotational aspects are then separated from the design, and
+
+then added back in at a later time [23].
+
+        In order to minimize the force needed to deal with high loads the knee joint
+
+utilizes a changing center of rotation. As the flexion of the joint increases, the moment
+
+arm across the front of the joint increases. This mechanism keeps the joint compact and
+
+greatly reduces force requirements when compared to a static center of rotation.
+
+        The knee joint also utilizes what is called a “screw home” mechanism, called such
+
+because during the last 20 degrees of extension the tibia with respect to the femur
+
+externally rotates by roughly 10 degrees [24]. This mechanism tightens both cruciate
+
+ligaments, which lock the knee. The tibia with respect to the femur is then in a position of
+
+maximal stability. In this position, the knee requires no extra forces to stay fully extended
+
+[24].
+
+
+
+
+3.3 - Ankle and foot anatomy and physiology
+
+        Much like the hip joint, the ankle joint is formed from several different bones that
+
+have different purposes and dimensions, but for our purposes are grouped together. For
+
+                                                                                            18
+this reason, we are grouping the foot anatomy and physiology with the ankle joint like we
+
+did with the hip joint and pelvis.
+
+
+
+
+3.3.1 - Ankle anatomy and physiology
+
+        The articulating surfaces of the ankle are made up of three different bones, the
+
+talus of the foot along with the tibia and the fibula, which together form a bracket shaped
+
+socket (Fig. 9). Similar to the hip joint the ankle is a synovial joint; functionally the joint
+
+acts as a hinge joint allowing for stable dorsiflexion and plantarflexion only [25, 26].
+
+Eversion and inversion is a result of the movement by the subtalar joint, which is formed
+
+by the calcaneus and talus and is distant and separate from the ankle joint [27].
+
+
+
+
+ Figure 9 - The tibia and fibula form a square shaped bracket that fits around the heart-shaped articular
+                                            surface of the talus
+
+        The ankle joint is held together by two main sets of ligaments both originating
+
+from a malleolus, the bony prominence on either side of the ankle. The two sets of
+
+ligaments are grouped by location medially and laterally [26].
+
+                                                                                                       19
+       While the ankle and foot has 3 degrees of freedom, modeling the ankle joint alone
+
+is typically done as a hinge, because the other degrees of freedom are created by the
+
+subtalar joint [28, 29]. For the purposes of this thesis, we will approximate both the hip
+
+and ankle joints as ball and socket type joints. This approximation will help remove some
+
+of the instability of the ankle joint and give the joint increased range of motion.
+
+
+
+
+3.3.2 - Foot anatomy and physiology
+
+       The foot is made up of twenty-six individual bones. The calcaneus bone is the
+
+largest, strongest, and the most posterior bone of the foot and is the attachment point for
+
+the Achilles tendon; superiorly to the calcaneus is the talus, which forms a tri-planar, but
+
+uniaxial joint with the calcaneus. The talus also serves as the loading surface for the distal
+
+end of the tibia and fibula [30].
+
+       Biomechanically, the foot behaves in two separate halves [27]. The two medial
+
+most metatarsals and phalanges move in conjunction with the talus forming a chain of
+
+interconnected motion [27]. The other three metatarsals phalanges move in conjunction
+
+with the calcaneus also forming a chain of interconnected motions [27]. Therefore, we
+
+simplify the design of the foot to just two toes instead of needing to recreate all five toes
+
+for use in mimicking the biomechanics.
+
+
+
+
+                                                                                             20
+3.4 - 3D printing with continuous fiber
+
+        This work uses a MarkForged Mark II 3D printer [31]. The printer prints in a
+
+nylon and carbon fiber chop composite called Onyx. It also has the unique and patented
+
+ability to print with continuous fiber inlay. The printer has the ability to add continuous
+
+fiberglass, High Temperature and High Strength (HTHS) fiberglass, Kevlar or carbon
+
+fiber to the prints (Fig. 10).
+
+        With each of these fibers having its own mechanical properties, inlayed fiber is
+
+used to augment the print depending on the requirements of the part. Thus, we add
+
+strength, temperature resistance, or wear resistance by incorporating the corresponding
+
+fiber into particular layers or sections of the part.
+
+
+
+
+  Figure 10 - Cutaway of a 3D printed part showing the continuous Kevlar fiber inlay (yellow) inside the
+
+                            nylon and chopped carbon fiber composite (black)
+
+
+        By utilizing this continuous fiber inlay, the company claims a part achieves a
+
+strength to weight ratio similar to aluminum. To back these strength claims, the company
+
+                                                                                                       21
+tested the mechanical properties of parts with continuous fiber. These properties are
+
+measured by a method similar to ASTM D790 and are shown here in table 2 [32–35].
+
+Table 2 - Material properties for continuous fiber inlay used in the MarkForged Mark II 3D printer
+
+provided from the company. *Measured by a method similar to ASTM D790         **Two samples measured
+                  #
+instead of five    6061-T6
+
+
+             Property           Test Standard    Carbon Kevlar Fiberglass HSHT Aluminum#
+
+Tensile Strength (MPa)           ASTM D3039        700     610       590       600        276
+
+Tensile Modulus (GPa)            ASTM D3039        54      27         21        21        68.9
+
+Tensile Strain at break (%)      ASTM D3039        1.5     2.7       3.8       3.9         12
+
+Flexural Strength (MPa)          ASTM D790*        470     190       210       420        276
+
+Flexural Modulus (GPa)           ASTM D790*        51      26         22        21        68.9
+
+Flexural Strain at Break (%)     ASTM D790*        1.2     2.1       1.1       2.2         12
+
+Compressive Strength (MPa)       ASTM D6641        320     97        140       192        234
+
+Compressive Modulus (GPa)        ASTM D6641        54      28         21        21        70.3
+
+Compressive Strain at break (%) ASTM D6641         0.7     1.5       N/A       N/A
+
+Heat Deflection Temp (oC)         ASTM D648        105     105       105       150
+
+Density (g/cm3)                       N/A          1.4     1.25      1.6       1.6        2.71
+
+Izod Impact – Notched (J/m)     ASTM D256-10 958         1873**     2603      3117
+
+
+
+
+                                                                                                     22
+                                         Chapter 4
+
+                                  Methods and Materials
+
+
+
+
+       This chapter presents the detailed design and implementation of hip, knee, and
+
+ankle bio-equivalent joints, and outlines their strengths as well as their limitations.
+
+       Unfortunately, the ability to measure biomechanical quantities of a joint in vivo is
+
+limited. I assume that MRI modeling of the joint provides enough biomechanical
+
+information that I am able to construct model, because the ex vivo modeling of joints
+
+removes some of the normal, or pathological conditions. From this model, I then design a
+
+mechanical joint that has properties similar to the corresponding biological joint, for
+
+instance the knee, which has a changing center of rotation and the ability to lock in the
+
+upright (standing) position.
+
+       This chapter also details the design process that was used to create the robot. I
+
+will show how I created 3D models using different medical scans and where those
+
+medical scans were obtained. Then the chapter covers each of the designed versions for
+
+each type of joint.
+
+
+
+
+4.1 - Medical scans to 3D models
+
+       MRI scans and CT scans are similar in that they are non-invasive ways of imaging
+
+inside of the body. CT scans (or Computerized tomography) use multiple X-rays taken at
+
+                                                                                            23
+different angles to produce cross-sectional images. MRI (Magnetic Resonance Imaging)
+
+scans use strong magnetic fields, radio waves, and field gradients to generate cross-
+
+sectional images. These cross-sectional images are enhanced to show particular details of
+
+the anatomy by adding IV contrast.
+
+        CT scans are excellent at looking at bones, but do not provide a clear picture of
+
+the soft tissues without the aid of contrast. Conversely, MRI scans are excellent at
+
+detecting even slight differences in tissue and is the better choice for showing tendons
+
+and ligaments. Therefore, both scans types are necessary to develop a clear understanding
+
+of the kinematics and produce a 3D model capable of reproducing the correct motions.
+
+
+
+
+4.2 - Obtaining medical scans
+
+    The first step was to acquire medical scans; using the open repository of medical
+
+scans provided by the software, I was able to locate several different MRI and CT scans
+
+(Fig. 11).
+
+
+
+
+                                                                                            24
+                     Figure 11 - DICOM library search tool layout via 3D Slicer
+
+
+        The DICOM files selected needed to be free from injury, had to have adequate
+
+contrast to resolve the joint structures, and need to be the same sex due to the biological
+
+differences between males and females. Furthermore, preference was given to files of
+
+patients that fell into the same age range to minimize the differences between scans.
+
+Scans were selected from adult males because the bipedal robot needed to be able handle
+
+roughly 91 kilograms (200 lbs.). Lastly, the slice thickness needed to be as small as
+
+possible to maximize the fidelity of the 3D model [36].
+
+
+
+
+4.3 - Creating a 3D model
+
+                The process of turning medical scans to a 3D model is essentially the same
+
+for each joint; for this reason, this thesis will only go into detail about process for a single
+
+                                                                                             25
+joint, the knee joint. The joint was selected for the next chapter because it is the most
+
+complex joint that was modeled and is the best to illustrate the process.
+
+3D slicer was used to read the MRI and CT files.
+
+       “3D Slicer is an open source software platform for medical image informatics,
+
+image processing, and three-dimensional visualization. Built over two decades through
+
+support from the National Institutes of Health and a worldwide developer community,
+
+Slicer brings free, powerful cross-platform processing tools to physicians, researchers,
+
+and the general public.”
+
+       The software was chosen because it is capable of processing a range of medical
+
+imaging data. It parses the different scans and acquire different measurements of tendons
+
+directly from the joints themselves.
+
+       To create the 3D models, the chosen medical scans in DICOM (Digital Imaging
+
+and Communications in Medicine) format were imported into the 3DSlicer software (Fig
+
+12).
+
+
+
+
+                                                                                            26
+                 Figure 12 - DICOM files loaded into 3D slicer as viewed in the GUI
+
+       The software automatically assembles the scans into a model by organizing the
+
+scans; however, the different tissues and bones needed to be selected manually in order to
+
+create a model from the scans. The contrast of the scans was adjusted manually to
+
+provide the best intensity gradient for the section of interest (bones, tendons, and
+
+ligaments) from the surrounding tissues.
+
+       CT scans show the bone much clearer than the MRI scans while the MRI scans
+
+show the tendons and ligaments with more clarity than the CT scans (Fig 13). By
+
+utilizing these larger gradients, the software has a much easier time separating the soft
+
+tissue from bone or the ligaments and tendons from tissues.
+
+
+
+
+                                                                                            27
+Figure 13 - Results of a CT scan (left) vs. an MRI scan (right) notice that the CT scan shows a much higher
+
+                                   contrast for bones than the MRI scan.
+
+
+        The program then selects sections of each layer of the scan within the stated range
+
+(Fig. 14).
+
+
+
+
+Figure 14 - Initial attempt as selecting bone exclusively using the software’s selection algorithm (selection
+
+                                                 in brown)
+
+
+        I manually cleaned the scans once the software selected and labeled the sections
+
+as the target tissue or bone. By removing unwanted selections made by the program. This
+                                                                                                          28
+step verifies the software selected the correct areas of the scan and requires manually
+
+fixes any discontinuities or erroneous selections (Fig. 15).
+
+
+
+
+          Figure 15 - Bone selection (brown) after manual cleanup and verification of selection
+
+
+        After manual cleaning, I converted the selections to a 3D model using the built in
+
+functionality. However, the model is not ready to be used due to how the software
+
+processes the slice thickness of the MRI and CT scans layers. Each layer is a simple
+
+extrusion to the thickness of the MRI or CT scan slice thickness, which in this case is 1
+
+mm (Fig 16).
+
+
+
+
+ Figure 16 - Initial result from the extrude operation using 3D Slicer. This operation creates a "stepped"
+
+                                  effect that needs to be later smoothed.
+
+
+
+                                                                                                         29
+        This model must be smoothed, so the model was then exported from the 3DSlicer
+
+and into another open-source software called Mesh Mixer. This software smooths the
+
+scans by determining, then attempting to maintain, tangent continuity.
+
+        Tangent continuity occurs when the two curves share a common endpoint and are
+
+tangent to one another at that point. A high fidelity model that limits deformation from
+
+this process is created by maintaining tangent continuity preferentially over other
+
+smoothing operations (Fig 17).
+
+
+
+
+  Figure 17 - (A) The 3D model from 3D Slicer loaded into Mesh Mixer and (B) after the tangent smooth
+
+                                         operation is applied
+
+
+
+
+4.4 - Hip Joint
+
+        The hip is made up of three different fused bones, so for the purposes of designing
+
+and building a robot this is simplified to just one. That leaves us with three separate
+
+bones, the left and right ilium, and the sacrum.
+
+
+                                                                                                    30
+       To design the hip, CT and MRI scans of the lower extremities were used to create
+
+3D models of the joints using an open-source software called 3D Slicer (Fig. 18). This
+
+program organizes the Digital Imaging and Communications in Medicine (DICOM) files
+
+so they are manipulatable in a 3D environment. The software selects specific portions of
+
+each layer, and by applying an extrusion operation corresponding to the layer thickness of
+
+the medical scan, creates a 3D model.
+
+
+
+
+                Figure 18 - Hip Model created using the extrude function in 3D Slicer.
+
+
+       Once these layers are extruded, a tangent smooth operation is applied to the model
+
+to eliminate the stepping artifacts from the extrusion operation. Using this process, we
+
+recreate the structures from the medical scan into a high fidelity 3D model. From these
+
+models, the initial articulating surfaces of the designed joint are created and sized
+
+similarly to the corresponding joints in the body. The files used to create our hip model
+
+
+                                                                                            31
+were obtained from an open source biomedical 3D printing community called embodi3d
+
+[37].
+
+        The hip joint has several different geometric considerations which need to be
+
+considered to maximize the life of the designed joint [38, 39]. These geometric
+
+parameters (Fig. 19) are the femoral neck length, the narrow neck width, and the neck-
+
+shaft angle. The neck of the femur is especially at risk of fracture from loading. The joint
+
+geometry in the design comes from the median values of the accepted range for an adult
+
+male and not the medical scans since these are considered the ideal values [40]. However,
+
+the overall shape of the contacting surfaces is based on the medical scan models (Fig 20).
+
+
+
+
+              Figure 19 - Geometric considerations for designing the hip joint and femur
+
+
+        A way to attach the pneumatic actuator securely to each side of the joint needed to
+
+be included into the design process because the braided pneumatic actuators are going to
+
+need to resist some of the applied load. Adjustable steel hose clamps secure the actuator
+                                                                                           32
+to either side of the joint; a recess on both ends of the links keeps the actuator firmly
+
+secured when tension is applied to the joint.
+
+
+
+
+                            Figure 20 - 3D model of the designed femur
+
+
+       As previously mentioned, the hip is broken into three separate bones to mimic the
+
+human hip the two ilium and the sacrum (Fig 21). The parts connect to each other the
+
+same way the hip does, a spring and damping element was added between the bones
+
+using braided pneumatic actuators. These flexible connections help the hip absorb impact
+
+loading similar to how the real hip behaves when walking.
+
+
+
+
+                                                                                            33
+             Figure 21 - Anterior view of the 3D model of the designed hip with vertebrae.
+
+
+
+
+4.5 - Knee Joint
+
+       The knee joint is one of the most complex joints in the body. This section covers
+
+the three different versions of the joint and the design processes for each version.
+
+
+
+
+4.5.1 - Version 1
+
+       An early solution at modeling the soft structures of the knee with rigid aluminum
+
+connections was to include an adjustable compliant element to the design. A small
+
+pneumatic actuator was selected because it matched the diameter of the human tibia. This
+
+actuator provides adjustable compliance. Furthermore, pressure in the actuator is
+
+
+                                                                                             34
+adjustable to limit slip between the surfaces, the main cause of wear, and reduce impact
+
+shock as the robot moved or if the robot fell.
+
+       Machining cost was a factor so the design needed to be limited to the geometry
+
+that could be machined in house. This meant that the most complex geometry that could
+
+be created had to be machinable using a 3-axis CNC machine.
+
+       The LCL and MCL are located on the outer faces of the knee, so I determined
+
+machining solid metal links to act as analogs to these ligaments would be more feasible
+
+than trying to model and machine analogs of the ACL and PCL, which are located on the
+
+inner faces of the knee.
+
+       After determining which ligaments to model, I created the mechanical knee
+
+design in SolidWorks (Fig. 22). After several simulations under a variety of rotational
+
+input conditions, the proposed joint design was determined to perform similar to the
+
+biological counterpart.
+
+
+
+
+                                                                                          35
+                     Figure 22 - 3D model of the first version of the knee joint
+
+
+       To machine the part, the fibular end and tibial head (the two load bearing
+
+surfaces), were imported into a CNC program called MasterCAM (Fig. 23). Using this
+
+program, the order of cuts, the tolerances, number of passes, and finish to the design are
+
+controlled. This program also runs simulations to test the order of operations based on the
+
+sizes of the bits used and the operating conditions of the machine, which is set by the
+
+program, or by the user.
+
+
+
+
+                                                                                          36
+                     Figure 23 - MasterCAM GUI showing the tooling path.
+
+
+        The distal extremity of the femur and the proximal extremity of the tibia were
+
+machined using a 3-axis CNC machine (Fig. 24). This would give the best true to CAD
+
+outcome and cut the parts quicker than trying to machine each part by hand on a mill.
+
+
+
+
+               Figure 24 - Machining of the tibial head using a 3-axis CNC machine
+
+
+
+                                                                                         37
+        The rest of the parts were machined on a mill, lathe, or a 2-axis CNC machine
+
+(Fig. 25).
+
+
+
+
+       Figure 25 - Aluminum slug being machined for the tibial end using a 2-axis CNC machine.
+
+
+        Welding of the square tube that holds the pneumatic cylinder was done using a
+
+TIG welder. Welding of the components was done prior to assembly (Fig. 26). Between
+
+setup, takedown, clean up, and waiting to access the 3-axis CNC machine, the fabrication
+
+process took roughly 6 weeks from start to finish.
+
+
+
+
+                    Figure 26 - Initial completion of the knee joint prior to welding
+
+
+
+
+                                                                                                 38
+4.5.2 - Version 2
+
+        Having access to new equipment, the MarkForged 3D printer, the primary goal of
+
+the second joint design was to address problems with the first design. The second goal
+
+was to determine the abilities of the new technology and to evaluate the veracity of the
+
+claims regarding material properties. Significant changes were not made to the design.
+
+        However, a few key changes were made to the 3D model to make it more suitable
+
+for 3D printing. The lateral and medial faces of the femoral portion of the design were
+
+hollowed to lighten the design (Fig. 27). This cut the amount of material needed,
+
+shortened the time to print, and did not affect the strength of the design. The other change
+
+was to the LCL and MCL connections. The connections were modified for added strength
+
+in 3D printing. There were no other significant changes made to the version one design.
+
+For example, the first iteration of the second knee joint used the same contact face angles
+
+as the first version of the joint.
+
+
+
+
+                     Figure 27 - Modification of the femoral end to reduce weight.
+
+
+
+
+                                                                                           39
+4.5.3 - Version 3
+
+        However, this was changed for the second iteration of the second design. The
+
+ability to lock the joint when fully extended was added to the tibial contact face. A
+
+protrusion in the center of the tibial contact face was added. This protrusion was shaped
+
+to give the shaft that was press fit into the bearings of the femoral end a way to lock when
+
+the joint is fully extended (Fig. 28).
+
+
+
+
+              Figure 28 - Tibial head showing the addition of the screw-home mechanism
+
+        The fibular end of the joint was modified with the addition of a replaceable clip-
+
+on face for the load-bearing surfaces of the fibular end of the joint (Fig. 29), which was
+
+printed using a Kevlar inlay because of the wear properties of the material.
+
+
+
+
+                                                                                             40
+                              Figure 29 - 3D model of the designed clip
+
+
+       The fibular end was further modified to include rounded teeth that lock in with the
+
+clip-on faces. This modification provided a tight fitting connection that would not create
+
+unwanted sliding. The clip-on faces attach in such a way that they do not dislodge from
+
+the fibular end of the joint during use (Fig. 30).
+
+
+
+
+           Figure 30 - 3D model showing the addition of locking surfaces on the fibular end
+
+
+                                                                                              41
+4.5.4 - Version 4
+
+       With the additional equipment and because I was no longer constrained by the
+
+limitations of a 3-axis CNC machine, I redesigned the entire mechanism by modeling the
+
+ACL and PCL. This change meant not only could a more compact joint be created, but
+
+the geometric complexity of the joint could be increased as well.
+
+       Design of the distal end of the femur and the tibial head were done to ensure that
+
+the loading surfaces made contact throughout the entire range of motion of the joint. By
+
+doing this we redirect the forces from the linkage to the condylar surfaces, this will
+
+reduce wear on the pins and reduce the risk of catastrophic failure.
+
+       The contacting surfaces of the knee could not be copied outright, because the
+
+linkages we are using are solid and the linkages of the human knee are flexible. Instead, a
+
+new design for the tibial contact surfaces was designed to reduce sliding while still being
+
+compact. For that reason, the curve of the medial condyle, the larger of the two condyles,
+
+was chosen for both the contact surfaces of the distal end of the femur.
+
+       The tibial head was designed so that when the end of the femur is constrained to
+
+the crossed four-bar linkage it maintained contact throughout the range of motion. In
+
+order to do this, the shape of the curve created by the femur when constrained by the
+
+four-bar linkage was calculated and then used to create a 2-dimensional profile of the
+
+contact surface of the tibia. This curve was then turned into the profile of the tibial
+
+contact surface using SolidWorks. The rest of the tibial head was then designed around
+
+the movement of the linkage so that it would not interfere with the range of motion.
+
+
+                                                                                          42
+       Advantageously, by modeling the ACL and PCL instead of the MCL and LCL in
+
+addition to representing them by solid links, the new model without additional
+
+modifications had a simplified version of the screw home mechanism that lets the joint
+
+lock at full extension. This new locking mechanism was more robust than the one that
+
+was created for version 2.
+
+       The analog to the screw-home mechanism is achieved using the geometry of the
+
+linkage because the design uses a solid and crossed 4-bar linkage design. Limiting the
+
+forward movement of link 1 through modification of the condylar surface of the tibial
+
+head creates a mechanical stop that prevents any additional forward movement (Fig. 31).
+
+
+
+
+              Figure 31 - The modification of the tibial head to allow for upright locking
+
+
+       Once the joint is in the upright position, the modification to the tibial head creates
+
+a locking mechanism such that any amount of loading force applied through the knee –
+
+for example while in a standing position – cannot induce a rotation of the joint due to the
+
+forward location of the instantaneous center of rotation (ICR) at full extension. The
+
+design directs weight through the condylar surfaces of the distal end of the femur and the
+                                                                                             43
+tibial head instead of the connecting links of the joint. This broad surface contact spreads
+
+out the load and reduces this source of premature wear and failure.
+
+       Once the linkage was designed, designing a patella to maximize the efficiency of
+
+the knee needed to be done. One of the first considerations for approximating the patella
+
+in the design was the contact faces. Contact needs to be maximized to reduce the wear of
+
+the surfaces. Additionally, the force vector applied by the patella to the joint should point
+
+perpendicularly to the moment arm in order to maximize the torque about the joint
+
+applied by the quadriceps muscles. The quadriceps muscles apply forces to the knee joint
+
+(Fig.32), where the resultant force F(θ) passes through the instantaneous center of
+
+rotation and is calculated by
+
+                                                    𝜃
+                                𝐹(𝜃) = 2𝑄 ∗ cos ( 2)                                        (1)
+
+
+       The angle θ is the angle between the quadriceps tendon and the patellar tendon.
+
+Because the ICR curve of the designed joint is flattened, the resultant force is directed
+
+perpendicularly to the moment arm and through the ICR longer than an ICR curve that
+
+was more convex. By correctly angling the patellar using Equation 1, the resultant force
+
+from the actuator is maximized through the entire extension of the joint.
+
+
+
+
+                                                                                            44
+              Figure 32 - Force applied to the knee through the patella as seen laterally
+
+
+
+
+4.6 - Ankle Joint and foot
+
+       This section covers the two designs that were created for the foot, the main design
+
+consideration for the foot was that it needed to be under actuated and it needed to include
+
+the articulations that make the gait of the robot fluid (IE- the feet could not be solid). Two
+
+designs of feet were created, both of which are covered in this section.
+
+
+
+
+4.6.1 - Version 1
+
+       The design of the foot only needed to be able to function under actuated, the first
+
+version was designed using pin joints (Fig 33) and designed using measurements of the
+
+human foot obtained from the 3D models.
+
+
+
+                                                                                            45
+                      Figure 33 - 3D model of the first version of the foot and ankle
+
+
+        This design includes the same leaver style design the calcaneus (the bone that
+
+forms the heel) has in the foot. The protrusion (Fig. 34) adds leverage in the same manner
+
+as its biological counterpart.
+
+
+
+
+  Figure 34 – 3D rendering of the underside of the designed foot showing the addition of a lever arm to
+
+     apply force to the constructed foot the same way the calcaneus does in the human foot (circled).
+                                                                                                          46
+        A braided pneumatic actuator attaches to the underside of the foot at the rear and
+
+connects to each of the two metatarsals. This acts as an elastic element and creates the
+
+arch of the foot.
+
+
+
+4.6.2 - Version 2
+
+        The second design corrects the use of pin joints in favor of using braided
+
+pneumatic actuators for attachment. The design also better incorporates the braided
+
+pneumatic actuator that is used to create the elastic element for the arch of the foot.
+
+        An extra contact point was added to the foot design so that the metatarsals of the
+
+newly designed foot make contact with the ground. This is a more natural design that
+
+gives the robot a larger contact area during the step off portion of the gait (Fig. 35).
+
+
+
+
+  Figure 35 – 3D model of version 2 of the foot as seen laterally (and without the pneumatic sleeve, that
+
+                                           attaches the joints).
+
+
+        Using the same pneumatic cylinder connections that are used in the hip and ankle,
+
+the pin joints were eliminated. This added damping to the foot as well as an elastic
+
+element between joints.
+                                                                                                        47
+        The pneumatic actuator that attaches on the underside of the foot from the
+
+calcaneus to each of the metatarsals is now inside of the calcaneus (Fig. 36). Unlike the
+
+last design, the calcaneus (bone in the heel of the foot) and the talus (joint that forms the
+
+ankle) are joined together. This combined structure forms a protective enclosure for the
+
+braided pneumatic actuator used for the arch of the foot.
+
+
+
+
+ Figure 36 - By combining the talus and calcaneus, the pneumatic spring element used for the arch is now
+
+                                               protected.
+
+
+
+
+                                                                                                      48
+                                               Chapter 5
+
+                                                Results
+
+
+
+
+        This section covers the result of testing for each joint. It covers the performance
+
+metrics and when applicable, how the designs compare to the pin joint that they are trying
+
+to replace.
+
+
+
+
+5.1 – Hip Joint Results
+
+        The three pieces of the pelvis are connected using braded pneumatic actuators as a
+
+spring and damping element (Fig 37).
+
+
+
+
+  Figure 37 - Lateral view of the pelvis showing several vertebrae and better illustrating the connecting
+
+                                 surfaces between the sacrum and ilium
+
+
+
+                                                                                                            49
+       Once the hip was designed, the length of the pneumatic actuator needed to be
+
+determined in order to maximize the range of motion, because it is dependent upon the
+
+stiffness of the braided pneumatic actuator, the pneumatic actuator pressure, the joint gap,
+
+and the empty volume inside the pneumatic actuator.
+
+       The initial spacing between the two ends of the joint prior to inflation is set such
+
+that the range of motion matches closely to the range of motion of the corresponding
+
+human joint. By increasing the initial spacing of the two ends of the joint, the braided
+
+pneumatic actuator is forced to compress as the joint end comes into contact. This
+
+compression of the actuator gives the joint added range because the actuator is no longer
+
+fully extended.
+
+       Stiffness (k) for these pneumatic actuators is not constant and is a function of the
+
+length and pressure of the actuator. This stiffness function is found using a model created
+
+by Colbrunn et al. [41] by taking the derivative of actuator force with respect to length
+
+                                           𝑑𝐹
+                                    𝑘 = 𝑑𝐿                                                  (2).
+
+
+Using a model Chou and Hannaford developed for braided pneumatic actuators [42] to
+
+determine force expressed in terms of gauge pressure (Pg) and length (L)
+
+                                    𝑃𝑔 𝑏 2 3𝐿2
+                               𝐹=          ( 2 − 1)                                         (3)
+                                    4𝜋𝑛2    𝑏
+
+
+if we differentiate (3) with respect to L (2) becomes,
+
+                              𝑏2    3𝐿2         𝑑𝑃𝑔   3𝑃𝑔 𝐿
+                        𝑘 = 4𝜋𝑛2 ( 𝑏2 − 1) 𝑑𝐿 + 2𝜋𝑛2                                        (4)
+
+
+                                                                                             50
+where b is the thread length of braided sleeve and n is the number of turns for a single
+
+thread in the length of the braided sleeve (Fig. 38).
+
+
+
+
+ Figure 38 - Parameters for determining the single thread length of the braided sleeve and the number of
+
+                                          turns for that thread.
+
+
+        Colbrunn et al. [41] assumes that the actuator is a membrane such that the
+
+pressure inside the actuator stays constant throughout the range of motion of the actuator.
+
+This assumption means
+
+                                         𝑑𝑃𝑔
+                                               ≈0                                                     (5)
+                                          𝑑𝐿
+
+
+making this assumption and applying it to (4) we now have
+
+                                                3𝑃𝑔 𝐿
+                                          𝑘 = 2𝜋𝑛2                                                   (6).
+
+
+        To determine radial stiffness, the beam model, where the actuator is treated as a
+
+slender member and loaded in a single plane is used. This formula relates the applied
+
+moment (M) to the curvature of the beam (φ), the internal pressure (P) and the beam
+
+radius (r) such that
+
+                                                                                                      51
+                          𝜋
+                           [(𝜋−φ)+sin 𝜑 cos 𝜑]−𝑣[(𝜋−𝜑)2 −(𝜋−𝜑) sin 𝜑 cos 𝜑−(2 sin 𝜑)2 ]
+             𝑀 = 𝑃𝑟 3 2                                                                                       (7)
+                                                 sin 𝜑+(𝜋−𝜑) cos 𝜑
+
+
+
+where v is the Poisson’s ratio of the actuator. Equation (6) is used to determine the
+
+stiffness as the joint angle changes (Fig. 39). However, this model is only valid when the
+
+joint surfaces inside the air muscle do not make contact because once the surfaces make
+
+contact we need to take into consideration the restoring forces the joint adds to the model
+
+and is no longer be assumed to be zero. The restorative force of the joint links created by
+
+the compression force of the actuator along with the added friction, increase the joint
+
+stiffness and this change needs to be taken into account.
+
+
+
+
+   Figure 39 – Calculated change in stiffness as it relates to joint angle at an initial pressure of 25 psi
+
+
+       The empty volume remaining inside the actuator has significant effects on the
+
+range of motion and stability of the joint. As a bending moment is applied to the joint, the
+
+contact surface inside the actuator moves along the ball surface, similar to the joints of
+
+the human body and is held in place by the actuator. Therefore, the empty volume inside
+
+the joint creates a mechanical limit to the amount of motion that the joint achieves.
+
+                                                                                                              52
+         Table 3 shows the range of motion for the hip joints of the average adult male
+
+[43–45], the variables that impact the range of motion should be adjusted to match
+
+closely to these values while attempting to maintain maximum joint stability.
+
+Table 3 - Range of motion of the hip joint for the average adult male
+
+                                        Motion                          Range (degrees)
+                   Hip Joint
+                                        Flexion/ Extension              32-88
+                                        Adduction/ Abduction            51-61
+                                        Internal/ External Rotation     79-99
+
+
+
+5.2 - Knee Joint Results
+
+         This section covers the results from the design of the knee joint; this includes
+
+model testing for all the versions.
+
+
+
+
+5.2.1 - Version 1
+
+         Testing of the machined joint, (Fig. 40) met with mixed results. The simulation of
+
+the joint did not take into full consideration the effect out of plane forces would have on
+
+the joint. Due to this, along with machine tolerances – accidental damage to the prototype
+
+confounded this issue – the joint did not appear to be suitably stable when applying a
+
+combination of force and torque. This instability caused the femoral head to rotate out of
+
+the sagittal plane which was would lead to premature wear and could cause damage to the
+
+joint.
+
+
+
+
+                                                                                            53
+ Figure 40 - Version one of the knee prototype showing how the pneumatic actuator changes as the knee
+
+                rotates Figure 39 shows the assembled joint in different states of flexion
+
+
+       The tibia and femur bones attach to the knee using a 44.5 mm square tube stock.
+
+The condylar joint was created from machined aluminum stock using the MRI scans. The
+
+contact surfaces were lined with strips of UHMW plastic film, which helps reduce the
+
+coefficient of friction and gives the joint a smooth, wear resistant surface.
+
+       The design did not include the cruciate ligaments, but retained the different
+
+curved profiles of the lateral and medial femoral condylar surfaces. The intercondylar
+
+tubercules (center of tibia) have been expanded upon and used as a rail to help direct the
+
+femur in the case of high out of plane forces acting on the joint. For the prototype joint,
+
+the patellar surface has been machined in order to guide the patellar analog similarly to a
+
+biological femur.
+
+       The use of the pneumatic cylinder as an adjustable complaint member worked as
+
+expected and added stability to the joint, but also created an internal joint torque pointing
+
+towards 45 degrees from full extension.
+
+
+
+
+                                                                                                    54
+       As previously mentioned the human knee has a screw home mechanism that locks
+
+the knee when in the upright position. The design also needed to be redesigned to let the
+
+joint lock in the upright position.
+
+       No testing of the joint was done and instead it was redesigned to better deal with
+
+out of plane forces. Additionally, the weight of the joint needed to be reduced, so other
+
+material options needed to be explored.
+
+
+
+
+5.2.2 - Version 2
+
+       The second version design was 3D printed instead of machined. The new design
+
+underwent modifications to fix the instability of the first joint design and decrease the
+
+weight (Fig. 41).
+
+
+
+
+         Figure 41 - Fully assembled second version of the knee joint with the cylinder inflated.
+
+                                                                                                    55
+        The design has a clip-on loadbearing face for the distal end of the femur. This
+
+clip-on end helps reduce cost by giving the option of replacing only the loadbearing
+
+surface (Fig. 42).
+
+
+
+
+                 Figure 42 - 3D printed femoral end with the clips removed from the end
+
+
+        These grooves help keep contact between the clip-on face and the femoral end to
+
+reduce unwanted movement between the two components (Fig 43).
+
+
+
+
+  Figure 43 - 3D printed femoral end with the clips inlayed with Kevlar added back into the femoral end
+
+
+
+
+                                                                                                      56
+       The design includes a mechanism for locking the joint in the upright position,
+
+similar to the screw home mechanism. This addition eliminated the instability the first
+
+design had when torque was applied perpendicularly to the joint.
+
+       Several design changes to the screw home mechanism had to be made in order for
+
+it to function properly; these modifications were made to the center protrusion and
+
+consisted of changes in the geometry of the locking portion itself, where the metal bar
+
+would rest (Fig. 44).
+
+
+
+
+        Figure 44 - Second version of the 3D printed knee showing locking mechanism (circled)
+
+
+       By increasing the width of the LCL and MCL analog connections, the design
+
+reduced the deflection from out of plane forces significantly. This design change also
+
+created enough room to use roller bearings; this smoothed the joint movement, reduced
+
+the friction, and therefore likely increased the life of the joint when compared to the
+
+Version 1 metal-on-metal design.
+
+
+                                                                                                57
+        This joint underwent a series of tests to determine the length of the torque arm,
+
+range of motion, and center of rotation (Fig 45).
+
+
+
+
+ Figure 45 – Theoretical torque requirement to move a 46-kilogram load over the angle of rotation (blue
+
+                    solid line) vs the torque required for a pin joint (red dashed line)
+
+
+        The joint has a theoretical maximum torque requirement of 100 N-m, which is
+
+less than half the torque required to move a pin joint with the same weight.
+
+        The sliding to rolling ratio is an important parameter for the assessment of the
+
+joint since it estimates the amount of wear on the joint, it was necessary to determine the
+
+ratio for the proposed condylar joint [46]. This is calculated by modeling the contacting
+
+surfaces of the tibia and femur and the 3D model to create a motion study using
+
+SolidWorks software.
+
+        Rigid body kinematics is applied to determine the sliding to rolling ratio. The
+
+ratio is calculated as the difference between the arc lengths on each contacting divided by
+
+the arc length of the moving link, or:
+
+                                                                                                     58
+                                               Δ𝐿𝑡𝑖𝑏𝑖𝑎 (𝜃)−Δ𝐿𝑓𝑒𝑚𝑢𝑟 (𝜃)
+                                     𝜒(𝜃) =                                                        (8)
+                                                     Δ𝐿_𝑡𝑖𝑏𝑖𝑎(𝜃)
+
+
+
+where
+
+
+                       Δ𝐿𝑡𝑖𝑏𝑖𝑎 (𝜃) = 𝐶𝑡𝑖𝑏𝑖𝑎 𝑓𝑖𝑛𝑎𝑙 (𝜃) − 𝐶𝑡𝑖𝑏𝑖𝑎 𝑖𝑛𝑖𝑡𝑎𝑙 (𝜃)                          (9)
+
+
+                    Δ𝐿𝑓𝑒𝑚𝑢𝑟 (𝜃) = 𝐶𝑓𝑒𝑚𝑢𝑟 𝑓𝑖𝑛𝑎𝑙 (𝜃) − 𝐶𝑓𝑒𝑚𝑢𝑟 𝑖𝑛𝑖𝑡𝑎𝑙 (𝜃)                             (10)
+
+
+are the corresponding incremental differences of the contact arc lengths (Fig. 46).
+
+
+
+
+          Figure 46 - Kinematics of sliding to rolling ratio from initial contact point C1 to C2
+
+
+        A sliding ratio of zero indicates pure rolling and a ratio of one signifies pure
+
+sliding. If the ratio is between zero and one, the movement is characterized as partial
+
+sliding and rolling. For example, a sliding-rolling ratio of 0.7 resulted in 70% sliding and
+
+only 30% rolling. If the ratio is positive, then the slip of the femur is higher than the tibia.
+
+If the sign is negative, then the tibia has higher slip when compared to the femur.
+
+
+
+
+                                                                                                      59
+       It is desirable to have the slip as close to zero as possible to minimize the wear of
+
+the joint. The sliding-rolling ratio calculation was done over the range of the entire range
+
+of motion of the prototype joint from Eq. (8). SolidWorks simulations were then done to
+
+determine the sliding-rolling ratio of the proposed knee design with an incremental angle
+
+(θ) of 0.75 degrees (Fig. 47).
+
+
+
+
+  Figure 47 - Sliding and rolling ratio of the proposed joint. Note, the initially high sliding ratio settles
+
+                        because the model settles prior to the start of the rotation.
+
+
+       Our model suggests a sliding-rolling ratio of 0.159, but if we disregard the initial
+
+settling of the 3D simulation, the sliding-rolling ratio drops to 0.126. Due to the complex
+
+nature of the human knee, several attempts have been made to analytically model the
+
+sliding-rolling ratio [46, 47]. However, these models make several simplifying
+
+assumptions that do not accurately characterize the movement of the joint. We cannot
+
+confidently estimate the sliding ratio of the human knee joint for comparison, but we
+
+expect that the sliding-rolling ratio of our model to be similar to that of the human knee
+
+
+                                                                                                                60
+(0.3 - 0.5) [47]. It should also be noted that the sliding-rolling ratio of the human knee
+
+changes with the change of flexion angle, as does our model plotted in Fig 46.
+
+        The proposed joints’ mechanical advantage directly influences the selection of
+
+actuators that are used. To calculate the mechanical advantage, the length of the radius
+
+arm r(θ) needs first to be determined. Using the radius arm the mechanical advantage of
+
+the joint is determined (Fig. 48). The mechanical advantage (MA) is calculated by the
+
+following
+
+                                     𝑀𝐴 = 𝑟(𝜃)/𝐶                                                     (11)
+
+where C is the distance to the center of the joint.
+
+
+
+
+  Figure 48 - Radius arm r(θ) changing as a function of the angle of rotation θ plotted against the radius
+
+                                    arm of a pin joint (red-hashed line)
+
+
+
+
+                                                                                                         61
+5.2.3 - Version 3
+
+        Initial prototyping of the joint showed that out of plane forces has a significant
+
+effect on the joint when it reached full flexion. To better deal with this, several
+
+modifications to the tibial head were made as initial prototype testing went on (Fig. 49).
+
+
+
+
+                  Figure 49 - Tibial head changes as the prototype testing progressed
+
+
+        A locking face was added posteriorly to the tibial head (Fig. 50) to eliminate
+
+deflection from out of plane forces. This addition was designed specifically to fit into the
+
+slot on the distal end of the femur. This had two positive changes to the joint design; first,
+
+it becomes the load bearing surfaces for the joint, keeping perpendicular forces from
+
+being loaded onto the ACL and PCL of joint. Secondly, it increases the moment arm of
+
+the joint to the full length of the tibial head.
+
+
+
+
+                                                                                             62
+Figure 50 - Tibial head seen laterally (A) prior to modification, (B) post modification, change highlighted
+
+          in red circle, and (C) tibial head locked with the distal end of the femur for reference.
+
+
+        The constructed joint (Fig. 51) will be tested later to verify the theoretical results.
+
+
+
+
+    Figure 51 - Constructed joint (A) rear view, (B) front view, (C) full flexion, and (D) full extension
+
+
+        Metal fasteners were placed directly into the print so that metal shafts and
+
+lubricated sleeve bearings could be added to reduce friction at the joint connections. By
+
+
+
+                                                                                                            63
+adding the fasteners directly into the print, a clamping force is not required to keep the
+
+link on the shaft.
+
+        Figure 52 shows the linkage configuration used in the construction as well as the
+
+link designation, angle designation, and coordinate system for the following equations.
+
+
+
+
+Figure 52 - Four-bar linkage used in the proposed design showing link designation, angle designation, and
+
+                            the coordinate system for the following equations.
+
+
+        For n number of moving bodies, there are N number of instantaneous centers of
+
+rotation such that
+
+                                          𝑛(𝑛−1)
+                                    𝑁=           .                                                  (12)
+                                             2
+
+
+        From Equation 12, a four-bar linkage has six ICR, four of which are the joints
+
+where two links meet. This leaves two ICR that are not explicitly formed at joints;
+
+however, we are only interested in the ICR that is created by the crossing of the links.
+
+
+                                                                                                      64
+This ICR is of interest in particular because any force that creates rotation about the joint
+
+need to pass through this point.
+
+       This is the ICR formed by the intersection of the lines created from links 1 and 3,
+
+where link 1 is the PCL, link 3 represents the ACL, and links 2 and 4 represent the fibular
+
+end and tibial head respectively. This closed link configuration is defined as four vectors
+
+in a closed polygon where the sum is zero, written as
+
+                                   ⃗⃗⃗⃗⃗ + 𝐶𝐷
+                           ⃗⃗⃗⃗⃗ + 𝐵𝐶
+                           𝐴𝐵                      ⃗⃗⃗⃗⃗ = 0.
+                                           ⃗⃗⃗⃗⃗ + 𝐷𝐴                                    (13)
+
+
+       However, because ⃗⃗⃗⃗⃗
+                        𝐷𝐴 is parallel to the origin it is reduced to just the length L4.
+
+Then vector equation may be rewritten in complex-number form such that
+
+
+                          𝐿1 𝑒 𝑖𝜃1 + 𝐿2 𝑒 𝑖𝜃2 + 𝐿3 𝑒 𝑖𝜃3 + 𝐿4                            (14)
+
+       Next Equation 14 is separated into the real and imaginary parts
+
+
+                     𝐿1 𝑐𝑜𝑠(𝜃1 ) = 𝐿3 cos(𝜃4 ) + 𝐿2 cos(𝜃3 ) + 𝐿4                        (15)
+
+
+                                𝐿3 sin(𝜃1 ) = 𝐿3 sin(𝜃4 ) + 𝐿2 sin(𝜃3 )                  (16)
+
+       Solving to find the intersection of the two links, we obtain the set of equations for
+
+the instantaneous center of rotation given in x and y coordinates
+
+                                         tan(𝜃4 )
+                            𝑥 = 𝐿4                                                       (17)
+                                     tan(𝜃4 )−tan(𝜃1 )
+
+
+                                     tan(𝜃4 )∗tan(𝜃1 )
+                            𝑦 = 𝐿4                                                       (18)
+                                     tan(𝜃4 )−tan(𝜃1 )
+
+
+
+
+                                                                                            65
+       The length of the links which correspond to our designed joint are [L1, L2, L3,
+
+L4] = [1.85, 0.92, 2.03, 1.57] given in inches. The ICR only moves ± 0.2 inches out of
+
+plane from the desired line of action and has a maximum overall moment arm of 2.7
+
+inches prior to the addition of a patella (Fig 53).
+
+       The designed joint is only 2.8 inches wide and has a range of motion of 151
+
+degrees; this is roughly the same size and range of motion of the human knee. In a fully
+
+extended position, such as when standing, the joint will not rotate past that point so that
+
+no extra energy is needed to keep the joint in that position. This feature, in conjunction
+
+with the large moment arm, should greatly reduce the energy requirements of a robot
+
+when compared to a robot using a non-locking pin joint at the knee.
+
+
+
+
+     Figure 53 - Instantaneous center of rotation plot of proposed joint for the full range of motion.
+
+
+       I created a motion study to determine the sliding to rolling ratio of the joint using
+
+SolidWorks (Fig 54). First, the travel arc length of the tibia (∆LT) and the travel arc
+
+length of the femur (∆LF) are defined as
+
+
+
+                                                                                                         66
+                              Δ𝐿𝑇 (𝜃) = 𝐶𝑇𝑓 (𝜃) − 𝐶𝑇𝑖 (𝜃)                                          (12)
+
+
+                               Δ𝐿𝐹 (𝜃) = 𝐶𝐹𝑓 (𝜃) − 𝐶𝐹𝑖 (𝜃)                                          (3)
+
+
+where CTi and CFi are the initial contact points and CTf and CFf are the final contact points
+
+of the tibia and femur given an incremental flexion angle (θ).
+
+       Once the travel arc length is calculated, the sliding to rolling ratio (SR) is
+
+calculated by
+
+                                              Δ𝐿𝑇 (𝜃)−Δ𝐿𝐹 (𝜃)
+                                  𝑆𝑅(𝜃) =                                                           (4)
+                                                   Δ𝐿𝑇 (𝜃)
+
+
+
+
+          Figure 54 - Kinematics of sliding to rolling ratio from initial contact point C1 to C2
+
+
+       A SolidWorks Motion Analysis simulation was done to determine the sliding to
+
+rolling ratio with regard to flexion and was calculated at 0.5-degree intervals through the
+
+full range of motion of the joint (Fig. 55). The ratio of sliding to rolling of the proposed
+
+joint, on average is 0.079 with a minimum value of 0.018 and a maximum value of 0.28.
+
+
+
+
+                                                                                                    67
+ Figure 55 - Sliding to rolling ratio over the designed joints range of motion where zero is a pure rolling
+
+                   condition and one is a pure sliding condition, which increases wear.
+
+
+5.3 - Ankle and foot
+
+        This section will focus primarily on the construction instead of the theoretical
+
+behavior of the joint because the hip and ankle joint share the same design.
+
+
+
+
+5.3.1 - Version 1
+
+        The ankle is approximated as a ball and socket joint; the talus has a ball along
+
+with the connections needed to anchor the pneumatic actuator to the joint (Fig 56).
+
+
+
+
+                                                                                                          68
+Figure 56 - 3D printed version 1 of the foot as seen laterally
+
+
+         A lever arm that was added to the calcaneus to mimic the lever arm the calcaneus
+
+has in the foot (Fig. 57). This addition better mimics the human foot because the
+
+calcaneus applies a force in the same manner; however, the design leaves the pneumatic
+
+cylinder that would act as a spring element unprotected. This pneumatic cylinder would
+
+be located just below the lever arm; the attachment point was not included, because this
+
+was just a test print.
+
+
+
+
+Figure 57 - Distal view of version 1 of the 3D printed foot showing the lever arm addition on the calcaneus
+
+
+
+
+                                                                                                        69
+       There only needed to be two toes instead of the five we have because the foot
+
+behaves as two separate sections [29]. This meant that the design could be simplified,
+
+which also means that it could meet the requirement for it being under-actuated and is
+
+shown in the anterior view below in Fig. 58.
+
+
+
+
+            Figure 58 - Anterior view of the 3D printed version 1 foot showing the two toes
+
+
+5.3.2 - Version 2
+
+       The second foot design created a more natural foot while also creating a larger
+
+footprint (Fig. 59). Furthermore, while almost the entire foot is rounded, drop-testing
+
+shows that the design is very resilient to tipping and is much more stable than the
+
+previous design.
+
+
+
+
+                                                                                              70
+Figure 59 - Foot design version 2 seen laterally after the assembly using the pneumatic actuators as
+
+synovial joints
+
+
+         This design also included two hollow tubes inside the printed foot bones that
+
+allowed air to inflate all of the joints from a single connection at the ankle (Fig. 60).
+
+
+
+
+  Figure 60 – Section view of the talus in SolidWorks showing the tube inside the model that lets air flow
+
+                                   down into the other joints of the foot
+
+
+
+
+                                                                                                         71
+       Next, the ankle joint needed to be tested to insure that the gap created was large
+
+enough to accommodate the pneumatic actuator. Figure 61 shows the full ankle and foot
+
+joint assembled with the pneumatic actuators.
+
+
+
+
+     Figure 61 - 3D Printed foot version 2 with the pneumatic actuator sleeve for the ankle added
+
+
+
+
+                                                                                                    72
+                                         Chapter 6
+
+                                         Discussion
+
+       With respect to the hip and ankle joints, both joint stiffness and damping is
+
+expected to change as the angle of the joint changes, due to the increase in the curvature
+
+of the pneumatic actuator and the associated change in pressure, this change mimics the
+
+observed behavior of the human ankle [48–51]. This behavior should help stabilize a
+
+bipedal robot just as it helps stabilize humans.
+
+       Additionally, the joints should exhibit increased stability as the angle of the joint
+
+increases because the stiffness of the joint is expected to increase as a result of bending.
+
+This means the joint is expected to behave closer to a rigid joint as the angle increases;
+
+this too should be beneficial in robotic control.
+
+       Because braided pneumatic actuators have a protective fiber braid around the air
+
+bladder, should the air bladder puncture or become damaged, if the joint is in tension, the
+
+fiber braid should support the load which should help limit damage to the system as a
+
+whole. Conversely, if the air bladder fails and the joints are in tension, the fiber wrapping
+
+should mechanically limit the joint movement and while the system dynamics of the joint
+
+have changed, as long as the load applied to the fiber braid does not exceed its tensile
+
+strength the joint should remain semi-functional.
+
+       With respect to the knee, the comparison of the ICR curve with one developed by
+
+Fekete et al. [50] demonstrate that the placement of the curve is similar to the placement
+
+of the ICR curve of the human knee. Due to the compliance of tendons in the human
+
+                                                                                             73
+knee, unlike the solid links used in the current design, the ICR curve of a human knee is
+
+more convex than the ICR curve of the designed knee. However, the placement of the
+
+curve is similar to the placement of the ICR curve of the human knee and the flattened
+
+ICR curve of the designed joint has desirable properties with respect to the force
+
+requirements to create motion.
+
+        There are too many variables to determine the sliding to rolling ratio of the human
+
+knee in vivo so we cannot confidently include a graphical comparison. However, current
+
+research on the subject suggests the sliding to rolling ratio of the human knee is between
+
+0.3-0.46 [46, 52].
+
+        By mimicking the design of the human knee, the designed joint is comparable in
+
+size while having several of the knees’ desirable properties. This is in part due to the
+
+complex geometry that was obtained from 3D printing instead of using traditional
+
+methods. 3D printing also reduced the time of construction to just over one day as
+
+compared to potentially weeks of traditional machining.
+
+        Because the joint is made primarily from a nylon-carbon fiber chop and has a
+
+continuous carbon fiber inlay, the joint has exceptional strength giving it functionally, but
+
+weighs just 0.66 pounds. Furthermore, the majority of the weight of the joint is due to the
+
+steel fastening hardware added internally to the design mid-print and not from the print
+
+material itself.
+
+        One of the goals in the design of our knee joint was to reduce wear, with an
+
+average sliding to rolling ratio of 0.079; the joint has a significantly lower sliding to
+
+
+                                                                                            74
+rolling ratio than the human knee. By having continuous contact of the loading faces, the
+
+load applied to the pins is minimized and the addition of the locking extension on the rear
+
+of the tibia transfers a majority of the forces that would be placed on the pins at full
+
+flexion. By removing most of the loading forces from the pin connections, the joint will
+
+be less likely to suffer from a catastrophic failure and should last significantly longer than
+
+the traditional pin joint.
+
+        Reynolds et al. [53] using a sudden reduction in load with constant pressure
+
+experimentally determined the independent estimates for the spring coefficient (K) and
+
+the damping coefficient (B) of braided pneumatic actuators. They determined that both
+
+the increase linearly with the change in pressure and that B and K could be functions of
+
+loading. Furthermore, that as the applied load increases damping of the system increases
+
+and the system becomes overdamped, however when the load decreases the system acts
+
+closer to a critically damped system.
+
+        This behavior should help increase the controllability of the system because the
+
+system will not oscillate due to perturbations. This also means that damping is expected
+
+to increase as the joint angle increases, which should further help stabilize the system.
+
+The proposed ankle joint should be adjusted to match closely with the human range of
+
+motion of the ankle as shown in table 4.
+
+Table 4 - Average ankle joint range of motion
+                              Motion                          Range (degrees)
+ Ankle joint
+                              Planter Flexion/ Dorsiflexion   59-71
+                              Inversion/Eversion              42-56
+
+
+
+                                                                                            75
+       Future work concerning the hip and ankle joints should include experimentally
+
+testing the relationship between the length of the pneumatic actuator, the joint gap after
+
+pressurization, initial pressure of the actuator, and the remaining volume inside the
+
+actuator to create a more complete model of the joint.
+
+       Once a more complete model is created, testing should be done using alternative
+
+pneumatic actuators constructed from materials with increased elasticity and flexibility.
+
+These properties should be adjusted using this new model in conjunction with the
+
+mechanical and material properties of the joints they are mimicking.
+
+       Future work for the knee should involve wear testing and further material
+
+property testing to verify the material properties data given from MarkForged. This will
+
+help better characterize the joint lifetime and failure modes.
+
+
+
+
+                                                                                             76
+Bibliography
+
+
+
+1. Saad Mukras, Nam H. Kim, Nathan A. Mauntler, Tony L. Schmitz, W. Gregory
+    Sawyer: Analysis of planar multibody systems with revolute joint wear. Wear. 268,
+    643–652 (2010).
+2. Asano, Y., Mizoguchi, H., Kozuki, T., Motegi, Y., Urata, J., Nakanishi, Y., Okada,
+    K., Inaba, M.: Achievement of Twist Squat by Musculoskeletal Humanoid with
+    Screw-Home Mechanism. IEEE. (2013).
+3. Appolinaire C. Etoundi: A bio-inspired condylar hinge joint for mobile robots.
+    International Conference on Intelligent Robots and Systems. (2011).
+4. Burgess, S., Etoundi, A.: Performance Maps for a Bio-Inspired Robotic Condylar
+    Hinge Joint. Journal of Mechanical Design. 136, 7 (2014).
+5. Khan, H., Featherstone, R., Caldwell, D.G., Semini, C.: Bio-inspired knee joint
+    mechanism for a hydraulic quadruped robot. In: 2015 6th International Conference on
+    Automation, Robotics and Applications (ICARA). pp. 325–331 (2015).
+6. Hobon, M., Elyaaqoubi, N.L., Abba, G.: Quasi optimal sagittal gait of a biped robot
+    with a new structure of knee joint. Robotics and Autonomous Systems. 62, 436–445
+    (2014).
+7. Susan Standring: Gray’s Anatomy. Elsevier (2015).
+8. Pamela K. Levangie, Cynthia C. Norkin: Joint Structure and Function: A
+    Comprehensive Analysis Fifth Edition. F. A. Davis Company (2011).
+9. Hewitt, J., Guilak, F., Glisson, R., Vail, T.P.: Regional material properties of the
+    human hip joint capsule ligaments. Journal of Orthopaedic Research. 19, 359–364
+    (2001).
+10. van Arkel, R.J., Amis, A.A., Cobb, J.P., Jeffers, J.R.T.: The capsular ligaments
+    provide more hip rotational restraint than the acetabular labrum and the ligamentum
+    teres: an experimental study. The Bone & Joint Journal. 97-B, 484–491 (2015).
+11. Joseph M. Mansour: Biomechanics of Cartilage. In: Biomechanical Principles.
+12. Halonen, K.S., Mononen, M.E., Jurvelin, J.S., T€oyr€as, J., Kłodowski, A., Kulmala,
+    J.-P., Korhonen, R.K.: Importance of Patella, Quadriceps Forces, and Depthwise
+    Cartilage Structure on Knee Joint Motion and Cartilage Response During Gait.
+    Journal of Biomechanical Engineering. 138, (2016).
+13. Michael Harty: The Anatomy of the Hip Joint. Surgery of the Hip Joint. 45–74
+    (1984).
+14. Hodge, W.A., Fijan, R.S., Carlson, K.L., Burgess, R.G., Harris, W.H., Mann, R.W.:
+    Contact pressures in the human hip joint measured in vivo. Proceedings of the
+    National Academy of Sciences. 83, 2879–2883 (1986).
+15. Stewart C. Wang, Chris Brede, David Lange, Craig S. Poster, Aaron W. Lange, Carla
+    Kohoyda-Inglis, Mark R. Sochor, Kyros Ipaktchi, Stephen A. Rowe: Gender
+    Differences in Hip Anatomy: Possible Implications for Injury Tolerance in Frontal
+    Collisions. Association for the Advancement of Automotive Medicine. 287–301
+    (2004).
+
+                                                                                    77
+16. American College of Sports Medicine, http://www.acsm.org/.
+17. Horton, M.G., Hall, T.L.: Quadriceps Femoris Muscle Angle: Normal Values and
+    Relationships with Gender and Selected Skeletal Measures. Phys Ther. 69, 897–901
+    (1989).
+18. Mohammad-Jafar Emami, Mohammad-Hossein Ghahramani, Farzad Abdinejad,
+    Hamid Namazi: Q-angle: An Invaluable Parameter for Evaluation of Anterior Knee
+    Pain. Archives of Iranian Medicine. 10, (2007).
+19. Hugo Machado Sanchez, Eliane Gouveia de Morais Sanchez, Mario Antonio
+    Baraúna, Roberto Sérgio de Tavares Cant: Evaluation of Q angle in differents static
+    postures. Acta Ortop Bras. 22, 325–329 (2014).
+20. Jawad F. Abulhasan, Michael J. Grey: Anatomy and Physiology of Knee Stability.
+    Journal of Functional Morphology and Kinesiology. 2, (2017).
+21. S. A. Shahane, C. Ibbotson, R. Strachan, D. R. Bickerstaff: The popliteofibular
+    ligament - An anatomical study of the posterolateral corner of the knee. The Journal
+    of Bone and Joint Surgery. (1998).
+22. Erin M. Parsons, Albert O. Gee, Charles Spiekerman, Peter R. Cavanagh: The
+    Biomechanical Function of the Anterolateral Ligament of the Knee. The American
+    Journal of Sports Medicine. 43, 669–674 (2015).
+23. Yuki Asano, Hironori Mizoguchi, Masahiko Osada, Toyotaka Kozuki, Junichi Urata,
+    Tamon Izawa, Yuto Nakanishi, Kei Okada, Masayuki Inaba: Biomimetic Design of
+    Musculoskeletal Humanoid Knee Joint with Patella and Screw-Home Mechanism.
+    Robotics and Biomimetics (ROBIO), 2011 IEEE International Conference on
+    Robotics and Biomimetics. (2011).
+24. Bhaskar Kumar, Srinivasa Rao, S. K. Sundara siva rao: Biomechanics of knee joint
+    — A review. Frontiers of Mechanical Engineering. 10, 176–186 (2015).
+25. Donatelli, R.A.: Normal biomechanics of the foot and ankle. J Orthop Sports Phys
+    Ther. 7, 91–95 (1985).
+26. Milner, C.E., Soames, R.W.: Anatomy of the Collateral Ligaments of the Human
+    Ankle Joint. Foot & Ankle International. 19, 757–760 (1998).
+27. Kelikian, A.S., Sarrafian, S.K.: Sarrafian’s Anatomy of the Foot and Ankle:
+    Descriptive, Topographic, Functional. Lippincott Williams & Wilkins (2011).
+28. Chitsazan, A., Rouhi, G., Abbasi, M., Pezeshki, S., Tavakoli, S.A.H.: Assessment of
+    stress distribution in ankle joint: simultaneous application of experimental and finite
+    element methods. International Journal of Experimental and Computational
+    Biomechanics. 3, 45 (2015).
+29. Golanó, P., Vega, J., de Leeuw, P.A.J., Malagelada, F., Manzanares, M.C., Götzens,
+    V., van Dijk, C.N.: Anatomy of the ankle ligaments: a pictorial essay. Knee Surgery,
+    Sports Traumatology, Arthroscopy. 24, 944–956 (2016).
+30. Scott, S.H., Winter, D.A.: Biomechanical model of the human foot: Kinematics and
+    kinetics during the stance phase of walking. Journal of Biomechanics. 26, 1091–1104
+    (1993).
+31. Mark Two – Markforged, https://markforged.com/mark-two/.
+32. Carbon Fiber, http://support.markforged.com/hc/en-us/articles/211439563-Carbon-
+    Fiber.
+
+                                                                                        78
+33. Kevlar, http://support.markforged.com/hc/en-us/articles/209934366-Kevlar.
+34. Standard Fiberglass, http://support.markforged.com/hc/en-us/articles/209934386-
+    Standard-Fiberglass.
+35. High-Strength, High-Temperature Fiberglass, http://support.markforged.com/hc/en-
+    us/articles/211358483-High-Strength-High-Temperature-Fiberglass.
+36. Bücking, T.M., Hill, E.R., Robertson, J.L., Maneas, E., Plumb, A.A., Nikitichev,
+    D.I.: From medical imaging data to 3D printed anatomical models. PLOS ONE. 12,
+    e0178540 (2017).
+37. Pelvis and Hip - CT scan, https://www.embodi3d.com/files/file/11745-pelvis-and-
+    hip-ct-scan/.
+38. Kazemi, S.M., Qoreishy, M., Keipourfard, A., Sajjadi, M.M., Shokraneh, S.: Effects
+    of Hip Geometry on Fracture Patterns of Proximal Femur. Arch Bone Jt Surg. 4,
+    248–252 (2016).
+39. Hui-Hui Wu, null, Dong Wang, null, An-Bang Ma, null, Dong-Yun Gu, null: Hip
+    joint geometry effects on cartilage contact stresses during a gait cycle. Conf Proc
+    IEEE Eng Med Biol Soc. 2016, 6038–6041 (2016).
+40. Hartel, M.J., Petersik, A., Schmidt, A., Kendoff, D., Nüchtern, J., Rueger, J.M.,
+    Lehmann, W., Grossterlinden, L.G.: Determination of Femoral Neck Angle and
+    Torsion Angle Utilizing a Novel Three-Dimensional Modeling and Analytical
+    Technology Based on CT Datasets. PLoS One. 11, (2016).
+41. Colbrunn, R.W., Nelson, G.M., Quinn, R.D.: Modeling of braided pneumatic
+    actuators for robotic control. In: Proceedings 2001 IEEE/RSJ International
+    Conference on Intelligent Robots and Systems. Expanding the Societal Role of
+    Robotics in the the Next Millennium (Cat. No.01CH37180). pp. 1964–1970 vol.4
+    (2001).
+42. Chou, C.-P., Hannaford, B.: Measurement and modeling of McKibben pneumatic
+    artificial muscles. IEEE Transactions on Robotics and Automation. 12, 90–102
+    (1996).
+43. J. M. Soucie, C. Wang, A. Forsyth, S. Funk, M. Denny, K. E. Roach, D. Boone:
+    Range of motion measurements: reference values and a database for comparison
+    studies. Haemophilia. 500–507 (2011).
+44. Roaas, A., Andersson, G.B.J.: Normal Range of Motion of the Hip, Knee and Ankle
+    Joints in Male Subjects, 30–40 Years of Age. Acta Orthopaedica Scandinavica. 53,
+    205–208 (1982).
+45. Kouyoumdjian, P., Coulomb, R., Sanchez, T., Asencio, G.: Clinical evaluation of hip
+    joint rotation range of motion in adults. Orthopaedics & Traumatology: Surgery &
+    Research. 98, 17–23 (2012).
+46. Fekete, G., De Baets, P., Abdel Wahab, M., Csizmadia, B., Katona, G., Vanegas-
+    Useche, L., Solanilla, J.: Sliding-Rolling Ratio during Deep Squat with Regard to
+    Different Knee Prostheses. Acta Polytechnica Hungarica. 9, 20 (2012).
+47. Fekete, G.: Kinetics and Kinematics of the Human Knee Joint under Standard and
+    Non-Standard Squat Movement, (2013).
+48. Amiri, P., Kearney, R.E.: Ankle intrinsic stiffness is modulated by postural sway.
+    Presented at the July (2017).
+
+                                                                                     79
+49. Berno J. E. Misgeld, Tony Zhang, Markus J. Lüken, Steffen Leonhardt: Model-Based
+    Estimation of Ankle Joint Stiffness. (2017).
+50. Guarin, D.L., Kearney, R.E.: Time-varying identification of ankle dynamic joint
+    stiffness during movement with constant muscle activation. Presented at the August
+    (2015).
+51. Hettich, G., Assländer, L., Gollhofer, A., Mergner, T.: Human hip–ankle
+    coordination emerging from multisensory feedback control. Human Movement
+    Science. 37, 123–146 (2014).
+52. Masouros, S.D., Bull, A.M.J., Amis, A.A.: Biomechanics of the knee joint.
+    ORTHOPAEDICS AND TRAUMA. 24, 84–91 (2010).
+53. Reynolds, D.B., Repperger, D.W., Phillips, C.A., Bandry, G.: Modeling the Dynamic
+    Characteristics of Pneumatic Muscle. Annals of Biomedical Engineering. 31, 310–
+    317 (2003).
+
+
+
+
+                                                                                   80
+
