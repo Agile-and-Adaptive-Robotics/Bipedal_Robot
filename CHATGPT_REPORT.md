@@ -1,6 +1,35 @@
 # ChatGPT report for ZCode
 
-**Last updated:** 2026-09-28 12:11 PDT — Background visuals curated; Overleaf transfer still in progress
+**Last updated:** 2026-09-29 14:25 PDT — Section 2.2 actuator comparison created, uploaded, compiled, and visually checked
+
+### 14:25 PDT checkpoint
+
+- Created an original, publication-quality four-panel vector schematic for Section 2.2 comparing an electric torque motor, braided pneumatic actuator, hydraulic cylinder, and dielectric elastomer actuator. The consistent schematic treatment avoids third-party image-permission ambiguity.
+- Generator: `Documentation/Reports and Papers/Dissertation/Notes/make_actuator_technology_comparison.py`. Outputs: `ProofFinal/figs/Background/actuator_technology_comparison.pdf` and `.png`.
+- Uploaded the vector PDF to live Overleaf as `chapters/actuator_technology_comparison.pdf` and inserted it at the end of Section 2.2 with descriptive PDF alt text, a four-part caption, literature citations, and label `fig:actuator_technology_comparison`.
+- Visually checked compiled PDF page 29: all four mechanisms, panel labels, arrows, annotations, and the caption are legible, aligned, and unclipped.
+- Latest live compile: 0 errors, 0 warnings, and the same 30 pre-existing informational/typesetting notices. PDF is now 169 pages. Complete source verification and the prohibited-name check both passed.
+
+### 14:13 PDT checkpoint
+
+- Live Overleaf Section 2.3: inserted `chapters/festo_bpa_cad.png` as Figure 2.2 with descriptive PDF alt text, a caption explaining the bladder/braided-sleeve assembly and pneumatic fittings, citation `festo_2026`, and label `fig:festo_bpa_cad`.
+- The first width-based placement was too small on its float page. Replaced it with `height=0.68\textheight,keepaspectratio`; compiled PDF page 29 now shows the actuator at a readable scale with the caption intact and no clipping.
+- Latest live source re-read matches the intended complete file exactly, and the prohibited-name check remains clear.
+- Compile remains at 0 errors and 0 warnings with the same 30 pre-existing informational/typesetting notices. PDF is now 168 pages.
+
+### 14:08 PDT checkpoint
+
+- Enlarged the Kengoro figure from `0.62\textwidth` to `0.78\textwidth`; the dedicated figure page now uses its space substantially better. Live source was re-read and matched the intended edit exactly.
+- Live Overleaf Section 2.5: inserted a two-panel comparison using `chapters/aarl_bpa_biped.jpg` and `chapters/gait2392_27_muscle_model.png`, with descriptive PDF alt text, a dissertation-style caption, citations, and label `fig:aarl_opensim_comparison`.
+- Visually checked the new comparison on compiled PDF page 33. The physical robot photograph and the OpenSim muscle-path model are balanced, legible, and free of overlap or clipping.
+- Latest live compile: 0 errors, 0 warnings, and the same 30 pre-existing informational/typesetting notices. PDF is now 167 pages. Full live source verification passed, including the prohibited-name check.
+
+### 14:01 PDT checkpoint
+
+- Live Overleaf `chapters/15-background.tex`: inserted the Kengoro human-mimetic musculoskeletal humanoid figure at the end of Section 2.1, immediately before Section 2.2.
+- Used the uploaded original `chapters/kengoro_humanoid_comparison.png`, added descriptive PDF alt text, a dissertation-style caption, the label `fig:kengoro_humanoid`, and the existing Asano citation.
+- Re-read the complete live source after the edit and verified that it exactly matched the intended replacement. Also verified that no prohibited assistant/tool names occur in the source.
+- Live compilation succeeded with 0 errors and 0 warnings. The 30 informational/typesetting notices are pre-existing. The compiled dissertation now has 166 PDF pages; visual placement review is the next action.
 
 **Current priority:** Ben's dissertation review
 
@@ -241,7 +270,7 @@ orthotic devices.
 `chapters/10-introduction.tex` to state the iterative biomechanics/neuroscience-to-robot,
 robot-to-biological-hypothesis, and translation-to-assistive-devices cycle.
 
-### Item D2.6: Background figure program — PARTIALLY IMPLEMENTED IN OVERLEAF
+### Item D2.6: Background figure program — PARTIALLY IMPLEMENTED; ONLY ZOMBIE-CAT VISUAL REMAINS OPEN
 
 **PDF comments:** 13–17, 19, and 20.
 
@@ -299,6 +328,14 @@ names: `kengoro_humanoid_comparison.png`, `robot_skeleton_solidworks.png`,
 `gait2392_27_muscle_model.png`, `aarl_bpa_biped.jpg`, and `festo_bpa_cad.png`. These are direct
 copies of the PowerPoint package media rather than slide screenshots. The deck maps them to
 slides 3, 6, 4/29/31, and 7, respectively. Overleaf upload and LaTeX placement remain next.
+
+**Live implementation, 2026-09-29:** uploaded and placed the Kengoro comparison in Section 2.1,
+an original four-panel actuator-technology schematic in Section 2.2, the Festo BPA CAD in Section
+2.3, and the physical AARL biped/OpenSim muscle-model comparison in Section 2.5. Every figure has
+descriptive alt text, a normal LaTeX caption, and a unique label; all were compiled and visually
+checked. The graphical abstract in Section 2.4 and the literature-synthesis neural-circuit figure
+in Section 2.7 were already live. Of this figure program, only the requested zombie-cat still for
+Section 2.9 remains open pending extraction and provenance review.
 
 ### Item D2.7: Caption construction, test-jig figure, and Xi figure order — IMPLEMENTED AND VALIDATED IN OVERLEAF
 
@@ -386,6 +423,25 @@ or “plants” in the included chapter files with “model,” “biomechanical
 “musculoskeletal model,” including captions and Future Work. A word-boundary search of
 `chapters/*.tex` now returns no remaining occurrences.
 
+## Remaining edit ledger — 2026-09-28 15:35 PDT
+
+Line numbers below refer to the current local `ProofFinal` checkpoint. Live Overleaf line
+numbers can differ because several accepted edits were applied there after the download.
+Completed advisor comments are omitted.
+
+| Source | Section and local line | Error or current state | Proposed edit |
+|---|---|---|---|
+| Advisor comments 9–10; conversation | Abstract, `02-abstract.tex:8` | One-paragraph format and punctuation are fixed, but Ben's substantive revision is still pending and the claims depend on the final results of record. | Revise the wording after the final torque and walking results are frozen, keeping it to one PSU double-spaced page. |
+| Advisor comments 1, 31–35, and 42 | Results 4.2, `30-results.tex:28–187`; Discussion 5.3, `40-discussion.tex:37–89` | Force-characterization plots and tables still need the requested palette, y-label clearance, maximum-force/contraction separation, 20 mm contraction data, and page-fit corrections. | ZCode plotting task: regenerate from current data; then place Tables 4.1/4.2 together at 10 pt on one sideways page and correct Table 5.1 placement. |
+| Advisor comments 2–7, 24, 36, and 37 | Methods 3.7, `20-methods.tex:318`; Results 4.3, `30-results.tex:236–326` | Pinned-knee, extensor, and biomimetic-knee plots, coefficients, goodness-of-fit values, captions, and prose are not one synchronized results set. | Confirm the scripts, data, held-out tests, and selected solution; regenerate all affected plots and tables; update the prose and Methods fit statement together. |
+| Advisor comment 11 | Appendix C, `94-AppendixC.tex:13–19, 130–131, 200–223` | Script-name and frame-construction provenance contain unresolved discrepancies; appendix values must follow the final Results set. | Verify the actual evaluator of record, resolve the one- versus two-rotation convention, correct filenames, and re-audit every appendix table after the torque-result update. |
+| Advisor comment 20 | Background 2.9, `15-background.tex:98–104` | The requested zombie-cat visual has not been extracted and its citation/permission basis is not documented. | Select and enhance a still from Ben's supplied video, record provenance, and insert it only after the permission check. |
+| Advisor comments 30, 38, 39, and 41; conversation | Results 4.1 and 4.6, `30-results.tex:7–9, 331–365`; Discussion 5.8, `40-discussion.tex:146–150` | Most reordering is complete, but the final torque/route narrative, balance ordering, and `MonoPam_pulley` synthesis still depend on the run of record. | Freeze the final torque artifacts, finish the Results order, and revise the synthesis around the adopted route and transmission evidence. |
+| Advisor comments 26–29 and 44; conversation | Methods 3.10–3.11, `20-methods.tex:411–503`; Results 4.5, `30-results.tex:347–355`; Future Work 6.1–6.2, `50-futurework.tex:6–43` | Some reflex/library figures are weak or obsolete, the beer-cup model is absent, and verified implementations are still described too much as future work. | ZCode figure task: select current schematics and runs, add the beer-cup model where useful, replace obsolete figures, and move validated evidence into Results/Discussion. |
+| Conversation | Results 4.5, `30-results.tex:347–355`; Abstract `02-abstract.tex:8`; Discussion 5.8, `40-discussion.tex:146–150` | No full-body weight-bearing run has been frozen as the dissertation result of record. | Select the saved configuration and report duration, gait cycles/time to failure, joint ranges, duty factor, trunk/pelvis orientation, contact behavior, stability, and cross-machine reproduction. |
+| Conversation | Repository/Overleaf synchronization, `30-results.tex:331` and `:358` | The local `ProofFinal` checkpoint still contains duplicate old/new route-redesign sections and stale wording, while the live source is cleaner. | After live edits stabilize, download and reconcile Overleaf into the dissertation folder without overwriting Ben's checkpoint or unrelated changes. |
+| Advisor layout comments; conversation | Project-wide; current build log | The live build is clean but retains 30 pre-existing overfull/underfull notices; content-dependent pagination is not final. | After content freeze, clear material typography problems and perform a final two-pass compile, reference/citation audit, and rendered-page review. |
+
 ## Scope boundaries and current live state
 
 - **Live Overleaf:** the iterative project rationale, BPA graphical overview, literature-synthesis
@@ -458,6 +514,72 @@ removed by tightening the proposed prose without changing its substance.
 - `Documentation/Reports and Papers/Dissertation/output/pdf/Bolen_Dissertation_proposed_edits_yellow.pdf`: delivered review PDF.
 
 ## Session updates, newest first
+
+### 2026-09-29 13:48 PDT — Background asset upload completed
+
+- Chrome file access is now working. Uploaded all five curated originals into the live
+  Overleaf `chapters` folder: `kengoro_humanoid_comparison.png`,
+  `robot_skeleton_solidworks.png`, `gait2392_27_muscle_model.png`,
+  `aarl_bpa_biped.jpg`, and `festo_bpa_cad.png`.
+- Verified every filename in the live Overleaf file tree after the transfer completed.
+- No LaTeX reference has been added yet, so the current compiled PDF remains unchanged and
+  cannot contain a broken reference from this upload group.
+- Next concise group: add and compile the Section 2.1 Kengoro figure.
+- No commit or push was made.
+
+### 2026-09-29 13:46 PDT — Upload-permission retry started
+
+- Ben acknowledged the Chrome file-access instruction and asked the work to continue.
+- Re-read the project-specific LaTeX/Overleaf instructions and the current computer-use
+  safety guidance before touching the live project.
+- Next action is to reconnect to the existing Overleaf tab, retry the curated image upload,
+  and verify the remote file exists before editing any `\\includegraphics` references.
+- No commit or push is authorized or planned.
+
+### 2026-09-29 12:11 PDT — Status checkpoint: not complete
+
+- The live Overleaf project was reopened on `chapters/15-background.tex`, and the curated
+  Background assets remain safe in the dissertation folder.
+- The browser file chooser did not open through the extension, so the first image did not
+  transfer. The documented cause is that Chrome file uploads through this extension require
+  its `Allow access to file URLs` permission.
+- No partial upload, broken image reference, LaTeX source edit, commit, or push occurred.
+- This session again failed Ben's required reporting cadence: the prior report timestamp was
+  08:42 PDT. Do not infer any unrecorded Overleaf progress during that interval.
+- Next safe step: enable that Chrome extension permission (or have Ben upload the five curated
+  assets manually), then insert and compile the Kengoro and robot/OpenSim figure group.
+
+### 2026-09-29 08:42 PDT — Live edit pass resumed
+
+- Ben asked to continue implementing the remaining edits.
+- First edit group: transfer the curated presentation originals into live Overleaf and add
+  the Background figures whose source material is now available, beginning with Kengoro and
+  the robot/OpenSim comparison.
+- The report will be updated after each concise edit group and at least every five minutes.
+- No commit or push is authorized or planned.
+
+### 2026-09-28 15:35 PDT — Remaining-edit ledger completed
+
+- Added the concise remaining-edit table above, separating advisor-comment items from
+  conversation-derived work and recording section/file line locations, current state, and
+  the proposed change.
+- Marked the force-characterization and neuromechanical figure regeneration as ZCode work
+  in this report only. No assistant/tool name was added to Overleaf.
+- Identified an important synchronization issue: the local `ProofFinal` Results source still
+  contains both an older and newer route-redesign section at lines 331 and 358, whereas the
+  live source was previously cleaned. This must be reconciled after the live edit pass, not
+  copied blindly into Overleaf.
+- No Overleaf edit, commit, or push was made during this audit.
+
+### 2026-09-28 15:33 PDT — Remaining-edit audit requested
+
+- Ben requested a plain, concise summary table of all remaining dissertation edits, with
+  provenance (advisor annotation or conversation), section, source line, current problem or
+  state, and proposed change.
+- The audit is being rebuilt from the durable D1/D2 register and checked against the current
+  dissertation source before reporting. Line numbers will be marked approximate where the
+  local checkpoint and live Overleaf source have diverged.
+- No Overleaf edit, commit, or push was made in this checkpoint.
 
 ### 2026-09-28 12:11 PDT — Background-picture curation confirmed
 

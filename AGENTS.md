@@ -1510,6 +1510,10 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   online mode + WoS/Scholar + Zotero-like extension in `app\README.md`; Airtable
   GET 422s on a fields[] filter because two fields share the name "Models copy"
   — fetch full records).**
+  **2026-09-28: ACTIVE campaign on this folder — see the "2026-09-28 — SADb/Airtable
+  campaign" section at the END of this file (prune over the 1000-record cap, curation
+  layer v2, app online search, Research-Rabbit-style bubble focus, pivot sortability;
+  deliverable = package-able app for the advisor).**
   SADb work is DELEGATED TO
   CHATGPT during GLM peak hours (Mon–Fri 23:00–03:00 Pacific) — its brief is the SADb
   section of `CHATGPT_HANDOFF.md`; keys live in `D:\Github\api_credentials_local.txt`
@@ -2198,3 +2202,50 @@ A separate chat is updating the dissertation text with these. Sources (Testing_D
   "pelvis to -1.44 m" was a qpos-addressing artifact (ankle_L radians); freejoint A/B
   crumples <0.5 s (necessary not sufficient; M1 damping/spawn gates); resume recipe in
   goal2_m2_li_architecture.md §8.
+
+## 2026-09-28 — SADb/Airtable campaign (Ben's /goal list — the ACTIVE work plan, ~6 h)
+
+Session-start checklist (Ben's goal 0): confirm plugins, subagents, and MCPs for
+PDF handling, browser automation, image analysis, and critical thinking are
+available (deepeval, ai-tools-setup, zcode-configuration-guide,
+claude-automation-recommender); check hostname FIRST (guard at top of this
+file); long computations go to easteregg2 over SSH. All work lives in
+`SADb_audit\` (base "Sensory Feedback" `appMQTnobUNRytIp7`; curation spec +
+state in `SADb_audit\README.md`, app details in `SADb_audit\app\README.md`).
+
+1. **PRUNE the base** — it is over Airtable's 1000-record cap. Shortlist
+   low-relevance / low-impact Papers for BEN TO APPROVE; the "never delete
+   records" hard rule is lifted only per-record on his explicit go.
+2. **Curation layer v2**: fill Notes per the README spec (grounding mandatory)
+   plus the new asks: papers that cite each other reflected on the records
+   (`export\sadb_cites.json` is the graph source); Animals = every animal the
+   paper discusses; an afferent-type classification (legacy "type 1" = old
+   papers' terminology, Ia, Ib, II, III/IV, mechanosensory, heat, nociceptive);
+   reflex pathways (Feedback links); Models links; "how this could seed an
+   animal study / be tested on an animal"; and "which pathway / synapse /
+   loss-of-function fact from animal vivisection would let a simulated or
+   robotic model test the hypothesis". Ben asked for the columns "renamed like
+   we talked about" — the agreed rename list is NOT recorded in this repo;
+   get it from Ben before any schema change. He named the knowledge-base and
+   agent-evaluation skills (supervisor / fact-checking role) plus
+   plugin-dev agent-development as part of this goal.
+3. **App online search**: `app\sadb_app.html` gains internet search — OpenAlex
+   default (already the citation source), Web of Science via PSU access,
+   Google Scholar ToS-sensitive (app\README.md roadmap v2/v3) — while the app
+   folder stays FULLY SELF-CONTAINED. Final deliverable: a package Ben can zip
+   and send to his advisor.
+4. **Bubble focus view à la Research Rabbit**: excitatory input onto a node
+   when the source node cites it (semantics already implemented — open
+   triangles from citing papers, filled circles onto cited papers); show the
+   network 2–3 degrees out but COLORIZE ONLY DIRECT connections, gray the 2nd
+   degree; side panels on BOTH sides — focus paper LEFT, list of connection
+   papers RIGHT (order swapped vs Research Rabbit).
+5. **Pivot tab**: make the unnamed "cluster" dimension meaningful (categorize
+   the 18 Louvain clusters); sortable dimensions — Primary Author
+   alphabetically (Rybak is secondary author on many papers; entry-count order
+   is not enough); de-emphasize Import source; keep the Feedback×Feedback
+   cross-tab and fix drill-through navigation so getting back OUT to the
+   pivot after diving into a cell is obvious.
+Rebuild chain after every batch: `export_corpus.py` → `build_citation_graph.py`
+→ `app\build_app.py`. Standing rules hold: no proxied URLs, no PDFs/binaries
+in the repo, Ben approves every schema change and every deletion.
