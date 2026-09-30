@@ -1,6 +1,78 @@
 # ChatGPT report for ZCode
 
-**Last updated:** 2026-09-29 14:25 PDT — Section 2.2 actuator comparison created, uploaded, compiled, and visually checked
+**Last updated:** 2026-09-29 23:55 PDT — Upscaled cat preview rendered
+
+### Upscaled preview rendered
+
+- Created a separate conservative image-tool upscale and displayed it inline for Ben. Saved as `Dissertation/output/decerebrate_cat_upscaled_preview.png`; the raw frame remains unchanged.
+- Prompt required preserving grayscale, pose, apparatus, occlusions, framing, and ambiguity, with only sampling/noise/blur improvement and no invented anatomy or hardware.
+- The rendered derivative appears smoother but contains reconstructed fine edges/details; it is a display preview, not a faithful additional measurement. It has NOT been uploaded to Overleaf or substituted for the raw frame.
+- Original cat-figure insertion remains pending while Ben reviews the upscale. The raw asset is uploaded; no cat-related bibliography or prose edits have yet been applied live.
+
+### 23:53 PDT upload checkpoint
+
+- Submitted the authentic selected PNG through Overleaf's Upload dialog; awaiting the file-tree confirmation before source insertion.
+- Verified the video's visible expanded description: uploader `0zxr`, upload date April 30, 2010. The uploader labels the animal decerebrate; original experiment authors/date are not established by the upload, and its speculative description will not be used as scientific evidence.
+- The expanded description exposes no explicit reuse-license grant. Attribution will identify the upload and timestamp without asserting permission. Final publication rights remain a separate author clearance check.
+- Source MP4 SHA-256: `87812AFA68F3A9BD6A55C8FCE5C56610338D6F6D2A21FDD8BDA9805660D1D710`.
+
+### Upscale request checkpoint
+
+- Ben requested an upscaled render while the source insertion was in progress. The raw image is uploaded and visible in Overleaf's file tree; neither bibliography nor Background source has yet been changed for this figure.
+- Preparing a separate display-only enhancement with the image tool. Preserve the untouched scientific source and inspect the enhanced output for invented anatomy/apparatus before any publication use.
+
+### 23:52 PDT cat-still checkpoint
+
+- Extracted 20 authentic frames from the supplied MP4 and visually reviewed the contact sheet. Source: 22.199 seconds, 30 fps, 320 × 240 pixels.
+- Selected frame 06 at approximately 5.833 seconds, showing the cat and treadmill apparatus with distinguishable limb positions. Copied the unchanged frame to `ProofFinal/figs/Background/decerebrate_cat_video_still.png`.
+- No generative enhancement, retouching, crop, or invented detail was applied. Low native resolution will be managed through modest printed size.
+- Online title verified: *Decerebrate Cat walks and exhibits multiple gait patterns*, YouTube ID `wPiLLplofYw`. Uploader/date and an explicit reuse license are not yet verified; no permission or public-domain assertion will be included.
+
+### Cat-video source recovered — extraction checkpoint
+
+- Ben identified `Dissertation/CHATGPT_staging_20260925`; it contains `Decerebrate Cat walks and exhibits multiple gait patterns.mp4` (958,380 bytes).
+- Recovered Ben's exact video URL from the original Comment 20: https://youtu.be/wPiLLplofYw?si=8rdRavr9YPJQopBT . The earlier claim that the source could not be located is superseded.
+- Added `Notes/extract_cat_video_stills.m` to extract authentic frames and a contact sheet. No generated image enhancement, scientific-content alteration, or Overleaf edit has occurred in this group.
+
+### 16:17 PDT checkpoint
+
+- Verified both Tables 4.1 and 4.2 together on compiled PDF page 91 (printed page 75). All columns, coefficients, captions, and rules fit without clipping or overlap; the table body is 10-point type.
+- Final explicit log check: 171 pages, 0 errors, 0 warnings, and 29 typesetting notices (down from 30). The removed notice was the Results table alignment issue; the three large Results figure overflows remain.
+- Visual proof saved under the dissertation, not the repository root: `output/paired_coefficient_tables_2026-09-29.jpg`.
+- The table-layout portion of advisor comments 32 and 35 is implemented. Data/statistic consistency, replotting, Table 5.1 placement, and the remaining page-fit issues are still open. No data values were intentionally changed, and no Git commit or push was performed.
+
+### 16:16 PDT checkpoint — table source edit
+
+- Edited live `chapters/30-results.tex`: combined Tables 4.1 and 4.2 into one `sidewaystable`, with two separate captions/labels, 10-point type, single spacing, and compact column spacing.
+- Preserved coefficient, CI, goodness-of-fit, and error entries. Replaced fixed-width `tabularx` declarations with ordinary nine-column tables, and normalized fractional multirow spans to their actual row counts.
+- Re-read complete source after pasting: exact equality passed. Prohibited-name guard passed. Compilation and rendered-page validation are pending; this is not yet a verified layout completion.
+- Plot/data revisions remain assigned to ZCode; this edit only addresses the advisor's table-layout request.
+
+### 16:16 PDT checkpoint
+
+- Live figure-reference edit compiled successfully: 170 pages, 0 errors, 0 warnings, and the same 30 typesetting notices. No new Background overflow notice appeared.
+- Important qualification: these notices are not all harmless. Results contains three substantial vertical overflows (approximately 179–193 pt), and bibliography/appendix entries contain wide horizontal overflows. A clean error/warning count is not a clean layout audit.
+- The next independent layout task is to inspect Results tables/figures before choosing a bounded formatting correction. Data-dependent replotting remains assigned to ZCode.
+
+### 16:14 PDT checkpoint
+
+- Edited live `chapters/15-background.tex`: added five in-text callouts for the Kengoro, actuator-comparison, Festo assembly, BPA graphical overview, and physical robot/OpenSim comparison figures.
+- Removed the obsolete commented Steele-figure placeholder; the implemented Steele figure and its existing callout remain intact.
+- Re-read the full live source after pasting: exact equality confirmed (35,151 characters). Prohibited-name guard passed. Compilation of this edit is pending; the last verified build remains 169 pages.
+- Browser recovery succeeded through a fresh tab in the existing Chrome session; the old tab was not modified or closed.
+
+### 16:12 PDT checkpoint
+
+- Reconciled the operational summary, live-asset list, remaining-ledger date, and validation summary with the latest verified 169-page build. Historical checkpoints remain intact.
+- The old browser tab could be listed but not controlled; opened a fresh connection to the same project. No dissertation source change has been made during this reconnection.
+- Report updates are required immediately after every edit, not only on a timer.
+
+### 16:09 PDT checkpoint
+
+- Ben requested report updates after every edit; this is now the checkpoint rule for each source, figure, or report edit group.
+- The contact-sheet extraction completed. Visually inspected both repository MP4 files: `20230419_230001_1.mp4` and `20230510_161942.mp4` show knee-test hardware, not the requested zombie-cat footage. They cannot satisfy the Section 2.9 annotation.
+- The latest verified live dissertation remains 169 pages, with 0 errors, 0 warnings, and 30 legacy typesetting notices. Sections 2.1, 2.2, 2.3, and 2.5 received the new Background figures in the preceding edit groups.
+- Next: locate the actual cat-video source, reconcile the current-state summary and remaining ledger, and review figure references and placement.
 
 ### 14:25 PDT checkpoint
 
@@ -42,8 +114,8 @@ item is summarized or superseded.
 
 ## Read this first: current state
 
-- **ACTIVE.** Ben resumed the live Overleaf pass at 15:06 PDT. Update this report before
-  and after every meaningful edit group; use a one-line checkpoint for a single tiny edit.
+- **ACTIVE.** Ben resumed the live Overleaf pass on September 29. Update this report immediately
+  after every edit; use a one-line checkpoint for a single tiny edit.
 - A 10:33 PDT audit found no work recorded after the 10:26 pause checkpoint; the report's
   filesystem timestamp before this audit was 10:26:51 PDT. No Overleaf changes were made
   during this status audit.
@@ -51,17 +123,14 @@ item is summarized or superseded.
   10:26 PDT, a 4-hour-33-minute gap. This did not satisfy Ben's required 2--3 minute
   reporting cadence. Do not infer that final compilation or validation was completed during
   that undocumented interval; the explicit pending list below remains authoritative.
-- The live project currently compiles to 164 pages after the restored sections, repaired figure
-  paths, removal of a dispensable sentence that had created a nearly blank 166th page, and a
-  one-page pagination reflow from the shorter Future Work prose. The
-  earlier 167-page count was recorded while figures were missing; do not treat it as a required
-  final count.
+- The latest verified live project compiles to 171 pages after the September 29 Background
+  additions and paired sideways coefficient tables. Page count is a checkpoint, not a required final count.
 - Major approved text, figure, Methods, Results-ordering, terminology, and figure-path
-  changes have been applied directly in Overleaf. See the 10:26 PDT handoff near the end of
-  this report for the exact completed set and stopping point.
+  changes have been applied directly in Overleaf. The September 29 checkpoints above record
+  the newer Background additions; the 10:26 PDT handoff is historical, not the current stopping point.
 - The Background paragraph boundary, missing figure paths, citation typo, and bad section
   reference are repaired. Explicit compile pass 1 is clean (0 errors, 0 warnings, no undefined
-  citations or references). The latest build is clean and stable at 164 pages. The prohibited-name
+  citations or references). The latest verified build has 0 errors and 0 warnings at 171 pages; 29 layout notices remain. The prohibited-name
   and source-text terminology audits are clean. The embedded circuit-figure label was corrected to
   `MUSCULOSKELETAL MODEL + SENSORY FEEDBACK` and visually verified in the live PDF.
 - The review deliverables were moved from the incorrectly placed repository-root `output`
@@ -86,7 +155,7 @@ item is summarized or superseded.
 
 The D1 entries began as the isolated yellow-review register. Where an item was later
 implemented directly in Overleaf, its heading now says so. The yellow review's successful
-160-page build does **not** constitute validation of the current 167-page live project.
+160-page build does **not** constitute validation of the current 171-page live project.
 
 ### Item D1.1: Current-Overleaf yellow review build — SUPERSEDED BY LIVE IMPLEMENTATION
 
@@ -423,7 +492,7 @@ or “plants” in the included chapter files with “model,” “biomechanical
 “musculoskeletal model,” including captions and Future Work. A word-boundary search of
 `chapters/*.tex` now returns no remaining occurrences.
 
-## Remaining edit ledger — 2026-09-28 15:35 PDT
+## Remaining edit ledger — reconciled 2026-09-29 16:12 PDT
 
 Line numbers below refer to the current local `ProofFinal` checkpoint. Live Overleaf line
 numbers can differ because several accepted edits were applied there after the download.
@@ -432,7 +501,7 @@ Completed advisor comments are omitted.
 | Source | Section and local line | Error or current state | Proposed edit |
 |---|---|---|---|
 | Advisor comments 9–10; conversation | Abstract, `02-abstract.tex:8` | One-paragraph format and punctuation are fixed, but Ben's substantive revision is still pending and the claims depend on the final results of record. | Revise the wording after the final torque and walking results are frozen, keeping it to one PSU double-spaced page. |
-| Advisor comments 1, 31–35, and 42 | Results 4.2, `30-results.tex:28–187`; Discussion 5.3, `40-discussion.tex:37–89` | Force-characterization plots and tables still need the requested palette, y-label clearance, maximum-force/contraction separation, 20 mm contraction data, and page-fit corrections. | ZCode plotting task: regenerate from current data; then place Tables 4.1/4.2 together at 10 pt on one sideways page and correct Table 5.1 placement. |
+| Advisor comments 1, 31–35, and 42 | Results 4.2, `30-results.tex:28–187`; Discussion 5.3, `40-discussion.tex:37–89` | Tables 4.1/4.2 now share one sideways page at 10 pt and are visually verified. Force plots still need palette, y-label clearance, maximum-force/contraction separation, 20 mm contraction data, and page-fit corrections; Table 5.1 placement remains open. | ZCode plotting task: regenerate from current data. Independently correct Table 5.1 placement and verify statistics against the results of record. |
 | Advisor comments 2–7, 24, 36, and 37 | Methods 3.7, `20-methods.tex:318`; Results 4.3, `30-results.tex:236–326` | Pinned-knee, extensor, and biomimetic-knee plots, coefficients, goodness-of-fit values, captions, and prose are not one synchronized results set. | Confirm the scripts, data, held-out tests, and selected solution; regenerate all affected plots and tables; update the prose and Methods fit statement together. |
 | Advisor comment 11 | Appendix C, `94-AppendixC.tex:13–19, 130–131, 200–223` | Script-name and frame-construction provenance contain unresolved discrepancies; appendix values must follow the final Results set. | Verify the actual evaluator of record, resolve the one- versus two-rotation convention, correct filenames, and re-audit every appendix table after the torque-result update. |
 | Advisor comment 20 | Background 2.9, `15-background.tex:98–104` | The requested zombie-cat visual has not been extracted and its citation/permission basis is not documented. | Select and enhance a still from Ben's supplied video, record provenance, and insert it only after the permission check. |
@@ -440,7 +509,7 @@ Completed advisor comments are omitted.
 | Advisor comments 26–29 and 44; conversation | Methods 3.10–3.11, `20-methods.tex:411–503`; Results 4.5, `30-results.tex:347–355`; Future Work 6.1–6.2, `50-futurework.tex:6–43` | Some reflex/library figures are weak or obsolete, the beer-cup model is absent, and verified implementations are still described too much as future work. | ZCode figure task: select current schematics and runs, add the beer-cup model where useful, replace obsolete figures, and move validated evidence into Results/Discussion. |
 | Conversation | Results 4.5, `30-results.tex:347–355`; Abstract `02-abstract.tex:8`; Discussion 5.8, `40-discussion.tex:146–150` | No full-body weight-bearing run has been frozen as the dissertation result of record. | Select the saved configuration and report duration, gait cycles/time to failure, joint ranges, duty factor, trunk/pelvis orientation, contact behavior, stability, and cross-machine reproduction. |
 | Conversation | Repository/Overleaf synchronization, `30-results.tex:331` and `:358` | The local `ProofFinal` checkpoint still contains duplicate old/new route-redesign sections and stale wording, while the live source is cleaner. | After live edits stabilize, download and reconcile Overleaf into the dissertation folder without overwriting Ben's checkpoint or unrelated changes. |
-| Advisor layout comments; conversation | Project-wide; current build log | The live build is clean but retains 30 pre-existing overfull/underfull notices; content-dependent pagination is not final. | After content freeze, clear material typography problems and perform a final two-pass compile, reference/citation audit, and rendered-page review. |
+| Advisor layout comments; conversation | Project-wide; current build log | The live build has 0 errors and 0 warnings but retains 29 overfull/underfull notices, including three large Results figure overflows; pagination is not final. | Clear material typography problems and perform a final two-pass compile, reference/citation audit, and rendered-page review after content freeze. |
 
 ## Scope boundaries and current live state
 
@@ -449,7 +518,10 @@ Completed advisor comments are omitted.
   material, Results restructuring, and terminology edits have been applied. Final compilation,
   source searches, and the annotation-directed rendered-PDF spot checks are complete. Uploaded assets are
   `circuit_literature.pdf`, `inverted_pendulum_photo.jpg`, `steeleknee.pdf`,
-  `testJigs_reviewed.pdf`, `xiFrameTransform.pdf`, and `xiProjection.pdf`.
+  `testJigs_reviewed.pdf`, `xiFrameTransform.pdf`, and `xiProjection.pdf`. September 29 additions:
+  `kengoro_humanoid_comparison.png`, `robot_skeleton_solidworks.png`,
+  `gait2392_27_muscle_model.png`, `aarl_bpa_biped.jpg`, `festo_bpa_cad.png`, and
+  `actuator_technology_comparison.pdf`. The skeleton asset is uploaded but not newly inserted.
 - **Canonical repository copies:** `ProofFinal/`, `upload/`, and `ZCode_drafts/` were not
   replaced with the yellow review sources.
 - **Simulation and optimization code:** no MATLAB, MuJoCo, SNS-Toolbox, OpenSim,
@@ -464,12 +536,12 @@ Completed advisor comments are omitted.
 ## Verification record for the isolated yellow review
 
 The V1 checks below apply only to the separate 160-page yellow review artifact. They do not
-validate the subsequently edited 167-page live Overleaf project.
+validate the subsequently edited 171-page live Overleaf project.
 
 ### Live Overleaf validation — PASSED FOR THE ANNOTATION-DIRECTED REVIEW
 
 - The live project received two consecutive clean explicit builds before the final small cleanup
-  edits. The latest build is 165 pages with 0 errors, 0 warnings, and 30 pre-existing typesetting
+  edits. The latest verified build (September 29, 16:17 PDT) is 171 pages with 0 errors, 0 warnings, and 29 remaining typesetting
   notices.
 - Undefined-reference, undefined-citation, prohibited-name, and authored `plant`/`plants` source
   searches were completed without remaining matches.
