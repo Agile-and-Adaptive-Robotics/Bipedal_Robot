@@ -1,0 +1,14 @@
+# Feedback pathway: trochanteral campaniform sensilla load signals to adjust MN magnitude
+
+3 papers in the corpus.
+
+- **Ayali 2015** — [Sensory feedback in cockroach locomotion: current knowledge and open questions](https://doi.org/10.1007/s00359-014-0968-1)  
+  - animals: Cockroach · pathways: Fictive locomotion without sensory feedback; Biomechanically mediated preflexive feedback; trochanteral hair plate multi-synaptic excitation; trochanteral hair plate multi-synaptic inhibition; trochanteral campaniform sensilla load signals to adjust MN magnitude; Chordotonal organ multi-synaptic excitation; Chordotonal organ multi-synaptic inhibition  
+  - The cockroach model and describe the basic characteristics of the neural generation and control of walking and running in this insect. The paper provides a brief overview of some recent studies, including mathematical modeling, which have contributed to knowledge of sensory control in cockroach locomotion. They focus on two sensory mechanisms and sense organs, those providing information related to loading and unloading of the body and the legs, and leg-movement-related sensory receptors, and present evidence for the instrumental role of these sensory signals in inter-leg locomotion control.
+- **Kaliyamoorthy 2005** — [Force Sensors in Hexapod Locomotion](https://doi.org/10.1177/0278364905055381)  
+  - animals: Insects, Cockroach · pathways: trochanteral campaniform sensilla load signals to adjust MN magnitude  
+  - Finite-element modeling of the cockroach leg shows that loads are sensed by leg force sensors located close to the body, where specific force vectors (body load versus propulsion) can be discriminated, and that this information is used in positive load feedback to regulate walking — design principles directly transferable to force-controlled legged robots.
+- **Akay 2004** — [Signals from load sensors underlie interjoint coordination during stepping movements of the stick insect leg.](https://doi.org/10.1152/jn.01271.2003)  
+  - animals: Stick Insect · afferents: Mechanosensory · pathways: trochanteral campaniform sensilla load signals to adjust MN magnitude  
+  - In the stick insect single middle-leg preparation, load signals from trochanteral campaniform sensilla couple thorax-coxa joint motoneuron activity to stepping of the distal leg segments: ablating the trochanteral sensilla abolishes the coupling, and stimulating them by rearward bending of the femur terminates protractor (swing) activity and initiates retractor (stance) activity - cuticular strain provides the interjoint timing signal linking proximal motoneuron timing to distal leg stepping.  
+  - *Robot/sim:* Implement load-sensitive strain feedback that terminates swing (protractor) motoneuron activity and initiates stance (retractor) activity at load onset, coupling adjacent joints; ablating this pathway in the model should decouple proximal joint activity from distal leg stepping.

@@ -555,3 +555,57 @@ Parked for the next session (Ben's requests, 2026-09-12):
   build_citation_graph → build_app.
   Note: Airtable's GET keys responses by FIELD NAME, and a `fields[]` filter 422s
   on Papers because two fields share the name "Models copy" — export fetches full records.
+  (SUPERSEDED 2026-09-28: the duplicate was renamed "Review Papers"; fields[]
+  projections now work.)
+
+## CURATION v2 CAMPAIGN (2026-09-28/30, EB475WS4 five-hour-reset session) — corpus fully curated; app v2 shipped
+
+- **Schema v2** (`COLUMN_RENAMES_20260928.md` = full record): the live
+  Review-Papers link renamed from "Models copy" to **Review Papers** (kills
+  the duplicate-name GET-422 — export now uses a fields[] projection);
+  "Field 10/11" + the empty Models-copy twin renamed "(unused)" for Ben
+  to delete; NEW fields: **Afferent Types** (10-option select), **Animal
+  Study Potential**, **Robot/Sim Translation**, **Cites (in corpus)** +
+  auto-inverse **Cited by (in corpus)** (self-links, 730 papers / 11,130
+  directed pairs from sadb_cites.json), **Prune Status / Prune Reason**.
+- **Goal-1 prune shortlist**: base census 1232 records (cap 1000). Strict
+  criteria flagged 38 Papers (no notes/pathway/model/review, isolated,
+  OpenAlex cites <= 2) + 7 satellite orphans (3 Models / 1 Review / 3
+  Feedback no-link) + 2 preprint-vs-published duplicate pairs found during
+  curation (Molkov mouse-locomotion, Danner split-belt) = ~47 recoverable;
+  the remaining ~185 must come from Ben's judgment or a plan upgrade.
+  **The curation twins GREW Models (172 -> 247) and Review Papers (75 ->
+  157) — base now ~1389 records; if the cap bites, twins can be converted
+  to select fields on Papers.**
+- **Goal-2 curation**: grounding pipeline `fetch_grounding.py` (OpenAlex
+  abstracts + Europe PMC fallback; epmc_cache.json) -> queue 374 curatable /
+  110 no-text; 15 subagent batches (curation_queue/CURATOR_GUIDE.md +
+  queue_NN.json -> curation_out/batch_NN.json) validated + written by
+  `write_curation.py` (vocabulary + abstract-paste 8-gram gate + duplicate
+  gate) and **echo-verified 374/374 per-record** (`_verify_all.py` — the
+  list endpoint's records[] filter is SILENTLY IGNORED by the REST API,
+  only per-record GETs tell the truth). Corpus now **833/943 with notes,
+  606 animals, 118 feedback-linked, 95 afferent-classified**; 110 stay
+  bare (no findable text). 164 curator FLAGS for Ben:
+  `curation_flags_20260928.md` (new-pathway candidates, vocab gaps — Fish,
+  Chick, Aplysia, vestibular/visual — and one metadata catch:
+  rec2EuBpkiSUE9ZtV ships Smith-1998-Forms-III's abstract under the
+  Forms-II title).
+- **Goal-3/4/5 app v2** (app/build_app.py; browser-verified on
+  localhost:8643): Research-Rabbit-style **focus mode** (click = BFS
+  neighborhood 1/2/3 degrees; DIRECT connections colored + green-triangle /
+  red-circle synapses; 2nd degree grayed; LEFT panel = focus paper, RIGHT
+  panel = connection list with click-to-hop; Esc exits); **pivot upgrades**
+  (18 named clusters via export/cluster_labels.json from name_clusters.py;
+  rows AND columns sort by count/A-Z/Z-A; Import source demoted to last +
+  labelled legacy; drill-through now has a Back-to-pivot button); **Search
+  (online) tab** (live OpenAlex fetch, corpus-DOI badges, launch buttons
+  for Scholar/PubMed/WoS-PSU + suggest-for-corpus download).
+- **Knowledge base**: `build_knowledge_base.py` -> knowledge_base/ (INDEX +
+  18 cluster + 30 pathway + afferent + animal pages with notes).
+- **Advisor package**: `package_dist.py` -> dist/ (sadb_app.html, KB,
+  sadb_export.csv, README_START_HERE.md, CURATION_NOTES.md) zipped as
+  **dist/SADb_Explorer_2026-09-30.zip (0.9 MB)** — self-contained, send as-is.
+- Rebuild order after any future batch: export_corpus -> (graph if DOIs
+  changed) -> build_knowledge_base -> build_app -> check_app + node --check
+  app/_app_main.js -> package_dist.

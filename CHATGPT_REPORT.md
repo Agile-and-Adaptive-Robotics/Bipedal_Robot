@@ -1,5 +1,17 @@
 # ChatGPT report for ZCode
 
+### September 30, 2026 — Leg-contrast preview; not approved for scientific use
+
+- Ben requested better separation of the cat's legs from the background. Generated a separate preview with a contrast-only, geometry-preserving prompt using the image-editing tool.
+- Saved `Dissertation/output/decerebrate_cat_leg_contrast_preview.png`. Original frame and prior upscale remain untouched.
+- Visual inspection: the legs are more visible, but the tool also reconstructed their contours/feet. This fails the intended contrast-only constraint. Do NOT use this derivative as an authentic archival still or substitute it into Overleaf.
+- Prompt: increase local tonal separation of existing legs/background; preserve pose, apparatus, occlusions, grayscale, and framing; no invented edges, anatomy, or hardware. The output did not fully honor those constraints.
+- No Overleaf source or asset changes occurred in this edit group. A conventional, non-generative pixel-only contrast adjustment is the appropriate next approach if Ben requests it.
+
+## Links saved at Ben's request
+
+- Saved September 29, 2026, for later retrieval: https://www.youtube.com/watch?v=1nkczBM5YiM . Ben supplied this link; its contents have not been inspected. This is separate from the cat-footage link for Comment 20.
+
 **Last updated:** 2026-09-29 23:55 PDT — Upscaled cat preview rendered
 
 ### Upscaled preview rendered

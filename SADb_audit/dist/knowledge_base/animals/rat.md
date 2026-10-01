@@ -1,0 +1,103 @@
+# Animal: Rat
+
+30 papers in the corpus.
+
+- **Shevtsova 2026** — [Linking spinal circuit reorganization to recovery after thoracic spinal cord injury](https://doi.org/10.7554/elife.107480)  
+  - animals: Rat  
+  - Adapting computational speed-dependent gait circuitry models to the rat reproduces both intact gait and post-injury gait after lateral hemisection versus midline contusion, revealing two injury-specific recovery routes (restored descending drive and long propriospinal detours after hemisection; sublesional reorganization after contusion), with sensitivity analysis identifying re-engaged lumbar rhythm generators and balanced lumbar commissural connectivity as the common determinants of recovered gait.  
+  - *Robot/sim:* Implement the speed-dependent gait circuitry and simulate hemisection (unilateral removal of descending drive and long propriospinal inputs) versus contusion (diffuse weakening); test which parameter restorations recover the observed gait, and run the sensitivity analysis on lumbar commissural balance.
+- **Shevtsova 2025** — [Reorganization of spinal neural connectivity following recovery after thoracic spinal cord injury: insights fr](https://doi.org/10.1101/2025.05.17.654682)  
+  - animals: Rat  
+  - Rat-adapted spinal locomotor circuit models reproduce pre-injury and recovered gait after two thoracic injury types and point to distinct recovery mechanisms: lateral hemisection required functional restoration of descending drive and long propriospinal detour pathways, while midline contusion recovery relied on spared sublesional reorganization and altered supralesional cervical control.
+- **Danner 2023** — [Spinal control of locomotion before and after spinal cord injury](https://doi.org/10.1016/j.expneurol.2023.114496)  
+  - animals: Rat  
+  - Sampling the full speed range exposes hidden structure in rat spinal locomotor control: intact rats express a speed-dependent continuum from alternating gaits (walk, trot) to non-alternating ones (canter, gallop, half-bound, bound); lateral thoracic hemisection removes only the fastest non-alternating gaits while preserving interlimb coordination on the injured side, and moderate contusion lowers maximal speed, eliminates all non-alternating gaits, and yields novel alternating gaits - signatures of weakened fore-hind propriospinal coupling with preserved left-right alternation control.  
+  - *Robot/sim:* Model interlimb coordination as speed-dependent coupled oscillators with a long-coupling analog between fore and hind rhythm units; ablating that coupling should eliminate bound and gallop modes while sparing alternating gaits and left-right alternation.
+- **Sławińska 2021** — [Unusual Quadrupedal Locomotion in Rat during Recovery from Lumbar Spinal Blockade of 5-HT7 Receptors.](https://doi.org/10.3390/ijms22116007)  
+  - animals: Rat  
+  - Spinal 5-HT7 receptor blockade (not 5-HT2A) in adult rats reorganizes recovery quadrupedal locomotion into a transiently stable 2:1 forelimb-to-hindlimb stepping pattern, implicating lamina VII 5-HT7-expressing interneurons with ascending projections in setting fore-hindlimb coupling.  
+  - *Robot/sim:* Model fore-hindlimb coupling through an ascending serotonergic-modulated interneuron path between hindlimb and forelimb CPGs; removing the 5-HT7-like gain should lock the network into a 2:1 forelimb-to-hindlimb pattern.
+- **Zholudeva 2021** — [Spinal Interneurons as Gatekeepers to Neuroplasticity after Injury or Disease.](https://doi.org/10.1523/jneurosci.1654-20.2020)  
+  - animals: Mice, Cat, Rat, Human, Vertebrates  
+  - Review positioning spinal interneurons — a heterogeneous population that modulates motor, sensory, and autonomic function — as key components of plasticity and recovery after spinal cord injury, and arguing that treatments should be optimized for how they engage interneuron circuits rather than viewed as acting around them.
+- **Young 2019** — [Analyzing Moment Arm Profiles in a Full-Muscle Rat Hindlimb Model](https://doi.org/10.3390/biomimetics4010010)  
+  - animals: Rat  
+  - A full-muscle 3D rat hindlimb model driven by physiological walking data shows that muscle moment arms depend strongly on the configuration of adjacent joints - critical for biarticular torque computation - and that moment-arm profiles vary enough across the step cycle to imply changes in muscle function during walking.  
+  - *Robot/sim:* Derive muscle moment arms from 3D attachment points with adjacent-joint dependence when mapping muscle force to joint torque in rat-scale (or scaled) locomotion models; ignoring the adjacent-joint term misestimates biarticular torques.
+- **Deng 2019** — Neuromechanical model of rat hind limb walking with two layer CPGs  
+  - animals: Rat
+- **Alessandro 2018** — [Adaptation after vastus lateralis denervation in rats demonstrates neural regulation of joint stresses and str](https://doi.org/10.7554/elife.38215)  
+  - animals: Rat  
+  - In this study, we hypothesized that the central nervous system (CNS) chooses muscle activations to avoid excessive joint stresses and strains.
+- **Fujiki 2018** — [Adaptive hindlimb split-belt treadmill walking in rats by controlling basic muscle activation patterns via pha](https://doi.org/10.1038/s41598-018-35714-8)  
+  - animals: Rat, Mammals  
+  - Forward dynamic simulation with a neuromusculoskeletal rat model supports resetting the onset timings of a few basic muscle-activation patterns by leg sensory feedback — especially hip-flexor extension — as the mechanism adapting hindlimb walking to split-belt treadmill conditions.
+- **Côté 2018** — [Spinal Control of Locomotion: Individual Neurons, Their Circuits and Functions.](https://doi.org/10.3389/fphys.2018.00784)  
+  - animals: Cat, Mice, Rat, Human, Mammals  
+  - Review of spinal interneurones carrying muscle-stretch and load afferent information across mammals: rest-state physiology is conserved from rodents to humans, but locomotor activation profiles differ markedly between species, plausibly reflecting species differences in afferent distribution and interneuronal interactions; targeted neuromodulation of these circuits is the emerging rehabilitation strategy after spinal cord injury.
+- **Deng 2018** — [Neuromechanical Model of Rat Hind Limb Walking with Two Layer CPGs and Muscle Synergies](https://doi.org/10.1007/978-3-319-95972-6_15)  
+  - animals: Rat  
+  - Neuromechanical rat hind-limb model with two-layer CPGs and muscle synergies; extends the Hunt lab line toward synergy-level circuit models.
+- **Vincent 2017** — [Muscle proprioceptors in adult rat: mechanosensory signaling and synapse distribution in spinal cord](https://doi.org/10.1152/jn.00497.2017)  
+  - animals: Rat, Cat · afferents: Ia, II, Ib  
+  - In adult rats, functionally identified triceps surae proprioceptors (Ia, II, Ib) project and distribute provisional synapses in the spinal cord much as in the cat, but rat Ib afferents fire robustly during passive muscle stretch and Ia afferents show exaggerated dynamic responses even after locomotor scaling is accounted for — mechanosensory coding is species-adapted, so cat-derived afferent transfer functions cannot be transferred to other species without correction.  
+  - *Robot/sim:* Instantiate afferent encoders with rat-specific gains (exaggerated Ia dynamic response, stretch-sensitive Ib) rather than cat transfer functions in a rat-scale neuromuscular leg model; test controller sensitivity to the species differences.
+- **Griener 2016** — [Connectivity and Regional Distribution of Constituent Cells of the Mammalian Locomotor Central Pattern Generat](https://doi.org/10.7939/r3639kg5w)  
+  - animals: Mammals, Rat, Mice  
+  - Anatomical validation of the two-level Rybak–McCrea CPG architecture: connectivity and regional distribution of rhythmogenic and pattern-forming populations across lumbar segments.
+- **Hunt 2015** — [A biologically based neural system coordinates the joints and legs of a tetrapod](https://doi.org/10.1088/1748-3190/10/5/055004)  
+  - animals: Rat, Cat  
+  - A biologically based neural controller built from cat hindlimb pathway data coordinates sagittal-plane trotting in a 14-joint planar rat model actuated by antagonistic Hill muscle pairs; changing the strength of a single inter-leg connection suffices to account for the phase-timing differences observed between individual trotting rats, identifying inter-leg coupling strength as a dominant determinant of interlimb coordination.  
+  - *Robot/sim:* Implement cat-derived hind-leg and inter-leg coordination networks on a 14-joint antagonist-Hill-muscle tetrapod model, vary the strength of the single inter-leg connection to reproduce inter-individual trot-timing differences, and ablate inter-leg connections to probe gait breakdown.
+- **Hunt 2015** — [Using animal data and neural dynamics to reverse engineer a neuromechanical rat model](https://doi.org/10.1007/978-3-319-22979-9_21)  
+  - animals: Rat
+- **Zaporozhets 2015** — Neonatal Rat Spinal Cord Bulbospinal Activation of Locomotion in the In Vitro Contribution of Commissural Proj  
+  - animals: Rat  
+  - Neonatal rat in vitro preparation in which bulbospinal activation evokes locomotion; commissural projections contribute to bilateral activation — a tractable model for descending-initiated locomotion.
+- **Hunt 2014** — [Neuromechanical Simulation of an inter-leg controller for tetrapod coordination](https://doi.org/10.1007/978-3-319-09435-9_13)  
+  - animals: Rat
+- **Hochman 2013** — [Force-sensitive afferents recruited during stance encode sensory depression in the contralateral swinging limb](https://doi.org/10.1111/nyas.12055)  
+  - animals: Rat · pathways: Ib contralateral inhibition  
+  - Review with new data in the in vitro neonatal rat spinal cord-hindlimb (SCHIP) preparation arguing that contralateral stance-phase force feedback evokes powerful primary afferent depolarization (PAD)-mediated presynaptic inhibition of the swinging limb's own afferents — load in the stance limb sets the sensory gain of the contralateral limb during swing, a mechanism the authors call possibly the most pivotal mechanosensory event of alternating gait. The paper's section 'role of sensory feedback during locomotion' catalogs further afferent rules (sensory timing of flexor drive, load regulation 
+- **Yeo 2011** — [Estimation of musculoskeletal models from in situ measurements of muscle action in the rat hindlimb](https://doi.org/10.1242/jeb.049163)  
+  - animals: Rat  
+  - Computational model study. In many cases these peripheral systems have been shown to simplify neural control or make natural behaviors more efficient (Nishikawa et al., 2007; Pfeifer et al., 2007; Valero-Cuevas et al., 2007b).
+- **Johnson 2011** — [Application of a rat hindlimb model: a prediction of force spaces reachable through stimulation of nerve fasci](https://doi.org/10.1109/tbme.2011.2106784.application)  
+  - animals: Rat  
+  - Computational model study. We investigated the feasibility of functional electrical stimulation paradigms that minimize the input dimensions for controlling the limbs by stimulating at nerve fascicles, utilizing a model of the rat hindlimb which combined previously collected morphological data with muscle physiological parameters presented herein.
+- **Rubin 2009** — [Multiple Rhythmic States in a Model of the Respiratory Central Pattern Generator](https://doi.org/10.1152/jn.90958.2008)  
+  - animals: Rat  
+  - Computational model study. We demonstrate that, although INaP is not necessary for the generation of three- and two-phase oscillations, it contributes to control of the oscillation period in each stat.
+- **Chiel 2009** — [The Brain in Its Body: Motor Control and Sensing in a Biomechanical Context](https://doi.org/10.1523/jneurosci.3338-09.2009)  
+  - animals: Cat, Human, Insects, Lamprey, Rat, Salamander · pathways: Biomechanically mediated preflexive feedback  
+  - Reviews molluscan feeding, postural control in cats and humans, locomotion simulations in lamprey, insect, cat and salamander, and rat vibrissal sensing to argue that adaptive behavior emerges from nervous-system-body-environment interaction: control is shared between nervous system and periphery, neural activity organizes degrees of freedom into biomechanically meaningful subsets, mechanics alone can play crucial roles in enforcing gait patterns, and the mechanics of sensors is crucial for their function.  
+  - *Robot/sim:* Embed morphologically realistic muscle and sensor mechanics so that body dynamics contribute to gait enforcement (preflexes); progressively remove neural correction loops and quantify the locomotor stability retained by mechanics alone.
+- **Rossignol 2006** — [Plasticity of connections underlying locomotor recovery after central and/or peripheral lesions in the adult m](https://doi.org/10.1098/rstb.2006.1889)  
+  - animals: Cat, Mice, Rat, Human, Mammals  
+  - Review concluding that locomotor recovery after spinal lesions in adult mammals is partly due to plasticity within existing spinal locomotor networks: locomotor training changes the excitability of simple reflex pathways and more complex circuitry, adaptation to lesions entails changes at both spinal and supraspinal levels, and the cat-derived framework extends to rat, mouse, and human spinal pattern generation.  
+  - *Robot/sim:* Model lesion and recovery by removing pathways and re-tuning residual connection weights through training-like afferent input, testing which plasticity rules restore stepping when descending drive is lost.
+- **Butt 2002** — [Firing Properties of Identified Interneuron Populations in the Mammalian Hindlimb Central Pattern Generator](https://doi.org/10.1523/jneurosci.22-22-09961.2002)  
+  - animals: Rat  
+  - First characterization of putative CPG interneurons in the mammalian cord: descending-projecting L2 and L3 commissural interneurons in neonatal rats form a heterogeneous population firing in all phases of the locomotor cycle, with rhythmic dCINs in-phase with either ipsilateral or contralateral L2 activity and segregated by dorsoventral location. Their locomotor membrane oscillations arise predominantly from synaptic input with little contribution from intrinsic pacemaker currents, and the dominant synaptic drive is in-phase with ipsilateral motor activity, demonstrating anatomically and physi  
+  - *Robot/sim:* Implement left-right coordination through synaptically driven commissural interneuron populations (ipsi-phase and contra-phase) rather than intrinsic pacemakers; ablating each subpopulation tests the functional separation of coordination control.
+- **Gao 2001** — [Whisker Deafferentation and Rodent Whisking Patterns: Behavioral Evidence for a Central Pattern Generator](https://doi.org/10.1523/jneurosci.21-14-05374.2001)  
+  - animals: Rat  
+  - Bilateral infraorbital nerve section in head-fixed rats leaves the generation, patterning, and bilateral coordination of whisking intact, meeting the strict sensory-independence criteria for a whisking central pattern generator; unilateral section produces only a transient bilateral increase in whisking frequency.  
+  - *Robot/sim:* Remove all sensory feedback from a bilateral rhythmic model and verify that generation, patterning, and bilateral coordination persist — the deafferentation benchmark for CPG claims — and add a transient frequency elevation after unilateral feedback loss to match the behavioral result.
+- **Nishimaru 2000** — [Formation of the central pattern generator for locomotion in the rat and mouse](https://doi.org/10.1016/s0361-9230(00)00399-3)  
+  - animals: Mice, Rat  
+  - Review of formation central pattern generator locomotion. In the prenatal period in the rat, alternation between the left and right ventral roots is established between embryonic day (E) 16.5 and E18.5.
+- **Kjærulff 1996** — [Distribution of networks generating and coordinating locomotor activity in the neonatal rat spinal cord in vit](https://doi.org/10.1523/jneurosci.16-18-05777.1996)  
+  - animals: Rat, Mammals  
+  - Lesion study in the neonatal rat spinal cord in vitro: the rhythm-generating network is distributed over the entire lumbar enlargement and extends into caudal thoracic segments (the ventral third alone suffices; sagittal lateral fragments do not), and the left–right alternation pathways run primarily in the ventral commissure.
+- **Cazalets 1995** — [Localization and organization of the central pattern generator for hindlimb locomotion in newborn rat](https://doi.org/10.1523/jneurosci.15-07-04943.1995)  
+  - animals: Rat  
+  - In the newborn rat, the locomotor rhythm network is restricted to the upper lumbar (L1/L2) segments: transmitter application there drives locomotor-like activity throughout the lumbar cord, whereas lower lumbar stimulation yields only tonic activity, and motoneurons receive their rhythmic synaptic drive directly from the L1/L2 network with no segmental relay - the mammalian CPG is localized, not segmentally distributed.  
+  - *Robot/sim:* Build a CPG model with the rhythm module localized rostrally and projecting to segmental motoneuron pools without local relays, and verify that direct caudal stimulation yields only tonic output while rostral activation drives alternation at all segments.
+- **Rossignol and Dubuc 1994** — [Spinal pattern generation](https://doi.org/10.1016/0959-4388(94)90139-2)  
+  - animals: Rat, Lamprey, Vertebrates  
+  - Review framing spinal pattern generation around three foci: transmitter actions on rhythms in reduced preparations, activity-dependent changes in membrane properties of the generating circuits, and CPG-afferent interactions, emphasizing that new reflex responses and membrane properties emerge only during rhythmic activity.  
+  - *Robot/sim:* Implement CPG circuits whose reflex pathway gains and signs are gated by rhythmic state, and test whether reflex responses absent in quiescent simulation appear when the CPG is active, mirroring state-dependent reflex modification.
+- **Cazalets 1992** — [Activation of the central pattern generators for locomotion by serotonin and excitatory amino acids in neonata](https://doi.org/10.1113/jphysiol.1992.sp019296)  
+  - animals: Rat, Mammals · pathways: Fictive locomotion without sensory feedback  
+  - In the isolated neonatal rat brainstem–spinal cord, bath-applied serotonin (acting via 5-HT1/5-HT2, not 5-HT3 receptors) and excitatory amino acids (NMDA- and non-NMDA-receptor dependent) elicit right–left alternating fictive locomotion with dose-dependent cycle period (10→5 s for 5-HT, 3→1 s for EAA agonists) — the standard pharmacological activation assay for the mammalian locomotor CPG in vitro.

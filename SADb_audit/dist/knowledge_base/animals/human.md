@@ -1,0 +1,775 @@
+# Animal: Human
+
+215 papers in the corpus.
+
+- **Mojtabavi 2026** — [Neuromuscular Basis of Kinematic Adaptations During Bidirectional Walking](https://doi.org/10.64898/2026.02.11.705376)  
+  - animals: Human  
+  - Bidirectional split-belt walking (equal speeds, opposite directions) in twelve humans: rhythm generation remained robust (burst-to-cycle ratios stable) while pattern formation adapted — prolonged TA activation in the backward-moving leg persisted into washout — indicating selective amplitude recalibration rather than rhythm reorganization.
+- **Steffen 2026** — [A Spiking Neural Architecture for Coordinating Arm and Locomotor Control](https://doi.org/10.48550/arXiv.2606.11034)  
+  - animals: Human  
+  - First integrated spiking controller coordinating bipedal locomotion and arm control on a full-scale humanoid: NEF/SPA neural control with a biologically grounded spiking basal-ganglia model mediates action selection, validated in Nengo–Isaac Sim co-simulation for reaching, drawing, path-following locomotion, and task switching.
+- **Ton and Song 2026** — [Unified comparison of spinal locomotion control architectures in neuromechanical simulations](https://doi.org/10.64898/2026.06.09.731213)  
+  - animals: Human  
+  - Implemented four representative spinal locomotion controllers (reflex-based, CPG-reflex, muscle-synergy, CPG-reflex-synergy) in one unified neuromechanical framework and compared them under shared biomechanical conditions: reflex-based and CPG-reflex-synergy controllers best reproduced experimentally observed gait characteristics, and the CPG-reflex-synergy controller was most versatile across speeds and slopes. The limited versatility of all spinal-only controllers across broader speed–slope conditions points to supraspinal modulation as necessary beyond nominal steady gait.
+- **Koseki 2026** — [Human-inspired bipedal locomotion: from neuromechanics to mathematical modelling and robotic applications](https://doi.org/10.1098/rsif.2025.0662)  
+  - animals: Human  
+  - Review synthesizing neuroscience, biomechanics, mathematical modeling, and robotics for human-inspired bipedal locomotion: from spinal circuits and supraspinal coordination through neural-oscillator to musculoskeletal simulations, and their embodiment in bipedal robots as a reciprocal driver of biological insight and engineering design.
+- **Jin 2026** — [Minimal-calibration multimodal wearable sensing for long-duration three-dimensional shoulder kinematics](https://doi.org/10.1038/s44460-026-00059-7)  
+  - animals: Human  
+  - Here we report a wearable platform for long-duration tracking of three-dimensional shoulder kinematics with minimal calibration.
+- **Schumacher 2025** — [Emergence of natural and robust bipedal walking by learning from biologically plausible objectives](https://doi.org/10.1016/j.isci.2025.112203)  
+  - animals: Human  
+  - Reinforcement learning with a single adaptive biologically plausible reward learns locomotion controllers for four musculoskeletal models (up to 90 muscles) in two simulators without any motion demonstrations; the controllers generalize to diverse unseen terrains and remain robust on complex 3D models where reflex controllers are difficult to apply, producing close-to-natural gait.  
+  - *Robot/sim:* Implement RL with the adaptive biologically plausible reward on a musculoskeletal biped as an alternative to hand-tuned reflex/CPG hierarchies; benchmark terrain generalization and muscle-count scalability against reflex-based controllers.
+- **Mo 2025** — [A multi-Layered neural control framework: Combining central pattern generators utilizing muscle synergy Theory](https://doi.org/10.1016/j.engappai.2025.111811)  
+  - animals: Human  
+  - Bionic control framework combining CPG signals organized by muscle-synergy principles with reinforcement-learning-adapted weights and a lower proprioceptive feedback loop, integrated into an upper-limb musculoskeletal model; simulated elbow kinematics matched human experiments, and removing the proprioceptive loop degraded accuracy and stability.
+- **Bunz 2025** — [A simple network of proprioceptive reflexes can produce a variety of bipedal gaits](https://doi.org/10.1101/2025.02.05.636668)  
+  - animals: Human  
+  - A controller built solely from monosynaptic and antagonistic length- and force-feedback pathways with constant gains produces walking, hopping, and running forwards and backwards in simulation — no CPG, no state machine, no gain modulation — arguing for a re-evaluation of reflexes' role in rhythm generation, with proprioception as the sole source of versatile gaits.
+- **Arai 2024** — [Interlimb coordination is not strictly controlled during walking](https://doi.org/10.1038/s42003-024-06843-w)  
+  - animals: Human  
+  - Coupled-oscillator analysis of human walking reveals a control dead zone in interlimb coordination: relative phase is not actively corrected until deviation from antiphase exceeds a threshold, indicating loose left-right coupling within a tolerance band that may trade correction precision for energy efficiency and maneuverability.  
+  - *Robot/sim:* Give a bipedal CPG left-right coupling a dead-zone nonlinearity so correction engages only beyond a phase-deviation threshold; compare energy use and maneuverability against strictly enforced antiphase coupling.
+- **Duman 2023** — [Hindlimb muscle spindles inform preparatory forelimb coordination prior to landing in toads](https://doi.org/10.1242/jeb.244629)  
+  - animals: Human  
+  - We found that toads significantly delayed the onset and reduced the activation duration of their elbow extensor muscle following spindle Ia afferent ablation in the hindlimbs.
+- **Minassian 2023** — [Rare phenomena of central rhythm and pattern generation in a case of complete spinal cord injury](https://doi.org/10.1038/s41467-023-39034-y)  
+  - animals: Human  
+  - In a complete thoracic spinal cord injury, self-sustained spinal myoclonus proved to tap spinal circuits that generate muscle spasms rather than a locomotor CPG, whereas epidural electrical stimulation produced flexor-extensor and left-right alternating patterns with spontaneous motor deletions - preserved cycle frequency and period when rhythmicity resumed - previously reported only in animals, supporting a separation between rhythm generation and pattern formation in the human lumbar cord.  
+  - *Robot/sim:* Separate rhythm and pattern modules in a CPG controller: transiently silence the rhythm kernel while the pattern-formation circuitry retains its phase relationships, reproducing motor deletions with preserved cycle period upon resumption.
+- **Refy 2023** — [Dynamic spinal reflex adaptation during locomotor adaptation](https://doi.org/10.1152/jn.00248.2023)  
+  - animals: Human  
+  - Provides direct evidence that spinal reflexes can be modulated on demand and unilaterally during split-belt locomotor adaptation in healthy adults, and proposes reflex-gain modulation itself as a candidate mechanism for the adaptation of gait asymmetry.  
+  - *Robot/sim:* Implement reflex pathways with side-specific, adaptable gains in a bilateral walker and test whether modulating reflex gain alone (holding CPG drive fixed) reduces gait asymmetry during split-belt perturbations.
+- **Cimolato 2023** — [Symbiotic electroneural and musculoskeletal framework to encode proprioception via neurostimulation: ProprioSt](https://doi.org/10.1016/j.isci.2023.106248)  
+  - animals: Human  
+  - Computational model study. We demonstrated its feasibility through non-invasive stimulation on seven healthy subjects comparing it with standard linear charge encoding.
+- **Takahashi 2023** — [Enhancing postural stability in a musculoskeletal hopping robot through stretch reflex application on biarticu](https://doi.org/10.3389/frobt.2023.1293365)  
+  - animals: Human  
+  - Guided by this physiological principle, this study aims to enhance the postural stability of a hopping robot through the emulation of this human mechanism.
+- **Madarshahian 2022** — [Intra-muscle Synergies Stabilizing Reflex-mediated Force Changes](https://doi.org/10.1016/j.neuroscience.2022.10.009)  
+  - animals: Human  
+  - Highlights
+•
+Reflex-mediated finger force changes are stabilized by intra-muscle synergies.
+
+•
+No synergies in the space of individual finger force stabilized the force changes.
+
+•
+Effects of dominance are seen in inter-finger but not intra-muscle synergies.
+
+•
+Effects of motor equivalence are seen during reflex-induced force changes.
+
+
+Abstract
+We used the framework of the uncontrolled manifold hypothesis to explore force-stabilizing synergies and motor equivalence in the spaces of individual motor unit (MU) firing frequencies. Healthy subjects performed steady force production tasks by press
+- **Dewolf 2022** — [Left-right locomotor coordination in human neonates](https://doi.org/10.1523/jneurosci.0612-22.2022)  
+  - animals: Human, Mammals  
+  - In 46 stepping neonates, interlimb coordination is variable (including 2:1 locking episodes and activity deletions on a blocked side), hip-position effects are strictly ipsilateral (backward hip position engaging hip flexors, flexed position engaging hip extensors), sudden posterior release of a blocked limb elicits immediate swing initiation, and extensor muscles show load responses at midstance, indicating neonatal networks with independent per-limb pattern generators and load and hip-position feedback but incomplete sensory modulation relative to mature locomotion.  
+  - *Robot/sim:* Model per-limb flexor and extensor pattern generators with hip-position and load feedback but weak interlimb coupling; reproduce 2:1 coordination episodes and activity deletions, then strengthen coupling parameters toward mature alternation.
+- **Banks 2021** — [Secondary endings of muscle spindles: Structure, reflex action, role in motor control and proprioception](https://doi.org/10.1113/ep089826)  
+  - animals: Human  
+  - Review of secondary endings muscle spindles: structure, reflex action,. There are two types of sensory endings, primary and secondary, with differing development, morphology, distribution and responsiveness.
+- **Hachmann 2021** — [Epidural spinal cord stimulation as an intervention for motor recovery after motor complete spinal cord injury](https://doi.org/10.1152/jn.00020.2021)  
+  - animals: Human · pathways: large diameter spinal afferent stimulation  
+  - Review arguing that lumbosacral epidural stimulation after motor-complete SCI acts by first depolarizing large-diameter dorsal-root proprioceptive afferents, which — integrated with interneuronal and latent residual supraspinal translesional connections — recruit locomotor centers and augment downstream motor units, with different stimulation parameters able to facilitate standing versus stepping.  
+  - *Robot/sim:* Model epidural stimulation as tonic depolarization of large-diameter proprioceptive afferent inputs to the spinal network; simulate parameter-dependent switching between standing and stepping attractors to test how afferent recruitment gates locomotor centers.
+- **Arelekatti 2021** — [Design of a Four-Bar Latch Mechanism and a Shear-Based Rotary Viscous Damper for Single-Axis Prosthetic Knees](https://doi.org/10.1115/1.4052804)  
+  - animals: Human  
+  - In this study, we present the design and preliminary testing of two distinct mechanism modules that are novel for passive prosthetic knee applications: the stability module and the damping module.
+- **Zholudeva 2021** — [Spinal Interneurons as Gatekeepers to Neuroplasticity after Injury or Disease.](https://doi.org/10.1523/jneurosci.1654-20.2020)  
+  - animals: Mice, Cat, Rat, Human, Vertebrates  
+  - Review positioning spinal interneurons — a heterogeneous population that modulates motor, sensory, and autonomic function — as key components of plasticity and recovery after spinal cord injury, and arguing that treatments should be optimized for how they engage interneuron circuits rather than viewed as acting around them.
+- **Labbe 2021** — [Proprioceptive Stimulation Added to a Walking Self-Avatar Enhances the Illusory Perception of Walking in Stati](https://doi.org/10.3389/frvir.2021.557783)  
+  - animals: Human  
+  - Adding gait-patterned lower-limb muscle vibration to a first-person walking avatar increased static participants' sense of agency and illusory perception of walking; only realistic, temporally aligned proprioceptive stimulation produced anteroposterior center-of-pressure sway matching the avatar's gait cadence — congruent proprioceptive input alone can evoke motor correlates of gait.
+- **Wang 2020** — [Standing Balance Experiment with Long Duration Random Pulses Perturbation](https://doi.org/10.5281/zenodo.3631958)  
+  - animals: Human  
+  - Computational model study. 37 ABSTRACT Standing balance experiment and the measured data-set are fundamental for identifying postural feedback controllers.
+- **Amann 2020** — [On the Influence of Group III/IV Muscle Afferent Feedback on Endurance Exercise Performance](https://doi.org/10.1249/JES.0000000000000233)  
+  - animals: Human · pathways: group III/IV fatigue  
+  - Consequences of group III/IV muscle afferent feedback for the development of neuromuscular fatigue and whole body exercise performance. Muscle contraction-induced increases in group III/IV afferent feedback raise circulation and pulmonary ventilation during exercise and thereby assure adequate oxygen delivery to the working locomotor muscle. This attenuates the development of peripheral fatigue and facilitates exercise performance. On the other hand, group III/IV muscle afferent feedback restricts spinal motoneuron output and voluntary muscle activation, i.e. promotes central fatigue and impai
+- **Wang 2020** — [Identification of the human postural control system through stochastic trajectory optimization](https://doi.org/10.1016/j.jneumeth.2020.108580)  
+  - animals: Human  
+  - Computational model study. However, unstable controllers were sometimes found, which obviously do not explain human balance and can- not be applied in control of humanoid robots.
+- **Maxwell and Soteropoulos 2020** — [The mammalian spinal commissural system: properties and functions.](https://doi.org/10.1152/jn.00347.2019)  
+  - animals: Mammals, Human  
+  - Review of mammalian spinal commissural interneurons — heterogeneous cells definable by gray-matter location, axonal projections and targets, neurotransmitter phenotype, activation properties, and embryological origin — whose crossed projections coordinate left-right motor activity in locomotion and posture; their roles in grasping, reaching, and bimanual control remain poorly understood, especially in the cervical cord of primates including humans, and they are implicated in restoration of function after spinal injury and stroke.  
+  - *Robot/sim:* Implement multiple heterogeneous commissural interneuron classes with distinct signs, targets, and drive dependencies in a bilateral CPG; ablating each class should produce distinct left-right coordination deficits, and graded lesions can model post-injury recovery.
+- **Schedler 2019** — [Age and sex differences in human balance performance from 6-18 years of age: A systematic review and meta-anal](https://doi.org/10.1371/journal.pone.0214434)  
+  - animals: Human  
+  - Review of age sex differences human balance performance. RESEARCH ARTICLE Age and sex differencesin human balance performancefrom 6-18 years of age: A systematicreview and meta-analysis Simon SchedlerID 1*, Rainer Kiss2, Thomas Muehlbauer1 1 Division of Movement and Training Sciences/Biomechanics of Sport, University of Duisburg-Essen, Essen, Germany, 2 Department of Health and Social Affairs,...
+- **Laliberté 2019** — [Propriospinal Neurons: Essential Elements of Locomotor Control in the Intact and Possibly the Injured Spinal C](https://doi.org/10.3389/fncel.2019.00512)  
+  - animals: Human  
+  - Review of propriospinal interneurons as short- and long-distance relays within the spinal cord that link motor circuits controlling muscles across the forelimbs, trunk, and hindlimbs; their coordinating role in the intact cord, and the formation and activation of circuits established by spared propriospinal interneurons, may promote the re-emergence of locomotion after spinal cord injury disrupts descending commands, with supporting progress in animal models and human patients.  
+  - *Robot/sim:* Implement short- and long-propriospinal intersegmental coupling between locomotor circuits for the limbs and trunk; ablate the coupling to emulate spinal-cord-injury disconnection and test recovery through its re-activation.
+- **Sra 2019** — [Adding Proprioceptive Feedback to Virtual Reality Experiences Using Galvanic Vestibular Stimulation](https://doi.org/10.1145/3290605.3300905)  
+  - animals: Human  
+  - A wearable galvanic vestibular stimulation device significantly reduces cybersickness and increases rated immersion during virtual self-motion (N=20), showing that electrically elicited vestibular reflexes can stand in for the vestibular and proprioceptive cues that virtual motion lacks.  
+  - *Robot/sim:* Implement a vestibular-analog feedback channel (attitude or acceleration error driving reflex gains) in a balance controller and ablate it to quantify how vestibular input supplements proprioceptive feedback during self-motion.
+- **Duysens and Forner-Cordero 2019** — [A controller perspective on biological gait control: Reflexes and central pattern generators](https://doi.org/10.1016/j.arcontrol.2019.04.004)  
+  - animals: Human, Cat  
+  - Reviews the neural control of gait from a control-engineering perspective and argues the biological CPG is asymmetric: the rhythm generator drives the flexor half in feedforward fashion while the extensor half operates in feedback mode, gated by external inputs such as ground contact — an architecture with direct implications for how biped robots should couple CPGs to contact sensing.
+- **Nichols 2018** — [Distributed force feedback in the Spinal Cord and the regulation of limb mechanics](https://doi.org/10.1152/jn.00216.2017)  
+  - animals: Cat, Human · pathways: Ib disynaptic inhibition; Ib disynaptic excitation; Ia monosynaptic  
+  - Review Update Paper; This paper show able to give insight to the inhibitory and excitatory force feedback during locomotion
+- **Côté 2018** — [Spinal Control of Locomotion: Individual Neurons, Their Circuits and Functions.](https://doi.org/10.3389/fphys.2018.00784)  
+  - animals: Cat, Mice, Rat, Human, Mammals  
+  - Review of spinal interneurones carrying muscle-stretch and load afferent information across mammals: rest-state physiology is conserved from rodents to humans, but locomotor activation profiles differ markedly between species, plausibly reflecting species differences in afferent distribution and interneuronal interactions; targeted neuromodulation of these circuits is the emerging rehabilitation strategy after spinal cord injury.
+- **Chu 2018** — [Stepping responses to treadmill perturbations vary with severity of motor deficits in human SCI](https://doi.org/10.1152/jn.00486.2017)  
+  - animals: Human  
+  - Split-belt treadmill perturbations during human stepping show that stopping one belt in midstance triggers an unnecessary swing in most walkers, with the likelihood dropping as SCI severity increases, while belt acceleration or deceleration during stance advances or delays swing onset — evidence for interdependent central and sensory drive in stepping control that degrades with injury severity.
+- **Duysens and Forner-Cordero 2018** — [Walking with perturbations: a guide for biped humans and robots](https://doi.org/10.1088/1748-3190/aada54)  
+  - animals: Human  
+  - Review of bipedal walking for biologists and roboticists: argues CPG function is fundamentally asymmetric (the flexor half more tightly coupled to the rhythm generator), catalogs phase-dependent trip-recovery strategies (elevating and lowering) and the comparison of expected versus actual feedback for stepping into a hole, and tracks emerging robotics implementations including learning to fall safely and split-belt disturbances.
+- **Macefield 2018** — [Functional properties of human muscle spindles](https://doi.org/10.1152/jn.00071.2018)  
+  - animals: Cat, Human  
+  - Review of functional properties human muscle spindles. First published April 18, 2018; doi:10.1152/ jn.00071.2018.—Muscle spindles are ubiquitous encapsulated mechanoreceptors found in most mammalian muscles.
+- **Santuz 2018** — [Challenging human locomotion: stability and modular organisation in unsteady conditions](https://doi.org/10.1038/s41598-018-21018-4)  
+  - animals: Human  
+  - We found a decreased stability when switching from even- to uneven-surface locomotion (p < 0.001 in walking, p = 0.001 in running).
+- **Van der Noot 2018** — [Bio-inspired controller achieving forward speed modulation with a 3D bipedal walker](https://doi.org/10.1177/0278364917743320)  
+  - animals: Human  
+  - In the present contribution, we embrace the idea of combining a CPG and reflexes in a neuromuscular torquebased controller for bipedal locomotion. More precisely, we design a controller capable of generating robust and humanlike locomotion gaits on a 3D bipedal walker.
+
+In this paper, we have developed a bio-inspired torque-based controller supporting the emergence of a new generation of robust and energy-efficient walkers. It recruits virtual muscles driven by reflexes and a central pattern generator, and thus requires no computationally intensive inverse kinematics or dynamics modeling. This
+- **Cellucci 2018** — [Distributed Pressure Sensing for Enabling Self-Aware Autonomous Aerial Vehicles](https://doi.org/10.1109/iros.2018.8593664)  
+  - animals: Human  
+  - We present a modular, scal- able, distributed pressure sensing skin for aerodynamic state estimation of a large, ﬂexible aerostructure.
+- **Proske and Gandevia 2018** — [Kinesthetic Senses](https://doi.org/10.1002/cphy.c170036)  
+  - animals: Human, Cat  
+  - The kinesthetic senses are the senses of position and movement of the body, senses we are awareof only on introspection. A method used to study kinesthesia is muscle vibration, which engagesafferents of muscle spindles to trigger illusions of movement and changed position. When vibratingelbow ﬂexors, it generates sensations of forearm extension, when vibrating extensors, sensationsof forearm ﬂexion. Vibrating the elbow joint produces no illusion. Vibrating ﬂexors and extensorstogether at the same frequency also produces no illusion, because what is perceived is the signaldifference between ant
+- **Schiefer 2018** — [Artificial tactile and proprioceptive feedback improves performance and confidence on object identification ta](https://doi.org/10.1371/journal.pone.0207659)  
+  - animals: Human  
+  - Electrical nerve stimulation can restore localized tactile and proprioceptive feedback with intensity discrimination capability similar to natural sensation.
+- **Frigon 2017** — [The neural control of interlimb coordination during mammalian locomotion.](https://doi.org/10.1152/jn.00978.2016)  
+  - animals: Mammals, Human  
+  - Review of interlimb coordination in mammalian locomotion: coordination between forelimb and hindlimb spinal networks is achieved by mechanisms intrinsic to the spinal cord, somatosensory feedback from the limbs, and supraspinal pathways; incomplete spinal cord injury disrupts this coordination, but lesion-based inference is confounded by compensatory strategies, redundant control, and plasticity in remaining circuits.  
+  - *Robot/sim:* Build a locomotion model with separate interlimb-coupling modules (intraspinal coupling, limb somatosensory feedback, supraspinal modulation) and ablate them individually to reproduce the coordination disruptions seen after incomplete spinal lesions.
+- **Jiang 2017** — [A postural control model incorporating multisensory inputs for maintaining a musculoskeletal model in a stance](https://doi.org/10.1080/01691864.2016.1266095)  
+  - animals: Human  
+  - Computational model study. In this study, our aim was to develop a stance postural control model including a neural controller with feed-forward controlandsensoryfeedbackcontrolbasedonvisual,vestibular,andproprioceptivesomatosensory feedback inputs.
+- **Yokoyama 2017** — [Speed dependency in α-motoneuron activity and locomotor modules in human locomotion: indirect evidence for phy](https://doi.org/10.1098/rspb.2017.0290)  
+  - animals: Human  
+  - In human walking, generation of muscle activity is largely
+affected by sensory input [32]. In slow walking, as discussed
+above, large sacral activity in mid-stance is presumably derived
+from foot-support interactions thorough load feedback. This
+sacral activity is most probably related to constancy in triceps
+activity over the speed range and to negative speed dependency in PL activity with regard to load information in
+slow-speed walking, as discussed in [33]. At higher speeds,
+changes in locomotor muscle activity are clearly related to
+reinforcement of sensory feedback depending on speed
+inc
+- **Minassian 2017** — [The Human Central Pattern Generator for Locomotion: Does It Exist and Contribute to Walking?](https://doi.org/10.1177/1073858417699790)  
+  - animals: Human  
+  - Argues from spinal-cord-stimulation and pharmacological neuromodulation studies in spinal cord injury plus neuromechanical modeling that the human lumbar cord can produce rhythmic muscle activation resembling CPG activity of the isolated animal spinal cord in the absence of volitional control and step-specific sensory feedback, and that CPGs may contribute to specific phases of the step cycle while serving as a feedforward component that simplifies supraspinal control of step-cycle frequency for a targeted speed.  
+  - *Robot/sim:* Add a feedforward CPG component that sets step-cycle frequency for a targeted speed and reduces supraspinal control burden; ablate it and measure the added control complexity or gait degradation in a neuromechanical walker.
+- **J. 2017** — [On the possibility (or lack thereof) of agreement between experiment and computation of flows over wings at mo](https://doi.org/10.1098/rsfs.2016.0076)  
+  - animals: Human  
+  - Here we exam- ine one ostensibly simple case of the NACA 0012 aerofoil and make careful comparison between the technical literature, and new experiments and com- putations.
+- **Kuczynski 2017** — [Lack of adaptation during prolonged split-belt locomotion in the intact and spinal cat.](https://doi.org/10.1113/jp274518)  
+  - animals: Cat, Human  
+  - Neither intact nor spinal-transected cats adapt to 10 min of split-belt locomotion: step-length and double-support asymmetries persist with no after-effect on returning to tied belts (symmetry is restored immediately), and spinal cats show no EMG modulation while intact cats raise extensor EMG throughout - unlike humans - suggesting that restoring left-right symmetry is not required for balance in quadrupedal gait and that split-belt adaptation is not a cat spinal plasticity.  
+  - *Robot/sim:* Run a spinal-only CPG plus reflex quadruped model on split-belt input - it should reproduce the cat phenotype (persistent asymmetry, immediate re-symmetrization, no after-effect), whereas adding a supraspinal adaptive layer is required for the human-like after-effect.
+- **Kaminishi 2017** — [Proprioceptive postural control of a musculoskeletal model against horizontal disturbances](https://doi.org/10.1109/robio.2017.8324592)  
+  - animals: Human  
+  - Computational model study. Here, we developed a hypothesis that when we cannot use all sensory information, we maintain upright posture with high muscle stiffness.
+- **Hilts 2017** — [Simulation of Human Balance Control Using an Inverted Pendulum Model](https://doi.org/10.1007/978-3-319-63537-8_15)  
+  - animals: Human  
+  - A synthetic nervous system providing proportional-derivative control of a single-joint inverted pendulum model of human balance: an ankle angular-position sensor feeds a neural network that computes the derivative of position error and applies corrective torque about the ankle, maintaining unstable equilibrium and correcting perturbations — the minimal building block for larger neuromechanical balance controllers.
+- **Hofstoetter 2017** — [Probing the Human Spinal Locomotor Circuits by Phasic Step-Induced Feedback and by Tonic Electrical and Pharma](https://doi.org/10.2174/1381612822666161214144655)  
+  - animals: Human  
+  - Critical review arguing that rhythmic leg-muscle activity elicited in severe spinal cord injury by assisted treadmill stepping reflects entrainment of spinal proprioceptive reflex circuits by cyclically generated proprioceptive feedback rather than central pattern generator activation, and that genuine CPG engagement requires sustained tonic excitatory drive — from electrical spinal cord stimulation or combinations of dopaminergic, adrenergic, and 5-HT pharmacology.  
+  - *Robot/sim:* Implement a lumbar circuit model with separately controlled reflex entrainment (cyclic proprioceptive input drives reflex circuits) and CPG activation (tonic excitatory drive gates rhythm generation); reproduce the dissociation and test rehabilitation-style combined stimulation.
+- **Yokoyama 2017** — [Motor module activation sequence and topography in the spinal cord during air-stepping in human: Insights into](https://doi.org/10.14814/phy2.13504)  
+  - animals: Human  
+  - During human air-stepping, which removes foot-contact interactions, four NMF-extracted motor modules activated sequentially, with reconstructed motoneuron clusters progressing from rostral to caudal spinal regions from initial flexion to the last extension phase — evidence for rostrocaudally traveling waves in human locomotor spinal circuits, resolving the rostral propagation shift previously observed at foot contact during walking.  
+  - *Robot/sim:* Implement a rostrocaudally sequenced motor-module CPG (a traveling wave over distributed MN pools) and reproduce the module activation order from initial flexion to late extension during unloaded stepping, then add ground contact to test waveform modulation.
+- **Luca 2017** — [Bioinspired morphing wings for extended flight envelope and roll control of small drones](https://doi.org/10.1098/rsfs.2016.0092)  
+  - animals: Vertebrates, Human  
+  - We show that a fully deployed configuration enhances manoeuvrability while a folded configuration offers low drag at high speeds and is beneficial in strong headwinds.
+- **Han 2017** — [Feedback design for multi-contact push recovery via LMI approximation of the Piecewise-Affine Quadratic Regula](https://doi.org/10.1109/humanoids.2017.8246970)  
+  - animals: Human  
+  - Computational model study. We show that we can embed a quadratic objective in the SDP, designing a controller approximating the Piecewise-Afﬁne Quadratic Reg- ulator .
+- **Malik 2016** — [An Assessment of Six Muscle Spindle Models for Predicting Sensory Information during Human Wrist Movements](https://doi.org/10.3389/fncom.2015.00154)  
+  - animals: Human  
+  - Computational model study. Jones kejones@ualberta.ca Received: 27 April 2015 Accepted: 21 December 2015 Published: 14 January 2016 Citation: Malik P , Jabakhanji N and Jones KE (2016) An Assessment of Six Muscle Spindle Models for Predicting Sensory Information during Human Wrist Movements.
+- **Schiefer 2016** — [Sensory feedback by peripheral nerve stimulation improves task performance in individuals with upper limb loss](https://doi.org/10.1088/1741-2560/13/1/016001)  
+  - animals: Human  
+  - 13 016001 View the article online for updates and enhancements.
+- **Chiba 2016** — [Human upright posture control models based on multisensory inputs; in fast and slow dynamics](https://doi.org/10.1016/j.neures.2015.12.002)  
+  - animals: Human  
+  - Review of human upright posture control models based multisensory. We found that the study of the slow dynamics is lagging compared to that of fast dynamics, such that our understanding of long-term alterations is insufﬁcient to reveal the underlying mechanisms and to propose suitable models.
+- **Afschrift 2016** — [Mechanical effort predicts the selection of ankle over hip strategies in nonstepping postural responses](https://doi.org/10.1152/jn.00127.2016)  
+  - animals: Human  
+  - Computational model study. First pub- lished August 3, 2016; doi:10.1152/jn.00127.2016.—Experimental studies have shown that a continuum of ankle and hip strategies is used to restore posture following an external perturbation.
+- **Assländer 2016** — [Sensory reweighting dynamics following removal and addition of visual and proprioceptive cues](https://doi.org/10.1152/jn.01145.2015)  
+  - animals: Human  
+  - Sine responses and variability of body sway velocity showed signiﬁcant changes following transitions and were highly correlated under steady-state conditions.
+- **Versteeg 2016** — [Hip and ankle responses for reactive balance emerge from varying priorities to reduce effort and kinematic exc](https://doi.org/10.1016/j.jbiomech.2016.08.007)  
+  - animals: Human  
+  - Computational model study. Similar to prior studies using torque- driven models, we investigated how movement patterns during a reactive balance response are affected by high-level task goals (e.g., reducing center-of-mass movement, maintaining vertical trunk orientation, and minimizing effort).
+- **Ling 2016** — [Reynolds averaged turbulence modelling using deep neural networks with embedded invariance](https://doi.org/10.1017/jfm.2016.615)  
+  - animals: Human  
+  - Computational model study. A novel neural network architecture is proposed which uses a multiplicative layer with an invariant tensor basis to embed Galilean invariance into the predicted anisotropy tensor.
+- **Shahriari 2016** — [Taking the Human Out of the Loop: A Review of Bayesian Optimization](https://doi.org/10.1109/jproc.2015.2494218)  
+  - animals: Human  
+  - Review of taking human out loop:. These parameters are often specified and hard-coded into the software by various developers or teams.
+- **Peterson 2016** — [Neural Control of Walking in People with Parkinsonism](https://doi.org/10.1152/physiol.00034.2015)  
+  - animals: Human  
+  - Review of neural control walking people parkinsonism. These impairments have been shown to be relatively independent (22, 41), and we postulate each depends on partially distinct neural networks.
+- **Lee 2015** — [Balancing of humanoid robot using contact force/moment control by task-oriented whole body control framework](https://doi.org/10.1007/s10514-015-9509-1)  
+  - animals: Human  
+  - The proposed approach in this paper is to maintain balance of torque-controlled robots by controlling contact force and moment using whole-body control framework with hierar- chical structure.
+- **van Arkel 2015** — [The capsular ligaments provide more hip rotational restraint than the acetabular labrum and the ligamentum ter](https://doi.org/10.1302/0301-620x.97b4.34638)  
+  - animals: Human  
+  - In cadaveric hips under functional load, each capsular ligament (iliofemoral medial and lateral arms, pubofemoral, ischiofemoral) acts as the primary rotational restraint somewhere within the full range of motion, the ligamentum teres acts as a secondary restraint in high flexion, adduction and external rotation, and the iliofemoral lateral arm and ischiofemoral ligaments are primary restraints in about two-thirds of the positions tested, quantifying the passive soft-tissue contribution to hip rotational stability.  
+  - *Robot/sim:* Use the measured capsular-ligament restraint contributions as position-dependent passive hip rotational stiffness and limits in musculoskeletal or robotic models of the lower limb.
+- **Koo 2015** — [Biologically inspired gait transition control for a quadruped walking robot](https://doi.org/10.1007/s10514-015-9433-4)  
+  - animals: Human  
+  - Computational model study. A Two- Way oscillator coupling has been used for modeling the CPG.
+- **Kilby 2015** — [Models of Postural Control: Shared Variance in Joint and COM Motions](https://doi.org/10.1371/journal.pone.0126379)  
+  - animals: Human  
+  - Computational model study. The CCA was performed as a function of established models of postural control that varied in their joint degrees of freedom (DOF), namely, an inverted pendulum ankle model (2DOF), ankle-hip model (4DOF), ankle-knee-hip model (5DOF), and ankle-knee-hip-neck model (7DOF).
+- **Khan 2015** — [Bio-inspired knee joint mechanism for a hydraulic quadruped robot](https://doi.org/10.1109/icara.2015.7081168)  
+  - animals: Human  
+  - In this paper, we focus on the knee joint and propose the adaptation and optimization of the so-called isogram mechanism.
+- **Ting 2015** — [Neuromechanical Principles Underlying Movement Modularity and Their Implications for Rehabilitation](https://doi.org/10.1016/j.neuron.2015.02.042)  
+  - animals: Human  
+  - Neuromechanical principles define the properties and problems that shape neural solutions for movement.
+Although the theoretical and experimental evidence is debated, we present arguments for consistent structures in motor patterns, i.e., motor modules, that are neuromechanical solutions for movement particular
+to an individual and shaped by evolutionary, developmental, and learning processes. As a consequence,
+motor modules may be useful in assessing sensorimotor deficits specific to an individual and define targets
+for the rational development of novel rehabilitation therapies that enhance n
+- **Roden-Reynolds 2015** — [Hip proprioceptive feedback influences the control of mediolateral stability during human walking](https://doi.org/10.1152/jn.00551.2015)  
+  - animals: Human  
+  - Artificial hip-abductor proprioception (gluteus medius vibration) during human walking shifts mediolateral foot placement in a phase-dependent manner - stance-phase vibration draws the contralateral foot toward the midline, swing-phase vibration places the vibrated leg farther from it - evidence that hip proprioceptive feedback is monitored to regulate mediolateral stability.  
+  - *Robot/sim:* Add hip-abductor proprioceptive feedback to a mediolateral foot-placement controller in a bipedal walker; ablate it to test step-width dysregulation, and simulate vibration-like biased afferent input to reproduce the placement shifts.
+- **Freyler 2015** — [Reactive Balance Control in Response to Perturbation in Unilateral Stance: Interaction Effects of Direction, D](https://doi.org/10.1371/journal.pone.0144529)  
+  - animals: Human  
+  - This study aimed to assess interaction effects of the direction, displacement and velocity of perturbations on electromyographic (EMG) activity, centre of pressure (COP) dis- placement and joint kinematics to detect neuromuscular characteristics (phasic and seg- mental) and kinematic strategies of compensatory reactions in an unilateral...
+- **Danner 2015** — [Human spinal locomotor control is based on flexibly organized burst generators](https://doi.org/10.1093/brain/awu372)  
+  - animals: Human  
+  - Constant drive provided to the human lumbar spinal cord by epidural electrical stimulation can cause local neural circuits to
+generate rhythmic motor outputs to lower limb muscles in people paralysed by spinal cord injury. Epidural spinal cord stimulation
+thus allows the study of spinal rhythm and pattern generating circuits without their configuration by volitional motor tasks or taskspecific peripheral feedback. To reveal spinal locomotor control principles, we studied the repertoire of rhythmic patterns that can
+be generated by the functionally isolated human lumbar spinal cord, detected as
+- **Park 2015** — [Quadrupedal galloping control for a wide range of speed via vertical impulse scaling](https://doi.org/10.1088/1748-3190/10/2/025003)  
+  - animals: Human  
+  - The bilateral feedback system shows robustness to inertial variations and to external disturbances with the proposed human-in-the-loop control strategy offering valuable insight for future work.
+- **Hubbuch 2015** — [Proprioceptive feedback contributes to the adaptation toward an economical gait pattern](https://doi.org/10.1016/j.jbiomech.2015.04.024)  
+  - animals: Human  
+  - Disrupting plantarflexor proprioception with noisy Achilles tendon vibration left level walking largely unchanged but slowed adaptation to a 2.5% incline — shorter stride periods and redistributed medial gastrocnemius activity (reduced mid-stance, increased late-stance) persisted for 2-3 minutes before converging, and uphill metabolic cost rose — indicating proprioceptive feedback is needed to rapidly identify low-cost muscle activation patterns.  
+  - *Robot/sim:* Add a proprioception-dependent adaptation layer to a neuromuscular gait model that searches for economical activation patterns; ablate the proprioceptive input and reproduce the delayed adaptation and elevated cost under a mechanical demand change.
+- **Dzeladini 2014** — [The contribution of a central pattern generator in a reflex-based neuromuscular model](https://doi.org/10.3389/fnhum.2014.00371)  
+  - animals: Human  
+  - In a human neuro-musculo-skeletal walking model, purely reflex-based control can match the perturbation stability of CPG-based models but offers no simple means of controlling speed or step length; adding a CPG feedforward component restores simple gait modulation, delineating complementary roles in which reflexes dominate stability and the CPG provides speed and step-length control.  
+  - *Robot/sim:* Extend a reflex-based walking model with a half-center CPG feedforward module and demonstrate speed and step-length control; ablating the CPG should reproduce stable but poorly modulable gait.
+- **Hettich 2014** — [Human hip–ankle coordination emerging from multisensory feedback control](https://doi.org/10.1016/j.humov.2014.07.004)  
+  - animals: Human  
+  - Computational model study. This study postu- lates that the coordination emerges from interactions on the sen- sory levels in the feedback control.
+- **Stifani 2014** — [Motor neurons and the generation of spinal motor neurons diversity](https://doi.org/10.3389/fncel.2014.00293)  
+  - animals: Human  
+  - Review of motor neurons generation spinal motor. During development, SpMNs emerge from dividing progenitor cells located in the medial portion of the ventral neural tube.
+- **Papegaaij 2014** — [Aging causes a reorganization of cortical and spinal control of posture](https://doi.org/10.3389/fnagi.2014.00028)  
+  - animals: Human  
+  - Review of aging causes reorganization cortical spinal. Sharma, Uppsala University, Sweden Reviewed by: Changiz Geula, Northwestern University, USA Richard Camicioli, McGill University, Canada *Correspondence: Selma Papegaaij, Center for Human Movement Sciences, University of Groningen, Antonius Deusinglaan 1, 9713AV Groningen, Netherlands e-mail: s.papegaaij@umcg.nl Classical studies in animal preparations suggest a strong role for...
+- **Leonardis 2014** — [Multisensory Feedback Can Enhance Embodiment Within an Enriched Virtual Walking Scenario](https://doi.org/10.1162/pres_a_00190)  
+  - animals: Human  
+  - Congruent vestibular and proprioceptive feedback (motion platform plus lower-limb tendon vibration) during immersive virtual walking raises subjective embodiment and presence and elevates galvanic skin response and respiration rate relative to vision alone, showing that multisensory afferent congruence drives the embodied walking experience.
+- **Gervasio 2014** — Interlimb communication during human walking: crossed responses in the gastrocnemius muscle  
+  - animals: Human  
+  - Thesis work mapping interlimb neural pathways between the gastrocnemii during human walking: building on the short-latency crossed response documented in soleus, it investigates crossed responses in the gastrocnemius as evidence that spinal interlimb coordination circuits, well documented in animals, operate in humans under supraspinal control.
+- **Niu 2014** — [Emulated muscle spindle and spiking afferents validates VLSI neuromorphic hardware as a testbed for sensorimot](https://doi.org/10.3389/fncom.2014.00141)  
+  - animals: Human  
+  - Computational model study. Here we demonstrate an accurate and extremely fast emulation of a muscle spindle and its spiking afferents, which are computationally expensive but fundamental for reﬂex functions.
+- **Assländer 2014** — [Sensory reweighting dynamics in human postural control](https://doi.org/10.1152/jn.00669.2013)  
+  - animals: Human  
+  - Previous studies found that the contribution of each of these sensory systems changes depending on perturbations applied during stance and on environmental conditions.
+- **Shamaei 2013** — [Estimation of Quasi-Stiffness of the Human Knee in the Stance Phase of Walking](https://doi.org/10.1371/journal.pone.0059993)  
+  - animals: Human · pathways: Biomechanically mediated preflexive feedback  
+  - In human walking, the knee moment-angle relationship is approximately linear within both the flexion and extension stages of stance, giving nearly constant quasi-stiffnesses that are well predicted (R2 > 86%) by gait speed, knee excursion, and subject height and weight, and height and weight alone predict preferred-speed quasi-stiffness with about 9% average error. The regressions provide a framework for selecting subject-specific stiffness in prosthetic and exoskeletal knees that emulate biological function during stance.  
+  - *Robot/sim:* Implement stage-specific constant knee quasi-stiffness slopes from the regressions in a prosthesis, exoskeleton, or neuromechanical simulation; removing the stiffness emulation quantifies its contribution to stance behavior.
+- **Ravi 2013** — [Transient Loads Occurring over a Thin Airfoil Subjected to Large-Scale Freestream Turbulence](https://doi.org/10.2514/1.j052142)  
+  - animals: Human  
+  - The individual influence of turbulence intensity and integral length scale on the transient lift, pressure drag, pitching and rolling moments experienced by the airfoil was identified from these representative turbulence conditions.
+- **Moraux 2013** — [Ankle dorsi- and plantar-flexion torques measured by dynamometry in healthy subjects from 5 to 80 years](https://doi.org/10.1186/1471-2474-14-104)  
+  - animals: Human  
+  - Computational model study. The objectives of this study were to establish normative data and predictive equations for both ankle dorsi- and plantar-flexion strength from a population of healthy subjects (children and adults), to assess the reliability of the measurements and to study the feasibility of using a novel...
+- **Duysens 2013** — [The flexion synergy, mother of all synergies and father of new models of gait](https://doi.org/10.3389/fncom.2013.00014)  
+  - animals: Human · pathways: Ib stance to swing  
+  - The flexion synergy of Sherrington's flexor reflex, the withdrawal-reflex modules of Schouenborg, and the neonatal locomotor modules of Dominici largely overlap, and the end-of-stance facilitation of the flexion synergy — broadly afferent-facilitated but load-suppressed — points to a flexor burst generator as the core of an asymmetric CPG model whose afferent gating has already been implemented in walking bipedal robots.
+- **Dean 2013** — [Proprioceptive Feedback and Preferred Patterns of Human Movement](https://doi.org/10.1097/jes.0b013e3182724bb0)  
+  - animals: Human  
+  - Hypothesis paper proposing that the stereotyped movement patterns humans prefer during cyclical tasks are identified via proprioceptive feedback reporting body mechanics, rather than solely by minimizing metabolic energy expenditure — preferred movement patterns may depend on body mechanics and be partially dependent on proprioceptive feedback.  
+  - *Robot/sim:* Implement an optimizer that selects movement patterns using simulated proprioceptive signals (length, force) as objective variables rather than metabolic cost alone; compare predicted preferred patterns with and without the feedback term.
+- **Guertin 2013** — [Central Pattern Generator for Locomotion: Anatomical, Physiological, and Pathophysiological Considerations](https://doi.org/10.3389/fneur.2012.00183)  
+  - animals: Vertebrates, Lamprey, Human · pathways: Fictive locomotion without sensory feedback  
+  - Century-spanning review concluding that walking, flying, and swimming are largely controlled by spinal central pattern generator networks, demonstrated across vertebrate species from lamprey to human, which can self-produce basic rhythmic coordinated movements even in the absence of descending or peripheral inputs; CPG plasticity is then linked to Restless Legs Syndrome, Periodic Leg Movement, Alternating Leg Muscle Activation, and Uner Tan Syndrome.  
+  - *Robot/sim:* Model excitability or plasticity changes in CPG elements and test whether they generate spontaneous locomotor-like bursts resembling the reviewed disorders, identifying which parameter changes reproduce each pathology.
+- **Onushko 2013** — [Hip proprioceptors preferentially modulate reflexes of the leg in human spinal cord injury](https://doi.org/10.1152/jn.00261.2012)  
+  - animals: Human  
+  - In chronic spinal cord injury, hip movement direction gates reflexes at the knee and ankle — patellar tendon reflexes are larger during hip extension and the tonic Achilles vibration response larger during hip flexion — while knee and ankle afferent input leaves hip-triggered reflexes unchanged, giving hip stretch afferents a privileged modulatory role over the whole leg.  
+  - *Robot/sim:* Make knee and ankle reflex gains in a leg model depend on hip angle (larger patellar gain during extension, larger tonic vibration response during flexion); ablate the dependence to test its role in spastic-reflex modulation.
+- **de Rugy 2013** — [Are muscle synergies useful for neural control?](https://doi.org/10.3389/fncom.2013.00019)  
+  - animals: Human  
+  - Computational model study. Finally, we showed that the number of synergies required to approximate the optimal muscle pattern for an arb.
+- **Yeo 2013** — [Phenomenological models of the dynamics of muscle during isotonic shortening](https://doi.org/10.1016/j.jbiomech.2013.07.018)  
+  - animals: Human, Mice  
+  - Computational model study. We investigated the effectiveness of simple, Hill-type, phenomenological models of the force-length- velocity relationship for simulating measured length trajectories during muscle shortening, and, if so, what forms of the model are most useful.
+- **Wilke 2013** — [Sensorimotor Recalibration Depends on Attribution of Sensory Prediction Errors to Internal Causes](https://doi.org/10.1371/journal.pone.0054925)  
+  - animals: Human  
+  - Here, we investigated the recalibration of internal predictions about the sensory consequences of one’s actions.
+- **Ting 2012** — [Review and perspective: neuromechanical considerations for predicting muscle activation patterns for movement](https://doi.org/10.1002/cnm.2485)  
+  - animals: Human  
+  - Review of review perspective: neuromechanical considerations predicting muscle. Computational model study. In postural control, we demonstrate that temporal patterns of muscle activity may be governed by feedback control of task-level variables that represent the overall goal-directed motion of the body.
+- **Ravi 2012** — [Influence of Large-Scale Freestream Turbulence on the Performance of a Thin Airfoil](https://doi.org/10.2514/1.j051640)  
+  - animals: Human  
+  - Freestream turbulence present within the atmospheric boundary layer can generally be characterized in terms of its intensity and integral length scale.
+- **Procházka and Ellaway 2012** — [Sensory Systems in the Control of Movement](https://doi.org/10.1002/cphy.c100086)  
+  - animals: Mammals, Human  
+  - Comprehensive Physiology review of somatosensory control of movement: muscle-receptor response properties and reflex actions, CPG–sensory interactions, and the proposal that a descending command related to bodily velocity controls locomotion through stereotyped activation–phase relationships, with sensory input modulating both the timing and the pattern-forming layers of the CPG machinery.
+- **Hasegawa 2012** — [Pseudo-proprioceptive motion feedback by electric stimulation](https://doi.org/10.1109/mhs.2012.6492480)  
+  - animals: Human  
+  - Electro-tactile sensory substitution can convey lower-limb posture to paraplegic exoskeleton users, matching intact proprioception on hip joint-angle precision and time delay, though not on sensitivity to inertia changes — quantifying how much state information a substitute feedback channel must carry for walking support.  
+  - *Robot/sim:* Replace simulated proprioceptive feedback with a quantized, delayed substitute channel (matching the demonstrated precision/delay equivalence but degraded inertia sensitivity) and test locomotion-controller robustness to information-poor feedback.
+- **McKay 2012** — [Optimization of Muscle Activity for Task-Level Goals Predicts Complex Changes in Limb Forces across Biomechani](https://doi.org/10.1371/journal.pcbi.1002465)  
+  - animals: Cat, Human  
+  - Computational model study. In an unrestrained balance task in cats, we demonstrate that achieving task-level constraints center of mass forces and moments while minimizing control effort predicts detailed patterns of muscle activity and ground reaction forces in an anatomically-realistic musculoskeletal model.
+- **Quigley 2012** — [Incidence and Cost of Serious Fall-Related Injuries in Nursing Homes](https://doi.org/10.1177/1054773811414180)  
+  - animals: Human  
+  - Over a 3-year period, there were 2,400 admissions to VHA hospitals for FRI, with 55.4% hip fractures and10.1% intracranial injuries, with an average cost of US$23,723 per admission.
+- **Hutter 2012** — [Starleth: a compliant quadrupedal robot for fast, efficient, and versatile locomotion](https://doi.org/10.1142/9789814415958_0062)  
+  - animals: Human  
+  - Computational model study. The work is concluded with a number of experiments that demonstrate the performance of the presented hardware and controllers.
+- **Harrison 2012** — [Forelimb muscle activity during equine locomotion](https://doi.org/10.1242/jeb.065441)  
+  - animals: Cat, Human  
+  - Computational model study. The patterns of net muscular torques developed over one gait cycle have been calculated for a wide variety of species using measurements of joint kinematics and ground reaction forces (Clayton et al., 2000; Colborne et al., 1997; Dogan et al., 1991; Fowler et al., 1993;...
+- **Suzuki 2012** — [Intermittent control with ankle, hip, and mixed strategies during quiet standing: A theoretical proposal based](https://doi.org/10.1016/j.jtbi.2012.06.019)  
+  - animals: Human  
+  - Computational model study. Here we consider a double inverted pendulum model in the sagittal plane with small passive viscoelasticity at the ankle and hip joints.
+- **Lewek 2012** — [Use of Visual and Proprioceptive Feedback to Improve Gait Speed and Spatiotemporal Symmetry Following Chronic ](https://doi.org/10.2522/ptj.20110206)  
+  - animals: Human  
+  - In two chronic stroke patients, 18 sessions of treadmill gait training augmented with continuous real-time visual feedback (immersive virtual environment) and proprioceptive feedback (dual-belt treadmill) improved gait speed and spatiotemporal symmetry beyond levels previously reported, with each patient improving the symmetry dimension they trained (step-length versus stance-time). Shows augmented sensory channels can drive relearning of gait symmetry after stroke.  
+  - *Robot/sim:* Model gait adaptation as an external feedback loop: real-time symmetry error signals delivered through visual and proprioceptive channels drive step-to-step correction of a neuromuscular gait controller, reproducing the differential improvement in the trained symmetry dimension.
+- **Dominici 2011** — [Locomotor primitives in newborn babies and their development.](https://doi.org/10.1126/science.1210617)  
+  - animals: Human, Mammals  
+  - Multimuscle EMG recordings show that the two basic locomotor primitives of stepping neonates persist through development and are augmented — not replaced — by two new patterns first revealed in toddlers, and markedly similar patterns appear in rat, cat, macaque, and guineafowl, supporting the view that locomotion across species is built from common phylogenetically conserved primitives.
+- **Procházka and Prochazka 2011** — [Proprioceptive Feedback and Movement Regulation](https://doi.org/10.1002/cphy.cp120103)  
+  - animals: Human · afferents: Ia, II, Ib, Cutaneous · pathways: Ia monosynaptic excitation; Ib excitatory  
+  - Comprehensive treatment of proprioceptive feedback in movement regulation spanning muscle spindle, tendon organ, joint, ligament, skin, and invertebrate proprioceptors, their firing during active movement (including task-related fusimotor set), and a control-theoretic framing: stretch reflexes as proportional control, positive force feedback via tendon organs, finite-state logic of postural constraints, and inherent feedback from muscle properties.  
+  - *Robot/sim:* Build the control hierarchy in simulation: proportional Ia feedback, positive Ib force feedback, finite-state (phase-gated) reflex switching, and muscle-property-mediated preflexes; ablate each layer to quantify its contribution to stable movement.
+- **Chang 2011** — [Doublet Electrical Stimulation Enhances Torque Production in People With Spinal Cord Injury](https://doi.org/10.1177/1545968310390224)  
+  - animals: Human  
+  - Objective—This study compared the effects of hybrid patterns of muscle stimulation in individuals with acute and chronic SCI.
+- **Etoundi 2011** — [A bio-inspired condylar hinge joint for mobile robots](https://doi.org/10.1109/iros.2011.6048561)  
+  - animals: Human  
+  - Numerical analysis and experimental tests have shown that the new hinge joint has superior performance to a pin jointed hinge in terms of stiffness and mechanical advantage.
+- **Peterka 2011** — [Postural Compensation for Unilateral Vestibular Loss](https://doi.org/10.3389/fneur.2011.00057)  
+  - animals: Human  
+  - Computational model study. Results showed that UVL subjects made signiﬁcantly greater use of proprioceptive, and therefore less use of vestibular, orientation information on all tests.
+- **Goodworth 2010** — [Influence of Stance Width on Frontal Plane Postural Dynamics and Coordination in Human Balance Control](https://doi.org/10.1152/jn.00916.2009)  
+  - animals: Human  
+  - Results show that the narrow stance postural system is nonlinear across stimulus ampli- tude in both EO and EC conditions, whereas the wide stance postural system is more linear.
+- **Schneider 2010** — [Exercise, music, and the brain: Is there a central pattern generator?](https://doi.org/10.1080/02640414.2010.507252)  
+  - animals: Human  
+  - Vertical body oscillation during self-paced running clusters at 2.7-2.8 Hz, matching dominant frequencies of heart rate and of runners' preferred music, with EEG delta power rising after running — supporting the speculation that a common ~3 Hz oscillator, possibly a locomotor central pattern generator, couples intrinsic and extrinsic rhythms during exercise.  
+  - *Robot/sim:* Embed a CPG in a neuromechanical running model driving coupled oscillator loads representing autonomic and cortical-like subsystems, and test frequency locking to the locomotor rhythm under speed changes.
+- **Kooij 2010** — [Non-linear stimulus-response behavior of the human stance control system is predicted by optimization of a sys](https://doi.org/10.1007/s10827-010-0291-y)  
+  - animals: Human  
+  - Computational model study. We developed a theory of human stance control that predicted (1) how subjects re-weight their utilization of proprioceptive and graviceptive orientation information in experiments where eyes closed stance was perturbed by surface-tilt stimuli with different amplitudes, (2) the experimentally observed increase in body sway variability...
+- **Torres-Oviedo 2010** — [Subject-Specific Muscle Synergies in Human Balance Control Are Consistent Across Different Biomechanical Conte](https://doi.org/10.1152/jn.00960.2009)  
+  - animals: Human  
+  - Consistent with this hypothesis, we showed that trial-by-trial variations in muscle activation for multidirectional balance control in humans were con- strained by a small set of muscle synergies.
+- **Hof 2010** — [Balance responses to lateral perturbations in human treadmill walking](https://doi.org/10.1242/jeb.042572)  
+  - animals: Human  
+  - Computational model study. It has been shown that this dependency can conveniently be described by introducing a new point, the ‘extrapolated centre of mass’, XcoM, defined as (Hof et al., 2005): The XcoM can be seen as a point on the ground, a distance vz/0 removed from the...
+- **Tjernström 2010** — [Postural control and adaptation are influenced by preceding postural challenges](https://doi.org/10.1007/s00221-010-2166-x)  
+  - animals: Human  
+  - Computational model study. We investigated the possible consequences of two consecutive postural tasks on adaptation.
+- **Keshavan 2010** — [MAV stability augmentation using weighted outputs from distributed hair sensor arrays](https://doi.org/10.1109/acc.2010.5531002)  
+  - animals: Insects, Human  
+  - Computational model study. Trichoid hair sensillae, found extensively on the surface of the head, wings and the thorax of most insects, are used to sense the nature of air ﬂow past the body.
+- **Cenciarini 2010** — [Stiffness and Damping in Postural Control Increase with Age](https://doi.org/10.1109/tbme.2009.2031874)  
+  - animals: Human  
+  - Computational model study. We investigated the effect of aging on standing balance by fitting body sway data to a previously-developed postural control model that includes active and passive stiffness and damping parameters.
+- **Geyer and Herr 2010** — [A Muscle-Reflex Model That Encodes Principles of Legged Mechanics Produces Human Walking Dynamics and Muscle A](https://doi.org/10.1109/TNSRE.2010.2047592)  
+  - animals: Human  
+  - While neuroscientists identify increasingly complex neural circuits that control animal and human gait, biomechanists ﬁnd that locomotion requires little control if principles of legged mechanics are heeded that shape and exploit the dynamics of legged systems. Here, we show that muscle reﬂexes could be vital to link these two observations. We develop a model of human locomotion that is controlled by muscle reﬂexes which encode principles of legged mechanics. Equipped with this reﬂex control, we ﬁnd this model to stabilize into a walking gait from its dynamic interplay with the ground, reprodu
+- **Knikou 2010** — [Neural control of locomotion and training-induced plasticity after spinal and cerebral lesions.](https://doi.org/10.1016/j.clinph.2010.01.039)  
+  - animals: Human  
+  - Review synthesis arguing that sensory afferent feedback is constitutive of locomotion rather than merely corrective: it acts through spinal reflex circuits on the rhythm-generating networks, is phase-dependently modulated in humans, and drives short- and long-term reorganization of brain and spinal circuits that supports walking recovery after locomotor training - spinal circuits integrating sensory signals are adjustable networks with learning capabilities.  
+  - *Robot/sim:* Implement spinal reflex circuits as adaptive elements whose gains reorganize with training exposure around a CPG, and test whether afferent-driven gain plasticity restores rhythmic stepping after a simulated lesion faster than fixed-gain control.
+- **Mergner 2010** — [A neurological view on reactive human stance control](https://doi.org/10.1016/j.arcontrol.2010.08.001)  
+  - animals: Human  
+  - Computational model study. Annual Reviews in Control 34 (2010) 177–198 ARTICLE INFO Article history: Received 26 February 2010 Accepted 2 August 2010 Keywords: Human reactive balancing Sensory disturbance estimation Disturbance rejection Sensory reweighting Proactive-reactive fusion Robot simulations ABSTRACT During biped stance or locomotion, humans show remarkable skills in...
+- **Klarner 2010** — [Contribution of load and length related manipulations to muscle responses during force perturbations](https://doi.org/10.14288/1.0071394)  
+  - animals: Human  
+  - Dissociates load from kinematics in perturbed human walking: adding Lokomat resistance and independently clamping the knee pattern each increase swing-phase quadriceps activity, with the load manipulation contributing more, evidence that load-sensitive feedback rather than just the altered movement pattern drives compensatory swing muscle activity.  
+  - *Robot/sim:* Implement separate force-based (load) and length/velocity-based (stretch) feedback channels onto swing-phase extensor motoneurons; apply simulated resistance and kinematic clamping, then ablate each channel to test their independent contributions.
+- **Jindrich 2009** — [Maneuvers during legged locomotion](https://doi.org/10.1063/1.3143031)  
+  - animals: Human  
+  - Running turns in bipeds are constrained by matching body rotation to movement direction: humans generate large braking forces to prevent over-rotation whereas ostriches obtain appropriate rotation from lateral force alone (aided by greater rotational inertia relative to body mass), humans stabilize orientation within the theoretical two-step minimum, and horizontal-plane leg forces follow spring-mass behavior — so passive dynamic stabilization contributes to maneuver stability.  
+  - *Robot/sim:* Implement a biped with horizontal-plane spring-mass legs and a rotation-matching turn controller; verify that fore-aft braking against over-rotation emerges and that increasing rotational inertia removes the braking requirement, reproducing the human-versus-ostrich contrast.
+- **Mahboobin 2009** — [A mechanism for sensory re-weighting in postural control](https://doi.org/10.1007/s11517-009-0477-5)  
+  - animals: Human  
+  - Computational model study. A key ﬁnding of human balance experiments has been that the integration of sensory information utilized for postural control appears to be dynamically regulated to adapt to changing environmental conditions and the available sensory information, a process referred to as ‘‘sensory re-weighting.’’ We propose a...
+- **Selionov 2009** — [Tonic Central and Sensory Stimuli Facilitate Involuntary Air-Stepping in Humans](https://doi.org/10.1152/jn.90895.2008)  
+  - animals: Human · afferents: Cutaneous  
+  - In healthy humans, tonic stimulation - continuous muscle vibration, electrical stimulation of cutaneous nerves, or the postcontraction (Kohnstamm) state - elicits involuntary air-stepping in about half of subjects, with prominent hip and knee excursions but no ankle involvement unless small constant plantar loads (4-25 N) are applied; pattern characteristics and stability depend on the sensory input, and bilateral alternating movements are more stable than unidirectional ones with fewer spontaneous transitions.  
+  - *Robot/sim:* Implement tonic afferent input as a sufficient trigger for CPG rhythmogenesis in an air-stepping model, with load-dependent ankle recruitment from constant plantar forces and reduced transition frequency for bilateral alternating patterns.
+- **Dai 2009** — [Electrophysiological and Pharmacological Properties of Locomotor Activity-Related Neurons in cfos-EGFP Mice](https://doi.org/10.1152/jn.00265.2009)  
+  - animals: Mice, Human  
+  - In this study, we demonstrate a new way of identifying neurons active in locomotion.
+- **Chiel 2009** — [The Brain in Its Body: Motor Control and Sensing in a Biomechanical Context](https://doi.org/10.1523/jneurosci.3338-09.2009)  
+  - animals: Cat, Human, Insects, Lamprey, Rat, Salamander · pathways: Biomechanically mediated preflexive feedback  
+  - Reviews molluscan feeding, postural control in cats and humans, locomotion simulations in lamprey, insect, cat and salamander, and rat vibrissal sensing to argue that adaptive behavior emerges from nervous-system-body-environment interaction: control is shared between nervous system and periphery, neural activity organizes degrees of freedom into biomechanically meaningful subsets, mechanics alone can play crucial roles in enforcing gait patterns, and the mechanics of sensors is crucial for their function.  
+  - *Robot/sim:* Embed morphologically realistic muscle and sensor mechanics so that body dynamics contribute to gait enforcement (preflexes); progressively remove neural correction loops and quantify the locomotor stability retained by mechanics alone.
+- **van der Krogt 2009** — [Robust passive dynamics of the musculoskeletal system compensate for unexpected surface changes during human h](https://doi.org/10.1152/japplphysiol.91189.2008)  
+  - animals: Human  
+  - 28 articles, 11 of which you can access free at: This article cites http://jap.physiology.org/cgi/content/full/107/3/801#BIBL including high-resolution figures, can be found at: Updated information and services http://jap.physiology.org/cgi/content/full/107/3/801 can be found at: Journal of Applied Physiologyabout Additional material and information http://www.the-aps.org/publications/jappl This information is current as of...
+- **Turvey 2009** — [Nature of Motor Control: Perspectives and Issues](https://doi.org/10.1007/978-0-387-77064-2_6)  
+  - animals: Human  
+  - Computational model study. Four perspectives on motor control provide the framework for developing a comprehensive theory of motor control in biological systems.
+- **Kiemel 2008** — [Identification of the Plant for Upright Stance in Humans: Multiple Movement Patterns From a Single Neural Stra](https://doi.org/10.1152/jn.01272.2007)  
+  - animals: Human  
+  - Computational model study. Because EMG signals from ankle muscles and from hip and lower trunk muscles showed similar responses to the visual perturbation across frequency, we combined EMG signals from all recorded muscles into a single plant input.
+- **White 2008** — [Altered Gravity Highlights Central Pattern Generator Mechanisms](https://doi.org/10.1152/jn.90436.2008)  
+  - animals: Human  
+  - Parabolic-flight experiments show the period of human voluntary rhythmic arm movements shortens systematically with increasing gravity, while in weightlessness it depends more on task instruction, matching a computational model of a CPG coupled to a simple pendulum in which the CPG exploits near-resonant driving - evidence that CPG mechanisms flexibly entrain rhythmic movement to changing gravitational and mechanical contexts.  
+  - *Robot/sim:* Couple an oscillator or CPG to a pendular limb plant under variable gravity and loading; verify frequency adaptation toward resonance and the loss of resonance-locking in weightlessness when the pattern is purely command-driven; ablate the coupling to test the mechanism.
+- **Scrivens 2008** — [A robotic device for understanding neuromechanical interactions during standing balance control.](https://doi.org/10.1088/1748-3182/3/2/026002)  
+  - animals: Cat, Human  
+  - Computational model study. Here we demonstrate that independent variations in either stance width or delayed neural feedback gains can have profound and often surprisingly detrimental effects on the postural stability of the system.
+- **King 2008** — [Lateral Stepping for Postural Correction in Parkinson’s Disease](https://doi.org/10.1016/j.apmr.2007.11.017)  
+  - animals: Human  
+  - The objective of this study is to characterize, for the first time, the lateral stepping strategies for postural correction in patients with Parkinson’s Disease (PD) and the effect of their antiparkinson medication.
+- **Deliagina 2008** — [Spinal and supraspinal postural networks](https://doi.org/10.1016/j.brainresrev.2007.06.017)  
+  - animals: Cat, Human, Lamprey  
+  - In the lamprey, the postural control system is driven by vestibular input.
+- **Welch 2008** — [A Feedback Model Reproduces Muscle Activity During Human Postural Responses to Support-Surface Translations](https://doi.org/10.1152/jn.01110.2007.)  
+  - animals: Cat, Human  
+  - Computational model study. We investigated whether a simple feedback law could explain temporal patterns of muscle activation in response to support-surface translations in human subjects.
+- **Endo 2008** — [Learning CPG-based Biped Locomotion with a Policy Gradient Method: Application to a Humanoid Robot](https://doi.org/10.1177/0278364907084980)  
+  - animals: Human  
+  - Computational model study. Our goals in this study are to achieve CPG-based biped walking with a 3D hardware humanoid and to develop an efficient learning algorithm with CPG by reducing the dimensional- ity of the state space used for learning.
+- **Musselman and Yang 2007** — [Loading the Limb During Rhythmic Leg Movements Lengthens the Duration of Both Flexion and Extension in Human I](https://doi.org/10.1152/jn.00891.2006)  
+  - animals: Human  
+  - In rhythmic leg movements of human infants, load-related feedback prolongs whichever phase is more loaded: stepping on a treadmill, kicking against a plate, and kicking in sitting lengthen extension, whereas air-stepping with ankle weights lengthens flexion, and infants exerting lower forces show shorter extensor durations. Manipulating weight-bearing during stepping confirms the effect, showing that the degree of loading directly and incrementally affects the duration of the loaded phase.  
+  - *Robot/sim:* Implement load-dependent phase-duration modulation, in which the more loaded phase of the step cycle lengthens incrementally, in a stepping network; ablate the load input to test phase-duration changes.
+- **Grey 2007** — [Positive force feedback in human walking: Positive force feedback in human walking](https://doi.org/10.1113/jphysiol.2007.130088)  
+  - animals: Human · afferents: Ib · pathways: Ib excitatory  
+  - Rapid plantar flexion perturbations in late stance transiently suppress soleus EMG in proportion to treadmill inclination and Achilles tendon force (not ankle kinematics), indicating that Golgi tendon organ feedback via the group Ib pathway operates as positive force feedback enhancing ankle extensor activity during late stance of human walking.  
+  - *Robot/sim:* Implement stance-gated positive force feedback from tendon-force-like Ib signals onto ankle extensor motoneurons in a neuromuscular walker and ablate it: the model should lose inclination-dependent late-stance extensor enhancement and show the unload-induced EMG drop.
+- **Yang 2007** — [Self-adapting humanoid locomotion using a neural oscillator network](https://doi.org/10.1109/iros.2007.4399498)  
+  - animals: Human  
+  - Computational model study. In order to verify the validity of the proposed scheme, we carry out simulations and experiments.
+- **Iida 2007** — [Motor control optimization of compliant one-legged locomotion in rough terrain](https://doi.org/10.1109/iros.2007.4399195)  
+  - animals: Human  
+  - Computational model study. The self-organization of two gait patterns (walking and running) is demonstrated in simulation and in a real-world robot.
+- **Hsu 2007** — [Control and Estimation of Posture During Quiet Stance Depends on Multijoint Coordination](https://doi.org/10.1152/jn.01142.2006)  
+  - animals: Human  
+  - This study tested the hypotheses that all major joints along the longitudinal axis of the body are equally active during quiet standing and that their motions are coordinated to stabilize the spatial positions of the center of mass (CM) and head.
+- **Minassian 2007** — [Human lumbar cord circuitries can be activated by extrinsic tonic input to generate locomotor-like activity](https://doi.org/10.1016/j.humov.2007.01.005)  
+  - animals: Human · pathways: large diameter spinal afferent stimulation  
+  - Cited by Geyer and Herr, 2010.
+We have demonstrated that non-patterned electrical stimulation of the lumbar cord can induce stepping-like activity in the lower limbs of complete spinal cord injured individuals. This result suggested the existence of a human lumbar locomotor pattern generator, which can convert a tonic input to a rhythmic motor output. We have studied the human lumbar cord in isolation from supraspinal input but under extrinsic tonic input delivered by spinal cord stimulation. Large-diameter afferents within the posterior roots are directly depolarized by the electrical stimula
+- **Lockhart 2007** — [Optimal sensorimotor transformations for balance](https://doi.org/10.1038/nn1986)  
+  - animals: Cat, Human  
+  - Computational model study. Optimal sensorimotor transformations for balance Daniel B Lockhart 1 & Lena H Ting 2 Here we have identiﬁed a sensorimotor transformation that is used by a mammalian nervous system to produce a multijoint motor behavior.
+- **Chen 2007** — [Design and Characterization of Artificial Haircell Sensor for Flow Sensing With Ultrahigh Velocity and Angular](https://doi.org/10.1109/jmems.2007.902436)  
+  - animals: Human, Insects  
+  - Engel, Member, IEEE, Yingchen Yang, Saunvit Pandya, and Chang Liu Abstract—We report the development of an artiﬁcial haircell (AHC) sensor with design inspired by biological haircells.
+- **Verdaasdonk 2007** — [Resonance tuning in a neuro-musculo-skeletal model of the forearm](https://doi.org/10.1007/s00422-006-0112-6)  
+  - animals: Human  
+  - Cited  by Geyer and Herr, 2010.
+In rhythmic movements, humans activate their muscles in a robust and energy efficient way. These activation patterns are oscillatory and seem to originate from neural networks in the spinal cord, called central pattern generators (CPGs). Evidence for the existence of CPGs was found for instance in lampreys, cats and rats. There are indications that CPGs exist in humans as well, but this is not proven yet. Energy efficiency is achieved by resonance tuning: the central nervous system is able to tune into the resonance frequency of the limb, which is determined by 
+- **Torres-oviedo 2007** — [Muscle Synergies Characterizing Human Postural Responses](https://doi.org/10.1152/jn.01360.2006.)  
+  - animals: Cat, Human  
+  - These results suggest that muscle synergies represent a general neural strategy underlying muscle coordination in postural tasks.
+- **Hultborn and Nielsen 2007** — [Spinal control of locomotion--from cat to man.](https://doi.org/10.1111/j.1748-1716.2006.01651.x)  
+  - animals: Cat, Human, Vertebrates  
+  - Review establishing that spinal networks generate the basic locomotor rhythm across vertebrates including man, with limb sensory feedback essential for effective locomotion: sensory regulation reaches motoneurons via reflex pathways that bypass the rhythm generators and also acts on the locomotor networks themselves, controlling phase timing, shaping muscle-activity patterns, adding excitatory drive, and driving long-term adaptation - the basis for treadmill-training rehabilitation after spinal cord injury.  
+  - *Robot/sim:* Implement both sensory routes in a locomotion model - direct reflex pathways to motoneurons plus afferent input to the rhythm generator - and ablate each separately to test their predicted contributions to phase timing, pattern shaping, and net excitatory drive.
+- **Rossignol 2006** — [Plasticity of connections underlying locomotor recovery after central and/or peripheral lesions in the adult m](https://doi.org/10.1098/rstb.2006.1889)  
+  - animals: Cat, Mice, Rat, Human, Mammals  
+  - Review concluding that locomotor recovery after spinal lesions in adult mammals is partly due to plasticity within existing spinal locomotor networks: locomotor training changes the excitability of simple reflex pathways and more complex circuitry, adaptation to lesions entails changes at both spinal and supraspinal levels, and the cat-derived framework extends to rat, mouse, and human spinal pattern generation.  
+  - *Robot/sim:* Model lesion and recovery by removing pathways and re-tuning residual connection weights through training-like afferent input, testing which plasticity rules restore stepping when descending drive is lost.
+- **Albert 2006** — [The Ia afferent feedback of a given movement evokes the illusion of the same movement when returned to the sub](https://doi.org/10.1007/s00221-005-0325-2)  
+  - animals: Human  
+  - The results show that the Ia aﬀerent feedback of a given movement evokes the illu- sion of the same movement when it is applied to the subject via the appropriate pattern of muscle tendon vibration.
+- **Maurer 2006** — [Multisensory control of human upright stance](https://doi.org/10.1007/s00221-005-0256-y)  
+  - animals: Human  
+  - Computational model study. We found gain and phase of the responses to vary as a function of stimulus frequency and in relation to the absence versus presence of vestibular and proprioceptive cues.
+- **Mizuuchi 2006** — [A Musculoskeletal Flexible-Spine Humanoid Kotaro Aiming at the Future in 15 Years Time](https://doi.org/10.5772/4684)  
+  - animals: Human  
+  - Introduction Recently, humanoid research and development are widely under way.
+- **Cenciarini 2006** — [Stimulus-Dependent Changes in the Vestibular Contribution to Human Postural Control](https://doi.org/10.1152/jn.00856.2004)  
+  - animals: Human  
+  - Computational model study. The goal of this study was to test this sensory-reweighting hypothesis using measures that quantitatively assess the relative contributions of the proprioceptive and graviceptive (vestibular) sys- tems to postural control during eyes-closed stance in different test conditions.
+- **Mazzaro 2006** — [Afferent-mediated modulation of the soleus muscle activity during the stance phase of human walking](https://doi.org/10.1007/s00221-006-0451-5)  
+  - animals: Human · afferents: Ia, II, Cutaneous · pathways: type II excitatory  
+  - In human walking, slow small-amplitude ankle dorsiflexion perturbations during stance modulate ongoing soleus activity through group II afferent feedback (response reduced by tizanidine depression of group II pathways) with at least a partial group Ia contribution; blocking sensory feedback from the foot had no effect, and body-load changes shifted baseline activity without changing response amplitude. Group II and possibly load-sensitive afferents govern stance-phase extensor amplitude, whereas foot cutaneous and intrinsic proprioceptive afferents do not contribute.  
+  - *Robot/sim:* Implement ankle stretch-mediated group II feedback (plus partial Ia) onto stance-phase soleus/extensor motoneurons; reproduce the perturbation-response amplitude, its persistence under load change, and its reduction when group II gain is removed.
+- **Mergner 2006** — [Human Equilibrium Control Principles Implemented into a Biped Humanoid Robot](https://doi.org/10.1007/3-211-38927-x_35)  
+  - animals: Human  
+  - The sensor signals are not used directly for feedback, but in- stead are used to internally reconstruct the physical stimuli in the outside world by means of sensor fusions.
+- **Stevens 2006** — [The costs of fatal and non-fatal falls among older adults](https://doi.org/10.1136/ip.2005.011015)  
+  - animals: Human  
+  - Review of costs fatal non-fatal falls among. Results: In 2000, there were almost 10 300 fatal and 2.6 million medically treated non-fatal fall related injuries.
+- **Horak 2006** — [Postural orientation and equilibrium: what do we need to know about neural control of balance to prevent falls](https://doi.org/10.1093/ageing/afl077)  
+  - animals: Human  
+  - Frames postural control as two interacting goals - orientation (active alignment of trunk and head to gravity, support surface, and visual surround) and equilibrium (movement strategies stabilizing the center of body mass) - achieved by dynamic sensorimotor processes in which the weighting of somatosensory, vestibular, and visual inputs depends on task goals and context; anticipatory postural adjustments precede voluntary limb movement, and damage to different underlying systems yields context-specific instabilities.  
+  - *Robot/sim:* Implement a balance controller with task- and context-dependent weighting of somatosensory, vestibular, and visual channels plus anticipatory postural adjustments before limb movements; ablating single channels should reproduce distinct, context-specific instability signatures.
+- **Loram 2005** — [Human postural sway results from frequent, ballistic bias impulses by soleus and gastrocnemius](https://doi.org/10.1113/jphysiol.2004.076307)  
+  - animals: Human  
+  - Here we employ automated analysis of ultrasound images to resolve calf muscle (soleus and gastro- cnemius) length changes as small as 10 µmi n standing subjects.
+- **Pierrot-Deseilligny and Burke 2005** — The Circuitry of the Human Spinal Cord: Its Role in Motor Control and Movement Disorders  
+  - animals: Human  
+  - Reference monograph on human spinal circuitry — descending tracts, reflex pathways, and their pathophysiology in movement disorders.
+- **Kuo 2005** — [An optimal state estimation model of sensory integration in human postural balance](https://doi.org/10.1088/1741-2560/2/3/s07)  
+  - animals: Human  
+  - Computational model study. We propose a model for human postural balance, combining state feedback control with optimal state estimation.
+- **Creath 2005** — [A unified view of quiet and perturbed stance: simultaneous co-existing excitable modes](https://doi.org/10.1016/j.neulet.2004.11.071)  
+  - animals: Human  
+  - Here we present evidence that a single- segment characterization of quiet stance is inadequate.
+- **Quevedo 2005** — [Intracellular analysis of reflex pathways underlying the stumbling corrective reaction during fictive locomoti](https://doi.org/10.1152/jn.00176.2005)  
+  - animals: Cat, Human · afferents: Cutaneous · pathways: Cutaneous flexor excitation  
+  - Intracellular recordings in decerebrate cats during fictive locomotion show the stumbling corrective reaction is built from di- and trisynaptic cutaneous excitation of knee-flexor and ankle-extensor motoneurons, with locomotor-phase-dependent reconfiguration of inhibition (increased onto ankle flexors, suppressed onto extensors) and motoneuron membrane potential sculpting whether short-latency EPSPs actually recruit firing.  
+  - *Robot/sim:* Implement phase-gated cutaneous reflex pathways: di-/trisynaptic excitation of knee flexors and ankle extensors with reciprocal inhibitory gating (suppressed onto extensors, increased onto flexors during flexion) plus motoneuron membrane-potential sculpting, and test foot-dorsum contact responses during swing.
+- **Dietz and Harkema 2004** — [Locomotor activity in spinal cord-injured persons](https://doi.org/10.1152/japplphysiol.00942.2003)  
+  - animals: Human  
+  - After a spinal cord injury (SCI) of the cat or rat, neuronal centers below the level of lesion exhibit plasticity that can be exploited by specific training paradigms. In individuals with complete or incomplete SCI, human spinal locomotor centers can be activated and modulated by locomotor training (facilitating stepping movements of the legs using body weight support on a treadmill to provide appropriate sensory cues). Individuals with incomplete SCI benefit from locomotor training such that they improve their ability to walk over ground. Load- or hip joint-related afferent input seems to be 
+- **van der Kooij 2004** — [Identification of human balance control in standing](https://doi.org/10.1109/icsmc.2004.1400711)  
+  - animals: Human  
+  - Computational model study. The results show that subjects balancing on a randomly moving platform in the for%vard-backward direction applied a minimal stifJiness strategv.
+- **Krishnamoorthy 2004** — [Muscle modes during shifts of the center of pressure by standing persons: effect of instability and additional](https://doi.org/10.1007/s00221-003-1812-y)  
+  - animals: Human  
+  - In the present study we investigated the effects of support surface instability and availability of a light touch or grasp of a stable external support on the M-modes and their co-variation.
+- **Beres-Jones and Harkema 2004** — [The human spinal cord interprets velocity-dependent afferent input during stepping](https://doi.org/10.1093/brain/awh252)  
+  - animals: Human  
+  - In individuals with spinal cord injury stepping on a treadmill with body-weight support, EMG mean amplitudes increased and burst durations shortened as treadmill speed rose from 0.27 to 1.52 m/s, and these modulations could not be accounted for by muscle stretch of an individual muscle and were similar in subjects with partial and with no detectable supraspinal input. The human spinal cord can therefore interpret complex, step-related, velocity-dependent afferent information to contribute to the neural control of stepping.  
+  - *Robot/sim:* Couple motoneuron burst amplitude and duration in a stepping model to cycle-velocity-dependent afferent signals rather than instantaneous muscle stretch; removing the velocity pathway should abolish the speed adaptation of motor output.
+- **Peterka 2004** — [Dynamic Regulation of Sensorimotor Integration in Human Postural Control](https://doi.org/10.1152/jn.00516.2003)  
+  - animals: Human  
+  - Computational model study. However, we show that, after a period in which access to accurate sensory information was reduced, the restoration of accurate information disrupted postural stability.
+- **Zbikowski 2004** — [Sensor-rich feedback control: a new paradigm for flight control inspired by insect agility](https://doi.org/10.1109/mim.2004.1337909)  
+  - animals: Human, Insects  
+  - 1094-6969/04/$20.00©2004IEEE T he effort to design and build a micro air vehicle (MAV) with insect-like flapping wings has led to a surprising new development in flight control, which will accord miniature sensors a central role.
+- **Loram 2004** — [Paradoxical muscle movement in human standing](https://doi.org/10.1113/jphysiol.2004.062398)  
+  - animals: Human  
+  - Here we use dynamic ultrasound imaging in vivo with novel automated tracking of muscle length to test our hypo- thesis.
+- **Duysens et al. 2004** — [Sensory Influences on Interlimb Coordination During Gait](https://doi.org/10.1007/978-1-4419-9056-3_1)  
+  - animals: Cat, Human  
+  - Review of sensory influences on interlimb coordination during gait across species and preparations; organizes cutaneous and proprioceptive contributions to interlimb phase coupling.
+- **Donelan and Pearson 2004** — [Contribution of sensory feedback to ongoing ankle extensor activity during the stance phase of walking](https://doi.org/10.1139/y04-043)  
+  - animals: Human, Cat · afferents: II, Ib · pathways: Ib excitatory; type II excitatory  
+  - Quantitative review establishing that load-related sensory feedback contributes up to 60% of ongoing ankle extensor activity during the stance phase of walking, with secondary spindle endings (human) and Golgi tendon organs (human and cat) the likely receptors — autogenic positive feedback reinforcing stance extensor force. Argues that resolving which receptor groups set extensor magnitude across locomotor tasks requires network simulations coupled to forward-dynamic musculoskeletal models, since experimental strategies alone cannot dissociate the distributed contributions.  
+  - *Robot/sim:* Implement autogenic positive force feedback (Ib) and length/velocity feedback (II) onto stance-gated ankle extensor motoneurons; ablate each channel in turn and test whether unloading reduces extensor activity by up to 60% as reported.
+- **Ivanenko 2004** — [Five basic muscle activation patterns account for muscle activity during human locomotion](https://doi.org/10.1113/jphysiol.2003.057174)  
+  - animals: Human  
+  - We recorded from12–16 ipsilateral leg and trunk muscles
+using both surface and intramuscular recording and determined the average, normalized EMG
+of each record for 10–15 consecutive step cycles. We identified five basic underlying factors or
+component waveforms that can account for about 90% of the total waveform variance across
+different muscles during normal gait. Furthermore, while activation patterns of individual
+muscles could vary dramatically with speed and gravitational load, both the limb kinematics
+and the basic EMG components displayed only limited changes. Thus, we found a systema
+- **Zehr and Duysens 2004** — [Regulation of Arm and Leg Movement during Human Locomotion](https://doi.org/10.1177/1073858404264680)  
+  - animals: Human  
+  - Synthesis that both arms and legs during human locomotion are regulated by central pattern generators, with sensory feedback regulating CPG activity and assisting interlimb coordination; coupling strength is stronger between the legs than between the arms, but all four limbs are similarly governed by CPG activity and reflex control.  
+  - *Robot/sim:* Implement four limb oscillators (a quadrupedal-style CPG) with weaker arm-leg than leg-leg coupling plus afferent phase modulation of each oscillator; test whether arm-swing entrainment matches human interlimb coordination data.
+- **Moritz 2004** — [Passive dynamics change leg mechanics for an unexpected surface during human hopping](https://doi.org/10.1152/japplphysiol.00393.2004)  
+  - animals: Human  
+  - The goal of this study was to determine the contributions of anticipation and reaction when human hoppers encounter surprise, expected, and random changes from a soft elastic surface (27 kN/m) to a hard surface (411 kN/m).
+- **Blackburn 2004** — [Sex comparison of extensibility, passive, and active stiffness of the knee flexors](https://doi.org/10.1016/j.clinbiomech.2003.09.003)  
+  - animals: Human  
+  - Males show less extensibility and greater active and passive knee-flexor stiffness than females, measured by final knee position in active extension, the slope of the passive moment-angle curve, and damping of imposed vibratory motion under 10 percent body-mass loading; the sex differences may be functions of greater male mass and height, with relevance to higher female anterior cruciate ligament injury rates.  
+  - *Robot/sim:* Use the measured passive and active knee-flexor stiffness values (and their sex differences) as joint-level stiffness parameters in a neuromuscular knee model, testing whether stiffness differences alone - without altered reflex gains - change joint stability margins.
+- **Fouad and Pearson 2004** — [Restoring walking after spinal cord injury.](https://doi.org/10.1016/j.pneurobio.2004.04.003)  
+  - animals: Human  
+  - Review of walking restoration after spinal cord injury: treadmill training with partial weight support exploits spinal locomotor networks whose training-induced improvement mechanisms were revealed in animal studies; functional electrical stimulation of nerves and muscles assists stepping; and regeneration strategies promote growth of damaged axons - but no direct spinal-cord treatment is in routine use, so successful protocols will likely combine re-establishing functional connections to spinal networks with task-specific rehabilitation that shapes their motor patterns.  
+  - *Robot/sim:* Model spinal locomotor networks with training-induced plasticity and FES-like activation: simulate reconnection plus task-specific shaping signals and test whether the combination, not either alone, recovers stepping, including which feedback channels the training exploits.
+- **Peterka 2003** — [Simplifying the complexities of maintaining balance](https://doi.org/10.1109/memb.2003.1195698)  
+  - animals: Human  
+  - Computational model study. However, further consider- ation reveals that this problem is not trivial since complex biomechanical, sensory, neural, and muscular subsystems are involved in human postural control.
+- **Patla 2003** — [Strategies for dynamic stability during adaptive human locomotion](https://doi.org/10.1109/memb.2003.1195695)  
+  - animals: Human  
+  - Frames dynamic stability in adaptive human locomotion as an interplay among multiple balance strategies across the sudden support-surface transitions of every bipedal step, with visual, vestibular, and kinesthetic sensory information plus knowledge and prior experience all contributing to strategy selection — stability emerges from distributed, sensory-gated strategy interaction rather than a single mechanism.  
+  - *Robot/sim:* Implement a layered balance-strategy controller (weight-shifting, stepping, arm reactions) with multimodal sensory gating in a biped simulation; ablate individual strategies to identify the minimum set required for stable adaptive walking.
+- **Izhikevich 2003** — [Simple model of spiking neurons](https://doi.org/10.1109/tnn.2003.820440)  
+  - animals: Human  
+  - Computational model study. As we develop such large-scale brain models consisting of spiking neurons, we must find compromises between two seemingly mutually exclusive requirements: The model for a single neuron must be: 1) computationally simple, yet 2) capable of producing rich firing patterns exhibited by real biological neurons.
+- **Park 2003** — [Postural feedback responses scale with biomechanical constraints in human standing](https://doi.org/10.1007/s00221-003-1674-3)  
+  - animals: Human  
+  - Computational model study. These results indicate that postural adjustments can be described as a single feedback control scheme, with scalable heterogenic gains that are adjusted according to biomechanical constraints.
+- **Dietz 2003** — [Spinal Cord Pattern Generators for Locomotion](https://doi.org/10.1016/s1388-2457(03)00120-2)  
+  - animals: Human · pathways: Ib stance to swing  
+  - CPG generates rhythm an shapes the pattern of bursts of motoneurons(Pg.2)
+
+Cats with transected spinal cord and with cut dorsal roots still produce rhythmic alternating contraction in ankle flexors and extensors (Pg.2)
+
+Basic mechanism underlying locomotion, no fundamental differences seems to exist between bipeds and quadrupeds.(Pg.2)
+
+Differences between cats and primates may be due to increased importance of the Cortico spinal tract in primates. Additionally the gait of primates relies more on Supraspinal drive.(Pg.2)
+
+Spinal Circuitry for locomotion might be suppressed by Supraspinal input
+- **Verschueren 2003** — [Vibration-Induced Changes in EMG During Human Locomotion](https://doi.org/10.1152/jn.00863.2002)  
+  - animals: Human · afferents: Ia · pathways: Ia stance to swing  
+  - Continuous tendon vibration during blindfolded walking enhanced the EMG of quadriceps femoris and biceps femoris (mainly in stance) and quadriceps vibration advanced the onset of tibialis anterior within the gait cycle, while vibration of ankle and hip muscles had no significant amplitude effect - implicating Ia afferent input in stance-phase muscle activation and in a limited role in triggering phase transitions (stance to swing) during human locomotion.  
+  - *Robot/sim:* Implement Ia input as an amplitude contribution to stance-phase muscle activation plus a weak phase-transition trigger term driven by knee-extensor Ia activity; ablating the timing term should remove the advanced dorsiflexor onset while leaving the stance EMG enhancement intact.
+- **Griffin 2002** — [Stimulation pattern that maximizes force in paralyzed and control whole thenar muscles](https://doi.org/10.1152/jn.2002.87.5.2271)  
+  - animals: Human  
+  - These data show that the pulse patterns that maximize force and force-time integral in paralyzed muscles are similar to those that maximize these parameters in single motor units and various whole muscles across species.
+- **Oie 2002** — [Multisensory fusion: simultaneous re-weighting of vision and touch for the control of human posture](https://doi.org/10.1016/s0926-6410(02)00071-x)  
+  - animals: Human  
+  - Computational model study. Gain calculated in each trial with respect to each of the two stimuli was found to change systematically as stimulus motion amplitudes changed across condition.
+- **Dietz 2002** — [Proprioception and locomotor disorders](https://doi.org/10.1038/nrn939)  
+  - animals: Human  
+  - Review paper
+Key Points
+Locomotion in mammals depends on central pattern generators — networks of spinal interneurons that can produce rhythmic outputs independently of any modulatory input. However, the spinal activity pattern is influenced by inputs from peripheral afferents, brainstem nuclei and cortical motor centres. Central pattern generators must select the appropriate inputs at each stage of movement and according to external conditions.
+
+Afferent inputs that influence gait include the short-latency stretch reflex, which is mediated by excitatory monosynaptic connections between sensor
+- **Duysens 2002** — [A walking robot called human: lessons to be learned from neural control of locomotion.](https://doi.org/10.1016/s0021-9290(01)00187-7)  
+  - animals: Cat, Human  
+  - Distills cat and human locomotion into design principles for walking robots: control at three levels (actuator/motoneuron, whole-limb flexion-extension oscillators with mutual inhibition, interlimb coordination), with the most essential feedback at the limb level, where activation of the extensor part of the limb oscillator must be triggered by feedback signalling onset of loading via limb load sensors, and flexor activation must require unloading below a threshold plus a hip position within the normal end-of-stance range.  
+  - *Robot/sim:* Implement the three-level architecture with limb-level decision rules: extensor oscillator activation on limb loading (load-sensor threshold) and flexor initiation gated on unloading below threshold together with hip position in the end-of-stance range; ablate each rule and quantify gait robustness loss.
+- **Tjernström 2002** — [Adaptation of postural control to perturbations—a process that initiates long-term motor memory](https://doi.org/10.1016/s0966-6362(01)00175-8)  
+  - animals: Human  
+  - The ﬁndings suggest that balance rehabilitation should include a variety of repeated exercises, which are sufﬁciently long to induce habituation.
+- **Capaday 2002** — [The special nature of human walking and its neural control](https://doi.org/10.1016/S0166-2236(02)02173-2)  
+  - animals: Human  
+  - Review paper. 
+Walking the way we do is inherently unstable. Sophisticated neurological control systems are required to ensure that we progress and maintain our balance at the same time. Most of what is known about the functional organization of these neurological control systems is inferred from studies on animals. Here, I compare selected studies on the neural control of human walking with similar studies in reduced animal preparations. The simple monosynaptic reflex appears to be controlled by comparable mechanisms in walking cats and humans. However, peripheral feedback mechanisms suggeste
+- **Wakeling 2001** — [Biomechanics of fast-start swimming in fish](https://doi.org/10.1016/s1095-6433(01)00461-5)  
+  - animals: Human  
+  - Review of biomechanics fast-start swimming fish. However, close examination reveals that propulsion occurs even during the initial phase of body bending.
+- **Ogihara and Yamazaki 2001** — [Generation of human bipedal locomotion by a bio-mimetic neuro-musculo-skeletal model.](https://doi.org/10.1007/pl00007977)  
+  - animals: Human · afferents: Ia, II, Ib  
+  - A neuro-musculo-skeletal biped model (seven sagittal links, nine muscles, per-muscle spindle, Golgi tendon organ, and alpha-motoneuron units) whose reflex connection weights are optimized with a genetic algorithm reproduces human walking remarkably well, attributing the emergent gait largely to reciprocal spindle innervation interacting with musculoskeletal mechanics rather than detailed central programming.  
+  - *Robot/sim:* Replicate the architecture: per-muscle spindle, tendon-organ, and alpha-motoneuron units converging with foot-contact and rhythm-generator input, weights optimized for walking distance and energy; ablate spindle versus tendon-organ channels to quantify their contribution to the emergent gait.
+- **Lackner 2001** — [Stabilization of posture by precision touch of the index finger with rigid and flexible filaments](https://doi.org/10.1007/s002210100775)  
+  - animals: Human  
+  - Our findings indicate that: (1) stimula- tion of a small number of receptors in the fingertip is ad- equate to allow stabilization of sway, (2) fingertip force levels as low as 5–10 g provide some stabilization, (3) contact with a stationary spatial referent is most...
+- **Kooij 2000** — [An adaptive model of sensory integration in a dynamic environment applied to human stance control](https://doi.org/10.1007/s004220000196)  
+  - animals: Human  
+  - An adaptive estimator model of human stance control dynamically weights the difference between expected and actual sensory signals as a function of estimated environmental conditions, with only sensor noise characteristics supplied by the designer. The model reproduces the saturation of visually induced sway and its absence in vestibular-loss subjects without any explicit vestibular threshold, and predicts that vestibular function is needed to prevent falling during sinusoidal support-base translations while loss of foot somatosensory information enlarges postural sway.  
+  - *Robot/sim:* Implement the adaptive sensory-error weighting estimator in a balance controller; removing the vestibular channel should reproduce the loss of visually-induced-sway saturation and the predicted falls in sensory-conflict conditions.
+- **Pang and Yang 2000** — [The initiation of the swing phase in human infant stepping: importance of hip position and leg loading](https://doi.org/10.1111/j.1469-7793.2000.00389.x)  
+  - animals: Human, Cat  
+  - In supported stepping of human infants, hip flexion combined with high limb load prolongs stance and delays swing, whereas hip extension with low load shortens stance and advances swing, remarkably similar to reduced cat preparations. Hip position and load show an inverse relationship at the time of swing initiation, indicating the two sensory factors combine to regulate the stance-to-swing transition, consistent with similar brainstem and spinal walking circuitry in infants and cats.  
+  - *Robot/sim:* Implement swing-initiation gating as a combined hip-extension and low-load condition with an inverse interaction between hip angle and limb load; ablate either input to reproduce prolonged stance and delayed swing.
+- **Lamb 2000** — [Could Different Directions of Infant Stepping Be Controlled by the Same Locomotor Central Pattern Generator?](https://doi.org/10.1152/jn.2000.83.5.2814)  
+  - animals: Human  
+  - Human infants who sustain forward stepping can also step sideways and backward on a treadmill, with the same relationships of stance and swing phase durations to cycle duration across directions and speeds, and no discrete changes in electromyographic or temporal parameters when direction is varied continuously, supporting a single locomotor CPG controlling different walking directions with direction-specific muscle tuning (for example hamstrings much more active in backward swing).  
+  - *Robot/sim:* Drive a single locomotor CPG through a direction-dependent motoneuron mapping and test continuous direction changes for graded, EMG-like retuning without discrete pattern switches.
+- **Sinkjær 2000** — [Major role for sensory feedback in soleus EMG activity in the stance phase of walking in man.](https://doi.org/10.1111/j.1469-7793.2000.00817.x)  
+  - animals: Human · afferents: Ib, II  
+  - Unloading the ankle extensors for 210 ms during stance reduces soleus EMG by about 50% (64 ms onset) in human walking; the suppression survives common peroneal nerve block, excluding peripherally mediated reciprocal inhibition from antagonists, and survives ischaemia that abolishes the Ia short-latency stretch reflex, excluding group Ia. Group II and/or group Ib afferents from ankle extensors therefore carry a major part of stance-phase extensor activation in humans.  
+  - *Robot/sim:* Implement a load-dependent extensor excitation pathway (Ib/II-analog positive force feedback) supplying a large fraction of stance-phase extensor drive; a sudden unloading event should cut extensor activity by about half within roughly 60 ms, and removing the Ia stretch reflex should leave that response intact.
+- **Abelew 2000** — [Local Loss of Proprioception Results in Disruption of Interjoint Coordination During Locomotion in the Cat](https://doi.org/10.1152/jn.2000.84.5.2709)  
+  - animals: Cat, Human  
+  - These results indicate an important role for the stretch reﬂex and stiffness regulation during locomotion.
+- **Dietz and Duysens 2000** — [Significance of load receptor input during locomotion: a review](https://doi.org/10.1016/s0966-6362(99)00052-1)  
+  - animals: Human, Cat · pathways: Ib stance to swing  
+  - Review making the case that extensor load receptors are central to locomotor control: in the cat, Golgi tendon organ input switches function during walking from Ib inhibition to extensor facilitation proportional to load, and in humans leg extensor activation during stance scales with body weight — one load-regulatory mechanism spanning quadrupedal and bipedal gait.
+- **Barbeau 1999** — [Tapping into spinal circuits to restore motor function.](https://doi.org/10.1016/s0165-0173(99)00008-9)  
+  - animals: Cat, Human, Vertebrates  
+  - Multidisciplinary review arguing that electrically activating spinal interneuronal circuits (reflex and pattern-generating) could coordinate many muscles at once for neuroprostheses, far more tractable than stimulating each muscle individually; draws on phase-adaptable cat hindlimb reflexes, chick embryo rhythmogenic network development, the cat spinal locomotor pattern generator, and locomotor training in incomplete SCI patients to identify candidate circuits and the control problems engineers must solve.  
+  - *Robot/sim:* Model the control layer for FNS-style stimulation as a spinal circuit hierarchy (phase-modulated reflexes plus CPG) driving a musculoskeletal limb, instead of per-muscle open-loop stimulation.
+- **Orlovsky 1999** — [Neuronal Control of LocomotionFrom Mollusc to Man](https://doi.org/10.1093/acprof:oso/9780198524052.001.0001)  
+  - animals: Human  
+  - Comparative monograph surveying the neural mechanisms of locomotion across evolutionarily diverse species, from leech swimming to human running, synthesizing CPG organization, descending control, and sensory regulation into unifying principles of how nervous systems generate locomotion; a canonical cross-species reference for locomotor neurobiology.  
+  - *Robot/sim:* Use its comparative survey of CPG organization and descending control across species to select conserved motifs (half-center rhythm cores, brainstem initiation and speed control) as architecture choices for robotic locomotor controllers.
+- **Prochazka 1999** — Quantifying proprioception  
+  - animals: Cat, Human, Mammals  
+  - Quantifies proprioceptive afferent discharge during natural movement: spindle and GTO firing ranges, gain changes with movement, and the case that proprioceptive feedback operates with state-dependent gain.
+- **Zehr and Stein 1999** — [What functions do reflexes serve during human locomotion](https://doi.org/10.1016/s0301-0082(98)00081-1)  
+  - animals: Lamprey, Cat, Human · afferents: Cutaneous · pathways: Cutaneous flexor excitation; Ia monosynaptic excitation  
+  - Review establishing that reflexes during locomotion are task-, phase-, and context-dependent, with a division of labor: cutaneous reflexes alter swing-limb trajectory to avoid stumbling, stretch reflexes stabilize limb trajectory and assist force production during stance, and load receptor reflexes support body weight and influence step-cycle timing - functions dynamically reassigned across the cycle and clinically exploitable after neurotrauma.  
+  - *Robot/sim:* Implement phase- and task-gated cutaneous (swing trajectory), Ia stretch (stance stabilization and force), and load-receptor (weight support, cycle timing) pathways in a walker; ablate each to reproduce the predicted functional losses.
+- **Van de Crommert 1998** — [Neural control of locomotion: sensory control of the central pattern generator and its relation to treadmill t](https://doi.org/10.1016/s0966-6362(98)00010-1)  
+  - animals: Cat, Human  
+  - Review synthesizing that locomotor recovery through treadmill training in spinalized cats and spinal-cord-injured patients rests on a spinal central pattern generator whose activation and regulation depend on locomotor-related afferent input: adequate sensory input during training can drive and calibrate the spinal locomotor circuitry, a principle for designing gait rehabilitation programs.  
+  - *Robot/sim:* Implement a CPG controller whose activation and phase regulation are gated by locomotor-related afferent input, and ablate that input to show that training-like recovery of rhythmic output fails under tonic drive alone.
+- **Duysens and Van de Crommert 1998** — [Neural control of locomotion; Part 1: The central pattern generator from cats to humans](https://doi.org/10.1016/s0966-6362(97)00042-8)  
+  - animals: Cat, Human  
+  - Traces the spinal CPG concept from cats with complete spinal cord transection that recover locomotor function to evidence for a human spinal locomotor CPG drawn from treadmill-training recovery in incomplete spinal cord injury, framing locomotor rehabilitation as exploitation of spinal rhythm-generating circuitry conserved from cats to humans.  
+  - *Robot/sim:* Implement a spinal CPG block whose basic rhythmic activation survives removal of step-specific sensory feedback, mirroring transection-cat recovery, and study training-like adaptation regimes of the circuit in simulation.
+- **Kakuda 1998** — [Dynamic response of human muscle spindle afferents to stretch during voluntary contraction](https://doi.org/10.1111/j.1469-7793.1998.621bb.x)  
+  - animals: Cat, Human  
+  - This study was conducted to investigate the basic pattern of dynamic and static fusimotor actions on human muscle spindles.
+- **Dimitrijević 1998** — [Evidence for a Spinal Central Pattern Generator in Humansa](https://doi.org/10.1111/j.1749-6632.1998.tb09062.x)  
+  - animals: Human  
+  - Non-patterned epidural stimulation of the posterior lumbar cord (25-60 Hz, 5-9 V over L2) in complete paraplegics induces patterned, locomotor-like EMG with rhythmic alternating stance and swing — evidence that human spinal circuitry isolated from the brain can generate locomotor-like activity when externally controlled sustained stimulation replaces the tonic drive normally generated by the brain.  
+  - *Robot/sim:* Model an externally driven spinal network: replace tonic descending drive with sustained periodic drive to an otherwise quiescent CPG and test whether alternating stance/swing output emerges with the observed stimulation-frequency dependence.
+- **Kooij 1998** — [A multisensory integration model of human stance control](https://doi.org/10.1007/s004220050527)  
+  - animals: Human  
+  - Computational model study. We aim to apply the model in (1) the design and development of prostheses and orthoses and (2) the diagnosis of neurological balance disorders.
+- **Harkema 1997** — [Human Lumbosacral Spinal Cord Interprets Loading During Stepping](https://doi.org/10.1152/jn.1997.77.2.797)  
+  - animals: Human  
+  - In spinal-cord-injured humans during assisted stepping, soleus, gastrocnemius, and tibialis anterior EMG amplitude scales directly with peak limb load regardless of supraspinal input, and load predicts phasic EMG better than muscle-tendon stretch or stretch velocity - the lumbosacral cord uses limb-loading cues, not just stretch reflexes, to grade efferent output for stepping.  
+  - *Robot/sim:* Implement stance-gated limb-load feedback that scales extensor and flexor motoneuron pool gain; ablating it should mimic reduced load-bearing and depress stepping EMG, reproducing body-weight-support effects.
+- **Prochazka 1997** — [Positive Force Feedback Control of Muscles](https://doi.org/10.1152/jn.1997.77.6.3226)  
+  - animals: Human · pathways: Ib stance to swing; Ib excitatory  
+  - Establish some basic properties of positive force feedback in relation to load compensation, stability intrinsic muscle properties an interaction with displacement feedback
+Positive force feedback was an effective means of generating load compensation
+Suggestion a useful role of Ib-mediated positive force feedback from extensor muscles during gait.
+- **Zehr 1997** — [Cutaneous Reflexes During Human Gait: Electromyographic and Kinematic Responses to Electrical Stimulation](https://doi.org/10.1152/jn.1997.77.6.3311)  
+  - animals: Human  
+  - Non-noxious electrical stimulation of the superficial peroneal and tibial nerves during human walking produces phase-modulated cutaneous reflexes in leg muscles and correlated kinematic corrections — superficial peroneal responses amount to a stumbling-corrective reaction during swing, while tibial responses smooth the swing leg and assist foot placement and weight acceptance at the start of stance.
+- **Stephens and Yang 1996** — [Short latency, non-reciprocal group I inhibition is reduced during the stance phase of walking in humans.](https://doi.org/10.1016/s0006-8993(96)00977-8)  
+  - animals: Human, Cat · afferents: Ib · pathways: Ib disynaptic inhibition  
+  - In intact humans, short-latency non-reciprocal group I inhibition from the medial gastrocnemius nerve onto the conditioned soleus H-reflex, disynaptic and present at rest in most subjects, is significantly reduced during treadmill walking, with some subjects showing significant excitation, mirroring the reduction of resting Ib inhibition toward excitation seen in walking cats. The reduction may be partially accounted for by activation of the triceps surae itself.  
+  - *Robot/sim:* Implement disynaptic Ib inhibition onto ankle extensors with a locomotor-phase-dependent gain reduction (partial reversal toward excitation during gait); ablate the phase switch to test its effect on stance extensor activity.
+- **Nathan 1996** — [Vestibulospinal, reticulospinal and descending propriospinal nerve fibres in man](https://doi.org/10.1093/brain/119.6.1809)  
+  - animals: Human  
+  - The course and location of vestibulospinal, reticulospinal
+and descending propriospinal fibres in man are reported.
+
+There is an extensive propriospinal network of reciprocal excitatory and inhibitory connections active during locomotion that may activate MNs far from the site of pattern generator
+- **Taga 1995** — [A model of the neuro-musculo-skeletal system for human locomotion](https://doi.org/10.1007/bf00204048)  
+  - animals: Human  
+  - A neuromusculoskeletal model in which human gait emerges as a stable limit cycle through global entrainment among neural oscillators, the musculoskeletal body, and the environment: walking is robust to perturbations and loads, graded in speed by a single tonic drive parameter, and entrainable by rhythmic input — the CPG and the body need not be programmed separately.
+- **Assaiante 1995** — [An ontogenetic model for the sensorimotor organization of balance control in humans](https://doi.org/10.1016/0167-9457(94)00048-j)  
+  - animals: Human  
+  - Review of ontogenetic model sensorimotor organization. Computational model study. the basis of a review of the literature including the authors’ own experimental studies, a model for the ontogenesis of balance control in children was developed.
+- **Dietz 1994** — [HUMAN NEURONAL INTERLIMB COORDINATION DURING SPLIT-BELT LOCOMOTION](https://doi.org/10.1007/bf00227344)  
+  - animals: Human  
+  - Human split-belt adaptation occurs within 10-20 stride cycles through reorganization of the stride cycle (support shortens and swing lengthens on the fast leg), with ipsilateral gastrocnemius activity scaling almost linearly with belt speed under proprioceptive control while the contralateral tibialis anterior is centrally modulated, revealing an ipsilateral-proprioceptive / contralateral-central coupling between the support phase of one leg and the swing phase of the other.  
+  - *Robot/sim:* Implement split-belt adaptation in a biped model as ipsilateral proprioceptive extensor feedback that scales stance muscle activity with belt speed, plus a central contralateral coupling from support to opposite-limb swing; ablating the proprioceptive branch should abolish automatic speed matching.
+- **Bajd 1994** — [Unstable states in four-legged locomotion](https://doi.org/10.1109/iros.1994.407480)  
+  - animals: Human  
+  - Treats crutch-assisted walking of paraplegic persons (passive bracing or multichannel FES) as four-legged locomotion described by a sequence of foot-and-crutch contact states, and shows that inserting 'unstable' two-contact passive phases - in which the center of body is carried forward by gravity and inertia alone - improves the four-point gait; kinematic measurements in a paraplegic subject confirmed the passive center-of-body progression.  
+  - *Robot/sim:* Implement gait as a finite sequence of contact states over feet and crutches in a crutch-assisted biped or quadruped simulation, insert unstable two-support passive phases, and verify that the center of body traverses them by gravity and inertia alone with bounded excursions.
+- **Duysens 1993** — [Increased amplitude of cutaneous reflexes during human running as compared to standing.](https://doi.org/10.1016/0006-8993(93)90903-z)  
+  - animals: Human · afferents: Cutaneous · pathways: Cutaneous flexor excitation  
+  - In humans running on a treadmill, sural-nerve stimulation at twice perception threshold produced reflex ratios in biceps femoris and tibialis anterior far larger than during matched isometric contractions in standing, because large facilitatory responses were present through most of the step cycle but rarely during standing contractions, while at the end of swing the responses became predominantly suppressive. Cutaneous reflex transmission is thus strongly gated by locomotor state and phase rather than by contraction level alone.  
+  - *Robot/sim:* Implement phase- and speed-dependent cutaneous reflex gains, facilitatory through most of the cycle and suppressive at end of swing, on a simulated runner; ablating the gating should reproduce standing-like small, suppressive responses.
+- **Yang 1991** — [Contribution of peripheral afferents to the activation of the soleus muscle during walking in humans.](https://doi.org/10.1007/bf00227094)  
+  - animals: Human  
+  - In human walking, soleus EMG responses to rapid stance-phase stretches are predicted chiefly by stretch velocity (70% of variance at an average 38 ms delay; adding displacement raises it to 85%, acceleration adds nothing), and the velocity-derived reflex gain ramps up through early stance in parallel with the H-reflex, demonstrating phase-dependent gain modulation of the ankle extensor stretch reflex.  
+  - *Robot/sim:* Add a velocity-dominant ankle-extensor stretch reflex with ~38 ms delay and a ramped gain through early stance to a biped model; verify the gain schedule reproduces the human EMG and that removing it destabilizes stance.
+- **Edin 1990** — [Dynamic response of human muscle spindle afferents to stretch](https://doi.org/10.1152/jn.1990.63.6.1297)  
+  - animals: Human · afferents: Ia, II, Ib  
+  - In human radial-nerve recordings from finger extensor muscles, three discrete and statistically pairwise-independent response markers, the initial burst at stretch onset, the deceleration response at the start of hold, and prompt silencing during imposed shortening, discriminate muscle spindle primaries from secondaries (the dynamic index alone is a poor discriminator with a unimodal distribution), while Golgi tendon organ afferents give negligible stretch responses; the battery supports a probability-based classification of human muscle afferents.  
+  - *Robot/sim:* Implement Ia and II spindle models that reproduce the discrete dynamic markers (initial burst, deceleration response, silence during shortening) and validate the model's response statistics against these human single-unit data.
+- **Duysens 1990** — [Gating and reversal of reflexes in ankle muscles during human walking](https://doi.org/10.1007/bf00231254)  
+  - animals: Human  
+  - In walking humans, electrical stimulation at the ankle produced phase- and intensity-dependent reflex effects: low-intensity swing-phase stimuli suppressed tibialis anterior activity, high-intensity stimuli facilitated it (largest mid-swing and correlated with exaggerated dorsiflexion), and some subjects showed a phase-dependent reversal from swing-phase tibialis anterior responses to gastrocnemius facilitation during early stance, demonstrating central gating and modulation of reflex transmission rather than simple scaling of ongoing EMG.  
+  - *Robot/sim:* Implement phase- and intensity-dependent reflex gating in a neuromechanical walker: ankle-afferent stimulation suppresses tibialis anterior in swing at low intensity, facilitates it at high intensity, and reverses to gastrocnemius facilitation in early stance; test the balance contribution during perturbations.
+- **Capaday et al. 1986** — [Amplitude modulation of the soleus H-reflex in the human during walking and standing](https://doi.org/10.1523/jneurosci.06-05-01308.1986)  
+  - animals: Human · pathways: Ia monosynaptic excitation  
+  - The soleus H-reflex is strongly modulated over the step cycle during walking versus standing; central gating of the monosynaptic Ia pathway is phase- and task-dependent.
+- **Nilsson 1985** — [Changes in leg movements and muscle activity with speed of locomotion and mode of progression in humans](https://doi.org/10.1111/j.1748-1716.1985.tb07612.x)  
+  - animals: Human  
+  - Human treadmill dataset (walking 0.4-3.0 m/s, running 1-9 m/s) showing speed adaptation proceeds by increasing both frequency and amplitude of leg movements, with mode-specific EMG re-timing: rectus femoris shifts from knee-extension to hip-flexion emphasis with speed, gastrocnemius lateralis pre-activates before foot contact in running but not walking, and tibialis anterior peaks before rather than after touchdown in running - the basic stride structure matches other animals, suggesting shared neural control.  
+  - *Robot/sim:* Use these speed- and mode-dependent EMG phase relationships (rectus femoris role switch, gastrocnemius pre-contact onset, tibialis anterior timing) as quantitative validation targets for a CPG plus reflex biped model across walking and running speeds.
+- **Rebula ** — [The Stabilizing Properties of Foot Yaw in Human Walking](https://doi.org/10.1016/j.jbiomech.2016.11.059)  
+  - animals: Human  
+  - Review of stabilizing properties foot yaw human. Computational model study. We first developed a simple dynamic walking model, which shows that bipedal walking may indeed be stabilized through steering---externally rotating the foot about vertical toward the direction of lateral lean for each footfall---governed by linear feedback control.

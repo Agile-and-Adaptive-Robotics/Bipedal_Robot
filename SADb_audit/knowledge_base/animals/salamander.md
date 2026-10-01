@@ -1,0 +1,29 @@
+# Animal: Salamander
+
+7 papers in the corpus.
+
+- **Pazzaglia 2025** — [Balancing central control and sensory feedback produces adaptable and robust locomotor patterns in a spiking, ](https://doi.org/10.1371/journal.pcbi.1012101)  
+  - animals: Salamander · afferents: Mechanosensory  
+  - A spiking neuromechanical salamander model with detailed adaptive-LIF locomotor circuits and a 3D body with realistic muscles replicates in vitro and in vivo swimming and trotting open-loop; intermediate-strength axial stretch (proprioceptive) feedback - conserved across ascending/descending and excitatory/inhibitory topologies - increases tail-beat frequency, reduces intersegmental phase lag, and expands the stable range of descending drives, whereas high feedback strength overrides central rhythms and degrades controllability: proprioception helps only while it does not dominate the CPG.  
+  - *Robot/sim:* Implement intermediate-strength axial stretch feedback in a spiking CPG coupled to a body model and sweep the feedback gain to reproduce the frequency increase, phase-lag reduction, and stability-region expansion at intermediate gains and the controllability loss at high gains; test topology-independence by swapping ascending/descending excitatory/inhibitory variants.
+- **Bicanski 2013** — [Decoding the mechanisms of gait generation in salamanders by combining neurobiology, modeling and robotics](https://doi.org/10.1007/s00422-012-0543-1)  
+  - animals: Salamander  
+  - Salamanders exhibit both swimming and stepping gaits and is faced with the problem of producing efficient propulsive forces using the same musculo-skeletal system in two environments with significant physical differences in density, viscosity and gravitational load. Authors' approach is based on a combination of neurophysiological experiments, numerical modeling at different levels of abstraction, and robotic validation using an amphibious salamander-like robot.
+- **Knuesel 2011** — [Effects of muscle dynamics and proprioceptive feedback on the kinematics and CPG activity of salamander steppi](https://doi.org/10.1186/1471-2202-12-s1-p158)  
+  - animals: Salamander  
+  - Conference abstract: in an 8-joint salamander stepping model without feedback, trunk kinematics deviate from the EMG pattern, illustrating the effect of muscle dynamics (motion closer to a standing wave), and feedback in a 10-joint model modulates CPG activity.  
+  - *Robot/sim:* Reproduce salamander stepping models with and without muscle dynamics and with CPG feedback modulation (8- versus 10-joint versions), quantifying how muscle dynamics decouple trunk kinematics from the EMG pattern and how feedback modulates the CPG.
+- **Harischandra 2011** — [Sensory feedback plays a significant role in generating walking gait and in gait transition in salamanders: a ](https://doi.org/10.3389/fnbot.2011.00003)  
+  - animals: Salamander · afferents: Mechanosensory  
+  - A 3D neuro-musculo-mechanical salamander model shows proprioceptive feedback - girdle stretch-receptor-like intraspinal neurons plus hip and scapula limb stretch receptors - is essential for a coordinated lateral-sequence walking gait, while walking trot is dominated by the CPG; the walk-to-trot transition can be induced by increased descending drive from the mesencephalic locomotor region and is helped by hip/scapula sensory input signaling late stance. Demonstrates that the sensory-versus-central balance of control differs by gait.  
+  - *Robot/sim:* Implement girdle and hip/scapula stretch-receptor feedback onto a body-CPG plus four limb-CPGs network in simulation; ablate the sensory modulation to check that lateral-sequence walking degrades while trot survives, and gate the walk-to-trot switch on late-stance stretch detection with increasing descending drive.
+- **Chiel 2009** — [The Brain in Its Body: Motor Control and Sensing in a Biomechanical Context](https://doi.org/10.1523/jneurosci.3338-09.2009)  
+  - animals: Cat, Human, Insects, Lamprey, Rat, Salamander · pathways: Biomechanically mediated preflexive feedback  
+  - Reviews molluscan feeding, postural control in cats and humans, locomotion simulations in lamprey, insect, cat and salamander, and rat vibrissal sensing to argue that adaptive behavior emerges from nervous-system-body-environment interaction: control is shared between nervous system and periphery, neural activity organizes degrees of freedom into biomechanically meaningful subsets, mechanics alone can play crucial roles in enforcing gait patterns, and the mechanics of sensors is crucial for their function.  
+  - *Robot/sim:* Embed morphologically realistic muscle and sensor mechanics so that body dynamics contribute to gait enforcement (preflexes); progressively remove neural correction loops and quantify the locomotor stability retained by mechanics alone.
+- **Ijspeert 2007** — From Swimming to Walking with a Salamander Robot Driven by a Spinal Cord Model  
+  - animals: Salamander
+- **Ijspeert 2001** — [A connectionist central pattern generator for the aquatic and terrestrial gaits of a simulated salamander](https://doi.org/10.1007/s004220000211)  
+  - animals: Salamander, Lamprey  
+  - A connectionist CPG model of leaky-integrator neurons tuned by a genetic algorithm reproduces the salamander's aquatic traveling-wave swimming and terrestrial standing-wave trotting by coupling a lamprey-like body CPG with a limb CPG. Tonic, non-oscillating excitation applied to the single network modulates speed, direction, and gait type, demonstrating that one distributed circuit with two coupled subnetworks can underlie both locomotor programs.  
+  - *Robot/sim:* Implement the two-level body-plus-limb CPG with a genetic-algorithm parameter search; sweep the tonic drive to verify gait, speed, and direction modulation, and ablate the limb-to-body CPG coupling to isolate the swimming program.
