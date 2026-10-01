@@ -1,0 +1,18 @@
+== gate: M3 W2L 2023 ORIGINAL (single LH RG) air stepping on the axis-fixed M1 body, 20 s ==
+   knobs: net=orig comm=1.0 te=3.0 tf=4.0 tau_rg_nap_h=0.25 ctrl_cap=0.5 joint_damp=3.0 stiff_limits=1 lift=0.3
+   ground contacts: 28890 (must be 0) | leg-leg self contacts: 22982
+   neural: L RG ext bursts=18, period 1.027 s (0.97 Hz), E max 6.99 mV
+   hip L swing excursions: 31, mean interval 0.543 s (1.84 Hz); ACF dominant period 1.029 s (0.97 Hz)
+   hip R swing excursions: 31, mean interval 0.576 s (1.74 Hz); ACF dominant period 1.029 s (0.97 Hz)
+   joint flexion-positive excursions (deg, min..max and range) vs AnimatLab references:
+     hip   L [ -26.8, +19.3] range  46.1 | R [ -27.9, +18.8] range  46.7   (ref range ~38)
+     knee  L [  -4.4, +64.8] range  69.2 | R [  -4.0, +64.3] range  68.4   (ref range ~61)
+     ankle L [  -2.0, +25.4] range  27.4 | R [  -2.2, +24.7] range  26.9   (ref range ~16)
+   hip flexion L/R correlation (0 lag): r = -0.414 (antiphase want < -0.3)
+   [PASS] finite_20s
+   [PASS] both_hips_swing
+   [PASS] antiphase
+   [FAIL] airborne
+   [PASS] freq_within_2x
+   [PASS] hip_amp_ok
+VERDICT: FAIL airborne

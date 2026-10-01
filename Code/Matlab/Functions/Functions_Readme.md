@@ -98,6 +98,11 @@ Inputs:
 Output:
 - R – Radius of BPA, outer, in meters.
 BPAdiameters – Not really a function but a plot to show BPA radius and diameter over contraction as a function of diameter. Third plot shows that resting length, using the equations from Chou and Hannaford and Martens and Boblan, don’t affect the curve.
+spring_series – Small standalone example script: plots force–deflection for a soft spring (k1 = 100) alone versus in series with a much stiffer spring (k2 = 1000), illustrating how a stiff series element barely changes overall compliance (the bracket-compliance idea behind the Xi work). Not referenced by other code.
+Inputs:
+- none (constants set in the script)
+Output:
+- Two figures: Force vs. distance and distance vs. force, for the two spring cases.
 
 ---
 

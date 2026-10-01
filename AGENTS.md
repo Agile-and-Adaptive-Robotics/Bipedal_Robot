@@ -85,6 +85,170 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   optuna 5.0.0 pip-added to `myo` (numpy pin 1.21.6 untouched; shared `optuna_walk.db`
   is schema 12 — version-matched with EB475WS4). Restart ZCode to pick up new
   PATH/env entries for MCP servers.
+  **SSH from the laptop WORKS (2026-09-27):** key-auth `ssh -i ~/.ssh/id_ed25519
+  "ben bolen@easteregg2.mme.pdx.edu"` (local account `easteregg2\ben bolen` — quote the
+  space; remote default shell is cmd.exe, not bash — use `&` separators, `&&` chains, and
+  quote inner paths). Inbound 22 is firewall-allowed ONLY from the PSU VPN pool
+  10.218.124.0/22 (local rule "OpenSSH from VPN pool"; campus/lab-ethernet rules differ —
+  lab boxes reach each other on-subnet). Key lives unencrypted on the laptop; revoke by
+  deleting its line from `C:\ProgramData\ssh\administrators_authorized_keys` on easteregg2.
+  **EB475WS4 SSH WORKS (2026-09-30, direct from the laptop):** `ssh eb475ws4` (laptop
+  `~/.ssh/config` alias → `eb475ws4.cecs.pdx.edu` = 10.218.219.32, key id_ed25519,
+  account `eb475ws4\ben bolen`, remote shell cmd.exe — same `&`-separator/quoted-path
+  traps as easteregg2). sshd was installed by the ZCode session ON that box (Ben set it
+  up 2026-09-30; MSI build — its default firewall rule is named "OpenSSH SSH Server
+  (sshd)", NOT the capability's "OpenSSH-Server-In-TCP"); `tmp\setup_sshd_eb475ws4.ps1`
+  is superseded. Firewall = 3 allow rules, ALL scoped **10.218.0.0/16** (internal PSU):
+  widened 2026-09-30 from the script's VPN-pool 10.218.124.0/22 because the PSU VPN
+  hands out DIFFERENT pools per session (124.x one day, 120.x the next — the /22 scope
+  caused silent timeouts from the laptop; easteregg2 only ever worked from those sources
+  because its default rule is still Any/Any). SSH sessions on EB475WS4 run ELEVATED
+  (High integrity token — remote admin over SSH works: firewall edits verified).
+  Fallback when direct fails: `ssh -J easteregg2 eb475ws4` (ProxyJump through the lab
+  subnet, same key). easteregg2's administrators_authorized_keys also carries a
+  `zcode@EB475WS4` key — EB475WS4→easteregg2 SSH works.
+  **PRUNE-MATRIX CAMPAIGN (2026-09-28, laptop session driving easteregg2 over that SSH
+  bridge; analysis `spinal\prune_analysis.md`, raw `spinal\prune_results_{s3k,w2lvar,syn6}.jsonl`,
+  copies on both machines):** 216-cell leave-one-out ablation × 3 walker variants —
+  FULL + 8 cuts (noaff/interleg/contact/ia/ii/ib/renshaw/rgweak) × modes AIR/AIRDEAFF/
+  WALK/STAND/PUSH×4 (40 N pelvis pulse ±x/±y at t=4 s via NEW default-off runner flags
+  `--push N --push-time T --push-axis ±x|±y`, bit-identical when absent — **UNCOMMITTED on
+  BOTH laptop working tree and easteregg2, commit together**). RESULTS: **s3k = 4 prunable
+  components** (interleg, contact machinery heel/toe/onset/pm, Ib, rg-weak-excitation; 4-way
+  COMBO CONFIRMED: walk −186.4 → −176.1 BETTER, stand + push recovery identical, air
+  unchanged) — s3k KEEP: Ia (walk −134 without it), noaff (−81), renshaw (−81), II (−69);
+  s3k air has NO rhythm at its production drive (rises 0 in every config). **w2lvar/syn6:
+  NOTHING prunable** — every single cut kills their air rhythm (−46..−48; rhythm is entirely
+  sensory-sustained, confirming the 09-20 "self-sustain lost" note at winner params);
+  w2lvar FULL WALK reproduced t68 **bit-exact −144.46440311078322** (the goal-4 report's
+  "replay-verify before trusting" is DONE); w2lvar renshaw cut would IMPROVE walk/stand
+  (+2.1/+6.7) but kills air; syn6's winner −200.3796 also reproduced. ALL THREE stand
+  (scores 25.6/31.5/37.5) and recover all 40 N pushes with zero falls anywhere. Ops traps
+  banked: launch long easteregg2 jobs via **WMI `Win32_Process.Create`** (Start-Process
+  children die with the ssh session — first launch lost 9 shards); harness pins OMP/BLAS=1
+  (in-matrix comparability; w2lvar t68 still replayed bit-exact under it); variant configs
+  load through each variant's OWN curriculum set_stage — s3k_trial34_full_params.json
+  NESTS under ["params"] (cost one restart), w2lvar/syn6 stage jsons are flat-with-params.
+  Files: `spinal\prune_matrix.py` / `prune_combo.py` / `analyze_prune.py` + the ps1 launch/
+  status helpers (easteregg2-side). Combo key values = COMBO_KEYS in prune_combo.py (8
+  keys zeroed + --no-interleg) — adopting the pruned s3k = those deltas vs s3k trial34.
+  **2026-09-30 CAMPAIGN (Ben: "short optuna pass, long pass, pruning, retuning,
+  everything"; index = `spinal\campaigns\20260930\INDEX.md`):** (1) PRUNED-s3k RETUNE
+  launched on easteregg2 — `_curriculum_pruned.py` air (30 trials) + 3 parallel walk
+  studies (batches of 40, Ben's stop rule, cap 200 each; per-study sqlite DBs — 4
+  concurrent create_study in ONE db hit sqlalche.me/e3q8 lock errors, cost one
+  relaunch); `finalize` merges + validates. (2) Kinematic-robustness sweep
+  `prune_robust.py` (4 walkers × pelvis-ty ±1/±2 cm × WALK/STAND/PUSH; s3k family
+  perturbs via p["pelvis_ty"], w2lvar/syn6 via AARL_PELVIS_TY set AFTER set_stage —
+  their loaders POP the env; syn6 initially crashed on undefined TY_BASE, fixed).
+  (3) Literature validation `gait_validate_all.py` (4 walkers vs all 43 gait_refs).
+  (4) AnimatLab-in-MuJoCo Li resume executed: make_w2l_mjcf.py now emits the ROOT
+  FREEJOINT (was welded-world — the primary Li collapse cause), per-joint damping
+  ΣB·r² from source muscle B × spawn moment arms (replaces the scalar 1.5 runtime
+  stand-in), spawn KEYFRAME (limited hinges whose range excludes 0 set mid-range =
+  the ankle [-20,-5]° violation; root z from exact world-frame foot-box corners,
+  1 mm clearance; test_li_stepping uses mj_resetDataKeyframe; validate_body gate
+  8→9 joints); aproj path env-overridable W2L_APROJ. (5) W2L split-net V3 edges
+  CORRECTED per the 09-26 audit + Ben's go (V3→contra RG ext IN only; the
+  V3→contra-RG-E HC edge was a generator invention). (6) AnimatLab headless on
+  easteregg2 WORKS (AnimatSimulator at D:\Program Files (x86)\NeuroRobotic
+  Technologies\AnimatLab\bin): BilateralRG Ground + W2L modern + Biped Standalone
+  asims ran clean, chart traces in campaigns\20260930\animatlab\. (7) Simscape on
+  easteregg2 = R2025a: SNS_SpinalNetwork.slx (R2025b-saved) does NOT load there;
+  KneeReflexDemo_R2025a + units test rerun instead. (8) Rules conflict audit
+  `campaigns\20260930\lit_rules_conflict_audit.md` (lit_rules_conflicts.py):
+  8 sign conflicts (RG-E self-connection exc-vs-inh across rybak; RG→PF gate sign;
+  Ben's own dual Ib/II/RC pathways), 6 gain conflicts (supra drive 1.0 vs
+  0.02–0.15). (9) Connectome: walker_s3k_pruned + _flat templates (generator now
+  repo-relative — the D:\Github hardcode was another machine's; optuna 5.0.0
+  pip-added to laptop myoconv for the generator's curriculum imports).
+  (10) Figures prune_{walk_deltas,air_scores,push_recovery}.png in
+  campaigns\20260930\figs. **VPN INCIDENT ~00:30: the CECS OpenVPN tunnel
+  DROPPED mid-campaign (all lab hosts unreachable from the laptop; Ben's RDP
+  died with it). OpenVPN Connect driven to RETRY via computer-use; it waits at
+  an ENTER-PASSWORD prompt for the CECS split-tunnel profile (session creds
+  expired — Ben types his PSU password; agents must NEVER handle it). All
+  easteregg2 jobs are WMI-detached and unaffected. Recovery: reconnect VPN →
+  `powershell -File D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\campaign_status.ps1`.**
+  **09-30 LATE ADDENDA: (a) SHARED-BOX RULE (Ben: colleague uses easteregg2 for
+  SolidWorks/MATLAB): background jobs run at BelowNormal priority and the box is
+  TRIMMED to the 4 retune studies only when a colleague is on it — validation +
+  robustness WALK-rerun procs were STOPPED (both crash-safe resumable: the
+  validation csv flushes per-row and skips done variants; robust skips done
+  cells). Relaunch after the colleague leaves: relaunch3.ps1 pattern +
+  relaunch_robust2.ps1. (b) MY EDITING BUG in prune_robust.py args (if/if/else
+  instead of if/elif/else) ran every WALK robustness cell as a PUSH eval — WALK
+  rows stripped from robust_results_*.jsonl on both machines, rerun queued;
+  STAND/PUSH rows are VALID (real finding: w2lvar/syn6 FALL at ±1 cm pelvis-ty
+  perturbation while s3k/s3kpruned hold through ±2 cm). (c) MuJoCo jnt enum:
+  FREE=0/BALL=1/SLIDE=2/HINGE=3 — two of my checks had it backwards (the
+  'skip freejoint' filters skipped the HINGES); fixed in fix_joint_axes.py,
+  validate_body.py gate 4, make_w2l_mjcf keyframe. (d) Li chain AFTER the
+  enum fixes: axis fix PASS, all validate_body gates PASS (freejoint drop
+  settles feet at 6.7 mm), W2L air gate PASS (18 bursts, 1.027 s, antiphase
+  −0.414) on the CORRECTED V3 wiring — but the 20 s Li ground gate = NOT YET
+  (0 stance episodes: heels never load; next suspects = settle-assist
+  co-contraction lifting the body / contact-force threshold). (e) SIMSCAPE
+  moved to the LAPTOP (Ben's call; easteregg2 is R2025a): units test PASS
+  (6.07e-4 mV), KneeReflexDemo R2025b OK, SNS_SpinalNetwork verify PASS
+  4.201e-06 mV at RG_F_l — THE 4.2e-6 NUMBER NOW HAS AN IN-REPO ARTIFACT
+  (SNS_Simscape\logs\laptop_20260930\runs.log; housekeeping item closed).
+  export_slx_to_R2025a.m extended with a SNS_SpinalNetwork section (1948/1948
+  links relinked; note the exported SNS_SpinalNetwork_R2025a.slx lands in the
+  SNS_Simscape ROOT, not results\ — exportToVersion saves to cwd). (f) Retune
+  3rd-relaunch bugs fixed: BASE (v10 multipliers) was never merged into
+  _curriculum_pruned configs (cost the rg_adapt KeyError) and prev_best on a
+  WAITING-only study raises 'Record does not exist' — studies healthy since
+  ~01:20 (air + 3×walk at BelowNormal).**
+  **09-30 LI DROP-PROTOCOL PASS (Ben's correction: "the Li + 2-layer CPG walkers are
+  SUSPENDED IN AIR, then dropped on the platform"): the old gate spawned feet-down
+  with a settle-assist hack (my invention, NOT the protocol) — replaced in
+  test_li_stepping.py with the virtual-walker protocol: harness hold (feedforward
+  weight + vertical PD, feet CLEAR, CPG air-steps) → LOWER z_target to contact
+  height over --lower 1.0 s → full release (a hard drop from 4 cm ALSO tried:
+  buckles). RESULT after both drop styles: 0 stance episodes, pelvis collapses to
+  0.10-0.14 m. ROOT CAUSE ISOLATED BY PROBE (w2l_mujoco\probe_hold.py, max-effort
+  hold test): (1) all-muscles-max = flail (co-contraction), (2) EXTENSORS-ONLY
+  holds under harness (z 1.01) then COLLAPSES 0.5 s after release with knees at
+  −64° THROUGH their [0,+60]° limit and ankles through theirs — sum Fmax 16 kN is
+  ample, but the port has NO elastic load path (Li's LinearHill Kse/Kpe absent;
+  rigid tendons) and MuJoCo soft joint limits YIELD under the 411 N body weight.
+  CONCLUSION: Li closed-loop ground walking is BODY-FIDELITY-blocked, not
+  CPG/protocol-blocked — needs (a) stiff limit solimp on the 8 hinges, (b) Kpe
+  as tendon stiffness/springlength (goal3 §3.2 stability caveats: ≥1 kg virtual
+  tendon mass or 0.5 ms), THEN re-run probe_hold until the hold passes, THEN the
+  20 s gate. The W2L ground test (test_w2l_ground.py) still runs the PERMANENT
+  rig (leash + soft harness + tilt = the M6 "harness march") — converting it to
+  the air-hold→lower→release protocol is QUEUED.**
+  **10-01 CROSS-PLATFORM WORKFLOW (dwfrun-6971fe5f, Ben's /workflow; full report =
+  `spinal\campaigns\20260930\CROSS_PLATFORM_REPORT.md`, board artifact "Four model
+  tracks"; all findings evidence-quoted in the report):** (1) ANIMATLAB VALIDATION
+  11/11 PASS incl. **Li's own asim rerun reproducing his 2023 reference** (periods
+  1.2992/1.3327 s vs 1.3005/1.3363; height 0.952–1.020 m; 0.637 m/s; DataTool_7
+  byte-near-identical). (2) MuJoCo PARTIAL: Li 0 stance in ALL 7 protocol variants
+  (pelvis 1.001–1.007 m, CPG knee pose −64..−67° keeps feet clear — next: below-
+  keyframe z target / contact-gated lowering / Kpe); test_w2l_ground CONVERTED to
+  Ben's drop protocol — **stand=FULL** (no fall, tilt ≤2.1° all 4 rig scales) but
+  walk=NO-GAIT (heel SN 0.00 mV, toe-only, +1 mm); agent also fixed stale 166-
+  synapse census asserts in build_w2l_split/aff_net.py (now 87/164, the 09-30 V3
+  correction's follow-through) + duplicate-freejoint bug in write_ground_xml.
+  REGRESSION FLAG: test_w2l_air.py FAILS airborne on the freejoint body (28,890
+  contacts; rhythm itself reproduces 18/1.027 s/−0.414) — air-PASS claims predating
+  the rebuild are not citable until the gate pins/lifts the root. (3) SIMSCAPE
+  DONE: SNS_W2L_CPG.slx (dev\build_sns_w2l_cpg_20260930.m; custom NapHC block,
+  FIXED tau_h 250 ms) — **0.0% period error vs numpy, r=1.000 xcorr, RMSE 0.10 mV**;
+  caveat: the W2L net LATCHES under tonic alone (reporter re-ran the probe: R RG-E
+  −1.154 mV, 0 bursts) — both engines use the heel-train protocol; core is 42
+  synapses, missing pieces inventoried in sns_simscape.md. (4) BPA MuJoCo gate
+  **PASS** (test_bpa_stepping.py: 63° knee air-stepping at 1.542 s, retained
+  stand 0.916 m, stance 7/5, loads 880/1372 N, 372 kPa < 620 ceiling) — key fixes:
+  BPA rest length sized to MAX route length (festo4 explodes for negative strain),
+  force-servo lowering; blockers: knee-ext route is FLEXION-sign on this body
+  (−0.0553 N·m/N), kmax_frac 0.6 > Festo DMSP ~0.2 (Xi-program redesign).
+  Simscape BPA demo clean but 0 sustained cycles (tuning-blocked). EB475WS4
+  dissertation track NOT RUN (machine unreachable) — sync = commit+push to origin,
+  pull everywhere; campaign files UNCOMMITTED on both trees (3 MuJoCo files
+  hash-identical).**
 - Custom skills are version-controlled in the `ZCode_Skills` repo. **EB475WS4: the repo is
   at `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills`** (NOT `D:\GitHub\` — corrected
   2026-09-16; easteregg2: `D:\GitHub\ZCode_Skills`; laptop: `Documents\GitHub\ZCode_Skills`).
@@ -121,8 +285,14 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
    copy). Use the `latex-overleaf` skill for Overleaf work (installed on this machine via the
    ZCode_Skills repo junction). 2026-09-21: three Xi-methods figures (`xiFrameGeo` /
    `xiBalance` / `xiWrapLoss.pdf`, in both figs/Aim2 dirs) wired into 20-methods.tex
-   (fig:xiFrames/xiBalance/xiWrapLoss); generator = `Dissertation\Notes\make_xi_method_figures.m`
-   (draws from FlxPinBPASet/ExtPinBPASet; details + open items in summary.md).
+   (fig:xiFrames/xiBalance/xiWrapLoss). [2026-10-01: those figures are SUPERSEDED — the
+   live Methods set is the ChatGPT-session `xiFrameTransform`/`xiProjection` pair, no live
+   `\ref` references remain to the old set; their generator
+   `Dissertation\Notes\make_xi_method_figures.m` exists NOWHERE (searched laptop,
+   easteregg2, EB475WS4 + full git history at Ben's delete ruling — it was never
+   committed), and the three red-marked folders `CHATGPT_staging_20260925\`,
+   `Overleaf_review_20260926_yellow\`, `output\` were DELETED at Ben's same ruling
+   (git-recoverable).]
 2. Design and control of bipedal humanoid robot legs with artificial muscles (PAMs/BPAs)
    controlled by a synthetic nervous system. Lab: AARL (Agile and Adaptive Robotics Lab), PSU.
 3. **Xi-correction-factor program** — run minimizers against pinned-knee test data in
@@ -966,6 +1136,22 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     re-passed). Editor = snapshot of the architecture, NOT live (live = neuro_scope.py /
     runner --scope).
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
+- `Code\Hardware\walker_io\` — Python walker IO stack (Orin daemon, lab console, valves,
+  sensors, afferents; README inside). Placement is wrong per Ben (2026-09-30) — fold into
+  the post-defense reorg below. The empty `Code\Solid_Models\` tree (Simscape_Part_Library\
+  OpenSim_Bones, zero files) was deleted 2026-09-30 at Ben's ruling.
+- `tmp\` — session scratch at repo root; contents are disposable by convention (emptied
+  2026-09-30 at Ben's ruling — the dissertation overleaf round-1 staging that lived there
+  is preserved in git history; canonical dissertation = Documentation\...\Dissertation\).
+- **POST-DEFENSE REORG PLAN (Ben, 2026-09-30 — do NOT execute before the dissertation
+  deadline; every move runs the repo-hygiene refs-impact protocol first):** (1)
+  consolidate neuromechanical models under `Neuromechanical_Models\`: SCONE, AnimatLab,
+  SNS_Simscape, and SNS-toolbox model content all belong in the eponymous folder.
+  (2) `Code\MuJoCo_SNS\spinal\` has a crazy number of loose files — organize internally.
+  (3) `Code\Hardware\walker_io` belongs with the other hardware code, not at Code level.
+  (4) Root `0` stray connectome layout dump (broken edge targets, accidental 09-23
+  redirect artifact from the editor session) DELETED 2026-09-30 at Ben's ruling —
+  recoverable from git history (added in 5ec3635).
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the
   cable winch on the test mechanism. "Bending" (Xi2) is modeled as a simple Hooke-law spring in

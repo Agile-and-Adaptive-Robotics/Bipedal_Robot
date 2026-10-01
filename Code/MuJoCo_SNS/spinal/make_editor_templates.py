@@ -27,7 +27,13 @@ changes; the editor reads the file fresh on every page load.
 import json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-NM = r'D:\Github\Bipedal_Robot\Neuromechanical_Models'
+# repo root derived from THIS file (spinal/ -> MuJoCo_SNS/ -> Code/ ->
+# repo) so the generator runs on any machine; AARL_NM env overrides for
+# non-standard layouts (the old hardcoded D:\Github path was another
+# machine's and failed with PermissionError on the laptop).
+_repo = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
+NM = os.environ.get('AARL_NM',
+                    os.path.join(_repo, 'Neuromechanical_Models'))
 TMP = os.environ.get('TEMP', r'C:\Users\Ben Bolen\AppData\Local\Temp')
 
 TYPES = set("""SN-Ia SN-II SN-Ib SN-heel SN-toe PORT-load IN-V0D IN-V0V IN-V1
@@ -1485,6 +1491,33 @@ def main():
             'knobs stay top-level; every boundary wire attaches to its '
             'subsystem node; double-click a subsystem to see the true '
             'flat wiring; the unchanged flat spec = "' + key + '_flat".]')
+
+    # ---- 2026-09-30: PRUNED s3k (the 09-28 prune-matrix combo config,
+    # CONFIRMED by prune_combo.py: interleg + contact + Ib-central +
+    # rg-weak all cut, walk IMPROVES). Derived from the flat s3k spec:
+    # drop edges whose gain tag belongs to a cut component; the runner
+    # equivalent = COMBO_KEYS zeroed + --no-interleg (prune_combo.py).
+    PRUNE_TAGS = {'heel_rge', 'toe_rge', 'contact_onset', 'pm_gain',
+                  'pm_add', 'pm_ws', 'pm_aff', 'ib_rge', 'ib_reversal',
+                  'ib_to_IBEXC', 'ib_to_LBIN', 'c1_gain', 'v3_gain',
+                  'v3_to_contraInE', 'v3_to_ibexc', 'contra_kinh',
+                  'contra_swing', 'ia_f_contra_f'}
+    pruned = json.loads(json.dumps(out['walker_s3k_flat']))
+    keep = [e for e in pruned['edges']
+            if e.get('tag', '') not in PRUNE_TAGS]
+    pruned['edges'] = keep
+    pruned['_note'] = (
+        'PRUNED s3k (2026-09-28 prune matrix, 4-way combo CONFIRMED): '
+        'interleg commissurals + contact machinery (heel/toe/onset/pm '
+        'phase machine) + Ib central/group pathway + RG weak excitation '
+        'ALL CUT. Leave-one-out cost of each cut = 0 or BETTER (walk '
+        '+10.3, stand/push identical); runner form = COMBO_KEYS in '
+        'prune_combo.py + --no-interleg. Derived from walker_s3k_flat '
+        'by tag filtering (drawn tags map 1:1 to the zeroed gain keys).')
+    out['walker_s3k_pruned_flat'] = pruned
+    pruned_sch = make_schematic(json.loads(json.dumps(pruned)), 'walker')
+    pruned_sch['_note'] = pruned['_note'] +         ' [STRUCTURE: subsystem schematic like walker_s3k.]'
+    out['walker_s3k_pruned'] = pruned_sch
 
     for nm, spec in out.items():
         errs += validate(nm, spec)
