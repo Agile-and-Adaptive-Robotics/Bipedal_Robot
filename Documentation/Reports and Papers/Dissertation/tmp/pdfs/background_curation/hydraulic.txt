@@ -1,0 +1,1038 @@
+      Advanced Robotics
+
+
+
+
+      ISSN: 0169-1864 (Print) 1568-5535 (Online) Journal homepage: https://www.tandfonline.com/loi/tadr20
+
+
+
+
+Trends in hydraulic actuators and components in
+legged and tough robots: a review
+
+Koichi Suzumori & Ahmad Athif Faudzi
+
+To cite this article: Koichi Suzumori & Ahmad Athif Faudzi (2018) Trends in hydraulic actuators
+and components in legged and tough robots: a review, Advanced Robotics, 32:9, 458-476, DOI:
+10.1080/01691864.2018.1455606
+
+To link to this article: https://doi.org/10.1080/01691864.2018.1455606
+
+
+
+
+       Published online: 08 Apr 2018.
+
+
+
+       Submit your article to this journal
+
+
+
+       Article views: 1214
+
+
+
+       View related articles
+
+
+
+       View Crossmark data
+
+
+
+       Citing articles: 23 View citing articles
+
+
+
+
+                      Full Terms & Conditions of access and use can be found at
+             https://www.tandfonline.com/action/journalInformation?journalCode=tadr20
+Advanced Robotics, 2018
+VOL. 32, NO. 9, 458–476
+https://doi.org/10.1080/01691864.2018.1455606
+
+
+SURVEY PAPER
+
+Trends in hydraulic actuators and components in legged and tough robots: a
+review
+Koichi Suzumoria and Ahmad Athif Faudzia,b,c
+a
+ School of Engineering, Tokyo Institute of Technology, Tokyo, Japan; bCentre for Artificial Intelligence and Robotics, Universiti Teknologi Malaysia,
+Johor Bahru, Malaysia; cFaculty of Electrical Engineering, Universiti Teknologi Malaysia, Johor Bahru, Malaysia
+
+
+
+    ABSTRACT                                                                                                             ARTICLE HISTORY
+    Hydraulics is an old technology which is being applied in many applications including large                          Received 23 August 2017
+    machinery, heavy industries, and early robotics. The traditional features of hydraulics that possess                 Revised 17 December 2017
+                                                                                                                         and 11 March 2018
+    a high power to weight ratio compared to other power transmission system make it suitable to
+                                                                                                                         Accepted 13 March 2018
+    work in a tough and robust environment. However, the trend of hydraulic system has decreased
+    since the introduction and mass usage of the powerful brushless motor and rare earth magnetic                        KEYWORDS
+    motor in industrial sector since the 1980s. Recently, hydraulic systems have shown incremental                       Hydraulic components;
+    demand where the innovation of hydraulic actuators and components was actively conducted                             tough robots; trends in
+    aimed at compactness, lightweight with higher energy-efficiency, clean and friendly features for                     future hydraulics
+    many applications in both mobile and industrial hydraulics. This review shows the hydraulic trends
+    in tough robotics applications which focus on legged robots such as humanoid, search and rescue
+    robot and large machinery. New innovations of hydraulic components such as actuators, pump,
+    and other accessories and trends are discussed for future hydraulics in tough robotics applications.
+
+
+
+1. Introduction                                                              long distances, best applicable to low-power operations, easy
+                                                                             to control and available at reduced cost. Examples of legged
+For years, scientists have developed machines and systems
+                                                                             robots and humanoids developed using electric actuation
+to assist humans in their daily activities, starting with the
+                                                                             are R-Hex [11], TITAN series [12–14], HONDA ASIMO
+invention of mechanical power transmission that employ
+                                                                             [15], TOYOTA humanoids [16], Lola robot [17], JSK-H7
+a variety of kinematic mechanism such as belt, chains,                       [18], Justin from DLR [19], MOTOMAN-SDA20 from
+pulley, gearing system, and bar linkages which are driven                    Yasukawa Electric Corp. [20], and NAO [21]. Nevertheless,
+by manual motions from human, animals, and manip-                            the electrical system is limited by the magnetic saturation
+ulation of environmental source such as water flow [1].                      and heat dissipation and its usage with mechanical reduc-
+Shortcomings of these system include limited speed and                       tion gear device also limits high power application. Without
+torque control capabilities, uneven force distribution and                   specific control algorithm or additional supplementary
+the requirement for large space. Advances of innovation                      mechanical components, it is also difficult to produce the
+introduce the major contemporary power transmission                          stiffness changes needed for safety [22].
+systems [2] that can be classified as electrical [3], pneu-                      On the other hand, pneumatic systems could achieve
+matic [4,5], hydraulic [6], and other systems such as shape                  compliance characteristics because of the safety advantage
+memory alloy [7], soft actuator [8,9] in macro and micro                     of its natural air resources that possess natural mechani-
+application [10].                                                            cal compliance. Using the natural compliance, pneumatic
+                                                                             actuators could emulate natural spring and damping char-
+                                                                             acteristics in apparatus chair application [23], robotic
+1.1 Electrics and pneumatics
+                                                                             forceps [24], ball and beam system [25], rehabilitation
+In recent years, electrics and pneumatics are the types of                   robotics [26,27] and robotic leg [28], exoskeleton [29] and
+drive system that have dominated the global market for                       more. Although pneumatic systems are sensitive to small
+actuators in controlling machineries and equipment [6].                      changes in pressure or flow, the safe properties of the air
+Electric systems are suitable for power transmission over                    system are suitable for human friendly application. Most
+
+
+
+CONTACT Koichi Suzumori               suzumori.k.aa@m.titech.ac.jp
+© 2018 Taylor & Francis and The Robotics Society of Japan
+                                                                                                       ADVANCED ROBOTICS         459
+
+
+
+
+Figure 1. Trends in oil hydraulic and water hydraulic (Adapted from [38–43].
+
+
+of the soft robotics [8,9] also apply pneumatic source to             to electric drive, ushering in the era of motor actuation.
+drive the system such as medical application [30], mimic              The improvement of power density in motor has replaced
+biological creatures [31–33], Giacometti structures                   hydraulics in industries and in robotic application.
+[34,35], biomimetic hands [36,37], and others.                            In 1994, the Danfoss Group introduced tap water
+                                                                      hydraulic system components known as Nessie® product
+                                                                      and revived the water hydraulics application as an environ-
+1.2 Hydraulics
+                                                                      mental friendly new fluid power drive system. Currently,
+‘Hydraulics’, on the other hand, which comes from the                 as certain production machinery and their drive systems
+Greek word for water, comes in third despite its popular              especially in food industries [47] require environmental
+usage since the eighteenth century. Figure 1 traces the               friendly standard, water hydraulics is attracting attention
+development history of water and oil hydraulics to date               again because of its cleanliness and safety [38]. Although
+adapted from [38–42] and [43]. The origin of fluid power              water hydraulics components are prone to rust and have
+system started with water hydraulic and further applied oil           problem of low lubricity and corrosive property, these
+hydraulic in large machinery for higher power. In 1884,               problems have been overcame by recent development of
+the London Hydraulic Power Company was set up to pro-                 new materials, particularly ceramics and usage of stainless
+vide a water hydraulic system to power lifts, theatrical              material for its components, which increased the over-
+scenery, and other systems [6]. With the invention of axial           all cost. Oshima et al. developed new rotary-type water
+piston pump in early 1900s that can deliver high power,               hydraulic pressure intensifier with a basic structure similar
+the application of oil hydraulics increased drastically. The          to that of water hydraulic planetary gear motor [48]. A
+world’s first industrial robots, Unimate [44] and Versatran           water hydraulic robot was also reported in [49]. Focchi
+[45] were born in the US and were hydraulically actuated              et al. investigates the benefits of using water instead of air
+to deliver powerful and robust actuation. The first bipedal           as its working medium with FESTO pneumatic artificial
+walking humanoid robot, WABOT, was also developed                     muscle [50]. In hazardous environment such as ITER,
+using hydraulic actuation by the late I. Kato in 1970s from           the development of a teleoperation system using water
+Waseda University [46]. At the time, electrical motor drive           hydraulic manipulator is essential. Hydraulic remote
+system has limited power density to be used for such                  handling system for divertor maintenance of ITER was
+applications. Also, around 1960, McKibben-type artifi-                discussed in [51] a parallel water hydraulic weld/cut robot
+cial muscle was invented, and new ‘wearable robot’ for                for machining processes in ITER vacuum vessel was pre-
+rehabilitation was developed. However, in the mid 1980s,              sented in [52]. The first development of oil hydraulic
+when a rare earth magnetic motor and brushless motor                  muscles was a 3 MPa Flexible Hydraulic Actuator (FHA)
+entered the practical stage, almost all applications moved            in 1994 [53], and further improved with 5 MPa [54] and
+460       K. SUZUMORI AND A. A. FAUDZI
+
+
+
+
+Figure 2. Sales of Hydraulic in the US [41] and Japan [42] from 2008 to 2016.
+
+
+8 MPa [55] oil hydraulics McKibben muscles. Other new                 excavators [60,61], and compact hydraulic power unit in
+actuators such as the 35 MPa cylinder and other hydraulic             exoskeletal robotics system [62].
+components will be discussed in Section 3. These compo-                   Associated with high force as its advantage, the range of
+nents are important for the development of tough robot                application is huge and mainly divided to mobile hydrau-
+for various applications.                                             lics and industrial hydraulic [57]. Mobile hydraulics can
+   Recently, the advanced of additive material has                    be found in applications where all hydraulic components
+improved the fabrication of hydraulic parts with lighter              are embedded together as all-in-one system. On the other
+weight and fast production lead time [56]. Traditional                hand, industrial hydraulics can be found in stationary
+manufacturing is more suitable for large-scale produc-                system where they require bigger space for hydraulics
+tion, whereas 3D printing may be more economical                      industrial line setup. JFPA reported in their 2016 report
+for small volumes of complex hydraulic components.                    on the areas of hydraulic applications with their percent-
+Liebherr-Aerospace and Transportation SAS used a 3D                   age. Figure 3 shows Japan’s distribution of components
+printed spoiler actuator valve block, to be the first metal           and the sector into which hydraulics were applied in 2016
+3D printed hydraulic components on an Airbus A380 [43].               with total equipment shipment amounting to Japanese Yen
+   The sales of hydraulics in Japan from Japan Fluid Power            290 billion divided into components and market demand.
+Association (JFPA) and in the US from National Fluid                  Valves and hydraulic motor show the highest component
+Power Association (NFPA) are shown in Figure 2. Overall               with 26 and 25%, respectively, followed by pump and cyl-
+trends show the increase in hydraulic sales with some dec-            inder actuator with 20 and 12%, respectively. These com-
+lination in 2009. The recession in 2009 was a period of               ponents are mainly used in automotive industries for civil
+general economic decline observed in world markets and                engineering construction machines such as excavators
+affected the sales of hydraulics. In the latest data published        and tractors with 42%, specially equipped vehicle such as
+by the NPFA shows industry, shipments of fluid power                  fire trucks and garbage trucks, car production, and ships
+products for May 2017 increased 17.5% compared to May                 with 3% each and agricultural vehicles with 2% usage.
+2016 [57]. This growth shows increment in application of              Industrial sectors apply hydraulics in primary and second-
+mobile and industrial hydraulics especially the use of high           ary metal fabrication, plastic machineries and machine
+power and robust environment such as robotics. Some of                tools with a total of 11% of the overall market. Hydraulic
+the drawbacks of hydraulics such as potential oil leakage,            robots and other research application falls under Others
+sensitivity to dirt, unfavorable efficiency factor, and slower        category with 11% [42].
+response have been understood by hydraulic engineers                      It is important to note that each technology has its own
+and researchers. New components and hydraulic innova-                 preferred application areas. To illustrate this, comparison
+tions have been applied to solve these issues towards reviv-          table has been drawn to compare the typical data between
+ing the function of hydraulics in industry. Some recent               the three most commonly used technologies – electric-
+applications applies hybrid system development using a                ity, pneumatics, and hydraulics [63,64]. This paper will
+combination of different drive system in applications such            discuss tough robotics as one of the areas of application
+as electro-hydrostatic actuator [22,58], service robot [59],          in mobile hydraulics with recent research conducted, its
+                                                                                                               ADVANCED ROBOTICS        461
+
+
+
+
+Figure 3. Japans distribution of components and the applying sector of hydraulics in 2016.
+Notes: Total equipment shipment amounted to Yen 290 billion by market demand and component composition [42].
+
+
+
+hydraulic components which benefit the research to the                       difficult, and dangerous situations. Application of robot
+hydraulic world and the trends in hydraulic in the near                      technologies is important in improving response to the
+future.                                                                      occurrence of disaster such as earth quake, floods, fires etc.
+                                                                             However, most of the current available robots are not up
+                                                                             to par to be used in these environments and could be han-
+2. What is tough robotics?
+                                                                             dled only in lab controlled environment with limited per-
+Normal definition of tough refers to object or system                        formance in the extreme environment of disasters. Binoy
+which can withstand adverse condition, physically robust                     presented a survey on urban search and rescue robot
+and prone to violence in rough handling. Applying these                      where he discussed on how robots could help in disas-
+characteristics to robotics produce a system with tough-                     trous environment such as in World Trade Centre disaster,
+ness but not limited only to physical stiffness. As an initia-               New York [68]. Actual experience of operating the robot
+tive from Cabinet Office Council for Science, Technology                     in the World Trade Centre disaster was discussed in [69]
+and Innovation of Japan, Tough Robotics Challenge (TRC)                      where Urbots from SPAWAR, Solem from Foster-Miller,
+project was proposed under Impulsing Paradigm Change                         Packbot from Univ. of South Florida and ATRV2 from
+through Disruptive Technologies Program (ImPACT) led by                      iRobot and MicroVGTV from Center for Robot-Assisted
+S. Tadokoro which has given a new definition for tough                       Search and Rescue were used for operation. Path-planning
+robots [65,66]. The project focuses on different kinds of                    for firefighter robots in large petrochemical complexes was
+tough robots for real applications in search and rescue, i.e.                presented by [70]. In the following paragraphs, we will
+aerial vehicles, cyber rescue canine, construction robots,                   give a brief overview of the ImPACT project’s previous
+serpentine robots and legged robots that can perform in                      results in the field of search and rescue robots.
+an uncontrolled environment. This section will discuss                          The ImPACT project [65,66] was initiated to combine
+the application of hydraulics in search and rescue robot-                    experts from academia and industry towards developing
+ics, legged robots, humanoids, and big machines such as                      and applying essential technologies for remote auton-
+excavators and others.                                                       omous robots that are tough and can work in extreme
+                                                                             disaster conditions. The robot will possess physical tough-
+                                                                             ness for hydraulic robot [71,72], toughness for continuous
+2.1 Search and rescue robot
+                                                                             navigation with a broken propeller and limited GPS signal
+Large-scale disasters have occurred frequently, which                        for drones [73], toughness to adapt in uneven surfaces and
+demonstrates the urgency in applying robots for search                       changing walking modes for legged robot [74], cyber-dog
+and rescue operation in 3D environment [67] of dirty,                        system that can locate and gives information with sensors
+462       K. SUZUMORI AND A. A. FAUDZI
+
+
+
+
+Figure 4. Object handling with hand mode and gravel digging with shovel mode [72].
+
+
+
+
+Figure 5. Components of tough robotic hand (35 MPa cylinder, 35 MPa rotary actuator, and new swivel joint) [71].
+
+
+and communication capability [75], serpentine robot to               by Komatsu and Osaka University [72]. Figure 4 shows
+navigate and inspect in various pipe diameter [76] and               the operating modes of the hand which are divided to
+other real tough robot applications.                                 hand mode for object handing and shovel mode for gravel
+   Suzumori and his co-researchers proposed several                  digging. Figure 5 shows the new hydraulic components
+innovations of hydraulic components to be applied in                 used for the robotic hand such as the 35 MPa cylinder,
+real tough environments. Among the hydraulic compo-                  35 MPa rotary actuator and swivel joint [71]. Developed
+nents are new cylinders [77], new muscles [78], new valves           hydraulic cylinder has twice force/mass ratio of conven-
+[79], and new power pack with miniature pump [39]. The               tional hydraulic cylinder and has small friction that could
+group recently developed a four-fingered hand [80] using             achieve fine force control with large force. The developed
+new hydraulic actuator for use with construction robots              hydraulic motor (rotary actuator) has about three times
+and was attached to one of the robot’s arms developed                torque/mass ratio of conventional hydraulic motor. The
+                                                                                                               ADVANCED ROBOTICS            463
+
+
+
+
+Figure 6. Hydraulic legged robots ranging from biped to hexapod robot. (a) GE truck [81], (b) ASV [82], (c) Raibert’s Monopod [116], (d)
+Raibert’s Quadruped [116], (e) BigDog [85,86,126], (f) TITAN XI [14], (g) ROBOCLIMBER [84], (h) HyQ [88], (i) COMET-IV [143], (j) WildCat
+[87], (k) Scalf-1 [92], (l) Quadruped robot [93], (m) Baby Elephant [94], (n) LS3 [87], (o) RL-A1 [95], (p) Jinpoong [96], (q) MiniHyQ [89], (r)
+Spot [87], (s) Handle [87], and (t) HyQ2Max [90,91].
+
+
+swivel joint used gives flexibility for the hydraulic hose to             over obstacles. One of the biggest challenges with the
+move around the joints and reduce possibility to be tan-                  machine was that it required 227.3 liter of oil per minute
+gled and twisted. Using these components, it is possible for              (l/min) to operate, so it had to be continuously attached to
+the hand to change and control its grip strength according                hydraulic lines. McGhee and Waldron built the Adaptive
+to the shape of objects.                                                  Suspension Vehicle (ASV), the largest terrain adapted
+                                                                          walking machine ever built [82]. The robot uses a two-
+                                                                          stage hydraulic-hydrostatic system that overcomes large
+2.2 Hydraulic legged robot
+                                                                          throttling losses inherent in valve control during full-
+Hydraulic legged robot may come in many configurations                    speed walking. It was first operated outdoor by Vohnout
+depending on the application from bipedal to hexapedal                    in 1987 through an aircraft joystick and successfully simu-
+robots. Compared to the electrical driven robots, hydrau-                 lated timber harvesting trial in 1990 [83]. In 2003, Hirose
+lic system is more robust and has large power while main-                 developed TITAN-XI, a remotely controlled quadruped
+taining dexterous function required by the system. Figure                 robot developed to walk on slopes to perform autonomous
+6 shows the development of tough hydraulic legged robots                  drilling holes of rock bolt on mountain area to prevent
+and their specifications in Table 1 for various applications.             landslide or steep slope failures [14]. ROBOCLIMBER
+    Among the early legged robots applying hydraulic                      also performed the same function of deep drilling on a
+system is the GE Walking Truck which was developed                        mountain [84].
+by Mosher in close collaboration with General Electric                       The first agile and tough hydraulic legged robot, BigDog,
+Corporation in 1965 [81]. The machine, which was 3.3 m                    was developed by Boston Dynamics using hydraulic actu-
+tall and weighed 1400 kg, could move around and climb                     ation under the American Defence Advanced Research
+464         K. SUZUMORI AND A. A. FAUDZI
+
+
+Table 1. Details of hydraulic legged robot.
+Name                  Height (m)    Weight (kg)   Payload (kg)    Power (kW)            Actuation           Perception         Joint   Year
+GE truck [81]             3            1400            –               7.46             Hydraulic         Manual controlled     12     1969
+ASV [82]                  2             –              –          52.2 Gasoline         Hydraulic         Terrain scanning      18     1985
+                                                                      engine                                   sensor
+Raibert’s monopod         1.1          17.3            –                –             Pneumatic and               –             3      1984
+  [116]                                                                                 hydraulic
+Raibert’s quadruped       0.35         25.2            –                –               Hydraulic         Remote controlled     8      1987
+  [116]
+BigDog [85,86,126]         1           109            45            Gasoline             Hydraulic         Lidar and stereo     16     2012
+                                                                                                               camera
+TITAN XI [14]               2          7000           –          2.8 Litre engine       Hydraulic         Remote controlled     12     2004
+ROBOCLIMBER [84]          0.65         3500          4000          16 hydraulic         Hydraulic                  –            12     2009
+HyQ [88]                   0.5          91            –             AC source         Hydraulic and        Remote control       16     2008
+                                                                                         motor
+COMET-IV [143]            3.3          2120           –             Gasoline            Hydraulic         LRF vision camera     16     2012
+SCalf-1 [92]              0.4           65            80               –                Hydraulic          Remote control       12     2012
+Quadruped robot            –            –             50            Battery             Hydraulic                  –            16     2012
+  [93]
+Baby elephant [94]        0.5          130            60             Battery        Motor and hydraulic   Remote controlled     12     2014
+Wildcat [87]              1.17         154            –          Methanol engine        Hydraulic          Terrain scanning     14     2013
+                                                                                                                 laser
+LS3 [87]                  1.7          590            181         Gas and diesel         Hydraulic         Lidar and Stereo     12     2012
+RL-A1 [95]                 1           60.2           120               –                Hydraulic          Remote control      16     2014
+Jinpoong [96]             1.2          120             –          2 power pack           Hydraulic               Lidar          16     2008
+                                                                      engine
+MiniHyQ [89]              0.77         35             –             AC source            Hydraulic                –             12     2015
+Spot [87]                 0.94         75             45             Battery             Hydraulic        360 scanning Lidar    12     2015
+Handle [87]                 2          105            45             Battery           Hydraulic and       Depth cameras        10     2016
+                                                                                          electric
+HyQ2Max [90,91]           0.54             80         40            AC source            Hydraulic                –             12     2017
+
+
+
+Projects Agency (DARPA) in 2005. BigDog was the first                  2011 [92]. In 2012, RunBin et al. proposed a quadruped
+advanced rough-terrain robot to leave the lab and adapt                with new control method, Time-Pose control method and
+with the real-world environment. BigDog was originally                 chose the enhanced extended Jacobian matrix method for
+developed to serve as a robotic assistance to accompany                inverse kinematics [93]. In 2013, Baby Elephant that has
+soldiers in terrain which is too rough for conventional                heavy load capability and the elephant like appearance was
+vehicles to move [84–86]. The Boston Dynamics machines                 reported in [94]. The robots leg is a serial-parallel hybrid
+appear to be optimized for specific tasks and applied                  mechanism that can support maximum walking speed of
+hydraulics as described in [87]. WildCat could run at                  0.5 m/s. The static gait experiment conducted shows that
+32 km/h while maneuvering and maintaining its balance                  the Baby Elephant could walk on different kinds of terrains
+while LS3 is a tough hydraulic machine that can carry                  with loads up to 100 kg. Researchers from Japan, Hyon
+181 kg of payload. Spot, an improved version of BigDog,                et al., developed a hydraulic quadruped robot RL-A1[95]
+Wildcat and LS3, is a quiet four-legged robot with extraor-            in 2014. Jinpoong robot [96], a quadruped from Korea
+dinary capability to locomote on rough terrain and easy                inspired by the gait of horses, was developed in 2015.
+to be operated by human. Handle has a unique design                    Other legged robots are shown in Figure 6 with charac-
+compared to the previous quadruped with 10 actuated                    teristics as in Table 1 where most show capability to work
+joints which combines the rough-terrain capability of legs             in tough environment.
+with the efficiency of wheels using both hydraulic and
+electric actuators. It uses many of the same principles for
+                                                                       2.3 Hydraulic humanoid
+dynamics, balance, and mobile manipulation​found in the
+quadruped and biped robots previously built. Most of the               The first humanoid robot, WABOT, was hydraulically
+Boston Dynamics robot details were not disclosed except                driven and could achieve stable walking on steep surface
+for some papers on BigDog [84–86].                                     in early 1970s [46]. However, recent humanoid and dual
+   HyQ robot is a quadruped robot headed by Semini [88]                arm robots were electrically driven [15–21]. The number
+who began their research to develop a hopping leg proto-               of hydraulic humanoids may not be as many as electri-
+type. Newer version was presented with optimized design                cal driven but they could give comparable performance
+and new actuation system; MiniHyQ [89] and HyQ2max                     with higher value of force. Full body hydraulic human-
+[90,91]. Researchers from China had developed SCalf-1                  oid robots by ATR, Computational Brain (CB) made by
+robot that could trot with 80 kg payload at 0.4 m/s in                 Sarcos Inc. [97] have 50 DOF, exploring the underlying
+                                                                                                          ADVANCED ROBOTICS          465
+
+
+
+
+Figure 7. Hydraulic humanoid robot. (a) WABOT [46], (b) CB (Sarcos) [143], (c) Atlas [87], (d) Hydra [99,100], (e) PETMAN [98], (f) RL-H1
+[102], (g) Toshiba TV800 [101], and (h) TaeMu [128].
+
+
+processing of human brain while interacting with the                   4 kg driven by hydraulic linear servo actuator that could
+world. The robot has full body compliant control, percep-              achieve higher torque and speed than human arms. A
+tion and physical power for walking. PETMAN [98] was                   double four-bar linkage provides a wide range of motion
+developed with human anthropometry that could simul-                   to the shoulder joint [102]. The lower body part from
+taneously achieve human-like strength, motion, and speed               the same researcher, called TaeMu, achieved fast torque
+while wearing human clothing for individual protective                 control with 15 active joints that are driven by hydraulic
+equipment (IPE) test. Atlas, from Boston Dynamics [87],                servo cylinders. The researcher highlighted five reasons
+was built upon the software and mechanical advances                    why hydraulic servo valve drive is suitable for full-sized
+of PETMEN to advance in rough terrain mobility. The                    humanoid robot platforms. (1) The newly developed servo
+design took the advantage of 3D printing to save weight                actuators are compact and durable, (2) the system could
+and space of its structure, resulting in a compact robot               achieve human-comparable force and speed with high
+with high strength-to-weight ratio. Powered by hydrau-                 power density, (3) it is cost-efficient compared to other
+lic actuation, its control system coordinates motions of               actuation, (4) the joints are scalable and finally (5) the
+the arms, torso, and legs to achieve whole-body mobile                 torque of the robot can be controlled and has good torque
+manipulation. Atlas are tough enough to be pushed, able                tracking performance, comparable with human capability.
+to manipulate objects and walk on rough terrain using                  Figure 7 shows hydraulic humanoid robot with its char-
+the stereo vision, range sensing, and other sensors. The               acteristics as in Table 2.
+University of Tokyo and NEDO developed Hydra [99], a
+full body hydraulic actuated robot, which started from the
+                                                                       2.4 Excavators and other tough application
+development of hydraulic robotics hand [58]. The robot,
+which has hydraulic pumps in the robot’s limbs, attempted              Excavators are known for tough work for construction
+to join the DARPA challenge in 2015 but was withdrawn                  and heavy lifting. Without hydraulic drive system, the
+due to technical challenges [100].                                     work could have been impossible with human capability
+    Half body system such as Toshiba’s dual arm has an                 alone. Previous excavators had problems of slow motion
+arm that weighs 5.5 kg and can control its torque. When                and efficiency in motion [60]. Improvements of excava-
+the arm is swung at high speeds, its maximum joint angu-               tor system were proposed by a few researchers aimed at
+lar velocity reaches 8.55 rad/s. Toshiba’s dual arm robot              improving efficiency in performing tough tasks. Review of
+is driven by seven-axis of electrical and seven-axis of                the current excavator system was presented in [103] where
+hydraulic actuators. The robot has similar human shoul-                problems and points of improvement of the available
+der length of 0.70 m but can accommodate a payload                     excavator were identified. Improvement for the hydraulic
+of 50 kg per arm [101]. The RL-H1 is a rapid prototype                 excavator was proposed using in line hydraulic oil con-
+upper body structure with three joint lightweight arm of               tamination monitoring [104], flow area optimization to
+466        K. SUZUMORI AND A. A. FAUDZI
+
+
+Table 2. Details of hydraulic humanoid robot.
+Name                   Height (m)    Weight (kg)   Payload (kg)     Power         Actuation              Perception       Joint   Year
+WABOT [46]                0.46           83              –        AC source   Hydraulic           CCD camera               50     1987
+RL-H1 [102]               0.475         26.5            5.5       AC source   Hydraulic           Remote controlled         6     2014
+Atlas [87]                1.5            75             11        Battery     Hydraulic           Lidar and stereo         28     2016
+Toshiba TV800 [101]       0.7            –              50        AC          Hydraulic & motor   Stereo and 2D-camera     14     2014
+Tae-mu [128]              1.377         72.3             –        AC source   Hydraulic           IMU and joint sensors    15     2017
+CB (Sarcos) [143]         1.58          93.7             –        AC source   Hydraulic           Stereo cameras           50     2006
+PETMAN [98]               1.5            44             40             –      Hydraulic           90 sensors               29     2009
+Hydra [99,100]            1.5            75             11        Battery     Hydraulic           Lidar and stereo         28     2016
+
+
+
+minimize pump pressure [105], data-driven torque con-                  excavator applying hybrid technology in their ZH 200 and
+troller [106], and joint torque control by pressure feedback           was able to reduce fuel consumption by 20% compared to
+[107] for smoother motion. Research on the performance                 current machine [111]. Yoshida et al. developed a mas-
+of hydraulic excavator with pump and valve combined                    ter–salve control for the hydraulic excavator which aims
+separate meter in and meter out circuits was performed                 for training for the operators [112] and newer version
+by Ge and colleagues [108].                                            for TRC ImPACT project [72]. These methods make it
+   For increasing demand in construction machines with                 possible for heavy machinery like excavator to perform
+lower fuel consumption, hybrid excavators have been                    tough operations in optimized way.
+proposed by a few excavator manufacturers. KOBELCO                         Other applications of hydraulics include parallel mech-
+Construction Machinery has developed an 8 ton class                    anism [113] and 3D tube forming using bending machines
+hybrid hydraulic excavator which uses electrically driven              [114]. The proposed method applies new method hydrau-
+swing with loss reduction system, a redesigned pump,                   lic parallel kinematics using Stewart-Gough platform
+valves and piping controlled by the hybrid controller                  which is normally executed in flight simulators. The plat-
+[109]. Fuel consumption was reduced by 15% compared                    form is controlled using hydraulic servo drive giving com-
+to standard configuration [110]. Komatsu PC 200-8 [60]                 plete motion of six axes and high dynamic motion of the
+hybrid hydraulic actuator claims to reduce the emission of             machine. Seki presented 4-DOF hydraulic drive drilling
+CO2 while also reducing the fuel consumption [61]. The                 robot for in-pipe repair. The parallel link-type mechanism
+Komatsu hybrid hydraulic excavator has an electric swing               is able to retain high stiffness in the predetermined reach-
+motor that converts the kinetic energy of the revolving                able areas for work in sewer pipes [115].
+upper structure during swing braking into electricity and
+stores it to the capacitor. In contract with conventional
+                                                                       3. Tough hydraulic components
+hydraulic excavators, the entire engine output is converted
+into hydraulic energy and distributed to the individual                Although hydraulics is a traditional technology with a long
+actuators. However, this hydraulic loss can be reduced by              history of contribution, existing hydraulic components
+using a hybrid system that drives the upper structure with             are not suitable for robotics. For robots, it is necessary
+an electric motor and works in coordination with other                 to make components with reduced weight, miniaturiza-
+hydraulic equipment. The stored kinetic energy can be                  tion, low friction, and multi degrees of freedom capabil-
+regenerated when the upper structure slows down. Hitachi               ity. Generally, a hydraulic system is characterized by four
+also developed their new version of 20-ton backhoe-type                basic types of components as shown in Figure 8. These
+
+
+
+
+Figure 8. Hydraulic power transmission system.
+                                                                                                             ADVANCED ROBOTICS               467
+
+
+components are hydraulic power generators (pumps),                        to another. Most of the actuators that drive the robots
+hydraulic control components (valves), hydraulic trans-                   today utilize electric motors that are based on technology
+mission lines (tubes, hoses, fittings, adapter), and hydrau-              commonly used for consumer products. They have limi-
+lic actuators (cylinders, muscles, and rotary motors).                    tation in the ‘force-to-weight ratio’ and sensitive to high
+Selection of these components is essential especially in                  impact and vibration due to its low resistance materials
+developing tough robots. Most of the latest inventions                    while applying the reduction gear. Hydraulic actuators
+have focused on the development of new actuators (cyl-                    may come in form of hydraulic cylinders, motors, and
+inder, muscles, and rotary motors), and hybrid actuation                  McKibben muscles. For example, hydraulic excavator
+with other drive transmission. Some miniaturizations of                   uses cylinder hydraulic actuator for its boom, arm, and
+pumps and valves were reported in a few academic reports                  bucket while hydraulic motor is used for swing and trav-
+with similar design concept. In this section, we will review              eling [111].
+hydraulic actuators (cylinder, motor, and muscles), valves                   New hydraulic actuator for tough robot aims for light
+and pumps, and other components of hydraulics (trans-                     weight, higher power density with high pressure, low
+mission line, connectors, sensors, and tubing).                           friction, and simple drive system by combining other
+                                                                          components in its structure. This will make it suitable for
+                                                                          application with Multi DOF and having dexterous func-
+3.1 Hydraulic actuators – cylinder
+                                                                          tion. Figure 9 and Table 3 shows the available trends of
+An actuator is a generic term for a device that gener-                    new hydraulic actuator development for tough application.
+ates ‘motion and power’. The actuators are the element                       Marc Raibert’s early monopod and quadruped robots
+that drives the system to execute the manipulation such                   used custom hydraulic actuators that combined a low
+as moving position of the end effector from one point                     friction cylinder, position sensor, velocity sensor, and
+
+
+
+
+Figure 9. Cylinder actuator (a) BigDog [85,86,126], (b) Hy-Mo [94], (c) IHEA [22], (d) Hemmi et al. [77], (e) EHA [117], (f) Kusakabe et al.
+[71], (g) ISA v2 [118], (h) ISA v4 [118].
+
+
+Table 3. Details of hydraulic cylinder actuator.
+                                                              Driving pressure                                          Additional periph-
+Actuators              Bore diameter (mm)    Stroke (mm)            (MPa)          Thrust force (N)   Dry weight (g)              erals
+BigDog [85,86,126]              –                 –                   –                   –                 –          Sensors, servo valve,
+                                                                                                                         electronic box
+Hy-Mo [94]                     –                    –                –                   –                  –          Servo motor, valves
+Hemmi et al. [77]              20                  100               35                11,000              900         Sensors, valve, control
+                                                                                                                         circuits
+ISA v2 [118]                   16                  80                20                 4000               920         Servovalve, sensors,
+                                                                                                                         electronics for con-
+                                                                                                                         trol and communi-
+                                                                                                                         cation
+Kusakabe et al. [71]           22                  75                35                24,740             2600                      –
+IEHA [22]                      –                   2.7               10                  –                 –           Micro valve, sensors,
+                                                                                                                         electric motor
+ISA v4 [118]                   20                  100               20                 6200              1150         Servovalve, sensors,
+                                                                                                                         electronics for
+                                                                                                                         control
+EHA [117]                      20                  50               5.6                 1500               444         Valves, electric motor
+468      K. SUZUMORI AND A. A. FAUDZI
+
+
+pressure control servo valve [116]. The similar custom         the single can produce. Compared to the piston motors,
+actuators with additional improvements were used in            the vane-type oscillating motors have simple structures
+Boston Dynamics robot after Raibert developed the              but provide high response. Selection of these motors is
+company. BigDog, for example, used 12 custom hydraulic         based on the specific torque and design criteria to suit the
+actuators which combines hydraulic cylinder, embedded          application. Equation (1) shows the torque calculation for
+servo valve, piston position potentiometer, and a load cell    the hydraulic motor selection:
+[86]. However, details of components for recent Boston
+Dynamic robots such as LS3, Spot, Handle, and ATLAS                                       Vg ⋅ Δp 𝜂mh
+                                                                                     T=                                  (1)
+were not disclosed.                                                                            2𝜋
+    Quadruped Baby Elephant robot [94] is also powered
+by a custom-made hydraulic cylinder called Hy-Mo. It           where Vg is the one revolution delivery oil volume, 𝛥p is
+consists of servo motor, valve sleeves, piston, and cylin-     the difference of pressure, 𝜂mh is the torque efficiency (0.65
+der which is characterized by its spiral valve port, inte-     ~ 0.8).
+grated with symmetric spiral flow channel. Using the               For heavy crane and ship anchor winding applications,
+design architecture, the robot is capable to be used with-     piston motor is normally used as the amount of torque
+out filter. Altare proposed an Electro-Hydraulic Actuator      supplied is higher, while robotics application like the
+(EHA) and includes a brushless variable speed electric         robotic hand applies the vane rotary actuator. Kusakabe et
+motor which drives a bi-rotational external gear miniature     al. developed vane rotary actuator with JPN Co. Ltd with
+(0.13 cc/rev) pump [117]. Alfayad et al. recently presented    input pressure of 35 MPa while most of the conventional
+the IEHA – Integrated Electro Hydraulic Actuator which         motors only applied 21 MPa for the actuation [71]. The
+consists of (1) the micro-pump; (2) the micro-valve; and       latest research aims to develop rotary actuator up to 330°
+(3) the passive distributor. The system has unidirectional     at 35 MPa. The actuator was used for a robotic hand [80]
+integrated micro-pump actuated with an electric motor.         that could grip and manipulate objects [71] which would
+The micro-pump is connected through built-in reservoirs        be part of ImPACT project on as mentioned in Section
+to a standard rotary actuator which able to invert the flow    2.1. HyQ [88] and MiniHyQ [89] robot also apply rotary
+direction without inverting the direction of rotation of the   actuator in the leg mechanism using DS Dynatec parts.
+input motor [22].
+    Moog on the other hand has developed an actuator
+                                                               3.3 Hydraulic actuators – artificial muscles
+series of ISA V2 and ISA V4 [118] in collaboration with
+IIT along with its Moog A085 Series Servo Actuators            McKibben artificial muscles have been proposed since
+which is available in the market. The actuator combine         1960s where it was initially applied for rehabilitation
+high performance cylinders, linear feedback devices and        purpose by Schulte using pneumatic drive [119]. Later
+servo valves in one assembly using additive materials with     advancement of artificial muscle was extended to many
+its unique design in HyQ series quadruped robot [88].          applications including exoskeleton. The flexible hydraulic
+Figure 9 shows other hydraulic cylinder actuator with its      actuator (FHA) proposed by Yokota is the first hydraulic
+characteristics as in Table 3.                                 muscle that could contract in axial direction by 30%, out-
+                                                               put force is 1500 N at maximum 3 MPa [53]. The hydrau-
+                                                               lic muscle could give similar properties to the hydraulic
+3.2 Hydraulic actuators – motors
+                                                               cylinder to support high pressure input. The advantage of
+Hydraulic motors convert hydraulic power to mechanical         hydraulic muscle compared to hydraulic cylinder is that,
+rotating force making motion like the electrical motors.       there is no friction issue in the structural design as hydrau-
+The rotation speed can be adjusted by controlling the sup-     lic muscles contract to obtain its displacement motion.
+ply flow, while their output torque depends on the differ-     The structure of hydraulic muscle which is softer could
+ence between the motor inlet and outlet pressures and          absorb vibration and could give natural compliance during
+considering the friction factor [40]. There are two types      its operation. However, due to high pressure, the end cap
+of hydraulic motors, which are continuous rotating motor       design is very important to eliminate any burst or leakage
+and oscillating motor (vane motor or rotary actuator). The     during actuation. Recently, hydraulic-driven McKibben
+continuous rotating motor can turn 360° clockwise and          muscles with very high force characteristics were proposed
+anti-clockwise. On the other hand, the oscillating motor       by Mori et al. in the application of ultra-high-strength
+has limited angle ranging from 90 to 280° for vane and         p-phenylene-2,6-benzobisoxazole fiber sleeves using water
+piston-type oscillating motor. The single vane-type oper-      hydraulic with pressure of 4 MPa [120] compared to con-
+ates with a rotation angle of 280° or less, while the double   ventional muscles with only 0.7 MPa. Using the muscle,
+operates with 100° or less, giving the torque twice what       Mori proposed power robotic hand [121] for large robot
+                                                                                                                ADVANCED ROBOTICS             469
+
+
+and achieved pick and place operation of round and                         include pressure control valves, directional control valves,
+square-shaped objects. Contraction and extension-type                      and flow control valves [40]. Modular valve is normally
+of muscles could achieve bending motion when coupled                       compact with its pipe-less structure while logic valves
+together [122], which inspires other researchers to develop                are used for high-flow and high-pressure application
+pneumatic driven system using the concept [123].                           such as in steel mill application and large-scale pressing
+   7 MPa water hydraulic muscle was reported by Iwata                      machine. Proportional electro hydraulic valve is used to
+et al. [124] and Tokyo Tech., while Bridgestone recently                   control analog switch on the hydraulic power unit [71].
+developed the first oil hydraulic muscles that can be driven               Mobile tough robots, such as BigDog [126], HyQ [88],
+up to 8 MPa [55]. The system uses (1) a new type of oil                    robotic leg [127], TaeMu robot [128], and others, use new
+proof Nitrile rubber material that has excellent oil resist-               actuators that combine the servo valves together with
+ance and deformation characteristics (good elasticity and                  hydraulic cylinder in a single structure. TaeMu robot
+high strength), (2) weaving of high tensional chemical                     [128] and robotic leg [127] uses PSC Co. Ltd. servo valve
+fibers, (3) new techniques to tighten the tube ends that can               that weighs 300 g. The servo valve has flow capacity of
+resist high pressure. By changing the end capsulate mate-                  8.4 l/min (0.00014 m3/s) at 7 MPa pressure drop, with
+rials, the weight can be reduced by more than 50%. The                     frequency response of 120 Hz at −3 dB and 90 phase lag
+use of rubber tubes and high-tensile fibers make it possible               for ±25% input. HyQ and Boston Dynamic robots such
+to achieve smooth movement, high shock, and vibration                      as BigDog used Moog valves to control the actuators. The
+resistance. The muscle is able to generate gentle motion                   system uses two stage valve normally applied for torque
+with its compliance characteristics such as fine motion                    motor and nozzle flapper type, both systems can control
+for 3DOF wrist mechanism [78]. It is also suitable to be                   for maximum 21 MPa pressure. In a joint research, Tokyo
+applied as components for tough robot in high intensity                    Tech. and Yuken Kogyo. Co are currently developing a
+and delicate jobs such as concrete chipping by antagonistic                new servo valve for low flow of 4.02 l/min (0.000067 m3/s)
+drive of muscle due to its high capability towards vibra-                  and high pressure of 35 MPa with small design, high
+tion [125]. Figure 10 shows McKibben muscles with their                    response, proportional 20 Hz, servo 200, 300 Hz.
+characteristics as in Table 4.                                                Other types of valves were presented using a flow vis-
+                                                                           ualization technique [129] where transparent material
+                                                                           was used to observe the condition of the fluid motion.
+3.4 Hydraulic valves
+                                                                           Different kinds of valves using particle excitation were
+There are many types of hydraulic valves that act as the                   recently proposed by Ukida et al. [130] which had pre-
+component to control the flow of the fluid. Basic valves                   viously succeeded to control flow rate for pneumatic
+
+
+
+
+Figure 10. McKibben Muscles (a) FHA [53], (b) Mori et al. [120], (c) Iwata et al. [124], and (d) Morita et al. [55].
+
+
+Table 4. Details of hydraulic McKibben muscles.
+                                                                                  Maximum pressure
+Actuators     Fluid medium       Inner diameter (mm)     Contraction ratio (%)         (MPa)            Contraction force (kN)    Fiber material
+FHA [53]      Oil                         14.2                    30                     3                       1.5             Aramid
+Mori [120]    Water                        40                     25                     4                       28              PBO
+Iwata [124]   Water                        21               (−10) to (+30)               7                        8              PBO
+Morita [55]   Oil                          18                     33                     8                       13              Aramid
+470       K. SUZUMORI AND A. A. FAUDZI
+
+
+actuator. The orifices were opened and closed with parti-            the HPU which is embedded into its body. The engine,
+cles excited by the vibration of the orifice plate making the        called DogChow, is a 12.68 kW with two-cylinder com-
+valve structure simple and compact. The valve was then               bustion engine as shown in Figure 11(c) [86]. The system
+applied to control water flow for a McKibben actuator                drives a hydraulic variable displacement pump providing
+[131]. Water hydraulic valves use special valves for small           3000 PSI system pressure to control 12 custom hydraulic
+flow rate [132] and water hydraulic servo valve cam-drive-           actuators via a central manifold.
+type proportional valve [133].                                          Other components such as oil reserve tank, an accu-
+                                                                     mulator, filters, a heat exchanger, check valve, dump valve,
+                                                                     and sensors for oil pressure, flow and temperature are also
+3.5 Hydraulic pump and power unit
+                                                                     incorporated into the robot. For mobile application, Tokyo
+Hydraulic pumps convert mechanical energy, such as the               Tech. and KYB power pack used a four-stroke engine
+rotations of motors or engines, to fluid energy. Hydraulic           embedded with relief valves and an accumulator using
+pumps such as piston pump, vane pump, gear pump,                     small size 1.6 cc per revolution pump. The smaller size of
+screw pump, and reciprocal pumps are among the types                 pump is possible for light weight power pack compared
+of pumps used in conventional hydraulics [40]. Recent                to the available 10 cc per revolution pump while driving
+development is mainly focused on piston, vane and gear               35 MPa pressure. The system is possible for all posture
+pumps where these types of pumps are suitable for robot-             correspondence and has high efficiency with automatic
+ics and mobile hydraulics application. Small and compact             adjustment of swash plate angle making it possible for
+pump using piezohydraulic structure was presented by                 long-term driving.
+Valdovinos et al. [134]. They demonstrate a proof-of-prin-              X. Ouyang presented a compact hydraulic power unit
+ciple compact (centimeter size) piezo hydraulic pump that            (CHPU) for an exoskeleton robot [62] using a two-stroke
+can produce useful mechanical work driven at frequencies             IC engine, with a rated power of 2.4 kW at 13,000 rpm
+in the kilohertz range compared with other piezohydraulic            as its prime mover as in Figure 11(d). In the meantime,
+pumps. Tokyo Tech. and KYB Co. Ltd have developed a                  Amundson proposed hydraulic-electric power unit
+miniature piston pump [39] to be used in a new power                 (HEPU) for their Berkeley lower extremity exoskeleton
+pack as shown in Figure 11. The design is possible for both          (BLEEX) [137]. The prototype power unit weighs 27 kg
+stationary and mobile hydraulic tough robots.                        and produces 2.3 kW (3.0 hp) hydraulic power at 6.9 MPa
+    Tough hydraulic robot such as TaeMu robot [135], CB              (1000 p.s.i.) and 220 W of electric power at 15 V DC.
+robot from Sarcos [97] and early version of HyQ [88] used            Raade created a novel hydraulic power source for mobile
+external hydraulic power unit (HPU) (also called as power            robot by developing a free piston hydraulic pump (FPHP)
+pack) which is placed outside of the robot. This will ena-           which produces 1 kW power source, producing steam and
+ble the system to change the supply pressure flow easily.            oxygen as its by-product [136] while [138] proposes free
+This flexibility is important for researchers in the initial         piston engine capable of practical operation.
+development. Industrial application can use up to 45 MPa
+nominal pressure for closed circuit pumps offered by the
+                                                                     4. Summary and trends for future hydraulics
+component suppliers.
+    On the other hand, tough mobile robots require ener-             Hydraulic technologies have matured in the last decade
+getic autonomy without cables/hose connecting the sys-               and new technologies have emerged related to informa-
+tem to a power source. Thus, the power source must be                tion technology, energy saving, mechatronics, and water
+portable and possible for long-time operation. Along                 hydraulics. Innovations in hydraulic technology involv-
+with the engine itself, the fuel and the tank mass must be           ing sustainable design for hydraulic systems and compo-
+included when evaluating a potential power system design             nents are essential for sustainably developing fluid power
+[136]. Boston Dynamic mobile robot, such as BigDog, has              technology for tough robot. This paper has summarized
+
+
+
+
+Figure 11. Hydraulic power unit (power pack) (a) Engine power pack [39], (b) AC power pack [39], (c) BigDog DogChow [86], and (d) CHPU
+[62].
+                                                                                                  ADVANCED ROBOTICS          471
+
+
+the trends in hydraulic and application of tough robots             Closed hydraulic circuits on stationary driveline
+in search and rescue robots, legged and humanoid robot          hydraulics could achieve high pressure up to 70 MPa.
+as well as big machinery such as excavators. Reviews            For example, special application such as jack-up robot
+of hydraulic components highlighted actuators, valves,          could be driven by 70 MPa hydraulic cylinder [142].
+pump, and power packs. Other hydraulics components              However, current robot and other hydraulic application
+such as hoses, adapters, accumulators, and filters were not     are operated in between 14 and 21 MPa input pressure.
+thoroughly discussed, however, absence of these will have       Hydraulic components manufacturers such as Moog and
+big impact to the overall system. For example, adapters         Yuken Co. Ltd already have line-up product that could
+and tubing are important to ensure the connection to each       support till 35 MPa, nevertheless the design is heavy and
+hydraulic components are perfectly connected to ensure          bulky which make it unsuitable for robotics application.
+no fluid leakages despite its capability to withstand high      As future mobile hydraulics with high power density is
+pressure and flexible dexterous application.                    becoming more realistic, miniature designs of these com-
+    Other than the hardware and components invention,           ponents are essential. Research on high-pressure actuator,
+controls of hydraulics are important. Earlier, hydraulic        valves and pump by Tokyo Tech., KYB Co. Ltd, YUKEN
+systems are associated with slow response and inaccurate        Co. Ltd and JPN Co. Ltd are among initiatives to develop
+positioning. In current application, faster response and        smaller and lighter components that could be driven at
+high accuracy are needed for optimum hydraulic perfor-          35 MPa pressure [71].
+mance. This is based on design criteria of each applica-            Coshford highlighted trends in construction machiner-
+tion such as required torque, required angle of motors          ies for hydraulic components to offer plug-and-play solu-
+and stroke cylinder. Jouni Matilla et al. did a survey on       tions that will greatly enhance selling opportunities [110].
+control of hydraulic robotic manipulators with projection       Developing component based on the market requirements
+to future trends [139]. Two fundamental challenges of           is important for the suppliers instead of designing accord-
+non-linear dynamic behavior and non-energy efficiency           ing to what they can offer. Other than power density, the
+in traditional hydraulic closed-loop systems need to be         realization of stable, dynamically efficient electrohydraulic
+addressed to achieve both energy efficiency and high-per-       control systems will provide users more precise cultivation,
+formance control. A novel control method is necessary to        smoother operation and increased safety. The emergence
+adjust the production machine, development of model             of control by wire is expected instead of the conservative
+and development of new algorithm to control the actuator        direct control as electronics are easier to implement [141].
+or motor motion for a specific required angle [140].            With technology evolving, suppliers also will develop tools
+    As the market for hydraulic components is increasing        to troubleshoot the equipment from distance through the
+for mobile hydraulics in compared to stationary hydraulics,     Internet. Trends in hydraulic hybrid technology system
+the development of components should be able to support         are also a way forward in hydraulic application. We have
+the need in these applications especially for tough robots.     reported application that uses hybrid design as in Section
+Faster response of servo valves with higher frequency capa-     2.4, which shows combination of electrical and hydrau-
+bility, smaller size of pump with lightweight materials and     lic characteristics improves fuel consumption, increases
+truly intelligent integrated hydraulic actuators with embed-    efficiency, and provides smoother operation by capturing
+ded servo controllers and sensors that receive actuator-level   wasted energy and putting it to work in the application. It
+commands through the network are needed. These com-             is envisaged that new hydraulics components will be very
+ponents will have broader market for tough robots. Harms        useful in high power, fast response, miniature, and safe
+outlined seven concerns on future mobile hydraulics [141]       tough robots’ exploration.
+which are (1) decrease in weight in relation to energy and
+power, (2) improvement of saving energy and optimization
+economy, (3) improvement of static and dynamic behav-           Disclosure statement
+ior, (4) increase in operability and comfort, (5) increase      No potential conflict of interest was reported by the authors.
+in availability and reliability, (6) improved environmental
+compatibility, and (7) rapid prototyping and simulation
+engineering. Based on the above concern, additive man-
+                                                                Notes on contributors
+ufacture has been used in developing new actuators such         Koichi Suzumori was born in 1959. He received the BS, MS,
+as the ISA V2 by Moog and IIT where it provides custom-         and PhD degrees in mechanical engineering from Yokohama
+                                                                National University, Japan, in 1982, 1984, and 1990, respec-
+ized shape with internal tubing routings which reduces the
+                                                                tively. He had worked for Toshiba R&D Center from 1984 to
+weight. The integration with servo valves allows high-per-      2001, and also worked for Micromachine Center, Tokyo, from
+formance control with the embedded integrated electronics       1999 to 2001. He had been a professor of Division of Industrial
+for the distributed position/force control [118].               Innovation Sciences, Okayama University, Japan since 2001.
+472       K. SUZUMORI AND A. A. FAUDZI
+
+
+He has been a professor of Department of Mechanical                   [9] Majidi C. Soft robotics: a perspective – current trends
+Engineering, Tokyo Institute of Technology since 2014. He is               and prospects for the future. Soft Robot. 2014;1(1):5–11.
+mainly engaging in the research fields of new actuators and          [10] De Volder M, Reynaerts D. Pneumatic and hydraulic
+their applications. He received many awards such as JSME                   microactuators: a review. J Micromech Microeng.
+Medal for Outstanding Paper, in 1999, RSJ Best Paper Award                 2010;20(4):43001.
+in 2000, and JSAEM Best Book Award in 2006. He is a fellow           [11] Spenko MJ, Haynes GC, Saunders JA, et al. Biologically
+member of the Japan Society of Mechanical Engineers and a                  inspired climbing with a hexapedal robot. J F Robot.
+fellow member of the Robotics Society of Japan.                            2008;25(4–5):223–242.
+                                                                     [12] Kato K, Hirose S. Development of the quadruped
+Ahmad Athif Faudzi is a member of Centre for Artificial
+                                                                           walking robot, TITAN-IX – mechanical design concept
+Intelligence and Robotics (CAIRO), Universiti Teknologi
+                                                                           and application for the humanitarian de-mining robot.
+Malaysia, Malaysia. He received the BE in Computer
+                                                                           Adv Robot. 2001;15(2):191–204.
+Engineering, the ME in Mechatronics and Automatic Control
+                                                                     [13] Kitano S, Hirose S, Endo G, et al. Development of
+from Universiti Teknologi Malaysia, Malaysia and the Dr. Eng.
+                                                                           lightweight sprawling-type quadruped robot TITAN-
+in System Integration from Okayama University, Japan in 2004,
+                                                                           XIII and its dynamic walking. 2013:6025–6030.
+2006, and 2010, respectively. He was a visiting research fellow at
+                                                                     [14] Hodoshima R, Fukuda Y, Hirose S, et al. Development of
+Tokyo Institute of Technology from 2016 to 2017. He is mainly
+                                                                           TITAN XI: a quadruped walking robot to work on slopes
+engaged in the research fields of pneumatic, soft mechanism,
+                                                                           – design of system and mechanism. IEEE International
+and hydraulic actuators. He also involved in bio-robotics and
+                                                                           Conference on Intelligent Robots and Systems (IEEE
+biomedical applications. He had won many awards nationally
+                                                                           Cat. No.04CH37566). Vol. 1; 2004. p. 792–797.
+and internationally such as SIIF, Seoul and ITEX, Malaysia in
+                                                                     [15] Chestnutt J, Lau M, Cheung G, et al. Footstep planning
+the year 2013 and PECIPTA, Malaysia in the year 2015. He is a
+                                                                           for the Honda ASIMO humanoid. In Proceedings – IEEE
+professional engineer with Practicing Certificate (PEPC) under
+                                                                           International Conference on Robotics and Automation;
+the Board of Engineers Malaysia, Charted Engineer (CEng)
+                                                                           2005. p. 629–634.
+under The Institution of Engineering and Technology (IET),
+                                                                     [16] Toyota. Toyota humanoids; 2009. [Online]. Available
+UK, and members of IEEE Robotics and Automation Society
+                                                                           from: http://www2.toyota.co.jp/en/tech/robot/probot/
+(RAS). Athif has published extensively in peer-reviewed jour-
+                                                                           ind
+nals on the subject of actuators and its application.
+                                                                     [17] Lohmeier S, Buschmann T, Ulbrich H, et al. Humanoid
+                                                                           robot LOLA – research platform for high-speed walking.
+                                                                           Motion Vib Control. 2009:221–230.
+ORCID                                                                [18] Nishiwaki K, Kagami S, Kuffner J, et al. Humanoid
+                                                                           ‘JSK-H7’: research platform for autonomous behavior
+Ahmad Athif Faudzi       http://orcid.org/0000-0002-8591-4551
+                                                                           and whole body motion. In Proc Intl Work. Humanoid
+                                                                           Hum. friendly Robot; 2002. p. 2–9.
+References                                                           [19] Fuchs M, Borst C, Giordano PR, et al. Rollin’ Justin
+                                                                           – Design considerations and realization of a mobile
+  [1] Huber JE, Fleck NA, Ashby MF. The selection of                      platform for a humanoid upper body. In Proceedings
+       mechanical actuators based on performance indices.                  – IEEE International Conference on Robotics and
+       Proc R Soc London A. 1997;453:2185–2205.                            Automation; 2009. p. 4131–4137.
+  [2] Hollerbach JM, Hunter I, Ballantyne J. A comparative          [20] Hoske MT. Robotics: higher speeds, more power,
+       analysis of actuator technologies for robotics. Rob Rev.            programming advances. Control Engineering. 2013.
+       1991;2:299–342.                                                     [Online]. Available from: https://www.controleng.com/
+  [3] Paresh CSEN. Electric motor drives and control-past,                single-article/robotics-higher-speeds-more-power-
+       present, and future. IEEE Trans Industr Electron.                   programming-advances/7cb8f3d4c385dc5fcb81596d91
+       1990;37(6):562–575.                                                 92bf3b.html
+  [4] Ali HI, Bahari S, Noor BM, et al. A review of pneumatic       [21] Gouaillier D, Hugel V, Blazevic P, et al. Mechatronic
+       actuators (modeling and control). Aust J Basic Appl Sci.            design of NAO humanoid. In 2009 IEEE International
+       2009;3(2):440–454.                                                  Conference on Robotics and Automation; 2009. p. 769–
+  [5] Rahmat MF, Sunar NH, Salim SNS, et al. Review                       774.
+       on modeling and controller design in pneumatic                [22] Alfayad S, Ouezdou FB, Namoun F, et al. High performance
+       actuator control system. Int J Smart Sens Intell Syst.              integrated electro-hydraulic actuator for robotics – part I:
+       2011;4(4):630–661.                                                  principle, prototype design and first experiments. Sens
+  [6] Woodhead C. Advantages of hydraulic actuators In                    Actuators A Phys. 2011;169(1):115–123.
+       Valve World Magazine; 2014 Dec, pp. 1–2. [Online].            [23] Faudzi AAM, Suzumori K, Wakimoto S. Design
+       Available from: www.valve-world.net                                 and control of new intelligent pneumatic cylinder
+  [7] AbuZaiter A, Nafea M, Faudzi AAM, et al.                            for intelligent chair tool application. In IEEE/ASME
+       Thermomechanical behavior of bulk NiTi shape-                       International Conference on Advanced Intelligent
+       memory-alloy microactuators based on bimorph                        Mechatronics, AIM; 2009. p. 1909–1914.
+       actuation. Microsyst Technol. 2016;22(8):2125–2131.           [24] Haraguchi D, Tadano K, Kawashima K. Development of
+  [8] Rus D, Tolley MT. Design, fabrication and control of soft           a pneumatically-driven robotic forceps with a flexible
+       robots. Nature. 2015;521:467–475.                                   wrist joint. Procedia – Soc Behav Sci. 2013;5:61–65.
+                                                                                                   ADVANCED ROBOTICS         473
+
+
+[25] Azman MA, Faudzi AAM, Mustafa ND, et al. Integrating        [42] Japan Fluid Power Association. Statistics of hydraulic;
+      servo-pneumatic actuator with ball beam system based              2017. [Online] Available from: http://www.jfpa.biz/
+      on intelligent position control. J Teknol. 2014;69(3):73–         statistics/statistical-data/
+      79.                                                         [43] Saunders S. First 3D printed primary flight control
+[26] Osman K, Faudzi AAM, Rahmat MF, et al. Intelligent                hydraulic component flies the friendly skies on an airbus
+      pneumatic assisted therapy on ankle rehabilitation.               A380 aircraft. 3DPrint.com. 2017.
+      In IEEE International Conference on Rehabilitation          [44] Unimate First Industrial Robot. 1961. Available from:
+      Robotics; 2015. p. 107–112.                                       http://www.robothalloffame.org/inductees/03inducte
+[27] Saga N, Saito N, Ya Nagase J. Ankle rehabilitation device   [45] Johnson H, Milekovic V. Versatran-versatile transfer
+      to prevent contracture using a pneumatic balloon                  machine. cyberneticzoo.com; 2013. [Online]. Available
+      actuator. Int J Autom Technol. 2011;5(4):538–543.                 from:          http://cyberneticzoo.com/early-industrial-
+[28] Colbrunn RW, Nelson GM, Quinn RD. Design and                      robots/1958-62-versatran-industrial-robot-harry-
+      control of a robotic leg with braided pneumatic                   johnson-veljko-milenkovic/
+      actuators. In Proceedings of 2001 IEEE/RSJ International    [46] Kato I, Ohteru S, Kobayashi H, et al. Information-power
+      Conference on Intelligent Robots and Systems. Expand              machine with senses and limbs. On Theory and Practice
+      Soc Role Robot Next Millenn. (Cat. No.01CH37180).                 of Robots and Manipulators. 1973;1:11–24.
+      Vol. 2; 2001. p. 992–998.                                   [47] Pham PN, Ito K, Ikeo S. Energy saving for water
+[29] Hyon S, Hayashi T, Yagi A, et al. Design of hybrid                hydraulic pushing cylinder in meat slicer. JFPS Int J
+      drive exoskeleton robot XoR2. In IEEE International               Fluid Power Syst. 2017;10(2):24–29.
+      Conference on Intelligent Robots and Systems; 2013. p.      [48] Oshima S, Hirano T, Miyakawa S, et al. Development of
+      4642–4648.                                                        a rotary type water hydraulic pressure intensifier. Proc
+[30] Ranzani T, Gerboni G, Cianchetti M, et al. A bioinspired          JFPS Int Symp Fluid Power. 2008;2008:391–396.
+      soft manipulator for minimally invasive surgery.            [49] Taylor PM, Kieffer J, Oldaker R, et al. A water hydraulic
+      Bioinspir Biomim. 2015;10(3):35008.                               robot. In Proceedings of the 32nd Conference on
+[31] Niiyama R, Nagakubo A, Kuniyoshi Y. Mowgli: a                     Decision and Control; 1993. p. 1911–1912.
+      bipedal jumping and landing robot with an artificial        [50] Focchi M, Guglielmino E, Semini C, et al. Water/air
+      musculoskeletal system. In Proceedings – IEEE                     performance analysis of a fluidic muscle. In IEEE/RSJ
+      International Conference on Robotics and Automation;              2010 Int Conf Intell Robot Syst IROS 2010 – Conf Proc;
+      2007 Apr. p. 2546–2551.                                           2010. p. 2194–2199.
+[32] Bachmann RJ, Kingsley DA, Quinn RD, et al. A                [51] Muhammad A, Esque S, Mattila J, et al. Development
+      cockroach robot with artificial muscles. Climbing Walk            of water hydraulic remote handling system for divertor
+      Robot. 2002:659–666.                                              maintenance of ITER. In Proc – Symp Fusion Eng; 2007.
+[33] Razif MRM, Faudzi AAM, Bavandi M, et al. Two                      p. 1–4.
+      chambers soft actuator realizing robotic gymnotiform        [52] Wu H, Handroos H, Pessi P, et al. Development and
+      swimmers fin. In Robotics and Biomimetics (ROBIO),                control towards a parallel water hydraulic weld/cut
+      2014 IEEE International Conference on Robotics and                robot for machining processes in ITER vacuum vessel.
+      Biomimetics; 2014. p. 15–20.                                      Fusion Eng Des. 2005;75–79(SUPPL):625–631.
+[34] Takeichi M, Suzumori K, Endo G, et al. Development of       [53] Yokota S, Komatsu T. Flexible hydraulic actuator for
+      giacometti arm with balloon body. IEEE Robot Autom                space manipulators. JSME Int J. 1994;Series C(1):179–
+      Lett. 2017;2(2):951–957.                                          184.
+[35] Faudzi AAM, Endo G, Kurumaya S, et al. Long-legged          [54] Development of a hydraulic drive high-power artificial
+      hexapod giacometti robot using thin soft McKibben                 muscle through the cabinet office tough robotics
+      actuator. IEEE Robot Autom Lett. 2017;3766(c):1.                  challenge; 2013. [Online]. Available from: http://www.
+[36] Wang Z, Torigoe Y, Hirai S. A prestressed soft gripper :          titech.ac.jp/english/news/2017/037286.html
+      design, modeling, fabrication, and tests for food           [55] Morita R, Suzumori K. Development of oil-hydraulic
+      handling. IEEE Robot Autom Lett. 2017;2(4):1909–1916.             artificial muscle and application to robotics (in
+[37] Faudzi AAM, Ooga J, Goto T, et al. Index finger of a              Japanese). J Jpn Fluid Power Syst Soc. 2017;48(6). to be
+      human-like robotic hand using thin soft muscles. IEEE             published November 2017
+      Robot Autom Lett. 2017;3766(c):1.                           [56] MacCurdy R, Katzschmann R, Kim Y, et al. Printable
+[38] Conrad F. Trends in design of water hydraulics – motion           hydraulics: a method for fabricating robots by 3D
+      control and open-ended solutions. In Proceedings of               co-printing solids and liquids. In IEEE International
+      6th JFPS International Symposium Fluid Power; 2005;               Conference on Robotics and Automation (ICRA); 2016.
+      Tsukuba.                                                          p. 3878–3885.
+[39] Suzumori K. Key note talk : next generation robotics        [57] Armstrong E. Industry trends available; 2017. Available
+      developed by fluid power (in Japanese). The Proceedings           from:          http://news.nfpahub.com/industry-trends-
+      on Spring Conference of Japan Fluid Power System                  available/
+      Society; 2017. [Online] Available from: www.jfps.jp/        [58] Kaminaga H, Otsuki S, Nakamura Y. Development of
+      net/10thjfps/07.html                                              high-power and backdrivable linear electro-hydrostatic
+[40] Yuken Kogyo Co Ltd. Basic hydraulic and components;               actuator. In IEEE-RAS International Conference on
+      2006.                                                             Humanoid Robots (Humanoids); 2014. p. 973–978.
+[41] NFPA. 2015 Annual Report on the U.S. Fluid Power            [59] Amundson K, Raade J, Harding N, et al. Hybrid
+      Industry. Natl Fluid Power Assoc. 2015.                           hydraulic-electric power unit for field and service
+474       K. SUZUMORI AND A. A. FAUDZI
+
+
+       robots. 2005 IEEE/RSJ Int Conf Intell Robot Syst IROS.       [77] Hemmi M, Hirota Y, Nabae H, et al. Development and
+       2005;1864(July):3126–3131.                                         test of lightweight, low friction, high power hydraulic
+ [60] Inoue H. Introduction of product introduction of                   actuator for tough robots. In JSME Conference on
+       PC200-8 hybrid hydraulic excavators 1 . introduction               Robotics and Mechatronics; 2017. p. 2A2-B02 1–3.
+       (trend toward hybrid con- struction machinery)               [78] Morita R, Suzumori K, Nabae H, et al. 3 DOF wrist
+       hydraulic excavator. 2008;54(161):1–6.                             mechanism for tough robots by hydraulic muscles
+ [61] Inoue H, Yoshida H. Development of hybrid hydraulic                (in Japanese). In JSME Conference on Robotics and
+       excavator. Int J Autom Technol. 2012;6(4):516–520.                 Mechatronics; 2017. p. 2A2-B01 1–2.
+ [62] Ouyang X, Ding S, Fan B, et al. Development of a novel       [79] Ukida T, Suzumori K, Nabae H, et al. Hydraulic control
+       compact hydraulic power unit for the exoskeleton robot.            by flow control valve using particle excitation. Trans Jpn
+       Mechatronics. 2016;38:68–75.                                       Fluid Power Syst Soc. 2016;47(6):39–46.
+ [63] Merkle D. Hydraulics, basic level (textbook). Festo          [80] A dual-arm construction robot with remote-control
+       Didactic. 2003.                                                    function; 2017. [Online]. Available from: http://www.
+ [64] Gonzalez C. What’ s the difference between pneumatic,              titech.ac.jp/english/news/2017/038742.h
+       hydraulic, and electrical actuators ?. Mach Des; 2015.       [81] Mosher R, Liston R. A versatile walking truck. In Proc
+       [Online]. Available from: http://www.machinedesign.                Trans- portation Eng Conf; 1968.
+       com/linear-motion/what-s-difference-between-                 [82] Pugh DR, Ribble EA, Vohnout VJ, et al. Technical
+       pneumatic-hydraulic-and-electrical-actuators                       description of the adaptive suspension vehicle. Int J Rob
+ [65] Tadokoro S, Uchizono T. ImPACT tough robotics                      Res. 1990;9(2):24–42.
+       challenge. In JSME Conference on Robotics and                [83] Vohnout VJ. An excellent adventure. In Advances in
+       Mechatronics; 2017. p. 1P1-R01 1–2.                                Mechanisms, Robotics and Design Education and
+ [66] Tadokoro S. Tough robotics challenge (trc) impulsing               Research; 2013. p. 34–47.
+       paradigm change through disruptive technologies              [84] Nabulsi S, Sarria JF, Montes H, et al. High-resolution
+       program; 2017. [Online]. Available from: http://www.               indirect feet–ground interaction measurement for
+       jst.go.jp/impact/en/program/07.html                                hydraulic-legged robots. IEEE Trans Instrum Meas.
+ [67] Jung K, Chu B, Park S, et al. An implementation of a               2009;58(10):3396–3404.
+       teleoperation system for robotic beam assembly in            [85] Buehler M, Playter R, Raibert M, et al. Robots step
+       construction. Int J Precis Eng Manuf. 2013;14(3):351–              outside. In Int Symp Adapt Motion Anim Mach AMAM
+       358.                                                               Ilmenau Ger; 2005. p. 1–4.
+ [68] Shah B, Choset H. Survey on urban search and rescue          [86] Playter R, Buehler M, Raibert M. BigDog. In Proceedings
+       robots. J Robot Soc Japan. 2004;22(5):582–586.                     of SPIE. Vol. 6230. Unmanned Systems Technology
+ [69] Davids Angela. Urban search and rescue robots: from                VIII; 2006. p. 1–6.
+       tragedy to technology. IEEE Intell Syst. 2002;17(2):81–83.   [87] Boston Dynamics Official Website; 2017. [Online].
+ [70] Shamsudin AU, Ohno K, Hamada R, et al. Two-stage                   [cited 2017 Jul 31]. Available from: https://www.
+       hybrid A∗ Path-planning in large petrochemical                     bostondynamics.com/robots
+       complexes. IEEE/ASME Int Conf Adv Intell                     [88] Semini C, Tsagarakis NG, Guglielmino E, et al. Design
+       Mechatronics, AIM; 2017. p. 1619–1626.                             of HyQ – a hydraulically and electrically actuated
+ [71] Kusakabe Y, Ide T, Hirota Y, et al. Developmet of high             quadruped robot. Proceedings of the Institution of
+       perfomance hydraulic actuators and their application to            Mechanical Engineers, Part I: Journal of Systems and
+       tough robot hand. In JSME Conference on Robotics and               Control Engineering. 2011;225(6):831–849.
+       Mechatronics; 2016. p. 1P1-09b6 1–3.                         [89] Khan H, Kitano S, Frigerio M, et al. Development of
+ [72] Yoshinada H, Yokokohji Y, Nagatani K, et al. ImPACT                the lightweight hydraulic quadruped robot – MiniHyQ.
+       tough robotics challenge construction robot – field                In IEEE International Conference on Technologies for
+       evaluation experiments using single arm model. In                  Practical Robot Applications (TePRA); 2015. p. 1–6.
+       JSME Conference on Robotics and Mechatronics; 2017.          [90] Semini C, Barasuol V, Goldsmith J, et al. Design
+       p. 2A1-P01 1–4.                                                    of the hydraulically-actuated, torque-controlled
+ [73] Kagawa T, Ono F, Shan L, et al. A study on tough wireless          quadruped robot HyQ2Max. IEEE/ASME Trans Mech.
+       communication for tough robotics. In JSME Conference               2017;22(2):635–646.
+       on Robotics and Mechatronics; 2017. p. 1P1-R07 1–3.          [91] Semini C, Goldsmith J, Rehman BU, et al. Design
+ [74] Matsuzawa T, Koizumi A, Hashimoto K, et al.                        overview of the hydraulic quadruped robots HyQ2MAX
+       Crawling gait for four-limbed robot and simulation on              and HyQ2CENTAUR. In The 14th Scandinavian
+       uneven terrain. In 2016 IEEE-RAS 16th International                International Conference on Fluid Power; 2015. p. 1–11.
+       Conference on Humanoid Robots; 2016. p. 3–4.                 [92] Rong X, Li Y, Ruan J, et al. Design and simulation for
+ [75] Hamada R, Ohno K, Matsubara S, et al. Development                  a hydraulic actuated quadruped robot. J Mech Sci
+       of real-time emotion estimation system for canines. In             Technol. 2012;26(4):1171–1177.
+       JSME Conference on Robotics and Mechatronics; 2017.          [93] Runbin Cai, YangZheng Chen, Lin Lang, et al. Inverse
+       p. 2A1-Q02 1–4.                                                    kinematics of a new quadruped robot control method.
+ [76] Kamegawa T, Suhara H, Akiyama T, et al. Development                Int J Adv Rob Sy. 2013;10(46):1–8.
+       of a snake robot moving in a pipe with helical rolling       [94] Wang J, Gao F, Zhang Y. High power density drive system
+       motion. In JSME Conference on Robotics and                         of a novel hydraulic quadruped robot. In Proceedings
+       Mechatronics; 2017. p. 1P2-Q02 1–4.                                of the ASME 2014 International Design Engineering
+                                                                                                     ADVANCED ROBOTICS          475
+
+
+       Technical Conferences & Computers and Information           [113] Nahvi A, Hollerbach JM, Hayward V. Calibration of a
+       in Engineering Conference; 2014. p. 1–7.                           parallel robot using multiple kinematic closed loops. In
+ [95] Kawabata K, Nishi T, Torii Y, et al. Development of                Proceedings of the 1994 IEEE International Conference
+       hydraulic quadruped walking robot RL-A1. In JSME                   on Robotics and Automation; 1994. p. 407–412.
+       Conference on Robotics and Mechatronics; 2014. p.           [114] Goto H, Tanaka Y, Ichiryu K. 3D tube forming and
+       1A1-I02 1–3.                                                       applications of a new bending machine with hydraulic
+ [96] Cho J, Park S, Kim K. Design of mechanical stiffness               parallel kinematics. Int J Autom Technol. 2012;6(4):509–
+       switch for hydraulic quadruped robot legs inspired by              515.
+       equine distal forelimb. Electron Lett. 2015;51(1):33–35.    [115] Seki H, Amakata H, Kamiya Y, et al. Development of
+ [97] Cheng G, Hyon SH, Morimoto J, et al. CB: a humanoid                hydraulic drive drilling robot with 4-DOF tool for in-
+       research platform for exploring neuroscience. In                   pipe repair – mechanical design of new tool. Int J Autom
+       Proceedings of 2006 6th IEEE-RAS International                     Technol. 2012;6(2):221–227.
+       Conference on Humanoid Robots HUMANOIDS. Vol.               [116] Raibert MH. Legged robots that balance. 1986.
+       1864; 2006. p. 182–187.                                     [117] Altare G, Vacca A. A design solution for efficient and
+ [98] Nelson G, Saunders A, Neville N, et al. PETMAN: a                  compact electro-hydraulic actuators. Procedia Eng.
+       humanoid robot for testing chemical protective clothing.           2015;106:8–16.
+       J Rob Soc Jpn. 2012;30(4):372–377.                          [118] Semini C, Baker M, Laxman K, et al. A brief overview
+ [99] Hiroshi K, Ko T, Masumura R, et al. Mechanism and                  of a novel, highly-integrated hydraulic servo actuator
+       control of whole-body electro-hydrostatic actuator                 with additive-manufactured titanium body. IROS Work.
+       driven humanoid robot hydra. In International                      2016;2016:4–7.
+       Symposium on Experimental Robotics. 2017;656–665.           [119] Schulte HF. The characteristics of the McKibben
+[100] Sofge E. Meet Hydra, The coolest robot not competing               artificial muscle. Appl Extern Power Prosthet Orthetics.
+       in the DARPA robotics challenge. Popular Sci. 2015.                1961;874:94–115.
+[101] Takahashi H, Ichida S, Hara N, et al. Hydraulic-and-        [120] Mori M, Suzumori K, Takahashi M, et al. Very high
+       electric double-arm robot. Rob Soc Jpn. 2016;34(1):33–             force hydraulic mckibben artificial muscle with a
+       39.                                                                p-phenylene-2, 6-benzobisoxazole cord sleeve very high
+[102] Izawa K, Hyon SH. Prototyping force-controlled 3-DOF               force hydraulic McKibben artificial muscle with a p
+       hydraulic arms for humanoid robots. J Rob Mech.                    -phenylene-2, 6-benzobisoxazole cord sleeve. Adv Rob.
+       2016;28(1):95–103.                                                 2012;1864(24):233–254.
+[103] Xu J, Yoon H-S. A review on mechanical and hydraulic        [121] Mori M, Suzumori K, Wakimoto S, et al. Development
+       system modeling of excavator manipulator system. J                 of power robot hand with shape adaptability using
+       Constr Eng. 2016;2016:1–11.                                        hydraulic McKibben muscles. In Proceedings – IEEE
+[104] Ng F, Harding JA, Glass J. Improving hydraulic                     International Conference on Robotics and Automation;
+       excavator performance through in line hydraulic oil                2010. p. 1162–1168.
+       contamination monitoring. Mech Syst Signal Process.         [122] Iwata K, Suzumori K, Wakimoto S, et al. Development
+       2017;83:176–193.                                                   of contraction and extension artificial muscles with
+[105] Kim K, Jag Y, Ahn H. Development of the flow area                  different braid angles and their application to stiffness
+       optimization for a hydraulic excavator. In JFPS                    changeable bending rubber mechanism by their
+       International Journal of Fluid Power System; 2014. p. 20.          combination. J Rob Mech. 2016;23(4):582–588.
+[106] Oshima Y, Kinoshita T, Koiwai K, et al. Data-               [123] Nordin INAM, Faudzi AAM, Wakimoto S, et al.
+       driven torque controller for a hydraulic excavator.                Simulations of fiber braided bending actuator :
+       2016;28(5):752–758.                                                investigation on position of fiber layer placement and air
+[107] Inoue K, Yoneda T, Maehara T. Joint torque control                 chamber diameter. In IEEE Asian Control Conference;
+       by pressure feedback on robotic application. In JFPS               2015. p. 1–4.
+       International Journal of Fluid Power System; 2014.          [124] Iwata K, Suzumori K, Wakimoto S. A method of designing
+[108] Ge L, Dong Z, Huang W, et al. Research on the                      and fabricating mckibben muscles driven by 7 MPa
+       performance of hydraulic excavator with pump and                   hydraulics. Int J Autom Technol. 2012;6(4):482–487.
+       valve combined separate meter in and meter out circuits.    [125] Morita R, Suzumori K, Nabae H, et al. Concrete
+       In Proceedings of 2015 International Conference                    chipping by antagonistic drive of hydraulic artificial
+       on Fluid Power and Mechatronics, FPM 2015; 2015.                   muscle (in Japanese). In JSME Conferenc on Robotics
+       p. 37–41.                                                          and Mechatronics; 2017. p. 2A1-P11 1–2.
+[109] Kagoshima M. The Development of an 8 tonne Class            [126] Raibert M, Blankespoor K, Nelson G, et al. BigDog,
+       Hybrid Hydraulic Excavator SK80H. In Kobelco                       the rough-terrain quadruped robot. IFAC Proc.
+       Technology Review No. 31; 2013. p. 6–11.                           2008;41(2):10822–10825.
+[110] Cosford J. Trends in construction machinery hydraulics;     [127] Hemmi M, Hirota Y, Nabae H, et al. Driving robotic
+       2015.                                                              leg by lightweight, low friction, high power hydraulic
+[111] Tsurugawa Y, Ishikawa K. Development of hybrid                     actuator for tough robots. In JSME Conferenc on
+       hydraulic excavator. In JFPS International Journal of              Robotics and Mechatronics; 2017. p. 2A1-P12 (1–4).
+       Fluid Power System; 2014. p. 21.                            [128] Hyon SH, Suewaka D, Torii Y, et al. Development of
+[112] Yoshinada H, Okamura K, Yokota S. Master-slave                     a fast torque-controlled hydraulic humanoid robot
+       control method for hydraulic excavator. J Rob Mech.                that can balance compliantly. In IEEE-RAS Int Conf
+       2012;24:977–984.                                                   Humanoid Robot; 2015 Dec. p. 576–581).
+476       K. SUZUMORI AND A. A. FAUDZI
+
+
+[129] Tsukiji T, Noguchi E, Yoshida F. Development of                [137] Amundson K, Raade JW, Harding N, et al. Development
+       oil hydraulic components using a flow visualization                   of hybrid hydraulic-electric power units for field
+       technique. 2012;6(4):4–5.                                             and service robots. Adv Robot. 2006;20(9):1015–
+[130] Ukida T, Suzumori K, Nabae H, et al. Development of                   1034.
+       hydraulic particle excitation control valve driven by          [138] Achten PAJ. A review of free piston engine concepts. Soc
+       lateral-deflection vibration. In JSME Conferenc on                    Automot Eng PA, SAE Pap. 1994;#941776.
+       Robotics and Mechatronics; 2017. p. 2A1-P08 (1–2).             [139] Mattila J, Koivumaki J, Caldwell DG, et al. A survey
+[131] Ofuji S, Kanda T, Osaki H, et al. Control of a McKibben               on control of hydraulic robotic manipulators with
+       artificial muscle by flow control valves using particle               projection to future trends. IEEE/ASME Trans Mech.
+       excitation. In JSME Conferenc on Robotics and                         2017;22(2):669–680.
+       Mechatronics; 2017. p. 2A1-P10 (1–2.                           [140] Izzuddin NH, Faudzi AAM, Johari MR, et al. System
+[132] Watanabe T, Inayama T, Oomichi T. Development of the                  identification and predictive functional control for
+       small flow rate water hydraulic servo valve. J Rob Mech.              electro-hydraulic actuator system. IEEE Int Symp Robot
+       2010;22(3):333–340.                                                   Intell Sensors. 2015;1:138–143.
+[133] Suzuki K, Akazawa S, Nakao Y. Development of cam-              [141] Harms HH. Hydraulic fluid technology: current
+       drive type proportional valve for water hydraulics.                   problems and future challenges. In International
+       2012;6(4):450–456.                                                    Exposition for Power Transmission and Technical
+[134] Valdovinos J, Carman GP. Development of a low-voltage                 Conference. 2000. p. 1–6.
+       piezohydraulic pump for compact hydraulic systems.             [142] Mori M, Tanaka J, Suzumori K, et al. Field test for
+       Smart Mater Struct. 2015;24(12):125008.                               verifying the capability of two high-powered hydraulic
+[135] Hyon S-H, Suewaka D, Torii Y, et al. Design and experimental          small robots for rescue operations. In IEEE International
+       evaluation of a fast torque-controlled hydraulic humanoid             Conference on Intelligent Robots and Systems; 2006. p.
+       robot. IEEE/ASME Trans Mech. 2017;22(2):1–1.                          3492–3497.
+[136] Raade JW, Kazerooni H. Analysis and design of a novel          [143] Irawan A, Nonami K. Compliant walking control for
+       hydraulic power source for mobile robots. IEEE Trans                  hydraulic driven hexapod robot on rough terrain. J
+       Autom Sci Eng. 2005;2(3):226–232.                                     Robot Mech. 2011;23(1).
+

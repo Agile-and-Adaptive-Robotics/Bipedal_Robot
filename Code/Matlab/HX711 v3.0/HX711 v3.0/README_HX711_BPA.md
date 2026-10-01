@@ -43,7 +43,8 @@ uploaded from this folder automatically on first **Connect**.
 **Route 2, known-factor entry** (no hardware step needed):
 - *Known LC Cal* tab — type the zero offset/tare (raw counts) and the
   calibration slope (counts per gram-equivalent), click **Apply Known
-  Load-Cell Cal**.
+  Load-Cell Cal**. A field left blank (NaN) keeps its current value, so
+  entering just a new zero offset never touches the scale factor.
 - *Pressure Cal* tab — type `a` and `b` in
   `Pressure_kPa = a*Voltage_V + b`, click **Apply Known Pressure Cal**; or
   click **Run 7-Point Pressure Cal** for a guided calibration (regulator
@@ -53,7 +54,60 @@ Factors persist across sessions in `hx711_bpa_last_cal.mat` next to the app
 (machine-local; gitignored, so each machine keeps its own). Every saved
 file embeds the factors used, so provenance is never lost.
 
+### Ben's normal load-cell procedure (and how the app protects it)
+
+1. Hang the load cell unloaded → **Tare** (zero offset #1).
+2. Take it down, tie the known weight on, hang it → **Scale Factor**.
+3. Remove the weight.
+4. Mount the load cell horizontally, tie it to the tibia → **Tare** again
+   (zero offset #2 for the mounted orientation).
+
+The app is built around this: **Tare updates only the zero offset.** The
+scale factor (counts per gram — a property of the cell, not the mounting)
+is never modified by a tare, in the live session or in the saved
+calibration cache, and the message after each tare states the preserved
+scale explicitly. On the Known LC Cal tab the slope field defaults to
+blank/NaN; Apply with a blank slope keeps the current scale factor, so a
+tare-only entry can never wipe the calibration. The offline self-test
+includes a regression check for exactly this re-zero sequence.
+
 Acquisition unlocks as soon as tare + scale are set by *either* route.
+
+## Dynamic pressure calibration (Pressure Ctrl tab)
+
+For a **free BPA** (not mounted on the leg): give a desired pressure and
+the built-in PID reaches it through the valves, using time-proportioning.
+The PID output `u` in [−100, +100] % becomes, each control period:
+
+| `u` | Valve state | Pins (Increase / Maintain) |
+| --- | --- | --- |
+| u ≥ +2 % | **FILL** | High / High |
+| u ≤ −2 % | **VENT** | Low / Low |
+| otherwise | **HOLD** | Low / High |
+
+(the ±2 % minimum duty avoids valve chatter; the "Increase/Maintain"
+buttons in the Valves panel drive the same three states manually).
+
+- **Kp [%/kPa], Ki [%/kPa/s], Kd [%·s/kPa]** — PID gains; **Ctrl Period**
+  is the valve-update tick (default 0.10 s). Derivative acts on the
+  measured pressure (no setpoint kick); the integrator has anti-windup.
+  Gains persist in the machine-local calibration cache like the other
+  factors.
+- **Run Step Test (Dynamic Cal)** — steps the free BPA from its current
+  pressure to the setpoint, plots the response on the Calibration Result
+  axes with the ± deadband, then reports **overshoot and undershoot in
+  kPa and as % of the step**, 10–90 % rise time, settling time (last time
+  outside the deadband), and steady-state error — on the message line and
+  in the command window. Each test is saved as `DPC_S##_R##.mat` in the
+  save folder (`DPC_Data` = t, kPa, V, duty %, valve state;
+  `DPC_Metrics`; `DPC_PID`). Click **Pause** to abort a test early; the
+  valves always park on HOLD afterwards.
+- **PID servo during Get Data** (checkbox) — the same PID holds the
+  setpoint while force data is acquired, one valve update per sample.
+- Tuning procedure: start with Kd = 0, raise Kp until the response is
+  fast with modest overshoot, add Ki to remove steady-state error, then
+  add a little Kd if the approach rings. Compare overshoot/settling
+  numbers across step tests (each run saved) to confirm improvements.
 
 ## Data acquisition
 
