@@ -123,10 +123,15 @@ def main() -> int:
     mm = mujoco.MjModel.from_xml_path(DST)
     dd = mujoco.MjData(mm)
     mujoco.mj_forward(mm, dd)
-    print("\nverified world axes (MJ): all 8 must be ~lateral (|y| > 0.99)")
+    print("\nverified world axes (MJ): all 8 hinges must be ~lateral (|y| > 0.99)")
     ok = True
     for i in range(mm.njnt):
         n = mujoco.mj_id2name(mm, mujoco.mjtObj.mjOBJ_JOINT, i)
+        if mm.jnt_type[i] != 3:      # 2026-09-30: skip the ROOT FREEJOINT
+            continue                 # (mjJNT_HINGE == 3; FREE == 0 - the
+                                     # first version of this skip had the
+                                     # enum backwards and checked hinges
+                                     # against the freejoint)
         ax = dd.xmat[mm.jnt_bodyid[i]].reshape(3, 3) @ mm.jnt_axis[i]
         lat = abs(ax[1]) > 0.99
         ok &= lat

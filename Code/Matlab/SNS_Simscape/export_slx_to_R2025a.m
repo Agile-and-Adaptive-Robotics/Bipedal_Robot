@@ -62,6 +62,45 @@ for k = 1:numel(others)
     end
 end
 
+% 3b) SNS_SpinalNetwork (lives in results\; needs the same library
+% relink as the demo so easteregg2/EB475WS4 (R2025a) can load it -
+% 2026-09-30, Ben: "export and convert matlab versions for the other
+% machines if it works").
+spn = fullfile(thisDir, 'results', 'SNS_SpinalNetwork.slx');
+if exist(spn, 'file')
+    try
+        load_system('SNS_Library_R2025a');   % keep loaded for the relink
+        load_system(spn);
+        blks = find_system('SNS_SpinalNetwork', 'LookUnderMasks', 'all', 'Type', 'Block');
+        nLinkS = 0; nRelinkS = 0; nFailS = 0;
+        for h = 1:numel(blks)
+            b = blks{h};
+            try
+                if ~strcmp(get_param(b, 'LinkStatus'), 'none')
+                    nLinkS = nLinkS + 1;
+                    rb = get_param(b, 'ReferenceBlock');
+                    if strncmp(rb, 'SNS_Library/', numel('SNS_Library/'))
+                        set_param(b, 'ReferenceBlock', ...
+                            ['SNS_Library_R2025a/' rb(numel('SNS_Library/')+1:end)]);
+                        nRelinkS = nRelinkS + 1;
+                    end
+                end
+            catch
+                nFailS = nFailS + 1;
+            end
+        end
+        fprintf('SPN RELINKED %d of %d links (%d failed)\n', nRelinkS, nLinkS, nFailS);
+        Simulink.exportToVersion('SNS_SpinalNetwork', 'SNS_SpinalNetwork_R2025a', 'R2025a');
+        close_system('SNS_SpinalNetwork', 0);
+        fprintf('EXPORTED_OK: results\SNS_SpinalNetwork_R2025a.slx\n');
+    catch ME
+        fprintf('FAILED: SNS_SpinalNetwork : %s\n', ME.message);
+        try close_system('SNS_SpinalNetwork', 0); catch; end
+    end
+else
+    fprintf('SKIP: results\SNS_SpinalNetwork.slx not found\n');
+end
+
 % 4) Verify: reload the copies fresh; every demo link must resolve to the copy.
 load_system('SNS_Library_R2025a');
 load_system('KneeReflexDemo_R2025a');

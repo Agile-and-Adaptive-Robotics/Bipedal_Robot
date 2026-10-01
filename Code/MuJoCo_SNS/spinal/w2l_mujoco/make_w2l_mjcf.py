@@ -59,7 +59,10 @@ import os
 import sys
 import xml.etree.ElementTree as ET
 
-APROJ = r"D:\Github\Bipedal_Robot\Neuromechanical_Models\Walker_2_Layer_CPG\Walker_2_Layer_CPG.aproj"
+APROJ = os.environ.get(
+    "W2L_APROJ",
+    r"D:\Github\Bipedal_Robot\Neuromechanical_Models\Walker_2_Layer_CPG"
+    r"\Walker_2_Layer_CPG.aproj")
 HERE = os.path.dirname(os.path.abspath(__file__))
 XML_OUT = os.path.join(HERE, "w2l_mjcf.xml")
 DUMP_OUT = os.path.join(HERE, "w2l_source_dump.json")
@@ -362,6 +365,53 @@ def build_mjcf(m):
     A('    <geom name="ground" type="plane" size="5 5 0.1" pos="0 0 0"')
     A('          friction="1 0.005 0.0001" contype="1" conaffinity="1"/>')
 
+    # ---- per-joint muscle-damping stand-in (2026-09-30, resume step 2):
+    # damping[j] = sum over muscles SPANNING joint j of B * r^2, r =
+    # spawn-pose perpendicular distance from the joint anchor to the
+    # muscle attachment polyline (world AL, meters). Replaces the old
+    # scalar 1.5 runtime knob.
+    def _subtree(b):
+        out = [b]
+        for c in b.children:
+            out += _subtree(c)
+        return out
+
+    def _pt_seg_dist(p, a, bb):
+        ab = vsub(bb, a)
+        L2 = vdot(ab, ab)
+        if L2 < 1e-12:
+            return vnorm(vsub(p, a))
+        s = max(0.0, min(1.0, vdot(vsub(p, a), ab) / L2))
+        return vnorm(vsub(p, vadd(a, vscale(ab, s))))
+
+    joint_damping = {}
+    for b in m["bodies"]:
+        if getattr(b, "joint", None) is None or b.parent is None:
+            continue
+        anchor = vadd(b.p_world,
+                      mat_vec(b.R_world, b.joint["pos_local_al"]))
+        sub_ids = {x.id for x in _subtree(b)}
+        dsum = 0.0
+        for mus in m["muscles"]:
+            atts = [m["by_id"][aid] for aid in mus["attach_ids"]]
+            if len(atts) < 2 or not mus.get("B"):
+                continue
+            sides = [any(getattr(a.parent, "id", None) in sub_ids
+                         for a in atts),
+                     any(getattr(a.parent, "id", None) not in sub_ids
+                         for a in atts)]
+            if not all(sides):
+                continue          # muscle does not span this joint
+            pts = [a.p_world for a in atts]
+            r = min(_pt_seg_dist(anchor, pts[i], pts[i + 1])
+                    for i in range(len(pts) - 1))
+            dsum += mus["B"] * r * r
+        if dsum > 0:
+            joint_damping[b.joint["name"]] = dsum
+    print("joint damping sum(B*r^2): "
+          + ", ".join("%s=%.3f" % kv for kv in sorted(
+              joint_damping.items())))
+
     # emit body tree recursively (boxes with mass; skip massless overlay types)
     def emit_body(b, indent):
         if b.type in ("LinearHillMuscle", "LinearHillStretchReceptor",
@@ -386,6 +436,12 @@ def build_mjcf(m):
         if abs(quat[0] - 1.0) > 1e-10:
             attrs += ' quat="%s"' % f3(quat)
         A("%s<body %s>" % (pad, attrs))
+        if b.parent is None:
+            # Li closed-loop resume step 1 (goal2_m2_li_architecture.md
+            # section 8): a jointless Root is WELDED to the world - the
+            # contact-driven CPG can never see a heel strike and the
+            # run is a fixed-base rig. Free the root.
+            A('%s  <freejoint name="root"/>' % pad)
         # inertial (uniform box about COM; massless overlays skipped)
         if b.type == "Box" and b.mass_kg > 0:
             dims_mj = (b.lwh[0], b.lwh[2], b.lwh[1])   # AL(a,b,c) -> MJ(a,c,b)
@@ -403,7 +459,17 @@ def build_mjcf(m):
                 jR = mat_mul(b.R_al, j["R_local_al"])
                 axis_al = mat_vec(jR, [1.0, 0.0, 0.0])      # Vortex primary = local x
                 axis_mj = al2mj_vec(axis_al)
+                # M1-deviation stand-in REPLACED (2026-09-30, resume step
+                # 2): AnimatLab LinearHill muscle damping B [N s/m] maps
+                # to hinge damping sum(B * r^2) [N m s/rad] with r = the
+                # spawn-pose perpendicular distance from the joint anchor
+                # to each muscle's attachment segment (muscles whose
+                # attachments span this joint only). Computed below in
+                # joint_damping(); was a scalar 1.5 at runtime.
+                jdamp = joint_damping.get(j["name"])
                 jattrs = 'name="%s" pos="%s" axis="%s"' % (mj_name("joint", j["name"]), f3(jpos_mj), f3(axis_mj))
+                if jdamp:
+                    jattrs += ' damping="%.6g"' % jdamp
                 if j["enable_limits"] and j["lower_deg"] is not None and j["upper_deg"] is not None:
                     lo, hi = j["lower_deg"] * D2R, j["upper_deg"] * D2R
                     if abs(lo) < 1e-12 and abs(hi) < 1e-12:
@@ -484,10 +550,68 @@ def mj_name(etype, name, prefix=""):
     _used[key] = 1
     return "%s%s" % (prefix, name.replace(" ", "_").replace("-", "_"))
 
+def add_spawn_keyframe(xml_text):
+    """Resume step 3: spawn INSIDE the joint limits, feet touching.
+
+    The M1 pose ships qpos0=0 with ankle range [-20,-5] deg (5 deg
+    outside at t=0) and feet hovering 2.6-3.1 cm. Compile the emitted
+    model, set every limited hinge to mid-range, forward, measure the
+    lowest foot/toe box corner in the world frame, then append a
+    <keyframe> whose root z drops the body to 1 mm clearance.
+    """
+    import numpy as np
+    import mujoco
+    model = mujoco.MjModel.from_xml_string(xml_text)
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    q = np.zeros(model.nq)
+    q[:7] = data.qpos[:7]                     # root pos+quat at qpos0
+    for j in range(model.njnt):
+        # MINIMAL correction: only HINGES (mjJNT_HINGE == 3; the first
+        # version checked == 0 = FREE joint and never fired) whose range
+        # excludes 0 (the ankle [-20,-5] violation). Hinges containing 0
+        # keep qpos0.
+        if model.jnt_type[j] == 3 and model.jnt_limited[j]:
+            lo, hi = model.jnt_range[j]
+            if lo > 0.0 or hi < 0.0:
+                q[model.jnt_qposadr[j]] = 0.5 * (lo + hi)
+    data.qpos[:] = q
+    mujoco.mj_forward(model, data)
+    min_z = None
+    for g in range(model.ngeom):
+        gname = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_GEOM, g)
+        if not gname or model.geom_type[g] != 6:    # box only
+            continue
+        if not any(s in gname.lower() for s in ("foot", "toe")):
+            continue
+        R = data.geom_xmat[g].reshape(3, 3)
+        h = model.geom_size[g]
+        corners = [data.geom_xpos[g] + R @ np.array([sx * h[0],
+                                                     sy * h[1],
+                                                     sz * h[2]])
+                   for sx in (-1, 1) for sy in (-1, 1) for sz in (-1, 1)]
+        z = min(float(c[2]) for c in corners)
+        min_z = z if min_z is None else min(min_z, z)
+    if min_z is None:
+        min_z = 0.0
+    q[2] -= (min_z - 0.001)
+    kf = ('  <keyframe>\n'
+          '    <key name="spawn" qpos="%s" ctrl="%s"/>\n'
+          '  </keyframe>\n' % (" ".join("%.8g" % v for v in q),
+                               " ".join("0" for _ in range(model.nu))))
+    return xml_text.replace("</mujoco>", kf + "</mujoco>")
+
+
 def main():
     _used.clear()
     m = parse_aproj()
     xml_text = build_mjcf(m)
+    try:
+        xml_text = add_spawn_keyframe(xml_text)
+        print("spawn keyframe added")
+    except Exception as ex:
+        print("spawn keyframe SKIPPED (%r) - xml written without it"
+              % ex)
     with open(XML_OUT, "w") as fh:
         fh.write(xml_text)
     # source dump for validator + report

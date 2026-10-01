@@ -128,8 +128,14 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
    copy). Use the `latex-overleaf` skill for Overleaf work (installed on this machine via the
    ZCode_Skills repo junction). 2026-09-21: three Xi-methods figures (`xiFrameGeo` /
    `xiBalance` / `xiWrapLoss.pdf`, in both figs/Aim2 dirs) wired into 20-methods.tex
-   (fig:xiFrames/xiBalance/xiWrapLoss); generator = `Dissertation\Notes\make_xi_method_figures.m`
-   (draws from FlxPinBPASet/ExtPinBPASet; details + open items in summary.md).
+   (fig:xiFrames/xiBalance/xiWrapLoss). [2026-10-01: those figures are SUPERSEDED — the
+   live Methods set is the ChatGPT-session `xiFrameTransform`/`xiProjection` pair, no live
+   `\ref` references remain to the old set; their generator
+   `Dissertation\Notes\make_xi_method_figures.m` exists NOWHERE (searched laptop,
+   easteregg2, EB475WS4 + full git history at Ben's delete ruling — it was never
+   committed), and the three red-marked folders `CHATGPT_staging_20260925\`,
+   `Overleaf_review_20260926_yellow\`, `output\` were DELETED at Ben's same ruling
+   (git-recoverable).]
 2. Design and control of bipedal humanoid robot legs with artificial muscles (PAMs/BPAs)
    controlled by a synthetic nervous system. Lab: AARL (Agile and Adaptive Robotics Lab), PSU.
 3. **Xi-correction-factor program** — run minimizers against pinned-knee test data in
@@ -986,6 +992,22 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     re-passed). Editor = snapshot of the architecture, NOT live (live = neuro_scope.py /
     runner --scope).
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
+- `Code\Hardware\walker_io\` — Python walker IO stack (Orin daemon, lab console, valves,
+  sensors, afferents; README inside). Placement is wrong per Ben (2026-09-30) — fold into
+  the post-defense reorg below. The empty `Code\Solid_Models\` tree (Simscape_Part_Library\
+  OpenSim_Bones, zero files) was deleted 2026-09-30 at Ben's ruling.
+- `tmp\` — session scratch at repo root; contents are disposable by convention (emptied
+  2026-09-30 at Ben's ruling — the dissertation overleaf round-1 staging that lived there
+  is preserved in git history; canonical dissertation = Documentation\...\Dissertation\).
+- **POST-DEFENSE REORG PLAN (Ben, 2026-09-30 — do NOT execute before the dissertation
+  deadline; every move runs the repo-hygiene refs-impact protocol first):** (1)
+  consolidate neuromechanical models under `Neuromechanical_Models\`: SCONE, AnimatLab,
+  SNS_Simscape, and SNS-toolbox model content all belong in the eponymous folder.
+  (2) `Code\MuJoCo_SNS\spinal\` has a crazy number of loose files — organize internally.
+  (3) `Code\Hardware\walker_io` belongs with the other hardware code, not at Code level.
+  (4) Root `0` stray connectome layout dump (broken edge targets, accidental 09-23
+  redirect artifact from the editor session) DELETED 2026-09-30 at Ben's ruling —
+  recoverable from git history (added in 5ec3635).
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the
   cable winch on the test mechanism. "Bending" (Xi2) is modeled as a simple Hooke-law spring in

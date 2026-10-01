@@ -41,8 +41,10 @@ net is RG<->RG commissural (c1/V3) or the shared knee-extensor Renshaw quirk
 transcribed from the 2023 original (MN/RC level, not RG->PF).
 
 CENSUS (asserted):
-  coupled  : 87 neurons / 166 synapses / 6 inputs / 12 outputs
+  coupled  : 87 neurons / 164 synapses / 6 inputs / 12 outputs
   --comm=0 : 83 neurons / 156 synapses / 6 inputs / 12 outputs
+  (164 since the 2026-10-01 census fix for the 2026-09-30 V3-wiring
+   correction; was 166 while the invented v3_SynAmp0.1_weak edges existed)
   (M3 baseline: 79 / 150 / 3 / 12; delta = +4 R RG +4 comm neurons,
    -4 crossed pf_drive +6 R rg_laminate +4 R pf_drive +10 comm synapses)
 
@@ -107,19 +109,20 @@ R_PF_DRIVE_EDGES = [
     ("R RG flx", "R Knee PF flx", "exc", "pf_drive"),
 ]
 
-# Shinohara commissurals, verbatim (from, to, sign, tag) from the bilateralrg
-# template (steps 2-3). Both V3 out-edges per side (contra RG ext + contra
-# RG ext IN) as the template carries them.
+# Shinohara commissurals, verbatim (from, to, sign, tag) from the
+# bilateralrg template (steps 2-3). 2026-09-30 CORRECTION (Ben's go, the
+# 09-26 wiring audit): the V3 -> contra-RG-E HC edge was a GENERATOR
+# INVENTION - the real BilateralRG.aproj carries V3 -> contra RG ext IN
+# ONLY (0.1). Removed here; the afferented march net that extends this
+# template inherits the corrected wiring.
 COMM_EDGES = [
     ("L RG flx", "c1_L", "exc", "comm_c1"),
     ("c1_L", "R RG flx", "inh", "c1_SynAmp2.749"),
     ("R RG flx", "c1_R", "exc", "comm_c1"),
     ("c1_R", "L RG flx", "inh", "c1_SynAmp2.749"),
     ("L RG ext", "V3_L", "exc", "comm_v3"),
-    ("V3_L", "R RG ext", "exc", "v3_SynAmp0.1_weak"),
     ("V3_L", "R RG ext IN", "exc", "v3_to_contra_InE"),
     ("R RG ext", "V3_R", "exc", "comm_v3"),
-    ("V3_R", "L RG ext", "exc", "v3_SynAmp0.1_weak"),
     ("V3_R", "L RG ext IN", "exc", "v3_to_contra_InE"),
 ]
 
@@ -331,7 +334,12 @@ class W2LSplitNet:
                 continue
             expected[e["tag"]] = expected.get(e["tag"], 0) + 1
         comm = self.comm > 0
-        n_neu, n_syn = (87, 166) if comm else (83, 156)
+        # 2026-10-01 census fix: the V3-wiring correction (2026-09-30,
+        # Ben-approved: V3 -> contra RG ext IN only; the two
+        # v3_SynAmp0.1_weak HC edges were a generator invention) removed
+        # 2 commissural synapses, so the coupled baseline is 87/164 (was
+        # 87/166). The count asserts had not been updated with it.
+        n_neu, n_syn = (87, 164) if comm else (83, 156)
         assert len(self.idx) == n_neu, \
             f"neuron count {len(self.idx)} != {n_neu}"
         assert self.n_synapses == sum(expected.values()) == n_syn, \
@@ -345,8 +353,10 @@ class W2LSplitNet:
         assert tags.get("rg_laminate") == 12, tags.get("rg_laminate")  # 6+6
         if comm:
             assert tags.get("comm_c1") == 2 and tags.get("c1_SynAmp2.749") == 2
+            # 2026-10-01: v3_SynAmp0.1_weak (V3 -> contra RG-E HC) is GONE
+            # with the 2026-09-30 V3 correction; the only V3 target is the
+            # contralateral RG ext IN
             assert tags.get("comm_v3") == 2 and \
-                tags.get("v3_SynAmp0.1_weak") == 2 and \
                 tags.get("v3_to_contra_InE") == 2
         else:
             assert not any(k.startswith(("comm_", "c1_", "v3_"))

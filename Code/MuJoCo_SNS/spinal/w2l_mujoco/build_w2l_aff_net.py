@@ -56,7 +56,7 @@ synapses (zero current through them leaves the graph unchanged).
 
 CENSUS (asserted, families heel+toe+ib all on):
   97 neurons / 188 synapses / 12 inputs / 12 outputs
-  (M4 coupled baseline 87/166/6/12; +10 sensor/interneurons, +22 synapses:
+  (M4 coupled baseline 87/164/6/12 (+10 sensor/interneurons, +22 synapses;
    heel_rge_in 4, heel_pf 4, toe_in 2, toe_df 2, toe_df_mn 2, ib_load 8)
 
 USAGE
@@ -231,9 +231,12 @@ class W2LAffNet(SPLIT.W2LSplitNet):
             if n_types[e["from"]] == "PORT-load":
                 continue
             expected[e["tag"]] = expected.get(e["tag"], 0) + 1
-        # family-dependent census: M4 coupled baseline 87/166/6 + per side
-        # (heel: 1 neuron + 4 syn, toe: 3 neurons + 3 syn, Ib: 1 neuron + 4 syn)
-        n_syn = 166 + (8 if self.heel_on else 0) + (6 if self.toe_on else 0) \
+        # family-dependent census: M4 coupled baseline 87/164/6 + per side
+        # (heel: 1 neuron + 4 syn, toe: 3 neurons + 3 syn, Ib: 1 neuron + 4
+        #  syn). 2026-10-01: 164 not 166 — the 2026-09-30 V3-wiring
+        # correction removed the 2 invented v3_SynAmp0.1_weak HC edges from
+        # the split baseline (see build_w2l_split_net.py census note).
+        n_syn = 164 + (8 if self.heel_on else 0) + (6 if self.toe_on else 0) \
             + (8 if self.ib_on else 0)
         n_neu = 87 + (2 if self.heel_on else 0) + (6 if self.toe_on else 0) \
             + (2 if self.ib_on else 0)
@@ -291,4 +294,4 @@ if __name__ == "__main__":
     # ablated variants keep the census honest
     w2 = build(heel=False, toe=False, ib=False)
     print(f"all-off: neurons {len(w2.idx)}  synapses {w2.n_synapses}  "
-          f"inputs {len(w2.inputs)}  (= M4 coupled 87/166/6)")
+          f"inputs {len(w2.inputs)}  (= M4 coupled 87/164/6)")

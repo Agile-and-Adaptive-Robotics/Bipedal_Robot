@@ -49,7 +49,13 @@ def main():
     n_bodies_expected = 1 + 13   # world + Root + 4 segments/leg * 2 + 2 welded contact boxes/leg * 2
     check("body count", model.nbody == n_bodies_expected,
           "nbody=%d (expected %d incl. world)" % (model.nbody, n_bodies_expected))
-    check("8 hinge joints", model.njnt == 8, "njnt=%d" % model.njnt)
+    # 2026-09-30 freejoint fix: root free joint + 8 hinges = 9 joints
+    check("9 joints (root freejoint + 8 hinges)", model.njnt == 9,
+          "njnt=%d" % model.njnt)
+    check("root freejoint present", model.jnt_type[0] == 0 and
+          mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, 0) ==
+          "root", "jnt0=%s" % mujoco.mj_id2name(model,
+          mujoco.mjtObj.mjOBJ_JOINT, 0))
     check("12 muscle actuators", model.nu == 12, "nu=%d" % model.nu)
     check("14 tendons (12 muscle + 2 toe springs)",
           model.ntendon == 14, "ntendon=%d" % model.ntendon)
@@ -97,6 +103,8 @@ def main():
     detail = []
     for j in range(model.njnt):
         jname = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, j)
+        if model.jnt_type[j] != 3:      # 2026-09-30: root FREEJOINT (type
+            continue                    # 0) has no aproj source; hinge=3
         src = dump_joints.get(jname)
         if src is None:
             all_ok = False
