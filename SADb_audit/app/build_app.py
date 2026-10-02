@@ -1,4 +1,4 @@
-﻿"""Build the single-file SADb explorer app: app/sadb_app.html.
+"""Build the single-file SADb explorer app: app/sadb_app.html.
 
 Reads export/sadb_export.json + export/sadb_cites.json + export/cluster_labels.json
 and embeds everything into ONE self-contained HTML file (double-click to open;
@@ -7,12 +7,12 @@ core browsing works fully offline).
 Tabs:
   Table   search/sort/filters + drill-through with a back-to-pivot bar
   Pivot   count matrix, labeled topic clusters, count/A-Z sortable rows+cols
-  Map     yearÃ—citations + topic landscape; neuron styling; Research-Rabbit-style
+  Map     year×citations + topic landscape; neuron styling; Research-Rabbit-style
           FOCUS MODE: click a paper -> BFS neighborhood to 1/2/3 degrees,
           DIRECT connections colored, 2nd-degree grayed; left panel = focus
           paper, right panel = connection list (click to hop)
   Search  ONLINE tab (new, 2026-09-28): live OpenAlex query + launch buttons for
-          Google Scholar / PubMed / Web of Science (PSU) / doi.org â€” the app
+          Google Scholar / PubMed / Web of Science (PSU) / doi.org — the app
           itself only fetches OpenAlex (CORS-open, no key); Scholar/WoS open in
           your browser so institutional access + their ToS apply
 
@@ -80,6 +80,7 @@ for r in records:
         "rs": r.get("robot_sim", ""), "pr": r.get("prune", ""),
         "md": r["models2"], "mr": r["models_ref"], "rv": r["reviews"],
         "pdf": 1 if r["has_pdf"] else 0, "n": 1 if r["has_notes"] else 0,
+        "ar": 1 if r.get("archived") else 0,
         "nt": r["notes"], "src": _classify(r), "c": 0, "cl": -1,
         "lx": 0.0, "ly": 0.0,
     })
@@ -94,7 +95,7 @@ if os.path.exists(layout_path):
         r["lx"] = L.get("x", 0.0)
         r["ly"] = L.get("y", 0.0)
 else:
-    print("WARNING: sadb_layout.json missing â€” citation counts/clusters/landscape coords will be 0")
+    print("WARNING: sadb_layout.json missing — citation counts/clusters/landscape coords will be 0")
 
 payload = json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 cites_payload = json.dumps(cites, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
@@ -104,7 +105,7 @@ HTML = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>SADb Explorer â€” Sensory Afferent Database</title>
+<title>SADb Explorer — Sensory Afferent Database</title>
 <style>
  :root { --bg:#fafafa; --fg:#1a1a1a; --mut:#666; --line:#ddd; --acc:#0b62a4; }
  * { box-sizing:border-box; }
@@ -172,7 +173,7 @@ HTML = r"""<!DOCTYPE html>
 </head>
 <body>
 <header>
-  <h1>SADb Explorer â€” Sensory Afferent Database <span class="sub" id="stats"></span></h1>
+  <h1>SADb Explorer — Sensory Afferent Database <span class="sub" id="stats"></span></h1>
   <div class="sub">Snapshot of the Airtable "Sensory Feedback" corpus. Offline core; the Search tab adds live OpenAlex queries. Rebuild: <code>myo python SADb_audit/export_corpus.py &amp;&amp; SADb_audit/build_citation_graph.py &amp;&amp; SADb_audit/app/build_app.py</code></div>
   <div class="tabs">
     <button id="tab-table" class="on" onclick="show('table')">Table</button>
@@ -183,30 +184,30 @@ HTML = r"""<!DOCTYPE html>
 </header>
 
 <div class="bar" id="bar-table">
-  <input type="text" id="q" placeholder="Search title / author / year / DOI / notesâ€¦" size="38">
+  <input type="text" id="q" placeholder="Search title / author / year / DOI / notes…" size="38">
   <label>Animal <select id="f-an"><option value="">(any)</option></select></label>
   <label>Pathway <select id="f-fb"><option value="">(any)</option></select></label>
   <label>Afferent <select id="f-af"><option value="">(any)</option></select></label>
   <label>Source <select id="f-src"><option value="">(any)</option></select></label>
-  <label>Year <input type="number" id="f-y0" placeholder="from"> â€“ <input type="number" id="f-y1" placeholder="to"></label>
+  <label>Year <input type="number" id="f-y0" placeholder="from"> – <input type="number" id="f-y1" placeholder="to"></label>
   <label><input type="checkbox" id="f-notes"> has notes</label>
   <label><input type="checkbox" id="f-pdf"> has PDF</label>
   <span class="warn" id="cellwarn"></span>
-  <button class="backbtn" id="back-pivot" style="display:none" onclick="backToPivot()">â—€ Back to pivot</button>
+  <button class="backbtn" id="back-pivot" style="display:none" onclick="backToPivot()">◀ Back to pivot</button>
   <button onclick="clearCell()">Clear drill-through</button>
 </div>
 
 <div class="bar" id="bar-pivot" style="display:none">
   <label>Rows <select id="p-row"></select></label>
   <label>Columns <select id="p-col"></select></label>
-  <label>Sort rows <select id="p-sr"><option value="count">by count</option><option value="alpha">A â†’ Z</option><option value="alpha-r">Z â†’ A</option></select></label>
-  <label>Sort cols <select id="p-sc"><option value="count">by count</option><option value="alpha">A â†’ Z</option><option value="alpha-r">Z â†’ A</option></select></label>
+  <label>Sort rows <select id="p-sr"><option value="count">by count</option><option value="alpha">A → Z</option><option value="alpha-r">Z → A</option></select></label>
+  <label>Sort cols <select id="p-sc"><option value="count">by count</option><option value="alpha">A → Z</option><option value="alpha-r">Z → A</option></select></label>
   <label class="sub">Count = papers; multi-valued fields count once per value. Click a cell to drill through; the Table view then shows a "Back to pivot" button.</label>
 </div>
 
 <div class="bar" id="bar-map" style="display:none">
   <label>Layout <select id="m-layout">
-    <option value="year">Year Ã— citations</option>
+    <option value="year">Year × citations</option>
     <option value="land">Topic landscape (citation network)</option>
   </select></label>
   <label>Style <select id="m-style">
@@ -230,11 +231,11 @@ HTML = r"""<!DOCTYPE html>
     <option value="focus">Focus paper</option>
     <option value="details">Show details</option>
   </select></label>
-  <label class="sub">Click = focus: network out to N degrees â€” <b>direct connections colored</b> (green triangles = papers citing the focus arrive excitatory; red circles = papers the focus cites), 2nd degree grayed. Left panel = focus paper; right panel = connections (click to hop). Esc = back.</label>
+  <label class="sub">Click = focus: network out to N degrees — <b>direct connections colored</b> (green triangles = papers citing the focus arrive excitatory; red circles = papers the focus cites), 2nd degree grayed. Left panel = focus paper; right panel = connections (click to hop). Esc = back.</label>
 </div>
 
 <div class="bar" id="bar-search" style="display:none">
-  <input type="text" id="s-q" placeholder="Search OpenAlex live â€” title / author / topicâ€¦" size="44">
+  <input type="text" id="s-q" placeholder="Search OpenAlex live — title / author / topic…" size="44">
   <button onclick="doSearch()">Search OpenAlex</button>
   <label>per page <select id="s-n"><option>10</option><option selected>25</option><option>50</option></select></label>
   <span class="sub" id="s-note"></span>
@@ -273,7 +274,7 @@ HTML = r"""<!DOCTYPE html>
 </main>
 
 <div id="tip"></div>
-<div id="detail"><span class="close" onclick="hideDetail()">âœ•</span><div id="detail-body"></div></div>
+<div id="detail"><span class="close" onclick="hideDetail()">✕</span><div id="detail-body"></div></div>
 
 <script type="application/json" id="sadb-data">__DATA__</script>
 <script type="application/json" id="sadb-cites">__CITES__</script>
@@ -294,7 +295,7 @@ const neighborsOf = id => [...new Set([...(CITES[id]||[]), ...(citedBy[id]||[])]
 const ANIMALS = [...new Set(DATA.flatMap(r => r.an))].sort();
 const AFFECTS = [...new Set(DATA.flatMap(r => r.af))].sort();
 function clName(cl){ return CL_LABELS[String(cl)] || CL_LABELS[cl] || ('Cluster '+(cl+1)); }
-function clShort(cl){ const s = clName(cl); return s.length>34 ? s.slice(0,32)+'â€¦' : s; }
+function clShort(cl){ const s = clName(cl); return s.length>34 ? s.slice(0,32)+'…' : s; }
 
 const state = { q:'', an:'', fb:'', af:'', src:'', y0:null, y1:null, notes:false, pdf:false,
                 sort:{k:'c', dir:-1}, cell:null };
@@ -356,6 +357,7 @@ function renderTable(){
     const tags = [];
     if (r.n) tags.push('<span class="pill yes">notes</span>');
     else tags.push('<span class="pill no">no notes</span>');
+    if (r.ar) tags.push('<span class="pill" style="background:#eee3f3">app-only (removed from Airtable)</span>');
     if (r.pdf) tags.push('<span class="pill yes">PDF</span>');
     if (r.pr === 'prune-candidate') tags.push('<span class="pill no">prune?</span>');
     r.an.slice(0,3).forEach(a => tags.push('<span class="pill">'+a+'</span>'));
@@ -368,7 +370,7 @@ function renderTable(){
     frag.appendChild(tr);
   });
   tb.appendChild(frag);
-  if (rows.length > 400) $('count').textContent += ' â€” showing first 400 (use filters)';
+  if (rows.length > 400) $('count').textContent += ' — showing first 400 (use filters)';
 }
 document.querySelectorAll('th[data-k]').forEach(th => th.onclick = () => {
   const k = th.dataset.k;
@@ -408,7 +410,7 @@ function renderPivot(){
   });
   const rl = sortEntries([...rVals.entries()], $('p-sr').value).slice(0,40);
   const cl = sortEntries([...cVals.entries()], $('p-sc').value).slice(0,24);
-  let h = '<table class="pivot"><tr><th class="rh">'+DIMS[rk].label+' â†“ / '+DIMS[ck].label+' â†’</th>';
+  let h = '<table class="pivot"><tr><th class="rh">'+DIMS[rk].label+' ↓ / '+DIMS[ck].label+' →</th>';
   cl.forEach(([cv]) => h += '<th>'+esc(cv)+'</th>');
   h += '<th>total</th></tr>';
   rl.forEach(([rv]) => {
@@ -416,16 +418,16 @@ function renderPivot(){
     let tot = 0;
     cl.forEach(([cv]) => {
       const v = matrix.get(rv+'||'+cv)||0; tot += v;
-      h += '<td class="cell" data-r="'+esc(rv)+'" data-c="'+esc(cv)+'"'+(v?'':' style="color:#ccc"')+'>'+(v||'Â·')+'</td>';
+      h += '<td class="cell" data-r="'+esc(rv)+'" data-c="'+esc(cv)+'"'+(v?'':' style="color:#ccc"')+'>'+(v||'·')+'</td>';
     });
     h += '<td class="tot">'+tot+'</td></tr>';
   });
   h += '</table>';
-  if (rVals.size>40 || cVals.size>24) h += '<p class="sub">Showing top 40 row / 24 column values ('+rVals.size+' Ã— '+cVals.size+' total).</p>';
+  if (rVals.size>40 || cVals.size>24) h += '<p class="sub">Showing top 40 row / 24 column values ('+rVals.size+' × '+cVals.size+' total).</p>';
   const el = $('view-pivot'); el.innerHTML = h;
   el.querySelectorAll('td.cell').forEach(td => td.onclick = () => {
     state.cell = [rk, td.dataset.r, ck, td.dataset.c];
-    $('cellwarn').textContent = 'Drill: '+td.dataset.r+' Ã— '+td.dataset.c;
+    $('cellwarn').textContent = 'Drill: '+td.dataset.r+' × '+td.dataset.c;
     $('cellwarn').style.display = 'inline';
     show('table');
   });
@@ -542,7 +544,7 @@ function drawMap(){
     ctx.fillText('Citations (log scale)', 0, 0); ctx.restore();
   } else {
     ctx.fillStyle = '#888'; ctx.font = '12px system-ui'; ctx.textAlign = 'center';
-    ctx.fillText('Topic landscape â€” proximity â‰ˆ citation similarity ('+
+    ctx.fillText('Topic landscape — proximity ≈ citation similarity ('+
       Object.keys(CL_LABELS).length+' named clusters)', cv.width/2, 14);
   }
 
@@ -679,7 +681,7 @@ function connRow(id, mark){
   return '<div class="conn'+(mark?' cur':'')+'" onclick="hopFocus(\''+id+'\')">'+
     '<b>'+esc(r.a||'?')+'</b> '+(r.y||'')+
     (mark? ' <span class="ct">['+mark+']</span>':'')+
-    '<div class="ct">'+esc(r.t.slice(0,72))+(r.t.length>72?'â€¦':'')+'</div></div>';
+    '<div class="ct">'+esc(r.t.slice(0,72))+(r.t.length>72?'…':'')+'</div></div>';
 }
 function renderPanels(){
   const L = $('lpanel'), R = $('rpanel');
@@ -688,35 +690,35 @@ function renderPanels(){
   L.style.display='block'; R.style.display='block';
   const nRef = (CITES[r.id]||[]).length, nBy = (citedBy[r.id]||[]).length;
   L.innerHTML = '<h3>Focus paper</h3>'+
-    '<b>'+esc(r.t)+'</b><div class="ct">'+esc(r.a)+(r.s? ' â€” '+esc(r.s):'')+' Â· '+(r.y||'n.d.')+
-    ' Â· '+r.c+' citations</div>'+
+    '<b>'+esc(r.t)+'</b><div class="ct">'+esc(r.a)+(r.s? ' — '+esc(r.s):'')+' · '+(r.y||'n.d.')+
+    ' · '+r.c+' citations</div>'+
     (r.d? '<div style="margin-top:6px"><a href="https://doi.org/'+esc(r.d)+'" target="_blank" rel="noopener">'+esc(r.d)+'</a></div>':'')+
     '<div class="ph">In-corpus graph</div>'+
-    '<div>'+nRef+' references Â· '+nBy+' citing papers Â· '+
+    '<div>'+nRef+' references · '+nBy+' citing papers · '+
       Object.keys(degMap).length+' shown ('+$('m-deg').value+' degrees)</div>'+
-    '<div class="ph">Animals</div><div>'+(r.an.length? r.an.map(a=>'<span class="pill">'+esc(a)+'</span>').join(''):'â€”')+'</div>'+
-    '<div class="ph">Afferents</div><div>'+(r.af.length? r.af.map(a=>'<span class="pill af">'+esc(a)+'</span>').join(''):'â€”')+'</div>'+
-    '<div class="ph">Pathways</div><div>'+(r.fb.length? r.fb.map(f=>'<span class="pill fb">'+esc(f)+'</span>').join(''):'â€”')+'</div>'+
+    '<div class="ph">Animals</div><div>'+(r.an.length? r.an.map(a=>'<span class="pill">'+esc(a)+'</span>').join(''):'—')+'</div>'+
+    '<div class="ph">Afferents</div><div>'+(r.af.length? r.af.map(a=>'<span class="pill af">'+esc(a)+'</span>').join(''):'—')+'</div>'+
+    '<div class="ph">Pathways</div><div>'+(r.fb.length? r.fb.map(f=>'<span class="pill fb">'+esc(f)+'</span>').join(''):'—')+'</div>'+
     '<div class="ph">Actions</div>'+
     '<button class="backbtn" onclick="viewRefs(\''+r.id+'\')">References map</button> '+
     '<button class="backbtn" onclick="viewCitedBy(\''+r.id+'\')">Cited-by map</button> '+
     '<button class="backbtn" onclick="showDetail(byId[\''+r.id+'\'])">Details</button> '+
-    '<button class="backbtn" onclick="clearSpot()">âœ• Un-focus</button>'+
+    '<button class="backbtn" onclick="clearSpot()">✕ Un-focus</button>'+
     (r.n? '<div class="ph">Curation note</div><div>'+esc(r.nt.slice(0,420))+'</div>':'')+
     (r.rs? '<div class="ph">Robot/sim translation</div><div>'+esc(r.rs.slice(0,420))+'</div>':'');
   const cap = 60;
   const refs = (CITES[r.id]||[]), bys = (citedBy[r.id]||[]);
   const second = Object.keys(degMap).filter(id => degMap[id] >= 2);
   R.innerHTML = '<h3>Connections</h3>'+
-    '<div class="ph">â–¼ Cited by '+bys.length+' (excitatory input)</div>'+
+    '<div class="ph">▼ Cited by '+bys.length+' (excitatory input)</div>'+
     (bys.length? bys.slice(0,cap).map(id => connRow(id)).join('') +
-      (bys.length>cap? '<div class="ct">+'+(bys.length-cap)+' moreâ€¦</div>':'') : '<div class="ct">none in corpus</div>')+
-    '<div class="ph">â–¼ References '+refs.length+' (focus cites)</div>'+
+      (bys.length>cap? '<div class="ct">+'+(bys.length-cap)+' more…</div>':'') : '<div class="ct">none in corpus</div>')+
+    '<div class="ph">▼ References '+refs.length+' (focus cites)</div>'+
     (refs.length? refs.slice(0,cap).map(id => connRow(id)).join('') +
-      (refs.length>cap? '<div class="ct">+'+(refs.length-cap)+' moreâ€¦</div>':'') : '<div class="ct">none in corpus</div>')+
+      (refs.length>cap? '<div class="ct">+'+(refs.length-cap)+' more…</div>':'') : '<div class="ct">none in corpus</div>')+
     '<div class="ph">2nd degree ('+second.length+')</div><div class="ct">'+
-      second.slice(0,40).map(id => (byId[id]? (byId[id].a||'?')+' '+(byId[id].y||''):'')).join(' Â· ')+
-      (second.length>40? ' â€¦':'')+'</div>';
+      second.slice(0,40).map(id => (byId[id]? (byId[id].a||'?')+' '+(byId[id].y||''):'')).join(' · ')+
+      (second.length>40? ' …':'')+'</div>';
 }
 function hopFocus(id){
   ms.spot = id; kfocus = -1; nodesSorted._c = null;
@@ -746,16 +748,16 @@ function updateCrumb(){
   if ((ms.mode==='refs'||ms.mode==='citedby') && ms.focus){
     const r = byId[ms.focus];
     const n = ms.mode==='refs' ? (CITES[ms.focus]||[]).length : (citedBy[ms.focus]||[]).length;
-    c.innerHTML = '<button id="map-back">â† All papers</button> '+
+    c.innerHTML = '<button id="map-back">← All papers</button> '+
       (ms.mode==='refs'?'References of':'Cited by')+' <b>'+esc((r.a||'')+' '+(r.y||''))+'</b>: '+
-      esc(r.t.slice(0,80))+' â€” '+n+' in-corpus papers';
+      esc(r.t.slice(0,80))+' — '+n+' in-corpus papers';
   } else if (ms.spot){
     const r = byId[ms.spot];
-    c.innerHTML = '<button id="map-back">â† Show all</button> Focused: <b>'+esc((r.a||'')+' '+(r.y||''))+'</b> â€” '+
-      esc(r.t.slice(0,80))+' Â· '+Object.keys(degMap||{}).length+' papers within '+$('m-deg').value+' degree(s)';
+    c.innerHTML = '<button id="map-back">← Show all</button> Focused: <b>'+esc((r.a||'')+' '+(r.y||''))+'</b> — '+
+      esc(r.t.slice(0,80))+' · '+Object.keys(degMap||{}).length+' papers within '+$('m-deg').value+' degree(s)';
   } else {
     const lbl = {all:'All papers', review:'Research review', animal:'Animal studies', models:'Models'}[ms.mode];
-    c.innerHTML = '<span class="sub">'+lbl+' â€” click a bubble to focus its citation neighborhood; switch View to References or Cited by for one-direction maps.</span>';
+    c.innerHTML = '<span class="sub">'+lbl+' — click a bubble to focus its citation neighborhood; switch View to References or Cited by for one-direction maps.</span>';
   }
   const back = $('map-back');
   if (back) back.onclick = () => {
@@ -821,9 +823,9 @@ window.addEventListener('mousemove', e => {
   if (hover){
     tip.style.display='block';
     tip.style.left = (e.clientX+14)+'px'; tip.style.top = (e.clientY+10)+'px';
-    const deg = (ms.spot && degMap && degMap[hover.id] != null) ? ' Â· degree '+degMap[hover.id] : '';
-    tip.innerHTML = '<b>'+esc(hover.t)+'</b><br>'+esc(hover.a)+' '+(hover.y||'')+' Â· '+hover.c+' citations'+deg+
-      '<br><span class="sub">left-click: '+$('m-swap').value+' Â· right-click/Ctrl+click: '+($('m-swap').value==='focus'?'details':'focus')+'</span>';
+    const deg = (ms.spot && degMap && degMap[hover.id] != null) ? ' · degree '+degMap[hover.id] : '';
+    tip.innerHTML = '<b>'+esc(hover.t)+'</b><br>'+esc(hover.a)+' '+(hover.y||'')+' · '+hover.c+' citations'+deg+
+      '<br><span class="sub">left-click: '+$('m-swap').value+' · right-click/Ctrl+click: '+($('m-swap').value==='focus'?'details':'focus')+'</span>';
   } else tip.style.display='none';
   drawMap();
 });
@@ -878,20 +880,21 @@ function showDetail(r){
   const dd = $('detail-body');
   const nRefs = (CITES[r.id]||[]).length, nBy = (citedBy[r.id]||[]).length;
   dd.innerHTML = '<h2>'+esc(r.t)+'</h2>'+
-    '<div class="sub">'+esc(r.a)+(r.s? ' â€” '+esc(r.s):'')+' Â· '+(r.y||'n.d.')+' Â· '+r.c+' citations</div>'+
+    '<div class="sub">'+esc(r.a)+(r.s? ' — '+esc(r.s):'')+' · '+(r.y||'n.d.')+' · '+r.c+' citations</div>'+
     '<dt>DOI</dt><dd>'+(r.d? '<a href="https://doi.org/'+esc(r.d)+'" target="_blank" rel="noopener">'+esc(r.d)+'</a>' : '(none)')+'</dd>'+
-    '<dt>In-corpus citations</dt><dd>'+nRefs+' references in corpus Â· cited by '+nBy+' corpus papers'+
-    ' â€” <a href="#" onclick="focusInMap(\''+r.id+'\');return false;">Focus in map</a> Â· '+
-    '<a href="#" onclick="viewRefs(\''+r.id+'\');return false;">References map</a> Â· '+
+    '<dt>In-corpus citations</dt><dd>'+nRefs+' references in corpus · cited by '+nBy+' corpus papers'+
+    ' — <a href="#" onclick="focusInMap(\''+r.id+'\');return false;">Focus in map</a> · '+
+    '<a href="#" onclick="viewRefs(\''+r.id+'\');return false;">References map</a> · '+
     '<a href="#" onclick="viewCitedBy(\''+r.id+'\');return false;">Cited-by map</a></dd>'+
-    '<dt>Import source</dt><dd>'+(SRC_LABEL[r.src]||r.src||'?')+'</dd>'+
+    '<dt>Import source</dt><dd>'+(SRC_LABEL[r.src]||r.src||'?')+
+    (r.ar? ' · <b>app-only: removed from Airtable (record-cap cut), kept here for its rules/insight</b>':'')+'</dd>'+
     '<dt>Topic cluster</dt><dd>'+(r.cl>=0? esc(clName(r.cl)) : '(no citation links)')+'</dd>'+
     '<dt>Animals</dt><dd>'+(r.an.length? r.an.map(a=>'<span class="pill">'+esc(a)+'</span>').join('') : '(untagged)')+'</dd>'+
     '<dt>Afferent types</dt><dd>'+(r.af.length? r.af.map(a=>'<span class="pill af">'+esc(a)+'</span>').join('') : '(untagged)')+'</dd>'+
     '<dt>Feedback pathways</dt><dd>'+(r.fb.length? r.fb.map(f=>'<span class="pill fb">'+esc(f)+'</span>').join('') : '(none linked)')+'</dd>'+
     '<dt>Models</dt><dd>'+esc([].concat(r.md,r.mr).filter(Boolean).join('; ')||'(none)')+'</dd>'+
     '<dt>Review coverage</dt><dd>'+esc(r.rv.join('; ')||'(none)')+'</dd>'+
-    '<dt>PDF in Airtable</dt><dd>'+(r.pdf? 'yes':'no')+(r.pr? ' Â· prune status: '+esc(r.pr):'')+'</dd>'+
+    '<dt>PDF in Airtable</dt><dd>'+(r.pdf? 'yes':'no')+(r.pr? ' · prune status: '+esc(r.pr):'')+'</dd>'+
     '<dt>Curation note</dt><dd>'+(r.n? esc(r.nt) : '<i>(not yet curated)</i>')+'</dd>'+
     (r.ast? '<dt>Animal-study potential</dt><dd>'+esc(r.ast)+'</dd>':'')+
     (r.rs? '<dt>Robot / sim translation</dt><dd>'+esc(r.rs)+'</dd>':'');
@@ -908,7 +911,7 @@ async function doSearch(){
   const q = $('s-q').value.trim();
   const res = $('s-results');
   if (!q){ res.innerHTML = '<div class="sub">Type a query first.</div>'; return; }
-  res.innerHTML = '<div class="sub">Querying OpenAlexâ€¦</div>';
+  res.innerHTML = '<div class="sub">Querying OpenAlex…</div>';
   const url = 'https://api.openalex.org/works?search=' + encodeURIComponent(q) +
     '&per-page=' + $('s-n').value + '&mailto=benjamin.bolen@pdx.edu' +
     '&select=id,doi,title,publication_year,authorships,cited_by_count,primary_location,abstract_inverted_index';
@@ -939,16 +942,16 @@ async function doSearch(){
     const sq = encodeURIComponent(((w.title||'') + ' ' + q).slice(0,180));
     return '<div class="srch-r"><div class="t">'+esc(w.title||'(untitled)')+
       (inCorpus? ' <span class="incorpus">already in corpus</span>':'')+'</div>'+
-      '<div class="m">'+esc(auth)+' Â· '+(w.publication_year||'')+(inst? ' Â· '+esc(inst):'')+
-      ' Â· cited by '+(w.cited_by_count||0)+(doi? ' Â· doi: '+esc(doi):'')+'</div>'+
-      (ab? '<div class="m">'+esc(ab.slice(0,320))+(ab.length>320?'â€¦':'')+'</div>':'')+
+      '<div class="m">'+esc(auth)+' · '+(w.publication_year||'')+(inst? ' · '+esc(inst):'')+
+      ' · cited by '+(w.cited_by_count||0)+(doi? ' · doi: '+esc(doi):'')+'</div>'+
+      (ab? '<div class="m">'+esc(ab.slice(0,320))+(ab.length>320?'…':'')+'</div>':'')+
       '<div style="margin-top:4px">'+
       (doi? '<a href="https://doi.org/'+esc(doi)+'" target="_blank" rel="noopener">doi.org</a>':'')+
-      '<a href="https://scholar.google.com/scholar?q='+sq+'" target="_blank" rel="noopener">Google Scholar â†—</a>'+
-      '<a href="https://pubmed.ncbi.nlm.nih.gov/?term='+sq+'" target="_blank" rel="noopener">PubMed â†—</a>'+
-      '<a href="#" onclick="openWoS(\''+esc(String(q).replace(/'/g,""))+'\');return false;">Web of Science â†—</a>'+
-      '<a href="'+esc(w.id)+'" target="_blank" rel="noopener">OpenAlex â†—</a>'+
-      '<a href="#" onclick="suggestImport(\''+esc((doi||w.id).replace(/'/g,""))+'\');return false;">â¤“ suggest for corpus</a>'+
+      '<a href="https://scholar.google.com/scholar?q='+sq+'" target="_blank" rel="noopener">Google Scholar ↗</a>'+
+      '<a href="https://pubmed.ncbi.nlm.nih.gov/?term='+sq+'" target="_blank" rel="noopener">PubMed ↗</a>'+
+      '<a href="#" onclick="openWoS(\''+esc(String(q).replace(/'/g,""))+'\');return false;">Web of Science ↗</a>'+
+      '<a href="'+esc(w.id)+'" target="_blank" rel="noopener">OpenAlex ↗</a>'+
+      '<a href="#" onclick="suggestImport(\''+esc((doi||w.id).replace(/'/g,""))+'\');return false;">⤓ suggest for corpus</a>'+
       '</div></div>';
   }).join('');
 }
@@ -1000,9 +1003,11 @@ function show(t){
   $('p-row').value = 'cluster'; $('p-col').value = 'decade';
   ['p-row','p-col','p-sr','p-sc'].forEach(id => $(id).addEventListener('change', renderPivot));
   const withNotes = DATA.filter(r=>r.n).length, withPdf = DATA.filter(r=>r.pdf).length;
+  const appOnly = DATA.filter(r=>r.ar).length;
   const ys = DATA.map(r=>r.y||9999).filter(v=>v<9999);
-  $('stats').textContent = ' â€” '+DATA.length+' papers Â· '+withNotes+' curated Â· '+withPdf+' with PDF Â· '+
-    Math.min(...ys)+'â€“'+Math.max(...DATA.map(r=>r.y||0));
+  $('stats').textContent = ' — '+DATA.length+' papers ('+appOnly+' app-only, removed from Airtable) · '+
+    withNotes+' curated · '+withPdf+' with PDF · '+
+    Math.min(...ys)+'–'+Math.max(...DATA.map(r=>r.y||0));
   renderTable();
 })();
 </script>
@@ -1018,4 +1023,4 @@ with open(out, "w", encoding="utf-8") as fh:
     fh.write(html)
 print("wrote", out, f"({len(html)/1024:.0f} KB, {len(data)} papers, "
       f"{sum(len(v) for v in cites.values())} directed citation pairs, "
-      f"{len(cl_labels)} named clusters) â€” built {datetime.date.today().isoformat()}")
+      f"{len(cl_labels)} named clusters) — built {datetime.date.today().isoformat()}")

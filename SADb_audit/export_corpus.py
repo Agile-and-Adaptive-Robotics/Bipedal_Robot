@@ -131,3 +131,25 @@ n_fb = sum(1 for r in out if r["feedback"])
 n_af = sum(1 for r in out if r["afferents"])
 print(f"wrote {len(out)} records | notes {n_notes} | pdf {n_pdf} | animals {n_an} | "
       f"feedback {n_fb} | afferents {n_af} | review-links {n_rev} | bare {len(out)-n_notes}")
+
+# --- archive merge (Ben, 2026-10-02: "we'll keep them in the app") ---
+# Records deleted from Airtable (over the free-plan record cap) are re-added
+# from their full-row snapshots in archive/deleted_records_*.json, flagged
+# archived=True, so the HTML app keeps their rules/insight forever.
+import glob as _glob
+live_ids = {r["id"] for r in out}
+for path in sorted(_glob.glob(os.path.join(OUT, "..", "archive", "deleted_records_*.json"))):
+    for snap in json.load(open(path, encoding="utf-8")):
+        if snap["id"] not in live_ids:
+            snap["archived"] = True
+            out.append(snap)
+n_arch = sum(1 for r in out if r.get("archived"))
+with open(os.path.join(OUT, "sadb_export.json"), "w", encoding="utf-8") as fh:
+    json.dump(out, fh, ensure_ascii=False)
+with open(os.path.join(OUT, "sadb_export.csv"), "w", encoding="utf-8-sig", newline="") as fh:
+    w = csv.DictWriter(fh, fieldnames=cols + ["archived"])
+    w.writeheader()
+    for r in out:
+        w.writerow({c: (("; ".join(r[c]) if isinstance(r[c], list) else r[c])) for c in cols}
+                   | {"archived": bool(r.get("archived"))})
+print(f"after archive merge: {len(out)} records ({n_arch} app-only / removed from Airtable)")

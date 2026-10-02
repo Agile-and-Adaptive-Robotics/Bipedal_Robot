@@ -2,6 +2,10 @@
 
 5 papers in the corpus.
 
+- **Hart and Giszter 2010** — [A Neural Basis for Motor Primitives in the Spinal Cord](https://doi.org/10.1523/jneurosci.5894-08.2010)  
+  - animals: Frog · afferents: Cutaneous  
+  - Identifies a neural substrate for motor primitives: in spinalized frogs, intermediate-zone interneurons with short-latency postspike facilitation of multiple motor pools have facilitation patterns that match the weighting vectors of statistically extracted primitives, implying dedicated interneuron sets organize individual primitives.  
+  - *Robot/sim:* Represent each motor primitive as a dedicated interneuron population with fixed postspike facilitation weights onto its motor pools; ablate individual populations to predict loss of the matching synergy component in evoked motor patterns.
 - **Kargo 2010** — [A Simple Experimentally Based Model Using Proprioceptive Regulation of Motor Primitives Captures Adjusted Traj](https://doi.org/10.1152/jn.01054.2007)  
   - animals: Frog  
   - In frogs, prior work supports
@@ -12,10 +16,6 @@ whether a compact description using primitives modulated by proprioceptive feedb
 a biomechanical model based on physiological data. We recorded
 from hindlimb muscle spindles to evaluate possible proprioceptive
 input. As movement was initiated
-- **Hart and Giszter 2010** — [A Neural Basis for Motor Primitives in the Spinal Cord](https://doi.org/10.1523/jneurosci.5894-08.2010)  
-  - animals: Frog · afferents: Cutaneous  
-  - Identifies a neural substrate for motor primitives: in spinalized frogs, intermediate-zone interneurons with short-latency postspike facilitation of multiple motor pools have facilitation patterns that match the weighting vectors of statistically extracted primitives, implying dedicated interneuron sets organize individual primitives.  
-  - *Robot/sim:* Represent each motor primitive as a dedicated interneuron population with fixed postspike facilitation weights onto its motor pools; ablate individual populations to predict loss of the matching synergy component in evoked motor patterns.
 - **Poppele and Bosco 2003** — [Sophisticated spinal contributions to motor control](https://doi.org/10.1016/S0166-2236(03)00073-0)  
   - animals: Vertebrates, Frog, Turtle, Cat  
   - Review paper.

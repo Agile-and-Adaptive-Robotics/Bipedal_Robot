@@ -3,7 +3,7 @@
 5 papers in the corpus.
 
 - **Nichols 2018** — [Distributed force feedback in the Spinal Cord and the regulation of limb mechanics](https://doi.org/10.1152/jn.00216.2017)  
-  - animals: Cat, Human · pathways: Ib disynaptic inhibition; Ib disynaptic excitation; Ia monosynaptic  
+  - animals: Cat, Human · pathways: Ib disynaptic inhibition; Ia monosynaptic; Ib disynaptic excitation  
   - Review Update Paper; This paper show able to give insight to the inhibitory and excitatory force feedback during locomotion
 - **Ross and Nichols 2009** — [Heterogenic Feedback Between Hindlimb Extensors in the Spontaneously Locomoting Premammillary Cat](https://doi.org/10.1152/jn.90338.2008)  
   - animals: Cat · pathways: Ib disynaptic inhibition  
