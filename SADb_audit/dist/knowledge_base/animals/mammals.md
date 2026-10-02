@@ -1,0 +1,204 @@
+# Animal: Mammals
+
+56 papers in the corpus.
+
+- **Zhu 2024** — [A spinal circuit model with asymmetric cervical-lumbar layout controls backward locomotion and scratching in q](https://doi.org/10.1016/j.neunet.2024.106422)  
+  - animals: Mammals  
+  - A spinal circuit model with asymmetric cervical-lumbar layout (V0D versus V0V commissural interneurons mediating left-right alternation at the two levels) reproduces quadruped walk/trot, half-bound after V0V deletion, bound after V0 deletion, unilateral versus bilateral scratching after V0V deletion, and afferent-plus-perineal-driven coordination in backward-biped-spinal locomotion - supporting one shared spinal network reconfigured by supraspinal input and somatosensory feedback across motor behaviors.  
+  - *Robot/sim:* Implement the asymmetric cervical-lumbar CIN network in a quadruped simulator; ablate V0V then V0D+V0V to check the gait transitions, and drive network reconfiguration with afferent feedback plus perineal-like stimulation to switch among forward, backward, and scratching modes.
+- **Rybak 2024** — [Operation regimes of spinal circuits controlling locomotion and the role of supraspinal drives and sensory fee](https://doi.org/10.7554/elife.98841)  
+  - animals: Cat, Mammals  
+  - Computational model reproducing intact and spinal-transected cats in tied- and split-belt locomotion, showing the spinal network changes operating regime with speed: a non-oscillating state-machine at slow speeds (<0.4 m/s) whose phase transitions require sensory feedback related to limb extension (removing it prevents slow-speed oscillation), a flexor-driven oscillatory regime at intermediate speeds, and a classical half-center regime at high speeds; after transection only the state-machine regime remains.  
+  - *Robot/sim:* Build the tri-regime spinal controller (state-machine with sensory phase transitions at slow speed, flexor-driven, half-center) in a neuromechanical simulation; ablate the limb-extension feedback term to confirm loss of slow-speed oscillation and lock the spinalized configuration to state-machine behavior.
+- **Sengupta and Bagnall 2023** — [Spinal Interneurons: Diversity and Connectivity in Motor Control](https://doi.org/10.1146/annurev-neuro-083122-025325)  
+  - animals: Mammals, Mice  
+  - Comprehensive review of spinal interneuron diversity — V0–V3, dI6, Shox2 and related classes — and their connectivity in motor control; a reference map for interneuron contributions to rhythm and pattern.
+- **Li et al. 2023** — [Identified interneurons contributing to locomotion in mammals](https://doi.org/10.1016/b978-0-12-819260-3.00009-3)  
+  - animals: Mammals, Mice, Cat  
+  - Chapter cataloguing identified interneuron classes contributing to mammalian locomotion and their synaptic relations; useful companion to Sengupta & Bagnall 2023.
+- **Dewolf 2022** — [Left-right locomotor coordination in human neonates](https://doi.org/10.1523/jneurosci.0612-22.2022)  
+  - animals: Human, Mammals  
+  - In 46 stepping neonates, interlimb coordination is variable (including 2:1 locking episodes and activity deletions on a blocked side), hip-position effects are strictly ipsilateral (backward hip position engaging hip flexors, flexed position engaging hip extensors), sudden posterior release of a blocked limb elicits immediate swing initiation, and extensor muscles show load responses at midstance, indicating neonatal networks with independent per-limb pattern generators and load and hip-position feedback but incomplete sensory modulation relative to mature locomotion.  
+  - *Robot/sim:* Model per-limb flexor and extensor pattern generators with hip-position and load feedback but weak interlimb coupling; reproduce 2:1 coordination episodes and activity deletions, then strengthen coupling parameters toward mature alternation.
+- **Gosgnach 2022** — [Synaptic connectivity amongst components of the locomotor central pattern generator](https://doi.org/10.3389/fncir.2022.1076766)  
+  - animals: Mammals, Mice  
+  - Synaptic connectivity amongst locomotor CPG components — updates the wiring diagram of rhythm and pattern elements with paired-recording data.
+- **Rančić and Gosgnach 2021** — [Recent Insights into the Rhythmogenic Core of the Locomotor CPG.](https://doi.org/10.3390/ijms22031394)  
+  - animals: Mammals  
+  - Review of the rhythmogenic core of the mammalian locomotor CPG: genetic approaches have identified spinal interneuron populations and their roles in stepping, but the identity and interconnection of the rhythm-generating neurons themselves remain undeciphered; compiles the properties expected of rhythmogenic neurons and the candidate genetically defined classes.  
+  - *Robot/sim:* Construct a CPG whose rhythmogenic kernel exhibits the expected rhythm-neuron features alongside separate pattern circuitry; ablate candidate kernel classes to test which removal stops rhythm generation while leaving patterning intact.
+- **Merlet 2021** — [Cutaneous inputs from perineal region facilitate spinal locomotor activity and modulate cutaneous reflexes fro](https://doi.org/10.1002/jnr.24791)  
+  - animals: Cat, Mammals · afferents: Cutaneous  
+  - In spinal cats, mechanical perineal stimulation triggers and intensifies rhythmic hindlimb activity - shortening cycle and burst durations and raising flexor and extensor amplitudes - while simultaneously decreasing short-latency ipsilateral and contralateral cutaneous reflexes across joints and limbs, indicating that perineal facilitation of locomotion and weight support acts by increasing the excitability of CPG circuitry through state-dependent interneuronal modulation rather than by increasing foot cutaneous afferent excitation.  
+  - *Robot/sim:* Model perineal input as a tonic excitability gain on CPG neurons paired with a divisive reduction of cutaneous reflex pathway gains; ablating the reflex-gain reduction tests whether unmodulated cutaneous feedback destabilizes the evoked rhythm.
+- **Frigon 2021** — [Control of Mammalian Locomotion by Somatosensory Feedback](https://doi.org/10.1002/cphy.c210020)  
+  - animals: Mammals  
+  - When animals walk overground, mechanical stimuli activate various receptors located in muscles,joints, and skin. Afferents from these mechanoreceptors project to neuronal networks controllinglocomotion in the spinal cord and brain. The dynamic interactions between the control systemsat different levels of the neuraxis ensure that locomotion adjusts to its environment and meetstask demands. In this article, we describe and discuss the essential contribution of somatosen-sory feedback to locomotion. We start with a discussion of how biomechanical properties of thebody affect somatosensory feedba
+- **Grillner and Kozlov 2021** — [The CPGs for Limbed Locomotion-Facts and Fiction.](https://doi.org/10.3390/ijms22115882)  
+  - animals: Mammals, Vertebrates  
+  - Review separating fact from fiction in limbed-locomotion CPG claims; takes a hard line on evidence quality for interneuronal and computational assertions.
+- **Merlet 2021** — [Inhibition and Facilitation of the Spinal Locomotor Central Pattern Generator and Reflex Circuits by Somatosen](https://doi.org/10.3389/fnins.2021.720542)  
+  - animals: Cat, Mammals · afferents: Cutaneous  
+  - Review showing that in mammals with complete spinal cord injury, somatosensory input from the lumbar region powerfully inhibits hindlimb locomotion while perineal input facilitates it, and the two regions oppositely regulate cutaneous reflexes from the foot (lumbar input increases reflex gain, perineal input decreases it); spinal cord injury can also cause loss of functional specificity, with somatosensory feedback abnormally co-activating functions such as locomotion and micturition.  
+  - *Robot/sim:* Add region-specific somatosensory gating to a spinal locomotor model: lumbar input inhibits and perineal input facilitates the CPG, with opposite modulation of cutaneous reflex gain; simulating complete spinal-cord injury then tests emergence of maladaptive co-activation of locomotion with other spinal functions.
+- **Grillner and El Manira 2020** — [Current Principles of Motor Control, with Special Reference to Vertebrate Locomotion](https://doi.org/10.1152/physrev.00015.2019)  
+  - animals: Vertebrates, Mammals, Lamprey  
+  - Frames vertebrate locomotor control as spinal CPG microcircuits setting muscle timing with sensory compensation for perturbations, brainstem command systems setting CPG activity level and locomotor speed, basal ganglia selecting and initiating/stopping motor programs, with postural and steering systems integrated around the propulsive core.  
+  - *Robot/sim:* Architect a controller with distinct CPG modules, brainstem-like drive/gain modules for speed, and a basal ganglia-like action-selection layer that starts and stops locomotion; ablate each level to reproduce the framework's predicted functional dissociations.
+- **Maxwell and Soteropoulos 2020** — [The mammalian spinal commissural system: properties and functions.](https://doi.org/10.1152/jn.00347.2019)  
+  - animals: Mammals, Human  
+  - Review of mammalian spinal commissural interneurons — heterogeneous cells definable by gray-matter location, axonal projections and targets, neurotransmitter phenotype, activation properties, and embryological origin — whose crossed projections coordinate left-right motor activity in locomotion and posture; their roles in grasping, reaching, and bimanual control remain poorly understood, especially in the cervical cord of primates including humans, and they are implicated in restoration of function after spinal injury and stroke.  
+  - *Robot/sim:* Implement multiple heterogeneous commissural interneuron classes with distinct signs, targets, and drive dependencies in a bilateral CPG; ablating each class should produce distinct left-right coordination deficits, and graded lesions can model post-injury recovery.
+- **Perreault and Giorgi 2019** — [Diversity of reticulospinal systems in mammals](https://doi.org/10.1016/j.cophys.2019.03.001)  
+  - animals: Mammals  
+  - Review of reticulospinal system diversity in mammals — cell types, targets, and functional specialization beyond a monolithic 'reticulospinal tract'.
+- **Fujiki 2018** — [Adaptive hindlimb split-belt treadmill walking in rats by controlling basic muscle activation patterns via pha](https://doi.org/10.1038/s41598-018-35714-8)  
+  - animals: Rat, Mammals  
+  - Forward dynamic simulation with a neuromusculoskeletal rat model supports resetting the onset timings of a few basic muscle-activation patterns by leg sensory feedback — especially hip-flexor extension — as the mechanism adapting hindlimb walking to split-belt treadmill conditions.
+- **Côté 2018** — [Spinal Control of Locomotion: Individual Neurons, Their Circuits and Functions.](https://doi.org/10.3389/fphys.2018.00784)  
+  - animals: Cat, Mice, Rat, Human, Mammals  
+  - Review of spinal interneurones carrying muscle-stretch and load afferent information across mammals: rest-state physiology is conserved from rodents to humans, but locomotor activation profiles differ markedly between species, plausibly reflecting species differences in afferent distribution and interneuronal interactions; targeted neuromodulation of these circuits is the emerging rehabilitation strategy after spinal cord injury.
+- **Frigon 2017** — [The neural control of interlimb coordination during mammalian locomotion.](https://doi.org/10.1152/jn.00978.2016)  
+  - animals: Mammals, Human  
+  - Review of interlimb coordination in mammalian locomotion: coordination between forelimb and hindlimb spinal networks is achieved by mechanisms intrinsic to the spinal cord, somatosensory feedback from the limbs, and supraspinal pathways; incomplete spinal cord injury disrupts this coordination, but lesion-based inference is confounded by compensatory strategies, redundant control, and plasticity in remaining circuits.  
+  - *Robot/sim:* Build a locomotion model with separate interlimb-coupling modules (intraspinal coupling, limb somatosensory feedback, supraspinal modulation) and ablate them individually to reproduce the coordination disruptions seen after incomplete spinal lesions.
+- **Hunt 2017** — [Development and Training of a Neural Controller for Hind Leg Walking in a Dog Robot](https://doi.org/10.3389/fnbot.2017.00018)  
+  - animals: Dog, Mammals  
+  - An automatic parameter-setting method for synthetic nervous systems of non-spiking leaky integrator neurons on physical robots: motor-neuron activations required for stable walking are computed first from a model of the system, then network parameters are tuned so the circuit produces those activations under expected sensory feedback - successfully yielding adaptive rear-leg walking in an artificial-muscle dog robot and supporting the validity of current mammalian locomotion circuit models.  
+  - *Robot/sim:* Apply the two-stage tuning recipe - solve for MN activations that produce stable walking, then fit SNS parameters so the circuit generates those activations under expected sensory feedback - and ablate individual sensory pathways to test their necessity for adaptive walking.
+- **Ziskind-Conhaim and Hochman 2017** — [Diversity of molecularly defined spinal interneurons engaged in mammalian locomotor pattern generation.](https://doi.org/10.1152/jn.00322.2017)  
+  - animals: Mice, Mammals  
+  - Review of the four cardinal classes of molecularly defined ventral spinal interneurons (from ten progenitor domains) and their contribution to mammalian locomotor pattern generation, organizing each population by excitatory versus inhibitory action and axonal projection as candidate rhythm-generating versus coordinating elements.
+- **Bondy 2016** — [Control of Cat Walking and Paw-Shake by a Multifunctional Central Pattern Generator](https://doi.org/10.1007/978-1-4939-3267-2_12)  
+  - animals: Cat, Mammals  
+  - A single half-center CPG model with two coexisting activity regimes — fast ~10 Hz paw-shake and slow ~2 Hz walking — drives a neuromechanical cat-hindlimb model to produce either behavior when regime-appropriate spinal synaptic weights are selected; paw skin afferent input is proposed as the trigger for selecting both the CPG regime and the spinal circuitry.
+- **Griener 2016** — [Connectivity and Regional Distribution of Constituent Cells of the Mammalian Locomotor Central Pattern Generat](https://doi.org/10.7939/r3639kg5w)  
+  - animals: Mammals, Rat, Mice  
+  - Anatomical validation of the two-level Rybak–McCrea CPG architecture: connectivity and regional distribution of rhythmogenic and pattern-forming populations across lumbar segments.
+- **Shevtsova 2015** — [Organization of left-right coordination of neuronal activity in the mammalian spinal cord: Insights from compu](https://doi.org/10.1113/JP270121)  
+  - animals: Mammals, Mice  
+  - Coordination of neuronal activity between left and right sides of the mammalian spinal cord is provided by several sets of commissural interneurons (CINs) whose axons cross the midline. Genetically identified inhibitory V0D and excitatory V0V CINs and ipsilaterally projecting excitatory V2a interneurons were shown to secure left-right alternation at different locomotor speeds. We have developed computational models of neuronal circuits in the spinal cord that include left and right rhythm-generating centres interacting bilaterally via three parallel pathways mediated by V0D , V2a-V0V and V3 ne
+- **Brooks 2015** — [Learning to expect the unexpected: rapid updating in primate cerebellum during voluntary self-motion](https://doi.org/10.1038/nn.4077)  
+  - animals: Mammals  
+  - Trial-by-trial analysis of primate cerebellar neurons during voluntary head movements shows neuronal sensitivities dynamically tracking the comparison between predicted and actual sensory feedback: when the motor command-movement relationship is altered, neurons respond as if the movement were externally generated, and sensitivities decline with the time course of behavioral learning - direct evidence for a sensory-prediction-error computation with rapid internal-model updating.  
+  - *Robot/sim:* Implement a cerebellar-style forward model that predicts the sensory consequences of motor commands, computes a trial-by-trial sensory prediction error, and updates its gains with a learning time course; ablating it should remove rapid re-adaptation to altered dynamics.
+- **Rybak 2015** — [Organization of the Mammalian Locomotor CPG: Review of Computational Model and Circuit Architectures Based on ](https://doi.org/10.1523/eneuro.0069-15.2015)  
+  - animals: Mice, Mammals  
+  - Review proposing computational architectures for the mammalian locomotor CPG that integrate the genetically identified interneuron classes (V0D and V0V, V1, V2a, V2b, V3, Shox2) with ablation phenotypes, assigning them roles in rhythm generation, flexor-extensor interactions on each side of the cord, and commissural left-right coordination, and showing how such models can unify and predict mutant locomotor data.  
+  - *Robot/sim:* Implement the proposed two-level CPG with genetically identified interneuron classes assigned to rhythm generation, flexor-extensor interactions, and commissural left-right coordination, and reproduce mutant phenotypes by removing individual populations.
+- **Bui and Brownstone 2015** — [Sensory-evoked perturbations of locomotor activity by sparse sensory input: a computational study](https://doi.org/10.1152/jn.00866.2014)  
+  - animals: Mammals  
+  - Computational study showing sparse sensory input can perturb and restructure locomotor activity; small afferent signals access widely distributed locomotor networks.
+- **Hägglund 2013** — [Optogenetic dissection reveals multiple rhythmogenic modules underlying locomotion](https://doi.org/10.1073/pnas.1304365110)  
+  - animals: Mammals  
+  - Optogenetic activation of spinal excitatory and inhibitory populations shows that locomotor-like bursting can be induced unilaterally and independently in flexor or extensor networks, and that individual flexor motor pools can be recruited into bursting without any activity in nearby flexor pools. The mammalian locomotor CPG is therefore a distributed assembly of many intrinsically rhythmogenic modules rather than a single unitary oscillator, discriminating among several proposed architectures for rhythm generation in vertebrates.  
+  - *Robot/sim:* Build the CPG as many independently rhythmogenic modules (per side, per flexor/extensor network, even per motor pool) instead of one coupled half-center; ablating individual modules should leave the remaining modules bursting, reproducing the distributed-organization evidence.
+- **Procházka and Ellaway 2012** — [Sensory Systems in the Control of Movement](https://doi.org/10.1002/cphy.c100086)  
+  - animals: Mammals, Human  
+  - Comprehensive Physiology review of somatosensory control of movement: muscle-receptor response properties and reflex actions, CPG–sensory interactions, and the proposal that a descending command related to bodily velocity controls locomotion through stereotyped activation–phase relationships, with sensory input modulating both the timing and the pattern-forming layers of the CPG machinery.
+- **Hatz 2012** — [Control of ankle extensor muscle activity in walking cats](https://doi.org/10.1152/jn.00944.2011)  
+  - animals: Cat, Mammals · pathways: Ib excitatory; type II excitatory  
+  - In conscious cats with an isolated medial gastrocnemius, stance-phase and slope-dependent modulation of ankle-extensor activity is well described by constant central drive with constant proprioceptive gains: Ib force feedback is the primary modulator, group II adds a small tonic contribution, and Ia feedback contributes none — terrain compensation without changing central commands or nervous-system gains.
+- **Frigon 2012** — [Central Pattern Generators of the Mammalian Spinal Cord](https://doi.org/10.1177/1073858410396101)  
+  - animals: Mammals  
+  - Review of mammalian spinal central pattern generators emphasizing that one spinal cord produces multiple rhythmic behaviors — walking, running, swimming, scratching — each with its own goals and demands, and discussing how spinal circuitry is organized to deliver this complexity and flexibility.  
+  - *Robot/sim:* Implement a modular CPG architecture that recombines shared rhythm- and pattern-formation elements to generate multiple distinct rhythmic output sets, testing whether one network reproduces the different behaviors' demands.
+- **Dominici 2011** — [Locomotor primitives in newborn babies and their development.](https://doi.org/10.1126/science.1210617)  
+  - animals: Human, Mammals  
+  - Multimuscle EMG recordings show that the two basic locomotor primitives of stepping neonates persist through development and are augmented — not replaced — by two new patterns first revealed in toddlers, and markedly similar patterns appear in rat, cat, macaque, and guineafowl, supporting the view that locomotion across species is built from common phylogenetically conserved primitives.
+- **Kiehn 2011** — [Development and functional organization of spinal locomotor circuits](https://doi.org/10.1016/j.conb.2010.09.004)  
+  - animals: Vertebrates, Mice, Zebrafish, Lamprey, Mammals  
+  - This review outlines and compares recent
+advances that have revealed the developmental and functional
+organization of these fundamental spinal motor networks in
+limbed and non-limbed animals. The comparison will highlight
+common principles and divergence in the organization of the
+spinal locomotor network structure in these different species as
+well as point to unresolved issues regarding the assembly and
+functioning of these networks.
+- **Brownstone and Bui 2010** — [Spinal interneurons providing input to the final common path during locomotion](https://doi.org/10.1016/b978-0-444-53613-6.00006-x)  
+  - animals: Mammals, Cat  
+  - Spinal interneurons providing input to the final common path during locomotion; framework relating interneuron diversity to the assembly of locomotor commands.
+- **Whelan 2010** — [Shining light into the black box of spinal locomotor networks](https://doi.org/10.1098/rstb.2009.0322)  
+  - animals: Mammals  
+  - Reviews how new genetic approaches that identify and manipulate specific interneuron classes are opening the mammalian locomotor CPG 'black box' that had previously been probed only through input-output manipulation, critically discussing these techniques in relation to current models of network function.  
+  - *Robot/sim:* Populate a simulated locomotor network with genetically identified interneuron classes as distinct node types (rhythmogenic vs pattern-organizing populations) and match model ablation phenotypes to the genetic loss-of-function data reviewed.
+- **Brocard 2010** — [Do Pacemakers Drive the Central Pattern Generator for Locomotion in Mammals?](https://doi.org/10.1177/1073858409346339)  
+  - animals: Mammals  
+  - Reviews mammalian locomotor rhythmogenesis and advances the working hypothesis that pacemaker neurons with intrinsic oscillatory properties are functionally integrated into the locomotor network, complementing network-based bursting as a substrate for rhythm generation in mammals.  
+  - *Robot/sim:* Build a hybrid rhythm generator combining half-center network oscillation with an intrinsic pacemaker population and ablate the pacemakers to quantify changes in rhythm robustness, phase, and frequency.
+- **Jankowska and Edgley 2010** — [Functional subdivision of feline spinal interneurons in reflex pathways from group Ib and II muscle afferents;](https://doi.org/10.1111/j.1460-9568.2010.07354.x)  
+  - animals: Cat, Mammals · afferents: Ib, II  
+  - Reassesses the subdivision of adult mammalian spinal intermediate-zone interneurons and finds no compelling reason to separate those with group Ib input from those co-excited by group II afferents: distributed input patterns, projection targets (ipsilateral, contralateral, bilateral), excitatory versus inhibitory identity, and task-dependent reflex changes during locomotion are all consistent with shared premotor interneurons integrating group I and II signals - prompting the proposed renaming to group I/II interneurons.  
+  - *Robot/sim:* Replace separate Ib and II reflex channels in a locomotion model with a single premotor interneuron population receiving convergent group I and II input, and test whether the merged population reproduces the task-dependent reflex modulation and reversals seen during locomotion.
+- **Guertin 2009** — [The mammalian central pattern generator for locomotion](https://doi.org/10.1016/j.brainresrev.2009.08.002)  
+  - animals: Mammals  
+  - Comprehensive review tracing the mammalian locomotor central pattern generator from Graham Brown's early experiments to modern spinal-cord work: a caudally localized spinal network autonomously generates the basic rhythm and pattern command signals to limb muscles, and homologous CPG networks govern walking, flying, and swimming across species. The review frames the CPG as the source of the basic locomotor command onto which descending and afferent control is layered.  
+  - *Robot/sim:* Implement a spinal network that generates locomotor rhythm and pattern command signals with descending and sensory inputs removed; persistence of coordinated rhythmic motor output in the model tests the CPG-autonomy claim the review summarizes.
+- **Nichols and Ross 2009** — [The Implications of Force Feedback for the λ Model](https://doi.org/10.1007/978-0-387-77064-2_36)  
+  - animals: Cat, Mammals · pathways: Ib excitatory; Ib inhibition  
+  - In the λ-model framework, autogenic length feedback compensates muscle nonlinearities while positive force feedback — during level cat stepping largely restricted to gastrocnemius — reinforces the stiff ankle–knee linkage; heterogenic inhibitory force feedback spans different joints and axes, so it coordinates interjoint action and shifts activation thresholds, making threshold a feedback-dependent quantity rather than a pure descending control variable.
+- **McCrea and Rybak 2008** — [Organization of mammalian locomotor rhythm and pattern generation](https://doi.org/10.1016/j.brainresrev.2007.08.006)  
+  - animals: Cat, Mammals  
+  - Central pattern generators (CPGs) located in the spinal cord produce the coordinated activation of flexor and extensor motoneurons during locomotion. Previously proposed architectures for the spinal locomotor CPG have included the classical half-center oscillator and the unit burst generator (UBG) comprised of multiple coupled oscillators. We have recently proposed another organization in which a two-level CPG has a common rhythm generator (RG) that controls the operation of the pattern formation (PF) circuitry responsible for motoneuron activation. These architectures are discussed in relatio
+- **Tazerart 2008** — [The Persistent Sodium Current Generates Pacemaker Activities in the Central Pattern Generator for Locomotion a](https://doi.org/10.1523/jneurosci.1437-08.2008)  
+  - animals: Mammals  
+  - In neonatal rodent spinal cord, removing extracellular calcium unmasks bursting in about 75% of interneurons in the locomotor CPG area with a concomitantly upregulated persistent sodium current, and putative CPG interneurons including commissural and Hb9 interneurons express riluzole-sensitive I(NaP)-dependent bursting, with most bursting cells showing pacemaker-like frequency increases under depolarization. Upregulating I(NaP) with veratridine induces riluzole-sensitive bursting and slows the locomotor rhythm, establishing I(NaP) pacemaker properties as generators and frequency regulators of   
+  - *Robot/sim:* Add persistent-sodium pacemaker currents to CPG interneurons and modulate the I(NaP) conductance (model analogs of riluzole and veratridine) to test rhythm initiation, frequency regulation, and burst termination.
+- **Prochazka 2007** — [The neuromechanical tuning hypothesis](https://doi.org/10.1016/S0079-6123(06)65016-4)  
+  - animals: Mammals  
+  - The rhythm-generating properties of central pattern generators (CPGs) are discussed in light of results indicating that cycle characteristics may be preset by tonic drive to spinal interneuronal networks. We then describe neuromechanical simulations that have revealed some basic rules of interaction between CPGs, sensory-mediated switching mechanisms and the biomechanics of locomotor movements. We posit that the spinal CPG timer and the sensory-mediated switch operate in parallel, the former being driven primarily by descending inputs and the latter by the kinematics. The CPG timer produces ex
+- **Quinlan and Kiehn 2007** — [Segmental, Synaptic Actions of Commissural Interneurons in the Mouse Spinal Cord](https://doi.org/10.1523/jneurosci.1618-07.2007)  
+  - animals: Mice, Mammals  
+  - Connectivity map of mouse commissural interneurons: short- and long-range CINs directly excite (glutamatergic) or directly/indirectly inhibit (glycinergic and/or GABAergic) contralateral motoneurones, so left–right coordination is organized as a dual-inhibitory plus single-excitatory CIN system.
+- **Rossignol 2006** — [Plasticity of connections underlying locomotor recovery after central and/or peripheral lesions in the adult m](https://doi.org/10.1098/rstb.2006.1889)  
+  - animals: Cat, Mice, Rat, Human, Mammals  
+  - Review concluding that locomotor recovery after spinal lesions in adult mammals is partly due to plasticity within existing spinal locomotor networks: locomotor training changes the excitability of simple reflex pathways and more complex circuitry, adaptation to lesions entails changes at both spinal and supraspinal levels, and the cat-derived framework extends to rat, mouse, and human spinal pattern generation.  
+  - *Robot/sim:* Model lesion and recovery by removing pathways and re-tuning residual connection weights through training-like afferent input, testing which plasticity rules restore stepping when descending drive is lost.
+- **Kiehn 2006** — [LOCOMOTOR CIRCUITS IN THE MAMMALIAN SPINAL CORD](https://doi.org/10.1146/annurev.neuro.29.051605.112910)  
+  - animals: Mammals  
+  - Landmark review of locomotor circuits in the mammalian spinal cord: rhythmogenesis, pattern formation, and the genetic dissection of interneuron classes.
+- **Bouyer and Rossignol 2003** — [Contribution of Cutaneous Inputs From the Hindpaw to the Control of Locomotion. II. Spinal Cats](https://doi.org/10.1152/jn.00497.2003)  
+  - animals: Cat, Mammals · pathways: Cutaneous stance modification  
+  - Sequential hindpaw cutaneous denervation in spinal cats shows cutaneous inputs are necessary for plantar foot placement and weight bearing during spinal locomotion — fully denervated cats never recovered either despite 35–71 days of treadmill training — while partial denervations reveal substantial adaptive capacity of the spinal cord.
+- **Butt and Kiehn 2003** — [Functional identification of interneurons responsible for left-right coordination of hindlimbs in mammals.](https://doi.org/10.1016/s0896-6273(03)00353-2)  
+  - animals: Mammals  
+  - Commissural interneurons organizing left-right hindlimb coordination form distinct rostral-lumbar flexor and extensor centers that define activity in caudal flexor and extensor motor pools across the midline, with some connections functionally reconfigured when switching from rest to locomotion — a candidate substrate for state-dependent spinal synaptic plasticity.  
+  - *Robot/sim:* Implement distinct flexor and extensor commissural centers driving contralateral caudal motor pools, with connection weights that switch between rest and locomotion states; ablating the commissural population should collapse left-right alternation.
+- **Prochazka 1999** — Quantifying proprioception  
+  - animals: Cat, Human, Mammals  
+  - Quantifies proprioceptive afferent discharge during natural movement: spindle and GTO firing ranges, gain changes with movement, and the case that proprioceptive feedback operates with state-dependent gain.
+- **Pearson 1998** — [Enhancement and Resetting of Locomotor Activity by Muscle Afferentsa](https://doi.org/10.1111/j.1749-6632.1998.tb09050.x)  
+  - animals: Mammals · afferents: Ib · pathways: Ib stance to swing; Ib disynaptic excitation; Ib excitatory  
+  - Feedback from ankle extensor group I afferents sets two stance-critical features of the mammalian locomotor pattern: Ib Golgi tendon organ input excites the extensor half-center to prolong extensor bursts, so swing is not initiated while the leg is loaded, and extensor burst magnitude is enhanced through disynaptic and polysynaptic pathways opened only during locomotion. Reflex gains must be calibrated to limb biomechanics, and weakening ankle extensors evokes compensatory recalibration of proprioceptive influences on the pattern.  
+  - *Robot/sim:* Implement stance-gated Ib excitation of the extensor half-center plus locomotion-gated disynaptic enhancement of extensor motoneuron gain; ablating the load gate should trigger swing under load and abolish load-proportional burst scaling.
+- **Jordan 1998** — [Initiation of locomotion in mammals.](https://doi.org/10.1111/j.1749-6632.1998.tb09040.x)  
+  - animals: Mammals  
+  - Reviews brainstem initiation of locomotion: c-fos-labeled active cells during locomotion localize the mesencephalic locomotor region across the periaqueductal gray, cuneiform nucleus, pedunculopontine nucleus, and locus coeruleus, with different subsets of locomotor nuclei apparently activated in different behavioral contexts (exploratory, appetitive, defensive), implying that lesion studies must be interpreted relative to the nuclei active in the specific locomotor task tested.  
+  - *Robot/sim:* Implement a supraspinal initiation module with context-selective drives (exploratory, appetitive, defensive) converging on the spinal locomotor network, mimicking the brainstem command structure; ablate submodules to mirror the lesion-study interpretation caveats.
+- **Hultborn et al. 1998** — [How Do We Approach the Locomotor Network in the Mammalian Spinal Cord?a](https://doi.org/10.1111/j.1749-6632.1998.tb09039.x)  
+  - animals: Mammals  
+  - Critical essay on strategies for delineating the mammalian locomotor network; questions the rhythm-center consensus and outlines testable network approaches.
+- **Procházka 1997** — [Implications of Positive Feedback in the Control of Movement](https://doi.org/10.1152/jn.1997.77.6.3237)  
+  - animals: Mammals · afferents: Ib · pathways: Ib inhibition; Ib excitatory  
+  - Argues with analytic neuromuscular models that tendon-organ afferents switch from negative force feedback in static posture to positive force feedback in locomotion, and that positive force feedback is stable and effective because muscle length-tension properties provide automatic gain control - stability is further supported by concomitant negative displacement feedback and, unexpectedly, by delays in the positive feedback pathway - making positive force feedback a load-compensation mechanism complementing negative displacement and velocity feedback.  
+  - *Robot/sim:* Implement stance-phase positive autogenic force feedback (Ib excitatory) on extensors with length-tension automatic gain control plus negative displacement feedback; demonstrate stability at strong gains and with realistic delays, then remove the gain control to show instability.
+- **Kjærulff 1996** — [Distribution of networks generating and coordinating locomotor activity in the neonatal rat spinal cord in vit](https://doi.org/10.1523/jneurosci.16-18-05777.1996)  
+  - animals: Rat, Mammals  
+  - Lesion study in the neonatal rat spinal cord in vitro: the rhythm-generating network is distributed over the entire lumbar enlargement and extends into caudal thoracic segments (the ventral third alone suffices; sagittal lateral fragments do not), and the left–right alternation pathways run primarily in the ventral commissure.
+- **Jankowska 1992** — [INTERNEURONAL RELAY IN SPINAL PATHWAYS FROM PROPRIOCEPTORS](https://doi.org/10.1016/0301-0082(92)90024-9)  
+  - animals: Mammals  
+  - review pathway and sensory
+- **Cazalets 1992** — [Activation of the central pattern generators for locomotion by serotonin and excitatory amino acids in neonata](https://doi.org/10.1113/jphysiol.1992.sp019296)  
+  - animals: Rat, Mammals · pathways: Fictive locomotion without sensory feedback  
+  - In the isolated neonatal rat brainstem–spinal cord, bath-applied serotonin (acting via 5-HT1/5-HT2, not 5-HT3 receptors) and excitatory amino acids (NMDA- and non-NMDA-receptor dependent) elicit right–left alternating fictive locomotion with dose-dependent cycle period (10→5 s for 5-HT, 3→1 s for EAA agonists) — the standard pharmacological activation assay for the mammalian locomotor CPG in vitro.
+- **Grillner 1985** — [Neurobiological Bases of Rhythmic Motor Acts in Vertebrates](https://doi.org/10.1126/science.3975635)  
+  - animals: Vertebrates, Mammals, Lamprey  
+  - Classic formulation of the principles underlying nervous control of innate rhythmic motor acts in vertebrates, establishing the in vitro lamprey spinal cord preparation in which the locomotor motor pattern can be elicited in isolated cord sections for detailed mechanism analysis, and proposing that parts of the locomotor network are reused in other motor acts, including learned ones.  
+  - *Robot/sim:* Implement modular CPG subnetworks shared across multiple motor programs in a simulated swimmer or walker and verify that reuse preserves timing and stability while reducing controller complexity.
+- **Andersson and Grillner 1983** — [Peripheral control of the cat's step cycle. II. Entrainment of the central pattern generators for locomotion b](https://doi.org/10.1111/j.1748-1716.1983.tb07267.x)  
+  - animals: Cat, Mammals  
+  - In low-spinal curarized cats with pharmacologically evoked fictive locomotion, sinusoidal hip movements entrain the burst pattern in strict 1:1 coordination over roughly ±5–70% of the resting burst period, with flexion-phase movements driving flexor efferents and extension driving extensors — direct evidence that hip-joint afferent feedback can pace the spinal locomotor CPG.
+- **Brown 1911** — [The intrinsic factors in the act of progression in the mammal](https://doi.org/10.1098/rspb.1911.0077)  
+  - animals: Mammals, Cat  
+  - Rhythmic stepping persists in the low-spinal cat after complete deafferentation of the hindlimb muscles, and Graham Brown concluded the cycle is generated by paired antagonistic spinal centres whose balance sways through fatigue and rebound — the origin of the half-center concept — with proprioceptive input playing a regulative, not causative, role in grading steps to the terrain.

@@ -86,13 +86,12 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   optuna 5.0.0 pip-added to `myo` (numpy pin 1.21.6 untouched; shared `optuna_walk.db`
   is schema 12 — version-matched with EB475WS4). Restart ZCode to pick up new
   PATH/env entries for MCP servers.
-  **SSH access (2026-09-28):** OpenSSH Server installed on easteregg2 (sshd auto-start;
-  key in `C:\ProgramData\ssh\administrators_authorized_keys`; RDP also open on 3389).
-  From EB475WS4: `ssh easteregg2 "..."` just works (config `C:\Users\Ben Bolen\.ssh\config`
-  → easteregg2.local, user `ben bolen`, key `id_ed25519_aarl`; `scp` same way). Verified:
-  repo at `D:\GitHub\Bipedal_Robot`, `optuna_walk.db` present, MATLAB R2025a,
-  `D:\Anaconda\envs\myo\python.exe` 3.10.21, **git CLI 2.54 on PATH there** (unlike
-  EB475WS4). Laptop DESKTOP-5Q16KE9 not SSH-set-up yet.
+  **SSH access (2026-09-28):** lab machines are SSH-reachable to each other. Setup
+  details (service/keys/firewall/host/user names) are kept in machine-local notes
+  only, NEVER in this repo — it is PUBLIC on GitHub (verified 2026-09-30). Verified
+  on easteregg2: repo at `D:\GitHub\Bipedal_Robot`, `optuna_walk.db` present, MATLAB
+  R2025a, `D:\Anaconda\envs\myo\python.exe` 3.10.21, **git CLI 2.54 on PATH there**
+  (unlike EB475WS4). Laptop DESKTOP-5Q16KE9 not SSH-set-up yet.
 - Custom skills are version-controlled in the `ZCode_Skills` repo. **EB475WS4: the repo is
   at `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills`** (NOT `D:\GitHub\` — corrected
   2026-09-16; easteregg2: `D:\GitHub\ZCode_Skills`; laptop: `Documents\GitHub\ZCode_Skills`).
@@ -129,8 +128,14 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
    copy). Use the `latex-overleaf` skill for Overleaf work (installed on this machine via the
    ZCode_Skills repo junction). 2026-09-21: three Xi-methods figures (`xiFrameGeo` /
    `xiBalance` / `xiWrapLoss.pdf`, in both figs/Aim2 dirs) wired into 20-methods.tex
-   (fig:xiFrames/xiBalance/xiWrapLoss); generator = `Dissertation\Notes\make_xi_method_figures.m`
-   (draws from FlxPinBPASet/ExtPinBPASet; details + open items in summary.md).
+   (fig:xiFrames/xiBalance/xiWrapLoss). [2026-10-01: those figures are SUPERSEDED — the
+   live Methods set is the ChatGPT-session `xiFrameTransform`/`xiProjection` pair, no live
+   `\ref` references remain to the old set; their generator
+   `Dissertation\Notes\make_xi_method_figures.m` exists NOWHERE (searched laptop,
+   easteregg2, EB475WS4 + full git history at Ben's delete ruling — it was never
+   committed), and the three red-marked folders `CHATGPT_staging_20260925\`,
+   `Overleaf_review_20260926_yellow\`, `output\` were DELETED at Ben's same ruling
+   (git-recoverable).]
 2. Design and control of bipedal humanoid robot legs with artificial muscles (PAMs/BPAs)
    controlled by a synthetic nervous system. Lab: AARL (Agile and Adaptive Robotics Lab), PSU.
 3. **Xi-correction-factor program** — run minimizers against pinned-knee test data in
@@ -987,6 +992,22 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     re-passed). Editor = snapshot of the architecture, NOT live (live = neuro_scope.py /
     runner --scope).
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
+- `Code\Hardware\walker_io\` — Python walker IO stack (Orin daemon, lab console, valves,
+  sensors, afferents; README inside). Placement is wrong per Ben (2026-09-30) — fold into
+  the post-defense reorg below. The empty `Code\Solid_Models\` tree (Simscape_Part_Library\
+  OpenSim_Bones, zero files) was deleted 2026-09-30 at Ben's ruling.
+- `tmp\` — session scratch at repo root; contents are disposable by convention (emptied
+  2026-09-30 at Ben's ruling — the dissertation overleaf round-1 staging that lived there
+  is preserved in git history; canonical dissertation = Documentation\...\Dissertation\).
+- **POST-DEFENSE REORG PLAN (Ben, 2026-09-30 — do NOT execute before the dissertation
+  deadline; every move runs the repo-hygiene refs-impact protocol first):** (1)
+  consolidate neuromechanical models under `Neuromechanical_Models\`: SCONE, AnimatLab,
+  SNS_Simscape, and SNS-toolbox model content all belong in the eponymous folder.
+  (2) `Code\MuJoCo_SNS\spinal\` has a crazy number of loose files — organize internally.
+  (3) `Code\Hardware\walker_io` belongs with the other hardware code, not at Code level.
+  (4) Root `0` stray connectome layout dump (broken edge targets, accidental 09-23
+  redirect artifact from the editor session) DELETED 2026-09-30 at Ben's ruling —
+  recoverable from git history (added in 5ec3635).
 - **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
   literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the
   cable winch on the test mechanism. "Bending" (Xi2) is modeled as a simple Hooke-law spring in
@@ -1510,10 +1531,12 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   online mode + WoS/Scholar + Zotero-like extension in `app\README.md`; Airtable
   GET 422s on a fields[] filter because two fields share the name "Models copy"
   — fetch full records).**
-  **2026-09-28: ACTIVE campaign on this folder — see the "2026-09-28 — SADb/Airtable
-  campaign" section at the END of this file (prune over the 1000-record cap, curation
-  layer v2, app online search, Research-Rabbit-style bubble focus, pivot sortability;
-  deliverable = package-able app for the advisor).**
+  **2026-09-28/30: the five-goal campaign on this folder was EXECUTED (full record
+  in the "2026-09-28 — SADb/Airtable campaign" section at the END of this file +
+  SADb_audit\README.md "CURATION v2 CAMPAIGN" section): schema v2 + 374 papers
+  curated (833/943 have notes) + app v2 (Research-Rabbit focus view, pivot sort,
+  online search) + knowledge_base/ + advisor zip dist\SADb_Explorer_2026-09-30.zip.
+  The old "Models copy" GET-422 note above is FIXED (renamed "Review Papers").**
   SADb work is DELEGATED TO
   CHATGPT during GLM peak hours (Mon–Fri 23:00–03:00 Pacific) — its brief is the SADb
   section of `CHATGPT_HANDOFF.md`; keys live in `D:\Github\api_credentials_local.txt`
@@ -1873,6 +1896,15 @@ Knee_Torque_Test\Figures\Figure components\FlxPin_group\FlxPin_group.fig`.
   bracket-y offset; the un-shifted pB is optimal for it. Plastic-deformation
   allowance in that axis is unsupported by the torque data.
 
+## File references — always clickable links (Ben, 2026-10-01; user-global rule)
+
+Every file/folder mentioned in any reply is a Markdown link with an ABSOLUTE
+forward-slash path, e.g. [sadb_app.html](D:/Github/Bipedal_Robot/SADb_audit/app/sadb_app.html) —
+never a bare path (Ben should click, not copy-paste). Exception: inside code
+blocks / shell commands. Mirrored at `C:\Users\Ben Bolen\.zcode\AGENTS.md`
+(all projects on this machine; copy that one-liner file to the laptop and
+easteregg2 user homes to cover them too).
+
 ## Hazards — do NOT open these as source
 
 - Known data concern FINAL (Ben, 2026-09-12): the angle-shifted test is **#3, the
@@ -2203,49 +2235,89 @@ A separate chat is updating the dissertation text with these. Sources (Testing_D
   crumples <0.5 s (necessary not sufficient; M1 damping/spawn gates); resume recipe in
   goal2_m2_li_architecture.md §8.
 
-## 2026-09-28 — SADb/Airtable campaign (Ben's /goal list — the ACTIVE work plan, ~6 h)
+## 2026-09-30 — AIRTABLE API LIMIT HIT (Ben's email 2026-10-01; standing through ~2026-11)
 
-Session-start checklist (Ben's goal 0): confirm plugins, subagents, and MCPs for
-PDF handling, browser automation, image analysis, and critical thinking are
-available (deepeval, ai-tools-setup, zcode-configuration-guide,
-claude-automation-recommender); check hostname FIRST (guard at top of this
-file); long computations go to easteregg2 over SSH. All work lives in
-`SADb_audit\` (base "Sensory Feedback" `appMQTnobUNRytIp7`; curation spec +
-state in `SADb_audit\README.md`, app details in `SADb_audit\app\README.md`).
+The AARL workspace is over its Free-plan monthly PUBLIC API limit; a 30-day
+grace period runs to ~2026-11-01, after which over-limit calls BLOCK until the
+month resets. The airtable MCP IS a public-API integration — count its calls.
+RULE until further notice: work from `SADb_audit\export\sadb_export.json` (the
+cached snapshot) and only touch the API for a handful of calls Ben explicitly
+wants (field renames etc.); NO export_corpus / write_curation / MCP sweeps.
+2026-10-01 follow-ups: Ben ruled the PRUNE SHORTLIST IS ON HOLD (nothing
+deleted; review sheet `SADb_audit\prune_review_20261001.md` groups
+out-of-scope clusters — general NN/ML theory, aerodynamics, non-neural
+bioinspired engineering — from his row examples; his grid row numbers do NOT
+match export order). Flags doc is now hyperlinked
+(`curation_flags_20260928.md` + `.docx`, every record links straight to its
+Airtable record URL; regenerate via `build_flags_doc.py` +
+`docx_build\generate_flags_docx.js`). Ben's comment on COLUMN_RENAMES never
+reached disk (unsaved editor buffer) — renames beyond the applied set wait
+for it. **UPDATE 2026-10-01 (same day): Ben's comment landed ("Everything
+here looks good. Go for it.") — RENAMES APPLIED: "Models 2" → "Is the model
+paper", "Models" → "Models referenced" (export_corpus.py + app labels already
+updated; REBUILD PENDING until API budget allows). Feedback "Models copy" →
+"(unused, empty)" (0/38 usage). Junk-field DELETIONS 404 via API (PAT lacks
+schema scope) — Ben deletes the 3 empty Papers fields in the UI. TWIN AUDIT
+(twins_profile.json): Models 247 = 230 stubs + 14 rich + 3 orphans; Review
+157 = 156 stubs + 0 rich + 1 orphan — the 386 stubs are the cap-cut lever
+(delete stubs + re-express is-model/is-review as Papers fields FIRST), NOT
+deleting Papers records (that orphans the curation layer and saves nothing).
+PLAN PROPOSED, awaiting Ben's go; no deletions executed.**
 
-1. **PRUNE the base** — it is over Airtable's 1000-record cap. Shortlist
-   low-relevance / low-impact Papers for BEN TO APPROVE; the "never delete
-   records" hard rule is lifted only per-record on his explicit go.
-2. **Curation layer v2**: fill Notes per the README spec (grounding mandatory)
-   plus the new asks: papers that cite each other reflected on the records
-   (`export\sadb_cites.json` is the graph source); Animals = every animal the
-   paper discusses; an afferent-type classification (legacy "type 1" = old
-   papers' terminology, Ia, Ib, II, III/IV, mechanosensory, heat, nociceptive);
-   reflex pathways (Feedback links); Models links; "how this could seed an
-   animal study / be tested on an animal"; and "which pathway / synapse /
-   loss-of-function fact from animal vivisection would let a simulated or
-   robotic model test the hypothesis". Ben asked for the columns "renamed like
-   we talked about" — the agreed rename list is NOT recorded in this repo;
-   get it from Ben before any schema change. He named the knowledge-base and
-   agent-evaluation skills (supervisor / fact-checking role) plus
-   plugin-dev agent-development as part of this goal.
-3. **App online search**: `app\sadb_app.html` gains internet search — OpenAlex
-   default (already the citation source), Web of Science via PSU access,
-   Google Scholar ToS-sensitive (app\README.md roadmap v2/v3) — while the app
-   folder stays FULLY SELF-CONTAINED. Final deliverable: a package Ben can zip
-   and send to his advisor.
-4. **Bubble focus view à la Research Rabbit**: excitatory input onto a node
-   when the source node cites it (semantics already implemented — open
-   triangles from citing papers, filled circles onto cited papers); show the
-   network 2–3 degrees out but COLORIZE ONLY DIRECT connections, gray the 2nd
-   degree; side panels on BOTH sides — focus paper LEFT, list of connection
-   papers RIGHT (order swapped vs Research Rabbit).
-5. **Pivot tab**: make the unnamed "cluster" dimension meaningful (categorize
-   the 18 Louvain clusters); sortable dimensions — Primary Author
-   alphabetically (Rybak is secondary author on many papers; entry-count order
-   is not enough); de-emphasize Import source; keep the Feedback×Feedback
-   cross-tab and fix drill-through navigation so getting back OUT to the
-   pivot after diving into a cell is obvious.
-Rebuild chain after every batch: `export_corpus.py` → `build_citation_graph.py`
-→ `app\build_app.py`. Standing rules hold: no proxied URLs, no PDFs/binaries
-in the repo, Ben approves every schema change and every deletion.
+## 2026-09-28 — SADb/Airtable campaign (Ben's /goal list) — EXECUTED 2026-09-28/30; full details in SADb_audit\README.md "CURATION v2 CAMPAIGN"
+
+Five-hour-reset session on EB475WS4 (machine guard OK; airtable MCP live; Node
+v22.23.2 available for `node --check`). All five goals executed; per-goal state:
+
+0. Tooling verified (airtable MCP create-permission, browser-use IAB, web
+   search, node). No easteregg2 needed — nothing here was compute-bound.
+1. **Prune**: base census was 1232 (cap 1000). Strict shortlist flagged 38
+   Papers + 7 satellite orphans + 2 preprint/published duplicate pairs
+   (Molkov 2023/24, Danner 2020) ≈ 47 recoverable — the rest is Ben's
+   judgment call. Flags live in Prune Status/Reason fields; CSV =
+   `prune_shortlist.csv`. NOTHING deleted. WARNING: curation twins grew
+   Models 172→247 and Review 75→157 (base ≈ 1389 now); escape hatch =
+   convert twins to select fields on Papers.
+2. **Curation v2**: schema additions (Afferent Types 10-option select, Animal
+   Study Potential, Robot/Sim Translation, Cites/Cited-by self-links with
+   730 papers × 11,130 pairs, Prune flags) + semantic renames (the live
+   Review-Papers link was "Models copy"; junk fields marked "(unused)";
+   COLUMN_RENAMES_20260928.md documents applied-vs-proposed — "renamed like
+   we talked about" was never recorded, so PROPOSED items await Ben).
+   Pipeline: fetch_grounding.py (OpenAlex abstracts + EPMC cache) →
+   curation_queue/ (374 curatable / 110 no-text) → 15 background subagent
+   batches under CURATOR_GUIDE.md → write_curation.py validation gate
+   (vocab, abstract-paste 8-gram, duplicate-notes) → **374/374 echo-verified
+   per-record**. Corpus: 833/943 with notes, 606 animals, 118 feedback-
+   linked, 95 afferent-classified. 164 curator flags for Ben in
+   curation_flags_20260928.md (vocab gaps Fish/Chick/Aplysia/vestibular;
+   new-pathway candidates; Smith-1998 abstract-swap catch).
+3. **App online search**: Search tab with LIVE OpenAlex fetch (CORS, no key;
+   corpus-DOI badges) + launch buttons for Scholar/PubMed/WoS-PSU (opens WoS
+   search page, copies query — no scraping, ToS-safe) + suggest-for-corpus
+   JSON download. App stays single-file; offline core unaffected.
+4. **Bubble focus view**: click = BFS 1/2/3 degrees over the in-corpus graph;
+   direct connections colored (+ green open-triangle excitatory-in /
+   red filled-circle inhibitory-out synapses per Ben's 2026-09-22
+   semantics), 2nd degree GRAYED; left panel = focus paper, right panel =
+   clickable connection list; Esc/back button exits. Browser-verified
+   (Goslow 1973: 64 direct + 431 second-degree at depth 2; hop + degree
+   switch + Esc all pass).
+5. **Pivot**: 18 Louvain clusters NAMED (export/cluster_labels.json from
+   name_clusters.py profiles — "Neuromechanics & robot/insect walking
+   models", "Afferent control of locomotion (classics)", etc.); rows AND
+   columns sort count/A→Z/Z→A (Primary Author alphabetical works);
+   Import source demoted + labelled legacy; drill-through has a
+   "◀ Back to pivot" button (verified round-trip).
+Knowledge base: build_knowledge_base.py → knowledge_base/ (INDEX + 18
+cluster + ~30 pathway + afferent + animal markdown pages). Advisor package:
+**dist\SADb_Explorer_2026-09-30.zip (0.9 MB)** — sadb_app.html + KB +
+sadb_export.csv + README_START_HERE.md + CURATION_NOTES.md; regenerate with
+package_dist.py after any rebuild.
+Rebuild order: export_corpus → (build_citation_graph only if DOIs changed) →
+build_knowledge_base → build_app → check_app + node --check app/_app_main.js →
+package_dist. GOTCHA BANK: Airtable REST list-endpoint `records[]` filter is
+SILENTLY IGNORED (returns unfiltered first 100) — verification must use
+per-record GETs (_verify_all.py); clearing a select = null, not ""; PowerShell
+Set-Content -Encoding UTF8 adds a BOM (read with utf-8-sig) and ConvertTo-Json
+corrupts nested arrays — patch JSON with python, not PowerShell.

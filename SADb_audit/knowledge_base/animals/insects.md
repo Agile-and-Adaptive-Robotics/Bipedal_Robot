@@ -1,0 +1,145 @@
+# Animal: Insects
+
+42 papers in the corpus.
+
+- **Zill 2024** — [Mechanosensory encoding of forces in walking uphill and downhill: force feedback can stabilize leg movements i](https://doi.org/10.1152/jn.00414.2023)  
+  - animals: Stick Insect, Insects  
+  - Our results suggest the hypothesis that sensory feedback from the femoro-tibial joint indicating force dynamics (dF/d t) can be used to counter the instability in traversing sloped surfaces in animals and, potentially, in walking machines.
+- **Husbands 2021** — [Recent advances in evolutionary and bio-inspired adaptive robotics: Exploiting embodied dynamics](https://doi.org/10.1007/s10489-021-02275-9)  
+  - animals: Insects  
+  - Argues through four case studies that adaptive behavior is best obtained by exploiting embodied dynamics rather than suppressing them: evolved analog electronic controllers act as robot controllers, insect-inspired navigation builds on innate behaviors, neuromechanical chaos powers a goal-driven search for robust motor behaviors with neural-oscillator architectures, and evolved dynamical controllers yield agile flapping flight robust to wind gusts.  
+  - *Robot/sim:* Adopt the neuromechanical-chaos result: use neural-oscillator controllers whose chaotic dynamics power a goal-driven search for motor behaviors, testing whether robust locomotion emerges by exploiting rather than damping body-level chaos.
+- **Szczecinski 2021** — [A computational model of insect campaniform sensilla predicts encoding of forces during walking.](https://doi.org/10.1088/1748-3190/ac1ced)  
+  - animals: Insects, Cockroach, Stick Insect · afferents: Mechanosensory  
+  - A phenomenological model of insect campaniform sensilla predicts afferent discharge as proportional to instantaneous stimulus force relative to an adaptive variable: nonlinear first-order dynamics reproduce power-law adaptation, rate sensitivity, and hysteresis as manifestations of a single mechanism, generalize across cockroach and stick insect sensillum groups after tuning to one response, and can be inverted to estimate stimulus force from recorded discharge - a compact transducer law for load feedback during walking.  
+  - *Robot/sim:* Use the adaptive-variable campaniform model as the force-feedback transducer in a walking simulation or robot leg, and ablate the adaptive variable to test how tonic-force adaptation, rate sensitivity, and hysteresis each shape load-dependent motor control.
+- **Goldsmith 2020** — [Neurodynamic modeling of the fruit fly Drosophila melanogaster.](https://doi.org/10.1088/1748-3190/ab9e52)  
+  - animals: Insects · afferents: Mechanosensory  
+  - Drosophibot, a hexapod robot and dynamic simulation of Drosophila melanogaster, captures fruit-fly biomechanics through dynamically scaled joint elasticity and movement speed, a biomimetic actuator scheme converting neural activity into motion as in insects, proprioception from all leg joints and strain sensing from all leg segments, and passively compliant tarsi. Its actuators and sensors are shown to perform in an animal-like way, providing a testbed in which an insect neural walking controller can be evaluated in simulation and transferred to hardware.  
+  - *Robot/sim:* Replicate Drosophibot-style biomimetic sensing (per-joint proprioception, per-segment strain feedback) and neural-activity-to-motion actuation in simulation; ablate the strain-sensing channel to quantify its role in the insect neural walking controller.
+- **Naris 2020** — [A neuromechanical model exploring the role of the common inhibitor motor neuron in insect locomotion.](https://doi.org/10.1007/s00422-019-00811-y)  
+  - animals: Insects  
+  - In a closed-loop neuromechanical model of insect joint control, slow muscle fibers act as temporal integrators of sensory feedback that improve limb positioning accuracy, and common inhibitory motor neurons reset this integration by accelerating muscle relaxation at commanded position changes — allowing stance-phase speed control independent of swing amplitude or duration through the gain of sensory feedback to stance muscles.  
+  - *Robot/sim:* Give simulated joint actuators slow-fiber (leaky-integrator) dynamics with sensory feedback plus a CI-like inhibitory reset input; ablating CI should slow relaxation after retargeting, and raising stance feedback gain should speed stance without altering swing amplitude or duration.
+- **Schilling and Cruse 2020** — [Decentralized control of insect walking: A simple neural network explains a wide range of behavioral and neuro](https://doi.org/10.1371/journal.pcbi.1007804)  
+  - animals: Insects  
+  - Very interesting paper that should be a mandatory read for all that work on insect locomotion. Talks about scaling. 5-rule model. Also is like a literature review that uses 148 reference citations.
+- **Pickard 2020** — [A dynamical model exploring sensory integration in the insect central complex substructures](https://doi.org/10.1088/1748-3190/ab57b6)  
+  - animals: Insects  
+  - Dynamical model of sensory integration in insect central-complex substructures supporting navigation decisions.
+- **Dallmann 2019** — [Motor control of an insect leg during level and incline walking](https://doi.org/10.1242/jeb.188748)  
+  - animals: Stick Insect, Insects  
+  - Here, we studied these parameters in hindlegs of stick insects ( Carausius morosus ) during level and uphill/downhill (±45 deg) walking, using a combination of electromyography, 3D motion capture and ground reaction force measurements.
+- **Nourse 2019** — [Analyzing the Interplay Between Local CPG Activity and Sensory Signals for Inter-leg Coordination in Drosophil](https://doi.org/10.1007/978-3-030-24741-6_34)  
+  - animals: Insects, Arthropods  
+  - Tibia-amputated Drosophila legs show a speed-dependent stump oscillation — the wide range of possible periods at low walking speed collapses to a minimum as speed increases — which noisy leg CPGs stabilized by intra-leg load feedback and inter-leg coordinating signals can explain; the measured data anchor a simplified neuromuscular model of inter-leg coordination.
+- **Bidaye 2018** — [Six-legged walking in insects: how CPGs, peripheral feedback, and descending signals generate coordinated and ](https://doi.org/10.1152/jn.00658.2017)  
+  - animals: Insects  
+  - Reviews insect six-legged walking: how leg central pattern generators interact with sensory signals from the leg in generating single-leg stepping, how those interactions are reconfigured for forward and backward walking, curve walking, and speed changes, and how descending signals from the brain mediate initiation, maintenance, modification, and cessation of walking, with emphasis on knowledge gaps addressable by neurogenetic approaches.  
+  - *Robot/sim:* Implement hexapod leg CPGs coupled to leg sensory signals with reconfigurable interactions for backward walking, curve walking, and speed changes; ablate individual sensory channels to quantify loss of motor flexibility.
+- **Araujo-Estrada 2017** — [Bio-inspired Distributed Strain and Airflow Sensing for Small Unmanned Air Vehicle Flight Control](https://doi.org/10.2514/6.2017-1487)  
+  - animals: Insects  
+  - These results suggest that distributed mechanosensing and airﬂow sensin g both oﬀer advantages beyond traditional ﬂight control based on rigid body state estimat ion using inertial sensing.
+- **Fisher 2016** — [The gust-mitigating potential of flapping wings](https://doi.org/10.1088/1748-3190/11/4/046010)  
+  - animals: Insects  
+  - Review of gust-mitigating potential flapping wings. Computational model study. In this study, we subject a mechanicalﬂapping wing to replicated atmospheric turbulence across a range ofﬂapping frequencies and turbulence intensities.
+- **Tuthill and Wilson 2016** — [Mechanosensation and Adaptive Motor Control in Insects](https://doi.org/10.1016/j.cub.2016.06.070)  
+  - animals: Insects  
+  - The ability of animals to flexibly navigate through complex environments depends on the integration of sensory information with motor commands. The sensory modality most tightly linked to motor control is mechanosensation. Adaptive motor control depends critically on an animal’s ability to respond to mechanical forces
+generated both within and outside the body. The compact neural circuits of insects provide appealing systems to investigate how mechanical cues guide locomotion in rugged environments. Here, we review our current understanding of mechanosensation in insects and its role in adapti
+- **Szczecinski et al. 2015** — [Neuromechanical model of praying mantis explores the role of descending commands in pre-strike pivots.](https://doi.org/10.1088/1748-3190/10/6/065005)  
+  - animals: Insects  
+  - Neuromechanical model of the praying mantis showing how descending commands interact with leg mechanics to produce pre-strike pivots; small descending signals exploit body dynamics.
+- **Chen 2014** — [An adaptive locomotion controller for a hexapod robot: CPG, kinematics and force feedback](https://doi.org/10.1007/s11432-014-5148-y)  
+  - animals: Insects  
+  - Computational model study. To tackle this challenge, a central pattern generator (CPG)-based locomotion control methodology is proposed, integrated with a contact force feedback function.
+- **Wosnitza 2013** — [Inter-leg coordination in the control of walking speed in Drosophila](https://doi.org/10.1242/jeb.078139)  
+  - animals: Cat, Insects  
+  - The transition from one gait to another is discontinuous and it can be shown that quadrupeds select the energetically optimal gait at a given speed (Hoyt and Taylor, 1981).
+- **Mendes 2013** — [Quantification of gait parameters in freely walking wild type and sensory deprived Drosophila melanogaster](https://doi.org/10.7554/elife.00231)  
+  - animals: Insects  
+  - High-speed optical tracking of freely walking Drosophila quantified wild-type gait, tarsal positioning, and intersegmental and left-right coordination; genetic inactivation of leg sensory neurons (blocking proprioceptive feedback) left interleg coordination and the tripod gait intact but degraded step precision - central coupling suffices for interleg coordination while leg proprioception tunes the accuracy of individual steps.  
+  - *Robot/sim:* In a hexapod model, ablate leg-local proprioceptive feedback while keeping central interleg coupling - the phenotype to reproduce is preserved tripod coordination with degraded footfall precision.
+- **Quinn 2011** — [Novel Locomotion via Biological Inspiration](https://doi.org/10.1117/12.886413)  
+  - animals: Insects, Cockroach  
+  - Robotics review translating biological design principles into machines: cockroach-tarsus-inspired passive foot compliance robustifies climbing adhesion and permits large steps and stationary turns, insect-inspired wheel-legs passively change gait on irregular terrain, and earthworm-style peristalsis drives scalable soft robots - passive mechanics can substitute for active control.  
+  - *Robot/sim:* Implement tarsus-inspired passive foot compliance and hub-integrated passive gait-change mechanisms in a simulated hexapod or wheel-legged robot and test whether stepping robustness on irregular terrain is maintained without active control.
+- **Schnell 2010** — [Processing of Horizontal Optic Flow in Three Visual Interneurons of the Drosophila Brain](https://doi.org/10.1152/jn.00950.2009)  
+  - animals: Insects  
+  - First whole-cell recordings of Drosophila horizontal-system cells (HSN, HSE, HSS): direction-selective tuning to large-field horizontal motion consistent with the correlation-type motion-detection model, with extensive ipsilateral coupling explaining sensitivity to both ipsi- and contralateral motion — the circuit basis for optomotor behavior.
+- **Ai 2010** — [Vibration receptive sensilla on the wing margins of the silkworm moth Bombyx mori](https://doi.org/10.1016/j.jinsphys.2009.10.007)  
+  - animals: Cockroach, Insects  
+  - Each kind of sensillum is specialized both morphologically and physiologically for detecting its own speciﬁc sensory quality.
+- **Keshavan 2010** — [MAV stability augmentation using weighted outputs from distributed hair sensor arrays](https://doi.org/10.1109/acc.2010.5531002)  
+  - animals: Insects, Human  
+  - Computational model study. Trichoid hair sensillae, found extensively on the surface of the head, wings and the thorax of most insects, are used to sense the nature of air ﬂow past the body.
+- **Borgmann 2009** — [Sensory Feedback Induced by Front-Leg Stepping Entrains the Activity of Central Pattern Generators in Caudal S](https://doi.org/10.1523/jneurosci.3155-08.2009)  
+  - animals: Stick Insect, Insects  
+  - We investigated here the influence of stepping in one leg on the activities of neighboring-leg thorax– coxa (TC) joint CPGs in the stick insect (Carausius morosus).
+- **Chiel 2009** — [The Brain in Its Body: Motor Control and Sensing in a Biomechanical Context](https://doi.org/10.1523/jneurosci.3338-09.2009)  
+  - animals: Cat, Human, Insects, Lamprey, Rat, Salamander · pathways: Biomechanically mediated preflexive feedback  
+  - Reviews molluscan feeding, postural control in cats and humans, locomotion simulations in lamprey, insect, cat and salamander, and rat vibrissal sensing to argue that adaptive behavior emerges from nervous-system-body-environment interaction: control is shared between nervous system and periphery, neural activity organizes degrees of freedom into biomechanically meaningful subsets, mechanics alone can play crucial roles in enforcing gait patterns, and the mechanics of sensors is crucial for their function.  
+  - *Robot/sim:* Embed morphologically realistic muscle and sensor mechanics so that body dynamics contribute to gait enforcement (preflexes); progressively remove neural correction loops and quantify the locomotor stability retained by mechanics alone.
+- **Büschges 2008** — [Organizing network action for locomotion: Insights from studying insect walking.](https://doi.org/10.1016/j.brainresrev.2007.06.028)  
+  - animals: Insects  
+  - Review paper: Insect feedback and walking phases
+- **Chen 2007** — [Design and Characterization of Artificial Haircell Sensor for Flow Sensing With Ultrahigh Velocity and Angular](https://doi.org/10.1109/jmems.2007.902436)  
+  - animals: Human, Insects  
+  - Engel, Member, IEEE, Yingchen Yang, Saunvit Pandya, and Chang Liu Abstract—We report the development of an artiﬁcial haircell (AHC) sensor with design inspired by biological haircells.
+- **Hooper 2007** — [Different Motor Neuron Spike Patterns Produce Contractions With Very Similar Rises in Graded Slow Muscles](https://doi.org/10.1152/jn.01014.2006)  
+  - animals: Stick Insect, Insects  
+  - A consequence of spike-number dependency is that brief changes in spike frequency do not alter contraction slope and we show here that extensor motor neuron bursts with different spike patterns give rise to contractions with very similar contraction rises.
+- **Ritzmann 2006** — Adaptive Control Responses to Behavioral Perturbation Based Upon the Insect  
+  - animals: Insects, Cockroach  
+  - Final report on Eglin AFB-supported Case Western Reserve work on decision behaviors in insect walking: quantitative descriptions of cockroaches choosing to climb over or tunnel under barriers, brain-lesion experiments localizing where descending turning commands are formulated, and a robotic leg built to test the hypotheses at the systems level.
+- **Kaliyamoorthy 2005** — [Force Sensors in Hexapod Locomotion](https://doi.org/10.1177/0278364905055381)  
+  - animals: Insects, Cockroach · pathways: trochanteral campaniform sensilla load signals to adjust MN magnitude  
+  - Finite-element modeling of the cockroach leg shows that loads are sensed by leg force sensors located close to the body, where specific force vectors (body load versus propulsion) can be discriminated, and that this information is used in positive load feedback to regulate walking — design principles directly transferable to force-controlled legged robots.
+- **Ekeberg 2004** — [Dynamic simulation of insect walking.](https://doi.org/10.1016/j.asd.2004.05.002)  
+  - animals: Stick Insect, Insects, Arthropods · pathways: Chordotonal organ multi-synaptic excitation; Chordotonal organ multi-synaptic inhibition  
+  - A 3-D biomechanical stick-insect leg driven by a reduced neural controller containing only experimentally established chordotonal-organ reflex mechanisms reproduces the full middle-leg step cycle in both restricted and unrestrained simulations; front-leg stepping works with the same mechanisms, whereas hind-leg control requires reorganized, possibly sign-reversed, chordotonal influence on levator–depressor timing.
+- **Zbikowski 2004** — [Sensor-rich feedback control: a new paradigm for flight control inspired by insect agility](https://doi.org/10.1109/mim.2004.1337909)  
+  - animals: Human, Insects  
+  - 1094-6969/04/$20.00©2004IEEE T he effort to design and build a micro air vehicle (MAV) with insect-like flapping wings has led to a surprising new development in flight control, which will accord miniature sensors a central role.
+- **Ritzmann 2004** — [Convergent evolution and locomotion through complex terrain by insects, vertebrates and robots](https://doi.org/10.1016/j.asd.2004.05.001)  
+  - animals: Insects, Vertebrates, Arthropods  
+  - Argues from convergent evolution that insects and vertebrates independently arrived at similar neural control properties and mechanical schemes for legged locomotion, highlighting leg specialization, body flexion, and complex head-mounted sensing as critical for complex-terrain agility - features most robots of the era lacked. The design-transfer principle is selection rather than copying: pick the properties critical for the target behavior when building a robot.  
+  - *Robot/sim:* Build legged-robot models that incrementally add leg specialization, body flexion, and head-region sensing over a homogeneous-leg rigid-body baseline, and compare complex-terrain agility to test which convergent properties carry the performance benefit.
+- **Schmitt 2002** — [Dynamics and stability of legged locomotion in the horizontal plane: a test case using insects](https://doi.org/10.1007/s00422-001-0300-3)  
+  - animals: Insects · pathways: Biomechanically mediated preflexive feedback  
+  - A three-degree-of-freedom, energetically conservative horizontal-plane rigid-body model with compliant virtual legs in intermittent contact exhibits periodic gaits in which mechanics alone confers asymptotic stability of relative heading and body angular velocity, with gait and force characteristics matching insect running observations reasonably well - passive lateral dynamics can stabilize hexapod running without neural feedback.  
+  - *Robot/sim:* Implement the horizontal-plane compliant-virtual-leg model and verify that passive mechanics alone stabilizes heading and body angular velocity; use parameter sweeps (mass, moment of inertia, leg stiffness, length) to map stable gait regimes before adding any neural control.
+- **Suster 2002** — [Embryonic assembly of a central pattern generator without sensory input](https://doi.org/10.1038/416174a)  
+  - animals: Insects · pathways: Fictive locomotion without sensory feedback  
+  - The Drosophila peristaltic-crawling circuitry assembles into a functional central pattern generator with no sensory input at all, but sensory information is required to integrate the circuit into actual locomotion: without afferent input, movement polarity is deranged and backward peristaltic waves predominate at the expense of forward peristalsis.  
+  - *Robot/sim:* Assemble a peristaltic-crawling CPG with zero afferent feedback and verify the rhythm self-organizes; then add sensory feedback to control wave polarity, ablating it to reproduce the backward-dominant peristalsis seen without afferents.
+- **Marder and Bucher 2001** — [Central pattern generators and the control of rhythmic movements](https://doi.org/10.1016/s0960-9822(01)00581-4)  
+  - animals: Vertebrates, Insects, Arthropods  
+  - Review of central pattern generators: rhythmic motor output can be produced with no sensory or descending timing cues, and neuromodulation reconfigures the same circuit to generate multiple patterns — the framework in which one spinal network can produce many gaits, with general principles drawn from invertebrate circuits and vertebrate spinal cord and brainstem.
+- **Schmitt 2000** — [Mechanical models for insect locomotion: dynamics and stability in the horizontal plane I. Theory](https://doi.org/10.1007/s004220000181)  
+  - animals: Insects, Cockroach · pathways: Biomechanically mediated preflexive feedback  
+  - Horizontal-plane rigid-body models with pairs of virtual elastic legs in intermittent ground contact exhibit periodic gaits whose stability is largely determined by geometrical criteria, showing that mechanics alone can confer asymptotic stability in heading and body orientation without neural feedback, motivating application to rapidly running cockroaches in the companion paper.  
+  - *Robot/sim:* Implement the horizontal-plane passive compliant-legged dynamics with intermittent foot contact in a legged-robot model and test whether heading and orientation stability emerge from mechanics alone before adding any neural feedback (preflex behavior).
+- **Schmitt 2000** — [Mechanical models for insect locomotion: dynamics and stability in the horizontal plane - II. Application](https://doi.org/10.1007/s004220000180)  
+  - animals: Cockroach, Insects · pathways: Biomechanically mediated preflexive feedback  
+  - Idealized horizontal-plane mechanical models of legged locomotion reproduce observed cockroach gait and ground-reaction-force characteristics during rapid running and turning, demonstrating that passive lateral-dynamics stability - mechanics rather than neural feedback - can account for the dominant stability of rapid insect locomotion.  
+  - *Robot/sim:* Use the horizontal-plane lateral dynamics as the mechanical plant of a hexapedal walker and verify gait stability with neural stabilization ablated, quantifying the preflexive contribution to running and turning.
+- **Ozaki 2000** — [An air flow sensor modeled on wind receptor hairs of insects](https://doi.org/10.1109/memsys.2000.838573)  
+  - animals: Insects  
+  - A new conceptual air flow sensor modeled on wind- receptor hairs of insects which can detect low velocity air flow is demonstrated.
+- **Ritzmann 2000** — [Insect Walking and Biorobotics: A Relationship with Mutual Benefits](https://doi.org/10.1641/0006-3568(2000)050[0023:IWABAR]2.3.CO;2)  
+  - animals: Insects  
+  - Biorobotics represents a synergistic relationship between engineers attempting to design better robots and biologists attempting to understand principles of movement in animals.
+- **Flannigan 1998** — [Locomotion controller for a crab-like robot](https://doi.org/10.1109/robot.1998.676345)  
+  - animals: Insects  
+  - An insect-inspired, mechanism-based gait controller with local rough-terrain reflexes drives an eight-legged demining robot in simulation over irregular terrain, obstacles on the order of half the tibia length, sparse terrain, and ditches - robust navigation achieved without complex sensing or terrain mapping, showing simple biologically inspired local rules scale to rough-terrain walking.  
+  - *Robot/sim:* Implement mechanism-based gait control with insect-inspired local terrain reflexes (no terrain map, simple sensing) on multi-legged platforms, and ablate individual reflexes to quantify their contribution to obstacle and ditch traversal.
+- **Bässler and Büschges 1998** — [Pattern generation for stick insect walking movements-multisensory control of a locomotor program](https://doi.org/10.1016/s0165-0173(98)00006-x)  
+  - animals: Stick Insect, Insects
+- **Beer 1997** — [Biologically inspired approaches to robotics: what can we learn from insects?](https://doi.org/10.1145/245108.245118)  
+  - animals: Insects  
+  - Distills principles of insect walking for legged robots: highly distributed control, synergy of local reflexes with distributed gait control, and matching body mechanics to terrain yield robust complex-terrain locomotion with modest computational resources — while insect legs vastly exceed robots in degrees of freedom, sensory richness (hundreds of joint and stress sensors plus antennae), and actuator performance, integrating this feedback to reconfigure the legs step-by-step.  
+  - *Robot/sim:* Build hexapod controllers layering distributed per-leg reflexes under distributed gait control and ablate either layer on rough terrain to test the claimed synergy and the robustness-versus-computation trade-off.
+- **Pearson 1995** — [Proprioceptive regulation of locomotion.](https://doi.org/10.1016/0959-4388(95)80107-3)  
+  - animals: Cat, Insects, Arthropods · pathways: Ib stance to swing; Ia or II stance to swing  
+  - Review of proprioceptive regulation across walking systems: during locomotion, Golgi tendon organ feedback from extensor muscles reverses from inhibition to excitation, maintaining stance while the extensors are loaded and helping time the stance-to-swing transition, while primary and secondary spindle afferents also influence the timing of the rhythm — establishing phase-dependent reflex reversal as a general feature of cat and arthropod walking.

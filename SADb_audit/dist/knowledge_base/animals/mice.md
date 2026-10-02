@@ -1,0 +1,251 @@
+# Animal: Mice
+
+67 papers in the corpus.
+
+- **Molkov 2026** — [Speed-dependent turning strategies in quadrupedal locomotion: insights from computational modeling](https://doi.org/10.3389/fbioe.2026.1787167)  
+  - animals: Mice  
+  - Extends the 2024 quadrupedal model with three asymmetric steering mechanisms — body bending, lateral force, and lateral limb shifting — compared across walking speeds: bending wins at low speed, lateral force at medium, lateral shifting at high, with forelimbs consistently leading steering and hindlimbs adjusting propulsion and stability per strategy.
+- **Toscano 2025** — [A spinal circuit for skilled locomotion](https://doi.org/10.1016/j.cub.2025.09.030)  
+  - animals: Mice  
+  - Identifies V0g ascending neurons as a subtype of the V0 family integrated in lumbar sensorimotor circuits and specifically required for execution of the precise limb movements of skilled locomotion, revealing a previously unappreciated role for ascending spinal neurons in adjusting body movements to the demands of challenging locomotor tasks.  
+  - *Robot/sim:* Implement an ascending precision-correction pathway (V0g analog) that modulates limb-movement precision only in high-demand locomotion modes; ablate it in simulation and quantify loss of foot-placement precision on demanding terrain.
+- **Molkov 2025** — [Ionic mechanisms underlying bistability in spinal motoneurons: insights from a computational model](https://doi.org/10.3389/fncel.2025.1710893)  
+  - animals: Mice  
+  - Conductance-based modeling with mouse slice recordings identifies a minimal mechanistic core for motoneuron plateau potentials and bistable firing: synergistic ICaL + CICR + ICAN interactions, promoted by persistent sodium current and opposed by Ca2+-dependent K+ current — a tractable basis for interpreting dysregulated excitability in spasticity.
+- **Molkov 2024** — [Sensory feedback and central neuronal interactions in mouse locomotion](https://doi.org/10.1098/rsos.240207)  
+  - animals: Mice  
+  - A tractable model of mouse locomotion — four per-limb state-machine rhythm generators with limb load, extension, and balance feedback — separates the roles of sensory feedback from central propriospinal interactions in speed-dependent gait expression, and predicts that postural imbalance feedback critically controls swing-to-stance transitions and stabilization of walking direction.  
+  - *Robot/sim:* Implement four per-limb rhythm generators with load-, extension-, and balance-driven state transitions; ablate the balance signal to test for destabilized swing-to-stance transitions and wandering direction, and ablate propriospinal inter-limb coupling to reproduce speed-dependent gait changes.
+- **Sengupta and Bagnall 2023** — [Spinal Interneurons: Diversity and Connectivity in Motor Control](https://doi.org/10.1146/annurev-neuro-083122-025325)  
+  - animals: Mammals, Mice  
+  - Comprehensive review of spinal interneuron diversity — V0–V3, dI6, Shox2 and related classes — and their connectivity in motor control; a reference map for interneuron contributions to rhythm and pattern.
+- **Li et al. 2023** — [Identified interneurons contributing to locomotion in mammals](https://doi.org/10.1016/b978-0-12-819260-3.00009-3)  
+  - animals: Mammals, Mice, Cat  
+  - Chapter cataloguing identified interneuron classes contributing to mammalian locomotion and their synaptic relations; useful companion to Sengupta & Bagnall 2023.
+- **Molkov 2023** — [Sensory Feedback and Central Neuronal Interactions in Mouse Locomotion](https://doi.org/10.1101/2023.10.31.564886)  
+  - animals: Mice  
+  - bioRxiv preprint of the same mouse-locomotion model paper as the published Royal Society Open Science version, which is curated in this corpus as recCjTyA6Mz9tHw0G: four per-limb state-machine rhythm generators with limb load, extension, and balance feedback, dissociating sensory feedback from central propriospinal interactions in speed-dependent gait expression and predicting that postural imbalance feedback controls swing-to-stance transitions and walking direction. The scientific summary should be cited from the published record recCjTyA6Mz9tHw0G; this preprint entry is retained for dedupli  
+  - *Robot/sim:* Implement four per-limb rhythm generators with load-, extension-, and balance-driven state transitions; ablate the balance signal to test for destabilized swing-to-stance transitions and wandering direction, and ablate propriospinal inter-limb coupling to reproduce speed-dependent gait changes.
+- **Laflamme 2023** — [Distinct roles of spinal commissural interneurons in transmission of contralateral sensory information](https://doi.org/10.1016/j.cub.2023.07.014)  
+  - animals: Mice  
+  - Two genetically distinct commissural interneuron populations carry crossed reflexes in mice: the exclusively excitatory V3 CINs directly mediate excitatory crossed reflexes and are essential for inhibitory ones, while the mixed V0 CINs are not directly involved in either but downregulate inhibitory crossed reflexes - linking genetically identified locomotor commissural populations to contralateral sensory transmission.  
+  - *Robot/sim:* Implement left-right coupling with two commissural populations - a direct excitatory V3-analog pathway plus a V0-analog modulatory population scaling inhibitory crossed pathways - and ablate each to test interlimb reflex coordination.
+- **Ramalingasetty 2023** — [On All Fours: A 3D Framework to Study Closed-loop Control of Quadrupedal Mouse Locomotion](https://doi.org/10.1162/isal_a_00788)  
+  - animals: Mice  
+  - Proof-of-concept 3D closed-loop neuromechanical mouse: four limb rhythm generators drive pattern-formation circuits generating muscle synergies, with commissural and long-propriospinal interlimb coordination and spindle/Golgi/cutaneous feedback terminating in the RG, PF, and motoneuron layers; evolution-optimized flat-ground walking collapses with acute feedback removal.
+- **Hsu 2023** — [Deconstructing the modular organization and real-time dynamics of mammalian spinal locomotor networks](https://doi.org/10.1038/s41467-023-36587-w)  
+  - animals: Mice  
+  - In a mouse brainstem-spinal cord preparation with simultaneous Ca2+ imaging, glutamatergic neurons in the lateral paragigantocellular and caudal ventrolateral reticular nuclei directly initiate locomotion, and the descending command is executed by distinct spinal glutamatergic modules that transform it into rhythmic output, with inhibitory networks recruited in a different pattern — a modular logic for how the cord implements the locomotor command.
+- **Giorgi 2023** — [Excitatory and Inhibitory Descending Commissural Interneurons Differentially Integrate Supraspinal and Segment](https://doi.org/10.1523/jneurosci.2015-22.2023)  
+  - animals: Mice  
+  - Mouse descending commissural interneurons (dCINs), key to left-right coordination, integrate supraspinal and sensory input with a neurotransmitter-specific asymmetry: both glutamatergic (VGluT2+) and GABAergic (GAD2+) dCINs are recruited by reticulospinal or segmental sensory input alone, but when recruitment requires combined subthreshold reticulospinal plus sensory drive only excitatory VGluT2+ dCINs respond - a circuit mechanism gating excitatory crossed pathways in normal motor behavior and after injury.  
+  - *Robot/sim:* Implement crossed pathways where excitatory commissural units act as AND-gates on concurrent descending drive and ipsilateral sensory input while inhibitory units respond to either input alone; ablate the excitatory gate to test loss of bilateral coordination.
+- **Ramalingasetty 2023** — [An integrated neuromechanical model of the mouse to study neural control of locomotion](https://doi.org/10.18910/92326)  
+  - animals: Mice
+- **Zhang 2022** — [The role of V3 neurons in speed-dependent interlimb coordination during locomotion in mice.](https://doi.org/10.7554/elife.73424)  
+  - animals: Mice  
+  - Silencing V3 neurons in mice reduces maximal locomotor speed and abolishes stable trot, gallop, and bound, and an extended left-right rhythm-generator model shows locally projecting V3 neurons mediate left-right synchronization (gallop and bound) while ascending long propriospinal V3 neurons with contralateral cervical projections couple fore and hind generators for trot.
+- **Gosgnach 2022** — [Synaptic connectivity amongst components of the locomotor central pattern generator](https://doi.org/10.3389/fncir.2022.1076766)  
+  - animals: Mammals, Mice  
+  - Synaptic connectivity amongst locomotor CPG components — updates the wiring diagram of rhythm and pattern elements with paired-recording data.
+- **Zholudeva 2021** — [Spinal Interneurons as Gatekeepers to Neuroplasticity after Injury or Disease.](https://doi.org/10.1523/jneurosci.1654-20.2020)  
+  - animals: Mice, Cat, Rat, Human, Vertebrates  
+  - Review positioning spinal interneurons — a heterogeneous population that modulates motor, sensory, and autonomic function — as key components of plasticity and recovery after spinal cord injury, and arguing that treatments should be optimized for how they engage interneuron circuits rather than viewed as acting around them.
+- **Akay 2020** — [Sensory Feedback Control of Locomotor Pattern Generation in Cats and Mice.](https://doi.org/10.1016/j.neuroscience.2020.05.008)  
+  - animals: Cat, Mice  
+  - Review framing sensory feedback control of locomotion across the two dominant models: cat experiments established the broad picture of phase- and task-dependent reflex modulation during walking, while mouse molecular genetics now enables population-specific deletion and modulation to assign those roles to identified afferent and interneuron classes.  
+  - *Robot/sim:* Use the cat-derived sensory-control map to choose which afferent pathways to implement in a simulated walker, then emulate mouse population deletions as targeted pathway ablations to predict functional losses.
+- **Santuz 2019** — [Modular organization of murine locomotor pattern in the presence and absence of sensory feedback from muscle s](https://doi.org/10.1113/jp277515)  
+  - animals: Mice  
+  - Muscle synergy testing on mice with and without proprioceptive feedback.
+- **Haque 2019** — [Characterization of WT1-expressing interneurons and investigation of their role in locomotion](https://doi.org/10.7939/r3-jt04-kz83)  
+  - animals: Mice  
+  - Thesis using a newly developed upright in vitro mouse spinal cord preparation that keeps the locomotor CPG intact to record WT1-expressing ventral interneurons during fictive locomotion: WT1+ cells are inhibitory, project mainly commissural axons, and regulate left-right alternation; viral tracing of their upstream synaptic partners constrains the network structure of the locomotor CPG.  
+  - *Robot/sim:* Implement an inhibitory, commissurally projecting interneuron population (WT1-analog) as the left-right alternation pathway in a bilateral CPG; ablating it should push the model toward synchronous gaits, a loss-of-function test of interleg coordination design.
+- **LaPallo 2019** — [Crossed activation of thoracic trunk motoneurons by medullary reticulospinal neurons.](https://doi.org/10.1152/jn.00194.2019)  
+  - animals: Mice  
+  - Two spatially distinct reticulospinal pathways from the lateral medullary reticular formation cross-activate contralateral trunk motoneurons in neonatal mice - one crossing at the brainstem and one in the spinal cord via excitatory descending commissural interneurons - providing parallel channels for patterning bilateral trunk coordination.  
+  - *Robot/sim:* Implement two commissural routing channels for trunk motoneuron activation (brainstem-crossed versus spinal commissural) in a biped model and ablate each to test for distinct bilateral trunk coordination deficits.
+- **Li 2019** — [Flexor and Extensor Ankle Afferents Broadly Innervate Locomotor Spinal Shox2 Neurons and Induce Similar Effect](https://doi.org/10.3389/fncel.2019.00452)  
+  - animals: Mice  
+  - Shox2 CPG neurons in neonatal mice are broadly innervated by both flexor- and extensor-related ankle afferents, which evoke similar currents without the expected functional antagonism; stimulation of either resets ongoing fictive locomotion to flexion, so low-threshold proprioceptive input reinforces sensory perturbation of both the rhythm and patterning layers.  
+  - *Robot/sim:* Add broad convergent low-threshold proprioceptive input onto both rhythm and patterning layers so that flexor- or extensor-related activation resets the CPG to flexion; ablate the Shox2-analog population to test loss of afferent resetting.
+- **Mayer et al. 2018** — [Role of muscle spindle feedback in regulating muscle activity strength during walking at different speed in mi](https://doi.org/10.1152/jn.00250.2018)  
+  - animals: Mice · pathways: Ia monosynaptic excitation  
+  - Muscle spindle feedback regulates the strength of muscle activity across walking speeds in mice — Ia feedback scales EMG amplitude, not only timing, so spindle loss degrades force output as speed increases.
+- **Jean-Xavier and Perreault 2018** — [Influence of Brain Stem on Axial and Hindlimb Spinal Locomotor Rhythm Generating Circuits of the Neonatal Mous](https://doi.org/10.3389/fnins.2018.00053)  
+  - animals: Mice  
+  - In isolated neonatal mouse brainstem-spinal cord preparations, removing or cooling the brain stem increases locomotor rhythm frequency and shortens axial and hindlimb motoneuron bursts without altering the tonic excitability component, showing brainstem locomotor circuits are operational at birth and extend the operating range of spinal axial and hindlimb rhythm-generating circuits.  
+  - *Robot/sim:* Add a descending module that independently scales CPG frequency and burst duration over axial and hindlimb rhythm generators; ablating it should reproduce the faster, shorter-burst rhythm observed after brain stem removal.
+- **Côté 2018** — [Spinal Control of Locomotion: Individual Neurons, Their Circuits and Functions.](https://doi.org/10.3389/fphys.2018.00784)  
+  - animals: Cat, Mice, Rat, Human, Mammals  
+  - Review of spinal interneurones carrying muscle-stretch and load afferent information across mammals: rest-state physiology is conserved from rodents to humans, but locomotor activation profiles differ markedly between species, plausibly reflecting species differences in afferent distribution and interneuronal interactions; targeted neuromodulation of these circuits is the emerging rehabilitation strategy after spinal cord injury.
+- **Chopek 2018** — [Sub-populations of Spinal V3 Interneurons Form Focal Modules of Layered Pre-motor Microcircuits.](https://doi.org/10.1016/j.celrep.2018.08.095)  
+  - animals: Mice  
+  - Combines patch-clamp recording with holographic glutamate uncaging in mice to reveal focal, layered V3 premotor modules: ventromedial V3 interneurons synapse onto ventrolateral V3 interneurons, which contact ipsilateral motoneurons, while motoneurons return recurrent excitatory glutamatergic input to V3 interneurons, a substrate for well-timed, spatially specific movement.  
+  - *Robot/sim:* Add a two-layer excitatory premotor module (ventromedial to ventrolateral V3 to motoneuron) with motoneuron recurrent excitation back to the premotor layer; ablate the recurrent branch and measure degradation of burst-timing precision.
+- **Murray 2018** — [Balance Control Mediated by Vestibular Circuits Directing Limb Extension or Antagonist Muscle Co-activation](https://doi.org/10.1016/j.celrep.2018.01.009)  
+  - animals: Mice  
+  - Jessell Correspondence a.murray@ucl.ac.uk (A.J.M.), tmj1@columbia.edu (T.M.J.) In Brief Murray et al.
+- **Danner 2017** — [Computational modeling of spinal circuits controlling limb coordination and gaits in quadrupeds](https://doi.org/10.7554/eLife.31050)  
+  - animals: Mice  
+  - Interactions between cervical and lumbar spinal circuits are mediated by long propriospinal neurons (LPNs). Ablation of descending LPNs in mice disturbs left-right coordination at high speeds without affecting fore-hind alternation. We developed a computational model of spinal circuits consisting of four rhythm generators coupled by commissural interneurons (CINs), providing left-right interactions, and LPNs, mediating homolateral and diagonal interactions. The proposed CIN and diagonal LPN connections contribute to speed-dependent gait transition from walk, to trot, and then to gallop and bou
+- **Schnerwitzki 2017** — [Loss of Wt1 in the murine spinal cord alters interneuron composition and locomotion](https://doi.org/10.1101/226316)  
+  - animals: Mice  
+  - Mice lacking Wt1 in neurons run slower with decreased stride frequency and increased stride length, show altered fore-hindlimb coordination accompanied by loss of contralateral spinal projections, and display arrhythmic reduced-frequency motor output as neonates — tying a Wt1-expressing dI6 subpopulation to left-right coordination circuitry assembly.  
+  - *Robot/sim:* Reduce contralateral commissural projection weights in a bilateral CPG to mimic Wt1 loss; check for slower cadence, longer strides, degraded interlimb coordination, and arrhythmic motor output.
+- **Ziskind-Conhaim and Hochman 2017** — [Diversity of molecularly defined spinal interneurons engaged in mammalian locomotor pattern generation.](https://doi.org/10.1152/jn.00322.2017)  
+  - animals: Mice, Mammals  
+  - Review of the four cardinal classes of molecularly defined ventral spinal interneurons (from ten progenitor domains) and their contribution to mammalian locomotor pattern generation, organizing each population by excitatory versus inhibitory action and axonal projection as candidate rhythm-generating versus coordinating elements.
+- **Sivertsen 2016** — [Pontine reticulospinal projections in the neonatal mouse: Internal organization and axon trajectories.](https://doi.org/10.1002/cne.23904)  
+  - animals: Mice  
+  - Retrograde tracing in the neonatal mouse shows the pontine reticulospinal projection consists of segregated ipsi- and contralaterally projecting populations (3:1 ipsilateral) that are predominantly excitatory (GAD-negative) with distinct brainstem and spinal axon trajectories; the larger size and greater number of the uncrossed population accounts for its more reliable transmission to spinal motoneurons. This is the anatomical substrate for the powerful descending reticulospinal drive assumed in spinal locomotor models.
+- **Griener 2016** — [Connectivity and Regional Distribution of Constituent Cells of the Mammalian Locomotor Central Pattern Generat](https://doi.org/10.7939/r3639kg5w)  
+  - animals: Mammals, Rat, Mice  
+  - Anatomical validation of the two-level Rybak–McCrea CPG architecture: connectivity and regional distribution of rhythmogenic and pattern-forming populations across lumbar segments.
+- **Shevtsova 2015** — [Organization of left-right coordination of neuronal activity in the mammalian spinal cord: Insights from compu](https://doi.org/10.1113/JP270121)  
+  - animals: Mammals, Mice  
+  - Coordination of neuronal activity between left and right sides of the mammalian spinal cord is provided by several sets of commissural interneurons (CINs) whose axons cross the midline. Genetically identified inhibitory V0D and excitatory V0V CINs and ipsilaterally projecting excitatory V2a interneurons were shown to secure left-right alternation at different locomotor speeds. We have developed computational models of neuronal circuits in the spinal cord that include left and right rhythm-generating centres interacting bilaterally via three parallel pathways mediated by V0D , V2a-V0V and V3 ne
+- **Rybak 2015** — [Organization of the Mammalian Locomotor CPG: Review of Computational Model and Circuit Architectures Based on ](https://doi.org/10.1523/eneuro.0069-15.2015)  
+  - animals: Mice, Mammals  
+  - Review proposing computational architectures for the mammalian locomotor CPG that integrate the genetically identified interneuron classes (V0D and V0V, V1, V2a, V2b, V3, Shox2) with ablation phenotypes, assigning them roles in rhythm generation, flexor-extensor interactions on each side of the cord, and commissural left-right coordination, and showing how such models can unify and predict mutant locomotor data.  
+  - *Robot/sim:* Implement the proposed two-level CPG with genetically identified interneuron classes assigned to rhythm generation, flexor-extensor interactions, and commissural left-right coordination, and reproduce mutant phenotypes by removing individual populations.
+- **Machado et al. 2015** — [Primacy of Flexor Locomotor Pattern Revealed by Ancestral Reversion of Motor Neuron Identity](https://doi.org/10.1016/j.cell.2015.06.036)  
+  - animals: Mice  
+  - Ancestral reversion of lumbar motor neuron identity reveals the primacy of the flexor locomotor pattern; flexor-dominant circuitry appears to be the conserved building block of limb locomotion.
+- **Kasumacic 2015** — [Segmental organization of vestibulospinal inputs to spinal interneurons mediating crossed activation of thorac](https://doi.org/10.1523/jneurosci.5188-14.2015)  
+  - animals: Mice  
+  - Lateral vestibulospinal tract activation of contralateral thoracolumbar motoneurons in neonatal mice is overwhelmingly polysynaptic, relayed by descending commissural interneurons whose LVST-responsive fractions differ by segment and dorsoventral position; upper-lumbar dCINs projecting to contralateral L5 selectively channel vestibular signals toward hindlimb extensor motoneurons versus trunk targets.  
+  - *Robot/sim:* Route vestibular balance corrections through segment-specific commissural interneuron populations in a biped model; ablate the upper-lumbar channel to reproduce differential loss of hindlimb versus trunk crossed activation.
+- **McLean and Dougherty 2015** — [Peeling back the layers of locomotor control in the spinal cord](https://doi.org/10.1016/j.conb.2015.03.001)  
+  - animals: Mice, Zebrafish  
+  - Synthesizes optical and genetic work in mice and zebrafish into a layered picture of spinal locomotor control: modular spinal networks simplify limb and axial motor pool coordination, module deployment is reconfigured with increasing locomotor speed, and rhythm and pattern are regulated in functional hierarchies.  
+  - *Robot/sim:* Build a hierarchical controller with rhythm and pattern layers plus speed-dependent module recruitment; ablate modules at specific speeds to test the modularity and hierarchy claims drawn from mice and zebrafish.
+- **Akay 2014** — [Degradation of mouse locomotor pattern in the absence of proprioceptive sensory feedback](https://doi.org/10.1073/pnas.1419045111)  
+  - animals: Mice · pathways: Ia or II swing to stance; Ia or II stance to swing; Ib swing to stance  
+  - Ia/ II stance to swing
+
+Ia/II and Ib swing to stance
+- **Sivertsen 2014** — [Organization of pontine reticulospinal inputs to motoneurons controlling axial and limb muscles in the neonata](https://doi.org/10.1152/jn.00820.2013)  
+  - animals: Mice  
+  - In neonatal mouse brainstem-spinal cord preparations, pontine reticulospinal stimulation activates axial and limb motoneurons bilaterally at cervical, thoracic, and lumbar levels, similarly in medial and lateral motor columns and in flexor- and extensor-dominant segments, with responses following individual stimuli in trains nearly one-to-one. Unilateral C1 hemisection separates two pathways, an uncrossed one that transmits more faithfully and appears more direct, and a crossed one with smaller, longer-latency responses, defining a dual-route organization for bilateral descending control of tr  
+  - *Robot/sim:* Model descending pontine drive as parallel fast-uncrossed and slower-crossed routes to bilateral motoneuron pools; sectioning the crossed route should reproduce the longer latencies and stimulus-train failures seen after contralateral hemisection.
+- **Zhang 2014** — [V1 and V2b Interneurons Secure the Alternating Flexor-Extensor Motor Activity Mice Require for Limbed Locomoti](https://doi.org/10.1016/j.neuron.2014.02.013)  
+  - animals: Mice  
+  - V1 and V2b interneurons together supply the inhibitory component that secures alternating flexor-extensor activity: removing V1/V2b-derived neurotransmission in the isolated mouse spinal cord synchronizes L2 flexor and L5 extensor rhythms, and mice lacking V1/V2b inhibition cannot articulate limb joints — identifying these two ventral inhibitory classes as core elements of the limb CPG.
+- **Borowska 2013** — [Functional subpopulations of V3 interneurons in the mature mouse spinal cord.](https://doi.org/10.1523/jneurosci.2005-13.2013)  
+  - animals: Mice  
+  - Identifies two physiologically and topographically distinct V3 interneuron subpopulations in the mature mouse spinal cord: ventral lamina-VIII cells with simple morphology and rapid tonic firing, active during running in a manner suggesting a premotor role, and dorsal cells with complex morphology, strong spike-frequency adaptation, large sag voltages and post-inhibitory rebound (consistent with HCN and T-type calcium currents), active during swimming in a manner suggesting a sensory-relay role.  
+  - *Robot/sim:* Split the commissural excitatory population in a CPG model into tonic-firing premotor and adapting rebound-capable relay subtypes with HCN- and T-type-like currents; test whether differential recruitment across gaits preserves rhythm robustness.
+- **Talpalar 2013** — [Dual-mode operation of neuronal networks involved in left-right alternation](https://doi.org/10.1038/nature12286)  
+  - animals: Mice  
+  - Intersectional mouse genetics shows that ablating the V0 commissural population forces quadrupedal hopping at all locomotor frequencies, while selective ablation splits the system into dual modes: inhibitory V0 neurons are required for left-right alternation at low speeds (mixed coordination at medium, alternation at high), and excitatory V0 neurons for alternation at low speeds with hopping at medium/high speeds. Left-right coordination is thus implemented by two molecularly distinct commissural modules whose recruitment is speed-dependent — a modular logic that may constrain species-specific  
+  - *Robot/sim:* Implement dual-mode commissural coupling in a CPG: inhibitory left-right coupling dominant at low oscillation frequency, excitatory coupling recruited at high frequency; ablate each module and verify the model reproduces the hopping versus alternation phenotypes as a function of drive.
+- **Rybak 2013** — [Modelling genetic reorganization in the mouse spinal cord affecting left–right coordination during locomotion](https://doi.org/10.1113/jphysiol.2013.261115)  
+  - animals: Mice  
+  - A computational model of the left-right commissural circuitry (inhibitory and excitatory commissural interneuron populations plus an EphA4-positive subpopulation) reproduces the gait phenotypes of axon-guidance mutations — EphA4 knockout converts to synchronized hopping via crossed excitation, Netrin-1 knockout by loss of contralateral inhibition, DCC knockout by loss of both — and shows amplified inhibition restores alternation in EphA4 and DCC knockouts but not Netrin-1 knockouts.
+- **Dougherty 2013** — [Locomotor Rhythm Generation Linked to the Output of Spinal Shox2 Excitatory Interneurons](https://doi.org/10.1016/j.neuron.2013.08.015)  
+  - animals: Mice  
+  - Identifies Shox2 excitatory interneurons as part of the rhythm-generating kernel in the mouse spinal cord: optogenetic silencing or blocking their synaptic output perturbs locomotor rhythm without affecting left-right and flexor-extensor patterning (while ablating the Shox2 subset coinciding with V2a interneurons has no effect), and rhythmically active Shox2 cells contact other Shox2 cells, commissural neurons, and motor neurons with a preference for flexor motor pools.  
+  - *Robot/sim:* Structure the CPG with a separable rhythm kernel (interconnected excitatory units biased to flexor MNs) distinct from the pattern layer; ablating the kernel in simulation should reproduce rhythm loss with preserved patterning.
+- **Bui 2013** — [Circuits for Grasping: Spinal dI3 Interneurons Mediate Cutaneous Control of Motor Behavior](https://doi.org/10.1016/j.neuron.2013.02.007)  
+  - animals: Mice · afferents: Cutaneous  
+  - Defines the spinal microcircuit for cutaneous grip control: dI3 interneurons (marked by Isl1) relay low-threshold cutaneous afferent input to motoneurons, and genetic silencing of their output specifically abolishes the ability to scale grip force with increasing load while sparing other motor tasks.  
+  - *Robot/sim:* Add a dI3-analog relay layer between low-threshold tactile sensors and grip motoneurons; ablate it to reproduce the failure to scale grip force with load while other behaviors persist, a minimal circuit for tactile grip control in prosthetic or robotic hands.
+- **Yeo 2013** — [Phenomenological models of the dynamics of muscle during isotonic shortening](https://doi.org/10.1016/j.jbiomech.2013.07.018)  
+  - animals: Human, Mice  
+  - Computational model study. We investigated the effectiveness of simple, Hill-type, phenomenological models of the force-length- velocity relationship for simulating measured length trajectories during muscle shortening, and, if so, what forms of the model are most useful.
+- **Kasumacic 2012** — [Vestibular-mediated synaptic inputs and pathways to sympathetic preganglionic neurons in the neonatal mouse.](https://doi.org/10.1113/jphysiol.2012.234609)  
+  - animals: Mice  
+  - In the neonatal mouse, vestibular (VIIIth nerve) stimulation evokes slow polysynaptic excitatory responses in thoracic sympathetic preganglionic neurons with concomitant GABAergic inhibition, mediated predominantly indirectly through the ventrolateral medulla rather than by direct vestibulospinal projections, and these vestibulosympathetic connections are already functional at birth.  
+  - *Robot/sim:* Model vestibular influence on autonomic and motor output as polysynaptic - relayed through a medullary node with mixed inhibition - rather than as direct vestibulospinal projections, and test response-latency and pharmacological signatures against ablation of the relay.
+- **Zhong 2012** — [Neuronal activity in the isolated mouse spinal cord during spontaneous deletions in fictive locomotion: insigh](https://doi.org/10.1113/jphysiol.2012.240895)  
+  - animals: Mice  
+  - Zhong, Shevtsova, Rybak.
+Key points 
+• The organization of the spinal circuitry responsible for the generation of locomotor rhythm and control of locomotion in mammals is largely unknown, though several types of spinal interneurons involved in the rodent locomotor network have been identified. 
+• Ventral root recordings of spinal motoneurons during fictive locomotion in the isolated mouse spinal cord show spontaneous deletions of activity. The majority of deletions in the isolated neonatal mouse spinal cord are non-resetting: they do not change the phase of subsequent motor cycles. Flexor and 
+- **Arber 2012** — [Motor circuits in action: specification, connectivity, and function](https://doi.org/10.1016/j.neuron.2012.05.011)  
+  - animals: Mice  
+  - Review of motor circuit assembly: specification, connectivity, and function of spinal motor circuits with a developmental-genetic lens.
+- **Talpalar 2011** — [Identification of Minimal Neuronal Networks Involved in Flexor-Extensor Alternation in the Mammalian Spinal Co](https://doi.org/10.1016/j.neuron.2011.07.011)  
+  - animals: Mice · afferents: Ia · pathways: Ia reciprocal inhibition  
+  - In mice with glutamatergic neurotransmission ablated from the spinal locomotor region, inhibitory interneuron networks alone generate locomotor-like rhythmicity, and flexor-extensor alternation is produced by Ia inhibitory interneurons - the proprioceptive reciprocal-inhibition pathway - defining a minimal inhibitory network sufficient for locomotor pattern generation.  
+  - *Robot/sim:* Model antagonist motoneuron pools connected through reciprocally inhibiting Ia inhibitory interneurons; ablating the Ia inhibitory population should collapse alternation into co-contraction.
+- **Szokol 2011** — [Organization of functional synaptic connections between medullary reticulospinal neurons and lumbar descending](https://doi.org/10.1523/jneurosci.5486-10.2011)  
+  - animals: Mice  
+  - Reticulospinal-mediated calcium responses in lumbar motoneurons are reduced by mephenesin and by midline lesions, and stimulation in medial or lateral medullary reticular formation activates roughly half of ipsilateral and of contralateral descending commissural interneurons, with the responsive populations largely overlapping spatially. Differential descending control of trunk and hindlimb muscles by the medullary reticulospinal system is therefore mediated in part by identifiable dCIN populations, providing a polysynaptic crossed and uncrossed route to lumbar motor pools.  
+  - *Robot/sim:* Route reticulospinal drive to bilateral motoneuron pools through a commissural interneuron layer; ablating the layer (modeling mephenesin or midline lesion) should reduce motoneuron response magnitude as observed.
+- **Kiehn 2011** — [Development and functional organization of spinal locomotor circuits](https://doi.org/10.1016/j.conb.2010.09.004)  
+  - animals: Vertebrates, Mice, Zebrafish, Lamprey, Mammals  
+  - This review outlines and compares recent
+advances that have revealed the developmental and functional
+organization of these fundamental spinal motor networks in
+limbed and non-limbed animals. The comparison will highlight
+common principles and divergence in the organization of the
+spinal locomotor network structure in these different species as
+well as point to unresolved issues regarding the assembly and
+functioning of these networks.
+- **Tripodi 2011** — [Motor antagonism exposed by spatial segregation and timing of neurogenesis](https://doi.org/10.1038/nature10538)  
+  - animals: Mice  
+  - Extensor and flexor premotor interneurons are segregated medio-laterally in the dorsal spinal cord yet derive from common progenitor domains separated only by timing of neurogenesis, and proprioceptive feedback selectively targets the medial extensor premotor population, where it is required for extensor-specific connectivity to develop — an anatomical and developmental basis for antagonistic circuitry.  
+  - *Robot/sim:* Route proprioceptive feedback preferentially onto the extensor premotor side of a bilateral CPG and remove it during connection formation to test whether extensor-specific connectivity fails to develop, mirroring the developmental requirement.
+- **Zhong 2011** — [Frequency-dependent recruitment of V2a interneurons during fictive locomotion in the mouse spinal cord](https://doi.org/10.1038/ncomms1276)  
+  - animals: Mice · pathways: Fictive locomotion without sensory feedback  
+  - V2a interneurons are dispensable for left-right coordination at low locomotor frequencies but essential at high frequencies because rhythmic synaptic drive to a subpopulation grows with cycle frequency and recruits subthreshold oscillating V2a neurons — speed-dependent recruitment within one pool rather than activation of a silent second set.  
+  - *Robot/sim:* Model a V2a pool whose subthreshold units recruit as rhythmic synaptic drive grows with cycle frequency; ablating it should degrade left-right coordination only at high frequencies while sparing low-frequency alternation.
+- **Hinckley 2010** — [Sensory Modulation of Locomotor-Like Membrane Oscillations in Hb9-Expressing Interneurons](https://doi.org/10.1152/jn.00996.2009)  
+  - animals: Mice  
+  - In isolated neonatal mouse spinal cords, low-threshold afferents produce short-latency monosynaptic excitatory responses in most Hb9 interneurons, with VGLUT1- and parvalbumin-immunoreactive afferent contacts on somata and dendrites, and afferent input resets neurochemically induced locomotor-like rhythms: flexor-related afferent stimulation during the flexor phase delays subsequent cycle onsets while extensor-related stimulation prolongs cycle period two- to threefold, with Hb9 IN oscillations remaining phase-locked to motor bursts throughout. Hb9 INs are therefore sensorimotor interneurons p  
+  - *Robot/sim:* Add an Hb9 interneuron layer receiving monosynaptic afferent input and phase-locked to motor bursts in a CPG model; ablating the layer should remove the afferent phase-resetting effects on cycle timing without abolishing rhythmicity.
+- **Zhong 2010** — [Electrophysiological Characterization of V2a Interneurons and Their Locomotor-Related Activity in the Neonatal](https://doi.org/10.1523/jneurosci.4849-09.2010)  
+  - animals: Mice  
+  - V2a (Chx10) interneurons fall into tonic, phasic, and delayed-onset classes with electrical coupling only within a class; about half fire rhythmically during NMDA/5-HT fictive locomotion, and the rhythmically active fraction increases at higher locomotor frequencies, providing a mechanism for the frequency-dependent shift in left-right coupling seen when these neurons are ablated.  
+  - *Robot/sim:* Implement left-right coordination with a rhythmically active V2a commissural population whose recruitment grows with cycle frequency; ablating this population in the model should reproduce the frequency-dependent left-right coupling shift observed in Chx10::DTA mice.
+- **Hägglund 2010** — [Activation of groups of excitatory neurons in the mammalian spinal cord or hindbrain evokes locomotion](https://doi.org/10.1038/nn.2482)  
+  - animals: Mice  
+  - Using Vglut2-ChR2 mice, photostimulation of either the lumbar spinal cord or the caudal hindbrain was sufficient to both initiate and maintain locomotor-like activity, directly demonstrating that glutamatergic neurons in the spinal cord are critical for initiating or maintaining the locomotor rhythm and that activation of hindbrain locomotor command regions can directly activate the spinal locomotor network.  
+  - *Robot/sim:* Model locomotion initiation as a tonic excitatory glutamatergic drive channel that both starts and sustains the rhythm generator; ablating it should reproduce failure of locomotor initiation while leaving the remaining network structure intact.
+- **Kasumacic et al. 2010** — [Segmental patterns of vestibular-mediated synaptic inputs to axial and limb motoneurons in the neonatal mouse ](https://doi.org/10.1113/jphysiol.2010.195644)  
+  - animals: Mice  
+  - Optical recording reveals segmental patterns of vestibular-mediated synaptic input to axial and limb motoneurons in the neonatal mouse; vestibular influence on the cord is segmentally organized — strong on axial, weaker on limb.
+- **Dai 2009** — [Electrophysiological and Pharmacological Properties of Locomotor Activity-Related Neurons in cfos-EGFP Mice](https://doi.org/10.1152/jn.00265.2009)  
+  - animals: Mice, Human  
+  - In this study, we demonstrate a new way of identifying neurons active in locomotion.
+- **Crone 2009** — [In mice lacking V2a interneurons, gait depends on speed of locomotion](https://doi.org/10.1523/jneurosci.1206-09.2009)  
+  - animals: Mice  
+  - Ablating V2a interneurons (Chx10::DTA mice) leaves slow-speed trot intact but shifts high-speed gait to synchronous left-right coupling without altering foreleg-hindleg alternation or swing/stance durations, a speed-specific loss of left-right alternation recapitulated in isolated-cord fictive locomotion, establishing V2a neurons as required for maintaining alternation at fast speeds.  
+  - *Robot/sim:* Implement a speed-dependent commissural (V2a-analog) pathway that maintains left-right alternation at high frequencies; remove it and test whether the model transitions from alternate to synchronous gait as drive increases while sagittal timing is preserved.
+- **Endo and Kiehn 2008** — [Asymmetric Operation of the Locomotor Central Pattern Generator in the Neonatal Mouse Spinal Cord](https://doi.org/10.1152/jn.90729.2008)  
+  - animals: Mice  
+  - Continuous conductance measurements from neonatal mouse motoneurones during locomotor-like activity show push-pull CPG operation (alternating excitatory and inhibitory conductances with inhibitory predominance, most pronounced in extensors), sharper phase tuning of flexor-related than extensor-related synaptic drives, and rostral-versus-caudal segmental differences - evidence for reciprocally coupled but differently composed flexor and extensor modules in a multilayered, distributed premotor network, preserved across frequencies and drug combinations.  
+  - *Robot/sim:* Implement premotor modules as reciprocally coupled flexor and extensor half-centers with unequal phase-tuning sharpness, inhibition-dominant extensor drive, and rostral/caudal parameter differences, then compare generated motoneurone conductance profiles with the extracted ones.
+- **Crone 2008** — [Genetic Ablation of V2a Ipsilateral Interneurons Disrupts Left-Right Locomotor Coordination in Mammalian Spina](https://doi.org/10.1016/j.neuron.2008.08.009)  
+  - animals: Mice  
+  - Genetic ablation of V2a ipsilateral interneurons disrupts consistent left-right alternation in the mammalian spinal cord and increases locomotor burst variability while leaving flexor-extensor coordination unaffected, and anatomical tracing shows V2a cells provide direct excitatory input onto commissural interneurons, including molecularly defined V0 neurons that drive alternation. The neural substrate for left-right coordination therefore consists of at least two components: commissural neurons and a class of ipsilateral interneurons that activates commissural pathways.  
+  - *Robot/sim:* Implement an ipsilateral V2a excitatory relay onto commissural (V0-like) cross-coupling in a left-right CPG; ablating the relay should selectively degrade left-right alternation while preserving flexor-extensor timing on each side.
+- **Szokol 2008** — [Differential origin of reticulospinal drive to motoneurons innervating trunk and hindlimb muscles in the mouse](https://doi.org/10.1113/jphysiol.2008.158105)  
+  - animals: Mice  
+  - Optical recording in neonatal mouse brainstem-spinal cord preparations reveals a mediolateral organization of the medullary reticular formation: medial stimulation drives lateral motor column (hindlimb) motoneurons whereas lateral stimulation drives medial motor column (trunk) motoneurons, on both sides - an anatomical substrate for differential reticulospinal control of trunk versus limb muscles in postural and locomotor coordination.  
+  - *Robot/sim:* Implement two spatially distinct descending-drive channels - one to trunk motoneuron pools, one to hindlimb pools - in a trunk-plus-legs controller, and ablate either channel to test postural versus locomotor decoupling.
+- **Quinlan and Kiehn 2007** — [Segmental, Synaptic Actions of Commissural Interneurons in the Mouse Spinal Cord](https://doi.org/10.1523/jneurosci.1618-07.2007)  
+  - animals: Mice, Mammals  
+  - Connectivity map of mouse commissural interneurons: short- and long-range CINs directly excite (glutamatergic) or directly/indirectly inhibit (glycinergic and/or GABAergic) contralateral motoneurones, so left–right coordination is organized as a dual-inhibitory plus single-excitatory CIN system.
+- **Rossignol 2006** — [Plasticity of connections underlying locomotor recovery after central and/or peripheral lesions in the adult m](https://doi.org/10.1098/rstb.2006.1889)  
+  - animals: Cat, Mice, Rat, Human, Mammals  
+  - Review concluding that locomotor recovery after spinal lesions in adult mammals is partly due to plasticity within existing spinal locomotor networks: locomotor training changes the excitability of simple reflex pathways and more complex circuitry, adaptation to lesions entails changes at both spinal and supraspinal levels, and the cat-derived framework extends to rat, mouse, and human spinal pattern generation.  
+  - *Robot/sim:* Model lesion and recovery by removing pathways and re-tuning residual connection weights through training-like afferent input, testing which plasticity rules restore stepping when descending drive is lost.
+- **Tryba 2006** — [Gasping activity in vitro: a rhythm dependent on 5-HT2A receptors](https://doi.org/10.1523/jneurosci.4186-05.2006)  
+  - animals: Mice  
+  - Here, we demonstrate that fictive gasping and CI-pacemaker bursting were selectively eliminated by the 5-HT 2A receptor antagonist piperidine or ketanserin.
+- **Gosgnach 2006** — [V1 spinal neurons regulate the speed of vertebrate locomotor outputs.](https://doi.org/10.1038/nature04545)  
+  - animals: Mice  
+  - Genetically silencing V1 interneurons (Engrailed1-expressing inhibitory cells) eliminates fast motor bursting during locomotion, establishing local inhibition as the element that sets locomotor CPG cycle frequency and positioning V1 neurons as an evolutionarily conserved speed-control pathway for vertebrate locomotor movements.  
+  - *Robot/sim:* Add an inhibitory V1-analog population to a half-center CPG whose gain sets burst frequency; ablating it should selectively remove fast motor bursting while slower rhythms persist, separating speed control from rhythm generation.
+- **Álvarez 2005** — [Postnatal Phenotype and Localization of Spinal Cord V1 Derived Interneurons](https://doi.org/10.1002/cne.20711)  
+  - animals: Mice · afferents: Ia  
+  - Fate-mapping shows mouse V1-derived interneurons develop into ipsilaterally projecting inhibitory cells (over 80 percent glycinergic varicosities, a third GABAergic, none glutamatergic or cholinergic) comprising Renshaw cells (9 percent), parvalbumin-only group 4 proprioceptive interneurons contacted by primary sensory afferents (27 percent), and a ventral subgroup resembling Ia inhibitory interneurons that receives convergent Renshaw cell input (13 percent); V1 axons never cross the midline.  
+  - *Robot/sim:* Constrain spinal reflex circuitry in models so Renshaw cells, Ia inhibitory interneurons, and other proprioceptive interneurons derive from one ipsilateral inhibitory V1 lineage with convergent Renshaw-to-IaIN connections; ablating the lineage predicts which reflex components fail together.
+- **Nishimaru 2000** — [Formation of the central pattern generator for locomotion in the rat and mouse](https://doi.org/10.1016/s0361-9230(00)00399-3)  
+  - animals: Mice, Rat  
+  - Review of formation central pattern generator locomotion. In the prenatal period in the rat, alternation between the left and right ventral roots is established between embryonic day (E) 16.5 and E18.5.

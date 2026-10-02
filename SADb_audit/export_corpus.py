@@ -4,10 +4,11 @@ Reads the PAT from D:\Github\api_credentials_local.txt (never stores it).
 Stdlib only. Run: python export_corpus.py
 Regenerate after any curation batch — the HTML app + pivot consume these files.
 
-NOTE: Airtable's REST API keys response `fields` by FIELD NAME (even when you
-request by field id). "Models copy" has two same-named fields; fldh983rtt2YtMZQX
-is empty everywhere (2026-09-11 audit) so any value seen belongs to the live
-Review Papers link fldBLowhKJcjuFMSK.
+2026-09-28 schema v2: the duplicate "Models copy" fields were renamed
+(fldBLowhKJcjuFMSK is now "Review Papers"; the empty twin is "(unused) …"),
+which UNIQUE-IFIES all field names — a fields[] filter no longer 422s, so this
+fetch is now projection-filtered. New curation-layer fields exported:
+Afferent Types, Animal Study Potential, Robot/Sim Translation, Prune Status.
 """
 import csv, json, os, re, urllib.parse, urllib.request
 
@@ -18,7 +19,9 @@ BASE = "appMQTnobUNRytIp7"
 PAPERS = "tblnnMrZszhboU4uD"
 
 FETCH = ["Name", "Notes", "Attachments", "Feedback", "Primary Author", "Animal",
-         "Year", "Models", "Models 2", "Models copy", "DOI", "Secondary Authors"]
+         "Year", "Models referenced", "Is the model paper", "Review Papers", "DOI",
+         "Secondary Authors", "Afferent Types", "Animal Study Potential",
+         "Robot/Sim Translation", "Prune Status"]
 
 
 def pat():
@@ -35,7 +38,7 @@ _PAT = pat()
 def air(path, params=None):
     q = ""
     if params:
-        q = "?" + urllib.parse.urlencode(params, doseq=True, quote_via=urllib.parse.quote)
+        q = "?" + urllib.parse.urlencode(params, doseq=True)
     req = urllib.request.Request("https://api.airtable.com/v0/" + path + q,
                                  headers={"Authorization": "Bearer " + _PAT})
     with urllib.request.urlopen(req, timeout=90) as r:
@@ -58,24 +61,14 @@ def names_for(table_id, label):
     return out
 
 
-def air_post(path, body):
-    req = urllib.request.Request("https://api.airtable.com/v0/" + path,
-                                 data=json.dumps(body).encode(),
-                                 headers={"Authorization": "Bearer " + _PAT,
-                                          "Content-Type": "application/json"},
-                                 method="POST")
-    with urllib.request.urlopen(req, timeout=90) as r:
-        return json.loads(r.read().decode())
-
-
 papers_raw, offset = [], None
 while True:
-    p = [("pageSize", 100)]
+    p = [("pageSize", 100), ("fields[]", FETCH)]
     if offset:
         p.append(("offset", offset))
-    d = air(f"{BASE}/{PAPERS}", p)  # full fetch: a fields[] filter 422s here
-    papers_raw.extend(d.get("records", []))  # because two fields share the
-    offset = d.get("offset")                 # name "Models copy"
+    d = air(f"{BASE}/{PAPERS}", p)
+    papers_raw.extend(d.get("records", []))
+    offset = d.get("offset")
     if not offset:
         break
 print(f"Papers: {len(papers_raw)} records")
@@ -105,20 +98,25 @@ for rec in papers_raw:
         "year": f.get("Year", ""),
         "doi": (f.get("DOI", "") or "").strip(),
         "animals": sel(f.get("Animal", [])) if isinstance(f.get("Animal"), list) else [],
+        "afferents": sel(f.get("Afferent Types", [])) if isinstance(f.get("Afferent Types"), list) else [],
         "feedback": [fb_names.get(r, r) for r in f.get("Feedback", [])],
-        "models_ref": [md_names.get(r, r) for r in f.get("Models", [])],
-        "models2": [md_names.get(r, r) for r in f.get("Models 2", [])],
-        "reviews": [rv_names.get(r, r) for r in f.get("Models copy", [])],
+        "models_ref": [md_names.get(r, r) for r in f.get("Models referenced", [])],
+        "models2": [md_names.get(r, r) for r in f.get("Is the model paper", [])],
+        "reviews": [rv_names.get(r, r) for r in f.get("Review Papers", [])],
         "has_pdf": bool(f.get("Attachments")),
         "has_notes": bool(notes.strip()),
         "notes": notes.strip()[:1500],
+        "animal_study": (f.get("Animal Study Potential", "") or "").strip()[:1000],
+        "robot_sim": (f.get("Robot/Sim Translation", "") or "").strip()[:1000],
+        "prune": sel(f.get("Prune Status", "")) or "",
     })
 
 with open(os.path.join(OUT, "sadb_export.json"), "w", encoding="utf-8") as fh:
     json.dump(out, fh, ensure_ascii=False)
 
-cols = ["id", "title", "primary", "secondary", "year", "doi", "animals", "feedback",
-        "models_ref", "models2", "reviews", "has_pdf", "has_notes", "notes"]
+cols = ["id", "title", "primary", "secondary", "year", "doi", "animals", "afferents",
+        "feedback", "models_ref", "models2", "reviews", "has_pdf", "has_notes", "notes",
+        "animal_study", "robot_sim", "prune"]
 with open(os.path.join(OUT, "sadb_export.csv"), "w", encoding="utf-8-sig", newline="") as fh:
     w = csv.DictWriter(fh, fieldnames=cols)
     w.writeheader()
@@ -130,4 +128,6 @@ n_pdf = sum(1 for r in out if r["has_pdf"])
 n_rev = sum(1 for r in out if r["reviews"])
 n_an = sum(1 for r in out if r["animals"])
 n_fb = sum(1 for r in out if r["feedback"])
-print(f"wrote {len(out)} records | notes {n_notes} | pdf {n_pdf} | animals {n_an} | feedback {n_fb} | review-links {n_rev}")
+n_af = sum(1 for r in out if r["afferents"])
+print(f"wrote {len(out)} records | notes {n_notes} | pdf {n_pdf} | animals {n_an} | "
+      f"feedback {n_fb} | afferents {n_af} | review-links {n_rev} | bare {len(out)-n_notes}")
