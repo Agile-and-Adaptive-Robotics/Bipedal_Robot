@@ -48,6 +48,14 @@
 - **Audet 2022** — [Control of fore- and hindlimb movements and their coordination during quadrupedal locomotion across speeds in ](https://doi.org/10.1089/neu.2022.0042)  
   - animals: Cat  
   - Quadrupedal fore-hindlimb coordination across speeds in adult spinal cats: the isolated spinal cord replays speed-dependent coordination, including gallop-like patterns.
+- **Harnie 2022** — [State- and Condition-Dependent Modulation of the Hindlimb Locomotor Pattern in Intact and Spinal Cats Across S](https://doi.org/10.3389/fnsys.2022.814028)  
+  - animals: Cat  
+  - Comparing quadrupedal and hindlimb-only locomotion in the same intact cats before and after spinal transection separates state-dependent from condition-dependent changes in the hindlimb pattern: the spinal state produces convergence of stance and swing durations at high speed, improper ankle-hip coordination, and altered flexor burst timing, whereas the hindlimb-only condition itself shifts paw placement, yield magnitude, and some burst durations - so hindlimb-only intact locomotion, not quadrupedal, is the proper baseline for spinal-state comparisons.  
+  - *Robot/sim:* When modeling spinal-state gait changes, validate against a hindlimb-only intact baseline rather than quadrupedal locomotion; implement intact versus spinal (supraspinal drive removed) controller variants and separate state-dependent effects (stance/swing convergence at speed, ankle-hip coordination) from condition-dependent ones.
+- **Kim 2022** — [Contribution of Afferent Feedback to Adaptive Hindlimb Walking in Cats: A Neuromusculoskeletal Modeling Study](https://doi.org/10.3389/fbioe.2022.825149)  
+  - animals: Cat  
+  - A cat hindlimb neuromusculoskeletal model coupled to a half-center CPG reproduces normal walking and the adaptive movement changes when the foot steps into a hole; dynamical-systems and nullcline analysis of the coupled CPG-musculoskeleton-environment loop shows how afferent feedback mediates adaptive locomotion in ways that immobilized fictive preparations cannot reveal.  
+  - *Robot/sim:* Reproduce the architecture — half-center CPG coupled to a cat hindlimb musculoskeletal model with limb afferent feedback — and ablate each afferent channel during hole-step perturbations to map which feedback is necessary for the adaptive response.
 - **Kohler 2022** — [Diversified physiological sensory input connectivity questions the existence of distinct classes of spinal int](https://doi.org/10.1016/j.isci.2022.104083)  
   - animals: Cat  
   - The spinal cord is engaged in all forms of motor performance but its functions are
@@ -57,22 +65,10 @@ a wide population of spinal interneurons in the lower cervical segments. Using
 low noise intracellular whole cell recordings in the decerebrated, non-anesthetized cat in vivo, we could define mono-, di-, and trisynaptic inputs as well as
 the weights of each input. Whereas each neuron had a highly specific input, and
 each indirect input could moreover be explained 
-- **Harnie 2022** — [State- and Condition-Dependent Modulation of the Hindlimb Locomotor Pattern in Intact and Spinal Cats Across S](https://doi.org/10.3389/fnsys.2022.814028)  
-  - animals: Cat  
-  - Comparing quadrupedal and hindlimb-only locomotion in the same intact cats before and after spinal transection separates state-dependent from condition-dependent changes in the hindlimb pattern: the spinal state produces convergence of stance and swing durations at high speed, improper ankle-hip coordination, and altered flexor burst timing, whereas the hindlimb-only condition itself shifts paw placement, yield magnitude, and some burst durations - so hindlimb-only intact locomotion, not quadrupedal, is the proper baseline for spinal-state comparisons.  
-  - *Robot/sim:* When modeling spinal-state gait changes, validate against a hindlimb-only intact baseline rather than quadrupedal locomotion; implement intact versus spinal (supraspinal drive removed) controller variants and separate state-dependent effects (stance/swing convergence at speed, ankle-hip coordination) from condition-dependent ones.
-- **Kim 2022** — [Contribution of Afferent Feedback to Adaptive Hindlimb Walking in Cats: A Neuromusculoskeletal Modeling Study](https://doi.org/10.3389/fbioe.2022.825149)  
-  - animals: Cat  
-  - A cat hindlimb neuromusculoskeletal model coupled to a half-center CPG reproduces normal walking and the adaptive movement changes when the foot steps into a hole; dynamical-systems and nullcline analysis of the coupled CPG-musculoskeleton-environment loop shows how afferent feedback mediates adaptive locomotion in ways that immobilized fictive preparations cannot reveal.  
-  - *Robot/sim:* Reproduce the architecture — half-center CPG coupled to a cat hindlimb musculoskeletal model with limb afferent feedback — and ablate each afferent channel during hole-step perturbations to map which feedback is necessary for the adaptive response.
 - **Merlet 2021** — [Cutaneous inputs from perineal region facilitate spinal locomotor activity and modulate cutaneous reflexes fro](https://doi.org/10.1002/jnr.24791)  
   - animals: Cat, Mammals · afferents: Cutaneous  
   - In spinal cats, mechanical perineal stimulation triggers and intensifies rhythmic hindlimb activity - shortening cycle and burst durations and raising flexor and extensor amplitudes - while simultaneously decreasing short-latency ipsilateral and contralateral cutaneous reflexes across joints and limbs, indicating that perineal facilitation of locomotion and weight support acts by increasing the excitability of CPG circuitry through state-dependent interneuronal modulation rather than by increasing foot cutaneous afferent excitation.  
   - *Robot/sim:* Model perineal input as a tonic excitability gain on CPG neurons paired with a divisive reduction of cutaneous reflex pathway gains; ablating the reflex-gain reduction tests whether unmodulated cutaneous feedback destabilizes the evoked rhythm.
-- **Klishko 2021** — [Common and distinct muscle synergies during level and slope locomotion in the cat.](https://doi.org/10.1152/jn.00310.2020)  
-  - animals: Cat  
-  - Cat downslope walking's atypical EMG (silent one-joint hip extensors, stance-related flexor bursts) shares the majority of its burst groups and muscle synergies with level and upslope walking, and slope changes swing/stance phase durations but not cycle duration — consistent with one shared CPG whose output is reshaped by somatosensory and supraspinal inputs rather than task-specific circuit reconfiguration.  
-  - *Robot/sim:* Drive a fixed muscle-synergy output layer from a single CPG whose phase-duration scaling reproduces slope-dependent EMG; verify the model predicts the downslope silent hip extensors and stance flexor bursts without changing synergy vectors.
 - **Zholudeva 2021** — [Spinal Interneurons as Gatekeepers to Neuroplasticity after Injury or Disease.](https://doi.org/10.1523/jneurosci.1654-20.2020)  
   - animals: Mice, Cat, Rat, Human, Vertebrates  
   - Review positioning spinal interneurons — a heterogeneous population that modulates motor, sensory, and autonomic function — as key components of plasticity and recovery after spinal cord injury, and arguing that treatments should be optimized for how they engage interneuron circuits rather than viewed as acting around them.
@@ -92,6 +88,10 @@ The foot is on the ground during the stance phase and moves in the opposite
   - animals: Cat, Mammals · afferents: Cutaneous  
   - Review showing that in mammals with complete spinal cord injury, somatosensory input from the lumbar region powerfully inhibits hindlimb locomotion while perineal input facilitates it, and the two regions oppositely regulate cutaneous reflexes from the foot (lumbar input increases reflex gain, perineal input decreases it); spinal cord injury can also cause loss of functional specificity, with somatosensory feedback abnormally co-activating functions such as locomotion and micturition.  
   - *Robot/sim:* Add region-specific somatosensory gating to a spinal locomotor model: lumbar input inhibits and perineal input facilitates the CPG, with opposite modulation of cutaneous reflex gain; simulating complete spinal-cord injury then tests emergence of maladaptive co-activation of locomotion with other spinal functions.
+- **Klishko 2021** — [Common and distinct muscle synergies during level and slope locomotion in the cat.](https://doi.org/10.1152/jn.00310.2020)  
+  - animals: Cat  
+  - Cat downslope walking's atypical EMG (silent one-joint hip extensors, stance-related flexor bursts) shares the majority of its burst groups and muscle synergies with level and upslope walking, and slope changes swing/stance phase durations but not cycle duration — consistent with one shared CPG whose output is reshaped by somatosensory and supraspinal inputs rather than task-specific circuit reconfiguration.  
+  - *Robot/sim:* Drive a fixed muscle-synergy output layer from a single CPG whose phase-duration scaling reproduces slope-dependent EMG; verify the model predicts the downslope silent hip extensors and stance flexor bursts without changing synergy vectors.
 - **Domínguez-Rodríguez 2020** — [Candidate Interneurons Mediating the Resetting of the Locomotor Rhythm by Extensor Group I Afferents in the Ca](https://doi.org/10.1016/j.neuroscience.2020.09.017)  
   - animals: Cat · afferents: Ib · pathways: Ib stance to swing; Ib swing to stance; Ib excitatory  
   - Extensor group I afferent stimulation resets fictive locomotion to extension - prolonging ongoing extension and terminating ongoing flexion - through a polysynaptic excitation of extensor motoneurons (latencies near 3.5-4.0 ms, compatible with three interposed interneurons) that replaces the classical Ib non-reciprocal inhibition during locomotion. Extension-phase interneurons receiving short-latency group I excitation satisfy the criteria for the pathway that resets the rhythm and may belong to the rhythm-generating layer of the CPG.  
@@ -100,21 +100,21 @@ The foot is on the ground during the stance phase and moves in the opposite
   - animals: Cat  
   - After complete spinal transection, cats can generate backward walking - given tonic perineal somatosensory facilitation - using speed-modulation strategies, muscle activation patterns, and five muscle synergies shared with forward locomotion, including split-belt stepping; the spinal locomotor network is therefore shared between directions, with limb sensory feedback controlling direction and backward locomotion requiring greater spinal excitability.  
   - *Robot/sim:* Implement one CPG whose phase-sequence direction is selected by limb afferent signals, with a raised excitability threshold for the backward mode, and test whether a fixed synergy basis serves both directions.
-- **Latash 2020** — [On the organization of the locomotor CPG: insights from split-belt locomotion and mathematical modeling](https://doi.org/10.1101/2020.07.17.205351)  
-  - animals: Cat  
-  - Review of organization locomotor cpg: insights. Computational model study. We suggest that the operation of RGs is state -dependent, so that with an increase of external excitation the rhythmogen esis changes from “flexor-driven” oscillations to a “classical half-center” mechanism.
 - **Latash 2020** — [On the Organization of the Locomotor CPG: Insights From Split-Belt Locomotion and Mathematical Modeling](https://doi.org/10.3389/fnins.2020.598888)  
   - animals: Cat  
   - Uses split-belt experiments in intact and spinal cats together with mathematical modeling of CPG circuits to support a state-dependent organization: with increasing excitatory input or locomotor speed, the rhythmogenic mechanism of each limb's rhythm generator changes from flexor-driven rhythmicity toward a classical half-center mechanism, with specific commissural interactions between left and right rhythm generators accounting for stance and swing duration changes under symmetric and asymmetric conditions.  
   - *Robot/sim:* Build a two-level CPG with a separate rhythm generator per limb and commissural interactions; reproduce stance and swing duration changes under symmetric and asymmetric (split-belt) drives and verify that the flexor-driven-to-half-center regime switch emerges with increasing drive.
-- **Merlet 2020** — [Cutaneous inputs from perineal region facilitates and modulates spinal locomotor activity and reduces cutaneou](https://doi.org/10.1101/2020.07.29.226530)  
-  - animals: Cat · afferents: Cutaneous  
-  - In spinal cats, mechanical stimulation of the perineal region triggers and re-times rhythmic locomotor activity — shortening cycle and burst durations and increasing flexor and extensor burst amplitudes — while simultaneously decreasing short-latency ipsilateral and contralateral cutaneous reflexes from the foot across joints and limbs. The locomotor facilitation therefore reflects excitation of CPG circuitry with state-dependent reflex suppression by spinal interneurons, not an increase in cutaneous reflex gain.  
-  - *Robot/sim:* Implement a tonic cutaneous (perineal-analog) input that raises CPG drive while scaling down short-latency reflex gains; the model should show shorter cycles, larger bursts, and reduced cutaneous reflex responses, testing state-dependent reflex gating layered on a CPG.
+- **Latash 2020** — [On the organization of the locomotor CPG: insights from split-belt locomotion and mathematical modeling](https://doi.org/10.1101/2020.07.17.205351)  
+  - animals: Cat  
+  - Review of organization locomotor cpg: insights. Computational model study. We suggest that the operation of RGs is state -dependent, so that with an increase of external excitation the rhythmogen esis changes from “flexor-driven” oscillations to a “classical half-center” mechanism.
 - **Akay 2020** — [Sensory Feedback Control of Locomotor Pattern Generation in Cats and Mice.](https://doi.org/10.1016/j.neuroscience.2020.05.008)  
   - animals: Cat, Mice  
   - Review framing sensory feedback control of locomotion across the two dominant models: cat experiments established the broad picture of phase- and task-dependent reflex modulation during walking, while mouse molecular genetics now enables population-specific deletion and modulation to assign those roles to identified afferent and interneuron classes.  
   - *Robot/sim:* Use the cat-derived sensory-control map to choose which afferent pathways to implement in a simulated walker, then emulate mouse population deletions as targeted pathway ablations to predict functional losses.
+- **Merlet 2020** — [Cutaneous inputs from perineal region facilitates and modulates spinal locomotor activity and reduces cutaneou](https://doi.org/10.1101/2020.07.29.226530)  
+  - animals: Cat · afferents: Cutaneous  
+  - In spinal cats, mechanical stimulation of the perineal region triggers and re-times rhythmic locomotor activity — shortening cycle and burst durations and increasing flexor and extensor burst amplitudes — while simultaneously decreasing short-latency ipsilateral and contralateral cutaneous reflexes from the foot across joints and limbs. The locomotor facilitation therefore reflects excitation of CPG circuitry with state-dependent reflex suppression by spinal interneurons, not an increase in cutaneous reflex gain.  
+  - *Robot/sim:* Implement a tonic cutaneous (perineal-analog) input that raises CPG drive while scaling down short-latency reflex gains; the model should show shorter cycles, larger bursts, and reduced cutaneous reflex responses, testing state-dependent reflex gating layered on a CPG.
 - **Fujiki 2019** — [Phase-Dependent Response to Afferent Stimulation During Fictive Locomotion: A Computational Modeling Study.](https://doi.org/10.3389/fnins.2019.01288)  
   - animals: Cat  
   - A half-center CPG model with a slowly inactivating persistent sodium current reproduces the phase-dependent effects of brief afferent stimulation on fictive locomotion in cats, in which stimulation can shorten or prolong the current locomotor phase and reset the cycle depending on stimulation phase and nerve. Dynamic-systems analysis of the model identifies the mechanisms of locomotor rhythm resetting, supporting phase-dependent afferent access to the CPG as the substrate for sensory correction of the locomotor rhythm.  
@@ -126,12 +126,12 @@ The control of locomotion is thought to be generated by activating groups of mus
 Here, we investigated if muscle synergies are controlled at the level of the spinal cord.
 We did this by comparing muscle activity in the legs of cats during stepping on a treadmill before and after a complete spinal transection that abolishes commands from the brain.
 We show that muscle synergies were maintained following spinal transection, validating the concept that muscle synergies for locomotion are primarily controlled by circui
-- **Duysens and Forner-Cordero 2019** — [A controller perspective on biological gait control: Reflexes and central pattern generators](https://doi.org/10.1016/j.arcontrol.2019.04.004)  
-  - animals: Human, Cat  
-  - Reviews the neural control of gait from a control-engineering perspective and argues the biological CPG is asymmetric: the rhythm generator drives the flexor half in feedforward fashion while the extensor half operates in feedback mode, gated by external inputs such as ground contact — an architecture with direct implications for how biped robots should couple CPGs to contact sensing.
 - **Habu 2019** — [Three-dimensional walking of a simulated muscle-driven quadruped robot with neuromorphic two-level central pat](https://doi.org/10.1177/1729881419885288)  
   - animals: Cat  
   - Computational model study. For each leg, we use a two-level central pattern generator consisting of a rhythm generation part to produce basic rhythms and a pattern formation part to synergistically activate a different set of muscles in each of the four sequential phases (swing, touchdown, stance, and liftoff).
+- **Duysens and Forner-Cordero 2019** — [A controller perspective on biological gait control: Reflexes and central pattern generators](https://doi.org/10.1016/j.arcontrol.2019.04.004)  
+  - animals: Human, Cat  
+  - Reviews the neural control of gait from a control-engineering perspective and argues the biological CPG is asymmetric: the rhythm generator drives the flexor half in feedforward fashion while the extensor half operates in feedback mode, gated by external inputs such as ground contact — an architecture with direct implications for how biped robots should couple CPGs to contact sensing.
 - **Hurteau 2018** — [Intralimb and Interlimb Cutaneous Reflexes during Locomotion in the Intact Cat](https://doi.org/10.1523/JNEUROSCI.3288-17.2018)  
   - animals: Cat · pathways: Cutaneous flexor excitation; Cutaneous stance modification  
   - The skin contains receptors that, when activated, send inputs to spinal circuits, signaling a perturbation. Rapid responses, or
@@ -140,7 +140,7 @@ investigated reflexes during quadrupedal locomotion in the cat by electrically s
 limbs. Functionally, responses appear to modify the trajectory or stabilize the movement of the stimulated limb while modifying
 the support phase ofthe other limbs. Reflexes between limbs aremediated byfast-conducting path
 - **Nichols 2018** — [Distributed force feedback in the Spinal Cord and the regulation of limb mechanics](https://doi.org/10.1152/jn.00216.2017)  
-  - animals: Cat, Human · pathways: Ib disynaptic inhibition; Ib disynaptic excitation; Ia monosynaptic  
+  - animals: Cat, Human · pathways: Ib disynaptic inhibition; Ia monosynaptic; Ib disynaptic excitation  
   - Review Update Paper; This paper show able to give insight to the inhibitory and excitatory force feedback during locomotion
 - **Côté 2018** — [Spinal Control of Locomotion: Individual Neurons, Their Circuits and Functions.](https://doi.org/10.3389/fphys.2018.00784)  
   - animals: Cat, Mice, Rat, Human, Mammals  
@@ -172,15 +172,15 @@ modulated with speed and that this is controlled at the level of the spinal cord
   - animals: Cat, Human  
   - Neither intact nor spinal-transected cats adapt to 10 min of split-belt locomotion: step-length and double-support asymmetries persist with no after-effect on returning to tied belts (symmetry is restored immediately), and spinal cats show no EMG modulation while intact cats raise extensor EMG throughout - unlike humans - suggesting that restoring left-right symmetry is not required for balance in quadrupedal gait and that split-belt adaptation is not a cat spinal plasticity.  
   - *Robot/sim:* Run a spinal-only CPG plus reflex quadruped model on split-belt input - it should reproduce the cat phenotype (persistent asymmetry, immediate re-symmetrization, no after-effect), whereas adding a supraspinal adaptive layer is required for the human-like after-effect.
-- **Bondy 2016** — [Control of Cat Walking and Paw-Shake by a Multifunctional Central Pattern Generator](https://doi.org/10.1007/978-1-4939-3267-2_12)  
-  - animals: Cat, Mammals  
-  - A single half-center CPG model with two coexisting activity regimes — fast ~10 Hz paw-shake and slow ~2 Hz walking — drives a neuromechanical cat-hindlimb model to produce either behavior when regime-appropriate spinal synaptic weights are selected; paw skin afferent input is proposed as the trigger for selecting both the CPG regime and the spinal circuitry.
 - **Danner et al. 2016** — [Central control of interlimb coordination and speed-dependent gait expression in quadrupeds.](https://doi.org/10.1113/jp272787)  
   - animals: Cat  
   - Computational demonstration that one spinal circuit with commissural and intralimb coupling reorganizes across speeds to express walk, trot, and gallop — gait expression emerges from speed-dependent coordination, not separate CPGs.
 - **Frigon 2016** — [Left–right coordination from simple to extreme conditions during split-belt locomotion in the chronic spinal a](https://doi.org/10.1113/JP272740)  
   - animals: Cat  
   - These people make cat zombies
+- **Bondy 2016** — [Control of Cat Walking and Paw-Shake by a Multifunctional Central Pattern Generator](https://doi.org/10.1007/978-1-4939-3267-2_12)  
+  - animals: Cat, Mammals  
+  - A single half-center CPG model with two coexisting activity regimes — fast ~10 Hz paw-shake and slow ~2 Hz walking — drives a neuromechanical cat-hindlimb model to produce either behavior when regime-appropriate spinal synaptic weights are selected; paw skin afferent input is proposed as the trigger for selecting both the CPG regime and the spinal circuitry.
 - **Frigon 2015** — [Modulation of forelimb and hindlimb muscle activity during quadrupedal tied-belt and split-belt locomotion in ](https://doi.org/10.1016/j.neuroscience.2014.12.084)  
   - animals: Cat  
   - Cats were chronically implanted for EMG, which was
@@ -225,9 +225,6 @@ duration significantly decreased with increasing speed, whereas sartorius burst 
 and the relative distance of the paw at stance offset significantly
 increased with increasing speed, whereas the relative distance at
 stance onset and both the temporal and spatial phasing betw
-- **Shevtsova 2013** — [Two-Level Model of Mammalian Locomotor CPG](https://doi.org/10.1007/978-1-4614-7320-6_49-2)  
-  - animals: Cat  
-  - Chapter presentation of the two-level model of the mammalian locomotor CPG: a half-center rhythm generator (RG) drives a separate pattern-formation network (PF) that determines the coordinated motoneuron activity pattern, an architecture inferred from deletion analysis and afferent stimulation during brainstem-evoked fictive locomotion in the decerebrate, immobilized cat.
 - **Frigon 2013** — [The Cat Model of Spinal Cord Injury](https://doi.org/10.1007/978-1-62703-197-4_8)  
   - animals: Cat  
   - Synthesis of landmark cat spinal cord injury studies: cats recover robust hindlimb locomotion after partial or complete spinalization, which established the spinal-network basis of locomotor recovery, the adaptive changes taking place after injury, and the treadmill-training principles now applied to rehabilitating spinal cord-injured humans.  
@@ -238,21 +235,24 @@ stance onset and both the temporal and spatial phasing betw
 - **Frigon et al. 2013** — [Split-belt walking alters the relationship between locomotor phases and cycle duration across speeds in intact](https://doi.org/10.1523/jneurosci.3931-12.2013)  
   - animals: Cat  
   - Split-belt walking alters the phase-cycle duration relationship similarly in intact and chronic spinalized cats; the spinal cord alone performs substantial speed-dependent processing of afferent timing information.
+- **Shevtsova 2013** — [Two-Level Model of Mammalian Locomotor CPG](https://doi.org/10.1007/978-1-4614-7320-6_49-2)  
+  - animals: Cat  
+  - Chapter presentation of the two-level model of the mammalian locomotor CPG: a half-center rhythm generator (RG) drives a separate pattern-formation network (PF) that determines the coordinated motoneuron activity pattern, an architecture inferred from deletion analysis and afferent stimulation during brainstem-evoked fictive locomotion in the decerebrate, immobilized cat.
 - **Krouchev and Drew 2013** — [Motor cortical regulation of sparse synergies provides a framework for the flexible control of precision walki](https://doi.org/10.3389/fncom.2013.00083)  
   - animals: Cat  
   - Motor cortex regulates sparse synergies during precision walking; cortical control selects and modulates a small set of muscle synergies rather than individual muscles, a framework for goal-dependent gait modification.
-- **McKay 2012** — [Optimization of Muscle Activity for Task-Level Goals Predicts Complex Changes in Limb Forces across Biomechani](https://doi.org/10.1371/journal.pcbi.1002465)  
-  - animals: Cat, Human  
-  - Computational model study. In an unrestrained balance task in cats, we demonstrate that achieving task-level constraints center of mass forces and moments while minimizing control effort predicts detailed patterns of muscle activity and ground reaction forces in an anatomically-realistic musculoskeletal model.
 - **Hatz 2012** — [Control of ankle extensor muscle activity in walking cats](https://doi.org/10.1152/jn.00944.2011)  
   - animals: Cat, Mammals · pathways: Ib excitatory; type II excitatory  
   - In conscious cats with an isolated medial gastrocnemius, stance-phase and slope-dependent modulation of ankle-extensor activity is well described by constant central drive with constant proprioceptive gains: Ib force feedback is the primary modulator, group II adds a small tonic contribution, and Ia feedback contributes none — terrain compensation without changing central commands or nervous-system gains.
-- **Markin 2012** — [Motoneuronal and muscle synergies involved in cat hindlimb control during fictive and real locomotion: a compa](https://doi.org/10.1152/jn.00865.2011)  
-  - animals: Cat  
-  - Markin and Rybak model. Cat EMG data. Focus on synergies.
+- **McKay 2012** — [Optimization of Muscle Activity for Task-Level Goals Predicts Complex Changes in Limb Forces across Biomechani](https://doi.org/10.1371/journal.pcbi.1002465)  
+  - animals: Cat, Human  
+  - Computational model study. In an unrestrained balance task in cats, we demonstrate that achieving task-level constraints center of mass forces and moments while minimizing control effort predicts detailed patterns of muscle activity and ground reaction forces in an anatomically-realistic musculoskeletal model.
 - **Harrison 2012** — [Forelimb muscle activity during equine locomotion](https://doi.org/10.1242/jeb.065441)  
   - animals: Cat, Human  
   - Computational model study. The patterns of net muscular torques developed over one gait cycle have been calculated for a wide variety of species using measurements of joint kinematics and ground reaction forces (Clayton et al., 2000; Colborne et al., 1997; Dogan et al., 1991; Fowler et al., 1993;...
+- **Markin 2012** — [Motoneuronal and muscle synergies involved in cat hindlimb control during fictive and real locomotion: a compa](https://doi.org/10.1152/jn.00865.2011)  
+  - animals: Cat  
+  - Markin and Rybak model. Cat EMG data. Focus on synergies.
 - **Gossard 2011** — [Chapter 2--the spinal generation of phases and cycle duration.](https://doi.org/10.1016/b978-0-444-53825-3.00007-3)  
   - animals: Cat  
   - In decerebrate cats, fictive locomotion without sensory feedback shows a built-in asymmetry - cycle period varies predominantly with extensor phase duration - and ankle dorsiflexion greatly prolongs the extension phase during fictive locomotion but not fictive scratching, evidence that locomotor and scratch rhythms rely on distinct spinal interneuronal components.  
@@ -261,29 +261,21 @@ stance onset and both the temporal and spatial phasing betw
   - animals: Cat · afferents: Ia, Ib, II  
   - During spontaneous fictive locomotion in decerebrate cats, group I afferents from the plantaris (ankle extensor) nerve always reset the locomotor rhythm, prolonging extension when stimulated in extension and terminating flexion to initiate extension when stimulated in flexion, whereas hip muscle nerve stimulation (rectus femoris, caudal gluteal, sartorius) reset the rhythm only in restricted epochs, with sartorius, particularly at group II strength, shortening the flexion phase. The epoch-specific access of hip afferents implies the rhythm generator operates with several subdivisions to determ  
   - *Robot/sim:* Implement a rhythm generator with phase subdivisions such that extensor group I input prolongs extension and terminates flexion globally while hip afferent input acts only within specific phase windows; ablating the subdivision should make hip afferents reset the rhythm globally.
-- **Brownstone and Bui 2010** — [Spinal interneurons providing input to the final common path during locomotion](https://doi.org/10.1016/b978-0-444-53613-6.00006-x)  
-  - animals: Mammals, Cat  
-  - Spinal interneurons providing input to the final common path during locomotion; framework relating interneuron diversity to the assembly of locomotor commands.
 - **Jankowska and Edgley 2010** — [Functional subdivision of feline spinal interneurons in reflex pathways from group Ib and II muscle afferents;](https://doi.org/10.1111/j.1460-9568.2010.07354.x)  
   - animals: Cat, Mammals · afferents: Ib, II  
   - Reassesses the subdivision of adult mammalian spinal intermediate-zone interneurons and finds no compelling reason to separate those with group Ib input from those co-excited by group II afferents: distributed input patterns, projection targets (ipsilateral, contralateral, bilateral), excitatory versus inhibitory identity, and task-dependent reflex changes during locomotion are all consistent with shared premotor interneurons integrating group I and II signals - prompting the proposed renaming to group I/II interneurons.  
   - *Robot/sim:* Replace separate Ib and II reflex channels in a locomotion model with a single premotor interneuron population receiving convergent group I and II input, and test whether the merged population reproduces the task-dependent reflex modulation and reversals seen during locomotion.
+- **Brownstone and Bui 2010** — [Spinal interneurons providing input to the final common path during locomotion](https://doi.org/10.1016/b978-0-444-53613-6.00006-x)  
+  - animals: Mammals, Cat  
+  - Spinal interneurons providing input to the final common path during locomotion; framework relating interneuron diversity to the assembly of locomotor commands.
 - **Donelan 2009** — [Force Regulation of Ankle Extensor Muscle Activity in Freely Walking Cats](https://doi.org/10.1152/jn.90918.2008)  
   - animals: Cat · afferents: Ib, Ia, II · pathways: Ib excitatory  
   - In freely walking cats with the medial gastrocnemius functionally isolated, changes in ankle extensor activity across walking conditions correlate strongly with Ib (force) afferent activity rather than with Ia or group II activity, and force feedback contributes about 30% of total muscle activity during level walking. The pathway gain from muscle force to motoneuron depolarization is length-independent while loop gain rises with length through the intrinsic force-length property, and force feedback's contribution increases during upslope and decreases during downslope walking, providing a simp  
   - *Robot/sim:* Implement autogenic Ib force feedback on the ankle extensor with length-dependent loop gain (via the force-length property) supplying roughly 30% of stance activation; ablate it during slope changes to test terrain compensation.
-- **Karayannidou 2009** — [Maintenance of Lateral Stability During Standing and Walking in the Cat](https://doi.org/10.1152/jn.90934.2008)  
-  - animals: Cat  
-  - Lateral perturbations in the cat recruit context-specific postural mechanisms: during standing, corrective redistribution of muscle activity between symmetrical limbs (contralateral hindlimb extensor excitation with ipsilateral inhibition); during walking, a corrective lateral step whose direction depends on push timing relative to the step cycle and whose EMG signature is marked hip abductor and adductor reprogramming — reconfiguring the base of support rather than redistributing activity.  
-  - *Robot/sim:* Implement phase-dependent lateral-perturbation correction in a legged model — standing mode redistributes extensor activity across limbs, walking mode triggers a corrective lateral step via step-cycle-gated hip abductor/adductor modulation — and test recovery against push timing.
 - **Chiel 2009** — [The Brain in Its Body: Motor Control and Sensing in a Biomechanical Context](https://doi.org/10.1523/jneurosci.3338-09.2009)  
   - animals: Cat, Human, Insects, Lamprey, Rat, Salamander · pathways: Biomechanically mediated preflexive feedback  
   - Reviews molluscan feeding, postural control in cats and humans, locomotion simulations in lamprey, insect, cat and salamander, and rat vibrissal sensing to argue that adaptive behavior emerges from nervous-system-body-environment interaction: control is shared between nervous system and periphery, neural activity organizes degrees of freedom into biomechanically meaningful subsets, mechanics alone can play crucial roles in enforcing gait patterns, and the mechanics of sensors is crucial for their function.  
   - *Robot/sim:* Embed morphologically realistic muscle and sensor mechanics so that body dynamics contribute to gait enforcement (preflexes); progressively remove neural correction loops and quantify the locomotor stability retained by mechanics alone.
-- **Pérez 2009** — [An Intersegmental Neuronal Architecture for Spinal Wave Propagation under Deletions](https://doi.org/10.1523/jneurosci.1737-09.2009)  
-  - animals: Cat  
-  - During cat scratching, traveling electrical waves along the spinal cord persist through extensor-burst deletions that leave the cycle unaltered, whereas deletions that perturb the cycle coincide with loss of the traveling wave; numerical simulations of an asymmetric two-layer CPG distributed longitudinally along the cord reproduce both the sinusoidal waves and both deletion classes, supporting a longitudinal chain organization of CPG networks.  
-  - *Robot/sim:* Implement a longitudinally distributed asymmetric two-layer CPG and perturb individual unit oscillators to reproduce the deletion dichotomy (cycle-preserving versus cycle-perturbing deletions); use it to calibrate intersegmental coupling in multi-segment walkers.
 - **Ross and Nichols 2009** — [Heterogenic Feedback Between Hindlimb Extensors in the Spontaneously Locomoting Premammillary Cat](https://doi.org/10.1152/jn.90338.2008)  
   - animals: Cat · pathways: Ib disynaptic inhibition  
   - During spontaneous treadmill stepping in the premammillary decerebrate cat, force-dependent heterogenic inhibition between hindlimb extensors persists (quadriceps onto gastrocnemius, gastrocnemius onto plantaris/FHL) but distal-onto-proximal inhibition is weaker than during the crossed-extension reflex, yielding a proximal-to-distal gradient of Ib inhibition that supports interjoint coordination and limb stability.
@@ -294,6 +286,14 @@ stance onset and both the temporal and spatial phasing betw
 - **Nichols and Ross 2009** — [The Implications of Force Feedback for the λ Model](https://doi.org/10.1007/978-0-387-77064-2_36)  
   - animals: Cat, Mammals · pathways: Ib excitatory; Ib inhibition  
   - In the λ-model framework, autogenic length feedback compensates muscle nonlinearities while positive force feedback — during level cat stepping largely restricted to gastrocnemius — reinforces the stiff ankle–knee linkage; heterogenic inhibitory force feedback spans different joints and axes, so it coordinates interjoint action and shifts activation thresholds, making threshold a feedback-dependent quantity rather than a pure descending control variable.
+- **Pérez 2009** — [An Intersegmental Neuronal Architecture for Spinal Wave Propagation under Deletions](https://doi.org/10.1523/jneurosci.1737-09.2009)  
+  - animals: Cat  
+  - During cat scratching, traveling electrical waves along the spinal cord persist through extensor-burst deletions that leave the cycle unaltered, whereas deletions that perturb the cycle coincide with loss of the traveling wave; numerical simulations of an asymmetric two-layer CPG distributed longitudinally along the cord reproduce both the sinusoidal waves and both deletion classes, supporting a longitudinal chain organization of CPG networks.  
+  - *Robot/sim:* Implement a longitudinally distributed asymmetric two-layer CPG and perturb individual unit oscillators to reproduce the deletion dichotomy (cycle-preserving versus cycle-perturbing deletions); use it to calibrate intersegmental coupling in multi-segment walkers.
+- **Karayannidou 2009** — [Maintenance of Lateral Stability During Standing and Walking in the Cat](https://doi.org/10.1152/jn.90934.2008)  
+  - animals: Cat  
+  - Lateral perturbations in the cat recruit context-specific postural mechanisms: during standing, corrective redistribution of muscle activity between symmetrical limbs (contralateral hindlimb extensor excitation with ipsilateral inhibition); during walking, a corrective lateral step whose direction depends on push timing relative to the step cycle and whose EMG signature is marked hip abductor and adductor reprogramming — reconfiguring the base of support rather than redistributing activity.  
+  - *Robot/sim:* Implement phase-dependent lateral-perturbation correction in a legged model — standing mode redistributes extensor activity across limbs, walking mode triggers a corrective lateral step via step-cycle-gated hip abductor/adductor modulation — and test recovery against push timing.
 - **Barriere 2008** — [Prominent Role of the Spinal Central Pattern Generator in the Recovery of Locomotion after Partial Spinal Cord](https://doi.org/10.1523/jneurosci.5692-07.2008)  
   - animals: Cat  
   - A dual-lesion paradigm in cats shows the spinal CPG undergoes plastic changes after partial spinal cord injury that are shaped by locomotor training: cats trained on the treadmill after a partial thoracic lesion expressed bilateral hindlimb locomotion within hours of a subsequent complete transection, whereas untrained cats walked asymmetrically with the limb on the partially lesioned side recovering first. Re-expression of the hindlimb locomotor pattern after partial SCI therefore arises mostly from intrinsic changes below the lesion in the CPG and afferent inputs rather than from remnant des  
@@ -304,9 +304,6 @@ stance onset and both the temporal and spatial phasing betw
 - **Pearson 2008** — [Role of sensory feedback in the control of stance duration in walking cats](https://doi.org/10.1016/j.brainresrev.2007.06.014)  
   - animals: Cat · pathways: Ib stance to swing; Ia or II stance to swing  
   - Review Paper
-- **Scrivens 2008** — [A robotic device for understanding neuromechanical interactions during standing balance control.](https://doi.org/10.1088/1748-3182/3/2/026002)  
-  - animals: Cat, Human  
-  - Computational model study. Here we demonstrate that independent variations in either stance width or delayed neural feedback gains can have profound and often surprisingly detrimental effects on the postural stability of the system.
 - **Jankowska 2008** — [Spinal interneuronal networks in the cat: elementary components.](https://doi.org/10.1016/j.brainresrev.2007.06.022)  
   - animals: Cat  
   - Establishes that feline commissural interneuron networks operate as elementary building blocks incorporated into larger networks: they receive mono- and disynaptic reticulospinal and vestibulospinal input plus mono- to oligosynaptic muscle-afferent input, and reach motoneurons mono- or disynaptically, so one population can serve reflex, postural, locomotor, and voluntary coordination.  
@@ -317,17 +314,12 @@ stance onset and both the temporal and spatial phasing betw
 - **Welch 2008** — [A Feedback Model Reproduces Muscle Activity During Human Postural Responses to Support-Surface Translations](https://doi.org/10.1152/jn.01110.2007.)  
   - animals: Cat, Human  
   - Computational model study. We investigated whether a simple feedback law could explain temporal patterns of muscle activation in response to support-surface translations in human subjects.
+- **Scrivens 2008** — [A robotic device for understanding neuromechanical interactions during standing balance control.](https://doi.org/10.1088/1748-3182/3/2/026002)  
+  - animals: Cat, Human  
+  - Computational model study. Here we demonstrate that independent variations in either stance width or delayed neural feedback gains can have profound and often surprisingly detrimental effects on the postural stability of the system.
 - **McKay 2008** — [Functional muscle synergies constrain force production during postural tasks.](https://doi.org/10.1016/j.jbiomech.2007.09.012)  
   - animals: Cat  
   - Computational model study. We recently demonstrated that a set of ﬁve functional muscle synergies were sufﬁcient to characterize both hindlimb muscle activity and active forces during automatic postural responses in cats standing at multiple postural conﬁgurations.
-- **Maas 2007** — [The effects of self-reinnervation of cat medial and lateral gastrocnemius muscles on hindlimb kinematics in sl](https://doi.org/10.1007/s00221-007-0938-8)  
-  - animals: Cat · afferents: Ia, II, Cutaneous  
-  - Self-reinnervation of cat gastrocnemius muscles (motor function recovers, proprioceptive feedback permanently absent) leaves level- and upslope-walking kinematics recovered within 14-19 weeks but produces permanent ankle and interjoint deficits in downslope walking - indicating MG/LG proprioceptive feedback is specifically required for regulating ankle extensors on downslope, with compensation by other sensory sources (e.g., cutaneous) or altered central drive elsewhere.  
-  - *Robot/sim:* Ablate length and force feedback from ankle extensors in a slope-walking simulator: level and upslope gaits should tolerate the loss via central-drive/cutaneous compensation while downslope develops persistent ankle yield - a test of feedback redundancy.
-- **Guevremont 2007** — [Physiologically based controller for generating overground locomotion using functional electrical stimulation.](https://doi.org/10.1152/jn.01177.2006)  
-  - animals: Cat  
-  - In spinal cats stepping via functional electrical stimulation, an intrinsically timed controller achieves overground stepping more easily (lower sensitivity to initial stimulation parameters) but cannot compensate walkway resistance or muscle fatigue, while a sensory-driven controller that switches between unloaded flexion and loaded extension phases adapts to loading — motivating a combined controller that runs on intrinsic timing but resets phase from sensory signals.  
-  - *Robot/sim:* Implement a fixed-timing CPG with load-based sensory phase resetting (combined controller) in a neuromuscular biped; ablating the sensory reset should cause failures under fatigue-like actuator force decay and changing walkway resistance, reproducing the timed controller's limitation.
 - **Procházka et al. 2007** — [Predictive and reactive tuning of the locomotor CPG](https://doi.org/10.1093/icb/icm065)  
   - animals: Cat  
   - The locomotor CPG is tuned both predictively (state-dependent adjustment to expected limb mechanics) and reactively (perturbation-driven corrections); proprioceptive feedback does not merely correct errors but continuously calibrates the pattern.
@@ -338,13 +330,21 @@ stance onset and both the temporal and spatial phasing betw
   - animals: Cat  
   - A computational model of the mammalian spinal cord circuitry incorporating a two-level central pattern generator (CPG) with separate half-center rhythm generator (RG) and pattern formation (PF) networks.
 The model consists of interacting populations of interneurons and motoneurons described in the Hodgkin-Huxley style. Locomotor rhythm generation is based on a combination of intrinsic (persistent sodium current dependent) properties of excitatory RG neurons and reciprocal inhibition between the two half-centers comprising the RG. The two-level architecture of the CPG was suggested from an anal
-- **Torres-oviedo 2007** — [Muscle Synergies Characterizing Human Postural Responses](https://doi.org/10.1152/jn.01360.2006.)  
-  - animals: Cat, Human  
-  - These results suggest that muscle synergies represent a general neural strategy underlying muscle coordination in postural tasks.
 - **Hultborn and Nielsen 2007** — [Spinal control of locomotion--from cat to man.](https://doi.org/10.1111/j.1748-1716.2006.01651.x)  
   - animals: Cat, Human, Vertebrates  
   - Review establishing that spinal networks generate the basic locomotor rhythm across vertebrates including man, with limb sensory feedback essential for effective locomotion: sensory regulation reaches motoneurons via reflex pathways that bypass the rhythm generators and also acts on the locomotor networks themselves, controlling phase timing, shaping muscle-activity patterns, adding excitatory drive, and driving long-term adaptation - the basis for treadmill-training rehabilitation after spinal cord injury.  
   - *Robot/sim:* Implement both sensory routes in a locomotion model - direct reflex pathways to motoneurons plus afferent input to the rhythm generator - and ablate each separately to test their predicted contributions to phase timing, pattern shaping, and net excitatory drive.
+- **Torres-oviedo 2007** — [Muscle Synergies Characterizing Human Postural Responses](https://doi.org/10.1152/jn.01360.2006.)  
+  - animals: Cat, Human  
+  - These results suggest that muscle synergies represent a general neural strategy underlying muscle coordination in postural tasks.
+- **Guevremont 2007** — [Physiologically based controller for generating overground locomotion using functional electrical stimulation.](https://doi.org/10.1152/jn.01177.2006)  
+  - animals: Cat  
+  - In spinal cats stepping via functional electrical stimulation, an intrinsically timed controller achieves overground stepping more easily (lower sensitivity to initial stimulation parameters) but cannot compensate walkway resistance or muscle fatigue, while a sensory-driven controller that switches between unloaded flexion and loaded extension phases adapts to loading — motivating a combined controller that runs on intrinsic timing but resets phase from sensory signals.  
+  - *Robot/sim:* Implement a fixed-timing CPG with load-based sensory phase resetting (combined controller) in a neuromuscular biped; ablating the sensory reset should cause failures under fatigue-like actuator force decay and changing walkway resistance, reproducing the timed controller's limitation.
+- **Maas 2007** — [The effects of self-reinnervation of cat medial and lateral gastrocnemius muscles on hindlimb kinematics in sl](https://doi.org/10.1007/s00221-007-0938-8)  
+  - animals: Cat · afferents: Ia, II, Cutaneous  
+  - Self-reinnervation of cat gastrocnemius muscles (motor function recovers, proprioceptive feedback permanently absent) leaves level- and upslope-walking kinematics recovered within 14-19 weeks but produces permanent ankle and interjoint deficits in downslope walking - indicating MG/LG proprioceptive feedback is specifically required for regulating ankle extensors on downslope, with compensation by other sensory sources (e.g., cutaneous) or altered central drive elsewhere.  
+  - *Robot/sim:* Ablate length and force feedback from ankle extensors in a slope-walking simulator: level and upslope gaits should tolerate the loss via central-drive/cutaneous compensation while downslope develops persistent ankle yield - a test of feedback redundancy.
 - **Rossignol 2006** — [Plasticity of connections underlying locomotor recovery after central and/or peripheral lesions in the adult m](https://doi.org/10.1098/rstb.2006.1889)  
   - animals: Cat, Mice, Rat, Human, Mammals  
   - Review concluding that locomotor recovery after spinal lesions in adult mammals is partly due to plasticity within existing spinal locomotor networks: locomotor training changes the excitability of simple reflex pathways and more complex circuitry, adaptation to lesions entails changes at both spinal and supraspinal levels, and the cat-derived framework extends to rat, mouse, and human spinal pattern generation.  
@@ -375,25 +375,18 @@ The model consists of interacting populations of interneurons and motoneurons de
 - **McVea 2005** — [A Role for Hip Position in Initiating the Swing-to-Stance Transition in Walking Cats](https://doi.org/10.1152/jn.00511.2005)  
   - animals: Cat · pathways: Ia or II swing to stance  
   - This investigation obtained data that support the hypothesis that afferent signals associated with hip flexion play a role in initiating the swing-to-stance transition of the hind legs in walking cats
-- **Langlet 2005** — [Mid-Lumbar Segments Are Needed for the Expression of Locomotion in Chronic Spinal Cats](https://doi.org/10.1152/jn.00909.2004)  
-  - animals: Cat  
-  - In chronically spinalized cats, a second transection at caudal L3 or L4 permanently abolishes treadmill locomotion even after weeks of training, while lesions at L2 or rostral L3 spare it; fast paw shakes and clonidine-induced hindlimb hyperextension persist below the lesion, so mid-lumbar segments are necessary specifically for locomotor rhythm expression, not for other rhythmic motor patterns or caudal motoneuron function.  
-  - *Robot/sim:* Model a spatially distributed spinal network where only mid-lumbar-equivalent modules generate the locomotor pattern while caudal segments retain reflex and rhythmic capacity; ablating the mid-lumbar module should eliminate gait but leave paw-shake-like rhythmicity intact.
 - **Stecina et al. 2005** — [Parallel reflex pathways from flexor muscle afferents evoking resetting and flexion enhancement during fictive](https://doi.org/10.1113/jphysiol.2005.095505)  
   - animals: Cat · pathways: Ia or II stance to swing  
   - Parallel reflex pathways from flexor muscle afferents evoke resetting and flexion enhancement during fictive locomotion and scratch; group I/II flexor afferents access the rhythm generator through multiple routes.
 - **Lafrenière-Roula et al. 2005** — [Deletions of Rhythmic Motoneuron Activity During Fictive Locomotion and Scratch Provide Clues to the Organizat](https://doi.org/10.1152/jn.00216.2005)  
   - animals: Cat · pathways: Fictive locomotion without sensory feedback  
   - Deletions of rhythmic motoneuron activity during fictive locomotion and scratch provide key clues to CPG organization — evidence for the two-level rhythm/pattern architecture.
-- **Nielsen et al. 2005** — [Organization of common synaptic drive to motoneurones during fictive locomotion in the spinal cat](https://doi.org/10.1113/jphysiol.2005.091744)  
-  - animals: Cat  
-  - Common drive to motoneurones during fictive locomotion is organized in low-frequency coherent components that group muscles into functional synergies; locomotor drive is shared rather than muscle-specific.
 - **Ekeberg and Pearson 2005** — [Computer simulation of stepping in the hind legs of the cat: an examination of mechanisms regulating the stanc](https://doi.org/10.1152/jn.00065.2005)  
   - animals: Cat · pathways: Ib stance to swing  
   - A three-dimensional simulation of cat hind-leg stepping shows that stance termination governed by ankle extensor force (load) signals — alone or combined with hip position — yields stable stepping and correct interleg timing, whereas the hip position signal alone fails; mutual inhibition between controllers restores stability but not correct timing. Coordination depends critically on load-sensitive signals from each leg, with mechanical linkages mediated by these signals playing a significant role in establishing the alternating gait.  
   - *Robot/sim:* Reproduce directly: gate the stance-to-swing transition on thresholded ankle-extensor force (with and without hip-angle gating) in a hind-leg/biped model, ablate each channel, and verify the load channel is necessary for stable alternation and correct contralateral timing.
 - **Angel 2005** — [Candidate interneurones mediating group I disynaptic EPSPs in extensor motoneurones during fictive locomotion ](https://doi.org/10.1113/jphysiol.2004.076034)  
-  - animals: Cat · afferents: Ia, Ib · pathways: Ib disynaptic excitation  
+  - animals: Cat · afferents: Ia, Ib · pathways: I disynaptic excitation (mixed group I)  
   - Identifies a candidate population of excitatory interneurons in intermediate laminae of mid-to-caudal L7 that are activated by extensor group I afferents at monosynaptic latency specifically during the extensor phase of MLR-evoked fictive locomotion, project to extensor motor nuclei, and burst rhythmically in extension even without afferent stimulation — a previously unknown population that could mediate the group I disynaptic excitation of extensor motoneurones while also supplying central extensor drive.  
   - *Robot/sim:* Implement stance-gated group I afferent excitation of extensor motoneurones through a disynaptic interneuron layer whose cells also carry central extensor drive; ablating either the afferent gate or the interneuron population should remove load-dependent extensor reinforcement.
 - **Yakovenko 2005** — [Control of locomotor cycle durations.](https://doi.org/10.1152/jn.00991.2004)  
@@ -411,17 +404,17 @@ The model consists of interacting populations of interneurons and motoneurons de
 - **Quevedo 2005** — [Stumbling corrective reaction during fictive locomotion in the cat.](https://doi.org/10.1152/jn.00175.2005)  
   - animals: Cat · pathways: Cutaneous flexor excitation  
   - Stimulation of the cutaneous superficial peroneal nerve during the flexion phase of fictive locomotion in decerebrate cats reproduces the full stumbling corrective reaction — brief flexor excitation, flexor inhibition, recruitment of knee and ankle extensors, then post-stimulation flexor excitation with a prolonged flexion phase — showing the corrective synergy is assembled by spinal locomotor circuitry from short-latency cutaneous reflexes plus actions of the rhythm-generating network.
+- **Nielsen et al. 2005** — [Organization of common synaptic drive to motoneurones during fictive locomotion in the spinal cat](https://doi.org/10.1113/jphysiol.2005.091744)  
+  - animals: Cat  
+  - Common drive to motoneurones during fictive locomotion is organized in low-frequency coherent components that group muscles into functional synergies; locomotor drive is shared rather than muscle-specific.
+- **Langlet 2005** — [Mid-Lumbar Segments Are Needed for the Expression of Locomotion in Chronic Spinal Cats](https://doi.org/10.1152/jn.00909.2004)  
+  - animals: Cat  
+  - In chronically spinalized cats, a second transection at caudal L3 or L4 permanently abolishes treadmill locomotion even after weeks of training, while lesions at L2 or rostral L3 spare it; fast paw shakes and clonidine-induced hindlimb hyperextension persist below the lesion, so mid-lumbar segments are necessary specifically for locomotor rhythm expression, not for other rhythmic motor patterns or caudal motoneuron function.  
+  - *Robot/sim:* Model a spatially distributed spinal network where only mid-lumbar-equivalent modules generate the locomotor pattern while caudal segments retain reflex and rhythmic capacity; ablating the mid-lumbar module should eliminate gait but leave paw-shake-like rhythmicity intact.
 - **Donelan and Pearson 2004** — [Contribution of Force Feedback to Ankle Extensor Activity in Decerebrate Walking Cats](https://doi.org/10.1152/jn.00325.2004)  
   - animals: Cat · afferents: Ib, Ia, II · pathways: Ib excitatory  
   - Measured the loop gain of homonymous positive force feedback from ankle extensor Golgi tendon organs in decerebrate walking cats: about 0.2 at short muscle lengths (roughly 20 percent of total activity and force) rising to 0.5 at long lengths (about 50 percent), with the length dependence arising from the intrinsic force-length property while the force-to-motoneuron gain stays length-independent - establishing positive Ib feedback as a substantial contributor to stance extensor drive, not a minor modulator.  
   - *Robot/sim:* Implement homonymous positive force feedback on stance extensors with loop gain 0.2-0.5, scaled by the muscle force-length property; ablating it should cut extensor activity by a length-dependent 20-50 percent.
-- **Yamaguchi 2004** — [The central pattern generator for forelimb locomotion in the cat.](https://doi.org/10.1016/s0079-6123(03)43011-2)  
-  - animals: Cat  
-  - In decerebrate cats with fictive forelimb locomotion evoked by repetitive cervical lateral funiculus stimulation, the shortest descending pathway to cervical motoneurons via the CPG is disynaptic, and the intercalated interneurons are proposed to form mutually exciting, reverberating circuits that constitute the CPG itself. Disynaptic, trisynaptic, and polysynaptic PSPs in motoneurons are phase-related to the rhythm with reciprocal modulation between extensor and flexor responses, indicating interactions between the mediating pathways.  
-  - *Robot/sim:* Implement the forelimb CPG as a reverberating, mutually excitatory interneuron loop driven disynaptically from a descending command; ablating the mutual excitation should collapse the rhythm and its phase-locked PSP modulation.
-- **Duysens et al. 2004** — [Sensory Influences on Interlimb Coordination During Gait](https://doi.org/10.1007/978-1-4419-9056-3_1)  
-  - animals: Cat, Human  
-  - Review of sensory influences on interlimb coordination during gait across species and preparations; organizes cutaneous and proprioceptive contributions to interlimb phase coupling.
 - **Pearson 2004** — [Generating the walking gait: role of sensory feedback.](https://doi.org/10.1016/s0079-6123(03)43012-4)  
   - animals: Cat  
   - Synthesizes cat walking evidence that feedback from muscle proprioceptors establishes the timing of major phase transitions, contributes to burst production, generates some features of the motor pattern, and is required for adaptive modification after alterations in leg mechanics; argues that afferent signals likely reorganize the functioning of central networks, making 'afferent modulation of a hard-wired CPG' too simplistic a framework.  
@@ -433,8 +426,15 @@ The model consists of interacting populations of interneurons and motoneurons de
 - **Ting 2004** — [Ratio of Shear to Load Ground-Reaction Force May Underlie the Directional Tuning of the Automatic Postural Res](https://doi.org/10.1152/jn.00773.2003)  
   - animals: Cat  
   - This study sought to identify the sensory signals that encode perturbation direction rapidly enough to shape the directional tuning of the automatic postural response.
+- **Duysens et al. 2004** — [Sensory Influences on Interlimb Coordination During Gait](https://doi.org/10.1007/978-1-4419-9056-3_1)  
+  - animals: Cat, Human  
+  - Review of sensory influences on interlimb coordination during gait across species and preparations; organizes cutaneous and proprioceptive contributions to interlimb phase coupling.
+- **Yamaguchi 2004** — [The central pattern generator for forelimb locomotion in the cat.](https://doi.org/10.1016/s0079-6123(03)43011-2)  
+  - animals: Cat  
+  - In decerebrate cats with fictive forelimb locomotion evoked by repetitive cervical lateral funiculus stimulation, the shortest descending pathway to cervical motoneurons via the CPG is disynaptic, and the intercalated interneurons are proposed to form mutually exciting, reverberating circuits that constitute the CPG itself. Disynaptic, trisynaptic, and polysynaptic PSPs in motoneurons are phase-related to the rhythm with reciprocal modulation between extensor and flexor responses, indicating interactions between the mediating pathways.  
+  - *Robot/sim:* Implement the forelimb CPG as a reverberating, mutually excitatory interneuron loop driven disynaptically from a descending command; ablating the mutual excitation should collapse the rhythm and its phase-locked PSP modulation.
 - **Ivashko 2003** — [Modeling the spinal cord neural circuitry controlling cat hindlimb movement during locomotion](https://doi.org/10.1016/S0925-2312(02)00832-9)  
-  - animals: Cat · pathways: Ib disynaptic excitation; Ib disynaptic excitation; Ib stance to swing; Ib swing to stance; Ia stance to swing; Ia swing to stance; Ia monosynaptic; Ia monosynaptic excitation; Mechanosensory monosynaptic excitation; Ia disynaptic inhibition  
+  - animals: Cat · pathways: Ib disynaptic excitation; Ib stance to swing; Ib swing to stance; Ia stance to swing; Ia swing to stance; Ia monosynaptic; Ia monosynaptic excitation; Mechanosensory monosynaptic excitation; Ia disynaptic inhibition  
   - Abstract
 A computational model of the spinal cord neural circuitry that controls locomotor movements of simulated cat hindlimbs. The neural circuitry includes two central pattern generators integrated with reflex circuits. All neurons were modeled in the Hodgkin–Huxley style. The musculoskeletal system includes two three-joint hindlimbs and the trunk. Each
 hindlimb is actuated by nine one- and two-joint muscles (a Hill-type model). Our simulations allow us to suggest a specific network architecture in the spinal cord and a pattern of feedback connectivities (from Ia and Ib fibers and touch s
@@ -457,21 +457,17 @@ muscle activations to achieve
 - **Bouyer and Rossignol 2003** — [Contribution of Cutaneous Inputs From the Hindpaw to the Control of Locomotion. II. Spinal Cats](https://doi.org/10.1152/jn.00497.2003)  
   - animals: Cat, Mammals · pathways: Cutaneous stance modification  
   - Sequential hindpaw cutaneous denervation in spinal cats shows cutaneous inputs are necessary for plantar foot placement and weight bearing during spinal locomotion — fully denervated cats never recovered either despite 35–71 days of treadmill training — while partial denervations reveal substantial adaptive capacity of the spinal cord.
-- **Wilmink and Nichols 2003** — [Distribution of Heterogenic Reflexes Among the Quadriceps and Triceps Surae Muscles of the Cat Hind Limb](https://doi.org/10.1152/jn.00833.2002)  
-  - animals: Cat  
-  - Heterogenic proprioceptive reflexes among cat quadriceps and triceps surae are organized by articulation rather than motor-unit composition: excitatory length feedback strongly links the uniarticular vastus muscles (and vastus to soleus) to regulate joint stiffness, while force-related inhibition is absent between vastus muscles but strong and bidirectional between vastus and rectus femoris and between triceps surae and quadriceps - regulating interjoint coupling and, together with length feedback, the endpoint mechanical properties.  
-  - *Robot/sim:* Implement heterogenic feedback by articulation: excitatory length feedback among uniarticular synergists for joint stiffness, bidirectional force inhibition between muscles spanning different joints for interjoint coupling; ablate the interjoint force inhibition to test endpoint property regulation.
 - **Gagnon 2003** — [Contribution of Cutaneous Inputs From the Hindpaw to the Control of Locomotion. I. Intact Cats](https://doi.org/10.1152/jn.00496.2003)  
   - animals: Cat · afferents: Cutaneous  
   - Bilateral hindpaw cutaneous denervation at the ankle in intact cats barely disrupts level treadmill walking but severely impairs ladder and incline walking early on; flexor EMG remains permanently elevated and mediolateral ground reaction forces increase by 200 percent, showing cutaneous feedback matters most for demanding locomotor contexts and that active adaptive mechanisms compensate without fully restoring the control pattern. The companion paper shows these same inputs become critical for foot placement after spinalization.  
   - *Robot/sim:* Add foot/ankle cutaneous afferent channels to a walking simulation and ablate them: the model should reproduce near-normal level walking with degraded ladder/incline behavior, persistently elevated flexor drive, and increased mediolateral ground reaction forces.
+- **Wilmink and Nichols 2003** — [Distribution of Heterogenic Reflexes Among the Quadriceps and Triceps Surae Muscles of the Cat Hind Limb](https://doi.org/10.1152/jn.00833.2002)  
+  - animals: Cat  
+  - Heterogenic proprioceptive reflexes among cat quadriceps and triceps surae are organized by articulation rather than motor-unit composition: excitatory length feedback strongly links the uniarticular vastus muscles (and vastus to soleus) to regulate joint stiffness, while force-related inhibition is absent between vastus muscles but strong and bidirectional between vastus and rectus femoris and between triceps surae and quadriceps - regulating interjoint coupling and, together with length feedback, the endpoint mechanical properties.  
+  - *Robot/sim:* Implement heterogenic feedback by articulation: excitatory length feedback among uniarticular synergists for joint stiffness, bidirectional force inhibition between muscles spanning different joints for interjoint coupling; ablate the interjoint force inhibition to test endpoint property regulation.
 - **Lam and Pearson 2002** — [The Role of Proprioceptive Feedback in the Regulation and Adaptation of Locomotor Activity](https://doi.org/10.1007/978-1-4615-0713-0_40)  
   - animals: Cat · pathways: Ia or II swing to stance  
   - muscle spindle ends swing
-- **Duysens 2002** — [A walking robot called human: lessons to be learned from neural control of locomotion.](https://doi.org/10.1016/s0021-9290(01)00187-7)  
-  - animals: Cat, Human  
-  - Distills cat and human locomotion into design principles for walking robots: control at three levels (actuator/motoneuron, whole-limb flexion-extension oscillators with mutual inhibition, interlimb coordination), with the most essential feedback at the limb level, where activation of the extensor part of the limb oscillator must be triggered by feedback signalling onset of loading via limb load sensors, and flexor activation must require unloading below a threshold plus a hip position within the normal end-of-stance range.  
-  - *Robot/sim:* Implement the three-level architecture with limb-level decision rules: extensor oscillator activation on limb loading (load-sensor threshold) and flexor initiation gated on unloading below threshold together with hip position in the end-of-stance range; ablate each rule and quantify gait robustness loss.
 - **Yakovenko 2002** — [Spatiotemporal activation of lumbosacral motoneurons in the locomotor step cycle](https://doi.org/10.1152/jn.00479.2001)  
   - animals: Cat  
   - A 3-D digital reconstruction of 27 cat hindlimb motoneuron pools, modulated by compiled EMG profiles, reveals a rostrocaudal oscillation of spinal activity across the step cycle: the caudal third of the lumbosacral enlargement dominates during stance, activation shifts abruptly rostral during swing, and a transient caudal focus at the stance-swing transition coincides with retractor muscles (gracilis, posterior biceps, semimembranosus, semitendinosus) that clear the foot from the ground.  
@@ -479,6 +475,10 @@ muscle activations to achieve
 - **Perreault 2002** — [Motoneurons have different membrane resistance during fictive scratching and weight support.](https://doi.org/10.1523/jneurosci.22-18-08259.2002)  
   - animals: Cat  
   - Motoneuron membrane resistance differs between fictive scratching and weight support; motor state changes motoneuron conductance and therefore the gain of synaptic inputs — the same afferent signal has state-dependent effects.
+- **Duysens 2002** — [A walking robot called human: lessons to be learned from neural control of locomotion.](https://doi.org/10.1016/s0021-9290(01)00187-7)  
+  - animals: Cat, Human  
+  - Distills cat and human locomotion into design principles for walking robots: control at three levels (actuator/motoneuron, whole-limb flexion-extension oscillators with mutual inhibition, interlimb coordination), with the most essential feedback at the limb level, where activation of the extensor part of the limb oscillator must be triggered by feedback signalling onset of loading via limb load sensors, and flexor activation must require unloading below a threshold plus a hip position within the normal end-of-stance range.  
+  - *Robot/sim:* Implement the three-level architecture with limb-level decision rules: extensor oscillator activation on limb loading (load-sensor threshold) and flexor initiation gated on unloading below threshold together with hip position in the end-of-stance range; ablate each rule and quantify gait robustness loss.
 - **Burke 2001** — [Patterns of locomotor drive to motoneurons and last-order interneurons: clues to the structure of the CPG.](https://doi.org/10.1152/jn.2001.86.1.447)  
   - animals: Cat · afferents: Cutaneous  
   - During fictive locomotion in decerebrate cats, low-threshold cutaneous reflex pathways to the flexor digitorum longus motor pool are differentially controlled at the level of last-order excitatory interneurons, and the modulation pattern is preserved whether FDL fires in early flexion or during extension. The motor pool and reflex-modulation patterns reveal distinct early versus late flexion components, and pattern formation can be separated from rhythm generation — evidence the CPG embodies partially distinct neural organizations for these two functions.  
@@ -494,10 +494,6 @@ muscle activations to achieve
   - animals: Human, Cat  
   - In supported stepping of human infants, hip flexion combined with high limb load prolongs stance and delays swing, whereas hip extension with low load shortens stance and advances swing, remarkably similar to reduced cat preparations. Hip position and load show an inverse relationship at the time of swing initiation, indicating the two sensory factors combine to regulate the stance-to-swing transition, consistent with similar brainstem and spinal walking circuitry in infants and cats.  
   - *Robot/sim:* Implement swing-initiation gating as a combined hip-extension and low-load condition with an inverse interaction between hip angle and limb load; ablate either input to reproduce prolonged stance and delayed swing.
-- **Marcoux and Rossignol 2000** — [Initiating or Blocking Locomotion in Spinal Cats by Applying Noradrenergic Drugs to Restricted Lumbar Spinal S](https://doi.org/10.1523/jneurosci.20-22-08577.2000)  
-  - animals: Cat  
-  - Focal alpha2-noradrenergic action at restricted lumbar levels both starts and stops spinal walking: topical clonidine over L3-L4 or L5-L7, or microinjection at L3-L5, induces treadmill locomotion in acutely spinalized cats, whereas yohimbine at L3-L5 (not L6) or a transection at L3-L4 blocks it — mid-lumbar segments are a sufficient pharmacological trigger and a necessary substrate for the rhythm.  
-  - *Robot/sim:* Build a spatially segmented spinal CPG in which only mid-lumbar-equivalent modules can be tonically activated to launch the full hindlimb pattern; ablating those modules while leaving caudal motoneuron pools functional should abolish gait but spare other rhythmic outputs.
 - **Gosgnach 2000** — [Depression of group Ia monosynaptic EPSPs in cat hindlimb motoneurones during fictive locomotion.](https://doi.org/10.1111/j.1469-7793.2000.00639.x)  
   - animals: Cat · pathways: Ia presynaptic inhibition  
   - During brainstem-evoked fictive locomotion in decerebrate cats, monosynaptic group Ia EPSPs are tonically depressed to about two-thirds of control in most motoneurones, with group I field potentials similarly reduced and only weak correlation with decreased motoneurone input resistance — evidence that presynaptic inhibition of Ia transmission underlies the tonic depression of stretch reflexes during locomotion.
@@ -507,6 +503,10 @@ muscle activations to achieve
 - **Dietz and Duysens 2000** — [Significance of load receptor input during locomotion: a review](https://doi.org/10.1016/s0966-6362(99)00052-1)  
   - animals: Human, Cat · pathways: Ib stance to swing  
   - Review making the case that extensor load receptors are central to locomotor control: in the cat, Golgi tendon organ input switches function during walking from Ib inhibition to extensor facilitation proportional to load, and in humans leg extensor activation during stance scales with body weight — one load-regulatory mechanism spanning quadrupedal and bipedal gait.
+- **Marcoux and Rossignol 2000** — [Initiating or Blocking Locomotion in Spinal Cats by Applying Noradrenergic Drugs to Restricted Lumbar Spinal S](https://doi.org/10.1523/jneurosci.20-22-08577.2000)  
+  - animals: Cat  
+  - Focal alpha2-noradrenergic action at restricted lumbar levels both starts and stops spinal walking: topical clonidine over L3-L4 or L5-L7, or microinjection at L3-L5, induces treadmill locomotion in acutely spinalized cats, whereas yohimbine at L3-L5 (not L6) or a transection at L3-L4 blocks it — mid-lumbar segments are a sufficient pharmacological trigger and a necessary substrate for the rhythm.  
+  - *Robot/sim:* Build a spatially segmented spinal CPG in which only mid-lumbar-equivalent modules can be tonically activated to launch the full hindlimb pattern; ablating those modules while leaving caudal motoneuron pools functional should abolish gait but spare other rhythmic outputs.
 - **Barbeau 1999** — [Tapping into spinal circuits to restore motor function.](https://doi.org/10.1016/s0165-0173(99)00008-9)  
   - animals: Cat, Human, Vertebrates  
   - Multidisciplinary review arguing that electrically activating spinal interneuronal circuits (reflex and pattern-generating) could coordinate many muscles at once for neuroprostheses, far more tractable than stimulating each muscle individually; draws on phase-adaptable cat hindlimb reflexes, chick embryo rhythmogenic network development, the cat spinal locomotor pattern generator, and locomotor training in incomplete SCI patients to identify candidate circuits and the control problems engineers must solve.  
@@ -550,13 +550,13 @@ muscle activations to achieve
   - animals: Cat · afferents: Ia, II, Ib  
   - Chronic recordings during normal cat stepping show that ensemble spindle afferent firing is largely predictable from muscle length and velocity alone (with significant EMG-linked fusimotor action in triceps surae), and that the ensemble of triceps surae tendon organ afferents accurately encodes whole-muscle force. To a first approximation, large muscle afferents in the cat hindlimb signal muscle velocity (Ia), length (II), and force (Ib) at locomotor speeds and amplitudes.  
   - *Robot/sim:* Instantiate afferent feedback as ensemble codes (Ia proportional to muscle velocity, II to length, Ib ensemble averaging to whole-muscle force) rather than single-unit transfer functions in a locomotion controller, and verify feedback control survives realistic firing variance and fusimotor modulation.
-- **Kakuda 1998** — [Dynamic response of human muscle spindle afferents to stretch during voluntary contraction](https://doi.org/10.1111/j.1469-7793.1998.621bb.x)  
-  - animals: Cat, Human  
-  - This study was conducted to investigate the basic pattern of dynamic and static fusimotor actions on human muscle spindles.
 - **Procházka and Gorassini 1998** — [Models of ensemble firing of muscle spindle afferents recorded during normal locomotion in cats](https://doi.org/10.1111/j.1469-7793.1998.277bu.x)  
   - animals: Cat · afferents: Ia  
   - Mathematical models of muscle spindle primary (presumed Ia) firing, validated against chronically recorded hamstring afferents over 132 cat step cycles, are dominated by muscle velocity — firing rate scales approximately with the square root of velocity (power-law exponents 0.5-0.6) — with only small EMG-linked fusimotor components; inverse models recover muscle length accurately from firing profiles, implying the CNS could decode muscle length simply from Ia ensemble firing.  
   - *Robot/sim:* Use a square-root-of-velocity-dominant spindle encoder with a small EMG-linked fusimotor term as the Ia block in reflex models, and run it in reverse to estimate muscle length from afferent firing for state estimation in a neurally controlled walker.
+- **Kakuda 1998** — [Dynamic response of human muscle spindle afferents to stretch during voluntary contraction](https://doi.org/10.1111/j.1469-7793.1998.621bb.x)  
+  - animals: Cat, Human  
+  - This study was conducted to investigate the basic pattern of dynamic and static fusimotor actions on human muscle spindles.
 - **Rossignol 1998** — [Pharmacological Activation and Modulation of the Central Pattern Generator for Locomotion in the Cat](https://doi.org/10.1111/j.1749-6632.1998.tb09061.x)  
   - animals: Cat  
   - Box 6128, Station Centre-Ville, Montreal (Qc) H3C 3J7, Canada ABSTRACT: Pharmacological agents have been shown to be capable of inducing a pat- tern of rhythmic activity recorded in muscle nerves or motoneurons of paralyzed spinal cats that closely resembles the locomotor pattern seen in intact...
@@ -565,7 +565,7 @@ muscle activations to achieve
   - In intact humans, short-latency non-reciprocal group I inhibition from the medial gastrocnemius nerve onto the conditioned soleus H-reflex, disynaptic and present at rest in most subjects, is significantly reduced during treadmill walking, with some subjects showing significant excitation, mirroring the reduction of resting Ib inhibition toward excitation seen in walking cats. The reduction may be partially accounted for by activation of the triceps surae itself.  
   - *Robot/sim:* Implement disynaptic Ib inhibition onto ankle extensors with a locomotor-phase-dependent gain reduction (partial reversal toward excitation during gait); ablate the phase switch to test its effect on stance extensor activity.
 - **Angel 1996** — [Group I extensor afferents evoke disynaptic EPSPs in cat hindlimb extensor motorneurones during fictive locomo](https://doi.org/10.1113/jphysiol.1996.sp021538)  
-  - animals: Cat · afferents: Ia, Ib · pathways: Ib disynaptic excitation  
+  - animals: Cat · afferents: Ia, Ib · pathways: Ia disynaptic excitation  
   - During the extension (stance-equivalent) phase of MLR-evoked fictive locomotion in decerebrate cats, group I afferents from ankle extensors evoke disynaptic EPSPs (mean central latency 1.55 ms, single interposed interneuron) in hip, knee, and ankle extensor motoneurons — also elicited by selective group Ia activation via muscle stretch — with hip extensor motoneurons receiving excitation from both homonymous and ankle extensor nerves. The effect arises from cyclic disinhibition of excitatory interneurons rather than motoneuronal voltage-dependent conductances or flexion-phase presynaptic inhib  
   - *Robot/sim:* Implement a disynaptic excitatory pathway from extensor group I afferents to extensor motoneurons, gated ON during extension via interneuron disinhibition (OFF during flexion); ablate it and test for loss of stance force reinforcement.
 - **Hiebert 1996** — [Contribution of Hind Limb Flexor Muscle Afferents to the Timing of Phase Transitions in the Cat Step Cycle](https://doi.org/10.1152/jn.1996.75.3.1126)  
@@ -645,13 +645,6 @@ Interneurons must therefore be located in the L7 and S1 spinal segments.
   - animals: Cat  
   - Microstimulation of the cat medullary reticular formation during locomotion evokes phase-dependent responses incorporated into the ongoing pattern — flexor excitation in each limb during that muscle's natural activity period, inhibition of ipsilateral extensors, mixed responses in contralateral vastus lateralis — with response latencies shortest during a muscle's active period, showing that reticulospinal transmission is gated by the locomotor network itself.  
   - *Robot/sim:* Implement descending reticulospinal-like drive onto a CPG with phase-dependent pathway gating (gain high during each muscle's active phase) and reproduce the shortening of response latency with activity state as a test of state-dependent transmission.
-- **Orsal et al. 1990** — [Interlimb coordination during fictive locomotion in the thalamic cat.](https://doi.org/10.1007/bf00228795)  
-  - animals: Cat  
-  - Interlimb coordination during fictive locomotion in the thalamic cat persists without phasic sensory feedback, demonstrating central interlimb coupling that sensory input can then modulate.
-- **Gossard 1990** — [Phase-dependent modulation of primary afferent depolarization in single cutaneous primary afferents evoked by ](https://doi.org/10.1016/0006-8993(90)90334-8)  
-  - animals: Cat · afferents: Cutaneous  
-  - Cutaneous primary afferent terminals in the cat hindlimb are rhythmically depolarized during fictive locomotion (L-PAD), and primary afferent depolarization evoked by peripheral nerve stimulation is phase-modulated by the CPG - minimal during flexion, maximal during extension - so presynaptic inhibitory gating of cutaneous reflex transmission is locomotor-phase dependent. Centrally generated and peripherally evoked presynaptic mechanisms are in part separately controlled, since evoked PAD peaked in extension regardless of L-PAD amplitude.  
-  - *Robot/sim:* Implement locomotor-phase-dependent presynaptic gain on cutaneous feedback channels (lowest during flexion, highest during extension) in a reflex-gated walker, then ablate the gating to quantify its contribution to reflex timing and gait stability.
 - **Buford and Smith 1990** — [Adaptive control for backward quadrupedal walking. II. Hindlimb muscle synergies](https://doi.org/10.1152/jn.1990.64.3.756)  
   - animals: Cat  
   - Backward walking in cats reuses the forward reciprocal synergies — flexors in swing, extensors in stance — but retunes temporal parameters and amplitudes (gastrocnemius active from midswing with ramping stance EMG, near-absent knee and ankle yield, early-ending iliopsoas with prolonged semitendinosus), indicating one direction-general circuit with task-specific reweighting.  
@@ -660,6 +653,13 @@ Interneurons must therefore be located in the L7 and S1 spinal segments.
   - animals: Cat · afferents: II  
   - During MLR-evoked fictive locomotion in the decerebrate cat, midlumbar (L4) interneurons receiving group II input from quadriceps, sartorius, and pretibial flexors — and projecting to L7 motor nuclei — fired predominantly with ipsilateral flexor bursts and were less responsive to peripheral input during extension: a phase-gated group II pathway positioned to shape flexor activity.  
   - *Robot/sim:* Implement a midlumbar interneuron layer receiving group II afferent input from quadriceps, sartorius, and pretibial flexor pathways and projecting to motor nuclei, with gain reduced during extension; test its contribution to flexor burst generation in a CPG model.
+- **Orsal et al. 1990** — [Interlimb coordination during fictive locomotion in the thalamic cat.](https://doi.org/10.1007/bf00228795)  
+  - animals: Cat  
+  - Interlimb coordination during fictive locomotion in the thalamic cat persists without phasic sensory feedback, demonstrating central interlimb coupling that sensory input can then modulate.
+- **Gossard 1990** — [Phase-dependent modulation of primary afferent depolarization in single cutaneous primary afferents evoked by ](https://doi.org/10.1016/0006-8993(90)90334-8)  
+  - animals: Cat · afferents: Cutaneous  
+  - Cutaneous primary afferent terminals in the cat hindlimb are rhythmically depolarized during fictive locomotion (L-PAD), and primary afferent depolarization evoked by peripheral nerve stimulation is phase-modulated by the CPG - minimal during flexion, maximal during extension - so presynaptic inhibitory gating of cutaneous reflex transmission is locomotor-phase dependent. Centrally generated and peripherally evoked presynaptic mechanisms are in part separately controlled, since evoked PAD peaked in extension regardless of L-PAD amplitude.  
+  - *Robot/sim:* Implement locomotor-phase-dependent presynaptic gain on cutaneous feedback channels (lowest during flexion, highest during extension) in a reflex-gated walker, then ablate the gating to quantify its contribution to reflex timing and gait stability.
 - **Gossard 1989** — [Intra-axonal recordings of cutaneous primary afferents during fictive locomotion in the cat](https://doi.org/10.1152/jn.1989.62.5.1177)  
   - animals: Cat · afferents: Cutaneous  
   - Intra-axonal recordings during fictive locomotion in decorticated cats show that all cutaneous primary afferents develop locomotor-rhythmic membrane potential fluctuations with two depolarization waves per cycle (maximal during flexor activity in the majority of units), demonstrating that the CPG phasically controls the efficacy of transmission in cutaneous pathways at a presynaptic level as part of the locomotor program.  
@@ -671,10 +671,6 @@ Interneurons must therefore be located in the L7 and S1 spinal segments.
   - animals: Cat · afferents: Ia · pathways: Ia reciprocal inhibition  
   - During MLR-evoked fictive locomotion in decerebrate cats, Renshaw cells discharge rhythmically in phase with the motoneuron pools that excite them, with extensor Renshaw activity peaking at the end of extension coincident with extensor motoneuron hyperpolarization; Renshaw inhibition of quadriceps Ia inhibitory interneurons is not sufficient to disrupt the phasing of reciprocal inhibition, though extensor Renshaw cells may contribute to the late-extension decline in IaIN discharge. Ia reciprocal IPSPs in motoneurons vary significantly in amplitude across the fictive step cycle.  
   - *Robot/sim:* Implement Renshaw cells phase-locked to motoneuron pools with recurrent inhibition onto Ia inhibitory interneurons; ablate the Renshaw-to-IaIN connection to test the late-extension decline of reciprocal inhibition.
-- **Noga 1987** — [The role of Renshaw cells in locomotion: antagonism of their excitation from motor axon collaterals with intra](https://doi.org/10.1007/bf00236206)  
-  - animals: Cat  
-  - Blocking nicotinic transmission from motor axon collaterals with mecamylamine during fictive locomotion abolished recurrent IPSPs and rhythmic Renshaw firing yet left locomotor drive potentials, burst timing, and Ia inhibitory interneuron rhythmicity intact, with motoneuron and Ia-inhibitory-interneuron bursts carrying more spikes at higher frequency - establishing that Renshaw cells are not part of the locomotor CPG and do not time bursts, but limit firing rates within them.  
-  - *Robot/sim:* Implement Renshaw cells as recurrent negative feedback acting only on motoneuron and Ia-inhibitory-interneuron firing rates; ablating them in simulation should raise within-burst firing while leaving burst timing and the locomotor rhythm unchanged.
 - **Mori 1987** — [Integration of posture and locomotion in acute decerebrate cats and in awake, freely moving cats](https://doi.org/10.1016/0301-0082(87)90010-4)  
   - animals: Cat  
   - Integration of posture and locomotion in decerebrate cats: postural set and locomotion share circuitry, with tonically controlled parallel descending systems.
@@ -691,6 +687,10 @@ Interneurons must therefore be located in the L7 and S1 spinal segments.
 Rythm generators came mainly from Golgi Tendon Organ Ib afferents for group I
 
 Increased load of limb extensor during the stance phase enhance and prolong extensor activity while simultaneously delaying the transition to the swing phase of the step cycle.
+- **Noga 1987** — [The role of Renshaw cells in locomotion: antagonism of their excitation from motor axon collaterals with intra](https://doi.org/10.1007/bf00236206)  
+  - animals: Cat  
+  - Blocking nicotinic transmission from motor axon collaterals with mecamylamine during fictive locomotion abolished recurrent IPSPs and rhythmic Renshaw firing yet left locomotor drive potentials, burst timing, and Ia inhibitory interneuron rhythmicity intact, with motoneuron and Ia-inhibitory-interneuron bursts carrying more spikes at higher frequency - establishing that Renshaw cells are not part of the locomotor CPG and do not time bursts, but limit firing rates within them.  
+  - *Robot/sim:* Implement Renshaw cells as recurrent negative feedback acting only on motoneuron and Ia-inhibitory-interneuron firing rates; ablating them in simulation should raise within-burst firing while leaving burst timing and the locomotor rhythm unchanged.
 - **Armstrong 1986** — [Supraspinal contributions to the initiation and control of locomotion in the cat.](https://doi.org/10.1016/0301-0082(86)90021-3)  
   - animals: Cat
 - **Lovely 1986** — [Effects of training on the recovery of full-weight-bearing stepping in the adult spinal cat.](https://doi.org/10.1016/0014-4886(86)90094-4)  

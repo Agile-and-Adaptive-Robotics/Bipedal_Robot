@@ -5,14 +5,14 @@
 - **Zill 2024** — [Mechanosensory encoding of forces in walking uphill and downhill: force feedback can stabilize leg movements i](https://doi.org/10.1152/jn.00414.2023)  
   - animals: Stick Insect, Insects  
   - Our results suggest the hypothesis that sensory feedback from the femoro-tibial joint indicating force dynamics (dF/d t) can be used to counter the instability in traversing sloped surfaces in animals and, potentially, in walking machines.
-- **Husbands 2021** — [Recent advances in evolutionary and bio-inspired adaptive robotics: Exploiting embodied dynamics](https://doi.org/10.1007/s10489-021-02275-9)  
-  - animals: Insects  
-  - Argues through four case studies that adaptive behavior is best obtained by exploiting embodied dynamics rather than suppressing them: evolved analog electronic controllers act as robot controllers, insect-inspired navigation builds on innate behaviors, neuromechanical chaos powers a goal-driven search for robust motor behaviors with neural-oscillator architectures, and evolved dynamical controllers yield agile flapping flight robust to wind gusts.  
-  - *Robot/sim:* Adopt the neuromechanical-chaos result: use neural-oscillator controllers whose chaotic dynamics power a goal-driven search for motor behaviors, testing whether robust locomotion emerges by exploiting rather than damping body-level chaos.
 - **Szczecinski 2021** — [A computational model of insect campaniform sensilla predicts encoding of forces during walking.](https://doi.org/10.1088/1748-3190/ac1ced)  
   - animals: Insects, Cockroach, Stick Insect · afferents: Mechanosensory  
   - A phenomenological model of insect campaniform sensilla predicts afferent discharge as proportional to instantaneous stimulus force relative to an adaptive variable: nonlinear first-order dynamics reproduce power-law adaptation, rate sensitivity, and hysteresis as manifestations of a single mechanism, generalize across cockroach and stick insect sensillum groups after tuning to one response, and can be inverted to estimate stimulus force from recorded discharge - a compact transducer law for load feedback during walking.  
   - *Robot/sim:* Use the adaptive-variable campaniform model as the force-feedback transducer in a walking simulation or robot leg, and ablate the adaptive variable to test how tonic-force adaptation, rate sensitivity, and hysteresis each shape load-dependent motor control.
+- **Husbands 2021** — [Recent advances in evolutionary and bio-inspired adaptive robotics: Exploiting embodied dynamics](https://doi.org/10.1007/s10489-021-02275-9)  
+  - animals: Insects  
+  - Argues through four case studies that adaptive behavior is best obtained by exploiting embodied dynamics rather than suppressing them: evolved analog electronic controllers act as robot controllers, insect-inspired navigation builds on innate behaviors, neuromechanical chaos powers a goal-driven search for robust motor behaviors with neural-oscillator architectures, and evolved dynamical controllers yield agile flapping flight robust to wind gusts.  
+  - *Robot/sim:* Adopt the neuromechanical-chaos result: use neural-oscillator controllers whose chaotic dynamics power a goal-driven search for motor behaviors, testing whether robust locomotion emerges by exploiting rather than damping body-level chaos.
 - **Goldsmith 2020** — [Neurodynamic modeling of the fruit fly Drosophila melanogaster.](https://doi.org/10.1088/1748-3190/ab9e52)  
   - animals: Insects · afferents: Mechanosensory  
   - Drosophibot, a hexapod robot and dynamic simulation of Drosophila melanogaster, captures fruit-fly biomechanics through dynamically scaled joint elasticity and movement speed, a biomimetic actuator scheme converting neural activity into motion as in insects, proprioception from all leg joints and strain sensing from all leg segments, and passively compliant tarsi. Its actuators and sensors are shown to perform in an animal-like way, providing a testbed in which an insect neural walking controller can be evaluated in simulation and transferred to hardware.  
@@ -27,12 +27,12 @@
 - **Pickard 2020** — [A dynamical model exploring sensory integration in the insect central complex substructures](https://doi.org/10.1088/1748-3190/ab57b6)  
   - animals: Insects  
   - Dynamical model of sensory integration in insect central-complex substructures supporting navigation decisions.
-- **Dallmann 2019** — [Motor control of an insect leg during level and incline walking](https://doi.org/10.1242/jeb.188748)  
-  - animals: Stick Insect, Insects  
-  - Here, we studied these parameters in hindlegs of stick insects ( Carausius morosus ) during level and uphill/downhill (±45 deg) walking, using a combination of electromyography, 3D motion capture and ground reaction force measurements.
 - **Nourse 2019** — [Analyzing the Interplay Between Local CPG Activity and Sensory Signals for Inter-leg Coordination in Drosophil](https://doi.org/10.1007/978-3-030-24741-6_34)  
   - animals: Insects, Arthropods  
   - Tibia-amputated Drosophila legs show a speed-dependent stump oscillation — the wide range of possible periods at low walking speed collapses to a minimum as speed increases — which noisy leg CPGs stabilized by intra-leg load feedback and inter-leg coordinating signals can explain; the measured data anchor a simplified neuromuscular model of inter-leg coordination.
+- **Dallmann 2019** — [Motor control of an insect leg during level and incline walking](https://doi.org/10.1242/jeb.188748)  
+  - animals: Stick Insect, Insects  
+  - Here, we studied these parameters in hindlegs of stick insects ( Carausius morosus ) during level and uphill/downhill (±45 deg) walking, using a combination of electromyography, 3D motion capture and ground reaction force measurements.
 - **Bidaye 2018** — [Six-legged walking in insects: how CPGs, peripheral feedback, and descending signals generate coordinated and ](https://doi.org/10.1152/jn.00658.2017)  
   - animals: Insects  
   - Reviews insect six-legged walking: how leg central pattern generators interact with sensory signals from the leg in generating single-leg stepping, how those interactions are reconfigured for forward and backward walking, curve walking, and speed changes, and how descending signals from the brain mediate initiation, maintenance, modification, and cessation of walking, with emphasis on knowledge gaps addressable by neurogenetic approaches.  
@@ -40,13 +40,13 @@
 - **Araujo-Estrada 2017** — [Bio-inspired Distributed Strain and Airflow Sensing for Small Unmanned Air Vehicle Flight Control](https://doi.org/10.2514/6.2017-1487)  
   - animals: Insects  
   - These results suggest that distributed mechanosensing and airﬂow sensin g both oﬀer advantages beyond traditional ﬂight control based on rigid body state estimat ion using inertial sensing.
-- **Fisher 2016** — [The gust-mitigating potential of flapping wings](https://doi.org/10.1088/1748-3190/11/4/046010)  
-  - animals: Insects  
-  - Review of gust-mitigating potential flapping wings. Computational model study. In this study, we subject a mechanicalﬂapping wing to replicated atmospheric turbulence across a range ofﬂapping frequencies and turbulence intensities.
 - **Tuthill and Wilson 2016** — [Mechanosensation and Adaptive Motor Control in Insects](https://doi.org/10.1016/j.cub.2016.06.070)  
   - animals: Insects  
   - The ability of animals to flexibly navigate through complex environments depends on the integration of sensory information with motor commands. The sensory modality most tightly linked to motor control is mechanosensation. Adaptive motor control depends critically on an animal’s ability to respond to mechanical forces
 generated both within and outside the body. The compact neural circuits of insects provide appealing systems to investigate how mechanical cues guide locomotion in rugged environments. Here, we review our current understanding of mechanosensation in insects and its role in adapti
+- **Fisher 2016** — [The gust-mitigating potential of flapping wings](https://doi.org/10.1088/1748-3190/11/4/046010)  
+  - animals: Insects  
+  - Review of gust-mitigating potential flapping wings. Computational model study. In this study, we subject a mechanicalﬂapping wing to replicated atmospheric turbulence across a range ofﬂapping frequencies and turbulence intensities.
 - **Szczecinski et al. 2015** — [Neuromechanical model of praying mantis explores the role of descending commands in pre-strike pivots.](https://doi.org/10.1088/1748-3190/10/6/065005)  
   - animals: Insects  
   - Neuromechanical model of the praying mantis showing how descending commands interact with leg mechanics to produce pre-strike pivots; small descending signals exploit body dynamics.
@@ -64,15 +64,15 @@ generated both within and outside the body. The compact neural circuits of insec
   - animals: Insects, Cockroach  
   - Robotics review translating biological design principles into machines: cockroach-tarsus-inspired passive foot compliance robustifies climbing adhesion and permits large steps and stationary turns, insect-inspired wheel-legs passively change gait on irregular terrain, and earthworm-style peristalsis drives scalable soft robots - passive mechanics can substitute for active control.  
   - *Robot/sim:* Implement tarsus-inspired passive foot compliance and hub-integrated passive gait-change mechanisms in a simulated hexapod or wheel-legged robot and test whether stepping robustness on irregular terrain is maintained without active control.
-- **Schnell 2010** — [Processing of Horizontal Optic Flow in Three Visual Interneurons of the Drosophila Brain](https://doi.org/10.1152/jn.00950.2009)  
-  - animals: Insects  
-  - First whole-cell recordings of Drosophila horizontal-system cells (HSN, HSE, HSS): direction-selective tuning to large-field horizontal motion consistent with the correlation-type motion-detection model, with extensive ipsilateral coupling explaining sensitivity to both ipsi- and contralateral motion — the circuit basis for optomotor behavior.
-- **Ai 2010** — [Vibration receptive sensilla on the wing margins of the silkworm moth Bombyx mori](https://doi.org/10.1016/j.jinsphys.2009.10.007)  
-  - animals: Cockroach, Insects  
-  - Each kind of sensillum is specialized both morphologically and physiologically for detecting its own speciﬁc sensory quality.
 - **Keshavan 2010** — [MAV stability augmentation using weighted outputs from distributed hair sensor arrays](https://doi.org/10.1109/acc.2010.5531002)  
   - animals: Insects, Human  
   - Computational model study. Trichoid hair sensillae, found extensively on the surface of the head, wings and the thorax of most insects, are used to sense the nature of air ﬂow past the body.
+- **Ai 2010** — [Vibration receptive sensilla on the wing margins of the silkworm moth Bombyx mori](https://doi.org/10.1016/j.jinsphys.2009.10.007)  
+  - animals: Cockroach, Insects  
+  - Each kind of sensillum is specialized both morphologically and physiologically for detecting its own speciﬁc sensory quality.
+- **Schnell 2010** — [Processing of Horizontal Optic Flow in Three Visual Interneurons of the Drosophila Brain](https://doi.org/10.1152/jn.00950.2009)  
+  - animals: Insects  
+  - First whole-cell recordings of Drosophila horizontal-system cells (HSN, HSE, HSS): direction-selective tuning to large-field horizontal motion consistent with the correlation-type motion-detection model, with extensive ipsilateral coupling explaining sensitivity to both ipsi- and contralateral motion — the circuit basis for optomotor behavior.
 - **Borgmann 2009** — [Sensory Feedback Induced by Front-Leg Stepping Entrains the Activity of Central Pattern Generators in Caudal S](https://doi.org/10.1523/jneurosci.3155-08.2009)  
   - animals: Stick Insect, Insects  
   - We investigated here the influence of stepping in one leg on the activities of neighboring-leg thorax– coxa (TC) joint CPGs in the stick insect (Carausius morosus).
@@ -98,13 +98,13 @@ generated both within and outside the body. The compact neural circuits of insec
 - **Ekeberg 2004** — [Dynamic simulation of insect walking.](https://doi.org/10.1016/j.asd.2004.05.002)  
   - animals: Stick Insect, Insects, Arthropods · pathways: Chordotonal organ multi-synaptic excitation; Chordotonal organ multi-synaptic inhibition  
   - A 3-D biomechanical stick-insect leg driven by a reduced neural controller containing only experimentally established chordotonal-organ reflex mechanisms reproduces the full middle-leg step cycle in both restricted and unrestrained simulations; front-leg stepping works with the same mechanisms, whereas hind-leg control requires reorganized, possibly sign-reversed, chordotonal influence on levator–depressor timing.
-- **Zbikowski 2004** — [Sensor-rich feedback control: a new paradigm for flight control inspired by insect agility](https://doi.org/10.1109/mim.2004.1337909)  
-  - animals: Human, Insects  
-  - 1094-6969/04/$20.00©2004IEEE T he effort to design and build a micro air vehicle (MAV) with insect-like flapping wings has led to a surprising new development in flight control, which will accord miniature sensors a central role.
 - **Ritzmann 2004** — [Convergent evolution and locomotion through complex terrain by insects, vertebrates and robots](https://doi.org/10.1016/j.asd.2004.05.001)  
   - animals: Insects, Vertebrates, Arthropods  
   - Argues from convergent evolution that insects and vertebrates independently arrived at similar neural control properties and mechanical schemes for legged locomotion, highlighting leg specialization, body flexion, and complex head-mounted sensing as critical for complex-terrain agility - features most robots of the era lacked. The design-transfer principle is selection rather than copying: pick the properties critical for the target behavior when building a robot.  
   - *Robot/sim:* Build legged-robot models that incrementally add leg specialization, body flexion, and head-region sensing over a homogeneous-leg rigid-body baseline, and compare complex-terrain agility to test which convergent properties carry the performance benefit.
+- **Zbikowski 2004** — [Sensor-rich feedback control: a new paradigm for flight control inspired by insect agility](https://doi.org/10.1109/mim.2004.1337909)  
+  - animals: Human, Insects  
+  - 1094-6969/04/$20.00©2004IEEE T he effort to design and build a micro air vehicle (MAV) with insect-like flapping wings has led to a surprising new development in flight control, which will accord miniature sensors a central role.
 - **Schmitt 2002** — [Dynamics and stability of legged locomotion in the horizontal plane: a test case using insects](https://doi.org/10.1007/s00422-001-0300-3)  
   - animals: Insects · pathways: Biomechanically mediated preflexive feedback  
   - A three-degree-of-freedom, energetically conservative horizontal-plane rigid-body model with compliant virtual legs in intermittent contact exhibits periodic gaits in which mechanics alone confers asymptotic stability of relative heading and body angular velocity, with gait and force characteristics matching insect running observations reasonably well - passive lateral dynamics can stabilize hexapod running without neural feedback.  
@@ -124,12 +124,12 @@ generated both within and outside the body. The compact neural circuits of insec
   - animals: Cockroach, Insects · pathways: Biomechanically mediated preflexive feedback  
   - Idealized horizontal-plane mechanical models of legged locomotion reproduce observed cockroach gait and ground-reaction-force characteristics during rapid running and turning, demonstrating that passive lateral-dynamics stability - mechanics rather than neural feedback - can account for the dominant stability of rapid insect locomotion.  
   - *Robot/sim:* Use the horizontal-plane lateral dynamics as the mechanical plant of a hexapedal walker and verify gait stability with neural stabilization ablated, quantifying the preflexive contribution to running and turning.
-- **Ozaki 2000** — [An air flow sensor modeled on wind receptor hairs of insects](https://doi.org/10.1109/memsys.2000.838573)  
-  - animals: Insects  
-  - A new conceptual air flow sensor modeled on wind- receptor hairs of insects which can detect low velocity air flow is demonstrated.
 - **Ritzmann 2000** — [Insect Walking and Biorobotics: A Relationship with Mutual Benefits](https://doi.org/10.1641/0006-3568(2000)050[0023:IWABAR]2.3.CO;2)  
   - animals: Insects  
   - Biorobotics represents a synergistic relationship between engineers attempting to design better robots and biologists attempting to understand principles of movement in animals.
+- **Ozaki 2000** — [An air flow sensor modeled on wind receptor hairs of insects](https://doi.org/10.1109/memsys.2000.838573)  
+  - animals: Insects  
+  - A new conceptual air flow sensor modeled on wind- receptor hairs of insects which can detect low velocity air flow is demonstrated.
 - **Flannigan 1998** — [Locomotion controller for a crab-like robot](https://doi.org/10.1109/robot.1998.676345)  
   - animals: Insects  
   - An insect-inspired, mechanism-based gait controller with local rough-terrain reflexes drives an eight-legged demining robot in simulation over irregular terrain, obstacles on the order of half the tibia length, sparse terrain, and ditches - robust navigation achieved without complex sensing or terrain mapping, showing simple biologically inspired local rules scale to rough-terrain walking.  

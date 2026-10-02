@@ -13,31 +13,31 @@
   - animals: Rat  
   - Sampling the full speed range exposes hidden structure in rat spinal locomotor control: intact rats express a speed-dependent continuum from alternating gaits (walk, trot) to non-alternating ones (canter, gallop, half-bound, bound); lateral thoracic hemisection removes only the fastest non-alternating gaits while preserving interlimb coordination on the injured side, and moderate contusion lowers maximal speed, eliminates all non-alternating gaits, and yields novel alternating gaits - signatures of weakened fore-hind propriospinal coupling with preserved left-right alternation control.  
   - *Robot/sim:* Model interlimb coordination as speed-dependent coupled oscillators with a long-coupling analog between fore and hind rhythm units; ablating that coupling should eliminate bound and gallop modes while sparing alternating gaits and left-right alternation.
+- **Zholudeva 2021** — [Spinal Interneurons as Gatekeepers to Neuroplasticity after Injury or Disease.](https://doi.org/10.1523/jneurosci.1654-20.2020)  
+  - animals: Mice, Cat, Rat, Human, Vertebrates  
+  - Review positioning spinal interneurons — a heterogeneous population that modulates motor, sensory, and autonomic function — as key components of plasticity and recovery after spinal cord injury, and arguing that treatments should be optimized for how they engage interneuron circuits rather than viewed as acting around them.
 - **Sławińska 2021** — [Unusual Quadrupedal Locomotion in Rat during Recovery from Lumbar Spinal Blockade of 5-HT7 Receptors.](https://doi.org/10.3390/ijms22116007)  
   - animals: Rat  
   - Spinal 5-HT7 receptor blockade (not 5-HT2A) in adult rats reorganizes recovery quadrupedal locomotion into a transiently stable 2:1 forelimb-to-hindlimb stepping pattern, implicating lamina VII 5-HT7-expressing interneurons with ascending projections in setting fore-hindlimb coupling.  
   - *Robot/sim:* Model fore-hindlimb coupling through an ascending serotonergic-modulated interneuron path between hindlimb and forelimb CPGs; removing the 5-HT7-like gain should lock the network into a 2:1 forelimb-to-hindlimb pattern.
-- **Zholudeva 2021** — [Spinal Interneurons as Gatekeepers to Neuroplasticity after Injury or Disease.](https://doi.org/10.1523/jneurosci.1654-20.2020)  
-  - animals: Mice, Cat, Rat, Human, Vertebrates  
-  - Review positioning spinal interneurons — a heterogeneous population that modulates motor, sensory, and autonomic function — as key components of plasticity and recovery after spinal cord injury, and arguing that treatments should be optimized for how they engage interneuron circuits rather than viewed as acting around them.
 - **Young 2019** — [Analyzing Moment Arm Profiles in a Full-Muscle Rat Hindlimb Model](https://doi.org/10.3390/biomimetics4010010)  
   - animals: Rat  
   - A full-muscle 3D rat hindlimb model driven by physiological walking data shows that muscle moment arms depend strongly on the configuration of adjacent joints - critical for biarticular torque computation - and that moment-arm profiles vary enough across the step cycle to imply changes in muscle function during walking.  
   - *Robot/sim:* Derive muscle moment arms from 3D attachment points with adjacent-joint dependence when mapping muscle force to joint torque in rat-scale (or scaled) locomotion models; ignoring the adjacent-joint term misestimates biarticular torques.
 - **Deng 2019** — Neuromechanical model of rat hind limb walking with two layer CPGs  
   - animals: Rat
-- **Alessandro 2018** — [Adaptation after vastus lateralis denervation in rats demonstrates neural regulation of joint stresses and str](https://doi.org/10.7554/elife.38215)  
-  - animals: Rat  
-  - In this study, we hypothesized that the central nervous system (CNS) chooses muscle activations to avoid excessive joint stresses and strains.
-- **Fujiki 2018** — [Adaptive hindlimb split-belt treadmill walking in rats by controlling basic muscle activation patterns via pha](https://doi.org/10.1038/s41598-018-35714-8)  
-  - animals: Rat, Mammals  
-  - Forward dynamic simulation with a neuromusculoskeletal rat model supports resetting the onset timings of a few basic muscle-activation patterns by leg sensory feedback — especially hip-flexor extension — as the mechanism adapting hindlimb walking to split-belt treadmill conditions.
 - **Côté 2018** — [Spinal Control of Locomotion: Individual Neurons, Their Circuits and Functions.](https://doi.org/10.3389/fphys.2018.00784)  
   - animals: Cat, Mice, Rat, Human, Mammals  
   - Review of spinal interneurones carrying muscle-stretch and load afferent information across mammals: rest-state physiology is conserved from rodents to humans, but locomotor activation profiles differ markedly between species, plausibly reflecting species differences in afferent distribution and interneuronal interactions; targeted neuromodulation of these circuits is the emerging rehabilitation strategy after spinal cord injury.
 - **Deng 2018** — [Neuromechanical Model of Rat Hind Limb Walking with Two Layer CPGs and Muscle Synergies](https://doi.org/10.1007/978-3-319-95972-6_15)  
   - animals: Rat  
   - Neuromechanical rat hind-limb model with two-layer CPGs and muscle synergies; extends the Hunt lab line toward synergy-level circuit models.
+- **Fujiki 2018** — [Adaptive hindlimb split-belt treadmill walking in rats by controlling basic muscle activation patterns via pha](https://doi.org/10.1038/s41598-018-35714-8)  
+  - animals: Rat, Mammals  
+  - Forward dynamic simulation with a neuromusculoskeletal rat model supports resetting the onset timings of a few basic muscle-activation patterns by leg sensory feedback — especially hip-flexor extension — as the mechanism adapting hindlimb walking to split-belt treadmill conditions.
+- **Alessandro 2018** — [Adaptation after vastus lateralis denervation in rats demonstrates neural regulation of joint stresses and str](https://doi.org/10.7554/elife.38215)  
+  - animals: Rat  
+  - In this study, we hypothesized that the central nervous system (CNS) chooses muscle activations to avoid excessive joint stresses and strains.
 - **Vincent 2017** — [Muscle proprioceptors in adult rat: mechanosensory signaling and synapse distribution in spinal cord](https://doi.org/10.1152/jn.00497.2017)  
   - animals: Rat, Cat · afferents: Ia, II, Ib  
   - In adult rats, functionally identified triceps surae proprioceptors (Ia, II, Ib) project and distribute provisional synapses in the spinal cord much as in the cat, but rat Ib afferents fire robustly during passive muscle stretch and Ia afferents show exaggerated dynamic responses even after locomotor scaling is accounted for — mechanosensory coding is species-adapted, so cat-derived afferent transfer functions cannot be transferred to other species without correction.  
@@ -59,12 +59,12 @@
 - **Hochman 2013** — [Force-sensitive afferents recruited during stance encode sensory depression in the contralateral swinging limb](https://doi.org/10.1111/nyas.12055)  
   - animals: Rat · pathways: Ib contralateral inhibition  
   - Review with new data in the in vitro neonatal rat spinal cord-hindlimb (SCHIP) preparation arguing that contralateral stance-phase force feedback evokes powerful primary afferent depolarization (PAD)-mediated presynaptic inhibition of the swinging limb's own afferents — load in the stance limb sets the sensory gain of the contralateral limb during swing, a mechanism the authors call possibly the most pivotal mechanosensory event of alternating gait. The paper's section 'role of sensory feedback during locomotion' catalogs further afferent rules (sensory timing of flexor drive, load regulation 
-- **Yeo 2011** — [Estimation of musculoskeletal models from in situ measurements of muscle action in the rat hindlimb](https://doi.org/10.1242/jeb.049163)  
-  - animals: Rat  
-  - Computational model study. In many cases these peripheral systems have been shown to simplify neural control or make natural behaviors more efficient (Nishikawa et al., 2007; Pfeifer et al., 2007; Valero-Cuevas et al., 2007b).
 - **Johnson 2011** — [Application of a rat hindlimb model: a prediction of force spaces reachable through stimulation of nerve fasci](https://doi.org/10.1109/tbme.2011.2106784.application)  
   - animals: Rat  
   - Computational model study. We investigated the feasibility of functional electrical stimulation paradigms that minimize the input dimensions for controlling the limbs by stimulating at nerve fascicles, utilizing a model of the rat hindlimb which combined previously collected morphological data with muscle physiological parameters presented herein.
+- **Yeo 2011** — [Estimation of musculoskeletal models from in situ measurements of muscle action in the rat hindlimb](https://doi.org/10.1242/jeb.049163)  
+  - animals: Rat  
+  - Computational model study. In many cases these peripheral systems have been shown to simplify neural control or make natural behaviors more efficient (Nishikawa et al., 2007; Pfeifer et al., 2007; Valero-Cuevas et al., 2007b).
 - **Rubin 2009** — [Multiple Rhythmic States in a Model of the Respiratory Central Pattern Generator](https://doi.org/10.1152/jn.90958.2008)  
   - animals: Rat  
   - Computational model study. We demonstrate that, although INaP is not necessary for the generation of three- and two-phase oscillations, it contributes to control of the oscillation period in each stat.

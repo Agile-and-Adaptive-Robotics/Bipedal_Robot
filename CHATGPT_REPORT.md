@@ -1,5 +1,155 @@
 # ChatGPT report for ZCode
 
+## Current handoff — October 2, 2026, 03:41 PDT
+
+Local organization cleanup is complete. This checkpoint supersedes the older in-progress organization entries below; it does not claim that every dissertation annotation is finished.
+
+- Removed `CHATGPT_staging_20260925`, `output`, and `Overleaf_review_20260926_yellow` from Dissertation using the Windows Recycle Bin. Figure assets and the cat source video were relocated before removal. Deleted folders remain recoverable until the Recycle Bin is emptied.
+- Local figures are under `Dissertation/Figures`, with chapter-named immediate subfolders: 10-introduction, 15-background, 20-methods, 30-results, 40-discussion, 50-futurework, 60-conclusion, 92-AppendixA, 93-AppendixB, and 94-AppendixC. No loose files remain at the Figures root. CPG assets are preserved within 30-results/CPG_airstepping_figs; distinct filename collisions were preserved with alternate-numbered filenames.
+- ProofFinal contains only `main.tex`, `BolenFrontiers22.bib`, `thesis.bib`, `Frontiers-Harvard.bst`, `psutex.cls`, and `chapters/` containing 15 .tex files. Build folders and the old figs tree were recycled. Loose proposals/drafts were preserved in the existing Dissertation/Notes folder.
+- Updated local chapter graphics paths to `../Figures/<chapter-stem>/`. Checked 35 active image references: zero missing files. No prose edits or git commit were made. Local compilation remains unverified because latexmk cannot find Perl.
+- The preceding live Overleaf organization migration compiled with zero errors, zero warnings, and 29 typesetting notices. The subsequent local cleanup did not change live Overleaf or overwrite the user's downloaded ZIP/PDF. Local ProofFinal prose has NOT been synchronized with the newer live sources; local Figures and live Overleaf figs have different root names intentionally for their respective layouts.
+- Remaining work is separate: unresolved editorial/data-owner annotations, cat reconstruction accuracy, and existing layout/typesetting issues. Do not describe the entire dissertation as done or silently promote the preserved proposals into the current source.
+
+## October 2, 2026 — Local cleanup explicitly authorized
+
+- FINAL LOCAL CHECK: 35 active includegraphics references checked against the relocated chapter directories; zero missing assets. Figures has no loose root files. All three requested folder removals verified. Local compilation was not rerun: latexmk remains unavailable because its Perl engine is missing. This cleanup does not synchronize old ProofFinal prose with live Overleaf; the user-downloaded ZIP/PDF remain untouched and more current.
+
+- EDIT GROUP COMPLETE: all 13 existing local chapter graphics-path declarations now point to ../Figures/<chapter-stem>/. Removed the three explicitly named folders, ProofFinal build outputs ($out, build_review_round1, build_wf), emptied/duplicate ProofFinal/figs tree, and legacy Figures/Aim1, Aim2, and Background folders using Windows Recycle Bin. Recoverable there until emptied. ProofFinal root now contains only main.tex, BolenFrontiers22.bib, thesis.bib, Frontiers-Harvard.bst, psutex.cls, and chapters; chapters contains only its 15 .tex files. No prose changed, no live Overleaf edits, no ZIP/PDF overwrite, and no git commit.
+
+- EDIT GROUP COMPLETE: moved local ProofFinal figure assets, legacy Figures/Aim1 and Aim2 assets, cat outputs and source video into Dissertation/Figures chapter-named folders. CPG assets preserved under Figures/30-results/CPG_airstepping_figs. Distinct filename collisions retain alternate-numbered names rather than overwrite data. Loose text proposals/drafts and cat verification screenshot moved to the existing Notes folder. Figure-path edits and recoverable folder deletion are next.
+
+- Current request supersedes the earlier instruction to leave preliminary folders in place: remove Dissertation/CHATGPT_staging_20260925, output, and Overleaf_review_20260926_yellow. Exact paths checked on EB475WS4; none is a junction. Preserve figure/video assets in Dissertation/Figures before removing those folders; use the Recycle Bin for recovery.
+- ProofFinal is to contain only main.tex, bibliography files, bibliography style, psutex.cls, and chapters containing .tex files. Move figure assets into chapter-named subfolders of Dissertation/Figures; retain distinct source drafts in the existing Notes folder rather than discard unpublished text. Remove generated build directories from ProofFinal. Update local chapter figure paths without changing prose. User ZIP/PDF and live Overleaf are untouched by this local cleanup.
+- Previous live Overleaf organization build ultimately completed with zero errors, zero warnings, and 29 typesetting notices. This verifies organization, not completion of all dissertation edits.
+
+## October 2, 2026 — Authorized organization migration in progress
+
+- BUILD CHECKPOINT (not complete): first compile reported missing Results graphics because Results still used its old graphics path. The earlier immediate clipboard equality check was insufficient to prove persistence; corrected the Results path and switched verification to a fresh clipboard copy with an intervening rendered UI observation. No figure files are missing from the tree. Rechecking saved sources and recompiling before completion.
+
+- LIVE SOURCE EDIT GROUP VERIFIED: appendix chapters 92, 93, and 94 now declare their chapter-named graphics paths. All 11 edited source files were reread completely and matched the prepared files. Recompile started; build verification and final tree audit pending. No prose, equations, captions, dimensions, review comments, or tracked changes were intentionally altered.
+
+- LIVE SOURCE EDIT GROUP VERIFIED: applied chapter-local graphics paths to 20-methods, 30-results, 50-futurework, and 60-conclusion. Methods uses filenames with its AnimatLab_reference fallback; Results uses only its own chapter folder. Full source rereads matched the prepared files. Appendix path updates and final build check remain.
+
+- LIVE SOURCE EDIT GROUP VERIFIED: applied main.tex plus 10-introduction, 15-background, and 40-discussion graphics-path updates in Editing mode; full source rereads matched the prepared files. Legacy figure paths removed from these includegraphics commands. Seven chapter path updates and final compile check remain.
+
+- PRELIMINARY SOURCE EDIT GROUP: saved path-only updates as `ProofFinal/*.organized.tex` for main and chapters 10/15/20/30/40/50/60/92/93/94. All 11 current live sources read and fingerprint-matched against the current user ZIP before editing. Chapter-local graphics paths match numbered folder names; explicit includegraphics paths become filenames, with Methods also searching its AnimatLab_reference subfolder. Prose, equations, captions, and figure dimensions unchanged. Live application/build verification pending.
+
+- LIVE EDIT GROUP: both AnimatLab results PDFs now reside in `figs/30-results`. File relocation is complete; source graphics-path updates are underway. Empty former Aim2 was reused as 60-conclusion; no files/folders were permanently deleted. Remaining folder names match actual chapter stems (10-introduction through 94-AppendixC).
+
+- LIVE EDIT GROUP: Aim2 figures redistributed into 20-methods (geometry/test jig) and 30-results (torque plots); bibliography style moved to project root. Empty Aim2 renamed to 60-conclusion without deleting anything. Graphical abstract moved to 15-background, force-test jig to 20-methods, and comparison EPS/PDF pair to 40-discussion. All immediate figs subfolders now have chapter names. Final Results figure move and source path edits are next.
+
+- LIVE EDIT GROUP: `chapters` now contains only its 15 `.tex` files. All 13 misplaced image/PDF assets moved intact into `figs/15-background` (8) or `figs/20-methods` (5), preserving imported-file links. Renamed Aim1 → 30-results and empty Aim3 → 10-introduction; created 40-discussion, 50-futurework, and 92/93/94 appendix folders. Aim2 redistribution and source path edits remain underway. No local preliminary folders moved.
+
+- LIVE EDIT: renamed `figs/Preliminary` to `figs/20-methods` in Overleaf. Its contents are preserved. Source path updates and redistribution of the Results figure are pending; do not compile the transitional hierarchy yet. Scope is live Overleaf figure organization only; local preliminary directories remain restored in place.
+
+- SCOPE CORRECTION: Ben explicitly objected to wholesale preliminary-folder consolidation. Undid all three folder moves, restoring CHATGPT_staging_20260925, output, and Overleaf_review_20260926_yellow to their original Dissertation-root locations, with every file SHA-256 verified. No files deleted or overwritten. Only figure relocation into numbered figs folders and associated LaTeX paths are now in scope. The earlier consolidation checkpoint below is historical and has been reversed. No live Overleaf edits were made in this turn before the correction; live figure migration remains pending.
+
+- New cat-source concern from Ben: reconstructed grayscale may have invented a collar-like feature and obscured preparation details. Ben provided ResearchGate schematic `https://www.researchgate.net/figure/Cat-walking-above-a-treadmill-Schema-of-a-decerebrate-cat-walking-above-a-treadmill_fig2_317731563` and additional video `https://www.youtube.com/watch?v=hAteWL78NMc`. Anatomical assertions are not yet verified. Do not treat the generated picture as recovered photographic evidence. No replacement image or live source changes made in this migration turn so far; live folder migration remains pending. Local three-folder consolidation is complete.
+
+- Local consolidation completed: moved `Dissertation/CHATGPT_staging_20260925`, `Dissertation/output`, and `Dissertation/Overleaf_review_20260926_yellow` intact underneath `Dissertation/ProofFinal/`, with SHA-256 verification of every file before/after. No unique files deleted or overwritten. Historical paths below refer to their former locations; the cat video and prior generated images now live under ProofFinal. Scientific CPG_airstepping_figs, Notes, Figures, Tables, and user ZIP/PDF remain untouched. Live figure migration is still pending.
+
+Ben approved moving existing figures into chapter-numbered folders and consolidating preliminary folders into ProofFinal, without deleting unique material. This is organization work, not a declaration that remaining scientific/editorial annotations are complete. Current downloaded ZIP/PDF will be preserved. Live source will be read before path edits, and every edit group will receive a checkpoint here. Local latexmk is presently unavailable because its Perl engine is missing; live Overleaf compilation remains the verification route.
+
+
+## October 1, 2026 — Verified status after Ben's completion audit
+
+**NOT DONE.** Prior "done except delegated work and the cat" characterization was too broad. This current-state audit supersedes conflicting historical completion claims below. Current ZIP/PDF were read as the baseline and were not overwritten. Live Overleaf now includes the bounded changes listed here; preliminary sources remain in ProofFinal.
+
+- Grayscale cat inserted and visually verified as Figure 2.8 on PDF page 47 (printed page 31), using `figs/15-background/decerebrate_cat_illustration.png`. Caption discloses reconstruction, source upload, and 1.300-second timestamp. Personal color version saved at `Dissertation/decerebrate_cat_personal_color.png`, not uploaded.
+- Methods original line 10: added route-design purpose against human knee torque targets. Original line 307: added distinction between inner compliance solve and outer parameter fitting. Full live source verified after both edits. Related broader comments are NOT automatically resolved by these bounded sentences.
+- Build: 172 pages, 0 errors, 0 warnings, and 29 typesetting notices. Visual proof: `Dissertation/ProofFinal/cat_overleaf_verification.jpg`. This is not final project-wide layout approval.
+- No prohibited assistant/tool names inserted in changed Overleaf source or captions. No Git commit or push. No legacy folders deleted or renamed. No new staging/output/review directory created; working sources and proof are inside ProofFinal.
+
+### Confirmed unfinished work — ownership and current-source anchors
+
+| Source | Section / original ZIP line | Actual current state | Next edit / owner |
+|---|---|---|---|
+| Ben's agreed file structure | Project-wide; `20-methods.tex:2`, `15-background.tex:2` | Live figures still live under chapters and Aim1/Aim2/Preliminary. Only cat has the new numbered path. My earlier chapter-path completion claim did not describe live source. | Mine: migrate every figure to chapter-numbered figs folders and add chapter-local graphics paths; preserve references and compile after migration. Existing-file moves need Ben's approval under the project skill. |
+| Ben's agreed local workflow | Dissertation root / ProofFinal | Extra staging, output, and review folders remain; old local chapter copies differ from the current ZIP/live sources. | Mine: inventory and consolidate preliminary material into ProofFinal without deleting unique files or overwriting Ben's changes. No new staging folder. |
+| Advisor, Methods Overview | `20-methods.tex:10` | Route-design purpose was omitted. Added live in this session. | Mine: bounded prose correction applied; no claim that all current routes meet targets. |
+| Advisor, compliance purpose | `20-methods.tex:307–313` | Inner solve versus parameter fitting was unclear. Added live purpose sentence at original line 307. Related subsection/rationale request remains open. | Mine: finish explanation/organization; ZCode/code reviewer: confirm evaluator, parameter identification, and stopping details against the implementation of record. Not purely delegated plotting work. |
+| Advisor, equation/solver audit | Methods review comments, 11 September 9:12/9:14 | "Have Stu double check the equations" and "Stop conditions?" remain visible in live review. Their being visible is not proof of whether prose edits fully address them; audit not completed. | Verify equations and documented stop criteria with implementation/reviewer; do not invent tolerances or claim an external review occurred. |
+| Advisor layout / final QA | Results; bibliography; Appendices A–C | Three Results overflows of about 179–193 pt; bibliography overflow about 296 pt; multiple large appendix overflows. Zero errors/warnings does not mean publishable layout. | Mine: correct substantial layout defects and visually audit; plotting changes may additionally require ZCode regeneration. |
+| Advisor Table 5.1 | Discussion, current `40-discussion.tex:72` | Placement remains listed open; log still reports underfull alignment. Only Tables 4.1/4.2 have a verified shared-page layout. | Mine: verify and correct Table 5.1 placement independently of statistic/data verification. |
+| Data/run-dependent annotations | Force/torque figures, Appendix C, neural simulation Results, Abstract | Final synchronized plots, coefficients, run-of-record claims, and related captions/prose remain in the prior ledger. | ZCode/data owner: freeze and regenerate results; mine: integrate verified artifacts and complete editorial/layout pass. Do not count the entire dissertation as finished. |
+
+This is a targeted audit of the defects Ben identified plus verified build/ledger defects, not an exhaustive declaration that every other advisor comment is closed. No review comment was resolved or tracked change accepted/rejected in this session.
+
+- Compile checkpoint: current live output is 172 pages, with 0 errors, 0 warnings, and 29 typesetting notices. The three large Results vertical overflows and material bibliography/appendix horizontal overflows remain. A successful build is not a clean final-layout audit. Preliminary Background source synchronized to the actual live placement at the end of Section 2.9; visual check pending.
+
+- Live Methods checkpoint: both bounded prose corrections applied and full source reread matched exactly (57,323 characters). Prohibited-name guard passed. No comments resolved, tracked changes accepted/rejected, equations altered, or new numerical results asserted. Related subsection/rationale and implementation verification remain open.
+
+- Preliminary Methods correction saved at `ProofFinal/20-methods.proposed.tex`: line 10 adds the model's route-design role against human knee torque targets; near line 307 explicitly separates the compliance solve for specified parameters from the outer parameter-identification optimization. No equations, parameters, data, or optimizer claims changed. Live application pending.
+
+- Live checkpoint: Background source insertion applied and complete source reread matched exactly (36,069 characters). Chapter-local graphics path added for `figs/15-background` with temporary legacy fallbacks; grayscale illustration/caption appended in Section 2.9. Caption explicitly identifies reconstructed details and source video/timestamp. Prohibited-name check passed. Compile/placement verification pending; full project migration is NOT complete.
+
+- Live checkpoint: upload confirmed in `figs/15-background/decerebrate_cat_illustration.png`. Source insertion and compile verification still pending. Personal color version is not uploaded.
+
+- Preliminary Background insertion saved in `ProofFinal/15-background.proposed.tex`, based on the current downloaded/live 35,151-character source. Adds a numbered Background graphics path and the approved grayscale illustration with explicit reconstruction/source provenance. This is a preliminary source, not yet applied live; existing ProofFinal chapter is preserved.
+
+- Live checkpoint: created `figs/15-background` for the approved cat illustration; upload and source insertion are still pending. No legacy files moved or deleted.
+
+### October 1, 2026 — Cat files placed within agreed destinations
+
+- Copied approved grayscale preview to `Dissertation/ProofFinal/figs/15-background/decerebrate_cat_illustration.png` for the live upload. Saved personal orange version directly at `Dissertation/decerebrate_cat_personal_color.png`, outside the Overleaf project. No new staging/output/review folder created; originals preserved.
+- Live Methods line 10 comment asks to state that the model also designs attachment locations toward human knee torque capability. This is my prose responsibility, not a delegated plotting task; it was missed.
+- Comment near line 307 asks whether the compliance calculation is for later optimization or attachment compliance, and notes optimized stiffness is introduced before its fitting is explained. Related comment near line 313 requests an optimization subsection and rationale. The explanation/organization is my responsibility; evaluator/parameter accuracy still requires the code/results audit. These are not completed just because equations compile.
+
+### October 1, 2026 — Completion claim withdrawn; current-source audit underway
+
+- Ben identified that the live project does not follow the agreed chapter-numbered `figs/` hierarchy. Confirmed in both current `Bolen_Dissertation.zip` and live Overleaf: newly uploaded figures remain under `chapters/`, while older figures use `figs/Aim1`, `figs/Aim2`, and `figs/Preliminary`.
+- The report's claim that every chapter has a chapter-local graphics path is NOT true of the current downloaded/live source. For example, current `chapters/20-methods.tex` line 2 is blank; local ProofFinal has a different `figs/Methods/` declaration. Local edits must not be reported as live completion. Prior blanket "done except delegated edits/cat" claim is withdrawn.
+- Auditing Methods line 10 and the comment near line 307 directly in Overleaf. Do not assume all remaining comments are delegated plotting work. No review comments resolved during this audit.
+- User authorizes the grayscale cat in Overleaf and the personal color version saved locally. Pending insertion with explicit interpretive provenance; current original ZIP/PDF left untouched. Preliminary work stays within ProofFinal; no new staging/output/review folders will be created. Existing extra folders have not been deleted or reorganized.
+
+### October 1, 2026 — Grayscale cat-local softness and wire enhancement
+
+- Ben clarified: slightly blur/add grain to the cat only, not background or apparatus; enhance the faint fixture circled in green, similar to the shoulder wire. Then explicitly corrected the output to KEEP GRAYSCALE.
+- Built-in image-editing tool produced `Documentation/Reports and Papers/Dissertation/output/decerebrate_cat_01-300_grayscale_cat_soft_wire_v3.png`. Prior versions preserved. The intermediate color output is superseded by this grayscale result.
+- Prompt used the marked grayscale image as target, preserved its head/neck and pose, removed markup, requested cat-local softness/grain, unchanged apparatus/background focus, and increased visibility of the existing second wire. Visual QA: grayscale, softer cat, and second wire visibly clarified. Generated editing cannot guarantee pixel-exact preservation of background or authenticate reconstructed fixture details.
+- Still an interpretive preview; no dissertation insertion, Overleaf changes, Git commit, or push. Report checkpoint saved immediately after final render/copy.
+
+### October 1, 2026 — Personal grainy interpretation v2
+
+- Ben requested an unsettling, subtly zombie-like head/neck impression, slight blur/grain, a slimmer near hindleg, and restoration of orange coloring on the visible tail segment. Used the built-in image-editing skill/tool with the prior personal color version as target and original 1.300-second frame as reference.
+- Saved `Documentation/Reports and Papers/Dissertation/output/decerebrate_cat_01-300_personal_grainy_v2.png`; previous versions preserved. Visual QA: added grain/softness, slightly reduced hindleg bulk, and an orange tail segment. Head/neck changes are subtle, not a major transformation.
+- Prompt requested a dull eye, rough/asymmetric shaved skin and existing dried-blood patches, with no additional wounds, exposed anatomy, decay, fresh bleeding, monster features, or markup. This is a personal artistic interpretation, not evidence of actual procedure/anatomy or recovered source color.
+- No dissertation insertion or Overleaf changes. No Git commit or push. Report updated immediately after render/save.
+
+### October 1, 2026 — Personal-use color interpretation saved
+
+- Ben explicitly requested a personal-use orange-tabby interpretation with pale pink-beige shaved feline skin and existing dark eye/throat patches interpreted as caked-on post-surgical blood. Used the built-in image-editing tool with the prior color image as the edit target and grayscale image as the shaved-area reference.
+- Saved `Documentation/Reports and Papers/Dissertation/output/decerebrate_cat_01-300_personal_color_interpretation.png`. Original and previous versions remain untouched.
+- Visual check: shaved head/neck now show pink skin rather than gray/orange fur; dark reddish-brown crusts appear at the eye and throat. Four-leg pose, orange body, and laboratory backdrop remain broadly consistent. Head detail remains generatively reconstructed, not verified historical evidence.
+- Prompt constraints: change shaved skin and existing dark patches only; retain pose, apparatus, and background; no fresh flowing blood, additional wounds, exposed internal anatomy, text, or labels.
+- PERSONAL USE ONLY, not dissertation material. No Overleaf changes, source substitution, Git commit, or push. Report updated immediately after this render/save group.
+
+### October 1, 2026 — Both preferred-frame previews delivered
+
+- Saved and displayed the orange-tabby interpretation: `output/decerebrate_cat_01-300_orange_tabby_render.png`. Grayscale counterpart: `output/decerebrate_cat_01-300_grayscale_render.png`. Both use the preferred frame matched at 1.300 seconds, not the old 5.833-second selection.
+- Prompt requested muted ginger fur guided by visible tonal bands, neutral laboratory hardware/background, four-leg pose preservation, visible head/throat apparatus, no beautification/restored anatomy, no added gore, and no new hardware.
+- These are built-in image-tool renderings. They reconstruct fur/anatomy detail and are NOT documentary restorations. Orange is Ben's requested interpretation, not authenticated source color. Preserve and use the original for scientific provenance; no rendered version has been inserted in Overleaf.
+- Source frame, matching scores/metadata, and visual contact sheet remain in `Notes/cat_selected_match/`. Report was updated after each render/copy group; no Git commit or push.
+
+### October 1, 2026 — Grayscale render saved
+
+- Built-in image-editing tool rendered the matched 1.300-second source and displayed it. Saved `output/decerebrate_cat_01-300_grayscale_render.png`.
+- Prompt requested exact pose/apparatus preservation, grayscale, modest deblocking/contrast, four original leg positions, no restored healthy anatomy, and no added injury.
+- Visual QA: legs are clearer, but fur texture, feet, and head detail have been reconstructed beyond the source. This is an AI interpretation, NOT an authenticated contrast-only restoration. No Overleaf substitution is authorized by this output.
+
+### October 1, 2026 — Preferred frame matched; two render variants requested
+
+- Pixel comparison across the supplied video found the closest screenshot match at VideoReader timestamp 1.300 seconds (extraction index 39). Next scores: 1.333 and 1.367 seconds. Selected raw frame saved at `Notes/cat_selected_match/selected_original.png`, with a preserved deliverable copy `output/decerebrate_cat_selected_01-300_original.png`.
+- Ben requests both a grayscale enhancement and an orange-tabby rendering. Color rendering is an interpretation requested by Ben, not recovered color evidence. Preserve visible head/throat apparatus, all four legs/feet, pose, and experimental hardware.
+- No cat render is approved for dissertation use yet. No Overleaf changes in this group.
+
+### October 1, 2026 — Matching Ben's preferred original frame
+
+- Ben supplied a screenshot with the slider near 00:01 and a clearer four-leg pose. Added `Notes/match_cat_selected_frame.m` to compare the screenshot's video region against every saved-video frame using normalized pixel similarity, then extract the best authentic match.
+- Matching is image analysis/extraction, not generative editing. Original footage and previous stills remain untouched. The exact timestamp will be recorded after running and visually checking the result.
+- A separate AI-enhancement preview is requested; publication use remains pending inspection and Ben's review. No Overleaf changes in this group.
+
 ### September 30, 2026 — Leg-contrast preview; not approved for scientific use
 
 - Ben requested better separation of the cat's legs from the background. Generated a separate preview with a contrast-only, geometry-preserving prompt using the image-editing tool.
@@ -12,7 +162,7 @@
 
 - Saved September 29, 2026, for later retrieval: https://www.youtube.com/watch?v=1nkczBM5YiM . Ben supplied this link; its contents have not been inspected. This is separate from the cat-footage link for Comment 20.
 
-**Last updated:** 2026-09-29 23:55 PDT — Upscaled cat preview rendered
+**Last updated:** 2026-10-01 — Cat inserted live; Methods clarifications applied; incomplete structure/layout claims corrected
 
 ### Upscaled preview rendered
 

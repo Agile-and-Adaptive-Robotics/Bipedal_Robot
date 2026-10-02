@@ -5,11 +5,17 @@ You are curating Sensory Afferent Database papers. You receive a batch file
 `primary` author, `year`, `doi`, `abstract`, `topic`). You produce ONE output
 file `curation_out/batch_NN.json` — a JSON array, SAME ORDER, SAME `id`s.
 
-## Grounding rule (absolute)
-Write fields ONLY from the paper's own `abstract` (plus title/topic as
-context). NEVER from your memory of the literature. If the abstract is too
-thin to support a field, leave that field empty — never guess. Do not fetch
-the web; the abstract IS the grounding.
+## Grounding rule (absolute) — PDF FIRST (Ben, 2026-10-01)
+Ground on the paper's FULL TEXT whenever a PDF exists — Ben's rule: "You need
+to look at the actual pdf if it is attached." Source order:
+1. `curation_queue/pdf_grounding/<recordId>.txt` (extracted from the local
+   Zotero copy via `pdf_grounding.py` — run it for your batch's papers first)
+2. The paper's `abstract` from the batch file (fallback when no PDF exists)
+3. Scholar snippet in `export/grounding_scholar.json` (second fallback)
+NEVER write fields from model memory. If none of the three exist, leave the
+field empty — never guess. Note: OpenAlex abstracts are occasionally attached
+to the WRONG record (e.g. Carlson-Kuhta 'Forms II' carried the 'Forms III'
+abstract) — when a PDF is present it ALWAYS outranks the abstract.
 
 ## Fields to produce per paper
 
@@ -27,9 +33,9 @@ the web; the abstract IS the grounding.
 
 - **animals** (array, exact names from this list ONLY — all preparations the
   paper actually discusses, empty if none/unclear):
-  Cat, Dog, Frog, Hexapod, Human, Insects, Lamprey, Mammals, Mice, Rat,
-  Salamander, Stick Insect, Vertebrates, Zebrafish, Arthropods, Cockroach,
-  Turtle. ("Mice", never "Mouse".)
+  Cat, Dog, Frog, Hexapod, Human, Insects, **Invertebrates** (Ben 2026-10-02),
+  Lamprey, Mammals, Mice, Rat, Salamander, Stick Insect, Vertebrates, Zebrafish,
+  Arthropods, Cockroach, Turtle. ("Mice", never "Mouse".)
 
 - **afferents** (array, exact names ONLY, empty if the abstract does not
   specify afferent types): "Type 1 (legacy)" (old papers using the type 1/2
@@ -61,7 +67,15 @@ the web; the abstract IS the grounding.
   "Ipsilateral excitatory - swimming edge cell", "Cross inhibitory - swimming edge cell",
   "large diameter spinal afferent stimulation".
   If the paper demonstrates a pathway that clearly fits NONE of these, do NOT
-  force it: leave feedback empty and put a one-line description in `flags`.
+  force it: leave feedback empty and put a one-line description in `flags`,
+  **composed in Ben's naming grammar (2026-10-02)**:
+  `afferent + (inhibit|excite) + (contralateral|ipsilateral|agonist|antagonist) + joint + phase`
+  — e.g. "ankle Ib feedback to hip during stance" (his Ekeberg-Pearson
+  example), "lateral postural reflex" (his Karayannidou naming). Standalone
+  phase terms ("stance", "swing", "stance to swing", "swing to stance") are
+  combinable primitives. REVERSE direction (phase/state MODULATING afferent
+  gain, as in Akazawa 1982) is its own dimension: "phase → afferent gain",
+  not a forward pathway.
 
 - **animal_study** (string, ≤1000 chars): how the paper's information could
   seed an animal study, or how its hypothesis could be tested ON an animal

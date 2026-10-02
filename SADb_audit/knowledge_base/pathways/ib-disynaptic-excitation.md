@@ -1,21 +1,12 @@
 # Feedback pathway: Ib disynaptic excitation
 
-9 papers in the corpus.
+6 papers in the corpus.
 
 - **Nichols 2018** — [Distributed force feedback in the Spinal Cord and the regulation of limb mechanics](https://doi.org/10.1152/jn.00216.2017)  
-  - animals: Cat, Human · pathways: Ib disynaptic inhibition; Ib disynaptic excitation; Ia monosynaptic  
+  - animals: Cat, Human · pathways: Ib disynaptic inhibition; Ia monosynaptic; Ib disynaptic excitation  
   - Review Update Paper; This paper show able to give insight to the inhibitory and excitatory force feedback during locomotion
-- **Angel 2005** — [Candidate interneurones mediating group I disynaptic EPSPs in extensor motoneurones during fictive locomotion ](https://doi.org/10.1113/jphysiol.2004.076034)  
-  - animals: Cat · afferents: Ia, Ib · pathways: Ib disynaptic excitation  
-  - Identifies a candidate population of excitatory interneurons in intermediate laminae of mid-to-caudal L7 that are activated by extensor group I afferents at monosynaptic latency specifically during the extensor phase of MLR-evoked fictive locomotion, project to extensor motor nuclei, and burst rhythmically in extension even without afferent stimulation — a previously unknown population that could mediate the group I disynaptic excitation of extensor motoneurones while also supplying central extensor drive.  
-  - *Robot/sim:* Implement stance-gated group I afferent excitation of extensor motoneurones through a disynaptic interneuron layer whose cells also carry central extensor drive; ablating either the afferent gate or the interneuron population should remove load-dependent extensor reinforcement.
 - **Ivashko 2003** — [Modeling the spinal cord neural circuitry controlling cat hindlimb movement during locomotion](https://doi.org/10.1016/S0925-2312(02)00832-9)  
-  - animals: Cat · pathways: Ib disynaptic excitation; Ib disynaptic excitation; Ib stance to swing; Ib swing to stance; Ia stance to swing; Ia swing to stance; Ia monosynaptic; Ia monosynaptic excitation; Mechanosensory monosynaptic excitation; Ia disynaptic inhibition  
-  - Abstract
-A computational model of the spinal cord neural circuitry that controls locomotor movements of simulated cat hindlimbs. The neural circuitry includes two central pattern generators integrated with reflex circuits. All neurons were modeled in the Hodgkin–Huxley style. The musculoskeletal system includes two three-joint hindlimbs and the trunk. Each
-hindlimb is actuated by nine one- and two-joint muscles (a Hill-type model). Our simulations allow us to suggest a specific network architecture in the spinal cord and a pattern of feedback connectivities (from Ia and Ib fibers and touch s
-- **Ivashko 2003** — [Modeling the spinal cord neural circuitry controlling cat hindlimb movement during locomotion](https://doi.org/10.1016/S0925-2312(02)00832-9)  
-  - animals: Cat · pathways: Ib disynaptic excitation; Ib disynaptic excitation; Ib stance to swing; Ib swing to stance; Ia stance to swing; Ia swing to stance; Ia monosynaptic; Ia monosynaptic excitation; Mechanosensory monosynaptic excitation; Ia disynaptic inhibition  
+  - animals: Cat · pathways: Ib disynaptic excitation; Ib stance to swing; Ib swing to stance; Ia stance to swing; Ia swing to stance; Ia monosynaptic; Ia monosynaptic excitation; Mechanosensory monosynaptic excitation; Ia disynaptic inhibition  
   - Abstract
 A computational model of the spinal cord neural circuitry that controls locomotor movements of simulated cat hindlimbs. The neural circuitry includes two central pattern generators integrated with reflex circuits. All neurons were modeled in the Hodgkin–Huxley style. The musculoskeletal system includes two three-joint hindlimbs and the trunk. Each
 hindlimb is actuated by nine one- and two-joint muscles (a Hill-type model). Our simulations allow us to suggest a specific network architecture in the spinal cord and a pattern of feedback connectivities (from Ia and Ib fibers and touch s
@@ -27,10 +18,6 @@ hindlimb is actuated by nine one- and two-joint muscles (a Hill-type model). Our
   - animals: Mammals · afferents: Ib · pathways: Ib stance to swing; Ib disynaptic excitation; Ib excitatory  
   - Feedback from ankle extensor group I afferents sets two stance-critical features of the mammalian locomotor pattern: Ib Golgi tendon organ input excites the extensor half-center to prolong extensor bursts, so swing is not initiated while the leg is loaded, and extensor burst magnitude is enhanced through disynaptic and polysynaptic pathways opened only during locomotion. Reflex gains must be calibrated to limb biomechanics, and weakening ankle extensors evokes compensatory recalibration of proprioceptive influences on the pattern.  
   - *Robot/sim:* Implement stance-gated Ib excitation of the extensor half-center plus locomotion-gated disynaptic enhancement of extensor motoneuron gain; ablating the load gate should trigger swing under load and abolish load-proportional burst scaling.
-- **Angel 1996** — [Group I extensor afferents evoke disynaptic EPSPs in cat hindlimb extensor motorneurones during fictive locomo](https://doi.org/10.1113/jphysiol.1996.sp021538)  
-  - animals: Cat · afferents: Ia, Ib · pathways: Ib disynaptic excitation  
-  - During the extension (stance-equivalent) phase of MLR-evoked fictive locomotion in decerebrate cats, group I afferents from ankle extensors evoke disynaptic EPSPs (mean central latency 1.55 ms, single interposed interneuron) in hip, knee, and ankle extensor motoneurons — also elicited by selective group Ia activation via muscle stretch — with hip extensor motoneurons receiving excitation from both homonymous and ankle extensor nerves. The effect arises from cyclic disinhibition of excitatory interneurons rather than motoneuronal voltage-dependent conductances or flexion-phase presynaptic inhib  
-  - *Robot/sim:* Implement a disynaptic excitatory pathway from extensor group I afferents to extensor motoneurons, gated ON during extension via interneuron disinhibition (OFF during flexion); ablate it and test for loss of stance force reinforcement.
 - **McCrea 1995** — [Disynaptic group I excitation of synergist ankle extensor motoneurones during fictive locomotion in the cat.](https://doi.org/10.1113/jphysiol.1995.sp020897)  
   - animals: Cat · afferents: Ia, Ib · pathways: Ib disynaptic inhibition; Ib disynaptic excitation  
   - In decerebrate cats, plantaris nerve group I stimulation evokes short-latency disynaptic IPSPs in medial gastrocnemius motoneurons at rest but EPSPs during the extensor phase of MLR-evoked fictive locomotion, also elicited by selective group Ia activation via Achilles tendon stretch, indicating an excitatory group Ia and Ib feedback system that reinforces ongoing extensor activity during stance. In clonidine-treated spinal preparations the resting inhibition disappears without appearing as excitation, suggesting locomotion inhibits the inhibitory interneurons operating at rest.  

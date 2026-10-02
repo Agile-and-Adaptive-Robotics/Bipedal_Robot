@@ -53,11 +53,11 @@
 - **Araujo-Estrada 2017** — [Bio-inspired Distributed Strain and Airflow Sensing for Small Unmanned Air Vehicle Flight Control](https://doi.org/10.2514/6.2017-1487)  
   - animals: Insects  
   - These results suggest that distributed mechanosensing and airﬂow sensin g both oﬀer advantages beyond traditional ﬂight control based on rigid body state estimat ion using inertial sensing.
+- **Sarlo 2016** — [Flow field sensing with bio-inspired artificial hair cell arrays](https://doi.org/10.1016/j.snb.2016.05.091)  
+  - Inspired by this principle, an artiﬁcial hair cell (AHC) sensory method based on bio-membrane transducers is developed for airﬂow sensing.
 - **Keshavan 2010** — [MAV stability augmentation using weighted outputs from distributed hair sensor arrays](https://doi.org/10.1109/acc.2010.5531002)  
   - animals: Insects, Human  
   - Computational model study. Trichoid hair sensillae, found extensively on the surface of the head, wings and the thorax of most insects, are used to sense the nature of air ﬂow past the body.
-- **Sarlo 2016** — [Flow field sensing with bio-inspired artificial hair cell arrays](https://doi.org/10.1016/j.snb.2016.05.091)  
-  - Inspired by this principle, an artiﬁcial hair cell (AHC) sensory method based on bio-membrane transducers is developed for airﬂow sensing.
 - **Wang 2011** — [Flight attitude estimation for MAV based on M-estimation](https://doi.org/10.1109/cecnet.2011.5768718)  
   - Computational model study. Subsequently, an innovation amendment method based on M-estimate is designed to improve the ability of Kalman filter to resist the interference from carrier maneuvering acceleration.
 - **Yeo 2013** — [Experimental Validation of an Aerodynamic Sensing Scheme for Post-Stall Aerodynamic Moment Characterization](https://doi.org/10.2514/6.2013-4979)  

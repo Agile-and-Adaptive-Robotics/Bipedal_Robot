@@ -1,4 +1,4 @@
-# Curation state (generated 2026-09-30)
+# Curation state (generated 2026-10-02)
 
 - 943 papers in the corpus; 833 carry distilled curation notes.
 - 95 papers have an afferent-type classification (Ia / Ib / II / III-IV /

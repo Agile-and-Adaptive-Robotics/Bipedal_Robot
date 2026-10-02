@@ -2,9 +2,6 @@
 
 32 papers in the corpus.
 
-- **Wilson and Sweeney 2023** — [Spinal cords: Symphonies of interneurons across species](https://doi.org/10.3389/fncir.2023.1146449)  
-  - animals: Vertebrates  
-  - Review of spinal interneuron composition across vertebrates: fish run on two basic classes (ipsilateral excitatory and commissural inhibitory neurons) plus ipsilateral inhibition for escape swimming, and with the evolution of limbs these three types proliferated into molecularly, anatomically, and functionally distinct subpopulations — movement elaboration is mirrored by interneuron specialization.
 - **Ijspeert and Daley 2023** — [Integration of feedforward and feedback control in the neuromechanics of vertebrate locomotion: a review of ex](https://doi.org/10.1242/jeb.245784)  
   - animals: Vertebrates  
   - Review arguing that vertebrate locomotion emerges from distributed control, spinal CPGs as coupled-oscillator feedforward controllers plus multiple reflex feedback loops, activated and modulated by descending pathways, whose relative contributions vary among animals with body size, intrinsic mechanical stability, time to reach locomotor maturity, and speed. It hypothesizes that distal joints rely more on feedback control than proximal joints, and positions robots and neuromechanical simulations as complements to experiments through what-if scenario testing.  
@@ -13,6 +10,9 @@
   - animals: Vertebrates  
   - Historical review of vertebrate locomotor control organizing a century of work into three interacting systems: spinal central pattern generators produce the basic rhythm, brainstem descending inputs initiate, maintain, and stop locomotion while controlling speed and direction, and sensory inputs adapt the locomotor program to environmental conditions.  
   - *Robot/sim:* Structure a locomotor controller as a spinal CPG plus brainstem-analog descending commands (start, stop, speed, direction) plus sensory adaptation loops, and test that removing each layer reproduces its predicted functional loss.
+- **Wilson and Sweeney 2023** — [Spinal cords: Symphonies of interneurons across species](https://doi.org/10.3389/fncir.2023.1146449)  
+  - animals: Vertebrates  
+  - Review of spinal interneuron composition across vertebrates: fish run on two basic classes (ipsilateral excitatory and commissural inhibitory neurons) plus ipsilateral inhibition for escape swimming, and with the evolution of limbs these three types proliferated into molecularly, anatomically, and functionally distinct subpopulations — movement elaboration is mirrored by interneuron specialization.
 - **Zholudeva 2021** — [Spinal Interneurons as Gatekeepers to Neuroplasticity after Injury or Disease.](https://doi.org/10.1523/jneurosci.1654-20.2020)  
   - animals: Mice, Cat, Rat, Human, Vertebrates  
   - Review positioning spinal interneurons — a heterogeneous population that modulates motor, sensory, and autonomic function — as key components of plasticity and recovery after spinal cord injury, and arguing that treatments should be optimized for how they engage interneuron circuits rather than viewed as acting around them.
@@ -28,16 +28,16 @@
   - Comparative overview of brainstem and spinal CPGs (deglutition, mastication, respiration, defecation, micturition, ejaculation, locomotion) showing that organization, function, and cellular properties are generally well-preserved phylogenetically across in vivo models, in vitro preparations, and primates, with the locomotor network the most fully characterized — supporting transfer of locomotor CPG design principles across species and preparations.  
   - *Robot/sim:* Use the review's summary of conserved CPG organization (modular rhythmogenic units, descending trigger and steering inputs) as the architectural template for a simulated network controlling multiple rhythmic behaviors, not only locomotion.
 - **Ting and Chiel 2017** — [Muscle, Biomechanics, and Implications for Neural Control](https://doi.org/10.1002/9781118873397.ch12)  
-  - animals: Vertebrates  
+  - animals: Vertebrates, Invertebrates  
   - Argues that muscle multifunctionality versus specialization determines the relative division of labor between neural and muscular control in vertebrates and invertebrates: the transformation from neural activation to muscle force depends on intrinsic neuromuscular properties, body structure, environmental forces, and behavioral context, so muscles are not single-function actuators and neural control complexity must be evaluated within that biomechanical context.  
   - *Robot/sim:* Endow simulated muscles with realistic intrinsic and context-dependent properties, then measure how much neural control complexity is required as muscle multifunctionality varies - directly testing the chapter's neural-versus-muscular complexity trade-off.
-- **Luca 2017** — [Bioinspired morphing wings for extended flight envelope and roll control of small drones](https://doi.org/10.1098/rsfs.2016.0092)  
-  - animals: Vertebrates, Human  
-  - We show that a fully deployed configuration enhances manoeuvrability while a folded configuration offers low drag at high speeds and is beneficial in strong headwinds.
 - **Edwards and Prilutsky 2017** — [Sensory Feedback in the Control of Posture and Locomotion](https://doi.org/10.1002/9781118873397.ch9)  
   - animals: Arthropods, Vertebrates  
   - Book chapter synthesizing sensory control of posture and locomotion in arthropods and vertebrates through classical feedback-control theory, arguing that experimental paradigms, reduced animal preparations, and neuromechanical modeling must be combined to understand postural control, which in both groups maintains a body-configuration set point (a set of joint angles keeping the body above the feet) during standing, locomotion, and other movements, and resists sudden perturbations.  
   - *Robot/sim:* Build posture controllers for simulated walkers per the chapter's framework - body-configuration set points defended by sensory feedback loops - and ablate loops individually to compare predicted versus resulting postural deficits in arthropod- and vertebrate-style morphologies.
+- **Luca 2017** — [Bioinspired morphing wings for extended flight envelope and roll control of small drones](https://doi.org/10.1098/rsfs.2016.0092)  
+  - animals: Vertebrates, Human  
+  - We show that a fully deployed configuration enhances manoeuvrability while a folded configuration offers low drag at high speeds and is beneficial in strong headwinds.
 - **Mohamed 2016** — [Development and Flight Testing of a Turbulence Mitigation System for Micro Air Vehicles](https://doi.org/10.1002/rob.21626)  
   - animals: Vertebrates  
   - Development and Flight Testing of a Turbulence Mitigation System for Micro Air Vehicles •••••••••••••••••••••••••••••••••••• A.

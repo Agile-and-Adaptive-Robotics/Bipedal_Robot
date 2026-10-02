@@ -1896,6 +1896,24 @@ Knee_Torque_Test\Figures\Figure components\FlxPin_group\FlxPin_group.fig`.
   bracket-y offset; the un-shifted pB is optimal for it. Plastic-deformation
   allowance in that axis is unsupported by the torque data.
 
+## NEUROMECHANICAL MODELING — read the SADb rules FIRST (Ben, 2026-10-02; applies on ALL machines)
+
+Any session building, tuning, or debugging a neuromechanical model in
+**AnimatLab** (`Neuromechanical_Models\`), **SNS Simulink / SNS_Simscape**
+(`Code\Matlab\SNS_Simscape\`), or the **MuJoCo-SNS toolbox**
+(`Code\MuJoCo_SNS\`) MUST first read **`SADb_audit\MODEL_XREF.md`** — the
+generated cross-reference of feedback-pathway RULES (each with its
+demonstrating papers), key MODELS, key STUDIES (top-cited with distilled
+notes), the afferent encoding cheat sheet (Ia/Ib/II semantics + the
+`(L−Lmid)/Lhalf, L̇/0.6, F/Fmax` encoder conventions), and the per-platform
+rule→implementation table. Ground pathway wiring and gains in the cited
+studies and cite the demonstrating paper in code comments. Deeper browsing:
+`SADb_audit\knowledge_base\INDEX.md` and the SADb Explorer app. The xref
+regenerates from the corpus (`myo python SADb_audit\build_model_xref.py`) —
+part of the rebuild chain (export → build_model_xref → build_knowledge_base
+→ build_app → check → package_dist); regenerate after any curation batch so
+new rules/studies propagate to future modeling sessions.
+
 ## File references — always clickable links (Ben, 2026-10-01; user-global rule)
 
 Every file/folder mentioned in any reply is a Markdown link with an ABSOLUTE
@@ -2262,7 +2280,58 @@ schema scope) — Ben deletes the 3 empty Papers fields in the UI. TWIN AUDIT
 157 = 156 stubs + 0 rich + 1 orphan — the 386 stubs are the cap-cut lever
 (delete stubs + re-express is-model/is-review as Papers fields FIRST), NOT
 deleting Papers records (that orphans the curation layer and saves nothing).
-PLAN PROPOSED, awaiting Ben's go; no deletions executed.**
+PLAN PROPOSED, awaiting Ben's go; no deletions executed.** **EXECUTED
+LATER 2026-10-01: Ben approved "delete the 90" — 95 records deleted (88
+Papers: NN/ML 14 + aero 4 + flow-sensing-no-neuro 15 + bio-mechanisms 4 +
+fish 10 + prior flags 41, deduped; + 7 satellite orphans) via guarded
+query-string batch DELETE (GOTCHA: Airtable batch-DELETE request BODIES are
+dropped in transit → `?records[]=` query params; single-record DELETE works
+normally). Audit: `deletion_log.csv` + FULL record snapshots in
+`deleted_records_20261001.json` (regret-proof). Base now **1294 records**
+(Papers 855 + Models 244 + Review 156 + Feedback 35 + Recorders 4) — still
+over cap; the remaining lever = the 386 twin stubs, WHICH BEN HOLDS until
+he reviews the curation flags (his read: stubs may just be unfinished
+curation). Scholar-via-browser pilot WORKS (3/3 no-text abstracts recovered
+through his PSU-logged-in IAB tab; `scholar_pilot_20261001.md` documents
+the workflow for the ~107 remaining no-text papers, ~10/session pace);
+the Airtable UI in the IAB shows an unsupported-browser banner — API stays
+the write path.**
+**SAME-DAY LATER (Ben away ~1h, "give me the 290"): his round-2 + flags
+rulings applied (7 round-2 deletes; Jessell/Izhikevich/Orlovsky; NEW RULES:
+delete all monographs/textbooks — T3 sweep; conference-abstract-only stubs
+with no accessible paper/poster get deleted — T4; titles in review docs are
+NEVER truncated — his "don't be lazy" ruling after truncated titles made
+companion papers indistinguishable). CUT LIST DELIVERED:
+`cut_list_290.md`/`.csv` (T1 7 + T2 3 + T3 3 + T4 1 + T5 276 rubric-ranked;
+351 protected: his important-author list incl. Gerr→Geyer and
+Buschmann→+Büschges, feedback-linked, ≥400 cites, pre-1940, explicit keeps;
+no-DOI records excluded from the rubric — citation data MISSING ≠ zero, the
+Shik-1966 failure mode; 2024+ excluded as too new to judge) — NOT EXECUTED,
+Ben reviews. DATA-QUALITY FIND: models2/reviews link fields are POLLUTED
+with multi-links (probably task5 + the records[]-GET bug in the campaign's
+twin linker — audit owed before those fields are trusted again). PDF pass
+("Get papers"): 47/55 flagged papers extracted from the LOCAL Zotero library
+(`pdf_grounding.py` → curation_queue/pdf_grounding/), 8 lack local copies;
+Jankowska-2010 answer to Ben = shared group I/II premotor integration (no
+separate Ib-vs-II rules in the paper). Queued on Ben's word: execute the
+290, Kooij-2000 three postural-integration Feedback tags (names proposed),
+Karayannidou "Lateral postural reflex" tag, Hunt-2017/Quinn pathway
+curation from full text, Hägglund/Knikou/Mazzaro full-text reads (no local
+PDF — Scholar/download route).**
+**EXECUTED 2026-10-02 (Ben: "ax them from airtable… we'll keep them in the
+app"): all 290 deleted (0 failures); snapshots live in
+`SADb_audit\archive\deleted_records_*.json` (both deletion waves); the
+export now MERGES archive/ back in with archived=True, so the app + KB
+keep all 378 removed papers forever — pill "app-only (removed from
+Airtable)" in table/detail + stats line (browser-verified). Airtable now:
+Papers 565 (527 curated, 38 bare) / Models 244 / Review 156 / Feedback 35 /
+Recorders 4 = **1004 records — 4 OVER the cap**; next-4 by rubric named to
+Ben (Crowe 1964, Buford+Smith 1990, Sengupta+Bagnall 2023,
+Roden-Reynolds 2015 — increasingly substantive; recommend 4 twin stubs
+instead, which Ben holds pending his flags review). Advisor zip refreshed
+(dist\SADb_Explorer_2026-10-01.zip). GOTCHA BANKED: PowerShell -replace +
+Set-Content CORRUPTS UTF-8 files (cp1252 round-trip mojibake — build_app.py
+was hit and byte-repaired); munge repo text files with python ONLY.**
 
 ## 2026-09-28 — SADb/Airtable campaign (Ben's /goal list) — EXECUTED 2026-09-28/30; full details in SADb_audit\README.md "CURATION v2 CAMPAIGN"
 
@@ -2321,3 +2390,7 @@ SILENTLY IGNORED (returns unfiltered first 100) — verification must use
 per-record GETs (_verify_all.py); clearing a select = null, not ""; PowerShell
 Set-Content -Encoding UTF8 adds a BOM (read with utf-8-sig) and ConvertTo-Json
 corrupts nested arrays — patch JSON with python, not PowerShell.
+
+**2026-10-02b: flags round-2 rulings executed — 4 more papers + 47 ORPHANED Review stubs deleted (zero info loss; 115 Models orphans found, Ben holds); Animals +Invertebrates (typecast-write trick; metadata API rejects select-option edits); naming GRAMMAR banked in CURATOR_GUIDE (afferent+action+side+joint+phase; phase- as reverse direction); BASE NOW 953 RECORDS (Papers 561 / Models 244 / Review 109 / Feedback 35 / Recorders 4) — UNDER THE 1000 CAP. Queued tag creations on Ben word: Ia/Ib disynaptic excitation split, lateral postural reflex, Kooij vestibular/visual/somatosensory postural tags.**
+
+**2026-10-02c (Ben 'yes' batch): Feedback tags created + linked — 'Ia disynaptic excitation' (Angel 1996), 'I disynaptic excitation (mixed group I)' (Angel 2005; both Angels re-pointed OFF Ib disynaptic excitation), Vestibular/Visual/Somatosensory 'feedback to postural control' (Kooij 2000). Karayannidou 'Lateral postural reflex' SKIPPED — its paper was archived in the 290, an unlinked tag = junk record; restore the pair (archive snapshot + tag) on request. Feedback table now 45 records. Base 953. Full rebuild done: KB 84 pages, app 943 papers (382 app-only), advisor zip dist\SADb_Explorer_2026-10-02.zip. GOTCHA: link-field GETs return bare ID strings on per-record GET (no name dict) — filter by known ID sets.**

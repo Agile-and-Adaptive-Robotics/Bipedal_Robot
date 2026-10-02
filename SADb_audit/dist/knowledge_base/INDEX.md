@@ -32,9 +32,9 @@ Generated from the Airtable “Sensory Feedback” corpus: **943 papers**, 833 w
 - [Ib excitatory](pathways/ib-excitatory.md) — 12 papers
 - [Fictive locomotion without sensory feedback](pathways/fictive-locomotion-without-sensory-feedback.md) — 12 papers
 - [Ia or II stance to swing](pathways/ia-or-ii-stance-to-swing.md) — 10 papers
-- [Ib disynaptic excitation](pathways/ib-disynaptic-excitation.md) — 9 papers
 - [Ia monosynaptic excitation](pathways/ia-monosynaptic-excitation.md) — 7 papers
 - [Ia reciprocal inhibition](pathways/ia-reciprocal-inhibition.md) — 6 papers
+- [Ib disynaptic excitation](pathways/ib-disynaptic-excitation.md) — 6 papers
 - [Chordotonal organ multi-synaptic excitation](pathways/chordotonal-organ-multi-synaptic-excitation.md) — 5 papers
 - [Chordotonal organ multi-synaptic inhibition](pathways/chordotonal-organ-multi-synaptic-inhibition.md) — 5 papers
 - [Ib disynaptic inhibition](pathways/ib-disynaptic-inhibition.md) — 5 papers
@@ -50,11 +50,16 @@ Generated from the Airtable “Sensory Feedback” corpus: **943 papers**, 833 w
 - [Ia swing to stance](pathways/ia-swing-to-stance.md) — 1 papers
 - [Mechanosensory monosynaptic excitation](pathways/mechanosensory-monosynaptic-excitation.md) — 1 papers
 - [Ia disynaptic inhibition](pathways/ia-disynaptic-inhibition.md) — 1 papers
+- [Somatosensory feedback to postural control](pathways/somatosensory-feedback-to-postural-control.md) — 1 papers
+- [Vestibular feedback to postural control](pathways/vestibular-feedback-to-postural-control.md) — 1 papers
+- [Visual feedback to postural control](pathways/visual-feedback-to-postural-control.md) — 1 papers
 - [trochanteral hair plate multi-synaptic excitation](pathways/trochanteral-hair-plate-multi-synaptic-excitation.md) — 1 papers
 - [trochanteral hair plate multi-synaptic inhibition](pathways/trochanteral-hair-plate-multi-synaptic-inhibition.md) — 1 papers
 - [Ia inhibitory](pathways/ia-inhibitory.md) — 1 papers
 - [group III/IV fatigue](pathways/group-iii-iv-fatigue.md) — 1 papers
 - [Total afferent inhibition](pathways/total-afferent-inhibition.md) — 1 papers
+- [Ia disynaptic excitation](pathways/ia-disynaptic-excitation.md) — 1 papers
+- [I disynaptic excitation (mixed group I)](pathways/i-disynaptic-excitation-mixed-group-i.md) — 1 papers
 - [Type 1 swing to stance](pathways/type-1-swing-to-stance.md) — 1 papers
 - [type 1 stance to swing](pathways/type-1-stance-to-swing.md) — 1 papers
 - [II inhibitory](pathways/ii-inhibitory.md) — 1 papers
@@ -89,4 +94,5 @@ Generated from the Airtable “Sensory Feedback” corpus: **943 papers**, 833 w
 - [Turtle](animals/turtle.md) — 4 papers
 - [Dog](animals/dog.md) — 4 papers
 - [Zebrafish](animals/zebrafish.md) — 2 papers
+- [Invertebrates](animals/invertebrates.md) — 1 papers
 - [Hexapod](animals/hexapod.md) — 1 papers

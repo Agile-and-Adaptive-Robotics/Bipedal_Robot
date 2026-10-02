@@ -136,7 +136,7 @@ skimming 'Data concerns' first is worthwhile. Regenerate after future batches:
 - [Noga 1987 — The role of Renshaw cells in locomotion: antagonism of their excitation from motor axon co](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recI3QJS6rddKdgQH) · [doi](https://doi.org/10.1007/bf00236206)  
   Renshaw recurrent inhibition (rate control, not part of the CPG) has no feedback vocabulary term; feedback left empty.
 - [Norris 2011 — Constancy and Variability in the Output of a Central Pattern Generator](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recd1FHQNmrOPeUNp) · [doi](https://doi.org/10.1523/jneurosci.5072-10.2011)  
-  Leech (annelid) preparation not in the animal vocabulary; animals left empty.
+  Leech (annelid) preparation not in the anim al vocabulary; animals left empty.
 - [Ogihara and Yamazaki 2001 — Generation of human bipedal locomotion by a bio-mimetic neuro-musculo-skeletal model.](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recmkSPf9bTo465ER) · [doi](https://doi.org/10.1007/pl00007977)  
   Feedback left empty: the abstract credits 'reciprocal innervation in the muscle spindles' without typing it as Ia reciprocal inhibition.
 - [Onushko 2013 — Hip proprioceptors preferentially modulate reflexes of the leg in human spinal cord injury](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recqN5btwC8zeVr9w) · [doi](https://doi.org/10.1152/jn.00261.2012)  
@@ -208,20 +208,27 @@ skimming 'Data concerns' first is worthwhile. Regenerate after future batches:
 
 - [Elson 1992 — Identified proprioceptive afferents and motor rhythm entrainment in the crayfish walking s](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recm4urpzERKRV42b) · [doi](https://doi.org/10.1152/jn.1992.67.3.530)  
   Crayfish mapped to 'Arthropods' (no Crayfish list entry); TCMRO S/T afferent entrainment and burst-resetting pathways fit no current Feedback vocabulary (arthropod promote/remote phases rather than vertebrate stance/swing), so feedback is empty.
+  # create the feedback vocabulary. Animals: Crayfish and Arthopods.
 - [Jindrich 2009 — Maneuvers during legged locomotion](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recD8qqPsM8KJCYJX) · [doi](https://doi.org/10.1063/1.3143031)  
   Ostriches are discussed as the comparison biped but are not in the animals vocabulary.
+  # Animals: Ostriches (and humans?)
 - [LaBella 1992 — Low-threshold, short-latency cutaneous reflexes during fictive locomotion in the "semi-chr](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recLuYXbI1HoROtsh) · [doi](https://doi.org/10.1007/bf00231657)  
   Feedback mapping: short-latency excitation in extensors (triceps surae) maximal during their active period was mapped to Cutaneous stance modification, and excitation in the flexor semitendinosus to Cutaneous flexor excitation.
+  # Again, I am confused by "Cutaneous". Like contact or like an external stimulus?
 - [Maas 2007 — The effects of self-reinnervation of cat medial and lateral gastrocnemius muscles on hindl](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/rec2RZbu3cjgkAJvv) · [doi](https://doi.org/10.1007/s00221-007-0938-8)  
   'Length feedback' from MG/LG mapped to spindle Ia/II (reinnervation also silences Ib); Cutaneous included because the abstract names it explicitly.
 - [Rome 1993 — How Fish Power Swimming](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/rec2LGJaT2IS5CkEM) · [doi](https://doi.org/10.1126/science.8332898)  
   Abstract says only 'fish' (no species); animals mapped to the closest allowed bucket 'Vertebrates' - consider adding 'Fish' to the vocabulary.
+  # Add fish
 - [Rossi-Durand 1993 — Peripheral proprioceptive modulation in crayfish walking leg by serotonin](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/reckkLAj4fWC3npA8) · [doi](https://doi.org/10.1016/0006-8993(93)91131-b)  
   Crayfish (crustacean) mapped to 'Arthropods' - no Crayfish entry in the animal list.
+  # add crayfish
 - [Schmitt 2002 — Dynamics and stability of legged locomotion in the horizontal plane: a test case using ins](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recN3bMEzLPbHVamF) · [doi](https://doi.org/10.1007/s00422-001-0300-3)  
   Passive-dynamic stability from leg mechanics was mapped to Biomechanically mediated preflexive feedback; the abstract does not use the term preflex itself.
+  # Is preflex here like stance to swing transition?
 - [Ting and Chiel 2017 — Muscle, Biomechanics, and Implications for Neural Control](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recMLbRa9efnWHXEx) · [doi](https://doi.org/10.1002/9781118873397.ch12)  
   Chapter explicitly covers both vertebrates and invertebrates; the animals vocabulary has no general invertebrate entry, so only Vertebrates was recorded.
+# add invertebrates
 
 ## Judgment calls (tagging conservatism etc.) (60)
 
@@ -231,38 +238,52 @@ skimming 'Data concerns' first is worthwhile. Regenerate after future batches:
   Abstract too thin to extract specific afferent types or pathways.
 - [Akazawa 1982 — Modulation of stretch reflexes during locomotion in the mesencephalic cat](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recetENlBYcGrP7zO) · [doi](https://doi.org/10.1113/jphysiol.1982.sp014319)  
   Core finding is phase-dependent gain modulation of the Ia stretch reflex; no vocabulary item for reflex gain modulation.
+  # Well can we call it "stance to swing", "swing to stance", "stance", "swing", and then add either "Ia inhibition" or "Ia excitation"? In general, we should allow for this logic algebra: "afferent" + "inhibit/excite" + "contralateral/ipsilateral/agonist/antagonist" + "joint" + "phase". In this case though it is the phase feeding back to the afferent. Do you understand?
 - [Andersson and Grillner 1981 — Peripheral control of the cat's step cycle I. Phase dependent effects of ramp-movements of](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recPGqPZU3LRiZkX3) · [doi](https://doi.org/10.1111/j.1748-1716.1981.tb06867.x)  
   Hip-ramp phase reset and swing-triggering effects fit no current vocabulary entry; consider 'hip position afferent stance to swing'. The abstract does not specify the afferent type mediating the effect.
+  # Exactly, see note above. 
 - [Angel 1996 — Group I extensor afferents evoke disynaptic EPSPs in cat hindlimb extensor motorneurones d](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recWccr9LDvwi2WzR) · [doi](https://doi.org/10.1113/jphysiol.1996.sp021538)  
   Selective group Ia activation also evoked the disynaptic excitation; the vocabulary has no 'Ia disynaptic excitation' entry, so the finding is tagged under 'Ib disynaptic excitation' (the group I mixed-nerve result).
+  # I would like to know the history of the types of afferent discovery. Did they think about load or position? Otherwise we might need to leave it 'I disynaptic excitation'. Or, it could be 'Ia disynaptic excitation' and 'Ib disynaptic excitation'. I think both exist in the stance-phase.
 - [Angel 2005 — Candidate interneurones mediating group I disynaptic EPSPs in extensor motoneurones during](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/reca10selgQlFrpHA) · [doi](https://doi.org/10.1113/jphysiol.2004.076034)  
   Abstract specifies 'group I' without dissociating Ia from Ib; afferents listed as both, and the 'Ib disynaptic excitation' vocabulary item used as the standard name for this stance-phase group I pathway.
+# see above
 - [Asif 2012 — On the Improvement of Multi-Legged Locomotion over Difficult Terrains Using a Balance Stab](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/reciUGAHPamTLce0k) · [doi](https://doi.org/10.5772/7789)  
   Pure control-engineering paper - no sensory-afferent content; Ben may want to decide whether it belongs in SADb.
+  # delete if not done already
 - [Beer 1998 — Biorobotic approaches to the study of motor systems](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recW2QvwSd3rFpEda) · [doi](https://doi.org/10.1016/s0959-4388(98)80121-9)  
   Abstract is a three-sentence editorial summary; no species, afferents, or pathways — minimal curation possible.
 - [Blackburn 2004 — Sex comparison of extensibility, passive, and active stiffness of the knee flexors](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recxUQ8JuDHyBXIk0) · [doi](https://doi.org/10.1016/j.clinbiomech.2003.09.003)  
   Marginal for a sensory-afferent database: biomechanical stiffness comparison with no afferent or reflex pathway content in the abstract.
+  # I think we deleted it already
 - [Dean 2013 — Proprioceptive Feedback and Preferred Patterns of Human Movement](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recUWzWrumdQrLybs) · [doi](https://doi.org/10.1097/jes.0b013e3182724bb0)  
   Abstract is an 'In Brief' hypothesis statement with no data — too thin for afferent typing or feedback pathway tags.
+  # delete
 - [Dimitrijević 1998 — Evidence for a Spinal Central Pattern Generator in Humansa](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/reccXh6N1BuE4gy39) · [doi](https://doi.org/10.1111/j.1749-6632.1998.tb09062.x)  
   Stimulation site is 'posterior structures' of the lumbar cord — afferent or dorsal-root involvement implied but not named in the abstract; see Hachmann 2021 for the large-diameter afferent interpretation.
 - [Edgley and Jankowska 1987 — An interneuronal relay for group I and II muscle afferents in the midlumbar segments of th](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recf2nnsCOlfEvGxV) · [doi](https://doi.org/10.1113/jphysiol.1987.sp016676)  
   Group I afferents decomposed to Ia+Ib in the afferents field (standard definition); group I disynaptic actions could not be assigned to a specific vocabulary item.
 - [Ekeberg and Pearson 2005 — Computer simulation of stepping in the hind legs of the cat: an examination of mechanisms ](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recYC3Vr0fYcePhr4) · [doi](https://doi.org/10.1152/jn.00065.2005)  
   Abstract names load (ankle extensor force) and hip-angle signals without naming receptor types; 'Ib stance to swing' is tagged because the load-sensitive stance-termination pathway is the paper's core mechanism, but the receptor attribution is by convention.
+  # sure 'Ib stance to swing' fits but we can do 'ankle Ib feedback to hip during stance' it sounds like
 - [Gao 2019 — Dendritic Neuron Model With Effective Learning Algorithms for Classification, Approximatio](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recvwIzskqiUp9ikx) · [doi](https://doi.org/10.1109/tnnls.2018.2846646)  
   Off-topic for a sensory afferent database: pure machine-learning neuron-model paper with no afferent or locomotor content — Ben may want to reclassify or drop.
+  # delete
 - [Gerstner 2009 — How Good Are Neuron Models?](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recKCncNuVAa7rZ4g) · [doi](https://doi.org/10.1126/science.1181936)  
   Abstract is a two-sentence teaser with no methods or results; only a minimal note can be grounded, and commentary-versus-review classification is uncertain (is_review left false).
+  # delete
 - [Gomar 2014 — Digital Multiplierless Implementation of Biological Adaptive-Exponential Neuron Model](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recwAaYQRw2Psco5n) · [doi](https://doi.org/10.1109/tcsi.2013.2286030)  
   Off-topic for a sensory afferent database: digital hardware neuron implementation with no afferent or locomotor content — Ben may want to reclassify.
+  # delete
 - [Gossard 2011 — Chapter 2--the spinal generation of phases and cycle duration.](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recfIKtOOvoPaRCFc) · [doi](https://doi.org/10.1016/b978-0-444-53825-3.00007-3)  
   Ankle dorsiflexion prolongs extension during fictive locomotion, but the afferent type is not specified and no vocabulary item covers stance prolongation by extensor stretch.
+  # maybe I'm just tired but you can say 'Ankle dorsiflexion prolongs extension during fictive locomotion,'
 - [Gubina 1974 — On the Dynamic Stability of Biped Locomotion](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recZVayeFS2NnRjwz) · [doi](https://doi.org/10.1109/tbme.1974.324294)  
   Pure control-theory paper (state feedback laws, no afferent content); feedback vocabulary not applicable here.
+  # delete
 - [Guevremont 2007 — Physiologically based controller for generating overground locomotion using functional ele](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recDbjiLWM58hFrG9) · [doi](https://doi.org/10.1152/jn.01177.2006)  
   Sensory-driven flexion/extension phase transitions were implemented with external sensors (force plates, accelerometers) — no afferent type identified, so no Feedback vocabulary entry applies.
+  # I'll make a note to look at this again. It sounds like you can get Ib, II, and maybe from Ia from what you describe.
 - [Hachmann 2021 — Epidural spinal cord stimulation as an intervention for motor recovery after motor complet](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recZblEttLs7yl33F) · [doi](https://doi.org/10.1152/jn.00020.2021)  
   Afferents described only as 'large diameter dorsal root proprioceptive' with no exact match in the afferents vocabulary (Ia/Ib/II not dissociated); feedback set via the 'large diameter spinal afferent stimulation' item.
 - [Haque 2019 — Characterization of WT1-expressing interneurons and investigation of their role in locomot](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recbdmPohBK1Qlvi7) · [doi](https://doi.org/10.7939/r3-jt04-kz83)  
@@ -275,38 +296,66 @@ skimming 'Data concerns' first is worthwhile. Regenerate after future batches:
   Abstract field contains publisher boilerplate only (no scientific content); all fields grounded in title alone, and is_model inferred from the title. Suggest re-fetching the real abstract.
 - [Hunt 2017 — Development and Training of a Neural Controller for Hind Leg Walking in a Dog Robot](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recM0Spre5cjj30My) · [doi](https://doi.org/10.3389/fnbot.2017.00018)  
   Robotics study with no animal experiments; animals entries record the modeled biology only (dog hind legs, mammalian locomotion models).
+  ## dog, mammal animal categories. You should find the rules if you haven't already. This is my advisor's work. Get it right.
+
 - [Hägglund 2013 — Optogenetic dissection reveals multiple rhythmogenic modules underlying locomotion](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recYd8bwl6gcq1KwR) · [doi](https://doi.org/10.1073/pnas.1304365110)  
   OpenAlex topic tag says Zebrafish but the abstract concerns the mammalian CPG; animal recorded as Mammals. Ben may want the species confirmed from the full text.
+  ## zebrafish and Mammals. Did you get rules from this paper?
+
 - [Izhikevich 2006 — Dynamical Systems in Neuroscience: The Geometry of Excitability and Bursting](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recTyf20KciVGaJVG) · [doi](https://doi.org/10.7551/mitpress/2526.001.0001)  
   Monograph/textbook, not primary research or a review essay; curated as methods background. No animal or afferent content in the abstract.
+## delete all monographs and textbooks
+
 - [Jankowska and Edgley 2010 — Functional subdivision of feline spinal interneurons in reflex pathways from group Ib and ](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recyaLy0ToIQpfrnw) · [doi](https://doi.org/10.1111/j.1460-9568.2010.07354.x)  
   Core claim - shared group I/II premotor integration rather than separate Ib and II populations - has no feedback vocabulary entry.
+## we'll come back to it. but it sounds like "type I/II premotor integration"? The title has Ib, what other rules have you got from this paper?
+
 - [Jessell 2000 — Neuronal specification in the spinal cord: inductive signals and transcriptional codes](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recmtKi7BqBJSH9my) · [doi](https://doi.org/10.1038/35049541)  
   Developmental review with no sensory-afferent content in the abstract; Ben may want to review its inclusion in the afferent database.
+  ## delete
+
 - [Karayannidou 2009 — Maintenance of Lateral Stability During Standing and Walking in the Cat](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recFd4pICpFKMQZ4h) · [doi](https://doi.org/10.1152/jn.90934.2008)  
   Lateral-perturbation corrective responses are a postural feedback pathway with no Feedback vocabulary entry.
+  ## "lateral postural reflex"
+
 - [Knikou 2010 — Neural control of locomotion and training-induced plasticity after spinal and cerebral les](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/rechb1DliCuuKLIy7) · [doi](https://doi.org/10.1016/j.clinph.2010.01.039)  
   Abstract cites 'reduced animal preparations' for afferent regulation of the CPG without naming species, so animals restricted to Human.
+  ## read the full text
+
 - [Knuesel 2011 — Effects of muscle dynamics and proprioceptive feedback on the kinematics and CPG activity ](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recLvq2dSfUodmjTa) · [doi](https://doi.org/10.1186/1471-2202-12-s1-p158)  
   Abstract is two figure captions (conference abstract, about 50 words) - too thin to support afferent types, feedback vocabulary, or an animal_study field.
+  ## new rule for SADb on airtable: If it's a conference abstract and there is no paper or poster accessible, the paper should probably just be deleted.
+
 - [Koditschek 2004 — Mechanical aspects of legged locomotion control](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/reccLn6XYsnyAJmyX) · [doi](https://doi.org/10.1016/j.asd.2004.06.003)  
   'Biomechanically mediated preflexive feedback' inferred from the muscular-skeletal-neural integration framing; the abstract does not use the word preflex.
+  ## Is the term in quotes one you made or was already there?
+
 - [Kooij 2000 — An adaptive model of sensory integration in a dynamic environment applied to human stance ](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/rec4qLdYPmyjgG02Z) · [doi](https://doi.org/10.1007/s004220000196)  
   Balance sensory-integration model (vestibular, visual, somatosensory weighting) lies outside the current afferent/feedback vocabulary; vestibular and visual inputs have no SADb tags.
+  ## Great. sound like you can create at least 3 feedback tags to this article.
+
 - [Laliberté 2019 — Propriospinal Neurons: Essential Elements of Locomotor Control in the Intact and Possibly ](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recBq2I1f3v1wg9i1) · [doi](https://doi.org/10.3389/fncel.2019.00512)  
   The abstract references unspecified 'animal models of SCI' without naming species, so only Human is listed; add the relevant species after checking the full text.
 - [Mazzaro 2006 — Afferent-mediated modulation of the soleus muscle activity during the stance phase of huma](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recY2yVKiHmqH2TuE) · [doi](https://doi.org/10.1007/s00221-006-0451-5)  
   Ia contribution is stated as 'at least partially' mediating the increments with no pathway detail given, so no Ia feedback term tagged; group II result tagged 'type II excitatory'.
+  ## ok. See if position, not just velocity, feedback is mentioned and use that as a stand in for Ia feedback.
+
 - [Merlet 2021 — Inhibition and Facilitation of the Spinal Locomotor Central Pattern Generator and Reflex C](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recz45EOs5F1ttdpq) · [doi](https://doi.org/10.3389/fnins.2021.720542)  
   Lumbar-region (inhibitory) versus perineal (facilitatory) somatosensory modulation of the CPG and reflex gain has no feedback vocabulary entry.
 - [Naris 2020 — A neuromechanical model exploring the role of the common inhibitor motor neuron in insect ](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recDBS8FWkbL8ogi1) · [doi](https://doi.org/10.1007/s00422-019-00811-y)  
   Core mechanism is efferent (common inhibitor MN plus slow-fiber dynamics), so no afferent Feedback vocabulary entry applies.
 - [Nelson and Quinn 1998 — Posture control of a cockroach-like robot](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recifDtY9KNMQFxmg) · [doi](https://doi.org/10.1109/robot.1998.676348)  
   Robot-engineering paper - no afferent content; Ben may want to decide whether it belongs in SADb.
+  ## Yeah. Quinn is my boss's boss, sorta. There's some Ia or insect equivalent feedback in there.
+
 - [Orlovsky 1999 — Neuronal Control of LocomotionFrom Mollusc to Man](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recH0svuO344o1Stg) · [doi](https://doi.org/10.1093/acprof:oso/9780198524052.001.0001)  
   Monograph, so is_review kept false per the guide (reviews exclude monographs); abstract too general to ground animals beyond Human (leech is named but not in the animal list) or any mechanism field.
+  ## delete then
+
 - [Pearson and Rossignol 1991 — Fictive motor patterns in chronic spinal cats](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/rec4xSUdAGn6omVtB) · [doi](https://doi.org/10.1152/jn.1991.66.6.1874)  
   Tagged 'Fictive locomotion without sensory feedback' for the paralyzed chronic-spinal fictive preparation; rhythms were evoked by cutaneous (perineal/paw) stimulation, and the leg-position afferent class modulating burst timing is not named.
+I really don't like how you (and the papers, tbf), use cutaneous. Stimulus or TENS/EMS seems more fitting. To me, I also think that sometimes cutaneous means normal contact, shear contact, or something else. Don't we have "deafferented" already? So would this be two types of feedback tags, like "deafferented" and "Stimulus to PF layer".
+
 - [Perreault 1999 — Depression of muscle and cutaneous afferent-evoked monosynaptic field potentials during fi](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recSh9tW4eoP1c5tq) · [doi](https://doi.org/10.1111/j.1469-7793.1999.00691.x)  
   Abstract specifies 'group I' without an Ia/Ib split; afferents tagged Ia+Ib by convention. The demonstrated depression is generalized locomotor-state gating of group I/II/cutaneous afferent transmission; closest vocabulary entry is 'Ia presynaptic inhibition' — consider a broader locomotor-state transmission-depression term.
 - [Pratt 2012 — Capturability-based analysis and control of legged locomotion, Part 2: Application to M2V2](https://airtable.com/appMQTnobUNRytIp7/tblnnMrZszhboU4uD/recQrYCoH7uVZ4zvP) · [doi](https://doi.org/10.1177/0278364912452762)  
