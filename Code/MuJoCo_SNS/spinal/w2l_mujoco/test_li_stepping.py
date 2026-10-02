@@ -74,6 +74,12 @@ def main():
 
     m = mujoco.MjModel.from_xml_path(MJCF)
     d = mujoco.MjData(m)
+    # spawn keyframe (2026-09-30): ankles inside range, feet at 1 mm
+    try:
+        mujoco.mj_resetDataKeyframe(m, d, 0)
+        mujoco.mj_forward(m, d)
+    except Exception:
+        pass
 
     act_ids = {a: mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_ACTUATOR, a)
                for a in net.muscle_outputs}
@@ -96,15 +102,33 @@ def main():
     # (Li's own asim ships an (inactive) Stimulus_1; the symmetric rest pose
     # otherwise holds both feet down and both stance CPGs off.)
     KICK, KICK_T = 3.0, 0.2
-    # settle-assist: the M1 rest pose HOVERS 2.6-3.1 cm (M1 report section 2.8)
-    # while Li's model starts feet-on-ground (his DataTool_7 height=1.02 from
-    # t=0). Without this the body crumples passively during the drop (M1 gate
-    # note: "ends in a crumpled kneel") before any neural drive exists. Fixed
-    # mild posture co-contraction for SETTLE_T, then the net takes over.
-    SETTLE_T = 0.5
-    settle = {"knee_L_ext": 0.35, "knee_R_ext": 0.35,
-              "hip_L_ext": 0.25, "hip_R_ext": 0.25,
-              "ankle_L_ext": 0.15, "ankle_R_ext": 0.15}
+    # BEN'S PROTOCOL (2026-09-30, his correction): in AnimatLab these walkers
+    # run under a VIRTUAL WALKER - suspended in AIR while the CPG air-steps,
+    # then DROPPED onto the platform so heel strikes drive the contact CPG.
+    # The previous gate spawned feet-down with a settle-assist co-contraction
+    # (an invention, not the protocol) and heels never loaded (0 stance
+    # episodes). REPLACED by the protocol: a support harness (feedforward
+    # weight + vertical PD, weak horizontal damping - the runner-rig idiom)
+    # holds the root CLEAR above contact during [0, T_HOLD), then releases
+    # ALL force at T_HOLD - the body drops, lands, and the heel SNs fire.
+    # Settle-assist block REMOVED.
+    T_HOLD = float(kv.pop("hold", 3.0))    # air-hold duration, s
+    T_LOW = float(kv.pop("lower", 1.0))     # platform-lowering duration, s
+    CLEAR = float(kv.pop("clear", 0.04))   # extra height above contact, m
+    # Ben 2026-09-30 (clarification): "In AnimatLab they can drop it WITH
+    # the harness" - the virtual walker STAYS ATTACHED after the drop. So
+    # after the lowering, keep the support on at SUPPORT fraction of body
+    # weight + PD at contact height (feet bear the rest -> heel SNs fire,
+    # contact-driven CPG engages, body cannot buckle - sidesteps the
+    # no-Kse/Kpe body-fidelity blocker for the march gate).
+    SUPPORT = float(kv.pop("support", 0.7))    # retained weight fraction
+    root_bid = int(m.jnt_bodyid[0])
+    _mass = float(np.sum(m.body_mass))
+    _wgt = _mass * (-m.opt.gravity[2])            # N
+    K_H = 4.0 * _wgt / max(CLEAR, 0.01)           # sag < CLEAR/4 at weight
+    C_H = 2.0 * float(np.sqrt(K_H * _mass))       # ~critical
+    z_contact = float(d.qpos[2])                  # keyframe z (feet 1 mm)
+    z_hold = z_contact + CLEAR
     # M1 DEVIATION STAND-IN: AnimatLab LinearHill muscles carry B damping
     # (400-800 N s/m per muscle, M1 report section 3: "B - none"); the M1
     # MuJoCo 2.3.7 <muscle> has no damping, and Li's own joint frictions are
@@ -112,10 +136,12 @@ def main():
     # damped through the MUSCLES, which M1 does not model. Without a joint
     # damping stand-in the undamped hinges blow through their limits at the
     # landing impact (measured: ankle -82 deg through a [-20,-5] limit).
-    # JOINT_DAMP [N m s/rad] applied at RUNTIME (m.dof_damping - the XML file
-    # is not modified), default a modest 1.5.
-    JOINT_DAMP = kv.pop("joint_damp", 1.5)
-    m.dof_damping[:] = JOINT_DAMP
+    # 2026-09-30: the XML now carries per-joint damping sum(B*r^2)
+    # (make_w2l_mjcf.py) - default = USE THE XML; --joint-damp=X still
+    # overrides for sweeps.
+    JOINT_DAMP = kv.pop("joint_damp", 0.0)
+    if JOINT_DAMP > 0:
+        m.dof_damping[:] = JOINT_DAMP
 
     for i in range(nsteps):
         t = i * 0.001
@@ -134,9 +160,21 @@ def main():
         for _ in range(N_SUB):
             V = net.step(u)
         ctrl = net.muscle_ctrl(V)
-        if t < SETTLE_T:
-            for a, v in settle.items():
-                ctrl[a] = max(ctrl[a], v)
+        # Ben's protocol, AnimatLab semantics: hold in AIR (air-stepping)
+        # -> LOWER to the platform over T_LOW -> harness STAYS ON at
+        # SUPPORT fraction (drop WITH the harness - 2026-09-30 Ben).
+        if t < T_HOLD:
+            z_t, wff = z_hold, 1.0
+        elif t < T_HOLD + T_LOW:   # linear descent to contact height
+            z_t = z_hold + (z_contact - z_hold) * \
+                (t - T_HOLD) / max(T_LOW, 1e-6)
+            wff = 1.0
+        else:                      # ON THE PLATFORM, harness retained
+            z_t, wff = z_contact, SUPPORT
+        Fz = wff * _wgt + K_H * (z_t - d.qpos[2]) - C_H * d.qvel[2]
+        d.xfrc_applied[root_bid, 2] = max(Fz, 0.0)
+        d.xfrc_applied[root_bid, 0] = -20.0 * d.qvel[0]   # weak xy damp
+        d.xfrc_applied[root_bid, 1] = -20.0 * d.qvel[1]
         for a, val in ctrl.items():
             d.ctrl[act_ids[a]] = min(val, 0.9)
         mujoco.mj_step(m, d)
@@ -150,7 +188,9 @@ def main():
             return 1
 
     # ------------------------------------------------------------- metrics
-    an = int(0.05 * nsteps)                       # drop the drop-transient
+    # measure from AFTER the drop + landing transient (hold phase has no
+    # ground contact by construction - Ben's protocol)
+    an = int(max(0.05, (T_HOLD + T_LOW + 0.5) / dur) * nsteps)
     t, q, c, h = log_t[an:], log_q[an:], log_c[an:], log_h[an:]
     height_min, height_end = h[:, 0].min(), h[-1, 0]
     speed = (h[-1, 1] - h[0, 1]) / (t[-1] - t[0])

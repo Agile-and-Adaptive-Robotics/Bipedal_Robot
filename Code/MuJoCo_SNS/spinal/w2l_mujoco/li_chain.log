@@ -1,0 +1,286 @@
+joint damping sum(B*r^2): ankle_L=3.100, ankle_R=3.100, hip_L=12.736, hip_R=12.731, knee_L=2.972, knee_R=2.972
+spawn keyframe added
+bodies parsed: 69 (boxes 13, muscles 12, receptors 12, springs 2, attachments 30)
+wrote D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\w2l_mjcf.xml
+wrote D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\w2l_source_dump.json
+NOTE rot dev >1e-4 (LocalMatrix vs RxRyRz Euler; all are Attachment/StretchReceptor overlays whose own orientation is not ported):
+  femur_L_f: 1
+  femur_L_b: 1
+  femur_L_f_low: 1
+  tibia_L_b: 1
+  tibia_L_b_low: 1
+  foot_L_f: 2
+  tibia_L_f_low: 1
+  tibia_L: 1
+  knee_L: 1
+  femur_L_b_low: 1
+  femur_R-f_low: 1
+  femur_R_b: 1
+  tibia_R_f_low: 1
+  tibia_R_b: 1
+  knee_R: 1
+  foot_R_f: 2
+  tibia_R_b_low: 1
+  tibia_R_f: 1
+  femur_R_f: 1
+  femur_R_b_low: 1
+  knee range knee_L: [0,1.0472] -> [-1.0472,-0] (flexion = -qpos; see comment above)
+  knee range knee_R: [0,1.0472] -> [-1.0472,-0] (flexion = -qpos; see comment above)
+joint     world_AL (aproj)        world_MJ desired      body-local axis written
+ankle_L   (-0.0001,+0.0006,-1.0000)  (-0.0001,+1.0000,+0.0006)  ->  (+0.139040, +0.990287, +0.000623)
+ankle_R   (-0.0001,+0.0006,-1.0000)  (-0.0001,+1.0000,+0.0006)  ->  (+0.139040, +0.990287, +0.000623)
+hip_L     (-0.0002,+0.0000,-1.0000)  (-0.0002,+1.0000,+0.0000)  ->  (-0.000202, +1.000000, +0.000023)
+hip_R     (+0.0000,-0.0000,-1.0000)  (+0.0000,+1.0000,-0.0000)  ->  (+0.000000, +1.000000, -0.000000)
+knee_L    (+0.0002,+0.0001,+1.0000)  (+0.0002,-1.0000,+0.0001)  ->  (+0.000231, +0.000351, +1.000000)
+knee_R    (-0.0000,-0.0010,+1.0000)  (-0.0000,-1.0000,-0.0010)  ->  (+0.000037, -0.000818, +1.000000)
+toe_L     (-0.0001,+0.0006,-1.0000)  (-0.0001,+1.0000,+0.0006)  ->  (+0.034754, +0.000412, -0.999396)
+toe_R     (-0.0002,-0.0002,-1.0000)  (-0.0002,+1.0000,-0.0002)  ->  (+0.034706, -0.000007, +0.999398)
+wrote D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\w2l_mjcf_fixed.xml
+
+verified world axes (MJ): all 8 must be ~lateral (|y| > 0.99)
+  root     (+0.1118, +0.0000, +0.9937)  NOT LATERAL -- FAIL
+  hip_L    (-0.0002, +1.0000, +0.0000)  lateral OK
+  knee_L   (+0.0002, -1.0000, +0.0001)  lateral OK
+  ankle_L  (-0.0001, +1.0000, +0.0006)  lateral OK
+  toe_L    (-0.0001, +1.0000, +0.0006)  lateral OK
+  hip_R    (+0.0000, +1.0000, -0.0000)  lateral OK
+  knee_R   (-0.0000, -1.0000, -0.0010)  lateral OK
+  ankle_R  (-0.0001, +1.0000, +0.0006)  lateral OK
+  toe_R    (-0.0002, +1.0000, -0.0002)  lateral OK
+AXIS FIX: FAIL
+joint damping sum(B*r^2): ankle_L=3.100, ankle_R=3.100, hip_L=12.736, hip_R=12.731, knee_L=2.972, knee_R=2.972
+spawn keyframe added
+bodies parsed: 69 (boxes 13, muscles 12, receptors 12, springs 2, attachments 30)
+wrote D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\w2l_mjcf.xml
+wrote D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\w2l_source_dump.json
+NOTE rot dev >1e-4 (LocalMatrix vs RxRyRz Euler; all are Attachment/StretchReceptor overlays whose own orientation is not ported):
+  femur_L_f: 1
+  femur_L_b: 1
+  femur_L_f_low: 1
+  tibia_L_b: 1
+  tibia_L_b_low: 1
+  foot_L_f: 2
+  tibia_L_f_low: 1
+  tibia_L: 1
+  knee_L: 1
+  femur_L_b_low: 1
+  femur_R-f_low: 1
+  femur_R_b: 1
+  tibia_R_f_low: 1
+  tibia_R_b: 1
+  knee_R: 1
+  foot_R_f: 2
+  tibia_R_b_low: 1
+  tibia_R_f: 1
+  femur_R_f: 1
+  femur_R_b_low: 1
+  knee range knee_L: [0,1.0472] -> [-1.0472,-0] (flexion = -qpos; see comment above)
+  knee range knee_R: [0,1.0472] -> [-1.0472,-0] (flexion = -qpos; see comment above)
+joint     world_AL (aproj)        world_MJ desired      body-local axis written
+ankle_L   (-0.0001,+0.0006,-1.0000)  (-0.0001,+1.0000,+0.0006)  ->  (+0.139040, +0.990287, +0.000623)
+ankle_R   (-0.0001,+0.0006,-1.0000)  (-0.0001,+1.0000,+0.0006)  ->  (+0.139040, +0.990287, +0.000623)
+hip_L     (-0.0002,+0.0000,-1.0000)  (-0.0002,+1.0000,+0.0000)  ->  (-0.000202, +1.000000, +0.000023)
+hip_R     (+0.0000,-0.0000,-1.0000)  (+0.0000,+1.0000,-0.0000)  ->  (+0.000000, +1.000000, -0.000000)
+knee_L    (+0.0002,+0.0001,+1.0000)  (+0.0002,-1.0000,+0.0001)  ->  (+0.000231, +0.000351, +1.000000)
+knee_R    (-0.0000,-0.0010,+1.0000)  (-0.0000,-1.0000,-0.0010)  ->  (+0.000037, -0.000818, +1.000000)
+toe_L     (-0.0001,+0.0006,-1.0000)  (-0.0001,+1.0000,+0.0006)  ->  (+0.034754, +0.000412, -0.999396)
+toe_R     (-0.0002,-0.0002,-1.0000)  (-0.0002,+1.0000,-0.0002)  ->  (+0.034706, -0.000007, +0.999398)
+wrote D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\w2l_mjcf_fixed.xml
+
+verified world axes (MJ): all 8 hinges must be ~lateral (|y| > 0.99)
+  root     (+0.1118, +0.0000, +0.9937)  NOT LATERAL -- FAIL
+AXIS FIX: FAIL
+joint damping sum(B*r^2): ankle_L=3.100, ankle_R=3.100, hip_L=12.736, hip_R=12.731, knee_L=2.972, knee_R=2.972
+spawn keyframe added
+bodies parsed: 69 (boxes 13, muscles 12, receptors 12, springs 2, attachments 30)
+wrote D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\w2l_mjcf.xml
+wrote D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\w2l_source_dump.json
+NOTE rot dev >1e-4 (LocalMatrix vs RxRyRz Euler; all are Attachment/StretchReceptor overlays whose own orientation is not ported):
+  femur_L_f: 1
+  femur_L_b: 1
+  femur_L_f_low: 1
+  tibia_L_b: 1
+  tibia_L_b_low: 1
+  foot_L_f: 2
+  tibia_L_f_low: 1
+  tibia_L: 1
+  knee_L: 1
+  femur_L_b_low: 1
+  femur_R-f_low: 1
+  femur_R_b: 1
+  tibia_R_f_low: 1
+  tibia_R_b: 1
+  knee_R: 1
+  foot_R_f: 2
+  tibia_R_b_low: 1
+  tibia_R_f: 1
+  femur_R_f: 1
+  femur_R_b_low: 1
+  knee range knee_L: [0,1.0472] -> [-1.0472,-0] (flexion = -qpos; see comment above)
+  knee range knee_R: [0,1.0472] -> [-1.0472,-0] (flexion = -qpos; see comment above)
+joint     world_AL (aproj)        world_MJ desired      body-local axis written
+ankle_L   (-0.0001,+0.0006,-1.0000)  (-0.0001,+1.0000,+0.0006)  ->  (+0.139040, +0.990287, +0.000623)
+ankle_R   (-0.0001,+0.0006,-1.0000)  (-0.0001,+1.0000,+0.0006)  ->  (+0.139040, +0.990287, +0.000623)
+hip_L     (-0.0002,+0.0000,-1.0000)  (-0.0002,+1.0000,+0.0000)  ->  (-0.000202, +1.000000, +0.000023)
+hip_R     (+0.0000,-0.0000,-1.0000)  (+0.0000,+1.0000,-0.0000)  ->  (+0.000000, +1.000000, -0.000000)
+knee_L    (+0.0002,+0.0001,+1.0000)  (+0.0002,-1.0000,+0.0001)  ->  (+0.000231, +0.000351, +1.000000)
+knee_R    (-0.0000,-0.0010,+1.0000)  (-0.0000,-1.0000,-0.0010)  ->  (+0.000037, -0.000818, +1.000000)
+toe_L     (-0.0001,+0.0006,-1.0000)  (-0.0001,+1.0000,+0.0006)  ->  (+0.034754, +0.000412, -0.999396)
+toe_R     (-0.0002,-0.0002,-1.0000)  (-0.0002,+1.0000,-0.0002)  ->  (+0.034706, -0.000007, +0.999398)
+wrote D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\w2l_mjcf_fixed.xml
+
+verified world axes (MJ): all 8 hinges must be ~lateral (|y| > 0.99)
+  hip_L    (-0.0002, +1.0000, +0.0000)  lateral OK
+  knee_L   (+0.0002, -1.0000, +0.0001)  lateral OK
+  ankle_L  (-0.0001, +1.0000, +0.0006)  lateral OK
+  toe_L    (-0.0001, +1.0000, +0.0006)  lateral OK
+  hip_R    (+0.0000, +1.0000, -0.0000)  lateral OK
+  knee_R   (-0.0000, -1.0000, -0.0010)  lateral OK
+  ankle_R  (-0.0001, +1.0000, +0.0006)  lateral OK
+  toe_R    (-0.0002, +1.0000, -0.0002)  lateral OK
+AXIS FIX: PASS
+== gate 1: model loads under mujoco 2.3.7 ==
+  [PASS] mj_loadXML  nbody=14 nq=15 nu=12 neq=0 ngeom=14
+  [PASS] mujoco version 2.3.7  2.3.7
+  [PASS] body count  nbody=14 (expected 14 incl. world)
+  [PASS] 9 joints (root freejoint + 8 hinges)  njnt=9
+  [PASS] root freejoint present  jnt0=root
+  [PASS] 12 muscle actuators  nu=12
+  [PASS] 14 tendons (12 muscle + 2 toe springs)  ntendon=14
+== gate 2: 2 s passive drop (timestep 0.001 s) ==
+  [PASS] passive drop finite (2 s, 2000 steps)  max|qpos|=2.571, min foot height=0.0067 m
+  [PASS] drop settles on ground (0 <= foot z < 0.1)  min foot z=0.0067 m
+== gate 3: 12 actuators finite resting lengths ==
+  [PASS] actuator_lengthrange finite + lo<hi for all 12  hip_L_flx[0.081,0.259]; hip_R_flx[0.130,0.290]; knee_L_flx[0.245,0.445]; ankle_L_ext[-0.775,1.225]; ankle_L_flx[-0.752,1.248]; knee_L_ext[0.260,0.420]; knee_R_ext[0.260,0.420]; ankle_R_ext[-0.775,1.225]; knee_R_flx[0.245,0.445]; ankle_R_flx[-0.752,1.248]; hip_R_ext[0.081,0.259]; hip_L_ext[0.130,0.290]
+  [PASS] tendon lengths finite at rest  rest lengths: 0.183 0.159 0.346 0.278 0.263 0.341 0.341 0.278 0.346 0.262 0.158 0.138 0.088 0.091
+== gate 4: joint ranges match aproj (deg->rad) ==
+  [FAIL] joint ranges match  root: no source | hip_L mj=[-0.261799,0.401426] src=[-0.261799,0.401426] dev=4.13e-11 | knee_L mj=[0.000000,1.047198] src=[0.000000,1.047198] dev=1.97e-10 | ankle_L mj=[-0.349066,-0.087266] src=[-0.349066,-0.087266] dev=1.13e-12 | toe_L unlimited (mj limited=False) | hip_R mj=[-0.261799,0.401426] src=[-0.261799,0.401426] dev=4.13e-11 | knee_R mj=[0.000000,1.047198] src=[0.000000,1.047198] dev=1.97e-10 | ankle_R mj=[-0.349066,-0.087266] src=[-0.349066,-0.087266] dev=1.13e-12 | toe_R unlimited (mj limited=False)
+== fidelity readback: body masses (aproj vs MJCF) ==
+  Root             aproj= 30.9910 kg  mjcf= 30.9910 kg  dev=0.00e+00
+  femur_L          aproj=  3.5000 kg  mjcf=  3.5000 kg  dev=0.00e+00
+  tibia_L          aproj=  1.5000 kg  mjcf=  1.5000 kg  dev=0.00e+00
+  foot_L           aproj=  0.4000 kg  mjcf=  0.4000 kg  dev=0.00e+00
+  toe_L            aproj=  0.0640 kg  mjcf=  0.0640 kg  dev=0.00e+00
+  femur_R          aproj=  3.5000 kg  mjcf=  3.5000 kg  dev=0.00e+00
+  tibia_R          aproj=  1.5000 kg  mjcf=  1.5000 kg  dev=0.00e+00
+  foot_R           aproj=  0.4000 kg  mjcf=  0.4000 kg  dev=0.00e+00
+  toe_R            aproj=  0.0640 kg  mjcf=  0.0640 kg  dev=0.00e+00
+  toe_L_contact    aproj=  0.0024 kg  mjcf=  0.0024 kg  dev=0.00e+00
+  foot_L_contact   aproj=  0.0096 kg  mjcf=  0.0096 kg  dev=0.00e+00
+  toe_R_contact    aproj=  0.0024 kg  mjcf=  0.0024 kg  dev=0.00e+00
+  foot_R_contact   aproj=  0.0096 kg  mjcf=  0.0096 kg  dev=0.00e+00
+  [PASS] body masses match  worst dev=0.00e+00 kg
+  total            aproj= 41.9430 kg  mjcf= 41.9430 kg
+
+RESULT: 12 passed, 1 failed
+  FAILED: joint ranges match  root: no source | hip_L mj=[-0.261799,0.401426] src=[-0.261799,0.401426] dev=4.13e-11 | knee_L mj=[0.000000,1.047198] src=[0.000000,1.047198] dev=1.97e-10 | ankle_L mj=[-0.349066,-0.087266] src=[-0.349066,-0.087266] dev=1.13e-12 | toe_L unlimited (mj limited=False) | hip_R mj=[-0.261799,0.401426] src=[-0.261799,0.401426] dev=4.13e-11 | knee_R mj=[0.000000,1.047198] src=[0.000000,1.047198] dev=1.97e-10 | ankle_R mj=[-0.349066,-0.087266] src=[-0.349066,-0.087266] dev=1.13e-12 | toe_R unlimited (mj limited=False)
+joint damping sum(B*r^2): ankle_L=3.100, ankle_R=3.100, hip_L=12.736, hip_R=12.731, knee_L=2.972, knee_R=2.972
+spawn keyframe added
+bodies parsed: 69 (boxes 13, muscles 12, receptors 12, springs 2, attachments 30)
+wrote D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\w2l_mjcf.xml
+wrote D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\w2l_source_dump.json
+NOTE rot dev >1e-4 (LocalMatrix vs RxRyRz Euler; all are Attachment/StretchReceptor overlays whose own orientation is not ported):
+  femur_L_f: 1
+  femur_L_b: 1
+  femur_L_f_low: 1
+  tibia_L_b: 1
+  tibia_L_b_low: 1
+  foot_L_f: 2
+  tibia_L_f_low: 1
+  tibia_L: 1
+  knee_L: 1
+  femur_L_b_low: 1
+  femur_R-f_low: 1
+  femur_R_b: 1
+  tibia_R_f_low: 1
+  tibia_R_b: 1
+  knee_R: 1
+  foot_R_f: 2
+  tibia_R_b_low: 1
+  tibia_R_f: 1
+  femur_R_f: 1
+  femur_R_b_low: 1
+  knee range knee_L: [0,1.0472] -> [-1.0472,-0] (flexion = -qpos; see comment above)
+  knee range knee_R: [0,1.0472] -> [-1.0472,-0] (flexion = -qpos; see comment above)
+joint     world_AL (aproj)        world_MJ desired      body-local axis written
+ankle_L   (-0.0001,+0.0006,-1.0000)  (-0.0001,+1.0000,+0.0006)  ->  (+0.139040, +0.990287, +0.000623)
+ankle_R   (-0.0001,+0.0006,-1.0000)  (-0.0001,+1.0000,+0.0006)  ->  (+0.139040, +0.990287, +0.000623)
+hip_L     (-0.0002,+0.0000,-1.0000)  (-0.0002,+1.0000,+0.0000)  ->  (-0.000202, +1.000000, +0.000023)
+hip_R     (+0.0000,-0.0000,-1.0000)  (+0.0000,+1.0000,-0.0000)  ->  (+0.000000, +1.000000, -0.000000)
+knee_L    (+0.0002,+0.0001,+1.0000)  (+0.0002,-1.0000,+0.0001)  ->  (+0.000231, +0.000351, +1.000000)
+knee_R    (-0.0000,-0.0010,+1.0000)  (-0.0000,-1.0000,-0.0010)  ->  (+0.000037, -0.000818, +1.000000)
+toe_L     (-0.0001,+0.0006,-1.0000)  (-0.0001,+1.0000,+0.0006)  ->  (+0.034754, +0.000412, -0.999396)
+toe_R     (-0.0002,-0.0002,-1.0000)  (-0.0002,+1.0000,-0.0002)  ->  (+0.034706, -0.000007, +0.999398)
+wrote D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\w2l_mujoco\w2l_mjcf_fixed.xml
+
+verified world axes (MJ): all 8 hinges must be ~lateral (|y| > 0.99)
+  hip_L    (-0.0002, +1.0000, +0.0000)  lateral OK
+  knee_L   (+0.0002, -1.0000, +0.0001)  lateral OK
+  ankle_L  (-0.0001, +1.0000, +0.0006)  lateral OK
+  toe_L    (-0.0001, +1.0000, +0.0006)  lateral OK
+  hip_R    (+0.0000, +1.0000, -0.0000)  lateral OK
+  knee_R   (-0.0000, -1.0000, -0.0010)  lateral OK
+  ankle_R  (-0.0001, +1.0000, +0.0006)  lateral OK
+  toe_R    (-0.0002, +1.0000, -0.0002)  lateral OK
+AXIS FIX: PASS
+== gate 1: model loads under mujoco 2.3.7 ==
+  [PASS] mj_loadXML  nbody=14 nq=15 nu=12 neq=0 ngeom=14
+  [PASS] mujoco version 2.3.7  2.3.7
+  [PASS] body count  nbody=14 (expected 14 incl. world)
+  [PASS] 9 joints (root freejoint + 8 hinges)  njnt=9
+  [PASS] root freejoint present  jnt0=root
+  [PASS] 12 muscle actuators  nu=12
+  [PASS] 14 tendons (12 muscle + 2 toe springs)  ntendon=14
+== gate 2: 2 s passive drop (timestep 0.001 s) ==
+  [PASS] passive drop finite (2 s, 2000 steps)  max|qpos|=2.571, min foot height=0.0067 m
+  [PASS] drop settles on ground (0 <= foot z < 0.1)  min foot z=0.0067 m
+== gate 3: 12 actuators finite resting lengths ==
+  [PASS] actuator_lengthrange finite + lo<hi for all 12  hip_L_flx[0.081,0.259]; hip_R_flx[0.130,0.290]; knee_L_flx[0.245,0.445]; ankle_L_ext[-0.775,1.225]; ankle_L_flx[-0.752,1.248]; knee_L_ext[0.260,0.420]; knee_R_ext[0.260,0.420]; ankle_R_ext[-0.775,1.225]; knee_R_flx[0.245,0.445]; ankle_R_flx[-0.752,1.248]; hip_R_ext[0.081,0.259]; hip_L_ext[0.130,0.290]
+  [PASS] tendon lengths finite at rest  rest lengths: 0.183 0.159 0.346 0.278 0.263 0.341 0.341 0.278 0.346 0.262 0.158 0.138 0.088 0.091
+== gate 4: joint ranges match aproj (deg->rad) ==
+  [PASS] joint ranges match  hip_L mj=[-0.261799,0.401426] src=[-0.261799,0.401426] dev=4.13e-11 | knee_L mj=[0.000000,1.047198] src=[0.000000,1.047198] dev=1.97e-10 | ankle_L mj=[-0.349066,-0.087266] src=[-0.349066,-0.087266] dev=1.13e-12 | toe_L unlimited (mj limited=False) | hip_R mj=[-0.261799,0.401426] src=[-0.261799,0.401426] dev=4.13e-11 | knee_R mj=[0.000000,1.047198] src=[0.000000,1.047198] dev=1.97e-10 | ankle_R mj=[-0.349066,-0.087266] src=[-0.349066,-0.087266] dev=1.13e-12 | toe_R unlimited (mj limited=False)
+== fidelity readback: body masses (aproj vs MJCF) ==
+  Root             aproj= 30.9910 kg  mjcf= 30.9910 kg  dev=0.00e+00
+  femur_L          aproj=  3.5000 kg  mjcf=  3.5000 kg  dev=0.00e+00
+  tibia_L          aproj=  1.5000 kg  mjcf=  1.5000 kg  dev=0.00e+00
+  foot_L           aproj=  0.4000 kg  mjcf=  0.4000 kg  dev=0.00e+00
+  toe_L            aproj=  0.0640 kg  mjcf=  0.0640 kg  dev=0.00e+00
+  femur_R          aproj=  3.5000 kg  mjcf=  3.5000 kg  dev=0.00e+00
+  tibia_R          aproj=  1.5000 kg  mjcf=  1.5000 kg  dev=0.00e+00
+  foot_R           aproj=  0.4000 kg  mjcf=  0.4000 kg  dev=0.00e+00
+  toe_R            aproj=  0.0640 kg  mjcf=  0.0640 kg  dev=0.00e+00
+  toe_L_contact    aproj=  0.0024 kg  mjcf=  0.0024 kg  dev=0.00e+00
+  foot_L_contact   aproj=  0.0096 kg  mjcf=  0.0096 kg  dev=0.00e+00
+  toe_R_contact    aproj=  0.0024 kg  mjcf=  0.0024 kg  dev=0.00e+00
+  foot_R_contact   aproj=  0.0096 kg  mjcf=  0.0096 kg  dev=0.00e+00
+  [PASS] body masses match  worst dev=0.00e+00 kg
+  total            aproj= 41.9430 kg  mjcf= 41.9430 kg
+
+RESULT: 13 passed, 0 failed
+== M2 gate: Li CPG on the M1 MuJoCo body, 20 s ground run ==  knobs: defaults
+  pelvis height: min 0.099 m, end 0.100 m
+  mean forward speed: +0.001 m/s   (Li ref +0.638)
+  L_foot: 0 stance episodes, period nan s (Li ref 1.3), stance nan s, duty 0.00
+  R_foot: 0 stance episodes, period nan s (Li ref 1.3), stance nan s, duty 0.00
+  L/R stance correlation (0 lag, 10 ms samples): r = +nan (Li antiphase => r < -0.5)
+  hip L: +5.5..+12.7 deg  knee L: -62.1..-61.4 deg  ankle L: +54.7..+66.0 deg
+  hip R: -9.5..-2.5 deg  knee R: -14.1..+3.1 deg  ankle R: -38.9..+75.9 deg
+VERDICT: not yet
+== gate: M3 W2L 2023 ORIGINAL (single LH RG) air stepping on the axis-fixed M1 body, 20 s ==
+   knobs: net=orig comm=1.0 te=3.0 tf=4.0 tau_rg_nap_h=0.25 ctrl_cap=0.5 joint_damp=3.0 stiff_limits=1 lift=0.3
+   ground contacts: 28890 (must be 0) | leg-leg self contacts: 22982
+   neural: L RG ext bursts=18, period 1.027 s (0.97 Hz), E max 6.99 mV
+   hip L swing excursions: 31, mean interval 0.543 s (1.84 Hz); ACF dominant period 1.029 s (0.97 Hz)
+   hip R swing excursions: 31, mean interval 0.576 s (1.74 Hz); ACF dominant period 1.029 s (0.97 Hz)
+   joint flexion-positive excursions (deg, min..max and range) vs AnimatLab references:
+     hip   L [ -26.8, +19.3] range  46.1 | R [ -27.9, +18.8] range  46.7   (ref range ~38)
+     knee  L [  -4.4, +64.8] range  69.2 | R [  -4.0, +64.3] range  68.4   (ref range ~61)
+     ankle L [  -2.0, +25.4] range  27.4 | R [  -2.2, +24.7] range  26.9   (ref range ~16)
+   hip flexion L/R correlation (0 lag): r = -0.414 (antiphase want < -0.3)
+   [PASS] finite_20s
+   [PASS] both_hips_swing
+   [PASS] antiphase
+   [FAIL] airborne
+   [PASS] freq_within_2x
+   [PASS] hip_amp_ok
+VERDICT: FAIL airborne

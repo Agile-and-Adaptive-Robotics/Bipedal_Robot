@@ -1,0 +1,102 @@
+[robust:w2lvar] shard 0/1: 20 cells, 15 done
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[robust:w2lvar] dty=None WALK  -> kine=-144.46440311078322 fell=False
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.010 m (env override=0.01); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 1.00], >0.1: 34 muscles
+  top: glut_med1_r=1.00, glut_max1_r=1.00, glut_min2_l=1.00, glut_min1_l=1.00, tfl_l=1.00, pect_l=1.00, glut_med1_l=1.00, iliacus_l=1.00
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+
+!! qacc/qvel non-finite at t=0.624, dofs: [ 0  1  2  3  4  5  6  7  8  9 10 11]
+   dof 0: joint pelvis_tx
+   dof 1: joint pelvis_ty
+   dof 2: joint pelvis_tz
+   dof 3: joint pelvis_tilt
+   dof 4: joint pelvis_list
+   dof 5: joint pelvis_rotation
+   dof 6: joint hip_flexion_r
+   dof 7: joint hip_adduction_r
+   dof 8: joint hip_rotation_r
+   dof 9: joint knee_r_translation1
+   dof 10: joint knee_r_translation2
+   dof 11: joint knee_angle_r
+   ncon=18
+[robust:w2lvar] dty=0.01 WALK  -> kine=-25.0 fell=True
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty -0.010 m (env override=-0.01); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 1.00], >0.1: 34 muscles
+  top: glut_med1_r=1.00, glut_max1_r=1.00, glut_min2_l=1.00, glut_min1_l=1.00, tfl_l=1.00, pect_l=1.00, glut_med1_l=1.00, iliacus_l=1.00
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+
+!! qacc/qvel non-finite at t=0.624, dofs: [ 0  1  2  3  4  5  6  7  8  9 10 11]
+   dof 0: joint pelvis_tx
+   dof 1: joint pelvis_ty
+   dof 2: joint pelvis_tz
+   dof 3: joint pelvis_tilt
+   dof 4: joint pelvis_list
+   dof 5: joint pelvis_rotation
+   dof 6: joint hip_flexion_r
+   dof 7: joint hip_adduction_r
+   dof 8: joint hip_rotation_r
+   dof 9: joint knee_r_translation1
+   dof 10: joint knee_r_translation2
+   dof 11: joint knee_angle_r
+   ncon=18
+[robust:w2lvar] dty=-0.01 WALK  -> kine=-25.0 fell=True
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.020 m (env override=0.02); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 1.00], >0.1: 34 muscles
+  top: glut_med1_r=1.00, glut_max1_r=1.00, glut_min2_l=1.00, glut_min1_l=1.00, tfl_l=1.00, pect_l=1.00, glut_med1_l=1.00, iliacus_l=1.00
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+
+!! qacc/qvel non-finite at t=0.642, dofs: [ 0  1  2  3  4  5  6  7  8  9 10 11]
+   dof 0: joint pelvis_tx
+   dof 1: joint pelvis_ty
+   dof 2: joint pelvis_tz
+   dof 3: joint pelvis_tilt
+   dof 4: joint pelvis_list
+   dof 5: joint pelvis_rotation
+   dof 6: joint hip_flexion_r
+   dof 7: joint hip_adduction_r
+   dof 8: joint hip_rotation_r
+   dof 9: joint knee_r_translation1
+   dof 10: joint knee_r_translation2
+   dof 11: joint knee_angle_r
+   ncon=0
+[robust:w2lvar] dty=0.02 WALK  -> kine=-25.0 fell=True
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty -0.020 m (env override=-0.02); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 1.00], >0.1: 33 muscles
+  top: glut_med1_r=1.00, glut_max1_r=1.00, glut_min2_l=1.00, glut_min1_l=1.00, tfl_l=1.00, pect_l=1.00, glut_med1_l=1.00, iliacus_l=1.00
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+
+!! qacc/qvel non-finite at t=0.624, dofs: [ 0  1  2  3  4  5  6  7  8  9 10 11]
+   dof 0: joint pelvis_tx
+   dof 1: joint pelvis_ty
+   dof 2: joint pelvis_tz
+   dof 3: joint pelvis_tilt
+   dof 4: joint pelvis_list
+   dof 5: joint pelvis_rotation
+   dof 6: joint hip_flexion_r
+   dof 7: joint hip_adduction_r
+   dof 8: joint hip_rotation_r
+   dof 9: joint knee_r_translation1
+   dof 10: joint knee_r_translation2
+   dof 11: joint knee_angle_r
+   ncon=18
+[robust:w2lvar] dty=-0.02 WALK  -> kine=-25.0 fell=True
+[robust:w2lvar] shard 0 done
+WARNING: Inertia matrix is too close to singular at DOF 76. Check model. Time = 0.0240.
+
+WARNING: Inertia matrix is too close to singular at DOF 78. Check model. Time = 0.0240.
+
+WARNING: Inertia matrix is too close to singular at DOF 47. Check model. Time = 0.0420.
+
+WARNING: Inertia matrix is too close to singular at DOF 78. Check model. Time = 0.0240.
+
+[robust:w2lvar] shard 0/1: 20 cells, 20 done
+[robust:w2lvar] shard 0 done

@@ -1,0 +1,67 @@
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+[val:s3k] running walk eval...
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[val:s3k] scored vs 43 refs
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+[val:s3kpruned] running walk eval...
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[val:s3kpruned] scored vs 43 refs
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+[val:w2lvar] running walk eval...
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[val:w2lvar] scored vs 43 refs
+Traceback (most recent call last):
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\gait_validate_all.py", line 124, in <module>
+    main()
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\gait_validate_all.py", line 96, in main
+    drive, argv = config_variant(v)
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\gait_validate_all.py", line 70, in config_variant
+    CS.set_stage(5, dict(W))
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\_curriculum_syn6.py", line 98, in set_stage
+    OW.load_fitted_baseline()
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\optuna_walk_v10.py", line 65, in load_fitted_baseline
+    print("fitted baseline loaded: " +
+ValueError: I/O operation on closed file.
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+[val:s3k] running walk eval...
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[val:s3k] scored vs 43 refs
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+[val:s3kpruned] running walk eval...
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[val:s3kpruned] scored vs 43 refs
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+[val:w2lvar] running walk eval...
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+[val:s3k] already scored, skipping
+[val:s3kpruned] already scored, skipping
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+[val:w2lvar] running walk eval...
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[val:w2lvar] scored vs 43 refs
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+[val:syn6] running walk eval...
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[val:syn6] scored vs 43 refs
+wrote gait_validation_20260930.csv

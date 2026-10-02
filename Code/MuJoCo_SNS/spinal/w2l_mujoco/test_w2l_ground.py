@@ -4,8 +4,22 @@ r"""M6 GATE — GROUND STANDING BALANCE + CONTACT-DRIVEN GROUND WALKING
 Body: w2l_ground.xml (written by this script) = w2l_mjcf_fixed.xml (the
 M3 axis-fixed M1 body) with a FREEJOINT added to the Root pelvis — the
 milestone-6 ask ("release the pelvis"). The aproj's rest pose is kept
-verbatim; it hovers 2.6-3.1 cm (M1 report section 2.8), so the released
-body drops that far at t=0.
+verbatim; it hovers 2.6-3.1 cm (M1 report section 2.8), and under the
+drop protocol below the harness holds it at that AIR height.
+
+DROP PROTOCOL (2026-10-01; Ben 2026-09-30: "In AnimatLab they can drop
+it WITH the harness" — the virtual walker holds the body in AIR while
+the CPG air-steps, then LOWERS it onto the platform and STAYS
+ATTACHED; same protocol as test_li_stepping.py): the rest pose spawns
+VERBATIM (plates hover 2.6-3.1 cm, M1 section 2.8 — the old spawn-time
+--drop grounding of the free-joint z is REMOVED); a feedforward-weight
++ vertical-PD harness on the root free-joint z holds the AIR height for
+--hold s (3.0), lowers to contact height (z_air - --drop - --sink) over
+--lower s (1.0), then keeps feedforward at --wsup (0.7) of body weight
++ PD at contact height — the feet bear the remaining fraction so the
+heel/toe contact encoders fire, and the body cannot buckle (sidesteps
+the no-Kse/Kpe body-fidelity blocker). Metric windows start at
+hold+lower+0.5 s.
 
 Contact encoders (the ask: "heel/toe from MuJoCo contact forces per the
 rules"): the aproj's four dedicated contact plates are the sensors —
@@ -20,23 +34,21 @@ is a saturating linear encoder:
 calibration; cref default 50 N ~ 12% body weight.) The Ib group ports
 keep the M5 wiring: I = ibnA * mean normalized extensor force.
 
-Support rig (knob --rig=S): a world-frame PD on the Root body via
-xfrc_applied — a HORIZONTAL leash on the COM, a SOFT vertical harness
-(kz 2000 N/m: ~25% weight-bearing at a 5 cm sink, ~0 near upright, so
-the feet stay loaded) and a TILT assist (rotation vector of
-R_root @ R0^T), stiffness K_eff = S * K0 with K0 = {kxy 2000 N/m,
-kz 2000 N/m, krot 400 N m/rad} + critical-rate damping. S=0 = no rig.
-WHY A RIG IS NEEDED AT ALL (measured this session,
-tmp\m6_static_margin.py): at the grounded rest pose the COM sits 3.09
-cm OUTSIDE the front edge of the foot support polygon — the pose
-cannot statically stand even rigid, and the source aproj itself ships
-the Root with Freeze=True (never a free-standing model). START POSE:
---drop (default 0.026 m) lowers the free-joint z so the rest pose
-STARTS grounded (plates hover 2.6-3.1 cm, M1 section 2.8) —
-documented start-pose modification. SETTLE DEVICE (runtime,
-documented): for t < settle (default 0.4 s) the rig runs at S=1 while
-neural tone builds; at t=settle the anchor is re-captured at the
-settled pose, then S blends 1.0 -> target over 0.6 s.
+Support rig (knob --rig=S, walk-phase default now 1.0 = retained): the
+HORIZONTAL leash on the COM + a TILT assist (rotation vector of
+R_root @ R0^T) via xfrc_applied, stiffness K_eff = S * K0 with
+K0 = {kxy 2000 N/m, krot 400 N m/rad} + critical-rate damping. The old
+soft-COM-z kz spring is REPLACED by the protocol vertical channel
+above (which is NOT scaled by S — the harness is the protocol piece).
+S=0 = leash/tilt off only. WHY A RIG IS NEEDED AT ALL (measured this
+session, tmp\m6_static_margin.py): at the grounded rest pose the COM
+sits 3.09 cm OUTSIDE the front edge of the foot support polygon — the
+pose cannot statically stand even rigid, and the source aproj itself
+ships the Root with Freeze=True (never a free-standing model).
+SETTLE DEVICE (runtime, documented): for t < settle (default 0.4 s)
+the rig runs at S=1 while neural tone builds; at t=settle the anchor
+is re-captured at the settled AIR pose (inside the hold), then S
+blends 1.0 -> target over 0.6 s.
 
 STAND phase (--phase=stand|--phase=both, dur_stand=12 s): drive regime
 --sregime=latch (default; te=tf=0 + the 10 nA 10 ms kickoff on
@@ -58,7 +70,8 @@ Run (cwd w2l_mujoco\):
     C:\Users\Ben Bolen\.conda\envs\myo\python.exe test_w2l_ground.py
         [--phase=both --dur_stand=12 --dur_walk=20 --ctn_amp=4.0
          --cref=50 --ibnA=1.0 --te=3.0 --tf=4.0 --tau=0.25 --cap=0.5
-         --damp=3.0 --rig=0.0 --sregime=latch --settle=0.4]
+         --damp=3.0 --rig=1.0 --sregime=latch --settle=0.4
+         --hold=3.0 --lower=1.0 --wsup=0.7 --sink=0.01]
 """
 from __future__ import annotations
 
@@ -83,7 +96,8 @@ GROUND = os.path.join(HERE, "w2l_ground.xml")
 KV = dict(phase="both", dur_stand=12.0, dur_walk=20.0,
           ctn_amp=4.0, cref=50.0, ibnA=1.0,
           te=3.0, tf=4.0, tau=0.25, cap=0.5, acap=-1.0, damp=3.0,
-          rig=0.0, sregime="latch", settle=0.4, heelN=5.0, drop=0.026)
+          rig=1.0, sregime="latch", settle=0.4, heelN=5.0, drop=0.026,
+          hold=3.0, lower=1.0, wsup=0.7, sink=0.01)
 for arg in sys.argv[1:]:
     if arg.startswith("--") and "=" in arg:
         k, v = arg[2:].split("=", 1)
@@ -94,16 +108,18 @@ for arg in sys.argv[1:]:
         KV[k.replace("-", "_")] = v
 
 # rig base stiffnesses (world frame, applied at the Root body via
-# xfrc_applied): [kx, ky N/m] horizontal leash, kz N/m SOFT vertical
-# harness, [kroll, kpitch, kyaw N m/rad] tilt assist. kz=2000 N/m is
-# ~10x softer than a suspension: it carries ~25% of the 411 N weight at
-# a 5 cm sink and 0 near upright, so the feet stay LOADED (heel duty is
-# reported as the evidence). Rationale: the static margin probe
-# (tmp\m6_static_margin.py) measured the COM 3.09 cm OUTSIDE the front
-# edge of the support polygon at the grounded rest pose — no open-loop
-# controller can free-stand this pose, matching the aproj shipping the
-# Root with Freeze=True (it was never a free-standing model).
-K0_XY, K0_Z, K0_ROT = 2000.0, 2000.0, 400.0
+# xfrc_applied): [kx, ky N/m] horizontal leash on the COM, [kroll,
+# kpitch, kyaw N m/rad] tilt assist. The VERTICAL channel is the drop
+# protocol harness (feedforward weight fraction + stiff PD, computed
+# in run_phase) — it replaced the old soft COM-z kz spring so the
+# harness can actually hold the body in AIR (a 2000 N/m spring would
+# need a 20 cm sag to carry the 411 N weight). Rationale for keeping
+# a leash/tilt at all: the static margin probe (tmp\m6_static_margin.py)
+# measured the COM 3.09 cm OUTSIDE the front edge of the support
+# polygon at the grounded rest pose — no open-loop controller can
+# free-stand this pose, matching the aproj shipping the Root with
+# Freeze=True (it was never a free-standing model).
+K0_XY, K0_ROT = 2000.0, 400.0
 # rig damping is critical-rate: c = 2*sqrt(K*m_eff); m_eff 42 kg (trans),
 # I_eff 5 kg m^2 (rot)
 M_EFF, I_EFF = 42.0, 5.0
@@ -119,18 +135,20 @@ FALL_TILT = 45.0       # deg
 
 
 def write_ground_xml() -> None:
-    """w2l_mjcf_fixed.xml + <freejoint> on the Root pelvis (read-only
-    transform; the source XML is never modified)."""
+    """Ground variant of w2l_mjcf_fixed.xml. The 2026-09-30 MJCF rebuild
+    made the Root pelvis FREEJOINT-ed at the source (make_w2l_mjcf.py now
+    emits <freejoint name="root"/> — the old M6 route INJECTED one here,
+    which after the rebuild produced a duplicate joint name). So this is
+    now a read-only copy + header comment; no structural edit."""
     txt = open(FIXED, encoding="utf-8").read()
-    marker = '<body name="Root" pos="-3.454 0 0.99298"'
-    assert marker in txt, "Root body open tag not found in w2l_mjcf_fixed.xml"
-    line_end = txt.index(">", txt.index(marker)) + 1
+    assert '<freejoint name="root"/>' in txt, \
+        "w2l_mjcf_fixed.xml lost its root freejoint (2026-09-30 rebuild)"
     hdr = ("<!-- GROUND VARIANT for milestone 6 (test_w2l_ground.py):\n"
            "     identical to w2l_mjcf_fixed.xml (axis-fixed body, see\n"
-           "     fix_joint_axes.py) except the Root pelvis carries a FREE\n"
-           "     joint (the ask: release the pelvis). Rest pose verbatim\n"
-           "     (hovers 2.6-3.1 cm; the drop is caught by the settle rig). -->\n")
-    txt = txt[:line_end] + '\n    <freejoint name="root"/>' + txt[line_end:]
+           "     fix_joint_axes.py; Root pelvis freejoint INCLUDED since\n"
+           "     the 2026-09-30 make_w2l_mjcf.py rebuild). Rest pose kept\n"
+           "     verbatim (hovers 2.6-3.1 cm; the drop protocol harness\n"
+           "     holds it in air, then lowers it). -->\n")
     open(GROUND, "w", encoding="utf-8").write(hdr + txt)
 
 
@@ -156,14 +174,23 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
     m.dof_damping[:] = KV["damp"]
     m.jnt_solimp[:] = np.array([0.9, 0.99, 0.001, 0.5, 2.0])
     m.jnt_solref[:] = np.array([0.006, 1.0])
-    # ground the rest pose: the aproj plates hover 2.6-3.1 cm (M1 report
-    # section 2.8); lower the free-joint z by --drop so the feet START
-    # loaded (documented start-pose modification; Li's model also starts
-    # feet-on-ground, M2 report section 1). No vertical rig spring exists,
-    # so the full weight goes through the feet from t=0.
+    # DROP PROTOCOL (Ben 2026-09-30): spawn at the VERBATIM rest pose
+    # (plates hover 2.6-3.1 cm, M1 report section 2.8) — the old
+    # spawn-time --drop grounding of the free-joint z is REMOVED. The
+    # virtual-walker harness below holds the root in AIR, lowers it to
+    # the platform over --lower s, and STAYS ON at --wsup weight
+    # fraction (drop WITH the harness).
     jadr = m.jnt_qposadr[mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_JOINT,
                                            "root")]
-    d.qpos[jadr + 2] -= KV["drop"]
+    z_air = float(d.qpos[jadr + 2])             # rest-pose root z
+    z_contact = z_air - KV["drop"] - KV["sink"]  # lowered target
+    W = float(np.sum(m.body_mass)) * (-m.opt.gravity[2])   # N
+    HOLD, LOW = KV["hold"], KV["lower"]
+    # vertical harness = feedforward weight + stiff PD (the
+    # test_li_stepping.py runner-rig idiom): K_V sized so the sag at
+    # full weight is < drop/4
+    K_V = 4.0 * W / max(KV["drop"], 0.01)
+    C_V = 2.0 * float(np.sqrt(K_V * M_EFF))     # ~critical
     # RUNTIME STAND-IN (documented): the transported ankle range
     # [-20,-5] deg EXCLUDES the aproj's own rest pose (ankle 0 deg) —
     # the M3 report section 5 transport inconsistency. At t=0 the stiff
@@ -261,14 +288,28 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
             for a, c in net.muscle_ctrl(V).items():
                 d.ctrl[act_ids[a]] = min(c, acap if "ankle" in a else cap)
             d.xfrc_applied[body_root, :] = 0.0     # rig force is per-step
+            # VIRTUAL-WALKER VERTICAL HARNESS (the drop-protocol piece;
+            # always on, NOT scaled by rig S): feedforward weight +
+            # vertical PD at the protocol target height. Air-hold ->
+            # linear descent -> retained support (Ben 2026-09-30).
+            if t < HOLD:                      # AIR: feet clear, air-step
+                z_t, wff = z_air, 1.0
+            elif t < HOLD + LOW:              # LOWER to the platform
+                z_t = z_air + (z_contact - z_air) * (t - HOLD) / \
+                    max(LOW, 1e-6)
+                wff = 1.0
+            else:                             # ON platform, harness kept
+                z_t, wff = z_contact, KV["wsup"]
+            Fz = max(wff * W + K_V * (z_t - float(d.qpos[jadr + 2]))
+                     - C_V * d.qvel[2], 0.0)
+            d.xfrc_applied[body_root, 2] += Fz
             if anchor is not None and S_now > 0.0:
-                # world-frame PD support rig via xfrc_applied on Root
-                com, pel = anchor["com"], anchor["pel"]
+                # leash (COM xy) + tilt assist, scaled by S (the rig)
+                com = anchor["com"]
                 dv = d.subtree_com[0] - com
                 F = np.zeros(3)
                 F[0] = -S_now * K0_XY * dv[0]
                 F[1] = -S_now * K0_XY * dv[1]
-                F[2] = -S_now * K0_Z * dv[2]
                 rv = rotvec_deg(d.xmat[body_root].reshape(3, 3),
                                 anchor["R0"])
                 T = -S_now * K0_ROT * rv
@@ -276,14 +317,12 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
                     T -= S_now * 2.0 * np.sqrt(K0_ROT * I_EFF) * \
                         (rv - rv_prev) / DT_PHY
                 rv_prev = rv
-                F -= S_now * 2.0 * np.sqrt(K0_XY * M_EFF) * \
-                    np.array([d.qvel[0], d.qvel[1], 0.0])
-                F[2] -= S_now * 2.0 * np.sqrt(K0_Z * M_EFF) * d.qvel[2]
-                d.xfrc_applied[body_root, :3] = F
+                F[:2] -= S_now * 2.0 * np.sqrt(K0_XY * M_EFF) * \
+                    np.array([d.qvel[0], d.qvel[1]])
+                d.xfrc_applied[body_root, 0] += F[0]
+                d.xfrc_applied[body_root, 1] += F[1]
                 d.xfrc_applied[body_root, 3:] = T
-                log["rigFz"][i] = F[2]
-            elif i > 0:
-                log["rigFz"][i] = log["rigFz"][i - 1]
+            log["rigFz"][i] = d.xfrc_applied[body_root, 2]
         mujoco.mj_step(m, d)
         if i % NSUB == 0 and t >= settle and anchor is None:
             # re-anchor the rig at the SETTLED pose (feet loaded)
@@ -340,7 +379,9 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
 
 
 def stand_report(rig: float, log: dict, regime: str) -> dict:
-    t0 = KV["settle"] + 0.6           # window = after the rig blend ends
+    # window = after the drop (hold + lower + settle transient); the
+    # settle/blend window sits INSIDE the air-hold under the protocol
+    t0 = max(KV["settle"] + 0.6, KV["hold"] + KV["lower"] + 0.5)
     w = log["t"] >= t0
     t = log["t"][w]
     com = log["com"][w]
@@ -375,9 +416,10 @@ def main() -> int:
               f"pelvis FREE, {KV['dur_stand']:.0f} s ==")
         print(f"   knobs: sregime={KV['sregime']} ctn_amp={KV['ctn_amp']} "
               f"cref={KV['cref']} ibnA={KV['ibnA']} damp={KV['damp']} "
-              f"settle={KV['settle']} (+0.6 s blend) drop={KV['drop']} m "
-              f"(rig at S=1: kxy={K0_XY:.0f} N/m, kz={K0_Z:.0f} N/m "
-              f"[~25% weight at 5 cm sink], krot={K0_ROT:.0f} N m/rad) "
+              f"settle={KV['settle']} (+0.6 s blend) | DROP PROTOCOL: "
+              f"hold={KV['hold']} s -> lower={KV['lower']} s -> retained "
+              f"wsup={KV['wsup']} (drop={KV['drop']}+sink={KV['sink']} m) "
+              f"| rig kxy={K0_XY:.0f} N/m krot={K0_ROT:.0f} N m/rad | "
               f"fall: pelvis z<{FALL_Z} m or tilt>{FALL_TILT} deg")
         for rig in (0.0, 0.25, 0.5, 1.0):
             log = run_phase("stand", KV["dur_stand"], rig, KV["sregime"])
@@ -409,10 +451,12 @@ def main() -> int:
               f"rig S={KV['rig']} ==")
         print(f"   knobs: ctn_amp={KV['ctn_amp']} cref={KV['cref']} N "
               f"ibnA={KV['ibnA']} te={KV['te']} tf={KV['tf']} tau={KV['tau']} "
-              f"cap={KV['cap']} acap={KV['acap']} damp={KV['damp']} "
-              f"settle={KV['settle']} drop={KV['drop']}")
+              f"cap={KV['cap']} acap={KV['acap']} damp={KV['damp']} | "
+              f"DROP PROTOCOL: hold={KV['hold']} s lower={KV['lower']} s "
+              f"wsup={KV['wsup']} drop={KV['drop']}+sink={KV['sink']} m "
+              f"rig S={KV['rig']}")
         wlog = run_phase("walk", KV["dur_walk"], KV["rig"], None)
-        t0 = KV["settle"] + 0.6
+        t0 = KV["hold"] + KV["lower"] + 0.5   # after the drop settles
         w = wlog["t"] >= t0
         t = wlog["t"][w]
         q = -wlog["q"][w]                    # flexion-positive

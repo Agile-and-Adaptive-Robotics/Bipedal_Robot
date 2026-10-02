@@ -1,0 +1,1112 @@
+{
+ "T0_post_transient_s": 1.0,
+ "models": [
+  {
+   "label": "BilateralRG Ground | Rhythm Generator",
+   "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\animatlab\\Walker_2_Layer_CPG_BilateralRG_Ground_Standalone\\Rhythm Generator.txt",
+   "n_rows_raw": 25010,
+   "n_trailing_zero_rows_dropped": 9,
+   "first_dropped_time_s": 5.0018,
+   "series": [
+    "TimeSlice",
+    "Time",
+    "L RG ext IN",
+    "L RG flx IN",
+    "L RG ext",
+    "L RG flx",
+    "R RG ext IN",
+    "R RG flx IN",
+    "R RG ext",
+    "R RG flx",
+    "L c1",
+    "R c1",
+    "L V3",
+    "R V3"
+   ],
+   "t_min_s": 0.0,
+   "t_max_s": 5.0,
+   "dt_ms": 0.2,
+   "bursts": [
+    {
+     "col": "L RG ext",
+     "full": {
+      "min": -0.06193,
+      "max": -0.05166,
+      "p05": -0.06161,
+      "p95": -0.05669,
+      "thr": -0.05915,
+      "bursts": 12,
+      "mean_period_s": 0.4502,
+      "std_period_s": 0.0503,
+      "mean_dur_s": 0.2617,
+      "duty_frac": 0.628,
+      "xings_-50mV_full": 0
+     },
+     "post_T0": {
+      "min": -0.06193,
+      "max": -0.05627,
+      "p05": -0.06167,
+      "p95": -0.05667,
+      "thr": -0.05917,
+      "bursts": 9,
+      "mean_period_s": 0.4705,
+      "std_period_s": 0.0089,
+      "mean_dur_s": 0.268,
+      "duty_frac": 0.6031,
+      "xings_-55mV_post": 0
+     }
+    },
+    {
+     "col": "R RG ext",
+     "full": {
+      "min": -0.06195,
+      "max": -0.05284,
+      "p05": -0.06155,
+      "p95": -0.05671,
+      "thr": -0.05913,
+      "bursts": 11,
+      "mean_period_s": 0.4668,
+      "std_period_s": 0.0161,
+      "mean_dur_s": 0.3047,
+      "duty_frac": 0.6704,
+      "xings_-50mV_full": 0
+     },
+     "post_T0": {
+      "min": -0.06195,
+      "max": -0.05628,
+      "p05": -0.0616,
+      "p95": -0.05669,
+      "thr": -0.05914,
+      "bursts": 9,
+      "mean_period_s": 0.4688,
+      "std_period_s": 0.0127,
+      "mean_dur_s": 0.3042,
+      "duty_frac": 0.6844,
+      "xings_-55mV_post": 0
+     }
+    },
+    {
+     "col": "L RG flx",
+     "full": {
+      "min": -0.0648,
+      "max": -0.05284,
+      "p05": -0.06414,
+      "p95": -0.05493,
+      "thr": -0.05954,
+      "bursts": 11,
+      "mean_period_s": 0.4661,
+      "std_period_s": 0.0154,
+      "mean_dur_s": 0.2475,
+      "duty_frac": 0.5444,
+      "xings_-50mV_full": 0
+     },
+     "post_T0": {
+      "min": -0.06443,
+      "max": -0.05408,
+      "p05": -0.06416,
+      "p95": -0.05478,
+      "thr": -0.05947,
+      "bursts": 9,
+      "mean_period_s": 0.4685,
+      "std_period_s": 0.0126,
+      "mean_dur_s": 0.246,
+      "duty_frac": 0.5536,
+      "xings_-55mV_post": 9
+     }
+    },
+    {
+     "col": "R RG flx",
+     "full": {
+      "min": -0.06445,
+      "max": -0.05239,
+      "p05": -0.06417,
+      "p95": -0.05497,
+      "thr": -0.05957,
+      "bursts": 11,
+      "mean_period_s": 0.452,
+      "std_period_s": 0.0369,
+      "mean_dur_s": 0.2319,
+      "duty_frac": 0.5101,
+      "xings_-50mV_full": 0
+     },
+     "post_T0": {
+      "min": -0.06445,
+      "max": -0.05402,
+      "p05": -0.06422,
+      "p95": -0.0549,
+      "thr": -0.05956,
+      "bursts": 8,
+      "mean_period_s": 0.4691,
+      "std_period_s": 0.0086,
+      "mean_dur_s": 0.2436,
+      "duty_frac": 0.4872,
+      "xings_-55mV_post": 8
+     }
+    }
+   ],
+   "corr_post": [
+    {
+     "r_zero_lag": -0.6473,
+     "r_max": 0.9762,
+     "lag_at_rmax_s": 0.238,
+     "a": "L RG ext",
+     "b": "R RG ext",
+     "lag_cycles": 0.529
+    },
+    {
+     "r_zero_lag": -0.9162,
+     "r_max": 0.8978,
+     "lag_at_rmax_s": 0.244,
+     "a": "L RG ext",
+     "b": "L RG flx",
+     "lag_cycles": 0.542
+    },
+    {
+     "r_zero_lag": -0.9256,
+     "r_max": 0.8551,
+     "lag_at_rmax_s": -0.234,
+     "a": "R RG ext",
+     "b": "R RG flx",
+     "lag_cycles": -0.501
+    }
+   ]
+  },
+  {
+   "label": "BilateralRG Ground | L Angles",
+   "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\animatlab\\Walker_2_Layer_CPG_BilateralRG_Ground_Standalone\\L Angles.txt",
+   "n_rows_raw": 4510,
+   "n_trailing_zero_rows_dropped": 9,
+   "first_dropped_time_s": 5.009,
+   "series": [
+    "TimeSlice",
+    "Time",
+    "ankle_L",
+    "hip_L",
+    "knee_L"
+   ],
+   "t_min_s": 0.5,
+   "t_max_s": 5.0,
+   "dt_ms": 1.0,
+   "freq_hz_post": [
+    {
+     "col": "ankle_L",
+     "peak_hz": 2.2494,
+     "period_from_peak_s": 0.4446
+    },
+    {
+     "col": "hip_L",
+     "peak_hz": 1.9995,
+     "period_from_peak_s": 0.5001
+    },
+    {
+     "col": "knee_L",
+     "peak_hz": 2.2494,
+     "period_from_peak_s": 0.4446
+    }
+   ],
+   "ranges": [
+    {
+     "col": "ankle_L",
+     "full_min": -0.3567,
+     "full_max": -0.0692,
+     "post_min": -0.3547,
+     "post_max": -0.0692,
+     "post_mean": -0.2,
+     "post_ptp": 0.2855,
+     "post_ptp_deg_if_rad": 16.36
+    },
+    {
+     "col": "hip_L",
+     "full_min": 0.0988,
+     "full_max": 0.4042,
+     "post_min": 0.0988,
+     "post_max": 0.4034,
+     "post_mean": 0.3306,
+     "post_ptp": 0.3046,
+     "post_ptp_deg_if_rad": 17.45
+    },
+    {
+     "col": "knee_L",
+     "full_min": -0.0046,
+     "full_max": 1.0658,
+     "post_min": -0.0046,
+     "post_max": 1.0658,
+     "post_mean": 0.3694,
+     "post_ptp": 1.0703,
+     "post_ptp_deg_if_rad": 61.33
+    }
+   ]
+  },
+  {
+   "label": "BilateralRG Ground | Contact",
+   "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\animatlab\\Walker_2_Layer_CPG_BilateralRG_Ground_Standalone\\Contact.txt",
+   "n_rows_raw": 25010,
+   "n_trailing_zero_rows_dropped": 305,
+   "first_dropped_time_s": 5.0018,
+   "series": [
+    "TimeSlice",
+    "Time",
+    "toe_L_contact",
+    "toe_R_contact",
+    "foot_L_contact",
+    "foot_R_contact"
+   ],
+   "t_min_s": 0.0,
+   "t_max_s": 4.941,
+   "dt_ms": 0.2,
+   "bursts": [
+    {
+     "col": "foot_L_contact",
+     "full": {
+      "min": 0.0,
+      "max": 2.0,
+      "p05": 0.0,
+      "p95": 0.0,
+      "thr": 0.0,
+      "bursts": 0,
+      "mean_period_s": null,
+      "std_period_s": null,
+      "mean_dur_s": null,
+      "duty_frac": null,
+      "xings_-50mV_full": 0
+     },
+     "post_T0": {
+      "min": 0.0,
+      "max": 2.0,
+      "p05": 0.0,
+      "p95": 0.0,
+      "thr": 0.0,
+      "bursts": 0,
+      "mean_period_s": null,
+      "std_period_s": null,
+      "mean_dur_s": null,
+      "duty_frac": null,
+      "xings_-55mV_post": 0
+     }
+    },
+    {
+     "col": "foot_R_contact",
+     "full": {
+      "min": 0.0,
+      "max": 1.0,
+      "p05": 0.0,
+      "p95": 0.0,
+      "thr": 0.0,
+      "bursts": 0,
+      "mean_period_s": null,
+      "std_period_s": null,
+      "mean_dur_s": null,
+      "duty_frac": null,
+      "xings_-50mV_full": 0
+     },
+     "post_T0": {
+      "min": 0.0,
+      "max": 1.0,
+      "p05": 0.0,
+      "p95": 0.0,
+      "thr": 0.0,
+      "bursts": 0,
+      "mean_period_s": null,
+      "std_period_s": null,
+      "mean_dur_s": null,
+      "duty_frac": null,
+      "xings_-55mV_post": 0
+     }
+    }
+   ],
+   "duty_post": [
+    {
+     "col": "toe_L_contact",
+     "min": 0.0,
+     "max": 1.0,
+     "frac_gt_0.5": 0.0365
+    },
+    {
+     "col": "toe_R_contact",
+     "min": 0.0,
+     "max": 2.0,
+     "frac_gt_0.5": 0.2809
+    },
+    {
+     "col": "foot_L_contact",
+     "min": 0.0,
+     "max": 2.0,
+     "frac_gt_0.5": 0.0315
+    },
+    {
+     "col": "foot_R_contact",
+     "min": 0.0,
+     "max": 1.0,
+     "frac_gt_0.5": 0.0297
+    }
+   ]
+  },
+  {
+   "label": "W2L modern | Rhythm Generator",
+   "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\animatlab\\Walker_2_Layer_CPG_Standalone_modern\\Rhythm Generator.txt",
+   "n_rows_raw": 25010,
+   "n_trailing_zero_rows_dropped": 9,
+   "first_dropped_time_s": 5.0018,
+   "series": [
+    "TimeSlice",
+    "Time",
+    "L RG ext IN",
+    "L RG flx IN",
+    "L RG ext",
+    "L RG flx"
+   ],
+   "t_min_s": 0.0,
+   "t_max_s": 5.0,
+   "dt_ms": 0.2,
+   "bursts": [
+    {
+     "col": "L RG ext",
+     "full": {
+      "min": -0.06107,
+      "max": -0.05216,
+      "p05": -0.06094,
+      "p95": -0.05659,
+      "thr": -0.05877,
+      "bursts": 11,
+      "mean_period_s": 0.4434,
+      "std_period_s": 0.0006,
+      "mean_dur_s": 0.2383,
+      "duty_frac": 0.5244,
+      "xings_-50mV_full": 0
+     },
+     "post_T0": {
+      "min": -0.06107,
+      "max": -0.05641,
+      "p05": -0.06097,
+      "p95": -0.05657,
+      "thr": -0.05877,
+      "bursts": 9,
+      "mean_period_s": 0.4432,
+      "std_period_s": 0.0001,
+      "mean_dur_s": 0.2386,
+      "duty_frac": 0.5367,
+      "xings_-55mV_post": 0
+     }
+    },
+    {
+     "col": "L RG flx",
+     "full": {
+      "min": -0.0625,
+      "max": -0.05284,
+      "p05": -0.06096,
+      "p95": -0.05661,
+      "thr": -0.05879,
+      "bursts": 12,
+      "mean_period_s": 0.4441,
+      "std_period_s": 0.0025,
+      "mean_dur_s": 0.2223,
+      "duty_frac": 0.5336,
+      "xings_-50mV_full": 0
+     },
+     "post_T0": {
+      "min": -0.06107,
+      "max": -0.05641,
+      "p05": -0.06097,
+      "p95": -0.05657,
+      "thr": -0.05877,
+      "bursts": 9,
+      "mean_period_s": 0.4433,
+      "std_period_s": 0.0001,
+      "mean_dur_s": 0.2154,
+      "duty_frac": 0.4847,
+      "xings_-55mV_post": 0
+     }
+    }
+   ],
+   "flexcheck": [
+    {
+     "col": "L RG flx",
+     "full_max_mV": -52.84,
+     "post_max_mV": -56.41,
+     "xings_-55mV_full": 0,
+     "xings_-55mV_post": 0
+    },
+    {
+     "col": "L RG ext",
+     "full_max_mV": -52.16,
+     "post_max_mV": -56.41,
+     "xings_-55mV_full": 0,
+     "xings_-55mV_post": 0
+    }
+   ],
+   "corr_post": [
+    {
+     "r_zero_lag": -0.9959,
+     "r_max": 1.0,
+     "lag_at_rmax_s": -1.108,
+     "a": "L RG ext",
+     "b": "L RG flx",
+     "lag_cycles": -2.499
+    }
+   ]
+  },
+  {
+   "label": "W2L modern | L Angles",
+   "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\animatlab\\Walker_2_Layer_CPG_Standalone_modern\\L Angles.txt",
+   "n_rows_raw": 4510,
+   "n_trailing_zero_rows_dropped": 9,
+   "first_dropped_time_s": 5.009,
+   "series": [
+    "TimeSlice",
+    "Time",
+    "ankle_L",
+    "hip_L",
+    "knee_L"
+   ],
+   "t_min_s": 0.5,
+   "t_max_s": 5.0,
+   "dt_ms": 1.0,
+   "freq_hz_post": [
+    {
+     "col": "ankle_L",
+     "peak_hz": 2.2494,
+     "period_from_peak_s": 0.4446
+    },
+    {
+     "col": "hip_L",
+     "peak_hz": 2.2494,
+     "period_from_peak_s": 0.4446
+    },
+    {
+     "col": "knee_L",
+     "peak_hz": 2.2494,
+     "period_from_peak_s": 0.4446
+    }
+   ],
+   "ranges": [
+    {
+     "col": "ankle_L",
+     "full_min": -0.356,
+     "full_max": -0.0704,
+     "post_min": -0.3547,
+     "post_max": -0.0704,
+     "post_mean": -0.2136,
+     "post_ptp": 0.2843,
+     "post_ptp_deg_if_rad": 16.29
+    },
+    {
+     "col": "hip_L",
+     "full_min": -0.2621,
+     "full_max": 0.4047,
+     "post_min": -0.2621,
+     "post_max": 0.4043,
+     "post_mean": 0.099,
+     "post_ptp": 0.6664,
+     "post_ptp_deg_if_rad": 38.18
+    },
+    {
+     "col": "knee_L",
+     "full_min": -0.0166,
+     "full_max": 1.0516,
+     "post_min": -0.0166,
+     "post_max": 1.0516,
+     "post_mean": 0.4036,
+     "post_ptp": 1.0682,
+     "post_ptp_deg_if_rad": 61.2
+    }
+   ]
+  },
+  {
+   "label": "Biped_2xCPG | Rhythm Generator",
+   "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\animatlab\\Biped_2xCPG_wSubs_Standalone\\Rhythm Generator.txt",
+   "n_rows_raw": 25010,
+   "n_trailing_zero_rows_dropped": 9,
+   "first_dropped_time_s": 5.0018,
+   "series": [
+    "TimeSlice",
+    "Time",
+    "L RG ext IN",
+    "L RG flx IN",
+    "L RG ext",
+    "L RG flx"
+   ],
+   "t_min_s": 0.0,
+   "t_max_s": 5.0,
+   "dt_ms": 0.2,
+   "bursts": [
+    {
+     "col": "L RG ext",
+     "full": {
+      "min": -0.06269,
+      "max": -0.05232,
+      "p05": -0.06066,
+      "p95": -0.06057,
+      "thr": -0.06062,
+      "bursts": 1,
+      "mean_period_s": null,
+      "std_period_s": null,
+      "mean_dur_s": 4.5544,
+      "duty_frac": 0.9109,
+      "xings_-50mV_full": 0
+     },
+     "post_T0": {
+      "min": -0.06057,
+      "max": -0.06057,
+      "p05": -0.06057,
+      "p95": -0.06057,
+      "thr": -0.06057,
+      "bursts": 1,
+      "mean_period_s": null,
+      "std_period_s": null,
+      "mean_dur_s": 3.7246,
+      "duty_frac": 0.9311,
+      "xings_-55mV_post": 0
+     }
+    },
+    {
+     "col": "L RG flx",
+     "full": {
+      "min": -0.06154,
+      "max": -0.05284,
+      "p05": -0.05793,
+      "p95": -0.05791,
+      "thr": -0.05792,
+      "bursts": 1,
+      "mean_period_s": null,
+      "std_period_s": null,
+      "mean_dur_s": 0.3678,
+      "duty_frac": 0.0736,
+      "xings_-50mV_full": 0
+     },
+     "post_T0": {
+      "min": -0.05793,
+      "max": -0.05793,
+      "p05": -0.05793,
+      "p95": -0.05793,
+      "thr": -0.05793,
+      "bursts": 0,
+      "mean_period_s": null,
+      "std_period_s": null,
+      "mean_dur_s": null,
+      "duty_frac": null,
+      "xings_-55mV_post": 0
+     }
+    }
+   ],
+   "corr_post": [
+    {
+     "r_zero_lag": -0.6443,
+     "r_max": 0.1083,
+     "lag_at_rmax_s": 1.5,
+     "a": "L RG ext",
+     "b": "L RG flx"
+    }
+   ]
+  },
+  {
+   "label": "Biped_2xCPG | L Hip Physical",
+   "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\animatlab\\Biped_2xCPG_wSubs_Standalone\\L Hip Physical.txt",
+   "n_rows_raw": 5010,
+   "n_trailing_zero_rows_dropped": 9,
+   "first_dropped_time_s": 5.009,
+   "series": [
+    "TimeSlice",
+    "Time",
+    "hip_L_flx_rec",
+    "hip_L_ext_rec",
+    "hip_L",
+    "hip_L_flx",
+    "hip_L_ext"
+   ],
+   "t_min_s": 0.0,
+   "t_max_s": 5.0,
+   "dt_ms": 1.0,
+   "freq_hz_post": [
+    {
+     "col": "hip_L",
+     "peak_hz": null,
+     "period_from_peak_s": null
+    }
+   ],
+   "ranges": [
+    {
+     "col": "hip_L",
+     "full_min": -0.2641,
+     "full_max": 0.3206,
+     "post_min": -0.2618,
+     "post_max": -0.2618,
+     "post_mean": -0.2618,
+     "post_ptp": 0.0,
+     "post_ptp_deg_if_rad": 0.0
+    },
+    {
+     "col": "hip_L_flx",
+     "full_min": 0.0,
+     "full_max": 348.831,
+     "post_min": 41.2757,
+     "post_max": 41.2757,
+     "post_mean": 41.2757,
+     "post_ptp": 0.0,
+     "post_ptp_deg_if_rad": 0.0
+    },
+    {
+     "col": "hip_L_ext",
+     "full_min": 0.0,
+     "full_max": 416.343,
+     "post_min": 0.0,
+     "post_max": 0.0,
+     "post_mean": 0.0,
+     "post_ptp": 0.0,
+     "post_ptp_deg_if_rad": 0.0
+    }
+   ]
+  },
+  {
+   "label": "Li rerun | DataTool_7",
+   "file": "D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\campaigns\\20260930\\animatlab\\Li_rerun\\DataTool_7.txt",
+   "n_rows_raw": 50010,
+   "n_trailing_zero_rows_dropped": 9,
+   "first_dropped_time_s": 10.0018,
+   "series": [
+    "TimeSlice",
+    "Time",
+    "R_foot ground contact",
+    "R_toe ground contact",
+    "R_hip middle",
+    "L_toe ground contact",
+    "L_hip middle",
+    "L_foot ground contact",
+    "height",
+    "distance"
+   ],
+   "t_min_s": 0.0,
+   "t_max_s": 10.0,
+   "dt_ms": 0.2,
+   "bursts": [
+    {
+     "col": "R_foot ground contact",
+     "full": {
+      "min": -0.06004,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05397,
+      "thr": -0.05699,
+      "bursts": 7,
+      "mean_period_s": 1.2992,
+      "std_period_s": 0.0241,
+      "mean_dur_s": 0.6331,
+      "duty_frac": 0.4432,
+      "xings_-50mV_full": 503
+     },
+     "post_T0": {
+      "min": -0.06004,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05387,
+      "thr": -0.05693,
+      "bursts": 6,
+      "mean_period_s": 1.303,
+      "std_period_s": 0.0246,
+      "mean_dur_s": 0.6392,
+      "duty_frac": 0.4261,
+      "xings_-55mV_post": 504
+     }
+    },
+    {
+     "col": "L_foot ground contact",
+     "full": {
+      "min": -0.06076,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05387,
+      "thr": -0.05693,
+      "bursts": 8,
+      "mean_period_s": 1.3327,
+      "std_period_s": 0.0796,
+      "mean_dur_s": 0.6938,
+      "duty_frac": 0.5551,
+      "xings_-50mV_full": 631
+     },
+     "post_T0": {
+      "min": -0.06076,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05387,
+      "thr": -0.05693,
+      "bursts": 7,
+      "mean_period_s": 1.3007,
+      "std_period_s": 0.014,
+      "mean_dur_s": 0.6664,
+      "duty_frac": 0.5183,
+      "xings_-55mV_post": 533
+     }
+    },
+    {
+     "col": "R_hip middle",
+     "full": {
+      "min": -0.06014,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05397,
+      "thr": -0.05699,
+      "bursts": 8,
+      "mean_period_s": 1.3725,
+      "std_period_s": 0.1564,
+      "mean_dur_s": 0.5541,
+      "duty_frac": 0.4433,
+      "xings_-50mV_full": 501
+     },
+     "post_T0": {
+      "min": -0.06014,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05397,
+      "thr": -0.05699,
+      "bursts": 7,
+      "mean_period_s": 1.3106,
+      "std_period_s": 0.0418,
+      "mean_dur_s": 0.4907,
+      "duty_frac": 0.3816,
+      "xings_-55mV_post": 399
+     }
+    },
+    {
+     "col": "L_hip middle",
+     "full": {
+      "min": -0.06004,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05403,
+      "thr": -0.05702,
+      "bursts": 7,
+      "mean_period_s": 1.2915,
+      "std_period_s": 0.0465,
+      "mean_dur_s": 0.4766,
+      "duty_frac": 0.3336,
+      "xings_-50mV_full": 377
+     },
+     "post_T0": {
+      "min": -0.06004,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05399,
+      "thr": -0.057,
+      "bursts": 7,
+      "mean_period_s": 1.2914,
+      "std_period_s": 0.0464,
+      "mean_dur_s": 0.4765,
+      "duty_frac": 0.3706,
+      "xings_-55mV_post": 378
+     }
+    }
+   ],
+   "corr_post": [
+    {
+     "r_zero_lag": -0.153,
+     "r_max": 0.4025,
+     "lag_at_rmax_s": 0.626,
+     "a": "L_hip middle",
+     "b": "R_hip middle",
+     "lag_cycles": 0.485
+    },
+    {
+     "r_zero_lag": -0.185,
+     "r_max": 0.3007,
+     "lag_at_rmax_s": 0.652,
+     "a": "L_foot ground contact",
+     "b": "R_foot ground contact",
+     "lag_cycles": 0.489
+    }
+   ],
+   "freq_hz_post": [
+    {
+     "col": "R_hip middle",
+     "peak_hz": 0.7778,
+     "period_from_peak_s": 1.2857
+    },
+    {
+     "col": "L_hip middle",
+     "peak_hz": 0.7778,
+     "period_from_peak_s": 1.2857
+    }
+   ],
+   "ranges": [
+    {
+     "col": "height",
+     "full_min": 0.9522,
+     "full_max": 1.0202,
+     "post_min": 0.9534,
+     "post_max": 0.9721,
+     "post_mean": 0.9674,
+     "post_ptp": 0.0187,
+     "post_ptp_deg_if_rad": 1.07
+    }
+   ],
+   "duty_post": [
+    {
+     "col": "R_foot ground contact",
+     "min": -0.06,
+     "max": 0.0,
+     "frac_gt_0.5": 0.0
+    },
+    {
+     "col": "L_foot ground contact",
+     "min": -0.0608,
+     "max": 0.0,
+     "frac_gt_0.5": 0.0
+    },
+    {
+     "col": "R_toe ground contact",
+     "min": -0.0606,
+     "max": 0.0,
+     "frac_gt_0.5": 0.0
+    },
+    {
+     "col": "L_toe ground contact",
+     "min": -0.061,
+     "max": 0.0,
+     "frac_gt_0.5": 0.0
+    }
+   ],
+   "endpoints_post": [
+    {
+     "col": "distance",
+     "first": -3.1451,
+     "last": 2.9136,
+     "t_first": 1.0,
+     "t_last": 10.0,
+     "abs_rate": 0.6732
+    },
+    {
+     "col": "height",
+     "first": 0.9584,
+     "last": 0.9689,
+     "t_first": 1.0,
+     "t_last": 10.0,
+     "abs_rate": 0.0012
+    }
+   ]
+  },
+  {
+   "label": "Li reference 2023 | DataTool_7",
+   "file": "D:\\GitHub\\Bipedal_Robot\\Neuromechanical_Models\\Li Model\\DataTool_7.txt",
+   "n_rows_raw": 50010,
+   "n_trailing_zero_rows_dropped": 9,
+   "first_dropped_time_s": 10.0018,
+   "series": [
+    "TimeSlice",
+    "Time",
+    "R_foot ground contact",
+    "R_toe ground contact",
+    "R_hip middle",
+    "L_toe ground contact",
+    "L_hip middle",
+    "L_foot ground contact",
+    "height",
+    "distance"
+   ],
+   "t_min_s": 0.0,
+   "t_max_s": 10.0,
+   "dt_ms": 0.2,
+   "bursts": [
+    {
+     "col": "R_foot ground contact",
+     "full": {
+      "min": -0.06004,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05397,
+      "thr": -0.05699,
+      "bursts": 7,
+      "mean_period_s": 1.3005,
+      "std_period_s": 0.0244,
+      "mean_dur_s": 0.6392,
+      "duty_frac": 0.4474,
+      "xings_-50mV_full": 508
+     },
+     "post_T0": {
+      "min": -0.06004,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05387,
+      "thr": -0.05693,
+      "bursts": 6,
+      "mean_period_s": 1.3046,
+      "std_period_s": 0.0248,
+      "mean_dur_s": 0.6462,
+      "duty_frac": 0.4308,
+      "xings_-55mV_post": 509
+     }
+    },
+    {
+     "col": "L_foot ground contact",
+     "full": {
+      "min": -0.06076,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05387,
+      "thr": -0.05693,
+      "bursts": 8,
+      "mean_period_s": 1.3363,
+      "std_period_s": 0.0778,
+      "mean_dur_s": 0.6893,
+      "duty_frac": 0.5515,
+      "xings_-50mV_full": 626
+     },
+     "post_T0": {
+      "min": -0.06076,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05387,
+      "thr": -0.05693,
+      "bursts": 7,
+      "mean_period_s": 1.3048,
+      "std_period_s": 0.0119,
+      "mean_dur_s": 0.6613,
+      "duty_frac": 0.5143,
+      "xings_-55mV_post": 528
+     }
+    },
+    {
+     "col": "R_hip middle",
+     "full": {
+      "min": -0.06002,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05397,
+      "thr": -0.05699,
+      "bursts": 8,
+      "mean_period_s": 1.3665,
+      "std_period_s": 0.1578,
+      "mean_dur_s": 0.5569,
+      "duty_frac": 0.4455,
+      "xings_-50mV_full": 504
+     },
+     "post_T0": {
+      "min": -0.06002,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05397,
+      "thr": -0.05699,
+      "bursts": 7,
+      "mean_period_s": 1.3036,
+      "std_period_s": 0.0372,
+      "mean_dur_s": 0.4939,
+      "duty_frac": 0.3841,
+      "xings_-55mV_post": 402
+     }
+    },
+    {
+     "col": "L_hip middle",
+     "full": {
+      "min": -0.06004,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.054,
+      "thr": -0.057,
+      "bursts": 7,
+      "mean_period_s": 1.2985,
+      "std_period_s": 0.0439,
+      "mean_dur_s": 0.4822,
+      "duty_frac": 0.3375,
+      "xings_-50mV_full": 380
+     },
+     "post_T0": {
+      "min": -0.06004,
+      "max": 0.0,
+      "p05": -0.06,
+      "p95": -0.05399,
+      "thr": -0.057,
+      "bursts": 7,
+      "mean_period_s": 1.2985,
+      "std_period_s": 0.0439,
+      "mean_dur_s": 0.4822,
+      "duty_frac": 0.375,
+      "xings_-55mV_post": 382
+     }
+    }
+   ],
+   "corr_post": [
+    {
+     "r_zero_lag": -0.155,
+     "r_max": 0.3471,
+     "lag_at_rmax_s": 0.65,
+     "a": "L_hip middle",
+     "b": "R_hip middle",
+     "lag_cycles": 0.501
+    },
+    {
+     "r_zero_lag": -0.1859,
+     "r_max": 0.2994,
+     "lag_at_rmax_s": 0.637,
+     "a": "L_foot ground contact",
+     "b": "R_foot ground contact",
+     "lag_cycles": 0.477
+    }
+   ],
+   "freq_hz_post": [
+    {
+     "col": "R_hip middle",
+     "peak_hz": 0.7778,
+     "period_from_peak_s": 1.2857
+    },
+    {
+     "col": "L_hip middle",
+     "peak_hz": 0.7778,
+     "period_from_peak_s": 1.2857
+    }
+   ],
+   "ranges": [
+    {
+     "col": "height",
+     "full_min": 0.9522,
+     "full_max": 1.0202,
+     "post_min": 0.9534,
+     "post_max": 0.9721,
+     "post_mean": 0.9674,
+     "post_ptp": 0.0187,
+     "post_ptp_deg_if_rad": 1.07
+    }
+   ],
+   "duty_post": [
+    {
+     "col": "R_foot ground contact",
+     "min": -0.06,
+     "max": 0.0,
+     "frac_gt_0.5": 0.0
+    },
+    {
+     "col": "L_foot ground contact",
+     "min": -0.0608,
+     "max": 0.0,
+     "frac_gt_0.5": 0.0
+    },
+    {
+     "col": "R_toe ground contact",
+     "min": -0.0606,
+     "max": 0.0,
+     "frac_gt_0.5": 0.0
+    },
+    {
+     "col": "L_toe ground contact",
+     "min": -0.061,
+     "max": 0.0,
+     "frac_gt_0.5": 0.0
+    }
+   ],
+   "endpoints_post": [
+    {
+     "col": "distance",
+     "first": -3.1451,
+     "last": 2.9302,
+     "t_first": 1.0,
+     "t_last": 10.0,
+     "abs_rate": 0.675
+    },
+    {
+     "col": "height",
+     "first": 0.9584,
+     "last": 0.9676,
+     "t_first": 1.0,
+     "t_last": 10.0,
+     "abs_rate": 0.001
+    }
+   ]
+  }
+ ]
+}
