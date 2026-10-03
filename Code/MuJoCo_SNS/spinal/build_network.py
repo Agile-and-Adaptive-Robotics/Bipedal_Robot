@@ -1020,7 +1020,10 @@ def build(model_actuators: list[str], dt: float = DT,
     # before; AARL_NET=w2lvar routes to the Walker_2_Layer_CPG-layout
     # variant (build_network_w2lvar.py); AARL_NET=syn6 (or G["syn6"] > 0,
     # default 0) routes to the 6-synergy variant (build_network_syn6.py).
-    # The lazy import keeps the default path free of any variant code.
+    # AARL_NET=spiking (2026-10-02 goal-1 spiking campaign) routes to the
+    # hybrid spiking mirror (build_network_spiking.py; SPIKING_MIRROR_
+    # PLAN.md). The lazy import keeps the default path free of any
+    # variant code.
     import os as _os
     _aarl_net = _os.environ.get("AARL_NET", "").strip().lower()
     if _aarl_net == "w2lvar":
@@ -1029,6 +1032,9 @@ def build(model_actuators: list[str], dt: float = DT,
     if _aarl_net == "syn6" or G.get("syn6", 0.0) > 0.0:
         import build_network_syn6 as _syn6
         return _syn6.build(model_actuators, dt=dt, interleg=interleg)
+    if _aarl_net == "spiking":
+        import build_network_spiking as _spk
+        return _spk.build(model_actuators, dt=dt, interleg=interleg)
     muscles: dict[str, MuscleInfo] = {}
     for act in model_actuators:
         mi = classify(act)

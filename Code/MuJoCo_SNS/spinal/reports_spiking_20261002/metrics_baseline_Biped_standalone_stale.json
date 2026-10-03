@@ -1,0 +1,92 @@
+{
+ "asim": "D:/GitHub/Bipedal_Robot/Code/MuJoCo_SNS/spinal/reports_spiking_20261002/models/Biped_standalone_stale/Biped_standalone_stale.asim",
+ "mode": "graded",
+ "charts": {
+  "L Hip Neural": {
+   "file": "L Hip Neural.txt",
+   "empty": true
+  },
+  "L Hip Physical": {
+   "file": "L Hip Physical.txt",
+   "rows": 5001,
+   "t_end": 5.0,
+   "cols": [
+    {
+     "name": "hip_L_flx_rec",
+     "type": "Ia",
+     "mean": 1.8329
+    },
+    {
+     "name": "hip_L_ext_rec",
+     "type": "Ia",
+     "mean": 1.83323
+    },
+    {
+     "name": "hip_L",
+     "type": "angle_deg",
+     "min": -15.1,
+     "max": 18.4,
+     "range": 33.5
+    },
+    {
+     "name": "hip_L_flx",
+     "type": "Tension",
+     "mean": 44.71945
+    },
+    {
+     "name": "hip_L_ext",
+     "type": "Tension",
+     "mean": 2.50496
+    }
+   ]
+  },
+  "L Hip PF": {
+   "file": "L Hip PF.txt",
+   "empty": true
+  },
+  "Rhythm Generator": {
+   "file": "Rhythm Generator.txt",
+   "rows": 25001,
+   "t_end": 5.0,
+   "cols": [
+    {
+     "name": "L RG ext IN",
+     "mean_mV": -59.92,
+     "min_mV": -60.0,
+     "max_mV": -55.76,
+     "crossings_-60mV": 0
+    },
+    {
+     "name": "L RG flx IN",
+     "mean_mV": -57.26,
+     "min_mV": -60.0,
+     "max_mV": -56.62,
+     "crossings_-60mV": 1
+    },
+    {
+     "name": "L RG ext",
+     "mean_mV": -60.52,
+     "min_mV": -62.69,
+     "max_mV": -52.32,
+     "crossings_-60mV": 0
+    },
+    {
+     "name": "L RG flx",
+     "mean_mV": -57.99,
+     "min_mV": -61.54,
+     "max_mV": -52.84,
+     "crossings_-60mV": 1
+    }
+   ]
+  }
+ },
+ "rg_bursts": {
+  "L RG ext": {
+   "bursts": 0
+  },
+  "L RG flx": {
+   "bursts": 1,
+   "note": "single onset (latch?)"
+  }
+ }
+}
