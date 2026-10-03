@@ -4,88 +4,123 @@ This file briefs any AI assistant (ChatGPT or otherwise) working on this project
 primary assistant (ZCode) is unavailable. Read it fully before doing anything. The repo-wide
 `AGENTS.md` next to this file has additional standing context — both are plain markdown.
 
-## 2026-10-02 EVENING — DISSERTATION OVERLEAF UPLOAD BRIEF (ZCode; supersedes the older
+## 2026-10-03 — DISSERTATION OVERLEAF UPLOAD BRIEF (ZCode; supersedes the older
 ## dissertation rules below for this task only)
 
 Ben's instruction: upload the verified ProofFinal content into Overleaf. The local
-`Documentation\Reports and Papers\Dissertation\ProofFinal\` is now the SOURCE OF TRUTH
-(it was re-synced from the 2026-10-02 Overleaf zip, then corrected and extended). The old
-rule "repo ProofFinal is a stale Sep-8 snapshot" is void. Local compile check: pdflatex +
-bibtex, 206 pages, 0 errors, 0 undefined references, 0 multiply-defined labels.
+`Documentation\Reports and Papers\Dissertation\ProofFinal\` is the SOURCE OF TRUTH
+(re-synced from the 2026-10-02 Overleaf zip, then corrected and extended). Local compile:
+pdflatex + bibtex, 0 errors, 0 undefined references, 0 multiply-defined labels.
 
-**The correction that motivated this round (Ben, 2026-10-02): the adopted Xi values.**
+### RULES THAT BIND THIS TASK (Ben, 2026-10-03 — one of these already burned him)
+
+1. **NEVER paste an entire .tex file over a live Overleaf chapter.** Make SELECTIVE edits
+   (the exact insertions/replacements listed below). Advisor and colleague comments live in
+   these files, and a wholesale paste has already destroyed some. Before editing ANY chapter:
+   download a FRESH Overleaf zip, diff the live chapter against the 2026-10-02 zip, and if the
+   live file contains comment blocks, tracked changes, or annotations that the 10-02 zip lacks,
+   PRESERVE them verbatim and report what you found to Ben before proceeding. (ZCode's scan:
+   the 10-02 zip itself contains no advisor comments at any chapter bottom — only the abstract's
+   own commented draft — so anything you find now arrived after that download.)
+2. **Figure-folder policy.** In every `figs/<chapter>/` folder, ONLY figures that are used (or
+   imminently going to be used) in the dissertation belong at the top level. Pieces that make
+   up figures go into a `Components/` subfolder; superseded versions go into `Deprecated/`.
+   Apply this to the Overleaf figs tree as part of the upload (Ben has already done it for the
+   local `Figures/15-background/`).
+3. All ZCODE-fenced blocks (`% [ZCODE ... BEGIN/END]`) port verbatim. The campaign sources live
+   in `Code\MuJoCo_SNS\spinal\reports_spiking_20261002\` and `spinal\campaigns\20260930\`.
+
+### The pick correction at the core of this round (Ben, 2026-10-02)
+
 The Overleaf Results §"Follow-Up Identification and Route Redesign" currently carries the
 SUPERSEDED set (flexor χ0 = +8.9 mm, χ1 = 5.62e4, χ2 = 1.85e4 N/m; extensor χ0 = −10.1 mm,
-χ3 = 0.621 on 4.354e4/1.701e4 — the old row-107/20260910-pick-1 front). The picks of record
-are **flexor front row 77** of `minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat`
-and **extensor flxr77 row 32** (Ben's ruling, verified from the mats by ZCode on 2026-10-02:
-mat `filtered_results` row 77 = X0 3.9374e-3 m, X1 3.9979e4, X2 1.4734e4; `Vas_Pam_20mm_Result_20260920_1519.mat`
-XiUsed = [−6.378e-3, 3.9979e4, 1.4734e4, 0.15829]). Adopted values to appear in print:
-flexor χ0 = +3.94 mm, χ1 = 3.998e4 N/m, χ2 = 1.473e4 N/m; extensor χ0 = −6.38 mm, χ3 = 0.158
-on the same locked pair. The corrected paragraphs (with re-evaluated GoF and the redesign
-margins +5.01 % / +5.043 %) are already in the local ProofFinal 30-results.tex — copy them
-verbatim; do not retype numbers.
+χ3 = 0.621 — the old row-107/20260910-pick-1 front). The picks of record, verified from the
+mats (`filtered_results` row 77 of `minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat`;
+`Vas_Pam_20mm_Result_20260920_1519.mat` XiUsed = [−6.378e-3, 3.9979e4, 1.4734e4, 0.15829]):
+**flexor χ0 = +3.94 mm, χ1 = 3.998e4, χ2 = 1.473e4 N/m; extensor χ0 = −6.38 mm, χ3 = 0.158 on
+the same locked pair.** The corrected paragraphs (values, GoF, redesign margins +5.01 % /
++5.043 %) are in the local 30-results.tex — copy them verbatim; do not retype numbers.
 
-### What to upload — figures (into Overleaf `figs/<chapter>/`)
+### Figures to upload (into Overleaf `figs/<chapter>/`)
 
-| Local file (Dissertation\Figures\...) | Overleaf destination |
-|---|---|
-| 30-results\sns_w2l_traces.png | figs/30-results/ |
-| 30-results\spiking_mirror_rhythm.pdf (+ .png, _alt.txt) | figs/30-results/ |
-| 30-results\spiking_mirror_ground_gait.pdf (+ .png, _alt.txt) | figs/30-results/ |
-| 30-results\simulink_knee_spiking_twin.pdf (+ .png, _alt.txt) | figs/30-results/ |
-| 92-AppendixA\muscle_force_compare.png | figs/92-AppendixA/ |
-| 93-AppendixB\animatlab_spiking_conversion.pdf (+ .png, _alt.txt) | figs/93-AppendixB/ |
+| Local file (Dissertation\Figures\...) | Destination | Note |
+|---|---|---|
+| 15-background\decerebrate_cat_colorized.png | figs/15-background/ | NEW cat figure (Ben's restoration, machine-colorized frame) |
+| 15-background\aarl_bpa_biped.png | figs/15-background/ | Ben's corrected biped skeleton for Fig 2.5 (A) |
+| 30-results\sns_w2l_traces.png | figs/30-results/ | cross-engine verification figure |
+| 30-results\spiking_mirror_rhythm.pdf (+png, _alt.txt) | figs/30-results/ | spiking campaign |
+| 30-results\spiking_mirror_ground_gait.pdf (+png, _alt.txt) | figs/30-results/ | spiking campaign |
+| 30-results\simulink_knee_spiking_twin.pdf (+png, _alt.txt) | figs/30-results/ | spiking campaign |
+| 92-AppendixA\muscle_force_compare.png | figs/92-AppendixA/ | |
+| 93-AppendixB\animatlab_spiking_conversion.pdf (+png, _alt.txt) | figs/93-AppendixB/ | |
 
-(`circuit_literature.pdf` and `testJigs_reviewed.pdf` already exist on Overleaf — no upload.)
+`testJigs_reviewed.pdf`: Ben replaced the local file with a new 3-PANEL version (panel A
+removed; it duplicated Fig. 3.1). Upload the new file, and update the fig:testJigs caption and
+every panel-letter reference to it — but the new panel map was still being described by Ben at
+time of writing, so CONFIRM the panel contents with him (or against the new PDF) before
+rewriting the caption.
 
-### What to upload — .tex (7 chapters; apply content, keep Overleaf's `\graphicspath{figs/...}` lines)
+### Figure program notes (Ben, 2026-10-03 — for the figure-generation workflow)
+
+- **Fig 2.2 (B)**: the BPA panel of `actuator_technology_comparison` shows air pressure acting
+  on the OUTSIDE of the actuator; it acts on the INSIDE (bladder). Fix the schematic
+  (generator: `Dissertation\Notes\make_actuator_technology_comparison.py`).
+- **Fig 2.3**: should show a deflated and an inflated BPA, ideally attached at a bicep-like
+  joint, depicting the joint movement as the BPA length contracts and diameter expands
+  (replaces/completes the current CAD-only view).
+- **Fig 2.5**: now (A) = bipedal skeleton (`aarl_bpa_biped.png`, no actuators — the caption must
+  not imply BPAs are installed) and (B) = `gait2392_27_muscle_model.png`; Ben suggests a third
+  panel showing the gait2392_simbody model ("gait2392_simbody.stop" in his note — likely the
+  simbody model render; confirm with him). The tex wiring for (A)/(B) is already done locally.
+- **fig:testJigs**: 3 panels now; captions and panel references must be made accurate.
+
+### .tex changes (8 chapters + thesis.bib; SELECTIVE edits, keep Overleaf's `\graphicspath` lines)
 
 1. **20-methods.tex** — (a) §3.7 human-torque-target paragraph gains the OpenSim moment-arm
-   sentence (r = ∂l_MT/∂θ, targets = moment arm × maximum isometric force); (b) the two
-   goodness-of-fit decomposition paragraphs (RMSE/FVU interpretation, `taylor_summarizing_2001`
-   — key already in thesis.bib) inserted immediately before §"Optimization Algorithms and Cost
-   Functions"; (c) the flexor/extensor margin sentence replaced by the 5 %-both version with its
-   ZCODE 2026-09-26 audit comment, and §"Balance Platform and Inverted-Pendulum Testbeds" restored
-   as its own heading line (it must NOT sit on a comment line); (d) new subsection
-   "Cross-Platform Verification of the Contact-Driven Rhythm Core" (`sec:crossengine_methods`);
-   (e) new fenced subsection "Spiking-Neuron Mirrors of the Simulation Models" (`sec:spiking_methods`).
-2. **30-results.tex** — (a) §4.1 SADb audit sentence (943 papers / 833 curated / 95 afferent /
-   363 translation notes); (b) §4.2 goodness-of-fit definition pointer; (c) §4.4 paragraphs 2
-   and 3 REPLACED by the pick-77/flxr77-row-32 versions incl. both ZCODE audit comments (source:
-   local file; also removes the duplicated-section hazard the repo version had); (d) three new
-   §4.6 subsections (cross-engine verification, AnimatLab headless validation, BPA-actuated MuJoCo
-   walker) + `sns_w2l_traces.png` figure; (e) new fenced section "Spiking-Neuron Mirror Results"
-   (`sec:spiking_results`) with 2 figures and 3 tables.
+   sentence (r = ∂l_MT/∂θ; targets = moment arm × maximum isometric force); (b) the two
+   goodness-of-fit decomposition paragraphs (RMSE/FVU interpretation, `taylor_summarizing_2001`)
+   inserted immediately before §"Optimization Algorithms and Cost Functions"; (c) the
+   flexor/extensor margin sentence replaced by the 5 %-both version with its ZCODE audit
+   comment, with §"Balance Platform and Inverted-Pendulum Testbeds" as its own heading line;
+   (d) new subsection "Cross-Platform Verification of the Contact-Driven Rhythm Core"
+   (`sec:crossengine_methods`); (e) fenced subsection "Spiking-Neuron Mirrors of the Simulation
+   Models" (`sec:spiking_methods`).
+2. **30-results.tex** — (a) §4.1 SADb audit sentence (943/833/95/363); (b) §4.2 goodness-of-fit
+   definition pointer; (c) §4.4 paragraphs 2 and 3 replaced by the pick-77/flxr77-row-32
+   versions incl. both ZCODE audit comments; (d) three new §4.6 subsections + `sns_w2l_traces`
+   figure; (e) fenced section "Spiking-Neuron Mirror Results" (`sec:spiking_results`, 2 figures,
+   3 tables).
 3. **40-discussion.tex** — synthesis paragraph swapped to the "neural layer is no longer only a
-   proposal" version; new cross-engine paragraph after it; new fenced section
-   "What Spiking Changes and Does Not" (`sec:disc_spiking`).
-4. **60-conclusion.tex** — one sentence added to the final paragraph (verified portability of the
-   neural primitives; gap localized to the balance layer).
-5. **92-AppendixA.tex** — new "OpenSim Moment Arms and Human Torque Targets" subsection; new
-   "Goodness-of-Fit Metrics" subsection (`Go_OfF.m` formulas); compliance provenance corrected to
-   the evaluator of record (minimizeFlxPin.m pitch-only frames lines 289/306, arrays at 387/400;
-   legacy minimizeFlxPinX3.m line 267); `muscle_force_compare.png` figure un-commented; several
-   drifted line-number citations fixed.
-6. **93-AppendixB.tex** — new fenced section "Spiking-Mirror Implementation, Calibration, and
+   proposal" version; new cross-engine paragraph; fenced section "What Spiking Changes and Does
+   Not" (`sec:disc_spiking`).
+4. **60-conclusion.tex** — one sentence added to the final paragraph (verified portability; gap
+   localized to the balance layer).
+5. **92-AppendixA.tex** — new "OpenSim Moment Arms and Human Torque Targets" and "Goodness-of-
+   Fit Metrics" subsections; compliance provenance corrected to the evaluator of record; the
+   `muscle_force_compare` figure un-commented; several drifted line-number citations fixed.
+6. **93-AppendixB.tex** — fenced section "Spiking-Mirror Implementation, Calibration, and
    Verification" (`app:spiking_details`) with calibration/gate/variant tables + figure.
-7. **94-AppendixC.tex** — REPLACE WHOLESALE with the local file (the ZCODE 2026-09-26 audited
-   version): picks 77/32 in the adopted-values table, LOCKSRC sentence, Pbri row
+7. **94-AppendixC.tex** — apply the ZCODE 2026-09-26 audit changes selectively (they are
+   extensive: picks 77/32 in the adopted-values table, LOCKSRC sentence, Pbri row
    [−48.11, −107.81, 13.80], fcec-ray extensor seed rows, rebuilt stiffness-array table,
-   extensor bounds X0 ∈ [−20, +5] mm, evaluator-of-record citations throughout.
+   extensor bounds X0 ∈ [−20, +5] mm, evaluator-of-record citations). Because the changes touch
+   nearly every table, the local file may be used as the base ONLY IF the live file matches the
+   10-02 zip exactly (no advisor comments); otherwise merge selectively.
+8. **15-background.tex** — (a) the decerebrate-cat block REPLACED and MOVED: new paragraph +
+   figure now sit after the Three-Rs paragraph and before the "For a robot to serve as a
+   replacement subject" paragraph; the figure is `decerebrate_cat_colorized.png`, cited via the
+   NEW bib key `decerebrate_cat_footage` (video: https://www.youtube.com/watch?v=hAteWL78NMc,
+   "Decerebrated Cat Treadmill Experiments"); the old wPiLLplofYw citation and trailing block
+   are gone. (b) Fig 2.5 reworked per the notes above ((A)/(B) panels, no-BPA caption).
+9. **thesis.bib** — add the `@misc{decerebrate_cat_footage}` entry at the end of the local file.
 
-All fenced blocks carry `% [ZCODE 2026-10-02 ... BEGIN/END]` markers — port them verbatim; the
-campaign sources live in `Code\MuJoCo_SNS\spinal\reports_spiking_20261002\` and
-`spinal\campaigns\20260930\`. After upload, compile on Overleaf and confirm: 0 errors,
-0 undefined references, no "multiply-defined labels" warning (that warning means the §4.4
-duplication or the commented section header came back). Local reference count: 47
-\includegraphics, all resolving.
+After upload, compile on Overleaf and confirm: 0 errors, 0 undefined references, no
+"multiply-defined labels" warning (that warning means the §4.4 duplication or a commented-out
+section header came back). Local reference count: 48 \includegraphics, all resolving.
 
-Notes: (1) `decerebrate_cat_illustration.png` is still referenced by 15-background and was
-accidentally deleted locally mid-session (restored by ZCode from git; the other cat renders
-remain deleted locally and are git-recoverable — Ben's apparent cleanup). (2) The repo's
-50-futurework.tex carries an alternative "completed-work" framing that Overleaf's current
-version does not; it was NOT ported — Ben's call if he wants it.
+Notes: (1) The repo's 50-futurework.tex carries an alternative "completed-work" framing that
+Overleaf's version does not; NOT ported — Ben's call. (2) Ben's local figure tree now follows
+the Components/Deprecated policy for 15-background; mirror it on Overleaf.
 
 ## REPO SIZE REDUCTION OBJECTIVE (Ben, 2026-09-15) — READ BEFORE ANY GIT OPERATION
 Ben wants the repo shrunk across the board (~13.8 GB on disk) and is WARY of

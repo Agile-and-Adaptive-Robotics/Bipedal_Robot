@@ -100,22 +100,24 @@ Figure~\ref{fig:bpa_graphical_abstract} summarizes the force-characterization wo
 
 Designing a biomimetic leg requires a quantitative benchmark of human muscle--joint behavior. This dissertation uses OpenSim \citep{delp_opensim_2007, seth_opensim_2011, seth_opensim_2018} and the Gait2392 model, which descends from the interactive lower-extremity model of \citet{delp_interactive_1990} and includes musculoskeletal geometry from \citet{hoy_musculoskeletal_1990}, planar knee kinematics from \citet{yamaguchi_planar_1989}, and a lower-limb model with 23 degrees of freedom and 54 musculotendon actuators \citep{arnold_model_2010}. Muscle moment arms, force-generating properties, and functional roles in such models have been characterized extensively \citep{zajac_determining_1989, brand_model_1982, menegaldo_moment_2004, millard_flexing_2013, sherman_what_2013, suderman_moving_2012}, and standard reporting conventions for kinematics and joint mechanics are established by the International Society of Biomechanics \citep{wu_for_1995, wu_isb_2002, wu_isb_2005, derrick_isb_2020}. The human knee is itself a complex joint: its instantaneous center of rotation migrates posteriorly with flexion, a behavior captured by four-bar linkage descriptions of the joint \citep{romero_four-bar_2020, steele_biomimetic_2018}.
 
-Figure~\ref{fig:aarl_opensim_comparison} places the physical BPA-actuated robot beside its OpenSim muscle-routing reference.
+Figure~\ref{fig:aarl_opensim_comparison} places the laboratory's bipedal skeleton beside the OpenSim muscle-routing reference developed for it.
 
 \begin{figure}[htbp]
 \centering
 \begin{minipage}[c]{0.67\textwidth}
 \centering
-\includegraphics[width=\linewidth]{aarl_bpa_biped.jpg}
+\textbf{(A)}\par\smallskip
+\includegraphics[width=\linewidth]{aarl_bpa_biped.png}
 \end{minipage}\hfill
 \begin{minipage}[c]{0.25\textwidth}
 \centering
+\textbf{(B)}\par\smallskip
 \includegraphics[width=\linewidth]{gait2392_27_muscle_model.png}
 \end{minipage}
-% ALT TEXT: Left, the physical AARL BPA-actuated bipedal skeleton stands in its
-% support frame. Right, a Gait2392-derived OpenSim model shows the retained
+% ALT TEXT: (A) The laboratory bipedal skeleton, shown without actuators
+% installed. (B) A Gait2392-derived OpenSim model shows the retained
 % lower-limb muscle paths in red beside the skeletal geometry.
-\caption[Physical BPA biped and OpenSim muscle model]{Physical AARL BPA-actuated bipedal skeleton (left) and the Gait2392-derived OpenSim model used to develop its muscle routing (right). The OpenSim view exposes the retained lower-limb musculotendon paths used as biomechanical design references \citep{bolen_determination_2019, morrow_optimization_2020}.}
+\caption[Laboratory biped skeleton and OpenSim muscle model]{\textbf{(A)} The laboratory bipedal skeleton (actuators not installed in this view). \textbf{(B)} The Gait2392-derived OpenSim model used to develop its muscle routing; the view exposes the retained lower-limb musculotendon paths used as biomechanical design references \citep{bolen_determination_2019, morrow_optimization_2020}.}
 \label{fig:aarl_opensim_comparison}
 \end{figure}
 
@@ -167,17 +169,18 @@ The third line, in which this dissertation sits, is biologically grounded synthe
 
 The experiments this research program is designed to enable --- deleting a muscle from a limb, blocking a sensory pathway, lesioning part of a rhythm generator, applying tonic stimulation to spinal circuits --- cannot be performed on healthy humans. Invasive intervention on the human neuromuscular system is limited to clinical populations, is tightly constrained by ethics review, and permits neither the within-subject control nor the reversibility that neuromechanical hypotheses demand. The same experiments in animals carry real moral cost, and their justification is governed by the Three Rs framework: replacement of animal subjects with non-animal methods, reduction of the numbers required, and refinement of the remaining procedures \citep{russell_principles_1959, tannenbaum_russell_2015}. A robot that implements a validated neuromechanical hypothesis is precisely such a replacement method: every deletion, lesion, and stimulation experiment that runs on the synthetic nervous system is an experiment that does not require a living subject, and the robot population can be duplicated exactly, so that ``subjects'' are statistically identical across conditions --- a form of reduction no breeding colony can offer. Refinement follows as well: the failure modes of these experiments damage hardware, not tissue.
 
-For a robot to serve as a replacement subject, however, it must first earn standing as a scientific model. Webb's influential analyses of bio-robotic methodology \citep{webb_robots_2001, webb_robots_2002} argue that a robot is a good model of biological behavior when the mechanism it implements is tested at the same level of organization as the target phenomenon --- matching dynamics, control structure, and sensory ecology rather than surface appearance. The validation chain of this dissertation is constructed to that standard: the actuator force model is validated against bench data (Section~\ref{sec:results_force}), the joint torque model against isometric measurements and human torque envelopes (Section~\ref{sec:results_torque}), and the neuromechanical controller can be verified against published tonic stimulation and deletion phenomena \citep{selionov_tonic_2009, rybak_modelling_2006} before any locomotion tuning is attempted. Only then can a robot experiment be read as evidence about the hypothesized biological circuit rather than about the robot.
-
-The argument is ultimately bidirectional, completing the loop described in Section~\ref{sec:project}. Experiments that are unethical, impractical, or statistically unreachable in humans and animals become routine on the robot; the resulting insights into neuromechanical control feed back into biology, into the design of the next robot iteration, and directly into prosthetic and orthotic devices that face the same problem of controlling muscles-like actuators for human users, whose central pattern generator controllers are an active topic in lower-limb exoskeleton research \citep{duan_gait_2024, pery_benchmarking_2026}. The ethical case and the scientific case are the same case: the robot is the instrument that makes these experiments possible.
-
-
-Figure~\ref{fig:decerebrate_cat_illustration} illustrates the animal-test context motivating replacement approaches; it is a reconstructed visual, not evidence about surgical anatomy or quantitative gait.
+Figure~\ref{fig:decerebrate_cat} shows what that accounting leaves out. The image is a frame from footage of a real decerebrate-cat experiment, the class of preparation on which the field's understanding of spinal locomotion has been built since its beginnings \citep{brown_intrinsic_1911, decerebrate_cat_footage}: a living cat, its forebrain disconnected by a brainstem transection, walks the treadmill because the circuits below the cut still walk. The published record of this work is drawn almost exclusively in schematic, labeled boxes for half-centers and color-coded reflex arcs that are honest about the circuitry and silent about the animal. The figure is included as the counterweight. It is the only image in this dissertation that is neither a model, nor a measurement, nor a diagram; it documents what the experiments looked like, and therefore what a replacement method stands in for.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.82\textwidth]{decerebrate_cat_illustration.png}
-\caption[Illustrative reconstruction of a treadmill cat preparation]{Digitally reconstructed illustration based on the frame at 1.300~s in \href{https://www.youtube.com/watch?v=wPiLLplofYw}{\emph{Decerebrate Cat walks and exhibits multiple gait patterns}} (uploaded by 0zxr, April 30, 2010). The source upload identifies the preparation as decerebrate. Fine anatomical and apparatus details are interpretive; this is not an unaltered experimental photograph or a quantitative gait record.}
-\label{fig:decerebrate_cat_illustration}
+\includegraphics[width=0.82\textwidth]{decerebrate_cat_colorized.png}
+% ALT TEXT: A cat with surgically prepared head and neck stands on a moving
+% treadmill belt in a laboratory, supported by rigging, walking.
+\caption[Decerebrate cat treadmill experiment, restored footage frame]{Frame from archival footage of a decerebrate-cat treadmill experiment \citep{decerebrate_cat_footage}, restored and machine colorized; color and fine detail are inferred by the restoration rather than recovered from the source. Shown as documentary context for the replacement argument of this section, not as gait evidence.}
+\label{fig:decerebrate_cat}
 \end{figure}
+
+For a robot to serve as a replacement subject, however, it must first earn standing as a scientific model. Webb's influential analyses of bio-robotic methodology \citep{webb_robots_2001, webb_robots_2002} argue that a robot is a good model of biological behavior when the mechanism it implements is tested at the same level of organization as the target phenomenon --- matching dynamics, control structure, and sensory ecology rather than surface appearance. The validation chain of this dissertation is constructed to that standard: the actuator force model is validated against bench data (Section~\ref{sec:results_force}), the joint torque model against isometric measurements and human torque envelopes (Section~\ref{sec:results_torque}), and the neuromechanical controller can be verified against published tonic stimulation and deletion phenomena \citep{selionov_tonic_2009, rybak_modelling_2006} before any locomotion tuning is attempted. Only then can a robot experiment be read as evidence about the hypothesized biological circuit rather than about the robot.
+
+The argument is ultimately bidirectional, completing the loop described in Section~\ref{sec:project}. Experiments that are unethical, impractical, or statistically unreachable in humans and animals become routine on the robot; the resulting insights into neuromechanical control feed back into biology, into the design of the next robot iteration, and directly into prosthetic and orthotic devices that face the same problem of controlling muscles-like actuators for human users, whose central pattern generator controllers are an active topic in lower-limb exoskeleton research \citep{duan_gait_2024, pery_benchmarking_2026}. The ethical case and the scientific case are the same case: the robot is the instrument that makes these experiments possible.
 
