@@ -77,10 +77,15 @@ rewriting the caption.
 ### .tex changes (8 chapters + thesis.bib; SELECTIVE edits, keep Overleaf's `\graphicspath` lines)
 
 1. **20-methods.tex** — (a) §3.7 human-torque-target paragraph gains the OpenSim moment-arm
-   sentence (r = ∂l_MT/∂θ; targets = moment arm × maximum isometric force); (b) the two
-   goodness-of-fit decomposition paragraphs (RMSE/FVU interpretation, `taylor_summarizing_2001`)
-   inserted immediately before §"Optimization Algorithms and Cost Functions"; (c) the
-   flexor/extensor margin sentence replaced by the 5 %-both version with its ZCODE audit
+   sentence (r = ∂l_MT/∂θ; targets = moment arm × maximum isometric force); (a2) §3.7 opening
+   gains the advisor-requested justification paragraph: why the χ0–χ3 correction terms are
+   identified by optimization rather than derived analytically (distributed/lumped compliance
+   of printed brackets, fixtures, winch, tendon; implicit force balance defeats closed-form
+   inversion; joint identifiability only, hence Pareto front + holdout validation);
+   (b) the two goodness-of-fit decomposition paragraphs (RMSE/FVU/max-residual as offset,
+   amplitude, phase/shape; `taylor_summarizing_2001`, `nash_river_1970`, `iosa_assessment_2014`)
+   inserted immediately before §"Optimization Algorithms and Cost Functions";
+   (c) the flexor/extensor margin sentence replaced by the 5 %-both version with its ZCODE audit
    comment, with §"Balance Platform and Inverted-Pendulum Testbeds" as its own heading line;
    (d) new subsection "Cross-Platform Verification of the Contact-Driven Rhythm Core"
    (`sec:crossengine_methods`); (e) fenced subsection "Spiking-Neuron Mirrors of the Simulation
@@ -121,6 +126,42 @@ section header came back). Local reference count: 48 \includegraphics, all resol
 Notes: (1) The repo's 50-futurework.tex carries an alternative "completed-work" framing that
 Overleaf's version does not; NOT ported — Ben's call. (2) Ben's local figure tree now follows
 the Components/Deprecated policy for 15-background; mirror it on Overleaf.
+
+### QUEUED WORK (Ben, 2026-10-03 — for the NEXT rounds; do not start until Ben says go)
+
+Sequencing per Ben: he commits on easteregg2, tells ZCode, then ChatGPT runs the Overleaf
+upload above. The items below are the next content round after that.
+
+- **Advisor's justification note — DONE by ZCode 2026-10-03**: §3.7 now argues why χ0–χ3 are
+  identified by optimization instead of analytical derivation, and the RMSE/FVU/max-residual
+  reasoning (offset, amplitude, phase/shape) is set up in Methods via the decomposition
+  paragraphs. Advisor used the phrase "Xi0–Xi4"; the dissertation carries Xi0–Xi3 only — if a
+  Xi4 term is intended, Ben should define it.
+- **Advisor comments live on Overleaf** (Ben: viewable with the browser-use control-browser and
+  latex-overleaf skills). ZCode's scan found none in the 10-02 zip or repo chapters, so they
+  postdate that download; whoever edits next MUST read them before touching prose.
+- **SNS Simscape imagery**: use the better current library images and demos; Methods should
+  discuss the process of building demos/simple circuits and porting known-good models between
+  engines as a methodology (this pairs with `sec:crossengine_methods`).
+- **Between Results §4.2 and §4.3**: add the first placement optimization (Morrow + Bolen) as
+  its own content, not just the §4.1 summary sentence.
+- **Table 5.1**: make it a sideways table (long-standing advisor layout item).
+- **Torque-test discussion expansion**: more Discussion on the torque tests; Ben's new runs
+  arrive tonight and may show the updated compliant system lets `Opt_run`/`Opt_run_Ext` meet or
+  exceed human torque magnitude — that belongs in DISCUSSION, not Results, per Ben.
+- **Data refresh (old D2.2 set)**: Table 4.3, Figures 4.4–4.6, Table 4.4 regenerated from the
+  current results of record.
+- **§4.5**: add pictures from Ben's posters — inverted pendulums, balance platform, and the
+  reverse-pulley system.
+- **§4.6 expansion**: split into more sections/subsections with results from AnimatLab, SNS
+  Simscape (including the demos), and MuJoCo SNS. Connectomes shown here or in Methods; more
+  material to the appendices.
+- **Discussion: SADb** — its staging on Airtable and migration to the in-house app, with key
+  pictures; more pictures/examples in an appendix.
+- **FEA-for-BPA future-work document**: Ben knows of a document on using advanced FEA for BPA
+  characterization. NOT FOUND by ZCode (2026-10-03) after four search passes on EB475WS4 and
+  easteregg2 (filenames, text files, .docx internals, .pptx internals, Zotero storage names).
+  Likely on the laptop (not SSH-reachable) or in a non-text format — Ben to locate or point.
 
 ## REPO SIZE REDUCTION OBJECTIVE (Ben, 2026-09-15) — READ BEFORE ANY GIT OPERATION
 Ben wants the repo shrunk across the board (~13.8 GB on disk) and is WARY of
