@@ -1,0 +1,1054 @@
+seeded {"drive": 2.0773198435110425, "rg_nap_h": 0.8420833189531531, "desc_e": 1.6987967868158145, "desc_f": 0.9963926530754599, "rg_to_pf": 2.6005147390334713, "ia_in": 0.8250460785281135, "ankle_post_walk_trim": 0.3308631104719715, "f1_anklepf_inh": 0.9285368580077491, "pf_gain": 0.3086648568525935}
+Traceback (most recent call last):
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\_curriculum_pruned.py", line 256, in <module>
+    run_walk(int(sys.argv[2]) if len(sys.argv) > 2 else 1)
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\_curriculum_pruned.py", line 183, in run_walk
+    prev_best = st.best_value if len(st.trials) else None
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\study\study.py", line 133, in best_value
+    best_value = self.best_trial.value
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\study\study.py", line 167, in best_trial
+    return self._get_best_trial(deepcopy=True)
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\study\study.py", line 333, in _get_best_trial
+    best_trial = self._storage.get_best_trial(self._study_id)
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\storages\_cached_storage.py", line 188, in get_best_trial
+    trial_id = self._backend._get_best_trial_id(study_id, direction)
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\storages\_rdb\storage.py", line 981, in _get_best_trial_id
+    return models.TrialModel.find_max_value_trial_id(study_id, 0, session)
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\storages\_rdb\models.py", line 265, in find_max_value_trial_id
+    raise ValueError(NOT_FOUND_MSG)
+ValueError: Record does not exist.
+[W 2026-09-30 13:06:34,545] Trial 0 failed with parameters: {'drive': 2.0773198435110425, 'rg_nap_h': 0.8420833189531531, 'desc_e': 1.6987967868158145, 'desc_f': 0.9963926530754599, 'rg_to_pf': 2.6005147390334713, 'ia_in': 0.8250460785281135, 'ankle_post_walk_trim': 0.3308631104719715, 'f1_anklepf_inh': 0.9285368580077491, 'pf_gain': 0.3086648568525935} because of the following error: NameError("name 'BASE' is not defined").
+Traceback (most recent call last):
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\study\_optimize.py", line 206, in _run_trial
+    value_or_values = func(trial)
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\_curriculum_pruned.py", line 135, in _walk_obj
+    argv = _config(sug)
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\_curriculum_pruned.py", line 80, in _config
+    full = {**BASE, **{k: float(T34[k]) for k in T34},
+NameError: name 'BASE' is not defined
+[W 2026-09-30 13:06:34,545] Trial 0 failed with value None.
+Traceback (most recent call last):
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\_curriculum_pruned.py", line 260, in <module>
+    run_walk(int(sys.argv[2]) if len(sys.argv) > 2 else 1)
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\_curriculum_pruned.py", line 189, in run_walk
+    st.optimize(_walk_obj, n_trials=40, gc_after_trial=True)
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\study\study.py", line 502, in optimize
+    _optimize(
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\study\_optimize.py", line 68, in _optimize
+    _optimize_sequential(
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\study\_optimize.py", line 165, in _optimize_sequential
+    frozen_trial_id = _run_trial(study, func, catch)
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\study\_optimize.py", line 263, in _run_trial
+    raise func_err
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\study\_optimize.py", line 206, in _run_trial
+    value_or_values = func(trial)
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\_curriculum_pruned.py", line 135, in _walk_obj
+    argv = _config(sug)
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\_curriculum_pruned.py", line 80, in _config
+    full = {**BASE, **{k: float(T34[k]) for k in T34},
+NameError: name 'BASE' is not defined
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.27, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.71], >0.1: 18 muscles
+  top: add_long_l=0.71, tib_ant_r=0.61, tib_ant_l=0.48, ext_dig_r=0.40, glut_min1_l=0.40, glut_min2_l=0.38, pect_l=0.34, ext_dig_l=0.29
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.67], >0.1: 14 muscles
+  top: add_long_l=0.67, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.38, glut_min1_l=0.34, glut_min2_l=0.32, pect_l=0.31, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.69], >0.1: 16 muscles
+  top: add_long_l=0.69, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.39, glut_min1_l=0.37, glut_min2_l=0.35, pect_l=0.33, ext_dig_l=0.27
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 14 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.38, glut_min1_l=0.32, pect_l=0.31, glut_min2_l=0.30, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.27, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.32, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.38, glut_min1_l=0.32, pect_l=0.31, glut_min2_l=0.30, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.67], >0.1: 14 muscles
+  top: add_long_l=0.67, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.38, glut_min1_l=0.33, pect_l=0.31, glut_min2_l=0.31, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 14 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.38, glut_min1_l=0.32, pect_l=0.31, glut_min2_l=0.30, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.38, glut_min1_l=0.32, pect_l=0.30, glut_min2_l=0.30, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[pruned_walk_3] batch 1: best -157.578 (gain +inf)
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 14 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.38, glut_min1_l=0.32, pect_l=0.31, glut_min2_l=0.30, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.32, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.32, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 14 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.38, glut_min1_l=0.32, pect_l=0.31, glut_min2_l=0.30, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[pruned_walk_3] batch 2: best -141.171 (gain +16.407)
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.32, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.32, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 14 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[pruned_walk_3] batch 3: best -141.171 (gain +0.000)
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.32, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[pruned_walk_3] batch 4: best -136.295 (gain +4.876)
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.30, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.66], >0.1: 13 muscles
+  top: add_long_l=0.66, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.28, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.922 m (env override=0.9215287157201333); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.65], >0.1: 13 muscles
+  top: add_long_l=0.65, tib_ant_r=0.61, tib_ant_l=0.47, ext_dig_r=0.37, glut_min1_l=0.31, pect_l=0.30, glut_min2_l=0.29, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[pruned_walk_3] batch 5: best -134.238 (gain +2.056)

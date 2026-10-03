@@ -26,6 +26,7 @@
     <geom name="ground" type="plane" size="5 5 0.1" pos="0 0 0"
           friction="1 0.005 0.0001" contype="1" conaffinity="1"/>
     <body name="Root" pos="-3.454 0 1.29298" quat="0.99843241 0 0.055970727 0">
+      <freejoint name="root"/>
       <inertial pos="0.02 0 0" mass="30.991" diaginertia="0.3028957 0.3028957 0.20660667"/>
       <geom name="Root" size="0.1 0.1 0.139" friction="1 0.005 0.0001" rgba="0.7 0.7 0.7 1"/>
       <site name="site_body_L_f" pos="0.1 -0.06 -0.055"/>
@@ -34,7 +35,7 @@
       <site name="site_body_L_b" pos="-0.1 -0.06 -0.055"/>
       <body name="femur_L" pos="1.2143064e-16 -0.06 -0.27000024" quat="0.99955542 0 -0.029815575 0">
         <inertial pos="0 0 0" mass="3.5" diaginertia="0.052179167 0.0014583333 0.052179167"/>
-        <joint name="hip_L" pos="0 0 0.21" axis="-0.000202377209 1 2.27614967e-05" limited="true" range="-0.2617993878 0.401425728"/>
+        <joint name="hip_L" pos="0 0 0.21" axis="-0.000202377209 1 2.27614967e-05" damping="12.7358" limited="true" range="-0.2617993878 0.401425728"/>
         <geom name="femur_L" size="0.025 0.21 0.025" friction="1 0.005 0.0001" rgba="0.7 0.7 0.7 1"/>
         <site name="site_femur_L_f" pos="0.0348804 0 0.0681122"/>
         <site name="site_femur_L_b" pos="-0.0348804 0 0.0722445"/>
@@ -42,7 +43,7 @@
         <site name="site_femur_L_b_low" pos="-0.0348804 0 0.00538991"/>
         <body name="tibia_L" pos="-0.048059425 0 -0.42730645" quat="0.70703487 0.70717869 3.7686962e-06 3.7686949e-06">
           <inertial pos="0 0 0" mass="1.5" diaginertia="0.0223625 0.0223625 0.000625"/>
-          <joint name="knee_L" pos="0 0.22 0" axis="0.000231131132 0.000351419574 1.00000003" limited="true" range="-1.047197551 -0"/>
+          <joint name="knee_L" pos="0 0.22 0" axis="0.000231131132 0.000351419574 1.00000003" damping="2.97237" limited="true" range="-1.047197551 -0"/>
           <geom name="tibia_L" size="0.025 0.025 0.21" friction="1 0.005 0.0001" rgba="0.7 0.7 0.7 1"/>
           <site name="site_tibia_L_b" pos="-0.0359273 0.09 0"/>
           <site name="site_tibia_L_b_low" pos="-0.034683 0.003379 -1.057e-06"/>
@@ -51,7 +52,7 @@
           <site name="site_knee_L" pos="0.0567703 0.22749 0"/>
           <body name="foot_L" pos="-0.022524686 -0.25804255 5.2154514e-05" quat="0.70377958 -0.70650565 0.030848031 0.067767715">
             <inertial pos="0 0 0" mass="0.4" diaginertia="0.00022666667 0.00049333333 0.00069333333"/>
-            <joint name="ankle_L" pos="-0.050101 0.040024 -7.231e-06" axis="0.139039956 0.990286702 0.000622692492" limited="true" range="-0.3490658504 -0.0872664626"/>
+            <joint name="ankle_L" pos="-0.050101 0.040024 -7.231e-06" axis="0.139039956 0.990286702 0.000622692492" damping="3.10047" limited="true" range="-0.3490658504 -0.0872664626"/>
             <geom name="foot_L" size="0.06 0.04 0.01" friction="1 0.005 0.0001" rgba="0.7 0.7 0.7 1"/>
             <site name="site_foot_L_f" pos="0.03 0.0299756 0"/>
             <site name="site_foot_L_spring" pos="0 0.02 0"/>
@@ -75,7 +76,7 @@
       </body>
       <body name="femur_R" pos="1.2143064e-16 0.06 -0.27000024" quat="0.99955542 0 -0.029815575 0">
         <inertial pos="0 0 0" mass="3.5" diaginertia="0.052179167 0.0014583333 0.052179167"/>
-        <joint name="hip_R" pos="0 0 0.21" axis="4.12152531e-08 1 -4.63125564e-09" limited="true" range="-0.2617993878 0.401425728"/>
+        <joint name="hip_R" pos="0 0 0.21" axis="4.12152531e-08 1 -4.63125564e-09" damping="12.7307" limited="true" range="-0.2617993878 0.401425728"/>
         <geom name="femur_R" size="0.025 0.21 0.025" friction="1 0.005 0.0001" rgba="0.7 0.7 0.7 1"/>
         <site name="site_femur_R_f_low" pos="0.0348804 0 0"/>
         <site name="site_femur_R_b" pos="-0.03488 0 0.07244"/>
@@ -83,7 +84,7 @@
         <site name="site_femur_R_b_low" pos="-0.0348804 0 0.00539"/>
         <body name="tibia_R" pos="-0.048059425 0 -0.42730645" quat="0.70703487 0.70717869 3.7686962e-06 3.7686949e-06">
           <inertial pos="0 0 0" mass="1.5" diaginertia="0.0223625 0.0223625 0.000625"/>
-          <joint name="knee_R" pos="0 0.22 0" axis="3.72004461e-05 -0.000817850903 1.00000002" limited="true" range="-1.047197551 -0"/>
+          <joint name="knee_R" pos="0 0.22 0" axis="3.72004461e-05 -0.000817850903 1.00000002" damping="2.97245" limited="true" range="-1.047197551 -0"/>
           <geom name="tibia_R" size="0.025 0.025 0.21" friction="1 0.005 0.0001" rgba="0.7 0.7 0.7 1"/>
           <site name="site_tibia_R_f_low" pos="0.0348804 0 0"/>
           <site name="site_tibia_R_b" pos="-0.03593 0.09 0"/>
@@ -92,7 +93,7 @@
           <site name="site_tibia_R_f" pos="0.0348804 0.09 0"/>
           <body name="foot_R" pos="-0.022524686 -0.25804255 5.2154514e-05" quat="0.70377958 -0.70650565 0.030848031 0.067767715">
             <inertial pos="0 0 0" mass="0.4" diaginertia="0.00022666667 0.00049333333 0.00069333333"/>
-            <joint name="ankle_R" pos="-0.050101 0.040024 -7.231e-06" axis="0.139039956 0.990286702 0.000622692492" limited="true" range="-0.3490658504 -0.0872664626"/>
+            <joint name="ankle_R" pos="-0.050101 0.040024 -7.231e-06" axis="0.139039956 0.990286702 0.000622692492" damping="3.10047" limited="true" range="-0.3490658504 -0.0872664626"/>
             <geom name="foot_R" size="0.06 0.04 0.01" friction="1 0.005 0.0001" rgba="0.7 0.7 0.7 1"/>
             <site name="site_foot_R_f" pos="0.03 0.02998 0"/>
             <site name="site_foot_R_b" pos="-0.09 0.02998 0"/>
@@ -148,4 +149,7 @@
     <muscle name="hip_R_ext" tendon="t_hip_R_ext" force="1500" range="0.0811 0.2589" lengthrange="0.0811 0.2589" timeconst="0.01 0.01"/>
     <muscle name="hip_L_ext" tendon="t_hip_L_ext" force="1500" range="0.13 0.29" lengthrange="0.13 0.29" timeconst="0.01 0.01"/>
   </actuator>
+  <keyframe>
+    <key name="spawn" qpos="-3.454 0 1.007846 0.99843241 0 0.055970727 0 0 0 -0.21816616 0 0 0 -0.21816616 0" ctrl="0 0 0 0 0 0 0 0 0 0 0 0"/>
+  </keyframe>
 </mujoco>

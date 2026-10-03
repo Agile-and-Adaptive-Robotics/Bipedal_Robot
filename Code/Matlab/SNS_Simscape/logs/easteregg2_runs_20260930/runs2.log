@@ -1,0 +1,14 @@
+Error using sns_units_test_2n (line 24)
+There is no block named 'SNS_Library/NonSpikingNeuron'
+
+Error in run (line 112)
+evalin('caller', strcat(scriptStem, ';'));
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ - Show complete stack trace
+Caused by:
+    Error using sns_units_test_2n (line 24)
+    Model 'SNS_Library' was created with a newer version (R2025b) of Simulink
+    To disable this error message, use Simulink preferences.
+    To create a model that is compatible with this version of Simulink, load the model in Simulink R2025b and select Save > Export Model to > Previous Version. - Show complete stack trace
+Model 'KneeReflexDemo_R2025a' was exported from R2025b to R2025a. To find blocks that were removed during the export operation, <a href="matlab:slexportprevious.utils.displayReplacedBlocks('KneeReflexDemo_R2025a')">click here</a>. Save the model to remove this notification.
+Model 'SNS_Library_R2025a' was exported from R2025b to R2025a. To find blocks that were removed during the export operation, <a href="matlab:slexportprevious.utils.displayReplacedBlocks('SNS_Library_R2025a')">click here</a>. Save the model to remove this notification.
+KneeReflexDemo_R2025a OK
