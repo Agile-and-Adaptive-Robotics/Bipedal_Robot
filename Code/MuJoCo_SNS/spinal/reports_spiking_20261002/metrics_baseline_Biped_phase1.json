@@ -1,0 +1,223 @@
+{
+ "asim": "D:/GitHub/Bipedal_Robot/Code/MuJoCo_SNS/spinal/reports_spiking_20261002/models/Biped_phase1/Biped_phase1.asim",
+ "mode": "spiking",
+ "charts": {
+  "DataTool_7": {
+   "file": "DataTool_7.txt",
+   "rows": 50001,
+   "t_end": 10.0,
+   "cols": [
+    {
+     "name": "R_foot ground contact",
+     "mean_mV": -57.3,
+     "min_mV": -61.02,
+     "max_mV": 0.0,
+     "spikes": 511,
+     "rate_Hz": 51.1
+    },
+    {
+     "name": "R_toe ground contact",
+     "mean_mV": -57.49,
+     "min_mV": -61.09,
+     "max_mV": 0.0,
+     "spikes": 476,
+     "rate_Hz": 47.6
+    },
+    {
+     "name": "R_hip middle",
+     "mean_mV": -57.22,
+     "min_mV": -60.0,
+     "max_mV": 0.0,
+     "spikes": 520,
+     "rate_Hz": 52.0
+    },
+    {
+     "name": "L_toe ground contact",
+     "mean_mV": -56.86,
+     "min_mV": -61.02,
+     "max_mV": 0.0,
+     "spikes": 593,
+     "rate_Hz": 59.3
+    },
+    {
+     "name": "L_hip middle",
+     "mean_mV": -57.92,
+     "min_mV": -60.57,
+     "max_mV": 0.0,
+     "spikes": 391,
+     "rate_Hz": 39.1
+    },
+    {
+     "name": "L_foot ground contact",
+     "mean_mV": -56.67,
+     "min_mV": -60.76,
+     "max_mV": 0.0,
+     "spikes": 626,
+     "rate_Hz": 62.6
+    },
+    {
+     "name": "height",
+     "type": "WorldPositionY",
+     "mean": 0.96768
+    },
+    {
+     "name": "distance",
+     "type": "WorldPositionX",
+     "mean": -0.37873
+    }
+   ]
+  },
+  "DataTool_8": {
+   "file": "DataTool_8.txt",
+   "rows": 50001,
+   "t_end": 10.0,
+   "cols": [
+    {
+     "name": "hip_L_deg",
+     "type": "JointRotationDeg",
+     "mean": 3.51244
+    },
+    {
+     "name": "knee_L_deg",
+     "type": "JointRotationDeg",
+     "mean": 7.66353
+    },
+    {
+     "name": "ankle_L_deg",
+     "type": "JointRotationDeg",
+     "mean": -6.81131
+    },
+    {
+     "name": "hip_R_deg",
+     "type": "JointRotationDeg",
+     "mean": 7.49529
+    },
+    {
+     "name": "knee_R_deg",
+     "type": "JointRotationDeg",
+     "mean": 8.82145
+    },
+    {
+     "name": "ankle_R_deg",
+     "type": "JointRotationDeg",
+     "mean": -6.76333
+    },
+    {
+     "name": "RG_L_stance",
+     "mean_mV": -59.71,
+     "min_mV": -65.34,
+     "max_mV": 0.0,
+     "spikes": 279,
+     "rate_Hz": 27.9
+    },
+    {
+     "name": "RG_L_inhabit",
+     "mean_mV": -53.14,
+     "min_mV": -59.76,
+     "max_mV": 0.0,
+     "spikes": 511,
+     "rate_Hz": 51.1
+    },
+    {
+     "name": "RG_R_stance",
+     "mean_mV": -60.43,
+     "min_mV": -65.64,
+     "max_mV": 0.0,
+     "spikes": 222,
+     "rate_Hz": 22.2
+    },
+    {
+     "name": "PF_L_hip_ext",
+     "mean_mV": -57.47,
+     "min_mV": -61.78,
+     "max_mV": 0.0,
+     "spikes": 293,
+     "rate_Hz": 29.3
+    },
+    {
+     "name": "PF_L_knee",
+     "mean_mV": -58.6,
+     "min_mV": -65.94,
+     "max_mV": 0.0,
+     "spikes": 399,
+     "rate_Hz": 39.9
+    },
+    {
+     "name": "PF_L_dorsi",
+     "mean_mV": -59.7,
+     "min_mV": -64.96,
+     "max_mV": 0.0,
+     "spikes": 234,
+     "rate_Hz": 23.4
+    },
+    {
+     "name": "MN_L_hip_ext",
+     "mean_mV": -64.99,
+     "min_mV": -68.94,
+     "max_mV": 0.0,
+     "spikes": 564,
+     "rate_Hz": 56.4
+    },
+    {
+     "name": "MN_L_knee_ext",
+     "mean_mV": -63.79,
+     "min_mV": -69.16,
+     "max_mV": 0.0,
+     "spikes": 704,
+     "rate_Hz": 70.4
+    }
+   ]
+  }
+ },
+ "rg_bursts": {
+  "RG_L_stance": {
+   "bursts": 8,
+   "period_s": 1.3052,
+   "freq_Hz": 0.766
+  },
+  "RG_L_inhabit": {
+   "bursts": 8,
+   "period_s": 1.28,
+   "freq_Hz": 0.781
+  },
+  "RG_R_stance": {
+   "bursts": 7,
+   "period_s": 1.3022,
+   "freq_Hz": 0.768
+  },
+  "PF_L_hip_ext": {
+   "bursts": 9,
+   "period_s": 1.2794,
+   "freq_Hz": 0.782
+  },
+  "PF_L_knee": {
+   "bursts": 9,
+   "period_s": 1.307,
+   "freq_Hz": 0.765
+  },
+  "PF_L_dorsi": {
+   "bursts": 10,
+   "period_s": 1.2642,
+   "freq_Hz": 0.791
+  },
+  "MN_L_hip_ext": {
+   "bursts": 8,
+   "period_s": 1.3052,
+   "freq_Hz": 0.766
+  },
+  "MN_L_knee_ext": {
+   "bursts": 9,
+   "period_s": 1.307,
+   "freq_Hz": 0.765
+  }
+ },
+ "antiphase": {
+  "pair": [
+   "RG_L_stance",
+   "RG_R_stance"
+  ],
+  "lag_s": -0.66,
+  "r": 0.703,
+  "lag_cycle_folded": 0.494
+ }
+}

@@ -38,6 +38,21 @@ Backups: `tools/backup_v0` (pristine copy) → `v1_bilateralRG` → `v2_commissu
 
 ## Hard-won mechanics (do not relearn)
 
+- **(2026-10-02) GUI Adapter links must NEVER originate at a RigidBody — save-time trap.**
+  `build_contact.pl` wrote four `Links.Adapter` elements FROM the contact bodies
+  (`foot/toe_L/R_contact`) to the adapter nodes. The GUI **loads** that fine (the
+  9/16 "zero error dialogs" check passed), but the **save validator** rejects it:
+  "Link 'cafe0221-…' was missing either an origin or destination node" — and a
+  fresh load + immediate save fails, so the file was silently un-saveable from
+  9/22 until Ben hit it 10/02. Proof: the known-good
+  `origin/AddingStepSensor_CoMorrow_stw` aproj has 80 Adapter links, ALL
+  node→node, none touching a body — the body binding belongs on the ADAPTER NODE
+  (`<OriginID>`=body, `<DestinationID>`=neuron children), which our four contact
+  adapters already had. Fix applied by `tools/fix_contact_links_20261002.py`
+  (deleted the 4 illegal links + their InLinks entries; pre-fix backup in
+  `tools/backup_v5_prefix_20261002/`; audits:
+  `tools/audit_dangling_20261002.py`, `tools/probe_parents_20261002.py`).
+
 - **AddFlow drawing format (decoded 2026-09-16 evening, verify_handles.pl):**
   a page drawing `<Link Org="N" Dst="M">`'s Org/Dst = **0-based index of the
   endpoint NODE entry in the CDATA's interleaved (nodes+links) file order**.
