@@ -6,7 +6,7 @@
 
 \section{Completed Foundation Studies}\label{sec:foundation}
 
-Four studies completed during this dissertation establish the foundation for the results that follow. First, the placement optimization of Morrow, Bolen, and Hunt found artificial muscle attachment locations that reproduce human torque profiles and ranges of motion about the trunk and leg joints \citep{morrow_optimization_2020}; it converted the earlier finding that transplanted human attachment locations do not transfer directly to a BPA-actuated robot \citep{bolen_bipedal_2019, bolen_determination_2019} into a usable design tool. The route redesigns of Section~\ref{sec:ongoing} rerun that tool under the corrected torque model. Second, the Sensory Afferent Database organized sensory-afferent literature into a structured, model-oriented resource \citep{bolen_sensory_2023}, and a follow-up study evaluated AI-assisted literature triage for expanding it \citep{bolen_using_2024}; those data inform the sensory channels of the neural controller. Third, an inverted-pendulum balance platform with BPA-driven plantarflexion and dorsiflexion demonstrated pseudo-vestibular feedback using inertial measurement units \citep{bolen_balance_2024, bolen_selfbalancing_2024, bolen_selfbalancing_srs_2024}. Fourth, companion work by Elzein, Lutz, Bolen, and Hunt produced a state-space, optimization-based model of pressure and force dynamics in pulse-modulated BPAs \citep{elzein_pressure_2025}, supplying dynamic actuator behavior beyond the static force characterization reported below.
+Four studies completed during this dissertation establish the foundation for the results that follow. First, the placement optimization of Morrow, Bolen, and Hunt found artificial muscle attachment locations that reproduce human torque profiles and ranges of motion about the trunk and leg joints \citep{morrow_optimization_2020}; it converted the earlier finding that transplanted human attachment locations do not transfer directly to a BPA-actuated robot \citep{bolen_bipedal_2019, bolen_determination_2019} into a usable design tool. The route redesigns of Section~\ref{sec:ongoing} rerun that tool under the corrected torque model. Second, the Sensory Afferent Database organized sensory-afferent literature into a structured, model-oriented resource \citep{bolen_sensory_2023}, and a follow-up study evaluated AI-assisted literature triage for expanding it \citep{bolen_using_2024}; those data inform the sensory channels of the neural controller. The database has since been audited and expanded into a curated laboratory tool: of the 943 papers in the audited corpus, 833 carry structured curation notes, 95 carry an afferent classification, and 363 carry notes translating each pathway toward robot or simulation use, packaged with the corpus citation graph (18 topic clusters, 11,130 directed citation pairs) as a self-contained explorer for lab use. Third, an inverted-pendulum balance platform with BPA-driven plantarflexion and dorsiflexion demonstrated pseudo-vestibular feedback using inertial measurement units \citep{bolen_balance_2024, bolen_selfbalancing_2024, bolen_selfbalancing_srs_2024}. Fourth, companion work by Elzein, Lutz, Bolen, and Hunt produced a state-space, optimization-based model of pressure and force dynamics in pulse-modulated BPAs \citep{elzein_pressure_2025}, supplying dynamic actuator behavior beyond the static force characterization reported below.
 
 \section{BPA Force Characterization}\label{sec:results_force}
 
@@ -41,21 +41,24 @@ The length is offset by \qty{0.0075}{\m} and \qty{0.013}{\m} because solid model
 \subsection{Force as a Function of Pressure and Resting Length}
 
 Data from BPA characterization tests of the \qty{10}{\mm} muscles resulted in force--pressure pairings for different muscle resting lengths ($l_0$) (Figure~\ref{fig:F-P_contraction}a). Similar to the maximum force data, these data show a force response resembling an $\arctan$ curve along the $l_0$ dimension  with a more linear response to changes in pressure. Using the Nonlinear Least Squares method and a Least Absolute Residual robustness, we fit an arctan curve to the data to get the maximum force given a resting length and pressure as described by the model form given in Section~\ref{sec:force_model}:
-where $a_1 = \qty{0.4895}{\N\per\kPa}$  and $a_2=\qty{0.03068}{\per\kPa\per\m}$ for the \qty{10}{\mm} actuator, and \mbox{$a_1 = \qty{1.49}{\N\per\kPa}$,} $a_2=\qty{0.0248}{\per\kPa\per\m}$ for the \qty{20}{\mm} actuator. Goodness-of-fit measures are given in Table~\ref{tab:Fmax}. 
+where $a_1 = \qty{0.4895}{\N\per\kPa}$  and $a_2=\qty{0.03068}{\per\kPa\per\m}$ for the \qty{10}{\mm} actuator, and \mbox{$a_1 = \qty{1.49}{\N\per\kPa}$,} $a_2=\qty{0.0248}{\per\kPa\per\m}$ for the \qty{20}{\mm} actuator. Goodness-of-fit measures are given in Table~\ref{tab:Fmax}; throughout this dissertation, goodness of fit is reported as the root-mean-square error (RMSE), the adjusted fraction of variance unexplained (FVU, for which $R^{2} = 1 - \mathrm{FVU}$), and the maximum absolute residual, as defined alongside the reference implementation in Appendix~\ref{app:muscle_calcs}. 
 
 
 
-\begin{table}[H]
-\caption{Maximum force equation coefficient values with confidence intervals (CI) and goodness-of-fit measures. Equation~(\ref{eq:Fmax_3D}) is compared to data taken at \qty{620}{\kPa}. Equations~(\ref{eq:Fmax10}) and (\ref{eq:Fmax20}) are compared against maximum force from using the Festo tool. It was not necessary to fit an adjusted $\text{R}^2$ in \mbox{these cases.}}
+\begin{sidewaystable}[p]
+\centering
+\begingroup
+\singlespacing
+\fontsize{10}{12}\selectfont
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.15}
+\caption{Maximum force equation coefficient values with confidence intervals (CI) and goodness-of-fit measures. Equation~(\ref{eq:Fmax_3D}) is compared to data taken at \qty{620}{\kPa}. Equations~(\ref{eq:Fmax10}) and (\ref{eq:Fmax20}) are compared against maximum force from using the Festo tool. It was not necessary to fit an adjusted $\text{R}^2$ in \mbox{these cases.}} 
 \label{tab:Fmax}
-\tiny
-\begin{adjustwidth}{0cm}{0cm}
-%\centering %% If there is a figure in wide page, please release command \centering
-\begin{tabularx}{\textwidth}{cllllrclr}
+\begin{tabular}{@{}cllrrrrrr@{}}
 \toprule
 \multirow{2}{*}{\textbf{Equation}} &
-  \multirow{2.1}{*}{\textbf{Coefficient}} &
-  \multirow{2.2}{*}{\textbf{CI (95\%)}} &
+  \multirow{2}{*}{\textbf{Coefficient}} &
+  \multirow{2}{*}{\textbf{CI (95\%)}} &
   \multicolumn{3}{c}{\textbf{Our Model}} &
   \multicolumn{3}{c}{\textbf{Festo Tool}} \\  
  &
@@ -121,9 +124,57 @@ where $a_1 = \qty{0.4895}{\N\per\kPa}$  and $a_2=\qty{0.03068}{\per\kPa\per\m}$ 
   \multicolumn{1}{l}{} &
   \multicolumn{1}{l}{} &
    \\ \bottomrule
-\end{tabularx}
-\end{adjustwidth}
-\end{table}
+\end{tabular}
+
+\vspace{1.5em}
+\caption{Normalized isometric BPA force equation (Equation~(\ref{eq:Fstar})) coefficient values and goodness-of-fit measures.}
+\label{tab:Fstar}
+\begin{tabular}{@{}cllrrrrrr@{}}
+\toprule
+\multirow{2}{*}{\textbf{BPA}} &
+  \multirow{2}{*}{\textbf{Coefficient}} &
+  \multirow{2}{*}{\textbf{CI (95\%)}} &
+  \multicolumn{3}{c}{\textbf{Model}} &
+  \multicolumn{3}{c}{\textbf{Validation}} \\ 
+& & &
+  \multicolumn{1}{l}{\textbf{Adj. $\text{R}^2$}} &
+  \multicolumn{1}{l}{\textbf{RMSE}} &
+  \textbf{Max. Error} &
+  \multicolumn{1}{l}{\textbf{Adj. $\text{R}^2$}} &
+  \multicolumn{1}{l}{\textbf{RMSE}} &
+  \textbf{Max. Error} \\ \midrule
+\multirow{3}{*}{$\phi$\qty{10}{\mm}} &
+  $c_0 = 0.5682$ & (0.5584, 0.578) &
+  \multicolumn{1}{l}{\multirow{3}{*}{0.9998}} &
+  \multicolumn{1}{l}{\multirow{3}{*}{0.005118}} &
+  \multirow{3}{*}{10.3\%} &
+  \multicolumn{1}{l}{\multirow{3}{*}{0.9994}} &
+  \multicolumn{1}{l}{\multirow{3}{*}{0.0245409}} &
+  \multirow{3}{*}{10.6\%} \\ \cmidrule{2-3}
+& $c_1 = 4.254$ & (4.126, 4.383) &
+  \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & &
+  \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \\ \cmidrule{2-3}
+& $c_2 = 0.5597$ & (0.5429, 0.5766) &
+  \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & &
+  \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \\ \midrule
+\multirow{3}{*}{$\phi$\qty{20}{\mm}} &
+  $c_0 = 0.2579$ & (0.2401, 0.2756) &
+  \multicolumn{1}{l}{\multirow{3}{*}{0.992}} &
+  \multicolumn{1}{l}{\multirow{3}{*}{0.02294}} &
+  \multirow{3}{*}{6.8\%} &
+  \multicolumn{1}{l}{\multirow{3}{*}{0.9943}} &
+  \multicolumn{1}{l}{\multirow{3}{*}{0.0231303}} &
+  \multirow{3}{*}{5.7\%} \\ \cmidrule{2-3}
+& $c_1 = 6.477$ & (5.558, 7.396) &
+  \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & &
+  \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \\ \cmidrule{2-3}
+& $c_2 = 1.321$ & (1.239, 1.403) &
+\multicolumn{1}{l}{} & \multicolumn{1}{l}{} & &
+\multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \\ \bottomrule
+\end{tabular}
+
+\endgroup
+\end{sidewaystable}
 
 
 
@@ -172,57 +223,7 @@ For the $\phi$\qty{10}{\mm} BPAs, the result of the improved fit can be seen in 
 
 
 
-\begin{table}[htbp]
-\caption{Normalized isometric BPA force equation (Equation~(\ref{eq:Fstar})) coefficient values and goodness-of-fit measures.}
-\label{tab:Fstar}
-\tiny
-\begin{adjustwidth}{0cm}{0cm}
-%\centering %% If there is a figure in wide page, please release command \centering
-\begin{tabularx}{\textwidth}{@{}lLLLllrllr@{}}
-\toprule
-\multirow{2.1}{*}{\textbf{BPA}} &
-  \multirow{2.2}{*}{\textbf{Coefficient}} &
-  \multirow{2.2}{*}{\textbf{CI (95\%)}} &
-  \multicolumn{3}{c}{\textbf{Model}} &
-  \multicolumn{3}{c}{\textbf{Validation}} \\ 
-& & &
-  \multicolumn{1}{l}{\textbf{Adj. $\text{R}^2$}} &
-  \multicolumn{1}{l}{\textbf{RMSE}} &
-  \textbf{Max. Error} &
-  \multicolumn{1}{l}{\textbf{Adj. $\text{R}^2$}} &
-  \multicolumn{1}{l}{\textbf{RMSE}} &
-  \textbf{Max. Error} \\ \midrule
-\multirow{3.8}{*}{$\phi$\qty{10}{\mm}} &
-  $c_0 = 0.5682$ & (0.5584, 0.578) &
-  \multicolumn{1}{l}{\multirow{3.8}{*}{0.9998}} &
-  \multicolumn{1}{l}{\multirow{3.8}{*}{0.005118}} &
-  \multirow{3.8}{*}{10.3\%} &
-  \multicolumn{1}{l}{\multirow{3.8}{*}{0.9994}} &
-  \multicolumn{1}{l}{\multirow{3.8}{*}{0.0245409}} &
-  \multirow{3.8}{*}{10.6\%} \\ \cmidrule{2-3}
-& $c_1 = 4.254$ & (4.126, 4.383) &
-  \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & &
-  \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \\ \cmidrule{2-3}
-& $c_2 = 0.5597$ & (0.5429, 0.5766) &
-  \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & &
-  \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \\ \midrule
-\multirow{3.8}{*}{$\phi$\qty{20}{\mm}} &
-  $c_0 = 0.2579$ & (0.2401, 0.2756) &
-  \multicolumn{1}{l}{\multirow{3.8}{*}{0.992}} &
-  \multicolumn{1}{l}{\multirow{3.8}{*}{0.02294}} &
-  \multirow{3.8}{*}{6.8\%} &
-  \multicolumn{1}{l}{\multirow{3.8}{*}{0.9943}} &
-  \multicolumn{1}{l}{\multirow{3.8}{*}{0.0231303}} &
-  \multirow{3.8}{*}{5.7\%} \\ \cmidrule{2-3}
-& $c_1 = 6.477$ & (5.558, 7.396) &
-  \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & &
-  \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \\ \cmidrule{2-3}
-& $c_2 = 1.321$ & (1.239, 1.403) &
-\multicolumn{1}{l}{} & \multicolumn{1}{l}{} & &
-\multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \\ \bottomrule
-\end{tabularx}
-\end{adjustwidth}
-\end{table}
+
 
 
 
@@ -301,7 +302,7 @@ The torque results for a $l_{0}=\qty{51.8}{\cm}$ BPA are shown in Fig. \ref{fig:
 \subsection{Flexor on Biomimetic Knee}
 
 
-Fig.~\ref{fig:FlxGrp} shows the isometric torque values of the biomimetic knee from measurements, the Hunt model \citep{hunt_modeling_2017}, and the predictions of the updated model. The values for $\chi_{0}$, $\chi_{1}$, and $\chi_{2}$ derived from the flexors on the pinned knee were used. The bracket frame for the $\phi$\qty{10}{\mm} BPA is shown on the left hand side of Fig. \ref{fig:bktFrame}\textbf{C}, and for the $\phi$\qty{20}{\mm} it is \ref{fig:bktFrame}\textbf{D}. Fig. \ref{fig:FlxGrp}\textbf{A} represents a $\phi$\qty{10}{\mm} $l_{0}=\qty{41.5}{\cm}$ BPA with a \qty{21}{\mm} artificial tendon made out of $\phi \qty{1.5}{\mm}$ Shimano bicycle brake cable. The brake cable was wrapped four times. The BPA was pressurized to \qty{604}{\kPa}. The predicted values have an $\text{RMSE}=0.3007$, $\text{FVU} = 0.0102$, and a maximum absolute residual of $0.4647$ $N\cdot m$.  Fig. \ref{fig:FlxGrp}\textbf{B} represents a $\phi$\qty{20}{\mm} $l_{0}=\qty{42.0}{\cm}$ BPA with a \qty{15}{\mm} artificial tendon made out of Shimano bicycle brake cable (wrapped six times). Maximum human isometric torque values are shown as the black dotted line. The experiment was performed at \qtylist{620;325}{\kPa}. At \qty{620}{\kPa}, the predicted values have an $\text{RMSE}=1.8024$, $\text{FVU} = 0.0499$, and a maximum absolute residual of $3.5678$ $N\cdot m$. The BPA torque does not exceed the magnitude of the human torque from ca. 60 -- 100 degrees knee flexion. Allowing for a $\pm20\%$ deviation from the human mean, the BPA does not produce human levels of torque from 78 -- 103 degrees knee flexion.
+Fig.~\ref{fig:FlxGrp} shows the isometric torque values of the biomimetic knee from measurements, the Hunt model \citep{hunt_modeling_2017}, and the predictions of the updated model. The values for $\chi_{0}$, $\chi_{1}$, and $\chi_{2}$ derived from the flexors on the pinned knee were used. The bracket frame for the $\phi$\qty{10}{\mm} BPA is shown on the left hand side of Fig. \ref{fig:bktFrame}\textbf{C}, and for the $\phi$\qty{20}{\mm} it is \ref{fig:bktFrame}\textbf{D}. Fig. \ref{fig:FlxGrp}\textbf{A} represents a $\phi$\qty{10}{\mm} $l_{0}=\qty{41.5}{\cm}$ BPA with a \qty{21}{\mm} artificial tendon made out of $\phi \qty{1.5}{\mm}$ Shimano bicycle brake cable. The brake cable was wrapped four times. The BPA was pressurized to \qty{604}{\kPa}. The predicted values have an $\text{RMSE}=0.3007$, $\text{FVU} = 0.0102$, and a maximum absolute residual of $0.4647$ $N\cdot m$.  Fig. \ref{fig:FlxGrp}\textbf{B} represents a $\phi$\qty{20}{\mm} $l_{0}=\qty{42.0}{\cm}$ BPA with a \qty{15}{\mm} artificial tendon made out of Shimano bicycle brake cable (wrapped six times). Maximum human isometric torque values are shown as the black dotted line. The experiment was performed at \qtylist{620;325}{\kPa}. At \qty{620}{\kPa}, the predicted values have an $\text{RMSE}=1.8024$, $\text{FVU} = 0.0499$, and a maximum absolute residual of $3.5678$ $N\cdot m$. The BPA torque does not exceed the magnitude of the human torque from ca. 60 -- 100 degrees knee flexion. Allowing for a $\pm20\%$ deviation from the human mean, the BPA does not produce human levels of torque from 78 -- 103 degrees knee flexion. 
 
 \begin{figure}[htbp]
 \begin{center}
@@ -332,9 +333,11 @@ Flexor, biomimetic knee, $\phi$\qty{20}{\mm}, $l_{0}=\qty{41.5}{\cm}$ (\qty{620}
 
 The identification work outlined at the close of the experimental chapters has since been completed, and its outcomes are summarized here; the coefficient values shown with the figures above (Table~\ref{tab:OptCoeff}) belong to the initial single-bracket identification of those experiments.
 
-The correction terms were re-identified over the full archived test sets with the two-stage procedure of Section~\ref{sec:improved_model}: a two-bracket flexor fit cross-validated over the five pinned-flexor tests (the encoder-corrected \qty{47}{\cm} test held out), followed by an extensor refit with the stiffness pair locked to the flexor front. The adopted values are $\chi_{0} = \qty{+8.9}{\mm}$, $\chi_{1} = \qty{5.62e4}{\N\per\m}$, and $\chi_{2} = \qty{1.85e4}{\N\per\m}$ for the flexor, and $\chi_{0} = \qty{-10.1}{\mm}$ with $\chi_{3} = 0.621$ for the extensor on the locked pair ($4.354\times10^{4}$, $1.701\times10^{4}$~N/m); full provenance is given in Appendix~\ref{app:model_geometry}, Table~\ref{tab:app_xi_values}. At these values, the corrected flexor model predicts the five pinned-flexor tests with per-test RMSE of 1.94/1.51/2.29/1.63/1.21~N{\,}m (48, 46, 47, 40-tendon, 41\,cm; FVU at most 0.17), the \qty{47}{\cm} test being pure held-out validation. On the six-test extensor validation pool, per-test RMSE spans 0.56--1.88~N{\,}m against 0.95--3.62~N{\,}m for the uncorrected rigid model --- an improvement on every pool test. On the biomimetic extensor test ($l_{0} = \qty{51.8}{\cm}$) the corrected prediction improves substantially on the baseline (RMSE 2.20 vs.\ 3.03~N{\,}m) but leaves FVU above unity, so the shared-pair model still under-predicts that configuration's measured torque variation; this remains the open gap in the cross-configuration validation. The solver question raised during the campaign was settled empirically: the genetic multiobjective solver was retained for the identification, where the Pareto front is required for holdout validation, and the surrogate-plus-pattern-search pipeline was reserved for the route redesign where it is already the method of record (Section~\ref{sec:optimization}).
+The correction terms were re-identified over the full archived test sets with the two-stage procedure of Section~\ref{sec:improved_model}: a two-bracket flexor fit cross-validated over the five pinned-flexor tests (the encoder-corrected \qty{47}{\cm} test held out), followed by an extensor refit with the stiffness pair locked to the flexor front. The adopted values are $\chi_{0} = \qty{+3.94}{\mm}$, $\chi_{1} = \qty{3.998e4}{\N\per\m}$, and $\chi_{2} = \qty{1.473e4}{\N\per\m}$ for the flexor (front row 77), and $\chi_{0} = \qty{-6.38}{\mm}$ with $\chi_{3} = 0.158$ for the extensor on that same locked pair; full provenance is given in Appendix~\ref{app:model_geometry}, Table~\ref{tab:app_xi_values}. This pair was adopted because it is the stiffness pair for which both redesign configurations meet the required 5\,\% torque-overshoot target simultaneously (flexor $+5.00$\,\%, extensor $+5.043$\,\% at $-20.2^{\circ}$ in the 2026-09-20 campaign). At these values, the corrected flexor model predicts the five pinned-flexor tests with per-test RMSE of 2.16/1.37/2.29/1.61/1.08~N{\,}m (48, 46, 47, 40-tendon, 41\,cm; FVU at most 0.17), the \qty{47}{\cm} test being pure held-out validation. On the six-test extensor validation pool, per-test RMSE spans 0.49--1.52~N{\,}m against 0.95--3.62~N{\,}m for the uncorrected rigid model --- an improvement on every pool test, with FVU below unity on every pool test except the 43\,cm-tendon test (FVU 1.33 against a rigid-baseline FVU of 4.73). On the biomimetic extensor test ($l_{0} = \qty{51.8}{\cm}$) the corrected prediction improves substantially on the baseline (RMSE 1.17 vs.\ 3.03~N{\,}m, FVU 0.67 vs.\ 4.49), so the shared-pair model now explains the bulk of that configuration's measured torque variance as well as its level. The solver question raised during the campaign was settled empirically: the genetic multiobjective solver was retained for the identification, where the Pareto front is required for holdout validation, and the surrogate-plus-pattern-search pipeline was reserved for the route redesign where it is already the method of record (Section~\ref{sec:optimization}).
+% [ZCODE 2026-09-26 Xi-audit: adopted values updated from the superseded row-107/20260910-pick-1 set (+8.9 mm, 5.62e4, 1.85e4; extensor -10.1 mm, 0.621 on 4.354e4/1.701e4) to the 2026-09-20 locked pair pick 77 / flxr77 row 32 -- buildKneeFlexorContext20mm.m pick = 77 live, extensor front LOCKSRC 'soft-Xi2 lock from flexor 2trans_noT3 front row 77'; rationale = the single pair meeting the 5% overshoot target on BOTH configurations. GoF numbers re-evaluated 2026-09-26 with the current evaluators of record (reeval scripts in Dig_out/xi_audit_tmp/): flexor RMSE 2.16465/1.36817/2.28691/1.61102/1.08363, FVU max 0.171825; extensor pool RMSE 1.24371-0.48955 (span 0.49-1.52), FVU 1.32704 only above unity (ke6); bio-extensor 1.1702/0.6681/2.2088 vs baseline 3.0322/4.4856/5.5870 (old-value reproduction check passed exactly: 2.1950/2.3506/4.7268). The old sentence 'FVU above unity ... remains the open gap' no longer holds at the adopted values.]
 
-The route redesign built on these values produced usable flexor and extensor model definitions. The two-BPA flexor arrangement, motivated by the single-muscle shortfall at high flexion angles documented above, reached a feasible solution meeting the flexor torque target under the stated modeling assumption that both actuators share one attachment route rather than a physically mirrored pair. That shared-route solution is the result reported here; Chapter~\ref{ch:futurework} identifies explicit comparison with a mirrored pair as a follow-on design study. The extensor route was redesigned directly under the adopted correction terms: it meets or exceeds its human-scaled target at every angle in the range of motion, with the thinnest torque margin below $0.1\%$ at a single angle, while respecting the wrap-release schedule and contraction limits of the route-elimination rule (Appendix~\ref{app:model_geometry}). These redesign solutions provide the model definitions used by the neuromechanical simulation tools of Sections~\ref{sec:preliminary_sim_methods}--\ref{sec:preliminary_sim_results} and the extension studies of Chapter~\ref{ch:futurework}.
+The route redesign built on these values is likewise far advanced. The two-BPA flexor arrangement --- motivated by the single-muscle shortfall at high flexion angles documented above --- reached a feasible solution meeting the flexor torque target under the modeling assumption that both actuators share one attachment route rather than a physically mirrored pair; making the mirrored pair explicit is the next design refinement. The flexor re-run under the newly adopted correction terms is complete: its design of record (\texttt{Bifemsh\_20mm\_Result.mat}, 2026-09-21) meets the 5\,\% target with a minimum margin of $+5.01$\,\% at $-107^{\circ}$. The extensor route was redesigned directly under the adopted correction terms and meets or exceeds its human-scaled target with the required 5\,\% overshoot consumed as the thinnest margin at every angle of record: $+5.043$\,\% at $-20.2^{\circ}$ in the 2026-09-20 campaign, improved to $+5.03$\,\% by the 2026-09-25 re-run of record (\texttt{Vas\_Pam\_20mm\_Result.mat}), while respecting the wrap-release schedule and contraction limits of the route-elimination rule (Appendix~\ref{app:model_geometry}). These redesign solutions are the plant definitions carried into the neuromechanical simulation work of Sections~\ref{sec:preliminary_sim_methods}--\ref{sec:preliminary_sim_results} and Chapter~\ref{ch:futurework}.
+% [ZCODE 2026-09-26 Xi-audit: redesign status updated. Old text: flexor re-run 'still in progress' and extensor 'thinnest torque margin below 0.1%' -- both described the pre-flxr77 campaign. Current facts, verified from the mats/logs on 2026-09-26: Bifemsh_20mm_Result.mat (stamp 20260921_2037, XiUsed = pick-77 pair with Xi3 0.158289) min torqueMarginFraction +5.007% at -106.869 deg over valid-human frames; Vas_Pam_20mm_Result_20260920_1519.mat XiUsed = flxr77 row 32 with log line 'Minimum torque margin = +5.043% at -20.202 deg' (Dig_out/Opt_flxr77_20260920.log), and the 09-25 re-run (Vas_Pam_20mm_Result.mat mtime 2026-09-25 22:53, fBest 0.10910, liveRun=1) carries minMargin 0.05024928. NOTE for Ben: the 09-25 extensor mat postdates the last results commit and records removedText '-p8' (optimizer dropped p8); if the 09-25 run is not the intended design of record, revert this sentence to the 09-20 numbers.]
 
 \section{Balance Platform and Inverted-Pendulum Demonstrations}\label{sec:results_balance}
 
@@ -355,13 +358,148 @@ The AnimatLab phase-1 run described in Section~\ref{sec:preliminary_sim_methods}
 \label{fig:animatlab_phase1_preliminary}
 \end{figure}
 
-\section{Follow-Up Identification and Route Redesign}\label{sec:ongoing}
+\subsection{Cross-Engine Verification of the Contact-Driven Rhythm Core}\label{sec:crossengine_results}
 
-The identification work outlined at the close of the experimental chapters has since been completed, and its outcomes are summarized here; the coefficient values shown with the figures above (Table~\ref{tab:OptCoeff}) belong to the initial single-bracket identification of those experiments.
+The verification protocol of Section~\ref{sec:crossengine_methods} was applied to the W2L rhythm core. Between the NumPy reference and the native Simulink reimplementation, both legs' rhythm-generator burst periods matched at \qty{1.000}{\second} versus \qty{1.000}{\second} (0.0\% error), the left--right antiphase correlation reproduced the reference exactly ($r = -0.525$), and all ten expected bursts occurred in the scored window. The full voltage traces cross-correlate at $r = 0.99996$--$0.99998$ at a $-\qty{2}{\milli\second}$ lag with an RMSE of 0.099--0.111~mV (Figure~\ref{fig:w2l_crossengine}); the residual lag is consistent with the one-step delay of the discrete Simulink solver. The same protocol surfaced an architectural fact rather than a defect: with the heel-contact trains removed, the full network holds a static latch under tonic drive with kickoff alone, in every implementation --- so phasic contact feedback is part of the drive architecture of the W2L design, not an optional perturbation.
 
-The correction terms were re-identified over the full archived test sets with the two-stage procedure of Section~\ref{sec:improved_model}: a two-bracket flexor fit cross-validated over the five pinned-flexor tests (the encoder-corrected \qty{47}{\cm} test held out), followed by an extensor refit with the stiffness pair locked to the flexor front. The adopted values are $\chi_{0} = \qty{+3.94}{\mm}$, $\chi_{1} = \qty{3.998e4}{\N\per\m}$, and $\chi_{2} = \qty{1.473e4}{\N\per\m}$ for the flexor (front row 77), and $\chi_{0} = \qty{-6.38}{\mm}$ with $\chi_{3} = 0.158$ for the extensor on that same locked pair; full provenance is given in Appendix~\ref{app:model_geometry}, Table~\ref{tab:app_xi_values}. This pair was adopted because it is the stiffness pair for which both redesign configurations meet the required 5\,\% torque-overshoot target simultaneously (flexor $+5.00$\,\%, extensor $+5.043$\,\% at $-20.2^{\circ}$ in the 2026-09-20 campaign). At these values, the corrected flexor model predicts the five pinned-flexor tests with per-test RMSE of 2.16/1.37/2.29/1.61/1.08~N{\,}m (48, 46, 47, 40-tendon, 41\,cm; FVU at most 0.17), the \qty{47}{\cm} test being pure held-out validation. On the six-test extensor validation pool, per-test RMSE spans 0.49--1.52~N{\,}m against 0.95--3.62~N{\,}m for the uncorrected rigid model --- an improvement on every pool test, with FVU below unity on every pool test except the 43\,cm-tendon test (FVU 1.33 against a rigid-baseline FVU of 4.73). On the biomimetic extensor test ($l_{0} = \qty{51.8}{\cm}$) the corrected prediction improves substantially on the baseline (RMSE 1.17 vs.\ 3.03~N{\,}m, FVU 0.67 vs.\ 4.49), so the shared-pair model now explains the bulk of that configuration's measured torque variance as well as its level. The solver question raised during the campaign was settled empirically: the genetic multiobjective solver was retained for the identification, where the Pareto front is required for holdout validation, and the surrogate-plus-pattern-search pipeline was reserved for the route redesign where it is already the method of record (Section~\ref{sec:optimization}).
-% [ZCODE 2026-09-26 Xi-audit: adopted values updated from the superseded row-107/20260910-pick-1 set (+8.9 mm, 5.62e4, 1.85e4; extensor -10.1 mm, 0.621 on 4.354e4/1.701e4) to the 2026-09-20 locked pair pick 77 / flxr77 row 32 -- buildKneeFlexorContext20mm.m pick = 77 live, extensor front LOCKSRC 'soft-Xi2 lock from flexor 2trans_noT3 front row 77'; rationale = the single pair meeting the 5% overshoot target on BOTH configurations. GoF numbers re-evaluated 2026-09-26 with the current evaluators of record (reeval scripts in Dig_out/xi_audit_tmp/): flexor RMSE 2.16465/1.36817/2.28691/1.61102/1.08363, FVU max 0.171825; extensor pool RMSE 1.24371-0.48955 (span 0.49-1.52), FVU 1.32704 only above unity (ke6); bio-extensor 1.1702/0.6681/2.2088 vs baseline 3.0322/4.4856/5.5870 (old-value reproduction check passed exactly: 2.1950/2.3506/4.7268). The old sentence 'FVU above unity ... remains the open gap' no longer holds at the adopted values.]
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth,height=0.55\textheight,keepaspectratio]{sns_w2l_traces.png}
+\caption[W2L rhythm-core traces across engines]{Left and right rhythm-generator extensor half-center voltages of the W2L contact-driven rhythm core under the shared verification protocol, from the NumPy reference (SNS-Toolbox backend) and the native Simulink reimplementation. Scored metrics --- burst period, left--right antiphase correlation, and burst counts --- agree exactly, and the full traces cross-correlate at $r \geq 0.99996$ at a $-\qty{2}{\milli\second}$ lag.}
+\label{fig:w2l_crossengine}
+\end{figure}
 
-The route redesign built on these values is likewise far advanced. The two-BPA flexor arrangement --- motivated by the single-muscle shortfall at high flexion angles documented above --- reached a feasible solution meeting the flexor torque target under the modeling assumption that both actuators share one attachment route rather than a physically mirrored pair; making the mirrored pair explicit is the next design refinement. The flexor re-run under the newly adopted correction terms is complete: its design of record (\texttt{Bifemsh\_20mm\_Result.mat}, 2026-09-21) meets the 5\,\% target with a minimum margin of $+5.01$\,\% at $-107^{\circ}$. The extensor route was redesigned directly under the adopted correction terms and meets or exceeds its human-scaled target with the required 5\,\% overshoot consumed as the thinnest margin at every angle of record: $+5.043$\,\% at $-20.2^{\circ}$ in the 2026-09-20 campaign, improved to $+5.03$\,\% by the 2026-09-25 re-run of record (\texttt{Vas\_Pam\_20mm\_Result.mat}), while respecting the wrap-release schedule and contraction limits of the route-elimination rule (Appendix~\ref{app:model_geometry}). These redesign solutions are the plant definitions carried into the neuromechanical simulation work of Sections~\ref{sec:preliminary_sim_methods}--\ref{sec:preliminary_sim_results} and Chapter~\ref{ch:futurework}.
-% [ZCODE 2026-09-26 Xi-audit: redesign status updated. Old text: flexor re-run 'still in progress' and extensor 'thinnest torque margin below 0.1%' -- both described the pre-flxr77 campaign. Current facts, verified from the mats/logs on 2026-09-26: Bifemsh_20mm_Result.mat (stamp 20260921_2037, XiUsed = pick-77 pair with Xi3 0.158289) min torqueMarginFraction +5.007% at -106.869 deg over valid-human frames; Vas_Pam_20mm_Result_20260920_1519.mat XiUsed = flxr77 row 32 with log line 'Minimum torque margin = +5.043% at -20.202 deg' (Dig_out/Opt_flxr77_20260920.log), and the 09-25 re-run (Vas_Pam_20mm_Result.mat mtime 2026-09-25 22:53, fBest 0.10910, liveRun=1) carries minMargin 0.05024928. NOTE for Ben: the 09-25 extensor mat postdates the last results commit and records removedText '-p8' (optimizer dropped p8); if the 09-25 run is not the intended design of record, revert this sentence to the 09-20 numbers.]
+\subsection{Headless Validation of the AnimatLab Reference Models}\label{sec:animatlab_validation}
 
+The archived AnimatLab reference models were re-run headless from their standalone simulators with instrumented charts, and eleven targetable rhythm and gait metrics were extracted automatically; all eleven pass their acceptance bands. In the bilateral contact-driven model, the rhythm generators oscillate at periods of \qty{0.450}{\second} (left) and \qty{0.467}{\second} (right) with a left--right lag of \qty{0.529}{cycle} (cross-correlation $r = 0.976$), confirming alternating gait timing. In the modern W2L model, the joints oscillate at \qty{2.25}{\Hz}; its flexor half-centers peak at $-\qty{56.4}{\mV}$ and never cross the $-\qty{55}{\mV}$ threshold, so the rhythm is carried by clean extensor/flexor antiphase ($r = -0.996$) through the graded pathway rather than by flexor spiking. The Li-model rerun \citep{li_bipedal_2017} walks at \qty{0.637}{\meter\per\second} with right and left step periods of \qty{1.299 \pm 0.024}{\second} and \qty{1.333 \pm 0.080}{\second} and duty factors of 0.443 and 0.555, reproducing the published behavior of the original model in its original engine.
+
+\subsection{BPA-Actuated Walker in MuJoCo}\label{sec:bpa_walker}
+
+The walker geometry of Section~\ref{sec:prior_walker} was exported to MuJoCo and driven by antagonistic BPA actuator pairs under the split contact-driven network, with actuator forces computed by the BPA model of Chapter~\ref{ch:methods}. In the air-stepping gate --- the harness carrying 70\% of the \qty{411}{\N} body weight --- the walker produced clean knee-flexion excursions at a \qty{1.542}{\second} period with a knee flexion range of \ang{63.5}, peak BPA forces of \qty{880}{\N} (left) and \qty{1372}{\N} (right) at a peak pressure of \qty{372}{\kPa} --- 60\% of the \qty{620}{\kPa} ceiling --- and 7 and 5 heel-contact episodes on the left and right. This run demonstrates the complete chain from the characterized BPA force model to a multi-joint walker stepping under synthetic neural control, with actuator sizing operating inside the characterized pressure range.
+
+The same campaign reported its failures with equal weight. On the ground, the W2L gate model stands (full-support stance) but does not walk: heel duty is zero and forward displacement is $+\qty{0.001}{\meter}$ over the run. The MuJoCo port of the Li model produced no stance episodes in any of seven drop-protocol variants. Together with the latch result of Section~\ref{sec:crossengine_results}, these negatives localize the open problem precisely: the contact-driven rhythm architecture itself transfers across engines intact, but translating it to unsupported ground locomotion requires the balance and weight-bearing layers defined in Chapter~\ref{ch:futurework}, and those layers are not present in these models.
+
+% [ZCODE 2026-10-02 Spiking-mirror campaign BEGIN — additive goal-4 dissertation edit. Source of truth: Code/MuJoCo_SNS/spinal/reports_spiking_20261002 (goal1/goal2/goal3 reports + artifacts; supervisor-gated campaign). Methods: Section~\ref{sec:spiking_methods}; full tables in Appendix~\ref{app:neuron_equations}. Nothing above this fence was changed.]
+\section{Spiking-Neuron Mirror Results}\label{sec:spiking_results}
+
+The spiking-neuron mirrors of Section~\ref{sec:spiking_methods} were evaluated against their non-spiking twins in the same order in which the families were introduced: the MuJoCo spinal network, the Simulink demonstrations, and the AnimatLab walker family. All numbers in this section come from the gated verification campaign whose artifacts and reproduction commands are catalogued in Appendix~\ref{app:neuron_equations}.
+
+\subsection{MuJoCo Spinal-Network Mirror}
+
+The non-spiking production baselines were first re-established on the machine of record: all three current production configurations reproduce their documented evaluation scores exactly, including the default build's kinematic score of $-161.56754173676563$, and after the mirror's selector was added the default build gate ($(410, 376, 1186)$ populations, inputs, and connections) and that same baseline score reproduce digit for digit, proving the non-spiking pipeline untouched.
+
+The topology gate passes exactly: under the default, fully tuned, and joint-layer pattern-formation gain configurations, the spiking mirror's directed connection multiset is identical to the non-spiking build's ($1{,}186$, $7{,}908$, and $7{,}762$ connections respectively), with identical input lists, identical motor-neuron maps, and exactly the expected number of readout taps (12, 12, and 16). The mirror is structurally the same network.
+
+Under constant drive (network alone, \qty{20}{\second}), the rhythm gate splits. The spiking mirror self-sustains clean bilateral antiphase --- rhythm-generator extensor and flexor cells firing at \qty{4.9}{\hertz} and \qty{3.2}{\hertz} per leg, with the swing readout sustained in every window --- but its envelope period is \qty{0.621}{\second} against the analog build's \qty{0.399}{\second}, a \qty{55.6}{\percent} lengthening that misses the gate's \qty{20}{\percent} tolerance (Figure~\ref{fig:spike_rhythm}). The basin gate passes in full: the rhythm persists under \qty{1}{\percent} multiplicative jitter on every scalar parameter in all 12 seeded trials, with a final-window swing minimum of \qty{4.58}{\mV} against the \qty{5.13}{\mV} baseline (margin $0.89\times$) and no divergent trials. In the deafferented suspended-air preparation, the mirror air-steps rhythmically with full-amplitude joint swings (knee range \ang{106.0} against the twin's \ang{117.9}), but its cadence is roughly ten times faster than the non-spiking twin's \qty{0.47}{\hertz} air-stepping regime in this preparation, so the air-regime gate fails on the cadence clause alone.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{spiking_mirror_rhythm.pdf}
+% ALT TEXT: see spiking_mirror_rhythm_alt.txt beside the figure file.
+\caption[Constant-drive rhythm, non-spiking versus spiking]{Constant-drive rhythm of the right rhythm-generator under network-only simulation. \textbf{(A)} The non-spiking network's extensor-minus-flexor readout voltage alternates irregularly about a \qty{4.8}{\milli\volt} swing (larger only in the startup transient), with an average period of \qty{0.399}{\second}. \textbf{(B)} The spiking mirror's raw extensor (solid orange) and flexor (dashed indigo) cells fire in alternating bursts whose envelope period is \qty{0.621}{\second}, \qty{55.6}{\percent} longer than the analog build.}
+\label{fig:spike_rhythm}
+\end{figure}
+
+One untuned ground-walking evaluation was run as a stretch attempt: the spiking mirror at the non-spiking winner's mapped parameters, with no re-tuning. It scores worse overall (kinematic score $-236.35$ against $-161.57$), as expected for an untuned mapped starting point, but it produces a genuine bilateral gait --- eight right-leg and nine left-leg cycles, a cycle-window knee flexion minimum of \ang{-79.8}, no non-finite states, and the model stays up --- whereas the non-spiking winner's left leg is frozen (zero cycles) in every recorded run of its study, including this session's baseline (Figure~\ref{fig:spike_ground}, Table~\ref{tab:spike_ground}). This is a single run with no statistics, reported as a lead for the fresh tuning campaign that the mirror's plan calls for, not as an established gait result.
+
+\begin{table}[htbp]
+\caption{Untuned spiking mirror versus its non-spiking twin at the same winner parameters, ground evaluation (16 s). The cycle knee minimum and stance fractions are computed over detected gait cycles; the kinematic score is the cycle-shape error metric of the production pipeline (more negative is better). The spiking mirror carries mapped parameters only, with zero re-tuning.}
+\label{tab:spike_ground}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Metric} & \textbf{Non-spiking winner} & \textbf{Spiking mirror (untuned)} \\
+\midrule
+Kinematic score                & $-161.57$          & $-236.35$ \\
+Gait cycles, right / left      & 9 / 0 (left frozen) & 8 / 9 (bilateral) \\
+Cycle knee minimum             & \ang{-64.3}         & \ang{-79.8} \\
+Contact duty, right / left     & 0.637 / 0.985       & 0.799 / 0.856 \\
+Maximum pelvis tilt            & \ang{22.1}          & \ang{19.2} \\
+Non-finite states / fell       & no / up             & no / up \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{spiking_mirror_ground_gait.pdf}
+% ALT TEXT: see spiking_mirror_ground_gait_alt.txt beside the figure file.
+\caption[Ground gait, non-spiking winner versus untuned spiking mirror]{Ground-walking joint angles of the converted MuJoCo robot at the non-spiking winner's parameters. \textbf{(A, C)} The non-spiking winner steps with the right leg only; the left knee moves through a single slow excursion without cycling. \textbf{(B, D)} The untuned spiking mirror cycles both legs with deep knee flexion. Solid indigo traces denote the left leg, and dashed orange traces denote the right leg.}
+\label{fig:spike_ground}
+\end{figure}
+
+\subsection{Simulink Spiking Demonstration Twins}
+
+The three new library blocks were verified at the unit level before any demonstration was rebuilt. The single-spike conductance transient matches the exact exponential to \qty{6.2e-07}{\micro\siemens}, saturating pulse-train accumulation matches to \qty{4.6e-05}{\micro\siemens}, and a hybrid two-neuron circuit matches a verbatim port of the SNS-Toolbox update equations spike for spike (62 of 62 spikes, maximum spike-time deviation \qty{11.75}{\micro\second}, maximum voltage deviation \qty{1.2e-02}{\mV}). The same circuit run through the SNS-Toolbox numpy backend agrees with the Simulink copy to \qty{0.19}{\micro\second} in mean interspike interval and \qty{0.81}{\micro\volt} in final voltage. With the spiking blocks present in the library, every committed demonstration and units test reproduces its recorded value exactly, including the committed two-neuron units test at \qty{6.07e-04}{\mV}.
+
+At the matched operating point, the spiking twin of the knee-reflex demonstration is indistinguishable from the baseline in its transient and within one degree in its settle behavior (Table~\ref{tab:spike_knee}, Figure~\ref{fig:spike_knee}): both read \ang{15.79} at \qty{0.05}{\second}, and the twin settles \ang{0.9} higher with a slightly hotter, faster antagonist alternation, because the rate-coded pathway adds the synaptic filter time constant that graded synapses do not have. The spiking twin of the beverage-holding demonstration likewise holds the cup at essentially the same level, with the reflex-off sag identical to the baseline and the reflex modulation within \ang{0.02} (Table~\ref{tab:spike_beer}).
+
+\begin{table}[htbp]
+\caption{Knee-reflex demonstration, committed baseline versus spiking twin at the matched operating point (5 s runs; settle statistics over the last \qty{2}{\second}).}
+\label{tab:spike_knee}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Metric} & \textbf{Baseline} & \textbf{Spiking twin} \\
+\midrule
+Knee angle at \qty{0.05}{\second}   & \ang{15.79} & \ang{15.79} \\
+Settle mean (last \qty{2}{\second}) & \ang{43.5}  & \ang{44.4} \\
+Settle range                        & \ang{41.6}--\ang{44.9} & \ang{41.9}--\ang{46.7} \\
+Extensor / flexor activation (window means) & 0.53 / 0.53 & 0.58 / 0.56 \\
+Antagonist alternation              & \qty{0.5}{\hertz}--\qty{2}{\hertz} & \qty{7.4}{\hertz} (dominant peak) \\
+Ia interneuron firing at settle     & graded, subthreshold & \qty{95}{\hertz}; Ib \qty{0}{\hertz} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Beverage-holding demonstration, committed baseline versus spiking twin (10 s pour; sag measured after \qty{2}{\second}).}
+\label{tab:spike_beer}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Metric} & \textbf{Baseline} & \textbf{Spiking twin} \\
+\midrule
+Maximum sag, reflex on             & \ang{2.00} & \ang{2.02} \\
+Maximum sag, reflex off            & \ang{7.85} & \ang{7.85} \\
+Reflex modulation (off minus on)   & \ang{5.85} & \ang{5.83} \\
+Biceps activation over the pour    & 0.392 $\to$ 0.417 & 0.392 $\to$ 0.447 \\
+Triceps activation over the pour   & 0.400 $\to$ 0.316 & 0.400 $\to$ 0.254 \\
+Biceps Ia firing rate (reflex on)  & graded     & \qty{166.6}{\hertz} (mean) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{simulink_knee_spiking_twin.pdf}
+% ALT TEXT: see simulink_knee_spiking_twin_alt.txt beside the figure file.
+\caption[Simulink knee-reflex twin, baseline versus spiking]{Knee angle of the Simulink knee-reflex demonstration: committed non-spiking baseline (solid indigo) versus spiking twin (dashed orange) at the matched operating point. \textbf{(A)} Full \qty{5}{\second} run. \textbf{(B)} Settle window (last \qty{2}{\second}); the spiking twin's alternation band is slightly wider.}
+\label{fig:spike_knee}
+\end{figure}
+
+A representative rhythm-generator-to-motor-pool subnetwork demonstrates the hybrid motif end to end: spiking half-centers with laminated inhibition drive a non-spiking three-motor-neuron pool whose voltage stays graded over a \qty{5}{\milli\volt} depth ($-52.0$ to $-46.9$~mV) and tracks its rhythm generator's rate envelope. Burst alternation in that subnetwork is partial --- the extensor half-center bursts four times in \qty{12}{\second} while the flexor half-center keeps a low-rate floor through the extensor bursts --- and is reported as incomplete; the full 410-population Simulink spinal-network conversion is scoped as future work for the same reason.
+
+\subsection{AnimatLab Spiking Conversions}
+
+The AnimatLab family produces the campaign's clearest negative result, and it is reported as such. The graded baselines were re-established first: the two-layer walker's rhythm generator oscillates at \qty{0.443}{\second} (\qty{2.26}{\hertz}), the bilateral variant at \qty{0.462}{\second} with the two legs folded near antiphase (lag $-0.42$ cycle, $r = 0.869$), and the already-spiking 2023-lineage model --- the family's spiking reference --- bursts at \qty{1.305}{\second} with folded antiphase of $+0.494$ cycle ($r = 0.703$), reproducing its period of record. The current reorganized project's standalone export remains latched under the tonic drives examined, consistent with Section~\ref{sec:preliminary_sim_methods}.
+
+No spiking copy of the three graded models preserves the rhythm (Table~\ref{tab:spike_animatlab}). The two-layer conversions die at every threshold and decay tried (two or zero rhythm-generator spikes in \qty{5}{\second}); the bilateral variant latches with one side's half-centers saturated at \qty{442}{\hertz}--\qty{450}{\hertz}; and the reorganized project's copy converts its latched baseline into strictly synchronous \qty{11.8}{\hertz} co-bursting with no alternation --- the left extensor and flexor half-centers emit identical 58-spike trains whose spike-count envelopes correlate at $r = 1.000$ at zero lag. The thresholds-only ablation, which keeps the graded synapses, preserves near-baseline joint oscillations, isolating the synapse conversion as the breaking change (Figure~\ref{fig:spike_animatlab}): per-spike conductances at the graded amplitude either starve the reciprocal loop of inhibitory charge or saturate it, whereas the graded synapses read the membrane potential continuously and keep oscillating through subthreshold voltages. A spiking version of this family therefore needs its synaptic amplitudes and decays re-tuned as a rate code --- which is how the 2023 spiking reference was built in the first place --- rather than a parameter port.
+
+\begin{table}[htbp]
+\caption{AnimatLab spiking conversions versus their graded baselines (5.1 s headless runs; joint ranges in degrees where the rhythm survives). The thresholds-only ablation converts the neurons but keeps the graded synapses.}
+\label{tab:spike_animatlab}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Variant} & \textbf{Baseline (graded)} & \textbf{Spiking copy} \\
+\midrule
+Two-layer walker     & \qty{0.443}{\second} rhythm;   & dead (2 spikes; \\
+                     & hip $-15$ to $+23$, knee $-1$ to $+60$ & hip pinned near $+6$) \\
+Bilateral variant    & \qty{0.462}{\second}; antiphase $-0.42$ cycle & latched; one side at \qty{442}{\hertz}--\qty{450}{\hertz} \\
+Reorganized project  & latched (tonic drives) & synchronous \qty{11.8}{\hertz} co-bursting; \\
+(standalone export)  &                        & same-leg envelopes $r = 1.000$ at lag 0 \\
+Thresholds only      & \multirow{2}{*}{hip $-15$ to $+23$, knee $-1$ to $+60$} & oscillates: hip $-15.1$ to $+23.2$, \\
+(graded synapses)    &                        & knee $-0.8$ to $+47.9$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The spiking conversions of the two-layer family, the calibrated-threshold variants, and the decay probe are catalogued variant by variant --- with neuron, synapse-type, and connection counts and the structural-validation outcome of each --- in Appendix~\ref{app:neuron_equations} (Table~\ref{tab:app_spk_animatlab_full}), together with the full gate table of the MuJoCo mirror (Table~\ref{tab:app_spk_gates}).
+% [ZCODE 2026-10-02 Spiking-mirror campaign END]
