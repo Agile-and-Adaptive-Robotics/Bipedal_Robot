@@ -145,10 +145,20 @@ upload above. The items below are the next content round after that.
   engines as a methodology (this pairs with `sec:crossengine_methods`).
 - **Between Results §4.2 and §4.3**: add the first placement optimization (Morrow + Bolen) as
   its own content, not just the §4.1 summary sentence.
+  **— CONTENT ADDRESSED 2026-10-03 later round (see "2026-10-03 LATER ROUNDS" section
+  below): the placement-optimization results now exist as their own subsection
+  `sec:route_redesign_results` (Opt_run flexor + Opt_run_Ext extensor records, mono/bi-pulley
+  runs, add_mag3_r provenance fix) — but it sits in §4.4/sec:ongoing immediately before
+  sec:results_balance, NOT between §4.2 and §4.3. If Ben still wants it between §4.2/§4.3,
+  that is now a RELOCATION of existing content, not new writing.**
 - **Table 5.1**: make it a sideways table (long-standing advisor layout item).
 - **Torque-test discussion expansion**: more Discussion on the torque tests; Ben's new runs
   arrive tonight and may show the updated compliant system lets `Opt_run`/`Opt_run_Ext` meet or
   exceed human torque magnitude — that belongs in DISCUSSION, not Results, per Ben.
+  **— SCAFFOLDED 2026-10-03 later round: Discussion gained `sec:disc_pulley`
+  (40-discussion.tex:163) plus a visible FLAG-BEN placeholder at :167-168 for the measured
+  numbers; the meet-or-exceed claim is stated only as pending, never as fact. The
+  substantive expansion still waits on Ben's runs landing.**
 - **Data refresh (old D2.2 set)**: Table 4.3, Figures 4.4–4.6, Table 4.4 regenerated from the
   current results of record.
 - **§4.5**: add pictures from Ben's posters — inverted pendulums, balance platform, and the
@@ -156,12 +166,176 @@ upload above. The items below are the next content round after that.
 - **§4.6 expansion**: split into more sections/subsections with results from AnimatLab, SNS
   Simscape (including the demos), and MuJoCo SNS. Connectomes shown here or in Methods; more
   material to the appendices.
+  **— PARTIALLY ADDRESSED 2026-10-03 later round: two new MuJoCo-SNS §4.6 subsections
+  (`sec:gait_library_results` gait-library sweep; `sec:walker_variant_results`
+  walker-variant ablations + robustness) and the connectomes landed in Appendix B
+  (`app:connectomes` = circuit_full + circuit_core). Still open: AnimatLab and SNS Simscape
+  (demos) §4.6 content, and any further splitting.**
 - **Discussion: SADb** — its staging on Airtable and migration to the in-house app, with key
   pictures; more pictures/examples in an appendix.
 - **FEA-for-BPA future-work document**: Ben knows of a document on using advanced FEA for BPA
   characterization. NOT FOUND by ZCode (2026-10-03) after four search passes on EB475WS4 and
   easteregg2 (filenames, text files, .docx internals, .pptx internals, Zotero storage names).
   Likely on the laptop (not SSH-reachable) or in a non-text format — Ben to locate or point.
+
+## 2026-10-03 LATER ROUNDS — PROOFFINAL CONTENT + FIGURE ADDITIONS STAGED LOCALLY (ZCode;
+## READ BEFORE THE NEXT OVERLEAF UPLOAD)
+
+Local-only content rounds on the resynced ProofFinal (post the 10-02 zip), run 2026-10-03
+after the upload brief above was written. NOTHING here is on Overleaf yet. These additions
+ride the NEXT upload under the same RULES THAT BIND above (selective anchored edits; fresh
+Overleaf zip diff FIRST — the live chapters may have gained advisor comments since; ZCODE
+fences port verbatim). Every anchor below was re-verified on disk on EB475WS4 on 2026-10-03
+(findstr against the five chapter files) by the handoff pass that wrote this section.
+
+### Anchored .tex additions (ProofFinal\chapters\; ZCODE 2026-10-02 fences untouched)
+
+- **30-results.tex** — three new subsections:
+  - `sec:route_redesign_results` (:343, "Redesigned-Route Results on the Gait2392
+    Robot-Body Model") — inside §4.4/sec:ongoing, inserted immediately before the
+    sec:results_balance \section heading. Carries the Opt_run_Ext extensor record (fBest
+    0.1091; 09-20 snapshot 0.09770; min margin fraction 0.05025 at angle index 77; predicted
+    35.45–109.4 N·m vs human 20.25–50.32 N·m, zero shortfall), the Opt_run flexor multi-BPA
+    record (seed 2894 → fBest 74.47, min margin 0.05007, predicted −81.23 to −3.864 N·m vs
+    human −23.16 to −2.461 N·m, XiUsed with the Xi3 FLAG-BEN placeholder), the mono/bi-pulley
+    results (pulley objective 0.08465, incommensurable with the 74.47 flexor objective;
+    insertion torque 81.23 → 85.74 N·m, insertion-side 85.56, off-axis ≤ 0.803 N·m,
+    collision-feasible, exit flag 1; table `tab:bipulley_batch` = all five OpenSim-site
+    Bi-pulley failures, clearances 4.260–19.14 mm vs 25 mm required), and the add_mag3_r
+    provenance-fix paragraph (34.28 N·m = 1.12× human 30.61; 27.62 N·m = 0.82× human 33.60;
+    optimizer-stage status; converted-trees staleness limited to the one verifiable tree).
+  - `sec:gait_library_results` (:420, "Gait-Validation Sweep against the Locomotion
+    Reference Library") — §4.6, anchored after sec:bpa_walker's closing paragraph. Defines
+    the two controller lineages (human-derived s3k/s3kpruned/syn6 vs robot-walker w2lvar),
+    the 43-cycle library (32 running trials, 10 walking refs 0.5–2.0 m/s, 1 further cycle),
+    table `tab:gait_sweep` (tuning-ref scores −186.4/−176.1/−200.4/−144.5; library means
+    −8776/−6924/−9961/−5808; worst refs Case_40_motion −8841/−6986/−10040 and
+    subject08_Run_20002 −5896), identical-ranking + transfer-gap reading.
+  - `sec:walker_variant_results` (:442, "Comparison of the Production Walker Variants") —
+    §4.6, immediately before the 2026-10-02 spiking ZCODE fence (fence untouched). Table
+    `tab:walker_ablations` (s3k: Ia removal → −25 no-cycle fallback; noaff/renshaw/II
+    −267.8/−267.3/−255.2; ib/contact/interleg −180.3/−183.9/−174.9; syn6 noaff −190.5 with
+    10/10 bilateral cycles, knee −71.2°, 0.684 s; w2lvar ia −273.5, rgweak −279.9, renshaw
+    −142.4) + robustness paragraph (s3k 0 falls in 15 stand/push runs, max sway 0.123 m,
+    survives −0.01/+0.01/−0.02 at −201.9/−177.0/−171.2, freezes at +0.02; s3kpruned survives
+    base and −0.02; syn6/w2lvar fall under every perturbation, tilt 39–40°).
+- **40-discussion.tex** — new section `sec:disc_pulley` (:163, "What Mono- and Bi-Pulley
+  Routing Buys"), anchored immediately after the ZCODE 2026-10-02 spiking END fence (:160),
+  inside its own ZCODE 2026-10-03 fence (:162–169). One discussion paragraph on the flexor
+  pulley run + Bi-pulley batch + optimizer-stage status + model-propagation gap. All its
+  numbers are digest-cited — the pulley campaign has NO Results counterpart (only the
+  balance-platform reverse-pulley mention at 30-results.tex:383); if Ben wants a Results
+  account too, that is a separate edit.
+- **94-AppendixC.tex** — new appendix section `app:route_geometry` (:226, "Redesigned
+  Extensor Route Geometry") after the final ZCODE Xi-audit comment; figures
+  `fig:app_route_geometry` (:238) + `fig:app_bone_mesh` (:246), both ALT-TEXT-commented,
+  grounded numbers throughout (panel angles, xBest endpoints, 0.784 m path length).
+- **93-AppendixB.tex** — new appendix section `app:connectomes` (:198, "Connectomes of the
+  Spinal-Network Models") after the ZCODE "Spiking-mirror campaign END" fence (nothing above
+  the fence changed); figures `fig:app_circuit_full` (:209) + `fig:app_circuit_core` (:217),
+  ALT-TEXT-commented, drawn live from the compiled fitted network (410 neurons = 201/side +
+  8 shared, 376 inputs; MN-pool memberships pulled from muscle_map.py, not hardcoded).
+- **92-AppendixA.tex** — anchored addition at :140-141 (", visible in the soleus panel of
+  Figure~\ref{fig:force-compare}." — the figure itself already existed at :155 and was NOT
+  duplicated) and an ALT TEXT comment at :157-166 above the existing caption. ON-DISK
+  CAUTION: the alt text describes a SIX-panel grid (3 rows × 2 cols, soleus_r … psoas_r)
+  with the twelve-muscle stats in the CSV sidecar; the generating round's summary said
+  "12-panel 3x4" — trust the file, not that phrase.
+- **Code\Matlab\Mesh_Optimization\Export_AppendixBoneMesh.m** — NEW reproducible driver
+  (companion to Export_AppendixRouteGeo.m): runs the static bone-mesh section of
+  Results/Knee_Extensor_20mm.m from a temp copy dropping only the GIF-animation block,
+  exports PNG + alt.txt; verified headless when generated (not re-run by the handoff pass).
+
+### Staged figures (local `Documentation\Reports and Papers\Dissertation\Figures\`; mirror into Overleaf `figs/<chapter>/`)
+
+| Local file (Figures\...) | Destination | Note |
+|---|---|---|
+| 94-AppendixC\route_geometry_ext20mm_20260925.pdf (+ .png twin + .alt.txt) | figs/94-AppendixC/ | regenerated `matlab -batch Export_AppendixRouteGeo` — "done (8 pose tiles, 2 tile rows)"; vision-verified, no toolbar artifacts |
+| 94-AppendixC\bone_mesh_static_extensor20mm.png (+ .alt.txt) | figs/94-AppendixC/ | via the new Export_AppendixBoneMesh.m; title "Knee angle = 0.0 deg, BPA path length = 0.784 m"; release schedule == hardcoded constants, Xi gate passed |
+| 93-AppendixB\circuit_full.pdf (+ .png + _alt.txt) | figs/93-AppendixB/ | draw_circuit.py --which full --source fitted ("410 neurons (201/side + 8 shared), 376 inputs"); PNG byte-identical to fresh render; sidecar line 11 corrected round-2 to "BAL_LAT/TRK abduct/trunk" |
+| 93-AppendixB\circuit_core.pdf (+ .png + _alt.txt) | figs/93-AppendixB/ | draw_circuit.py --which core --source fitted; PNG byte-identical to fresh render |
+| 92-AppendixA\muscle_force_compare.csv | figs/92-AppendixA/ | data sidecar copied from Code\MuJoCo_SNS\spinal\ (Table tab:force-r2 cites its numbers); muscle_force_compare.png was already staged, byte-identical to source |
+
+Provenance: the four figure files + alt sidecars + Export_AppendixRouteGeo.m + the
+Knee_Extensor_20mm.m:56 repoint at the dated mat pre-existed from an earlier same-day
+attempt (~03:31–03:39, no tex wiring, no bone driver); this round verified provenance,
+regenerated all four figures (PNG renders byte-identical where compared), and added
+Export_AppendixBoneMesh.m. Deliberately UNUSED: Knee_Extensor_20mm_route_check_20260921.png
+(stale, pre-dates the 09-25 design of record), FlexorNonlinearCollisionConstraint.png,
+circuit_dengstyle/circuit_rules/sns_diagram_panels (unreferenced; left in
+Figures/30-results/CPG_airstepping_figs), circuit_literature (already in use at
+15-background.tex:144, not duplicated).
+
+### FLAG-BEN placeholders this round added (exact locations)
+
+1. **30-results.tex:350 (comment) + :352 (visible italic bracket)** — flexor Xi3
+   canonicality: Dig_out/Opt_flxr77_20260920.log flexor preflight uses Xi3 = 0.6209, but
+   every final flexor MAT (Bifemsh*, incl. pulley) carries Xi3 = 0.1583 (the extensor
+   value); no source states which is canonical for the flexor or whether Xi3 is inert in the
+   flexor objective. The visible flexor paragraph rests on this — resolve before upload.
+2. **40-discussion.tex:167-168** — pending torque-test numbers for the updated compliant
+   system (flexor/extensor torque-vs-angle, worst-margin angles, pressures). The
+   meet-or-exceed-human-torque-magnitude claim is stated ONLY as pending; fill with Ben's
+   measured numbers, then delete the comment pair.
+3. **94-AppendixC.tex:231 (comment)** — Knee_Extensor_20mm.gif (2.3 MB) +
+   Knee_Flexor_20mm.gif (4.7 MB) as dissertation supplementary media, or archived result
+   files only? Prose states they are archived.
+
+### Other flags for Ben (record-only; no placeholder in the tex)
+
+- **30-results.tex:357**: BiPulley_opensim_bifemsh_r_20260926_1702.mat st.tauAbs is
+  PARTIALLY NaN (30 of 75 NaN, 45 finite, max 17.18 N·m) — wording corrected during the
+  2026-10-03 prose-fix round; the earlier "all-NaN, only the CSV row survives" note
+  overstated the mat. The batch CSV row remains the summary of record.
+- **30-results.tex:376**: the converted-trees staleness claim was corrected to the ONE
+  verifiable tree (mjc/gait2392_robotbody, dated 2026-09-24); the gitignored/regenerable
+  MyoSuite robotbody output is absent locally, so no staleness claim is made for it.
+- **Pre-existing, NOT touched** (sits inside the 2026-10-02 ZCODE fence): the tab:spike_ground
+  caption says the kinematic score is "(more negative is better)", but kine_ref.py:30 states
+  HIGHER IS BETTER, 0 = perfect (kine_score = −total at :331), and the spiking prose agrees
+  with the code. Ben should reconcile that caption parenthetical. The new tables
+  (tab:gait_sweep, tab:walker_ablations) follow the code convention.
+- **94-AppendixC.tex:202** (protected adopted-values paragraph, deliberately NOT edited):
+  states the 2026-09-25 extensor margin as +5.03% while a re-run of the design-of-record
+  script prints "minimum torque margin = +0.050249 (+5.02%)"; the new section restates no
+  margin. Ben to reconcile.
+- gait_validation_20260930.log does not exist anywhere in Code\MuJoCo_SNS (searched during
+  digest harvesting); the sweep's provenance is gait_validation_20260930.csv alone.
+- Cross-platform campaign artifacts are uncommitted on the laptop and easteregg2 (EB475WS4
+  holds synced copies); no figures were generated from them this round, so no citation issue.
+
+### Gates + verification status (as reported by the generating rounds; NOT re-run by the handoff pass)
+
+- Round-reported gate: **GATE PASS pages=223**.
+- Round verifier: numbers_ok = true, no remaining problems. The round-2 "-p8" misreading is
+  fixed in both places — 30-results.tex:340 and 94-AppendixC.tex:37 now carry p8 active
+  97/100 frames, release at +7.37° (rendered +7.4°), the release-event panel at +6.06°, and
+  explicitly withdraw the revert-to-09-20 advice built on the old reading (both comments
+  re-verified on disk by the handoff pass).
+- Cosmetic, carried: the p8 paragraph mixes rounding renderings (+6.06/+6.1/+7.4 are all
+  correct roundings of 6.0606/7.3737); 30-results.tex:345 "zero corresponds to no violated
+  penalty" is strictly true only at the unchanged seed (the design-change terms Jgeom/Jlen
+  are nonzero for any moved x) — harmless as the same sentence lists them as sum members.
+- Checks NOT run (per the verifier): the MATLAB Export_AppendixBoneMesh.m headless re-run, a
+  LaTeX compile of the five touched files, and any MuJoCo re-simulation — all
+  gait/prune/robust numbers were re-verified by recomputation against
+  gait_validation_20260930.csv and prune_results_*.jsonl / robust_results_*.jsonl, not by
+  re-running sims. Files 40-discussion.tex (mtime 04:54), 92-AppendixA.tex (04:55), and
+  93-AppendixB.tex (04:55) were unchanged after the round-2 verification; 30-results.tex and
+  94-AppendixC.tex were later touched (05:14) by the p8/tauAbs/converted-tree prose fixes
+  described above.
+
+### What the next upload round must do
+
+1. Re-read RULES THAT BIND at the top of this file; download a fresh Overleaf zip and diff
+   FIRST — these chapters now carry 2026-10-03 local content the 10-02 zip lacks, and the
+   live files may have gained advisor comments. All additions above are anchored between
+   existing content, so they port as INSERTIONS, never wholesale pastes.
+2. Add the five figure rows above to the upload set (the 10-03 table already covers
+   muscle_force_compare.png; the CSV and the four Appendix B/C figures are new).
+3. Port the three 30-results subsections, sec:disc_pulley, app:route_geometry,
+   app:connectomes, and the two 92-AppendixA anchored edits verbatim; keep the FLAG-BEN
+   placeholders visible in the live copy until Ben fills them (they gate submission).
 
 ## REPO SIZE REDUCTION OBJECTIVE (Ben, 2026-09-15) — READ BEFORE ANY GIT OPERATION
 Ben wants the repo shrunk across the board (~13.8 GB on disk) and is WARY of
