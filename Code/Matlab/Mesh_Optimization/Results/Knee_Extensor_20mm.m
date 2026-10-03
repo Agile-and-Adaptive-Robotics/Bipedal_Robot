@@ -51,8 +51,17 @@ addpath(fullfile(root, 'Testing_Data', '2022_02_Festo'), '-end');
 % builder's Xi pick moved on since the run and the display would mislabel
 % the design. Do not load old Location/bendMeasure arrays or expect
 % separate saved endpoint variables.
-resultFile = fullfile(scriptDir, 'Vas_Pam_20mm_Result.mat');
-S = load(resultFile, 'xBest', 'XiUsed');
+% 2026-10-03 (dissertation figure export): pointed at the dated design of
+% record (2026-09-25 full-workspace save) instead of the undated mat.
+resultFile = fullfile(scriptDir, 'Vas_Pam_20mm_Result_20260925.mat');
+S = load(resultFile, 'xBest', 'XiUsed', 'ctx');
+% The 2026-09-25 mat predates the XiUsed record (verified by whos: it
+% carries ctx but no XiUsed). Its own full-workspace ctx holds the run's
+% Xi block, so recover XiUsed from there; the builder-vs-run drift check
+% below still applies unchanged.
+if ~isfield(S,'XiUsed') && isfield(S,'ctx')
+    S.XiUsed = [S.ctx.Xi0, S.ctx.Xi1, S.ctx.Xi2, S.ctx.Xi3];
+end
 if ~isfield(S,'xBest') || ~isfield(S,'XiUsed')
     error('Knee_Extensor_20mm:MissingResult', ...
         '%s must contain xBest and XiUsed from Opt_run_Ext.', resultFile)

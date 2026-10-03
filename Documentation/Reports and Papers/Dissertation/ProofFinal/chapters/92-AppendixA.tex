@@ -137,7 +137,8 @@ instead visible in waveform \emph{shape}: for the soleus (the largest
 series-elastic energy store in human gait), the OpenSim compliant
 tendon carries substantial force through mid-stance while the MuJoCo
 rigid-tendon force follows the activation dips --- the expected
-smoothing of the series elastic element. The two outliers are
+smoothing of the series elastic element, visible in the soleus panel of
+Figure~\ref{fig:force-compare}. The two outliers are
 anatomically explained: rectus femoris was rerouted in the conversion
 over the vastii's patella-tracking via point, and its moment-arm
 polyfit deviates from OpenSim's path (the same coupler artifact noted
@@ -153,6 +154,16 @@ the rigid-tendon model.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.9\textwidth]{muscle_force_compare.png}
+  % ALT TEXT: Six-panel grid (three rows by two columns) of muscle
+  % force versus time along the subject01 walk at matched activations,
+  % one muscle per panel in reading order: soleus_r (top left),
+  % med_gas_r, vas_lat_r, semimem_r, tib_ant_r, and psoas_r (bottom
+  % right). Each panel overlays the MuJoCo rigid-tendon force (solid
+  % orange) and the OpenSim Thelen compliant-tendon force (black
+  % dashed), normalized to each muscle's own peak. Per-muscle R2,
+  % shape correlation, lag, and force-ratio values for all twelve
+  % analyzed muscles are archived in muscle_force_compare.csv beside
+  % the figure file.
   \caption{Normalized muscle force along the analyzed walk at matched
   OpenSim static-optimization activations (MuJoCo: rigid tendon;
   OpenSim: Thelen compliant tendon). Soleus illustrates the signature
