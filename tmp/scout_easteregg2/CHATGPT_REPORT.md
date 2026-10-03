@@ -42,9 +42,3 @@ Folder dragging briefly moved Discussion under Methods and the active MuJoCo fig
 
 ## Queued next-round work
 The handoff's figure-generation notes remain queued: Fig 2.2 internal bladder pressure, Fig 2.3 inflated/deflated BPA illustration, and the possible third Fig 2.5 simbody panel. No new figure-generation work or alternative Future Work framing was started. No commit was made.
-
-## 2026-10-03 second upload round — started 06:56:15 PDT
-Re-read the newly added LATER ROUNDS brief. Next: fresh Overleaf source and review snapshot before editing; selective inserts in five chapters, staged figures, Xi3 provenance check, compile and preservation audit. Browser extension connected and returning page state.
-
-### 07:00:23 — pre-edit preservation gate
-Fresh Overleaf source ZIP download blocked by Chrome. Read back all five target chapters directly from the live editor and compared each byte-for-byte (normalizing line endings) with the prior saved final_checkpoint: all five MATCH, so no new source drift. Full Overleaf Review inventory also matches the previous round exactly (28,368 characters), including advisor comments and tracked deletions. Prepared selective diffs against current ProofFinal. No new live edits yet.
