@@ -52,19 +52,35 @@ addpath(fullfile(root, 'Testing_Data', '2022_02_Festo'), '-end');
 % the design. Do not load old Location/bendMeasure arrays or expect
 % separate saved endpoint variables.
 resultFile = fullfile(scriptDir, 'Vas_Pam_20mm_Result.mat');
-S = load(resultFile, 'xBest', 'XiUsed');
-if ~isfield(S,'xBest') || ~isfield(S,'XiUsed')
+% One load call: the "Variable 'XiUsed' not found" warning below is
+% expected for the 2026-09-25 full-workspace save pattern (its Xi block
+% lives inside the saved ctx); S still receives every variable that IS
+% present.
+S = load(resultFile, 'xBest', 'XiUsed', 'ctx');
+if ~isfield(S,'xBest')
     error('Knee_Extensor_20mm:MissingResult', ...
-        '%s must contain xBest and XiUsed from Opt_run_Ext.', resultFile)
+        '%s must contain xBest from Opt_run_Ext.', resultFile)
+end
+% Xi record of the run: dated Opt_run_Ext results save a top-level XiUsed;
+% the 2026-09-25 full-workspace save pattern carries the same block inside
+% its saved ctx. Either source is accepted; the mismatch guard below is
+% unchanged.
+if isfield(S,'XiUsed')
+    xiRun = S.XiUsed;
+elseif isfield(S,'ctx') && isfield(S.ctx,'Xi0')
+    xiRun = [S.ctx.Xi0, S.ctx.Xi1, S.ctx.Xi2, S.ctx.Xi3];
+else
+    error('Knee_Extensor_20mm:MissingResult', ...
+        '%s must contain xBest and XiUsed (or a saved ctx) from Opt_run_Ext.', resultFile)
 end
 
 ctx = buildKneeExtContext20mm();
 
 xiBuilt = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
-if ~isequal(xiBuilt, S.XiUsed)
+if ~isequal(xiBuilt, xiRun)
     error('Knee_Extensor_20mm:XiMismatch', ...
-        'Builder Xi [%.6g %.6g %.6g %.6g] does not equal run XiUsed [%.6g %.6g %.6g %.6g]. Update buildKneeExtContext20mm or repoint resultFile.', ...
-        xiBuilt, S.XiUsed)
+        'Builder Xi [%.6g %.6g %.6g %.6g] does not equal run Xi [%.6g %.6g %.6g %.6g]. Update buildKneeExtContext20mm or repoint resultFile.', ...
+        xiBuilt, xiRun)
 end
 
 xBest = reshape(S.xBest,1,[]);
@@ -400,6 +416,159 @@ xlabel(ax,'\theta_k, °','FontWeight','bold')
 ylabel(ax,'Torque Margin, %','FontWeight','bold')
 title(ax,'BPA Torque Margin Relative to Human','FontName',fontName,'FontSize',titleFontSize,'FontWeight','bold')
 formatLegend(ax,fontName,legendFontSize)
+
+%% ExtTest20mm_1: measured torque via the Adjoint transform
+% Reads the 'ExtTest20mm_1' tab of Testing_Data\2026_06_Festo\
+% Results_table_20mm.xlsx (row 6 Load (N), row 7 knee angle, row 8
+% pressure, row 10 load-cell angle (tibia)), then transforms each measured
+% load-cell wrench to the moving knee ICR with the same Adjoint machinery
+% as the 40 mm extensor tests (Knee_Extensor_40mm.m). Extension torque
+% comes out POSITIVE, matching the tab's row-16 formula (no negative).
+% Prints the Torque actual values for paste into row 17 of the tab.
+extXlsx1 = fullfile(root,'Testing_Data','2026_06_Festo','Results_table_20mm.xlsx');
+extSheet1 = 'ExtTest20mm_1';
+% Reaction-point geometry of this test in the tibia (theta1) frame.
+% Defaults are the 40 mm extensor test-1 values -- UPDATE after the 20 mm
+% rig setup is measured.
+dExt1   = 292.9/1000;    % theta1 origin -> load-cell arm, m
+angExt1 = -90.83;         % arm angle in the tibia frame, deg
+
+T20e = readcell(extXlsx1,'Sheet',extSheet1);
+keepE1 = false(1, size(T20e,2));
+keepE1(3:end) = cellfun(@(x) isnumeric(x) && isscalar(x) && ~isnan(x), ...
+    T20e(6,3:end));
+
+if ~any(keepE1)
+    fprintf(['%s: no measured Load data yet -- measured-torque ', ...
+        'section skipped.\n'], extSheet1);
+else
+    LoadE1 = cell2mat(T20e(6,keepE1));     % N
+    KEd1   = cell2mat(T20e(7,keepE1));     % knee angle, deg
+    PE1    = cell2mat(T20e(8,keepE1));     % pressure, kPa
+    LCEd1  = cell2mat(T20e(10,keepE1));    % load-cell angle (tibia), deg
+    KE1  = KEd1*cdeg;
+    % LC angle convention (Ben, 2026-10-04): entered FROM THE TIBIA AXIS
+    % (torque about t1 = F*sin(LC+0.83 deg)*d). The Adjoint machinery
+    % wants the force angle from the tibia x-axis: 90 - LC.
+    LCE1 = deg2rad(90 - LCEd1);
+
+    p_rfE1 = [dExt1*cosd(angExt1), dExt1*sind(angExt1), 0]';
+    T_t1_rfE1 = RpToTrans(eye(3),p_rfE1);
+    TrkE1 = pagemtimes(TransInv(T_t1_rfE1),T_t1_ICR);
+    fcnE1x = fit(phi', squeeze(TrkE1(1,4,:)),'cubicspline');
+    fcnE1y = fit(phi', squeeze(TrkE1(2,4,:)),'cubicspline');
+
+    FrE1 = zeros(6,1,numel(LoadE1));
+    FkE1 = zeros(6,1,numel(LoadE1));
+    for i = 1:numel(LoadE1)
+        TrkE1i = RpToTrans(eye(3),[fcnE1x(KE1(i)), fcnE1y(KE1(i)), 0]');
+        FrE1(:,:,i) = -[0; 0; 0; LoadE1(i)*cos(pi-LCE1(i)); ...
+            LoadE1(i)*sin(pi-LCE1(i)); 0];
+        FkE1(:,:,i) = Adjoint(TrkE1i)'*FrE1(:,:,i);
+    end
+    TorqueZE1 = squeeze(FkE1(3,1,:));
+
+    fprintf('%s Torque actual (paste into row 17 of the tab):\n', extSheet1);
+    fprintf('%.4f\t', TorqueZE1); fprintf('\n');
+
+    figure('Name','ExtTest20mm_1 measured vs predicted','Color','w')
+    ax = gca;
+    hold(ax,'on')
+    plot(ax,phiD,Torque3,'-','Color',optimizedColor,'LineWidth',2.5, ...
+        'DisplayName','Optimized BPA, 620 kPa')
+    plot(ax,ctx.humanAngleD,ctx.humanTorque,':','Color',humanColor, ...
+        'LineWidth',4,'DisplayName','Human target')
+    scatter(ax,KEd1,TorqueZE1,60*PE1/620,'filled', ...
+        'MarkerFaceColor','#EA5F94','DisplayName','Measured (adjoint)')
+    formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
+    xlabel(ax,'\theta_k, °','Interpreter','tex','FontWeight','bold')
+    ylabel(ax,'Torque, N\cdotm','Interpreter','tex','FontWeight','bold')
+    title(ax,'ExtTest20mm_1: measured vs predicted torque')
+    formatLegend(ax,fontName,legendFontSize)
+end
+
+%% Pressure back-calculation: kPa needed at each angle to meet the human
+% vasti torque target with the optimized 20 mm extensor design.
+% Torque_p(phi,P) is evaluated on a pressure grid and inverted per angle
+% (route geometry, Xi compliance and the festo4 surface all included).
+% Targets outside the OpenSim angle data are NOT extrapolated here -- no
+% target, no recommended pressure. Pressurizing ABOVE the tabulated value
+% overshoots the human torque and risks the test rig.
+humanTgtPhiE = interp1(ctx.humanAngleD, ctx.humanTorque, phiD, 'pchip');
+humanTgtPhiE = humanTgtPhiE(:);
+
+PgridE = (0:5:620)';
+TqVsPE = nan(numel(PgridE), positions);
+for kP = 1:numel(PgridE)
+    tmpP = MonoPamDataExplicit_balanceX3(Name, Location, CrossPoint, ...
+        Dia, T_Pam, rest, kmax, tendon, fitting, PgridE(kP), ...
+        Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount, bendMeasure);
+    TqVsPE(kP,:) = tmpP.Torque_p(:,3).';
+end
+
+PreqExt = nan(positions,1);
+extFlag = repmat("no human data", positions, 1);
+for i = 1:positions
+    tgt = humanTgtPhiE(i);
+    if ~isfinite(tgt)
+        continue
+    end
+    if tgt <= 0
+        extFlag(i) = "no extension demand";
+        continue
+    end
+    col = TqVsPE(:,i);
+    fin = isfinite(col);
+    if ~any(fin)
+        extFlag(i) = "BPA out of range";
+        continue
+    end
+    if max(col(fin)) < tgt
+        extFlag(i) = "unreachable at 620 kPa";
+        continue
+    end
+    k = find(col >= tgt, 1);
+    if k <= 1
+        PreqExt(i) = 0;
+    else
+        pq = PgridE([k-1 k]);
+        [xs, isrt] = sort(col([k-1 k]));
+        PreqExt(i) = interp1(xs, pq(isrt), tgt);
+    end
+    extFlag(i) = "ok";
+end
+
+fprintf(['\nPressure back-calculation (optimized extensor, ', ...
+    'rest = %.4f m, Dia = %d mm):\n'], rest, Dia);
+fprintf('angle_deg   target_Nm     kPa   status\n');
+for i = 1:5:positions
+    if isfinite(PreqExt(i))
+        fprintf('%8.1f  %10.2f  %6.1f   %s\n', phiD(i), ...
+            humanTgtPhiE(i), PreqExt(i), extFlag(i));
+    else
+        fprintf('%8.1f  %10.2f      --   %s\n', phiD(i), ...
+            humanTgtPhiE(i), extFlag(i));
+    end
+end
+
+ExtPtable = table(phiD(:), humanTgtPhiE(:), PreqExt(:), extFlag, ...
+    'VariableNames', {'knee_angle_deg','human_target_Nm', ...
+    'required_pressure_kPa','status'});
+writetable(ExtPtable, 'Ext_20mm_pressure_for_human_torque.csv');
+fprintf('Full table: Ext_20mm_pressure_for_human_torque.csv (in cwd)\n');
+
+figure('Name','Extensor pressure back-calculation','Color','w')
+yyaxis left
+plot(phiD, humanTgtPhiE,'LineWidth',2)
+ylabel('Human target torque, N\cdotm','Interpreter','tex','FontWeight','bold')
+yyaxis right
+plot(phiD, PreqExt,'LineWidth',2)
+hold on
+yline(620,':','620 kPa max')
+ylabel('Required pressure, kPa','FontWeight','bold')
+xlabel('\theta_k, °','Interpreter','tex','FontWeight','bold')
+title('Extensor: pressure to meet the human torque target')
+hold off
 
 %% Plot full optimized geometry and p1:p9 route
 % Port of Opt_run_Ext's route-geometry figure (Ben, 2026-09-21: "so I

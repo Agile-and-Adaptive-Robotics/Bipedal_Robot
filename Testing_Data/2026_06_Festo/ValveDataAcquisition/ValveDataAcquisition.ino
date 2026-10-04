@@ -12,11 +12,11 @@ const uint8_t CLOCK_PIN = 2;
 
 // Analog inputs
 const int sensorPin = A0;     // MPX5700GP pressure sensor
-const int encoderPin = A2;    // AS5600 magnetic encoder
+//const int encoderPin = A2;    // AS5600 magnetic encoder
 
 // Replace these with your printed calibration values
-const int32_t OFFSET = -12228;
-const float SCALE_FACTOR = -4489.861328;
+const int32_t OFFSET = -12538;
+const float SCALE_FACTOR = -4495.3534;
 
 // Maximum output rate.
 // The actual rate may be lower if the HX711 is operating at 10 samples/s.
@@ -138,10 +138,12 @@ void loop()
     float forceN = scale.get_units(1);
 
     float pressureRaw = analogRead(sensorPin);
-    float pressureCalibrated = 0.7572 * pressureRaw - 13.955;
+    // 1032 was a typo for 1023 (Uno ADC full-scale; matches the MATLAB
+    // readVoltage the a/b fit used). a*5/1023 = 0.7632588 kPa/count.
+    float pressureCalibrated = 156.16274022767666*5/1023 * pressureRaw - 14.829703445090772;
 
-    float angleRaw = analogRead(encoderPin);
-    float angleCalibrated = -(angleRaw * 0.359) + 215.25;
+   // float angleRaw = analogRead(encoderPin);
+   // float angleCalibrated = -(angleRaw * 0.359) + 215.25;
 
     int fillState = digitalRead(fillPin);
     int exhaustState = digitalRead(exhaustPin);
@@ -158,8 +160,8 @@ void loop()
     
     // Angle degree
     // Serial.print("Angle (deg) = ");
-    Serial.print(angleCalibrated, 3);
-    Serial.print(",");
+    //Serial.print(angleCalibrated, 3);
+    //Serial.print(",");
     
     // Force (N)
     // Serial.print("Force (N) = ");
