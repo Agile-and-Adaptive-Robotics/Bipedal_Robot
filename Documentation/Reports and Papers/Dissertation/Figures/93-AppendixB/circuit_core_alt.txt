@@ -1,0 +1,24 @@
+Alt text for circuit_core.pdf
+
+One-side hierarchy schematic of the gait2392 spinal-cord network (410
+neurons total, 201 per side plus 8 shared), showing the DRIVE/POSTURE to
+RG to PF to MN to muscle hierarchy for a single leg. Descending DRIVE (MLR
+surrogate) and POSTURE boxes enter at the top-left, with the solved
+standing bias POST_i injected as dashed lines into every motoneuron pool.
+The RHYTHM GENERATOR band (orange) holds the persistent-sodium RG-E and
+RG-F half-centers with mutual inhibition and ADAP-E/ADAP-F adaptation
+cells; the PATTERN FORMATION band (blue) holds the phase-window cells
+PF-E1, PF-E2, PF-F1, and PF-F2 with their PFA adaptation interneurons. The
+sensory column shows one Ia, II, and Ib afferent per pool (46 of each per
+side): homonymous and reciprocal Ia, autogenic Ib with the RG-E
+stance-gated Ib reversal, and stance-gated II, plus the five IB-EXC
+load-sharing interneurons. The MOTONEURON POOLS band (green) draws one
+cluster per functional group with live counts (HIP-E x7, HIP-F x4, KNEE-E
+x4, KNEE-F x4, ANK-PF x9, ANK-DF x3, HIP-AB x6, HIP-AD x6, TRK-E x1, TRK-F
+x2; 46 motoneurons per side), each projecting through excitatory triangles
+to its muscle ellipse. A boxed MN pool key lists every pool abbreviation
+with its member muscles (live from muscle_map.py). Open circles are
+neurons, white triangles are excitatory synapses, solid black dots are
+inhibitory synapses, and wire colors encode the source. A gray source note
+names fitted_walk_params.json (IK/NNLS back-solve refit) and the live
+network size.

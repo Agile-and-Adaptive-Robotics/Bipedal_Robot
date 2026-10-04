@@ -1,0 +1,23 @@
+{
+ "f_ref": 40.0,
+ "tau_exc": 0.005,
+ "tau_inh": 0.02,
+ "sat_ref": 0.9567314087583332,
+ "src_bias_nA": 35.71469094692648,
+ "k_sn_exc": 5.408716406021604,
+ "k_sn_exc_resid_mV": 0.0001018502215948125,
+ "k_sn_inh": 1.2284015375404085,
+ "k_sn_inh_resid_mV": 0.0002638169920117228,
+ "k_ns": 0.35,
+ "k_ns_resid_Hz": -0.6666666666666643,
+ "k_ns_g_ns_drive": 1.517816924128661,
+ "g_inc_readout": 1.70931982421875,
+ "g_inc_readout_check_mV": 4.9975183311936044,
+ "k_s2s_exc": 1.875375,
+ "k_s2s_exc_rate_resid_Hz": 0.0,
+ "k_s2s_inh": 0.9996497940385192,
+ "k_s2s_inh_silenced_Hz": 0.0,
+ "provenance": "calibrate_spiking.py 2026-10-02; sat_ref measured on the analog network (check_selfsustain recipe, DRIVE 2.5, effective_tables('best')); k_sn/k_ns/g_inc_readout bisected on 2-cell rigs; k_s2s analytic mean-conductance mapping + integrator verify",
+ "rg_thr_inc": 4.0,
+ "rg_sweep_note": "k_ns/rg_thr_inc refined by tools/tune_rg_pair.py RG-pair sweep (alternation + period target 0.399 s; winner k_ns 0.35, tau_theta=rg_nap_h 0.35, thr_inc 4.0 -> period 0.340 s)"
+}

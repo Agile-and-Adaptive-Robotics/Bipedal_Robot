@@ -1,0 +1,1019 @@
+{
+ "generated": "2026-10-03T08:33:59.875786",
+ "model": "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\gait2392_simbody.osim",
+ "model_sha1": "b89062c763e6d8fa3d7651c0a4fd2820055d807c",
+ "map": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\Mesh_Optimization\\Routing27\\actuator_map_27.json",
+ "map_sha1": "a97afffeeae85687810986273db6ba0151eba1a2",
+ "opensim_version": "4.6",
+ "n_primary": 101,
+ "n_secondary": 101,
+ "fd_tol": 0.05,
+ "tauB_note": "tauB equilibrium cross-check intentionally omitted (add_mag3 verdict section 6: Thelen passive overstretch makes equilibrium forces unusable as targets); tauA = arm * MIF is the doctrine",
+ "actuators": [
+  {
+   "id": 1,
+   "master_name": "Erector Spinae",
+   "human_group": [
+    "ercspn_r"
+   ],
+   "dofs": {
+    "lumbar_extension": {
+     "kind": "primary",
+     "rom_deg": [
+      -20.0,
+      15.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_01_Erector_Spinae_lumbar_extension_primary.csv",
+     "peak_abs_tau_Nm": 121.32871225379132,
+     "group_sign_change": false
+    },
+    "lumbar_bending": {
+     "kind": "secondary",
+     "rom_deg": [
+      -15.0,
+      15.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_01_Erector_Spinae_lumbar_bending_secondary.csv",
+     "peak_abs_tau_Nm": 113.63138095934099,
+     "group_sign_change": false
+    },
+    "lumbar_rotation": {
+     "kind": "secondary",
+     "rom_deg": [
+      -15.0,
+      15.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_01_Erector_Spinae_lumbar_rotation_secondary.csv",
+     "peak_abs_tau_Nm": 36.50481763708622,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "ercspn_r": 7.456732195512585e-06
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 2,
+   "master_name": "Internal Oblique",
+   "human_group": [
+    "intobl_r"
+   ],
+   "dofs": {
+    "lumbar_extension": {
+     "kind": "primary",
+     "rom_deg": [
+      -20.0,
+      15.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_02_Internal_Oblique_lumbar_extension_primary.csv",
+     "peak_abs_tau_Nm": 47.57322557264802,
+     "group_sign_change": false
+    },
+    "lumbar_bending": {
+     "kind": "secondary",
+     "rom_deg": [
+      -15.0,
+      15.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_02_Internal_Oblique_lumbar_bending_secondary.csv",
+     "peak_abs_tau_Nm": 93.98207748775532,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "intobl_r": 1.659379384495648e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 3,
+   "master_name": "External Oblique",
+   "human_group": [
+    "extobl_r"
+   ],
+   "dofs": {
+    "lumbar_extension": {
+     "kind": "primary",
+     "rom_deg": [
+      -20.0,
+      15.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_03_External_Oblique_lumbar_extension_primary.csv",
+     "peak_abs_tau_Nm": 72.51881298393401,
+     "group_sign_change": false
+    },
+    "lumbar_bending": {
+     "kind": "secondary",
+     "rom_deg": [
+      -15.0,
+      15.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_03_External_Oblique_lumbar_bending_secondary.csv",
+     "peak_abs_tau_Nm": 71.60706532082462,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "extobl_r": 5.756811338330086e-06
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 4,
+   "master_name": "Bicep Femoris, Long Head",
+   "human_group": [
+    "bifemlh_r"
+   ],
+   "dofs": {
+    "knee_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -120.0,
+      10.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_04_Bicep_Femoris_Long_Head_knee_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 31.167712269141134,
+     "group_sign_change": true
+    },
+    "hip_flexion_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -15.0,
+      110.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_04_Bicep_Femoris_Long_Head_hip_flexion_r_secondary.csv",
+     "peak_abs_tau_Nm": 59.01748440180236,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "bifemlh_r": 0.010191668944797377
+   },
+   "fd_informational": true,
+   "fd_pass": true
+  },
+  {
+   "id": 5,
+   "master_name": "Semimembranosus",
+   "human_group": [
+    "semimem_r",
+    "semiten_r"
+   ],
+   "dofs": {
+    "knee_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -120.0,
+      10.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_05_Semimembranosus_knee_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 71.88411779822546,
+     "group_sign_change": false
+    },
+    "hip_flexion_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -15.0,
+      110.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_05_Semimembranosus_hip_flexion_r_secondary.csv",
+     "peak_abs_tau_Nm": 103.35013788970386,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "semimem_r": 1.1591470184175436,
+    "semiten_r": 1.2622107068174246
+   },
+   "fd_informational": true,
+   "fd_pass": true
+  },
+  {
+   "id": 6,
+   "master_name": "Sartorius",
+   "human_group": [
+    "sar_r"
+   ],
+   "dofs": {
+    "knee_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -120.0,
+      10.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_06_Sartorius_knee_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 3.1641886876280325,
+     "group_sign_change": true
+    },
+    "hip_flexion_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -15.0,
+      110.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_06_Sartorius_hip_flexion_r_secondary.csv",
+     "peak_abs_tau_Nm": 12.93595191533812,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "sar_r": 0.0012763761537461546
+   },
+   "fd_informational": true,
+   "fd_pass": true
+  },
+  {
+   "id": 7,
+   "master_name": "Tensor Fasciae Latae",
+   "human_group": [
+    "tfl_r"
+   ],
+   "dofs": {
+    "knee_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -120.0,
+      10.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_07_Tensor_Fasciae_Latae_knee_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 3.2544758790637056,
+     "group_sign_change": false
+    },
+    "hip_flexion_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -15.0,
+      110.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_07_Tensor_Fasciae_Latae_hip_flexion_r_secondary.csv",
+     "peak_abs_tau_Nm": 20.98282710750244,
+     "group_sign_change": false
+    },
+    "hip_adduction_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -45.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_07_Tensor_Fasciae_Latae_hip_adduction_r_secondary.csv",
+     "peak_abs_tau_Nm": 18.75137436397095,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "tfl_r": 0.0001134025020269761
+   },
+   "fd_informational": true,
+   "fd_pass": true
+  },
+  {
+   "id": 8,
+   "master_name": "Rectus Femoris",
+   "human_group": [
+    "rect_fem_r"
+   ],
+   "dofs": {
+    "knee_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -120.0,
+      10.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_08_Rectus_Femoris_knee_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 58.873687446866384,
+     "group_sign_change": false
+    },
+    "hip_flexion_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -15.0,
+      110.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_08_Rectus_Femoris_hip_flexion_r_secondary.csv",
+     "peak_abs_tau_Nm": 63.163714713647614,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "rect_fem_r": 0.4107710655342445
+   },
+   "fd_informational": true,
+   "fd_pass": true
+  },
+  {
+   "id": 9,
+   "master_name": "Gracilis",
+   "human_group": [
+    "grac_r"
+   ],
+   "dofs": {
+    "knee_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -120.0,
+      10.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_09_Gracilis_knee_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 6.280192511327691,
+     "group_sign_change": false
+    },
+    "hip_flexion_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -15.0,
+      110.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_09_Gracilis_hip_flexion_r_secondary.csv",
+     "peak_abs_tau_Nm": 8.530504027912814,
+     "group_sign_change": true
+    }
+   },
+   "fd_worst_rel": {
+    "grac_r": 1.0877134036924985
+   },
+   "fd_informational": true,
+   "fd_pass": true
+  },
+  {
+   "id": 10,
+   "master_name": "Bicep Femoris, Short Head",
+   "human_group": [
+    "bifemsh_r"
+   ],
+   "dofs": {
+    "knee_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -120.0,
+      10.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_10_Bicep_Femoris_Short_Head_knee_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 27.225718355642837,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "bifemsh_r": 0.0014276116032404733
+   },
+   "fd_informational": true,
+   "fd_pass": true
+  },
+  {
+   "id": 11,
+   "master_name": "Vastus Intermedius",
+   "human_group": [
+    "vas_int_r",
+    "vas_lat_r",
+    "vas_med_r"
+   ],
+   "dofs": {
+    "knee_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -120.0,
+      10.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_11_Vastus_Intermedius_knee_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 209.71187109775883,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "vas_int_r": 0.39166373539093674,
+    "vas_lat_r": 0.506177529995884,
+    "vas_med_r": 0.3905709065674127
+   },
+   "fd_informational": true,
+   "fd_pass": true
+  },
+  {
+   "id": 12,
+   "master_name": "Soleus",
+   "human_group": [
+    "soleus_r"
+   ],
+   "dofs": {
+    "ankle_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -50.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_12_Soleus_ankle_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 171.35639234323344,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "soleus_r": 1.6804786982469904e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 13,
+   "master_name": "Medial Gastroocnemius",
+   "human_group": [
+    "med_gas_r"
+   ],
+   "dofs": {
+    "ankle_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -50.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_13_Medial_Gastroocnemius_ankle_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 74.12040907739535,
+     "group_sign_change": false
+    },
+    "knee_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -120.0,
+      10.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_13_Medial_Gastroocnemius_knee_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 36.58468885462472,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "med_gas_r": 1.5695137747076127e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 14,
+   "master_name": "Lateral Gastrocenemius",
+   "human_group": [
+    "lat_gas_r"
+   ],
+   "dofs": {
+    "ankle_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -50.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_14_Lateral_Gastrocenemius_ankle_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 33.28000247944343,
+     "group_sign_change": false
+    },
+    "knee_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -120.0,
+      10.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_14_Lateral_Gastrocenemius_knee_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 16.14166341338767,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "lat_gas_r": 1.5701390799105547e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 15,
+   "master_name": "Tibialis Posterior",
+   "human_group": [
+    "tib_post_r"
+   ],
+   "dofs": {
+    "subtalar_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -25.0,
+      35.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_15_Tibialis_Posterior_subtalar_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 31.92412002747373,
+     "group_sign_change": false
+    },
+    "ankle_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -50.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_15_Tibialis_Posterior_ankle_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 22.741396648267198,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "tib_post_r": 5.858845732289394e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 16,
+   "master_name": "Tibialis Posterior (duplicate name)",
+   "human_group": [
+    "tib_ant_r"
+   ],
+   "dofs": {
+    "ankle_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -50.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_16_Tibialis_Posterior_duplicate_name_ankle_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 39.34741205955796,
+     "group_sign_change": false
+    },
+    "subtalar_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -25.0,
+      35.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_16_Tibialis_Posterior_duplicate_name_subtalar_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 14.586353177720046,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "tib_ant_r": 1.4721142235845808e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 17,
+   "master_name": "Peroneus Brevis",
+   "human_group": [
+    "per_brev_r"
+   ],
+   "dofs": {
+    "subtalar_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -25.0,
+      35.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_17_Peroneus_Brevis_subtalar_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 13.039321386954034,
+     "group_sign_change": false
+    },
+    "ankle_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -50.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_17_Peroneus_Brevis_ankle_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 3.495388426878248,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "per_brev_r": 7.47993865430423e-06
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 18,
+   "master_name": "Peroneus Longus",
+   "human_group": [
+    "per_long_r"
+   ],
+   "dofs": {
+    "subtalar_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -25.0,
+      35.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_18_Peroneus_Longus_subtalar_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 26.823305902676704,
+     "group_sign_change": false
+    },
+    "ankle_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -50.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_18_Peroneus_Longus_ankle_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 11.248209189169291,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "per_long_r": 2.2681522029917193e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 19,
+   "master_name": "Peroneus Tertius",
+   "human_group": [
+    "per_tert_r"
+   ],
+   "dofs": {
+    "subtalar_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -25.0,
+      35.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_19_Peroneus_Tertius_subtalar_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 3.5841534790805456,
+     "group_sign_change": false
+    },
+    "ankle_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -50.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_19_Peroneus_Tertius_ankle_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 4.864902028523106,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "per_tert_r": 2.6088620774366723e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 20,
+   "master_name": "Flexor Digitorum Longus",
+   "human_group": [
+    "flex_dig_r"
+   ],
+   "dofs": {
+    "mtp_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -40.0,
+      40.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_20_Flexor_Digitorum_Longus_mtp_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 2.1820670080477997,
+     "group_sign_change": false
+    },
+    "ankle_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -50.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_20_Flexor_Digitorum_Longus_ankle_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 4.687389903480179,
+     "group_sign_change": false
+    },
+    "subtalar_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -25.0,
+      35.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_20_Flexor_Digitorum_Longus_subtalar_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 6.1235221923367495,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "flex_dig_r": 2.4480940801692894e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 21,
+   "master_name": "Flexor Hallucis Longus",
+   "human_group": [
+    "flex_hal_r"
+   ],
+   "dofs": {
+    "mtp_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -40.0,
+      40.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_21_Flexor_Hallucis_Longus_mtp_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 1.9672765394659193,
+     "group_sign_change": false
+    },
+    "ankle_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -50.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_21_Flexor_Hallucis_Longus_ankle_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 6.445321938119553,
+     "group_sign_change": false
+    },
+    "subtalar_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -25.0,
+      35.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_21_Flexor_Hallucis_Longus_subtalar_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 5.277462454201995,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "flex_hal_r": 2.7354785666612087e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 22,
+   "master_name": "Extensor Digitorum Longus",
+   "human_group": [
+    "ext_dig_r"
+   ],
+   "dofs": {
+    "mtp_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -40.0,
+      40.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_22_Extensor_Digitorum_Longus_mtp_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 3.6847877213761753,
+     "group_sign_change": false
+    },
+    "ankle_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -50.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_22_Extensor_Digitorum_Longus_ankle_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 20.662590458922573,
+     "group_sign_change": false
+    },
+    "subtalar_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -25.0,
+      35.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_22_Extensor_Digitorum_Longus_subtalar_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 7.038587236425044,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "ext_dig_r": 1.0823129351931216e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 23,
+   "master_name": "Extensor Hallucis Longus",
+   "human_group": [
+    "ext_hal_r"
+   ],
+   "dofs": {
+    "mtp_angle_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -40.0,
+      40.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_23_Extensor_Hallucis_Longus_mtp_angle_r_primary.csv",
+     "peak_abs_tau_Nm": 1.4465303304671893,
+     "group_sign_change": false
+    },
+    "ankle_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -50.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_23_Extensor_Hallucis_Longus_ankle_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 6.901495047887098,
+     "group_sign_change": false
+    },
+    "subtalar_angle_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -25.0,
+      35.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_23_Extensor_Hallucis_Longus_subtalar_angle_r_secondary.csv",
+     "peak_abs_tau_Nm": 1.2128864430360307,
+     "group_sign_change": false
+    }
+   },
+   "fd_worst_rel": {
+    "ext_hal_r": 1.1387966888542871e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 24,
+   "master_name": "Gluteus Maximus",
+   "human_group": [
+    "glut_max1_r",
+    "glut_max2_r",
+    "glut_max3_r",
+    "glut_med1_r",
+    "glut_med2_r",
+    "glut_med3_r",
+    "glut_min1_r",
+    "glut_min2_r",
+    "glut_min3_r"
+   ],
+   "dofs": {
+    "hip_flexion_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -15.0,
+      110.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_24_Gluteus_Maximus_hip_flexion_r_primary.csv",
+     "peak_abs_tau_Nm": 161.17726795916698,
+     "group_sign_change": true
+    },
+    "hip_adduction_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -45.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_24_Gluteus_Maximus_hip_adduction_r_secondary.csv",
+     "peak_abs_tau_Nm": 150.76891125410114,
+     "group_sign_change": false
+    },
+    "hip_rotation_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -45.0,
+      40.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_24_Gluteus_Maximus_hip_rotation_r_secondary.csv",
+     "peak_abs_tau_Nm": 70.14576731123763,
+     "group_sign_change": true
+    }
+   },
+   "fd_worst_rel": {
+    "glut_max1_r": 1.2152395007479244e-05,
+    "glut_max2_r": 9.774913923323805e-06,
+    "glut_max3_r": 3.427981297300466e-05,
+    "glut_med1_r": 8.57548784446593e-06,
+    "glut_med2_r": 1.262296993754206e-05,
+    "glut_med3_r": 1.7714543288605445e-05,
+    "glut_min1_r": 1.257335812881042e-05,
+    "glut_min2_r": 1.0480097043218711e-05,
+    "glut_min3_r": 1.15300787984274e-05
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 25,
+   "master_name": "Adductor Magnus",
+   "human_group": [
+    "add_mag1_r",
+    "add_mag2_r",
+    "add_mag3_r",
+    "add_long_r",
+    "add_brev_r"
+   ],
+   "dofs": {
+    "hip_adduction_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -45.0,
+      20.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_25_Adductor_Magnus_hip_adduction_r_primary.csv",
+     "peak_abs_tau_Nm": 140.63616408636872,
+     "group_sign_change": false
+    },
+    "hip_flexion_r": {
+     "kind": "secondary",
+     "rom_deg": [
+      -15.0,
+      110.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_25_Adductor_Magnus_hip_flexion_r_secondary.csv",
+     "peak_abs_tau_Nm": 72.85619561081202,
+     "group_sign_change": true
+    }
+   },
+   "fd_worst_rel": {
+    "add_mag1_r": 1.813324275552006e-05,
+    "add_mag2_r": 2.869237336217355e-05,
+    "add_mag3_r": 2.040552423066903e-05,
+    "add_long_r": 1.5252535496534867e-05,
+    "add_brev_r": 9.66222836618717e-06
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 26,
+   "master_name": "Iliacus",
+   "human_group": [
+    "iliacus_r"
+   ],
+   "dofs": {
+    "hip_flexion_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -15.0,
+      110.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_26_Iliacus_hip_flexion_r_primary.csv",
+     "peak_abs_tau_Nm": 47.998694863231755,
+     "group_sign_change": true
+    }
+   },
+   "fd_worst_rel": {
+    "iliacus_r": 0.00040071605196714333
+   },
+   "fd_pass": true
+  },
+  {
+   "id": 27,
+   "master_name": "Psoas X",
+   "human_group": [
+    "psoas_r"
+   ],
+   "dofs": {
+    "hip_flexion_r": {
+     "kind": "primary",
+     "rom_deg": [
+      -15.0,
+      110.0
+     ],
+     "rom_source": "campaign table",
+     "csv": "targets27_27_Psoas_X_hip_flexion_r_primary.csv",
+     "peak_abs_tau_Nm": 48.62787525385968,
+     "group_sign_change": true
+    }
+   },
+   "fd_worst_rel": {
+    "psoas_r": 0.0004444294772315183
+   },
+   "fd_pass": true
+  }
+ ]
+}

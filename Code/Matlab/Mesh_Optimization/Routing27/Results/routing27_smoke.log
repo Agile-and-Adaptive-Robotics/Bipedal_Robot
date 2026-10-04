@@ -1,0 +1,26 @@
+==== ROUTING27 CAMPAIGN ====
+Started 03-Oct-2026 08:39:33 | mode = smoke
+
+---- PLAN ----
+Grid 13 primary angles | budgets surrogate 0 + pattern 40 | parallel 0
+id   actuator                         seed         primary DOF        configs
+12   Soleus                           soleus_r     ankle_angle_r      pulley2
+--------------
+
+
+===== [12] Soleus (seed soleus_r; ankle_angle_r) =====
+ctx 12: 2 pts, cross [2 2], ankle_angle_r at crossing 1, Lchar 0.374 m, peak human 171.4 N*m
+  --- config pulley2 (nBPA=1, G=2) at 03-Oct-2026 08:39:36 ---
+  initial: f = 8.84e+04, worstC = 0.0217, marginRel = -1.0000
+
+                                      Max
+  Iter   Func-count       f(x)      Constraint   MeshSize      Method
+    0         1      88396.7      0.02172            1    
+    1        42      78545.7      0.02246        0.001   Increase penalty/Infeasible
+Maximum number of function evaluations exceeded: increase options.MaxFunctionEvaluations.
+  final: f = 7.855e+04, worstC = 0.0225, marginRel = -0.8031, minBone 1.8 mm, lat 35.7 mm
+  chosen: pulley2 | objective 7.855e+04 | worstC 0.0225 | marginRel -0.8031
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27\Results\Routing27_a12_Soleus_20261003_0839.mat
+
+CAMPAIGN smoke done: 1 config(s) done, 1 route(s) finalized, 0.1 min elapsed.
+Summary: D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27\Results\routing27_summary_smoke.csv

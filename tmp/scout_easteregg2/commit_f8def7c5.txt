@@ -1,0 +1,299 @@
+f8def7c5 2026-09-28 14:15:57 -0700 Dissertation, CAD, HX711 app
+
+ .../ProofFinal/figs/Background/aarl_bpa_biped.jpg  |  Bin 0 -> 748262 bytes
+ .../ProofFinal/figs/Background/festo_bpa_cad.png   |  Bin 0 -> 58652 bytes
+ .../figs/Background/gait2392_27_muscle_model.png   |  Bin 0 -> 47260 bytes
+ .../Background/kengoro_humanoid_comparison.png     |  Bin 0 -> 532598 bytes
+ .../figs/Background/robot_skeleton_solidworks.png  |  Bin 0 -> 462042 bytes
+ .../tmp/pdfs/background_curation/asano.txt         |  958 ++++++
+ .../tmp/pdfs/background_curation/asano_p9.png      |  Bin 0 -> 1401543 bytes
+ .../tmp/pdfs/background_curation/hydraulic.txt     | 1038 +++++++
+ .../tmp/pdfs/background_curation/hydraulic_p11.png |  Bin 0 -> 581485 bytes
+ .../tmp/pdfs/background_curation/liang.txt         | 1328 +++++++++
+ .../tmp/pdfs/background_curation/liang_p3.png      |  Bin 0 -> 682588 bytes
+ .../tmp/pdfs/background_curation/liang_p6.png      |  Bin 0 -> 946313 bytes
+ .../tmp/pdfs/background_curation/steele.txt        | 3066 ++++++++++++++++++++
+ .../tmp/pdfs/background_curation/steele_p19.png    |  Bin 0 -> 187969 bytes
+ .../tmp/pdfs/background_curation/steele_p49.png    |  Bin 0 -> 251635 bytes
+ .../tmp/pdfs/background_curation/steele_p64.png    |  Bin 0 -> 171357 bytes
+ .../tmp/pptx/Sigma_XI_presentation/montage.png     |  Bin 0 -> 2446637 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-1.png     |  Bin 0 -> 630539 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-10.png    |  Bin 0 -> 262555 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-11.png    |  Bin 0 -> 327888 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-12.png    |  Bin 0 -> 283632 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-13.png    |  Bin 0 -> 332221 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-14.png    |  Bin 0 -> 376535 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-15.png    |  Bin 0 -> 340724 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-16.png    |  Bin 0 -> 330095 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-17.png    |  Bin 0 -> 369557 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-18.png    |  Bin 0 -> 1234025 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-19.png    |  Bin 0 -> 615878 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-2.png     |  Bin 0 -> 125654 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-20.png    |  Bin 0 -> 405695 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-21.png    |  Bin 0 -> 395631 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-22.png    |  Bin 0 -> 157842 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-23.png    |  Bin 0 -> 227215 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-24.png    |  Bin 0 -> 312256 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-25.png    |  Bin 0 -> 417331 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-26.png    |  Bin 0 -> 124310 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-27.png    |  Bin 0 -> 995120 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-28.png    |  Bin 0 -> 597652 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-29.png    |  Bin 0 -> 316011 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-3.png     |  Bin 0 -> 836756 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-30.png    |  Bin 0 -> 356436 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-31.png    |  Bin 0 -> 874771 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-4.png     |  Bin 0 -> 435542 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-5.png     |  Bin 0 -> 634457 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-6.png     |  Bin 0 -> 310153 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-7.png     |  Bin 0 -> 756435 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-8.png     |  Bin 0 -> 783020 bytes
+ .../tmp/pptx/Sigma_XI_presentation/slide-9.png     |  Bin 0 -> 195723 bytes
+ .../Sigma_XI_unpacked_20260928/[Content_Types].xml |    1 +
+ .../pptx/Sigma_XI_unpacked_20260928/_rels/.rels    |    1 +
+ .../Sigma_XI_unpacked_20260928/docProps/core.xml   |    1 +
+ .../ppt/_rels/presentation.xml.rels                |    1 +
+ .../ppt/fonts/Nunito-bold.fntdata                  |  Bin 0 -> 50453 bytes
+ .../ppt/fonts/Nunito-boldItalic.fntdata            |  Bin 0 -> 53430 bytes
+ .../ppt/fonts/Nunito-italic.fntdata                |  Bin 0 -> 54180 bytes
+ .../ppt/fonts/Nunito-regular.fntdata               |  Bin 0 -> 50796 bytes
+ .../ppt/media/image1.png                           |  Bin 0 -> 79623 bytes
+ .../ppt/media/image10.png                          |  Bin 0 -> 26140 bytes
+ .../ppt/media/image11.png                          |  Bin 0 -> 1096055 bytes
+ .../ppt/media/image12.png                          |  Bin 0 -> 1105327 bytes
+ .../ppt/media/image13.png                          |  Bin 0 -> 47260 bytes
+ .../ppt/media/image14.jpg                          |  Bin 0 -> 748262 bytes
+ .../ppt/media/image15.png                          |  Bin 0 -> 229310 bytes
+ .../ppt/media/image16.jpg                          |  Bin 0 -> 44744 bytes
+ .../ppt/media/image17.png                          |  Bin 0 -> 131868 bytes
+ .../ppt/media/image18.png                          |  Bin 0 -> 49477 bytes
+ .../ppt/media/image19.gif                          |  Bin 0 -> 2307685 bytes
+ .../ppt/media/image2.png                           |  Bin 0 -> 82799 bytes
+ .../ppt/media/image20.png                          |  Bin 0 -> 28924 bytes
+ .../ppt/media/image21.png                          |  Bin 0 -> 193749 bytes
+ .../ppt/media/image22.png                          |  Bin 0 -> 283880 bytes
+ .../ppt/media/image23.png                          |  Bin 0 -> 50654 bytes
+ .../ppt/media/image24.png                          |  Bin 0 -> 25621 bytes
+ .../ppt/media/image25.png                          |  Bin 0 -> 68720 bytes
+ .../ppt/media/image26.png                          |  Bin 0 -> 162283 bytes
+ .../ppt/media/image27.png                          |  Bin 0 -> 207151 bytes
+ .../ppt/media/image28.png                          |  Bin 0 -> 30902 bytes
+ .../ppt/media/image29.png                          |  Bin 0 -> 125662 bytes
+ .../ppt/media/image3.png                           |  Bin 0 -> 25888 bytes
+ .../ppt/media/image30.png                          |  Bin 0 -> 799 bytes
+ .../ppt/media/image31.png                          |  Bin 0 -> 532598 bytes
+ .../ppt/media/image32.png                          |  Bin 0 -> 114222 bytes
+ .../ppt/media/image33.png                          |  Bin 0 -> 99757 bytes
+ .../ppt/media/image34.png                          |  Bin 0 -> 195719 bytes
+ .../ppt/media/image35.png                          |  Bin 0 -> 35756 bytes
+ .../ppt/media/image36.png                          |  Bin 0 -> 6299 bytes
+ .../ppt/media/image37.png                          |  Bin 0 -> 6429 bytes
+ .../ppt/media/image38.png                          |  Bin 0 -> 90617 bytes
+ .../ppt/media/image39.png                          |  Bin 0 -> 140492 bytes
+ .../ppt/media/image4.png                           |  Bin 0 -> 15615 bytes
+ .../ppt/media/image40.png                          |  Bin 0 -> 59802 bytes
+ .../ppt/media/image41.jpg                          |  Bin 0 -> 866262 bytes
+ .../ppt/media/image42.png                          |  Bin 0 -> 10255 bytes
+ .../ppt/media/image43.jpg                          |  Bin 0 -> 903005 bytes
+ .../ppt/media/image44.png                          |  Bin 0 -> 961593 bytes
+ .../ppt/media/image45.png                          |  Bin 0 -> 7166 bytes
+ .../ppt/media/image46.png                          |  Bin 0 -> 1229032 bytes
+ .../ppt/media/image47.png                          |  Bin 0 -> 18694 bytes
+ .../ppt/media/image48.png                          |  Bin 0 -> 95729 bytes
+ .../ppt/media/image49.png                          |  Bin 0 -> 149617 bytes
+ .../ppt/media/image5.jpg                           |  Bin 0 -> 36823 bytes
+ .../ppt/media/image50.png                          |  Bin 0 -> 259314 bytes
+ .../ppt/media/image51.png                          |  Bin 0 -> 238944 bytes
+ .../ppt/media/image52.png                          |  Bin 0 -> 41185 bytes
+ .../ppt/media/image53.png                          |  Bin 0 -> 82156 bytes
+ .../ppt/media/image54.png                          |  Bin 0 -> 243303 bytes
+ .../ppt/media/image55.png                          |  Bin 0 -> 790913 bytes
+ .../ppt/media/image56.png                          |  Bin 0 -> 292698 bytes
+ .../ppt/media/image6.png                           |  Bin 0 -> 58652 bytes
+ .../ppt/media/image7.png                           |  Bin 0 -> 358028 bytes
+ .../ppt/media/image8.png                           |  Bin 0 -> 83540 bytes
+ .../ppt/media/image9.png                           |  Bin 0 -> 462042 bytes
+ .../pptx/Sigma_XI_unpacked_20260928/ppt/metadata   |  504 ++++
+ .../ppt/notesMasters/_rels/notesMaster1.xml.rels   |    1 +
+ .../ppt/notesMasters/notesMaster1.xml              |    1 +
+ .../ppt/notesSlides/_rels/notesSlide1.xml.rels     |    1 +
+ .../ppt/notesSlides/_rels/notesSlide10.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide11.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide12.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide13.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide14.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide15.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide16.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide17.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide18.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide19.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide2.xml.rels     |    1 +
+ .../ppt/notesSlides/_rels/notesSlide20.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide21.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide22.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide23.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide24.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide25.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide26.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide27.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide28.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide29.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide3.xml.rels     |    1 +
+ .../ppt/notesSlides/_rels/notesSlide30.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide31.xml.rels    |    1 +
+ .../ppt/notesSlides/_rels/notesSlide4.xml.rels     |    1 +
+ .../ppt/notesSlides/_rels/notesSlide5.xml.rels     |    1 +
+ .../ppt/notesSlides/_rels/notesSlide6.xml.rels     |    1 +
+ .../ppt/notesSlides/_rels/notesSlide7.xml.rels     |    1 +
+ .../ppt/notesSlides/_rels/notesSlide8.xml.rels     |    1 +
+ .../ppt/notesSlides/_rels/notesSlide9.xml.rels     |    1 +
+ .../ppt/notesSlides/notesSlide1.xml                |    1 +
+ .../ppt/notesSlides/notesSlide10.xml               |    1 +
+ .../ppt/notesSlides/notesSlide11.xml               |    1 +
+ .../ppt/notesSlides/notesSlide12.xml               |    1 +
+ .../ppt/notesSlides/notesSlide13.xml               |    1 +
+ .../ppt/notesSlides/notesSlide14.xml               |    1 +
+ .../ppt/notesSlides/notesSlide15.xml               |    1 +
+ .../ppt/notesSlides/notesSlide16.xml               |    1 +
+ .../ppt/notesSlides/notesSlide17.xml               |    1 +
+ .../ppt/notesSlides/notesSlide18.xml               |    1 +
+ .../ppt/notesSlides/notesSlide19.xml               |    1 +
+ .../ppt/notesSlides/notesSlide2.xml                |    1 +
+ .../ppt/notesSlides/notesSlide20.xml               |    1 +
+ .../ppt/notesSlides/notesSlide21.xml               |    1 +
+ .../ppt/notesSlides/notesSlide22.xml               |    1 +
+ .../ppt/notesSlides/notesSlide23.xml               |    1 +
+ .../ppt/notesSlides/notesSlide24.xml               |    1 +
+ .../ppt/notesSlides/notesSlide25.xml               |    1 +
+ .../ppt/notesSlides/notesSlide26.xml               |    1 +
+ .../ppt/notesSlides/notesSlide27.xml               |    1 +
+ .../ppt/notesSlides/notesSlide28.xml               |    1 +
+ .../ppt/notesSlides/notesSlide29.xml               |    1 +
+ .../ppt/notesSlides/notesSlide3.xml                |    1 +
+ .../ppt/notesSlides/notesSlide30.xml               |    1 +
+ .../ppt/notesSlides/notesSlide31.xml               |    1 +
+ .../ppt/notesSlides/notesSlide4.xml                |    1 +
+ .../ppt/notesSlides/notesSlide5.xml                |    1 +
+ .../ppt/notesSlides/notesSlide6.xml                |    1 +
+ .../ppt/notesSlides/notesSlide7.xml                |    1 +
+ .../ppt/notesSlides/notesSlide8.xml                |    1 +
+ .../ppt/notesSlides/notesSlide9.xml                |    1 +
+ .../Sigma_XI_unpacked_20260928/ppt/presProps.xml   |    1 +
+ .../ppt/presentation.xml                           |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout1.xml.rels   |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout10.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout11.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout12.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout13.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout14.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout15.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout16.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout17.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout18.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout19.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout2.xml.rels   |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout20.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout21.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout22.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout23.xml.rels  |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout3.xml.rels   |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout4.xml.rels   |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout5.xml.rels   |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout6.xml.rels   |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout7.xml.rels   |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout8.xml.rels   |    1 +
+ .../ppt/slideLayouts/_rels/slideLayout9.xml.rels   |    1 +
+ .../ppt/slideLayouts/slideLayout1.xml              |    1 +
+ .../ppt/slideLayouts/slideLayout10.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout11.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout12.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout13.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout14.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout15.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout16.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout17.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout18.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout19.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout2.xml              |    1 +
+ .../ppt/slideLayouts/slideLayout20.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout21.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout22.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout23.xml             |    1 +
+ .../ppt/slideLayouts/slideLayout3.xml              |    1 +
+ .../ppt/slideLayouts/slideLayout4.xml              |    1 +
+ .../ppt/slideLayouts/slideLayout5.xml              |    1 +
+ .../ppt/slideLayouts/slideLayout6.xml              |    1 +
+ .../ppt/slideLayouts/slideLayout7.xml              |    1 +
+ .../ppt/slideLayouts/slideLayout8.xml              |    1 +
+ .../ppt/slideLayouts/slideLayout9.xml              |    1 +
+ .../ppt/slideMasters/_rels/slideMaster1.xml.rels   |    1 +
+ .../ppt/slideMasters/_rels/slideMaster2.xml.rels   |    1 +
+ .../ppt/slideMasters/slideMaster1.xml              |    1 +
+ .../ppt/slideMasters/slideMaster2.xml              |    1 +
+ .../ppt/slides/_rels/slide1.xml.rels               |    1 +
+ .../ppt/slides/_rels/slide10.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide11.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide12.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide13.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide14.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide15.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide16.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide17.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide18.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide19.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide2.xml.rels               |    1 +
+ .../ppt/slides/_rels/slide20.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide21.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide22.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide23.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide24.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide25.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide26.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide27.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide28.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide29.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide3.xml.rels               |    1 +
+ .../ppt/slides/_rels/slide30.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide31.xml.rels              |    1 +
+ .../ppt/slides/_rels/slide4.xml.rels               |    1 +
+ .../ppt/slides/_rels/slide5.xml.rels               |    1 +
+ .../ppt/slides/_rels/slide6.xml.rels               |    1 +
+ .../ppt/slides/_rels/slide7.xml.rels               |    1 +
+ .../ppt/slides/_rels/slide8.xml.rels               |    1 +
+ .../ppt/slides/_rels/slide9.xml.rels               |    1 +
+ .../ppt/slides/slide1.xml                          |    1 +
+ .../ppt/slides/slide10.xml                         |    1 +
+ .../ppt/slides/slide11.xml                         |    1 +
+ .../ppt/slides/slide12.xml                         |    1 +
+ .../ppt/slides/slide13.xml                         |    1 +
+ .../ppt/slides/slide14.xml                         |    1 +
+ .../ppt/slides/slide15.xml                         |    1 +
+ .../ppt/slides/slide16.xml                         |    1 +
+ .../ppt/slides/slide17.xml                         |    1 +
+ .../ppt/slides/slide18.xml                         |    1 +
+ .../ppt/slides/slide19.xml                         |    1 +
+ .../ppt/slides/slide2.xml                          |    1 +
+ .../ppt/slides/slide20.xml                         |    1 +
+ .../ppt/slides/slide21.xml                         |    1 +
+ .../ppt/slides/slide22.xml                         |    1 +
+ .../ppt/slides/slide23.xml                         |    1 +
+ .../ppt/slides/slide24.xml                         |    1 +
+ .../ppt/slides/slide25.xml                         |    1 +
+ .../ppt/slides/slide26.xml                         |    1 +
+ .../ppt/slides/slide27.xml                         |    1 +
+ .../ppt/slides/slide28.xml                         |    1 +
+ .../ppt/slides/slide29.xml                         |    1 +
+ .../ppt/slides/slide3.xml                          |    1 +
+ .../ppt/slides/slide30.xml                         |    1 +
+ .../ppt/slides/slide31.xml                         |    1 +
+ .../ppt/slides/slide4.xml                          |    1 +
+ .../ppt/slides/slide5.xml                          |    1 +
+ .../ppt/slides/slide6.xml                          |    1 +
+ .../ppt/slides/slide7.xml                          |    1 +
+ .../ppt/slides/slide8.xml                          |    1 +
+ .../ppt/slides/slide9.xml                          |    1 +
+ .../ppt/theme/theme1.xml                           |    1 +
+ .../ppt/theme/theme2.xml                           |    1 +
+ .../ppt/theme/theme3.xml                           |    1 +
+ .../Sigma_XI_unpacked_20260928/ppt/viewProps.xml   |    1 +
+ .../Reports and Papers/Sigma_XI presentation.pptx  |  Bin 0 -> 15864305 bytes
+ 296 files changed, 7080 insertions(+)

@@ -1,0 +1,108 @@
+{
+ "asim": "D:/GitHub/Bipedal_Robot/Code/MuJoCo_SNS/spinal/reports_spiking_20261002/models/Biped_standalone_stale_spiking/Biped_standalone_stale_spiking.asim",
+ "mode": "spiking",
+ "charts": {
+  "L Hip Neural": {
+   "file": "L Hip Neural.txt",
+   "empty": true
+  },
+  "L Hip Physical": {
+   "file": "L Hip Physical.txt",
+   "rows": 5001,
+   "t_end": 5.0,
+   "cols": [
+    {
+     "name": "hip_L_flx_rec",
+     "type": "Ia",
+     "mean": 1.83295
+    },
+    {
+     "name": "hip_L_ext_rec",
+     "type": "Ia",
+     "mean": 1.83361
+    },
+    {
+     "name": "hip_L",
+     "type": "angle_deg",
+     "min": -15.3,
+     "max": 18.5,
+     "range": 33.8
+    },
+    {
+     "name": "hip_L_flx",
+     "type": "Tension",
+     "mean": 44.83669
+    },
+    {
+     "name": "hip_L_ext",
+     "type": "Tension",
+     "mean": 2.54116
+    }
+   ]
+  },
+  "L Hip PF": {
+   "file": "L Hip PF.txt",
+   "empty": true
+  },
+  "Rhythm Generator": {
+   "file": "Rhythm Generator.txt",
+   "rows": 25001,
+   "t_end": 5.0,
+   "cols": [
+    {
+     "name": "L RG ext IN",
+     "mean_mV": -56.37,
+     "min_mV": -60.0,
+     "max_mV": 0.0,
+     "spikes": 472,
+     "rate_Hz": 94.4
+    },
+    {
+     "name": "L RG flx IN",
+     "mean_mV": -56.37,
+     "min_mV": -60.0,
+     "max_mV": 0.0,
+     "spikes": 472,
+     "rate_Hz": 94.4
+    },
+    {
+     "name": "L RG ext",
+     "mean_mV": -59.58,
+     "min_mV": -66.44,
+     "max_mV": 0.0,
+     "spikes": 58,
+     "rate_Hz": 11.6
+    },
+    {
+     "name": "L RG flx",
+     "mean_mV": -63.0,
+     "min_mV": -68.19,
+     "max_mV": 0.0,
+     "spikes": 58,
+     "rate_Hz": 11.6
+    }
+   ]
+  }
+ },
+ "rg_bursts": {
+  "L RG ext": {
+   "bursts": 58,
+   "period_s": 0.0848,
+   "freq_Hz": 11.793
+  },
+  "L RG flx": {
+   "bursts": 58,
+   "period_s": 0.0848,
+   "freq_Hz": 11.792
+  }
+ },
+ "same_leg_xcorr": {
+  "L RG ext-vs-flx": {
+   "ext_spikes": 58,
+   "flx_spikes": 58,
+   "r": 1.0,
+   "lag_s": 0.0,
+   "convention": "0.02 s spike-count envelopes, -40 mV rising crossings, 1 ms refractory, +/-2 s scan"
+  }
+ }
+}

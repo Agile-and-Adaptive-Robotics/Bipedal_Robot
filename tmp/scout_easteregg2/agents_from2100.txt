@@ -1,0 +1,296 @@
+  mats 20260915: L107 DIAG = Xi0 ≈ 0.1mm / Xi3 0.150 / mean RMSE 1.587 / FVU 0.077 (best
+  pinned-flexor fit on record); L1trans = Xi3 0.291. Non-_x3u 20260915 mats = superseded
+  series-stiffness Xi3. Gotchas: pool workers never see client setenv after spawn (env-gated
+  evaluator branches silently run the wrong mode in parfor — set env BEFORE parpool); wrap
+  the Xi-factor handoff details: CHATGPT_HANDOFF.md ACTIVE WORK F (2026-09-14/16).
+- **2026-09-26 — Simscape Multibody bring-up: leg rig + lower humanoid, BPAs + SNS (laptop,
+  this session; models + dev scripts in `Code\Matlab\SNS_Simscape\`):** Ben exported BOTH via
+  Simscape Multibody Link v7.4 (`Knee assembly\09_BA_003.xml` re-export + NEW `10_AH_001.xml`
+  = full robot assembly 09_BA_001 wrapped as grounded subassembly; Hinge→Concentric+Coincident
+  fix WORKED — imports have real revolutes now). **`mdl_leg_rig_ba003_imported.slx`** =
+  knee test rig (2 Cyl + 3 Rev + four-bar knee; grounded at KB = correct for bench tests);
+  **`mdl_humanoid_lower_ah001_imported.slx`** = free biped: sealed `x09_BA_001_1` subsystem
+  (own Solver + Mechanism Config, gravity **[0 −9.80665 0]** — CAD is +y UP, not z!), pelvis
+  on 6-DOF (`pelvis_free` + `World_pelvis` inside the sub), hips = Spherical PE↔KNOB with
+  stud/knob hardware WELDED to the femur heads (parasitic stud spins removed), loose root
+  hardware (screws/nuts ~15 g) DELETED, 59 world-tie lines cut. **Masses: skeleton rescaled
+  ×1.2 to Onyx 1200 kg/m³ in `mdl_humanoid_lower_ah001_DataFile.m`** (XML mass ÷
+  SW-COM CreateMassProperty volume = 1000.0 kg/m³ exactly for every part → factor exact;
+  Body2.GetMassProperties UNRELIABLE on this install — negative/volume>bbox garbage; use
+  Extension.CreateMassProperty). Feet = 0.24×0.035×0.09 m bricks (0.907 kg ea) welded at the
+  tibia bottoms (ankle world y ≈ −0.861); spine = r0.06×0.45 m cylinder + 0.1 m cube lump
+  (ρ 61090) at (−0.079, +0.35, 0) → **total 73.0 kg** ✓. **BPA+SNS layer (both models):**
+  muscle = Internal Force block (f input is SCALAR = force along the frame-to-frame line —
+  no vector math needed) + Transform Sensor (SenseDist only) + `SNS_Library/BPA_20mm`
+  (Ben's Festo law; Rest 0.1281/Kmax 0.1057) + antagonistic NonSpikingNeuron pair (mutual
+  inhibition Esyn = Vrest−25, gmax 1.5; antiphase sine 0.5 Hz drive; V−(Vrest+8) → sat 25 →
+  ×620/25 = kPa). Port layouts BANKED: Transform Sensor LConn(1)=base, RConn(1)=follower,
+  RConn(2..n)=enabled PS outputs; Internal Force LConn(1)=frame, LConn(2)=PS f, RConn(1)=frame;
+  World Frame port = RConn(1); PS-Simulink converter: LConn=PS-in, Outport=sim-out;
+  Simulink-PS: Inport=sim-in, RConn=PS-out. GOTCHAS: add_line can mix handle+string args
+  NEVER; string 'blk/N' counts ALL ports (Product out = '/4' for 3-in) — use handles;
+  add_line can THROW "destination already has a line" AFTER successfully connecting —
+  verify Line>0 in the catch before rethrowing; smimport prefixes 'x' only on digit-leading
+  names and collapses ' - ' to one underscore; product-name→STEP map =
+  `dev\instance_step_map_{rig,humanoid}.json`. **Rig status: WORKING antagonistic knee —
+  corr(L_EXT,L_FLX) = −0.17, forces to 999 N, knee travel 0.13 m** (knee reduced to ONE
+  z-revolute `knee_hinge` at the FL_002 crank midpoint; four-bar joints deleted; brackets
+  welded: BL→KB, FL_001/FL_002→KT; muscle points ±2.8–3.3 cm from the pin, 7 cm above /
+  5.8 cm below — the pin frames sit on x-FLIPPED source frames (smiData ang=π [1,0,0]) so
+  their offsets are counter-rotated; original muscle-calibration loop =
+  `dev\calibrate_muscles_20260926.m` (affine correction, sign: origT += err/2, insT −= err/2)).
+  **Humanoid status: both knees SNS-driven and articulating** (L fully antagonistic
+  0.009–0.142 m; R half-range — the R-leg muscle x-offsets likely need mirroring, TODO Ben/
+  next session). Knee four-bar reductions on the humanoid mirror the rig (joints Revolute/
+  Revolute1/Revolute5/Revolute3/Cylindrical/Cylindrical1/Revolute2/Revolute4 per leg; FL_001_1
+  = R crank, FL_001_2 = L crank; the ORIGINAL import welds KT↔KB had to be CUT
+  (`dev\cut_knee_welds_20260926.m`, ports KT_R#8↔KB_R#3, KT_L#4↔KB_L#6) — they were missed
+  in the 09-20-era surgery and lock the knees shut). Runner scripts all in
+  `SNS_Simscape\dev\*20260926*`; logs in `SNS_Simscape\logs\`; results mats in
+  `SNS_Simscape\results\{rig,humanoid}_bpa_sns_20260926.mat`. NOT done: reflex closure
+  (afferents from joint sensors), ground contact for the humanoid, ankle joints (feet are
+  welded blocks), hip adduction/abduction actuation, N-segment BPA sleeve (Ben's full
+  expanding-diameter plan — these are point-force BPAs), muscle route points from Ben's
+  Xi/AttachPoints data (current points are reasonable placeholders ±3 cm off the knee pin).
+- **2026-09-26 (cont.) — WALKER PROGRAM LAUNCHED (Ben's 5 goals; master doc =
+  `Documentation\Program_Workflow\BPA_Walker_Program.md`):** G1 sagittal uniarticular walker →
+  G2 ah001+27 BPAs/side → G3 design freeze → G4 sim validation (SNS-Simscape AND/OR MuJoCo-SNS)
+  → G5 physical sagittal walker w/ Orin Nano on-board + computer-in-loop (neural deletions +
+  stimulus injection). KEY MAPPING: hardware sensors plug into afferent classes the spinal net
+  ALREADY has — encoder→Ia (θ̇), Liquid Wire→II (length; Leo Micklam), pressure→Ib (festo4(F)),
+  insole→heel/toe contact resets (exists), IMU→VEST (stage-4), 3D camera→drift correction.
+  Sensor→afferent→SNS contract = `Code\Hardware\walker_io\` (SKELETONS, smoke-tested):
+  protocol.py (UDP JSON wire: telemetry 50 Hz Orin→PC, commands PC→Orin — overrides on
+  params.G gains = deletions, stim = current into named neurons, all EPHEMERAL over the best
+  json so every trial replays offline), valves.py (bang_bang + proportional_taped modes,
+  vent-all watchdog), sensors.py (pressure/encoder/LiquidWire/IMU/insole readers with TODO(hw)
+  stubs), afferents.py (Ia/II/Ib formulas verbatim from the conversion map; constants from
+  bpa_actuators_27.json), orin_daemon.py (1 kHz loop budget + watchdogs: sensor-stale 20 ms →
+  vent-all, 650 kPa cap; PC heartbeat loss is NOT a stop), lab_console.py (trial logs →
+  `Testing_Data\walker_trials\<date>_<trial>\`). **OpenSim bones → Simscape PROVEN**:
+  `Solid_Models\Simscape_Part_Library\OpenSim_Bones\` (13 gait2392 bone STLs) +
+  `sns_bone_leg_demo.slx` (hip-ball/knee/ankle leg, File Solid at Onyx 1200, UPDATE+SIM OK;
+  gotchas: UnitType='Custom' for unitless STLs; joint anchors currently at body-frame origins —
+  pull exact offsets from gait2392_robot.mjc when bones enter a real walker). **Ty's foot
+  identified: "final" = `Ty Ankle Foot\Foot and Ankle Design, Newest (7-17-20)` = the renamed
+  `01_00_00_Foot` (part lists match 1:1); two-toe version =
+  `Ty Ankle Foot\Agility Robotics\Foot.SLDASM`; InternFoot has AnkleJointEquations.txt + STLs.**
+  SW CRASH 17:57: FootAnkle.SLDASM save-at-crash was 78% undersized → crash-save preserved as
+  FootAnkle_crashsave_20260926.SLDASM.bak, committed version restored from git, 44 stale locks
+  deleted (cause likely: agent SW probe left 13 parts open in Ben's session — RULE: every
+  script-opened doc gets closed; also Ben has NO AutoRecover backup dir — enable it). Ankle
+  retrofit on the ah001 BLOCK feet BLOCKED ("rigidly connected" despite verified-correct
+  chain — welded feet restored & model UPDATE+SIM OK; do ankles in a FRESH build, e.g. OpenSim
+  foot.stl route or Ty's foot via Multibody-Link export after Ben re-paths links). R-leg
+  muscle mirror asymmetry (half-sweep) also still open.
+
+## 2026-09-27 — easteregg2 generations campaign bring-back (goal4; full report
+`spinal\reports_20260925\easteregg2\goal4_easteregg2_generations.md`; NO commits — all output is uncommitted working tree for GitHub Desktop)
+
+- **kine_ref left-ref fix APPLIED (Ben ruled option a; UNCOMMITTED)**: s3k
+  -160.23425729850192 → -161.56754173676563; w2lvar s5 winner -165.040506 → -165.335963;
+  syn6 s5 seed -197.2146 → -200.3796; syn6 s4 -237.2534 → -234.2860. ALL pre-09-26 kine
+  scores shift once committed; `_pf_layer_variant_test.py` gate 3 stale TWICE (renumber +
+  fixed ref) — repoint at stage 4 and re-record before use.
+- **Convergence (Ben's stop rule = 2 consecutive batches < +0.5)**: w2lvar s5 NEW BEST
+  ground walk -144.464403 (trial 68; batches +1.13/+18.16/+1.28/0/0 over 100 trials;
+  bilateral, kz 0.83) — winner near space edges (drive 3.82/4.0, contact_onset 0.003) →
+  replay-verify before trusting; loop stopped 5/10 batches, resumable. syn6 s4 -180.844766
+  (t109, +140 trials, +53.4 like-for-like); syn6 s5 SEED STILL WINS after 40 more trials
+  (-200.3796 rebased) — architectural, not sampling. Air: w2lvar s1 saturates the rises=30
+  cap (127.752845), s2 94.924507 (t49); syn6 s1 130.238130 / s2 110.517696 (replay
+  bit-exact, REAL RHYTHM); both s3 stages unchanged (below top-up threshold). w2lvar-s4
+  harvest "exploit FAIL" line = stale-ref false positive (genuine walker, -230.860
+  fixed-ref). Protected files untouched; supervisor gate GO (bit-exact rebaseline replay,
+  DB argmax==json on all 10 studies).
+- **Connectome schematic**: walker_s3k/w2lvar/syn6 templates restructured into NESTED
+  SUBSYSTEMS (13n/322e, 18n/2726e, 18n/2123e top-level; +3 _flat entries verbatim==HEAD;
+  conservation verified; subsystem load 42/42); bilateralrg 105n/226e → 109n/222e.
+  Generator wiring errors CORRECTED: V3→contra RG ext IN only (old contra-HC edge was
+  invented); heel/toe→ANK-MN invented → contact_C20 = Hip/Knee targets only; afferent→HC
+  24 edges 1:1 with build_aff.pl; R RG↔RG pair in-template.
+- **Wiring findings (report-only, Ben's files)**: RE clone-type bug is .APROJ-ONLY (.asim
+  clean). NEW: patch_comm_types.pl's aproj link-repoint never landed — 4 commissural
+  out-links still ride strong RG types (2.749 uS) while the dedicated weak types sit
+  unused in the same file → GUI .aproj and runnable .asim differ; one GUI session fixes
+  all 5 links. w2l_mujoco/build_w2l_split_net.py:119/122 still hardcode the old V3 edges
+  (Ben's go pending). w2l_aproj_mine.json + li_aproj_mine.json are UNTRACKED — commit
+  them. Live net 95n/208syn re-verified; smoke PASS period 1.000, antiphase -0.525 HERE
+  (-0.532 was machine-specific — quote the env).
+- **Numbers audit (every quoted Xi/GoF number reproduced from source)**: pick-77 GoF
+  exact (RMSE 2.16465/1.36817/2.28691/1.61102/1.08363); OLD row-107 appendix numbers NOT
+  reproducible (fresh 2.01171/1.49305/2.314/1.73522/1.08103); bio-ext at adopted pair
+  1.17/0.67/2.21 (FVU<1). MATERIAL: minimizeFlxPin.m executes PITCH-ONLY for BOTH flexor
+  brackets (origin Thbr :306 live, two-rotation :305 commented) — header + the 09-13 note
+  say origin two-rotation; K2=[X1,X1,X2] not y-symmetric so it matters; everything since
+  8e3c1b9d inherits it — Ben's fix-code-vs-fix-docs ruling OPEN. Tex owed: '+5.03%'→
+  '+5.02%' (Vas 09-25 minMargin 0.05024928); Appendix C line refs 306/305/326/339/338+327;
+  compile on EB475WS4 + Overleaf sync pending. goal5 'monotone'→near-monotone (ong_100
+  -207.37 beats 075 -208.15); muscle_force_compare.csv header 6 names vs 8 fields;
+  SNS_SpinalNetwork 4.2e-6 mV still has NO in-repo artifact; units test 6.07e-4 mV
+  double-verified; s3c t54 gait numbers still unverified.
+- **add_mag3_r ruled**: Ben's both-axes torque rule = NEITHER-PASSES-BOTH (rounded repo
+  P2 fails flexion 0.63× with a zero-crossing/sign flip; thumb P2 fails adduction 0.82×).
+  Tie-break applied on Ben's behalf (overrulable): repo P2 = corruption artifact
+  (duplicates P2_0, degenerate zero-length via); FULL-PRECISION THUMB P2
+  (-0.1357,-0.0929,+0.0591) APPLIED to gait2392_robotbody.osim (one line; robot.osim
+  regenerated, probe bit-exact). Adduction shortfall → Opt_run sizing item; ~10x
+  passive-overstretch finding needs its own decision; stale one path-point:
+  gait2392_robotbody_hip.osim, gait2327.osim, mjc\ (regeneration Ben-gated).
+- **BiPulley DONE — nothing left running**: sanity gates PASS; Opt_run_pulley 10.7 min
+  exit 0 → Results\Bifemsh_20mm_Result_pulley_20260926_1652.mat (fBest 0.0846509, min
+  torque margin +5.38%, clears 5%); Opt_run_BiPulley 5-muscle OpenSim manifest done
+  (master's builder absent on easteregg2) = first-pass baselines (biarticular margins
+  ~-1; clearances 4.3–19.1 mm vs ≥25 need); pulley pool ran 10 workers not 6 (implicit
+  parpool pre-empted the guard); chain DONE 2026-09-26T17:02:40, no processes remain.
+- **AnimatLab**: the 12 "missing" synapses were PURGED by Ben's Sep-16 GUI re-save (34
+  keys; GUI loader drops links outside fragment <Links>) — restored byte-verbatim into
+  Biped_2xCPG_wSubs.aproj (syn=239, verify_final clean, GUI opens 0 errors); 22 more
+  purged synapses remain; RE-EXPORT the Standalone .asim before any RG re-test (stale
+  asim ≠ edited aproj). **Li**: still collapses — ROOT CAUSE: w2l_mjcf_fixed.xml Root
+  has NO joint (welded base; feet 2.6–3.1 cm above floor; heels never trigger); the old
+  "pelvis to -1.44 m" was a qpos-addressing artifact (ankle_L radians); freejoint A/B
+  crumples <0.5 s (necessary not sufficient; M1 damping/spawn gates); resume recipe in
+  goal2_m2_li_architecture.md §8.
+
+## 2026-09-30 — AIRTABLE API LIMIT HIT (Ben's email 2026-10-01; standing through ~2026-11)
+
+The AARL workspace is over its Free-plan monthly PUBLIC API limit; a 30-day
+grace period runs to ~2026-11-01, after which over-limit calls BLOCK until the
+month resets. The airtable MCP IS a public-API integration — count its calls.
+RULE until further notice: work from `SADb_audit\export\sadb_export.json` (the
+cached snapshot) and only touch the API for a handful of calls Ben explicitly
+wants (field renames etc.); NO export_corpus / write_curation / MCP sweeps.
+2026-10-01 follow-ups: Ben ruled the PRUNE SHORTLIST IS ON HOLD (nothing
+deleted; review sheet `SADb_audit\prune_review_20261001.md` groups
+out-of-scope clusters — general NN/ML theory, aerodynamics, non-neural
+bioinspired engineering — from his row examples; his grid row numbers do NOT
+match export order). Flags doc is now hyperlinked
+(`curation_flags_20260928.md` + `.docx`, every record links straight to its
+Airtable record URL; regenerate via `build_flags_doc.py` +
+`docx_build\generate_flags_docx.js`). Ben's comment on COLUMN_RENAMES never
+reached disk (unsaved editor buffer) — renames beyond the applied set wait
+for it. **UPDATE 2026-10-01 (same day): Ben's comment landed ("Everything
+here looks good. Go for it.") — RENAMES APPLIED: "Models 2" → "Is the model
+paper", "Models" → "Models referenced" (export_corpus.py + app labels already
+updated; REBUILD PENDING until API budget allows). Feedback "Models copy" →
+"(unused, empty)" (0/38 usage). Junk-field DELETIONS 404 via API (PAT lacks
+schema scope) — Ben deletes the 3 empty Papers fields in the UI. TWIN AUDIT
+(twins_profile.json): Models 247 = 230 stubs + 14 rich + 3 orphans; Review
+157 = 156 stubs + 0 rich + 1 orphan — the 386 stubs are the cap-cut lever
+(delete stubs + re-express is-model/is-review as Papers fields FIRST), NOT
+deleting Papers records (that orphans the curation layer and saves nothing).
+PLAN PROPOSED, awaiting Ben's go; no deletions executed.** **EXECUTED
+LATER 2026-10-01: Ben approved "delete the 90" — 95 records deleted (88
+Papers: NN/ML 14 + aero 4 + flow-sensing-no-neuro 15 + bio-mechanisms 4 +
+fish 10 + prior flags 41, deduped; + 7 satellite orphans) via guarded
+query-string batch DELETE (GOTCHA: Airtable batch-DELETE request BODIES are
+dropped in transit → `?records[]=` query params; single-record DELETE works
+normally). Audit: `deletion_log.csv` + FULL record snapshots in
+`deleted_records_20261001.json` (regret-proof). Base now **1294 records**
+(Papers 855 + Models 244 + Review 156 + Feedback 35 + Recorders 4) — still
+over cap; the remaining lever = the 386 twin stubs, WHICH BEN HOLDS until
+he reviews the curation flags (his read: stubs may just be unfinished
+curation). Scholar-via-browser pilot WORKS (3/3 no-text abstracts recovered
+through his PSU-logged-in IAB tab; `scholar_pilot_20261001.md` documents
+the workflow for the ~107 remaining no-text papers, ~10/session pace);
+the Airtable UI in the IAB shows an unsupported-browser banner — API stays
+the write path.**
+**SAME-DAY LATER (Ben away ~1h, "give me the 290"): his round-2 + flags
+rulings applied (7 round-2 deletes; Jessell/Izhikevich/Orlovsky; NEW RULES:
+delete all monographs/textbooks — T3 sweep; conference-abstract-only stubs
+with no accessible paper/poster get deleted — T4; titles in review docs are
+NEVER truncated — his "don't be lazy" ruling after truncated titles made
+companion papers indistinguishable). CUT LIST DELIVERED:
+`cut_list_290.md`/`.csv` (T1 7 + T2 3 + T3 3 + T4 1 + T5 276 rubric-ranked;
+351 protected: his important-author list incl. Gerr→Geyer and
+Buschmann→+Büschges, feedback-linked, ≥400 cites, pre-1940, explicit keeps;
+no-DOI records excluded from the rubric — citation data MISSING ≠ zero, the
+Shik-1966 failure mode; 2024+ excluded as too new to judge) — NOT EXECUTED,
+Ben reviews. DATA-QUALITY FIND: models2/reviews link fields are POLLUTED
+with multi-links (probably task5 + the records[]-GET bug in the campaign's
+twin linker — audit owed before those fields are trusted again). PDF pass
+("Get papers"): 47/55 flagged papers extracted from the LOCAL Zotero library
+(`pdf_grounding.py` → curation_queue/pdf_grounding/), 8 lack local copies;
+Jankowska-2010 answer to Ben = shared group I/II premotor integration (no
+separate Ib-vs-II rules in the paper). Queued on Ben's word: execute the
+290, Kooij-2000 three postural-integration Feedback tags (names proposed),
+Karayannidou "Lateral postural reflex" tag, Hunt-2017/Quinn pathway
+curation from full text, Hägglund/Knikou/Mazzaro full-text reads (no local
+PDF — Scholar/download route).**
+**EXECUTED 2026-10-02 (Ben: "ax them from airtable… we'll keep them in the
+app"): all 290 deleted (0 failures); snapshots live in
+`SADb_audit\archive\deleted_records_*.json` (both deletion waves); the
+export now MERGES archive/ back in with archived=True, so the app + KB
+keep all 378 removed papers forever — pill "app-only (removed from
+Airtable)" in table/detail + stats line (browser-verified). Airtable now:
+Papers 565 (527 curated, 38 bare) / Models 244 / Review 156 / Feedback 35 /
+Recorders 4 = **1004 records — 4 OVER the cap**; next-4 by rubric named to
+Ben (Crowe 1964, Buford+Smith 1990, Sengupta+Bagnall 2023,
+Roden-Reynolds 2015 — increasingly substantive; recommend 4 twin stubs
+instead, which Ben holds pending his flags review). Advisor zip refreshed
+(dist\SADb_Explorer_2026-10-01.zip). GOTCHA BANKED: PowerShell -replace +
+Set-Content CORRUPTS UTF-8 files (cp1252 round-trip mojibake — build_app.py
+was hit and byte-repaired); munge repo text files with python ONLY.**
+
+## 2026-09-28 — SADb/Airtable campaign (Ben's /goal list) — EXECUTED 2026-09-28/30; full details in SADb_audit\README.md "CURATION v2 CAMPAIGN"
+
+Five-hour-reset session on EB475WS4 (machine guard OK; airtable MCP live; Node
+v22.23.2 available for `node --check`). All five goals executed; per-goal state:
+
+0. Tooling verified (airtable MCP create-permission, browser-use IAB, web
+   search, node). No easteregg2 needed — nothing here was compute-bound.
+1. **Prune**: base census was 1232 (cap 1000). Strict shortlist flagged 38
+   Papers + 7 satellite orphans + 2 preprint/published duplicate pairs
+   (Molkov 2023/24, Danner 2020) ≈ 47 recoverable — the rest is Ben's
+   judgment call. Flags live in Prune Status/Reason fields; CSV =
+   `prune_shortlist.csv`. NOTHING deleted. WARNING: curation twins grew
+   Models 172→247 and Review 75→157 (base ≈ 1389 now); escape hatch =
+   convert twins to select fields on Papers.
+2. **Curation v2**: schema additions (Afferent Types 10-option select, Animal
+   Study Potential, Robot/Sim Translation, Cites/Cited-by self-links with
+   730 papers × 11,130 pairs, Prune flags) + semantic renames (the live
+   Review-Papers link was "Models copy"; junk fields marked "(unused)";
+   COLUMN_RENAMES_20260928.md documents applied-vs-proposed — "renamed like
+   we talked about" was never recorded, so PROPOSED items await Ben).
+   Pipeline: fetch_grounding.py (OpenAlex abstracts + EPMC cache) →
+   curation_queue/ (374 curatable / 110 no-text) → 15 background subagent
+   batches under CURATOR_GUIDE.md → write_curation.py validation gate
+   (vocab, abstract-paste 8-gram, duplicate-notes) → **374/374 echo-verified
+   per-record**. Corpus: 833/943 with notes, 606 animals, 118 feedback-
+   linked, 95 afferent-classified. 164 curator flags for Ben in
+   curation_flags_20260928.md (vocab gaps Fish/Chick/Aplysia/vestibular;
+   new-pathway candidates; Smith-1998 abstract-swap catch).
+3. **App online search**: Search tab with LIVE OpenAlex fetch (CORS, no key;
+   corpus-DOI badges) + launch buttons for Scholar/PubMed/WoS-PSU (opens WoS
+   search page, copies query — no scraping, ToS-safe) + suggest-for-corpus
+   JSON download. App stays single-file; offline core unaffected.
+4. **Bubble focus view**: click = BFS 1/2/3 degrees over the in-corpus graph;
+   direct connections colored (+ green open-triangle excitatory-in /
+   red filled-circle inhibitory-out synapses per Ben's 2026-09-22
+   semantics), 2nd degree GRAYED; left panel = focus paper, right panel =
+   clickable connection list; Esc/back button exits. Browser-verified
+   (Goslow 1973: 64 direct + 431 second-degree at depth 2; hop + degree
+   switch + Esc all pass).
+5. **Pivot**: 18 Louvain clusters NAMED (export/cluster_labels.json from
+   name_clusters.py profiles — "Neuromechanics & robot/insect walking
+   models", "Afferent control of locomotion (classics)", etc.); rows AND
+   columns sort count/A→Z/Z→A (Primary Author alphabetical works);
+   Import source demoted + labelled legacy; drill-through has a
+   "◀ Back to pivot" button (verified round-trip).
+Knowledge base: build_knowledge_base.py → knowledge_base/ (INDEX + 18
+cluster + ~30 pathway + afferent + animal markdown pages). Advisor package:
+**dist\SADb_Explorer_2026-09-30.zip (0.9 MB)** — sadb_app.html + KB +
+sadb_export.csv + README_START_HERE.md + CURATION_NOTES.md; regenerate with
+package_dist.py after any rebuild.
+Rebuild order: export_corpus → (build_citation_graph only if DOIs changed) →
+build_knowledge_base → build_app → check_app + node --check app/_app_main.js →
+package_dist. GOTCHA BANK: Airtable REST list-endpoint `records[]` filter is
+SILENTLY IGNORED (returns unfiltered first 100) — verification must use
+per-record GETs (_verify_all.py); clearing a select = null, not ""; PowerShell
+Set-Content -Encoding UTF8 adds a BOM (read with utf-8-sig) and ConvertTo-Json
+corrupts nested arrays — patch JSON with python, not PowerShell.
+
+**2026-10-02b: flags round-2 rulings executed — 4 more papers + 47 ORPHANED Review stubs deleted (zero info loss; 115 Models orphans found, Ben holds); Animals +Invertebrates (typecast-write trick; metadata API rejects select-option edits); naming GRAMMAR banked in CURATOR_GUIDE (afferent+action+side+joint+phase; phase- as reverse direction); BASE NOW 953 RECORDS (Papers 561 / Models 244 / Review 109 / Feedback 35 / Recorders 4) — UNDER THE 1000 CAP. Queued tag creations on Ben word: Ia/Ib disynaptic excitation split, lateral postural reflex, Kooij vestibular/visual/somatosensory postural tags.**
+
+**2026-10-02c (Ben 'yes' batch): Feedback tags created + linked — 'Ia disynaptic excitation' (Angel 1996), 'I disynaptic excitation (mixed group I)' (Angel 2005; both Angels re-pointed OFF Ib disynaptic excitation), Vestibular/Visual/Somatosensory 'feedback to postural control' (Kooij 2000). Karayannidou 'Lateral postural reflex' SKIPPED — its paper was archived in the 290, an unlinked tag = junk record; restore the pair (archive snapshot + tag) on request. Feedback table now 45 records. Base 953. Full rebuild done: KB 84 pages, app 943 papers (382 app-only), advisor zip dist\SADb_Explorer_2026-10-02.zip. GOTCHA: link-field GETs return bare ID strings on per-record GET (no name dict) — filter by known ID sets.**

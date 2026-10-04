@@ -317,6 +317,7 @@ class SpinalNetwork:
             self._add_muscle_neurons(n, act, mi)
         for act, mi in self.muscles.items():
             self._wire_muscle(n, act, mi)
+        self._complete_in_mutual(n)
         self._wire_balance(n)
 
         # ---- cross-side coordination, laminated through commissural INs
@@ -924,6 +925,44 @@ class SpinalNetwork:
                 n.add_connection(_syn(1.5, exc=True), gate, kname)
             n.add_connection(_syn(G["f1_anklepf_inh"], exc=False), kname, mn)
 
+    def _complete_in_mutual(self, n: Network, force: bool = False):
+        """2026-10-03 audit fix (WIRING_RULINGS_20261003.md, s3k finding
+        F3): complete the IaIN<->IaIN and IBIN<->IBIN MUTUAL inhibition
+        (Deng Table A6 / Rybak 2006 Table 2: both directions).
+
+        The per-muscle loops above create these INs LAZILY, so when the
+        earlier-wired muscle's antagonist loop ran the later muscle's IN
+        did not exist yet and the `in self.idx` guards silently skipped
+        the edge: exactly ONE direction (later->earlier in wiring order)
+        of each pair was built - measured 218 of 436 directed edges per
+        family under full_rules (probe tmp/wiring_audit_20261003/
+        probe_mutual_dir.py). RC<->RC never had this problem (RCs are
+        created in the neuron pass); syn6 pre-creates all four motif INs
+        in its creation pass and is unaffected (measured 436/436).
+
+        This pass adds ONLY the missing directed edges at the same 0.5
+        conductance: no existing edge, neuron, or index changes, and the
+        DEFAULT build (full_rules 0, ia_in 0) never enters it - the
+        410/376/1186 counts gate is unaffected. Recorded full_rules>0
+        eval scores (the s3k family) are PRE-FIX values. force=True is
+        for the variant builders whose motifs are unconditional."""
+        if not force and not (G["full_rules"] > 0.0):
+            return
+        have = {(n.populations[c["source"]]["name"],
+                 n.populations[c["destination"]]["name"])
+                for c in n.connections}
+        for act, mi in self.muscles.items():
+            for ant in ANTAGONIST.get(mi.groups[0], ()):
+                for act2, mi2 in self.muscles.items():
+                    if mi2.side != mi.side or mi2.groups[0] != ant:
+                        continue
+                    for fam in ("IaIN", "IBIN"):
+                        if f"{fam}_{act2}" not in self.idx:
+                            continue
+                        e = (f"{fam}_{act}", f"{fam}_{act2}")
+                        if e not in have:
+                            n.add_connection(_syn(0.5, exc=False), *e)
+
     def _wire_balance(self, n: Network):
         """Balance inputs reach ankle + hip MNs (ankle + hip strategy).
 
@@ -1020,7 +1059,10 @@ def build(model_actuators: list[str], dt: float = DT,
     # before; AARL_NET=w2lvar routes to the Walker_2_Layer_CPG-layout
     # variant (build_network_w2lvar.py); AARL_NET=syn6 (or G["syn6"] > 0,
     # default 0) routes to the 6-synergy variant (build_network_syn6.py).
-    # The lazy import keeps the default path free of any variant code.
+    # AARL_NET=spiking (2026-10-02 goal-1 spiking campaign) routes to the
+    # hybrid spiking mirror (build_network_spiking.py; SPIKING_MIRROR_
+    # PLAN.md). The lazy import keeps the default path free of any
+    # variant code.
     import os as _os
     _aarl_net = _os.environ.get("AARL_NET", "").strip().lower()
     if _aarl_net == "w2lvar":
@@ -1029,6 +1071,9 @@ def build(model_actuators: list[str], dt: float = DT,
     if _aarl_net == "syn6" or G.get("syn6", 0.0) > 0.0:
         import build_network_syn6 as _syn6
         return _syn6.build(model_actuators, dt=dt, interleg=interleg)
+    if _aarl_net == "spiking":
+        import build_network_spiking as _spk
+        return _spk.build(model_actuators, dt=dt, interleg=interleg)
     muscles: dict[str, MuscleInfo] = {}
     for act in model_actuators:
         mi = classify(act)

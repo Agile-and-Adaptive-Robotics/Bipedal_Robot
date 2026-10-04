@@ -1,0 +1,23 @@
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+syn6 stage-5 winner: study=curr_syn6_s5_walk_contact trial=0 recorded_score=-197.21456977796157
+BASELINE EVAL syn6: AARL_NPZ=spinal_run_spkbase_syn6.npz drive=2.7864122963006754
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+== baseline syn6 ==
+kine_score = -200.37955834081458
+nan = False  t_end = 16.00  dx = 0.067 m
+kz = 0.8396  tilt_max = 28.07 deg  knee_min = -0.98 deg  hip_amp = 0.82 deg
+duty(RG_E_r) = 0.422  burst_r = 5
+bal_fell = False  bal_tilt_max = 28.07
+kine fields: {"contact_frac_r": 0.955, "contact_frac_l": 1.0, "n_cycles_r": 4, "n_cycles_l": 0, "bilateral": false, "knee_min": -49.748622735367185, "duty_r": 0.7445714285714286, "kine_score": -200.37955834081458}
+joint ranges over the full run [deg]:
+  hip_flexion_r       15.82 ..    62.78
+  knee_angle_r       -56.31 ..    10.19
+  ankle_angle_r      -64.65 ..    -1.66
+  hip_flexion_l      -28.80 ..     9.25
+  knee_angle_l       -49.61 ..    11.32
+  ankle_angle_l      -56.50 ..     9.81
+  pelvis_tilt         -1.87 ..    28.07
+BASELINE_DONE
