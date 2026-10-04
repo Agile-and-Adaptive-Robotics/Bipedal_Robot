@@ -1,0 +1,309 @@
+6f851851 Modeling
+
+ Code/Matlab/SNS_Simscape/SNS_Library.slx           |   Bin 178967 -> 205909 bytes
+ Code/Matlab/SNS_Simscape/demos/BPACPGLegDemo.slx   |   Bin 132526 -> 131747 bytes
+ .../SNS_Simscape/demos/BeerCupReflexDemo.slx       |   Bin 157406 -> 156630 bytes
+ .../demos/BeerCupReflexDemo_Spiking.slx            |   Bin 0 -> 163421 bytes
+ .../SNS_Simscape/demos/KneeReflexCircuit.slx       |   Bin 153142 -> 150123 bytes
+ Code/Matlab/SNS_Simscape/demos/KneeReflexDemo.slx  |   Bin 149435 -> 148659 bytes
+ .../SNS_Simscape/demos/KneeReflexDemo_Spiking.slx  |   Bin 0 -> 153947 bytes
+ .../Matlab/SNS_Simscape/demos/SNS_SpikingRG_MN.slx |   Bin 0 -> 156282 bytes
+ .../SNS_Simscape/demos/sns_build_beer_spiking.m    |   122 +
+ .../SNS_Simscape/demos/sns_build_knee_spiking.m    |   142 +
+ .../SNS_Simscape/demos/sns_build_rgmn_spiking.m    |   155 +
+ .../SNS_Simscape/demos/sns_run_beer_spiking.m      |    69 +
+ .../SNS_Simscape/demos/sns_run_knee_spiking.m      |    85 +
+ .../SNS_Simscape/demos/sns_run_rgmn_spiking.m      |    95 +
+ Code/Matlab/SNS_Simscape/results/sns_units_2n.slx  |   Bin 0 -> 96249 bytes
+ .../SNS_Simscape/results/sns_units_spk_hybrid.slx  |   Bin 0 -> 99843 bytes
+ .../SNS_Simscape/results/units_ref_spiking_sim.mat |   Bin 0 -> 12344284 bytes
+ Code/Matlab/SNS_Simscape/sns_build_spiking.m       |   317 +
+ Code/Matlab/SNS_Simscape/sns_units_test_spiking.m  |   252 +
+ Code/MuJoCo_SNS/spinal/build_network.py            |     8 +-
+ Code/MuJoCo_SNS/spinal/build_network_spiking.py    |   910 +
+ Code/MuJoCo_SNS/spinal/calibrate_spiking.py        |   376 +
+ .../reports_spiking_20261002/air_smoke_ns.json     |    12 +
+ .../air_smoke_spiking.json                         |    12 +
+ .../baseline_graded_ranges.json                    |   688 +
+ .../basin_gate_spiking.json                        |    14 +
+ .../goal1_walkers_spiking.md                       |   198 +
+ .../reports_spiking_20261002/goal2_baselines.mat   |   Bin 0 -> 241976 bytes
+ .../goal2_beer_spiking.mat                         |   Bin 0 -> 3267410 bytes
+ .../goal2_beer_spiking.png                         |   Bin 0 -> 236592 bytes
+ .../goal2_cross_check_spiking.py                   |    85 +
+ .../reports_spiking_20261002/goal2_dbg_rgmn.m      |    27 +
+ .../goal2_knee_spiking.mat                         |   Bin 0 -> 1217340 bytes
+ .../goal2_knee_spiking.png                         |   Bin 0 -> 249581 bytes
+ .../spinal/reports_spiking_20261002/goal2_probe.m  |    31 +
+ .../spinal/reports_spiking_20261002/goal2_probe2.m |    33 +
+ .../spinal/reports_spiking_20261002/goal2_probe3.m |    38 +
+ .../spinal/reports_spiking_20261002/goal2_probe4.m |    39 +
+ .../reports_spiking_20261002/goal2_regen_r2025a.m  |    39 +
+ .../goal2_rgmn_spiking.mat                         |   Bin 0 -> 174902 bytes
+ .../goal2_rgmn_spiking.png                         |   Bin 0 -> 133227 bytes
+ .../reports_spiking_20261002/goal2_run_baselines.m |   125 +
+ .../goal2_sns_simscape_spiking.md                  |   261 +
+ .../goal3_animatlab_spiking.md                     |   210 +
+ .../goal4_dissertation_spiking.md                  |   142 +
+ .../goal4_export_knee_traces.m                     |    55 +
+ .../goal4_gate2_traces.npz                         |   Bin 0 -> 100830 bytes
+ .../reports_spiking_20261002/goal4_knee_traces.mat |   Bin 0 -> 275213 bytes
+ .../logs/baseline_BipRG_modern.log                 |     7 +
+ .../logs/baseline_Biped_phase1.log                 |     7 +
+ .../logs/baseline_Biped_standalone_stale.log       |     7 +
+ .../logs/baseline_Li_2023.log                      |     7 +
+ .../logs/baseline_W2L_modern.log                   |     7 +
+ .../reports_spiking_20261002/logs/baseline_s3k.log |    22 +
+ .../logs/baseline_s3k_postedit.log                 |    22 +
+ .../logs/baseline_syn6.log                         |    23 +
+ .../logs/baseline_w2lvar.log                       |    23 +
+ .../logs/bisect2_W2L_neuronsonly.log               |     7 +
+ .../logs/bisect_W2L_neuronsonly.log                |     7 +
+ .../logs/bisect_W2L_synonly.log                    |     4 +
+ .../logs/calibrate_full.log                        |    12 +
+ .../logs/calibrate_full2.log                       |    12 +
+ .../reports_spiking_20261002/logs/gate2_rhythm.log |    15 +
+ .../logs/gate2_rhythm2.log                         |    15 +
+ .../reports_spiking_20261002/logs/gate3_basin.log  |    15 +
+ .../logs/gate4_air_compare.log                     |    11 +
+ .../reports_spiking_20261002/logs/gate4_air_ns.log |   103 +
+ .../logs/gate4_air_spiking.log                     |   103 +
+ .../logs/goal4_gate2_traces.log                    |     5 +
+ .../logs/goal4_knee_export.log                     |    69 +
+ .../logs/ground_eval_spiking.log                   |    22 +
+ .../logs/spiking2_BipRG_modern_spiking.log         |     7 +
+ .../spiking2_Biped_standalone_stale_spiking.log    |     7 +
+ .../logs/spiking2_W2L_modern_spiking.log           |     7 +
+ .../logs/spiking_BipRG_modern_spiking.log          |     4 +
+ .../spiking_Biped_standalone_stale_spiking.log     |     4 +
+ .../logs/spiking_W2L_modern_spiking.log            |     4 +
+ .../logs/spikingv2_BipRG_modern_spiking_v2.log     |     7 +
+ ...spikingv2_Biped_standalone_stale_spiking_v2.log |     7 +
+ .../logs/spikingv2_W2L_modern_spiking_v2.log       |     7 +
+ .../logs/sweep_thrinc_full.log                     |     2 +
+ .../logs/sweep_thrinc_full2.log                    |     4 +
+ .../reports_spiking_20261002/logs/tune_rg_pair.log |    29 +
+ .../logs/tune_rg_pair2.log                         |    29 +
+ .../logs/tune_rg_pair3.log                         |    50 +
+ .../logs/v3_W2L_spiking_v3_decay30.log             |     7 +
+ .../logs/v3b_W2L_spiking_v3_decay30.log            |     7 +
+ .../metrics_BipRG_modern_spiking.json              |   930 +
+ .../metrics_BipRG_modern_spiking_v2.json           |   930 +
+ .../metrics_Biped_standalone_stale_spiking.json    |   108 +
+ .../metrics_Biped_standalone_stale_spiking_v2.json |    95 +
+ .../metrics_W2L_modern_spiking.json                |   848 +
+ .../metrics_W2L_modern_spiking_v2.json             |   848 +
+ .../metrics_W2L_spiking_v3_decay30.json            |   848 +
+ .../metrics_baseline_BipRG_modern.json             |   841 +
+ .../metrics_baseline_Biped_phase1.json             |   223 +
+ .../metrics_baseline_Biped_standalone_stale.json   |    92 +
+ .../metrics_baseline_Li_2023.json                  |    72 +
+ .../metrics_baseline_W2L_modern.json               |   766 +
+ .../metrics_bisect_W2L_neuronsonly.json            |   848 +
+ .../models/BipRG_modern/BipRG_modern.asim          | 12007 +++++
+ .../models/BipRG_modern/L Angles.txt               |  4511 ++
+ .../models/BipRG_modern/L Ankle Sensory Motor.txt  | 25011 ++++++++++
+ .../models/BipRG_modern/L CPG Charts.txt           | 22511 +++++++++
+ .../models/BipRG_modern/L Hip PF.txt               | 25011 ++++++++++
+ .../models/BipRG_modern/L Hip Physical.txt         |  5011 ++
+ .../models/BipRG_modern/L Hip Sensory Motor.txt    | 25011 ++++++++++
+ .../models/BipRG_modern/L Knee PF.txt              | 25011 ++++++++++
+ .../models/BipRG_modern/L Knee Sensory Motor.txt   | 25011 ++++++++++
+ .../models/BipRG_modern/R Ankle Sensory Motor.txt  | 25011 ++++++++++
+ .../models/BipRG_modern/R Hip PF.txt               | 25011 ++++++++++
+ .../models/BipRG_modern/R Hip Sensory Motor.txt    | 25011 ++++++++++
+ .../models/BipRG_modern/R Knee PF.txt              | 25011 ++++++++++
+ .../models/BipRG_modern/R Knee Sensory Motor.txt   | 25011 ++++++++++
+ .../models/BipRG_modern/Rhythm Generator.txt       | 25011 ++++++++++
+ .../BipRG_modern_spiking/BipRG_modern_spiking.asim | 12247 +++++
+ .../models/BipRG_modern_spiking/L Angles.txt       |  4511 ++
+ .../BipRG_modern_spiking/L Ankle Sensory Motor.txt | 25011 ++++++++++
+ .../models/BipRG_modern_spiking/L CPG Charts.txt   | 22511 +++++++++
+ .../models/BipRG_modern_spiking/L Hip PF.txt       | 25011 ++++++++++
+ .../models/BipRG_modern_spiking/L Hip Physical.txt |  5011 ++
+ .../BipRG_modern_spiking/L Hip Sensory Motor.txt   | 25011 ++++++++++
+ .../models/BipRG_modern_spiking/L Knee PF.txt      | 25011 ++++++++++
+ .../BipRG_modern_spiking/L Knee Sensory Motor.txt  | 25011 ++++++++++
+ .../BipRG_modern_spiking/R Ankle Sensory Motor.txt | 25011 ++++++++++
+ .../models/BipRG_modern_spiking/R Hip PF.txt       | 25011 ++++++++++
+ .../BipRG_modern_spiking/R Hip Sensory Motor.txt   | 25011 ++++++++++
+ .../models/BipRG_modern_spiking/R Knee PF.txt      | 25011 ++++++++++
+ .../BipRG_modern_spiking/R Knee Sensory Motor.txt  | 25011 ++++++++++
+ .../BipRG_modern_spiking/Rhythm Generator.txt      | 25011 ++++++++++
+ .../BipRG_modern_spiking_v2.asim                   | 12247 +++++
+ .../models/BipRG_modern_spiking_v2/L Angles.txt    |  4511 ++
+ .../L Ankle Sensory Motor.txt                      | 25011 ++++++++++
+ .../BipRG_modern_spiking_v2/L CPG Charts.txt       | 22511 +++++++++
+ .../models/BipRG_modern_spiking_v2/L Hip PF.txt    | 25011 ++++++++++
+ .../BipRG_modern_spiking_v2/L Hip Physical.txt     |  5011 ++
+ .../L Hip Sensory Motor.txt                        | 25011 ++++++++++
+ .../models/BipRG_modern_spiking_v2/L Knee PF.txt   | 25011 ++++++++++
+ .../L Knee Sensory Motor.txt                       | 25011 ++++++++++
+ .../R Ankle Sensory Motor.txt                      | 25011 ++++++++++
+ .../models/BipRG_modern_spiking_v2/R Hip PF.txt    | 25011 ++++++++++
+ .../R Hip Sensory Motor.txt                        | 25011 ++++++++++
+ .../models/BipRG_modern_spiking_v2/R Knee PF.txt   | 25011 ++++++++++
+ .../R Knee Sensory Motor.txt                       | 25011 ++++++++++
+ .../BipRG_modern_spiking_v2/Rhythm Generator.txt   | 25011 ++++++++++
+ .../models/Biped_phase1/Biped_phase1.asim          |  7541 +++
+ .../models/Biped_phase1/DataTool_7.txt             | 50011 +++++++++++++++++++
+ .../models/Biped_phase1/DataTool_8.txt             | 50011 +++++++++++++++++++
+ .../Biped_standalone_stale.asim                    | 14573 ++++++
+ .../models/Biped_standalone_stale/L Hip Neural.txt |  5011 ++
+ .../models/Biped_standalone_stale/L Hip PF.txt     |  5011 ++
+ .../Biped_standalone_stale/L Hip Physical.txt      |  5011 ++
+ .../Biped_standalone_stale/Rhythm Generator.txt    | 25011 ++++++++++
+ .../Biped_standalone_stale_spiking.asim            | 15173 ++++++
+ .../L Hip Neural.txt                               |  5011 ++
+ .../Biped_standalone_stale_spiking/L Hip PF.txt    |  5011 ++
+ .../L Hip Physical.txt                             |  5011 ++
+ .../Rhythm Generator.txt                           | 25011 ++++++++++
+ .../Biped_standalone_stale_spiking_v2.asim         | 15173 ++++++
+ .../L Hip Neural.txt                               |  5011 ++
+ .../Biped_standalone_stale_spiking_v2/L Hip PF.txt |  5011 ++
+ .../L Hip Physical.txt                             |  5011 ++
+ .../Rhythm Generator.txt                           | 25011 ++++++++++
+ .../models/Li_2023/DataTool_7.txt                  | 50011 +++++++++++++++++++
+ .../models/Li_2023/Li_2023.asim                    |  7415 +++
+ .../models/W2L_modern/L Angles.txt                 |  4511 ++
+ .../models/W2L_modern/L Ankle Sensory Motor.txt    | 25011 ++++++++++
+ .../models/W2L_modern/L CPG Charts.txt             | 22511 +++++++++
+ .../models/W2L_modern/L Hip PF.txt                 | 25011 ++++++++++
+ .../models/W2L_modern/L Hip Physical.txt           |  5011 ++
+ .../models/W2L_modern/L Hip Sensory Motor.txt      | 25011 ++++++++++
+ .../models/W2L_modern/L Knee PF.txt                | 25011 ++++++++++
+ .../models/W2L_modern/L Knee Sensory Motor.txt     | 25011 ++++++++++
+ .../models/W2L_modern/R Ankle Sensory Motor.txt    | 25011 ++++++++++
+ .../models/W2L_modern/R Hip PF.txt                 | 25011 ++++++++++
+ .../models/W2L_modern/R Hip Sensory Motor.txt      | 25011 ++++++++++
+ .../models/W2L_modern/R Knee PF.txt                | 25011 ++++++++++
+ .../models/W2L_modern/R Knee Sensory Motor.txt     | 25011 ++++++++++
+ .../models/W2L_modern/Rhythm Generator.txt         | 25011 ++++++++++
+ .../models/W2L_modern/W2L_modern.asim              | 10641 ++++
+ .../models/W2L_modern_spiking/L Angles.txt         |  4511 ++
+ .../W2L_modern_spiking/L Ankle Sensory Motor.txt   | 25011 ++++++++++
+ .../models/W2L_modern_spiking/L CPG Charts.txt     | 22511 +++++++++
+ .../models/W2L_modern_spiking/L Hip PF.txt         | 25011 ++++++++++
+ .../models/W2L_modern_spiking/L Hip Physical.txt   |  5011 ++
+ .../W2L_modern_spiking/L Hip Sensory Motor.txt     | 25011 ++++++++++
+ .../models/W2L_modern_spiking/L Knee PF.txt        | 25011 ++++++++++
+ .../W2L_modern_spiking/L Knee Sensory Motor.txt    | 25011 ++++++++++
+ .../W2L_modern_spiking/R Ankle Sensory Motor.txt   | 25011 ++++++++++
+ .../models/W2L_modern_spiking/R Hip PF.txt         | 25011 ++++++++++
+ .../W2L_modern_spiking/R Hip Sensory Motor.txt     | 25011 ++++++++++
+ .../models/W2L_modern_spiking/R Knee PF.txt        | 25011 ++++++++++
+ .../W2L_modern_spiking/R Knee Sensory Motor.txt    | 25011 ++++++++++
+ .../models/W2L_modern_spiking/Rhythm Generator.txt | 25011 ++++++++++
+ .../W2L_modern_spiking/W2L_modern_spiking.asim     | 10845 ++++
+ .../models/W2L_modern_spiking_v2/L Angles.txt      |  4511 ++
+ .../L Ankle Sensory Motor.txt                      | 25011 ++++++++++
+ .../models/W2L_modern_spiking_v2/L CPG Charts.txt  | 22511 +++++++++
+ .../models/W2L_modern_spiking_v2/L Hip PF.txt      | 25011 ++++++++++
+ .../W2L_modern_spiking_v2/L Hip Physical.txt       |  5011 ++
+ .../W2L_modern_spiking_v2/L Hip Sensory Motor.txt  | 25011 ++++++++++
+ .../models/W2L_modern_spiking_v2/L Knee PF.txt     | 25011 ++++++++++
+ .../W2L_modern_spiking_v2/L Knee Sensory Motor.txt | 25011 ++++++++++
+ .../R Ankle Sensory Motor.txt                      | 25011 ++++++++++
+ .../models/W2L_modern_spiking_v2/R Hip PF.txt      | 25011 ++++++++++
+ .../W2L_modern_spiking_v2/R Hip Sensory Motor.txt  | 25011 ++++++++++
+ .../models/W2L_modern_spiking_v2/R Knee PF.txt     | 25011 ++++++++++
+ .../W2L_modern_spiking_v2/R Knee Sensory Motor.txt | 25011 ++++++++++
+ .../W2L_modern_spiking_v2/Rhythm Generator.txt     | 25011 ++++++++++
+ .../W2L_modern_spiking_v2.asim                     | 10845 ++++
+ .../models/W2L_spiking_v3_decay30/L Angles.txt     |  4511 ++
+ .../L Ankle Sensory Motor.txt                      | 25011 ++++++++++
+ .../models/W2L_spiking_v3_decay30/L CPG Charts.txt | 22511 +++++++++
+ .../models/W2L_spiking_v3_decay30/L Hip PF.txt     | 25011 ++++++++++
+ .../W2L_spiking_v3_decay30/L Hip Physical.txt      |  5011 ++
+ .../W2L_spiking_v3_decay30/L Hip Sensory Motor.txt | 25011 ++++++++++
+ .../models/W2L_spiking_v3_decay30/L Knee PF.txt    | 25011 ++++++++++
+ .../L Knee Sensory Motor.txt                       | 25011 ++++++++++
+ .../R Ankle Sensory Motor.txt                      | 25011 ++++++++++
+ .../models/W2L_spiking_v3_decay30/R Hip PF.txt     | 25011 ++++++++++
+ .../W2L_spiking_v3_decay30/R Hip Sensory Motor.txt | 25011 ++++++++++
+ .../models/W2L_spiking_v3_decay30/R Knee PF.txt    | 25011 ++++++++++
+ .../R Knee Sensory Motor.txt                       | 25011 ++++++++++
+ .../W2L_spiking_v3_decay30/Rhythm Generator.txt    | 25011 ++++++++++
+ .../W2L_spiking_v3_decay30.asim                    | 10845 ++++
+ .../models/bisect/L Angles.txt                     |  4511 ++
+ .../models/bisect/L Ankle Sensory Motor.txt        | 25011 ++++++++++
+ .../models/bisect/L CPG Charts.txt                 | 22511 +++++++++
+ .../models/bisect/L Hip PF.txt                     | 25011 ++++++++++
+ .../models/bisect/L Hip Physical.txt               |  5011 ++
+ .../models/bisect/L Hip Sensory Motor.txt          | 25011 ++++++++++
+ .../models/bisect/L Knee PF.txt                    | 25011 ++++++++++
+ .../models/bisect/L Knee Sensory Motor.txt         | 25011 ++++++++++
+ .../models/bisect/R Ankle Sensory Motor.txt        | 25011 ++++++++++
+ .../models/bisect/R Hip PF.txt                     | 25011 ++++++++++
+ .../models/bisect/R Hip Sensory Motor.txt          | 25011 ++++++++++
+ .../models/bisect/R Knee PF.txt                    | 25011 ++++++++++
+ .../models/bisect/R Knee Sensory Motor.txt         | 25011 ++++++++++
+ .../models/bisect/Rhythm Generator.txt             | 25011 ++++++++++
+ .../models/bisect/W2L_neuronsonly.asim             | 10641 ++++
+ .../models/bisect/W2L_synonly.asim                 | 10845 ++++
+ .../reports_spiking_20261002/tools/analyze.py      |   285 +
+ .../tools/baseline_eval.py                         |   123 +
+ .../tools/basin_gate_spiking.py                    |   165 +
+ .../tools/bisect_variant.py                        |    74 +
+ .../tools/check_selfsustain_spiking.py             |   130 +
+ .../tools/debug_rg_pair.py                         |    23 +
+ .../tools/debug_rg_pair2.py                        |    19 +
+ .../tools/debug_rg_pair3.py                        |    25 +
+ .../tools/goal4_dump_gate2_traces.py               |   113 +
+ .../tools/goal4_fig_animatlab.py                   |    95 +
+ .../tools/goal4_fig_ground_gait.py                 |    95 +
+ .../tools/goal4_fig_knee_twin.py                   |    84 +
+ .../tools/goal4_fig_rhythm.py                      |    77 +
+ .../tools/goal4_fig_style.py                       |    51 +
+ .../tools/goal4_tex_check.py                       |    96 +
+ .../reports_spiking_20261002/tools/inventory.py    |   114 +
+ .../reports_spiking_20261002/tools/make_spiking.py |   159 +
+ .../tools/probe_build_spiking.py                   |    29 +
+ .../reports_spiking_20261002/tools/probe_hybrid.py |    49 +
+ .../reports_spiking_20261002/tools/probe_lif.py    |    19 +
+ .../reports_spiking_20261002/tools/run_all.cmd     |    18 +
+ .../tools/sameleg_xcorr.py                         |   131 +
+ .../tools/smoke_air_spiking.py                     |    92 +
+ .../tools/sweep_thrinc_fullnet.py                  |    95 +
+ .../tools/topology_mirror_check.py                 |   142 +
+ .../reports_spiking_20261002/tools/tune_rg_pair.py |   137 +
+ .../reports_spiking_20261002/tools/validate.py     |   170 +
+ Code/MuJoCo_SNS/spinal/spiking_calibration.json    |    23 +
+ Code/MuJoCo_SNS/spinal/spinal_run.png              |   Bin 340624 -> 516807 bytes
+ Code/MuJoCo_SNS/spinal/spinal_run_spkbase_s3k.npz  |   Bin 0 -> 7881999 bytes
+ .../spinal/spinal_run_spkbase_spiking.npz          |   Bin 0 -> 8641319 bytes
+ Code/MuJoCo_SNS/spinal/spinal_run_spkbase_syn6.npz |   Bin 0 -> 8515282 bytes
+ .../spinal/spinal_run_spkbase_w2lvar.npz           |   Bin 0 -> 8490943 bytes
+ .../30-results/simulink_knee_spiking_twin.pdf      |   Bin 0 -> 45517 bytes
+ .../30-results/simulink_knee_spiking_twin.png      |   Bin 0 -> 268948 bytes
+ .../30-results/simulink_knee_spiking_twin_alt.txt  |    16 +
+ .../30-results/spiking_mirror_ground_gait.pdf      |   Bin 0 -> 68919 bytes
+ .../30-results/spiking_mirror_ground_gait.png      |   Bin 0 -> 470111 bytes
+ .../30-results/spiking_mirror_ground_gait_alt.txt  |    22 +
+ .../Figures/30-results/spiking_mirror_rhythm.pdf   |   Bin 0 -> 44976 bytes
+ .../Figures/30-results/spiking_mirror_rhythm.png   |   Bin 0 -> 241431 bytes
+ .../30-results/spiking_mirror_rhythm_alt.txt       |    17 +
+ .../93-AppendixB/animatlab_spiking_conversion.pdf  |   Bin 0 -> 46532 bytes
+ .../93-AppendixB/animatlab_spiking_conversion.png  |   Bin 0 -> 443826 bytes
+ .../animatlab_spiking_conversion_alt.txt           |    17 +
+ .../Biped_2xCPG_wSubs/Biped_2xCPG_wSubs.aproj      |   385 +-
+ .../Walker_2_Layer_CPG_BilateralRG.aproj           |   180 +-
+ .../tools/SESSION_NOTES_20260916.md                |    15 +
+ .../tools/audit_dangling_20261002.py               |   102 +
+ .../Walker_2_Layer_CPG_BilateralRG.aproj           | 41562 +++++++++++++++
+ .../tools/fix_contact_links_20261002.py            |   153 +
+ .../tools/probe_branch_20261002.py                 |    66 +
+ .../tools/probe_contact_links_20261002.py          |    90 +
+ .../tools/probe_dups_20261002.py                   |    34 +
+ .../tools/probe_parents_20261002.py                |    63 +
+ tmp/audit_gate2/KneeReflexDemo_HEAD.slx            |   Bin 0 -> 149435 bytes
+ tmp/audit_gate2/SNS_Library_HEAD.slx               |   Bin 0 -> 178967 bytes
+ tmp/audit_gate2/dump_mats.py                       |    58 +
+ tmp/audit_gate2/libhash.py                         |    18 +
+ tmp/audit_gate2/libnames.py                        |    22 +
+ tmp/audit_gate2/pngcheck.py                        |    18 +
+ tmp/audit_gate2/slxver.py                          |    30 +
+ tmp/audit_gate2/slxver2.py                         |    22 +
+ tmp/sup_fig_qa.py                                  |    45 +
+ tmp/sup_m2_tex.diff                                |   315 +
+ 306 files changed, 2946652 insertions(+), 362 deletions(-)

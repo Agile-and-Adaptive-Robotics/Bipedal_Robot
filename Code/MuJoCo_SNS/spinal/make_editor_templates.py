@@ -986,6 +986,197 @@ def build_variant(variant):
     return _stamp_variant_grps(nodes, spec)
 
 
+# ---------------------------------------------------------------- spiking
+# 2026-10-03 (spiking-campaign follow-up): the SPIKING MIRROR
+# (build_network_spiking.py, 2026-10-02 goal-1) as an editor template,
+# harvested from the REAL built network exactly like the variants above.
+# Config choice (documented, per Ben's make-a-choice-and-move-on rule):
+# the topology gate's TUNED gain set VERBATIM
+# (reports_spiking_20261002/tools/topology_mirror_check.py lines 47-56;
+# every conditional pathway nonzero, full_rules=1, phase PF, joint_pf=0)
+# so EVERY pathway class is visible in one drawing; the s3k production
+# flavor is the same builder at its stage-4 gains. Gains are copied, never
+# re-derived.
+SPIKE_TUNED = dict(
+    phase_reset_e=0.5, phase_reset_f=0.5, f1_kneext_inh=0.6,
+    f1_anklepf_inh=0.6, renshaw=0.5, ia_in=0.6, heel_rge=0.6,
+    toe_rge=0.4, ib_rge=0.6, rg_weak_exc=0.0,
+    ib_e_central=0.5, ia_f_central=0.5, ii_f_central=0.3,
+    ii_e_central=0.3, ia_f_contra_f=0.4, v3_to_ibexc=0.4,
+    c1_gain=0.6, v3_gain=0.25, full_rules=1.0,
+    heel_pf_layer=0.5, toe_df_inh=1.0, heel_in_f_exc=0.5,
+    ia_pf_f=0.5, ii_pf_f=0.5,
+    aff_e_rg=0.3, aff_f_rg=0.3, aff_e_pf=0.3, aff_f_pf=0.3,
+    vest_ext=0.3, vest_flex_inh=0.2, contra_kinh=0.5)
+
+# column order for the spiking-mirror layout (LOCAL: _KIND_COL above stays
+# untouched so w2lvar/syn6 layouts are byte-identical on regeneration)
+_SPK_COLS = ['PORT', 'RG', 'PFIN', 'PF', 'COMM', 'MECH', 'MOTIF', 'MN',
+             'RC', 'AFF', 'RD']
+
+
+def _spk_kind(name):
+    """(column, editor type) for one spiking-mirror neuron name. Extends
+    _v_kind with the mirror-only populations (CIN_F/CIN_E commissurals,
+    AFF_E/F group relays, RD_ readout taps, VEST cells, phase-PF names)."""
+    if name.startswith('CIN_F'):
+        return 'COMM', 'IN-V0D'      # crossed flexor inhibition (V0D-like)
+    if name.startswith('CIN_E'):
+        return 'COMM', 'IN-V3'       # crossed extensor excitation (V3-like)
+    if name.startswith(('AFF_E', 'AFF_F')):
+        return 'AFF', 'IN-C'         # grouped proprioceptive loop relays
+    if name.startswith('RD_'):
+        return 'RD', 'IN-C'          # analog readout taps (pure sinks)
+    if name.startswith('VEST'):
+        return 'PORT', 'PORT-load'   # analog vestibular-analog cells
+    if name.startswith('PF_E'):      # phase cells BEFORE the w2lvar '-E_'
+        return 'PF', 'HC-PF-E'       # rule (PF_E1_r has no '-E_' token)
+    if name.startswith('PF_F'):
+        return 'PF', 'HC-PF-F'
+    return _v_kind(name)
+
+
+def _stamp_spiking_grps(nodes, spec):
+    """Layer groups for the spiking-mirror template (variant-style rules
+    plus the RD_ readout layer; editor Layers tree semantics)."""
+    G = {'drive': 'Brainstem surrogates (analog): DRIVE/POSTURE/BAL/VEST'}
+    for S in ('r', 'l'):
+        Su = S.upper()
+        G['rg_' + S] = 'Rhythm RG + lamination + commissural (%s)' % Su
+        G['pf_' + S] = 'Pattern formation (%s)' % Su
+        G['mech_' + S] = 'Contact / load mechano (%s)' % Su
+        G['motif_' + S] = 'Reflex motif INs (%s)' % Su
+        G['mn_' + S] = 'Motoneurons, per muscle, NON-SPIKING (%s)' % Su
+        G['rc_' + S] = 'Renshaw (%s)' % Su
+        G['aff_' + S] = 'Afferent encoders + AFF relays (%s)' % Su
+        G['rd_' + S] = 'RD_ readout taps, analog (%s)' % Su
+        G['mus_' + S] = 'Muscles (%s)' % Su
+    grp_of_col = {'RG': 'rg', 'COMM': 'rg', 'PFIN': 'pf', 'PF': 'pf',
+                  'MECH': 'mech', 'MOTIF': 'motif', 'MN': 'mn', 'RC': 'rc',
+                  'AFF': 'aff', 'RD': 'rd'}
+    for nd in nodes:
+        if nd['type'] == 'MUSCLE':
+            base = nd['label'][:-len(' (pruned)')] \
+                if nd['label'].endswith(' (pruned)') else nd['label']
+            S = _v_side(base)
+            if S:
+                nd['grp'] = 'mus_' + S
+            continue
+        nm = nd['label']
+        if nm.startswith(('DRIVE', 'POSTURE', 'BAL_', 'VEST')):
+            nd['grp'] = 'drive'
+            continue
+        S = _v_side(nm)
+        gid = grp_of_col.get(_spk_kind(nm)[0])
+        if gid and S:
+            nd['grp'] = gid + '_' + S
+    spec['groups'] = G
+    return spec
+
+
+def build_spiking_mirror():
+    """Build the spiking mirror at the TUNED topology-gate config and
+    harvest nodes + synapses off the built SNS object (build_variant
+    pattern). Read-only for params (G snapshotted/restored)."""
+    import build_network_spiking as BSS
+    from collections import Counter
+    keep = dict(_params.G)
+    try:
+        _params.G.update(SPIKE_TUNED)
+        _params.G['joint_pf'] = 0.0
+        acts = []
+        for b in _mm._GROUPS_BY_NAME:
+            acts.append(b + '_r')
+            acts.append(b + '_l')
+        net = BSS.build(acts, interleg=True)
+    finally:
+        _params.G.clear()
+        _params.G.update(keep)
+    nobj = net.net
+    counts = (nobj.get_num_neurons(), nobj.get_num_inputs_actual(),
+              nobj.get_num_connections())
+    names = [q['name'] for q in nobj.populations]
+    n_spike_cells = sum(1 for nm in names if not nm.startswith(
+        ('DRIVE', 'POSTURE', 'BAL_', 'VEST', 'MN_', 'RD_')))
+    # ---- layout: per-(side, column) bands (variant-style) ----
+    side_x0 = {'s': 60, 'r': 60,
+               'l': 60 + (len(_SPK_COLS) + 1) * _W_COL + 120}
+    col_count = Counter()
+    for nm in names:
+        col_count[(_v_side(nm) or 's', _spk_kind(nm)[0])] += 1
+    col_pos = Counter()
+    nodes = []
+    for nm in names:
+        kind, t = _spk_kind(nm)
+        S = _v_side(nm) or 's'
+        key = (S, kind)
+        i = col_pos[key]
+        col_pos[key] += 1
+        cnt = col_count[key]
+        step = 40 if cnt > 24 else 70
+        x = side_x0[S] + (_SPK_COLS.index(kind) if kind in _SPK_COLS
+                          else len(_SPK_COLS)) * _W_COL
+        nodes.append({'type': t, 'label': nm, 'x': x, 'y': 60 + i * step})
+    edges = []
+    for c in nobj.connections:
+        src, dst = names[c['source']], names[c['destination']]
+        p = c['params']
+        spk = 'conductance_increment' in p
+        gain = float(p['conductance_increment'] if spk
+                     else p.get('max_conductance', 0.0))
+        er = float(p.get('reversal_potential', 0.0))
+        edges.append({
+            'from': src, 'to': dst,
+            'sign': 'exc' if er > -1e-6 else 'inh',
+            'gain': round(gain, 4),
+            'tag': _spk_kind(src)[0] + '->' + _spk_kind(dst)[0] +
+                   (' spk' if spk else ' grd')})
+    # implied muscles (MuJoCo side), pruned runner muscles marked
+    row = Counter()
+    for act in acts:
+        S = act[-1]
+        lbl = act + (' (pruned)' if act in _PRUNED_ACTS else '')
+        i = row[S]
+        row[S] += 1
+        nodes.append({'type': 'MUSCLE', 'label': lbl,
+                      'x': side_x0[S] + len(_SPK_COLS) * _W_COL + 110,
+                      'y': 60 + i * 40})
+        edges.append({'from': 'MN_' + act, 'to': lbl, 'sign': 'exc',
+                      'gain': 1.0, 'tag': 'mn_to_muscle grd'})
+    spec = {'nodes': nodes, 'edges': edges, '_note': (
+        'HARVESTED from the REAL SPIKING MIRROR network '
+        '(build_network_spiking.py, 2026-10-02 spiking campaign) at the '
+        'topology-gate TUNED config VERBATIM '
+        '(reports_spiking_20261002/tools/topology_mirror_check.py: every '
+        'conditional pathway on, full_rules=1, phase PF, joint_pf=0 - '
+        'documented choice so every pathway class is visible; s3k '
+        'production = same builder at stage-4 gains). Gate 1 (topology '
+        'mirror) proved this edge multiset IDENTICAL to the non-spiking '
+        'build. Neurons/inputs/synapses = %d/%d/%d (%d spiking cells). '
+        '2026-10-03 UPDATE: both builders now carry the IaIN/IBIN '
+        'mutual-inhibition completion pass (WIRING_RULINGS_20261003.md '
+        'finding F3, mirrored into build_network_spiking.py the same '
+        'day: +436 directed edges here), so the multiset equality holds '
+        'and the synapse count moved from the recorded 7920 to 8356. '
+        'HYBRID ruling: SPIKING LIF = afferent encoders Ia/II/Ib, '
+        'HEEL/TOE, AFF_E/F relays, RG-E/F (adapting LIF, thr adaptation '
+        'reuses rg_nap_h), InE/InF, PF cells, PF_INs, CIN_F/CIN_E, '
+        'IaIN/IIX/IBIN/IIIN, RC, KINH, LBIN, IBEXC. NON-SPIKING analog = '
+        'DRIVE/POSTURE/BAL/VEST brainstem surrogates, MN pools (a = '
+        'clip(V/5mV,0,1) unchanged), and the RD_ readout taps (pure '
+        'sinks low-passing RG/PF spike trains for the runner). Editor '
+        'types stay semantic (no spiking glyph in the palette): the '
+        'spiking/analog split lives in THIS note and in the static '
+        'schematics (Dissertation Defense slideshow). Gain = '
+        'conductance_increment for spike synapses (the CALIBRATED '
+        'per-spike step, spiking_calibration.json: k_sn_exc 5.4087 / '
+        'k_sn_inh 1.2284 / k_s2s_exc 1.8754 / k_s2s_inh 0.9996 / k_ns '
+        '0.35) and max_conductance for graded synapses; edge tags carry '
+        'src->dst kind + spk/grd. MUSCLE nodes + mn_to_muscle edges are '
+        'implied.') % (counts[0], counts[1], counts[2], n_spike_cells)}
+    return _stamp_spiking_grps(nodes, spec)
+
+
 # ---------------------------------------------------------------- schematic
 # 2026-09-26 (TASK: "s3k, w2lvar and syn6 visible as a COMPACT SCHEMATIC
 # using the subsystem ability"): collapse a flat walker template into
@@ -1458,6 +1649,16 @@ def main():
                               '(GM/VL/SO/GA) -- autogenic, per Ben; '
                               'RG-E/IN-E/PF-E drive is the population '
                               'sum (shin2025_eq11).')}
+
+    # ---- 2026-10-03: the SPIKING MIRROR (2026-10-02 campaign) as a
+    # template, harvested from the real built net. MUST run BEFORE the
+    # variant builds below: build_variant's params snapshot/restore does
+    # not cover keys its set_stage loaders ADD, and the leaked table
+    # entries showed up as +172 conditional edges in a post-variant
+    # harvest (fresh-process build = 896/388/7920 = the gate-1 tuned row;
+    # measured 2026-10-03, tmp/probe_spk_counts.py). At this point in
+    # main() the params state is still pristine.
+    out['spiking_mirror'] = build_spiking_mirror()
 
     # ---- 2026-09-25: the goal-4 VARIANT walkers (w2lvar / syn6) —
     # generated LAST because their curriculum imports mutate params

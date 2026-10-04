@@ -4,6 +4,141 @@ This file briefs any AI assistant (ChatGPT or otherwise) working on this project
 primary assistant (ZCode) is unavailable. Read it fully before doing anything. The repo-wide
 `AGENTS.md` next to this file has additional standing context — both are plain markdown.
 
+## 2026-10-03 MORNING — OVERNIGHT TRACK B (WIRING / CONNECTOME / TUNING) +
+## TRACK A 27-ACTUATOR CAMPAIGN LIVE ON EASTEGG2 (ZCode)
+
+Two-track overnight round. Track B audited and re-tuned the three walker networks
+(s3k, syn6, w2lvar); Track A launched the full 27-actuator routing campaign on
+easteregg2. Nothing here touches the dissertation tex or the Overleaf brief below.
+All Track B artifact paths below were verified on disk on EB475WS4 by the handoff
+pass; Track A facts are as reported by the launch round (live campaign is on
+easteregg2, not re-checked by this pass).
+
+### Track B — wiring rulings (one real bug fixed, everything else documented)
+
+- Full audit: [WIRING_RULINGS_20261003.md](D:/Github/Bipedal_Robot/Code/MuJoCo_SNS/spinal/WIRING_RULINGS_20261003.md)
+  (s3k, syn6, w2lvar vs Ben's master-rules drawing + his Shevtsova/Shinohara
+  exports + the replication drafts + the SADb knowledge base; every conflict has
+  an explicit ruling). No gain value changed; no ZCODE fence or adopted §4.4
+  value touched.
+- **Real bug FIXED**: IaIN↔IaIN and IBIN↔IBIN mutual inhibition was
+  ONE-DIRECTIONAL under full_rules (218 of 436 directed edges per family, all
+  later→earlier, from lazy IN creation) — completed to 436/436 via
+  `_complete_in_mutual`. Defaults gate (410/376/1186) passes before and after.
+  Winner-topology synapse counts grew: s3k (786,382,3410)→(786,382,3846) and
+  w2lvar (888,382,7430)→(888,382,7866); syn6 NOT affected (794/382/3033
+  unchanged, INs pre-created). **All recorded full_rules>0 scores and prior
+  s3k/w2lvar study results are PRE-FIX values.**
+- **Conflicts kept as tuned** (documented in the doc, no code change): direct
+  afferent→HC central knobs (Ben's drawing + Shinohara over the Deng-original
+  deafferentation doctrine); heel routing side (drawing = ipsi InE exc + CONTRA
+  InF exc; stock full_rules wires ipsi InE exc + ipsi InF inh; the contra edge
+  exists only in w2lvar); II relay gains at stack calibration; DRIVE→PF stays
+  removed. syn6-specific: heel→InF edge is ipsilateral where the drawing places
+  it contralateral (kept — the dress is unconditional and curr_syn6 was tuned on
+  it; retune recommendation recorded), IBEXC ungated per the drawing (recorded
+  deviation), analytic Eq-18 kept over dynamic g_fit (3–4 centered-VAF points,
+  documented).
+- **syn6 synergy implementation verified end-to-end**: W verbatim gain.T from
+  fsa_backsolve.npz ([43×6]/side, rank 6 both sides), stored-H replay R² 0.9261
+  r / 0.9126 l, all 311 PF_S→MN conductances == Eq-18 exactly (atol 1e-12), S5
+  mixed-family RG split equals rg_to_pf × the unrounded stance fraction.
+
+### Track B — connectome KB check, schematics, editor templates
+
+- SADb KB pathway check of the spiking MIRROR and the AnimatLab spiking
+  conversions: Ia/Ib/II/Renshaw/commissural/RG-PF/contact-afferent wiring AGREES
+  with the KB citations (Eccles/Lundberg, Talpalar 2011, Pearson/Collins 1993,
+  Dominguez-Rodriguez 2020, Pratt & Jordan 1987, Duysens & Pearson 1976, etc.);
+  deviations are documented choices (static Ia→MN gain, parallel-coexisting Ib
+  regimes instead of a transmission switch, no presynaptic inhibition, no
+  stumbling-corrective reaction, adapting-LIF burst termination instead of
+  persistent-Na). KB coverage GAPS flagged: no dedicated Renshaw, commissural,
+  or synergy pathway pages.
+- The wiring fix was mirrored into
+  [build_network_spiking.py](D:/Github/Bipedal_Robot/Code/MuJoCo_SNS/spinal/build_network_spiking.py)
+  (default-inert; +436 directed edges at full_rules=1 → 896/388/8356) so the
+  topology-mirror contract holds against the fixed non-spiking builder.
+- Editor templates ([connectome_templates.json](D:/Github/Bipedal_Robot/Code/MuJoCo_SNS/spinal/connectome_templates.json)):
+  NEW `spiking_mirror` entry (988 nodes / 8448 edges, 19 layer groups); w2lvar +
+  w2lvar_flat REGENERATED embedding the wiring fix (+218 IaIN↔IaIN and +218
+  IBIN↔IBIN edges — diff-guard verified, nothing else changed); all other
+  entries byte-identical. Pre-existing make_editor_templates.py ordering leak
+  (build_variant params snapshot/restore misses keys its set_stage loaders ADD →
+  +172 phantom edges if a spiking build follows the variants) flagged and
+  documented in the generator — deliberately NOT fixed (would change
+  w2lvar/syn6 bytes).
+- Static schematics (spike-trace vs graded-waveform markers, Okabe-Ito):
+  `spiking_mirror_layers.*` and `animatlab_spiking_conversions.*` (PNG+PDF) in
+  [Defense\slideshow](<D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/Defense/slideshow>)
+  and Figures\30-results\CPG_airstepping_figs; generator
+  [draw_spiking_schematic.py](D:/Github/Bipedal_Robot/Code/MuJoCo_SNS/spinal/draw_spiking_schematic.py)
+  asserts all 75 edge classes are drawn. **Visual QC of the PNGs was NOT
+  possible this round — Ben should eyeball both before the defense.**
+- Checks run and passing (connectome round): node --check; editor suites
+  _editor_template_test.js 4/4, _editor_edges_test.js 17/17,
+  _editor_tree_test.js 9/9; _editor_static_check.py; NEW
+  _editor_spiking_tpl_check.js 8/8; template diff guard. NOT run by that round:
+  topology_mirror_check, defaults gate, basin gate, runner evals (the defaults
+  gate WAS run by the wiring round — commands and output in the rulings doc).
+
+### Track B — tuning studies (both DONE this morning; logs end "DONE Sat 10/03/2026")
+
+- **curr_s4_nocross_mutfix_20261003** (optuna_walk.db; stage-4 ground walk, s3k
+  lineage, stock vehicle, post-fix topology, seeded from the s3k trial-34
+  production winner): 18 trials, best **−192.579** (trial 15). Trial 0 = the s3k
+  trial-34 incumbent replayed under the corrected topology = **−320.0 (no-cycles
+  sentinel) — the pre-fix production winner does NOT walk post-fix**; the
+  recorded pre-fix best was −159.453. Winner saved to
+  [curriculum_stage4_mutfix_20261003.json](D:/Github/Bipedal_Robot/Code/MuJoCo_SNS/spinal/curriculum_stage4_mutfix_20261003.json);
+  full run in spinal_run_s4_mutfix_20261003.npz.
+- **curr_syn6_s5_reseed_20261003** (optuna_syn6.db; stage-5 walk-with-contact
+  fresh-seed rescan): 16 trials, best **−200.380** = trial 0, the enqueued
+  recorded incumbent (15 fresh TPE trials did not beat it; recorded winner was
+  −197.215, delta 3.16 unattributed between documented BLAS nondeterminism and
+  working-tree drift; no bit-exact replay was run). Saved to
+  [curriculum_syn6_stage5_reseed_20261003.json](D:/Github/Bipedal_Robot/Code/MuJoCo_SNS/spinal/curriculum_syn6_stage5_reseed_20261003.json).
+  syn6 build unchanged (794/382/3033).
+- Logs, runner scripts, preflight:
+  [tmp\tuning_seed_20261003](D:/Github/Bipedal_Robot/tmp/tuning_seed_20261003).
+
+### Track A — easteregg2 27-actuator routing campaign: LAUNCHED AND RUNNING
+
+- **Status**: live on easteregg2, launched detached via Task Scheduler task
+  `routing27full` (trigger disabled after start so it cannot re-fire; runs in
+  Ben's RDP session and survives ssh disconnect — an earlier `start /b` attempt
+  died with the ssh console). At the launch round's last check: 11 MATLAB
+  processes (1 main + 10-worker parpool), rolling log 0 → 58,893 → 97,776 bytes
+  across checks, checkpoint + summary rows landing.
+- **Log (easteregg2 path)**:
+  `D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27\Results\routing27_full.log`
+- **How to check**: on easteregg2, watch the log grow (size/tail) and the
+  summary CSV + dated mats accumulate in `Routing27\Results\`; resume = rerun
+  the wrapper (picks up `Results\routing27_checkpoint_full.mat`); restart clean
+  = delete that checkpoint. The scheduled task is disabled, not deleted — remove
+  with `schtasks /delete /tn routing27full /f`.
+- **First results in** (Erector Spinae): single marginRel −0.348 (cannot meet),
+  par2 +0.003 (meets the +5 % requirement), par3 +0.357, tauRobotPeak 192 vs
+  human 121 N·m — the mode trade-off Ben specified; negative single-BPA margins
+  are physics, the par/pulley modes exist to close them.
+- **Scale**: 400 surrogateopt + 2000 patternsearch per config × 5 configs
+  (single/par2/par3/pulley2/pulley2par2) × 27 actuators, ~1–2 min/config
+  observed → multi-hour. Human targets always from stock gait2392_simbody.
+- **Campaign contents** (repo folder exists on EASTEGG2 ONLY —
+  `D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27`; EB475WS4
+  holds only the staging mirror [tmp\routing_opt](D:/Github/Bipedal_Robot/tmp/routing_opt),
+  verified this session): actuator_map_27.json (MIF-grounded 27-actuator map),
+  gen_gait2392_torque_targets.py (27 primary + 29 secondary stock curves, 56
+  CSVs + manifest, moment arms FD-gated; knee-DOF arms FD-informational),
+  routingSpecsFromRobotbody.m (27/27 specs; the committed builder's
+  MovingPathPoint/Spline drops fixed), Opt_run_Routing27.m (single / parallel /
+  pulley modes, meet-or-beat +5 % worst-angle margin, Xi of record = flexor 2brk
+  pick-77 triple, bone-clearance + footprint + muscle-spacing constraints, right
+  side optimized and left mirrored), README_ROUTING_CAMPAIGN.md (every mode,
+  weight, bound). Pre-launch validation ran end-to-end on easteregg2 with the
+  real stock targets (vasti 208.5 / soleus 171.4 / gluteal 160.7 N·m;
+  ROUTING27_MODE=validate, 1.7 min, exit 0).
+
 ## 2026-10-03 — DISSERTATION OVERLEAF UPLOAD BRIEF (ZCode; supersedes the older
 ## dissertation rules below for this task only)
 

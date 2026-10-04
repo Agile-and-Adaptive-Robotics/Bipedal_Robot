@@ -241,6 +241,15 @@ class W2LVarnet(BN.SpinalNetwork):
             self._add_muscle_neurons(n, act, mi)
         for act, mi in self.muscles.items():
             self._wire_muscle_w2l(n, act, mi)
+        # 2026-10-03 audit fix (WIRING_RULINGS_20261003.md, w2lvar
+        # finding F5): the antagonist mutual edges above are guarded by
+        # `in self.idx`, but IaIN/IBIN cells are created lazily inside
+        # _wire_muscle_w2l, so only the later->earlier direction of each
+        # pair existed (measured 218/436 per family). The inherited
+        # completion pass adds ONLY the missing directions at the same
+        # 0.5 conductance; neuron count/indices and all existing edges
+        # unchanged. Recorded w2lvar study scores are PRE-FIX values.
+        self._complete_in_mutual(n, force=True)
         self._wire_balance(n)          # inherited verbatim (BAL_* -> MNs)
 
         # ---- Shevtsova commissural set (both sides exist now) ----
