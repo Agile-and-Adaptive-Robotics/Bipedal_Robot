@@ -353,6 +353,7 @@ class SpinalNetworkSpiking:
             self._add_muscle_neurons(n, act, mi)
         for act, mi in self.muscles.items():
             self._wire_muscle(n, act, mi)
+        self._complete_in_mutual(n)
         self._wire_balance(n)
 
         # ---- cross-side commissurals (mirror of the non-spiking block) --
@@ -406,6 +407,37 @@ class SpinalNetworkSpiking:
             self.idx[cell] = self.idx[rd]      # runner-facing analog level
 
     # ------------------------------------------------------------------ parts
+    def _complete_in_mutual(self, n: Network, force: bool = False):
+        """2026-10-03 audit-fix MIRROR (WIRING_RULINGS_20261003.md, s3k
+        finding F3, propagated to the spiking twin the same day so the
+        gate-1 edge-mirror contract holds against the FIXED non-spiking
+        builder): complete the IaIN<->IaIN and IBIN<->IBIN MUTUAL
+        inhibition (Deng Table A6 / Rybak 2006 Table 2: both directions).
+        This builder has the same lazy-creation trap the audit measured in
+        build_network.py (only the later->earlier direction of each pair
+        existed; 218 of 436 directed edges per family under full_rules).
+        Adds ONLY the missing directed edges as spike synapses at the same
+        0.5 conductance-increment scale as the existing edges. Default
+        build never enters (full_rules 0, ia_in 0: no IaIN/IBIN cells at
+        all), so the stage-1 mirror counts (422 pops / 1186 edges) are
+        unaffected."""
+        if not force and not (G["full_rules"] > 0.0):
+            return
+        have = {(n.populations[c["source"]]["name"],
+                 n.populations[c["destination"]]["name"])
+                for c in n.connections}
+        for act, mi in self.muscles.items():
+            for ant in ANTAGONIST.get(mi.groups[0], ()):
+                for act2, mi2 in self.muscles.items():
+                    if mi2.side != mi.side or mi2.groups[0] != ant:
+                        continue
+                    for fam in ("IaIN", "IBIN"):
+                        if f"{fam}_{act2}" not in self.idx:
+                            continue
+                        e = (f"{fam}_{act}", f"{fam}_{act2}")
+                        if e not in have:
+                            n.add_connection(_ssyn(0.5, exc=False), *e)
+
     def _add(self, name: str, tau: float, n: Network, kind: str = "in"):
         n.add_neuron(_spk(tau, kind), name=name)
         self.idx[name] = len(self.idx)
