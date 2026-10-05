@@ -46,14 +46,14 @@ function data = readserialnumbers2()
     savedNumCols = 9;
 
     %% Torque-guard geometry (matches Knee_Extensor_20mm.m dExt1/angExt1)
-    dLC  = 292.9/1000;    % theta1 origin -> load-cell arm, m
-    angLC = -90.83;       % arm angle in the tibia frame, deg
+    dLC  = 215.05/1000;    % theta1 origin -> load-cell arm, m
+    angLC = -92.41;       % arm angle in the tibia frame, deg
 
     %% Save settings
 
     functionFolder = fileparts(mfilename("fullpath"));
     saveFolder = fullfile(functionFolder, "Ext_20mm");
-    baseName = "ExtTest_1_";
+    baseName = "ExtTest_2_";
 
     if ~isfolder(saveFolder)
         mkdir(saveFolder);
@@ -491,7 +491,7 @@ function data = readserialnumbers2()
         % FROM THE TIBIA AXIS -- torque about t1 = F*sin(LC+0.83 deg)*d.
         % The Adjoint machinery expects the force angle from the tibia
         % x-axis, i.e. 90 - LC. Convert here.
-        Lr = deg2rad(90 - Ldeg);
+        Lr = deg2rad(Ldeg);
         tx = interp1(phiV, txV, Kr, "pchip");
         ty = interp1(phiV, tyV, Kr, "pchip");
         if ~isfinite(tx) || ~isfinite(ty)
