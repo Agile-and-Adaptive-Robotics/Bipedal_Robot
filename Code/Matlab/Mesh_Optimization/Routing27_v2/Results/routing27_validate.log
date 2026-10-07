@@ -1,0 +1,285 @@
+==== ROUTING27 CAMPAIGN v2 (penalty restructure) ====
+Started 03-Oct-2026 21:32:10 | mode = validate
+
+---- PLAN (v2: task-envelope hard set + penalty outer set) ----
+Grid 13 primary angles | budgets surrogate 60 (max 120s) + pattern 200 (max 120s) | parallel 0
+id   actuator                         seed         primary DOF        task range       configs
+11   Vastus Intermedius               vas_med_r    knee_angle_r       (plan defers to ctx) single
+12   Soleus                           soleus_r     ankle_angle_r      (plan defers to ctx) pulley2
+24   Gluteus Maximus                  glut_max3_r  hip_flexion_r      (plan defers to ctx) single
+--------------
+
+
+===== [11] Vastus Intermedius (seed vas_med_r; knee_angle_r) =====
+ctx 11: 4 pts, cross [3 4], knee_angle_r at crossing 1, Lchar 0.284 m, peak human 208.5 N*m
+task envelope [-120, 10] deg: 13 of 13 poses hard
+  --- config single (nBPA=1, G=1) at 03-Oct-2026 21:32:16 ---
+  initial: f = 1.057e+05, worstC = 6, marginRel = -1.0000, Jrom 0, Janat 0
+Scalar objective function
+Number of variables: 14
+Number of integer constraints: 0
+Number of linear inequality constraints: 0
+Number of linear equality constraints: 0
+Number of nonlinear inequality constraints: 0
+
+F-count       Time        Best          Current         Trial
+             (seconds)    Fval          Fval            type
+   1         12.40      1.0080e+05      1.0080e+05   random 
+   2         15.74      1.0080e+05      1.0568e+05   random 
+   3         16.07      1.0080e+05      1.0561e+05   random 
+   4         16.36      1.0080e+05      1.0570e+05   random 
+   5         16.64      1.0080e+05      1.0283e+05   random 
+   6         16.93      1.0080e+05      1.0564e+05   random 
+   7         17.08      1.0080e+05      1.0570e+05   random 
+   8         17.22      9.7627e+04      9.7627e+04   random 
+   9         17.40      9.7627e+04      1.0563e+05   random 
+  10         17.57      9.7627e+04      1.0394e+05   random 
+  11         17.71      9.7627e+04      1.0399e+05   random 
+  12         17.84      9.5656e+04      9.5656e+04   random 
+  13         18.00      9.5656e+04      1.0419e+05   random 
+  14         18.14      9.5656e+04      1.0393e+05   random 
+  15         18.26      9.5656e+04      9.9711e+04   random 
+  16         18.42      9.5656e+04      1.0568e+05   random 
+  17         18.60      9.5656e+04      1.0395e+05   random 
+  18         18.73      9.5656e+04      1.0079e+05   random 
+  19         18.86      9.5656e+04      1.0572e+05   random 
+  20         18.97      9.5656e+04      1.0560e+05   random 
+  21         19.06      9.5656e+04      1.0569e+05   random 
+  22         19.21      9.5656e+04      1.0568e+05   random 
+  23         19.38      9.5656e+04      1.0566e+05   random 
+  24         19.53      9.5656e+04      1.0566e+05   random 
+  25         19.66      9.5656e+04      9.8446e+04   random 
+  26         19.80      9.5656e+04      1.0570e+05   random 
+  27         19.88      9.5656e+04      1.0569e+05   random 
+  28         20.06      9.5656e+04      1.0395e+05   random 
+  29         20.35      9.5656e+04      1.0019e+05   adaptive
+  30         20.49      9.5656e+04      1.0567e+05   adaptive
+
+F-count       Time        Best          Current         Trial
+             (seconds)    Fval          Fval            type
+  31         20.64      9.5656e+04      1.0564e+05   adaptive
+  32         20.81      9.5180e+04      9.5180e+04   adaptive
+  33         21.00      9.5180e+04      1.0071e+05   adaptive
+  34         21.18      9.5180e+04      1.0565e+05   adaptive
+  35         21.31      9.5180e+04      9.7171e+04   adaptive
+  36         21.44      9.5180e+04      9.5605e+04   adaptive
+  37         21.54      9.5180e+04      1.0569e+05   adaptive
+  38         21.68      9.5180e+04      9.9568e+04   adaptive
+  39         21.80      9.5180e+04      1.0077e+05   adaptive
+  40         21.94      9.4885e+04      9.4885e+04   adaptive
+  41         22.04      9.4885e+04      1.0573e+05   adaptive
+  42         22.19      9.4885e+04      1.0400e+05   adaptive
+  43         22.32      9.4885e+04      9.6187e+04   adaptive
+  44         22.45      9.4885e+04      9.7249e+04   adaptive
+  45         22.63      9.4885e+04      1.0396e+05   adaptive
+  46         22.76      9.4885e+04      1.0076e+05   adaptive
+  47         22.90      9.4885e+04      9.6988e+04   adaptive
+  48         23.03      9.4885e+04      1.0077e+05   adaptive
+  49         23.18      9.4861e+04      9.4861e+04   adaptive
+  50         23.37      9.4861e+04      1.0397e+05   adaptive
+  51         23.51      9.2840e+04      9.2840e+04   adaptive
+  52         23.67      9.2840e+04      9.4545e+04   adaptive
+  53         23.86      9.2840e+04      1.0168e+05   adaptive
+  54         23.97      9.2840e+04      1.0563e+05   adaptive
+  55         24.12      9.2840e+04      9.4235e+04   adaptive
+  56         24.27      9.2840e+04      9.4336e+04   adaptive
+  57         24.44      9.2840e+04      1.0460e+05   adaptive
+  58         24.60      9.2840e+04      1.0569e+05   adaptive
+  59         24.75      9.2840e+04      9.3131e+04   adaptive
+  60         24.91      9.2840e+04      9.2922e+04   adaptive
+surrogateopt stopped because it exceeded the function evaluation limit set by 
+'options.MaxFunctionEvaluations'.
+
+                                      Max
+  Iter   Func-count       f(x)      Constraint   MeshSize      Method
+    0         1      92840.3        0.261            1    
+    1       190      92840.3        0.261        0.001   Increase penalty
+Optimization finished: no feasible point found.
+  final: f = 9.284e+04, worstC = 0.261, marginRel = -1.0000, minBone 2.4 mm, lat 65.8 mm, Jrom 0, Janat 0
+  chosen: single | objective 9.284e+04 | worstC 0.261 | marginRel -1.0000 | Jrom 0 | Janat 0
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27_v2\Results\Routing27_a11_Vastus_Intermedius_20261003_2132.mat
+
+===== [12] Soleus (seed soleus_r; ankle_angle_r) =====
+ctx 12: 2 pts, cross [2 2], ankle_angle_r at crossing 1, Lchar 0.374 m, peak human 171.4 N*m
+task envelope [-50, 20] deg: 13 of 13 poses hard
+  --- config pulley2 (nBPA=1, G=2) at 03-Oct-2026 21:32:58 ---
+  initial: f = 8.84e+04, worstC = 0, marginRel = -1.0000, Jrom 0, Janat 0
+Scalar objective function
+Number of variables: 8
+Number of integer constraints: 0
+Number of linear inequality constraints: 0
+Number of linear equality constraints: 0
+Number of nonlinear inequality constraints: 0
+
+F-count       Time        Best          Current         Trial
+             (seconds)    Fval          Fval            type
+   1         0.34       1.0597e+05      1.0597e+05   random 
+   2         0.92       8.3159e+04      8.3159e+04   random 
+   3         1.04       8.3159e+04      1.0602e+05   random 
+   4         1.15       8.3159e+04      1.0596e+05   random 
+   5         1.31       8.3159e+04      1.0537e+05   random 
+   6         1.52       8.3159e+04      9.4630e+04   random 
+   7         1.63       8.3159e+04      1.0596e+05   random 
+   8         1.83       8.3159e+04      9.0818e+04   random 
+   9         1.93       8.3159e+04      1.0602e+05   random 
+  10         2.15       8.3159e+04      8.8959e+04   random 
+  11         2.26       8.3159e+04      1.0596e+05   random 
+  12         2.48       8.3159e+04      9.9397e+04   random 
+  13         2.58       8.3159e+04      1.0596e+05   random 
+  14         2.78       8.1902e+04      8.1902e+04   random 
+  15         2.89       8.1902e+04      1.0602e+05   random 
+  16         2.99       8.1902e+04      1.0596e+05   random 
+  17         3.19       8.1902e+04      1.0428e+05   random 
+  18         3.36       8.1902e+04      1.0353e+05   random 
+  19         3.48       8.1902e+04      1.0596e+05   random 
+  20         3.71       8.1902e+04      9.8327e+04   random 
+  21         3.85       8.1902e+04      1.0595e+05   adaptive
+  22         4.01       8.1902e+04      1.0596e+05   adaptive
+  23         4.22       8.0885e+04      8.0885e+04   adaptive
+  24         4.43       8.0885e+04      8.1689e+04   adaptive
+  25         4.64       8.0885e+04      8.1574e+04   adaptive
+  26         4.74       8.0885e+04      1.0596e+05   adaptive
+  27         4.95       8.0885e+04      8.3030e+04   adaptive
+  28         5.16       8.0545e+04      8.0545e+04   adaptive
+  29         5.37       8.0545e+04      9.8197e+04   adaptive
+  30         5.57       8.0545e+04      9.8021e+04   adaptive
+
+F-count       Time        Best          Current         Trial
+             (seconds)    Fval          Fval            type
+  31         5.78       8.0545e+04      8.3862e+04   adaptive
+  32         5.99       7.7139e+04      7.7139e+04   adaptive
+  33         6.10       7.7139e+04      1.0596e+05   adaptive
+  34         6.25       7.7139e+04      1.0518e+05   adaptive
+  35         6.46       7.7139e+04      7.7281e+04   adaptive
+  36         6.67       7.7139e+04      8.2578e+04   adaptive
+  37         6.88       7.7139e+04      9.6459e+04   adaptive
+  38         7.10       7.7139e+04      7.8786e+04   adaptive
+  39         7.30       7.7139e+04      8.1399e+04   adaptive
+  40         7.47       7.7139e+04      1.0358e+05   adaptive
+  41         7.65       7.7139e+04      1.0382e+05   adaptive
+  42         7.86       7.5740e+04      7.5740e+04   adaptive
+  43         8.07       7.5740e+04      8.0667e+04   adaptive
+  44         8.28       7.5518e+04      7.5518e+04   adaptive
+  45         8.49       7.5518e+04      7.8704e+04   adaptive
+  46         8.60       7.5518e+04      1.0596e+05   adaptive
+  47         8.81       7.4476e+04      7.4476e+04   adaptive
+  48         9.01       7.4476e+04      8.2580e+04   adaptive
+  49         9.23       7.4476e+04      8.1549e+04   adaptive
+  50         9.44       7.4476e+04      7.5313e+04   adaptive
+  51         9.65       7.4225e+04      7.4225e+04   adaptive
+  52         9.86       7.3933e+04      7.3933e+04   adaptive
+  53         10.02      7.3933e+04      1.0596e+05   adaptive
+  54         10.23      7.3933e+04      9.6850e+04   adaptive
+  55         10.43      7.3933e+04      8.2563e+04   adaptive
+  56         10.63      7.3933e+04      7.5232e+04   adaptive
+  57         10.84      7.3933e+04      9.8405e+04   adaptive
+  58         11.05      7.3933e+04      9.9108e+04   adaptive
+  59         11.26      7.3933e+04      7.6139e+04   adaptive
+  60         11.47      7.3933e+04      7.6089e+04   adaptive
+surrogateopt stopped because it exceeded the function evaluation limit set by 
+'options.MaxFunctionEvaluations'.
+
+                                      Max
+  Iter   Func-count       f(x)      Constraint   MeshSize      Method
+    0         1      73933.2            0            1    
+    1         7      73933.2            0     0.009772   Update multipliers
+    2       171      72392.5            0     0.000955   Update multipliers
+    3       200      72392.5            0    9.333e-05   Update multipliers
+Optimization finished: mesh size less than options.MeshTolerance 
+and constraint violation is less than options.ConstraintTolerance.
+  final: f = 7.239e+04, worstC = 0, marginRel = -0.7753, minBone 6.2 mm, lat 51.3 mm, Jrom 0, Janat 0
+  chosen: pulley2 | objective 7.239e+04 | worstC 0 | marginRel -0.7753 | Jrom 0 | Janat 0
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27_v2\Results\Routing27_a12_Soleus_20261003_2133.mat
+
+===== [24] Gluteus Maximus (seed glut_max3_r; hip_flexion_r) =====
+ctx 24: 5 pts, cross [3 4], hip_flexion_r at crossing 1, Lchar 0.610 m, peak human 160.7 N*m
+task envelope [-15, 110] deg: 13 of 13 poses hard
+  --- config single (nBPA=1, G=1) at 03-Oct-2026 21:33:38 ---
+  initial: f = 7.695e+04, worstC = 0.128, marginRel = -1.0000, Jrom 0, Janat 0.00733
+Scalar objective function
+Number of variables: 14
+Number of integer constraints: 0
+Number of linear inequality constraints: 0
+Number of linear equality constraints: 0
+Number of nonlinear inequality constraints: 0
+
+F-count       Time        Best          Current         Trial
+             (seconds)    Fval          Fval            type
+   1         0.30       1.0552e+05      1.0552e+05   random 
+   2         0.81       7.6154e+04      7.6154e+04   random 
+   3         1.03       7.6154e+04      7.7002e+04   random 
+   4         1.30       7.1020e+04      7.1020e+04   random 
+   5         1.57       7.1020e+04      8.2900e+04   random 
+   6         1.75       7.1020e+04      1.0550e+05   random 
+   7         1.98       7.1020e+04      1.0551e+05   random 
+   8         2.16       7.1020e+04      1.0550e+05   random 
+   9         2.39       7.1020e+04      1.0552e+05   random 
+  10         2.60       7.1020e+04      8.6677e+04   random 
+  11         2.84       4.9107e+04      4.9107e+04   random 
+  12         3.02       4.9107e+04      1.0550e+05   random 
+  13         3.22       4.9107e+04      8.6647e+04   random 
+  14         3.49       4.9107e+04      1.0244e+05   random 
+  15         3.67       4.9107e+04      1.0550e+05   random 
+  16         3.94       4.9107e+04      1.0537e+05   random 
+  17         4.21       4.9107e+04      8.8565e+04   random 
+  18         4.39       4.9107e+04      1.0550e+05   random 
+  19         4.65       4.9107e+04      1.0546e+05   random 
+  20         4.82       4.9107e+04      1.0550e+05   random 
+  21         5.00       4.9107e+04      1.0551e+05   random 
+  22         5.27       4.9107e+04      9.6578e+04   random 
+  23         5.50       4.9107e+04      7.6778e+04   random 
+  24         5.74       4.9107e+04      1.0550e+05   random 
+  25         5.97       4.9107e+04      6.5996e+04   random 
+  26         6.25       4.9107e+04      8.1089e+04   random 
+  27         6.42       4.9107e+04      1.0551e+05   random 
+  28         6.69       4.9107e+04      1.0544e+05   random 
+  29         6.88       4.9107e+04      1.0551e+05   adaptive
+  30         7.16       4.9107e+04      8.9485e+04   adaptive
+
+F-count       Time        Best          Current         Trial
+             (seconds)    Fval          Fval            type
+  31         7.41       4.9107e+04      5.6165e+04   adaptive
+  32         7.65       4.9107e+04      5.0091e+04   adaptive
+  33         7.83       4.9107e+04      1.0550e+05   adaptive
+  34         8.11       4.9107e+04      1.0250e+05   adaptive
+  35         8.36       4.9107e+04      5.8523e+04   adaptive
+  36         8.58       4.9107e+04      7.6896e+04   adaptive
+  37         8.86       4.9107e+04      9.5674e+04   adaptive
+  38         9.14       4.9107e+04      9.7129e+04   adaptive
+  39         9.39       4.9107e+04      5.3129e+04   adaptive
+  40         9.66       4.9107e+04      6.5050e+04   adaptive
+  41         9.84       4.9107e+04      1.0550e+05   adaptive
+  42         10.01      4.9107e+04      1.0551e+05   adaptive
+  43         10.26      4.9107e+04      5.3869e+04   adaptive
+  44         10.51      4.9107e+04      5.1118e+04   adaptive
+  45         10.79      4.9107e+04      9.4821e+04   adaptive
+  46         11.08      4.9107e+04      1.0175e+05   adaptive
+  47         11.32      4.7718e+04      4.7718e+04   adaptive
+  48         11.57      4.7718e+04      5.1789e+04   adaptive
+  49         11.76      4.7718e+04      1.0550e+05   adaptive
+  50         11.98      4.7718e+04      7.6908e+04   adaptive
+  51         12.22      4.7718e+04      5.4114e+04   adaptive
+  52         12.46      4.7225e+04      4.7225e+04   adaptive
+  53         12.75      4.7225e+04      7.7906e+04   adaptive
+  54         13.03      4.7225e+04      8.1336e+04   adaptive
+  55         13.27      4.7225e+04      5.0949e+04   adaptive
+  56         13.51      4.5761e+04      4.5761e+04   adaptive
+  57         13.69      4.5761e+04      1.0550e+05   adaptive
+  58         13.96      4.5761e+04      6.5052e+04   adaptive
+  59         14.20      4.5761e+04      5.4106e+04   adaptive
+  60         14.43      4.5761e+04      5.4112e+04   adaptive
+surrogateopt stopped because it exceeded the function evaluation limit set by 
+'options.MaxFunctionEvaluations'.
+
+                                      Max
+  Iter   Func-count       f(x)      Constraint   MeshSize      Method
+    0         1      45761.1      0.08127            1    
+    1        25      38496.6      0.01167     0.009772   Update multipliers
+    2       200      36079.4      0.01647     0.000955   Update multipliers
+Maximum number of function evaluations exceeded: increase options.MaxFunctionEvaluations.
+  final: f = 3.608e+04, worstC = 0.0165, marginRel = -1.0000, minBone 14.7 mm, lat 181.3 mm, Jrom 0, Janat 0.0881
+  chosen: single | objective 3.608e+04 | worstC 0.0165 | marginRel -1.0000 | Jrom 0 | Janat 0.0881
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27_v2\Results\Routing27_a24_Gluteus_Maximus_20261003_2134.mat
+
+CAMPAIGN validate done: 3 config(s) done, 3 route(s) finalized, 2.3 min elapsed.
+Summary: D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27_v2\Results\routing27_summary_validate.csv

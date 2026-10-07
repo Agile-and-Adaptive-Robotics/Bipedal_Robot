@@ -1,0 +1,81 @@
+[01] Erector Spinae -> ercspn_r
+    seed: ercspn_r: OK
+    robotbody route ercspn_r (actuator 1 Erector Spinae): 9 points, cross = [3 4], primary lumbar_extension at crossing 1; slot 3 = rigid clone; crossing-2 outputs inert; crossing 1 = back hinge on lumbar_extension (axis [0 0 1], pivot [-0.1007 0.0815 0]); crossing 2 rigid (identity transform)
+[02] Internal Oblique -> intobl_r
+    seed: intobl_r: OK
+    robotbody route intobl_r (actuator 2 Internal Oblique): 3 points, cross = [2 3], primary lumbar_extension at crossing 1; duplicate insertion row appended; crossing-2 outputs inert; crossing 1 = back hinge on lumbar_extension (axis [0 0 1], pivot [-0.1007 0.0815 0]); crossing 2 rigid (identity transform)
+[03] External Oblique -> extobl_r
+    seed: extobl_r: OK
+    robotbody route extobl_r (actuator 3 External Oblique): 3 points, cross = [2 3], primary lumbar_extension at crossing 1; duplicate insertion row appended; crossing-2 outputs inert; crossing 1 = back hinge on lumbar_extension (axis [0 0 1], pivot [-0.1007 0.0815 0]); crossing 2 rigid (identity transform)
+[04] Bicep Femoris, Long Head -> bifemlh_r
+    seed: bifemlh_r: OK
+    robotbody route bifemlh_r (actuator 4 Bicep Femoris, Long Head): 4 points, cross = [2 2], primary knee_angle_r at crossing 2; empty middle frame: duplicate crossing, transforms chained; crossing 1 = hip_r hinge on hip_flexion_r (axis [0 0 1], pivot [-0.0707 -0.0661 0.0835]); crossing 2 = knee_r hinge on knee_angle_r (axis [0 0 1], pivot [0 0 0])
+[05] Semimembranosus -> semimem_r
+    seed: semimem_r: OK
+    robotbody route semimem_r (actuator 5 Semimembranosus): 5 points, cross = [2 2], primary knee_angle_r at crossing 2; empty middle frame: duplicate crossing, transforms chained; crossing 1 = hip_r hinge on hip_flexion_r (axis [0 0 1], pivot [-0.0707 -0.0661 0.0835]); crossing 2 = knee_r hinge on knee_angle_r (axis [0 0 1], pivot [0 0 0])
+[06] Sartorius -> sar_r
+    seed: sar_r: OK
+    robotbody route sar_r (actuator 6 Sartorius): 7 points, cross = [2 5], primary knee_angle_r at crossing 2; crossing 1 = hip_r hinge on hip_flexion_r (axis [0 0 1], pivot [-0.0707 -0.0661 0.0835]); crossing 2 = knee_r hinge on knee_angle_r (axis [0 0 1], pivot [0 0 0])
+[07] Tensor Fasciae Latae -> tfl_r
+    seed: tfl_r: OK
+    robotbody route tfl_r (actuator 7 Tensor Fasciae Latae): 5 points, cross = [2 4], primary knee_angle_r at crossing 2; crossing 1 = hip_r hinge on hip_flexion_r (axis [0 0 1], pivot [-0.0707 -0.0661 0.0835]); crossing 2 = knee_r hinge on knee_angle_r (axis [0 0 1], pivot [0 0 0])
+[08] Rectus Femoris -> rect_fem_r
+    seed: rect_fem_r: OK
+    robotbody route rect_fem_r (actuator 8 Rectus Femoris): 5 points, cross = [2 5], primary knee_angle_r at crossing 2; crossing 1 = hip_r hinge on hip_flexion_r (axis [0 0 1], pivot [-0.0707 -0.0661 0.0835]); crossing 2 = knee_r hinge on knee_angle_r (axis [0 0 1], pivot [0 0 0])
+[09] Gracilis -> grac_r
+    seed: grac_r: OK
+    robotbody route grac_r (actuator 9 Gracilis): 6 points, cross = [2 4], primary knee_angle_r at crossing 2; crossing 1 = hip_r hinge on hip_flexion_r (axis [0 0 1], pivot [-0.0707 -0.0661 0.0835]); crossing 2 = knee_r hinge on knee_angle_r (axis [0 0 1], pivot [0 0 0])
+[10] Bicep Femoris, Short Head -> bifemsh_r
+    seed: bifemsh_r: OK
+    robotbody route bifemsh_r (actuator 10 Bicep Femoris, Short Head): 3 points, cross = [2 3], primary knee_angle_r at crossing 1; slot 3 = rigid clone; crossing-2 outputs inert; crossing 1 = knee_r hinge on knee_angle_r (axis [0 0 1], pivot [0 0 0]); crossing 2 rigid (identity transform)
+[11] Vastus Intermedius -> vas_med_r
+    seed: vas_med_r: OK
+    robotbody route vas_med_r (actuator 11 Vastus Intermedius): 4 points, cross = [3 4], primary knee_angle_r at crossing 1; duplicate insertion row appended; crossing-2 outputs inert; crossing 1 = knee_r hinge on knee_angle_r (axis [0 0 1], pivot [0 0 0]); crossing 2 rigid (identity transform)
+[12] Soleus -> soleus_r
+    seed: soleus_r: OK
+    robotbody route soleus_r (actuator 12 Soleus): 2 points, cross = [2 2], primary ankle_angle_r at crossing 1; empty middle frame: duplicate crossing, transforms chained; crossing 1 = ankle_r hinge on ankle_angle_r (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 = subtalar_r hinge on subtalar_angle_r (axis [0.78718 0.604747 -0.120949], pivot [-0.04877 -0.04195 0.00792])
+[13] Medial Gastroocnemius -> med_gas_r
+    seed: med_gas_r: OK
+    robotbody route med_gas_r (actuator 13 Medial Gastroocnemius): 3 points, cross = [3 3], primary ankle_angle_r at crossing 2; empty middle frame: duplicate crossing, transforms chained; calcn points shifted by the subtalar offset (alias); crossing 1 = knee_r hinge on knee_angle_r (axis [0 0 1], pivot [0 0 0]); crossing 2 = ankle_r hinge on ankle_angle_r (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0])
+[14] Lateral Gastrocenemius -> lat_gas_r
+    seed: lat_gas_r: OK
+    robotbody route lat_gas_r (actuator 14 Lateral Gastrocenemius): 3 points, cross = [3 3], primary ankle_angle_r at crossing 2; empty middle frame: duplicate crossing, transforms chained; calcn points shifted by the subtalar offset (alias); crossing 1 = knee_r hinge on knee_angle_r (axis [0 0 1], pivot [0 0 0]); crossing 2 = ankle_r hinge on ankle_angle_r (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0])
+[15] Tibialis Posterior -> tib_post_r
+    seed: tib_post_r: OK
+    robotbody route tib_post_r (actuator 15 Tibialis Posterior): 4 points, cross = [3 3], primary subtalar_angle_r at crossing 2; empty middle frame: duplicate crossing, transforms chained; crossing 1 = ankle_r hinge on ankle_angle_r (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 = subtalar_r hinge on subtalar_angle_r (axis [0.78718 0.604747 -0.120949], pivot [-0.04877 -0.04195 0.00792])
+[16] Tibialis Posterior (duplicate name) -> tib_ant_r
+    seed: tib_ant_r: OK
+    robotbody route tib_ant_r (actuator 16 Tibialis Posterior (duplicate name)): 3 points, cross = [3 3], primary ankle_angle_r at crossing 1; empty middle frame: duplicate crossing, transforms chained; crossing 1 = ankle_r hinge on ankle_angle_r (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 = subtalar_r hinge on subtalar_angle_r (axis [0.78718 0.604747 -0.120949], pivot [-0.04877 -0.04195 0.00792])
+[17] Peroneus Brevis -> per_brev_r
+    seed: per_brev_r: OK
+    robotbody route per_brev_r (actuator 17 Peroneus Brevis): 5 points, cross = [4 4], primary subtalar_angle_r at crossing 2; empty middle frame: duplicate crossing, transforms chained; crossing 1 = ankle_r hinge on ankle_angle_r (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 = subtalar_r hinge on subtalar_angle_r (axis [0.78718 0.604747 -0.120949], pivot [-0.04877 -0.04195 0.00792])
+[18] Peroneus Longus -> per_long_r
+    seed: per_long_r: OK
+    robotbody route per_long_r (actuator 18 Peroneus Longus): 7 points, cross = [4 4], primary subtalar_angle_r at crossing 2; empty middle frame: duplicate crossing, transforms chained; crossing 1 = ankle_r hinge on ankle_angle_r (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 = subtalar_r hinge on subtalar_angle_r (axis [0.78718 0.604747 -0.120949], pivot [-0.04877 -0.04195 0.00792])
+[19] Peroneus Tertius -> per_tert_r
+    seed: per_tert_r: OK
+    robotbody route per_tert_r (actuator 19 Peroneus Tertius): 3 points, cross = [3 3], primary subtalar_angle_r at crossing 2; empty middle frame: duplicate crossing, transforms chained; crossing 1 = ankle_r hinge on ankle_angle_r (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 = subtalar_r hinge on subtalar_angle_r (axis [0.78718 0.604747 -0.120949], pivot [-0.04877 -0.04195 0.00792])
+[20] Flexor Digitorum Longus -> flex_dig_r
+    seed: flex_dig_r: OK
+    robotbody route flex_dig_r (actuator 20 Flexor Digitorum Longus): 8 points, cross = [3 6], primary mtp_angle_r at crossing 2; crossing 1 = ankle_r hinge on ankle_angle_r (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 = mtp_r hinge on mtp_angle_r (axis [-0.580954 0 0.813936], pivot [0.1788 -0.002 0.00108])
+[21] Flexor Hallucis Longus -> flex_hal_r
+    seed: flex_hal_r: OK
+    robotbody route flex_hal_r (actuator 21 Flexor Hallucis Longus): 7 points, cross = [3 6], primary mtp_angle_r at crossing 2; crossing 1 = ankle_r hinge on ankle_angle_r (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 = mtp_r hinge on mtp_angle_r (axis [-0.580954 0 0.813936], pivot [0.1788 -0.002 0.00108])
+[22] Extensor Digitorum Longus -> ext_dig_r
+    seed: ext_dig_r: OK
+    robotbody route ext_dig_r (actuator 22 Extensor Digitorum Longus): 6 points, cross = [3 5], primary mtp_angle_r at crossing 2; crossing 1 = ankle_r hinge on ankle_angle_r (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 = mtp_r hinge on mtp_angle_r (axis [-0.580954 0 0.813936], pivot [0.1788 -0.002 0.00108])
+[23] Extensor Hallucis Longus -> ext_hal_r
+    seed: ext_hal_r: OK
+    robotbody route ext_hal_r (actuator 23 Extensor Hallucis Longus): 7 points, cross = [3 6], primary mtp_angle_r at crossing 2; crossing 1 = ankle_r hinge on ankle_angle_r (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 = mtp_r hinge on mtp_angle_r (axis [-0.580954 0 0.813936], pivot [0.1788 -0.002 0.00108])
+[24] Gluteus Maximus -> glut_max3_r
+    seed: glut_max3_r: OK
+    robotbody route glut_max3_r (actuator 24 Gluteus Maximus): 5 points, cross = [3 4], primary hip_flexion_r at crossing 1; slot 3 = rigid clone; crossing-2 outputs inert; crossing 1 = hip_r hinge on hip_flexion_r (axis [0 0 1], pivot [-0.0707 -0.0661 0.0835]); crossing 2 rigid (identity transform)
+[25] Adductor Magnus -> add_mag3_r
+    seed: add_mag3_r: OK
+    robotbody route add_mag3_r (actuator 25 Adductor Magnus): 4 points, cross = [3 4], primary hip_adduction_r at crossing 1; slot 3 = rigid clone; crossing-2 outputs inert; crossing 1 = hip_r hinge on hip_adduction_r (axis [1 0 0], pivot [-0.0707 -0.0661 0.0835]); crossing 2 rigid (identity transform)
+[26] Iliacus -> iliacus_r
+    seed: iliacus_r: OK
+    robotbody route iliacus_r (actuator 26 Iliacus): 4 points, cross = [3 4], primary hip_flexion_r at crossing 1; duplicate insertion row appended; crossing-2 outputs inert; crossing 1 = hip_r hinge on hip_flexion_r (axis [0 0 1], pivot [-0.0707 -0.0661 0.0835]); crossing 2 rigid (identity transform)
+[27] Psoas X -> psoas_r
+    seed: psoas_r: OK
+    robotbody route psoas_r (actuator 27 Psoas X): 4 points, cross = [3 4], primary hip_flexion_r at crossing 1; duplicate insertion row appended; crossing-2 outputs inert; torso rows folded to pelvis via back joint at default; crossing 1 = hip_r hinge on hip_flexion_r (axis [0 0 1], pivot [-0.0707 -0.0661 0.0835]); crossing 2 rigid (identity transform)
