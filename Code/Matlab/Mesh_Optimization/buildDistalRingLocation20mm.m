@@ -459,6 +459,16 @@ end
 seed20(7,1) = x7;
 seed20(7,2) = 0.5*(seed20(6,2) + seed20(8,2));
 
+% Optional explicit t1 contact points (clip-on tibia-part studies):
+% geo.seedP6XY / seedP7XY / seedP8XY each hold a finite 1x2 t1-frame
+% point that replaces the constructed contact above, so a part measured
+% in CAD can place p6:p8 directly instead of through the stock clearance
+% circles. Absent fields keep the construction (default-off, so every
+% existing caller is bit-identical to the unmodified builder).
+seed20(6,1:2) = explicitT1SeedPoint(geo, 'seedP6XY', seed20(6,1:2));
+seed20(7,1:2) = explicitT1SeedPoint(geo, 'seedP7XY', seed20(7,1:2));
+seed20(8,1:2) = explicitT1SeedPoint(geo, 'seedP8XY', seed20(8,1:2));
+
 % Clearance-driven seed repair, applied ONLY when the SolidWorks femur
 % chain actually violates the hard exclusion envelope. Compliant seed
 % points keep their validated SolidWorks positions (the reference release
@@ -491,6 +501,26 @@ if ~chainClear
         seed20(3:5,1:2) = qFemurChain;
     end
 end
+
+end
+
+
+function q = explicitT1SeedPoint(geo, fieldName, qConstructed)
+% Explicit t1 contact-point override for clip-on tibia-part studies.
+% A present field must be a finite two-element point; an absent field
+% keeps the constructed contact (default-off, bit-identical).
+
+if ~isfield(geo, fieldName)
+    q = qConstructed;
+    return
+end
+
+qOverride = geo.(fieldName);
+
+validateattributes(qOverride, {'numeric'}, ...
+    {'real', 'finite', 'numel', 2}, fieldName, 'geo');
+
+q = reshape(qOverride, 1, 2);
 
 end
 
