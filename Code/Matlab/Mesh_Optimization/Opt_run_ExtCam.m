@@ -7,16 +7,22 @@
 % length over the whole knee RoM, so it cannot produce torque
 % unpressurized.
 %
-% Design vector (7): xCam = [p6x p6y p7x p7y p8x p8y tendon], p6:p8 in
-% the t1 frame. FIXED at the loaded Opt_run_Ext winner: p1, pEnd, rest.
+% Design vector (8): xCam = [p6x p6y p7x p7y p8x p8y tendon p3dx],
+% p6:p8 in the t1 frame; p3dx is the femur-frame +X offset of the p3
+% clip (Ben, 2026-10-13: 25-50 mm). FIXED at the loaded Opt_run_Ext
+% winner: p1, pEnd, rest.
 %
 % Objective: objective_KneeExtCam20mm (family objective + worst-angle
 % margin reward + arm-step penalty + push-neighborhood regularizer).
 % Constraints: nonlconExtCam20mm (family set incl. the hard no-stretch
 % cRestLength + theta(p6) rule + y-ordering + no points inside the
-% stock tibia clearance circles + the VTUG valve floor: the design must
-% not exceed the human target at vtugFloorKPa, because below that
-% pressure the manifold cannot throttle to the target).
+% stock tibia clearance circles + the p6/p7 15 mm X window and 20-45 mm
+% height band + the VTUG
+% valve floor: the design must not exceed the human target at
+% vtugFloorKPa, because below that pressure the manifold cannot
+% throttle to the target). Cam designs evaluate the tibia wrap-loss
+% bend radius as the circumcircle of the actual p6:p8 contacts
+% (geo.tibiaWrapCircumcircle; the stock route keeps its legacy center).
 %
 % Env knobs (read BEFORE parpool): OPTCAM_SURR_N (default 3000) and
 % OPTCAM_PS_N (default 15000) cap the surrogate/patternsearch budgets
@@ -106,20 +112,22 @@ refPts = seedBase(6:8,1:2);
 refPts(1,:) = refPts(1,:) + adjPush*refPts(1,:)/norm(refPts(1,:));
 refPts(2,:) = refPts(2,:) + adjPush*refPts(2,:)/norm(refPts(2,:));
 
-xCamBase = [reshape(seedBase(6:8,1:2),1,6), tendonRef];
-xCamPush = [reshape(refPts,1,6), tendonRef];
+xCamBase = [reshape(seedBase(6:8,1:2),1,6), tendonRef, 0.025];
+xCamPush = [reshape(refPts,1,6), tendonRef, 0.0375];
 
 %% Bounds (t1 frame; the part grows on the proximal-anterior tibia)
 lbCam = [ ...
     seedBase(6,1)-0.010, seedBase(6,2)-0.020, ...
     seedBase(7,1)-0.010, seedBase(7,2)-0.040, ...
     seedBase(8,1)-0.010, seedBase(8,2)-0.040, ...
-    ctx.geo.tendonMin];
+    ctx.geo.tendonMin, ...
+    0.025];   % p3 clip +X offset, m (Ben: 25-50 mm)
 ubCam = [ ...
     seedBase(6,1)+0.060, seedBase(6,2)+0.040, ...
     seedBase(7,1)+0.060, seedBase(7,2)+0.040, ...
     seedBase(8,1)+0.050, seedBase(8,2)+0.030, ...
-    0.3];
+    0.3, ...
+    0.050];   % p3 clip +X offset, m
 
 obj = @(x) objective_KneeExtCam20mm(x, ctx, xFixed, refPts);
 nonlcon = @(x) nonlconExtCam20mm(x, ctx, xFixed, thetaP6BaseD, vtugFloorKPa);
@@ -184,6 +192,12 @@ fprintf('p6 = [%.6f %.6f] m, theta %.3f deg (baseline limit %.3f deg)\n', ...
 fprintf('p7 = [%.6f %.6f] m\n', xBestCam(3:4))
 fprintf('p8 = [%.6f %.6f] m\n', xBestCam(5:6))
 fprintf('tendon = %.6f m (baseline %.6f m)\n', xBestCam(7), tendonRef)
+fprintf('p3 clip: +%0.1f mm in x -> [%.6f %.6f] m (femur frame)\n', ...
+    1000*xBestCam(8), ctx.routeSeed(3,1)+xBestCam(8), ctx.routeSeed(3,2))
+fprintf('p7x - p6x = %+.1f mm (window 15 mm)\n', ...
+    1000*(xBestCam(3)-xBestCam(1)))
+fprintf('p6y - p7y = %+.1f mm (band 20-45 mm)\n', ...
+    1000*(xBestCam(2)-xBestCam(4)))
 fprintf('max constraint = %+.6f (cRestLength %+.6f, cContraction %+.6f, ', ...
     max(cBest), cBest(5), cBest(6))
 fprintf('cTendonMax %+.6f, cTheta %+.6f, cVtug@%dkPa %+.6f)\n', ...
@@ -193,6 +207,9 @@ fprintf('min torque margin vs required = %+.2f%%; vs plain target = %+.2f%%\n', 
 fprintf('moment arm: min %.1f mm, mean %.1f mm, max %.1f mm; max pose step %.2f mm\n', ...
     1000*min(predBest.momentArm), 1000*mean(predBest.momentArm), ...
     1000*max(predBest.momentArm), 1000*maxArmStepBest)
+wrapRadW = predBest.routeInfo.wrap.radius(2,:);
+fprintf('tibia wrap bend radius (circumcircle): %.1f - %.1f mm\n', ...
+    1000*min(wrapRadW), 1000*max(wrapRadW))
 
 %% No-stretch / 0-pressure check: baseline vs first cut vs winner
 % The rule (Ben): at 0 pressure the BPA produces no torque, i.e. it is
@@ -228,6 +245,8 @@ fprintf('tendonAdj = %.6f;%% m\n', xBestCam(7))
 fprintf('p6Adj = [%.6f, %.6f];%% t1 frame\n', xBestCam(1:2))
 fprintf('p7Adj = [%.6f, %.6f];%% t1 frame\n', xBestCam(3:4))
 fprintf('p8Adj = [%.6f, %.6f];%% t1 frame\n', xBestCam(5:6))
+fprintf('p3Adj = [%.6f, %.6f];%% femur frame (p3 clip, +%0.1f mm in x)\n', ...
+    ctx.routeSeed(3,1)+xBestCam(8), ctx.routeSeed(3,2), 1000*xBestCam(8))
 
 %% Winner required-pressure envelope (VTUG floor check)
 % Coarse 20 kPa scan over the angles that carry an extension target:
@@ -259,7 +278,7 @@ end
 %% Winner diagnostic figures
 xLim = [min(ctx.phiD), max(ctx.phiD)];
 
-hFigW1 = figure('Name','Cam torque vs human target','Color','w')
+hFigW1 = figure('Name','Cam torque vs human target','Color','w');
 hold on
 plot(ctx.phiD, predBest.TorqueZ, 'LineWidth', 2)
 plot(ctx.humanAngleD, ctx.humanTorque, 'LineWidth', 2)
@@ -270,7 +289,7 @@ legend('Cam BPA prediction', char(ctx.targetName), 'Required (+5%)', ...
     'Location', 'best')
 title('Cam-optimized extensor torque')
 
-hFigW2 = figure('Name','Cam torque margin','Color','w')
+hFigW2 = figure('Name','Cam torque margin','Color','w');
 hold on
 plot(ctx.phiD, 100*marginBest, 'LineWidth', 2)
 yline(0, '--'); yline(100*ctx.requiredTorqueMargin, ':')
@@ -279,7 +298,7 @@ xlabel('Knee angle, deg'); ylabel('Torque margin, %')
 legend('vs plain target', 'zero', 'required +5%', 'Location', 'best')
 title('Cam torque margin relative to human')
 
-hFigW3 = figure('Name','Cam BPA strain','Color','w')
+hFigW3 = figure('Name','Cam BPA strain','Color','w');
 hold on
 plot(ctx.phiD, predBest.strain_f, 'LineWidth', 2)
 plot(ctx.phiD, predBest.strain_p, '--', 'LineWidth', 2)
@@ -290,7 +309,7 @@ legend('strain_f (incl Xi3)', 'strain_p', '0 (no stretch)', 'KMAX', ...
     'Location', 'best')
 title('Cam BPA strain over the RoM')
 
-hFigW4 = figure('Name','Cam moment arm','Color','w')
+hFigW4 = figure('Name','Cam moment arm','Color','w');
 plot(ctx.phiD, 1000*predBest.momentArm, 'LineWidth', 2)
 xlim(xLim); grid off
 xlabel('Knee angle, deg'); ylabel('Moment arm, mm')

@@ -1,0 +1,69 @@
+[Warning: Variable 'XiUsed' not found.] 
+[> In Knee_Extensor_20mm (line 59)] 
+The algorithm will be calculating Torque at 100 different joint positions.
+Initial tendon = 0.040000 m
+Initial geometry-dependent tendon maximum = 0.059648 m
+p5 release: hardcoded -89.80 deg, derived -89.80 deg
+p4 release: hardcoded -55.66 deg, derived -55.66 deg
+p6 release: hardcoded -47.78 deg, derived -47.78 deg
+p7 release: hardcoded -20.20 deg, derived -20.20 deg
+p3 release: hardcoded +6.06 deg, derived +6.06 deg
+p8 release: hardcoded +7.37 deg, derived +7.37 deg
+p7 active anywhere (hardcoded: yes until wall lift-off): 1
+The algorithm will be calculating Torque at 100 different joint positions.
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+
+Loaded optimized extensor design:
+p1     = [0.040000 0.137000 0.000000] m
+pEnd   = [0.034420 -0.197096 0.000000] m
+rest   = 0.827738 m
+tendon = 0.036841 m
+kmax   = 0.616665 m
+minimum torque margin = +0.050249 (+5.02%)
+
+Adjusted route (clip-on tibia part):
+tendon = 0.083119 m (baseline 0.036841 m)
+p6 = [0.11248 0.01401] m, theta 26.566 -> 7.103 deg
+p7 = [0.12516 -0.02040] m
+p8 = [0.06510 -0.02040] m
+p3 = [0.09216 -0.42680] m (femur frame, p3 clip)
+p3:p5 moved with p6 (clearance-driven femur-chain repair):
+  p3: [0.06660 -0.42778] -> [0.06938 -0.42022] m
+  p4: [0.05472 -0.44364] -> [0.05453 -0.44347] m
+  p5: [0.03883 -0.45441] -> [0.03872 -0.45418] m
+p2: repeats its neighbor from -17.58 deg on
+p3: repeats its neighbor from -51.72 deg on
+p4: repeats its neighbor from -83.23 deg on
+p5: repeats its neighbor from -109.49 deg on
+p6: repeats its neighbor from -14.95 deg on
+p7: active through the full RoM
+p8: repeats its neighbor from -120.00 deg on
+adj minimum torque margin = +0.400263 (+40.03%)
+ExtTest20mm_1 Torque actual (paste into row 17 of the tab):
+1.1630	7.8494	23.4367	
+
+Pressure back-calculation (optimized extensor, rest = 0.8277 m, Dia = 20 mm; baseline vs adj route):
+angle_deg   target_Nm   kPa_base   kPa_adj   status_base / status_adj
+  -120.0       28.72     229.4     249.3   ok / ok
+  -113.4       30.52     243.7     248.3   ok / ok
+  -106.9       31.92     257.5     258.7   ok / ok
+  -100.3       33.07     271.6     272.4   ok / ok
+   -93.7       35.88     295.3     295.5   ok / ok
+   -87.2       38.43     321.5     320.2   ok / ok
+   -80.6       40.48     345.0     343.8   ok / ok
+   -74.0       41.71     366.2     360.2   ok / ok
+   -67.5       42.58     387.9     377.5   ok / ok
+   -60.9       45.38     424.5     409.2   ok / ok
+   -54.3       47.82     465.1     444.6   ok / ok
+   -47.8       49.51     507.9     464.9   ok / ok
+   -41.2       50.28     535.3     472.1   ok / ok
+   -34.6       50.22     559.7     479.9   ok / ok
+   -28.1       49.50     582.1     489.7   ok / ok
+   -21.5       47.19     592.6     495.5   ok / ok
+   -14.9       43.53     590.0     497.0   ok / ok
+    -8.4       38.76     573.3     485.7   ok / ok
+    -1.8       35.86     578.5     495.7   ok / ok
+     4.7       28.34     532.8     484.4   ok / ok
+max required pressure: baseline 596.6 kPa, adj 500.2 kPa
+Full table: Ext_20mm_pressure_for_human_torque.csv (in cwd)

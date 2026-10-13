@@ -13,10 +13,12 @@ function [c, ceq] = nonlconExtCam20mm(xCam, ctx, xFixed, thetaP6BaseD, vtugFloor
 % pressure the BPA sits at or below rest length everywhere in the RoM,
 % so it cannot produce torque unpressurized), and contraction <= KMAX.
 %
-% Cam additions (Ben, 2026-10-12):
+% Cam additions (Ben, 2026-10-12 / 2026-10-13):
 %   - the t1-frame polar angle of the line p6-t1 must not increase;
 %   - p6/p7/p8 stay ordered proximal -> distal in y;
 %   - no cam point may sit inside the stock tibia clearance circles;
+%   - p6 and p7 sit within 15 mm of each other in X (rounded-corner
+%     clip manufacturability, Ben 2026-10-13);
 %   - VTUG FLOOR: the manifold does not like to open/close below
 %     ~200 kPa, so the design must not exceed the human target AT the
 %     floor pressure -- if it does, the required pressure at that angle
@@ -50,6 +52,18 @@ cInsideLower = [ ...
     geo.tibiaLowerClearRadius - norm(p8 - geo.tibiaLowerCenter);
     geo.tibiaLowerClearRadius - norm(p7 - geo.tibiaLowerCenter)];
 
+% p6/p7 X window (Ben, 2026-10-13): |p7x - p6x| <= 15 mm, encoded as
+% two smooth rows so the gradient-free solvers see clean hyperplanes.
+xWindow = 0.015;
+cP6P7X = [p7(1) - p6(1) - xWindow;
+          p6(1) - p7(1) - xWindow];
+
+% p6/p7 height band (Ben, 2026-10-13): p6 sits 20-45 mm ABOVE p7 --
+% the natural staggered wrap, not a same-height pair.
+yBand = [0.020, 0.045];
+cP6P7Y = [yBand(1) - (p6(2) - p7(2));
+          (p6(2) - p7(2)) - yBand(2)];
+
 %% VTUG floor overshoot (scaled by ctx.torqueScale; <= 0 feasible)
 cVtug = 1;   % infeasible unless the floor check runs clean
 if vtugFloorKPa > 0
@@ -77,6 +91,7 @@ end
 
 ceq = [];
 
-c = [cBase(:); cTheta; cOrder; cInsideUpper; cInsideLower; cVtug];
+c = [cBase(:); cTheta; cOrder; cInsideUpper; cInsideLower; ...
+    cP6P7X; cP6P7Y; cVtug];
 
 end

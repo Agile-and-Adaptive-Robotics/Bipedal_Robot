@@ -328,16 +328,18 @@ fprintf('minimum torque margin = %+.6f (%+.2f%%)\n',min(torqueMarginFraction(val
 % clearance-driven femur-chain repair inside buildDistalRingLocation20mm,
 % and the elimination logic turns p5/p4 into repeats of their neighbors
 % wherever the adjusted route no longer needs them. Cam design below =
-% the VTUG-floor Opt_run_ExtCam winner (2026-10-12, budgets 1000+1500,
-% floor 200 kPa; required pressure 247-496 kPa over the RoM, zero
-% stretch / 0 N m at 0 kPa, margin vs required +34.1%). The first-cut
-% 25.4 mm radial push is recoverable with:
+% the revised Opt_run_ExtCam winner (2026-10-13: p6/p7 15 mm X window,
+% 20-45 mm height band, p3 clip, circumcircle bend radius from the
+% ACTIVE contacts; required pressure 248-500 kPa, zero stretch /
+% 0 N m at 0 kPa, margin vs required +31.8%). The first-cut 25.4 mm
+% radial push is recoverable with:
 %   p6Adj = routeInfo.seed20(6,1:2);
 %   p6Adj = p6Adj + 0.0254*p6Adj/norm(p6Adj);   (same for p7)
-tendonAdj = 0.088381;                  % adjusted tendon length, m
-p6Adj = [0.100710, 0.021345];          % t1 frame [x y]
-p7Adj = [0.131610, -0.014208];         % t1 frame [x y]
-p8Adj = [0.068434, -0.016017];         % t1 frame [x y]
+tendonAdj = 0.083119;                  % adjusted tendon length, m
+p6Adj = [0.112477, 0.014015];          % t1 frame [x y]
+p7Adj = [0.125165, -0.020398];         % t1 frame [x y]
+p8Adj = [0.065104, -0.020402];         % t1 frame [x y]
+p3Adj = [0.092155, -0.426800];         % femur frame [x y] (p3 clip, +28.1 mm in x)
 
 % Ben's constraint: the angle theta of the line p6-t1 (t1 is the frame
 % origin) must not increase -- theta' <= theta.
@@ -357,6 +359,10 @@ ctxAdj = ctx;
 ctxAdj.geo.seedP6XY = p6Adj;
 ctxAdj.geo.seedP7XY = p7Adj;
 ctxAdj.geo.seedP8XY = p8Adj;
+ctxAdj.geo.tibiaWrapCircumcircle = true;   % bend radius = circumcircle of p6:p8
+if ~isempty(p3Adj)
+    ctxAdj.geo.seedP3XY = p3Adj;
+end
 
 [LocationAdj,bendMeasureAdj,routeInfoAdj] = ...
     buildDistalRingLocation20mm(p1,pEnd,tendonAdj,ctxAdj);
@@ -402,6 +408,11 @@ fprintf('p6 = [%.5f %.5f] m, theta %.3f -> %.3f deg\n', ...
     p6Adj, thetaP6D, thetaP6AdjD)
 fprintf('p7 = [%.5f %.5f] m\n', p7Adj)
 fprintf('p8 = [%.5f %.5f] m\n', p8Adj)
+if isempty(p3Adj)
+    fprintf('p3 clip: none\n')
+else
+    fprintf('p3 = [%.5f %.5f] m (femur frame, p3 clip)\n', p3Adj)
+end
 if ~isequal(routeInfoAdj.seed20(3:5,1:2), routeInfo.seed20(3:5,1:2))
     fprintf('p3:p5 moved with p6 (clearance-driven femur-chain repair):\n')
     for rowAdj = 3:5

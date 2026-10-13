@@ -431,6 +431,12 @@ if ok2
     seed20(2,1:2) = q2;
 end
 
+% Optional explicit p3 override (femur-frame clip studies, Ben,
+% 2026-10-13): a finite 1x2 geo.seedP3XY replaces the fcec-rule p3 row
+% before the clearance-driven chain repair below; p4:p5 keep their
+% seed rows. Absent field keeps the seed (default-off).
+seed20(3,1:2) = explicitSeedPoint(geo, 'seedP3XY', seed20(3,1:2));
+
 % Tibia seed construction (replaces the SolidWorks p6:p8 coordinates and
 % the old pEnd-tangent p8 adjustment). Ben's rule:
 %   p6 = upper-cylinder clearance circle at +30 deg,
@@ -465,9 +471,9 @@ seed20(7,2) = 0.5*(seed20(6,2) + seed20(8,2));
 % in CAD can place p6:p8 directly instead of through the stock clearance
 % circles. Absent fields keep the construction (default-off, so every
 % existing caller is bit-identical to the unmodified builder).
-seed20(6,1:2) = explicitT1SeedPoint(geo, 'seedP6XY', seed20(6,1:2));
-seed20(7,1:2) = explicitT1SeedPoint(geo, 'seedP7XY', seed20(7,1:2));
-seed20(8,1:2) = explicitT1SeedPoint(geo, 'seedP8XY', seed20(8,1:2));
+seed20(6,1:2) = explicitSeedPoint(geo, 'seedP6XY', seed20(6,1:2));
+seed20(7,1:2) = explicitSeedPoint(geo, 'seedP7XY', seed20(7,1:2));
+seed20(8,1:2) = explicitSeedPoint(geo, 'seedP8XY', seed20(8,1:2));
 
 % Clearance-driven seed repair, applied ONLY when the SolidWorks femur
 % chain actually violates the hard exclusion envelope. Compliant seed
@@ -505,10 +511,10 @@ end
 end
 
 
-function q = explicitT1SeedPoint(geo, fieldName, qConstructed)
-% Explicit t1 contact-point override for clip-on tibia-part studies.
-% A present field must be a finite two-element point; an absent field
-% keeps the constructed contact (default-off, bit-identical).
+function q = explicitSeedPoint(geo, fieldName, qConstructed)
+% Explicit contact-point override for clip-part studies. A present
+% field must be a finite two-element point; an absent field keeps the
+% constructed contact (default-off, bit-identical).
 
 if ~isfield(geo, fieldName)
     q = qConstructed;
@@ -2071,17 +2077,47 @@ function ref = tibiaCurveWrapReference(raw, active, phiD, geo)
 % Temporary tibia wrap-loss model through p8, p7, and p6.  The knee-angle
 % map starts at extension and reaches its plateau when p6 is introduced
 % while reading the plot right-to-left.
+%
+% Bend-radius recalculation (Ben, 2026-10-13): with
+% geo.tibiaWrapCircumcircle = true, the wrap center is the circumcenter
+% of the actual full-flexion p6/p7/p8 contacts (the clip-part surface
+% arc), instead of the legacy fixed CAD curve center. Degenerate
+% configurations (fewer than three unique points, near-collinear, or an
+% absurd radius) fall back to the legacy center. Default-off keeps the
+% stock route bit-identical.
 
 N = size(raw,3);
 idxExtension = N;
 
+% Only contacts that are actually ACTIVE at full flexion define the
+% wrap surface (Ben, 2026-10-13: a p8 that is never contacted must not
+% figure into the bend radius). Inactive rows repeat their neighbors in
+% raw, so including them would pollute the radius with ghost points.
+% The stock route has all of p6:p8 active at full flexion, so it is
+% unchanged.
 C = geo.tibiaCurveCenter;
-seedPts = squeeze(raw([6 7 8],1:2,1));
+rowsTibia = [6 7 8];
+rowsContacted = rowsTibia(active(rowsTibia,1));
+if isempty(rowsContacted)
+    rowsContacted = rowsTibia;
+end
+seedPts = squeeze(raw(rowsContacted,1:2,1));
+
+if isfield(geo, 'tibiaWrapCircumcircle') && geo.tibiaWrapCircumcircle
+    C = tibiaWrapCircumcenter(seedPts, C);
+end
+
 R = mean(vecnorm(seedPts - C, 2, 2));
 
 idxP6On = find(active(6,:), 1, 'last');
 
-if isempty(idxP6On)
+% A p6 that stays active through full extension leaves idxP6On at the
+% extension end, collapsing the interpolation span and silently zeroing
+% the tibia wrap-loss term (the permanent-wrap cam routes). Measure the
+% plateau at full flexion instead: two t1-fixed contacts keep a
+% constant wrap arc, so the plateau-constant behavior this produces is
+% exact. Releasing routes (the stock case) are unchanged.
+if isempty(idxP6On) || idxP6On == N
     idxP6On = 1;
 end
 
@@ -2300,6 +2336,57 @@ Rb = norm(qOut - geo.femurProfileCenter);
 ok = ref.valid && isfinite(alpha) && isfinite(R);
 
 end
+
+function C = tibiaWrapCircumcenter(seedPts, Cdefault)
+% Circumcenter of the unique tibia contact points; falls back to the
+% legacy fixed CAD center when the points cannot define a sensible
+% circle (fewer than three unique points, near-collinear, non-finite,
+% or a mean radius above 0.5 m).
+
+C = Cdefault;
+
+Q = zeros(0,2);
+for k = 1:size(seedPts,1)
+    if isempty(Q) || all(vecnorm(Q - seedPts(k,:),2,2) > 1e-6)
+        Q(end+1,:) = seedPts(k,:); %#ok<AGROW>
+    end
+end
+
+if size(Q,1) < 3
+    return
+end
+
+A = Q(1,:);
+B = Q(2,:);
+D = Q(3,:);
+
+d = 2*(A(1)*(B(2)-D(2)) + B(1)*(D(2)-A(2)) + D(1)*(A(2)-B(2)));
+
+if abs(d) < 1e-12
+    return
+end
+
+ux = ((A(1)^2+A(2)^2)*(B(2)-D(2)) + ...
+      (B(1)^2+B(2)^2)*(D(2)-A(2)) + ...
+      (D(1)^2+D(2)^2)*(A(2)-B(2)))/d;
+uy = ((A(1)^2+A(2)^2)*(D(1)-B(1)) + ...
+      (B(1)^2+B(2)^2)*(A(1)-D(1)) + ...
+      (D(1)^2+D(2)^2)*(B(1)-A(1)))/d;
+
+Cnew = [ux, uy];
+
+if ~all(isfinite(Cnew))
+    return
+end
+
+if mean(vecnorm(seedPts - Cnew, 2, 2)) > 0.5
+    return
+end
+
+C = Cnew;
+
+end
+
 
 function ref = crosspointWrapReference(raw, Location, active, phiD, T_Pam_inv)
 % p5-p6 crosspoint wrap lives in the ICR frame.  p5 starts in femur and is
