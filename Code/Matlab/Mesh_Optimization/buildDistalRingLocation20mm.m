@@ -122,6 +122,18 @@ Pfixed(9,:) = pEnd;
 activeState = true(9,1);
 info.initiallyEliminated = false(9,1);
 
+% p3 stand-off clip (Ben, 2026-10-13): with an explicit p3 override the
+% clip replaces the condyle wrap, so p4/p5 start eliminated (repeats of
+% p3) instead of being dragged around by the chain repair. There is no
+% femur-side clip hardware for p4/p5 (distal-femur/proximal-tibia
+% interference), so they stay repeats for the whole sweep.
+if isfield(ctx.geo, 'seedP3XY')
+    activeState(4) = false;
+    activeState(5) = false;
+    info.initiallyEliminated(4) = true;
+    info.initiallyEliminated(5) = true;
+end
+
 % Seed colinearity guard: if the p7 seed lies within seedColinearTolD of the
 % pEnd->p8 tangent ray, the p7->p8->p9 path is nearly straight and p7 is a
 % detour spike rather than a wrap contact. p7 then starts the sweep already
@@ -484,7 +496,17 @@ iFlex = ctx.idxMaxFlex;
 p6FlexFemur = RowVecTrans( ...
     ctx.T_Pam(:,:,iFlex)*ctx.T_ICR_t1(:,:,iFlex), seed20(6,:));
 
-chain = [seed20(2,1:2); seed20(3:5,1:2); p6FlexFemur(1:2)];
+% p3 stand-off clip: the clip is new hard geometry, not a seed to
+% repair -- check the shortened p2 -> p3 -> p6 chain and leave the
+% standoff exactly where the designer put it (the cam nonlcon rejects
+% colliding clips). Stock designs keep the full-chain repair.
+useP3Clip = isfield(geo, 'seedP3XY');
+
+if useP3Clip
+    chain = [seed20(2,1:2); seed20(3,1:2); p6FlexFemur(1:2)];
+else
+    chain = [seed20(2,1:2); seed20(3:5,1:2); p6FlexFemur(1:2)];
+end
 chainClear = true;
 for kkChain = 1:size(chain,1)-1
     if segmentPenetratesPolygon( ...
@@ -495,7 +517,7 @@ for kkChain = 1:size(chain,1)-1
     end
 end
 
-if ~chainClear
+if ~chainClear && ~useP3Clip
     [qFemurChain, okFemurChain] = adjustedFemurSeedChainAtFlexion( ...
         seed20(2,1:2), ...
         seed20(3:5,1:2), ...
@@ -1769,7 +1791,7 @@ end
 
 p2Ref = p2WrapReference(Pall, active, phiD, geo);
 tibiaRef = tibiaCurveWrapReference(raw, active, phiD, geo);
-femurRef = femurCurveWrapReference(raw, active, phiD, geo);
+femurRef = femurCurveWrapReference(raw, active, phiD, geo, Pall);
 crossRef = crosspointWrapReference(raw, Location, active, phiD, T_Pam_inv);
 
 % Each reference object maps knee angle -> wrap angle. That prevents the
@@ -2105,9 +2127,14 @@ seedPts = squeeze(raw(rowsContacted,1:2,1));
 
 if isfield(geo, 'tibiaWrapCircumcircle') && geo.tibiaWrapCircumcircle
     C = tibiaWrapCircumcenter(seedPts, C);
+    % Ben, 2026-10-14: the wrap bend radius is the drum radius
+    % p7x - p9x (cam edge to insertion x-extent, ~4 in on the final
+    % design) -- the contacted points' circumradius read too low
+    % (59.6 mm) because p6/p7/p8 run nearly collinear down the clip.
+    R = abs(raw(7,1,idxExtension) - raw(9,1,idxExtension));
+else
+    R = mean(vecnorm(seedPts - C, 2, 2));
 end
-
-R = mean(vecnorm(seedPts - C, 2, 2));
 
 idxP6On = find(active(6,:), 1, 'last');
 
@@ -2142,9 +2169,15 @@ ref.center = C;
 end
 
 
-function ref = femurCurveWrapReference(raw, active, phiD, geo)
+function ref = femurCurveWrapReference(raw, active, phiD, geo, Pall)
 % Temporary femur wrap-loss model through p3, p4, and p5.  It is zero until
 % p3 is introduced and reaches its plateau when p5 is introduced.
+%
+% p3-clip routes (Ben, 2026-10-13): p4/p5 are repeats of p3, so the
+% femur-side bend is the direction change AT the clip contact p3, with
+% bend radius ||p3 - fcec|| (fcec = the femur condyle ellipse center =
+% geo.femurProfileCenter). The plateau angle is measured at full
+% flexion between the incoming p2->p3 and outgoing p3->p6 directions.
 
 idxP3On = find(active(3,:), 1, 'last');
 idxP5On = find(active(5,:), 1, 'last');
@@ -2153,16 +2186,27 @@ if isempty(idxP3On)
     idxP3On = 1;
 end
 
-if isempty(idxP5On)
-    idxP5On = idxP3On;
-end
-
 C = geo.femurProfileCenter;
-R3 = norm(raw(3,1:2,idxP3On) - C);
-R5 = norm(raw(5,1:2,idxP5On) - C);
 
-[alphaPlateauRad, okPlateau] = centralAngleUnsigned( ...
-    C, raw(3,1:2,idxP5On), raw(5,1:2,idxP5On));
+if isempty(idxP5On) && nargin >= 5 && ~isempty(Pall)
+    % Clip route: no p5 plateau anchor exists -- measure the p3 bend
+    % (radius ||p3 - fcec||, Ben 2026-10-13) at full flexion.
+    idxP5On = 1;
+    p3f = raw(3,1:2,idxP5On);
+    p2f = raw(2,1:2,idxP5On);
+    p6f = Pall(6,1:2,idxP5On);
+    R3 = norm(p3f - C);
+    R5 = R3;
+    [alphaPlateauRad, okPlateau] = vectorAngleUnsigned(p2f - p3f, p6f - p3f);
+else
+    if isempty(idxP5On)
+        idxP5On = idxP3On;
+    end
+    R3 = norm(raw(3,1:2,idxP3On) - C);
+    R5 = norm(raw(5,1:2,idxP5On) - C);
+    [alphaPlateauRad, okPlateau] = centralAngleUnsigned( ...
+        C, raw(3,1:2,idxP5On), raw(5,1:2,idxP5On));
+end
 
 ref = makeWABKARef( ...
     phiD(idxP3On), ...

@@ -7,22 +7,28 @@
 % length over the whole knee RoM, so it cannot produce torque
 % unpressurized.
 %
-% Design vector (8): xCam = [p6x p6y p7x p7y p8x p8y tendon p3dx],
-% p6:p8 in the t1 frame; p3dx is the femur-frame +X offset of the p3
-% clip (Ben, 2026-10-13: 25-50 mm). FIXED at the loaded Opt_run_Ext
-% winner: p1, pEnd, rest.
+% Design vector (7): xCam = [p6x p6y p7x p7y p8x p8y tendon], p6:p8 in
+% the t1 frame. The p3 clip is RETIRED -- p3:p5 keep their fcec-rule
+% seeds (Ben, 2026-10-13). FIXED at the loaded Opt_run_Ext winner:
+% p1, pEnd, rest.
 %
 % Objective: objective_KneeExtCam20mm (family objective + worst-angle
 % margin reward + arm-step penalty + push-neighborhood regularizer).
 % Constraints: nonlconExtCam20mm (family set incl. the hard no-stretch
-% cRestLength + theta(p6) rule + y-ordering + no points inside the
-% stock tibia clearance circles + the p6/p7 15 mm X window and 20-45 mm
-% height band + the VTUG
-% valve floor: the design must not exceed the human target at
-% vtugFloorKPa, because below that pressure the manifold cannot
-% throttle to the target). Cam designs evaluate the tibia wrap-loss
-% bend radius as the circumcircle of the actual p6:p8 contacts
-% (geo.tibiaWrapCircumcircle; the stock route keeps its legacy center).
+% cRestLength + y-ordering + no points inside the stock tibia
+% clearance circles + the p6/p7 15 mm X window and 20-45 mm height
+% band + p6-vs-condyle clearance at 10 deg extension + the VTUG valve
+% floor: the design must not exceed the human target at vtugFloorKPa,
+% because below that pressure the manifold cannot throttle to the
+% target). RETIRED per Ben, 2026-10-13: the theta(p6) limit, the p3
+% clip, the p8 contact-forcing binary + chord window (p8 is a CAD
+% design point that carries wrap loss when contacted; its Y stays in
+% the +/-5 mm driver box), and the hard arm-step cap (release
+% continuity is verified in the winner's arm curve instead -- the soft
+% arm-step penalty stays in the objective as seed doctrine). Cam
+% designs evaluate the tibia wrap-loss bend radius as the circumcircle
+% of the actually-contacted points (geo.tibiaWrapCircumcircle; the
+% stock route keeps its legacy center).
 %
 % Env knobs (read BEFORE parpool): OPTCAM_SURR_N (default 3000) and
 % OPTCAM_PS_N (default 15000) cap the surrogate/patternsearch budgets
@@ -41,11 +47,14 @@ if ~isempty(getenv('OPTCAM_PS_N'))
     psBudget = str2double(getenv('OPTCAM_PS_N'));
 end
 
-% Festo VTUG valve-manifold floor (Ben, 2026-10-12): the manifold does
-% not like to open/close below ~200 kPa, so the winner must still NEED
-% at least this pressure at every angle that carries a target. This,
-% not the search boxes, is what caps the cam size.
-vtugFloorKPa = 200;
+% Festo VTUG valve-manifold floor (Ben, 2026-10-13): the Festo datasheet
+% lists 1.5 bar minimum operating pressure with internal pilot air
+% supply (1.5-8 bar range; external pilot goes lower, even vacuum), so
+% the winner must still NEED at least this pressure at every angle
+% that carries a target. Any design feasible at a higher floor is
+% automatically feasible here; raise it again if the pilot supply
+% changes.
+vtugFloorKPa = 150;
 
 % Marks a full optimizer pass; the (commented) result save clears it
 % just before saving, mirroring Opt_run_Ext.
@@ -112,26 +121,31 @@ refPts = seedBase(6:8,1:2);
 refPts(1,:) = refPts(1,:) + adjPush*refPts(1,:)/norm(refPts(1,:));
 refPts(2,:) = refPts(2,:) + adjPush*refPts(2,:)/norm(refPts(2,:));
 
-xCamBase = [reshape(seedBase(6:8,1:2),1,6), tendonRef, 0.025];
-xCamPush = [reshape(refPts,1,6), tendonRef, 0.0375];
+xCamBase = [reshape(seedBase(6:8,1:2),1,6), tendonRef];
+xCamPush = [reshape(refPts,1,6), tendonRef];
 
 %% Bounds (t1 frame; the part grows on the proximal-anterior tibia)
 lbCam = [ ...
     seedBase(6,1)-0.010, seedBase(6,2)-0.020, ...
     seedBase(7,1)-0.010, seedBase(7,2)-0.040, ...
-    seedBase(8,1)-0.010, seedBase(8,2)-0.040, ...
-    ctx.geo.tendonMin, ...
-    0.025];   % p3 clip +X offset, m (Ben: 25-50 mm)
+    seedBase(8,1)-0.010, seedBase(8,2)-0.005, ...  % p8y +/-5 mm (Ben)
+    ctx.geo.tendonMin];
 ubCam = [ ...
     seedBase(6,1)+0.060, seedBase(6,2)+0.040, ...
     seedBase(7,1)+0.060, seedBase(7,2)+0.040, ...
-    seedBase(8,1)+0.050, seedBase(8,2)+0.030, ...
-    0.3, ...
-    0.050];   % p3 clip +X offset, m
+    seedBase(8,1)+0.050, seedBase(8,2)+0.005, ...  % p8y +/-5 mm (Ben)
+    0.3];
 
 obj = @(x) objective_KneeExtCam20mm(x, ctx, xFixed, refPts);
-nonlcon = @(x) nonlconExtCam20mm(x, ctx, xFixed, thetaP6BaseD, vtugFloorKPa);
+nonlcon = @(x) nonlconExtCam20mm(x, ctx, xFixed, vtugFloorKPa);
 objconstr = @(x) objconstrExt20mm(x, obj, nonlcon);
+
+% Warm start (2026-10-13): the clip-length / no-stretch / VTUG frontier
+% is narrow -- the surrogate missed it at 1000 evals. Seed with the
+% previous run's near-feasible winner in addition to the construction
+% and push rows.
+xCamSeedR5 = [0.128026, 0.020211, 0.128425, -0.017395, ...
+    0.065000, -0.016000, 0.117244];
 
 if isempty(gcp('nocreate'))
     parpool;
@@ -144,7 +158,7 @@ optsG = optimoptions('surrogateopt', ...
     'MaxFunctionEvaluations', surrBudget, ...
     'MinSampleDistance', 0.001, ...
     'ConstraintTolerance', 1e-6, ...
-    'InitialPoints', [xCamBase; xCamPush]);
+    'InitialPoints', [xCamBase; xCamPush; xCamSeedR5]);
 
 [xG, fG] = surrogateopt(objconstr, lbCam, ubCam, optsG);
 
@@ -176,40 +190,56 @@ end
 %% Winner evaluation and report
 [xFullBest, ctxCamBest] = camToExtDesign20mm(xBestCam, ctx, xFixed);
 predBest = predictKneeExt20mm(xFullBest, ctxCamBest);
-[cBest, ~] = nonlconExtCam20mm(xBestCam, ctx, xFixed, thetaP6BaseD, vtugFloorKPa);
+[cBest, ~] = nonlconExtCam20mm(xBestCam, ctx, xFixed, vtugFloorKPa);
 
 humanBest = interp1(ctx.humanAngleD, ctx.humanTorque, ctx.phiD, 'pchip', 'extrap');
 marginBest = (predBest.TorqueZ(:) - humanBest(:))./humanBest(:);
 requiredBest = (1 + ctx.requiredTorqueMargin)*abs(humanBest(:));
 marginReqBest = (abs(predBest.TorqueZ(:)) - requiredBest(:))./ctx.torqueScale;
 maxArmStepBest = max(abs(diff(predBest.momentArm)));
+[~, iStepBest] = max(abs(diff(predBest.momentArm)));
 
 fprintf('\n========== CAM-OPTIMIZED DESIGN ==========\n')
 fprintf('objective = %.6g (surrogate best %.6g, push first cut %.6g)\n', ...
     fBestCam, fG, fPush)
-fprintf('p6 = [%.6f %.6f] m, theta %.3f deg (baseline limit %.3f deg)\n', ...
+fprintf('p6 = [%.6f %.6f] m, theta %.3f deg (baseline constructed %.3f deg)\n', ...
     xBestCam(1:2), atan2d(xBestCam(2),xBestCam(1)), thetaP6BaseD)
 fprintf('p7 = [%.6f %.6f] m\n', xBestCam(3:4))
 fprintf('p8 = [%.6f %.6f] m\n', xBestCam(5:6))
 fprintf('tendon = %.6f m (baseline %.6f m)\n', xBestCam(7), tendonRef)
-fprintf('p3 clip: +%0.1f mm in x -> [%.6f %.6f] m (femur frame)\n', ...
-    1000*xBestCam(8), ctx.routeSeed(3,1)+xBestCam(8), ctx.routeSeed(3,2))
 fprintf('p7x - p6x = %+.1f mm (window 15 mm)\n', ...
     1000*(xBestCam(3)-xBestCam(1)))
 fprintf('p6y - p7y = %+.1f mm (band 20-45 mm)\n', ...
     1000*(xBestCam(2)-xBestCam(4)))
 fprintf('max constraint = %+.6f (cRestLength %+.6f, cContraction %+.6f, ', ...
     max(cBest), cBest(5), cBest(6))
-fprintf('cTendonMax %+.6f, cTheta %+.6f, cVtug@%dkPa %+.6f)\n', ...
-    cBest(1), cBest(7), vtugFloorKPa, cBest(end))
+fprintf('cTendonMax %+.6f, cP6Condyle %+.6f, cVtug@%dkPa %+.6f)\n', ...
+    cBest(1), cBest(end-1), vtugFloorKPa, cBest(end))
 fprintf('min torque margin vs required = %+.2f%%; vs plain target = %+.2f%%\n', ...
     100*min(marginReqBest), 100*min(marginBest))
-fprintf('moment arm: min %.1f mm, mean %.1f mm, max %.1f mm; max pose step %.2f mm\n', ...
+fprintf('moment arm: min %.1f mm, mean %.1f mm, max %.1f mm; max pose step %.2f mm at %.1f deg\n', ...
     1000*min(predBest.momentArm), 1000*mean(predBest.momentArm), ...
-    1000*max(predBest.momentArm), 1000*maxArmStepBest)
+    1000*max(predBest.momentArm), 1000*maxArmStepBest, ctx.phiD(iStepBest))
 wrapRadW = predBest.routeInfo.wrap.radius(2,:);
 fprintf('tibia wrap bend radius (circumcircle): %.1f - %.1f mm\n', ...
     1000*min(wrapRadW), 1000*max(wrapRadW))
+
+% p6 vs femoral condyles at 10 deg extension (informational distance;
+% the hard cP6Condyle constraint already enforces it).
+[~, idxExtPoseW] = max(ctx.phiD);
+T6extW = ctx.T_Pam(:,:,idxExtPoseW)*ctx.T_ICR_t1(:,:,idxExtPoseW);
+p6ExtW = RowVecTrans(T6extW, [xBestCam(1:2), 0]);
+dCondyleW = distanceToPolygonBoundary(p6ExtW(1:2), ...
+    ctx.geo.femurOffsetBoundary);
+inCondyleW = inpolygon(p6ExtW(1), p6ExtW(2), ...
+    ctx.geo.femurOffsetBoundary(:,1), ctx.geo.femurOffsetBoundary(:,2));
+if inCondyleW
+    fprintf('p6 is INSIDE the femoral-condyle envelope at %.1f deg extension by %.1f mm\n', ...
+        ctx.phiD(idxExtPoseW), 1000*dCondyleW)
+else
+    fprintf('p6 clears the femoral-condyle envelope at %.1f deg extension by %.1f mm\n', ...
+        ctx.phiD(idxExtPoseW), 1000*dCondyleW)
+end
 
 %% No-stretch / 0-pressure check: baseline vs first cut vs winner
 % The rule (Ben): at 0 pressure the BPA produces no torque, i.e. it is
@@ -245,8 +275,6 @@ fprintf('tendonAdj = %.6f;%% m\n', xBestCam(7))
 fprintf('p6Adj = [%.6f, %.6f];%% t1 frame\n', xBestCam(1:2))
 fprintf('p7Adj = [%.6f, %.6f];%% t1 frame\n', xBestCam(3:4))
 fprintf('p8Adj = [%.6f, %.6f];%% t1 frame\n', xBestCam(5:6))
-fprintf('p3Adj = [%.6f, %.6f];%% femur frame (p3 clip, +%0.1f mm in x)\n', ...
-    ctx.routeSeed(3,1)+xBestCam(8), ctx.routeSeed(3,2), 1000*xBestCam(8))
 
 %% Winner required-pressure envelope (VTUG floor check)
 % Coarse 20 kPa scan over the angles that carry an extension target:
@@ -326,6 +354,25 @@ fprintf('\nCreated %d winner diagnostic figures (exported to %s as Vas_Pam_20mm_
     numel(winnerFigs), resDir)
 
 %% Local functions
+function d = distanceToPolygonBoundary(pt, poly)
+% Shortest distance from a point to the closed polygon's edge loop.
+
+n = size(poly,1);
+A = poly;
+B = [poly(2:end,:); poly(1,:)];
+D = B - A;
+d2 = sum(D.^2, 2);
+valid = d2 > 1e-18;
+
+t = zeros(n,1);
+t(valid) = sum((pt - A(valid,:)).*D(valid,:), 2)./d2(valid);
+t = min(max(t, 0), 1);
+
+Q = A + t.*D;
+d = min(vecnorm(Q - pt, 2, 2));
+
+end
+
 function [pmin, pmax] = requiredPressureScanCam(xFull, ctxEval)
 % Coarse required-pressure scan (20 kPa grid; torque is monotone in
 % pressure) over the angles that carry an extension target.

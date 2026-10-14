@@ -328,28 +328,29 @@ fprintf('minimum torque margin = %+.6f (%+.2f%%)\n',min(torqueMarginFraction(val
 % clearance-driven femur-chain repair inside buildDistalRingLocation20mm,
 % and the elimination logic turns p5/p4 into repeats of their neighbors
 % wherever the adjusted route no longer needs them. Cam design below =
-% the revised Opt_run_ExtCam winner (2026-10-13: p6/p7 15 mm X window,
-% 20-45 mm height band, p3 clip, circumcircle bend radius from the
-% ACTIVE contacts; required pressure 248-500 kPa, zero stretch /
-% 0 N m at 0 kPa, margin vs required +31.8%). The first-cut 25.4 mm
-% radial push is recoverable with:
+% the FINAL design of record (run-8 Opt_run_ExtCam winner + the
+% verified p8/tendon adjustment, saved as
+% Vas_Pam_20mm_Result_cam_20261014_*.mat): p8 on the clip's distal
+% edge, 10 mm past the pEnd -> p7 chord (+2.05 mm of path, tendon grown
+% by the same amount). Wrap bend radius = p7x - p9x (Ben, 2026-10-14;
+% 96.9 mm). Verified: margin +30.8% vs required, arm step 1.39 mm at
+% -55.7 deg, p8 a permanent contact, required pressure ~245-505 kPa,
+% zero stretch / 0 N m at 0 kPa. The first-cut 25.4 mm radial push is
+% recoverable with:
 %   p6Adj = routeInfo.seed20(6,1:2);
 %   p6Adj = p6Adj + 0.0254*p6Adj/norm(p6Adj);   (same for p7)
-tendonAdj = 0.083119;                  % adjusted tendon length, m
-p6Adj = [0.112477, 0.014015];          % t1 frame [x y]
-p7Adj = [0.125165, -0.020398];         % t1 frame [x y]
-p8Adj = [0.065104, -0.020402];         % t1 frame [x y]
-p3Adj = [0.092155, -0.426800];         % femur frame [x y] (p3 clip, +28.1 mm in x)
+tendonAdj = 0.092490;                  % adjusted tendon length, m
+p6Adj = [0.116323, 0.015040];          % t1 frame [x y]
+p7Adj = [0.131323, -0.018974];         % t1 frame [x y]
+p8Adj = [0.127039, -0.047873];         % t1 frame [x y] (clip distal edge, 10 mm past the pEnd->p7 chord)
+p3Adj = [];                            % femur frame [x y] p3 clip; [] = none (RETIRED 2026-10-13)
 
-% Ben's constraint: the angle theta of the line p6-t1 (t1 is the frame
-% origin) must not increase -- theta' <= theta.
+% Ben, 2026-10-13: the theta(p6) <= theta(p6 baseline) angular
+% restriction is RETIRED -- reported for information only. p6 clearance
+% to the femoral condyles at 10 deg extension is enforced in
+% Opt_run_ExtCam's constraint set.
 thetaP6D    = atan2d(routeInfo.seed20(6,2), routeInfo.seed20(6,1));
 thetaP6AdjD = atan2d(p6Adj(2), p6Adj(1));
-if thetaP6AdjD > thetaP6D + 1e-9
-    error('Knee_Extensor_20mm:P6ThetaIncreased', ...
-        'theta(p6'') = %.3f deg exceeds theta(p6) = %.3f deg: the t1-frame angle of the p6 line must not increase.', ...
-        thetaP6AdjD, thetaP6D)
-end
 
 % The clip part replaces the stock tibia contact geometry, so p6:p8
 % enter as explicit t1 points (geo.seedP6XY etc. in
@@ -414,7 +415,7 @@ else
     fprintf('p3 = [%.5f %.5f] m (femur frame, p3 clip)\n', p3Adj)
 end
 if ~isequal(routeInfoAdj.seed20(3:5,1:2), routeInfo.seed20(3:5,1:2))
-    fprintf('p3:p5 moved with p6 (clearance-driven femur-chain repair):\n')
+    fprintf('p3:p5 moved (p3 clip and/or clearance-driven femur-chain repair):\n')
     for rowAdj = 3:5
         fprintf('  p%d: [%.5f %.5f] -> [%.5f %.5f] m\n', rowAdj, ...
             routeInfo.seed20(rowAdj,1:2), ...
@@ -459,10 +460,10 @@ xLimits = [min(phiD),max(phiD)];
 figure('Name','Extensor Torque', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
 ax = gca;
 hold(ax,'on')
-plot(ax,phiD,Torque0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
+plot(ax,phiD,Torque0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa')
 plot(ax,phiD,Torque2,'--','Color',optClr2,'LineWidth',2,'DisplayName','Optimized BPA, 200 kPa')
 plot(ax,phiD,Torque3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa')
-plot(ax,phiD,Torque0_adj,'-.','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, adj route')
+plot(ax,phiD,Torque0_adj,'-.','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa, adj route')
 plot(ax,phiD,Torque1_adj,'--','Color',adjColor,'LineWidth',2,'DisplayName','Optimized BPA, 200 kPa, adj route')
 plot(ax,phiD,Torque2_adj,'-','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa, adj route')
 plot(ax,ctx.humanAngleD,ctx.humanTorque,':','Color',humanColor,'LineWidth',4,'DisplayName','Human target')
@@ -485,10 +486,10 @@ formatLegend(ax,fontName,legendFontSize)
 figure('Name','Muscle Length', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
 ax = gca;
 hold(ax,'on')
-plot(ax,phiD,Lm0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
+plot(ax,phiD,Lm0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa')
 plot(ax,phiD,Lm2,'-','Color',optClr2,'LineWidth',2.5,'DisplayName','Optimized BPA, 200 kPa')
 plot(ax,phiD,Lm3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa')
-plot(ax,phiD,Lm0_adj,'-.','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, adj route')
+plot(ax,phiD,Lm0_adj,'-.','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa, adj route')
 plot(ax,phiD,Lm1_adj,'--','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 200 kPa, adj route')
 plot(ax,phiD,Lm2_adj,'-','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa, adj route')
 formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
@@ -501,10 +502,10 @@ formatLegend(ax,fontName,legendFontSize)
 figure('Name','Relative Strain', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
 ax = gca;
 hold(ax,'on')
-plot(ax,phiD,relstrain0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
+plot(ax,phiD,relstrain0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa')
 plot(ax,phiD,relstrain2,'-','Color',optClr2,'LineWidth',2.5,'DisplayName','Optimized BPA')
 plot(ax,phiD,relstrain3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA')
-plot(ax,phiD,relstrain0_adj,'-.','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, adj route')
+plot(ax,phiD,relstrain0_adj,'-.','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa, adj route')
 plot(ax,phiD,relstrain1_adj,'--','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 200 kPa, adj route')
 plot(ax,phiD,relstrain2_adj,'-','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa, adj route')
 formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
@@ -517,10 +518,10 @@ formatLegend(ax,fontName,legendFontSize)
 figure('Name','Moment Arm', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
 ax = gca;
 hold(ax,'on')
-plot(ax,phiD,G0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
+plot(ax,phiD,G0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa')
 plot(ax,phiD,G2,'-','Color',optClr2,'LineWidth',2.5,'DisplayName','Optimized BPA, 200 kPa')
 plot(ax,phiD,G3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa')
-plot(ax,phiD,G0_adj,'-.','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, adj route')
+plot(ax,phiD,G0_adj,'-.','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa, adj route')
 plot(ax,phiD,G1_adj,'--','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 200 kPa, adj route')
 plot(ax,phiD,G2_adj,'-','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa, adj route')
 formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
@@ -794,7 +795,7 @@ tGeo = tiledlayout( ...
     nTileRows, nTileCols, ...
     'TileSpacing','compact', ...
     'Padding','compact');
-hGeoLegend = gobjects(10,1);
+hGeoLegend = gobjects(11,1);
 
 for qPlot = 1:nPoseTiles
 
@@ -812,7 +813,7 @@ for qPlot = 1:nPoseTiles
     ax = nexttile(tGeo,qPlot);
     hold(ax, 'on')
     colororder(ax, plt.rgbclr)
-    hGeo = gobjects(10,1);
+    hGeo = gobjects(11,1);
 
     % Femur cylinder clearance
     C = ctx.geo.femurCylCenter;
@@ -902,15 +903,34 @@ for qPlot = 1:nPoseTiles
 
     % Adjusted route (clip-on tibia part) overlay in the same femur
     % frame: t1 rows converted through ICR exactly like the baseline.
+    % Eliminated rows repeat their neighbors (p8 repeats p7 at every
+    % pose in the run-8 design; p6 repeats p7 beyond its release), so
+    % the routed markers alone HIDE those CAD design points. Draw the
+    % CANDIDATE p6:p8 points as open diamonds with indigo labels so
+    % every design point stays visible whether or not the route
+    % contacts it.
     PAdj = routeInfoAdj.raw(:,:,ii);
+    PCand = routeInfoAdj.candidateRaw(:,:,ii);
     for j = 6:9
         qICRAdj = RowVecTrans(T_ICR_t1(:,:,ii), PAdj(j,:));
         PAdj(j,:) = RowVecTrans(T_Pam(:,:,ii), qICRAdj);
+        qCandAdj = RowVecTrans(T_ICR_t1(:,:,ii), PCand(j,:));
+        PCand(j,:) = RowVecTrans(T_Pam(:,:,ii), qCandAdj);
     end
     hGeo(10) = plot(ax, PAdj(:,1), PAdj(:,2), 'o--', ...
         'Color', adjColor, 'LineWidth', plt.lineW, ...
         'MarkerSize', plt.markersz, ...
         'MarkerFaceColor', adjColor, 'MarkerEdgeColor', 'none');
+    hGeo(11) = plot(ax, PCand(6:8,1), PCand(6:8,2), 'd', ...
+        'Color', adjColor, 'LineWidth', plt.lineW, ...
+        'MarkerSize', plt.markersz, 'MarkerFaceColor', 'none', ...
+        'MarkerEdgeColor', adjColor);
+    for j = 6:8
+        text(ax, PCand(j,1), PCand(j,2), sprintf(' p%d',j), ...
+            'Color', adjColor, ...
+            'FontName', plt.fontN, 'FontSize', plt.lgdFontsz, ...
+            'FontWeight', 'bold', 'Interpreter','none')
+    end
 
     % Highlight optimized design endpoints
     hGeo(8) = scatter(ax, P(1,1), P(1,2), plt.scattersz, ...
@@ -951,7 +971,8 @@ makeRouteLegendR(axLeg, hGeoLegend, { ...
     'p1:p9 optimized route', ...
     'Optimized p1', ...
     'Optimized pEnd', ...
-    'p1:p9 adj route (clip part)'}, plt);
+    'p1:p9 adj route (clip part)', ...
+    'p6:p8 adj CAD points (open)'}, plt);
 
 %% Static muscle/bone plot at exactly zero knee angle
 % One common input list prevents static/animated frame conventions diverging.
