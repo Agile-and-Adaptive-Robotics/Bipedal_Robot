@@ -158,5 +158,15 @@ it on any machine after pulling.
 | `Code\Matlab\HX711-LoadCell\HX711 v3.0\hx711_redesign_matlab2025\HX711.m` → `.superseded` | earlier redesign draft this app supersedes. |
 | Zips (`github_repo.zip`, `HX711 v3.0.zip`, `hx711_redesign_matlab2025.zip`) | untouched archives; not on the MATLAB path. |
 
+**2026-10-03: the whole `Code\Matlab\HX711-LoadCell\` folder (clean File-Exchange
+original, redesign draft, archives) was DELETED at Ben's request — its inner
+"HX711 v3.0" directory name collided with the live app folder and caused
+confusion. Everything in it is recoverable from git history
+(`git checkout <commit> -- "Code/Matlab/HX711-LoadCell"`). The window now
+also shrink-fits + centers itself on the launch display (`fitToScreen` in
+`HX711_BPA.m`): the design grid is 1120x900 px and is uniformly scaled
+(component positions + fonts, floor 8 pt) when a screen is shorter, so the
+app is usable on laptop displays.**
+
 License: original app copyright 2018 Nicholas Giacoboni (BSD); AARL/BPA
 modifications as noted in the app's License tab.

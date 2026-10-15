@@ -51,29 +51,36 @@ addpath(fullfile(root, 'Testing_Data', '2022_02_Festo'), '-end');
 % builder's Xi pick moved on since the run and the display would mislabel
 % the design. Do not load old Location/bendMeasure arrays or expect
 % separate saved endpoint variables.
-% 2026-10-03 (dissertation figure export): pointed at the dated design of
-% record (2026-09-25 full-workspace save) instead of the undated mat.
-resultFile = fullfile(scriptDir, 'Vas_Pam_20mm_Result_20260925.mat');
+resultFile = fullfile(scriptDir, 'Vas_Pam_20mm_Result.mat');
+% One load call: the "Variable 'XiUsed' not found" warning below is
+% expected for the 2026-09-25 full-workspace save pattern (its Xi block
+% lives inside the saved ctx); S still receives every variable that IS
+% present.
 S = load(resultFile, 'xBest', 'XiUsed', 'ctx');
-% The 2026-09-25 mat predates the XiUsed record (verified by whos: it
-% carries ctx but no XiUsed). Its own full-workspace ctx holds the run's
-% Xi block, so recover XiUsed from there; the builder-vs-run drift check
-% below still applies unchanged.
-if ~isfield(S,'XiUsed') && isfield(S,'ctx')
-    S.XiUsed = [S.ctx.Xi0, S.ctx.Xi1, S.ctx.Xi2, S.ctx.Xi3];
-end
-if ~isfield(S,'xBest') || ~isfield(S,'XiUsed')
+if ~isfield(S,'xBest')
     error('Knee_Extensor_20mm:MissingResult', ...
-        '%s must contain xBest and XiUsed from Opt_run_Ext.', resultFile)
+        '%s must contain xBest from Opt_run_Ext.', resultFile)
+end
+% Xi record of the run: dated Opt_run_Ext results save a top-level XiUsed;
+% the 2026-09-25 full-workspace save pattern carries the same block inside
+% its saved ctx. Either source is accepted; the mismatch guard below is
+% unchanged.
+if isfield(S,'XiUsed')
+    xiRun = S.XiUsed;
+elseif isfield(S,'ctx') && isfield(S.ctx,'Xi0')
+    xiRun = [S.ctx.Xi0, S.ctx.Xi1, S.ctx.Xi2, S.ctx.Xi3];
+else
+    error('Knee_Extensor_20mm:MissingResult', ...
+        '%s must contain xBest and XiUsed (or a saved ctx) from Opt_run_Ext.', resultFile)
 end
 
 ctx = buildKneeExtContext20mm();
 
 xiBuilt = [ctx.Xi0, ctx.Xi1, ctx.Xi2, ctx.Xi3];
-if ~isequal(xiBuilt, S.XiUsed)
+if ~isequal(xiBuilt, xiRun)
     error('Knee_Extensor_20mm:XiMismatch', ...
-        'Builder Xi [%.6g %.6g %.6g %.6g] does not equal run XiUsed [%.6g %.6g %.6g %.6g]. Update buildKneeExtContext20mm or repoint resultFile.', ...
-        xiBuilt, S.XiUsed)
+        'Builder Xi [%.6g %.6g %.6g %.6g] does not equal run Xi [%.6g %.6g %.6g %.6g]. Update buildKneeExtContext20mm or repoint resultFile.', ...
+        xiBuilt, xiRun)
 end
 
 xBest = reshape(S.xBest,1,[]);
@@ -313,11 +320,133 @@ fprintf('tendon = %.6f m\n',tendon)
 fprintf('kmax   = %.6f m\n',kmax)
 fprintf('minimum torque margin = %+.6f (%+.2f%%)\n',min(torqueMarginFraction(validHumanTorque)),100*min(torqueMarginFraction(validHumanTorque)))
 
+%% Clip-on proximal-anterior tibia part: adjusted-route results (Ben,
+% 2026-10-12). p1, pEnd, and rest stay at the loaded Opt_run_Ext design;
+% the allowed changes are the tendon length and the t1-frame contacts
+% p6:p8, which sit on the clip-on part that adds moment arm. p3:p5 are
+% NOT edited here: they follow p6 automatically through the
+% clearance-driven femur-chain repair inside buildDistalRingLocation20mm,
+% and the elimination logic turns p5/p4 into repeats of their neighbors
+% wherever the adjusted route no longer needs them. Cam design below =
+% the FINAL design of record (run-8 Opt_run_ExtCam winner + the
+% verified p8/tendon adjustment, saved as
+% Vas_Pam_20mm_Result_cam_20261014_*.mat): p8 on the clip's distal
+% edge, 10 mm past the pEnd -> p7 chord (+2.05 mm of path, tendon grown
+% by the same amount). Wrap bend radius = p7x - p9x (Ben, 2026-10-14;
+% 96.9 mm). Verified: margin +30.8% vs required, arm step 1.39 mm at
+% -55.7 deg, p8 a permanent contact, required pressure ~245-505 kPa,
+% zero stretch / 0 N m at 0 kPa. The first-cut 25.4 mm radial push is
+% recoverable with:
+%   p6Adj = routeInfo.seed20(6,1:2);
+%   p6Adj = p6Adj + 0.0254*p6Adj/norm(p6Adj);   (same for p7)
+tendonAdj = 0.092490;                  % adjusted tendon length, m
+p6Adj = [0.116323, 0.015040];          % t1 frame [x y]
+p7Adj = [0.131323, -0.018974];         % t1 frame [x y]
+p8Adj = [0.127039, -0.047873];         % t1 frame [x y] (clip distal edge, 10 mm past the pEnd->p7 chord)
+p3Adj = [];                            % femur frame [x y] p3 clip; [] = none (RETIRED 2026-10-13)
+
+% Ben, 2026-10-13: the theta(p6) <= theta(p6 baseline) angular
+% restriction is RETIRED -- reported for information only. p6 clearance
+% to the femoral condyles at 10 deg extension is enforced in
+% Opt_run_ExtCam's constraint set.
+thetaP6D    = atan2d(routeInfo.seed20(6,2), routeInfo.seed20(6,1));
+thetaP6AdjD = atan2d(p6Adj(2), p6Adj(1));
+
+% The clip part replaces the stock tibia contact geometry, so p6:p8
+% enter as explicit t1 points (geo.seedP6XY etc. in
+% buildDistalRingLocation20mm). NOTE: the bypass gates still test the
+% STOCK tibia clearance circles; clip-part collision is not modeled.
+ctxAdj = ctx;
+ctxAdj.geo.seedP6XY = p6Adj;
+ctxAdj.geo.seedP7XY = p7Adj;
+ctxAdj.geo.seedP8XY = p8Adj;
+ctxAdj.geo.tibiaWrapCircumcircle = true;   % bend radius = circumcircle of p6:p8
+if ~isempty(p3Adj)
+    ctxAdj.geo.seedP3XY = p3Adj;
+end
+
+[LocationAdj,bendMeasureAdj,routeInfoAdj] = ...
+    buildDistalRingLocation20mm(p1,pEnd,tendonAdj,ctxAdj);
+[Location0Adj,bendMeasure0Adj] = ...
+    buildDistalRingLocation20mm(p10,pEnd0,tendonAdj,ctxAdj);
+
+if isequal(tendonAdj,tendon) && ...
+        isequal(p6Adj,routeInfo.seed20(6,1:2)) && ...
+        isequal(p7Adj,routeInfo.seed20(7,1:2)) && ...
+        isequal(p8Adj,routeInfo.seed20(8,1:2))
+    fprintf(['\nadj inputs equal the baseline values -- adj route ', ...
+        'identical (max |dLocation| = %.3g) until the adj block is ', ...
+        'edited.\n'], max(abs(LocationAdj(:) - Location(:))))
+end
+
+% Adj family (Ben): 0 = original design, 1 = optimized at 200 kPa,
+% 2 = optimized at 620 kPa -- the adj counterparts of Vas_Pam0,
+% Vas_Pam2, and Vas_Pam3, all with the adjusted tendon length.
+Vas_Pam0_adj = MonoPamDataExplicit_balanceX3(Name,Location0Adj,CrossPoint,Dia,T_Pam,rest0,kmax0,tendonAdj,fitting,pres,Xi0,Xi1,Xi2,Xi3,wraps,phiD,BPAcount,bendMeasure0Adj);
+Vas_Pam1_adj = MonoPamDataExplicit_balanceX3(Name,LocationAdj,CrossPoint,Dia,T_Pam,rest,kmax,tendonAdj,fitting,200,Xi0,Xi1,Xi2,Xi3,wraps,phiD,BPAcount,bendMeasureAdj);
+Vas_Pam2_adj = MonoPamDataExplicit_balanceX3(Name,LocationAdj,CrossPoint,Dia,T_Pam,rest,kmax,tendonAdj,fitting,pres,Xi0,Xi1,Xi2,Xi3,wraps,phiD,BPAcount,bendMeasureAdj);
+
+Torque0_adj = Vas_Pam0_adj.Torque_p(:,3);
+Torque1_adj = Vas_Pam1_adj.Torque_p(:,3);
+Torque2_adj = Vas_Pam2_adj.Torque_p(:,3);
+Lm0_adj = rest0.*(1-Vas_Pam0_adj.strain_p(:));
+Lm1_adj = rest.*(1-Vas_Pam1_adj.strain_p(:));
+Lm2_adj = rest.*(1-Vas_Pam2_adj.strain_p(:));
+relstrain0_adj = Vas_Pam0_adj.strain_f(:)/KMAX;
+relstrain1_adj = Vas_Pam1_adj.strain_f(:)/KMAX;
+relstrain2_adj = Vas_Pam2_adj.strain_f(:)/KMAX;
+G0_adj = hypot(Vas_Pam0_adj.mA_p(:,1),Vas_Pam0_adj.mA_p(:,2));
+G1_adj = hypot(Vas_Pam1_adj.mA_p(:,1),Vas_Pam1_adj.mA_p(:,2));
+G2_adj = hypot(Vas_Pam2_adj.mA_p(:,1),Vas_Pam2_adj.mA_p(:,2));
+
+torqueMarginFractionAdj = nan(size(Torque2_adj));
+torqueMarginFractionAdj(validHumanTorque) = ...
+    Torque2_adj(validHumanTorque)./humanTorque(validHumanTorque)-1;
+
+fprintf('\nAdjusted route (clip-on tibia part):\n')
+fprintf('tendon = %.6f m (baseline %.6f m)\n', tendonAdj, tendon)
+fprintf('p6 = [%.5f %.5f] m, theta %.3f -> %.3f deg\n', ...
+    p6Adj, thetaP6D, thetaP6AdjD)
+fprintf('p7 = [%.5f %.5f] m\n', p7Adj)
+fprintf('p8 = [%.5f %.5f] m\n', p8Adj)
+if isempty(p3Adj)
+    fprintf('p3 clip: none\n')
+else
+    fprintf('p3 = [%.5f %.5f] m (femur frame, p3 clip)\n', p3Adj)
+end
+if ~isequal(routeInfoAdj.seed20(3:5,1:2), routeInfo.seed20(3:5,1:2))
+    fprintf('p3:p5 moved (p3 clip and/or clearance-driven femur-chain repair):\n')
+    for rowAdj = 3:5
+        fprintf('  p%d: [%.5f %.5f] -> [%.5f %.5f] m\n', rowAdj, ...
+            routeInfo.seed20(rowAdj,1:2), ...
+            routeInfoAdj.seed20(rowAdj,1:2))
+    end
+else
+    fprintf('p3:p5 unchanged (femur-chain repair did not fire)\n')
+end
+for rowAdj = 2:8
+    elimAdjD = routeInfoAdj.eliminatedAngleD(rowAdj);
+    if isnan(elimAdjD)
+        fprintf('p%d: active through the full RoM\n', rowAdj)
+    else
+        fprintf('p%d: repeats its neighbor from %+.2f deg on\n', ...
+            rowAdj, elimAdjD)
+    end
+end
+adjMarginMin = min(torqueMarginFractionAdj(validHumanTorque),[],'omitnan');
+if isempty(adjMarginMin) || isnan(adjMarginMin)
+    fprintf('adj minimum torque margin = NaN (no finite adj torque)\n')
+else
+    fprintf('adj minimum torque margin = %+.6f (%+.2f%%)\n', ...
+        adjMarginMin, 100*adjMarginMin)
+end
+
 %% Plot settings
 run('Colors.m')
 originalColor = [0.4 0.4 0.4];
 optimizedColor = c{6};
 optClr2 = c{5};
+adjColor = c{7};    % indigo: clip-on-part adjusted route family
 humanColor = '#000000';
 fontName = 'Arial';
 axesFontSize = 10;
@@ -331,14 +460,18 @@ xLimits = [min(phiD),max(phiD)];
 figure('Name','Extensor Torque', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
 ax = gca;
 hold(ax,'on')
-plot(ax,phiD,Torque0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
+plot(ax,phiD,Torque0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa')
 plot(ax,phiD,Torque2,'--','Color',optClr2,'LineWidth',2,'DisplayName','Optimized BPA, 200 kPa')
 plot(ax,phiD,Torque3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa')
+plot(ax,phiD,Torque0_adj,'-.','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa, adj route')
+plot(ax,phiD,Torque1_adj,'--','Color',adjColor,'LineWidth',2,'DisplayName','Optimized BPA, 200 kPa, adj route')
+plot(ax,phiD,Torque2_adj,'-','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa, adj route')
 plot(ax,ctx.humanAngleD,ctx.humanTorque,':','Color',humanColor,'LineWidth',4,'DisplayName','Human target')
 formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
 % Fit the signed torque data; the old [0 15] limit clipped these predictions.
-torqueLimits = [min([0;Torque0(:);Torque2(:);Torque3(:);ctx.humanTorque(:)]), ...
-               max([0;Torque0(:);Torque2(:);Torque3(:);ctx.humanTorque(:)])];
+% omitnan: the adj route can run past KMAX and return NaN torques.
+torqueLimits = [min([0;Torque0(:);Torque2(:);Torque3(:);Torque0_adj(:);Torque1_adj(:);Torque2_adj(:);ctx.humanTorque(:)],[],'omitnan'), ...
+               max([0;Torque0(:);Torque2(:);Torque3(:);Torque0_adj(:);Torque1_adj(:);Torque2_adj(:);ctx.humanTorque(:)],[],'omitnan')];
 torquePadding = 0.05*diff(torqueLimits);
 if torquePadding == 0
     torquePadding = 1;
@@ -353,9 +486,12 @@ formatLegend(ax,fontName,legendFontSize)
 figure('Name','Muscle Length', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
 ax = gca;
 hold(ax,'on')
-plot(ax,phiD,Lm0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
+plot(ax,phiD,Lm0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa')
 plot(ax,phiD,Lm2,'-','Color',optClr2,'LineWidth',2.5,'DisplayName','Optimized BPA, 200 kPa')
 plot(ax,phiD,Lm3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa')
+plot(ax,phiD,Lm0_adj,'-.','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa, adj route')
+plot(ax,phiD,Lm1_adj,'--','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 200 kPa, adj route')
+plot(ax,phiD,Lm2_adj,'-','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa, adj route')
 formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
 xlabel(ax,'\theta_k, °','Interpreter','tex','FontWeight','bold')
 ylabel(ax,'Muscle Length, m','FontWeight','bold')
@@ -366,9 +502,12 @@ formatLegend(ax,fontName,legendFontSize)
 figure('Name','Relative Strain', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
 ax = gca;
 hold(ax,'on')
-plot(ax,phiD,relstrain0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
+plot(ax,phiD,relstrain0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa')
 plot(ax,phiD,relstrain2,'-','Color',optClr2,'LineWidth',2.5,'DisplayName','Optimized BPA')
 plot(ax,phiD,relstrain3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA')
+plot(ax,phiD,relstrain0_adj,'-.','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa, adj route')
+plot(ax,phiD,relstrain1_adj,'--','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 200 kPa, adj route')
+plot(ax,phiD,relstrain2_adj,'-','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa, adj route')
 formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
 xlabel(ax,'\theta_k, °','Interpreter','tex','FontWeight','bold')
 ylabel(ax,[char(949) '^{*}'], 'Interpreter','tex','FontName','Arial','FontWeight','bold');
@@ -379,13 +518,41 @@ formatLegend(ax,fontName,legendFontSize)
 figure('Name','Moment Arm', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
 ax = gca;
 hold(ax,'on')
-plot(ax,phiD,G0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA')
+plot(ax,phiD,G0,'--','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa')
 plot(ax,phiD,G2,'-','Color',optClr2,'LineWidth',2.5,'DisplayName','Optimized BPA, 200 kPa')
 plot(ax,phiD,G3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa')
+plot(ax,phiD,G0_adj,'-.','Color',originalColor,'LineWidth',2,'DisplayName','Original BPA, 620 kPa, adj route')
+plot(ax,phiD,G1_adj,'--','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 200 kPa, adj route')
+plot(ax,phiD,G2_adj,'-','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, 620 kPa, adj route')
 formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
 xlabel(ax,'\theta_k, °','Interpreter','tex','FontWeight','bold')
 ylabel(ax,'Moment Arm, m','FontWeight','bold')
 title(ax,'Moment Arm','FontName',fontName,'FontSize',titleFontSize,'FontWeight','bold')
+formatLegend(ax,fontName,legendFontSize)
+
+%% BPA force and moment arm (Opt_run_Ext-style dual-axis figure, Ben,
+% 2026-10-12) with the adj route overlaid for comparison.
+F2 = vecnorm(Vas_Pam2.F_p,2,2);
+F3 = vecnorm(Vas_Pam3.F_p,2,2);
+F1_adj = vecnorm(Vas_Pam1_adj.F_p,2,2);
+F2_adj = vecnorm(Vas_Pam2_adj.F_p,2,2);
+
+figure('Name','BPA Force and Moment Arm', 'Color','w', 'Units','centimeters', 'Position',figurePosition)
+ax = gca;
+yyaxis(ax,'left')
+hold(ax,'on')
+plot(ax,phiD,F2,'--','Color',optClr2,'LineWidth',2,'DisplayName','BPA force, 200 kPa')
+plot(ax,phiD,F3,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','BPA force, 620 kPa')
+plot(ax,phiD,F1_adj,'--','Color',adjColor,'LineWidth',2,'DisplayName','BPA force, 200 kPa, adj route')
+plot(ax,phiD,F2_adj,'-','Color',adjColor,'LineWidth',2.5,'DisplayName','BPA force, 620 kPa, adj route')
+ylabel(ax,'Total BPA force, N','FontWeight','bold')
+yyaxis(ax,'right')
+plot(ax,phiD,G3,'-.','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Moment arm, 620 kPa')
+plot(ax,phiD,G2_adj,'-.','Color',adjColor,'LineWidth',2.5,'DisplayName','Moment arm, 620 kPa, adj route')
+ylabel(ax,'Moment Arm, m','FontWeight','bold')
+formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
+xlabel(ax,'\theta_k, °','Interpreter','tex','FontWeight','bold')
+title(ax,'BPA Force and Moment Arm','FontName',fontName,'FontSize',titleFontSize,'FontWeight','bold')
 formatLegend(ax,fontName,legendFontSize)
 
 %% Torque margin
@@ -393,6 +560,7 @@ figure('Name','Torque Margin Fraction', 'Color','w', 'Units','centimeters', 'Pos
 ax = gca;
 hold(ax,'on')
 plot(ax,phiD,100*torqueMarginFraction,'-','Color',optimizedColor,'LineWidth',2.5,'DisplayName','Optimized BPA')
+plot(ax,phiD,100*torqueMarginFractionAdj,'-','Color',adjColor,'LineWidth',2.5,'DisplayName','Optimized BPA, adj route')
 % The extensor objective originally has no extra torque-margin field.
 requiredMargin = 0;
 if isfield(ctx,'requiredTorqueMargin')
@@ -409,6 +577,189 @@ xlabel(ax,'\theta_k, °','FontWeight','bold')
 ylabel(ax,'Torque Margin, %','FontWeight','bold')
 title(ax,'BPA Torque Margin Relative to Human','FontName',fontName,'FontSize',titleFontSize,'FontWeight','bold')
 formatLegend(ax,fontName,legendFontSize)
+
+%% ExtTest20mm_1: measured torque via the Adjoint transform
+% Reads the 'ExtTest20mm_1' tab of Testing_Data\2026_06_Festo\
+% Results_table_20mm.xlsx (row 6 Load (N), row 7 knee angle, row 8
+% pressure, row 10 load-cell angle (tibia)), then transforms each measured
+% load-cell wrench to the moving knee ICR with the same Adjoint machinery
+% as the 40 mm extensor tests (Knee_Extensor_40mm.m). Extension torque
+% comes out POSITIVE, matching the tab's row-16 formula (no negative).
+% Prints the Torque actual values for paste into row 17 of the tab.
+extXlsx1 = fullfile(root,'Testing_Data','2026_06_Festo','Results_table_20mm.xlsx');
+extSheet1 = 'ExtTest20mm_1';
+% Reaction-point geometry of this test in the tibia (theta1) frame.
+% Defaults are the 40 mm extensor test-1 values -- UPDATE after the 20 mm
+% rig setup is measured.
+dExt1   = 292.9/1000;    % theta1 origin -> load-cell arm, m
+angExt1 = -90.83;         % arm angle in the tibia frame, deg
+
+T20e = readcell(extXlsx1,'Sheet',extSheet1);
+keepE1 = false(1, size(T20e,2));
+keepE1(3:end) = cellfun(@(x) isnumeric(x) && isscalar(x) && ~isnan(x), ...
+    T20e(6,3:end));
+
+if ~any(keepE1)
+    fprintf(['%s: no measured Load data yet -- measured-torque ', ...
+        'section skipped.\n'], extSheet1);
+else
+    LoadE1 = cell2mat(T20e(6,keepE1));     % N
+    KEd1   = cell2mat(T20e(7,keepE1));     % knee angle, deg
+    PE1    = cell2mat(T20e(8,keepE1));     % pressure, kPa
+    LCEd1  = cell2mat(T20e(10,keepE1));    % load-cell angle (tibia), deg
+    KE1  = KEd1*cdeg;
+    % LC angle convention (Ben, 2026-10-04): entered FROM THE TIBIA AXIS
+    % (torque about t1 = F*sin(LC+0.83 deg)*d). The Adjoint machinery
+    % wants the force angle from the tibia x-axis: 90 - LC.
+    LCE1 = deg2rad(90 - LCEd1);
+
+    p_rfE1 = [dExt1*cosd(angExt1), dExt1*sind(angExt1), 0]';
+    T_t1_rfE1 = RpToTrans(eye(3),p_rfE1);
+    TrkE1 = pagemtimes(TransInv(T_t1_rfE1),T_t1_ICR);
+    % phi is 100x1; fit needs column X (the phi' row form errored once
+    % the tab held measured data).
+    fcnE1x = fit(phi, squeeze(TrkE1(1,4,:)),'cubicspline');
+    fcnE1y = fit(phi, squeeze(TrkE1(2,4,:)),'cubicspline');
+
+    FrE1 = zeros(6,1,numel(LoadE1));
+    FkE1 = zeros(6,1,numel(LoadE1));
+    for i = 1:numel(LoadE1)
+        TrkE1i = RpToTrans(eye(3),[fcnE1x(KE1(i)), fcnE1y(KE1(i)), 0]');
+        FrE1(:,:,i) = -[0; 0; 0; LoadE1(i)*cos(pi-LCE1(i)); ...
+            LoadE1(i)*sin(pi-LCE1(i)); 0];
+        FkE1(:,:,i) = Adjoint(TrkE1i)'*FrE1(:,:,i);
+    end
+    TorqueZE1 = squeeze(FkE1(3,1,:));
+
+    fprintf('%s Torque actual (paste into row 17 of the tab):\n', extSheet1);
+    fprintf('%.4f\t', TorqueZE1); fprintf('\n');
+
+    figure('Name','ExtTest20mm_1 measured vs predicted','Color','w')
+    ax = gca;
+    hold(ax,'on')
+    plot(ax,phiD,Torque3,'-','Color',optimizedColor,'LineWidth',2.5, ...
+        'DisplayName','Optimized BPA, 620 kPa')
+    plot(ax,ctx.humanAngleD,ctx.humanTorque,':','Color',humanColor, ...
+        'LineWidth',4,'DisplayName','Human target')
+    scatter(ax,KEd1,TorqueZE1,60*PE1/620,'filled', ...
+        'MarkerFaceColor','#EA5F94','DisplayName','Measured (adjoint)')
+    formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
+    xlabel(ax,'\theta_k, °','Interpreter','tex','FontWeight','bold')
+    ylabel(ax,'Torque, N\cdotm','Interpreter','tex','FontWeight','bold')
+    title(ax,'ExtTest20mm_1: measured vs predicted torque')
+    formatLegend(ax,fontName,legendFontSize)
+end
+
+%% Pressure back-calculation: kPa needed at each angle to meet the human
+% vasti torque target with the optimized 20 mm extensor design.
+% Torque_p(phi,P) is evaluated on a pressure grid and inverted per angle
+% (route geometry, Xi compliance and the festo4 surface all included).
+% Targets outside the OpenSim angle data are NOT extrapolated here -- no
+% target, no recommended pressure. Pressurizing ABOVE the tabulated value
+% overshoots the human torque and risks the test rig.
+humanTgtPhiE = interp1(ctx.humanAngleD, ctx.humanTorque, phiD, 'pchip');
+humanTgtPhiE = humanTgtPhiE(:);
+
+PgridE = (0:5:620)';
+% Two routes side by side (Ben, 2026-10-12): the optimized baseline and
+% the adj (clip-on tibia part) route. NOTE a route that VIOLATES the
+% no-stretch rule already exceeds the target unpressurized, so its
+% required pressure can read 0 kPa -- that reading is a stretch symptom,
+% not free torque.
+pressRoutes = { ...
+    Location,     bendMeasure,     tendon; ...
+    LocationAdj,  bendMeasureAdj,  tendonAdj};
+
+PreqByRoute = nan(positions, size(pressRoutes,1));
+flagByRoute = repmat("no human data", positions, size(pressRoutes,1));
+
+for vPr = 1:size(pressRoutes,1)
+    TqVsPE = nan(numel(PgridE), positions);
+    for kP = 1:numel(PgridE)
+        tmpP = MonoPamDataExplicit_balanceX3(Name, pressRoutes{vPr,1}, ...
+            CrossPoint, Dia, T_Pam, rest, kmax, pressRoutes{vPr,3}, ...
+            fitting, PgridE(kP), Xi0, Xi1, Xi2, Xi3, wraps, phiD, ...
+            BPAcount, pressRoutes{vPr,2});
+        TqVsPE(kP,:) = tmpP.Torque_p(:,3).';
+    end
+
+    for i = 1:positions
+        tgt = humanTgtPhiE(i);
+        if ~isfinite(tgt)
+            continue
+        end
+        if tgt <= 0
+            flagByRoute(i,vPr) = "no extension demand";
+            continue
+        end
+        col = TqVsPE(:,i);
+        fin = isfinite(col);
+        if ~any(fin)
+            flagByRoute(i,vPr) = "BPA out of range";
+            continue
+        end
+        if max(col(fin)) < tgt
+            flagByRoute(i,vPr) = "unreachable at 620 kPa";
+            continue
+        end
+        k = find(col >= tgt, 1);
+        if k <= 1
+            PreqByRoute(i,vPr) = 0;
+        else
+            pq = PgridE([k-1 k]);
+            [xs, isrt] = sort(col([k-1 k]));
+            PreqByRoute(i,vPr) = interp1(xs, pq(isrt), tgt);
+        end
+        flagByRoute(i,vPr) = "ok";
+    end
+end
+
+PreqExt = PreqByRoute(:,1);
+extFlag = flagByRoute(:,1);
+PreqExtAdj = PreqByRoute(:,2);
+extFlagAdj = flagByRoute(:,2);
+
+fprintf(['\nPressure back-calculation (optimized extensor, ', ...
+    'rest = %.4f m, Dia = %d mm; baseline vs adj route):\n'], rest, Dia);
+fprintf('angle_deg   target_Nm   kPa_base   kPa_adj   status_base / status_adj\n');
+for i = 1:5:positions
+    if isfinite(PreqExt(i)) || isfinite(PreqExtAdj(i))
+        fprintf('%8.1f  %10.2f  %8.1f  %8.1f   %s / %s\n', phiD(i), ...
+            humanTgtPhiE(i), PreqExt(i), PreqExtAdj(i), ...
+            extFlag(i), extFlagAdj(i));
+    else
+        fprintf('%8.1f  %10.2f       --       --   %s / %s\n', phiD(i), ...
+            humanTgtPhiE(i), extFlag(i), extFlagAdj(i));
+    end
+end
+fprintf('max required pressure: baseline %.1f kPa, adj %.1f kPa\n', ...
+    max(PreqExt,[],'omitnan'), max(PreqExtAdj,[],'omitnan'));
+
+ExtPtable = table(phiD(:), humanTgtPhiE(:), PreqExt(:), extFlag, ...
+    PreqExtAdj(:), extFlagAdj, ...
+    'VariableNames', {'knee_angle_deg','human_target_Nm', ...
+    'required_pressure_kPa','status', ...
+    'adj_required_pressure_kPa','adj_status'});
+writetable(ExtPtable, 'Ext_20mm_pressure_for_human_torque.csv');
+fprintf('Full table: Ext_20mm_pressure_for_human_torque.csv (in cwd)\n');
+
+figure('Name','Extensor pressure back-calculation','Color','w')
+yyaxis left
+plot(phiD, humanTgtPhiE,'LineWidth',2,'Color',humanColor, ...
+    'DisplayName','Human target (left axis)')
+ylabel('Human target torque, N\cdotm','Interpreter','tex','FontWeight','bold')
+yyaxis right
+hold on
+plot(phiD, PreqExt,'LineWidth',2,'Color',optimizedColor, ...
+    'DisplayName','Baseline route')
+plot(phiD, PreqExtAdj,'LineWidth',2,'Color',adjColor, ...
+    'DisplayName','Adj route (clip part)')
+yline(620,':','620 kPa max','HandleVisibility','off')
+ylabel('Required pressure, kPa','FontWeight','bold')
+xlabel('\theta_k, °','Interpreter','tex','FontWeight','bold')
+title('Extensor: pressure to meet the human torque target')
+legend('Location','best')
+hold off
 
 %% Plot full optimized geometry and p1:p9 route
 % Port of Opt_run_Ext's route-geometry figure (Ben, 2026-09-21: "so I
@@ -444,7 +795,7 @@ tGeo = tiledlayout( ...
     nTileRows, nTileCols, ...
     'TileSpacing','compact', ...
     'Padding','compact');
-hGeoLegend = gobjects(9,1);
+hGeoLegend = gobjects(11,1);
 
 for qPlot = 1:nPoseTiles
 
@@ -462,7 +813,7 @@ for qPlot = 1:nPoseTiles
     ax = nexttile(tGeo,qPlot);
     hold(ax, 'on')
     colororder(ax, plt.rgbclr)
-    hGeo = gobjects(9,1);
+    hGeo = gobjects(11,1);
 
     % Femur cylinder clearance
     C = ctx.geo.femurCylCenter;
@@ -550,6 +901,37 @@ for qPlot = 1:nPoseTiles
         end
     end
 
+    % Adjusted route (clip-on tibia part) overlay in the same femur
+    % frame: t1 rows converted through ICR exactly like the baseline.
+    % Eliminated rows repeat their neighbors (p8 repeats p7 at every
+    % pose in the run-8 design; p6 repeats p7 beyond its release), so
+    % the routed markers alone HIDE those CAD design points. Draw the
+    % CANDIDATE p6:p8 points as open diamonds with indigo labels so
+    % every design point stays visible whether or not the route
+    % contacts it.
+    PAdj = routeInfoAdj.raw(:,:,ii);
+    PCand = routeInfoAdj.candidateRaw(:,:,ii);
+    for j = 6:9
+        qICRAdj = RowVecTrans(T_ICR_t1(:,:,ii), PAdj(j,:));
+        PAdj(j,:) = RowVecTrans(T_Pam(:,:,ii), qICRAdj);
+        qCandAdj = RowVecTrans(T_ICR_t1(:,:,ii), PCand(j,:));
+        PCand(j,:) = RowVecTrans(T_Pam(:,:,ii), qCandAdj);
+    end
+    hGeo(10) = plot(ax, PAdj(:,1), PAdj(:,2), 'o--', ...
+        'Color', adjColor, 'LineWidth', plt.lineW, ...
+        'MarkerSize', plt.markersz, ...
+        'MarkerFaceColor', adjColor, 'MarkerEdgeColor', 'none');
+    hGeo(11) = plot(ax, PCand(6:8,1), PCand(6:8,2), 'd', ...
+        'Color', adjColor, 'LineWidth', plt.lineW, ...
+        'MarkerSize', plt.markersz, 'MarkerFaceColor', 'none', ...
+        'MarkerEdgeColor', adjColor);
+    for j = 6:8
+        text(ax, PCand(j,1), PCand(j,2), sprintf(' p%d',j), ...
+            'Color', adjColor, ...
+            'FontName', plt.fontN, 'FontSize', plt.lgdFontsz, ...
+            'FontWeight', 'bold', 'Interpreter','none')
+    end
+
     % Highlight optimized design endpoints
     hGeo(8) = scatter(ax, P(1,1), P(1,2), plt.scattersz, ...
         'Marker', 's', 'MarkerFaceColor', c{1}, ...
@@ -588,7 +970,9 @@ makeRouteLegendR(axLeg, hGeoLegend, { ...
     'Local bend radii', ...
     'p1:p9 optimized route', ...
     'Optimized p1', ...
-    'Optimized pEnd'}, plt);
+    'Optimized pEnd', ...
+    'p1:p9 adj route (clip part)', ...
+    'p6:p8 adj CAD points (open)'}, plt);
 
 %% Static muscle/bone plot at exactly zero knee angle
 % One common input list prevents static/animated frame conventions diverging.

@@ -172,9 +172,11 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
 - `Code\Matlab\Functions\`, `Code\Matlab\Robot_Data\` — shared helpers; MonoPam classes/data.
 - `Code\Matlab\Human_Data\`, `Code\Matlab\Bone_Mesh_Plots\` — human/bone data and plotting.
 - `Code\Matlab\minimizers\`, `Code\Matlab\Previous Optimization Code\` — **legacy**; don't build on.
-- `Code\Matlab\HX711-LoadCell\` — load-cell apps used with test data (File-Exchange
-  originals/archives + superseded redesign draft).
-  **2026-09-27 REBUILD — the live app is `Code\Matlab\HX711 v3.0\HX711 v3.0\HX711_BPA.m`**
+- `Code\Matlab\HX711 v3.0\HX711 v3.0\` — **the HX711/BPA load-cell app lives here (and ONLY
+  here — `Code\Matlab\HX711-LoadCell\` was DELETED 2026-10-03 at Ben's request: its inner
+  "HX711 v3.0" directory name collided with this folder and caused confusion; the File-Exchange
+  original, redesign draft, and archive zips it held are recoverable from git history).**
+  **2026-09-27 REBUILD — the live app is `HX711_BPA.m`**
   (programmatic uifigure class, launch via `Start_HX711_BPA` from any folder/machine/clone —
   the launcher addpaths its own folder so `+arduinoioaddons/+basicHX711` resolves; default save
   dir found by walking UP from the app file to the repo's `Testing_Data`, never hard-coded).
@@ -200,9 +202,46 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   original 2-column format; Run spinner auto-increments. `test_HX711_BPA_offline` = hardware-free
   self-test, run on any machine after pulling. Unique class name = can't be shadowed by any
   installed File-Exchange HX711 app (none on EB475WS4's MATLAB path — verified `which -all`).
+  **2026-10-03 WINDOW FIT FIX: `fitToScreen` (constructor, after createComponents) shrink-fits
+  and centers the fixed 1120×900 design grid on the launch display — on shorter screens
+  (the laptop at Windows display scaling, 1536×864 logical) it uniformly scales all component
+  positions + fonts (floor 8 pt) and adds the title-bar chrome to the outer size; verified
+  headless (148 components in client, offline self-test still PASS). Without this the window
+  launched taller than the laptop screen with its top panels off-screen.**
+  **2026-10-03 UI pass (Ben's list, pre-data-collection): pressure gauge moved to bottom-right
+  with the Force/Pressure/Time/Sampling/#Data readouts column at its left (bottom-right strip);
+  Global Settings panel enlarged to 350x290 design px (was 185x188); Calibration + Clean panels
+  relocated to the vacated bottom-left; Message field narrowed so it no longer runs under the
+  Valves panel. Pressure Cal tab: the fixed 7-point inputdlg flow is REPLACED by free-entry —
+  user sets # cal points (2–50), types the actual gauge kPa, clicks "Take Reading"
+  (averages Readings/point at the entered pressure; fits a/b after the last point). Pressure Ctrl
+  tab gained a "GO" button (PID drive-to-setpoint, hold in deadband, park HOLD — no trace
+  logging). LAPTOP GAP: the MATLAB Arduino support package is NOT installed on DESKTOP-5Q16KE9
+  R2025b (only the HX711 add-on is; COM6/7/10/12 visible) — Connect cannot work until installed
+  via Add-Ons; the app's COM4 default is also wrong here.**
+  **2026-10-04: app — live force+pressure readout (5 Hz timer, paused during acquisition),
+  Connect pre-checks the COM port (no more hang on missing USB), all cal-button read loops
+  abort cleanly on hardware errors, Valves panel = Open (Fill)/Hold/Deflate (Vent) next to
+  the gauge. ValveDataAcquisition.ino: Ben's 2026-10-04 cal ported (OFFSET -12538 int32 =
+  app rig-mount tare 8376070 MINUS 2^23 -- the MATLAB basic_HX711 add-on flips the sign bit
+  (data[2] ^= 0x80) so its values are offset-binary = signed + 8388608; Ben caught the first
+  port attempt writing 8376070 raw, which was wrong by 2^23; SCALE_FACTOR -4495.3534 counts/N =
+  -44.0844 counts/g x 1000/9.80665, slopes unaffected by the convention;
+  pressure now 0.7632588*counts - 14.829703 = a*V+b port), ENCODER REMOVED (5-column output:
+  time,force,pressure,fill,exhaust -- SKETCH MUST BE RE-UPLOADED). readserialnumbers2.m
+  rewritten for 5 columns + LIVE TORQUE GUARD: user enters knee + load-cell angle, live
+  force -> knee torque via the same Adjoint machinery as Knee_Extensor_20mm's ExtTest20mm_1
+  section (dLC 292.9 mm, angLC -90.83 deg), compared live to the OpenSim vasti target
+  (MET/BELOW verdict + margin; saved files append knee/LC angle, torque, target cols).
+  **LC-ANGLE CONVENTION (Ben, 2026-10-04, authoritative for ALL new tests): the load-cell
+  angle is measured FROM THE TIBIA AXIS -- torque about t1 = F*sin(LC+0.83 deg)*d. All new
+  adjoint consumers (readserialnumbers2 guard, Knee_Extensor_20mm ExtTest20mm_1 section,
+  Knee_Flexor_Data_20mm FlxTest20mm_51cm section) convert with 90-LC before the transform.
+  The 2022-era arrays/tabs used the OLD convention (cos(LC-2.83)) -- do not mix.**
   Old apps DISABLED by rename: `HX711_customized_original.mlapp.disabled` +
-  `HX711_Pressure.mlapp.disabled` (in the v3.0 folder), LoadCell's `HX711.mlapp.disabled`,
-  redesign `HX711.m.superseded` — rename back to restore; details in `README_HX711_BPA.md`.
+  `HX711_Pressure.mlapp.disabled` (in the v3.0 folder) — rename back to restore; the
+  LoadCell-folder copies (`HX711.mlapp.disabled`, redesign `HX711.m.superseded`) went with
+  that folder's 2026-10-03 deletion (git history has them); details in `README_HX711_BPA.md`.
 - `Code\MuJoCo_SNS\` — MuJoCo + SNS-Toolbox pipeline (see its README.md):
   custom BPA muscle (`bpa_muscle.py`, exact port of festo4/maxBPAforce/
   balanceX3), MuJoCo glue, SNS demo, `add_bpa_to_mjcf.py`. Env: conda
@@ -1116,6 +1155,18 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   - `2026_06_Festo\` subfolders (Ext_10mm_pinned, Flx_10mm_pinned, Torque_Pressure_Tester V1–V3,
     ValveDataAcquisition): long raw data files, summarized in tabs of
     `2026_06_Festo\Results_table_10mm_pinned.xlsx` — read that instead of the raw files.
+    **2026-10-02: `Results_table_20mm.xlsx` gained two blank data-entry tabs — `ExtTest20mm_1` +
+    `FlxTest20mm_51cm` (clones of `FlxTest20mm_42cm (3)`; the extensor's row-16 torque formula has
+    NO leading minus; both keep the 2.83° LC-offset, update per rig). The pressure back-calculation
+    (per-angle kPa to exactly meet the OpenSim human target from the stiffness-aware pair model;
+    CSVs `Flx_/Ext_20mm_pressure_for_human_torque.csv` + dual-axis figures) and the measured-torque
+    sections that READ these tabs (Adjoint transform of the load-cell wrench to the moving ICR,
+    printing Torque-actual values for paste into tab row 17) now live in
+    `Knee_Flexor_Data_20mm.m` / `Knee_Extensor_20mm.m` — UPDATE the d/ang reaction-point constants
+    (d51/ang51, dExt1/angExt1) after rig measurement before trusting measured torque. The flexor
+    back-calc used the current optimized pair (rest 0.5615 m) — not a 51 cm BPA. Extensor loader
+    now also accepts the 2026-09-25 full-workspace `Vas_Pam_20mm_Result.mat` (Xi block from its
+    saved ctx; the "Variable 'XiUsed' not found" warning on load is expected/benign).**
   - Also holds large BPA max-force / force-pressure-contraction characterization structures;
     some processed here, some from the Muscle_Sensory repository. Used with `Code\Matlab\Functions`
     and the HX711 apps.

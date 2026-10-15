@@ -52,6 +52,7 @@ classdef HX711_BPA < matlab.apps.AppBase
         MatlabArduinoHX711UIFigure     matlab.ui.Figure
         PressureGauge                  matlab.ui.control.SemicircularGauge
         PressureGaugeLabel             matlab.ui.control.Label
+        PressureTimer                  timer
         kPaLabel                       matlab.ui.control.Label
         Pressure                       matlab.ui.control.NumericEditField
         PressureLabel                  matlab.ui.control.Label
@@ -111,6 +112,7 @@ classdef HX711_BPA < matlab.apps.AppBase
         CtrlPeriod                     matlab.ui.control.Spinner
         CtrlPeriodLabel                matlab.ui.control.Label
         RunStepTestButton              matlab.ui.control.Button
+        GoButton                       matlab.ui.control.Button
         SaveDataTab                    matlab.ui.container.Tab
         Name                           matlab.ui.control.EditField
         NameEditFieldLabel             matlab.ui.control.Label
@@ -168,8 +170,12 @@ classdef HX711_BPA < matlab.apps.AppBase
         PressureCalN                   matlab.ui.control.NumericEditField
         PressureCalNLabel              matlab.ui.control.Label
         ApplyKnownPressureButton       matlab.ui.control.Button
-        PressureCalButton              matlab.ui.control.Button
-        PressureCalHint                matlab.ui.control.Label
+        PressureCalPoints              matlab.ui.control.NumericEditField
+        PressureCalPointsLabel         matlab.ui.control.Label
+        CalGaugePressure               matlab.ui.control.NumericEditField
+        CalGaugePressureLabel          matlab.ui.control.Label
+        TakeCalPointButton             matlab.ui.control.Button
+        CalProgressLabel               matlab.ui.control.Label
         LicenseTab                     matlab.ui.container.Tab
         TextArea                       matlab.ui.control.TextArea
         Axes2                          matlab.ui.control.UIAxes
@@ -214,6 +220,9 @@ classdef HX711_BPA < matlab.apps.AppBase
         scale = NaN       % raw counts per gram-equivalent; NaN = not set
         pressureA = 155.61 % kPa/V slope (default = old app's hard-coded line)
         pressureB = -126.99 % kPa intercept
+        calKPa = []       % pressure-cal points: entered gauge kPa
+        calV = []         % pressure-cal points: mean pin voltage, V
+        acquiring = false % true while Get Data / GO / step test owns the port
         g = 9.80665
         check_connection = false
         v = 1
@@ -594,6 +603,17 @@ classdef HX711_BPA < matlab.apps.AppBase
                 app.valveIncPin = app.ValveIncEdit.Value;
                 app.valveMaintainPin = app.ValveMaintainEdit.Value;
 
+                % Fail fast when the USB cable is not plugged in: calling
+                % arduino() on a missing port can block for a very long
+                % time, which looked like a stuck loop.
+                avail = string(serialportlist('available'));
+                if isempty(avail) || ~any(strcmpi(avail, string(app.serial)))
+                    app.Message.Value = sprintf( ...
+                        ['Connection error: %s not found. Plug in the USB cable. ', ...
+                        'Available ports: %s'], app.serial, strjoin(avail, ', '));
+                    return;
+                end
+
                 app.a = arduino(app.serial, app.board, 'libraries', {'basicHX711/basic_HX711'});
                 app.HX711_obj = addon(app.a, 'basicHX711/basic_HX711', {app.data, app.clock});
                 configurePin(app.a, app.pressurePin, 'AnalogInput');
@@ -605,7 +625,9 @@ classdef HX711_BPA < matlab.apps.AppBase
                 pidReset(app);
                 updateStatusConnected(app, true);
                 app.Message.Value = 'Connected.';
+                start(app.PressureTimer);
             catch ME
+                stop(app.PressureTimer);
                 updateStatusConnected(app, false);
                 app.Message.Value = ['Connection error: ', ME.message];
             end
@@ -646,6 +668,8 @@ classdef HX711_BPA < matlab.apps.AppBase
             app.Yellow.Color = 'white';
             app.get_true = true;
             drawnow;
+            app.acquiring = true;
+            clnAcq = onCleanup(@() app.finishAcquire()); %#ok<NASGU> pauses the live gauge until this run ends
 
             servoWasOn = app.EnablePressureControl.Value;
             if servoWasOn
@@ -816,9 +840,19 @@ classdef HX711_BPA < matlab.apps.AppBase
             drawnow;
             z = round(app.n.Value);
             x = zeros(1, z);
-            for j = 1:z
-                x(j) = read_HX711(app.HX711_obj);
-                pause(1/1000);
+            try
+                for j = 1:z
+                    x(j) = read_HX711(app.HX711_obj);
+                    pause(1/1000);
+                end
+            catch ME
+                % Hardware gone/stuck mid-average: abort cleanly instead of
+                % leaving the app in its "Please wait..." state forever.
+                app.Cyan.Color = 'white';
+                app.Yellow.Color = 'yellow';
+                app.Message.Value = ['Hardware read failed: ', ME.message, ...
+                    ' - reconnect the board and retry.'];
+                return;
             end
             % Zero offset ONLY. The scale factor (counts per gram) is a
             % property of the load cell and is deliberately NOT touched:
@@ -859,9 +893,19 @@ classdef HX711_BPA < matlab.apps.AppBase
             drawnow;
             z = round(app.n.Value);
             x = zeros(1, z);
-            for j = 1:z
-                x(j) = read_HX711(app.HX711_obj);
-                pause(1/1000);
+            try
+                for j = 1:z
+                    x(j) = read_HX711(app.HX711_obj);
+                    pause(1/1000);
+                end
+            catch ME
+                % Hardware gone/stuck mid-average: abort cleanly instead of
+                % leaving the app in its "Please wait..." state forever.
+                app.Cyan.Color = 'white';
+                app.Yellow.Color = 'yellow';
+                app.Message.Value = ['Hardware read failed: ', ME.message, ...
+                    ' - reconnect the board and retry.'];
+                return;
             end
             app.scale = (mean(x) - app.tare)/app.known_weight;
             app.ScaleDisp.Value = app.scale;
@@ -926,47 +970,54 @@ classdef HX711_BPA < matlab.apps.AppBase
             end
         end
 
-        % Button pushed function: PressureCalButton (guided 7-point)
-        function PressureCalButtonPushed(app, event)
+        % Button pushed function: TakeCalPointButton (pressure cal point
+        % at the gauge kPa the user typed -- free-entry, any number of
+        % points). Each click averages PressureCalN pin readings at the
+        % entered pressure; after the last point the a/b line is fitted,
+        % applied, cached, and plotted.
+        function TakeCalPointButtonPushed(app, event)
             if ~app.check_connection
                 app.Message.Value = 'Error: You are not connected yet.';
                 return;
             end
-            setpoints = [0 200 300 400 500 600 620];
-            actual = zeros(size(setpoints));
-            voltage = zeros(size(setpoints));
-            z = max(1, round(app.PressureCalN.Value));
-            for j = 1:numel(setpoints)
-                prompt = sprintf(['Set the regulator near %d kPa. Enter the actual gauge kPa ', ...
-                    'after the pressure stabilizes:'], setpoints(j));
-                answer = inputdlg(prompt, 'Pressure calibration', [1 70], {num2str(setpoints(j))});
-                if isempty(answer)
-                    app.Message.Value = 'Pressure calibration cancelled.';
-                    return;
-                end
-                actual(j) = str2double(answer{1});
-                if ~isfinite(actual(j))
-                    app.Message.Value = 'Pressure calibration error: actual kPa must be numeric.';
-                    return;
-                end
-                readings = zeros(1, z);
-                app.Message.Value = sprintf('Reading pressure pin at actual %.2f kPa...', actual(j));
-                drawnow;
-                for k = 1:z
-                    readings(k) = readVoltage(app.a, app.pressurePin);
-                    pause(0.02);
-                end
-                voltage(j) = mean(readings);
+            pEntered = app.CalGaugePressure.Value;
+            if ~isfinite(pEntered)
+                app.Message.Value = 'Pressure cal error: enter the actual gauge kPa first.';
+                return;
             end
-            coeff = polyfit(voltage, actual, 1);
+            nPts = max(2, round(app.PressureCalPoints.Value));
+            if numel(app.calKPa) >= nPts
+                app.calKPa = [];   % series full -> start a fresh one
+                app.calV = [];
+            end
+            z = max(1, round(app.PressureCalN.Value));
+            app.Message.Value = sprintf('Averaging %d readings at %.2f kPa...', z, pEntered);
+            drawnow;
+            readings = zeros(1, z);
+            for k = 1:z
+                readings(k) = readVoltage(app.a, app.pressurePin);
+                pause(0.02);
+            end
+            app.calKPa(end+1) = pEntered;   %#ok<AGROW>
+            app.calV(end+1) = mean(readings);   %#ok<AGROW>
+            kNow = numel(app.calKPa);
+            if kNow < nPts
+                app.CalProgressLabel.Text = sprintf('Points: %d/%d. Next gauge pressure, then Take Reading.', ...
+                    kNow, nPts);
+                app.Message.Value = sprintf('Point %d/%d taken (%.3f V mean).', kNow, nPts, app.calV(end));
+                return;
+            end
+            coeff = polyfit(app.calV, app.calKPa, 1);
             app.pressureA = coeff(1);
             app.pressureB = coeff(2);
             app.PressureA.Value = app.pressureA;
             app.PressureB.Value = app.pressureB;
             saveCalCache(app);
-            plot(app.Axes2, voltage, actual, 'o', voltage, polyval(coeff, voltage), '-');
+            plot(app.Axes2, app.calV, app.calKPa, 'o', app.calV, polyval(coeff, app.calV), '-');
             xlabel(app.Axes2, 'Voltage [V]');
             ylabel(app.Axes2, 'Pressure [kPa]');
+            app.CalProgressLabel.Text = sprintf('Points: %d/%d done. p = %.6g*V %+.6g. Take again to restart.', ...
+                nPts, nPts, app.pressureA, app.pressureB);
             app.Message.Value = sprintf('Pressure calibration complete: y = %.6g*x %+.6g', ...
                 app.pressureA, app.pressureB);
         end
@@ -997,9 +1048,19 @@ classdef HX711_BPA < matlab.apps.AppBase
             setWeightToGramsFromKnown(app);
             z = round(app.n.Value);
             x = zeros(1, z);
-            for j = 1:z
-                x(j) = read_HX711(app.HX711_obj);
-                pause(1/1000);
+            try
+                for j = 1:z
+                    x(j) = read_HX711(app.HX711_obj);
+                    pause(1/1000);
+                end
+            catch ME
+                % Hardware gone/stuck mid-average: abort cleanly instead of
+                % leaving the app in its "Please wait..." state forever.
+                app.Cyan.Color = 'white';
+                app.Yellow.Color = 'yellow';
+                app.Message.Value = ['Hardware read failed: ', ME.message, ...
+                    ' - reconnect the board and retry.'];
+                return;
             end
             x = rawToGrams(app, x);
             M = mean(x);
@@ -1034,7 +1095,15 @@ classdef HX711_BPA < matlab.apps.AppBase
             app.Cyan.Color = 'cyan';
             app.Yellow.Color = 'white';
             drawnow;
-            raw = read_HX711(app.HX711_obj);
+            try
+                raw = read_HX711(app.HX711_obj);
+            catch ME
+                app.Cyan.Color = 'white';
+                app.Yellow.Color = 'yellow';
+                app.Message.Value = ['Hardware read failed: ', ME.message, ...
+                    ' - reconnect the board and retry.'];
+                return;
+            end
             grams = rawToGrams(app, raw);
             updateMaxLoadGaugeWithGrams(app, grams);
             x = gramsToSelectedUnit(app, grams);
@@ -1088,6 +1157,97 @@ classdef HX711_BPA < matlab.apps.AppBase
             setValves(app, 0, 0, 'Valves: pressure decreasing / 0 kPa (Increase Low, Maintain Low).');
         end
 
+        % Timer callback: live gauge + pressure readout refresh (5 Hz).
+        % Skipped when disconnected or while an acquisition / GO / step
+        % test loop owns the Arduino port.
+        function PressureTimerFcn(app, timerObj, event)
+            if ~ishandle(app.MatlabArduinoHX711UIFigure)
+                stop(timerObj);   % window closed: never outlive the app
+                return;
+            end
+            if ~app.check_connection || app.acquiring
+                return;
+            end
+            try
+                % Live force (skip when the LC is not calibrated yet)
+                if isLoadCellCalibrated(app)
+                    raw = read_HX711(app.HX711_obj);
+                    grams = rawToGrams(app, raw);
+                    app.ForceEdit.Value = gramsToSelectedUnit(app, grams);
+                end
+                % Live pressure
+                v = readVoltage(app.a, app.pressurePin);
+                p = pressureVoltageToKPa(app, v);
+                app.Pressure.Value = p;
+                app.PressureGauge.Value = max(app.PressureGauge.Limits(1), ...
+                    min(app.PressureGauge.Limits(2), p));
+            catch
+            end
+        end
+
+        function finishAcquire(app)
+            app.acquiring = false;
+        end
+
+        % Button pushed function: GoButton (drive to the setpoint and hold)
+        function GoButtonPushed(app, event)
+            if ~app.check_connection
+                app.Message.Value = 'Error: You are not connected yet.';
+                return;
+            end
+            sp = app.DesiredPressure.Value;
+            db = max(0.5, app.PressureDeadband.Value);
+            Tc = max(0.02, app.CtrlPeriod.Value);
+            settleHold = 1.5;   % s inside the deadband before "there"
+            maxDur = 60;        % s hard cap; click Pause to abort early
+
+            app.pidReset();
+            app.acquiring = true;
+            clnAcq = onCleanup(@() app.finishAcquire()); %#ok<NASGU> pauses the live gauge until this run ends
+            app.Message.Value = sprintf('GO: driving to %.0f kPa (PID %.4g/%.4g/%.4g)...', ...
+                sp, app.Kp.Value, app.Ki.Value, app.Kd.Value);
+            app.Cyan.Color = 'cyan';
+            app.Yellow.Color = 'white';
+            drawnow;
+
+            settleSince = [];
+            reached = false;
+            t0 = tic;
+            while toc(t0) < maxDur && app.r == 0
+                v = readVoltage(app.a, app.pressurePin);
+                p = pressureVoltageToKPa(app, v);
+                app.Pressure.Value = p;
+                app.PressureGauge.Value = max(app.PressureGauge.Limits(1), ...
+                    min(app.PressureGauge.Limits(2), p));
+                if abs(p - sp) <= db
+                    if isempty(settleSince)
+                        settleSince = toc(t0);
+                    end
+                    if (toc(t0) - settleSince) >= settleHold
+                        reached = true;
+                        break;
+                    end
+                    applyValveDuty(app, 0, Tc);   % hold inside the band
+                else
+                    u = pidCompute(app, p, Tc, sp);
+                    applyValveDuty(app, u, Tc);
+                end
+                drawnow limitrate;
+            end
+            app.r = 0;  % a Pause press aborts this run, not the next Get Data
+            writeDigitalPin(app.a, app.valveIncPin, 0);
+            writeDigitalPin(app.a, app.valveMaintainPin, 1);  % park HOLD
+            app.Cyan.Color = 'white';
+            app.Yellow.Color = 'yellow';
+            vEnd = readVoltage(app.a, app.pressurePin);
+            pEnd = pressureVoltageToKPa(app, vEnd);
+            if reached
+                app.Message.Value = sprintf('At setpoint: %.1f kPa (target %.0f, holding).', pEnd, sp);
+            else
+                app.Message.Value = sprintf('GO ended at %.1f kPa (target %.0f) - timeout or Pause.', pEnd, sp);
+            end
+        end
+
         % Button pushed function: RunStepTestButton (dynamic pressure cal)
         function RunStepTestButtonPushed(app, event)
             if ~app.check_connection
@@ -1101,6 +1261,8 @@ classdef HX711_BPA < matlab.apps.AppBase
             maxDur = 60;        % s hard cap; click Pause to abort early
 
             app.pidReset();
+            app.acquiring = true;
+            clnAcq = onCleanup(@() app.finishAcquire()); %#ok<NASGU> pauses the live gauge until this run ends
             v0 = readVoltage(app.a, app.pressurePin);
             p0 = pressureVoltageToKPa(app, v0);
             app.Message.Value = sprintf('Dynamic pressure cal: stepping %.1f -> %.0f kPa (PID %.4g/%.4g/%.4g)...', ...
@@ -1419,6 +1581,53 @@ classdef HX711_BPA < matlab.apps.AppBase
     % Component initialization
     methods (Access = private)
 
+        % Shrink-to-fit + center the fixed-size layout on the current
+        % display. The design grid is 1120x900 client pixels (fits
+        % EB475WS4's 1080p displays); on shorter screens (the laptop at
+        % Windows display scaling) the unscaled window is taller than the
+        % screen and its top panels land off-screen. Every component uses
+        % an absolute position, so the whole UI (positions + font sizes)
+        % is scaled uniformly by the one factor that fits.
+        function fitToScreen(app)
+            fig = app.MatlabArduinoHX711UIFigure;
+            ss = get(groot, 'ScreenSize');           % [1 1 W H], px
+            designW = 1120;
+            designH = 900;
+            taskbar = 60;
+            s = min([1, (ss(3)-40)/designW, (ss(4)-taskbar-20)/designH]);
+            s = max(s, 0.5);                          % never scale below 50 %
+            chromeW = fig.OuterPosition(3) - fig.InnerPosition(3);
+            chromeH = fig.OuterPosition(4) - fig.InnerPosition(4);
+            outerW = round(designW*s) + chromeW;
+            outerH = round(designH*s) + chromeH;
+            if s < 0.999
+                scaleUI(app, fig.Children, s);
+            end
+            x = max(10, floor((ss(3) - outerW)/2));
+            y = max(10, floor((ss(4) - taskbar - outerH)/2));
+            fig.Position = [x y outerW outerH];
+        end
+
+        function scaleUI(app, hs, s)
+            for k = 1:numel(hs)
+                h = hs(k);
+                if isprop(h, 'Position') && ~isempty(h.Position)
+                    % Some containers (e.g. Tab) auto-fill their parent and
+                    % expose a read-only Position; those need no scaling.
+                    try
+                        h.Position = round(s*h.Position);
+                    catch
+                    end
+                end
+                if isprop(h, 'FontSize') && isnumeric(h.FontSize)
+                    h.FontSize = max(8, round(s*h.FontSize));
+                end
+                if isprop(h, 'Children') && ~isempty(h.Children)
+                    scaleUI(app, h.Children, s);
+                end
+            end
+        end
+
         % Create UIFigure and components
         function createComponents(app)
             app.MatlabArduinoHX711UIFigure = uifigure('Visible', 'off');
@@ -1440,7 +1649,7 @@ classdef HX711_BPA < matlab.apps.AppBase
             app.Message.FontWeight = 'bold';
             app.Message.FontAngle = 'italic';
             app.Message.FontColor = [1 0 0];
-            app.Message.Position = [13 241 350 38];
+            app.Message.Position = [13 241 195 38];
 
             app.StatusPanel = uipanel(app.MatlabArduinoHX711UIFigure);
             app.StatusPanel.TitlePosition = 'centertop';
@@ -1541,7 +1750,7 @@ classdef HX711_BPA < matlab.apps.AppBase
             app.CalibrationPanel.FontName = 'Verdana';
             app.CalibrationPanel.FontAngle = 'italic';
             app.CalibrationPanel.FontWeight = 'bold';
-            app.CalibrationPanel.Position = [216 482 147 188];
+            app.CalibrationPanel.Position = [13 13 170 215];
 
             app.TareButton = uibutton(app.CalibrationPanel, 'push');
             app.TareButton.ButtonPushedFcn = createCallbackFcn(app, @TareButtonPushed, true);
@@ -1581,77 +1790,80 @@ classdef HX711_BPA < matlab.apps.AppBase
             app.GlobalSettingsPanel.FontName = 'Verdana';
             app.GlobalSettingsPanel.FontAngle = 'italic';
             app.GlobalSettingsPanel.FontWeight = 'bold';
-            app.GlobalSettingsPanel.Position = [13 482 185 188];
+            app.GlobalSettingsPanel.Position = [13 380 350 290];
 
             app.TabGroup = uitabgroup(app.GlobalSettingsPanel);
-            app.TabGroup.Position = [1 -25 185 193];
+            app.TabGroup.Position = [1 2 348 286];
 
             app.ConnectionTab = uitab(app.TabGroup);
             app.ConnectionTab.Title = 'Connection';
-            app.ArduinoDropDownLabel = uilabel(app.ConnectionTab, 'Text', 'Arduino', 'Position', [5 139 49 15]);
-            app.BoardEdit = uidropdown(app.ConnectionTab, 'Items', {'Uno','Mega2560'}, 'Position', [77 135 104 22], 'Value', 'Uno');
-            app.SerialportEditFieldLabel = uilabel(app.ConnectionTab, 'Text', 'Serial port', 'Position', [0 106 66 15]);
-            app.SerialEdit = uieditfield(app.ConnectionTab, 'text', 'Position', [112 102 69 22], 'Value', 'Com4');
-            app.DataPinEditFieldLabel = uilabel(app.ConnectionTab, 'Text', 'Data Pin', 'Position', [0 74 55 15]);
-            app.DataEdit = uieditfield(app.ConnectionTab, 'text', 'Position', [112 70 69 22], 'Value', 'D3');
-            app.ClockPinEditFieldLabel = uilabel(app.ConnectionTab, 'Text', 'Clock Pin', 'Position', [1 42 58 15]);
-            app.ClockEdit = uieditfield(app.ConnectionTab, 'text', 'Position', [112 38 69 22], 'Value', 'D2');
-            app.PressurePinLabel = uilabel(app.ConnectionTab, 'Text', 'Pressure Pin', 'Position', [4 10 74 22]);
-            app.PressureEdit = uieditfield(app.ConnectionTab, 'text', 'Position', [111 12 69 22], 'Value', 'A0');
+            app.ArduinoDropDownLabel = uilabel(app.ConnectionTab, 'Text', 'Arduino', 'Position', [5 183 49 15]);
+            app.BoardEdit = uidropdown(app.ConnectionTab, 'Items', {'Uno','Mega2560'}, 'Position', [77 179 104 22], 'Value', 'Uno');
+            app.SerialportEditFieldLabel = uilabel(app.ConnectionTab, 'Text', 'Serial port', 'Position', [0 150 66 15]);
+            app.SerialEdit = uieditfield(app.ConnectionTab, 'text', 'Position', [112 146 69 22], 'Value', 'Com10');
+            app.DataPinEditFieldLabel = uilabel(app.ConnectionTab, 'Text', 'Data Pin', 'Position', [0 118 55 15]);
+            app.DataEdit = uieditfield(app.ConnectionTab, 'text', 'Position', [112 114 69 22], 'Value', 'D3');
+            app.ClockPinEditFieldLabel = uilabel(app.ConnectionTab, 'Text', 'Clock Pin', 'Position', [1 86 58 15]);
+            app.ClockEdit = uieditfield(app.ConnectionTab, 'text', 'Position', [112 82 69 22], 'Value', 'D2');
+            app.PressurePinLabel = uilabel(app.ConnectionTab, 'Text', 'Pressure Pin', 'Position', [4 54 74 22]);
+            app.PressureEdit = uieditfield(app.ConnectionTab, 'text', 'Position', [111 56 69 22], 'Value', 'A0');
 
             app.DataAcquisitionTab = uitab(app.TabGroup);
             app.DataAcquisitionTab.Title = 'Data Acquisition';
-            app.ForceDropDownLabel = uilabel(app.DataAcquisitionTab, 'Text', 'Force', 'Position', [4 152 32 15]);
-            app.Unit = uidropdown(app.DataAcquisitionTab, 'Items', {'[ N ]','[ g ]','[ kg ]','[ kN ]'}, 'Position', [44 148 76 22], 'Value', '[ N ]');
-            app.SetSession = uicheckbox(app.DataAcquisitionTab, 'Text', 'Set Session Time [min]', 'Position', [4 128 170 15]);
-            app.SessionTimeSpinnerLabel = uilabel(app.DataAcquisitionTab, 'Text', 'Session Time', 'Position', [4 106 70 15]);
-            app.SessionV = uispinner(app.DataAcquisitionTab, 'Limits', [0 Inf], 'Position', [88 102 60 22]);
-            app.SamplingRateSpinnerLabel = uilabel(app.DataAcquisitionTab, 'Text', 'Sample Period [s]', 'Position', [4 82 86 15]);
-            app.Add_time = uispinner(app.DataAcquisitionTab, 'Step', 0.1, 'Limits', [0.001 Inf], 'ValueDisplayFormat', '%.3f', 'Position', [96 78 52 22], 'Value', 0.1);
-            app.SampleCountSpinnerLabel = uilabel(app.DataAcquisitionTab, 'Text', 'Samples', 'Position', [4 58 44 15]);
-            app.Nsamples = uispinner(app.DataAcquisitionTab, 'Limits', [1 750], 'ValueDisplayFormat', '%.0f', 'Position', [84 54 60 22], 'Value', 750);
+            app.ForceDropDownLabel = uilabel(app.DataAcquisitionTab, 'Text', 'Force', 'Position', [4 196 32 15]);
+            app.Unit = uidropdown(app.DataAcquisitionTab, 'Items', {'[ N ]','[ g ]','[ kg ]','[ kN ]'}, 'Position', [44 192 76 22], 'Value', '[ N ]');
+            app.SetSession = uicheckbox(app.DataAcquisitionTab, 'Text', 'Set Session Time [min]', 'Position', [4 172 170 15]);
+            app.SessionTimeSpinnerLabel = uilabel(app.DataAcquisitionTab, 'Text', 'Session Time', 'Position', [4 150 70 15]);
+            app.SessionV = uispinner(app.DataAcquisitionTab, 'Limits', [0 Inf], 'Position', [88 146 60 22]);
+            app.SamplingRateSpinnerLabel = uilabel(app.DataAcquisitionTab, 'Text', 'Sample Period [s]', 'Position', [4 126 90 15]);
+            app.Add_time = uispinner(app.DataAcquisitionTab, 'Step', 0.1, 'Limits', [0.001 Inf], 'ValueDisplayFormat', '%.3f', 'Position', [96 122 52 22], 'Value', 0.1);
+            app.SampleCountSpinnerLabel = uilabel(app.DataAcquisitionTab, 'Text', 'Samples', 'Position', [4 102 54 15]);
+            app.Nsamples = uispinner(app.DataAcquisitionTab, 'Limits', [1 750], 'ValueDisplayFormat', '%.0f', 'Position', [84 98 60 22], 'Value', 750);
 
             app.PressureCtrlTab = uitab(app.TabGroup);
             app.PressureCtrlTab.Title = 'Pressure Ctrl';
-            app.EnablePressureControl = uicheckbox(app.PressureCtrlTab, 'Text', 'PID servo during Get Data', 'Position', [4 158 178 15], 'Value', false);
-            app.KpLabel = uilabel(app.PressureCtrlTab, 'Text', 'Kp  [%/kPa]', 'Position', [4 136 70 15]);
-            app.Kp = uieditfield(app.PressureCtrlTab, 'numeric', 'Limits', [0 Inf], 'ValueDisplayFormat', '%.4g', 'Position', [96 132 50 22], 'Value', 2);
-            app.KiLabel = uilabel(app.PressureCtrlTab, 'Text', 'Ki  [%/kPa/s]', 'Position', [4 112 74 15]);
-            app.Ki = uieditfield(app.PressureCtrlTab, 'numeric', 'Limits', [0 Inf], 'ValueDisplayFormat', '%.4g', 'Position', [96 108 50 22], 'Value', 0.5);
-            app.KdLabel = uilabel(app.PressureCtrlTab, 'Text', 'Kd  [%-s/kPa]', 'Position', [4 88 74 15]);
-            app.Kd = uieditfield(app.PressureCtrlTab, 'numeric', 'Limits', [0 Inf], 'ValueDisplayFormat', '%.4g', 'Position', [96 84 50 22], 'Value', 0);
-            app.SetpointkPaLabel = uilabel(app.PressureCtrlTab, 'Text', 'Set / +-dB [kPa]', 'Position', [4 64 84 15]);
-            app.DesiredPressure = uispinner(app.PressureCtrlTab, 'Limits', [0 700], 'ValueDisplayFormat', '%.0f', 'Position', [96 60 40 22], 'Value', 400);
-            app.PressureDeadband = uispinner(app.PressureCtrlTab, 'Limits', [0 100], 'ValueDisplayFormat', '%.0f', 'Position', [140 60 40 22], 'Value', 5);
-            app.CtrlPeriodLabel = uilabel(app.PressureCtrlTab, 'Text', 'Ctrl Period [s]', 'Position', [4 40 80 15]);
-            app.CtrlPeriod = uispinner(app.PressureCtrlTab, 'Limits', [0.02 5], 'Step', 0.01, 'ValueDisplayFormat', '%.2f', 'Position', [96 36 50 22], 'Value', 0.10);
-            app.RunStepTestButton = uibutton(app.PressureCtrlTab, 'push', 'Text', 'Run Step Test (Dynamic Cal)', 'Position', [4 8 176 26]);
+            app.EnablePressureControl = uicheckbox(app.PressureCtrlTab, 'Text', 'PID servo during Get Data', 'Position', [4 202 178 15], 'Value', false);
+            app.KpLabel = uilabel(app.PressureCtrlTab, 'Text', 'Kp  [%/kPa]', 'Position', [4 180 70 15]);
+            app.Kp = uieditfield(app.PressureCtrlTab, 'numeric', 'Limits', [0 Inf], 'ValueDisplayFormat', '%.4g', 'Position', [96 176 50 22], 'Value', 2);
+            app.KiLabel = uilabel(app.PressureCtrlTab, 'Text', 'Ki  [%/kPa/s]', 'Position', [4 156 74 15]);
+            app.Ki = uieditfield(app.PressureCtrlTab, 'numeric', 'Limits', [0 Inf], 'ValueDisplayFormat', '%.4g', 'Position', [96 152 50 22], 'Value', 0.5);
+            app.KdLabel = uilabel(app.PressureCtrlTab, 'Text', 'Kd  [%-s/kPa]', 'Position', [4 132 74 15]);
+            app.Kd = uieditfield(app.PressureCtrlTab, 'numeric', 'Limits', [0 Inf], 'ValueDisplayFormat', '%.4g', 'Position', [96 128 50 22], 'Value', 0);
+            app.SetpointkPaLabel = uilabel(app.PressureCtrlTab, 'Text', 'Set / +-dB [kPa]', 'Position', [4 108 84 15]);
+            app.DesiredPressure = uispinner(app.PressureCtrlTab, 'Limits', [0 700], 'ValueDisplayFormat', '%.0f', 'Position', [96 104 60 22], 'Value', 300);
+            app.PressureDeadband = uispinner(app.PressureCtrlTab, 'Limits', [0 100], 'ValueDisplayFormat', '%.0f', 'Position', [160 104 55 22], 'Value', 5);
+            app.CtrlPeriodLabel = uilabel(app.PressureCtrlTab, 'Text', 'Ctrl Period [s]', 'Position', [4 84 80 15]);
+            app.CtrlPeriod = uispinner(app.PressureCtrlTab, 'Limits', [0.02 5], 'Step', 0.01, 'ValueDisplayFormat', '%.2f', 'Position', [96 80 50 22], 'Value', 0.10);
+            app.RunStepTestButton = uibutton(app.PressureCtrlTab, 'push', 'Text', 'Run Step Test (Dynamic Cal)', 'Position', [176 52 168 26]);
             app.RunStepTestButton.ButtonPushedFcn = createCallbackFcn(app, @RunStepTestButtonPushed, true);
             app.RunStepTestButton.FontWeight = 'bold';
+            app.GoButton = uibutton(app.PressureCtrlTab, 'push', 'Text', 'GO', 'Position', [4 52 165 26]);
+            app.GoButton.ButtonPushedFcn = createCallbackFcn(app, @GoButtonPushed, true);
+            app.GoButton.FontWeight = 'bold';
 
             app.SaveDataTab = uitab(app.TabGroup);
             app.SaveDataTab.Title = 'Save Data';
-            app.SaveFolderLabel = uilabel(app.SaveDataTab, 'Text', 'Folder', 'Position', [7 146 40 15]);
-            app.SaveFolder = uieditfield(app.SaveDataTab, 'text', 'Position', [52 142 129 22]);
-            app.SeriesSpinnerLabel = uilabel(app.SaveDataTab, 'Text', 'Series $', 'Position', [7 112 52 15]);
-            app.SeriesSpinner = uispinner(app.SaveDataTab, 'Limits', [0 999], 'ValueDisplayFormat', '%.0f', 'Position', [72 108 45 22], 'Value', 1);
-            app.RunSpinnerLabel = uilabel(app.SaveDataTab, 'Text', 'Run #', 'Position', [7 80 42 15]);
-            app.RunSpinner = uispinner(app.SaveDataTab, 'Limits', [0 99], 'ValueDisplayFormat', '%02.0f', 'Position', [72 76 45 22], 'Value', 0);
-            app.PrefixLabel = uilabel(app.SaveDataTab, 'Text', 'Prefix', 'Position', [7 48 40 15]);
-            app.Prefix = uieditfield(app.SaveDataTab, 'text', 'Position', [72 44 109 22], 'Value', 'FlxTest');
-            app.NameEditFieldLabel = uilabel(app.SaveDataTab, 'Text', 'Last file', 'Position', [7 16 50 15]);
-            app.Name = uieditfield(app.SaveDataTab, 'text', 'Editable', 'off', 'Position', [60 12 121 22]);
+            app.SaveFolderLabel = uilabel(app.SaveDataTab, 'Text', 'Folder', 'Position', [7 190 40 15]);
+            app.SaveFolder = uieditfield(app.SaveDataTab, 'text', 'Position', [52 186 200 22]);
+            app.SeriesSpinnerLabel = uilabel(app.SaveDataTab, 'Text', 'Series $', 'Position', [7 156 52 15]);
+            app.SeriesSpinner = uispinner(app.SaveDataTab, 'Limits', [0 999], 'ValueDisplayFormat', '%.0f', 'Position', [72 152 45 22], 'Value', 1);
+            app.RunSpinnerLabel = uilabel(app.SaveDataTab, 'Text', 'Run #', 'Position', [7 124 42 15]);
+            app.RunSpinner = uispinner(app.SaveDataTab, 'Limits', [0 99], 'ValueDisplayFormat', '%02.0f', 'Position', [72 120 52 22], 'Value', 0);
+            app.PrefixLabel = uilabel(app.SaveDataTab, 'Text', 'Prefix', 'Position', [7 92 40 15]);
+            app.Prefix = uieditfield(app.SaveDataTab, 'text', 'Position', [72 88 109 22], 'Value', 'FlxTest');
+            app.NameEditFieldLabel = uilabel(app.SaveDataTab, 'Text', 'Last file', 'Position', [7 60 50 15]);
+            app.Name = uieditfield(app.SaveDataTab, 'text', 'Editable', 'off', 'Position', [60 56 121 22]);
 
             app.MetadataTab = uitab(app.TabGroup);
             app.MetadataTab.Title = 'Metadata';
-            app.KneeAngleLabel = uilabel(app.MetadataTab, 'Text', 'Knee angle [deg]', 'Position', [7 119 115 15]);
-            app.KneeAngle = uieditfield(app.MetadataTab, 'numeric', 'Position', [118 115 62 22], 'ValueDisplayFormat', '%.2f');
-            app.LoadCellAngleLabel = uilabel(app.MetadataTab, 'Text', 'Load cell angle [deg]', 'Position', [7 82 130 15]);
-            app.LoadCellAngle = uieditfield(app.MetadataTab, 'numeric', 'Position', [118 78 62 22], 'ValueDisplayFormat', '%.2f');
-            app.ValveIncPinLabel = uilabel(app.MetadataTab, 'Text', 'Valve D11 pin', 'Position', [7 45 84 15]);
-            app.ValveIncEdit = uieditfield(app.MetadataTab, 'text', 'Position', [118 41 62 22], 'Value', 'D11');
-            app.ValveMaintainPinLabel = uilabel(app.MetadataTab, 'Text', 'Valve D6 pin', 'Position', [7 14 84 15]);
-            app.ValveMaintainEdit = uieditfield(app.MetadataTab, 'text', 'Position', [118 10 62 22], 'Value', 'D6');
+            app.KneeAngleLabel = uilabel(app.MetadataTab, 'Text', 'Knee angle [deg]', 'Position', [7 163 115 15]);
+            app.KneeAngle = uieditfield(app.MetadataTab, 'numeric', 'Position', [118 159 62 22], 'ValueDisplayFormat', '%.2f');
+            app.LoadCellAngleLabel = uilabel(app.MetadataTab, 'Text', 'Load cell angle [deg]', 'Position', [7 126 130 15]);
+            app.LoadCellAngle = uieditfield(app.MetadataTab, 'numeric', 'Position', [118 122 62 22], 'ValueDisplayFormat', '%.2f');
+            app.ValveIncPinLabel = uilabel(app.MetadataTab, 'Text', 'Valve D11 pin', 'Position', [7 89 84 15]);
+            app.ValveIncEdit = uieditfield(app.MetadataTab, 'text', 'Position', [118 85 62 22], 'Value', 'D11');
+            app.ValveMaintainPinLabel = uilabel(app.MetadataTab, 'Text', 'Valve D6 pin', 'Position', [7 58 84 15]);
+            app.ValveMaintainEdit = uieditfield(app.MetadataTab, 'text', 'Position', [118 54 62 22], 'Value', 'D6');
 
             app.ContinuosDataAcquisitionPanel = uipanel(app.MatlabArduinoHX711UIFigure);
             app.ContinuosDataAcquisitionPanel.Title = 'Continuous Data Acquisition';
@@ -1735,17 +1947,20 @@ classdef HX711_BPA < matlab.apps.AppBase
             app.PressureB = uieditfield(app.PressureCalTab, 'numeric', 'ValueDisplayFormat', '%.12g', 'Position', [120 168 130 22], 'Value', -126.99);
             app.PressureCalNLabel = uilabel(app.PressureCalTab, 'Text', 'Readings/point', 'Position', [10 139 100 15]);
             app.PressureCalN = uieditfield(app.PressureCalTab, 'numeric', 'Limits', [1 Inf], 'ValueDisplayFormat', '%.0f', 'Position', [120 135 130 22], 'Value', 25);
-            app.ApplyKnownPressureButton = uibutton(app.PressureCalTab, 'push', 'Text', 'Apply Known Pressure Cal', 'Position', [65 86 210 28]);
+            app.PressureCalPointsLabel = uilabel(app.PressureCalTab, 'Text', 'Cal points', 'Position', [10 106 100 15]);
+            app.PressureCalPoints = uieditfield(app.PressureCalTab, 'numeric', 'Limits', [2 50], 'ValueDisplayFormat', '%.0f', 'Position', [120 102 130 22], 'Value', 7);
+            app.CalGaugePressureLabel = uilabel(app.PressureCalTab, 'Text', 'Gauge kPa now', 'Position', [10 73 105 15]);
+            app.CalGaugePressure = uieditfield(app.PressureCalTab, 'numeric', 'Limits', [-Inf Inf], 'ValueDisplayFormat', '%.2f', 'Position', [120 69 130 22]);
+            app.TakeCalPointButton = uibutton(app.PressureCalTab, 'push', 'Text', 'Take Reading', 'Position', [4 34 158 28]);
+            app.TakeCalPointButton.ButtonPushedFcn = createCallbackFcn(app, @TakeCalPointButtonPushed, true);
+            app.TakeCalPointButton.FontWeight = 'bold';
+            app.ApplyKnownPressureButton = uibutton(app.PressureCalTab, 'push', 'Text', 'Apply Known Pressure Cal', 'Position', [166 34 154 28]);
             app.ApplyKnownPressureButton.ButtonPushedFcn = createCallbackFcn(app, @ApplyKnownPressureButtonPushed, true);
-            app.PressureCalButton = uibutton(app.PressureCalTab, 'push', 'Text', 'Run 7-Point Pressure Cal', 'Position', [65 45 210 28]);
-            app.PressureCalButton.ButtonPushedFcn = createCallbackFcn(app, @PressureCalButtonPushed, true);
-            app.PressureCalHint = uilabel(app.PressureCalTab);
-            app.PressureCalHint.Position = [10 4 324 36];
-            app.PressureCalHint.FontSize = 9;
-            app.PressureCalHint.FontColor = [0.35 0.35 0.35];
-            app.PressureCalHint.WordWrap = 'on';
-            app.PressureCalHint.Text = ['Pressure_kPa = a*Voltage_V + b. Type known a and b and Apply, ', ...
-                'or run the guided 7-point calibration (regulator 0-620 kPa).'];
+            app.CalProgressLabel = uilabel(app.PressureCalTab);
+            app.CalProgressLabel.Position = [10 4 324 24];
+            app.CalProgressLabel.FontSize = 9;
+            app.CalProgressLabel.FontColor = [0.35 0.35 0.35];
+            app.CalProgressLabel.Text = 'Points: 0/7. Set gauge, enter its kPa, Take Reading. p = a*V + b.';
 
             app.LicenseTab = uitab(app.TabGroup2);
             app.LicenseTab.Title = '*License*';
@@ -1760,7 +1975,7 @@ classdef HX711_BPA < matlab.apps.AppBase
             app.CleanPanel.FontName = 'Verdana';
             app.CleanPanel.FontAngle = 'italic';
             app.CleanPanel.FontWeight = 'bold';
-            app.CleanPanel.Position = [216 359 147 111];
+            app.CleanPanel.Position = [190 13 173 111];
             app.Clean = uibutton(app.CleanPanel, 'push');
             app.Clean.ButtonPushedFcn = createCallbackFcn(app, @CleanButtonPushed, true);
             app.Clean.FontName = 'Verdana';
@@ -1775,34 +1990,44 @@ classdef HX711_BPA < matlab.apps.AppBase
             app.ValvePanel.FontName = 'Verdana';
             app.ValvePanel.FontAngle = 'italic';
             app.ValvePanel.FontWeight = 'bold';
-            app.ValvePanel.Position = [216 241 147 105];
-            app.IncreasePressureButton = uibutton(app.ValvePanel, 'push', 'Text', 'Increase', 'Position', [21 58 105 22]);
+            app.ValvePanel.Position = [600 25 245 175];
+            app.IncreasePressureButton = uibutton(app.ValvePanel, 'push', 'Text', 'Open (Fill)', 'Position', [21 118 200 26]);
             app.IncreasePressureButton.ButtonPushedFcn = createCallbackFcn(app, @IncreasePressureButtonPushed, true);
-            app.MaintainPressureButton = uibutton(app.ValvePanel, 'push', 'Text', 'Maintain', 'Position', [21 33 105 22]);
+            app.IncreasePressureButton.FontWeight = 'bold';
+            app.MaintainPressureButton = uibutton(app.ValvePanel, 'push', 'Text', 'Hold', 'Position', [21 76 200 26]);
             app.MaintainPressureButton.ButtonPushedFcn = createCallbackFcn(app, @MaintainPressureButtonPushed, true);
-            app.DecreasePressureButton = uibutton(app.ValvePanel, 'push', 'Text', 'Decrease / 0', 'Position', [21 8 105 22]);
+            app.MaintainPressureButton.FontWeight = 'bold';
+            app.DecreasePressureButton = uibutton(app.ValvePanel, 'push', 'Text', 'Deflate (Vent)', 'Position', [21 34 200 26]);
             app.DecreasePressureButton.ButtonPushedFcn = createCallbackFcn(app, @DecreasePressureButtonPushed, true);
+            app.DecreasePressureButton.FontWeight = 'bold';
 
-            app.ForceEditFieldLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'Text', 'Force', 'Position', [14 426 42 15]);
-            app.ForceEdit = uieditfield(app.MatlabArduinoHX711UIFigure, 'numeric', 'ValueDisplayFormat', '%.2f', 'Editable', 'off', 'Position', [67 422 82 22]);
-            app.measure = uieditfield(app.MatlabArduinoHX711UIFigure, 'text', 'Editable', 'off', 'Position', [159 421 36 22], 'Value', 'N');
-            app.PressureLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'Text', 'Pressure', 'Position', [15 391 57 22]);
-            app.Pressure = uieditfield(app.MatlabArduinoHX711UIFigure, 'numeric', 'ValueDisplayFormat', '%.2f', 'Editable', 'off', 'Position', [68 394 82 22]);
-            app.kPaLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'Text', 'kPa', 'Position', [161 387 30 22]);
-            app.TimeEditFieldLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'Text', 'Time', 'Position', [13 373 38 15]);
-            app.TimeEdit = uieditfield(app.MatlabArduinoHX711UIFigure, 'numeric', 'ValueDisplayFormat', '%.1f', 'Editable', 'off', 'Position', [67 369 82 22]);
-            app.measure2 = uieditfield(app.MatlabArduinoHX711UIFigure, 'text', 'Editable', 'off', 'Position', [158 366 36 22], 'Value', 's');
-            app.SamplingRLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'Text', 'Sampling R.', 'Position', [13 343 85 15]);
-            app.Rate = uieditfield(app.MatlabArduinoHX711UIFigure, 'numeric', 'ValueDisplayFormat', '%.3f', 'Editable', 'off', 'Position', [105 339 44 22]);
-            app.measure3 = uieditfield(app.MatlabArduinoHX711UIFigure, 'text', 'Editable', 'off', 'Position', [158 339 36 22], 'Value', 's');
-            app.DataEditFieldLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'Text', '# Data', 'Position', [18 317 50 15]);
-            app.DataEditField = uieditfield(app.MatlabArduinoHX711UIFigure, 'numeric', 'ValueDisplayFormat', '%.0f', 'Editable', 'off', 'Position', [77 313 121 22]);
+            app.ForceEditFieldLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'Text', 'Force', 'Position', [394 220 42 15]);
+            app.ForceEdit = uieditfield(app.MatlabArduinoHX711UIFigure, 'numeric', 'ValueDisplayFormat', '%.2f', 'Editable', 'off', 'Position', [450 216 82 22]);
+            app.measure = uieditfield(app.MatlabArduinoHX711UIFigure, 'text', 'Editable', 'off', 'Position', [538 215 36 22], 'Value', 'N');
+            app.PressureLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'Text', 'Pressure', 'Position', [394 185 57 22]);
+            app.Pressure = uieditfield(app.MatlabArduinoHX711UIFigure, 'numeric', 'ValueDisplayFormat', '%.2f', 'Editable', 'off', 'Position', [450 188 82 22]);
+            app.kPaLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'Text', 'kPa', 'Position', [538 184 30 22]);
+            app.TimeEditFieldLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'Text', 'Time', 'Position', [394 150 38 15]);
+            app.TimeEdit = uieditfield(app.MatlabArduinoHX711UIFigure, 'numeric', 'ValueDisplayFormat', '%.1f', 'Editable', 'off', 'Position', [450 146 82 22]);
+            app.measure2 = uieditfield(app.MatlabArduinoHX711UIFigure, 'text', 'Editable', 'off', 'Position', [538 145 36 22], 'Value', 's');
+            app.SamplingRLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'Text', 'Sampling R.', 'Position', [394 115 85 15]);
+            app.Rate = uieditfield(app.MatlabArduinoHX711UIFigure, 'numeric', 'ValueDisplayFormat', '%.3f', 'Editable', 'off', 'Position', [485 111 44 22]);
+            app.measure3 = uieditfield(app.MatlabArduinoHX711UIFigure, 'text', 'Editable', 'off', 'Position', [535 111 36 22], 'Value', 's');
+            app.DataEditFieldLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'Text', '# Data', 'Position', [394 80 50 15]);
+            app.DataEditField = uieditfield(app.MatlabArduinoHX711UIFigure, 'numeric', 'ValueDisplayFormat', '%.0f', 'Editable', 'off', 'Position', [450 76 121 22]);
 
-            app.PressureGaugeLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'HorizontalAlignment', 'center', 'Position', [139 21 93 22]);
+            app.PressureGaugeLabel = uilabel(app.MatlabArduinoHX711UIFigure, 'HorizontalAlignment', 'center', 'Position', [930 18 100 22]);
             app.PressureGaugeLabel.Text = 'Pressure Gauge';
             app.PressureGauge = uigauge(app.MatlabArduinoHX711UIFigure, 'semicircular');
             app.PressureGauge.Limits = [0 700];
-            app.PressureGauge.Position = [61 58 249 135];
+            app.PressureGauge.Position = [852 52 250 136];
+
+            % Live pressure monitor: 5 Hz gauge/readout refresh while
+            % connected. Paused during Get Data / GO / step tests so it
+            % never interleaves Arduino IO with those control loops.
+            app.PressureTimer = timer('Name','HX711_BPA_live_pressure', ...
+                'Period', 0.2, 'ExecutionMode', 'fixedRate', 'BusyMode', 'drop');
+            app.PressureTimer.TimerFcn = createCallbackFcn(app, @PressureTimerFcn, true);
         end
     end
 
@@ -1821,6 +2046,7 @@ classdef HX711_BPA < matlab.apps.AppBase
             end
             app.appRoot = char(appRoot);
             createComponents(app);
+            app.fitToScreen();
             app.SaveFolder.Value = app.resolveDefaultSaveDir();
             app.loadCalCache();
             registerApp(app, app.MatlabArduinoHX711UIFigure);
@@ -1833,6 +2059,11 @@ classdef HX711_BPA < matlab.apps.AppBase
         end
 
         function delete(app)
+            try
+                stop(app.PressureTimer);
+            catch
+                % never block app teardown on timer problems
+            end
             try
                 if ~isempty(app.a) && isvalid(app.a)
                     app.a.disconnect();

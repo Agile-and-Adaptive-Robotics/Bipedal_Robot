@@ -612,6 +612,156 @@ xlabel('Knee angle, degrees')
 ylabel('Strain')
 title('BPA strain definitions')
 
+%% FlxTest20mm_51cm: measured torque via the Adjoint transform
+% Reads the 'FlxTest20mm_51cm' tab of Testing_Data\2026_06_Festo\
+% Results_table_20mm.xlsx (same layout as the 42 cm tabs: row 6 Load (N),
+% row 7 knee angle, row 8 pressure, row 10 load-cell angle (tibia)), then
+% transforms each measured load-cell wrench to the moving knee ICR with
+% the same Adjoint machinery used above for the 42 cm tests. Prints the
+% Torque actual values for paste into row 17 of the tab.
+flxXlsx51 = fullfile(root,'Testing_Data','2026_06_Festo','Results_table_20mm.xlsx');
+flxSheet51 = 'FlxTest20mm_51cm';
+% Reaction-point geometry of this test in the tibia (theta1) frame.
+% Defaults are the 42 cm long-tibia values (d, ang above) -- UPDATE after
+% the 51 cm rig setup is measured.
+d51   = 320/1000;     % theta1 origin -> load-cell arm, m
+ang51 = -82.97;       % arm angle in the tibia frame, deg
+
+T51 = readcell(flxXlsx51,'Sheet',flxSheet51);
+keep51 = false(1, size(T51,2));
+keep51(3:end) = cellfun(@(x) isnumeric(x) && isscalar(x) && ~isnan(x), ...
+    T51(6,3:end));
+
+if ~any(keep51)
+    fprintf(['%s: no measured Load data yet -- measured-torque ', ...
+        'section skipped.\n'], flxSheet51);
+else
+    Load51 = cell2mat(T51(6,keep51));       % N
+    K51d   = cell2mat(T51(7,keep51));       % knee angle, deg
+    P51    = cell2mat(T51(8,keep51));       % pressure, kPa
+    LC51d  = cell2mat(T51(10,keep51));      % load-cell angle (tibia), deg
+    K51  = K51d*pi/180;                     % NOTE: c is the color cell here
+    % LC angle convention (Ben, 2026-10-04): entered FROM THE TIBIA AXIS
+    % (flexor mirror of torque about t1 = F*sin(LC+0.83 deg)*d). The
+    % Adjoint machinery wants the force angle from the tibia x-axis.
+    LC51 = deg2rad(90 - LC51d);
+
+    p_rf51 = [d51*cosd(ang51), d51*sind(ang51), 0]';
+    T_t1_rf51 = RpToTrans(eye(3),p_rf51);
+    Trk51 = pagemtimes(TransInv(T_t1_rf51),T_t1_ICR);
+    fcn51x = fit(phi', squeeze(Trk51(1,4,:)),'cubicspline');
+    fcn51y = fit(phi', squeeze(Trk51(2,4,:)),'cubicspline');
+
+    Fr51 = zeros(6,1,numel(Load51));
+    Fk51 = zeros(6,1,numel(Load51));
+    for i = 1:numel(Load51)
+        Trk51i = RpToTrans(eye(3),[fcn51x(K51(i)), fcn51y(K51(i)), 0]');
+        Fr51(:,:,i) = [0; 0; 0; Load51(i)*cos(LC51(i)+pi); ...
+            Load51(i)*sin(LC51(i)+pi); 0];
+        Fk51(:,:,i) = Adjoint(Trk51i)'*Fr51(:,:,i);
+    end
+    TorqueZ51 = squeeze(Fk51(3,1,:));
+
+    fprintf('%s Torque actual (paste into row 17 of the tab):\n', flxSheet51);
+    fprintf('%.4f\t', TorqueZ51); fprintf('\n');
+
+    figure
+    hold on
+    plot(phiD, Bifemsh_Pam3.Torque_p(:,3),'--','Color',c7)
+    plot(humanAngle, TorqueHz,':','Color',c8)
+    scatter(K51d, TorqueZ51, 60*P51/620, 'filled','MarkerFaceColor',c4)
+    legend('Optimized pair, 620 kPa','Human target','Measured (adjoint)', ...
+        'Location','best')
+    title(sprintf('%s: measured vs predicted torque', flxSheet51))
+    xlabel('Knee angle, \circ','Interpreter','tex')
+    ylabel('Torque, N \cdot m','Interpreter','tex')
+    hold off
+end
+
+%% Pressure back-calculation: kPa needed at each angle to meet the human
+% Bifemsh (short head) torque target with the optimized 2x20 mm pair.
+% Torque_p(phi,P) is evaluated on a pressure grid and inverted per angle,
+% so the route geometry, Xi compliance and the festo4 force surface are
+% all included. Angles where even 620 kPa cannot reach the target (or the
+% BPA is out of range, or there is no human datum) are flagged instead of
+% extrapolated. Pressurizing ABOVE the tabulated value overshoots the
+% human torque and risks the test rig.
+[humanAngleU, iuH] = unique(humanAngle);
+humanTgtPhi = interp1(humanAngleU, TorqueHz(iuH), phiD, 'pchip');
+humanTgtPhi = humanTgtPhi(:);
+
+Pgrid = (0:5:620)';
+TqVsP = nan(numel(Pgrid), positions);
+for kP = 1:numel(Pgrid)
+    tmpP = MonoPam_mult(Name, LocationPair, CrossPoint, Dia, T_Pam, ...
+        rest, kmax, tendon, fitting, Pgrid(kP), Xi0, Xi1, Xi2, Xi3, ...
+        wraps, phiD, BPAcount, bendMeasurePair);
+    TqVsP(kP,:) = tmpP.Torque_p(:,3).';
+end
+
+PreqFlx = nan(positions,1);
+flxFlag = repmat("no human data", positions, 1);
+for i = 1:positions
+    tgt = humanTgtPhi(i);
+    if ~isfinite(tgt)
+        continue
+    end
+    if tgt >= 0
+        flxFlag(i) = "no flexion demand";
+        continue
+    end
+    col = TqVsP(:,i);
+    fin = isfinite(col);
+    if ~any(fin)
+        flxFlag(i) = "BPA out of range";
+        continue
+    end
+    if min(col(fin)) > tgt
+        flxFlag(i) = "unreachable at 620 kPa";
+        continue
+    end
+    k = find(col <= tgt, 1);
+    if k <= 1
+        PreqFlx(i) = 0;
+    else
+        pq = Pgrid([k-1 k]);
+        [xs, isrt] = sort(col([k-1 k]));
+        PreqFlx(i) = interp1(xs, pq(isrt), tgt);
+    end
+    flxFlag(i) = "ok";
+end
+
+fprintf(['\nPressure back-calculation (optimized flexor pair, ', ...
+    'rest = %.4f m, Dia = %d mm):\n'], rest, Dia);
+fprintf('angle_deg   target_Nm     kPa   status\n');
+for i = 1:5:positions
+    if isfinite(PreqFlx(i))
+        fprintf('%8.1f  %10.2f  %6.1f   %s\n', phiD(i), ...
+            humanTgtPhi(i), PreqFlx(i), flxFlag(i));
+    else
+        fprintf('%8.1f  %10.2f      --   %s\n', phiD(i), ...
+            humanTgtPhi(i), flxFlag(i));
+    end
+end
+
+FlxPtable = table(phiD(:), humanTgtPhi(:), PreqFlx(:), flxFlag, ...
+    'VariableNames', {'knee_angle_deg','human_target_Nm', ...
+    'required_pressure_kPa','status'});
+writetable(FlxPtable, 'Flx_20mm_pressure_for_human_torque.csv');
+fprintf('Full table: Flx_20mm_pressure_for_human_torque.csv (in cwd)\n');
+
+figure
+yyaxis left
+plot(phiD, humanTgtPhi,'LineWidth',2)
+ylabel('Human target torque, N\cdotm','Interpreter','tex','FontWeight','bold')
+yyaxis right
+plot(phiD, PreqFlx,'LineWidth',2)
+hold on
+yline(620,':','620 kPa max')
+ylabel('Required pressure, kPa','FontWeight','bold')
+xlabel('Knee angle, \circ','Interpreter','tex','FontWeight','bold')
+title('Flexor pair: pressure to meet the human torque target')
+hold off
 
 %% Muscle Bone Plotting
 
