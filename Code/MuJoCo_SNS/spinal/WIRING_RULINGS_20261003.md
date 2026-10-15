@@ -392,7 +392,7 @@ source from them, true neuron count 888 confirmed.
 
 | # | Conflict | Sources | Choice |
 |---|----------|---------|--------|
-| 1 | Afferents onto RG/PF half-centers | Deng original: none; Ben master rules + Shinohara eq10/11: direct; Shevtsova: no afferents | Ben's drawing + Shinohara (kept, F4) |
+| 1 | Afferents onto RG/PF half-centers | Deng original: PRESENT (Ben, 2026-10-03 screenshot verification: afferents DO reach the RG/PF half-centers in the original model; the earlier 'none' was an audit error in reports_20260924/deng_feedback_wiring_audit.md); Ben master rules + Shinohara eq10/11: direct; Shevtsova: no afferents in her abstraction | Ben's drawing + Shinohara + Deng original all agree: direct afferents to HCs are correct (not a deviation) |
 | 2 | Heel-to-InF side and sign | Drawing: ipsi InE exc + contra InF exc; stock full_rules: ipsi InE exc + ipsi InF inh; AGENTS prose: unspecified side | Drawing wins; stock kept as tuned, contra edge realized in w2lvar, syn6 flagged S1 |
 | 3 | II relay gains | Drawing: II-to-IIIN 0.5, IIIN-to-ant-MN 0.5; stock: 1.0 and reuse of ia_to_antagonist 0.4 | Keep stock calibration, document (F6); syn6 uses verbatim |
 | 4 | DRIVE-to-PF | Rybak: MLR-to-PF 0.5; Deng/Shevtsova: RG only | Already removed 2026-09-16; keep (F7) |

@@ -1,0 +1,1244 @@
+'C:\Users\Ben' is not recognized as an internal or external command,
+operable program or batch file.
+[spiking] pinned AARL_NET=spiking AARL_NPZ=spinal_run_curr_spiking_37820.npz DB=sqlite:///optuna_spiking.db
+[spiking] warm start from curriculum_spiking_stage1.json
+seeded {"drive": 3.1417992610138152, "rg_nap_h": 0.4831643716732844, "desc_e": 0.9998702526765368, "desc_f": 1.3027886964942652, "rg_to_pf": 1.814051439793709, "heel_rge": 0.0, "toe_rge": 0.0, "ib_e_central": 0.0, "ia_f_central": 0.0, "ii_f_central": 0.0, "ii_e_central": 0.0, "c1_gain": 0.1, "v3_gain": 0.0}
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      82.3 max|qvel|=   2.62 ncon=  0 com_z=0.930 com_x=-0.114
+t=  1.50 max|qacc|=      77.2 max|qvel|=   1.19 ncon=  0 com_z=0.929 com_x=-0.126
+t=  2.00 max|qacc|=      83.6 max|qvel|=   0.99 ncon=  0 com_z=0.932 com_x=-0.124
+t=  2.50 max|qacc|=      42.0 max|qvel|=   1.07 ncon=  0 com_z=0.929 com_x=-0.130
+t=  3.00 max|qacc|=      43.8 max|qvel|=   0.91 ncon=  0 com_z=0.930 com_x=-0.129
+t=  3.50 max|qacc|=     768.6 max|qvel|=   3.44 ncon=  0 com_z=0.931 com_x=-0.134
+t=  4.00 max|qacc|=     165.9 max|qvel|=  11.19 ncon=  0 com_z=0.928 com_x=-0.124
+t=  4.50 max|qacc|=     216.5 max|qvel|=   3.11 ncon=  0 com_z=0.930 com_x=-0.116
+t=  5.00 max|qacc|=     224.7 max|qvel|=   4.33 ncon=  0 com_z=0.931 com_x=-0.129
+t=  5.50 max|qacc|=     213.1 max|qvel|=  11.50 ncon=  0 com_z=0.934 com_x=-0.116
+t=  6.00 max|qacc|=     545.9 max|qvel|=  12.80 ncon=  0 com_z=0.930 com_x=-0.078
+t=  6.50 max|qacc|=      73.4 max|qvel|=  10.02 ncon=  0 com_z=0.944 com_x=-0.109
+t=  7.00 max|qacc|=     184.6 max|qvel|=   7.31 ncon=  0 com_z=0.945 com_x=-0.090
+t=  7.50 max|qacc|=     282.8 max|qvel|=   2.77 ncon=  0 com_z=0.952 com_x=-0.095
+t=  8.00 max|qacc|=      30.5 max|qvel|=   8.41 ncon=  0 com_z=0.934 com_x=-0.108
+t=  8.50 max|qacc|=     101.2 max|qvel|=   7.94 ncon=  0 com_z=0.932 com_x=-0.105
+t=  9.00 max|qacc|=      33.3 max|qvel|=   8.00 ncon=  0 com_z=0.930 com_x=-0.133
+t=  9.50 max|qacc|=      66.9 max|qvel|=   6.45 ncon=  0 com_z=0.926 com_x=-0.111
+t= 10.00 max|qacc|=     819.1 max|qvel|=  10.02 ncon=  0 com_z=0.931 com_x=-0.131
+t= 10.50 max|qacc|=     136.0 max|qvel|=  11.44 ncon=  0 com_z=0.924 com_x=-0.090
+t= 11.00 max|qacc|=     472.0 max|qvel|=  12.89 ncon=  0 com_z=0.934 com_x=-0.114
+t= 11.50 max|qacc|=     117.3 max|qvel|=  11.28 ncon=  0 com_z=0.934 com_x=-0.092
+t= 12.00 max|qacc|=      58.7 max|qvel|=   3.72 ncon=  0 com_z=0.949 com_x=-0.096
+t= 12.50 max|qacc|=      54.5 max|qvel|=   7.03 ncon=  0 com_z=0.943 com_x=-0.095
+t= 13.00 max|qacc|=      30.4 max|qvel|=   7.48 ncon=  0 com_z=0.939 com_x=-0.105
+t= 13.50 max|qacc|=      56.0 max|qvel|=   8.68 ncon=  0 com_z=0.931 com_x=-0.124
+t= 14.00 max|qacc|=     130.2 max|qvel|=   7.59 ncon=  0 com_z=0.929 com_x=-0.109
+t= 14.50 max|qacc|=     588.3 max|qvel|=   4.02 ncon=  0 com_z=0.932 com_x=-0.135
+t= 15.00 max|qacc|=     236.4 max|qvel|=   7.15 ncon=  0 com_z=0.926 com_x=-0.101
+t= 15.50 max|qacc|=     161.4 max|qvel|=  10.39 ncon=  0 com_z=0.932 com_x=-0.120
+t= 16.00 max|qacc|=      73.9 max|qvel|=   6.98 ncon=  0 com_z=0.928 com_x=-0.092
+t= 16.50 max|qacc|=      93.7 max|qvel|=   6.34 ncon=  0 com_z=0.931 com_x=-0.131
+t= 17.00 max|qacc|=      68.5 max|qvel|=   6.87 ncon=  0 com_z=0.930 com_x=-0.130
+t= 17.50 max|qacc|=      54.3 max|qvel|=   1.13 ncon=  0 com_z=0.929 com_x=-0.111
+t= 18.00 max|qacc|=     127.2 max|qvel|=   1.38 ncon=  0 com_z=0.934 com_x=-0.142
+t= 18.50 max|qacc|=      60.7 max|qvel|=   0.95 ncon=  0 com_z=0.927 com_x=-0.124
+t= 19.00 max|qacc|=      40.3 max|qvel|=   0.73 ncon=  0 com_z=0.930 com_x=-0.126
+t= 19.50 max|qacc|=      46.9 max|qvel|=   0.83 ncon=  0 com_z=0.932 com_x=-0.137
+t= 20.00 max|qacc|=      35.4 max|qvel|=   0.96 ncon=  0 com_z=0.928 com_x=-0.121
+t= 20.50 max|qacc|=     116.2 max|qvel|=   0.82 ncon=  0 com_z=0.931 com_x=-0.132
+t= 21.00 max|qacc|=      47.6 max|qvel|=   0.76 ncon=  0 com_z=0.930 com_x=-0.131
+t= 21.50 max|qacc|=     122.6 max|qvel|=   1.27 ncon=  0 com_z=0.928 com_x=-0.123
+t= 22.00 max|qacc|=      31.0 max|qvel|=   0.71 ncon=  0 com_z=0.931 com_x=-0.133
+t= 22.50 max|qacc|=     100.7 max|qvel|=   1.54 ncon=  0 com_z=0.929 com_x=-0.128
+t= 23.00 max|qacc|=      25.4 max|qvel|=   1.03 ncon=  0 com_z=0.929 com_x=-0.127
+t= 23.50 max|qacc|=      31.1 max|qvel|=   0.70 ncon=  0 com_z=0.931 com_x=-0.132
+t= 24.00 max|qacc|=      70.9 max|qvel|=   1.19 ncon=  0 com_z=0.929 com_x=-0.126
+t= 24.50 max|qacc|=      39.5 max|qvel|=   0.79 ncon=  0 com_z=0.930 com_x=-0.130
+t= 25.00 max|qacc|=      60.5 max|qvel|=   1.33 ncon=  0 com_z=0.930 com_x=-0.130
+t= 25.50 max|qacc|=      40.3 max|qvel|=   0.65 ncon=  0 com_z=0.929 com_x=-0.127
+t= 26.00 max|qacc|=      34.0 max|qvel|=   0.55 ncon=  0 com_z=0.930 com_x=-0.130
+t= 26.50 max|qacc|=      40.8 max|qvel|=   0.53 ncon=  0 com_z=0.929 com_x=-0.129
+t= 27.00 max|qacc|=      68.3 max|qvel|=   0.71 ncon=  0 com_z=0.929 com_x=-0.128
+t= 27.50 max|qacc|=      49.3 max|qvel|=   0.59 ncon=  0 com_z=0.930 com_x=-0.130
+t= 28.00 max|qacc|=      42.1 max|qvel|=   0.52 ncon=  0 com_z=0.929 com_x=-0.128
+t= 28.50 max|qacc|=      67.8 max|qvel|=   0.57 ncon=  0 com_z=0.930 com_x=-0.129
+t= 29.00 max|qacc|=      53.5 max|qvel|=   0.67 ncon=  0 com_z=0.930 com_x=-0.130
+t= 29.50 max|qacc|=      65.1 max|qvel|=   1.32 ncon=  0 com_z=0.929 com_x=-0.128
+t= 30.00 max|qacc|=      46.6 max|qvel|=   0.68 ncon=  0 com_z=0.930 com_x=-0.130
+t= 30.50 max|qacc|=      66.4 max|qvel|=   0.59 ncon=  0 com_z=0.930 com_x=-0.129
+t= 31.00 max|qacc|=      92.1 max|qvel|=   0.21 ncon=  0 com_z=0.929 com_x=-0.129
+t= 31.50 max|qacc|=      66.6 max|qvel|=   1.68 ncon=  0 com_z=0.930 com_x=-0.129
+t= 32.00 max|qacc|=      54.4 max|qvel|=   0.54 ncon=  0 com_z=0.930 com_x=-0.128
+t= 32.50 max|qacc|=      59.4 max|qvel|=   0.47 ncon=  0 com_z=0.930 com_x=-0.129
+t= 33.00 max|qacc|=      85.1 max|qvel|=   1.48 ncon=  0 com_z=0.930 com_x=-0.129
+t= 33.50 max|qacc|=      77.3 max|qvel|=   1.53 ncon=  0 com_z=0.930 com_x=-0.129
+t= 34.00 max|qacc|=      60.1 max|qvel|=   0.77 ncon=  0 com_z=0.930 com_x=-0.129
+t= 34.50 max|qacc|=      55.9 max|qvel|=   1.33 ncon=  0 com_z=0.930 com_x=-0.129
+t= 35.00 max|qacc|=      58.6 max|qvel|=   0.89 ncon=  0 com_z=0.930 com_x=-0.129
+t= 35.50 max|qacc|=      42.8 max|qvel|=   0.68 ncon=  0 com_z=0.930 com_x=-0.130
+t= 36.00 max|qacc|=      67.9 max|qvel|=   0.64 ncon=  0 com_z=0.930 com_x=-0.129
+t= 36.50 max|qacc|=      91.4 max|qvel|=   1.04 ncon=  0 com_z=0.930 com_x=-0.129
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.92 m, final 0.93 m  (stayed up)
+COM x: min -0.14 max -0.07 final -0.13 m
+COM y: min -0.021 max -0.001 m
+RG_F_r bursts during walk window: 35
+RG_r: cycles in window 36, period 0.28 s (3.64 Hz), E-duty 0.27
+RG_l: cycles in window 36, period 0.28 s (3.64 Hz), E-duty 0.27
+peak ctrl: [0.49 0.79 0.86 0.72 0.41 0.31 0.69 0.44 0.41 0.09 0.49 0.79 0.86 0.69
+ 0.41 0.31 0.62 0.44 0.41 0.09] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r        -29.8 ..    30.6 deg
+  knee_angle_r         -91.4 ..    13.5 deg
+  ankle_angle_r        -66.9 ..    14.9 deg
+  hip_adduction_r       -1.1 ..    12.4 deg
+  subtalar_angle_r      -4.0 ..    17.5 deg
+  hip_flexion_l        -39.7 ..    21.4 deg
+  knee_angle_l         -99.7 ..    12.9 deg
+  ankle_angle_l        -69.7 ..    10.1 deg
+  hip_adduction_l       -7.6 ..    16.1 deg
+  subtalar_angle_l      -3.5 ..    23.9 deg
+  pelvis_tilt           -1.9 ..     0.2 deg
+  pelvis_list           -0.5 ..    -0.3 deg
+  pelvis_rotation        2.3 ..     2.5 deg
+saved spinal_run.npz
+(plot skipped: [Errno 22] Invalid argument: 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run.png')
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      45.9 max|qvel|=   2.41 ncon=  0 com_z=0.930 com_x=-0.119
+t=  1.50 max|qacc|=      55.2 max|qvel|=   0.81 ncon=  0 com_z=0.929 com_x=-0.132
+t=  2.00 max|qacc|=      50.2 max|qvel|=   0.98 ncon=  0 com_z=0.932 com_x=-0.126
+t=  2.50 max|qacc|=      54.9 max|qvel|=   0.90 ncon=  0 com_z=0.930 com_x=-0.134
+t=  3.00 max|qacc|=     105.2 max|qvel|=   1.39 ncon=  0 com_z=0.930 com_x=-0.132
+t=  3.50 max|qacc|=      77.5 max|qvel|=   3.61 ncon=  0 com_z=0.932 com_x=-0.139
+t=  4.00 max|qacc|=     299.7 max|qvel|=   4.01 ncon=  0 com_z=0.931 com_x=-0.141
+t=  4.50 max|qacc|=     188.7 max|qvel|=   2.65 ncon=  0 com_z=0.928 com_x=-0.120
+t=  5.00 max|qacc|=     629.6 max|qvel|=   7.74 ncon=  0 com_z=0.929 com_x=-0.125
+t=  5.50 max|qacc|=     101.6 max|qvel|=   5.30 ncon=  0 com_z=0.925 com_x=-0.099
+t=  6.00 max|qacc|=     181.1 max|qvel|=   2.62 ncon=  0 com_z=0.925 com_x=-0.099
+t=  6.50 max|qacc|=     189.5 max|qvel|=   6.95 ncon=  0 com_z=0.927 com_x=-0.118
+t=  7.00 max|qacc|=     126.0 max|qvel|=   2.80 ncon=  0 com_z=0.925 com_x=-0.086
+t=  7.50 max|qacc|=     119.9 max|qvel|=   7.82 ncon=  0 com_z=0.928 com_x=-0.119
+t=  8.00 max|qacc|=     387.5 max|qvel|=   5.31 ncon=  0 com_z=0.942 com_x=-0.082
+t=  8.50 max|qacc|=     112.8 max|qvel|=   7.69 ncon=  0 com_z=0.924 com_x=-0.082
+t=  9.00 max|qacc|=     380.8 max|qvel|=   5.73 ncon=  0 com_z=0.944 com_x=-0.108
+t=  9.50 max|qacc|=      31.2 max|qvel|=   6.68 ncon=  0 com_z=0.926 com_x=-0.101
+t= 10.00 max|qacc|=      30.4 max|qvel|=   8.87 ncon=  0 com_z=0.929 com_x=-0.089
+t= 10.50 max|qacc|=      27.3 max|qvel|=   5.84 ncon=  0 com_z=0.930 com_x=-0.119
+t= 11.00 max|qacc|=      83.1 max|qvel|=   2.42 ncon=  0 com_z=0.924 com_x=-0.113
+t= 11.50 max|qacc|=      55.3 max|qvel|=   7.70 ncon=  0 com_z=0.926 com_x=-0.097
+t= 12.00 max|qacc|=      73.9 max|qvel|=   1.76 ncon=  0 com_z=0.925 com_x=-0.112
+t= 12.50 max|qacc|=     171.8 max|qvel|=   2.45 ncon=  0 com_z=0.928 com_x=-0.113
+t= 13.00 max|qacc|=      38.5 max|qvel|=   1.74 ncon=  0 com_z=0.924 com_x=-0.101
+t= 13.50 max|qacc|=      99.0 max|qvel|=   1.23 ncon=  0 com_z=0.929 com_x=-0.122
+t= 14.00 max|qacc|=      68.8 max|qvel|=   9.96 ncon=  0 com_z=0.926 com_x=-0.083
+t= 14.50 max|qacc|=      93.3 max|qvel|=   2.44 ncon=  0 com_z=0.925 com_x=-0.094
+t= 15.00 max|qacc|=      75.8 max|qvel|=   9.58 ncon=  0 com_z=0.931 com_x=-0.109
+t= 15.50 max|qacc|=      16.5 max|qvel|=   5.75 ncon=  0 com_z=0.930 com_x=-0.091
+t= 16.00 max|qacc|=     321.8 max|qvel|=   3.89 ncon=  0 com_z=0.926 com_x=-0.098
+t= 16.50 max|qacc|=      66.6 max|qvel|=   5.12 ncon=  0 com_z=0.938 com_x=-0.117
+t= 17.00 max|qacc|=      42.5 max|qvel|=   2.55 ncon=  0 com_z=0.927 com_x=-0.103
+t= 17.50 max|qacc|=      40.2 max|qvel|=   2.23 ncon=  0 com_z=0.935 com_x=-0.145
+t= 18.00 max|qacc|=      59.7 max|qvel|=   1.00 ncon=  0 com_z=0.930 com_x=-0.136
+t= 18.50 max|qacc|=      71.0 max|qvel|=   0.96 ncon=  0 com_z=0.928 com_x=-0.122
+t= 19.00 max|qacc|=      53.4 max|qvel|=   0.63 ncon=  0 com_z=0.935 com_x=-0.144
+t= 19.50 max|qacc|=      55.7 max|qvel|=   1.02 ncon=  0 com_z=0.929 com_x=-0.127
+t= 20.00 max|qacc|=      85.9 max|qvel|=   0.43 ncon=  0 com_z=0.930 com_x=-0.131
+t= 20.50 max|qacc|=     119.6 max|qvel|=   1.49 ncon=  0 com_z=0.932 com_x=-0.139
+t= 21.00 max|qacc|=     121.6 max|qvel|=   0.96 ncon=  0 com_z=0.928 com_x=-0.125
+t= 21.50 max|qacc|=      96.0 max|qvel|=   0.88 ncon=  0 com_z=0.932 com_x=-0.136
+t= 22.00 max|qacc|=      49.1 max|qvel|=   1.00 ncon=  0 com_z=0.930 com_x=-0.133
+t= 22.50 max|qacc|=      57.3 max|qvel|=   0.52 ncon=  0 com_z=0.929 com_x=-0.129
+t= 23.00 max|qacc|=      73.7 max|qvel|=   0.90 ncon=  0 com_z=0.932 com_x=-0.137
+t= 23.50 max|qacc|=      92.1 max|qvel|=   1.58 ncon=  0 com_z=0.929 com_x=-0.130
+t= 24.00 max|qacc|=      46.7 max|qvel|=   1.02 ncon=  0 com_z=0.930 com_x=-0.132
+t= 24.50 max|qacc|=      62.3 max|qvel|=   1.56 ncon=  0 com_z=0.931 com_x=-0.135
+t= 25.00 max|qacc|=      20.7 max|qvel|=   0.92 ncon=  0 com_z=0.929 com_x=-0.130
+t= 25.50 max|qacc|=      80.0 max|qvel|=   0.90 ncon=  0 com_z=0.930 com_x=-0.134
+t= 26.00 max|qacc|=      24.8 max|qvel|=   0.99 ncon=  0 com_z=0.930 com_x=-0.133
+t= 26.50 max|qacc|=      61.8 max|qvel|=   0.82 ncon=  0 com_z=0.929 com_x=-0.131
+t= 27.00 max|qacc|=      88.4 max|qvel|=   1.64 ncon=  0 com_z=0.931 com_x=-0.134
+t= 27.50 max|qacc|=      66.9 max|qvel|=   0.28 ncon=  0 com_z=0.930 com_x=-0.132
+t= 28.00 max|qacc|=      64.1 max|qvel|=   0.79 ncon=  0 com_z=0.930 com_x=-0.132
+t= 28.50 max|qacc|=      64.8 max|qvel|=   1.66 ncon=  0 com_z=0.931 com_x=-0.133
+t= 29.00 max|qacc|=      31.6 max|qvel|=   0.88 ncon=  0 com_z=0.930 com_x=-0.131
+t= 29.50 max|qacc|=      56.0 max|qvel|=   0.47 ncon=  0 com_z=0.930 com_x=-0.133
+t= 30.00 max|qacc|=      74.2 max|qvel|=   0.88 ncon=  0 com_z=0.930 com_x=-0.133
+t= 30.50 max|qacc|=     106.7 max|qvel|=   1.19 ncon=  0 com_z=0.930 com_x=-0.132
+t= 31.00 max|qacc|=      60.3 max|qvel|=   0.87 ncon=  0 com_z=0.930 com_x=-0.133
+t= 31.50 max|qacc|=     117.2 max|qvel|=   1.06 ncon=  0 com_z=0.930 com_x=-0.132
+t= 32.00 max|qacc|=     109.0 max|qvel|=   0.40 ncon=  0 com_z=0.930 com_x=-0.132
+t= 32.50 max|qacc|=      53.1 max|qvel|=   0.76 ncon=  0 com_z=0.930 com_x=-0.133
+t= 33.00 max|qacc|=      61.3 max|qvel|=   0.55 ncon=  0 com_z=0.930 com_x=-0.132
+t= 33.50 max|qacc|=      93.9 max|qvel|=   0.47 ncon=  0 com_z=0.930 com_x=-0.133
+t= 34.00 max|qacc|=      41.4 max|qvel|=   0.98 ncon=  0 com_z=0.930 com_x=-0.133
+t= 34.50 max|qacc|=      88.7 max|qvel|=   0.77 ncon=  0 com_z=0.930 com_x=-0.132
+t= 35.00 max|qacc|=     112.0 max|qvel|=   0.93 ncon=  0 com_z=0.930 com_x=-0.133
+t= 35.50 max|qacc|=      62.7 max|qvel|=   0.97 ncon=  0 com_z=0.930 com_x=-0.132
+t= 36.00 max|qacc|=      65.1 max|qvel|=   0.71 ncon=  0 com_z=0.930 com_x=-0.132
+t= 36.50 max|qacc|=      78.1 max|qvel|=   0.33 ncon=  0 com_z=0.930 com_x=-0.133
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.92 m, final 0.93 m  (stayed up)
+COM x: min -0.15 max -0.07 final -0.13 m
+COM y: min -0.021 max -0.002 m
+RG_F_r bursts during walk window: 19
+RG_r: cycles in window 30, period 0.33 s (3.03 Hz), E-duty 0.24
+RG_l: cycles in window 30, period 0.33 s (3.03 Hz), E-duty 0.24
+peak ctrl: [0.48 0.78 0.87 0.71 0.4  0.31 0.73 0.43 0.4  0.09 0.48 0.78 0.87 0.71
+ 0.4  0.31 0.66 0.43 0.4  0.09] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r        -26.4 ..    32.2 deg
+  knee_angle_r         -76.6 ..    13.0 deg
+  ankle_angle_r        -67.6 ..    15.2 deg
+  hip_adduction_r       -5.5 ..    14.4 deg
+  subtalar_angle_r      -2.9 ..    18.3 deg
+  hip_flexion_l        -38.6 ..    19.6 deg
+  knee_angle_l         -86.4 ..    12.9 deg
+  ankle_angle_l        -71.7 ..    12.0 deg
+  hip_adduction_l       -8.7 ..    14.1 deg
+  subtalar_angle_l      -3.1 ..    23.9 deg
+  pelvis_tilt           -1.9 ..     0.2 deg
+  pelvis_list           -0.5 ..    -0.3 deg
+  pelvis_rotation        2.3 ..     2.5 deg
+saved spinal_run.npz
+(plot skipped: [Errno 22] Invalid argument: 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run.png')
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      70.6 max|qvel|=   2.03 ncon=  0 com_z=0.931 com_x=-0.127
+t=  1.50 max|qacc|=      72.8 max|qvel|=   0.77 ncon=  0 com_z=0.931 com_x=-0.141
+t=  2.00 max|qacc|=      89.4 max|qvel|=   0.92 ncon=  0 com_z=0.932 com_x=-0.128
+t=  2.50 max|qacc|=      30.2 max|qvel|=   0.81 ncon=  0 com_z=0.932 com_x=-0.142
+t=  3.00 max|qacc|=     105.6 max|qvel|=   1.54 ncon=  0 com_z=0.931 com_x=-0.138
+t=  3.50 max|qacc|=     118.3 max|qvel|=   3.17 ncon=  0 com_z=0.932 com_x=-0.142
+t=  4.00 max|qacc|=     204.3 max|qvel|=  11.35 ncon=  0 com_z=0.933 com_x=-0.143
+t=  4.50 max|qacc|=     703.7 max|qvel|=   6.10 ncon=  0 com_z=0.930 com_x=-0.121
+t=  5.00 max|qacc|=     177.5 max|qvel|=   4.66 ncon=  0 com_z=0.930 com_x=-0.130
+t=  5.50 max|qacc|=      73.5 max|qvel|=   5.90 ncon=  0 com_z=0.924 com_x=-0.103
+t=  6.00 max|qacc|=     110.5 max|qvel|=   1.95 ncon=  0 com_z=0.930 com_x=-0.131
+t=  6.50 max|qacc|=     114.4 max|qvel|=   1.98 ncon=  0 com_z=0.926 com_x=-0.127
+t=  7.00 max|qacc|=     129.6 max|qvel|=   2.39 ncon=  0 com_z=0.925 com_x=-0.109
+t=  7.50 max|qacc|=     142.5 max|qvel|=   8.91 ncon=  0 com_z=0.931 com_x=-0.131
+t=  8.00 max|qacc|=     113.7 max|qvel|=   5.10 ncon=  0 com_z=0.926 com_x=-0.099
+t=  8.50 max|qacc|=     107.5 max|qvel|=   6.77 ncon=  0 com_z=0.925 com_x=-0.107
+t=  9.00 max|qacc|=     101.6 max|qvel|=   1.69 ncon=  0 com_z=0.930 com_x=-0.134
+t=  9.50 max|qacc|=     496.8 max|qvel|=   8.61 ncon=  0 com_z=0.927 com_x=-0.115
+t= 10.00 max|qacc|=      82.5 max|qvel|=   5.18 ncon=  0 com_z=0.929 com_x=-0.122
+t= 10.50 max|qacc|=      68.1 max|qvel|=   6.74 ncon=  0 com_z=0.924 com_x=-0.100
+t= 11.00 max|qacc|=     103.9 max|qvel|=   2.00 ncon=  0 com_z=0.931 com_x=-0.132
+t= 11.50 max|qacc|=     125.8 max|qvel|=   1.76 ncon=  0 com_z=0.926 com_x=-0.125
+t= 12.00 max|qacc|=     124.0 max|qvel|=   2.25 ncon=  0 com_z=0.925 com_x=-0.111
+t= 12.50 max|qacc|=     177.3 max|qvel|=   8.78 ncon=  0 com_z=0.930 com_x=-0.129
+t= 13.00 max|qacc|=     121.9 max|qvel|=   4.59 ncon=  0 com_z=0.925 com_x=-0.102
+t= 13.50 max|qacc|=     116.6 max|qvel|=   6.99 ncon=  0 com_z=0.924 com_x=-0.107
+t= 14.00 max|qacc|=     126.7 max|qvel|=   1.72 ncon=  0 com_z=0.930 com_x=-0.134
+t= 14.50 max|qacc|=     552.2 max|qvel|=   9.16 ncon=  0 com_z=0.927 com_x=-0.116
+t= 15.00 max|qacc|=      85.9 max|qvel|=   4.87 ncon=  0 com_z=0.929 com_x=-0.122
+t= 15.50 max|qacc|=      91.4 max|qvel|=   9.43 ncon=  0 com_z=0.922 com_x=-0.095
+t= 16.00 max|qacc|=     133.7 max|qvel|=   7.24 ncon=  0 com_z=0.931 com_x=-0.129
+t= 16.50 max|qacc|=      37.1 max|qvel|=   5.54 ncon=  0 com_z=0.934 com_x=-0.101
+t= 17.00 max|qacc|=     107.0 max|qvel|=   2.31 ncon=  0 com_z=0.929 com_x=-0.120
+t= 17.50 max|qacc|=      32.8 max|qvel|=   0.86 ncon=  0 com_z=0.937 com_x=-0.156
+t= 18.00 max|qacc|=      81.8 max|qvel|=   1.55 ncon=  0 com_z=0.928 com_x=-0.124
+t= 18.50 max|qacc|=      47.2 max|qvel|=   1.00 ncon=  0 com_z=0.933 com_x=-0.142
+t= 19.00 max|qacc|=      33.1 max|qvel|=   0.75 ncon=  0 com_z=0.933 com_x=-0.144
+t= 19.50 max|qacc|=      97.1 max|qvel|=   1.45 ncon=  0 com_z=0.928 com_x=-0.128
+t= 20.00 max|qacc|=      42.5 max|qvel|=   0.96 ncon=  0 com_z=0.934 com_x=-0.146
+t= 20.50 max|qacc|=      54.0 max|qvel|=   0.72 ncon=  0 com_z=0.930 com_x=-0.135
+t= 21.00 max|qacc|=     118.5 max|qvel|=   1.04 ncon=  0 com_z=0.930 com_x=-0.135
+t= 21.50 max|qacc|=     120.6 max|qvel|=   1.07 ncon=  0 com_z=0.933 com_x=-0.144
+t= 22.00 max|qacc|=     122.0 max|qvel|=   0.97 ncon=  0 com_z=0.929 com_x=-0.133
+t= 22.50 max|qacc|=      65.7 max|qvel|=   0.80 ncon=  0 com_z=0.932 com_x=-0.140
+t= 23.00 max|qacc|=      52.9 max|qvel|=   0.61 ncon=  0 com_z=0.932 com_x=-0.139
+t= 23.50 max|qacc|=      32.9 max|qvel|=   0.83 ncon=  0 com_z=0.930 com_x=-0.135
+t= 24.00 max|qacc|=      83.6 max|qvel|=   0.54 ncon=  0 com_z=0.932 com_x=-0.141
+t= 24.50 max|qacc|=      73.6 max|qvel|=   0.52 ncon=  0 com_z=0.931 com_x=-0.137
+t= 25.00 max|qacc|=      76.3 max|qvel|=   0.69 ncon=  0 com_z=0.931 com_x=-0.137
+t= 25.50 max|qacc|=      69.6 max|qvel|=   0.66 ncon=  0 com_z=0.932 com_x=-0.140
+t= 26.00 max|qacc|=     112.4 max|qvel|=   1.06 ncon=  0 com_z=0.930 com_x=-0.136
+t= 26.50 max|qacc|=     102.5 max|qvel|=   1.60 ncon=  0 com_z=0.931 com_x=-0.139
+t= 27.00 max|qacc|=      58.8 max|qvel|=   1.19 ncon=  0 com_z=0.931 com_x=-0.138
+t= 27.50 max|qacc|=      94.3 max|qvel|=   0.73 ncon=  0 com_z=0.931 com_x=-0.137
+t= 28.00 max|qacc|=      28.9 max|qvel|=   0.92 ncon=  0 com_z=0.931 com_x=-0.139
+t= 28.50 max|qacc|=      60.3 max|qvel|=   1.07 ncon=  0 com_z=0.931 com_x=-0.138
+t= 29.00 max|qacc|=      59.4 max|qvel|=   0.64 ncon=  0 com_z=0.931 com_x=-0.138
+t= 29.50 max|qacc|=      56.7 max|qvel|=   0.82 ncon=  0 com_z=0.931 com_x=-0.139
+t= 30.00 max|qacc|=      68.3 max|qvel|=   0.62 ncon=  0 com_z=0.931 com_x=-0.138
+t= 30.50 max|qacc|=     117.3 max|qvel|=   1.08 ncon=  0 com_z=0.931 com_x=-0.138
+t= 31.00 max|qacc|=      98.8 max|qvel|=   1.61 ncon=  0 com_z=0.931 com_x=-0.138
+t= 31.50 max|qacc|=      55.3 max|qvel|=   1.31 ncon=  0 com_z=0.931 com_x=-0.138
+t= 32.00 max|qacc|=     104.5 max|qvel|=   0.65 ncon=  0 com_z=0.931 com_x=-0.138
+t= 32.50 max|qacc|=      60.7 max|qvel|=   0.72 ncon=  0 com_z=0.931 com_x=-0.138
+t= 33.00 max|qacc|=      55.9 max|qvel|=   0.91 ncon=  0 com_z=0.931 com_x=-0.138
+t= 33.50 max|qacc|=      55.4 max|qvel|=   0.96 ncon=  0 com_z=0.931 com_x=-0.138
+t= 34.00 max|qacc|=      37.1 max|qvel|=   0.98 ncon=  0 com_z=0.931 com_x=-0.138
+t= 34.50 max|qacc|=     110.8 max|qvel|=   0.64 ncon=  0 com_z=0.931 com_x=-0.138
+t= 35.00 max|qacc|=      81.9 max|qvel|=   0.81 ncon=  0 com_z=0.931 com_x=-0.138
+t= 35.50 max|qacc|=      39.7 max|qvel|=   0.87 ncon=  0 com_z=0.931 com_x=-0.138
+t= 36.00 max|qacc|=      71.9 max|qvel|=   0.67 ncon=  0 com_z=0.931 com_x=-0.138
+t= 36.50 max|qacc|=      74.7 max|qvel|=   0.58 ncon=  0 com_z=0.931 com_x=-0.138
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.92 m, final 0.93 m  (stayed up)
+COM x: min -0.16 max -0.09 final -0.14 m
+COM y: min -0.020 max -0.003 m
+RG_F_r bursts during walk window: 32
+RG_r: cycles in window 36, period 0.28 s (3.62 Hz), E-duty 0.27
+RG_l: cycles in window 36, period 0.28 s (3.62 Hz), E-duty 0.27
+peak ctrl: [0.49 0.76 0.84 0.76 0.36 0.31 0.74 0.43 0.36 0.09 0.49 0.76 0.84 0.66
+ 0.37 0.31 0.67 0.43 0.36 0.09] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r        -20.2 ..    32.0 deg
+  knee_angle_r         -85.6 ..    13.3 deg
+  ankle_angle_r        -69.0 ..    16.7 deg
+  hip_adduction_r       -3.0 ..    13.2 deg
+  subtalar_angle_r      -2.9 ..    19.1 deg
+  hip_flexion_l        -29.2 ..    23.1 deg
+  knee_angle_l         -87.9 ..    13.1 deg
+  ankle_angle_l        -74.6 ..    16.4 deg
+  hip_adduction_l       -8.9 ..    13.4 deg
+  subtalar_angle_l      -3.0 ..    22.6 deg
+  pelvis_tilt           -1.9 ..     0.2 deg
+  pelvis_list           -0.5 ..    -0.3 deg
+  pelvis_rotation        2.3 ..     2.5 deg
+saved spinal_run.npz
+(plot skipped: [Errno 22] Invalid argument: 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run.png')
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      39.7 max|qvel|=   2.27 ncon=  0 com_z=0.930 com_x=-0.123
+t=  1.50 max|qacc|=      56.4 max|qvel|=   0.97 ncon=  0 com_z=0.930 com_x=-0.135
+t=  2.00 max|qacc|=      65.4 max|qvel|=   0.97 ncon=  0 com_z=0.932 com_x=-0.126
+t=  2.50 max|qacc|=      44.8 max|qvel|=   0.87 ncon=  0 com_z=0.930 com_x=-0.138
+t=  3.00 max|qacc|=      81.3 max|qvel|=   0.93 ncon=  0 com_z=0.931 com_x=-0.135
+t=  3.50 max|qacc|=      63.0 max|qvel|=   3.34 ncon=  0 com_z=0.933 com_x=-0.142
+t=  4.00 max|qacc|=     231.9 max|qvel|=   3.12 ncon=  0 com_z=0.933 com_x=-0.154
+t=  4.50 max|qacc|=     143.8 max|qvel|=   3.01 ncon=  0 com_z=0.928 com_x=-0.128
+t=  5.00 max|qacc|=     367.1 max|qvel|=   4.41 ncon=  0 com_z=0.934 com_x=-0.151
+t=  5.50 max|qacc|=      94.4 max|qvel|=   9.39 ncon=  0 com_z=0.925 com_x=-0.111
+t=  6.00 max|qacc|=     899.9 max|qvel|=   5.63 ncon=  0 com_z=0.934 com_x=-0.144
+t=  6.50 max|qacc|=     238.5 max|qvel|=   3.62 ncon=  0 com_z=0.945 com_x=-0.093
+t=  7.00 max|qacc|=     251.7 max|qvel|=   5.71 ncon=  0 com_z=0.937 com_x=-0.140
+t=  7.50 max|qacc|=     108.9 max|qvel|=   6.14 ncon=  0 com_z=0.930 com_x=-0.114
+t=  8.00 max|qacc|=      72.7 max|qvel|=   3.65 ncon=  0 com_z=0.936 com_x=-0.149
+t=  8.50 max|qacc|=     171.4 max|qvel|=   3.29 ncon=  0 com_z=0.929 com_x=-0.137
+t=  9.00 max|qacc|=     833.2 max|qvel|=   4.12 ncon=  0 com_z=0.931 com_x=-0.131
+t=  9.50 max|qacc|=     350.4 max|qvel|=   7.12 ncon=  0 com_z=0.931 com_x=-0.142
+t= 10.00 max|qacc|=     374.8 max|qvel|=  11.20 ncon=  0 com_z=0.929 com_x=-0.097
+t= 10.50 max|qacc|=     225.0 max|qvel|=   6.89 ncon=  0 com_z=0.934 com_x=-0.145
+t= 11.00 max|qacc|=      47.1 max|qvel|=   5.77 ncon=  0 com_z=0.940 com_x=-0.099
+t= 11.50 max|qacc|=      21.1 max|qvel|=   6.47 ncon=  0 com_z=0.938 com_x=-0.145
+t= 12.00 max|qacc|=      50.5 max|qvel|=   5.74 ncon=  0 com_z=0.927 com_x=-0.125
+t= 12.50 max|qacc|=     115.0 max|qvel|=   2.29 ncon=  0 com_z=0.934 com_x=-0.145
+t= 13.00 max|qacc|=     442.7 max|qvel|=   2.57 ncon=  0 com_z=0.930 com_x=-0.143
+t= 13.50 max|qacc|=      89.6 max|qvel|=   7.17 ncon=  0 com_z=0.927 com_x=-0.118
+t= 14.00 max|qacc|=     438.2 max|qvel|=   3.01 ncon=  0 com_z=0.935 com_x=-0.145
+t= 14.50 max|qacc|=     116.4 max|qvel|=   6.99 ncon=  0 com_z=0.940 com_x=-0.091
+t= 15.00 max|qacc|=     143.5 max|qvel|=   6.76 ncon=  0 com_z=0.935 com_x=-0.144
+t= 15.50 max|qacc|=      24.2 max|qvel|=   6.60 ncon=  0 com_z=0.930 com_x=-0.112
+t= 16.00 max|qacc|=     116.3 max|qvel|=   5.81 ncon=  0 com_z=0.935 com_x=-0.135
+t= 16.50 max|qacc|=      76.5 max|qvel|=   6.58 ncon=  0 com_z=0.930 com_x=-0.137
+t= 17.00 max|qacc|=     120.6 max|qvel|=   2.69 ncon=  0 com_z=0.926 com_x=-0.101
+t= 17.50 max|qacc|=     118.3 max|qvel|=   1.13 ncon=  0 com_z=0.944 com_x=-0.158
+t= 18.00 max|qacc|=      87.4 max|qvel|=   1.31 ncon=  0 com_z=0.928 com_x=-0.130
+t= 18.50 max|qacc|=     107.3 max|qvel|=   1.47 ncon=  0 com_z=0.928 com_x=-0.121
+t= 19.00 max|qacc|=      57.8 max|qvel|=   0.94 ncon=  0 com_z=0.939 com_x=-0.155
+t= 19.50 max|qacc|=      92.4 max|qvel|=   0.89 ncon=  0 com_z=0.927 com_x=-0.119
+t= 20.00 max|qacc|=      80.1 max|qvel|=   0.96 ncon=  0 com_z=0.932 com_x=-0.138
+t= 20.50 max|qacc|=      60.6 max|qvel|=   1.14 ncon=  0 com_z=0.933 com_x=-0.143
+t= 21.00 max|qacc|=     120.6 max|qvel|=   0.97 ncon=  0 com_z=0.927 com_x=-0.122
+t= 21.50 max|qacc|=      30.7 max|qvel|=   0.77 ncon=  0 com_z=0.934 com_x=-0.144
+t= 22.00 max|qacc|=      54.1 max|qvel|=   1.06 ncon=  0 com_z=0.929 com_x=-0.133
+t= 22.50 max|qacc|=      59.2 max|qvel|=   0.73 ncon=  0 com_z=0.929 com_x=-0.130
+t= 23.00 max|qacc|=      86.0 max|qvel|=   0.71 ncon=  0 com_z=0.933 com_x=-0.142
+t= 23.50 max|qacc|=      65.9 max|qvel|=   0.65 ncon=  0 com_z=0.929 com_x=-0.129
+t= 24.00 max|qacc|=      97.3 max|qvel|=   0.82 ncon=  0 com_z=0.931 com_x=-0.136
+t= 24.50 max|qacc|=      62.9 max|qvel|=   1.22 ncon=  0 com_z=0.931 com_x=-0.137
+t= 25.00 max|qacc|=      94.3 max|qvel|=   0.55 ncon=  0 com_z=0.929 com_x=-0.130
+t= 25.50 max|qacc|=      85.3 max|qvel|=   0.43 ncon=  0 com_z=0.932 com_x=-0.138
+t= 26.00 max|qacc|=      31.4 max|qvel|=   0.89 ncon=  0 com_z=0.930 com_x=-0.134
+t= 26.50 max|qacc|=      60.6 max|qvel|=   0.88 ncon=  0 com_z=0.930 com_x=-0.133
+t= 27.00 max|qacc|=      31.6 max|qvel|=   0.79 ncon=  0 com_z=0.931 com_x=-0.137
+t= 27.50 max|qacc|=      71.9 max|qvel|=   0.63 ncon=  0 com_z=0.930 com_x=-0.133
+t= 28.00 max|qacc|=     108.8 max|qvel|=   0.80 ncon=  0 com_z=0.931 com_x=-0.135
+t= 28.50 max|qacc|=      63.0 max|qvel|=   0.67 ncon=  0 com_z=0.931 com_x=-0.136
+t= 29.00 max|qacc|=      37.1 max|qvel|=   0.77 ncon=  0 com_z=0.930 com_x=-0.133
+t= 29.50 max|qacc|=      48.6 max|qvel|=   0.95 ncon=  0 com_z=0.931 com_x=-0.136
+t= 30.00 max|qacc|=      41.9 max|qvel|=   0.99 ncon=  0 com_z=0.930 com_x=-0.134
+t= 30.50 max|qacc|=      65.1 max|qvel|=   0.69 ncon=  0 com_z=0.930 com_x=-0.134
+t= 31.00 max|qacc|=      57.5 max|qvel|=   0.46 ncon=  0 com_z=0.931 com_x=-0.135
+t= 31.50 max|qacc|=      95.8 max|qvel|=   1.48 ncon=  0 com_z=0.930 com_x=-0.134
+t= 32.00 max|qacc|=      48.1 max|qvel|=   0.69 ncon=  0 com_z=0.930 com_x=-0.135
+t= 32.50 max|qacc|=      65.5 max|qvel|=   0.63 ncon=  0 com_z=0.930 com_x=-0.135
+t= 33.00 max|qacc|=      43.8 max|qvel|=   0.99 ncon=  0 com_z=0.930 com_x=-0.134
+t= 33.50 max|qacc|=      95.0 max|qvel|=   0.64 ncon=  0 com_z=0.931 com_x=-0.135
+t= 34.00 max|qacc|=      74.1 max|qvel|=   1.07 ncon=  0 com_z=0.930 com_x=-0.135
+t= 34.50 max|qacc|=     117.4 max|qvel|=   0.92 ncon=  0 com_z=0.930 com_x=-0.135
+t= 35.00 max|qacc|=      63.1 max|qvel|=   0.68 ncon=  0 com_z=0.931 com_x=-0.135
+t= 35.50 max|qacc|=      47.8 max|qvel|=   0.77 ncon=  0 com_z=0.930 com_x=-0.135
+t= 36.00 max|qacc|=      67.0 max|qvel|=   0.76 ncon=  0 com_z=0.930 com_x=-0.135
+t= 36.50 max|qacc|=      43.9 max|qvel|=   1.00 ncon=  0 com_z=0.930 com_x=-0.135
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.92 m, final 0.93 m  (stayed up)
+COM x: min -0.16 max -0.09 final -0.13 m
+COM y: min -0.020 max +0.001 m
+RG_F_r bursts during walk window: 27
+RG_r: cycles in window 52, period 0.19 s (5.31 Hz), E-duty 0.38
+RG_l: cycles in window 52, period 0.19 s (5.31 Hz), E-duty 0.38
+peak ctrl: [0.51 0.91 0.95 0.7  0.43 0.44 0.77 0.48 0.43 0.14 0.51 0.91 0.95 0.69
+ 0.43 0.44 0.7  0.48 0.43 0.14] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r        -24.3 ..    37.7 deg
+  knee_angle_r         -80.1 ..    12.0 deg
+  ankle_angle_r        -70.4 ..    15.4 deg
+  hip_adduction_r       -2.1 ..    17.2 deg
+  subtalar_angle_r      -3.5 ..    18.8 deg
+  hip_flexion_l        -29.7 ..    25.4 deg
+  knee_angle_l         -82.7 ..    11.9 deg
+  ankle_angle_l        -73.7 ..    14.1 deg
+  hip_adduction_l       -8.1 ..    13.4 deg
+  subtalar_angle_l      -3.4 ..    23.3 deg
+  pelvis_tilt           -1.9 ..     0.4 deg
+  pelvis_list           -0.5 ..    -0.3 deg
+  pelvis_rotation        2.3 ..     2.5 deg
+saved spinal_run.npz
+(plot skipped: [Errno 22] Invalid argument: 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run.png')
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      32.2 max|qvel|=   2.44 ncon=  0 com_z=0.930 com_x=-0.118
+t=  1.50 max|qacc|=      58.9 max|qvel|=   1.20 ncon=  0 com_z=0.929 com_x=-0.131
+t=  2.00 max|qacc|=      96.7 max|qvel|=   0.94 ncon=  0 com_z=0.932 com_x=-0.126
+t=  2.50 max|qacc|=      76.6 max|qvel|=   1.59 ncon=  0 com_z=0.929 com_x=-0.133
+t=  3.00 max|qacc|=     106.8 max|qvel|=   1.02 ncon=  0 com_z=0.930 com_x=-0.132
+t=  3.50 max|qacc|=      65.1 max|qvel|=   3.89 ncon=  0 com_z=0.933 com_x=-0.139
+t=  4.00 max|qacc|=     329.4 max|qvel|=   7.43 ncon=  0 com_z=0.937 com_x=-0.150
+t=  4.50 max|qacc|=     229.2 max|qvel|=   5.75 ncon=  0 com_z=0.927 com_x=-0.117
+t=  5.00 max|qacc|=      46.5 max|qvel|=   4.31 ncon=  0 com_z=0.930 com_x=-0.128
+t=  5.50 max|qacc|=      73.3 max|qvel|=   6.38 ncon=  0 com_z=0.932 com_x=-0.142
+t=  6.00 max|qacc|=     119.6 max|qvel|=   3.33 ncon=  0 com_z=0.930 com_x=-0.128
+t=  6.50 max|qacc|=     114.8 max|qvel|=   6.41 ncon=  0 com_z=0.930 com_x=-0.112
+t=  7.00 max|qacc|=      26.2 max|qvel|=   8.05 ncon=  0 com_z=0.930 com_x=-0.129
+t=  7.50 max|qacc|=      54.5 max|qvel|=   7.40 ncon=  0 com_z=0.928 com_x=-0.127
+t=  8.00 max|qacc|=      43.0 max|qvel|=   6.49 ncon=  0 com_z=0.934 com_x=-0.103
+t=  8.50 max|qacc|=     341.8 max|qvel|=   4.97 ncon=  0 com_z=0.934 com_x=-0.125
+t=  9.00 max|qacc|=     426.4 max|qvel|=   7.28 ncon=  0 com_z=0.928 com_x=-0.117
+t=  9.50 max|qacc|=      28.5 max|qvel|=   5.91 ncon=  0 com_z=0.941 com_x=-0.100
+t= 10.00 max|qacc|=     154.4 max|qvel|=   1.55 ncon=  0 com_z=0.935 com_x=-0.121
+t= 10.50 max|qacc|=     182.4 max|qvel|=   6.21 ncon=  0 com_z=0.923 com_x=-0.114
+t= 11.00 max|qacc|=     724.2 max|qvel|=   3.44 ncon=  0 com_z=0.947 com_x=-0.096
+t= 11.50 max|qacc|=      74.8 max|qvel|=   2.39 ncon=  0 com_z=0.935 com_x=-0.119
+t= 12.00 max|qacc|=     133.8 max|qvel|=   4.68 ncon=  0 com_z=0.923 com_x=-0.114
+t= 12.50 max|qacc|=     154.9 max|qvel|=   5.83 ncon=  0 com_z=0.946 com_x=-0.095
+t= 13.00 max|qacc|=      63.8 max|qvel|=   0.90 ncon=  0 com_z=0.937 com_x=-0.118
+t= 13.50 max|qacc|=     328.4 max|qvel|=   6.33 ncon=  0 com_z=0.925 com_x=-0.111
+t= 14.00 max|qacc|=      55.1 max|qvel|=   9.82 ncon=  0 com_z=0.936 com_x=-0.101
+t= 14.50 max|qacc|=     844.2 max|qvel|=   2.73 ncon=  0 com_z=0.937 com_x=-0.117
+t= 15.00 max|qacc|=     150.7 max|qvel|=   2.94 ncon=  0 com_z=0.925 com_x=-0.110
+t= 15.50 max|qacc|=      52.6 max|qvel|=  11.45 ncon=  0 com_z=0.932 com_x=-0.105
+t= 16.00 max|qacc|=      36.5 max|qvel|=   2.54 ncon=  0 com_z=0.943 com_x=-0.107
+t= 16.50 max|qacc|=      34.8 max|qvel|=   3.34 ncon=  0 com_z=0.936 com_x=-0.098
+t= 17.00 max|qacc|=      46.2 max|qvel|=   3.35 ncon=  0 com_z=0.928 com_x=-0.124
+t= 17.50 max|qacc|=      87.3 max|qvel|=   1.85 ncon=  0 com_z=0.935 com_x=-0.144
+t= 18.00 max|qacc|=      78.3 max|qvel|=   0.68 ncon=  0 com_z=0.928 com_x=-0.127
+t= 18.50 max|qacc|=      50.2 max|qvel|=   0.92 ncon=  0 com_z=0.930 com_x=-0.130
+t= 19.00 max|qacc|=      72.9 max|qvel|=   0.94 ncon=  0 com_z=0.932 com_x=-0.138
+t= 19.50 max|qacc|=      45.9 max|qvel|=   0.75 ncon=  0 com_z=0.928 com_x=-0.125
+t= 20.00 max|qacc|=      37.9 max|qvel|=   0.90 ncon=  0 com_z=0.931 com_x=-0.135
+t= 20.50 max|qacc|=      88.0 max|qvel|=   0.86 ncon=  0 com_z=0.930 com_x=-0.133
+t= 21.00 max|qacc|=      57.0 max|qvel|=   0.76 ncon=  0 com_z=0.929 com_x=-0.127
+t= 21.50 max|qacc|=      57.4 max|qvel|=   1.66 ncon=  0 com_z=0.932 com_x=-0.136
+t= 22.00 max|qacc|=      49.9 max|qvel|=   0.92 ncon=  0 com_z=0.929 com_x=-0.130
+t= 22.50 max|qacc|=      65.5 max|qvel|=   0.92 ncon=  0 com_z=0.930 com_x=-0.131
+t= 23.00 max|qacc|=      71.4 max|qvel|=   0.91 ncon=  0 com_z=0.931 com_x=-0.134
+t= 23.50 max|qacc|=     102.2 max|qvel|=   0.43 ncon=  0 com_z=0.929 com_x=-0.129
+t= 24.00 max|qacc|=      50.4 max|qvel|=   0.62 ncon=  0 com_z=0.931 com_x=-0.133
+t= 24.50 max|qacc|=      48.9 max|qvel|=   0.52 ncon=  0 com_z=0.930 com_x=-0.132
+t= 25.00 max|qacc|=      66.7 max|qvel|=   0.73 ncon=  0 com_z=0.929 com_x=-0.130
+t= 25.50 max|qacc|=      56.1 max|qvel|=   0.97 ncon=  0 com_z=0.931 com_x=-0.134
+t= 26.00 max|qacc|=      57.3 max|qvel|=   0.95 ncon=  0 com_z=0.930 com_x=-0.131
+t= 26.50 max|qacc|=      45.6 max|qvel|=   1.17 ncon=  0 com_z=0.930 com_x=-0.132
+t= 27.00 max|qacc|=      79.3 max|qvel|=   0.60 ncon=  0 com_z=0.931 com_x=-0.133
+t= 27.50 max|qacc|=     115.2 max|qvel|=   0.88 ncon=  0 com_z=0.930 com_x=-0.131
+t= 28.00 max|qacc|=     121.7 max|qvel|=   1.11 ncon=  0 com_z=0.930 com_x=-0.132
+t= 28.50 max|qacc|=      62.5 max|qvel|=   0.99 ncon=  0 com_z=0.930 com_x=-0.132
+t= 29.00 max|qacc|=      69.7 max|qvel|=   1.65 ncon=  0 com_z=0.930 com_x=-0.131
+t= 29.50 max|qacc|=      39.7 max|qvel|=   0.89 ncon=  0 com_z=0.930 com_x=-0.132
+t= 30.00 max|qacc|=      54.9 max|qvel|=   0.51 ncon=  0 com_z=0.930 com_x=-0.131
+t= 30.50 max|qacc|=     123.1 max|qvel|=   0.62 ncon=  0 com_z=0.930 com_x=-0.132
+t= 31.00 max|qacc|=      40.4 max|qvel|=   0.88 ncon=  0 com_z=0.930 com_x=-0.132
+t= 31.50 max|qacc|=      69.5 max|qvel|=   0.63 ncon=  0 com_z=0.930 com_x=-0.131
+t= 32.00 max|qacc|=      75.6 max|qvel|=   1.59 ncon=  0 com_z=0.930 com_x=-0.132
+t= 32.50 max|qacc|=      41.8 max|qvel|=   1.00 ncon=  0 com_z=0.930 com_x=-0.132
+t= 33.00 max|qacc|=      87.6 max|qvel|=   1.55 ncon=  0 com_z=0.930 com_x=-0.131
+t= 33.50 max|qacc|=      52.7 max|qvel|=   0.92 ncon=  0 com_z=0.930 com_x=-0.132
+t= 34.00 max|qacc|=      59.2 max|qvel|=   0.38 ncon=  0 com_z=0.930 com_x=-0.132
+t= 34.50 max|qacc|=      56.0 max|qvel|=   0.69 ncon=  0 com_z=0.930 com_x=-0.132
+t= 35.00 max|qacc|=      46.2 max|qvel|=   0.62 ncon=  0 com_z=0.930 com_x=-0.132
+t= 35.50 max|qacc|=      42.7 max|qvel|=   0.99 ncon=  0 com_z=0.930 com_x=-0.132
+t= 36.00 max|qacc|=      71.9 max|qvel|=   1.49 ncon=  0 com_z=0.930 com_x=-0.132
+t= 36.50 max|qacc|=      39.3 max|qvel|=   0.92 ncon=  0 com_z=0.930 com_x=-0.132
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.92 m, final 0.93 m  (stayed up)
+COM x: min -0.15 max -0.09 final -0.13 m
+COM y: min -0.021 max -0.002 m
+RG_F_r bursts during walk window: 34
+RG_r: cycles in window 42, period 0.24 s (4.21 Hz), E-duty 0.31
+RG_l: cycles in window 42, period 0.24 s (4.21 Hz), E-duty 0.31
+peak ctrl: [0.49 0.86 0.92 0.71 0.45 0.44 0.73 0.45 0.45 0.14 0.49 0.86 0.92 0.73
+ 0.45 0.44 0.66 0.45 0.45 0.14] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r        -21.3 ..    32.4 deg
+  knee_angle_r         -84.2 ..    12.6 deg
+  ankle_angle_r        -67.1 ..    15.8 deg
+  hip_adduction_r        0.0 ..    13.9 deg
+  subtalar_angle_r      -2.7 ..    17.9 deg
+  hip_flexion_l        -30.3 ..    23.3 deg
+  knee_angle_l         -90.1 ..    12.7 deg
+  ankle_angle_l        -71.6 ..    11.3 deg
+  hip_adduction_l       -8.2 ..    13.5 deg
+  subtalar_angle_l      -2.9 ..    23.2 deg
+  pelvis_tilt           -1.9 ..     0.4 deg
+  pelvis_list           -0.5 ..    -0.3 deg
+  pelvis_rotation        2.3 ..     2.5 deg
+saved spinal_run.npz
+(plot skipped: [Errno 22] Invalid argument: 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run.png')
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      79.9 max|qvel|=   2.71 ncon=  0 com_z=0.930 com_x=-0.111
+t=  1.50 max|qacc|=     106.5 max|qvel|=   0.87 ncon=  0 com_z=0.928 com_x=-0.123
+t=  2.00 max|qacc|=      63.8 max|qvel|=   0.74 ncon=  0 com_z=0.932 com_x=-0.124
+t=  2.50 max|qacc|=      29.1 max|qvel|=   0.78 ncon=  0 com_z=0.928 com_x=-0.127
+t=  3.00 max|qacc|=      52.0 max|qvel|=   0.86 ncon=  0 com_z=0.930 com_x=-0.126
+t=  3.50 max|qacc|=      96.4 max|qvel|=   3.09 ncon=  0 com_z=0.933 com_x=-0.136
+t=  4.00 max|qacc|=     120.7 max|qvel|=   3.56 ncon=  0 com_z=0.930 com_x=-0.134
+t=  4.50 max|qacc|=    1572.8 max|qvel|=   4.08 ncon=  0 com_z=0.931 com_x=-0.122
+t=  5.00 max|qacc|=      71.8 max|qvel|=   7.68 ncon=  0 com_z=0.925 com_x=-0.103
+t=  5.50 max|qacc|=     133.7 max|qvel|=   1.93 ncon=  0 com_z=0.924 com_x=-0.097
+t=  6.00 max|qacc|=     127.7 max|qvel|=   4.09 ncon=  0 com_z=0.928 com_x=-0.112
+t=  6.50 max|qacc|=     290.9 max|qvel|=   2.07 ncon=  0 com_z=0.924 com_x=-0.086
+t=  7.00 max|qacc|=     100.8 max|qvel|=   5.93 ncon=  0 com_z=0.928 com_x=-0.113
+t=  7.50 max|qacc|=     336.9 max|qvel|=   3.06 ncon=  0 com_z=0.925 com_x=-0.102
+t=  8.00 max|qacc|=      96.4 max|qvel|=   6.91 ncon=  0 com_z=0.925 com_x=-0.099
+t=  8.50 max|qacc|=     935.3 max|qvel|=   5.91 ncon=  0 com_z=0.925 com_x=-0.102
+t=  9.00 max|qacc|=     106.2 max|qvel|=   8.46 ncon=  0 com_z=0.926 com_x=-0.100
+t=  9.50 max|qacc|=     484.2 max|qvel|=   5.51 ncon=  0 com_z=0.925 com_x=-0.096
+t= 10.00 max|qacc|=      47.6 max|qvel|=   9.73 ncon=  0 com_z=0.927 com_x=-0.101
+t= 10.50 max|qacc|=     428.8 max|qvel|=   6.60 ncon=  0 com_z=0.926 com_x=-0.094
+t= 11.00 max|qacc|=      85.0 max|qvel|=  10.24 ncon=  0 com_z=0.928 com_x=-0.099
+t= 11.50 max|qacc|=      88.5 max|qvel|=   0.83 ncon=  0 com_z=0.926 com_x=-0.094
+t= 12.00 max|qacc|=      90.4 max|qvel|=  10.15 ncon=  0 com_z=0.929 com_x=-0.097
+t= 12.50 max|qacc|=      90.5 max|qvel|=   2.30 ncon=  0 com_z=0.925 com_x=-0.094
+t= 13.00 max|qacc|=      82.2 max|qvel|=   9.50 ncon=  0 com_z=0.932 com_x=-0.096
+t= 13.50 max|qacc|=      87.3 max|qvel|=   3.83 ncon=  0 com_z=0.924 com_x=-0.093
+t= 14.00 max|qacc|=     130.6 max|qvel|=   8.36 ncon=  0 com_z=0.936 com_x=-0.094
+t= 14.50 max|qacc|=      78.7 max|qvel|=   5.38 ncon=  0 com_z=0.924 com_x=-0.091
+t= 15.00 max|qacc|=     144.5 max|qvel|=   6.63 ncon=  0 com_z=0.941 com_x=-0.093
+t= 15.50 max|qacc|=      53.4 max|qvel|=   9.82 ncon=  0 com_z=0.930 com_x=-0.078
+t= 16.00 max|qacc|=      52.3 max|qvel|=   1.22 ncon=  0 com_z=0.953 com_x=-0.064
+t= 16.50 max|qacc|=      60.6 max|qvel|=   5.99 ncon=  0 com_z=0.935 com_x=-0.118
+t= 17.00 max|qacc|=      52.7 max|qvel|=   3.26 ncon=  0 com_z=0.930 com_x=-0.138
+t= 17.50 max|qacc|=      83.4 max|qvel|=   1.70 ncon=  0 com_z=0.928 com_x=-0.104
+t= 18.00 max|qacc|=      61.4 max|qvel|=   0.64 ncon=  0 com_z=0.937 com_x=-0.146
+t= 18.50 max|qacc|=      45.8 max|qvel|=   0.73 ncon=  0 com_z=0.927 com_x=-0.121
+t= 19.00 max|qacc|=      57.0 max|qvel|=   0.72 ncon=  0 com_z=0.929 com_x=-0.119
+t= 19.50 max|qacc|=      63.0 max|qvel|=   0.87 ncon=  0 com_z=0.933 com_x=-0.140
+t= 20.00 max|qacc|=      46.5 max|qvel|=   0.63 ncon=  0 com_z=0.928 com_x=-0.116
+t= 20.50 max|qacc|=      56.2 max|qvel|=   0.58 ncon=  0 com_z=0.930 com_x=-0.129
+t= 21.00 max|qacc|=      88.9 max|qvel|=   0.73 ncon=  0 com_z=0.931 com_x=-0.133
+t= 21.50 max|qacc|=      37.4 max|qvel|=   0.84 ncon=  0 com_z=0.928 com_x=-0.118
+t= 22.00 max|qacc|=      51.3 max|qvel|=   0.66 ncon=  0 com_z=0.931 com_x=-0.133
+t= 22.50 max|qacc|=      81.7 max|qvel|=   0.39 ncon=  0 com_z=0.929 com_x=-0.126
+t= 23.00 max|qacc|=     103.9 max|qvel|=   0.52 ncon=  0 com_z=0.929 com_x=-0.123
+t= 23.50 max|qacc|=      82.8 max|qvel|=   0.42 ncon=  0 com_z=0.931 com_x=-0.132
+t= 24.00 max|qacc|=      29.6 max|qvel|=   0.78 ncon=  0 com_z=0.929 com_x=-0.124
+t= 24.50 max|qacc|=      40.6 max|qvel|=   0.82 ncon=  0 com_z=0.929 com_x=-0.127
+t= 25.00 max|qacc|=      31.9 max|qvel|=   0.85 ncon=  0 com_z=0.930 com_x=-0.130
+t= 25.50 max|qacc|=      69.2 max|qvel|=   0.68 ncon=  0 com_z=0.929 com_x=-0.124
+t= 26.00 max|qacc|=      69.1 max|qvel|=   1.28 ncon=  0 com_z=0.930 com_x=-0.128
+t= 26.50 max|qacc|=      55.1 max|qvel|=   0.63 ncon=  0 com_z=0.930 com_x=-0.127
+t= 27.00 max|qacc|=      55.8 max|qvel|=   0.55 ncon=  0 com_z=0.929 com_x=-0.125
+t= 27.50 max|qacc|=      58.8 max|qvel|=   0.57 ncon=  0 com_z=0.930 com_x=-0.129
+t= 28.00 max|qacc|=      47.6 max|qvel|=   0.67 ncon=  0 com_z=0.929 com_x=-0.126
+t= 28.50 max|qacc|=      48.9 max|qvel|=   0.64 ncon=  0 com_z=0.929 com_x=-0.126
+t= 29.00 max|qacc|=      63.7 max|qvel|=   0.75 ncon=  0 com_z=0.930 com_x=-0.128
+t= 29.50 max|qacc|=      66.7 max|qvel|=   1.14 ncon=  0 com_z=0.929 com_x=-0.126
+t= 30.00 max|qacc|=      56.8 max|qvel|=   0.50 ncon=  0 com_z=0.929 com_x=-0.127
+t= 30.50 max|qacc|=      62.4 max|qvel|=   0.98 ncon=  0 com_z=0.930 com_x=-0.127
+t= 31.00 max|qacc|=      62.4 max|qvel|=   0.59 ncon=  0 com_z=0.929 com_x=-0.126
+t= 31.50 max|qacc|=      68.3 max|qvel|=   0.52 ncon=  0 com_z=0.930 com_x=-0.128
+t= 32.00 max|qacc|=      48.0 max|qvel|=   0.73 ncon=  0 com_z=0.930 com_x=-0.127
+t= 32.50 max|qacc|=      41.5 max|qvel|=   0.58 ncon=  0 com_z=0.929 com_x=-0.127
+t= 33.00 max|qacc|=      44.2 max|qvel|=   0.82 ncon=  0 com_z=0.930 com_x=-0.128
+t= 33.50 max|qacc|=      83.8 max|qvel|=   0.84 ncon=  0 com_z=0.929 com_x=-0.126
+t= 34.00 max|qacc|=      41.4 max|qvel|=   0.78 ncon=  0 com_z=0.929 com_x=-0.127
+t= 34.50 max|qacc|=      41.4 max|qvel|=   0.74 ncon=  0 com_z=0.930 com_x=-0.127
+t= 35.00 max|qacc|=      40.6 max|qvel|=   0.77 ncon=  0 com_z=0.929 com_x=-0.127
+t= 35.50 max|qacc|=      68.1 max|qvel|=   0.88 ncon=  0 com_z=0.929 com_x=-0.127
+t= 36.00 max|qacc|=      69.9 max|qvel|=   1.32 ncon=  0 com_z=0.929 com_x=-0.127
+t= 36.50 max|qacc|=      65.1 max|qvel|=   0.50 ncon=  0 com_z=0.929 com_x=-0.127
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.92 m, final 0.93 m  (stayed up)
+COM x: min -0.15 max -0.06 final -0.13 m
+COM y: min -0.021 max -0.001 m
+RG_F_r bursts during walk window: 20
+RG_r: cycles in window 30, period 0.34 s (2.98 Hz), E-duty 0.23
+RG_l: cycles in window 30, period 0.34 s (2.98 Hz), E-duty 0.23
+peak ctrl: [0.48 0.8  0.88 0.71 0.43 0.31 0.71 0.43 0.43 0.1  0.48 0.8  0.88 0.61
+ 0.43 0.31 0.64 0.43 0.43 0.1 ] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r        -28.6 ..    31.4 deg
+  knee_angle_r         -80.0 ..    12.9 deg
+  ankle_angle_r        -69.4 ..    16.4 deg
+  hip_adduction_r       -4.1 ..    13.3 deg
+  subtalar_angle_r      -2.9 ..    16.9 deg
+  hip_flexion_l        -48.0 ..    15.3 deg
+  knee_angle_l         -86.5 ..    12.7 deg
+  ankle_angle_l        -73.3 ..    10.0 deg
+  hip_adduction_l       -7.8 ..    14.0 deg
+  subtalar_angle_l      -3.1 ..    24.1 deg
+  pelvis_tilt           -1.9 ..     0.2 deg
+  pelvis_list           -0.5 ..    -0.2 deg
+  pelvis_rotation        2.3 ..     2.5 deg
+saved spinal_run.npz
+(plot skipped: [Errno 22] Invalid argument: 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run.png')
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      77.2 max|qvel|=   2.78 ncon=  0 com_z=0.931 com_x=-0.109
+t=  1.50 max|qacc|=      69.9 max|qvel|=   0.88 ncon=  0 com_z=0.928 com_x=-0.120
+t=  2.00 max|qacc|=      60.2 max|qvel|=   0.79 ncon=  0 com_z=0.933 com_x=-0.123
+t=  2.50 max|qacc|=      58.2 max|qvel|=   0.78 ncon=  0 com_z=0.928 com_x=-0.125
+t=  3.00 max|qacc|=      52.6 max|qvel|=   0.94 ncon=  0 com_z=0.929 com_x=-0.125
+t=  3.50 max|qacc|=     258.8 max|qvel|=   4.33 ncon=  0 com_z=0.933 com_x=-0.138
+t=  4.00 max|qacc|=     303.6 max|qvel|=   7.49 ncon=  0 com_z=0.939 com_x=-0.154
+t=  4.50 max|qacc|=      27.0 max|qvel|=   3.15 ncon=  0 com_z=0.951 com_x=-0.097
+t=  5.00 max|qacc|=     111.6 max|qvel|=   2.49 ncon=  0 com_z=0.946 com_x=-0.096
+t=  5.50 max|qacc|=     105.1 max|qvel|=   0.70 ncon=  0 com_z=0.940 com_x=-0.098
+t=  6.00 max|qacc|=      72.8 max|qvel|=   0.90 ncon=  0 com_z=0.942 com_x=-0.091
+t=  6.50 max|qacc|=      16.1 max|qvel|=   0.48 ncon=  0 com_z=0.943 com_x=-0.096
+t=  7.00 max|qacc|=      38.8 max|qvel|=   0.52 ncon=  0 com_z=0.942 com_x=-0.093
+t=  7.50 max|qacc|=      56.6 max|qvel|=   0.37 ncon=  0 com_z=0.942 com_x=-0.095
+t=  8.00 max|qacc|=      42.7 max|qvel|=   1.01 ncon=  0 com_z=0.941 com_x=-0.094
+t=  8.50 max|qacc|=      25.8 max|qvel|=   0.32 ncon=  0 com_z=0.942 com_x=-0.094
+t=  9.00 max|qacc|=      35.8 max|qvel|=   0.44 ncon=  0 com_z=0.942 com_x=-0.094
+t=  9.50 max|qacc|=      88.0 max|qvel|=   0.52 ncon=  0 com_z=0.942 com_x=-0.094
+t= 10.00 max|qacc|=      63.3 max|qvel|=   0.83 ncon=  0 com_z=0.942 com_x=-0.094
+t= 10.50 max|qacc|=      24.7 max|qvel|=   0.35 ncon=  0 com_z=0.942 com_x=-0.094
+t= 11.00 max|qacc|=      24.0 max|qvel|=   0.40 ncon=  0 com_z=0.942 com_x=-0.095
+t= 11.50 max|qacc|=      21.5 max|qvel|=   0.76 ncon=  0 com_z=0.941 com_x=-0.094
+t= 12.00 max|qacc|=      64.1 max|qvel|=   0.48 ncon=  0 com_z=0.942 com_x=-0.095
+t= 12.50 max|qacc|=     101.0 max|qvel|=   0.88 ncon=  0 com_z=0.942 com_x=-0.094
+t= 13.00 max|qacc|=      37.8 max|qvel|=   0.36 ncon=  0 com_z=0.942 com_x=-0.094
+t= 13.50 max|qacc|=      23.3 max|qvel|=   0.66 ncon=  0 com_z=0.942 com_x=-0.094
+t= 14.00 max|qacc|=     110.6 max|qvel|=   0.49 ncon=  0 com_z=0.942 com_x=-0.094
+t= 14.50 max|qacc|=      72.3 max|qvel|=   0.97 ncon=  0 com_z=0.942 com_x=-0.095
+t= 15.00 max|qacc|=       6.9 max|qvel|=   0.35 ncon=  0 com_z=0.941 com_x=-0.094
+t= 15.50 max|qacc|=      99.7 max|qvel|=   2.36 ncon=  0 com_z=0.937 com_x=-0.150
+t= 16.00 max|qacc|=     695.2 max|qvel|=   7.70 ncon=  0 com_z=0.949 com_x=-0.099
+t= 16.50 max|qacc|=      89.3 max|qvel|=   4.05 ncon=  0 com_z=0.945 com_x=-0.124
+t= 17.00 max|qacc|=      69.0 max|qvel|=   5.71 ncon=  0 com_z=0.932 com_x=-0.138
+t= 17.50 max|qacc|=      48.1 max|qvel|=   1.89 ncon=  0 com_z=0.928 com_x=-0.112
+t= 18.00 max|qacc|=      54.9 max|qvel|=   1.33 ncon=  0 com_z=0.934 com_x=-0.136
+t= 18.50 max|qacc|=      76.2 max|qvel|=   1.26 ncon=  0 com_z=0.930 com_x=-0.126
+t= 19.00 max|qacc|=      55.2 max|qvel|=   1.02 ncon=  0 com_z=0.927 com_x=-0.113
+t= 19.50 max|qacc|=      28.3 max|qvel|=   0.89 ncon=  0 com_z=0.932 com_x=-0.137
+t= 20.00 max|qacc|=      47.5 max|qvel|=   0.51 ncon=  0 com_z=0.929 com_x=-0.120
+t= 20.50 max|qacc|=      44.2 max|qvel|=   0.50 ncon=  0 com_z=0.928 com_x=-0.122
+t= 21.00 max|qacc|=      29.9 max|qvel|=   0.83 ncon=  0 com_z=0.931 com_x=-0.133
+t= 21.50 max|qacc|=      73.9 max|qvel|=   0.82 ncon=  0 com_z=0.928 com_x=-0.118
+t= 22.00 max|qacc|=      60.7 max|qvel|=   0.71 ncon=  0 com_z=0.930 com_x=-0.128
+t= 22.50 max|qacc|=      54.2 max|qvel|=   0.70 ncon=  0 com_z=0.930 com_x=-0.128
+t= 23.00 max|qacc|=      84.4 max|qvel|=   0.53 ncon=  0 com_z=0.929 com_x=-0.120
+t= 23.50 max|qacc|=      61.6 max|qvel|=   0.35 ncon=  0 com_z=0.930 com_x=-0.129
+t= 24.00 max|qacc|=      58.5 max|qvel|=   0.81 ncon=  0 com_z=0.929 com_x=-0.125
+t= 24.50 max|qacc|=      84.9 max|qvel|=   0.24 ncon=  0 com_z=0.929 com_x=-0.123
+t= 25.00 max|qacc|=      36.7 max|qvel|=   0.67 ncon=  0 com_z=0.930 com_x=-0.128
+t= 25.50 max|qacc|=      60.5 max|qvel|=   0.52 ncon=  0 com_z=0.929 com_x=-0.123
+t= 26.00 max|qacc|=      47.7 max|qvel|=   1.08 ncon=  0 com_z=0.929 com_x=-0.125
+t= 26.50 max|qacc|=      25.8 max|qvel|=   0.82 ncon=  0 com_z=0.930 com_x=-0.127
+t= 27.00 max|qacc|=      52.4 max|qvel|=   0.86 ncon=  0 com_z=0.929 com_x=-0.123
+t= 27.50 max|qacc|=      57.2 max|qvel|=   0.58 ncon=  0 com_z=0.929 com_x=-0.126
+t= 28.00 max|qacc|=      66.5 max|qvel|=   0.65 ncon=  0 com_z=0.929 com_x=-0.126
+t= 28.50 max|qacc|=      80.5 max|qvel|=   0.82 ncon=  0 com_z=0.929 com_x=-0.124
+t= 29.00 max|qacc|=      83.2 max|qvel|=   0.69 ncon=  0 com_z=0.930 com_x=-0.126
+t= 29.50 max|qacc|=      41.7 max|qvel|=   0.83 ncon=  0 com_z=0.929 com_x=-0.125
+t= 30.00 max|qacc|=      49.9 max|qvel|=   0.48 ncon=  0 com_z=0.929 com_x=-0.125
+t= 30.50 max|qacc|=      28.1 max|qvel|=   0.89 ncon=  0 com_z=0.930 com_x=-0.126
+t= 31.00 max|qacc|=      34.2 max|qvel|=   0.85 ncon=  0 com_z=0.929 com_x=-0.124
+t= 31.50 max|qacc|=      66.4 max|qvel|=   0.37 ncon=  0 com_z=0.929 com_x=-0.126
+t= 32.00 max|qacc|=      77.9 max|qvel|=   0.47 ncon=  0 com_z=0.929 com_x=-0.126
+t= 32.50 max|qacc|=      19.8 max|qvel|=   0.78 ncon=  0 com_z=0.929 com_x=-0.125
+t= 33.00 max|qacc|=      58.2 max|qvel|=   0.32 ncon=  0 com_z=0.929 com_x=-0.126
+t= 33.50 max|qacc|=      79.4 max|qvel|=   1.03 ncon=  0 com_z=0.929 com_x=-0.125
+t= 34.00 max|qacc|=      64.3 max|qvel|=   0.75 ncon=  0 com_z=0.929 com_x=-0.125
+t= 34.50 max|qacc|=      54.6 max|qvel|=   0.48 ncon=  0 com_z=0.929 com_x=-0.126
+t= 35.00 max|qacc|=      79.1 max|qvel|=   0.41 ncon=  0 com_z=0.929 com_x=-0.125
+t= 35.50 max|qacc|=      42.7 max|qvel|=   0.57 ncon=  0 com_z=0.929 com_x=-0.125
+t= 36.00 max|qacc|=      59.8 max|qvel|=   0.48 ncon=  0 com_z=0.929 com_x=-0.125
+t= 36.50 max|qacc|=      39.3 max|qvel|=   0.94 ncon=  0 com_z=0.929 com_x=-0.125
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.92 m, final 0.93 m  (stayed up)
+COM x: min -0.16 max -0.09 final -0.13 m
+COM y: min -0.021 max -0.002 m
+RG_F_r bursts during walk window: 0
+peak ctrl: [0.56 0.89 0.93 0.73 0.44 0.39 0.71 0.52 0.44 0.11 0.56 0.89 0.88 0.68
+ 0.44 0.39 0.68 0.52 0.44 0.11] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r        -21.4 ..    35.1 deg
+  knee_angle_r         -97.2 ..    13.1 deg
+  ankle_angle_r        -67.5 ..    15.5 deg
+  hip_adduction_r       -1.4 ..    17.9 deg
+  subtalar_angle_r      -2.2 ..    15.9 deg
+  hip_flexion_l        -34.0 ..    26.3 deg
+  knee_angle_l        -107.2 ..    13.5 deg
+  ankle_angle_l        -70.1 ..     9.8 deg
+  hip_adduction_l       -7.3 ..    14.1 deg
+  subtalar_angle_l      -3.5 ..    24.7 deg
+  pelvis_tilt           -1.9 ..     0.2 deg
+  pelvis_list           -0.5 ..    -0.3 deg
+  pelvis_rotation        2.3 ..     2.5 deg
+saved spinal_run.npz
+(plot skipped: [Errno 22] Invalid argument: 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run.png')
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      51.5 max|qvel|=   2.12 ncon=  0 com_z=0.930 com_x=-0.125
+t=  1.50 max|qacc|=      56.9 max|qvel|=   0.94 ncon=  0 com_z=0.931 com_x=-0.139
+t=  2.00 max|qacc|=      60.3 max|qvel|=   0.82 ncon=  0 com_z=0.932 com_x=-0.127
+t=  2.50 max|qacc|=      56.1 max|qvel|=   1.58 ncon=  0 com_z=0.931 com_x=-0.140
+t=  3.00 max|qacc|=     111.5 max|qvel|=   0.96 ncon=  0 com_z=0.931 com_x=-0.137
+t=  3.50 max|qacc|=     111.6 max|qvel|=   3.04 ncon=  0 com_z=0.932 com_x=-0.140
+t=  4.00 max|qacc|=     106.5 max|qvel|=   4.88 ncon=  0 com_z=0.932 com_x=-0.144
+t=  4.50 max|qacc|=     212.9 max|qvel|=   3.30 ncon=  0 com_z=0.931 com_x=-0.120
+t=  5.00 max|qacc|=     276.8 max|qvel|=   2.31 ncon=  0 com_z=0.927 com_x=-0.122
+t=  5.50 max|qacc|=     237.0 max|qvel|=   1.85 ncon=  0 com_z=0.927 com_x=-0.112
+t=  6.00 max|qacc|=     409.6 max|qvel|=   7.22 ncon=  0 com_z=0.926 com_x=-0.086
+t=  6.50 max|qacc|=      90.4 max|qvel|=  10.29 ncon=  0 com_z=0.929 com_x=-0.117
+t=  7.00 max|qacc|=     101.3 max|qvel|=   5.97 ncon=  0 com_z=0.925 com_x=-0.084
+t=  7.50 max|qacc|=     651.8 max|qvel|=   5.55 ncon=  0 com_z=0.943 com_x=-0.100
+t=  8.00 max|qacc|=     109.2 max|qvel|=   8.53 ncon=  0 com_z=0.931 com_x=-0.085
+t=  8.50 max|qacc|=      14.5 max|qvel|=   5.92 ncon=  0 com_z=0.932 com_x=-0.099
+t=  9.00 max|qacc|=      28.7 max|qvel|=   8.23 ncon=  0 com_z=0.930 com_x=-0.106
+t=  9.50 max|qacc|=      28.5 max|qvel|=   3.26 ncon=  0 com_z=0.927 com_x=-0.100
+t= 10.00 max|qacc|=     187.5 max|qvel|=   5.78 ncon=  0 com_z=0.927 com_x=-0.123
+t= 10.50 max|qacc|=     331.8 max|qvel|=   1.88 ncon=  0 com_z=0.925 com_x=-0.093
+t= 11.00 max|qacc|=     100.5 max|qvel|=   7.08 ncon=  0 com_z=0.927 com_x=-0.119
+t= 11.50 max|qacc|=     127.2 max|qvel|=   2.25 ncon=  0 com_z=0.928 com_x=-0.090
+t= 12.00 max|qacc|=     138.3 max|qvel|=   8.02 ncon=  0 com_z=0.936 com_x=-0.102
+t= 12.50 max|qacc|=      59.9 max|qvel|=  10.86 ncon=  0 com_z=0.925 com_x=-0.084
+t= 13.00 max|qacc|=      17.2 max|qvel|=   5.50 ncon=  0 com_z=0.936 com_x=-0.102
+t= 13.50 max|qacc|=     647.9 max|qvel|=   7.23 ncon=  0 com_z=0.940 com_x=-0.090
+t= 14.00 max|qacc|=      66.0 max|qvel|=   5.21 ncon=  0 com_z=0.928 com_x=-0.102
+t= 14.50 max|qacc|=      51.8 max|qvel|=   8.98 ncon=  0 com_z=0.925 com_x=-0.117
+t= 15.00 max|qacc|=      44.5 max|qvel|=   2.01 ncon=  0 com_z=0.925 com_x=-0.097
+t= 15.50 max|qacc|=     101.4 max|qvel|=   7.70 ncon=  0 com_z=0.927 com_x=-0.120
+t= 16.00 max|qacc|=      37.5 max|qvel|=   5.87 ncon=  0 com_z=0.946 com_x=-0.059
+t= 16.50 max|qacc|=      40.0 max|qvel|=   4.14 ncon=  0 com_z=0.929 com_x=-0.095
+t= 17.00 max|qacc|=      41.3 max|qvel|=   1.56 ncon=  0 com_z=0.939 com_x=-0.160
+t= 17.50 max|qacc|=      81.8 max|qvel|=   1.02 ncon=  0 com_z=0.927 com_x=-0.119
+t= 18.00 max|qacc|=      75.8 max|qvel|=   0.76 ncon=  0 com_z=0.934 com_x=-0.143
+t= 18.50 max|qacc|=      52.5 max|qvel|=   1.14 ncon=  0 com_z=0.933 com_x=-0.145
+t= 19.00 max|qacc|=      44.6 max|qvel|=   0.69 ncon=  0 com_z=0.928 com_x=-0.123
+t= 19.50 max|qacc|=      59.7 max|qvel|=   0.86 ncon=  0 com_z=0.935 com_x=-0.147
+t= 20.00 max|qacc|=      25.9 max|qvel|=   0.71 ncon=  0 com_z=0.930 com_x=-0.134
+t= 20.50 max|qacc|=      36.3 max|qvel|=   0.74 ncon=  0 com_z=0.930 com_x=-0.133
+t= 21.00 max|qacc|=      71.1 max|qvel|=   0.90 ncon=  0 com_z=0.933 com_x=-0.144
+t= 21.50 max|qacc|=      67.5 max|qvel|=   0.69 ncon=  0 com_z=0.929 com_x=-0.130
+t= 22.00 max|qacc|=      98.1 max|qvel|=   0.77 ncon=  0 com_z=0.931 com_x=-0.140
+t= 22.50 max|qacc|=      59.4 max|qvel|=   0.97 ncon=  0 com_z=0.932 com_x=-0.138
+t= 23.00 max|qacc|=      67.1 max|qvel|=   0.73 ncon=  0 com_z=0.929 com_x=-0.133
+t= 23.50 max|qacc|=      67.7 max|qvel|=   0.85 ncon=  0 com_z=0.932 com_x=-0.141
+t= 24.00 max|qacc|=      57.6 max|qvel|=   0.57 ncon=  0 com_z=0.930 com_x=-0.135
+t= 24.50 max|qacc|=      84.4 max|qvel|=   0.60 ncon=  0 com_z=0.930 com_x=-0.136
+t= 25.00 max|qacc|=      27.5 max|qvel|=   0.83 ncon=  0 com_z=0.932 com_x=-0.139
+t= 25.50 max|qacc|=     116.3 max|qvel|=   0.73 ncon=  0 com_z=0.930 com_x=-0.134
+t= 26.00 max|qacc|=      45.4 max|qvel|=   0.46 ncon=  0 com_z=0.931 com_x=-0.138
+t= 26.50 max|qacc|=     105.0 max|qvel|=   1.37 ncon=  0 com_z=0.931 com_x=-0.137
+t= 27.00 max|qacc|=      99.4 max|qvel|=   1.62 ncon=  0 com_z=0.930 com_x=-0.136
+t= 27.50 max|qacc|=      98.7 max|qvel|=   1.47 ncon=  0 com_z=0.931 com_x=-0.138
+t= 28.00 max|qacc|=     101.8 max|qvel|=   0.93 ncon=  0 com_z=0.931 com_x=-0.136
+t= 28.50 max|qacc|=      50.3 max|qvel|=   1.01 ncon=  0 com_z=0.930 com_x=-0.137
+t= 29.00 max|qacc|=      54.2 max|qvel|=   1.46 ncon=  0 com_z=0.931 com_x=-0.137
+t= 29.50 max|qacc|=      74.9 max|qvel|=   1.62 ncon=  0 com_z=0.930 com_x=-0.136
+t= 30.00 max|qacc|=      57.3 max|qvel|=   1.05 ncon=  0 com_z=0.931 com_x=-0.137
+t= 30.50 max|qacc|=      64.3 max|qvel|=   1.17 ncon=  0 com_z=0.931 com_x=-0.137
+t= 31.00 max|qacc|=     100.4 max|qvel|=   0.64 ncon=  0 com_z=0.930 com_x=-0.136
+t= 31.50 max|qacc|=      68.2 max|qvel|=   0.79 ncon=  0 com_z=0.931 com_x=-0.137
+t= 32.00 max|qacc|=      70.8 max|qvel|=   0.65 ncon=  0 com_z=0.931 com_x=-0.136
+t= 32.50 max|qacc|=      95.3 max|qvel|=   0.69 ncon=  0 com_z=0.931 com_x=-0.137
+t= 33.00 max|qacc|=      55.3 max|qvel|=   1.25 ncon=  0 com_z=0.931 com_x=-0.137
+t= 33.50 max|qacc|=      69.2 max|qvel|=   1.55 ncon=  0 com_z=0.931 com_x=-0.137
+t= 34.00 max|qacc|=     111.4 max|qvel|=   1.14 ncon=  0 com_z=0.931 com_x=-0.137
+t= 34.50 max|qacc|=      64.5 max|qvel|=   0.83 ncon=  0 com_z=0.931 com_x=-0.137
+t= 35.00 max|qacc|=      50.2 max|qvel|=   0.78 ncon=  0 com_z=0.931 com_x=-0.137
+t= 35.50 max|qacc|=      59.9 max|qvel|=   0.65 ncon=  0 com_z=0.931 com_x=-0.137
+t= 36.00 max|qacc|=      29.5 max|qvel|=   0.66 ncon=  0 com_z=0.931 com_x=-0.137
+t= 36.50 max|qacc|=      27.9 max|qvel|=   0.74 ncon=  0 com_z=0.931 com_x=-0.137
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.92 m, final 0.93 m  (stayed up)
+COM x: min -0.16 max -0.06 final -0.14 m
+COM y: min -0.021 max -0.001 m
+RG_F_r bursts during walk window: 18
+RG_r: cycles in window 27, period 0.37 s (2.72 Hz), E-duty 0.21
+RG_l: cycles in window 27, period 0.37 s (2.72 Hz), E-duty 0.21
+peak ctrl: [0.48 0.76 0.85 0.72 0.38 0.31 0.74 0.42 0.38 0.09 0.48 0.76 0.85 0.69
+ 0.38 0.31 0.67 0.42 0.38 0.09] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r        -27.3 ..    31.6 deg
+  knee_angle_r         -79.0 ..    12.5 deg
+  ankle_angle_r        -69.1 ..    16.4 deg
+  hip_adduction_r       -2.7 ..    13.2 deg
+  subtalar_angle_r      -2.7 ..    19.4 deg
+  hip_flexion_l        -48.6 ..    19.7 deg
+  knee_angle_l         -82.4 ..    12.6 deg
+  ankle_angle_l        -72.9 ..    15.5 deg
+  hip_adduction_l       -8.9 ..    13.7 deg
+  subtalar_angle_l      -2.9 ..    22.7 deg
+  pelvis_tilt           -1.9 ..     0.2 deg
+  pelvis_list           -0.5 ..    -0.3 deg
+  pelvis_rotation        2.3 ..     2.5 deg
+saved spinal_run.npz
+saved spinal_run.png
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      69.2 max|qvel|=   2.50 ncon=  0 com_z=0.930 com_x=-0.118
+t=  1.50 max|qacc|=      79.4 max|qvel|=   1.70 ncon=  0 com_z=0.929 com_x=-0.130
+t=  2.00 max|qacc|=      31.8 max|qvel|=   0.95 ncon=  0 com_z=0.932 com_x=-0.125
+t=  2.50 max|qacc|=      54.6 max|qvel|=   1.75 ncon=  0 com_z=0.929 com_x=-0.133
+t=  3.00 max|qacc|=      55.9 max|qvel|=   0.98 ncon=  0 com_z=0.930 com_x=-0.131
+t=  3.50 max|qacc|=     285.8 max|qvel|=   8.37 ncon=  0 com_z=0.928 com_x=-0.128
+t=  4.00 max|qacc|=     293.8 max|qvel|=   9.65 ncon=  0 com_z=0.928 com_x=-0.124
+t=  4.50 max|qacc|=      65.6 max|qvel|=  10.36 ncon=  0 com_z=0.928 com_x=-0.097
+t=  5.00 max|qacc|=     156.3 max|qvel|=   8.00 ncon=  0 com_z=0.926 com_x=-0.101
+t=  5.50 max|qacc|=      99.4 max|qvel|=  10.08 ncon=  0 com_z=0.927 com_x=-0.103
+t=  6.00 max|qacc|=     100.7 max|qvel|=   3.28 ncon=  0 com_z=0.927 com_x=-0.077
+t=  6.50 max|qacc|=     132.2 max|qvel|=   7.83 ncon=  0 com_z=0.936 com_x=-0.104
+t=  7.00 max|qacc|=      86.7 max|qvel|=   4.65 ncon=  0 com_z=0.925 com_x=-0.087
+t=  7.50 max|qacc|=     304.9 max|qvel|=   4.08 ncon=  0 com_z=0.943 com_x=-0.092
+t=  8.00 max|qacc|=      63.5 max|qvel|=   8.30 ncon=  0 com_z=0.923 com_x=-0.090
+t=  8.50 max|qacc|=     210.6 max|qvel|=   5.25 ncon=  0 com_z=0.943 com_x=-0.091
+t=  9.00 max|qacc|=      96.3 max|qvel|=   8.80 ncon=  0 com_z=0.923 com_x=-0.088
+t=  9.50 max|qacc|=      24.6 max|qvel|=   5.97 ncon=  0 com_z=0.939 com_x=-0.095
+t= 10.00 max|qacc|=     209.2 max|qvel|=   7.18 ncon=  0 com_z=0.929 com_x=-0.086
+t= 10.50 max|qacc|=      13.3 max|qvel|=   6.62 ncon=  0 com_z=0.935 com_x=-0.096
+t= 11.00 max|qacc|=     411.2 max|qvel|=   7.78 ncon=  0 com_z=0.935 com_x=-0.090
+t= 11.50 max|qacc|=       9.2 max|qvel|=   6.84 ncon=  0 com_z=0.932 com_x=-0.097
+t= 12.00 max|qacc|=      24.1 max|qvel|=   8.37 ncon=  0 com_z=0.930 com_x=-0.098
+t= 12.50 max|qacc|=      29.6 max|qvel|=   6.42 ncon=  0 com_z=0.929 com_x=-0.098
+t= 13.00 max|qacc|=      28.1 max|qvel|=   9.23 ncon=  0 com_z=0.926 com_x=-0.106
+t= 13.50 max|qacc|=      58.3 max|qvel|=   5.24 ncon=  0 com_z=0.928 com_x=-0.099
+t= 14.00 max|qacc|=      59.3 max|qvel|=   7.90 ncon=  0 com_z=0.924 com_x=-0.112
+t= 14.50 max|qacc|=      42.1 max|qvel|=   3.06 ncon=  0 com_z=0.927 com_x=-0.098
+t= 15.00 max|qacc|=      95.8 max|qvel|=   5.25 ncon=  0 com_z=0.926 com_x=-0.115
+t= 15.50 max|qacc|=     239.4 max|qvel|=   5.96 ncon=  0 com_z=0.929 com_x=-0.076
+t= 16.00 max|qacc|=      40.5 max|qvel|=   1.44 ncon=  0 com_z=0.946 com_x=-0.090
+t= 16.50 max|qacc|=      76.0 max|qvel|=   3.09 ncon=  0 com_z=0.927 com_x=-0.084
+t= 17.00 max|qacc|=      63.6 max|qvel|=   2.11 ncon=  0 com_z=0.931 com_x=-0.130
+t= 17.50 max|qacc|=      78.1 max|qvel|=   1.40 ncon=  0 com_z=0.937 com_x=-0.150
+t= 18.00 max|qacc|=      85.4 max|qvel|=   0.66 ncon=  0 com_z=0.926 com_x=-0.111
+t= 18.50 max|qacc|=      40.0 max|qvel|=   0.87 ncon=  0 com_z=0.934 com_x=-0.141
+t= 19.00 max|qacc|=      41.9 max|qvel|=   0.96 ncon=  0 com_z=0.930 com_x=-0.135
+t= 19.50 max|qacc|=      70.2 max|qvel|=   0.84 ncon=  0 com_z=0.927 com_x=-0.119
+t= 20.00 max|qacc|=     112.5 max|qvel|=   0.94 ncon=  0 com_z=0.935 com_x=-0.143
+t= 20.50 max|qacc|=      81.8 max|qvel|=   0.77 ncon=  0 com_z=0.928 com_x=-0.126
+t= 21.00 max|qacc|=      84.9 max|qvel|=   0.42 ncon=  0 com_z=0.930 com_x=-0.129
+t= 21.50 max|qacc|=      60.5 max|qvel|=   0.99 ncon=  0 com_z=0.932 com_x=-0.139
+t= 22.00 max|qacc|=      74.6 max|qvel|=   0.90 ncon=  0 com_z=0.928 com_x=-0.124
+t= 22.50 max|qacc|=      70.4 max|qvel|=   0.98 ncon=  0 com_z=0.931 com_x=-0.135
+t= 23.00 max|qacc|=      55.2 max|qvel|=   0.70 ncon=  0 com_z=0.930 com_x=-0.133
+t= 23.50 max|qacc|=      48.8 max|qvel|=   0.76 ncon=  0 com_z=0.928 com_x=-0.127
+t= 24.00 max|qacc|=      88.0 max|qvel|=   0.52 ncon=  0 com_z=0.932 com_x=-0.136
+t= 24.50 max|qacc|=      62.8 max|qvel|=   0.98 ncon=  0 com_z=0.929 com_x=-0.129
+t= 25.00 max|qacc|=      28.3 max|qvel|=   0.71 ncon=  0 com_z=0.929 com_x=-0.130
+t= 25.50 max|qacc|=      92.8 max|qvel|=   1.65 ncon=  0 com_z=0.931 com_x=-0.134
+t= 26.00 max|qacc|=      66.7 max|qvel|=   0.95 ncon=  0 com_z=0.929 com_x=-0.128
+t= 26.50 max|qacc|=      58.4 max|qvel|=   0.84 ncon=  0 com_z=0.930 com_x=-0.133
+t= 27.00 max|qacc|=      51.8 max|qvel|=   1.63 ncon=  0 com_z=0.930 com_x=-0.132
+t= 27.50 max|qacc|=      85.6 max|qvel|=   0.72 ncon=  0 com_z=0.929 com_x=-0.129
+t= 28.00 max|qacc|=      53.1 max|qvel|=   0.99 ncon=  0 com_z=0.931 com_x=-0.133
+t= 28.50 max|qacc|=      62.3 max|qvel|=   0.95 ncon=  0 com_z=0.930 com_x=-0.130
+t= 29.00 max|qacc|=      82.3 max|qvel|=   1.68 ncon=  0 com_z=0.930 com_x=-0.131
+t= 29.50 max|qacc|=      77.1 max|qvel|=   0.94 ncon=  0 com_z=0.930 com_x=-0.132
+t= 30.00 max|qacc|=     119.2 max|qvel|=   1.42 ncon=  0 com_z=0.930 com_x=-0.130
+t= 30.50 max|qacc|=      55.5 max|qvel|=   0.74 ncon=  0 com_z=0.930 com_x=-0.132
+t= 31.00 max|qacc|=      89.1 max|qvel|=   0.66 ncon=  0 com_z=0.930 com_x=-0.132
+t= 31.50 max|qacc|=      70.6 max|qvel|=   0.94 ncon=  0 com_z=0.930 com_x=-0.130
+t= 32.00 max|qacc|=      79.2 max|qvel|=   1.64 ncon=  0 com_z=0.930 com_x=-0.132
+t= 32.50 max|qacc|=     117.2 max|qvel|=   0.89 ncon=  0 com_z=0.930 com_x=-0.131
+t= 33.00 max|qacc|=      64.7 max|qvel|=   0.67 ncon=  0 com_z=0.930 com_x=-0.131
+t= 33.50 max|qacc|=      46.6 max|qvel|=   0.94 ncon=  0 com_z=0.930 com_x=-0.132
+t= 34.00 max|qacc|=      54.7 max|qvel|=   1.11 ncon=  0 com_z=0.930 com_x=-0.131
+t= 34.50 max|qacc|=      55.0 max|qvel|=   0.55 ncon=  0 com_z=0.930 com_x=-0.132
+t= 35.00 max|qacc|=     108.9 max|qvel|=   1.00 ncon=  0 com_z=0.930 com_x=-0.131
+t= 35.50 max|qacc|=      52.7 max|qvel|=   0.71 ncon=  0 com_z=0.930 com_x=-0.131
+t= 36.00 max|qacc|=      75.1 max|qvel|=   1.61 ncon=  0 com_z=0.930 com_x=-0.132
+t= 36.50 max|qacc|=      55.8 max|qvel|=   0.97 ncon=  0 com_z=0.930 com_x=-0.131
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.92 m, final 0.93 m  (stayed up)
+COM x: min -0.15 max -0.07 final -0.13 m
+COM y: min -0.021 max +0.008 m
+RG_F_r bursts during walk window: 20
+RG_r: cycles in window 29, period 0.35 s (2.89 Hz), E-duty 0.23
+RG_l: cycles in window 29, period 0.35 s (2.89 Hz), E-duty 0.23
+peak ctrl: [0.48 0.78 0.86 0.67 0.41 0.31 0.7  0.42 0.41 0.09 0.48 0.78 0.86 0.68
+ 0.41 0.31 0.63 0.42 0.41 0.09] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r        -26.5 ..    29.1 deg
+  knee_angle_r         -77.2 ..    12.1 deg
+  ankle_angle_r        -67.4 ..    15.2 deg
+  hip_adduction_r       -5.1 ..    14.4 deg
+  subtalar_angle_r      -3.0 ..    18.5 deg
+  hip_flexion_l        -33.1 ..    14.2 deg
+  knee_angle_l         -86.1 ..    11.6 deg
+  ankle_angle_l        -72.9 ..    10.9 deg
+  hip_adduction_l      -11.5 ..    17.8 deg
+  subtalar_angle_l      -3.1 ..    22.6 deg
+  pelvis_tilt           -1.9 ..     0.2 deg
+  pelvis_list           -0.6 ..    -0.3 deg
+  pelvis_rotation        2.3 ..     2.5 deg
+saved spinal_run.npz
+(plot skipped: [Errno 22] Invalid argument: 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run.png')
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=     100.1 max|qvel|=   2.20 ncon=  0 com_z=0.930 com_x=-0.124
+t=  1.50 max|qacc|=      68.8 max|qvel|=   0.76 ncon=  0 com_z=0.931 com_x=-0.138
+t=  2.00 max|qacc|=      47.1 max|qvel|=   0.97 ncon=  0 com_z=0.932 com_x=-0.127
+t=  2.50 max|qacc|=      56.3 max|qvel|=   0.93 ncon=  0 com_z=0.931 com_x=-0.140
+t=  3.00 max|qacc|=      68.6 max|qvel|=   0.89 ncon=  0 com_z=0.931 com_x=-0.136
+t=  3.50 max|qacc|=      24.7 max|qvel|=   0.50 ncon=  0 com_z=0.930 com_x=-0.129
+t=  4.00 max|qacc|=      51.0 max|qvel|=   6.40 ncon=  0 com_z=0.938 com_x=-0.137
+t=  4.50 max|qacc|=     383.8 max|qvel|=   8.47 ncon=  0 com_z=0.931 com_x=-0.108
+t=  5.00 max|qacc|=     163.0 max|qvel|=   6.41 ncon=  0 com_z=0.951 com_x=-0.096
+t=  5.50 max|qacc|=      52.1 max|qvel|=   4.96 ncon=  0 com_z=0.953 com_x=-0.073
+t=  6.00 max|qacc|=      50.6 max|qvel|=   8.57 ncon=  0 com_z=0.941 com_x=-0.096
+t=  6.50 max|qacc|=     118.1 max|qvel|=   8.68 ncon=  0 com_z=0.926 com_x=-0.111
+t=  7.00 max|qacc|=     199.5 max|qvel|=  12.41 ncon=  0 com_z=0.927 com_x=-0.094
+t=  7.50 max|qacc|=      72.1 max|qvel|=  12.71 ncon=  0 com_z=0.935 com_x=-0.096
+t=  8.00 max|qacc|=      44.2 max|qvel|=   3.85 ncon=  0 com_z=0.955 com_x=-0.065
+t=  8.50 max|qacc|=      50.1 max|qvel|=   8.59 ncon=  0 com_z=0.940 com_x=-0.104
+t=  9.00 max|qacc|=     164.5 max|qvel|=   8.48 ncon=  0 com_z=0.927 com_x=-0.106
+t=  9.50 max|qacc|=     153.6 max|qvel|=  12.17 ncon=  0 com_z=0.927 com_x=-0.094
+t= 10.00 max|qacc|=      70.7 max|qvel|=  12.47 ncon=  0 com_z=0.936 com_x=-0.096
+t= 10.50 max|qacc|=      41.7 max|qvel|=   3.73 ncon=  0 com_z=0.955 com_x=-0.065
+t= 11.00 max|qacc|=      48.3 max|qvel|=   8.66 ncon=  0 com_z=0.940 com_x=-0.105
+t= 11.50 max|qacc|=     153.8 max|qvel|=   8.47 ncon=  0 com_z=0.927 com_x=-0.104
+t= 12.00 max|qacc|=     157.1 max|qvel|=  12.14 ncon=  0 com_z=0.927 com_x=-0.095
+t= 12.50 max|qacc|=      88.0 max|qvel|=  12.25 ncon=  0 com_z=0.938 com_x=-0.096
+t= 13.00 max|qacc|=      46.6 max|qvel|=   3.60 ncon=  0 com_z=0.956 com_x=-0.064
+t= 13.50 max|qacc|=      47.8 max|qvel|=   8.63 ncon=  0 com_z=0.940 com_x=-0.106
+t= 14.00 max|qacc|=      84.6 max|qvel|=   8.53 ncon=  0 com_z=0.927 com_x=-0.103
+t= 14.50 max|qacc|=     162.5 max|qvel|=  12.11 ncon=  0 com_z=0.928 com_x=-0.096
+t= 15.00 max|qacc|=     110.4 max|qvel|=  12.09 ncon=  0 com_z=0.939 com_x=-0.095
+t= 15.50 max|qacc|=      48.3 max|qvel|=   5.26 ncon=  0 com_z=0.956 com_x=-0.055
+t= 16.00 max|qacc|=      43.2 max|qvel|=   3.14 ncon=  0 com_z=0.935 com_x=-0.053
+t= 16.50 max|qacc|=      76.4 max|qvel|=   4.87 ncon=  0 com_z=0.941 com_x=-0.134
+t= 17.00 max|qacc|=      58.9 max|qvel|=   1.26 ncon=  0 com_z=0.933 com_x=-0.132
+t= 17.50 max|qacc|=      67.5 max|qvel|=   1.83 ncon=  0 com_z=0.930 com_x=-0.130
+t= 18.00 max|qacc|=      59.0 max|qvel|=   1.61 ncon=  0 com_z=0.936 com_x=-0.147
+t= 18.50 max|qacc|=      53.0 max|qvel|=   0.94 ncon=  0 com_z=0.927 com_x=-0.129
+t= 19.00 max|qacc|=      53.6 max|qvel|=   0.78 ncon=  0 com_z=0.934 com_x=-0.136
+t= 19.50 max|qacc|=      81.1 max|qvel|=   1.17 ncon=  0 com_z=0.932 com_x=-0.141
+t= 20.00 max|qacc|=     122.5 max|qvel|=   1.09 ncon=  0 com_z=0.928 com_x=-0.129
+t= 20.50 max|qacc|=      99.3 max|qvel|=   1.46 ncon=  0 com_z=0.935 com_x=-0.141
+t= 21.00 max|qacc|=     110.8 max|qvel|=   0.71 ncon=  0 com_z=0.929 com_x=-0.136
+t= 21.50 max|qacc|=     114.8 max|qvel|=   0.62 ncon=  0 com_z=0.930 com_x=-0.133
+t= 22.00 max|qacc|=      36.6 max|qvel|=   0.76 ncon=  0 com_z=0.933 com_x=-0.140
+t= 22.50 max|qacc|=      84.5 max|qvel|=   0.38 ncon=  0 com_z=0.929 com_x=-0.132
+t= 23.00 max|qacc|=     106.1 max|qvel|=   1.45 ncon=  0 com_z=0.932 com_x=-0.137
+t= 23.50 max|qacc|=     111.4 max|qvel|=   0.78 ncon=  0 com_z=0.931 com_x=-0.138
+t= 24.00 max|qacc|=      99.9 max|qvel|=   1.22 ncon=  0 com_z=0.929 com_x=-0.133
+t= 24.50 max|qacc|=     105.6 max|qvel|=   1.21 ncon=  0 com_z=0.932 com_x=-0.138
+t= 25.00 max|qacc|=      90.7 max|qvel|=   0.42 ncon=  0 com_z=0.930 com_x=-0.135
+t= 25.50 max|qacc|=     115.3 max|qvel|=   0.68 ncon=  0 com_z=0.931 com_x=-0.135
+t= 26.00 max|qacc|=      79.8 max|qvel|=   0.82 ncon=  0 com_z=0.932 com_x=-0.138
+t= 26.50 max|qacc|=      59.8 max|qvel|=   0.59 ncon=  0 com_z=0.930 com_x=-0.134
+t= 27.00 max|qacc|=      57.3 max|qvel|=   0.81 ncon=  0 com_z=0.931 com_x=-0.137
+t= 27.50 max|qacc|=      33.9 max|qvel|=   0.77 ncon=  0 com_z=0.931 com_x=-0.137
+t= 28.00 max|qacc|=      30.4 max|qvel|=   0.75 ncon=  0 com_z=0.930 com_x=-0.135
+t= 28.50 max|qacc|=      69.6 max|qvel|=   0.98 ncon=  0 com_z=0.931 com_x=-0.137
+t= 29.00 max|qacc|=      61.9 max|qvel|=   0.83 ncon=  0 com_z=0.930 com_x=-0.136
+t= 29.50 max|qacc|=      40.2 max|qvel|=   1.07 ncon=  0 com_z=0.931 com_x=-0.136
+t= 30.00 max|qacc|=      63.6 max|qvel|=   0.98 ncon=  0 com_z=0.931 com_x=-0.137
+t= 30.50 max|qacc|=      65.9 max|qvel|=   0.83 ncon=  0 com_z=0.930 com_x=-0.135
+t= 31.00 max|qacc|=      50.1 max|qvel|=   0.86 ncon=  0 com_z=0.931 com_x=-0.136
+t= 31.50 max|qacc|=      29.8 max|qvel|=   0.98 ncon=  0 com_z=0.931 com_x=-0.136
+t= 32.00 max|qacc|=      57.9 max|qvel|=   0.79 ncon=  0 com_z=0.930 com_x=-0.136
+t= 32.50 max|qacc|=      48.7 max|qvel|=   0.85 ncon=  0 com_z=0.931 com_x=-0.136
+t= 33.00 max|qacc|=      55.9 max|qvel|=   0.85 ncon=  0 com_z=0.930 com_x=-0.136
+t= 33.50 max|qacc|=      54.1 max|qvel|=   0.69 ncon=  0 com_z=0.931 com_x=-0.136
+t= 34.00 max|qacc|=      51.3 max|qvel|=   0.55 ncon=  0 com_z=0.931 com_x=-0.136
+t= 34.50 max|qacc|=      55.2 max|qvel|=   0.69 ncon=  0 com_z=0.930 com_x=-0.136
+t= 35.00 max|qacc|=      64.7 max|qvel|=   0.59 ncon=  0 com_z=0.931 com_x=-0.136
+t= 35.50 max|qacc|=      52.8 max|qvel|=   0.82 ncon=  0 com_z=0.930 com_x=-0.136
+t= 36.00 max|qacc|=      33.9 max|qvel|=   0.66 ncon=  0 com_z=0.930 com_x=-0.136
+t= 36.50 max|qacc|=      20.1 max|qvel|=   0.76 ncon=  0 com_z=0.931 com_x=-0.136
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.92 m, final 0.93 m  (stayed up)
+COM x: min -0.15 max -0.04 final -0.14 m
+COM y: min -0.020 max +0.004 m
+RG_F_r bursts during walk window: 24
+RG_r: cycles in window 16, period 0.62 s (1.61 Hz), E-duty 0.13
+RG_l: cycles in window 16, period 0.62 s (1.61 Hz), E-duty 0.13
+peak ctrl: [0.49 0.86 0.92 0.72 0.41 0.41 0.73 0.44 0.41 0.13 0.49 0.86 0.92 0.67
+ 0.41 0.41 0.67 0.44 0.41 0.13] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r        -46.0 ..    35.0 deg
+  knee_angle_r         -97.9 ..    13.1 deg
+  ankle_angle_r        -61.4 ..    16.2 deg
+  hip_adduction_r       -6.1 ..    18.8 deg
+  subtalar_angle_r      -2.2 ..    18.8 deg
+  hip_flexion_l        -44.2 ..    16.9 deg
+  knee_angle_l        -107.9 ..    12.4 deg
+  ankle_angle_l        -65.0 ..    14.8 deg
+  hip_adduction_l       -8.6 ..    14.5 deg
+  subtalar_angle_l      -3.1 ..    22.9 deg
+  pelvis_tilt           -1.9 ..     0.3 deg
+  pelvis_list           -0.6 ..    -0.3 deg
+  pelvis_rotation        2.2 ..     2.5 deg
+saved spinal_run.npz
+(plot skipped: [Errno 22] Invalid argument: 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run.png')
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      68.0 max|qvel|=   2.48 ncon=  0 com_z=0.930 com_x=-0.118
+t=  1.50 max|qacc|=      32.6 max|qvel|=   0.73 ncon=  0 com_z=0.929 com_x=-0.130
+t=  2.00 max|qacc|=      81.2 max|qvel|=   0.90 ncon=  0 com_z=0.932 com_x=-0.125
+t=  2.50 max|qacc|=      37.5 max|qvel|=   0.63 ncon=  0 com_z=0.929 com_x=-0.133
+t=  3.00 max|qacc|=      65.9 max|qvel|=   0.97 ncon=  0 com_z=0.930 com_x=-0.131
+t=  3.50 max|qacc|=     336.6 max|qvel|=   7.57 ncon=  0 com_z=0.927 com_x=-0.131
+t=  4.00 max|qacc|=      42.2 max|qvel|=   1.05 ncon=  0 com_z=0.944 com_x=-0.121
+t=  4.50 max|qacc|=     123.5 max|qvel|=   9.40 ncon=  0 com_z=0.930 com_x=-0.103
+t=  5.00 max|qacc|=      98.1 max|qvel|=   1.96 ncon=  0 com_z=0.927 com_x=-0.106
+t=  5.50 max|qacc|=     273.1 max|qvel|=   4.30 ncon=  0 com_z=0.930 com_x=-0.099
+t=  6.00 max|qacc|=     109.8 max|qvel|=   1.30 ncon=  0 com_z=0.926 com_x=-0.100
+t=  6.50 max|qacc|=      17.8 max|qvel|=   7.81 ncon=  0 com_z=0.928 com_x=-0.099
+t=  7.00 max|qacc|=      59.8 max|qvel|=   6.47 ncon=  0 com_z=0.924 com_x=-0.099
+t=  7.50 max|qacc|=      65.8 max|qvel|=   5.78 ncon=  0 com_z=0.925 com_x=-0.103
+t=  8.00 max|qacc|=     153.2 max|qvel|=   6.71 ncon=  0 com_z=0.928 com_x=-0.093
+t=  8.50 max|qacc|=     112.0 max|qvel|=   1.18 ncon=  0 com_z=0.926 com_x=-0.104
+t=  9.00 max|qacc|=      22.3 max|qvel|=   7.58 ncon=  0 com_z=0.930 com_x=-0.097
+t=  9.50 max|qacc|=      99.6 max|qvel|=   5.29 ncon=  0 com_z=0.924 com_x=-0.099
+t= 10.00 max|qacc|=      59.5 max|qvel|=   6.71 ncon=  0 com_z=0.926 com_x=-0.103
+t= 10.50 max|qacc|=     147.6 max|qvel|=   7.52 ncon=  0 com_z=0.925 com_x=-0.094
+t= 11.00 max|qacc|=      93.4 max|qvel|=   1.85 ncon=  0 com_z=0.926 com_x=-0.105
+t= 11.50 max|qacc|=     725.9 max|qvel|=   5.23 ncon=  0 com_z=0.931 com_x=-0.095
+t= 12.00 max|qacc|=      74.2 max|qvel|=   4.39 ncon=  0 com_z=0.925 com_x=-0.101
+t= 12.50 max|qacc|=      47.5 max|qvel|=   7.48 ncon=  0 com_z=0.926 com_x=-0.102
+t= 13.00 max|qacc|=      99.2 max|qvel|=   7.75 ncon=  0 com_z=0.923 com_x=-0.095
+t= 13.50 max|qacc|=      86.1 max|qvel|=   3.20 ncon=  0 com_z=0.926 com_x=-0.105
+t= 14.00 max|qacc|=     344.8 max|qvel|=   6.27 ncon=  0 com_z=0.932 com_x=-0.093
+t= 14.50 max|qacc|=     141.7 max|qvel|=   3.17 ncon=  0 com_z=0.925 com_x=-0.102
+t= 15.00 max|qacc|=      25.2 max|qvel|=   7.97 ncon=  0 com_z=0.926 com_x=-0.101
+t= 15.50 max|qacc|=     158.5 max|qvel|=   6.86 ncon=  0 com_z=0.936 com_x=-0.085
+t= 16.00 max|qacc|=      55.6 max|qvel|=   2.35 ncon=  0 com_z=0.951 com_x=-0.083
+t= 16.50 max|qacc|=      49.5 max|qvel|=   4.46 ncon=  0 com_z=0.926 com_x=-0.088
+t= 17.00 max|qacc|=      90.5 max|qvel|=   3.46 ncon=  0 com_z=0.933 com_x=-0.135
+t= 17.50 max|qacc|=      84.4 max|qvel|=   1.54 ncon=  0 com_z=0.935 com_x=-0.143
+t= 18.00 max|qacc|=      57.8 max|qvel|=   1.14 ncon=  0 com_z=0.927 com_x=-0.115
+t= 18.50 max|qacc|=      43.7 max|qvel|=   0.59 ncon=  0 com_z=0.934 com_x=-0.142
+t= 19.00 max|qacc|=      99.0 max|qvel|=   1.62 ncon=  0 com_z=0.930 com_x=-0.132
+t= 19.50 max|qacc|=      65.9 max|qvel|=   1.34 ncon=  0 com_z=0.928 com_x=-0.124
+t= 20.00 max|qacc|=      82.3 max|qvel|=   0.70 ncon=  0 com_z=0.934 com_x=-0.141
+t= 20.50 max|qacc|=     101.7 max|qvel|=   0.63 ncon=  0 com_z=0.928 com_x=-0.126
+t= 21.00 max|qacc|=      64.6 max|qvel|=   0.66 ncon=  0 com_z=0.930 com_x=-0.132
+t= 21.50 max|qacc|=      40.3 max|qvel|=   0.75 ncon=  0 com_z=0.932 com_x=-0.136
+t= 22.00 max|qacc|=     119.3 max|qvel|=   1.35 ncon=  0 com_z=0.928 com_x=-0.126
+t= 22.50 max|qacc|=      30.1 max|qvel|=   0.86 ncon=  0 com_z=0.931 com_x=-0.135
+t= 23.00 max|qacc|=      71.5 max|qvel|=   0.62 ncon=  0 com_z=0.930 com_x=-0.132
+t= 23.50 max|qacc|=      55.7 max|qvel|=   0.75 ncon=  0 com_z=0.929 com_x=-0.129
+t= 24.00 max|qacc|=      49.1 max|qvel|=   0.75 ncon=  0 com_z=0.931 com_x=-0.135
+t= 24.50 max|qacc|=      64.2 max|qvel|=   0.95 ncon=  0 com_z=0.929 com_x=-0.129
+t= 25.00 max|qacc|=      99.7 max|qvel|=   1.37 ncon=  0 com_z=0.930 com_x=-0.131
+t= 25.50 max|qacc|=      89.2 max|qvel|=   0.82 ncon=  0 com_z=0.931 com_x=-0.133
+t= 26.00 max|qacc|=      64.8 max|qvel|=   0.65 ncon=  0 com_z=0.929 com_x=-0.129
+t= 26.50 max|qacc|=      49.0 max|qvel|=   0.97 ncon=  0 com_z=0.930 com_x=-0.132
+t= 27.00 max|qacc|=      24.6 max|qvel|=   0.94 ncon=  0 com_z=0.930 com_x=-0.132
+t= 27.50 max|qacc|=      59.2 max|qvel|=   0.96 ncon=  0 com_z=0.929 com_x=-0.130
+t= 28.00 max|qacc|=      69.1 max|qvel|=   0.56 ncon=  0 com_z=0.931 com_x=-0.133
+t= 28.50 max|qacc|=      64.2 max|qvel|=   1.67 ncon=  0 com_z=0.930 com_x=-0.131
+t= 29.00 max|qacc|=      48.8 max|qvel|=   0.98 ncon=  0 com_z=0.930 com_x=-0.131
+t= 29.50 max|qacc|=      38.0 max|qvel|=   0.79 ncon=  0 com_z=0.930 com_x=-0.132
+t= 30.00 max|qacc|=     121.4 max|qvel|=   1.42 ncon=  0 com_z=0.930 com_x=-0.131
+t= 30.50 max|qacc|=      63.6 max|qvel|=   1.00 ncon=  0 com_z=0.930 com_x=-0.132
+t= 31.00 max|qacc|=      54.2 max|qvel|=   1.55 ncon=  0 com_z=0.930 com_x=-0.132
+t= 31.50 max|qacc|=      53.9 max|qvel|=   0.84 ncon=  0 com_z=0.930 com_x=-0.131
+t= 32.00 max|qacc|=      56.6 max|qvel|=   0.78 ncon=  0 com_z=0.930 com_x=-0.132
+t= 32.50 max|qacc|=      87.2 max|qvel|=   0.69 ncon=  0 com_z=0.930 com_x=-0.132
+t= 33.00 max|qacc|=     104.2 max|qvel|=   1.11 ncon=  0 com_z=0.930 com_x=-0.131
+t= 33.50 max|qacc|=      67.7 max|qvel|=   0.67 ncon=  0 com_z=0.930 com_x=-0.132
+t= 34.00 max|qacc|=     118.3 max|qvel|=   0.71 ncon=  0 com_z=0.930 com_x=-0.131
+t= 34.50 max|qacc|=      26.9 max|qvel|=   0.88 ncon=  0 com_z=0.930 com_x=-0.132
+t= 35.00 max|qacc|=     100.5 max|qvel|=   0.87 ncon=  0 com_z=0.930 com_x=-0.132
+t= 35.50 max|qacc|=      60.5 max|qvel|=   0.69 ncon=  0 com_z=0.930 com_x=-0.131
+t= 36.00 max|qacc|=      78.6 max|qvel|=   1.15 ncon=  0 com_z=0.930 com_x=-0.131
+t= 36.50 max|qacc|=      49.5 max|qvel|=   1.00 ncon=  0 com_z=0.930 com_x=-0.132
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.92 m, final 0.93 m  (stayed up)
+COM x: min -0.15 max -0.08 final -0.13 m
+COM y: min -0.021 max -0.002 m
+RG_F_r bursts during walk window: 28
+RG_r: cycles in window 28, period 0.35 s (2.82 Hz), E-duty 0.22
+RG_l: cycles in window 28, period 0.35 s (2.82 Hz), E-duty 0.22
+peak ctrl: [0.48 0.79 0.87 0.7  0.41 0.31 0.71 0.42 0.41 0.09 0.48 0.79 0.87 0.64
+ 0.41 0.31 0.64 0.42 0.41 0.09] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r        -20.5 ..    29.5 deg
+  knee_angle_r         -83.2 ..    12.0 deg
+  ankle_angle_r        -65.5 ..    14.7 deg
+  hip_adduction_r       -2.7 ..    10.2 deg
+  subtalar_angle_r      -1.5 ..    18.9 deg
+  hip_flexion_l        -39.7 ..    17.5 deg
+  knee_angle_l         -95.0 ..    12.1 deg
+  ankle_angle_l        -70.3 ..    11.1 deg
+  hip_adduction_l       -7.9 ..     9.9 deg
+  subtalar_angle_l      -2.1 ..    23.1 deg
+  pelvis_tilt           -1.9 ..     0.2 deg
+  pelvis_list           -0.5 ..    -0.3 deg
+  pelvis_rotation        2.3 ..     2.5 deg
+saved spinal_run.npz
+(plot skipped: [Errno 22] Invalid argument: 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run.png')
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+t=  1.00 max|qacc|=      87.5 max|qvel|=   2.58 ncon=  0 com_z=0.930 com_x=-0.115
+t=  1.50 max|qacc|=      36.0 max|qvel|=   0.77 ncon=  0 com_z=0.929 com_x=-0.127
+t=  2.00 max|qacc|=      43.8 max|qvel|=   1.07 ncon=  0 com_z=0.932 com_x=-0.125
+t=  2.50 max|qacc|=      33.1 max|qvel|=   0.60 ncon=  0 com_z=0.929 com_x=-0.131
+t=  3.00 max|qacc|=      63.9 max|qvel|=   0.95 ncon=  0 com_z=0.930 com_x=-0.129
+t=  3.50 max|qacc|=      50.6 max|qvel|=   3.63 ncon=  0 com_z=0.932 com_x=-0.138
+t=  4.00 max|qacc|=     125.8 max|qvel|=   4.68 ncon=  0 com_z=0.934 com_x=-0.146
+t=  4.50 max|qacc|=      75.6 max|qvel|=   7.33 ncon=  0 com_z=0.934 com_x=-0.102
+t=  5.00 max|qacc|=      64.1 max|qvel|=   7.70 ncon=  0 com_z=0.937 com_x=-0.130
+t=  5.50 max|qacc|=      72.8 max|qvel|=   8.73 ncon=  0 com_z=0.931 com_x=-0.117
+t=  6.00 max|qacc|=     123.5 max|qvel|=   7.61 ncon=  0 com_z=0.929 com_x=-0.112
+t=  6.50 max|qacc|=     200.0 max|qvel|=   4.20 ncon=  0 com_z=0.933 com_x=-0.137
+t=  7.00 max|qacc|=     281.0 max|qvel|=   4.46 ncon=  0 com_z=0.927 com_x=-0.103
+t=  7.50 max|qacc|=     181.7 max|qvel|=  10.65 ncon=  0 com_z=0.931 com_x=-0.127
+t=  8.00 max|qacc|=     361.2 max|qvel|=  12.17 ncon=  0 com_z=0.926 com_x=-0.096
+t=  8.50 max|qacc|=      95.5 max|qvel|=  11.71 ncon=  0 com_z=0.933 com_x=-0.106
+t=  9.00 max|qacc|=      82.4 max|qvel|=  10.05 ncon=  0 com_z=0.939 com_x=-0.097
+t=  9.50 max|qacc|=      87.1 max|qvel|=   8.65 ncon=  0 com_z=0.926 com_x=-0.104
+t= 10.00 max|qacc|=     111.0 max|qvel|=   7.11 ncon=  0 com_z=0.924 com_x=-0.104
+t= 10.50 max|qacc|=     299.2 max|qvel|=  12.54 ncon=  0 com_z=0.932 com_x=-0.118
+t= 11.00 max|qacc|=      95.6 max|qvel|=  11.97 ncon=  0 com_z=0.932 com_x=-0.090
+t= 11.50 max|qacc|=      85.7 max|qvel|=   9.60 ncon=  0 com_z=0.942 com_x=-0.103
+t= 12.00 max|qacc|=     222.1 max|qvel|=   5.94 ncon=  0 com_z=0.948 com_x=-0.095
+t= 12.50 max|qacc|=      94.6 max|qvel|=   8.49 ncon=  0 com_z=0.930 com_x=-0.100
+t= 13.00 max|qacc|=     270.8 max|qvel|=  10.88 ncon=  0 com_z=0.923 com_x=-0.095
+t= 13.50 max|qacc|=     107.9 max|qvel|=  11.39 ncon=  0 com_z=0.939 com_x=-0.111
+t= 14.00 max|qacc|=     104.1 max|qvel|=   9.27 ncon=  0 com_z=0.941 com_x=-0.089
+t= 14.50 max|qacc|=     237.1 max|qvel|=   5.33 ncon=  0 com_z=0.951 com_x=-0.098
+t= 15.00 max|qacc|=     743.8 max|qvel|=   4.11 ncon=  0 com_z=0.948 com_x=-0.100
+t= 15.50 max|qacc|=      82.0 max|qvel|=   5.00 ncon=  0 com_z=0.925 com_x=-0.098
+t= 16.00 max|qacc|=      20.0 max|qvel|=   8.27 ncon=  0 com_z=0.928 com_x=-0.120
+t= 16.50 max|qacc|=     181.1 max|qvel|=   4.59 ncon=  0 com_z=0.929 com_x=-0.119
+t= 17.00 max|qacc|=      96.7 max|qvel|=   5.13 ncon=  0 com_z=0.932 com_x=-0.130
+t= 17.50 max|qacc|=      51.3 max|qvel|=   1.11 ncon=  0 com_z=0.930 com_x=-0.120
+t= 18.00 max|qacc|=      50.9 max|qvel|=   1.50 ncon=  0 com_z=0.931 com_x=-0.134
+t= 18.50 max|qacc|=      64.1 max|qvel|=   0.88 ncon=  0 com_z=0.928 com_x=-0.130
+t= 19.00 max|qacc|=      82.9 max|qvel|=   0.65 ncon=  0 com_z=0.931 com_x=-0.126
+t= 19.50 max|qacc|=      55.9 max|qvel|=   0.42 ncon=  0 com_z=0.930 com_x=-0.133
+t= 20.00 max|qacc|=      52.2 max|qvel|=   0.68 ncon=  0 com_z=0.930 com_x=-0.128
+t= 20.50 max|qacc|=     118.3 max|qvel|=   1.12 ncon=  0 com_z=0.930 com_x=-0.129
+t= 21.00 max|qacc|=      60.0 max|qvel|=   0.97 ncon=  0 com_z=0.930 com_x=-0.132
+t= 21.50 max|qacc|=      38.5 max|qvel|=   0.61 ncon=  0 com_z=0.929 com_x=-0.127
+t= 22.00 max|qacc|=      85.4 max|qvel|=   1.16 ncon=  0 com_z=0.930 com_x=-0.131
+t= 22.50 max|qacc|=      47.3 max|qvel|=   1.02 ncon=  0 com_z=0.929 com_x=-0.130
+t= 23.00 max|qacc|=      71.1 max|qvel|=   1.14 ncon=  0 com_z=0.930 com_x=-0.128
+t= 23.50 max|qacc|=      51.1 max|qvel|=   0.89 ncon=  0 com_z=0.930 com_x=-0.131
+t= 24.00 max|qacc|=      67.7 max|qvel|=   0.94 ncon=  0 com_z=0.929 com_x=-0.129
+t= 24.50 max|qacc|=      74.8 max|qvel|=   0.82 ncon=  0 com_z=0.930 com_x=-0.129
+t= 25.00 max|qacc|=      42.5 max|qvel|=   0.84 ncon=  0 com_z=0.930 com_x=-0.131
+t= 25.50 max|qacc|=      43.6 max|qvel|=   0.81 ncon=  0 com_z=0.930 com_x=-0.129
+t= 26.00 max|qacc|=     103.4 max|qvel|=   1.11 ncon=  0 com_z=0.930 com_x=-0.130
+t= 26.50 max|qacc|=      61.3 max|qvel|=   1.27 ncon=  0 com_z=0.930 com_x=-0.130
+t= 27.00 max|qacc|=      47.2 max|qvel|=   0.81 ncon=  0 com_z=0.930 com_x=-0.129
+t= 27.50 max|qacc|=      33.1 max|qvel|=   0.86 ncon=  0 com_z=0.930 com_x=-0.130
+t= 28.00 max|qacc|=      69.5 max|qvel|=   0.81 ncon=  0 com_z=0.930 com_x=-0.129
+t= 28.50 max|qacc|=      43.6 max|qvel|=   0.64 ncon=  0 com_z=0.930 com_x=-0.130
+t= 29.00 max|qacc|=      46.3 max|qvel|=   0.88 ncon=  0 com_z=0.930 com_x=-0.130
+t= 29.50 max|qacc|=      57.3 max|qvel|=   1.19 ncon=  0 com_z=0.930 com_x=-0.129
+t= 30.00 max|qacc|=     104.4 max|qvel|=   1.18 ncon=  0 com_z=0.930 com_x=-0.130
+t= 30.50 max|qacc|=      42.6 max|qvel|=   0.72 ncon=  0 com_z=0.930 com_x=-0.130
+t= 31.00 max|qacc|=      40.6 max|qvel|=   0.74 ncon=  0 com_z=0.930 com_x=-0.129
+t= 31.50 max|qacc|=     105.4 max|qvel|=   0.93 ncon=  0 com_z=0.930 com_x=-0.130
+t= 32.00 max|qacc|=      61.0 max|qvel|=   0.56 ncon=  0 com_z=0.930 com_x=-0.130
+t= 32.50 max|qacc|=     110.3 max|qvel|=   1.05 ncon=  0 com_z=0.930 com_x=-0.130
+t= 33.00 max|qacc|=      56.1 max|qvel|=   0.78 ncon=  0 com_z=0.930 com_x=-0.129
+t= 33.50 max|qacc|=      36.7 max|qvel|=   0.84 ncon=  0 com_z=0.930 com_x=-0.129
+t= 34.00 max|qacc|=      63.5 max|qvel|=   0.83 ncon=  0 com_z=0.930 com_x=-0.130
+t= 34.50 max|qacc|=      41.7 max|qvel|=   0.91 ncon=  0 com_z=0.930 com_x=-0.130
+t= 35.00 max|qacc|=      74.1 max|qvel|=   0.83 ncon=  0 com_z=0.930 com_x=-0.130
+t= 35.50 max|qacc|=      41.7 max|qvel|=   1.25 ncon=  0 com_z=0.930 com_x=-0.130
+t= 36.00 max|qacc|=      84.6 max|qvel|=   0.80 ncon=  0 com_z=0.930 com_x=-0.130
+t= 36.50 max|qacc|=      90.0 max|qvel|=   1.14 ncon=  0 com_z=0.930 com_x=-0.130
+
+== summary ==
+pelvis/COM height: start 0.94 m, min 0.92 m, final 0.93 m  (stayed up)
+COM x: min -0.15 max -0.08 final -0.13 m
+COM y: min -0.021 max -0.001 m
+RG_F_r bursts during walk window: 39
+RG_r: cycles in window 37, period 0.27 s (3.64 Hz), E-duty 0.27
+RG_l: cycles in window 37, period 0.27 s (3.64 Hz), E-duty 0.27
+peak ctrl: [0.49 0.8  0.87 0.71 0.42 0.32 0.72 0.45 0.42 0.09 0.49 0.8  0.87 0.69
+ 0.42 0.32 0.64 0.45 0.42 0.09] (('vas_lat_r', 'med_gas_r', 'soleus_r', 'tib_ant_r', 'psoas_r', 'semimem_r', 'glut_max2_r', 'rect_fem_r', 'sar_r', 'grac_r', 'vas_lat_l', 'med_gas_l', 'soleus_l', 'tib_ant_l', 'psoas_l', 'semimem_l', 'glut_max2_l', 'rect_fem_l', 'sar_l', 'grac_l'))
+  hip_flexion_r        -27.2 ..    32.3 deg
+  knee_angle_r         -91.3 ..    13.3 deg
+  ankle_angle_r        -67.2 ..    14.3 deg
+  hip_adduction_r       -4.4 ..    14.9 deg
+  subtalar_angle_r      -3.4 ..    17.0 deg
+  hip_flexion_l        -39.0 ..    21.3 deg
+  knee_angle_l         -97.1 ..    13.8 deg
+  ankle_angle_l        -71.4 ..    10.2 deg
+  hip_adduction_l       -8.1 ..    14.6 deg
+  subtalar_angle_l      -2.8 ..    23.6 deg
+  pelvis_tilt           -1.9 ..     0.2 deg
+  pelvis_list           -0.5 ..    -0.2 deg
+  pelvis_rotation        2.3 ..     2.5 deg
+saved spinal_run.npz
+(plot skipped: [Errno 22] Invalid argument: 'D:\\Github\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\spinal_run.png')
+== spiking stage 2 best 165.639 (trial 11)
+{
+ "drive": 3.0293649136293297,
+ "rg_nap_h": 0.6689689406578545,
+ "desc_e": 1.4273279625487754,
+ "desc_f": 1.9237036125594713,
+ "rg_to_pf": 1.9716763397450265,
+ "heel_rge": 0.07803297885458334,
+ "toe_rge": 0.04378474549556781,
+ "ib_e_central": 0.017290097867323995,
+ "ia_f_central": 0.23332168208111354,
+ "ii_f_central": 0.05143065786182781,
+ "ii_e_central": 0.04200461063098272,
+ "c1_gain": 0.6912756911513525,
+ "v3_gain": 0.030590067045530626
+}
+saved curriculum_spiking_stage2.json
