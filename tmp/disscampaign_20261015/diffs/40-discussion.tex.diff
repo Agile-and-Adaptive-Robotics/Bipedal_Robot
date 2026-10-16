@@ -1,0 +1,16 @@
+diff --git "a/D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\40-discussion.tex" "b/D:\\Github\\Bipedal_Robot\\tmp\\disscampaign_20261015\\overleaf_pull\\chapters\\40-discussion.tex"
+index 860ed58c..a3a202c1 100644
+--- "a/D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\40-discussion.tex"	
++++ "b/D:\\Github\\Bipedal_Robot\\tmp\\disscampaign_20261015\\overleaf_pull\\chapters\\40-discussion.tex"
+@@ -1,5 +1,5 @@
+ \chapter{Discussion}\label{ch:discussion}
+-\graphicspath{{../Figures/40-discussion/}}
++\graphicspath{{figs/40-discussion/}}
+ 
+ {\doublespacing\normalsize\upshape
+ \noindent Publication note: Sections~\ref{sec:disc_effects}--\ref{sec:disc_bio} and the associated figures and tables appeared in \citet{bolen_2026} (Bolen, Elzein, Pang, and Hunt, \emph{Actuators}, 2026). Section~\ref{sec:disc_error} is also the subject of an unpublished manuscript in preparation by Bolen, Burgess, Morrow, Elzein, Pang, Scharzenberger, and Hunt \citep{bolen_isometric_2025}. This manuscript has not been submitted for publication. Author contributions for both works are stated in Chapter~\ref{ch:methods}.\par}
+@@ -167,3 +167,4 @@ The route redesign of Section~\ref{sec:ongoing} placed both \qty{20}{\mm} actuat
+ % FLAG-BEN 2026-10-03: PENDING torque-test results for the updated compliant system (the physical redesigns returned by Opt_run.m / Opt_run_Ext.m under the adopted correction terms of Section~\ref{sec:ongoing}). The pending claim is NOT stated as fact anywhere in this chapter. TODO(Ben): replace the bracketed placeholder below with the measured torque-versus-angle numbers (flexor and extensor, worst-margin angles, pressures) once the runs land, then delete this comment pair.
+ \noindent\textit{[FLAG-BEN, PENDING TORQUE-TEST RESULTS: Once the pending torque-test runs land, this paragraph will state that the updated compliant system lets \texttt{Opt\_run} and \texttt{Opt\_run\_Ext} meet or exceed human torque magnitude, and it will report the measured torque-versus-angle results for the redesigned flexor and extensor routes. TODO(Ben): insert the measured numbers.]}
+ % [ZCODE 2026-10-03 Pulley-route discussion + FLAG-BEN torque-test placeholder END]
++

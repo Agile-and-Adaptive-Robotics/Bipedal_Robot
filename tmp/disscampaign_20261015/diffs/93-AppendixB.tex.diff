@@ -1,0 +1,17 @@
+diff --git "a/D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\93-AppendixB.tex" "b/D:\\Github\\Bipedal_Robot\\tmp\\disscampaign_20261015\\overleaf_pull\\chapters\\93-AppendixB.tex"
+index 8216e314..d4098dc9 100644
+--- "a/D:\\Github\\Bipedal_Robot\\Documentation\\Reports and Papers\\Dissertation\\ProofFinal\\chapters\\93-AppendixB.tex"	
++++ "b/D:\\Github\\Bipedal_Robot\\tmp\\disscampaign_20261015\\overleaf_pull\\chapters\\93-AppendixB.tex"
+@@ -1,5 +1,5 @@
+ \chapter{Appendix B: Neuron Model Equations}\label{app:neuron_equations}
+-\graphicspath{{../Figures/93-AppendixB/}}
++\graphicspath{{figs/93-AppendixB/}}
+ 
+ This appendix documents the neuron and synapse models used by the synthetic nervous systems in this project, both in the AnimatLab walker model and in the SNS-Toolbox implementation of the MuJoCo pipeline (Chapter~\ref{ch:futurework}). The authoritative model state is the working AnimatLab project file (\texttt{Biped\_2xCPG\_wSubs/Biped\_2xCPG\_wSubs.aproj}); after the network reorganization described in Section~\ref{sec:preliminary_sim_methods}, a fresh standalone export (\texttt{Biped\_2xCPG\_wSubs\_Standalone.asim}) runs headless and carries the rhythm-generator charts, and the earlier phase-1 instrumented export (\texttt{walk new new tester added 2 axis\_phase1.asim}) records the run reported in Section~\ref{sec:preliminary_sim_results}.
+ 
+@@ -216,3 +216,5 @@ Figure~\ref{fig:app_circuit_full} draws both legs in full. A vertical dashed mid
+ \caption[One-side hierarchy of the gait2392 spinal network]{One-side hierarchy of the same gait2392 spinal network: descending DRIVE (MLR surrogate) and POSTURE inputs, the solved standing bias injected as dashed lines into every motoneuron pool, the persistent-sodium rhythm-generator half-centers, the phase-window pattern-formation cells, the Ia, II, and Ib afferent column, and the motoneuron pools (46 per leg) projecting to their muscles. A boxed key lists every pool abbreviation with its member muscles.}
+ \label{fig:app_circuit_core}
+ \end{figure}
++
++
