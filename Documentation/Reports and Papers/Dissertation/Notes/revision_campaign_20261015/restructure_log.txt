@@ -1,0 +1,105 @@
+HOSTNAME: EB475WS4
+Python: 3.10.21
+
+donor lengths (lines): methods=519 results=598 discussion=169 futurework=58 conclusion=11 background=186
+
+=== CONSERVATION CHECK (non-blank line multiset) ===
+donor content lines: 951 ; target lines: 985
+MISSING (donor lines that landed nowhere): 4
+  MISSING> Before the simulation pipeline of Chapter~\ref{ch:futurework} was defined, the author and Morrow built a neuromechanical model of a bipedal walker in AnimatLab,
+  MISSING> The biomechanical model consisted of nine rigid bodies --- pelvis, thigh, shank, foot, and toe segments --- connected by sagittal-plane hinge joints with human-
+  MISSING> The synthetic nervous network was built from non-spiking, leaky-integrator neurons and followed the two-layer CPG organization of \citet{deng_neuromechanical_20
+  MISSING> \section{Prior Neuromechanical Simulation: The AnimatLab Bipedal Walker}\label{sec:prior_walker}
+ADDED (new skeleton/header/note lines): 38
+
+=== LABEL CHECK ===
+labels lost: 4 ['ch:discussion', 'ch:futurework', 'ch:methods', 'ch:results']
+labels added: 6 ['ch:ankle', 'ch:database', 'ch:muscles', 'ch:overall', 'ch:sns', 'ch:torque']
+deleted chapters/20-methods.tex
+deleted chapters/30-results.tex
+deleted chapters/40-discussion.tex
+deleted chapters/50-futurework.tex
+deleted chapters/60-conclusion.tex
+main.tex include order updated
+
+=== FIGURE MOVES ===
+fig-move: Figures/30-results/02a_MaxForce10.eps -> Figures/20-muscles/02a_MaxForce10.eps
+fig-move: Figures/30-results/02a_MaxForce10-eps-converted-to.pdf -> Figures/20-muscles/02a_MaxForce10-eps-converted-to.pdf
+fig-move: Figures/30-results/02b_MaxForce20.eps -> Figures/20-muscles/02b_MaxForce20.eps
+fig-move: Figures/30-results/02b_MaxForce20-eps-converted-to.pdf -> Figures/20-muscles/02b_MaxForce20-eps-converted-to.pdf
+fig-move: Figures/30-results/03a_MaxForce10_all.eps -> Figures/20-muscles/03a_MaxForce10_all.eps
+fig-move: Figures/30-results/03a_MaxForce10_all-eps-converted-to.pdf -> Figures/20-muscles/03a_MaxForce10_all-eps-converted-to.pdf
+fig-move: Figures/30-results/03b_kmax10.eps -> Figures/20-muscles/03b_kmax10.eps
+fig-move: Figures/30-results/03b_kmax10-eps-converted-to.pdf -> Figures/20-muscles/03b_kmax10-eps-converted-to.pdf
+fig-move: Figures/30-results/04a_FStar10.eps -> Figures/20-muscles/04a_FStar10.eps
+fig-move: Figures/30-results/04a_FStar10-eps-converted-to.pdf -> Figures/20-muscles/04a_FStar10-eps-converted-to.pdf
+fig-move: Figures/30-results/04b_FStar20.eps -> Figures/20-muscles/04b_FStar20.eps
+fig-move: Figures/30-results/04b_FStar20-eps-converted-to.pdf -> Figures/20-muscles/04b_FStar20-eps-converted-to.pdf
+fig-move: Figures/40-discussion/05_Comparison.eps -> Figures/20-muscles/05_Comparison.eps
+fig-move: Figures/40-discussion/05_Comparison-eps-converted-to.pdf -> Figures/20-muscles/05_Comparison-eps-converted-to.pdf
+fig-move: Figures/20-methods/01_testJigs1.pdf -> Figures/20-muscles/01_testJigs1.pdf
+fig-move: Figures/30-results/Deprecated/02_Fmax_fit.eps -> Figures/20-muscles/Deprecated/02_Fmax_fit.eps
+fig-move: Figures/30-results/Deprecated/03_F-P_contraction.eps -> Figures/20-muscles/Deprecated/03_F-P_contraction.eps
+fig-move: Figures/30-results/Deprecated/04_GeneralizedForceFit.eps -> Figures/20-muscles/Deprecated/04_GeneralizedForceFit.eps
+fig-move: Figures/20-methods/testJigs_reviewed.pdf -> Figures/30-torque/testJigs_reviewed.pdf
+fig-move: Figures/20-methods/KneeICR.eps -> Figures/30-torque/KneeICR.eps
+fig-move: Figures/20-methods/KneeICR-eps-converted-to.pdf -> Figures/30-torque/KneeICR-eps-converted-to.pdf
+fig-move: Figures/20-methods/bktFrame.pdf -> Figures/30-torque/bktFrame.pdf
+fig-move: Figures/20-methods/xiFrameTransform.pdf -> Figures/30-torque/xiFrameTransform.pdf
+fig-move: Figures/20-methods/xiFrameTransform.png -> Figures/30-torque/xiFrameTransform.png
+fig-move: Figures/20-methods/xiProjection.pdf -> Figures/30-torque/xiProjection.pdf
+fig-move: Figures/20-methods/xiProjection.png -> Figures/30-torque/xiProjection.png
+fig-move: Figures/20-methods/xiProjection.svg -> Figures/30-torque/xiProjection.svg
+fig-move: Figures/20-methods/xiProjection.pptx -> Figures/30-torque/xiProjection.pptx
+fig-move: Figures/30-results/FlxPin_group.eps -> Figures/30-torque/FlxPin_group.eps
+fig-move: Figures/30-results/FlxPin_group-eps-converted-to.pdf -> Figures/30-torque/FlxPin_group-eps-converted-to.pdf
+fig-move: Figures/30-results/ExtPin_group.eps -> Figures/30-torque/ExtPin_group.eps
+fig-move: Figures/30-results/ExtPin_group-eps-converted-to.pdf -> Figures/30-torque/ExtPin_group-eps-converted-to.pdf
+fig-move: Figures/30-results/Ext10mm_52cm.eps -> Figures/30-torque/Ext10mm_52cm.eps
+fig-move: Figures/30-results/Ext10mm_52cm-eps-converted-to.pdf -> Figures/30-torque/Ext10mm_52cm-eps-converted-to.pdf
+fig-move: Figures/30-results/FlxGrp.eps -> Figures/30-torque/FlxGrp.eps
+fig-move: Figures/30-results/FlxGrp-eps-converted-to.pdf -> Figures/30-torque/FlxGrp-eps-converted-to.pdf
+fig-move: Figures/30-results/KneeExt_10mm_passthru.png -> Figures/30-torque/KneeExt_10mm_passthru.png
+fig-move: Figures/20-methods/Deprecated/testJigs.pdf -> Figures/30-torque/Deprecated/testJigs.pdf
+fig-move: Figures/20-methods/Deprecated/testJigs_alternate1.pdf -> Figures/30-torque/Deprecated/testJigs_alternate1.pdf
+fig-move: Figures/30-results/Deprecated/paired_coefficient_tables_2026-09-29.jpg -> Figures/30-torque/Deprecated/paired_coefficient_tables_2026-09-29.jpg
+fig-move: Figures/20-methods/inverted_pendulum_photo.jpg -> Figures/40-ankle/inverted_pendulum_photo.jpg
+fig-move: Figures/20-methods/animatlab_body_gui.png -> Figures/60-sns/animatlab_body_gui.png
+fig-move: Figures/20-methods/animatlab_network_gui.png -> Figures/60-sns/animatlab_network_gui.png
+fig-move: Figures/20-methods/mujoco_converted_robot.png -> Figures/60-sns/mujoco_converted_robot.png
+fig-move: Figures/20-methods/mujoco_synthetic_knee.png -> Figures/60-sns/mujoco_synthetic_knee.png
+fig-move: Figures/20-methods/simulink_knee_reflex_arranged.png -> Figures/60-sns/simulink_knee_reflex_arranged.png
+fig-move: Figures/20-methods/simulink_knee_reflex_arranged.pdf -> Figures/60-sns/simulink_knee_reflex_arranged.pdf
+fig-move: Figures/20-methods/simulink_neuron_detail.png -> Figures/60-sns/simulink_neuron_detail.png
+fig-move: Figures/20-methods/simulink_neuron_detail.pdf -> Figures/60-sns/simulink_neuron_detail.pdf
+fig-move: Figures/20-methods/simulink_sns_library_grid.png -> Figures/60-sns/simulink_sns_library_grid.png
+fig-move: Figures/20-methods/simulink_sns_library_grid.pdf -> Figures/60-sns/simulink_sns_library_grid.pdf
+fig-move: Figures/20-methods/mujoco_render_provenance.json -> Figures/60-sns/mujoco_render_provenance.json
+fig-move: Figures/20-methods/AnimatLab_reference -> Figures/60-sns/AnimatLab_reference (whole subfolder)
+fig-move: Figures/20-methods/Deprecated/simulink_knee_reflex.pdf -> Figures/60-sns/Deprecated/simulink_knee_reflex.pdf
+fig-move: Figures/20-methods/Deprecated/simulink_knee_reflex.png -> Figures/60-sns/Deprecated/simulink_knee_reflex.png
+fig-move: Figures/20-methods/Deprecated/simulink_sns_library.pdf -> Figures/60-sns/Deprecated/simulink_sns_library.pdf
+fig-move: Figures/20-methods/Deprecated/simulink_sns_library.png -> Figures/60-sns/Deprecated/simulink_sns_library.png
+fig-move: Figures/30-results/Deprecated/animatlab_phase1_preliminary.pdf -> Figures/60-sns/Deprecated/animatlab_phase1_preliminary.pdf
+fig-move: Figures/30-results/animatlab_phase1_joint_angles.pdf -> Figures/60-sns/animatlab_phase1_joint_angles.pdf
+fig-move: Figures/30-results/sns_w2l_traces.png -> Figures/60-sns/sns_w2l_traces.png
+fig-move: Figures/30-results/spiking_mirror_rhythm.pdf -> Figures/60-sns/spiking_mirror_rhythm.pdf
+fig-move: Figures/30-results/spiking_mirror_rhythm.png -> Figures/60-sns/spiking_mirror_rhythm.png
+fig-move: Figures/30-results/spiking_mirror_rhythm_alt.txt -> Figures/60-sns/spiking_mirror_rhythm_alt.txt
+fig-move: Figures/30-results/spiking_mirror_ground_gait.pdf -> Figures/60-sns/spiking_mirror_ground_gait.pdf
+fig-move: Figures/30-results/spiking_mirror_ground_gait.png -> Figures/60-sns/spiking_mirror_ground_gait.png
+fig-move: Figures/30-results/spiking_mirror_ground_gait_alt.txt -> Figures/60-sns/spiking_mirror_ground_gait_alt.txt
+fig-move: Figures/30-results/simulink_knee_spiking_twin.pdf -> Figures/60-sns/simulink_knee_spiking_twin.pdf
+fig-move: Figures/30-results/simulink_knee_spiking_twin.png -> Figures/60-sns/simulink_knee_spiking_twin.png
+fig-move: Figures/30-results/simulink_knee_spiking_twin_alt.txt -> Figures/60-sns/simulink_knee_spiking_twin_alt.txt
+fig-move: Figures/30-results/CPG_airstepping_figs -> Figures/60-sns/CPG_airstepping_figs (whole subfolder, unreferenced by ProofFinal)
+fig-dir created: Figures/50-database (empty; skeleton chapter)
+fig-dir created: Figures/70-overall (empty; skeleton chapter)
+fig-dir created: Figures/80-conclusion (empty; skeleton chapter)
+removed emptied folder: Figures/20-methods
+removed emptied folder: Figures/30-results
+removed emptied folder: Figures/40-discussion
+removed emptied folder: Figures/50-futurework
+removed emptied folder: Figures/60-conclusion
+
+=== DONE ===
