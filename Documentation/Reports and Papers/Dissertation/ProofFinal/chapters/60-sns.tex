@@ -1,5 +1,5 @@
 \chapter{Synthetic Nervous System Simulation}\label{ch:sns}
-\graphicspath{{../Figures/60-sns/}{../Figures/60-sns/AnimatLab_reference/}}
+\graphicspath{{../Figures/60-sns/}{figs/60-sns/}{../Figures/60-sns/AnimatLab_reference/}{figs/60-sns/AnimatLab_reference/}}
 
 The preceding chapters validate the robot's mechanics: a force model for the braided pneumatic actuators (Chapter~\ref{ch:muscles}) and a corrected model of the joint torque those actuators deliver through the biomimetic knee (Chapter~\ref{ch:torque}). This chapter builds the other half of the neuromechanical system, the controller, together with the simulation pipeline required to develop it. The controller is a synthetic nervous system (SNS): a network of conductance-based neuron and synapse models whose organization follows the mammalian spinal cord \citep{rybak_modelling_2006, mccrea_organization_2008, deng_neuromechanical_2019}. The networks are not trained in the machine-learning sense; their parameters are set from physiological data and then tuned against explicit verification tests, which is what keeps the circuits interpretable: every neuron corresponds to an identifiable cell class, so the simulated system supports lesion, stimulation, and sensory-deletion experiments that cannot be performed on living subjects (Section~\ref{sec:bg_ethics}).
 

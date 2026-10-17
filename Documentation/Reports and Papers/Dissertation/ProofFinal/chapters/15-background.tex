@@ -1,5 +1,5 @@
 \chapter{Background}\label{ch:background}
-\graphicspath{{../Figures/15-background/}}
+\graphicspath{{../Figures/15-background/}{figs/15-background/}}
 
 This chapter reviews the established knowledge against which the dissertation's contributions are defined: biomimetic and musculoskeletal robotics, the actuation technologies available to them, the human lower-limb biomechanics they imitate, the neuroscience of locomotor control they implement, and the simulation and ethical context in which they are tested. Work from the author's own program that goes beyond this background, including the prior AnimatLab bipedal walker, the Sensory Afferent Database, and the neuromechanical simulation pipeline, is presented as dissertation work in Chapters~\ref{ch:database} and~\ref{ch:sns} rather than repeated here.
 
@@ -94,6 +94,17 @@ $k_{E}$ & \qty{0.331e-3}{\per\newton} & force-dependent reduction of usable cont
 \end{table}
 
 Festo provides a manufacturer tool, MuscleSIM, for predicting force as a function of pressure and contraction \citep{lang_robert_musclesim_2005}, but experimental comparisons indicate that it does not adequately account for variation in $l_0$ or actuator-specific contraction limits. Comparisons with experimental data indicate that none of the existing models effectively take into account differences in maximum force due to initial actuator length, and the Hunt model was taken with low external forces ($\leq$\qty{106}{\newton}), so it is unclear how well it captures actuator behavior at higher forces. Chapter~\ref{ch:muscles} compares these models with data collected for this dissertation and develops the improved characterization on which the torque and controller work of the later chapters depends.
+
+Figure~\ref{fig:bpa_graphical_abstract} summarizes the force-characterization workflow developed in this dissertation.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{00_GraphicalAbstract.png}
+% ALT TEXT: A graphical overview connects biological muscle inspiration and a
+% laboratory BPA test apparatus to measured force data and fitted force surfaces.
+\caption[Overview of the BPA force-characterization study]{Overview of the BPA force-characterization study. Biological-muscle inspiration and the laboratory test apparatus lead to measured force--length--pressure data and fitted force surfaces used for actuator and robot design.}
+\label{fig:bpa_graphical_abstract}
+\end{figure}
 
 \section{Human Lower-Limb Biomechanics}\label{sec:bg_biomechanics}
 
