@@ -1,0 +1,537 @@
+1
+Isometric Torque Values About Robotic Knee
+Using Braided Pneumatic Actuators
+Ben Bolen 1,∗, Lindie Burgess 1, Connor Morrow 1, Lawrence Pang 1, Cody
+Scharzenberger 1, and Alex Hunt 1
+1Agile and Adaptive Robotics Laboratory , Portland State University , Department of
+Mechanical and Materials Engineering, Portland, OR, USA
+Correspondence*:
+Ben Bolen
+Portland State University, Department of Mechanical and Materials Engineering, PO
+Box 751, Portland, OR, 97207-0751, USA
+bbolen83@gmail.com
+ABSTRACT2
+Artificial muscles such as braided pnuematic actuators (BPAs) offer many advantages for robotic3
+systems, including high durability and and strength-to-weight ratios. However, their use in robotic4
+systems are still extremely limited, in part due to their poor characterization, especially with regard5
+to their force and length capabilities. In this work, test setups are created to compare forces6
+and torques produced by Festo fluidic braided pneumatic actuators (BPAs) with leading models.7
+The muscle force setup consists of linear force recordings while the robotic system consists of a8
+lower limb model of a bipedal humanoid robot that was designed to achieve biomimetic ranges of9
+motion and isometric torque values. Predicted torque values based on developed models are10
+compared with recorded torque data to determine the major sources of error in current modeling11
+tools. Our analysis of the data has resulted in the development of new equations to calculate force12
+as functions of pressure and strain for muscles with diameters of 10 mm and 20 mm. We have13
+also developed a novel equation for maximum force in the 10 mm diameter BPA as a function14
+of resting length. The improved force calculations reduced the difference between measured15
+and calculated torque in the robot, but are unable to explain all the discrepancies. An improved16
+model is better able to match the experimental data by including a series spring element in the17
+BPA model. Finally, we show that a properly sized BPA can be used to meet or exceed human18
+isometric knee torque values. This work demonstrates a greatly improved model that is better able19
+to predict joint torques produced by Festo BPAs on biomimetic designs. This will lead to faster20
+design processes and the development of biomimetic robots that are able to more accurately21
+reproduce the range of motion and isometric torque profiles that exist in the animals they are22
+mimicking.23
+Keywords: BPA, Biomimetic, Function Fit, PAM, Artificial Muscle, Bioinspired, Bipedal Robot, Isometric Knee Torque24
+1 INTRODUCTION
+Both academic researchers and the general public are keenly interested in biomimetic robots due to their25
+many applications. In the discipline of biomimetic robotics, high fidelity robots can help improve our26
+understanding of both biomechanics and the underlying neuromechanical systems that control them (Shin27
+1
+Bolen et al. Torque Values About Robotic Knee
+et al., 2018; Asano et al., 2019). Experiments can be performed on robots that would not be practical or28
+ethical if done on human test subjects. Additionally, modifying robotic platforms is potentially faster and29
+cheaper than human observation studies.30
+Biomimetic robots that are built with artificial muscles provide opportunities to investigate how muscles31
+are controlled to produce desired motions. McKibben style braided pneumatic actuators (BPAs, also called32
+Pneumatic Artificial Muscles or PAMs) are a promising method of actuation because they have low weight,33
+high force/weight ratio, high efficiency, and a force-length curve that is similar to actual muscle []. [2-334
+sentences of artificial muscle robots - Asano, Hosoda, Hunt] Combining these artificial muscles with35
+muscle control schemes that have been developed using muscle models in simulation [] can allow for more36
+effective investigations of dynamic interactions with the environment than current physics simulators have37
+to offer. Unfortunately, these artificial muscles don’t fully match their biological counterpoints, and there38
+are few tools or design methodologies for BPA attachment locations on robotic systems.39
+Our previous research has worked to bridge this gap through the development of better models and muscle40
+placement algorithms. We developed a more accurate force-pressure-length model ofϕ10 mm Festo BPAs41
+that incorporates changes that arise from different initial lengths (Hunt et al., 2017). We also investigated42
+how the location of muscle attachments affects the torque capabilities of each muscle and compared these43
+capabilities with human data (Bolen and Hunt, 2019). We found that if artificial muscles are placed in44
+the same locations as human muscles, the robot would not be able to achieve the same range of motion45
+or torque that humans achieve. To improve the range of motion and torque produce by the muscles, we46
+developed optimization methods that find attachment locations that can produce a torque curve and range47
+of motion that match human capabilities (Morrow et al., 2020). However, these methods had not been48
+validated on a physical robot body.49
+Deviation between calculated and measured joint torques could occur through several mechanisms. Festo50
+reports that there can be a 10% deviation from theoretical force due to manufacturing differences ((Festo,51
+2022)), and it is unclear how well the previous model (Hunt et al., 2017) holds true at high forces. Bending52
+and kinking of the artificial muscle as it wraps around a joint will also reduce the force produced by the53
+muscle. Joint friction can cause a decrease in torque, as can non-rigid elements of the artificial leg. For54
+these reasons we also hypothesize that the experimentally measured torque values will be lower than what55
+is predicted by our theoretical model, and correction factors will need to be incorporated in the modeling56
+system.57
+This work sets out to fill in these gaps by developing a better model of maximum force produced by58
+ϕ10 mm Festo BPAs, and extending this model toϕ20 mm Festo BPAs, which are needed to produce the59
+high torques found about the human knee joint. We then built an isometric knee test stand that enables60
+us to measure the torque about the knee joint at various configurations. Data collected from the test stand61
+is compared with theoretical torque values, and used to develop an improved model that incorporates62
+loses due to compliance. We also demonstrate that the improved attachment locations produced by the63
+optimization method in previous work are able to produce torques that match or exceed human capabilities64
+across a wide range of motion.65
+Frontiers 2
+Bolen et al. Torque Values About Robotic Knee
+2 METHODS AND MATERIALS
+2.1 Overview66
+First, we built a jig to measure artificial muscle force as a function of length and pressure. We tested 1067
+mm and 20 mm muscles with various initial lengths and at different contraction lengths. This data was68
+used to develop an improved model that better predicts maximum muscle force based on initial muscle69
+length and current muscle length. We then built a jig to test the torque produced by the artificial muscles70
+about a knee joint. With the expectation that measured torque will be less than that predicted by the model,71
+the robot muscle arrangement and knee design were simplified to elucidate the variables that most effect72
+the results. Two joints were used and tested: a simplified pinned knee joint and a biomimetic 1-DoF knee73
+(Steele et al., 2018). Each joint was driven by a single flexor and single extensor muscle. We also varied74
+muscle origin/insertion locations, initial length, diameters, and whether or not they used an artificial tendon.75
+The results from these tests were compared with three virtual models: (1) the human biomechanical model,76
+(2) the conceptual robot model, and (3) the actual robot model.77
+2.2 Actuator force testing78
+A test jig was made of 80/20 1515 series extruded aluminum (Fig. XX). Artificial muscles were placed79
+vertically in the jig. The upper end was attached to an Loadstar S shaped load cell. The lower end was80
+attached to an adjustable crossbeam used to change the length of the actuator. Compressed air was supplied81
+through the building at 620 kPa (90 PSI) and measured with an MXPXXXX pressure sensor.82
+Each BPAlrest was measured as the distance between the hose clamps. This is how Festo defineslrest,83
+although in (Hunt et al., 2017) it was measured to also include end cap length.84
+We then inflated each BPA toPmax = 620 kPa and measuredϵmax. The BPAs were then deflated, placed85
+vertically in the test jig made out of 80/20 1515 series extruded aluminum pieces and fixed between two86
+crossmembers. The force sensor was placed between the upper crossmember and the BPA. For120 mm,87
+220 mm, 260 mm, 281 mm and 281 mmlrest, a Loadstar S Shaped load cell was used instead of the other88
+force sensors previously mentioned. The distance between the crossmembers was adjusted to get different89
+amounts ofϵ∗. The BPAs would then be inflated. BPAs withlrest of 120 mm, 220 mm, 260 mm, 281 mm90
+and 281 mm had a lot ofP variation, with only 4–5 different values ofϵ∗ per BPA. Conversely, BPAs with91
+lrest of 112 mm, 415 mm, 455 mm, 490 mm and 518 mm had many different values ofϵ∗ recorded, but all92
+values were taken at or nearPmax.F andP data are collected as described in a previous subsection, above.93
+2.3 Robot Architecture94
+Components of the robot leg are the knee joint, femur, tibia, BPAs, BPA end caps, artificial tendon,95
+and attachment brackets (Fig. 1). The artificial bone components are 3D printed using Onyx material on96
+Markforged Onyx One and Mark Two printers. Onyx is a proprietary Markforged material that consists97
+of chopped carbon fiber in nylon. Certain brackets also included carbon fiber layers to increase stiffness.98
+Artificial tendon is made with Shimano bicycle brake cable for ϕ10 mm BPAs, and wire rope with the99
+ϕ20 mm and ϕ40 mm BPAs. When using the brake cable we first apply load to it and induce plastic100
+deformation so that during the test the cable only has elastic deformation.101
+One uniarticular knee extensor and one uniarticular knee flexor are used to actuate the joint. Each knee102
+knee joint type is tested usingϕ10 mm Festo BPAs. Additionally, for the biomimetic knee joint, the biceps103
+femoris short head muscle was mimicked using aϕ20 mm Festo BPA, and the vasti muscles are mimicked104
+Frontiers 3
+Bolen et al. Torque Values About Robotic Knee
+Figure 1. 1-DoF pinned-joint robot knee in the test apparatus with important components labeled. Leg is
+shown with 30 degrees flexion, i.e.θk =−30°
+using oneϕ40 mm Festo BPA. The artificial muscle is pinned to the muscle origin location, while the other105
+end is either pinned or is free floating and attached to the muscle insertion location via an artificial tendon.106
+Steele designed the biomimetic robot knee used in this study (Steele et al., 2018, 2017). A 1-DoF joint107
+is achieved by using a four bar linkage mechanism. The intersection point of the crossed links define the108
+knee frame origin and ICR. This allows the joint ICR location in the femur frame (pk) to translate in the ˆx109
+and ˆy directions during knee rotation (see Figs. 1 and 2B). Having a moving ICR complicates test stand110
+construction. If the joint were of a pinned revolute design, a torque motor could have been used to measure111
+M. Translation as a function of knee angle is also how the human knee behaves.112
+The leg assembly geometry and dimensions are based off of bones scans of a 6ft tall (∼1.83 m) person.113
+Each joint is driven by two antagonistic Festo actuators that act as artificial muscles. Both joints have the114
+same location in the femur frame (pk) atθk = 0 deg as the human benchmark model. A test jig constrains115
+the robot to saggital planar motion (Fig. 2). This system has two mounting locations to fix the femur to the116
+frame. To eliminate the effect of gravity on our test results, the robot saggital plane was made parallel with117
+the horizontal plane of the ground.118
+Frontiers 4
+Bolen et al. Torque Values About Robotic Knee
+A B
+Figure 2. (A) CAD solid model assembly of the revolute joint knee in the test stand. (B) Picture of robot
+leg in test jig. Setup shows the pinned knee configured for a test of the extensor BPA. The knee is flexed
+withθk =−120°. The S shaped load cell attaches the tibia to the swing arm and is nearly perpendicular to
+the tibia in this configuration. Also note the compressed shape of the inflated BPA during this high degree
+of flexion.
+2.4 Moment arm and Torque calculations119
+2.4.1 Classical mechanics120
+The goal of this study is to compare measured robot performance to both calculated robot performance121
+and also to what we expected from a human’s reported maximum M. The classical mechanics way to122
+calculate torque ⃗M about the joint is to take the cross product of ⃗d and ⃗F123
+⃗M = ⃗d× ⃗F (1)
+where distance ⃗d is from the joint to the force’s line of action of represented by⃗F The calculations for124
+human muscleF and jointM that we used as a benchmark were from Delp, Hoy, Yamaguchi, Sherman,125
+Millard, and Thelen (Delp et al., 1990; Hoy et al., 1990; Yamaguchi and Zajac, 1989; Sherman et al., 2013;126
+Millard et al., 2013; Thelen, 2003). Reference human values were obtained using the Gait2392 model in127
+the biomechanical modeling software OpenSim (Delp et al., 1990; Seth et al., 2011, 2018). Gait2392 is the128
+anatomical human biomechanical model used for comparison. Fig. 3 shows the human uniarticular knee129
+flexor and extensor muscle actuators.130
+2.4.2 Moment arm131
+Moment arm⃗ ris the shortest ⃗d to ⃗F . In this study it is calculated using the method specified by Young132
+and colleagues (Young et al., 2019). The moment arm,rˆk, about the ˆz axis is calculated by:133
+rˆk = ⃗ pproj,i· ⃗ pf× ˆk
+∥⃗ pf× ˆk∥
+(2)
+Frontiers 5
+Bolen et al. Torque Values About Robotic Knee
+⃗ pproj,i is the free muscle segment projected onto the xy–plane which is normal to the joint axis. ⃗ pf is the134
+projected muscle segment vector. Moment arm is calculated in the body frame.135
+Figure 3. View of the human biomechanical model Gait2392 used for comparison. In this test we looked
+at the uniarticular muscles that attach to the femur and cross the knee, shown as red muscle actuators in the
+picture.
+2.4.3 Wrench136
+Experimentally determinedM is calculated using the wrench.137
+2.4.4 Hybrid method138
+The hybrid method is a way of back calculating torque from experimentally measured values.139
+2.5 Data Collection: Equipment and Procedures140
+We built a jig to collect kneeM measurements at different knee angles (θk) over its RoM. The test stand141
+frame is made predominantly out of 80/20 1515 series extruded aluminum components. The knee joint is142
+allowed to rotate while the femur is fixed to the frame. A force sensor has one end connected to the tibia143
+and the other is connected to a swing arm. The swing arm is tied to the winch with 3/16 inch Kevlar rope144
+from Quality™ Nylon Rope (see Figs. 1 and 2B. This rope has a Kevlar core with a polyester jacket and is145
+rated to have a break strength of 1150 lbs.146
+Force data was collected using one of two different sensors. The first was a MODERN STEP 300 kg147
+digital crane scale. The second force sensor is a CALT DYLY-103100 kg S shaped load cell. The was load148
+cell was used in conjunction with a HX711 Load Cell Amplifier.P data comes from a Freescale MPX5700149
+GP 5 V pressure sensor. Building air supply pressure was controlled with two pressure regulators in series.150
+The first is a Parker model 20R113GC 0-120psi pressure regulator. The second is a Husky 3/8in. High151
+Performance Air Regulator HDA72200. A Festo VTUG-10-MRCR-S1T-26V20-T516LA-UL-T532S-8K152
+valve manifold VTUG-G was used to deliver air from the pressure regulator to the actuator. This manifold153
+Frontiers 6
+Bolen et al. Torque Values About Robotic Knee
+is comprised of eight two-in-one bidirectional normally closed Festo VUVG-S10-T32C-AZT-M5-1T1L154
+valves.155
+P and load cell amplifier data are sent to Matlab via an Arduino Uno style Sparkfun BlackBoard C156
+microcontroller. The computers that used Matlab were running either Windows 10 and Windows 11. During157
+phases when the Arduino was collectingF andP data to send to Matlab, the Arduino would also trigger158
+(via Matlab) an Onsemi 2N4401 NPN transistor to make valve manifold open or close the valve. For other159
+data collection the valve was manually opened and closed.160
+Length measurements were done using a FANUC tape measure. When there was sufficient curvature in161
+the BPA during knee extensor torque tests, a flexible piece of string to was used to mark the axial length,162
+and then the distance was determined with the tape measure. Other times we were able to measure the163
+extensor length using iBayam flexible tape measures.164
+Angle measurements were taken with either a Medigauge digital electronic goniometer or with165
+MALENOO analog goniometers of 6, 8, or 12 inch lengths. The angle of the knee joint and the angle of166
+the force sensor to a predefined line on the tibia were the angle measurements of interest to us. The latter167
+angle allows us to calculate torque as the force sensor was not always perpendicular with the tibial axis.168
+2.6 Actuator Force Calculation169
+Human muscle-actuator F is calculated using the Hill muscle model. Specifically, we relied on the170
+equations as described by Millard (Millard et al., 2013) and used in OpenSim model Gait 2392. The171
+specifics equation and values are detailed in previous work by Bolen and Morrow (Bolen and Hunt, 2019;172
+Morrow et al., 2020).173
+BPA actuatorF in our previous work has been calculated from a FLP relationship derived by Hunt (Hunt174
+et al., 2017). For a given robot configuration andP (in kPa), the scalar forceF (in Newtons) for each of175
+the artificial muscles can be determined by solving the equation:176
+P = 254 kPa + 1.23 kPa
+N ·F + 15.6 kPa·S+
+192 kPa· tan
+ 
+2.03
+ 
+ϵ
+−0.331× 10−3 1
+N·F +ϵmax
+− 0.46
+!!
+(3)
+ϵ is the amount of contraction, andϵmax is the maximum amount of contraction in a BPA without external177
+load that is inflated to 620 kPa.S is the hysteresis factor of the artificial muscle in whichS = 1 indicates178
+the muscle is shortening and with S =−1 it is lengthening. For isometric contraction, set S = 0 . An179
+important note for (3) is that the coefficients have been updated with the correct values as the previous180
+version contained typos. We used this corrected version of the equation to create a lookup table for actuator181
+F for a given amount ofP and relative strainϵ∗, defined as182
+ϵ∗ = ϵ
+ϵmax
+(4)
+With this lookup table created it is possible to use a curve fit to develop an equation forF as a function183
+ofP andϵ∗. However, we note here two problems with the BPA characterization in (Hunt et al., 2017).184
+Frontiers 7
+Bolen et al. Torque Values About Robotic Knee
+The first is that this testing was done with a maximum of 111.2 N applied load, which is only about 20% of185
+the maximumF (Fmax) specified for the Festo BPA at maximum pressurePmax andϵ∗ = 0. Secondly,186
+we observed thatFmax in theϕ10 mm BPA decreases aslrest decreases. Therefore, we created a test jig187
+apparatus to testF for variouslrest ofϕ10 mm Festo BPAs at differentP values.188
+Frontiers 8
+Bolen et al. Torque Values About Robotic Knee
+3 RESULTS
+Results from BPA characterization tests are shown first in Fig. 4. Fig. 4A and fig. 4B shows a force response189
+resembling an arctan curve along thelrest dimension and with a more linear response along theP axis.190
+We used a surface fit to find the equation for maximum force in aϕ10 mm BPA as a function oflrest and191
+P , i.e.Fmax10(lrest,P ).192
+Fmax10(lrest,P ) = a1·P· arctan (a2·P· (lrest− 0.0075)) (5)
+lrest is offset by 7.5 mm because solid modeling showed our endcaps contact each other at lrest =193
+0.0075mm. Therefore Fmax10(7.5 mm) = 0 because air would flow in one endcap and out the other194
+(assuming perfect alignment). The curve fitting was done using the Nonlinear Least Squares method195
+and a Least Absolute Residual robustness. a1 = 0 .4848 N kPa−1 (0.4848–0.488 with 95% CI) and196
+a2 = 0 .033 06 kPa−1 m−1 (0.0325–0.03362 with 95% CI). 5 has an Adjusted R2 = 0.9997 and an197
+RMSE = 2.749. SubstitutingPmax = 620 kPa into 5 yields the following simplified equation:198
+Fmax10(lrest) = 301.6 N· arctan (20.5 m−1· (lrest− 0.0075)) (6)
+Equation 6 is compared with the data in fig. 4B. It can be seen that lim
+lrest→∞
+Fmax10 = 473.7 N. Fig. 4C199
+shows an attempt at a linear fit forϵmax(lrest). There was a large amount of variance in the data, with the200
+linear fit giving an adjustedR2 = 0.4124 and an RMSE = 0.0083, therefore at this time we cannot say201
+with confidence that there is a linear relationship between maximum strain andlrest.202
+The next step in BPA characterization we derived an equation for normalized force in the BPA, or203
+F∗ =F/F max. In previous work we have already used relative strainϵ∗ =ϵ/ϵmax (4), and here we will204
+also introduce relative pressureP∗ =P/P max. Then we can show thatF∗(ϵ∗,P∗) (Fig. 5). By visualizing205
+the lookup tables discussed above, and the Festo Corporation data sheet, we can see that there appears to206
+be an exponential relationship betweenϵ∗ andF , and a linear relationship betweenP andF . A polynomial207
+surface fit also shows an interaction between the linear P and exponentialϵ∗ terms. Therefore we fit a208
+surface to the original data using an equation of the form209
+F∗(ϵ∗,P ) = b0 + exp (−b1·ϵ∗ +b2) +P· exp (−b3·ϵ∗2 +b4) +b5·P∗ (7)
+With all the additional data collected on ϕ10 mm BPAs withlrest given in fig. 4, we then normalized210
+the force data collected by dividing each BPA’s force results byFmax10 for that BPA.P data was divided211
+byPmax This reduced much of the variance in the data, as shown in fig. 5, which qualitatively pointed212
+towards using a surface fit as the right approach for F∗. Usingϵ∗ andP∗, it was possible to reduce the213
+amount of coefficients in Eq. 7 from six to only two. The equation for normalized force is214
+F∗
+10(ϵ∗,P∗) =−1 + exp (−c1·ϵ∗) +P∗· exp (−c2·ϵ∗2) (8)
+withc1 = 1.7 (1.692–1.708 with 95% CI) andc2 = 0.2 (0.1968–0.2029 with 95% CI). This surface fit215
+was done using Nonlinear Least Squares method and Least Absolute Residuals robustness. Additional data216
+from separate tests using thelrest values of 120 mm, 220 mm, 260 mm, 281 mm and 281 mm were used217
+for validation. Eq. 8 has an AdjustedR2 = 0.9998, SSE = 0.007833, and an RMSE = 0.0057. Validation218
+Frontiers 9
+Bolen et al. Torque Values About Robotic Knee
+CB
+A
+Figure 4. Results for finding the relationship between lrest and Fmax10, ϵmax. (A) Surface fit for
+Fmax10(lrest,P ). (B)Fmax10 versuslrest atPmax = 620 kPa. (C)ϵmax versuslrest atPmax = 620 kPa.
+No conclusive relationship betweenϵmax andlrest could be deduced from this experiment.
+SSE = 0.482595 and RMSE = 0.044292. Combining Eq. 8 and Eq. 6 will now allow researchers to219
+determine the forceF in a BPA givenlrest,P∗, andϵ∗.220
+F (ϵ∗,P∗,l rest) = F∗(ϵ∗,P∗)·Fmax(lrest) (9)
+Force functions forϕ20 mm andϕ40 mm BPAs were also derived.F tests were not performed on these221
+BPA sizes. Instead, values ofFmax20 = 1500 N,Fmax40 = 6000 N,ϵmax = 25%, andPmax = 600 kPa,222
+provided by Festo Corporation (Festo, 2022) were used. The normalized force equation for theϕ20 mm223
+BPA is224
+F∗
+20(ϵ∗,P∗) = b0 + exp (−b1·ϵ∗ +b2) +P· exp (−b3·ϵ∗2 +b4)−b4·P∗ (10)
+From this equation, it can be seen that the coefficientb4 =−b5 appears twice. Eq. 10 has an Adjusted225
+R2 = 0.9985, SSE = 0.0125, and an RMSE = 0.0154. Theϕ40 mm BPA fit equation is226
+Frontiers 10
+Bolen et al. Torque Values About Robotic Knee
+F∗
+40(ϵ∗,P∗) = b0 + exp (−b1·ϵ∗ +b2) +P· exp (−b3·ϵ∗ +b4) +b5·P∗ (11)
+It can be seen that 11 is similar to the structure of Eqns. 7 and 10, but with an ϵ∗ term in the second227
+exponential instead ofϵ∗2. Eq. 11 has an AdjustedR2 = 0.9999, SSE = 8.614× 10−4, and an RMSE =228
+0.0040.229
+The new method of calculating 10 mm BPA force is used to calculate maximum M for the various230
+configurations. Starting with the simplest case, we examine BPAs of lrest 45.7 cm and 48.5 cm on the231
+pinned knee used for knee flexion (fig. 6). Fig. 6A shows measured torque as blue diamonds and expected232
+(theoretical) torque as a magenta line. Experimentally measured values of BPA length,P , and moment arm233
+were used with Eq. 9 to back calculate torque values. It was determined that a major part of the discrepancy234
+in measured versus expected torque values was due to differences in measured versus expectedϵ∗ values235
+(Fig. 6B). After running an optimization algorithm to change the length of the end cap fitting, Fig. 6 C236
+shows improved results. The results of the optimization were validated with the 45.7 cmM values (fig.237
+6D). The fitting length in the algorithm is changed from 25.4 mm to 35.2 mm. The optimization yielded an238
+SSE = 554.6 and the validation returned a SSE = 315.3 with a RMSE = 2.96.239
+Pinned knee extensor results usingϕ10 mm Festo BPAs oflrest 41.5 cm, 45.7 cm and 48.5 cm are shown240
+in Fig. 7. Measured torque was slightly higher than expected in the 48 cm BPA whereas it was slightly241
+lower than expected in the 45.7 cm BPA. The 41.5 cm BPA was used in two configurations: with and242
+without an artificial tendon. Previous optimization wasn’t used with these results.243
+Why the discrepancy between the results? The first two seem acceptable, but not perfect. The shorter the244
+lrest, the more the results are less than expected. Comparing measured values oflm andϵ∗ to theoretical245
+shows a close correlation, but would increase torque for the first two and decrease for the second. The246
+BPA w/ artificial tendon shows a discrepancy, so maybe the tendon length was measured incorrectly?247
+Well, maybe looking at Fig. 2 B again can shed some insight? It would be possible to bring it into the248
+Matlab image acquisition toolbox to analyze lengths. If I can also show somehow that the shorter lengths249
+tend to kink then that would also let us create a nonlinear torque correction factor along the lines of250
+Mˆk = ⃗ rˆk× (F−cf·F·θk). Improved solid model might also help?251
+Fig. 8 shows the results optimized flexor calculation method in the biomimetic knee for a ϕ10 mm252
+lrest = 41.5cm BPA with a 12 mm artificial tendon made out of Shimano bicycle brake cable. Comparing253
+the previous method of calculating torque to the measured torque results in an SSE = 287.3 and an254
+RMSE = 5.36. The optimized torque calculation fits much better with a SSE = 1.282 and a RMSE =255
+0.358. Experimentally measured values were again used to back calculate torque, although we note that256
+moment armrˆk was measured from knee ICR, notpk, and that experimentally measuringrˆk is less precise257
+(±5 mm) in the biomimetic knee versus the pinned knee.258
+We obtained results for M in 9 using the biomimetic knee with a ϕ10 mm BPA in the extensor259
+configuration. The torque values differ a lot from those we expected. Looking at 9B it can be observed that260
+the length is very close to what we expected, but 9C. However, again we note that moment arm by hand is261
+measured to the ICR, and using this value would mean we would expect even high torque than what was262
+observed. Fig.10 shows the difficulty of modeling something that passes through the femoral condyles.263
+Opensim comparison. Full size BPAs in biomimetic knee assembly results. Fig 11 shows the 40mm BPA264
+in the extensor configuration. Fig. ??265
+Frontiers 11
+Bolen et al. Torque Values About Robotic Knee
+Figure 5. Surface fit forF∗(ϵ∗,P∗) with (95% CI shown). Black circles represent fit data. (A)Fit data for
+ϕ10 mm Festo BPA. Validation data is the green circles.(B)Fit data forϕ20 mm Festo BPAs. (C)Fit data
+forϕ40 mm Festo BPAs.
+Frontiers 12
+Bolen et al. Torque Values About Robotic Knee
+Figure 6. Results for the pinned knee using flexor BPAs. (A) Theoretical, measured, and back calculated
+torque for the 48.5 cm BPA. (B) comparison of measured versus expected ϵ∗ for the 48.5 cm BPA. (C)
+Theoretical and measured torque for the 48.5 cm BPA using an optimized fitting length of 35.2 mm. (D)
+Theoretical and measured torque for the 45.7 cm BPA using an optimized fitting length of 35.2 mm
+Frontiers 13
+Bolen et al. Torque Values About Robotic Knee
+Figure 7. Pinned kneeM with the extensor BPA for lengths, (a) 48.5 cm, (A) 45.5 cm, (c) 41.5 cm, and
+(D) 41.5 cm with a 22 mm tendon
+Frontiers 14
+Bolen et al. Torque Values About Robotic Knee
+Figure 8. Biomimetic kneeM for aϕ10 mmlrest = 41.5cm flexor BPA with a 12 mm artificial tendon.
+Blue diamond shows the measured torque values. Light orange line shows the theoretical torque expected
+using the updated actuatorF equation and the optimized fitting length. The yellow line shows the theoretical
+torque expected using without the optimized fitting length. Magenta circles are torque values back calculated
+from experimentally measured values oflm,P , andrˆk (using measurements from knee ICR notpk).
+Frontiers 15
+Bolen et al. Torque Values About Robotic Knee
+Figure 9. Measured versus expected results using a ϕ10 mm, lrest = 51.8 cm extensor BPA on the
+biomimetic knee. AM. B Relative Strain. C moment arm.
+Frontiers 16
+Bolen et al. Torque Values About Robotic Knee
+Figure 10. A configuration that is particularly hard to model.
+-120 -100 -80- 60 -40- 20 02 0
+degrees Flexion(-),Extension(+)
+0
+50
+100
+150
+200
+250
+300
+350
+400
+450
+500Torque, N*m
+Isometric Torque vs Knee Angle, 40mm Extensor, 55.7cm long
+Direct values from OpenSim
+Robot, distal ring
+Robot, proximal ring
+Human values (Bolen)
+Human values (Morrow)
+100 kPa, load cell
+230 kPa, load cell
+380 kPa, load cell
+604 kPa, load cell
+100 kPa, hand
+230 kPa, hand
+380 kPa, hand
+604 kPA, hand
+projected 600 kPa Torque for data
+Figure 11. Comparison of M for theoretical BPA values with the humanoid knee, human muscle
+calculations using our method, and human muscle values as provided by OpenSim. Configurations
+listed are for (A) flexor and (B) extensor muscles. Note the major discrepancies between the our human
+value and OpenSim’s, which calls into question the accuracy of our calculations.
+Frontiers 17
+Bolen et al. Torque Values About Robotic Knee
+Figure 12. Comparison of measured and theoretical M for the ϕ20 mm BPA in flexor configuration.
+Diamonds represent measured torque values. Dashed lines represent theoretical torque with old fitting
+length, solid line is the theoretical torque with the optimized fitting length from the previous section. Yellow
+circles represent values expected from back calculating with BPA length andP known.
+Frontiers 18
+Bolen et al. Torque Values About Robotic Knee
+4 DISCUSSION
+The analysis in this study has allowed us to create novel equations for calculatingF in BPAs ofϕ10 mm(Eqs.266
+6,8).267
+There certainly are many factors that affect theM results. Compliance in testing system, flexibility of268
+brackets, imperfect modeling, variation in individual BPAs, etc.269
+Simplifying the model and testing it allowed us to see how we were deficient in our previous analysis.270
+The isometric system is not rigid. There is compliance in the winch cable, tendons, bending brackets. The271
+modeling of BPA paths is also just an estimate.272
+Curving BPA during high angles of knee flexion show the BPA being stretched and compressed. It is273
+known that the axial stress in a pressure vessel is274
+σˆz = F
+A = Pd 2
+(d + 2t)2−d2 (12)
+Whereσˆz is the axial stress,F is Force,A is area,P is the internal pressure,t is the wall thickness, andd275
+is the mean diameter (O.D.−t). In thin wall pressure vessels 12 can be reduced to276
+σˆz = Pd
+4t (13)
+Frontiers 19
+Bolen et al. Torque Values About Robotic Knee
+RESOURCE IDENTIFICATION INITIATIVE
+• MATLAB (RRID:SCR 001622)277
+• OpenSim (RRID SCR 002683)278
+• Arduino UNO (RRID:SCR 017284)279
+CONFLICT OF INTEREST STATEMENT
+The authors declare that the research was conducted in the absence of any commercial or financial280
+relationships that could be construed as a potential conflict of interest.281
+AUTHOR CONTRIBUTIONS
+BB, CM, and AH contributed to conception and design of the study. BB and CM wrote the code to calculate282
+theoretical robotMs. Figures were created by BB. BB, LB, and LP wrote code for data collection and283
+analysis. BB and LP collected the data. BB performed the statistical analysis and organized the database.284
+BB wrote the first draft of the manuscript. BB, LB, and AH wrote sections of the manuscript. All authors285
+read the manuscript, contributed to its revision, and approved the submitted version.286
+FUNDING
+Research for this article was funded by the Department of Mechanical and Materials Engineering at287
+Portland State University, the National Science Foundation (NSF) grant for NeuroNex: Communication,288
+Coordination, and Control in Systems (C3NS) 2015317 and NSF grant 1943483.289
+ACKNOWLEDGMENTS
+The authors would like to acknowledge the contribution of Alex Steele, who designed the initial biomimetic290
+4-bar knee linkage we used for the test. He gave us solid models, built a 3D prototype, and let us break said291
+prototype. His prompt and thoughtful responses to our questions about the previous design was very much292
+appreciated. The authors would also like to thank Jasmine Bradley for her help reworking the figures in the293
+results section. As a visual designer, her contributions improved the aesthetic quality of the images. She294
+also helped us choose colors that ensured data accessibility for people with color blindness.295
+SUPPLEMENTAL DATA
+Supplemental Data includes figures for the test setup.296
+DATA AVAILABILITY STATEMENT
+The data sets are available from the authors upon reasonable request.297
+REFERENCES
+Asano, Y ., Okada, K., and Inaba, M. (2019). Musculoskeletal design, control, and application of human298
+mimetic humanoid Kenshiro. Bioinspiration & Biomimetics 14, 036011. doi:10.1088/1748-3190/ab03fc299
+Frontiers 20
+Bolen et al. Torque Values About Robotic Knee
+Bolen, B. P. and Hunt, A. J. (2019). Determination of Artificial Muscle Placement for Biomimetic300
+Humanoid Robot Legs. In Biomimetic and Biohybrid Systems, eds. U. Martinez-Hernandez, V . V ouloutsi,301
+A. Mura, M. Mangan, M. Asada, T. J. Prescott, and P. F. Verschure (Cham: Springer International302
+Publishing), vol. 11556. 15–26. doi:10.1007/978-3-030-24741-6 2303
+Delp, S., Loan, J., Hoy, M., Zajac, F., Topp, E., and Rosen, J. (1990). An interactive graphics-based model304
+of the lower extremity to study orthopaedic surgical procedures. IEEE Transactions on Biomedical305
+Engineering 37, 757–767. doi:10.1109/10.102791306
+[Dataset] Festo (2022). Festo Fluidic Muscle DMSP307
+Hoy, M., Zajac, F., and Gordon, M. (1990). A musculoskeletal model of the human lower extremity: the308
+effect of muscle, tendon, and moment arm on the moment-angle relationship of musculotendon actuators309
+at the hip, knee, and ankle. Journal of Biomechanics 23, 157–169310
+Hunt, A., Graber-Tilton, A., and Quinn, R. (2017). Modeling length effects of braided pneumatic actuators.311
+In IDETC/CIE 2017 (Cleveland, OH: ASME)312
+Millard, M., Uchida, T., Seth, A., and Delp, S. L. (2013). Flexing Computational Muscle: Modeling313
+and Simulation of Musculotendon Dynamics. Journal of Biomechanical Engineering 135, 021005.314
+doi:10.1115/1.4023390315
+Morrow, C., Bolen, B., and Hunt, A. (2020). Optimization of Artificial Muscle Placements for a Humanoid316
+Bipedal Robot. In Biomimetic and Biohybrid Systems317
+Seth, A., Hicks, J. L., Uchida, T. K., Habib, A., Dembia, C. L., Dunne, J. J., et al. (2018). OpenSim:318
+Simulating musculoskeletal dynamics and neuromuscular control to study human and animal movement.319
+PLOS Computational Biology 14, e1006223. doi:10.1371/journal.pcbi.1006223320
+[Dataset] Seth, A., Sherman, M., Reinbolt, J. A., and Delp, S. L. (2011). OpenSim: a musculoskeletal321
+modeling and simulation framework for in silico investigations and exchange.322
+Sherman, M. A., Seth, A., and Delp, S. L. (2013). What is a Moment Arm? Calculating Muscle323
+Effectiveness in Biomechanical Models Using Generalized Coordinates. In V olume 7B: 9th International324
+Conference on Multibody Systems, Nonlinear Dynamics, and Control (Portland, Oregon, USA: American325
+Society of Mechanical Engineers), V07BT10A052. doi:10.1115/DETC2013-13633326
+Shin, H., Ikemoto, S., and Hosoda, K. (2018). Constructive understanding and reproduction of functions327
+of gluteus medius by using a musculoskeletal walking robot. Advanced Robotics 32, 202–214. doi:10.328
+1080/01691864.2018.1434015. Publisher: Taylor & Francis329
+Steele, A., Hunt, A., and Etoundi, A. (2018). Biomimetic Knee Design to Improve Joint Torque and Life330
+for Bipedal Robotics (Bristol, UK)331
+Steele, A. G., Hunt, A., and Etoundi, A. C. (2017). Development of a Bio-inspired Knee Joint Mechanism332
+for a Bipedal Robot. In Biomimetic and Biohybrid Systems (Springer, Cham), Lecture Notes in Computer333
+Science, 418–427. doi:10.1007/978-3-319-63537-8 35334
+Thelen, D. G. (2003). Adjustment of Muscle Mechanics Model Parameters to Simulate Dynamic335
+Contractions in Older Adults. Journal of Biomechanical Engineering 125, 70–77. doi:10.1115/1.336
+1531112337
+Yamaguchi, G. T. and Zajac, F. E. (1989). A planar model of the knee joint to characterize the knee338
+extensor mechanism. Journal of Biomechanics 22, 1–10. doi:10.1016/0021-9290(89)90179-6339
+Young, F., Rode, C., Hunt, A., and Quinn, R. (2019). Analyzing Moment Arm Profiles in a Full-Muscle340
+Rat Hindlimb Model. Biomimetics 4, 10. doi:10.3390/biomimetics4010010341
+Frontiers 21
+Bolen et al. Torque Values About Robotic Knee
+FIGURES
+Frontiers 22
+Bolen et al. Torque Values About Robotic Knee
+TABLES
+Table 1. Equations for BPAF with fit and coefficient values
+Eq. Model Validation Coefficient CI (95%)Adj. R2 SSE RMSE SSE RMSE
+5 0.9997 733.2 2.749 – – a1 = 0.4864 N kPa−1 (0.4848, 0.488)
+a2 = 0.033 kPa−1 m−1 (0.0325, 0.0336)
+6 0.982 5941 14.83 – – a1 = 301.6 N (300.6, 302.6)
+a2 = 20.5 m−1 (20.15, 20.83)
+8 0.9998 0.007833 0.006 0.4826 0.0443 c1 = 1.7 (1.692, 1.708)
+c2 = 0.2 (0.197, 0.203)
+10 0.9985 0.0125 0.015 – –
+b0 = -0.1881 (-0.2005,-0.1757)
+b1 = 7.965 (7.533, 8.396)
+b2 = -1.677 (-1.755, -1.599)
+b3 = 2.036 (1.733, 2.339)
+b4 = -0.1518 (0.1033, 0.2004)
+11 0.9999 8.614∗ 10−4 0.004 – –
+b0 = -0.06974 (-0.07298, -0.06651)
+b1 = 8.547 (8.365, 8.728)
+b2 = -2.628 (-2.67, -2.586)
+b3 = 0.2854 (0.2449, 0.3259)
+b4 = 1.148 (1.024, 1.272)
+b5 = -2.128 (-2.519, -1.737)
+Frontiers 23
