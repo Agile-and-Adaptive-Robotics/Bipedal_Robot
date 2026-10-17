@@ -121,6 +121,8 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
 ## Project purpose (priority order)
 
 **Ben's prose preference:** always use the Oxford comma in lists of three or more items.
+Call the simulated bodies **models** (human model, W2L robot model) — never "plants"
+(Ben's ruling 2026-10-16; control-theory usage notwithstanding).
 
 1. **Dissertation first** (deadline: this week, Sept 2026). LaTeX source lives in
    `Documentation\Reports and Papers\Dissertation\` (repo-tracked as of 2026-09-08; the
@@ -1030,6 +1032,43 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
     lacked; pre-existing 16 templates byte-identical; editor tests + defaults gate
     re-passed). Editor = snapshot of the architecture, NOT live (live = neuro_scope.py /
     runner --scope).
+    **2026-10-16/17 OVERNIGHT WALK CAMPAIGN (workflow dwfrun-cd6e3be8, Ben's L/R alpha+gamma
+    drive plan; ALL evidence in `spinal\reports_20261016\` on easteregg2, index =
+    WEAN_CAMPAIGN_20261016.md + the supervisor's exec summary; NOTHING committed — egg
+    working tree + reports only):** (1) Connectome audits: production s3k does NOT
+    implement Ben's per-PF-layer rules — joint_pf=0 (4 phase cells broadcast via 340
+    W_PF_MN edges), heel never reaches the PF layer (heel_pf_layer=0), TOEDF absent (toe
+    is an InE EXTENSOR exciter, not DF-inhibition); stacked duplicate IBEXC->LBIN synapses
+    (54 synapses on 8 pairs — stance load group-size-weighted 4.5/3.5/3.0/2.0 vs intended
+    flat 0.5; NOT fixed, Ben's call); classic t34 kine -25.0 at full_rules=1 under current
+    physics — the bit-exact -161.56754173676563 anchor is the full_rules=0 flavor (do not
+    conflate; seed bootstraps from mutfix winners). Autogenic rule MET at the winner (Ia
+    relay INs, non-autogenic 0). W2L: M3/M4/M5 air gates were BROKEN at HEAD since the
+    10-01 body rebuild (added freejoint made the air body free-fall) — FIXED, all gates
+    pass; M5 file defaults NEVER passed (amp=4/ibnA=6 latch both RGs) — canonical CLI
+    knobs (amp=1.5 pulse=0.5 ibnA=1.0) required; w2l_cpg port is 95n/208syn (91 is stale).
+    (2) NEW default-0 KNOBS on both models: alpha_l/gamma_l/alpha_r/gamma_r (alpha =
+    MN/PF-level, gamma = RG-level); defaults gate (410,376,1186) + anchor bit-exact
+    re-verified by the supervisor (drive_defaults_gate.py). (3) RESULTS (supervisor
+    re-ran everything bit-exact): HUMAN kine -161.5675 -> **-145.07** (10+10 cycles, duty
+    0.71/0.65, params wean_human\round8_best3.json) with drive weaned to **0.381**, basin
+    8/8; the wean ladder runs to scale 0.0 STILL CYCLING (-157.07, 8/11 cycles) — a
+    fully-weaned walker candidate exists; Ong second-reference generalizes (-159.66/
+    -173.27/-197.39 ws2.0 family, -164.43 ws5.0). Gain-sensitivity (Ben's anti-lottery
+    probe): ia_in STRUCTURAL (zero -> -250.90), toe_rge removal IMPROVES the score (prune
+    candidate), phase_reset_f inert at this operating point, ii_e_central required.
+    ROBOT: progression slope 0.0609 -> **0.06617** (25/23 L/R cycles, phase_med 0.487 =
+    antiphase, +1.718 m forward, survive true, drive 0.6, basin 12/12; params
+    w2l_wean_best_params.json). NEITHER connectome-repair loop fired — both models walked
+    on the FIRST strong-drive sweep (Ben's criterion: the connectome is not the blocker
+    once L/R drive exists). (4) Realizations: SNS_WinnerSlice_R8.slx (redesigned
+    one-input-synapse library; headless 4-check ALL PASS per stage log — supervisor did
+    NOT re-run MATLAB); AnimatLab robot variant built + headless-run only (GUI open-check
+    PENDING BEN in AnimatLab2.exe). (5) spinal_run.npz working-tree content overwritten by
+    campaign evals (git-recoverable; documented WEAN_CAMPAIGN §8). INFRA NOTE: workflow
+    world.run("ssh") auth-fails from the laptop while Bash-ssh is 100% healthy (client-env
+    issue, unresolved) — campaign gates ran through a gate-runner agent instead; keep that
+    pattern for future workflows.
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
 - `Code\Hardware\walker_io\` — Python walker IO stack (Orin daemon, lab console, valves,
   sensors, afferents; README inside). Placement is wrong per Ben (2026-09-30) — fold into

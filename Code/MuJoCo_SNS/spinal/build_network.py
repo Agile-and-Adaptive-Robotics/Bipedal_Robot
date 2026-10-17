@@ -305,6 +305,30 @@ class SpinalNetwork:
                 n.add_input(vname)
                 self.inputs.append("VEST_c_" + side)
 
+        # ---- 2026-10-16 campaign: per-side HAND-DRIVE cells (alpha/
+        # gamma split; Shevtsova brainstem analog, one pair per side so
+        # left/right can be driven independently). GAMMA_s carries that
+        # side's rhythm-level hand drive onto its RG pair; ALPHA_s the
+        # tonic MN-pool drive onto that side's MNs. EACH SIDE'S cell is
+        # built ONLY when its own params.G knob > 0 (gamma_s / alpha_s;
+        # default 0 = cells/ports/edges absent = bit-identical - the
+        # zero-gain synapse BLAS-order lesson). Runner feeds
+        # GAMMA_c_s = drive * G[gamma_s], ALPHA_c_s = drive * G[alpha_s].
+        self.gamma_side = {s: bool(G.get(f"gamma_{s}", 0.0) > 0.0)
+                           for s in self.sides}
+        self.alpha_side = {s: bool(G.get(f"alpha_{s}", 0.0) > 0.0)
+                           for s in self.sides}
+        for side in self.sides:
+            for pre, on in (("GAMMA", self.gamma_side[side]),
+                            ("ALPHA", self.alpha_side[side])):
+                if not on:
+                    continue
+                name = f"{pre}_{side}"
+                n.add_neuron(_neu(TAU["descend"]), name=name)
+                self.idx[name] = len(self.idx)
+                n.add_input(name)
+                self.inputs.append(f"{pre}_c_{side}")
+
         # ---- per-side circuitry ----
         for side in self.sides:
             self._build_rg(n, side)
@@ -414,6 +438,17 @@ class SpinalNetwork:
         n.add_connection(_syn(G["descend_to_rg_f"], exc=True), "DRIVE", rg_f)
         # posture tonic bias keeps the E cell (load-bearing side) ready
         n.add_connection(_syn(G["posture_to_rg_e"], exc=True), "POSTURE", rg_e)
+
+        # 2026-10-16 per-side gamma hand drive (built only when
+        # G["gamma_<side>"] > 0): GAMMA_side -> this side's RG pair at
+        # the SAME conductances the shared DRIVE uses (descend_to_rg_e/f),
+        # so drive * gamma_side on the GAMMA_c port is the direct
+        # per-side analog of the shared DRIVE current.
+        if self.gamma_side.get(side):
+            n.add_connection(_syn(G["descend_to_rg_e"], exc=True),
+                             f"GAMMA_{side}", rg_e)
+            n.add_connection(_syn(G["descend_to_rg_f"], exc=True),
+                             f"GAMMA_{side}", rg_f)
 
         # ---- v5/v10 PRESET/PREA hip phase-reset pathway REMOVED
         # (2026-09-16, Ben circled it in the panel figure): it was the
@@ -993,6 +1028,17 @@ class SpinalNetwork:
             elif g == "trunk_flex":
                 n.add_connection(_syn(G["bal_trunk"], exc=True),
                                  "BAL_TRK_FLX", f"MN_{act}")
+
+        # ---- 2026-10-16 per-side ALPHA hand drive (built only when
+        # G["alpha_<side>"] > 0): ALPHA_side -> every ipsilateral MN pool
+        # at the uniform G["alpha_to_mn"] conductance (tonic MN-pool
+        # drive; the per-side analog of the shared POSTURE cell). Called
+        # once after all MNs exist; inherited by the w2lvar/syn6
+        # variants (they set self.alpha_side in their __post_init__).
+        for act, mi in self.muscles.items():
+            if self.alpha_side.get(mi.side):
+                n.add_connection(_syn(G.get("alpha_to_mn", 0.5), exc=True),
+                                 f"ALPHA_{mi.side}", f"MN_{act}")
 
         # ---- goal2 vestibular-analog tone (2026-09-23; Ben's
         # standing-balance-stage request). Traces to (a) Ben's request

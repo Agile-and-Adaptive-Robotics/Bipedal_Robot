@@ -1365,6 +1365,17 @@ def main(argv):
                     u[iport[f"VEST_c_{s2}"]] = u_vest
         u[iport["DRIVE"]] = drive
         u[iport["POSTURE"]] = posture
+        # 2026-10-16 per-side alpha/gamma hand-drive ports (each side's
+        # cells built ONLY when its params.G knob > 0; port current =
+        # the scheduled DRIVE times that side's knob). Ports absent at
+        # defaults = the u vector is untouched = bit-identical.
+        for s2 in net.sides:
+            _port = f"GAMMA_c_{s2}"
+            if _port in iport:
+                u[iport[_port]] = drive * G[f"gamma_{s2}"]
+            _port = f"ALPHA_c_{s2}"
+            if _port in iport:
+                u[iport[_port]] = drive * G[f"alpha_{s2}"]
         # --- v11 heel/toe contact mechanosensors (audit P1a) ---
         # 2026-09-20: forces computed EVERY step in ground mode (the eval
         # objective and figures consume them); sensor ports fed only when
