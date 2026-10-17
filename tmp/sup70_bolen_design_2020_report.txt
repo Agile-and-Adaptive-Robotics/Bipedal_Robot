@@ -1,0 +1,291 @@
+Design of a Bipedal Walker Controlled by a
+CPG Network in Animatlab ⋆
+Benjamin Bolen and Connor Morrow
+Department of Mechanical and Materials Engineering, Portland State University,
+Portland, OR 97207, USA
+comorrow@pdx.edu
+Abstract. This work details a neuromechanical model of a bipedal
+robot based oﬀ simpliﬁed anatomy of the human lower body. The con-
+troller consists of a neural network that replicates central pattern gen-
+erators (CPGs) that take the form of rhythm generators (RGs), pattern
+formation (PF) networks, and sensorimotor networks. The current model
+is unable to walk on it’s own, however this work demonstrates that bio-
+logically similar gait patterns can be generated through the use of CPGs.
+Keywords: CPG · Biped · Animatlab
+1 Introduction
+Biomimetic robots attempt to replicate human biology to further research in
+both robotics and anatomy. By replicating both the biomechanical properties
+and neural systems of a human, researchers can formulate hypotheses and test
+them in a controlled environment.
+These robotics allow for continued research into CPGs and how humans use
+them to generate smooth and continuous gait while encountering perturbations.
+Literature on CPGs is numerous [2] and their implementation on robotics is
+an active area of research [4]. However, most robot models that use CPGs use
+simpliﬁed models of the neural networks to drive actuation.
+This work takes that research and creates a model of a bipedal walker in the
+neuromechanical modeling software Animatlab [1]. The Animatlab environment
+allows researchers to construct physical models that are controlled by a synthetic
+neural network. The simulation detailed in this work looks to creating a model
+to be used on biomimmetic bipedal robots.
+2 Methods
+The neuromechanical model was developed in Animatlab. Animatlab is a 3D
+graphical environment that allows user to construct biomechanical systems that
+are actuated by synthetic neural systems (SNS). A bipedal humanoid biome-
+chanical model was developed in Animatlab, whose physical structure is based
+⋆ Supported by Portland State University.
+2 B. Bolen and C. Morrow
+oﬀ of the work by Li et al. [6]. In their work, Li creates a SNS with spiking
+neurons that form both a rhythm generator (RG) network and pattern forma-
+tion (PF) network that control the muscles, but lacks aﬀerent feedback from the
+muscles. The SNS developed here is based oﬀ of the SNS created by Deng et al.
+[3]. Their network has a RG network, PF network, sensorimotor network, and
+aﬀerent feedback to modulate these networks.
+2.1 Biomechanical Model
+The biomechanical model created simulates the simpliﬁed anatomy of the human
+lower body. This model consists of nine bodies: pelvis, thighs, shanks, feet, and
+toes (Figure 1a). Hinge joints between segments allow for rotation with capa-
+bilities similar to human anatomy. The model is designed to only perform gait
+in the sagittal plane and therefore does not require joints with more degrees of
+freedom.
+Attached to the body of the model are Hill muscle model actuators. Antag-
+onistic muscles about each joint create rotation. The only joint not to contain
+a pair of antagonistic muscles is the toe joint, which contains a spring instead
+to increase compliance of the foot and to conserve energy when walking (Figure
+1b).
+2.2 Synthetic Neural Network
+The synthetic neural network is comprised of nonspiking neurons. The neuron
+dynamics are derived from a leaky-integrator neuron model, which can be de-
+scribed by the diﬀerential equations:
+Cm
+dV
+dt =Ileak +Isyn +IN a +Iapp (1)
+where Cm is the membrane conductance, V is the membrane voltage, Ileak
+is the leak current, Isyn is the synaptic current, and Iapp is an applied current.
+Each current is governed by it’s own equation:
+Ileak =Gm(Er −V ) (2)
+Isyn =
+n∑
+i=1
+Gsyn,i(Esyn,i −V ) (3)
+IN a =GN a ·m ·h(EN a −V ) (4)
+where Er is the reversal potential, Gsyn,i is the incoming synaptic potential
+from theith synapse, andEN a is the sodium channel potential. The m and h pa-
+rameters are the activation parameter and deactivation parameter of the sodium
+Design of a Bipedal Walker Controlled by a CPG Network in Animatlab 3
+(a) Bipedal walker model show-
+ing the nine body segments: pelvis,
+thighs, shanks, feet, and toes.
+(b) Bipedal walker model with
+joints labeled. Antagonistic muscle
+pair are colored red for ﬂexors and
+blue for extensors.
+Fig. 1: Images of the bipedal walker model.
+channel, respectively, and can be calculated by knowing their time constants,τm
+and τh:
+dm
+dt = m∞ −m
+τm
+(5)
+dh
+dt = h∞ −h
+τh
+(6)
+Bothm∞ andh∞ can be calculated from the same equation, substituting in
+the appropriate parameters into the p variables:
+p∞ = 1
+1 +Ap ·eSp(V−Ep) (7)
+4 B. Bolen and C. Morrow
+where Ap is the factor, Sp is the slope, and Ep is the reversal potential. The
+synaptic conductance for a speciﬁc synapse, Gsyn,i is treated as a linear piece
+wise function governed by:
+Gsyn,i =
+
+
+
+0 Vpre <E lo
+gsyn
+Vpre−Elo
+Ehi−Elo
+Elo ≤Vpre <E hi
+gsyn Ehi ≤Vpre
+(8)
+whereVpre is the presynaptic neuron voltage andgsyn,Elo, andEhi represent
+the slope, lower bound, and upper bound of the piece wise function. Values for
+all of these parameters used in the model can be found in Table 1 and 2.
+T able 1: Neural Parameters
+Neuron Cm
+(nF)
+Gm
+(µS)
+Er
+(mV)
+GN a
+(µS) Ah Sh
+Eh
+(mV)
+τh
+(ms) Am Sm
+Em
+(mV)
+τm
+(ms)
+RG 5 1 -60 1.5 0.5 -0.6 -60 350 1 0.2 -40 2
+PF 5 1 -60 1.5 0.5 -0.6 -60 350 1 0.2 -40 2
+MN 5 1 -100 0 - - - - - - - -
+IN 5 1 -60 0 - - - - - - - -
+T able 2: Synapse Parameters
+Synapse gsyn
+(µS)
+Es
+(mV)
+Elo
+(mV)
+Ehi
+mV
+RG to IN 2.749 -40 -60 -25
+IN to RG 2.749 -70 -60 -25
+RG to RG 0.1 -40 -65 -40
+PF to IN 2.749 -40 -60 -25
+IN to PF 2.749 -70 -60 -25
+RG to PF 0.1 -40 -60 -40
+PF to MN - -10 -60 -50
+PF to Ia 0.5 -40 -60 -40
+Ia to Ia 0.5 -70 -60 -40
+Ia to MN 2 -100 -60 -40
+MN to RE 0.5 -40 -100 -10
+RE to RE 0.5 -70 -60 -40
+RE to MN 0.5 -100 -60 -40
+RE to Ia 0.5 -70 -60 -40
+CPGs are created from four coupled nonspiking neurons that oscillate periods
+of activity. Two neurons serve as outputs to diﬀerent networks. When one output
+neuron is driven high the other is driven low. Two integrator neurons are included
+Design of a Bipedal Walker Controlled by a CPG Network in Animatlab 5
+in the network to drive this oscillation of activation and inhibition. These CPG
+networks take the form of a rhythm generator network and a pattern formation
+network [7].
+RG networks maintain the timing of the system. The RG network is the
+highest network in the hierarchical structure and is based oﬀ of the ﬁndings of
+Zhang et al. [8]. Two output neurons are connected through mutual excitation
+and are attached via inhibitory synapses to interneurons. The structure of the
+used RG network can be seen in Figure 2a.
+PF networks help reshape the timing signals coming from the RG layer and
+dictate the activity of the sensorimotor layer. The PF layer also controls muscle
+synergies between the knee and ankle muscles, activating them with similar
+timing.
+(a) Rhythm generator network conﬁg-
+uration. Stimulus to this network lasts
+for 1 ms and initiates oscillation.
+(b) Pattern formation network conﬁg-
+uration. Input comes from the rhythm
+generation layer and outputs to the sen-
+sorimotor network.
+Fig. 2: Example conﬁguration of the rhythm generation and pattern formation net-
+works.
+A third simpliﬁed CPG network is included in the sensorimotor network
+and oscillates activity of motor neurons that drive the muscles. This network is
+made of two Renshall cells coupled by inhibitory synapses. The Renshall cells
+provide feedback, along with Ia signals, Ib signals, and PF network output, to
+the motor neurons. These motor neurons output their activity to muscles to
+drive contraction and relaxation. Figure 3 details the connections of the used
+sensorimotor network.
+Muscles provide feedback through aﬀerent receptors. Both Ia and Ib signals
+are used in the feedback for the sensorimotor network. The Ia signals cause
+an interneuron to discharge at a rate that is proportional to the velocity of
+stretch in the muscle. The Ib signals cause an interneuron to discharge at a rate
+6 B. Bolen and C. Morrow
+Fig. 3: Example conﬁguration of a sensorimotor network, who receives input from the
+pattern formation layer.
+proportional to the tension in the muscle. These feedback signals help reinforce
+the step and swing in the model as well as signaling when the leg should begin
+switching between the two modes.
+3 Results
+The oscillating signals from the diﬀerent neural networks create a stepping pat-
+tern in the bipedal biomechanical model. The RG, PF, and motor neurons os-
+cillate their levels of activation once the simulation is initiated. Figure 4 shows
+that each couple neuron pair switches its voltage with a frequency of 4 Hz. The
+output from these neurons drive the activation of the muscles on the model. As
+one muscle in an antagonistic muscle pair begins to contract, the other extends.
+This creates rotation about the joint (Figure 5). These ﬁgures show the results
+from the left sided limbs, which are mirrored for the right side limbs. The model
+is also suspended in the air. When the model is lowered to a platform below it,
+it is unable to use the gait patterns to generate forward motion.
+4 Discussion
+The results show that a neural network comprised of a rhythm generator layer,
+pattern formation layer, and sensorimotor layer can be used to actuate and drive
+a bipedal model in a manner similar to gait. All layers of the network activate
+Design of a Bipedal Walker Controlled by a CPG Network in Animatlab 7
+Fig. 4: Output from the rhythm generation layer (top), pattern formation layer (mid-
+dle), and motor neurons in the sensorimotor layer (bottom).
+at frequencies that are in phase with one another and the motor neuron outputs
+properly actuate the muscles that drive the physical model.
+The timing of the oscillation is faster than typical human gait, which is ap-
+proximately 1 Hz [5]. The current model has a gait frequency of 4 Hz. This quick
+timing frequency can be adjusted by altering the activation and deactivation val-
+ues for the sodium channels.
+As the model moves, all joints move to their maximum and minimum po-
+sitions. This abrupt collision in the model can be corrected by adjusting the
+stimulus tension values for the individual muscles. Muscles are stimulated by
+the motor neurons and output a tension that is dictated by a polynomial curve
+in Animatlab. By adjusting the values of this polynomial curve, the high ten-
+sion values of the muscles can be lowered so that the joints don’t reach their
+maximum and minimum values as quickly.
+5 Conclusion
+This work demonstrates the construction of a bipedal walker that is controlled
+with a 2 layer CPG hierarchy. The rhythm generator CPG network, located at
+8 B. Bolen and C. Morrow
+Fig. 5: Angle of the body joints as they are stimulated: hip (top), knee (middle), and
+ankle (bottom).
+the top of the network hierarchy, is initiated by a stimulus of 10 nA for a duration
+of 1 ms, and creates a timing system for the rest of the networks. The pattern
+formation networks take in the output from the rhythm generator to create step
+timing frequency for the sensory motor networks. The sensory motor networks
+take in the pattern formation output as well as aﬀerent signals from the muscles
+to modulate step timing. The signals from the sensory motor network drive pair
+of antagonistic muscles about a hip, knee, and ankle joint. Muscle tension and
+velocity feedback into the sensory motor network.
+The model is able to generate gait like stepping motions, however when low-
+ered to the ground, it is unable to walk. Walking can be generated with further
+tuning of neural and muscle parameters, as well as implementation of more feed-
+back systems. By adjusting the activation and deactivation of the sodium channel
+parameters, the model will more closely resemble the kinematics of human gait,
+which will aid it while walking. By implementing more feedback systems, such
+as heel and toe contact, the model will be able to modulate its stepping motion.
+Contact sensors will help the neural network know when swing and stance are
+necessary, by reinforcing stance when the model is supporting all of its weight on
+one leg, while then reinforcing swing motions as the force on the contact sensor
+begins to decrease.
+Design of a Bipedal Walker Controlled by a CPG Network in Animatlab 9
+The model is a considerable step towards building biomimetic humanoid
+robots. By studying and analysing the motion that the model is capable of in
+simulation, similar systems can be physically built.
+References
+1. Cofer, D., Cymbalyuk, G., Reid, J., Zhu, Y., Heitler, W.J., Edwards, D.H.: Animat-
+Lab: A 3D graphics environment for neuromechanical simulations. Journal of Neu-
+roscience Methods 187(2), 280–288 (Mar 2010), https://linkinghub.elsevier.com/
+retrieve/pii/S0165027010000087
+2. Danner, S.M., Shevtsova, N.A., Frigon, A., Rybak, I.A.: Computational modeling
+of spinal circuits controlling limb coordination and gaits in quadrupeds. eLife 6,
+e31050 (Nov 2017), https://elifesciences.org/articles/31050
+3. Deng, K., Szczecinski, N.S., Arnold, D., Andrada, E., Fischer, M.S., Quinn, R.D.,
+Hunt, A.J.: Neuromechanical Model of Rat Hindlimb Walking with Two-Layer
+CPGs. Biomimetics 4(1), 21 (Mar 2019), https://www.mdpi.com/2313-7673/4/
+1/21
+4. Ijspeert, A.J.: Central pattern generators for locomotion control in animals and
+robots: a review. Neural networks : the oﬃcial journal of the International Neu-
+ral Network Society 21(4), 642–653 (May 2008), http://www.ncbi.nlm.nih.gov/
+pubmed/18555958
+5. Kadaba, M.P., Ramakrishnan, H.K., Wootten, M.E.: Measurement of lower extrem-
+ity kinematics during level walking. Journal of Orthopaedic Research 8(3), 383–392
+(May 1990), http://doi.wiley.com/10.1002/jor.1100080310
+6. Li, W., Szczecinski, N.S., Quinn, R.D.: A neural network with central pattern
+generators entrained by sensory feedback controls walking of a bipedal model.
+Bioinspiration & Biomimetics 12(6), 065002 (Oct 2017), https://doi.org/10.1088%
+2F1748-3190%2Faa8290
+7. McCrea, D.A., Rybak, I.A.: Organization of mammalian locomotor rhythm and
+pattern generation. Brain Research Reviews 57(1), 134–146 (Jan 2008), https://
+linkinghub.elsevier.com/retrieve/pii/S0165017307001798
+8. Zhang, J., Lanuza, G., Britz, O., Wang, Z., Siembab, V., Zhang, Y., Velasquez,
+T., Alvarez, F., Frank, E., Goulding, M.: V1 and V2b Interneurons Secure the Al-
+ternating Flexor-Extensor Motor Activity Mice Require for Limbed Locomotion.
+Neuron 82(1), 138–150 (Apr 2014), https://linkinghub.elsevier.com/retrieve/pii/
+S0896627314001111
