@@ -1,0 +1,596 @@
+[
+ {
+  "n": 1,
+  "texts": [
+   "Movement and Control of | Biomimetic Humanoid Robots",
+   "Dissertation Defense",
+   "Ben P. Bolen",
+   "Advisor: M. Anthony Hunt, Ph.D."
+  ],
+  "notes": true,
+  "notes_head": "Good morning. Committee members, thank you for reading the dissertation. Today: four objectives - characterize the actuator, validate and co"
+ },
+ {
+  "n": 2,
+  "texts": [
+   "ROADMAP",
+   "Four objectives connect one actuator to a robot that walks under neural control",
+   "Dissertation Ch. 1 §1.3 (research objectives); outcomes in Ch. 3-7",
+   "01"
+  ],
+  "notes": true,
+  "notes_head": "One sentence per objective, mirroring Ch. 1 sec 1.3: objective 1 (Ch. 3) is published as Bolen et al. 2026, Actuators; objective 2 (Ch. 4) s"
+ },
+ {
+  "n": 3,
+  "texts": [
+   "THE PROJECT",
+   "A humanoid robot from the trunk down: human-like body plan, synthetic nervous system",
+   "Dissertation Ch. 1 §1.2; Bolen & Hunt 2019; Morrow et al. 2020; Steele 2018; Scharzenberger et al. 2019",
+   "converted leg model, 92 muscle paths"
+  ],
+  "notes": true,
+  "notes_head": "Ground the committee: this dissertation is the actuator-and-joint foundation of the AARL humanoid program (Ch. 1, sec. 1.2). The converted m"
+ },
+ {
+  "n": 4,
+  "texts": [
+   "WHY BIOMIMETIC ROBOTS",
+   "Robots run neuromechanical experiments that are impossible in living subjects",
+   "Dissertation Ch. 1 §1.1; Ijspeert 2020; Shin et al. 2018; photo: Asano et al. 2016, Humanoids",
+   "Biology | anatomy · architecture · afferents"
+  ],
+  "notes": true,
+  "notes_head": "The biology professor on the committee will recognize this loop: model, perturb, understand. The experiments listed are the ones the introdu"
+ },
+ {
+  "n": 5,
+  "texts": [
+   "THE ACTUATOR",
+   "Braided pneumatic actuators: muscle-like strengths, and three modeling headaches",
+   "Dissertation Ch. 1 §1.1 + Ch. 2; Hunt et al. 2017; Sárosi et al. 2012-2017; Martens & Boblan 2017; Festo DMSP ",
+   "Festo DMSP-10/20"
+  ],
+  "notes": true,
+  "notes_head": "Sets up gap 1. Force peaks AT resting length - unlike a biological muscle whose optimum is mid-range (Ch. 3, biomimetic-analogy discussion)."
+ },
+ {
+  "n": 6,
+  "texts": [
+   "PROBLEM STATEMENT",
+   "Four gaps stood between the existing design and a robot that walks under neural control",
+   "Dissertation Ch. 1 §1.1 (summary paragraph) + §1.3",
+   "GAP 1"
+  ],
+  "notes": true,
+  "notes_head": "The four gaps are the introduction's own summary (Ch. 1, sec. 1.1, closing paragraph). Anticipated question: why is gap 4 in the literature "
+ },
+ {
+  "n": 7,
+  "texts": [
+   "CH. 3 · MUSCLES",
+   "A custom jig measured isometric force across resting length, pressure, and contraction",
+   "Dissertation Ch. 3 §3.1 (test jig); Bolen, Elzein, Pang, and Hunt 2026, Actuators",
+   "DIAMETERS | 10 mm and 20 mm Festo DMSP"
+  ],
+  "notes": true,
+  "notes_head": "Hardware slide - one breath. The point: wide l0 range, both diameters, 537 pairs. Anticipated question: how is contraction set? Answer: the "
+ },
+ {
+  "n": 8,
+  "texts": [
+   "CH. 3 · MUSCLES",
+   "Maximum isometric force depends on resting length - a previously unreported characteristic",
+   "Dissertation Ch. 3 §3.2 (F₆₂₀ vs l₀); Bolen et al. 2026, Actuators, Figs. 2-3",
+   "φ 10 mm:  F₆₂₀ vs l₀"
+  ],
+  "notes": true,
+  "notes_head": "The discovery slide. Festo's own tool predicts the OPPOSITE trend - force rising as length shrinks. Anticipated question: is the length effe"
+ },
+ {
+  "n": 9,
+  "texts": [
+   "CH. 3 · MUSCLES",
+   "Two coefficients per diameter capture the resting-length effect",
+   "Dissertation Ch. 3 §§3.1-3.2 (equations + coefficient table); Bolen et al. 2026, Actuators, Eqs. 4-6; fit: non",
+   "LIMITS BEHAVE | l₀ → ∞:   470 N (10 mm) vs Festo 490 N | within Festo's stated 10% manufacturing tolerance (20"
+  ],
+  "notes": true,
+  "notes_head": "Math committee: arctan form, bounded asymptote, physical offset from end-cap contact in CAD. Anticipated question: why an arctan? Answer: th"
+ },
+ {
+  "n": 10,
+  "texts": [
+   "CH. 3 · MUSCLES",
+   "At short resting lengths the manufacturer's tool mis-predicts force by 42%",
+   "Dissertation Ch. 3 §3.3 (discussion: effects of resting length); example: φ10 mm, l₀ = 112 mm, 620 kPa",
+   "error:  4.5% (ours)  vs  42.1% (Festo)"
+  ],
+  "notes": true,
+  "notes_head": "The design-relevant failure: anyone specifying BPAs under 300 mm gets burned by the tool. Anticipated question: is 42% within Festo's tolera"
+ },
+ {
+  "n": 11,
+  "texts": [
+   "CH. 3 · MUSCLES",
+   "All 537 measurements collapse onto one dimensionless force surface",
+   "Dissertation Ch. 3 §3.2 (normalized surface); ε* = ε/ε₆₂₀,  P* = P/620 kPa",
+   "F*(ε*, P*) - φ10 mm, pressure isoclines"
+  ],
+  "notes": true,
+  "notes_head": "Normalization by each muscle's own F620 and eps620 is what makes one surface fit all lengths. Anticipated question: does eps620 need to be m"
+ },
+ {
+  "n": 12,
+  "texts": [
+   "CH. 3 · MUSCLES",
+   "Three coefficients per diameter: force predicted out-of-sample to a few percent",
+   "Dissertation Ch. 3 §3.2 (F* coefficient + goodness-of-fit table); 80/20 train/validation split",
+   "adj. R² (fit)"
+  ],
+  "notes": true,
+  "notes_head": "Stress: validation is 20% held out, and max error under ~11% everywhere - at ANY length. Anticipated question: what do the max errors mean? "
+ },
+ {
+  "n": 13,
+  "texts": [
+   "CH. 3 · MUSCLES",
+   "Lowest error of the compared models at every diameter and length tested",
+   "Dissertation Ch. 3 §3.3 (comparison with published BPA models); Bolen et al. 2026, Actuators, Fig. 5 + Table 3",
+   "measured vs predicted; y = x is perfect fit"
+  ],
+  "notes": true,
+  "notes_head": "Sarosi params come from specific lengths - extrapolation is where they fail. Martens is geometry-sensitive. Anticipated question: why does M"
+ },
+ {
+  "n": 14,
+  "texts": [
+   "CH. 3 → CH. 4",
+   "The force model is two cheap maps - built to sit inside a real-time controller",
+   "Dissertation Ch. 3 §3.3 (implications for real-time control and simulation); dynamics complement: Elzein et al",
+   "MAP 1"
+  ],
+  "notes": true,
+  "notes_head": "Static map = feedforward actuator model inside the controller (lookup table). Valve-airflow dynamics are the Elzein layer. Anticipated quest"
+ },
+ {
+  "n": 15,
+  "texts": [
+   "CH. 4 · ISOMETRIC KNEE TORQUE",
+   "Two test stands: a pinned knee exposes the losses; the biomimetic four-bar validates them",
+   "Dissertation Ch. 4 (Isometric Knee Torque), robot leg model and test stands; four-bar knee: Steele et al. 2018",
+   "pinned-joint stand (CAD + test photo)"
+  ],
+  "notes": true,
+  "notes_head": "Bone geometry from scans of a 6 ft (1.83 m) person. Both joints share the same center of rotation in the femur frame at 0 deg, and the knee "
+ },
+ {
+  "n": 16,
+  "texts": [
+   "CH. 4 · HYBRID METHOD",
+   "The hybrid method shows the error is kinematic, not force",
+   "Ch. 4, Fig. FlxPin_group A-B (pre-optimized pinned flexor); manuscript bolen_isometric_2025 (in prep.)",
+   "yellow = hybrid; it sits on the blue measured dots where they agree - that agreement is the result | blue = me"
+  ],
+  "notes": true,
+  "notes_head": "Yellow = hybrid (measured Lm and rk + model force). It tracks measurement, so the validated force model is not the problem; the kinematics w"
+ },
+ {
+  "n": 17,
+  "texts": [
+   "CH. 4 · IMPROVED MODEL",
+   "Three physical effects close the gap: length offset, series compliance, wrap loss",
+   "Ch. 4, improved torque model (Eqs. lm, K_br, delta-l); bracket frames: Fig. bktFrame; two-bracket projection: ",
+   "χ₀ · constant length offset"
+  ],
+  "notes": true,
+  "notes_head": "chi1/chi2 are EFFECTIVE system stiffness terms (bracket, fixtures, winch, and tendon lumped together), not literal beam stiffness; every sti"
+ },
+ {
+  "n": 18,
+  "texts": [
+   "CH. 4 · IDENTIFICATION PROTOCOL",
+   "Terms identified by multiobjective optimization, judged on held-out tests",
+   "Ch. 4, identification (gamultiobj / NSGA-II, Deb 2002); bounds: Appendix C, Table C.3 (app_opt_bounds)",
+   "5 pinned-flexor tests | (48.5 / 45.7 / 47.9 / 40.6-tendon / 41.0 cm)"
+  ],
+  "notes": true,
+  "notes_head": "gamultiobj: flexor two-bracket fit evolves 150 for up to 600 generations, extensor refit 50 for 150; parameters searched normalized (cm, log"
+ },
+ {
+  "n": 19,
+  "texts": [
+   "CH. 4 · PINNED FLEXOR",
+   "With corrections, prediction tracks measurement - including the dip at small angles",
+   "Ch. 4, Fig. FlxPin_group C-D; Table TorqueFit rows 1-2 (initial single-bracket identification)",
+   "blue = measured · dashed orange = BPA characterization alone · magenta = optimized prediction"
+  ],
+  "notes": true,
+  "notes_head": "Panels C (left) and D (right) of Fig. FlxPin_group. Panel C: fit on the 48.5 cm BPA (the panel title reads 48.0 cm; the chapter caption and "
+ },
+ {
+  "n": 20,
+  "texts": [
+   "CH. 4 · PINNED FLEXOR",
+   "Corrections cut flexor training-mean RMSE from 8.12 to 1.56 N·m; held-out validates at 2.29",
+   "Ch. 4, Table FlxPinGof (corrected model, adopted terms); Appendix C, Table app_gof",
+   "FVU (all five tests) | 0.17 / 0.05 / 0.16 / 0.04 / 0.03 | * 47.9 cm test | encoder-corrected, never trained on"
+  ],
+  "notes": true,
+  "notes_head": "Zero-correction per-test RMSE spans 6.37-9.69 N-m (improved BPA characterization alone); corrected FVU stays at or below 0.17 on all five te"
+ },
+ {
+  "n": 21,
+  "texts": [
+   "CH. 4 · PINNED EXTENSOR",
+   "The extensor wraps the joint - and χ₃ recovers the length it loses there",
+   "Ch. 4, Table ExtPinGof + follow-up identification (adopted χ values); wrap loss: Eq. Δl = χ₃ R |Δθ| ζ²",
+   "χ₀ = −6.38 mm | extensor length offset: OPPOSITE sign to the flexor's +3.94 mm"
+  ],
+  "notes": true,
+  "notes_head": "Validation test 45.7 cm: RMSE 2.178 to 0.490 N-m, FVU 1.059 to 0.054. The stiffness pair is locked to the flexor-identified values and never"
+ },
+ {
+  "n": 22,
+  "texts": [
+   "CH. 4 · VALUES OF RECORD",
+   "One stiffness pair of record spans the flexor and extensor configurations",
+   "Appendix C, Table app_xi_values; flexor front row 77 of 212, extensor flxr77 row 32",
+   "Term"
+  ],
+  "notes": true,
+  "notes_head": "Mats of record: minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat row 77, and minimizeExt10mmX3_results_20260920_flxr77.mat row 32 (pa"
+ },
+ {
+  "n": 23,
+  "texts": [
+   "CH. 4 · BIOMIMETIC KNEE",
+   "The biomimetic knee meets or exceeds human flexor torque over most of the range of motion",
+   "Ch. 4, Fig. FlxGrp + Table TorqueFit; human curve: Gait2392 maximum-isometric torque (Delp 2007; Seth 2018)",
+   "blue = measured · magenta = corrected prediction · dashed orange = BPA characterization alone · black dotted ="
+  ],
+  "notes": true,
+  "notes_head": "Pinned-flexor chi values transferred unchanged. Panel A: ⌀10 mm, l0 = 41.5 cm, 21 mm tendon, 604 kPa, RMSE 0.3007, FVU 0.0102, max 0.4647. P"
+ },
+ {
+  "n": 24,
+  "texts": [
+   "CH. 4 · BIOMIMETIC KNEE",
+   "Biomimetic extensor: corrections cut the error, but prediction still sits above measurement",
+   "Ch. 4, Fig. Ext10mm_52cm + Table TorqueFit; adopted values: Appendix C, adopted correction-term values",
+   "⌀10 mm extensor on the four-bar knee, l₀ = 51.8 cm"
+  ],
+  "notes": true,
+  "notes_head": "Measured torque is significantly smaller than both the original and the hybrid predictions; the corrected prediction more closely matches bu"
+ },
+ {
+  "n": 25,
+  "texts": [
+   "CH. 4 · ROUTE REDESIGN",
+   "The χ values of record drive a redesign ladder: direct routes, a cam, then pulleys",
+   "Ch. 4, follow-up identification and route redesign + redesigned-route results; solver: surrogateopt → patterns",
+   "1 · DIRECT ROUTES | two ⌀20 mm BPAs each |  | flexor  +5.01% @ −107° | extensor  +5.02% @ −20.2° | (later supe"
+  ],
+  "notes": true,
+  "notes_head": "Direct flexor: predicted knee-axis torque -81.23 to -3.86 N-m vs human-scaled requirement -23.16 to -2.46 N-m (peak 23.16), exceeded at ever"
+ },
+ {
+  "n": 26,
+  "texts": [
+   "CH. 4 · ROUTE REDESIGN",
+   "The cam extensor is the design of record: +30.83% margin with hardware-safe geometry",
+   "Ch. 4, redesigned-route results (cam paragraph); figure: Mesh_Optimization\\Results\\Vas_Pam_20mm_cam_winner_4.p",
+   "extensor cam, design of record: moment arm vs knee angle"
+  ],
+  "notes": true,
+  "notes_head": "The final geometry folds the optimizer winner together with a verified adjustment of the distal route point and tendon length; the winner al"
+ },
+ {
+  "n": 27,
+  "texts": [
+   "CH. 4 · ROUTE REDESIGN",
+   "Pulleys buy reach at the knee, and screen the anatomy: geometry binds, not torque",
+   "Ch. 4, mono- and bi-pulley tendon routing + Table bipulley_batch",
+   "MONO-PULLEY · KNEE FLEXOR | 81.23 → 85.74 N·m | peak predicted flexion torque (knee axis), single tackle-line "
+  ],
+  "notes": true,
+  "notes_head": "Pulley run: collision-feasible, zero bound violations, pattern-search exit flag 1; objective values are not commensurable across families (0"
+ },
+ {
+  "n": 28,
+  "texts": [
+   "CH. 5 · SENSORY AFFERENT DATABASE",
+   "A century of scattered afferent physiology, consolidated into one audited, offline-searchable resource",
+   "Dissertation Ch. 5 (§A Structured Afferent Resource, §Audited Corpus and Curation Coverage); Bolen et al., SfN",
+   "the packaged SADb Explorer: single file, runs offline in a browser · table view with curation-state tags"
+  ],
+  "notes": true,
+  "notes_head": "Provenance: the database's three homes did not agree, so the 2026 campaign opened with a record-by-record reconciliation on DOI and normaliz"
+ },
+ {
+  "n": 29,
+  "texts": [
+   "CH. 5 · SENSORY AFFERENT DATABASE",
+   "The machine drafts at scale; the vocabulary, every judgment call, and every deletion stay human",
+   "Dissertation Ch. 5 (§A Structured Afferent Resource, §AI-Assisted Literature Triage); Bolen et al., SfN 2024",
+   "RECONCILE | Zotero 538 + group 911 + Airtable 99, matched record by record on DOI and title"
+  ],
+  "notes": true,
+  "notes_head": "Evidence detail: 374 papers machine-drafted in fifteen batches, each batch passing automated vocabulary, abstract-paste, and duplicate gates"
+ },
+ {
+  "n": 30,
+  "texts": [
+   "CH. 5 · SENSORY AFFERENT DATABASE",
+   "A pathway record maps to a circuit edge: class fixes the signal, phase fixes the gating, action fixes the sign",
+   "Dissertation Ch. 5, Tables 5.1-5.2 (§Toward Robot and Simulation Use); Ch. 6 implements the mammalian subset",
+   "THE CONTROLLER'S SENSORY CHANNELS"
+  ],
+  "notes": true,
+  "notes_head": "Evidence detail: the Feedback table's naming grammar (afferent, action, side, joint, phase) is the same grammar a circuit edge needs, so tra"
+ },
+ {
+  "n": 31,
+  "texts": [
+   "CH. 6 · SYNTHETIC NERVOUS SYSTEM · PRIOR WORK",
+   "The direct ancestor: a hand-tuned AnimatLab bipedal walker whose limits set the verification-first agenda",
+   "Dissertation Ch. 6 §Prior Work (with C. Morrow); Li et al. 2017; Deng et al. 2019; 2021 NIH BRAIN Initiative M",
+   "the working project: biomechanical body at initialization"
+  ],
+  "notes": true,
+  "notes_head": "Evidence detail: nine rigid bodies, sagittal-plane hinges, antagonistic Hill-type pairs at the hip, knee, and ankle, and the author's passiv"
+ },
+ {
+  "n": 32,
+  "texts": [
+   "CH. 6 · SYNTHETIC NERVOUS SYSTEM · TOOLCHAIN",
+   "A toolchain that did not exist: audited model conversion, BPA force inside the loop, and SNS blocks in Simulin",
+   "Dissertation Ch. 6 §A Neuromechanical Simulation Toolchain; MyoConverter (Caggiano 2022); SNS-Toolbox (Nourse ",
+   "converted robot, reference pose"
+  ],
+  "notes": true,
+  "notes_head": "Evidence detail: no physics engine carried the robot's custom muscle routing together with the BPA force model and an SNS, so the pipeline i"
+ },
+ {
+  "n": 33,
+  "texts": [
+   "CH. 6 · SYNTHETIC NERVOUS SYSTEM · VERIFICATION",
+   "The contact-driven rhythm core, rebuilt in two engines: exact period agreement, trace r ≥ 0.99996",
+   "Dissertation Ch. 6 §Cross-Platform Verification (NumPy reference vs native Simulink; 12 s runs at a 2 ms step,",
+   "left / right RG extensor voltages: NumPy reference vs Simulink"
+  ],
+  "notes": true,
+  "notes_head": "Evidence detail: the harness is defined around the W2L contact-driven core - four rhythm-generator half-centers built from spiking neurons w"
+ },
+ {
+  "n": 34,
+  "texts": [
+   "CH. 6 · SYNTHETIC NERVOUS SYSTEM · END-TO-END CHAIN",
+   "The characterized BPA model drives a stepping, multi-joint walker in MuJoCo",
+   "Dissertation Ch. 6 §BPA-Actuated Walker in MuJoCo — air-stepping gate; ground failures reported with equal wei",
+   "non-spiking — the chapter's air gate: | knee flexion + rhythm-generator drive | artifact: bpa_ns_best_20261003"
+  ],
+  "notes": true,
+  "notes_head": "Evidence detail: the walker geometry of the prior AnimatLab model exported to MuJoCo and driven by antagonistic BPA pairs under the split co"
+ },
+ {
+  "n": 35,
+  "texts": [
+   "CH. 6 · SYNTHETIC NERVOUS SYSTEM · HONEST SCOPE CHECK",
+   "Tuning to one reference transfers poorly: 43 diverse human reference cycles score one to two orders worse",
+   "Dissertation Ch. 6 §Gait-Validation Sweep, Table 6.1 — library: 32 running + 10 walking + 1 predicted cycle",
+   "CYCLE-SHAPE KINEMATIC SCORE (0 = PERFECT)"
+  ],
+  "notes": true,
+  "notes_head": "Evidence detail: the library holds 32 running trials from eight subjects at four speeds, ten walking references (seven prescribed, 0.5-2.0 m"
+ },
+ {
+  "n": 36,
+  "texts": [
+   "CH. 6 · SYNTHETIC NERVOUS SYSTEM · STIMULUS AND DELETION",
+   "The laboratory's first lesion and stimulus experiments read like the physiology they imitate",
+   "Dissertation Ch. 6 §Stimulus and Deletion Experiments, Table 6.2; cf. deafferentation: Akay 2014; Lam 2002; Se",
+   "PATHWAY REMOVAL · PRODUCTION CONFIGURATION (s3k)"
+  ],
+  "notes": true,
+  "notes_head": "Evidence detail: the sweep removes one pathway class at a time and re-evaluates the tuning-reference score; minus 25 is the fixed no-cycle f"
+ },
+ {
+  "n": 37,
+  "texts": [
+   "CH. 6 · SYNTHETIC NERVOUS SYSTEM · CODING ASSUMPTION",
+   "Spiking mirrors of every simulation family, judged by gates — not by eyeball",
+   "Dissertation Ch. 6 §Spiking-Neuron Mirror Results (gated verification campaign; motor neurons stay non-spiking",
+   "constant drive, network alone: analog 0.399 s vs spiking envelope 0.621 s (+55.6%)"
+  ],
+  "notes": true,
+  "notes_head": "Evidence detail: the non-spiking baselines were re-established first - all three production configurations reproduce their documented scores"
+ },
+ {
+  "n": 38,
+  "texts": [
+   "CH. 6 · SYNTHETIC NERVOUS SYSTEM · CODING ASSUMPTION",
+   "Spiking changes timing and robustness; it does not change the interface — and it forbids parameter copies",
+   "Dissertation Ch. 6 §What Spiking Changes and Does Not (knee-reflex and beverage twins; AnimatLab conversions)",
+   "UNCHANGED — THE INTERFACE | motor neurons stay graded · knee transient identical (15.79° at 0.05 s) · settle +"
+  ],
+  "notes": true,
+  "notes_head": "Evidence detail: with only the sensory interneuron layer converted, the knee-reflex transient is identical - both read 15.79 degrees at 0.05"
+ },
+ {
+  "n": 39,
+  "texts": [
+   "CH. 7 · DISCUSSION · SYNTHESIS",
+   "Each stage feeds the next: actuator → joint → balance hardware → afferent database → neuromechanical laborator",
+   "Dissertation Ch. 7 §Synthesis (chapters 3-6 supply the links)",
+   "ACTUATOR"
+  ],
+  "notes": true,
+  "notes_head": "Evidence detail: the force model supplies the actuator terms of the torque model; the torque model supplies the biomechanical model for desi"
+ },
+ {
+  "n": 40,
+  "texts": [
+   "CH. 7 · DISCUSSION · HONEST BOUNDARIES",
+   "What these results do not claim",
+   "Dissertation Ch. 7 + chapter-level limitations (Chs. 3-6)",
+   "Static, isometric models | hysteresis and dynamics set aside by design; ε₆₂₀ not predictable a priori — measur"
+  ],
+  "notes": true,
+  "notes_head": "These are stated by the dissertation itself. Actuator level: the models are static and isometric - hysteresis, thermodynamics, and airflow a"
+ },
+ {
+  "n": 41,
+  "texts": [
+   "CH. 7 · DISCUSSION · FUTURE WORK",
+   "The program the tools define: close the loop, extend the sensorium, build the robot, then maneuver",
+   "Dissertation Ch. 7 §Future Work (closing the loop in simulation; sensorium, physical realization, whole-body m",
+   "1 · CLOSE THE LOOP | resolve the non-finite leg-joint blocker · staged validation: open-loop → contact + one p"
+  ],
+  "notes": true,
+  "notes_head": "Evidence detail: the nearest work is the closed loop itself - much of the pipeline is already in place and the remaining blocker is the non-"
+ },
+ {
+  "n": 42,
+  "texts": [
+   "Acknowledgments",
+   "ADVISOR | M. Anthony Hunt",
+   "COMMITTEE | thank you for reading, commenting, and being here",
+   "COLLABORATORS | M. Elzein · L. Pang · L. Burgess · C. Morrow · J. Scharzenberger · C. Steele · J. Chung"
+  ],
+  "notes": true,
+  "notes_head": "Keep brief; thank by name. Committee members read the dissertation in full during the revision campaign - say so."
+ },
+ {
+  "n": 43,
+  "texts": [
+   "Thank you — questions?",
+   "Movement and Control of Biomimetic Humanoid Robots",
+   "Ben P. Bolen  ·  bbolen83@gmail.com",
+   "Appendix: model details, protocol, robustness checks"
+  ],
+  "notes": true,
+  "notes_head": "Anticipated questions route to the appendix: force-model coefficients and GoF decomposition (Appendices A-C), bracket geometry and adopted χ"
+ },
+ {
+  "n": 44,
+  "texts": [
+   "APPENDIX A · MODEL",
+   "The complete actuator force model",
+   "Dissertation Ch. 3, Eqs. (3.1), (3.4)–(3.6); reference implementation: App. A §A.3 (Functions/f_festo.m, maxBP",
+   "STRAIN MEASURES · EQ. (3.1)"
+  ],
+  "notes": true,
+  "notes_head": "Reference card for the actuator force model of Chapter 3 (muscles). Chain: strain (3.1) normalized by the recorded free-load contraction (3."
+ },
+ {
+  "n": 45,
+  "texts": [
+   "APPENDIX B · COEFFICIENTS",
+   "Coefficient values with 95% confidence intervals",
+   "Ch. 3 Tables 3.1–3.2 (published as Bolen et al. 2026, Actuators, Tables 1–2); fitting: App. A §A.3",
+   "F₆₂₀ arctan fits"
+  ],
+  "notes": true,
+  "notes_head": "Coefficients of record. Fitted with fittype nonlinear least squares + least-absolute-residual robustness, lower bounds [0,0,0] (App. A sect."
+ },
+ {
+  "n": 46,
+  "texts": [
+   "APPENDIX C · COMPARISON",
+   "Full goodness-of-fit against published BPA models",
+   "Ch. 3 Table 3.3; RMSE / max error in N; FVU = fraction of variance unexplained",
+   "Bolen RMSE"
+  ],
+  "notes": true,
+  "notes_head": "Comparison of record against Sarosi and Martens-and-Boblan. Fixed-parameter models degrade when moved off their fit length; Martens-Boblan s"
+ },
+ {
+  "n": 47,
+  "texts": [
+   "APPENDIX D · COMPLIANCE CHAIN",
+   "From bracket stiffness matrix to solved deflection",
+   "Ch. 4 Eqs. (4.18), (4.20), (4.22); implementation: App. A §A.5; frames and arrays: App. C §§C.3–C.4",
+   "1 · project compliance on the force direction · eq. (4.18)"
+  ],
+  "notes": true,
+  "notes_head": "One-dimensional nonlinear root-find per configuration: fzero on [0, l_m - l_620], converged to machine precision by bracket collapse; safegu"
+ },
+ {
+  "n": 48,
+  "texts": [
+   "APPENDIX E · WRAP LOSS",
+   "Wrapping-loss implementation, per contact arc",
+   "Ch. 4 Eqs. (4.24)–(4.26); implementation: App. A §A.6 (minimizeExtX3.m, Contraction); constants: App. C §C.4",
+   "PINNED EXTENSOR | two physical contact arcs: | R₁ = 12 mm from 27° to −23° | R₂ = 40 mm on the second bracket "
+  ],
+  "notes": true,
+  "notes_head": "The loss enters only the force-producing strain; the kinematic (prediction) strain excludes it. Anticipated question: is the loss double-cou"
+ },
+ {
+  "n": 49,
+  "texts": [
+   "APPENDIX F · PROTOCOL",
+   "Identification campaign details and data decisions",
+   "Ch. 4 §4.1 (identification); test constants: App. C §C.1; bounds and adopted values: App. C §§C.4–C.5",
+   "Encoder correction | the 47.9 cm flexor test’s measured angles carry a +5.3° correction at load time (App. C, "
+  ],
+  "notes": true,
+  "notes_head": "Protocol of record. Data rulings: the +5.3 degree encoder correction on the 47.9 cm flexor test (applied to experimental angles at load time"
+ },
+ {
+  "n": 50,
+  "texts": [
+   "APPENDIX G · INVARIANCE",
+   "Frame convention is irrelevant for y-symmetric stiffness arrays",
+   "Ch. 4 §4.1 (Improved Torque Model); bracket frames and arrays: App. C §§C.3–C.4",
+   "CLAIM (CH. 4, IMPROVED TORQUE MODEL) | Let K = diag(a, b, a); equal stiffness about x and z. For any frame who"
+  ],
+  "notes": true,
+  "notes_head": "Frame-convention invariance, proven in Ch. 4: a diagonal stiffness array is invariant under a rotation about y if and only if the two stiffn"
+ },
+ {
+  "n": 51,
+  "texts": [
+   "APPENDIX H · BRACKET DATA",
+   "Bracket reference points and adopted correction terms; recorded together",
+   "Reference points: App. C §C.3 (Table C-5); adopted values and provenance: App. C §C.5 (Table C-8)",
+   "Bracket reference points (mm)"
+  ],
+  "notes": true,
+  "notes_head": "Bracket data of record. Moving a reference point changes the identified stiffness values, so Appendix C records each point alongside the val"
+ },
+ {
+  "n": 52,
+  "texts": [
+   "APPENDIX I · KINEMATICS",
+   "Moment arm and torque conventions",
+   "Ch. 4 Eqs. (4.1)–(4.2); implementation: App. A §A.4 (MonoPamDataExplicit.m lines 156–168, 308); human targets:",
+   "CONVENTIONS | r = perpendicular foot of the joint origin onto the line of action; identical result to the cros"
+  ],
+  "notes": true,
+  "notes_head": "Moment-arm conventions. The robot side uses the perpendicular-foot construction of App. A sect. A.4; the human targets are computed in OpenS"
+ },
+ {
+  "n": 53,
+  "texts": [
+   "APPENDIX J · IMPLEMENTATION",
+   "Synthetic nervous system: Simulink library and spiking twin",
+   "Ch. 6 §6.2 (Figs. 6.5 and 6.11); spiking-twin numbers: Ch. 6 Table 6.4; neuron and synapse equations: App. B §",
+   "seven core masked blocks (library grows to 12, then 15 with the spiking additions); runs in base Simulink"
+  ],
+  "notes": true,
+  "notes_head": "Two parallel implementations: AnimatLab (prototyping and the archived reference models) and Simulink/MuJoCo (the pipeline). The Simulink lib"
+ },
+ {
+  "n": 54,
+  "texts": [
+   "APPENDIX K · WALKER NUMBERS",
+   "Walker configurations of record: scores, library sweep, and pathway deletions",
+   "Ch. 6 Table 6.1 (gait sweep) and Table 6.2 (pathway removal); drive perturbations: Ch. 6 §6.3",
+   "Gait-validation sweep (43-reference library)"
+  ],
+  "notes": true,
+  "notes_head": "Walker numbers of record for committee questions. Score is the cycle-shape kinematic score: 0 is perfect agreement, -25 the fixed no-cycle f"
+ }
+]

@@ -1,2523 +1,328 @@
 # AGENTS.md — Standing context for AI coding sessions in Bipedal_Robot
 
 Loaded automatically at session start. Keep it current; keep it lean.
+**Cleaned 2026-10-18 at Ben's mandate** (he ruled the stale results, old mat-file
+narratives, incorrect Xi values, HX711 detail, and old neuromechanics campaign logs
+were confusing sessions). Everything cut is preserved verbatim in this file's git
+history (diff against any pre-2026-10-18 revision) and in the referenced reports:
+`Code\MuJoCo_SNS\spinal\DESIGN.md` (spinal stack history), `spinal\reports_*\`
+(per-campaign reports), `Dig_out\` logs.
 
 ## Machines
 
-**2026-09-21 machine-ID guard (from a side-chat correction — read before the bullets):** check
-`hostname` FIRST and read only that machine's bullet (EB475WS4: `D:\Github\Bipedal_Robot`;
-easteregg2: `D:\GitHub\Bipedal_Robot`). The EB475WS4 paths (`C:\ProgramData\anaconda3`,
-`C:\Users\Ben Bolen\.conda\envs\myo`) do NOT exist on easteregg2 — that is a different
-machine, NOT staleness. easteregg2 Python = `D:\Anaconda`
-(base 3.11.5; envs `myo` 3.10.21 / `opensim` 3.11.16 / `d2l` / `gs`), NOT on PATH — call by FULL
-path. Bare `python` on PATH = Microsoft-Store stub (runs nothing — a PATH check falsely reads
-"no Python"). Ghostscript = `D:\Anaconda\envs\gs\Library\bin\gswin64c.exe` (conda env, NOT
-MATLAB-bundled). The env notes below are current — do not "fix" them over a machine mix-up.
+**Machine-ID guard: check `hostname` FIRST and read only that machine's bullet.**
+Paths in the wrong machine's bullet do not exist elsewhere — that is a different
+machine, NOT staleness.
 
-- **EB475WS4 (third machine, added 2026-09-10)** — repo at `D:\Github\Bipedal_Robot`,
-  has a D: drive but **no `D:\Anaconda`** (the easteregg2 notes below don't apply here).
-  Anaconda base = `C:\ProgramData\anaconda3` (conda 26.5.3; NOT writable — env creation
-  fails under ProgramData and `D:\Users\...`). Spinal SNS env = **conda env `myo` at
-  `C:\Users\Ben Bolen\.conda\envs\myo`** (py3.10.21; pip numpy **1.22.4** — scipy 1.9.3
-  needs the 1.22 ABI, the easteregg2 pin 1.21.6 fails with "compiled against API version
-  0xf"; + mujoco 2.3.7 + sns-toolbox 1.5.2 --no-deps + torch 2.14 cpu --no-deps +
-  filelock/typing-extensions/sympy/networkx/jinja2/fsspec/graphviz/tqdm + scipy 1.9.3 +
-  matplotlib 3.7.5). Call as `C:\Users\Ben Bolen\.conda\envs\myo\python.exe`. Second env
-  `MyoSuite` (py3.9, mujoco 3.1.2, MyoSuite 2.8.5, NO sns_toolbox) at
-  `D:\Users\Ben Bolen\.anaconda3\envs\MyoSuite`. No git CLI on PATH (Ben uses GitHub
-  Desktop). **Inline `python -c "multi-line"` gets EATEN by this shell — write script
-  files instead.** Hardware/installs (from the Sept-9 stash, still true): 12 logical
-  cores, 32 GB RAM — **not a heavy-runs box** (cap `parpool` ~6–8; long optimization
-  runs still belong on easteregg2). MATLAB **R2025a Update 1** at
-  `D:\Program Files\MATLAB\R2025a` (on PATH); PSU network license: `license('test')`
-  readings are unreliable here — trust a runtime test (Simulink/Simscape/Optimization/
-  Parallel/CurveFitting/Statistics and gamultiobj/surrogateopt/patternsearch all verified
-  RUNNING). **Simscape Multibody (`smimport`) is BLOCKED here** — the license server
-  reserves all SimMechanics seats (error 101.2), so the URDF→smimport CAD route cannot
-  run on this machine (it works on the laptop). SOLIDWORKS 2025 SP3 (33.3.0) at
-  `D:\Program Files\SOLIDWORKS Corp` (contains a duplicate `SOLIDWORKS (2)` folder, same
-  version); SW2URDF add-in registered (enable via Tools > Add-Ins); Simscape Multibody
-  Link NOT installed.
-  **2026-09-20 rebuild notes (after Ben replaced the C: drive; registry links to
-  D:-installed software were wiped):** VS Code 1.138 at `D:\Program Files\Microsoft VS
-  Code` — extensions (python/jupyter/matlab/latex-workshop/cpptools/xml) + settings
-  rebuilt; project `.vscode\` (untracked) + Desktop shortcut "Bipedal_Robot (VS Code)";
-  python interpreter = the myo env. **SW COM was broken** (LocalServer32 used 8.3 short
-  paths; 8.3 generation is disabled on D:) — fixed per-user via
-  `HKCU\Software\Classes\CLSID\{6AF263BB-EB9F-4176-89E9-4F892EB0CA3D}` → real path; API
-  verified (33.3.0) through the solidworks skill with **pywin32 now pip-installed in the
-  myo env**; `sw_session.py` gen_py fix (pip pywin32 caches in %TEMP%\gen_py — the old
-  site-packages guess failed; committed 2026-09-22 as f24322e in ZCode_Skills). NOTE
-  2026-09-22: the latex-overleaf SKILL.md MiKTeX note briefly credited DESKTOP-5Q16KE9 —
-  wrong machine (cross-machine mix-up); corrected in ZCode_Skills to EB475WS4. MiKTeX 22.1
-  (`D:\Program Files\MiKTeX`) was dead (its config died with the old registry) — removed;
-  complete package set installed **user-scope at `D:\MiKTeX`** (pdflatex
-  `D:\MiKTeX\miktex\bin\x64`, on user PATH; Ben declined the all-users/admin install for
-  now — staged one-click: `D:\temp\miktex_setup\elevated_install2.ps1` + local repo
-  `D:\temp\miktex-repo`). MATLAB R2025a U1 re-verified headless (Optimization + Simulink
-  license OK).
-- **DESKTOP-5Q16KE9 (laptop), the main workstation** — newest/premium
-  MATLAB + SolidWorks, but modest hardware (6 cores, 16 GB RAM). MATLAB **R2025b** at
-  `C:\Program Files\MATLAB\R2025b`; SOLIDWORKS **2025 SP4.1** (33.4.1) at
-  `C:\Program Files\SOLIDWORKS Corp`. Its GitHub repos live under
-  `C:\Users\Ben\Documents\GitHub\` — **no D: drive on this machine**. Conda =
-  `C:\Users\Ben\.anaconda3` — env `myoconv` (py3.10.21, mujoco 2.3.7,
-  sns-toolbox 1.5.2, numpy 1.25.2), call
-  `C:\Users\Ben\.anaconda3\envs\myoconv\python.exe`; also `snsenv`.
-  **MuJoCo↔Simulink bridge BUILT + PROVEN on R2025b here (2026-09-16; tests
-  a/b/c bit-exact, E1/E2 reproduced — BRIDGE_REPORT.md "LAPTOP PORT" section;
-  rebuild driver `mujoco_bridge\matlab\laptop_build_bridge.m`)**.
-  Simscape Multibody license WORKS on the laptop for smimport AND hand-built
-  models (E0 PASSES here; the block-ADD failure is EB475WS4-only) — Ben's
-  cylinder-elbow plant belongs on THIS machine.
-- **easteregg2 (desktop; sessions there read this file too)** — 10 cores, 128 GB RAM; older
-  installs (MATLAB R2025a, SOLIDWORKS 2025 SP03). Repos live under `D:\GitHub\`.
-  **Heavy parallel optimization runs belong on easteregg2**;
-  `parpool(10)` only makes sense there — on the laptop cap the pool at 6.
-  **Python = Anaconda at `D:\Anaconda`, NOT on PATH** (why PyCharm says "no python"):
-  call env pythons by full path — MuJoCo/SNS env = `D:\Anaconda\envs\myo\python.exe`
-  (py3.10, mujoco 2.3.7, sns-toolbox 1.5.2, opensim 4.4.1; this machine's name is `myo` —
-  `myoconv` is the laptop's copy of the same toolchain). Other envs: `opensim`
-  (py3.11 + opensim 4.6), `d2l`. PyCharm: Add Interpreter → Conda → executable
-  `D:\Anaconda\condabin\conda.bat` → existing env `myo` (never let PyCharm create a venv).
-  **ZCode tooling parity (2026-09-23):** Node v22.23.2 at `D:\NodeJS\node-v22.23.2-win-x64`
-  (user PATH) so npx-based MCP servers (mujoco-sns-walker's `zai-mcp-server`,
-  chrome-devtools-mcp) run here too; `ZAI_API_KEY` set user-level (never in the repo);
-  optuna 5.0.0 pip-added to `myo` (numpy pin 1.21.6 untouched; shared `optuna_walk.db`
-  is schema 12 — version-matched with EB475WS4). Restart ZCode to pick up new
-  PATH/env entries for MCP servers.
-  **SSH access (2026-09-28):** lab machines are SSH-reachable to each other. Setup
-  details (service/keys/firewall/host/user names) are kept in machine-local notes
-  only, NEVER in this repo — it is PUBLIC on GitHub (verified 2026-09-30). Verified
-  on easteregg2: repo at `D:\GitHub\Bipedal_Robot`, `optuna_walk.db` present, MATLAB
-  R2025a, `D:\Anaconda\envs\myo\python.exe` 3.10.21, **git CLI 2.54 on PATH there**
-  (unlike EB475WS4). Laptop DESKTOP-5Q16KE9 not SSH-set-up yet.
-- Custom skills are version-controlled in the `ZCode_Skills` repo. **EB475WS4: the repo is
-  at `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills`** (NOT `D:\GitHub\` — corrected
-  2026-09-16; easteregg2: `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills`
-  (MOVED there from `D:\GitHub\ZCode_Skills` 2026-10-17 at Ben's request, junctions
-  repointed, git intact at 62b9ef7); laptop: `Documents\GitHub\ZCode_Skills`).
-  **easteregg2: ALL repo-backed skills are junctions at `C:\Users\Ben Bolen\.agents\skills\`**
-  into `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills` (2026-09-23; mujoco/neuroscience/python/sns-toolbox/scone
-  added then, drift merged; `eiger` + `prusa-slicer` are easteregg2-local plain dirs; this
-  host's loader reads `.agents\skills`, EB475WS4's reads `.zcode\skills` — different names,
-  same junction pattern).
-  On EB475WS4 `C:\Users\Ben Bolen\.zcode\skills\` holds **directory junctions** into that
-  repo (verified 2026-09-16 23:24 — the earlier "plain copies under `.agents\skills\`"
-  note was wrong/stale; `.agents\skills` does not exist here). Live set, ALL junctions:
-  animatlab, latex-overleaf, matlab, mujoco, neuroscience, opensim, python,
-  sns-toolbox, solidworks, **scone** (added 2026-09-23: SCONE 2.4.4 at
-  `C:\Program Files\SCONE` — predictive neuromuscular sim, Geyer-Herr reflex gait,
-  CMA-ES; OpenSim3/4 backends verified headless, Hyfydy needs a free license key,
-  SconePy = py3.9-only → dedicated conda env `scone` at
-  `C:\Users\Ben Bolen\.conda\envs\scone`). **NEW skills added 2026-09-16**: `neuroscience` (CPG circuit
-  design: NaP half-centers/τh, laminated inhibition, commissural latch trap, curriculum
-  tuning), `mujoco` (converted-model pitfalls: contact pairs ignore contype, ligament
-  surrogates, muscle actuators), `python` (AARL workflow: inline-python trap, stdout
-  wrappers, background chains, optuna hygiene) — and `sns-toolbox` is now IN the repo
-  (updated with the backend-override trap + fixed-τh NaP measurements) and junctioned
-  like the rest. `opensim` gained a .sto/synergy-analysis section. The repo still carries
-  the retired `myoconverter/` folder (superseded by `opensim`). Edit the repo copy, then
-  Ben commits via GitHub Desktop.
+- **EB475WS4 (desktop, this repo at `D:\Github\Bipedal_Robot`)** — 12 logical cores,
+  32 GB RAM (not a heavy-runs box; cap `parpool` ~6–8). Anaconda base
+  `C:\ProgramData\anaconda3` (NOT writable). Spinal SNS env = **`myo`** at
+  `C:\Users\Ben Bolen\.conda\envs\myo\python.exe` (py3.10.21, numpy 1.22.4 — scipy
+  1.9.3 needs the 1.22 ABI, mujoco 2.3.7, sns-toolbox 1.5.2, optuna 5.0.0, torch cpu,
+  matplotlib 3.7.5). Second env `MyoSuite` (py3.9, mujoco 3.1.2) at
+  `D:\Users\Ben Bolen\.anaconda3\envs\MyoSuite`. **No git CLI on PATH** — use GitHub
+  Desktop's bundled git: `C:\Users\Ben Bolen\AppData\Local\GitHubDesktop\app-*\
+  resources\app\git\cmd\git.exe` (glob the app-* version; works for log/diff/show).
+  **Inline `python -c "multi-line"` gets EATEN by this shell — write script files.**
+  MATLAB R2025a U1 at `D:\Program Files\MATLAB\R2025a` (on PATH; Optimization,
+  Simulink, and gamultiobj/surrogateopt/patternsearch verified RUNNING headless;
+  `license('test')` is unreliable here — trust a runtime test). **Simscape Multibody
+  `smimport` is BLOCKED** (license server reserves all SimMechanics seats) — the
+  URDF→smimport route runs on the laptop, not here. SOLIDWORKS 2025 SP3 at
+  `D:\Program Files\SOLIDWORKS Corp` (SW2URDF add-in registered; SW COM fixed
+  per-user after the C:-drive rebuild — real CLSID path in HKCU, pywin32 pip-installed
+  in `myo`). MiKTeX user-scope at `D:\MiKTeX` (pdflatex
+  `D:\MiKTeX\miktex\bin\x64`, on user PATH; all-users install staged at
+  `D:\temp\miktex_setup\elevated_install2.ps1` if ever wanted). AnimatLab headless
+  runs here: `D:\Program Files (x86)\NeuroRobotic Technologies\AnimatLab\bin\
+  AnimatSimulator.exe`. SCONE 2.4.4 at `C:\Program Files\SCONE` (Hyfydy trial
+  licensed through 2026-10-24).
+- **DESKTOP-5Q16KE9 (laptop, main workstation)** — repos under
+  `C:\Users\Ben\Documents\GitHub\` (no D: drive). MATLAB R2025b, SOLIDWORKS 2025
+  SP4.1. Conda `C:\Users\Ben\.anaconda3`; SNS env `myoconv`
+  (`C:\Users\Ben\.anaconda3\envs\myoconv\python.exe`, py3.10.21, mujoco 2.3.7,
+  sns-toolbox 1.5.2, myoconverter editable). **MuJoCo↔Simulink bridge BUILT + PROVEN
+  here** (R2025b; rebuild driver `mujoco_bridge\matlab\laptop_build_bridge.m`).
+  **Simscape Multibody license WORKS here for smimport AND hand-built models** —
+  Ben's cylinder-elbow and CAD-import work belongs on this machine. Modest hardware
+  (6 cores, 16 GB) — cap `parpool` at 6. Not SSH-set-up (as of 2026-09-28).
+- **easteregg2 (heavy box, 10 cores, 128 GB RAM)** — repos under `D:\GitHub\`.
+  **Heavy parallel optimization runs belong here.** Python = Anaconda at `D:\Anaconda`,
+  NOT on PATH (bare `python` = Microsoft-Store stub): call
+  `D:\Anaconda\envs\myo\python.exe` (py3.10.21, mujoco 2.3.7, sns-toolbox 1.5.2,
+  opensim 4.4.1, optuna 5.0.0 — shared `optuna_walk.db` schema-matched with EB475WS4).
+  **git CLI 2.54 on PATH** (unlike EB475WS4). SSH-reachable from the other lab
+  machines (aliases `easteregg2` / `eb475ws4`; setup details machine-local only —
+  this repo is PUBLIC). MATLAB R2025a. Ghostscript at `D:\Anaconda\envs\gs\Library\bin`.
+- Custom skills are version-controlled in the `ZCode_Skills` repo (EB475WS4:
+  `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills`; easteregg2: same path — moved
+  there 2026-10-17 from `D:\GitHub\ZCode_Skills` at Ben's request, junctions
+  repointed, git history intact at 62b9ef7; laptop: `Documents\GitHub\ZCode_Skills`). On EB475WS4
+  `C:\Users\Ben Bolen\.zcode\skills\` holds directory junctions into that repo
+  (animatlab, latex-overleaf, matlab, mujoco, neuroscience, opensim, python,
+  sns-toolbox, solidworks, scone, dissertation). easteregg2 uses the same junction
+  pattern at `C:\Users\Ben Bolen\.agents\skills\`. Edit the repo copy; Ben commits.
 
 ## Project purpose (priority order)
 
-**Ben's prose preference:** always use the Oxford comma in lists of three or more items.
-Call the simulated bodies **models** (human model, W2L robot model) — never "plants"
-(Ben's ruling 2026-10-16; control-theory usage notwithstanding).
+**Ben's prose rules:** Oxford comma, always. Call the simulated bodies **models**
+(human model, W2L robot model) — never "plants". Minimal em-dashes.
 
-1. **Dissertation first** (deadline: this week, Sept 2026). LaTeX source lives in
-   `Documentation\Reports and Papers\Dissertation\` (repo-tracked as of 2026-09-08; the
-   `ProofFinal\` folder is the working copy and `upload\` mirror is the canonical Overleaf
-   copy). Use the `latex-overleaf` skill for Overleaf work (installed on this machine via the
-   ZCode_Skills repo junction). 2026-09-21: three Xi-methods figures (`xiFrameGeo` /
-   `xiBalance` / `xiWrapLoss.pdf`, in both figs/Aim2 dirs) wired into 20-methods.tex
-   (fig:xiFrames/xiBalance/xiWrapLoss). [2026-10-01: those figures are SUPERSEDED — the
-   live Methods set is the ChatGPT-session `xiFrameTransform`/`xiProjection` pair, no live
-   `\ref` references remain to the old set; their generator
-   `Dissertation\Notes\make_xi_method_figures.m` exists NOWHERE (searched laptop,
-   easteregg2, EB475WS4 + full git history at Ben's delete ruling — it was never
-   committed), and the three red-marked folders `CHATGPT_staging_20260925\`,
-   `Overleaf_review_20260926_yellow\`, `output\` were DELETED at Ben's same ruling
-   (git-recoverable).]
-   [2026-10-17 DISSERTATION RESTRUCTURE + REVISION CAMPAIGN — the state of record.
-   ProofFinal now holds the TOPIC-CHAPTER structure (advisor C12 + Ben's rulings):
-   10-introduction, 15-background, 20-muscles (titled after Ben's Actuators 15(5):230
+1. **Dissertation first.** Deadline: **submitted 2026-10-21; defended 2026-11-06**.
+   LaTeX source in `Documentation\Reports and Papers\Dissertation\ProofFinal\`
+   (+ sibling `Figures\<chapter>\` trees). Topic-chapter structure per the advisor's
+   C12 directive: 10-introduction, 15-background, 20-muscles (Ben's Actuators 15(5):230
    paper), 30-torque (WIP manuscript bolen_isometric_2025), 50-database, 60-sns
-   (tools-framed: goal, minimum demonstrations, stimulus/deletion experiments), 70-overall
-   ("Discussion"; future work in closing subsections), 80-conclusion, appendices 92/93/94;
-   the ankle/balance chapter was REMOVED 2026-10-16 at the advisor's in-person ruling;
-   chapters 3+4 use Methods/Results/Discussion sections. Figures = sibling
-   Figures\<chapter>\ (with Components/ + Deprecated/ subsubfolders); each chapter's
-   \graphicspath tries BOTH ../Figures/ (local) and figs/ (Overleaf names the folder
-   figs). Local build gate: MiKTeX pdflatex (full path) from ProofFinal into a build_*
-   dir (build_r4 = record at 10-17: 264 pp, 0 errors). NEVER round-trip thesis.bib
-   through default-encoding PowerShell (legacy Zotero mojibake; Latin-1 byte-safe only).
-   Standing conventions: Oxford comma; minimal em-dashes; "plant" is BANNED for the
-   robot/model; engineering diameter symbol (mathabx \diameter), not \phi; publication
-   notes scoped per chapter; Modern-Robotics notation; no machine-voiced comments in
-   .tex; no silent deletions or number changes. Campaign artifacts (comment ledger, style
-   contract, supervisor rubric, BEN_TODO, rulings, report): Documentation\Reports and
-   Papers\Dissertation\Notes\revision_campaign_20261015\ — in any dissertation session
-   READ BEN_TODO.md + Notes\DISS_STATUS.md + the newest Project_Digests\digest_*.md
-   FIRST. Cxx/Txx/Rxx = entries in CHATGPT_REPORT.md (open comments / tracked changes /
-   resolved) — always gloss them for Ben. Lesson of record: execute Ben's directives
-   VERBATIM, not interpreted; dropping existing content (even one figure block) is a
-   first-class edit that must be flagged; every revision pass ends with a build + a
-   per-directive compliance check with line evidence. DEADLINES: dissertation submission
-   2026-10-21; defense 2026-11-06. "Faster than real time" is an approved claim
-   (literature-supported, 2026-10-17). Rybak + Shevtsova pathway diagrams ARE included
-   with citation (dissertation fair use, ruled 2026-10-17). Neuromechanical modeling
-   tools to name: OpenSim (SimTK), SCONE, AnimatLab, SNS-Toolbox, MuJoCo, MyoConverter.
-   Documentation voice rule (2026-10-17): minimize AI self-narration in repo docs —
-   state what was done and when, not who-or-what did it. The HX711 app section below is
-   flagged for condensation post-submission. Dissertation plugin creation APPROVED
-   (pending, via plugin-creator). Root junk folders deleted 2026-10-17; the defense-deck
-   pipeline relocated to Documentation\...\Dissertation\Defense\deck_builder\ (was
-   .zcode_tmp).]
-2. Design and control of bipedal humanoid robot legs with artificial muscles (PAMs/BPAs)
-   controlled by a synthetic nervous system. Lab: AARL (Agile and Adaptive Robotics Lab), PSU.
-3. **Xi-correction-factor program** — run minimizers against pinned-knee test data in
-   `Testing_Data\` to correct the rigid-body + PAM/BPA model:
-   - **A. Flexor, pinned knee:** measure torque, compare to prediction (scripts in
-     `Mesh_Optimization\Results\` + `Robot_Data\`), solve for Xi0–Xi2. Train on some tests,
-     validate on others, discard the rest; keep the "best" result. *Open question: whether to
-     revisit — different result pick, different transformation matrix, brackets on both sides
-     of the knee, or a new Xi3-style term for stiffness/compliance along the force vector,
-     independent of force orientation.*
-   - **B. Extensor, pinned knee (muscle wraps over the joint):** solve for Xi0 and Xi3.
-     Xi3 = loss of usable length as a function of arc length and the square of the additive
-     complement to strain. Two physical brackets exist but the model approximates them as one;
-     the bracket not used in calculation is mechanically constrained to limited −x deflection.
-     Extensor and flexor Xi0 share meaning but differ in value.
-   - **C. Biomimetic humanoid knee, flexor:** validation using Xi0–Xi2 from A. Original
-     prediction showed sufficient torque; corrected prediction shows insufficient. One bracket.
-   - **D. Biomimetic humanoid knee, extensor:** validation with Xi0–Xi3. One bracket.
-   - *Open question: switch the iii solver from gamultiobjective to surrogateopt?*
-4. **Mesh_Optimization rework** (`Opt_run.m` flexor / `Opt_run_Ext.m` extensor, with Morrow):
-   use the Xi values to redesign the mechanics so each configuration (2× 20 mm BPAs each)
-   meets or exceeds the magnitude of select human monoarticular muscles. Human torque and
-   moment-arm data come from OpenSim (Gait2392; see directory map). Results land in
-   `Mesh_Optimization\Results\` and feed scripts there used for hand-tuning or W.A.G.-ing a
-   BPA prediction. Plots must be journal-publication ready. Legacy human calculations kept
-   for now. *Open: need higher Xi1 — options are single-bracket frame orientation change, or
-   a second bracket on the hip frame (unit direction + stiffness array order specified by Ben,
-   still Xi1/Xi2, with the 2nd bracket's compliance projected on the force path u).*
-5. Run tests on the human leg; show predictions from 4 meet or exceed human torque values.
+   (tools-framed), 70-overall ("Discussion"), 80-conclusion, appendices 92/93/94; no
+   ankle chapter. Chapters 3+ carry Methods/Results/Discussion sections.
+   **In any dissertation session, FIRST read** the `dissertation` skill, then
+   `Notes\revision_campaign_20261015\BEN_TODO.md`, `Notes\DISS_STATUS.md`, the newest
+   `Documentation\Project_Digests\digest_*.md`, and the campaign folder
+   (`style-contract.md`, `RULINGS_20261016.md`, `SNS_DISCUSSION_REDESIGN_20261017.md`,
+   `FLOW_REVIEW_20261017.md`, `CAMPAIGN_REPORT.md`). Notation: Cxx/Txx/Rxx = advisor
+   comment threads / tracked changes / resolved, all in `CHATGPT_REPORT.md` — gloss
+   them for Ben. Standing rules: execute Ben's directives VERBATIM; no silent
+   deletions or number changes (flag everything); every revision pass ends with a
+   clean build (MiKTeX pdflatex full path, fresh `build_*` dir, bibtex with absolute
+   BIBINPUTS/BSTINPUTS) + a per-directive compliance check with line evidence;
+   NEVER round-trip thesis.bib through default-encoding PowerShell (Latin-1 byte-safe
+   only — legacy Zotero mojibake); no machine-voiced comments in .tex; no dates or
+   campaign provenance in prose; Modern-Robotics notation; engineering diameter
+   symbol (`mathabx \diameter`), never `\phi`; "faster than real time" is an approved,
+   literature-supported claim ONLY in its scoped form (what actually runs fast);
+   minimal AI self-narration in repo docs. Campaign artifacts in
+   `Notes\revision_campaign_20261015\`; defense-deck pipeline in
+   `Dissertation\Defense\deck_builder\`.
+   **2026-10-17/18 pass (this campaign):** journal-register writing pass over all
+   chapters + FLOW_REVIEW TOP-10 fixes landed; open rulings applied (χ4 named in the
+   Discussion, SADb naming aligned, "pool"→"fit set" in App. C + Ch. 4, stale
+   commented numbers removed, easteregg2 wean results folded into chs. 6–7 — see
+   the spinal section below for those numbers); failed torque figures regenerated
+   (`*_r2.png`) + OpenSim-model isometric render staged in `Figures\30-torque\`
+   (Ben dispositions wiring); Overleaf re-push staged. Verification build of record:
+   ProofFinal `build_r7` (or the latest build_r* the campaign reports).
+2. Design and control of bipedal humanoid robot legs with artificial muscles
+   (PAMs/BPAs) controlled by a synthetic nervous system. Lab: AARL, PSU.
+3. **Xi-correction-factor program** — the design factors χ0–χ3 (candidate χ4) that
+   remove the rigid-body idealization from the BPA joint-torque model.
+   **Values of record = the dissertation's Appendix C** (Tables `tab:app_xi_values`,
+   `tab:app_opt_bounds`) and Chapter 4's adopted set — read those, NOT older numbers
+   from git history or retired mats. Identification: `gamultiobj` Pareto fronts +
+   holdout validation (the surrogate-vs-gamultiobj question is settled: gamultiobj for
+   identification, surrogateopt+patternsearch for route redesign). One (χ1,χ2) pair
+   shared across flexor and extensor configurations (advisor requirement, enforced).
+   Open: a hip-frame second bracket on the flexor route (unit direction + stiffness
+   projected on the force path), final 20 mm torque sweeps (Ben is machining/assembling
+   the final parts), Routing27 v2 route-builder crash (12/27 actuators — lumbar +
+   distal foot; post-defense).
+4. **Mesh_Optimization rework** (`Opt_run.m` flexor / `Opt_run_Ext.m` extensor, with
+   Morrow): redesign mechanics so each configuration (2× 20 mm BPAs per route) meets
+   or exceeds the magnitude of select human monoarticular muscles over the knee RoM.
+   Human torque/moment-arm targets from OpenSim (Gait2392; `OpenSim_Vasti_Results.txt`,
+   `OpenSim_Bifem_Results.txt`). Results in `Mesh_Optimization\Results\`; the cam
+   extensor design of record = `Vas_Pam_20mm_Result_cam_20261014_0416.mat` (min margin
+   +30.83% vs required envelope, +39.77% vs plain target; pressure 269–507 kPa; bend
+   radius 96.9 mm; clearance 43.1 mm; moment arm 59.4–102.8 mm). Plots must be
+   journal-ready (Tol palette from `Code\Matlab\Colors.m`, Arial, 10 pt floor,
+   CVD-safe markers AND line styles — never hue/dash alone, alt-text file per figure).
+5. Run tests on the human leg; show predictions from 4 meet or exceed human torque
+   values. First extensor 20 mm points: ExtTest_1_01 (1.163 / 7.849 / 23.437 N·m at
+   10°/11°/10°, hung loads 3.7/25.2/76 N, 388.5/388/592 kPa); full sweeps pending
+   hardware.
 
 ## Directory map
 
-- `Code\Matlab\Mesh_Optimization\` — **active workspace** (optimizers, route builders, results).
-- `Code\Matlab\Functions\`, `Code\Matlab\Robot_Data\` — shared helpers; MonoPam classes/data.
-- `Code\Matlab\Human_Data\`, `Code\Matlab\Bone_Mesh_Plots\` — human/bone data and plotting.
-- `Code\Matlab\minimizers\`, `Code\Matlab\Previous Optimization Code\` — **legacy**; don't build on.
-- `Code\Matlab\HX711 v3.0\HX711 v3.0\` — **the HX711/BPA load-cell app lives here (and ONLY
-  here — `Code\Matlab\HX711-LoadCell\` was DELETED 2026-10-03 at Ben's request: its inner
-  "HX711 v3.0" directory name collided with this folder and caused confusion; the File-Exchange
-  original, redesign draft, and archive zips it held are recoverable from git history).**
-  **2026-09-27 REBUILD — the live app is `HX711_BPA.m`**
-  (programmatic uifigure class, launch via `Start_HX711_BPA` from any folder/machine/clone —
-  the launcher addpaths its own folder so `+arduinoioaddons/+basicHX711` resolves; default save
-  dir found by walking UP from the app file to the repo's `Testing_Data`, never hard-coded).
-  Calibration: original Tare→Scale Factor→Calibration workflow AND known-factor entry
-  (Known LC Cal tab: tare+scale; Pressure Cal tab: a/b or guided 7-point, 0–620 kPa);
-  **Tare updates ONLY the zero offset — the scale factor is deliberately never touched by
-  a tare** (Ben's procedure: hang→zero→tie weight→Scale Factor→unweight→mount horizontally
-  tied to tibia→zero again; Known-Cal fields are TEXT, blank = keep current value, so a
-  tare-only entry cannot wipe the slope; regression check `retareKeepsScale` in the
-  self-test); factors persist in `hx711_bpa_last_cal.mat` next to the app (gitignored,
-  machine-local).
-  Pressure read per-sample (old app froze it at connect); **PID pressure
-  controller (Pressure Ctrl tab)**: Kp/Ki/Kd (valve-duty %/kPa) + control
-  period, time-proportioned onto the fill/hold/vent valve states (FILL
-  D11+D6 High, HOLD D11 Low + D6 High, VENT both Low, ±2% min duty);
-  derivative-on-measurement + conditional-integration anti-windup;
-  "Run Step Test" = dynamic pressure cal on a free BPA (step response
-  plot on Axes2, overshoot/undershoot kPa + % of step, 10-90% rise,
-  settling time, ess; saves DPC_S##_R##.mat traces; Pause aborts); same
-  PID optionally holds setpoint during Get Data; PID gains persist in the
-  cal cache; PID math/duty-map regression-checked offline; KneeAngle/LoadCellAngle metadata into
-  every save; Save = .mat (750×6 + Stats + Metadata + ColumnNames) + .txt sidecar in the
-  original 2-column format; Run spinner auto-increments. `test_HX711_BPA_offline` = hardware-free
-  self-test, run on any machine after pulling. Unique class name = can't be shadowed by any
-  installed File-Exchange HX711 app (none on EB475WS4's MATLAB path — verified `which -all`).
-  **2026-10-03 WINDOW FIT FIX: `fitToScreen` (constructor, after createComponents) shrink-fits
-  and centers the fixed 1120×900 design grid on the launch display — on shorter screens
-  (the laptop at Windows display scaling, 1536×864 logical) it uniformly scales all component
-  positions + fonts (floor 8 pt) and adds the title-bar chrome to the outer size; verified
-  headless (148 components in client, offline self-test still PASS). Without this the window
-  launched taller than the laptop screen with its top panels off-screen.**
-  **2026-10-03 UI pass (Ben's list, pre-data-collection): pressure gauge moved to bottom-right
-  with the Force/Pressure/Time/Sampling/#Data readouts column at its left (bottom-right strip);
-  Global Settings panel enlarged to 350x290 design px (was 185x188); Calibration + Clean panels
-  relocated to the vacated bottom-left; Message field narrowed so it no longer runs under the
-  Valves panel. Pressure Cal tab: the fixed 7-point inputdlg flow is REPLACED by free-entry —
-  user sets # cal points (2–50), types the actual gauge kPa, clicks "Take Reading"
-  (averages Readings/point at the entered pressure; fits a/b after the last point). Pressure Ctrl
-  tab gained a "GO" button (PID drive-to-setpoint, hold in deadband, park HOLD — no trace
-  logging). LAPTOP GAP: the MATLAB Arduino support package is NOT installed on DESKTOP-5Q16KE9
-  R2025b (only the HX711 add-on is; COM6/7/10/12 visible) — Connect cannot work until installed
-  via Add-Ons; the app's COM4 default is also wrong here.**
-  **2026-10-04: app — live force+pressure readout (5 Hz timer, paused during acquisition),
-  Connect pre-checks the COM port (no more hang on missing USB), all cal-button read loops
-  abort cleanly on hardware errors, Valves panel = Open (Fill)/Hold/Deflate (Vent) next to
-  the gauge. ValveDataAcquisition.ino: Ben's 2026-10-04 cal ported (OFFSET -12538 int32 =
-  app rig-mount tare 8376070 MINUS 2^23 -- the MATLAB basic_HX711 add-on flips the sign bit
-  (data[2] ^= 0x80) so its values are offset-binary = signed + 8388608; Ben caught the first
-  port attempt writing 8376070 raw, which was wrong by 2^23; SCALE_FACTOR -4495.3534 counts/N =
-  -44.0844 counts/g x 1000/9.80665, slopes unaffected by the convention;
-  pressure now 0.7632588*counts - 14.829703 = a*V+b port), ENCODER REMOVED (5-column output:
-  time,force,pressure,fill,exhaust -- SKETCH MUST BE RE-UPLOADED). readserialnumbers2.m
-  rewritten for 5 columns + LIVE TORQUE GUARD: user enters knee + load-cell angle, live
-  force -> knee torque via the same Adjoint machinery as Knee_Extensor_20mm's ExtTest20mm_1
-  section (dLC 292.9 mm, angLC -90.83 deg), compared live to the OpenSim vasti target
-  (MET/BELOW verdict + margin; saved files append knee/LC angle, torque, target cols).
-  **LC-ANGLE CONVENTION (Ben, 2026-10-04, authoritative for ALL new tests): the load-cell
-  angle is measured FROM THE TIBIA AXIS -- torque about t1 = F*sin(LC+0.83 deg)*d. All new
-  adjoint consumers (readserialnumbers2 guard, Knee_Extensor_20mm ExtTest20mm_1 section,
-  Knee_Flexor_Data_20mm FlxTest20mm_51cm section) convert with 90-LC before the transform.
-  The 2022-era arrays/tabs used the OLD convention (cos(LC-2.83)) -- do not mix.**
-  Old apps DISABLED by rename: `HX711_customized_original.mlapp.disabled` +
-  `HX711_Pressure.mlapp.disabled` (in the v3.0 folder) — rename back to restore; the
-  LoadCell-folder copies (`HX711.mlapp.disabled`, redesign `HX711.m.superseded`) went with
-  that folder's 2026-10-03 deletion (git history has them); details in `README_HX711_BPA.md`.
-- `Code\MuJoCo_SNS\` — MuJoCo + SNS-Toolbox pipeline (see its README.md):
-  custom BPA muscle (`bpa_muscle.py`, exact port of festo4/maxBPAforce/
-  balanceX3), MuJoCo glue, SNS demo, `add_bpa_to_mjcf.py`. Env: conda
-  `myoconv` (py3.10, opensim 4.5.2, mujoco 2.3.7, myoconverter editable from
-  `Documents\GitHub\myoconverter` — carries local `[patched]` robustness
-  fixes). Converted models live in
-  `Solid_Models\OpenSim\Gait2392_Robotbody\mjc\`; `gait2392_robot.osim` there
-  is GENERATED by `repair_robotbody_muscles.py` (mirrors Ben's edited
-  right-side muscle paths onto the left, re-enables all 92 muscles) — don't
-  hand-edit it, edit the repair script or robotbody and regenerate.
-  - **`spinal/` — gait2392 spinal cord network (built 2026-09-09; see
-    `spinal\DESIGN.md`)**: two-level RG+PF SNS network (406 neurons) for the
-    converted simbody model — 92 MN pools + Ia/II/Ib afferents, per-leg
-    half-center RG, 4 phase-shifted PF groups/leg, stance-gated Ib load
-    sharing, descending DRIVE + balance inputs, solved standing posture
-    (static-opt) injected as per-MN bias. Run with the `myo` env from
-    cwd `Code\MuJoCo_SNS\spinal`: `check_rhythm.py` (rhythm alone — VERIFIED:
-    0.885 s period, antiphase −0.88), `runner.py` (stand→walk→stand),
-    `audit_signs.py` (anatomical sign audit, run DYNAMICALLY — static
-    `actuator_moment` misses the pathpoint equality couplings),
-    `diag_nan.py`, `fit_synapses.py` (IK/SO activations → NMF synergies +
-    per-phase NNLS back-solve scaffold). Model repairs live in
-    `apply_harness()` in runner.py, all audit-verified: hip_flexion/
-    hip_adduction hinge axes WERE flipped vs OpenSim (negated); rect_fem
-    lacked a patella wrap and pulled the knee into flexion (rerouted over
-    the vastii's vas_med-P4 patella-tracking via point); quad_fem/gem/peri
-    pruned (`PRUNE_MUSCLES`, Ben's list). DO NOT weld the conditional
-    pathpoints (freezes moment arms — the earlier attempt did); they stay
-    equality-coupled with `boundmass`/`boundinertia`. Gotchas: MuJoCo
-    muscle Fmax = `actuator_gainprm[:,2]`; Ia/Ib afferents must be
-    pure-signal (resting tone drove constant reciprocal inhibition);
-    speed = DRIVE + presynaptic reflex-gain modulation (`params.MOD`).
-    **Blocker RESOLVED 2026-09-10 (EB475WS4 session; full chain in
-    DESIGN.md):** pathpoint followers' keyframe-sampled range limits
-    fought their equality couplings (knees jammed AND huge constraint
-    forces → the NaNs; stripped + `limited="false"` + follower
-    `armature="0.5"`), boundmass 0.01 was too light at human muscle
-    forces (singular mass matrix → 0.1), predefined contact pairs ignore
-    contype (patch the <contact> section instead), pelvis yaw had zero
-    damping (rig now springs all 3 rotations), the standing solve was
-    degenerate (solve on a ground-on model, joint rows only, preloads
-    hip -40/knee -60/ankle +40), and the II-afferent BASELINE needed the
-    stance gate (ungated i0_ii was a global ~0.2 co-contraction floor).
-    **Knee convention (Ben-corrected, real-actuator-verified): the
-    converter PRESERVED OpenSim's flexion-negative knee; knee_angle
-    NEGATIVE = flexion, and the joint ships `limited="false"` (range
-    inert). An earlier "knee range flip" was reverted the same evening.**
-    audit_signs.py's moment-injection signs are inverted vs real
-    activation (docstring caveat); use `_muscle_direction_test.py`
-    (ctrl=1 per muscle) as ground truth. After the stack: deafferented
-    suspended-air 22 s clean AND full ground stand→walk→stand 22 s with
-    afferents, stayed up. **Night 2026-09-10/11 (Ben's staged plan):**
-    (1) air-stepping lit (Ivanenko 2002): preferred 0.3 Hz cycles (3×
-    SLOWER than walking, not 5× faster), E-duty 53%, sinusoidal joints;
-    (2) deafferented air + `--no-interleg` WORKS: 21 s clean, knee
-    −75..+15° true swing flexion (amplitude/frequency DECOUPLED: low
-    DRIVE had shrunk all network amplitudes to sub-mV — doubled
-    rg_to_pf/pf_to_mn/descend conductances + slow ADAP τ=1.9 s for
-    rhythm), subtalar/mtp ligament-surrogate springs (OpenSim coordinate
-    stops lost in conversion; foot flopped to 128°), follower armature
-    1.0; (3) afferented ground + interleg at --drive 2.5: 21 s up, COM y
-    ±2–3 cm, adduction ±8° (stance-gated BAL_LAT abductors working,
-    mujoco −y = opensim +z). PELVIS-LIMBO DIAGNOSED: pelvis_tilt 36°
-    despite 400 N·m/rad rig + new IMU trunk controller (BAL_TRK_EXT/FLX,
-    torso up-vector PD → ercspn/obliques) — the IMU levels the TORSO
-    (lumbar counter-tilts) but saturated hip extensors (glut_max 0.94,
-    semimem 1.0) pitch the planted-leg pelvis backward; only balanced
-    activation patterns fix it. **LIMBO FIXED at the source 2026-09-11
-    night — the IK/NNLS chain RAN END TO END (details + traps in
-    spinal\DESIGN.md night section):** `bsolve_ik.py` validates the
-    converted model vs OpenSim along subject01_walk1_ik.mot (lengths
-    median r 0.89, moment arms sign-exact after folding in MuJoCo's
-    transmission minus) and back-solves per-timestep activations
-    (SO-style ridge + [0,1] bounds via lsq_linear — plain NNLS explodes;
-    measured GRF applied at the CoP; 6 Hz filtering like SO);
-    `fit_pf.py` refits W_PF_MN/W_POSTURE from the back-solved group
-    profiles → `fitted_walk_params.json`; hip_ext stance drive stack
-    1.17 → 0.27 vs human peak 0.34. `optuna_walk.py` v3 (study
-    ground_walk_v3; winner in best_walk_params.json with pf_gain) adds a
-    global pf_gain dimension — back-solved weights are ~10× SMALLER than
-    the old hand-tuned table the gain structure was tuned against (at
-    gain 1 the sim barely moves) — plus a duty-0.6 reward (runner --eval
-    reports duty). v3 winner score 1.521 vs v2's 1.091. FULL 22 s ground
-    walk at rig 1.0 with `--fitted --best`: knee −22° REAL flexion, hip
-    amp 38°, tilt 29°, stays up. Weaning ladder (`wean_rig.py`;
-    `--rig-scale S` = rig stiffness×S, damping×√S): S=0.8 completes and
-    keeps stepping (knee −23°, hip 37°) but leans to 37° — the support
-    boundary is S≈0.8–1.0 until the pelvis-balance piece exists.
-    **THREE SILENT TRAPS (probes diag_force/diag_frontal/diag_knee/
-    diag_trans.py):** (1) pelvis slides load IDENTITY — the converter
-    preserved OpenSim's coordinate values (keyframe
-    qpos[pelvis_ty]=0.95 ↔ pelvis world z 0.95); the z-up remap lives in
-    body frames; GRF VECTORS still remap os(x,y,z)→mj(x,−z,y). (2)
-    Equalities MUST be disabled for INVERSE dynamics — at deep knee
-    flexion the polyfit followers generate ~890 N·m of spurious
-    knee-row wrench (forward sim still needs them). (3) data.act drives
-    muscle force under mj_forward; data.ctrl is inert there
-    (dyntype=muscle; ctrl only feeds act dynamics in mj_step).
-    **Ben's night addendum (verified, see spinal\DESIGN.md):**
-    MuJoCo's actuator_moment does NOT propagate through the eq couplers
-    — at the knee use bsolve_ik.py's fd_moments (central-difference
-    dl/dθ with followers re-projected = OpenSim's definition). ALL 36
-    knee couplers are the vastii pathpoints — vastii→tibia actuation
-    verified (mean arm −0.047 m vs OpenSim −0.045 m; the small AC
-    anti-correlation = coupler-polyfit artifact, same family as the
-    peronei/subtalar SO mismatches). "78 muscles" = 92 minus 14 with
-    Fmax ≤ 5 N: the 6 intentional prunes PLUS 8 the converter shipped
-    at 1 N — ercspn/intobl/extobl/ext_hal r/l — so the IMU trunk
-    controller currently drives 1-newton muscles; fix = set those Fmax
-    from stock gait2392 in patch_xml, then refit + v4 (needs Ben's go,
-    invalidates current v3 tuning). plot_run.py load_benchmark now
-    honors the .mot inDegrees header (subject01_walk1_ik.mot is
-    DEGREES — the np.degrees() there was Ben's suspected double
-    conversion; fig4 legend renamed "SNS sim mean"); ground figs +
-    ground_walk.gif refreshed in Dissertation\CPG_airstepping_figs from
-    the post-v3 S=1.0 run.
-    **v4 KINEMATICS CAMPAIGN (2026-09-12, Ben: "fine-tune until the
-    kinematics are similar to OpenSim"):** `kine_ref.py` is the
-    acceptance metric — reference cycle from subject01_walk1_ik.mot
-    phased by GRF onsets (1.23 s / 0.81 Hz, duty 0.61, knee −69.7°, hip
-    43°, ankle 23°); runner --eval now reports `kine` + `kine_score`
-    (cycle-normalized hip/knee/ankle shape RMSE + peak-knee + range +
-    duty; 0 = perfect). optuna_walk v4b (study ground_walk_v4b_kine; a
-    first v4 died to a broken −25 no-rhythm sentinel plateau —
-    no-rhythm must score ≈ −65, what a frozen model really costs) ran
-    60 trials with 2 new knobs (`desc_f` = DRIVE→RG-F,
-    `e2_adapt` = PF_SHAPE["E2"] adapt; runner --best applies both):
-    best kine_score −61.2 vs baseline −63.6 — converged. HONEST
-    DIAGNOSIS (details + priority list in spinal\DESIGN.md 2026-09-12):
-    the remaining gap is ARCHITECTURAL, not scalar — (1) E-duty 0.27 vs
-    0.61 (half-center+adaptation tops out ~0.3 → needs sensory phase
-    reset into the RG, which also fixes cycle-to-cycle phase jitter),
-    (2) swing knee still extension-dominant (needs phase-specific quad
-    SUPPRESSION, not more flexor drive), (3) ankle PF-dominant
-    (POSTURE_OVERRIDE soleus/tib_post tone rides into gait), (4)
-    cadence 1.18 vs 0.81 Hz (rg_adapt at range edge). Current best
-    config = the v4b winner (runner --fitted --best reproduces); the v3
-    winner is still better on the stability-shaped objective (its study
-    remains in the db). **NEXT: ground duty 0.6 (E-duty still 0.16–0.34
-    vs human 0.6), ankle balance, the pelvis-balance piece to wean
-    below S=0.8, then vestibular/ocular (Ben) and cerebellum/BG
-    layers.** New
-    tools: `diag_stab.py`, `diag_phase.py` (adaptive thresholds),
-    `_muscle_direction_test.py`, `draw_circuit.py` (Rybak-style schematic
-    PNG), `neuro_scope.py`; runner flags `--no-ground`, `--no-interleg`,
-    `--leg-damping X`, `--time N`, `--view` (3D window, full speed),
-    `--scope` (live neural traces), `--realtime`; per-0.5 s
-    forensics + NaN dof dump; `diag_nan.py` superseded. Lit grounding:
-    Rybak/McCrea RG+PF, Bunz 2026 (reflex
-    speed control), Ben's Zotero "Sensory Afferent Database" collection;
-    read Di Russo/Ijspeert/Bouri 2023 JNE before any novelty claims.
-    **2026-09-12/13 overnight (v5/v6 + a CRITICAL pre-existing fix —
-    morning report at TOP of spinal\DESIGN.md):** (1) **`--best` pf_gain
-    bug FIXED**: it tested `json["params"]` for pf_gain (pf_gain lives at
-    the JSON TOP level) so the gain-scaling branch NEVER ran — every
-    pre-fix `--fitted --best` reproduction since v3 silently evaluated a
-    pf_gain=1.0 config (the recorded v4b/v3 full-run numbers — E-duty
-    0.27, knee −14..+26, −63.3 — are gain-1.0 configs, NOT the true
-    study winners). Fix scales ONLY fitted-file entries (trunk keys are
-    not in the fitted json; scaling them was also wrong but inert — 1-N
-    trunk muscles). Regression gate now BIT-EXACT:
-    `runner --fitted --best --eval --drive 2.5868` = −61.1741850610298
-    on current code; draw_circuit composites fixed identically
-    (circuit_* weights numbers changed slightly — regenerated + recopied
-    2026-09-13). (2) **v5 sensory phase-reset**: HIP_EXT_SIG/HIP_FLEX_SIG
-    ports → PRESET_E/F INs → RG (ext: E↑F↓ prolongs stance; flex:
-    F↑E↓ triggers swing), params.G phase_reset_e/f + PHASE_RESET dict,
-    defaults 0. **CONDITIONAL TOPOLOGY: new neurons are built only when
-    their gain > 0** — zero-g synapses alone change BLAS summation order
-    and chaos turns the 1e-16 drift into real kine shifts (byte-identity
-    at 0 is the regression contract). v5 study ground_walk_v5_phase
-    (150 trials, seeded v4b): best −60.987 (trial 137, gains 0.22/0.22)
-    — TPE AVOIDS the gains; tonic stance-gated position/velocity input
-    (≤1 nA vs ~4 nA DRIVE) is effectively inert; phase_reset_e ~0.6-0.75
-    + weak drive LATCHES RG-E on (stability constraint). (3) **v6
-    swing-knee quad suppression — THE LEVER THAT WORKS**: PF_F1 → KINH
-    inhibitory IN → knee_ext MNs (phase-gated by F1 = swing-only;
-    params.G f1_kneext_inh). Study ground_walk_v6_kneext (110 trials,
-    seeded v5): best −59.426 (trial 106, f1_kneext_inh 0.59), full-22s
-    −60.59, duty 0.47, knee_min still +10, cadence rose to 1.4 Hz —
-    next bottleneck = RG duty/cadence architecture. Reproduce: `runner
-    --fitted --best6` (v5: --best5; old v4b: --best) — v5/v6 evals use
-    repr(drive) so their jsons reproduce bit-exactly (4-dp rounding
-    costs only ~0.005). Audits _phase_reset_audit.py / _kinh_audit.py
-    PASS; hand sweep v5_sweep.csv; per-trial CSVs v5_results.csv /
-    v6_results.csv; global-best full runs v5_best_trial*.npz (9) /
-    v6_best_trial*.npz (10); runner flags --phase-reset E F,
-    --kneext-inh X, --best5/--best6; RUNNER_DUMP_STATE=<file> env dumps
-    all mutable params after arg-parsing for config diffing. (4)
-    **Phase 1 deliverable**: `draw_circuit.py --vclasses` renders
-    circuit_full with a Shevtsova-2026-eLife-RP107480 / Rybak-2015
-    V-class strip + tags (our circuit: V0D/V0c+dI6 analog = commissural
-    inhibition, V1/V2b = half-center+PF+Ia inhibition, V2a = RG→PF/PF→MN
-    excitation, **NO V3 analog** — all cross-side connections
-    inhibitory) → circuit_full_vclasses.{pdf,svg,png} in
-    Dissertation\CPG_airstepping_figs; full class-by-class mapping table
-    in spinal\DESIGN.md. **2026-09-13 (day, Ben's go received): trunk
-    Fmax fix APPLIED** — `_fmax_audit.py` (every actuator gainprm[2] vs
-    stock osim; the 84 active muscles match within the converter's
-    RoM normalization ≤15%; ONLY ercspn/intobl/extobl/ext_hal r/l were
-    1 N vs stock 2500/900/900/162) + patch_xml repair 2c (build-asserted
-    8 tags). Post-fix the v6 winner IMPROVES (eval −59.241, tilt 27.4 —
-    BAL_TRK finally drives real muscles); no retune needed; old
-    --best/--best5 recorded numbers remain pre-fix values. Torque
-    budget (`_torque_budget.py`, fd arms × stock Fmax vs bsolve ID
-    demand): hip 3.4x, knee 2.8x, trunk 2.1x, ankle 1.4x (tightest;
-    ankle demand 2.7 N·m/kg runs hot vs ~1.5 literature — known
-    subtalar/CoP residuals). MuJoCo-muscle fidelity note (Ben Q):
-    converted actuators = rigid-tendon simplified Thelen (activation +
-    F-L-V, NO series elasticity); options = tendon stiffness
-    (approximate) or custom Millard/Thelen plugin (full). v6 render
-    ground_walk_v6_trial106.gif + v6_trial106_fig1..6.png in
-    Dissertation\CPG_airstepping_figs (spinal_run.npz now holds the v6
-    winner run). Dissertation-ready draft section:
-    Dissertation\CPG_spinal_section_draft.tex. **2026-09-13 (Ben's
-    circuit-figure critique): `draw_circuit.py --which deng` →
-    circuit_dengstyle.\*** (figures/ + Dissertation folder) — the
-    Deng/Nourse-Fig-6A-style layered schematic, STRUCTURE-DRIVEN: it
-    builds the representative network, reads every connection from the
-    compiled SNS object (`_net_edges.py` is the standalone inventory
-    dump) and ASSERTS each (src,dst,sign) edge group is drawn — the
-    figure cannot drift from the code. Deng Table A6 quoted in the
-    footer. Honest accounting built in: Renshaw NOT implemented
-    (ghost), RG mutual inhibition + Ia reciprocal are direct/lumped
-    (Deng's Ext/Flx-IN and IaIN drawn as ghosts), Ib = autogenic-inh +
-    stance-gated IBEXC reversal (Deng's IbIN→MN is EXCITATORY —
-    opposite sign), ours adds II afferents, monosynaptic Ia→MN,
-    commissurals, PRESET/KINH INs, and the real conversion-map
-    formulas (a=clip(V/5mV,0,1); (L−Lmid)/Lhalf, L̇/0.6, F/Fmax →
-    afferent currents). ADAP cells = burst termination, NOT fatigue.
-    Full Deng/Nourse connection table in spinal\DESIGN.md 2026-09-13
-    section. **2026-09-14: JOINT RoM LIMITS ON** (patch_xml repair 2f2:
-    all 14 driver hinges limited="true" with stock ranges — knee
-    [-120,+10] deg enforced; hyperextension artifact GONE, ground knee
-    now -0.3..+11.4). **RENSHAW CELLS IN** (per-pool RC, MN→RC 1.0
-    exc / RC→MN inh G["renshaw"] / RC↔RC once per pair, default 0,
-    --renshaw X, ran 0.5). Post-limits+Renshaw: ground stays up, knee
-    -0.3..+11.4, tilt 30.5, but gait re-timed (E-duty 0.15, 1.32 Hz —
-    v7 retune needed); **AIR-STEPPING now 0.41 Hz, knee -97..+10, hip
-    -21..+50** (Ivanenko regime; v6_rom_{ground,air}.npz +
-    hindlimb_style_{ground,air}.png/pdf + {ground,air}_rom.gif in the
-    Dissertation folder). **Toolbox-native diagram**: spinal_layers.py
-    (Tutorial-4 Network subclasses RG/PF/motor) + _render_diagram.py →
-    sns_diagram_spinal.png via the OFFICIAL sns_toolbox.renderer
-    (graphviz BINARY installed into the myo env — <env>\Library\bin,
-    NOT on PATH unless the env is activated). **Tutorials 1/2/4/8
-    executed** (all 9 notebooks in spinal\sns_tutorials); **NEW SKILL:
-    C:\Users\Ben Bolen\.zcode\skills\sns-toolbox\SKILL.md** (junction
-    into ZCode_Skills — Ben commits; env, 1.5.2 API traps:
-    add_population needs shape=[1], backends take net.compile() params
-    not the Network, two class trees, connections-dict schema,
-    add_network flattens; net-sizing: numpy backend fine at 8k neurons
-    tested, practical wall ~25-30k dense-matrix memory — our
-    410-neuron net nowhere near limits).
-    **OPTIMIZER-RELEVANT INSIGHTS (2026-09-13, Simulink-realization
-    session — read before interpreting v7+ trials):** (1) The network IS
-    a self-sustaining limit cycle at CONSTANT DRIVE in numpy — 20 s clean
-    alternation at bare DRIVE=2.5, period 1.21 s, amplitude constant
-    (`spinal\check_selfsustain.py`). Tonic collapse in an eval means the
-    CANDIDATE PARAMS killed the cycle (adaptation/drive balance), not
-    that constant-drive testing is invalid. (2) **The network sits near a
-    bifurcation**: an EXACT Simulink port (wiring verified to 4.2e-6 mV
-    at t=0.3 s, same 2 ms Euler) settles to the TONIC fixed point where
-    numpy oscillates — the reggate_v5_0 summation-order chaos tips
-    marginal limit cycles either way. Winners that oscillate with only a
-    small basin (drive/adaptation at the edge of the oscillatory range)
-    will NOT transfer to Simulink/co-sim or survive BLAS-order changes;
-    consider a basin-robustness gate on finalists: perturb params ±1 %
-    (or shuffle a summation order) and require the cycle to persist 20 s;
-    report the basin margin alongside the score. (3) Pointwise agreement
-    between ANY two integrators dies at ~0.4 s (1e-9 @ 0.1 s → 1e-6 @
-    0.3 s → O(1) @ 0.5 s) — eval-vs-eval differences late in a cycle are
-    PHASE, not signal; only seeded identical binaries reproduce
-    bit-exactly (existing contract). (4) Deng-style persistent-Na
-    half-centers need tau_h FIXED — sns_toolbox's tau_h(V) quenches them
-    (`spinal\deng_cpg_ode.py`: toolbox-tau flatlines, fixed-350 ms
-    self-runs at 1.94 s; Simulink files `SNS_Simscape\demos\SNS_Deng_*.slx`
-    reproduce). Same transfer risk if tuned candidates are ever ported to
-    Animatlab/Simulink realizations. (5) **CORRECTION 2026-09-16 (Ben)**:
-    sns_toolbox 1.5.2 DOES ship `NonSpikingNeuronWithPersistentSodiumChannel`
-    (Tutorial 8, executed in `spinal\sns_tutorials` 2026-09-14) — earlier
-    "toolbox can't express NaP / ADAP is the only burst-termination
-    substitute" claims were WRONG. The spinal RG can be built as literal
-    Deng persistent-Na HC neurons; FIRST test the real class's tau_h(V)
-    with tau_max_h at depolarized V (the quenching result in (4) was
-    measured on the hand-coded formula in deng_cpg_ode.py, not the class).
-    **(6) Basin gate IMPLEMENTED (2026-09-16, laptop): `spinal\basin_gate.py`**
-    (myoconv env) operationalizes this: loads a RUNNER_DUMP_STATE json
-    (`state_v10_best.json` / `state_v10_study.json`), perturbs every scalar
-    param ±1% (seeded), runs the network-only constant-DRIVE rhythm 20 s (as
-    check_selfsustain.py), PASS = last-5 s swing ≥ max(0.1 mV, ½ baseline
-    first window). RESULT: **v10-best (drive 2.929) is basin-robust — 12/12
-    perturbations persist, final swing 0.98× baseline, ~6.5 mV, period ~2 s
-    (5 peaks/10 s — don't impose a fixed peak floor, slow winners mislabel);
-    `state_v10_study` does NOT self-sustain at constant drive (baseline decays
-    to 0 — it depends on the runner input schedule, consistent with E2's
-    tonic collapse)**. Caveat logged: an identical-seed trial EXPLODED (1e164)
-    in a 2 s smoke run but was stable in the 20 s run — multithreaded-BLAS
-    summation-order nondeterminism is real even between processes; treat
-    single borderline trials as noise. Results: `spinal\basin_gate_results.json`
-    + `basin_gate_full.log`.
-    **2026-09-20 (EB475WS4) — CURRICULUM FIXED + FIRST GROUND GAIT; full
-    chain in spinal\DESIGN.md "2026-09-20" section:** the 09-18 stage-2
-    "winner" was a STATIC-POSE EXPLOIT (rises=0; score 36.906 = knee term
-    alone; bit-exact repro) — the air objective now RHYTHM-GATES (rises<3
-    → ≈−10), new gains enter at [0,0.5] (full-range sampling killed the
-    stage-1 rhythm in all 25 trials), seeds are full-dicts (missing keys
-    get SAMPLED — JSON-rule lesson), exploited studies archived
-    (curriculum_exploit_archive_20260920.json) and rerun as curr_s2b/s3b.
-    NEW KNOB `contact_onset` (params.G, runner-side edge-triggered heel/
-    toe transients, default 0 = bit-identical, JSON-RULE loader updated).
-    OUTCOMES: s2b 50 trials — seed (stage-1 winner, drive 3.15) still
-    best 129.05; best afferented 128.3 ties it with all new gains ≈0
-    (afferents tolerated, not additive). s3b 60 trials — 11/60 real
-    gaits, winner trial 52 = −85.22: 20 cycles, duty 0.69 (ref 0.61),
-    knee −53.5° cycle / −76..+10 raw, hip range 16.9° (43.3 ref), ankle
-    34° OVER ref, tilt 29.7°, no NaN. Scalar search PLATEAUED — remaining
-    duty/cadence/hip-range gaps are ARCHITECTURAL (sensory phase reset
-    into RG). Also: runner npz q = named KEY_JOINTS already in degrees
-    (the old "q[m,4] is a quat" bug is resolved; _diag_stage3's double
-    np.degrees fixed); tuned-config constant-DRIVE self-sustain is LOST
-    (schedule-sustained; `_debug_rhythm_tuned.py`). Run instructions for
-    Ben's Spyder: `Code\MuJoCo_SNS\HowToRunCode.md`. Dissertation
-    CPG_spinal_section_draft.tex \fillme slots FILLED (ZCODE 2026-09-20
-    fenced blocks) + 3 new figs curr3b_ground_* — deconfliction note for
-    the other dissertation chat is in CHATGPT_HANDOFF.md "DISSERTATION
-    CPG SECTION — DECONFLICTION".
-    **2026-09-23 (EB475WS4) — SEVEN-GOAL WORKFLOW (all reports in
-    `spinal\reports_20260923\`, EXEC_SUMMARY_20260923.md is the index;
-    workflow dwfrun-cfd949f1, supervisor GO):** (1) editor rubber-band
-    multi-select + group drag landed in `connectome_block_editor.html`
-    (NOT connectome_editor.html — that one is the rules form, no canvas;
-    ALT+click now arms synapses; node --check + 37/37 DOM-stub suite;
-    browser-confirm still pending). (2) curriculum stage 4 "balance"
-    (SCONE-Tutorial-3a analog): VEST vestibular-analog cells + II
-    length-loop, runner flags --vest/--vest-flexinh/--vest-prop,
-    --stand-eval; defaults 0 = bit-identical (410/376/1186 unchanged);
-    supervisor-caught bug fixed (contact-symmetry term now abs());
-    new edges await Ben's connectome-spec confirmation. (3) goal-3 MuJoCo
-    fidelity: keep 2.3.7/implicitfast/2 ms through the dissertation (SEE
-    impossible natively; spring-tendon workaround needs ≥1 kg virtual
-    tendon mass or 0.5 ms — recipe in goal3_mujoco_fidelity.md §3.2,
-    Ben-gated); ladder MEASURED (goal3_timestep_ladder.py): 2 ms vs
-    0.5 ms = 0.44° RMS ground / 0.19° air, error halves with step —
-    1-4 s per variant, cheap standing check; runner now has DEFAULT-OFF
-    `--adaptive-tol X` (error-controlled substepping, step-doubling
-    estimate) and `--contact-damp lessviscous|nonlinear` (stable
-    impedance-framework variants; naive negative-solref direct k,b is
-    UNSTABLE at 2 ms) — smokes exit 0, spinal_run.npz untouched.
-    (4) optuna review: ensemble answer YES for seeds + plant jitter, NO
-    for synthetic IK perturbation (only ONE reference cycle exists;
-    subject01_walk1.mot all-zeros placeholder); 22-70% of stage-3 trials
-    sat on the −320 sentinel at 32 params/1.3-2.5 trials-param; next
-    study: TPE multivariate + constraints_func, ~10-param space; ensemble
-    scaffold delivered; **REGRESSION FLAG: v10-era `--fitted --bestN`
-    winners NO LONGER WALK under current physics (100% double-support,
-    zero cycles at any drive — only s3* winners are current).** (5) gait
-    libraries: SimTK downloads login-gated (no mirrors for Arnold data);
-    OPEN substitute staged: Falisse 2022 predictsim_mtp (46 MB,
-    `D:\temp\gait_lib_staging\`, outside repo) with full predicted walking
-    + 92 muscle activations; `gait_lib_loader.py` (subject01 regression
-    <1e-9, GRF auto-detect + periodic-wrap mode); `gait_lib_intake.py` =
-    ONE command after Ben drops SimTK zips into
-    `D:\temp\gait_lib_staging\downloads\`; `gait_lib_score.py` +
-    `gait_lib_pilot2.py`: the s3k winner matches FALISSE BETTER than
-    subject01 (kine −222 vs −241 — the subject01 misfit is the known
-    knee/hip gaps); our six-synergy basis does NOT transfer to Falisse
-    (VAF ≈ 0, R2-vs-0 0.60) — train multi-reference, don't fix one basis.
-    (6) Rybak/Shevtsova/Shinohara first-pass drafts + rules JSONs in
-    `spinal\replication\` (per-edge citations; crossed flexor-excitatory
-    edge EXISTS in Shevtsova T1 + Rybak 2015 Fig 7A, not Shinohara;
-    IaIN↔IaIN + IBIN↔IBIN already exist conditionally at g=0.5 under
-    full_rules, build_network.py:795-800). (7) six-synergy model:
-    `synergy_model.py` + `synergy_basis.npz` (fsa_backsolve rank-6 NMF
-    verbatim; replay VAF 0.945/R2 0.920; NNLS≡H to 1e-6). PENDING BEN:
-    ~~SimTK downloads~~ (RESOLVED 2026-09-24, see below) + goal-3
-    production ruling.
-    **2026-09-24 OVERNIGHT — THUMB DRIVE = SIMTK HAUL LANDED (Ben
-    supplied `F:\Biomechanics data`, 3.03 GB, READ-ONLY; full report
-    `reports_20260923\goal5_thumbdrive_campaign.md` + EXEC_SUMMARY
-    addendum 5):** staged to `D:\temp\gait_lib_staging\downloads`
-    (17.6 GB extracted). `gait_lib_intake.py` v2 (nested zip-in-zip,
-    NEW "arnold" GRF style in gait_lib_loader — OpenSim plate-2 columns
-    duplicate names positionally, sides by earlier onset; cross-folder
-    trial pairing ik/Results_191 ↔ ExportedData; RRA/CMC derivative
-    de-dup) integrated **33 refs into `spinal\gait_refs\*.npz`**:
-    Falisse predicted WALKING + 8 subjects × 4 RUNNING speeds — **ALL
-    32 Arnold trials are RUNNING** (trial prefix "Run_", duty
-    0.31–0.46, T 0.56–0.80 s, knee_min −80…−140° across the speed
-    sweep; the walking-side expansion needs the Ong/SCONE states route).
-    `gait_lib_score_all.py`: s3k walker = of-record walking −189.5
-    (best) → Falisse −200.5 → slow running −188…−208 → sprint −332,
-    monotone with speed. Also inventoried, not yet integrated: Ong et
-    al. predictive WALKING states 0.5–2.0 m/s + deficit runs
-    (GRF-less single-cycle → needs states-based loader extension),
-    RAW EMG (10 subj × 4 trials, pairs by trial token), SCONE setup
-    files v2 (goal-2 balance reference), Hamner 2010 full-body running
-    model + RunningSimulation subject02 pair (didn't auto-pair; one
-    manual ref if wanted), assistloadwalk experiments (5270 .sto).
-    Multi-reference training corpus is LOCAL; next study awaits Ben.
-    **ADDENDUM (same night): Ong predictive WALKING refs integrated —
-    the states.sto files carry per-leg GRF (Leg1_r/Leg0_l.grf_y,
-    BW-normalized) + gait2392-named angles in radians, so
-    `gait_lib_ong_refs.py` (radians-tolerant reader, GRF×750 N,
-    case-insensitive columns) built 10 more refs: ong_speed_050..200
-    (T 2.10→1.02 s) + 3 self-selected (ong_selfsel_Init200 has a
-    degenerate left cycle — drop if sampled). LIBRARY TOTAL = 43 refs;
-    s3k vs Ong family −203…−224, monotone in speed. Deficit runs NOT
-    integrated (Ben: not yet); same script pattern covers them.**
-    **2026-09-24 NIGHT WORKFLOW (dwfrun-6e655f5f; supervisor SHIP;
-    all reports in `spinal\reports_20260924\`, index =
-    overnight_report_20260924.md):** (1) **SCONE 2.4.4 hands-on**
-    (sconecmd headless): Tutorials 3a Balance + 4a Gait run on the
-    OpenSim engine — gait: 7 steps / 2.5 m / 2.78 s then falls
-    (com_y→84.9% < 0.85 termination, knee DofLimits penalty 7.4);
-    OVERRIDE GOTCHA: scenario-value overrides need the FULL dot-path
-    (`CmaOptimizer.SimulationObjective.max_duration=3` — bare
-    `SimulationObjective.max_duration` silently unused, proven A/B);
-    Hyfydy scenario fails with the exact "no active license key" error
-    until Ben activates (settings zml had NO hyfydy block — never
-    activated; Examples3/Tutorials3 were missing from
-    Documents\SCONE and were COPIED there 09-24; activation = GUI
-    Tools→Preferences→Hyfydy→paste→Enable, trial expires 2026-10-24).
-    SCONE reflex/balance controller idioms read into the report
-    (per-muscle delays $hip_delay 0.01…$ankle 0.035, $ves_delay 0.05,
-    GaitStateController 5-state, tiered 10/20/35 ms). (2)
-    **AnimatLab W2L headless runs WORK on this box** (AnimatSimulator
-    at `D:\Program Files (x86)\NeuroRobotic Technologies\AnimatLab\bin`):
-    modern W2L asim 5.1 s — **flexor HCs NEVER cross −55 mV
-    post-transient** (peaks −55.8/−56.4 mV, sub-threshold; the rhythm
-    rides ext/flx antiphase r=−0.956, joints oscillate 2.22 Hz, neural
-    leads joints 57–89 ms) — nuance vs the "count flexor crossings"
-    09-18 rule; the 2023 asim (14 tonic 5–6 nA neurons) DOES burst
-    (8 bursts each, ~0.77 Hz, survives 40 N push 10 s);
-    BilateralRG ground asim: L 10 / R 11 onsets, period 0.464 s,
-    L/R lag +0.474 cycle antiphase. Chart .txt byproducts rewritten
-    (sizes identical); no model file touched. (3) **`spinal\w2l_cpg\`
-    — the MuJoCo SNS port of Ben's contact-driven bilateral CPG**
-    (his ask: "W2L in MuJoCo SNS with the subnetworks like
-    Biped_2xCPG_wSubs… create the RH RG, wire the RGs together"):
-    build_w2l_net.py = 91 neurons / 214 synapses / 10 inputs,
-    EVERY edge tagged to the bilateralrg editor template (105/226)
-    or the SESSION_NOTES build chain — Ben's wiring transcribed, 6
-    deviations documented in README.md (copy into DESIGN.md at the
-    next DESIGN.md gate); smoke_w2l.py gate = alternating L/R heel
-    pulses: **W2L_SMOKE PASS period 1.000 s, antiphase −0.532,
-    RG-E bursts 22/22** (supervisor reproduced bit-exact); NOT done:
-    connection to the 92-muscle model, muscle map TODO in README
-    (hip ext=glut max, hip flex=iliopsoas, knee ext=vasti,
-    knee flex=hamstrings…). Bit-exactness contract intact —
-    supervisor mtime-swept the repo: nothing modified outside
-    w2l_cpg/ + reports_20260924/ + AnimatLab chart byproducts.
-    (4) **gait2392_muscle_function_pf_assignment.md**: Confluence page
-    + 2 inline PDFs fetched (Gait2392-vs-2354 muscle appendix,
-    MuscleIsometricForces) + John 2012 full text (ML-GRF windows 0–6%
-    lateral lead / 14–30% medial / 40–56% medial trailing; abductors
-    largest medial contributor; adductors late-stance lateral);
-    frontal-plane PF pair DESIGN (PF_ADD_/PF_ABD_ HCs per side both
-    from RG_E staggered, PF_IN_ADD_/ABD_ lamination, 6 adductor vs
-    6 glut_med/min pools, G["front_pf"] default-0) + 3-DoF foot
-    force sensor recipe — DESIGN ONLY, no code touched. (5) balance
-    catalog (awesome-biomechanics) shortlist with licenses
-    (Zenodo 3819630 CC-BY-4.0 verified live). **FOR BEN: activate
-    Hyfydy (1 min), then the -Hyfydy.scone variants + engine A/B
-    become runnable; see overnight report for the full story.**
-    **2026-09-24 MORNING — HYFYDY ACTIVATED (Ben entered the trial
-    license; `hyfydy{enabled=1}`, Hyfydy 1.12.6.1412): both blocked
-    scenarios now run headless — 4a Gait: 7 steps / 2.58 m, DofLimits
-    0.033, **90.5× real-time** (OpenSim engine: 2.50 m, 0.261, 1.17×);
-    3a Balance: 65.2/100 at 1.045 s, 99× RT. Engines use DIFFERENT
-    .par inits → both-work comparison, not same-controller A/B.
-    GOAL-3 HEADLINE: Hyfydy natively ships the three features MuJoCo
-    2.3.7 lacks — `muscle_force_m2012fast` (elastic-tendon muscle),
-    `contact_force_hunt_crossley_sb`, `predictive_integrator_psemtw` —
-    the post-deadline engine option from goal3_mujoco_fidelity.md §3.2
-    is now CONCRETE + licensed to 2026-10-24. Addendum in
-    reports_20260924\scone_hyfydy_hands_on.md; logs
-    scone_logs\{gait,balance}_hfd.log.**
-    **2026-09-24 DAY — DENG WALKER ARCHAEOLOGY + PER-MUSCLE TEMPLATES
-    (Ben's bb192d48 tip):** original Deng walker mined read-only from
-    `AddingStepSensor_CoMorrow_stw` @ bb192d48 ("Added two models" =
-    Biped_2xCPG_wSubs.aproj + K_A with RG; parent 407fa01 "Connected
-    RG, PF, and Sensorimotor Layers") via GitHub Desktop git
-    (`C:\Users\Ben Bolen\AppData\Local\GitHubDesktop\app-3.6.5\
-    resources\app\git\cmd\git.exe` — WORKS for show/ls-tree; no branch
-    switch); extracted to %TEMP%\deng_orig\ (aproj + links CSV +
-    summary). **ANSWER to Ben's HC-vs-IN question (audit doc:
-    reports_20260924\deng_feedback_wiring_audit.md): in the ORIGINAL
-    W2L, ZERO afferents reach RG or PF half-centers — RG HCs take only
-    weak mutual EXC (0.1) + laminated IN drive (2.749); PF HCs take RG
-    drive (0.1) + PF-IN inhibition; ALL feedback lands at Ia relay INs
-    (PF→relay EXC 0.5 phase gating, RE→relay INH = recurrent
-    disinhibition) and MNs (Ia reciprocal INH g=2, Ib autogenic
-    EXCITATORY 0.59-1.0). Current-stack deviation: ii/ia_f_central
-    knobs connect DIRECTLY to RG HCs.** Editor templates REDRAWN
-    per-muscle (Ben: "every of the 43 muscle-actuators needs a MN" —
-    the old 6-pool MN drawing was a template simplification, NOT the
-    real net which has 92 per-actuator MNs via W_PF_MN): walker_v9/
-    v10/s1/s2/s3/s3k now 222-233 nodes / 382-420 edges, real
-    W_PF_MN/W_POSTURE/POSTURE_OVERRIDE weights per muscle, pruned
-    quad_fem/gem/peri marked, group afferents shown on representative
-    muscles; generator imports muscle_map+params (embedded blob now
-    388 KB). PF critique fact-check: joint-layer antagonistic PF HCs
-    (HIP-E/F, KNEE-E/F, ANK-E/F) EXIST behind G["joint_pf"] (default 0;
-    s3k runs the 4 phase-cell PF + PF_IN_E/F).
-    **2026-09-24 PM — SAME-CONTROLLER ENGINE A/B (Ben's yes):** the
-    H0918 gait tutorial's two tuned pars (Osim4/Hfd4) use DIFFERENT
-    parameter-name schemes but map 1:1 by order (53 rows, 0 suffix
-    mismatches); translated copies evaluated 2×2
-    (%TEMP%\scone_ab\Tutorials3 scratch, `init_file`+`use_init_file`,
-    max_duration=4): home-engine always wins — Osim4par→OpenSim 3.198 m
-    / 9 steps / 0.60 m/s; Hfd4par→Hyfydy 4.317 m / 8 steps / 1.09 m/s
-    (only cell surviving the full window); cross cells fall early
-    (1.23/1.96 s). Engines NOT interchangeably tuned (m2012fast vs
-    Thelen muscle, contact, integrator). Hyfydy ~95× RT vs OpenSim
-    ~1.2×. Addendum 2 in reports_20260924\scone_hyfydy_hands_on.md;
-    logs scone_logs\AB1..AB4. NOTE: sconecmd needs the FULL scenario
-    path (relative open fails outside its launcher dir).**
-    **2026-09-23 EVENING — CONNECTOME BLOCK EDITOR v3.0 (Ben-requested;
-    supervisor SHIP):** `connectome_block_editor.html` v2.2 → v3.0:
-    (a) TEMPLATE LIBRARY — 15 sidecar templates in
-    `spinal\connectome_templates.json` (generated by
-    `spinal\make_editor_templates.py`, deterministic, validated against
-    the TYPES catalog): biped2xcpg (from Biped_2xCPG_wSubs
-    connectivity_audit.txt — signs assigned by wiring-class convention,
-    68 edges tagged sign_assumed, muscles implied),
-    w2laproj 92/163 (**subagent mine: the local Walker_2_Layer_CPG.aproj
-    is the 2023 ORIGINAL — single L RG, endogenous kickoff stimulus, NO
-    contact wiring; the contact-driven variant lives on the
-    AddingStepSensor_CoMorrow_stw BRANCH; Ia-chain typed by ROLE:
-    "Ia IN"=SN-Ia front-end, "Ia"=IN-IaIN**), bilateralrg 105/226
-    (documented build_rg/comm/aff/contact transform of w2laproj per
-    BilateralRG tools\SESSION_NOTES_20260916.md), li 58/98 (contact-driven
-    spiking CPG; interleg = reciprocal stance-CPG inhibition; NO
-    Renshaw/Ia/Ib/II), walker_v9/v10/s1/s2/s3/s3k (winner-param tuning
-    maps — v11/v12 don't exist as artifacts; s3k = current production),
-    synergy6, rules (the 11 CONNECTOME.md rules), shevtsova/shinohara/
-    rybak (converted replication drafts). **2026-09-24: the SAME data
-    is now EMBEDDED in the HTML between /*TPL-EMBED*/ markers (201 KB;
-    generator writes both) — the editor is self-contained for a plain
-    double-click, since browsers block file:// XHR so the sidecar alone
-    would not load; verified by hiding the sidecar and reloading (21
-    templates, src=embedded). The localhost:8642 http.server is only a
-    test convenience, not a dependency.** Templates load into a NEW tab
-    (never clobbers Ben's work) + auto-Fit; every template carries a
-    _note provenance string shown in the status line. (b) UI: wheel zoom
-    5–400% at cursor + Zoom buttons + Fit + middle-drag pan (all pointer
-    math now world-coords via svgPoint()); CTRL/SHIFT+click multi-select
-    + CTRL+band-add; Ctrl+C/Ctrl+V copy/paste (label-form internal
-    clipboard, auto-relabel _2/_3, keeps internal edges, pastes at
-    cursor); group Delete; palette places at cursor. (c) TWO v2.2 BUGS
-    FIXED: persist() now syncs the ACTIVE tab before saving (old code
-    only synced on tab-switch — close-browser-after-edit lost that tab's
-    changes), and undo stacks clear on tab switch/new/close (old global
-    stack could restore one tab's content into another). Browser-verified
-    (localhost serve + IAB): all 21 template options load clean,
-    persistence across reload, copy/paste, zoom, undo isolation.
-    Companion read-only audit of Ben's Deng_partial.json:
-    `reports_20260923\vision_review_browser_deng_20260923.md` (5 wiring
-    flags for Ben: direct HC↔HC EXC edges, IbIN sign asymmetry, crossed
-    Renshaw, label typos, no afferent→RG).
-    **2026-09-24 EVENING — EDITOR v3.1 (Ben's three asks; browser-verified,
-    reply in reports_20260924\reply_english_20260924.md Reply 4):**
-    (1) crossing lines hop in semicircles (circuit-diagram style; the
-    LATER-created edge always hops — stable across renders, recomputed
-    live in redrawEdges via computeHops with AABB culling; HOP_R=7);
-    (2) edge selection = new invisible 12 px hit line per segment
-    (HIT_W; there was NO invisible hit layer before — the 2 px visible
-    line was the only target; HIT_INSET=7 keeps node rims grabbable);
-    (3) ALT+click a LINE = bend point at that segment's midpoint, drag
-    the pink handle to reroute, ALT+click any segment again = another
-    bend in that segment; held ALT can't machine-gun points (one per
-    physical click + 250 ms cooldown, lastBendAt starts at -1e9 so the
-    first click after load is never eaten). Bends serialize as edge
-    `pts` (undo/tabs/copy-paste/reload/JSON export all keep them);
-    panel has "Remove N bend point(s)". ALT+click on a NODE still arms
-    the two-click synapse (no conflict). Edges now render as one
-    `<path>` (pointer-events none) + hit `<line>`s; deleteSel calls
-    redrawEdges so hops recompute. Tests: `_editor_edges_test.js`
-    17/17; ALSO FIXED pre-existing: `_editor_template_test.js` +
-    `_editor_static_check.py` still sliced the FIRST <script> — since
-    the 09-24 template embed that empties the extraction (suites had
-    been silently vacuous); they take the LAST script block now.
-    **Ben's contact ruling (same evening, his updated rules JSON at
-    `Neuromechanical_Models\Mujoco_SNS_models\Circuit_rules_CONNECTOME_md__connectome.json`
-    — his exports ALWAYS land there, browser download dir = look there
-    FIRST): RG+PF feedback is PER PF LAYER not per joint (one
-    ipsilateral RG pair drives separate hip/knee/ankle PF micro-layers,
-    Shinohara-style); HEEL = stance-phase reset of the ipsilateral leg
-    (heel_IN → InE/InF + the three PF-layer INs, g 0.5); TOE =
-    dorsiflexion inhibition ONLY (toe_IN → IN-PF_dorsiflexion_inhibit
-    g 5 → HC-PF-Dorsiflexion); Ib load unchanged (PF-E 0.5, RG-E gate
-    0.1). build_network.py implementation offered behind default-0 gain
-    keys — see the late-evening v3.2 block below for the completed
-    build.
-    **2026-09-24 LATE EVENING — EDITOR v3.2 + CONTACT VARIANT BUILT
-    (Ben's asks; supervisor gate run twice, second BLOCK reconciled in
-    reports_20260924\reply_english_20260924.md Reply 5):**
-    (1) EDITOR v3.2 FROZEN: LAYERS tree column (13 semantic layers in
-    walker templates via stamp_walker_grps in make_editor_templates.py,
-    mirrored by stampWalkerGrps() in the HTML; non-walker templates
-    fall back to type buckets), click row = select, double-click
-    row/node = zoom into that layer, F2 = hide selected layer,
-    F3 = show all hidden, F4 = back out (F3/F4 are Ben's bindings),
-    double-click empty canvas = zoom out; hidden persists in
-    data.hidden; node grp carried through loadSpec/addNode/copy/paste
-    (addNode takes a grp arg — attaching grp AFTER addNode is a bug:
-    renderNode runs inside addNode). Walker templates regenerated with
-    groups ONLY (`_tpl_diff_groups_20260924.py` guard: 0 content diffs,
-    edges/notes byte-identical, walkers stamped 233/233). Tests: edges
-    17/17, templates 4/4, tree 9/9 (_editor_tree_test.js), static
-    check, node --check; browser sweep verified F2 233→190 nodes,
-    3-layer reload persistence (172), drill zoom 0.39→2.65x.
-    (2) PER-PF-LAYER CONTACT VARIANT BUILT (Ben: "yes, build it";
-    per-joint layering COEXISTS): params.py five default-0 keys —
-    heel_pf_layer (heel IN → PF_IN_E exc = stance reset AT the PF
-    layer), toe_df_inh (toe IN → TOEDF IN → ANK-F inh = dorsiflexion
-    inhibition ONLY), heel_in_f_exc (heel → InF EXCITATORY variant;
-    coexists with the full_rules INH branch), ia_pf_f / ii_pf_f
-    (flexor-group IaIN/IIX → same-joint PF-*-F). heel_pf_layer /
-    toe_df_inh / ia_pf_f / ii_pf_f require joint_pf=1; TOEDF built only
-    when toe_df_inh>0. Standing gate `_pf_layer_variant_test.py`:
-    defaults = (410, 376, 1186) EXACT; variant delta = +2 neurons
-    (TOEDF r/l), 0 inputs, +52 synapses; ground eval bit-exact at
-    -160.23425729850192. **STALE GATE: the _fullrules_test.py
-    -148.6878643 reference no longer reproduces on PRE-VARIANT code
-    either (reverse-patch A/B proven) — the s3 eval moved with the
-    09-23/24 physics changes; current baseline = -160.23425729850192.
-    UPDATE 2026-09-26 (audit re-run): THIS gate no longer reproduces
-    either — `_pf_layer_variant_test.py` gate 3 still calls
-    `set_stage(3, ...)`, which after the 09-24-night renumber loads the
-    BALANCE stage (vest loaders, no walk params) → gate 3 printed
-    kine -25.0 FAIL (gates 1-2 still PASS, counts (410,376,1186) and
-    (2,0,52) re-verified). With the walk config via `set_stage(4,
-    {**mul, **curriculum_stage3.json params, full_rules:0})` the same
-    eval gives -161.56754173676563 under the 09-26 applied left-ref fix
-    (kine_ref.py working-tree change, Ben's "fix first" ruling); the
-    SAME probe with HEAD (pre-fix) kine_ref reproduces
-    -160.23425729850192 BIT-EXACT — so the recorded baseline was true
-    for committed 09-24 code, and the drift is exactly (stage renumber
-    + left-ref fix). Before relying on gate 3, repoint
-    `_pf_layer_variant_test.py` at stage 4 and re-record the baseline
-    post-fix.**
-    Ben's exports ALWAYS land in
-    `Neuromechanical_Models\Mujoco_SNS_models\` (browser download dir —
-    look there first). One-off scripts deleted per supervisor
-    (_sup_audit_*, _inspect_ben_rules, _pfvar_*); kept
-    `_tpl_diff_groups_20260924.py` (regen guard) + the standing tests.
-    **2026-09-24 NIGHT — "CIRCUIT RULES" ENTRY = BEN'S DRAWING (Ben:
-    the dropdown "pulls up the incorrect one that you made"):** the
-    `rules` library entry now loads his export verbatim via a tracked
-    copy `spinal\ben_rules_20260924.json` (97n/109e, retitled
-    "Circuit rules — Ben (2026-09-24)"); the generated motifs moved to
-    `rules_motifs` ("Rule motifs (auto-generated, old)"); TPL_JSON_
-    NAMES/GROUP updated in the HTML. EXPORT CAVEAT: the editor format
-    keys synapses by label, and his drawing has 5 duplicate labels
-    (Ia_A, Ia_N, ia: Ia, ii_exc: II, HC-RG-F_Contralateral) — the
-    generator renames later copies "(n)" and edges attach to the first;
-    Ben should relabel + re-export to disambiguate. No supervisor on
-    this fix (Ben: "Can you not finish your work without the supervisor
-    now?" — yes; spawn only when he asks).
-    **2026-09-24 NIGHT II — EDITOR v3.3 SUBSYSTEMS + BEN'S CORRECTED
-    CONNECTOMES + CURRICULUM STAGE 5 (all Ben-directed; no supervisor,
-    per Ben):**
-    (1) SUBSYSTEMS (Ben: "I did not mean double-click to zoom" — the
-    AnimatLab containment he wanted): node.sub = nested spec; dblclick
-    a ⊞ node (dashed ring) = ENTER (ctxStack push, canvas = sub's
-    nodes/edges, fully editable, breadcrumb in the tree panel); F4 or
-    dblclick-empty = write back + pop; Ctrl+G = pack selection into a
-    SUB node, Ctrl+Shift+G = unpack; nesting recursive; persists in
-    node.sub through reload/export (persist/modelSpec flattens the
-    stack; snapshot/undo stay per-context). loadSpec = tab-level (exits
-    subs); loadIntoCanvas = context-aware (undo/hide inside a sub stay
-    inside). GOTCHA: pack drops edges TOUCHING the packed set
-    (one-endpoint dangling edges crash serialize). TYPES gained "SUB".
-    (2) BEN'S THREE CORRECTED EXPORTS are now the canonical template
-    entries (tracked copies in spinal\): rules (22:46, 90n/99e — he
-    consolidated the dups himself), ben_shevtsova_20260924.json (23:09,
-    IniF/IniE/V0D/V0V/V2a/V3-E + brainstem), ben_shinohara_20260924.json
-    (23:16, per-muscle MNs IP/TA/BF + GM/VL/SO/GA). Shinohara's
-    symbolic afferent nodes ("flexor ii/ia", "extensor Ib") carry SUBS
-    expanding to per-muscle Ia/II (Ia_IP/II_IP/...) — READING RULE
-    (Ben): proprioception feeds back to ITSELF, autogenic per muscle,
-    not group-broadcast. load_ben_export() in the generator merges
-    duplicate labels as same-neuron (Ben-confirmed semantics).
-    (3) CLARIFICATIONS SETTLED: afferents = direct-off-muscle (AFF
-    encoders fuse receptor+AD; drop AnimatLab plumbing INs); label =
-    identity in exports; PORT-load = generic current-input block;
-    runner PF layer HAS PF_IN_E AND PF_IN_F (palette had one visual
-    type only).
-    (4) CURRICULUM STAGE 5 (curr_s5_pfvariant): ground eval,
-    joint_pf categorical fixed ON, KEYS5 = heel_pf_layer/toe_df_inh/
-    heel_in_f_exc/ia_pf_f/ii_pf_f ([0,0.5], toe [0,5]) — everything
-    else pinned at s3k (reports_20260923/s3k_trial34_full_params.json
-    merged into BASE_MUL; set_stage/objective/main stage-5 branches;
-    SEEDING TRAP: the stage-3 else-branch mid-range defaults must stay
-    elif (1,2,3) or they leak into the stage-5 seed). Launched 40 TPE
-    trials in the background; results → curriculum_stage5.json.
-    Runner gates re-verified: (410,376,1186) + bit-exact
-    -160.23425729850192. **(5) REORDER (Ben, same night: "standing
-    should be stage 3 and walking stage 4"): stage 3 = standing
-    balance (study curr_s3_balance, vest/rig keys), stage 4 = ground
-    walk (curr_s4_nocross, the s3 key set seeded from s3k via
-    reports_20260923/s3k_trial34_full_params.json) — FRESH study names
-    so no existing DB study changes meaning (old curr_s4_balance stays
-    as-is); stage 5 unchanged; set_stage/objective/main renumbered,
-    smoke-verified (stage-3 vest loaders, stage-4 walk loaders with
-    joint_pf 0, stage-5 variant loaders).**
-    **2026-09-25 EARLY AM — CORRECTION BEN IS OWED + EDITOR LEAK FIX:**
-    (1) Ben called out the architecture claim: the walker is NOT his
-    connectome — what shipped is a default-off five-key variant + a
-    stage-5 exploration on s3k; his per-micro-layer lamination,
-    dorsiflexion chain, heel→InF-exc are simplified or absent. DO NOT
-    phrase the working models as "following his connectome rules" until
-    the architecture itself is rebuilt to his drawing — that work is
-    HIS to direct (he scheduled the morning chat himself; no agent
-    scheduling). The stage-5 tuning run was STOPPED at his word
-    (curr_s5_pfvariant purged of a bad first seed — SEEDING TRAP: the
-    stage-3 else-branch mid-range defaults must stay elif(1,2,3) or
-    they leak into the stage-5 seed; resumable via
-    `python _curriculum.py 5 <n>` against the renumbered stage 5).
-    (2) EDITOR v3.3 leak fix (Ben's reports, root-caused): entering a
-    subsystem orphaned its DOM on exit — its afferents/wires floated
-    over EVERY tab ("afferents persist when I change tabs", "synapses
-    hanging"). clearCanvasDom now removes ALL .node/.edge elements from
-    the world group; reloadCurrent uses it too. Esc + a visible
-    "◀ back out (F4)" crumb button close a subsystem; pack RETARGETS
-    boundary wires to the SUB node (no dropped/hanging edges).
-    Browser-verified: enter→switch tab→0 stray DOM nodes; Esc exits;
-    PF-E→MN-VL retargets to the subsystem node. GOTCHA: editor
-    localStorage is PER-ORIGIN — agent test tabs share the storage
-    Ben's page loads; clean TEST_* artifacts and duplicate pristine
-    template tabs after testing and have Ben reload the page once.
-    **2026-09-25 CAMPAIGN (workflow dwfrun-52e69ca8; supervisor GO; Ben committed all of
-    it as 5f1890d7 "Figures"; index = `spinal\reports_20260925\EXEC_SUMMARY_20260925.md`,
-    figures/gifs in its `figs\` + INDEX.md):** (1) SCONE: all 15 never-run tutorials
-    evaluated (Hyfydy, no fallbacks) + FIRST optimizations ever on this machine — 3a
-    Balance 300-gen CMA-ES stands the full 30-s horizon (96.56→2.21, BalanceMeasure 0;
-    needed ~300 gens, not 40); 4a Gait optimized at short max_duration=4 OVERFITS (falls
-    at 4.7 s of the native 20-s window) — full-horizon optimization is the recipe
-    (0.883→0.873 keeping the 20-s/36-step walk); 2a jump +13.5% still climbing at cap.
-    (2) **`spinal\w2l_mujoco\` (NEW)** — W2L .aproj → MJCF (M1: 12/12 gate, masses exact,
-    pose 4.5e-7 m) with M3's fix of an M1 transport bug (knee/ankle shipped as
-    VERTICAL-axis yaw joints → `w2l_mjcf_fixed.xml`); W2L air stepping PASS (1.027 s,
-    hip 41.8/knee 68.5/ankle 27.5 deg); **split-RG (Ben's ask) with causal ablation**:
-    coupled lock 1.357 s antiphase −0.75, and with commissurals ablated BOTH legs still
-    oscillate at the intrinsic 1.027 s; afferents per rules (heel = stance reset at the
-    PF layer, toe→TOEDF, Ib autogenic) with causal heel-reset (+54 ms shift); toe gate
-    FAIL-honest (2023 template has no DF layer); M6: harness-supported march stands,
-    free stand structurally impossible (COM 3.09 cm outside support polygon).
-    **BEN'S PROTOCOL CORRECTION: the AnimatLab models run with a VIRTUAL WALKER (the
-    aproj WalkingPath body) — air-step held, then dropped onto the platform; Deng/Li
-    walk supported, Ben's 2023 model fell (no afferents). M6's free-standing rubric was
-    wrong; the harness march IS the walker analog. WalkingPath params NOT yet mined —
-    open: redo M6 as air→drop-under-walker→progression.** Li reproduction: net built
-    (gains verbatim; graded surrogates — toolbox SpikingNeuron g_spike is per-NEURON and
-    would destroy Li's convergent mixed-sign inputs), closed-loop NOT YET (body-side
-    collapse, pre-axis-fix diagnosis); his targets regenerated from his own .asim
-    headless (period 1.305 s, `Li Model\DataTool_7.txt`) — his Trace_2020*.txt files are
-    EMPTY logger byproducts. (3) **TWO new s3k-body variants behind the default-inert
-    AARL_NET selector in build_network.py** (defaults gate 410/376/1186 re-passed
-    throughout; s3k untouched): **w2lvar** (888n/382in/7430syn — 1 RG/leg + HIP PF +
-    ONE merged KNEE+ANKLE synergy PF per side; Shevtsova commissurals; heel@PF-layer;
-    toe→TOEDF) and **syn6** (794/382/3033 — 1 RG/leg + 6 synergy PF layers via
-    Szczecinski Eq-18 from synergy_basis.npz; rhythm fragility documented). Own
-    curricula `_curriculum_w2lvar.py`/`_curriculum_syn6.py`, dbs `optuna_w2lvar.db`/
-    `optuna_syn6.db` (git-tracked), studies curr_w2lvar_s1..s5 / curr_syn6_s1..s5
-    (**s1..s5 = curriculum STAGES**: air-deaff / air-aff / balance / walk-no-contact /
-    walk-contact; 18–23 trials each = SHALLOW — **more generations on easteregg2 is the
-    takeaway; full recipe `reports_20260925\EASTEREGG2_HANDOFF.md`**). Stage-5 winners:
-    w2lvar −165.04 (bilateral, kz 0.83; left leg slower: duty 0.81 vs 0.56), syn6
-    −197.21 (right-leg-only, left planted; winners sit AT the rises=3 gate minimum).
-    Supervisor audit: GO (db census exact, winners argmax, no exploits, bit-exact
-    replays). (4) **OPEN DECISION (Ben): kine_ref.load_reference() left-ref bug** — the
-    left cycle is cut at the first left GRF onset (t=0.005 s) but the IK file starts at
-    0.50 s, so np.interp edge-fill FREEZES ref['l'] for the first 39.6% of the left
-    cycle (proof `figs\ref_left_bug_proof.png`; probe `tmp\probe_ref_flat.py`). Affects
-    every ref['l']-based score since the per-side left ref landed (~a4738f92 Sep 21:
-    curr_s3*→s3k→variants); v1 (Sep 12) was right-leg-only and clean — why past overlays
-    looked different. Fix = first onset pair fully inside IK support + coverage assert;
-    NOT applied (objective change; Ben's call — decide before easteregg2 s4/s5 runs).
-    (5) Connectome editor: **w2lvar + syn6 templates ADDED** (dropdown entries
-    "w2lvar — W2L-layout s3k variant" 980n/7526e and "syn6 — 6-synergy walker"
-    886n/3129e, generated from the real built nets at stage-5 winner params — winner
-    synapse counts 7434/3037 include the 4 rg_weak_exc edges the gate-b default build
-    lacked; pre-existing 16 templates byte-identical; editor tests + defaults gate
-    re-passed). Editor = snapshot of the architecture, NOT live (live = neuro_scope.py /
-    runner --scope).
-    **2026-10-16/17 OVERNIGHT WALK CAMPAIGN (workflow dwfrun-cd6e3be8, Ben's L/R alpha+gamma
-    drive plan; ALL evidence in `spinal\reports_20261016\` on easteregg2, index =
-    WEAN_CAMPAIGN_20261016.md + the supervisor's exec summary; NOTHING committed — egg
-    working tree + reports only):** (1) Connectome audits: production s3k does NOT
-    implement Ben's per-PF-layer rules — joint_pf=0 (4 phase cells broadcast via 340
-    W_PF_MN edges), heel never reaches the PF layer (heel_pf_layer=0), TOEDF absent (toe
-    is an InE EXTENSOR exciter, not DF-inhibition); stacked duplicate IBEXC->LBIN synapses
-    (54 synapses on 8 pairs — stance load group-size-weighted 4.5/3.5/3.0/2.0 vs intended
-    flat 0.5; NOT fixed, Ben's call); classic t34 kine -25.0 at full_rules=1 under current
-    physics — the bit-exact -161.56754173676563 anchor is the full_rules=0 flavor (do not
-    conflate; seed bootstraps from mutfix winners). Autogenic rule MET at the winner (Ia
-    relay INs, non-autogenic 0). W2L: M3/M4/M5 air gates were BROKEN at HEAD since the
-    10-01 body rebuild (added freejoint made the air body free-fall) — FIXED, all gates
-    pass; M5 file defaults NEVER passed (amp=4/ibnA=6 latch both RGs) — canonical CLI
-    knobs (amp=1.5 pulse=0.5 ibnA=1.0) required; w2l_cpg port is 95n/208syn (91 is stale).
-    (2) NEW default-0 KNOBS on both models: alpha_l/gamma_l/alpha_r/gamma_r (alpha =
-    MN/PF-level, gamma = RG-level); defaults gate (410,376,1186) + anchor bit-exact
-    re-verified by the supervisor (drive_defaults_gate.py). (3) RESULTS (supervisor
-    re-ran everything bit-exact): HUMAN kine -161.5675 -> **-145.07** (10+10 cycles, duty
-    0.71/0.65, params wean_human\round8_best3.json) with drive weaned to **0.381**, basin
-    8/8; the wean ladder runs to scale 0.0 STILL CYCLING (-157.07, 8/11 cycles) — a
-    fully-weaned walker candidate exists; Ong second-reference generalizes (-159.66/
-    -173.27/-197.39 ws2.0 family, -164.43 ws5.0). Gain-sensitivity (Ben's anti-lottery
-    probe): ia_in STRUCTURAL (zero -> -250.90), toe_rge removal IMPROVES the score (prune
-    candidate), phase_reset_f inert at this operating point, ii_e_central required.
-    ROBOT: progression slope 0.0609 -> **0.06617** (25/23 L/R cycles, phase_med 0.487 =
-    antiphase, +1.718 m forward, survive true, drive 0.6, basin 12/12; params
-    w2l_wean_best_params.json). NEITHER connectome-repair loop fired — both models walked
-    on the FIRST strong-drive sweep (Ben's criterion: the connectome is not the blocker
-    once L/R drive exists). (4) Realizations: SNS_WinnerSlice_R8.slx (redesigned
-    one-input-synapse library; headless 4-check ALL PASS per stage log — supervisor did
-    NOT re-run MATLAB); AnimatLab robot variant built + headless-run only (GUI open-check
-    PENDING BEN in AnimatLab2.exe). (5) spinal_run.npz working-tree content overwritten by
-    campaign evals (git-recoverable; documented WEAN_CAMPAIGN §8). INFRA NOTE: workflow
-    world.run("ssh") auth-fails from the laptop while Bash-ssh is 100% healthy (client-env
-    issue, unresolved) — campaign gates ran through a gate-runner agent instead; keep that
-    pattern for future workflows.
+- `Code\Matlab\Mesh_Optimization\` — active optimization workspace (Routing27 v1/v2,
+  ExtCam solver set: `Opt_run_ExtCam.m`, `objective_/nonlcon_/camToExtDesign_/
+  buildDistalRingLocation_ *20mm.m`, `save_cam_result_20261014.m`).
+- `Code\Matlab\Functions\`, `Code\Matlab\Robot_Data\` — shared helpers; MonoPam
+  classes/data. `Code\Matlab\Human_Data\`, `Code\Matlab\Bone_Mesh_Plots\` — human/bone
+  data and plotting. `Code\Matlab\minimizers\`, `Code\Matlab\Previous Optimization
+  Code\` — legacy; don't build on.
+- `Code\Matlab\HX711 v3.0\HX711 v3.0\` — the HX711/BPA load-cell app, and the ONLY
+  home of it. **Live app = `HX711_BPA.m`**, a programmatic uifigure class; launch via
+  `Start_HX711_BPA` from anywhere (the launcher addpaths its own folder). Calibration:
+  original Tare→Scale-Factor flow or known-factor entry; a TARE UPDATES ONLY THE ZERO
+  OFFSET, never the scale factor. PID pressure controller + step-test cal on the
+  Pressure Ctrl tab. Factors persist in `hx711_bpa_last_cal.mat` next to the app
+  (gitignored). Offline self-test: `test_HX711_BPA_offline` (hardware-free, run after
+  pulling). Full detail, workflows, and the firmware notes live in
+  `README_HX711_BPA.md` — read that, not this file. Companion DAQ firmware:
+  `Testing_Data\2026_06_Festo\ValveDataAcquisition\ValveDataAcquisition.ino`
+  (5-column output; sketch must match the app version).
+- `Code\MuJoCo_SNS\` — MuJoCo + SNS-Toolbox pipeline (see its README.md): custom BPA
+  muscle (`bpa_muscle.py`, port of the Festo force model), MuJoCo glue,
+  `add_bpa_to_mjcf.py`. Converted models in
+  `Solid_Models\OpenSim\Gait2392_Robotbody\mjc\`; `gait2392_robot.osim` there is
+  GENERATED by `repair_robotbody_muscles.py` — don't hand-edit it.
+  - **`spinal\` — the spinal-cord network stack. Full history + gotcha archive:
+    `spinal\DESIGN.md` (read before touching runner.py / build_network.py /
+    params.py). Per-campaign reports: `spinal\reports_2026{0923,0924,0925,1016}\`.**
+    The stack: two-level RG+PF SNS networks (410-neuron production build: 92 MN
+    pools + Ia/II/Ib afferents, per-leg RG half-centers, phase-shifted PF groups,
+    stance-gated Ib load sharing, static-opt standing posture bias) coupled to the
+    converted MuJoCo model at a **2 ms neural step = physics step**, forces from the
+    BPA model inside the loop. Entry points: `runner.py` (stand→walk→stand; flags
+    `--eval --fitted --bestN --view --scope --vest ...`; `HowToRunCode.md` for
+    Spyder), `check_rhythm.py`, `audit_signs.py` (run DYNAMICALLY), `kine_ref.py`
+    (acceptance metric), `optuna_walk.py` + `_curriculum*.py` family (dbs
+    `optuna_walk.db`, `optuna_w2lvar.db`, `optuna_syn6.db`).
+    **Contracts that MUST hold:** default build census (410, 376, 1186) + the
+    bit-exact anchor eval **−161.56754173676563** (flavor: s3k stage-4 full_rules=0
+    under current physics; the −160.23/−148.69 older baselines do NOT reproduce —
+    stage renumber + left-ref fix moved them; do not conflate). Conditional topology:
+    new neurons are built only when their gain > 0. JSON RULE: every params.G knob a
+    study uses is saved in the winner json AND has an `if key in best` loader branch.
+    Basin gate on finalists (±1% on every scalar; closed-loop form for tuned
+    walkers). Anti-lottery: per-term diagnostics per trial + gain-sensitivity probe
+    + wean ladder as the structural test. Frozen/NaN runs never count as walking.
+    **BLAS/summation-order nondeterminism is real** and tuned nets sit near
+    bifurcations — verify wean/rung winners in a FRESH process before believing them;
+    in-process vs CLI contexts can land on different attractors with identical config.
+    Production configs (censuses): `s3k` lineage (410/376/1186), `w2lvar`
+    (888/382/7866), `syn6` (794/382/3033), plus spiking mirrors
+    (`build_network_spiking.py`, env-selector, MN layer stays graded) and the
+    AARL_NET selector for variants. **v10-era `--fitted --bestN` winners no longer
+    walk under current physics — only s3*-lineage winners are current.**
+    **Results of record (2026-10-16/17 wean campaign, reports_20261016\):** HUMAN
+    model: feedback re-tuned at drive scale 0.381 → kine **−145.07** (10+10 cycles,
+    duty 0.71/0.65, basin 8/8; `wean_human\round8_best3.json`); wean ladder holds
+    bilateral stepping at EVERY drive scale down to **0.0** (8+11 cycles, −157.07 —
+    feedback-sustained, un-retuned config dies below 0.85); generalizes across Ong
+    references (−159.66 @ 0.75 m/s …); still in-place under the support rig, no
+    forward progression; two lottery weights reported (toe_rge, phase_reset_f —
+    removal does not degrade). ROBOT (W2L): L/R split drive + tuned feedback →
+    antiphase progression 0.0662 m/s, +1.718 m/30 s, 25/23 cycles, drive weaned to
+    0.60, basin 12/12 (`w2l_wean\w2l_wean_best_params.json`); below 0.60 dies;
+    harness NOT weaned; duty below the strict walking gate. **No harness-free walking
+    anywhere in the program's records — state it exactly that way.**
+    `spinal\gait_refs\*.npz` — the 43-cycle locomotion reference library (Arnold
+    running 8 subj × 4 speeds; Ong walking 0.5–2.0 m/s + self-selected, drop
+    `ong_selfsel_Init200`'s degenerate left cycle if sampled; Falisse predicted
+    walking) — this is "the many-subject IK references" (staging history:
+    `D:\temp\gait_lib_staging`, source thumb drive `F:\Biomechanics data`).
+    Knee convention: **flexion NEGATIVE** (converter preserved OpenSim's), joint
+    ships `limited="false"` pre-patch. `spinal_run.npz`/`spinal_run.png` get
+    overwritten by evals — redirect via AARL_NPZ or git-restore.
+    Tools around it: `connectome_block_editor.html` (v3.3, self-contained —
+    templates EMBEDDED; Ben's exports land in
+    `Neuromechanical_Models\Mujoco_SNS_models\` — look there first; localStorage is
+    per-origin: clean TEST_* artifacts after agent testing), `neuro_scope.py`,
+    `draw_circuit.py`, `basin_gate.py`/`basin_closed_*.py`, `synergy_model.py` +
+    `synergy_basis.npz`. `spinal\replication\` — Shevtsova/Shinohara/Rybak
+    circuit-rule translations (per-edge citations; NOT built/verified as running
+    models — the dissertation says so honestly). `spinal\w2l_cpg\` (Ben's
+    contact-driven bilateral CPG in SNS, 95n/208syn — 91 is stale; W2L_SMOKE gate)
+    and `spinal\w2l_mujoco\` (W2L .aproj→MJCF, `w2l_mjcf_fixed.xml`; canonical CLI
+    knobs amp=1.5 pulse=0.5 ibnA=1.0; the AnimatLab originals run under a VIRTUAL
+    WALKER (WalkingPath body) — harness march is the walker analog, free standing is
+    structurally impossible for that geometry). L/R drive knobs (2026-10-16):
+    alpha_l/gamma_l/alpha_r/gamma_r, default-0, default-off = bit-identical
+    (`drive_defaults_gate.py`). MuJoCo fidelity ruling: keep 2.3.7/implicitfast/2 ms
+    through the dissertation; Hyfydy (m2012fast elastic tendon, Hunt-Crossley
+    contact, PSEM-TW integrator, ~95× RT) is the post-deadline engine option.
 - `Code\Arduino\`, `Code\Festo\` — embedded/valve hardware code.
-- `Code\Hardware\walker_io\` — Python walker IO stack (Orin daemon, lab console, valves,
-  sensors, afferents; README inside). Placement is wrong per Ben (2026-09-30) — fold into
-  the post-defense reorg below. The empty `Code\Solid_Models\` tree (Simscape_Part_Library\
-  OpenSim_Bones, zero files) was deleted 2026-09-30 at Ben's ruling.
-- `tmp\` — session scratch at repo root; contents are disposable by convention (emptied
-  2026-09-30 at Ben's ruling — the dissertation overleaf round-1 staging that lived there
-  is preserved in git history; canonical dissertation = Documentation\...\Dissertation\).
-- **POST-DEFENSE REORG PLAN (Ben, 2026-09-30 — do NOT execute before the dissertation
-  deadline; every move runs the repo-hygiene refs-impact protocol first):** (1)
-  consolidate neuromechanical models under `Neuromechanical_Models\`: SCONE, AnimatLab,
-  SNS_Simscape, and SNS-toolbox model content all belong in the eponymous folder.
-  (2) `Code\MuJoCo_SNS\spinal\` has a crazy number of loose files — organize internally.
-  (3) `Code\Hardware\walker_io` belongs with the other hardware code, not at Code level.
-  (4) Root `0` stray connectome layout dump (broken edge targets, accidental 09-23
-  redirect artifact from the editor session) DELETED 2026-09-30 at Ben's ruling —
-  recoverable from git history (added in 5ec3635).
-- **Xi1/Xi2 semantics (Ben, 2026-09-07):** they are *effective system-stiffness parameters*, not
-  literal bracket beam stiffness — the fitted compliance lumps in the bracket, fixtures, and the
-  cable winch on the test mechanism. "Bending" (Xi2) is modeled as a simple Hooke-law spring in
-  N/m with no length/EI dependence. Ben's shorthand "bracket axial/bending stiffness" is
-  convenience, not definition; don't over-interpret them structurally.
-- Bracket reference points (Pbr, Pbri, Pbr2) are interpretation choices Ben sets from the CAD
-  (Onyx FDM parts, not simple beams). Moving a point changes identified stiffness dramatically
-  (Pbr2 move swung flexor Xi1 by 16x). Current active points: flexor insertion Pbri
-  [-27.5,-107.81,-0.54]mm, flexor origin Pbr2 [-52.61,0,75.06]mm (pinned-flexor ONLY), extensor
-  Pbr [-3.84,-46.44,62.5]mm (rib midpoint, medial side). Both 2brk brackets use two-rotation
-  (Z then Y) frames — **proven 2026-09-08: frame convention is irrelevant** for y-symmetric
-  stiffness arrays K=[a,b,a] (compliance is invariant under the y-axis second rotation;
-  1trans/2trans agree to ~1e-17; transMode flag in minimizeFlxPin2brk demonstrates this).
-  The 39x Xi1 swings between flexor CV runs (5.4e4 vs 2.1e6, with Xi0 +7.5mm vs ~0) are
-  **gamultiobj stochasticity on a flat likelihood valley** — the pinned-flexor data cannot
-  distinguish them (both fit mean RMSE ~1.6). Break ties by cross-configuration consistency
-  or Lm_p/Lm_h checks, not reruns; consider rng seeding for reproducibility.
-  Advisor requirement: one (Xi1,Xi2) consistent across pinned-flexor,
-  pinned-extensor, and both biomimetic configurations.
-- `Testing_Data\` — **important.** Immediate subfolders `2022_02_Festo\` and `2026_06_Festo\` matter.
-  - `2022_02_Festo\` holds the Xi-minimizer family: outer CV drivers (`minimizeFlxPin10mm.m`,
-    `minimizeFlxPin10mmX3.m`, `minimizeExt10mmX3.m`) call inner evaluators (`minimizeFlxPin`,
-    `minimizeFlxPinX3`, `minimizeExtX3`, `minimizeExt`, `minimizeFlx`) that each carry their own
-    `computeForceVector`/`Lok`/`fortz`. New (Sept 2026): two-bracket flexor method —
-    **`minimizeFlxPin.m` is the evaluator of record (2026-09-11)**: Ben's original
-    evaluator re-worked in place with the full 2brk mechanics. **Convention since
-    2026-09-13: MIXED — insertion/tibia bracket ONE-TRANSFORM (pitch-only)
-    `Tkbr = RpToTrans(RkbrZ, Pbri')` with K = [X1,X2,X1] and the 1-rotation
-    pbrBnew reconstruction; origin/hip bracket TWO-ROTATION with
-    K2 = [X1,X1,X2]** (supersedes the 2026-09-12 isotropic-K2 test and the
-    all-2trans port; the y-symmetry proof makes the tibia 1trans switch
-    numerically neutral — it is Ben's structural preference). Pbri =
-    [-48.11,-107.81,13.8]/1000, Pbr2 = [-52.61, 0, 75.06]/1000, `persistent kf`
-    data cache, +5.3° encoder offset on kf(3) (47cm; Ben moved it back from
-    kf(4) on 2026-09-12 — see data-concern note below).
-    **Test-5 pB shift (2026-09-13): env `FLX_T5_YMM`** = millimeters of permanent
-    +y offset in the INSERTION-BRACKET frame for the 42 cm BPA only
-    (`pbrBnew = [norm(pkbrB(1:2)), t5y, pkbrB(3)] + eB`). A pure knee-frame +5 mm
-    y is UNREACHABLE by thetabrB rotation (point B sits nearly straight above the
-    bracket, θ=91.8°, asin-arg 1.079); the bracket-y offset is equivalent to
-    thetabrB +4.56° ("a few degrees more") and models a permanent ~5 mm bend of
-    the bracket arm along the bending axis. Unset/0 = off. Commented 1trans
-    alternatives for the Tkbr/Thbr frames AND the pbrBnew/pbrAnew reconstructions are
-    kept in Lok (restored 2026-09-12 after Ben's pitch-only toggle experiment hit the
-    missing lines) — toggle frame AND reconstruction together. Signature unchanged
-    `(Xi0,Xi1,Xi2,idx_val)`; escape paths kept (X1=X2=kSpr=Inf → rigid; X1=X2=Inf +
-    tendon → cable-only). Port verified vs minimizeFlxPin2brk 2trans: M_p identical on
-    all 5 tests (finite Xi and escape), GoF identical on tests 1/2/5, differs only on
-    3/4 via the offset move (smoke_FlxPin2brk_port_20260911.m in Dig_out).
-    `minimizeFlxPin2brk.m` (the previous evaluator; 6th `transMode` arg / driver's
-    `FLX2BRK_TRANS` env selects 1trans|2trans — the laptop session's separate-file 1trans
-    evaluator was DELETED 2026-09-08 at Ben's ruling: transMode is the vehicle of record)
-    is now STALE: pre-mixed-convention (2trans both brackets, pre-isotropic-K2
-    [X1,X1,X2] 2trans / [X2,X1,X2] 1trans) — do not re-run it as-is. Mechanically it matches the
-    port: insertion bracket two-rotation frame K = [X1,X2,X1] (Sept-8-morning arm-1
-    runs used [X1,X2,X2]); origin bracket at `Pbr2`: 1trans pitch-only frame →
-    K2 = [X2,X1,X2]; 2trans two-rotation frame → K2 = [X1,X1,X2] (Ben, late 2026-09-08).
-    `USE_BRACKET2` flag).
-    **Pbr2 applies ONLY to the pinned-knee flexor configuration** — the extensor evaluators
-    (minimizeExtX3, minimizeExt) have their own independent bracket offsets; do not port Pbr2.
-    + driver `minimizeFlxPin10mm_2brk.m` (env `FLX2BRK_MODE`
-    = smoke|full, `FLX2BRK_SOLVER` = gamultiobj|surrogateopt, `FLX2BRK_TRANS` = 2trans|1trans),
-    **compile-loop bug fixed 2026-09-09** (`for i = 1:numBPA` → `1:numel(results_cv)`): with ALLBPA
-    overrides the old loop silently dropped fully-computed folds from the pooled front (noT3 runs
-    kept 4 of 6 folds, full-5-test runs 5 of 10; harmless in the legacy 2-test era where
-    numBPA == #folds). Existing mats can be recompiled post-hoc from stored `results_cv` — no rerun
-    needed. Fold-structure findings: `Dig_foldLeverage.m` + log/mat in `Dig_out\` (2026-09-09):
-    all folds land on the same score plateau (fold choice doesn't change conclusions); pooled
-    fronts are ~80% cross-fold duplicates; predictability 46cm≈41cm < 40cm-tendon < 48cm≈47cm
-    (47cm now normal after the encoder fix); Xi2 binds at ub=2e4 in recentered-bounds mats;
-    1trans-vs-2trans and old-vs-new-bounds pooled fronts barely overlap in x-space (~0-3%).
-    harnesses renamed to Ben's Collect/Dig scheme (2026-09-08): `Dig_crossPredict.m`
-    (flexor→biomimetic/extensor cross-prediction), `Collect_ExtPinX3_sweep.m` (high-Xi1/Xi3
-    hunt, pool {1,2,5,6,7,8}; tests 3/4/9 EXCLUDED per Ben),
-    `Collect_batch.m` (overnight sequence; solver A/B settled 2026-09-07 — gamultiobj kept,
-    the env flag is still honored); `Dig_*` = analyze existing mats (Dig_CVpatterns,
-    Dig_ExtPinX3_CV, Dig_ExtPinX3_Xi3map, Dig_FlxPin_2brkt); their logs/one-off outputs live
-    in `2022_02_Festo\Dig_out\`. `Robot_Data` must be on the MATLAB path for the biomimetic
-    evaluators.
-    2026-09-08 late rerun (commit 19fea63): driver bounds re-centered on the biomimetic
-    hand-tune winner (Xi0 +12 mm, Xi1 5e5, Xi2 1e4) → Xi1 ∈ [3e4,1e6], Xi2 ∈ [5e3,2e4],
-    initial population 0.5–1.5 cm / 5e4–5e5 / 7e3–1.5e4. Current CV mats:
-    `minimizeFlxPin10_results_20260908_2brkt_{1trans,2trans}_{noT3,noT3noT5}.mat`
-    (BPA #3 = 47 cm EXCLUDED from training; #5 = 41 cm also dropped in noT3noT5; flexor
-    labels: 1–5 = 48cm, 46cm, 47cm, 40cm-tendon, 41cm). All T3-including fronts (20260907
-    + full/noT5 variants) archived in `Dig_out\old_T3_results\`; log
-    `Dig_out\encoder_campaign_noT3newXi_20260908.log`. Biomimetic-flexor chain
-    `Dig_FlxBio_dubfilt` → `_handtune` → `_refine` (mats/logs in Dig_out; hardcoded D:/
-    paths, written on easteregg2). **Scope of the 1trans≡2trans proof:** y-symmetric arrays
-    only (K_x=K_z); the per-convention K2 orderings are Ben's buckling argument, NOT covered
-    by the proof — that choice is carried, not derived.
-  - **Laptop-session mining handoff (2026-09-08, merged and adjudicated):** findings in
-    `2022_02_Festo\HANDOFF_laptop_20260908.md` — no flexor test is garbage; Xi2 is
-    consistent across configs (~1.1e4) while Xi1 is the flat, undetermined one; Xi0 pins
-    at lb=0 on the front (Ben may want lb<0). Kept under the Collect/Dig scheme:
-    `Dig_FlxPin_2brkt_picksScan.m` (whole-front pick scoring + shortlist cross-prediction)
-    and `Dig_allbpaNumHoldScan.m` (per-test held-out table + E-fold numHoldout spectrum);
-    both still UNTESTED end-to-end. Deleted as superseded: the `_1trans` evaluator/driver,
-    `nightBatch_20260908.m`, `mine_smoke_20260908.m`. The "_smoke mat" question is CLOSED:
-    that file is `minimizeFlxPin10_results_20260907_2brkt_2trans.mat`, now archived in
-    `Dig_out\old_T3_results\` (canonical restored-2trans full CV; no TRANSMODE field is
-    expected for its vintage) — never resurrect a smoke-named copy.
-  - `2022_02_Festo\` subfolders (Flx/Ext × 10mm/10mm_pinned/20mm/40mm): needed only by certain
-    plotting functions — add to path transiently and **remove afterward**; they shadow other
-    plotting functions if left on path.
-  - `2026_06_Festo\` subfolders (Ext_10mm_pinned, Flx_10mm_pinned, Torque_Pressure_Tester V1–V3,
-    ValveDataAcquisition): long raw data files, summarized in tabs of
-    `2026_06_Festo\Results_table_10mm_pinned.xlsx` — read that instead of the raw files.
-    **2026-10-02: `Results_table_20mm.xlsx` gained two blank data-entry tabs — `ExtTest20mm_1` +
-    `FlxTest20mm_51cm` (clones of `FlxTest20mm_42cm (3)`; the extensor's row-16 torque formula has
-    NO leading minus; both keep the 2.83° LC-offset, update per rig). The pressure back-calculation
-    (per-angle kPa to exactly meet the OpenSim human target from the stiffness-aware pair model;
-    CSVs `Flx_/Ext_20mm_pressure_for_human_torque.csv` + dual-axis figures) and the measured-torque
-    sections that READ these tabs (Adjoint transform of the load-cell wrench to the moving ICR,
-    printing Torque-actual values for paste into tab row 17) now live in
-    `Knee_Flexor_Data_20mm.m` / `Knee_Extensor_20mm.m` — UPDATE the d/ang reaction-point constants
-    (d51/ang51, dExt1/angExt1) after rig measurement before trusting measured torque. The flexor
-    back-calc used the current optimized pair (rest 0.5615 m) — not a 51 cm BPA. Extensor loader
-    now also accepts the 2026-09-25 full-workspace `Vas_Pam_20mm_Result.mat` (Xi block from its
-    saved ctx; the "Variable 'XiUsed' not found" warning on load is expected/benign).**
-  - Also holds large BPA max-force / force-pressure-contraction characterization structures;
-    some processed here, some from the Muscle_Sensory repository. Used with `Code\Matlab\Functions`
-    and the HX711 apps.
-- `Solid_Models\Biomimetics_2022-Knee_Test\` — the knee test setup (CAD, STLs, point clouds).
-- `Solid_Models\OpenSim\Gait2392_Robotbody\` — OpenSim human reference models/data (incl.
-  Bifemsh/Vastus-adjusted variants used for muscle torque targets). **Master's-robot
-  provenance (2026-09-22, packaging-study session): `ConnorBipedal.osim` (+ `_Bifemsh_Adjusted`,
-  `_Vastus_Adjusted`) = Ben's UNTOUCHED master's-era robot** (repo import May 2023; Connor =
-  Connor Morrow, PamData author 2020); `gait2392_robotbody.osim` is the 2026-evolved copy
-  (last touched Sep 8 2026). The "27 actuators" = the PamData instantiations in
-  `Code\Matlab\Previous Optimization Code\RobotPAMCalculationOptimization.m` (3 trunk + 8
-  thigh/knee + 3 ankle PF + 5 subtalar incl. TWO Tibialis-Posterior routes + 4 toes + 4 hip;
-  ΣMIF 36,557 N). Full table extracted to
-  `Gait2392_Robotbody\bpa_actuators_27.json` (2026-09-22; conventions + anomalies inside —
-  incl. 'Psoas X' call whose `PLocation` is UNDEFINED in the script (presumed `Location4`),
-  the 2nd 'Tibialis Posterior' likely misnamed Tibialis Anterior (TAMIF 905, comment
-  "Tibialis Anterior t2 -> a3"), and a stray `9hi` token on PamData.m line 271 that breaks
-  MATLAB parsing). **`ConnorBipedal_symmetric.osim` = GENERATED 2026-09-22** by
-  `mirror_connor_left.py` (same mirror rules as repair_robotbody_muscles.py: z-negation,
-  socket _r→_l, MovingPathPoint z-spline negation; all 46 pairs validated; appliesForce
-  flags KEPT as-is — 16 RH-off). ConnorBipedal has 12 custom-vs-stock RH paths
-  (mostly via-point DROPS), disjoint-ish from robotbody's 25 custom paths. OPEN FOR BEN:
-  add_mag3_r differs repo-vs-thumb-drive (`D:\Bipedal humanoid\Gait2392_Robotbody\` — the
-  only path difference; thumb P2 = full-precision original (−0.1357, −0.0929, +0.0591),
-  repo = rounded (−0.059, −0.108, −0.03) == P2_0's coords). Thumb drive = `D:\Bipedal
-  humanoid` (master's data: RobotAssembly2019 SLDPRT bone-with-attachments parts, LM2020
-  knee STLs, Matlab code incl. AttachPoints_Robot.mat + PAM_Prop.mat + Modern-Robotics lib,
-  Living Machines 2019/2020 paper + PAM-placement drafts). Bone geometry for packaging:
-  repo `Code\Matlab\Bone_Mesh_Plots\Open_Sim_Bone_Geometry\` point clouds (Femur, Tibia,
-  Pelvis_R, Calcaneus, Talus, Toes, Sacrum, Spine .txt/.xlsx) + the MyoConverter Geometry
-  STLs already wired into `Gait2392_simbody_simscape.slx`. `gait2327.osim` there is
-  **GENERATED** (2026-09-08, `D:\GitHub\myoconverter\build_gait2327.py`): stock gait2392_simbody
-  with muscle GeometryPaths (points+wraps) ported from robotbody via XML surgery — stock Thelen
-  params, all 92 muscles enabled; verified paths == robotbody 92/92. Key finding behind it:
-  **robotbody is a LEFT-LEG reference model** — left-leg paths are byte-identical to stock; the
-  right leg has 25 muscles with moved paths (15 with different point counts, e.g. ercspn_r 2→9)
-  onto shared placeholder points, and 19 right-side muscles `appliesForce=false`. Stock params +
-  those right-leg paths = path lengths off 7–480% → OpenSim equilibrium fails (tfl_r) and force
-  maps would be garbage. MyoConverter outputs (`Gait2392_Robotbody\myosuite_gait2392_robotbody\`,
-  `Solid_Models\OpenSim\myosuite_gait2392_simbody\`) are **regenerable** (~116 MB, Geometry =
-  stock OpenSim STL copies) — gitignored 2026-09-08; rebuild with MyoConverter instead of
-  restoring from git.
-- `Documentation\Reports and Papers\` — papers; `Dissertation\` = the dissertation (see priority 1).
-  `Documentation\Research Notes\` — agent-written lit reviews with V/L/U provenance tags
-  (board-sports/gymnastics motor control; kickflip neuromuscular hypothesis).
-- `Neuromechanical_Models\` — Animatlab CPG walker models. The `_Standalone.asim` exports
-  are STALE (predate the subsystem reorg); the instrumented phase-1 file is
-  `Biped_2xCPG_wSubs\walk new new tester added 2 axis_phase1.asim`; Ben exported a fresh
-  `Biped_2xCPG_wSubs_Standalone.asim` 2026-09-09 (runs clean headless; has RG charts).
-  DataTool_*.txt are run byproducts. **2026-09-09 .aproj surgery (GUI-verified clean open;
-  ACTIVE WORK — scheduled 8am PT session continues):** RH-side wiring completed (RH_RG
-  half-center, RG→PF drive, hip Ia/II + ankle Ib/II coordination — mirrored from LH),
-  LH↔RH RG commissural inhibition (4 OffPages on the top page + 2 nA tonic on L RG ext),
-  4 biarticular muscles per leg added (Gas/BFlh/Semimem/RF: Gait2392 Fmax 2241/896/1288/
-  1169 N applied; full Deng-style chains from the existing PF layers), RH knee/ankle
-  muscle-drive adapters fixed (were Renshaw-driven, now MN-driven), grids off, all page
-  drawings rebuilt. **Ben added connections manually and reports some are STILL missing —
-  audit drawn arrows vs the standard section FIRST.** Also open: RG does not oscillate
-  (latches ≤10 nA; sweep 20–40 nA / pulse / Deng Table A2 conductances), 16 placeholder
-  attachments (then RestingLength = TSL+OFL), no Renshaw/II on new muscles, TFL needs an
-  abduction DOF, LH_HipZ→LH_Hip rename pending. **LATCH PRIME SUSPECT (Simulink
-  session, 2026-09-13, verified in `spinal\_tau_h_check.py`): the Na h-gate time
-  constant. sns_toolbox's tau_h(V) formula collapses to ~0.1 ms at depolarized V
-  (removes burst termination, quenches the oscillator; fixed τh=350 ms self-runs) —
-  when opening the .aproj, FIRST check how LinearHill implements the Na h-gate tau
-  (Animatlab treats tau_h.max as a fixed constant, which is why the Simulink Deng
-  port works). Related trap: SNS_Library vs sns_toolbox use OPPOSITE synapse
-    saturation conventions (ThrPre/Elo) — keep straight when porting values.
-    **2026-09-16 update: sns_toolbox DOES ship
-    `NonSpikingNeuronWithPersistentSodiumChannel` (Tutorial 8) — "toolbox
-    can't express NaP" was wrong; if the MuJoCo-side RG moves to that
-    class, verify its tau_max_h semantics against the quenching result
-    before assuming cross-platform consistency (see
-    SNS_Simscape\README_SNS_Simscape.md correction note).****
-    **2026-09-14b: START POSE = normal.mot** (Ben supplied the gait2392
-    "normal" Coordinates values — pelvis_tilt −1.87, knees −3.9/−8.2,
-    hips R+24.6/L−16.6, ankle_l +9.8 dorsi, lumbar set, ty 0.96;
-    `START_POSE_DEG` in runner.py, applied AS GIVEN — an auto-sign-flip
-    heuristic was REMOVED after it mangled the canonical values; applied
-    before standing solve + rig so springs/solve hold it; 21-22 muscles
-    engage). **v8 (hand pose) BREAKTHROUGH: −47.9 eval in 60 trials**
-    (v7 plateau was −62.5) — pose quality is a first-order lever; winner
-    used quad suppression 1.0 + phase_reset_f 1.72. v8b on normal.mot
-    FIRST LAUNCH COLLAPSED onto the −65 frozen sentinel (real walkers
-    score −76..−86 on the pose) — sentinels recalibrated (−100 frozen /
-    −110 NaN), eval schedule lengthened to 16 s (11 s walk window) so
-    0.3–0.9 Hz gaits yield ≥3 countable cycles, seeded with the v8
-    winner; fresh study `ground_walk_v8b_normal` (optuna_walk_v8b.py,
-    --best8b). RULE: when plant/pose/objective change, sentinels must
-    sit BELOW the worst genuine walker. **v9 (flat-foot height +
-    amplitude objective): −65.4/60 trials → −62.24/120 trials**
-    (reproduced bit-exact); **amplitude now MATCHES OpenSim** (hip
-    46.4/43.3, knee 66.9/70.5, ankle 24.1/23.1, knee_min −78/−69.7);
-    remaining = hip phase (inverted vs RG anchor), ankle −45° PF
-    OFFSET (posture tone), duty 0.17, cadence 0.3 Hz — regenerated
-    overlay in the Dissertation folder. **2026-09-14 evening: ankle
-    trim + TRANSIENT reset** — `ankle_post_walk_trim` (POST bias of
-    ankle_pf group scales toward 0 with drive; 1.0 = v9-identical);
-    PRESET_E/F now have a FAST adaptation loop (PREA τ0.08, gain 1.5)
-    = high-pass ONSET detector (tonic ≤1 nA proven inert; rectifying
-    synapses pass only the onset pulse); **v10 study
-    `ground_walk_v10_transient` running** (seeded v9, +trim searched,
-    --best10). **ENV INCIDENT: the conda graphviz install clobbered
-    myo\python.exe (repaired via --force-reinstall python=3.10.21;
-    pip pins survived) — verify python.exe after any conda
-    transaction in this env.** **v10 (transient reset + trim): −65.375
-    (trial 56, 60 trials), reproduced bit-exact via `runner --fitted
-    --best10`** after TWO catches: the --best10 flag branch was lost in
-    successive same-anchor edits (chain silently ended at --best9 —
-    state-dump diff + missing loader print caught it), and the trim
-    loader branch was missing (JSON RULE again). Winner = knee −75,
-    tilt 15.7, amplitudes hold (45/62/25 vs 43/70/23), trim winner
-    0.097 (near-zero standing PF tone wanted in gait — confirms the
-    set-point diagnosis). Duty/cadence/hip-phase remain
-    architecture-level; study resumable. **2026-09-15: CURRICULUM +
-    mechanosensory stance feedback + IaIN (Ben's methodology question
-    became the plan)** — (a) heel/toe contact mechanosensors (per-foot
-    MuJoCo contact normal forces → HEEL_c/TOE_c ports → HEEL_IN→RG-E
-    S2W trigger + TOE_IN→RG-E late-stance prolongation; gains
-    heel_rge/toe_rge default 0); (b) LBIN stance-Ib group IN (per
-    Dominguez 2020: INs in the rhythm-generating layer) → RG-E
-    prolonger (gain ib_rge default 0); (c) IaIN population replacing
-    direct Ia→antagonist when G["ia_in"]>0 (PF_F1 phase gate +
-    RC→IaIN disinhibition per Hultborn); (d) mutual Renshaw fix (was
-    one-directional). ALL conditional topology, defaults 0 =
-    v10-identical at renshaw=0. **Regression gate now measures the
-    DELIBERATE mutual-RC change**: v10 winner re-scores −79.9 (was
-    −65.4 on lopsided wiring) — retune needed, not a bug. Staged
-    curriculum (_curriculum.py): s1 air-deaff (25 trials, best 104.6
-    objective = 3×rises + swing depth), s2 air-aff (+heel/toe, 25
-    trials, kine −68.1), s3 ground (+ib_rge/ia_in/trim, 30 trials,
-    kine −72.5). All new pathways tuned nonzero (heel 0.91, toe 0.63,
-    ib 0.68, ia_in 0.62, trim 0.63). Final v11 run: stayed up, knee
-    −78.8..+12.7 INSIDE RoM (deep swing flexion), hip −24..+58, tilt
-    −2..+19, ankle −90..−0.8. Gaps remain: duty 0.14, cadence 0.46 Hz,
-    ankle PF bias. START POSE = normal.mot values (see
-    START_POSE_DEG in runner.py). Zotero Web API access (AARL group
-    735051) verified for full-text PDF retrieval; credentials in
-    D:\Github\api_credentials_local.txt (outside repo). Musculoskeletal
-    audit script: _muscle_force_compare.py (matched-activation R²
-    0.87–0.98 on 8 of the 12 compared muscles — muscle_force_compare.csv:
-    soleus 0.742, semimem 0.565, rect_fem −1.150, bifemsh −0.261 fall
-    outside; the 8 in-band ratios run 0.910–1.018, lags 0–2 frames.
-    Audit correction 2026-09-26; the old "R² 0.87–0.98 matched
-    activation" read as if all twelve were in band).
-    Literature audit report:
-    LIT_CIRCUIT_AUDIT.md (P1a/P1b IMPLEMENTED; P2a/P2b/P3 open).
-    **2026-09-14 (v7 retune under corrected physics): ANKLE DORSIFLEXION
-    MECHANISM FOUND** — boosting swing DF drive does nothing (9 PF
-    muscles ~10 kN vs 3 DF ~1.6 kN); `params.G["f1_anklepf_inh"]`
-    (KINH→ankle_pf MNs, swing-gated, same pattern as knee) at 1.0 gives
-    air-stepping ankle **−55..+7.1° true dorsiflexion** (tests
-    `_ankle_test.py`/`_ankle_anh_test.py`). **v7 study**
-    `ground_walk_v7_rom` (140 trials, Renshaw 0.5 fixed, anklepf gain
-    searched): best **−62.523 (trial 100)**, plateaued; reproduces
-    bit-exact via `runner --fitted --best7`. Winner = slow stiff shuffle
-    (duty 0.18, knee pinned AT the +10 cap, 0.4 Hz, tilt 28.6) — scalar
-    tuning CONVERGED; duty/cadence/flexion gaps are architecture-level
-    (transient reset / FSA-analytic seeding next). **JSON RULE**: every
-    new params.G knob a study uses MUST be saved in the json params AND
-    have an `if key in best` branch in the --best loader — v7's renshaw
-    omission cost a silent 0.14 kine delta, caught only by the
-    reproduction check.
-  **Toolchain + format traps:**
-  `Biped_2xCPG_wSubs\tools\` (build_A2→build_B2→repair_dup_ids2→fix_gas_ia3→
-  rebuild_pages_v3→move_links_by_page→set_fmax2; pipeline from pristine git 6437441
-  backup — re-run the WHOLE chain, never patch a patched file). Traps: page CDATAs are
-  NOT covered by whole-file XML validation (validate each page separately); tag
-  depth-counters must skip CDATA and match `<Node attr>` opens; page rebuilds must emit
-  `<Version>` + closing tags; cloned blocks need child-object GUIDs re-rolled; **NEVER
-  hand Ben an .aproj without opening it in AnimatLab2.exe first** (zero Error dialogs =
-  pass; each broken page throws one dialog) and never save from the GUI (taskkill /F).
-  Full brief: `CHATGPT_HANDOFF.md` AnimatLab section. **RG oscillation root cause
-  (2026-09-15; full map in `Biped_2xCPG_wSubs\tools\RG_contact_drive_notes_20260915.md`):**
-  the working reference is `origin/AddingStepSensor_CoMorrow_stw:...Walker_2_Layer_CPG/
-  Walker_2_Layer_CPG.aproj` — its RG is CONTACT-driven (spiking foot-contact neurons →
-  own RG ext G=6 + contralateral RG flx G=6, SpikingChemical Equil −50; NO tonic anywhere;
-  NonSpiking RG InitialThreshold +50 mV; connexion G 0.5 where ours is 5). Proven on our
-  standalone .asim: a tonic-driven half-center CANNOT oscillate at any drive/G/threshold
-  (latches; the Ca plateau holds the ON cell). The "-55 mV RG fix" was a class mix-up
-  (−55 belongs to W2L's SPIKING contact neurons) — reverted same day. **The standalone
-  .asim's Root (pelvis) ships `<Freeze>True</Freeze>`** (31 kg box at y=1.02) → the biped
-  hangs, feet never touch ground, ContactCount=0 on all 41 bodies; Freeze→False + generic
-  PhysicalToNode adapters (`SourceDataType=ContactCount`, source=toe body GUID,
-  TargetDataType=ExternalCurrent, Gain C = amps/contact) makes contact drive WORK headless.
-  Harness builder: `%TEMP%\build_contact.pl <gainC> <ve> <vf>`. AnimatLab traps: chart
-  DataColumns need valid GUIDs (invalid → that chart silently writes 0 bytes);
-  SimEndTime == chart EndTime kills the end-of-sim flush (keep sim end longer); an
-  adapter's Gain child object needs its own fresh GUID. Next: standing tone →
-  contact-asymmetry stepping → G rescale toward W2L values → port via tools pipeline.
-- `Code\Matlab\SNS_Simscape\` — SNS neuron block library (`SNS_Library.slx`: non-spiking RC
-  neurons, E/I synapses with AUTO E/I icons, Ia/Ib afferents) + `KneeReflexDemo.slx`
-  (antagonist BPA knee reflex demo; runs in plain Simulink).
-  **2026-09-22 LIBRARY REDESIGN (laptop, Ben's circuit rules — BREAKING):**
-  `SNS_Library.slx` rebuilt around ONE-INPUT synapses + INTERNAL neuronal
-  summation. `NonSpikingSynapse` = Vpre-in → `[g; g·Esyn]`-out (the POSTSYNAPTIC
-  neuron forms `Isyn = ΣgE − VΣg` — algebraically identical to the old 2-input
-  `gmax·Sat(Vpre)·(Esyn−Vpost)`, so all tuning + numpy references stay valid).
-  `NonSpikingNeuron` ports: 1 = `Iapp` [nA] (scalar OR vector, element-summed),
-  2..7 = `syn1..syn6` 2-wide synapse inputs; UNCONNECTED syn ports auto-ground
-  (model diag `UnconnectedInputMsg='none'`, the default) — NO Sum block before
-  any neuron, synapses are small and sit against the neuron they synapse onto.
-  New `SynSum` junction block (sums ≤8 synapse lines, chainable) for >6-synapse
-  neurons. Icons per Ben: graded-potential waveform (non-spiking) / spike-train
-  (spiking) neurons, spindle-shaped Ia capsule, striated muscle/BPA fusiforms,
-  pink PENTAGON MuscleActivation (new mask param `A0` = initial activation).
-  TERMINOLOGY (Ben): call things MODELS not "plants". Rebuilt + re-verified on
-  the new architecture: units test PASS 6.07e-4 mV (same); KneeReflexDemo
-  (verified vs an independent MATLAB ODE of the same math: rise 15.8°@0.05 s
-  identical, settle mean 43.5°; the old "~9 Hz limit cycle" note was wrong —
-  mild 0.5–2 Hz alternation, compare windowed means not final samples);
-  KneeReflexCircuit = RUNNABLE 1:1 twin of the demo (the old print-only stub
-  could not run — Ben flagged "neither work"); BPACPGLegDemo (theta range
-  9.7..48.0 IDENTICAL to the committed results; single sweep, corr(Ae,Af)
-  = +0.09 — it never cycled continuously); BeerCupReflexDemo reworked:
-  BICEPS + TRICEPS BPA_20mm pair with reciprocal Ia inhibition (triceps
-  activation FALLS 0.40→0.32 over the pour, plotted; biceps rises 0.39→0.42),
-  STARTS IN EQUILIBRIUM (A0 init + descending drive sized for the EMPTY cup) —
-  the old ON 5.13°/OFF 9.66° "max sag" numbers were STARTUP transients at
-  t = 0.12–0.2 s (measured from the committed mat: activation started at 0
-  under a full-cup step drive); new numbers: ON settles 2.0° vs OFF 7.9°.
-  `c_len` 0.02 (series/tendon compliance) is what leaves real work for the
-  reflex. SNS_SpinalNetwork regenerated via the updated sns_build_from_json.m
-  (per-neuron input Muxes onto Iapp + syn ports + 146 chained SynSums for
-  in-degrees up to 17; network verify PASS 4.2e-6 mV, V_DRIVE Euler-exact).
-  sns_animate_demo REWRITTEN: the knee shank was drawn UP alongside the femur
-  (leg read as folded 180° at θ≈0 — Ben's "leg starts out at 180 degrees");
-  now flexion swings the shank POSTERIORLY (shankA = −(90+θ)), quad = belly →
-  fixed patella + tendon → rotating tuberosity, hamstring → rotating posterior
-  tibia insertion, foot anterior; it animates KneeReflexDemo AND CPG results
-  separately. Beer animation: biceps origin was floating 10 cm lateral of the
-  shoulder → now shoulder → forearm insertion; triceps drawn posterior;
-  frames visually verified. export_slx_to_R2025a fixed for the demos\ folder
-  (was written pre-reorg). Traps banked: BPA force explodes for rel<0 (length
-  > Rest — sfit valid only in [0, KMAX]); a double-negated damping Sum port
-  caused runaway to 1e95 deg in the first beer rebuild (fixed).
-  **Diagram conventions
-  (Ben, 2026-09-09):** open circle = neuron, white triangle = excitatory, solid black
-  circle = inhibitory, ellipse = muscle; tints = Okabe-Ito CVD-safe; markers auto-draw
-  from the sign of Esyn. Journal figures regenerate via `sns_draw_circuit.m` (circuit
-  redraw) and `sns_function_subnetworks.m` (Szczecinski 2017 arithmetic primitives:
-  add/sub/div/mul/diff/integrate) into `figures\`. **CAD route is now URDF** (Ben's
-  choice): SolidWorks → sw2urdf add-in → .urdf → `smimport`. The old "Simscape
-  Multibody not licensed" blocker was FALSE — the license carries it as legacy feature
-  `SimMechanics` (=1) and `sns_urdf_smoke.m` proved smimport works (2026-09-09).
-  **2026-09-16: ACTIVE on the SECOND route too — Simscape Multibody Link add-in v7.4
-  export of `09_BA_003.SLDASM` → `Knee assembly\09_BA_003.xml` (+`09_BA_003_error.txt`).
-  Exporter DROPPED the 4 Hinge mates (Ben: make them revolute — replace each Hinge with
-  Concentric+Coincident in SW, re-export) and the 6 BPA1/BPA2 mates to the assembly root
-  (Ben: ignore; BPAs will be built NATIVELY in Multibody — expanding-diameter force law
-  + N-segment sleeve with Spatial Contact Force vs the STL meshes — not imported from
-  CAD); PathMate drops = patella, ignore. CORRECTION (Ben): the KB_R_003↔TI_R_006
-  Concentric set is the tibial head BOLTED to the shank = rigid group, NOT the knee
-  joint. Import inventory (which joints smimport made) still to run.
-  Full brief for any assistant: `CHATGPT_HANDOFF.md` "ACTIVE WORK D".**
-  sw2urdf v1.6.1 INSTALLED on the laptop (Ben, 2026-09-10; official build targets
-  SW2021, so on SW2025 watch for the vanishing-dialog issue, issue #147); fallback:
-  Simscape Multibody Link IS installed+registered (disabled — enable in SW Tools >
-  Add-Ins). `import_simscape_when_ready.m` takes URDF or XML. Tendon parts
-  (`Tendon_Extensor/Flexor.SLDPRT`) are built but NOT yet inserted into `09_BA_003`;
-  GUI steps in the README. Gotchas: mask icon drawing commands take numbers only
-  (no LineSpec/name-value; `color('black')` not RGB), and keep masked blocks square
-  so circle icons stay round. **R2025a copies for the other machines (2026-09-10):**
-  `export_slx_to_R2025a.m` wrote `{SNS_Library,KneeReflexDemo,sns_simscape_EI_test}_R2025a.slx`
-  in this folder. The demo's 20 library links were re-pointed to `SNS_Library_R2025a`
-  (exported slx files get renamed to match their filename), so those two `_R2025a`
-  files must stay together in the same folder. Verified block-identical (67/67 and
-  54/54 blocks, same type inventories) and 20/20 links resolve. The EI-test copy is
-  best-effort only: Simscape-block downgrades are officially unsupported and it needs
-  `simscape_sources\SNS_lib.slx` (not exported — if needed on R2025a, rebuild there
-  from the `+SNS` sources via `sns_build_simscape_lib.m`). On R2025a machines, open
-  the `_R2025a` copies, not the originals (R2025b format won't load).
-  **MuJoCo↔Simulink bridge — INSTALLED & PROVEN (2026-09-12, same-day resume):**
-  `mujoco_bridge\` = mathworks-robotics/mujoco-simulink-blockset on this machine,
-  MJ_VER 2.3.7 (3.3.6 cannot parse `collision="predefined"`), mex-compiled with
-  MinGW gcc 8.1 (README's 12.2+ requirement is NOT binding). All 3 prove-it
-  tests PASS (`matlab\run_bridge_tests.m`, log `logs\test_abc.log`): fire-one-
-  muscle (ctrl→force, knee extends 88°), two clock rates (0.001 s ctrl source →
-  Rate Transition → 0.005 s plant), sensor readback BIT-EXACT vs Python myo-env
-  ground truth. **One LOCAL PATCH to upstream `src\mj.cpp` is REQUIRED and
-  applied**: upstream initData() zero-fills qpos (no mj_resetData) — our model
-  starts 0.95 m underground and explodes; patch = `mj_resetDataKeyframe(m,d,0)`
-  when nkey>0 (marked AARL LOCAL PATCH; rebuild via tools\setupBuild[MINghW]+build).
-  Sensor-patched model `gait2392_simbody_cvt3_simbridge.xml` (cvt3.xml itself
-  NEVER touched) generated by `matlab\make_simbridge_xml.py` — 2.3.7 sensor
-  elements are `jointpos/jointvel/actuatorpos/actuatorvel/actuatorfrc` (the
-  old report's "actuator_length" was wrong). Simulink gotchas banked in
-  BRIDGE_REPORT.md (xmlFileRel needs an ABSOLUTE path; log the sensor bus via
-  port DataLogging, not To Workspace; Rate Transition lives in Signal
-  Attributes). Downloaded binaries are gitignored. Not yet wired into any
-  pipeline — the SNS-side counterpart (Part 3) now exists, below.
-  **LAPTOP PORT DONE (2026-09-16, R2025b):** blockset re-extracted from
-  `mujoco_bridge\blockset.zip`, MJ_VER 2.3.7, AARL patch re-applied (correct
-  signature is `mj_resetData(m, d)` — two args), MinGW 8.1 support package
-  already configured, all 4 mexw64 built; tests a/b/c PASS **bit-exact** and
-  E1/E2 reproduce (logs `logs\*_laptop.log`). E2 re-saved
-  `results\SNS_SpinalNetwork.slx` in R2025b format — R2025a machines use the
-  kept `SNS_SpinalNetwork.slx.r2025a` backup or regenerate. New Simulink/
-  smimport gotchas (find_system option ORDER matters; Mechanism Configuration
-  only reachable by direct path `sm_lib/Utilities/Mechanism Configuration`;
-  gravity param is `GravityVector`; a Solver Configuration block IS required
-  for Multibody nets; smimport's return value is not the model name — import
-  a sanitized temp copy) all banked in BRIDGE_REPORT.md "LAPTOP PORT".
-  **2026-09-20 SNS_Simscape session (laptop, all details in
-  README_SNS_Simscape.md):** (1) ALL FOUR demos verified on R2025b —
-  KneeReflex 42.72°, CPG 9.7-48°, Beer 5.13°/9.66°, Deng 1.938 s r −0.857;
-  fixed sns_run_deng_demo.m corr() (no Statistics Toolbox on laptop →
-  base-MATLAB Pearson). (2) **SNS_Library.slx REBUILT with Rybak-style
-  synapse icons** (pass-through axon + E-triangle/I-ball terminal at the
-  postsynaptic edge; restyle in sns_build_library.m>synapseIconCode) — now
-  R2025b-native, demos' links still resolve, SNS_Library_R2025a.slx
-  exported; R2025a machines regenerate via the two build scripts. Actuator
-  validation re-PASSED (4.9e-10 N). (3) **Dissertation exports**:
-  sns_export_diagram.m upgraded — per-block 12 pt (R2025b has NO model-level
-  FontSize param), synapse names hidden, white canvas, styling in-memory
-  only; EPS = MiKTeX pdfcrop + mgs.exe eps2write chain (print -depsc is
-  REFUSED for Simulink systems; R2025b bundles NO ghostscript; pdfcrop
-  cannot write to C:\ root). NEW `demos\sns_build_circuit_view.m` →
-  `demos\KneeReflexCircuit.slx` = print-only neural-circuit view (blocks
-  COPIED from the demo, mask values 1:1). snsfig/sns_draw_circuit fonts
-  9.5-11 pt on a 16.5 cm canvas (= text width, no LaTeX downscale).
-  (4) **OpenSim→Simscape COMPLETE on the laptop**: Gait2392_simbody_simscape.slx
-  (osim_import\) imports (1446 blocks), COMPILES + sims after patching the 19
-  File Solids to absolute STL paths — **mesh param is `ExtGeomFileName`**
-  ('FileName' doesn't exist); `osim_import\Geometry` is a gitignored junction
-  into the cvt3 Geometry; a junction created AFTER import does NOT fix an
-  already-saved model. Joint inventory: 85 Prismatic (pathpoint slides) +
-  20 Revolute + 44 Weld = 149. (5) **09_BA_003 Multibody-Link XML imported**
-  (`mdl_knee_rig_xml_imported.slx`, runner dev\imports2_20260920.m): 96
-  blocks, joints = 2 Cylindrical + 3 6-DOF, ZERO revolute — **knee DOF
-  missing** (dropped Hinge mates → welds); Ben's SW re-export (Hinge →
-  Concentric+Coincident) still required. The older
-  mdl_knee_rig_import_tmp_imported.slx = 1-link sw2urdf stub. (6) CRASH
-  HAZARD: a FAILED `SimulationCommand update` leaves Simscape's GUI tree
-  poisoned — physmod_sm_gui_app_tree.dll access-violation at ANY later touch
-  incl. process teardown; make the compile succeed or expect crash-at-exit
-  (log survives). .gitignore gained `Code/Matlab/SNS_Simscape/osim_import/Geometry/`.
-  **Part 3 — tuned spinal network as an EDITABLE Simulink model (2026-09-12,
-  same session, all VERIFIED):** `spinal\export_network_json.py` (myo env)
-  dumps the tuned `--fitted --best` network (v4b winner) to `spinal\
-  spinal_net_export.json` (410 neurons / 1392 synapses / 376 inputs / 92
-  MN→actuator outputs; the SNS Network object names every input port
-  "Input" — real names come from SpinalNetwork.inputs order).
-  `SNS_Simscape\sns_units_test_2n.m` proves the units mapping (PASS 6e-4 mV:
-  C=tau µF → Cm=1000·tau nF, Gm=1 uS, Vrest=0, synapse e_lo/e_hi=(0,5 mV) →
-  ThrPre=0/SlopePre=5, g µS, Esyn mV, currents nA). `sns_build_from_json.m`
-  generates `results\SNS_SpinalNetwork.slx` (~2600 SNS_Library blocks; u
-  [376×1] input currents nA, S [92×1] MN drives in MuJoCo ctrl order;
-  REGENERATE after any retuning — values live in block masks).
-  `sns_verify_from_json.m` = wiring proof: **PASS, 4.2e-6 mV max dev over
-  ALL 410 neurons at t=0.3 s** vs the numpy 2 ms Euler reference
-  (`export_verify_ref.py` → verify_ref.mat; scipy string lists load in
-  MATLAB as padded char rows — strtrim). **The network is CHAOTIC: any two
-  integrators agree only to ~0.4 s** (1e-9 @ 0.1 s → O(1) @ 0.5 s; the
-  same "reggate_v5_0" summation-order effect), and the RG period itself
-  shifts ~35% between 0.1 ms and 2 ms stepping — **the v4b tuning is a
-  property of the 2 ms Euler semantics; reproduce it in Simulink with
-  fixed-step ode1 @ 0.002 s** (bit-compatible with the runner's numpy
-  stepping). Extra Simulink gotchas banked in README_SNS_Simscape.md
-  (ExternalInput unreliable under -batch — inject a Constant into the
-  demux; log buses via port DataLogging; subsystem ports are numeric
-  blk/1, never inner port-block names).
-  **Deng RG/PF layers as separate Simulink files (2026-09-13):** `SNS_Deng_Library.slx`
-  (persistent-Na HCNeuron, Nourse 2023 Tables A4-A7, tau_h FIXED 350 ms) +
-  `demos\SNS_Deng_RG.slx` + `SNS_Deng_PF.slx` (IN-laminated half-centers) +
-  `SNS_Deng_CPGDemo.slx`/`sns_run_deng_demo.m`: ONE 10 nA/20 ms pulse ->
-  continuous 1.938 s alternation (matches `spinal\deng_cpg_ode.py` 1.94 s).
-  KEY: toolbox tau_h(V) QUENCHES this circuit; fixed tau_h bursts. Same
-  suspicion for the Animatlab RG latch. See README_SNS_Simscape.md.
-  **First closed-loop experiments (2026-09-13, scripts `mujoco_bridge\
-  matlab\e{0,1,2}_*.m`, results in `exp_out\`, details in BRIDGE_REPORT.md):
-  E0 — hand-built Simscape Multibody (primitives, no CAD) FAILS on this
-  machine; the license blocks at block-ADD time, so Ben's cylinder-elbow
-  idea must run on the laptop. E1 — first CLOSED-LOOP SNS↔MuJoCo sim
-  (Ia/II/Ib from vas_med_r sensors → tuned synapses → MN → ctrl): reflex ON
-  bounds the post-collapse transient (469 N vs 43 kN, knee ~80° straighter,
-  S recruits 0.40→0.97). E2 — full 410-neuron net → all 92 muscles via a
-  Model block, single-rate 2 ms (new `simbridge2.xml` = the runner's
-  timestep/implicitfast rewrite), 5 s clean — but bare DRIVE=2.5 lands on a
-  TONIC fixed point (no rhythm): the production rhythm needs the runner's
-  full input schedule (POSTURE/BAL/afferent gating), not DRIVE alone.**
-- Repo root: `CHATGPT_HANDOFF.md` (brief for other AI assistants when ZCode is unavailable)
-  and `CHATGPT_REPORT.md` (their report back; 2026-09-08 edition covers Overleaf
-  manuscript-status edits) — keep both current when work is handed off.
-- `SADb_audit\` — Sensory Afferent Database reconciliation (Zotero personal / AARL group /
-  Airtable "Sensory Feedback" base `appMQTnobUNRytIp7`) + the standing curation backlog.
-  Spec + live state in `SADb_audit\README.md`, per-batch details in `curation_log.csv`
-  (WORKFLOW rows = current state). **State 2026-09-16: Papers table = 943 records, 500 with
-  empty Notes; the 383 rest-import campaign has batches 1–5 DONE + audit PASS (50/383;
-  batch 6 = queue CSV rows 41–50) with Ben's 09-15 rulings applied; the Sept-15/16 "task5"
-  auto-curation pass created ~390 more records and flagged 108 as insufficient
-  (`task5_progress\task5_insufficient.json` — manual curation needed); PDFs attached to
-  PDFs attached to 318/886 DOI-bearing records; THE definitive no-PDF hunt list =
-  `author_fix\remaining_no_pdf.csv` (581 records, doi/record_id/title/hunt_status;
-  rebuilt by `rebuild_no_pdf_list.py`; the Sept-15 intermediate lists were deleted
-  2026-09-20); author
-  normalization done (Primary Author = one surname + Secondary Authors multi-select);
-  citation-graph tooling = `build_citation_graph.py` (**VOSviewer RETIRED
-  2026-09-22 as a dead end — `vosviewer\` folder + map/network files deleted; do
-  not resurrect**). **2026-09-18/21: batches 6–7 DONE (16 curated + echo-verified,
-  4 Elsevier/CRC chapters logged no-text pending Ben's library pass; twins Fujiki
-  2018 / Ekeberg 2004 / Bondy 2016 Models + Côté 2018 / Prochazka and Ellaway 2012 /
-  Ziskind-Conhaim and Hochman 2017 / Duysens and Forner-Cordero 2018 Review) —
-  459/943 records have notes; task5 did NOT cover the rest-import queue
-  (`reconcile_queue.py` proves it); next = batch 8 = rows 62–70 (pre-grounded in
-  `batch6\ground_*.txt`). Airtable-independent stack:
-  `export_corpus.py` → `export\sadb_export.{json,csv}` (943 records, Excel-ready),
-  `build_citation_graph.py` → `export\sadb_cites.json` (directed adjacency) +
-  `export\sadb_layout.json` (layout + clusters), `app\build_app.py` →
-  `app\sadb_app.html` single-file OFFLINE explorer (Table search/sort/filter,
-  Pivot with drill-through, bubble map with year×citations AND topic-landscape
-  layouts, neuron styling + excitatory/inhibitory citation links; roadmap for
-  online mode + WoS/Scholar + Zotero-like extension in `app\README.md`; Airtable
-  GET 422s on a fields[] filter because two fields share the name "Models copy"
-  — fetch full records).**
-  **2026-09-28/30: the five-goal campaign on this folder was EXECUTED (full record
-  in the "2026-09-28 — SADb/Airtable campaign" section at the END of this file +
-  SADb_audit\README.md "CURATION v2 CAMPAIGN" section): schema v2 + 374 papers
-  curated (833/943 have notes) + app v2 (Research-Rabbit focus view, pivot sort,
-  online search) + knowledge_base/ + advisor zip dist\SADb_Explorer_2026-09-30.zip.
-  The old "Models copy" GET-422 note above is FIXED (renamed "Review Papers").**
-  SADb work is DELEGATED TO
-  CHATGPT during GLM peak hours (Mon–Fri 23:00–03:00 Pacific) — its brief is the SADb
-  section of `CHATGPT_HANDOFF.md`; keys live in `D:\Github\api_credentials_local.txt`
-  (rotation to scoped keys pending; Zotero key is READ-ONLY per Ben).
+- `Code\Hardware\walker_io\` — Python walker IO stack (Orin daemon, lab console,
+  valves, sensors, afferents; README inside). Belongs with the hardware code after
+  the reorg below.
+- `tmp\` — session scratch at repo root; disposable by convention.
+- **POST-DEFENSE REORG PLAN (Ben, 2026-09-30 — execute only after submission; run
+  the repo-hygiene refs-impact protocol first):** consolidate SCONE, AnimatLab,
+  SNS_Simscape, and SNS-toolbox model content under `Neuromechanical_Models\`;
+  organize `spinal\`'s loose files internally; move `walker_io` next to the other
+  hardware code.
+- **Xi1/Xi2 semantics (Ben, 2026-09-07):** *effective system-stiffness parameters*,
+  not literal bracket beam stiffness — the fitted compliance lumps bracket,
+  fixtures, and the test-stand cable winch. Don't over-interpret structurally.
+  **CV-mat fold bookkeeping (Ben, 2026-10-18 — read before quoting any
+  "validation" test):** in the pinned-knee front mats' `filtered_results`, the
+  leading columns are the fold's held-out (validation) test indices.
+  Flexor `minimizeFlxPin10_results.mat`: columns 2–3 = the two validation tests;
+  "noT3" means the 47 cm test was NOT evaluated in those runs at all — the folds
+  live on the other four tests (2 held, 2 trained). Adopted flexor pick row 77:
+  validation {46 cm, 40 cm-tendon}, training {48 cm, 41 cm}. Extensor
+  `minimizeExt10mmX3_results.mat` (`holdCols=[2 3 4]`): columns 2–4 = the three
+  held-out tests of that member's fold over the six used tests; the 42 cm and
+  48 cm tests were never used (bracket shift on those early tests). Adopted
+  extensor pick row 32:
+  validation {40, 40-tendon, 47 cm}, training {43, 43-tendon, 46 cm} — 3
+  training / 3 validation / 3 not-used (42, 42-tendon, 48 cm) over the nine
+  (Ben, 2026-10-18). Flexor: 2 training / 2 validation / 1 not-used (47 cm).
+  The mats' own
+  `PICK` fields are legacy — the picks of record are what
+  `buildKneeFlexorContext20mm.m` (77) and `buildKneeExtContext20mm.m` (32) load.
+  Bracket reference points are Ben's CAD interpretation choices (current: flexor
+  insertion Pbri, flexor origin Pbr2 (pinned-flexor only), extensor Pbr — exact
+  values in Appendix C of the dissertation and the evaluator headers). Frame
+  convention (1- vs 2-rotation) is provably irrelevant for y-symmetric K=[a,b,a]
+  arrays; the per-convention K-orderings are Ben's structural preference, carried
+  not derived. The pinned-flexor data cannot uniquely determine the stiffness pair
+  (flat likelihood valley) — the adopted pair was selected by the external
+  requirement that both redesign configurations meet the 5% overshoot target.
+- `Testing_Data\` — **important.** `2022_02_Festo\` = the Xi-minimizer family.
+  **Evaluator of record: `minimizeFlxPin.m`** (full two-bracket mechanics; MIXED
+  convention since 2026-09-13: insertion/tibia bracket one-rotation pitch-only frame
+  K=[X1,X2,X1], origin/hip bracket two-rotation K2=[X1,X1,X2]; +5.3° encoder offset
+  on kf(3); env `FLX_T5_YMM` for the test-5 insertion-bracket y-shift).
+  **Pinned-knee records of record (Ben, 2026-10-18): `minimizeFlxPin10_results.mat`
+  (flexor front, row 77 pick) and `minimizeExt10mmX3_results.mat` (extensor front,
+  row 32 pick, pair-locked; verified 2026-10-18 to carry the same fronts, picks,
+  LOCKSRC, and baselineScores as the dated duplicates). Ben will DELETE the other
+  pinned-knee result mats to save space — never build on or resurrect them.**
+  `minimizeFlxPin2brk.m` and the other legacy evaluators are STALE — do not re-run
+  as-is. Harnesses follow Ben's Collect/Dig scheme (`Dig_*` analyze existing mats,
+  `Collect_*` run sweeps; logs/outputs in `2022_02_Festo\Dig_out\`). Extensor
+  identification used tests {1,2,5,6,7,8} of nine: adopted fold fitting {5,6,7},
+  validation {1,2,8}; tests 3/4/9 (42, 42-tendon, 48 cm) not used — the attachment
+  bracket shifted during those early tests. Subfolders Flx/Ext × sizes are
+  needed only by certain plotters — add to path transiently and REMOVE afterward.
+  `2026_06_Festo\` — long raw files summarized in
+  `Results_table_10mm_pinned.xlsx` and `Results_table_20mm.xlsx` (read the tabs, not
+  the raw files). 20 mm data-entry tabs `ExtTest20mm_1` + `FlxTest20mm_51cm`;
+  measured-torque and pressure back-calculation sections live in
+  `Knee_Flexor_Data_20mm.m` / `Knee_Extensor_20mm.m` — UPDATE the d/ang
+  reaction-point constants after rig measurement before trusting measured torque.
+  **LC-angle convention (Ben, 2026-10-04, authoritative for ALL new tests): the
+  load-cell angle is measured FROM THE TIBIA AXIS — torque about t1 =
+  F·sin(LC+0.83°)·d; all new consumers convert with 90−LC before the adjoint
+  transform. The 2022-era arrays used the OLD convention — do not mix.** Also holds
+  the BPA force/pressure characterization structures (some from Muscle_Sensory).
+- `Solid_Models\Biomimetics_2022-Knee_Test\` — knee test setup CAD/STLs/point
+  clouds. `Solid_Models\OpenSim\Gait2392_Robotbody\` — human reference models.
+  Provenance: `ConnorBipedal.osim` (+_Adjusted variants) = Ben's untouched
+  master's-era robot (Connor Morrow, 2020); `gait2392_robotbody.osim` = the
+  2026-evolved copy (LEFT-leg reference model; right leg carries the custom paths).
+  `ConnorBipedal_symmetric.osim` and `gait2327.osim` are GENERATED (mirror /
+  XML-surgery scripts) — regenerate, don't hand-edit. MyoConverter outputs are
+  regenerable (~116 MB, gitignored) — rebuild with MyoConverter, don't restore from
+  git. Bone geometry for packaging: `Code\Matlab\Bone_Mesh_Plots\Open_Sim_Bone_
+  Geometry\` point clouds + MyoConverter STLs. Master's data thumb drive =
+  `D:\Bipedal humanoid` (on machines that have it).
+- `Documentation\Reports and Papers\` — papers; `Dissertation\` = priority 1.
+  `Documentation\Research Notes\` — lit reviews with V/L/U provenance tags.
+- `Neuromechanical_Models\` — AnimatLab CPG walker models + Ben's connectome
+  exports (his downloads land in `Mujoco_SNS_models\`). The instrumented phase-1
+  file is `Biped_2xCPG_wSubs\walk new new tester added 2 axis_phase1.asim`; a fresh
+  standalone export exists (2026-09-09). The .aproj is mid-surgery (bilateral RH
+  wiring, biarticulars added; reorganized model latches under tonic drive —
+  conductance tuning is the active step; no locomotor claim beyond verified
+  assembly). Canonical connectome: `ben_connectome_canonical.json` (110n/216e).
+  Wiring rulings of record (incl. the CORRECTED Deng audit: afferents DO reach
+  the RG/PF half-centers in the Deng original — retraction of the earlier "zero
+  afferents" claim, Ben-verified 2026-10-03): `spinal\WIRING_RULINGS_20260903.md`.
+  Latch lesson: Deng-style persistent-Na half-centers need tau_h FIXED (voltage-
+  dependent tau_h quenches burst termination; `spinal\deng_cpg_ode.py`,
+  `_tau_h_check.py`). AnimatLab-vs-SNS_Library synapse saturation conventions are
+  OPPOSITE — keep straight when porting.
+  `SNS_Simscape\` — the Simulink SNS block library (12+3 blocks; README inside;
+  MuJoCo bridge proven on the laptop).
 
-## REPO SIZE REDUCTION (standing objective — Ben, 2026-09-15)
+## Standing conventions
 
-Ben wants the repository size reduced ACROSS THE BOARD (folder currently
-~13.8 GB) and is wary of any operation that forces a re-clone. ANY AI
-session working on this MUST present the safeguard checklist below and
-get Ben's explicit go PER STEP before running anything destructive
-(filter-repo, push --force, gc/prune, bulk deletions). Do not fold these
-steps into unrelated work.
-
-**Measured composition (2026-09-15, EB475WS4):**
-- `SADb_audit\pdf_staging\` = **5.8 GB, UNTRACKED** (another session's
-  PDF-staging area for its Zotero upload workflow). Disk-only: deleting
-  or archiving it involves NO git operation — but it is that session's
-  working data: confirm with Ben/that chat before removing. This is the
-  single biggest disk item.
-- `.git` = 6.17 GB: history carries large CAD binaries (Solid_Models
-  SLDPRT/STL/STEP across many commits) + the ~500 MB npz commit
-  a8746f9 (HEAD of branch `KneeTestSetup_BenBo_stw`, PUSHED — so it is
-  on GitHub; branch is otherwise in sync with origin).
-- Tracked worktree ≈ 1.8 GB (Solid_Models 1.06 GB dominates).
-
-**Phased plan (nothing executed yet — Phase A/B safe, C/D need the
-checklist + go):**
-- Phase A (disk, no git): decide pdf_staging (archive vs delete) —
-  frees 5.8 GB immediately once the owning session's upload is done.
-- Phase B (prevention): extend .gitignore (npz, __pycache__,
-  SADb_audit/pdf_staging/, large binaries by policy) — Ben commits.
-- Phase C (history, branch-scoped): strip `*.npz` from
-  KneeTestSetup_BenBo_stw (the npz commits are unique to this branch —
-  verify with `git log --all -- '*.npz'` first), via amend of a8746f9
-  (tip) if that covers all of it, else git-filter-repo on that ref
-  only; then `push --force` that branch; then reflog expire + gc.
-  Requires: GitHub Desktop git at
-  `C:\Users\Ben Bolen\AppData\Local\GitHubDesktop\app-3.6.5\resources\app\git\cmd\git.exe`,
-  git-filter-repo (pip) for the multi-commit variant.
-- Phase D (policy, biggest long-term lever): CAD-binary history
-  (Solid_Models revisions, Unused_Parts duplicates) — decide LFS vs
-  external storage vs pruning duplicate-geometry commits. Most
-  invasive; separate explicit go.
-
-**MANDATORY SAFEGUARDS (any session, any step of Phase C/D):**
-1. Backup FIRST, outside the repo: full `git bundle create
-   <path>\pre_rewrite.bundle --all` + a copy of the dirty working-tree
-   files (list from `git status --short`; 117+ entries as of
-   2026-09-15). Verify both exist before proceeding.
-2. filter-repo/reset does HARD RESETS — uncommitted tracked-file work
-   is destroyed unless backed up and restored afterward. Re-apply
-   intentional working-tree deletions after restore.
-3. Always PROMPT Ben with this checklist + the specific commands before
-   executing; he is wary of re-clone-requiring operations (his words).
-4. After any force push: EVERY other clone (laptop DESKTOP-5Q16KE9,
-   easteregg2) must re-clone or `fetch + reset --hard` + expire reflogs,
-   or it will re-push the old history. Tell Ben explicitly each time.
-5. filter-repo removes the `origin` remote — re-add
-   `https://github.com/Agile-and-Adaptive-Robotics/Bipedal_Robot.git`.
-6. Verify afterward: `git log --all -- '*.npz'` empty (Phase C), .git
-   size reduced, `git status` matches the pre-rewrite dirty list,
-   unaffected branches/colleagues' refs untouched.
-7. GitHub-side full shrink may need GitHub's gc (contact support or
-   wait for their maintenance) — local + push results are immediate.
-
-## OpenSim / MyoConverter / SNS-Toolbox on easteregg2 (Sept 2026)
-
-Distinct from the laptop's `myoconv` env (above): easteregg2 uses conda env **`myo`**
-(py3.10). Working pin set: conda `opensim=4.4.1=py310np121` (opensim-org channel) +
-pip `mujoco==2.3.7` + pip `vtk==9.2.6` + pip `trimesh==3.23.5` + pip
-`numpy==1.21.6` (**must be the pip/OpenBLAS build** — conda's MKL numpy crash-planes
-with 0xc06d007e in np.dot once opensim+mujoco are loaded) + `sns-toolbox` (--no-deps,
-plus CPU torch --no-deps + filelock/typing-extensions/sympy/networkx/jinja2/fsspec +
-graphviz). Run python with `CONDA_PREFIX=D:\Anaconda\envs\myo` (mujoco reads it).
-Second env `opensim` = py3.11 + pip opensim 4.6 wheel (PyPI wheels are cp311+ only on
-Windows) for model editing / opensim-cmd follow-ups. IK output:
-`Documents\OpenSim\4.6\Models\Gait2392_Simbody\subject01_walk1_ik.mot` (workflow:
-Scale first — the bundled IK setup consumes its `subject01_simbody.osim` output).
-
-- MyoConverter clone: `D:\GitHub\myoconverter` (API: `O2MPipeline(osim, geometry,
-  out, **kwargs)`). Drivers: `convert_gait2392.py` (stock→MuJoCo, ~90 min, DONE),
-  `build_gait2327.py`, `sns_gait2392_cosim.py` (SNS↔MuJoCo co-sim, proven),
-  `compare_pathpoints.py`/`verify_gait2327.py`. Reference CPG: 
-  `D:\GitHub\Two_layer_CPG_SNS_Toolbox` (Nourse 2023; `build_net(dt)` runs verbatim).
-- **Windows pitfalls (each cost real time — do not relearn):** MyoConverter step 3
-  uses multiprocessing spawn → every driver script needs `if __name__ == "__main__":`;
-  guard-less children re-run the whole pipeline and hold the output log open
-  (PermissionError WinError 32) — kill zombie python children before rerunning.
-  Classic conda solver hangs 20+ min on the upstream yml — use libmamba, and prefer
-  pip for mujoco/vtk/numpy so conda only carries opensim.
-- **SNS-Toolbox 1.5.2 wheel ships two parallel class trees**: use `Network` from
-  `sns_toolbox.networks` (has `.compile(backend='numpy')`) with neuron/synapse classes
-  from legacy top-level `sns_toolbox.neurons` / `sns_toolbox.connections`
-  (`resting_potential`, `e_lo`/`e_hi` kwargs). `design.neurons` instances FAIL the
-  isinstance check inside design/networks.py.
-- Co-sim pattern (proven, ~4x real time): SNS dt=0.1 ms → MN voltage →
-  `stim2activation()` sigmoid → `mj_data.act[actuator_id]` → `mj_step` →
-  `-gain*actuator_force` → Ib feedback (15 SNS inputs: 3 drive + 6 Ia + 6 Ib).
-  Converted-model caveats: MJCF has `limited="false"` joints (the pelvis-pinned
-  variant enables limits), keyframe qpos matches the FULL model (strip keyframe if
-  you remove joints), and MJCF resolves `Geometry\` relative to the XML location.
-
-## MATLAB workflow (follow exactly)
-
-- Entry scripts are in `Code\Matlab\Mesh_Optimization\`: run `Opt_sanity.m` / `Opt_sanity_Ext.m`
-  **before** the full `Opt_run.m` / `Opt_run_Ext.m`.
-- Every run starts from a context struct: `ctx = buildKneeFlexorContext20mm()` or
-  `buildKneeExtContext20mm()`; objectives/constraints are wrapped as anonymous functions of
-  `(x, ctx)`. Flexor and extensor use different constraint machinery.
-- Optimizers use `parpool(10)` + `surrogateopt` (≈7000 evals) then `patternsearch` (≈15000) —
-  **hours, not minutes.** (parpool(10) fits easteregg2; on DESKTOP-5Q16KE9 cap at 6.) Run via
-  the `matlab` skill (`matlab -batch`) in the background with
-  output tee'd to a log; check the log tail, never babysit the run turn-by-turn.
-- Path setup: self-locate the repo root, then `addpath(genpath(root/Code/Matlab))` with
-  **Mesh_Optimization winning any shadowing contest** (duplicate filenames exist in Robot_Data,
-  Knee_Torque_revision_3, Bone_Mesh_Plots). `Debug_RouteElim_Ext.m` shows the canonical setup.
-- Results (.mat/GIF/CSV) go to `Mesh_Optimization\Results\`.
-- **2brk drivers keep Ben's "%% Pick best solution (later, flexible)" section VERBATIM** (lowercase
-  `pick`, commented `sol_actual` lines, hand-editable hardcoded k1/k2/k3, the two disp tables and
-  two Mean fprintf lines) — only the evaluator call line may carry the extra evaluator arguments.
-  Do not rework it into a PICK-strict or mean-of-all-tests version.
-- **Result-mat saves are FULL-WORKSPACE (Ben directive, 2026-09-12; re-stated 2026-09-20 for the
-  Opt_run family)**: bare `save(file)` — he loads the mat and runs any driver section from it;
-  figures inside the mat are accepted. This applies to the `Bifemsh_20mm_Result_*` /
-  `Vas_Pam_20mm_Result_*` mats too: since 2026-09-20 both drivers save bare behind a `liveRun`
-  flag (set at the top of a full run, `clear`ed immediately before the save) so section reruns
-  from a loaded mat can never mint a new dated mat — a variable-list save or an
-  `exist('optsP')`-style guard is a BUG in these drivers. Ben keeps the save blocks commented in
-  his resting state; uncomment before a real run. The drivers' adjusted-seed + display sections
-  carry `~exist` guards (incl. rebuilding `nonlcon`/`optsP` from the mat's ctx) so the
-  load-mat→run-section workflow works; keep them intact when editing.
-  Every `*FlxPin10_results_202609*.mat` (root + Dig_out archives) now carries lowercase
-  `allBPA` + `numBPA` (patched 2026-09-12 via `Dig_out\patch_FlxPin10mats_allBPA_20260912.m`;
-  noT3 vintages: allBPA = [1 2 4 5], the training pool of that era).
-- **Plotting convention (Ben, 2026-09-12)** in `minimizeFlxPin10mm` / `minimizeFlxPin10mmX3`
-  color-scheme sections: his 3-line override block
-  (`% allBPA = allBPA;` / `allBPA = [1, 2, 3, 4, 5];` / `numBPA = numel(allBPA);`),
-  auto tileLabels (A),(B),… drawn bold at each tile's top-left, and the legend rule:
-  even numBPA → legend in tile (1,2); odd → first empty tile (`lg.Layout.Tile =
-  2*ceil(numBPA/2)`, e.g. tile 6 of 3×2). `minimizeFlx10mm` (1×2, different series per
-  tile) and `minimizeExt10mm` (separate 1×1 figures) keep per-tile legends — no empty
-  tile exists there; letters are auto tileLabels. Verified renders in
-  `Dig_out\plotcheck_*_20260912.png`.
-- Never casually re-run entry scripts; ask/state intent first — runs are long and results get
-  overwritten.
-
-## Current state (Sept 2026)
-
-- Flexor: **solved and feasible** with 2 BPAs. **2026-09-21 asymmetric two-route rework
-  (Ben's CAD-picture routing)**: `Location{2}` is no longer the z-mirror of `Location{1}`.
-  Instead `flexorBpa2Endpoints20mm.m` keeps the mirrored distal attachment
-  (`pEnd{2}z = -pEnd{1}z`) and anchors the origin on BPA 1's side of the knee via
-  `p1{2}z = p1{1}z - (pEnd{1}z - pEnd{2}z)` (z is frame-invariant here: knee rotates about z,
-  all translations carry z=0). `predictKneeFlexor20mm` SOLVES the second route through
-  `buildKneeFlexorRoute20mm` (own wrap point + own bendMeasure — `MonoPam_mult` now accepts a
-  per-route bendMeasure cell) and `nonlconExclusion` checks BOTH routes (all 7 constraints,
-  worst-of-both; femoral-condyle check included — pred structs predating 2026-09-21 are
-  rejected with a clear error). The standing `Bifemsh_20mm_Result.mat` xBest violates the
-  femur constraint on the NEW BPA-2 route by 1.6 mm → **Opt_run re-run pending** (torque is NOT
-  short: min margin vs the 1.05×human requirement is +1.06% under the new model, worst angle
-  −104°). **Soft BPA-2 anchor (same evening, Ben's Q-angle/aLDFA request)**: the refinement
-  pattern search (Opt_run "Run with adjusted seed" section) sets `ctx.bpa2TargetP1/P2` from
-  the loaded design's derived BPA-2 endpoints, and `objective_KneeFlexor20mm` adds
-  `bpa2AnchorWeight * ((|p1{2}-t1|/norm)² + (|pEnd{2}-t2|/norm)²)` — a SCORE punishment only,
-  never a constraint. Weight 10 / norm 1 cm (knobs in buildKneeFlexorContext20mm;
-  weight 0 = off): 1 cm drift on both ends costs 20 vs ~4300 for 1 N·m of worst-angle torque
-  shortfall, so torque always wins. Opt_run prints the targets + post-refinement drift.
-  Verified: anchor cost 0 at seed, exactly 12.5 at a +5 mm p2z probe; a 40-eval capped
-  refinement (mechanics smoke, not converged) reached feasible with p1{2} drift 0.0 mm /
-  pEnd{2} 0.18 mm. The old
-  commit-0453a2f "double force at same points" caveat no longer describes the code.
-  `Knee_Flexor_Data_20mm.m` bone plots/animation FIXED same day: now uses the
-  `bonePlotArgs` interface like `Knee_Extensor_20mm.m` (root-derived addpath added; both BPA
-  routes drawn via the new `'Location2'` option in `AnimateKneeBoneMuscle`; GIF verified
-  199 frames headless). Verification harnesses for this pipeline MUST be function files,
-  not scripts — `MonoPam_mult` (L557) and `MonoPamDataExplicit_balanceX3` (L657) contain
-  parfor, and a script caller gets replayed on the workers.
-- Radius controls (commit fd5963d): `ctx.bpaRadiusMode` = "scalar" (geo.bpaRb / geo.bpaRs) or
-  "bpaR" (candidate-dependent physical radii); `geo.bpaRbOffset` / `geo.bpaRsOffset` defaults 0.
-  Three-radius scheme: `bpaRb` = 20 mm nominal pWrap standoff, `bpaRs` = 16 mm min tibia
-  clearance, `wRap` = 25 mm Xi3 bend-length radius.
-- Extensor route elimination **REWORKED AND VERIFIED (Sept 2026, commits through 416f08f)**:
-  - Ben's rule in `buildDistalRingLocation20mm.m>candidateEliminationTest`: femur rows p2:p5
-    tested in femur frame (vectors from previous active row, rotated +90°; remove when big more
-    CCW); tibia rows p6:p8 in t1 frame (vectors from next active row, rotated −90°; remove when
-    big more CW). ONE `atan2(cross,dot)` on the rotated pair — comparing two principal atan2
-    values separately IS seam-bitten at ±180°. p3/p4 anchor to p7 while active; cascade guard
-    forces release order p5,p6,p4,p3,p7; ONE removal per step (priority must init
-    `bestMargin = -inf`, NOT 0 — hysteresis margins are negative).
-  - Collision gates ON: chord must clear envelope by `geo.bypassTol` (0.5 mm), 2 mm endpoint
-    trim, contraction-radius slack `geo.bypassRelaxFemur`/`bypassRelaxTibia` = 3 mm (envelopes
-    use inflated 19.25 mm radius; routed BPA is contracted per `bpaR`), p7's gate = the two
-    tibia cylinders only (wall band is virtual). `geo.marginTolD` = 1.5° release hysteresis —
-    releases BEFORE the wrapped contact goes collinear and collapses the moment arm (the old
-    "torque jog"). Tibia seeds CONSTRUCTED: p6 = +30° on upper clear circle, p8 = −30° on
-    lower, p7 = (tibiaWallX, mid-y); knobs `geo.seedP6AngleD/seedP8AngleD/seedP7X`.
-  - Verified x0 schedule: p5@−91.1°, p4@−50.4°, p6@−47.8°, p7@−20.2°, p3@+6.1°, one per step,
-    min moment arm +45.2 mm, max torque step 0.53 N·m (jog eliminated).
-    NOTE: schedules are NOT hardcoded — candidateEliminationTest derives them per design at
-    sweep time. **2026-09-21 gate fixes (Ben's rulings): (a) geo.seedColinearTolD = 0 — p7
-    STAYS: the wall connecting the two tibia cylinders (vertical at tibiaWallX) is REAL
-    (original introduction in git d9df68b7/1cd2c062); the old 1.0° guard had let the
-    optimized low pEnd (pEndy −0.173) eliminate p7 at sweep start, routing the BPA straight
-    across the wall. (b) geo.bypassRelaxTibia 3→6 mm — at 3 mm the inflated upper-tibia
-    circle held the p3*→p8 chord to −34.7°, overriding the rotation rule (opens −42.5°).**
-    Design-of-record schedule after the fixes (Vas_Pam_20mm_Result = 20260920_1519):
-    p5@−91.11, p4@−50.40, p6@−47.78, p7@−20.20 (wall lift-off), p3@+6.06, p8@+7.37 — back on
-    the validated x0-family pattern; minMargin +5.252%, max arm step 1.87 mm (p3 release),
-    wrap constraint grazes +18 µm. Full-precision schedule + drift check hardcoded in
-    Knee_Extensor_20mm.m (constants are a RECORD, not inputs — the route derives the
-    schedule every build). **SEEDS REWORKED per Ben's fcec-ray rule (same evening): p3 on
-    the ray femoral-condyle-ellipse-center → hard-ellipse/hard-wall junction, p5 on the
-    distal semi-minor axis, p4 the angular midpoint; each at 19 mm clearance to the hard
-    ellipse (p3 clears the wall line 17.2 mm). Values live as HAND-EDITABLE routeSeed rows
-    in buildKneeExtContext20mm (SW rows kept commented); Knee_Extensor_20mm gained a
-    handSeed override block (p2:p8 [x y], femur frame p2:p5 / t1 frame p6:p8) so Ben can
-    hand-shape routes in the display.** FINAL 9/21 NIGHT STATE — Ben's rule RESTATED VERBATIM
-    and implemented exactly: femur rows compare p_i−p_{i−1} vs p_{i+1}−p_{i−1} rotated +90°;
-    tibia rows p_j−p_{j+1} vs p_{j−1}−p_{j+1} rotated −90° (rotation avoids the atan2 ±pi seam);
-    EVERY optional row tested at EVERY pose between its nearest ACTIVE neighbors (repeating
-    rows + frame transforms) — the CASCADE WAIT and the p7-TRIPLET anchor are REMOVED, and the
-    same-day relax experiments (tibia 6 mm, femur 9 mm) were REVERTED to the verified 3 mm per
-    his ruling: "if collision occurs when a p_i or p_j is eliminated, the seed route could have
-    been better — seeds need to stay within a certain tolerance zone from the hard geometry."
-    Schedule (standing xBest, ray seeds, exact rule): p5@−79.29, p6@−50.40, p7@−25.46, p4@+4.75,
-    p3@+6.06, p8@+7.37; minMargin +7.486%; arm step 2.06 mm; xBest also +1.23 mm over the
-    series rest-length constraint (stale design — Opt_run_Ext re-run pending). **SEED SIGNALS
-    (rule open, chord blocked = seed to improve): p3 blocked −120..+4.75° (margin +1.55°, the
-    p2→p4 chord crosses the femur-wall clearance band ~3.7 mm — p3's ray placement clears the
-    ellipse 19 mm but the wall only 17.2 mm); p8 blocked −120..+6.06° (hysteresis range,
-    −0.25°).** GIF replay: Results\Replay_Route_Gif.m (plays once + Replay button). p6 pending
-    Ben's re-think: the upper tibia head circle sits mid-part with the two BPAs straddling it
-    in z, which the planar model doesn't represent.
-    **SEED CORRECTION (same night, Ben: "put p3 where p4 is; p4 halfway between p3 and p5,
-    angularly, from fcec") + route-figure port:** p3 [0.06406,−0.42680] (old SW-p3 spot, local
-    ray −44.88°), p4 [0.05283,−0.44188] (midpoint ray −67.44°, 18.9 mm), p5 [0.03777,−0.45214]
-    (semi-minor); the wall-junction ray is NOT used. Schedule: p5@−89.80, p4@−55.66, p6@−47.78,
-    p7@−20.20, p3@+6.06, p8@+7.37 — the validated release ORDER is back; minMargin +5.220% on
-    the stale xBest; arm step 2.19 mm; rest-length overshoot down to 35 µm. Seed signals now:
-    p3 blocked only −4.44..+4.75° (margin +0.51°, near hysteresis noise — was 96 poses); p8
-    unchanged. Opt_run_Ext re-run still pending. The '%% Plot full optimized geometry and
-    p1:p9 route' section is now IN Knee_Extensor_20mm.m (R-suffixed helper ports of the
-    driver's plotStyle/styleAxis/styleLegend/makeRouteLegend); rendered smell-test PNG at
-    Results\Knee_Extensor_20mm_route_check_20260921.png.
-  - `Debug_RouteElim_Ext.m` (tracked) = ~1 min verifier: elimination table, gate audit, p1/pEnd
-    bound scans. Tiled route figures in Opt_sanity_Ext/Opt_run_Ext: 4 poses per row, legend in
-    a 5th column spanning all rows.
-- `MonoPamDataExplicit_balanceX3.m` has exactly ONE copy: `Robot_Data\` (`mif = BPAcount*Fmax`).
-  The nested Knee_Torque_revision_3 shadow copy was deleted — do not resurrect it.
-- Open design question: replace the 4 per-contact wrap terms (geometricBendMeasure) with p2's
-  term kept + ONE unified R×(total polyline turn) term for p3–p8, plateau-calibrated so the
-  Xi3·bend product stays consistent; prototype behind `ctx.bendModel` flag. Ben hasn't decided.
-
-## DISSERTATION .TEX — NEVER EDIT WITHOUT BEN'S EXPLICIT OK (Ben, 2026-09-21)
-
-Do NOT edit `CPG_spinal_section_draft.tex` or any ProofFinal chapter file
-without Ben's explicit per-edit approval. This holds even for ZCODE-fenced
-blocks, figure-pointer fixes, and number refreshes. If a change is needed
-(figure renamed, numbers stale), ASK with the exact diff proposed and wait.
-Deleting/renaming a figure file that the tex references is NOT license to
-edit the tex — leave the tex pointer alone and tell Ben both sides.
-
-## SUPERVISOR AGENT — spawn at milestones (Ben, 2026-09-21)
-
-Walker sessions MUST spawn a general-purpose agent gated by
-`Code\MuJoCo_SNS\spinal\SUPERVISOR_AGENT.md` (use its full text as the
-spawn prompt) at: M1 before declaring results, M2 before any
-figure/tex/circuit edit, M3 before calling wiring "literature-faithful".
-Act on BLOCK verdicts before proceeding. Also standing: Ben owns the
-connectome (edit only via his connectome spec /
-`spinal\connectome_editor.html` + `CONNECTOME.md`); replication of
-Shinohara / Shevtsova / Di Russo connectomes lives in
-`spinal\replication\` (first pass by the session, then Ben edits).
-
-## Figure standards — PROJECT-WIDE (Ben, 2026-09-21)
-
-Every figure produced for this project (MATLAB, Python, Illustrator
-exports) must follow these rules; reference examples: the
-Plot_KneeFlxPin family + `Documentation\Reports and Papers\
-Knee_Torque_Test\Figures\Figure components\FlxPin_group\FlxPin_group.fig`.
-
-1. **Page/size**: sized for regular letter paper, usable area
-   7.5 x 10 in (8.5x11 with margins). Nothing smaller.
-2. **Type**: minimum 10 pt everywhere (axis labels, ticks, legends,
-   annotations). **No italic text** (set font.style normal; avoid
-   mathtext italics — use \mathrm or plain text). Leave visible clearance
-   between axis titles and tick-label text, especially on the y axis.
-3. **Font**: Arial only (freely available in MATLAB, Adobe Illustrator,
-   and Python/matplotlib on all three machines). MATLAB:
-   set(groot,'defaultAxesFontName','Arial'); Python:
-   rcParams["font.family"]="Arial", "mathtext.fontset":"custom" with
-   rm/it/bf all Arial.
-4. **Colors**: use the accessible palette from `Code\Matlab\Colors.m`.
-   For ranked result series, the most important or adopted result is indigo
-   (#0000FF), followed by progressively lighter/de-emphasized colors:
-   #9D02D7, #CD34B5, #EA5F94, #FA8775, #FFB14E, and #FFD700. Greys
-   #B0B0B0 (context) and light lavender (inactive circuit context) are for
-   de-emphasized structure, Di-Russo-style. This indigo-to-light hierarchy
-   is Ben's preferred presentation order; do not reverse it.
-5. **Accessibility**: colorblind-safe by construction (Tol palette +
-   distinct line styles/markers/shapes so no information is carried by
-   hue alone); every figure ships with **alt text** (one file per
-   figure set, e.g. <figure>_alt.txt, one block per panel: panel
-   letter, what is plotted, key takeaway).
-6. **Synapse/element shapes in circuit diagrams** (Ben's SNS
-   convention, 2026-09-09): open circle = neuron, open triangle =
-   excitatory synapse, filled circle = inhibitory synapse,
-   ellipse = muscle; afferent/interneuron classes distinguished by
-   Colors.m hue + label.
-7. **Terminology**: refer to afferent pathways as Ia / II / Ib
-   (e.g. "stance-group Ib interneuron" — the code symbol LBIN means
-   exactly that; do not write "LB"). KINH = swing-gated inhibitory IN
-   (PF_F1 -> KINH -> knee_ext/ankle_pf MN suppression).
-8. **Say "neuromechanical model" / "musculoskeletal model" — not
-   "plant"** (Ben, 2026-09-21): the musculoskeletal side is part of
-   the coupled model its reflexes loop through, not passive plumbing.
-
-## Readmes
-
-- `Code\Matlab\Mesh_Optimization\Mesh_Optimization_Readme.md`, `Code\Matlab\Functions\Functions_Readme.md`,
-  `Code\Matlab\Robot_Data\Robot_Data_Readme.md` — agent-readable copies; **the .docx versions are
-  canonical for humans.** If you edit a .md copy, remind Ben to update the .docx.
-- `Code\Matlab\Mesh_Optimization\Knee_Torque_revision_3\Knee_Torque_revision_3\README_revision_3.md`
-  — detailed flexor BPA/route model doc (modes, how to run tests).
-
-- Known data concern FINAL (Ben, 2026-09-12): the angle-shifted test is **#3, the
-  flexor 47 cm (kf(3))** — its encoder read ~5.3° low; correction is
-  **Angle-only (phiD NOT shifted)**, applied at build time in `minimizeFlxPin.m`
-  (Ben moved the shift back to kf(3) himself on 2026-09-12, after briefly assigning
-  it to test 4 / 40cm-tendon on 2026-09-11). HISTORY: the 2026-09-08 2brk campaign,
-  dissertation flexor pick 107, and the extensor Xi1/Xi2 lock were all fit with the
-  kf(3) shift; the 2026-09-11/12 `offT4` / `Xi1gtXi2` / `K2allX1_2folds` mats were
-  run with the kf(4) shift — remember which shift a mat carries when re-picking.
-  `minimizeFlxPin2brk.m` happens to carry the shift on kf(3) but is STALE re: the
-  2026-09-13 mixed convention (tibia 1trans + hip 2trans K2=[X1,X1,X2]).
-
-### Mixed-convention campaign COMPLETE (2026-09-13)
-
-- Config: tibia 1trans K=[X1,X2,X1] / hip 2trans K2=[X1,X1,X2]; folds holdout
-  {1,5} and {3,4} (nothing left out); Xi1>Xi2 constraint live; encoder shift on
-  kf(3). Runner `Dig_out\run_FlxPin10mm_mixT_20260913.m` (first launch lost run 1
-  at the save line to the driver-`clear`-wipes-runner-vars trap — fixed, rerun
-  deterministic). Readout: `Dig_out\Dig_FlxPin_mixT_readout_20260913.m`.
-- **Run 1 `..._20260913_2brkt_mixT_2folds.mat` (no T5 shift)**: fold 1 (train
-  {2,3,4}) best Xi0 1.279 mm / 2.551e4 / 2.556e4 ratio 0.998 (boundary); fold 2
-  (train {1,2,5}) Xi0 2.465 mm / 3.389e4 / 1.748e4 ratio 1.94 INTERIOR; pooled
-  106 rows, median ratio 1.53. pick=1 per-test RMSE 2.196/1.363/2.281/1.187/1.499,
-  FVU ≤ 0.177 — 40cm-tendon best-ever 1.187/0.023.
-- **Run 2 `..._mixT_T5y5mm_2folds.mat` (T5 +5 mm bracket-y)**: pick=1 Xi0 1.572 mm
-  / 2.695e4 / 2.434e4 ratio 1.107; fold-2 winner Xi0 pushed to 7.1 mm. Per-test
-  RMSE 2.181/1.315/2.253/1.168/**1.556**.
-- **T5-shift verdict (fixed-Xi isolation, tests 1–4 bit-identical both ways): the
-  +5 mm bracket-y offset HURTS test 5** (1.499→1.602 at run-1's pick; 1.440→1.556
-  at run-2's). Sign sweep: −2 → 1.69, −5 → 2.17 — monotonic degradation in BOTH
-  directions from zero. Test 5's residual is NOT explained by an insertion-point
-  bracket-y offset; the un-shifted pB is optimal for it. Plastic-deformation
-  allowance in that axis is unsupported by the torque data.
-
-## NEUROMECHANICAL MODELING — read the SADb rules FIRST (Ben, 2026-10-02; applies on ALL machines)
-
-Any session building, tuning, or debugging a neuromechanical model in
-**AnimatLab** (`Neuromechanical_Models\`), **SNS Simulink / SNS_Simscape**
-(`Code\Matlab\SNS_Simscape\`), or the **MuJoCo-SNS toolbox**
-(`Code\MuJoCo_SNS\`) MUST first read **`SADb_audit\MODEL_XREF.md`** — the
-generated cross-reference of feedback-pathway RULES (each with its
-demonstrating papers), key MODELS, key STUDIES (top-cited with distilled
-notes), the afferent encoding cheat sheet (Ia/Ib/II semantics + the
-`(L−Lmid)/Lhalf, L̇/0.6, F/Fmax` encoder conventions), and the per-platform
-rule→implementation table. Ground pathway wiring and gains in the cited
-studies and cite the demonstrating paper in code comments. Deeper browsing:
-`SADb_audit\knowledge_base\INDEX.md` and the SADb Explorer app. The xref
-regenerates from the corpus (`myo python SADb_audit\build_model_xref.py`) —
-part of the rebuild chain (export → build_model_xref → build_knowledge_base
-→ build_app → check → package_dist); regenerate after any curation batch so
-new rules/studies propagate to future modeling sessions.
-
-## File references — always clickable links (Ben, 2026-10-01; user-global rule)
-
-Every file/folder mentioned in any reply is a Markdown link with an ABSOLUTE
-forward-slash path, e.g. [sadb_app.html](D:/Github/Bipedal_Robot/SADb_audit/app/sadb_app.html) —
-never a bare path (Ben should click, not copy-paste). Exception: inside code
-blocks / shell commands. Mirrored at `C:\Users\Ben Bolen\.zcode\AGENTS.md`
-(all projects on this machine; copy that one-liner file to the laptop and
-easteregg2 user homes to cover them too).
-
-## Hazards — do NOT open these as source
-
-- Known data concern FINAL (Ben, 2026-09-12): the angle-shifted test is **#3, the
-  flexor 47 cm (kf(3))**; +5.3° Angle-only at build time in `minimizeFlxPin.m`.
-  2026-09-11/12 offT4-family mats carry the kf(4) shift instead.
-- `Solid_Models\Biomimetics_2022-Knee_Test\Point_cloud\Tibia_copy.txt` (7.1 MB point cloud);
-  `Spine_Mesh_Points.txt` (172 KB, duplicated in 3 places); `HX711*sempio.txt` (1 MB);
-  any `.mat` in `Previous Optimization Code\Trial Results\` (up to 95 MB).
-- `.asv` files = stale MATLAB autosaves that mislead; the real source is the `.m` beside them.
-- Logs: grep/tail them, never read whole. Point clouds/binary .mat: process with MATLAB, never
-  ingest.
-
-## Agent efficiency rules (credit/token hygiene)
-
-- Delegate broad searches and audits to subagents; keep main-session context small.
-- Fresh session per task; long MATLAB runs in background; plan mode before expensive execution.
-- Ben uses **GitHub Desktop** for git and does not know git/Git Bash CLI. Read-only git
-  (status/log/diff/fetch) via my own tools is fine, but **never commit, amend, merge, or
-  push without his explicit go-ahead for that exact action** — even when he asks for git
-  work, prefer preparing the changes + a draft commit message and letting HIM click
-  Commit/Push in GitHub Desktop. Give GUI steps in GUI terms (Fetch/Pull origin, file
-  checklist, commit message, Push origin) — never hand him shell git commands. (Rule set
-  2026-09-08 after a two-machines-one-branch mix-up between parallel AI sessions.)
-- Prefer COM/API automation (SolidWorks skill, Overleaf file edits, Zotero local HTTP) over
-  screenshot-driven GUI automation.
-- Model strategy: default GLM-5.3-Flash; escalate to GLM-5.3 only for hard debugging or
-  architecture decisions. Peak billing is Mon–Fri 11 PM–3 AM Pacific — schedule expensive
-  (GLM-5.3) work before 11 PM or on weekend nights; evenings/weekends are 50% off-peak.
-
-## Extensor campaign state (Sept 2026, desktop session — merged here for the laptop session)
-
-- **Extensor Xi0 is NEGATIVE**: driver bounds [-2,0] cm; transfer from flexor = `-g(1)`
-  (minimizeExt10mmX3.m). Screens that pass positive flexor Xi0 into the extensor are wrong
-  (bit once, Sept 9).
-- `minimizeExt10mmX3.m` now loads its Xi1/Xi2 lock from
-  `minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat` (corrected-encoder 2trans flexor
-  front; pick pair 4.35e4/1.7e4) — NOT the legacy 20260730 mat.
-- **Pbr variants recovered from git** (minimizeExtX3.m): rib midpoint [-3.84,-46.44,62.5]
-  (current, ACTIVE), lower bolt hole [-6.26,-29.69,75.06] (the ORIGINAL "lower bolt hole";
-  [-2.65,-54.71,75.06] later inherited that comment and is now "lower section" — do not
-  confuse them), midpoint between two bolt holes [-7.325,-22.27,75.06] (EXCLUDED per Ben).
-  minimizeExtX3.m has transMode (arg 6 / env EXTX3_TRANS; 1T≡2T for its y-symmetric
-  K=[X2,X1,X2], verified). Rib midpoint vs lower bolt hole CVs (1trans, fronts captured)
-  are essentially identical: pick Xi3 0.62 vs 0.60, Xi0 -10.1 vs -11.6 mm, bio-ext
-  2.195/2.35/4.73 vs 2.204/2.369/4.727 → extensor Xi identification is robust to the
-  bracket-point choice. Filter pass 72/90 vs 83/90.
-- **minimizeExt.m (BIOMIMETIC extensor) stays at its committed state** — own centroid
-  bracket [8.38,20.75,25.1], K=[X1,X2,X1] (Ben-set), no transMode; do not "extend" it.
-  Extensor drivers have NO save statement — capture fronts by appending save(...) to the
-  launch line (pattern: minimizeExt10mmX3_front_*.mat).
-- **Results under the new pair**: extensor front collapses to 4 unique members, Xi0
-  -6..-12 mm, Xi3 0.50-0.78 (all >> 0.02), pinned RMSE 0.96-1.64, bio-ext RMSE 1.99-2.26
-  (FVU > 1 there — known gap). Best bio-ext member: Xi0 -6 mm, Xi3 0.504. Flipped-screen
-  note: smaller |Xi0| (-1.6..-3.3 mm) beat -5..-12 mm on the pinned pool; Xi3 grid capped
-  at 0.35 in screens — all leaders hit the cap.
-- **New Dig scripts**: Dig_ExtPinX3_screen.m (flexor candidates × Xi3 grid through both
-  extensors), Dig_ExtPin_frontBio.m (extensor front → bio-ext), Dig_FlxPin_frontScan.m
-  (flexor front → bio-flexor), Dig_FlxPin_cornerCheck.m (direct Xi check vs pinned
-  baseline), Dig_FlxBio_refine2.m (STAGED, not yet run — extends the flexor refinement
-  grid past its Xi0/Xi1 edges).
-- **Extensor front reproducibility (2026-09-09/10):** relaunching the identical
-  noT3newXi-pair extensor CV with a fresh GA seed reproduced the front EXACTLY — same 4
-  unique members (Xi0 -6.0/-8.6/-10.1/-11.9 mm, Xi3 0.504/0.661/0.621/0.783), same
-  ranking. The family is stable, not a stochastic artifact.
-- **noT3 name note:** the desktop's current noT3 pair (NEW bounds + corrected 47 cm,
-  `minimizeFlxPin10_results_20260908_2brkt_{1trans,2trans}_noT3.mat`) supersedes the
-  old-bounds campaign pair, which is archived in `Dig_out\old_bounds\`. Watch for name
-  collisions if the laptop session also produced 20260908 noT3 mats.
-- **Results tracking (Ben, 2026-09-10):** Ben will create his own pivot table to track Xi
-  results across evaluators/configurations. Do NOT build unprompted tracking tooling for
-  it. When he defines the format, future sessions maintain/populate it; until then,
-  present results as simple tables with all 3 GoF and always name the source .mat.
-- **Opt_run_Ext with the new Xi pair (2026-09-10, desktop):** completed feasible —
-  ctx (Xi0 -10.1mm, Xi1 4.354e4, Xi2 1.701e4, Xi3 0.621 from the 20260910_noT3 front).
-  Pick: Xi0 -12.3mm, Xi3 0.281 (locked pair 1.448e4/1.355e4 = pass-1 wide-search match).
-  Max path length 0.832 m, contraction 0.69 KMAX, torque margin met (thinnest +0.063% at
-  -18.9 deg), shortfall penalty 0, binding constraint -0.000442 (near-active at optimum).
-  Results: Mesh_Optimization\Results\Vas_Pam_20mm_Result_20260910_{0446,0528}.mat
-  (XiUsed recorded inside). Log: 2022_02_Festo\Dig_out\Opt_run_Ext_newXipair_20260910.log.
-  Launch recipe needs cwd = 2022_02_Festo (OpenSim Vasti txt) AND Code\Matlab on path
-  (Colors.m) AND Mesh_Optimization on path.
-
-## Xi values for the dissertation text (SETTLED 2026-09-10, Ben-approved picks — verified by direct .mat loads)
-
-**CAVEAT (2026-09-11):** the flexor pick below (and everything downstream of it, incl. the
-extensor Xi1/Xi2 lock) was fit with the +5.3° encoder offset on the WRONG test (47 cm
-instead of 40 cm-tendon). Ben ordered a corrected re-run — `minimizeFlxPin10_results_
-20260911_2brkt_2trans_offT4.mat` (legacy minimizeFlxPin10mm driver) — which supersedes
-these for future work once Ben re-picks. Section kept as the record of what the
-dissertation text used.
-**offT4 campaign outcome (completed 2026-09-12 01:47; ran 3× deterministic — identical
-tables):** pick=1 = Xi0 ≈ 0 (1.1e-6 m) / Xi1 2.42e4 / Xi2 2.11e4 N/m, 265/265 filter pass,
-per-test RMSE 2.21/1.37/2.61/1.65/1.49 (48/46/47/40cm-t/41), all FVU ≤ 0.214. Fold 1 =
-Ben's preferred split (train {3,4,5} / holdout {1,2}): 53 candidates, Xi0 0.01–0.95 mm,
-Xi1 2.11–2.23e4, Xi2 2.41–2.95e4; best-distance candidate VALIDATES better than it trains
-(raw held-out 48cm 2.28/0.19, 46cm 1.60/0.064). Readout: `Dig_out\Dig_FlxPin_offT4_readout_
-20260912.m`. minimizeFlxPin.m restored to Ben's kf() naming (kfCache persistent wrapper),
-baseline+pick verified identical post-restore.
-
-A separate chat is updating the dissertation text with these. Sources (Testing_Data\2022_02_Festo\):
-
-- **Flexor, pinned 2brk**: minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat, pick 107
-  Xi0 = +8.9 mm (0.0089 m), Xi1 = 5.62e4 N/m, Xi2 = 1.85e4 N/m
-  Pinned per-test RMSE 1.98/1.36/2.22/1.47/1.23 (48/46/47/40cm-t/41cm), all FVU < 0.16
-  1trans twin (minimizeFlxPin10_results_20260908_2brkt_1trans_noT3.mat): Xi0 +5.95 mm, Xi1 4.36e5, Xi2 2e4
-- **Extensor, pinned**: minimizeExt10mmX3_results_20260910_noT3.mat, pick 1
-  Xi0 = -10.1 mm (-0.0101 m), Xi3 = 0.621; Xi1/Xi2 LOCKED to the flexor pair 4.354e4/1.701e4 (never searched)
-  Held-out RMSE 1.04-1.64 vs baselines 2.44-3.62 (72/90 filter pass)
-- **Signs matter**: flexor Xi0 positive, extensor Xi0 negative. Extensor Pbr = rib midpoint
-  [-3.84,-46.44,62.5] (lower bolt hole [-6.26,-29.69,75.06] tested: equivalent, pick Xi3 0.60 vs 0.62).
-- Mesh optimizations with these values: Opt_run_Ext completed feasible
-  (Mesh_Optimization\Results\Vas_Pam_20mm_Result_20260910_0528.mat, XiUsed inside);
-  Opt_run launched with buildKneeFlexorContext20mm.m re-pointed to the 2trans_noT3 pick 107.
-- **Display-script rehydration (2026-09-10):** dated `Vas_Pam_20mm_Result_*.mat` (rework
-  onward) originally saved xBest/XiUsed but NOT ctx. NOW FIXED BOTH WAYS: (1) both drivers
-  save `ctx` in their dated captures (`Opt_run_Ext` adds ctx; `Opt_run` adds ctx + a new
-  `XiUsed` record alongside its legacy `Xi3` field); (2) the two current mats were
-  rehydrated IN PLACE with verified fresh-built ctx — `Vas_Pam_20mm_Result_20260910_0528.mat`
-  and `Bifemsh_20mm_Result_20260910_1234.mat` (gate before each write: builder Xi ==
-  XiUsed and fBest/constraints reproduced exactly; temp backups + rehydrate script in
-  `%LOCALAPPDATA%\Temp\rehydrate_backup`). `Vas_Pam_20mm_Result_20260910_0446.mat` was
-  deliberately NOT rehydrated (its pass-1 Xi pair -12.3mm/0.281 differs from the current
-  builder; attach an Xi-overridden ctx only if it ever needs displaying).
-  `Results\Knee_Extensor_20mm.m` still rebuilds ctx via buildKneeExtContext20mm() with a
-  builder-Xi == XiUsed guard (could now load mat ctx instead, but rebuild+guard also
-  catches builder drift). The old Sep-1 `Vas_Pam_20mm_Result.mat` still carries a
-  pre-rework ctx.geo — loading it with the current builder is what produced the original
-  `bypassTol` error. `AnimateKneeBoneMuscle` writes its GIF next to the script folder
-  regardless of cwd.
-- **FVU caveat**: bio-ext 52cm FVU 2.35 > 1 at this pick — improved vs baseline 4.49 but do not overclaim.
-- **Opt_run runtime reality check (Ben, 2026-09-10):** configured eval budgets (surrogateopt
-  ~7000 + patternsearch ~15000) are MAXIMA — actual stages exit early on FunctionTolerance;
-  Ben's observed patternsearch stages wrap in ~5 min, not 1.5-2.5 h. Extrapolate ETAs from
-  measured rates and his historical runtimes, not from configured caps.
-
-## Extensor K=[X1,X2,X2] single-bracket campaign + flexor 2brkt (2026-09-14/16, EB475WS4)
-
-- **minimizeExtX3.m K is now [X1, X2, X2]** (was [X2,X1,X2]; old line commented in fortz) —
-  Ben-directed, LIVE for all future extensor runs. Single bracket (no useB2 in this evaluator;
-  arg 6 = transMode). **minimizeExt10mmX3.m** gained env hooks `EXTX3_HOLD` ('1,8' etc. =
-  ONE custom fold) and `EXTX3_ALLTESTS=1` (allBPA = all 9 tests), fold-row loop fixes
-  (`size(list,1)` not `length(list)` — a 1xN row list re-ran folds; `ind = (1:size(x2,1)).'`
-  — `1:length(x2)` breaks on 1x4 single-row fronts; the latent length() bug is STILL in
-  minimizeFlxPin10mmX3.m), and reworked plot sections: 2 figures per metric (Training /
-  Validation, tiles subtitled "Training"/"Validation"). The same latent length() bug was
-  fixed in minimizeFlxPin10mmX3_2brkt.m; minimizeFlxPin10mmX3.m untouched.
-- **Four single-fold lock runs saved** (EXTX3_PASS=2; mats minimizeExt10mmX3_results_20260916_*):
-  pick1_h18 (lock 4.354e4/1.701e4, holdout {1,8}: Xi0 −1.60mm, Xi3 0.797, mean RMSE 1.448/FVU 0.650),
-  pick107_h18 (5.624e4/1.854e4, {1,8}: −1.55mm, 0.796, 1.457/0.653),
-  pick1_all_h3479 / pick107_all_h3479 (allBPA = all 9, holdout {3,4,7,9}: Xi3 0.446/0.480,
-  mean RMSE 1.195/1.163). **Both lock pairs converge to near-identical picks** — the locked
-  pair barely matters in this configuration. Also `_20260916_1translock.mat` (full 10-fold CV,
-  1trans pair: Xi0 −0.91cm, Xi3 0.842, mean RMSE 1.638). Runner/log: Dig_out\run_ExtPinX3_x122_fourcases_20260916.m.
-  **Lock-pair provenance (spelled out): the runner read the pairs from TWO different mats** —
-  pick1 pair (4.354e4/1.701e4) from minimizeExt10mmX3_results_20260910_noT3.mat sol_actual,
-  pick107 pair (5.624e4/1.854e4) from minimizeExt10mmX3_results_20260914_pk107lock.mat
-  sol_actual. Both originate in the same flexor front minimizeFlxPin10_results_20260908_
-  2brkt_2trans_noT3.mat (filtered_results rows 1 and 107); each extensor mat carries its pair
-  unchanged because the extensor never searches Xi1/Xi2 (EXTX3_PASS=2 lock input).
-  **Ben's note (2026-09-16): he will still probably USE the two-bracket `_noT3` flexor front
-  results — minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat at pick 1 or pick 107
-  (the dissertation-settled line). The K=[X1,X2,X2] extensor runs and the flexor x3u runs are
-  comparisons, NOT a replacement of that line unless Ben says so.**
-- **minimizeExt10mmX3_results_20260910_noT3.mat rehydrated in place** (labels/allBPA/numHold/
-  baselineScores added — pick/plot sections now run from it; pre-fix backup in
-  Dig_out\..._BACKUP_20260916.mat; gates verified: pick = −10.12mm/0.621 settled row).
-- **minimizeExt10mmX3.m plot sections**: truncation at strain < −0.03 is INTENTIONAL (Tor NaN
-  rule; stretch-side festo4 unvalidated — manufacturer 2-3% limit, never characterized) —
-  do NOT relax it, fake Go_OfF values, or plot extrapolation (Ben ruled 2026-09-16).
-- **Flexor 2brkt (companion)**: minimizeFlxPinX3.m = original restored bit-exact;
-  minimizeFlxPinX3_2brkt.m = two-bracket evaluator (bracket 2 at Pbri2 = [30.5,−103.41,0]mm
-  tibia frame, K2t = [X1,X2,X1], compliance-only; screw-head CLAMP at −3.5mm tibia-X with
-  contact force Nc in bpa; Xi3 = UNITLESS wrap-loss delta_L = Xi3·15mm·theta_wrap·comp²;
-  30mm-circle tangency check, FLXPX3_TANGENCY=DIAG = store-not-enforce; FLXPX3_NOSHIFT=1 =
-  legacy unshifted). Driver minimizeFlxPin10mmX3_2brkt.m (FX3B_LOCK1/2 env lock). x3u lock-CV
-  mats 20260915: L107 DIAG = Xi0 ≈ 0.1mm / Xi3 0.150 / mean RMSE 1.587 / FVU 0.077 (best
-  pinned-flexor fit on record); L1trans = Xi3 0.291. Non-_x3u 20260915 mats = superseded
-  series-stiffness Xi3. Gotchas: pool workers never see client setenv after spawn (env-gated
-  evaluator branches silently run the wrong mode in parfor — set env BEFORE parpool); wrap
-  the Xi-factor handoff details: CHATGPT_HANDOFF.md ACTIVE WORK F (2026-09-14/16).
-- **2026-09-26 — Simscape Multibody bring-up: leg rig + lower humanoid, BPAs + SNS (laptop,
-  this session; models + dev scripts in `Code\Matlab\SNS_Simscape\`):** Ben exported BOTH via
-  Simscape Multibody Link v7.4 (`Knee assembly\09_BA_003.xml` re-export + NEW `10_AH_001.xml`
-  = full robot assembly 09_BA_001 wrapped as grounded subassembly; Hinge→Concentric+Coincident
-  fix WORKED — imports have real revolutes now). **`mdl_leg_rig_ba003_imported.slx`** =
-  knee test rig (2 Cyl + 3 Rev + four-bar knee; grounded at KB = correct for bench tests);
-  **`mdl_humanoid_lower_ah001_imported.slx`** = free biped: sealed `x09_BA_001_1` subsystem
-  (own Solver + Mechanism Config, gravity **[0 −9.80665 0]** — CAD is +y UP, not z!), pelvis
-  on 6-DOF (`pelvis_free` + `World_pelvis` inside the sub), hips = Spherical PE↔KNOB with
-  stud/knob hardware WELDED to the femur heads (parasitic stud spins removed), loose root
-  hardware (screws/nuts ~15 g) DELETED, 59 world-tie lines cut. **Masses: skeleton rescaled
-  ×1.2 to Onyx 1200 kg/m³ in `mdl_humanoid_lower_ah001_DataFile.m`** (XML mass ÷
-  SW-COM CreateMassProperty volume = 1000.0 kg/m³ exactly for every part → factor exact;
-  Body2.GetMassProperties UNRELIABLE on this install — negative/volume>bbox garbage; use
-  Extension.CreateMassProperty). Feet = 0.24×0.035×0.09 m bricks (0.907 kg ea) welded at the
-  tibia bottoms (ankle world y ≈ −0.861); spine = r0.06×0.45 m cylinder + 0.1 m cube lump
-  (ρ 61090) at (−0.079, +0.35, 0) → **total 73.0 kg** ✓. **BPA+SNS layer (both models):**
-  muscle = Internal Force block (f input is SCALAR = force along the frame-to-frame line —
-  no vector math needed) + Transform Sensor (SenseDist only) + `SNS_Library/BPA_20mm`
-  (Ben's Festo law; Rest 0.1281/Kmax 0.1057) + antagonistic NonSpikingNeuron pair (mutual
-  inhibition Esyn = Vrest−25, gmax 1.5; antiphase sine 0.5 Hz drive; V−(Vrest+8) → sat 25 →
-  ×620/25 = kPa). Port layouts BANKED: Transform Sensor LConn(1)=base, RConn(1)=follower,
-  RConn(2..n)=enabled PS outputs; Internal Force LConn(1)=frame, LConn(2)=PS f, RConn(1)=frame;
-  World Frame port = RConn(1); PS-Simulink converter: LConn=PS-in, Outport=sim-out;
-  Simulink-PS: Inport=sim-in, RConn=PS-out. GOTCHAS: add_line can mix handle+string args
-  NEVER; string 'blk/N' counts ALL ports (Product out = '/4' for 3-in) — use handles;
-  add_line can THROW "destination already has a line" AFTER successfully connecting —
-  verify Line>0 in the catch before rethrowing; smimport prefixes 'x' only on digit-leading
-  names and collapses ' - ' to one underscore; product-name→STEP map =
-  `dev\instance_step_map_{rig,humanoid}.json`. **Rig status: WORKING antagonistic knee —
-  corr(L_EXT,L_FLX) = −0.17, forces to 999 N, knee travel 0.13 m** (knee reduced to ONE
-  z-revolute `knee_hinge` at the FL_002 crank midpoint; four-bar joints deleted; brackets
-  welded: BL→KB, FL_001/FL_002→KT; muscle points ±2.8–3.3 cm from the pin, 7 cm above /
-  5.8 cm below — the pin frames sit on x-FLIPPED source frames (smiData ang=π [1,0,0]) so
-  their offsets are counter-rotated; original muscle-calibration loop =
-  `dev\calibrate_muscles_20260926.m` (affine correction, sign: origT += err/2, insT −= err/2)).
-  **Humanoid status: both knees SNS-driven and articulating** (L fully antagonistic
-  0.009–0.142 m; R half-range — the R-leg muscle x-offsets likely need mirroring, TODO Ben/
-  next session). Knee four-bar reductions on the humanoid mirror the rig (joints Revolute/
-  Revolute1/Revolute5/Revolute3/Cylindrical/Cylindrical1/Revolute2/Revolute4 per leg; FL_001_1
-  = R crank, FL_001_2 = L crank; the ORIGINAL import welds KT↔KB had to be CUT
-  (`dev\cut_knee_welds_20260926.m`, ports KT_R#8↔KB_R#3, KT_L#4↔KB_L#6) — they were missed
-  in the 09-20-era surgery and lock the knees shut). Runner scripts all in
-  `SNS_Simscape\dev\*20260926*`; logs in `SNS_Simscape\logs\`; results mats in
-  `SNS_Simscape\results\{rig,humanoid}_bpa_sns_20260926.mat`. NOT done: reflex closure
-  (afferents from joint sensors), ground contact for the humanoid, ankle joints (feet are
-  welded blocks), hip adduction/abduction actuation, N-segment BPA sleeve (Ben's full
-  expanding-diameter plan — these are point-force BPAs), muscle route points from Ben's
-  Xi/AttachPoints data (current points are reasonable placeholders ±3 cm off the knee pin).
-- **2026-09-26 (cont.) — WALKER PROGRAM LAUNCHED (Ben's 5 goals; master doc =
-  `Documentation\Program_Workflow\BPA_Walker_Program.md`):** G1 sagittal uniarticular walker →
-  G2 ah001+27 BPAs/side → G3 design freeze → G4 sim validation (SNS-Simscape AND/OR MuJoCo-SNS)
-  → G5 physical sagittal walker w/ Orin Nano on-board + computer-in-loop (neural deletions +
-  stimulus injection). KEY MAPPING: hardware sensors plug into afferent classes the spinal net
-  ALREADY has — encoder→Ia (θ̇), Liquid Wire→II (length; Leo Micklam), pressure→Ib (festo4(F)),
-  insole→heel/toe contact resets (exists), IMU→VEST (stage-4), 3D camera→drift correction.
-  Sensor→afferent→SNS contract = `Code\Hardware\walker_io\` (SKELETONS, smoke-tested):
-  protocol.py (UDP JSON wire: telemetry 50 Hz Orin→PC, commands PC→Orin — overrides on
-  params.G gains = deletions, stim = current into named neurons, all EPHEMERAL over the best
-  json so every trial replays offline), valves.py (bang_bang + proportional_taped modes,
-  vent-all watchdog), sensors.py (pressure/encoder/LiquidWire/IMU/insole readers with TODO(hw)
-  stubs), afferents.py (Ia/II/Ib formulas verbatim from the conversion map; constants from
-  bpa_actuators_27.json), orin_daemon.py (1 kHz loop budget + watchdogs: sensor-stale 20 ms →
-  vent-all, 650 kPa cap; PC heartbeat loss is NOT a stop), lab_console.py (trial logs →
-  `Testing_Data\walker_trials\<date>_<trial>\`). **OpenSim bones → Simscape PROVEN**:
-  `Solid_Models\Simscape_Part_Library\OpenSim_Bones\` (13 gait2392 bone STLs) +
-  `sns_bone_leg_demo.slx` (hip-ball/knee/ankle leg, File Solid at Onyx 1200, UPDATE+SIM OK;
-  gotchas: UnitType='Custom' for unitless STLs; joint anchors currently at body-frame origins —
-  pull exact offsets from gait2392_robot.mjc when bones enter a real walker). **Ty's foot
-  identified: "final" = `Ty Ankle Foot\Foot and Ankle Design, Newest (7-17-20)` = the renamed
-  `01_00_00_Foot` (part lists match 1:1); two-toe version =
-  `Ty Ankle Foot\Agility Robotics\Foot.SLDASM`; InternFoot has AnkleJointEquations.txt + STLs.**
-  SW CRASH 17:57: FootAnkle.SLDASM save-at-crash was 78% undersized → crash-save preserved as
-  FootAnkle_crashsave_20260926.SLDASM.bak, committed version restored from git, 44 stale locks
-  deleted (cause likely: agent SW probe left 13 parts open in Ben's session — RULE: every
-  script-opened doc gets closed; also Ben has NO AutoRecover backup dir — enable it). Ankle
-  retrofit on the ah001 BLOCK feet BLOCKED ("rigidly connected" despite verified-correct
-  chain — welded feet restored & model UPDATE+SIM OK; do ankles in a FRESH build, e.g. OpenSim
-  foot.stl route or Ty's foot via Multibody-Link export after Ben re-paths links). R-leg
-  muscle mirror asymmetry (half-sweep) also still open.
-
-## 2026-09-27 — easteregg2 generations campaign bring-back (goal4; full report
-`spinal\reports_20260925\easteregg2\goal4_easteregg2_generations.md`; NO commits — all output is uncommitted working tree for GitHub Desktop)
-
-- **kine_ref left-ref fix APPLIED (Ben ruled option a; UNCOMMITTED)**: s3k
-  -160.23425729850192 → -161.56754173676563; w2lvar s5 winner -165.040506 → -165.335963;
-  syn6 s5 seed -197.2146 → -200.3796; syn6 s4 -237.2534 → -234.2860. ALL pre-09-26 kine
-  scores shift once committed; `_pf_layer_variant_test.py` gate 3 stale TWICE (renumber +
-  fixed ref) — repoint at stage 4 and re-record before use.
-- **Convergence (Ben's stop rule = 2 consecutive batches < +0.5)**: w2lvar s5 NEW BEST
-  ground walk -144.464403 (trial 68; batches +1.13/+18.16/+1.28/0/0 over 100 trials;
-  bilateral, kz 0.83) — winner near space edges (drive 3.82/4.0, contact_onset 0.003) →
-  replay-verify before trusting; loop stopped 5/10 batches, resumable. syn6 s4 -180.844766
-  (t109, +140 trials, +53.4 like-for-like); syn6 s5 SEED STILL WINS after 40 more trials
-  (-200.3796 rebased) — architectural, not sampling. Air: w2lvar s1 saturates the rises=30
-  cap (127.752845), s2 94.924507 (t49); syn6 s1 130.238130 / s2 110.517696 (replay
-  bit-exact, REAL RHYTHM); both s3 stages unchanged (below top-up threshold). w2lvar-s4
-  harvest "exploit FAIL" line = stale-ref false positive (genuine walker, -230.860
-  fixed-ref). Protected files untouched; supervisor gate GO (bit-exact rebaseline replay,
-  DB argmax==json on all 10 studies).
-- **Connectome schematic**: walker_s3k/w2lvar/syn6 templates restructured into NESTED
-  SUBSYSTEMS (13n/322e, 18n/2726e, 18n/2123e top-level; +3 _flat entries verbatim==HEAD;
-  conservation verified; subsystem load 42/42); bilateralrg 105n/226e → 109n/222e.
-  Generator wiring errors CORRECTED: V3→contra RG ext IN only (old contra-HC edge was
-  invented); heel/toe→ANK-MN invented → contact_C20 = Hip/Knee targets only; afferent→HC
-  24 edges 1:1 with build_aff.pl; R RG↔RG pair in-template.
-- **Wiring findings (report-only, Ben's files)**: RE clone-type bug is .APROJ-ONLY (.asim
-  clean). NEW: patch_comm_types.pl's aproj link-repoint never landed — 4 commissural
-  out-links still ride strong RG types (2.749 uS) while the dedicated weak types sit
-  unused in the same file → GUI .aproj and runnable .asim differ; one GUI session fixes
-  all 5 links. w2l_mujoco/build_w2l_split_net.py:119/122 still hardcode the old V3 edges
-  (Ben's go pending). w2l_aproj_mine.json + li_aproj_mine.json are UNTRACKED — commit
-  them. Live net 95n/208syn re-verified; smoke PASS period 1.000, antiphase -0.525 HERE
-  (-0.532 was machine-specific — quote the env).
-- **Numbers audit (every quoted Xi/GoF number reproduced from source)**: pick-77 GoF
-  exact (RMSE 2.16465/1.36817/2.28691/1.61102/1.08363); OLD row-107 appendix numbers NOT
-  reproducible (fresh 2.01171/1.49305/2.314/1.73522/1.08103); bio-ext at adopted pair
-  1.17/0.67/2.21 (FVU<1). MATERIAL: minimizeFlxPin.m executes PITCH-ONLY for BOTH flexor
-  brackets (origin Thbr :306 live, two-rotation :305 commented) — header + the 09-13 note
-  say origin two-rotation; K2=[X1,X1,X2] not y-symmetric so it matters; everything since
-  8e3c1b9d inherits it — Ben's fix-code-vs-fix-docs ruling OPEN. Tex owed: '+5.03%'→
-  '+5.02%' (Vas 09-25 minMargin 0.05024928); Appendix C line refs 306/305/326/339/338+327;
-  compile on EB475WS4 + Overleaf sync pending. goal5 'monotone'→near-monotone (ong_100
-  -207.37 beats 075 -208.15); muscle_force_compare.csv header 6 names vs 8 fields;
-  SNS_SpinalNetwork 4.2e-6 mV still has NO in-repo artifact; units test 6.07e-4 mV
-  double-verified; s3c t54 gait numbers still unverified.
-- **add_mag3_r ruled**: Ben's both-axes torque rule = NEITHER-PASSES-BOTH (rounded repo
-  P2 fails flexion 0.63× with a zero-crossing/sign flip; thumb P2 fails adduction 0.82×).
-  Tie-break applied on Ben's behalf (overrulable): repo P2 = corruption artifact
-  (duplicates P2_0, degenerate zero-length via); FULL-PRECISION THUMB P2
-  (-0.1357,-0.0929,+0.0591) APPLIED to gait2392_robotbody.osim (one line; robot.osim
-  regenerated, probe bit-exact). Adduction shortfall → Opt_run sizing item; ~10x
-  passive-overstretch finding needs its own decision; stale one path-point:
-  gait2392_robotbody_hip.osim, gait2327.osim, mjc\ (regeneration Ben-gated).
-- **BiPulley DONE — nothing left running**: sanity gates PASS; Opt_run_pulley 10.7 min
-  exit 0 → Results\Bifemsh_20mm_Result_pulley_20260926_1652.mat (fBest 0.0846509, min
-  torque margin +5.38%, clears 5%); Opt_run_BiPulley 5-muscle OpenSim manifest done
-  (master's builder absent on easteregg2) = first-pass baselines (biarticular margins
-  ~-1; clearances 4.3–19.1 mm vs ≥25 need); pulley pool ran 10 workers not 6 (implicit
-  parpool pre-empted the guard); chain DONE 2026-09-26T17:02:40, no processes remain.
-- **AnimatLab**: the 12 "missing" synapses were PURGED by Ben's Sep-16 GUI re-save (34
-  keys; GUI loader drops links outside fragment <Links>) — restored byte-verbatim into
-  Biped_2xCPG_wSubs.aproj (syn=239, verify_final clean, GUI opens 0 errors); 22 more
-  purged synapses remain; RE-EXPORT the Standalone .asim before any RG re-test (stale
-  asim ≠ edited aproj). **Li**: still collapses — ROOT CAUSE: w2l_mjcf_fixed.xml Root
-  has NO joint (welded base; feet 2.6–3.1 cm above floor; heels never trigger); the old
-  "pelvis to -1.44 m" was a qpos-addressing artifact (ankle_L radians); freejoint A/B
-  crumples <0.5 s (necessary not sufficient; M1 damping/spawn gates); resume recipe in
-  goal2_m2_li_architecture.md §8.
-
-## 2026-09-30 — AIRTABLE API LIMIT HIT (Ben's email 2026-10-01; standing through ~2026-11)
-
-The AARL workspace is over its Free-plan monthly PUBLIC API limit; a 30-day
-grace period runs to ~2026-11-01, after which over-limit calls BLOCK until the
-month resets. The airtable MCP IS a public-API integration — count its calls.
-RULE until further notice: work from `SADb_audit\export\sadb_export.json` (the
-cached snapshot) and only touch the API for a handful of calls Ben explicitly
-wants (field renames etc.); NO export_corpus / write_curation / MCP sweeps.
-2026-10-01 follow-ups: Ben ruled the PRUNE SHORTLIST IS ON HOLD (nothing
-deleted; review sheet `SADb_audit\prune_review_20261001.md` groups
-out-of-scope clusters — general NN/ML theory, aerodynamics, non-neural
-bioinspired engineering — from his row examples; his grid row numbers do NOT
-match export order). Flags doc is now hyperlinked
-(`curation_flags_20260928.md` + `.docx`, every record links straight to its
-Airtable record URL; regenerate via `build_flags_doc.py` +
-`docx_build\generate_flags_docx.js`). Ben's comment on COLUMN_RENAMES never
-reached disk (unsaved editor buffer) — renames beyond the applied set wait
-for it. **UPDATE 2026-10-01 (same day): Ben's comment landed ("Everything
-here looks good. Go for it.") — RENAMES APPLIED: "Models 2" → "Is the model
-paper", "Models" → "Models referenced" (export_corpus.py + app labels already
-updated; REBUILD PENDING until API budget allows). Feedback "Models copy" →
-"(unused, empty)" (0/38 usage). Junk-field DELETIONS 404 via API (PAT lacks
-schema scope) — Ben deletes the 3 empty Papers fields in the UI. TWIN AUDIT
-(twins_profile.json): Models 247 = 230 stubs + 14 rich + 3 orphans; Review
-157 = 156 stubs + 0 rich + 1 orphan — the 386 stubs are the cap-cut lever
-(delete stubs + re-express is-model/is-review as Papers fields FIRST), NOT
-deleting Papers records (that orphans the curation layer and saves nothing).
-PLAN PROPOSED, awaiting Ben's go; no deletions executed.** **EXECUTED
-LATER 2026-10-01: Ben approved "delete the 90" — 95 records deleted (88
-Papers: NN/ML 14 + aero 4 + flow-sensing-no-neuro 15 + bio-mechanisms 4 +
-fish 10 + prior flags 41, deduped; + 7 satellite orphans) via guarded
-query-string batch DELETE (GOTCHA: Airtable batch-DELETE request BODIES are
-dropped in transit → `?records[]=` query params; single-record DELETE works
-normally). Audit: `deletion_log.csv` + FULL record snapshots in
-`deleted_records_20261001.json` (regret-proof). Base now **1294 records**
-(Papers 855 + Models 244 + Review 156 + Feedback 35 + Recorders 4) — still
-over cap; the remaining lever = the 386 twin stubs, WHICH BEN HOLDS until
-he reviews the curation flags (his read: stubs may just be unfinished
-curation). Scholar-via-browser pilot WORKS (3/3 no-text abstracts recovered
-through his PSU-logged-in IAB tab; `scholar_pilot_20261001.md` documents
-the workflow for the ~107 remaining no-text papers, ~10/session pace);
-the Airtable UI in the IAB shows an unsupported-browser banner — API stays
-the write path.**
-**SAME-DAY LATER (Ben away ~1h, "give me the 290"): his round-2 + flags
-rulings applied (7 round-2 deletes; Jessell/Izhikevich/Orlovsky; NEW RULES:
-delete all monographs/textbooks — T3 sweep; conference-abstract-only stubs
-with no accessible paper/poster get deleted — T4; titles in review docs are
-NEVER truncated — his "don't be lazy" ruling after truncated titles made
-companion papers indistinguishable). CUT LIST DELIVERED:
-`cut_list_290.md`/`.csv` (T1 7 + T2 3 + T3 3 + T4 1 + T5 276 rubric-ranked;
-351 protected: his important-author list incl. Gerr→Geyer and
-Buschmann→+Büschges, feedback-linked, ≥400 cites, pre-1940, explicit keeps;
-no-DOI records excluded from the rubric — citation data MISSING ≠ zero, the
-Shik-1966 failure mode; 2024+ excluded as too new to judge) — NOT EXECUTED,
-Ben reviews. DATA-QUALITY FIND: models2/reviews link fields are POLLUTED
-with multi-links (probably task5 + the records[]-GET bug in the campaign's
-twin linker — audit owed before those fields are trusted again). PDF pass
-("Get papers"): 47/55 flagged papers extracted from the LOCAL Zotero library
-(`pdf_grounding.py` → curation_queue/pdf_grounding/), 8 lack local copies;
-Jankowska-2010 answer to Ben = shared group I/II premotor integration (no
-separate Ib-vs-II rules in the paper). Queued on Ben's word: execute the
-290, Kooij-2000 three postural-integration Feedback tags (names proposed),
-Karayannidou "Lateral postural reflex" tag, Hunt-2017/Quinn pathway
-curation from full text, Hägglund/Knikou/Mazzaro full-text reads (no local
-PDF — Scholar/download route).**
-**EXECUTED 2026-10-02 (Ben: "ax them from airtable… we'll keep them in the
-app"): all 290 deleted (0 failures); snapshots live in
-`SADb_audit\archive\deleted_records_*.json` (both deletion waves); the
-export now MERGES archive/ back in with archived=True, so the app + KB
-keep all 378 removed papers forever — pill "app-only (removed from
-Airtable)" in table/detail + stats line (browser-verified). Airtable now:
-Papers 565 (527 curated, 38 bare) / Models 244 / Review 156 / Feedback 35 /
-Recorders 4 = **1004 records — 4 OVER the cap**; next-4 by rubric named to
-Ben (Crowe 1964, Buford+Smith 1990, Sengupta+Bagnall 2023,
-Roden-Reynolds 2015 — increasingly substantive; recommend 4 twin stubs
-instead, which Ben holds pending his flags review). Advisor zip refreshed
-(dist\SADb_Explorer_2026-10-01.zip). GOTCHA BANKED: PowerShell -replace +
-Set-Content CORRUPTS UTF-8 files (cp1252 round-trip mojibake — build_app.py
-was hit and byte-repaired); munge repo text files with python ONLY.**
-
-## 2026-09-28 — SADb/Airtable campaign (Ben's /goal list) — EXECUTED 2026-09-28/30; full details in SADb_audit\README.md "CURATION v2 CAMPAIGN"
-
-Five-hour-reset session on EB475WS4 (machine guard OK; airtable MCP live; Node
-v22.23.2 available for `node --check`). All five goals executed; per-goal state:
-
-0. Tooling verified (airtable MCP create-permission, browser-use IAB, web
-   search, node). No easteregg2 needed — nothing here was compute-bound.
-1. **Prune**: base census was 1232 (cap 1000). Strict shortlist flagged 38
-   Papers + 7 satellite orphans + 2 preprint/published duplicate pairs
-   (Molkov 2023/24, Danner 2020) ≈ 47 recoverable — the rest is Ben's
-   judgment call. Flags live in Prune Status/Reason fields; CSV =
-   `prune_shortlist.csv`. NOTHING deleted. WARNING: curation twins grew
-   Models 172→247 and Review 75→157 (base ≈ 1389 now); escape hatch =
-   convert twins to select fields on Papers.
-2. **Curation v2**: schema additions (Afferent Types 10-option select, Animal
-   Study Potential, Robot/Sim Translation, Cites/Cited-by self-links with
-   730 papers × 11,130 pairs, Prune flags) + semantic renames (the live
-   Review-Papers link was "Models copy"; junk fields marked "(unused)";
-   COLUMN_RENAMES_20260928.md documents applied-vs-proposed — "renamed like
-   we talked about" was never recorded, so PROPOSED items await Ben).
-   Pipeline: fetch_grounding.py (OpenAlex abstracts + EPMC cache) →
-   curation_queue/ (374 curatable / 110 no-text) → 15 background subagent
-   batches under CURATOR_GUIDE.md → write_curation.py validation gate
-   (vocab, abstract-paste 8-gram, duplicate-notes) → **374/374 echo-verified
-   per-record**. Corpus: 833/943 with notes, 606 animals, 118 feedback-
-   linked, 95 afferent-classified. 164 curator flags for Ben in
-   curation_flags_20260928.md (vocab gaps Fish/Chick/Aplysia/vestibular;
-   new-pathway candidates; Smith-1998 abstract-swap catch).
-3. **App online search**: Search tab with LIVE OpenAlex fetch (CORS, no key;
-   corpus-DOI badges) + launch buttons for Scholar/PubMed/WoS-PSU (opens WoS
-   search page, copies query — no scraping, ToS-safe) + suggest-for-corpus
-   JSON download. App stays single-file; offline core unaffected.
-4. **Bubble focus view**: click = BFS 1/2/3 degrees over the in-corpus graph;
-   direct connections colored (+ green open-triangle excitatory-in /
-   red filled-circle inhibitory-out synapses per Ben's 2026-09-22
-   semantics), 2nd degree GRAYED; left panel = focus paper, right panel =
-   clickable connection list; Esc/back button exits. Browser-verified
-   (Goslow 1973: 64 direct + 431 second-degree at depth 2; hop + degree
-   switch + Esc all pass).
-5. **Pivot**: 18 Louvain clusters NAMED (export/cluster_labels.json from
-   name_clusters.py profiles — "Neuromechanics & robot/insect walking
-   models", "Afferent control of locomotion (classics)", etc.); rows AND
-   columns sort count/A→Z/Z→A (Primary Author alphabetical works);
-   Import source demoted + labelled legacy; drill-through has a
-   "◀ Back to pivot" button (verified round-trip).
-Knowledge base: build_knowledge_base.py → knowledge_base/ (INDEX + 18
-cluster + ~30 pathway + afferent + animal markdown pages). Advisor package:
-**dist\SADb_Explorer_2026-09-30.zip (0.9 MB)** — sadb_app.html + KB +
-sadb_export.csv + README_START_HERE.md + CURATION_NOTES.md; regenerate with
-package_dist.py after any rebuild.
-Rebuild order: export_corpus → (build_citation_graph only if DOIs changed) →
-build_knowledge_base → build_app → check_app + node --check app/_app_main.js →
-package_dist. GOTCHA BANK: Airtable REST list-endpoint `records[]` filter is
-SILENTLY IGNORED (returns unfiltered first 100) — verification must use
-per-record GETs (_verify_all.py); clearing a select = null, not ""; PowerShell
-Set-Content -Encoding UTF8 adds a BOM (read with utf-8-sig) and ConvertTo-Json
-corrupts nested arrays — patch JSON with python, not PowerShell.
-
-**2026-10-02b: flags round-2 rulings executed — 4 more papers + 47 ORPHANED Review stubs deleted (zero info loss; 115 Models orphans found, Ben holds); Animals +Invertebrates (typecast-write trick; metadata API rejects select-option edits); naming GRAMMAR banked in CURATOR_GUIDE (afferent+action+side+joint+phase; phase- as reverse direction); BASE NOW 953 RECORDS (Papers 561 / Models 244 / Review 109 / Feedback 35 / Recorders 4) — UNDER THE 1000 CAP. Queued tag creations on Ben word: Ia/Ib disynaptic excitation split, lateral postural reflex, Kooij vestibular/visual/somatosensory postural tags.**
-
-**2026-10-02c (Ben 'yes' batch): Feedback tags created + linked — 'Ia disynaptic excitation' (Angel 1996), 'I disynaptic excitation (mixed group I)' (Angel 2005; both Angels re-pointed OFF Ib disynaptic excitation), Vestibular/Visual/Somatosensory 'feedback to postural control' (Kooij 2000). Karayannidou 'Lateral postural reflex' SKIPPED — its paper was archived in the 290, an unlinked tag = junk record; restore the pair (archive snapshot + tag) on request. Feedback table now 45 records. Base 953. Full rebuild done: KB 84 pages, app 943 papers (382 app-only), advisor zip dist\SADb_Explorer_2026-10-02.zip. GOTCHA: link-field GETs return bare ID strings on per-record GET (no name dict) — filter by known ID sets.**
+- Execute Ben's directives verbatim; ambiguities get asked, not inferred. Every
+  revision pass ends with verification + a per-directive compliance check.
+- No silent deletions or number changes anywhere in the dissertation; every number
+  in prose traceable to a Testing_Data file, a generating script/mat, or a citation.
+- Ben commits via GitHub Desktop; agents leave the working tree clean for him and
+  say what to commit. NO commits/pushes by agents unless Ben says so.
+- This repo is PUBLIC — never put credentials, license details, or SSH setup here.

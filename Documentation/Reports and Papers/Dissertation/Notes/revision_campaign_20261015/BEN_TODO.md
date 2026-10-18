@@ -1,76 +1,83 @@
 # BEN_TODO — running tally of things only Ben can do
 
 Living list; agent updates it after each round. Items are numbered for reference in chat.
-Machine: EB475WS4. Last updated: 2026-10-17.
+Machine: EB475WS4. Last updated: 2026-10-18 (writing-quality campaign session).
 
 ## Do now
 
-1. **Overleaf finish (upload dragged 2026-10-17 — two steps left, ~30 seconds in your
-   Chrome):** (a) delete the five obsolete chapter files from the Overleaf project tree —
-   20-methods.tex, 30-results.tex, 40-ankle.tex, 50-futurework.tex, 60-conclusion.tex
-   (they are inert: the new main.tex does not include them, but they clutter the tree);
-   (b) click Recompile and eyeball the first pages (the agent's local gate says 264 pages,
-   0 errors, 0 undefined references, 0 missing figures; the in-app browser is not logged
-   into Overleaf, so this verification is yours). Old figs entries from the pre-restructure
-   layout can be deleted whenever; they are unreferenced.
+1. **Commit the working tree (GitHub Desktop).** The whole 2026-10-17/18 revision wave is
+   uncommitted: the journal-register chapter passes, the Tables 4.2/4.3 corrections,
+   the publication-note rescope, the abstract/acknowledgments naming fixes, the cleaned
+   AGENTS.md, the regenerated figures, and the campaign notes
+   (RULINGS_20261017_session.md). Commit BEFORE further pulls. (tmp\ is disposable by
+   convention — the diss_baseline_20261017 snapshot in there is not for committing.)
 
-2. **Overleaf review UI: disposition the 15 pending tracked changes (T01–T15 in
-   [CHATGPT_REPORT.md](D:/Github/Bipedal_Robot/CHATGPT_REPORT.md)).** The pushed files already
-   carry their content applied, so accepting in the UI reconciles the record. If you REJECT
-   any, Overleaf's file reverts and re-diverges from the local copy — tell the agent and it
-   re-syncs.
+2. **Overleaf re-push (drag-and-drop, your Chrome):** drag the changed chapter .tex
+   files to the project root and the new figure files into the project's
+   figs/30-torque/ folder (the agent will list the exact changed set in the final
+   report once the verification build lands). Then in the Overleaf UI: the five
+   obsolete chapter files (20-methods, 30-results, 40-ankle, 50-futurework,
+   60-conclusion) may still need deleting if the earlier cleanup did not cover them,
+   and click Recompile.
 
-## Content decisions (small, one ruling each)
+3. **Overleaf review UI: disposition the 15 pending tracked changes (T01–T15).** The
+   pushed files already carry their content applied; accepting in the UI reconciles
+   the record. Any REJECT re-diverges the trees — tell the agent and it re-syncs.
 
-3. **Airtable screenshot** for the database chapter: drop your capture at
-   Figures/50-database/airtable_base.png (Papers grid with the linked fields visible).
-   Caption is drafted; the agent wires the figure in once the file exists.
+## Figure decisions (nothing auto-wired; verdicts only)
 
-4. **Database numbers framing:** ch. 6 carries the retained corpus (561 papers / 523 notes /
-   86 afferent-classified / 258 translation notes) while the Discussion chapter carries the
-   audited corpus (943 / 833 / 95 / 363). Both are correct and explicitly scoped, but pick
-   which framing leads, or bless both as-is.
+4. `Figures/30-torque/` now holds the regenerated candidates from this campaign, none
+   wired into the .tex: `Vas_Pam_20mm_cam_winner_{1,2,3}_r2.png` and
+   `route_check_run8{,b}_r2.png` (restyled to your figure spec: Tol palette, distinct
+   markers AND line styles, 10 pt floor), each with a `.alt.txt` sidecar, plus
+   `opensim_robot_isometric.png` — a 300 dpi isometric render of the converted robot
+   model (candidate replacement/companion for the low-res master's-era leg figure).
+   Say which to wire and where, or discard. Cam winner 4 already passed. The knee GIF
+   first frame remains unusable as a print still.
 
-5. **"Faster than real time" (background, simulation-tooling paragraph)** contradicts the SNS
-   chapter's honest "full-body co-simulation is not yet running." One-sentence fix ready;
-   awaiting your nod since it weakens a claim.
+5. **Airtable screenshot** for the database chapter (carried): drop your capture at
+   Figures/50-database/airtable_base.png; caption is drafted and the agent wires it.
 
-6. **Tracked-change T03/T04 wording:** the advisor's accepted edit was "I used these tools to
-   convert..."; the restructure pass reverted it to the passive. Restore the advisor's wording
-   (one line) or ratify the passive.
+## Content rulings (small, one ruling each)
 
-7. **Figure QC verdicts (from the campaign, nothing auto-changed):** cam winner figures 1–3
-   FAILED print legibility (curve-style collisions), winner 4 PASSED; route-check figures
-   FAILED (sub-legible at print scale); the knee GIF first frame is unusable as a print still.
-   Regenerate the failed ones with your scripts if you want them in the dissertation.
+6. **Voice:** you predicted the advisor will want more first-person "I". It was NOT
+   mass-applied (style contract forbids it, and a full-voice change days before
+   submission is high risk). The advisor's accepted T03/T04 wording ("I used these
+   tools to convert...") IS restored in the background as the single sanctioned "I".
+   A light first-person pass over the introduction, discussion, and conclusion is a
+   one-hour job on your nod — ideally after the advisor sees the current draft.
 
-8. **Master's leg-model figure is intrinsically low-res** (the 2019 source itself is low-res;
-   feet cut off in the original). Regenerable from code for print-crisp if wanted.
+7. **Database numbers framing** (carried): Chapter 5 carries the retained corpus
+   (561/523/86/258), the Discussion the audited corpus (943/833/95/363). Both are
+   explicitly scoped; bless both or pick which leads.
 
-9. **24 inferred comment anchors:** the detached advisor comments were placed by inferred
-   anchors (the ledger marks them "inferred"). A skim of
-   [comment_ledger.json](D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/Notes/revision_campaign_20260915/comment_ledger.json)
-   … correct path: Notes/revision_campaign_20261015/comment_ledger.json — confirm the
-   placements so the inference retires.
+8. **Graphical abstract placement** (writer flag): fig:bpa_graphical_abstract is
+   Chapter 3's graphical abstract but sits in the Background chapter. Left in place;
+   moving it is your call.
+
+9. **24 inferred comment anchors** (carried): skim comment_ledger.json and confirm
+   the inferred placements so the inference retires.
 
 ## Housekeeping
 
-10. **Commit the working tree** (GitHub Desktop): the whole revision campaign — restructured
-    chapters, moved figures, thesis.bib, campaign notes — is uncommitted.
+10. **Pinned-knee mats (your stated plan):** the clean-named records of record —
+    `minimizeFlxPin10_results.mat` and `minimizeExt10mmX3_results.mat` — are now what
+    the dissertation and every script cite. When you delete the other pinned-knee
+    result mats, keep `FlxPinBPASet.mat` and `ExtPinBPASet.mat` (test data, still
+    cited by Appendix C).
 
-11. **Build-directory cleanup:** ProofFinal now holds build_wf, build_final, build_final2,
-    build_r2, build_r3 output folders (only the latest, build_r3, matters; the rest are
-    deletable, though build_wf/main.pdf was locked by an open viewer).
+11. Old build dirs (build_wf, build_final, build_final2, build_r2 through the latest
+    minus one) are deletable; keep the newest build of record.
 
-12. Optional, defense-adjacent: deposit the balance-platform demonstration videos (for the
-    record, if the quantitative video analysis ever gets added) and the SNS slideshow GIF
-    supplementary-media decision.
+12. Defense-deck wiring (15+2 new assets) and the GIF supplementary-media decision
+    (carried).
 
 ## Notation (for reading agent reports)
 
 - **C01–C46** = the 46 OPEN reviewer comment threads, in order, in
-  [CHATGPT_REPORT.md](D:/Github/Bipedal_Robot/CHATGPT_REPORT.md) ("#### C12 — ajh26 — ...").
-  Example: C12 is the advisor's chapter-restructure comment.
+  [CHATGPT_REPORT.md](D:/Github/Bipedal_Robot/CHATGPT_REPORT.md).
 - **T01–T15** = the 15 PENDING tracked changes (accept/reject in Overleaf's review UI).
-  Example: T02 is "requirement" → "improvement" in the background.
 - **R01–R32** = the 32 already-resolved comment threads (archive section of the same file).
+- Session rulings of record (tables 4.2/4.3 folds, publication note, clean mats, χ4,
+  SADb naming, "pool" wording, wean fold-in):
+  [RULINGS_20261017_session.md](D:/Github/Bipedal_Robot/Documentation/Reports and Papers/Dissertation/Notes/revision_campaign_20261015/RULINGS_20261017_session.md).

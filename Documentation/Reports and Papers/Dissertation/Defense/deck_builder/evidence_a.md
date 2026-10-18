@@ -1,0 +1,30 @@
+# Evidence manifest — Batch A (slides 1–14: title, framing, Ch. 3 muscles)
+
+Sources: `chapters/<file>.tex:<line>` under `Documentation\Reports and Papers\Dissertation\ProofFinal\`.
+Chapter numbers per main.tex include order: 10-introduction=Ch.1, 15-background=Ch.2, 20-muscles=Ch.3,
+30-torque=Ch.4, 50-database=Ch.5, 60-sns=Ch.6, 70-overall=Ch.7, 80-conclusion=Ch.8.
+
+| # | Slide | Assertion / content | Numbers on slide | Source |
+|---|-------|--------------------|------------------|--------|
+| 1 | Title | Title, defense, name, advisor, lab, "November 2026" | November 2026 (defense date 2026-11-06, per project deadline record in AGENTS/deck spec) | date directive from CONTENT_SPEC s01; no chapter number on slide |
+| 2 | Roadmap | Four objectives connect one actuator to a walking, neurally controlled robot | 4 objective cards; "537 tests"; "943-paper corpus" | objectives wording: chapters/10-introduction.tex:26-31; 537: chapters/20-muscles.tex:290; meets/exceeds target: chapters/30-torque.tex:504 ("meets the flexor torque target ... +5.01%", "meets or exceeds its human-scaled target ... +5.02% at worst"); 943: chapters/50-database.tex:14 ("the audited corpus stood at 943 papers"); "verified cross-engine toolchain": chapters/60-sns.tex:6 ("verified neuromechanical laboratory"), :12 (pipeline + cross-engine checks) |
+| 3 | The project | Humanoid robot from the trunk down; guiding hypothesis; built-on; this dissertation | "92 muscle paths" (converted model) | project framing: chapters/10-introduction.tex:18,20; 92 muscle-tendon actuators: chapters/60-sns.tex:73; master's finding (transplanted attachments ≠ human torque): chapters/10-introduction.tex:20 |
+| 4 | Why biomimetic robots | Robots run experiments impossible in living subjects; 5 experiment bullets | none | chapters/10-introduction.tex:6 ("removing a specific muscle ... or blocking a sensory feedback pathway", "faster and cheaper than human observation studies") |
+| 5 | The actuator | BPA strengths vs three modeling headaches; max ≈ ε₆₂₀; nonlinear in l₀, P, ε; tool mis-predicts short BPAs | ε₆₂₀ | BPA properties/limits: chapters/10-introduction.tex:8; ε₆₂₀ definition: chapters/20-muscles.tex:22-28; Festo over-prediction at short l₀: chapters/10-introduction.tex:8, chapters/20-muscles.tex:312 |
+| 6 | Problem statement | FOUR gaps between existing design and a robot that walks under neural control | 4 gap cards; footer mapping objectives→gaps | gap summary (near-verbatim): chapters/10-introduction.tex:14; gap 1 detail: :8; gap 2 detail: :10; gaps 3+4 detail: :12; footer mapping: :24 ("addresses the first two gaps experimentally, resolves the fourth ... develops the tools and framework that close the third") |
+| 7 | Ch. 3 · jig | Custom jig: isometric force across resting length, pressure, contraction | 10 & 20 mm DMSP; 112–518 mm (10 mm); 300–509 mm (20 mm); 620 kPa; 537 pairs = 321 + 216; S-type load cells + HX711, MPX5700, Arduino → MATLAB | diameters: chapters/20-muscles.tex:71; l₀ ranges + P₆₂₀=620 kPa: :78; 537/321/216: :290; instrumentation: :74-76 |
+| 8 | Ch. 3 · F_max discovery | Max isometric force depends on resting length — previously unreported | none beyond axes | chapters/20-muscles.tex:96 ("previously unreported characteristic"; Festo tool "predicts increased force with shorter lengths, while our collected data indicate decreasing force") |
+| 9 | Ch. 3 · F_max model | Two coefficients per diameter; limits; physical offset | 470 N vs 490 N (10 mm); 1460 vs 1570 N (20 mm); 10% tolerance; 7.5 mm / 13 mm; force → 0 as l₀ → 0 | eqs: chapters/20-muscles.tex:98 (303.5 N, 19.03 /m, 0.0075 m), :99 (922.4 N, 15.37 /m, 0.013 m), :57 (3D form); offset = end-cap contact: :103; 470/490, 1460/1570, 10%: :310; force → 0: :312 |
+| 10 | Ch. 3 · Festo error 42% | Manufacturer tool mis-predicts short lengths by 42% | bars 350.9 / 335.3 / 498.6 N; 4.5% vs 42.1%; φ10 mm, l₀ = 112 mm, 620 kPa; under-300-mm quote | chapters/20-muscles.tex:312 (all five numbers + the quoted sentence); end-effect mechanism: :316; exponential-growth claim: :312 |
+| 11 | Ch. 3 · force surface | All 537 measurements collapse onto one dimensionless surface | 537; ε* = ε/ε₆₂₀; P* = P/620 kPa | 537: chapters/20-muscles.tex:290; ε* eq: :33; P* def: :52; normalization collapse: :264 |
+| 12 | Ch. 3 · surface GoF | Three coefficients per diameter; out-of-sample to a few percent | φ10: 0.9998 / 0.9994 / 10.3% / 10.6%; φ20: 0.992 / 0.9943 / 6.8% / 5.7%; RMSE 0.005 / 0.023; 3 + 2 coefficients | Table tab:Fstar: chapters/20-muscles.tex:221-234 (10 mm row block incl. RMSE 0.005118 fit, 0.0245409 val.), :235-248 (20 mm block incl. RMSE 0.02294 fit, 0.0231303 val.); 80/20 split: :290; slide RMSE values are the table fit values rounded (0.005118→0.005, 0.02294→0.023) |
+| 13 | Ch. 3 · vs models | Lowest RMSE of compared models at every diameter/length | 10/257: 22.9, 143.8, 73.8; 10/233: 16.8, 132.7, 62.6; 20/300: 35.6, 132.1, 72.8; 20/450: 67.6, 177.7, 862.1 (N) | Table tab:model_compare: chapters/20-muscles.tex:369,370,371,372 (row per line); Martens negative-force blowup at 450 mm: :391 |
+| 14 | Ch. 3 → Ch. 4 | Force model = two cheap maps for real-time control | none (equation images only) | chapters/20-muscles.tex:399 ("computationally inexpensive to evaluate online", "suitable for lookup-table implementation", Elzein pressure–force dynamics as next step); force eq: :62-64 |
+
+Notes
+- Slide 1 date: CONTENT_SPEC directive "update date line to November 2026 (defense 2026-11-06)"; not a dissertation-sourced number.
+- Kickers on slides 7–13 use "Ch. 3 · muscles" per CONTENT_SPEC; slide 14 is the Ch. 3 → Ch. 4 bridge.
+- No post-freeze ("since submission") content in this batch; every number traces to a chapter line above.
+- Figures used (all pre-existing deck_assets): figs/testJigs_force.png, MaxForce10/20.png, FStar10/20.png,
+  Comparison.png, mujoco_robot.png; eqs/fmax, fmax20, fmax3d, fstar, force; talk_media image5/11/44 —
+  same assets as the pre-update deck (Ch. 3 figure set unchanged).

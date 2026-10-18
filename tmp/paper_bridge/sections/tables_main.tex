@@ -1,0 +1,136 @@
+% ======================================================================
+% tables_main.tex — display tables T1–T5 for the Frontiers manuscript
+% "Design Factors for Isometric Robotic Knee Torque Using Braided
+% Pneumatic Actuators".
+% Every number is taken from mining/results_ledger.md or the
+% dissertation chapter of record (chapters/30-torque.tex, committed
+% 0d23da03); the per-table provenance is noted above each float.
+% Placement per plan §5: T1–T3 in Discussion 4.2; T4–T5 in Discussion
+% 4.3. Labels are unique against surviving Main.tex labels
+% (tab:OptCoeff is retired by the plan; the supplement's tab:TorqueFit
+% is not used here).
+% .xlsx twins of all five tables live in Knee_Torque_Test/Tables/
+% (PinnedFlexor_GoF.xlsx, PinnedExtensor_GoF.xlsx,
+% AdoptedCorrectionTerms.xlsx, RouteRedesign_Summary.xlsx,
+% BiPulley_Batch.xlsx).
+% ======================================================================
+
+%% ------------------------------------------------------------------
+%% T1 — Pinned-knee flexor goodness of fit (Discussion 4.2)
+%% Source of record: chapter Table tab:FlxPinGof, 30-torque.tex:364-383
+%% (values re-verified against ledger §3 flexor rows, DR-verified).
+%% ------------------------------------------------------------------
+\begin{table}[htbp]
+\caption{Pinned-knee flexor torque-prediction goodness of fit per test. The improved-BPA-characterization-alone prediction uses the improved BPA force characterization with rigid attachments, no length offset, and no wrapping loss; the corrected model adds the adopted correction terms of the two-stage identification (Table~\ref{tab:AdoptedXi}). RMSE and maximum absolute residual (Max.) are in \unit{\newton\meter}, and FVU denotes the fraction of variance unexplained. The $l_{0}=\qty{47.9}{\cm}$ test was held out of training, and the training mean averages the four training tests.}
+\label{tab:FlxPinGof}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+& \multicolumn{3}{c}{\textbf{Improved BPA char.\ alone}} & \multicolumn{3}{c}{\textbf{Corrected model}} \\
+\cmidrule(lr){2-4} \cmidrule(l){5-7}
+\textbf{Test} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} \\
+\midrule
+$l_{0}=\qty{48.5}{\cm}$ (training)        & 7.617 & 2.1278 & 25.531 & 2.165 & 0.1718 & 5.467 \\
+$l_{0}=\qty{45.7}{\cm}$ (training)        & 8.803 & 1.9380 & 26.264 & 1.368 & 0.0468 & 3.614 \\
+$l_{0}=\qty{47.9}{\cm}$ (validation)      & 7.670 & 1.8463 & 21.650 & 2.287 & 0.1641 & 7.818 \\
+$l_{0}=\qty{40.6}{\cm}$, tendon (training) & 6.373 & 0.5935 & 16.859 & 1.611 & 0.0427 & 5.891 \\
+$l_{0}=\qty{41.0}{\cm}$ (training)        & 9.694 & 2.1149 & 21.076 & 1.084 & 0.0277 & 1.766 \\
+\midrule
+Mean (training)                           & 8.122 & 1.6935 & 22.433 & 1.557 & 0.0723 & 4.184 \\
+Mean (validation)                         & 7.670 & 1.8463 & 21.650 & 2.287 & 0.1641 & 7.818 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ------------------------------------------------------------------
+%% T2 — Pinned-knee extensor goodness of fit (Discussion 4.2)
+%% Source of record: chapter Table tab:ExtPinGof, 30-torque.tex:400-420
+%% (values re-verified against ledger §3 extensor rows, DR-verified).
+%% ------------------------------------------------------------------
+\begin{table}[htbp]
+\caption{Pinned-knee extensor torque-prediction goodness of fit per test, at the adopted correction terms with the effective-stiffness pair locked to the flexor-identified values (Table~\ref{tab:AdoptedXi}). The improved-BPA-characterization-alone prediction uses the improved BPA force characterization with rigid attachments, no length offset, and no wrapping loss; the corrected model adds the extensor-specific terms $\chi_{0}$ and $\chi_{3}$. RMSE and maximum absolute residual (Max.) are in \unit{\newton\meter}, and FVU denotes the fraction of variance unexplained. The extensor terms were fitted over the fitting tests, the $l_{0}=\qty{45.7}{\cm}$ test was held out, and the fitting mean averages the five fitting tests.}
+\label{tab:ExtPinGof}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+& \multicolumn{3}{c}{\textbf{Improved BPA char.\ alone}} & \multicolumn{3}{c}{\textbf{Corrected model}} \\
+\cmidrule(lr){2-4} \cmidrule(l){5-7}
+\textbf{Test} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} \\
+\midrule
+$l_{0}=\qty{40.0}{\cm}$ (fitting)          & 3.092 & 0.5638 & 4.842 & 1.244 & 0.1303 & 2.196 \\
+$l_{0}=\qty{40.0}{\cm}$, tendon (fitting)  & 3.622 & 6.3919 & 7.845 & 1.350 & 0.8878 & 1.890 \\
+$l_{0}=\qty{43.6}{\cm}$ (fitting)          & 2.437 & 0.9618 & 4.284 & 0.978 & 0.1634 & 1.818 \\
+$l_{0}=\qty{43.2}{\cm}$, tendon (fitting)  & 2.878 & 4.7304 & 4.817 & 1.525 & 1.3270 & 2.481 \\
+$l_{0}=\qty{45.7}{\cm}$ (validation)       & 2.178 & 1.0586 & 4.974 & 0.490 & 0.0535 & 1.206 \\
+$l_{0}=\qty{46.5}{\cm}$ (fitting)          & 0.949 & 0.3152 & 2.272 & 0.699 & 0.1714 & 1.559 \\
+\midrule
+Mean (fitting)                             & 2.596 & 2.5926 & 4.812 & 1.159 & 0.5360 & 1.989 \\
+Mean (validation)                          & 2.178 & 1.0586 & 4.974 & 0.490 & 0.0535 & 1.206 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ------------------------------------------------------------------
+%% T3 — Adopted correction terms of the two-stage identification
+%% (Discussion 4.2). Sources: ledger §1 adopted + bounds rows
+%% (DR-verified); chapter 30-torque.tex:502 and its Appendix C tables
+%% (opt bounds + adopted values).
+%% ------------------------------------------------------------------
+\begin{table}[htbp]
+\caption{Adopted correction terms of the two-stage identification. The extensor refit locked the effective-stiffness pair $(\chi_{1}, \chi_{2})$ to the flexor-identified values, so a single stiffness pair is shared across the flexor and extensor configurations, and only $\chi_{0}$ and $\chi_{3}$ were re-identified for the extensor. The pair was adopted from a family of near-equivalent fits by a requirement external to the identification, namely that both route-redesign configurations meet the required \qty{5}{\percent} torque-overshoot target simultaneously. The stiffness terms are effective system stiffnesses that lump the compliance of the brackets, fixtures, and winch cable; $\chi_{3}$ is unitless and scales the fictive-strain wrapping loss.}
+\label{tab:AdoptedXi}
+\small
+\begin{tabular}{@{}lllp{5.8cm}@{}}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Search bounds} & \textbf{Configuration and role} \\
+\midrule
+$\chi_{0}$ & \qty{+3.94}{\mm} & \qtyrange{0}{20}{\mm} & Flexor: constant effective-length offset \\
+$\chi_{1}$ & \qty{3.998e4}{\N\per\m} & \qtyrange{3e4}{1e6}{\N\per\m} & Flexor: effective axial stiffness (bracket-frame $x$ and $z$) \\
+$\chi_{2}$ & \qty{1.473e4}{\N\per\m} & \qtyrange{5e3}{2e4}{\N\per\m} & Flexor: effective bending stiffness (bracket-frame $y$) \\
+$\chi_{0}$ & \qty{-6.38}{\mm} & \qtyrange{-20}{5}{\mm} & Extensor: constant effective-length offset (opposite sign to the flexor value) \\
+$\chi_{3}$ & \num{0.158} & \numrange{0}{1} & Extensor: wrapping-loss (fictive-strain) scale factor \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ------------------------------------------------------------------
+%% T4 — Route-redesign outcomes against the human isometric torque
+%% targets (Discussion 4.3). Sources: ledger §6.1-§6.4 (DR-verified
+%% against the result mats) and chapter 30-torque.tex:504, :510, :512,
+%% :514, :516, :542.
+%% ------------------------------------------------------------------
+\begin{table}[htbp]
+\caption{Route-redesign outcomes against the human isometric torque targets under the shared actuator plan of two \qty{20}{\mm} BPAs per route, a \qty{620}{\kPa} pressure ceiling, and a maximum usable contraction of 0.255. Negative torques denote knee flexion. The margin is stated with respect to the required envelope, the human target plus the required \qty{5}{\percent} overshoot; for the cam redesign the margin with respect to the plain human target is \qty{+39.77}{\percent} (the optimizer winner before the final adjustment carried \qty{+31.30}{\percent} and \qty{+42.34}{\percent} at the same checks). Both extensor variants target the same human-scaled requirement, and the mono-pulley variant evaluates its torque requirement on the insertion-side torque, the force delivered at the insertion after the tackle's force loss; for that variant only the peak torque is reported rather than a span. A dash marks a quantity not reported for that variant, and objective values of the direct and pulley formulations are different functions, so they are not commensurable.}
+\label{tab:Redesign}
+\small
+\begin{tabular}{@{}p{2.3cm}p{2.7cm}p{2.4cm}p{1.4cm}p{1.1cm}p{4.4cm}@{}}
+\toprule
+\textbf{Route variant} & \textbf{Predicted torque} & \textbf{Human-scaled requirement} & \textbf{Min.\ margin} & \textbf{Worst angle} & \textbf{Note} \\
+\midrule
+Direct extensor & \qtyrange{35.45}{109.4}{\newton\meter} & \qtyrange{20.25}{50.32}{\newton\meter} & \qty{+5.02}{\percent} & \ang{-20.2} & Meets the required envelope at every angle with zero shortfall points; superseded by the cam redesign. \\
+Cam extensor (design of record) & -- & \qtyrange{20.25}{50.32}{\newton\meter} & \qty{+30.83}{\percent} & -- & Current extensor design; pressure to meet the envelope spans \qtyrange{269}{507}{\kPa}; tibial wrap bend radius \qty{96.9}{\mm}; condyle clearance \qty{43.1}{\mm} at \ang{10} of extension; moment arm spans \qtyrange{59.4}{102.8}{\mm} (mean \qty{72.4}{\mm}). \\
+Direct flexor & \qtyrange{-81.23}{-3.864}{\newton\meter} & \qtyrange{-23.16}{-2.461}{\newton\meter} & \qty{+5.01}{\percent} & \ang{-107} & Both actuators share one attachment route, and the mirrored pair is the next design refinement; applies the adopted correction terms including the extensor wrapping factor. \\
+Mono-pulley flexor variant & peak \qty{-85.74}{\newton\meter} (\qty{-85.56}{\newton\meter} insertion-side) & \qtyrange{-23.16}{-2.461}{\newton\meter} & -- & -- & Pulley gain fixed at 1:1, a redirect rather than a force multiplier; deepens the peak predicted flexion torque by \qty{4.51}{\newton\meter} (\qty{5.6}{\percent}) over the direct route while holding the off-axis torque to at most \qty{0.803}{\newton\meter}. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ------------------------------------------------------------------
+%% T5 — Bi-pulley batch on five muscle sites (Discussion 4.3).
+%% Sources: chapter Table tab:bipulley_batch, 30-torque.tex:520-534,
+%% with the clearance column from ledger §6.5 (DR-verified).
+%% ------------------------------------------------------------------
+\begin{table}[htbp]
+\caption{Bi-pulley batch on five muscle sites of the robot-body model's OpenSim leg. Objective values are unitless, and an objective of \num{101} is the batch's infeasibility sentinel; all five runs closed with a nonpositive torque margin. Adjacent routes are required to clear one another by \qty{25}{\mm}, the sum of two \qty{10}{\mm} actuator radii and a \qty{5}{\mm} bundle margin. The medial-gastrocnemius run records no finite minimum clearance, so its outcome rests on the infeasibility sentinel and its worst-constraint value alone; for the biceps femoris short head, whose torque target is \qty{40.2}{\newton\meter} at a maximum isometric force of \qty{804}{\N}, the pattern search exited with flag $-2$ from an initial objective of \num{1000}.}
+\label{tab:BiPulley}
+\small
+\begin{tabular}{@{}lp{2.4cm}p{5.9cm}p{2.6cm}@{}}
+\toprule
+\textbf{Muscle site} & \textbf{Objective} & \textbf{Outcome} & \textbf{Min.\ route clearance (\unit{\milli\meter})} \\
+\midrule
+soleus & \num{0.9968} & Converged (pattern-search exit flag 1), nonpositive torque margin & 19.142 \\
+tibialis anterior & \num{0.9288} & Converged (pattern-search exit flag 1), nonpositive torque margin & 15.558 \\
+rectus femoris & \num{3.423} (worst constraint \num{0.2423}) & Nonpositive torque margin & 7.024 \\
+medial gastrocnemius & \num{101} (infeasibility sentinel, worst constraint \num{10}) & Pattern-search exit flag $-2$ & -- \\
+biceps femoris short head & \num{101} (infeasibility sentinel, worst constraint \num{10}) & Pattern-search exit flag $-2$ & 4.260 \\
+\bottomrule
+\end{tabular}
+\end{table}

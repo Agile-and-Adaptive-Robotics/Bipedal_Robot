@@ -15,12 +15,17 @@ im.crop((half + 60, 0, w, h)).save(os.path.join(FIG, "flxpin_CD.png"))
 
 prs = new_deck()
 n1 = slides_a.build(prs)
-n2 = slides_b.build(prs)
-n3 = slides_c.build(prs)
-n4 = slides_d.build(prs)
+n2 = slides_b.build(prs, n1 + 1)
+n3 = slides_c.build(prs, n2 + 1)
+n4 = slides_d.build(prs, n3 + 1)
 
-OUT = r"D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Bolen_Dissertation_Defense_20260910.pptx"
+OUT = r"D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Defense\Bolen_Dissertation_Defense.pptx"
 prs.core_properties.title = "Movement and Control of Biomimetic Humanoid Robots"
 prs.core_properties.author = "Ben P. Bolen"
 prs.save(OUT)
+
+import json
+ranges = {"a": [1, n1], "b": [n1 + 1, n2], "c": [n2 + 1, n3], "d": [n3 + 1, n4]}
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "deck_ranges.json"), "w") as f:
+    json.dump(ranges, f)
 print("slides:", n4, "->", OUT)
