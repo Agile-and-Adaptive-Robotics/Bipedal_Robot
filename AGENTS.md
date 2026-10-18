@@ -94,9 +94,11 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
   (unlike EB475WS4). Laptop DESKTOP-5Q16KE9 not SSH-set-up yet.
 - Custom skills are version-controlled in the `ZCode_Skills` repo. **EB475WS4: the repo is
   at `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills`** (NOT `D:\GitHub\` — corrected
-  2026-09-16; easteregg2: `D:\GitHub\ZCode_Skills`; laptop: `Documents\GitHub\ZCode_Skills`).
+  2026-09-16; easteregg2: `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills`
+  (MOVED there from `D:\GitHub\ZCode_Skills` 2026-10-17 at Ben's request, junctions
+  repointed, git intact at 62b9ef7); laptop: `Documents\GitHub\ZCode_Skills`).
   **easteregg2: ALL repo-backed skills are junctions at `C:\Users\Ben Bolen\.agents\skills\`**
-  into `D:\GitHub\ZCode_Skills` (2026-09-23; mujoco/neuroscience/python/sns-toolbox/scone
+  into `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills` (2026-09-23; mujoco/neuroscience/python/sns-toolbox/scone
   added then, drift merged; `eiger` + `prusa-slicer` are easteregg2-local plain dirs; this
   host's loader reads `.agents\skills`, EB475WS4's reads `.zcode\skills` — different names,
   same junction pattern).
