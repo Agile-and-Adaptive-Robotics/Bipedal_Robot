@@ -1,17 +1,8 @@
 \chapter{Appendix A: Muscle Force and Joint Torque Calculations}\label{app:muscle_calcs}
 \graphicspath{{../Figures/92-AppendixA/}}
 
-This appendix documents the reference implementation of the force, torque, and compliance equations used in Chapters~\ref{ch:methods}--\ref{ch:results}. When present in Matlab code, file names are given so that any number in this dissertation can be traced to the code that produced it.
+This appendix documents the reference implementation of the force, torque, and compliance equations used in Chapters~\ref{ch:muscles} and~\ref{ch:torque}. When present in MATLAB code, file names are given so that any number in this dissertation can be traced to the code that produced it.
 
-    % ---------------------------------------------------------------------------
-% muscle_model_appendix_draft.tex — appendix-ready draft covering the two
-% muscle formulations used in this work (MuJoCo muscle actuator as produced
-% by the conversion, and OpenSim's Thelen2003/Millard2012 Hill-type models),
-% and the quantitative force comparison along the subject01 walking
-% trajectory. Written 2026-09-14; regenerate numbers with
-% Code\MuJoCo_SNS\spinal\_muscle_force_compare.py (muscle_force_compare.csv,
-% figures\muscle_force_compare.png).
-% ---------------------------------------------------------------------------
 \section{Human muscle force calculations}
 \subsection{OpenSim Thelen2003 and Millard2012 Formulations}
 
@@ -47,8 +38,8 @@ analysis tables archived with the test data
 (\texttt{OpenSim\_Vasti\_MomentArm.txt}, \texttt{OpenSim\_Vasti\_Results.txt},
 \texttt{OpenSim\_Bifem\_MomentArm.txt}, \texttt{OpenSim\_Bifem\_Results.txt})
 carry the per-muscle moment arms and the corresponding
-maximum-isometric torque curves --- moment arm multiplied by each
-muscle's maximum isometric force --- for vastus intermedius,
+maximum-isometric torque curves (moment arm multiplied by each
+muscle's maximum isometric force) for vastus intermedius,
 lateralis, and medialis, and for the biceps femoris short head; the
 optimization loads the vastus medialis and biceps femoris short-head
 columns as its targets (\texttt{buildKneeExtContext20mm.m} lines
@@ -83,11 +74,11 @@ parameter \texttt{gainprm[2]}) is set by the converter such that the
 peak force over the model's range of motion matches the OpenSim
 \texttt{max\_isometric\_force}; audited across all 84 active muscles,
 the deviation is $\le 15\%$ (Sec.~\ref{sec:muscle-models-compare}). Two
-properties matter for interpretation: (i) the tendon is \emph{rigid} --
-there is no series-elastic element and no tendon slack length; force at
-the joint equals the contractile-element force immediately; and (ii)
-all curve parameters are shared defaults of the converted model rather
-than per-muscle fits.
+properties matter for interpretation: (i) the tendon is \emph{rigid},
+so there is no series-elastic element and no tendon slack length, and
+force at the joint equals the contractile-element force immediately;
+and (ii) all curve parameters are shared defaults of the converted
+model rather than per-muscle fits.
 
 \subsection{Cross-Platform Force Comparison}
 \label{sec:muscle-models-compare}
@@ -99,7 +90,10 @@ StaticOptimization solution's own muscle forces (full Thelen dynamics
 with compliant tendon); the MuJoCo side replays the identical joint
 trajectory with those activations. Table~\ref{tab:force-r2} reports, per
 muscle, the coefficient of determination $R^2$ between the two force
-time series, the shape correlation, and the best-aligning lag.
+time series, the shape correlation, and the best-aligning lag
+[Provenance: \texttt{Code/MuJoCo\_SNS/spinal/\_muscle\_force\_compare.py};
+per-muscle values for all twelve analyzed muscles are archived in
+\texttt{muscle\_force\_compare.csv} beside Figure~\ref{fig:force-compare}].
 
 \begin{table}[h]
   \centering
@@ -127,23 +121,24 @@ time series, the shape correlation, and the best-aligning lag.
   \end{tabular}
 \end{table}
 
-For ten of twelve representative muscles the two formulations agree
-with $R^2 = 0.87$--$0.98$ and mean-force ratios within $\pm 22\%$, with
-\emph{no} systematic phase shift (best-aligning lag 0--2 frames,
-$\le 34$\,ms). The absence of a phase lead in the rigid-tendon model
-indicates that, along physiological trajectories, missing tendon slack
-compliance does not desynchronize force transmission; its signature is
-instead visible in waveform \emph{shape}: for the soleus (the largest
-series-elastic energy store in human gait), the OpenSim compliant
-tendon carries substantial force through mid-stance while the MuJoCo
-rigid-tendon force follows the activation dips --- the expected
-smoothing of the series elastic element, visible in the soleus panel of
-Figure~\ref{fig:force-compare}. The two outliers are
-anatomically explained: rectus femoris was rerouted in the conversion
-over the vastii's patella-tracking via point, and its moment-arm
-polyfit deviates from OpenSim's path (the same coupler artifact noted
-for the vastii); biceps femoris short head agrees in shape
-($r^2 = 0.87$) but carries a scale offset. We conclude that the
+For eight of the twelve representative muscles the two formulations
+agree with $R^2 = 0.87$--$0.98$ and mean-force ratios within $10\%$,
+with \emph{no} systematic phase shift (best-aligning lag 0--2 frames,
+$\le 34$\,ms); soleus and semimembranosus agree moderately
+($R^2 = 0.74$ and $0.57$, respectively). The absence of a phase lead in
+the rigid-tendon model indicates that, along physiological
+trajectories, missing tendon slack compliance does not desynchronize
+force transmission; its signature is instead visible in waveform
+\emph{shape}: for the soleus (the largest series-elastic energy store
+in human gait), the OpenSim compliant tendon carries substantial force
+through mid-stance while the MuJoCo rigid-tendon force follows the
+activation dips. This is the expected smoothing of the series-elastic
+element, visible in the soleus panel of Figure~\ref{fig:force-compare}.
+The two remaining outliers are anatomically explained: rectus femoris
+was rerouted in the conversion over the vastii's patella-tracking via
+point, and its moment-arm polyfit deviates from OpenSim's path (the
+same coupler artifact noted for the vastii); biceps femoris short head
+agrees in shape ($r^2 = 0.87$) but carries a scale offset. We conclude that the
 converted model reproduces OpenSim muscle force generation along
 physiological trajectories to a degree sufficient for neural-control
 studies, and that if tendon-elasticity phenomena (energy storage,
@@ -212,10 +207,10 @@ Path length accumulates the Euclidean norm of each segment between via points, a
 
 The vector moment arm is implemented as the perpendicular foot of the joint origin onto the line of action,
 \begin{equation}
-    \vec{r} \;=\; \vec{p} \;-\; \hat{u}\left(\hat{u}\cdot\vec{p}\right),
+    \mathbf{r} \;=\; \mathbf{p} \;-\; \hat{\mathbf{u}}\left(\hat{\mathbf{u}}\cdot\mathbf{p}\right),
     \label{eq:app_perpfoot}
 \end{equation}
-where $\vec{p}$ is the vector from the joint origin to the muscle-path crossing point and $\hat{u}$ is the unit force direction (\texttt{MonoPamDataExplicit.m} lines 156--168; identical implementations in \texttt{MonoMuscleData.m} lines 111--123, the \texttt{Mom} function of \texttt{minimizeFlxPin.m} at line 539, and \texttt{MonoPam\_mult.m} lines 186--201). This is the same quantity as the cross-product projection of Equation~(\ref{eq:project_ma}); the planar scalar moment arm about the joint axis is the magnitude of the in-plane components, computed as \texttt{hypot(mA(:,1), mA(:,2))} (\texttt{predictKneeFlexor20mm.m} line 217). Torque about the joint $z$-axis is $\vec{M} = \vec{r}\times\vec{F}$, evaluated only where the BPA is in tension (values are discarded for $\varepsilon < -0.02$, the excessive stretching region; \texttt{MonoPamDataExplicit.m} line 308).
+where $\mathbf{p}$ is the vector from the joint origin to the muscle-path crossing point and $\hat{\mathbf{u}}$ is the unit force direction (\texttt{MonoPamDataExplicit.m} lines 156--168; identical implementations in \texttt{MonoMuscleData.m} lines 111--123, the \texttt{Mom} function of \texttt{minimizeFlxPin.m} at line 539, and \texttt{MonoPam\_mult.m} lines 186--201). This is the same quantity as the cross-product projection of Equation~(\ref{eq:project_ma}); the planar scalar moment arm about the joint axis is the magnitude of the in-plane components, computed as \texttt{hypot(mA(:,1), mA(:,2))} (\texttt{predictKneeFlexor20mm.m} line 217). Torque about the joint $z$-axis is $\mathbf{m} = \mathbf{r}\times\mathbf{f}$, evaluated only where the BPA is in tension (values are discarded for $\varepsilon < -0.02$, the excessive stretching region; \texttt{MonoPamDataExplicit.m} line 308).
 
 \section{Compliance Model Implementation}
 
@@ -226,7 +221,7 @@ The compliance-corrected muscle length entering Equation~(\ref{eq:Lm}) is comput
     k_{\hat{u},br} = \left(\hat{u}^{\,T}\mathbf{K}_{br}^{-1}\hat{u}\right)^{-1},
     \label{eq:app_kbr}
 \end{equation}
-matching Equation~(\ref{eq:bktstiffness}), and the origin-side second bracket contributes an additional scalar compliance $c_{b2}$ in series (Appendix~\ref{app:model_geometry}, Table~\ref{tab:app_stiffness_arrays}). As executed by the evaluator of record, both bracket frames are assembled pitch-only --- insertion frame at \texttt{minimizeFlxPin.m} line 289 and origin frame at line 306, with the two-rotation assemblies carried as commented alternatives --- with the insertion array $[X_{1},X_{2},X_{1}]$ (line 387) and the origin array $[X_{1},X_{1},X_{2}]$ (line 400); the two-rotation-capable twin of the same block is \texttt{minimizeFlxPin2brk.m} lines 387--418. The 2026-09-08 arm-1 array $[X_{1},X_{2},X_{2}]$ is superseded and survives only in the provenance comment at line 387, and the legacy single-bracket evaluator uses $[X_{1},X_{2},X_{1}]$ (\texttt{minimizeFlxPinX3.m} line 267).
+matching Equation~(\ref{eq:bktstiffness}), and the origin-side second bracket contributes an additional scalar compliance $c_{b2}$ in series (Appendix~\ref{app:model_geometry}, Table~\ref{tab:app_stiffness_arrays}). As executed by the evaluator of record, both bracket frames are assembled pitch-only, at \texttt{minimizeFlxPin.m} line 289 (insertion) and line 306 (origin), with the two-rotation assemblies carried as commented alternatives; the insertion array is $[X_{1},X_{2},X_{1}]$ (line 387) and the origin array $[X_{1},X_{1},X_{2}]$ (line 400). The two-rotation-capable twin of the same block is \texttt{minimizeFlxPin2brk.m} lines 387--418. An earlier arm-1 array $[X_{1},X_{2},X_{2}]$ is superseded and survives only in the provenance comment at line 387, and the legacy single-bracket evaluator uses $[X_{1},X_{2},X_{1}]$ (\texttt{minimizeFlxPinX3.m} line 267).
 
 The artificial tendon is modeled as an axial spring with stiffness
 \begin{equation}
@@ -240,7 +235,7 @@ The scalar compliance displacement $\delta$ of Equation~(\ref{eq:complianceforce
     F_{620}(l_{0})\,F^{*}\!\left(\varepsilon^{*}(\delta),P^{*}\right) - k_{eq}\,\delta = 0,
     \label{eq:app_forcebalance}
 \end{equation}
-with $\delta \equiv 0$ when the uncorrected relative strain already exceeds unity (\texttt{minimizeFlxPin.m} lines 434--441). The vector bracket deflection is then $\boldsymbol{\epsilon}_{br} = \mathbf{K}_{br}^{-1}\left(\norm{\vec{F}}\hat{u}\right)$ (line 461), the cable stretch is $\norm{\vec{F}}/k_{ten}$ (line 478), and the attachment point, path, moment arm, and torque are recomputed. For the two-BPA flexor grouping, the coupled balance shares one common force between both muscles and is solved analogously on $[0, F_{620}]$ (\texttt{MonoPam\_mult.m} lines 556--612).
+with $\delta \equiv 0$ when the uncorrected relative strain already exceeds unity (\texttt{minimizeFlxPin.m} lines 434--441). The vector bracket deflection is then $\boldsymbol{\epsilon}_{br} = \mathbf{K}_{br}^{-1}\left(\norm{\mathbf{f}}\,\hat{\mathbf{u}}\right)$ (line 461), the cable stretch is $\norm{\mathbf{f}}/k_{ten}$ (line 478), and the attachment point, path, moment arm, and torque are recomputed. For the two-BPA flexor grouping, the coupled balance shares one common force between both muscles and is solved analogously on $[0, F_{620}]$ (\texttt{MonoPam\_mult.m} lines 556--612).
 
 \section{Wrapping-Loss Implementation}
 

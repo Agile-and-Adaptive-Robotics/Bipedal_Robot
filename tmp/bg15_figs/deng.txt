@@ -1,0 +1,1093 @@
+                          biomimetics
+                 Article
+                 NeuromechanicalModelofRatHindlimbWalking
+                 withTwo-LayerCPGs‚Ä†
+                 KaiyuDeng1,*,NicholasS.Szczecinski1 ,DirkArnold2,EmanuelAndrada2,
+                 MartinS.Fischer2,RogerD.Quinn1 andAlexanderJ.Hunt3
+                  1   DepartmentofMechanicalandAerospaceEngineering,CaseWesternReserveUniversity,
+                      Cleveland, OH44106,USA;nss36@case.edu(N.S.S.);rdq@case.edu(R.D.Q.)
+                  2   Institute of Zoology and Evolutionary Research, Friedrich-Schiller University Jena, Erbertstr. 1,
+                      07743Jena, Germany;d.arnold@uni-jena.de (D.A.); emanuel.andrada@uni-jena.de (E.A.);
+                      martin.Ô¨Åscher@uni-jena.de (M.S.F.)
+                  3   DepartmentofMechanicalandMaterialsEngineering,PortlandStateUniversity,Portland,OR97207,USA;
+                      ajh26@pdx.edu
+                  *   Correspondence: kxd194@case.edu; Tel.: +01-216-544-0278
+                  ‚Ä†   This article is an extended version of our paper published in Lecture Notes in ArtiÔ¨Åcial Intelligence,
+                      Volume10928,Proceedingsofthe7thInternationalConferenceonBiomimeticandBiohybridSystems,
+                      Living Machines 2018, Paris, France, 17‚Äì20 July 2018; Vouloutsi, V., Halloy, J., Mura, A., Mangan, M.,
+                      Lepora, N., Prescott, T.J., Verschure, P.F.M.J., Eds. Springer Nature: 2018; Paper No. 15, pp. 134‚Äì144.
+                                                                                                           
+                  Received: 12 November2018;Accepted: 19February2019;Published: 1March2019                 
+                  Abstract: This work demonstrates a neuromechanical model of rat hindlimb locomotion undergoing
+                  nominal walking with perturbations. In the animal, two types of responses to perturbations are
+                  observed: resetting and non-resetting deletions. This suggests that the animal locomotor system
+                  containsamemory-likeorganization. Tomodelthisphenomenon,webuiltasyntheticnervoussystem
+                  that uses separate rhythmgeneratorandpatternformationlayerstoactivateantagonisticmusclepairs
+                  abouteachjoint in the sagittal plane. Our model replicates the resetting and non-resetting deletions
+                  observed in the animal. In addition, in the intact (i.e., fully afferented) rat walking simulation,
+                  we observe slower recovery after perturbation, which is different from the deafferented animal
+                  experiment. These results demonstrate that our model is a biologically feasible description of some of
+                  the neural circuits in the mammalian spinal cord that control locomotion, and the difference between
+                  our simulation and Ô¨Åctive motion shows the importance of sensory feedback on motor output.
+                  This modelalsodemonstrateshowthepatternformationnetworkcanactivatemusclesynergiesin
+                  acoordinatedwaytoproducestablewalking,whichmotivatestheuseofmorecomplexsynergies
+                  activating more muscles in the legs for three-dimensional limb motion.
+                  Keywords: synthetic nervous system; rat; rhythm generator; pattern formation; muscle synergies
+                 1. Introduction
+                      Neural circuits in the spinal cord, called central pattern generators (CPGs), generate neural
+                 oscillations and control rhythmic movements. These CPGs are responsible for repetitive motions such
+                 as walking [1,2], swimming [3], and breathing [4]. However, it is still unclear how CPGs contribute to
+                 motoneuronactivationsandmuscleforces. Understandingthisrelationshipwillcontributetomany
+                 Ô¨Åelds, including understanding the effects of disease on locomotor circuits, repair and rehabilitation of
+                 injuries [5], and even controlling robots. There are many parallels between robotic and neurobiological
+                 walkingcontrollers [6]. However, there are still many questions about how neurobiological systems
+                 producedynamicandrobustwalking. Forexample,littleisknownaboutthedetailsofmotoneuron
+                 activity when animals perform steady walking, as it is difÔ¨Åcult to record from individual neurons
+                 Biomimetics 2019, 4, 21; doi:10.3390/biomimetics4010021            www.mdpi.com/journal/biomimetics
+          Biomimetics 2019, 4, 21                              2of19
+          of live, intact animals as they move freely. Computational modeling is a useful tool to test how
+          neural circuits give rise to walking [7]. For this research we built an intact rat walking model to test
+          hypothetical networks that connect CPGs to motoneurons.
+             Previously, we developed a synthetic nervous system (SNS) that applies the neurobiological
+          hypothesisofCPGsasaprimarycomponentofthecontrollerforwalking. Wesuccessfullyshowedthat
+          the reduced pattern generating circuit is sufÔ¨Åcient for performing forward walking in a rat model and
+          a dog robot [8,9]. However, in the CPG model we implemented in that previous network, the rhythm
+          generating oscillators were directly connected to motoneurons. Thus, any excitation of the CPGs
+          altered step cycle timing and motoneuron activation amplitude simultaneously [10]. This makes it
+          difÔ¨Åcult to modify rhythm timing and muscle force independently, as animals frequently do.
+             Recent animal and neural modeling experiments have demonstrated there may be two separate
+          structures in locomotor spinal circuits. Studies of the Ô¨Åctive locomotor activity of decerebrate
+          cats [11‚Äì14] revealed that: (1) afferent stimulation can advance or prolong phase switching within the
+          ongoing step cycle without changing the following step cycle‚Äôs timing, and (2) in instances where
+          motoneuronburstswereabsent,subsequentmotoneuronburstsreappearatthetimetheywouldbe
+          expected, had the deletion not occurred. These so-called ‚Äúnon-resetting deletions‚Äù were also found in
+          motoneuronintracellularrecordingstudiesduringscratchreÔ¨Çexactivityinturtles[15]andmice[16,17].
+          In fact, Zhong et al. [17] revealed that nearly all (over 90%) of the deletions were non-resetting in
+          mice. These two experimental results suggest that the CPG should have an internal structure that can
+          ‚Äústore‚Äù the locomotor cycle rhythm and phase, even when the output of that structure is not directed to
+          the motoneurons.
+             Basedonthesestudies,Rybakandcolleagues[13,14,18‚Äì20]hypothesizedacomputationalmodel
+          of a two-layer CPG containing a half-center rhythm generator performing a ‚Äúclock‚Äù function, and an
+          intermediate pattern formation network that distributes and coordinates motoneuron pool activity.
+          This hypothesized two-layer CPG allows separate control of walking rhythm timing and the activity
+          pattern of motoneurons during locomotion. In this paper, we apply a two-layer CPG neural model
+          for control of a physics-based biomechanical model and test the robustness of this neuromechanical
+          systemtoneuralandmechanicalperturbations.
+             Researchers working in parallel have done some similar work. Markin‚Äôs group developed a
+          neuromechanicalmodelofcatsthatincludesatwo-layerCPGandamusculoskeletalmodelofcathind
+          limbs that generates motion-dependent afferent input to the neural model [20]. However, there are
+          differences in the modeling approach taken that distinguish our model and, in particular, our results
+          fromthoseofMarkin‚Äôswork.
+             The method in which the pattern formation layer activates the multitude of muscles in the
+          limb during walking is still unknown; however, a leading theory involves the use of muscle
+          synergies [12,20‚Äì24]. It is theorized that the central nervous system (CNS) produces a wide range
+          of motor behaviors by co-activating groups of muscles using similar activation patterns in space or
+          time [21,23,25]. There are two types of muscle synergies [24,25]: (1) ‚Äúsynchronous synergies‚Äù, which
+          activate all muscles at the same time with no temporal delay; and (2) ‚Äútime-varying synergies‚Äù, which
+          producepatterns with a temporal proÔ¨Åle of weighting coefÔ¨Åcient for each muscle. The muscle synergy
+          theory works well with the two-layer CPG model as it allows for the modiÔ¨Åcation and modulation of
+          different muscle synergies through the pattern formation layer without affecting the overall timing
+          of the step cycle kept by the rhythm generating structure. For example, in 2012, Markin et. al. [22]
+          identiÔ¨Åed the possible motoneuronal and muscle synergies operating during both Ô¨Åctive and real
+          locomotion. They determined muscle activation patterns in Ô¨Åctive locomotion were consistent with
+          activation patterns seen in real locomotion for single-joint muscles. However, this consistency did
+          not hold for biarticular muscles. Later in 2016, in collaboration with Shevtsova, they constructed a
+          10 degrees of freedom biomechanical model of a cat hindlimb [20]. By implementing the identiÔ¨Åed
+          musclesynergiesinthepatternformationnetworkoftheCPG,andusingthepatternformationnetwork
+          as synergy distributor, they successfully reproduced the patterns of biarticular muscle activities during
+          Biomimetics 2019, 4, 21                                3of19
+           Biomimetics 2019, 4, x FOR PEER REVIEW               3  of  20 
+          Ô¨Åctivelocomotionandvalidatedmusclebehaviorsduringdeletions. Thisresearchsuggeststhatmuscle
+           research suggests that muscle synergy is a viable solution to simplify the control problem in complex 
+          synergyis a viable solution to simplify the control problem in complex situations.
+           situations. 
+             Theresearchdescribedinthispaperappliesthetwo-layerCPGhypothesistoaneuromechanical
+              The research described in this paper applies the two-layer CPG hypothesis to a neuromechanical 
+          modeloftherathindlimbduringlocomotion. Here,weaimtotestwhethertheratmodelsimulation
+           model of the rat hindlimb during locomotion. Here, we aim to test whether the rat model simulation 
+          couldmatchexistingexperimentaldatabyseparatingthecontrolofmotoneurontimingandmagnitude.
+           could  match  existing  experimental  data  by  separating  the  control  of  motoneuron  timing  and 
+          To reach this goal, we expanded our previous model to include a new, leg-level rhythm generator
+           magnitude. To reach this goal, we expanded our previous model to include a new, leg-level rhythm 
+          that helps coordinate the timing of the pattern generating circuits. We demonstrate the success of this
+           generator that helps coordinate the timing of the pattern generating circuits. We demonstrate the 
+          expansioninseveralways. First,wecomparetheneuralbehavioroftheCPGofthedeafferentedneuron
+           success of this expansion in several ways. First, we compare the neural behavior of the CPG of the 
+          modelwiththatofthedecerebratecatÔ¨Åctivelocomotionexperiments. Afterreproducingtheanimal
+           deafferented neuron model with that of the decerebrate cat fictive locomotion experiments. After 
+          behavior with our simpliÔ¨Åed neural circuits, we apply this structure to the intact, neuromechanical rat
+           reproducing the animal behavior with our simplified neural circuits, we apply this structure to the 
+          model,andmeasuretheimpactofsensoryfeedbackinthesimulation. Inordertoexaminewhether
+           intact, neuromechanical rat model, and measure the impact of sensory feedback in the simulation. In 
+          musclesynergies could reduce the complexity of the circuit design, two pattern formation groups are
+           order to examine whether muscle synergies could reduce the complexity of the circuit design, two 
+          usedtoactivatethesixmusclesinthehindlimb,oneactivatinghipmuscleswhiletheotherco-activates
+           pattern formation groups are used to activate the six muscles in the hindlimb, one activating hip 
+          kneeandanklemuscles. Ourresultsshowthatthetwo-layerCPGsuccessfullyreplicatesnon-resetting
+           muscles while the other co-activates knee and ankle muscles. Our results show that the two-layer 
+          deletions and produces stable walking with a simple muscle synergy. This two-layer CPG model of
+           CPG successfully replicates non-resetting deletions and produces stable walking with a simple 
+          locomotion demonstrates complex interdependencies of mechanics, sensory feedback, and rhythm
+           muscle synergy. This two-layer CPG model of locomotion demonstrates complex interdependencies 
+           of  mechanics,  sensory  feedback,  and  rhythm  generation  during  phase  resetting  and  non-phase 
+          generation during phase resetting and non-phase resetting deletions of locomotor rhythms.
+           resetting deletions of locomotor rhythms. 
+          2. Methods
+           2. Methods 
+             OurpreviousSNSforrathindlimblocomotionusedisolatedsubnetworkstocontrolindividual
+          limb joints [8]. It successfully reproduced sagittal plane forward walking, using proprioceptive
+              Our previous SNS for rat hindlimb locomotion used isolated subnetworks to control individual 
+          feedback(typeIa, Ib, and II) to coordinate step timing. Those isolated subnetworks (Figure 1A) are
+           limb joints [8].  It  successfully  reproduced  sagittal  plane forward  walking, using  proprioceptive 
+          composedofahalf-centeroscillator, motoneurons and interneurons. The cyan box is the half-center
+           feedback (type Ia, Ib, and II) to coordinate step timing. Those isolated subnetworks (Figure 1A) are 
+           composed of a half-center oscillator, motoneurons and interneurons. The cyan box is the half-center 
+          oscillator. The half-center neurons possess persistent sodium channels and mutually inhibit each other
+           oscillator. The half-center neurons possess persistent sodium channels and mutually inhibit each 
+          via interneurons. The half-center oscillator can generate repetitive oscillations without external inputs
+           other via interneurons. The half-center oscillator can generate repetitive oscillations without external 
+          to maintain the switches between extension and Ô¨Çexion. The green area includes all the proprioceptive
+           inputs to maintain the switches between extension and flexion. The green area includes all the 
+          feedback, which play an important role during rat walking. Feedback from the entire limb is applied
+           proprioceptive feedback, which play an important role during rat walking. Feedback from the entire 
+          directly to the CPG of each joint in the form of hip Ô¨Çexor Ia and II, hip extensor II, and ankle extensor Ib
+           limb is applied directly to the CPG of each joint in the form of hip flexor Ia and II, hip extensor II, and 
+          feedback to coordinate stance‚Äìswing timing [9]. Extensor and Ô¨Çexor Ia and Ib feedback from each joint
+           ankle extensor Ib feedback to coordinate stance‚Äìswing timing [9]. Extensor and flexor Ia and Ib 
+          feed directly back onto the joint control through Ia interneurons or directly onto the motoneuron to
+           feedback from each joint feed directly back onto the joint control through Ia interneurons or directly 
+          mediatemusclevelocityandforceproduction. Details about feedback and swing‚Äìstance relationship
+           onto the motoneuron to mediate muscle velocity and force production. Details about feedback and 
+          are derived from a variety of experiments and are outlined in Hunt et al. [26]. For this study, we are
+           swing‚Äìstance relationship are derived from a variety of experiments and are outlined in Hunt et al. 
+          extendingthepreviousworkbylayeringonadditionalneuralcircuitrywhilemaintainingtheprevious
+           [26]. For this study, we are extending the previous work by layering on additional neural circuitry 
+          feedback pathwaysthatmediatethecoordinationbetweenjoints.
+           while maintaining the previous feedback pathways that mediate the coordination between joints. 
+                                                                    
+             Figure 1. (A) Single limb joint control network. (B) Neuron activities of half-center neurons and
+              Figure 1. (A) Single limb joint control network. (B) Neuron activities of half-center neurons and 
+             motoneurons without feedback. Excitatory stimulus with a current of 2 nA applied to an extensor
+              motoneurons without feedback. Excitatory stimulus with a current of 2 nA applied to an extensor 
+             half-center neuron from 2 to 2.1 s (blue area). EXT: Extensor; FLX: Flexor; HC: Half-center neuron; IN:
+              half-center neuron from 2 to 2.1 s (blue area). EXT: Extensor; FLX: Flexor; HC: Half-center neuron; IN: 
+             Interneuron; MN: Motoneuron; RE: Renshaw cell.
+              Interneuron; MN: Motoneuron; RE: Renshaw cell. 
+            
+                                     Biomimetics 2019, 4, 21                                                                                                                                                                                    4of19
+                                       Biomimetics 2019, 4, x FOR PEER REVIEW                                                                                                                                                                    4  of  20 
+                                                  In  the  previous,  single  layer  model,  the  CPG  synapsed directly  onto  the  motoneurons. As 
+                                                In the previous, single layer model, the CPG synapsed directly onto the motoneurons. As sensory
+                                       sensory feedback shapes CPG behavior and period, this structure is sufficient to produce steady 
+                                      feedback shapes CPGbehaviorandperiod,thisstructureissufÔ¨Åcienttoproducesteadycoordinated
+                                       coordinated walking. However, any perturbation to the CPG system results in simultaneous changes 
+                                     walking. However, any perturbation to the CPG system results in simultaneous changes both in
+                                       both  in  step  timing  and  muscle  force  magnitude,  which  does  not  allow  for  controlling  force 
+                                      step timing and muscle force magnitude, which does not allow for controlling force generation and
+                                       generation and rhythm separately. To demonstrate this, we applied an excitatory stimulus to an 
+                                      rhythmseparately. To demonstratethis, we applied an excitatory stimulus to an extensor neuron of the
+                                       extensor neuron of the half-center to simulate a sudden perturbation (Figure 1B). To eliminate other 
+                                      half-center to simulate a sudden perturbation (Figure 1B). To eliminate other inÔ¨Çuences, we removed
+                                       influences, we removed all sensory feedback from the network, the only variable is the excitatory 
+                                      all sensory feedback from the network, the only variable is the excitatory stimulus. The motoneuron
+                                       stimulus. The motoneuron successfully generates more muscle force to balance this influence, but the 
+                                      successfully generates more muscle force to balance this inÔ¨Çuence, but the step timing generated
+                                       step timing generated by the CPG is also shifted, which could not replicate the non-resetting deletion 
+                                      by the CPG is also shifted, which could not replicate the non-resetting deletion phenomena. Also,
+                                       phenomena. Also, as our model implemented separate limb joint controllers, the communication 
+                                      as our model implemented separate limb joint controllers, the communication between left and right
+                                       between left and right hindlimbs becomes complex, and these perturbations lead to an unintended 
+                                      hindlimbsbecomescomplex,andtheseperturbationsleadtoanunintendedchangeingait.
+                                       change in gait. 
+                                                                                                                                                                                                                                                              
+                                                Figure 2. (A) Hypothetical synthetic nervous system for a single limb. (B) Limb joint control network
+                                                  Figure 2. (A) Hypothetical synthetic nervous system for a single limb. (B) Limb joint control network 
+                                                that forms active pattern of motoneurons. Coordinating pathways are inhibitory (Ô¨Ålled circles)
+                                                  that forms active pattern of motoneurons. Coordinating pathways are inhibitory (filled circles) or 
+                                                or excitatory (Ô¨Ålled triangles). Pathways inspired by biological research are indicated by colored
+                                                  excitatory  (filled  triangles).  Pathways  inspired  by  biological  research  are  indicated  by  colored 
+                                                synapses of magenta, blue, and brown [26]. Hypothesized pathways are in black. MLR: Midbrain
+                                                  synapses of magenta, blue, and brown [26]. Hypothesized pathways are in black. MLR: Midbrain 
+                                                locomotorregion.
+                                                  locomotor region. 
+                                      2.1. Model Description
+                                       2.1. Model Description 
+                                                Theconceptualneuralcircuit for a single limb (Figure 2A) builds on our previous models [8,9].
+                                                  The conceptual neural circuit for a single limb (Figure 2A) builds on our previous models [8,9]. 
+                                      Eachjointhasanindependentcontrolnetwork(Figures1Aand2B)thatmanagesthepatternactivityof
+                                       Each joint has an independent control network (Figures 1A and 2B) that manages the pattern activity 
+                                      motoneurons. Thatistheextentofourpreviouswork. Inthisnewmodel,thehalf-centeroscillatorsact
+                                       of motoneurons. That is the extent of our previous work. In this new model, the half-center oscillators 
+                                      as pattern formation layers, which are only responsible for reshaping the timing signals and managing
+                                       act as pattern formation layers, which are only responsible for reshaping the timing signals and 
+                                      motoneuron activation. We have added a rhythm generator network as a four-neuron half-center
+                                       managing motoneuron activation. We have added a rhythm generator network as a four-neuron half-
+                                      oscillator to generate swing‚Äìstance rhythm. This network synapses onto every pattern formation layer
+                                       center  oscillator  to  generate  swing‚Äìstance  rhythm.  This  network  synapses  onto  every  pattern 
+                                      in the limb, helping to regulate timing. In our model, we use relatively few non-spiking neurons to
+                                       formation layer in the limb, helping to regulate timing. In our model, we use relatively few non-
+                                      represent populations of spiking neurons. The network consists of leaky-integrator neuron models.
+                                       spiking  neurons  to  represent  populations  of  spiking  neurons.  The  network  consists  of  leaky-
+                                     Thedynamicsofwhicharedescribedbythedifferentialequations[27]:
+                                       integrator neuron models. The dynamics of which are described by the differential equations [27]: 
+                                                                                 dV Ì±ëÌ†µÌ±âÌ†µ                                                                            
+                                                                             C           =G(E ‚àíV)+                                    G           E        ‚àíV +G (E ‚àíV)¬∑m¬∑h
+                                                                                                       rest                    ‚àë syn syn                                        Na        Na
+                                                                                  dt                      (                    )                                                           (                 )
+                                                                                       Ì∞∂Ì†µ         =Ì∞∫Ì†µ Ì∞∏Ì†µ               ‚àíÌ±âÌ†µ +‚àëÌ∞∫Ì†µ (Ì∞∏Ì†µ                                ‚àíÌ±âÌ†µ)+Ì∞∫Ì†µ                   Ì∞∏Ì†µ       ‚àíÌ±âÌ†µ ‚àô Ì±öÌ†µ‚àô ‚Ñé 
+                                                                                                               Ì±üÌ†µÌ±íÌ†µÌ±†Ì†µÌ±°Ì†µ                          Ì±†Ì†µÌ±¶Ì†µÌ±õÌ†µ     Ì±†Ì†µÌ±¶Ì†µÌ±õÌ†µ                    Ì±ÅÌ†µÌ±éÌ†µ      Ì±ÅÌ†µÌ±éÌ†µ
+                                                                                           Ì±ëÌ†µÌ±°Ì†µ
+                                                                                                                 dm            m‚àû‚àím dh                            h‚àû‚àíh
+                                                                                                                           Ì±ëÌ†µÌ±öÌ†µ          Ì±öÌ†µ‚àû ‚àíÌ±öÌ†µ                Ì±ëÌ†µ‚Ñé         ‚Ñé‚àû‚àí‚Ñé
+                                                                                                                         =                       ,          =
+                                                                                                                                    =                     ,            =                   
+                                                                                                                  dt                 œÑ               dt                œÑ
+                                                                                                                            Ì±ëÌ†µÌ±°Ì†µ       m ÌºèÌ†µ                     Ì±ëÌ†µÌ±°Ì†µ     h       ÌºèÌ†µ
+                                                                                                                                                 Ì±öÌ†µ                                ‚Ñé
+                                                                                                               z      =                               1        1
+                                                                                                                  ‚àû        Ì±ßÌ†µ     =                                                         
+                                                                                                                             ‚àû
+                                                                                                                            1+A ¬∑exp(S (V‚àíE ))
+                                                                                                                                         z               z             ( z             )
+                                                                                                                                       1+Ì∞¥Ì†µ ‚àôexp (Ì±ÜÌ†µ   Ì±âÌ†µ ‚àí Ì∞∏Ì†µ )
+                                                                                                                  Ô£±                                Ì±ßÌ†µ               Ì±ßÌ†µ               Ì±ßÌ†µ
+                                                                                                                                                           0, Ì±ñÌ†µÌ±ìÌ†µ  Ì±âÌ†µ           <Ì∞∏Ì†µ
+                                                                                                                  Ô£¥                       0, if V              <E Ì±ùÌ†µÌ±üÌ†µÌ±íÌ†µ                Ì±ôÌ†µÌ±úÌ†µ
+                                                                                                                  Ô£≤                                     pre            lo
+                                                                                                                                 V ‚àíE
+                                                                                                                                    pre     Ì±âÌ†µ      ‚àíÌ∞∏Ì†µ
+                                                                                                                                             lo
+                                                                                                  G         =                                 Ì±ùÌ†µÌ±üÌ†µÌ±íÌ†µ    Ì±ôÌ†µÌ±úÌ†µ                                  ,
+                                                                                                     syn                 g                      , i f E          <V <E
+                                                                                                                           syn                                           pre
+                                                                                                                                   Ì±îÌ†µ                       , Ì±ñÌ†µÌ±ìÌ†µ  Ì∞∏Ì†µ      <Ì±âÌ†µ           <Ì∞∏Ì†µ
+                                                                                                               Ì∞∫Ì†µ        = {                                lo                          hi           , 
+                                                                                                                                  E ‚àíE
+                                                                                                                  Ì±†Ì†µÌ±¶Ì†µÌ±õÌ†µ             Ì±†Ì†µÌ±¶Ì†µÌ±õÌ†µ                            Ì±ôÌ†µÌ±úÌ†µ        Ì±ùÌ†µÌ±üÌ†µÌ±íÌ†µ         ‚ÑéÌ±ñÌ†µ
+                                                                                                                  Ô£¥                  hi      lo
+                                                                                                                                             Ì∞∏Ì†µ    ‚àíÌ∞∏Ì†µ
+                                                                                                                  Ô£≥                            ‚ÑéÌ±ñÌ†µ     Ì±ôÌ†µÌ±úÌ†µ
+                                                                                                                                       g       , i f E         <V
+                                                                                                                                         syn               hi           pre
+                                                                                                                                                      Ì±îÌ†µ       , Ì±ñÌ†µÌ±ìÌ†µ  Ì∞∏Ì†µ      <Ì±âÌ†µ
+                                                                                                                                                         Ì±†Ì†µyn             ‚ÑéÌ±ñÌ†µ         Ì±ùÌ†µÌ±üÌ†µÌ±íÌ†µ
+                                        
+                                     Biomimetics 2019, 4, 21                                                                                                                                                                                    5of19
+                                      Biomimetics 2019, 4, x FOR PEER REVIEW                                                                                                                                                                   5  of  20 
+                                     where V is the membrane voltage of the neuron, C is the membrane capacitance, E                                                                                                                           is the
+                                                                                                                                                                                                                                       rest
+                                      where Ì±âÌ†µ is the membrane voltage of the neuron, Ì∞∂Ì†µ is the membrane capacitance, Ì∞∏Ì†µ                                                                                                         is the resting 
+                                                                                                                                                                                                                        Ì±üÌ†µÌ±íÌ†µÌ±†Ì†µÌ±°Ì†µ
+                                      resting potential of the neuron, t is the time variable, and E stands for a constant reference voltage
+                                                                                                                                                                                            
+                                      potential of the neuron, Ì±°Ì†µ is the time variable, and E stands for a constant reference voltage (i.e., 
+                                     (i.e., reversal potential). G(E                                     ‚àíV)istheleakcurrent, G                                           E         ‚àíV arecurrentsduetosynaptic
+                                                                                                  rest                                                            syn        syn
+                                                                                      (                    )
+                                      reversal potential).    Ì∞∫Ì†µ Ì∞∏Ì†µ                                ‚àíÌ±âÌ†µ  is the leak current,  Ì∞∫Ì†µ                                     (Ì∞∏Ì†µ         ‚àíÌ±âÌ†µ) are currents due to synaptic 
+                                                                                           Ì±üÌ†µÌ±íÌ†µÌ±†Ì†µÌ±°Ì†µ                                                           Ì±†Ì†µÌ±¶Ì†µÌ±õÌ†µ      Ì±†Ì†µÌ±¶Ì†µÌ±õÌ†µ
+                                      connections, and GNa(ENa ‚àíV) is a persistent sodium current present in rhythm generating neurons
+                                                                                    (                 )
+                                      connections, and Ì∞∫Ì†µ                             Ì∞∏Ì†µ      ‚àíÌ±âÌ†µ  is a persistent sodium current present in rhythm generating neurons 
+                                                                               Ì±ÅÌ†µÌ±éÌ†µ     Ì±ÅÌ†µÌ±éÌ†µ
+                                     with voltage-dependent channel activation and inactivation described by m and h, respectively.
+                                      with voltage-dependent channel activation and inactivation described by Ì±öÌ†µ and ‚Ñé, respectively. Ì±ßÌ†µ 
+                                      z Represents either m or h, and time constant (œÑ), factor (A), slope (S) and reversal potential (E)
+                                      Represents either Ì±öÌ†µ or ‚Ñé, and time constant (ÌºèÌ†µ), factor (A), slope (S) and reversal potential (E) are 
+                                      are constant parameters, speciÔ¨Åc to m or h. For interneurons, these parameters are set to 0, and there
+                                      constant parameters, specific to Ì±öÌ†µ or ‚Ñé. For interneurons, these parameters are set to 0, and there 
+                                      are no dynamic sodium currents. The parameters gsyn, E , and E                                                                                      are constants representing the
+                                                                                                                                                                  lo                 hi
+                                      are no dynamic sodium currents. The parameters Ì±îÌ†µ                                                                    ,  Ì∞∏Ì†µ     , and Ì∞∏Ì†µ  are constants representing the 
+                                                                                                                                                     Ì±†Ì†µÌ±¶Ì†µÌ±õÌ†µ      Ì±ôÌ†µÌ±úÌ†µ                ‚ÑéÌ±ñÌ†µ
+                                      synapse‚Äôs maximumsynapticconductance,itslowerthreshold,anditsupperthreshold,respectively.
+                                      synapse's maximum synaptic conductance, its lower threshold, and its upper threshold, respectively. 
+                                      V hereisthepresynapticneuronvoltage. Detailsofneuronalandsynapticparametercanbefound
+                                      Ì±âÌ†µpre  here is the presynaptic neuron voltage. Details of neuronal and synaptic parameter can be found 
+                                        Ì±ùÌ†µÌ±üÌ†µÌ±íÌ†µ
+                                      in AppendixA(TablesA1andA2).
+                                      in Appendix A (Tables A1 and A2). 
+                                                All the modeling and simulation was performed in Animatlab [28]. The biomechanical model
+                                                All the modeling and simulation was performed in Animatlab [28]. The biomechanical model 
+                                      reconstruction is limited to motion in the sagittal plane for the rat hindlimbs, resulting in six actuated
+                                      reconstruction is limited to motion in the sagittal plane for the rat hindlimbs, resulting in six actuated 
+                                      degrees of freedom, three for each hindlimb (hip, knee, and ankle), and three unactuated degrees of
+                                      degrees of freedom, three for each hindlimb (hip, knee, and ankle), and three unactuated degrees of 
+                                      freedom(theforwardandverticaltranslation, and pitch angle of the pelvis). To improve simulation
+                                      freedom (the forward and vertical translation, and pitch angle of the pelvis). To improve simulation 
+                                      and calculation speed, the biomechanical model was simpliÔ¨Åed by reducing the complexity of
+                                      and calculation  speed,  the  biomechanical  model  was  simplified  by  reducing  the  complexity  of 
+                                      segmentshapes(Figure3). Instead of loading rat bone Ô¨Åles scanned from X-ray images as previously
+                                      segment shapes (Figure 3). Instead of loading rat bone files scanned from X-ray images as previously 
+                                      described [8,26], the pelvis (red), femur (green), tibia (yellow), and foot (purple) were constructed
+                                      described [8,26], the pelvis (red), femur (green), tibia (yellow), and foot (purple) were constructed 
+                                     withsimpleboxmodels. Thisresultedinthesimulationrunningfourtimesfaster. Thelength,weight,
+                                      with simple box models. This resulted in the simulation running four times faster. The length, weight, 
+                                      and density of the bones, and the insertion points and properties of muscle are the same as in our
+                                      and density of the bones, and the insertion points and properties of muscle are the same as in our 
+                                     previous biomechanical model. Similar to our previous work [8], two bars, one in front and one in
+                                      previous biomechanical model. Similar to our previous work [8], two bars, one in front and one in 
+                                      back, support the body during simulated walking experiments.
+                                      back, support the body during simulated walking experiments. 
+                                                                                                                                                                                                                                         
+                                                Figure3. Biomechanicalmodelofarathindlimb. Motionisconstrainedinthesagittalplanewithhinge
+                                                Figure 3. Biomechanical model of a rat hindlimb. Motion is constrained in the sagittal plane with 
+                                                joints. The two bars on the ground support the body.
+                                                hinge joints. The two bars on the ground support the body. 
+                                                Thenewneuralnetworkiscomposedofathree-levelhierarchy(Figure 4A). The top layer is the
+                                                The new neural network is composed of a three-level hierarchy (Figure 4A). The top layer is the 
+                                      rhythmgeneratorlayer(Figure4B),whichislocatedinthespinalcordinvertebrates. Wemodeledour
+                                      rhythm generator layer (Figure 4B), which is located in the spinal cord in vertebrates. We modeled 
+                                      rhythmgeneratorsimilartotheonereportedbyZhangetal.[29],withtwointeractingneuronscoupled
+                                      our rhythm generator similar to the one reported by Zhang et al. [29], with two interacting neurons 
+                                      bymutualexcitation(weakconnection)andinhibition(viainhibitory interneurons). The endogenous
+                                      coupled by mutual excitation (weak connection) and inhibition (via inhibitory interneurons). The 
+                                      rhythmogenic properties of rhythm generator neurons are generated using persistent sodium
+                                      endogenous rhythmogenic properties of rhythm generator neurons are generated using persistent 
+                                      channels [13]. The rhythm generator deÔ¨Ånes the rhythm of locomotion and the general timing of the
+                                      sodium channels [13]. The rhythm generator defines the rhythm of locomotion and the general timing 
+                                      extensor and Ô¨Çexor phases. The second layer is the pattern formation network (Figure 4C) located
+                                      of the extensor and flexor phases. The second layer is the pattern formation network (Figure 4C) 
+                                      in the lower thoracic and lumbar segments of the spinal cord. The knee and ankle share one pattern
+                                      located in the lower thoracic and lumbar segments of the spinal cord. The knee and ankle share one 
+                                      formation network. The last layer is the motoneuron layer (Figure 4D); this layer mediates the
+                                      pattern formation network. The last layer is the motoneuron layer (Figure 4D); this layer mediates 
+                                      magnitudeofmotoneuronactivation with feedback, it is connected to muscles and responsible for
+                                      the magnitude of motoneuron activation with feedback, it is connected to muscles and responsible 
+                                      generating muscle force.
+                                      for generating muscle force.  
+                                                 
+                                       
+                    Biomimetics 2019, 4, 21                                                                                   6of19
+                    Biomimetics 2019, 4, x FOR PEER REVIEW                                                                   6  of  20 
+                                                                                                                                     
+                         Figure4. Syntheticnervoussystem. (A)Singlelimbcontrolhierarchy. (B)Rhythmgeneratorconfiguration.
+                         Figure  4.  Synthetic  nervous  system.  (A)  Single  limb  control  hierarchy.  (B)  Rhythm  generator 
+                         (C) Pattern formation network. (D) Sensory-motor network. AD: Adaptor; EXT: Extensor; FLX: Flexor; IN:
+                         configuration.  (C)  Pattern  formation  network.  (D)  Sensory-motor  network.  AD:  Adaptor;  EXT: 
+                         Interneuron; PF: Pattern formation; RE: Renshaw cell; RG: Rhythm generation.
+                         Extensor;  FLX:  Flexor;  IN:  Interneuron;  PF:  Pattern  formation;  RE:  Renshaw  cell;  RG:  Rhythm 
+                         generation. 
+                         Thepatternformationlayerreshapestheswing‚Äìstancetimingsignalsreceivedfromtherhythm
+                    generator. According to Rybak‚Äôs model [13,14,18,19], the pattern formation layer distributes the
+                         The pattern formation layer reshapes the swing‚Äìstance timing signals received from the rhythm 
+                    information to synergistic motoneuron pools. The implementation of muscle synergies in decerebrate
+                    generator. According to Rybak‚Äôs model [13,14,18,19], the pattern formation layer distributes the 
+                    cat models [20,22] motivated us to apply such muscle synergy into our simulation model. In our
+                    information to synergistic motoneuron pools. The implementation of muscle synergies in decerebrate 
+                    previous work, activation of the knee and ankle muscles was found to be in tandem [8]. Therefore,
+                    cat models [20,22] motivated us to apply such muscle synergy into our simulation model. In our 
+                    weimplementedaknee‚ÄìanklesynergywhichcoordinatesextensorandÔ¨Çexormusclesinthesetwo
+                    previous work, activation of the knee and ankle muscles was found to be in tandem [8]. Therefore, 
+                    joints, and so they share a pattern formation network.
+                    we implemented a knee‚Äìankle synergy which coordinates extensor and flexor muscles in these two 
+                    2.2. Model Validation
+                    joints, and so they share a pattern formation network. 
+                         Before implementing the two-layer CPG structure into the full neuromechanical rat model, it was
+                    2.2.  Model Validation 
+                    Ô¨Årst tested in isolation to see if the deafferented model could reproduce results from the decerebrate
+                         Before implementing the two-layer CPG structure into the full neuromechanical rat model, it 
+                    cat [12] and mouse [17]. In these experiments, the rhythm generator is connected to the pattern
+                    was first  tested  in  isolation  to  see  if  the  deafferented  model  could  reproduce  results  from  the 
+                    formation network, which is, in turn, connected to a single pair of Ô¨Çexor and extensor motoneurons.
+                    decerebrate cat [12] and mouse [17]. In these experiments, the rhythm generator is connected to the 
+                    Thewholenetworkisisolatedwithnosensoryfeedback.
+                    pattern formation network, which is, in turn, connected to a single pair of flexor and extensor 
+                         In the Ô¨Årst test, the rhythm generator undergoes external stimulation. The stimulus is applied to
+                    motoneurons. The whole network is isolated with no sensory feedback. 
+                    bothextensorandÔ¨Çexorneuronsoftherhythmgeneratortosimulateadescendingcommandfrom
+                         In the first test, the rhythm generator undergoes external stimulation. The stimulus is applied to 
+                    the midbrain locomotor region (MLR). The same current is applied to both the extensor neuron and
+                    both extensor and flexor neurons of the rhythm generator to simulate a descending command from 
+                    Ô¨Çexor neuron, so the extensor and Ô¨Çexor period are identical. The second set of tests examines the
+                    the midbrain locomotor region (MLR). The same current is applied to both the extensor neuron and 
+                    inÔ¨Çuenceofexternalcurrentsonthepatternformationlayer. Forthistestweappliedtwostimulitothe
+                    flexor neuron, so the extensor and flexor period are identical. The second set of tests examines the 
+                    model,onestimulusisshorterthanonestepcycleandtheotherislongerthanonestepcycle. Thistest
+                    influence of external currents on the pattern formation layer. For this test we applied two stimuli to 
+                    investigates how the two-layer CPG reacts to external currents and if it reproduces the Ô¨Åndings on the
+                    the model, one stimulus is shorter than one step cycle and the other is longer than one step cycle. This 
+                    decerebrate cat that we mentioned in the Introduction section.
+                    test investigates how the two-layer CPG reacts to external currents and if it reproduces the findings 
+                         Theresult of external stimulus to the rhythm generators demonstrates that rhythmic periods can
+                    on the decerebrate cat that we mentioned in the Introduction section. 
+                    be modulated with minimal inÔ¨Çuence on the motoneuron activation amplitudes. When a positive
+                    electrical current is applied to both rhythm generator neurons (orange area in Figure 5), the period
+                    of one stride is shortened from 0.5 to 0.35 s. After the excitatory stimulus is removed, the period
+                    immediately returns to 0.5 s. When negative electrical current is applied to both rhythm generator
+                    neurons(blueareainFigure6),thecycleperiodisprolongedto0.65sperperiod. Thecycleperiodis
+                    calculatedusingMATLAB(MATLAB2017b,TheMathWorks,Inc.,Natick,MA,USA).Eachnewperiod
+                    begins whentheextensorpatternformationneuronvoltage,V                     , crosses a threshold (i.e., V      =
+                                   dV                                                    PFext                              PFext
+                    ‚àí60mVand PFext >0).
+                                     dt
+                     
+                  Biomimetics 2019, 4, 21                                                                       7of19
+                   Biomimetics 2019, 4, x FOR PEER REVIEW                                                      7  of  20 
+                                                                                                                      
+                       Figure 5. Rhythm generator performance under different conditions. Excitatory stimulus applied from
+                        Figure 5. Rhythm generator performance under different conditions. Excitatory stimulus applied 
+                      1.5 to 2.5 s (orange area) with a current of 2 nA. Inhibitory stimulus applied from 3.5 to 4.5 s (blue
+                        from 1.5 to 2.5 s (orange area) with a current of 2 nA. Inhibitory stimulus applied from 3.5 to 4.5 s 
+                       area) with a current of ‚àí2 nA. Both stimuli applied to extensor and Ô¨Çexor rhythm generator neurons
+                        (blue area) with a current of ‚àí2 nA. Both stimuli applied to extensor and flexor rhythm generator 
+                       simulate descending signals from the midbrain locomotor region. The simulation startup transient,
+                        neurons simulate descending signals from the midbrain locomotor region.  The simulation startup 
+                       corresponding to the Ô¨Årst 0.5 s is not shown. EXT: Extensor; FLX: Flexor; MN: Motoneuron; PF: Pattern
+                        transient, corresponding to the first 0.5 s is not shown. EXT: Extensor; FLX: Flexor; MN: Motoneuron; 
+                       formation; RG: Rhythm generation.
+                        PF: Pattern formation; RG: Rhythm generation. 
+                       TheresultsoftheinÔ¨ÇuenceofexternalcurrentsonthepatternformationlayerisshowninFigure6.
+                        The result of external stimulus to the rhythm generators demonstrates that rhythmic periods can 
+                  In the Ô¨Årst stimulus, a positive current of duration of 0.1 s (blue area in Figure 6) is applied to the
+                   be modulated with minimal influence on the motoneuron activation amplitudes. When a positive 
+                  extensorneuronofthepatternformationlayer,whichisshorterthanthedurationoftheextensorperiod.
+                   electrical current is applied to both rhythm generator neurons (orange area in Figure 5), the period 
+                  This result meets the Ô¨Årst observation from the cat Ô¨Åctive locomotion: the inÔ¨Çuence is limited to within
+                   of one stride is shortened from 0.5 to 0.35 s. After the excitatory stimulus is removed, the period 
+                  the ongoing step period, and does not affect the timing of the following step. The second stimulus
+                   immediately returns to 0.5 s. When negative electrical current is applied to both rhythm generator 
+                  is a positive current applied to the extensor neuron of the pattern formation layer for a length of 1 s,
+                   neurons (blue area in Figure 6), the cycle period is prolonged to 0.65 s per period. The cycle period is 
+                  whichislongerthanoneperiodduration(orangeareainFigure6). Whenthedurationofstimulusis
+                   calculated using MATLAB (MATLAB 2017b, The MathWorks, Inc., Natick, MA, USA). Each new 
+                  less than one step period, the extensor period is shortened and the Ô¨Çexor period is prolonged after
+                   period begins when the extensor pattern formation neuron voltage, Ì±âÌ†µ     , crosses a threshold (i.e., 
+                                                                                       Ì±ÉÌ†µÌ∞πÌ†µÌ±íÌ†µÌ±•Ì†µÌ±°Ì†µ
+                                         Ì±ëÌ†µÌ±âÌ†µ
+                                           Ì±ÉÌ†µÌ∞πÌ†µÌ±íÌ†µÌ±•Ì†µÌ±°Ì†µ
+                  the stimulus ends. When the duration of the stimulus is longer than one step period, the rhythmic
+                   Ì±âÌ†µ    =‚àí60 Ì±öÌ†µÌ±âÌ†µ and         >0).  
+                    Ì±ÉÌ†µÌ∞πÌ†µÌ±íÌ†µÌ±•Ì†µÌ±°Ì†µ             Ì±ëÌ†µÌ±°Ì†µ
+                  bursting of motoneurons disappears during the stimulus, but reappears on the expected next step
+                    
+           Biomimetics 2019, 4, x FOR PEER REVIEW               8  of  20 
+              The results of the influence of external currents on the pattern formation layer is shown in Figure 
+           6. In the first stimulus, a positive current of duration of 0.1 s (blue area in Figure 6) is applied to the 
+           extensor neuron of the pattern formation layer, which is shorter than the duration of the extensor 
+           period. This result meets the first observation from the cat fictive locomotion: the influence is limited 
+           to within the ongoing step period, and does not affect the timing of the following step. The second 
+           stimulus is a positive current applied to the extensor neuron of the pattern formation layer for a 
+           length of 1 s, which is longer than one period duration (orange area in Figure 6). When the duration 
+           of stimulus is less than one step period, the extensor period is shortened and the flexor period is 
+          Biomimetics 2019, 4, 21                                8of19
+           prolonged after the stimulus ends. When the duration of the stimulus is longer than one step period, 
+           the rhythmic bursting of motoneurons disappears during the stimulus, but reappears on the expected 
+           next step timing without causing a phase shift. These results demonstrate that the two-layer CPG 
+          timing without causing a phase shift. These results demonstrate that the two-layer CPG structure can
+           structure can reproduce the observations from fictive locomotion of decerebrate cats [13,14] and 
+          reproducetheobservationsfromÔ¨Åctivelocomotionofdecerebratecats[13,14]andisolatedmice[17].
+           isolated mice [17]. 
+                                                                    
+             Figure 6. ‚ÄúMemory‚Äù function of a two-layer CPG. The Ô¨Årst stimulus applied to extensor pattern
+              Figure 6. ‚ÄúMemory‚Äù function of a two-layer CPG. The first stimulus applied to extensor pattern 
+             formation neuron from 1 to 1.1 s (blue area) with a current of 2 nA and duration of 0.1 s is shorter than
+              formation neuron from 1 to 1.1 s (blue area) with a current of 2 nA and duration of 0.1 s is shorter 
+             oneswing‚Äìstanceperiod. Thesecondstimulusisappliedfrom2.5to3.5s(orangearea)withacurrent
+              than one swing‚Äìstance period. The second stimulus is applied from 2.5 to 3.5 s (orange area) with a 
+             of 2 nA and duration of 1 s is longer than one swing‚Äìstance period. The simulation startup transients
+              current of 2 nA and duration of 1 s is longer than one swing‚Äìstance period. The simulation startup 
+             are not shown for the Ô¨Årst 0.5 s. MN: Motoneuron; PF: Pattern formation; RG: Rhythm generation.
+              transients are not shown for the first 0.5 s. MN: Motoneuron; PF: Pattern formation; RG: Rhythm 
+              generation. 
+             Fortheintact rat hindlimb walking simulations shown in Figures 5 and 6, as there is no neural
+          connectivity between the left and right hindlimb to initiate alternating gait walking, a tonic current
+              For the intact rat hindlimb walking simulations shown in Figures 5 and 6, as there is no neural 
+          of 2 nA with duration of 0.5 s was injected in the extensor neuron of the left rhythm generator at the
+           connectivity between the left and right hindlimb to initiate alternating gait walking, a tonic current 
+          start of the simulation. The Ô¨Årst 0.5 s, referred to as the simulation startup transient, are not shown in
+           of 2 nA with duration of 0.5 s was injected in the extensor neuron of the left rhythm generator at the 
+          these Ô¨Ågures.
+           start of the simulation. The first 0.5 s, referred to as the simulation startup transient, are not shown in 
+           these figures. 
+          2.3. Animal Experimental Procedure
+             Wealsoperformedanimalexperimentstocollectratmotiondata. Thepreparationsarefemale
+           2.3.  Animal Experimental Procedure 
+          RattusnorvegicusHanWistarratsandallratswereatleast6monthsold. Animalcarewasinaccordance
+              We also performed animal experiments to collect rat motion data. The preparations are female 
+          with German animal welfare regulations, and experimental procedures were registered with the
+           Rattus norvegicus Han Wistar rats and all rats were at least 6 months old. Animal care was in 
+          Thuringian Committee for Animal Research (JSHK-2684-05-04/12-1). We have chosen rats as the
+           accordance with German animal welfare regulations, and experimental procedures were registered 
+          experimentalsubjectbecausetheirsizemakesthemexcellentforstudyingfullbodykinematicsinfront
+          of our three-dimensional X-ray acquisition system. Moreover, they are easy to handle and train, and
+            
+          are robust against infections and heal quickly after experimental procedures.
+             ThemotiondatawascollectedthroughX-rayvideographyofratwalkingontreadmills(Figure7).
+          TheX-raydevice(Neurostar,Siemens,Erlangen,Germany,)recordsatfrequenciesupto2000Hzwith
+          high resolution (1536 √ó 1024 dpi) high-speed cameras (SpeedCam Visario G2, Weinberger GmbH,
+          Erlangen, Germany), enabling us to record movements precisely. Nine rats were used in total for
+          motioncapture. Thetreadmills(Tetra, Ilmenau, Germany)weresetupat0.5m/s,andaround400steps
+          wereanalyzedforhard,medium,andsoftbeltruns. Themotiondatawasanalyzedtodeterminejoint
+          angle motions and to be used in SIMSCAN tools [27] as desired data to tune the simulations.
+           Biomimetics 2019, 4, x FOR PEER REVIEW              9  of  20 
+           with the Thuringian Committee for Animal Research (JSHK-2684-05-04/12-1). We have chosen rats as 
+           the experimental subject because their size makes them excellent for studying full body kinematics 
+           in front of our three-dimensional X-ray acquisition system. Moreover, they are easy to handle and 
+           train, and are robust against infections and heal quickly after experimental procedures. 
+             The motion data was collected through X-ray videography of rat walking on treadmills (Figure 
+           7). The X-ray device (Neurostar, Siemens, Erlangen, Germany,) records at frequencies up to 2000 Hz 
+           with high resolution (1536 √ó  1024 dpi) high-speed cameras (SpeedCam Visario G2, Weinberger 
+           GmbH, Erlangen, Germany), enabling us to record movements precisely. Nine rats were used in total 
+           for motion capture. The treadmills (Tetra, Ilmenau, Germany) were setup at 0.5 m/s, and around 400 
+           steps  were  analyzed  for  hard,  medium,  and  soft  belt  runs.  The  motion  data  was  analyzed  to 
+           determine joint angle motions and to be used in SIMSCAN tools [27] as desired data to tune the 
+          Biomimetics 2019, 4, 21                              9of19
+           simulations.  
+            
+                                                                   
+             Figure 7. (Left) Workspace and Siemens Neurostar X-ray Ô¨Çuoroscope. (Right) Recording of a rat
+             Figure 7. (Left) Workspace and Siemens Neurostar X-ray fluoroscope. (Right) Recording of a rat 
+             walkingonthetreadmill.
+             walking on the treadmill. 
+          3. Results
+           3. Results 
+          3.1. Intact Model
+           3.1.  Intact Model 
+             To test the hypothesis that the SNS with the addition of the rhythm generator is capable of
+             To test the hypothesis that the SNS with the addition of the rhythm generator is capable of 
+          different modes of sensory control and non-resetting deletions, we ran tests to investigate if the full
+           different modes of sensory control and non-resetting deletions, we ran tests to investigate if the full 
+          neuromechanicalmodelcanreplicatetheobservedanimalbehaviors. Tobetterobservetherhythm
+           neuromechanical model can replicate the observed animal behaviors. To better observe the rhythm 
+          maintenanceandphaseshifting,thenetworkwastunedtomaketheratproducehoppingmotionsin
+           maintenance and phase shifting, the network was tuned to make the rat produce hopping motions in 
+          simulation, in which the behavior and neuron activities of the left and right hindlimbs are mirrored.
+           simulation, in which the behavior and neuron activities of the left and right hindlimbs are mirrored. 
+          Toeliminate other inÔ¨Çuences, we applied each stimulus into the network with the same intensity and
+           To eliminate other influences, we applied each stimulus into the network with the same intensity and 
+          activation timing.
+           activation timing. 
+             TheÔ¨Årstexperimenttests for non-resetting deletions. By inhibiting the extensor neuron of the
+             The first experiment tests for non-resetting deletions. By inhibiting the extensor neuron of the 
+          pattern formation layer (PF EXT in Figure 4C), we expected to observe non-phase-shifting on the
+           pattern formation layer (PF EXT in Figure 4C), we expected to observe non-phase-shifting on the 
+          post-inhibition rhythm. We applied ‚àí10 nA tonic stimulus to inhibit the left hip pattern formation
+           post-inhibition rhythm. We applied ‚àí10 nA tonic stimulus to inhibit the left hip pattern formation 
+          extensor neuron from 2 to 2.1 s. Figure 8 shows the joint motions corresponding to this stimulus.
+           extensor neuron from 2 to 2.1 s. Figure 8 shows the joint motions corresponding to this stimulus. The 
+          Therathindlimbsproducedhoppingmotionsuntil2s,beforetheinhibitorystimuluswasapplied.
+           rat hindlimbs produced hopping motions until 2 s, before the inhibitory stimulus was applied. At 
+          Atthatmoment,thehipjointswerestillinÔ¨Çexion,butashorttimeafterthattherighthipjointstarts
+           that moment, the hip joints were still in flexion, but a short time after that the right hip joint starts 
+          extending. However,thestimulusprolongedtheÔ¨Çexionphaseofthelefthindlimb,causingtheleft
+           extending. However, the stimulus prolonged the flexion phase of the left hindlimb, causing the left 
+          hindlimbtolagbehindthemasterphaseofthepatterngenerationlayer. Thelefthiprestartsextension
+           hindlimb to lag behind the master phase of the pattern generation layer. The left hip restarts extension 
+          after the stimulus ends, and generates a fast step to compensate for the delay. There is a small phase
+           after the stimulus ends, and generates a fast step to compensate for the delay. There is a small phase 
+          shift after the stimulus ends, but a short time later, the rhythm quickly returns to the original hopping
+            
+          rhythm. This brief phase shifting is caused by feedback coordinating the joint. As shown in Figure 8,
+          the knee and the ankle joint also shift their phases accordingly to produce steady steps.
+             Tobetter understand this rhythm behavior, we inspected the neuron activities of the left hindlimb.
+          AsshowninFigure9,theextensorneuroninthepatternformationnetworkisinhibitedbythestimulus,
+          reducingtheactivation time of the extensor motoneuron. The cycle timing generated by the rhythm
+          generator is not inÔ¨Çuenced by the stimulus directly; after the stimulus ends, the extension phase is
+          still ongoing. The pattern formation extensor neuron, driven by the rhythm generator, undergoes a
+          swift hyperpolarization and produces an increase in neuron activation that compensates for the delay,
+          which leads to an overshoot of extension in the hip joint as observed on Figure 8 (t = 2 s, top plot,
+          in black). In addition, the rhythm generator is affected by afferent feedback for the following few
+               Biomimetics 2019, 4, 21                                                     10of19
+               cycles, which results in some phase shifting. However, the inÔ¨Çuence of the feedback is reduced by the
+                   Biomimetics 2019, 4, x FOR PEER REVIEW                               10 of 20 
+               intrinsic rhythmogenic properties of the rhythm generator, and thus the step cycle rhythm recovers.
+                   shift after the stimulus ends, but a short time later, the rhythm quickly returns to the original hopping 
+               Experimental results showing longer deletions in the pattern formation layer are presented in the
+                   rhythm. This brief phase shifting is caused by feedback coordinating the joint. As shown in Figure 8, 
+               AppendixB(FigureA1).
+                   the knee and the ankle joint also shift their phases accordingly to produce steady steps. 
+                                                                                              
+                   Figure 8. Limb joint motion during a non-resetting experiment. The stimulus is applied to the left hip
+                       Figure 8. Limb joint motion during a non-resetting experiment. The stimulus is applied to the left hip 
+                   Biomimetics 2019, 4, x FOR PEER REVIEW                               11 of 20 
+                   pattern formation extensor neuron from 2 to 2.1 s with a current of ‚àí10 nA.
+                       pattern formation extensor neuron from 2 to 2.1 s with a current of ‚àí10 nA. 
+                       To  better  understand  this  rhythm  behavior,  we  inspected  the  neuron  activities  of  the  left 
+                   hindlimb. As shown in Figure 9, the extensor neuron in the pattern formation network is inhibited 
+                   by the stimulus, reducing the activation time of the extensor motoneuron. The cycle timing generated 
+                   by the rhythm generator is not influenced by the stimulus directly; after the stimulus ends, the 
+                   extension phase is still ongoing. The pattern formation extensor neuron, driven by the rhythm 
+                   generator, undergoes a swift hyperpolarization and produces an increase in neuron activation that 
+                   compensates for the delay, which leads to an overshoot of extension in the hip joint as observed on 
+                   Figure 8 (t = 2 s, top plot, in black). In addition, the rhythm generator is affected by afferent feedback 
+                   for the following few cycles, which results in some phase shifting. However, the influence of the 
+                   feedback is reduced by the intrinsic rhythmogenic properties of the rhythm generator, and thus the 
+                   step cycle rhythm recovers. Experimental results showing longer deletions in the pattern formation 
+                   layer are presented in the Appendix B (Figure A1). 
+                                                                                              
+                   Figure 9. Neuron activities during non-resetting experiment. Inhibitory stimuli applied to the left hip
+                       Figure 9. Neuron activities during non-resetting experiment. Inhibitory stimuli applied to the left hip 
+                   pattern formation extensor neuron from 2 s to 2.1 s with a current of ‚àí10 nA. MN: Motoneuron; PF:
+                       pattern formation extensor neuron from 2 s to 2.1 s with a current of ‚àí10 nA. MN: Motoneuron; PF: 
+                   Pattern formation; RG: Rhythm generation.
+                       Pattern formation; RG: Rhythm generation. 
+                       Inhibiting the extensor neuron of the rhythm generator layer (RG EXT in Figure 4B) should result 
+                   in permanently altering the walking rhythm. Our results confirm this; when the inhibiting stimulus 
+                   is applied to the extensor neuron of the rhythm generator, the rat produces a prolonged stance phase 
+                   in the left hindlimb (Figure 10, t = 2 s, top plot, in black), and the walking rhythm is permanently 
+                   altered. This switches the gait from hopping to alternating stepping, despite there being no neural 
+                   connections between the hindlimbs. Another interesting result of this change in gait is that the range 
+                   of motion of the knee joint changes as well due to mechanical feedback within the system. 
+                    
+          Biomimetics 2019, 4, 21                               11of19
+             Inhibiting the extensor neuron of the rhythm generator layer (RG EXT in Figure 4B) should result
+          in permanently altering the walking rhythm. Our results conÔ¨Årm this; when the inhibiting stimulus is
+          applied to the extensor neuron of the rhythm generator, the rat produces a prolonged stance phase in
+          the left hindlimb (Figure 10, t = 2 s, top plot, in black), and the walking rhythm is permanently altered.
+          This switches the gait from hopping to alternating stepping, despite there being no neural connections
+          betweenthehindlimbs. Anotherinteresting result of this change in gait is that the range of motion of
+           Biomimetics 2019, 4, x FOR PEER REVIEW              12 of 20 
+          the knee joint changes as well due to mechanical feedback within the system.
+                                                                    
+             Figure 10. Limb joint motion for a resetting experiment. The stimulus is applied to the left hip rhythm
+              Figure 10. Limb joint motion for a resetting experiment. The stimulus is applied to the left hip rhythm 
+             generator extensor neuron from 2 to 2.1 s with a current of ‚àí10 nA.
+              generator extensor neuron from 2 to 2.1 s with a current of ‚àí10 nA. 
+          3.2. Knee‚ÄìAnkle Synergy
+           3.2.  Knee‚ÄìAnkle Synergy 
+             Wecollectedkinematicanddynamicdataofratsrunningonatreadmill. Framebyframetracking
+              We collected kinematic and dynamic data of rats running on a treadmill. Frame by frame 
+          of X-ray video recordings of these animals revealed coordination between joints. Figure 11 shows
+           tracking of X-ray video recordings of these animals revealed coordination between joints. Figure 11 
+          someoftheframes recorded. By applying red marks on the mid spine and all joints of the rat left
+           shows some of the frames recorded. By applying red marks on the mid spine and all joints of the rat 
+          hindlimb, we digitally tracked the joint motion.
+           left hindlimb, we digitally tracked the joint motion. 
+            
+          Biomimetics 2019, 4, 21                             12of19
+          Biomimetics 2019, 4, x FOR PEER REVIEW              13 of 20 
+           Biomimetics 2019, 4, x FOR PEER REVIEW              13 of 20 
+                                                                   
+                                                                   
+             Figure 11. Images from X-ray video recordings of rat walking on a treadmill. Red marks are applied 
+             Figure 11. Images from X-ray video recordings of rat walking on a treadmill. Red marks are applied
+             Figure 11. Images from X-ray video recordings of rat walking on a treadmill. Red marks are applied 
+             on the mid spine and all joints of a rat left hindlimb in order to track joint motion. 
+             onthemidspineandalljointsofaratlefthindlimbinordertotrackjointmotion.
+             on the mid spine and all joints of a rat left hindlimb in order to track joint motion. 
+             Duringnormalwalking,thekneeandanklejointmotionproÔ¨Ålesaresimilar(i.e.,bothbiphasic)
+             During normal walking, the knee and ankle joint motion profiles are similar (i.e., both biphasic) 
+             During normal walking, the knee and ankle joint motion profiles are similar (i.e., both biphasic) 
+          while the hip joint motion follows its own pattern. Frame 4 to frame 5 in Figure 11 show that the hip
+          while the hip joint motion follows its own pattern. Frame 4 to frame 5 in Figure 11 show that the hip 
+           while the hip joint motion follows its own pattern. Frame 4 to frame 5 in Figure 11 show that the hip 
+          joint is still performing Ô¨Çexion while the ankle and the knee begin extension. Moreover, from frame 6
+          joint is still performing flexion while the ankle and the knee begin extension. Moreover, from frame 
+           joint is still performing flexion while the ankle and the knee begin extension. Moreover, from frame 
+          to frame 7, the hip extends while the ankle and the knee Ô¨Çex. These observations are veriÔ¨Åed by the
+          6 to frame 7, the hip extends while the ankle and the knee flex. These observations are verified by the 
+           6 to frame 7, the hip extends while the ankle and the knee flex. These observations are verified by the 
+          resulting joint rotation data extracted from these frames (Figure 12). The similarity of knee and ankle
+          resulting joint rotation data extracted from these frames (Figure 12). The similarity of knee and ankle 
+           resulting joint rotation data extracted from these frames (Figure 12). The similarity of knee and ankle 
+          motionpatternsinkinematicanalysismotivatedustoconsiderthepossibilityofapplyingthesame
+          motion patterns in kinematic analysis motivated us to consider the possibility of applying the same 
+           motion patterns in kinematic analysis motivated us to consider the possibility of applying the same 
+          rhythmcontrolforboththekneeandanklejoints.
+          rhythm control for both the knee and ankle joints. 
+           rhythm control for both the knee and ankle joints. 
+           
+            
+                                                                   
+                                                                   
+             Figure 12. Rat left hindlimb schematic and joint motion. The ankle and the knee motion rhythms are 
+             Figure 12. Rat left hindlimb schematic and joint motion. The ankle and the knee motion rhythms are
+             Figure 12. Rat left hindlimb schematic and joint motion. The ankle and the knee motion rhythms are 
+             similar, but the timing and the magnitude are different. 
+             similar, but the timing and the magnitude are different.
+             similar, but the timing and the magnitude are different. 
+             In our previous neuromechanical model, all three joints were independently coordinated by
+             In our previous neuromechanical model, all three joints were independently coordinated by 
+             In our previous neuromechanical model, all three joints were independently coordinated by 
+          feedback to match the desired timing between stance and swing phase [8]. Comparing the pattern
+          feedback to match the desired timing between stance and swing phase [8]. Comparing the pattern 
+           feedback to match the desired timing between stance and swing phase [8]. Comparing the pattern 
+          formation neuron activities of the knee and ankle joint in that model also support our hypothesis
+          formation neuron activities of the knee and ankle joint in that model also support our hypothesis that 
+           formation neuron activities of the knee and ankle joint in that model also support our hypothesis that 
+          that the knee and the ankle can share the same pattern formation network to generate steady
+          the knee and the ankle can share the same pattern formation network to generate steady walking 
+           the knee and the ankle can share the same pattern formation network to generate steady walking 
+          walkingbehavior.
+          behavior. 
+           behavior. 
+             We tuned the intact rat model to produce steady alternating stepping with an appropriate tonic 
+             We tuned the intact rat model to produce steady alternating stepping with an appropriate tonic 
+          noise on the left hindlimb. Simulation data collected include joint kinematics and neural activity from 
+           noise on the left hindlimb. Simulation data collected include joint kinematics and neural activity from 
+          all neurons. Data was processed using MATLAB. The cycle period and step start time were calculated 
+           all neurons. Data was processed using MATLAB. The cycle period and step start time were calculated 
+          using the same method used in the deafferented model. Joint motions in each cycle were manipulated 
+           using the same method used in the deafferented model. Joint motions in each cycle were manipulated 
+          by interpolation and the mean function was used to get characteristic kinematic data. The comparison 
+           by interpolation and the mean function was used to get characteristic kinematic data. The comparison 
+          of  animal  joint  motions  with  simulation  characteristic  kinematic  data  (Figure  13)  shows  some 
+           of  animal  joint  motions  with  simulation  characteristic  kinematic  data  (Figure  13)  shows  some 
+          similarities in the hip and knee motions, but there are differences. The ankle joint shows the most 
+           similarities in the hip and knee motions, but there are differences. The ankle joint shows the most 
+          difference; it is out of phase with the animal data in the stance phase. The core of the SIMSCAN tools 
+           difference; it is out of phase with the animal data in the stance phase. The core of the SIMSCAN tools 
+          used to tune the network is the penalty method of nonlinear optimization. The first priority is the 
+           used to tune the network is the penalty method of nonlinear optimization. The first priority is the 
+           
+            
+          Biomimetics 2019, 4, 21                             13of19
+             Wetunedtheintactratmodeltoproducesteadyalternatingsteppingwithanappropriatetonic
+          noise on the left hindlimb. Simulation data collected include joint kinematics and neural activity
+          from all neurons. Data was processed using MATLAB. The cycle period and step start time were
+          calculated using the same method used in the deafferented model. Joint motions in each cycle were
+          manipulated by interpolation and the mean function was used to get characteristic kinematic data.
+          The comparison of animal joint motions with simulation characteristic kinematic data (Figure 13)
+          showssomesimilaritiesinthehipandkneemotions,buttherearedifferences. Theanklejointshows
+          the most difference; it is out of phase with the animal data in the stance phase. The core of the
+          Biomimetics 2019, 4, x FOR PEER REVIEW              14 of 20 
+          SIMSCANtoolsusedtotunethenetworkisthepenaltymethodofnonlinearoptimization. TheÔ¨Årst
+          priority is the activity of motoneurons. After that, kinematic proÔ¨Åles were taken into consideration
+          activity of motoneurons. After that, kinematic profiles were taken into consideration with the period 
+          with the period and height of the peaks given more weight than the mean squared error between
+          and height of the peaks given more weight than the mean squared error between the model and the 
+          the model and the animal joint angles. Also, the simulated muscle properties in this model need
+          animal joint angles. Also, the simulated muscle properties in this model need to be tuned to mimic 
+          to be tuned to mimic the actual rat biomechanics. Therefore, we believe the joint motion errors are
+          the actual rat biomechanics. Therefore, we believe the joint motion errors are understandable. Most 
+          understandable. Most importantly, the simulation produced steady walking, which enabled the
+          importantly, the simulation produced steady walking, which enabled the resetting and non-resetting 
+          resetting and non-resetting experiments to be performed, which is the primary purpose of this work.
+          experiments to be performed, which is the primary purpose of this work. 
+                                                                   
+             Figure13. ComparisonofanimaljointmotionproÔ¨Åleswithsimulationresults. Animaldata(solidlines);
+             Figure 13. Comparison of animal joint motion profiles with simulation results. Animal data (solid 
+             simulationresultsfromthispresentworkwiththeknee‚Äìanklesynergy(dashedlines);simulationresults
+             lines);  simulation  results  from  this  present  work  with  the  knee‚Äìankle  synergy  (dashed  lines); 
+             fromourpreviousmodel[8](dottedlines)withseparatehip,kneeandanklepatternformationcircuits.
+             simulation results from our previous model [8] (dotted lines) with separate hip, knee and ankle 
+          4. Discussion
+             pattern formation circuits. 
+          4.1. Neural Control Adaptations
+          4. Discussion 
+             Inthiswork,wepresentimprovementstoourpreviousneuromechanicalmodelforratlocomotion[8]
+          4.1. Neural Control Adaptations 
+          forthepurposeofperformingresettingandnon-resettingexperiments. First,weimplementedatwo-layer
+          CPGstructure, which provides the network with a rhythm generation layer. This addition enables
+             In  this  work,  we  present  improvements  to  our  previous  neuromechanical  model  for  rat 
+          morerobustcontrolofthesteppingphase. Thiscouldbeadvantageousforstabilizingaleggedrobot
+          locomotion [8] for the purpose of performing resetting and non-resetting experiments. First, we 
+          controlled by a SNS, such as that reported by Hunt et al. [9]. The second improvement was the
+          implemented a two-layer CPG structure, which provides the network with a rhythm generation 
+          establishment of a simple muscle synergy, which coordinates the ankle and knee motion by using
+          layer. This addition enables more robust control of the stepping phase. This could be advantageous 
+          the same pattern formation layer to activate both joints. This is an important Ô¨Årst step towards
+          for stabilizing a legged robot controlled by a SNS, such as that reported by Hunt et al. [9]. The second 
+          implementingamoresophisticated,leg-widesynergy-basedcontrolsystem,whichisanincreasingly
+          improvement was the establishment of a simple muscle synergy, which coordinates the ankle and 
+          accepted idea in motor control [20,22‚Äì24,30].
+          knee motion by using the same pattern formation layer to activate both joints. This is an important 
+             Resetting and non-resetting deletion experiments revealed that our improved neural model is
+          first step towards implementing a more sophisticated, leg-wide synergy-based control system, which 
+          capable of handling different sensory control tasks by separately adjusting the step cycle timing and
+          is an increasingly accepted idea in motor control [20,22‚Äì24,30]. 
+          motoneuron activation as known to occur in animals. This is in agreement with the results of the
+             Resetting and non-resetting deletion experiments revealed that our improved neural model is 
+          biomechanicalcatmodelproposedbyMarkinandcolleagues[20,22]andtheneuronalbehaviorsofour
+          capable of handling different sensory control tasks by separately adjusting the step cycle timing and 
+          simulation are similar to the mouse model by Zhong et al. [17]. However, we found that the rhythm
+          motoneuron activation as known to occur in animals. This is in agreement with the results of the 
+          generator did not perfectly match the non-resetting deletions as demonstrated in previous neural
+          biomechanical cat model proposed by Markin and colleagues [20,22] and the neuronal behaviors of 
+          modelingstudies[13]. For example, the joint angle performs an overshoot after the stimulus is applied.
+          our simulation are similar to the mouse model by Zhong et al. [17]. However, we found that the 
+          Also, during the Ô¨Åctive motion, the stepping phase returned immediately after the perturbation
+          rhythm generator did not perfectly match the non-resetting deletions as demonstrated in previous 
+          ended[13,20]. However, in our simulation, the stepping rhythm did not reset immediately, but reset
+          neural modeling studies [13]. For example, the joint angle performs an overshoot after the stimulus 
+          is  applied.  Also,  during  the  fictive  motion,  the  stepping  phase  returned  immediately  after  the 
+          perturbation  ended  [13,20].  However,  in  our  simulation,  the  stepping  rhythm  did  not  reset 
+          immediately, but reset slowly over time. This difference between our simulation and fictive motion 
+          shows  the  importance  of  physics-based  mechanical  modeling  and  sensory  feedback  in  neural 
+          modeling  studies.  This  mechanism  could  be  responsible  for  gait  stability‚Äîensuring  that  local 
+          stability  control  takes  preference  over  gait  control,  while  gait  control  is  maintained  over  time. 
+          Another possible explanation is that the slow recovery of stepping rhythm might be the mechanical 
+          entrainment from the contralateral hindlimb, which modifies the forces on the hindlimb in question, 
+          and not necessarily a product of solely the presence of sensory feedback in the model. Another 
+          example of mechanical entrainment is the joint range of motion change during gait switching. Our 
+          results show that both hindlimbs are affected by the stimulus, even though the stimulus is only 
+           
+          Biomimetics 2019, 4, 21                             14of19
+          slowly over time. This difference between our simulation and Ô¨Åctive motion shows the importance of
+          physics-basedmechanicalmodelingandsensoryfeedbackinneuralmodelingstudies. Thismechanism
+          could be responsible for gait stability‚Äîensuring that local stability control takes preference over gait
+          control, while gait control is maintained over time. Another possible explanation is that the slow
+          recovery of stepping rhythm might be the mechanical entrainment from the contralateral hindlimb,
+          which modiÔ¨Åes the forces on the hindlimb in question, and not necessarily a product of solely the
+          presence of sensory feedback in the model. Another example of mechanical entrainment is the joint
+          rangeofmotionchangeduringgaitswitching. Ourresultsshowthatbothhindlimbsareaffectedby
+          the stimulus, even though the stimulus is only applied to one hindlimb. The range of motion changed
+          signiÔ¨Åcantly when the perturbation occurred, especially for the knee joint, as it is sufÔ¨Åcient to change
+          the center of mass to balance the disturbance. The comparison of mechanical versus sensory feedback
+          inÔ¨Çuences on coordination and gait is an interesting topic to investigate further.
+             TheinclusionoftherhythmgeneratorcircuitexpandsourpreviousSNStoatwo-layerCPGin
+          whichthetoplayercontrolstiming,andthesecondlayercontrolsmuscleforce. Thenetworkcannow
+          handle different modes of sensory control to more effectively manage gait control. First, timing signals
+          fromotherhindlimbcanimpacttherhythmgeneration(timing)layer,whileforcesignalsfromwithin
+          the hindlimb can be used to impact the pattern formation (magnitude) layer. Second, descending
+          commandsfromtheCNScanbeusedtointerfacewiththerhythmgeneration layer, changing the
+          rhythmictimingtochangegaitswithoutaffectingmuscleforcegeneration. Descendingcommands
+          fromthevestibularsystem,however,mayimpactthepatternformationlayer,tochangetheground
+          reaction force. Additional experiments are needed to explore how different types of descending
+          commandsfromthebraintotheCPGcanmakewalkingcontrolmorerobust.
+             AsstatedintheIntroduction, there are several differences between our model and Makin‚Äôs work.
+          Markin‚Äôscomputationalcircuits[20]areconstructedfromcompartmentmodelswithmulticonductance
+          channels. Our SNS network is built on the dynamics of a leaky integrator [27], thus we focused
+          on how signals propagate through the network, and how individual neurons activate, deactivate,
+          andcontributetonetworkbehavior. However,itshouldbenotedthattherearefundamentalsimilarities
+          between the depolarization of a leaky integrator, and the Ô¨Åring frequency of a spiking neuron [31].
+          Another difference is in muscle modeling. While both models use Hill-type muscle models, they
+          differ in the length tension equation and the way in which afferent feedback is calculated. Markin‚Äôs
+          biomechanical modelisbasedontheworkbyPrilutskyetal.[32],andourssimulatesmusclesusing
+          the model proposed by Cofer et al. [28]. Another difference is how the models interact with the
+          environment. In Markin‚Äôs model, the ground reaction viscoelastic forces are computed as a function of
+          velocity and displacement of the leg endpoint during stance. However, in our model, there is friction
+          between a stance foot and the ground. Our model is capable of propelling the simulated animal
+          forwardversuswalkingonabelt. However,theprimarydifferencethatdistinguishesthepresentwork
+          is that we performed different experiments with our rat model and described exclusive results.
+          4.2. Knee‚ÄìAnkle Synergy
+             After implementing a knee‚Äìankle synergy, our SNS successfully produced steady hopping
+          (Figure 8) and alternating stepping without interlimb neural connections (Figure 10). Since the knee and
+          the ankle share the same pattern formation layer, the complexity of the neural system was reduced.
+          AsshowninFigure13,thehipandkneejointmotionpatternsforwalkinggenerallymatchtheanimal
+          behavior patterns with differences in total excursion and timing. Furthermore, our new results appear
+          improvedincomparisontoourpreviousmodel.
+             Kinematics between the simulation and those obtained by experimental data with the animal
+          donotmatchwellbecauseofsomelimitations and approximations of the model. However, when
+          makingthesimpliÔ¨Åcationsnecessaryforneuromechanicalsimulations,therewillalwaysbedifÔ¨Åculty
+          in matchingexperimentaldata. Forexample,intheworkbyMarkinetal.[20],theytunedtheweightof
+          synapticconnectiontomatchthecatwalkingkinematics,butthemuscleactivitydoesnotalwaysmatch
+          Biomimetics 2019, 4, 21                             15of19
+          well. In our model, the ankle joint also does not match well with the animal data, and the synergy
+          modelshowsworsematchingthanourpreviousmodel. However, wedonotbelievetheseresults
+          are surprising for several reasons. First, neither model was optimized to produce speciÔ¨Åc kinematics,
+          so it is not clear if each individual model would be able to match the kinematics better. Additionally,
+          the poor match for both models is likely the result of simpliÔ¨Åcations in the biomechanical model.
+          That is, the reduction in degrees of freedom and number of muscles limits how the biomechanical
+          modelinteracts with the ground and produces torques about the joints. This mismatch with ankle
+          joint motion is also found in other models [20]. The advantage of these simpliÔ¨Åcations is much greater
+          simulation speed, which enables more rapid tuning of parameters in the neural network using our
+          MATLABtoolboxSIMSCAN[27].
+             It is noteworthy that the presented work is useful for understanding the underlying coordination
+          within the neural system, and not in understanding the speciÔ¨Åc activation of muscles during walking.
+          Givenenoughcomplexityofamodel,itskinematicsandmuscleactivationscanalwaysbetunedto
+          producesomespeciÔ¨Åcmotionsandvalues. Forinstance,differentspecies of quadrupeds demonstrate
+          different kinematics, despite anatomicalsimilaritiesattheskeletal, muscular, andneurallevels. Despite
+          their different walking patterns, animals can still adapt their locomotion and gait. Such Ô¨Çexibility
+          suggests that feed-forward muscle activation, descending commands, and proprioceptive feedback
+          are all used to shape motor output, motivating the continued study of hypothetical circuits that may
+          facilitate such control. This speciÔ¨Åc work demonstrates how the nervous system can serve multiple
+          purposesatthesametime;inourcase,maintainingproperinterlimbcoordinationwhilemaintaining
+          stability in individual stepping limbs.
+             The limitations of model simpliÔ¨Åcation lead to the question: Will those Ô¨Çaws be solved by
+          including more details in the biomechanical model? The rat has 38 muscles in each of its hindlimbs
+          to control seven degrees of freedom. Even though rats have many more muscles in their legs than
+          appear necessary for locomotion, those ‚Äúredundant‚Äù muscles probably perform functions that are
+          not yet understood. We expect that simpliÔ¨Åed biomechanical models will fail to reproduce or reduce
+          the efÔ¨Åciency of some animal postures and movements. Therefore, future work will include adding
+          moremusclesincludingbiarticular muscles [33]. Such more complex models can compare joint angle
+          motionproÔ¨Ålesandhowtheneuromechanicalmodelreactstoperturbationsasthenumberofhind
+          limbmusclesisincreased.
+             Future work could also extend the network with additional structures or different connectivity in
+          the pattern formation layer to establish time-varying synergies inside the neural network. This process
+          could lead to insights in to how to design time-varying synergies for more complicated muscular
+          systems, motivating the use of a more sophisticated full muscle structure in future models. In the
+          modelbyHartandGiszter[25],temporallycoordinated(butnotnecessarilysynchronous)drivesare
+          supplied to groups of muscles [23,25]. The time-varying synergies show more details of how muscles
+          co-activate with time delays during locomotion. However, directly applying time-varying synergies
+          will result in redundancy. As our work [33] shows, most of the muscles in any muscle group are active
+          at the same time.
+             Theresults of the work by Markin and colleagues [20,22] has revealed that muscles which are
+          active at the same time can share the same circuits in the pattern formation layer. Those works provide
+          a powerful tool to help understand rat muscle synergies. In addition, adjusting the conductance
+          of synapses between the pattern formation layer and motoneurons could allow those muscles to
+          producedifferent force amplitude. It is possible to modulate the time delays between different muscle
+          groups by setting up a dynamical interneuron or interneurons between the rhythm generator and
+          pattern formation networks. The modularity of the SNS with two-layer CPGs makes it possible to
+          implementbothamplitudeandtime-varyingsynergiesatthesametimeandreducethecomplexityof
+          the control problem.
+                 Biomimetics 2019, 4, 21                                                                 16of19
+                     Extending purely neurological models to include biomechanical components with sensory
+                 feedbackenablesstudyingadditionalquestionsregardinglocomotion. Forinstance,onecaninvestigate
+                 theinÔ¨Çuenceofdifferentkindsofdisturbancesonlocomotion. Inthepresentstudy,weonlytestedhow
+                 this biomechanical model reacts to one kind of stimulus. There are many other types of stimuli that
+                 canbetestedinamorecompleteneuromechanicalmodeloftherat,suchassteppingoverobstacles,
+                 walking along an incline or decline, and stepping into a hole in the ground (postponed ground
+                 touch). There exist studies of how rats [34,35] and cats [36,37] react to these types of disturbances.
+                 In future work, we will test and expand our SNS to encompass rat-like behaviors in response to these
+                 perturbations [9].
+                 Author Contributions: Conceptualization, A.J.H.; data curation, D.A. and E.A.; formal analysis, K.D. and
+                 E.A.; funding acquisition, R.D.Q.; investigation, D.A.; methodology, K.D.; project administration, M.S.F. and
+                 R.D.Q.; resources, M.S.F. and R.D.Q.; software, N.S.S.; supervision, R.D.Q.; validation, A.J.H.; visualization, K.D.;
+                 writing‚Äîoriginal draft, K.D.; writing‚Äîreview and editing, N.S.S., R.D.Q. and A.J.H.
+                 Funding: This workwassupportedbygrantsfromtheUS-GermanCRCNSprogramincludingNSFIIS160811
+                 andDLRgrant01GQ1605.
+                 Acknowledgments: SpecialthankstoAndrewHorchlerforproducingtheoriginalschemeofFigure2.
+                 ConÔ¨ÇictsofInterest: The authors declare no conÔ¨Çict of interest.
+                 AppendixA
+                                                   TableA1. Neuralparameters.
+                              C      G       E     G                   E      œÑ                  E      œÑ
+                     Neuron    m      m       r     Na    A     S       h      h    A     S       m      m
+                             (nF)    (¬µS)  (mV)    (¬µS)    h     h    (mV)   (ms)    m     m    (mV)   (ms)
+                      RG       5      1     ‚àí60     1.5   0.5  ‚àí0.6   ‚àí60    0.35    1    0.2   ‚àí40      2
+                      PF       5      1     ‚àí60     1.5   0.5  ‚àí0.6   ‚àí60    0.35    1    0.2   ‚àí40      2
+                      MN       5      1    ‚àí100     0      -     -     -       -     -     -     -       -
+                      IN       5      1     -60     0      -     -     -       -     -     -     -       -
+                                                   TableA2. Synapseparameters.
+                                                 g       g        g        E        E       E
+                                  Synapse                 ext      flx      s        lo       hi
+                                               (¬µS)     (¬µS)     (¬µS)     (mV)     (mV)    (mV)
+                                  RGtoIN       2.749      -        -      ‚àí40      ‚àí60      ‚àí25
+                                  INtoRG       2.749      -        -      ‚àí70      ‚àí60      ‚àí25
+                                BetweenRG       0.1       -        -      ‚àí40      ‚àí65      ‚àí40
+                                  PFtoIN       2.749      -        -      ‚àí40      ‚àí60      ‚àí25
+                                  INtoPF       2.749      -        -      ‚àí70      ‚àí60      ‚àí25
+                                  RGtoPF        0.1       -        -      ‚àí40      ‚àí60      ‚àí40
+                                 PFtoMN          -        -        -      ‚àí10      ‚àí60      ‚àí50
+                                    Hip          -      2.565    3.632      -      ‚àí60      ‚àí40
+                                   Knee          -       4.93    1.516      -      ‚àí60      ‚àí40
+                                   Ankle         -      4.054    4.522      -      ‚àí60      ‚àí40
+                                  PFtoIa        0.5       -        -      ‚àí40      ‚àí60      ‚àí55
+                                 BetweenIa      0.5       -        -      ‚àí70      ‚àí60      ‚àí40
+                                  Ia to MN       2        -        -      ‚àí100     ‚àí60      ‚àí40
+                                 MNtoRE         0.5       -        -      ‚àí40      ‚àí100     ‚àí10
+                                 BetweenR       0.5       -        -      ‚àí70      ‚àí60      ‚àí40
+                                  RtoMN         0.5       -        -      ‚àí100     ‚àí60      ‚àí40
+                                   RtoIa        0.5       -        -      ‚àí70      ‚àí60      ‚àí40
+                          Biomimetics 2019, 4, 21                                                                                                                  17of19
+                           Biomimetics 2019, 4, x FOR PEER REVIEW                                                                                               18 of 20 
+                          AppendixB
+                           Appendix B 
+                                                                                                                                                                           
+                                 Figure A1. Limb joint motion during a non-resetting experiment. The stimulus is applied to the left
+                                  Figure A1. Limb joint motion during a non-resetting experiment. The stimulus is applied to the left 
+                                 hip pattern formation extensor neuron from 2 to 2.5 s with a current of ‚àí10 nA.
+                                  hip pattern formation extensor neuron from 2 to 2.5 s with a current of ‚àí10 nA. 
+                          References
+                           References 
+                          1.     Brown,T.G.Onthenatureofthefundamentalactivityofthenervouscentres;togetherwithananalysisof
+                           1.     Brown, T.G. On the nature of the fundamental activity of the nervous centres; together with an analysis of 
+                                 the conditioning of rhythmic activity in progression, and a theory of the evolution of function in the nervous
+                                  the conditioning of rhythmic activity in progression, and a theory of the evolution of function in the 
+                                 system. J. Physiol. 1914, 48, 18‚Äì46. [CrossRef] [PubMed]
+                                  nervous system. J. Physiol. 1914, 48, 18‚Äì46, doi:10.1113/jphysiol.1914.sp001646. 
+                          2.     H√§gglund,M.;Dougherty,K.J.;Borgius,L.; Itohara, S.; Iwasato, T.; Kiehn, O. Optogenetic dissection reveals
+                           2.     H√§gglund, M.; Dougherty, K.J.; Borgius, L.; Itohara, S.; Iwasato, T.; Kiehn, O. Optogenetic dissection reveals 
+                                 multiple rhythmogenic modules underlying locomotion. Proc. Natl. Acad. Sci. USA 2013, 110, 11589‚Äì11594.
+                                  multiple rhythmogenic modules underlying locomotion. Proc. Natl. Acad. Sci. USA 2013, 110, 11589‚Äì11594, 
+                                 [CrossRef] [PubMed]
+                                  doi:10.1073/pnas.1304365110. 
+                          3.     Grillner, S.; McClellan, A.; Sigvardt, K.; Wall√©n, P.; Wil√©n, M. Activation of NMDA-receptors elicits ‚ÄúÔ¨Åctive
+                           3.     Grillner, S.; McClellan, A.; Sigvardt, K.; Wall√©n, P.; Wil√©n, M. Activation of NMDA-receptors elicits ‚Äúfictive 
+                                 locomotion‚Äù in lamprey spinal cord in vitro. Acta Physiol. Scand. 1981, 113, 549‚Äì551. [CrossRef] [PubMed]
+                                  locomotion‚Äù in lamprey spinal cord in vitro. Acta Physiol. Scand. 1981, 113, 549‚Äì551, doi:10.1111/j.1748-
+                          4.     Tryba, A.K.; Pe√±a, F.; Ramirez, J.-M. Gasping activity in vitro: A rhythm dependent on 5-HT2A receptors.
+                                  1716.1981.tb06937.x. 
+                                 J. Neurosci. 2006, 26, 2623‚Äì2634. [CrossRef] [PubMed]
+                           4.     Tryba, A.K.; Pe√±a, F.; Ramirez, J.-M. Gasping activity in vitro: A rhythm dependent on 5-HT2A receptors. 
+                          5.     Wenger,N.;Moraud,E.M.;Gandar,J.;Musienko,P.;Capogrosso,M.;Baud,L.;LeGoff,C.G.;Barraud,Q.;
+                                  J. Neurosci. 2006, 26, 2623‚Äì2634, doi:10.1523/JNEUROSCI.4186-05.2006. 
+                                 Pavlova, N.; Dominici, N.; et al. Spatiotemporal neuromodulation therapies engaging muscle synergies
+                           5.     Wenger, N.; Moraud, E.M.; Gandar, J.; Musienko, P.; Capogrosso, M.; Baud, L.; Le Goff, C.G.; Barraud, Q.; 
+                                 improvemotorcontrolafterspinalcordinjury. Nat. Med. 2016, 22, 138‚Äì145. [CrossRef] [PubMed]
+                                  Pavlova, N.; Dominici, N.; et al. Spatiotemporal neuromodulation therapies engaging muscle synergies 
+                          6.     Buschmann,T.;Ewald,A.;VonTwickel,A.;B√ºschges,A.Controllinglegsforlocomotion‚ÄîInsightsfrom
+                                  improve motor control after spinal cord injury. Nat. Med. 2016, 22, 138‚Äì145, doi:10.1038/nm.4025. 
+                                 robotics and neurobiology. Bioinspir. Biomim. 2015, 10, 41001. [CrossRef] [PubMed]
+                           6.     Buschmann, T.; Ewald, A.; Von Twickel, A.; B√ºschges, A. Controlling legs for locomotion‚ÄîInsights from 
+                          7.     Pearson, K.; Ekeberg, √ñ.; B√ºschges, A. Assessing sensory function in locomotor systems using
+                                  robotics and neurobiology. Bioinspir. Biomim. 2015, 10, 41001, doi:10.1088/1748-3190/10/4/041001. 
+                                 neuro-mechanical simulations. Trends Neurosci. 2006, 29, 625‚Äì631. [CrossRef] [PubMed]
+                           7.     Pearson, K.; Ekeberg, √ñ .; B√ºschges, A. Assessing sensory function in locomotor systems using neuro-
+                          8.     Hunt,A.J.; Szczecinski, N.S.; Andrada, E.; Fischer, M.; Quinn, R.D. Using animal data and neural dynamics
+                                  mechanical simulations. Trends Neurosci. 2006, 29, 625‚Äì631, doi:10.1016/j.tins.2006.08.007. 
+                                 to reverse engineer a neuromechanical rat model. Lect. Notes Comput. Sci. 2015, 9222, 211‚Äì222. [CrossRef]
+                           8.     Hunt, A.J.; Szczecinski, N.S.; Andrada, E.; Fischer, M.; Quinn, R.D. Using animal data and neural dynamics 
+                          9.     Hunt,A.;Szczecinski, N.; Quinn, R. Development and training of a neural controller for hind leg walking in
+                                  to  reverse  engineer  a  neuromechanical  rat  model.  Lect.  Notes  Comput.  Sci.  2015,  9222,  211‚Äì222, 
+                                 a dog robot. Front. Neurorobot. 2017, 11, 18. [CrossRef] [PubMed]
+                                  doi:10.1007/978-3-319-22979-9. 
+                          10.    McCrea,D.A.;Rybak,I.A.Organizationofmammalianlocomotorrhythmandpatterngeneration. BrainRes.
+                           9.     Hunt, A.; Szczecinski, N.; Quinn, R. Development and training of a neural controller for hind leg walking 
+                                 Rev. 2008, 57, 134‚Äì146. [CrossRef] [PubMed]
+                                  in a dog robot. Front. Neurorobot. 2017, 11, 18, doi:10.3389/fnbot.2017.00018. 
+                           10.    McCrea, D.A.; Rybak, I.A. Organization of mammalian locomotor rhythm and pattern generation. Brain 
+                                  Res. Rev. 2008, 57, 134‚Äì146, doi:10.1016/j.brainresrev.2007.08.006. 
+                            
+                     Biomimetics 2019, 4, 21                                                                                         18of19
+                     11.   Grillner, S.; Zangger, P. On the central generation of locomotion in the low spinal cat. Exp. Brain Res. 1979,
+                           34, 241‚Äì261. [CrossRef] [PubMed]
+                     12.   Lafreniere-Roula, M.; McCrea, D.A. Deletions of rhythmic motoneuron activity during Ô¨Åctive locomotion
+                           andscratchprovidecluestotheorganizationofthemammaliancentralpatterngenerator. J.Neurophysiol.
+                           2005, 94, 1120‚Äì1132. [CrossRef] [PubMed]
+                     13.   Rybak,I.A.; Stecina, K.; Shevtsova, N.A.; McCrea, D.A. Modelling spinal circuitry involved in locomotor
+                           pattern generation: Insights from deletions during Ô¨Åctive locomotion. J. Physiol. 2006, 577, 617‚Äì639.
+                           [CrossRef] [PubMed]
+                     14.   Rybak,I.A.; Stecina, K.; Shevtsova, N.A.; McCrea, D.A. Modelling spinal circuitry involved in locomotor
+                           pattern generation: Insights from the effects of afferent stimulation. J. Physiol. 2006, 577, 641‚Äì658. [CrossRef]
+                           [PubMed]
+                     15.   Robertson, G.A.; Stein, P.S. Synaptic control of hindlimb motoneurones during three forms of the Ô¨Åctive
+                           scratch reÔ¨Çex in the turtle. J. Physiol. 1988, 404, 101‚Äì128. [CrossRef] [PubMed]
+                     16.   Harris-Warrick, R. Locomotor pattern generation in the rodent spinal cord. In Encyclopedia of Computational
+                           Neuroscience; Springer: New York, NY, USA, 2013; pp. 1‚Äì15, ISBN 978-1-4614-7320-6.
+                     17.   Zhong,G.;Shevtsova,N.A.;Rybak,I.A.;Harris-Warrick, R.M. Neuronal activity in the isolated mouse spinal
+                           cord during spontaneous deletions in Ô¨Åctive locomotion: Insights into locomotor central pattern generator
+                           organization. J. Physiol. 2012, 590, 4735‚Äì4759. [CrossRef] [PubMed]
+                     18.   Shevtsova, N.A.; Hamade, K.; Chakrabarty, S.; Markin, S.N.; Prilutsky, B.I.; Rybak, I.A. Modeling the
+                           organization of spinal cord neural circuits controlling two-joint muscles. In Neuromechanical Modeling of
+                           Posture and Locomotion; Springer: New York, NY, USA, 2016; pp. 121‚Äì162, ISBN 978-1-4939-3267-2.
+                     19.   Shevtsova, N.A.; Rybak, I.A. Organization of Ô¨Çexor‚Äìextensor interactions in the mammalian spinal cord:
+                           Insights from computational modelling. J. Physiol. 2016, 594, 6117‚Äì6131. [CrossRef] [PubMed]
+                     20.   Markin,S.N.; Klishko, A.N.; Shevtsova, N.A.; Lemay, M.A.; Prilutsky, B.I.; Rybak, I.A. A neuromechanical
+                           model of spinal control of locomotion. In Neuromechanical Modeling of Posture and Locomotion; Springer:
+                           NewYork,NY,USA,2016;pp.21‚Äì65,ISBN978-1-4939-3267-2.
+                     21.   D‚ÄôAvella, A.; Saltiel, P.; Bizzi, E. Combinations of muscle synergies in the construction of a natural motor
+                           behavior. Nat. Neurosci. 2003, 6, 300‚Äì308. [CrossRef] [PubMed]
+                     22.   Markin, S.N.; Lemay, M.A.; Prilutsky, B.I.; Rybak, I.A. Motoneuronal and muscle synergies involved in
+                           cat hindlimb control during Ô¨Åctive and real locomotion: A comparison study. J. Neurophysiol. 2012, 107,
+                           2057‚Äì2071. [CrossRef] [PubMed]
+                     23.   Ting, L.H.; McKay, J.L. Neuromechanics of muscle synergies for posture and movement. Curr. Opin.
+                           Neurobiol. 2007, 17, 622‚Äì628. [CrossRef] [PubMed]
+                     24.   Tresch, M.C.; Jarc, A. The case for and against muscle synergies. Curr. Opin. Neurobiol. 2009, 19, 601‚Äì607.
+                           [CrossRef] [PubMed]
+                     25.   Hart, C.B.; Giszter, S.F. Distinguishing synchronous and time-varying synergies using point process interval
+                           statistics: Motor primitives in frog and rat. Front. Comput. Neurosci. 2013, 7, 52. [CrossRef] [PubMed]
+                     26.   Hunt,A.;Schmidt,M.;Fischer, M.; Quinn, R. A biologically based neural system coordinates the joints and
+                           legs of a tetrapod. Bioinspir. Biomim. 2015, 10, 055004. [CrossRef] [PubMed]
+                     27.   Szczecinski, N.S.; Hunt, A.J.; Quinn, R.D. Design process and tools for dynamic neuromechanical models
+                           androbotcontrollers. Biol. Cybern. 2017, 111, 105‚Äì127. [CrossRef] [PubMed]
+                     28.   Cofer, D.; Cymbalyuk, G.; Reid, J.; Zhu, Y.; Heitler, W.J.; Edwards, D.H. AnimatLab: A 3D graphics
+                           environmentforneuromechanicalsimulations. J. Neurosci. Methods 2010, 187, 280‚Äì288. [CrossRef] [PubMed]
+                     29.   Zhang,J.; Lanuza, G.M.; Britz, O.; Wang, Z.; Siembab, V.C.; Zhang, Y.; Velasquez, T.; Alvarez, F.J.; Frank, E.;
+                           Goulding, M. V1 and V2b interneurons secure the alternating Ô¨Çexor-extensor motor activity mice require for
+                           limbedlocomotion. Neuron2014,82,138‚Äì150. [CrossRef] [PubMed]
+                     30.   Mussa-Ivaldi, F.A.; Bizzi, E. Motor learning through the combination of primitives. Philos. Trans. R. Soc. B
+                           Biol. Sci. 2000, 355, 1755‚Äì1769. [CrossRef] [PubMed]
+                     31.   Szczecinski, N.S.; Quinn, R.D.; Hunt, A.J. Parallel relationships between a nonspiking neuron model and a
+                           generalized linear integrate and Ô¨Åre model. submitted.
+                     32.   Prilutsky, B.I.; Klishko, A.N.; Weber, D.J.; Lemay, M.A. Computing motion dependent afferent activity during
+                           cat locomotion using a forward dynamics musculoskeletal model. In Neuromechanical Modeling of Posture and
+                           Locomotion; Springer: New York, NY, USA, 2016; pp. 273‚Äì307, ISBN 978-1-4939-3267-2.
+                     Biomimetics 2019, 4, 21                                                                                         19of19
+                     33.   Young,F.; Rode, C.; Hunt, A.; Quinn, R. Analyzing moment arm proÔ¨Åles in a full-muscle rat hindlimb model.
+                           Biomimetics 2019, 4, 10. [CrossRef]
+                     34.   Aoi, S.; Kondo, T.; Hayashi, N.; Yanagihara, D.; Aoki, S.; Yamaura, H.; Ogihara, N.; Funato, T.; Tomita, N.;
+                           Senda, K.; et al. Contributions of phase resetting and interlimb coordination to the adaptive control of
+                           hindlimbobstacle avoidance during locomotion in rats: A simulation study. Biol. Cybern. 2013, 107, 201‚Äì216.
+                           [CrossRef] [PubMed]
+                     35.   Lynn, R.; Talbot, J.A.; Morgan, D.L. Differences in rat skeletal muscles after incline and decline running
+                           differences in rat skeletal muscles after incline and decline running. J. Appl. Physiol. 1998, 85, 98‚Äì104.
+                           [CrossRef] [PubMed]
+                     36.   Hiebert, G.W.; Pearson, K.G. Contribution of sensory feedback to the generation of extensor activity during
+                           walkinginthedecerebratecat. J. Neurophysiol. 1999, 81, 758‚Äì770. [CrossRef] [PubMed]
+                     37.   Ivashko,D.G.;Prilutsky,B.I.; Markin, S.N.; Chapin, J.K.; Rybak, I.A. Modeling the spinal cord neural circuitry
+                           controlling cat hindlimb movement during locomotion. Neurocomputing 2003, 52‚Äì54, 621‚Äì629. [CrossRef]
+                                              ¬©2019bytheauthors. LicenseeMDPI,Basel,Switzerland. Thisarticleisanopenaccess
+                                              article distributed under the terms and conditions of the Creative Commons Attribution
+                                              (CCBY)license(http://creativecommons.org/licenses/by/4.0/).

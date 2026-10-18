@@ -1,0 +1,495 @@
+Received:
+Revised:
+Accepted:
+Published:
+Copyright:© 2026 by the authors.
+Submitted toActuatorsfor possible
+open access publication under the
+terms and conditions of the Creative
+Commons Attribution (CC BY) license.
+Article
+Isometric Force Characterization of Braided Pneumatic Actuators
+Ben Bolen 1,*
+ , Mohammed Elzein 1
+ , Lawrence Pang 1 and Alexander Hunt 1,
+1 Department of Mechanical and Materials Engineering, Portland State University, Portland, OR, USA
+*Correspondence: bbolen83@gmail.com
+Highlights 1
+2
+• Braided Pneumatic Actuator maximum isometric force is a function of resting length3
+• Force curves are normalized with pressure and maximum contraction4
+• A high-fidelity predictive force model is developed using few coefficients5
+Abstract 6
+Artificial muscles such as braided pneumatic actuators (BPAs) offer many advantages for 7
+robotic systems, including high durability and strength-to-weight ratios. However, their 8
+use in robotic systems is still extremely limited, in part due to their poor force, length, and 9
+pressure characterization. In this work, a test setup is created to compare force produced 10
+by Festo fluidic BPAs with leading models. Our analysis of the data has resulted in 1) the 11
+development of new equations to calculate force as functions of pressure and contraction 12
+for Festo BPAs with uninflated diameters of 10mm and 20 mm, and 2) a novel equation for 13
+the maximum force in 10 mm and 20 mm diameter Festo BPAs as a function of their resting 14
+length. This will lead to faster design processes and the development of new systems such 15
+as biomimetic robots that are able to more accurately reproduce the range of motion and 16
+isometric torque profiles that exist in the animals they are mimicking.17
+Keywords:BPA; Biomimetic; Function Fit; PAM; Artificial Muscle; Isometric Force18
+1. Introduction 19
+Biomimetic robots provide a platform for investigating how mechanical structure and 20
+control interact to generate movement, offering complementary insights to simulation- 21
+based studies [1–3]. Musculoskeletal humanoids and limb systems driven by tendon-like 22
+actuators have been shown to support biologically meaningful experiments on motion 23
+generation, internal force transmission, and neural control hypotheses [ 4–8]. This dual 24
+perspective of using robots to learn about biology and using biology to design more 25
+adaptive robots has been emphasized in both biomimetic robotics and biomechanics [4,9].26
+A wide range of actuation technologies have been explored in robotics, including 27
+electric motors, hydraulic systems, smart-material actuators, and artificial muscles [10,11]. 28
+Electric motors are widely used due to their controllability and maturity, but are limited by 29
+thermal constraints, gearing requirements, and reduced compliance compared to muscle- 30
+like actuators [12,13]. Hydraulic actuators offer exceptionally high power density and have 31
+enabled highly dynamic legged systems, but they remain relatively heavy, less efficient than 32
+biological muscle, and require a dedicated fluid infrastructure [13]. Dielectric elastomer 33
+actuators (DEAs), a class of electronic electroactive polymers, demonstrate high specific 34
+work and good bandwidth in comparative studies [ 11]. However, they are limited by 35
+the need for kilovolt-range driving voltages [ 14], electromechanical instability, and the 36
+Version March 2, 2026 submitted toActuatorshttps://doi.org/10.3390/act1010000
+Version March 2, 2026 submitted toActuators 2 of 10
+requirement for compliant electrodes [11]. In contrast, McKibben-style braided pneumatic 37
+actuators (BPAs) combine low mass, high force-to-weight ratio, and intrinsic compliance 38
+with a force–length curve that qualitatively resembles that of skeletal muscle [11,15]. BPAs 39
+have been used in quadrupedal robots [ 15,16], musculoskeletal humanoids [ 4,6], and 40
+dexterous manipulation systems [8], demonstrating their ability to support biologically 41
+motivated investigations and improve robot adaptability in unstructured environments.42
+Despite these advantages, BPAs exhibit several important differences from biological 43
+muscle. First, BPA maximum tensile force occurs at resting (i.e., uninflated) length (lrest) 44
+rather than at an optimal fiber length [11]. Second, their maximum contraction ratio is sub- 45
+stantially lower than that of human muscle, presenting challenges for achieving biomimetic 46
+joint ranges of motion [ 11,15,17]. Third, BPAs have a highly nonlinear dependence on 47
+internal pressure (P), contraction (ϵ), and loading state [15,18], which complicates control 48
+and motivates high-fidelity force–length–pressure modeling.49
+To address these challenges, numerous researchers have proposed static and dynamic 50
+models for BPAs. Sárosi et al. [17] compared geometric and empirical models for uninflated 51
+diameters (ϕ) 10 mm and 20 mm actuators and highlighted limitations when lrest varies. 52
+Martens and Boblan [18] introduced a physically motivated static model for the Festo 53
+DMSP series and demonstrated accurate predictions at specific lrest. Festo provides a 54
+manufacturer tool for predicting force as a function of pressure and contraction [ 19,20], 55
+but experimental comparisons indicate that it does not adequately account for variation in 56
+lrest or actuator-specific contraction limits. Hunt et al. [15] developed a more generalizable 57
+empirical model for ϕ10 mm Festo BPAs that incorporates differences between eccentric 58
+and concentric loading states and accounts for the maximum achievable contraction (ϵmax ) 59
+at high pressures. Comparisons with experimental data indicates that none of the existing 60
+models effectively takes into account differences in maximum force due to initial actuator61
+length. 62
+The present work develops an improved force–pressure–length model for both 63
+ϕ10 mm and ϕ20 mm Festo BPAs. We collected extensive force data for a wide range 64
+of resting lengths, contraction ratios, and internal pressures. These data were first used 65
+to find maximum force as a function of resting length. Then we normalized the data to 66
+formulate normalized force (F∗) as a function of relative strain (ϵ∗) and relative pressure 67
+(P∗). The resulting model provides improved predictive accuracy for isometric BPA force, 68
+supporting the design and control of biomimetic robotic systems that rely on BPAs.69
+2. Background 70
+Previous studies have generated empirical models of the force-length-pressure rela- 71
+tionship of BPA actuators. Sárosi et al. [17] discuss several high-fidelity BPA force models. 72
+They present a static force model with a 21 coefficient polynomial function for a Festo MAS- 73
+20-200N (i.e. ϕ20 mm, lrest = 200 mm) with an impressive R2 = 0.9994. They also present 74
+Sárosi’s static force model for a Festo DMSP-20-400N-RM-RM (i.e. ϕ20 mm, lrest = 400 mm) 75
+, with 6 coefficients and a R2 = 0.9995. Martins and Boblan present an even more accurate 76
+model, in terms of absolute error, using five coefficients for a DMSP-10-250 (i.e. ϕ10 mm, 77
+lrest = 250 mm) and a DMSP-20-300 (i.e. ϕ20 mm, lrest = 300 mm) [18]. However, our 78
+work, as presented below, demonstrates that different resting lengths produce different 79
+force-length curves, preventing the use of these models for designing systems with different 80
+resting lengths. 81
+Hunt et al. [15] looked at six resting lengths of ϕ10 mm Festo BPAs, accounting for 82
+differences in maximum contractile percentages, and elucidating the force-length-pressure 83
+relationship. In particular, for a given contraction percent and force F (in Newtons), the 84
+https://doi.org/10.3390/act1010000
+Version March 2, 2026 submitted toActuators 3 of 10
+scalar pressure P (in kPa) required to produce this force for aϕ10 mm Festo artificial muscle 85
+can be determined by solving the equation: 86
+P=254 kPa+F·1.23 kPa N −1 +S·15.6 kPa+192 kPa·tan
+
+2.03
+ ϵ
+ϵmax −F·0.331×10 −3 N−1 −0.46
+
+(1)87
+88
+where S is the artificial muscle hysteresis factor such that S= 1 indicates the muscle is 89
+shortening, S=− 1 indicates it is lengthening, and S= 0 under static conditions. An 90
+important note for Equation 2 is that the coefficients have been updated with the correct 91
+values as the values reported in [ 15] contained typographical errors. The amount of 92
+contraction,ϵ, is calculated as 93
+ϵ= (lrest −l)
+lrest
+(2)94
+where ϵ620 is the amount of contraction in a BPA without external load when inflated at 95
+620 kPa (90 psi), similarly calculated as 96
+ϵ620 = (lrest −l 620)
+lrest
+(3)97
+where l620 is defined as the muscle length measured at 620 kPa. Equation 2 was used to 98
+create a lookup table for actuator force, F, for a given amount of pressure, P, and relative 99
+contraction,ϵ ∗, defined as 100
+ϵ∗ = ϵ
+ϵ620
+(4)101
+using the results from Equation 2 and Equation 3. 102
+However, this model was taken with low external forces (≤ 24 lbs), and it is unclear 103
+how well this model captures actuator behavior at higher forces, so we compare this model 104
+with data collected in this work. 105
+3. Materials and Methods 106
+3.1. Overview 107
+To measure artificial muscle force as a function of length and pressure, we built a test 108
+jig from extruded alumnium and 3D printed parts. Festo BPAs with 10 mm and 20 mm109
+diameter were tested with various resting lengths and different amounts of contraction. 110
+These data are used to develop an improved model that more accurately predicts maximum 111
+muscle force based on lrest, current muscle length lm, and pressure P. The results are 112
+compared with existing models and the new data is used to create an updated model.113
+3.2. BP A force characterization experiment 114
+A test jig was made of 80/20® brand 1515 series extruded aluminum (Figure 1). 115
+Artificial muscles were placed vertically in the jig one at a time. The upper end was attached 116
+to an S-shaped load cell. The lower end was attached to an adjustable crossmember that 117
+was used to change the actuator length lm. Compressed air was supplied through the 118
+building at 620 kPa and measured with a Freescale MPX5700 pressure sensor.119
+The inner distance between the hose clamps on each BPA was measured to determine 120
+the muscle’s resting length ( lrest). This is how Festo [19] defines lrest, although in Hunt 121
+et al. [15] it was measured to also include end cap length. We then inflated each BPA to 122
+P620 = 620 kPa, with one end allowed to move freely in the axial Degree of Freedom (DoF), 123
+and measured the length l620 to calculate maximum contraction at 620kPa using Equation 3. 124
+The distance between the crossmembers was then controlled to obtain different amounts of 125
+https://doi.org/10.3390/act1010000
+Version March 2, 2026 submitted toActuators 4 of 10
+contraction, the muscles were inflated to various pressures, and the contractile force was 126
+recorded at the pressure-contraction pairs. This was done for ϕ10 mm BPA resting lengths 127
+(lrest) of 112 mm – 518 mm. For ϕ20 mm BPAs, resting lengths (lrest) of 300 mm – 509 mm128
+were used. 129
+Test 
+Frame
+Load 
+Cell
+BPA 
+Length
+End 
+caps
+Hose 
+clamps
+Air 
+supply
+Air to pressure 
+sensor
+Figure 1.A picture of a BPA in the isometric force test stand with components labeled.
+4. Results 130
+4.1. Maximum Force at 620 kPa 131
+Data of the maximum force from BPA characterization tests of the 10 mm and 20 mm132
+diameters at 620 kPa show a dependency on resting length (Figure 2). This is a previously 133
+unreported characteristic of these artificial muscles. Detailed anaylsis of the Festo Tool 134
+[19], do in fact predict a change in maximum force with the resting length, however the 135
+Festo Tool predicts increased force with shorter lengths, while our collected data indicate 136
+decreasing force with shorter lengths. The data show a force response resembling an arctan137
+curve along the lrest dimension. Using the Nonlinear Least Squares method and a Least 138
+Absolute Residual robustness, we fit an arctan curve to the data to get the maximum force 139
+at 620 kPA given a resting length as: 140
+F62010 =303.5 N·arctan(19.03 m −1 ·(l rest −0.0075))(5)141
+F62020 =922.4 N·arctan(15.37 m −1 ·(l rest −0.013))(6)142
+The length is offset by 0.0075 m and 0.013 m because solid modeling showed that the end 143
+caps contact each other at these lengths. At these lengths, the actuator would not be able to 144
+contract to produce force. 145
+4.2. Force as a function of pressure and resting length 146
+Data from BPA characterization tests of the 10mm muscles resulted in force-pressure 147
+pairings for different muscle resting lengths ( lrest) (Figure 3A). Similar to the maximum 148
+force data, these data show a force response resembling an arctan curve along the lrest 149
+dimension with a more linear response to changes in pressure. Using the Nonlinear Least150
+Squares method and a Least Absolute Residual robustness, we fit an arctan curve to the 151
+data to get the maximum force given a resting length and pressure as:152
+https://doi.org/10.3390/act1010000
+Version March 2, 2026 submitted toActuators 5 of 10
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 
+0
+100
+200
+300
+400
+500
+F620 (N) 
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+Resting Length, m 
+0
+500
+1000
+1500
+2000
+F620  (N) 
+20 mmA) B) 10 mm
+Resting Length, m 
+Figure 2.Results for finding the relationship between F620 and lrest.(A) F62010 as a function of lrest,
+at P620. Dashed line is the F62010 data from Festo. Solid line is the fit from equation 5.(B) F62020 as a
+function ofl rest atP 620. Dashed line isF 62020 data from Festo. Solid line is the fit from equation 6.
+0 0.2 0.4 0.6 0.8
+0
+100
+200
+300
+400
+500
+Force (N) 
+Resting Length (m) 
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 
+Resting Length (m) 
+0.1
+0.12 
+0.14 
+0.16 
+0.18 Strain 
+A) B) 
+P=200 kPa, model P=200 kPa, experiment 
+P=300 kPa, model P=300 kPa, experiment 
+P=400 kPa, model P=400 kPa, experiment 
+P=500 kPa, model P=500 kPa, experiment 
+P=620 kPa, model P=620 kPa, experiment 
+Figure 3.Results for finding the relationship between F620, lrest, P620, and ϵ620.(A)Isoclines of the
+surface fit for F62010 (lrest, P620).(B) ϵ620 versus lrest at P620. Although there is a general trend of longer
+resting lengths producing more contraction, no conclusive relationship between ϵ620 and lrest could
+be deduced from this experiment.
+Fmax (lrest,P) =a 1 ·P·arctan(a 2 ·P·(l rest −0.0075))(7)153
+where a1 = 0.4895 NkPa−1 and a2 = 0.030 68kPa−1 m−1 for the 10 mm actuator, and a1 =154
+1.49 NkPa−1, a2 = 0.0248 kPa−1 m−1 for the 20 mm actuator. Goodness-of-fit measures are 155
+given in Table 1. 156
+4.3. Maximum Contraction at620 kPa 157
+Figure 3Bshows an attempt at a linear fit for maximum contraction at 620 kPa (ϵ620) 158
+as a function of resting length ( lrest ). There was a large amount of variance in the data, 159
+with the linear fit giving an adjusted R2 = 0.4124 and an RMSE= 0.0083. Since there is no 160
+direct, predicable relationship between maximum contraction and lrest, this value should be 161
+recorded in each muscle used on a robot to best predict the force it may produce at different 162
+pressures and contraction. 163
+4.4. Force as a function of pressure and contraction 164
+In addition to being a function of the pressure and resting length, the force produced 165
+by the actuator is also a function of the amount of actuator contraction, with less force 166
+being applied as the actuator contracts. To build this model, the collected data of force, 167
+pressure, and contraction are normalized by dividing by F620, P620, and ϵ620, respectively. 168
+This had the effect of compressing the data into a 3D surface ranging from 0 to 1 on all axes. 169
+Normalized data are compared with pressure isoclines of force predicted by the Festo tool 170
+divided by the maximum force equation described in the previous section (Figure 4. With 171
+this comparison, it is clear that the Festo tool over-predicts the expected force, especially at 172
+lower pressures and contraction. 173
+https://doi.org/10.3390/act1010000
+Version March 2, 2026 submitted toActuators 6 of 10
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 
+Contraction, *
+0
+0.2
+0.4
+0.6
+0.8
+1
+Force, F *
+10 mm BPA Force-Pressure-Contraction Relationship 
+P=200 kPa, festo P=200 kPa, model P=200 kPa, experiment 
+P=300 kPa, festo P=300 kPa, model P=300 kPa, experiment 
+P=400 kPa, festo P=400 kPa, model P=400 kPa, experiment 
+P=500 kPa, festo P=500 kPa, model P=500 kPa, experiment 
+P=620 kPa, festo P=620 kPa, model P=620 kPa, experiment 
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1 
+Contraction, *
+0
+0.2
+0.4
+0.6
+0.8
+1
+Force, F *
+20 mm BPA Force-Pressure-Contraction Relationship 
+A) 
+B) 
+Figure 4.Surface fit for F∗(ϵ∗, P∗). Solid lines are from our model. Dashed lines from Festo supplied
+data. In total, 537 data points were collected and used to fit the 3D surfaces (321 data points for
+ϕ10 mm BPAs and 216 data points for ϕ20 mm BPAs). 80% of these data were used for training, and
+20% were used for validation. For figure clarity, not all data is included and plotted circles represent
+collected data at ±10 kPa of the stated pressure.(A)Fit data for ϕ10 mm Festo BPAs.(B)Fit data for
+ϕ20 mm Festo BPAs.
+We therefore derived our own equation for isometric force in the BPA as a function of 174
+pressure and contraction. Visual analysis of the experimental data shows an exponential 175
+relationship between ϵ∗ and F∗, and a linear relationship between P∗ and F. We fit a surface 176
+to the data using nonlinear least squares and a least absolute residual robustness such that: 177
+F∗(ϵ∗,P ∗) =
+
+
+
+c0 ·
+ 
+exp(−c1 ·ϵ ∗)−1
+
++P ∗ ·exp
+ 
+−c2(ϵ∗)2 forF ∗ >0
+0 forF ∗ ≤0
+(8)178
+For the ϕ10 mm BPAs, the result of the improved fit can be seen in Figure 4A. The 179
+adjusted R2 = 0.9998, a RMSE= 0.004537, and a maximum absolute residual of 10.6%. 180
+Solving 8 for the ϕ20 mm BPA, yields different coefficients, and results are seen in Figure 4B. 181
+Coefficient values and goodness of fit statistics are found in table 2.182
+https://doi.org/10.3390/act1010000
+Version March 2, 2026 submitted toActuators 7 of 10
+Table 1.Maximum force equation coefficient values with confidence intervals (CI) and goodness-of-fit measures. Equation 7 is compared to data taken at 620 kPa .
+Equation 5 and Equation 6 are compared against maximum force from using the Festo tool. It was not necessary to fit an adjusted R2 in these cases.
+Equation Coefficient CI (95%) Our Model Festo Tool
+Adj. R2 RMSE Max. Error Adj. R2 RMSE Max. Error
+(7) a1 =0.4895 N kPa −1 (0.4822, 0.4968) 0.9945 11.61 N 55.3 N 0.9854 14.7 N 30.9 Na2 =0.030 68 kPa −1 m−1 (0.0282, 0.03317)
+(5) b1 =303.5 N (300, 308) 0.9854 14.72 N 30.9 N – 189.9 N 375.6 Nb2 =19.03 m −1 (17.48, 20.57)
+(6) b1 =922.4 N (914.2, 930.7) 0.9945 23.83 N 62.1 N – 668.4 N 1590.1 Nb2 =15.37 m −1 (14.75, 15.98)
+Table 2.Normalized isometric BPA force eccquation (Equation 8) coefficient values and goodness-of-fit measures.
+BPA Coefficient CI (95%) Model Validation
+Adj. R2 RMSE Max. Error Adj. R2 RMSE Max. Error
+ϕ10 mm
+c0 =0.5682 (0.5584, 0.578)
+0.9998 0.005118 10.3% 0.9994 0.0245409 10.6%c1 =4.254 (4.126, 4.383)
+c2 =0.5597 (0.5429, 0.5766)
+ϕ20 mm
+c0 =0.2579 (0.2401, 0.2756)
+0.992 0.02294 6.8% 0.9943 0.0231303 5.7%c1 =6.477 (5.558, 7.396)
+c2 =1.321 (1.239, 1.403)
+https://doi.org/10.3390/act1010000
+Version March 2, 2026 submitted toActuators 8 of 10
+5. Discussion 183
+We have developed newF620 equations for 10mm and 20 mm diameter Festo BPAs that 184
+capture the change in maximum force produced by the actuators at 620 kPa as a function 185
+of their resting length. When examining Equation 5 and measured data in Figure 2B, it 186
+can be seen that as lrest goes to infinity, F62010 goes to 470 N. When the Festo tool [ 20] 187
+was queried at lrest = 1 m as an approximation of infinity, it predicts the ϕ10 mm BPA 188
+can produce F= 490 N at P620. This is within the 10% variability that Festo states may 189
+occur in manufacturing tolerances. Similarly, the Festo data predict a ϕ20 mm BPA will 190
+produce F= 1570 N. However, our results for Equation 6 show that F62020 goes to 1460 N 191
+as lrest approaches infinity. Although the difference is much larger, it is also with the 10% 192
+manufacturing tolerance. 193
+Where our measured data differs significantly from the Festo model, is that as lrest 194
+goes to zero. For the measured data, as the length gets smaller, the force does as well, 195
+whereas the Festo tool predicts exponential force increase (see Figure 2). As a specific 196
+example, when specifying lrest = 112 mm for the 10 mm diameter BPAs, the Festo predicted 197
+F620 is 498.6 N. However, using Equation 5, F620 is calculated to be 335.3 N. Actual force in 198
+the lrest = 112 mm was measured at 350.9 N Therefore, the error in predicted F620 for the 199
+ϕ10 mm BPA is 4.5% for our model and 42.1% using the Festo tool. Researchers using BPA 200
+resting lengths under 300 mm should take note of these results.201
+It remains to be seen how ffl620 can be known a priori. We still suspect that it is a 202
+function of lrest, but it might also be a function of product batch number. Modeling work 203
+of ideal McKibben actuators describe how this is a function of the total number of twists, 204
+and the angle of twist in the usable muscle area [21]. Uncovering this relationship for the 205
+Festo DMSP/MAS artificial muscles, if it exists in a meaningful way, will require additional 206
+controlled tests. Not knowing this relationship a priori means there is still the potential 207
+for robots and other systems to go through an iterative design stage if it is discovered that 208
+the system does not produce the torque or have the RoM that the design team expects. 209
+However, the data and models provided here should enable for faster redesigns with fewer 210
+additional measurements. 211
+We have also introduced the concept of nondimensionalized isometric force that is a 212
+function of relative strain and relative pressure (Equation 8). This elegant equation has only 213
+3 coefficients with low error (Table 2. In the work presented here, we add in the relative 214
+pressure term, P∗ =P/P 620. Our data shows that by normalizing force, contraction, and 215
+pressure, we are able to create a simplified force equation as a function of contraction and216
+pressure that scales well with initial actuator length, i.e.217
+F(ϵ ∗,P ∗,l rest ) =F ∗(ϵ∗,P ∗)·F 620(lrest )(9)218
+For example, given lrest = 54 mm and P= 300 kPa, the measured force was Factual =219
+103 N. Force prediction using only the Festo tool predicts the force to be Fpredict = 270 N. 220
+This is 161% greater than the measured force. Using Equation 5 and Equation 8 with 221
+Equation 9 gives Fpredict =F ∗(0, 0.48)·F 620(0.054) = 0.49 · 230 N = 112 N. This is an error 222
+of 8%, which is much more accurate than using the Festo tool only.223
+In our work, P620 = 620 kPa is the maximum supply pressure for our system, and other 224
+users of this actuator may use a different supply pressure. However, this supply pressure 225
+is not required, and normalizing by this value was chosen as a method for improving the 226
+optimization techniques by reducing the sensitivity of the term associated with pressure. 227
+This equation will work for any pressure supplies below the 620 kPa. We also anticipate 228
+the equation will also work for pressures up to 800 kPa (the maximum rated pressure for 229
+Festo 10 mm BPAs), however we do not have the data to confirm this.230
+https://doi.org/10.3390/act1010000
+Version March 2, 2026 submitted toActuators 9 of 10
+The improved BPA characterization more accurately predicts isometric force produced 231
+by the BPAs. Unlike Equation 9, it does not account for the hysteresis that occurs in BPAs. 232
+BPA artificial muscles are often said to be analogous to biological muscles because they 233
+have force length curves and can produce force only in tension. This analogy is worth 234
+closer inspection, although it should be kept in mind that biological muscle optimum fiber 235
+length lOFL is not equivalent to lrest. The improved Hill-muscle model of Thelen [22] shows 236
+an exponential term for a muscle’s passive force-length property concentric loading.237
+The analysis in this study has created novel equations for calculating force in Festo 238
+10 mm and 20 mm diameter BPAs. This study has elucidated the relationship between 239
+maximum BPA force at 620 kPa F620 as a function of resting length lrest (Equation 5, Equa- 240
+tion 6, Table 1). We have also created more accurate equations for the nondimensionalized 241
+force in a BPA as a function of relative strain ϵ∗ and relative pressure P∗, (Equation 8 and 242
+Table 2). Taken together, the F620(lrest ) fits and the nondimensional force surface F∗(ϵ∗, P∗)243
+provide a practical way to predict isometric BPA force across resting lengths using a small 244
+number of measurements. In a design workflow, these equations make it easier to select 245
+actuator diameter and resting length, and to evaluate whether a proposed routing can meet 246
+force and range-of-motion requirements before committing to a full prototype. As a result, 247
+BPA-driven mechanisms (e.g., joints in biomimetic legs or manipulators) can be developed 248
+with fewer design iterations and with realistic expectations of force output at short resting 249
+lengths. 250
+Author Contributions:Conceptualization, B.B. and A.H..; Methodology, B.B., A.H., M.E., and L.P .; 251
+Software, B.B., M.E., and L.P .; Validation, B.B. and A.H.; Formal Analysis, B.B.; Investigation, B.B., 252
+M.E., and L.P .; Resources, B.B. and A.H.; Data Curation, B.B. and L.P .; Writing – Original Draft 253
+Preparation, B.B.; Writing – Review & Editing, B.B., M.E., L.P ., and A.H.; Visualization, B.B. and A.H.; 254
+Supervision, B.B. and A.H.; Project Administration, B.B. and A.H.; Funding Acquisition, A.H.255
+Funding:Research for this article was funded by the Department of Mechanical and Materials 256
+Engineering at Portland State University, the National Science Foundation (NSF) grant for NeuroNex: 257
+Communication, Coordination, and Control in Systems (C3NS) 2015317 and NSF grant 1943483.258
+Data Availability Statement:The data sets are available from the authors upon reasonable request.259
+Acknowledgments:The authors would like to thank Jasmine Bradley for her help reworking the 260
+figures in the results section. As a visual designer, her contributions improved the aesthetic quality 261
+of the images and ensured data accessibility for people with color blindness. Furthermore, the 262
+authors would like to express their gratitude towards Cody Scharzenberger for all his assistance in 263
+proof-reading and editing the manuscript. 264
+Conflicts of Interest:The authors declare no conflicts of interest. The funders had no role in the design 265
+of the study; in the collection, analyses, or interpretation of data; in the writing of the manuscript; or 266
+in the decision to publish the results. 267
+Abbreviations 268
+The following abbreviations are used in this manuscript: 269
+270
+BPA Braided Pneumatic Actuators 271
+References 272
+1. Andrews, J.G. A General Method for Determining the Functional Role of a Muscle.Journal of Biomechanical Engineering1985, 273
+107, 348–353. https://doi.org/10.1115/1.3138568. 274
+2. Millard, M.; Uchida, T.; Seth, A.; Delp, S.L. Flexing Computational Muscle: Modeling and Simulation of Musculotendon 275
+Dynamics.Journal of Biomechanical Engineering2013,135, 021005. https://doi.org/10.1115/1.4023390.276
+https://doi.org/10.3390/act1010000
+Version March 2, 2026 submitted toActuators 10 of 10
+3. Arnold, E.M.; Ward, S.R.; Lieber, R.L.; Delp, S.L. A Model of the Lower Limb for Analysis of Human Movement.Ann Biomed Eng 277
+2010,38, 269–279. https://doi.org/10.1007/s10439-009-9852-5. 278
+4. Asano, Y.; Okada, K.; Inaba, M. Design principles of a human mimetic humanoid: Humanoid platform to study human 279
+intelligence and internal body system.Science Robotics2017,2. https://doi.org/10.1126/scirobotics.aaq0899.280
+5. Asano, Y.; Okada, K.; Inaba, M. Musculoskeletal design, control, and application of human mimetic humanoid Kenshiro.Bioinspir. 281
+Biomim.2019,14, 036011. https://doi.org/10.1088/1748-3190/ab03fc. 282
+6. Hitzmann, A.; Masuda, H.; Ikemoto, S.; Hosoda, K. Anthropomorphic musculoskeletal 10 degrees-of-freedom robot arm driven 283
+by pneumatic artificial muscles.Advanced Robotics2018,32, 865–878. https://doi.org/10.1080/01691864.2018.1494040.284
+7. Liu, X.; Rosendo, A.; Ikemoto, S.; Shimizu, M.; Hosoda, K. Robotic investigation on effect of stretch reflex and crossed 285
+inhibitory response on bipedal hopping.J. R. Soc. Interface2018,15, 20180024. Place: London WOS:000428576200018, 286
+https://doi.org/10.1098/rsif.2018.0024. 287
+8. Chen, J.; Zhong, S.; Kang, E.; Qiao, H. Realizing human-like manipulation with a musculoskeletal system and biologically 288
+inspired control scheme.Neurocomputing2019,339, 116–129. https://doi.org/10.1016/j.neucom.2018.12.069.289
+9. Ijspeert, A.J. Amphibious and Sprawling Locomotion: From Biology to Robotics and Back.Annual Review of Control, Robotics, and 290
+Autonomous Systems2020,3, 173–193. _eprint: https://doi.org/10.1146/annurev-control-091919-095731, https://doi.org/10.114 291
+6/annurev-control-091919-095731. 292
+10. He, J.; Gao, F. Mechanism, Actuation, Perception, and Control of Highly Dynamic Multilegged Robots: A Review.Chinese Journal 293
+of Mechanical Engineering2020,33, 79. https://doi.org/10.1186/s10033-020-00485-9. 294
+11. Liang, W.; Liu, H.; Wang, K.; Qian, Z.; Ren, L.; Ren, L. Comparative study of robotic artificial actuators and biological muscle. 295
+Advances in Mechanical Engineering2020,12, 1687814020933409. https://doi.org/10.1177/1687814020933409.296
+12. Veale, A.J.; Xie, S.Q. Towards compliant and wearable robotic orthoses: A review of current and emerging actuator technologies. 297
+Medical Engineering & Physics2016,38, 317–325. https://doi.org/10.1016/j.medengphy.2016.01.010.298
+13. Suzumori, K.; Faudzi, A.A. Trends in hydraulic actuators and components in legged and tough robots: a review.Advanced Robotics 299
+2018,32, 458–476. _eprint: https://doi.org/10.1080/01691864.2018.1455606, https://doi.org/10.1080/01691864.2018.1455606.300
+14. Madden, J.; Vandesteeg, N.; Anquetil, P .; Madden, P .; Takshi, A.; Pytel, R.; Lafontaine, S.; Wieringa, P .; Hunter, I. Artificial muscle 301
+technology: physical principles and naval prospects.IEEE Journal of Oceanic Engineering2004,29, 706–728. Conference Name: 302
+IEEE Journal of Oceanic Engineering, https://doi.org/10.1109/JOE.2004.833135. 303
+15. Hunt, A.; Graber-Tilton, A.; Quinn, R. Modeling length effects of braided pneumatic actuators. In Proceedings of the 304
+Volume 5A: 41st Mechanisms and Robotics Conference, Cleveland, OH, aug 2017; Vol. 58172, p. V05AT08A008. https: 305
+//doi.org/10.1115/detc2017-67458. 306
+16. Aschenbeck, K.; Kern, N.; Bachmann, R.; Quinn, R. Design of a Quadruped Robot Driven by Air Muscles. In Proceedings of the 307
+The First IEEE/RAS-EMBS International Conference on Biomedical Robotics and Biomechatronics, 2006. BioRob 2006., feb 2006, 308
+pp. 875–880. https://doi.org/10.1109/BIOROB.2006.1639201. 309
+17. Sárosi, J.; Pitel’, J.; Tóthová, M.; Hošovský, A.; Bíró, I. COMPARATIVE SURVEY OF VARIOUS STATIC AND DYNAMIC 310
+MODELS OF PNEUMATIC ARTIFICIAL MUSCLES.T ransactions of the Canadian Society for Mechanical Engineering2017,41, 825– 311
+844. https://doi.org/10.1139/tcsme-2017-514. 312
+18. Martens, M.; Boblan, I. Modeling the Static Force of a Festo Pneumatic Muscle Actuator: A New Approach and a Comparison to 313
+Existing Models.Actuators2017,6, 33. https://doi.org/10.3390/act6040033. 314
+19. Festo. Festo Fluidic Muscle DMSP, 2022. 315
+20. Lang, R. Festo MuscleSim, 2005. 316
+21. Chou, C.P .; Hannaford, B. Measurement and modeling of McKibben pneumatic artificial muscles.IEEE T ransactions on Robotics 317
+and Automation1996,12, 90–102. https://doi.org/10.1109/70.481753. 318
+22. Thelen, D.G. Adjustment of Muscle Mechanics Model Parameters to Simulate Dynamic Contractions in Older Adults.Journal of 319
+Biomechanical Engineering2003,125, 70–77. https://doi.org/10.1115/1.1531112. 320
+Disclaimer/Publisher’s Note:The statements, opinions and data contained in all publications are solely those of the individual 321
+author(s) and contributor(s) and not of MDPI and/or the editor(s). MDPI and/or the editor(s) disclaim responsibility for any injury to 322
+people or property resulting from any ideas, methods, instructions or products referred to in the content.323
+https://doi.org/10.3390/act1010000
