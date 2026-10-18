@@ -56,7 +56,8 @@ machine, NOT staleness.
   this repo is PUBLIC). MATLAB R2025a. Ghostscript at `D:\Anaconda\envs\gs\Library\bin`.
 - Custom skills are version-controlled in the `ZCode_Skills` repo (EB475WS4:
   `C:\Users\Ben Bolen\Documents\GitHub\ZCode_Skills`; easteregg2: same path — moved
-  there 2026-10-17; laptop: `Documents\GitHub\ZCode_Skills`). On EB475WS4
+  there 2026-10-17 from `D:\GitHub\ZCode_Skills` at Ben's request, junctions
+  repointed, git history intact at 62b9ef7; laptop: `Documents\GitHub\ZCode_Skills`). On EB475WS4
   `C:\Users\Ben Bolen\.zcode\skills\` holds directory junctions into that repo
   (animatlab, latex-overleaf, matlab, mujoco, neuroscience, opensim, python,
   sns-toolbox, solidworks, scone, dissertation). easteregg2 uses the same junction
