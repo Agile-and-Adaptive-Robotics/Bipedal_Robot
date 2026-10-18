@@ -319,6 +319,25 @@ class Syn6Network(SNSpinal.SpinalNetwork):
             n.add_connection(_syn(DRESS["drive_to_bs"], exc=True),
                              "DRIVE", "BS_ALPHA")
 
+        # 2026-10-16 per-side alpha/gamma HAND-DRIVE cells (parent
+        # contract, build_network.py): GAMMA_s -> this side's RG pair at
+        # descend_to_rg_e/f, ALPHA_s -> ipsilateral MNs at alpha_to_mn
+        # (inherited _wire_balance). Each side's cells built ONLY when
+        # its own G knob (gamma_s / alpha_s) > 0; default 0 = absent =
+        # syn6 build unchanged.
+        self.gamma_side = {s: bool(G.get(f"gamma_{s}", 0.0) > 0.0)
+                           for s in self.sides}
+        self.alpha_side = {s: bool(G.get(f"alpha_{s}", 0.0) > 0.0)
+                           for s in self.sides}
+        for side in self.sides:
+            for pre, on in (("GAMMA", self.gamma_side[side]),
+                            ("ALPHA", self.alpha_side[side])):
+                if not on:
+                    continue
+                self._add(f"{pre}_{side}", TAU["descend"], n)
+                n.add_input(f"{pre}_{side}")
+                self.inputs.append(f"{pre}_c_{side}")
+
         # ---- per-side circuitry ----
         for side in self.sides:
             self._build_rg(n, side)
@@ -395,6 +414,13 @@ class Syn6Network(SNSpinal.SpinalNetwork):
         n.add_connection(_syn(G["descend_to_rg_f"], exc=True), "DRIVE", rg_f)
         n.add_connection(_syn(G["posture_to_rg_e"], exc=True),
                          "POSTURE", rg_e)
+        # 2026-10-16 per-side gamma hand drive (only when G["gamma_s"]>0):
+        # GAMMA_side -> this side's RG pair at the DRIVE conductances.
+        if self.gamma_side.get(side):
+            n.add_connection(_syn(G["descend_to_rg_e"], exc=True),
+                             f"GAMMA_{side}", rg_e)
+            n.add_connection(_syn(G["descend_to_rg_f"], exc=True),
+                             f"GAMMA_{side}", rg_f)
         # brainstem dress (Shevtsova): gamma -> RG-E, alpha -> RG-F
         # (built only when G["syn6_brainstem"] > 0; see __post_init__)
         if self.brainstem:

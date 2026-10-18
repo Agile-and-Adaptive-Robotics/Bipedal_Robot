@@ -23,7 +23,12 @@ the window max; np.corrcoef of the two RG-E traces).
 Usage:
     python smoke_w2l.py [--tonic-e N] [--tonic-f N] [--freq HZ] [--width S]
                         [--duration S] [--contact-current N] [--c1 N]
-                        [--v3 N] [--contact-syn N] [--plot]
+                        [--contact-syn N] [--plot]
+                        [--tonic-e-l N --tonic-e-r N --tonic-f-l N
+                         --tonic-f-r N]   # per-side GAMMA (RG) overrides
+                        [--alpha-l N --alpha-r N]
+                                           # per-side ALPHA (MN) drive, nA
+                                           # (0 = not built = baseline)
 """
 from __future__ import annotations
 
@@ -73,6 +78,24 @@ def main() -> int:
                          "(W2L_GAINS['v3_weak'])")
     ap.add_argument("--duration", type=float, default=T_END_DEFAULT)
     ap.add_argument("--plot", action="store_true")
+    # ---- per-side drive (2026-10-16): gamma = per-side RG tonic offsets,
+    # alpha = per-side MN drive (builds ALPHA ports when nonzero). Defaults
+    # (None / 0.0) reproduce the symmetric baseline bit-exactly.
+    ap.add_argument("--tonic-e-l", type=float, default=None, dest="tonic_e_l",
+                    help="nA override for the L RG ext TONIC port only "
+                         "(default: --tonic-e, symmetric baseline)")
+    ap.add_argument("--tonic-e-r", type=float, default=None, dest="tonic_e_r",
+                    help="nA override for the R RG ext TONIC port only")
+    ap.add_argument("--tonic-f-l", type=float, default=None, dest="tonic_f_l",
+                    help="nA override for the L RG flx TONIC port only")
+    ap.add_argument("--tonic-f-r", type=float, default=None, dest="tonic_f_r",
+                    help="nA override for the R RG flx TONIC port only")
+    ap.add_argument("--alpha-l", type=float, default=0.0, dest="alpha_l",
+                    help="nA tonic alpha (MN-level) drive on the six L MN "
+                         "pools (0 = ports not built, bit-identical)")
+    ap.add_argument("--alpha-r", type=float, default=0.0, dest="alpha_r",
+                    help="nA tonic alpha (MN-level) drive on the six R MN "
+                         "pools (0 = ports not built)")
     args = ap.parse_args()
 
     gains = {}
@@ -82,7 +105,7 @@ def main() -> int:
         gains["c1_inh"] = args.c1
     if args.v3 is not None:
         gains["v3_weak"] = args.v3
-    net = build(gains=gains)
+    net = build(gains=gains, alpha_l=args.alpha_l, alpha_r=args.alpha_r)
     print(f"neurons: {len(net.idx)}  synapses: {net.n_synapses}  "
           f"inputs: {len(net.inputs)}")
 
@@ -97,6 +120,16 @@ def main() -> int:
                      ("L RG flx", "R RG flx")]}
     i_heel = {"L": net.input_index("L heel contact"),
               "R": net.input_index("R heel contact")}
+    # per-side gamma (fallback to the symmetric values when not given)
+    te = (args.tonic_e if args.tonic_e_l is None else args.tonic_e_l,
+          args.tonic_e if args.tonic_e_r is None else args.tonic_e_r)
+    tf = (args.tonic_f if args.tonic_f_l is None else args.tonic_f_l,
+          args.tonic_f if args.tonic_f_r is None else args.tonic_f_r)
+    # per-side alpha (list of (index, current); empty at defaults)
+    i_alpha = ([(net.input_index(p), args.alpha_l)
+                for p in net.inputs if p.startswith("ALPHA L ")] +
+               [(net.input_index(p), args.alpha_r)
+                for p in net.inputs if p.startswith("ALPHA R ")])
 
     watch = ["L RG ext", "L RG flx", "R RG ext", "R RG flx"]
     cols = {w: np.zeros(nsteps) for w in watch}
@@ -108,11 +141,15 @@ def main() -> int:
         t = k * dt
         u[:] = 0.0
         # (a) constant mild drive (stack DRIVE convention: both half-centers
-        # of a side carry tonic) + the verbatim 10 ms 10 nA kickoff pair
-        for i in i_tonic["E"]:
-            u[i] = args.tonic_e
-        for i in i_tonic["F"]:
-            u[i] = args.tonic_f
+        # of a side carry tonic) + the verbatim 10 ms 10 nA kickoff pair.
+        # Per-side overrides land here (gamma drive, L independent of R).
+        u[i_tonic["E"][0]] = te[0]        # TONIC L RG ext
+        u[i_tonic["E"][1]] = te[1]        # TONIC R RG ext
+        u[i_tonic["F"][0]] = tf[0]        # TONIC L RG flx
+        u[i_tonic["F"][1]] = tf[1]        # TONIC R RG flx
+        # alpha (MN-level) drive, per side (no-op at defaults)
+        for i, a_cur in i_alpha:
+            u[i] = a_cur
         u[i_s1] = 10.0 if t < kick_until else 0.0
         u[i_s2] = 10.0 if t < kick_until else 0.0
         # (b) alternating heel-contact trains at ~1 Hz, C = 20 nA

@@ -197,6 +197,8 @@ class W2LSplitNet:
     template: dict
     comm: float = 1.0
     gains: dict = field(default_factory=dict)   # merged over W2L_GAINS
+    alpha_l: float = 0.0    # MN-level ALPHA drive, LEFT (nA; 0 = no ports
+    alpha_r: float = 0.0    # built; != 0 adds 6 "ALPHA L/R ..." MN ports)
     net: object = field(init=False, default=None)
     compiled: object = field(init=False, default=None)
     idx: dict = field(default_factory=dict)
@@ -264,6 +266,28 @@ class W2LSplitNet:
             self.net.add_input(lab)
             self.inputs.append(port)
             self.port_targets[port] = lab
+
+        # ---- ALPHA drive ports (MN-level, per side; CONDITIONAL - lab law:
+        # extra input ports change compiled shapes even at zero current, so
+        # alpha == 0.0 builds NOTHING and the census stays bit-identical
+        # (87/164/6 coupled, 83/156/6 ablated; the M5 aff net adds its own
+        # on top). Separate LEFT/RIGHT alpha drive = tonic depolarizing
+        # current on all six MN pools of that side; one current port per MN
+        # ("ALPHA L Hip MN ext" ...), added 2026-10-16. GAMMA (RG-level)
+        # per-side drive needs no knob: the four TONIC ports above ARE it
+        # (the runner sets L and R independently).
+        self.alpha_ports = []
+        for side, a in (("L", self.alpha_l), ("R", self.alpha_r)):
+            if a == 0.0:
+                continue
+            for e in edges:
+                if e["tag"] == "mn_to_muscle" and e["to"].startswith(side):
+                    mn = e["from"]
+                    port = "ALPHA " + mn
+                    self.net.add_input(mn)
+                    self.inputs.append(port)
+                    self.port_targets[port] = mn
+                    self.alpha_ports.append(port)
 
         # ---- muscles: output ports of their MN (pass-through, g=1)
         for e in edges:
@@ -345,7 +369,8 @@ class W2LSplitNet:
         assert self.n_synapses == sum(expected.values()) == n_syn, \
             f"synapse transcription mismatch: {self.n_synapses} vs {n_syn}"
         assert dict(self.synapse_counts) == expected, "per-tag mismatch"
-        assert len(self.inputs) == 6, f"port count {len(self.inputs)} != 6"
+        assert len(self.inputs) == 6 + len(self.alpha_ports), \
+            f"port count {len(self.inputs)} != {6 + len(self.alpha_ports)}"
         assert len(self.muscle_outputs) == 12, "muscle outputs != 12"
         # the 4 crossed edges must be gone and the mirror/comm families present
         tags = expected
@@ -390,14 +415,19 @@ _TYPE_TAU = dict(ORIG._TYPE_TAU, **{"IN-C": "rg", "IN-V3": "rg"})
 
 
 def build(template_path=None, dt: float = DT, gains: dict | None = None,
-          tau_rg_nap_h: float | None = None, comm: float = 1.0) -> W2LSplitNet:
+          tau_rg_nap_h: float | None = None, comm: float = 1.0,
+          alpha_l: float = 0.0, alpha_r: float = 0.0) -> W2LSplitNet:
     """Build + compile the split-RG network.
 
     comm: commissural coupling scale. 1.0 = the documented bilateralrg gains
     (W2L_GAINS comm_c1/c1_inh/comm_v3/v3_weak); 0 = ABLATION (the 4 c1/V3
     neurons and all 10 commissural synapses are not built — conditional
     topology, not zero-gain edges). tau_rg_nap_h = the fixed h-gate tau
-    (period knob), applied to BOTH RGs."""
+    (period knob), applied to BOTH RGs. alpha_l / alpha_r: per-side MN-level
+    (ALPHA) drive, nA — 0.0 (default) builds no ports (bit-identical
+    census); nonzero adds six "ALPHA {L,R} ..." current ports on that
+    side's MN pools. GAMMA (RG-level) per-side drive = the four TONIC
+    ports, driven independently by the runner."""
     if template_path is None:
         template_path = SPINAL / "connectome_templates.json"
     tpl = json.loads(Path(template_path).read_text(encoding="utf-8"))
@@ -406,7 +436,8 @@ def build(template_path=None, dt: float = DT, gains: dict | None = None,
     if tau_rg_nap_h is not None:
         NAP["tau_max_h"] = float(tau_rg_nap_h)
     split = make_split_template(tpl["w2laproj"], comm=comm)
-    net = W2LSplitNet(template=split, comm=comm, gains=gains or {})
+    net = W2LSplitNet(template=split, comm=comm, gains=gains or {},
+                      alpha_l=alpha_l, alpha_r=alpha_r)
     net.compile(dt=dt)
     return net
 

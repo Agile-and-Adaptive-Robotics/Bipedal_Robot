@@ -48,7 +48,13 @@ C:\Users\Ben Bolen\.conda\envs\myo\python.exe smoke_w2l.py [--plot]
 ```
 
 Knobs: `--tonic-e 2.0 --tonic-f 3.0 --freq 1.0 --width 0.3
---contact-current 20 --c1 3.0 --v3 0.08 --contact-syn 1.0 --duration 24`.
+--contact-current 20 --c1 3.0 --v3 0.08 --contact-syn 1.0 --duration 24`
+**plus the per-side drive knobs (2026-10-16): `--tonic-e-l/-r`,
+`--tonic-f-l/-r` (GAMMA, RG-level — override one side's TONIC ports; unset
+= the symmetric baseline, bit-identical) and `--alpha-l/-r` (ALPHA,
+MN-level — a nonzero value builds six `ALPHA {L,R} ...` current ports on
+that side's MN pools via `build(alpha_l=..., alpha_r=...)`; 0 = ports not
+built, census (95, 208, 10) and the smoke output bit-identical).**
 The only read-only dependency on the parent stack is
 `from build_network import SNS_NumpyFixedTau` (the fixed-tau_h backend patch,
 single source of truth — see below).

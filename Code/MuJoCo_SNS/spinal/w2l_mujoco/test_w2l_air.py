@@ -85,11 +85,32 @@ def write_air_xml() -> None:
     txt = open(FIXED, encoding="utf-8").read()
     old = 'pos="-3.454 0 0.99298"'
     assert old in txt, "root pos pattern not found in w2l_mjcf_fixed.xml"
-    hdr = ("<!-- AIR VARIANT for milestones 3/4 (test_w2l_air.py): identical\n"
+    # 2026-10-16 REGRESSION FIX (w2l audit, overnight campaign): the
+    # 2026-09-30 MJCF rebuild gave the Root a FREEJOINT
+    # (make_w2l_mjcf.py <freejoint name="root"/>). Lifting the pos alone
+    # no longer holds the body in air - it free-falls the lift distance
+    # onto the ground (measured this session: 77646 ground contacts,
+    # joints pinned, gate a FAIL, causal gates crash on onA[2]). The AIR
+    # condition is a WELDED root at standing height (the pre-09-30
+    # semantics this gate was validated under, reports_20260925
+    # goal2_m3/m4/m5) -> weld it back IN THE AIR VARIANT ONLY: drop the
+    # freejoint and the spawn keyframe (its qpos carries 7 root values
+    # that would mismatch the welded nq). w2l_mjcf_fixed.xml itself is
+    # NOT touched - the ground/M6 path keeps its freejoint.
+    if '<freejoint name="root"/>' in txt:
+        txt = txt.replace('      <freejoint name="root"/>\n', '')
+        import re
+        txt, n_key = re.subn(r'[ \t]*<keyframe>.*?</keyframe>\s*\n?',
+                             '', txt, flags=re.S)
+        assert '<freejoint' not in txt and n_key == 1, \
+            "air-variant weld failed (freejoint/keyframe removal)"
+    hdr = ("<!-- AIR VARIANT for milestones 3/4/5 (test_w2l_air.py): identical\n"
            "     to w2l_mjcf_fixed.xml (axis-fixed body, see fix_joint_axes.py)\n"
-           "     except the welded Root is lifted +0.30 m so NO leg pose can\n"
-           "     reach the ground plane (leg vertical reach ~0.95 m). Keeps\n"
-           "     'no ground contact' provable (ground contacts == 0). -->\n")
+           "     except the Root is WELDED (freejoint removed - see the\n"
+           "     2026-10-16 regression note inside) and lifted +0.30 m so NO\n"
+           "     leg pose can reach the ground plane (leg vertical reach\n"
+           "     ~0.95 m). Keeps 'no ground contact' provable (ground\n"
+           "     contacts == 0). -->\n")
     new = 'pos="-3.454 0 %.5f"' % (0.99298 + KV["lift"])
     open(AIR, "w", encoding="utf-8").write(hdr + txt.replace(old, new))
 

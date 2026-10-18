@@ -1,0 +1,29 @@
+START Fri 10/16/2026 10:24:40.75 
+
+Traceback (most recent call last):
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\wean_tune_20261016.py", line 304, in <module>
+    cmd_one()
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\wean_tune_20261016.py", line 141, in cmd_one
+    res = run_eval(spec.get("tag", "one"), knobs,
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\wean_tune_20261016.py", line 123, in run_eval
+    apply_config(knobs, scale, overrides)
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\wean_tune_20261016.py", line 96, in apply_config
+    C.set_stage(4, base)
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\_curriculum.py", line 93, in set_stage
+    OW.load_fitted_baseline()
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\optuna_walk_v10.py", line 65, in load_fitted_baseline
+    print("fitted baseline loaded: " +
+ValueError: I/O operation on closed file.
+
+Traceback (most recent call last):
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\wean_tune_20261016.py", line 306, in <module>
+    cmd_gate()
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\wean_tune_20261016.py", line 174, in cmd_gate
+    r0 = cmd_spec_eval("gate_anchor", {k: 0.0 for k in DRIVE_KEYS}, 1.0)
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\wean_tune_20261016.py", line 166, in cmd_spec_eval
+    raise RuntimeError("subprocess eval failed")
+RuntimeError: subprocess eval failed
+EXITCODE 1 Fri 10/16/2026 10:24:43.36 
+START Fri 10/16/2026 10:26:33.00 
+GATE anchor -161.56754173676563 exact=True bootstrap -173.0970129592704 match=True wall 89.9/87.2 s
+EXITCODE 0 Fri 10/16/2026 10:29:30.10 

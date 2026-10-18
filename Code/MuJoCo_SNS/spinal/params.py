@@ -327,6 +327,28 @@ G = dict(
     # (reports_20260925/goal4_build_syn6.md) - the runner's
     # descend_to_rg_e/f edges already carry the descending-drive role.
     syn6_brainstem=0.0,
+    # ---- 2026-10-16 campaign: separate LEFT/RIGHT HAND DRIVE, split
+    # into ALPHA (tonic MN-pool drive) and GAMMA (RG/rhythm-level drive)
+    # - the per-side version of the Shevtsova brainstem gamma/alpha
+    # cells (ben_shevtsova_20260924.json rows "brainstem gamma/alpha").
+    # FOUR default-0 knobs per model (Ben's overnight-campaign spec):
+    #   gamma_l / gamma_r: per-side fraction of the scheduled DRIVE fed
+    #     into that side's GAMMA cell, which drives RG_E_s
+    #     (descend_to_rg_e) + RG_F_s (descend_to_rg_f) - i.e. side_s's
+    #     RG sees drive*(1+gamma_s) through the tuned conductances.
+    #   alpha_l / alpha_r: per-side fraction of the scheduled DRIVE fed
+    #     into that side's ALPHA cell -> EVERY ipsilateral MN pool at
+    #     the uniform alpha_to_mn conductance (tonic antigravity tone).
+    # Cells/ports/edges built ONLY when that side's knob > 0 (default
+    # 0 = absent = bit-identical: 410/376/1186 + the s3k anchor
+    # -161.56754173676563). JSON RULE: any study using these saves them
+    # in the winner json; the loader is a plain P.G assignment before
+    # build (recipe in reports_20261016/CHANGES_*_connectome_drive.md).
+    gamma_l=0.0,
+    gamma_r=0.0,
+    alpha_l=0.0,
+    alpha_r=0.0,
+    alpha_to_mn=0.5,   # ALPHA_s -> MN conductance (edges only when alpha_s > 0)
 )
 
 # Extra gains for the phase-reset pathways (not searched by default; the

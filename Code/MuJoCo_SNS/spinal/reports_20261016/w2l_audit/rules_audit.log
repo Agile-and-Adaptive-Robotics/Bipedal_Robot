@@ -1,0 +1,214 @@
+==============================================================================
+1. RULES FILE IDENTITY
+   D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\ben_rules_20260924.json
+   D:\GitHub\Bipedal_Robot\Neuromechanical_Models\Mujoco_SNS_models\Circuit_rules_CONNECTOME_md__connectome.json
+   payload identical: True  (sha daf0017baeb6e56a)
+
+==============================================================================
+2-4. RULES FAMILIES (verbatim from the JSON)
+   [heel] 5 edges
+      'heel: heel' -> 'IN-InF_2813' (IN-InF) sign=exc gain=0.5
+      'heel: heel' -> 'IN-InE_2806' (IN-InE) sign=exc gain=0.5
+      'heel: heel' -> 'IN-PF_2810' (IN-PF) sign=exc gain=0.5
+      'heel: heel' -> 'IN-PF_2812' (IN-PF) sign=exc gain=0.5
+      'heel: heel' -> 'IN-PF_2814' (IN-PF) sign=exc gain=0.5
+   [toe] 1 edges
+      'toe: toe' -> 'toe: toe IN' (IN-C) sign=exc gain=1
+   [toe_in] 1 edges
+      'toe: toe IN' -> 'IN-PF_dorsiflexion_inhibit' (IN-PF) sign=exc gain=5
+   [toedf_out] 1 edges
+      'IN-PF_dorsiflexion_inhibit' -> 'HC-PF-Dorsiflexion' (HC-PF-F) sign=inh gain=2.749
+   [ib_load] 3 edges
+      'ib_load: Ib grp' -> 'ib_load: RG-E' (HC-RG-E) sign=exc gain=0.5
+      'ib_load: Ib grp' -> 'IN-InE_2803' (IN-InE) sign=exc gain=0.5
+      'ib_load: Ib grp' -> 'HC-PF-E_2805' (HC-PF-E) sign=exc gain=0.5
+   [sn_ia_ii_to_HC] 4 edges
+      'SN-II_2844' -> 'HC-RG-F_2811' (HC-RG-F) sign=exc gain=0.5
+      'SN-II_2844' -> 'HC-PF-F_2817' (HC-PF-F) sign=exc gain=0.5
+      'SN-Ia_2843' -> 'HC-PF-F_2817' (HC-PF-F) sign=exc gain=0.5
+      'SN-Ia_2843' -> 'HC-RG-F_2811' (HC-RG-F) sign=exc gain=0.5
+   [edges INTO IN-PF_dorsiflexion_inhibit] 2
+      'HC-PF-E_2809' (HC-PF-E) -> sign=exc gain=2.749
+      'toe: toe IN' (IN-C) -> sign=exc gain=5
+
+==============================================================================
+5-8. BUILT NETS
+
+--- w2l_cpg / bilateralrg (contact-driven CPG) ---
+   [bilateralrg] neurons=95 synapses=208 inputs=10 outputs=12
+      ports: ['Stimulus_1', 'Stimulus_2 (10nA)', 'L heel contact', 'L toe contact', 'R heel contact', 'R toe contact', 'TONIC L RG ext', 'TONIC L RG flx', 'TONIC R RG ext', 'TONIC R RG flx']
+   -- afferent->HC (aff_HC_excite) + contact (contact_C20)
+      'L Hip flx Ia' -> 'L Hip PF flx'  (HC-PF-F) sign=exc g=0.08 tag=aff_HC_excite
+      'L Hip flx Ia' -> 'L RG flx'  (HC-RG-F) sign=exc g=0.08 tag=aff_HC_excite
+      'L Hip flx II' -> 'L Hip PF flx'  (HC-PF-F) sign=exc g=0.08 tag=aff_HC_excite
+      'L Hip flx II' -> 'L RG flx'  (HC-RG-F) sign=exc g=0.08 tag=aff_HC_excite
+      'L Hip ext Ib' -> 'L Hip PF ext'  (HC-PF-E) sign=exc g=0.08 tag=aff_HC_excite
+      'L Hip ext Ib' -> 'L RG ext'  (HC-RG-E) sign=exc g=0.08 tag=aff_HC_excite
+      'L Knee flx Ia' -> 'L Knee PF flx'  (HC-PF-F) sign=exc g=0.08 tag=aff_HC_excite
+      'L Knee flx Ia' -> 'L RG flx'  (HC-RG-F) sign=exc g=0.08 tag=aff_HC_excite
+      'L Knee flx II' -> 'L Knee PF flx'  (HC-PF-F) sign=exc g=0.08 tag=aff_HC_excite
+      'L Knee flx II' -> 'L RG flx'  (HC-RG-F) sign=exc g=0.08 tag=aff_HC_excite
+      'L Knee ext Ib' -> 'L Knee PF ext'  (HC-PF-E) sign=exc g=0.08 tag=aff_HC_excite
+      'L Knee ext Ib' -> 'L RG ext'  (HC-RG-E) sign=exc g=0.08 tag=aff_HC_excite
+      'R Hip flx Ia' -> 'R Hip PF flx'  (HC-PF-F) sign=exc g=0.08 tag=aff_HC_excite
+      'R Hip flx Ia' -> 'R RG flx'  (HC-RG-F) sign=exc g=0.08 tag=aff_HC_excite
+      'R Hip flx II' -> 'R Hip PF flx'  (HC-PF-F) sign=exc g=0.08 tag=aff_HC_excite
+      'R Hip flx II' -> 'R RG flx'  (HC-RG-F) sign=exc g=0.08 tag=aff_HC_excite
+      'R Hip ext Ib' -> 'R Hip PF ext'  (HC-PF-E) sign=exc g=0.08 tag=aff_HC_excite
+      'R Hip ext Ib' -> 'R RG ext'  (HC-RG-E) sign=exc g=0.08 tag=aff_HC_excite
+      'R Knee flx Ia' -> 'R Knee PF flx'  (HC-PF-F) sign=exc g=0.08 tag=aff_HC_excite
+      'R Knee flx Ia' -> 'R RG flx'  (HC-RG-F) sign=exc g=0.08 tag=aff_HC_excite
+      'R Knee flx II' -> 'R Knee PF flx'  (HC-PF-F) sign=exc g=0.08 tag=aff_HC_excite
+      'R Knee flx II' -> 'R RG flx'  (HC-RG-F) sign=exc g=0.08 tag=aff_HC_excite
+      'R Knee ext Ib' -> 'R Knee PF ext'  (HC-PF-E) sign=exc g=0.08 tag=aff_HC_excite
+      'R Knee ext Ib' -> 'R RG ext'  (HC-RG-E) sign=exc g=0.08 tag=aff_HC_excite
+      'L heel contact' -> 'L RG ext'  (HC-RG-E) sign=exc g=? tag=contact_C20
+      'L toe contact' -> 'L RG ext'  (HC-RG-E) sign=exc g=? tag=contact_C20
+      'L heel contact' -> 'L Hip PF ext'  (HC-PF-E) sign=exc g=? tag=contact_C20
+      'L toe contact' -> 'L Hip PF ext'  (HC-PF-E) sign=exc g=? tag=contact_C20
+      'L heel contact' -> 'L Knee PF ext'  (HC-PF-E) sign=exc g=? tag=contact_C20
+      'L toe contact' -> 'L Knee PF ext'  (HC-PF-E) sign=exc g=? tag=contact_C20
+      'L heel contact' -> 'L Hip MN ext'  (MN) sign=exc g=? tag=contact_C20
+      'L toe contact' -> 'L Hip MN ext'  (MN) sign=exc g=? tag=contact_C20
+      'L heel contact' -> 'L Knee MN ext'  (MN) sign=exc g=? tag=contact_C20
+      'L toe contact' -> 'L Knee MN ext'  (MN) sign=exc g=? tag=contact_C20
+      'R heel contact' -> 'R Hip PF ext'  (HC-PF-E) sign=exc g=? tag=contact_C20
+      'R toe contact' -> 'R Hip PF ext'  (HC-PF-E) sign=exc g=? tag=contact_C20
+      'R heel contact' -> 'R Knee PF ext'  (HC-PF-E) sign=exc g=? tag=contact_C20
+      'R toe contact' -> 'R Knee PF ext'  (HC-PF-E) sign=exc g=? tag=contact_C20
+      'R heel contact' -> 'R Hip MN ext'  (MN) sign=exc g=? tag=contact_C20
+      'R toe contact' -> 'R Hip MN ext'  (MN) sign=exc g=? tag=contact_C20
+      'R heel contact' -> 'R Knee MN ext'  (MN) sign=exc g=? tag=contact_C20
+      'R toe contact' -> 'R Knee MN ext'  (MN) sign=exc g=? tag=contact_C20
+      'R heel contact' -> 'R RG ext'  (HC-RG-E) sign=exc g=? tag=contact_C20
+      'R toe contact' -> 'R RG ext'  (HC-RG-E) sign=exc g=? tag=contact_C20
+
+--- w2l_mujoco split-RG (M4) ---
+   [split coupled] neurons=87 synapses=164 inputs=6 outputs=12
+      ports: ['Stimulus_1', 'Stimulus_2', 'TONIC L RG ext', 'TONIC L RG flx', 'TONIC R RG ext', 'TONIC R RG flx']
+
+--- w2l_mujoco aff net (M5, Ben's-rules afferents ON) ---
+   [aff] neurons=97 synapses=186 inputs=12 outputs=12
+      ports: ['Stimulus_1', 'Stimulus_2', 'PORT heel L', 'PORT toe L', 'PORT Ib L', 'PORT heel R', 'PORT toe R', 'PORT Ib R', 'TONIC L RG ext', 'TONIC L RG flx', 'TONIC R RG ext', 'TONIC R RG flx']
+   -- M5 afferent families (built-in gains)
+      'heel L' -> 'L RG ext IN'  (IN-InE) sign=exc g=? tag=heel_rge_in
+      'heel L' -> 'R RG flx IN'  (IN-InF) sign=exc g=? tag=heel_rge_in
+      'heel L' -> 'L Hip PF ext IN'  (IN-PF) sign=exc g=? tag=heel_pf
+      'heel L' -> 'L Knee PF ext IN'  (IN-PF) sign=exc g=? tag=heel_pf
+      'heel R' -> 'R RG ext IN'  (IN-InE) sign=exc g=? tag=heel_rge_in
+      'heel R' -> 'L RG flx IN'  (IN-InF) sign=exc g=? tag=heel_rge_in
+      'heel R' -> 'R Hip PF ext IN'  (IN-PF) sign=exc g=? tag=heel_pf
+      'heel R' -> 'R Knee PF ext IN'  (IN-PF) sign=exc g=? tag=heel_pf
+      'toe L' -> 'toe IN L'  (IN-C) sign=exc g=1.0 tag=toe_in
+      'toe IN L' -> 'TOEDF IN L'  (IN-PF) sign=exc g=5.0 tag=toe_df
+      'TOEDF IN L' -> 'L Ank MN flx'  (MN) sign=inh g=2.749 tag=toe_df_mn
+      'toe R' -> 'toe IN R'  (IN-C) sign=exc g=1.0 tag=toe_in
+      'toe IN R' -> 'TOEDF IN R'  (IN-PF) sign=exc g=5.0 tag=toe_df
+      'TOEDF IN R' -> 'R Ank MN flx'  (MN) sign=inh g=2.749 tag=toe_df_mn
+      'Ib grp L' -> 'L RG ext'  (HC-RG-E) sign=exc g=? tag=ib_load
+      'Ib grp L' -> 'L RG ext IN'  (IN-InE) sign=exc g=? tag=ib_load
+      'Ib grp L' -> 'L Hip PF ext'  (HC-PF-E) sign=exc g=? tag=ib_load
+      'Ib grp L' -> 'L Knee PF ext'  (HC-PF-E) sign=exc g=? tag=ib_load
+      'Ib grp R' -> 'R RG ext'  (HC-RG-E) sign=exc g=? tag=ib_load
+      'Ib grp R' -> 'R RG ext IN'  (IN-InE) sign=exc g=? tag=ib_load
+      'Ib grp R' -> 'R Hip PF ext'  (HC-PF-E) sign=exc g=? tag=ib_load
+      'Ib grp R' -> 'R Knee PF ext'  (HC-PF-E) sign=exc g=? tag=ib_load
+
+==============================================================================
+6. AFFERENT -> RG/PF HALF-CENTER EDGES (every net, enumerated)
+   [bilateralrg] 30 afferent-source edges onto HC/InE/InF:
+      'c1_L' -> 'R RG flx' (HC-RG-F) sign=inh tag=c1_SynAmp2.749
+      'c1_R' -> 'L RG flx' (HC-RG-F) sign=inh tag=c1_SynAmp2.749
+      'L Hip flx II' -> 'L Hip PF flx' (HC-PF-F) sign=exc tag=aff_HC_excite
+      'L Hip flx II' -> 'L RG flx' (HC-RG-F) sign=exc tag=aff_HC_excite
+      'L Hip ext Ib' -> 'L Hip PF ext' (HC-PF-E) sign=exc tag=aff_HC_excite
+      'L Hip ext Ib' -> 'L RG ext' (HC-RG-E) sign=exc tag=aff_HC_excite
+      'L Knee flx II' -> 'L Knee PF flx' (HC-PF-F) sign=exc tag=aff_HC_excite
+      'L Knee flx II' -> 'L RG flx' (HC-RG-F) sign=exc tag=aff_HC_excite
+      'L Knee ext Ib' -> 'L Knee PF ext' (HC-PF-E) sign=exc tag=aff_HC_excite
+      'L Knee ext Ib' -> 'L RG ext' (HC-RG-E) sign=exc tag=aff_HC_excite
+      'R Hip flx II' -> 'R Hip PF flx' (HC-PF-F) sign=exc tag=aff_HC_excite
+      'R Hip flx II' -> 'R RG flx' (HC-RG-F) sign=exc tag=aff_HC_excite
+      'R Hip ext Ib' -> 'R Hip PF ext' (HC-PF-E) sign=exc tag=aff_HC_excite
+      'R Hip ext Ib' -> 'R RG ext' (HC-RG-E) sign=exc tag=aff_HC_excite
+      'R Knee flx II' -> 'R Knee PF flx' (HC-PF-F) sign=exc tag=aff_HC_excite
+      'R Knee flx II' -> 'R RG flx' (HC-RG-F) sign=exc tag=aff_HC_excite
+      'R Knee ext Ib' -> 'R Knee PF ext' (HC-PF-E) sign=exc tag=aff_HC_excite
+      'R Knee ext Ib' -> 'R RG ext' (HC-RG-E) sign=exc tag=aff_HC_excite
+      'L heel contact' -> 'L RG ext' (HC-RG-E) sign=exc tag=contact_C20
+      'L toe contact' -> 'L RG ext' (HC-RG-E) sign=exc tag=contact_C20
+      'L heel contact' -> 'L Hip PF ext' (HC-PF-E) sign=exc tag=contact_C20
+      'L toe contact' -> 'L Hip PF ext' (HC-PF-E) sign=exc tag=contact_C20
+      'L heel contact' -> 'L Knee PF ext' (HC-PF-E) sign=exc tag=contact_C20
+      'L toe contact' -> 'L Knee PF ext' (HC-PF-E) sign=exc tag=contact_C20
+      'R heel contact' -> 'R Hip PF ext' (HC-PF-E) sign=exc tag=contact_C20
+      'R toe contact' -> 'R Hip PF ext' (HC-PF-E) sign=exc tag=contact_C20
+      'R heel contact' -> 'R Knee PF ext' (HC-PF-E) sign=exc tag=contact_C20
+      'R toe contact' -> 'R Knee PF ext' (HC-PF-E) sign=exc tag=contact_C20
+      'R heel contact' -> 'R RG ext' (HC-RG-E) sign=exc tag=contact_C20
+      'R toe contact' -> 'R RG ext' (HC-RG-E) sign=exc tag=contact_C20
+   [split] 2 afferent-source edges onto HC/InE/InF:
+      'c1_L' -> 'R RG flx' (HC-RG-F) sign=inh tag=c1_SynAmp2.749
+      'c1_R' -> 'L RG flx' (HC-RG-F) sign=inh tag=c1_SynAmp2.749
+   [aff] 14 afferent-source edges onto HC/InE/InF:
+      'c1_L' -> 'R RG flx' (HC-RG-F) sign=inh tag=c1_SynAmp2.749
+      'c1_R' -> 'L RG flx' (HC-RG-F) sign=inh tag=c1_SynAmp2.749
+      'heel L' -> 'L RG ext IN' (IN-InE) sign=exc tag=heel_rge_in
+      'heel L' -> 'R RG flx IN' (IN-InF) sign=exc tag=heel_rge_in
+      'heel R' -> 'R RG ext IN' (IN-InE) sign=exc tag=heel_rge_in
+      'heel R' -> 'L RG flx IN' (IN-InF) sign=exc tag=heel_rge_in
+      'Ib grp L' -> 'L RG ext' (HC-RG-E) sign=exc tag=ib_load
+      'Ib grp L' -> 'L RG ext IN' (IN-InE) sign=exc tag=ib_load
+      'Ib grp L' -> 'L Hip PF ext' (HC-PF-E) sign=exc tag=ib_load
+      'Ib grp L' -> 'L Knee PF ext' (HC-PF-E) sign=exc tag=ib_load
+      'Ib grp R' -> 'R RG ext' (HC-RG-E) sign=exc tag=ib_load
+      'Ib grp R' -> 'R RG ext IN' (IN-InE) sign=exc tag=ib_load
+      'Ib grp R' -> 'R Hip PF ext' (HC-PF-E) sign=exc tag=ib_load
+      'Ib grp R' -> 'R Knee PF ext' (HC-PF-E) sign=exc tag=ib_load
+
+==============================================================================
+7. AUTOGENIC STRUCTURE (template per-pool chains + active Ib source)
+   [bilateralrg] ib_auto (SN-Ib -> homonymous MN) 12 edges: sources=['L Ank ext Ib', 'L Ank flx Ib', 'L Hip ext Ib', 'L Hip flx Ib', 'L Knee ext Ib', 'L Knee flx Ib', 'R Ank ext Ib', 'R Ank flx Ib', 'R Hip ext Ib', 'R Hip flx Ib', 'R Knee ext Ib', 'R Knee flx Ib']
+      ia_recip 24 edges; SN-Ia sources=['L Ank ext Ia IN', 'L Ank flx Ia IN', 'L Hip ext Ia IN', 'L Hip flx Ia IN', 'L Knee ext Ia IN', 'L Knee flx Ia IN', 'R Ank ext Ia IN', 'R Ank flx Ia IN', 'R Hip ext Ia IN', 'R Hip flx Ia IN', 'R Knee ext Ia IN', 'R Knee flx Ia IN']
+   [aff] ib_auto (SN-Ib -> homonymous MN) 12 edges: sources=['L Ank ext Ib', 'L Ank flx Ib', 'L Hip ext Ib', 'L Hip flx Ib', 'L Knee ext Ib', 'L Knee flx Ib', 'R Ank ext Ib', 'R Ank flx Ib', 'R Hip ext Ib', 'R Hip flx Ib', 'R Knee ext Ib', 'R Knee flx Ib']
+      ia_recip 24 edges; SN-Ia sources=['L Ank ext Ia IN', 'L Ank flx Ia IN', 'L Hip ext Ia IN', 'L Hip flx Ia IN', 'L Knee ext Ia IN', 'L Knee flx Ia IN', 'R Ank ext Ia IN', 'R Ank flx Ia IN', 'R Hip ext Ia IN', 'R Hip flx Ia IN', 'R Knee ext Ia IN', 'R Knee flx Ia IN']
+
+==============================================================================
+8. MUSCLE-MAP TODO SCAN (spinal root, one level of .py)
+   w2l_mujoco .py files: 18
+   spinal/build_network_w2lvar.py: imports/mentions w2l_cpg
+   spinal/make_editor_templates.py: imports/mentions w2l_cpg
+   (runner.py wiring w2l_cpg into the 92-muscle model would appear above; README says NOT wired)
+
+==============================================================================
+9. PER-SIDE MN + MUSCLE LABELS (drive-plan entry points)
+   [bilateralrg] mn_to_muscle map (MN -> MUSCLE node label):
+      'R Ank MN flx' -> 'R_ankle dorsiflexion'
+      'L Ank MN flx' -> 'L_ankle dorsiflexion'
+      'R Hip MN flx' -> 'R Hip flx'
+      'R Knee MN flx' -> 'R_knee flexion'
+      'R Knee MN ext' -> 'R_knee extension'
+      'L Knee MN flx' -> 'L_knee flexion'
+      'L Ank MN ext' -> 'L_ankle plantarflexion'
+      'R Ank MN ext' -> 'R_ankle plantarflexion'
+      'R Hip MN ext' -> 'R Hip ext'
+      'L Hip MN flx' -> 'L Hip flx'
+      'L Hip MN ext' -> 'L Hip ext'
+      'L Knee MN ext' -> 'L_knee extension'
+      actuator map (MUSCLE_MAP): {'R_ankle dorsiflexion': 'R Ank MN flx', 'L_ankle dorsiflexion': 'L Ank MN flx', 'R Hip flx': 'R Hip MN flx', 'R_knee flexion': 'R Knee MN flx', 'R_knee extension': 'R Knee MN ext', 'L_knee flexion': 'L Knee MN flx', 'L_ankle plantarflexion': 'L Ank MN ext', 'R_ankle plantarflexion': 'R Ank MN ext', 'R Hip ext': 'R Hip MN ext', 'L Hip flx': 'L Hip MN flx', 'L Hip ext': 'L Hip MN ext', 'L_knee extension': 'L Knee MN ext'}
+   [aff] mn_to_muscle map (MN -> MUSCLE node label):
+      'R Ank MN flx' -> 'R_ankle dorsiflexion'
+      'L Ank MN flx' -> 'L_ankle dorsiflexion'
+      'R Hip MN flx' -> 'R Hip flx'
+      'R Knee MN flx' -> 'R_knee flexion'
+      'R Knee MN ext' -> 'R_knee extension'
+      'L Knee MN flx' -> 'L_knee flexion'
+      'L Ank MN ext' -> 'L_ankle plantarflexion'
+      'R Ank MN ext' -> 'R_ankle plantarflexion'
+      'R Hip MN ext' -> 'R Hip ext'
+      'L Hip MN flx' -> 'L Hip flx'
+      'L Hip MN ext' -> 'L Hip ext'
+      'L Knee MN ext' -> 'L_knee extension'
+      actuator map (MUSCLE_MAP): {'ankle_R_flx': 'R Ank MN flx', 'ankle_L_flx': 'L Ank MN flx', 'hip_R_ext': 'R Hip MN flx', 'knee_R_flx': 'R Knee MN flx', 'knee_R_ext': 'R Knee MN ext', 'knee_L_flx': 'L Knee MN flx', 'ankle_L_ext': 'L Ank MN ext', 'ankle_R_ext': 'R Ank MN ext', 'hip_R_flx': 'R Hip MN ext', 'hip_L_flx': 'L Hip MN flx', 'hip_L_ext': 'L Hip MN ext', 'knee_L_ext': 'L Knee MN ext'}
+
+AUDIT SCRIPT DONE
