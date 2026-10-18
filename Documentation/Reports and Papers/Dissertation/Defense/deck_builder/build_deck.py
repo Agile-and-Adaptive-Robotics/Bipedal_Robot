@@ -19,7 +19,7 @@ n2 = slides_b.build(prs, n1 + 1)
 n3 = slides_c.build(prs, n2 + 1)
 n4 = slides_d.build(prs, n3 + 1)
 
-OUT = r"D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Defense\Bolen_Dissertation_Defense.pptx"
+OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Bolen_Dissertation_Defense.pptx")
 prs.core_properties.title = "Movement and Control of Biomimetic Humanoid Robots"
 prs.core_properties.author = "Ben P. Bolen"
 prs.save(OUT)

@@ -155,12 +155,12 @@ def a6_protocol(prs, n):
     s = content_slide(prs, "Appendix F \u00b7 protocol",
         "Identification campaign details and data decisions",
         cite="Ch. 4 \u00a74.1 (identification); test constants: App. C \u00a7C.1; bounds and adopted values: App. C \u00a7\u00a7C.4\u2013C.5",
-        notes="Protocol of record. Data rulings: the +5.3 degree encoder correction on the 47.9 cm flexor test (applied to experimental angles at load time), and the a-priori exclusion of extensor tests 3, 4, and 9. The stiffness pair is not unique - the adopted pair is the one for which both redesign configurations meet the required 5 percent overshoot simultaneously. Anticipated question: why gamultiobj? Answer: the Pareto front is required for holdout validation; settings of record - flexor: population 150, up to 600 generations, spread tolerance 4e-3; extensor: population 50, up to 150 generations, 1e-3.")
+        notes="Protocol of record. Data rulings: the +5.3 degree encoder correction on the 47.9 cm flexor test (applied to experimental angles at load time), and the three extensor tests not used in the evaluation (3, 4, and 9). The stiffness pair is not unique - the adopted pair is the one for which both redesign configurations meet the required 5 percent overshoot simultaneously. Anticipated question: why gamultiobj? Answer: the Pareto front is required for holdout validation; settings of record - flexor: population 150, up to 600 generations, spread tolerance 4e-3; extensor: population 50, up to 150 generations, 1e-3.")
     items = [
         ("Encoder correction",
-         "the 47.9 cm flexor test\u2019s measured angles carry a +5.3\u00b0 correction at load time (App. C, Table C-1); it was held out of training as pure validation"),
+         "the 47.9 cm flexor test\u2019s measured angles carry a +5.3\u00b0 correction at load time (App. C, Table C-1); it was not used in the identification, and its corrected-model fit is a post hoc evaluation"),
         ("Training / validation",
-         "flexor: four training tests, 47.9 cm held out \u00b7 extensor: six-test pool {1, 2, 5, 6, 7, 8}; tests 3, 4, and 9 excluded a priori"),
+         "flexor: four tests cross-validated, 2 training / 2 held-out per fold (adopted fold: 48.5 + 41.0 cm train, 45.7 + 40.6-tendon validate) \u00b7 extensor: training {43, 43-tendon, 46 cm}, validation {40, 40-tendon, 47 cm}; 42, 42-tendon, and 48 cm not used"),
         ("Non-uniqueness handled explicitly",
          "a family of stiffness pairs fits the training tests nearly equally well; the adopted pair (pooled-front row 77; extensor locked refit row 32) is the one for which both redesigns meet the required 5% overshoot simultaneously (+5.01% flexor, +5.02% extensor)"),
         ("Solver settings of record",

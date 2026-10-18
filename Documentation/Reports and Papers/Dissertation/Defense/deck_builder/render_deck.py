@@ -1,7 +1,7 @@
 import os, sys
 import win32com.client
 
-PPTX = r"D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Defense\Bolen_Dissertation_Defense.pptx"
+PPTX = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Bolen_Dissertation_Defense.pptx")
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "deck_render")
 os.makedirs(OUT, exist_ok=True)
 for f in os.listdir(OUT):

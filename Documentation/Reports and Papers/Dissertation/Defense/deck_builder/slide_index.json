@@ -192,7 +192,7 @@
    "CH. 4 · IDENTIFICATION PROTOCOL",
    "Terms identified by multiobjective optimization, judged on held-out tests",
    "Ch. 4, identification (gamultiobj / NSGA-II, Deb 2002); bounds: Appendix C, Table C.3 (app_opt_bounds)",
-   "5 pinned-flexor tests | (48.5 / 45.7 / 47.9 / 40.6-tendon / 41.0 cm)"
+   "4 pinned-flexor tests | (48.5 / 45.7 / 40.6-tendon / 41.0 cm)"
   ],
   "notes": true,
   "notes_head": "gamultiobj: flexor two-bracket fit evolves 150 for up to 600 generations, extensor refit 50 for 150; parameters searched normalized (cm, log"
@@ -212,12 +212,12 @@
   "n": 20,
   "texts": [
    "CH. 4 · PINNED FLEXOR",
-   "Corrections cut flexor training-mean RMSE from 8.12 to 1.56 N·m; held-out validates at 2.29",
+   "Corrections cut flexor training-mean RMSE from 8.66 to 1.62 N·m; validation mean 7.59 → 1.49",
    "Ch. 4, Table FlxPinGof (corrected model, adopted terms); Appendix C, Table app_gof",
-   "FVU (all five tests) | 0.17 / 0.05 / 0.16 / 0.04 / 0.03 | * 47.9 cm test | encoder-corrected, never trained on"
+   "FVU (4 identification tests) | 0.17 / 0.03 / 0.05 / 0.04 | 47.9 cm test | encoder-corrected, not used in the i"
   ],
   "notes": true,
-  "notes_head": "Zero-correction per-test RMSE spans 6.37-9.69 N-m (improved BPA characterization alone); corrected FVU stays at or below 0.17 on all five te"
+  "notes_head": "Zero-correction per-test RMSE spans 6.37-9.69 N-m (improved BPA characterization alone); corrected FVU stays at or below 0.18 on the four id"
  },
  {
   "n": 21,
@@ -228,18 +228,18 @@
    "χ₀ = −6.38 mm | extensor length offset: OPPOSITE sign to the flexor's +3.94 mm"
   ],
   "notes": true,
-  "notes_head": "Validation test 45.7 cm: RMSE 2.178 to 0.490 N-m, FVU 1.059 to 0.054. The stiffness pair is locked to the flexor-identified values and never"
+  "notes_head": "The 45.7 cm test trained the extensor fit (RMSE 2.178 to 0.490 N-m); the validation trio is 40.0, 40.0-tendon, and 46.5 cm (triple mean 2.55"
  },
  {
   "n": 22,
   "texts": [
    "CH. 4 · VALUES OF RECORD",
    "One stiffness pair of record spans the flexor and extensor configurations",
-   "Appendix C, Table app_xi_values; flexor front row 77 of 212, extensor flxr77 row 32",
+   "Appendix C, Table app_xi_values; flexor front row 77 of 212, extensor front row 32 (pair locked to row 77)",
    "Term"
   ],
   "notes": true,
-  "notes_head": "Mats of record: minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat row 77, and minimizeExt10mmX3_results_20260920_flxr77.mat row 32 (pa"
+  "notes_head": "Mats of record: minimizeFlxPin10_results.mat row 77, and minimizeExt10mmX3_results.mat row 32 (pair locked to row 77). Initial single-bracke"
  },
  {
   "n": 23,

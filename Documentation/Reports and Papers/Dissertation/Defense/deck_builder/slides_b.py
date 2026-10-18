@@ -83,9 +83,9 @@ def s18_identification(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 identification protocol",
         "Terms identified by multiobjective optimization, judged on held-out tests",
         cite="Ch. 4, identification (gamultiobj / NSGA-II, Deb 2002); bounds: Appendix C, Table C.3 (app_opt_bounds)",
-        notes="gamultiobj: flexor two-bracket fit evolves 150 for up to 600 generations, extensor refit 50 for 150; parameters searched normalized (cm, log stiffness). The encoder-corrected 47.9 cm test is never trained on. Q: why hold one test out? A: the pinned-flexor data admit a family of stiffness pairs of comparable fit, so the adopted set is selected by held-out prediction, not residual minimization.")
-    node(s, MX, 2.0, 3.3, 1.0, "5 pinned-flexor tests\n(48.5 / 45.7 / 47.9 / 40.6-tendon / 41.0 cm)", fill=CARD2, size=12.5)
-    node(s, MX + 3.9, 2.0, 2.6, 1.0, "train on 4\nhold out 47.9 cm", fill=CARD, size=12.5)
+        notes="gamultiobj: flexor two-bracket fit evolves 150 for up to 600 generations, extensor refit 50 for 150; parameters searched normalized (cm, log stiffness). The encoder-corrected 47.9 cm test was not used in the two-bracket identification at all. Q: why hold tests out? A: the pinned-flexor data admit a family of stiffness pairs of comparable fit, so the adopted set is selected by held-out prediction, not residual minimization.")
+    node(s, MX, 2.0, 3.3, 1.0, "4 pinned-flexor tests\n(48.5 / 45.7 / 40.6-tendon / 41.0 cm)", fill=CARD2, size=12.5)
+    node(s, MX + 3.9, 2.0, 2.6, 1.0, "cross-validate:\n2 train / 2 hold per fold", fill=CARD, size=12.5)
     node(s, MX + 7.1, 2.0, 2.3, 1.0, "Pareto front\n{RMSE, FVU, max res.}", fill=CARD, size=12.5)
     node(s, MX + 9.85, 2.0, 2.35, 1.0, "pick: held-out fit +\ncross-configuration", fill=CARD, size=12.5)
     arrow(s, MX + 3.35, 2.5, MX + 3.85, 2.5); arrow(s, MX + 6.55, 2.5, MX + 7.05, 2.5); arrow(s, MX + 9.45, 2.5, MX + 9.8, 2.5)
@@ -117,19 +117,19 @@ def s19_flexor_opt(prs, n):
 
 def s20_flexor_numbers(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 pinned flexor",
-        "Corrections cut flexor training-mean RMSE from 8.12 to 1.56 N\u00b7m; held-out validates at 2.29",
+        "Corrections cut flexor training-mean RMSE from 8.66 to 1.62 N\u00b7m; validation mean 7.59 \u2192 1.49",
         cite="Ch. 4, Table FlxPinGof (corrected model, adopted terms); Appendix C, Table app_gof",
-        notes="Zero-correction per-test RMSE spans 6.37-9.69 N-m (improved BPA characterization alone); corrected FVU stays at or below 0.17 on all five tests, the 47.9 cm test being pure held-out validation. Q: why is held-out slightly worse than the training mean? A: 2.29 vs 1.56 N-m is expected; it is still 3.3x better than its own zero-correction RMSE of 7.67.")
+        notes="Zero-correction per-test RMSE spans 6.37-9.69 N-m (improved BPA characterization alone); corrected FVU stays at or below 0.18 on the four identification tests, the worst case being the 48.5 cm training test at 0.172. Training pair: 48.5 + 41.0 cm (zero-correction mean 8.66); validation pair: 45.7 + 40.6-tendon (mean 7.59). Q: what about the fifth test? A: the encoder-corrected 47.9 cm test was not used in the identification; its post hoc evaluation improves from 7.67 to 2.29 N-m (Appendix C).")
     bar_chart(s, 0.7, 2.0, 8.1, 4.5,
-              ["48.5 cm", "45.7 cm", "47.9 cm*", "40.6 cm-tendon", "41.0 cm"], [2.165, 1.368, 2.287, 1.611, 1.084],
-              [GREEN, GREEN, TEAL, GREEN, GREEN],
+              ["48.5 cm (train)", "41.0 cm (train)", "45.7 cm (val)", "40.6 cm-t (val)"], [2.165, 1.084, 1.368, 1.611],
+              [GREEN, GREEN, TEAL, TEAL],
               title="per-test torque RMSE at adopted \u03c7 values (N\u00b7m)", num_fmt="0.000", max_scale=2.6)
     card(s, 9.2, 2.2, 3.55, 4.2, fill=CARD)
     rich(s, 9.45, 2.42, 3.1, 3.9, [
-        {"t": "FVU (all five tests)", "size": 12, "color": TEAL, "bold": True, "space_after": 2},
-        {"t": "0.17 / 0.05 / 0.16 / 0.04 / 0.03", "size": 14.5, "color": TEXT, "spacing": 1.1, "space_after": 12},
-        {"t": "* 47.9 cm test", "size": 12, "color": TEAL, "bold": True, "space_after": 2},
-        {"t": "encoder-corrected, never trained on: pure held-out validation.", "size": 13.5, "color": TEXT, "spacing": 1.12, "space_after": 12},
+        {"t": "FVU (4 identification tests)", "size": 12, "color": TEAL, "bold": True, "space_after": 2},
+        {"t": "0.17 / 0.03 / 0.05 / 0.04", "size": 14.5, "color": TEXT, "spacing": 1.1, "space_after": 12},
+        {"t": "47.9 cm test", "size": 12, "color": TEAL, "bold": True, "space_after": 2},
+        {"t": "encoder-corrected, not used in the identification; improves post hoc (App. C).", "size": 13.5, "color": TEXT, "spacing": 1.12, "space_after": 12},
         {"t": "Every test predicts.", "size": 14, "color": BROWN, "bold": True, "spacing": 1.1},
     ])
     pageno(s, n)
@@ -138,13 +138,13 @@ def s21_extensor(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 pinned extensor",
         "The extensor wraps the joint - and \u03c7\u2083 recovers the length it loses there",
         cite="Ch. 4, Table ExtPinGof + follow-up identification (adopted \u03c7 values); wrap loss: Eq. \u0394l = \u03c7\u2083 R |\u0394\u03b8| \u03b6\u00b2",
-        notes="Validation test 45.7 cm: RMSE 2.178 to 0.490 N-m, FVU 1.059 to 0.054. The stiffness pair is locked to the flexor-identified values and never searched. Initial single-bracket extensor values were chi0 = -10.9 mm, chi3 = 0.123 (Table OptCoeff). Q: why does chi0 flip sign? A: wrapping consumes usable length, so the extensor behaves as if longer; its zero point shifts opposite to the flexor's.")
+        notes="The 45.7 cm test trained the extensor fit (RMSE 2.178 to 0.490 N-m); the validation trio is 40.0, 40.0-tendon, and 46.5 cm (triple mean 2.55 to 1.10 N-m). The stiffness pair is locked to the flexor-identified values and never searched. Initial single-bracket extensor values were chi0 = -10.9 mm, chi3 = 0.123 (Table OptCoeff). Q: why does chi0 flip sign? A: wrapping consumes usable length, so the extensor behaves as if longer; its zero point shifts opposite to the flexor's.")
     pic(s, os.path.join(FIG, "ExtPin_group.png"), box=(0.6, 1.9, 7.2, 4.85))
     stats = [
         ("\u03c7\u2080 = \u22126.38 mm", "extensor length offset: OPPOSITE sign to the flexor's +3.94 mm", RED),
         ("\u03c7\u2083 = 0.158", "fractional wrap loss acting on arc length \u00d7 \u03b6\u00b2", BROWN),
-        ("0.49\u20131.53 N\u00b7m", "corrected RMSE, improved in every pool test (6/6)", GREEN),
-        ("2.60 \u2192 1.16 N\u00b7m", "fitting-set mean RMSE; FVU < 1 on all but the 43.2 cm tendon test", TEAL),
+        ("0.49\u20131.53 N\u00b7m", "corrected RMSE, improved in every used test (6/6)", GREEN),
+        ("2.50 \u2192 1.00 / 2.55 \u2192 1.10 N\u00b7m", "training / validation triple means; FVU < 1 on all but the 43.2 cm tendon test", TEAL),
     ]
     y = 2.0
     for v, lab, c in stats:
@@ -159,8 +159,8 @@ def s21_extensor(prs, n):
 def s22_xi_record(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 values of record",
         "One stiffness pair of record spans the flexor and extensor configurations",
-        cite="Appendix C, Table app_xi_values; flexor front row 77 of 212, extensor flxr77 row 32",
-        notes="Mats of record: minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat row 77, and minimizeExt10mmX3_results_20260920_flxr77.mat row 32 (pair locked to row 77). Initial single-bracket values (Table OptCoeff): flexor 11.9 mm / 1.02e5 / 1.06e4 N/m; extensor -10.9 mm / 0.123. Q: how sensitive is the redesign to the pair choice? A: the adoption campaign screened the front for a pair meeting both targets simultaneously: +5.00% flexor and +5.043% extensor at adoption, refined to +5.01% and +5.02% (Appendix C).")
+        cite="Appendix C, Table app_xi_values; flexor front row 77 of 212, extensor front row 32 (pair locked to row 77)",
+        notes="Mats of record: minimizeFlxPin10_results.mat row 77, and minimizeExt10mmX3_results.mat row 32 (pair locked to row 77). Initial single-bracket values (Table OptCoeff): flexor 11.9 mm / 1.02e5 / 1.06e4 N/m; extensor -10.9 mm / 0.123. Q: how sensitive is the redesign to the pair choice? A: the adoption screen chose the pair meeting both targets simultaneously: +5.00% flexor and +5.043% extensor at adoption, refined to +5.01% and +5.02% (Appendix C).")
     hdr = ["Term", "Value", "Source", "Row"]
     rows = [
         ("Flexor \u03c7\u2080", "+3.94 mm", "App. C", "77"),

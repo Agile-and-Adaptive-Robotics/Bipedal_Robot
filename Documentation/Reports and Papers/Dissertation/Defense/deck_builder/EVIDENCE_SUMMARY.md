@@ -65,10 +65,10 @@ appendices 92/93/94 = A/B/C. Chapter paths below are
 | 15 | Two test stands: pinned + biomimetic four-bar | ⌀10/⌀20 mm; 1.83 m donor | 30-torque.tex:33,22,55,24 |
 | 16 | Hybrid method: the error is kinematic, not force | M = r × F, measured Lm, rk | 30-torque.tex:63-78,338,346 |
 | 17 | Three effects close the gap: offset, compliance, wrap loss | ζ = 1 − ε*; bracketed fzero | 30-torque.tex:88-93,97-99,141-151,211-230,278-291,246-252,126-132,254-270 |
-| 18 | Terms identified by multiobjective optimization, held-out judged | 48.5/45.7/47.9/40.6/41.0 cm; bounds; pop 150/600, 50/150 | 30-torque.tex:301,373-377,305,319; 94-AppendixC.tex:175-186 |
+| 18 | Terms identified by multiobjective optimization, held-out judged | 4 tests, 2 train / 2 hold per fold; 47.9 cm not used; bounds; pop 150/600, 50/150 | 30-torque.tex:301,305,373-377,319; 94-AppendixC.tex:18,175-186 |
 | 19 | Corrected prediction tracks measurement incl. the dip | RMSE 1.616 / 2.1214 N·m | 30-torque.tex:346,348,469-470 |
-| 20 | Flexor training-mean RMSE 8.12 → 1.56; held-out 2.29 ✔ | per-test 2.165/1.368/2.287/1.611/1.084; FVU ≤ 0.17 | 30-torque.tex:362,373-380,502; 94-AppendixC.tex:212-236 |
-| 21 | Extensor wraps; χ₃ recovers lost length ✔ | χ₀ −6.38 mm; χ₃ 0.158; 2.60 → 1.16 N·m; 2.178 → 0.490 | 30-torque.tex:502,409-417,398,358,387,396 |
+| 20 | Flexor training-mean RMSE 8.66 → 1.62; validation 7.59 → 1.49 ✔ | per-test 2.165/1.084/1.368/1.611; FVU ≤ 0.18; 47.9 post hoc | 30-torque.tex:358-360,373-380,502; 94-AppendixC.tex:212-236 |
+| 21 | Extensor wraps; χ₃ recovers lost length ✔ | χ₀ −6.38 mm; χ₃ 0.158; training 2.50 → 1.00, validation 2.55 → 1.10 N·m | 30-torque.tex:502,409-417,398,358,387,396 |
 | 22 | One stiffness pair of record spans configurations ✔ | +3.94 mm; 3.998×10⁴; 1.473×10⁴ N/m; rows 77/32 | 94-AppendixC.tex:196-203,207,192; 30-torque.tex:502 |
 | 23 | Biomimetic knee meets/exceeds human flexor torque | shortfall 60–100°; RMSE 1.80 / 0.30 N·m | 30-torque.tex:451,457,472-473 |
 | 24 | Bio-extensor: corrected still above measurement | 51.8 cm; 0.89 / 1.17 N·m; FVU 0.67 | 30-torque.tex:430,471,502; 94-AppendixC.tex:209 |
@@ -96,7 +96,7 @@ appendices 92/93/94 = A/B/C. Chapter paths below are
 | 46 | Appendix C: GoF vs published models | full RMSE/FVU/max grid | 20-muscles.tex:369-372 |
 | 47 | Appendix D: compliance chain | Eqs. (4.18), (4.20), (4.22); fzero bracket | 30-torque.tex:215-220,228-232,244-250; 92-AppendixA.tex:233-238 |
 | 48 | Appendix E: wrap loss per arc | R₁ 12 mm 27°→−23°; R₂ 40 mm; Eqs. (4.24)–(4.26) | 30-torque.tex:279-297; 92-AppendixA.tex:242; 94-AppendixC.tex:173 |
-| 49 | Appendix F: protocol + data decisions | +5.3° encoder; pool {1,2,5,6,7,8}; rows 77/32; +5.01/+5.02 | 94-AppendixC.tex:18,72,176-188,192,201-207; 30-torque.tex:301-305,319,502-504 |
+| 49 | Appendix F: protocol + data decisions | +5.3° encoder; flexor 2/2 folds, 47.9 not used; extensor 3/3/3; rows 77/32; +5.01/+5.02 | 94-AppendixC.tex:18,72,176-188,192,201-207; 30-torque.tex:301-305,319,502-504 |
 | 50 | Appendix G: frame invariance | iff k_x = k_z | 30-torque.tex:139,303; 94-AppendixC.tex:126,156-171 |
 | 51 | Appendix H: bracket points + adopted terms ✔ | six points (Pbri…); χ +3.94/−6.38 mm; 3.998e4/1.473e4; 0.158 | 94-AppendixC.tex:128-143,194-205,207; 30-torque.tex:502 |
 | 52 | Appendix I: moment-arm conventions | perpendicular foot; ε < −0.02 | 30-torque.tex:37-46,48,326; 92-AppendixA.tex:213,32-36 |
