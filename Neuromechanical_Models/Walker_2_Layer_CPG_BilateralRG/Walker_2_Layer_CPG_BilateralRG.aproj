@@ -6,7 +6,7 @@
 <Physics>Vortex</Physics>
 <LibraryVersion>Double</LibraryVersion>
 <Simulation>
-<ProjectPath>C:\Users\Ben\Documents\GitHub\Bipedal_Robot\tmp\aproj_work\</ProjectPath>
+<ProjectPath>C:\Users\Ben\Documents\GitHub\Bipedal_Robot\Neuromechanical_Models\Walker_2_Layer_CPG_BilateralRG\</ProjectPath>
 <AnimatModule>VortexAnimatSim_VC10.dll</AnimatModule>
 <UpdateDataInterval>250</UpdateDataInterval>
 <StartPaused>False</StartPaused>
@@ -224,7 +224,7 @@
 <Z Value="0" Scale="None" Actual="0"/>
 </COM>
 <MaterialTypeID>09bccf17-3f71-4b1b-b397-53550cb1bd6b</MaterialTypeID>
-<Freeze>True</Freeze>
+<Freeze>False</Freeze>
 <ChildBodies>
 <RigidBody>
 <Name>hip_L_flx_rec</Name>
@@ -9330,7 +9330,7 @@
 <ActivationType>False</ActivationType>
 </CaDeactivation>
 <InitAtBottom>True</InitAtBottom>
-<TonicStimulus Value="0" Scale="nano" Actual="0"/>
+<TonicStimulus Value="2" Scale="nano" Actual="2e-009"/>
 <TonicNoise Value="0" Scale="milli" Actual="0"/>
 </Node>
 <Node>
@@ -40573,18 +40573,18 @@
 <ToolFormID>f98e7c64-eeaa-4c3c-a4e1-a2cfce8edaee</ToolFormID>
 </ToolHolder>
 <ToolHolder>
-<ID>4c85cedd-c42d-4b6f-9656-2415ac08b926</ID>
-<Name>L CPG Charts</Name>
-<BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
-<BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
-<ToolFormID>958cf904-535f-4288-b32d-e64a64c0966c</ToolFormID>
-</ToolHolder>
-<ToolHolder>
 <ID>f4ddaac2-d760-47f2-9367-756c40f8a6de</ID>
 <Name>R Hip Sensory Motor</Name>
 <BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
 <ToolFormID>88453fb2-4b4c-4c0d-a57a-e51b4e895928</ToolFormID>
+</ToolHolder>
+<ToolHolder>
+<ID>142b2421-d466-43bc-8f10-0e98aa9e8826</ID>
+<Name>L Hip Sensory Motor</Name>
+<BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
+<ToolFormID>2fd83016-b642-485b-8586-2800e8ebde3d</ToolFormID>
 </ToolHolder>
 <ToolHolder>
 <ID>3d082bfc-22b6-4d58-9420-38793c8d33de</ID>
@@ -40643,11 +40643,11 @@
 <ToolFormID>cf201706-8817-4d38-8a78-3b658a968b5e</ToolFormID>
 </ToolHolder>
 <ToolHolder>
-<ID>142b2421-d466-43bc-8f10-0e98aa9e8826</ID>
-<Name>L Hip Sensory Motor</Name>
+<ID>4c85cedd-c42d-4b6f-9656-2415ac08b926</ID>
+<Name>L CPG Charts</Name>
 <BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
-<ToolFormID>2fd83016-b642-485b-8586-2800e8ebde3d</ToolFormID>
+<ToolFormID>958cf904-535f-4288-b32d-e64a64c0966c</ToolFormID>
 </ToolHolder>
 </ToolViewers>
 <Stimuli>
@@ -40698,8 +40698,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>d9fa4340-4d02-4395-a91c-2e4fda2b6340</Name>
-<ID>d9fa4340-4d02-4395-a91c-2e4fda2b6340</ID>
+<Name>bf63db37-093d-4ff3-8eaa-c95278c0e5f4</Name>
+<ID>bf63db37-093d-4ff3-8eaa-c95278c0e5f4</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -40812,7 +40812,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/18/2026 00:19:04"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/18/2026 11:38:26"&gt;
   &lt;Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Toolbox" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Toolbox" UniqueName="" /&gt;
