@@ -1,5 +1,9 @@
 # INSTALL — `dissertation` plugin (v0.1.0)
 
+**SUPERSEDED 2026-10-17:** the live plugin source of record is the ZCode_Skills repo,
+`ZCode_Skills\plugins\dissertation\` (with `ZCode_Skills\plugins\marketplace.json`).
+This scaffold copy is a campaign record; do not register it.
+
 **Registration is Ben's call.** This scaffold is inert until he registers it; no session
 should install or enable it on its own initiative. If Ben asks for it, the routes are below.
 
