@@ -1,8 +1,10 @@
-<!-- AIR VARIANT for milestones 3/4 (test_w2l_air.py): identical
+<!-- AIR VARIANT for milestones 3/4/5 (test_w2l_air.py): identical
      to w2l_mjcf_fixed.xml (axis-fixed body, see fix_joint_axes.py)
-     except the welded Root is lifted +0.30 m so NO leg pose can
-     reach the ground plane (leg vertical reach ~0.95 m). Keeps
-     'no ground contact' provable (ground contacts == 0). -->
+     except the Root is WELDED (freejoint removed - see the
+     2026-10-16 regression note inside) and lifted +0.30 m so NO
+     leg pose can reach the ground plane (leg vertical reach
+     ~0.95 m). Keeps 'no ground contact' provable (ground
+     contacts == 0). -->
 <!-- M3 AXIS FIX (fix_joint_axes.py): identical to w2l_mjcf.xml except
      the 8 hinge axes are corrected to the aproj ground truth
      (world AL axis = R_world @ R_joint @ e_x per make_w2l_mjcf.py's own
@@ -26,7 +28,6 @@
     <geom name="ground" type="plane" size="5 5 0.1" pos="0 0 0"
           friction="1 0.005 0.0001" contype="1" conaffinity="1"/>
     <body name="Root" pos="-3.454 0 1.29298" quat="0.99843241 0 0.055970727 0">
-      <freejoint name="root"/>
       <inertial pos="0.02 0 0" mass="30.991" diaginertia="0.3028957 0.3028957 0.20660667"/>
       <geom name="Root" size="0.1 0.1 0.139" friction="1 0.005 0.0001" rgba="0.7 0.7 0.7 1"/>
       <site name="site_body_L_f" pos="0.1 -0.06 -0.055"/>
@@ -149,7 +150,4 @@
     <muscle name="hip_R_ext" tendon="t_hip_R_ext" force="1500" range="0.0811 0.2589" lengthrange="0.0811 0.2589" timeconst="0.01 0.01"/>
     <muscle name="hip_L_ext" tendon="t_hip_L_ext" force="1500" range="0.13 0.29" lengthrange="0.13 0.29" timeconst="0.01 0.01"/>
   </actuator>
-  <keyframe>
-    <key name="spawn" qpos="-3.454 0 1.007846 0.99843241 0 0.055970727 0 0 0 -0.21816616 0 0 0 -0.21816616 0" ctrl="0 0 0 0 0 0 0 0 0 0 0 0"/>
-  </keyframe>
 </mujoco>

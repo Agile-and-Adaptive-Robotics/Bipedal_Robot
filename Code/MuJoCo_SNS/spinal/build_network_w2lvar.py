@@ -194,6 +194,13 @@ class W2LVarnet(BN.SpinalNetwork):
         self.ia_in = True             # rules: reciprocal via IaIN
         self.ib_exc_groups = {}
         self._aliases = {}            # runner-watch name -> real neuron idx
+        # 2026-10-16 per-side alpha/gamma hand-drive knobs (parent
+        # contract: GAMMA_s -> this side's RG pair, ALPHA_s -> ipsi MNs;
+        # each side's cells built ONLY when its own G knob > 0).
+        self.gamma_side = {s: bool(G.get(f"gamma_{s}", 0.0) > 0.0)
+                           for s in self.sides}
+        self.alpha_side = {s: bool(G.get(f"alpha_{s}", 0.0) > 0.0)
+                           for s in self.sides}
 
         # Per-muscle decomposition of the drawing's SYMBOLIC afferent
         # nodes: SN-Ia/SN-II ("flexor ii/ia") and "extensor Ib" are ONE
@@ -229,6 +236,20 @@ class W2LVarnet(BN.SpinalNetwork):
             self.idx[name] = len(self.idx)
             n.add_input(name)
             self.inputs.append(name)
+
+        # 2026-10-16 per-side hand-drive cells (alpha/gamma; see parent
+        # build_network.py - GAMMA_s rhythm-level, ALPHA_s MN-pool;
+        # each side only when its own G knob > 0).
+        for side in self.sides:
+            for pre, on in (("GAMMA", self.gamma_side[side]),
+                            ("ALPHA", self.alpha_side[side])):
+                if not on:
+                    continue
+                name = f"{pre}_{side}"
+                n.add_neuron(_neu(TAU["descend"]), name=name)
+                self.idx[name] = len(self.idx)
+                n.add_input(name)
+                self.inputs.append(f"{pre}_c_{side}")
 
         # ---- per-side circuitry (RG + the W2L PF pairs) ----
         for side in self.sides:
@@ -318,6 +339,13 @@ class W2LVarnet(BN.SpinalNetwork):
         n.add_connection(_syn(G["descend_to_rg_e"], exc=True), "DRIVE", rg_e)
         n.add_connection(_syn(G["descend_to_rg_f"], exc=True), "DRIVE", rg_f)
         n.add_connection(_syn(G["posture_to_rg_e"], exc=True), "POSTURE", rg_e)
+        # 2026-10-16 per-side gamma hand drive (only when G["gamma_s"]>0):
+        # GAMMA_side -> this side's RG pair at the DRIVE conductances.
+        if self.gamma_side.get(side):
+            n.add_connection(_syn(G["descend_to_rg_e"], exc=True),
+                             f"GAMMA_{side}", rg_e)
+            n.add_connection(_syn(G["descend_to_rg_f"], exc=True),
+                             f"GAMMA_{side}", rg_f)
 
         # ---- mechanosensor INs + ports (runner stance_fb contract:
         # runner.py:1377-1389 feeds HEEL_c/TOE_c/LOAD_c scaled by

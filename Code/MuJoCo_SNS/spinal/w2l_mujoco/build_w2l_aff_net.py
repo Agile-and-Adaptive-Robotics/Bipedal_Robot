@@ -55,7 +55,9 @@ are built only when its switch is on; the PORT-load source edges are not
 synapses (zero current through them leaves the graph unchanged).
 
 CENSUS (asserted, families heel+toe+ib all on):
-  97 neurons / 188 synapses / 12 inputs / 12 outputs
+  97 neurons / 186 synapses / 12 inputs / 12 outputs
+  (2026-10-16 audit: header previously said 188 — the per-family sum is
+   164+8+6+8 = 186; corrected to match the assert + build)
   (M4 coupled baseline 87/164/6/12 (+10 sensor/interneurons, +22 synapses;
    heel_rge_in 4, heel_pf 4, toe_in 2, toe_df 2, toe_df_mn 2, ib_load 8)
 
@@ -241,7 +243,7 @@ class W2LAffNet(SPLIT.W2LSplitNet):
         n_neu = 87 + (2 if self.heel_on else 0) + (6 if self.toe_on else 0) \
             + (2 if self.ib_on else 0)
         n_in = 6 + (2 if self.heel_on else 0) + (2 if self.toe_on else 0) \
-            + (2 if self.ib_on else 0)
+            + (2 if self.ib_on else 0) + len(self.alpha_ports)
         assert self.n_synapses == sum(expected.values()) == n_syn, \
             f"synapse transcription mismatch: {self.n_synapses} vs {n_syn}"
         assert dict(self.synapse_counts) == expected, "per-tag mismatch"
@@ -263,9 +265,16 @@ class W2LAffNet(SPLIT.W2LSplitNet):
 
 def build(template_path=None, dt: float = DT, gains: dict | None = None,
           tau_rg_nap_h: float | None = None, comm: float = 1.0,
-          heel: bool = True, toe: bool = True, ib: bool = True) -> W2LAffNet:
+          heel: bool = True, toe: bool = True, ib: bool = True,
+          alpha_l: float = 0.0, alpha_r: float = 0.0) -> W2LAffNet:
     """Build + compile the afferented split-RG network (Ben's gains by
-    default; `gains` overrides individual aff_* / W2L keys)."""
+    default; `gains` overrides individual aff_* / W2L keys).
+
+    alpha_l / alpha_r: per-side MN-level (ALPHA) drive, nA — 0.0 (default)
+    builds no ports (census 97/186/12 bit-identical); nonzero adds six
+    "ALPHA {L,R} ..." current ports on that side's MN pools (inherited
+    from W2LSplitNet, 2026-10-16). GAMMA (RG-level) per-side drive = the
+    four TONIC ports, driven independently by the runner."""
     if template_path is None:
         template_path = SPLIT.SPINAL / "connectome_templates.json"
     tpl = json.loads(Path(template_path).read_text(encoding="utf-8"))
@@ -276,7 +285,8 @@ def build(template_path=None, dt: float = DT, gains: dict | None = None,
     split = SPLIT.make_split_template(tpl["w2laproj"], comm=comm)
     aff = make_aff_template(split, heel=heel, toe=toe, ib=ib)
     net = W2LAffNet(template=aff, comm=comm, gains=gains or {},
-                    heel_on=heel, toe_on=toe, ib_on=ib)
+                    heel_on=heel, toe_on=toe, ib_on=ib,
+                    alpha_l=alpha_l, alpha_r=alpha_r)
     net.compile(dt=dt)
     return net
 

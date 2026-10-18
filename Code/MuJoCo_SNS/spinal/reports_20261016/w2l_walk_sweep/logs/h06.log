@@ -1,0 +1,15 @@
+
+== M6 gate (b): CONTACT-DRIVEN GROUND WALKING attempt, real heel/toe contact forces, 30 s, rig S=0.25 ==
+   knobs: ctn_amp=2.0 cref=50.0 N ibnA=1.0 te=4.0 tf=4.0 tau=0.25 cap=0.5 acap=-1.0 damp=3.0 | DROP PROTOCOL: hold=3.0 s lower=1.0 s wsup=0.7 drop=0.026+sink=0.08 m rig S=0.25
+   finite=True | fall=no | pelvis z min 0.885 m (start 0.993) | tilt max 19.8 deg | harness carries +30% weight
+   cycles (heel strikes >20 N, window 25.5 s): L 20 (interval 1.291 s) | R 20 (interval 1.291 s)
+   heel duty L 0.05 R 0.04 | forward disp -0.046 m (-0.002 m/s)
+   flexion ranges (deg): hip L 43.7 R 43.1 | knee L 63.5 R 63.4 | ankle L 34.3 R 35.7
+   flexion min..max: hip L [-25.4,+18.2] knee L [-1.8,+61.7] ankle L [-10.7,+23.6]
+   neural: L RG-E bursts 20 (period 1.291 s), R RG-E bursts 19; L/R RG-E r -0.662
+   contact encoder evidence: heel SN max 1.65 mV, toe SN max 1.75 mV, heel port current max 2.00 nA
+   walk verdict: SHUFFLES-IN-PLACE
+
+M6 VERDICT: WALK=SHUFFLES-IN-PLACE
+
+--- stderr ---

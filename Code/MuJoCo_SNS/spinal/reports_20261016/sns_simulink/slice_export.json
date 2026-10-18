@@ -1,0 +1,1126 @@
+{
+ "meta": {
+  "source": "round8_best3.json (curr_s8b_wean04 trial 35, drive_scale 0.3807379786697019)",
+  "loader": "wean_tune_20261016.apply_config(knobs, scale, fb) == cmd_one winner path",
+  "dt_s": 0.002,
+  "E_HI_mV": 5.0,
+  "mn_pair": {
+   "ext": "vas_lat_r",
+   "flx": "bifemsh_r"
+  },
+  "units": "mV, nA, uS, nF (SNS toolbox / SNS_Library conventions)",
+  "h0": 0.0009110511944006454,
+  "schedule": {
+   "walk_drive_nA": 2.0773198435110425,
+   "segments": {
+    "stand1": [
+     0.0,
+     3.0
+    ],
+    "ramp_up": [
+     3.0,
+     5.0
+    ],
+    "walk": [
+     5.0,
+     15.0
+    ],
+    "ramp_down": [
+     15.0,
+     17.0
+    ],
+    "stand2": [
+     17.0,
+     22.0
+    ]
+   },
+   "posture": "1.0 stand / 0.6 walk (runner.drive_posture)",
+   "knob_G_values": {
+    "gamma_l": 0.5115737136333512,
+    "gamma_r": 0.30361757202346634,
+    "alpha_l": 0.3286184629397121,
+    "alpha_r": 0.3706222051599761,
+    "alpha_to_mn": 0.8720993696196817
+   },
+   "port_semantics": "u[GAMMA_c_s] = drive(t)*G[gamma_s], u[ALPHA_c_s] = drive(t)*G[alpha_s] (runner.py:1372-1378)"
+  },
+  "notes": [
+   "Afferent encoders (Ia/II/Ib), BAL_*/VEST cells, pm_* runner phase machine, contra_* crossed edges (no_cross=1) and the muJoCo body are OUT of the slice; their input ports are simply not driven.",
+   "POST_<muscle> MN bias ports default 0: production values come from the runner's MuJoCo standing solve (6.0*act_stand*stand_frac, ~0.05 floor in walk) - runner machinery, not circuit; they cannot affect the RG/PF rhythm (MNs project only to their Renshaw cells)."
+  ],
+  "reference_stats": {
+   "slice_input_runs": {
+    "baseline": {
+     "RG_E_r": {
+      "cycles": 0,
+      "period_s": null,
+      "duty": null,
+      "vmax": 5.187666213671948,
+      "vmin": 5.101905916012806
+     },
+     "RG_F_r": {
+      "cycles": 1,
+      "period_s": null,
+      "duty": null,
+      "vmax": -1.9591341785969103,
+      "vmin": -2.0966137732918346
+     },
+     "gamma_r_mult": 1.0
+    },
+    "gamma_r_x2": {
+     "RG_E_r": {
+      "cycles": 0,
+      "period_s": null,
+      "duty": null,
+      "vmax": 5.322645194113001,
+      "vmin": 5.2267359348317255
+     },
+     "RG_F_r": {
+      "cycles": 1,
+      "period_s": null,
+      "duty": null,
+      "vmax": -1.1205972873761196,
+      "vmin": -1.5515096607733818
+     },
+     "gamma_r_mult": 2.0
+    },
+    "gamma_r_half": {
+     "RG_E_r": {
+      "cycles": 0,
+      "period_s": null,
+      "duty": null,
+      "vmax": 5.120039601089545,
+      "vmin": 5.041738393519156
+     },
+     "RG_F_r": {
+      "cycles": 1,
+      "period_s": null,
+      "duty": null,
+      "vmax": -2.210222739475409,
+      "vmin": -2.3163958449283926
+     },
+     "gamma_r_mult": 0.5
+    }
+   },
+   "production_npz": {
+    "cycles": 6,
+    "period_s": 1.7284,
+    "duty": 0.2621475704859028,
+    "vmax": 3.5273896228363615,
+    "vmin": 3.0911539881768513
+   }
+  }
+ },
+ "neurons": [
+  {
+   "name": "ALPHA_l",
+   "kind": "rc",
+   "tau_s": 0.1,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 100.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "ALPHA_r",
+   "kind": "rc",
+   "tau_s": 0.1,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 100.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "CIN_F_l",
+   "kind": "rc",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "CIN_F_r",
+   "kind": "rc",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "DRIVE",
+   "kind": "rc",
+   "tau_s": 0.1,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 100.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "GAMMA_l",
+   "kind": "rc",
+   "tau_s": 0.1,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 100.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "GAMMA_r",
+   "kind": "rc",
+   "tau_s": 0.1,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 100.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "HEEL_l",
+   "kind": "rc",
+   "tau_s": 0.04,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 40.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "HEEL_r",
+   "kind": "rc",
+   "tau_s": 0.04,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 40.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "IBEXC_knee_ext_r",
+   "kind": "rc",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "InE_l",
+   "kind": "rc",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "InE_r",
+   "kind": "rc",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "InF_l",
+   "kind": "rc",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "InF_r",
+   "kind": "rc",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "KINH_r",
+   "kind": "rc",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "LBIN_l",
+   "kind": "rc",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "LBIN_r",
+   "kind": "rc",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "MN_bifemsh_r",
+   "kind": "rc",
+   "tau_s": 0.03,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 30.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "MN_vas_lat_r",
+   "kind": "rc",
+   "tau_s": 0.03,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 30.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "PF_E1_r",
+   "kind": "rc",
+   "tau_s": 0.048,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 48.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "PF_E2_r",
+   "kind": "rc",
+   "tau_s": 0.07200000000000001,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 72.00000000000001,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "PF_F1_r",
+   "kind": "rc",
+   "tau_s": 0.07200000000000001,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 72.00000000000001,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "PF_F2_r",
+   "kind": "rc",
+   "tau_s": 0.128,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 128.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "PF_IN_E_r",
+   "kind": "rc",
+   "tau_s": 0.08,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 80.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "PF_IN_F_r",
+   "kind": "rc",
+   "tau_s": 0.08,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 80.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "POSTURE",
+   "kind": "rc",
+   "tau_s": 0.1,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 100.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "RC_bifemsh_r",
+   "kind": "rc",
+   "tau_s": 0.03,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 30.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "RC_vas_lat_r",
+   "kind": "rc",
+   "tau_s": 0.03,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 30.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "RG_E_l",
+   "kind": "nap",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0,
+   "nap": {
+    "g_ion": 12.0,
+    "e_ion": 8.0,
+    "k_m": 1.0,
+    "slope_m": 0.8,
+    "e_m": 2.0,
+    "k_h": 1.0,
+    "slope_h": -2.0,
+    "e_h": 3.5,
+    "tau_h_s": 0.8420833189531531
+   }
+  },
+  {
+   "name": "RG_E_r",
+   "kind": "nap",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0,
+   "nap": {
+    "g_ion": 12.0,
+    "e_ion": 8.0,
+    "k_m": 1.0,
+    "slope_m": 0.8,
+    "e_m": 2.0,
+    "k_h": 1.0,
+    "slope_h": -2.0,
+    "e_h": 3.5,
+    "tau_h_s": 0.8420833189531531
+   }
+  },
+  {
+   "name": "RG_F_l",
+   "kind": "nap",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0,
+   "nap": {
+    "g_ion": 12.0,
+    "e_ion": 8.0,
+    "k_m": 1.0,
+    "slope_m": 0.8,
+    "e_m": 2.0,
+    "k_h": 1.0,
+    "slope_h": -2.0,
+    "e_h": 3.5,
+    "tau_h_s": 0.8420833189531531
+   }
+  },
+  {
+   "name": "RG_F_r",
+   "kind": "nap",
+   "tau_s": 0.05,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 50.0,
+   "bias_nA": 0.0,
+   "nap": {
+    "g_ion": 12.0,
+    "e_ion": 8.0,
+    "k_m": 1.0,
+    "slope_m": 0.8,
+    "e_m": 2.0,
+    "k_h": 1.0,
+    "slope_h": -2.0,
+    "e_h": 3.5,
+    "tau_h_s": 0.8420833189531531
+   }
+  },
+  {
+   "name": "TOE_l",
+   "kind": "rc",
+   "tau_s": 0.04,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 40.0,
+   "bias_nA": 0.0
+  },
+  {
+   "name": "TOE_r",
+   "kind": "rc",
+   "tau_s": 0.04,
+   "Vrest_mV": 0.0,
+   "Gm_uS": 1.0,
+   "Cm_nF": 40.0,
+   "bias_nA": 0.0
+  }
+ ],
+ "synapses": [
+  {
+   "src": "RG_E_l",
+   "dst": "InE_l",
+   "g_uS": 4.0,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "InE_l",
+   "dst": "RG_F_l",
+   "g_uS": 4.0,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RG_F_l",
+   "dst": "InF_l",
+   "g_uS": 4.0,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "InF_l",
+   "dst": "RG_E_l",
+   "g_uS": 4.0,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "DRIVE",
+   "dst": "RG_E_l",
+   "g_uS": 1.6987967868158145,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "DRIVE",
+   "dst": "RG_F_l",
+   "g_uS": 0.9963926530754599,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "POSTURE",
+   "dst": "RG_E_l",
+   "g_uS": 0.8,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "GAMMA_l",
+   "dst": "RG_E_l",
+   "g_uS": 1.6987967868158145,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "GAMMA_l",
+   "dst": "RG_F_l",
+   "g_uS": 0.9963926530754599,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "HEEL_l",
+   "dst": "RG_E_l",
+   "g_uS": 1.4827569817170443,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "HEEL_l",
+   "dst": "RG_F_l",
+   "g_uS": 1.4827569817170443,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "TOE_l",
+   "dst": "RG_E_l",
+   "g_uS": 0.36000460790520544,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "LBIN_l",
+   "dst": "RG_E_l",
+   "g_uS": 0.31221919098930606,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "HEEL_l",
+   "dst": "InE_l",
+   "g_uS": 0.13938587596681723,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "TOE_l",
+   "dst": "InE_l",
+   "g_uS": 0.13938587596681723,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RG_E_r",
+   "dst": "InE_r",
+   "g_uS": 4.0,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "InE_r",
+   "dst": "RG_F_r",
+   "g_uS": 4.0,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RG_F_r",
+   "dst": "InF_r",
+   "g_uS": 4.0,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "InF_r",
+   "dst": "RG_E_r",
+   "g_uS": 4.0,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "DRIVE",
+   "dst": "RG_E_r",
+   "g_uS": 1.6987967868158145,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "DRIVE",
+   "dst": "RG_F_r",
+   "g_uS": 0.9963926530754599,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "POSTURE",
+   "dst": "RG_E_r",
+   "g_uS": 0.8,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "GAMMA_r",
+   "dst": "RG_E_r",
+   "g_uS": 1.6987967868158145,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "GAMMA_r",
+   "dst": "RG_F_r",
+   "g_uS": 0.9963926530754599,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "HEEL_r",
+   "dst": "RG_E_r",
+   "g_uS": 1.4827569817170443,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "HEEL_r",
+   "dst": "RG_F_r",
+   "g_uS": 1.4827569817170443,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "TOE_r",
+   "dst": "RG_E_r",
+   "g_uS": 0.36000460790520544,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "LBIN_r",
+   "dst": "RG_E_r",
+   "g_uS": 0.31221919098930606,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RG_E_r",
+   "dst": "PF_E1_r",
+   "g_uS": 2.6005147390334713,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RG_E_r",
+   "dst": "PF_E2_r",
+   "g_uS": 2.6005147390334713,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RG_F_r",
+   "dst": "PF_F1_r",
+   "g_uS": 2.6005147390334713,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RG_F_r",
+   "dst": "PF_F2_r",
+   "g_uS": 2.6005147390334713,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_E1_r",
+   "dst": "PF_IN_E_r",
+   "g_uS": 4.0,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_E2_r",
+   "dst": "PF_IN_E_r",
+   "g_uS": 4.0,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_F1_r",
+   "dst": "PF_IN_F_r",
+   "g_uS": 4.0,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_F2_r",
+   "dst": "PF_IN_F_r",
+   "g_uS": 4.0,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_IN_E_r",
+   "dst": "PF_F1_r",
+   "g_uS": 4.0,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_IN_E_r",
+   "dst": "PF_F2_r",
+   "g_uS": 4.0,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_IN_F_r",
+   "dst": "PF_E1_r",
+   "g_uS": 4.0,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_IN_F_r",
+   "dst": "PF_E2_r",
+   "g_uS": 4.0,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "HEEL_r",
+   "dst": "PF_E1_r",
+   "g_uS": 0.13938587596681723,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "HEEL_r",
+   "dst": "PF_E2_r",
+   "g_uS": 0.13938587596681723,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "HEEL_r",
+   "dst": "InE_r",
+   "g_uS": 0.13938587596681723,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "TOE_r",
+   "dst": "PF_E1_r",
+   "g_uS": 0.13938587596681723,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "TOE_r",
+   "dst": "PF_E2_r",
+   "g_uS": 0.13938587596681723,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "TOE_r",
+   "dst": "InE_r",
+   "g_uS": 0.13938587596681723,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_E1_r",
+   "dst": "MN_bifemsh_r",
+   "g_uS": 0.07957380009659859,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_E2_r",
+   "dst": "MN_bifemsh_r",
+   "g_uS": 0.13334321816032038,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_F1_r",
+   "dst": "MN_bifemsh_r",
+   "g_uS": 0.10378112084032287,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_F2_r",
+   "dst": "MN_bifemsh_r",
+   "g_uS": 0.12525619891078243,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "POSTURE",
+   "dst": "MN_bifemsh_r",
+   "g_uS": 0.03901523790616782,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "MN_bifemsh_r",
+   "dst": "RC_bifemsh_r",
+   "g_uS": 1.0,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RC_bifemsh_r",
+   "dst": "MN_bifemsh_r",
+   "g_uS": 0.5,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RC_bifemsh_r",
+   "dst": "RC_vas_lat_r",
+   "g_uS": 0.5,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RG_E_r",
+   "dst": "IBEXC_knee_ext_r",
+   "g_uS": 1.0,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "IBEXC_knee_ext_r",
+   "dst": "LBIN_r",
+   "g_uS": 0.5,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_F1_r",
+   "dst": "KINH_r",
+   "g_uS": 1.5,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "IBEXC_knee_ext_r",
+   "dst": "LBIN_r",
+   "g_uS": 0.5,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "IBEXC_knee_ext_r",
+   "dst": "LBIN_r",
+   "g_uS": 0.5,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_E2_r",
+   "dst": "MN_vas_lat_r",
+   "g_uS": 0.026113046889729406,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_F1_r",
+   "dst": "MN_vas_lat_r",
+   "g_uS": 0.0014815913128924487,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "PF_F2_r",
+   "dst": "MN_vas_lat_r",
+   "g_uS": 0.011976196445880627,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "POSTURE",
+   "dst": "MN_vas_lat_r",
+   "g_uS": 0.005289034074390961,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "MN_vas_lat_r",
+   "dst": "RC_vas_lat_r",
+   "g_uS": 1.0,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RC_vas_lat_r",
+   "dst": "MN_vas_lat_r",
+   "g_uS": 0.5,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RC_vas_lat_r",
+   "dst": "RC_bifemsh_r",
+   "g_uS": 0.5,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "IBEXC_knee_ext_r",
+   "dst": "MN_vas_lat_r",
+   "g_uS": 0.6,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "IBEXC_knee_ext_r",
+   "dst": "LBIN_r",
+   "g_uS": 0.5,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "KINH_r",
+   "dst": "MN_vas_lat_r",
+   "g_uS": 0.178469005720975,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "ALPHA_r",
+   "dst": "MN_bifemsh_r",
+   "g_uS": 0.8720993696196817,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "ALPHA_r",
+   "dst": "MN_vas_lat_r",
+   "g_uS": 0.8720993696196817,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RG_F_r",
+   "dst": "CIN_F_r",
+   "g_uS": 0.4,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "CIN_F_r",
+   "dst": "RG_F_l",
+   "g_uS": 0.4,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "RG_F_l",
+   "dst": "CIN_F_l",
+   "g_uS": 0.4,
+   "Esyn_mV": 8.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  },
+  {
+   "src": "CIN_F_l",
+   "dst": "RG_F_r",
+   "g_uS": 0.4,
+   "Esyn_mV": -5.0,
+   "ThrPre_mV": 0.0,
+   "SlopePre_mV": 5.0
+  }
+ ],
+ "inputs": [
+  {
+   "port": "DRIVE",
+   "dst": "DRIVE"
+  },
+  {
+   "port": "POSTURE",
+   "dst": "POSTURE"
+  },
+  {
+   "port": "GAMMA_c_l",
+   "dst": "GAMMA_l"
+  },
+  {
+   "port": "ALPHA_c_l",
+   "dst": "ALPHA_l"
+  },
+  {
+   "port": "GAMMA_c_r",
+   "dst": "GAMMA_r"
+  },
+  {
+   "port": "ALPHA_c_r",
+   "dst": "ALPHA_r"
+  },
+  {
+   "port": "HEEL_c_l",
+   "dst": "HEEL_l"
+  },
+  {
+   "port": "TOE_c_l",
+   "dst": "TOE_l"
+  },
+  {
+   "port": "LOAD_c_l",
+   "dst": "LBIN_l"
+  },
+  {
+   "port": "HEEL_c_r",
+   "dst": "HEEL_r"
+  },
+  {
+   "port": "TOE_c_r",
+   "dst": "TOE_r"
+  },
+  {
+   "port": "LOAD_c_r",
+   "dst": "LBIN_r"
+  },
+  {
+   "port": "POST_bifemsh_r",
+   "dst": "MN_bifemsh_r"
+  },
+  {
+   "port": "POST_vas_lat_r",
+   "dst": "MN_vas_lat_r"
+  }
+ ]
+}

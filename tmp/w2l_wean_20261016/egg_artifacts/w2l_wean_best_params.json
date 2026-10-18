@@ -1,0 +1,322 @@
+{
+ "winner": {
+  "model": "W2L robot, w2l_mujoco (w2l_mjcf_fixed.xml body + M5 afferented split-RG net via build_w2l_aff_net), drop-protocol harness + yielding virtual walker (wsup 0.7, rig 0.25, walker_yield 1.5 s)",
+  "stage": "feedback optimizer (robot): optuna feedback tuning (study curr_s6_drive_robot_r060) + drive-wean ladder + CLI-reproduction audit + basin gate",
+  "knobs": {
+   "te": 2.4,
+   "tf": 3.0,
+   "dscale": 0.6,
+   "g_heel": 0.58765,
+   "g_ib": 0.11164,
+   "ibnA": 1.32101,
+   "ctn_amp": 0.71708,
+   "cref": 46.37426,
+   "comm": 0.41304,
+   "g_toe_in": 2.2198,
+   "g_toe_df": 11.0988,
+   "g_toe_df_mn": 6.1021,
+   "legcoll": 0,
+   "sink": 0.06,
+   "rig": 0.25,
+   "walker_yield": 1.5,
+   "dur_walk": 30.0
+  },
+  "metrics_30s_cli_reproduced": {
+   "finite": true,
+   "fall": false,
+   "fall_t": null,
+   "cycL": 25,
+   "cycR": 23,
+   "rawL": 39,
+   "rawR": 28,
+   "perL": 1.2215,
+   "perR": 1.3355,
+   "phase_med": 0.48748,
+   "phase_n": 22,
+   "rg_r": -0.76648,
+   "fwd": 1.71771,
+   "v_mean": 0.06736,
+   "slope": 0.06617,
+   "span": 25.499,
+   "dutyhL": 0.082,
+   "dutyhR": 0.05655,
+   "dutycL": 0.16647,
+   "dutycR": 0.20004,
+   "tilt_max": 16.3249,
+   "pelz_min": 0.90361,
+   "harness": 16.17229,
+   "survive": true,
+   "obj": 94.86191,
+   "wall_s": 9.3
+  },
+  "metrics_30s_campaign_context": {
+   "finite": true,
+   "fall": false,
+   "fall_t": null,
+   "cycL": 20,
+   "cycR": 20,
+   "rawL": 33,
+   "rawR": 53,
+   "perL": 0.9059999999999988,
+   "perR": 1.6899999999999995,
+   "phase_med": 0.4871043376318876,
+   "phase_n": 20,
+   "rg_r": -0.7281841776089518,
+   "fwd": 2.1907237401129356,
+   "v_mean": 0.08591410408694206,
+   "slope": 0.08544178713166081,
+   "span": 25.499000000000002,
+   "dutyhL": 0.24745098039215685,
+   "dutyhR": 0.26862745098039215,
+   "dutycL": 0.30211764705882355,
+   "dutycR": 0.34874509803921566,
+   "tilt_max": 13.648214280694493,
+   "pelz_min": 0.9041250765834942,
+   "harness": 15.315930059196305,
+   "survive": true,
+   "obj": 100.64042308847041,
+   "wall_s": 6.3
+  },
+  "reproduction_note": "CLI fresh-process runs are deterministic among themselves (4x identical, obj 94.86191); the campaign in-process verify gives obj 100.64 -- cross-context BLAS summation-order chaos, documented stack property; ALL conclusions use the CLI context",
+  "basin": "PASS 12/12 (+-1% joint perturbations, min cyc 20, min fwd +2.145 m)",
+  "reproduce_evaluator_cmd": "cd /d D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\reports_20261016\\w2l_wean && D:\\Anaconda\\envs\\myo\\python.exe _w2l_wean_eval.py --id=reproduce_finalist --dur=30 --dscale=0.6 --g-heel=0.58765 --g-ib=0.11164 --ibnA=1.32101 --ctn-amp=0.71708 --cref=46.37426 --comm=0.41304 --toe-m=2.21976",
+  "reproduce_test_cli_cmd": "cd /d D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\w2l_mujoco && D:\\Anaconda\\envs\\myo\\python.exe test_w2l_ground.py --phase=walk --te=2.4 --tf=3.0 --legcoll=0 --sink=0.06 --rig=0.25 --walker-yield=1.5 --ctn-amp=0.71708 --cref=46.37426 --ibnA=1.32101 --dur-walk=30 --g-heel=0.58765 --g-ib=0.11164 --comm=0.41304 --g-toe-in=2.21976 --g-toe-df=11.0988 --g-toe-df-mn=6.1021202400000005"
+ },
+ "baseline_bootstrap": {
+  "note": "drive-only bootstrap winner (Ben's rules gains, te=4/tf=5) same CLI context, 30 s",
+  "metrics": {
+   "cyc": "22/21",
+   "phase_med": 0.55257,
+   "slope": 0.0609,
+   "duty_combined": [
+    0.06051,
+    0.15761
+   ],
+   "tilt_max": 11.97064,
+   "obj": 91.44027
+  }
+ },
+ "wean_ladder_cli_robust": {
+  "robust_rungs": [
+   1.0,
+   0.85,
+   0.7,
+   0.6
+  ],
+  "dead_rungs": [
+   0.5,
+   0.4,
+   0.3,
+   0.2,
+   0.175,
+   0.15,
+   0.1
+  ],
+  "death_scale": 0.5,
+  "winner_dscale": 0.6,
+  "failure_mode_at_050": "inter-leg phase 0.322 (out of 0.35-0.65 band), cycR 9 -- antiphase breaks first",
+  "failure_mode_below_040": "0 heel strikes either side, R foot planted (combined duty 1.0) -- gait dead",
+  "marginal_in_process_datum": {
+   "dscale": 0.2,
+   "what_happened": "in-process campaign verify PASSED the survival criterion (34/33 cycles, 0.065 m/s) but the SAME config in a fresh CLI process is DEAD (0/0 cycles) and FAILED the +-1% basin gate (5/12 die) -- a context-dependent marginal basin, kept as the cautionary datum",
+   "basin_pass": false,
+   "sensitivity": {
+    "zero_g_heel": 7.132227425099595,
+    "zero_g_ib": 5.0,
+    "zero_ibnA": 5.0,
+    "zero_ctn_amp": 5.0,
+    "zero_comm": 91.22119754785722,
+    "zero_toe_m": 5.0,
+    "ben_defaults": 5.0
+   }
+  },
+  "ladder_table": [
+   {
+    "dscale": 1.0,
+    "cli_survive": true,
+    "cyc": "20/20",
+    "phase": 0.48936,
+    "slope": 0.0751,
+    "obj": 96.57111
+   },
+   {
+    "dscale": 0.85,
+    "cli_survive": true,
+    "cyc": "31/31",
+    "phase": 0.49819,
+    "slope": 0.06689,
+    "obj": 93.80684
+   },
+   {
+    "dscale": 0.7,
+    "cli_survive": true,
+    "cyc": "18/11",
+    "phase": 0.49855,
+    "slope": 0.03587,
+    "obj": 86.22512
+   },
+   {
+    "dscale": 0.6,
+    "cli_survive": true,
+    "cyc": "25/23",
+    "phase": 0.48748,
+    "slope": 0.06617,
+    "obj": 94.86191
+   },
+   {
+    "dscale": 0.5,
+    "cli_survive": false,
+    "cyc": "19/9",
+    "phase": 0.32172,
+    "slope": 0.0318,
+    "obj": 66.29629
+   },
+   {
+    "dscale": 0.4,
+    "cli_survive": false,
+    "cyc": "0/0",
+    "phase": null,
+    "slope": -4e-05,
+    "obj": 5.0
+   },
+   {
+    "dscale": 0.3,
+    "cli_survive": false,
+    "cyc": "0/0",
+    "phase": null,
+    "slope": -4e-05,
+    "obj": 5.0
+   },
+   {
+    "dscale": 0.2,
+    "cli_survive": false,
+    "cyc": "0/0",
+    "phase": null,
+    "slope": -4e-05,
+    "obj": 5.0
+   },
+   {
+    "dscale": 0.175,
+    "cli_survive": false,
+    "cyc": "0/0",
+    "phase": null,
+    "slope": -3e-05,
+    "obj": 5.0
+   },
+   {
+    "dscale": 0.15,
+    "cli_survive": false,
+    "cyc": "0/0",
+    "phase": null,
+    "slope": -3e-05,
+    "obj": 5.0
+   },
+   {
+    "dscale": 0.1,
+    "cli_survive": false,
+    "cyc": "0/0",
+    "phase": null,
+    "slope": -3e-05,
+    "obj": 5.0
+   }
+  ]
+ },
+ "basin_and_sensitivity": {
+  "r060_basin": {
+   "pass_": true,
+   "min_cyc": 20,
+   "min_fwd": 2.145420661784942,
+   "sensitivity": {
+    "zero_g_heel": {
+     "obj": 92.78710926307866,
+     "survive": true
+    },
+    "zero_g_ib": {
+     "obj": 101.1321723818909,
+     "survive": true
+    },
+    "zero_ibnA": {
+     "obj": 101.1321723818909,
+     "survive": true
+    },
+    "zero_ctn_amp": {
+     "obj": 86.0793876483492,
+     "survive": true
+    },
+    "zero_comm": {
+     "obj": 89.74038480208985,
+     "survive": true
+    },
+    "zero_toe_m": {
+     "obj": 94.13784733373787,
+     "survive": true
+    },
+    "ben_defaults": {
+     "obj": 6.807541505719051,
+     "survive": false
+    }
+   }
+  },
+  "r100_basin": {
+   "pass_": true,
+   "min_cyc": 19,
+   "min_fwd": 1.8822376604718631,
+   "sensitivity": {
+    "zero_g_heel": {
+     "obj": 89.24775375963836,
+     "survive": true
+    },
+    "zero_g_ib": {
+     "obj": 95.97369796203317,
+     "survive": true
+    },
+    "zero_ibnA": {
+     "obj": 95.97369796203317,
+     "survive": true
+    },
+    "zero_ctn_amp": {
+     "obj": 85.63020999643473,
+     "survive": true
+    },
+    "zero_comm": {
+     "obj": 40.241348930374556,
+     "survive": false
+    },
+    "zero_toe_m": {
+     "obj": 95.13872801073076,
+     "survive": true
+    },
+    "ben_defaults": {
+     "obj": 94.41536383056537,
+     "survive": true
+    }
+   }
+  },
+  "interpretation": "r060: no single pathway is solely load-bearing (any one removed: obj 86-101 vs anchor 101) but Ben's UNTUNED default gains at 0.6 drive are DEAD (obj 7, cyc 10/0) -- the tuned SET is what sustains the weaned gait. r100 (full drive): defaults survive (94, the bootstrap), comm silencing hurts most (40). r020 (marginal): every pathway critical (5-7)."
+ },
+ "provenance": {
+  "stage": "feedback optimizer (robot), overnight campaign 2026-10-16",
+  "db": "reports_20261016/w2l_wean/optuna_w2l_robot.db",
+  "studies": [
+   "curr_s6_drive_robot_r100",
+   "curr_s6_drive_robot_r085",
+   "curr_s6_drive_robot_r070",
+   "curr_s6_drive_robot_r060",
+   "curr_s6_drive_robot_r050",
+   "curr_s6_drive_robot_r040",
+   "curr_s6_drive_robot_r030",
+   "curr_s6_drive_robot_r020",
+   "curr_s6_drive_robot_r015",
+   "curr_s6_drive_robot_r010",
+   "curr_s6_drive_robot_r018"
+  ],
+  "trials_csv": "reports_20261016/w2l_wean/wean_trials.csv",
+  "cli_verify": "reports_20261016/w2l_wean/cli_verify_rungs.json",
+  "basins": [
+   "basin_results_r100.json",
+   "basin_results_r060.json",
+   "basin_results_r020.json"
+  ],
+  "bootstrap_report": "reports_20261016/W2L_ROBOT_BOOTSWEEP_20261016.md"
+ }
+}

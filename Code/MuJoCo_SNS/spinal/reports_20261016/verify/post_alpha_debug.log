@@ -1,0 +1,26 @@
+signature check: True
+
+== A bilateralrg: off vs alpha_l=0.6 ==
+[A-off] alpha_l=0.0 alpha_r=0.0: neurons=95 synapses=208 inputs=10 alpha_ports=0
+   L MN window-mean (6 pools): 1.5123 mV
+   R MN window-mean (6 pools): 1.5885 mV
+[A-alphaL] alpha_l=0.6 alpha_r=0.0: neurons=95 synapses=208 inputs=16 alpha_ports=6
+   ports: ['ALPHA L Ank MN flx', 'ALPHA L Knee MN flx', 'ALPHA L Ank MN ext', 'ALPHA L Hip MN flx', 'ALPHA L Hip MN ext', 'ALPHA L Knee MN ext']
+   L MN window-mean (6 pools): 1.8809 mV
+   R MN window-mean (6 pools): 1.5874 mV
+
+== C aff net: off vs alpha_r=0.5 ==
+[C-off] alpha_l=0.0 alpha_r=0.0: neurons=97 synapses=186 inputs=12 alpha_ports=0
+   L MN window-mean (6 pools): 1.5115 mV
+   R MN window-mean (6 pools): 1.5933 mV
+[C-alphaR] alpha_l=0.0 alpha_r=0.5: neurons=97 synapses=186 inputs=18 alpha_ports=6
+   ports: ['ALPHA R Ank MN flx', 'ALPHA R Hip MN flx', 'ALPHA R Knee MN flx', 'ALPHA R Knee MN ext', 'ALPHA R Ank MN ext', 'ALPHA R Hip MN ext']
+   L MN window-mean (6 pools): 1.5101 mV
+   R MN window-mean (6 pools): 1.9000 mV
+
+== gamma asym reachability: aff net te_l=3 te_r=2 vs symmetric ==
+   te L/R 3.0/3.0: L RG-E bursts 7 (period 1.711 s), R 7 (period 1.740 s)
+   te L/R 3.0/2.0: L RG-E bursts 1 (period nan s), R 1 (period nan s)
+   te L/R 3.0/1.0: L RG-E bursts 1 (period nan s), R 1 (period nan s)
+
+DEBUG DONE

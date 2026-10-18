@@ -1,0 +1,24 @@
+== gate: M4 split-RG coupled air stepping on the axis-fixed M1 body, 20 s ==
+   knobs: net=split comm=1.0 te=3.0 tf=4.0 tau_rg_nap_h=0.25 ctrl_cap=0.5 joint_damp=3.0 stiff_limits=1 lift=0.3
+   ground contacts: 0 (must be 0) | leg-leg self contacts: 24907
+   neural: L RG ext bursts=11, period 1.543 s (0.65 Hz), E max 7.00 mV
+   neural: R RG ext bursts=12, period 1.542 s (0.65 Hz), E max 7.00 mV; L/R RG-E r = -0.773 (antiphase want < -0.5)
+   hip L swing excursions: 23, mean interval 0.771 s (1.30 Hz); ACF dominant period 1.542 s (0.65 Hz)
+   hip R swing excursions: 15, mean interval 1.211 s (0.83 Hz); ACF dominant period 1.542 s (0.65 Hz)
+   hip L/R cross-correlation: peak +0.462 at lag +0.801 s, trough -0.534 at lag -0.175 s (L hip ACF period 1.542 s)
+   L/R phase lag = 0.519 cycle (antiphase = 0.5)
+   hip L/R correlation, fundamental band 0.3-1.2 Hz: r = -0.803 (antiphase want < -0.3); raw r = +0.309 (contact-kick 2nd harmonic inflates the raw value)
+   joint flexion-positive excursions (deg, min..max and range) vs AnimatLab references:
+     hip   L [ -25.0,  +7.7] range  32.7 | R [  -9.8, +16.9] range  26.6   (ref range ~38)
+     knee  L [  -2.2, +63.9] range  66.2 | R [  -4.0, +62.9] range  66.9   (ref range ~61)
+     ankle L [  -2.1, +23.5] range  25.6 | R [  -2.7, +23.9] range  26.7   (ref range ~16)
+   hip flexion L/R correlation (0 lag): r = +0.309 (antiphase want < -0.3)
+   [PASS] finite_20s
+   [PASS] both_hips_swing
+   [PASS] antiphase
+   [PASS] airborne
+   [PASS] freq_within_2x
+   [PASS] hip_amp_ok
+   [PASS] rg_e_antiphase
+   [PASS] phase_half_cycle
+VERDICT: PASS  hip-ACF period 1.542 s (0.65 Hz)  band-antiphase_r=-0.803 (raw +0.309)  phase=0.519 cycle  hip_range_L=32.7 deg

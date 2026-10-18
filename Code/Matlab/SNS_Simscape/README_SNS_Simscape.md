@@ -566,3 +566,7 @@ after the URDF `<robot>`; use the return value.
 - Mask icon drawing restrictions: see "Block appearance conventions" above.
 - `simscape_sources/SNS_lib.slx` is an older generated library kept for reference;
   the canonical build target is `SNS_Library.slx` via `sns_build_library.m`.
+
+## Winner circuit slice R8 (2026-10-16 overnight campaign)
+
+`demos\SNS_WinnerSlice_R8.slx` - a reduced but faithful Simulink slice of the walk-campaign winner (round8_best3.json, curr_s8b_wean04 t35, drive_scale 0.3807) in the 2026-09-22 redesigned architecture: NaP RG half-centers (local masked NapNeuron, fixed tau_h 842 ms), L/R GAMMA/ALPHA hand-drive knobs on the production drive schedule, one PF layer, heel/toe afferent reset INs on a stylized production-cadence contact script, KINH/IBEXC/LBIN/Renshaw, and a knee MN pair driving a NOMINAL torque-proxy demo load. Built by `demos\sns_build_winner_slice.m` from `spinal\reports_20261016\sns_simulink\slice_export.json` (all values extracted from the real built winner network); verified headless by `demos\sns_run_winner_slice.m` - ALL 4 checks PASS (base rhythm period 1.7285 s = numpy ref to 4 decimals; GAMMA x4 modulates duty 0.32->0.66; ALPHA sets MN level 2.06/2.59 mV = slice ref exactly; heel/toe script entrains 1:1). Solver ode1 @ 2 ms = production Euler semantics. Full story: `spinal\reports_20261016\sns_simulink\SNS_SIMULINK_WINNER_SLICE_20261016.md`.

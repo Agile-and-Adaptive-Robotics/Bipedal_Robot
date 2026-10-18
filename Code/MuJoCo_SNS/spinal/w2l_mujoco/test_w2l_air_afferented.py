@@ -58,7 +58,14 @@ import numpy as np                 # noqa: E402
 
 KV = dict(dur=20.0, causal="none", amp=4.0, pamp=float("nan"), pulse=0.2,
           ibnA=6.0, heel_frac=0.38, toe_frac0=0.62, toe_frac1=0.92,
-          aff_start=1.5, tfac=0.58)
+          aff_start=1.5, tfac=0.58,
+          # per-side drive (2026-10-16): te_l/te_r/tf_l/tf_r = per-side
+          # GAMMA (RG tonic) overrides in nA (nan = the symmetric TE/TF
+          # baseline, bit-identical); alpha_l/alpha_r = per-side ALPHA
+          # (MN-level) drive in nA (0 = ports not built, bit-identical).
+          te_l=float("nan"), te_r=float("nan"),
+          tf_l=float("nan"), tf_r=float("nan"),
+          alpha_l=0.0, alpha_r=0.0)
 for arg in sys.argv[1:]:
     if arg.startswith("--") and "=" in arg:
         k, v = arg[2:].split("=", 1)
@@ -85,7 +92,7 @@ def run_sim(extra=None):
     import mujoco
     import build_w2l_aff_net as B
     B.SPLIT.NAP["tau_max_h"] = TAU      # same dict object the builder reads
-    net = B.build(comm=1.0)
+    net = B.build(comm=1.0, alpha_l=KV["alpha_l"], alpha_r=KV["alpha_r"])
 
     TW.KV["lift"] = LIFT
     write_air_xml()
@@ -115,6 +122,15 @@ def run_sim(extra=None):
     iheel = [net.input_index(f"PORT heel {s}") for s in ("L", "R")]
     itoe = [net.input_index(f"PORT toe {s}") for s in ("L", "R")]
     iib = [net.input_index(f"PORT Ib {s}") for s in ("L", "R")]
+    # per-side GAMMA (RG tonic) values + ALPHA (MN) port currents
+    te = (TE if not np.isfinite(KV["te_l"]) else KV["te_l"],
+          TE if not np.isfinite(KV["te_r"]) else KV["te_r"])
+    tf = (TF if not np.isfinite(KV["tf_l"]) else KV["tf_l"],
+          TF if not np.isfinite(KV["tf_r"]) else KV["tf_r"])
+    i_alpha = ([(net.input_index(p), KV["alpha_l"])
+                for p in net.inputs if p.startswith("ALPHA L ")] +
+               [(net.input_index(p), KV["alpha_r"])
+                for p in net.inputs if p.startswith("ALPHA R ")])
     iE_L, iE_R = net.idx["L RG ext"], net.idx["R RG ext"]
     iH = [net.idx[f"heel {s}"] for s in ("L", "R")]
     iT = [net.idx[f"toe {s}"] for s in ("L", "R")]
@@ -141,8 +157,18 @@ def run_sim(extra=None):
             u[:] = 0.0
             u[iS1] = 10.0 if t < 0.01 else 0.0
             u[iS2] = 10.0 if t < 0.01 else 0.0
-            u[itE[0]] = u[itE[1]] = TE
-            u[itF[0]] = u[itF[1]] = TF
+            # per-side gamma + alpha (defaults reproduce TE/TF symmetric,
+            # no alpha ports -> bit-identical baseline)
+            u[itE[0]] = te[0]
+            u[itE[1]] = te[1]
+            u[itF[0]] = tf[0]
+            u[itF[1]] = tf[1]
+            # i_a (2026-10-16 sweep fix): NEVER shadow physics index i
+            # (same rebind bug as test_w2l_ground.py — corrupted logging
+            # whenever alpha ports exist). alpha=0 = loop body never runs
+            # = bit-identical defaults.
+            for i_a, a_cur in i_alpha:
+                u[i_a] = a_cur
             # Ib group current from ipsilateral extensor muscle force
             for k, s in enumerate(("L", "R")):
                 fnorm = np.mean([max(d.actuator_force[act_ids[a]] /
@@ -281,6 +307,15 @@ def main() -> int:
     print(f"   knobs: dur={KV['dur']} causal={CAUSAL} amp={KV['amp']} "
           f"pulse={KV['pulse']} ibnA={KV['ibnA']} te={TE} tf={TF} "
           f"tau={TAU} cap={CAP} damp={DAMP} lift={LIFT}")
+    if any(np.isfinite(KV[k]) for k in ("te_l", "te_r", "tf_l", "tf_r")) \
+            or KV["alpha_l"] or KV["alpha_r"]:
+        print(f"   per-side drive: te L/R "
+              f"{KV['te_l'] if np.isfinite(KV['te_l']) else TE}/"
+              f"{KV['te_r'] if np.isfinite(KV['te_r']) else TE} "
+              f"tf L/R "
+              f"{KV['tf_l'] if np.isfinite(KV['tf_l']) else TF}/"
+              f"{KV['tf_r'] if np.isfinite(KV['tf_r']) else TF} "
+              f"alpha L/R {KV['alpha_l']}/{KV['alpha_r']} nA")
     print("   scripted contact pattern: heel ON [onset+0.02, "
           f"+{KV['heel_frac']:.2f}*T], toe ON [{KV['toe_frac0']:.2f}*T, "
           f"{KV['toe_frac1']:.2f}*T], from t={KV['aff_start']:.1f} s "

@@ -1,0 +1,84 @@
+{
+ "winner": {
+  "model": "W2L robot, w2l_mujoco (w2l_mjcf_fixed.xml body + M5 afferented split-RG net, build_w2l_aff_net.build)",
+  "knobs": {
+   "te": 4.0,
+   "tf": 5.0,
+   "te_l": null,
+   "te_r": null,
+   "tf_l": null,
+   "tf_r": null,
+   "alpha_l": 0.0,
+   "alpha_r": 0.0,
+   "legcoll": 0,
+   "sink": 0.06,
+   "ctn_amp": 2.0,
+   "rig": 0.25,
+   "walker_yield": 1.5,
+   "dur_walk": 30.0
+  },
+  "protocol_defaults": {
+   "hold": 3.0,
+   "lower": 1.0,
+   "wsup": 0.7,
+   "drop": 0.026,
+   "cap": 0.5,
+   "acap": -1.0,
+   "cref": 50.0,
+   "ibnA": 1.0,
+   "tau": 0.25,
+   "damp": 3.0,
+   "settle": 0.4,
+   "comm": 1.0
+  },
+  "command": "cd /d D:\\GitHub\\Bipedal_Robot\\Code\\MuJoCo_SNS\\spinal\\w2l_mujoco && D:\\Anaconda\\envs\\myo\\python.exe test_w2l_ground.py --phase=walk --te=4 --tf=5 --legcoll=0 --sink=0.06 --ctn_amp=2 --rig=0.25 --walker-yield=1.5 --dur-walk=30",
+  "metrics_25p5s_window": {
+   "heel_strikes_L": 38,
+   "heel_strikes_R": 55,
+   "primary_stride_cycles_L": 22,
+   "primary_stride_cycles_R": 21,
+   "period_L_s": 1.199,
+   "period_R_s": 1.201,
+   "rg_e_corr": -0.743,
+   "interleg_phase_median": 0.498,
+   "forward_disp_m": 1.676,
+   "mean_forward_speed_mps": 0.0657,
+   "sustained_speed_fit_8_30s_mps": 0.0634,
+   "heel_duty_L": 0.06,
+   "heel_duty_R": 0.069,
+   "combined_duty_L": 0.128,
+   "combined_duty_R": 0.171,
+   "fall": false,
+   "finite": true,
+   "tilt_max_deg": 16.1,
+   "pelvis_z_min_m": 0.85
+  }
+ },
+ "runner_up_more_upright": {
+  "knobs": {
+   "te": 4.0,
+   "tf": 5.0,
+   "legcoll": 0,
+   "sink": 0.06,
+   "ctn_amp": 2.0,
+   "rig": 0.5,
+   "walker_yield": 3.0,
+   "dur_walk": 30.0
+  },
+  "metrics": {
+   "strikes": "24/37",
+   "rg_e_corr": -0.77,
+   "fwd_m_25p5s": 0.437,
+   "tilt_max_deg": 7.3,
+   "heel_duty": "0.065/0.068"
+  }
+ },
+ "provenance": {
+  "stage": "bootstrap driver (robot), overnight campaign 2026-10-16",
+  "sweep_runs": 128,
+  "sweeps": "A symmetric te x tf (25) | B E-dominant+asym gamma (20) | C alpha (12) | D stance/harness (14) | E legcoll+sink (13) | F refine (18) | G rig/progression (10) | H rig refine (8) | W yielding walker (8)",
+  "results_csv": "reports_20261016/w2l_walk_sweep/results.csv",
+  "probe_npz": "reports_20261016/w2l_walk_sweep/probe_w01.npz",
+  "report": "reports_20261016/W2L_ROBOT_BOOTSWEEP_20261016.md"
+ }
+}

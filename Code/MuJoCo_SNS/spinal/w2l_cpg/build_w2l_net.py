@@ -223,6 +223,8 @@ class W2LNet:
     the stack's SpinalNetwork: idx / inputs / make_inputs / step)."""
     template: dict
     gains: dict = field(default_factory=dict)   # merged over W2L_GAINS
+    alpha_l: float = 0.0    # MN-level ALPHA drive, LEFT side (nA; 0 = no
+    alpha_r: float = 0.0    # ports built; >/< 0 adds 6 "ALPHA L/R ..." ports)
     net: Network = field(init=False)
     compiled: object = field(init=False, default=None)
     idx: dict = field(default_factory=dict)
@@ -301,11 +303,38 @@ class W2LNet:
         # can never take over from an E plateau and the RG latches in
         # extension (measured in the first smoke run, 2026-09-24). Current
         # ports add no synapses - zero current leaves the graph unchanged.
+        # GAMMA (RG-level) drive, per side: these four ports ARE the gamma
+        # entry - "TONIC {L,R} RG {ext,flx}". A runner sets L and R
+        # independently for asymmetric drive (smoke_w2l.py --tonic-e-l/-r,
+        # --tonic-f-l/-r, 2026-10-16); value-level only, so default
+        # (symmetric) runs are bit-identical.
         for lab in ("L RG ext", "L RG flx", "R RG ext", "R RG flx"):
             port = "TONIC " + lab
             self.net.add_input(lab)
             self.inputs.append(port)
             self.port_targets[port] = lab
+
+        # ---- ALPHA drive ports (MN-level, per side; CONDITIONAL - lab law:
+        # extra input ports change compiled shapes even at zero current, so
+        # alpha == 0.0 (default) builds NOTHING and the census stays
+        # (95, 208, 10) bit-identical). Separate LEFT/RIGHT alpha drive =
+        # a tonic depolarizing current on all six MN pools of that side,
+        # one current port per MN (so a runner can shape per-pool later);
+        # ports are named "ALPHA <MN label>", e.g. "ALPHA L Hip MN ext".
+        # Added 2026-10-16 (overnight campaign: w2lvar's stage-5 asymmetry
+        # - left duty 0.81 vs right 0.56 - wants per-side drive).
+        self.alpha_ports = []
+        for side, a in (("L", self.alpha_l), ("R", self.alpha_r)):
+            if a == 0.0:
+                continue
+            for e in edges:
+                if e["tag"] == "mn_to_muscle" and e["to"].startswith(side):
+                    mn = e["from"]
+                    port = "ALPHA " + mn
+                    self.net.add_input(mn)
+                    self.inputs.append(port)
+                    self.port_targets[port] = mn
+                    self.alpha_ports.append(port)
 
         # ---- muscles: output ports of their MN (the mn_to_muscle edge is an
         # implied pass-through, g=1.0, no synapse)
@@ -419,7 +448,8 @@ class W2LNet:
             want_counts["rg_laminate_mirror"] = self.n_mirror
         assert dict(self.synapse_counts) == want_counts, "per-tag mismatch"
         assert len(self.idx) == 95, f"neuron count {len(self.idx)} != 95"
-        assert len(self.inputs) == 10, f"port count {len(self.inputs)} != 10"
+        assert len(self.inputs) == 10 + len(self.alpha_ports), \
+            f"port count {len(self.inputs)} != {10 + len(self.alpha_ports)}"
         assert len(self.muscle_outputs) == 12, "muscle outputs != 12"
 
     # ------------------------------------------------------------------ run
@@ -442,17 +472,24 @@ class W2LNet:
         return np.zeros(len(self.inputs))
 
 
-def build(template_path=None, dt: float = DT, gains: dict | None = None) -> W2LNet:
+def build(template_path=None, dt: float = DT, gains: dict | None = None,
+          alpha_l: float = 0.0, alpha_r: float = 0.0) -> W2LNet:
     """Load the bilateralrg template and build + compile the network.
 
     gains: optional per-key overrides merged over W2L_GAINS (tuning without
-    touching the transcribed topology)."""
+    touching the transcribed topology).
+    alpha_l / alpha_r: per-side MN-level (ALPHA) drive, nA. 0.0 (default)
+    builds no ports (census 95/208/10 bit-identical); nonzero adds six
+    "ALPHA {L,R} ..." current ports on that side's MN pools. GAMMA
+    (RG-level) per-side drive needs no build knob - the four TONIC ports
+    already exist (see W2LNet.__post_init__)."""
     if template_path is None:
         template_path = SPINAL / "connectome_templates.json"
     tpl = json.loads(Path(template_path).read_text(encoding="utf-8"))
     if "bilateralrg" not in tpl:
         raise KeyError(f"{template_path}: no 'bilateralrg' key")
-    net = W2LNet(template=tpl["bilateralrg"], gains=gains or {})
+    net = W2LNet(template=tpl["bilateralrg"], gains=gains or {},
+                 alpha_l=alpha_l, alpha_r=alpha_r)
     net.compile(dt=dt)
     return net
 

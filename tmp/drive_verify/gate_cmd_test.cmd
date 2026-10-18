@@ -1,0 +1,1 @@
+ssh -o BatchMode=yes -o StrictHostKeyChecking=accept-new -o ConnectTimeout=30 -o ConnectionAttempts=3 easteregg2 "cd /d D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal && D:\Anaconda\envs\myo\python.exe reports_20261016\drive_defaults_gate.py"

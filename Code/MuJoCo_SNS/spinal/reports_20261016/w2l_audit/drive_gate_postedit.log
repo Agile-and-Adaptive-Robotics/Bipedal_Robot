@@ -1,0 +1,13 @@
+== PRE/POST DEFAULT PROBES (must be identical pre-edit vs post-edit-default) ==
+[A bilateralrg] neurons=95 synapses=208 inputs=10
+   hash=01929488aad3ec023a6135851ff08b6ebd68b375d68fffa0f3c9cccf786ec3a3  repeats-equal=True  last=-2.123330212256 6.431794309815 5.886044396242 -2.874607112142
+[B split] neurons=87 synapses=164 inputs=6
+   hash=57637001168ca2d1983142ef0150844e7f017a4f6dfefcfb19d758aef4777cda  repeats-equal=True  last=-1.121638326615 6.962197022317
+[C aff] neurons=97 synapses=186 inputs=12
+   hash=6834c8d2503634444920bcf37309d5cfd7049f33610acdca95977ac1b37c4952  repeats-equal=True  last=5.429764286375 3.725950644954 -2.121390030453 -2.576152001441
+
+== POST-EDIT SANITY (knobs ON; NOT expected to match anything) ==
+[A alpha_l=0.6] hash=091332ff4237426a... L MN mean 0.998 mV vs R MN mean 1.906 mV (want L > R), finite=True
+[C alpha_r=0.5] hash=6834c8d250363444... last=5.429764286375 3.725950644954 -2.121390030453 -2.576152001441 finite-check done
+   finite=True
+[C te_l=3.0 te_r=1.0] RG-E burst starts L=7 R=7 (asymmetry knob reachable)

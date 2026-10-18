@@ -1,0 +1,1512 @@
+model actuators: 92 (glut_med1_r..extobl_l)
+unclassifiable: []
+
+========================================================================
+DEFAULT BUILD (all conditional gains at params.G module defaults)
+========================================================================
+counts neurons/inputs/synapses = (410, 376, 1186)
+inputs (376): ['DRIVE', 'POSTURE', 'BAL_PF', 'BAL_DF', 'BAL_TRK_EXT', 'BAL_TRK_FLX', 'BAL_LAT_R', 'BAL_LAT_L', 'POST_glut_med1_r', 'Ia_glut_med1_r', 'II_glut_med1_r', 'Ib_glut_med1_r', 'POST_glut_med2_r', 'Ia_glut_med2_r', 'II_glut_med2_r', 'Ib_glut_med2_r', 'POST_glut_med3_r', 'Ia_glut_med3_r', 'II_glut_med3_r', 'Ib_glut_med3_r', 'POST_glut_min1_r', 'Ia_glut_min1_r', 'II_glut_min1_r', 'Ib_glut_min1_r', 'POST_glut_min2_r', 'Ia_glut_min2_r', 'II_glut_min2_r', 'Ib_glut_min2_r', 'POST_glut_min3_r', 'Ia_glut_min3_r', 'II_glut_min3_r', 'Ib_glut_min3_r', 'POST_semimem_r', 'Ia_semimem_r', 'II_semimem_r', 'Ib_semimem_r', 'POST_semiten_r', 'Ia_semiten_r', 'II_semiten_r', 'Ib_semiten_r', 'POST_bifemlh_r', 'Ia_bifemlh_r', 'II_bifemlh_r', 'Ib_bifemlh_r', 'POST_bifemsh_r', 'Ia_bifemsh_r', 'II_bifemsh_r', 'Ib_bifemsh_r', 'POST_sar_r', 'Ia_sar_r', 'II_sar_r', 'Ib_sar_r', 'POST_add_long_r', 'Ia_add_long_r', 'II_add_long_r', 'Ib_add_long_r', 'POST_add_brev_r', 'Ia_add_brev_r', 'II_add_brev_r', 'Ib_add_brev_r', 'POST_add_mag1_r', 'Ia_add_mag1_r', 'II_add_mag1_r', 'Ib_add_mag1_r', 'POST_add_mag2_r', 'Ia_add_mag2_r', 'II_add_mag2_r', 'Ib_add_mag2_r', 'POST_add_mag3_r', 'Ia_add_mag3_r', 'II_add_mag3_r', 'Ib_add_mag3_r', 'POST_tfl_r', 'Ia_tfl_r', 'II_tfl_r', 'Ib_tfl_r', 'POST_pect_r', 'Ia_pect_r', 'II_pect_r', 'Ib_pect_r', 'POST_grac_r', 'Ia_grac_r', 'II_grac_r', 'Ib_grac_r', 'POST_glut_max1_r', 'Ia_glut_max1_r', 'II_glut_max1_r', 'Ib_glut_max1_r', 'POST_glut_max2_r', 'Ia_glut_max2_r', 'II_glut_max2_r', 'Ib_glut_max2_r', 'POST_glut_max3_r', 'Ia_glut_max3_r', 'II_glut_max3_r', 'Ib_glut_max3_r', 'POST_iliacus_r', 'Ia_iliacus_r', 'II_iliacus_r', 'Ib_iliacus_r', 'POST_psoas_r', 'Ia_psoas_r', 'II_psoas_r', 'Ib_psoas_r', 'POST_quad_fem_r', 'Ia_quad_fem_r', 'II_quad_fem_r', 'Ib_quad_fem_r', 'POST_gem_r', 'Ia_gem_r', 'II_gem_r', 'Ib_gem_r', 'POST_peri_r', 'Ia_peri_r', 'II_peri_r', 'Ib_peri_r', 'POST_rect_fem_r', 'Ia_rect_fem_r', 'II_rect_fem_r', 'Ib_rect_fem_r', 'POST_vas_med_r', 'Ia_vas_med_r', 'II_vas_med_r', 'Ib_vas_med_r', 'POST_vas_int_r', 'Ia_vas_int_r', 'II_vas_int_r', 'Ib_vas_int_r', 'POST_vas_lat_r', 'Ia_vas_lat_r', 'II_vas_lat_r', 'Ib_vas_lat_r', 'POST_med_gas_r', 'Ia_med_gas_r', 'II_med_gas_r', 'Ib_med_gas_r', 'POST_lat_gas_r', 'Ia_lat_gas_r', 'II_lat_gas_r', 'Ib_lat_gas_r', 'POST_soleus_r', 'Ia_soleus_r', 'II_soleus_r', 'Ib_soleus_r', 'POST_tib_post_r', 'Ia_tib_post_r', 'II_tib_post_r', 'Ib_tib_post_r', 'POST_flex_dig_r', 'Ia_flex_dig_r', 'II_flex_dig_r', 'Ib_flex_dig_r', 'POST_flex_hal_r', 'Ia_flex_hal_r', 'II_flex_hal_r', 'Ib_flex_hal_r', 'POST_tib_ant_r', 'Ia_tib_ant_r', 'II_tib_ant_r', 'Ib_tib_ant_r', 'POST_per_brev_r', 'Ia_per_brev_r', 'II_per_brev_r', 'Ib_per_brev_r', 'POST_per_long_r', 'Ia_per_long_r', 'II_per_long_r', 'Ib_per_long_r', 'POST_per_tert_r', 'Ia_per_tert_r', 'II_per_tert_r', 'Ib_per_tert_r', 'POST_ext_dig_r', 'Ia_ext_dig_r', 'II_ext_dig_r', 'Ib_ext_dig_r', 'POST_ext_hal_r', 'Ia_ext_hal_r', 'II_ext_hal_r', 'Ib_ext_hal_r', 'POST_glut_med1_l', 'Ia_glut_med1_l', 'II_glut_med1_l', 'Ib_glut_med1_l', 'POST_glut_med2_l', 'Ia_glut_med2_l', 'II_glut_med2_l', 'Ib_glut_med2_l', 'POST_glut_med3_l', 'Ia_glut_med3_l', 'II_glut_med3_l', 'Ib_glut_med3_l', 'POST_glut_min1_l', 'Ia_glut_min1_l', 'II_glut_min1_l', 'Ib_glut_min1_l', 'POST_glut_min2_l', 'Ia_glut_min2_l', 'II_glut_min2_l', 'Ib_glut_min2_l', 'POST_glut_min3_l', 'Ia_glut_min3_l', 'II_glut_min3_l', 'Ib_glut_min3_l', 'POST_semimem_l', 'Ia_semimem_l', 'II_semimem_l', 'Ib_semimem_l', 'POST_semiten_l', 'Ia_semiten_l', 'II_semiten_l', 'Ib_semiten_l', 'POST_bifemlh_l', 'Ia_bifemlh_l', 'II_bifemlh_l', 'Ib_bifemlh_l', 'POST_bifemsh_l', 'Ia_bifemsh_l', 'II_bifemsh_l', 'Ib_bifemsh_l', 'POST_sar_l', 'Ia_sar_l', 'II_sar_l', 'Ib_sar_l', 'POST_add_long_l', 'Ia_add_long_l', 'II_add_long_l', 'Ib_add_long_l', 'POST_add_brev_l', 'Ia_add_brev_l', 'II_add_brev_l', 'Ib_add_brev_l', 'POST_add_mag1_l', 'Ia_add_mag1_l', 'II_add_mag1_l', 'Ib_add_mag1_l', 'POST_add_mag2_l', 'Ia_add_mag2_l', 'II_add_mag2_l', 'Ib_add_mag2_l', 'POST_add_mag3_l', 'Ia_add_mag3_l', 'II_add_mag3_l', 'Ib_add_mag3_l', 'POST_tfl_l', 'Ia_tfl_l', 'II_tfl_l', 'Ib_tfl_l', 'POST_pect_l', 'Ia_pect_l', 'II_pect_l', 'Ib_pect_l', 'POST_grac_l', 'Ia_grac_l', 'II_grac_l', 'Ib_grac_l', 'POST_glut_max1_l', 'Ia_glut_max1_l', 'II_glut_max1_l', 'Ib_glut_max1_l', 'POST_glut_max2_l', 'Ia_glut_max2_l', 'II_glut_max2_l', 'Ib_glut_max2_l', 'POST_glut_max3_l', 'Ia_glut_max3_l', 'II_glut_max3_l', 'Ib_glut_max3_l', 'POST_iliacus_l', 'Ia_iliacus_l', 'II_iliacus_l', 'Ib_iliacus_l', 'POST_psoas_l', 'Ia_psoas_l', 'II_psoas_l', 'Ib_psoas_l', 'POST_quad_fem_l', 'Ia_quad_fem_l', 'II_quad_fem_l', 'Ib_quad_fem_l', 'POST_gem_l', 'Ia_gem_l', 'II_gem_l', 'Ib_gem_l', 'POST_peri_l', 'Ia_peri_l', 'II_peri_l', 'Ib_peri_l', 'POST_rect_fem_l', 'Ia_rect_fem_l', 'II_rect_fem_l', 'Ib_rect_fem_l', 'POST_vas_med_l', 'Ia_vas_med_l', 'II_vas_med_l', 'Ib_vas_med_l', 'POST_vas_int_l', 'Ia_vas_int_l', 'II_vas_int_l', 'Ib_vas_int_l', 'POST_vas_lat_l', 'Ia_vas_lat_l', 'II_vas_lat_l', 'Ib_vas_lat_l', 'POST_med_gas_l', 'Ia_med_gas_l', 'II_med_gas_l', 'Ib_med_gas_l', 'POST_lat_gas_l', 'Ia_lat_gas_l', 'II_lat_gas_l', 'Ib_lat_gas_l', 'POST_soleus_l', 'Ia_soleus_l', 'II_soleus_l', 'Ib_soleus_l', 'POST_tib_post_l', 'Ia_tib_post_l', 'II_tib_post_l', 'Ib_tib_post_l', 'POST_flex_dig_l', 'Ia_flex_dig_l', 'II_flex_dig_l', 'Ib_flex_dig_l', 'POST_flex_hal_l', 'Ia_flex_hal_l', 'II_flex_hal_l', 'Ib_flex_hal_l', 'POST_tib_ant_l', 'Ia_tib_ant_l', 'II_tib_ant_l', 'Ib_tib_ant_l', 'POST_per_brev_l', 'Ia_per_brev_l', 'II_per_brev_l', 'Ib_per_brev_l', 'POST_per_long_l', 'Ia_per_long_l', 'II_per_long_l', 'Ib_per_long_l', 'POST_per_tert_l', 'Ia_per_tert_l', 'II_per_tert_l', 'Ib_per_tert_l', 'POST_ext_dig_l', 'Ia_ext_dig_l', 'II_ext_dig_l', 'Ib_ext_dig_l', 'POST_ext_hal_l', 'Ia_ext_hal_l', 'II_ext_hal_l', 'Ib_ext_hal_l', 'POST_ercspn_r', 'Ia_ercspn_r', 'II_ercspn_r', 'Ib_ercspn_r', 'POST_ercspn_l', 'Ia_ercspn_l', 'II_ercspn_l', 'Ib_ercspn_l', 'POST_intobl_r', 'Ia_intobl_r', 'II_intobl_r', 'Ib_intobl_r', 'POST_intobl_l', 'Ia_intobl_l', 'II_intobl_l', 'Ib_intobl_l', 'POST_extobl_r', 'Ia_extobl_r', 'II_extobl_r', 'Ib_extobl_r', 'POST_extobl_l', 'Ia_extobl_l', 'II_extobl_l', 'Ib_extobl_l']
+total connections: 1186
+  INH CIN        -> RG-F       x   2  g[4]
+  EXC IBEXC_IN   -> MN         x  54  g[0.6]
+  EXC II-aff     -> MN         x  92  g[0.4]
+  EXC Ia-aff     -> MN         x  92  g[0.6]
+  INH Ia-aff     -> MN         x 436  g[0.4]
+  EXC Ib-aff     -> IBEXC_IN   x  54  g[0.5]
+  INH Ib-aff     -> MN         x  92  g[0.35]
+  INH InE        -> RG-F       x   2  g[4]
+  INH InF        -> RG-E       x   2  g[4]
+  EXC PF         -> MN         x 162  g[0.05, 0.1, 0.15, 0.2]
+  EXC PF         -> PF         x   8  g[4]
+  INH PF         -> PF         x   8  g[4]
+  EXC RG-E       -> IBEXC_IN   x  10  g[1]
+  EXC RG-E       -> InE        x   2  g[4]
+  EXC RG-E       -> PF         x   4  g[2.4]
+  EXC RG-F       -> CIN        x   2  g[4]
+  EXC RG-F       -> InF        x   2  g[4]
+  EXC RG-F       -> PF         x   4  g[2.4]
+  EXC desc-in    -> MN         x 152  g[0.05, 0.08, 0.1, 0.12]
+  EXC desc-in    -> RG-E       x   4  g[0.8, 1.7]
+  EXC desc-in    -> RG-F       x   2  g[1.4]
+
+--- (a) PF neurons (12): ['PF_E1_l', 'PF_E1_r', 'PF_E2_l', 'PF_E2_r', 'PF_F1_l', 'PF_F1_r', 'PF_F2_l', 'PF_F2_r', 'PF_IN_E_l', 'PF_IN_E_r', 'PF_IN_F_l', 'PF_IN_F_r']
+
+--- (a) RG -> PF drive edges (8 edges) ---
+  exc g=2.4       RG-E->PF x2: RG_E_l->PF_E1_l, RG_E_l->PF_E2_l
+  exc g=2.4       RG-E->PF x2: RG_E_r->PF_E1_r, RG_E_r->PF_E2_r
+  exc g=2.4       RG-F->PF x2: RG_F_l->PF_F1_l, RG_F_l->PF_F2_l
+  exc g=2.4       RG-F->PF x2: RG_F_r->PF_F1_r, RG_F_r->PF_F2_r
+
+--- (a) PF -> MN fan-out (per-muscle weights) (162 edges) ---
+  exc g=0.05      PF->MN x2: PF_E1_l->MN_med_gas_l, PF_E1_l->MN_lat_gas_l
+  exc g=0.1       PF->MN x7: PF_E1_l->MN_glut_med1_l, PF_E1_l->MN_glut_med2_l, PF_E1_l->MN_glut_med3_l, PF_E1_l->MN_glut_min1_l (+3 more)
+  exc g=0.2       PF->MN x7: PF_E1_l->MN_rect_fem_l, PF_E1_l->MN_vas_med_l, PF_E1_l->MN_vas_int_l, PF_E1_l->MN_vas_lat_l (+3 more)
+  exc g=0.4       PF->MN x1: PF_E1_l->MN_ercspn_l
+  exc g=0.55      PF->MN x3: PF_E1_l->MN_semimem_l, PF_E1_l->MN_semiten_l, PF_E1_l->MN_bifemlh_l
+  exc g=0.9       PF->MN x7: PF_E1_l->MN_add_mag3_l, PF_E1_l->MN_glut_max1_l, PF_E1_l->MN_glut_max2_l, PF_E1_l->MN_glut_max3_l (+3 more)
+  exc g=0.05      PF->MN x2: PF_E1_r->MN_med_gas_r, PF_E1_r->MN_lat_gas_r
+  exc g=0.1       PF->MN x7: PF_E1_r->MN_glut_med1_r, PF_E1_r->MN_glut_med2_r, PF_E1_r->MN_glut_med3_r, PF_E1_r->MN_glut_min1_r (+3 more)
+  exc g=0.2       PF->MN x7: PF_E1_r->MN_rect_fem_r, PF_E1_r->MN_vas_med_r, PF_E1_r->MN_vas_int_r, PF_E1_r->MN_vas_lat_r (+3 more)
+  exc g=0.4       PF->MN x1: PF_E1_r->MN_ercspn_r
+  exc g=0.55      PF->MN x3: PF_E1_r->MN_semimem_r, PF_E1_r->MN_semiten_r, PF_E1_r->MN_bifemlh_r
+  exc g=0.9       PF->MN x7: PF_E1_r->MN_add_mag3_r, PF_E1_r->MN_glut_max1_r, PF_E1_r->MN_glut_max2_r, PF_E1_r->MN_glut_max3_r (+3 more)
+  exc g=0.1       PF->MN x6: PF_E2_l->MN_glut_med1_l, PF_E2_l->MN_glut_med2_l, PF_E2_l->MN_glut_med3_l, PF_E2_l->MN_glut_min1_l (+2 more)
+  exc g=0.3       PF->MN x4: PF_E2_l->MN_rect_fem_l, PF_E2_l->MN_vas_med_l, PF_E2_l->MN_vas_int_l, PF_E2_l->MN_vas_lat_l
+  exc g=0.4       PF->MN x1: PF_E2_l->MN_ercspn_l
+  exc g=0.5       PF->MN x12: PF_E2_l->MN_semimem_l, PF_E2_l->MN_semiten_l, PF_E2_l->MN_bifemlh_l, PF_E2_l->MN_med_gas_l (+8 more)
+  exc g=1         PF->MN x7: PF_E2_l->MN_add_mag3_l, PF_E2_l->MN_glut_max1_l, PF_E2_l->MN_glut_max2_l, PF_E2_l->MN_glut_max3_l (+3 more)
+  exc g=0.1       PF->MN x6: PF_E2_r->MN_glut_med1_r, PF_E2_r->MN_glut_med2_r, PF_E2_r->MN_glut_med3_r, PF_E2_r->MN_glut_min1_r (+2 more)
+  exc g=0.3       PF->MN x4: PF_E2_r->MN_rect_fem_r, PF_E2_r->MN_vas_med_r, PF_E2_r->MN_vas_int_r, PF_E2_r->MN_vas_lat_r
+  exc g=0.4       PF->MN x1: PF_E2_r->MN_ercspn_r
+  exc g=0.5       PF->MN x12: PF_E2_r->MN_semimem_r, PF_E2_r->MN_semiten_r, PF_E2_r->MN_bifemlh_r, PF_E2_r->MN_med_gas_r (+8 more)
+  exc g=1         PF->MN x7: PF_E2_r->MN_add_mag3_r, PF_E2_r->MN_glut_max1_r, PF_E2_r->MN_glut_max2_r, PF_E2_r->MN_glut_max3_r (+3 more)
+  exc g=0.75      PF->MN x1: PF_F1_l->MN_rect_fem_l
+  exc g=1.1       PF->MN x3: PF_F1_l->MN_tib_ant_l, PF_F1_l->MN_ext_dig_l, PF_F1_l->MN_ext_hal_l
+  exc g=1.5       PF->MN x4: PF_F1_l->MN_sar_l, PF_F1_l->MN_tfl_l, PF_F1_l->MN_iliacus_l, PF_F1_l->MN_psoas_l
+  exc g=1.8       PF->MN x2: PF_F1_l->MN_med_gas_l, PF_F1_l->MN_lat_gas_l
+  exc g=3.6       PF->MN x4: PF_F1_l->MN_semimem_l, PF_F1_l->MN_semiten_l, PF_F1_l->MN_bifemlh_l, PF_F1_l->MN_bifemsh_l
+  exc g=0.75      PF->MN x1: PF_F1_r->MN_rect_fem_r
+  exc g=1.1       PF->MN x3: PF_F1_r->MN_tib_ant_r, PF_F1_r->MN_ext_dig_r, PF_F1_r->MN_ext_hal_r
+  exc g=1.5       PF->MN x4: PF_F1_r->MN_sar_r, PF_F1_r->MN_tfl_r, PF_F1_r->MN_iliacus_r, PF_F1_r->MN_psoas_r
+  exc g=1.8       PF->MN x2: PF_F1_r->MN_med_gas_r, PF_F1_r->MN_lat_gas_r
+  exc g=3.6       PF->MN x4: PF_F1_r->MN_semimem_r, PF_F1_r->MN_semiten_r, PF_F1_r->MN_bifemlh_r, PF_F1_r->MN_bifemsh_r
+  exc g=0.1       PF->MN x2: PF_F2_l->MN_intobl_l, PF_F2_l->MN_extobl_l
+  exc g=0.15      PF->MN x1: PF_F2_l->MN_rect_fem_l
+  exc g=0.3       PF->MN x4: PF_F2_l->MN_sar_l, PF_F2_l->MN_tfl_l, PF_F2_l->MN_iliacus_l, PF_F2_l->MN_psoas_l
+  exc g=1.1       PF->MN x3: PF_F2_l->MN_tib_ant_l, PF_F2_l->MN_ext_dig_l, PF_F2_l->MN_ext_hal_l
+  exc g=0.1       PF->MN x2: PF_F2_r->MN_intobl_r, PF_F2_r->MN_extobl_r
+  exc g=0.15      PF->MN x1: PF_F2_r->MN_rect_fem_r
+  exc g=0.3       PF->MN x4: PF_F2_r->MN_sar_r, PF_F2_r->MN_tfl_r, PF_F2_r->MN_iliacus_r, PF_F2_r->MN_psoas_r
+  exc g=1.1       PF->MN x3: PF_F2_r->MN_tib_ant_r, PF_F2_r->MN_ext_dig_r, PF_F2_r->MN_ext_hal_r
+
+--- (b) HEEL/TOE/TOEDF-sourced edges (0 edges) ---
+
+--- (b) edges INTO TOEDF (0 edges) ---
+
+--- (c) afferent->MN direct edges: autogenic 276, NON-autogenic 436 [('Ia_glut_med1_r', 'MN_add_long_r', 'inh', 0.4), ('Ia_glut_med1_r', 'MN_add_brev_r', 'inh', 0.4), ('Ia_glut_med1_r', 'MN_add_mag1_r', 'inh', 0.4), ('Ia_glut_med1_r', 'MN_add_mag2_r', 'inh', 0.4), ('Ia_glut_med1_r', 'MN_pect_r', 'inh', 0.4), ('Ia_glut_med1_r', 'MN_grac_r', 'inh', 0.4)]
+
+--- (c) Ia -> IaIN (0 edges) ---
+
+--- (c) II -> IIX/IIIN (0 edges) ---
+
+--- (c) Ib -> IBIN/IBEXC (54 edges) ---
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_add_mag3_l->IBEXC_hip_ext_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_add_mag3_r->IBEXC_hip_ext_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_ercspn_l->IBEXC_trunk_ext_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_ercspn_r->IBEXC_trunk_ext_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_flex_dig_l->IBEXC_ankle_pf_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_flex_dig_r->IBEXC_ankle_pf_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_flex_hal_l->IBEXC_ankle_pf_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_flex_hal_r->IBEXC_ankle_pf_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_gem_l->IBEXC_hip_ext_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_gem_r->IBEXC_hip_ext_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_max1_l->IBEXC_hip_ext_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_max1_r->IBEXC_hip_ext_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_max2_l->IBEXC_hip_ext_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_max2_r->IBEXC_hip_ext_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_max3_l->IBEXC_hip_ext_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_max3_r->IBEXC_hip_ext_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_med1_l->IBEXC_hip_abd_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_med1_r->IBEXC_hip_abd_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_med2_l->IBEXC_hip_abd_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_med2_r->IBEXC_hip_abd_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_med3_l->IBEXC_hip_abd_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_med3_r->IBEXC_hip_abd_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_min1_l->IBEXC_hip_abd_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_min1_r->IBEXC_hip_abd_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_min2_l->IBEXC_hip_abd_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_min2_r->IBEXC_hip_abd_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_min3_l->IBEXC_hip_abd_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_min3_r->IBEXC_hip_abd_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_lat_gas_l->IBEXC_ankle_pf_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_lat_gas_r->IBEXC_ankle_pf_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_med_gas_l->IBEXC_ankle_pf_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_med_gas_r->IBEXC_ankle_pf_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_per_brev_l->IBEXC_ankle_pf_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_per_brev_r->IBEXC_ankle_pf_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_per_long_l->IBEXC_ankle_pf_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_per_long_r->IBEXC_ankle_pf_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_per_tert_l->IBEXC_ankle_pf_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_per_tert_r->IBEXC_ankle_pf_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_peri_l->IBEXC_hip_ext_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_peri_r->IBEXC_hip_ext_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_quad_fem_l->IBEXC_hip_ext_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_quad_fem_r->IBEXC_hip_ext_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_rect_fem_l->IBEXC_knee_ext_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_rect_fem_r->IBEXC_knee_ext_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_soleus_l->IBEXC_ankle_pf_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_soleus_r->IBEXC_ankle_pf_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_tib_post_l->IBEXC_ankle_pf_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_tib_post_r->IBEXC_ankle_pf_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_vas_int_l->IBEXC_knee_ext_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_vas_int_r->IBEXC_knee_ext_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_vas_lat_l->IBEXC_knee_ext_l
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+
+winner-config G keys of interest: full_rules=1, joint_pf=0, heel_rge=0.3753, toe_rge=0.1457, ib_rge=0.6741, ib_e_central=0.2435, ia_f_central=0.3986, ii_f_central=0.3839, ii_e_central=0.093, ia_f_contra_f=0, c1_gain=0.1, v3_gain=0, ia_in=0.825, renshaw=0.5, contra_kinh=0, heel_pf_layer=0, toe_df_inh=0, heel_in_f_exc=0, ia_pf_f=0, ii_pf_f=0, rg_to_pf=2.601, descend_to_rg_e=1.699, descend_to_rg_f=0.9964, ib_group_exc=0.5, ib_exc_to_mn=0.6
+
+========================================================================
+S3K WINNER BUILD (curr_s3k_nocross t34 via set_stage(4)) - the production human-body walker
+========================================================================
+counts neurons/inputs/synapses = (878, 382, 8396)
+inputs (382): ['DRIVE', 'POSTURE', 'BAL_PF', 'BAL_DF', 'BAL_TRK_EXT', 'BAL_TRK_FLX', 'BAL_LAT_R', 'BAL_LAT_L', 'HEEL_c_l', 'TOE_c_l', 'LOAD_c_l', 'HEEL_c_r', 'TOE_c_r', 'LOAD_c_r', 'POST_glut_med1_r', 'Ia_glut_med1_r', 'II_glut_med1_r', 'Ib_glut_med1_r', 'POST_glut_med2_r', 'Ia_glut_med2_r', 'II_glut_med2_r', 'Ib_glut_med2_r', 'POST_glut_med3_r', 'Ia_glut_med3_r', 'II_glut_med3_r', 'Ib_glut_med3_r', 'POST_glut_min1_r', 'Ia_glut_min1_r', 'II_glut_min1_r', 'Ib_glut_min1_r', 'POST_glut_min2_r', 'Ia_glut_min2_r', 'II_glut_min2_r', 'Ib_glut_min2_r', 'POST_glut_min3_r', 'Ia_glut_min3_r', 'II_glut_min3_r', 'Ib_glut_min3_r', 'POST_semimem_r', 'Ia_semimem_r', 'II_semimem_r', 'Ib_semimem_r', 'POST_semiten_r', 'Ia_semiten_r', 'II_semiten_r', 'Ib_semiten_r', 'POST_bifemlh_r', 'Ia_bifemlh_r', 'II_bifemlh_r', 'Ib_bifemlh_r', 'POST_bifemsh_r', 'Ia_bifemsh_r', 'II_bifemsh_r', 'Ib_bifemsh_r', 'POST_sar_r', 'Ia_sar_r', 'II_sar_r', 'Ib_sar_r', 'POST_add_long_r', 'Ia_add_long_r', 'II_add_long_r', 'Ib_add_long_r', 'POST_add_brev_r', 'Ia_add_brev_r', 'II_add_brev_r', 'Ib_add_brev_r', 'POST_add_mag1_r', 'Ia_add_mag1_r', 'II_add_mag1_r', 'Ib_add_mag1_r', 'POST_add_mag2_r', 'Ia_add_mag2_r', 'II_add_mag2_r', 'Ib_add_mag2_r', 'POST_add_mag3_r', 'Ia_add_mag3_r', 'II_add_mag3_r', 'Ib_add_mag3_r', 'POST_tfl_r', 'Ia_tfl_r', 'II_tfl_r', 'Ib_tfl_r', 'POST_pect_r', 'Ia_pect_r', 'II_pect_r', 'Ib_pect_r', 'POST_grac_r', 'Ia_grac_r', 'II_grac_r', 'Ib_grac_r', 'POST_glut_max1_r', 'Ia_glut_max1_r', 'II_glut_max1_r', 'Ib_glut_max1_r', 'POST_glut_max2_r', 'Ia_glut_max2_r', 'II_glut_max2_r', 'Ib_glut_max2_r', 'POST_glut_max3_r', 'Ia_glut_max3_r', 'II_glut_max3_r', 'Ib_glut_max3_r', 'POST_iliacus_r', 'Ia_iliacus_r', 'II_iliacus_r', 'Ib_iliacus_r', 'POST_psoas_r', 'Ia_psoas_r', 'II_psoas_r', 'Ib_psoas_r', 'POST_quad_fem_r', 'Ia_quad_fem_r', 'II_quad_fem_r', 'Ib_quad_fem_r', 'POST_gem_r', 'Ia_gem_r', 'II_gem_r', 'Ib_gem_r', 'POST_peri_r', 'Ia_peri_r', 'II_peri_r', 'Ib_peri_r', 'POST_rect_fem_r', 'Ia_rect_fem_r', 'II_rect_fem_r', 'Ib_rect_fem_r', 'POST_vas_med_r', 'Ia_vas_med_r', 'II_vas_med_r', 'Ib_vas_med_r', 'POST_vas_int_r', 'Ia_vas_int_r', 'II_vas_int_r', 'Ib_vas_int_r', 'POST_vas_lat_r', 'Ia_vas_lat_r', 'II_vas_lat_r', 'Ib_vas_lat_r', 'POST_med_gas_r', 'Ia_med_gas_r', 'II_med_gas_r', 'Ib_med_gas_r', 'POST_lat_gas_r', 'Ia_lat_gas_r', 'II_lat_gas_r', 'Ib_lat_gas_r', 'POST_soleus_r', 'Ia_soleus_r', 'II_soleus_r', 'Ib_soleus_r', 'POST_tib_post_r', 'Ia_tib_post_r', 'II_tib_post_r', 'Ib_tib_post_r', 'POST_flex_dig_r', 'Ia_flex_dig_r', 'II_flex_dig_r', 'Ib_flex_dig_r', 'POST_flex_hal_r', 'Ia_flex_hal_r', 'II_flex_hal_r', 'Ib_flex_hal_r', 'POST_tib_ant_r', 'Ia_tib_ant_r', 'II_tib_ant_r', 'Ib_tib_ant_r', 'POST_per_brev_r', 'Ia_per_brev_r', 'II_per_brev_r', 'Ib_per_brev_r', 'POST_per_long_r', 'Ia_per_long_r', 'II_per_long_r', 'Ib_per_long_r', 'POST_per_tert_r', 'Ia_per_tert_r', 'II_per_tert_r', 'Ib_per_tert_r', 'POST_ext_dig_r', 'Ia_ext_dig_r', 'II_ext_dig_r', 'Ib_ext_dig_r', 'POST_ext_hal_r', 'Ia_ext_hal_r', 'II_ext_hal_r', 'Ib_ext_hal_r', 'POST_glut_med1_l', 'Ia_glut_med1_l', 'II_glut_med1_l', 'Ib_glut_med1_l', 'POST_glut_med2_l', 'Ia_glut_med2_l', 'II_glut_med2_l', 'Ib_glut_med2_l', 'POST_glut_med3_l', 'Ia_glut_med3_l', 'II_glut_med3_l', 'Ib_glut_med3_l', 'POST_glut_min1_l', 'Ia_glut_min1_l', 'II_glut_min1_l', 'Ib_glut_min1_l', 'POST_glut_min2_l', 'Ia_glut_min2_l', 'II_glut_min2_l', 'Ib_glut_min2_l', 'POST_glut_min3_l', 'Ia_glut_min3_l', 'II_glut_min3_l', 'Ib_glut_min3_l', 'POST_semimem_l', 'Ia_semimem_l', 'II_semimem_l', 'Ib_semimem_l', 'POST_semiten_l', 'Ia_semiten_l', 'II_semiten_l', 'Ib_semiten_l', 'POST_bifemlh_l', 'Ia_bifemlh_l', 'II_bifemlh_l', 'Ib_bifemlh_l', 'POST_bifemsh_l', 'Ia_bifemsh_l', 'II_bifemsh_l', 'Ib_bifemsh_l', 'POST_sar_l', 'Ia_sar_l', 'II_sar_l', 'Ib_sar_l', 'POST_add_long_l', 'Ia_add_long_l', 'II_add_long_l', 'Ib_add_long_l', 'POST_add_brev_l', 'Ia_add_brev_l', 'II_add_brev_l', 'Ib_add_brev_l', 'POST_add_mag1_l', 'Ia_add_mag1_l', 'II_add_mag1_l', 'Ib_add_mag1_l', 'POST_add_mag2_l', 'Ia_add_mag2_l', 'II_add_mag2_l', 'Ib_add_mag2_l', 'POST_add_mag3_l', 'Ia_add_mag3_l', 'II_add_mag3_l', 'Ib_add_mag3_l', 'POST_tfl_l', 'Ia_tfl_l', 'II_tfl_l', 'Ib_tfl_l', 'POST_pect_l', 'Ia_pect_l', 'II_pect_l', 'Ib_pect_l', 'POST_grac_l', 'Ia_grac_l', 'II_grac_l', 'Ib_grac_l', 'POST_glut_max1_l', 'Ia_glut_max1_l', 'II_glut_max1_l', 'Ib_glut_max1_l', 'POST_glut_max2_l', 'Ia_glut_max2_l', 'II_glut_max2_l', 'Ib_glut_max2_l', 'POST_glut_max3_l', 'Ia_glut_max3_l', 'II_glut_max3_l', 'Ib_glut_max3_l', 'POST_iliacus_l', 'Ia_iliacus_l', 'II_iliacus_l', 'Ib_iliacus_l', 'POST_psoas_l', 'Ia_psoas_l', 'II_psoas_l', 'Ib_psoas_l', 'POST_quad_fem_l', 'Ia_quad_fem_l', 'II_quad_fem_l', 'Ib_quad_fem_l', 'POST_gem_l', 'Ia_gem_l', 'II_gem_l', 'Ib_gem_l', 'POST_peri_l', 'Ia_peri_l', 'II_peri_l', 'Ib_peri_l', 'POST_rect_fem_l', 'Ia_rect_fem_l', 'II_rect_fem_l', 'Ib_rect_fem_l', 'POST_vas_med_l', 'Ia_vas_med_l', 'II_vas_med_l', 'Ib_vas_med_l', 'POST_vas_int_l', 'Ia_vas_int_l', 'II_vas_int_l', 'Ib_vas_int_l', 'POST_vas_lat_l', 'Ia_vas_lat_l', 'II_vas_lat_l', 'Ib_vas_lat_l', 'POST_med_gas_l', 'Ia_med_gas_l', 'II_med_gas_l', 'Ib_med_gas_l', 'POST_lat_gas_l', 'Ia_lat_gas_l', 'II_lat_gas_l', 'Ib_lat_gas_l', 'POST_soleus_l', 'Ia_soleus_l', 'II_soleus_l', 'Ib_soleus_l', 'POST_tib_post_l', 'Ia_tib_post_l', 'II_tib_post_l', 'Ib_tib_post_l', 'POST_flex_dig_l', 'Ia_flex_dig_l', 'II_flex_dig_l', 'Ib_flex_dig_l', 'POST_flex_hal_l', 'Ia_flex_hal_l', 'II_flex_hal_l', 'Ib_flex_hal_l', 'POST_tib_ant_l', 'Ia_tib_ant_l', 'II_tib_ant_l', 'Ib_tib_ant_l', 'POST_per_brev_l', 'Ia_per_brev_l', 'II_per_brev_l', 'Ib_per_brev_l', 'POST_per_long_l', 'Ia_per_long_l', 'II_per_long_l', 'Ib_per_long_l', 'POST_per_tert_l', 'Ia_per_tert_l', 'II_per_tert_l', 'Ib_per_tert_l', 'POST_ext_dig_l', 'Ia_ext_dig_l', 'II_ext_dig_l', 'Ib_ext_dig_l', 'POST_ext_hal_l', 'Ia_ext_hal_l', 'II_ext_hal_l', 'Ib_ext_hal_l', 'POST_ercspn_r', 'Ia_ercspn_r', 'II_ercspn_r', 'Ib_ercspn_r', 'POST_ercspn_l', 'Ia_ercspn_l', 'II_ercspn_l', 'Ib_ercspn_l', 'POST_intobl_r', 'Ia_intobl_r', 'II_intobl_r', 'Ib_intobl_r', 'POST_intobl_l', 'Ia_intobl_l', 'II_intobl_l', 'Ib_intobl_l', 'POST_extobl_r', 'Ia_extobl_r', 'II_extobl_r', 'Ib_extobl_r', 'POST_extobl_l', 'Ia_extobl_l', 'II_extobl_l', 'Ib_extobl_l']
+total connections: 8396
+  EXC CIN        -> IBEXC_IN   x  10  g[0.8784]
+  INH CIN        -> RG-F       x   2  g[0.4]
+  EXC HEEL_IN    -> InE        x   4  g[0.2435, 0.3753]
+  INH HEEL_IN    -> InF        x   2  g[0.3753]
+  EXC HEEL_IN    -> PF         x   4  g[0.2435]
+  EXC IBEXC_IN   -> LBIN_IN    x  54  g[0.5]
+  EXC IBEXC_IN   -> MN         x  54  g[0.6]
+  INH IBIN_IN    -> IBIN_IN    x 436  g[0.5]
+  INH IBIN_IN    -> MN         x  92  g[0.35]
+  EXC II-aff     -> IIIN_IN    x  92  g[1]
+  EXC II-aff     -> IIX_IN     x  92  g[1]
+  EXC II-aff     -> InE        x  54  g[0.093]
+  EXC II-aff     -> InF        x  38  g[0.3839]
+  EXC II-aff     -> PF         x 184  g[0.093, 0.3839]
+  EXC II-aff     -> RG-E       x  54  g[0.093]
+  EXC II-aff     -> RG-F       x  38  g[0.3839]
+  INH IIIN_IN    -> MN         x 436  g[0.4]
+  EXC IIX_IN     -> MN         x  92  g[0.4]
+  EXC Ia-aff     -> IaIN_IN    x  92  g[0.6]
+  EXC Ia-aff     -> InF        x  38  g[0.3986]
+  EXC Ia-aff     -> MN         x  92  g[0.6]
+  EXC Ia-aff     -> PF         x  76  g[0.3986]
+  EXC Ia-aff     -> RG-F       x  38  g[0.3986]
+  INH IaIN_IN    -> IaIN_IN    x 436  g[0.5]
+  INH IaIN_IN    -> MN         x 436  g[0.4]
+  EXC Ib-aff     -> IBEXC_IN   x  54  g[0.5]
+  EXC Ib-aff     -> IBIN_IN    x  92  g[1]
+  EXC Ib-aff     -> InE        x  54  g[0.2435]
+  EXC Ib-aff     -> PF         x 108  g[0.2435]
+  EXC Ib-aff     -> RG-E       x  54  g[0.2435]
+  INH InE        -> RG-F       x   2  g[4]
+  INH InF        -> RG-E       x   2  g[4]
+  INH KINH_IN    -> MN         x  26  g[0.9285, 1.584]
+  EXC LBIN_IN    -> RG-E       x   2  g[0.6741]
+  EXC MN         -> RC         x  92  g[1]
+  EXC PF         -> IaIN_IN    x  92  g[0.5]
+  EXC PF         -> KINH_IN    x   2  g[1.5]
+  EXC PF         -> MN         x 340  g[0.001482, 0.005988, 0.01124, 0.01198]
+  EXC PF         -> PF         x   8  g[4]
+  INH PF         -> PF         x   8  g[4]
+  INH RC         -> IaIN_IN    x  92  g[0.5]
+  INH RC         -> MN         x  92  g[0.5]
+  INH RC         -> RC         x4140  g[0.5]
+  EXC RG-E       -> IBEXC_IN   x  10  g[1]
+  EXC RG-E       -> InE        x   2  g[4]
+  EXC RG-E       -> PF         x   4  g[2.601]
+  EXC RG-F       -> CIN        x   2  g[0.4]
+  EXC RG-F       -> InF        x   2  g[4]
+  EXC RG-F       -> PF         x   4  g[2.601]
+  EXC TOE_IN     -> InE        x   4  g[0.1457, 0.2435]
+  EXC TOE_IN     -> PF         x   4  g[0.2435]
+  EXC desc-in    -> MN         x 152  g[0.005289, 0.009939, 0.01085, 0.0154]
+  EXC desc-in    -> RG-E       x   4  g[0.8, 1.699]
+  EXC desc-in    -> RG-F       x   2  g[0.9964]
+
+--- (a) PF neurons (12): ['PF_E1_l', 'PF_E1_r', 'PF_E2_l', 'PF_E2_r', 'PF_F1_l', 'PF_F1_r', 'PF_F2_l', 'PF_F2_r', 'PF_IN_E_l', 'PF_IN_E_r', 'PF_IN_F_l', 'PF_IN_F_r']
+
+--- (a) RG -> PF drive edges (8 edges) ---
+  exc g=2.6005    RG-E->PF x2: RG_E_l->PF_E1_l, RG_E_l->PF_E2_l
+  exc g=2.6005    RG-E->PF x2: RG_E_r->PF_E1_r, RG_E_r->PF_E2_r
+  exc g=2.6005    RG-F->PF x2: RG_F_l->PF_F1_l, RG_F_l->PF_F2_l
+  exc g=2.6005    RG-F->PF x2: RG_F_r->PF_F1_r, RG_F_r->PF_F2_r
+
+--- (a) PF -> MN fan-out (per-muscle weights) (340 edges) ---
+  exc g=0.0191    PF->MN x6: PF_E1_l->MN_add_long_l, PF_E1_l->MN_add_brev_l, PF_E1_l->MN_add_mag1_l, PF_E1_l->MN_add_mag2_l (+2 more)
+  exc g=0.0293    PF->MN x1: PF_E1_l->MN_rect_fem_l
+  exc g=0.0417    PF->MN x7: PF_E1_l->MN_soleus_l, PF_E1_l->MN_tib_post_l, PF_E1_l->MN_flex_dig_l, PF_E1_l->MN_flex_hal_l (+3 more)
+  exc g=0.0513    PF->MN x6: PF_E1_l->MN_glut_max1_l, PF_E1_l->MN_glut_max2_l, PF_E1_l->MN_glut_max3_l, PF_E1_l->MN_quad_fem_l (+2 more)
+  exc g=0.0586    PF->MN x4: PF_E1_l->MN_sar_l, PF_E1_l->MN_tfl_l, PF_E1_l->MN_iliacus_l, PF_E1_l->MN_psoas_l
+  exc g=0.0608    PF->MN x1: PF_E1_l->MN_add_mag3_l
+  exc g=0.0683    PF->MN x6: PF_E1_l->MN_glut_med1_l, PF_E1_l->MN_glut_med2_l, PF_E1_l->MN_glut_med3_l, PF_E1_l->MN_glut_min1_l (+2 more)
+  exc g=0.0796    PF->MN x1: PF_E1_l->MN_bifemsh_l
+  exc g=0.0815    PF->MN x2: PF_E1_l->MN_med_gas_l, PF_E1_l->MN_lat_gas_l
+  exc g=0.1052    PF->MN x3: PF_E1_l->MN_semimem_l, PF_E1_l->MN_semiten_l, PF_E1_l->MN_bifemlh_l
+  exc g=0.1166    PF->MN x3: PF_E1_l->MN_tib_ant_l, PF_E1_l->MN_ext_dig_l, PF_E1_l->MN_ext_hal_l
+  exc g=0.4       PF->MN x1: PF_E1_l->MN_ercspn_l
+  exc g=0.0191    PF->MN x6: PF_E1_r->MN_add_long_r, PF_E1_r->MN_add_brev_r, PF_E1_r->MN_add_mag1_r, PF_E1_r->MN_add_mag2_r (+2 more)
+  exc g=0.0293    PF->MN x1: PF_E1_r->MN_rect_fem_r
+  exc g=0.0417    PF->MN x7: PF_E1_r->MN_soleus_r, PF_E1_r->MN_tib_post_r, PF_E1_r->MN_flex_dig_r, PF_E1_r->MN_flex_hal_r (+3 more)
+  exc g=0.0513    PF->MN x6: PF_E1_r->MN_glut_max1_r, PF_E1_r->MN_glut_max2_r, PF_E1_r->MN_glut_max3_r, PF_E1_r->MN_quad_fem_r (+2 more)
+  exc g=0.0586    PF->MN x4: PF_E1_r->MN_sar_r, PF_E1_r->MN_tfl_r, PF_E1_r->MN_iliacus_r, PF_E1_r->MN_psoas_r
+  exc g=0.0608    PF->MN x1: PF_E1_r->MN_add_mag3_r
+  exc g=0.0683    PF->MN x6: PF_E1_r->MN_glut_med1_r, PF_E1_r->MN_glut_med2_r, PF_E1_r->MN_glut_med3_r, PF_E1_r->MN_glut_min1_r (+2 more)
+  exc g=0.0796    PF->MN x1: PF_E1_r->MN_bifemsh_r
+  exc g=0.0815    PF->MN x2: PF_E1_r->MN_med_gas_r, PF_E1_r->MN_lat_gas_r
+  exc g=0.1052    PF->MN x3: PF_E1_r->MN_semimem_r, PF_E1_r->MN_semiten_r, PF_E1_r->MN_bifemlh_r
+  exc g=0.1166    PF->MN x3: PF_E1_r->MN_tib_ant_r, PF_E1_r->MN_ext_dig_r, PF_E1_r->MN_ext_hal_r
+  exc g=0.4       PF->MN x1: PF_E1_r->MN_ercspn_r
+  exc g=0.0207    PF->MN x3: PF_E2_l->MN_tib_ant_l, PF_E2_l->MN_ext_dig_l, PF_E2_l->MN_ext_hal_l
+  exc g=0.0261    PF->MN x3: PF_E2_l->MN_vas_med_l, PF_E2_l->MN_vas_int_l, PF_E2_l->MN_vas_lat_l
+  exc g=0.0393    PF->MN x6: PF_E2_l->MN_add_long_l, PF_E2_l->MN_add_brev_l, PF_E2_l->MN_add_mag1_l, PF_E2_l->MN_add_mag2_l (+2 more)
+  exc g=0.0473    PF->MN x4: PF_E2_l->MN_sar_l, PF_E2_l->MN_tfl_l, PF_E2_l->MN_iliacus_l, PF_E2_l->MN_psoas_l
+  exc g=0.0498    PF->MN x1: PF_E2_l->MN_rect_fem_l
+  exc g=0.0728    PF->MN x6: PF_E2_l->MN_glut_max1_l, PF_E2_l->MN_glut_max2_l, PF_E2_l->MN_glut_max3_l, PF_E2_l->MN_quad_fem_l (+2 more)
+  exc g=0.0924    PF->MN x1: PF_E2_l->MN_add_mag3_l
+  exc g=0.099     PF->MN x6: PF_E2_l->MN_glut_med1_l, PF_E2_l->MN_glut_med2_l, PF_E2_l->MN_glut_med3_l, PF_E2_l->MN_glut_min1_l (+2 more)
+  exc g=0.1333    PF->MN x1: PF_E2_l->MN_bifemsh_l
+  exc g=0.1697    PF->MN x3: PF_E2_l->MN_semimem_l, PF_E2_l->MN_semiten_l, PF_E2_l->MN_bifemlh_l
+  exc g=0.2685    PF->MN x7: PF_E2_l->MN_soleus_l, PF_E2_l->MN_tib_post_l, PF_E2_l->MN_flex_dig_l, PF_E2_l->MN_flex_hal_l (+3 more)
+  exc g=0.3351    PF->MN x2: PF_E2_l->MN_med_gas_l, PF_E2_l->MN_lat_gas_l
+  exc g=0.4       PF->MN x1: PF_E2_l->MN_ercspn_l
+  exc g=0.0207    PF->MN x3: PF_E2_r->MN_tib_ant_r, PF_E2_r->MN_ext_dig_r, PF_E2_r->MN_ext_hal_r
+  exc g=0.0261    PF->MN x3: PF_E2_r->MN_vas_med_r, PF_E2_r->MN_vas_int_r, PF_E2_r->MN_vas_lat_r
+  exc g=0.0393    PF->MN x6: PF_E2_r->MN_add_long_r, PF_E2_r->MN_add_brev_r, PF_E2_r->MN_add_mag1_r, PF_E2_r->MN_add_mag2_r (+2 more)
+  exc g=0.0473    PF->MN x4: PF_E2_r->MN_sar_r, PF_E2_r->MN_tfl_r, PF_E2_r->MN_iliacus_r, PF_E2_r->MN_psoas_r
+  exc g=0.0498    PF->MN x1: PF_E2_r->MN_rect_fem_r
+  exc g=0.0728    PF->MN x6: PF_E2_r->MN_glut_max1_r, PF_E2_r->MN_glut_max2_r, PF_E2_r->MN_glut_max3_r, PF_E2_r->MN_quad_fem_r (+2 more)
+  exc g=0.0924    PF->MN x1: PF_E2_r->MN_add_mag3_r
+  exc g=0.099     PF->MN x6: PF_E2_r->MN_glut_med1_r, PF_E2_r->MN_glut_med2_r, PF_E2_r->MN_glut_med3_r, PF_E2_r->MN_glut_min1_r (+2 more)
+  exc g=0.1333    PF->MN x1: PF_E2_r->MN_bifemsh_r
+  exc g=0.1697    PF->MN x3: PF_E2_r->MN_semimem_r, PF_E2_r->MN_semiten_r, PF_E2_r->MN_bifemlh_r
+  exc g=0.2685    PF->MN x7: PF_E2_r->MN_soleus_r, PF_E2_r->MN_tib_post_r, PF_E2_r->MN_flex_dig_r, PF_E2_r->MN_flex_hal_r (+3 more)
+  exc g=0.3351    PF->MN x2: PF_E2_r->MN_med_gas_r, PF_E2_r->MN_lat_gas_r
+  exc g=0.4       PF->MN x1: PF_E2_r->MN_ercspn_r
+  exc g=0.0015    PF->MN x3: PF_F1_l->MN_vas_med_l, PF_F1_l->MN_vas_int_l, PF_F1_l->MN_vas_lat_l
+  exc g=0.006     PF->MN x6: PF_F1_l->MN_add_long_l, PF_F1_l->MN_add_brev_l, PF_F1_l->MN_add_mag1_l, PF_F1_l->MN_add_mag2_l (+2 more)
+  exc g=0.0112    PF->MN x6: PF_F1_l->MN_glut_med1_l, PF_F1_l->MN_glut_med2_l, PF_F1_l->MN_glut_med3_l, PF_F1_l->MN_glut_min1_l (+2 more)
+  exc g=0.0159    PF->MN x1: PF_F1_l->MN_rect_fem_l
+  exc g=0.0288    PF->MN x4: PF_F1_l->MN_sar_l, PF_F1_l->MN_tfl_l, PF_F1_l->MN_iliacus_l, PF_F1_l->MN_psoas_l
+  exc g=0.0525    PF->MN x6: PF_F1_l->MN_glut_max1_l, PF_F1_l->MN_glut_max2_l, PF_F1_l->MN_glut_max3_l, PF_F1_l->MN_quad_fem_l (+2 more)
+  exc g=0.0555    PF->MN x1: PF_F1_l->MN_add_mag3_l
+  exc g=0.0728    PF->MN x7: PF_F1_l->MN_soleus_l, PF_F1_l->MN_tib_post_l, PF_F1_l->MN_flex_dig_l, PF_F1_l->MN_flex_hal_l (+3 more)
+  exc g=0.0921    PF->MN x3: PF_F1_l->MN_tib_ant_l, PF_F1_l->MN_ext_dig_l, PF_F1_l->MN_ext_hal_l
+  exc g=0.1038    PF->MN x1: PF_F1_l->MN_bifemsh_l
+  exc g=0.1247    PF->MN x2: PF_F1_l->MN_med_gas_l, PF_F1_l->MN_lat_gas_l
+  exc g=0.13      PF->MN x3: PF_F1_l->MN_semimem_l, PF_F1_l->MN_semiten_l, PF_F1_l->MN_bifemlh_l
+  exc g=0.0015    PF->MN x3: PF_F1_r->MN_vas_med_r, PF_F1_r->MN_vas_int_r, PF_F1_r->MN_vas_lat_r
+  exc g=0.006     PF->MN x6: PF_F1_r->MN_add_long_r, PF_F1_r->MN_add_brev_r, PF_F1_r->MN_add_mag1_r, PF_F1_r->MN_add_mag2_r (+2 more)
+  exc g=0.0112    PF->MN x6: PF_F1_r->MN_glut_med1_r, PF_F1_r->MN_glut_med2_r, PF_F1_r->MN_glut_med3_r, PF_F1_r->MN_glut_min1_r (+2 more)
+  exc g=0.0159    PF->MN x1: PF_F1_r->MN_rect_fem_r
+  exc g=0.0288    PF->MN x4: PF_F1_r->MN_sar_r, PF_F1_r->MN_tfl_r, PF_F1_r->MN_iliacus_r, PF_F1_r->MN_psoas_r
+  exc g=0.0525    PF->MN x6: PF_F1_r->MN_glut_max1_r, PF_F1_r->MN_glut_max2_r, PF_F1_r->MN_glut_max3_r, PF_F1_r->MN_quad_fem_r (+2 more)
+  exc g=0.0555    PF->MN x1: PF_F1_r->MN_add_mag3_r
+  exc g=0.0728    PF->MN x7: PF_F1_r->MN_soleus_r, PF_F1_r->MN_tib_post_r, PF_F1_r->MN_flex_dig_r, PF_F1_r->MN_flex_hal_r (+3 more)
+  exc g=0.0921    PF->MN x3: PF_F1_r->MN_tib_ant_r, PF_F1_r->MN_ext_dig_r, PF_F1_r->MN_ext_hal_r
+  exc g=0.1038    PF->MN x1: PF_F1_r->MN_bifemsh_r
+  exc g=0.1247    PF->MN x2: PF_F1_r->MN_med_gas_r, PF_F1_r->MN_lat_gas_r
+  exc g=0.13      PF->MN x3: PF_F1_r->MN_semimem_r, PF_F1_r->MN_semiten_r, PF_F1_r->MN_bifemlh_r
+  exc g=0.012     PF->MN x3: PF_F2_l->MN_vas_med_l, PF_F2_l->MN_vas_int_l, PF_F2_l->MN_vas_lat_l
+  exc g=0.0511    PF->MN x1: PF_F2_l->MN_rect_fem_l
+  exc g=0.0542    PF->MN x6: PF_F2_l->MN_add_long_l, PF_F2_l->MN_add_brev_l, PF_F2_l->MN_add_mag1_l, PF_F2_l->MN_add_mag2_l (+2 more)
+  exc g=0.0691    PF->MN x6: PF_F2_l->MN_glut_max1_l, PF_F2_l->MN_glut_max2_l, PF_F2_l->MN_glut_max3_l, PF_F2_l->MN_quad_fem_l (+2 more)
+  exc g=0.0782    PF->MN x4: PF_F2_l->MN_sar_l, PF_F2_l->MN_tfl_l, PF_F2_l->MN_iliacus_l, PF_F2_l->MN_psoas_l
+  exc g=0.0815    PF->MN x7: PF_F2_l->MN_soleus_l, PF_F2_l->MN_tib_post_l, PF_F2_l->MN_flex_dig_l, PF_F2_l->MN_flex_hal_l (+3 more)
+  exc g=0.0962    PF->MN x1: PF_F2_l->MN_add_mag3_l
+  exc g=0.1       PF->MN x2: PF_F2_l->MN_intobl_l, PF_F2_l->MN_extobl_l
+  exc g=0.1253    PF->MN x1: PF_F2_l->MN_bifemsh_l
+  exc g=0.1442    PF->MN x2: PF_F2_l->MN_med_gas_l, PF_F2_l->MN_lat_gas_l
+  exc g=0.1598    PF->MN x3: PF_F2_l->MN_semimem_l, PF_F2_l->MN_semiten_l, PF_F2_l->MN_bifemlh_l
+  exc g=0.1859    PF->MN x6: PF_F2_l->MN_glut_med1_l, PF_F2_l->MN_glut_med2_l, PF_F2_l->MN_glut_med3_l, PF_F2_l->MN_glut_min1_l (+2 more)
+  exc g=0.012     PF->MN x3: PF_F2_r->MN_vas_med_r, PF_F2_r->MN_vas_int_r, PF_F2_r->MN_vas_lat_r
+  exc g=0.0511    PF->MN x1: PF_F2_r->MN_rect_fem_r
+  exc g=0.0542    PF->MN x6: PF_F2_r->MN_add_long_r, PF_F2_r->MN_add_brev_r, PF_F2_r->MN_add_mag1_r, PF_F2_r->MN_add_mag2_r (+2 more)
+  exc g=0.0691    PF->MN x6: PF_F2_r->MN_glut_max1_r, PF_F2_r->MN_glut_max2_r, PF_F2_r->MN_glut_max3_r, PF_F2_r->MN_quad_fem_r (+2 more)
+  exc g=0.0782    PF->MN x4: PF_F2_r->MN_sar_r, PF_F2_r->MN_tfl_r, PF_F2_r->MN_iliacus_r, PF_F2_r->MN_psoas_r
+  exc g=0.0815    PF->MN x7: PF_F2_r->MN_soleus_r, PF_F2_r->MN_tib_post_r, PF_F2_r->MN_flex_dig_r, PF_F2_r->MN_flex_hal_r (+3 more)
+  exc g=0.0962    PF->MN x1: PF_F2_r->MN_add_mag3_r
+  exc g=0.1       PF->MN x2: PF_F2_r->MN_intobl_r, PF_F2_r->MN_extobl_r
+  exc g=0.1253    PF->MN x1: PF_F2_r->MN_bifemsh_r
+  exc g=0.1442    PF->MN x2: PF_F2_r->MN_med_gas_r, PF_F2_r->MN_lat_gas_r
+  exc g=0.1598    PF->MN x3: PF_F2_r->MN_semimem_r, PF_F2_r->MN_semiten_r, PF_F2_r->MN_bifemlh_r
+  exc g=0.1859    PF->MN x6: PF_F2_r->MN_glut_med1_r, PF_F2_r->MN_glut_med2_r, PF_F2_r->MN_glut_med3_r, PF_F2_r->MN_glut_min1_r (+2 more)
+
+--- (b) HEEL/TOE/TOEDF-sourced edges (18 edges) ---
+  exc g=0.2435    HEEL_IN->InE x2: HEEL_l->InE_l, HEEL_r->InE_r
+  exc g=0.3753    HEEL_IN->InE x2: HEEL_l->InE_l, HEEL_r->InE_r
+  inh g=0.3753    HEEL_IN->InF x2: HEEL_l->InF_l, HEEL_r->InF_r
+  exc g=0.2435    HEEL_IN->PF x4: HEEL_l->PF_E1_l, HEEL_l->PF_E2_l, HEEL_r->PF_E1_r, HEEL_r->PF_E2_r
+  exc g=0.1457    TOE_IN->InE x2: TOE_l->InE_l, TOE_r->InE_r
+  exc g=0.2435    TOE_IN->InE x2: TOE_l->InE_l, TOE_r->InE_r
+  exc g=0.2435    TOE_IN->PF x4: TOE_l->PF_E1_l, TOE_l->PF_E2_l, TOE_r->PF_E1_r, TOE_r->PF_E2_r
+
+--- (b) edges INTO TOEDF (0 edges) ---
+
+--- (c) afferent->MN direct edges: autogenic 92, NON-autogenic 0 []
+
+--- (c) Ia -> IaIN (92 edges) ---
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_add_brev_l->IaIN_add_brev_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_add_brev_r->IaIN_add_brev_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_add_long_l->IaIN_add_long_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_add_long_r->IaIN_add_long_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_add_mag1_l->IaIN_add_mag1_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_add_mag1_r->IaIN_add_mag1_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_add_mag2_l->IaIN_add_mag2_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_add_mag2_r->IaIN_add_mag2_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_add_mag3_l->IaIN_add_mag3_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_add_mag3_r->IaIN_add_mag3_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_bifemlh_l->IaIN_bifemlh_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_bifemlh_r->IaIN_bifemlh_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_bifemsh_l->IaIN_bifemsh_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_bifemsh_r->IaIN_bifemsh_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_ercspn_l->IaIN_ercspn_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_ercspn_r->IaIN_ercspn_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_ext_dig_l->IaIN_ext_dig_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_ext_dig_r->IaIN_ext_dig_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_ext_hal_l->IaIN_ext_hal_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_ext_hal_r->IaIN_ext_hal_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_extobl_l->IaIN_extobl_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_extobl_r->IaIN_extobl_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_flex_dig_l->IaIN_flex_dig_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_flex_dig_r->IaIN_flex_dig_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_flex_hal_l->IaIN_flex_hal_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_flex_hal_r->IaIN_flex_hal_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_gem_l->IaIN_gem_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_gem_r->IaIN_gem_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_max1_l->IaIN_glut_max1_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_max1_r->IaIN_glut_max1_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_max2_l->IaIN_glut_max2_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_max2_r->IaIN_glut_max2_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_max3_l->IaIN_glut_max3_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_max3_r->IaIN_glut_max3_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_med1_l->IaIN_glut_med1_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_med1_r->IaIN_glut_med1_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_med2_l->IaIN_glut_med2_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_med2_r->IaIN_glut_med2_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_med3_l->IaIN_glut_med3_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_med3_r->IaIN_glut_med3_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_min1_l->IaIN_glut_min1_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_min1_r->IaIN_glut_min1_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_min2_l->IaIN_glut_min2_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_min2_r->IaIN_glut_min2_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_min3_l->IaIN_glut_min3_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_glut_min3_r->IaIN_glut_min3_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_grac_l->IaIN_grac_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_grac_r->IaIN_grac_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_iliacus_l->IaIN_iliacus_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_iliacus_r->IaIN_iliacus_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_intobl_l->IaIN_intobl_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_intobl_r->IaIN_intobl_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_lat_gas_l->IaIN_lat_gas_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_lat_gas_r->IaIN_lat_gas_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_med_gas_l->IaIN_med_gas_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_med_gas_r->IaIN_med_gas_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_pect_l->IaIN_pect_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_pect_r->IaIN_pect_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_per_brev_l->IaIN_per_brev_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_per_brev_r->IaIN_per_brev_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_per_long_l->IaIN_per_long_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_per_long_r->IaIN_per_long_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_per_tert_l->IaIN_per_tert_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_per_tert_r->IaIN_per_tert_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_peri_l->IaIN_peri_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_peri_r->IaIN_peri_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_psoas_l->IaIN_psoas_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_psoas_r->IaIN_psoas_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_quad_fem_l->IaIN_quad_fem_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_quad_fem_r->IaIN_quad_fem_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_rect_fem_l->IaIN_rect_fem_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_rect_fem_r->IaIN_rect_fem_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_sar_l->IaIN_sar_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_sar_r->IaIN_sar_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_semimem_l->IaIN_semimem_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_semimem_r->IaIN_semimem_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_semiten_l->IaIN_semiten_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_semiten_r->IaIN_semiten_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_soleus_l->IaIN_soleus_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_soleus_r->IaIN_soleus_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_tfl_l->IaIN_tfl_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_tfl_r->IaIN_tfl_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_tib_ant_l->IaIN_tib_ant_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_tib_ant_r->IaIN_tib_ant_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_tib_post_l->IaIN_tib_post_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_tib_post_r->IaIN_tib_post_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_vas_int_l->IaIN_vas_int_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_vas_int_r->IaIN_vas_int_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_vas_lat_l->IaIN_vas_lat_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_vas_lat_r->IaIN_vas_lat_r
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_vas_med_l->IaIN_vas_med_l
+  exc g=0.6       Ia-aff->IaIN_IN x1: Ia_vas_med_r->IaIN_vas_med_r
+
+--- (c) II -> IIX/IIIN (184 edges) ---
+  exc g=1         II-aff->IIIN_IN x1: II_add_brev_l->IIIN_add_brev_l
+  exc g=1         II-aff->IIX_IN x1: II_add_brev_l->IIX_add_brev_l
+  exc g=1         II-aff->IIIN_IN x1: II_add_brev_r->IIIN_add_brev_r
+  exc g=1         II-aff->IIX_IN x1: II_add_brev_r->IIX_add_brev_r
+  exc g=1         II-aff->IIIN_IN x1: II_add_long_l->IIIN_add_long_l
+  exc g=1         II-aff->IIX_IN x1: II_add_long_l->IIX_add_long_l
+  exc g=1         II-aff->IIIN_IN x1: II_add_long_r->IIIN_add_long_r
+  exc g=1         II-aff->IIX_IN x1: II_add_long_r->IIX_add_long_r
+  exc g=1         II-aff->IIIN_IN x1: II_add_mag1_l->IIIN_add_mag1_l
+  exc g=1         II-aff->IIX_IN x1: II_add_mag1_l->IIX_add_mag1_l
+  exc g=1         II-aff->IIIN_IN x1: II_add_mag1_r->IIIN_add_mag1_r
+  exc g=1         II-aff->IIX_IN x1: II_add_mag1_r->IIX_add_mag1_r
+  exc g=1         II-aff->IIIN_IN x1: II_add_mag2_l->IIIN_add_mag2_l
+  exc g=1         II-aff->IIX_IN x1: II_add_mag2_l->IIX_add_mag2_l
+  exc g=1         II-aff->IIIN_IN x1: II_add_mag2_r->IIIN_add_mag2_r
+  exc g=1         II-aff->IIX_IN x1: II_add_mag2_r->IIX_add_mag2_r
+  exc g=1         II-aff->IIIN_IN x1: II_add_mag3_l->IIIN_add_mag3_l
+  exc g=1         II-aff->IIX_IN x1: II_add_mag3_l->IIX_add_mag3_l
+  exc g=1         II-aff->IIIN_IN x1: II_add_mag3_r->IIIN_add_mag3_r
+  exc g=1         II-aff->IIX_IN x1: II_add_mag3_r->IIX_add_mag3_r
+  exc g=1         II-aff->IIIN_IN x1: II_bifemlh_l->IIIN_bifemlh_l
+  exc g=1         II-aff->IIX_IN x1: II_bifemlh_l->IIX_bifemlh_l
+  exc g=1         II-aff->IIIN_IN x1: II_bifemlh_r->IIIN_bifemlh_r
+  exc g=1         II-aff->IIX_IN x1: II_bifemlh_r->IIX_bifemlh_r
+  exc g=1         II-aff->IIIN_IN x1: II_bifemsh_l->IIIN_bifemsh_l
+  exc g=1         II-aff->IIX_IN x1: II_bifemsh_l->IIX_bifemsh_l
+  exc g=1         II-aff->IIIN_IN x1: II_bifemsh_r->IIIN_bifemsh_r
+  exc g=1         II-aff->IIX_IN x1: II_bifemsh_r->IIX_bifemsh_r
+  exc g=1         II-aff->IIIN_IN x1: II_ercspn_l->IIIN_ercspn_l
+  exc g=1         II-aff->IIX_IN x1: II_ercspn_l->IIX_ercspn_l
+  exc g=1         II-aff->IIIN_IN x1: II_ercspn_r->IIIN_ercspn_r
+  exc g=1         II-aff->IIX_IN x1: II_ercspn_r->IIX_ercspn_r
+  exc g=1         II-aff->IIIN_IN x1: II_ext_dig_l->IIIN_ext_dig_l
+  exc g=1         II-aff->IIX_IN x1: II_ext_dig_l->IIX_ext_dig_l
+  exc g=1         II-aff->IIIN_IN x1: II_ext_dig_r->IIIN_ext_dig_r
+  exc g=1         II-aff->IIX_IN x1: II_ext_dig_r->IIX_ext_dig_r
+  exc g=1         II-aff->IIIN_IN x1: II_ext_hal_l->IIIN_ext_hal_l
+  exc g=1         II-aff->IIX_IN x1: II_ext_hal_l->IIX_ext_hal_l
+  exc g=1         II-aff->IIIN_IN x1: II_ext_hal_r->IIIN_ext_hal_r
+  exc g=1         II-aff->IIX_IN x1: II_ext_hal_r->IIX_ext_hal_r
+  exc g=1         II-aff->IIIN_IN x1: II_extobl_l->IIIN_extobl_l
+  exc g=1         II-aff->IIX_IN x1: II_extobl_l->IIX_extobl_l
+  exc g=1         II-aff->IIIN_IN x1: II_extobl_r->IIIN_extobl_r
+  exc g=1         II-aff->IIX_IN x1: II_extobl_r->IIX_extobl_r
+  exc g=1         II-aff->IIIN_IN x1: II_flex_dig_l->IIIN_flex_dig_l
+  exc g=1         II-aff->IIX_IN x1: II_flex_dig_l->IIX_flex_dig_l
+  exc g=1         II-aff->IIIN_IN x1: II_flex_dig_r->IIIN_flex_dig_r
+  exc g=1         II-aff->IIX_IN x1: II_flex_dig_r->IIX_flex_dig_r
+  exc g=1         II-aff->IIIN_IN x1: II_flex_hal_l->IIIN_flex_hal_l
+  exc g=1         II-aff->IIX_IN x1: II_flex_hal_l->IIX_flex_hal_l
+  exc g=1         II-aff->IIIN_IN x1: II_flex_hal_r->IIIN_flex_hal_r
+  exc g=1         II-aff->IIX_IN x1: II_flex_hal_r->IIX_flex_hal_r
+  exc g=1         II-aff->IIIN_IN x1: II_gem_l->IIIN_gem_l
+  exc g=1         II-aff->IIX_IN x1: II_gem_l->IIX_gem_l
+  exc g=1         II-aff->IIIN_IN x1: II_gem_r->IIIN_gem_r
+  exc g=1         II-aff->IIX_IN x1: II_gem_r->IIX_gem_r
+  exc g=1         II-aff->IIIN_IN x1: II_glut_max1_l->IIIN_glut_max1_l
+  exc g=1         II-aff->IIX_IN x1: II_glut_max1_l->IIX_glut_max1_l
+  exc g=1         II-aff->IIIN_IN x1: II_glut_max1_r->IIIN_glut_max1_r
+  exc g=1         II-aff->IIX_IN x1: II_glut_max1_r->IIX_glut_max1_r
+  exc g=1         II-aff->IIIN_IN x1: II_glut_max2_l->IIIN_glut_max2_l
+  exc g=1         II-aff->IIX_IN x1: II_glut_max2_l->IIX_glut_max2_l
+  exc g=1         II-aff->IIIN_IN x1: II_glut_max2_r->IIIN_glut_max2_r
+  exc g=1         II-aff->IIX_IN x1: II_glut_max2_r->IIX_glut_max2_r
+  exc g=1         II-aff->IIIN_IN x1: II_glut_max3_l->IIIN_glut_max3_l
+  exc g=1         II-aff->IIX_IN x1: II_glut_max3_l->IIX_glut_max3_l
+  exc g=1         II-aff->IIIN_IN x1: II_glut_max3_r->IIIN_glut_max3_r
+  exc g=1         II-aff->IIX_IN x1: II_glut_max3_r->IIX_glut_max3_r
+  exc g=1         II-aff->IIIN_IN x1: II_glut_med1_l->IIIN_glut_med1_l
+  exc g=1         II-aff->IIX_IN x1: II_glut_med1_l->IIX_glut_med1_l
+  exc g=1         II-aff->IIIN_IN x1: II_glut_med1_r->IIIN_glut_med1_r
+  exc g=1         II-aff->IIX_IN x1: II_glut_med1_r->IIX_glut_med1_r
+  exc g=1         II-aff->IIIN_IN x1: II_glut_med2_l->IIIN_glut_med2_l
+  exc g=1         II-aff->IIX_IN x1: II_glut_med2_l->IIX_glut_med2_l
+  exc g=1         II-aff->IIIN_IN x1: II_glut_med2_r->IIIN_glut_med2_r
+  exc g=1         II-aff->IIX_IN x1: II_glut_med2_r->IIX_glut_med2_r
+  exc g=1         II-aff->IIIN_IN x1: II_glut_med3_l->IIIN_glut_med3_l
+  exc g=1         II-aff->IIX_IN x1: II_glut_med3_l->IIX_glut_med3_l
+  exc g=1         II-aff->IIIN_IN x1: II_glut_med3_r->IIIN_glut_med3_r
+  exc g=1         II-aff->IIX_IN x1: II_glut_med3_r->IIX_glut_med3_r
+  exc g=1         II-aff->IIIN_IN x1: II_glut_min1_l->IIIN_glut_min1_l
+  exc g=1         II-aff->IIX_IN x1: II_glut_min1_l->IIX_glut_min1_l
+  exc g=1         II-aff->IIIN_IN x1: II_glut_min1_r->IIIN_glut_min1_r
+  exc g=1         II-aff->IIX_IN x1: II_glut_min1_r->IIX_glut_min1_r
+  exc g=1         II-aff->IIIN_IN x1: II_glut_min2_l->IIIN_glut_min2_l
+  exc g=1         II-aff->IIX_IN x1: II_glut_min2_l->IIX_glut_min2_l
+  exc g=1         II-aff->IIIN_IN x1: II_glut_min2_r->IIIN_glut_min2_r
+  exc g=1         II-aff->IIX_IN x1: II_glut_min2_r->IIX_glut_min2_r
+  exc g=1         II-aff->IIIN_IN x1: II_glut_min3_l->IIIN_glut_min3_l
+  exc g=1         II-aff->IIX_IN x1: II_glut_min3_l->IIX_glut_min3_l
+  exc g=1         II-aff->IIIN_IN x1: II_glut_min3_r->IIIN_glut_min3_r
+  exc g=1         II-aff->IIX_IN x1: II_glut_min3_r->IIX_glut_min3_r
+  exc g=1         II-aff->IIIN_IN x1: II_grac_l->IIIN_grac_l
+  exc g=1         II-aff->IIX_IN x1: II_grac_l->IIX_grac_l
+  exc g=1         II-aff->IIIN_IN x1: II_grac_r->IIIN_grac_r
+  exc g=1         II-aff->IIX_IN x1: II_grac_r->IIX_grac_r
+  exc g=1         II-aff->IIIN_IN x1: II_iliacus_l->IIIN_iliacus_l
+  exc g=1         II-aff->IIX_IN x1: II_iliacus_l->IIX_iliacus_l
+  exc g=1         II-aff->IIIN_IN x1: II_iliacus_r->IIIN_iliacus_r
+  exc g=1         II-aff->IIX_IN x1: II_iliacus_r->IIX_iliacus_r
+  exc g=1         II-aff->IIIN_IN x1: II_intobl_l->IIIN_intobl_l
+  exc g=1         II-aff->IIX_IN x1: II_intobl_l->IIX_intobl_l
+  exc g=1         II-aff->IIIN_IN x1: II_intobl_r->IIIN_intobl_r
+  exc g=1         II-aff->IIX_IN x1: II_intobl_r->IIX_intobl_r
+  exc g=1         II-aff->IIIN_IN x1: II_lat_gas_l->IIIN_lat_gas_l
+  exc g=1         II-aff->IIX_IN x1: II_lat_gas_l->IIX_lat_gas_l
+  exc g=1         II-aff->IIIN_IN x1: II_lat_gas_r->IIIN_lat_gas_r
+  exc g=1         II-aff->IIX_IN x1: II_lat_gas_r->IIX_lat_gas_r
+  exc g=1         II-aff->IIIN_IN x1: II_med_gas_l->IIIN_med_gas_l
+  exc g=1         II-aff->IIX_IN x1: II_med_gas_l->IIX_med_gas_l
+  exc g=1         II-aff->IIIN_IN x1: II_med_gas_r->IIIN_med_gas_r
+  exc g=1         II-aff->IIX_IN x1: II_med_gas_r->IIX_med_gas_r
+  exc g=1         II-aff->IIIN_IN x1: II_pect_l->IIIN_pect_l
+  exc g=1         II-aff->IIX_IN x1: II_pect_l->IIX_pect_l
+  exc g=1         II-aff->IIIN_IN x1: II_pect_r->IIIN_pect_r
+  exc g=1         II-aff->IIX_IN x1: II_pect_r->IIX_pect_r
+  exc g=1         II-aff->IIIN_IN x1: II_per_brev_l->IIIN_per_brev_l
+  exc g=1         II-aff->IIX_IN x1: II_per_brev_l->IIX_per_brev_l
+  exc g=1         II-aff->IIIN_IN x1: II_per_brev_r->IIIN_per_brev_r
+  exc g=1         II-aff->IIX_IN x1: II_per_brev_r->IIX_per_brev_r
+  exc g=1         II-aff->IIIN_IN x1: II_per_long_l->IIIN_per_long_l
+  exc g=1         II-aff->IIX_IN x1: II_per_long_l->IIX_per_long_l
+  exc g=1         II-aff->IIIN_IN x1: II_per_long_r->IIIN_per_long_r
+  exc g=1         II-aff->IIX_IN x1: II_per_long_r->IIX_per_long_r
+  exc g=1         II-aff->IIIN_IN x1: II_per_tert_l->IIIN_per_tert_l
+  exc g=1         II-aff->IIX_IN x1: II_per_tert_l->IIX_per_tert_l
+  exc g=1         II-aff->IIIN_IN x1: II_per_tert_r->IIIN_per_tert_r
+  exc g=1         II-aff->IIX_IN x1: II_per_tert_r->IIX_per_tert_r
+  exc g=1         II-aff->IIIN_IN x1: II_peri_l->IIIN_peri_l
+  exc g=1         II-aff->IIX_IN x1: II_peri_l->IIX_peri_l
+  exc g=1         II-aff->IIIN_IN x1: II_peri_r->IIIN_peri_r
+  exc g=1         II-aff->IIX_IN x1: II_peri_r->IIX_peri_r
+  exc g=1         II-aff->IIIN_IN x1: II_psoas_l->IIIN_psoas_l
+  exc g=1         II-aff->IIX_IN x1: II_psoas_l->IIX_psoas_l
+  exc g=1         II-aff->IIIN_IN x1: II_psoas_r->IIIN_psoas_r
+  exc g=1         II-aff->IIX_IN x1: II_psoas_r->IIX_psoas_r
+  exc g=1         II-aff->IIIN_IN x1: II_quad_fem_l->IIIN_quad_fem_l
+  exc g=1         II-aff->IIX_IN x1: II_quad_fem_l->IIX_quad_fem_l
+  exc g=1         II-aff->IIIN_IN x1: II_quad_fem_r->IIIN_quad_fem_r
+  exc g=1         II-aff->IIX_IN x1: II_quad_fem_r->IIX_quad_fem_r
+  exc g=1         II-aff->IIIN_IN x1: II_rect_fem_l->IIIN_rect_fem_l
+  exc g=1         II-aff->IIX_IN x1: II_rect_fem_l->IIX_rect_fem_l
+  exc g=1         II-aff->IIIN_IN x1: II_rect_fem_r->IIIN_rect_fem_r
+  exc g=1         II-aff->IIX_IN x1: II_rect_fem_r->IIX_rect_fem_r
+  exc g=1         II-aff->IIIN_IN x1: II_sar_l->IIIN_sar_l
+  exc g=1         II-aff->IIX_IN x1: II_sar_l->IIX_sar_l
+  exc g=1         II-aff->IIIN_IN x1: II_sar_r->IIIN_sar_r
+  exc g=1         II-aff->IIX_IN x1: II_sar_r->IIX_sar_r
+  exc g=1         II-aff->IIIN_IN x1: II_semimem_l->IIIN_semimem_l
+  exc g=1         II-aff->IIX_IN x1: II_semimem_l->IIX_semimem_l
+  exc g=1         II-aff->IIIN_IN x1: II_semimem_r->IIIN_semimem_r
+  exc g=1         II-aff->IIX_IN x1: II_semimem_r->IIX_semimem_r
+  exc g=1         II-aff->IIIN_IN x1: II_semiten_l->IIIN_semiten_l
+  exc g=1         II-aff->IIX_IN x1: II_semiten_l->IIX_semiten_l
+  exc g=1         II-aff->IIIN_IN x1: II_semiten_r->IIIN_semiten_r
+  exc g=1         II-aff->IIX_IN x1: II_semiten_r->IIX_semiten_r
+  exc g=1         II-aff->IIIN_IN x1: II_soleus_l->IIIN_soleus_l
+  exc g=1         II-aff->IIX_IN x1: II_soleus_l->IIX_soleus_l
+  exc g=1         II-aff->IIIN_IN x1: II_soleus_r->IIIN_soleus_r
+  exc g=1         II-aff->IIX_IN x1: II_soleus_r->IIX_soleus_r
+  exc g=1         II-aff->IIIN_IN x1: II_tfl_l->IIIN_tfl_l
+  exc g=1         II-aff->IIX_IN x1: II_tfl_l->IIX_tfl_l
+  exc g=1         II-aff->IIIN_IN x1: II_tfl_r->IIIN_tfl_r
+  exc g=1         II-aff->IIX_IN x1: II_tfl_r->IIX_tfl_r
+  exc g=1         II-aff->IIIN_IN x1: II_tib_ant_l->IIIN_tib_ant_l
+  exc g=1         II-aff->IIX_IN x1: II_tib_ant_l->IIX_tib_ant_l
+  exc g=1         II-aff->IIIN_IN x1: II_tib_ant_r->IIIN_tib_ant_r
+  exc g=1         II-aff->IIX_IN x1: II_tib_ant_r->IIX_tib_ant_r
+  exc g=1         II-aff->IIIN_IN x1: II_tib_post_l->IIIN_tib_post_l
+  exc g=1         II-aff->IIX_IN x1: II_tib_post_l->IIX_tib_post_l
+  exc g=1         II-aff->IIIN_IN x1: II_tib_post_r->IIIN_tib_post_r
+  exc g=1         II-aff->IIX_IN x1: II_tib_post_r->IIX_tib_post_r
+  exc g=1         II-aff->IIIN_IN x1: II_vas_int_l->IIIN_vas_int_l
+  exc g=1         II-aff->IIX_IN x1: II_vas_int_l->IIX_vas_int_l
+  exc g=1         II-aff->IIIN_IN x1: II_vas_int_r->IIIN_vas_int_r
+  exc g=1         II-aff->IIX_IN x1: II_vas_int_r->IIX_vas_int_r
+  exc g=1         II-aff->IIIN_IN x1: II_vas_lat_l->IIIN_vas_lat_l
+  exc g=1         II-aff->IIX_IN x1: II_vas_lat_l->IIX_vas_lat_l
+  exc g=1         II-aff->IIIN_IN x1: II_vas_lat_r->IIIN_vas_lat_r
+  exc g=1         II-aff->IIX_IN x1: II_vas_lat_r->IIX_vas_lat_r
+  exc g=1         II-aff->IIIN_IN x1: II_vas_med_l->IIIN_vas_med_l
+  exc g=1         II-aff->IIX_IN x1: II_vas_med_l->IIX_vas_med_l
+  exc g=1         II-aff->IIIN_IN x1: II_vas_med_r->IIIN_vas_med_r
+  exc g=1         II-aff->IIX_IN x1: II_vas_med_r->IIX_vas_med_r
+
+--- (c) Ib -> IBIN/IBEXC (146 edges) ---
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_add_brev_l->IBIN_add_brev_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_add_brev_r->IBIN_add_brev_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_add_long_l->IBIN_add_long_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_add_long_r->IBIN_add_long_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_add_mag1_l->IBIN_add_mag1_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_add_mag1_r->IBIN_add_mag1_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_add_mag2_l->IBIN_add_mag2_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_add_mag2_r->IBIN_add_mag2_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_add_mag3_l->IBEXC_hip_ext_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_add_mag3_l->IBIN_add_mag3_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_add_mag3_r->IBEXC_hip_ext_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_add_mag3_r->IBIN_add_mag3_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_bifemlh_l->IBIN_bifemlh_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_bifemlh_r->IBIN_bifemlh_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_bifemsh_l->IBIN_bifemsh_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_bifemsh_r->IBIN_bifemsh_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_ercspn_l->IBEXC_trunk_ext_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_ercspn_l->IBIN_ercspn_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_ercspn_r->IBEXC_trunk_ext_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_ercspn_r->IBIN_ercspn_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_ext_dig_l->IBIN_ext_dig_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_ext_dig_r->IBIN_ext_dig_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_ext_hal_l->IBIN_ext_hal_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_ext_hal_r->IBIN_ext_hal_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_extobl_l->IBIN_extobl_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_extobl_r->IBIN_extobl_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_flex_dig_l->IBEXC_ankle_pf_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_flex_dig_l->IBIN_flex_dig_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_flex_dig_r->IBEXC_ankle_pf_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_flex_dig_r->IBIN_flex_dig_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_flex_hal_l->IBEXC_ankle_pf_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_flex_hal_l->IBIN_flex_hal_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_flex_hal_r->IBEXC_ankle_pf_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_flex_hal_r->IBIN_flex_hal_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_gem_l->IBEXC_hip_ext_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_gem_l->IBIN_gem_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_gem_r->IBEXC_hip_ext_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_gem_r->IBIN_gem_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_max1_l->IBEXC_hip_ext_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_max1_l->IBIN_glut_max1_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_max1_r->IBEXC_hip_ext_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_max1_r->IBIN_glut_max1_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_max2_l->IBEXC_hip_ext_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_max2_l->IBIN_glut_max2_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_max2_r->IBEXC_hip_ext_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_max2_r->IBIN_glut_max2_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_max3_l->IBEXC_hip_ext_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_max3_l->IBIN_glut_max3_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_max3_r->IBEXC_hip_ext_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_max3_r->IBIN_glut_max3_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_med1_l->IBEXC_hip_abd_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_med1_l->IBIN_glut_med1_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_med1_r->IBEXC_hip_abd_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_med1_r->IBIN_glut_med1_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_med2_l->IBEXC_hip_abd_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_med2_l->IBIN_glut_med2_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_med2_r->IBEXC_hip_abd_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_med2_r->IBIN_glut_med2_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_med3_l->IBEXC_hip_abd_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_med3_l->IBIN_glut_med3_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_med3_r->IBEXC_hip_abd_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_med3_r->IBIN_glut_med3_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_min1_l->IBEXC_hip_abd_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_min1_l->IBIN_glut_min1_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_min1_r->IBEXC_hip_abd_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_min1_r->IBIN_glut_min1_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_min2_l->IBEXC_hip_abd_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_min2_l->IBIN_glut_min2_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_min2_r->IBEXC_hip_abd_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_min2_r->IBIN_glut_min2_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_min3_l->IBEXC_hip_abd_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_min3_l->IBIN_glut_min3_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_glut_min3_r->IBEXC_hip_abd_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_glut_min3_r->IBIN_glut_min3_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_grac_l->IBIN_grac_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_grac_r->IBIN_grac_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_iliacus_l->IBIN_iliacus_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_iliacus_r->IBIN_iliacus_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_intobl_l->IBIN_intobl_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_intobl_r->IBIN_intobl_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_lat_gas_l->IBEXC_ankle_pf_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_lat_gas_l->IBIN_lat_gas_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_lat_gas_r->IBEXC_ankle_pf_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_lat_gas_r->IBIN_lat_gas_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_med_gas_l->IBEXC_ankle_pf_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_med_gas_l->IBIN_med_gas_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_med_gas_r->IBEXC_ankle_pf_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_med_gas_r->IBIN_med_gas_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_pect_l->IBIN_pect_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_pect_r->IBIN_pect_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_per_brev_l->IBEXC_ankle_pf_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_per_brev_l->IBIN_per_brev_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_per_brev_r->IBEXC_ankle_pf_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_per_brev_r->IBIN_per_brev_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_per_long_l->IBEXC_ankle_pf_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_per_long_l->IBIN_per_long_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_per_long_r->IBEXC_ankle_pf_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_per_long_r->IBIN_per_long_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_per_tert_l->IBEXC_ankle_pf_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_per_tert_l->IBIN_per_tert_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_per_tert_r->IBEXC_ankle_pf_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_per_tert_r->IBIN_per_tert_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_peri_l->IBEXC_hip_ext_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_peri_l->IBIN_peri_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_peri_r->IBEXC_hip_ext_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_peri_r->IBIN_peri_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_psoas_l->IBIN_psoas_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_psoas_r->IBIN_psoas_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_quad_fem_l->IBEXC_hip_ext_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_quad_fem_l->IBIN_quad_fem_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_quad_fem_r->IBEXC_hip_ext_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_quad_fem_r->IBIN_quad_fem_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_rect_fem_l->IBEXC_knee_ext_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_rect_fem_l->IBIN_rect_fem_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_rect_fem_r->IBEXC_knee_ext_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_rect_fem_r->IBIN_rect_fem_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_sar_l->IBIN_sar_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_sar_r->IBIN_sar_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_semimem_l->IBIN_semimem_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_semimem_r->IBIN_semimem_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_semiten_l->IBIN_semiten_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_semiten_r->IBIN_semiten_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_soleus_l->IBEXC_ankle_pf_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_soleus_l->IBIN_soleus_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_soleus_r->IBEXC_ankle_pf_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_soleus_r->IBIN_soleus_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_tfl_l->IBIN_tfl_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_tfl_r->IBIN_tfl_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_tib_ant_l->IBIN_tib_ant_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_tib_ant_r->IBIN_tib_ant_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_tib_post_l->IBEXC_ankle_pf_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_tib_post_l->IBIN_tib_post_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_tib_post_r->IBEXC_ankle_pf_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_tib_post_r->IBIN_tib_post_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_vas_int_l->IBEXC_knee_ext_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_vas_int_l->IBIN_vas_int_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_vas_int_r->IBEXC_knee_ext_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_vas_int_r->IBIN_vas_int_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_vas_lat_l->IBEXC_knee_ext_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_vas_lat_l->IBIN_vas_lat_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_vas_lat_r->IBEXC_knee_ext_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_vas_lat_r->IBIN_vas_lat_r
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_vas_med_l->IBEXC_knee_ext_l
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_vas_med_l->IBIN_vas_med_l
+  exc g=0.5       Ib-aff->IBEXC_IN x1: Ib_vas_med_r->IBEXC_knee_ext_r
+  exc g=1         Ib-aff->IBIN_IN x1: Ib_vas_med_r->IBIN_vas_med_r
+
+--- (d) LBIN-sourced edges (2 edges) ---
+  exc g=0.6741    LBIN_IN->RG-E x2: LBIN_l->RG_E_l, LBIN_r->RG_E_r
+
+--- (d) RG/desc -> IBEXC gates (10 edges) ---
+  exc g=1         RG-E->IBEXC_IN x5: RG_E_l->IBEXC_hip_abd_l, RG_E_l->IBEXC_hip_ext_l, RG_E_l->IBEXC_knee_ext_l, RG_E_l->IBEXC_ankle_pf_l (+1 more)
+  exc g=1         RG-E->IBEXC_IN x5: RG_E_r->IBEXC_hip_abd_r, RG_E_r->IBEXC_hip_ext_r, RG_E_r->IBEXC_knee_ext_r, RG_E_r->IBEXC_ankle_pf_r (+1 more)
+
+--- (d) IBEXC-sourced edges (108 edges) ---
+  exc g=0.5       IBEXC_IN->LBIN_IN x54: IBEXC_hip_abd_r->LBIN_r, IBEXC_hip_abd_r->LBIN_r, IBEXC_hip_abd_r->LBIN_r, IBEXC_hip_abd_r->LBIN_r (+50 more)
+  exc g=0.6       IBEXC_IN->MN x54: IBEXC_hip_abd_r->MN_glut_med1_r, IBEXC_hip_abd_r->MN_glut_med2_r, IBEXC_hip_abd_r->MN_glut_med3_r, IBEXC_hip_abd_r->MN_glut_min1_r (+50 more)
+
+--- (d)+(e) Ib -> PF/RG/In central projections (216 edges) ---
+  exc g=0.2435    Ib-aff->InE x1: Ib_add_mag3_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_add_mag3_l->PF_E1_l, Ib_add_mag3_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_add_mag3_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_add_mag3_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_add_mag3_r->PF_E1_r, Ib_add_mag3_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_add_mag3_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_ercspn_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_ercspn_l->PF_E1_l, Ib_ercspn_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_ercspn_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_ercspn_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_ercspn_r->PF_E1_r, Ib_ercspn_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_ercspn_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_flex_dig_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_flex_dig_l->PF_E1_l, Ib_flex_dig_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_flex_dig_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_flex_dig_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_flex_dig_r->PF_E1_r, Ib_flex_dig_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_flex_dig_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_flex_hal_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_flex_hal_l->PF_E1_l, Ib_flex_hal_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_flex_hal_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_flex_hal_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_flex_hal_r->PF_E1_r, Ib_flex_hal_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_flex_hal_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_gem_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_gem_l->PF_E1_l, Ib_gem_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_gem_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_gem_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_gem_r->PF_E1_r, Ib_gem_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_gem_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_max1_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_max1_l->PF_E1_l, Ib_glut_max1_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_max1_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_max1_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_max1_r->PF_E1_r, Ib_glut_max1_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_max1_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_max2_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_max2_l->PF_E1_l, Ib_glut_max2_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_max2_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_max2_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_max2_r->PF_E1_r, Ib_glut_max2_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_max2_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_max3_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_max3_l->PF_E1_l, Ib_glut_max3_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_max3_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_max3_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_max3_r->PF_E1_r, Ib_glut_max3_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_max3_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_med1_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_med1_l->PF_E1_l, Ib_glut_med1_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_med1_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_med1_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_med1_r->PF_E1_r, Ib_glut_med1_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_med1_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_med2_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_med2_l->PF_E1_l, Ib_glut_med2_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_med2_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_med2_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_med2_r->PF_E1_r, Ib_glut_med2_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_med2_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_med3_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_med3_l->PF_E1_l, Ib_glut_med3_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_med3_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_med3_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_med3_r->PF_E1_r, Ib_glut_med3_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_med3_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_min1_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_min1_l->PF_E1_l, Ib_glut_min1_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_min1_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_min1_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_min1_r->PF_E1_r, Ib_glut_min1_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_min1_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_min2_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_min2_l->PF_E1_l, Ib_glut_min2_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_min2_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_min2_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_min2_r->PF_E1_r, Ib_glut_min2_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_min2_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_min3_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_min3_l->PF_E1_l, Ib_glut_min3_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_min3_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_min3_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_glut_min3_r->PF_E1_r, Ib_glut_min3_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_min3_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_lat_gas_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_lat_gas_l->PF_E1_l, Ib_lat_gas_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_lat_gas_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_lat_gas_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_lat_gas_r->PF_E1_r, Ib_lat_gas_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_lat_gas_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_med_gas_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_med_gas_l->PF_E1_l, Ib_med_gas_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_med_gas_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_med_gas_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_med_gas_r->PF_E1_r, Ib_med_gas_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_med_gas_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_per_brev_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_per_brev_l->PF_E1_l, Ib_per_brev_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_per_brev_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_per_brev_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_per_brev_r->PF_E1_r, Ib_per_brev_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_per_brev_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_per_long_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_per_long_l->PF_E1_l, Ib_per_long_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_per_long_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_per_long_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_per_long_r->PF_E1_r, Ib_per_long_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_per_long_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_per_tert_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_per_tert_l->PF_E1_l, Ib_per_tert_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_per_tert_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_per_tert_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_per_tert_r->PF_E1_r, Ib_per_tert_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_per_tert_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_peri_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_peri_l->PF_E1_l, Ib_peri_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_peri_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_peri_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_peri_r->PF_E1_r, Ib_peri_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_peri_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_quad_fem_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_quad_fem_l->PF_E1_l, Ib_quad_fem_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_quad_fem_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_quad_fem_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_quad_fem_r->PF_E1_r, Ib_quad_fem_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_quad_fem_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_rect_fem_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_rect_fem_l->PF_E1_l, Ib_rect_fem_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_rect_fem_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_rect_fem_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_rect_fem_r->PF_E1_r, Ib_rect_fem_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_rect_fem_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_soleus_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_soleus_l->PF_E1_l, Ib_soleus_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_soleus_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_soleus_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_soleus_r->PF_E1_r, Ib_soleus_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_soleus_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_tib_post_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_tib_post_l->PF_E1_l, Ib_tib_post_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_tib_post_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_tib_post_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_tib_post_r->PF_E1_r, Ib_tib_post_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_tib_post_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_vas_int_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_vas_int_l->PF_E1_l, Ib_vas_int_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_vas_int_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_vas_int_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_vas_int_r->PF_E1_r, Ib_vas_int_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_vas_int_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_vas_lat_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_vas_lat_l->PF_E1_l, Ib_vas_lat_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_vas_lat_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_vas_lat_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_vas_lat_r->PF_E1_r, Ib_vas_lat_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_vas_lat_r->RG_E_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_vas_med_l->InE_l
+  exc g=0.2435    Ib-aff->PF x2: Ib_vas_med_l->PF_E1_l, Ib_vas_med_l->PF_E2_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_vas_med_l->RG_E_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_vas_med_r->InE_r
+  exc g=0.2435    Ib-aff->PF x2: Ib_vas_med_r->PF_E1_r, Ib_vas_med_r->PF_E2_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_vas_med_r->RG_E_r
+
+--- (e) afferent/IN -> RG half-centers (DIRECT) (186 edges) ---
+  exc g=0.3839    II-aff->RG-F x1: II_add_brev_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_add_brev_r->RG_F_r
+  exc g=0.3839    II-aff->RG-F x1: II_add_long_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_add_long_r->RG_F_r
+  exc g=0.3839    II-aff->RG-F x1: II_add_mag1_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_add_mag1_r->RG_F_r
+  exc g=0.3839    II-aff->RG-F x1: II_add_mag2_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_add_mag2_r->RG_F_r
+  exc g=0.093     II-aff->RG-E x1: II_add_mag3_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_add_mag3_r->RG_E_r
+  exc g=0.3839    II-aff->RG-F x1: II_bifemlh_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_bifemlh_r->RG_F_r
+  exc g=0.3839    II-aff->RG-F x1: II_bifemsh_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_bifemsh_r->RG_F_r
+  exc g=0.093     II-aff->RG-E x1: II_ercspn_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_ercspn_r->RG_E_r
+  exc g=0.3839    II-aff->RG-F x1: II_ext_dig_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_ext_dig_r->RG_F_r
+  exc g=0.3839    II-aff->RG-F x1: II_ext_hal_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_ext_hal_r->RG_F_r
+  exc g=0.3839    II-aff->RG-F x1: II_extobl_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_extobl_r->RG_F_r
+  exc g=0.093     II-aff->RG-E x1: II_flex_dig_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_flex_dig_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_flex_hal_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_flex_hal_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_gem_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_gem_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_glut_max1_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_glut_max1_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_glut_max2_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_glut_max2_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_glut_max3_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_glut_max3_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_glut_med1_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_glut_med1_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_glut_med2_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_glut_med2_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_glut_med3_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_glut_med3_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_glut_min1_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_glut_min1_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_glut_min2_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_glut_min2_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_glut_min3_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_glut_min3_r->RG_E_r
+  exc g=0.3839    II-aff->RG-F x1: II_grac_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_grac_r->RG_F_r
+  exc g=0.3839    II-aff->RG-F x1: II_iliacus_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_iliacus_r->RG_F_r
+  exc g=0.3839    II-aff->RG-F x1: II_intobl_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_intobl_r->RG_F_r
+  exc g=0.093     II-aff->RG-E x1: II_lat_gas_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_lat_gas_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_med_gas_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_med_gas_r->RG_E_r
+  exc g=0.3839    II-aff->RG-F x1: II_pect_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_pect_r->RG_F_r
+  exc g=0.093     II-aff->RG-E x1: II_per_brev_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_per_brev_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_per_long_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_per_long_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_per_tert_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_per_tert_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_peri_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_peri_r->RG_E_r
+  exc g=0.3839    II-aff->RG-F x1: II_psoas_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_psoas_r->RG_F_r
+  exc g=0.093     II-aff->RG-E x1: II_quad_fem_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_quad_fem_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_rect_fem_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_rect_fem_r->RG_E_r
+  exc g=0.3839    II-aff->RG-F x1: II_sar_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_sar_r->RG_F_r
+  exc g=0.3839    II-aff->RG-F x1: II_semimem_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_semimem_r->RG_F_r
+  exc g=0.3839    II-aff->RG-F x1: II_semiten_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_semiten_r->RG_F_r
+  exc g=0.093     II-aff->RG-E x1: II_soleus_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_soleus_r->RG_E_r
+  exc g=0.3839    II-aff->RG-F x1: II_tfl_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_tfl_r->RG_F_r
+  exc g=0.3839    II-aff->RG-F x1: II_tib_ant_l->RG_F_l
+  exc g=0.3839    II-aff->RG-F x1: II_tib_ant_r->RG_F_r
+  exc g=0.093     II-aff->RG-E x1: II_tib_post_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_tib_post_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_vas_int_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_vas_int_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_vas_lat_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_vas_lat_r->RG_E_r
+  exc g=0.093     II-aff->RG-E x1: II_vas_med_l->RG_E_l
+  exc g=0.093     II-aff->RG-E x1: II_vas_med_r->RG_E_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_add_brev_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_add_brev_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_add_long_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_add_long_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_add_mag1_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_add_mag1_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_add_mag2_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_add_mag2_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_bifemlh_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_bifemlh_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_bifemsh_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_bifemsh_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_ext_dig_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_ext_dig_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_ext_hal_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_ext_hal_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_extobl_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_extobl_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_grac_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_grac_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_iliacus_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_iliacus_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_intobl_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_intobl_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_pect_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_pect_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_psoas_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_psoas_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_sar_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_sar_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_semimem_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_semimem_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_semiten_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_semiten_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_tfl_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_tfl_r->RG_F_r
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_tib_ant_l->RG_F_l
+  exc g=0.3986    Ia-aff->RG-F x1: Ia_tib_ant_r->RG_F_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_add_mag3_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_add_mag3_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_ercspn_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_ercspn_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_flex_dig_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_flex_dig_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_flex_hal_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_flex_hal_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_gem_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_gem_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_max1_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_max1_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_max2_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_max2_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_max3_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_max3_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_med1_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_med1_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_med2_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_med2_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_med3_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_med3_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_min1_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_min1_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_min2_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_min2_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_min3_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_glut_min3_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_lat_gas_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_lat_gas_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_med_gas_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_med_gas_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_per_brev_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_per_brev_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_per_long_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_per_long_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_per_tert_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_per_tert_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_peri_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_peri_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_quad_fem_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_quad_fem_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_rect_fem_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_rect_fem_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_soleus_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_soleus_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_tib_post_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_tib_post_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_vas_int_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_vas_int_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_vas_lat_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_vas_lat_r->RG_E_r
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_vas_med_l->RG_E_l
+  exc g=0.2435    Ib-aff->RG-E x1: Ib_vas_med_r->RG_E_r
+  exc g=0.6741    LBIN_IN->RG-E x2: LBIN_l->RG_E_l, LBIN_r->RG_E_r
+
+--- (e/b) afferent/IN -> InE/InF lamination (194 edges) ---
+  exc g=0.2435    HEEL_IN->InE x2: HEEL_l->InE_l, HEEL_r->InE_r
+  exc g=0.3753    HEEL_IN->InE x2: HEEL_l->InE_l, HEEL_r->InE_r
+  inh g=0.3753    HEEL_IN->InF x2: HEEL_l->InF_l, HEEL_r->InF_r
+  exc g=0.3839    II-aff->InF x1: II_add_brev_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_add_brev_r->InF_r
+  exc g=0.3839    II-aff->InF x1: II_add_long_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_add_long_r->InF_r
+  exc g=0.3839    II-aff->InF x1: II_add_mag1_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_add_mag1_r->InF_r
+  exc g=0.3839    II-aff->InF x1: II_add_mag2_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_add_mag2_r->InF_r
+  exc g=0.093     II-aff->InE x1: II_add_mag3_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_add_mag3_r->InE_r
+  exc g=0.3839    II-aff->InF x1: II_bifemlh_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_bifemlh_r->InF_r
+  exc g=0.3839    II-aff->InF x1: II_bifemsh_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_bifemsh_r->InF_r
+  exc g=0.093     II-aff->InE x1: II_ercspn_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_ercspn_r->InE_r
+  exc g=0.3839    II-aff->InF x1: II_ext_dig_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_ext_dig_r->InF_r
+  exc g=0.3839    II-aff->InF x1: II_ext_hal_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_ext_hal_r->InF_r
+  exc g=0.3839    II-aff->InF x1: II_extobl_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_extobl_r->InF_r
+  exc g=0.093     II-aff->InE x1: II_flex_dig_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_flex_dig_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_flex_hal_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_flex_hal_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_gem_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_gem_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_glut_max1_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_glut_max1_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_glut_max2_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_glut_max2_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_glut_max3_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_glut_max3_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_glut_med1_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_glut_med1_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_glut_med2_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_glut_med2_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_glut_med3_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_glut_med3_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_glut_min1_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_glut_min1_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_glut_min2_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_glut_min2_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_glut_min3_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_glut_min3_r->InE_r
+  exc g=0.3839    II-aff->InF x1: II_grac_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_grac_r->InF_r
+  exc g=0.3839    II-aff->InF x1: II_iliacus_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_iliacus_r->InF_r
+  exc g=0.3839    II-aff->InF x1: II_intobl_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_intobl_r->InF_r
+  exc g=0.093     II-aff->InE x1: II_lat_gas_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_lat_gas_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_med_gas_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_med_gas_r->InE_r
+  exc g=0.3839    II-aff->InF x1: II_pect_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_pect_r->InF_r
+  exc g=0.093     II-aff->InE x1: II_per_brev_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_per_brev_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_per_long_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_per_long_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_per_tert_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_per_tert_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_peri_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_peri_r->InE_r
+  exc g=0.3839    II-aff->InF x1: II_psoas_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_psoas_r->InF_r
+  exc g=0.093     II-aff->InE x1: II_quad_fem_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_quad_fem_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_rect_fem_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_rect_fem_r->InE_r
+  exc g=0.3839    II-aff->InF x1: II_sar_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_sar_r->InF_r
+  exc g=0.3839    II-aff->InF x1: II_semimem_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_semimem_r->InF_r
+  exc g=0.3839    II-aff->InF x1: II_semiten_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_semiten_r->InF_r
+  exc g=0.093     II-aff->InE x1: II_soleus_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_soleus_r->InE_r
+  exc g=0.3839    II-aff->InF x1: II_tfl_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_tfl_r->InF_r
+  exc g=0.3839    II-aff->InF x1: II_tib_ant_l->InF_l
+  exc g=0.3839    II-aff->InF x1: II_tib_ant_r->InF_r
+  exc g=0.093     II-aff->InE x1: II_tib_post_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_tib_post_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_vas_int_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_vas_int_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_vas_lat_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_vas_lat_r->InE_r
+  exc g=0.093     II-aff->InE x1: II_vas_med_l->InE_l
+  exc g=0.093     II-aff->InE x1: II_vas_med_r->InE_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_add_brev_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_add_brev_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_add_long_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_add_long_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_add_mag1_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_add_mag1_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_add_mag2_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_add_mag2_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_bifemlh_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_bifemlh_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_bifemsh_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_bifemsh_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_ext_dig_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_ext_dig_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_ext_hal_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_ext_hal_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_extobl_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_extobl_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_grac_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_grac_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_iliacus_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_iliacus_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_intobl_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_intobl_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_pect_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_pect_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_psoas_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_psoas_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_sar_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_sar_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_semimem_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_semimem_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_semiten_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_semiten_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_tfl_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_tfl_r->InF_r
+  exc g=0.3986    Ia-aff->InF x1: Ia_tib_ant_l->InF_l
+  exc g=0.3986    Ia-aff->InF x1: Ia_tib_ant_r->InF_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_add_mag3_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_add_mag3_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_ercspn_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_ercspn_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_flex_dig_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_flex_dig_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_flex_hal_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_flex_hal_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_gem_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_gem_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_max1_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_max1_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_max2_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_max2_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_max3_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_max3_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_med1_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_med1_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_med2_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_med2_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_med3_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_med3_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_min1_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_min1_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_min2_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_min2_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_min3_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_glut_min3_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_lat_gas_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_lat_gas_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_med_gas_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_med_gas_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_per_brev_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_per_brev_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_per_long_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_per_long_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_per_tert_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_per_tert_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_peri_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_peri_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_quad_fem_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_quad_fem_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_rect_fem_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_rect_fem_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_soleus_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_soleus_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_tib_post_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_tib_post_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_vas_int_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_vas_int_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_vas_lat_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_vas_lat_r->InE_r
+  exc g=0.2435    Ib-aff->InE x1: Ib_vas_med_l->InE_l
+  exc g=0.2435    Ib-aff->InE x1: Ib_vas_med_r->InE_r
+  exc g=0.1457    TOE_IN->InE x2: TOE_l->InE_l, TOE_r->InE_r
+  exc g=0.2435    TOE_IN->InE x2: TOE_l->InE_l, TOE_r->InE_r
+
+--- drive map: DRIVE/POSTURE out-edges (94 edges) ---
+  exc g=1.6988    desc-in->RG-E x2: DRIVE->RG_E_l, DRIVE->RG_E_r
+  exc g=0.9964    desc-in->RG-F x2: DRIVE->RG_F_l, DRIVE->RG_F_r
+  exc g=0.0053    desc-in->MN x6: POSTURE->MN_vas_med_r, POSTURE->MN_vas_int_r, POSTURE->MN_vas_lat_r, POSTURE->MN_vas_med_l (+2 more)
+  exc g=0.0099    desc-in->MN x12: POSTURE->MN_add_long_r, POSTURE->MN_add_brev_r, POSTURE->MN_add_mag1_r, POSTURE->MN_add_mag2_r (+8 more)
+  exc g=0.0108    desc-in->MN x12: POSTURE->MN_glut_max1_r, POSTURE->MN_glut_max2_r, POSTURE->MN_glut_max3_r, POSTURE->MN_quad_fem_r (+8 more)
+  exc g=0.0154    desc-in->MN x6: POSTURE->MN_tib_ant_r, POSTURE->MN_ext_dig_r, POSTURE->MN_ext_hal_r, POSTURE->MN_tib_ant_l (+2 more)
+  exc g=0.0158    desc-in->MN x4: POSTURE->MN_add_mag3_r, POSTURE->MN_rect_fem_r, POSTURE->MN_add_mag3_l, POSTURE->MN_rect_fem_l
+  exc g=0.021     desc-in->MN x8: POSTURE->MN_sar_r, POSTURE->MN_tfl_r, POSTURE->MN_iliacus_r, POSTURE->MN_psoas_r (+4 more)
+  exc g=0.0337    desc-in->MN x12: POSTURE->MN_glut_med1_r, POSTURE->MN_glut_med2_r, POSTURE->MN_glut_med3_r, POSTURE->MN_glut_min1_r (+8 more)
+  exc g=0.039     desc-in->MN x2: POSTURE->MN_bifemsh_r, POSTURE->MN_bifemsh_l
+  exc g=0.0444    desc-in->MN x6: POSTURE->MN_semimem_r, POSTURE->MN_semiten_r, POSTURE->MN_bifemlh_r, POSTURE->MN_semimem_l (+2 more)
+  exc g=0.0995    desc-in->MN x4: POSTURE->MN_med_gas_r, POSTURE->MN_lat_gas_r, POSTURE->MN_med_gas_l, POSTURE->MN_lat_gas_l
+  exc g=0.15      desc-in->MN x10: POSTURE->MN_flex_dig_r, POSTURE->MN_flex_hal_r, POSTURE->MN_per_brev_r, POSTURE->MN_per_long_r (+6 more)
+  exc g=0.3       desc-in->MN x2: POSTURE->MN_ercspn_r, POSTURE->MN_ercspn_l
+  exc g=0.35      desc-in->MN x2: POSTURE->MN_tib_post_r, POSTURE->MN_tib_post_l
+  exc g=0.55      desc-in->MN x2: POSTURE->MN_soleus_r, POSTURE->MN_soleus_l
+  exc g=0.8       desc-in->RG-E x2: POSTURE->RG_E_l, POSTURE->RG_E_r
+
+========================================================================
+BEN EXPORT ben_rules_20260924.json: 90 nodes, 99 edges
+========================================================================
+  exc g=2      ia: Ia                                         -> ia_homo: MN agonist [ia_homo (0 hops shown)]
+  exc g=1      ia: Ia                                         -> ia_recip: Ia_A [ia_recip]
+  inh g=0.5    ia_recip: Ia_A                                 -> ia_recip: MN antagonist [ia_recip hops=1]
+  exc g=1      ii_exc: II                                     -> ii_exc: II_A2 [ii_exc_1]
+  exc g=0.5    ii_exc: II_A2                                  -> ii_exc: MN agonist [ii_exc hops=1]
+  inh g=0.5    ii_inh: II_A1                                  -> ii_inh: MN antagonist [ii_inh hops=1]
+  exc g=1      ib_auto: Ib                                    -> ib_auto: Ib_A [ib_auto]
+  inh g=0.5    ib_auto: Ib_A                                  -> ib_auto: MN agonist [ib_auto hops=1]
+  exc g=1      ib_rev: Ib+                                    -> ib_rev: Ib_Ext+ [ib_rev]
+  exc g=0.5    ib_rev: Ib_Ext+                                -> ib_rev: MN ext (stance) [ib_rev hops=1]
+  exc g=1      toe: toe                                       -> toe: toe IN [toe]
+  exc g=1      rc: MN                                         -> rc: RC [rc]
+  exc g=1      cross: RG-F                                    -> cross: c1 [cross]
+  inh g=0.5    cross: c1                                      -> cross: contra RG-F [cross hops=1]
+  exc g=0.5    ii_exc: II                                     -> ii_inh: II_A1 [ii_exc_2]
+  inh g=0.5    ib_auto: Ib_A                                  -> ib_auto: Ib_N []
+  inh g=0.5    ia_recip: Ia_A                                 -> ia_recip: Ia_N []
+  inh g=0.5    ib_auto: Ib_N                                  -> ib_auto: MN antagonist []
+  exc g=0.5    ii_inh: ia_to_antagonist                       -> ii_exc: II []
+  exc g=0.5    ib_auto: MN agonist                            -> ib_auto: ib_to_mn_inh []
+  exc g=0.5    ib_auto: ib_to_mn_inh                          -> ib_auto: Ib []
+  exc g=0.5    ib_rev: ib_group_exc                           -> ib_rev: Ib+ []
+  exc g=0.5    ib_rev: MN ext (stance)                        -> ib_rev: ib_group_exc []
+  exc g=0.5    rc: MN own+antag                               -> MUSCLE_2782 []
+  exc g=0.5    rc: MN own+antag                               -> rc: RC_N []
+  inh g=0.5    rc: RC                                         -> rc: RC_N []
+  inh g=0.5    rc: RC_N                                       -> rc: RC []
+  inh g=0.5    rc: RC_N                                       -> rc: MN own+antag []
+  inh g=0.5    rc: RC                                         -> rc: MN []
+  inh g=0.5    rc: RC                                         -> ia_recip: Ia_N []
+  inh g=0.5    rc: RC_N                                       -> ia_recip: Ia_A []
+  exc g=0.5    rc: MN                                         -> MUSCLE_2795 []
+  exc g=1      cross: RG-E                                    -> cross: V3 [cross]
+  exc g=0.5    ib_load: RG-E                                  -> IN-InE_2803 []
+  exc g=0.5    HC-RG-F_2809                                   -> IN-InF_2808 []
+  inh g=0.5    IN-InE_2803                                    -> HC-RG-F_2809 []
+  inh g=0.5    IN-InF_2808                                    -> ib_load: RG-E []
+  exc g=2.749  HC-PF-E_2805                                   -> IN-PF_2807 []
+  inh g=2.749  IN-PF_2807                                     -> HC-PF-F_2815 []
+  inh g=2.749  IN-PF_2817                                     -> HC-PF-E_2805 []
+  exc g=2.749  HC-PF-F_2815                                   -> IN-PF_2817 []
+  exc g=0.1    ib_load: RG-E                                  -> HC-PF-E_2805 []
+  exc g=0.1    HC-RG-F_2809                                   -> HC-PF-F_2815 []
+  exc g=0.5    cross: V3                                      -> contra IN-InE []
+  exc g=0.5    ib_load: RG-E2                                 -> IN-InE_2805 []
+  exc g=0.5    HC-RG-F_2811                                   -> IN-InF_2810 []
+  inh g=2.749  IN-InE_2805                                    -> HC-RG-F_2811 []
+  inh g=2.749  IN-InF_2810                                    -> ib_load: RG-E2 []
+  exc g=2.749  HC-PF-E_2807                                   -> IN-PF_2809 []
+  inh g=2.749  IN-PF_2809                                     -> HC-PF-F_2817 []
+  inh g=2.749  IN-PF_2819                                     -> HC-PF-E_2807 []
+  exc g=2.749  HC-PF-F_2817                                   -> IN-PF_2819 []
+  exc g=0.1    ib_load: RG-E2                                 -> HC-PF-E_2807 []
+  exc g=0.1    HC-RG-F_2811                                   -> HC-PF-F_2817 []
+  exc g=2.749  HC-PF-E_2809                                   -> IN-PF_dorsiflexion_inhibit []
+  inh g=2.749  IN-PF_dorsiflexion_inhibit                     -> HC-PF-Dorsiflexion []
+  inh g=2.749  IN-PF_2821                                     -> HC-PF-E_2809 []
+  exc g=2.749  HC-PF-Dorsiflexion                             -> IN-PF_2821 []
+  exc g=5      toe: toe IN                                    -> IN-PF_dorsiflexion_inhibit []
+  exc g=0.5    HC-RG-E-ipsilateral                            -> IN-InE_2806 []
+  exc g=0.5    HC-RG-F_ipsilateral                            -> IN-InF_2811 []
+  inh g=0.5    IN-InE_2806                                    -> HC-RG-F_ipsilateral []
+  inh g=0.5    IN-InF_2811                                    -> HC-RG-E-ipsilateral []
+  exc g=2.749  HC-PF-E_hip                                    -> IN-PF_2810 []
+  inh g=2.749  IN-PF_2810                                     -> HC-PF-F_hip []
+  inh g=2.749  IN-PF_2820                                     -> HC-PF-E_hip []
+  exc g=2.749  HC-PF-F_hip                                    -> IN-PF_2820 []
+  exc g=0.1    HC-RG-E-ipsilateral                            -> HC-PF-E_hip []
+  exc g=0.1    HC-RG-F_ipsilateral                            -> HC-PF-F_hip []
+  exc g=2.749  HC-PF-E_Knee                                   -> IN-PF_2812 []
+  inh g=2.749  IN-PF_2812                                     -> HC-PF-F_Knee []
+  inh g=2.749  IN-PF_2822                                     -> HC-PF-E_Knee []
+  exc g=2.749  HC-PF-F_Knee                                   -> IN-PF_2822 []
+  exc g=0.1    HC-RG-E-ipsilateral                            -> HC-PF-E_Knee []
+  exc g=0.1    HC-RG-F_ipsilateral                            -> HC-PF-F_Knee []
+  exc g=2.749  HC-PF-E_Ankle                                  -> IN-PF_2814 []
+  inh g=2.749  IN-PF_2814                                     -> HC-PF-F_Ankle []
+  inh g=2.749  IN-PF_2824                                     -> HC-PF-E_Ankle []
+  exc g=2.749  HC-PF-F_Ankle                                  -> IN-PF_2824 []
+  exc g=0.1    HC-RG-E-ipsilateral                            -> HC-PF-E_Ankle []
+  exc g=0.1    HC-RG-F_ipsilateral                            -> HC-PF-F_Ankle []
+  exc g=0.5    HC-RG-F_Contralateral                          -> IN-InE_2808 []
+  exc g=0.5    HC-RG-E_Contralateral                          -> IN-InF_2813 []
+  inh g=0.5    IN-InF_2813                                    -> HC-RG-F_Contralateral []
+  inh g=0.5    IN-InE_2808                                    -> HC-RG-E_Contralateral []
+  exc g=0.5    heel: heel                                     -> IN-InF_2813 []
+  exc g=0.5    heel: heel                                     -> IN-InE_2806 []
+  exc g=0.5    heel: heel                                     -> IN-PF_2810 []
+  exc g=0.5    heel: heel                                     -> IN-PF_2812 []
+  exc g=0.5    heel: heel                                     -> IN-PF_2814 []
+  exc g=0.5    SN-II_2844                                     -> HC-RG-F_2811 []
+  exc g=0.5    SN-II_2844                                     -> IN-InF_2810 []
+  exc g=0.5    SN-II_2844                                     -> HC-PF-F_2817 []
+  exc g=0.5    SN-Ia_2843                                     -> HC-PF-F_2817 []
+  exc g=0.5    SN-Ia_2843                                     -> IN-InF_2810 []
+  exc g=0.5    SN-Ia_2843                                     -> HC-RG-F_2811 []
+  exc g=0.5    ib_load: Ib grp                                -> ib_load: RG-E []
+  exc g=0.5    ib_load: Ib grp                                -> IN-InE_2803 []
+  exc g=0.5    ib_load: Ib grp                                -> HC-PF-E_2805 []
+
+========================================================================
+BEN EXPORT ben_shevtsova_20260924.json: 20 nodes, 34 edges
+========================================================================
+  exc g=0.4    RG-F_l                                         -> IniF_l [shev2026_t1]
+  exc g=0.7    RG-F_l                                         -> V0D_l [shev2026_t1]
+  exc g=1      RG-F_l                                         -> V2a_l [shev2026_t1]
+  exc g=0.35   RG-E_l                                         -> V3-E_l [shev2026_t1]
+  inh g=1      IniF_l                                         -> RG-E_l [shev2026_t1]
+  exc g=1      V2a_l                                          -> V0V_l [shev2026_t1]
+  exc g=0.6    V0V_l                                          -> Ini_r [shev2026_t1]
+  inh g=0.075  Ini_r                                          -> RG-F_r [shev2026_t1]
+  inh g=0.07   V0D_l                                          -> RG-F_r [shev2026_t1]
+  exc g=0.4    RG-F_r                                         -> IniF_r [shev2026_t1]
+  exc g=0.7    RG-F_r                                         -> V0D_r [shev2026_t1]
+  exc g=1      RG-F_r                                         -> V2a_r [shev2026_t1]
+  exc g=0.4    RG-E_r                                         -> IniE_r [shev2026_t1]
+  exc g=0.35   RG-E_r                                         -> V3-E_r [shev2026_t1]
+  inh g=1      IniF_r                                         -> RG-E_r [shev2026_t1]
+  inh g=0.1    IniE_r                                         -> RG-F_r [shev2026_t1]
+  exc g=1      V2a_r                                          -> V0V_r [shev2026_t1]
+  exc g=0.6    V0V_r                                          -> Ini_l [shev2026_t1]
+  inh g=0.075  Ini_l                                          -> RG-F_l [shev2026_t1]
+  inh g=0.07   V0D_r                                          -> RG-F_l [shev2026_t1]
+  exc g=0.02   V3-E_r                                         -> RG-E_l [shev2026_t1]
+  exc g=1      V3-E_r                                         -> InE1_l [shev2026_t1]
+  exc g=0.5    V3-E_l                                         -> RG-E_r []
+  exc g=0.5    V3-E_l                                         -> IniE_r []
+  exc g=0.5    RG-E_l                                         -> InE1_l []
+  inh g=0.5    InE1_l                                         -> RG-F_l []
+  exc g=0.5    brainstem gamma                                -> RG-E_l []
+  exc g=0.5    brainstem gamma                                -> RG-E_r []
+  exc g=0.5    brainstem alpha                                -> RG-F_l []
+  exc g=0.5    brainstem alpha                                -> RG-F_r []
+  inh g=0.5    brainstem alpha                                -> V0V_l []
+  inh g=0.5    brainstem alpha                                -> V0D_l []
+  inh g=0.5    brainstem alpha                                -> V0D_r []
+  inh g=0.5    brainstem alpha                                -> V0V_r []
+
+========================================================================
+BEN EXPORT ben_shinohara_20260924.json: 20 nodes, 37 edges
+========================================================================
+  exc g=0.02   supraspinal                                    -> RG-F [shin2025_a1]
+  exc g=0.15   supraspinal                                    -> RG-E [shin2025_a1]
+  exc g=0.4    RG-F                                           -> IN-F [shin2025_a1]
+  exc g=1      RG-F                                           -> C1 [shin2025_a1]
+  exc g=0.7    RG-F                                           -> PF-F [shin2025_a1]
+  exc g=0.4    RG-E                                           -> IN-E [shin2025_a1]
+  exc g=0.5    RG-E                                           -> V3 [shin2025_a1]
+  exc g=0.7    RG-E                                           -> PF-E [shin2025_a1]
+  inh g=0.7    IN-F                                           -> RG-E [shin2025_a1]
+  inh g=2.1    IN-F                                           -> PF-E [shin2025_a1]
+  inh g=0.6    IN-E                                           -> RG-F [shin2025_a1]
+  inh g=0.3    IN-E                                           -> PF-F [shin2025_a1]
+  exc g=1      C1                                             -> RG-F [shin2025_a1]
+  exc g=0.09   PF-F                                           -> MN-IP [shin2025_b3]
+  exc g=0.1    PF-F                                           -> MN-TA [shin2025_b3]
+  exc g=0.08   PF-F                                           -> MN-BF [shin2025_b3]
+  exc g=0.07   PF-E                                           -> MN-GM [shin2025_b3]
+  exc g=0.12   PF-E                                           -> MN-VL [shin2025_b3]
+  exc g=0.08   PF-E                                           -> MN-SO [shin2025_b3]
+  exc g=0.12   PF-E                                           -> MN-GA [shin2025_b3]
+  exc g=0.0007 flexor ii/ia                                   -> RG-F [shin2025_eq10]
+  exc g=0.53   flexor ii/ia                                   -> RG-F [shin2025_eq10]
+  exc g=0.53   flexor ii/ia                                   -> IN-F [shin2025_eq10]
+  exc g=0.53   flexor ii/ia                                   -> PF-F [shin2025_eq10]
+  exc g=0.000586 flexor ii/ia                                   -> MN-IP [shin2025_eq10]
+  exc g=0.583  flexor ii/ia                                   -> MN-IP [shin2025_eq10]
+  exc g=0.16   extensor Ib                                    -> RG-E [shin2025_eq11]
+  exc g=0.16   extensor Ib                                    -> IN-E [shin2025_eq11]
+  exc g=0.16   extensor Ib                                    -> PF-E [shin2025_eq11]
+  exc g=0.176  extensor Ib                                    -> MN-GM [shin2025_eq11]
+  exc g=0.5    extensor Ib                                    -> MN-VL []
+  exc g=0.5    extensor Ib                                    -> MN-SO []
+  exc g=0.5    extensor Ib                                    -> MN-GA []
+  exc g=0.5    flexor ii/ia                                   -> MN-TA []
+  exc g=0.5    flexor ii/ia                                   -> MN-BF []
+  exc g=0.5    V3                                             -> IN-E2 contralateral []
+  inh g=0.5    C1                                             -> RG-F2 contralateral []
+
+AUDIT DRIVER DONE

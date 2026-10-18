@@ -97,7 +97,40 @@ KV = dict(phase="both", dur_stand=12.0, dur_walk=20.0,
           ctn_amp=4.0, cref=50.0, ibnA=1.0,
           te=3.0, tf=4.0, tau=0.25, cap=0.5, acap=-1.0, damp=3.0,
           rig=1.0, sregime="latch", settle=0.4, heelN=5.0, drop=0.026,
-          hold=3.0, lower=1.0, wsup=0.7, sink=0.01)
+          hold=3.0, lower=1.0, wsup=0.7, sink=0.01,
+          # per-side drive (2026-10-16): te_l/te_r/tf_l/tf_r = per-side
+          # GAMMA (RG tonic) overrides in nA (nan = symmetric te/tf
+          # baseline, bit-identical); alpha_l/alpha_r = per-side ALPHA
+          # (MN-level) drive in nA (0 = ports not built, bit-identical).
+          te_l=float("nan"), te_r=float("nan"),
+          tf_l=float("nan"), tf_r=float("nan"),
+          alpha_l=0.0, alpha_r=0.0,
+          # leg-leg collision (2026-10-16 sweep): 1 (default) = the
+          # shipped MJCF behavior (everything collides with everything;
+          # the near-parallel tibia capsules interpenetrate at spawn and
+          # MuJoCo wedges them apart with ~3.4 kN, measured
+          # reports_20261016\w2l_walk_sweep\_w2l_static_pose.py). 0 =
+          # exclude L<->R leg pairs ONLY (runtime contype remask; the
+          # source aproj is a PLANAR walker with NO leg-leg contact —
+          # this is a fidelity fix toward the source, default-off).
+          legcoll=1.0,
+          # yielding virtual walker (2026-10-16 sweep): tau in s for the
+          # anchor-x EMA (see run_phase; 0 = fixed anchor = bit-identical
+          # default). The AnimatLab protocol's WalkingPath MOVES with the
+          # robot; a fixed anchor makes sustained progression impossible.
+          walker_yield=0.0,
+          # feedback-gain passthrough (2026-10-16 wean stage): build()
+          # afferent gain overrides + commissural scale. DEFAULTS = Ben's
+          # rules values (AFF_GAINS + comm 1.0), so the default build is
+          # UNCHANGED by construction (bit-exact; gate re-run post-edit).
+          # These are the knobs the curr_s6_drive_robot study tunes while
+          # the te/tf drive scale is weaned down.
+          g_heel=0.5,        # aff_heel  (heel -> InE/InF + PF-E INs)
+          g_toe_in=1.0,      # aff_toe_in  (toe SN -> toe IN)
+          g_toe_df=5.0,      # aff_toe_df  (toe IN -> TOEDF IN)
+          g_toe_df_mn=2.749, # aff_toe_df_mn (TOEDF IN -> DF MN inh)
+          g_ib=0.5,          # aff_ib    (Ib grp -> RG-E/InE/PF-E)
+          comm=1.0)          # commissural gain scale (0 = ablation)
 for arg in sys.argv[1:]:
     if arg.startswith("--") and "=" in arg:
         k, v = arg[2:].split("=", 1)
@@ -167,9 +200,29 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
     """One closed-loop ground run. kind = 'stand'|'walk'. Returns logs."""
     import build_w2l_aff_net as B
     B.SPLIT.NAP["tau_max_h"] = KV["tau"]
-    net = B.build(comm=1.0)
+    # g_* passthrough (2026-10-16 wean): defaults == AFF_GAINS/comm 1.0,
+    # so the unedited command line builds the IDENTICAL net (bit-exact).
+    net = B.build(comm=KV["comm"], alpha_l=KV["alpha_l"],
+                  alpha_r=KV["alpha_r"],
+                  gains=dict(aff_heel=KV["g_heel"],
+                             aff_toe_in=KV["g_toe_in"],
+                             aff_toe_df=KV["g_toe_df"],
+                             aff_toe_df_mn=KV["g_toe_df_mn"],
+                             aff_ib=KV["g_ib"]))
 
     m = mujoco.MjModel.from_xml_path(GROUND)
+    if KV["legcoll"] == 0:
+        # L<->R leg collision exclusion (default-off; see KV comment).
+        _L = ("femur_L", "tibia_L", "foot_L", "toe_L",
+              "toe_L_contact", "foot_L_contact")
+        _R = ("femur_R", "tibia_R", "foot_R", "toe_R",
+              "toe_R_contact", "foot_R_contact")
+        for names, ct in ((_L, 1), (_R, 2), (("Root", "ground"), 3)):
+            for nm in names:
+                gid = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_GEOM, nm)
+                if gid >= 0:
+                    m.geom_contype[gid] = ct
+                    m.geom_conaffinity[gid] = ct
     d = mujoco.MjData(m)
     m.dof_damping[:] = KV["damp"]
     m.jnt_solimp[:] = np.array([0.9, 0.99, 0.001, 0.5, 2.0])
@@ -218,6 +271,16 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
     iS2 = net.input_index("Stimulus_2")
     itE = [net.input_index(f"TONIC {s} RG ext") for s in ("L", "R")]
     itF = [net.input_index(f"TONIC {s} RG flx") for s in ("L", "R")]
+    # per-side GAMMA (RG tonic) + ALPHA (MN) resolution (defaults = the
+    # symmetric te/tf baseline, no alpha ports -> bit-identical)
+    te = (KV["te"] if not np.isfinite(KV["te_l"]) else KV["te_l"],
+          KV["te"] if not np.isfinite(KV["te_r"]) else KV["te_r"])
+    tf = (KV["tf"] if not np.isfinite(KV["tf_l"]) else KV["tf_l"],
+          KV["tf"] if not np.isfinite(KV["tf_r"]) else KV["tf_r"])
+    i_alpha = ([(net.input_index(p), KV["alpha_l"])
+                for p in net.inputs if p.startswith("ALPHA L ")] +
+               [(net.input_index(p), KV["alpha_r"])
+                for p in net.inputs if p.startswith("ALPHA R ")])
     iheel = [net.input_index(f"PORT heel {s}") for s in ("L", "R")]
     itoe = [net.input_index(f"PORT toe {s}") for s in ("L", "R")]
     iib = [net.input_index(f"PORT Ib {s}") for s in ("L", "R")]
@@ -267,12 +330,23 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
                 # stepping. (The first smoke run drove NEITHER side here
                 # — kickoff alone latches only the L RG in the split net;
                 # found in smoke 2, fixed.)
-                u[itE[0]] = u[itE[1]] = KV["te"]
+                u[itE[0]] = te[0]
+                u[itE[1]] = te[1]
             else:
                 u[iS1] = 10.0 if t < 0.01 else 0.0       # antiphase kickoff
                 u[iS2] = 10.0 if t < 0.01 else 0.0
-                u[itE[0]] = u[itE[1]] = KV["te"]
-                u[itF[0]] = u[itF[1]] = KV["tf"]
+                u[itE[0]] = te[0]
+                u[itE[1]] = te[1]
+                u[itF[0]] = tf[0]
+                u[itF[1]] = tf[1]
+            # i_a (2026-10-16 sweep fix): NEVER shadow the physics loop
+            # index i -- the audit-stage `for i, a_cur in i_alpha` rebind
+            # corrupted every even-index log entry AND silently disabled
+            # the rig anchor capture (leash/tilt never engaged in alpha
+            # runs; body drifted 11 m off-platform). alpha=0 = loop body
+            # never runs = bit-identical defaults.
+            for i_a, a_cur in i_alpha:    # per-side alpha (no-op default)
+                u[i_a] = a_cur
             # Ib group current from ipsilateral extensor muscle force
             for k, s in enumerate(("L", "R")):
                 fnorm = np.mean([max(d.actuator_force[act_ids[a]] /
@@ -305,6 +379,21 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
             d.xfrc_applied[body_root, 2] += Fz
             if anchor is not None and S_now > 0.0:
                 # leash (COM xy) + tilt assist, scaled by S (the rig)
+                if KV["walker_yield"] > 0.0 and i % NSUB == 0 and i > 0:
+                    # YIELDING VIRTUAL WALKER (default-off, 2026-10-16
+                    # sweep): Ben's AnimatLab protocol uses the MOVING
+                    # WalkingPath body as the walker; the fixed anchor
+                    # here pins the COM so sustained progression is
+                    # structurally impossible (measured: winner combo
+                    # shifts +0.10 m during the drop, then flat 22 s).
+                    # Anchor x follows a slow EMA of the COM (tau =
+                    # walker_yield s): the leash still damps FAST
+                    # deviations (the trolley has inertia) but yields
+                    # to slow step thrust. Default 0 = fixed anchor =
+                    # bit-identical.
+                    a = float(np.exp(-(NSUB * DT_PHY) / KV["walker_yield"]))
+                    anchor["com"][0] = a * anchor["com"][0] + \
+                        (1.0 - a) * float(d.subtree_com[0][0])
                 com = anchor["com"]
                 dv = d.subtree_com[0] - com
                 F = np.zeros(3)
