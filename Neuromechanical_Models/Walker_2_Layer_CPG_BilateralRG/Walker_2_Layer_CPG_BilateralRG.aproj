@@ -7248,7 +7248,7 @@
 <ZOrder>0</ZOrder>
 <Name>Heel_Ipsi_AnkMNext_Excite</Name>
 <EquilibriumPotential Value="-40" Scale="milli" Actual="-0.04"/>
-<MaxSynapticConductance Value="0.01" Scale="micro" Actual="1e-008"/>
+<MaxSynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
 <PreSynapticThreshold Value="-60" Scale="milli" Actual="-0.06"/>
 <PreSynapticSaturationLevel Value="-40" Scale="milli" Actual="-0.04"/>
 </Link>
@@ -12980,6 +12980,7 @@
 <InLinks>
 <ID>aa1aea00-6716-4c92-8af5-afa5ceccf73f</ID>
 <ID>23277baf-99d2-49e5-b602-0a5a0ec590ee</ID>
+<ID>35e70e7e-1f81-4de8-964f-dfaa6866617a</ID>
 <ID>77314e83-a277-48db-83a8-947902ccf025</ID>
 <ID>f5020126-50ff-4700-a2c4-4c7f32f70774</ID>
 <ID>8050c1ee-1cbc-4001-9ac6-2bf9d364e042</ID>
@@ -18530,6 +18531,7 @@
 <OutLinks>
 <ID>cafe0233-0000-4000-8000-900000000233</ID>
 <ID>cafe0232-0000-4000-8000-900000000232</ID>
+<ID>35e70e7e-1f81-4de8-964f-dfaa6866617a</ID>
 <ID>cafe0234-0000-4000-8000-900000000234</ID>
 <ID>cafe0235-0000-4000-8000-900000000235</ID>
 <ID>c3c2e321-3fed-42ac-adfa-75933fdc22f2</ID>
@@ -23241,6 +23243,53 @@
 <ToolTip/>
 <Url/>
 <ZOrder>0</ZOrder>
+</Link>
+<Link>
+<AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
+<ClassName>IntegrateFireGUI.DataObjects.Behavior.Synapse</ClassName>
+<ID>35e70e7e-1f81-4de8-964f-dfaa6866617a</ID>
+<AdjustDst>False</AdjustDst>
+<AdjustOrg>False</AdjustOrg>
+<ArrowDestination>
+<Style>Arrow</Style>
+<Size>Medium</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowDestination>
+<ArrowMiddle>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowMiddle>
+<ArrowOrigin>
+<Style>None</Style>
+<Size>Small</Size>
+<Angle>deg30</Angle>
+<Filled>False</Filled>
+</ArrowOrigin>
+<BackMode>Transparent</BackMode>
+<DashStyle>Solid</DashStyle>
+<DrawColor>-16777216</DrawColor>
+<DrawWidth>1</DrawWidth>
+<DestinationID>65bf92e8-ac16-4e97-9673-597b9223c141</DestinationID>
+<Font Family="Arial" Size="10" Bold="False" Underline="False" Strikeout="False" Italic="False"/>
+<Hidden>False</Hidden>
+<Jump>Arc</Jump>
+<LineStyle>Polyline</LineStyle>
+<OrthogonalDynamic>True</OrthogonalDynamic>
+<OriginID>cafe0201-0000-4000-8000-900000000201</OriginID>
+<OrientedText>True</OrientedText>
+<Selectable>True</Selectable>
+<Stretchable>True</Stretchable>
+<Text/>
+<ToolTip/>
+<Url/>
+<ZOrder>0</ZOrder>
+<SynapticTypeID>cafe0046-0000-4000-8000-900000000046</SynapticTypeID>
+<UserText/>
+<SynapticConductance Value="0.5" Scale="micro" Actual="5e-007"/>
+<ConductionDelay Value="0" Scale="milli" Actual="0"/>
 </Link>
 <Link>
 <AssemblyFile>IntegrateFireGUI.dll</AssemblyFile>
@@ -33772,8 +33821,8 @@
 <AssemblyFile>LicensedAnimatGUI.dll</AssemblyFile>
 <ClassName>LicensedAnimatGUI.Forms.Behavior.AddFlowDiagram</ClassName>
 <PageName>Neural Subsystem</PageName>
-<ZoomX>0.185046</ZoomX>
-<ZoomY>0.185046</ZoomY>
+<ZoomX>0.385046</ZoomX>
+<ZoomY>0.385046</ZoomY>
 <BackColor Red="1" Green="1" Blue="1" Alpha="1"/>
 <ShowGrid>False</ShowGrid>
 <GridColor Red="0.427451" Green="0.427451" Blue="0.427451" Alpha="1"/>
@@ -33781,7 +33830,7 @@
 <GridStyle>DottedLines</GridStyle>
 <JumpSize>Medium</JumpSize>
 <SnapToGrid>False</SnapToGrid>
-<AddFlow Nodes="160" Links="283">
+<AddFlow Nodes="160" Links="284">
   <Version>1.5.0.1</Version>
   <Node Left="2081.66138" Top="1244.56445" Width="39.4090271" Height="37.6364">
     <Shadow Style="None" Color="-16777216" Width="0" Height="0" />
@@ -39061,7 +39110,7 @@
     <DrawColor>-16777216</DrawColor>
     <TextColor>-16777216</TextColor>
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
-    <Point X="2096.2605" Y="545.222351" />
+    <Point X="2037.41882" Y="784.9711" />
     <Tag>8050c1ee-1cbc-4001-9ac6-2bf9d364e042</Tag>
   </Link>
   <Link Org="376" Dst="213">
@@ -39120,6 +39169,22 @@
     <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
     <Point X="2121.75342" Y="1490.751" />
     <Tag>9699ef3a-25bf-47ed-93cf-a34dc5ad501f</Tag>
+  </Link>
+  <Link Org="374" Dst="93">
+    <OrientedText>True</OrientedText>
+    <Line Style="Polyline" OrthogonalDynamic="True" RoundedCorner="True" />
+    <ArrowDst Head="Fork" Size="Medium" Angle="deg30" Filled="False" />
+    <ArrowOrg Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <ArrowMid Head="None" Size="Small" Angle="deg30" Filled="False" />
+    <Jump>Arc</Jump>
+    <DrawColor>-16777216</DrawColor>
+    <TextColor>-16777216</TextColor>
+    <Font Name="Arial" Size="12" Bold="False" Italic="False" Strikeout="False" Underline="False" />
+    <Point X="747.9625" Y="38.9563828" />
+    <Point X="2041.31445" Y="25.3216476" />
+    <Point X="2041.31445" Y="432.415833" />
+    <Point X="2045.21008" Y="584.345764" />
+    <Tag>35e70e7e-1f81-4de8-964f-dfaa6866617a</Tag>
   </Link>
 </AddFlow>
 </Diagram>
@@ -39440,18 +39505,18 @@
 <ToolFormID>f98e7c64-eeaa-4c3c-a4e1-a2cfce8edaee</ToolFormID>
 </ToolHolder>
 <ToolHolder>
+<ID>4c85cedd-c42d-4b6f-9656-2415ac08b926</ID>
+<Name>L CPG Charts</Name>
+<BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
+<BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
+<ToolFormID>958cf904-535f-4288-b32d-e64a64c0966c</ToolFormID>
+</ToolHolder>
+<ToolHolder>
 <ID>f4ddaac2-d760-47f2-9367-756c40f8a6de</ID>
 <Name>R Hip Sensory Motor</Name>
 <BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
 <ToolFormID>88453fb2-4b4c-4c0d-a57a-e51b4e895928</ToolFormID>
-</ToolHolder>
-<ToolHolder>
-<ID>142b2421-d466-43bc-8f10-0e98aa9e8826</ID>
-<Name>L Hip Sensory Motor</Name>
-<BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
-<BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
-<ToolFormID>2fd83016-b642-485b-8586-2800e8ebde3d</ToolFormID>
 </ToolHolder>
 <ToolHolder>
 <ID>3d082bfc-22b6-4d58-9420-38793c8d33de</ID>
@@ -39510,11 +39575,11 @@
 <ToolFormID>cf201706-8817-4d38-8a78-3b658a968b5e</ToolFormID>
 </ToolHolder>
 <ToolHolder>
-<ID>4c85cedd-c42d-4b6f-9656-2415ac08b926</ID>
-<Name>L CPG Charts</Name>
+<ID>142b2421-d466-43bc-8f10-0e98aa9e8826</ID>
+<Name>L Hip Sensory Motor</Name>
 <BaseAssemblyFile>LicensedAnimatGUI.dll</BaseAssemblyFile>
 <BaseClassName>LicensedAnimatGUI.Forms.Charts.LineChart</BaseClassName>
-<ToolFormID>958cf904-535f-4288-b32d-e64a64c0966c</ToolFormID>
+<ToolFormID>2fd83016-b642-485b-8586-2800e8ebde3d</ToolFormID>
 </ToolHolder>
 </ToolViewers>
 <Stimuli>
@@ -39565,8 +39630,8 @@
 </Stimuli>
 <HudItems>
 <HudItem>
-<Name>9f9c67f7-78e8-4136-9356-335418690fa5</Name>
-<ID>9f9c67f7-78e8-4136-9356-335418690fa5</ID>
+<Name>90a95020-dc60-4112-810c-04e339dd337e</Name>
+<ID>90a95020-dc60-4112-810c-04e339dd337e</ID>
 <Type>HudText</Type>
 <CharSize>30</CharSize>
 <Text>Time: %3.3f</Text>
@@ -39679,7 +39744,7 @@
 <DockingConfig>&lt;?xml version="1.0" encoding="us-ascii"?&gt;
 &lt;!-- DotNetMagic, The User Interface library for .NET (www.crownwood.net) --&gt;
 &lt;!-- Modifying this generated file will probably render it invalid --&gt;
-&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/17/2026 21:47:26"&gt;
+&lt;DockingConfig FormatVersion="10" InsideFill="False" InnerMinimum="20, 20" SavedAt="10/17/2026 21:55:54"&gt;
   &lt;Content Name="Toolbox" Visible="True" Docked="True" AutoHidden="True" CaptionBar="True" CloseButton="False" DisplaySize="150, 150" DisplayLocation="150, 150" AutoHideSize="150, 150" FloatingSize="150, 150" FullTitle="Toolbox" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Toolbox" UniqueName="" /&gt;
@@ -39851,7 +39916,7 @@
       &lt;Child Type="null" /&gt;
     &lt;/FloatingRestore&gt;
   &lt;/Content&gt;
-  &lt;Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="311, 150" DisplayLocation="150, 150" AutoHideSize="292, 150" FloatingSize="150, 150" FullTitle="Properties" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
+  &lt;Content Name="Properties" Visible="True" Docked="True" AutoHidden="False" CaptionBar="True" CloseButton="False" DisplaySize="297, 150" DisplayLocation="150, 150" AutoHideSize="292, 150" FloatingSize="150, 150" FullTitle="Properties" Office2003BackColor="Base" UniqueName="" Office2007BackColor="Base" MediaPlayerBackColor="Base"&gt;
     &lt;DefaultRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentState"&gt;
       &lt;Content Name="Properties" UniqueName="" /&gt;
       &lt;State Value="DockLeft" /&gt;
@@ -39870,7 +39935,7 @@
     &lt;DockingRestore Type="Crownwood.DotNetMagic.Docking.RestoreContentDockingAffinity"&gt;
       &lt;Content Name="Properties" UniqueName="" /&gt;
       &lt;State Value="DockRight" /&gt;
-      &lt;Position Size="311, 150" Location="150, 150" /&gt;
+      &lt;Position Size="297, 150" Location="150, 150" /&gt;
       &lt;Best Count="1"&gt;
         &lt;Item Name="Properties" /&gt;
       &lt;/Best&gt;
@@ -40203,7 +40268,7 @@
   &lt;CustomGlobalData /&gt;
   &lt;Sequence Count="1" Unique="0" Space="100" Direction="Horizontal"&gt;
     &lt;Leaf Count="17" Unique="3" Space="100"&gt;
-      &lt;Page Title="Sim Window" ImageList="True" ImageIndex="0" Selected="True" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Sim Window" ImageList="True" ImageIndex="0" Selected="False" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;78e624c6-9b15-44f1-a858-2d05b942ec32&lt;/ID&gt;
@@ -40229,7 +40294,7 @@
 &lt;/TabPage&gt;
 ]]&gt;&lt;/CustomPageData&gt;
       &lt;/Page&gt;
-      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="1" Selected="False" Control="null" UniqueName=""&gt;
+      &lt;Page Title="Neural Subsystem" ImageList="True" ImageIndex="1" Selected="True" Control="null" UniqueName=""&gt;
         &lt;CustomPageData&gt;&lt;![CDATA[&lt;TabPage&gt;
 &lt;Form&gt;
 &lt;ID&gt;9f6f0bf9-4697-4872-8d8a-0729c2d9f528&lt;/ID&gt;
