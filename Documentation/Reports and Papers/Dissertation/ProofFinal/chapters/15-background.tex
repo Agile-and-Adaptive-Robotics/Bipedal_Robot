@@ -1,5 +1,5 @@
 \chapter{Background}\label{ch:background}
-\graphicspath{{../Figures/15-background/}}
+\graphicspath{{../Figures/15-background/}{figs/15-background/}}
 
 This chapter reviews the established knowledge against which the dissertation's contributions are defined: biomimetic and musculoskeletal robotics, the actuation technologies available to them, the human lower-limb biomechanics they imitate, the neuroscience of locomotor control they implement, and the simulation and ethical context in which they are tested. Work from the author's own program that goes beyond this background, including the prior AnimatLab bipedal walker, the Sensory Afferent Database, and the neuromechanical simulation pipeline, is presented as dissertation work in Chapters~\ref{ch:database} and~\ref{ch:sns} rather than repeated here.
 
@@ -94,6 +94,17 @@ $k_{E}$ & \qty{0.331e-3}{\per\newton} & force-dependent reduction of usable cont
 \end{table}
 
 Festo provides a manufacturer tool, MuscleSIM, for predicting force as a function of pressure and contraction \citep{lang_robert_musclesim_2005}, but experimental comparisons indicate that it does not adequately account for variation in $l_0$ or actuator-specific contraction limits. Comparisons with experimental data indicate that none of the existing models effectively take into account differences in maximum force due to initial actuator length, and the Hunt model was taken with low external forces ($\leq$\qty{106}{\newton}), so it is unclear how well it captures actuator behavior at higher forces. Chapter~\ref{ch:muscles} compares these models with data collected for this dissertation and develops the improved characterization on which the torque and controller work of the later chapters depends.
+
+Figure~\ref{fig:bpa_graphical_abstract} summarizes the force-characterization workflow developed in this dissertation.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{00_GraphicalAbstract.png}
+% ALT TEXT: A graphical overview connects biological muscle inspiration and a
+% laboratory BPA test apparatus to measured force data and fitted force surfaces.
+\caption[Overview of the BPA force-characterization study]{Overview of the BPA force-characterization study. Biological-muscle inspiration and the laboratory test apparatus lead to measured force--length--pressure data and fitted force surfaces used for actuator and robot design.}
+\label{fig:bpa_graphical_abstract}
+\end{figure}
 
 \section{Human Lower-Limb Biomechanics}\label{sec:bg_biomechanics}
 
@@ -214,6 +225,29 @@ Three published circuits, reproduced in Figures~\ref{fig:deng_connectome}, \ref{
 \label{fig:shinohara_connectome}
 \end{figure}
 
+The two-level organization these circuits share descends from the modeling program of the Rybak group, and its foundational schematics are reproduced in Figures~\ref{fig:rybak_cpg_circuit} and~\ref{fig:shevtsova_spinal_circuit}. In the concept model of \citet{rybak_modelling_2006}, afferent feedback ascends to both the rhythm generator and the pattern-formation network, so a sensory perturbation can reset the rhythm at the generator or delete motoneuron activity at the pattern level without necessarily doing both, precisely the deletion phenomenology that motivated the two-level split. The extended model of \citet{shevtsova_modeling_2016} carries the same organization to the two-joint muscles, embedding dedicated pattern-formation populations for the bifunctional posterior biceps--semitendinosus and rectus femoris pools, and that biarticular convergence problem is the one a robot muscle routed across two joints presents to the controllers developed in this dissertation.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.55\textwidth]{rybak_cpg_circuit.pdf}
+% ALT TEXT: A three-tier schematic shows the rhythm-generator half-centers
+% above a pattern-formation network of interneuron populations that drive
+% motoneuron pools and muscles, with green afferent-feedback arrows
+% ascending to both levels.
+\caption[Rybak two-level locomotor CPG concept]{Two-level concept of the locomotor central pattern generator: a half-center rhythm generator (RG) sets the locomotor rhythm above a pattern-formation (PF) network whose interneuron populations drive synergist motoneuron pools, and afferent feedback ascends to both levels. Reproduced from \citet[Fig.~1]{rybak_modelling_2006}.}
+\label{fig:rybak_cpg_circuit}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.6\textwidth]{shevtsova_spinal_circuit.pdf}
+% ALT TEXT: A layered spinal circuit schematic shows rhythm-generator and
+% pattern-formation populations above motoneuron and Renshaw-cell pools,
+% with the two-joint-muscle extension for PBSt and RF outlined.
+\caption[Shevtsova extended CPG model with two-joint-muscle circuits]{Extended model of the locomotor CPG of \citet{shevtsova_modeling_2016}: the rhythm generator and pattern-formation network of the basic model operate above extensor and flexor motoneuron and Renshaw populations, augmented (outlined) by pattern-formation circuitry and bifunctional motoneuron pools for the two-joint muscles posterior biceps--semitendinosus (PBSt) and rectus femoris (RF). Reproduced from \citet[Fig.~5.8]{shevtsova_modeling_2016}.}
+\label{fig:shevtsova_spinal_circuit}
+\end{figure}
+
 \section{Computational Neuroscience of Locomotor Circuits}\label{sec:bg_compneuro}
 
 Computational neuroscience expresses hypotheses about locomotor circuitry as executable models. A locomotor model is a system of coupled differential equations in which every element of the schematic corresponds to an identified neural population or pathway; the wiring diagram is not an illustration of the model, it is the model. The founding hypothesis is Brown's half-center: alternating flexor and extensor activity arises from two reciprocally inhibitory central populations with opposing bias \citep{brown_intrinsic_1911}. Modern instantiations of the half-center endow each neuron with persistent sodium channels, whose slow inactivation terminates each burst so that reciprocal inhibition switches the populations without any phasic input \citep{deng_neuromechanical_2019}. Rhythmogenesis, in this tradition, is a property of the intrinsic membrane dynamics, not of a clock elsewhere in the network.
@@ -242,7 +276,7 @@ The third line, in which this dissertation sits, is biologically grounded synthe
 
 All three lines depend on a software substrate that is itself part of the method: musculoskeletal geometry too elaborate to integrate by hand, joined to neural models too large to wire by hand. The tools used in this dissertation, and the ones adjacent to it in the same ecosystem, are the following.
 
-OpenSim \citep{delp_opensim_2007, seth_opensim_2018}, distributed through the SimTK (Simulation Toolkit) repository, provides the biomechanical modeling side: musculoskeletal models with detailed bone geometry, muscle routing, and force-generating properties, along with tools for analyzing moment arms and isometric torque. These models are approximations with known limits rather than exact anatomies: muscle paths are interpolations over discrete attachment and wrapping data, and near the ends of a joint's range the routed paths of sparsely wrapped muscles can bunch up or pass through bone, an interference documented within Gait2392-derived routings themselves \citep{bolen_bipedal_2019}. Their geometry is accurate for a purpose, namely moment arms and torque predictions over the functional range of motion, and that is the standard against which the robot model of this program is compared. The same SimTK infrastructure hosts SCONE, an open-source package for predictive simulation and optimization of neuromuscular control of biological motion \citep{geijtenbeek_scone_2019}. AnimatLab \citep{cofer_animatlab_2010} provides a graphical environment in which physical bodies and synthetic neural systems are constructed and co-simulated; the AARL's prior walker (Section~\ref{sec:prior_walker}) was built in it. MuJoCo \citep{todorov_mujoco_2012} provides the physics-engine side: fast, accurate simulation of rigid-body dynamics with contacts, along with muscle-like actuators that include activation dynamics. MyoConverter bridges the biomechanical and physics-engine worlds by converting OpenSim musculoskeletal models to MuJoCo format with optimized muscle kinematics and kinetics \citep{caggiano_myosuite_2022, wang_myosim_2022}. Combined with the SNS-Toolbox's MuJoCo backend \citep{nourse_sns_2023}, these tools were used to convert the laboratory's modified OpenSim leg model to MuJoCo, couple it to a synthetic nervous system with Ia, Ib, and II proprioceptive channels plus contact sensors, and run the full neuromechanical loop faster than real time (Sections~\ref{sec:preliminary_sim_methods}--\ref{sec:preliminary_sim_results}). Simulation speed is the practical enabler: a single overnight run can sweep thousands of parameter combinations or execute hundreds of simulated gait cycles per condition, throughput that no human-subject or animal protocol could match, and that transforms lesion and stimulation studies from bespoke demonstrations into statistically powered experiments.
+OpenSim \citep{delp_opensim_2007, seth_opensim_2018}, distributed through the SimTK (Simulation Toolkit) repository, provides the biomechanical modeling side: musculoskeletal models with detailed bone geometry, muscle routing, and force-generating properties, along with tools for analyzing moment arms and isometric torque. These models are approximations with known limits rather than exact anatomies: muscle paths are interpolations over discrete attachment and wrapping data, and near the ends of a joint's range the routed paths of sparsely wrapped muscles can bunch up or pass through bone, an interference documented within Gait2392-derived routings themselves \citep{bolen_bipedal_2019}. Their geometry is accurate for a purpose, namely moment arms and torque predictions over the functional range of motion, and that is the standard against which the robot model of this program is compared. The same SimTK infrastructure hosts SCONE, an open-source package for predictive simulation and optimization of neuromuscular control of biological motion \citep{geijtenbeek_scone_2019}. AnimatLab \citep{cofer_animatlab_2010} provides a graphical environment in which physical bodies and synthetic neural systems are constructed and co-simulated; the AARL's prior walker (Section~\ref{sec:prior_walker}) was built in it. MuJoCo \citep{todorov_mujoco_2012} provides the physics-engine side: fast, accurate simulation of rigid-body dynamics with contacts, along with muscle-like actuators that include activation dynamics. MyoConverter bridges the biomechanical and physics-engine worlds by converting OpenSim musculoskeletal models to MuJoCo format with optimized muscle kinematics and kinetics \citep{caggiano_myosuite_2022, wang_myosim_2022}. Combined with the SNS-Toolbox's MuJoCo backend \citep{nourse_sns_2023}, I used these tools to convert the laboratory's modified OpenSim leg model to MuJoCo, couple it to a synthetic nervous system with Ia, Ib, and II proprioceptive channels plus contact sensors, and run the full neuromechanical loop faster than real time (Sections~\ref{sec:preliminary_sim_methods}--\ref{sec:preliminary_sim_results}). Simulation speed is the practical enabler: a single overnight run can sweep thousands of parameter combinations or execute hundreds of simulated gait cycles per condition, throughput that no human-subject or animal protocol could match, and that transforms lesion and stimulation studies from bespoke demonstrations into statistically powered experiments.
 
 \section{Testing Neuromechanical Hypotheses on Robots: The Ethical Case}\label{sec:bg_ethics}
 

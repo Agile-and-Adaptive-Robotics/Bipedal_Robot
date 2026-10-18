@@ -138,6 +138,41 @@ Call the simulated bodies **models** (human model, W2L robot model) — never "p
    committed), and the three red-marked folders `CHATGPT_staging_20260925\`,
    `Overleaf_review_20260926_yellow\`, `output\` were DELETED at Ben's same ruling
    (git-recoverable).]
+   [2026-10-17 DISSERTATION RESTRUCTURE + REVISION CAMPAIGN — the state of record.
+   ProofFinal now holds the TOPIC-CHAPTER structure (advisor C12 + Ben's rulings):
+   10-introduction, 15-background, 20-muscles (titled after Ben's Actuators 15(5):230
+   paper), 30-torque (WIP manuscript bolen_isometric_2025), 50-database, 60-sns
+   (tools-framed: goal, minimum demonstrations, stimulus/deletion experiments), 70-overall
+   ("Discussion"; future work in closing subsections), 80-conclusion, appendices 92/93/94;
+   the ankle/balance chapter was REMOVED 2026-10-16 at the advisor's in-person ruling;
+   chapters 3+4 use Methods/Results/Discussion sections. Figures = sibling
+   Figures\<chapter>\ (with Components/ + Deprecated/ subsubfolders); each chapter's
+   \graphicspath tries BOTH ../Figures/ (local) and figs/ (Overleaf names the folder
+   figs). Local build gate: MiKTeX pdflatex (full path) from ProofFinal into a build_*
+   dir (build_r4 = record at 10-17: 264 pp, 0 errors). NEVER round-trip thesis.bib
+   through default-encoding PowerShell (legacy Zotero mojibake; Latin-1 byte-safe only).
+   Standing conventions: Oxford comma; minimal em-dashes; "plant" is BANNED for the
+   robot/model; engineering diameter symbol (mathabx \diameter), not \phi; publication
+   notes scoped per chapter; Modern-Robotics notation; no machine-voiced comments in
+   .tex; no silent deletions or number changes. Campaign artifacts (comment ledger, style
+   contract, supervisor rubric, BEN_TODO, rulings, report): Documentation\Reports and
+   Papers\Dissertation\Notes\revision_campaign_20261015\ — in any dissertation session
+   READ BEN_TODO.md + Notes\DISS_STATUS.md + the newest Project_Digests\digest_*.md
+   FIRST. Cxx/Txx/Rxx = entries in CHATGPT_REPORT.md (open comments / tracked changes /
+   resolved) — always gloss them for Ben. Lesson of record: execute Ben's directives
+   VERBATIM, not interpreted; dropping existing content (even one figure block) is a
+   first-class edit that must be flagged; every revision pass ends with a build + a
+   per-directive compliance check with line evidence. DEADLINES: dissertation submission
+   2026-10-21; defense 2026-11-06. "Faster than real time" is an approved claim
+   (literature-supported, 2026-10-17). Rybak + Shevtsova pathway diagrams ARE included
+   with citation (dissertation fair use, ruled 2026-10-17). Neuromechanical modeling
+   tools to name: OpenSim (SimTK), SCONE, AnimatLab, SNS-Toolbox, MuJoCo, MyoConverter.
+   Documentation voice rule (2026-10-17): minimize AI self-narration in repo docs —
+   state what was done and when, not who-or-what did it. The HX711 app section below is
+   flagged for condensation post-submission. Dissertation plugin creation APPROVED
+   (pending, via plugin-creator). Root junk folders deleted 2026-10-17; the defense-deck
+   pipeline relocated to Documentation\...\Dissertation\Defense\deck_builder\ (was
+   .zcode_tmp).]
 2. Design and control of bipedal humanoid robot legs with artificial muscles (PAMs/BPAs)
    controlled by a synthetic nervous system. Lab: AARL (Agile and Adaptive Robotics Lab), PSU.
 3. **Xi-correction-factor program** — run minimizers against pinned-knee test data in
