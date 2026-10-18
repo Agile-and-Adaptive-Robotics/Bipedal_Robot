@@ -1,0 +1,347 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is just an example/guide for you to refer to when producing your supplementary material for your Frontiers article.                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Version 2.5 Generated 2018/06/15 %%%
+%%% You will need to have the following packages installed: datetime, fmtcount, etoolbox, fcprefix, which are normally inlcuded in WinEdt. %%%
+%%% In http://www.ctan.org/ you can find the packages and how to install them, if necessary. %%%
+%%%  NB logo1.jpg is required in the path in order to correctly compile front page header %%%
+
+\documentclass[utf8]{frontiers_suppmat} % for all articles
+\usepackage{amssymb}
+\usepackage{amsmath, bm}
+\usepackage{siunitx}
+\usepackage{url,hyperref,lineno,microtype}
+\let\DeclareUSUnit\DeclareSIUnit
+\let\US\SI
+\DeclareUSUnit\inch{in}
+\DeclareUSUnit\inch{in}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage[onehalfspacing]{setspace}
+\renewcommand{\arraystretch}{1.5}  % Increase row height (default is 1.0)
+%\linenumbers
+
+% Leave a blank line between paragraphs instead of using \\
+
+\begin{document}
+\onecolumn
+\firstpage{1}
+\title[Supplementary Material]{{\helveticaitalic{Supplementary Material}}}
+\maketitle
+
+\section{Supplementary Methods and Materials}
+
+% \subsection{Moment and Torque calculations}
+
+
+
+% The analysis presented here is based on physiology that is displayed in the OpenSim model gait2392. OpenSim is a platform in which researchers can explore the human musculoskeletal structure. Gait2392 is a human model of the lower torso and legs, and includes 92 muscle-actuators that represent 72 human muscles. These actuators are displayed as straight line segments that start at an origin point and end at an insertion point, with many actuators including via or wrapping points in between the origin and insertion which capture the changing direction of muscles in the human body without curving the muscles themselves. 
+
+
+% \subsubsection{Vector Analysis of Moment Arms}
+% The calculation of a moment arm $\Vec{ma}$ of a muscle that passes over a joint was done by using vector analysis and transformation matrices. The transformation matrices will be discussed in the next section. In this section, we will explore a vector algorithm that will be able to calculate the length and direction of a moment arm in the coordinate frame of a joint. 
+
+% A moment arm is the vector that begins at the origin of a body reference frame $\Vec{b}$ and goes to the force vector $\Vec{F}$. The moment arm is orthogonal to the force vector. When the moment arm is crossed with a force vector, a torque is produced. If we know the spatial coordinates of the reference frame as well as two points that define the line of action of the force vector, we can derive the moment arm to that vector. 
+
+% \subsubsection{Transformation Matrices}
+% Muscles generate torque by contracting about a joint. Because a muscle has complicated geometry, calculating the torque about a joint can be simplified by creating one or more linear approximations for the muscle geometry as it passes over joints. OpenSim \citep{delp_interactive_1990,seth_opensim_2011,seth_opensim_2018} provides the linear approximations of the muscles by listing origin points, attachment points, and wrapping or via points. Each of these points are given coordinates within a joint reference frame and are connected to one another with straight lines.
+
+% Since muscles have points along their geometric path that reside in two or more reference frames, it is important to determine the orientation and spatial distance between each of these reference frames in order to accurately calculate the moment arm. With this in mind, each joint reference frame is prescribed a transformation matrix that relates it to its parent reference frame, or the reference frame of the joint that precedes it in the path of the muscle.
+
+% \begin{equation}
+%     \Vec{p}_{knee} = \Vec{p}_{hk} = [p_{x}(\theta_k) \quad  p_{y}(\theta_k)  \quad p_{z}] \label{eq:joint_loc}
+% \end{equation}
+
+% It can be helpful to write $\Vec{p}_{knee}$ as $\Vec{p}_{hk}$ to emphasize that knee point $k$ is being described in the reference frame of the hip $h$.
+
+% In order to construct a transformation matrix, we first need to calculate the rotation matrix of a frame. A rotation matrix requires knowledge about how the axes of a coordinate frame has rotated away from it origin or home position. The home position of the OpenSim model has all of the coordinate frames in the same orientation, meaning there is no rotation along any of the axes. The axes all list the x axis as pointing along the anterior direction away from the model within the saggital plane and parallel to the ground. The y axis points in the superior direction, within the saggital plane, orthogonal to the ground. The z axis points laterally along the horizontal plane, orthogonal to the x and y axis, and parallel to the ground %\ref{fig:RobotSim_frames}.
+
+%\begin{figure}[htbp]
+%\begin{center}
+%\includegraphics[width=0.95\textwidth]{Figures/RobotSim_frames.pdf}
+%\end{center}
+%\caption{Refernce frames for Gait2392 in \textbf{(A)} home position and \textbf{(B)} flexed ($\theta=\ang{-120}$). Frames for biomimetic robot knee in \textbf{(C)} home position and \textbf{(D)} flexed ($\theta=\ang{-120}$). Coordinate directions are: $\hat{x}$ in red, $\hat{y}$ in green, and $\hat{z}$ in blue. Spatial frame is ${s}$ and body frame is ${b}$. For \textbf{(A)} and \textbf{(B)}: black arrows point to the tibia reference frame as defined by OpenSim, yellow arrows point to the actual ICR (the tibial-femoral contact point), the large axes are general space frames, and the small axes represent body frames for the hip {h} and knee {k}. For \textbf{(C)} and \textbf{(D)}: black arrows point to the tibia reference frame as arbitrarily defined by us ($\Vec{p}_{k}$ is at $\theta_{3}$ (see \citep{steele_development_2017} for details) when knee angle $\theta_{k}=0$ and follows a similar path to the Gait2392 model), yellow arrows point to the actual ICR (intersection point of the two links).}\label{fig:RobotSim_frames}
+%\end{figure}
+
+
+
+% \begin{equation}
+%         \bm{R}_{\hat{z}} = \begin{bmatrix}
+%                 \cos\theta_k && -\sin\theta_k && 0\\
+%                 \sin\theta_k && cos\theta_k && 0\\
+%                 0 && 0 && 1\\
+%             \end{bmatrix} \label{eq:Rot_z}
+% \end{equation}
+
+% Combining \ref{eq:joint_loc} and \ref{eq:Rot_z} in a 4x4 matrix creates the homogeneous transformation matrix.
+
+% \begin{equation}
+%     \bm{T}_{k} =  \bm{T}_{hk} = \begin{bmatrix}
+%             \cos\theta_k && -\sin\theta_k && 0 && p_{x}\\
+%             \sin\theta_k &&  \cos\theta_k && 0 && p_{y}\\
+%             0         && 0          && 0 && p_{z}\\
+%             0 && 0 && 0 && 1
+%         \end{bmatrix} \label{eq:trans_mat}
+% \end{equation}
+
+% The inverse homogeneous transformation matrix translates points from the $h$ frame to the $k$
+
+% \begin{equation}
+%     \bm{T}_{k}^{-1} = {\bm{T}_{hk}}^{-1} = \bm{T}_{kh}
+% \end{equation} \label{eq:invs_trans}
+
+% These calculations were moved into Matlab as described by Bolen \citep{bolen_determination_2019}, and further improved by Morrow \citep{morrow_optimization_2020}. Optimization was used for the placement for artificial muscle
+
+% \subsubsection{System compliance modeling}
+% We define:
+
+% \begin{align*}
+% \mathbf{p}_0 &= \text{original bracket point (given)} \\
+% \mathbf{p}_A &= \text{target point that defines the general } x' \text{ direction} \\
+% \mathbf{y}_0 &= \text{reference point used to define the general } y' \text{ direction} \\
+% \mathbf{z}_0 &= \text{reference point used to define the general } z' \text{ direction}
+% \end{align*}
+
+% We first compute the unit direction vectors:
+
+% \begin{align*}
+% \hat{\mathbf{z}}' &= \frac{\mathbf{p}_0 - \mathbf{z}_0}{\|\mathbf{p}_0 - \mathbf{z}_0\|} \\
+% \hat{\mathbf{y}}' &= \frac{\mathbf{p}_0 - \mathbf{y}_0}{\|\mathbf{p}_0 - \mathbf{y}_0\|}
+% \end{align*}
+
+% Let:
+% \[
+% \mathbf{v} = \mathbf{p}_A - \mathbf{p}_0
+% \]
+
+% To ensure the new origin lies in the \( x'y' \)-plane (i.e., \( \mathbf{v} \cdot \hat{\mathbf{z}}' = 0 \)), we compute the scalar offset:
+
+% \[
+% \lambda = -(\mathbf{v} \cdot \hat{\mathbf{z}}')
+% \]
+
+% Then the new origin, denoted \( \mathbf{p}_{\text{Br}} \), is:
+
+% \[
+% \mathbf{p}_{\text{Br}} = \mathbf{p}_0 + \lambda \cdot \hat{\mathbf{z}}'
+% \]
+
+% Finally, we construct an orthonormal right-handed frame:
+
+% \begin{align*}
+% \hat{\mathbf{x}}' &= \frac{(\mathbf{p}_A - \mathbf{p}_{\text{Br}}) - ((\mathbf{p}_A - \mathbf{p}_{\text{Br}}) \cdot \hat{\mathbf{z}}') \cdot \hat{\mathbf{z}}'}{\left\|(\mathbf{p}_A - \mathbf{p}_{\text{Br}}) - ((\mathbf{p}_A - \mathbf{p}_{\text{Br}}) \cdot \hat{\mathbf{z}}') \cdot \hat{\mathbf{z}}'\right\|} \\
+% \hat{\mathbf{y}}' &= \hat{\mathbf{z}}' \times \hat{\mathbf{x}}'
+% \end{align*}
+
+% Assembling the rotation matrix \( \mathbf{R} \in \mathbb{R}^{3 \times 3} \), with columns \( \hat{\mathbf{x}}', \hat{\mathbf{y}}', \hat{\mathbf{z}}' \), gives:
+
+% \[
+% \mathbf{R} = \begin{bmatrix}
+% | & | & | \\
+% \hat{\mathbf{x}}' & \hat{\mathbf{y}}' & \hat{\mathbf{z}}' \\
+% | & | & |
+% \end{bmatrix}
+% \]
+
+
+%\section{Supplementary Data}
+
+% Material should be uploaded separately on submission. Please include any supplementary data, figures and/or tables. All supplementary files are deposited to FigShare for permanent storage and receive a DOI.
+
+%Supplementary material is not typeset so please ensure that all information is clearly presented, the appropriate caption is included in the file and not in the manuscript, and that the style conforms to the rest of the article. To avoid discrepancies between the published article and the supplementary material, please do not add the title, author list, affiliations or correspondence in the supplementary files.
+
+\section{Supplementary Tables and Figures}
+
+\subsection{Tables}
+
+\begin{table}[htbp]
+\caption{Comparison of pre- and post-optimization torque prediction fits for BPAs in flexor and extensor configurations on the pinned and biomimetic knees. GoF metrics are RMSE ($N \cdot m$), FVU, and maximum residual ($N \cdot m$).}
+\label{tab:TorqueFit}
+\resizebox{\textwidth}{!}
+{%
+\begin{tabular}{|cc|l|l|lll|lll|}
+\hline
+\multicolumn{2}{|l|}{\multirow{2}{*}{\textbf{Configuration}}} &
+  \multirow{2}{*}{\textbf{\phi}} &
+  \multirow{2}{*}{\textbf{l_{rest}, cm}} &
+  \multicolumn{3}{c|}{\textbf{Pre-optimization}} &
+  \multicolumn{3}{c|}{\textbf{Optimized}} \\ \cline{5-10} 
+\multicolumn{2}{|l|}{} &
+   &
+   &
+  \multicolumn{1}{l|}{\textbf{RMSE}} &
+  \multicolumn{1}{l|}{\textbf{FVU}} &
+  \textbf{Max. Residual} &
+  \multicolumn{1}{l|}{\textbf{RMSE}} &
+  \multicolumn{1}{l|}{\textbf{FVU}} &
+  \textbf{Max. Residual} \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{Flexor}}} &
+  \multirow{2}{*}{\textbf{Pinned}} &
+  10 &
+  48.5 &
+  \multicolumn{1}{l|}{4.871} &
+  \multicolumn{1}{l|}{0.723} &
+  9.865 &
+  \multicolumn{1}{l|}{1.608} &
+  \multicolumn{1}{l|}{0.095} &
+  3.242 \\ \cline{3-10} 
+\multicolumn{1}{|c|}{} &
+   &
+  10 &
+  45.7 &
+  \multicolumn{1}{l|}{3.024} &
+  \multicolumn{1}{l|}{0.163} &
+  6.753 &
+  \multicolumn{1}{l|}{1.915} &
+  \multicolumn{1}{l|}{0.072} &
+  4.695 \\ \cline{2-10} 
+\multicolumn{1}{|c|}{} &
+  \multirow{2}{*}{\textbf{Biomimetic}} &
+  10 &
+  41.5 &
+  \multicolumn{1}{l|}{7.448} &
+  \multicolumn{1}{l|}{5.557} &
+  13.308 &
+  \multicolumn{1}{l|}{0.680} &
+  \multicolumn{1}{l|}{0.052} &
+  1.055 \\ \cline{3-10} 
+\multicolumn{1}{|c|}{} &
+   &
+  20 &
+  41.5 &
+  \multicolumn{1}{l|}{14.803} &
+  \multicolumn{1}{l|}{3.366} &
+  23.715 &
+  \multicolumn{1}{l|}{2.868} &
+  \multicolumn{1}{l|}{0.126} &
+  3.550 \\ \hline
+\multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{Extensor}}} &
+  \multirow{3}{*}{\textbf{Pinned}} &
+  10 &
+  41.5 &
+  \multicolumn{1}{l|}{4.520} &
+  \multicolumn{1}{l|}{3.972} &
+  11.741 &
+  \multicolumn{1}{l|}{2.042} &
+  \multicolumn{1}{l|}{0.844} &
+  3.588 \\ \cline{3-10} 
+\multicolumn{1}{|c|}{} &
+   &
+  10 &
+  45.7 &
+  \multicolumn{1}{l|}{1.999} &
+  \multicolumn{1}{l|}{0.892} &
+  4.609 &
+  \multicolumn{1}{l|}{0.896} &
+  \multicolumn{1}{l|}{0.179} &
+  1.846 \\ \cline{3-10} 
+\multicolumn{1}{|c|}{} &
+   &
+  10 &
+  48 &
+  \multicolumn{1}{l|}{0.845} &
+  \multicolumn{1}{l|}{0.232} &
+  1.951 &
+  \multicolumn{1}{l|}{0.682} &
+  \multicolumn{1}{l|}{0.151} &
+  2.068 \\ \cline{2-10} 
+\multicolumn{1}{|c|}{} &
+  \multicolumn{1}{l|}{\textbf{Biomimetic}} &
+  10 &
+  51.8 &
+  \multicolumn{1}{l|}{3.032} &
+  \multicolumn{1}{l|}{4.486} &
+  5.587 &
+  \multicolumn{1}{l|}{1.461} &
+  \multicolumn{1}{l|}{1.041} &
+  2.755 \\ \hline
+\end{tabular}
+}
+\end{table}
+
+%For more information on Supplementary Material and for details on the different file types accepted, please see \href{http://home.frontiersin.org/about/author-guidelines#SupplementaryMaterial}{the Supplementary Material section} of the Author Guidelines.
+
+%Figures, tables, and images will be published under a Creative Commons CC-BY licence and permission must be obtained for use of copyrighted material from other sources (including re-published/adapted/modified/partial figures and images from the internet). It is the responsibility of the authors to acquire the licenses, to follow any citation instructions requested by third-party rights holders, and cover any supplementary charges.
+
+%% Figures, tables, and images will be published under a Creative Commons CC-BY licence and permission must be obtained for use of copyrighted material from other sources (including re-published/adapted/modified/partial figures and images from the internet). It is the responsibility of the authors to acquire the licenses, to follow any citation instructions requested by third-party rights holders, and cover any supplementary charges.
+
+\begin{table}[htbp]
+\caption{Muscle origin and insertion locations for different models. Origin is in femur reference frame, insertion is in the tibia reference frame.}
+\label{table:muscle_attachment}
+\centering
+\begin{tabular}{||l l l r r r||} 
+ \hline
+ Muscle & Origin/Insertion & Model & X (m) & Y (m) & Z (m)  \\ [0.5ex] 
+ \hline\hline
+ Flexor & origin & Pinned knee & -0.075 & 0.100 & 0.0328 \\
+ Flexor & insertion & Pinned knee & -0.05011 & -0.045 & 0.0326 \\
+ Extensor & origin & Pinned knee & 0.030 & -0.050 & 0 \\
+ Extensor & insertion & Pinned knee & 0.0425 & -0.076 & 0 \\  
+ Bifemsh & origin & Gait2392 & 0.005 & -0.211 & 0.023 \\
+ Bifemsh & insertion & Gait2392 & -0.03 & -0.036 & 0.029 \\
+ Vastus int. & origin & Gait2392 & 0.029 & -0.192 & 0.031 \\
+ Vastus int. & insertion & Gait2392 & moving & moving & 0.0018 \\  
+ Flexor, \qty{10}{\milli\metre} & origin & Biomimetic knee & -0.050 & -0.045 & 0.0328 \\
+ Flexor, \qty{10}{\milli\metre} & insertion & Biomimetic knee  & -0.0279 & -0.046 & 0.0328 \\
+ Extensor, \qty{10}{\milli\metre} & origin & Biomimetic knee  & 0.040 & 0.035 & 0 \\
+ Extensor, \qty{10}{\milli\metre} & insertion & Biomimetic knee  & 0.021 & -0.072 & 0 \\
+ Flexor, \qty{20}{\milli\metre} & origin & Biomimetic knee  & -0.050 & -0.045 & 0.0328  \\
+ Flexor, \qty{20}{\milli\metre} & insertion & Biomimetic knee  & -0.0279 & -0.046 & 0.0328 \\
+ % Extensor, \qty{40}{\milli\metre} & origin & Biomimetic knee  & 0.040 & 0.035 & 0 \\
+ % Extensor, \qty{40}{\milli\metre} & insertion & Biomimetic knee & 0.022 & -0.072 & 0 \\ [1ex] 
+ \hline
+\end{tabular}
+\end{table}
+
+\clearpage
+
+\subsection{Figures}
+
+%%% There is no need for adding the file termination, as long as you indicate where the file is saved. In the examples below the files (logo1.eps and logos.eps) are in the Frontiers LaTeX folder
+%%% If using *.tif files convert them to .jpg or .png
+%%%  NB logo1.eps is required in the path in order to correctly compile front page header %%%
+
+%\begin{figure}[h]
+%\begin{center}
+%\begin{turn}{-90}
+%\includegraphics[width=10cm]{Figures/LoadCellCalibration.png}
+%\end{turn}
+%\end{center}
+%\caption{Load cell calibration procedure. Weight was hung with no weight to find zero offset. Weight was then hung on the load cell to find the calibration factor (shown). Then the weight was changed to verify that the scale was reading correctly. Finally, load cell was installed horizontally on the swing arm and a new zero factor was determined.}\label{fig:LoadCellCalibration}
+%\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1\textwidth]{Figures/extensor_misalign.png}\label{fig:extensor_misalign}
+\end{center}
+\caption{During extensor tests with the pinned knee using a tendon it was noticed that the actuator pathway was modeled to be anterior of the socket head cap screw that joins the femur body to the knee assembly. This slippage affects the muscle path and the moment arm. It was determined this caused a \qty{\pm20}{\milli\metre} $\hat{z}$ axis displacement. Test assembly is shown with \textbf{(A)} top down view and  \textbf{(B)} side view.}
+\label{fig:extensor_misalign}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{Figures/KneeExt_10mm_passthru.png}
+\end{center}
+\caption{Biomimetic 2-DoF robot leg installed in the extensor test configuration. Note how the BPA passes through the femoral condyle.}\label{fig:passThru}
+\end{figure}
+
+
+
+%%% If you are submitting a figure with subfigures please combine these into one image file with part labels integrated.
+%%% If you don't add the figures in the LaTeX files, please upload them when submitting the article.
+%%% Frontiers will add the figures at the end of the provisional pdf automatically
+%%% The use of LaTeX coding to draw Diagrams/Figures/Structures should be avoided. They should be external callouts including graphics.
+
+
+%\bibliographystyle{Frontiers-Harvard} %  Many Frontiers journals use the Harvard referencing system (Author-date), to find the style and resources for the journal you are submitting to see \href{https://zendesk.frontiersin.org/hc/en-us/articles/360017860337-Frontiers-Reference-Styles-by-Journal}{Frontiers Reference Styles by Journal}. For Humanities and Social Sciences articles please include page numbers in the in-text citations 
+%\bibliographystyle{Frontiers-Vancouver} % Many Frontiers journals use the numbered referencing system, to find the style and resources for the journal you are submitting to see \href{https://zendesk.frontiersin.org/hc/en-us/articles/360017860337-Frontiers-Reference-Styles-by-Journal}{Frontiers Reference Styles by Journal}.
+
+\bibliography{BolenFrontiers22}
+
+\end{document}

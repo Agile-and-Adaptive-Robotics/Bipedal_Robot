@@ -1,0 +1,53 @@
+\section{Results}\label{sec:results_torque}
+
+With the actuator force model characterized at the actuator level, we applied the same model to predict isometric torque about the knee on both test stands (Section~\ref{sec:robot_model}). In every configuration, the measured torque is compared against three predictions: the original rigid-body torque model, the improved BPA force characterization applied to the rigid kinematics, and the corrected torque model of Section~\ref{sec:improved_model} at its identified terms. The hybrid torque calculation (Section~\ref{sec:hybrid_method}) replaces the modeled muscle length and moment arm with their measured counterparts, which isolates kinematic error from force error. The coefficients quoted in this section are the initial single-bracket identification of Section~\ref{sec:identification}; the adopted two-stage values are reported in the Discussion.
+
+\subsection{Flexor on Pin Joint}
+
+Figure~\ref{fig:FlxPin_group} shows the measured flexor torque on the pinned knee next to the prediction series. The original rigid-body model and the improved BPA characterization alone overpredicted the measured torque at every joint angle, although the characterization alone performed slightly better (Figure~\ref{fig:FlxPin_group}\textbf{A,B}). The hybrid calculation reproduced the measurements closely, which localizes the misprediction to the modeled kinematics, the muscle length $l_\text{m}$ and the moment arm $r$, rather than to the force model.
+
+The initial identification, fitted on the $l_{0}=\qty{48.5}{\cm}$ test, yielded a length offset $\chi_{0} = \qty{11.9}{\mm}$ and effective stiffnesses $\chi_{1} = \qty{102}{\kilo\newton\per\meter}$ and $\chi_{2} = \qty{10.6}{\kilo\newton\per\meter}$. The corrected model at these terms followed the measured torque across the range of motion, including the loss of torque near full extension that the rigid-body prediction did not produce (Figure~\ref{fig:FlxPin_group}\textbf{C}). The $l_{0}=\qty{45.7}{\cm}$ actuator, configured to operate over a different joint range of motion, served as the validation test (Figure~\ref{fig:FlxPin_group}\textbf{D}); the corrected prediction reproduced the measured torque there without refitting. At these initial terms, the corrected prediction for the fitting test had a root-mean-square error (RMSE) of \qty{1.616}{\newton\meter}, a fraction of variance unexplained (FVU) of 0.0958, and a maximum absolute residual of \qty{3.2527}{\newton\meter}; validation on the held-out actuator gave \qty{2.1214}{\newton\meter}, 0.0878, and \qty{5.1690}{\newton\meter}, respectively.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{Figures/FlxPin_group.eps}
+\end{center}
+\caption{Pinned-knee torque versus knee angle for the flexor BPAs. Knee angle is negative in flexion, and flexion torque is negative. Indigo filled circles are experimentally measured torque; gold circles are the hybrid calculation, which combines the measured muscle length and moment arm with the modeled force; the gray dashed line is the original rigid-body prediction; the light orange line is the improved BPA characterization on the rigid kinematics; the magenta line is the corrected model at the identified terms. Column titles identify the fitting test (\textbf{A}, \textbf{C}; $l_{0}=\qty{48.5}{\cm}$) and the validation test (\textbf{B}, \textbf{D}; $l_{0}=\qty{45.7}{\cm}$). The top row shows the pre-optimization series, and the bottom row compares the measured torque with the characterization-only and corrected predictions. Legends are given in panels \textbf{B} and \textbf{D}.}\label{fig:FlxPin_group}
+\end{figure}
+
+\subsection{Extensor on Pin Joint}
+
+For the extensor on the pinned knee (Figure~\ref{fig:ExtPin_group}), the measured torque lay slightly above the original prediction for the $l_{0}=\qty{48.0}{\cm}$ actuator, slightly below it for the $l_{0}=\qty{45.7}{\cm}$ actuator, and well below it for the $l_{0}=\qty{41.5}{\cm}$ actuator. Two features of these data shaped the extensor identification. First, the measured torque crossed zero at a more extended angle than the prediction, indicating a length offset opposite in sign to the flexor offset. Second, on the $l_{0}=\qty{45.7}{\cm}$ test the hybrid calculation tracked the original prediction closely while the measured torque diverged from both, and the divergence grew with torque as the actuator wrapped over the joint.
+
+The stiffness pair was held at the flexor-identified values, and the identification, fitted with the $l_{0}=\qty{41.5}{\cm}$ actuator held out for validation, added two extensor-specific terms: $\chi_{0} = \qty{-10.9}{\mm}$ and $\chi_{3} = 0.123$. The extensor length offset is close to the flexor offset in magnitude and opposite in sign. The corrected prediction against the measured series is shown for all three tests in Figure~\ref{fig:ExtPin_group}.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{Figures/ExtPin_group.eps}
+\end{center}
+\caption{Pinned-knee torque versus knee angle for the extensor BPAs. Knee angle is negative in flexion, and extension torque is positive. Indigo filled circles are experimentally measured torque; gold circles are the hybrid calculation; the gray dashed line is the original rigid-body prediction; the magenta line is the corrected model with the extensor-specific terms $(\chi_{0}, \chi_{3})$ on the flexor-identified stiffness pair. Panels show tests at $l_{0}=\qty{48.0}{\cm}$ \textbf{(A)}, $l_{0}=\qty{45.7}{\cm}$ \textbf{(B)}, and $l_{0}=\qty{41.5}{\cm}$ \textbf{(C)}.}\label{fig:ExtPin_group}
+\end{figure}
+
+\subsection{Extensor on Biomimetic Knee}
+
+We tested the extensor configuration on the biomimetic knee with a $\diameter$\qty{10}{\mm} BPA at $l_{0}=\qty{51.8}{\cm}$. The measured torque fell well below both the original prediction and the hybrid calculation (Figure~\ref{fig:Ext10mm_52cm}). Applying the extensor terms identified on the pinned knee improved the prediction: at the initial terms, the corrected model reached an RMSE of \qty{0.8920}{\newton\meter}, an FVU of 0.3396, and a maximum absolute residual of \qty{1.4188}{\newton\meter}. On this configuration the actuator path passes between the femoral condyles close to the instantaneous center of rotation, a geometry that is difficult to represent with the modeled path (Supplementary Figure~\ref{fig:passThru}).
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{Figures/Ext10mm_52cm.eps}
+\end{center}
+\caption{Biomimetic-knee torque versus knee angle for the $\diameter$\qty{10}{\mm}, $l_{0}=\qty{51.8}{\cm}$ extensor BPA. Knee angle is negative in flexion, and extension torque is positive. Indigo filled circles are experimentally measured torque; gold circles are the hybrid calculation; the gray dashed line is the original rigid-body prediction; the magenta line is the corrected model using the extensor terms identified on the pinned knee.}\label{fig:Ext10mm_52cm}
+\end{figure}
+
+\subsection{Flexor on Biomimetic Knee}
+
+Figure~\ref{fig:FlxGrp} shows the biomimetic-knee flexor measurements with the flexor terms carried over unchanged from the pinned-knee identification. Panel \textbf{A} presents the $\diameter$\qty{10}{\mm} actuator at $l_{0}=\qty{41.5}{\cm}$ with a \qty{21}{\mm} artificial tendon ($\diameter$\qty{1.5}{\mm} bicycle brake cable wrapped four times), pressurized to \qty{604}{\kPa}; the corrected model reached an RMSE of \qty{0.3007}{\newton\meter}, an FVU of 0.0102, and a maximum absolute residual of \qty{0.4647}{\newton\meter}. Panel \textbf{B} presents the $\diameter$\qty{20}{\mm} actuator at $l_{0}=\qty{42.0}{\cm}$ with a \qty{15}{\mm} artificial tendon (wrapped six times) at \qty{620}{\kPa}, for which the corrected model reached an RMSE of \qty{1.8024}{\newton\meter}, an FVU of 0.0499, and a maximum absolute residual of \qty{3.5678}{\newton\meter}.
+
+The single-actuator torque did not exceed the magnitude of the maximum human isometric torque \citep{delp_interactive_1990,seth_opensim_2018} between \ang{60} and \ang{100} of knee flexion; within a $\pm 20\%$ band about the human mean, it fell short of human-level torque between \ang{78} and \ang{103} of flexion. Because pressurizing the actuator to \qty{620}{\kPa} would load the printed femur beyond its ultimate strength, we also recorded single points at the reduced pressures \qtylist{560;421;325;281}{\kPa}, which show that the desired range of motion is achievable at reduced pressure. This shortfall in flexion torque defines the target that the attachment-route redesign reported in the Discussion addresses.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1.0\textwidth]{Figures/FlxGrp.eps}
+\end{center}
+\caption{Biomimetic-knee torque versus knee angle for the flexor BPAs. Knee angle is negative in flexion, and flexion torque is negative. \textbf{(A)} $\diameter$\qty{10}{\mm}, $l_{0}=\qty{41.5}{\cm}$ actuator with a \qty{21}{\mm} artificial tendon at \qty{604}{\kPa}. \textbf{(B)} $\diameter$\qty{20}{\mm}, $l_{0}=\qty{42.0}{\cm}$ actuator with a \qty{15}{\mm} artificial tendon at \qty{620}{\kPa}. Indigo filled circles are measured torque; the magenta line is the corrected model using the flexor terms identified on the pinned knee; the dashed light orange line is the improved BPA characterization alone. In \textbf{(B)}, the black dotted line is the maximum human isometric torque, and the pink circles are measured points at the reduced pressures \qtylist{560;421;325;281}{\kPa}, recorded because full pressure would load the printed femur beyond its ultimate strength.}\label{fig:FlxGrp}
+\end{figure}

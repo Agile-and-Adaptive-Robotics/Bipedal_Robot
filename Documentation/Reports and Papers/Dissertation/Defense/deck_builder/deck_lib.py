@@ -28,7 +28,7 @@ FONT = "Calibri"
 W, H = 13.333, 7.5
 MX = 0.55
 
-ASSETS = r"D:\GitHub\Bipedal_Robot\.zcode_tmp\deck_assets"
+ASSETS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "deck_assets")
 FIG = os.path.join(ASSETS, "figs")
 EQ  = os.path.join(ASSETS, "eqs")
 MEDIA = os.path.join(ASSETS, "talk_media")

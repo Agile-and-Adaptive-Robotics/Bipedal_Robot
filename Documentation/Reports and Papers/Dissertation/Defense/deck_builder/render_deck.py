@@ -1,8 +1,8 @@
 import os, sys
 import win32com.client
 
-PPTX = r"D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Bolen_Dissertation_Defense_20260910.pptx"
-OUT = r"D:\GitHub\Bipedal_Robot\.zcode_tmp\deck_render"
+PPTX = r"D:\GitHub\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Defense\Bolen_Dissertation_Defense.pptx"
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "deck_render")
 os.makedirs(OUT, exist_ok=True)
 for f in os.listdir(OUT):
     os.remove(os.path.join(OUT, f))

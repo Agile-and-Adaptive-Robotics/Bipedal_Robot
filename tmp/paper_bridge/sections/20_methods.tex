@@ -1,0 +1,246 @@
+% ============================================================================
+% 20_methods.tex - Methods and Materials fragment (body content only).
+% Paper: "Design Factors for Isometric Robotic Knee Torque Using Braided
+% Pneumatic Actuators" (Frontiers in AI and Robotics).
+%
+% Assembler notes:
+%   * Requires \usepackage{mathabx} in the preamble for \diameter (currently
+%     missing from Main.tex; flagged in the bridge plan).
+%   * Figures referenced: Figures/testJigs.pdf, Figures/KneeICR.eps,
+%     Figures/xiFrameTransform.pdf (NEW to ProofFinal/Figures; staged by the
+%     figures agent as a renamed copy of the dissertation figure),
+%     Figures/bktFrame.pdf.
+%   * Equation/figure labels reuse the names already current in Main.tex and
+%     the dissertation chapter, so the equations migrating out of Results
+%     retire cleanly. Subsection labels mirror the chapter's label names.
+%   * siunitx v3 macro names (\qty, \qtylist, \qtyrange, \si) are used,
+%     consistent with Main.tex's existing \qty/\qtylist usage.
+%   * The wrapping-loss complement symbol is \zeta (= 1 - \varepsilon^*),
+%     replacing the old draft's \xi; Results/Discussion fragments must match.
+%   * Solver naming follows the plan's fallback for the missing algorithm
+%     citations: generic algorithm names plus the existing MATLAB RRID
+%     (see the missingCitations report of this fragment).
+%   * Prose lands at ~2,550 words vs the plan's ~1,300 Methods target. The
+%     surplus is structural: 23 equations carrying Actuators-Pattern-B
+%     where-clauses (~600 words) plus the identification and redesign
+%     procedure subsections the plan assigns here. Flagged for the
+%     assembler: keeping every section-2 mandate has a floor near 2,000
+%     words, so holding the 7,000-word body ceiling needs a trade against
+%     Results/Discussion or a Ben ruling on what to drop.
+% ============================================================================
+
+\section{Methods and Materials}\label{sec:methods}
+
+\subsection{Overview}
+
+Isometric knee torque is the product of the force an actuator develops and the moment arm of its line of action about the joint axis, and the force itself is set by the actuator's effective length through the force model. Each link in that chain is a design quantity: the attachment routing fixes the moment arm, the resting length and attachment compliance set the effective contraction, and wrapping over the joint removes usable length. We built two knee test stands, measured isometric torque across each joint's range of motion with \qtylist{10;20}{\mm} Festo braided pneumatic actuators (BPAs) in flexor and extensor configurations, and compared the measurements against the original rigid-body model, the improved actuator force characterization alone, and the corrected model developed here. A hybrid calculation isolated the error sources, a multiobjective identification produced the correction terms, and the corrected model then drove a redesign of the attachment routes against human isometric torque targets.
+
+\subsection{Actuator Force Model}\label{sec:force_model}
+
+The actuator force model is fully described in \citet{bolen_2026} and is reproduced here only as far as the torque model requires. The contraction $\varepsilon$ of a BPA is
+\begin{equation}
+    {\varepsilon} = \frac{(l_{0}-l_\text{m})}{l_{0}} \label{eq:strain}
+\end{equation}
+where $l_{0}$ is the uninflated resting length measured from hose clamp to hose clamp and $l_\text{m}$ is the current muscle length. The unloaded contraction at \qty{620}{\kPa} is
+\begin{equation}
+    \varepsilon_{620} = \frac{(l_{0}-l_{620})}{l_{0}} \label{eq:max_strain}
+\end{equation}
+where $l_{620}$ is the actuator length at \qty{620}{\kPa} with no external load, and the relative contraction is
+\begin{equation}
+    \varepsilon^* = \frac{\varepsilon}{\varepsilon_{620}} \label{eq:rel_strain}
+\end{equation}
+The pair $(\varepsilon_{620}, \varepsilon^*)$ is the strain basis of this work: every length-based correction introduced below is expressed in $\varepsilon_{620}$-normalized units. The normalized isometric force is
+\begin{equation}
+F^*(\varepsilon^*,P^*)=
+\begin{cases}
+\begin{aligned}
+c_0\cdot\bigl(\exp(-c_1 \cdot \varepsilon^*)-1\bigr)
++ P^*\cdot\exp\!\bigl(-c_2(\varepsilon^*)^{2}\bigr)
+\end{aligned}
+& \text{for } F^*>0\\[10pt]
+0
+& \text{for } F^*\le 0
+\end{cases}\label{eq:Fstar}
+\end{equation}
+where $P^*$ is pressure normalized by \qty{620}{\kPa} and the diameter-dependent coefficients $c_0$, $c_1$, and $c_2$ are tabulated in \citet{bolen_2026} (p.~10). The maximum force is
+\begin{equation}
+    F_{\mathrm{max}}(l_{0},P) = a_1 \, P \, \arctan\!\bigl(a_2 \, P \, (l_{0}-0.0075)\bigr) \label{eq:Fmax_3D}
+\end{equation}
+with $l_{0}$ in meters, a fixed \qty{7.5}{\mm} end-contact offset, and coefficients tabulated in \citet{bolen_2026} (p.~7); at the \qty{620}{\kPa} system ceiling, $F_{\mathrm{max}}(l_{0},\qty{620}{\kPa}) = F_{620}(l_{0})$. The isometric force is the composition
+\begin{equation}
+   F(\varepsilon^*,P^*,l_{0}) = F^*(\varepsilon^*,P^*) \cdot F_{620}(l_{0}) \label{eq:force}
+\end{equation}
+
+\subsection{Robot Leg Model and Knee Test Stands}\label{sec:robot_model}
+
+The robot leg consists of a knee joint, femur, tibia, BPA assemblies, and artificial tendons (Figure~\ref{fig:testJigs}\textbf{A--C}). The artificial bones were 3D printed in Onyx, carbon fiber, and high-strength high-temperature fiberglass, with machined links for the knee mechanism, and the tendons are Shimano bicycle brake cable. The leg geometry and dimensions derive from bone scans of a \qty{6}{\ft} (\qty{1.83}{\metre}) tall person \citep{bolen_determination_2019,seth_opensim_2018,delp_interactive_1990,delp_opensim_2007}.
+
+\begin{figure}[htbp]
+    \begin{center}
+    \includegraphics[width=0.9\textwidth]{Figures/testJigs.pdf}
+    \end{center}
+    \caption{\textbf{(A)} CAD solid model assembly of the revolute joint knee in the test stand. \textbf{(B)} 1-DoF pinned-joint robot knee in the test apparatus with important components labeled; the leg is shown with 30 degrees of flexion, i.e.\ $\theta_\text{k} = \ang{-30}$. \textbf{(C)} Picture from isometric torque testing. The setup shows the revolute knee configured for a test of the extensor BPA, with the knee flexed at $\theta_\text{k} = \ang{-120}$; note the compressed shape of the inflated BPA on the knee at this high degree of flexion.}\label{fig:testJigs}
+\end{figure}
+
+Two knee joints were tested: a pure revolute joint, and a biomimetic joint whose four-bar linkage translates the instantaneous center of rotation (ICR) as the knee rotates \citep{steele_biomimetic_2018,steele_development_2017,steele_biomimetic_2018-1}, moving it posteriorly in $X$ and distally in $Y$ in the femur frame, except briefly proximally near full flexion, much as the human knee does \citep{bolen_determination_2019}. Reference coordinate frames follow \citet{wu_for_1995,wu_isb_2002}, and Figure~\ref{fig:ICR} shows the measured ICR migration. Both joints share the same rotation center in the femur frame at $\theta_\text{k} = \ang{0}$, each was driven by an antagonistic flexor and extensor, and $\theta_\text{k}$ is negative in flexion throughout this work.
+
+\begin{figure}[htbp]
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{Figures/KneeICR.eps}
+    \end{center}
+    \caption{ICR for the biomimetic robot knee as a function of knee angle, measured from $\theta_{1}$ on the tibia. The plot is overlaid on a model of the knee at $\theta_\text{k}=0^\circ$ (solid line) and $-60^\circ$ and $-120^\circ$ (dotted dash lines). White circles represent measured points in $-15^\circ$ increments from $-150^\circ$ to $-15^\circ$, in $-5^\circ$ increments from $-15^\circ$ to $0^\circ$, and then at $2^\circ$, $5^\circ$, and $10^\circ$.}\label{fig:ICR}
+\end{figure}
+
+Each stand was tested with $\diameter$\qty{10}{\mm} Festo BPAs in both configurations, and the biomimetic knee also with a $\diameter$\qty{20}{\mm} BPA. Each actuator was pinned at its origin on the femur, with the far end either pinned at the tibial insertion or attached there through an artificial tendon. \citet{bolen_determination_2019,morrow_optimization_2020} give full details of the modeled robot and its torque calculation.
+
+\subsection{Equipment and Data Collection}\label{sec:torque_equipment}
+
+A test jig was built to collect knee torque at set knee angles over the range of motion. The stand frame is made of 80/20 1515 series extruded aluminum. The femur is fixed to the frame while the knee rotates the tibia, with the joint axis co-axial with gravity to eliminate gravitational torque. A force sensor connects the tibia to a swing arm tied to a winch with \qty{3/16}{\inch} Kevlar rope (Quality Nylon Rope) routed over idler pulleys. At each measured $\theta_\text{k}$ the winch was locked and the BPA was inflated and then deflated, keeping the measurement as isometric as possible.
+
+Force was collected with one of two sensors: a MODERN STEP \qty{300}{\kilo\gram} digital crane scale, or a CALT DYLY-103 \qty{100}{\kilo\gram} S-shaped load cell used with an HX711 load-cell amplifier. Pressure was measured with a Freescale MPX5700 GP \qty{5}{\volt} pressure sensor. Supply pressure was controlled by two regulators in series, a Parker 20R113GC (\qtyrange{0}{120}{\psi}) and a Husky HDA72200, and air was delivered through a Festo VTUG-10 valve manifold. Pressure and load-cell data were sent to MATLAB through a Sparkfun BlackBoard C (Arduino Uno style) microcontroller. Lengths were measured with a tape measure, with a flexible string marking the axial length of the BPA when its curvature was sufficient, and angles with a Medigauge digital goniometer or MALENOO analog goniometers of \qtylist{6;8;12}{\inch} lengths.
+
+\subsection{Hybrid Torque Calculation}\label{sec:hybrid_method}
+
+Torque about the knee is the moment of the actuator force about the ICR. Two vectors enter it: the position vector $\mathbf{d}$ from the ICR to the point of force application, and the force vector $\mathbf{F} = \norm{\mathbf{F}}\hat{\mathbf{u}}$ along the line of action. The moment arm is the perpendicular distance from the joint axis to the line of action,
+\begin{equation}
+    r = \norm{\mathbf{d} \times \hat{\mathbf{u}}}
+    \label{eq:momentarm_def}
+\end{equation}
+the same quantity computed from the vectors or measured with a tape measure. In the model it follows the projection method of \citet{young_analyzing_2019}: the scalar moment arm about the joint axis $\hat{\mathbf{z}}_{k}$ (the knee-frame $Z$ axis) is
+\begin{equation}
+    r_{k} = \mathbf{p}_{proj,xy} \cdot \frac{\mathbf{p}_{f} \times \hat{\mathbf{z}}_{k}} {\norm{\mathbf{p}_{f} \times \hat{\mathbf{z}}_{k}}} \label{eq:project_ma}
+\end{equation}
+where $\mathbf{p}_{proj,xy}$ is the free muscle segment, the segment whose endpoints ride on different bodies, projected onto the plane normal to the joint axis, $\mathbf{p}_{f}$ is the projected segment vector, and the moment arm is computed in the tibial body frame.
+
+The hybrid torque calculation localizes disagreement between the model and the measurements. The classical moment is the cross product
+\begin{equation}
+    \mathbf{m} = \mathbf{d} \times \mathbf{F} \label{eq:M_vec}
+\end{equation}
+and its scalar component about the joint axis, written $M_{z}$, reduces through the moment arm to the ordinary product
+\begin{equation}
+    M_{z} = r\,F \label{eq:M_scalar}
+\end{equation}
+The hybrid method replaces the model-predicted moment arm of Equation~\eqref{eq:project_ma} and the model-predicted muscle length with measured counterparts: $r$ is measured directly as the perpendicular distance from the knee axis to the line of action, and $F$ follows from the measured $P$, $l_{0}$, $l_{620}$, and $l_\text{m}$ through the force model of Section~\ref{sec:force_model}, which separates kinematic error from force error.
+
+\subsection{Improved Torque Model: Length Offset and Bracket Compliance}\label{sec:improved_model}
+
+Measured muscle lengths were consistently shorter than predicted at all joint angles, and the shortfall persisted at $\varepsilon = 1$ with $F = 0$, indicating a constant rather than a load-dependent offset. The corrected muscle length is therefore
+\begin{equation}
+    l_\text{m} = l_{LMT} - 2\;l_{fitting} - \chi_{0}
+    \label{eq:Lm}
+\end{equation}
+where $l_{LMT}$ is the musculotendon path length from origin to insertion, $l_{fitting}$ is the end-cap length (\qty{25.4}{\mm} per end), and $\chi_{0}$ is the constant length offset.
+
+As the actuator develops force, the compliant attachments deform, changing the effective BPA length and, through it, the force. The combined compliance is modeled with Hooke's law in a local bracket frame at each attachment. The frame is constructed by two rotations from the vector joining the bracket reference point to the BPA attachment point (Figure~\ref{fig:xiFrameTransform}): a rotation through $\theta_z$ about the fixed space-frame axis $\hat{\mathbf{z}}_{s}$ aligns an intermediate axis with the sagittal-plane projection of the attachment point, and a rotation through $-\theta_y$ about the current $\hat{\mathbf{y}}$ axis, which points posteriorly in the primary cantilever bending direction, aligns the bracket axis $\hat{\mathbf{x}}_{br}$ with the full three-dimensional point vector. The orientation and homogeneous transform are
+\begin{equation}
+\mathbf{R}_{sb}=\mathbf{R}_z(\theta_z)\mathbf{R}_y(\theta_y)^T,
+\qquad
+\mathbf{T}_{sb}=
+\begin{bmatrix}
+\mathbf{R}_{sb} & \mathbf{p}_{br}\\
+\mathbf{0}^{T} & 1
+\end{bmatrix}.
+\label{eq:bracket_frame_transform}
+\end{equation}
+Figure~\ref{fig:bktFrame} shows the bracket frame for each test configuration.
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[height=0.62\textheight]{Figures/xiFrameTransform.pdf}
+\end{center}
+\caption{Two-rotation construction of the bracket frame from the attachment point $\mathbf{p}_{A}$ or $\mathbf{p}_{B}$. \textbf{(A)} Rotation through $\theta_z$ about the fixed $\hat{\mathbf{z}}_{s}$ axis aligns the intermediate axis $\hat{\mathbf{x}}_{1}$ with the point's sagittal-plane projection. \textbf{(B)} Rotation through $-\theta_y$ about the current $\hat{\mathbf{y}}_{1}=\hat{\mathbf{y}}_{br}$ axis aligns the final bracket axis $\hat{\mathbf{x}}_{br}$ with the full point vector.}\label{fig:xiFrameTransform}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=1\textwidth]{Figures/bktFrame.pdf}
+\end{center}
+\caption{Bracket frame orientations for: \textbf{(A)} flexor configuration on the pinned knee, \textbf{(B)} extensor configuration on the pinned knee, \textbf{(C)} flexor and extensor configurations on the biomimetic knee with $\diameter$\qty{10}{\mm} BPAs, and \textbf{(D)} flexor configuration on the biomimetic knee with the $\diameter$\qty{20}{\mm} BPA.}\label{fig:bktFrame}
+\end{figure}
+
+In this frame the bracket is modeled as three independent linear springs, and the identified stiffness array is y-symmetric,
+\begin{equation}
+\mathbf{K}_{br} =
+\begin{bmatrix}
+\chi_{1} & 0   & 0 \\
+0   & \chi_{2} & 0 \\
+0   & 0   & \chi_{1} \\
+\end{bmatrix}
+\label{eq:bktstiffness}
+\end{equation}
+with $\chi_{1}$ the effective stiffness in the $x_{br}$ and $z_{br}$ directions and $\chi_{2}$ the effective bending stiffness along the cantilever direction $y_{br}$. The symmetry makes the compliance prediction independent of the frame convention: the pitch-only and two-rotation constructions of Figure~\ref{fig:xiFrameTransform} differ by a rotation about $\hat{\mathbf{y}}_{br}$, and a diagonal stiffness array is invariant under that rotation exactly when the two stiffnesses in its plane are equal.
+
+Only the deflection component along the line of action changes the actuator's effective length. With the force in the bracket frame written $F\,\hat{\mathbf{u}}$, where $\hat{\mathbf{u}}$ is the BPA force direction, the deflection $\mathbf{K}_{br}^{-1}F\,\hat{\mathbf{u}}$ projects onto the line of action as
+\begin{equation}
+\delta_{br} = F\, \hat{\mathbf{u}}^{T} \, \mathbf{K}_{br}^{-1} \, \hat{\mathbf{u}}
+\label{eq:bktprojectedcompliance}
+\end{equation}
+so the bracket presents the scalar stiffness
+\begin{equation}
+k_{\hat{u},br} = \frac{F}{\delta_{br}} = \left( \hat{\mathbf{u}}^{T} \mathbf{K}_{br}^{-1} \hat{\mathbf{u}} \right)^{-1}
+\label{eq:keff}
+\end{equation}
+along the force path. An artificial tendon is modeled as an axial spring of stiffness $k_{ten} = n A_{c} E / L_{ten}$, with $n = 2$ parallel cable strands (six for the $\diameter$\qty{20}{\mm} assembly), cable cross-sectional area $A_{c} = \qty{1.51e-6}{\metre\squared}$, and modulus $E = \qty{193}{\giga\pascal}$. Bracket deflection and tendon stretch both shorten the effective BPA length under the same force, so their scalar compliances add in series:
+\begin{equation} k_{eq} = \left( \frac{1}{k_{\hat{u},br}} + \frac{1}{k_{ten}} \right)^{-1}
+\label{eq:equivalentstiffness}
+\end{equation}
+
+The compliance displacement shortens the actuator, so the active length entering the force model is
+\begin{equation} l_m(\delta) = l_m^{(0)} - \delta
+\label{eq:activelengthcorrected}
+\end{equation}
+where $l_m^{(0)}$ is the initial length of Equation~\eqref{eq:Lm}. Because the force depends on contraction, and the contraction on the compliance displacement, $\delta$ is the root of the implicit balance
+\begin{equation} F_{620}(l_{0}) \, F^{*}\!\left(\varepsilon^*(\delta),P^*\right) - k_{eq}\,\delta = 0
+\label{eq:complianceforcebalance}
+\end{equation}
+solved by bracketed scalar root-finding between zero deflection and the deflection that would bring the actuator to its maximum usable contraction, with $\delta = 0$ returned when the residual shows no sign change across that interval. The solved force gives the vector bracket deflection, which updates the attachment location; the routed length, force direction, moment arm, and torque are recalculated at the deflected geometry. The stiffness terms are effective parameters for the attachment system as a whole, absorbing the printed brackets, the bone fixtures, and the winch cable, and they are identified from torque rather than measured on any component in isolation.
+
+Both ends of the actuator path can be compliant: the insertion-side bracket together with a second, origin-side bracket. Each bracket $j$ develops a three-dimensional deflection $\boldsymbol{\eta}_{br,j}$ along its local frame basis, of which only the projection along the corresponding force direction $\hat{\mathbf{u}}_j$ changes the actuator length, and the two projections act in series with the tendon elongation:
+\begin{equation}
+\begin{aligned}
+\boldsymbol{\eta}_{br,j} &= \sum_{i=1}^{3}\eta_{i,j}\hat{\mathbf{e}}_i^{(j)},\\
+\delta_{br,j} &= \hat{\mathbf{u}}_j^T\boldsymbol{\eta}_{br,j}, \qquad j\in\{1,2\},\\
+\delta_{\mathrm{series}} &= \delta_{br,1}+\delta_{\mathrm{tendon}}+\delta_{br,2}.
+\end{aligned}
+\label{eq:bracket_series_projection}
+\end{equation}
+
+\subsection{Fictive Strain and Wrapping Loss}\label{sec:fictive_contraction}
+
+The extensor configuration required one further correction, with a different physical origin than the compliance terms. As the knee flexes, the extensor BPA bends over the front of the joint, and part of the actuator follows the joint surface instead of a straight line. Bent this way, the BPA behaves like a beam: the pressurized wall on the inside of the bend carries less tension than the wall on the outside, and part of the wrapped arc length stops contributing usable contraction, so the actuator behaves as if it were more contracted than it physically is. We call this excess fictive strain: the additional contraction the force model must see to reproduce the observed force, beyond the actuator's physical contraction, expressed in $\varepsilon_{620}$-normalized units. A wrapping-loss term $\chi_{3}$ scales the length that this fictive strain removes:
+\begin{equation}
+    \Delta l = \begin{cases}
+     \chi_{3}\;R\;\abs{ \theta_\text{wrap}-\theta_\text{k}}\;\zeta^2 & \theta_\text{k} \leq      \theta_\text{wrap} \\
+      0 & \theta_\text{k} \geq      \theta_\text{wrap}
+     \end{cases}\label{eq:deltaL}
+\end{equation}
+where $\Delta l$ is the change in usable length of the BPA, $R$ is the wrapping radius, $\abs{\theta_\text{wrap}-\theta_\text{k}}$ is the angle through which the BPA is bent once contact begins, and $\theta_\text{wrap}$, the knee flexion angle at which the BPA starts to bend over the joint, is determined from solid modeling. The factor $\zeta$ is the additive complement to the relative contraction,
+\begin{equation}
+    \zeta = 1-\varepsilon^*
+\label{eq:comp}
+\end{equation}
+so the wrapping loss vanishes at full contraction and grows quadratically toward resting length. Combining Equations~\eqref{eq:comp} and~\eqref{eq:deltaL} with the offset of Equation~\eqref{eq:Lm} yields the fully corrected muscle length
+\begin{equation}
+    l_\text{m} = l_{LMT} - 2\;l_{fitting}  - \chi_{0} - \Delta l\label{eq:x3}
+\end{equation}
+
+\subsection{Identification Procedure}\label{sec:identification}
+
+The correction terms enter the prediction through the implicit balance of Equation~\eqref{eq:complianceforcebalance}, and no instrument measures them directly, so they were identified by global optimization against measured torque. Candidates are judged simultaneously on the root mean square error (RMSE), the fraction of variance unexplained (FVU, adjusted so that $R^{2} = 1 - \mathrm{FVU}$), and the maximum absolute residual, each computed between measured and predicted isometric torque over the tested range of motion; FVU is the primary criterion because it is scale-free and comparable across tests with different torque scales, while the maximum residual is the phase-sensitive worst case. The solver was an elitist nondominated-sorting genetic algorithm (gamultiobj in MATLAB, RRID:SCR\_001622) with adaptive-feasible mutation, scattered crossover at a fraction of 0.8, and a Pareto fraction of 0.35; the adopted solution is selected from the returned Pareto front by held-out validation.
+
+The identification proceeded in two stages. The flexor stage fits the two-bracket model $(\chi_{0}, \chi_{1}, \chi_{2})$ across the five pinned-knee flexor tests, four in training and the encoder-corrected $l_{0}=\qty{47.9}{\cm}$ test reserved for validation. It evolved a population of 150 for up to 600 generations, terminating early once the relative change in the spread of the Pareto front fell below $4\times10^{-3}$. The extensor stage locks $(\chi_{1}, \chi_{2})$ to a member of the flexor Pareto front, enforcing a single stiffness pair across configurations, and solves only the extensor-specific terms $(\chi_{0}, \chi_{3})$ on the extensor test pool: six of the nine pinned-extensor tests, five in fitting and the $l_{0}=\qty{45.7}{\cm}$ test held out, with the remaining three tests excluded from the pool and the extensor offset allowed negative values. The refit used a population of 50 for up to 150 generations at a spread tolerance of $1\times10^{-3}$. Both stages searched a normalized space, with length offsets in centimeters and stiffnesses on a base-ten logarithmic scale, so that the genetic search samples the decade-spanning stiffness bounds uniformly. The flexor bounds were $\chi_{0} \in [0, 20]$~\si{\milli\metre}, $\chi_{1} \in [3\times10^{4}, 10^{6}]$~\si{\N\per\metre}, and $\chi_{2} \in [5\times10^{3}, 2\times10^{4}]$~\si{\N\per\metre}; the extensor refit searched $\chi_{0} \in [-20, +5]$~\si{\milli\metre} and $\chi_{3} \in [0, 1]$ with the stiffness pair locked. The initial flexor population was drawn from $\chi_{0} \in [5, 15]$~\si{\milli\metre}, $\chi_{1} \in [5\times10^{4}, 5\times10^{5}]$, and $\chi_{2} \in [7\times10^{3}, 1.5\times10^{4}]$~\si{\N\per\metre}. An initial single-bracket identification, produced with the same framework before the origin-side bracket was added, is reported alongside the results figures; the two-stage procedure superseded it, and its adopted values are given in the Discussion.
+
+\subsection{Route-Redesign Procedure}\label{sec:route_redesign}
+
+With the correction terms fixed, the attachment routes themselves become design variables, and their best values are the ones that make the redesigned routes meet or exceed human knee torque capability. The redesign was carried out on the robot-body model derived from the Gait2392 lower-extremity model \citep{delp_opensim_2007,seth_opensim_2018}. The human targets are maximum-isometric torque curves: OpenSim moment arms, the partial derivative of muscle-tendon length with respect to the knee coordinate, $r(\theta_{k}) = \partial l_{\mathrm{MT}}/\partial\theta_{k}$, multiplied by each muscle's maximum isometric force \citep{delp_interactive_1990,hoy_musculoskeletal_1990,yamaguchi_planar_1989,sherman_what_2013,millard_flexing_2013,thelen_adjustment_2003,seth_opensim_2011}. The extensor is graded against vastus medialis and the flexor against biceps femoris short head; each target carries a required margin of 5\,\% above the human curve, so a route that merely touches the target at any angle is rejected.
+
+The design variables are the BPA origin $\mathbf{p}_{1}$, the insertion $\mathbf{p}_{\mathrm{end}}$, the resting length, and the tendon length. Because the route prediction (contact activation, wrapping, and the compliance correction) is expensive to evaluate and only moderately smooth, the redesign minimizes a scalar cost assembled from weighted penalty terms:
+\begin{equation}
+    J = w_{w}\,J_{\text{worst}} + w_{t}\,J_{\text{torque}} + \textstyle\sum_{a} J_{a} + J_{\text{geom}} + J_{\text{len}}
+    \label{eq:opt_cost}
+\end{equation}
+where $J_{\text{worst}}$ is the largest fraction by which robot torque falls short of the human target at any angle, weighted at $w_{w} = 10^{5}$, and $J_{\text{torque}}$ is the mean-squared shortfall fraction, weighted at $w_{t} = 10^{3}$, two orders of magnitude lower so that no single-angle shortfall can be traded for a better average. The $J_{a}$ are configuration-specific penalties (torque overshoot above the human curve, off-axis torque, wrap release), and $J_{\text{geom}}$ and $J_{\text{len}}$ regularize the endpoints and actuator lengths toward their seed values. Hard constraints, including bone clearance, wrap feasibility, actuator strain and contraction limits, and tendon geometry, reject failed candidates with a prohibitive penalty. The shared actuator plan is two $\diameter$\qty{20}{\mm} BPAs per route under a \qty{620}{\kPa} pressure ceiling, with a maximum usable contraction of 0.255 in the force model: the flexor route is mirrored about the mid-sagittal plane with the two actuator forces summed, and the extensor model scales the force of a single shared route by the actuator count. Adjacent routes are required to maintain \qty{25}{\mm} of clearance.
+
+Each run began with a sanity evaluation of the seed design, then executed a surrogate-assisted global solver under per-configuration evaluation budgets of 3,000 evaluations for the extensor route and 1,000 for the flexor route, and finally refined the best feasible point with a derivative-free mesh-adaptive pattern search for 15,000 further evaluations. The surrogate budgets sit past the observed plateau of a few hundred evaluations, so they cap run time rather than define convergence; the pattern search stops on its budget or early, once its mesh collapses with the constraints satisfied.
+
+Three variants extend the search space. In the cam variant, the tibial-side route points trace a cam profile, so the routing geometry itself is shaped rather than only its endpoints. In the mono-pulley variant, the tendon is reeved over a single pulley at a gain fixed at 1:1, so the pulley redirects rather than multiplies force. The bi-pulley variant reeves over two pulleys and was applied as a screening batch over five anatomical muscle sites of the robot-body model's leg.

@@ -1,4 +1,4 @@
-"""Slides 1-14: title, framing, Aim 1 (BPA force characterization)."""
+"""Slides 1-14: title, framing (four objectives / four gaps), Ch. 3 muscles (BPA force)."""
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
 from pptx.util import Inches, Pt
 from deck_lib import *
@@ -13,46 +13,71 @@ def s01_title(prs, n):
     tx(s, 0.7, 4.45, 11.93, 0.45, "Dissertation Defense", size=20, color=MUTED, align=PP_ALIGN.CENTER)
     tx(s, 0.7, 5.15, 11.93, 0.5, "Ben P. Bolen", size=24, color=TEXT, bold=True, align=PP_ALIGN.CENTER)
     tx(s, 0.7, 5.72, 11.93, 0.4, "Advisor: M. Anthony Hunt, Ph.D.", size=15, color=MUTED, align=PP_ALIGN.CENTER)
-    tx(s, 0.7, 6.30, 11.93, 0.4, "Agile & Adaptive Robotics Laboratory  ·  Portland State University  ·  September 2026",
+    tx(s, 0.7, 6.30, 11.93, 0.4, "Agile & Adaptive Robotics Laboratory  ·  Portland State University  ·  November 2026",
        size=13, color=MUTED, align=PP_ALIGN.CENTER)
     s.notes_slide.notes_text_frame.text = (
         "Good morning. Committee members, thank you for reading the dissertation. "
-        "Today: can pneumatic artificial muscles be characterized and arranged so a biomimetic robot "
-        "reproduces human joint force capability - and how the controller will be built on top.")
+        "Today: four objectives - characterize the actuator, validate and correct the joint "
+        "torque prediction, consolidate the afferent literature, and build the verified control "
+        "toolchain - connecting one actuator to a walking, neurally controlled robot. "
+        "Anticipated question: why does the title say 'movement and control' rather than a "
+        "single topic? Answer: the dissertation spans actuator to controller, and the title "
+        "follows the program it serves (Ch. 1, sec. 1.2).")
 
 def s02_roadmap(prs, n):
     s = content_slide(prs, "Roadmap",
-        "Three questions connect one actuator to a walking, neurally controlled robot",
-        cite="Dissertation Ch. 3-6; Bolen et al. 2026, Actuators; Bolen et al., in preparation 2025",
-        notes="One sentence per aim. Aim 1 published; Aim 2 in manuscript form; Aim 3 is the defined path.")
+        "Four objectives connect one actuator to a robot that walks under neural control",
+        cite="Dissertation Ch. 1 \u00a71.3 (research objectives); outcomes in Ch. 3-7",
+        notes="One sentence per objective, mirroring Ch. 1 sec 1.3: objective 1 (Ch. 3) is published as "
+              "Bolen et al. 2026, Actuators; objective 2 (Ch. 4) stands on the isometric torque manuscript; "
+              "objective 3 (Ch. 5) is the Sensory Afferent Database; objective 4 (Ch. 6-7) is the simulation "
+              "toolchain with its cross-engine verification. Anticipated question: which objectives are "
+              "experimental? Answer: objectives 1-2 are hardware experiments on the jig and the knee stands; "
+              "objective 3 is literature curation; objective 4 is simulation tooling - the same split the "
+              "introduction states (first two gaps addressed experimentally, the fourth resolved by the "
+              "database, the third closed by the tools).")
     items = [
-        ("01", "What force can one\nactuator produce?", "Isometric characterization of Festo BPAs:\nresting length, pressure, contraction", "537 tests  ·  dimensionless force surface", GREEN),
-        ("02", "What torque can a\nBPA-driven knee produce?", "Pinned + biomimetic knees; correction\nterms identified by multiobjective fit", "meets / exceeds human torque over\nmost of range of motion", GREEN),
-        ("03", "How will the robot\nbe controlled?", "OpenSim to MuJoCo pipeline; two-layer\nspinal CPG with full proprioception", "rhythm verified  ·  closed loop next", TEAL),
+        ("01", "Characterize\nBPA isometric force",
+         "Festo 10 and 20 mm BPAs across resting length,\ncontraction, and pressure; improved maximum-force\nand normalized force models vs. existing models\n(Ch. 3)",
+         "537 tests  \u00b7  dimensionless\nforce surface", GREEN),
+        ("02", "Validate knee\ntorque prediction",
+         "Pinned and biomimetic four-bar knees; correction\nterms for length offset, series compliance, and\nwrapping; envelopes vs. human torque\n(Ch. 4)",
+         "redesign meets / exceeds\nhuman targets", GREEN),
+        ("03", "Consolidate the\nafferent literature",
+         "Audit and curate the Ia, Ib, and group II afferent\nrecord into the Sensory Afferent Database;\nAI-assisted triage for expansion\n(Ch. 5)",
+         "943-paper audited corpus", BLUE),
+        ("04", "Build tools for\nneural control",
+         "OpenSim to MuJoCo conversion; SNS-Toolbox two-level\nspinal CPG with proprioceptive and heel/toe contact\nfeedback; staged tuning and verification\n(Ch. 6-7)",
+         "verified cross-engine\ntoolchain", TEAL),
     ]
-    x = MX; w = 3.85; gap = 0.35
+    x = MX; w = 2.92; gap = 0.183
     for i, (num, q, m, tag, c) in enumerate(items):
         cx = x + i * (w + gap)
-        card(s, cx, 2.0, w, 4.55, fill=CARD if i < 2 else CARD2)
-        tx(s, cx + 0.3, 2.25, 1.6, 0.9, num, size=40, color=BROWN, bold=True)
-        tx(s, cx + 0.3, 3.15, w - 0.6, 1.0, q, size=17, color=TEXT, bold=True, spacing=1.0)
-        tx(s, cx + 0.3, 4.35, w - 0.6, 1.1, m, size=13, color=MUTED, spacing=1.05)
-        tx(s, cx + 0.3, 5.75, w - 0.6, 0.7, tag, size=13, color=c, bold=True, spacing=1.0)
-        if i < 2:
-            arrow(s, cx + w + 0.03, 4.25, cx + w + gap - 0.03, 4.25, color=FAINT, width=2.2)
+        card(s, cx, 2.0, w, 4.55, fill=CARD if i < 3 else CARD2)
+        tx(s, cx + 0.25, 2.18, 1.6, 0.7, num, size=30, color=BROWN, bold=True)
+        tx(s, cx + 0.25, 2.92, w - 0.5, 1.0, q, size=15, color=TEXT, bold=True, spacing=1.0)
+        tx(s, cx + 0.25, 4.08, w - 0.5, 1.6, m, size=10.5, color=MUTED, spacing=1.05)
+        tx(s, cx + 0.25, 5.78, w - 0.5, 0.72, tag, size=12, color=c, bold=True, spacing=1.0)
+        if i < 3:
+            arrow(s, cx + w + 0.015, 4.25, cx + w + gap - 0.015, 4.25, color=FAINT, width=2.2)
     pageno(s, n)
 
 def s03_project(prs, n):
     s = content_slide(prs, "The project",
         "A humanoid robot from the trunk down: human-like body plan, synthetic nervous system",
-        cite="Bolen & Hunt 2019; Morrow et al. 2020; Steele 2018; Scharzenberger et al. 2019",
-        notes="Ground the committee: this dissertation is the actuator-and-joint foundation of the AARL humanoid program.")
+        cite="Dissertation Ch. 1 \u00a71.2; Bolen & Hunt 2019; Morrow et al. 2020; Steele 2018; Scharzenberger et al. 2019",
+        notes="Ground the committee: this dissertation is the actuator-and-joint foundation of the AARL humanoid "
+              "program (Ch. 1, sec. 1.2). The converted model shown carries all 92 muscle-tendon actuators "
+              "(Ch. 6). Anticipated question: what did the master's work establish? Answer: Gait2392-matched "
+              "kinematics and muscle-routing tools - and the finding that transplanting human attachments onto "
+              "a BPA robot does not reproduce human torque profiles, which motivates the placement optimization "
+              "completed in Ch. 4.")
     pic(s, os.path.join(FIG, "mujoco_robot.png"), box=(0.45, 1.75, 3.4, 5.1))
     tx(s, 0.45, 6.55, 3.5, 0.4, "converted leg model, 92 muscle paths", size=11, color=FAINT, italic=True)
     rows = [
         ("Guiding hypothesis", "human-like muscle numbers, architecture, routing + human-like torque capability, controlled by a biologically grounded neural architecture  \u2192  biomimetic movement", None),
         ("Built on", "my master's work: Gait2392-matched kinematics, muscle routing tools  \u00b7  Morrow: optimized attachments  \u00b7  Steele: biomimetic 4-bar knee  \u00b7  Scharzenberger: BPA quadruped", None),
-        ("This dissertation", "the quantitative basis: characterize the actuator, correct the joint model against experiment, validate against human torque, define the control path", GREEN),
+        ("This dissertation", "the quantitative basis: characterize the actuator, correct the joint model against experiment, compare with human torque, consolidate the afferent data, and define the control path", GREEN),
     ]
     y = 1.95
     for t, b, c in rows:
@@ -68,8 +93,12 @@ def s03_project(prs, n):
 def s04_motivation(prs, n):
     s = content_slide(prs, "Why biomimetic robots",
         "Robots run neuromechanical experiments that are impossible in living subjects",
-        cite="Ijspeert 2020; Shin et al. 2018; photo: Asano et al. 2016, Humanoids",
-        notes="The biology professor on the committee will recognize this loop: model, perturb, understand.")
+        cite="Dissertation Ch. 1 \u00a71.1; Ijspeert 2020; Shin et al. 2018; photo: Asano et al. 2016, Humanoids",
+        notes="The biology professor on the committee will recognize this loop: model, perturb, understand. "
+              "The experiments listed are the ones the introduction names (Ch. 1, sec. 1.1). "
+              "Anticipated question: why physical robots rather than simulation-only studies? Answer: "
+              "musculoskeletal humanoids and limb systems support experiments on internal force transmission "
+              "and hardware realities that simulation assumes away; the two are complementary.")
     node(s, MX, 2.15, 3.5, 1.15, "Biology\nanatomy \u00b7 architecture \u00b7 afferents", fill=CARD2, size=14, bold=False)
     node(s, MX, 4.9, 3.5, 1.15, "Robot\nactuators \u00b7 routing \u00b7 controller", fill=CARD, size=14)
     arrow(s, MX + 1.0, 3.4, MX + 1.0, 4.8, color=GREEN, width=2.5)
@@ -95,8 +124,12 @@ def s04_motivation(prs, n):
 def s05_bpa(prs, n):
     s = content_slide(prs, "The actuator",
         "Braided pneumatic actuators: muscle-like strengths, and three modeling headaches",
-        cite="Hunt et al. 2017; S\u00e1rosi et al. 2012-2017; Martens & Boblan 2017; Festo DMSP datasheets",
-        notes="Sets up gap 1. Force peaks AT resting length - unlike a biological muscle whose optimum is mid-range.")
+        cite="Dissertation Ch. 1 \u00a71.1 + Ch. 2; Hunt et al. 2017; S\u00e1rosi et al. 2012-2017; Martens & Boblan 2017; Festo DMSP datasheets",
+        notes="Sets up gap 1. Force peaks AT resting length - unlike a biological muscle whose optimum is "
+              "mid-range (Ch. 3, biomimetic-analogy discussion). Anticipated question: why BPAs rather than "
+              "electric actuators? Answer: low mass, high force-to-weight, intrinsic compliance, tension-only "
+              "operation, and a qualitatively muscle-like force-length curve (Ch. 1, sec. 1.1) - the costs are "
+              "the modeling issues on the right, which Ch. 3 quantifies.")
     pic(s, os.path.join(MEDIA, "image5.png"), box=(0.55, 1.95, 2.1, 4.6))
     tx(s, 0.35, 6.6, 2.5, 0.35, "Festo DMSP-10/20", size=11, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     plus = [
@@ -128,37 +161,50 @@ def s05_bpa(prs, n):
 
 def s06_gaps(prs, n):
     s = content_slide(prs, "Problem statement",
-        "Three gaps stood between the existing design and a robot that walks",
-        cite="Dissertation Ch. 1 \u00a71.3",
-        notes="Each gap maps to one aim. The committee heard these as the research objectives.")
+        "Four gaps stood between the existing design and a robot that walks under neural control",
+        cite="Dissertation Ch. 1 \u00a71.1 (summary paragraph) + \u00a71.3",
+        notes="The four gaps are the introduction's own summary (Ch. 1, sec. 1.1, closing paragraph). "
+              "Anticipated question: why is gap 4 in the literature rather than in methods? Answer: the "
+              "physiological properties of the Ia, Ib, and group II afferents that should inform feedback "
+              "design are scattered across hundreds of primary papers and reviews with no structured "
+              "resource - the dissertation resolves it by consolidation (the SADb) and closes gap 3 with "
+              "the tools, while gaps 1-2 are addressed experimentally.")
     rows = [
-        ("GAP 1", "Actuator force models inadequate for design",
+        ("GAP 1", "No actuator force model valid at arbitrary resting length",
          "Festo tool over-predicts short BPAs; published models fit a single length each",
-         GREEN), 
-        ("GAP 2", "Actuator force \u2260 joint torque",
-         "brackets, artificial tendons, wrap paths: unknown losses; optimized biomimetic routing never validated vs. human torque",
          GREEN),
-        ("GAP 3", "No pipeline from musculoskeletal model to biologically realistic controller",
+        ("GAP 2", "No quantified correction for torque lost through brackets, tendons, and wrapping",
+         "optimized biomimetic routing never validated against human isometric torque",
+         GREEN),
+        ("GAP 3", "No closed-loop pipeline from the robot model to a biologically realistic controller",
          "two-level CPG ingredients existed, never assembled for a BPA biped with human-like routing",
+         BLUE),
+        ("GAP 4", "No consolidated resource for the afferent data a controller requires",
+         "Ia, Ib, and group II properties scattered across hundreds of primary papers and reviews",
          TEAL),
     ]
-    y = 1.9
+    y = 1.82
     for tag, head, sub, c in rows:
-        card(s, MX, y, 12.2, 1.38, fill=CARD)
-        tx(s, MX + 0.28, y + 0.2, 1.2, 0.5, tag, size=15, color=c, bold=True)
-        rich(s, MX + 1.55, y + 0.16, 10.4, 1.1, [
-            {"t": head, "size": 17, "color": TEXT, "bold": True, "space_after": 2},
-            {"t": sub, "size": 13.5, "color": MUTED, "spacing": 1.0},
+        card(s, MX, y, 12.2, 1.06, fill=CARD)
+        tx(s, MX + 0.28, y + 0.15, 1.2, 0.5, tag, size=14, color=c, bold=True)
+        rich(s, MX + 1.55, y + 0.10, 10.4, 0.9, [
+            {"t": head, "size": 15, "color": TEXT, "bold": True, "space_after": 1},
+            {"t": sub, "size": 12.5, "color": MUTED, "spacing": 1.0},
         ])
-        y += 1.52
-    tx(s, MX, 6.5, 12.2, 0.4, "Aims 1-3 mirror the gaps  \u2192", size=14, color=BROWN, bold=True)
+        y += 1.17
+    tx(s, MX, 6.52, 12.2, 0.4,
+       "Objectives 1-2 address gaps 1-2 experimentally  \u00b7  the SADb resolves gap 4  \u00b7  the tools close gap 3",
+       size=14, color=BROWN, bold=True)
     pageno(s, n)
 
 def s07_jig(prs, n):
-    s = content_slide(prs, "Aim 1 \u00b7 actuator characterization",
+    s = content_slide(prs, "Ch. 3 \u00b7 muscles",
         "A custom jig measured isometric force across resting length, pressure, and contraction",
-        cite="Bolen, Elzein, Pang, Hunt 2026, Actuators (Ch. 3)",
-        notes="Hardware slide - one breath. The point: wide l0 range, both diameters, 537 pairs.")
+        cite="Dissertation Ch. 3 \u00a73.1 (test jig); Bolen, Elzein, Pang, and Hunt 2026, Actuators",
+        notes="Hardware slide - one breath. The point: wide l0 range, both diameters, 537 pairs. "
+              "Anticipated question: how is contraction set? Answer: the distance between the jig "
+              "crossmembers is controlled to obtain each contraction, then the muscle is inflated and "
+              "the contractile force recorded at the pressure-contraction pairs (Ch. 3, sec. 3.1).")
     pic(s, os.path.join(FIG, "testJigs_force.png"), box=(0.7, 1.9, 4.4, 4.75))
     specs = [
         ("Diameters", "10 mm and 20 mm Festo DMSP"),
@@ -177,10 +223,13 @@ def s07_jig(prs, n):
     pageno(s, n)
 
 def s08_fmax_discovery(prs, n):
-    s = content_slide(prs, "Aim 1 \u00b7 actuator characterization",
+    s = content_slide(prs, "Ch. 3 \u00b7 muscles",
         "Maximum isometric force depends on resting length - a previously unreported characteristic",
-        cite="Bolen et al. 2026, Actuators, Figs. 2-3",
-        notes="The discovery slide. Festo's own tool predicts the OPPOSITE trend - force rising as length shrinks.")
+        cite="Dissertation Ch. 3 \u00a73.2 (F\u2086\u2082\u2080 vs l\u2080); Bolen et al. 2026, Actuators, Figs. 2-3",
+        notes="The discovery slide. Festo's own tool predicts the OPPOSITE trend - force rising as length shrinks. "
+              "Anticipated question: is the length effect truly unreported? Answer: the chapter states it is a "
+              "previously unreported characteristic of these artificial muscles; the Festo tool does predict a "
+              "length dependence, but with the wrong sign (force increasing at shorter lengths).")
     pic(s, os.path.join(FIG, "MaxForce10.png"), box=(0.7, 1.9, 5.9, 3.95))
     pic(s, os.path.join(FIG, "MaxForce20.png"), box=(6.75, 1.9, 5.9, 3.95))
     tx(s, 0.7, 5.92, 5.9, 0.4, "\u03c6 10 mm:  F\u2086\u2082\u2080 vs l\u2080", size=13, color=MUTED, align=PP_ALIGN.CENTER)
@@ -192,10 +241,13 @@ def s08_fmax_discovery(prs, n):
     pageno(s, n)
 
 def s09_fmax_model(prs, n):
-    s = content_slide(prs, "Aim 1 \u00b7 actuator characterization",
+    s = content_slide(prs, "Ch. 3 \u00b7 muscles",
         "Two coefficients per diameter capture the resting-length effect",
-        cite="Bolen et al. 2026, Actuators, Eqs. 4-6; fit: nonlinear least squares, least-absolute-residual",
-        notes="Math committee: arctan form, bounded asymptote, physical offset from end-cap contact in CAD.")
+        cite="Dissertation Ch. 3 \u00a7\u00a73.1-3.2 (equations + coefficient table); Bolen et al. 2026, Actuators, Eqs. 4-6; fit: nonlinear least squares, least-absolute-residual",
+        notes="Math committee: arctan form, bounded asymptote, physical offset from end-cap contact in CAD. "
+              "Anticipated question: why an arctan? Answer: the measured F620 vs l0 saturates, and the arctan "
+              "is the bounded curve that matches it; the l0 offsets (7.5 mm and 13 mm) are the lengths at "
+              "which solid modeling shows the end caps contacting, where no contractile stroke remains.")
     card(s, MX, 1.95, 7.0, 1.5, fill=CARD)
     eq(s, "fmax", box=(1.0, 2.12, 6.3, 1.16))
     card(s, MX, 3.6, 7.0, 1.5, fill=CARD)
@@ -213,10 +265,13 @@ def s09_fmax_model(prs, n):
     pageno(s, n)
 
 def s10_festo_wrong(prs, n):
-    s = content_slide(prs, "Aim 1 \u00b7 actuator characterization",
+    s = content_slide(prs, "Ch. 3 \u00b7 muscles",
         "At short resting lengths the manufacturer's tool mis-predicts force by 42%",
-        cite="Bolen et al. 2026, Actuators, Discussion \u00a71; example: \u03c610 mm, l\u2080 = 112 mm, 620 kPa",
-        notes="The design-relevant failure: anyone specifying BPAs under 300 mm gets burned by the tool.")
+        cite="Dissertation Ch. 3 \u00a73.3 (discussion: effects of resting length); example: \u03c610 mm, l\u2080 = 112 mm, 620 kPa",
+        notes="The design-relevant failure: anyone specifying BPAs under 300 mm gets burned by the tool. "
+              "Anticipated question: is 42% within Festo's tolerance? Answer: no - Festo states roughly 10% "
+              "manufacturing variability; 42.1% is roughly four times that, at a length a knee design "
+              "actually uses, and the error direction (over-prediction) is the unsafe one for design.")
     bar_chart(s, 0.65, 2.0, 6.3, 4.6,
               ["Measured", "Our model", "Festo tool"], [350.9, 335.3, 498.6],
               [TEAL, GREEN, RED], title="\u03c610 mm at l\u2080 = 112 mm, 620 kPa:  isometric force (N)",
@@ -234,10 +289,13 @@ def s10_festo_wrong(prs, n):
     pageno(s, n)
 
 def s11_surface(prs, n):
-    s = content_slide(prs, "Aim 1 \u00b7 actuator characterization",
+    s = content_slide(prs, "Ch. 3 \u00b7 muscles",
         "All 537 measurements collapse onto one dimensionless force surface",
-        cite="Bolen et al. 2026, Actuators, Eqs. 7-9; \u03b5* = \u03b5/\u03b5\u2086\u2082\u2080,  P* = P/620 kPa",
-        notes="Normalization by each muscle's own F620 and eps620 is what makes one surface fit all lengths.")
+        cite="Dissertation Ch. 3 \u00a73.2 (normalized surface); \u03b5* = \u03b5/\u03b5\u2086\u2082\u2080,  P* = P/620 kPa",
+        notes="Normalization by each muscle's own F620 and eps620 is what makes one surface fit all lengths. "
+              "Anticipated question: does eps620 need to be measured per actuator? Answer: yes - the chapter "
+              "found no conclusive relationship between eps620 and l0 (linear fit adj. R2 = 0.4124), so each "
+              "muscle's maximum contraction is recorded for use on the robot.")
     card(s, MX, 1.9, 12.2, 1.05, fill=CARD2)
     eq(s, "fstar", 1.0, 2.12, h=0.62)
     pic(s, os.path.join(FIG, "FStar10.png"), box=(0.75, 3.15, 5.5, 3.55))
@@ -247,10 +305,13 @@ def s11_surface(prs, n):
     pageno(s, n)
 
 def s12_surface_gof(prs, n):
-    s = content_slide(prs, "Aim 1 \u00b7 actuator characterization",
+    s = content_slide(prs, "Ch. 3 \u00b7 muscles",
         "Three coefficients per diameter: force predicted out-of-sample to a few percent",
-        cite="Bolen et al. 2026, Actuators, Table 2; 80/20 train/validation split",
-        notes="Stress: validation is 20% held out, and max error under ~11% everywhere - at ANY length.")
+        cite="Dissertation Ch. 3 \u00a73.2 (F* coefficient + goodness-of-fit table); 80/20 train/validation split",
+        notes="Stress: validation is 20% held out, and max error under ~11% everywhere - at ANY length. "
+              "Anticipated question: what do the max errors mean? Answer: on the held-out set the 10 mm "
+              "surface reaches a 10.6% maximum residual (RMSE 0.0245 normalized) and the 20 mm reaches 5.7% "
+              "(RMSE 0.0231); adjusted R2 stays at 0.9994 and 0.9943 respectively.")
     cols = [
         ("\u03c6 10 mm", "0.9998", "0.9994", "10.3%", "10.6%"),
         ("\u03c6 20 mm", "0.992", "0.9943", "6.8%", "5.7%"),
@@ -282,10 +343,13 @@ def s12_surface_gof(prs, n):
     pageno(s, n)
 
 def s13_vs_models(prs, n):
-    s = content_slide(prs, "Aim 1 \u00b7 actuator characterization",
+    s = content_slide(prs, "Ch. 3 \u00b7 muscles",
         "Lowest error of the compared models at every diameter and length tested",
-        cite="Bolen et al. 2026, Actuators, Fig. 5 + Table 3; full table in Appendix C",
-        notes="Sarosi params come from specific lengths - extrapolation is where they fail. Martens is geometry-sensitive.")
+        cite="Dissertation Ch. 3 \u00a73.3 (comparison with published BPA models); Bolen et al. 2026, Actuators, Fig. 5 + Table 3",
+        notes="Sarosi params come from specific lengths - extrapolation is where they fail. Martens is geometry-sensitive. "
+              "Anticipated question: why does Martens and Boblan blow up at 450 mm? Answer: geometric sensitivity - "
+              "the chapter shows its F_PE dD/DL term grows dominant off its fitted geometry, to the point of "
+              "predicting negative force at 20 mm, 450 mm.")
     pic(s, os.path.join(FIG, "Comparison.png"), box=(0.55, 1.9, 5.6, 4.95))
     tx(s, 0.55, 6.85, 5.6, 0.35, "measured vs predicted; y = x is perfect fit", size=11.5, color=FAINT,
        italic=True, align=PP_ALIGN.CENTER)
@@ -323,10 +387,14 @@ def s13_vs_models(prs, n):
     pageno(s, n)
 
 def s14_realtime(prs, n):
-    s = content_slide(prs, "Aim 1 \u2192 Aim 2",
+    s = content_slide(prs, "Ch. 3 \u2192 Ch. 4",
         "The force model is two cheap maps - built to sit inside a real-time controller",
-        cite="Bolen et al. 2026, Actuators, Discussion \u00a74; dynamics complement: Elzein et al. 2025",
-        notes="Static map = feedforward plant model / lookup table. Valve-airflow dynamics are the Elzein layer.")
+        cite="Dissertation Ch. 3 \u00a73.3 (implications for real-time control and simulation); dynamics complement: Elzein et al. 2025",
+        notes="Static map = feedforward actuator model inside the controller (lookup table). Valve-airflow "
+              "dynamics are the Elzein layer. Anticipated question: can a static isometric map really support "
+              "control? Answer: the chapter cites Martens and Boblan - BPA dynamics are dominated by valve air "
+              "dynamics and mass flow, so the static force characteristic is the crucial piece for torque "
+              "control accuracy; the model is computationally inexpensive online and suits lookup tables.")
     card(s, 2.1, 2.1, 4.1, 1.5, fill=CARD2)
     tx(s, 2.3, 2.28, 3.7, 0.4, "MAP 1", size=12, color=TEAL, bold=True)
     tx(s, 2.3, 2.68, 3.7, 0.8, "F\u2086\u2082\u2080(l\u2080)\nresting length \u2192 max force", size=15.5, color=TEXT, spacing=1.05)
@@ -337,24 +405,24 @@ def s14_realtime(prs, n):
     eq(s, "force", 3.6, 4.05, h=0.62)
     card(s, 2.1, 5.15, 9.1, 1.35, fill=CARD)
     rich(s, 2.4, 5.32, 8.6, 1.05, [
-        {"t": "Closed form or lookup table; evaluated per timestep in the plant model.", "size": 15, "color": TEXT, "space_after": 3},
+        {"t": "Closed form or lookup table; evaluated per timestep in the robot model.", "size": 15, "color": TEXT, "space_after": 3},
         {"t": "Next: multiply by geometry (moment arm) \u2192 joint torque.  Does it survive contact with the joint?", "size": 15, "color": BROWN, "bold": True},
     ])
     pageno(s, n)
 
-def build(prs, start=2):
-    s01_title(prs, 1)
-    s02_roadmap(prs, 2)
-    s03_project(prs, 3)
-    s04_motivation(prs, 4)
-    s05_bpa(prs, 5)
-    s06_gaps(prs, 6)
-    s07_jig(prs, 7)
-    s08_fmax_discovery(prs, 8)
-    s09_fmax_model(prs, 9)
-    s10_festo_wrong(prs, 10)
-    s11_surface(prs, 11)
-    s12_surface_gof(prs, 12)
-    s13_vs_models(prs, 13)
-    s14_realtime(prs, 14)
-    return 14
+def build(prs, start=1):
+    s01_title(prs, start)
+    s02_roadmap(prs, start + 1)
+    s03_project(prs, start + 2)
+    s04_motivation(prs, start + 3)
+    s05_bpa(prs, start + 4)
+    s06_gaps(prs, start + 5)
+    s07_jig(prs, start + 6)
+    s08_fmax_discovery(prs, start + 7)
+    s09_fmax_model(prs, start + 8)
+    s10_festo_wrong(prs, start + 9)
+    s11_surface(prs, start + 10)
+    s12_surface_gof(prs, start + 11)
+    s13_vs_models(prs, start + 12)
+    s14_realtime(prs, start + 13)
+    return start + 13
