@@ -160,7 +160,17 @@ MATLAB-bundled). The env notes below are current — do not "fix" them over a ma
    resolved) — always gloss them for Ben. Lesson of record: execute Ben's directives
    VERBATIM, not interpreted; dropping existing content (even one figure block) is a
    first-class edit that must be flagged; every revision pass ends with a build + a
-   per-directive compliance check with line evidence.]
+   per-directive compliance check with line evidence. DEADLINES: dissertation submission
+   2026-10-21; defense 2026-11-06. "Faster than real time" is an approved claim
+   (literature-supported, 2026-10-17). Rybak + Shevtsova pathway diagrams ARE included
+   with citation (dissertation fair use, ruled 2026-10-17). Neuromechanical modeling
+   tools to name: OpenSim (SimTK), SCONE, AnimatLab, SNS-Toolbox, MuJoCo, MyoConverter.
+   Documentation voice rule (2026-10-17): minimize AI self-narration in repo docs —
+   state what was done and when, not who-or-what did it. The HX711 app section below is
+   flagged for condensation post-submission. Dissertation plugin creation APPROVED
+   (pending, via plugin-creator). Root junk folders deleted 2026-10-17; the defense-deck
+   pipeline relocated to Documentation\...\Dissertation\Defense\deck_builder\ (was
+   .zcode_tmp).]
 2. Design and control of bipedal humanoid robot legs with artificial muscles (PAMs/BPAs)
    controlled by a synthetic nervous system. Lab: AARL (Agile and Adaptive Robotics Lab), PSU.
 3. **Xi-correction-factor program** — run minimizers against pinned-knee test data in
