@@ -17,7 +17,10 @@ cd(fullfile(root, 'Testing_Data', '2022_02_Festo'));
 fprintf('MATLAB %s | %s\n', version, string(datetime('now')));
 
 %% Flexor: rows 77 (live pick) and 107 (dissertation row) via minimizeFlxPin
-S = load('minimizeFlxPin10_results_20260908_2brkt_2trans_noT3.mat', ...
+% 2026-10-18: loads repointed to the clean-named records of record
+% (minimizeFlxPin10_results.mat / minimizeExt10mmX3_results.mat); Ben will
+% delete the dated pinned-knee mats. Verified same fronts/picks both names.
+S = load('minimizeFlxPin10_results.mat', ...
     'filtered_results', 'xCols');
 g77  = S.filtered_results(77,  S.xCols);
 g107 = S.filtered_results(107, S.xCols);
@@ -30,7 +33,7 @@ f107 = minimizeFlxPin(g107(1), g107(2), g107(3), 1:5);
 for i = 1:5, fprintf('%4d  %.6g  %.6g  %.6g\n', i, f107(i,:)); end
 
 %% Extensor: flxr77 row 32 via minimizeExtX3 (default 2trans, K=[X1,X2,X2])
-E = load('minimizeExt10mmX3_results_20260920_flxr77.mat', ...
+E = load('minimizeExt10mmX3_results.mat', ...
     'filtered_results', 'xCols');
 g32 = E.filtered_results(32, E.xCols);
 fprintf('\n--- extensor flxr77 row 32 Xi = [%.6g %.6g %.6g %.6g] (minimizeExtX3, 2trans default) ---\n', g32)

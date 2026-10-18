@@ -1,0 +1,133 @@
+====================================================================================================
+FILE 15-background
+
+--- L8 [in baseline (grandfathered?)]
+Biomimetic robots offer many potential applications, ranging from assisting in factories and environmental exploration to serving as physical models of human movement. By developing high-fidelity biomimetic robots, we can perform tests that help improve our understanding of both biomechanics and the underlying neuromechanical systems that control movement \citep{shin_constructive_2018, asano_musculoskeletal_2019, ijspeert_amphibious_2020, goldsmith_investigating_2021, hunt_development_2017, schilling_adaptive_2022}. A few such biomimetic robots exist, such as the impressive Kengoro and Kenshiro robots of \citet{asano_design_2017} and \citet{asano_musculoskeletal_2019}, which have proportionally human bodies, anatomically correct musculotendon arrangements, rolling-sliding joints, and joint ranges and output power comparable with human-measured values; their artificial muscles are implemented with brushless DC motors, wires as tendons, gears, and integrated tension measurement. Kengoro, the more recent of the two, stands \qty{1670}{\mm} tall, weighs \qty{56.5}{\kg}, and carries 174 degrees of freedom when the end effectors are included \citep{asano_design_2017}. A dog-like robot developed by \citet{aschenbeck_design_2006} and actuated with Festo BPAs was designed from a planar kinematic model scaled to an adult greyhound, with three sagittal degrees of freedom per leg driven by antagonistic BPA pairs; its front-leg pair alone lifted a \qty{13.5}{\kg} payload, almost double the complete robot's predicted mass. That platform was used to show how central pattern generators provide robust locomotion patterns that are adaptive to perturbations in ground speed \citep{hunt_development_2017}.
+
+--- L66 [in baseline (grandfathered?)]
+Previous studies have generated empirical models of the force--length--pressure relationship of BPAs. \citet{sarosi_comparative_2017} discuss several high-fidelity BPA force models. They present a static force model with a 21-coefficient polynomial function for a Festo MAS-20-200N (i.e., $\diameter$\qty{20}{\mm}, $l_0=\qty{200}{\mm}$) with an impressive $\text{R}^2=0.9994$, as well as S\'arosi's static force model for a Festo DMSP-20-400N-RM-RM (i.e., $\diameter$\qty{20}{\mm}, $l_0=\qty{400}{\mm}$), with six coefficients and a $\text{R}^2=0.9995$ \citep{sarosi_new_2012, sarosi_investigation_2013}. Martens and Boblan present an even more accurate model, in terms of absolute error, using five coefficients for a DMSP-10-250 (i.e., $\diameter$\qty{10}{\mm}, $l_0=\qty{250}{\mm}$) and a DMSP-20-300 (i.e., $\diameter$\qty{20}{\mm}, $l_0=\qty{300}{\mm}$) \citep{martens_modeling_2017}. However, as demonstrated in this work, different resting lengths produce different force--length curves, preventing the use of these single-length models for designing systems with different resting lengths.
+
+--- L111 [in baseline (grandfathered?)]
+Designing a biomimetic leg requires a quantitative benchmark of human muscle--joint behavior. This dissertation uses OpenSim \citep{delp_opensim_2007, seth_opensim_2011, seth_opensim_2018} and the Gait2392 model, which descends from the interactive lower-extremity model of \citet{delp_interactive_1990} and includes musculoskeletal geometry from \citet{hoy_musculoskeletal_1990}, planar knee kinematics from \citet{yamaguchi_planar_1989}, and a lower-limb model with 23 degrees of freedom and 54 musculotendon actuators \citep{arnold_model_2010}. Muscle moment arms, force-generating properties, and functional roles in such models have been characterized extensively \citep{zajac_determining_1989, brand_model_1982, menegaldo_moment_2004, millard_flexing_2013, sherman_what_2013, suderman_moving_2012}, and standard reporting conventions for kinematics and joint mechanics are established by the International Society of Biomechanics \citep{wu_for_1995, wu_isb_2002, wu_isb_2005, derrick_isb_2020}.
+====================================================================================================
+FILE 20-muscles
+
+--- L74 [in baseline (grandfathered?)]
+Force data was collected using a CALT DYLY-103 100 kg S-shaped load cell for the $\diameter$\qty{10}{\mm} BPAs and a Loadstar RAS1-2HKS-S for the $\diameter$\qty{20}{\mm} BPAs. The load cell was used in conjunction with a HX711 Load Cell Amplifier. Pressure data was obtained from a Freescale MPX5700 GP \qty{5}{\volt} pressure sensor. Building air supply pressure was controlled with two pressure regulators in series. The first was a Parker model 20R113GC $0-120\,\text{psi}$ pressure regulator. The second was a Husky $3/8\,\text{in.}$ High Performance Air Regulator HDA72200. A Festo VTUG-10-MRCR-S1T-26V20-T516LA-UL-532S-8K valve manifold VTUG-G was used to deliver air from the pressure regulator to the actuator. This manifold is comprised of eight two-in-one bidirectional normally closed Festo VUVG-S10-T32C-AZT-M5-1T1L valves. 
+
+--- L94 [in baseline (grandfathered?)]
+\subsubsection{Maximum Force at 620 kPa}
+
+--- L295 [in baseline (grandfathered?)]
+For the $\diameter$\qty{10}{\mm} BPAs, the result of the improved fit can be seen in Figure \ref{fig:GenForceFit}a. The adjusted $\text{R}^2=0.9998$, a $\text{RMSE}=0.004537$, and a maximum absolute residual of $10.6\%$. Solving (\ref{eq:Fstar}) for the $\diameter$\qty{20}{\mm} BPA, yields different coefficients, and results are seen in \mbox{Figure~\ref{fig:GenForceFit}b.} Coefficient values and goodness-of-fit statistics are found in Table \ref{tab:Fstar}. 
+
+--- L310 [in baseline (grandfathered?)]
+We have developed new $F_{620}$ equations for \qtylist{10;20}{\mm} diameter Festo BPAs that capture the change in maximum force produced by the actuators at  \qty{620}{\kPa} as a function of their resting length. When examining Equation~(\ref{eq:Fmax10}) and measured data in Figure~\ref{fig:Fmax_fit}b, it can be seen that as $l_0$ goes to infinity, $F_{620_{10}}$ goes to \qty{470}{\N}. When the Festo tool \citep{lang_robert_musclesim_2005} was queried at $l_0=\qty{1}{m}$ as an approximation of infinity, it predicts the $\diameter$\qty{10}{\mm} BPA can produce $F=\qty{490}{\N}$ at $P_{620}$. This is within the 10\% variability that Festo states may occur in manufacturing tolerances. Similarly, the Festo data predict a $\diameter$\qty{20}{\mm} BPA will produce $F=\qty{1570}{\N}$. Our results for Equation~(\ref{eq:Fmax20}) show that  $F_{620_{20}}$ goes to \qty{1460}{\N} as $l_0$ approaches infinity. Although the difference is much larger, it is also within the \mbox{10\% manufacturing tolerance. }
+
+--- L328 [in baseline (grandfathered?)]
+The presented work is capable of predicting force output for 10 mm and 20 mm muscles with different initial muscle lengths, internal pressure, and contraction amount with minimal initial data collection. However, it remains to be seen if these relationships are maintained over the full lifecycle of the muscles. There are not yet any peer reviewed studies investigating the long-term behavior of these artificial muscles, though the Festo datasheet provides some indication of what can be expected \citep{festo_2026} (p.19). They report that the 40 mm BPA can complete 1 million cycles at \qty{6000}{\N} (maximum rated load), or 10 million cycles at \qty{4000}{\N}. The service life of the other size BPAs is not reported; however, it is mentioned that thermal stressing may reduce the lifespan and they should be inspected every 500,000 cycles for signs of aging \citep{festo_2018} (pp.~10--11). Future research should look at the behavior of these muscles over time.
+
+--- L369 [in baseline (grandfathered?)]
+\textbf{10 mm} & 257 & 22.9 & 0.0353 & 46.0  & 143.8 & 1.3903 & 235.8 & 73.8  & 0.3668 & 122.9  \\
+
+--- L410 [in baseline (grandfathered?)]
+Furthermore, biological muscles can adapt the optimal operating length through structural remodeling (e.g., sarcomere addition or tendon compliance) while BPAs have a fixed geometric configuration. This allows biological systems to self-optimize for the particular tasks the animal is subjected to. In order to re-optimize a robot for new tasks, new actuators would have to be swapped into the system. This distinction highlights a key limitation of BPAs in biomimetic applications, while also reinforcing the importance of accurate nonlinear modeling for control and design.
+====================================================================================================
+FILE 30-torque
+
+--- L18 [in baseline (grandfathered?)]
+    \caption{\textbf{(A)} CAD solid model assembly of the revolute joint knee in the test stand. \textbf{(B)} 1-DoF pinned-joint robot knee in the test apparatus with important components labeled. Leg is shown with 30 degrees flexion, i.e. $\theta_\text{k} = \ang{-30}$. \textbf{(C)} Picture from isometric torque testing. Setup shows the revolute knee configured for a test of the extensor BPA. The knee is flexed with $\theta_\text{k} = \ang{-120}$. Also note the compressed shape of the inflated BPA on the knee during this high degree of flexion. }\label{fig:testJigs}
+
+--- L32 [CHANGED/NEW vs baseline]
+Uniarticular knee extensor and knee flexor are used to actuate the joint. Each knee joint type was tested with a single $\diameter$\qty{10}{\mm} Festo BPA per muscle. The biomimetic knee was additionally tested with $\diameter$\qty{20}{\mm} Festo BPAs in a paired configuration: the extensor with two BPAs in parallel, and the flexor with two BPAs whose pathways are mirrored about the $Z$ axis. Each artificial muscle is pinned at the muscle origin location on the femur while the other end is either pinned or attached to the muscle insertion location on the tibia via an artificial tendon.
+====================================================================================================
+FILE 60-sns
+
+--- L135 [in baseline (grandfathered?)]
+The verification harness is a tool in its own right, and its existence is the chapter's answer to a trust problem: the toolchain spans several simulation engines, and a result that holds in only one software implementation is difficult to trust. Its fundamental demonstration is replication, in two forms; the same rhythm core rebuilt in two engines must reproduce the same rhythm, and the lineage's archived models must reproduce their published behavior in their original engine. The harness is defined around the contact-driven rhythm core of the Walker-2-Layer (W2L) bipedal architecture: four rhythm-generator half-centers, one extensor/flexor pair per leg, plus graded pattern-formation and sensory cells, driven by heel-contact mechanosensory feedback. Each half-center is built from spiking neurons whose persistent sodium current, a slowly inactivating inward current, terminates each burst, so the mutually inhibiting extensor and flexor populations of a pair alternate \citep{deng_neuromechanical_2019}. The same core was implemented twice from a common connectivity specification, once as a NumPy reference integration through the SNS-Toolbox backend and once as native Simulink blocks from the library of Section~\ref{sec:preliminary_sim_methods}, and both were driven with an identical protocol: a \qty{12}{\second} run at a \qty{2}{\milli\second} neural step, tonic drive with a brief kickoff pulse, and alternating \qty{1}{\Hz} heel-contact trains. Agreement was scored on rhythm-generator burst period, left--right antiphase correlation, burst counts, and full-trace correlation against the NumPy reference. The archived AnimatLab reference models (the bilateral contact-driven model, the modern W2L model, and the Li walker) were additionally re-run headless from their standalone simulators with instrumented charts, so that engine-level agreement and network-level agreement could be separated. The protocol covers the rhythm core and the archived models only; full-network and whole-body behavior are reported as limitations alongside the results in Section~\ref{sec:preliminary_sim_results}.
+
+--- L285 [in baseline (grandfathered?)]
+\caption{Untuned spiking mirror versus its non-spiking twin at the same winner parameters, ground evaluation (16 s). The cycle knee minimum and stance fractions are computed over detected gait cycles; the kinematic score is the cycle-shape error metric of the production pipeline (0 denotes perfect agreement; higher scores indicate closer agreement). The spiking mirror carries mapped parameters only, with zero re-tuning.}
+
+--- L316 [in baseline (grandfathered?)]
+\caption{Knee-reflex demonstration, committed baseline versus spiking twin at the matched operating point (5 s runs; settle statistics over the last \qty{2}{\second}).}
+
+--- L333 [in baseline (grandfathered?)]
+\caption{Beverage-holding demonstration, committed baseline versus spiking twin (10 s pour; sag measured after \qty{2}{\second}).}
+
+--- L366 [in baseline (grandfathered?)]
+\caption{AnimatLab spiking conversions versus their graded baselines (5.1 s headless runs; joint ranges in degrees where the rhythm survives). The thresholds-only ablation converts the neurons but keeps the graded synapses.}
+====================================================================================================
+FILE 93-AppendixB
+
+--- L87 [in baseline (grandfathered?)]
+\caption{Spiking cell parameters of the MuJoCo mirror (real millivolts; \texttt{build\_network\_spiking.py}, \texttt{SPIKE} table, with the rhythm-generator increment superseded by the calibration of record). All cells rest at \qty{-70}{\mV} with membrane conductance \qty{1}{\micro\siemens} and the tonic bias of Table~\ref{tab:app_spk_cal}.}
+
+--- L110 [in baseline (grandfathered?)]
+\subsection{Calibration of Record}
+
+--- L171 [in baseline (grandfathered?)]
+Two-layer v1        & $-55$/$-59$ mV        & 80  & 17 & 150 & dead (2 spikes / 5 s) \\
+====================================================================================================
+FILE 94-AppendixC
+
+--- L34 [CHANGED/NEW vs baseline]
+\caption{Biomimetic knee, extensor 20\,mm BPA route seed (femur frame: p1--p5; tibia frame: p6--p9; \texttt{buildKneeExtContext20mm.m} lines 431--440, the author's fcec-ray construction; the prior SolidWorks seed is kept commented at lines 421--430). Release schedule of the verified elimination, read from the adopted redesign (\texttt{Vas\_Pam\_20mm\_Result\_20260925.mat}, \texttt{routeInfo.eliminatedAngleD}): p5 at $-89.8^{\circ}$, p4 at $-55.7^{\circ}$, p6 at $-47.8^{\circ}$, p7 at $-20.2^{\circ}$, p3 at $+6.1^{\circ}$, p8 at $+7.4^{\circ}$.}
+
+--- L91 [in baseline (grandfathered?)]
+The biomimetic flexor route (\texttt{buildKneeFlexorContext20mm.m}) is a three-point path (femur-frame origin $\mathbf{p}_{1}$, a moving wrap point $\mathbf{p}_{\text{wrap}}$ on the tibia, and tibia-frame insertion $\mathbf{p}_{\text{end}}$), with the wrap point held on a standoff surface of radius \texttt{bpaRb} about the joint and its $z$ placed on the projected $\mathbf{p}_{1}$--$\mathbf{p}_{\text{end}}$ line; the optimizer seed is $\mathbf{p}_{1,0} = [-50.0,\,35.0,\,50.0]$~mm and $\mathbf{p}_{2,0} = [-12.24,\,-8.87,\,27.87]$~mm with $l_{0} = 415$~mm and 25~mm tendon [Provenance: \texttt{buildKneeFlexorContext20mm.m} lines 209--218; \texttt{buildKneeFlexorRoute20mm.m} lines 98--186]. The biomimetic extensor seed route is given in Table~\ref{tab:app_ext_seed}, including the release schedule of the route-elimination rule.
+
+--- L95 [in baseline (grandfathered?)]
+The knee transform is planar: every joint frame is a rotation about $z$ by the knee angle $\theta_{k}$ composed with a translation fitted to robot CAD tables of the migrating instantaneous center of rotation. With $\mathbf{R} = \mathbf{R}_{z}(\theta_{k})$, the robot (femur$\to$ICR) transform is $\mathbf{T}_{\text{Pam}} = [\mathbf{R},\; [f_{3}(\theta_{k}),\,f_{4}(\theta_{k}),\,0]^{\top};\; \mathbf{0}^{\top}\;1]$ with $f_{3}, f_{4}$ cubic-spline fits (ICR $x$: 23.30 to 10.47~mm; $y$: $-416.65$ to $-395.66$~mm over $\theta_{k} = 0.17$ to $-2.62$~rad), and the ICR$\to$tibia transform is the pure translation $[f_{13}(\theta_{k}),\,f_{14}(\theta_{k}),\,0]^{\top}$ ($x$: 29.66 to $-7.58$~mm; $y$: 25.97 to 22.33~mm), composed as $\mathbf{T}_{t1\to f} = \mathbf{T}_{t1\to\text{ICR}}\;\mathbf{T}_{\text{Pam}}^{-1}$ over 100 frames spanning $\theta_{k} \in [-120^{\circ}, +10^{\circ}]$ [Provenance: \texttt{buildKneeFlexorContext20mm.m} lines 34--80; \texttt{buildKneeExtContext20mm.m} lines 30--78; \texttt{Functions/ModernRobotics/RpToTrans.m}]. In the archived test sets the per-frame transform maps tibia to femur/ICR and takes the form
+
+--- L114 [in baseline (grandfathered?)]
+    \phi_{br} = \operatorname{atan2}(p'_{bz},\, p'_{bx})
+
+--- L121 [in baseline (grandfathered?)]
+    \mathbf{R}_{kbr} = \mathbf{R}_{z}(\theta_{br})\,\mathbf{R}_{y}(\phi_{br})^{\top},
+
+--- L126 [in baseline (grandfathered?)]
+so the frame's $x$ axis aims along the nominal load path. The angles are computed per configuration from the bracket geometry, not fixed [Provenance: \texttt{minimizeFlxPin2brk.m} lines 252--298; \texttt{minimizeExtX3.m} lines 461--483]. As executed, however, the flexor evaluator of record assembles \emph{both} of its bracket frames from the yaw rotation alone (the pitch-only, one-transform pose $\mathbf{T}_{kbr} = [\mathbf{R}_{z}(\theta_{br}), \mathbf{p}_{br}; \mathbf{0}\;1]$): insertion bracket at line 289 and origin bracket at line 305 of \texttt{minimizeFlxPin.m}, with the matching pitch-only point reconstructions at lines 318 and 331; the two-rotation assembly of Eq.~\eqref{eq:app_bracketframe} is computed but left commented at lines 288, 304, and 330. For the pinned extensor the two-rotation assembly is live (transMode default \texttt{2trans}; \texttt{minimizeExtX3.m} lines 3--6 and 479--482). Force is transformed into the bracket frame by $\mathbf{RowVecTrans}(\mathbf{T}_{kbr}^{-1}, \mathbf{F}_{k})$ and deformed points are mapped back by $\mathbf{RowVecTrans}(\mathbf{T}_{kbr}, \cdot)$. Because the insertion array $[X_{1},X_{2},X_{1}]$ is $y$-symmetric, the assembly choice is numerically immaterial there; for the origin bracket it is not (see Table~\ref{tab:app_stiffness_arrays}). The pitch-only (yaw-only) variant that the earlier one-transform fit used survives in \texttt{minimizeFlxPinX3.m} lines 200--209.
+
+--- L138 [in baseline (grandfathered?)]
+Pbr  & 8.38 & 20.75 & 25.10 & biomimetic extensor 10\,mm, cantilever centroid \\
+
+--- L139 [in baseline (grandfathered?)]
+Pbr  & 9.48 & $-33.38$ & 33.90 & biomimetic flexor 20\,mm, bolt-pattern centroid \\
+
+--- L140 [in baseline (grandfathered?)]
+Pbr  & $-19.00$ & 22.00 & 27.60 & biomimetic flexor 10\,mm, cantilever centroid \\
+
+--- L157 [in baseline (grandfathered?)]
+\caption{Bracket stiffness arrays by configuration ($K = [k_{1}, k_{2}, k_{3}]$ in bracket-frame axes, N/m; optimizer solves $X_{1}, X_{2}$ assigned as shown), as executed by the evaluators of record. The flexor evaluator has no frame switch: both brackets use the pitch-only assembly (see the Bracket Reference Points and Frames section above). The pinned-extensor evaluator carries a \texttt{transMode} argument (default \texttt{2trans}, env \texttt{EXTX3\_TRANS}); its axis assignment was revised by the author, with the previous assignment kept commented in the file.}
+
+--- L207 [CHANGED/NEW vs baseline]
+The flexor values are pooled-front row 77 of \texttt{minimizeFlxPin10\_results.mat} (212 members); the extensor values are row 32 of \texttt{minimizeExt10mmX3\_results.mat}, a front generated with $(\chi_{1}, \chi_{2})$ locked to that same row-77 pair (mat fields \texttt{LOCKSRC}, \texttt{xi1lock}, \texttt{xi2lock}, \texttt{flxRow}) with only $(\chi_{0}, \chi_{3})$ searched. The redesign context builders load exactly these values: \texttt{buildKneeFlexorContext20mm.m} pick 77 at lines 171--182, with $\chi_{3}$ from the extensor front's row 32 at lines 188--191, and \texttt{buildKneeExtContext20mm.m} pick 32 at lines 164--171.
+
+--- L209 [CHANGED/NEW vs baseline]
+Table~\ref{tab:app_gof} reports the per-test goodness of fit at the adopted values. The corrected model improves on the uncorrected rigid model in every extensor fit-set test, and the fraction of variance unexplained stays below unity on every fit-set test except the 43\,cm-tendon test (FVU 1.33, against a rigid-baseline FVU of 4.73). The three excluded tests (3, 4, 9) are not part of the fit of record. On the biomimetic extensor test ($l_{0} = \qty{51.8}{\cm}$) the same values give RMSE \qty{1.17}{\N\m}, FVU 0.67, and maximum residual \qty{2.21}{\N\m}, against a rigid baseline of RMSE \qty{3.03}{\N\m}, FVU 4.49, and maximum residual \qty{5.59}{\N\m}; the shared-pair correction now explains the bulk of that configuration's measured torque variance as well as its level [Provenance: \texttt{Dig\_out/xi\_audit\_tmp/reeval\_gof\_20260926.m} and \texttt{reeval\_bio\_20260926.m}; extensor rigid baseline from the \texttt{baselineScores} field of the extensor results mat].
+
+--- L236 [CHANGED/NEW vs baseline]
+This section documents the geometry of the adopted redesigned extensor route (Section~\ref{sec:ongoing}) as saved by the optimization results file (\texttt{Vas\_Pam\_20mm\_Result\_20260925.mat}, the run cited in Table~\ref{tab:app_ext_seed}). Figure~\ref{fig:app_route_geometry} reproduces the optimizer's tiled route-geometry view from that results file: eight pose panels sweep the 100-frame solution, drawing full flexion ($\theta_{k}=-120.0^{\circ}$), the solver frame immediately before each of the six contact-elimination events, and full extension ($+10.0^{\circ}$). The panel angles are the last poses at which the released row is still active; the release angles of Table~\ref{tab:app_ext_seed} are the first poses at which each row is off, one pose spacing of $1.31^{\circ}$ later. Beyond the release schedule, the results file also carries a top-level \texttt{removedText} field reading `\texttt{-p8}'. This field is a plotting leftover rather than a route statement: the plotting block of \texttt{Opt\_run\_Ext.m} (lines 730--736) computes \texttt{removedText} only as part of each interior pose-panel title, naming the point released in the next frame, and the value left in the results file is the one from the last interior panel, the p8 release-event panel at $+6.06^{\circ}$ in Figure~\ref{fig:app_route_geometry}. The route of record does contain p8: like p3, released at $+6.1^{\circ}$, p8 stays active from full flexion through 97 of the 100 design-grid frames until its release at $+7.4^{\circ}$ near full extension (Table~\ref{tab:app_ext_seed}), so the seed table and release schedule document the route as run. Each panel draws the active p1:p9 route in the femur frame (tibia-side rows transformed through the ICR) over the femur-cylinder, femur-wall, corrected-condyle, and tibia clearance envelopes of the route-elimination rule, with the local bend-radius checks at p2 and p8 drawn dashed. The optimized endpoint values of this design are $\mathbf{p}_{1} = [40.0,\,137.0,\,0]$~mm (femur frame; the square marker of Figure~\ref{fig:app_route_geometry}) and $\mathbf{p}_{\text{End}} = [34.4,\,-197.1,\,0]$~mm (tibia frame; the diamond marker), with resting length \qty{827.7}{\mm} and \qty{36.8}{\mm} of tendon.
+
+--- L252 [in baseline (grandfathered?)]
+\caption[Optimized 20 mm extensor route on the OpenSim bone meshes at zero knee angle]{Static bone-mesh view of the optimized 20 mm extensor route at $\theta_{k}=0^{\circ}$, rendered by \texttt{Export\_AppendixBoneMesh.m}.}
+====================================================================================================
+FILE 70-overall
+
+--- L42 [CHANGED/NEW vs baseline]
+The simulation laboratory of Chapter~\ref{ch:sns} is assembled, audited, and in active use. The converted robot model carries all of its muscle-tendon actuators with audited geometry, and the BPA force interface computes actuator forces from the validated model inside the loop; both are documented as complete in the chapter's methods (Section~\ref{sec:preliminary_sim_methods}). The 410-neuron SNS-Toolbox instantiation of the spinal network, with per-leg rhythm-generator half-centers, phase-shifted pattern-formation groups, motoneuron pools for every actuator, and Ia, Ib, and II afferent populations, couples to the converted model at a \qty{2}{\milli\second} neural step, and production walking configurations have been tuned against a walking reference and evaluated on the ground (Section~\ref{sec:gait_library_results}). A drive-weaning study has since produced a feedback-sustained bilateral configuration whose stepping persists with the hand-drive withdrawn entirely, still in place under the support rig, and the robot-side model progresses under its harness at weaned drive (Section~\ref{sec:sns_controller_comparison}). What those same evaluations localize as missing defines the work remaining here: the balance and weight-bearing layers that unsupported, bilateral walking requires; transfer from a single tuning reference to the diversity of the locomotion reference library; and the systematic verification series that follows.
+====================================================================================================
+
+
+ADDED-LINE CENSUS (added lines in unified diff, per chapter):
+  10-introduction: 25 added/changed lines
+  15-background: 80 added/changed lines
+  20-muscles: 112 added/changed lines
+  30-torque: 194 added/changed lines
+  50-database: 28 added/changed lines
+  60-sns: 130 added/changed lines
+  70-overall: 35 added/changed lines
+  80-conclusion: 10 added/changed lines
+  93-AppendixB: 42 added/changed lines
+  94-AppendixC: 66 added/changed lines

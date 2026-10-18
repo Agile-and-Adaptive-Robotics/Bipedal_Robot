@@ -12,26 +12,26 @@ The static BPA model routes each actuator as a straight-segment polyline through
 \end{equation}
 where $\mathbf{p}_{C}$ is the cross-point row, $\mathbf{p}_{C-1}$ the previous row, and $\mathbf{R}$ the frame-crossing rotation [Provenance: \texttt{minimizeFlxPin.m} lines 160 and 524--537 (\texttt{UD}) and 201--235 (\texttt{computeForceVector}); \texttt{minimizeExtX3.m} lines 687--700; BPA struct fields, \texttt{minimizeFlxPin.m} lines 28--35]. The pinned-knee test routes are archived as \texttt{FlxPinBPASet.mat} (5 flexor tests, $M=2$, knee angle $-120^{\circ}$ to $+10^{\circ}$) and \texttt{ExtPinBPASet.mat} (9 extensor tests, $M=7$, knee angle $-125^{\circ}$ to $+35^{\circ}$).
 
-Table~\ref{tab:app_flxpin_tests} lists the five pinned-knee flexor tests; their routes are two points, femur-frame origin $\mathbf{p}_{1} = [-75.0,\,100.0,\,32.8]$~mm and tibia-frame insertion $\mathbf{p}_{2} = [-50.1,\,-45.0,\,32.3]$~mm (test 1; \texttt{FlxPinBPASet.mat}, kf(1), frame 1). Table~\ref{tab:app_extpin_route} lists the extensor pinned-knee route of test 1 at $\theta_{k}=-125^{\circ}$; rows 1--6 are femur-frame and row 7 is tibia-frame, and as the knee extends, rows 2--6 release onto $\mathbf{p}_{1}$ (wrap released at $+35^{\circ}$). Table~\ref{tab:app_extpin_tests} lists the per-test constants of the nine extensor tests; the validation pool used for the correction terms of Section~\ref{sec:improved_model} is tests \{1, 2, 5, 6, 7, 8\} [Provenance: \texttt{Dig\_crossPredict.m} line 46].
+Table~\ref{tab:app_flxpin_tests} lists the five pinned-knee flexor tests; their routes are two points, femur-frame origin $\mathbf{p}_{1} = [-75.0,\,100.0,\,32.8]$~mm and tibia-frame insertion $\mathbf{p}_{2} = [-50.1,\,-45.0,\,32.3]$~mm (test 1; \texttt{FlxPinBPASet.mat}, kf(1), frame 1). Table~\ref{tab:app_extpin_route} lists the extensor pinned-knee route of test 1 at $\theta_{k}=-125^{\circ}$; rows 1--6 are femur-frame and row 7 is tibia-frame, and as the knee extends, rows 2--6 release onto $\mathbf{p}_{1}$ (wrap released at $+35^{\circ}$). Table~\ref{tab:app_extpin_tests} lists the per-test constants of the nine extensor tests; the correction terms of Section~\ref{sec:improved_model} used tests \{1, 2, 5, 6, 7, 8\}, of which the adopted fold trained on \{5, 6, 7\} and held out \{1, 2, 8\} for validation; tests 3, 4, and 9 were not used in the evaluation [Provenance: fold columns of \texttt{minimizeExt10mmX3\_results.mat}; \texttt{Dig\_crossPredict.m} line 46].
 
 \begin{table}[htbp]
-\caption{Pinned-knee flexor test BPA constants, read directly from \texttt{FlxPinBPASet.mat} (kf(1)--kf(5)). Labels are the laboratory shorthand used in the fitting logs (\texttt{minimizeFlxPin10mm\_2brk.m} line 51); $l_{0}$, tendon, and pressure are the values used by the model. All tests use $\diameter$\qty{10}{\mm} BPAs; the 47\,cm test's measured angles carry the $+5.3^{\circ}$ encoder correction at load time (\texttt{minimizeFlxPin.m} lines 77--80), and it was held out of the two-bracket identification as validation.}
+\caption{Pinned-knee flexor test BPA constants, read directly from \texttt{FlxPinBPASet.mat} (kf(1)--kf(5)). Labels are the laboratory shorthand used in the fitting logs (\texttt{minimizeFlxPin10mm\_2brk.m} line 51); $l_{0}$, tendon, and pressure are the values used by the model. All tests use $\diameter$\qty{10}{\mm} BPAs; the 47\,cm test's measured angles carry the $+5.3^{\circ}$ encoder correction at load time (\texttt{minimizeFlxPin.m} lines 77--80). The test was not used in the two-bracket identification, and the corrected-model fit reported for it in Table~\ref{tab:app_gof} is a post hoc evaluation; of the remaining four, the adopted cross-validation fold trained on kf(1) and kf(5) and held out kf(2) and kf(4) for validation.}
 \label{tab:app_flxpin_tests}
 \begin{tabular}{@{}lllllll@{}}
 \toprule
 \textbf{Test} & \textbf{Label} & $\boldsymbol{l_{0}}$ (m) & Tendon (m) & $P$ (kPa) & $F_{m}$ (N) & \textbf{Use} \\
 \midrule
 kf(1) & 48\,cm         & 0.485 & 0     & 605.7 & 443.4 & training \\
-kf(2) & 46\,cm         & 0.457 & 0     & 614.2 & 441.4 & training \\
-kf(3) & 47\,cm         & 0.479 & 0     & 623.2 & 443.0 & held-out validation \\
-kf(4) & 40\,cm-tendon  & 0.406 & 0.035 & 623.4 & 436.9 & training \\
+kf(2) & 46\,cm         & 0.457 & 0     & 614.2 & 441.4 & validation \\
+kf(3) & 47\,cm         & 0.479 & 0     & 623.2 & 443.0 & not used \\
+kf(4) & 40\,cm-tendon  & 0.406 & 0.035 & 623.4 & 436.9 & validation \\
 kf(5) & 41\,cm         & 0.410 & 0     & 615.4 & 437.3 & training \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{sidewaystable}
-\caption{Biomimetic knee, extensor 20\,mm BPA route seed (femur frame: p1--p5; tibia frame: p6--p9; \texttt{buildKneeExtContext20mm.m} lines 431--440, the author's fcec-ray construction; the prior SolidWorks seed is kept commented at lines 421--430). Release schedule of the verified elimination, read from the redesign of record (\texttt{Vas\_Pam\_20mm\_Result\_20260925.mat}, \texttt{routeInfo.eliminatedAngleD}): p5 at $-89.8^{\circ}$, p4 at $-55.7^{\circ}$, p6 at $-47.8^{\circ}$, p7 at $-20.2^{\circ}$, p3 at $+6.1^{\circ}$, p8 at $+7.4^{\circ}$.}
+\caption{Biomimetic knee, extensor \qty{20}{\mm} BPA route seed (femur frame: p1--p5; tibia frame: p6--p9; \texttt{buildKneeExtContext20mm.m} lines 431--440, the author's fcec-ray construction; the prior SolidWorks seed is kept commented at lines 421--430). Release schedule of the verified elimination, read from the redesign of record (\texttt{Vas\_Pam\_20mm\_Result\_20260925.mat}, \texttt{routeInfo.eliminatedAngleD}): p5 at $-89.8^{\circ}$, p4 at $-55.7^{\circ}$, p6 at $-47.8^{\circ}$, p7 at $-20.2^{\circ}$, p3 at $+6.1^{\circ}$, p8 at $+7.4^{\circ}$.}
 \label{tab:app_ext_seed}
 \begin{tabular}{@{}lrrrll@{}}
 \toprule
@@ -69,21 +69,21 @@ p7 & 42.50  & $-75.90$ & 0 \\
 \end{table}
 
 \begin{table}[htbp]
-\caption{Pinned-knee extensor test BPA constants, read directly from \texttt{ExtPinBPASet.mat} (ke(1)--ke(9)). Labels are the laboratory shorthand used in the fitting logs (\texttt{Dig\_resultsTable.m} line 32); $l_{0}$, tendon, and pressure are the values used by the model; note that the shorthand rounds several lengths (e.g.\ ``42\,cm'' is $l_{0}=0.415$~m and ``43\,cm-tendon'' is $l_{0}=0.432$~m). All tests use $\diameter$\qty{10}{\mm} BPAs. The correction terms of Section~\ref{sec:improved_model} were identified on the validation pool \{1, 2, 5, 6, 7, 8\}; tests 3, 4, and 9 were excluded.}
+\caption{Pinned-knee extensor test BPA constants, read directly from \texttt{ExtPinBPASet.mat} (ke(1)--ke(9)). Labels are the laboratory shorthand used in the fitting logs (\texttt{Dig\_resultsTable.m} line 32); $l_{0}$, tendon, and pressure are the values used by the model; the shorthand rounds several lengths (e.g.\ ``42\,cm'' is $l_{0}=0.415$~m and ``43\,cm-tendon'' is $l_{0}=0.432$~m). All tests use $\diameter$\qty{10}{\mm} BPAs. The correction terms of Section~\ref{sec:improved_model} used tests \{1, 2, 5, 6, 7, 8\}: the adopted fold trained on \{5, 6, 7\} and held out \{1, 2, 8\} for validation; tests 3, 4, and 9 were not used in the evaluation.}
 \label{tab:app_extpin_tests}
 \begin{tabular}{@{}lllllll@{}}
 \toprule
 \textbf{Test} & \textbf{Label} & $\boldsymbol{l_{0}}$ (m) & Tendon (m) & $P$ (kPa) & $F_{m}$ (N) & \textbf{Use} \\
 \midrule
-ke(1) & 40\,cm          & 0.400 & 0     & 624.9 & 436.3 & pool \\
-ke(2) & 40\,cm-tendon   & 0.400 & 0.040 & 618.4 & 436.3 & pool \\
-ke(3) & 42\,cm          & 0.415 & 0     & 605.2 & 437.8 & excluded \\
-ke(4) & 42\,cm-tendon   & 0.415 & 0.040 & 605.2 & 437.8 & excluded \\
-ke(5) & 43\,cm          & 0.436 & 0     & 621.8 & 439.7 & pool \\
-ke(6) & 43\,cm-tendon   & 0.432 & 0.022 & 622.9 & 439.3 & pool \\
-ke(7) & 46\,cm          & 0.457 & 0     & 605.9 & 441.4 & pool \\
-ke(8) & 47\,cm          & 0.465 & 0     & 605.9 & 442.0 & pool \\
-ke(9) & 48\,cm          & 0.480 & 0     & 605.9 & 443.1 & excluded \\
+ke(1) & 40\,cm          & 0.400 & 0     & 624.9 & 436.3 & validation \\
+ke(2) & 40\,cm-tendon   & 0.400 & 0.040 & 618.4 & 436.3 & validation \\
+ke(3) & 42\,cm          & 0.415 & 0     & 605.2 & 437.8 & not used \\
+ke(4) & 42\,cm-tendon   & 0.415 & 0.040 & 605.2 & 437.8 & not used \\
+ke(5) & 43\,cm          & 0.436 & 0     & 621.8 & 439.7 & training \\
+ke(6) & 43\,cm-tendon   & 0.432 & 0.022 & 622.9 & 439.3 & training \\
+ke(7) & 46\,cm          & 0.457 & 0     & 605.9 & 441.4 & training \\
+ke(8) & 47\,cm          & 0.465 & 0     & 605.9 & 442.0 & validation \\
+ke(9) & 48\,cm          & 0.480 & 0     & 605.9 & 443.1 & not used \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -170,7 +170,7 @@ Biomimetic flexor                   & $[X_{1},\,X_{2},\,X_{2}]$ & \texttt{minimi
 \end{tabular}
 \end{table}
 
-The wrapping-loss term $X_{3}$ (Equations~\ref{eq:deltaL}--\ref{eq:x3}) is evaluated as $X_{3}\,R\,\lvert\Delta\theta\rvert\,\zeta^{2}$ per contact arc. On the pinned extensor the two physical contact arcs use $R_{1} = 12$~mm ($27^{\circ}$ to $-23^{\circ}$) and $R_{2} = 40$~mm, with arc-length normalizers $27.75/(ang_{1} - ang_{2})$ and $92.46/(ang_{2}+120^{\circ})$; on the biomimetic configurations the bend measure is $w_{\text{rap}}\lvert\theta_{\text{turn}}\rvert$ with $w_{\text{rap}} = 25$~mm [Provenance: \texttt{minimizeExtX3.m} lines 333--359; \texttt{buildKneeFlexorRoute20mm.m} line 268; \texttt{MonoPamDataExplicit\_balanceX3.m} lines 489--494]. Table~\ref{tab:app_opt_bounds} records the optimizer parameterization and bounds of the adopted identification campaign: the two-bracket flexor fit solves all three terms, and the extensor refit locks $(X_{1}, X_{2})$ to the adopted flexor-front values (the extensor front was generated with the pair fixed to flexor front row 77 and only $(X_{0}, X_{3})$ searched), enforcing a single stiffness pair across configurations.
+The wrapping-loss term $X_{3}$ (Equations~\ref{eq:deltaL}--\ref{eq:x3}) is evaluated as $X_{3}\,R\,\lvert\Delta\theta\rvert\,\zeta^{2}$ per contact arc. On the pinned extensor the two physical contact arcs use $R_{1} = 12$~mm ($27^{\circ}$ to $-23^{\circ}$) and $R_{2} = 40$~mm, with arc-length normalizers $27.75/(ang_{1} - ang_{2})$ and $92.46/(ang_{2}+120^{\circ})$; on the biomimetic configurations the bend measure is $w_{\text{rap}}\lvert\theta_{\text{turn}}\rvert$ with $w_{\text{rap}} = 25$~mm [Provenance: \texttt{minimizeExtX3.m} lines 333--359; \texttt{buildKneeFlexorRoute20mm.m} line 268; \texttt{MonoPamDataExplicit\_balanceX3.m} lines 489--494]. Table~\ref{tab:app_opt_bounds} records the optimizer parameterization and bounds of the adopted identification: the two-bracket flexor fit solves all three terms, and the extensor refit locks $(X_{1}, X_{2})$ to the adopted flexor-front values (the extensor front was generated with the pair fixed to the adopted values of Table~\ref{tab:app_xi_values} and only $(X_{0}, X_{3})$ searched), enforcing a single stiffness pair across configurations.
 
 \begin{table}[htbp]
 \caption{Optimizer parameterization and bounds of the adopted identification. Length offsets are carried in centimeters and stiffnesses on a base-10 logarithmic scale; the initial population of the flexor run was drawn from $X_{0}\in[5,15]$~mm, $X_{1}\in[5\times10^{4}, 5\times10^{5}]$~N/m, $X_{2}\in[7\times10^{3}, 1.5\times10^{4}]$~N/m.}
@@ -189,7 +189,7 @@ Pinned extensor refit & $X_{0}, X_{3}$ & $X_{0}\in[-20,\,+5]$~mm; $X_{3}\in[0,\,
 
 \section{Adopted Correction-Term Values}
 
-Table~\ref{tab:app_xi_values} records the correction-term values adopted at the time of writing. The initial single-bracket identification reported with the results figures (Table~\ref{tab:OptCoeff}) was superseded by the two-stage campaign described in Section~\ref{sec:ongoing}: a two-bracket flexor identification over the four training tests of Table~\ref{tab:app_flxpin_tests} (encoder-corrected, cross-validated), followed by an extensor refit that locks $(X_{1}, X_{2})$ to a member of the same flexor Pareto front and solves only the extensor-specific terms $(X_{0}, X_{3})$ on the extensor validation pool. The pinned-flexor data do not uniquely determine $(X_{1}, X_{2})$ (the cross-validation fronts contain a family of stiffness pairs of comparable fit quality), so the adopted flexor row (front row 77) and the locked extensor refit (flxr77 front row 32, generated with the pair fixed to that same row-77 pair) are two operating points tied to one and the same stiffness pair. The row-77 pair was adopted because it is the pair for which both redesign configurations meet the required 5\,\% torque-overshoot target simultaneously: in the adoption campaign the flexor redesign reached a minimum margin of $+5.00$\,\% and the locked extensor redesign $+5.043$\,\% at $-20.2^{\circ}$ (\texttt{Dig\_out/frommat\_flx\_20260920.log} and \texttt{Dig\_out/Opt\_flxr77\_20260920.log}); the refined redesigns of record improve this to $+5.01$\,\% (flexor) and $+5.02$\,\% (extensor).
+Table~\ref{tab:app_xi_values} records the correction-term values adopted at the time of writing. The initial single-bracket identification reported with the results figures (Table~\ref{tab:OptCoeff}) was superseded by the two-stage identification described in Section~\ref{sec:ongoing}: a two-bracket flexor identification over the four tests of Table~\ref{tab:app_flxpin_tests} other than the 47\,cm test, cross-validated with two tests held out per fold (the adopted fold trained on the 48\,cm and 41\,cm tests and validated on the 46\,cm and 40\,cm-tendon tests), followed by an extensor refit that locks $(X_{1}, X_{2})$ to a member of the same flexor Pareto front and solves only the extensor-specific terms $(X_{0}, X_{3})$ on its three-test training set with three tests held out for validation. The pinned-flexor data do not uniquely determine $(X_{1}, X_{2})$ (the cross-validation fronts contain a family of stiffness pairs of comparable fit quality), so the adopted flexor row and the locked extensor refit are two operating points tied to one and the same stiffness pair; Table~\ref{tab:app_xi_values} and the paragraph that follows it state the adopted values and their front-row provenance. The adopted pair was chosen because it is the pair for which both redesign configurations meet the required 5\,\% torque-overshoot target simultaneously: in the adoption sweep the flexor redesign reached a minimum margin of $+5.00$\,\% and the locked extensor redesign $+5.043$\,\% at $-20.2^{\circ}$ (\texttt{Dig\_out/frommat\_flx\_20260920.log} and \texttt{Dig\_out/Opt\_flxr77\_20260920.log}); the refined redesigns improve this to $+5.01$\,\% (flexor) and $+5.02$\,\% (extensor).
 
 \begin{table}[htbp]
 \caption{Adopted correction-term values of record. The flexor fit solves $(\chi_{0}, \chi_{1}, \chi_{2})$; the extensor refit solves $(\chi_{0}, \chi_{3})$ with the stiffness pair locked to the flexor values.}
@@ -204,36 +204,36 @@ Extensor & $-6.38$ & $3.998\times10^{4}$ & $1.473\times10^{4}$ & 0.158 \\
 \end{tabular}
 \end{table}
 
-The flexor values are pooled-front row 77 of \texttt{minimizeFlxPin10\_results\_20260908\_2brkt\_2trans\_noT3.mat} (212 members); the extensor values are row 32 of \texttt{minimizeExt10mmX3\_results\_20260920\_flxr77.mat}, a front generated with $(\chi_{1}, \chi_{2})$ locked to that same row-77 pair (mat fields \texttt{LOCKSRC}, \texttt{xi1lock}, \texttt{xi2lock}, \texttt{flxRow}) with only $(\chi_{0}, \chi_{3})$ searched. The redesign context builders load exactly these values: \texttt{buildKneeFlexorContext20mm.m} pick 77 at lines 171--182, with $\chi_{3}$ from flxr77 row 32 at lines 188--191, and \texttt{buildKneeExtContext20mm.m} pick 32 at lines 164--171.
+The flexor values are pooled-front row 77 of \texttt{minimizeFlxPin10\_results.mat} (212 members); the extensor values are row 32 of \texttt{minimizeExt10mmX3\_results.mat}, a front generated with $(\chi_{1}, \chi_{2})$ locked to that same row-77 pair (mat fields \texttt{LOCKSRC}, \texttt{xi1lock}, \texttt{xi2lock}, \texttt{flxRow}) with only $(\chi_{0}, \chi_{3})$ searched. The redesign context builders load exactly these values: \texttt{buildKneeFlexorContext20mm.m} pick 77 at lines 171--182, with $\chi_{3}$ from the extensor front's row 32 at lines 188--191, and \texttt{buildKneeExtContext20mm.m} pick 32 at lines 164--171.
 
-Table~\ref{tab:app_gof} reports the per-test goodness of fit at the adopted values. The corrected model improves on the uncorrected rigid model in every extensor pool test, and the fraction of variance unexplained stays below unity on every pool test except the 43\,cm-tendon test (FVU 1.33, against a rigid-baseline FVU of 4.73). The three excluded tests (3, 4, 9) are not part of the fit of record. On the biomimetic extensor test ($l_{0} = \qty{51.8}{\cm}$) the same values give RMSE \qty{1.17}{\N\m}, FVU 0.67, and maximum residual \qty{2.21}{\N\m}, against a rigid baseline of RMSE \qty{3.03}{\N\m}, FVU 4.49, and maximum residual \qty{5.59}{\N\m}; the shared-pair correction now explains the bulk of that configuration's measured torque variance as well as its level [Provenance: \texttt{Dig\_out/xi\_audit\_tmp/reeval\_gof\_20260926.m} and \texttt{reeval\_bio\_20260926.m}, evaluator calls of record; extensor rigid baseline from the \texttt{baselineScores} field of the extensor results mat].
+Table~\ref{tab:app_gof} reports the per-test goodness of fit at the adopted values. The corrected model improves on the uncorrected rigid model in every extensor fit-set test, and the fraction of variance unexplained stays below unity on every fit-set test except the 43\,cm-tendon test (FVU 1.33, against a rigid-baseline FVU of 4.73). The three excluded tests (3, 4, 9) are not part of the fit of record. On the biomimetic extensor test ($l_{0} = \qty{51.8}{\cm}$) the same values give RMSE \qty{1.17}{\N\m}, FVU 0.67, and maximum residual \qty{2.21}{\N\m}, against a rigid baseline of RMSE \qty{3.03}{\N\m}, FVU 4.49, and maximum residual \qty{5.59}{\N\m}; the shared-pair correction now explains the bulk of that configuration's measured torque variance as well as its level [Provenance: \texttt{Dig\_out/xi\_audit\_tmp/reeval\_gof\_20260926.m} and \texttt{reeval\_bio\_20260926.m}; extensor rigid baseline from the \texttt{baselineScores} field of the extensor results mat].
 
 \begin{table}[htbp]
-\caption{Per-test torque-prediction goodness of fit at the adopted correction terms of Table~\ref{tab:app_xi_values}: RMSE and FVU of the corrected model, with the uncorrected rigid-model RMSE for the extensor pool. The \qty{47}{\cm} flexor test is pure held-out validation.}
+\caption{Per-test torque-prediction goodness of fit at the adopted correction terms of Table~\ref{tab:app_xi_values}: RMSE and FVU of the corrected model, with the uncorrected rigid-model RMSE for the extensor tests. The \qty{47}{\cm} flexor test was not used in the identification; its corrected-model fit improves over the zero-correction prediction but is a post hoc evaluation.}
 \label{tab:app_gof}
 \begin{tabular}{@{}llccc@{}}
 \toprule
 \textbf{Configuration} & \textbf{Test} & \textbf{RMSE} (N\,m) & \textbf{FVU} & \textbf{Rigid RMSE} (N\,m) \\
 \midrule
-Pinned flexor & 48\,cm & 2.16 & 0.17 & \\
- & 46\,cm & 1.37 & 0.05 & \\
- & 47\,cm (held out) & 2.29 & 0.16 & \\
- & 40\,cm-tendon & 1.61 & 0.04 & \\
- & 41\,cm & 1.08 & 0.03 & \\
+Pinned flexor & 48\,cm (training) & 2.16 & 0.17 & \\
+ & 46\,cm (validation) & 1.37 & 0.05 & \\
+ & 47\,cm (not used) & 2.29 & 0.16 & \\
+ & 40\,cm-tendon (validation) & 1.61 & 0.04 & \\
+ & 41\,cm (training) & 1.08 & 0.03 & \\
 \midrule
-Pinned extensor pool & 40\,cm & 1.24 & 0.13 & 3.09 \\
- & 40\,cm-tendon & 1.35 & 0.89 & 3.62 \\
- & 43\,cm & 0.98 & 0.16 & 2.44 \\
- & 43\,cm-tendon & 1.52 & 1.33 & 2.88 \\
- & 46\,cm & 0.49 & 0.05 & 2.18 \\
- & 47\,cm & 0.70 & 0.17 & 0.95 \\
+Pinned extensor identification & 43\,cm (training) & 0.98 & 0.16 & 2.44 \\
+ & 43\,cm-tendon (training) & 1.52 & 1.33 & 2.88 \\
+ & 46\,cm (training) & 0.49 & 0.05 & 2.18 \\
+ & 40\,cm (validation) & 1.24 & 0.13 & 3.09 \\
+ & 40\,cm-tendon (validation) & 1.35 & 0.89 & 3.62 \\
+ & 47\,cm (validation) & 0.70 & 0.17 & 0.95 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \section{Redesigned Extensor Route Geometry}\label{app:route_geometry}
 
-This section documents the geometry of the redesigned extensor route of record (Section~\ref{sec:ongoing}) as saved by the optimization run of record (\texttt{Vas\_Pam\_20mm\_Result\_20260925.mat}, the run cited in Table~\ref{tab:app_ext_seed}). Figure~\ref{fig:app_route_geometry} reproduces the optimizer's tiled route-geometry view from that results file: eight pose panels sweep the 100-frame solution, drawing full flexion ($\theta_{k}=-120.0^{\circ}$), the solver frame immediately before each of the six contact-elimination events, and full extension ($+10.0^{\circ}$). The panel angles are the last poses at which the released row is still active; the release angles of Table~\ref{tab:app_ext_seed} are the first poses at which each row is off, one pose spacing of $1.31^{\circ}$ later. Beyond the release schedule, the results file also carries a top-level \texttt{removedText} field reading `\texttt{-p8}'. This field is a plotting leftover rather than a route statement: the plotting block of \texttt{Opt\_run\_Ext.m} (lines 730--736) computes \texttt{removedText} only as part of each interior pose-panel title, naming the point released in the next frame, and the value left in the results file is the one from the last interior panel, the p8 release-event panel at $+6.06^{\circ}$ in Figure~\ref{fig:app_route_geometry}. The route of record does contain p8: like p3, released at $+6.1^{\circ}$, p8 stays active from full flexion through 97 of the 100 design-grid frames until its release at $+7.4^{\circ}$ near full extension (Table~\ref{tab:app_ext_seed}), so the seed table and release schedule document the route as run. Each panel draws the active p1:p9 route in the femur frame (tibia-side rows transformed through the ICR) over the femur-cylinder, femur-wall, corrected-condyle, and tibia clearance envelopes of the route-elimination rule, with the local bend-radius checks at p2 and p8 drawn dashed. The optimized endpoint values of this design are $\mathbf{p}_{1} = [40.0,\,137.0,\,0]$~mm (femur frame; the square marker of Figure~\ref{fig:app_route_geometry}) and $\mathbf{p}_{\text{End}} = [34.4,\,-197.1,\,0]$~mm (tibia frame; the diamond marker), with resting length \qty{827.7}{\mm} and \qty{36.8}{\mm} of tendon.
+This section documents the geometry of the adopted redesigned extensor route (Section~\ref{sec:ongoing}) as saved by the optimization results file (\texttt{Vas\_Pam\_20mm\_Result\_20260925.mat}, the run cited in Table~\ref{tab:app_ext_seed}). Figure~\ref{fig:app_route_geometry} reproduces the optimizer's tiled route-geometry view from that results file: eight pose panels sweep the 100-frame solution, drawing full flexion ($\theta_{k}=-120.0^{\circ}$), the solver frame immediately before each of the six contact-elimination events, and full extension ($+10.0^{\circ}$). The panel angles are the last poses at which the released row is still active; the release angles of Table~\ref{tab:app_ext_seed} are the first poses at which each row is off, one pose spacing of $1.31^{\circ}$ later. Beyond the release schedule, the results file also carries a top-level \texttt{removedText} field reading `\texttt{-p8}'. This field is a plotting leftover rather than a route statement: the plotting block of \texttt{Opt\_run\_Ext.m} (lines 730--736) computes \texttt{removedText} only as part of each interior pose-panel title, naming the point released in the next frame, and the value left in the results file is the one from the last interior panel, the p8 release-event panel at $+6.06^{\circ}$ in Figure~\ref{fig:app_route_geometry}. The route of record does contain p8: like p3, released at $+6.1^{\circ}$, p8 stays active from full flexion through 97 of the 100 design-grid frames until its release at $+7.4^{\circ}$ near full extension (Table~\ref{tab:app_ext_seed}), so the seed table and release schedule document the route as run. Each panel draws the active p1:p9 route in the femur frame (tibia-side rows transformed through the ICR) over the femur-cylinder, femur-wall, corrected-condyle, and tibia clearance envelopes of the route-elimination rule, with the local bend-radius checks at p2 and p8 drawn dashed. The optimized endpoint values of this design are $\mathbf{p}_{1} = [40.0,\,137.0,\,0]$~mm (femur frame; the square marker of Figure~\ref{fig:app_route_geometry}) and $\mathbf{p}_{\text{End}} = [34.4,\,-197.1,\,0]$~mm (tibia frame; the diamond marker), with resting length \qty{827.7}{\mm} and \qty{36.8}{\mm} of tendon.
 
 Figure~\ref{fig:app_bone_mesh} places the same optimized route on the OpenSim bone-surface point clouds (\texttt{Open\_Sim\_Bone\_Geometry}) at exactly zero knee angle: the full skeleton (femur, tibia, pelvis and hip, sacrum, lumbar spine, and foot) is drawn behind the three human vastus reference paths in light orange, the optimized p1-to-pEnd route is drawn in magenta with its endpoints circled, and the optimized route carries a total BPA-plus-tendon path length of \qty{0.784}{\m} at this pose. Animated sweeps of both redesigned routes over the full flexion range are archived with the optimization results (\texttt{Knee\_Extensor\_20mm.gif}, 2.3~MB, and \texttt{Knee\_Flexor\_20mm.gif}, 4.7~MB, in \texttt{Code/Matlab/Mesh\_Optimization/Results}).
 
