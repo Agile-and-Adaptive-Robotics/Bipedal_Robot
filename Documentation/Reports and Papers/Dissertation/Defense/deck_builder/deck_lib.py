@@ -124,14 +124,18 @@ def eq(slide, name, x=0, y=0, h=0.5, box=None):
     p = os.path.join(EQ, f"{name}.png")
     return pic(slide, p, x, y, box=box, h=h if not box else None)
 
-def content_slide(prs, kicker, assertion, cite=None, notes=None, assert_size=26):
+def content_slide(prs, kicker, assertion, cite=None, notes=None, assert_size=34):
+    """Template-proportioned assertion-evidence slide (official Alley 16:9 template,
+    authored 10.00x5.62 in, scaled x4/3 to this 13.333x7.5 canvas): headline 26-28pt
+    bold near edge-to-edge at the very top -> 34pt here; evidence fills the region
+    below; call-outs 18pt -> 24pt; cite 14pt -> 13pt muted here (longer, with file:line)."""
     s = prs.slides.add_slide(prs.slide_layouts[6])
     _bg(s)
     if kicker:
-        tx(s, MX, 0.30, 12.2, 0.3, kicker.upper(), size=12, color=TEAL, bold=True)
-    tx(s, MX, 0.60, 12.25, 1.25, assertion, size=assert_size, color=BROWN, bold=True, spacing=0.98)
+        tx(s, 0.35, 0.13, 12.4, 0.28, kicker.upper(), size=12, color=TEAL, bold=True)
+    tx(s, 0.35, 0.44, 12.65, 1.42, assertion, size=assert_size, color=BROWN, bold=True, spacing=0.95)
     if cite:
-        tx(s, MX, 7.08, 11.4, 0.32, cite, size=10, color=FAINT, italic=True)
+        tx(s, 0.35, 7.07, 12.0, 0.34, cite, size=13, color=FAINT, italic=True)
     if notes:
         s.notes_slide.notes_text_frame.text = notes
     return s

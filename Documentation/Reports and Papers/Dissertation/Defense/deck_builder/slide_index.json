@@ -49,7 +49,7 @@
    "THE ACTUATOR",
    "Braided pneumatic actuators: muscle-like strengths, and three modeling headaches",
    "Dissertation Ch. 1 §1.1 + Ch. 2; Hunt et al. 2017; Sárosi et al. 2012-2017; Martens & Boblan 2017; Festo DMSP ",
-   "Festo DMSP-10/20"
+   "Festo DMSP-10/20 fluidic muscle"
   ],
   "notes": true,
   "notes_head": "Sets up gap 1. Force peaks AT resting length - unlike a biological muscle whose optimum is mid-range (Ch. 3, biomimetic-analogy discussion)."
@@ -169,7 +169,7 @@
   "texts": [
    "CH. 4 · HYBRID METHOD",
    "The hybrid method shows the error is kinematic, not force",
-   "Ch. 4, Fig. FlxPin_group A-B (pre-optimized pinned flexor); manuscript bolen_isometric_2025 (in prep.)",
+   "Ch. 4, pinned-flexor setup figures (pre-optimized); manuscript bolen_isometric_2025 (in prep.)",
    "yellow = hybrid; it sits on the blue measured dots where they agree - that agreement is the result | blue = me"
   ],
   "notes": true,
@@ -180,7 +180,7 @@
   "texts": [
    "CH. 4 · IMPROVED MODEL",
    "Three physical effects close the gap: length offset, series compliance, wrap loss",
-   "Ch. 4, improved torque model (Eqs. lm, K_br, delta-l); bracket frames: Fig. bktFrame; two-bracket projection: ",
+   "Dissertation Ch. 4, improved torque model; bracket-frame figures, pinned configurations (Ch. 4)",
    "χ₀ · constant length offset"
   ],
   "notes": true,
@@ -191,7 +191,7 @@
   "texts": [
    "CH. 4 · IDENTIFICATION PROTOCOL",
    "Terms identified by multiobjective optimization, judged on held-out tests",
-   "Ch. 4, identification (gamultiobj / NSGA-II, Deb 2002); bounds: Appendix C, Table C.3 (app_opt_bounds)",
+   "Ch. 4, identification (gamultiobj / NSGA-II, Deb 2002); bounds: Appendix C, optimization-bounds table",
    "4 pinned-flexor tests | (48.5 / 45.7 / 40.6-tendon / 41.0 cm)"
   ],
   "notes": true,
@@ -202,7 +202,7 @@
   "texts": [
    "CH. 4 · PINNED FLEXOR",
    "With corrections, prediction tracks measurement - including the dip at small angles",
-   "Ch. 4, Fig. FlxPin_group C-D; Table TorqueFit rows 1-2 (initial single-bracket identification)",
+   "Ch. 4, pinned-flexor fit and validation figures (panels C-D); torque-fit table, rows 1-2 (initial single-brack",
    "blue = measured · dashed orange = BPA characterization alone · magenta = optimized prediction"
   ],
   "notes": true,
@@ -213,7 +213,7 @@
   "texts": [
    "CH. 4 · PINNED FLEXOR",
    "Corrections cut flexor training-mean RMSE from 8.66 to 1.62 N·m; validation mean 7.59 → 1.49",
-   "Ch. 4, Table FlxPinGof (corrected model, adopted terms); Appendix C, Table app_gof",
+   "Ch. 4, pinned-flexor goodness-of-fit table (corrected model, adopted terms); Appendix C, goodness-of-fit table",
    "FVU (4 identification tests) | 0.17 / 0.03 / 0.05 / 0.04 | 47.9 cm test | encoder-corrected, not used in the i"
   ],
   "notes": true,
@@ -224,7 +224,7 @@
   "texts": [
    "CH. 4 · PINNED EXTENSOR",
    "The extensor wraps the joint - and χ₃ recovers the length it loses there",
-   "Ch. 4, Table ExtPinGof + follow-up identification (adopted χ values); wrap loss: Eq. Δl = χ₃ R |Δθ| ζ²",
+   "Ch. 4, pinned-extensor goodness-of-fit table + follow-up identification (adopted χ values); wrap loss: Δl = χ₃",
    "χ₀ = −6.38 mm | extensor length offset: OPPOSITE sign to the flexor's +3.94 mm"
   ],
   "notes": true,
@@ -235,7 +235,7 @@
   "texts": [
    "CH. 4 · VALUES OF RECORD",
    "One stiffness pair of record spans the flexor and extensor configurations",
-   "Appendix C, Table app_xi_values; flexor front row 77 of 212, extensor front row 32 (pair locked to row 77)",
+   "Appendix C, values-of-record table; flexor front row 77 of 212, extensor front row 32 (pair locked to row 77)",
    "Term"
   ],
   "notes": true,
@@ -246,7 +246,7 @@
   "texts": [
    "CH. 4 · BIOMIMETIC KNEE",
    "The biomimetic knee meets or exceeds human flexor torque over most of the range of motion",
-   "Ch. 4, Fig. FlxGrp + Table TorqueFit; human curve: Gait2392 maximum-isometric torque (Delp 2007; Seth 2018)",
+   "Ch. 4, flexor-envelope figure + torque-fit table; human curve: Gait2392 maximum-isometric torque (Delp 2007; S",
    "blue = measured · magenta = corrected prediction · dashed orange = BPA characterization alone · black dotted ="
   ],
   "notes": true,
@@ -257,7 +257,7 @@
   "texts": [
    "CH. 4 · BIOMIMETIC KNEE",
    "Biomimetic extensor: corrections cut the error, but prediction still sits above measurement",
-   "Ch. 4, Fig. Ext10mm_52cm + Table TorqueFit; adopted values: Appendix C, adopted correction-term values",
+   "Ch. 4, 20 mm extensor figure + torque-fit table; adopted values: Appendix C, adopted correction-term values",
    "⌀10 mm extensor on the four-bar knee, l₀ = 51.8 cm"
   ],
   "notes": true,
@@ -279,7 +279,7 @@
   "texts": [
    "CH. 4 · ROUTE REDESIGN",
    "The cam extensor is the design of record: +30.83% margin with hardware-safe geometry",
-   "Ch. 4, redesigned-route results (cam paragraph); figure: Mesh_Optimization\\Results\\Vas_Pam_20mm_cam_winner_4.p",
+   "Ch. 4, redesigned-route results (cam paragraph); figure: cam-winner plot 4 (print-QC pass), optimization resul",
    "extensor cam, design of record: moment arm vs knee angle"
   ],
   "notes": true,
@@ -290,7 +290,7 @@
   "texts": [
    "CH. 4 · ROUTE REDESIGN",
    "Pulleys buy reach at the knee, and screen the anatomy: geometry binds, not torque",
-   "Ch. 4, mono- and bi-pulley tendon routing + Table bipulley_batch",
+   "Ch. 4, mono- and bi-pulley tendon routing + bi-pulley results table",
    "MONO-PULLEY · KNEE FLEXOR"
   ],
   "notes": true,
@@ -322,7 +322,7 @@
   "n": 30,
   "texts": [
    "CH. 5 · SENSORY AFFERENT DATABASE",
-   "A pathway record maps to a circuit edge: class fixes the signal, phase fixes the gating, action fixes the sign",
+   "A pathway record maps to a circuit edge: class fixes the signal, phase the gating, action the sign",
    "Dissertation Ch. 5, Tables 5.1-5.2 (§Toward Robot and Simulation Use); Ch. 6 implements the mammalian subset",
    "THE CONTROLLER'S SENSORY CHANNELS"
   ],
@@ -421,7 +421,7 @@
   "n": 39,
   "texts": [
    "CH. 7 · DISCUSSION · SYNTHESIS",
-   "Each stage feeds the next: actuator → joint → balance hardware → afferent database → neuromechanical laborator",
+   "Each stage feeds the next: actuator → joint → balance → afferent database → neuromechanical laboratory",
    "Dissertation Ch. 7 §Synthesis (chapters 3-6 supply the links)",
    "ACTUATOR"
   ],

@@ -9,7 +9,7 @@ def s01_title(prs, n):
     s = prs.slides.add_slide(prs.slide_layouts[6]); bg(s)
     pic(s, LOGO, box=(4.47, 0.75, 4.4, 1.34))
     tx(s, 0.7, 2.55, 11.93, 1.9, "Movement and Control of\nBiomimetic Humanoid Robots",
-       size=40, color=BROWN, bold=True, align=PP_ALIGN.CENTER, spacing=1.0)
+       size=44, color=BROWN, bold=True, align=PP_ALIGN.CENTER, spacing=1.0)
     tx(s, 0.7, 4.45, 11.93, 0.45, "Dissertation Defense", size=20, color=MUTED, align=PP_ALIGN.CENTER)
     tx(s, 0.7, 5.15, 11.93, 0.5, "Ben P. Bolen", size=24, color=TEXT, bold=True, align=PP_ALIGN.CENTER)
     tx(s, 0.7, 5.72, 11.93, 0.4, "Advisor: M. Anthony Hunt, Ph.D.", size=15, color=MUTED, align=PP_ALIGN.CENTER)
@@ -56,7 +56,7 @@ def s02_roadmap(prs, n):
         card(s, cx, 2.0, w, 4.55, fill=CARD if i < 3 else CARD2)
         tx(s, cx + 0.25, 2.18, 1.6, 0.7, num, size=30, color=BROWN, bold=True)
         tx(s, cx + 0.25, 2.92, w - 0.5, 1.0, q, size=15, color=TEXT, bold=True, spacing=1.0)
-        tx(s, cx + 0.25, 4.08, w - 0.5, 1.6, m, size=10.5, color=MUTED, spacing=1.05)
+        tx(s, cx + 0.25, 4.08, w - 0.5, 1.6, m, size=11.5, color=MUTED, spacing=1.05)
         tx(s, cx + 0.25, 5.78, w - 0.5, 0.72, tag, size=12, color=c, bold=True, spacing=1.0)
         if i < 3:
             arrow(s, cx + w + 0.015, 4.25, cx + w + gap - 0.015, 4.25, color=FAINT, width=2.2)
@@ -129,34 +129,29 @@ def s05_bpa(prs, n):
               "mid-range (Ch. 3, biomimetic-analogy discussion). Anticipated question: why BPAs rather than "
               "electric actuators? Answer: low mass, high force-to-weight, intrinsic compliance, tension-only "
               "operation, and a qualitatively muscle-like force-length curve (Ch. 1, sec. 1.1) - the costs are "
-              "the modeling issues on the right, which Ch. 3 quantifies.")
-    pic(s, os.path.join(MEDIA, "image5.png"), box=(0.55, 1.95, 2.1, 4.6))
-    tx(s, 0.35, 6.6, 2.5, 0.35, "Festo DMSP-10/20", size=11, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+              "the modeling issues on the right, which Ch. 3 quantifies. Off-slide detail: contraction "
+              "is capped near epsilon_620, and the design chain these models serve is actuator force -> "
+              "joint torque -> comparison with human capability.")
+    pic(s, os.path.join(MEDIA, "image5.png"), box=(0.5, 1.95, 5.15, 4.55))
+    tx(s, 0.5, 6.58, 5.15, 0.35, "Festo DMSP-10/20 fluidic muscle", size=12, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     plus = [
-        "High force-to-weight, low mass",
-        "Intrinsic compliance - safe, spring-like",
+        "High force-to-weight, low mass, intrinsic compliance",
         "Tension-only, like biological muscle",
-        "Force-length curve qualitatively muscle-like",
+        "Muscle-like force-length curve",
     ]
     minus = [
         "Maximum force occurs AT resting length",
-        "Contraction limited (max \u2248 \u03b5\u2086\u2082\u2080)",
-        "F highly nonlinear in l\u2080, P, \u03b5",
+        "Strongly nonlinear in l\u2080, P, \u03b5",
         "Manufacturer tool mis-predicts short BPAs",
     ]
-    rich(s, 3.3, 1.95, 4.6, 0.4, [{"t": "WHY WE USE THEM", "size": 13, "color": GREEN, "bold": True}])
-    y = 2.45
+    rich(s, 6.1, 1.95, 6.7, 0.4, [{"t": "WHY WE USE THEM", "size": 14, "color": GREEN, "bold": True}])
+    y = 2.42
     for p_ in plus:
-        tx(s, 3.3, y, 4.6, 0.5, "+  " + p_, size=15.5, color=TEXT, spacing=1.0); y += 0.68
-    rich(s, 8.25, 1.95, 4.5, 0.4, [{"t": "WHY THEY ARE HARD", "size": 13, "color": RED, "bold": True}])
-    y = 2.45
+        tx(s, 6.1, y, 6.7, 0.5, "+  " + p_, size=17, color=TEXT, spacing=1.0); y += 0.62
+    rich(s, 6.1, 4.55, 6.7, 0.4, [{"t": "WHY THEY ARE HARD", "size": 14, "color": RED, "bold": True}])
+    y = 5.02
     for m_ in minus:
-        tx(s, 8.25, y, 4.5, 0.5, "\u2013  " + m_, size=15.5, color=TEXT, spacing=1.0); y += 0.68
-    card(s, 3.3, 5.35, 9.45, 1.35, fill=CARD)
-    rich(s, 3.6, 5.55, 8.9, 1.0, [
-        {"t": "Designing a biomimetic robot around BPAs needs quantitative, predictive models:", "size": 14.5, "color": MUTED, "space_after": 3},
-        {"t": "actuator force  \u2192  joint torque  \u2192  comparison with human capability", "size": 16, "color": BROWN, "bold": True},
-    ])
+        tx(s, 6.1, y, 6.7, 0.5, "\u2013  " + m_, size=17, color=TEXT, spacing=1.0); y += 0.62
     pageno(s, n)
 
 def s06_gaps(prs, n):

@@ -28,12 +28,12 @@ def s15_stands(prs, n):
 def s16_hybrid(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 hybrid method",
         "The hybrid method shows the error is kinematic, not force",
-        cite="Ch. 4, Fig. FlxPin_group A-B (pre-optimized pinned flexor); manuscript bolen_isometric_2025 (in prep.)",
+        cite="Ch. 4, pinned-flexor setup figures (pre-optimized); manuscript bolen_isometric_2025 (in prep.)",
         notes="Yellow = hybrid (measured Lm and rk + model force). It tracks measurement, so the validated force model is not the problem; the kinematics were. Q: is the hybrid a fit? A: no; it substitutes measured Lm and rk into the same M = rF physics, isolating which model term was wrong.")
     pic(s, os.path.join(FIG, "b_flxpin_preopt.png"), box=(0.5, 2.05, 7.55, 3.9))
     rich(s, 0.5, 6.1, 7.55, 0.8, [
-        {"t": "yellow = hybrid; it sits on the blue measured dots where they agree - that agreement is the result", "size": 10.5, "color": FAINT, "italic": True, "spacing": 1.05, "space_after": 2},
-        {"t": "blue = measured \u00b7 black dashed = original model \u00b7 dashed red = improved BPA characterization", "size": 10.5, "color": FAINT, "italic": True, "spacing": 1.05},
+        {"t": "yellow = hybrid; it sits on the blue measured dots where they agree - that agreement is the result", "size": 11.5, "color": FAINT, "italic": True, "spacing": 1.05, "space_after": 2},
+        {"t": "blue = measured \u00b7 black dashed = original model \u00b7 dashed red = improved BPA characterization", "size": 11.5, "color": FAINT, "italic": True, "spacing": 1.05},
     ])
     card(s, 8.2, 2.1, 4.5, 3.95, fill=CARD)
     rich(s, 8.5, 2.32, 3.95, 3.6, [
@@ -49,7 +49,7 @@ def s16_hybrid(prs, n):
 def s17_corrections(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 improved model",
         "Three physical effects close the gap: length offset, series compliance, wrap loss",
-        cite="Ch. 4, improved torque model (Eqs. lm, K_br, delta-l); bracket frames: Fig. bktFrame; two-bracket projection: Fig. xiProjection",
+        cite="Dissertation Ch. 4, improved torque model; bracket-frame figures, pinned configurations (Ch. 4)",
         notes="chi1/chi2 are EFFECTIVE system stiffness terms (bracket, fixtures, winch, and tendon lumped together), not literal beam stiffness; every stiffness value quoted is an optimizer output. Q: why not model the bracket by FEA? A: printed anisotropic parts, braided sleeve, and construction-dependent tendon stiffness are unmeasured; the lumped terms are identified from the measured torque itself. Moved off-slide: chi0 - measured muscle length is consistently shorter than predicted at every angle, including at \u03b5 = 1, F = 0; that is a constant offset. chi1/chi2 - Hooke law in bracket principal directions; compliance projected on the force direction \u00fb; artificial tendon added in series. chi3 - a BPA bent over the joint loses usable arc length: the wall on the inside of the bend carries less tension; loss grows with the complement of strain, \u03b6 = 1 \u2212 \u03b5*. All three terms are solved together by nonlinear force balance: F\u2098\u2090\u2093 \u00b7 F*(\u03b5*(\u03b4), P*) \u2212 k\u2091\u2094 \u03b4 = 0 \u2192 \u03b4 (bracketed fzero), then length, path, moment arm, and torque are recomputed at the deflected geometry.")
     cw = 3.95; gap = 0.18
     # chi0
@@ -67,18 +67,18 @@ def s17_corrections(prs, n):
     # chi3
     x = MX + 2 * (cw + gap)
     card(s, x, 1.92, cw, 1.85, fill=CARD)
-    tx(s, x + 0.25, 2.06, cw - 0.5, 0.4, "\u03c7\u2083 \u00b7 wrapping loss (\u03b8\u2096 \u2264 \u03b8_wrap)", size=15, color=BROWN, bold=True)
+    tx(s, x + 0.25, 2.06, cw - 0.5, 0.4, "\u03c7\u2083 \u00b7 wrapping loss", size=15, color=BROWN, bold=True)
     eq(s, "wrap", box=(x + 0.25, 2.52, cw - 0.5, 0.40))
     tx(s, x + 0.25, 3.04, cw - 0.5, 0.62, "arc length lost to the bend \u00b7 grows with \u03b6 = 1 \u2212 \u03b5*", size=12.5, color=TEXT, spacing=1.05)
     # evidence: bracket-frame figure enlarged into the freed space
-    tx(s, MX, 3.97, 12.23, 0.26, "bracket frames, pinned configurations (A, B)", size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    tx(s, MX, 3.97, 12.23, 0.26, "bracket frames, pinned configurations (A, B)", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     pic(s, os.path.join(FIG, "b_bktframe_pin.png"), box=(MX, 4.24, 12.23, 2.68), valign="top")
     pageno(s, n)
 
 def s18_identification(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 identification protocol",
         "Terms identified by multiobjective optimization, judged on held-out tests",
-        cite="Ch. 4, identification (gamultiobj / NSGA-II, Deb 2002); bounds: Appendix C, Table C.3 (app_opt_bounds)",
+        cite="Ch. 4, identification (gamultiobj / NSGA-II, Deb 2002); bounds: Appendix C, optimization-bounds table",
         notes="gamultiobj: flexor two-bracket fit evolves 150 for up to 600 generations, extensor refit 50 for 150; parameters searched normalized (cm, log stiffness). The encoder-corrected 47.9 cm test was not used in the two-bracket identification at all. Q: why hold tests out? A: the pinned-flexor data admit a family of stiffness pairs of comparable fit, so the adopted set is selected by held-out prediction, not residual minimization.")
     node(s, MX, 2.0, 3.3, 1.0, "4 pinned-flexor tests\n(48.5 / 45.7 / 40.6-tendon / 41.0 cm)", fill=CARD2, size=12.5)
     node(s, MX + 3.9, 2.0, 2.6, 1.0, "cross-validate:\n2 train / 2 hold per fold", fill=CARD, size=12.5)
@@ -98,10 +98,10 @@ def s18_identification(prs, n):
 def s19_flexor_opt(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 pinned flexor",
         "With corrections, prediction tracks measurement - including the dip at small angles",
-        cite="Ch. 4, Fig. FlxPin_group C-D; Table TorqueFit rows 1-2 (initial single-bracket identification)",
+        cite="Ch. 4, pinned-flexor fit and validation figures (panels C-D); torque-fit table, rows 1-2 (initial single-bracket fit)",
         notes="Panels C (left) and D (right) of Fig. FlxPin_group. Panel C: fit on the 48.5 cm BPA (the panel title reads 48.0 cm; the chapter caption and text use 48.5 cm). Panel D: 45.7 cm, never used in the fit. GoF: 48.5 cm RMSE 1.616, FVU 0.0958, max 3.2527; 45.7 cm validation RMSE 2.1214, FVU 0.0878, max 5.1690. Q: why does the corrected model capture the dip? A: series compliance relieves contraction where force is high and contraction is low, exactly the small-angle regime.")
     pic(s, os.path.join(FIG, "b_flxpin_opt.png"), box=(4.55, 2.15, 7.7, 3.6))
-    tx(s, 4.55, 5.7, 7.7, 0.3, "blue = measured \u00b7 dashed orange = BPA characterization alone \u00b7 magenta = optimized prediction", size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    tx(s, 4.55, 5.7, 7.7, 0.3, "blue = measured \u00b7 dashed orange = BPA characterization alone \u00b7 magenta = optimized prediction", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     rich(s, MX, 2.1, 3.9, 4.4, [
         {"t": "THE MISSING DIP", "size": 12, "color": TEAL, "bold": True, "space_after": 4},
         {"t": "The rigid model completely missed the torque reduction at small flexion angles.", "size": 14.5, "color": TEXT, "spacing": 1.12, "space_after": 12},
@@ -114,26 +114,31 @@ def s19_flexor_opt(prs, n):
 def s20_flexor_numbers(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 pinned flexor",
         "Corrections cut flexor training-mean RMSE from 8.66 to 1.62 N\u00b7m; validation mean 7.59 \u2192 1.49",
-        cite="Ch. 4, Table FlxPinGof (corrected model, adopted terms); Appendix C, Table app_gof",
+        cite="Ch. 4, pinned-flexor goodness-of-fit table (corrected model, adopted terms); Appendix C, goodness-of-fit table",
         notes="Zero-correction per-test RMSE spans 6.37-9.69 N-m (improved BPA characterization alone); corrected FVU stays at or below 0.18 on the four identification tests, the worst case being the 48.5 cm training test at 0.172. Training pair: 48.5 + 41.0 cm (zero-correction mean 8.66); validation pair: 45.7 + 40.6-tendon (mean 7.59). Q: what about the fifth test? A: the encoder-corrected 47.9 cm test was not used in the identification; its post hoc evaluation improves from 7.67 to 2.29 N-m (Appendix C).")
     bar_chart(s, 0.7, 2.0, 8.1, 4.5,
               ["48.5 cm (train)", "41.0 cm (train)", "45.7 cm (val)", "40.6 cm-t (val)"], [2.165, 1.084, 1.368, 1.611],
               [GREEN, GREEN, TEAL, TEAL],
               title="per-test torque RMSE at adopted \u03c7 values (N\u00b7m)", num_fmt="0.000", max_scale=2.6)
-    card(s, 9.2, 2.2, 3.55, 4.2, fill=CARD)
-    rich(s, 9.45, 2.42, 3.1, 3.9, [
+    card(s, 9.2, 2.2, 3.55, 2.6, fill=CARD)
+    rich(s, 9.45, 2.42, 3.1, 2.3, [
         {"t": "FVU (4 identification tests)", "size": 12, "color": TEAL, "bold": True, "space_after": 2},
-        {"t": "0.17 / 0.03 / 0.05 / 0.04", "size": 14.5, "color": TEXT, "spacing": 1.1, "space_after": 12},
+        {"t": "0.17 / 0.03 / 0.05 / 0.04", "size": 14.5, "color": TEXT, "spacing": 1.1, "space_after": 10},
         {"t": "47.9 cm test", "size": 12, "color": TEAL, "bold": True, "space_after": 2},
-        {"t": "encoder-corrected, not used in the identification; improves post hoc (App. C).", "size": 13.5, "color": TEXT, "spacing": 1.12, "space_after": 12},
-        {"t": "Every test predicts.", "size": 14, "color": BROWN, "bold": True, "spacing": 1.1},
+        {"t": "encoder-corrected, not used in the identification; improves post hoc (App. C).", "size": 13.5, "color": TEXT, "spacing": 1.12},
+    ])
+    card(s, 9.2, 5.0, 3.55, 1.5, fill=CARD2)
+    rich(s, 9.45, 5.18, 3.1, 1.2, [
+        {"t": "MEANS (N\u00b7m)", "size": 12, "color": TEAL, "bold": True, "space_after": 4},
+        {"t": "training 8.66 \u2192 1.62", "size": 16, "color": BROWN, "bold": True, "spacing": 1.08, "space_after": 3},
+        {"t": "validation 7.59 \u2192 1.49", "size": 16, "color": BROWN, "bold": True, "spacing": 1.08},
     ])
     pageno(s, n)
 
 def s21_extensor(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 pinned extensor",
         "The extensor wraps the joint - and \u03c7\u2083 recovers the length it loses there",
-        cite="Ch. 4, Table ExtPinGof + follow-up identification (adopted \u03c7 values); wrap loss: Eq. \u0394l = \u03c7\u2083 R |\u0394\u03b8| \u03b6\u00b2",
+        cite="Ch. 4, pinned-extensor goodness-of-fit table + follow-up identification (adopted \u03c7 values); wrap loss: \u0394l = \u03c7\u2083 R |\u0394\u03b8| \u03b6\u00b2",
         notes="The 45.7 cm test trained the extensor fit (RMSE 2.178 to 0.490 N-m); the validation trio is 40.0, 40.0-tendon, and 46.5 cm (triple mean 2.55 to 1.10 N-m). The stiffness pair is locked to the flexor-identified values and never searched. Initial single-bracket extensor values were chi0 = -10.9 mm, chi3 = 0.123 (Table OptCoeff). Q: why does chi0 flip sign? A: wrapping consumes usable length, so the extensor behaves as if longer; its zero point shifts opposite to the flexor's.")
     pic(s, os.path.join(FIG, "ExtPin_group.png"), box=(0.6, 1.9, 7.2, 4.85))
     stats = [
@@ -155,7 +160,7 @@ def s21_extensor(prs, n):
 def s22_xi_record(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 values of record",
         "One stiffness pair of record spans the flexor and extensor configurations",
-        cite="Appendix C, Table app_xi_values; flexor front row 77 of 212, extensor front row 32 (pair locked to row 77)",
+        cite="Appendix C, values-of-record table; flexor front row 77 of 212, extensor front row 32 (pair locked to row 77)",
         notes="Mats of record: minimizeFlxPin10_results.mat row 77, and minimizeExt10mmX3_results.mat row 32 (pair locked to row 77). Initial single-bracket values (Table OptCoeff): flexor 11.9 mm / 1.02e5 / 1.06e4 N/m; extensor -10.9 mm / 0.123. Q: how sensitive is the redesign to the pair choice? A: the adoption screen chose the pair meeting both targets simultaneously: +5.00% flexor and +5.043% extensor at adoption, refined to +5.01% and +5.02% (Appendix C).")
     hdr = ["Term", "Value", "Source", "Row"]
     rows = [
@@ -185,36 +190,41 @@ def s22_xi_record(prs, n):
                align=PP_ALIGN.LEFT if i == 0 else PP_ALIGN.CENTER)
             xx += cw[i]
         y += 0.5
-    card(s, 8.85, 1.95, 3.9, 4.35, fill=CARD2)
-    rich(s, 9.1, 2.15, 3.45, 4.05, [
+    card(s, 8.85, 1.95, 3.9, 3.0, fill=CARD2)
+    rich(s, 9.1, 2.15, 3.45, 2.7, [
         {"t": "READ THIS TABLE LIKE THIS", "size": 11.5, "color": TEAL, "bold": True, "space_after": 5},
         {"t": "The pinned-flexor data admit a family of stiffness pairs of comparable fit quality.", "size": 13.5, "color": TEXT, "spacing": 1.12, "space_after": 8},
         {"t": "The adopted pair was chosen by a requirement external to the fit: both redesign configurations must clear the required 5% torque-overshoot target.", "size": 13.5, "color": TEXT, "spacing": 1.12, "space_after": 8},
         {"t": "The extensor never searches stiffness; it inherits it.", "size": 13.5, "color": BROWN, "bold": True, "spacing": 1.1},
+    ])
+    card(s, 8.85, 5.15, 3.9, 1.15, fill=CARD)
+    rich(s, 9.1, 5.32, 3.45, 0.9, [
+        {"t": "ADOPTION SCREEN (APP. C)", "size": 11.5, "color": TEAL, "bold": True, "space_after": 4},
+        {"t": "+5.00% flexor \u00b7 +5.04% extensor \u2014 both clear the 5% target", "size": 13.5, "color": BROWN, "bold": True, "spacing": 1.1},
     ])
     pageno(s, n)
 
 def s23_bioflexor(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 biomimetic knee",
         "The biomimetic knee meets or exceeds human flexor torque over most of the range of motion",
-        cite="Ch. 4, Fig. FlxGrp + Table TorqueFit; human curve: Gait2392 maximum-isometric torque (Delp 2007; Seth 2018)",
+        cite="Ch. 4, flexor-envelope figure + torque-fit table; human curve: Gait2392 maximum-isometric torque (Delp 2007; Seth 2018)",
         notes="Pinned-flexor chi values transferred unchanged. Panel A: \u230010 mm, l0 = 41.5 cm, 21 mm tendon, 604 kPa, RMSE 0.3007, FVU 0.0102, max 0.4647. Panel B: \u230020 mm, l0 = 42.0 cm, 15 mm tendon, 620 kPa, RMSE 1.8024, FVU 0.0499, max 3.5678. Note: the chapter text gives 42.0 cm for the \u230020 test while its summary table row lists 41.5 cm; the slide follows the text. Q: is the 60-100 deg shortfall fixable? A: yes by route redesign: the two-BPA flexor route exceeds the human envelope at every angle (next slides).")
     pic(s, os.path.join(FIG, "b_flxgrp_trim.png"), box=(0.5, 1.95, 10.05, 4.7))
-    tx(s, 0.5, 6.7, 10.05, 0.32, "blue = measured \u00b7 magenta = corrected prediction \u00b7 dashed orange = BPA characterization alone \u00b7 black dotted = human maximum-isometric torque", size=10, color=FAINT, italic=True)
+    tx(s, 0.5, 6.7, 10.05, 0.32, "blue = measured \u00b7 magenta = corrected prediction \u00b7 dashed orange = BPA characterization alone \u00b7 black dotted = human maximum-isometric torque", size=11.5, color=FAINT, italic=True)
     card(s, 10.7, 2.0, 2.35, 4.7, fill=CARD)
     rich(s, 10.86, 2.18, 2.05, 4.4, [
         {"t": "SHORTFALL", "size": 11, "color": TEAL, "bold": True, "space_after": 3},
         {"t": "60\u2013100\u00b0\n(\u00b120%: 78\u2013103\u00b0)", "size": 13, "color": RED, "bold": True, "spacing": 1.05, "space_after": 10},
         {"t": "\u230020 mm, l\u2080 = 42.0 cm\nRMSE 1.80 \u00b7 FVU 0.05\nmax resid 3.57 N\u00b7m", "size": 12, "color": TEXT, "spacing": 1.05, "space_after": 10},
         {"t": "\u230010 mm panel:\nRMSE 0.30 \u00b7 FVU 0.01", "size": 12, "color": TEXT, "spacing": 1.05, "space_after": 10},
-        {"t": "At 620 kPa the BPA exceeded the test femur's ultimate strength; remaining points taken at 560/421/325/281 kPa.", "size": 10.5, "color": MUTED, "italic": True, "spacing": 1.05},
+        {"t": "At 620 kPa the BPA exceeded the test femur's ultimate strength; remaining points taken at 560/421/325/281 kPa.", "size": 11.5, "color": MUTED, "italic": True, "spacing": 1.05},
     ])
     pageno(s, n)
 
 def s24_bioext(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 biomimetic knee",
         "Biomimetic extensor: corrections cut the error, but prediction still sits above measurement",
-        cite="Ch. 4, Fig. Ext10mm_52cm + Table TorqueFit; adopted values: Appendix C, adopted correction-term values",
+        cite="Ch. 4, 20 mm extensor figure + torque-fit table; adopted values: Appendix C, adopted correction-term values",
         notes="Measured torque is significantly smaller than both the original and the hybrid predictions; the corrected prediction more closely matches but remains higher than measurement, so level validation is not claimed. With the pinned-extensor chi values (the figure): RMSE 0.8920, FVU 0.3396, max 1.4188. At the values of record: max residual 2.21 N-m against a rigid baseline of 5.59. Q: why does extensor validation lag the flexor? A: the route wraps the joint through sequential contacts and passes between the femoral condyles near the ICR; the path model itself is the approximation.")
     pic(s, os.path.join(FIG, "b_ext10mm_trim.png"), box=(0.4, 1.95, 8.35, 3.75))
     tx(s, 0.4, 5.74, 8.35, 0.3, "\u230010 mm extensor on the four-bar knee, l\u2080 = 51.8 cm", size=12, color=MUTED, align=PP_ALIGN.CENTER)
@@ -226,11 +236,11 @@ def s24_bioext(prs, n):
         card(s, x, 6.02, 2.62, 1.0, fill=CARD)
         rich(s, x + 0.1, 6.14, 2.42, 0.85, [
             {"t": v, "size": 16, "color": c, "bold": True, "align": PP_ALIGN.CENTER, "space_after": 1},
-            {"t": lab, "size": 9.5, "color": MUTED, "align": PP_ALIGN.CENTER, "spacing": 0.95},
+            {"t": lab, "size": 11, "color": MUTED, "align": PP_ALIGN.CENTER, "spacing": 0.95},
         ])
         x += 2.72
     pic(s, os.path.join(FIG, "b_passthru.png"), box=(8.55, 1.95, 4.25, 2.75))
-    tx(s, 8.55, 4.78, 4.25, 0.55, "the route passes between the femoral condyles near the ICR: an approximation with inherent error", size=10.5, color=MUTED, italic=True, spacing=1.05)
+    tx(s, 8.55, 4.78, 4.25, 0.55, "the route passes between the femoral condyles near the ICR: an approximation with inherent error", size=11.5, color=MUTED, italic=True, spacing=1.05)
     card(s, 8.55, 5.42, 4.25, 1.6, fill=CARD2)
     rich(s, 8.8, 5.56, 3.8, 1.4, [
         {"t": "CLAIM CONTROL", "size": 11, "color": TEAL, "bold": True, "space_after": 3},
@@ -270,7 +280,7 @@ def s25_ladder(prs, n):
 def s26_cam(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 route redesign",
         "The cam extensor is the design of record: +30.83% margin with hardware-safe geometry",
-        cite="Ch. 4, redesigned-route results (cam paragraph); figure: Mesh_Optimization\\Results\\Vas_Pam_20mm_cam_winner_4.png (print-QC pass)",
+        cite="Ch. 4, redesigned-route results (cam paragraph); figure: cam-winner plot 4 (print-QC pass), optimization results folder",
         notes="The final geometry folds the optimizer winner together with a verified adjustment of the distal route point and tendon length; the winner alone carried +31.30% and +42.34% at the same checks. Envelope pressures sit comfortably above the 150 kPa regulated floor of the VTUG valve manifold that supplies the hardware. Hardware: the first and third points sit at essentially the same knee angle and span a twentyfold range of held torque; the full sweep and the flexor measurements are pending. Q: is the cam margin sensitive to the adopted chi pair? A: margins are evaluated under the values of record, whose adoption rule already required both routes to clear +5%.")
     pic(s, os.path.join(FIG, "b_cam_moment_arm.png"), box=(0.55, 1.9, 6.15, 3.9))
     tx(s, 0.55, 5.85, 6.15, 0.35, "extensor cam, design of record: moment arm vs knee angle", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
@@ -290,7 +300,7 @@ def s26_cam(prs, n):
 def s27_pulleys(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 route redesign",
         "Pulleys buy reach at the knee, and screen the anatomy: geometry binds, not torque",
-        cite="Ch. 4, mono- and bi-pulley tendon routing + Table bipulley_batch",
+        cite="Ch. 4, mono- and bi-pulley tendon routing + bi-pulley results table",
         notes="Pulley run: collision-feasible, zero bound violations, pattern-search exit flag 1; objective values are not commensurable across families (0.08465 pulley vs 74.47 direct). Insertion-side measure of the pulley peak: 85.56 N-m. Bi-pulley: the medial-gastrocnemius run records no finite clearance (worst constraint 10, exit flag -2); rectus femoris worst constraint 0.2423. These are optimizer-stage results, not yet propagated into the OpenSim or MuJoCo model trees. Q: why 25 mm clearance? A: two 10 mm actuator radii plus a 5 mm bundle margin. Q: does the bi-pulley failure kill the concept? A: no; it redirects design toward clearance-relaxed attachment sites. Moved off-slide: the mono-pulley is a single tackle-line part at 1:1 gain; peak predicted flexion torque at the knee axis 81.23 \u2192 85.74 N\u00b7m; the +4.51 N\u00b7m (+5.6%) gain comes from the redirect alone, with no mechanical advantage; off-axis torque \u2264 0.803 N\u00b7m is under 1% of peak; the human flexor scale of 23.16 N\u00b7m is exceeded \u00d73.51 (direct) / \u00d73.70 (pulley); minimum route-to-route clearances 4.26\u201319.14 mm vs the 25 mm requirement of two \u230010 mm actuator radii plus a 5 mm bundle margin - geometry binds, not torque.")
     card(s, MX, 1.95, 5.9, 4.95, fill=CARD)
     tx(s, MX, 2.14, 5.9, 0.32, "MONO-PULLEY \u00b7 KNEE FLEXOR", size=12, color=TEAL, bold=True, align=PP_ALIGN.CENTER)
@@ -320,9 +330,9 @@ def s27_pulleys(prs, n):
                align=PP_ALIGN.LEFT if i == 0 else PP_ALIGN.CENTER)
             xx += cw[i]
         y += 0.42
-    tx(s, 6.85, y + 0.02, 6.0, 0.3, "* infeasibility sentinel objective", size=10, color=FAINT, italic=True)
+    tx(s, 6.85, y + 0.02, 6.0, 0.3, "* infeasibility sentinel objective", size=11.5, color=FAINT, italic=True)
     stat(s, 6.85, 5.42, 5.95, "4.26\u201319.14 mm  vs  25 mm", "minimum route-to-route clearance \u00b7 all five sites rejected", color=RED, vsize=28, lsize=12)
-    tx(s, MX, 6.72, 12.2, 0.3, "optimizer-stage results \u00b7 not yet in the OpenSim or MuJoCo model trees", size=10.5, color=FAINT, italic=True)
+    tx(s, MX, 6.72, 12.2, 0.3, "optimizer-stage results \u00b7 not yet in the OpenSim or MuJoCo model trees", size=11.5, color=FAINT, italic=True)
     pageno(s, n)
 
 def build(prs, start=15):

@@ -88,7 +88,7 @@ def s27_sadb_curation(prs, n):
 
 def s28_sadb_use(prs, n):
     s = content_slide(prs, "Ch. 5 \u00b7 Sensory Afferent Database",
-        "A pathway record maps to a circuit edge: class fixes the signal, phase fixes the gating, action fixes the sign",
+        "A pathway record maps to a circuit edge: class fixes the signal, phase the gating, action the sign",
         cite="Dissertation Ch. 5, Tables 5.1-5.2 (\u00a7Toward Robot and Simulation Use); Ch. 6 implements the mammalian subset",
         notes="Evidence detail: the Feedback table's naming grammar (afferent, action, side, joint, phase) is the same grammar a "
               "circuit edge needs, so translating a record into a controller connection is a lookup rather than a literature search "
@@ -134,7 +134,7 @@ def s28_sadb_use(prs, n):
     lineage = [("Rybak 2006", "two-level CPG"), ("Geyer 2010", "muscle-reflex walking"), ("Deng 2019", "two-layer walker")]
     x = 0.55
     for i, (a, b) in enumerate(lineage):
-        node(s, x, 6.44, 2.15, 0.54, a + "\n" + b, fill=CARD2, size=10.5)
+        node(s, x, 6.44, 2.15, 0.54, a + "\n" + b, fill=CARD2, size=11.5)
         if i < 2:
             arrow(s, x + 2.17, 6.71, x + 2.47, 6.71, color=FAINT, width=1.6)
         x += 2.5
@@ -199,9 +199,9 @@ def s30_toolchain(prs, n):
     pic(s, os.path.join(FIG, "c_mujoco_converted_robot.png"), box=(0.55, 1.86, 3.55, 2.85))
     pic(s, os.path.join(FIG, "c_mujoco_synthetic_knee.png"), box=(4.35, 1.86, 3.55, 2.85))
     pic(s, os.path.join(FIG, "c_simulink_sns_library_grid.png"), box=(8.15, 1.86, 4.62, 2.85))
-    tx(s, 0.55, 4.78, 3.55, 0.3, "converted robot, reference pose", size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
-    tx(s, 4.35, 4.78, 3.55, 0.3, "synthetic antagonist-BPA knee, \u221235\u00b0", size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
-    tx(s, 8.15, 4.78, 4.62, 0.3, "the library's seven core masked blocks", size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    tx(s, 0.55, 4.78, 3.55, 0.3, "converted robot, reference pose", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    tx(s, 4.35, 4.78, 3.55, 0.3, "synthetic antagonist-BPA knee, \u221235\u00b0", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    tx(s, 8.15, 4.78, 4.62, 0.3, "the library's seven core masked blocks", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     cols = [
         (0.55, 3.55, "OpenSim \u2192 MuJoCo", "92 muscle-tendon actuators \u00b7 attachment geometry audited \u00b7 joint signs verified dynamically"),
         (4.35, 3.55, "BPA force in the loop", "Ch. 3 force surface + Ch. 4 \u03c7 force balance computed in Python at every step"),
@@ -235,7 +235,7 @@ def s31_rhythm_core(prs, n):
               "(r = 0.976); modern W2L 2.25 Hz, flexor peaks -56.4 mV never crossing the -55 mV threshold, graded antiphase "
               "r = -0.996; Li walker 0.637 m/s, steps 1.299+-0.024 / 1.333+-0.080 s, duty 0.443 / 0.555.")
     pic(s, os.path.join(FIG, "c_sns_w2l_traces.png"), box=(0.55, 1.86, 7.45, 4.42))
-    tx(s, 0.55, 6.34, 7.45, 0.3, "left / right RG extensor voltages: NumPy reference vs Simulink", size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    tx(s, 0.55, 6.34, 7.45, 0.3, "left / right RG extensor voltages: NumPy reference vs Simulink", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     y = 1.90
     for t, sub, c in [
         ("PERIOD", "1.000 s vs 1.000 s \u2014 0.0% error \u00b7 antiphase exact \u00b7 10 of 10 bursts", GREEN),
@@ -244,7 +244,7 @@ def s31_rhythm_core(prs, n):
     ]:
         card(s, 8.25, y, 4.50, 1.28, fill=CARD)
         rich(s, 8.47, y + 0.13, 4.1, 1.05, [
-            {"t": t, "size": 10.5, "color": c, "bold": True, "space_after": 3},
+            {"t": t, "size": 11.5, "color": c, "bold": True, "space_after": 3},
             {"t": sub, "size": 12.5, "color": TEXT, "bold": True, "spacing": 1.05},
         ])
         y += 1.42
@@ -272,10 +272,10 @@ def s32_bpa_walker(prs, n):
               "knee ranges asserted against each run's own metrics.")
     pic(s, os.path.join(FIG, "c_bpa_ns_knees_big.png"), box=(0.55, 1.88, 2.98, 2.98))
     tx(s, 0.55, 4.92, 2.98, 0.45, "non-spiking \u2014 the chapter's air gate\n(bpa_ns_best_20261003.npz)",
-       size=9.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER, spacing=1.0)
+       size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER, spacing=1.0)
     pic(s, os.path.join(FIG, "c_bpa_spk_knees_big.png"), box=(3.63, 1.88, 2.98, 2.98))
     tx(s, 3.63, 4.92, 2.98, 0.45, "spiking twin \u2014 since submission\n(bpa_spk_best_20261003.npz)",
-       size=9.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER, spacing=1.0)
+       size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER, spacing=1.0)
     stats = [
         ("1.542 s", "knee-flexion period"),
         ("63.5\u00b0", "knee-flexion range"),
@@ -285,7 +285,7 @@ def s32_bpa_walker(prs, n):
         ("7 / 5", "heel-contact episodes, L / R"),
     ]
     for i, (v, l) in enumerate(stats):
-        stat(s, 0.55 + (i % 3) * 2.06, 5.52 + (i // 3) * 0.78, 1.95, v, l, vsize=15, lsize=9)
+        stat(s, 0.55 + (i % 3) * 2.06, 5.52 + (i // 3) * 0.78, 1.95, v, l, vsize=15, lsize=11)
     card(s, 6.95, 1.88, 5.80, 1.62, fill=CARD)
     rich(s, 7.2, 2.00, 5.35, 1.42, [
         {"t": "ON THE GROUND, SAME WEIGHT", "size": 11, "color": RED, "bold": True, "space_after": 3},
@@ -296,11 +296,11 @@ def s32_bpa_walker(prs, n):
        size=13, color=BROWN, bold=True, spacing=1.05)
     card(s, 6.95, 4.66, 5.80, 1.30, fill=CARD, line=TEAL)
     rich(s, 7.2, 4.76, 5.35, 1.12, [
-        {"t": "SINCE SUBMISSION", "size": 10.5, "color": TEAL, "bold": True, "space_after": 2},
+        {"t": "SINCE SUBMISSION", "size": 11.5, "color": TEAL, "bold": True, "space_after": 2},
         {"t": "the spiking twin matches the air gate (knee 62.7\u00b0 / 61.9\u00b0, 9 / 9 contacts) and outscores non-spiking in tuning: 266.9 vs 185.9",
          "size": 11.5, "color": TEXT, "spacing": 1.03},
         {"t": "artifacts: bpa_spk_best_20261003.npz \u00b7 CURRICULUM_RUN_20261003.log",
-         "size": 9, "color": FAINT, "italic": True},
+         "size": 11, "color": FAINT, "italic": True},
     ])
     pageno(s, n)
 
@@ -331,25 +331,25 @@ def s33_gait_sweep(prs, n):
         card(s, 0.55, y, 4.6, 0.86, fill=CARD)
         tx(s, 0.75, y + 0.08, 1.5, 0.35, name, size=14, color=c, bold=True)
         if tag:
-            tx(s, 0.75, y + 0.48, 1.6, 0.3, tag, size=10.5, color=c, bold=True)
+            tx(s, 0.75, y + 0.48, 1.6, 0.3, tag, size=11.5, color=c, bold=True)
         rich(s, 2.35, y + 0.12, 2.7, 0.7, [
             {"t": "tuning-ref  " + tr, "size": 12, "color": MUTED, "space_after": 2},
             {"t": "library mean  " + lm, "size": 13.5, "color": TEXT, "bold": True},
         ])
         y += 1.00
-    tx(s, 0.55, 6.12, 4.6, 0.45, "43 references: 32 running \u00b7 10 walking \u00b7 1 predicted", size=10.5, color=MUTED, spacing=1.05)
+    tx(s, 0.55, 6.12, 4.6, 0.45, "43 references: 32 running \u00b7 10 walking \u00b7 1 predicted", size=11.5, color=MUTED, spacing=1.05)
     pic(s, os.path.join(FIG, "c_w2lvar_joints_big.png"), box=(5.35, 1.86, 3.6, 2.86))
-    tx(s, 5.35, 4.78, 3.6, 0.3, "W2L-layout variant \u2014 closest to the library", size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    tx(s, 5.35, 4.78, 3.6, 0.3, "W2L-layout variant \u2014 closest to the library", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     pic(s, os.path.join(FIG, "c_syn6_joints_big.png"), box=(9.15, 1.86, 3.65, 2.90))
-    tx(s, 9.15, 4.82, 3.65, 0.3, "six-synergy variant \u2014 farthest", size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    tx(s, 9.15, 4.82, 3.65, 0.3, "six-synergy variant \u2014 farthest", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     card(s, 9.15, 5.24, 3.65, 1.55, fill=CARD2)
     rich(s, 9.35, 5.36, 3.3, 1.35, [
-        {"t": "NOT A RUNNING ARTIFACT", "size": 10.5, "color": TEAL, "bold": True, "space_after": 2},
+        {"t": "NOT A RUNNING ARTIFACT", "size": 11.5, "color": TEAL, "bold": True, "space_after": 2},
         {"t": "s3k on the ten walking refs alone: \u22128816 vs \u22128761 running-only \u2014 all four walk right-leg-only or asymmetric",
          "size": 11.5, "color": TEXT, "spacing": 1.04},
     ])
     pic(s, os.path.join(FIG, "c_s3k_mutfix_skeletal.gif"), box=(5.35, 5.12, 3.4, 1.50))
-    tx(s, 5.35, 6.66, 3.4, 0.28, "production s3k, ground evaluation (animated in the talk)", size=10, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    tx(s, 5.35, 6.66, 3.4, 0.28, "production s3k, ground evaluation (animated in the talk)", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     tx(s, 0.55, 6.66, 4.6, 0.3, "the robot-lineage configuration agrees most closely", size=11.5, color=BROWN, bold=True)
     pageno(s, n)
 
@@ -382,13 +382,13 @@ def s34_deletions(prs, n):
         tx(s, 0.75, y + 0.07, 2.9, 0.30, name, size=12, color=TEXT, bold=strong)
         tx(s, 3.35, y + 0.05, 2.1, 0.30, val, size=12, color=c, bold=True, align=PP_ALIGN.RIGHT)
         y += 0.53
-    card(s, 6.05, 1.84, 6.75, 1.62, fill=CARD)
-    rich(s, 6.3, 1.95, 6.3, 1.42, [
+    card(s, 6.05, 1.84, 6.75, 1.32, fill=CARD)
+    rich(s, 6.3, 1.95, 6.3, 1.18, [
         {"t": "THE VARIANTS DIFFER \u2014 AND THAT IS INFORMATIVE", "size": 11, "color": TEAL, "bold": True, "space_after": 3},
         {"t": "syn6, all afferents removed: \u2212190.5, still bilateral \u2014 10 + 10 cycles \u00b7 knee min \u221271.2\u00b0 \u00b7 0.684 s period", "size": 12, "color": TEXT, "spacing": 1.04, "space_after": 3},
         {"t": "w2lvar needs Ia (\u2212273.5) and RG mutual excitation (\u2212279.9); Renshaw removal leaves \u2212142.4", "size": 12, "color": TEXT, "spacing": 1.04},
     ])
-    card(s, 6.05, 3.58, 6.75, 1.62, fill=CARD)
+    card(s, 6.05, 3.30, 6.75, 1.55, fill=CARD)
     rich(s, 6.3, 3.69, 6.3, 1.42, [
         {"t": "STIMULUS SIDE \u2014 DRIVE STEPS AND PUSHES", "size": 11, "color": TEAL, "bold": True, "space_after": 3},
         {"t": "s3k walks at +0.01 / \u22120.01 / \u22120.02 (\u2212201.9 / \u2212177.0 / \u2212171.2), freezes at +0.02 \u00b7 15 stand-and-push evaluations: never fell, max sway 0.123 m", "size": 12, "color": TEXT, "spacing": 1.04, "space_after": 3},
@@ -416,18 +416,18 @@ def s35_spiking_mirrors(prs, n):
               "(line 355).")
     pic(s, os.path.join(FIG, "c_spiking_mirror_rhythm.png"), box=(0.55, 1.86, 5.55, 3.90))
     tx(s, 0.55, 5.82, 5.55, 0.3, "constant drive, network alone: analog 0.399 s vs spiking envelope 0.621 s (+55.6%)",
-       size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+       size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     pic(s, os.path.join(FIG, "c_spiking_mirror_ground_gait.png"), box=(6.35, 1.86, 6.42, 3.90))
     tx(s, 6.35, 5.82, 6.42, 0.3, "ground, same winner parameters: 9 / 0 cycles (left frozen) vs 8 / 9 bilateral, untuned",
-       size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+       size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     card(s, 0.55, 6.14, 12.22, 0.40, fill=CARD)
     tx(s, 0.8, 6.21, 11.8, 0.28,
        "gates: topology identical (1,186 / 7,908 / 7,762 connections) \u00b7 basin 12/12 under 1% jitter (0.89\u00d7 swing) \u00b7 rhythm missed: +55.6% > 20% \u00b7 air \u224810\u00d7 the 0.47 Hz twin",
-       size=10.5, color=TEXT, align=PP_ALIGN.CENTER)
+       size=11.5, color=TEXT, align=PP_ALIGN.CENTER)
     card(s, 0.55, 6.60, 12.22, 0.44, fill=CARD2)
     tx(s, 0.8, 6.68, 11.8, 0.30,
        "one lead, honestly labeled: untuned mirror \u2212236.35 vs \u2212161.57, knee \u221279.8\u00b0 vs \u221264.3\u00b0 \u2014 bilateral where its twin freezes (single run, no statistics)",
-       size=10.5, color=BROWN, bold=True, align=PP_ALIGN.CENTER)
+       size=11.5, color=BROWN, bold=True, align=PP_ALIGN.CENTER)
     pageno(s, n)
 
 def s36_what_spiking_changes(prs, n):
@@ -458,13 +458,13 @@ def s36_what_spiking_changes(prs, n):
     for t, sub, c in calls:
         card(s, 0.55, y, 4.35, 1.12, fill=CARD)
         rich(s, 0.75, y + 0.12, 4.0, 0.92, [
-            {"t": t, "size": 10.5, "color": c, "bold": True, "space_after": 3},
+            {"t": t, "size": 11.5, "color": c, "bold": True, "space_after": 3},
             {"t": sub, "size": 13, "color": TEXT, "bold": True, "spacing": 1.04},
         ])
         y += 1.26
     pic(s, os.path.join(FIG, "c_simulink_knee_spiking_twin.png"), box=(5.15, 1.90, 7.60, 3.60))
     tx(s, 5.15, 5.56, 7.60, 0.3, "knee-reflex twin at the matched operating point \u00b7 unit check: 62 / 62 spikes, \u226411.75 \u00b5s deviation",
-       size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+       size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     card(s, 0.55, 6.50, 12.22, 0.62, fill=CARD2)
     tx(s, 0.8, 6.60, 11.8, 0.44,
        "calibrate first, gate everything \u2014 synaptic strength is a rate-code quantity, never copied from the graded value",
@@ -475,7 +475,7 @@ def s36_what_spiking_changes(prs, n):
 
 def s37_chain(prs, n):
     s = content_slide(prs, "Ch. 7 \u00b7 discussion \u00b7 synthesis",
-        "Each stage feeds the next: actuator \u2192 joint \u2192 balance hardware \u2192 afferent database \u2192 neuromechanical laboratory",
+        "Each stage feeds the next: actuator \u2192 joint \u2192 balance \u2192 afferent database \u2192 neuromechanical laboratory",
         cite="Dissertation Ch. 7 \u00a7Synthesis (chapters 3-6 supply the links)",
         notes="Evidence detail: the force model supplies the actuator terms of the torque model; the torque model supplies the "
               "biomechanical model for designing joint controllers; the validated biomimetic knee shows the architecture reproduces "
@@ -498,7 +498,7 @@ def s37_chain(prs, n):
     for i, (k, ch, sub, fill) in enumerate(cards_):
         card(s, x, 2.15, cw, 3.30, fill=fill)
         tx(s, x + 0.16, 2.32, cw - 0.32, 0.32, k, size=11.5, color=TEAL, bold=True)
-        tx(s, x + 0.16, 2.66, cw - 0.32, 0.3, ch, size=10.5, color=FAINT, italic=True)
+        tx(s, x + 0.16, 2.66, cw - 0.32, 0.3, ch, size=11.5, color=FAINT, italic=True)
         tx(s, x + 0.16, 3.05, cw - 0.32, 2.3, sub, size=11.5, color=TEXT, spacing=1.1)
         if i < 4:
             arrow(s, x + cw + 0.005, 3.80, x + cw + gap - 0.005, 3.80, color=FAINT, width=2.0)

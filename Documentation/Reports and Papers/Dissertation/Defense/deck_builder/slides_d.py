@@ -142,7 +142,7 @@ def a5_wraploss(prs, n):
         {"t": "BIOMIMETIC CONFIGURATIONS", "size": 11.5, "color": TEAL, "bold": True, "space_after": 5},
         {"t": "\u0394l = \u03c7\u2083 \u00b7 b(\u03b8\u2096) \u00b7 (1 \u2212 \u03b5*)\u00b2", "size": 15, "color": TEXT, "space_after": 5},
         {"t": "b(\u03b8\u2096) = routed bend measure (arc length swept by the wrap)", "size": 13.5, "color": TEXT, "spacing": 1.1, "space_after": 3},
-        {"t": "w Rap = 25 mm bend radius in the route builder", "size": 12, "color": MUTED, "spacing": 1.1},
+        {"t": "route builder assumes a 25 mm minimum bend radius", "size": 12, "color": MUTED, "spacing": 1.1},
     ])
     card(s, MX, 4.85, 12.2, 1.35, fill=CARD2)
     rich(s, MX + 0.3, 5.02, 11.6, 1.1, [
@@ -281,12 +281,12 @@ def a10_sns_impl(prs, n):
        size=11, color=FAINT, italic=True, align=PP_ALIGN.CENTER, spacing=1.0)
     card(s, 0.6, 5.90, 6.0, 1.0, fill=CARD)
     rich(s, 0.85, 6.04, 5.5, 0.8, [
-        {"t": "CAD COUPLING (CH. 6 \u00a76.2)", "size": 10.5, "color": TEAL, "bold": True, "space_after": 3},
+        {"t": "CAD COUPLING (CH. 6 \u00a76.2)", "size": 11.5, "color": TEAL, "bold": True, "space_after": 3},
         {"t": "SolidWorks \u2192 URDF \u2192 Simscape Multibody import verified on a trial knee assembly; tendon hardware modeled in CAD, not yet inserted.", "size": 12, "color": TEXT, "spacing": 1.05},
     ])
     card(s, 6.9, 5.90, 5.85, 1.0, fill=CARD)
     rich(s, 7.15, 6.04, 5.35, 0.8, [
-        {"t": "SPIKING BLOCK VERIFICATION (CH. 6 \u00a76.4)", "size": 10.5, "color": TEAL, "bold": True, "space_after": 3},
+        {"t": "SPIKING BLOCK VERIFICATION (CH. 6 \u00a76.4)", "size": 11.5, "color": TEAL, "bold": True, "space_after": 3},
         {"t": "single-spike conductance to 6.2\u00d710\u207b\u2077 \u00b5S \u00b7 62/62 spikes vs the toolbox equations \u00b7 committed regression exact (6.07\u00d710\u207b\u2074 mV).", "size": 12, "color": TEXT, "spacing": 1.05},
     ])
     pageno(s, n)

@@ -9,13 +9,21 @@ os.makedirs(OUT, exist_ok=True)
 for f in os.listdir(OUT):
     os.remove(os.path.join(OUT, f))
 
-app = win32com.client.Dispatch("PowerPoint.Application")
+# attach to a running PowerPoint if there is one (never Quit() an app the user has
+# open, e.g. Ben studying the official A-E template); only spawn-and-quit when none
+try:
+    app = win32com.client.GetActiveObject("PowerPoint.Application")
+    spawned = False
+except Exception:
+    app = win32com.client.Dispatch("PowerPoint.Application")
+    spawned = True
 pres = app.Presentations.Open(PPTX, ReadOnly=True, Untitled=False, WithWindow=False)
 n = pres.Slides.Count
 for i in range(1, n + 1):
     pres.Slides(i).Export(os.path.join(OUT, f"slide_{i:02d}.png"), "PNG", 1600, 900)
 pres.Close()
-app.Quit()
+if spawned:
+    app.Quit()
 sizes = sorted(os.listdir(OUT))
 print("exported", len(sizes), "slides")
 small = [f for f in sizes if os.path.getsize(os.path.join(OUT, f)) < 15000]
