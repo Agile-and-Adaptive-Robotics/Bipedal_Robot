@@ -90,20 +90,48 @@ for k = 1:6
     title(['\bf ' pttl{k}]); subtitle(['\bf ' psub{k}], 'FontName','Arial');
     set(gca, sty{:});
     allY = [allY; b1(i).M; b1(i).M_p(:,3); b1(i).Mexp; b1(i).M_h]; %#ok<AGROW>
-    if k == 3, lg = legend('Location','northeast'); lg.FontSize = 8; end
+    if k == 3, lg = legend('Location','northeast'); lg.FontSize = 8; lgAx = gca; end
 end
 for ax = reshape(findall(fig, 'Type', 'axes'), 1, [])
     ax.YLim = [0, ceil(max(allY)/5)*5];
 end
 ylabel(t, '\bf Torque, N\cdotm'); xlabel(t, '\bf \theta_{k} , \circ');
-% panel letters anchored inside each tile's actual axes box
+% panel letters per Ben's FlxPin_group.fig convention (dump_FlxPin_group_fig.m):
+% margin labels LEFT of each tile's outer box, right edge ~5 thou before
+% outerLeft; text straddles the plot-box top (8 thou below to ~22 above)
 ann = {'(A)','(B)','(C)','(D)','(E)','(F)'};
 drawnow;
+apos = zeros(6,2); pos0 = zeros(6,4); outL = zeros(6,1);
 for j = 1:6
-    pos = axT(j).Position;
-    annotation(fig,'textbox',[pos(1) + 0.004, pos(2) + pos(4) - 0.058, 0.035 0.05], ...
+    pos0(j,:) = axT(j).Position;
+    outL(j) = axT(j).OuterPosition(1);
+    innerTop = pos0(j,2) + pos0(j,4);
+    apos(j,:) = [outL(j) - 0.037, innerTop - 0.008];
+    annotation(fig,'textbox',[apos(j,:) 0.032 0.04], ...
         'String',['\bf ' ann{j}], 'FontSize',12,'FontName','Arial', ...
-        'EdgeColor','none','HorizontalAlignment','left');
+        'EdgeColor','none','HorizontalAlignment','left','VerticalAlignment','top');
+end
+
+% audit: print the final drawn state (Ben's fixes, verified not assumed)
+lgAll = findall(fig, 'Type', 'legend');
+fprintf('AUDIT legend: count=%d  location=%s  on tile-3 axes=%d\n', ...
+    numel(lgAll), lgAll(1).Location, lgAx == axT(3));
+for j = 1:6
+    innerTop = pos0(j,2) + pos0(j,4);
+    rightAtOuter = abs(apos(j,1) + 0.032 - (outL(j) - 0.005)) < 5e-3;   % letter ends just before tile
+    straddlesTop = (apos(j,2) < innerTop) && (apos(j,2) + 0.04 > innerTop); % text box crosses plot-box top
+    fprintf('AUDIT tile %d %s: XLim=[%g %g] letter@(%.3f,%.3f) letterR=%.3f outerL=%.3f innerTop=%.3f rightAtOuter=%d straddlesTop=%d\n', ...
+        j, ann{j}, axT(j).XLim(1), axT(j).XLim(2), apos(j,1), apos(j,2), ...
+        apos(j,1) + 0.032, outL(j), innerTop, rightAtOuter, straddlesTop);
+    % letter box in data coordinates of THIS tile: any plotted point under it?
+    bx = axT(j).XLim(1) + ([apos(j,1), apos(j,1)+0.032] - pos0(j,1)) / pos0(j,3) * diff(axT(j).XLim);
+    by = axT(j).YLim(1) + ([apos(j,2), apos(j,2)+0.04] - pos0(j,2)) / pos0(j,4) * diff(axT(j).YLim);
+    i = pord(j);
+    xs = [b1(i).A_h(:); b1(i).Aexp(:); b1(i).Ak(:); b1(i).Ak(:)];
+    ys = [b1(i).M_h(:); b1(i).Mexp(:); b1(i).M(:); b1(i).M_p(:,3)];
+    n_ov = sum(xs > bx(1) & xs < bx(2) & ys > by(1) & ys < by(2));
+    fprintf('AUDIT tile %d letter data-box x[%.0f %.0f] y[%.1f %.1f] points-under-letter=%d\n', ...
+        j, bx(1), bx(2), by(1), by(2), n_ov);
 end
 exportgraphics(fig, fullfile(outdir,'ExtPin_group.eps'), 'ContentType','vector');
 exportgraphics(fig, fullfile(qcdir,'QC_ExtPin_6panel.png'), 'Resolution',150);
