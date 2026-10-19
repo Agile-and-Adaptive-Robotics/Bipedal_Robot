@@ -230,26 +230,28 @@ def s31_rhythm_core(prs, n):
               "the flexor half-centers peak at minus 56.4 mV and never cross the minus 55 mV threshold, so the rhythm rides graded "
               "extensor-flexor antiphase rather than flexor spiking. Anticipated question: why does cross-engine agreement matter? "
               "Answer: an SNS is a mathematical object that must survive translation between the tools it is built, verified, and "
-              "deployed in - the formalism carries the dynamics, not any particular simulator (Ch. 7, line 14).")
-    pic(s, os.path.join(FIG, "c_sns_w2l_traces.png"), box=(0.55, 1.86, 5.65, 4.30))
-    tx(s, 0.55, 6.22, 5.65, 0.3, "left / right RG extensor voltages: NumPy reference vs Simulink", size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
-    card(s, 6.45, 1.86, 6.35, 1.98, fill=CARD)
-    rich(s, 6.7, 1.98, 5.9, 1.78, [
-        {"t": "TWO ENGINES, ONE RHYTHM", "size": 11, "color": TEAL, "bold": True, "space_after": 3},
-        {"t": "burst period 1.000 s vs 1.000 s \u2014 0.0% error \u00b7 antiphase r = \u22120.525, exact \u00b7 10 of 10 bursts", "size": 12.5, "color": TEXT, "bold": True, "spacing": 1.05, "space_after": 4},
-        {"t": "full traces: r = 0.99996\u20130.99998 at a \u22122 ms lag \u00b7 RMSE 0.099\u20130.111 mV", "size": 12.5, "color": TEXT, "spacing": 1.05},
-    ])
-    card(s, 6.45, 3.98, 6.35, 2.18, fill=CARD)
-    rich(s, 6.7, 4.10, 5.9, 1.98, [
-        {"t": "ARCHIVED MODELS RE-RUN HEADLESS \u2014 11 / 11 METRICS PASS", "size": 11, "color": TEAL, "bold": True, "space_after": 3},
-        {"t": "bilateral contact-driven: 0.450 s / 0.467 s, lag 0.529 cycle (r = 0.976)", "size": 12, "color": TEXT, "spacing": 1.03, "space_after": 3},
-        {"t": "modern W2L: 2.25 Hz \u00b7 flexor peaks \u221256.4 mV never cross \u221255 mV \u00b7 graded antiphase r = \u22120.996", "size": 12, "color": TEXT, "spacing": 1.03, "space_after": 3},
-        {"t": "Li walker: 0.637 m/s \u00b7 steps 1.299\u00b10.024 / 1.333\u00b10.080 s \u00b7 duty 0.443 / 0.555", "size": 12, "color": TEXT, "spacing": 1.03},
-    ])
-    card(s, 0.55, 6.48, 12.22, 0.50, fill=CARD2)
-    tx(s, 0.8, 6.56, 11.8, 0.36,
-       "first deletion finding: heel trains removed \u2192 static latch in every implementation \u2014 phasic contact feedback is part of the drive architecture, not an optional perturbation",
-       size=12, color=BROWN, bold=True, align=PP_ALIGN.CENTER)
+              "deployed in - the formalism carries the dynamics, not any particular simulator (Ch. 7, line 14). "
+              "Removed from slide, kept here: archived bilateral contact-driven model 0.450 s / 0.467 s at 0.529 cycle lag "
+              "(r = 0.976); modern W2L 2.25 Hz, flexor peaks -56.4 mV never crossing the -55 mV threshold, graded antiphase "
+              "r = -0.996; Li walker 0.637 m/s, steps 1.299+-0.024 / 1.333+-0.080 s, duty 0.443 / 0.555.")
+    pic(s, os.path.join(FIG, "c_sns_w2l_traces.png"), box=(0.55, 1.86, 7.45, 4.42))
+    tx(s, 0.55, 6.34, 7.45, 0.3, "left / right RG extensor voltages: NumPy reference vs Simulink", size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    y = 1.90
+    for t, sub, c in [
+        ("PERIOD", "1.000 s vs 1.000 s \u2014 0.0% error \u00b7 antiphase exact \u00b7 10 of 10 bursts", GREEN),
+        ("TRACES", "r = 0.99996\u20130.99998 at a \u22122 ms lag \u00b7 RMSE 0.099\u20130.111 mV", BROWN),
+        ("ARCHIVED MODELS, HEADLESS", "11 / 11 targetable metrics pass on re-run", BLUE),
+    ]:
+        card(s, 8.25, y, 4.50, 1.28, fill=CARD)
+        rich(s, 8.47, y + 0.13, 4.1, 1.05, [
+            {"t": t, "size": 10.5, "color": c, "bold": True, "space_after": 3},
+            {"t": sub, "size": 12.5, "color": TEXT, "bold": True, "spacing": 1.05},
+        ])
+        y += 1.42
+    card(s, 0.55, 6.62, 12.22, 0.50, fill=CARD2)
+    tx(s, 0.8, 6.70, 11.8, 0.36,
+       "heel trains removed \u2192 static latch in every implementation: contact feedback is drive architecture, not perturbation",
+       size=12.5, color=BROWN, bold=True, align=PP_ALIGN.CENTER)
     pageno(s, n)
 
 def s32_bpa_walker(prs, n):
@@ -268,36 +270,35 @@ def s32_bpa_walker(prs, n):
               "the air gate. Figure provenance: both knee panels are regenerated from the run artifacts with the column order fixed "
               "by the campaign code (w2l_mujoco/_curriculum_bpa.py JNTS = hip_L, knee_L, ankle_L, hip_R, knee_R, ankle_R), with "
               "knee ranges asserted against each run's own metrics.")
-    pic(s, os.path.join(FIG, "c_bpa_ns_knees_big.png"), box=(0.55, 1.88, 2.62, 2.62))
-    tx(s, 0.55, 4.40, 2.62, 0.62, "non-spiking \u2014 the chapter's air gate:\nknee flexion + rhythm-generator drive\nartifact: bpa_ns_best_20261003.npz",
+    pic(s, os.path.join(FIG, "c_bpa_ns_knees_big.png"), box=(0.55, 1.88, 2.98, 2.98))
+    tx(s, 0.55, 4.92, 2.98, 0.45, "non-spiking \u2014 the chapter's air gate\n(bpa_ns_best_20261003.npz)",
        size=9.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER, spacing=1.0)
-    pic(s, os.path.join(FIG, "c_bpa_spk_knees_big.png"), box=(3.35, 1.88, 2.62, 2.62))
-    tx(s, 3.35, 4.40, 2.62, 0.62, "spiking twin \u2014 since submission:\nknees + rhythm-generator drive\nartifact: bpa_spk_best_20261003.npz",
+    pic(s, os.path.join(FIG, "c_bpa_spk_knees_big.png"), box=(3.63, 1.88, 2.98, 2.98))
+    tx(s, 3.63, 4.92, 2.98, 0.45, "spiking twin \u2014 since submission\n(bpa_spk_best_20261003.npz)",
        size=9.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER, spacing=1.0)
     stats = [
         ("1.542 s", "knee-flexion period"),
         ("63.5\u00b0", "knee-flexion range"),
         ("880 / 1372 N", "peak BPA force, L / R"),
-        ("372 kPa", "peak pressure \u2014 60% of the 620 kPa ceiling"),
-        ("70%", "of the 411 N body weight, carried by the harness"),
+        ("372 kPa", "peak pressure \u2014 60% of ceiling"),
+        ("70%", "body weight on the harness"),
         ("7 / 5", "heel-contact episodes, L / R"),
     ]
     for i, (v, l) in enumerate(stats):
-        stat(s, 0.55 + (i % 3) * 1.87, 5.06 + (i // 3) * 0.84, 1.79, v, l, vsize=15, lsize=9)
-    card(s, 6.40, 1.88, 6.35, 2.02, fill=CARD)
-    rich(s, 6.65, 1.99, 5.9, 1.82, [
+        stat(s, 0.55 + (i % 3) * 2.06, 5.52 + (i // 3) * 0.78, 1.95, v, l, vsize=15, lsize=9)
+    card(s, 6.95, 1.88, 5.80, 1.62, fill=CARD)
+    rich(s, 7.2, 2.00, 5.35, 1.42, [
         {"t": "ON THE GROUND, SAME WEIGHT", "size": 11, "color": RED, "bold": True, "space_after": 3},
-        {"t": "W2L gate model stands (full support) but does not walk: heel duty zero, +0.001 m forward", "size": 12.5, "color": TEXT, "spacing": 1.05, "space_after": 4},
-        {"t": "Li re-implementation: no stance episodes in any of seven drop-protocol variants", "size": 12.5, "color": TEXT, "spacing": 1.05},
+        {"t": "W2L stands but does not walk: heel duty zero, +0.001 m \u00b7 Li: no stance in 7 drop variants", "size": 12.5, "color": TEXT, "spacing": 1.05},
     ])
-    card(s, 6.40, 4.02, 6.35, 1.08, fill=CARD2)
-    tx(s, 6.65, 4.13, 5.9, 0.9, "the missing piece is the balance and weight-bearing layer \u2014 not the rhythm, the actuators, or the engines",
+    card(s, 6.95, 3.62, 5.80, 0.92, fill=CARD2)
+    tx(s, 7.2, 3.74, 5.35, 0.72, "the missing piece is balance and weight-bearing \u2014 not rhythm, actuators, or engines",
        size=13, color=BROWN, bold=True, spacing=1.05)
-    card(s, 6.40, 5.22, 6.35, 1.72, fill=CARD, line=TEAL)
-    rich(s, 6.65, 5.31, 5.9, 1.58, [
+    card(s, 6.95, 4.66, 5.80, 1.30, fill=CARD, line=TEAL)
+    rich(s, 7.2, 4.76, 5.35, 1.12, [
         {"t": "SINCE SUBMISSION", "size": 10.5, "color": TEAL, "bold": True, "space_after": 2},
-        {"t": "a spiking twin of this walker now matches the air gate (knee 62.7\u00b0 / 61.9\u00b0, 9 / 9 contact episodes) and outscores the non-spiking build in curriculum tuning (266.9 vs 185.9 over 68 vs 66 trials)",
-         "size": 11, "color": TEXT, "spacing": 1.02, "space_after": 2},
+        {"t": "the spiking twin matches the air gate (knee 62.7\u00b0 / 61.9\u00b0, 9 / 9 contacts) and outscores non-spiking in tuning: 266.9 vs 185.9",
+         "size": 11.5, "color": TEXT, "spacing": 1.03},
         {"t": "artifacts: bpa_spk_best_20261003.npz \u00b7 CURRICULUM_RUN_20261003.log",
          "size": 9, "color": FAINT, "italic": True},
     ])
@@ -442,37 +443,32 @@ def s36_what_spiking_changes(prs, n):
               "because it was tuned as a rate code from birth (lines 327, 359). Anticipated question: do the actuator and torque "
               "conclusions of Chapters 3 and 4 depend on the coding choice? Answer: no - the motor-neuron layer stays non-spiking "
               "and the spikes onto it are calibrated by mean conductance, so the continuous activation interface is unchanged by "
-              "construction (line 353).")
-    quads = [
-        ("UNCHANGED \u2014 THE INTERFACE", GREEN,
-         "motor neurons stay graded \u00b7 knee transient identical (15.79\u00b0 at 0.05 s) \u00b7 settle +0.9\u00b0 \u00b7 pour-reflex modulation 5.85\u00b0 vs 5.83\u00b0 (sag 2.00\u00b0 vs 2.02\u00b0 with reflex, 7.85\u00b0 both without)"),
-        ("CHANGES \u2014 TIMING", BROWN,
-         "constant-drive rhythm 55.6% slower \u00b7 air cadence \u224810\u00d7 faster \u2014 opposite directions, so not one scaling error; traced to two knobs (threshold increment, adaptation constant)"),
-        ("CHANGES \u2014 ROBUSTNESS, ITS FAVOR", BLUE,
-         "the analog network sits near a bifurcation; the spiking basin passes 12 / 12 at 0.89\u00d7 swing \u2014 the safer substrate for finite-precision hardware, at 0.5 ms sub-steps inside the unchanged 2 ms physics"),
-        ("NOT TOLERATED \u2014 NAIVE COPIES", RED,
-         "AnimatLab conversions: two-layer dead (2 spikes) \u00b7 bilateral latches at 442\u2013450 Hz \u00b7 reorganized copy co-bursts 11.8 Hz (r = 1.000); thresholds-only keeps oscillating (hip \u221215.1\u00b0 to +23.2\u00b0)"),
+              "construction (line 353). Removed from slide, kept here: settle band +0.9 deg; pour-reflex modulation 5.85 vs 5.83 "
+              "deg (sag 2.00 vs 7.85 without reflex); bilateral conversion latches at 442-450 Hz; reorganized copy co-bursts at "
+              "11.8 Hz (r = 1.000); thresholds-only keeps oscillating (hip -15.1 to +23.2 deg); timing traced to two knobs "
+              "(threshold increment, adaptation constant); unit level: conductance transient matches the exact exponential to "
+              "6.2e-07 uS, hybrid circuit 62 / 62 spikes within 11.75 us, mean ISI within 0.19 us of the toolbox backend.")
+    calls = [
+        ("INTERFACE: UNCHANGED", "knee transient identical \u2014 15.79\u00b0 at 0.05 s", GREEN),
+        ("TIMING: SHIFTS", "rhythm 55.6% slower \u00b7 air cadence \u224810\u00d7 faster", BROWN),
+        ("ROBUSTNESS: ITS FAVOR", "spiking basin 12 / 12 \u00b7 analog near a bifurcation", BLUE),
+        ("NAIVE COPIES: FAIL", "dead \u00b7 latched \u00b7 co-bursting", RED),
     ]
-    xs = [0.55, 4.55]
-    ys = [1.86, 3.62]
-    for i, (t, c, sub) in enumerate(quads):
-        x = xs[i % 2]; y = ys[i // 2]
-        card(s, x, y, 3.85, 1.64, fill=CARD)
-        rich(s, x + 0.2, y + 0.10, 3.5, 1.48, [
+    y = 1.90
+    for t, sub, c in calls:
+        card(s, 0.55, y, 4.35, 1.12, fill=CARD)
+        rich(s, 0.75, y + 0.12, 4.0, 0.92, [
             {"t": t, "size": 10.5, "color": c, "bold": True, "space_after": 3},
-            {"t": sub, "size": 11, "color": TEXT, "spacing": 1.04},
+            {"t": sub, "size": 13, "color": TEXT, "bold": True, "spacing": 1.04},
         ])
-    pic(s, os.path.join(FIG, "c_simulink_knee_spiking_twin.png"), box=(8.70, 1.86, 4.10, 2.86))
-    tx(s, 8.70, 4.78, 4.10, 0.3, "knee-reflex twin at the matched operating point", size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
-    card(s, 8.70, 5.16, 4.10, 1.72, fill=CARD2)
-    rich(s, 8.90, 5.28, 3.75, 1.52, [
-        {"t": "UNIT-LEVEL VERIFICATION", "size": 10.5, "color": TEAL, "bold": True, "space_after": 3},
-        {"t": "conductance transient matches the exact exponential to 6.2e-07 \u00b5S \u00b7 hybrid circuit: 62 / 62 spikes, \u226411.75 \u00b5s deviation \u00b7 mean ISI within 0.19 \u00b5s of the toolbox backend",
-         "size": 11.5, "color": TEXT, "spacing": 1.05},
-    ])
-    tx(s, 0.55, 5.50, 7.85, 1.4,
-       "the transferable method: calibrate first, gate everything \u2014 synaptic strength in a spiking network is a rate-code quantity derived from firing rate and conductance decay, never copied from the graded value",
-       size=13, color=BROWN, bold=True, spacing=1.1)
+        y += 1.26
+    pic(s, os.path.join(FIG, "c_simulink_knee_spiking_twin.png"), box=(5.15, 1.90, 7.60, 3.60))
+    tx(s, 5.15, 5.56, 7.60, 0.3, "knee-reflex twin at the matched operating point \u00b7 unit check: 62 / 62 spikes, \u226411.75 \u00b5s deviation",
+       size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    card(s, 0.55, 6.50, 12.22, 0.62, fill=CARD2)
+    tx(s, 0.8, 6.60, 11.8, 0.44,
+       "calibrate first, gate everything \u2014 synaptic strength is a rate-code quantity, never copied from the graded value",
+       size=13.5, color=BROWN, bold=True, align=PP_ALIGN.CENTER)
     pageno(s, n)
 
 # ---------------------------------------------------------------- Ch. 7 / 8 close
@@ -530,12 +526,12 @@ def s38_limits(prs, n):
               "line 87). Anticipated question: which boundary worries you most? Answer: the balance layer - everything else is "
               "engineering.")
     items = [
-        ("Static, isometric models", "hysteresis and dynamics set aside by design; \u03b5\u2086\u2082\u2080 not predictable a priori \u2014 measured per actuator (Ch. 3)"),
-        ("Stiffness pair not unique", "a family fits the pinned-flexor data; the adopted pair was fixed by an external requirement (Ch. 4)"),
-        ("Bio-extensor prediction still high", "corrected FVU 4.49 \u2192 0.67, RMSE 3.03 \u2192 1.17 N\u00b7m \u2014 but it remains above measurement (Ch. 4)"),
-        ("Full-body co-simulation blocked", "non-finite leg-joint states; foot-contact meshes the primary suspect (Ch. 6)"),
-        ("No unsupported ground walking", "archived walkers stand or latch; the balance layer is not yet present (Ch. 6)"),
-        ("Tuning transfers poorly; MN deletions not reproduced", "library scores 1\u20132 orders worse than tuning refs; motoneuron-level phenomena outstanding (Ch. 6)"),
+        ("Static, isometric models", "hysteresis and dynamics set aside by design (Ch. 3)"),
+        ("Stiffness pair not unique", "a family fits; the adopted pair fixed externally (Ch. 4)"),
+        ("Bio-extensor prediction still high", "FVU 4.49 \u2192 0.67 \u2014 still above measurement (Ch. 4)"),
+        ("Full-body co-simulation blocked", "non-finite leg-joint states (Ch. 6)"),
+        ("No unsupported ground walking", "walkers stand or latch; balance layer absent (Ch. 6)"),
+        ("Tuning transfers poorly", "library scores 1\u20132 orders worse than tuning refs (Ch. 6)"),
     ]
     x = MX; y = 2.05; cw = 6.0
     for i, (t, sub) in enumerate(items):
@@ -564,10 +560,10 @@ def s39_future(prs, n):
               "the Elzein pulse-modulated pressure dynamics (lines 47, 49). Anticipated question: what is first? Answer: the "
               "closed loop - the pipeline is assembled and the blocker is specific.")
     stages = [
-        ("1 \u00b7 CLOSE THE LOOP", "resolve the non-finite leg-joint blocker \u00b7 staged validation: open-loop \u2192 contact + one proprioceptive channel \u2192 full Ia / Ib / II \u00b7 then tune across speeds", CARD),
-        ("2 \u00b7 SENSORIUM", "vestibular (IMU) \u00b7 ocular reset of IMU drift \u00b7 cerebellar gateway between commands and the CPG", CARD),
-        ("3 \u00b7 PHYSICAL REALIZATION", "treadmill biped \u00b7 Teensy per-joint loops + Jetson-class SNS evaluation \u00b7 Ch. 3-4 models as feedforward lookup + Elzein pressure dynamics", CARD),
-        ("4 \u00b7 WHOLE-BODY MANEUVERS", "gait transitions \u00b7 reactive balancing \u00b7 ballistic, precisely timed bursts \u2014 the kickflip aspiration", CARD2),
+        ("1 \u00b7 CLOSE THE LOOP", "resolve the leg-joint blocker \u00b7 staged validation \u2192 full Ia / Ib / II", CARD),
+        ("2 \u00b7 SENSORIUM", "vestibular (IMU) \u00b7 ocular drift reset \u00b7 cerebellar gateway", CARD),
+        ("3 \u00b7 PHYSICAL REALIZATION", "treadmill biped \u00b7 Teensy + Jetson \u00b7 Ch. 3-4 models on board", CARD),
+        ("4 \u00b7 WHOLE-BODY MANEUVERS", "gait transitions \u00b7 reactive balance \u00b7 the kickflip", CARD2),
     ]
     x = MX; cw = 2.95; gap = 0.14
     for i, (t, sub, fill) in enumerate(stages):

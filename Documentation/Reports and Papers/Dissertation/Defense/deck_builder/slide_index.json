@@ -159,7 +159,7 @@
    "CH. 4 · ISOMETRIC KNEE TORQUE",
    "Two test stands: a pinned knee exposes the losses; the biomimetic four-bar validates them",
    "Dissertation Ch. 4 (Isometric Knee Torque), robot leg model and test stands; four-bar knee: Steele et al. 2018",
-   "pinned-joint stand (CAD + test photo)"
+   "test stands: CAD (A) · labeled apparatus (B) · torque testing (C)"
   ],
   "notes": true,
   "notes_head": "Bone geometry from scans of a 6 ft (1.83 m) person. Both joints share the same center of rotation in the femur frame at 0 deg, and the knee "
@@ -269,7 +269,7 @@
    "CH. 4 · ROUTE REDESIGN",
    "The χ values of record drive a redesign ladder: direct routes, a cam, then pulleys",
    "Ch. 4, follow-up identification and route redesign + redesigned-route results; solver: surrogateopt → patterns",
-   "1 · DIRECT ROUTES | two ⌀20 mm BPAs each |  | flexor  +5.01% @ −107° | extensor  +5.02% @ −20.2° | (later supe"
+   "1 · DIRECT ROUTES | two ⌀20 mm BPAs each |  | flexor  +5.01% @ −107° | extensor  +5.02% @ −220.2° | superseded"
   ],
   "notes": true,
   "notes_head": "Direct flexor: predicted knee-axis torque -81.23 to -3.86 N-m vs human-scaled requirement -23.16 to -2.46 N-m (peak 23.16), exceeded at ever"
@@ -291,7 +291,7 @@
    "CH. 4 · ROUTE REDESIGN",
    "Pulleys buy reach at the knee, and screen the anatomy: geometry binds, not torque",
    "Ch. 4, mono- and bi-pulley tendon routing + Table bipulley_batch",
-   "MONO-PULLEY · KNEE FLEXOR | 81.23 → 85.74 N·m | peak predicted flexion torque (knee axis), single tackle-line "
+   "MONO-PULLEY · KNEE FLEXOR"
   ],
   "notes": true,
   "notes_head": "Pulley run: collision-feasible, zero bound violations, pattern-search exit flag 1; objective values are not commensurable across families (0"
@@ -368,7 +368,7 @@
    "CH. 6 · SYNTHETIC NERVOUS SYSTEM · END-TO-END CHAIN",
    "The characterized BPA model drives a stepping, multi-joint walker in MuJoCo",
    "Dissertation Ch. 6 §BPA-Actuated Walker in MuJoCo — air-stepping gate; ground failures reported with equal wei",
-   "non-spiking — the chapter's air gate: | knee flexion + rhythm-generator drive | artifact: bpa_ns_best_20261003"
+   "non-spiking — the chapter's air gate | (bpa_ns_best_20261003.npz)"
   ],
   "notes": true,
   "notes_head": "Evidence detail: the walker geometry of the prior AnimatLab model exported to MuJoCo and driven by antagonistic BPA pairs under the split co"
@@ -412,7 +412,7 @@
    "CH. 6 · SYNTHETIC NERVOUS SYSTEM · CODING ASSUMPTION",
    "Spiking changes timing and robustness; it does not change the interface — and it forbids parameter copies",
    "Dissertation Ch. 6 §What Spiking Changes and Does Not (knee-reflex and beverage twins; AnimatLab conversions)",
-   "UNCHANGED — THE INTERFACE | motor neurons stay graded · knee transient identical (15.79° at 0.05 s) · settle +"
+   "INTERFACE: UNCHANGED | knee transient identical — 15.79° at 0.05 s"
   ],
   "notes": true,
   "notes_head": "Evidence detail: with only the sensory interneuron layer converted, the knee-reflex transient is identical - both read 15.79 degrees at 0.05"
@@ -434,7 +434,7 @@
    "CH. 7 · DISCUSSION · HONEST BOUNDARIES",
    "What these results do not claim",
    "Dissertation Ch. 7 + chapter-level limitations (Chs. 3-6)",
-   "Static, isometric models | hysteresis and dynamics set aside by design; ε₆₂₀ not predictable a priori — measur"
+   "Static, isometric models | hysteresis and dynamics set aside by design (Ch. 3)"
   ],
   "notes": true,
   "notes_head": "These are stated by the dissertation itself. Actuator level: the models are static and isometric - hysteresis, thermodynamics, and airflow a"
@@ -445,7 +445,7 @@
    "CH. 7 · DISCUSSION · FUTURE WORK",
    "The program the tools define: close the loop, extend the sensorium, build the robot, then maneuver",
    "Dissertation Ch. 7 §Future Work (closing the loop in simulation; sensorium, physical realization, whole-body m",
-   "1 · CLOSE THE LOOP | resolve the non-finite leg-joint blocker · staged validation: open-loop → contact + one p"
+   "1 · CLOSE THE LOOP | resolve the leg-joint blocker · staged validation → full Ia / Ib / II"
   ],
   "notes": true,
   "notes_head": "Evidence detail: the nearest work is the closed loop itself - much of the pipeline is already in place and the remaining blocker is the non-"

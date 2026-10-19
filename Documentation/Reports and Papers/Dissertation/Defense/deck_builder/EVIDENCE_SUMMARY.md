@@ -1,5 +1,12 @@
 # EVIDENCE_SUMMARY — Bolen_Dissertation_Defense.pptx (whole-deck rollup)
 
+**2026-10-18 A-E pass (after the EB475WS4 result fixes were pulled in):** slides 17, 25, 27,
+33, 34, 38, 40, 41 were reworked to the assertion-evidence skill (call-outs instead of prose
+cards, figures enlarged). Every number removed from those slide faces moved verbatim into the
+speaker notes, so the manifests below remain the numbers of record. Slide 15's stand figure
+was replaced with the chapter's real three-panel `testJigs_reviewed.pdf` composite (the old
+asset carried the isometric force jig).
+
 **Total slides: 54** (verified by python-pptx read of `Defense\Bolen_Dissertation_Defense.pptx`; renders
 `deck_builder\deck_render\slide_01..54.png` post-date the pptx by 3–7 s, same build).
 

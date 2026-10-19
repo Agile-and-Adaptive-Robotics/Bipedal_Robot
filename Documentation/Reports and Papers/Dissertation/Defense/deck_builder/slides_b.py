@@ -13,7 +13,7 @@ def s15_stands(prs, n):
         cite="Dissertation Ch. 4 (Isometric Knee Torque), robot leg model and test stands; four-bar knee: Steele et al. 2018",
         notes="Bone geometry from scans of a 6 ft (1.83 m) person. Both joints share the same center of rotation in the femur frame at 0 deg, and the knee axis is co-axial with gravity so measurements stay isometric. Q: why two stands? A: the pinned stand isolates one DoF for identification; the four-bar validates transfer to the moving-ICR joint the robot uses.")
     pic(s, os.path.join(FIG, "testJigs_knee.png"), box=(0.6, 1.9, 4.2, 4.8))
-    tx(s, 0.6, 6.72, 4.2, 0.35, "pinned-joint stand (CAD + test photo)", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    tx(s, 0.6, 6.72, 4.2, 0.35, "test stands: CAD (A) \u00b7 labeled apparatus (B) \u00b7 torque testing (C)", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     pic(s, os.path.join(FIG, "b_kneeicr_trim.png"), box=(4.9, 1.8, 4.95, 5.02), valign="top")
     tx(s, 4.9, 6.85, 4.95, 0.35, "biomimetic knee: migrating ICR", size=11.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
     card(s, 9.55, 2.1, 3.2, 4.4, fill=CARD)
@@ -50,33 +50,29 @@ def s17_corrections(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 improved model",
         "Three physical effects close the gap: length offset, series compliance, wrap loss",
         cite="Ch. 4, improved torque model (Eqs. lm, K_br, delta-l); bracket frames: Fig. bktFrame; two-bracket projection: Fig. xiProjection",
-        notes="chi1/chi2 are EFFECTIVE system stiffness terms (bracket, fixtures, winch, and tendon lumped together), not literal beam stiffness; every stiffness value quoted is an optimizer output. Q: why not model the bracket by FEA? A: printed anisotropic parts, braided sleeve, and construction-dependent tendon stiffness are unmeasured; the lumped terms are identified from the measured torque itself.")
+        notes="chi1/chi2 are EFFECTIVE system stiffness terms (bracket, fixtures, winch, and tendon lumped together), not literal beam stiffness; every stiffness value quoted is an optimizer output. Q: why not model the bracket by FEA? A: printed anisotropic parts, braided sleeve, and construction-dependent tendon stiffness are unmeasured; the lumped terms are identified from the measured torque itself. Moved off-slide: chi0 - measured muscle length is consistently shorter than predicted at every angle, including at \u03b5 = 1, F = 0; that is a constant offset. chi1/chi2 - Hooke law in bracket principal directions; compliance projected on the force direction \u00fb; artificial tendon added in series. chi3 - a BPA bent over the joint loses usable arc length: the wall on the inside of the bend carries less tension; loss grows with the complement of strain, \u03b6 = 1 \u2212 \u03b5*. All three terms are solved together by nonlinear force balance: F\u2098\u2090\u2093 \u00b7 F*(\u03b5*(\u03b4), P*) \u2212 k\u2091\u2094 \u03b4 = 0 \u2192 \u03b4 (bracketed fzero), then length, path, moment arm, and torque are recomputed at the deflected geometry.")
     cw = 3.95; gap = 0.18
     # chi0
     x = MX
-    card(s, x, 1.95, cw, 2.75, fill=CARD)
-    tx(s, x + 0.25, 2.10, cw - 0.5, 0.45, "\u03c7\u2080 \u00b7 constant length offset", size=15, color=BROWN, bold=True)
-    eq(s, "lm", box=(x + 0.25, 2.58, cw - 0.5, 0.52))
-    tx(s, x + 0.25, 3.22, cw - 0.5, 1.4, "Measured muscle length is consistently shorter than predicted at every angle - including at \u03b5 = 1, F = 0. That is a constant offset.", size=12.5, color=TEXT, spacing=1.1)
+    card(s, x, 1.92, cw, 1.85, fill=CARD)
+    tx(s, x + 0.25, 2.06, cw - 0.5, 0.4, "\u03c7\u2080 \u00b7 constant length offset", size=15, color=BROWN, bold=True)
+    eq(s, "lm", box=(x + 0.25, 2.52, cw - 0.5, 0.40))
+    tx(s, x + 0.25, 3.04, cw - 0.5, 0.62, "measured shorter than predicted - even at \u03b5 = 1, F = 0", size=12.5, color=TEXT, spacing=1.05)
     # chi1 chi2
     x = MX + cw + gap
-    card(s, x, 1.95, cw, 2.75, fill=CARD)
-    tx(s, x + 0.25, 2.10, cw - 0.5, 0.45, "\u03c7\u2081, \u03c7\u2082 \u00b7 bracket compliance", size=15, color=BROWN, bold=True)
-    eq(s, "kbr", box=(x + 0.25, 2.58, cw - 0.5, 0.52))
-    tx(s, x + 0.25, 3.22, cw - 0.5, 1.4, "Hooke law in bracket principal directions; compliance projected on the force direction \u00fb; artificial tendon added in series.", size=12.5, color=TEXT, spacing=1.1)
+    card(s, x, 1.92, cw, 1.85, fill=CARD)
+    tx(s, x + 0.25, 2.06, cw - 0.5, 0.4, "\u03c7\u2081, \u03c7\u2082 \u00b7 bracket compliance", size=15, color=BROWN, bold=True)
+    eq(s, "kbr", box=(x + 0.25, 2.52, cw - 0.5, 0.40))
+    tx(s, x + 0.25, 3.04, cw - 0.5, 0.62, "compliance projected on the force direction \u00fb \u00b7 tendon in series", size=12.5, color=TEXT, spacing=1.05)
     # chi3
     x = MX + 2 * (cw + gap)
-    card(s, x, 1.95, cw, 2.75, fill=CARD)
-    tx(s, x + 0.25, 2.10, cw - 0.5, 0.45, "\u03c7\u2083 \u00b7 wrapping loss (\u03b8\u2096 \u2264 \u03b8_wrap)", size=15, color=BROWN, bold=True)
-    eq(s, "wrap", box=(x + 0.25, 2.58, cw - 0.5, 0.52))
-    tx(s, x + 0.25, 3.22, cw - 0.5, 1.4, "A BPA bent over the joint loses usable arc length: the wall on the inside of the bend carries less tension. Loss grows with the complement of strain, \u03b6 = 1 \u2212 \u03b5*.", size=12.5, color=TEXT, spacing=1.1)
-    tx(s, MX, 4.86, 6.2, 0.26, "bracket frames, pinned configurations (A, B)", size=10.5, color=FAINT, italic=True)
-    pic(s, os.path.join(FIG, "b_bktframe_pin.png"), box=(MX, 5.14, 6.2, 1.78), valign="top")
-    card(s, 6.8, 4.95, 5.95, 1.85, fill=CARD2)
-    rich(s, 7.05, 5.14, 5.5, 1.6, [
-        {"t": "Solved by nonlinear force balance", "size": 12, "color": TEAL, "bold": True, "space_after": 3},
-        {"t": "F\u2098\u2090\u2093 \u00b7 F*(\u03b5*(\u03b4), P*) \u2212 k\u2091\u2094 \u03b4 = 0  \u2192  \u03b4 (bracketed fzero), then length, path, moment arm, and torque recomputed at the deflected geometry.", "size": 12.5, "color": TEXT, "spacing": 1.08},
-    ])
+    card(s, x, 1.92, cw, 1.85, fill=CARD)
+    tx(s, x + 0.25, 2.06, cw - 0.5, 0.4, "\u03c7\u2083 \u00b7 wrapping loss (\u03b8\u2096 \u2264 \u03b8_wrap)", size=15, color=BROWN, bold=True)
+    eq(s, "wrap", box=(x + 0.25, 2.52, cw - 0.5, 0.40))
+    tx(s, x + 0.25, 3.04, cw - 0.5, 0.62, "arc length lost to the bend \u00b7 grows with \u03b6 = 1 \u2212 \u03b5*", size=12.5, color=TEXT, spacing=1.05)
+    # evidence: bracket-frame figure enlarged into the freed space
+    tx(s, MX, 3.97, 12.23, 0.26, "bracket frames, pinned configurations (A, B)", size=10.5, color=FAINT, italic=True, align=PP_ALIGN.CENTER)
+    pic(s, os.path.join(FIG, "b_bktframe_pin.png"), box=(MX, 4.24, 12.23, 2.68), valign="top")
     pageno(s, n)
 
 def s18_identification(prs, n):
@@ -246,34 +242,29 @@ def s25_ladder(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 route redesign",
         "The \u03c7 values of record drive a redesign ladder: direct routes, a cam, then pulleys",
         cite="Ch. 4, follow-up identification and route redesign + redesigned-route results; solver: surrogateopt \u2192 patternsearch",
-        notes="Direct flexor: predicted knee-axis torque -81.23 to -3.86 N-m vs human-scaled requirement -23.16 to -2.46 N-m (peak 23.16), exceeded at every angle; margin fraction 0.0501 vs required 0.05. Direct extensor: 35.45-109.4 N-m vs 20.25-50.32 N-m, zero shortfall points. Solver budgets: surrogateopt 3,000 evals (direct extensor), 1,000 (flexor), 1,000 + 1,500 refinement (cam), then patternsearch 15,000. Q: why is the flexor margin also about 5%? A: the adoption rule for the stiffness pair required both configurations to clear the +5% envelope, and the flexor model still assumes both actuators share one attachment route; making the mirrored pair explicit is the next refinement.")
+        notes="Direct flexor: predicted knee-axis torque -81.23 to -3.86 N-m vs human-scaled requirement -23.16 to -2.46 N-m (peak 23.16), exceeded at every angle; margin fraction 0.0501 vs required 0.05. Direct extensor: 35.45-109.4 N-m vs 20.25-50.32 N-m, zero shortfall points. Solver budgets: surrogateopt 3,000 evals (direct extensor), 1,000 (flexor), 1,000 + 1,500 refinement (cam), then patternsearch 15,000. Q: why is the flexor margin also about 5%? A: the adoption rule for the stiffness pair required both configurations to clear the +5% envelope, and the flexor model still assumes both actuators share one attachment route; making the mirrored pair explicit is the next refinement. Moved off-slide: shared plan - two \u230020 mm BPAs per route, a 620 kPa pressure ceiling, and maximum usable contraction 0.255; the direct routes were later superseded by the cam extensor (step 2 of the ladder); flexor route \u221281.23 to \u22123.86 N\u00b7m vs human-scaled \u221223.16 to \u22122.46 N\u00b7m, direct extensor 35.45\u2013109.4 vs 20.25\u201350.32 N\u00b7m, envelope exceeded at every angle.")
     nw = 2.83; gap = 0.30
-    y0 = 2.15; nh = 2.45
+    y0 = 2.05; nh = 3.25
     node(s, MX, y0, nw, nh,
-         "1 \u00b7 DIRECT ROUTES\ntwo \u230020 mm BPAs each\n\nflexor  +5.01% @ \u2212107\u00b0\nextensor  +5.02% @ \u221220.2\u00b0\n(later superseded by cam)",
-         fill=CARD, size=12)
+         "1 \u00b7 DIRECT ROUTES\ntwo \u230020 mm BPAs each\n\nflexor  +5.01% @ \u2212107\u00b0\nextensor  +5.02% @ \u2212220.2\u00b0\nsuperseded by cam",
+         fill=CARD, size=13)
     node(s, MX + nw + gap, y0, nw, nh,
          "2 \u00b7 CAM EXTENSOR\ndesign of record\n\n+30.83% vs required envelope\n+39.77% vs plain human\n269\u2013507 kPa to meet it",
-         fill=CARD2, line=TEAL, size=12)
+         fill=CARD2, line=TEAL, size=13)
     node(s, MX + 2 * (nw + gap), y0, nw, nh,
-         "3 \u00b7 MONO-PULLEY\nknee flexor, 1:1 tackle\n\npeak 81.23 \u2192 85.74 N\u00b7m\n+4.51 N\u00b7m (+5.6%)\nno mechanical advantage",
-         fill=CARD, size=12)
+         "3 \u00b7 MONO-PULLEY\nknee flexor \u00b7 1:1 tackle\n\npeak 81.23 \u2192 85.74 N\u00b7m\n+4.51 N\u00b7m (+5.6%)\nno mechanical advantage",
+         fill=CARD, size=13)
     node(s, MX + 3 * (nw + gap), y0, nw, nh,
          "4 \u00b7 BI-PULLEY SCREEN\nfive anatomical sites\n\nall five rejected\nclearances 4.26\u201319.14 mm\nvs 25 mm required",
-         fill=CARD, size=12)
+         fill=CARD, size=13)
     ym = y0 + nh / 2
     arrow(s, MX + nw + 0.03, ym, MX + nw + gap - 0.03, ym)
     arrow(s, MX + 2 * nw + gap + 0.03, ym, MX + 2 * (nw + gap) - 0.03, ym)
     arrow(s, MX + 3 * nw + 2 * gap + 0.03, ym, MX + 3 * (nw + gap) - 0.03, ym)
-    card(s, MX, 4.85, 12.23, 1.05, fill=CARD2)
-    rich(s, MX + 0.3, 4.98, 11.6, 0.85, [
-        {"t": "shared plan: two \u230020 mm BPAs per route \u00b7 620 kPa ceiling \u00b7 maximum usable contraction 0.255", "size": 12.5, "color": TEXT, "space_after": 3},
-        {"t": "targets: vastus medialis (extensor), biceps femoris short head (flexor) \u00b7 required envelope = human curve + 5%", "size": 12.5, "color": TEXT},
-    ])
-    card(s, MX, 6.05, 12.23, 0.85, fill=CARD)
-    tx(s, MX + 0.3, 6.17, 11.6, 0.65,
-       "flexor route: \u221281.23 to \u22123.86 N\u00b7m vs human-scaled \u221223.16 to \u22122.46 N\u00b7m \u00b7 direct extensor: 35.45\u2013109.4 vs 20.25\u201350.32 N\u00b7m \u00b7 envelope exceeded at every angle",
-       size=12, color=MUTED, spacing=1.05)
+    card(s, MX, 5.72, 12.23, 0.68, fill=CARD2)
+    tx(s, MX + 0.3, 5.9, 11.6, 0.4,
+       "targets: vastus medialis (extensor) \u00b7 biceps femoris short head (flexor) \u00b7 required envelope = human curve + 5%",
+       size=12.5, color=TEXT, align=PP_ALIGN.CENTER)
     pageno(s, n)
 
 def s26_cam(prs, n):
@@ -300,17 +291,13 @@ def s27_pulleys(prs, n):
     s = content_slide(prs, "Ch. 4 \u00b7 route redesign",
         "Pulleys buy reach at the knee, and screen the anatomy: geometry binds, not torque",
         cite="Ch. 4, mono- and bi-pulley tendon routing + Table bipulley_batch",
-        notes="Pulley run: collision-feasible, zero bound violations, pattern-search exit flag 1; objective values are not commensurable across families (0.08465 pulley vs 74.47 direct). Insertion-side measure of the pulley peak: 85.56 N-m. Bi-pulley: the medial-gastrocnemius run records no finite clearance (worst constraint 10, exit flag -2); rectus femoris worst constraint 0.2423. These are optimizer-stage results, not yet propagated into the OpenSim or MuJoCo model trees. Q: why 25 mm clearance? A: two 10 mm actuator radii plus a 5 mm bundle margin. Q: does the bi-pulley failure kill the concept? A: no; it redirects design toward clearance-relaxed attachment sites.")
-    card(s, MX, 1.95, 5.9, 4.35, fill=CARD)
-    rich(s, MX + 0.3, 2.15, 5.3, 4.05, [
-        {"t": "MONO-PULLEY \u00b7 KNEE FLEXOR", "size": 12, "color": TEAL, "bold": True, "space_after": 10},
-        {"t": "81.23 \u2192 85.74 N\u00b7m", "size": 24, "color": GREEN, "bold": True, "space_after": 1},
-        {"t": "peak predicted flexion torque (knee axis), single tackle-line part at 1:1 gain", "size": 11.5, "color": MUTED, "spacing": 1.0, "space_after": 12},
-        {"t": "+4.51 N\u00b7m (+5.6%)", "size": 19, "color": BROWN, "bold": True, "space_after": 1},
-        {"t": "from the redirect alone, no mechanical advantage", "size": 11.5, "color": MUTED, "spacing": 1.0, "space_after": 12},
-        {"t": "\u2264 0.803 N\u00b7m off-axis", "size": 19, "color": BROWN, "bold": True, "space_after": 1},
-        {"t": "under 1% of peak \u00b7 human flexor scale 23.16 N\u00b7m exceeded \u00d73.51 (direct) / \u00d73.70 (pulley)", "size": 11.5, "color": MUTED, "spacing": 1.0},
-    ])
+        notes="Pulley run: collision-feasible, zero bound violations, pattern-search exit flag 1; objective values are not commensurable across families (0.08465 pulley vs 74.47 direct). Insertion-side measure of the pulley peak: 85.56 N-m. Bi-pulley: the medial-gastrocnemius run records no finite clearance (worst constraint 10, exit flag -2); rectus femoris worst constraint 0.2423. These are optimizer-stage results, not yet propagated into the OpenSim or MuJoCo model trees. Q: why 25 mm clearance? A: two 10 mm actuator radii plus a 5 mm bundle margin. Q: does the bi-pulley failure kill the concept? A: no; it redirects design toward clearance-relaxed attachment sites. Moved off-slide: the mono-pulley is a single tackle-line part at 1:1 gain; peak predicted flexion torque at the knee axis 81.23 \u2192 85.74 N\u00b7m; the +4.51 N\u00b7m (+5.6%) gain comes from the redirect alone, with no mechanical advantage; off-axis torque \u2264 0.803 N\u00b7m is under 1% of peak; the human flexor scale of 23.16 N\u00b7m is exceeded \u00d73.51 (direct) / \u00d73.70 (pulley); minimum route-to-route clearances 4.26\u201319.14 mm vs the 25 mm requirement of two \u230010 mm actuator radii plus a 5 mm bundle margin - geometry binds, not torque.")
+    card(s, MX, 1.95, 5.9, 4.95, fill=CARD)
+    tx(s, MX, 2.14, 5.9, 0.32, "MONO-PULLEY \u00b7 KNEE FLEXOR", size=12, color=TEAL, bold=True, align=PP_ALIGN.CENTER)
+    stat(s, MX, 2.6, 5.9, "81.23 \u2192 85.74 N\u00b7m", "peak knee-axis flexion torque", color=GREEN, vsize=30, lsize=12)
+    stat(s, MX, 3.78, 5.9, "+4.51 N\u00b7m (+5.6%)", "from the redirect alone", color=BROWN, vsize=26, lsize=12)
+    stat(s, MX, 4.86, 5.9, "\u2264 0.803 N\u00b7m", "off-axis \u00b7 under 1% of peak", color=BROWN, vsize=26, lsize=12)
+    stat(s, MX, 5.94, 5.9, "\u00d73.51 / \u00d73.70", "human flexor scale 23.16 N\u00b7m \u00b7 direct / pulley", color=BLUE, vsize=26, lsize=12)
     tx(s, 6.85, 2.0, 6.0, 0.35, "BI-PULLEY SCREEN \u00b7 FIVE OPENSIM MUSCLE SITES", size=12, color=TEAL, bold=True)
     hdr = ["Muscle site", "Objective", "Outcome"]
     rows = [
@@ -333,13 +320,9 @@ def s27_pulleys(prs, n):
                align=PP_ALIGN.LEFT if i == 0 else PP_ALIGN.CENTER)
             xx += cw[i]
         y += 0.42
-    tx(s, 6.85, y + 0.02, 6.0, 0.3, "* infeasibility sentinel objective (worst constraint 10)", size=10, color=FAINT, italic=True)
-    card(s, 6.85, 5.15, 5.95, 1.15, fill=CARD2)
-    rich(s, 7.1, 5.3, 5.45, 0.95, [
-        {"t": "4.26\u201319.14 mm vs 25 mm required", "size": 15, "color": RED, "bold": True, "space_after": 2},
-        {"t": "minimum route-to-route clearances (two \u230010 mm radii + 5 mm bundle margin): geometry binds, not torque", "size": 11.5, "color": MUTED, "spacing": 1.0},
-    ])
-    tx(s, MX, 6.5, 12.2, 0.4, "optimizer-stage results; not yet propagated into the OpenSim or MuJoCo model trees", size=11, color=FAINT, italic=True)
+    tx(s, 6.85, y + 0.02, 6.0, 0.3, "* infeasibility sentinel objective", size=10, color=FAINT, italic=True)
+    stat(s, 6.85, 5.42, 5.95, "4.26\u201319.14 mm  vs  25 mm", "minimum route-to-route clearance \u00b7 all five sites rejected", color=RED, vsize=28, lsize=12)
+    tx(s, MX, 6.72, 12.2, 0.3, "optimizer-stage results \u00b7 not yet in the OpenSim or MuJoCo model trees", size=10.5, color=FAINT, italic=True)
     pageno(s, n)
 
 def build(prs, start=15):

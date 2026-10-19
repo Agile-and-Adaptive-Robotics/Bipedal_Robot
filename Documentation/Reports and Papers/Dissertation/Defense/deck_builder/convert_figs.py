@@ -20,7 +20,7 @@ JOBS = [
     ("30-torque/Ext10mm_52cm-eps-converted-to.pdf",  "Ext10mm_52cm.png"),
     ("30-torque/FlxGrp-eps-converted-to.pdf",        "FlxGrp.png"),
     ("30-torque/KneeICR-eps-converted-to.pdf",       "KneeICR.png"),
-    ("30-torque/testJigs.pdf",      "testJigs_knee.png"),
+    ("30-torque/testJigs_reviewed.pdf", "testJigs_knee.png"),
     ("30-torque/bktFrame.pdf",      "bktFrame.png"),
     ("60-sns/animatlab_phase1_joint_angles.pdf", "animatlab_phase1_joint_angles.png"),
     # batch C (Ch.5/6 + close): c_-prefixed rasters for slides_c.py

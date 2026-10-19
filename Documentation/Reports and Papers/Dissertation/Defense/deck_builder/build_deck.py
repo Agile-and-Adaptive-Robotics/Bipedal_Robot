@@ -20,6 +20,8 @@ n3 = slides_c.build(prs, n2 + 1)
 n4 = slides_d.build(prs, n3 + 1)
 
 OUT = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Bolen_Dissertation_Defense.pptx")
+if len(sys.argv) > 1:
+    OUT = os.path.abspath(sys.argv[1])  # optional override, e.g. while PowerPoint holds the default open
 prs.core_properties.title = "Movement and Control of Biomimetic Humanoid Robots"
 prs.core_properties.author = "Ben P. Bolen"
 prs.save(OUT)

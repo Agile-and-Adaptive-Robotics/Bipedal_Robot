@@ -2,6 +2,8 @@ import os, sys
 import win32com.client
 
 PPTX = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Bolen_Dissertation_Defense.pptx")
+if len(sys.argv) > 1:
+    PPTX = os.path.abspath(sys.argv[1])  # optional override, e.g. while PowerPoint holds the default open
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "deck_render")
 os.makedirs(OUT, exist_ok=True)
 for f in os.listdir(OUT):

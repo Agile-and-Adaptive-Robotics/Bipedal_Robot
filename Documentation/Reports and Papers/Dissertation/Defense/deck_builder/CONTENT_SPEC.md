@@ -15,6 +15,12 @@ Authoritative inputs, in priority order:
 
 ## Hard deck rules (Ben's directives)
 
+- **Assertion-evidence method is the standard** (Ben's ruling 2026-10-18): follow the skill at
+  `C:\Users\Ben Bolen\.agents\skills\assertion-evidence\SKILL.md` (junction into ZCode_Skills).
+  One-sentence claim headlines (≤ 2 lines), visual evidence ≥ ~half the slide, ≤ 2-3 call-outs,
+  no bullet walls; prose lives in speaker notes. Audit with `audit_ae.py` (words outside
+  assertion/kicker/cite, evidence-area fraction).
+
 - Assertion/evidence style: the assertion title carries the claim; a small `cite=` source line
   carries the evidence (number + source). Every quantitative claim needs both.
 - SLIDES STAY SPARSE: near-zero prose, one message per slide, figures carry the weight. If a slide
