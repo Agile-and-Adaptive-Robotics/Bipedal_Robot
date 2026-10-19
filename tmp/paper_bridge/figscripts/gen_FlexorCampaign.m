@@ -62,11 +62,18 @@ fprintf('MEANS validation {45.7,40.6t}: unopt %.4f/%.4f/%.4f  opt %.4f/%.4f/%.4f
     mean(f0(va,:),1), mean(f1(va,:),1));
 
 %% ---- 3. Hunt-equation (older force surface) series + GoF ----
+% Hunt is undefined where strain < 0 (near full extension): NaN there, so a
+% naive per-curve GoF scores it on a different point set than the other
+% series. Head-to-head GoF (gofH, gofUc) uses the COMMON support: measured
+% points where the Hunt curve is finite, so both force models are scored on
+% the same angles. The improved characterization is additionally reported on
+% all measured points (f0), and the hybrid / back-calculated pairs are
+% scored pointwise (A_h == Aexp, verified).
 load('ForceStrainForFit.mat', 'z');
 z(isnan(z)) = 0;
 Xp = linspace(0, 620, 20); Xp = Xp(2:20);
 Yp = linspace(0, 1, 30);
-Mold = cell(5, 1); gofH = zeros(5, 3);
+Mold = cell(5, 1); gofH = zeros(5, 3); gofUc = zeros(5, 3); gofHyb = zeros(5, 3);
 for i = 1:5
     Yq = bpa0(i).strain ./ ((bpa0(i).rest - bpa0(i).Kmax) / bpa0(i).rest);
     Xq = bpa0(i).P .* ones(size(Yq));
@@ -77,16 +84,26 @@ for i = 1:5
     Mo(Yq > 1) = 0;
     Mo(bpa0(i).strain < 0) = NaN;
     Mold{i} = Mo;
-    idx = round(interp1(bpa0(i).Ak, 1:numel(bpa0(i).Ak), bpa0(i).Aexp, 'nearest', 'extrap'));
-    Mm = Mo(idx); Me = bpa0(i).Mexp;
-    v = ~isnan(Mm) & isfinite(Me);
-    r = Mm(v) - Me(v);
-    gofH(i,:) = [sqrt(mean(r.^2)), sum(r.^2)/sum((Me(v)-mean(Me(v))).^2), max(abs(r))];
+    [As, ix] = sort(bpa0(i).Ak(:));
+    Gh = griddedInterpolant(As, Mo(ix));
+    Gu = griddedInterpolant(As, bpa0(i).M(ix));
+    Mh_at = Gh(bpa0(i).Aexp(:));
+    Mu_at = Gu(bpa0(i).Aexp(:));
+    com = isfinite(Mh_at);
+    Me = bpa0(i).Mexp(:);
+    [gofH(i,1), gofH(i,2), gofH(i,3)] = gof3(Mh_at(com), Me(com));
+    [gofUc(i,1), gofUc(i,2), gofUc(i,3)] = gof3(Mu_at(com), Me(com));
+    rh = bpa0(i).M_h(:) - Me;
+    [gofHyb(i,1), gofHyb(i,2), gofHyb(i,3)] = gof3(bpa0(i).M_h(:), Me); %#ok<NASGU>
+    fprintf('test %d: common pts %d/%d  Hunt %.4f/%.4f/%.4f  UnoptCommon %.4f/%.4f/%.4f  Hybrid %.4f/%.4f/%.4f\n', ...
+        i, sum(com), numel(com), gofH(i,:), gofUc(i,:), gofHyb(i,:));
 end
-fprintf('=== GoF Hunt equation [RMSE FVU Max] ===\n');
-for i = 1:5, fprintf('%-22s %8.4f %8.4f %8.4f\n', labels5{i}, gofH(i,:)); end
-fprintf('MEANS training: %.4f/%.4f/%.4f  validation: %.4f/%.4f/%.4f\n', ...
-    mean(gofH(tr,:),1), mean(gofH(va,:),1));
+fprintf('=== MEANS (fold) training {48.5,41.0} ===\n');
+fprintf('Hunt(common) %.4f/%.4f/%.4f  Unopt(common) %.4f/%.4f/%.4f  Hybrid %.4f/%.4f/%.4f\n', ...
+    mean(gofH(tr,:),1), mean(gofUc(tr,:),1), mean(gofHyb(tr,:),1));
+fprintf('=== MEANS (fold) validation {45.7,40.6t} ===\n');
+fprintf('Hunt(common) %.4f/%.4f/%.4f  Unopt(common) %.4f/%.4f/%.4f  Hybrid %.4f/%.4f/%.4f\n', ...
+    mean(gofH(va,:),1), mean(gofUc(va,:),1), mean(gofHyb(va,:),1));
 
 %% ---- FIG P1: pre-optimized (Hunt, Unoptimized, Measured, Hybrid) ----
 sty = {'FontSize',12,'FontWeight','bold','FontName','Arial','LineWidth',2, ...
@@ -97,27 +114,45 @@ p1sub = {'Training','Training','Validation','Validation'};
 p1ttl = {'48 cm','41 cm','46 cm','40 cm Tendon'};
 fig1 = figure('Name','FlxPin_preopt','Color','w'); fig1.Position = [80 80 950 700];
 t1 = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
-allY1 = [];
+allY1 = []; axP1 = gobjects(1,4);
 for k = 1:4
     i = p1order(k);
     nexttile(k); hold on
-    plot(bpa0(i).Ak, Mold{i}, '--', 'Color', cgray, 'LineWidth', 2, 'DisplayName','Hunt equation');
-    plot(bpa0(i).Ak, bpa0(i).M, '-.', 'Color', c3, 'LineWidth', 2.5, 'DisplayName','Unoptimized');
-    scatter(bpa0(i).Aexp, bpa0(i).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
-        'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none', 'DisplayName','Measured');
     scatter(bpa0(i).A_h, bpa0(i).M_h, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
         'MarkerFaceColor', c1, 'MarkerEdgeColor', 'none', 'DisplayName','Hybrid');
+    scatter(bpa0(i).Aexp, bpa0(i).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
+        'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none', 'DisplayName','Measured');
+    plot(bpa0(i).Ak, Mold{i}, '--', 'Color', cgray, 'LineWidth', 2, 'DisplayName','Hunt equation');
+    plot(bpa0(i).Ak, bpa0(i).M, '-.', 'Color', c3, 'LineWidth', 2.5, 'DisplayName','Unoptimized');
     title(['\bf ' p1ttl{k}]); subtitle(['\bf ' p1sub{k}], 'FontName','Arial');
     set(gca, sty{:});
+    axP1(k) = gca;
     allY1 = [allY1; Mold{i}(~isnan(Mold{i})); bpa0(i).M; bpa0(i).Mexp; bpa0(i).M_h]; %#ok<AGROW>
     if k == 4, lg = legend('Location','southwest'); lg.FontSize = 8; end
 end
 ylabel(t1, '\bf Torque, N\cdotm'); xlabel(t1, '\bf \theta_{k} , \circ');
 set(t1, 'TileSpacing','loose');
-ann1 = {'(A)','(B)','(C)','(D)'}; xp1 = [0.001 0.48 0.001 0.48]; yp1 = [0.935 0.935 0.45 0.45];
+ann1 = {'(A)','(B)','(C)','(D)'}; xp1 = [0.001 0.48 0.001 0.48];
+drawnow;
+% letters vertically centered on each panel's title line (Ben 2026-10-19)
 for j = 1:4
-    annotation(fig1,'textbox',[xp1(j) yp1(j) 0.05 0.05],'String',['\bf ' ann1{j}], ...
-        'FontSize',12,'FontName','Arial','EdgeColor','none');
+    axj = axP1(j); p4 = axj.Position;
+    tcY = 0.935;
+    try
+        Tj = axj.Title; Tj.Units = 'normalized';
+        te = Tj.Extent;
+        cand = p4(2) + (te(2) + te(4)/2) * p4(4);
+        if isfinite(cand) && cand > 0.3, tcY = cand; end
+    catch
+    end
+    a1 = annotation(fig1,'textbox',[xp1(j) tcY-0.025 0.05 0.05],'String',['\bf ' ann1{j}], ...
+        'FontSize',12,'FontName','Arial','FontWeight','bold','EdgeColor','none');
+    try
+        drawnow; ae = a1.Extent;
+        a1.Position(2) = a1.Position(2) + (tcY - (ae(2) + ae(4)/2));
+    catch
+    end
+    fprintf('AUDIT P1 tile %d: titleCenter=%.4f\n', j, tcY);
 end
 for ax = reshape(findall(fig1, 'Type', 'axes'), 1, [])
     ax.YLim = [floor(min(allY1)/5)*5, 0];
@@ -129,23 +164,40 @@ fprintf('WROTE FlxPin_preopt.eps\n'); close(fig1);
 %% ---- FIG P2: optimized (Unoptimized dashed, Optimized, Measured filled) ----
 fig2 = figure('Name','FlxPin_optimized','Color','w'); fig2.Position = [80 80 950 700];
 t2 = tiledlayout(2,2,'TileSpacing','loose','Padding','loose');
-allY2 = [];
+allY2 = []; axP2 = gobjects(1,4);
 for k = 1:4
     i = p1order(k);
     nexttile(k); hold on
-    plot(bpa1(i).Ak, bpa1(i).M, '--', 'Color', c3, 'LineWidth', 2, 'DisplayName','Unoptimized');
-    plot(bpa1(i).Ak, bpa1(i).M_p(:,3), '-', 'Color', c5, 'LineWidth', 2.5, 'DisplayName','Optimized');
     scatter(bpa1(i).Aexp, bpa1(i).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
         'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none', 'DisplayName','Measured');
+    plot(bpa1(i).Ak, bpa1(i).M, '--', 'Color', c3, 'LineWidth', 2, 'DisplayName','Unoptimized');
+    plot(bpa1(i).Ak, bpa1(i).M_p(:,3), '-', 'Color', c5, 'LineWidth', 2.5, 'DisplayName','Optimized');
     title(['\bf ' p1ttl{k}]); subtitle(['\bf ' p1sub{k}], 'FontName','Arial');
     set(gca, sty{:});
+    axP2(k) = gca;
     allY2 = [allY2; bpa1(i).M; bpa1(i).M_p(:,3); bpa1(i).Mexp]; %#ok<AGROW>
     if k == 4, lg = legend('Location','southwest'); lg.FontSize = 8; end
 end
 ylabel(t2, '\bf Torque, N\cdotm'); xlabel(t2, '\bf \theta_{k} , \circ');
+drawnow;
 for j = 1:4
-    annotation(fig2,'textbox',[xp1(j) yp1(j) 0.05 0.05],'String',['\bf ' ann1{j}], ...
-        'FontSize',12,'FontName','Arial','EdgeColor','none');
+    axj = axP2(j); p4 = axj.Position;
+    tcY = 0.935;
+    try
+        Tj = axj.Title; Tj.Units = 'normalized';
+        te = Tj.Extent;
+        cand = p4(2) + (te(2) + te(4)/2) * p4(4);
+        if isfinite(cand) && cand > 0.3, tcY = cand; end
+    catch
+    end
+    a2 = annotation(fig2,'textbox',[xp1(j) tcY-0.025 0.05 0.05],'String',['\bf ' ann1{j}], ...
+        'FontSize',12,'FontName','Arial','FontWeight','bold','EdgeColor','none');
+    try
+        drawnow; ae = a2.Extent;
+        a2.Position(2) = a2.Position(2) + (tcY - (ae(2) + ae(4)/2));
+    catch
+    end
+    fprintf('AUDIT P2 tile %d: titleCenter=%.4f\n', j, tcY);
 end
 for ax = reshape(findall(fig2, 'Type', 'axes'), 1, [])
     ax.YLim = [floor(min(allY2)/5)*5, 0];
@@ -158,6 +210,10 @@ fprintf('WROTE FlxPin_optimized.eps\n'); close(fig2);
 p3order = [1 5 2 4 3];  % 48.5 T, 41.0 T, 45.7 V, 40.6t V, 47.9 N
 p3sub = {'Training','Training','Validation','Validation','Not used'};
 p3ttl = {'48 cm','41 cm','46 cm','40 cm Tendon','47 cm'};
+%% ---- FIG P3: DISABLED — the flexor 6-panel was superseded (Ben 2026-10-19:
+%% the 3x2 belongs to the pinned EXTENSOR group); do not resurrect the
+%% deleted FlxPin_group.eps from ProofFinal/Figures.
+if false
 fig3 = figure('Name','FlxPin_group','Color','w'); fig3.Position = [60 60 1150 780];
 t3 = tiledlayout(2,3,'TileSpacing','loose','Padding','loose');
 allY3 = [];
@@ -202,9 +258,13 @@ end
 exportgraphics(fig3, fullfile(outdir,'FlxPin_group.eps'), 'ContentType','vector');
 exportgraphics(fig3, fullfile(qcdir,'QC_FlxPin_group_new.png'), 'Resolution',150);
 fprintf('WROTE FlxPin_group.eps (replacement)\n'); close(fig3);
+end  % doP3 disabled
 
 %% ---- FIG P4: FlxGrp replacement (biomimetic, adopted Xi terms) ----
 [~, ~, ~, bpab] = minimizeFlx(g(1), g(2), g(3));
+[~, ~, ~, bpau] = minimizeFlx(0, Inf, Inf);   % zero-correction: Unoptimized series
+fprintf('AUDIT FlxGrp series: max |bpab.M - bpau.M_p(:,3)| = %.4f / %.4f (two BPAs; ~0 = .M is the zero-corr curve)\n', ...
+    max(abs(bpab(1).M(:) - bpau(1).M_p(:,3))), max(abs(bpab(2).M(:) - bpau(2).M_p(:,3))));
 fprintf('\n=== biomimetic BPA values (non-stiffness-aware dump at adopted terms) ===\n');
 for i = 1:numel(bpab)
     fprintf('bpa(%d): rest=%.4f m  Kmax=%.4f  tendon=%.4f m  P=%.1f kPa\n', ...
@@ -215,20 +275,22 @@ knee_angle_rT = Tab(:,2)'; Bifemsh_T = Tab(:,4)';
 
 fig4 = figure('Name','FlxGrp','Color','w'); fig4.Position = [90 90 950 480];
 t4 = tiledlayout(1,2,'TileSpacing','loose','Padding','loose');
+ax4 = gobjects(1,2);
 % Tile A: 10 mm
 nexttile(1); hold on
 i = 1;
-plot(bpab(i).Ak, bpab(i).M, '--', 'Color', c3, 'LineWidth', 2, 'DisplayName','Unoptimized');
+plot(bpau(i).Ak, bpau(i).M_p(:,3), '--', 'Color', c3, 'LineWidth', 2, 'DisplayName','Unoptimized');
 plot(bpab(i).Ak, bpab(i).M_p(:,3), '-', 'Color', c5, 'LineWidth', 2.5, 'DisplayName','Optimized');
 scatter(bpab(i).Aexp, bpab(i).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
     'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none', 'DisplayName','Measured');
 title('\phi 10 mm'); set(gca, sty{:});
 lgA = legend('Location','southwest'); lgA.FontSize = 8;
+ax4(1) = gca;
 % Tile B: 20 mm at 620 kPa + human + reduced-pressure points
 nexttile(2); hold on
 i = 2;
 plot(knee_angle_rT, Bifemsh_T, ':', 'Color', c8, 'LineWidth', 4, 'DisplayName','Human model (max)');
-plot(bpab(i).Ak, bpab(i).M, '--', 'Color', c3, 'LineWidth', 2, 'DisplayName','Unoptimized');
+plot(bpau(i).Ak, bpau(i).M_p(:,3), '--', 'Color', c3, 'LineWidth', 2, 'DisplayName','Unoptimized');
 plot(bpab(i).Ak, bpab(i).M_p(:,3), '-', 'Color', c5, 'LineWidth', 2.5, 'DisplayName','Optimized');
 scatter(bpab(i).Aexp, bpab(i).Mexp, sz, 'filled', 'MarkerFaceAlpha', 0.75, ...
     'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none', 'DisplayName','Measured, 620 kPa');
@@ -245,11 +307,40 @@ scatter(angle_data(mask), torque_data(mask), sz, 'filled', 'MarkerFaceAlpha', 0.
     'MarkerFaceColor', c4, 'MarkerEdgeColor', 'none', 'DisplayName','Measured < 620 kPa');
 title('\phi 20 mm'); set(gca, sty{:});
 lgB = legend('Location','southwest'); lgB.FontSize = 8;
+ax4(2) = gca;
 ylabel(t4, '\bf Torque, N\cdotm'); xlabel(t4, '\bf \theta_{k} , \circ');
-annotation(fig4,'textbox',[0.01 0.9 0.04 0.05],'String','\bf (A)','FontSize',12,'FontName','Arial','EdgeColor','none');
-annotation(fig4,'textbox',[0.46 0.9 0.04 0.05],'String','\bf (B)','FontSize',12,'FontName','Arial','EdgeColor','none');
+drawnow;
+xL4 = [0.01 0.46];
+for j = 1:2
+    p4 = ax4(j).Position;
+    tcY = 0.9;
+    try
+        Tj = ax4(j).Title; Tj.Units = 'normalized';
+        te = Tj.Extent;
+        cand = p4(2) + (te(2) + te(4)/2) * p4(4);
+        if isfinite(cand) && cand > 0.3, tcY = cand; end
+    catch
+    end
+    a4 = annotation(fig4,'textbox',[xL4(j) tcY-0.025 0.04 0.05], ...
+        'String', sprintf('\\bf (%c)', 'A'+j-1), 'FontSize', 12, 'FontName', 'Arial', ...
+        'FontWeight','bold', 'EdgeColor', 'none');
+    try
+        drawnow; ae = a4.Extent;
+        a4.Position(2) = a4.Position(2) + (tcY - (ae(2) + ae(4)/2));
+    catch
+    end
+    fprintf('AUDIT P4 tile %d: titleCenter=%.4f\n', j, tcY);
+end
 exportgraphics(fig4, fullfile(outdir,'FlxGrp.eps'), 'ContentType','vector');
 exportgraphics(fig4, fullfile(qcdir,'QC_FlxGrp_new.png'), 'Resolution',150);
 fprintf('WROTE FlxGrp.eps (replacement)\n'); close(fig4);
 
 disp('DONE_FlexorCampaign');
+
+function [a, b, c] = gof3(Mp, Me)
+r = Mp(:) - Me(:);
+v = isfinite(r);
+a = sqrt(mean(r(v).^2));
+b = sum(r(v).^2) / sum((Me(v) - mean(Me(v))).^2);
+c = max(abs(r(v)));
+end

@@ -51,6 +51,15 @@ fprintf('MEANS training {43.6,43.2t,45.7}: unopt %.4f/%.4f/%.4f  opt %.4f/%.4f/%
 fprintf('MEANS validation {40,40t,46.5}:    unopt %.4f/%.4f/%.4f  opt %.4f/%.4f/%.4f\n', ...
     mean(f0(vaG,:),1), mean(f1(vaG,:),1));
 
+% curve-identity audit: the plotted "Unoptimized" series b1(i).M must equal
+% the zero-correction prediction b0(i).M_p(:,3) (verified 0.0000 on the
+% flexor family; stale .M is set at load time and is terms-independent)
+dm = 0;
+for i = pool
+    dm = max(dm, max(abs(b1(i).M(:) - b0(i).M_p(:,3))));
+end
+fprintf('AUDIT series: max |b1.M - b0.M_p(:,3)| over pool = %.4f (expect ~0)\n', dm);
+
 %% 3x2 figure (panels: 43.6, 43.2t, 45.7 training; 40.0, 40.0t, 46.5 validation)
 pord = [5 6 7 1 2 8];
 pttl = {'44 cm', '43 cm Tendon', '46 cm', '40 cm', '40 cm Tendon', '47 cm'};
@@ -96,20 +105,53 @@ for ax = reshape(findall(fig, 'Type', 'axes'), 1, [])
     ax.YLim = [0, ceil(max(allY)/5)*5];
 end
 ylabel(t, '\bf Torque, N\cdotm'); xlabel(t, '\bf \theta_{k} , \circ');
-% panel letters per Ben's FlxPin_group.fig convention (dump_FlxPin_group_fig.m):
-% margin labels LEFT of each tile's outer box, right edge ~5 thou before
-% outerLeft; text straddles the plot-box top (8 thou below to ~22 above)
+% panel letters per Ben's FlxPin_group.fig convention: margin labels LEFT of
+% each tile's outer box; VERTICALLY CENTERED ON THE PANEL TITLE (Ben
+% 2026-10-19: letters at the same y level as the figure title). (A)/(D) sit a
+% further ~14 thou -x with the left margin opened if the y-label is in the way.
 ann = {'(A)','(B)','(C)','(D)','(E)','(F)'};
 drawnow;
-apos = zeros(6,2); pos0 = zeros(6,4); outL = zeros(6,1);
+% rotated y-label band, measured off the render (layout Text exposes no
+% Extent/Units): x ~ [0.008, 0.024] figure-normalized
+ylL = 0.008; ylR = 0.024;
+xL1 = 0.040;                                   % (A)/(D) target left edge
+if (xL1 < ylR) && (xL1 + 0.032 > ylL)          % y-label overlaps: open the margin
+    S = (xL1 + 0.032 + 0.008) - ylL;
+    tp = t.Position; t.Position = [tp(1) + S, tp(2), tp(3) - S, tp(4)];
+    drawnow;
+    ylL = ylL + S; ylR = ylR + S;
+end
+fprintf('AUDIT margin: yLabel band x[%.4f %.4f]  (A)/(D) left=%.4f  gap=%.4f\n', ...
+    ylL, ylR, xL1, xL1 - ylR);
+apos = zeros(6,2); pos0 = zeros(6,4); outL = zeros(6,1); ttlC = zeros(6,1); ltrC = nan(6,1);
 for j = 1:6
     pos0(j,:) = axT(j).Position;
     outL(j) = axT(j).OuterPosition(1);
     innerTop = pos0(j,2) + pos0(j,4);
-    apos(j,:) = [outL(j) - 0.037, innerTop - 0.008];
-    annotation(fig,'textbox',[apos(j,:) 0.032 0.04], ...
+    tcY = innerTop + 0.030;                    % fallback if title extent unreadable
+    try
+        Tj = axT(j).Title; Tj.Units = 'normalized';
+        te = Tj.Extent;                        % axes-inner-box normalized (y > 1 above the box)
+        cand = pos0(j,2) + (te(2) + te(4)/2) * pos0(j,4);
+        if isfinite(cand) && cand > innerTop && cand < innerTop + 0.09
+            tcY = cand;
+        end
+    catch
+    end
+    ttlC(j) = tcY;
+    if ismember(j, [1 4]), xj = xL1; else, xj = outL(j) - 0.037; end
+    a = annotation(fig,'textbox',[xj, tcY - 0.020, 0.032, 0.04], ...
         'String',['\bf ' ann{j}], 'FontSize',12,'FontName','Arial', ...
-        'EdgeColor','none','HorizontalAlignment','left','VerticalAlignment','top');
+        'FontWeight','bold','EdgeColor','none','HorizontalAlignment','left', ...
+        'VerticalAlignment','top');
+    try
+        drawnow;
+        ae = a.Extent;                         % exact centering onto the title line
+        a.Position(2) = a.Position(2) + (tcY - (ae(2) + ae(4)/2));
+        ltrC(j) = ae(2) + ae(4)/2;
+    catch
+    end
+    apos(j,:) = a.Position(1:2);
 end
 
 % audit: print the final drawn state (Ben's fixes, verified not assumed)
@@ -118,11 +160,15 @@ fprintf('AUDIT legend: count=%d  location=%s  on tile-3 axes=%d\n', ...
     numel(lgAll), lgAll(1).Location, lgAx == axT(3));
 for j = 1:6
     innerTop = pos0(j,2) + pos0(j,4);
-    rightAtOuter = abs(apos(j,1) + 0.032 - (outL(j) - 0.005)) < 5e-3;   % letter ends just before tile
-    straddlesTop = (apos(j,2) < innerTop) && (apos(j,2) + 0.04 > innerTop); % text box crosses plot-box top
-    fprintf('AUDIT tile %d %s: XLim=[%g %g] letter@(%.3f,%.3f) letterR=%.3f outerL=%.3f innerTop=%.3f rightAtOuter=%d straddlesTop=%d\n', ...
+    if ismember(j, [1 4])
+        anchored = abs(apos(j,1) - xL1) < 1e-9;          % (A)/(D) at the opened margin
+    else
+        anchored = abs(apos(j,1) + 0.032 - (outL(j) - 0.005)) < 5e-3;  % others end just before tile
+    end
+    titleAligned = abs(ltrC(j) - ttlC(j)) < 5e-3;        % letter centered on the title line
+    fprintf('AUDIT tile %d %s: XLim=[%g %g] letter@(%.3f,%.3f) letterR=%.3f outerL=%.3f titleC=%.4f letterC=%.4f anchored=%d titleAligned=%d\n', ...
         j, ann{j}, axT(j).XLim(1), axT(j).XLim(2), apos(j,1), apos(j,2), ...
-        apos(j,1) + 0.032, outL(j), innerTop, rightAtOuter, straddlesTop);
+        apos(j,1) + 0.032, outL(j), ttlC(j), ltrC(j), anchored, titleAligned);
     % letter box in data coordinates of THIS tile: any plotted point under it?
     bx = axT(j).XLim(1) + ([apos(j,1), apos(j,1)+0.032] - pos0(j,1)) / pos0(j,3) * diff(axT(j).XLim);
     by = axT(j).YLim(1) + ([apos(j,2), apos(j,2)+0.04] - pos0(j,2)) / pos0(j,4) * diff(axT(j).YLim);

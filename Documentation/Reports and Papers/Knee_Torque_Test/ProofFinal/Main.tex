@@ -30,6 +30,7 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{multirow}
+\usepackage{float}
 \usepackage{array}
 \usepackage[onehalfspacing]{setspace}
 \renewcommand{\arraystretch}{2}  % Increase row height (default is 1.0)
@@ -143,7 +144,7 @@ with $l_{0}$ in meters, a fixed \qty{7.5}{\mm} end-contact offset, and coefficie
 
 The robot leg consists of a knee joint, femur, tibia, BPA assemblies, and artificial tendons (Figure~\ref{fig:testJigs}\textbf{A--C}). The artificial bones were 3D printed in Onyx, carbon fiber, and high-strength high-temperature fiberglass, with machined links for the knee mechanism, and the tendons are Shimano bicycle brake cable. The leg geometry and dimensions derive from bone scans of a \qty{6}{\ft} (\qty{1.83}{\metre}) tall person \citep{bolen_determination_2019,seth_opensim_2018,delp_interactive_1990,delp_opensim_2007}.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.9\textwidth]{Figures/testJigs.pdf}
     \end{center}
@@ -152,7 +153,7 @@ The robot leg consists of a knee joint, femur, tibia, BPA assemblies, and artifi
 
 Two knee joints were tested: a pure revolute joint, and a biomimetic joint whose four-bar linkage translates the instantaneous center of rotation (ICR) as the knee rotates \citep{steele_biomimetic_2018,steele_development_2017,steele_biomimetic_2018-1}, moving it posteriorly in $X$ and distally in $Y$ in the femur frame, except briefly proximally near full flexion, much as the human knee does \citep{bolen_determination_2019}. Reference coordinate frames follow \citet{wu_for_1995,wu_isb_2002}, and Figure~\ref{fig:ICR} shows the measured ICR migration. Both joints share the same rotation center in the femur frame at $\theta_\text{k} = \ang{0}$, each was driven by an antagonistic flexor and extensor, and $\theta_\text{k}$ is negative in flexion throughout this work.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.8\textwidth]{Figures/KneeICR.eps}
     \end{center}
@@ -188,7 +189,7 @@ and its scalar component about the joint axis, written $M_{z}$, reduces through 
 \begin{equation}
     M_{z} = r\,F \label{eq:M_scalar}
 \end{equation}
-The hybrid method replaces the model-predicted moment arm of Equation~\eqref{eq:project_ma} and the model-predicted muscle length with measured counterparts: $r$ is measured directly as the perpendicular distance from the knee axis to the line of action, and $F$ follows from the measured $P$, $l_{0}$, $l_{620}$, and $l_\text{m}$ through the force model of Section~\ref{sec:force_model}, which separates kinematic error from force error.
+The hybrid method replaces the model-predicted moment arm of Equation~\eqref{eq:project_ma} and the model-predicted muscle length with measured counterparts: $r$ is measured directly as the perpendicular distance from the knee axis to the line of action, and $F$ follows from the measured $P$, $l_{0}$, $l_{620}$, and $l_\text{m}$ through the force model of Section~\ref{sec:force_model}, which separates kinematic error from force error. This calculation is also referred to as the back-calculated torque; the two names denote the same quantity and are used interchangeably in this paper.
 
 \subsection{Improved Torque Model: Length Offset and Bracket Compliance}\label{sec:improved_model}
 
@@ -212,14 +213,14 @@ As the actuator develops force, the compliant attachments deform, changing the e
 \end{equation}
 Figure~\ref{fig:bktFrame} shows the bracket frame for each test configuration.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[height=0.62\textheight]{Figures/xiFrameTransform.pdf}
 \end{center}
 \caption{Two-rotation construction of the bracket frame from the attachment point $\mathbf{p}_{A}$ or $\mathbf{p}_{B}$. \textbf{(A)} Rotation through $\theta_z$ about the fixed $\hat{\mathbf{z}}_{s}$ axis aligns the intermediate axis $\hat{\mathbf{x}}_{1}$ with the point's sagittal-plane projection. \textbf{(B)} Rotation through $-\theta_y$ about the current $\hat{\mathbf{y}}_{1}=\hat{\mathbf{y}}_{br}$ axis aligns the final bracket axis $\hat{\mathbf{x}}_{br}$ with the full point vector.}\label{fig:xiFrameTransform}
 \end{figure}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=1\textwidth]{Figures/bktFrame.pdf}
 \end{center}
@@ -320,42 +321,46 @@ With the actuator force model characterized at the actuator level, we applied th
 
 \subsection{Flexor on Pin Joint}
 
-Figure~\ref{fig:FlxPin_preopt} shows the measured flexor torque on the pinned knee next to the pre-optimization prediction series for the four cross-validation tests. The Hunt-equation rigid-body model and the improved BPA characterization applied to the same rigid kinematics both overpredicted the measured torque across the range of motion, with residuals of the same order (Table~\ref{tab:FlxPinPreGof}). The hybrid calculation reproduced the measurements closely, which localizes the misprediction to the modeled kinematics, the muscle length $l_\text{m}$ and the moment arm $r$, rather than to the force model.
+Figure~\ref{fig:FlxPin_preopt} shows the measured flexor torque on the pinned knee next to the pre-optimization prediction series for the four cross-validation tests. Both pre-optimization force models overpredicted the magnitude of the measured flexor torque, and on the angles where the two predictions are both defined the improved BPA characterization fit the measurements better than the Hunt equation on every test, although it degraded near full extension, where the Hunt-equation prediction is undefined altogether (Table~\ref{tab:FlxPinPreGof}). The back-calculated (hybrid) torque reproduced the measurements closely, which localizes the misprediction to the modeled kinematics, the muscle length $l_\text{m}$ and the moment arm $r$, rather than to the force model.
 
 The initial identification, fitted on the $l_{0}=\qty{48.5}{\cm}$ test, yielded a length offset $\chi_{0} = \qty{11.9}{\mm}$ and effective stiffnesses $\chi_{1} = \qty{102}{\kilo\newton\per\meter}$ and $\chi_{2} = \qty{10.6}{\kilo\newton\per\meter}$. The corrected model at these terms followed the measured torque across the range of motion, including the loss of torque near full extension that the rigid-body prediction did not produce, and Figure~\ref{fig:FlxPin_optimized} shows this corrected-family behavior at the adopted two-stage terms. The $l_{0}=\qty{45.7}{\cm}$ actuator, configured to operate over a different joint range of motion, served as the validation test of the initial fit; the corrected prediction reproduced the measured torque there without refitting. At these initial terms, the corrected prediction for the fitting test had a root-mean-square error (RMSE) of \qty{1.616}{\newton\meter}, a fraction of variance unexplained (FVU) of 0.0958, and a maximum absolute residual of \qty{3.2527}{\newton\meter}; validation on the held-out actuator gave \qty{2.1214}{\newton\meter}, 0.0878, and \qty{5.1690}{\newton\meter}, respectively.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \begin{center}
-\includegraphics[width=1.0\textwidth]{Figures/FlxPin_preopt.eps}
+\includegraphics[width=0.8\textwidth]{Figures/FlxPin_preopt.eps}
 \end{center}
-\caption{Pre-optimization pinned-knee torque versus knee angle for the four cross-validation flexor tests. Knee angle is negative in flexion, and flexion torque is negative. The gray dashed line is the Hunt-equation rigid-body prediction; the light orange dash-dot line is the unoptimized prediction, the improved BPA force characterization applied to the same rigid kinematics; indigo filled circles are experimentally measured torque; gold circles are the hybrid calculation, which combines the measured muscle length and moment arm with the modeled force. Panel titles give the nominal resting length; the actual resting lengths are $l_{0}=\qty{48.5}{\cm}$ \textbf{(A)}, $l_{0}=\qty{41.0}{\cm}$ \textbf{(B)}, $l_{0}=\qty{45.7}{\cm}$ \textbf{(C)}, and $l_{0}=\qty{40.6}{\cm}$ with tendon \textbf{(D)}. Panels \textbf{(A)} and \textbf{(B)} are the training tests and panels \textbf{(C)} and \textbf{(D)} the validation tests of the adopted cross-validation fold.}\label{fig:FlxPin_preopt}
+\caption{Pre-optimization pinned-knee torque versus knee angle for the four cross-validation flexor tests. Knee angle is negative in flexion, and flexion torque is negative. Gold circles are the hybrid calculation, which combines the measured muscle length and moment arm with the modeled force; indigo filled circles are experimentally measured torque; the gray dashed line is the Hunt-equation rigid-body prediction; and the light orange dash-dot line is the unoptimized prediction, the improved BPA force characterization applied to the same rigid kinematics. Panel titles give the nominal resting length; the actual resting lengths are $l_{0}=\qty{48.5}{\cm}$ \textbf{(A)}, $l_{0}=\qty{41.0}{\cm}$ \textbf{(B)}, $l_{0}=\qty{45.7}{\cm}$ \textbf{(C)}, and $l_{0}=\qty{40.6}{\cm}$ with tendon \textbf{(D)}. Panels \textbf{(A)} and \textbf{(B)} are the training tests and panels \textbf{(C)} and \textbf{(D)} the validation tests of the adopted cross-validation fold.}\label{fig:FlxPin_preopt}
 \end{figure}
 
-\begin{table}[htbp]
-\caption{Pre-optimization pinned-knee flexor torque-prediction goodness of fit per test, comparing the two pre-optimization torque predictions of Figure~\ref{fig:FlxPin_preopt}: the Hunt-equation rigid-body prediction and the unoptimized prediction of the improved BPA characterization. RMSE and maximum absolute residual (Max.) are in \unit{\newton\meter}, and FVU denotes the fraction of variance unexplained. Training and validation follow the adopted cross-validation fold.}
+\begin{table}[H]
+\caption{Pre-optimization pinned-knee flexor torque-prediction goodness of fit per test, comparing the three pre-optimization torque predictions of Figure~\ref{fig:FlxPin_preopt}: the Hunt-equation rigid-body prediction, the unoptimized prediction of the improved BPA characterization, and the back-calculated (hybrid) torque. The Hunt-equation prediction is undefined near full extension, where its modeled strain falls below zero, so the Hunt-equation and improved-characterization columns are scored head-to-head on the measured points of each test at which the Hunt-equation prediction is defined (75 of 90, 17 of 20, 14 of 19, and 15 of 22 points, in panel order); the back-calculated torque is scored on all measured points. RMSE and maximum absolute residual (Max.) are in \unit{\newton\meter}, and FVU denotes the fraction of variance unexplained. Training and validation follow the adopted cross-validation fold.}
 \label{tab:FlxPinPreGof}
-\begin{tabular}{@{}lcccccc@{}}
+\begingroup
+\renewcommand{\arraystretch}{1.4}%
+\fontsize{10pt}{12pt}\selectfont
+\begin{tabular}{@{}lccccccccc@{}}
 \toprule
-& \multicolumn{3}{c}{\textbf{Hunt equation}} & \multicolumn{3}{c}{\textbf{Improved char.\ alone}} \\
-\cmidrule(lr){2-4} \cmidrule(l){5-7}
-\textbf{Test} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} \\
+& \multicolumn{3}{c}{\textbf{Hunt equation}} & \multicolumn{3}{c}{\textbf{Improved char.\ alone}} & \multicolumn{3}{c}{\textbf{Back-calculated (hybrid)}} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(l){8-10}
+\textbf{Test} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} \\
 \midrule
-$l_{0}=\qty{48.5}{\cm}$ (training)         & 5.762 & 1.1693 & 9.534 & 7.617 & 2.1278 & 25.531 \\
-$l_{0}=\qty{41.0}{\cm}$ (training)         & 7.101 & 3.1245 & 13.144 & 9.694 & 2.1149 & 21.076 \\
-$l_{0}=\qty{45.7}{\cm}$ (validation)       & 6.510 & 1.3069 & 15.886 & 8.803 & 1.9380 & 26.264 \\
-$l_{0}=\qty{40.6}{\cm}$, tendon (validation) & 3.955 & 0.6783 & 7.846 & 6.373 & 0.5935 & 16.859 \\
+$l_{0}=\qty{48.5}{\cm}$ (training)           & 5.779 & 1.1761 & 9.798 & 4.871 & 0.8354 & 9.865 & 1.635 & 0.0991 & 3.842 \\
+$l_{0}=\qty{41.0}{\cm}$ (training)           & 6.633 & 3.2313 & 11.409 & 6.074 & 2.7090 & 9.262 & 2.187 & 0.1184 & 4.243 \\
+$l_{0}=\qty{45.7}{\cm}$ (validation)         & 5.315 & 0.9408 & 9.991 & 4.465 & 0.6640 & 9.536 & 1.246 & 0.0409 & 2.275 \\
+$l_{0}=\qty{40.6}{\cm}$, tendon (validation) & 3.945 & 0.6750 & 7.527 & 3.226 & 0.4512 & 7.376 & 2.085 & 0.0755 & 3.073 \\
 \midrule
-Mean (training)                           & 6.432 & 2.1469 & 11.339 & 8.656 & 2.1213 & 23.303 \\
-Mean (validation)                         & 5.232 & 0.9926 & 11.866 & 7.588 & 1.2657 & 21.562 \\
+Mean (training)                             & 6.206 & 2.2037 & 10.604 & 5.472 & 1.7722 & 9.563 & 1.911 & 0.1088 & 4.043 \\
+Mean (validation)                           & 4.630 & 0.8079 & 8.759 & 3.845 & 0.5576 & 8.456 & 1.666 & 0.0582 & 2.674 \\
 \bottomrule
 \end{tabular}
+\endgroup
 \end{table}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \begin{center}
-\includegraphics[width=1.0\textwidth]{Figures/FlxPin_optimized.eps}
+\includegraphics[width=0.8\textwidth]{Figures/FlxPin_optimized.eps}
 \end{center}
-\caption{Optimized pinned-knee torque versus knee angle for the four cross-validation flexor tests, at the adopted correction terms (Table~\ref{tab:AdoptedXi}). Knee angle is negative in flexion, and flexion torque is negative. The dashed light orange line is the unoptimized prediction of the improved BPA characterization; the magenta line is the optimized prediction of the corrected model; blue filled circles are experimentally measured torque. Panel titles give the nominal resting length; the actual resting lengths are $l_{0}=\qty{48.5}{\cm}$ \textbf{(A)}, $l_{0}=\qty{41.0}{\cm}$ \textbf{(B)}, $l_{0}=\qty{45.7}{\cm}$ \textbf{(C)}, and $l_{0}=\qty{40.6}{\cm}$ with tendon \textbf{(D)}. Panels \textbf{(A)} and \textbf{(B)} are the training tests and panels \textbf{(C)} and \textbf{(D)} the validation tests of the adopted cross-validation fold; the goodness-of-fit values are given in Table~\ref{tab:FlxPinGof}.}\label{fig:FlxPin_optimized}
+\caption{Optimized pinned-knee torque versus knee angle for the four cross-validation flexor tests, at the adopted correction terms (Table~\ref{tab:AdoptedXi}). Knee angle is negative in flexion, and flexion torque is negative. Blue filled circles are experimentally measured torque; the dashed light orange line is the unoptimized prediction of the improved BPA characterization; the magenta line is the optimized prediction of the corrected model. Panel titles give the nominal resting length; the actual resting lengths are $l_{0}=\qty{48.5}{\cm}$ \textbf{(A)}, $l_{0}=\qty{41.0}{\cm}$ \textbf{(B)}, $l_{0}=\qty{45.7}{\cm}$ \textbf{(C)}, and $l_{0}=\qty{40.6}{\cm}$ with tendon \textbf{(D)}. Panels \textbf{(A)} and \textbf{(B)} are the training tests and panels \textbf{(C)} and \textbf{(D)} the validation tests of the adopted cross-validation fold; the goodness-of-fit values are given in Table~\ref{tab:FlxPinGof}.}\label{fig:FlxPin_optimized}
 \end{figure}
 
 \subsection{Extensor on Pin Joint}
@@ -364,7 +369,7 @@ For the extensor on the pinned knee, the measured torque lay slightly above the 
 
 The stiffness pair was held at the flexor-identified values, and the identification, fitted with the $l_{0}=\qty{41.5}{\cm}$ actuator held out for validation, added two extensor-specific terms: $\chi_{0} = \qty{-10.9}{\mm}$ and $\chi_{3} = 0.123$. The extensor length offset is close to the flexor offset in magnitude and opposite in sign. Those three tests are the initial-identification set: the initial extensor terms were fitted in cross-validated rounds over them, holding each actuator out in turn, and the quoted round is the one holding out $l_{0}=\qty{41.5}{\cm}$. The two-stage extensor refit of Section~\ref{sec:identification} used a different six-test pool (Table~\ref{tab:ExtPinGof}) drawn from the same campaign, in which the \qty{41.5}{\cm} and \qty{48.0}{\cm} tests of the initial set were excluded from the pool and the \qty{45.7}{\cm} test served as a training test of the adopted fold; Figure~\ref{fig:ExtPin_group} shows the six pool tests at the adopted terms.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{Figures/ExtPin_group.eps}
 \end{center}
@@ -375,9 +380,9 @@ The stiffness pair was held at the flexor-identified values, and the identificat
 
 We tested the extensor configuration on the biomimetic knee with a $\diameter$\qty{10}{\mm} BPA at $l_{0}=\qty{51.8}{\cm}$. The measured torque fell well below both the original prediction and the hybrid calculation (Figure~\ref{fig:Ext10mm_52cm}). Applying the extensor terms identified on the pinned knee improved the prediction: at the initial terms, the corrected model reached an RMSE of \qty{0.8920}{\newton\meter}, an FVU of 0.3396, and a maximum absolute residual of \qty{1.4188}{\newton\meter}. On this configuration the actuator path passes between the femoral condyles close to the instantaneous center of rotation, a geometry that is difficult to represent with the modeled path (Supplementary Figure~\ref{fig:passThru}).
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \begin{center}
-\includegraphics[width=1.0\textwidth]{Figures/Ext10mm_52cm.eps}
+\includegraphics[width=0.75\textwidth]{Figures/Ext10mm_52cm.eps}
 \end{center}
 \caption{Biomimetic-knee torque versus knee angle for the $\diameter$\qty{10}{\mm}, $l_{0}=\qty{51.8}{\cm}$ extensor BPA. Knee angle is negative in flexion, and extension torque is positive. Indigo filled circles are experimentally measured torque; gold circles are the hybrid calculation; the gray dashed line is the original rigid-body prediction; the magenta line is the corrected model using the extensor terms identified on the pinned knee.}\label{fig:Ext10mm_52cm}
 \end{figure}
@@ -388,9 +393,9 @@ Figure~\ref{fig:FlxGrp} shows the biomimetic-knee flexor measurements with the f
 
 The torque of the single $\diameter$\qty{20}{\mm} flexor actuator of panel \textbf{B} did not exceed the magnitude of the maximum human isometric flexion torque \citep{delp_interactive_1990,seth_opensim_2018} between \ang{60} and \ang{100} of knee flexion; within a $\pm 20\%$ band about the human mean, it still fell short of human-level torque between \ang{78} and \ang{103} of flexion, the shortfall extending slightly past the upper end of the no-tolerance comparison. Because operating at \qty{620}{\kPa} across the full desired range of motion would load the printed femur beyond its ultimate strength, we also recorded single points at the reduced pressures \qtylist{560;421;325;281}{\kPa}, which show that the desired range of motion is achievable at reduced pressure. This shortfall in flexion torque defines the target that the attachment-route redesign reported in the Discussion addresses.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \begin{center}
-\includegraphics[width=1.0\textwidth]{Figures/FlxGrp.eps}
+\includegraphics[width=0.9\textwidth]{Figures/FlxGrp.eps}
 \end{center}
 \caption{Biomimetic-knee torque versus knee angle for the flexor BPAs. Knee angle is negative in flexion, and flexion torque is negative. \textbf{(A)} $\diameter$\qty{10}{\mm}, $l_{0}=\qty{41.5}{\cm}$ actuator with a \qty{21}{\mm} artificial tendon at \qty{604}{\kPa}. \textbf{(B)} $\diameter$\qty{20}{\mm}, $l_{0}=\qty{41.5}{\cm}$ actuator with a \qty{14}{\mm} artificial tendon at \qty{620}{\kPa}. Indigo filled circles are measured torque; the magenta line is the optimized prediction of the corrected model using the flexor terms identified on the pinned knee; the dashed light orange line is the unoptimized prediction of the improved BPA characterization alone. In \textbf{(B)}, the black dotted line is the maximum human isometric torque, and the pink circles are measured points at the reduced pressures \qtylist{560;421;325;281}{\kPa}, recorded because full pressure would load the printed femur beyond its ultimate strength.}\label{fig:FlxGrp}
 \end{figure}
@@ -413,7 +418,7 @@ Working from the simple pinned knee to the complex biomimetic one isolated each 
 
 The coefficients quoted in the Results belong to the initial single-bracket identification (Section~\ref{sec:identification}). Re-identifying the correction terms over the full test sets, with the two-bracket flexor model and the locked extensor refit, yields the adopted values: $\chi_{0} = \qty{+3.94}{\mm}$, $\chi_{1} = \qty{3.998e4}{\N\per\m}$, and $\chi_{2} = \qty{1.473e4}{\N\per\m}$ for the flexor, and $\chi_{0} = \qty{-6.38}{\mm}$ with $\chi_{3} = 0.158$ for the extensor on the same locked stiffness pair (Table~\ref{tab:AdoptedXi}).
 
-\begin{table}[htbp]
+\begin{table}[H]
 \caption{Adopted correction terms of the two-stage identification. The extensor refit locked the effective-stiffness pair $(\chi_{1}, \chi_{2})$ to the flexor-identified values, so a single stiffness pair is shared across the flexor and extensor configurations, and only $\chi_{0}$ and $\chi_{3}$ were re-identified for the extensor. The pair was adopted from a family of near-equivalent fits by a requirement external to the identification, namely that both route-redesign configurations meet the required \qty{5}{\percent} torque-overshoot target simultaneously. The stiffness terms are effective system stiffnesses that lump the compliance of the brackets, fixtures, and winch cable; $\chi_{3}$ is unitless and scales the fictive-strain wrapping loss.}
 \label{tab:AdoptedXi}
 \small
@@ -436,9 +441,12 @@ The pinned-flexor data do not uniquely determine the stiffness pair. A family of
 
 Tables~\ref{tab:FlxPinGof} and \ref{tab:ExtPinGof} quantify what the corrections buy. On the pinned-flexor set, the corrected model reduces the training-mean RMSE, over the $l_{0}=\qty{48.5}{\cm}$ and \qty{41.0}{\cm} training tests, from \qty{8.66}{\newton\meter} to \qty{1.62}{\newton\meter} under the zero-correction prediction, the same kinematics and force model with every correction term disabled, and the validation mean over the held-out $l_{0}=\qty{45.7}{\cm}$ and \qty{40.6}{\cm} tendon tests improves from \qty{7.59}{\newton\meter} to \qty{1.49}{\newton\meter}; it holds the FVU at or below 0.172 on all five tests, including the $l_{0}=\qty{47.9}{\cm}$ test that was not used in the identification, at \qty{2.29}{\newton\meter}. On the extensor pool, the corrected model improves the RMSE of every test, reducing the training mean, over the \qty{43.6}{\cm}, \qty{43.2}{\cm}-tendon, and \qty{45.7}{\cm} tests, from \qty{2.50}{\newton\meter} to \qty{1.00}{\newton\meter}, and the validation mean, over the held-out \qty{40.0}{\cm} plain, \qty{40.0}{\cm}-tendon, and \qty{46.5}{\cm} tests, from \qty{2.55}{\newton\meter} to \qty{1.10}{\newton\meter}; the FVU stays below unity on every test except the $l_{0}=\qty{43.2}{\cm}$ tendon test. The biomimetic extensor test carries two goodness-of-fit pairs in this paper because it was evaluated at two parameter sets: the Results quote the initial extensor terms, and at the adopted terms the corrected prediction improves the RMSE from \qty{3.03}{\newton\meter} to \qty{1.17}{\newton\meter} and the FVU from 4.49 to 0.67 against the zero-correction baseline (Figure~\ref{fig:Ext10mm_52cm}). The initial configuration-specific terms fit this single test more closely still, at \qty{0.892}{\newton\meter} and FVU 0.3396; the shared-pair model gives up part of that single-configuration accuracy to hold one stiffness pair across configurations, while still explaining the bulk of that configuration's measured torque variance as well as its level.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \caption{Pinned-knee flexor torque-prediction goodness of fit per test. The improved-BPA-characterization-alone prediction (the zero-correction prediction of the text) uses the improved BPA force characterization with rigid attachments, no length offset, and no wrapping loss; the corrected model adds the adopted correction terms of the two-stage identification (Table~\ref{tab:AdoptedXi}). RMSE and maximum absolute residual (Max.) are in \unit{\newton\meter}, and FVU denotes the fraction of variance unexplained. In the adopted cross-validation fold the $l_{0}=\qty{48.5}{\cm}$ and \qty{41.0}{\cm} tests formed the training set and the $l_{0}=\qty{45.7}{\cm}$ and \qty{40.6}{\cm} tendon tests were held out for validation; the $l_{0}=\qty{47.9}{\cm}$ test was not used in the identification.}
 \label{tab:FlxPinGof}
+\begingroup
+\renewcommand{\arraystretch}{1.4}%
+\fontsize{10pt}{12pt}\selectfont
 \begin{tabular}{@{}lcccccc@{}}
 \toprule
 & \multicolumn{3}{c}{\textbf{Improved BPA char.\ alone}} & \multicolumn{3}{c}{\textbf{Corrected model}} \\
@@ -455,11 +463,15 @@ Mean (training)                           & 8.656 & 2.1213 & 23.303 & 1.624 & 0.
 Mean (validation)                         & 7.588 & 1.2657 & 21.562 & 1.490 & 0.0447 & 4.752 \\
 \bottomrule
 \end{tabular}
+\endgroup
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \caption{Pinned-knee extensor torque-prediction goodness of fit per test, at the adopted correction terms with the effective-stiffness pair locked to the flexor-identified values (Table~\ref{tab:AdoptedXi}). The improved-BPA-characterization-alone prediction (the zero-correction prediction of the text) uses the improved BPA force characterization with rigid attachments, no length offset, and no wrapping loss; the corrected model adds the extensor-specific terms $\chi_{0}$ and $\chi_{3}$. RMSE and maximum absolute residual (Max.) are in \unit{\newton\meter}, and FVU denotes the fraction of variance unexplained. In the adopted cross-validation fold the $l_{0}=\qty{43.6}{\cm}$, \qty{43.2}{\cm}-tendon, and \qty{45.7}{\cm} tests formed the training set and the $l_{0}=\qty{40.0}{\cm}$ plain, \qty{40.0}{\cm}-tendon, and \qty{46.5}{\cm} tests were held out for validation; the $l_{0}=\qty{41.5}{\cm}$ plain and tendon tests and the $l_{0}=\qty{48.0}{\cm}$ test were excluded from the pool.}
 \label{tab:ExtPinGof}
+\begingroup
+\renewcommand{\arraystretch}{1.4}%
+\fontsize{10pt}{12pt}\selectfont
 \begin{tabular}{@{}lcccccc@{}}
 \toprule
 & \multicolumn{3}{c}{\textbf{Improved BPA char.\ alone}} & \multicolumn{3}{c}{\textbf{Corrected model}} \\
@@ -477,6 +489,7 @@ Mean (training)                           & 2.498 & 2.2503 & 4.692 & 0.997 & 0.5
 Mean (validation)                         & 2.554 & 2.4236 & 4.986 & 1.098 & 0.3965 & 1.882 \\
 \bottomrule
 \end{tabular}
+\endgroup
 \end{table}
 
 The solver assignment follows the problem. The identification retains the genetic multiobjective solver, an elitist nondominated-sorting genetic algorithm, because the Pareto front it returns is what the holdout-validation procedure selects from. The route redesign is served by the surrogate-plus-pattern-search pipeline of Section~\ref{sec:route_redesign}, a surrogate-assisted global search refined by a derivative-free mesh-adaptive pattern search, because a single scalar cost is optimized there and each route evaluation is expensive.
@@ -487,7 +500,7 @@ The corrected force balance also admits an effective spring--damper reading in r
 
 The redesign addresses the single-actuator shortfall documented in the Results: one BPA per route does not reach the human flexor envelope through the mid-flexion range. Every redesigned configuration therefore carries two $\diameter$\qty{20}{\mm} BPAs per route, a \qty{620}{\kPa} pressure ceiling, and a maximum usable contraction of 0.255 in the force model, and every family was produced by the procedure of Section~\ref{sec:route_redesign} under the adopted correction terms of Table~\ref{tab:AdoptedXi}. The targets are maximum-isometric torque profiles computed on the Gait2392 lower-extremity model \citep{delp_opensim_2007, seth_opensim_2018}, the vastus medialis for the extensor and the biceps femoris short head for the flexor, each enlarged by a required \qty{5}{\percent} overshoot margin so that a route merely touching the target at any angle is rejected, and the redesign itself runs on the robot-body model derived from it. Knee angles are negative in flexion throughout this section, and Table~\ref{tab:Redesign} summarizes the four families.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \caption{Route-redesign outcomes against the human isometric torque targets under the shared actuator plan of two \qty{20}{\mm} BPAs per route, a \qty{620}{\kPa} pressure ceiling, and a maximum usable contraction of 0.255. Negative torques denote knee flexion. The margin is stated with respect to the required envelope, the human target plus the required \qty{5}{\percent} overshoot; for the cam redesign the margin with respect to the plain human target is \qty{+39.77}{\percent} (the optimizer winner before the final adjustment carried \qty{+31.30}{\percent} and \qty{+42.34}{\percent} at the same checks). Both extensor variants target the same human-scaled requirement, and the mono-pulley variant evaluates its torque requirement on the insertion-side torque, the force delivered at the insertion after the tackle's force loss; for that variant only the peak torque is reported rather than a span. A dash marks a quantity not reported for that variant, and objective values of the direct and pulley formulations are different functions, so they are not commensurable.}
 \label{tab:Redesign}
 \small
@@ -505,7 +518,7 @@ Mono-pulley flexor variant & peak \qty{-85.74}{\newton\meter} (\qty{-85.56}{\new
 
 The direct extensor route exceeds the human envelope in magnitude at every angle, with zero shortfall points. Across the design range, the predicted two-BPA torque spans \qty{35.45}{\newton\meter} to \qty{109.4}{\newton\meter} against a human-scaled requirement of \qty{20.25}{\newton\meter} to \qty{50.32}{\newton\meter}, and the required overshoot is consumed as the thinnest margin exactly as designed, $+5.02$~\% at the worst-case angle of \ang{-20.2}. The route respects the wrap-release schedule of the route-elimination rule, releasing its six sequential contacts at knee angles of \ang{-89.8}, \ang{-55.7}, \ang{-47.8}, \ang{-20.2}, \ang{6.1}, and \ang{7.4}, and the optimized design places the femur-side origin at $(40.0, 137.0, 0)$~mm and the tibial insertion at $(34.4, -197.1, 0)$~mm, with a resting length of \qty{827.7}{\mm} and \qty{36.8}{\mm} of tendon (Figure~\ref{fig:ExtensorRoute_redesigned}).
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=1.0\textwidth]{Figures/ExtensorRoute_redesigned.pdf}
 \end{center}
@@ -520,7 +533,7 @@ Allowing the artificial tendon to be reeved over pulleys before insertion extend
 
 The bi-pulley sweep establishes where that freedom runs out on anatomical routes. Applied to five muscle sites of the robot-body model's leg, all five runs failed the torque requirement (Table~\ref{tab:BiPulley}): every run closed with a nonpositive torque margin, and the medial-gastrocnemius and biceps-femoris-short-head runs terminated at the infeasibility sentinel. For the four runs that report a finite route-to-route clearance, the binding constraint was geometry rather than torque: the minimum pair clearances spanned \qty{4.26}{\mm} to \qty{19.14}{\mm} against the \qty{25}{\mm} separation required between adjacent routes, the sum of two \qty{10}{\mm} actuator radii (the $\diameter$\qty{20}{\mm} actuators of the shared plan) and a \qty{5}{\mm} bundle margin. For the biceps femoris short head site, whose target is \qty{40.2}{\newton\meter} at a maximum isometric force of \qty{804}{\N}, the search exited with an infeasibility flag. The practical outcome is a screening rule: reeved routes do not yet fit these corridors, and design effort is better spent on clearance-relaxed attachment sites.
 
-\begin{table}[htbp]
+\begin{table}[H]
 \caption{Bi-pulley batch on five muscle sites of the robot-body model's OpenSim leg. Objective values are unitless, and an objective of \num{101} is the batch's infeasibility sentinel; all five runs closed with a nonpositive torque margin. Adjacent routes are required to clear one another by \qty{25}{\mm}, the sum of two \qty{10}{\mm} actuator radii (the $\diameter$\qty{20}{\mm} actuators of the shared plan) and a \qty{5}{\mm} bundle margin. The medial-gastrocnemius run records no finite minimum clearance, so its outcome rests on the infeasibility sentinel and its worst-constraint value alone; for the biceps femoris short head, whose torque target is \qty{40.2}{\newton\meter} at a maximum isometric force of \qty{804}{\N}, the pattern search exited with flag $-2$ from an initial objective of \num{1000}.}
 \label{tab:BiPulley}
 \small

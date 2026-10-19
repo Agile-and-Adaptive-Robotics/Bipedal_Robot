@@ -27,8 +27,8 @@ for i = [1 2 4 5]
     Mo(Yq > 1) = 0;
     Mo(b0(i).strain < 0) = NaN;
 
-    cand = {'Hunt(Mold)', 'stale .M', 'M_p zero-corr', 'M_p adopted', 'Hybrid M_h'};
-    ser = {Mo, b0(i).M, b0(i).M_p(:,3), b1(i).M_p(:,3), b0(i).M_h};
+    cand = {'Hunt(Mold)', 'stale .M', 'M_p zero-corr', 'M_p adopted'};
+    ser = {Mo, b0(i).M, b0(i).M_p(:,3), b1(i).M_p(:,3)};
     fprintf('--- test %d (f0 = %.4f/%.4f/%.4f, f1 = %.4f/%.4f/%.4f) ---\n', ...
         i, f0(i,:), f1(i,:));
     for c = 1:numel(ser)
@@ -36,6 +36,17 @@ for i = [1 2 4 5]
         [tRMSE, tFVU, tMax] = local_gof(b0(i).Ak, Mv, b0(i).Aexp, b0(i).Mexp);
         fprintf('  %-14s RMSE %7.4f  FVU %7.4f  Max %7.4f\n', cand{c}, tRMSE, tFVU, tMax);
     end
+    % hybrid: paired points (A_h, M_h) vs measured
+    if isequal(b0(i).A_h(:), b0(i).Aexp(:))
+        rh = b0(i).M_h(:) - b0(i).Mexp(:);
+    else
+        rh = interp1(b0(i).A_h(:), b0(i).M_h(:), b0(i).Aexp(:), 'linear', 'extrap') - b0(i).Mexp(:);
+    end
+    vh = isfinite(rh);
+    fprintf('  %-14s RMSE %7.4f  FVU %7.4f  Max %7.4f  (paired A_h==Aexp: %d)\n', ...
+        'Hybrid M_h', sqrt(mean(rh(vh).^2)), ...
+        sum(rh(vh).^2)/sum((b0(i).Mexp(vh)-mean(b0(i).Mexp(vh))).^2), ...
+        max(abs(rh(vh))), isequal(b0(i).A_h(:), b0(i).Aexp(:)));
     fprintf('  |stale.M - M_p0| max %.4f   |stale.M - Mold| max %.4f   numel(A_h vs Aexp): %d/%d\n', ...
         max(abs(b0(i).M - b0(i).M_p(:,3))), max(abs(b0(i).M - Mo)), ...
         numel(b0(i).A_h), numel(b0(i).Aexp));
