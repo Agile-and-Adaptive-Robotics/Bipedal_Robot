@@ -536,11 +536,28 @@ This subsection records the quantitative outcomes of the redesigned routes on th
 
 The direct extensor route exceeds the human envelope in magnitude at every angle, with zero shortfall points: across the design range the predicted two-BPA extensor torque spans \qty{35.45}{\newton\cdot\meter} to \qty{109.4}{\newton\cdot\meter} against the human-scaled requirement of \qty{20.25}{\newton\cdot\meter} to \qty{50.32}{\newton\cdot\meter}, and the required 5\,\% overshoot is consumed as the thinnest margin exactly as designed, at a minimum margin of $+5.02$\,\% at the worst-case angle of $-20.2^{\circ}$.
 
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.98\textwidth]{ExtensorRoute_redesigned.pdf}
+\caption[Route geometry of the redesigned extensor route]{Route geometry of the direct extensor route redesign, drawn in the femur frame. Eight pose panels sweep the design range from full flexion ($\theta_\text{k} = \ang{-120}$) through the frame immediately before each of the six contact-elimination events to full extension ($\theta_\text{k} = \ang{10}$); knee angle is negative in flexion. Each panel draws the active route over the femur-cylinder, femur-wall, condyle, and tibia clearance envelopes of the route-elimination rule, with the local bend-radius checks dashed. The square marker is the femur-side origin and the diamond marker is the tibial insertion.}
+\label{fig:ExtensorRoute_redesigned}
+\end{figure}
+
+
 The extensor route has since been redesigned once more by allowing the tibial-side route points to trace a cam profile, and this cam redesign is the current extensor design. The cam solution converts the razor-thin margin of the direct route into genuine design headroom. On the final geometry, which folds the optimizer winner together with a verified adjustment of the distal route point and tendon length, the minimum torque margin is $+30.83\,\%$ with respect to the required envelope, the human target plus the 5\,\% overshoot, and $+39.77\,\%$ with respect to the plain human target; the optimizer winner before that adjustment carried $+31.30$\,\% and $+42.34$\,\% at the same checks. The pressure required to meet the envelope spans \SIrange[range-phrase=--]{269}{507}{\kPa} across the range of motion, comfortably above the \qty{150}{\kPa} regulated floor of the VTUG valve manifold that supplies the hardware. The geometry confirms that the headroom is not bought with routing risk: the tibial wrap follows a bend radius of \qty{96.9}{\mm}, the guiding route point clears the femoral-condyle envelope by \qty{43.1}{\mm} at \ang{10} of knee extension, and the moment arm spans \SIrange[range-phrase=--]{59.4}{102.8}{\mm} (mean \qty{72.4}{\mm}) over the range of motion.
 
 The flexor route, built on the same two-BPA arrangement sharing one attachment route, meets the flexor torque target with a minimum margin fraction of 0.0501 against the required 0.05. Its predicted knee-axis torque spans \qty{-81.23}{\newton\cdot\meter} to \qty{-3.864}{\newton\cdot\meter} against the human-scaled requirement of \qty{-23.16}{\newton\cdot\meter} to \qty{-2.461}{\newton\cdot\meter} (peak magnitude \qty{23.16}{\newton\cdot\meter}), again exceeding the human envelope at every angle. The flexor redesign applies the adopted correction terms of Table~\ref{tab:app_xi_values}, including the wrapping factor identified on the extensor configuration.
 
 The Mono/Bi-pulley algorithms extend the route search space by allowing the artificial tendon to be reeved over pulleys before insertion. On the knee-flexor route, the pulley variant converged to a collision-feasible layout with zero bound violations and a peak predicted flexion torque of \qty{85.56}{\newton\cdot\meter} on the insertion-side measure, the torque applied at the insertion after the tackle's force loss; Section~\ref{sec:disc_pulley} quantifies what the redirect adds on the knee-axis measure and the off-axis torque it bounds.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=0.98\textwidth]{PulleyTorqueSurfaces_20261020-eps-converted-to.pdf}\par\medskip
+\includegraphics[width=0.98\textwidth]{PulleyMarginSurfaces_20261020-eps-converted-to.pdf}
+\caption[Pulley-position sweep surfaces for the reeved flexor route]{Pulley-position sweep for the reeved knee-flexor route. Top: the predicted torque surface over the two pulley positions along the tendon run; bottom: the corresponding torque-margin surface against the human-scaled flexor requirement, on the same position grid. The sweeps show where the reeving freedom pays, the feasible ridges of pulley placement, and where the margin collapses as the geometry approaches the clearance constraints.}
+\label{fig:PulleySurfaces}
+\end{figure}
+
 
 The Bi-pulley batch applied the same reeving freedom to five muscle sites of the robot-body model's OpenSim leg, and all five runs failed the torque requirement, with the medial-gastrocnemius and biceps-femoris-short-head runs terminating at the infeasibility sentinel (Table~\ref{tab:bipulley_batch}). For the biceps femoris short head site, whose torque target is \qty{40.2}{\newton\cdot\meter} at the robot-body model's maximum isometric force of \qty{804}{\N}, the pattern search exited with flag $-2$ and returned the sentinel objective of 101 from an initial objective of 1000; Section~\ref{sec:disc_pulley} reports the per-run objectives and the clearance constraints behind these outcomes.
 
