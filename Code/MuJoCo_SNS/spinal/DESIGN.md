@@ -115,6 +115,48 @@ predicted edge count (ib_e_central 112 r/109 l, iain_pf_gate 92+92,
 pf_mixed_recip 2+2), one finite step. s3k builder NOT touched (no gaps
 found).
 
+## 2026-10-20 night (ZCode, egg): M2 gate additions - TWO open issues
+## that were living only in report files, promoted per the gatekeeper.
+
+6. **AnimatLab V3 RETYPE SUSPECT (drop-test finding, full record
+   `reports_20261020/w2l_animatlab/W2L_ANIMATLAB_TUNED_DROP_20261020.md`).**
+   Five headless 30.1 s Vortex runs of the tuned corrected-connectome
+   winner: NO drop-then-walk under any condition tested. stock30 (old
+   asim wiring) falls in ~1.5 s then keeps STEPPING ON ITS SIDE
+   (63/63 bursts - Ben's GUI "walking in circles on its side"
+   reproduced); every corrected-connectome run has RG flat or LATCHED
+   (the tuned winner's te/tf tonic latches the NonSpiking RG from
+   t~0.25 s - only FAMILY RATIOS were ever transferable, not the
+   drive). PRIME SUSPECT for the corrected wiring's absent free
+   rhythm: in the corrected aproj the crossed V3 -> contralateral
+   RG-ext-IN edges were re-typed onto the SHARED "RG Excite" type
+   (2.749 uS) - 27x their old dedicated "V3 Commissural Excite" class
+   (0.1 uS) and ~34x the MuJoCo twin's v3_weak (0.08 uS); strong
+   bilateral crossed excitation is a classic sync/latch path. Second
+   suspect: open issue 1's F1 edge. BEN'S FIRST TRY before any further
+   AnimatLab tuning: retype the V3-contra edges back to a weak
+   dedicated class (~0.1 uS). Also flagged: cref does not transfer
+   (aproj adapters are ContactCount-based, no force input; the port
+   runs the contact encoder saturated).
+7. **FIXED-TAU LATCHES AT HIGH ALPHA (Shevtsova flag S-1,
+   `replication/shevtsova_sns.py` docstring).** With tau_h FIXED (the
+   repo's Deng/AnimatLab-patch semantics), her circuit holds the trot
+   band at alpha=0.55 (tau 0.30 s -> 4.45 Hz vs the standalone's
+   4.51) but LATCHES at the co-active fixed point (both RG centers
+   pinned ~-42.3 mV, f(V_RG-F) ~ 0.15 > 0.1, no cycles) at alpha=1.05
+   for EVERY fixed tau in her stated 150-400 ms band. Her bell
+   tau_h(V) is slow through the burst band (256-400 ms) and fast in
+   silence (152-175 ms); that asymmetry is what destabilizes the
+   co-active fixed point at high drive. The SNS build therefore
+   DEFAULTS to her exact eq-8 bell (class SNS_NumpyBellTau, published
+   constants, no free knobs; tau_mode="fixed" keeps the reduction for
+   the record - holds C1, latches C2). OPEN IMPLICATION for the
+   repo-wide fixed-tau doctrine: a fixed-tau NaP reduction cannot in
+   principle reproduce high-drive destabilization of the co-active
+   point - weight comparisons of fixed-tau SNS nets against
+   voltage-dependent-tau literature circuits at high drive
+   accordingly.
+
 ## 2026-09-22 (ZCode, EB475WS4): s3k BILATERAL-OBJECTIVE VERDICT +
 **ROOT CAUSE chain complete: the objective, the circuit, and the
 runner machinery have ALL been fixed — and the left leg STILL won't
