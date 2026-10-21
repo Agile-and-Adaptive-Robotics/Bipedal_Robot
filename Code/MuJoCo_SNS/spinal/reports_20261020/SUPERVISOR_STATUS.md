@@ -146,3 +146,160 @@ commits made — commit list in the campaign README + gatekeeper notes.
   SUPERVISOR_AGENT.md verbatim), balance agent completion, then final
   wave report + automation retirement. The fixed-tau latch finding and
   the AnimatLab V3 retype should be added to DESIGN.md open issues.
+- 2026-10-21 supervisor pass B: the balance agent DIED on the 5-hour
+  usage limit mid-stream (limit has reset). Relaunched fresh with the
+  full requirement set (perturbations, metabolic cost, Ib ablation,
+  mechanism knobs, all 5 models, supervisor gates). Wave-2 streams 1-4
+  remain as logged in pass A (delivered, agent gates PASS; formal M1/M2
+  gatekeeper spawns still pending next pass).
+- 2026-10-21 supervisor pass C: spawned the formal M2 gatekeeper over
+  the four delivered streams (bit-identity re-verification, edge
+  citations, originals-untouched check, DESIGN.md open-issue coverage
+  for the fixed-tau latch + AnimatLab V3 findings). Verdict pending its
+  completion. Balance agent (relaunched) still running.
+- 2026-10-21 stage-3 balance + perturbations stream, entry 1 (resume
+  session, plain language): surveyed what the dead agent left. GOOD
+  NEWS: its two background studies SURVIVED and were still running
+  (curr_w2lvar_s3p_perturb, curr_syn6_s3p_perturb; left running, not
+  killed). Already on disk and now re-verified first-hand: (a) the
+  main-model quiet study curr_s3_balance is COMPLETE, 40/40 trials,
+  log curr_s3bal_20261020.log, best = trial 0 (score 17.29) = the
+  incumbent with vestibular gains 0 and rig 1.0 - an honest negative:
+  the searched vest gains found NOTHING better than the incumbent
+  quiet stand (40 stand / 0 fall). (b) Fresh-process re-verification
+  of all three quiet winners (verify_20261021.log): stock reproduces
+  its DB score BIT-EXACT (17.294510739883755), syn6 BIT-EXACT
+  (37.46299873272405), w2lvar 25.3098 vs DB 25.6134 (+1.2%, same
+  fresh-process value the dead agent got - deterministic in a fresh
+  process; the in-study number differs by the documented in-process
+  attractor effect). (c) Ib ablation re-run: stock byte-identical to
+  the dead agent's json. (d) W2L Hill robot: re-ran intact stands +
+  ibnA=0 ablation + full rig ladder (balance_w2l_ibablate_20261021.log):
+  unrigged it FALLS (t=1.18 s step regime; latch regime survives
+  rig-0.0 only by hanging - sway 48 cm, tilt 4.8 deg, heel duty 0.00,
+  harness ~50% weight); rigged (0.25-1.0) all PARTIAL with harness
+  ~49-50% weight and heel duty 0.00; ibnA=0 changes the rigged stand
+  barely at all and the unrigged fall time 1.18 -> 1.88 s (falls
+  either way). (e) BPA walker battery (dead agent's log re-read):
+  support 0.70 passes the foot-load gate (>=10% BW after event) on all
+  7 battery cases, post-event sway 32-44 cm; support 0.85 fails it
+  (9%); the runner itself states no free-stand claim (COM outside the
+  support polygon); NO Ib exists to ablate on the BPA walker (tonic
+  open-loop drive, no afferents) - stated as N/A, not dodged.
+  (f) NEW rig-share analysis (_s3_rigshare_20261021.py/json): the
+  three human-family quiet winners carry ~48-50% of body weight on
+  the feet (333-354 N of ~706 N) - i.e. the support rig holds up the
+  other HALF at their winning rig_scale 0.95-1.0. Tilt envelopes
+  19-29 deg. Honest interim verdict: these are rig-assisted stands
+  with large lean, NOT free balance. (g) syn6 Ib ablation is EXACTLY
+  identical to intact (every metric) - its stage-3 winner has all
+  extensor-Ib gains at default 0, so there is no Ib to remove: the
+  syn6 quiet stand never used Ib feedback at all. stock Ib ablation:
+  no fall, but the right knee drops into 42-50 deg SUSTAINED flexion
+  post-warmup (intact holds ~+9..+10 deg near extension) - the
+  Ib-removed model partially crumples into the rig without falling;
+  w2lvar barely changes (tilt 25.3 -> 19.7 deg, foot load 47 -> 42%).
+  Studies still finishing: syn6 s3p (17/18), w2lvar s3p (~11/18).
+  Supervisor M1 gates pending until they land.
+- 2026-10-21 supervisor pass D: M2 GATEKEEPER VERDICT SHIP for all four
+  delivered streams (it re-ran every gate itself: smoke 2.997/-0.782,
+  410/376/1186 + anchor bit-exact, syn6 794/382/3033, w2lvar
+  888/382/7866, ON-probe +409 reproduced, both Shevtsova verifiers
+  PASS). Originals verified untouched; Ben's commits 8a125e75 + 5f829950
+  carry the streams. Gatekeeper added DESIGN.md open issues 6 (AnimatLab
+  V3 retype) + 7 (fixed-tau latch at high alpha). Remaining for wave
+  close: balance agent (running) + its gate, then final report +
+  automation retirement.
+- 2026-10-21 supervisor pass E: balance agent mid-work and producing
+  (reports_20261020\balance\ already holds fresh-verify + Ib-ablation
+  JSONs for w2lvar/syn6 winners and a pull experiment). Streams 1-4
+  remain M2 SHIP. No action needed this pass; wave close awaits balance
+  delivery + its M1 gate.
+- 2026-10-21 supervisor pass F (batched firings): no change - streams
+  1-4 M2 SHIP; balance agent still mid-run (artifacts accumulating in
+  reports_20261020\balance\). No action required; wave close remains
+  blocked on balance delivery + its M1 gate. Heartbeat only.
+- 2026-10-21 supervisor pass G: balance stream progressing - newest
+  artifacts curriculum_s3p_stock.json + curriculum_stage3.json written
+  2026-10-21 00:33 (the main-model perturbation study is running /
+  seeded). Streams 1-4 M2 SHIP. Wave close still blocked on balance.
+- 2026-10-21 supervisor pass H: heartbeat - balance artifacts still
+  accumulating (see balance\ timestamps); streams 1-4 M2 SHIP; no new
+  action. Wave close remains blocked on balance delivery + gate.
+- 2026-10-21 supervisor pass I: balance stream found STALLED (zero
+  python processes, no log growth since 00:33, no completion
+  notification - second agent death suspected). Fresh resume agent
+  launched: finish/relaunch the main-model perturbation study, collect
+  the per-model verdict table, run the M1 gate, append the final
+  balance report. Streams 1-4 remain M2 SHIP.
+
+## FINAL BALANCE REPORT (2026-10-21 resume session; M1 gate SHIP — wave-2 CLOSED)
+
+Plain language, numbers first-hand. Good news first: the perturbation
+studies did NOT need relaunching — the background processes survived
+both agent deaths and finished on their own (s3p_stock EXITCODE 0 at
+00:24, s3p_syn6 at 00:54, s3p_w2lvar at 01:41; DBs show 20/20, 18/18,
+18/18 COMPLETE). The resume session re-verified everything firsthand.
+
+PER-MODEL VERDICTS (full table + sources:
+`reports_20261020\balance\VERDICT_TABLE_20261021.md` +
+`verdict_table_20261021.json`):
+
+1. HUMAN main (stock): LEANS ON RIG. Quiet winner = the incumbent
+   (vestibular gains 0, rig 1.0), score 17.2945, fresh BIT-EXACT;
+   40/40 trials stood. Perturbation battery (60 N pushes, 6 cm
+   translate, 6 deg tilt): winner is again the incumbent + vest_prop
+   0.375, score −46.08, ZERO falls in 7/7 evals, mean push sway 9.0 cm,
+   tilt 28.8 deg — fresh BIT-EXACT. The rig carries 49.8% of body
+   weight. Ib ablation: no fall, but the right knee crumples into
+   50 deg sustained flexion (intact −9 deg) — Ib load feedback is what
+   holds knee extension.
+2. w2lvar: LEANS ON RIG. Quiet winner 25.61 (fresh 25.31, +1.2%
+   documented fresh-process delta). Perturbations: 18/18 trials
+   zero-fall; winner = the FIXED incumbent (vest 0, rig 1.0) at −17.49
+   (fresh BIT-EXACT) — the vestibularly-tuned quiet winner did NOT
+   transfer to perturbed standing. Rig carries 52.8%. Ib ablation
+   barely changes anything (tilt 25.3→19.7 deg).
+3. syn6: LEANS ON RIG. Quiet winner 37.4630 fresh BIT-EXACT. s3p
+   search DID adopt mechanisms (vest 0.89 + stance width 9.2 deg +
+   knee bias 4.7 deg + coact 0.23 + rig_scale 0.054) and improved
+   −68.42→−54.05 with zero falls — fresh BIT-EXACT — BUT the rig-share
+   probe (NEW this session, `_s3p_syn6_rigshare_20261021.json`) shows
+   that pose carries only 29.8% of weight on its feet (COM sagged to
+   0.575 m): the low sway is a hang on the slack rig, NOT a free
+   stand. Honest lesson recorded: the s3p score lacks a rig-share
+   term. Ib ablation exactly identical to intact — the syn6 winner
+   never used Ib feedback (its extensor-Ib gains are all 0).
+4. W2L robot (Hill): PARTIAL, rigged stand only. Rigged (0.25–1.0)
+   stands with sway 0.1–1.0 cm and harness ~50% weight; UNRIGGED step
+   regime FALLS at t=1.18 s; latch regime survives rig-0 only by
+   hanging (sway 48 cm, heel duty 0). Push battery rigged: 0 falls,
+   sway 2.2–4.8 cm. ibnA=0 barely changes the rigged stand; unrigged
+   fall 1.18→1.88 s (falls either way).
+5. BPA robot: LEANS ON RIG, structurally. Retained harness
+   (support 0.70): all 6 perturbed cases pass the ≥10% BW foot-load
+   gate (10–11%, sway 32.5–43.7 cm); support 0.85 fails it (9%). The
+   runner itself states no free-stand claim (COM outside the support
+   polygon). Ib ablation N/A — the BPA walker is tonic open-loop with
+   no afferents.
+
+GATES: M1 supervisor gate SHIP (per-item evidence in
+`reports_20261020\balance\M1_GATE_20261021.md`; census scripts re-run
+PASS this session — 410/376/1186, 888/382/7866, 794/382/3033, coact
+adds exactly 4 edges and restores; all three s3p winner batteries
+re-run in FRESH processes, each score delta +0.0000 vs DB). One
+deviation noted in the gate record: no subagent facility exists in the
+resume environment, so the gatekeeper checklist was executed in-session
+with every verification command re-run firsthand. Anchor −161.56754173676563
+stands bit-exact per the M2 gatekeeper (pass D, post-s3p-edits).
+
+WAVE-2 STATEMENT: with this delivery the wave is FULLY GATED — streams
+1-4 were already M2 SHIP (pass D) and stream 5 (balance) is now
+delivered + M1 SHIP. The 'Walker wave-2 standing supervisor' automation
+can be retired by the main session. Ben: no commits were made; the
+balance artifacts to commit live in `spinal\` (study logs, winner
+jsons, verify/rigshare/verdict JSONs, `reports_20261020\balance\`) —
+note the tree ALSO carries your own uncommitted torque-paper +
+BiPulley work (untouched by agents), and the dead agent's scratch
+`_supervisor_gate_batch1_20261021.ts` (unfired workflow draft) is safe
+to delete.

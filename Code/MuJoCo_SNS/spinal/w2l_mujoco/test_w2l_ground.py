@@ -808,7 +808,12 @@ def main() -> int:
                       f" | tilt max {_res['tilt'][1]:.1f} deg"
                       f" | harness {_res['harness_pct']:+.0f}% weight")
             KV.update(_save)
-        print(f"   balance metrics table: {len(stand_rows)} rig scales")
+        # 2026-10-21: label was stale ("rig scales") - with --perturb the
+        # battery is 1 quiet + 6 perturbed CASES at the single perturb_rig.
+        _nlab = (f"{len(stand_rows)} battery cases (1 quiet + 6 perturbed) "
+                 f"at rig {KV['perturb_rig']}" if KV["perturb"] > 0.0
+                 else f"{len(stand_rows)} rig scales")
+        print(f"   balance metrics table: {_nlab}")
         print(f"   [{'PASS-FULL' if stand_full else 'PARTIAL'}] unrigged_stand")
 
     if phase in ("walk", "both"):
