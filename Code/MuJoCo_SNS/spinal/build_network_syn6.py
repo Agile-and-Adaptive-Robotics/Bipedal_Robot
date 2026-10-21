@@ -85,6 +85,26 @@ Architecture (per side unless noted):
   aff_loops/vest False (those pathways are not in this variant's dress).
   net.idx exposes RG_E_{s}, RG_F_{s}, MN_{act} and PF_S{k}_{s}.
 
+  2026-10-20 evening audit knobs (Ben's Ib-to-extensor-layers +
+  antagonist-IN questions; ALL default 0 = edges absent = census
+  794/382/3033 bit-identical, gated in reports_20261020):
+  - ib_e_central (params.G key shared with the s3k builder): per-muscle
+    extensor-stance-group Ib -> {RG_E, InE} + the E-family PF channels
+    CARRYING that muscle (W > 0; all E channels when the muscle is not
+    in the basis - the stock joint-layer fallback analog). Shinohara
+    2025 eq 11 per-muscle extensor force feedback, j in {RG-E, IN-E,
+    PF-E}. Two documented differences from the s3k reading of the same
+    key: (1) no HEEL/TOE ride-along (syn6's contact dress is the
+    unconditional master-rules one); (2) PF targets are the muscle's
+    own synergy channels, not every E cell.
+  - iain_pf_gate: committed F-family channels -> every IaIN (Deng A6 /
+    Rybak 2006a Table 2 PF->IaIN rows) - syn6 previously had NO PF gate
+    on the reciprocal Ia pathway.
+  - pf_mixed_recip: the genuinely-MIXED channel joins the family
+    lamination at this conductance (Rybak 2006a Inpf rows apply the
+    lamination to every family cell); default stays the documented
+    gate-c1 exclusion.
+
   Not implemented (out of this variant's scope): Renshaw cells (not in
   the goal-4 dress list; the stock G["renshaw"] key stays default-0 and
   stock-build-only), AFF_E/AFF_F semi-closed loops, VEST cells, F1/KINH
@@ -369,6 +389,17 @@ class Syn6Network(SNSpinal.SpinalNetwork):
                     n.add_connection(_syn(DRESS["alpha_to_v"], exc=False),
                                      "BS_ALPHA", f"V0D_{side}")
 
+        # ---- 2026-10-20 W2L corrected-connectome contact pathway #1
+        # (contra_flex, default 0 = absent = census 794/382/3033
+        # bit-identical): crossed flexor-EXCITATORY heel edge,
+        # HEEL_{a} -> RG_F_{b} (Ben's 2026-10-18 corrected W2L aproj;
+        # see build_network.py's block).
+        if G["contra_flex"] > 0.0:
+            for a, b in (("r", "l"), ("l", "r")):
+                if f"HEEL_{a}" in self.idx and f"RG_F_{b}" in self.idx:
+                    n.add_connection(_syn(G["contra_flex"], exc=True),
+                                     f"HEEL_{a}", f"RG_F_{b}")
+
         # ---- muscles: neurons first, then wire ----
         self._order = {a: i for i, a in enumerate(self.muscles)}
         for act, mi in self.muscles.items():
@@ -505,6 +536,31 @@ class Syn6Network(SNSpinal.SpinalNetwork):
             src = pf_in_e if fam[k] == "F" else pf_in_f
             n.add_connection(_syn(G["pf_recip_inh"], exc=False),
                              src, cells[k])
+        # ---- 2026-10-20 antagonist audit knob A3 (pf_mixed_recip,
+        # default 0 = edges absent = census 794/382/3033 bit-identical):
+        # include the genuinely-MIXED channel in the family lamination -
+        # it drives its family IN and receives the opposite-family IN,
+        # both at this knob's conductance. Rule: Rybak 2006a Table 2
+        # Inpf rows apply the PF lamination to EVERY family cell
+        # (replication/rybak_rules.json rybak2006_pflam: "PF-F -> Inpf-E
+        # 0.2" / "Inpf-E -> PF-F -0.35" and the mirror rows). The syn6
+        # exclusion above was the gate-c1 co-contraction-latch
+        # mitigation (measured 2026-09-25: a mixed channel riding both
+        # RG drives holds its family IN latched and pins the other
+        # family below threshold) and stays the DEFAULT; this knob makes
+        # the rule-conformal antagonist-channel topology (E family can
+        # inhibit the dorsiflexion channel S5) available to a study
+        # without disturbing the recorded winners.
+        if G["pf_mixed_recip"] > 0.0:
+            for k in range(N_SYN):
+                if not mixed[k]:
+                    continue
+                n.add_connection(_syn(G["pf_mixed_recip"], exc=True),
+                                 cells[k],
+                                 pf_in_e if fam[k] == "E" else pf_in_f)
+                n.add_connection(
+                    _syn(G["pf_mixed_recip"], exc=False),
+                    pf_in_e if fam[k] == "F" else pf_in_f, cells[k])
         # ---- rule dress at the PF layer ----
         # heel: stance reset -> InE + InF + the E-lamination IN (g 0.5)
         heel_in = f"HEEL_{side}"
@@ -618,6 +674,26 @@ class Syn6Network(SNSpinal.SpinalNetwork):
         n.add_connection(_syn(d["ib_to_ibin"], exc=True), ib, ibin)
         n.add_connection(_syn(d["ibin_to_mn"], exc=False), ibin, mn)
 
+        # ---- 2026-10-20 antagonist audit knob A2 (iain_pf_gate, default
+        # 0 = edges absent = census 794/382/3033 bit-identical): PF phase
+        # gate ONTO the reciprocal Ia pathway - the committed F-family
+        # channels of this muscle's side excite its IaIN. Rule rows:
+        # Deng Table A6 PF->IaIN 0.5 (the stock build_network.py ia_in
+        # branch gates by PF_F1 / the muscle's own joint F half-center)
+        # and Rybak 2006a Table 2 "Ia-E: PF-E (0.4)" / "Ia-F: PF-F
+        # (0.4)" (replication/rybak_rules.json tag rybak2006_iain).
+        # syn6 previously had NO gate here (audit finding A2): every
+        # IaIN fired ungated, so reciprocal inhibition ran through both
+        # phases. Stock-precedent reading (F1 gate for every muscle,
+        # regardless of the source muscle's family); the family-specific
+        # Rybak reading would gate extensor IaINs by E channels instead.
+        if G["iain_pf_gate"] > 0.0 and tab is not None:
+            mixed_s = self.syn_mixed.get(mi.side, [False] * N_SYN)
+            for k in range(N_SYN):
+                if tab["family"][k] == "F" and not mixed_s[k]:
+                    n.add_connection(_syn(G["iain_pf_gate"], exc=True),
+                                     f"PF_S{k + 1}_{mi.side}", iain)
+
         # antagonist projections (same side, antagonist primary groups)
         for ant in SNSpinal.ANTAGONIST.get(mi.groups[0], ()):
             for act2, mi2 in self.muscles.items():
@@ -649,6 +725,51 @@ class Syn6Network(SNSpinal.SpinalNetwork):
             if G["ib_rge"] > 0.0:
                 n.add_connection(_syn(d["ib_to_lbin"], exc=True), ib,
                                  f"LBIN_{mi.side}")
+
+        # ---- 2026-10-20 Ib audit knob A1 (ib_e_central, default 0 =
+        # edges absent = census 794/382/3033 bit-identical): the
+        # PER-MUSCLE extensor Ib afferent reaches the E centers directly
+        # - {RG_E, InE} + the E-family PF channels CARRYING this muscle.
+        # Rule rows (Ben's question 2026-10-20: "Is there similar Ib
+        # feedback to the different extensor layers as indicated in the
+        # Shinohara paper?"): Shinohara 2025 eq 11 - the extensor force
+        # afferent reaches j in {RG-E, IN-E, PF-E} with one k_f
+        # (replication/shinohara_rules.json rows "extensor F (GM,VL,SO,
+        # GA) -> RG-E / IN-E / PF-E, 0.16, tag shin2025_eq11";
+        # ben_shinohara_20260924.json rows "extensor Ib -> RG-E / IN-E /
+        # PF-E exc 0.16 [shin2025_eq11]"); the group form (Ib grp ->
+        # RG-E / IN-InE / HC-PF-E, all 0.5) is Ben's master-rules
+        # drawing, realized here by the ib_rge LBIN dress above. Same
+        # params.G key as the s3k builder's central-projection block
+        # (build_network.py _wire_muscle); two documented differences in
+        # this variant: (1) NO heel/toe ride-along (syn6's contact dress
+        # is the unconditional master-rules one), (2) the PF targets are
+        # the synergy channels carrying this muscle (W > 0, family E -
+        # the stock joint-layer routing's analog), falling back to ALL
+        # E-family channels when the muscle is not in the basis
+        # (pruned/out-of-basis; the stock JPF fallback precedent).
+        if G["ib_e_central"] > 0.0 and mi.groups[0] in \
+                SNSpinal.EXTENSOR_STANCE_GROUPS and tab is not None:
+            fam = tab["family"]
+            row = tab["names"].index(act) if covered else None
+            e_chans = [k for k in range(N_SYN)
+                       if fam[k] == "E"
+                       and (row is None or tab["W"][row, k] > 0.0)]
+            tgts = [f"RG_E_{mi.side}", f"InE_{mi.side}"]
+            tgts += [f"PF_S{k + 1}_{mi.side}" for k in e_chans]
+            for tgt in tgts:
+                n.add_connection(_syn(G["ib_e_central"], exc=True), ib, tgt)
+
+        # ---- 2026-10-20 W2L corrected-connectome contact pathway #2
+        # (contact_ank_mn, default 0 = absent = census 794/382/3033
+        # bit-identical): heel+toe contact INs -> this side's ankle_pf
+        # MN pool, exc (Ben's 2026-10-18 corrected W2L aproj; see
+        # build_network.py's block).
+        if G["contact_ank_mn"] > 0.0 and mi.groups[0] == "ankle_pf":
+            for src in (f"HEEL_{mi.side}", f"TOE_{mi.side}"):
+                if src in self.idx:
+                    n.add_connection(_syn(G["contact_ank_mn"], exc=True),
+                                     src, mn)
 
 
 def build(model_actuators: list[str], dt: float = SNSpinal.DT,

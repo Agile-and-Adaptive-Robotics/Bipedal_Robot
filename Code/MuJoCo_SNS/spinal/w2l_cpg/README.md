@@ -219,3 +219,16 @@ reuse it verbatim, with the MN activation convention
 - **The existing stack's tuned winners are untouched.** Nothing outside
   `spinal/w2l_cpg/` was read-modified; `build_network.py` / `runner.py` /
   `params.py` are imported read-only (one symbol) or not at all.
+
+## 2026-10-20 — bilateralrg2 (Ben's corrected aproj 2026-10-18)
+
+`make_bilateralrg2.py` generates the `bilateralrg2` template key from Ben's
+corrected `Walker_2_Layer_CPG_BilateralRG.aproj` (2026-10-18: physical
+contact sensing closed, Li-style chain; census 96/204/12). The 7-point
+wiring delta, the two flagged items (F1 RE→RE sign ruling, F2 weak-class
+typing), and the runner integration live in that generator's docstring and
+`reports_20261020/w2l_contact2/README.md`. The `bilateralrg` key above is
+UNCHANGED (regression smoke bit-identical); `build(template_key=...)` /
+`AARL_W2L_TPL` selects the template; `smoke_w2l.py --template
+bilateralrg2` gates the corrected net (PASS: r −0.782). The MuJoCo
+runner: `test_w2l_ground.py --net=bilateralrg2`.

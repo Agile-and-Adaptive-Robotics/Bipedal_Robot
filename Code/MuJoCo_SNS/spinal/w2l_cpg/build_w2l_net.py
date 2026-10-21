@@ -116,6 +116,18 @@ TAU = dict(
     pf=0.08,          # PF half-centers + PF cross-INs (params.TAU["pf"])
     rc=0.03,          # Renshaw cells (mn tau, as in the stack)
     contact=0.04,     # heel/toe encoder neurons (params.TAU["preset"] legacy)
+    # ---- mechanoreceptor-channel membrane taus (2026-10-20, Ben's ask:
+    # "four types of contact mechanoreceptors - wide and narrow field,
+    # quick and short acting"). DOCUMENTED STAND-INS for the RA/SA
+    # adaptation time constants (not fitted to any one receptor paper):
+    # RA ~20 ms = fast-adapting/FA-I order; SA ~200 ms = slow-adapting
+    # sustained level. The neuron is a graded RC cell (no intrinsic
+    # adaptation) - the RA channel gets its transient sensitivity from
+    # the RUNNER's rectified dF/dt feed (test_w2l_ground.py), the SA
+    # channel from the sustained force level; these taus set only how
+    # much each channel low-passes its port current.
+    ra=0.02,
+    sa=0.20,
 )
 
 # Persistent-Na half-center parameters - VERBATIM spinal/params.py NAP except
@@ -184,13 +196,45 @@ W2L_GAINS = dict(
     c1_inh=3.0,
     comm_v3=1.0,
     v3_weak=0.08,
-    # Contact-neuron OUTPUT synapses (24 edges). The template's gain 20 is the
+    # Contact-neuron OUTPUT synapses. The template's gain 20 is the
     # ANIMATLAB ADAPTER current gain (nA per contact into the contact neuron),
     # NOT a synapse strength - the adapter value is applied smoke-side
     # (CONTACT_CURRENT_NA = 20) and these synapses carry a generic excitatory
     # strength (strong: contact must flip the extensor layers, but below the
     # 4.0 that latches; SESSION_NOTES: contact C=20 is a tuning knob).
     contact=1.0,
+    # ---- 2026-10-18 corrected aproj (template bilateralrg2): Ben re-typed
+    # the heel cascade into the WEAK afferent-HC class (dedicated
+    # Heel_Ipsi_*_Excite types, gmax 1e-8 S = the build_aff.pl "SynAmp 0.01"
+    # family) and kept only the ankle-MN contact edges at the GENERIC 5e-7
+    # class - so the weak ones ride aff_HC_excite's proven value and the
+    # ankle edges keep the contact value (relative order preserved:
+    # generic 50x the 0.01 class; stack 1.0 vs 0.08).
+    contact_hc=0.08,
+    contact_ank=1.0,
+    # NEW crossed pathway heel -> CONTRA RG flx (Heel_Contra_RGflx_Excite,
+    # dedicated WEAK type 1e-8 S in the aproj): starts at the weak-class
+    # value; it is the antiphase-coupling edge family (DESIGN.md 2026-09-22)
+    # and a PRIMARY tuning dim.
+    contact_contra_flex=0.08,
+    # ---- PRESYNAPTIC THRESHOLD / SATURATION (2026-10-20, Ben's ask: "In
+    # AnimatLab you can see how they also optimized threshold and saturation
+    # level" - PreSynapticThreshold / SaturationLevel). Global defaults are
+    # the historical hardcodes (e_lo 0 / e_hi E_HI) so every default build
+    # is BIT-IDENTICAL. Per-family override: put "<tag>_presyn_lo" /
+    # "<tag>_presyn_hi" in gains (e.g. "contact_hc_presyn_lo") to shape one
+    # edge family only; families fall back to these globals.
+    presyn_lo=0.0,
+    presyn_hi=5.0,
+    # ---- RA/SA mechanoreceptor channel synapses (2026-10-20, CONDITIONAL
+    # build - see W2LNet(ra=/sa=)). Each channel wires to the SAME five
+    # ipsilateral extensor targets as the heel contact_hc family ({s} RG
+    # ext / Hip PF ext / Knee PF ext / Hip MN ext / Knee MN ext), so the
+    # default starts at that family's weak-class value (Ben's corrected
+    # aproj heel cascade; the tuned r030 winner raised contact_hc to
+    # 0.478 - tune from there).
+    ra_contact=0.08,
+    sa_contact=0.08,
 )
 
 # template node type -> membrane tau key
@@ -202,6 +246,9 @@ _TYPE_TAU = {
     "IN-IaIN": "afferent", "SN-Ia": "afferent", "SN-Ib": "afferent",
     "SN-II": "afferent",   # flexor II relays (template corrected 2026-09-26)
     "MN": "mn", "RC": "rc", "SN-heel": "contact", "SN-toe": "contact",
+    # conditional mechanoreceptor channels (2026-10-20; built only when
+    # W2LNet(ra=/sa=) is on - never present in a default build)
+    "SN-RA": "ra", "SN-SA": "sa",
 }
 
 
@@ -211,10 +258,15 @@ def _neu(tau: float) -> NonSpikingNeuron:
                             resting_potential=0.0, bias=0.0)
 
 
-def _syn(g: float, exc: bool) -> NonSpikingSynapse:
+def _syn(g: float, exc: bool, e_lo: float = SYN_E_LO,
+         e_hi: float = SYN_E_HI) -> NonSpikingSynapse:
+    """NonSpikingSynapse with tunable presynaptic activation window
+    (e_lo = threshold, e_hi = saturation; AnimatLab
+    PreSynapticThreshold / SaturationLevel). Defaults are the historical
+    hardcodes, so unchanged call sites compile identically."""
     return NonSpikingSynapse(max_conductance=float(g),
                              reversal_potential=E_REV_EXC if exc else E_REV_INH,
-                             e_lo=SYN_E_LO, e_hi=SYN_E_HI)
+                             e_lo=float(e_lo), e_hi=float(e_hi))
 
 
 @dataclass
@@ -225,6 +277,14 @@ class W2LNet:
     gains: dict = field(default_factory=dict)   # merged over W2L_GAINS
     alpha_l: float = 0.0    # MN-level ALPHA drive, LEFT side (nA; 0 = no
     alpha_r: float = 0.0    # ports built; >/< 0 adds 6 "ALPHA L/R ..." ports)
+    ib_ports: bool = False  # add "PORT Ib <label>" current inputs on all 12
+                            # SN-Ib neurons (the MuJoCo runner's group Ib
+                            # feed; False = census bit-identical)
+    ra: bool = False        # build the fast-adapting (RA) mechanoreceptor
+                            # channels "RA heel|toe {L,R}" (2026-10-20;
+                            # False = census bit-identical)
+    sa: bool = False        # build the slow-adapting (SA) channels
+                            # "SA heel|toe {L,R}" (False = bit-identical)
     net: Network = field(init=False)
     compiled: object = field(init=False, default=None)
     idx: dict = field(default_factory=dict)
@@ -314,6 +374,22 @@ class W2LNet:
             self.inputs.append(port)
             self.port_targets[port] = lab
 
+        # ---- Ib group current ports (CONDITIONAL, runner-only): one input
+        # per SN-Ib neuron, named "PORT Ib <neuron label>" (e.g.
+        # "PORT Ib L Hip ext Ib"). The MuJoCo runner writes the SAME
+        # side-normalized extensor-force current to that side's six ports
+        # (the M5 aff-net group semantics, but per-joint addressable).
+        # Default False: no ports built, census bit-identical.
+        self.ib_port_list = []
+        if self.ib_ports:
+            for lab in list(self.idx):
+                if lab.endswith("Ib"):
+                    port = "PORT Ib " + lab
+                    self.net.add_input(lab)
+                    self.inputs.append(port)
+                    self.port_targets[port] = lab
+                    self.ib_port_list.append(port)
+
         # ---- ALPHA drive ports (MN-level, per side; CONDITIONAL - lab law:
         # extra input ports change compiled shapes even at zero current, so
         # alpha == 0.0 (default) builds NOTHING and the census stays
@@ -343,8 +419,12 @@ class W2LNet:
                 self.net.add_output(e["from"], name=e["to"])
                 self.muscle_outputs[e["to"]] = e["from"]
 
-        # ---- synapses: every remaining edge, per-tag conductance
-        n_types = {lab: nd["type"] for lab, nd in nodes.items()}
+        # ---- synapses: every remaining edge, per-tag conductance. The
+        # presynaptic activation window (threshold e_lo / saturation e_hi)
+        # is PER-FAMILY tunable: "<tag>_presyn_lo/hi" gains keys win over
+        # the global presyn_lo/presyn_hi (both default to the historical
+        # hardcodes 0/E_HI -> bit-identical builds).
+        n_types = {label: nd["type"] for label, nd in nodes.items()}
         for e in edges:
             tag, sign = e["tag"], e["sign"]
             if tag == "mn_to_muscle":
@@ -352,7 +432,9 @@ class W2LNet:
             if n_types[e["from"]] == "PORT-load":
                 continue                     # stimulus edges -> ports, above
             g = self._gain(tag, sign, e, n_types)
-            self.net.add_connection(_syn(g, exc=(sign == "exc")),
+            self.net.add_connection(_syn(g, exc=(sign == "exc"),
+                                         e_lo=self._presyn_lo(tag),
+                                         e_hi=self._presyn_hi(tag)),
                                     e["from"], e["to"])
             self.synapse_counts[tag] = self.synapse_counts.get(tag, 0) + 1
             self.n_synapses += 1
@@ -374,15 +456,72 @@ class W2LNet:
         for src, dst in (("R RG ext", "R RG flx"), ("R RG flx", "R RG ext")):
             if (src, dst) in have:
                 continue
-            self.net.add_connection(_syn(self.G["rg_direct_exc"], exc=True),
-                                    src, dst)
+            self.net.add_connection(
+                _syn(self.G["rg_direct_exc"], exc=True,
+                     e_lo=self._presyn_lo("rg_laminate"),
+                     e_hi=self._presyn_hi("rg_laminate")),
+                src, dst)
             self.synapse_counts["rg_laminate_mirror"] = \
                 self.synapse_counts.get("rg_laminate_mirror", 0) + 1
             self.n_synapses += 1
 
+        # ---- RA/SA MECHANORECEPTOR CHANNELS (CONDITIONAL, 2026-10-20;
+        # Ben: "There's like four types of contact mechanoreceptors - wide
+        # and narrow field, quick and short acting"). Built ONLY when the
+        # matching flag is on; default off = census bit-identical. Each
+        # channel adds one graded contact-encoder neuron + its input port
+        # ("RA heel L", "SA toe R", ...) wired to the SAME five
+        # ipsilateral extensor targets as the existing heel contact_hc
+        # family ({s} RG ext, {s} Hip PF ext, {s} Knee PF ext, {s} Hip MN
+        # ext, {s} Knee MN ext), at the ra_contact / sa_contact gain
+        # family (per-family presyn keys "<fam>_presyn_lo/hi" honored).
+        # Membrane taus TAU["ra"] ~ 20 ms / TAU["sa"] ~ 200 ms are
+        # documented stand-ins (see TAU). The RUNNER feeds the ports:
+        # RA = rectified dF/dt of the same plate force, SA = force level
+        # (test_w2l_ground.py, --ra/--sa).
+        self.ra_sa_neurons = []
+        for kind, on, tau_key, fam in (("RA", self.ra, "ra", "ra_contact"),
+                                       ("SA", self.sa, "sa", "sa_contact")):
+            if not on:
+                continue
+            for site in ("heel", "toe"):
+                for side in ("L", "R"):
+                    lab = f"{kind} {site} {side}"
+                    self.net.add_neuron(_neu(TAU[tau_key]), name=lab)
+                    self.idx[lab] = len(self.idx)
+                    self.net.add_input(lab)
+                    self.inputs.append(lab)
+                    self.port_targets[lab] = lab
+                    self.ra_sa_neurons.append(lab)
+                    for tgt in (f"{side} RG ext", f"{side} Hip PF ext",
+                                f"{side} Knee PF ext", f"{side} Hip MN ext",
+                                f"{side} Knee MN ext"):
+                        self.net.add_connection(
+                            _syn(self.G[fam], exc=True,
+                                 e_lo=self._presyn_lo(fam),
+                                 e_hi=self._presyn_hi(fam)),
+                            lab, tgt)
+                        self.synapse_counts[fam] = \
+                            self.synapse_counts.get(fam, 0) + 1
+                        self.n_synapses += 1
+
         self._assert_complete(edges, n_types)
 
     # ------------------------------------------------------------------ parts
+    def _presyn_lo(self, family: str) -> float:
+        """Presynaptic THRESHOLD for an edge family: gains key
+        "<family>_presyn_lo" if present, else the global presyn_lo
+        (default 0.0 = the historical hardcode)."""
+        return float(self.G.get(f"{family}_presyn_lo",
+                                self.G.get("presyn_lo", SYN_E_LO)))
+
+    def _presyn_hi(self, family: str) -> float:
+        """Presynaptic SATURATION for an edge family ("<family>_presyn_hi"
+        else the global presyn_hi; default E_HI = the historical
+        hardcode)."""
+        return float(self.G.get(f"{family}_presyn_hi",
+                                self.G.get("presyn_hi", SYN_E_HI)))
+
     def _gain(self, tag: str, sign: str, e: dict, n_types: dict) -> float:
         """Template (tag, sign) -> toolbox conductance (see W2L_GAINS)."""
         G = self.G
@@ -421,6 +560,12 @@ class W2LNet:
             return G["v3_weak"]
         if tag == "contact_C20":
             return G["contact"]
+        if tag == "contact_hc":        # 2026-10-18 heel cascade (weak class)
+            return G["contact_hc"]
+        if tag == "contact_ank":       # 2026-10-18 heel/toe -> Ank MN ext
+            return G["contact_ank"]
+        if tag == "contact_contra_flex":  # 2026-10-18 heel -> contra RG flx
+            return G["contact_contra_flex"]
         if tag == "kickoff_antiphase":
             raise ValueError("kickoff edge should have become a port")
         raise ValueError(f"unknown template tag: {tag}")
@@ -433,24 +578,39 @@ class W2LNet:
             if n_types[e["from"]] == "PORT-load":
                 continue
             expected[e["tag"]] = expected.get(e["tag"], 0) + 1
-        # template corrected 2026-09-26 (see README DEVIATIONS #1/#7):
-        # 206 template synapses + 0 mirror-fix = 208 = the real aproj's
-        # 208 functional links; the v3->contra-RG-E HC pair, the 4
-        # heel/toe->ANK-MN-ext edges and the cross-joint afferent edges
-        # are gone, the 4 flexor II relays (+8 afferent edges) and the
-        # R RG<->RG direct-excitation pair are in.
+        # census of record: the template carries its own "_census" when
+        # generated (bilateralrg2, 2026-10-18 corrected aproj: 96/204/12);
+        # the hand-corrected 2026-09-26 bilateralrg template predates the
+        # field and keeps its hard-coded 95/208 (206 template + 0 mirror).
+        cen = self.template.get("_census") or {"neurons": 95, "synapses": 208,
+                                                "outputs": 12}
+        # conditional RA/SA channels: 5 targets per channel, 4 channels
+        # (heel/toe x L/R) per kind; each also adds 1 neuron + 1 input.
+        n_ra_sa = 20 * int(bool(self.ra)) + 20 * int(bool(self.sa))
         want_total = sum(expected.values()) + getattr(self, "n_mirror", 0)
-        assert self.n_synapses == want_total == 208, \
-            f"synapse transcription mismatch: {self.n_synapses} vs 208 " \
-            f"({sum(expected.values())} template + {getattr(self, 'n_mirror', 0)} mirror-fix)"
+        assert self.n_synapses == want_total + n_ra_sa == \
+            cen["synapses"] + n_ra_sa, \
+            f"synapse transcription mismatch: {self.n_synapses} vs " \
+            f"{cen['synapses']} + {n_ra_sa} RA/SA ({sum(expected.values())} " \
+            f"template + {getattr(self, 'n_mirror', 0)} mirror-fix)"
         want_counts = dict(expected)
         if getattr(self, "n_mirror", 0):
             want_counts["rg_laminate_mirror"] = self.n_mirror
+        for fam, on in (("ra_contact", self.ra), ("sa_contact", self.sa)):
+            if on:
+                want_counts[fam] = 20
         assert dict(self.synapse_counts) == want_counts, "per-tag mismatch"
-        assert len(self.idx) == 95, f"neuron count {len(self.idx)} != 95"
-        assert len(self.inputs) == 10 + len(self.alpha_ports), \
-            f"port count {len(self.inputs)} != {10 + len(self.alpha_ports)}"
-        assert len(self.muscle_outputs) == 12, "muscle outputs != 12"
+        n_ra_sa_n = len(getattr(self, "ra_sa_neurons", []))
+        assert len(self.idx) == cen["neurons"] + n_ra_sa_n, \
+            f"neuron count {len(self.idx)} != {cen['neurons']} + {n_ra_sa_n}"
+        n_base_inputs = 10 + len(self.ib_port_list)  # 4 contact + 2 stimulus
+        #                                    + 4 TONIC (RG) + 12 Ib (runner)
+        #                                    + RA/SA channel ports (cond.)
+        n_base_inputs += n_ra_sa_n
+        assert len(self.inputs) == n_base_inputs + len(self.alpha_ports), \
+            f"port count {len(self.inputs)} != {n_base_inputs + len(self.alpha_ports)}"
+        assert len(self.muscle_outputs) == cen["outputs"], \
+            f"muscle outputs {len(self.muscle_outputs)} != {cen['outputs']}"
 
     # ------------------------------------------------------------------ run
     def compile(self, dt: float = DT):
@@ -471,25 +631,50 @@ class W2LNet:
     def make_inputs(self) -> np.ndarray:
         return np.zeros(len(self.inputs))
 
+    def muscle_ctrl(self, V: np.ndarray) -> dict:
+        """MN membrane -> per-MUSCLE activation, the
+        build_w2l_split_net.muscle_ctrl formula (clip(V/E_HI, 0, 1); keys are
+        this net's template muscle labels - the runner maps them to MJCF
+        actuator names via build_w2l_orig_net.MUSCLE_MAP)."""
+        return {m: float(min(max(V[self.idx[mn]] / E_HI, 0.0), 1.0))
+                for m, mn in self.muscle_outputs.items()}
+
 
 def build(template_path=None, dt: float = DT, gains: dict | None = None,
-          alpha_l: float = 0.0, alpha_r: float = 0.0) -> W2LNet:
-    """Load the bilateralrg template and build + compile the network.
+          alpha_l: float = 0.0, alpha_r: float = 0.0,
+          template_key: str | None = None,
+          ib_ports: bool = False,
+          ra: bool = False, sa: bool = False) -> W2LNet:
+    """Load a bilateralrg* template and build + compile the network.
 
+    template_key: which connectome_templates.json entry to build. Default:
+    env AARL_W2L_TPL, else "bilateralrg" (the 2026-09-26 template, census
+    95/208 - the proven baseline). "bilateralrg2" = Ben's 2026-10-18
+    corrected aproj (census 96/204; make_bilateralrg2.py).
     gains: optional per-key overrides merged over W2L_GAINS (tuning without
-    touching the transcribed topology).
+    touching the transcribed topology) - includes the presynaptic window
+    keys presyn_lo/presyn_hi and "<family>_presyn_lo/hi" and the RA/SA
+    gain families ra_contact/sa_contact.
     alpha_l / alpha_r: per-side MN-level (ALPHA) drive, nA. 0.0 (default)
-    builds no ports (census 95/208/10 bit-identical); nonzero adds six
+    builds no ports (census bit-identical); nonzero adds six
     "ALPHA {L,R} ..." current ports on that side's MN pools. GAMMA
     (RG-level) per-side drive needs no build knob - the four TONIC ports
-    already exist (see W2LNet.__post_init__)."""
+    already exist (see W2LNet.__post_init__).
+    ra / sa: build the fast-/slow-adapting mechanoreceptor channels
+    "RA|SA heel|toe {L,R}" (2026-10-20; +4 neurons / +20 synapses / +4
+    inputs per kind; False = census bit-identical). The runner feeds the
+    ports: RA = rectified dF/dt of the plate force, SA = force level."""
+    if template_key is None:
+        import os
+        template_key = os.environ.get("AARL_W2L_TPL", "bilateralrg")
     if template_path is None:
         template_path = SPINAL / "connectome_templates.json"
     tpl = json.loads(Path(template_path).read_text(encoding="utf-8"))
-    if "bilateralrg" not in tpl:
-        raise KeyError(f"{template_path}: no 'bilateralrg' key")
-    net = W2LNet(template=tpl["bilateralrg"], gains=gains or {},
-                 alpha_l=alpha_l, alpha_r=alpha_r)
+    if template_key not in tpl:
+        raise KeyError(f"{template_path}: no {template_key!r} key")
+    net = W2LNet(template=tpl[template_key], gains=gains or {},
+                 alpha_l=alpha_l, alpha_r=alpha_r, ib_ports=ib_ports,
+                 ra=ra, sa=sa)
     net.compile(dt=dt)
     return net
 

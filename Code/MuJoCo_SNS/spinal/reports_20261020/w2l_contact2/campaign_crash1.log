@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\reports_20261020\w2l_contact2\_w2l_contact2_campaign.py", line 185, in <module>
+    sys.exit(main())
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\reports_20261020\w2l_contact2\_w2l_contact2_campaign.py", line 170, in main
+    r100 = run_round(1.0, None, n)
+  File "D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\reports_20261020\w2l_contact2\_w2l_contact2_campaign.py", line 147, in run_round
+    best = study.best_trial
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\study\study.py", line 167, in best_trial
+    return self._get_best_trial(deepcopy=True)
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\study\study.py", line 333, in _get_best_trial
+    best_trial = self._storage.get_best_trial(self._study_id)
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\storages\_cached_storage.py", line 188, in get_best_trial
+    trial_id = self._backend._get_best_trial_id(study_id, direction)
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\storages\_rdb\storage.py", line 981, in _get_best_trial_id
+    return models.TrialModel.find_max_value_trial_id(study_id, 0, session)
+  File "D:\Anaconda\envs\myo\lib\site-packages\optuna\storages\_rdb\models.py", line 265, in find_max_value_trial_id
+    raise ValueError(NOT_FOUND_MSG)
+ValueError: Record does not exist.

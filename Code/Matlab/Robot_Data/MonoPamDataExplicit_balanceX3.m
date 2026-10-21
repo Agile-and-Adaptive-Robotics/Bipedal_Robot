@@ -247,8 +247,8 @@ classdef MonoPamDataExplicit_balanceX3 < handle
             dia = obj.Diameter;
             rest = obj.RestingL;
 
-            if dia == 10    
-                maxF = maxBPAforce(rest,620);
+            if dia == 10
+                maxF = maxBPAforce(rest,'10',620);
             elseif dia ==20
                 maxF = maxBPAforce(rest,'20',620);
             elseif dia ==40

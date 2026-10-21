@@ -1,0 +1,23 @@
+========================================================================
+EXP A - drive asymmetry (Fig 2B/C)
+  [PASS] A[fig2b_E_dominant] rhythm present (period 1.038 s, cv 0.000, 13/13 RG eps)
+  [PASS] A[fig2b_E_dominant] T_E > T_F: T_E 0.538 vs T_F 0.455 s (MN-E 0.562 / MN-F 0.464)
+  [PASS] A[fig2c_F_dominant] rhythm present (period 1.096 s, cv 0.000, 13/12 RG eps)
+  [PASS] A[fig2c_F_dominant] T_F > T_E: T_E 0.488 vs T_F 0.572 s (MN-E 0.496 / MN-F 0.588)
+  [PASS] A[repeat] identical traces on re-run (results repeat)
+========================================================================
+EXP B1 - NON-RESETTING deletion, pulse at the PF level (Fig 10Ba regime, extra drive to PF-E)
+  B1 PF-pulse: period 1.275 s; pulse [18.48, 21.03] s (2.0 T); baseline flexor bursts in window 2 -> pulsed 0; Mn-E min f in window 0.13; RG-E min f in window 0.00; first post-deletion Mn-F residual 0.001 T; RG grid max residual 0.000 T; post-pulse period 1.275 s; pre-pulse trace identical: True
+  [PASS] B1(i) flexor MN bursts deleted in window (2 -> 0) with extensor MN sustained (min f 0.13)
+  [PASS] B1(ii) RG-E rhythm grid maintained through/after the PF pulse (max residual 0.000 T <= 0.15)
+  [PASS] B1(iii) first post-deletion flexor MN burst ON schedule (residual 0.001 T <= 0.15)
+  [PASS] B1(iv) pre-pulse trace identical to baseline (determinism)
+========================================================================
+EXP B2 - RESETTING deletion, pulse at the RG level (Fig 6A regime, extra drive to RG-E)
+  B2 RG-pulse: period 1.083 s; pulse [19.17, 21.34] s (2.0 T); baseline flexor bursts in window 2 -> pulsed 0; Mn-E min f in window 0.21; RG-E min f in window 0.29; first post-deletion Mn-F residual 0.416 T; RG grid max residual 0.443 T; post-pulse period 1.082 s; pre-pulse trace identical: True
+  [PASS] B2(i) RG-E phasic->sustained in window (min f 0.29 >= 0.25) and flexor MN deleted (2 -> 0)
+  [PASS] B2(ii) first post-pulse flexor MN burst PHASE-SHIFTED (residual 0.416 T > 0.15)
+  [PASS] B2(iii) rhythm re-establishes after the perturbation (post period 1.082 s vs 1.083 s)
+  [PASS] B2(iv) pre-pulse trace identical to baseline (determinism)
+========================================================================
+RYBAK2006_TEMPLATE PASS

@@ -285,6 +285,19 @@ class W2LVarnet(BN.SpinalNetwork):
                     n.add_connection(_syn(G["heel_rge"], exc=True),
                                      f"HEEL_{side}", f"InF_{other}")
 
+        # ---- 2026-10-20 W2L corrected-connectome contact pathway #1
+        # (contra_flex, default 0 = edges absent = census 888/382/7866
+        # bit-identical): crossed flexor-EXCITATORY heel edge,
+        # HEEL_{a} -> RG_F_{b} (Ben's 2026-10-18 corrected W2L aproj;
+        # see build_network.py's block). Coexists with the crossed
+        # heel->contra-InF stance-support edge above (opposite sign,
+        # different target layer).
+        if G["contra_flex"] > 0.0:
+            for a, b in (("r", "l"), ("l", "r")):
+                if f"HEEL_{a}" in self.idx and f"RG_F_{b}" in self.idx:
+                    n.add_connection(_syn(G["contra_flex"], exc=True),
+                                     f"HEEL_{a}", f"RG_F_{b}")
+
         # ---- runner-watch aliases (LOGGING only; no neurons, no
         # synapses). runner.py logs PF_KNEE-F_r/l and PF_ANK-F_r/l by
         # name; our dorsiflexion drive rides the merged KNEE-F cell, so
@@ -639,6 +652,15 @@ class W2LVarnet(BN.SpinalNetwork):
                  else G["f1_anklepf_inh"])
             if g > 0.0:
                 n.add_connection(_syn(g, exc=False), kname, mn)
+        # ---- 2026-10-20 W2L corrected-connectome contact pathway #2
+        # (contact_ank_mn, default 0 = absent = census bit-identical):
+        # heel+toe contact INs -> this side's ankle_pf MN pool (Ben's
+        # 2026-10-18 corrected W2L aproj; see build_network.py's block).
+        if G["contact_ank_mn"] > 0.0 and grp == "ankle_pf":
+            for src in (f"HEEL_{mi.side}", f"TOE_{mi.side}"):
+                if src in self.idx:
+                    n.add_connection(_syn(G["contact_ank_mn"], exc=True),
+                                     src, mn)
 
     # ------------------------------------------------------------------ run
     def compile(self, dt: float = DT):

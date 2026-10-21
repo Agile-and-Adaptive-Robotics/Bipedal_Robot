@@ -71,7 +71,15 @@ Run (cwd w2l_mujoco\):
         [--phase=both --dur_stand=12 --dur_walk=20 --ctn_amp=4.0
          --cref=50 --ibnA=1.0 --te=3.0 --tf=4.0 --tau=0.25 --cap=0.5
          --damp=3.0 --rig=1.0 --sregime=latch --settle=0.4
-         --hold=3.0 --lower=1.0 --wsup=0.7 --sink=0.01]
+         --hold=3.0 --lower=1.0 --wsup=0.7 --sink=0.01
+         --contact-mode=normal|shear|total   (2026-10-20; default normal
+          = z-only plate force, bit-identical; shear/total swap what the
+          encoders - and the RA/SA channels - sense)
+         --ra=1 --sa=1 --ra-syn=.. --sa-syn=..   (bilateralrg2 only;
+          RA/SA mechanoreceptor channels, default off = bit-identical)
+         --presyn-lo=.. --presyn-hi=.. --contact-presyn-lo=..
+         --contact-presyn-hi=..   (AnimatLab PreSynapticThreshold /
+          SaturationLevel analogs; defaults 0/5 = bit-identical)]
 """
 from __future__ import annotations
 
@@ -130,7 +138,43 @@ KV = dict(phase="both", dur_stand=12.0, dur_walk=20.0,
           g_toe_df=5.0,      # aff_toe_df  (toe IN -> TOEDF IN)
           g_toe_df_mn=2.749, # aff_toe_df_mn (TOEDF IN -> DF MN inh)
           g_ib=0.5,          # aff_ib    (Ib grp -> RG-E/InE/PF-E)
-          comm=1.0)          # commissural gain scale (0 = ablation)
+          comm=1.0,          # commissural gain scale (0 = ablation)
+          # ---- 2026-10-20: --net=bilateralrg2 runs Ben's CORRECTED aproj
+          # connectome (2026-10-18) via w2l_cpg.build_w2l_net instead of the
+          # M5 aff lineage. The ch_* knobs are that net's contact-family
+          # gains (W2L_GAINS defaults; ctn_amp/cref/ibnA/te/tf/tau/alpha/
+          # comm all carry over). Default 'aff' = the M5 lineage,
+          # bit-identical to the wean-walk of record.
+          net="aff",
+          ch_hc=0.08,        # contact_hc: heel -> ipsi extensor cascade
+          ch_ank=1.0,        # contact_ank: heel/toe -> ipsi Ank MN ext
+          ch_contra=0.08,    # contact_contra_flex: heel -> CONTRA RG flx
+          # ---- 2026-10-20 (Ben's mechanoreceptor/presynaptic ask):
+          # contact sensing mode. 'normal' (default) = the historical
+          # mj_contactForce z-only accumulation (BIT-IDENTICAL); 'shear'
+          # = tangential magnitude hypot(fx, fy) only; 'total' =
+          # hypot(normal, tangential). Applies to the heel/toe encoder
+          # AND the RA/SA channel feeds (same plate force).
+          contact_mode="normal",
+          # RA (fast-adapting) / SA (slow-adapting) mechanoreceptor
+          # channels, bilateralrg2 only: >0 builds the "RA|SA heel|toe
+          # {L,R}" neurons+ports (w2l_cpg.build_w2l_net; +4n/+20s/+4p per
+          # kind, wired to the heel contact_hc extensor targets). RA port
+          # current = ctn_amp*clip(rect(dF/dt)*tau_ra/cref, 0, 1); SA =
+          # ctn_amp*clip(F/cref, 0, 1) (the level encoder into the slow
+          # membrane). 0 = not built = census bit-identical.
+          ra=0.0, sa=0.0,
+          # RA/SA synaptic-gain overrides (nan = the W2L_GAINS defaults
+          # ra_contact/sa_contact 0.08).
+          ra_syn=float("nan"), sa_syn=float("nan"),
+          # PRESYNAPTIC THRESHOLD/SATURATION (AnimatLab
+          # PreSynapticThreshold/SaturationLevel, per Ben's tuning ask):
+          # global defaults 0/5 = the historical hardcodes = BIT-IDENTICAL.
+          # contact_presyn_lo/hi override the CONTACT edge families only
+          # (nan = inherit the globals).
+          presyn_lo=0.0, presyn_hi=5.0,
+          contact_presyn_lo=float("nan"),
+          contact_presyn_hi=float("nan"))
 for arg in sys.argv[1:]:
     if arg.startswith("--") and "=" in arg:
         k, v = arg[2:].split("=", 1)
@@ -198,17 +242,119 @@ def rotvec_deg(R: np.ndarray, R0: np.ndarray) -> np.ndarray:
 
 def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
     """One closed-loop ground run. kind = 'stand'|'walk'. Returns logs."""
-    import build_w2l_aff_net as B
-    B.SPLIT.NAP["tau_max_h"] = KV["tau"]
-    # g_* passthrough (2026-10-16 wean): defaults == AFF_GAINS/comm 1.0,
-    # so the unedited command line builds the IDENTICAL net (bit-exact).
-    net = B.build(comm=KV["comm"], alpha_l=KV["alpha_l"],
-                  alpha_r=KV["alpha_r"],
-                  gains=dict(aff_heel=KV["g_heel"],
-                             aff_toe_in=KV["g_toe_in"],
-                             aff_toe_df=KV["g_toe_df"],
-                             aff_toe_df_mn=KV["g_toe_df_mn"],
-                             aff_ib=KV["g_ib"]))
+    if str(KV["net"]) == "bilateralrg2":
+        # Ben's 2026-10-18 corrected aproj connectome (bilateralrg2
+        # template; census 96/204). Port/muscle names differ from the M5
+        # aff lineage - resolved through the _P/_IDX adapters below.
+        sys.path.insert(0, os.path.join(HERE, "..", "w2l_cpg"))
+        import build_w2l_net as B
+        B.NAP["tau_max_h"] = KV["tau"]
+        ra_on, sa_on = KV["ra"] > 0.0, KV["sa"] > 0.0
+        gains = dict(contact_hc=KV["ch_hc"],
+                     contact_ank=KV["ch_ank"],
+                     contact_contra_flex=KV["ch_contra"],
+                     c1_inh=3.0 * KV["comm"],
+                     v3_weak=0.08 * KV["comm"])
+        # presynaptic window (2026-10-20): only inject NON-default keys so
+        # the default gains dict (and therefore the compiled net) is
+        # EXACTLY the pre-knob build (bit-identical).
+        if KV["presyn_lo"] != 0.0:
+            gains["presyn_lo"] = KV["presyn_lo"]
+        if KV["presyn_hi"] != 5.0:
+            gains["presyn_hi"] = KV["presyn_hi"]
+        if np.isfinite(KV["contact_presyn_lo"]) or \
+                np.isfinite(KV["contact_presyn_hi"]):
+            _clo = (KV["contact_presyn_lo"] if np.isfinite(
+                KV["contact_presyn_lo"]) else KV["presyn_lo"])
+            _chi = (KV["contact_presyn_hi"] if np.isfinite(
+                KV["contact_presyn_hi"]) else KV["presyn_hi"])
+            for _fam in ("contact", "contact_hc", "contact_ank",
+                         "contact_contra_flex"):
+                gains[f"{_fam}_presyn_lo"] = _clo
+                gains[f"{_fam}_presyn_hi"] = _chi
+        if np.isfinite(KV["ra_syn"]):
+            gains["ra_contact"] = KV["ra_syn"]
+        if np.isfinite(KV["sa_syn"]):
+            gains["sa_contact"] = KV["sa_syn"]
+        net = B.build(template_key="bilateralrg2", ib_ports=True,
+                      alpha_l=KV["alpha_l"], alpha_r=KV["alpha_r"],
+                      ra=ra_on, sa=sa_on, gains=gains)
+        _knobs_on = (ra_on or sa_on or KV["presyn_lo"] != 0.0
+                     or KV["presyn_hi"] != 5.0
+                     or np.isfinite(KV["contact_presyn_lo"])
+                     or np.isfinite(KV["contact_presyn_hi"]))
+        if _knobs_on:
+            print(f"[bilateralrg2] knobs ON: census {len(net.idx)}n/"
+                  f"{net.n_synapses}s/{len(net.inputs)}p vs default runner "
+                  f"build 96n/204s/22p (delta "
+                  f"+{len(net.idx) - 96}n/+{net.n_synapses - 204}s/"
+                  f"+{len(net.inputs) - 22}p)", flush=True)
+        TAU_RA = B.TAU["ra"]
+        from build_w2l_orig_net import MUSCLE_MAP
+        MUSCLE_KEYS = {mlab: MUSCLE_MAP[mlab]
+                       for mlab in net.muscle_outputs}   # template -> MJCF
+
+        def _P(*names):
+            for n in names:
+                if n in net.inputs:
+                    return net.input_index(n)
+            raise KeyError(f"no port among {names}")
+
+        def _IDX(*names):
+            for n in names:
+                if n in net.idx:
+                    return net.idx[n]
+            raise KeyError(f"no neuron among {names}")
+
+        P_STIM2 = ("Stimulus_2", "Stimulus_2 (10nA)")
+        P_HEEL = lambda s: (f"PORT heel {s}", f"{s} heel contact")  # noqa: E731
+        P_TOE = lambda s: (f"PORT toe {s}", f"{s} toe contact")     # noqa: E731
+        IDX_HEEL = lambda s: (f"heel {s}", f"{s} heel contact")     # noqa: E731
+        IDX_TOE = lambda s: (f"toe {s}", f"{s} toe contact")        # noqa: E731
+
+        def _muscle_ctrl(V):
+            return {MUSCLE_KEYS[m]: c for m, c in net.muscle_ctrl(V).items()}
+
+        ACTUATORS = list(MUSCLE_KEYS.values())
+        IB_PORTS = [[p for p in net.inputs if p.startswith(f"PORT Ib {s}")]
+                    for s in ("L", "R")]
+        IIB = [[net.input_index(p) for p in pl] for pl in IB_PORTS]
+        # RA/SA mechanoreceptor feed list: (port index, kind, plate geom
+        # name) for every channel the build created (empty at defaults).
+        RA_SA = [(net.input_index(f"{kind} {site} {s}"), kind, plate)
+                 for kind, on in (("RA", ra_on), ("SA", sa_on)) if on
+                 for site, plates in (("heel", HEEL_GEOMS),
+                                      ("toe", TOE_GEOMS))
+                 for s, plate in zip(("L", "R"), plates)]
+    else:
+        if KV["ra"] > 0.0 or KV["sa"] > 0.0:
+            raise SystemExit("--ra/--sa mechanoreceptor channels are "
+                             "implemented for --net=bilateralrg2 only "
+                             "(w2l_cpg.build_w2l_net)")
+        RA_SA, TAU_RA = [], None
+        import build_w2l_aff_net as B
+        B.SPLIT.NAP["tau_max_h"] = KV["tau"]
+        # g_* passthrough (2026-10-16 wean): defaults == AFF_GAINS/comm 1.0,
+        # so the unedited command line builds the IDENTICAL net (bit-exact).
+        net = B.build(comm=KV["comm"], alpha_l=KV["alpha_l"],
+                      alpha_r=KV["alpha_r"],
+                      gains=dict(aff_heel=KV["g_heel"],
+                                 aff_toe_in=KV["g_toe_in"],
+                                 aff_toe_df=KV["g_toe_df"],
+                                 aff_toe_df_mn=KV["g_toe_df_mn"],
+                                 aff_ib=KV["g_ib"]))
+        _P = lambda *n: net.input_index(n[0])                     # noqa: E731
+        _IDX = lambda *n: net.idx[n[0]]                           # noqa: E731
+        P_STIM2 = ("Stimulus_2",)
+        P_HEEL = lambda s: (f"PORT heel {s}",)                    # noqa: E731
+        P_TOE = lambda s: (f"PORT toe {s}",)                      # noqa: E731
+        IDX_HEEL = lambda s: (f"heel {s}",)                       # noqa: E731
+        IDX_TOE = lambda s: (f"toe {s}",)                         # noqa: E731
+        _muscle_ctrl = net.muscle_ctrl
+        IIB = [[net.input_index(f"PORT Ib {s}")] for s in ("L", "R")]
+        ACTUATORS = list(net.muscle_outputs)
+    # (mode-shared interface above: _P/_IDX/P_* lambdas, _muscle_ctrl,
+    # IIB per-side port-index lists, ACTUATORS = MJCF actuator names)
 
     m = mujoco.MjModel.from_xml_path(GROUND)
     if KV["legcoll"] == 0:
@@ -257,7 +403,7 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
         m.jnt_range[jid] = np.array([np.radians(-20.0), np.radians(5.0)])
 
     act_ids = {a: mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_ACTUATOR, a)
-               for a in net.muscle_outputs}
+               for a in ACTUATORS}
     qadr = {j: m.jnt_qposadr[mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_JOINT, j)]
             for j in JNTS}
     gid = {g: mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_GEOM, g)
@@ -267,8 +413,8 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
             for a, aid in act_ids.items()}
 
     u = net.make_inputs()
-    iS1 = net.input_index("Stimulus_1")
-    iS2 = net.input_index("Stimulus_2")
+    iS1 = _P("Stimulus_1")
+    iS2 = _P(*P_STIM2)
     itE = [net.input_index(f"TONIC {s} RG ext") for s in ("L", "R")]
     itF = [net.input_index(f"TONIC {s} RG flx") for s in ("L", "R")]
     # per-side GAMMA (RG tonic) + ALPHA (MN) resolution (defaults = the
@@ -281,9 +427,11 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
                 for p in net.inputs if p.startswith("ALPHA L ")] +
                [(net.input_index(p), KV["alpha_r"])
                 for p in net.inputs if p.startswith("ALPHA R ")])
-    iheel = [net.input_index(f"PORT heel {s}") for s in ("L", "R")]
-    itoe = [net.input_index(f"PORT toe {s}") for s in ("L", "R")]
-    iib = [net.input_index(f"PORT Ib {s}") for s in ("L", "R")]
+    iheel = [_P(*P_HEEL(s)) for s in ("L", "R")]
+    itoe = [_P(*P_TOE(s)) for s in ("L", "R")]
+    iib = IIB                 # per side: list of port indices
+    ivH = {s: _IDX(*IDX_HEEL(s)) for s in ("L", "R")}
+    ivT = {s: _IDX(*IDX_TOE(s)) for s in ("L", "R")}
     iE = {s: net.idx[f"{s} RG ext"] for s in ("L", "R")}
 
     settle = KV["settle"]
@@ -301,12 +449,17 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
     log = dict(t=np.zeros(nphy), q=np.zeros((nphy, 6)),
                pel=np.zeros((nphy, 3)), com=np.zeros((nphy, 3)),
                tilt=np.zeros(nphy), heelF=np.zeros((nphy, 2)),
-               toeF=np.zeros((nphy, 2)), heelV=np.zeros((nphy, 2)),
+               toeF=np.zeros((nphy, 2)), heelS=np.zeros((nphy, 2)),
+               toeS=np.zeros((nphy, 2)), heelV=np.zeros((nphy, 2)),
                toeV=np.zeros((nphy, 2)), rgE=np.zeros((nphy, 2)),
                heelin=np.zeros((nphy, 2)), toein=np.zeros((nphy, 2)),
                rigFz=np.zeros(nphy))
     c6 = np.zeros(6)
     cf = {g: 0.0 for g in HEEL_GEOMS + TOE_GEOMS}
+    cfs = {g: 0.0 for g in HEEL_GEOMS + TOE_GEOMS}   # tangential (shear)
+    f_prev = {g: 0.0 for g in HEEL_GEOMS + TOE_GEOMS}  # RA dF/dt memory
+    DT_NET = NSUB * DT_PHY                            # 2 ms neural step
+    CMODE = str(KV["contact_mode"])                   # normal|shear|total
     cap = KV["cap"]
     S_target = float(rig)
     anchor = None
@@ -351,15 +504,37 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
             for k, s in enumerate(("L", "R")):
                 fnorm = np.mean([max(d.actuator_force[act_ids[a]] /
                                      fmax[a], 0.0) for a in EXT_ACT[s]])
-                u[iib[k]] = KV["ibnA"] * fnorm
+                for _p in iib[k]:
+                    u[_p] = KV["ibnA"] * fnorm
             # REAL contact encoders (accumulated over the previous step)
             for k in range(2):
                 u[iheel[k]] = KV["ctn_amp"] * min(cf[HEEL_GEOMS[k]] /
                                                   KV["cref"], 1.0)
                 u[itoe[k]] = KV["ctn_amp"] * min(cf[TOE_GEOMS[k]] /
                                                  KV["cref"], 1.0)
+            # RA/SA mechanoreceptor channel feeds (2026-10-20): driven by
+            # the SAME plate force as the encoders above, so --contact-mode
+            # (normal|shear|total) applies here too. RA = rectified dF/dt
+            # across one neural step, scaled so a ramp reaching cref
+            # within tau_ra saturates the encoder (stand-in; the 20 ms
+            # RA membrane then shapes the transient into a short pulse).
+            # SA = the sustained LEVEL (same encoder formula as the base
+            # channel; the 200 ms membrane + its own synaptic gain do the
+            # differentiating).
+            if RA_SA:
+                for iP, kind, plate in RA_SA:
+                    if kind == "RA":
+                        dfdt = max((cf[plate] - f_prev[plate]) / DT_NET,
+                                   0.0)
+                        u[iP] = KV["ctn_amp"] * min(dfdt * TAU_RA /
+                                                    KV["cref"], 1.0)
+                    else:
+                        u[iP] = KV["ctn_amp"] * min(cf[plate] /
+                                                    KV["cref"], 1.0)
+                for g in f_prev:
+                    f_prev[g] = cf[g]
             V = net.step(u)
-            for a, c in net.muscle_ctrl(V).items():
+            for a, c in _muscle_ctrl(V).items():
                 d.ctrl[act_ids[a]] = min(c, acap if "ankle" in a else cap)
             d.xfrc_applied[body_root, :] = 0.0     # rig force is per-step
             # VIRTUAL-WALKER VERTICAL HARNESS (the drop-protocol piece;
@@ -418,9 +593,15 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
             anchor = dict(com=d.subtree_com[0].copy(),
                           pel=d.xpos[body_root].copy(),
                           R0=d.xmat[body_root].reshape(3, 3).copy())
-        # contact forces (this step) for the NEXT encoder update
+        # contact forces (this step) for the NEXT encoder update.
+        # --contact-mode (2026-10-20, Ben's shear ask): 'normal' (default)
+        # = the historical z-only accumulation, BIT-IDENTICAL; 'shear' =
+        # tangential magnitude only (the plate as a pure slip sensor);
+        # 'total' = hypot(normal, shear). The tangential magnitude is
+        # ALWAYS accumulated into cfs/heelS/toeS for the logs.
         for g in cf:
             cf[g] = 0.0
+            cfs[g] = 0.0
         for k in range(d.ncon):
             con = d.contact[k]
             for nm, g2 in ((HEEL_GEOMS[0], gid["foot_L_contact"]),
@@ -429,13 +610,23 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
                            (TOE_GEOMS[1], gid["toe_R_contact"])):
                 if con.geom1 == g2 or con.geom2 == g2:
                     mujoco.mj_contactForce(m, d, k, c6)
-                    cf[nm] += abs(float(c6[0]))
+                    fn = abs(float(c6[0]))
+                    ft = float(np.hypot(c6[1], c6[2]))
+                    cfs[nm] += ft
+                    if CMODE == "shear":
+                        cf[nm] += ft
+                    elif CMODE == "total":
+                        cf[nm] += float(np.hypot(fn, ft))
+                    else:
+                        cf[nm] += fn
         log["t"][i] = t
         log["q"][i] = [np.degrees(d.qpos[qadr[j]]) for j in JNTS]
         log["pel"][i] = d.xpos[body_root]
         log["com"][i] = d.subtree_com[0]
         log["heelF"][i] = [cf[HEEL_GEOMS[0]], cf[HEEL_GEOMS[1]]]
         log["toeF"][i] = [cf[TOE_GEOMS[0]], cf[TOE_GEOMS[1]]]
+        log["heelS"][i] = [cfs[HEEL_GEOMS[0]], cfs[HEEL_GEOMS[1]]]
+        log["toeS"][i] = [cfs[TOE_GEOMS[0]], cfs[TOE_GEOMS[1]]]
         if anchor is None:
             log["tilt"][i] = 0.0
         else:
@@ -444,8 +635,8 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
                                           anchor["R0"])))
         if i % NSUB == 0:
             log["rgE"][i] = [V[iE["L"]], V[iE["R"]]]
-            log["heelV"][i] = [V[net.idx[f"heel {s}"]] for s in ("L", "R")]
-            log["toeV"][i] = [V[net.idx[f"toe {s}"]] for s in ("L", "R")]
+            log["heelV"][i] = [V[ivH[s]] for s in ("L", "R")]
+            log["toeV"][i] = [V[ivT[s]] for s in ("L", "R")]
             log["heelin"][i] = [u[iheel[0]], u[iheel[1]]]
             log["toein"][i] = [u[itoe[0]], u[itoe[1]]]
         else:
@@ -602,10 +793,30 @@ def main() -> int:
         print(f"   neural: L RG-E bursts {len(stL)} "
               f"(period {rg_per if np.isfinite(rg_per) else float('nan'):.3f} s), "
               f"R RG-E bursts {len(stR)}; L/R RG-E r {rg_r:+.3f}")
+        hi_, ti_ = wlog["heelin"][w], wlog["toein"][w]
+        amp_ = float(KV["ctn_amp"])
         print(f"   contact encoder evidence: heel SN max "
               f"{wlog['heelV'][w].max():.2f} mV, toe SN max "
               f"{wlog['toeV'][w].max():.2f} mV, heel port current max "
-              f"{wlog['heelin'][w].max():.2f} nA")
+              f"{hi_.max():.2f} nA")
+        # encoder duty split (2026-10-20 diagnosis ask): is the channel
+        # silent, partially active, or pinned at the ctn_amp ceiling?
+        for nm_, x_ in (("heel", hi_), ("toe", ti_)):
+            print(f"   {nm_} port current nA (L/R): mean "
+                  f"{x_[:, 0].mean():.3f}/{x_[:, 1].mean():.3f}, max "
+                  f"{x_[:, 0].max():.3f}/{x_[:, 1].max():.3f} | frac "
+                  f"steps ACTIVE (I>0) "
+                  f"{(x_[:, 0] > 1e-9).mean():.3f}/"
+                  f"{(x_[:, 1] > 1e-9).mean():.3f}, SATURATED "
+                  f"(I>=0.995*ctn_amp) "
+                  f"{(x_[:, 0] >= 0.995 * amp_).mean():.3f}/"
+                  f"{(x_[:, 1] >= 0.995 * amp_).mean():.3f} "
+                  f"(ceiling {amp_:.2f} nA, mode {KV['contact_mode']})")
+        print(f"   plate shear (tangential) N: heel mean/max "
+              f"{wlog['heelS'][w].mean():.1f}/{wlog['heelS'][w].max():.1f}, "
+              f"toe mean/max {wlog['toeS'][w].mean():.1f}/"
+              f"{wlog['toeS'][w].max():.1f} (sensed mode: "
+              f"{KV['contact_mode']})")
         walked = (not fell and wlog["finite"]
                   and len(strikes["L"]) >= 3 and len(strikes["R"]) >= 3
                   and 0.3 <= min(duty.values()) and max(duty.values()) <= 0.9

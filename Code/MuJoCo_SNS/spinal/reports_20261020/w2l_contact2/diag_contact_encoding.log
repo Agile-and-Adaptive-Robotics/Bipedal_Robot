@@ -1,0 +1,26 @@
+knobs: {'legcoll': 0.0, 'sink': 0.06, 'rig': 0.25, 'walker_yield': 1.5, 'net': 'bilateralrg2', 'dur_walk': 20.0, 'te': 5.26781, 'tf': 7.5507, 'ch_hc': 0.47826, 'ch_ank': 0.91176, 'ch_contra': 1.10224, 'ctn_amp': 4.60959, 'cref': 129.28324, 'ibnA': 0.16671, 'comm': 0.70048}
+
+finite=True fall_t=None window t>=4.5 s (15500 physics rows, neural-step-sampled encoders)
+encoder: I = ctn_amp*clip(F/cref, 0, 1), ctn_amp=4.610 nA, cref=129.28 N
+
+heel L: port current nA mean 0.357 max 4.610 (p50 0.000, p90 0.000, p99 4.610) | ceiling 4.610
+  steps: SATURATED (F>=cref) 0.070 | PARTIAL (0<I<ceiling) 0.017 | SILENT 0.915
+  plate force N: mean 84.9 max 7995.5 (p50 0.0, p90 0.0, p99 2127.9) | F>5N 0.085 | F/cref at p99 16.459
+  contact-neuron V mV: mean 0.357 max 3.986 p99 3.331 (0..5 mV scale, drive ceiling at ~4.60959*tau/C ratio)
+
+heel R: port current nA mean 0.295 max 4.610 (p50 0.000, p90 0.000, p99 4.610) | ceiling 4.610
+  steps: SATURATED (F>=cref) 0.055 | PARTIAL (0<I<ceiling) 0.019 | SILENT 0.928
+  plate force N: mean 62.0 max 9582.6 (p50 0.0, p90 0.0, p99 1780.9) | F>5N 0.071 | F/cref at p99 13.775
+  contact-neuron V mV: mean 0.291 max 3.968 p99 3.264 (0..5 mV scale, drive ceiling at ~4.60959*tau/C ratio)
+
+toe L: port current nA mean 0.466 max 4.610 (p50 0.000, p90 2.522, p99 4.610) | ceiling 4.610
+  steps: SATURATED (F>=cref) 0.053 | PARTIAL (0<I<ceiling) 0.088 | SILENT 0.860
+  plate force N: mean 16.5 max 384.8 (p50 0.0, p90 71.0, p99 234.9) | F>5N 0.138 | F/cref at p99 1.817
+  contact-neuron V mV: mean 0.466 max 4.147 p99 3.697 (0..5 mV scale, drive ceiling at ~4.60959*tau/C ratio)
+
+toe R: port current nA mean 0.560 max 4.610 (p50 0.000, p90 3.420, p99 4.610) | ceiling 4.610
+  steps: SATURATED (F>=cref) 0.079 | PARTIAL (0<I<ceiling) 0.075 | SILENT 0.847
+  plate force N: mean 22.6 max 375.7 (p50 0.0, p90 95.8, p99 286.9) | F>5N 0.152 | F/cref at p99 2.219
+  contact-neuron V mV: mean 0.557 max 4.534 p99 4.409 (0..5 mV scale, drive ceiling at ~4.60959*tau/C ratio)
+
+written: D:\GitHub\Bipedal_Robot\Code\MuJoCo_SNS\spinal\reports_20261020\w2l_contact2\diag_contact_encoding.json

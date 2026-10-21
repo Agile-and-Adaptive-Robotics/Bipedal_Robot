@@ -1,0 +1,244 @@
+== template node types ==
+     12  MN
+     12  MUSCLE
+     12  SN-Ia
+     12  IN-IaIN
+     12  SN-Ib
+     11  RC
+      8  IN-PF
+      4  HC-PF-E
+      4  HC-PF-F
+      4  SN-II
+      2  PORT-load
+      2  HC-RG-E
+      2  HC-RG-F
+      2  IN-InE
+      2  IN-InF
+      2  IN-C
+      2  IN-V3
+      2  SN-heel
+      2  SN-toe
+
+== template edges ==
+   L Hip ext Ib             -> L Hip PF ext             aff_HC_excite        exc
+   L Hip ext Ib             -> L RG ext                 aff_HC_excite        exc
+   L Hip flx II             -> L Hip PF flx             aff_HC_excite        exc
+   L Hip flx II             -> L RG flx                 aff_HC_excite        exc
+   L Hip flx Ia             -> L Hip PF flx             aff_HC_excite        exc
+   L Hip flx Ia             -> L RG flx                 aff_HC_excite        exc
+   L Knee ext Ib            -> L Knee PF ext            aff_HC_excite        exc
+   L Knee ext Ib            -> L RG ext                 aff_HC_excite        exc
+   L Knee flx II            -> L Knee PF flx            aff_HC_excite        exc
+   L Knee flx II            -> L RG flx                 aff_HC_excite        exc
+   L Knee flx Ia            -> L Knee PF flx            aff_HC_excite        exc
+   L Knee flx Ia            -> L RG flx                 aff_HC_excite        exc
+   R Hip ext Ib             -> R Hip PF ext             aff_HC_excite        exc
+   R Hip ext Ib             -> R RG ext                 aff_HC_excite        exc
+   R Hip flx II             -> R Hip PF flx             aff_HC_excite        exc
+   R Hip flx II             -> R RG flx                 aff_HC_excite        exc
+   R Hip flx Ia             -> R Hip PF flx             aff_HC_excite        exc
+   R Hip flx Ia             -> R RG flx                 aff_HC_excite        exc
+   R Knee ext Ib            -> R Knee PF ext            aff_HC_excite        exc
+   R Knee ext Ib            -> R RG ext                 aff_HC_excite        exc
+   R Knee flx II            -> R Knee PF flx            aff_HC_excite        exc
+   R Knee flx II            -> R RG flx                 aff_HC_excite        exc
+   R Knee flx Ia            -> R Knee PF flx            aff_HC_excite        exc
+   R Knee flx Ia            -> R RG flx                 aff_HC_excite        exc
+   c1_L                     -> R RG flx                 c1_SynAmp2.749       inh
+   c1_R                     -> L RG flx                 c1_SynAmp2.749       inh
+   L RG flx                 -> c1_L                     comm_c1              exc
+   R RG flx                 -> c1_R                     comm_c1              exc
+   L RG ext                 -> V3_L                     comm_v3              exc
+   R RG ext                 -> V3_R                     comm_v3              exc
+   L heel contact           -> L Hip MN ext             contact_C20          exc
+   L heel contact           -> L Hip PF ext             contact_C20          exc
+   L heel contact           -> L Knee MN ext            contact_C20          exc
+   L heel contact           -> L Knee PF ext            contact_C20          exc
+   L heel contact           -> L RG ext                 contact_C20          exc
+   L toe contact            -> L Hip MN ext             contact_C20          exc
+   L toe contact            -> L Hip PF ext             contact_C20          exc
+   L toe contact            -> L Knee MN ext            contact_C20          exc
+   L toe contact            -> L Knee PF ext            contact_C20          exc
+   L toe contact            -> L RG ext                 contact_C20          exc
+   R heel contact           -> R Hip MN ext             contact_C20          exc
+   R heel contact           -> R Hip PF ext             contact_C20          exc
+   R heel contact           -> R Knee MN ext            contact_C20          exc
+   R heel contact           -> R Knee PF ext            contact_C20          exc
+   R heel contact           -> R RG ext                 contact_C20          exc
+   R toe contact            -> R Hip MN ext             contact_C20          exc
+   R toe contact            -> R Hip PF ext             contact_C20          exc
+   R toe contact            -> R Knee MN ext            contact_C20          exc
+   R toe contact            -> R Knee PF ext            contact_C20          exc
+   R toe contact            -> R RG ext                 contact_C20          exc
+   L Ank ext Ia             -> L Ank flx Ia             ia_mutual            inh
+   L Ank flx Ia             -> L Ank ext Ia             ia_mutual            inh
+   L Hip ext Ia             -> L Hip flx Ia             ia_mutual            inh
+   L Hip flx Ia             -> L Hip ext Ia             ia_mutual            inh
+   L Knee ext Ia            -> L Knee flx Ia            ia_mutual            inh
+   L Knee flx Ia            -> L Knee ext Ia            ia_mutual            inh
+   R Ank ext Ia             -> R Ank flx Ia             ia_mutual            inh
+   R Ank flx Ia             -> R Ank ext Ia             ia_mutual            inh
+   R Hip ext Ia             -> R Hip flx Ia             ia_mutual            inh
+   R Hip flx Ia             -> R Hip ext Ia             ia_mutual            inh
+   R Knee ext Ia            -> R Knee flx Ia            ia_mutual            inh
+   R Knee flx Ia            -> R Knee ext Ia            ia_mutual            inh
+   L Ank ext Ia             -> L Ank MN flx             ia_recip             inh
+   L Ank ext Ia IN          -> L Ank ext Ia             ia_recip             exc
+   L Ank flx Ia             -> L Ank MN ext             ia_recip             inh
+   L Ank flx Ia IN          -> L Ank flx Ia             ia_recip             exc
+   L Hip ext Ia             -> L Hip MN flx             ia_recip             inh
+   L Hip ext Ia IN          -> L Hip ext Ia             ia_recip             exc
+   L Hip flx Ia             -> L Hip MN ext             ia_recip             inh
+   L Hip flx Ia IN          -> L Hip flx Ia             ia_recip             exc
+   L Knee ext Ia            -> L Knee MN flx            ia_recip             inh
+   L Knee ext Ia IN         -> L Knee ext Ia            ia_recip             exc
+   L Knee flx Ia            -> L Knee MN ext            ia_recip             inh
+   L Knee flx Ia IN         -> L Knee flx Ia            ia_recip             exc
+   R Ank ext Ia             -> R Ank MN flx             ia_recip             inh
+   R Ank ext Ia IN          -> R Ank ext Ia             ia_recip             exc
+   R Ank flx Ia             -> R Ank MN ext             ia_recip             inh
+   R Ank flx Ia IN          -> R Ank flx Ia             ia_recip             exc
+   R Hip ext Ia             -> R Hip MN flx             ia_recip             inh
+   R Hip ext Ia IN          -> R Hip ext Ia             ia_recip             exc
+   R Hip flx Ia             -> R Hip MN ext             ia_recip             inh
+   R Hip flx Ia IN          -> R Hip flx Ia             ia_recip             exc
+   R Knee ext Ia            -> R Knee MN flx            ia_recip             inh
+   R Knee ext Ia IN         -> R Knee ext Ia            ia_recip             exc
+   R Knee flx Ia            -> R Knee MN ext            ia_recip             inh
+   R Knee flx Ia IN         -> R Knee flx Ia            ia_recip             exc
+   L Ank ext Ib             -> L Ank MN ext             ib_auto              exc
+   L Ank flx Ib             -> L Ank MN flx             ib_auto              exc
+   L Hip ext Ib             -> L Hip MN ext             ib_auto              exc
+   L Hip flx Ib             -> L Hip MN flx             ib_auto              exc
+   L Knee ext Ib            -> L Knee MN ext            ib_auto              exc
+   L Knee flx Ib            -> L Knee MN flx            ib_auto              exc
+   R Ank ext Ib             -> R Ank MN ext             ib_auto              exc
+   R Ank flx Ib             -> R Ank MN flx             ib_auto              exc
+   R Hip ext Ib             -> R Hip MN ext             ib_auto              exc
+   R Hip flx Ib             -> R Hip MN flx             ib_auto              exc
+   R Knee ext Ib            -> R Knee MN ext            ib_auto              exc
+   R Knee flx Ib            -> R Knee MN flx            ib_auto              exc
+   Stimulus_2 (10nA)        -> R RG flx                 kickoff_antiphase    exc
+   L Ank MN ext             -> L_ankle plantarflexion   mn_to_muscle         exc
+   L Ank MN flx             -> L_ankle dorsiflexion     mn_to_muscle         exc
+   L Hip MN ext             -> L Hip ext                mn_to_muscle         exc
+   L Hip MN flx             -> L Hip flx                mn_to_muscle         exc
+   L Knee MN ext            -> L_knee extension         mn_to_muscle         exc
+   L Knee MN flx            -> L_knee flexion           mn_to_muscle         exc
+   R Ank MN ext             -> R_ankle plantarflexion   mn_to_muscle         exc
+   R Ank MN flx             -> R_ankle dorsiflexion     mn_to_muscle         exc
+   R Hip MN ext             -> R Hip ext                mn_to_muscle         exc
+   R Hip MN flx             -> R Hip flx                mn_to_muscle         exc
+   R Knee MN ext            -> R_knee extension         mn_to_muscle         exc
+   R Knee MN flx            -> R_knee flexion           mn_to_muscle         exc
+   L Ank MN ext RE          -> L Ank ext Ia             other                inh
+   L Ank MN flx RE          -> L Ank flx Ia             other                inh
+   L Hip MN ext RE          -> L Hip ext Ia             other                inh
+   L Hip MN flx RE          -> L Hip flx Ia             other                inh
+   L Hip PF ext             -> L Hip ext Ia             other                exc
+   L Hip PF flx             -> L Hip flx Ia             other                exc
+   L Knee MN ext RE         -> L Knee ext Ia            other                inh
+   L Knee MN ext RE         -> R Knee ext Ia            other                inh
+   L Knee MN flx RE         -> L Knee flx Ia            other                inh
+   L Knee PF ext            -> L Ank ext Ia             other                exc
+   L Knee PF ext            -> L Knee ext Ia            other                exc
+   L Knee PF flx            -> L Ank flx Ia             other                exc
+   L Knee PF flx            -> L Knee flx Ia            other                exc
+   R Ank MN ext RE          -> R Ank ext Ia             other                inh
+   R Ank MN flx RE          -> R Ank flx Ia             other                inh
+   R Hip MN ext RE          -> R Hip ext Ia             other                inh
+   R Hip MN flx RE          -> R Hip flx Ia             other                inh
+   R Hip PF ext             -> R Hip ext Ia             other                exc
+   R Hip PF flx             -> R Hip flx Ia             other                exc
+   R Knee MN flx RE         -> R Knee flx Ia            other                inh
+   R Knee PF ext            -> R Ank ext Ia             other                exc
+   R Knee PF ext            -> R Knee ext Ia            other                exc
+   R Knee PF flx            -> R Ank flx Ia             other                exc
+   R Knee PF flx            -> R Knee flx Ia            other                exc
+   Stimulus_1               -> L RG ext                 other                exc
+   L Hip PF ext             -> L Hip PF ext IN          pf_cross             exc
+   L Hip PF ext IN          -> L Hip PF flx             pf_cross             inh
+   L Hip PF flx             -> L Hip PF flx IN          pf_cross             exc
+   L Hip PF flx IN          -> L Hip PF ext             pf_cross             inh
+   L Knee PF ext            -> L Knee PF ext IN         pf_cross             exc
+   L Knee PF ext IN         -> L Knee PF flx            pf_cross             inh
+   L Knee PF flx            -> L Knee PF flx IN         pf_cross             exc
+   L Knee PF flx IN         -> L Knee PF ext            pf_cross             inh
+   R Hip PF ext             -> R Hip PF ext IN          pf_cross             exc
+   R Hip PF ext IN          -> R Hip PF flx             pf_cross             inh
+   R Hip PF flx             -> R Hip PF flx IN          pf_cross             exc
+   R Hip PF flx IN          -> R Hip PF ext             pf_cross             inh
+   R Knee PF ext            -> R Knee PF ext IN         pf_cross             exc
+   R Knee PF ext IN         -> R Knee PF flx            pf_cross             inh
+   R Knee PF flx            -> R Knee PF flx IN         pf_cross             exc
+   R Knee PF flx IN         -> R Knee PF ext            pf_cross             inh
+   L RG ext                 -> L Hip PF ext             pf_drive             exc
+   L RG ext                 -> L Knee PF ext            pf_drive             exc
+   L RG flx                 -> L Hip PF flx             pf_drive             exc
+   L RG flx                 -> L Knee PF flx            pf_drive             exc
+   R RG ext                 -> R Hip PF ext             pf_drive             exc
+   R RG ext                 -> R Knee PF ext            pf_drive             exc
+   R RG flx                 -> R Hip PF flx             pf_drive             exc
+   R RG flx                 -> R Knee PF flx            pf_drive             exc
+   L Hip PF ext             -> L Hip MN ext             pf_to_mn             exc
+   L Hip PF flx             -> L Hip MN flx             pf_to_mn             exc
+   L Knee PF ext            -> L Ank MN ext             pf_to_mn             exc
+   L Knee PF ext            -> L Knee MN ext            pf_to_mn             exc
+   L Knee PF flx            -> L Ank MN flx             pf_to_mn             exc
+   L Knee PF flx            -> L Knee MN flx            pf_to_mn             exc
+   R Hip PF ext             -> R Hip MN ext             pf_to_mn             exc
+   R Hip PF flx             -> R Hip MN flx             pf_to_mn             exc
+   R Knee PF ext            -> R Ank MN ext             pf_to_mn             exc
+   R Knee PF ext            -> R Knee MN ext            pf_to_mn             exc
+   R Knee PF flx            -> R Ank MN flx             pf_to_mn             exc
+   R Knee PF flx            -> R Knee MN flx            pf_to_mn             exc
+   L Ank MN ext RE          -> L Ank MN flx RE          rc_mutual            inh
+   L Ank MN flx RE          -> L Ank MN ext RE          rc_mutual            inh
+   L Hip MN ext RE          -> L Hip MN flx RE          rc_mutual            inh
+   L Hip MN flx RE          -> L Hip MN ext RE          rc_mutual            inh
+   L Knee MN ext RE         -> L Knee MN flx RE         rc_mutual            inh
+   L Knee MN ext RE         -> R Knee MN flx RE         rc_mutual            inh
+   L Knee MN flx RE         -> L Knee MN ext RE         rc_mutual            inh
+   R Ank MN ext RE          -> R Ank MN flx RE          rc_mutual            inh
+   R Ank MN flx RE          -> R Ank MN ext RE          rc_mutual            inh
+   R Hip MN ext RE          -> R Hip MN flx RE          rc_mutual            inh
+   R Hip MN flx RE          -> R Hip MN ext RE          rc_mutual            inh
+   R Knee MN flx RE         -> L Knee MN ext RE         rc_mutual            inh
+   L Ank MN ext             -> L Ank MN ext RE          rc_own               exc
+   L Ank MN ext RE          -> L Ank MN ext             rc_own               inh
+   L Ank MN flx             -> L Ank MN flx RE          rc_own               exc
+   L Ank MN flx RE          -> L Ank MN flx             rc_own               inh
+   L Hip MN ext             -> L Hip MN ext RE          rc_own               exc
+   L Hip MN ext RE          -> L Hip MN ext             rc_own               inh
+   L Hip MN flx             -> L Hip MN flx RE          rc_own               exc
+   L Hip MN flx RE          -> L Hip MN flx             rc_own               inh
+   L Knee MN ext            -> L Knee MN ext RE         rc_own               exc
+   L Knee MN ext RE         -> L Knee MN ext            rc_own               inh
+   L Knee MN ext RE         -> R Knee MN ext            rc_own               inh
+   L Knee MN flx            -> L Knee MN flx RE         rc_own               exc
+   L Knee MN flx RE         -> L Knee MN flx            rc_own               inh
+   R Ank MN ext             -> R Ank MN ext RE          rc_own               exc
+   R Ank MN ext RE          -> R Ank MN ext             rc_own               inh
+   R Ank MN flx             -> R Ank MN flx RE          rc_own               exc
+   R Ank MN flx RE          -> R Ank MN flx             rc_own               inh
+   R Hip MN ext             -> R Hip MN ext RE          rc_own               exc
+   R Hip MN ext RE          -> R Hip MN ext             rc_own               inh
+   R Hip MN flx             -> R Hip MN flx RE          rc_own               exc
+   R Hip MN flx RE          -> R Hip MN flx             rc_own               inh
+   R Knee MN ext            -> L Knee MN ext RE         rc_own               exc
+   R Knee MN flx            -> R Knee MN flx RE         rc_own               exc
+   R Knee MN flx RE         -> R Knee MN flx            rc_own               inh
+   L RG ext                 -> L RG ext IN              rg_laminate          exc
+   L RG ext                 -> L RG flx                 rg_laminate          exc
+   L RG ext IN              -> L RG flx                 rg_laminate          inh
+   L RG flx                 -> L RG ext                 rg_laminate          exc
+   L RG flx                 -> L RG flx IN              rg_laminate          exc
+   L RG flx IN              -> L RG ext                 rg_laminate          inh
+   R RG ext                 -> R RG ext IN              rg_laminate          exc
+   R RG ext                 -> R RG flx                 rg_laminate          exc
+   R RG ext IN              -> R RG flx                 rg_laminate          inh
+   R RG flx                 -> R RG ext                 rg_laminate          exc
+   R RG flx                 -> R RG flx IN              rg_laminate          exc
+   R RG flx IN              -> R RG ext                 rg_laminate          inh
+   V3_L                     -> R RG ext IN              v3_to_contra_InE     exc
+   V3_R                     -> L RG ext IN              v3_to_contra_InE     exc
