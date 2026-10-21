@@ -303,3 +303,28 @@ note the tree ALSO carries your own uncommitted torque-paper +
 BiPulley work (untouched by agents), and the dead agent's scratch
 `_supervisor_gate_batch1_20261021.ts` (unfired workflow draft) is safe
 to delete.
+- 2026-10-21 ~10:30Z BALANCE-OBJECTIVE FIX + REAL-BUDGET RERUN (Ben's
+  order, wave 3; this session): the s3p objective under-rewarded
+  weight-bearing - the syn6 winner sagged onto the slack rig (feet
+  29.8% BW, COM 0.575 m) and the incumbents lean ~50%. FIXED in
+  _curriculum_s3p.py (change recorded in its docstring) + additive
+  runner.py metrics: (a) RIG-SHARE term -250*max(0, rig_share-0.10)
+  graded from feet>=90% BW, hard sentinel -149.5 when quiet rig share
+  >50%; (b) METABOLIC term -0.5*(bal_act_sum + bal_cocon_act) = mean
+  SUMMED muscle activation with the antagonist-overlap mass weighted
+  extra (typ. act_sum ~56 over 92 actuators). Every 2026-10-20 metric
+  kept; sentinel ladder now nan -200 < all-fall -150 < RIG-SAG -149.5
+  < clip -149. New runner metrics bal_foot_load/bal_rig_share/
+  bal_act_sum/bal_cocon_act are additive-only; ANCHOR RE-CHECKED after
+  the edit: s3k flavor A BIT-EXACT -161.56754173676563. Recorded
+  studies untouched - new names curr_s3q_perturb (optuna_walk.db) and
+  curr_syn6_s3q_perturb (optuna_syn6.db), 60 trials each, launched
+  background 10:26/10:31Z (logs s3q_stock_20261021.log,
+  s3q_syn6_20261021.log; seeds = quiet incumbent defaults AND the
+  2026-10-20 s3p winner params). Fresh verify script
+  _s3q_verify_20261021.py includes the explicit sag check (foot-load
+  fraction + COM height). Ben's fallback addendum logged: if 60 trials
+  still cannot beat the hand-set seeds under the fixed objective, that
+  IS the finding - the next round becomes a deliberate HAND-SET sweep
+  (knobs/values proposed in the final entry below) until a pattern
+  emerges to reformulate the search around.

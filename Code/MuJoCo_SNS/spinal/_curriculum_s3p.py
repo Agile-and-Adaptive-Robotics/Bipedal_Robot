@@ -1,35 +1,64 @@
 """Stage-3 PERTURBATION + METABOLIC curriculum (2026-10-20, Ben's
 wave-2 expansion: 'the standing test must not be quiet standing').
 
+*** 2026-10-21 OBJECTIVE FIX (Ben's order, wave 3) — this file now runs
+the s3Q objective under NEW study names (curr_s3q_*); the recorded
+curr_s3p_* studies/dbs/jsons are untouched. Two terms were ADDED after
+the 2026-10-21 verdict table showed the syn6 s3p winner gamed the score
+by sagging onto the slack rig (feet carrying only 29.8% BW, COM 0.575 m)
+and the stock/w2lvar winners merely leaned ~50% on the rig:
+
+  (a) RIG-SHARE term (quiet eval): graded penalty
+        250 * max(0, rig_share - 0.10)
+      (feet must carry >= 90% BW for zero penalty; the penalty reaches
+      -100 at rig share 0.50), PLUS a hard sentinel: quiet rig share
+      > 0.50 -> score -149.5 (stood, but hanging on the rig — ranks
+      below every clipped partial stander, above all-fall -150).
+  (b) METABOLIC term (quiet eval):
+        0.5 * (bal_act_sum + 1.0 * bal_cocon_act)
+      = 0.5 x (mean SUMMED muscle activation + the antagonist-overlap
+      activation mass weighted 1x extra) — co-contraction costs more.
+      Typical act_sum ~56 (92 actuators), cocon_act ~3-5.
+
+Every 2026-10-20 metric/term is KEPT (falls, quiet sway/tilt/contact
+sym, post-push + post-platform sway, squared-effort, CCI cocon); the
+sentinel ladder is now: nan -200 < all-fall -150 < RIG-SAG -149.5 <
+clip floor -149. New runner metrics consumed: bal_rig_share,
+bal_act_sum, bal_cocon_act (additive in runner.py; anchor unaffected).
+
 Second stage-3 study per family (fresh names; the quiet curr_s3_balance
-studies are NOT discarded): each trial runs a 7-eval standing battery -
-quiet stand, 4 pelvis push pulses (forward/backward/lateral R/lateral L,
-60 N = ~8.5% BW, 150 ms, at t=4 s), platform translate (6 cm +x) and
-platform tilt (6 deg sagittal) - all 8 s, DRIVE 0, at the trial's rig
-wean. Score = fall count + sway response to the PERTURBATION SET (not
-just quiet sway) + a metabolic/co-contraction term (Ben: 'balance
-EFFICIENTLY instead of just co-contracting everything'):
+studies and the 2026-10-20 curr_s3p_* studies are NOT discarded): each
+trial runs a 7-eval standing battery - quiet stand, 4 pelvis push pulses
+(forward/backward/lateral R/lateral L, 60 N = ~8.5% BW, 150 ms, at
+t=4 s), platform translate (6 cm +x) and platform tilt (6 deg sagittal)
+- all 8 s, DRIVE 0, at the trial's rig wean. Seeding (empty study only):
+trial 0 = the family's QUIET stage-3 winner with mechanism knobs 0
+(unperturbed incumbent defaults), trial 1 = the family's 2026-10-20 s3p
+winner params (prior_json). Full score:
 
     nan anywhere                        -> -200   (sentinel)
     fell in ALL 7 battery evals         -> -150   (sentinel)
+    quiet rig share > 0.50              -> -149.5 (RIG-SAG sentinel)
     else: 100 - 25*falls - 300*quiet_sway[m] - 1*quiet_tilt[deg]
              - 40*|0.5 - quiet_contact_sym|
              - 250*mean(post-push COM sway, 4 evals)
              - 250*mean(post-platform COM sway, 2 evals)
              - 30*bal_effort (mean squared muscle activation, quiet run)
              - 20*bal_cocon (antagonist co-contraction index, quiet run)
-    clipped at -149 so partial standers order above the all-fall sentinel.
+             - 250*max(0, quiet_rig_share - 0.10)      [NEW 2026-10-21]
+             - 0.5*(bal_act_sum + bal_cocon_act)       [NEW 2026-10-21]
+    clipped at -149 so partial standers order above the sentinels.
 
 Searched = the family's quiet stage-3 keys PLUS the balance-mechanism
 knobs from Ben's prior (wide stance, slight knee flexion, antagonist
 co-activation): stance_width [0,10] deg hip abduction both hips, knee_bias
 [0,15] deg extra knee flexion, coact [0,1] antagonist posture drive
 (build_network), pelvis_ty [0.84,0.93] (a flexed-knee stand needs a lower
-pelvis). New knobs default 0 = incumbent pose exactly (trial 0 = the
-family's QUIET stage-3 winner reproduced under the perturbation battery).
+pelvis). New knobs default 0 = incumbent pose exactly.
 
 Usage: python _curriculum_s3p.py <stock|w2lvar|syn6> [n_trials]
-(defaults: stock 20, variants 18 - each trial = 7 evals of ~70 s).
+(defaults: stock 60, syn6 60 — the 2026-10-21 real-budget rerun; w2lvar
+18 — not rerun this round, same objective if ever needed).
 """
 import io
 import importlib
@@ -44,24 +73,34 @@ import optuna
 import numpy as np
 
 FAMILY = sys.argv[1] if len(sys.argv) > 1 else "stock"
-N_DEF = {"stock": 20, "w2lvar": 18, "syn6": 18}
+N_DEF = {"stock": 60, "w2lvar": 18, "syn6": 60}
 N = int(sys.argv[2]) if len(sys.argv) > 2 else N_DEF[FAMILY]
+
+# 2026-10-21 s3q objective constants (Ben's fix; see module docstring).
+RIG_TARGET = 0.10    # feet carry >= 90% BW -> zero graded rig penalty
+RIG_CAP = 0.50       # quiet rig share above this = RIG-SAG sentinel
+RIG_W = 250.0        # graded rig-share weight (per unit share)
+METAB_W = 0.5        # per unit summed activation (92 acts, typ. ~56)
+CCO_W = 1.0          # antagonist-overlap activation mass, extra weight
 
 CFG = {
     "stock": dict(db="sqlite:///optuna_walk.db",
-                  study="curr_s3p_perturb", mod="_curriculum",
+                  study="curr_s3q_perturb", mod="_curriculum",
                   quiet_json="curriculum_stage3.json",
-                  npz="spinal_run_curr_s3p_20261020.npz", net=None),
+                  prior_json="curriculum_s3p_stock.json",
+                  npz="spinal_run_curr_s3q_20261021.npz", net=None),
     "w2lvar": dict(db="sqlite:///optuna_w2lvar.db",
-                   study="curr_w2lvar_s3p_perturb",
+                   study="curr_w2lvar_s3q_perturb",
                    mod="_curriculum_w2lvar",
                    quiet_json="curriculum_w2lvar_stage3.json",
-                   npz="spinal_run_curr_w2lvar_s3p_20261020.npz",
+                   prior_json="curriculum_s3p_w2lvar.json",
+                   npz="spinal_run_curr_w2lvar_s3q_20261021.npz",
                    net="w2lvar"),
     "syn6": dict(db="sqlite:///optuna_syn6.db",
-                 study="curr_syn6_s3p_perturb", mod="_curriculum_syn6",
+                 study="curr_syn6_s3q_perturb", mod="_curriculum_syn6",
                  quiet_json="curriculum_syn6_stage3.json",
-                 npz="spinal_run_curr_syn6_s3p_20261020.npz",
+                 prior_json="curriculum_s3p_syn6.json",
+                 npz="spinal_run_curr_syn6_s3q_20261021.npz",
                  net="syn6"),
 }[FAMILY]
 
@@ -132,6 +171,11 @@ def score_battery(ms):
     if falls == len(ms):
         return -150.0, falls
     q = ms[0]
+    # 2026-10-21 RIG-SAG sentinel: stood, but the rig carries more than
+    # half the body weight in the QUIET stand = a hang, not a stand.
+    rig = float(q["bal_rig_share"])
+    if rig > RIG_CAP:
+        return -149.5, falls
 
     def _ps(m):
         v = float(m["bal_push_sway"])
@@ -149,7 +193,11 @@ def score_battery(ms):
          - 250.0 * (sum(push_sw) / max(len(push_sw), 1))
          - 250.0 * (sum(plat_sw) / max(len(plat_sw), 1))
          - 30.0 * float(q["bal_effort"])
-         - 20.0 * float(q["bal_cocon"]))
+         - 20.0 * float(q["bal_cocon"])
+         # 2026-10-21 additions (Ben's balance-objective fix):
+         - RIG_W * max(0.0, rig - RIG_TARGET)
+         - METAB_W * (float(q["bal_act_sum"])
+                      + CCO_W * float(q["bal_cocon_act"])))
     return max(s, -149.0), falls
 
 
@@ -171,8 +219,11 @@ def main():
     sk = list(quiet_keys) + ["rig_scale", "stance_width", "knee_bias",
                              "coact", "pelvis_ty"]
     if len(study.trials) == 0:
-        # FULL-dict seed: the family's QUIET stage-3 winner under the
-        # perturbation battery (mechanism knobs 0 = incumbent pose).
+        # FULL-dict seeds (Ben's 2026-10-21 order: prior winners AND the
+        # unperturbed defaults). Trial 0 = the family's QUIET stage-3
+        # winner with mechanism knobs 0 (the incumbent pose); trial 1 =
+        # the family's 2026-10-20 s3p winner params (the pose the fixed
+        # objective must beat or expose).
         seed = {k: 0.0 for k in sk}
         seed["rig_scale"] = 1.0
         seed["pelvis_ty"] = 0.92
@@ -186,7 +237,18 @@ def main():
             print(f"[s3p:{FAMILY}] WARNING: {CFG['quiet_json']} missing; "
                   "seeding defaults", flush=True)
         study.enqueue_trial(seed)
-        print(f"[s3p:{FAMILY}] seeded {json.dumps(seed)}", flush=True)
+        print(f"[s3p:{FAMILY}] seeded(defaults) {json.dumps(seed)}",
+              flush=True)
+        try:
+            pw = json.loads(open(CFG["prior_json"],
+                                 encoding="utf-8").read())["params"]
+            prior = {k: float(pw.get(k, seed[k])) for k in sk}
+            study.enqueue_trial(prior)
+            print(f"[s3p:{FAMILY}] seeded(s3p winner) {json.dumps(prior)}",
+                  flush=True)
+        except FileNotFoundError:
+            print(f"[s3p:{FAMILY}] WARNING: {CFG['prior_json']} missing; "
+                  "no prior-winner seed", flush=True)
 
     def obj(trial):
         sug = {}
@@ -211,6 +273,11 @@ def main():
         trial.set_user_attr("quiet_tilt", float(q["bal_tilt_max"]))
         trial.set_user_attr("quiet_effort", float(q["bal_effort"]))
         trial.set_user_attr("quiet_cocon", float(q["bal_cocon"]))
+        trial.set_user_attr("rig_share", float(q["bal_rig_share"]))
+        trial.set_user_attr("foot_load", float(q["bal_foot_load"]))
+        trial.set_user_attr("com_z_min", float(q["bal_com_z_min"]))
+        trial.set_user_attr("act_sum", float(q["bal_act_sum"]))
+        trial.set_user_attr("cocon_act", float(q["bal_cocon_act"]))
         trial.set_user_attr("push_sway_mean",
                             float(np.mean([m["bal_push_sway"]
                                            for m in ms[1:5]]))
@@ -221,7 +288,10 @@ def main():
               f"tilt {float(q['bal_tilt_max']):.1f} "
               f"effort {float(q['bal_effort']):.3f} "
               f"cocon {float(q['bal_cocon']):.3f} "
-              f"rig {p['rig_scale']:.2f}", flush=True)
+              f"rig {p['rig_scale']:.2f} "
+              f"FEET {100 * float(q['bal_foot_load']):.0f}%BW "
+              f"actsum {float(q['bal_act_sum']):.1f} "
+              f"comz {float(q['bal_com_z_min']):.3f}", flush=True)
         return val
 
     study.optimize(obj, n_trials=N, gc_after_trial=True)
@@ -229,14 +299,14 @@ def main():
     print(f"== [s3p:{FAMILY}] best {best.value:.3f} "
           f"(trial {best.number})")
     print(json.dumps(best.params, indent=1))
-    with open(f"curriculum_s3p_{FAMILY}.json", "w", encoding="utf-8") as f:
-        json.dump({"family": FAMILY, "stage": "3p", "score": best.value,
+    with open(f"curriculum_s3q_{FAMILY}.json", "w", encoding="utf-8") as f:
+        json.dump({"family": FAMILY, "stage": "3q", "score": best.value,
                    "params": best.params, "trial": best.number,
                    "study": CFG["study"], "db": CFG["db"],
                    "npz": CFG["npz"],
                    "aarl_net": CFG["net"],
                    "user_attrs": best.user_attrs}, f, indent=2)
-    print(f"saved curriculum_s3p_{FAMILY}.json")
+    print(f"saved curriculum_s3q_{FAMILY}.json")
 
 
 if __name__ == "__main__":

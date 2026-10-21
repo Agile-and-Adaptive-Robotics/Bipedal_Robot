@@ -1851,6 +1851,22 @@ def main(argv):
                 _cci_num += float(np.mean(2.0 * np.minimum(_sf, _se)))
                 _cci_den += float(np.mean(_sf + _se))
         bal_cocon = (_cci_num / _cci_den) if _cci_den > 1e-9 else 0.0
+        # 2026-10-21 balance-objective fix (Ben, wave 3): weight-bearing
+        # + linear-metabolic metrics for the s3q study. bal_foot_load =
+        # mean total foot contact force / body weight over the same
+        # post-warmup window (1.0 = the feet carry everything; the
+        # support rig carries the rest -> bal_rig_share = 1 - it).
+        # bal_act_sum = mean SUMMED muscle activation (linear metabolic
+        # proxy; bal_effort above is the squared one). bal_cocon_act =
+        # the antagonist-overlap activation mass (sum over the four
+        # pairs of 2*min(a_flex, a_ext), absolute = _cci_num) - the
+        # co-contraction share the s3q objective weights extra.
+        # Additive only: no existing metric value changes.
+        bal_foot_load = (float(np.mean(seg_ct[:, 0] + seg_ct[:, 1])) / BW
+                         if seg_ct.shape[0] else 0.0)
+        bal_act_sum = (float(np.mean(np.sum(_seg_a, axis=1)))
+                       if _seg_a.shape[0] else 0.0)
+        bal_cocon_act = _cci_num
         metrics = dict(
             nan=not (finite_q and finite_c),
             t_end=float(tt[-1]),
@@ -1879,6 +1895,11 @@ def main(argv):
             bal_push_sway=bal_push_sway,
             bal_effort=bal_effort,
             bal_cocon=bal_cocon,
+            # 2026-10-21 s3q additions (Ben's balance-objective fix)
+            bal_foot_load=bal_foot_load,
+            bal_rig_share=1.0 - bal_foot_load,
+            bal_act_sum=bal_act_sum,
+            bal_cocon_act=bal_cocon_act,
         )
         return metrics
 
