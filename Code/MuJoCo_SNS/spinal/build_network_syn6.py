@@ -658,6 +658,20 @@ class Syn6Network(SNSpinal.SpinalNetwork):
         # ---- posture tonic drive (stock table + overrides) ----
         w_post = SNSpinal._group_weight(mi, SNSpinal.W_POSTURE,
                                         SNSpinal.POSTURE_OVERRIDE)
+        # 2026-10-20 antagonist co-activation drive (G["coact"], default
+        # 0 = absent; same knob as the stock builder): the flexor
+        # antagonist of each extensor posture group gets a scaled
+        # POSTURE->MN weight so co-contraction is searchable.
+        if G.get("coact", 0.0) > 0.0:
+            for _fl, _ex in (("hip_flex", "hip_ext"),
+                             ("knee_flex", "knee_ext"),
+                             ("ankle_df", "ankle_pf"),
+                             ("trunk_flex", "trunk_ext")):
+                if (_fl in mi.groups
+                        and SNSpinal.W_POSTURE.get(_ex, 0.0) > 0.0):
+                    w_post = max(
+                        w_post,
+                        G["coact"] * float(SNSpinal.W_POSTURE[_ex]))
         if w_post > 0.0:
             n.add_connection(
                 _syn(G["posture_to_mn"] * w_post, exc=True), "POSTURE", mn)

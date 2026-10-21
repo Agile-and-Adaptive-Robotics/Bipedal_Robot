@@ -126,3 +126,23 @@ AWAITING BEN (DESIGN.md 2026-10-20 OPEN ISSUES 1-5): F1 RE->RE sign
 ruling; F2 weak-class strength doctrine; Shevtsova k_tau + F-B..F-E;
 basin accept-9/12-or-restructure; Ryak stand-ins F-A..F-I. No
 commits made — commit list in the campaign README + gatekeeper notes.
+- 2026-10-20 wave-2 supervisor pass A: four streams DELIVERED by agents,
+  one still running. (1) Contact sensing: feet DO contact (heel strikes
+  multi-kN, 13-16x saturation; crossed-edge weakness = pulse duty, not
+  air); RA/SA + shear/total modes + tunable presyn threshold/saturation
+  built default-off; agent gates PASS; default smoke re-verified this
+  pass. Ben committed files (8a125e75). (2) Shevtsova SNS: PASS, matches
+  standalone to 2 decimals; fixed-tau backend LATCHES at high alpha (her
+  bell asymmetry required) - program-wide finding. (3) syn6 Ib+antagonist:
+  per-muscle Ib->E-layers gap wired (ib_e_central) + Ia PF gate + S5
+  lamination; censuses/anchor bit-exact; ON-probe +409 exact. (4)
+  AnimatLab: no harness exists (Root free, no shelf); old wiring falls
+  then steps on its side 63/63 bursts (Ben's observation reproduced);
+  corrected model 0 bursts in AnimatLab vs free-running SNS twin -
+  suspect V3 edges retyped 2.749 uS (27x weak class) + F1 RE->RE exc;
+  tuned drive LATCHES (ratios port, numbers don't). Balance stream
+  (agent 5) still running with perturbations/metabolism/Ib-ablation.
+  PENDING for next passes: per-stream M1/M2 supervisor gates (spawn
+  SUPERVISOR_AGENT.md verbatim), balance agent completion, then final
+  wave report + automation retirement. The fixed-tau latch finding and
+  the AnimatLab V3 retype should be added to DESIGN.md open issues.

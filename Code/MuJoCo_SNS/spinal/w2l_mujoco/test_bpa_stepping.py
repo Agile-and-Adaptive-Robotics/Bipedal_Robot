@@ -60,11 +60,23 @@ KV = dict(dur=20.0, hold=6.0, lower=1.0, clear=0.04, support=0.7,
           te=3.0, tf=4.0, tau=0.25, cap=0.5, comm=1.0,
           stand_te=None, stand_tf=None,
           dia=20.0, count=1.0, kmax_frac=0.25, tendon=0.04, bias=0.02,
-          damp_bpa=0.0, stiff=1.0, servo_rate=0.01)
+          damp_bpa=0.0, stiff=1.0, servo_rate=0.01,
+          # 2026-10-20 wave-2 balance+perturbation mode (Ben: build a
+          # standing/perturbation mode for the BPA walker too). Default
+          # 0 = the actuation gate unchanged. balance=1: stand drives
+          # (stand_te/stand_tf; tf=0 = latched stand) from t=0, retained
+          # support, ONE perturbation event (push pulse on the root or
+          # platform move) at pushT (default hold+lower+3 s).
+          balance=0.0, pushN=40.0, pushT=float("nan"), pushAxis="+x",
+          platDx=0.0, platTilt=0.0)
 for arg in sys.argv[1:]:
     if arg.startswith("--") and "=" in arg:
         k, v = arg[2:].split("=", 1)
-        KV[k.replace("-", "_")] = float(v)
+        # 2026-10-20: string knobs (pushAxis) stay strings
+        try:
+            KV[k.replace("-", "_")] = float(v)
+        except ValueError:
+            KV[k.replace("-", "_")] = v
 if KV["stand_te"] is None:
     KV["stand_te"] = KV["te"]
 if KV["stand_tf"] is None:
@@ -215,6 +227,11 @@ def main() -> int:
     z_stand = z_contact
     load_prev = 0.0
     SERVO_RATE = KV["servo_rate"]
+    # 2026-10-20 wave-2 balance-mode perturbation event config
+    _T_EV = (float(KV["pushT"]) if np.isfinite(KV["pushT"])
+             else T_HOLD + T_LOW + 3.0)
+    _plat_done = [False]
+    _gid_ground = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_GEOM, "ground")
     print(f"== harness: mass {_mass:.1f} kg, weight {_wgt:.0f} N, "
           f"z_contact {z_contact:.4f}, z_hold {z_hold:.4f}, "
           f"load target {LOAD_TGT:.0f} N ==")
@@ -225,7 +242,7 @@ def main() -> int:
     log_t = np.zeros(nsteps)
     log_q = np.zeros((nsteps, 6))
     log_f = np.zeros((nsteps, 4))          # vertical normal force per geom
-    log_h = np.zeros((nsteps, 2))          # pelvis z, x
+    log_h = np.zeros((nsteps, 3))          # pelvis z, x, y
     log_p = np.zeros((nsteps, 12))         # pressure per muscle (kPa)
     log_rgE = np.zeros(nsteps)
     u = net.make_inputs()
@@ -241,6 +258,10 @@ def main() -> int:
         if i % NSUB == 0:
             te_now = KV["te"] if t < T_HOLD + T_LOW else KV["stand_te"]
             tf_now = KV["tf"] if t < T_HOLD + T_LOW else KV["stand_tf"]
+            if KV["balance"] > 0.0:
+                # 2026-10-20 balance mode: the STAND drive from t=0 (no
+                # air-march phase; tf=0 = latched-extensor quiet stand)
+                te_now, tf_now = KV["stand_te"], KV["stand_tf"]
             u[iE], u[iEr] = te_now, te_now
             u[iF], u[iFr] = tf_now, tf_now
             u[iS] = 10.0 if t < 0.01 else 0.0     # verbatim kickoff
@@ -267,13 +288,34 @@ def main() -> int:
         d.xfrc_applied[root_bid, 2] = max(Fz, 0.0)
         d.xfrc_applied[root_bid, 0] = -20.0 * d.qvel[0]
         d.xfrc_applied[root_bid, 1] = -20.0 * d.qvel[1]
+        # ---- 2026-10-20 wave-2 perturbations (balance mode only; the
+        # three xfrc lines above run EVERY step, so the pulse ADDS on
+        # top inside its window; default 0 = bit-identical):
+        if KV["balance"] > 0.0 and KV["pushN"] > 0.0 \
+                and _T_EV <= t < _T_EV + 0.15:
+            _ax = 0 if str(KV["pushAxis"]).endswith("x") else 1
+            _sg = -1.0 if str(KV["pushAxis"]).startswith("-") else 1.0
+            d.xfrc_applied[root_bid, _ax] += _sg * float(KV["pushN"])
+        if KV["balance"] > 0.0 and not _plat_done[0] and t >= _T_EV \
+                and (KV["platDx"] != 0.0 or KV["platTilt"] != 0.0):
+            if KV["platDx"] != 0.0:
+                m.geom_pos[_gid_ground, 0] += float(KV["platDx"])
+            if KV["platTilt"] != 0.0:
+                _th = np.radians(float(KV["platTilt"]))
+                _dq = np.array([np.cos(_th / 2.0), 0.0,
+                                np.sin(_th / 2.0), 0.0])
+                _gq = np.zeros(4)
+                mujoco.mju_mulQuat(_gq, _dq,
+                                   m.geom_quat[_gid_ground].copy())
+                m.geom_quat[_gid_ground] = _gq
+            _plat_done[0] = True
 
         mujoco.mj_step(m, d)
         log_t[i] = t
         log_q[i] = [np.degrees(d.qpos[qadr[j]]) for j in JNTS]
         log_f[i] = foot_forces(m, d, g_ids)
         load_prev = float(log_f[i, 0] + log_f[i, 1] + log_f[i, 2] + log_f[i, 3])
-        log_h[i] = d.qpos[2], d.qpos[0]
+        log_h[i] = d.qpos[2], d.qpos[0], d.qpos[1]
         log_p[i] = [muscles[a].pressure_kpa for a in sorted(muscles)]
         if not np.all(np.isfinite(d.qpos)):
             print(f"[FAIL] qpos non-finite at t={t:.3f} s")
@@ -360,6 +402,47 @@ def main() -> int:
           + " ".join(f"{a}={fmax_now[a]:.0f}" for a in sorted(fmax_now)))
 
     # --- verdicts
+    if KV["balance"] > 0.0:
+        # 2026-10-20 wave-2 BALANCE + PERTURBATION report. This rig's
+        # root carries no rotational DOF (the aproj ships Freeze=True),
+        # so there is no tilt channel: sway = root x/y excursion, and
+        # "fall" is reported as feet losing load (the harness retains
+        # the root regardless). NO quiet-stand claim is made here.
+        _quiet = (log_t >= T_HOLD + T_LOW + 0.5) & (log_t < _T_EV)
+        _pre = (log_t >= _T_EV - 0.3) & (log_t < _T_EV)
+        _post = log_t >= _T_EV + 0.15
+        _swx = float(log_h[_quiet, 1].ptp()) if _quiet.any() else float("nan")
+        _swy = float(log_h[_quiet, 2].ptp()) if _quiet.any() else float("nan")
+        _px = float(np.mean(log_h[_pre, 1])) if _pre.any() else 0.0
+        _py = float(np.mean(log_h[_quiet, 2])) if _quiet.any() else 0.0
+        _post_sw = (float(np.max(np.hypot(log_h[_post, 1] - _px,
+                                          log_h[_post, 2] - _py)))
+                    if _post.any() else -1.0)
+        _post_load = (float(np.mean(np.sum(log_f[_post], axis=1)))
+                      if _post.any() else 0.0)
+        _post_z = float(np.min(log_h[_post, 0])) if _post.any() else 0.0
+        print("== BALANCE PERTURBATION (wave 2, BPA walker) ==")
+        print(f"   event t={_T_EV:.1f} s | pushN={KV['pushN']:.0f} N "
+              f"axis={KV['pushAxis']} | platDx={KV['platDx']:.3f} m "
+              f"platTilt={KV['platTilt']:.1f} deg | support="
+              f"{SUPPORT * 100:.0f}% of {_wgt:.0f} N")
+        print(f"   quiet stand: root sway x/y ptp "
+              f"{_swx * 100:.1f}/{_swy * 100:.1f} cm")
+        print(f"   post-event: sway {_post_sw * 100:.1f} cm | "
+              f"root z min {_post_z:.3f} m | mean foot load "
+              f"{_post_load:.1f} N ({100.0 * _post_load / _wgt:.0f}% "
+              f"of weight)")
+        _feet_lost = (not _post.any()) or _post_load < 0.10 * _wgt
+        print(f"   [{'FAIL' if _feet_lost else 'PASS'}] feet keep "
+              f">=10% of body weight after the event")
+        print(f"   effort proxy: mean active pressure "
+              f"{p[p > 1].mean():.0f} kPa, peak {p.max():.0f} kPa "
+              f"(ceiling {PRESSURE_MAX:.0f})")
+        print("VERDICT: BPA BALANCE PERTURBATION RUN COMPLETE "
+              "(metrics above; retained-harness stand, no free-stand "
+              "claim - this body cannot statically stand, COM sits "
+              "outside the support polygon)")
+        return 0
     air_ok = all(len(bursts[s]) >= 3 for s in ("L", "R")) and all(
         flex_air[:, c].max() - flex_air[:, c].min() >= 10.0 for c in (0, 1))
     up = h[-1, 0] > 0.8 and h[:, 0].min() > 0.8

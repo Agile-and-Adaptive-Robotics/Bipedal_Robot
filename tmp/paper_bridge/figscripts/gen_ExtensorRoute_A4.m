@@ -59,7 +59,10 @@ fprintf('Route-state transitions (authoritative, from ri.active): ');
 fprintf('p%d@%.1fdeg  ', [transRows; transAngles]);
 fprintf('\n');
 fprintf('eliminatedAngleD field of record: ');
-fprintf('p%d@%.1f  ', find(isfinite(ri.eliminatedAngleD)), ri.eliminatedAngleD(isfinite(ri.eliminatedAngleD)));
+rowsE = find(isfinite(ri.eliminatedAngleD));
+for kk = 1:numel(rowsE)
+    fprintf('p%d@%.1f  ', rowsE(kk), ri.eliminatedAngleD(rowsE(kk)));
+end
 fprintf('\n');
 
 if numel(cand) == 8
@@ -94,9 +97,12 @@ for k = 1:nPoses
     ii = poseIdx(k);
     P = routeToFemurFrame(ri.raw(:,:,ii), ctx, ii);
     allX = [allX; P(:,1)]; allY = [allY; P(:,2)]; %#ok<AGROW>
-    for cc = { {geo.tibiaLowerCenter, geo.tibiaLowerClearRadius}, ...
-               {geo.tibiaUpperCenter, geo.tibiaUpperClearRadius} }
-        Cc = cc{1}; Rc = cc{2};
+    for ccIdx = 1:2
+        if ccIdx == 1
+            Cc = geo.tibiaLowerCenter; Rc = geo.tibiaLowerClearRadius;
+        else
+            Cc = geo.tibiaUpperCenter; Rc = geo.tibiaUpperClearRadius;
+        end
         L = [Cc(1)+Rc*cos(thPlot), Cc(2)+Rc*sin(thPlot), zeros(numel(thPlot),1)];
         Lf = t1ToFemur(L, ctx, ii);
         allX = [allX; Lf(:,1)]; allY = [allY; Lf(:,2)]; %#ok<AGROW>
@@ -176,15 +182,20 @@ for k = 1:nPoses
         'MarkerFaceColor', cK, 'MarkerEdgeColor', 'none');
 
     % Endpoints: femur-side origin p1 (gold square), insertion pEnd (orange diamond)
-    h(9)  = scatter(ax, P(1,1), P(1,2), 90, 'Marker', 's', 'filled', ...
+    h(9)  = scatter(ax, P(1,1), P(1,2), 90, 'Marker', 's', ...
         'MarkerFaceColor', c1, 'MarkerEdgeColor', 'none');
-    h(10) = scatter(ax, P(9,1), P(9,2), 90, 'Marker', 'd', 'filled', ...
+    h(10) = scatter(ax, P(9,1), P(9,2), 90, 'Marker', 'd', ...
         'MarkerFaceColor', c2, 'MarkerEdgeColor', 'none');
 
-    % Label active route points (10 pt floor, Mesh_Optimization journal standard)
+    % Label active route points (10 pt floor, Mesh_Optimization journal
+    % standard). Per-point label offsets declutter the tight p6:p8 cam-contact
+    % cluster (QC_ExtensorRoute_A4 round 1: labels overlapped there).
+    lblOff = 0.001 * [ 2  2; 2  2; 2  2; 2  2; 2  2; ...
+                       5  3; 6 -1; 4 -6; 2  2];
     for j = 1:9
         if active(j)
-            text(ax, P(j,1), P(j,2), sprintf(' p%d', j), ...
+            text(ax, P(j,1)+lblOff(j,1), P(j,2)+lblOff(j,2), ...
+                sprintf(' p%d', j), ...
                 'FontName', fontN, 'FontSize', 10, 'FontWeight', 'bold', ...
                 'Interpreter', 'none');
         end
@@ -235,21 +246,29 @@ for kk = 1:numel(labels)
         hLeg(kk).MarkerFaceColor = fc;
     end
     hLeg(kk).MarkerEdgeColor = 'none';
+    if ~isprop(hT(kk), 'Color')   % scatter-derived entries: keep the swatch
+        hLeg(kk).Color = hLeg(kk).MarkerFaceColor;   % line color consistent
+    end
 end
 lgd = legend(axLeg, hLeg, labels, 'Location', 'northwest', 'NumColumns', 1, ...
     'AutoUpdate', 'off');
 lgd.FontSize = 8; lgd.FontName = fontN; lgd.FontWeight = 'bold'; lgd.Box = 'off';
 
-% Info block: facts read from the mat of record only
+% Info block: facts read from the mat of record only (short lines so nothing
+% clips at the tile edge; QC round 1 flagged the long lines).
 wrapRmm = 1000 * ri.wrap.radius(2,1);
+rel1 = strjoin(arrayfun(@(r,a) sprintf('p%d %.0f\\circ', r, a), ...
+    transRows(1:3), transAngles(1:3), 'UniformOutput', false), ', ');
+rel2 = strjoin(arrayfun(@(r,a) sprintf('p%d %.0f\\circ', r, a), ...
+    transRows(4:end), transAngles(4:end), 'UniformOutput', false), ', ');
 infoLines = { ...
-    sprintf('Design range: %.0f\\circ (flexion) to %.0f\\circ (extension)', min(phiD), max(phiD)); ...
+    sprintf('Design range: %.0f\\circ to %.0f\\circ', min(phiD), max(phiD)); ...
     sprintf('Cam-drum wrap radius: %.1f mm', wrapRmm); ...
-    sprintf('Contact release: %s', strjoin(arrayfun(@(r,a) ...
-        sprintf('p%d %.0f\\circ', r, a), transRows, transAngles, ...
-        'UniformOutput', false), ', '))};
+    'Contact release:'; ...
+    ['  ' rel1]; ...
+    ['  ' rel2]};
 text(axLeg, 0.02, 0.02, infoLines, 'Units', 'normalized', ...
-    'FontName', fontN, 'FontSize', 10, 'FontWeight', 'bold', ...
+    'FontName', fontN, 'FontSize', 8, 'FontWeight', 'bold', ...
     'Interpreter', 'tex', 'VerticalAlignment', 'bottom');
 
 %% Panel letters (A)-(H): margin labels LEFT of each pose tile, vertically

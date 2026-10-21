@@ -138,6 +138,15 @@ KV = dict(phase="both", dur_stand=12.0, dur_walk=20.0,
           g_toe_df=5.0,      # aff_toe_df  (toe IN -> TOEDF IN)
           g_toe_df_mn=2.749, # aff_toe_df_mn (TOEDF IN -> DF MN inh)
           g_ib=0.5,          # aff_ib    (Ib grp -> RG-E/InE/PF-E)
+          # ---- 2026-10-20 wave-2 perturbation battery (Ben: balance is
+          # only proven under perturbation): --perturb=1 replaces the
+          # rig-ladder stand phase with a 7-case battery (quiet stand,
+          # push forward/backward/lateral R/lateral L, platform
+          # translate, platform tilt) at --perturb_rig support. All
+          # default 0 = bit-identical behavior.
+          perturb=0.0, perturb_rig=1.0,
+          pushN=40.0, pushT=8.0, pushAxis="+x",
+          platDx=0.0, platTilt=0.0,
           comm=1.0,          # commissural gain scale (0 = ablation)
           # ---- 2026-10-20: --net=bilateralrg2 runs Ben's CORRECTED aproj
           # connectome (2026-10-18) via w2l_cpg.build_w2l_net instead of the
@@ -465,6 +474,7 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
     anchor = None
     rv_prev = None
     fall_t = None
+    _plat_done = [False]   # 2026-10-20: one-shot platform-move latch
     for i in range(nphy):
         t = i * DT_PHY
         # current rig scale: settle catch (S=1) -> blend -> target
@@ -552,6 +562,30 @@ def run_phase(kind: str, dur: float, rig: float, sregime: str | None):
             Fz = max(wff * W + K_V * (z_t - float(d.qpos[jadr + 2]))
                      - C_V * d.qvel[2], 0.0)
             d.xfrc_applied[body_root, 2] += Fz
+            # ---- 2026-10-20 wave-2 perturbations (default 0 = off =
+            # bit-identical; the reset above wipes xfrc every neural
+            # step, so the pulse is REAPPLIED inside its window):
+            # (a) horizontal root force pulse, 0.15 s, at pushT;
+            if KV["pushN"] > 0.0 and KV["pushT"] <= t < KV["pushT"] + 0.15:
+                _ax = 0 if str(KV["pushAxis"]).endswith("x") else 1
+                _sg = -1.0 if str(KV["pushAxis"]).startswith("-") else 1.0
+                d.xfrc_applied[body_root, _ax] += _sg * float(KV["pushN"])
+            # (b) ONE-SHOT platform move (translate +x and/or sagittal
+            # tilt of the ground geom) at pushT; geom_pos/quat are
+            # mjModel fields, kinematics pick them up next step.
+            if (KV["platDx"] != 0.0 or KV["platTilt"] != 0.0) \
+                    and not _plat_done[0] and t >= KV["pushT"]:
+                _gg = gid["ground"]
+                if KV["platDx"] != 0.0:
+                    m.geom_pos[_gg, 0] += float(KV["platDx"])
+                if KV["platTilt"] != 0.0:
+                    _th = np.radians(float(KV["platTilt"]))
+                    _dq = np.array([np.cos(_th / 2.0), 0.0,
+                                    np.sin(_th / 2.0), 0.0])
+                    _gq = np.zeros(4)
+                    mujoco.mju_mulQuat(_gq, _dq, m.geom_quat[_gg].copy())
+                    m.geom_quat[_gg] = _gq
+                _plat_done[0] = True
             if anchor is not None and S_now > 0.0:
                 # leash (COM xy) + tilt assist, scaled by S (the rig)
                 if KV["walker_yield"] > 0.0 and i % NSUB == 0 and i > 0:
@@ -680,6 +714,26 @@ def stand_report(rig: float, log: dict, regime: str) -> dict:
                duty_L=float((heelF[:, 0] > KV["heelN"]).mean()),
                duty_R=float((heelF[:, 1] > KV["heelN"]).mean()),
                harness_pct=float(100.0 * log["rigFz"][w].mean() / 411.0))
+    # 2026-10-20 post-event recovery (wave 2): peak COM excursion from
+    # its pre-event position AFTER the perturbation window ends.
+    armed = (KV["pushN"] > 0.0 or KV["platDx"] != 0.0
+             or KV["platTilt"] != 0.0)
+    if armed:
+        _pre = w & (log["t"] >= KV["pushT"] - 0.3) & \
+            (log["t"] < KV["pushT"])
+        _post = w & (log["t"] >= KV["pushT"] + 0.15)
+        if _pre.any() and _post.any():
+            bx = float(np.mean(log["com"][_pre, 0]))
+            by = float(np.mean(log["com"][_pre, 1]))
+            pc = log["com"][_post]
+            res["post_sway"] = float(np.max(np.hypot(pc[:, 0] - bx,
+                                                     pc[:, 1] - by)))
+            res["post_fell"] = bool(
+                log["fall_t"] is not None
+                and log["fall_t"] >= KV["pushT"])
+        else:
+            res["post_sway"] = -1.0
+            res["post_fell"] = False
     return res
 
 
@@ -702,6 +756,8 @@ def main() -> int:
               f"| rig kxy={K0_XY:.0f} N/m krot={K0_ROT:.0f} N m/rad | "
               f"fall: pelvis z<{FALL_Z} m or tilt>{FALL_TILT} deg")
         for rig in (0.0, 0.25, 0.5, 1.0):
+            if KV["perturb"] > 0.0 and rig != KV["perturb_rig"]:
+                continue    # 2026-10-20 battery: single rig value
             log = run_phase("stand", KV["dur_stand"], rig, KV["sregime"])
             res = stand_report(rig, log, KV["sregime"])
             stand_rows.append(res)
@@ -722,6 +778,36 @@ def main() -> int:
                               and res["tilt"][1] < 15.0
                               and res["sway_x"][1] < 0.10
                               and res["sway_y"][1] < 0.10)
+        if KV["perturb"] > 0.0:
+            # 2026-10-20 wave-2 battery (Ben: perturbations mandatory):
+            # the ladder loop above ran the QUIET case at perturb_rig;
+            # here are the 6 perturbed cases (pushes 40 N ~ 10% of the
+            # 411 N body weight; platform 5 cm / 5 deg). Each restores
+            # the shared knobs afterward.
+            _cases = [("push_f", dict(pushN=KV["pushN"], pushAxis="+x")),
+                      ("push_b", dict(pushN=KV["pushN"], pushAxis="-x")),
+                      ("push_r", dict(pushN=KV["pushN"], pushAxis="+y")),
+                      ("push_l", dict(pushN=KV["pushN"], pushAxis="-y")),
+                      ("plat_dx", dict(pushN=0.0, platDx=0.05)),
+                      ("plat_tilt", dict(pushN=0.0, platTilt=5.0))]
+            _save = {k: KV[k] for k in ("pushN", "pushAxis",
+                                        "platDx", "platTilt")}
+            for _name, _kv in _cases:
+                KV.update(_kv)
+                _log = run_phase("stand", KV["dur_stand"],
+                                 KV["perturb_rig"], KV["sregime"])
+                _res = stand_report(KV["perturb_rig"], _log,
+                                    KV["sregime"])
+                _res["case"] = _name
+                stand_rows.append(_res)
+                _ps = _res.get("post_sway", -1.0)
+                print(f"   [{_name}] "
+                      f"fall={'t=%.2f s' % _res['fall_t'] if _res['fall_t'] is not None else 'no'}"
+                      f" | post-event sway "
+                      f"{_ps * 100 if _ps >= 0 else -1:.1f} cm"
+                      f" | tilt max {_res['tilt'][1]:.1f} deg"
+                      f" | harness {_res['harness_pct']:+.0f}% weight")
+            KV.update(_save)
         print(f"   balance metrics table: {len(stand_rows)} rig scales")
         print(f"   [{'PASS-FULL' if stand_full else 'PARTIAL'}] unrigged_stand")
 

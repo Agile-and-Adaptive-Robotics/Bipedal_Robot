@@ -684,6 +684,21 @@ def apply_start_pose(model, data) -> None:
     _ty = _os.environ.get("AARL_PELVIS_TY")
     ty = float(_ty) if _ty is not None else START_PELVIS_HEIGHT
     data.qpos[model.joint("pelvis_ty").qposadr[0]] = ty
+    # 2026-10-20 balance-mechanism offsets (Ben's priors; set per trial
+    # by the s3p curriculum or the --stance-width/--knee-bias flags,
+    # which route through env like AARL_PELVIS_TY): wide stance = BOTH
+    # hips abducted (OpenSim +adduction == toward midline -> SUBTRACT);
+    # knee bias = more flexion (flexion sign NEGATIVE -> SUBTRACT).
+    _sw = _os.environ.get("AARL_STANCE_W")
+    _kb = _os.environ.get("AARL_KNEE_BIAS")
+    if _sw is not None and float(_sw) != 0.0:
+        for _jn in ("hip_adduction_r", "hip_adduction_l"):
+            if _jn in jadr:
+                data.qpos[jadr[_jn]] -= np.radians(float(_sw))
+    if _kb is not None and float(_kb) != 0.0:
+        for _jn in ("knee_angle_r", "knee_angle_l"):
+            if _jn in jadr:
+                data.qpos[jadr[_jn]] -= np.radians(float(_kb))
     _project_followers(model, data)
     mujoco.mj_forward(model, data)
     torso = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, "torso")
@@ -725,6 +740,15 @@ def main(argv):
     push_time = 4.0         # --push-time T: pulse onset (s, post-warmup)
     push_axis = "+x"        # --push-axis +x|-x|+y|-y (world axes)
     push_state = [False, None]   # [pulse active, pelvis body id]
+    # 2026-10-20 stage-3 perturbation + mechanism knobs (Ben: balance is
+    # only proven under perturbation; wide stance / knee flexion /
+    # co-contraction are the candidate mechanisms). All default 0 =
+    # bit-identical (each hook guarded by != 0).
+    plat_dx = 0.0           # --plat-dx M: platform sudden x-translation
+    plat_tilt = 0.0         # --plat-tilt D: platform sudden tilt (deg,
+                            # about world +y = sagittal pitch) - both
+                            # fire once at push_time (the event time)
+    plat_state = [False]
     args = list(argv)
     fit_keys = None
     if "--fitted" in args:
@@ -977,6 +1001,27 @@ def main(argv):
                 args[0].replace(".", "").replace("-", "").isdigit() else 4.0
         elif a == "--push-axis":
             push_axis = args.pop(0) if args else "+x"
+        elif a == "--stance-width":
+            # 2026-10-20 balance mechanism (Ben's wide-stance prior):
+            # hip ABDUCTION offset in deg applied to BOTH hips on top of
+            # the start pose (env-routed so the s3p curriculum can set it
+            # per trial; 0 / absent = pose unchanged).
+            import os as _o
+            _o.environ["AARL_STANCE_W"] = repr(float(args.pop(0)))
+        elif a == "--knee-bias":
+            # 2026-10-20 balance mechanism (Ben's slight-knee-flexion
+            # prior): EXTRA knee flexion offset in deg, both knees
+            # (this model's knee flexion sign is NEGATIVE).
+            import os as _o
+            _o.environ["AARL_KNEE_BIAS"] = repr(float(args.pop(0)))
+        elif a == "--plat-dx":
+            # 2026-10-20 platform perturbation: sudden translation of
+            # the ground body (m, world +x) at the event time
+            plat_dx = float(args.pop(0))
+        elif a == "--plat-tilt":
+            # 2026-10-20 platform perturbation: sudden sagittal tilt of
+            # the ground body (deg about world +y) at the event time
+            plat_tilt = float(args.pop(0))
 
     # state-dump hook (debug): RUNNER_DUMP_STATE=<file> writes every
     # mutable param right after arg parsing - diff two paths to find
@@ -1151,6 +1196,10 @@ def main(argv):
 
     log_t = np.zeros(nsteps)
     log_act = np.zeros((nsteps, len(KEY_ACTS)))
+    # 2026-10-20: FULL actuator activation trace (all muscles) for the
+    # stage-3 metabolic/co-contraction metrics (log_act is only the 20
+    # KEY_ACTS); saved to the npz as 'ctrl'.
+    log_ctrl = np.zeros((nsteps, model.nu))
     log_q = np.zeros((nsteps, len(KEY_JOINTS)))
     log_qfull = np.zeros((nsteps, model.nq))   # full state for renderers
     log_com = np.zeros((nsteps, 3))
@@ -1594,6 +1643,28 @@ def main(argv):
             elif push_state[0] and t >= push_time + 0.15:
                 data.xfrc_applied[push_state[1], :] = 0.0
                 push_state[0] = False
+        if (plat_dx != 0.0 or plat_tilt != 0.0) and not plat_state[0] \
+                and t >= push_time:
+            # 2026-10-20 platform perturbation (Ben: perturbations are
+            # mandatory for the balance claim): ONE-SHOT translate and/
+            # or tilt of the ground body at the event time. body_pos /
+            # body_quat are mjModel fields; kinematics pick them up on
+            # the next mj_step (the ground body is world-attached, so
+            # its fields ARE the world pose of the platform).
+            _gid = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY,
+                                     "ground")
+            if _gid >= 0:
+                if plat_dx != 0.0:
+                    model.body_pos[_gid, 0] += float(plat_dx)
+                if plat_tilt != 0.0:
+                    _th = np.radians(float(plat_tilt))
+                    _dq = np.array([np.cos(_th / 2.0), 0.0,
+                                    np.sin(_th / 2.0), 0.0])
+                    _bq = model.body_quat[_gid].copy()
+                    _q = np.zeros(4)
+                    mujoco.mju_mulQuat(_q, _dq, _bq)  # world-frame premul
+                    model.body_quat[_gid] = _q
+                plat_state[0] = True
         if t < WARMUP:
             # hold the keyframe pose while activations build (qpos untouched,
             # velocities zeroed, activation states integrate via mj_forward)
@@ -1649,6 +1720,7 @@ def main(argv):
         log_qfull[k] = data.qpos
         for i, a in enumerate(KEY_ACTS):
             log_act[k, i] = data.ctrl[aid[a]]
+        log_ctrl[k] = data.ctrl[:model.nu]
         for i, jn in enumerate(KEY_JOINTS):
             log_q[k, i] = data.qpos[jadr[jn]]
         log_neuro[k] = (drive, posture,
@@ -1671,7 +1743,7 @@ def main(argv):
     _npz_name = _os.environ.get("AARL_NPZ", "spinal_run.npz")
     _tmp = HERE / f"{_npz_name}.{_os.getpid()}.tmp.npz"
     with open(_tmp, "wb") as _fh:
-        np.savez_compressed(_fh, t=log_t, act=log_act,
+        np.savez_compressed(_fh, t=log_t, act=log_act, ctrl=log_ctrl,
                             q=np.degrees(log_q), qfull=log_qfull,
                             com=log_com, neuro=log_neuro,
                             contact=log_contact, footz=log_footz,
@@ -1742,7 +1814,11 @@ def main(argv):
         # the window AFTER the push pulse ends. Low = good recovery.
         # 0.0 when no push; -1.0 when the push fired but no post-window
         # samples exist (degenerate short run).
-        if push_N > 0.0 and seg_c.shape[0]:
+        # 2026-10-20: also fires for platform perturbations (--plat-dx /
+        # --plat-tilt share push_time as the event time) - the metric is
+        # the same quantity (post-event COM excursion).
+        _perturbed = (push_N > 0.0 or plat_dx != 0.0 or plat_tilt != 0.0)
+        if _perturbed and seg_c.shape[0]:
             _pm = tt[i_bal:] >= push_time + 0.15
             if bool(np.any(_pm)):
                 _pc = seg_c[_pm]
@@ -1752,6 +1828,29 @@ def main(argv):
                 bal_push_sway = -1.0
         else:
             bal_push_sway = 0.0
+        # 2026-10-20 metabolic / co-contraction metrics (Ben: balance
+        # must be EFFICIENT, not co-contracted into rigidity): mean
+        # squared muscle activation (effort proxy, activations are
+        # 0-1) and the Rudolph-style antagonist co-contraction index
+        # 2*min(a_flex, a_ext)/(a_flex + a_ext), averaged over time and
+        # over the four antagonist joint pairs. 0 cocon = purely
+        # reciprocal; 1 = equal antagonists.
+        _seg_a = log_ctrl[i_bal:n_done]
+        bal_effort = float(np.mean(_seg_a ** 2)) if _seg_a.shape[0] else 0.0
+        _cci_num = 0.0
+        _cci_den = 0.0
+        for _fl, _ex in (("hip_flex", "hip_ext"),
+                         ("knee_flex", "knee_ext"),
+                         ("ankle_df", "ankle_pf"),
+                         ("trunk_flex", "trunk_ext")):
+            _af = [aid[a] for a in acts if _fl in muscles[a].groups]
+            _ae = [aid[a] for a in acts if _ex in muscles[a].groups]
+            if _af and _ae:
+                _sf = _seg_a[:, _af].mean(axis=1)
+                _se = _seg_a[:, _ae].mean(axis=1)
+                _cci_num += float(np.mean(2.0 * np.minimum(_sf, _se)))
+                _cci_den += float(np.mean(_sf + _se))
+        bal_cocon = (_cci_num / _cci_den) if _cci_den > 1e-9 else 0.0
         metrics = dict(
             nan=not (finite_q and finite_c),
             t_end=float(tt[-1]),
@@ -1778,6 +1877,8 @@ def main(argv):
             bal_com_z_min=bal_com_z_min,
             bal_fell=bool(bal_com_z_min < 0.55),
             bal_push_sway=bal_push_sway,
+            bal_effort=bal_effort,
+            bal_cocon=bal_cocon,
         )
         return metrics
 

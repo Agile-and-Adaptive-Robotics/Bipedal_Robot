@@ -738,6 +738,19 @@ class SpinalNetwork:
                                 _syn(G["pf_to_mn"] * w, exc=True),
                                 f"PF_{phase}_{side}", mn)
         w_post = _group_weight(mi, W_POSTURE, POSTURE_OVERRIDE)
+        # 2026-10-20 antagonist co-activation drive (Ben's balance-
+        # mechanism prior; G["coact"], default 0 = absent): the flexor
+        # antagonist of each extensor posture group gets a POSTURE->MN
+        # connection scaled off the extensor's own posture weight, so
+        # the optimizer can FIND co-contraction as a stiffness strategy.
+        if G.get("coact", 0.0) > 0.0:
+            for _fl, _ex in (("hip_flex", "hip_ext"),
+                             ("knee_flex", "knee_ext"),
+                             ("ankle_df", "ankle_pf"),
+                             ("trunk_flex", "trunk_ext")):
+                if _fl in mi.groups and W_POSTURE.get(_ex, 0.0) > 0.0:
+                    w_post = max(w_post,
+                                 G["coact"] * float(W_POSTURE[_ex]))
         if w_post > 0.0:
             n.add_connection(_syn(G["posture_to_mn"] * w_post, exc=True),
                              "POSTURE", mn)

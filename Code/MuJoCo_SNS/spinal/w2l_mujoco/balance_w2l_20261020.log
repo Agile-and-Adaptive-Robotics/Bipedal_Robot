@@ -1,0 +1,291 @@
+START Tue 10/20/2026 22:16:22.95 
+=== HILL latch rig0.25 === 
+== M6 gate (a): GROUND STANDING BALANCE, afferented walker, pelvis FREE, 12 s ==
+   knobs: sregime=latch ctn_amp=4.0 cref=50.0 ibnA=1.0 damp=3.0 settle=0.4 (+0.6 s blend) | DROP PROTOCOL: hold=3.0 s -> lower=1.0 s -> retained wsup=0.7 (drop=0.026+sink=0.01 m) | rig kxy=2000 N/m krot=400 N m/rad | fall: pelvis z<0.6 m or tilt>45.0 deg
+   rig S=0.25: finite=True fall=no | sway_x std/range 0.5/2.6 cm | sway_y std/range 0.0/0.0 cm | COM z mean/min 0.852/0.851 m | tilt mean/max 0.6/1.0 deg | heel duty L/R 0.00/0.00 | harness carries +50% weight
+   [push_f] fall=no | post-event sway 2.2 cm | tilt max 1.0 deg | harness +50% weight
+   [push_b] fall=no | post-event sway 2.2 cm | tilt max 0.9 deg | harness +50% weight
+   [push_r] fall=no | post-event sway 2.2 cm | tilt max 0.7 deg | harness +50% weight
+   [push_l] fall=no | post-event sway 2.2 cm | tilt max 0.8 deg | harness +50% weight
+   [plat_dx] fall=no | post-event sway 0.0 cm | tilt max 0.6 deg | harness +50% weight
+   [plat_tilt] fall=no | post-event sway 0.0 cm | tilt max 0.6 deg | harness +50% weight
+   balance metrics table: 7 rig scales
+   [PARTIAL] unrigged_stand
+
+M6 VERDICT: PARTIAL (rigged stand only)
+=== HILL step rig0.25 === 
+== M6 gate (a): GROUND STANDING BALANCE, afferented walker, pelvis FREE, 12 s ==
+   knobs: sregime=step ctn_amp=4.0 cref=50.0 ibnA=1.0 damp=3.0 settle=0.4 (+0.6 s blend) | DROP PROTOCOL: hold=3.0 s -> lower=1.0 s -> retained wsup=0.7 (drop=0.026+sink=0.01 m) | rig kxy=2000 N/m krot=400 N m/rad | fall: pelvis z<0.6 m or tilt>45.0 deg
+   rig S=0.25: finite=True fall=no | sway_x std/range 1.0/3.8 cm | sway_y std/range 0.3/1.0 cm | COM z mean/min 0.857/0.848 m | tilt mean/max 11.3/21.4 deg | heel duty L/R 0.00/0.00 | harness carries +49% weight
+   [push_f] fall=no | post-event sway 3.0 cm | tilt max 21.4 deg | harness +49% weight
+   [push_b] fall=no | post-event sway 4.8 cm | tilt max 21.6 deg | harness +49% weight
+   [push_r] fall=no | post-event sway 2.8 cm | tilt max 21.5 deg | harness +49% weight
+   [push_l] fall=no | post-event sway 4.0 cm | tilt max 21.5 deg | harness +49% weight
+   [plat_dx] fall=no | post-event sway 2.8 cm | tilt max 21.5 deg | harness +49% weight
+   [plat_tilt] fall=no | post-event sway 2.8 cm | tilt max 21.5 deg | harness +49% weight
+   balance metrics table: 7 rig scales
+   [PARTIAL] unrigged_stand
+
+M6 VERDICT: PARTIAL (rigged stand only)
+=== HILL step rig0.0 (unrigged attempt) === 
+== M6 gate (a): GROUND STANDING BALANCE, afferented walker, pelvis FREE, 12 s ==
+   knobs: sregime=step ctn_amp=4.0 cref=50.0 ibnA=1.0 damp=3.0 settle=0.4 (+0.6 s blend) | DROP PROTOCOL: hold=3.0 s -> lower=1.0 s -> retained wsup=0.7 (drop=0.026+sink=0.01 m) | rig kxy=2000 N/m krot=400 N m/rad | fall: pelvis z<0.6 m or tilt>45.0 deg
+   rig S=0.00: finite=True fall=t=1.18 s | sway_x std/range 42.5/159.3 cm | sway_y std/range 65.9/224.1 cm | COM z mean/min 0.861/0.844 m | tilt mean/max 67.3/109.2 deg | heel duty L/R 0.08/0.01 | harness carries +40% weight
+   [push_f] fall=t=1.18 s | post-event sway 143.2 cm | tilt max 109.2 deg | harness +40% weight
+   [push_b] fall=t=1.18 s | post-event sway 170.9 cm | tilt max 104.1 deg | harness +42% weight
+   [push_r] fall=t=1.18 s | post-event sway 129.2 cm | tilt max 103.8 deg | harness +41% weight
+   [push_l] fall=t=1.18 s | post-event sway 147.0 cm | tilt max 105.1 deg | harness +42% weight
+   [plat_dx] fall=t=1.18 s | post-event sway 155.7 cm | tilt max 107.4 deg | harness +41% weight
+   [plat_tilt] fall=t=1.18 s | post-event sway 155.7 cm | tilt max 107.4 deg | harness +41% weight
+   balance metrics table: 7 rig scales
+   [PARTIAL] unrigged_stand
+
+M6 VERDICT: FAIL
+=== BPA march support0.70 === 
+== BPA units (rest = max sampled route - tendon; 7^3 pose grid per side over joint ranges) ==
+  name                route min..max   spawn    rest    Fmax kmax_len rel_spawn
+  ankle_R_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  ankle_L_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  hip_R_ext         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  knee_R_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  knee_R_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+  knee_L_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  ankle_L_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  ankle_R_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  hip_R_flx         0.1236..0.1765  0.1570  0.1565    1069   0.1174     1.009
+  hip_L_flx         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  hip_L_ext         0.1238..0.1767  0.1572  0.1567    1070   0.1175     1.008
+  knee_L_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+== harness: mass 41.9 kg, weight 411 N, z_contact 1.0078, z_hold 1.0478, load target 123 N ==
+== BPA actuation gate: split-RG W2L + BPA muscles, 12 s ==
+   knobs: te=3.0 tf=4.0 tau=0.25 cap=0.5 dia=20 count=1 kmax_frac=0.25 tendon=0.04 bias=0.02 damp_bpa=0.0 support=0.7 stand_te=3.0 stand_tf=4.0
+   AIR knee L: 1 flexion excursions, period nan s, flexion range 1.8 deg [-0.1,+1.8]
+   AIR knee R: 2 flexion excursions, period nan s, flexion range 19.7 deg [-0.3,+19.4]
+   AIR hip L: flexion range 9.2 deg
+   AIR hip R: flexion range 9.2 deg
+   AIR neural: L RG-E bursts 1, period nan s, max 7.00 mV
+   RETAINED phase (7.5 s of it): pelvis z min 0.940 m, end 0.941 m
+   RETAINED vertical load: mean L 8.6 N / R 20.0 N; PEAK L 135 N / R 214 N; stance episodes L 4 / R 3 (harness carries 70% of 411 N)
+   RETAINED joints L: hip +22.1..+23.1 knee -15.3..+0.2 ankle -20.6..-3.6 deg
+   RETAINED joints R: hip -1.0..+7.7 knee -60.5..+0.3 ankle -20.7..-3.5 deg
+   BPA pressure: peak 310 kPa (ceiling 620), mean-of-active 272 kPa
+   BPA force at final pose (N): ankle_L_ext=0 ankle_L_flx=41 ankle_R_ext=277 ankle_R_flx=0 hip_L_ext=0 hip_L_flx=154 hip_R_ext=0 hip_R_flx=0 knee_L_ext=0 knee_L_flx=272 knee_R_ext=359 knee_R_flx=0
+== BALANCE PERTURBATION (wave 2, BPA walker) ==
+   event t=7.0 s | pushN=40 N axis=+x | platDx=0.000 m platTilt=0.0 deg | support=70% of 411 N
+   quiet stand: root sway x/y ptp 2.1/0.4 cm
+   post-event: sway 32.5 cm | root z min 0.940 m | mean foot load 44.2 N (11% of weight)
+   [PASS] feet keep >=10% of body weight after the event
+   effort proxy: mean active pressure 272 kPa, peak 310 kPa (ceiling 620)
+VERDICT: BPA BALANCE PERTURBATION RUN COMPLETE (metrics above; retained-harness stand, no free-stand claim - this body cannot statically stand, COM sits outside the support polygon)
+== BPA units (rest = max sampled route - tendon; 7^3 pose grid per side over joint ranges) ==
+  name                route min..max   spawn    rest    Fmax kmax_len rel_spawn
+  ankle_R_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  ankle_L_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  hip_R_ext         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  knee_R_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  knee_R_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+  knee_L_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  ankle_L_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  ankle_R_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  hip_R_flx         0.1236..0.1765  0.1570  0.1565    1069   0.1174     1.009
+  hip_L_flx         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  hip_L_ext         0.1238..0.1767  0.1572  0.1567    1070   0.1175     1.008
+  knee_L_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+== harness: mass 41.9 kg, weight 411 N, z_contact 1.0078, z_hold 1.0478, load target 123 N ==
+== BPA actuation gate: split-RG W2L + BPA muscles, 12 s ==
+   knobs: te=3.0 tf=4.0 tau=0.25 cap=0.5 dia=20 count=1 kmax_frac=0.25 tendon=0.04 bias=0.02 damp_bpa=0.0 support=0.7 stand_te=3.0 stand_tf=4.0
+   AIR knee L: 1 flexion excursions, period nan s, flexion range 1.8 deg [-0.1,+1.8]
+   AIR knee R: 2 flexion excursions, period nan s, flexion range 19.7 deg [-0.3,+19.4]
+   AIR hip L: flexion range 9.2 deg
+   AIR hip R: flexion range 9.2 deg
+   AIR neural: L RG-E bursts 1, period nan s, max 7.00 mV
+   RETAINED phase (7.5 s of it): pelvis z min 0.934 m, end 0.936 m
+   RETAINED vertical load: mean L 21.6 N / R 7.3 N; PEAK L 238 N / R 274 N; stance episodes L 3 / R 2 (harness carries 70% of 411 N)
+   RETAINED joints L: hip +21.6..+23.1 knee -28.3..+0.2 ankle -20.7..-3.6 deg
+   RETAINED joints R: hip -1.0..+7.7 knee -60.4..+0.3 ankle -20.7..-3.5 deg
+   BPA pressure: peak 310 kPa (ceiling 620), mean-of-active 272 kPa
+   BPA force at final pose (N): ankle_L_ext=0 ankle_L_flx=27 ankle_R_ext=277 ankle_R_flx=0 hip_L_ext=0 hip_L_flx=154 hip_R_ext=0 hip_R_flx=0 knee_L_ext=0 knee_L_flx=209 knee_R_ext=359 knee_R_flx=0
+== BALANCE PERTURBATION (wave 2, BPA walker) ==
+   event t=7.0 s | pushN=40 N axis=-x | platDx=0.000 m platTilt=0.0 deg | support=70% of 411 N
+   quiet stand: root sway x/y ptp 2.1/0.4 cm
+   post-event: sway 35.2 cm | root z min 0.934 m | mean foot load 44.7 N (11% of weight)
+   [PASS] feet keep >=10% of body weight after the event
+   effort proxy: mean active pressure 272 kPa, peak 310 kPa (ceiling 620)
+VERDICT: BPA BALANCE PERTURBATION RUN COMPLETE (metrics above; retained-harness stand, no free-stand claim - this body cannot statically stand, COM sits outside the support polygon)
+== BPA units (rest = max sampled route - tendon; 7^3 pose grid per side over joint ranges) ==
+  name                route min..max   spawn    rest    Fmax kmax_len rel_spawn
+  ankle_R_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  ankle_L_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  hip_R_ext         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  knee_R_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  knee_R_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+  knee_L_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  ankle_L_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  ankle_R_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  hip_R_flx         0.1236..0.1765  0.1570  0.1565    1069   0.1174     1.009
+  hip_L_flx         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  hip_L_ext         0.1238..0.1767  0.1572  0.1567    1070   0.1175     1.008
+  knee_L_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+== harness: mass 41.9 kg, weight 411 N, z_contact 1.0078, z_hold 1.0478, load target 123 N ==
+== BPA actuation gate: split-RG W2L + BPA muscles, 12 s ==
+   knobs: te=3.0 tf=4.0 tau=0.25 cap=0.5 dia=20 count=1 kmax_frac=0.25 tendon=0.04 bias=0.02 damp_bpa=0.0 support=0.7 stand_te=3.0 stand_tf=4.0
+   AIR knee L: 1 flexion excursions, period nan s, flexion range 1.8 deg [-0.1,+1.8]
+   AIR knee R: 2 flexion excursions, period nan s, flexion range 19.7 deg [-0.3,+19.4]
+   AIR hip L: flexion range 9.2 deg
+   AIR hip R: flexion range 9.2 deg
+   AIR neural: L RG-E bursts 1, period nan s, max 7.00 mV
+   RETAINED phase (7.5 s of it): pelvis z min 0.935 m, end 0.936 m
+   RETAINED vertical load: mean L 21.4 N / R 5.4 N; PEAK L 196 N / R 214 N; stance episodes L 3 / R 2 (harness carries 70% of 411 N)
+   RETAINED joints L: hip +21.4..+23.1 knee -23.9..+0.2 ankle -20.7..-3.6 deg
+   RETAINED joints R: hip +0.2..+7.7 knee -60.4..+0.3 ankle -20.9..-3.5 deg
+   BPA pressure: peak 310 kPa (ceiling 620), mean-of-active 272 kPa
+   BPA force at final pose (N): ankle_L_ext=0 ankle_L_flx=30 ankle_R_ext=277 ankle_R_flx=0 hip_L_ext=0 hip_L_flx=154 hip_R_ext=0 hip_R_flx=0 knee_L_ext=0 knee_L_flx=228 knee_R_ext=359 knee_R_flx=0
+== BALANCE PERTURBATION (wave 2, BPA walker) ==
+   event t=7.0 s | pushN=40 N axis=+y | platDx=0.000 m platTilt=0.0 deg | support=70% of 411 N
+   quiet stand: root sway x/y ptp 2.1/0.4 cm
+   post-event: sway 42.0 cm | root z min 0.935 m | mean foot load 41.4 N (10% of weight)
+   [PASS] feet keep >=10% of body weight after the event
+   effort proxy: mean active pressure 272 kPa, peak 310 kPa (ceiling 620)
+VERDICT: BPA BALANCE PERTURBATION RUN COMPLETE (metrics above; retained-harness stand, no free-stand claim - this body cannot statically stand, COM sits outside the support polygon)
+== BPA units (rest = max sampled route - tendon; 7^3 pose grid per side over joint ranges) ==
+  name                route min..max   spawn    rest    Fmax kmax_len rel_spawn
+  ankle_R_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  ankle_L_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  hip_R_ext         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  knee_R_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  knee_R_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+  knee_L_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  ankle_L_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  ankle_R_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  hip_R_flx         0.1236..0.1765  0.1570  0.1565    1069   0.1174     1.009
+  hip_L_flx         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  hip_L_ext         0.1238..0.1767  0.1572  0.1567    1070   0.1175     1.008
+  knee_L_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+== harness: mass 41.9 kg, weight 411 N, z_contact 1.0078, z_hold 1.0478, load target 123 N ==
+== BPA actuation gate: split-RG W2L + BPA muscles, 12 s ==
+   knobs: te=3.0 tf=4.0 tau=0.25 cap=0.5 dia=20 count=1 kmax_frac=0.25 tendon=0.04 bias=0.02 damp_bpa=0.0 support=0.7 stand_te=3.0 stand_tf=4.0
+   AIR knee L: 1 flexion excursions, period nan s, flexion range 1.8 deg [-0.1,+1.8]
+   AIR knee R: 2 flexion excursions, period nan s, flexion range 19.7 deg [-0.3,+19.4]
+   AIR hip L: flexion range 9.2 deg
+   AIR hip R: flexion range 9.2 deg
+   AIR neural: L RG-E bursts 1, period nan s, max 7.00 mV
+   RETAINED phase (7.5 s of it): pelvis z min 0.935 m, end 0.935 m
+   RETAINED vertical load: mean L 10.7 N / R 16.6 N; PEAK L 172 N / R 207 N; stance episodes L 3 / R 3 (harness carries 70% of 411 N)
+   RETAINED joints L: hip +22.2..+23.0 knee -3.7..+0.2 ankle -20.7..-3.6 deg
+   RETAINED joints R: hip +5.5..+7.7 knee -27.9..+0.3 ankle -20.7..-3.5 deg
+   BPA pressure: peak 310 kPa (ceiling 620), mean-of-active 272 kPa
+   BPA force at final pose (N): ankle_L_ext=0 ankle_L_flx=139 ankle_R_ext=277 ankle_R_flx=0 hip_L_ext=0 hip_L_flx=154 hip_R_ext=0 hip_R_flx=0 knee_L_ext=0 knee_L_flx=323 knee_R_ext=65 knee_R_flx=0
+== BALANCE PERTURBATION (wave 2, BPA walker) ==
+   event t=7.0 s | pushN=40 N axis=-y | platDx=0.000 m platTilt=0.0 deg | support=70% of 411 N
+   quiet stand: root sway x/y ptp 2.1/0.4 cm
+   post-event: sway 43.7 cm | root z min 0.935 m | mean foot load 42.2 N (10% of weight)
+   [PASS] feet keep >=10% of body weight after the event
+   effort proxy: mean active pressure 272 kPa, peak 310 kPa (ceiling 620)
+VERDICT: BPA BALANCE PERTURBATION RUN COMPLETE (metrics above; retained-harness stand, no free-stand claim - this body cannot statically stand, COM sits outside the support polygon)
+== BPA units (rest = max sampled route - tendon; 7^3 pose grid per side over joint ranges) ==
+  name                route min..max   spawn    rest    Fmax kmax_len rel_spawn
+  ankle_R_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  ankle_L_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  hip_R_ext         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  knee_R_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  knee_R_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+  knee_L_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  ankle_L_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  ankle_R_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  hip_R_flx         0.1236..0.1765  0.1570  0.1565    1069   0.1174     1.009
+  hip_L_flx         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  hip_L_ext         0.1238..0.1767  0.1572  0.1567    1070   0.1175     1.008
+  knee_L_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+== harness: mass 41.9 kg, weight 411 N, z_contact 1.0078, z_hold 1.0478, load target 123 N ==
+== BPA actuation gate: split-RG W2L + BPA muscles, 12 s ==
+   knobs: te=3.0 tf=4.0 tau=0.25 cap=0.5 dia=20 count=1 kmax_frac=0.25 tendon=0.04 bias=0.02 damp_bpa=0.0 support=0.7 stand_te=3.0 stand_tf=4.0
+   AIR knee L: 1 flexion excursions, period nan s, flexion range 1.8 deg [-0.1,+1.8]
+   AIR knee R: 2 flexion excursions, period nan s, flexion range 19.7 deg [-0.3,+19.4]
+   AIR hip L: flexion range 9.2 deg
+   AIR hip R: flexion range 9.2 deg
+   AIR neural: L RG-E bursts 1, period nan s, max 7.00 mV
+   RETAINED phase (7.5 s of it): pelvis z min 0.940 m, end 0.941 m
+   RETAINED vertical load: mean L 8.6 N / R 20.0 N; PEAK L 135 N / R 214 N; stance episodes L 4 / R 3 (harness carries 70% of 411 N)
+   RETAINED joints L: hip +22.1..+23.1 knee -15.3..+0.2 ankle -20.6..-3.6 deg
+   RETAINED joints R: hip -1.0..+7.7 knee -60.5..+0.3 ankle -20.7..-3.5 deg
+   BPA pressure: peak 310 kPa (ceiling 620), mean-of-active 272 kPa
+   BPA force at final pose (N): ankle_L_ext=0 ankle_L_flx=41 ankle_R_ext=277 ankle_R_flx=0 hip_L_ext=0 hip_L_flx=154 hip_R_ext=0 hip_R_flx=0 knee_L_ext=0 knee_L_flx=272 knee_R_ext=359 knee_R_flx=0
+== BALANCE PERTURBATION (wave 2, BPA walker) ==
+   event t=7.0 s | pushN=40 N axis=+x | platDx=0.050 m platTilt=0.0 deg | support=70% of 411 N
+   quiet stand: root sway x/y ptp 2.1/0.4 cm
+   post-event: sway 32.5 cm | root z min 0.940 m | mean foot load 44.2 N (11% of weight)
+   [PASS] feet keep >=10% of body weight after the event
+   effort proxy: mean active pressure 272 kPa, peak 310 kPa (ceiling 620)
+VERDICT: BPA BALANCE PERTURBATION RUN COMPLETE (metrics above; retained-harness stand, no free-stand claim - this body cannot statically stand, COM sits outside the support polygon)
+== BPA units (rest = max sampled route - tendon; 7^3 pose grid per side over joint ranges) ==
+  name                route min..max   spawn    rest    Fmax kmax_len rel_spawn
+  ankle_R_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  ankle_L_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  hip_R_ext         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  knee_R_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  knee_R_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+  knee_L_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  ankle_L_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  ankle_R_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  hip_R_flx         0.1236..0.1765  0.1570  0.1565    1069   0.1174     1.009
+  hip_L_flx         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  hip_L_ext         0.1238..0.1767  0.1572  0.1567    1070   0.1175     1.008
+  knee_L_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+== harness: mass 41.9 kg, weight 411 N, z_contact 1.0078, z_hold 1.0478, load target 123 N ==
+== BPA actuation gate: split-RG W2L + BPA muscles, 12 s ==
+   knobs: te=3.0 tf=4.0 tau=0.25 cap=0.5 dia=20 count=1 kmax_frac=0.25 tendon=0.04 bias=0.02 damp_bpa=0.0 support=0.7 stand_te=3.0 stand_tf=4.0
+   AIR knee L: 1 flexion excursions, period nan s, flexion range 1.8 deg [-0.1,+1.8]
+   AIR knee R: 2 flexion excursions, period nan s, flexion range 19.7 deg [-0.3,+19.4]
+   AIR hip L: flexion range 9.2 deg
+   AIR hip R: flexion range 9.2 deg
+   AIR neural: L RG-E bursts 1, period nan s, max 7.00 mV
+   RETAINED phase (7.5 s of it): pelvis z min 0.940 m, end 0.941 m
+   RETAINED vertical load: mean L 8.6 N / R 20.0 N; PEAK L 135 N / R 214 N; stance episodes L 4 / R 3 (harness carries 70% of 411 N)
+   RETAINED joints L: hip +22.1..+23.1 knee -15.3..+0.2 ankle -20.6..-3.6 deg
+   RETAINED joints R: hip -1.0..+7.7 knee -60.5..+0.3 ankle -20.7..-3.5 deg
+   BPA pressure: peak 310 kPa (ceiling 620), mean-of-active 272 kPa
+   BPA force at final pose (N): ankle_L_ext=0 ankle_L_flx=41 ankle_R_ext=277 ankle_R_flx=0 hip_L_ext=0 hip_L_flx=154 hip_R_ext=0 hip_R_flx=0 knee_L_ext=0 knee_L_flx=272 knee_R_ext=359 knee_R_flx=0
+== BALANCE PERTURBATION (wave 2, BPA walker) ==
+   event t=7.0 s | pushN=40 N axis=+x | platDx=0.000 m platTilt=5.0 deg | support=70% of 411 N
+   quiet stand: root sway x/y ptp 2.1/0.4 cm
+   post-event: sway 32.5 cm | root z min 0.940 m | mean foot load 44.2 N (11% of weight)
+   [PASS] feet keep >=10% of body weight after the event
+   effort proxy: mean active pressure 272 kPa, peak 310 kPa (ceiling 620)
+VERDICT: BPA BALANCE PERTURBATION RUN COMPLETE (metrics above; retained-harness stand, no free-stand claim - this body cannot statically stand, COM sits outside the support polygon)
+=== BPA march support0.85 (push_f only) === 
+== BPA units (rest = max sampled route - tendon; 7^3 pose grid per side over joint ranges) ==
+  name                route min..max   spawn    rest    Fmax kmax_len rel_spawn
+  ankle_R_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  ankle_L_flx       0.2350..0.2541  0.2442  0.2341    1191   0.1756     0.510
+  hip_R_ext         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  knee_R_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  knee_R_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+  knee_L_flx        0.2854..0.3462  0.3462  0.3262    1263   0.2446     0.245
+  ankle_L_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  ankle_R_ext       0.2820..0.2904  0.2863  0.2704    1225   0.2028     0.356
+  hip_R_flx         0.1236..0.1765  0.1570  0.1565    1069   0.1174     1.009
+  hip_L_flx         0.1335..0.1972  0.1606  0.1772    1111   0.1329     1.278
+  hip_L_ext         0.1238..0.1767  0.1572  0.1567    1070   0.1175     1.008
+  knee_L_ext        0.3407..0.3965  0.3407  0.3765    1288   0.2824     0.805
+== harness: mass 41.9 kg, weight 411 N, z_contact 1.0078, z_hold 1.0478, load target 62 N ==
+== BPA actuation gate: split-RG W2L + BPA muscles, 12 s ==
+   knobs: te=3.0 tf=4.0 tau=0.25 cap=0.5 dia=20 count=1 kmax_frac=0.25 tendon=0.04 bias=0.02 damp_bpa=0.0 support=0.85 stand_te=3.0 stand_tf=4.0
+   AIR knee L: 1 flexion excursions, period nan s, flexion range 1.8 deg [-0.1,+1.8]
+   AIR knee R: 2 flexion excursions, period nan s, flexion range 19.7 deg [-0.3,+19.4]
+   AIR hip L: flexion range 9.2 deg
+   AIR hip R: flexion range 9.2 deg
+   AIR neural: L RG-E bursts 1, period nan s, max 7.00 mV
+   RETAINED phase (7.5 s of it): pelvis z min 0.941 m, end 0.943 m
+   RETAINED vertical load: mean L 8.1 N / R 14.7 N; PEAK L 128 N / R 216 N; stance episodes L 3 / R 3 (harness carries 85% of 411 N)
+   RETAINED joints L: hip +21.8..+23.1 knee -17.0..+0.2 ankle -20.6..-3.6 deg
+   RETAINED joints R: hip +0.5..+7.7 knee -60.4..+0.3 ankle -20.6..-3.5 deg
+   BPA pressure: peak 310 kPa (ceiling 620), mean-of-active 272 kPa
+   BPA force at final pose (N): ankle_L_ext=0 ankle_L_flx=47 ankle_R_ext=277 ankle_R_flx=0 hip_L_ext=0 hip_L_flx=154 hip_R_ext=0 hip_R_flx=0 knee_L_ext=0 knee_L_flx=260 knee_R_ext=359 knee_R_flx=0
+== BALANCE PERTURBATION (wave 2, BPA walker) ==
+   event t=7.0 s | pushN=40 N axis=+x | platDx=0.000 m platTilt=0.0 deg | support=85% of 411 N
+   quiet stand: root sway x/y ptp 2.1/0.4 cm
+   post-event: sway 26.2 cm | root z min 0.941 m | mean foot load 35.2 N (9% of weight)
+   [FAIL] feet keep >=10% of body weight after the event
+   effort proxy: mean active pressure 272 kPa, peak 310 kPa (ceiling 620)
+VERDICT: BPA BALANCE PERTURBATION RUN COMPLETE (metrics above; retained-harness stand, no free-stand claim - this body cannot statically stand, COM sits outside the support polygon)
+EXITCODE 0 Tue 10/20/2026 22:19:34.95 

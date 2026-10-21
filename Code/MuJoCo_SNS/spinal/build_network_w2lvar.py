@@ -536,6 +536,18 @@ class W2LVarnet(BN.SpinalNetwork):
                                  f"PF_{cell}_{mi.side}", mn)
         # POSTURE tonic (parent table + per-muscle overrides)
         w_post = _group_weight(mi, W_POSTURE, POSTURE_OVERRIDE)
+        # 2026-10-20 antagonist co-activation drive (G["coact"], default
+        # 0 = absent; same knob as the stock builder): the flexor
+        # antagonist of each extensor posture group gets a scaled
+        # POSTURE->MN weight so co-contraction is searchable.
+        if G.get("coact", 0.0) > 0.0:
+            for _fl, _ex in (("hip_flex", "hip_ext"),
+                             ("knee_flex", "knee_ext"),
+                             ("ankle_df", "ankle_pf"),
+                             ("trunk_flex", "trunk_ext")):
+                if _fl in mi.groups and W_POSTURE.get(_ex, 0.0) > 0.0:
+                    w_post = max(w_post,
+                                 G["coact"] * float(W_POSTURE[_ex]))
         if w_post > 0.0:
             n.add_connection(_syn(G["posture_to_mn"] * w_post, exc=True),
                              "POSTURE", mn)

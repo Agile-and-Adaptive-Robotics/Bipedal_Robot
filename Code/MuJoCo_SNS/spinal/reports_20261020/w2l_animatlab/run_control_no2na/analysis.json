@@ -1,0 +1,141 @@
+{
+  "folder": "run_control_no2na",
+  "root": {
+    "t_end": 30.0,
+    "n": 30001,
+    "RootY_start": 0.993,
+    "RootY_min": 0.1069,
+    "RootY_min_t": 1.21,
+    "RootY_end": 0.1341,
+    "RootY_mean_last10s": 0.1306,
+    "RootX_start": -3.454,
+    "RootX_end": -8.054,
+    "RootX_net": -4.6,
+    "RootX_slope_mps": -0.18072,
+    "RootZ_start": 0.0,
+    "RootZ_end": -3.0216,
+    "RootZ_absmax": 4.06,
+    "hip_L_rad_minmax": [
+      -0.208,
+      0.405
+    ],
+    "hip_L_end": 0.041,
+    "hip_R_rad_minmax": [
+      -0.267,
+      0.407
+    ],
+    "hip_R_end": 0.401,
+    "stay_up": false
+  },
+  "columns": {
+    "L RG ext IN": {
+      "mean_mV": -54.45,
+      "min_mV": -59.549,
+      "max_mV": -51.591
+    },
+    "L RG flx IN": {
+      "mean_mV": -59.999,
+      "min_mV": -60.0,
+      "max_mV": -57.072
+    },
+    "L RG ext": {
+      "mean_mV": -57.938,
+      "min_mV": -59.435,
+      "max_mV": -52.036
+    },
+    "L RG flx": {
+      "mean_mV": -60.971,
+      "min_mV": -64.039,
+      "max_mV": -52.845
+    },
+    "R RG ext IN": {
+      "mean_mV": -54.455,
+      "min_mV": -59.549,
+      "max_mV": -52.989
+    },
+    "R RG flx IN": {
+      "mean_mV": -59.998,
+      "min_mV": -60.0,
+      "max_mV": -55.042
+    },
+    "R RG ext": {
+      "mean_mV": -57.899,
+      "min_mV": -61.583,
+      "max_mV": -52.845
+    },
+    "R RG flx": {
+      "mean_mV": -60.987,
+      "min_mV": -62.613,
+      "max_mV": -52.453
+    },
+    "L c1": {
+      "mean_mV": -59.999,
+      "min_mV": -60.0,
+      "max_mV": -57.072
+    },
+    "R c1": {
+      "mean_mV": -59.998,
+      "min_mV": -60.0,
+      "max_mV": -55.042
+    },
+    "L V3": {
+      "mean_mV": -57.214,
+      "min_mV": -59.549,
+      "max_mV": -52.722
+    },
+    "R V3": {
+      "mean_mV": -57.169,
+      "min_mV": -59.953,
+      "max_mV": -56.674
+    }
+  },
+  "bursts_-55mV": {
+    "L RG flx": 0,
+    "R RG flx": 0,
+    "L RG ext": 0,
+    "R RG ext": 0
+  },
+  "period_s_flx": {},
+  "bursts_last10s": 0,
+  "contact_duty": {
+    "toe_L_contact": {
+      "all": 0.0346,
+      "last10s": 0.0
+    },
+    "toe_R_contact": {
+      "all": 0.2502,
+      "last10s": 0.2643
+    },
+    "foot_L_contact": {
+      "all": 0.0,
+      "last10s": 0.0
+    },
+    "foot_R_contact": {
+      "all": 0.1126,
+      "last10s": 0.1527
+    }
+  },
+  "L_angles": {
+    "ankle_L": {
+      "min": -0.356,
+      "max": 0.0,
+      "end": -0.349,
+      "zero_crossings": 1,
+      "std_last10s": 0.1174
+    },
+    "hip_L": {
+      "min": -0.208,
+      "max": 0.405,
+      "end": 0.041,
+      "zero_crossings": 54,
+      "std_last10s": 0.1581
+    },
+    "knee_L": {
+      "min": -0.008,
+      "max": 1.067,
+      "end": 0.288,
+      "zero_crossings": 292,
+      "std_last10s": 0.3254
+    }
+  }
+}

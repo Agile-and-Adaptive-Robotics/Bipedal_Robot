@@ -314,6 +314,13 @@ G = dict(
     vest_ext=0.0,
     vest_flex_inh=0.0,
     vest_prop=0.0,
+    # ---- 2026-10-20 stage-3 balance-mechanism knob (Ben's prior: wide
+    # stance, slight knee flexion, ANTAGONIST CO-CONTRACTION stiffens the
+    # limb without new circuitry): coact scales a graded POSTURE->MN
+    # drive onto the FLEXOR antagonist of every extensor posture group
+    # (weight = coact * W_POSTURE[ext_group]); build_network wires it.
+    # Default 0 = no antagonist posture drive = byte-identical build.
+    coact=0.0,
     # ---- 2026-09-25 goal4 VARIANT SELECTOR (default 0 = stock build,
     # byte-identical; regression gate 410/376/1186): > 0 routes
     # build_network.build() to the 6-synergy variant builder
