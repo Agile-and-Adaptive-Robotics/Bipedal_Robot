@@ -14,6 +14,9 @@ and the stock/w2lvar winners merely leaned ~50% on the rig:
       -100 at rig share 0.50), PLUS a hard sentinel: quiet rig share
       > 0.50 -> score -149.5 (stood, but hanging on the rig — ranks
       below every clipped partial stander, above all-fall -150).
+      bal_foot_load/bal_rig_share use the rigshare convention of
+      record: 0.5 x the logged (double-counted heel+toe) contact sum,
+      steady t >= 4.0 s window.
   (b) METABOLIC term (quiet eval):
         0.5 * (bal_act_sum + 1.0 * bal_cocon_act)
       = 0.5 x (mean SUMMED muscle activation + the antagonist-overlap

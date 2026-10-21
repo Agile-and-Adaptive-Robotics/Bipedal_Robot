@@ -135,6 +135,12 @@ machine, NOT staleness.
 - `Code\Matlab\Mesh_Optimization\` — active optimization workspace (Routing27 v1/v2,
   ExtCam solver set: `Opt_run_ExtCam.m`, `objective_/nonlcon_/camToExtDesign_/
   buildDistalRingLocation_ *20mm.m`, `save_cam_result_20261014.m`).
+  Pulley transmission sweep directive of record (Ben, 2026-10-21):
+  `PULLEY_SWEEP_DIRECTIVE_20261021.md` — next campaign sweeps nBPA {1,2,3} ×
+  tackle line parts {1,2,3}, sizes re-solved per configuration; moving-via
+  deflections calculated from the BPA origin with the tackle's increased
+  internal force; bowden branch gets packaging space + bracket deflection at
+  aluminum/CroMoly stiffness.
 - `Code\Matlab\Functions\`, `Code\Matlab\Robot_Data\` — shared helpers; MonoPam
   classes/data. `Code\Matlab\Human_Data\`, `Code\Matlab\Bone_Mesh_Plots\` — human/bone
   data and plotting. `Code\Matlab\minimizers\`, `Code\Matlab\Previous Optimization

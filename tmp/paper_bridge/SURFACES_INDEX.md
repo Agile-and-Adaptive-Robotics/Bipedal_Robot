@@ -214,3 +214,35 @@ TorqueZ -81.23 … -3.86 N·m; mono-pulley insertion-side
    c1/c3/c5/c7 + gray dashed, legend 8 pt, panel letters (A)-(E) on the
    title line). Margin curves are clipped at +300 % for display; -105 %
    marks infeasible/zero-torque cells.
+
+---
+## SUPERSEDED — 2026-10-21 DOCTRINE RE-SOLVES (Ben's gain ruling)
+
+ALL gain-ladder quotables above (1/1, 2/1, 3/1 single-BPA fixed-size
+re-evaluations + gain-2 re-solves) are SUPERSEDED and must NOT be quoted.
+Direction error: TackleLineParts is TRAVEL gain G (insertion force =
+nBPA*F/G, travel = G*BPA contraction); force gain = nBPA/G.
+
+Results of record (PulleyDoctrine_summary_20261021.csv, mats
+BiPulley_opensim_<site>_{2BPA_G2,2BPA_G4,4BPA_G4}_20261021_*.mat, driver
+copies tmp/paper_bridge/Opt_run_BiPulley_doctrine_*_20261021.m, post script
+figscripts/pulley_doctrine_post_20261021.m; regression 0.000e+00 everywhere):
+
+Meeting range vs human requirement, 620 kPa (contig):
+- tib_ant (ankle): baseline 48.1 (46.7); 2BPA G=2 56.9 (55.4) peak 53.0;
+  4BPA G=4 59.8 (58.3) peak 54.5. Baseline pressure ladder 0/14.6/48.1 at 300/450/620.
+- bifemsh (knee): baseline 5.4 isolated + 8/25 infeasible; 2BPA G=2 27.1 (21.7)
+  peak 34.1 zero infeasible; 4BPA G=4 56.9 (54.2) peak 25.9 zero infeasible;
+  2BPA G=4 (force gain 0.5) 24.4 peak 13.3.
+- med_gas (knee): baseline 21.7 (16.2) + 7/25 infeasible; 2BPA G=2 65.0 (59.6);
+  2BPA G=4 105.6 (102.9) peak 118.0 ZERO infeasible; 4BPA G=4 119.2 (113.7) peak 236.1.
+- rect_fem (hip): baseline 46.9 (41.7) peak 192.3; 2BPA G=2 99.0 (93.8) peak 128.0;
+  4BPA G=4 96.4 (93.8) peak 160.3.
+- soleus: NEVER meets at any transmission (peak 25.3 vs req 134.08-171.35);
+  force shortfall, tackle cannot add force.
+
+Fixed gain-1 sizes at G>=2 go slack (proven, psiLo>0) - sizes MUST be re-solved
+per configuration. Paper figures PulleyTorqueSurfaces_20261020.eps (now the
+2BPA G=2 re-solved configs) and PulleyMarginSurfaces_20261020.eps (now the
+matched-force ladder 1BPA/G1, 2BPA/G2, 4BPA/G4 at 620 kPa) regenerated
+2026-10-21 by pulley_doctrine_post_20261021.m; paper prose rewritten same day.

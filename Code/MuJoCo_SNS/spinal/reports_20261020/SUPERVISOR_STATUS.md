@@ -328,3 +328,45 @@ to delete.
   IS the finding - the next round becomes a deliberate HAND-SET sweep
   (knobs/values proposed in the final entry below) until a pattern
   emerges to reformulate the search around.
+  CORRECTION (same session, ~10:50Z): the first launch's foot-load
+  metric was WRONG twice over - runner log_contact double-counts each
+  foot contact (added to both the heel and toe accumulators; the
+  rigshare scripts' 0.5 factor compensates) and the post-warmup 0.6 s
+  window includes the release transient (raw sums 1341 N over [0.6,8]
+  vs 708 N over [4,8] on the same stand). First 3 stock + 2 syn6
+  trials scored with a negative rig share (zero rig penalty) - KILLED,
+  the contaminated curr_s3q_* studies PURGED (they were this session's,
+  minutes old; Ben's recorded studies untouched), bal_foot_load fixed
+  to the rigshare convention of record (0.5 x logged sum, steady
+  t >= 4.0 s window), anchor re-checked BIT-EXACT, both studies
+  RELAUNCHED clean 10:47Z with the same seeds.
+- 2026-10-21 stage-3 balance stream, reconciliation entry (the FIRST
+  resume session, woken late - scopes only the DELIVERED s3p-era
+  results; the s3q wave-3 rerun above belongs to the other live
+  session): the FINAL BALANCE REPORT and M1 gate SHIP were delivered by
+  the pass-I resume session; this session adds an INDEPENDENT
+  re-verification of every number, run after Ben's commit 30c4261d
+  "torque and balance" (which took the stream's artifacts - the
+  "no commits" line in the report was true when written, now
+  superseded). Re-run first-hand: (1) anchor -161.56754173676563
+  BIT-EXACT (_anchor_20261021.log); (2) both census gates PASS
+  (410/376/1186 + 888/382/7866 + 794/382/3033; coact adds exactly 4
+  edges per family, restore clean); (3) quiet winners: stock + syn6
+  bit-exact vs DB, w2lvar 25.3098 deterministic fresh-process value
+  (documented +1.2% vs in-study); (4) stock Ib-ablation byte-identical
+  to the original run; (5) ALL THREE s3p winner batteries re-run a
+  THIRD time in fresh processes (s3p_verify_20261021.log, START
+  10:15:08): stock -46.0837, syn6 -54.0504, w2lvar -17.4920 - every
+  delta +0.0000 vs DB, falls 0/7 each. Three independent sessions now
+  agree on every number. Housekeeping: duplicate scratch
+  _s3p_verify_best_20261021.py (accidental second copy of the
+  verifier) deleted; the unfired workflow draft
+  _supervisor_gate_batch1_20261021.ts KEPT - it compiles clean and
+  lets the MAIN session fire a formal INDEPENDENT M1 gate spawn
+  (batch 1: stock/W2L/BPA) beyond the in-session gate record, whose
+  deviation (no subagent facility in the resume environments) is
+  documented in M1_GATE_20261021.md. The s3q foot-load convention this
+  wave-3 session standardized (0.5 x logged sum, t>=4 s window) matches
+  the _s3_rigshare_20261021.py convention this session used for the
+  verdict table - one convention of record. s3p-era stream CLOSED;
+  wave-3 s3q in flight under the live session.

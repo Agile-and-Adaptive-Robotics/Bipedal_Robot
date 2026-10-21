@@ -1853,17 +1853,28 @@ def main(argv):
         bal_cocon = (_cci_num / _cci_den) if _cci_den > 1e-9 else 0.0
         # 2026-10-21 balance-objective fix (Ben, wave 3): weight-bearing
         # + linear-metabolic metrics for the s3q study. bal_foot_load =
-        # mean total foot contact force / body weight over the same
-        # post-warmup window (1.0 = the feet carry everything; the
-        # support rig carries the rest -> bal_rig_share = 1 - it).
+        # mean total foot contact force / body weight, measured EXACTLY
+        # like the rig-share analyses of record (_s3_rigshare /
+        # _s3p_syn6_rigshare): the logged per-side contact is the normal
+        # force of each foot contact added to BOTH the heel and toe
+        # accumulators (see the loop above), so the true per-foot force
+        # is 0.5 x the logged column; and the window is the STEADY
+        # t >= 4.0 s slice, not WARMUP 0.6 s (the release transient
+        # carries far more force than steady standing - 2026-10-21
+        # measured raw sums 1341 N over [0.6, 8] vs 708 N over [4, 8]
+        # on the same stand). 1.0 = the feet carry everything; the
+        # support rig carries the rest -> bal_rig_share = 1 - it.
         # bal_act_sum = mean SUMMED muscle activation (linear metabolic
         # proxy; bal_effort above is the squared one). bal_cocon_act =
         # the antagonist-overlap activation mass (sum over the four
         # pairs of 2*min(a_flex, a_ext), absolute = _cci_num) - the
         # co-contraction share the s3q objective weights extra.
         # Additive only: no existing metric value changes.
-        bal_foot_load = (float(np.mean(seg_ct[:, 0] + seg_ct[:, 1])) / BW
-                         if seg_ct.shape[0] else 0.0)
+        i_load = min(int(np.searchsorted(tt, 4.0)), n_done - 1)
+        seg_ctl = log_contact[i_load:n_done]
+        bal_foot_load = (0.5 * float(np.mean(seg_ctl[:, 0]
+                                             + seg_ctl[:, 1])) / BW
+                         if seg_ctl.shape[0] else 0.0)
         bal_act_sum = (float(np.mean(np.sum(_seg_a, axis=1)))
                        if _seg_a.shape[0] else 0.0)
         bal_cocon_act = _cci_num
