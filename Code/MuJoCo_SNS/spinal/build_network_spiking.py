@@ -312,7 +312,9 @@ class SpinalNetworkSpiking:
                               or G["ib_e_central"] > 0.0
                               or G["heel_pf_layer"] > 0.0
                               or G["toe_df_inh"] > 0.0
-                              or G["heel_in_f_exc"] > 0.0)
+                              or G["heel_in_f_exc"] > 0.0
+                              or G["contra_flex"] > 0.0
+                              or G["contact_ank_mn"] > 0.0)
         self.ia_in = bool(G["ia_in"] > 0.0)
         self.aff_loops = bool(G["aff_e_rg"] > 0.0 or G["aff_f_rg"] > 0.0
                               or G["aff_e_pf"] > 0.0 or G["aff_f_pf"] > 0.0)
@@ -379,6 +381,16 @@ class SpinalNetworkSpiking:
                         if gname in self.idx:
                             n.add_connection(
                                 _ssyn(G["v3_to_ibexc"], exc=True), ce, gname)
+
+        # ---- 2026-10-20 W2L corrected-connectome contact pathway #1
+        # (contra_flex, default 0 = absent = bit-identical): crossed
+        # flexor-EXCITATORY heel edge, HEEL_{a} -> RG_F_{b} (Ben's
+        # 2026-10-18 corrected W2L aproj; see build_network.py's block).
+        if G["contra_flex"] > 0.0 and self.stance_fb:
+            for a, b in (("r", "l"), ("l", "r")):
+                if f"HEEL_{a}" in self.idx and f"RG_F_{b}" in self.idx:
+                    n.add_connection(_ssyn(G["contra_flex"], exc=True),
+                                     f"HEEL_{a}", f"RG_F_{b}")
 
         # ---- runner-facing analog readout taps (added LAST; pure sinks) -
         # RD_<cell> non-spiking neurons low-pass the spike trains; the
@@ -848,6 +860,17 @@ class SpinalNetworkSpiking:
                 n.add_connection(_ssyn(1.5, exc=True), gate, kname)
             n.add_connection(_ssyn(G["f1_anklepf_inh"], exc=False,
                                    onto_analog=True), kname, mn)
+        # ---- 2026-10-20 W2L corrected-connectome contact pathway #2
+        # (contact_ank_mn, default 0 = absent = bit-identical): heel+toe
+        # contact INs -> this side's ankle_pf MN pool (Ben's 2026-10-18
+        # corrected W2L aproj; see build_network.py's block).
+        if G["contact_ank_mn"] > 0.0 and self.stance_fb \
+                and mi.groups[0] == "ankle_pf":
+            for src in (f"HEEL_{mi.side}", f"TOE_{mi.side}"):
+                if src in self.idx:
+                    n.add_connection(
+                        _ssyn(G["contact_ank_mn"], exc=True,
+                              onto_analog=True), src, mn)
 
     def _wire_balance(self, n: Network):
         """Balance inputs reach ankle + hip MNs (ALL graded analog->analog;

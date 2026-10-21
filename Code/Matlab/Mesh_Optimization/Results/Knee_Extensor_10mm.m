@@ -187,27 +187,30 @@ Vas_Lat = MonoMuscleData(Name, Location, CrossPoint, MIF, TSL, Pennation, OFL, T
 %% PAM calculation
 Name = 'Vastus Intermedius';
 Location = zeros(8,3,positions);
-% %Origin and routing location from Ben, 10 mm
-% p1 = [0.040, 0.035, 0];                 %Origin
-% p2 = [0.0759, -0.27476, 0];             %BPA contacts mounting base
-% p3 = [0.05982, -0.37427, 0.000];        %femur channel contact, updated
-% p4 = [0.03955, -0.42183, 0.000];        %femoral condyle contact, updated
-% p5 = [0.05871, 0.025, 0];             %Tibia contact initial
-% p6 = [0.05871, 0.01228, 0];                %Tibia contact, updated
-% p7 = [0.054, -0.00612, 0];            %Tibia tendon contact, updated
-% p8 = [0.03604, -0.02844, 0];            %patellar ligament ring
-
-%Origin and routing location for 20mm
+%Origin and routing location from Ben, 10 mm — THE 52 cm TEST ROUTING
+%(verified 2026-10-19: reproduces KneeExt_10mm_52cm_stale_20261019.mat's
+%Location to 0.0; do not modify).
 p1 = [0.040, 0.035, 0];                 %Origin
-p2 = [0.08315, -0.27476, 0];             %BPA contacts mounting base
-p3 = [0.06536, -0.42389, 0.000];        %femoral contact, updated
-p4 = [0.05438, -0.44085, 0.000];        %femoral condyle contact, updated
-p5 = [0.03794, -0.45233, 0.000];        %femoral condyle contact, updated
+p2 = [0.0759, -0.27476, 0];             %BPA contacts mounting base
+p3 = [0.05982, -0.37427, 0.000];        %femur channel contact, updated
+p4 = [0.03955, -0.42183, 0.000];        %femoral condyle contact, updated
+p5 = [0.05871, 0.025, 0];               %Tibia contact initial
+p6 = [0.05871, 0.01228, 0];             %Tibia contact, updated
+p7 = [0.054, -0.00612, 0];              %Tibia tendon contact, updated
+p8 = [0.03604, -0.02844, 0];            %patellar ligament ring
 
-p6 = [0.06377, 0.03955, 0];             %Tibia contact initial
-p7 = [0.07161, 0.00765, 0];                %Tibia contact, updated
-p8 = [0.06450, -0.02101, 0];            %Tibia contact, updated
-p9 = [0.03406, -0.06687, 0];            %patellar ligament ring, distal
+%Origin and routing location for 20mm (NOT this test - was left active in
+%the script and broke the 2026-10-19 rerun; kept for reference):
+% p1 = [0.040, 0.035, 0];                 %Origin
+% p2 = [0.08315, -0.27476, 0];             %BPA contacts mounting base
+% p3 = [0.06536, -0.42389, 0.000];        %femoral contact, updated
+% p4 = [0.05438, -0.44085, 0.000];        %femoral condyle contact, updated
+% p5 = [0.03794, -0.45233, 0.000];        %femoral condyle contact, updated
+%
+% p6 = [0.06377, 0.03955, 0];             %Tibia contact initial
+% p7 = [0.07161, 0.00765, 0];                %Tibia contact, updated
+% p8 = [0.06450, -0.02101, 0];            %Tibia contact, updated
+% p9 = [0.03406, -0.06687, 0];            %patellar ligament ring, distal
 
 %Points for transformation matrices;
 v5 = zeros(1,3,positions);
@@ -272,7 +275,20 @@ fitting = 0.0254;
 
 pres = 596.3717;         %average pressure
 Vas_Pam = MonoPamDataExplicit(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
-Vas_Pam_adj = MonoPamDataExplicit_balanceX3(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres);
+%Adopted extensor correction terms of record (minimizeExt10mmX3_results
+%row 32, ledger-verified 2026-10-19): Xi0=-6.378022 mm, Xi1/X2 = the
+%locked stiffness pair, Xi3=0.158289. Routing above is UNCHANGED.
+%X3 bend: no BendMeasure is passed for this route, so the class applies
+%its pinned-knee bend formulation - the same formulation against which
+%Xi3 was identified. Single tendon path, no post wraps (wraps=1 keeps the
+%tendon spring rate at the pinned evaluator's mult=2).
+Xi0 = -6.378022e-3;
+Xi1 = 3.997873e4;
+Xi2 = 1.473375e4;
+Xi3 = 1.582887e-1;
+wraps = 1;
+BPAcount = 1;
+Vas_Pam_adj = MonoPamDataExplicit_balanceX3(Name, Location, CrossPoint, Dia, T_Pam, rest, kmax, tendon, fitting, pres, Xi0, Xi1, Xi2, Xi3, wraps, phiD, BPAcount);
 %% Unstacking the Torques to identify specific rotations
 % Force1 = Vas_Int.Force + Vas_Lat.Force + Vas_Med.Force;
 % Torque1 = Vas_Int.Torque + Vas_Lat.Torque + Vas_Med.Torque;

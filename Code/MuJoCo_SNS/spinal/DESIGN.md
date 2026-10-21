@@ -2,6 +2,119 @@
 
 Built 2026-09-09. Files in `Code\MuJoCo_SNS\spinal\`.
 
+## 2026-10-20 (ZCode, egg): W2L CORRECTED CONNECTOME RUN + family
+## contact knobs + template-model program opened. OPEN ITEMS below.
+
+**bilateralrg2** (w2l_cpg/make_bilateralrg2.py): Ben's 2026-10-18
+corrected aproj transcribed GUID-level (96/204/12; toe cascade deleted,
+heel cascade weak-class, NEW crossed heel→contra-RG-flx edge, heel+toe→
+ankle-MN ext, knee-ext Renshaw lateralized). Runs in MuJoCo
+(test_w2l_ground.py --net=bilateralrg2). HEADLINE: Ben's UNTUNED
+defaults survive the wean-campaign walk gate fresh-process (obj 90.0,
+19/17 cycles, phase 0.498). Tuned winner obj 91.4 fresh-survives.
+Basin: NO config passes 11/12 (best 9/12 with ch_contra 0.5); the
+phase lock is the fragile piece, stepping is robust. The campaign's
+wean ladder DEGENERATED (dscale bookkeeping only) — no weaning claim.
+Full record + flagged items: reports_20261020/w2l_contact2/README.md.
+
+**Family knobs (default-0, bit-identical off):** `contra_flex` (heel
+IN A → RG-F B, exc — the W2L crossed edge in the human/variant
+families) + `contact_ank_mn` (heel+toe → ankle_pf MNs) in
+build_network{,_spiking,_w2lvar,_syn6}.py. Gates 2026-10-20: 410/376/
+1186 + s3k anchor −161.56754173676563 BIT-EXACT; w2lvar 888/382/7866;
+syn6 794/382/3033; ON-probe +38 exact.
+
+**Template-model program (Ben: "run the template models until results
+repeat"):** DENG_TEMPLATE PASS (period 1937.8 ms vs 1938/1940 record,
+r −0.859). SHEVTSOVA_TEMPLATE PASS C1+C2 (lumbar-only reduction:
+4.51 Hz in the paper's 3–6 Hz trot band at α=0.55, LR phase 0.500,
+freq → 6.92 Hz ≥ 6.5, extensor fraction 0.42→0.22; the trot→bound
+phase transition is OUT OF SCOPE for the reduction — needs the
+quadruped LPN pathways the rules exclude). RYBAK2006_TEMPLATE PASS
+13/13 (drive asymmetry: 0.5/0.43 → T_E 0.538 > T_F 0.455 s, swapped →
+T_E 0.488 < T_F 0.572 s; deletion diagnostic: PF-level pulse
+NON-RESETTING residual 0.001 T, RG-level pulse RESETTING residual
+0.416 T — the paper's two-level claim; deterministic, bit-identical
+re-runs; τ_h,max = 1200 ms EXTRACTED from the local fulltext,
+superseding the draft's "not extracted" note).
+
+**OPEN ISSUES (flagged deviations awaiting Ben):**
+1. bilateralrg2 F1: the "R Hip MN flx RE → R Hip MN ext RE" edge
+   carries a V3-clone synapse type; transcribed INH per Ben's 10-03
+   export ruling — confirm.
+2. bilateralrg2 F2: heel cascade + crossed edge at the WEAK (0.01 µS)
+   class per the aproj's dedicated types — confirm effective-strength
+   reading (type-level, the .pl-chain doctrine).
+3. Shevtsova k_tau (F-A): the paper omits it; the lineage file's 15 mV
+   LATCHES under the 2026 τ0/τmax; calibrated stand-in 6.67 mV used
+   (replication/shevtsova_standalone.py F-A). Same file's F-B..F-E also
+   await confirmation: leak split (RG 4.5/−62.5 vs INs 2.8/−60, from
+   the lineage model file's [0:7] block), gSynE/I 10 nS + Vthr −50 +
+   Vmax 0 provenance (paper text + file), drive values (paper drive
+   paragraph, verified verbatim), noise OFF (Fig-9 protocol; σ=1.1 pA
+   bout mode available via flag).
+4. W2L basin marginality: no 11/12 config yet (best 9/12); the
+   ch_contra bracket shows a 0.5–0.8 plateau (6/6/9/9 of 12) —
+   residual marginality structural. Accept or restructure = Ben's call.
+5. Rybak 2006a flagged stand-ins (replication/rybak2006_standalone.py
+   F-A..F-I; Table-2 weights verbatim, only GLOBAL constants
+   calibrated): F-A GSYN=90 nS uniform weight scale; F-B GDRIVE=3.0
+   nS/unit (paper's gEd not extractable); F-D gNaP 4.5 nS + PF at
+   0.4×RG (paper's own 0.1/0.25 ratio); F-I EL_RG=−70 mV (lineage
+   −62.5 locked a middle fixed point; −70 restores escape/termination);
+   F-G the paper's Ia-F typo row wired as mutual inhibition; F-H
+   deletion-pulse amplitudes +1.0 PF / +5.0 RG d-units (paper 88%/400%
+   in its unit system); F-E Booth two-compartment/MN-dendrite dropped
+   (activity-based reinterpretation, per draft §5); F-C non-RG leak =
+   issue 3's lineage convention.
+
+## 2026-10-20 evening (ZCode, egg): syn6 Ib-CENTRAL + ANTAGONIST-IN
+## audit (Ben's two questions) - 3 default-0 knobs wired, s3k clean.
+
+**Q1 "Ib to the different extensor layers as in Shinohara?"** Audit
+(probes tmp/wiring_audit_20261020/, full 92-actuator builds): s3k
+CLEAN - at the trial-34 winner the per-muscle extensor Ib reaches
+{RG_E, InE, PF_E1, PF_E2} via ib_e_central 0.2435 (54 muscles x 4
+edges), MN via IBIN (1.0/0.35) + IBEXC (0.5/0.6, RG_E-gated) + the
+group route IBEXC->LBIN->RG_E (0.5/0.674); heel rides the SAME central
+pathway (the 2026-09-16 ruling) - Ben's "Ib wired like our heel
+contact" is literally true in s3k. syn6 had the GAP: per-muscle Ib
+reached ONLY the MN level; all three E layers were reachable solely
+through the group LBIN relay behind the single ib_rge knob (default 0;
+stage-5 winner ib_rge = 0.0 - inert), while HEEL unconditionally hits
+InE+InF+PF_IN_E. Wired knob A1 `ib_e_central` (params.G key shared
+with s3k): per extensor-stance muscle Ib -> {RG_E, InE} + the E-family
+PF channels CARRYING it (W>0; all-E fallback for the 3 pruned/side;
+Shinohara 2025 eq 11 j in {RG-E,IN-E,PF-E}, replication/shinohara_
+rules.json + ben_shinohara_20260924.json rows). Two documented deltas
+vs the s3k reading: no heel/toe ride-along; PF targets = the muscle's
+own channels.
+
+**Q2 "antagonistic groups in syn6 PF and MN layers with INs?"** MN
+level: YES, complete and unconditional - IaIN->antag MN 436/436,
+IIIN->antag MN 436/436, IaIN<->IaIN 436, IBIN<->IBIN 436 (all 10
+directed pairs of the ANTAGONIST table verified, per-pair counts in
+probe_antag_pairs.py). Two gaps wired: A2 `iain_pf_gate` (syn6 had NO
+PF phase gate on the Ia reciprocal pathway, unlike the stock PF_F1->
+IaIN; Deng A6 / Rybak 2006a Table 2 rybak2006_iain rows) - committed
+F-family channels -> every IaIN; A3 `pf_mixed_recip` (the MIXED df
+channel S5 was excluded from the PF family lamination in BOTH
+directions, so the E family could not inhibit dorsiflexion; Rybak
+2006a Inpf rows apply lamination to every family cell) - S5 joins the
+lamination at the knob's conductance; the gate-c1 exclusion stays the
+default. No IBIN->antagonist-MN edge exists anywhere in the rule files
+(ben_rules' "Ib_N -> MN antagonist" row is the antagonist muscle's own
+autogenic edge, mirror of Ib_A->MN agonist) - not a gap.
+
+**Gates (2026-10-20 evening):** syn6 default census 794/382/3033 PASS
+(variant_census_20261016.py, AARL_NET=syn6); s3k drive_defaults_gate
+PASS (410/376/1186 + anchor -161.56754173676563 BIT-EXACT). ON-probe
+reports_20261020/ib_antag/probe_ib_antag_knobs.py: all three knobs at
+0.5 -> (794, 382, 3442), delta +409 synapses == independently
+predicted edge count (ib_e_central 112 r/109 l, iain_pf_gate 92+92,
+pf_mixed_recip 2+2), one finite step. s3k builder NOT touched (no gaps
+found).
+
 ## 2026-09-22 (ZCode, EB475WS4): s3k BILATERAL-OBJECTIVE VERDICT +
 **ROOT CAUSE chain complete: the objective, the circuit, and the
 runner machinery have ALL been fixed — and the left leg STILL won't

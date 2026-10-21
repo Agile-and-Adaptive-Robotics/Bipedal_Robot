@@ -349,6 +349,59 @@ G = dict(
     alpha_l=0.0,
     alpha_r=0.0,
     alpha_to_mn=0.5,   # ALPHA_s -> MN conductance (edges only when alpha_s > 0)
+    # ---- 2026-10-20: W2L corrected-connectome contact pathways (Ben's
+    # 2026-10-18 Walker_2_Layer_CPG_BilateralRG.aproj, "physical contact
+    # sensing closed, Li-style chain"; w2l_cpg/make_bilateralrg2.py delta
+    # #3/#4) reflected into the human/variant families as default-0 knobs.
+    # Edges built ONLY when the knob > 0 (default 0 = absent = bit-identical:
+    # 410/376/1186 + the s3k anchor -161.56754173676563; the v5 zero-gain
+    # BLAS-order lesson). Both ride the existing HEEL_c/TOE_c port currents
+    # (no runner change; heels must be on - stance_fb includes these keys):
+    #   contra_flex: HEEL_{s} IN -> CONTRAlateral RG_F half-center, EXC.
+    #     The crossed flexor-excitatory edge family (DESIGN.md 2026-09-22
+    #     "the W2L lesson... each heel strike KICKS the other leg into
+    #     flexion"; Di Russo eq-6 antiphase coupling analog). Ben's aproj
+    #     carries it at the WEAK contact class (Heel_Contra_RGflx_Excite).
+    #   contact_ank_mn: HEEL_{s} + TOE_{s} INs -> that side's ankle_pf MN
+    #     pools, EXC (the aproj's Heel/Toe_Ipsi_AnkMNext_Excite family,
+    #     the only GENERIC-strength contact edges left in the aproj).
+    contra_flex=0.0,
+    contact_ank_mn=0.0,
+    # ---- 2026-10-20 evening (Ben's two questions: "Is there similar Ib
+    # feedback to the different extensor layers as indicated in the
+    # Shinohara paper?" / "Have you set up antagonistic muscle groups for
+    # your syn6 PF and MN layers with interneurons?"): syn6-family Ib-
+    # central + antagonist-IN audit knobs (reports_20261020 audit table;
+    # s3k audited CLEAN - its ib_e_central/ib_rge/IBEXC/IBIN already cover
+    # the full Shinohara eq-11 target set). ALL DEFAULTS 0 = edges absent
+    # = bit-identical (syn6 census 794/382/3033; s3k 410/376/1186 + anchor
+    # -161.56754173676563; the v5 zero-gain BLAS-order lesson).
+    #   iain_pf_gate: committed F-family PF channels -> every IaIN, exc.
+    #     The syn6 analog of the stock PF_F1 -> IaIN phase gate
+    #     (build_network.py ia_in branch; Deng A6 PF->IaIN 0.5) and of
+    #     Rybak 2006a Table 2 rows "Ia-E: PF-E (0.4)" / "Ia-F: PF-F
+    #     (0.4)" (replication/rybak_rules.json rybak2006_iain). syn6
+    #     previously had NO PF phase gate on the reciprocal Ia pathway
+    #     (audit gap A2) - the IaIN fired ungated.
+    #   pf_mixed_recip: include the genuinely-MIXED synergy channel (the
+    #     dorsiflexion channel, S5 both sides) in the PF family
+    #     lamination - it drives its family IN and receives the
+    #     opposite-family IN at this conductance. Rybak 2006a Table 2
+    #     Inpf-E/Inpf-F rows apply the lamination to every family cell
+    #     (replication/rybak_rules.json rybak2006_pflam); the syn6
+    #     exclusion was the gate-c1 co-contraction-latch mitigation and
+    #     stays the default - this knob makes the rule-conformal
+    #     antagonist-channel topology available to a study (audit gap A3:
+    #     the E family could not inhibit the dorsiflexion channel).
+    #   ib_e_central: ALSO READ by build_network_syn6.py since this
+    #     change (same key, same pathway class as the s3k block above):
+    #     per-muscle extensor-stance-group Ib -> {RG_E, InE} + the
+    #     E-family PF channels carrying that muscle - the syn6
+    #     implementation of Shinohara 2025 eq 11, j in {RG-E, IN-E, PF-E}
+    #     (audit gap A1; see the builder comment for the citations and
+    #     the two documented differences from the s3k reading).
+    iain_pf_gate=0.0,
+    pf_mixed_recip=0.0,
 )
 
 # Extra gains for the phase-reset pathways (not searched by default; the

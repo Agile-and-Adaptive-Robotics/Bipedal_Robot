@@ -265,7 +265,9 @@ class SpinalNetwork:
                               or G["ib_e_central"] > 0.0
                               or G["heel_pf_layer"] > 0.0
                               or G["toe_df_inh"] > 0.0
-                              or G["heel_in_f_exc"] > 0.0)
+                              or G["heel_in_f_exc"] > 0.0
+                              or G["contra_flex"] > 0.0
+                              or G["contact_ank_mn"] > 0.0)
         self.ia_in = bool(G["ia_in"] > 0.0)
         self.aff_loops = bool(G["aff_e_rg"] > 0.0 or G["aff_f_rg"] > 0.0
                               or G["aff_e_pf"] > 0.0 or G["aff_f_pf"] > 0.0)
@@ -383,6 +385,22 @@ class SpinalNetwork:
                         if gname in self.idx:
                             n.add_connection(
                                 _syn(G["v3_to_ibexc"], exc=True), ce, gname)
+
+        # ---- 2026-10-20 W2L corrected-connectome contact pathway #1
+        # (contra_flex, default 0 = edges absent = bit-identical): the
+        # crossed flexor-EXCITATORY heel edge - HEEL_{a} IN -> RG_F_{b},
+        # excitatory. Source: Ben's 2026-10-18 corrected W2L aproj
+        # (Heel_Contra_RGflx_Excite; w2l_cpg/make_bilateralrg2.py delta
+        # #3) - the edge family DESIGN.md 2026-09-22 identified as the
+        # missing antiphase mechanism ("each heel strike KICKS the other
+        # leg into flexion"; Di Russo eq-6 coupling analog). NOT nested
+        # under interleg (it is a sensory contact edge, like contra_kinh,
+        # not a commissural RG-RG relay).
+        if G["contra_flex"] > 0.0 and self.stance_fb:
+            for a, b in (("r", "l"), ("l", "r")):
+                if f"HEEL_{a}" in self.idx and f"RG_F_{b}" in self.idx:
+                    n.add_connection(_syn(G["contra_flex"], exc=True),
+                                     f"HEEL_{a}", f"RG_F_{b}")
 
     # ------------------------------------------------------------------ parts
     def _add(self, name: str, tau: float, n: Network):
@@ -959,6 +977,18 @@ class SpinalNetwork:
                 self._add(kname, TAU["ib_exc"], n)
                 n.add_connection(_syn(1.5, exc=True), gate, kname)
             n.add_connection(_syn(G["f1_anklepf_inh"], exc=False), kname, mn)
+        # ---- 2026-10-20 W2L corrected-connectome contact pathway #2
+        # (contact_ank_mn, default 0 = edges absent = bit-identical):
+        # heel AND toe contact INs -> this side's ankle_pf MN pool,
+        # excitatory (the aproj's Heel/Toe_Ipsi_AnkMNext_Excite family -
+        # the only GENERIC-strength contact edges in the corrected W2L;
+        # push-off/plantarflexion assist on ground contact).
+        if G["contact_ank_mn"] > 0.0 and self.stance_fb \
+                and mi.groups[0] == "ankle_pf":
+            for src in (f"HEEL_{mi.side}", f"TOE_{mi.side}"):
+                if src in self.idx:
+                    n.add_connection(_syn(G["contact_ank_mn"], exc=True),
+                                     src, mn)
 
     def _complete_in_mutual(self, n: Network, force: bool = False):
         """2026-10-03 audit fix (WIRING_RULINGS_20261003.md, s3k finding

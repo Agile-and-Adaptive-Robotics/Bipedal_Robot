@@ -96,6 +96,10 @@ def main() -> int:
     ap.add_argument("--alpha-r", type=float, default=0.0, dest="alpha_r",
                     help="nA tonic alpha (MN-level) drive on the six R MN "
                          "pools (0 = ports not built)")
+    ap.add_argument("--template", default=None,
+                    help="connectome_templates.json key (default env "
+                         "AARL_W2L_TPL, else 'bilateralrg'; "
+                         "'bilateralrg2' = the 2026-10-18 corrected aproj)")
     args = ap.parse_args()
 
     gains = {}
@@ -105,7 +109,8 @@ def main() -> int:
         gains["c1_inh"] = args.c1
     if args.v3 is not None:
         gains["v3_weak"] = args.v3
-    net = build(gains=gains, alpha_l=args.alpha_l, alpha_r=args.alpha_r)
+    net = build(gains=gains, alpha_l=args.alpha_l, alpha_r=args.alpha_r,
+                template_key=args.template)
     print(f"neurons: {len(net.idx)}  synapses: {net.n_synapses}  "
           f"inputs: {len(net.inputs)}")
 

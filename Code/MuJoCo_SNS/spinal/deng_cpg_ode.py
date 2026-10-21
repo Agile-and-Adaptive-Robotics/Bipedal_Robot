@@ -96,22 +96,30 @@ def simulate(tau_h_mode="fixed", t_end=20.0, dt=0.1, i_pulse=10.0,
         hh[k + 1] = h[0]
     return out, hh
 
-for mode in ("fixed", "toolbox"):
-    out, hh = simulate(mode, t_end=20000.0)
-    tt = np.arange(out.shape[0]) * 0.1
-    v = out[:, 0]
-    pk, _ = find_peaks(v, prominence=1.0)
-    per = np.diff(pk)
-    late = out[tt > 15000]
-    print(f"tau_h {mode:8s}: HC_ext [{v.min():.1f},{v.max():.1f}] mV, peaks "
-          f"{len(pk)}, period {per.mean() if len(per) else np.nan:.0f} ms, "
-          f"late swing {late[:, 0].max() - late[:, 0].min():.2f} mV")
+def _main():
+    for mode in ("fixed", "toolbox"):
+        out, hh = simulate(mode, t_end=20000.0)
+        tt = np.arange(out.shape[0]) * 0.1
+        v = out[:, 0]
+        pk, _ = find_peaks(v, prominence=1.0)
+        per = np.diff(pk)
+        late = out[tt > 15000]
+        print(f"tau_h {mode:8s}: HC_ext [{v.min():.1f},{v.max():.1f}] mV, peaks "
+              f"{len(pk)}, period {per.mean() if len(per) else np.nan:.0f} ms, "
+              f"late swing {late[:, 0].max() - late[:, 0].min():.2f} mV")
 
-# fixed-tau run is the reference; save it
-out, hh = simulate("fixed", t_end=20000.0)
-tt = np.arange(out.shape[0]) * 0.1
-savemat(Path(r"D:\Github\Bipedal_Robot\Code\Matlab\SNS_Simscape\results")
-        / "deng_cpg_ref.mat",
-        {"t": tt, "traces": out, "names": NAMES, "h_RG_HC_ext": hh,
-         "pulse": [0.1, 10.0, 1.0], "tau_h_mode": "fixed"})
-print("saved deng_cpg_ref.mat (fixed-tau run)")
+    # fixed-tau run is the reference; save it
+    out, hh = simulate("fixed", t_end=20000.0)
+    tt = np.arange(out.shape[0]) * 0.1
+    savemat(Path(r"D:\Github\Bipedal_Robot\Code\Matlab\SNS_Simscape\results")
+            / "deng_cpg_ref.mat",
+            {"t": tt, "traces": out, "names": NAMES, "h_RG_HC_ext": hh,
+             "pulse": [0.1, 10.0, 1.0], "tau_h_mode": "fixed"})
+    print("saved deng_cpg_ref.mat (fixed-tau run)")
+
+
+# 2026-10-20: script tail wrapped in a main guard (behavior unchanged when
+# run directly) so replication/verify_deng.py can import simulate() without
+# triggering the 2x20,000 s reference runs.
+if __name__ == "__main__":
+    _main()
