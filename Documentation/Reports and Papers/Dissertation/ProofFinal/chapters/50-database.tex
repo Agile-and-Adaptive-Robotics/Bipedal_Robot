@@ -1,4 +1,4 @@
-\chapter{The Sensory Afferent Database}\label{ch:database}
+﻿\chapter{The Sensory Afferent Database}\label{ch:database}
 \graphicspath{{../Figures/50-database/}{figs/50-database/}}
 
 \section{A Structured Afferent Resource}\label{sec:sadb_resource}
@@ -25,13 +25,20 @@ The audit and the prune are also why the laboratory built its own explorer app r
 
 At the close of the curation effort the working base held 957 records: 561 papers, 39 feedback-pathway records, 244 model records, 109 review records, and 4 recorder entries, 43 records below the laboratory's 1,000-record operating cap, with room to grow. Coverage of the retained papers is concentrated where the laboratory's design and experimental work needs it. Of the 561 retained papers, 523 carry curation notes, 426 carry animal-preparation tags, 240 carry notes assessing each paper's animal-study potential, 118 are linked to named feedback pathways, 86 carry an afferent classification, and 258 carry notes translating the paper's findings toward robot or simulation use; 550 carry DOIs, and 38 remain bare pending a findable text.
 
-The citation graph was built over the full audited corpus of 943 papers, which includes the 382 records the prune later removed and which the packaged database retains under an archived flag. Within that corpus, 730 papers are connected by 11,130 directed in-corpus citation pairs, and a Louvain community partition of the graph resolves 18 named topic clusters, from the classics of afferent locomotor control and spinal interneuron circuit modeling through human balance and posture to bioinspired flow sensing and deep-learning methods. The partition earned its keep in the prune: the satellite clusters it exposed, the flow-and-flight sensing, fish swimming, and neural-network method clusters, match the topic groups the first prune stage removed. The corpus, its citation graph, its cluster assignments, and the flat corpus export are distributed together in the packaged explorer, and Figure~\ref{fig:sadb_explorer} shows its table view as packaged.
+The citation graph was built over the full audited corpus of 943 papers, which includes the 382 records the prune later removed and which the packaged database retains under an archived flag. Within that corpus, 730 papers are connected by 11,130 directed in-corpus citation pairs, and a Louvain community partition of the graph resolves 18 named topic clusters, from the classics of afferent locomotor control and spinal interneuron circuit modeling through human balance and posture to bioinspired flow sensing and deep-learning methods. The partition earned its keep in the prune: the satellite clusters it exposed, the flow-and-flight sensing, fish swimming, and neural-network method clusters, match the topic groups the first prune stage removed. Within that audited corpus, 833 papers carry curation notes and 318 carry attached PDFs, and the prune's 382 removed records remain in the package under an archived flag so the audited scope stays reconstructible in full. The corpus, its citation graph, its cluster assignments, and the flat corpus export are distributed together in the packaged explorer, and Figure~\ref{fig:sadb_explorer} shows its table view as packaged. Figure~\ref{fig:sadb_clusters} summarizes the same corpus at the topic-cluster level: the seven clusters the curated corpus retains, and the satellite clusters the prune removed in full.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{sadb_explorer.png}
-\caption[The SADb Explorer offline corpus tool]{The SADb Explorer, the packaged offline interface to the audited corpus, shown on its table view. The header reports the audited scope: 943 papers, of which 382 are archived records removed from the Airtable base but retained in the packaged tool, with 833 carrying curation notes and 318 carrying attached PDFs. Rows are the Papers table sorted by citation count, and the tag column records each paper's curation state (notes, PDF, archived), animal preparation, and afferent or pathway links. The packaged application runs in a browser from a single file with no network connection required.}
+\caption[The SADb Explorer offline corpus tool]{The SADb Explorer, the packaged offline interface to the audited corpus, shown on its table view: the Papers table sorted by citation count, with the tag column recording each paper's curation state, animal preparation, and afferent or pathway links. The application runs in a browser from a single file with no network connection required.}
 \label{fig:sadb_explorer}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.92\textwidth]{sadb_clusters.pdf}
+\caption[Citation-graph topic clusters of the audited corpus]{The Louvain topic clusters of the audited corpus, one bubble per cluster. Horizontal position is the median publication year of the cluster's retained papers, vertical position the number of retained papers, and bubble area the audited cluster size; darker fill marks a larger retained fraction. The seven clusters with retained papers form the curated core, from the afferent-control classics and spinal-circuit modeling to neuromechanics and robot walking; the gray bubble aggregates the eleven satellite clusters the prune removed in full (58 papers), among them the fish-swimming, flow-and-flight-sensing, and neural-network-method clusters of the prune account. 27 of the 561 retained papers fall outside the citation-graph partition.}
+\label{fig:sadb_clusters}
 \end{figure}
 
 \section{AI-Assisted Literature Triage}\label{sec:sadb_triage}
@@ -42,7 +49,7 @@ The curation workflow reported here is the operational answer to that finding, a
 
 \section{Toward Robot and Simulation Use}\label{sec:sadb_use}
 
-The database exists to feed the sensorium of Chapter~\ref{ch:sns}. Its pathway records enumerate the signal taxonomy the controller's sensory channels implement: Ia afferents carrying length and velocity, Ib afferents carrying force, II afferents carrying length, and contact receptors marking the stance--swing boundary (Section~\ref{sec:preliminary_sim_methods}); Table~\ref{tab:sadb_afferents} summarizes what the corpus establishes for each class. The pathway naming grammar maps directly onto circuit edges, since a record's afferent class fixes the signal encoding, its phase fixes the gating, and its action fixes the sign, so translating a pathway record into a controller connection is a lookup rather than a literature search; Table~\ref{tab:sadb_pathways} lists the principal pathway records with the papers that demonstrate them. The Models table carries the lineage the controller instantiates, from the two-level rhythm-generator and pattern-formation architecture \citep{rybak_modelling_2006} through muscle-reflex walking \citep{geyer_musclereflex_2010} to the two-layer neuromechanical walker the laboratory's controller descends from \citep{deng_neuromechanical_2019}, and the 258 robot-and-simulation translation notes exist precisely to shorten the step from paper to wiring decision.
+The database exists to feed the sensorium of Chapter~\ref{ch:sns}. Its pathway records enumerate the signal taxonomy the controller's sensory channels implement: Ia afferents carrying length and velocity, Ib afferents carrying force, II afferents carrying length, and contact receptors marking the stance--swing boundary (Section~\ref{sec:preliminary_sim_methods}); Table~\ref{tab:sadb_afferents} summarizes what the corpus establishes for each class. The pathway naming grammar maps directly onto circuit edges, since a record's afferent class fixes the signal encoding, its phase fixes the gating, and its action fixes the sign, so translating a pathway record into a controller connection is a lookup rather than a literature search; Table~\ref{tab:sadb_pathways} lists the principal pathway records with the papers that demonstrate them. The Models table carries the lineage the controller instantiates, from the two-level rhythm-generator and pattern-formation architecture \citep{rybak_modelling_2006} through muscle-reflex walking \citep{geyer_musclereflex_2010} to the two-layer neuromechanical walker the laboratory's controller descends from \citep{deng_neuromechanical_2019}, and the 258 robot-and-simulation translation notes exist precisely to shorten the step from paper to wiring decision. Figure~\ref{fig:sadb_pivot} shows the two-dimension count the explorer's pivotable tables produce over the retained corpus, the afferent classes against the animal preparations: the classical cat preparation carries the largest share of the Ia, Ib, II, and cutaneous records, and the arthropod records enter through the mechanosensory class.
 
 \begin{table}[htbp]
 \caption{Afferent classes represented in the Sensory Afferent Database, the signal each class carries, and the pathway roles the corpus records for it. Anchor references are corpus papers linked to the corresponding records; the signal summary for the Ia, II, and Ib rows follows the ensemble afferent recordings of \citet{prochazka_ensemble_1998}.}
@@ -60,13 +67,20 @@ Cutaneous & skin and foot-pad receptors & contact and perturbation events & flex
 \end{tabularx}
 \end{table}
 
-\begin{table}[htbp]
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.96\textwidth]{sadb_pivot.pdf}
+\caption[Corpus pivot by afferent class and preparation]{A two-dimension pivot over the retained corpus, of the kind the explorer's pivotable tables produce. Rows are afferent classifications and columns animal preparations; each cell counts the retained papers carrying both tags, so a paper with several preparations or classes counts once in each corresponding cell, and the margins count unique papers. The base is the 86 retained papers that carry an afferent classification, of which 9 have no preparation tag.}
+\label{fig:sadb_pivot}
+\end{figure}
+
+\begin{sidewaystable}[p]
 \caption{Principal feedback-pathway records of the database's Feedback table, named by the fixed grammar of afferent, action, and phase. Linked papers are counted over the full audited corpus of 943 papers; for every pathway listed, the count is unchanged under the retained corpus of 561. Demonstrating references are the corpus papers linked to each record, as curated in the database.}
 \label{tab:sadb_pathways}
-\begin{tabularx}{\textwidth}{@{}llXrp{0.27\textwidth}@{}}
+\fontsize{10pt}{12pt}\selectfont
+\begin{tabularx}{\textheight}{@{}llXrp{0.26\textheight}@{}}
 \toprule
-\textbf{Pathway record} & \textbf{Class} & \textbf{Recorded action in the step cycle} & \textbf{Linked} & \textbf{Demonstrating} \\
- & & & \textbf{papers} & \textbf{references} \\
+\textbf{Pathway record} & \textbf{Class} & \textbf{Recorded action in the step cycle} & \textbf{Linked papers} & \textbf{Demonstrating references} \\
 \midrule
 Ia monosynaptic excitation & Ia & stretch excitation of the homonymous motor pool, with the pathway gain modulated over the step cycle & 7 & \citep{eccles_integrative_1958, capaday_amplitude_1986} \\
 Ia reciprocal inhibition & Ia & inhibition of the antagonist motor pool through the Ia inhibitory interneurons, rhythmically active in fictive locomotion & 6 & \citep{jankowska_effect_1967, pratt_ia_1987} \\
@@ -78,7 +92,7 @@ type II excitatory & II & stance-phase support of ankle-extensor activity throug
 Cutaneous flexor excitation & Cutaneous & flexion withdrawal and the stumbling corrective reaction, phase-modulated over the cycle & 16 & \citep{sherrington_flexion_1910, forssberg_stumbling_1979} \\
 \bottomrule
 \end{tabularx}
-\end{table}
+\end{sidewaystable}
 
 The 39 pathway records extend beyond the mammalian core of Table~\ref{tab:sadb_pathways}: paired excitation and inhibition records cover the chordotonal organs and trochanteral hair plates of insect legs, a load-feedback record covers the campaniform sensilla, and further records hold fictive locomotion without sensory feedback (12 linked papers), group III/IV fatigue, and one paper each for somatosensory, vestibular, and visual contributions to postural control. The controller of Chapter~\ref{ch:sns} implements the mammalian subset.
 
