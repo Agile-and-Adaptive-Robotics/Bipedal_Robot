@@ -46,6 +46,9 @@
 \usepackage{xstring} % For citation in left column
 \usepackage[labelformat=simple]{subfig} % Support to add subfigures
 \renewcommand\thesubfigure{\normalfont(\textbf{\alph{subfigure}})} % Change subfigure label format
+\setcounter{lofdepth}{1}\setcounter{lotdepth}{1} % Lists carry numbered figures/tables (level 1) but not subfigure entries
+\makeatletter\providecommand{\toclevel@subfigure}{2}\providecommand{\toclevel@subtable}{2}\makeatother % ...which sit at level 2, so tocloft's depth check hides them (PSU ETD: subfigure entries stay out of the front lists)
+\makeatletter\AtBeginDocument{\def\l@subfigure#1#2{}\def\l@subtable#1#2{}}\makeatother % Belt-and-braces: subfig writes these lines unconditionally; gobbled at typeset time
 \usepackage{natbib}
 \usepackage{siunitx}
 \DeclareSIUnit\bar{bar} % Explicit non-SI pressure unit
