@@ -62,7 +62,10 @@ extracts the JS for `node --check app\_app_main.js`).
 
 ## Roadmap (Ben, 2026-09-22)
 
-Airtable remains the primary data tool; this app is the corpus browser.
+Ben, 2026-10-22: **the app is now the primary thing** — Airtable is the editable
+working base the app is rebuilt from, not the deliverable. Every build embeds the
+FULL audited corpus (943 papers), including the papers pruned from Airtable, each
+carried under its archived flag, so nothing the prune removed is lost.
 
 1. **v1 — OFFLINE (done)**: snapshot browser.
 2. **v2 — ONLINE mode (done 2026-09-28 in-app)**: live OpenAlex search tab;

@@ -1,194 +1,1308 @@
-# chatgpt_report
+# Advisor review and revision handoff
 
-Advisor comment inventory and SNS revision proposal
+Updated from the live **Bolen-Dissertation** Overleaf Review → Overview, final capture **22 October 2026, 12:22:09 Pacific**. This was a review of advisor contents and their anchors, not another full-document quality review. The advisor is actively reviewing; this is a snapshot, not a claim that no later comments exist.
 
-Reviewed 22 October 2026, after your comment cleanup. Source: the live Overleaf project Bolen-Dissertation. Advisor account: ajh26.
+## Current inventory
 
-## Scope and reading conventions
+**73 open advisor threads (76 advisor messages) and 51 pending advisor tracked edits.** Ben's replies are explicitly separated below. Resolved comments and Ben-only appendix/main entries are excluded from the advisor totals. The previous 36-thread/8-edit inventory is superseded and preserved in Notes/advisor_review_20261022/CHATGPT_REPORT_before_this_pass.md. Existing SNS-01..15, DB-01..26, INTRO-01, BG-01, and BG-02 identifiers are retained.
 
-The current overview contains **36 open advisor comment threads (37 advisor messages) and 8 pending advisor tracked edits**, across four files. SNS has 11 comment threads and 4 tracked edits; the database chapter has 24 threads and 2 tracked edits; the introduction has 1 thread; the background has 2 tracked edits. Resolved/deleted comments and your own review entries are excluded. Your replies are not presented as advisor comments.
+| File | Advisor threads | Pending advisor edits |
+|---|---:|---:|
+| 10-introduction.tex | 14 | 20 |
+| 15-background.tex | 24 | 25 |
+| 50-database.tex | 24 | 2 |
+| 60-sns.tex | 11 | 4 |
 
-Line numbers are LaTeX source lines, not PDF line numbers. A paragraph often occupies one source line. They describe the source at review time and will shift after edits. Highlighted text is transcribed from the editor's comment markings, with adjacent fragments joined across spellchecking markup. Some anchors are only one word even when the comment discusses a paragraph. LaTeX commands are preserved. Tracked deletions are reported at their current insertion/deletion point; deleted text has no remaining highlight.
+Line numbers and context refer to the fresh pre-upload source snapshot in tmp/advisor_review_20261022/overleaf_before/chapters, except the later live background snapshot saved as Notes/advisor_review_20261022/background_final.tex. They do not refer to the differing local ProofFinal chapters or PDF line numbers. A long paragraph occupies one source line. Positions are the rendered review panel's character offsets. Exact highlighted text was captured from the editor where available; a context window is explicitly labeled when no highlight was returned. Thread IDs are retained in the JSON evidence. Source offsets can drift after concurrent edits. Tracked edits remain pending; recording them does not accept them.
 
-No chapter prose, suggestions, or comment status was changed for this report. The inventory comes first; the background cross-check and proposed changes follow it.
+## Ben's current controlling instructions
 
-## 1. SNS chapter — chapters/60-sns.tex
+These supersede conflicting older campaign plans and the earlier ZCode prompt:
 
-### SNS-01 · line 6 · comment
+1. Reduce the dissertation, especially SADb and SNS. Quality and a clear argument take precedence over more text. Do not bury a cut by adding an equally long appendix.
+2. SNS does **not** require Methods/Results/Discussion headings. Lead with Ben's PhD-time combination of the Deng CPG and Li walker in AnimatLab: stepping-like movement in air, but no walking achieved by hand tuning. Use that limitation to motivate the knowledge/capability gaps in Ben's replies below. Follow with brief results of new software tools and concrete verification showing what works and what gap is closed. Future work belongs mainly in Chapter 7.
+3. Preserve the advisor's active review. Supply narrowly targeted changes wherever possible; prefer a few paragraphs or one section to replacement of entire chapters. Log moves/deletions, retain labels and citations, and do not overwrite Overleaf from stale local chapters.
+4. Bring Chapter 4 into line with verified recent torque-paper work from GitHub, distinguishing new measurements, uncorrected estimates, completed reductions, and predicted results.
+5. Preserve Chapter 3's isometric-force figures and MATLAB figures. Reports and prompts stay local; **never upload CHATGPT_REPORT or handoff/administrative files to Overleaf.**
 
-**Highlighted text:**
+## Advisor comments and tracked changes
+
+## 10-introduction.tex
+
+### INTRO-01 · line 8 · comment · 14 October, 10:59 am
+
+**Highlighted source:**
 
 ```latex
-Two definitions cover most of the neuroscience vocabulary used below. First, the locomotor controller is a two-level central pattern generator: a rhythm generator sets the timing of the step cycle, and a pattern-formation layer shapes that timing into phase-appropriate activation of antagonist muscle groups \citep{rybak_modelling_2006}. Each leg's rhythm generator is a pair of mutually inhibiting antagonist populations, one extensor and one flexor, so that only one is strongly active at a time. Second, in the non-spiking (graded) formulation used for most of this work, each neuron is electrically a nonlinear RC circuit: synaptic current charges a membrane capacitance through a leak conductance, and the resulting membrane voltage, tens of millivolts, is both the neuron's state and its output \citep{nourse_sns_2023}. Graded chemical synapses couple these units: a depolarized presynaptic cell opens a conductance in the postsynaptic membrane whose sign makes the connection excitatory or inhibitory. The sensory channels that close the loop are the muscle afferents, Ia signaling muscle length and velocity, Ib signaling muscle force, and group II signaling length, together with heel and toe contact sensors.
+Artificial
 ```
 
-**Advisor — 21 October, 11:48 am:**
+**Advisor — 14 October, 10:59 am:**
 
-> So many details and I don't understand what the goal is. What is the gap in knowledge? What did you do to fill it?
+> This paragraph does a great job identifying one of the gaps of knowledge you worked to fill, but there are a few others you can worked on too.
 
-### SNS-02 · line 8 · comment
 
-**Highlighted text:**
+### INTRO-02 · line 12 · tracked edit · 22 October, 9:38 am
+
+**Context near the review anchor (not an exact highlight):**
 
 ```latex
-the reflex-based and learned alternatives \citep{geyer_musclereflex_2010, song_deep_2021} are treated there.
+rque data, so even the nominal torque envelope of the robot leg rested on unverified calculations.
+
+There are additional gaps concerning the development of more detailed neural control models of locomotion and balance. No simulation pipeline existed for closing the loop between a musculoskeletal robot model of this kin
 ```
 
-**Advisor — 21 October, 12:45 pm:**
+**Pending advisor edit:**
+
+```text
+Changed: The remaining
+to There are additional
+```
+
+
+### INTRO-03 · line 12 · tracked edit · 22 October, 9:38 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+rque envelope of the robot leg rested on unverified calculations.
+
+There are additional gaps concerning the development of more detailed neural control models of locomotion and balance. No simulation pipeline existed for closing the loop between a musculoskeletal robot model of this kind and a biologically grounded neu
+```
+
+**Pending advisor edit:**
+
+```text
+Added: ing
+```
+
+
+### INTRO-04 · line 12 · tracked edit · 22 October, 9:36 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+elope of the robot leg rested on unverified calculations.
+
+There are additional gaps concerning the development of more detailed neural control models of locomotion and balance. No simulation pipeline existed for closing the loop between a musculoskeletal robot model of this kind and a biologically grounded neural cont
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: controller
+to development of more detailed neural control models of locomotion and balance
+```
+
+
+### INTRO-05 · line 12 · tracked edit · 22 October, 9:36 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+ existed for closing the loop between a musculoskeletal robot model of this kind and a biologically grounded neural controller. The neuromechanical modeling literature provides the ingredients, including two-level spinal central pattern generator architectures \citep{rybak_modelling_2006, mccrea_organization_2008}, neu
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: realistic
+to grounded
+```
+
+
+### INTRO-06 · line 12 · tracked edit · 22 October, 9:37 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+}, neuromechanical simulation frameworks \citep{markin_afferent_2010}, and synthetic nervous system design tools \citep{nourse_sns_2023}, but it does not provide their assembly for a BPA-driven bipedal robot with human-like muscle routing. 
+
+Wiring realistic feedback into such a controller exposes a fourth gap, this on
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: tooling
+to design tools
+```
+
+
+### INTRO-07 · line 12 · comment · 22 October, 9:40 am
+
+**Highlighted source:**
+
+```latex
+but it does not provide their assembly for a BPA-driven bipedal robot with human-like muscle routing.
+```
+
+**Advisor — 22 October, 9:40 am:**
+
+> expand
+
+
+### INTRO-08 · line 12 · comment · 22 October, 9:37 am
+
+**Highlighted source:**
+
+```latex
+their
+```
+
+**Advisor — 22 October, 9:37 am:**
+
+> undefined
+
+
+### INTRO-09 · line 12 · tracked edit · 22 October, 9:41 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+t it does not provide their assembly for a BPA-driven bipedal robot with human-like muscle routing. 
+
+Wiring realistic feedback into such a controller exposes a fourth gap, this one in the literature rather than in methods: the physiological properties of the group Ia, group Ib, and group II afferents that should infor
+```
+
+**Pending advisor edit:**
+
+```text
+Added: 
+```
+
+
+### INTRO-10 · line 14 · comment · 22 October, 9:42 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+it does not provide their assembly for a BPA-driven bipedal robot with human-like muscle routing. 
+
+Wiring realistic feedback into such a controller exposes a fourth gap, this one in the literature rather than in methods: the physiological properties of the group Ia, group Ib, and group II afferents that should inform 
+```
+
+**Advisor — 22 October, 9:42 am:**
+
+> Awkward
+
+
+### INTRO-11 · line 14 · comment · 22 October, 9:41 am
+
+**Highlighted source:**
+
+```latex
+hundreds if not thousands
+```
+
+**Advisor — 22 October, 9:41 am:**
+
+> You should have a good idea of how many now that you have gathered them.
+
+
+### INTRO-12 · line 16 · tracked edit · 22 October, 9:43 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+er or an animal researcher could draw them.
+
+Four gaps thus stood between the existing robot design methods and a robot that can walk under neural control: no actuator force model valid at arbitrary resting length, no quantified correction for the torque lost through brackets, tendons, and wrapping, no closed-loop simu
+```
+
+**Pending advisor edit:**
+
+```text
+Added: methods
+```
+
+
+### INTRO-13 · line 16 · comment · 22 October, 9:44 am
+
+**Highlighted source:**
+
+```latex
+no closed-loop simulation pipeline joining the robot's musculoskeletal model to a biologically realistic neural controller, and no consolidated resource for the afferent data that such a controller requires.
+```
+
+**Advisor — 22 October, 9:44 am:**
+
+> use mirror language here and for your chapter order. Your chapters should be in the order you present the gaps/you should present the gaps in the order your chapters are.
+
+
+### INTRO-14 · line 22 · comment · 22 October, 9:49 am
+
+**Highlighted source:**
+
+```latex
+In parallel, a biomimetic four-bar knee linkage with a migrating instantaneous center of rotation was designed and validated by Steele \citep{steele_development_2017, steele_biomimetic_2018, steele_biomimetic_2018-1}, and a canine-inspired quadruped platform, Muscle Mutt, formerly called DoggyDeux, was developed with antagonistic BPA pairs and synthetic nervous system control \citep{scharzenberger_design_2019}. That platform extended an earlier AARL demonstration of central pattern generator control of a pneumatically actuated robot \citep{hunt_development_2017}.
+```
+
+**Advisor — 22 October, 9:49 am:**
+
+> It is not clear how this work connects to the Biomimetic Humanoid Project and how your work builds on it.
+
+
+### INTRO-15 · line 26 · comment · 22 October, 9:49 am
+
+**Highlighted source:**
+
+```latex
+first two gaps
+```
+
+**Advisor — 22 October, 9:49 am:**
+
+> undef
+
+**Advisor — 22 October, 9:50 am:**
+
+> You should name them specifically
+
+
+### INTRO-16 · line 26 · comment · 22 October, 9:49 am
+
+**Highlighted source:**
+
+```latex
+fourth
+```
+
+**Advisor — 22 October, 9:49 am:**
+
+> undef
+
+
+### INTRO-17 · line 26 · comment · 22 October, 9:50 am
+
+**Highlighted source:**
+
+```latex
+third
+```
+
+**Advisor — 22 October, 9:50 am:**
+
+> undef
+
+
+### INTRO-18 · line 41 · tracked edit · 22 October, 9:54 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+are adapted from the author's publication of this work \citep{bolen_2026}.
+
+Chapter~\ref{ch:torque} improves the actuator model at the joint. It describes the robot leg model, the pinned-joint and biomimetic knee test stands, and the equipment used to collect isometric torque data; formulates the hybrid torque calculat
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: carries
+to improves
+```
+
+
+### INTRO-19 · line 41 · tracked edit · 22 October, 9:54 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+'s publication of this work \citep{bolen_2026}.
+
+Chapter~\ref{ch:torque} improves the actuator model at the joint. It describes the robot leg model, the pinned-joint and biomimetic knee test stands, and the equipment used to collect isometric torque data; formulates the hybrid torque calculation method and the improved
+```
+
+**Pending advisor edit:**
+
+```text
+Deleted: s
+```
+
+
+### INTRO-20 · line 41 · tracked edit · 22 October, 9:54 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+s publication of this work \citep{bolen_2026}.
+
+Chapter~\ref{ch:torque} improves the actuator model at the joint. It describes the robot leg model, the pinned-joint and biomimetic knee test stands, and the equipment used to collect isometric torque data; formulates the hybrid torque calculation method and the improved 
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: to
+to at
+```
+
+
+### INTRO-21 · line 41 · comment · 22 October, 9:55 am
+
+**Highlighted source:**
+
+```latex
+Gait2392
+```
+
+**Advisor — 22 October, 9:55 am:**
+
+> Too specific
+
+
+### INTRO-22 · line 45 · tracked edit · 22 October, 9:57 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+on living subjects. It opens with the preliminary AnimatLab bipedal walker results, whose hand-tuned, two-layer CPG produced suspended stepping, with neither weight-bearing walking nor any role for afferent feedback in weight-bearing motion demonstrated; that outcome set the verification-first approach the developed to
+```
+
+**Pending advisor edit:**
+
+```text
+Added: ,
+```
+
+
+### INTRO-23 · line 45 · comment · 22 October, 9:58 am
+
+**Highlighted source:**
+
+```latex
+nor any role for afferent feedback in weight-bearing motion demonstrated
+```
+
+**Advisor — 22 October, 9:58 am:**
 
 > huh?
 
-### SNS-03 · line 10 · comment
 
-**Highlighted text:**
+### INTRO-24 · line 45 · tracked edit · 22 October, 9:59 am
+
+**Context near the review anchor (not an exact highlight):**
 
 ```latex
-tooling
+eedback in weight-bearing motion demonstrated; that outcome set the verification-first approach the developed tools use. The tools themselves are the OpenSim-to-MuJoCo conversion of the robot's musculoskeletal model with its synthetic BPA knee, the Simulink SNS library built to prototype reflex topologies, the spiking-
 ```
 
-**Advisor — 21 October, 12:47 pm:**
-
-> tooling tends to be a manufacturing term. Software Tool Development is more like what you are looking for here.
-
-### SNS-04 · line 10 · tracked edit
-
-**Advisor's tracked edit:**
+**Pending advisor edit:**
 
 ```text
-Added: virtual
+Added: developed
 ```
 
-### SNS-05 · line 10 · tracked edit
 
-**Advisor's tracked edit:**
+### INTRO-25 · line 45 · tracked edit · 22 October, 9:59 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+t-bearing motion demonstrated; that outcome set the verification-first approach the developed tools use. The tools themselves are the OpenSim-to-MuJoCo conversion of the robot's musculoskeletal model with its synthetic BPA knee, the Simulink SNS library built to prototype reflex topologies, the spiking-neuron mirrors, 
+```
+
+**Pending advisor edit:**
 
 ```text
-Changed: that
-to this
+Changed: follow
+to use
 ```
 
-### SNS-06 · line 10 · comment
 
-**Highlighted text:**
+### INTRO-26 · line 45 · comment · 22 October, 10:00 am
+
+**Highlighted source:**
 
 ```latex
-built in any of several simulation engines
+the spiking-neuron mirrors
 ```
 
-**Advisor — 21 October, 12:49 pm:**
-
-> why would we need several?
-
-### SNS-07 · line 10 · comment
-
-**Highlighted text:**
-
-```latex
-answer
-```
-
-**Advisor — 21 October, 12:53 pm:**
-
-> This is all super awkward. You need to identify the gap in knowledge and how you fill that gap in knowledge. Much of what you wrote here should be saved for discussion, where you talk about the implications of the work.
-
-The anchor is the word “answer” at the end of the long introductory paragraph on the virtual laboratory; the comment explicitly addresses that broader framing.
-
-### SNS-08 · line 14 · tracked edit
-
-**Advisor's tracked edit:**
-
-```text
-Deleted: Preliminary Results:
-```
-
-### SNS-09 · line 20 · comment
-
-**Highlighted text:**
-
-```latex
-verification-first approach
-```
-
-**Advisor — 21 October, 12:59 pm:**
-
-> I don't understand the connection.
-
-### SNS-10 · line 24 · comment
-
-**Highlighted text:**
-
-```latex
-build order
-```
-
-**Advisor — 21 October, 1:02 pm:**
+**Advisor — 22 October, 10:00 am:**
 
 > huh?
 
-### SNS-11 · line 26 · comment
 
-**Highlighted text:**
+### INTRO-27 · line 45 · tracked edit · 22 October, 10:02 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+, and the cross-platform verification protocol that ties the implementations together. Each tool is validated before the complete model is assembled. The stimulus and deletion experiments complete the validation process, and the chapter closes by discussing a five-stage training curriculum, the spiking-neuron mirrors, 
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: demonstrated on the fundamental exercises that establish what it does and does not show: cross-engine reproduction of the contact-driven rhythm core, headless re-runs of the archived AnimatLab reference models, the BPA-actuated walker in MuJoCo, a gait-validation sweep against a locomotion reference library, and a comparison of the production walker variants
+to validated before the complete model is assembled
+```
+
+
+### INTRO-28 · line 45 · tracked edit · 22 October, 10:02 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+alidated before the complete model is assembled. The stimulus and deletion experiments complete the validation process, and the chapter closes by discussing a five-stage training curriculum, the spiking-neuron mirrors, and the new tools the program leaves other researchers.
+
+Chapter~\ref{ch:overall} discusses the work 
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: demonstrations
+to validation process
+```
+
+
+### INTRO-29 · line 45 · tracked edit · 22 October, 10:03 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+ulus and deletion experiments complete the validation process, and the chapter closes by discussing a five-stage training curriculum, the spiking-neuron mirrors, and the new tools the program leaves other researchers.
+
+Chapter~\ref{ch:overall} discusses the work as a whole. It shows how the four chapters work together 
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: the
+to a
+```
+
+
+### INTRO-30 · line 45 · comment · 22 October, 10:03 am
+
+**Highlighted source:**
+
+```latex
+spiking-neuron mirrors
+```
+
+**Advisor — 22 October, 10:03 am:**
+
+> again, huh?
+
+
+### INTRO-31 · line 47 · tracked edit · 22 October, 10:04 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+s the program leaves other researchers.
+
+Chapter~\ref{ch:overall} discusses the work as a whole. It shows how the four chapters work together to develop improved biomimetic humanoid robots. Its also scopes the future work these results enable for other researchers, from BPA characterization and routing expansion throug
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: opens with the outcome, that improved first-pass robot design is now achievable, and attributes it: the design factors that remove the rigid-body idealization, the improved BPA characterization, the tiered attachment and routing optimization, the sensory afferent database, and the new neuromechanical simulation tools
+to shows how the four chapters work together to develop improved biomimetic humanoid robots
+```
+
+
+### INTRO-32 · line 47 · tracked edit · 22 October, 10:08 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+e. It shows how the four chapters work together to develop improved biomimetic humanoid robots. Its also scopes the future work these results enable for other researchers, from BPA characterization and routing expansion through database and simulation tools to real-time neural control of the physical robot. Chapter~\re
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: remaining subsections
+to also
+```
+
+
+### INTRO-33 · line 47 · tracked edit · 22 October, 10:08 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+s how the four chapters work together to develop improved biomimetic humanoid robots. Its also scopes the future work these results enable for other researchers, from BPA characterization and routing expansion through database and simulation tools to real-time neural control of the physical robot. Chapter~\ref{ch:concl
+```
+
+**Pending advisor edit:**
+
+```text
+Added: s
+```
+
+
+### INTRO-34 · line 47 · tracked edit · 22 October, 10:08 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+ other researchers, from BPA characterization and routing expansion through database and simulation tools to real-time neural control of the physical robot. Chapter~\ref{ch:conclusion} consolidates the principal contributions of the dissertation. Figure~\ref{fig:roadmap} summarizes the flow.
+
+\begin{figure}[htbp]
+\cent
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: tooling
+to tools
+```
+
+
+## 15-background.tex
+
+### BG-03 · line 36 · comment · 22 October, 10:42 am
+
+**Highlighted source:**
 
 ```latex
 \begin{figure}[htbp]
 ```
 
-**Advisor — 21 October, 1:00 pm:**
+**Advisor — 22 October, 10:42 am:**
 
-> Overlapping text in figure
+> Motor center is a little off
 
-Figure anchor: `pipeline.pdf`, caption “Simulation-to-robot pipeline,” label `fig:pipeline` (source lines 26–31).
 
-### SNS-12 · line 35 · tracked edit
+### BG-01 · line 48 · tracked edit · 14 October, 1:31 pm
 
-**Advisor's tracked edit:**
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+th relationship. Predicting their force as a function of length and pressure is therefore the first improvement of the torque tools developed in this dissertation, and the state of that prediction is the subject of the next subsection.
+
+Figure~\ref{fig:festo_bpa_cad} shows the commercial actuator assembly used in the l
+```
+
+**Pending advisor edit:**
 
 ```text
-Deleted: The laboratory stands on tools this program did not build.
+Changed: requirement
+to improvement
 ```
 
-### SNS-13 · line 37 · comment
 
-**Highlighted text:**
+### BG-04 · line 100 · comment · 22 October, 10:45 am
+
+**Highlighted source:**
 
 ```latex
-The SADb of Chapter~\ref{ch:database} is the data resource among the existing tools \citep{bolen_sensory_2023}. Its segments are the five-table Airtable base (Papers, Feedback, Models, Review Papers, and Recorders), the laboratory's Zotero libraries that feed it, citation mining in the Research Rabbit style that expanded it, and the laboratory's own packaged explorer application that distributes it. The SADb framed this chapter's benchmarks and validation measurements: its pathway records fix what each afferent class encodes and what each connection rule does, so the sensory channels, the reflex topologies, and the acceptance phenomena against which the controllers are validated (the deafferentation and stimulation results cited in Section~\ref{sec:walker_variant_results}) are looked up rather than re-derived from the primary literature.
+\begin{figure}[htbp]
 ```
 
-**Advisor — 21 October, 1:06 pm:**
+**Advisor — 22 October, 10:45 am:**
 
-> This whole paragraph seems unnecessary.
+> This figure is confusing and probably not needed,
 
-### SNS-14 · line 39 · comment
 
-**Highlighted text:**
+### BG-05 · line 111 · comment · 22 October, 10:53 am
+
+**Highlighted source:**
 
 ```latex
-\subsection{New Tools}\label{sec:sns_new_tools}
+Gait2392
 ```
 
-**Advisor — 21 October, 1:08 pm:**
+**Advisor — 22 October, 10:53 am:**
 
-> Wait, that is all you are saying about the other tools? It is hard for the reader to understand the limitations and gaps without a deeper description of them.
+> I assume the 23 corresponds to the DoF. What about the 92?
 
-### SNS-15 · line 41 · comment
 
-**Highlighted text:**
+### BG-06 · line 113 · comment · 22 October, 10:49 am
+
+**Highlighted source:**
 
 ```latex
-Simulink blocks
+the full-muscle rat hindlimb model of \citet{young_analyzing_2019} makes that adjacent-joint dependence a first-class result of its attachment-point technique.
 ```
 
-**Advisor — 21 October, 1:11 pm:**
+**Advisor — 22 October, 10:49 am:**
 
-> Did you compare and discuss against the libraries myself and Fletcher made here?
+> awkward
 
 
-## 2. Database chapter — chapters/50-database.tex
+### BG-07 · line 113 · comment · 22 October, 10:49 am
 
-### DB-01 · line 6 · comment
+**Highlighted source:**
 
-**Highlighted text:**
+```latex
+first-class
+```
+
+**Advisor — 22 October, 10:49 am:**
+
+> primary?
+
+
+### BG-31 · line 113 · tracked edit · 22 October, 10:49 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+-point technique. OpenSim evaluates moment arms as muscle-length sensitivities of this kind, so the moment arms used throughout this dissertation are properties of the Gait2392 geometry rather than measured inputs \citep{delp_opensim_2007, seth_opensim_2018}.
+
+The human knee is the joint where these definitions are str
+```
+
+**Pending advisor edit:**
+
+```text
+Added: moment
+```
+
+
+### BG-09 · line 113 · comment · 22 October, 10:50 am
+
+**Highlighted source:**
+
+```latex
+used throughout this dissertation
+```
+
+**Advisor — 22 October, 10:50 am:**
+
+> not on your collected data though, right? Be more specific.
+
+
+### BG-10 · line 115 · comment · 22 October, 10:50 am
+
+**Highlighted source:**
+
+```latex
+stressed
+```
+
+**Advisor — 22 October, 10:50 am:**
+
+> huh?
+
+**Advisor — 22 October, 10:50 am:**
+
+> definitions are stressed?
+
+
+### BG-11 · line 115 · comment · 22 October, 10:51 am
+
+**Highlighted source:**
+
+```latex
+ Its instantaneous center of rotation migrates posteriorly with flexion, a behavior captured by four-bar linkage descriptions of the joint \citep{romero_four-bar_2020, steele_biomimetic_2018}, and \citet{romero_four-bar_2020} treat locating that moving center as a kinematic problem in its own right, solved with natural coordinates so that the answer stays cheap to evaluate when an optimization must recompute it many times
+```
+
+**Advisor — 22 October, 10:51 am:**
+
+> run on. awkward
+
+
+### BG-12 · line 115 · tracked edit · 22 October, 10:52 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+femoral joint give different moment arms for identical muscle paths, so the modeling choice must be determined carefully. The ISB joint coordinate system recommendations were written against exactly this definitional freedom, to keep reports of joint motion comparable across laboratories \citep{wu_isb_2002}. Throughout
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: matched to the question asked of it
+to determined carefully
+```
+
+
+### BG-13 · line 115 · comment · 22 October, 10:52 am
+
+**Highlighted source:**
+
+```latex
+written against
+```
+
+**Advisor — 22 October, 10:52 am:**
+
+> huh?
+
+
+### BG-14 · line 115 · comment · 22 October, 10:53 am
+
+**Highlighted source:**
+
+```latex
+judged
+```
+
+**Advisor — 22 October, 10:53 am:**
+
+> I'm now a little lost...which method does 2392 use?
+
+
+### BG-15 · line 119 · comment · 22 October, 10:55 am
+
+**Highlighted source:**
+
+```latex
+It is a one-degree-of-freedom four-bar linkage whose crossed links reproduce the posterior migration of the human knee's instantaneous center of rotation (ICR) during flexion, so the rolling-and-sliding behavior of the human joint emerges from the link geometry itself rather than from cams or gear profiles; the design was calculated to reproduce an average sliding-to-rolling ratio of 0.079 over a \ang{151} range of motion \citep{steele_biomimetic_2018-1}.
+```
+
+**Advisor — 22 October, 10:55 am:**
+
+> run on(s)
+
+
+### BG-16 · line 119 · comment · 22 October, 10:56 am
+
+**Highlighted source:**
+
+```latex
+which is exactly the behavior a torque prediction tool must capture
+```
+
+**Advisor — 22 October, 10:56 am:**
+
+> non sequitor
+
+
+### BG-17 · line 131 · tracked edit · 22 October, 10:58 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+mination_2019}. Hand placement of muscle origins and insertions was a painstaking and iterative task. This resulted in the creation of a placement optimization algorithm \citep{morrow_optimization_2020}, discussed in Chapter~\ref{ch:torque}. Figure~\ref{fig:aarl_opensim_comparison} shows the laboratory's bipedal skelet
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: , and the
+to . This resulted in the creation of a
+```
+
+
+### BG-18 · line 131 · tracked edit · 22 October, 10:58 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+ions was a painstaking and iterative task. This resulted in the creation of a placement optimization algorithm \citep{morrow_optimization_2020}, discussed in Chapter~\ref{ch:torque}. Figure~\ref{fig:aarl_opensim_comparison} shows the laboratory's bipedal skeleton beside the OpenSim muscle-routing reference developed fo
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: that replaced it is dissertation work
+to algorithm
+```
+
+
+### BG-19 · line 131 · comment · 22 October, 11:49 am
+
+**Highlighted source:**
+
+```latex
+igure~\ref{fig:aarl_opensim_comparison} shows the laboratory's bipedal skeleton beside the OpenSim muscle-routing reference developed for it
+```
+
+**Advisor — 22 October, 11:49 am:**
+
+> non seq
+
+
+### BG-20 · line 131 · tracked edit · 22 October, 10:59 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+_optimization_2020}, discussed in Chapter~\ref{ch:torque}. Figure~\ref{fig:aarl_opensim_comparison} shows the laboratory's bipedal skeleton beside the OpenSim muscle-routing reference developed for it.
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}[c]{0.67\textwidth}
+\centering
+\textbf{(A)}\par\smallskip
+\includegra
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: places
+to shows
+```
+
+
+### BG-21 · line 152 · tracked edit · 22 October, 11:50 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+n_determination_2019, morrow_optimization_2020}.}
+\label{fig:aarl_opensim_comparison}
+\end{figure}
+
+An overview of the mechanics of that master's study are described below. Moment arms were computed geometrically from attachment points in the body frame, as the cross product of a joint-axis unit vector with the vector 
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: T
+to An overview of t
+```
+
+
+### BG-22 · line 152 · tracked edit · 22 October, 11:50 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+{fig:aarl_opensim_comparison}
+\end{figure}
+
+An overview of the mechanics of that master's study are described below. Moment arms were computed geometrically from attachment points in the body frame, as the cross product of a joint-axis unit vector with the vector from the joint center to the muscle's line of action, as
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: worth recording because the dissertation's torque work reuses them
+to described below
+```
+
+
+### BG-23 · line 152 · tracked edit · 22 October, 11:51 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+t of a joint-axis unit vector with the vector from the joint center to the muscle's line of action, as described in Section~\ref{sec:bg_biomechanics}. PAM routings were then placed by hand in OpenSim beside the Gait2392 paths they imitate, moved to respect Festo BPA contraction limits and to keep actuators from interfe
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: the same construction
+to as
+```
+
+
+### BG-24 · line 152 · comment · 22 October, 11:56 am
+
+**Highlighted source:**
+
+```latex
+PAM routings were then placed by hand in OpenSim beside the Gait2392 paths they imitate, moved to respect Festo BPA contraction limits and to keep actuators from interfering with one another, and the result was saved as the gait2392\_robotbody model that the later chapters of this dissertation continue to refine \citep{bolen_bipedal_2019}. 
+```
+
+**Advisor — 22 October, 11:56 am:**
+
+> Delete? 
+
+
+### BG-25 · line 152 · comment · 22 October, 11:51 am
+
+**Highlighted source:**
+
+```latex
+routings
+```
+
+**Advisor — 22 October, 11:51 am:**
+
+> origin and insertion points?
+
+
+### BG-26 · line 152 · comment · 22 October, 11:51 am
+
+**Highlighted source:**
+
+```latex
+ moved to respect Festo BPA contraction limits
+```
+
+**Advisor — 22 October, 11:51 am:**
+
+> huh?
+
+
+### BG-27 · line 152 · comment · 22 October, 11:52 am
+
+**Highlighted source:**
+
+```latex
+and the result was saved
+```
+
+**Advisor — 22 October, 11:52 am:**
+
+> I don't need to be told that you saved a file.
+
+
+### BG-28 · line 152 · comment · 22 October, 11:56 am
+
+**Highlighted source:**
+
+```latex
+PAM routings were then placed by hand in OpenSim beside the Gait2392 paths they imitate, moved to respect Festo BPA contraction limits and to keep actuators from interfering with one another, and the result was saved as the gait2392\_robotbody model that the later chapters of this dissertation continue to refine \citep{bolen_bipedal_2019}. 
+```
+
+**Advisor — 22 October, 11:56 am:**
+
+> I feel like this is jumping all over the place
+
+
+### BG-29 · line 152 · comment · 22 October, 11:59 am
+
+**Highlighted source:**
+
+```latex
+followed
+```
+
+**Advisor — 22 October, 11:59 am:**
+
+> is calculated?
+
+
+### BG-30 · line 152 · comment · 22 October, 11:57 am
+
+**Highlighted source:**
+
+```latex
+The biceps femoris long head shows what the comparison exposed:
+```
+
+**Advisor — 22 October, 11:57 am:**
+
+> what comparison was made? You don't say
+
+
+### BG-32 · line 182 · tracked edit · 22 October, 12:05 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+tor controller developed in Chapter~\ref{ch:sns} is built directly on this two-level organization.
+
+
+\section{Sensory Feedback in Locomotion}\label{sec:bg_sensory}
+
+Sensory feedback is not a passive correction layer but an integral part of locomotor pattern generation. Reviews of afferent control of the CPG \citep{van_
+```
+
+**Pending advisor edit:**
+
+```text
+Deleted: \begin{sidewaysfigure}[p] \centering \includegraphics[width=0.97\textheight,height=0.82\textwidth,keepaspectratio]{circuit_literature.pdf} % ALT TEXT: A two-panel synthesis shows a bilateral spinal locomotor network % and a detailed knee-control motif with rhythm-generator, pattern-formation, % motoneuron, commissural, and proprioceptive pathways. \caption[Locomotor circuit architecture synthesized from the literature]{Locomotor circuit architecture synthesized from the literature. The bilateral organization combines rhythm-generation, pattern-formation, motoneuron, commissural, and proprioceptive pathways used across two-level CPG and neuromechanical models \citep{rybak_modelling_2006, rybak_organization_2015, shevtsova_modeling_2016, deng_neuromechanical_2019}. The detailed knee-control motif makes the reciprocal antagonist and sensory pathways explicit.} \label{fig:locomotor_circuit_synthesis} \end{sidewaysfigure}
+```
+
+
+### BG-33 · line 185 · tracked edit · 22 October, 12:04 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+stems to locomotion are the subject of ongoing study \citep{akay_relative_2021, akay_sensory_2020}. Tonic central and sensory stimuli have been shown to facilitate involuntary air-stepping in humans \citep{selionov_tonic_2009}, demonstrating that simple graded stimulation of motoneuronal and rhythmic circuits can elici
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: Of particular relevance to the tests planned in Chapter~\ref{ch:futurework}, t
+to T
+```
+
+
+### BG-34 · line 185 · tracked edit · 22 October, 12:07 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+ve and contact feedback channels designed in Chapter~\ref{ch:sns} follow this afferent organization.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.55\textwidth]{rybak_cpg_circuit.pdf}
+% ALT TEXT: A three-tier schematic shows the rhythm-generator half-centers
+% above a pattern-formation network of interneuro
+```
+
+**Pending advisor edit:**
+
+```text
+Deleted:  Three published circuits, reproduced in Figures~\ref{fig:deng_connectome}, \ref{fig:afferent_connectomes}, and~\ref{fig:shinohara_connectome}, place these afferent channels in their circuit context. The rat hindlimb controller of \citet{deng_neuromechanical_2019} is organized exactly as Section~\ref{sec:bg_neural} describes: a rhythm-generator half-center and a pattern-formation layer sit above a sensory--motor network in which extensor and flexor muscle receptors feed back through interneurons and Renshaw cells onto the same motoneurons the CPG drives. The human-scale model of \citet{dirusso_investigating_2023} carries the idea to a full lower limb: each agonist--antagonist muscle pair carries Ia, II, and Ib reflex populations with Renshaw cells, and pattern-formation nodes from the locomotor controller terminate on the same motoneuron pools. The cat interlimb model of \citet{shinohara_mechanisms_2025} adds the left--right half of the problem, coupling the two rhythm generators through V3 and commissural interneuron populations while force, length, and velocity feedback returns from every muscle. The schematics differ in animal, scale, and emphasis, but they wire the same afferent classes of this section into the circuit at the level each hypothesis concerns, whether that is the rhythm generator, the pattern-formation layer, or the motor pool. \begin{figure}[htbp] \centering \includegraphics[width=1.0\textwidth]{deng_cpg_connectome.pdf} % ALT TEXT: A four-panel circuit schematic: single-limb control hierarchy, % rhythm-generator configuration, pattern-formation network, and a % sensory-motor network with extensor and flexor receptors, interneurons, % Renshaw cells, motoneurons, and muscles. \caption[Deng two-layer CPG and sensory--motor network]{Synthetic nervous system of the rat hindlimb model: \textbf{(A)} single limb control hierarchy, \textbf{(B)} rhythm-generator configuration, \textbf{(C)} pattern-formation network, and \textbf{(D)} sensory--motor network. Reproduced from \citet[Fig.~4]{deng_neuromechanical_2019} under CC BY 4.0.} \label{fig:deng_connectome} \end{figure} \begin{figure}[htbp] \centering \includegraphics[width=0.62\textwidth]{dirusso_spinal_network.pdf} % ALT TEXT: A spinal network between a muscle and its antagonist with pattern % nodes, interneurons, sensory neurons, motoneurons, and two muscles. \caption[Di Russo spinal network with afferent feedback]{Spinal network between a muscle and its antagonist in the human locomotion model of \citet{dirusso_investigating_2023}: Ia, II, and Ib reflex populations with Renshaw cells, and pattern input from the locomotor controller onto the same motoneuron pools. Reproduced from \citet[Fig.~5]{dirusso_investigating_2023} under CC BY 4.0.} \label{fig:afferent_connectomes} \end{figure} \begin{figure}[htbp] \centering \includegraphics[width=0.62\textwidth]{shinohara_connectome.pdf} % ALT TEXT: A bilateral neuromusculoskeletal cat model: rhythm-generator and % pattern-formation layers, commissural and V3 interneurons, motoneuron % pools, and a cat hindlimb on a treadmill with labeled muscles. \caption[Shinohara bilateral neuromusculoskeletal model]{Neuromusculoskeletal cat model of \citet{shinohara_mechanisms_2025}: bilateral rhythm-generator and pattern-formation layers coupled by V3 and commissural interneurons, motoneuron pools for seven muscles per hindlimb, and force, length, and velocity afferent feedback. Reproduced from \citet[Fig.~1]{shinohara_mechanisms_2025} under CC BY 4.0.} \label{fig:shinohara_connectome} \end{figure} The two-level organization these circuits share descends from the modeling program of the Rybak group, and its foundational schematics are reproduced in Figures~\ref{fig:rybak_cpg_circuit} and~\ref{fig:shevtsova_spinal_circuit}. In the concept model of \citet{rybak_modelling_2006}, afferent feedback ascends to both the rhythm generator and the pattern-formation network, so a sensory perturbation can reset the rhythm at the generator or delete motoneuron activity at the pattern level without necessarily doing both, precisely the deletion phenomenology that motivated the two-level split. The extended model of \citet{shevtsova_modeling_2016} carries the same organization to the two-joint muscles, embedding dedicated pattern-formation populations for the bifunctional posterior biceps--semitendinosus and rectus femoris pools, and that biarticular convergence problem is the one a robot muscle routed across two joints presents to the controllers developed in this dissertation.
+```
+
+
+### BG-35 · line 210 · tracked edit · 22 October, 12:09 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+
+
+Computational neuroscience expresses hypotheses about locomotor circuitry as executable models. A computational model is a system of coupled equations in which elements of the schematic correspond to identified neural populations or pathways. The founding hypothesis is Brown's half-center: alternating flexor and exte
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: locomotor
+to computational
+```
+
+
+### BG-36 · line 210 · tracked edit · 22 October, 12:08 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+otheses about locomotor circuitry as executable models. A computational model is a system of coupled equations in which elements of the schematic correspond to identified neural populations or pathways. The founding hypothesis is Brown's half-center: alternating flexor and extensor activity arises from two reciprocally
+```
+
+**Pending advisor edit:**
+
+```text
+Deleted:  differential
+```
+
+
+### BG-37 · line 210 · tracked edit · 22 October, 12:09 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+tor circuitry as executable models. A computational model is a system of coupled equations in which elements of the schematic correspond to identified neural populations or pathways. The founding hypothesis is Brown's half-center: alternating flexor and extensor activity arises from two reciprocally inhibitory central 
+```
+
+**Pending advisor edit:**
+
+```text
+Deleted: every
+```
+
+
+### BG-38 · line 210 · tracked edit · 22 October, 12:09 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+cuitry as executable models. A computational model is a system of coupled equations in which elements of the schematic correspond to identified neural populations or pathways. The founding hypothesis is Brown's half-center: alternating flexor and extensor activity arises from two reciprocally inhibitory central populat
+```
+
+**Pending advisor edit:**
+
+```text
+Added: s
+```
+
+
+### BG-39 · line 210 · tracked edit · 22 October, 12:09 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+A computational model is a system of coupled equations in which elements of the schematic correspond to identified neural populations or pathways. The founding hypothesis is Brown's half-center: alternating flexor and extensor activity arises from two reciprocally inhibitory central populations with opposing bias \cite
+```
+
+**Pending advisor edit:**
+
+```text
+Deleted: s
+```
+
+
+### BG-40 · line 210 · tracked edit · 22 October, 12:09 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+omputational model is a system of coupled equations in which elements of the schematic correspond to identified neural populations or pathways. The founding hypothesis is Brown's half-center: alternating flexor and extensor activity arises from two reciprocally inhibitory central populations with opposing bias \citep{b
+```
+
+**Pending advisor edit:**
+
+```text
+Deleted:  an
+```
+
+
+### BG-41 · line 210 · tracked edit · 22 October, 12:09 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+m of coupled equations in which elements of the schematic correspond to identified neural populations or pathways. The founding hypothesis is Brown's half-center: alternating flexor and extensor activity arises from two reciprocally inhibitory central populations with opposing bias \citep{brown_intrinsic_1911}. Modern 
+```
+
+**Pending advisor edit:**
+
+```text
+Added: s
+```
+
+
+### BG-42 · line 210 · tracked edit · 22 October, 12:09 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+ equations in which elements of the schematic correspond to identified neural populations or pathways. The founding hypothesis is Brown's half-center: alternating flexor and extensor activity arises from two reciprocally inhibitory central populations with opposing bias \citep{brown_intrinsic_1911}. Modern instantiatio
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: ; the wiring diagram is not an illustration of the model, it is the model
+to s
+```
+
+
+### BG-43 · line 210 · comment · 22 October, 12:10 pm
+
+**Highlighted source:**
+
+```latex
+The founding hypothesis is Brown's half-center: alternating flexor and extensor activity arises from two reciprocally inhibitory central populations with opposing bias \citep{brown_intrinsic_1911}.
+```
+
+**Advisor — 22 October, 12:10 pm:**
+
+> non seq - this is specifically about CPGs
+
+
+### BG-44 · line 210 · comment · 22 October, 12:10 pm
+
+**Highlighted source:**
+
+```latex
+Modern instantiations of the half-center endow each neuron with persistent sodium channels, whose slow inactivation terminates each burst so that reciprocal inhibition switches the populations without any phasic input \citep{deng_neuromechanical_2019}. Rhythmogenesis, in this tradition, is a property of the intrinsic membrane dynamics, not of a clock elsewhere in the network.
+```
+
+**Advisor — 22 October, 12:10 pm:**
+
+> More stuff specific to CPGs, not Comp Neuro
+
+
+### BG-45 · line 212 · comment · 22 October, 12:11 pm
+
+**Highlighted source:**
+
+```latex
+The two-level organization described in Section~\ref{sec:bg_neural} is the field's current working architecture, and its models account for specific electrophysiological observations: the fictive-locomotion deletions reproduced by \citet{rybak_modelling_2006}, the genetically identified interneuron classes mapped onto the model by \citet{rybak_organization_2015}, and the organization of circuits controlling two-joint muscles reviewed by \citet{shevtsova_modeling_2016}. Coupling such circuits to musculoskeletal models shows how afferent feedback shapes CPG output \citep{markin_afferent_2010} and how biomechanics and sensory feedback regularize the behavior of different CPG architectures \citep{deng_biomechanical_2022}. Physiologically plausible models of human locomotion use the same machinery to dissect the relative contributions of reflexes and CPGs, with locomotor primitives, Ia, II, and Ib pathways, and Renshaw cells represented explicitly \citep{dirusso_investigating_2023}, and recent models address interlimb coordination under abrupt perturbations such as the sudden loss of ground support \citep{shinohara_mechanisms_2025}.
+```
+
+**Advisor — 22 October, 12:11 pm:**
+
+> Seems like it should be in the CPG section
+
+
+### BG-46 · line 214 · tracked edit · 22 October, 12:12 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+ abrupt perturbations such as the sudden loss of ground support \citep{shinohara_mechanisms_2025}.
+
+One way of interpreting computational neuroscience diagrams is from a controls tradition in which the block diagram is the controller itself. Each block is an identifiable neural population with conductance-based dynamic
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: For a mechanical engineer, the productive way to read this literature is as
+to One way of interpreting computational neuroscience diagrams is from
+```
+
+
+### BG-47 · line 214 · tracked edit · 22 October, 12:12 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+uroscience diagrams is from a controls tradition in which the block diagram is the controller itself. Each block is an identifiable neural population with conductance-based dynamics, and each connection is a synaptic conductance with a physiologically interpretable weight. The controller developed in Chapter~\ref{ch:sn
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: :
+to .
+```
+
+
+### BG-48 · line 214 · tracked edit · 22 October, 12:12 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+oscience diagrams is from a controls tradition in which the block diagram is the controller itself. Each block is an identifiable neural population with conductance-based dynamics, and each connection is a synaptic conductance with a physiologically interpretable weight. The controller developed in Chapter~\ref{ch:sns}
+```
+
+**Pending advisor edit:**
+
+```text
+Changed: e
+to E
+```
+
+
+### BG-49 · line 214 · tracked edit · 22 October, 12:13 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+dynamics, and each connection is a synaptic conductance with a physiologically interpretable weight. The controller developed in Chapter~\ref{ch:sns} comes from this tradition: its two-layer organization follows the rat hindlimb model of \citet{deng_neuromechanical_2019}, and its verification tests are drawn from the d
+```
+
+**Pending advisor edit:**
+
+```text
+Deleted:  The connection schematics published with these models are therefore worth reading as carefully as their equations.
+```
+
+
+### BG-50 · line 214 · comment · 22 October, 12:13 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+dynamics, and each connection is a synaptic conductance with a physiologically interpretable weight. The controller developed in Chapter~\ref{ch:sns} comes from this tradition: its two-layer organization follows the rat hindlimb model of \citet{deng_neuromechanical_2019}, and its verification tests are drawn from the d
+```
+
+**Advisor — 22 October, 12:13 pm:**
+
+> non seq
+
+
+### BG-02 · line 260 · tracked edit · 14 October, 2:05 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+cientific case are the same case: the robot is the instrument that makes these experiments possible.
+
+```
+
+**Pending advisor edit:**
+
+```text
+Deleted: these tools were
+```
+
+
+## 50-database.tex
+
+### DB-01 · line 6 · comment · 21 October, 11:13 am
+
+**Highlighted source:**
 
 ```latex
 and design needs parameters, not only principles
@@ -198,9 +1312,10 @@ and design needs parameters, not only principles
 
 > huh?
 
-### DB-02 · line 6 · comment
 
-**Highlighted text:**
+### DB-02 · line 6 · comment · 21 October, 11:13 am
+
+**Highlighted source:**
 
 ```latex
 For each sensory channel, the designer has to know what the receptor encodes, over what ranges of length, velocity, and force it operates and with what receptor dynamics,
@@ -210,9 +1325,10 @@ For each sensory channel, the designer has to know what the receptor encodes, ov
 
 > not sure what this has to do with the database
 
-### DB-03 · line 6 · comment
 
-**Highlighted text:**
+### DB-03 · line 6 · comment · 21 October, 11:14 am
+
+**Highlighted source:**
 
 ```latex
 whether the target is ipsilateral or contralateral
@@ -222,9 +1338,10 @@ whether the target is ipsilateral or contralateral
 
 > there are more options
 
-### DB-04 · line 6 · comment
 
-**Highlighted text:**
+### DB-04 · line 6 · comment · 21 October, 11:14 am
+
+**Highlighted source:**
 
 ```latex
 Every element of that specification was established experimentally
@@ -234,9 +1351,10 @@ Every element of that specification was established experimentally
 
 > There are still lots of unknowns
 
-### DB-05 · line 6 · comment
 
-**Highlighted text:**
+### DB-05 · line 6 · comment · 21 October, 11:16 am
+
+**Highlighted source:**
 
 ```latex
 literature
@@ -246,17 +1364,25 @@ literature
 
 > After this sentence, define the gap in knowledge and what you did to fill it.
 
-### DB-06 · line 6 · tracked edit
 
-**Advisor's tracked edit:**
+### DB-06 · line 6 · tracked edit · 21 October, 11:14 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+se, rat, and human preparations, and the results are distributed over an enormous primary literature. A controller designer is not the only reader stranded by that scatter. An animal researcher planning the next experiment wants to know which preparations established a pathway property, and how the property compares ac
+```
+
+**Pending advisor edit:**
 
 ```text
 Deleted:  rather than collected anywhere
 ```
 
-### DB-07 · line 6 · comment
 
-**Highlighted text:**
+### DB-07 · line 6 · comment · 21 October, 11:15 am
+
+**Highlighted source:**
 
 ```latex
 A controller designer is not the only reader stranded by that scatter. An animal researcher planning the next experiment wants to know which preparations established a pathway property, and how the property compares across species, before committing a preparation to it. A roboticist wants to know which receptor encoding a sensor should imitate. Those readers ask different questions of the same literature, and the literature answers none of them without being gathered, structured, and searchable first.
@@ -266,9 +1392,10 @@ A controller designer is not the only reader stranded by that scatter. An animal
 
 > This should probably be the beginning of the paragraph
 
-### DB-08 · line 8 · comment
 
-**Highlighted text:**
+### DB-08 · line 8 · comment · 21 October, 11:19 am
+
+**Highlighted source:**
 
 ```latex
 Reviews
@@ -278,9 +1405,10 @@ Reviews
 
 > The tone of this paragraph is as an opening paragraph, and yet it is the 2nd. Probably doesn't need to be here. Discussion of the reviews as a starting point probably goes in your 'methods' section of this chapter
 
-### DB-09 · line 10 · comment
 
-**Highlighted text:**
+### DB-09 · line 10 · comment · 21 October, 11:20 am
+
+**Highlighted source:**
 
 ```latex
 Neuroscience 2023 \citep{bolen_sensory_2023}
@@ -290,9 +1418,10 @@ Neuroscience 2023 \citep{bolen_sensory_2023}
 
 > I thought it was presented 2x, once without the AI help, and the other with.
 
-### DB-10 · line 10 · comment
 
-**Highlighted text:**
+### DB-10 · line 10 · comment · 21 October, 11:20 am
+
+**Highlighted source:**
 
 ```latex
 distilled mechanism notes
@@ -302,9 +1431,10 @@ distilled mechanism notes
 
 > huh?
 
-### DB-11 · line 10 · comment
 
-**Highlighted text:**
+### DB-11 · line 10 · comment · 21 October, 11:21 am
+
+**Highlighted source:**
 
 ```latex
 first-class record
@@ -314,9 +1444,10 @@ first-class record
 
 > huh?
 
-### DB-12 · line 10 · comment
 
-**Highlighted text:**
+### DB-12 · line 10 · comment · 21 October, 11:21 am
+
+**Highlighted source:**
 
 ```latex
 pathway records
@@ -326,9 +1457,10 @@ pathway records
 
 > huh?
 
-### DB-13 · line 10 · comment
 
-**Highlighted text:**
+### DB-13 · line 10 · comment · 21 October, 11:25 am
+
+**Highlighted source:**
 
 ```latex
 The database lives in a five-table Airtable base (Papers, Feedback, Models, Review Papers, and Recorders)
@@ -338,9 +1470,10 @@ The database lives in a five-table Airtable base (Papers, Feedback, Models, Revi
 
 > I thought you migrated it to a different system
 
-### DB-14 · line 10 · comment
 
-**Highlighted text:**
+### DB-14 · line 10 · comment · 21 October, 11:25 am
+
+**Highlighted source:**
 
 ```latex
 canonical
@@ -350,9 +1483,10 @@ canonical
 
 > database?
 
-### DB-15 · line 12 · comment
 
-**Highlighted text:**
+### DB-15 · line 12 · comment · 21 October, 11:26 am
+
+**Highlighted source:**
 
 ```latex
 This chapter and the controller chapter are therefore built as one program.
@@ -362,9 +1496,10 @@ This chapter and the controller chapter are therefore built as one program.
 
 > huh?
 
-### DB-16 · line 12 · comment
 
-**Highlighted text:**
+### DB-16 · line 12 · comment · 21 October, 11:28 am
+
+**Highlighted source:**
 
 ```latex
 The database informs the sensory channels of Chapter~\ref{ch:sns}: the afferent classes the controller monitors, the signal encoding each channel carries, and the connection rules its circuit implements all trace to records held here, and Section~\ref{sec:sadb_use} documents that mapping.
@@ -374,19 +1509,29 @@ The database informs the sensory channels of Chapter~\ref{ch:sns}: the afferent 
 
 > This is a discussion point for the end of the chapter.
 
-### DB-17 · line 13 · tracked edit
 
-**Advisor's tracked edit:**
+### DB-17 · line 13 · tracked edit · 21 October, 11:29 am
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+ follow describe how the corpus was assembled, audited, pruned, and packaged into its present form.
+
+Methods
+
+The audit and curation effort reported here began from a three-way reconciliation, because the database's three homes did not agree. The author's personal Zotero collection held 538 items, the AARL group librar
+```
+
+**Pending advisor edit:**
 
 ```text
 Added:  Methods
 ```
 
-The insertion point is on line 13; the inserted heading text “Methods” appears on line 14 in the current copied source.
 
-### DB-18 · line 14 · comment
+### DB-18 · line 14 · comment · 21 October, 11:33 am
 
-**Highlighted text:**
+**Highlighted source:**
 
 ```latex
 Methods
@@ -396,9 +1541,10 @@ Methods
 
 > You don't have to follow this exactly, but you should generally put this in the Chochrane form. https://www.cochrane.org/sites/default/files/uploads/PDFs/guide_to_the_contents_of_a_cochrane_methodology_protocol_and_review.pdf
 
-### DB-19 · line 16 · comment
 
-**Highlighted text:**
+### DB-19 · line 16 · comment · 21 October, 11:29 am
+
+**Highlighted source:**
 
 ```latex
 audit
@@ -408,9 +1554,10 @@ audit
 
 > ?
 
-### DB-20 · line 16 · comment
 
-**Highlighted text:**
+### DB-20 · line 16 · comment · 21 October, 11:37 am
+
+**Highlighted source:**
 
 ```latex
 The author's personal Zotero collection held 538 items, the AARL group library's Biology subtree held 911 items across 27 collections, and the Airtable base held 99 papers. Matching record by record on DOI and normalized title showed that the personal collection was essentially a subset of the group library (all 483 personal DOIs present) and that the Airtable base was a small curated subset rather than a mirror: 95 of its 99 papers resolved to records in the group library's Biology subtree, while 443 personal items had never been entered at all. The gap was imported in verified batches, with every written record re-read and checked after writing, bringing the Papers table to 532 records. The corpus then kept growing while curation caught up: citation mining in the style of Research Rabbit contributed a Crossref-verified digest of recent papers, newly saved references flowed in from the laboratory's Zotero libraries, and a bulk pass imported 372 papers auto-classified from the laboratory's staged collection of PDFs.
@@ -418,11 +1565,12 @@ The author's personal Zotero collection held 538 items, the AARL group library's
 
 **Advisor — 21 October, 11:37 am:**
 
-> This is super confusing. We don't need all these details. The airtable base is the database...it can't 'start' with anything if you 'start from the beginning'. Also, starting from the beginning does not mean you tell a chronological story of everything that happened for the database curation. Start with the finished product, then tell us what we need to know about how it could be re-created.
+> This is super confusing. We don't need all these details. The airtable base is the database...it can't 'start' with anything if you 'start from the beginning'. Also, starting from the beginning does not mean you tell a chronological story of everything that happened for the database curation. Start with the finished product, then tell us what we need to know about how it could be re-created. 
 
-### DB-21 · line 18 · comment
 
-**Highlighted text:**
+### DB-21 · line 18 · comment · 21 October, 11:37 am
+
+**Highlighted source:**
 
 ```latex
 note
@@ -432,9 +1580,10 @@ note
 
 > what are notes?
 
-### DB-22 · line 18 · comment
 
-**Highlighted text:**
+### DB-22 · line 18 · comment · 21 October, 11:39 am
+
+**Highlighted source:**
 
 ```latex
 A note is written from the paper's own text, from the abstract at minimum and from the full text when available, never from the curator's recollection of the paper;
@@ -444,9 +1593,10 @@ A note is written from the paper's own text, from the abstract at minimum and fr
 
 > You are giving details before giving us the big picture. What does that database look like? What is in it? How is it organized?
 
-### DB-23 · line 22 · comment
 
-**Highlighted text:**
+### DB-23 · line 22 · comment · 21 October, 11:40 am
+
+**Highlighted source:**
 
 ```latex
 approved
@@ -456,9 +1606,10 @@ approved
 
 > approved by who?
 
-### DB-24 · line 22 · comment
 
-**Highlighted text:**
+### DB-24 · line 22 · comment · 21 October, 11:40 am
+
+**Highlighted source:**
 
 ```latex
 left as off-topic or orphaned
@@ -472,9 +1623,10 @@ left as off-topic or orphaned
 
 > how were they identified?
 
-### DB-25 · line 24 · comment
 
-**Highlighted text:**
+### DB-25 · line 24 · comment · 21 October, 11:41 am
+
+**Highlighted source:**
 
 ```latex
 the laboratory
@@ -484,9 +1636,10 @@ the laboratory
 
 > don't you mean you? Take credit in your dissertation.
 
-### DB-26 · line 24 · comment
 
-**Highlighted text:**
+### DB-26 · line 24 · comment · 21 October, 11:42 am
+
+**Highlighted source:**
 
 ```latex
 curation tool, not a reader
@@ -497,154 +1650,298 @@ curation tool, not a reader
 > huh?
 
 
-## 3. Introduction — chapters/10-introduction.tex
+## 60-sns.tex
 
-### INTRO-01 · line 8 · comment
+### SNS-01 · line 6 · comment · 21 October, 11:48 am
 
-**Highlighted text:**
+**Highlighted source:**
 
 ```latex
-Artificial
+Two definitions cover most of the neuroscience vocabulary used below. First, the locomotor controller is a two-level central pattern generator: a rhythm generator sets the timing of the step cycle, and a pattern-formation layer shapes that timing into phase-appropriate activation of antagonist muscle groups \citep{rybak_modelling_2006}. Each leg's rhythm generator is a pair of mutually inhibiting antagonist populations, one extensor and one flexor, so that only one is strongly active at a time. Second, in the non-spiking (graded) formulation used for most of this work, each neuron is electrically a nonlinear RC circuit: synaptic current charges a membrane capacitance through a leak conductance, and the resulting membrane voltage, tens of millivolts, is both the neuron's state and its output \citep{nourse_sns_2023}. Graded chemical synapses couple these units: a depolarized presynaptic cell opens a conductance in the postsynaptic membrane whose sign makes the connection excitatory or inhibitory. The sensory channels that close the loop are the muscle afferents, Ia signaling muscle length and velocity, Ib signaling muscle force, and group II signaling length, together with heel and toe contact sensors.
 ```
 
-**Advisor — 14 October, 10:59 am:**
+**Advisor — 21 October, 11:48 am:**
 
-> This paragraph does a great job identifying one of the gaps of knowledge you worked to fill, but there are a few others you can worked on too.
+> So many details and I don't understand what the goal is. What is the gap in knowledge? What did you do to fill it?
 
-This is the first word of the BPA motivation paragraph; the advisor's comment concerns the paragraph's gap statement, not the word itself.
+**Ben's reply (author context, not an advisor instruction or independent verification) — 21 October, 2:09 pm:**
+
+> Gaps: Gait2392_simbody with CPG in Mujoco-SNS Toolbox
+> - Gait2392_robotbody (BPAs and BPA routing) with CPG
+> - Block-programming on a fast physics simulator (Animatlab no longer supported)
+> - Robot solidworks assembly with BPAs from Matlab and a neural controller
+> - Li walker with Deng neural controller and foot contact feedback.
 
 
-## 4. Background — chapters/15-background.tex
+### SNS-02 · line 8 · comment · 21 October, 12:45 pm
 
-### BG-01 · line 48 · tracked edit
+**Highlighted source:**
 
-**Advisor's tracked edit:**
+```latex
+the reflex-based and learned alternatives \citep{geyer_musclereflex_2010, song_deep_2021} are treated there.
+```
+
+**Advisor — 21 October, 12:45 pm:**
+
+> huh?
+
+
+### SNS-03 · line 10 · comment · 21 October, 12:47 pm
+
+**Highlighted source:**
+
+```latex
+tooling
+```
+
+**Advisor — 21 October, 12:47 pm:**
+
+> tooling tends to be a manufacturing term. Software Tool Development is more like what you are looking for here.
+
+
+### SNS-04 · line 10 · tracked edit · 21 October, 12:48 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+hapters~\ref{ch:methods}--\ref{ch:torque}.
+
+This chapter concerns tooling: its object is a verified virtual neuromechanical laboratory for the BPA-actuated robot. In this laboratory a controller can be built in any of several simulation engines, checked against its own re-implementations in the other engines and agains
+```
+
+**Pending advisor edit:**
 
 ```text
-Changed: requirement
-to improvement
+Added: virtual
 ```
 
-### BG-02 · line 303 · tracked edit
 
-**Advisor's tracked edit:**
+### SNS-05 · line 10 · tracked edit · 21 October, 12:48 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+tooling: its object is a verified virtual neuromechanical laboratory for the BPA-actuated robot. In this laboratory a controller can be built in any of several simulation engines, checked against its own re-implementations in the other engines and against the published behavior of the models it descends from, and then 
+```
+
+**Pending advisor edit:**
 
 ```text
-Deleted: these tools were
+Changed: that
+to this
 ```
 
-This deletion is anchored at the end of the current file (line 303), rather than recoverable in its original sentence. Treat it as a dangling tracked deletion; no original sentence is inferred.
+
+### SNS-06 · line 10 · comment · 21 October, 12:49 pm
+
+**Highlighted source:**
+
+```latex
+built in any of several simulation engines
+```
+
+**Advisor — 21 October, 12:49 pm:**
+
+> why would we need several?
+
+**Ben's reply (author context, not an advisor instruction or independent verification) — 21 October, 2:04 pm:**
+
+> Well, Mujoco doesn't have as good of a physics engine as HYFYDY, for example, and is limited to rigid tendons. Python also is harder to use because it is code without a GUI. Simscape multibody allows for importing parts from solidworks. Some sort of block-programming language like Simulink is a natural choice for building our style of connectome. Mujoco-SNS Toolbox allows for real-time control and computer in the loop commands.
 
 
-## 5. Does 15-background.tex already answer the framing comments?
+### SNS-07 · line 10 · comment · 21 October, 12:53 pm
 
-**Partly.** The background already supplies the broad scientific context and a proposed gap, but it does not complete the chapter-specific argument about software capability, prior libraries, and demonstrated scope. The judgments below compare the two current chapter texts; they are not an independent verification of the cited literature.
+**Highlighted source:**
 
-| Advisor concern | Existing background material | Assessment and use in SNS |
-|---|---|---|
-| What kind of controller is this, and why use it? (SNS-01/02) | Lines 180 and 194: two-level CPG organization and sensory channels. Lines 253–257: executable neural circuits and their verification phenomena. Lines 261–263: SNS lineage and SNS-Toolbox. | Already explained substantially. Cut the long SNS definitions paragraph (line 6) to essential terms and cross-reference these sections. |
-| How does this relate to reflex and learned controllers? (SNS-02) | Lines 269–273 compare reflex-based, learned, and explicit SNS approaches. | Already answered at background level. Replace “are treated there” with a specific cross-reference and one sentence identifying the chosen approach and reason. |
-| What gap does this dissertation address? (SNS-01/07) | Line 273 explicitly identifies the attempted combination of an anatomical two-level controller, validated pneumatic mechanics, and an eventual robot. SNS line 8 already repeats it. | The ingredients are present. Put a bounded, concrete gap statement at the beginning of SNS, followed immediately by what you implemented and what the tests establish. “Unclaimed” and “always” in the background are broad novelty claims; narrow them to the work reviewed unless a systematic comparison supports them. |
-| Why several software environments? (SNS-06) | Lines 277–279 describe OpenSim, SCONE, AnimatLab, MuJoCo, MyoConverter, and SNS-Toolbox and motivate simulation throughput. | Partly answered. This describes functions more than limitations. It does not explain Simulink/Simscape or why a single environment does not meet the project's requirements. Add a short capability comparison, not another software inventory. |
-| How are the new tools distinct from existing tools? (SNS-14) | Background establishes software and controller lineage, but no detailed comparison of prior and new capabilities. | Still needs work. State each missing interface or capability, its consequence for this project, your addition, and the demonstration that tests it. |
-| How does the Simulink library compare with Hunt/Fletcher's? (SNS-15) | No Fletcher comparison or description of these libraries appears in the background. Hunt citations discuss other contributions. | Unanswered. Inspect the actual libraries and their documentation before claiming new component functionality. A comparison table should distinguish reused equations, implementation differences, integration features, and genuinely added capability. |
-| Why does this work matter for experiments? | Lines 283 and 301–303 give the ethical and model-validation motivation. | Already covered broadly. SNS needs only a brief link to the specific interventions implemented here. Do not repeat the full ethical case. |
+```latex
+answer
+```
 
-The background itself also needs claim alignment: line 301 says the controller is verified against published stimulation and deletion phenomena, whereas SNS line 234 explicitly says the pattern-formation and motoneuron tests have not been run. Specify which phenomena have been tested and retain the others as planned work.
+**Advisor — 21 October, 12:53 pm:**
 
-## 6. Proposed changes — for review, not applied to chapter prose
+> This is all super awkward. You need to identify the gap in knowledge and how you fill that gap in knowledge. Much of what you wrote here should be saved for discussion, where you talk about the implications of the work.
 
-### A. Make the chapter answer a small set of questions
+**Ben's reply (author context, not an advisor instruction or independent verification) — 21 October, 2:00 pm:**
 
-The advisor is asking for a research argument even for a tools contribution. The useful chain is:
+> I thought that was for research hypothesis not for "here are some tools we made".
 
-**Existing capability → specific limitation → consequence for your research → your addition → evidence → remaining limitation.**
 
-A missing capability can motivate software development without inventing a biological hypothesis. The interfaces and verification procedures can be the contribution. Avoid treating a list of software combinations as sufficient proof of a field-wide knowledge gap.
+### SNS-08 · line 14 · tracked edit · 21 October, 3:34 pm
 
-Use your five combinations from the comment reply as candidate contributions, then consolidate them:
+**Context near the review anchor (not an exact highlight):**
 
-| Candidate gap, bounded to this project | Your addition | Evidence to retain in the main chapter |
-|---|---|---|
-| Existing model/controller files do not by themselves provide a verified closed loop on both the human and BPA robot representations. | Model conversion/repair, routing checks, BPA force interface, SNS coupling, and explicit identification of which body each controller drives. | One pipeline figure, geometry/force checks, a clear closed-loop example, and the supported-motion limitations. |
-| A graphical circuit-building workflow is needed alongside the script-based simulation workflow and CAD-derived mechanics. | Simulink component implementation, controller exports, mechanical imports, and the MuJoCo bridge. | Hunt/Fletcher comparison, one readable library/circuit figure, reflex response, bridge comparison, and the incomplete imports identified honestly. |
-| Reimplementation and coding changes can alter circuit behavior, so a controller port cannot be assumed equivalent. | Shared verification protocols across engines and the graded/spiking comparisons. | One agreement table and one informative failure example. Distinguish matched externally driven behavior from autonomous oscillation. |
+```latex
+e closing with the new tools and the program they enable for Chapter~\ref{ch:futurework}.
 
-The human-model CPG coupling, BPA robot coupling, CAD-based mechanism, and Li/Deng/contact combination must each be labeled **implemented**, **demonstrated**, **partially assembled**, or **planned** from the underlying records. The current text mixes models with similar names; a single model–controller–environment–status table would prevent readers from mistaking one demonstration for another.
+\section{The AnimatLab Bipedal Walker}\label{sec:prior_walker}
 
-### B. Replace the opening with a short gap-led introduction
+As preliminary work of this dissertation, built before the simulation toolchain of this chapter existed, the author and Morrow constructed a neuromechanical model of
+```
 
-Proposed draft (adapt after checking the prior-library comparison and the exact model identities):
+**Pending advisor edit:**
 
-> The preceding chapters establish how braided pneumatic actuator force and knee torque can be predicted. To study how neural control interacts with these mechanics, I also needed a simulation environment that connects anatomically organized spinal circuits to the robot's muscle routing and BPA force model. The existing tools reviewed in the background provide the neural, biomechanical, and physics components separately; using them for this robot requires implemented interfaces and tests of the behavior preserved through conversion.
->
-> In this chapter, I develop and evaluate those interfaces in MuJoCo with SNS-Toolbox and in a graphical Simulink workflow. I compare controller implementations across environments and examine whether selected behaviors persist when graded neural components are replaced with spiking components. The contribution is the integration and its verification, with the distinction from existing Simulink libraries established by a direct comparison.
->
-> The demonstrations establish specific component and closed-loop capabilities. They also identify failures of behavior transfer and limits of the assembled models. Supported stepping and progression are distinguished from unsupported walking, which has not been demonstrated.
+```text
+Deleted: Preliminary Results:
+```
 
-This replaces SNS lines 4–12 with a focused opening, rather than adding another introduction ahead of them. Cite the relevant background sections and supporting sources in the LaTeX version. The draft intentionally avoids claiming first-ever software functionality before the prior-library comparison.
 
-### C. Cut the main narrative substantially
+### SNS-09 · line 20 · comment · 21 October, 12:59 pm
 
-Aim initially to remove or relocate **about 40–50% of the main narrative**, preserving the evidence needed to assess the contributions. This is an editorial target, not a measured reduction already performed. The current source contains about 12,600 whitespace-separated tokens/words including LaTeX, tables, and captions; that is not a clean prose word count.
+**Highlighted source:**
 
-| Current SNS material | Proposed action |
+```latex
+verification-first approach
+```
+
+**Advisor — 21 October, 12:59 pm:**
+
+> I don't understand the connection.
+
+
+### SNS-10 · line 24 · comment · 21 October, 1:02 pm
+
+**Highlighted source:**
+
+```latex
+build order
+```
+
+**Advisor — 21 October, 1:02 pm:**
+
+> huh?
+
+
+### SNS-11 · line 26 · comment · 21 October, 1:00 pm
+
+**Highlighted source:**
+
+```latex
+\begin{figure}[htbp]
+```
+
+**Advisor — 21 October, 1:00 pm:**
+
+> Overlapping text in figure
+
+
+### SNS-12 · line 35 · tracked edit · 21 October, 1:04 pm
+
+**Context near the review anchor (not an exact highlight):**
+
+```latex
+peline}
+\end{figure}
+
+\subsection{Existing Tools and Data Resources}\label{sec:sns_existing_tools}
+
+OpenSim supplies the musculoskeletal modeling side, the robot's source model, and the moment-arm and torque standards the conversions are audited against \citep{delp_opensim_2007, seth_opensim_2018}. MuJoCo supplies the 
+```
+
+**Pending advisor edit:**
+
+```text
+Deleted: The laboratory stands on tools this program did not build.
+```
+
+
+### SNS-13 · line 37 · comment · 21 October, 1:06 pm
+
+**Highlighted source:**
+
+```latex
+The SADb of Chapter~\ref{ch:database} is the data resource among the existing tools \citep{bolen_sensory_2023}. Its segments are the five-table Airtable base (Papers, Feedback, Models, Review Papers, and Recorders), the laboratory's Zotero libraries that feed it, citation mining in the Research Rabbit style that expanded it, and the laboratory's own packaged explorer application that distributes it. The SADb framed this chapter's benchmarks and validation measurements: its pathway records fix what each afferent class encodes and what each connection rule does, so the sensory channels, the reflex topologies, and the acceptance phenomena against which the controllers are validated (the deafferentation and stimulation results cited in Section~\ref{sec:walker_variant_results}) are looked up rather than re-derived from the primary literature.
+```
+
+**Advisor — 21 October, 1:06 pm:**
+
+> This whole paragraph seems unnecessary. 
+
+
+### SNS-14 · line 39 · comment · 21 October, 1:08 pm
+
+**Highlighted source:**
+
+```latex
+\subsection{New Tools}\label{sec:sns_new_tools}
+```
+
+**Advisor — 21 October, 1:08 pm:**
+
+> Wait, that is all you are saying about the other tools? It is hard for the reader to understand the limitations and gaps without a deeper description of them.
+
+
+### SNS-15 · line 41 · comment · 21 October, 1:11 pm
+
+**Highlighted source:**
+
+```latex
+Simulink blocks
+```
+
+**Advisor — 21 October, 1:11 pm:**
+
+> Did you compare and discuss against the libraries myself and Fletcher made here?
+
+**Ben's reply (author context, not an advisor instruction or independent verification) — 21 October, 2:00 pm:**
+
+> No. You've never encouraged us to use Simulink.
+
+
+## What the advisor's new notes require
+
+The introduction has newly annotated undefined references to numbered gaps, unexplained spiking-neuron mirrors, an overly specific roadmap, and a weak connection to the Biomimetic Humanoid Project. Name the gaps directly and present them in chapter order. Explain Ben's work as a continuation of the humanoid project, rather than inserting adjacent laboratory projects without a clear connection.
+
+The final background batch also identifies CPG-specific material misplaced in the broader computational-neuroscience section (BG-31 and BG-43–45). Move or condense it rather than repeating it in both sections. The new background notes target the motor drawing, the graphical abstract's usefulness, Gait2392's name, the moment-arm discussion, joint-center modeling, run-on sentences, and the chronology of the master's model. State what is compared and how it supports the present work. Replace abstractions such as “first-class,” “definitions are stressed,” and “written against” with concrete descriptions. Do not simply add explanatory paragraphs after every “huh?”; replace or remove the unclear statement and its unnecessary detail.
+
+SADb should start with the finished resource: what it contains, its organization, and who can use it. Then give only the methods needed to reproduce the curation, adapting the advisor's Cochrane suggestion without pretending it was a registered systematic review. Verify the two conference presentations, AI-assisted workflow, decision authority, and actual inclusion criteria from evidence. Ben's role should be explicit. Drop the import chronology and operational record counts unless needed to interpret the final corpus.
+
+For SNS, the old suggestion to compress AnimatLab to one generic paragraph is superseded by Ben's requested causal narrative. The account must identify what Ben combined, what the air-stepping result shows, what failed under hand tuning, and why the new tools were needed. A compact capability/evidence table can replace repeated inventories. Verification should identify the expected behavior, the test or comparison, the observed outcome, and its limit. Do not expand this into a catalogue of all experiments.
+
+## GitHub torque update checked in this pass
+
+Fetch succeeded. The active branch is KneeTestSetup_BenBo_stw. During the pass HEAD and origin both reached **65b05aae161d6a4e87f561a38e57dbae90ec6f95** (22 October, 12:00 Pacific), committed by another session/user; this agent did not commit or pull over local changes. Re-fetch at the start of ZCode work because other machines remain active.
+
+- **fd1c13f4**, 22 October 02:22: updates Knee_Torque_Test/ProofFinal/Main.tex:540–542 with the six-point extensor cam-route sweep, explicitly pending reaction-point geometry and adjoint torque reduction. Read as manuscript status, not independently verified final torque values. Chapter 4 should not continue to say no full angle sweep exists if the test record confirms this sweep.
+- The **same manuscript still says “full sweep ... pending” at line 556 and “first ... points ... near full extension” at line 560**. Resolve this internal inconsistency against the actual test sheets before adapting it. Do not copy both claims.
+- **7862e4e2**, 22 October 04:31: adds ExtTest_3_01..03 records, updates Results_table_20mm.xlsx, Knee_Extensor_20mm.m, and Ext20mm_compare_20261022.png, and adds the new BiPam_pulley2_20261022.m plus sweep33/escalation records. These are newer than the six-point paragraph; inspect their provenance before selecting the current validation status.
+- The 21 October commits also update torque and margin surfaces and the transmission doctrine. PULLEY_SWEEP_DIRECTIVE_20261021.md is the current scope: nBPA and tackle parts each span 1–3, re-solve actuator sizes, account for moving-via load and Bowden compliance, and audit OpenSim path artifacts. The existence of CSVs/mats is not proof that every configuration is feasible or implemented in the simulation model.
+
+The dissertation's 30-torque.tex also differs between live Overleaf and local ProofFinal. Neither was overwritten in this pass. Integrate in a small evidence-backed patch against fresh Overleaf text, not by replacing the chapter with the torque manuscript.
+
+## Figure synchronization in this pass
+
+Uploaded the 11 revised PDF assets to their existing figs/10-introduction, figs/15-background, figs/60-sns, and figs/70-overall folders. Kept editable PPTX, EPS, alt text, and generators local. Chapter 3 assets were not uploaded or edited.
+
+Applied seven exact-fragment changes to figure references, sizing, captions, and the sentence introducing the functional neuron view. No whole chapter was uploaded. Subsequent layout and technical checks led to nine further exact-fragment changes to the two combined figures: shorter captions and 0.94-textwidth panels retain figure text above 10 pt, and “fix axial displacement” precisely identifies the transverse constraint. The separate patches are recorded in the JSON evidence. Advisor tracked edits and comment status were not accepted, rejected, or resolved.
+
+No report, prompt, or administrative file was uploaded to Overleaf; the fresh pre-upload ZIP contains no chatgpt_report file. The source snapshot revealed six divergent chapters (introduction, background, torque, SADb, SNS, and Discussion). Local drafts and live advisor edits must be reconciled, not treated as interchangeable. A fresh source ZIP is evidence at its download time, not a permanent canonical version.
+
+## ZCode execution contract
+
+Use Notes/new_session_prompt_20261022.md. It replaces the stale broad task list with a focused reduction/revision pass, explicit prose and caption limits, the new SNS structure, small patch batches, and evidence requirements. The old prompt and report are preserved locally in Notes/advisor_review_20261022. No chapter reduction has been claimed completed in this pass: ZCode is assigned that heavy revision work.
+
+## Final synchronization checks
+
+- **Live Overleaf:** 295-page current preview; Errors 0, Warnings 4. Both new combined-figure size warnings were eliminated. The four remaining warning cards concern pre-existing floats and a database table outside this figure-sync scope. The advisor's live source was not replaced with the different local draft.
+- **Local verification:** ProofFinal/build_advisor_figures_20261022_final/main.pdf, 298 pages; four MiKTeX passes exit 0, zero undefined references/citations, and zero missing files. This local draft differs from the live review copy, so its page count is not a shortening result and must not be presented as the live Overleaf page count.
+- Final live SNS and Discussion sources match the fresh pre-upload source plus only the intended figure patches (UTF-8 BOM ignored for comparison). The earlier copied introduction matches its intended single caption patch. No general prose rewrite was applied on Overleaf.
+- The final rendered pages for Figures 6.6 and 7.2 pass independent visual and technical review. Minimum editable figure text is 10.152 pt. Their lowest text lies at 672.51 and 671.01 pt on a 792 pt page, respectively. No clipping remains.
+- Chapter 3's 19 protected files remain byte-identical. Reports, prompts, native editing sources, and evidence stayed local. No advisor comments were resolved, no tracked edits were dispositioned, and no commits or pushes were made by this agent.
+- GitHub was fetched again at completion; HEAD and origin still match 65b05aae. The latest torque-manuscript source commit remains fd1c13f4. No remote change was merged over the dirty working tree.
+- Overleaf source/PDF export attempts later in the pass were blocked by Chrome. Final verification therefore uses the visible live PDF, compile UI, and exact source-copy comparisons, plus the independent local build. A completed earlier PDF download was inspectable, but it is not claimed as the final live PDF.
+
+### Per-directive disposition
+
+| Ben's request | Completed action / evidence |
 |---|---|
-| Opening, lines 4–12 | Replace with the short gap/contribution/scope opening. Delete the extended roadmap and move basic definitions to a cross-reference. |
-| Prior AnimatLab walker, lines 14–20 | Reduce to one paragraph: what existed, its relevant limitation, and the resulting requirement. Keep detailed architecture/history only if needed to interpret a retained comparison. |
-| Existing/new tools, lines 33–43 | Replace the overlapping inventories with one capability-gap-contribution table. Explain the environments through their roles and limitations. |
-| SADb paragraph, line 37 (SNS-13) | Delete the database composition and curation recap. If needed, retain one sentence pointing to the precise records used for sensory encoding and pathway selection. |
-| AnimatLab organization and GUI views, lines 45–86 | Keep the clearest circuit/body architecture view. Move redundant GUI screenshots, instrumented-run provenance, and assembly chronology to an appendix or repository documentation. |
-| Conversion, component library, body/controller ports, lines 88–142 | Keep interfaces, equations or references needed for reproduction, audit criteria, and key defects that affect interpretation. Move software counts, script mechanics, environment switches, and import troubleshooting to an appendix. |
-| Tuning curriculum, currently lines 410–421 in Discussion | Move the procedure and scoring to Methods. Summarize the stages once. Discussion should interpret the performance and failure modes. |
-| Results, lines 166–267 | Group by the questions above. Keep quantitative results and failures together. Move neural/body logging details and repeated “fundamental demonstration” justifications out of Results. |
-| Spiking methods/results/discussion, lines 144–156, 269–408 | Condense to motivation, calibration/design, principal outcome, and limitation. Retain a compact comparison table and one revealing figure; relocate exhaustive gate records, block-level residuals, conversion variants, and repeated baseline confirmations. |
-| BPA integration, lines 423–425 | Put the force-interface method in Methods; put quantitative demonstration outcomes in Results. Keep only the implications of quasi-static actuation in Discussion. |
-| Robot and walking status, lines 427–437 | Consolidate into one results/status table. State the support protocol once per distinct experiment. Keep a short, explicit unsupported-walking limitation. |
-| Closing summary, lines 439–443 | Replace repeated inventories with one paragraph stating which gaps were addressed, what the evidence supports, and what remains open. |
+| Review advisor contents, not the whole dissertation | Review Overview capture, exact anchors, pending edits, and relevant reply threads; no new full quality review. |
+| Update local CHATGPT_REPORT | Current 73-thread/51-edit inventory above; previous report preserved locally. |
+| Insert changed figures | Eleven PDF assets uploaded to the existing chapter figure folders; exact-fragment integration patches and Overleaf proof image saved in Notes/advisor_review_20261022/. |
+| Prepare ZCode for reduction and new SNS structure | Replaced Notes/new_session_prompt_20261022.md; explicit AnimatLab → gap → tools/results → verification sequence, limited future-work handoff, and no mandatory Methods/Results/Discussion headings. |
+| Avoid more bloated prose and captions | Prompt requires measured cuts, brief captions, comment-specific repairs, and independent review; both combined-figure captions shortened in this pass. |
+| Check latest torque work | Fetch and commit/source inspection recorded above, including contradictory sweep status and newer test/sweep records. No unverified numerical transplant. |
+| Keep active advisor review intact | No chapter-file uploads, wholesale replacements, comment resolution, or tracked-edit acceptance/rejection; future prose changes remain targeted local proposals. |
+| Never save reports on Overleaf | No report/prompt uploaded; only figure PDFs and targeted figure-related source fragments changed there. |
+| Protect isometric-force/MATLAB figures | All 19 protected Chapter 3 files retain their hashes. |
 
-Do not achieve the cuts by removing the limitations. Remove repeated inventories, development chronology, software provenance, and repeated defenses of the work's value. Some new comparison material is necessary, but it should replace existing exposition.
-
-A lean structure would be: **Motivation and contribution; Methods; Results organized by contribution; Discussion and limitations.** Fold the spiking comparison into that structure unless its scientific importance warrants a separate major section.
-
-### D. Resolve the localized SNS comments
-
-| Inventory item | Proposed response |
-|---|---|
-| SNS-01/02 | Put the gap first; cross-reference background for CPG, SNS, and controller alternatives. |
-| SNS-03 | Use “software tool development” or a concrete phrase naming the interface/library. Avoid repeatedly calling the work “tooling.” |
-| SNS-04/05 | The advisor proposes “virtual” and “this.” These are local wording edits already visible as suggestions; leave acceptance to your review. |
-| SNS-06 | Explain the complementary roles of fast scripted closed-loop simulation, graphical circuit construction, and CAD-derived mechanics. Support any comparative speed, accuracy, or tendon-model claim with an actual benchmark or documentation; your comment reply alone is not that evidence. |
-| SNS-07 | Move statements about portability, trust, and implications to Discussion; retain the actual purpose and testable contribution in the introduction. |
-| SNS-08 | Use a neutral prior-work heading; keep the distinction between prior preliminary work and current results in the prose. |
-| SNS-09 | Replace “verification-first approach” with the concrete connection: manual tuning left sensitivity unmeasured, so the current procedure records performance under parameter and input perturbations. |
-| SNS-10 | Replace “build order” with an outline of method components. Delete construction-order narration. |
-| SNS-11 | Redraw or simplify pipeline.pdf. Separate conversion, closed-loop simulation, and planned hardware deployment; reduce text inside boxes. This report records the comment but does not repair the figure. |
-| SNS-12/13 | Remove the generic disclaimer about pre-existing tools and the database recap. Cite prior tools where used and distinguish your additions directly. |
-| SNS-14/15 | Add the substantive limitations/prior-library comparison before claiming novelty for the new tools. |
-
-### E. Correct internal inconsistencies before polishing
-
-These are additional reading findings, not advisor quotations or independently audited simulation results:
-
-1. **Scoring direction:** line 421 says the no-cycle fallback sits below every genuine gait so a frozen model cannot win. Lines 212 and 236–239 identify a −25 fallback, while genuine gait scores in the tables are around −144 to −279 and higher is better. Those statements conflict. Explain an independent validity gate if one exists; otherwise the scoring rule needs correction. Do not merely change the wording to hide the conflict.
-2. **Replication versus validation:** cross-engine agreement verifies an implementation under the tested protocol; it does not by itself validate biological fidelity or unsupported walking. Use those terms consistently.
-3. **Spiking scope:** line 146 says the controllers above all compute with graded neurons, while line 142 describes spiking rhythm cells in the W2L core. Name the network and layer being converted instead of treating all families as uniformly graded.
-4. **Prediction versus observation:** line 404 calls a period-matched spiking controller “a short tuning effort away.” Replace that prediction with the measured mismatch and the specific tuning still required.
-5. **Method/results placement:** the curriculum belongs in Methods, and the BPA walker outcomes belong in Results. Their current placement makes the chapter's central achievement hard to locate.
-
-### F. Other-chapter follow-through
-
-For the database chapter, the same editorial principle applies: show the finished database and its structure first, then give reproducible selection/curation methods and results. Replace the audit/import/pruning chronology with sources, scope, inclusion/exclusion criteria, extraction fields, quality checks, responsibility, and final counts. Define “notes,” remove software-data jargon such as “first-class record,” distinguish the Airtable working base from the distributed explorer, confirm the presentation history, and identify who approved the curation decisions. Use “I” where you performed the work. The advisor's Cochrane link is preserved in DB-18; this report does not claim to have evaluated that external guide.
-
-For the introduction, retain the strong BPA motivation and add concise corresponding gap statements for the joint mechanics, database, and SNS contributions. For the background, retain the conceptual material but avoid repeating it in SNS; align the verification claims with the tests actually reported.
-
-## 7. Recommended revision order
-
-1. Verify the Hunt/Fletcher comparison and model–controller–environment identities.
-2. Replace the SNS opening and establish the contribution/status table.
-3. Reorganize Methods and Results around those contributions.
-4. Move supporting technical detail to the appendix and remove repeated material.
-5. Resolve the scientific/score inconsistencies, simplify the pipeline figure, and then edit sentence-level wording.
-
-This report proposes the revisions; it does not rewrite the dissertation chapter or accept/resolve the advisor's review items.
+Start the new ZCode session using the entire prompt file. It is a handoff for work still to do, not a claim that SADb/SNS reduction or torque revision has already been completed.
