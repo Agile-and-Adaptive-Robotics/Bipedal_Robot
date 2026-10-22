@@ -1,0 +1,224 @@
+OPT_PULLEY_SMOKE=1: tiny budgets, solvers on one core (UseParallel false), the Opt_sanity_pulley geometry self-check, no result save.
+The algorithm will be calculating Torque at 100 different joint positions.
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+SWEEP33 smoke sub-grid: nBPA list [1], G list [2].
+SMOKE: building the Opt_sanity_pulley geometry (92 orientations).
+SMOKE identity check: F_p      relative difference = 2.885e-16
+SMOKE identity check: mA_p     relative difference = 0.000e+00
+SMOKE identity check: Torque_p relative difference = 2.839e-16
+SMOKE closure check (G = 2): max |kSpr*gama - F_BPA/G| = 1.137e-13 N, max |(2*PulleyTravel - DeltaL) - gama| = 1.772e-17 m
+SMOKE sanity-geometry check PASSED.
+Pulley config sweep ON: 1 x 1 = 1 configs, one dated mat per config.
+SWEEP33 corridor: nBPA = 1 forces ctx.BPAcount = 1 (ONE route corridor, perRouteN = 1: a true single-BPA design, NOT the nB = 2 problem in disguise).
+
+===== Transmission config 1 of 1: nPulleyBPA = 1, tackleLineParts (G) = 2, mode = moving_via =====
+Corner seed (lower-tibia p2): rest = 0.7312 m from pathLength0(5 deg) = 0.7982 m.
+Seeding surrogateopt with 7 initial points.
+Scalar objective function
+Number of variables: 8
+Number of integer constraints: 0
+Number of linear inequality constraints: 0
+Number of linear equality constraints: 0
+Number of nonlinear inequality constraints: 8
+
+F-count    Time            Best               Current          Trial
+          (seconds)    (Fval, Infeas)       (Fval, Infeas)     type
+   1         6.74      (-,  2.0015e-01)     (-,  2.0015e-01)   initial
+   2         10.79     ( 1.4017e+01, -)     ( 1.4017e+01, -)   initial
+   3         13.40     ( 1.4017e+01, -)     (-,  3.2947e-02)   initial
+   4         15.50     ( 1.4017e+01, -)     ( 1.8318e+01, -)   initial
+   5         17.68     ( 1.4017e+01, -)     ( 1.4079e+01, -)   initial
+   6         19.77     ( 1.4017e+01, -)     ( 1.6105e+01, -)   initial
+   7         21.73     ( 1.4017e+01, -)     (-,  1.5647e+00)   initial
+   8         23.53     ( 1.4017e+01, -)     (-,  2.4149e+00)   random 
+   9         25.24     ( 1.4017e+01, -)     (-,  2.0839e+00)   random 
+  10         27.05     ( 1.4017e+01, -)     (-,  2.3908e+00)   random 
+  11         28.82     ( 1.4017e+01, -)     (-,  1.5181e+00)   random 
+  12         30.39     ( 1.4017e+01, -)     (-,  2.6185e+00)   random 
+  13         31.90     ( 1.4017e+01, -)     (-,  1.9499e+00)   random 
+  14         34.00     ( 1.4017e+01, -)     (-,  4.2443e-02)   random 
+  15         35.68     ( 1.4017e+01, -)     (-,  2.6116e+00)   random 
+  16         37.64     ( 1.4017e+01, -)     (-,  2.1945e+00)   random 
+  17         39.03     ( 1.4017e+01, -)     (-,  1.9020e+00)   random 
+  18         40.83     ( 1.4017e+01, -)     (-,  1.2007e+00)   random 
+  19         42.39     ( 1.4017e+01, -)     (-,  2.6262e+00)   random 
+  20         44.31     ( 1.4017e+01, -)     (-,  1.1242e+00)   random 
+  21         46.09     ( 1.4017e+01, -)     (-,  9.4954e-01)   adaptive
+  22         47.59     ( 1.4017e+01, -)     (-,  8.0337e-01)   adaptive
+  23         49.52     ( 1.4017e+01, -)     (-,  2.4474e-01)   adaptive
+  24         51.30     ( 1.4017e+01, -)     (-,  1.8941e+00)   random 
+  25         53.08     ( 1.4017e+01, -)     (-,  3.5745e-01)   adaptive
+  26         54.75     ( 1.4017e+01, -)     (-,  3.2466e-01)   adaptive
+  27         56.54     ( 1.4017e+01, -)     (-,  1.8954e-01)   adaptive
+  28         58.38     ( 1.4017e+01, -)     (-,  5.3975e-01)   adaptive
+  29         59.88     ( 1.4017e+01, -)     (-,  8.6659e-01)   adaptive
+  30         61.76     ( 1.4017e+01, -)     ( 3.9558e+04, -)   adaptive
+
+F-count    Time            Best               Current          Trial
+          (seconds)    (Fval, Infeas)       (Fval, Infeas)     type
+  31         63.31     ( 1.4017e+01, -)     (-,  2.7948e+00)   random 
+  32         65.09     ( 1.4017e+01, -)     (-,  1.4869e+00)   random 
+  33         66.64     ( 1.4017e+01, -)     (-,  3.5483e-01)   adaptive
+  34         68.52     ( 1.4017e+01, -)     (-,  2.2381e-01)   adaptive
+  35         70.14     ( 1.4017e+01, -)     (-,  2.1946e+00)   random 
+  36         72.00     ( 1.4017e+01, -)     (-,  2.2027e+00)   random 
+  37         73.85     ( 1.4017e+01, -)     (-,  5.8547e-01)   adaptive
+  38         75.74     ( 1.4017e+01, -)     ( 6.5800e+04, -)   adaptive
+  39         77.30     ( 1.4017e+01, -)     (-,  2.5070e+00)   random 
+  40         79.38     ( 1.4017e+01, -)     (-,  1.3848e+00)   random 
+surrogateopt stopped because it exceeded the function evaluation limit set by 
+'options.MaxFunctionEvaluations'.
+
+Pattern search progress:
+ Iteration    Function evaluations       Best f       Mesh size     Max constraint
+
+                                      Max
+  Iter   Func-count       f(x)      Constraint   MeshSize      Method
+    0         1      14.0171            0            1    
+         1                       9      14.0171           0.001                  0
+    1         9      14.0171            0        0.001   Increase penalty
+         2                      60     0.349164           1e-05                  0
+    2        60     0.349164            0        1e-05   Increase penalty
+Optimization finished: mesh size less than options.MeshTolerance 
+and constraint violation is less than options.ConstraintTolerance.
+         2                      60     0.349164           1e-05                  0
+Pattern search finished.
+BPA-2 anchor targets (soft, weight 10): p1{2} = [-0.125000  0.135000 -0.033640] m, pEnd{2} = [-0.018411 -0.023291 -0.042133] m
+
+Two-route constraint values (BPA 1 + BPA 2, worst of both):
+p2 exclusion           = -0.020859547
+tibia collision        = -0.004599015
+femur collision        = -0.001424068
+series length          = -0.542859518
+wrap                   = -0.016000000
+tendon/wrap length     = +0.000000000
+relative strain        = -0.118854794
+route-route clearance  = -0.056253605
+Earlier-design objective = 25146.8
+Maximum nonlinear constraint = 0
+Maximum bound violation = 0
+
+Pattern search progress:
+ Iteration    Function evaluations       Best f       Mesh size     Max constraint
+
+                                      Max
+  Iter   Func-count       f(x)      Constraint   MeshSize      Method
+    0         1      25146.8            0            1    
+         1                       8      25146.8           0.001                  0
+    1         8      25146.8            0        0.001   Increase penalty
+         2                      60      3575.52           1e-05                  0
+    2        60      3575.52            0        1e-05   Increase penalty
+Optimization finished: mesh size less than options.MeshTolerance 
+and constraint violation is less than options.ConstraintTolerance.
+         2                      60      3575.52           1e-05                  0
+Pattern search finished.
+Refined objective = 3575.52
+Maximum nonlinear constraint = 0
+Maximum bound violation = 0
+Exit flag = 1
+BPA-2 anchor drift after refinement: p1{2} moved 2.3 mm, pEnd{2} moved 1.6 mm
+
+========== OPTIMIZED DESIGN VALUES (PULLEY) ==========
+surrogateopt exitflag    = 0
+patternsearch exitflag   = 1
+surrogate evaluations   = 40
+pattern evaluations     = 60
+fG                       = 14.0170555
+fBest                    = 3575.51534
+
+p (original), m; rows = [p1; pWrap; pEnd]:
+[-0.050000,  0.035000,  0.050000;
+ -0.029804, -0.005870,  0.028005;
+ -0.012240, -0.008870,  0.027870]
+
+p (optimized), m; rows = [p1; pWrap; pEnd]:
+[-0.125000,  0.135000,  0.074063;
+ -0.015538, -0.005870,  0.043816;
+ -0.018411, -0.038916,  0.042133]
+
+p (changed), m; optimized minus original:
+[-0.075000, +0.100000, +0.024063;
+ +0.014266, +0.000000, +0.015810;
+ -0.006171, -0.030046, +0.014263]
+wrap y-z line fraction at extension  = 0.947869
+wrap release found                  = 0
+first inactive wrap angle           = NONE IN MODELED RANGE
+
+Reverse-pulley transmission (MonoPam_pulley):
+nPulleyBPA (parallel BPAs, rig)     = 1
+route corridors modeled             = 1 (each carries 1 BPA line into the shared tackle)
+tackleLineParts = travel gain G     = 2
+routing mode                        = moving_via
+tackle exit row index               = 1
+Bowden envelope (report only in moving_via mode): boss dia = 7.0 mm, run clearance = 5.0 mm
+infeasible frames (both routes)     = 0 of 100
+slack frames (both routes)          = 0 of 100
+|F_ins| range, routes summed        = 253.086 to 490.805 N
+||ReactionF|| range, routes summed  = 253.178 to 491.237 N
+
+BPA and tendon lengths:
+number of parallel BPAs             = 1
+BPA radius source                    = scalar
+BPA radius range                     = 0.013000 to 0.013000 m
+rest length                         = 0.562507 m
+fully contracted length, kmax       = 0.419068 m
+maximum contraction fraction, KMAX  = 0.255000
+maximum BPA contraction travel      = 0.143439 m
+tendon length                       = 0.025000 m
+
+Muscle length over normal RoM:
+Lm at full extension (+10.000000 deg) = 0.529634 m
+Lm at full flexion   (-120.000000 deg) = 0.409253 m
+Lm flexion minus extension         = -0.120381 m
+absolute Lm difference             = 0.120381 m
+
+Rest-length check:
+restLmt           = 0.633444 m
+extensionDistance = 0.630113 m
+cRestLength       = -0.003331 m
+max Contraction/KMAX = 1.068426
+
+Off-axis torque relative to original BPA:
+maximum |original Tx|        = 29.678618 N m
+maximum |optimized Tx|       = 45.161164 N m
+maximum pointwise |Tx| excess= 15.482545 N m
+maximum |original Ty|        = 13.244732 N m
+maximum |optimized Ty|       = 15.599553 N m
+maximum pointwise |Ty| excess= 5.432703 N m
+
+Collision check at 4.747475 deg:
+constraint tolerance       = 1e-06 m
+all collision constraints feasible = 1
+p2 exclusion constraint    = -0.033244 m
+tibia collision constraint = -0.006186 m
+femur collision constraint = -0.003937 m
+series-length constraint   = -0.559176 m
+route-route clearance      = 1.000000 m (min separation demanded NaN m)
+min route-route separation = Inf m (worst over the sweep)
+routes checked             = 1 (BPA 2 = same-side p1, mirrored pEnd)
+binding route (worst)      = BPA 1
+min tibia clearance by route = 0.006186 / min femur clearance by route = 0.005437 / radius source              = scalar
+pWrap radius bpaRb         = 0.016000 m
+collision radius bpaRs     = 0.013000 m
+Xi3 wrap radius wRap       = 0.025000 m
+tendon radius              = 0.001000 m
+optimized tendon length    = 0.025000 m
+current muscle length Lm   = 0.559176 m
+Lm + two fittings          = 0.605113 m
+minimum tibia clearance    = 0.006186 m
+minimum femur clearance    = 0.005437 m
+extra femur clearance      = 0.001000 m
+worst tibia region         = outer profile
+worst tibia component      = BPA + fittings (radius 0.013000 m)
+worst tibia center, t1     = [-0.020811, -0.011095, 0.043550] m
+worst femur component      = BPA + fittings (radius 0.013000 m)
+worst femur center, femur  = [-0.029948, -0.422430, 0.045371] m
+=============================================
+min Contraction/KMAX = +0.229180
+max Contraction/KMAX = +1.068426
+
+Torque margin relative to human target (insertion torque):
+minimum margin fraction = +0.110365 (+11.04%)
+mean remaining shortfall = 0.000000 (0.00%)
+EXIT=0

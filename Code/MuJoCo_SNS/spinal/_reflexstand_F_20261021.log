@@ -1,0 +1,14 @@
+
+===== reflex-stand config F: {'ii_gain': 1.2, 'gamma': 0.0, 'aff': True, 'rig': 0.3} =====
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+reflex-stand: preload-FREE gravity-only standing solve (alpha bias); II setpoint = standing-pose length; BAL_* surrogate channels OFF; gamma_coact=0.0
+standing solve: nnls x in [0.00, 0.71], >0.1: 25 muscles
+  top: add_long_l=0.71, pect_l=0.34, glut_min1_l=0.34, glut_min2_l=0.31, tib_post_l=0.17, add_mag3_r=0.17, glut_min3_l=0.15, glut_med1_r=0.15
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+trunk-load staircase: [5.0, 10.0, 20.0] %BW steps, dwell 3.00 s from t=3.0 s (BW=769.7 N)
+[F] fell=0 comz_min=0.593 base_comz=0.63
+     5%BW: com_dz=-0.015 sway=0.048 ank_r=-16.8 feet=70.9% d_soleus=+0.002 d_vaslat=+0.005 actsum=58.2
+    10%BW: com_dz=-0.024 sway=0.072 ank_r=-17.0 feet=54.6% d_soleus=+0.003 d_vaslat=+0.005 actsum=58.2
+    20%BW: com_dz=-0.031 sway=0.090 ank_r=-17.0 feet=50.2% d_soleus=+0.003 d_vaslat=+0.005 actsum=58.2
+
+wrote _reflex_stand_results_20261021.json

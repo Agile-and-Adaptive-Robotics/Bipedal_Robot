@@ -1,0 +1,10 @@
+hipFlexDeg,adducLimDeg,abdLimDeg,source
+-15,20,-45,graded box = actuator_map_27.json rom_table_deg (hip_flexion [-15 110] hip_adduction [-45 20]); inside Ben AddMag full-adduction flexion band -25..85 deg (Add_Mag_Mesh_Opt.m:29-45); PENDING-BEN
+0,20,-45,inside Ben AddMag full-adduction flexion band (flexMin -25 flexMax 85 paired with full adduction -45..20); PENDING-BEN
+30,20,-45,inside Ben AddMag full-adduction flexion band; PENDING-BEN
+60,20,-45,inside Ben AddMag full-adduction flexion band; PENDING-BEN
+85,20,-45,band edge = Ben AddMag flexMax=85 deg still paired with the full adduction sweep; PENDING-BEN
+92.5,19.078784028338913,-42.927264063762555,quarter-ellipse taper sqrt(1-u^2) with u=(f-85)/25 beyond the AddMag band toward the graded flexion limit; PENDING-BEN
+100,16,-36,quarter-ellipse taper sqrt(1-u^2); PENDING-BEN
+107.5,8.7177978870813455,-19.615045245933027,quarter-ellipse taper sqrt(1-u^2); PENDING-BEN
+110,0,0,graded-box corner; combined full-flexion + full-abduction excluded as impractical per buildRoutingContext.m:26 note; PENDING-BEN

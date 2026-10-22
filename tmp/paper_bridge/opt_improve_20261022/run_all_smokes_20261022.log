@@ -1,0 +1,11 @@
+=== [1/5] BiPulley2 dry-run: deterministic replay gate over ALL 20 anchor mats ===
+exit=0 (dry-run gate)
+=== [2/5] BiPulley2 SMOKE mode=sweep (1 site, sub-grid {(1,1),(2,2)}, 60-eval budget) ===
+exit=0 (smoke sweep)
+=== [3/5] BiPulley2 SMOKE mode=escalate (ladder seed (2,2), 2 rungs, tiny budget) ===
+exit=0 (smoke escalate)
+=== [4/5] Opt_sanity_BiPulley (Ben's sanity gate, read-only run: G=1 identity 1e-8 / G=2 closure 1e-6) ===
+exit=0 (sanity BiPulley)
+=== [5/5] Flexor sweep33 SMOKE (OPT_PULLEY_SMOKE=1, sub-grid nB=1 G=2, embedded sanity checks) ===
+exit=1 (flexor sweep33 smoke)
+ALL SMOKES DONE Thu Oct 22 03:50:50 PDT 2026

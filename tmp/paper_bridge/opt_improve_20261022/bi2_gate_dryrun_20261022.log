@@ -1,0 +1,53 @@
+
+---- DETERMINISTIC REPLAY GATE (0.000 tolerance) ----
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -1 (d = +0), worstC +10 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -1 (d = +0), worstC +10 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -1 (d = +0), worstC +0.24229946334076527 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.99679446199179966 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.92879360101206543 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -1 (d = +0), worstC +0.31142889254782791 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -1 (d = +0), worstC +0.4308676606377031 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.99135922188331072 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.99638427902584248 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.92885198790126389 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.98938656399921987 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.99826314768444957 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.96961042636424943 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.99815511664874534 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.96452540967001632 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.98210648784165311 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.99652633302918803 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.942472446914981 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.9963103844960769 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.92888425908913752 (d = +0), worstC +0 (d = +0)
+  REPLAY GATE PASS: 20 of 20 anchor mat(s) reproduced exactly.
+
+================ BI PULLEY2 (20261022) PLAN ================
+Mode                = DRY-RUN (plan + replay gate only)
+Config grid         = nBPA [1 2 3] x G [1 2 3] (9 cells)
+Orientation grid    = 5 x 5 angles per muscle
+Stiffness defaults  = Xi0 0.005 m, Xi1 500000 N/m, Xi2 10000 N/m, wraps 6
+Torque target       = fmax * 5 cm nominal arm (documented heuristic)
+Muscles in manifest = 5
+  med_gas_r   opensim pts=3 cross=[3 3] frames=[femur_r tibia_r calcn_r] Fmax= 1558 N mode=moving_via
+    joints: [hinge; hinge]  ranges(deg): [-120 10; -50 20]
+    grid 5x5 angles; fmaxSource: gait2392_robotbody.osim max_isometric_force (1558 N)
+    notes: osim route med_gas_r: 3 points, cross = [3 3]; empty middle frame: duplicate crossing, transforms chained; calcn points shifted by the subtalar offset; crossing 1 = knee_r hinge (axis [0 0 1], pivot [0 0 0]); crossing 2 = ankle_r hinge (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0])
+  soleus_r    opensim pts=3 cross=[2 3] frames=[tibia_r calcn_r calcn_r] Fmax= 3549 N mode=moving_via
+    joints: [hinge; fixed]  ranges(deg): [-50 20; 0 0]
+    grid 5x5 angles; fmaxSource: gait2392_robotbody.osim max_isometric_force (3549 N)
+    notes: osim route soleus_r: 3 points, cross = [2 3]; duplicate insertion row appended; crossing-2 outputs inert; crossing 1 = ankle_r hinge (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 rigid (identity transform)
+  tib_ant_r   opensim pts=4 cross=[3 4] frames=[tibia_r calcn_r calcn_r] Fmax=  905 N mode=moving_via
+    joints: [hinge; fixed]  ranges(deg): [-50 20; 0 0]
+    grid 5x5 angles; fmaxSource: gait2392_robotbody.osim max_isometric_force (905 N)
+    notes: osim route tib_ant_r: 4 points, cross = [3 4]; duplicate insertion row appended; crossing-2 outputs inert; crossing 1 = ankle_r hinge (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0]); crossing 2 rigid (identity transform)
+  rect_fem_r  opensim pts=4 cross=[2 3] frames=[pelvis femur_r femur_r] Fmax= 1169 N mode=moving_via
+    joints: [hinge; fixed]  ranges(deg): [-15 110; 0 0]
+    grid 5x5 angles; fmaxSource: gait2392_robotbody.osim max_isometric_force (1169 N)
+    notes: osim route rect_fem_r: 4 points, cross = [2 3]; slot 3 = rigid clone; crossing-2 outputs inert; crossing 1 = hip_r hinge (axis [0 0 1], pivot [-0.0707 -0.0661 0.0835]); crossing 2 rigid (identity transform)
+  bifemsh_r   opensim pts=3 cross=[2 3] frames=[femur_r tibia_r tibia_r] Fmax=  804 N mode=moving_via
+    joints: [hinge; fixed]  ranges(deg): [-120 10; 0 0]
+    grid 5x5 angles; fmaxSource: gait2392_robotbody.osim max_isometric_force (804 N)
+    notes: osim route bifemsh_r: 3 points, cross = [2 3]; slot 3 = rigid clone; crossing-2 outputs inert; crossing 1 = knee_r hinge (axis [0 0 1], pivot [0 0 0]); crossing 2 rigid (identity transform)
+=============================================================
+DRY-RUN complete: plan resolved, replay gate executed. Set RUN_BATCH = true (or OPT_BPULLEY2_SMOKE=1) to execute.

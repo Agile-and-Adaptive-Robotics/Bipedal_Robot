@@ -445,3 +445,216 @@ to delete.
   mid-flight (45caa365 carries the code edits); still uncommitted for
   him: the s3q study logs/npzs/dbs, winner+verify jsons, gate record,
   and this status file.
+- 2026-10-21 CO-CONTRACTION STAND DESCENT stream (Ben's directive,
+  capability-first, correcting the s3q search order): "massively
+  activated antagonistic muscle groups should free-stand - heavily
+  activate antagonists so the torques balance (legs become rigid
+  struts), THEN reduce from there." DIRECT experiment run on the main
+  human model + cheap repeats on syn6/w2lvar (mechanism = the per-side
+  ALPHA hand-drive cells, uniform drive onto EVERY MN pool, via a new
+  default-off runner.py --alpha-stand hook; anchor re-checked
+  BIT-EXACT -161.56754173676563 after the edit,
+  _anchor_coactstand_20261021.log). PLAIN LANGUAGE, numbers first-hand
+  (full table + method: reports_20261020\balance\
+  COACT_STAND_DESCENT_20261021.md + coact_stand_*_20261021.json):
+
+  (1) EXISTENCE PROOF - NEGATIVE, and the gap is now MEASURED. At the
+  maximum drive the mechanism can deliver - every one of the 92 MN
+  pools saturated at activation 1.0 (act_sum 92.0, effort 0.9993,
+  co-contraction index 0.9999) - the model FALLS at rig 0, in ~0.4 s
+  after rig release (first divergence t=1.006 s: pelvis_rotation/
+  tilt + ankles + hips together; COM -8 cm at t=1.06 s; inverted heap
+  by ~2 s). Static torque probe at the standing pose with ALL
+  activations 1.0: the ANKLE carries a net -183/-187 N·m
+  PLANTARFLEXOR torque (gravity needs ~1) because the antagonist
+  capabilities are 4.4:1 (PF soleus -118.5 + med_gas -61.0 +
+  lat_gas -28.7 = -236 N·m vs DF tib_ant +34.5 + ext_dig +18.8 =
+  +53 N·m). Both ankles snap to -35..-66 deg within 0.1-0.3 s of
+  release, the body rises onto its toes, the COM passes the toe pivot,
+  and it cartwheels forward (knees pin at the +10 deg EXTENSION stop -
+  the knee IS torque-balanced at full co-activation, -8/+12 N·m, and
+  strut-holds; hips extensor-dominant R -153/L -18 N·m). Verdict per
+  Ben's taxonomy: NOT an activation->force ceiling; it is the
+  agonist/antagonist FORCE MISMATCH at the ankle (plus the unactuated
+  pelvis base). Balancing that ankle would need DF 1.0 vs PF ~0.23 -
+  no uniform drive can express it.
+
+  (2) DESCENT CURVE - there is no standing level to descend from.
+  7 levels (100/80/60/40/20/10/0% of the 5 nA lock; antagonist
+  activations 1.00 down to 0.30/0.45/0.63; act_sum 92.0 down to 52.7):
+  ALL FALL, stock + syn6 + w2lvar identically. The 56-s staircase
+  (lock then 6 steps down) topples in the FIRST lock window. The
+  "feet ~100% BW" numbers on fallen runs are the inverted heap
+  pressing its feet into the ground - artifacts, not standing loads.
+  Minimum level that still stands: NONE. The energy question (how
+  little co-contraction suffices) is upstream-blocked: free-standing
+  needs joint-specific ankle torque balancing (foot geometry /
+  DF reinforcement / graded PF:DF ratios - which the NNLS standing
+  solve already computes), not more uniform drive.
+
+  (3) Probes: symmetric start pose falls identically (ankles -65/-69
+  deg by t=0.9 s); the coact knob at max (1.0) also falls - by design
+  it caps antagonist drive at the extensor posture weight (act_sum
+  54.3), far below the massive regime. syn6 + w2lvar: same mechanism,
+  same all-fall verdict (min antagonist mean 0.86/1.00 at their locks).
+  W2L Hill robot + BPA walker NOT run (no ALPHA/coact mechanism exists
+  in those stacks; their unrigged records already answer capability).
+
+  Fresh-process verification: MAX lock and the 40% rung re-run
+  standalone reproduce the in-process matrix numbers EXACTLY (92.0/
+  104.3/-0.641; 83.2/104.8/-0.66). M1 gate for this stream: SHIP
+  (record reports_20261020\balance\M1_GATE_COACT_20261021.md;
+  in-session execution, same no-spawn deviation). Files for Ben to
+  commit: runner.py --alpha-stand hook, _coact_stand_20261021.py,
+  _coact_torque_probe_20261021.py, _coact_forensics_20261021.py,
+  coact_stand_* JSONs + COACT_STAND_DESCENT table + gate record +
+  logs (all in spinal\), DESIGN.md open issue 8, this status entry.
+
+## STRETCH-REFLEX POSTURE STREAM (2026-10-21 evening; Ben's REFLEXIVE-
+## balance directive: bias from the static backsolve + Ia/II/Ib close
+## the loop; filling-glass acceptance)
+
+Plain numbers, all first-hand, easteregg2, fresh process per config
+(each matrix tag = its own `python _reflex_stand_20261021.py <tag>`
+process). Artifacts: `_reflex_loop_audit_20261021.py`,
+`_reflex_stand_20261021.py`, `_reflexstand_*_20261021.{npz,log}`,
+`_reflex_stand_results_20261021.json`, audit log
+`_audit_signs_run_20261021.log` (all in spinal\).
+
+### Audit verdicts (dynamic probe, stock + s3k-trial34 topologies)
+
+- Ia -> homonymous MN monosynaptic excitation: SIGN CORRECT, ALIVE
+  (+0.33 mV soleus / +0.88 mV tib_ant per full-scale afferent;
+  build_network.py:765, ia_to_mn=0.6, unconditional). Anti-stretch
+  negative feedback structurally intact in every family.
+- Ia reciprocal inhibition of antagonist MN: ALIVE (-0.50 to -0.61
+  mV; direct edge default, IaIN population at ia_in>0).
+- II -> homonymous MN excitation: ALIVE (+0.17 mV per full scale).
+- Stance gate at DRIVE=0/POSTURE=1: OPEN (RG_E 4.55 mV -> gate 0.91
+  stock; 4.84 -> 0.97 trial-34; POSTURE->RG_E holds it). The
+  "gate collapses at standing" hypothesis is REJECTED by measurement.
+- BROKEN #1 - Ib stance load-sharing reversal DEAD: net Ib effect on
+  a loaded extensor MN stays NEGATIVE (-0.37..-0.46 mV) even at gate
+  1.0 with IBEXC_ankle_pf_r firing at 4.0 mV; autogenic inhibition
+  (0.35 cond., reversal -5 mV) beats group excitation (0.5->IBEXC->
+  0.6). Under load = positive feedback on force (weight ON ->
+  extensor inhibited -> unloads). The Pearson-2000 reversal framing
+  in params.py exists but its gains never achieve it.
+- BROKEN #2 - II postural setpoint wrong: at the standing pose
+  len_norm vs the converted-RoM midpoint is vas -0.68, glut_max
+  -0.61, ercspn -0.72 (on a converter-garbage [0.01,1.0] range);
+  only soleus +0.25 / med_gas +0.34 sit above. The rectified II
+  length term is silent until those muscles pass mid-RoM.
+- WEAK #3 - Ia velocity scale is gait-scale (full scale at 0.6 m/s);
+  postural sway 0.01-0.1 m/s -> Ia contributes ~0.01 mV at posture.
+- WEAK #4 - II loop gain ~30x below the literature postural scale:
+  SCONE T3a KL~1 per normalized length (goal2_balance_stage.md
+  transcription) maps to ii_gain ~30 in this network's units
+  (E_HI=5 saturation x 0.2 synaptic activation fraction); default
+  1.2 gives +0.17 mV = 3.4% of MN range per full-scale stretch.
+- Joint-axis audit re-run (audit_signs.py): 21/21 anchors agree.
+- Static-solve finding (both preload and preload-free): the NNLS
+  standing pattern is adductor/dorsiflexor-dominant (add_long 0.71,
+  pect 0.34, glut_min1 0.34...; soleus ~0.1) - the residual torques
+  at the rigged keyframe pose are hip/knee-sized, not extensor-sized.
+  FLAGGED for Ben: the "alpha bias" the directive prescribes is this
+  pattern; it does not by itself look like an antigravity pattern.
+
+### Machinery (default-off, gated; spinal\ only; no commits)
+
+runner.py --reflex-stand (preload-FREE gravity-only solve as the
+alpha bias; II setpoint = standing-pose length G.ii_set_pose;
+group POSTURE->MN tonic off; BAL_* surrogate ports zeroed),
+--trunk-load "5,10,20" (%BW stepped downward force on the torso,
+filling glass), --gamma-coact (G.gamma_coact: per-muscle spindle
+sensitivity (1+g*act_stand) on Ia gain + II length term; Matthews
+1972 / Prochazka 1989 - standard physiology, NOT in the SADb
+extracts, flagged; distinct from the RG-level GAMMA hand drive).
+params.py: G.ii_set_pose / G.gamma_coact documented, defaults 0.
+REGRESSION GATES after the edits: census (410,376,1186) PASS +
+coact delta 4 RESTORE PASS (re-run `_s3p_census_20261020.py`);
+anchor flavor A BIT-EXACT -161.56754173676563 (fresh process,
+`_s3k_anchor_eval_20261016.py A`, npz _anchor_reflexcheck_20261021).
+
+### Filling-glass runs (12 s: 3 s settle, then 5/10/20 %BW x 3 s)
+
+- S rig 1.0 default gains: STANDS (com_z min 0.707, sway 0.032-0.070)
+  but the glass never reaches the legs - feet UNLOAD 89.8 -> 58.9%
+  BW as the trunk force sags the body into the rig springs, and
+  d_soleus = +0.001..+0.002 per step while the ankle sinks -20 deg.
+- A rig 0 bias-only: run BROKE at t=1.23 s (instability exit after
+  the singular-inertia warning; com_x shot to -0.68 m). The bias
+  alone cannot dynamically hold the assembly.
+- B rig 0 bias+reflex default gains: fell by t~2 s (com_z -0.6);
+  load-step windows are post-collapse.
+- F rig 0.3 default gains: no fall (com_z min 0.593) but feet unload
+  70.9 -> 50.2% BW across the steps; d_soleus +0.002..0.003.
+- G rig 0.3 ii_gain 30: no fall; ankle sinks FURTHER (-24.7..-31.6
+  deg vs F's -16.8); feet 70.7 -> 44.0%; d_soleus +0.002. The high
+  II gain raises FLEXOR tone (tib_ant 0.46 -> 0.66, iliacus
+  0.10 -> 0.41, act_sum 58 -> 62) - the loop acts, but on the wrong
+  side of the joint, and the agonists have no headroom: soleus 0.81,
+  med_gas 0.81, vas 0.78-0.80, glut_max SATURATED 1.0, ercspn 0.93.
+- H rig 0.3 ii_gain 30 + gamma 0.5: identical to G to 3 decimals
+  (gamma has nothing to modulate while the bias is drowned by the
+  PF tonic).
+- J rig 0.3 ii_gain 30 gamma 0.5 + pf_to_mn=0 (headroom test): no
+  fall, act_sum 62 -> 43.5, MNs at 0.42-0.59 (headroom exists) - but
+  the body hangs further into the rig (feet 33.7 -> 22.9% BW) and
+  d_soleus = +0.000 at every step. Soleus sits at 0.54 with room and
+  STILL does not respond: the load path bypasses the legs (rig
+  springs), so the spindles never see the added demand.
+
+### Honest verdict (wave: REFLEXIVE posture, first pass)
+
+FAIL TO DEMONSTRATE reflex load compensation, with three measured
+blockers, in order of authority:
+1. LOAD PATH: at every survivable rig level the added trunk load is
+   carried by the rig springs (feet UNLOAD under load); at rig 0 the
+   assembly collapses before the load steps (A broke t=1.23 s, B fell
+   t~2 s - consistent with the 2026-10-21 co-contraction descent: no
+   uniform-drive free-stand exists; static -183/-187 N.m net
+   plantarflexor ankle at full co-activation). The filling glass is
+   being drunk by the rig, not the legs.
+2. NO HEADROOM: the RG-E->PF-E extensor tonic + 6x per-muscle bias
+   run the antigravity MNs at 0.78-1.0 (glut_max saturated) - the
+   same saturated co-contraction Ben rejected, arriving through the
+   PF pathway; reflexes cannot express through saturated pools
+   (F/G/H), and once headroom is created (J) the bias alone lets the
+   body sag onto the rig instead.
+3. LOOP GAIN/SETPOINT: default II gain is ~30x below the
+   literature-mapped postural scale and the II setpoint (RoM midpoint
+   vs standing pose) was wrong - both now have knobs (ii_gain sweep +
+   ii_set_pose) and the audit quantifies them.
+
+WHAT WORKED: the reflex arcs themselves are correctly wired and
+signed (Ia monosynaptic anti-stretch + reciprocal inhibition, II
+homonymous excitation, autogenic Ib inhibition, stance gate open at
+posture); the pipeline (bias port, pose setpoint, glass, gamma) is
+built, default-off, census+anchor bit-exact; S/F/G/H/J all stand
+without falling at rig 1.0/0.3 - just never reflexively.
+
+NEXT LEVERS (Ben's call, not executed): (a) free-stand needs the
+ankle PF:DF torque balance solved in geometry or bias before any
+rig-0 filling glass can start (the DESIGN.md graded-ratio route);
+(b) drop the PF extensor tonic at standing + recalibrate the bias
+scale so MNs sit ~0.3-0.5 with headroom, THEN sweep ii_gain 10-60
+for the compensation slope; (c) fix the Ib stance reversal (raise
+ib_exc_to_mn or gate ib_to_mn_inh by stance) so force feedback stops
+fighting load compensation - the audit gives the exact conductance
+arithmetic.
+
+M1 GATE (in-session checklist per the 2026-10-21 resume precedent -
+no subagent facility in this environment; every check re-run
+firsthand): figures N/A (none produced); dissertation .tex NOT
+touched this session (ProofFinal Main.tex modifications in the tree
+are Ben's own, predate this stream); connectome ownership: all new
+knobs runner-side/params-documented with sources (SCONE T3a via
+goal2_balance_stage.md; gamma = Matthews 1972 / Prochazka 1989,
+flagged as outside the SADb extracts); standing instructions: both
+legs reported (r/l columns), trunk tilt path untouched, no figures
+to pass; honest reporting: per-config numbers decomposed, failures
+reported as failures; reproduce-any-claim commands: census script +
+anchor script + `_reflex_stand_20261021.py G`. VERDICT: SHIP (the
+stream is an honest negative + audit, no tuning claim made).
+NO COMMITS; Ben commits the spinal\ artifacts when he dispositions.

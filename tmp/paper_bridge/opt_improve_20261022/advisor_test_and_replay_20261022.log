@@ -1,0 +1,132 @@
+== test_escalation_advisor_20261022 ==
+(a) PASS: 10 slack + taut cells at 2x target -> rom_slack_short, steps (+0,+1), raw -1.0000 vs taut +1.0000
+(b) PASS: taut cell 60% short -> torque_short, steps (+1,+0)
+(c) PASS: slack + taut shortfall -> both, steps (+1,+1)
+(d) PASS: clean grid -> converged
+(e) PASS: W = 0 on the slack cells -> converged (mask honored)
+--- escalation_advisor_20261022: BiPulley_opensim_med_gas_r_2BPA_G2_20261021_1114.mat | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 7.624 N*m < target 77.9 N*m (taut margin -0.9021)
+    RoM/slack side: 10 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.902133]
+(f) PASS: doctrine med_gas_r (2,[2 1]) -> both (nSlack = 10, raw -1.0000 = the log :1160 artifact vs taut -0.9021 = genuine), steps (+1,+1)
+(f2) PASS: slack cells masked -> torque_short persists (taut-driven, min taut 7.6238 unchanged)
+(g) PASS: deterministic (identical repeat outputs, zero optimizer calls)
+TEST_ESCALATION_ADVISOR_20261022 PASS
+== advisor_doctrine_replay_20261022: 20 anchor mats ==
+--- escalation_advisor_20261022: BiPulley_opensim_bifemsh_r_20260926_1702.mat | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 19.78 N*m < target 40.2 N*m (taut margin -0.5080)
+    RoM/slack side: 10 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    RoM/slack side: 10 of 25 cells infeasible (travel demand > KMAX*Rest)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.508004]
+  [1/20] BiPulley_opensim_bifemsh_r_20260926_1702.mat -> verdict both            steps (+1,+1) | slack 10, infeas 10, taut 5 | raw -1.0000 taut -0.5080
+--- escalation_advisor_20261022: BiPulley_opensim_med_gas_r_20260926_1655.mat | verdict = rom_slack_short | steps (nBPA,G) = (+0,+1) ---
+    torque OK over 0 taut feasible cell(s) (min NaN vs target 77.9)
+    torque test NOT evaluable (no taut feasible cells): cannot justify +BPA on a slack design
+    RoM/slack side: 15 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    RoM/slack side: 10 of 25 cells infeasible (travel demand > KMAX*Rest)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin nan]
+  [2/20] BiPulley_opensim_med_gas_r_20260926_1655.mat -> verdict rom_slack_short steps (+0,+1) | slack 15, infeas 10, taut 0 | raw -1.0000 taut NaN
+--- escalation_advisor_20261022: BiPulley_opensim_rect_fem_r_20260926_1701.mat | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 3.043 N*m < target 58.45 N*m (taut margin -0.9479)
+    RoM/slack side: 15 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.947933]
+  [3/20] BiPulley_opensim_rect_fem_r_20260926_1701.mat -> verdict both            steps (+1,+1) | slack 15, infeas 0, taut 10 | raw -1.0000 taut -0.9479
+--- escalation_advisor_20261022: BiPulley_opensim_soleus_r_20260926_1657.mat | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 11.5 N*m < target 177.5 N*m (taut margin -0.9352)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9352 vs taut margin -0.935208]
+  [4/20] BiPulley_opensim_soleus_r_20260926_1657.mat -> verdict torque_short    steps (+1,+0) | slack 0, infeas 0, taut 25 | raw -0.9352 taut -0.9352
+--- escalation_advisor_20261022: BiPulley_opensim_tib_ant_r_20260926_1659.mat | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 29.5 N*m < target 45.25 N*m (taut margin -0.3481)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.3481 vs taut margin -0.34814]
+  [5/20] BiPulley_opensim_tib_ant_r_20260926_1659.mat -> verdict torque_short    steps (+1,+0) | slack 0, infeas 0, taut 25 | raw -0.3481 taut -0.3481
+--- escalation_advisor_20261022: BiPulley_opensim_bifemsh_r_2BPA_G2_20261021_1119.mat | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 0.2819 N*m < target 40.2 N*m (taut margin -0.9930)
+    RoM/slack side: 10 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.992988]
+  [6/20] BiPulley_opensim_bifemsh_r_2BPA_G2_20261021_1119.mat -> verdict both            steps (+1,+1) | slack 10, infeas 0, taut 15 | raw -1.0000 taut -0.9930
+--- escalation_advisor_20261022: BiPulley_opensim_med_gas_r_2BPA_G2_20261021_1114.mat | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 7.624 N*m < target 77.9 N*m (taut margin -0.9021)
+    RoM/slack side: 10 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.902133]
+  [7/20] BiPulley_opensim_med_gas_r_2BPA_G2_20261021_1114.mat -> verdict both            steps (+1,+1) | slack 10, infeas 0, taut 15 | raw -1.0000 taut -0.9021
+--- escalation_advisor_20261022: BiPulley_opensim_rect_fem_r_2BPA_G2_20261021_1118.mat | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 42.55 N*m < target 58.45 N*m (taut margin -0.2721)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.2721 vs taut margin -0.27209]
+  [8/20] BiPulley_opensim_rect_fem_r_2BPA_G2_20261021_1118.mat -> verdict torque_short    steps (+1,+0) | slack 0, infeas 0, taut 25 | raw -0.2721 taut -0.2721
+--- escalation_advisor_20261022: BiPulley_opensim_soleus_r_2BPA_G2_20261021_1115.mat | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 12.78 N*m < target 177.5 N*m (taut margin -0.9280)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9280 vs taut margin -0.927976]
+  [9/20] BiPulley_opensim_soleus_r_2BPA_G2_20261021_1115.mat -> verdict torque_short    steps (+1,+0) | slack 0, infeas 0, taut 25 | raw -0.9280 taut -0.9280
+--- escalation_advisor_20261022: BiPulley_opensim_tib_ant_r_2BPA_G2_20261021_1117.mat | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 37.58 N*m < target 45.25 N*m (taut margin -0.1694)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.1694 vs taut margin -0.169402]
+  [10/20] BiPulley_opensim_tib_ant_r_2BPA_G2_20261021_1117.mat -> verdict torque_short    steps (+1,+0) | slack 0, infeas 0, taut 25 | raw -0.1694 taut -0.1694
+--- escalation_advisor_20261022: BiPulley_opensim_bifemsh_r_2BPA_G4_20261021_1127.mat | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 2.444 N*m < target 40.2 N*m (taut margin -0.9392)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9392 vs taut margin -0.939197]
+  [11/20] BiPulley_opensim_bifemsh_r_2BPA_G4_20261021_1127.mat -> verdict torque_short    steps (+1,+0) | slack 0, infeas 0, taut 25 | raw -0.9392 taut -0.9392
+--- escalation_advisor_20261022: BiPulley_opensim_med_gas_r_2BPA_G4_20261021_1122.mat | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 28.19 N*m < target 77.9 N*m (taut margin -0.6382)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.6382 vs taut margin -0.638157]
+  [12/20] BiPulley_opensim_med_gas_r_2BPA_G4_20261021_1122.mat -> verdict torque_short    steps (+1,+0) | slack 0, infeas 0, taut 25 | raw -0.6382 taut -0.6382
+--- escalation_advisor_20261022: BiPulley_opensim_rect_fem_r_2BPA_G4_20261021_1126.mat | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 23.24 N*m < target 58.45 N*m (taut margin -0.6024)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.6024 vs taut margin -0.602384]
+  [13/20] BiPulley_opensim_rect_fem_r_2BPA_G4_20261021_1126.mat -> verdict torque_short    steps (+1,+0) | slack 0, infeas 0, taut 25 | raw -0.6024 taut -0.6024
+--- escalation_advisor_20261022: BiPulley_opensim_soleus_r_2BPA_G4_20261021_1123.mat | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 6.505 N*m < target 177.5 N*m (taut margin -0.9633)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.9633 vs taut margin -0.96334]
+  [14/20] BiPulley_opensim_soleus_r_2BPA_G4_20261021_1123.mat -> verdict torque_short    steps (+1,+0) | slack 0, infeas 0, taut 25 | raw -0.9633 taut -0.9633
+--- escalation_advisor_20261022: BiPulley_opensim_tib_ant_r_2BPA_G4_20261021_1125.mat | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 20.91 N*m < target 45.25 N*m (taut margin -0.5379)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.5379 vs taut margin -0.537859]
+  [15/20] BiPulley_opensim_tib_ant_r_2BPA_G4_20261021_1125.mat -> verdict torque_short    steps (+1,+0) | slack 0, infeas 0, taut 25 | raw -0.5379 taut -0.5379
+--- escalation_advisor_20261022: BiPulley_opensim_bifemsh_r_4BPA_G4_20261021_1136.mat | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 4.398 N*m < target 40.2 N*m (taut margin -0.8906)
+    torque-short but nBPA = 4 already at the directive cap 3
+    [raw slack-gamed margin -0.8906 vs taut margin -0.890602]
+  [16/20] BiPulley_opensim_bifemsh_r_4BPA_G4_20261021_1136.mat -> verdict torque_short    steps (+0,+0) | slack 0, infeas 0, taut 25 | raw -0.8906 taut -0.8906
+--- escalation_advisor_20261022: BiPulley_opensim_med_gas_r_4BPA_G4_20261021_1130.mat | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 56.37 N*m < target 77.9 N*m (taut margin -0.2763)
+    torque-short but nBPA = 4 already at the directive cap 3
+    [raw slack-gamed margin -0.2763 vs taut margin -0.276321]
+  [17/20] BiPulley_opensim_med_gas_r_4BPA_G4_20261021_1130.mat -> verdict torque_short    steps (+0,+0) | slack 0, infeas 0, taut 25 | raw -0.2763 taut -0.2763
+--- escalation_advisor_20261022: BiPulley_opensim_rect_fem_r_4BPA_G4_20261021_1134.mat | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 46.16 N*m < target 58.45 N*m (taut margin -0.2103)
+    torque-short but nBPA = 4 already at the directive cap 3
+    [raw slack-gamed margin -0.2103 vs taut margin -0.210251]
+  [18/20] BiPulley_opensim_rect_fem_r_4BPA_G4_20261021_1134.mat -> verdict torque_short    steps (+0,+0) | slack 0, infeas 0, taut 25 | raw -0.2103 taut -0.2103
+--- escalation_advisor_20261022: BiPulley_opensim_soleus_r_4BPA_G4_20261021_1131.mat | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 13.01 N*m < target 177.5 N*m (taut margin -0.9267)
+    torque-short but nBPA = 4 already at the directive cap 3
+    [raw slack-gamed margin -0.9267 vs taut margin -0.926682]
+  [19/20] BiPulley_opensim_soleus_r_4BPA_G4_20261021_1131.mat -> verdict torque_short    steps (+0,+0) | slack 0, infeas 0, taut 25 | raw -0.9267 taut -0.9267
+--- escalation_advisor_20261022: BiPulley_opensim_tib_ant_r_4BPA_G4_20261021_1133.mat | verdict = torque_short | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 41.97 N*m < target 45.25 N*m (taut margin -0.0724)
+    torque-short but nBPA = 4 already at the directive cap 3
+    [raw slack-gamed margin -0.0724 vs taut margin -0.0724495]
+  [20/20] BiPulley_opensim_tib_ant_r_4BPA_G4_20261021_1133.mat -> verdict torque_short    steps (+0,+0) | slack 0, infeas 0, taut 25 | raw -0.0724 taut -0.0724
+VERDICT COUNTS: converged 0 | torque_short 15 | rom_slack_short 1 | both 4
+CSV: D:\GitHub\Bipedal_Robot\tmp\paper_bridge\opt_improve_20261022\advisor_doctrine_replay_20261022.csv
+ADVISOR_DOCTRINE_REPLAY_20261022 DONE

@@ -39,21 +39,22 @@ function data = readserialnumbers2()
 
     %% Serial settings
 
-    port = "COM10";
+    port = "COM3";
     baudRate = 115200;
 
     expectedNumCols = 5;
     savedNumCols = 9;
 
     %% Torque-guard geometry (matches Knee_Extensor_20mm.m dExt1/angExt1)
-    dLC  = 260.9/1000;    % theta1 origin -> load-cell arm, m
-    angLC = -102.1715;       % arm angle in the tibia frame, deg
+    prf = [-0.050, -0.255, 0]; %reaction point force
+    dLC  = hypot(prf(1),prf(2));    % theta1 origin -> load-cell arm, m
+    angLC = atan2d(prf(2),prf(1));       % arm angle in the tibia frame, deg
 
     %% Save settings
 
     functionFolder = fileparts(mfilename("fullpath"));
     saveFolder = fullfile(functionFolder, "Ext_20mm");
-    baseName = "ExtTest_2_";
+    baseName = "ExtTest_3_";
 
     if ~isfolder(saveFolder)
         mkdir(saveFolder);

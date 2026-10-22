@@ -1,0 +1,14 @@
+=== Build A: moving-via mount deflection (aluminum 6061-T6) ===
+  active crossing = 1, tackle nBPA = 2, G = 2
+  max |mount deflection| = 2.7569 mm; max ReactionFmag = 2661.7 N
+  min |Torque_ins| no-mount 0.0000 -> with mount 0.0000 N*m; max |delta Torque_ins| over cells = 4.3397 N*m (deflection carried)
+  k(axial) aluminum = 2.153e+08 N/m, CroMoly = 6.406e+08 N/m; ratio = 2.975326560 (E ratio 2.975326560)
+  max deflection aluminum/CroMoly = 2.9753 (expect ~ 2.9753)
+  --- material-without-section banner demo ---
+BiPam_pulley2_20261022: mount bracket section PENDING-BEN stand-in [b h L] = [25 5 40] mm (aluminum6061t6, E = 68.9 GPa) -- set mountSection for real hardware dims.
+=== Build B: bowden anchor deflection (CroMoly 4130) ===
+  crossing 1: pinned u_t (max dev 0.0e+00), max |anchor deflection| = 0.3538 mm
+  crossing 2: pinned u_t (max dev 0.0e+00), max |anchor deflection| = 0.2580 mm
+  min |Torque_ins| (bowden, active crossing 1) = 0.0000 N*m
+  envelope defaults boss 7.0 mm / clearance 5.0 mm; tuned 8.0 / 6.0 mm OK
+=== live_builds_BiPulley2_20261022: ALL CHECKS PASS ===

@@ -1,0 +1,1664 @@
+{
+ "family": "syn6",
+ "bw_N": 737.4,
+ "incumbent": {
+  "drive": 3.6201718626693635,
+  "vest_prop": 0.3565682764226969,
+  "rig_scale": 0.9458639224137748
+ },
+ "ref_incumbent_rig0": {
+  "tag": "ref_incumbent_rig0",
+  "t_end": 7.998,
+  "fell": true,
+  "feet_pctBW": 91.5,
+  "com_z_mean": -0.707,
+  "com_z_min": -0.787,
+  "sway": 0.849,
+  "tilt_max": 277.1,
+  "act_sum": 53.1,
+  "cocon_act": 4.92,
+  "group_mean": {
+   "hip_abd": 0.454,
+   "knee_flex": 0.929,
+   "hip_flex": 0.543,
+   "hip_add": 0.282,
+   "hip_ext": 0.01,
+   "knee_ext": 0.679,
+   "ankle_pf": 0.898,
+   "ankle_df": 0.999,
+   "trunk_ext": 0.658,
+   "trunk_flex": 0.866
+  },
+  "antag_pairs": {
+   "hip_flex|hip_ext": [
+    0.543,
+    0.01
+   ],
+   "knee_flex|knee_ext": [
+    0.929,
+    0.679
+   ],
+   "ankle_df|ankle_pf": [
+    0.999,
+    0.898
+   ],
+   "trunk_flex|trunk_ext": [
+    0.866,
+    0.658
+   ]
+  },
+  "joints": {
+   "pelvis_tilt": [
+    -277.1,
+    -98.8
+   ],
+   "pelvis_list": [
+    10.2,
+    82.1
+   ],
+   "pelvis_rotation": [
+    -6.4,
+    161.1
+   ],
+   "hip_flexion_r": [
+    60.0,
+    73.7
+   ],
+   "knee_angle_r": [
+    3.4,
+    10.0
+   ],
+   "ankle_angle_r": [
+    -61.5,
+    -50.4
+   ],
+   "hip_adduction_r": [
+    -16.5,
+    5.0
+   ],
+   "subtalar_angle_r": [
+    10.4,
+    18.1
+   ],
+   "hip_flexion_l": [
+    59.0,
+    71.2
+   ],
+   "knee_angle_l": [
+    -0.4,
+    10.0
+   ],
+   "ankle_angle_l": [
+    -60.8,
+    -48.6
+   ],
+   "hip_adduction_l": [
+    -30.2,
+    4.7
+   ],
+   "subtalar_angle_l": [
+    -1.2,
+    4.6
+   ]
+  },
+  "forensics": {
+   "t_buckle_s": 1.07,
+   "com_z_ref": 0.77,
+   "com_z_at": 0.689,
+   "first_divergences": [
+    [
+     "pelvis_rotation",
+     1.008,
+     3.2,
+     1.02
+    ],
+    [
+     "hip_adduction_r",
+     1.014,
+     -3.1,
+     1.14
+    ],
+    [
+     "hip_flexion_r",
+     1.014,
+     -3.1,
+     1.05
+    ],
+    [
+     "hip_adduction_l",
+     1.018,
+     3.0,
+     1.12
+    ],
+    [
+     "pelvis_tilt",
+     1.022,
+     -3.2,
+     1.05
+    ],
+    [
+     "hip_flexion_l",
+     1.032,
+     3.3,
+     1.06
+    ]
+   ],
+   "top_movers_at_buckle": [
+    [
+     "pelvis_rotation",
+     29.1
+    ],
+    [
+     "pelvis_tilt",
+     -17.8
+    ],
+    [
+     "hip_flexion_l",
+     14.1
+    ],
+    [
+     "hip_flexion_r",
+     -12.6
+    ],
+    [
+     "pelvis_list",
+     11.8
+    ]
+   ]
+  },
+  "wall_s": 115.0,
+  "alpha_to_mn": null,
+  "alpha_nA": null,
+  "rig_scale": 0.0
+ },
+ "existence_matrix": [
+  {
+   "tag": "lock_g0.5",
+   "t_end": 7.998,
+   "fell": true,
+   "feet_pctBW": 104.3,
+   "com_z_mean": -0.686,
+   "com_z_min": -0.736,
+   "sway": 1.086,
+   "tilt_max": 145.7,
+   "act_sum": 68.6,
+   "cocon_act": 6.08,
+   "group_mean": {
+    "hip_abd": 0.686,
+    "knee_flex": 0.977,
+    "hip_flex": 0.737,
+    "hip_add": 0.564,
+    "hip_ext": 0.335,
+    "knee_ext": 0.844,
+    "ankle_pf": 0.947,
+    "ankle_df": 1.0,
+    "trunk_ext": 0.682,
+    "trunk_flex": 1.0
+   },
+   "antag_pairs": {
+    "hip_flex|hip_ext": [
+     0.737,
+     0.335
+    ],
+    "knee_flex|knee_ext": [
+     0.977,
+     0.844
+    ],
+    "ankle_df|ankle_pf": [
+     1.0,
+     0.947
+    ],
+    "trunk_flex|trunk_ext": [
+     1.0,
+     0.682
+    ]
+   },
+   "joints": {
+    "pelvis_tilt": [
+     -141.8,
+     -91.6
+    ],
+    "pelvis_list": [
+     -28.7,
+     24.4
+    ],
+    "pelvis_rotation": [
+     -38.3,
+     -20.5
+    ],
+    "hip_flexion_r": [
+     49.8,
+     62.9
+    ],
+    "knee_angle_r": [
+     7.4,
+     10.0
+    ],
+    "ankle_angle_r": [
+     -59.8,
+     -51.0
+    ],
+    "hip_adduction_r": [
+     -4.7,
+     5.9
+    ],
+    "subtalar_angle_r": [
+     6.3,
+     10.6
+    ],
+    "hip_flexion_l": [
+     56.6,
+     63.2
+    ],
+    "knee_angle_l": [
+     4.9,
+     10.0
+    ],
+    "ankle_angle_l": [
+     -60.6,
+     -52.0
+    ],
+    "hip_adduction_l": [
+     -41.8,
+     -27.0
+    ],
+    "subtalar_angle_l": [
+     0.9,
+     6.6
+    ]
+   },
+   "forensics": {
+    "t_buckle_s": 1.07,
+    "com_z_ref": 0.795,
+    "com_z_at": 0.713,
+    "first_divergences": [
+     [
+      "pelvis_rotation",
+      1.006,
+      3.6,
+      1.02
+     ],
+     [
+      "pelvis_tilt",
+      1.008,
+      -3.2,
+      1.02
+     ],
+     [
+      "hip_flexion_r",
+      1.01,
+      -3.4,
+      1.04
+     ],
+     [
+      "hip_flexion_l",
+      1.018,
+      3.1,
+      1.04
+     ],
+     [
+      "ankle_angle_r",
+      1.032,
+      -3.0,
+      1.36
+     ],
+     [
+      "pelvis_list",
+      1.032,
+      3.1,
+      1.09
+     ]
+    ],
+    "top_movers_at_buckle": [
+     [
+      "pelvis_rotation",
+      34.8
+     ],
+     [
+      "pelvis_tilt",
+      -29.8
+     ],
+     [
+      "hip_flexion_l",
+      19.0
+     ],
+     [
+      "hip_flexion_r",
+      -12.0
+     ],
+     [
+      "pelvis_list",
+      8.5
+     ]
+    ]
+   },
+   "wall_s": 115.3,
+   "alpha_to_mn": 0.5,
+   "alpha_nA": 5.0,
+   "rig_scale": 0.0
+  },
+  {
+   "tag": "lock_g2.0",
+   "t_end": 7.998,
+   "fell": true,
+   "feet_pctBW": 103.7,
+   "com_z_mean": -0.656,
+   "com_z_min": -0.684,
+   "sway": 0.697,
+   "tilt_max": 248.1,
+   "act_sum": 88.9,
+   "cocon_act": 7.79,
+   "group_mean": {
+    "hip_abd": 0.966,
+    "knee_flex": 1.0,
+    "hip_flex": 1.0,
+    "hip_add": 0.943,
+    "hip_ext": 0.857,
+    "knee_ext": 1.0,
+    "ankle_pf": 0.999,
+    "ankle_df": 1.0,
+    "trunk_ext": 1.0,
+    "trunk_flex": 1.0
+   },
+   "antag_pairs": {
+    "hip_flex|hip_ext": [
+     1.0,
+     0.857
+    ],
+    "knee_flex|knee_ext": [
+     1.0,
+     1.0
+    ],
+    "ankle_df|ankle_pf": [
+     1.0,
+     0.999
+    ],
+    "trunk_flex|trunk_ext": [
+     1.0,
+     1.0
+    ]
+   },
+   "joints": {
+    "pelvis_tilt": [
+     -246.7,
+     -224.5
+    ],
+    "pelvis_list": [
+     -29.9,
+     39.2
+    ],
+    "pelvis_rotation": [
+     126.7,
+     165.7
+    ],
+    "hip_flexion_r": [
+     45.7,
+     57.2
+    ],
+    "knee_angle_r": [
+     6.9,
+     10.0
+    ],
+    "ankle_angle_r": [
+     -67.1,
+     -49.1
+    ],
+    "hip_adduction_r": [
+     -15.3,
+     7.4
+    ],
+    "subtalar_angle_r": [
+     1.1,
+     3.9
+    ],
+    "hip_flexion_l": [
+     46.9,
+     58.8
+    ],
+    "knee_angle_l": [
+     7.3,
+     10.1
+    ],
+    "ankle_angle_l": [
+     -60.0,
+     -51.8
+    ],
+    "hip_adduction_l": [
+     -42.7,
+     -18.5
+    ],
+    "subtalar_angle_l": [
+     1.3,
+     4.1
+    ]
+   },
+   "forensics": {
+    "t_buckle_s": 1.06,
+    "com_z_ref": 0.789,
+    "com_z_at": 0.707,
+    "first_divergences": [
+     [
+      "pelvis_rotation",
+      1.006,
+      4.2,
+      1.02
+     ],
+     [
+      "pelvis_tilt",
+      1.006,
+      -3.3,
+      1.02
+     ],
+     [
+      "hip_flexion_r",
+      1.01,
+      -3.3,
+      1.15
+     ],
+     [
+      "hip_flexion_l",
+      1.012,
+      3.4,
+      1.03
+     ],
+     [
+      "subtalar_angle_r",
+      1.016,
+      3.3,
+      1.21
+     ],
+     [
+      "pelvis_list",
+      1.022,
+      -3.1,
+      1.2
+     ]
+    ],
+    "top_movers_at_buckle": [
+     [
+      "pelvis_rotation",
+      31.3
+     ],
+     [
+      "pelvis_tilt",
+      -30.2
+     ],
+     [
+      "hip_flexion_l",
+      17.8
+     ],
+     [
+      "hip_adduction_r",
+      9.7
+     ],
+     [
+      "hip_flexion_r",
+      -7.9
+     ]
+    ]
+   },
+   "wall_s": 117.4,
+   "alpha_to_mn": 2.0,
+   "alpha_nA": 5.0,
+   "rig_scale": 0.0
+  }
+ ],
+ "g_lock": 2.0,
+ "descent": [
+  {
+   "tag": "desc_1.0",
+   "t_end": 7.998,
+   "fell": true,
+   "feet_pctBW": 103.7,
+   "com_z_mean": -0.656,
+   "com_z_min": -0.684,
+   "sway": 0.697,
+   "tilt_max": 248.1,
+   "act_sum": 88.9,
+   "cocon_act": 7.79,
+   "group_mean": {
+    "hip_abd": 0.966,
+    "knee_flex": 1.0,
+    "hip_flex": 1.0,
+    "hip_add": 0.943,
+    "hip_ext": 0.857,
+    "knee_ext": 1.0,
+    "ankle_pf": 0.999,
+    "ankle_df": 1.0,
+    "trunk_ext": 1.0,
+    "trunk_flex": 1.0
+   },
+   "antag_pairs": {
+    "hip_flex|hip_ext": [
+     1.0,
+     0.857
+    ],
+    "knee_flex|knee_ext": [
+     1.0,
+     1.0
+    ],
+    "ankle_df|ankle_pf": [
+     1.0,
+     0.999
+    ],
+    "trunk_flex|trunk_ext": [
+     1.0,
+     1.0
+    ]
+   },
+   "joints": {
+    "pelvis_tilt": [
+     -246.7,
+     -224.5
+    ],
+    "pelvis_list": [
+     -29.9,
+     39.2
+    ],
+    "pelvis_rotation": [
+     126.7,
+     165.7
+    ],
+    "hip_flexion_r": [
+     45.7,
+     57.2
+    ],
+    "knee_angle_r": [
+     6.9,
+     10.0
+    ],
+    "ankle_angle_r": [
+     -67.1,
+     -49.1
+    ],
+    "hip_adduction_r": [
+     -15.3,
+     7.4
+    ],
+    "subtalar_angle_r": [
+     1.1,
+     3.9
+    ],
+    "hip_flexion_l": [
+     46.9,
+     58.8
+    ],
+    "knee_angle_l": [
+     7.3,
+     10.1
+    ],
+    "ankle_angle_l": [
+     -60.0,
+     -51.8
+    ],
+    "hip_adduction_l": [
+     -42.7,
+     -18.5
+    ],
+    "subtalar_angle_l": [
+     1.3,
+     4.1
+    ]
+   },
+   "forensics": {
+    "t_buckle_s": 1.06,
+    "com_z_ref": 0.789,
+    "com_z_at": 0.707,
+    "first_divergences": [
+     [
+      "pelvis_rotation",
+      1.006,
+      4.2,
+      1.02
+     ],
+     [
+      "pelvis_tilt",
+      1.006,
+      -3.3,
+      1.02
+     ],
+     [
+      "hip_flexion_r",
+      1.01,
+      -3.3,
+      1.15
+     ],
+     [
+      "hip_flexion_l",
+      1.012,
+      3.4,
+      1.03
+     ],
+     [
+      "subtalar_angle_r",
+      1.016,
+      3.3,
+      1.21
+     ],
+     [
+      "pelvis_list",
+      1.022,
+      -3.1,
+      1.2
+     ]
+    ],
+    "top_movers_at_buckle": [
+     [
+      "pelvis_rotation",
+      31.3
+     ],
+     [
+      "pelvis_tilt",
+      -30.2
+     ],
+     [
+      "hip_flexion_l",
+      17.8
+     ],
+     [
+      "hip_adduction_r",
+      9.7
+     ],
+     [
+      "hip_flexion_r",
+      -7.9
+     ]
+    ]
+   },
+   "wall_s": 118.0,
+   "alpha_to_mn": 2.0,
+   "alpha_nA": 5.0,
+   "rig_scale": 0.0
+  },
+  {
+   "tag": "desc_0.8",
+   "t_end": 7.998,
+   "fell": true,
+   "feet_pctBW": 105.1,
+   "com_z_mean": -0.638,
+   "com_z_min": -0.671,
+   "sway": 3.135,
+   "tilt_max": 270.8,
+   "act_sum": 86.0,
+   "cocon_act": 7.61,
+   "group_mean": {
+    "hip_abd": 0.938,
+    "knee_flex": 1.0,
+    "hip_flex": 0.983,
+    "hip_add": 0.88,
+    "hip_ext": 0.749,
+    "knee_ext": 0.988,
+    "ankle_pf": 0.996,
+    "ankle_df": 1.0,
+    "trunk_ext": 1.0,
+    "trunk_flex": 1.0
+   },
+   "antag_pairs": {
+    "hip_flex|hip_ext": [
+     0.983,
+     0.749
+    ],
+    "knee_flex|knee_ext": [
+     1.0,
+     0.988
+    ],
+    "ankle_df|ankle_pf": [
+     1.0,
+     0.996
+    ],
+    "trunk_flex|trunk_ext": [
+     1.0,
+     1.0
+    ]
+   },
+   "joints": {
+    "pelvis_tilt": [
+     223.2,
+     255.3
+    ],
+    "pelvis_list": [
+     -17.2,
+     47.7
+    ],
+    "pelvis_rotation": [
+     749.8,
+     773.7
+    ],
+    "hip_flexion_r": [
+     51.2,
+     68.4
+    ],
+    "knee_angle_r": [
+     6.5,
+     10.1
+    ],
+    "ankle_angle_r": [
+     -58.3,
+     -52.5
+    ],
+    "hip_adduction_r": [
+     -51.6,
+     -35.1
+    ],
+    "subtalar_angle_r": [
+     0.7,
+     5.9
+    ],
+    "hip_flexion_l": [
+     37.3,
+     58.7
+    ],
+    "knee_angle_l": [
+     7.2,
+     10.0
+    ],
+    "ankle_angle_l": [
+     -59.9,
+     -52.2
+    ],
+    "hip_adduction_l": [
+     -11.1,
+     0.2
+    ],
+    "subtalar_angle_l": [
+     -0.4,
+     2.8
+    ]
+   },
+   "forensics": {
+    "t_buckle_s": 1.06,
+    "com_z_ref": 0.79,
+    "com_z_at": 0.71,
+    "first_divergences": [
+     [
+      "pelvis_rotation",
+      1.006,
+      4.3,
+      1.01
+     ],
+     [
+      "pelvis_tilt",
+      1.006,
+      -3.5,
+      1.02
+     ],
+     [
+      "hip_flexion_r",
+      1.01,
+      -3.4,
+      1.24
+     ],
+     [
+      "hip_flexion_l",
+      1.012,
+      3.4,
+      1.03
+     ],
+     [
+      "subtalar_angle_r",
+      1.016,
+      3.2,
+      1.08
+     ],
+     [
+      "hip_adduction_r",
+      1.026,
+      3.3,
+      1.06
+     ]
+    ],
+    "top_movers_at_buckle": [
+     [
+      "pelvis_rotation",
+      33.1
+     ],
+     [
+      "pelvis_tilt",
+      -32.3
+     ],
+     [
+      "hip_flexion_l",
+      19.0
+     ],
+     [
+      "hip_adduction_r",
+      9.9
+     ],
+     [
+      "subtalar_angle_r",
+      8.2
+     ]
+    ]
+   },
+   "wall_s": 110.8,
+   "alpha_to_mn": 2.0,
+   "alpha_nA": 4.0,
+   "rig_scale": 0.0
+  },
+  {
+   "tag": "desc_0.6",
+   "t_end": 7.998,
+   "fell": true,
+   "feet_pctBW": 104.5,
+   "com_z_mean": -0.678,
+   "com_z_min": -0.694,
+   "sway": 0.969,
+   "tilt_max": 238.7,
+   "act_sum": 81.7,
+   "cocon_act": 7.32,
+   "group_mean": {
+    "hip_abd": 0.862,
+    "knee_flex": 1.0,
+    "hip_flex": 0.921,
+    "hip_add": 0.797,
+    "hip_ext": 0.646,
+    "knee_ext": 0.967,
+    "ankle_pf": 0.985,
+    "ankle_df": 1.0,
+    "trunk_ext": 0.954,
+    "trunk_flex": 1.0
+   },
+   "antag_pairs": {
+    "hip_flex|hip_ext": [
+     0.921,
+     0.646
+    ],
+    "knee_flex|knee_ext": [
+     1.0,
+     0.967
+    ],
+    "ankle_df|ankle_pf": [
+     1.0,
+     0.985
+    ],
+    "trunk_flex|trunk_ext": [
+     1.0,
+     0.954
+    ]
+   },
+   "joints": {
+    "pelvis_tilt": [
+     143.0,
+     238.2
+    ],
+    "pelvis_list": [
+     -61.5,
+     -37.1
+    ],
+    "pelvis_rotation": [
+     185.6,
+     307.6
+    ],
+    "hip_flexion_r": [
+     45.2,
+     56.7
+    ],
+    "knee_angle_r": [
+     7.4,
+     10.0
+    ],
+    "ankle_angle_r": [
+     -62.6,
+     -54.2
+    ],
+    "hip_adduction_r": [
+     -3.3,
+     7.2
+    ],
+    "subtalar_angle_r": [
+     4.0,
+     5.7
+    ],
+    "hip_flexion_l": [
+     48.7,
+     59.0
+    ],
+    "knee_angle_l": [
+     8.7,
+     10.0
+    ],
+    "ankle_angle_l": [
+     -58.2,
+     -53.8
+    ],
+    "hip_adduction_l": [
+     -31.1,
+     -27.1
+    ],
+    "subtalar_angle_l": [
+     1.5,
+     3.1
+    ]
+   },
+   "forensics": {
+    "t_buckle_s": 1.06,
+    "com_z_ref": 0.792,
+    "com_z_at": 0.71,
+    "first_divergences": [
+     [
+      "pelvis_rotation",
+      1.006,
+      4.4,
+      1.01
+     ],
+     [
+      "pelvis_tilt",
+      1.006,
+      -3.5,
+      1.02
+     ],
+     [
+      "hip_flexion_r",
+      1.008,
+      -3.0,
+      1.24
+     ],
+     [
+      "hip_flexion_l",
+      1.012,
+      3.3,
+      1.03
+     ],
+     [
+      "subtalar_angle_r",
+      1.018,
+      3.1,
+      1.07
+     ],
+     [
+      "hip_adduction_r",
+      1.028,
+      3.1,
+      1.07
+     ]
+    ],
+    "top_movers_at_buckle": [
+     [
+      "pelvis_rotation",
+      34.9
+     ],
+     [
+      "pelvis_tilt",
+      -34.7
+     ],
+     [
+      "hip_flexion_l",
+      20.4
+     ],
+     [
+      "hip_adduction_r",
+      9.9
+     ],
+     [
+      "subtalar_angle_r",
+      8.8
+     ]
+    ]
+   },
+   "wall_s": 100.5,
+   "alpha_to_mn": 2.0,
+   "alpha_nA": 3.0,
+   "rig_scale": 0.0
+  },
+  {
+   "tag": "desc_0.4",
+   "t_end": 7.998,
+   "fell": true,
+   "feet_pctBW": 101.4,
+   "com_z_mean": -0.662,
+   "com_z_min": -0.692,
+   "sway": 0.893,
+   "tilt_max": 245.1,
+   "act_sum": 75.4,
+   "cocon_act": 6.83,
+   "group_mean": {
+    "hip_abd": 0.781,
+    "knee_flex": 0.994,
+    "hip_flex": 0.817,
+    "hip_add": 0.682,
+    "hip_ext": 0.496,
+    "knee_ext": 0.908,
+    "ankle_pf": 0.967,
+    "ankle_df": 1.0,
+    "trunk_ext": 0.946,
+    "trunk_flex": 0.966
+   },
+   "antag_pairs": {
+    "hip_flex|hip_ext": [
+     0.817,
+     0.496
+    ],
+    "knee_flex|knee_ext": [
+     0.994,
+     0.908
+    ],
+    "ankle_df|ankle_pf": [
+     1.0,
+     0.967
+    ],
+    "trunk_flex|trunk_ext": [
+     0.966,
+     0.946
+    ]
+   },
+   "joints": {
+    "pelvis_tilt": [
+     -215.8,
+     -116.3
+    ],
+    "pelvis_list": [
+     25.5,
+     70.2
+    ],
+    "pelvis_rotation": [
+     -10.0,
+     112.2
+    ],
+    "hip_flexion_r": [
+     35.7,
+     58.0
+    ],
+    "knee_angle_r": [
+     7.7,
+     10.0
+    ],
+    "ankle_angle_r": [
+     -62.6,
+     -51.0
+    ],
+    "hip_adduction_r": [
+     -4.2,
+     9.0
+    ],
+    "subtalar_angle_r": [
+     4.2,
+     7.9
+    ],
+    "hip_flexion_l": [
+     51.6,
+     68.4
+    ],
+    "knee_angle_l": [
+     8.4,
+     10.0
+    ],
+    "ankle_angle_l": [
+     -59.7,
+     -53.2
+    ],
+    "hip_adduction_l": [
+     -42.2,
+     -28.7
+    ],
+    "subtalar_angle_l": [
+     1.5,
+     6.9
+    ]
+   },
+   "forensics": {
+    "t_buckle_s": 1.07,
+    "com_z_ref": 0.795,
+    "com_z_at": 0.714,
+    "first_divergences": [
+     [
+      "pelvis_rotation",
+      1.006,
+      4.1,
+      1.02
+     ],
+     [
+      "pelvis_tilt",
+      1.006,
+      -3.2,
+      1.02
+     ],
+     [
+      "hip_flexion_r",
+      1.008,
+      -3.1,
+      1.03
+     ],
+     [
+      "hip_flexion_l",
+      1.014,
+      3.5,
+      1.03
+     ],
+     [
+      "subtalar_angle_r",
+      1.036,
+      3.1,
+      1.08
+     ],
+     [
+      "hip_adduction_r",
+      1.046,
+      3.3,
+      1.08
+     ]
+    ],
+    "top_movers_at_buckle": [
+     [
+      "pelvis_rotation",
+      35.7
+     ],
+     [
+      "pelvis_tilt",
+      -35.0
+     ],
+     [
+      "hip_flexion_l",
+      20.6
+     ],
+     [
+      "hip_flexion_r",
+      -10.6
+     ],
+     [
+      "hip_adduction_r",
+      7.3
+     ]
+    ]
+   },
+   "wall_s": 100.4,
+   "alpha_to_mn": 2.0,
+   "alpha_nA": 2.0,
+   "rig_scale": 0.0
+  },
+  {
+   "tag": "desc_0.2",
+   "t_end": 7.998,
+   "fell": true,
+   "feet_pctBW": 104.9,
+   "com_z_mean": -0.711,
+   "com_z_min": -0.749,
+   "sway": 0.903,
+   "tilt_max": 152.6,
+   "act_sum": 66.0,
+   "cocon_act": 5.82,
+   "group_mean": {
+    "hip_abd": 0.644,
+    "knee_flex": 0.971,
+    "hip_flex": 0.712,
+    "hip_add": 0.52,
+    "hip_ext": 0.271,
+    "knee_ext": 0.818,
+    "ankle_pf": 0.941,
+    "ankle_df": 1.0,
+    "trunk_ext": 0.626,
+    "trunk_flex": 1.0
+   },
+   "antag_pairs": {
+    "hip_flex|hip_ext": [
+     0.712,
+     0.271
+    ],
+    "knee_flex|knee_ext": [
+     0.971,
+     0.818
+    ],
+    "ankle_df|ankle_pf": [
+     1.0,
+     0.941
+    ],
+    "trunk_flex|trunk_ext": [
+     1.0,
+     0.626
+    ]
+   },
+   "joints": {
+    "pelvis_tilt": [
+     -124.5,
+     -98.3
+    ],
+    "pelvis_list": [
+     -33.2,
+     18.8
+    ],
+    "pelvis_rotation": [
+     -37.8,
+     -3.1
+    ],
+    "hip_flexion_r": [
+     50.9,
+     59.9
+    ],
+    "knee_angle_r": [
+     -8.0,
+     10.0
+    ],
+    "ankle_angle_r": [
+     -61.0,
+     -52.0
+    ],
+    "hip_adduction_r": [
+     -6.0,
+     5.1
+    ],
+    "subtalar_angle_r": [
+     8.0,
+     13.7
+    ],
+    "hip_flexion_l": [
+     57.6,
+     64.5
+    ],
+    "knee_angle_l": [
+     8.4,
+     10.0
+    ],
+    "ankle_angle_l": [
+     -58.2,
+     -50.9
+    ],
+    "hip_adduction_l": [
+     -29.3,
+     -17.9
+    ],
+    "subtalar_angle_l": [
+     0.8,
+     6.6
+    ]
+   },
+   "forensics": {
+    "t_buckle_s": 1.07,
+    "com_z_ref": 0.794,
+    "com_z_at": 0.712,
+    "first_divergences": [
+     [
+      "pelvis_rotation",
+      1.006,
+      3.3,
+      1.02
+     ],
+     [
+      "hip_flexion_r",
+      1.01,
+      -3.2,
+      1.03
+     ],
+     [
+      "pelvis_tilt",
+      1.01,
+      -3.6,
+      1.03
+     ],
+     [
+      "hip_adduction_r",
+      1.022,
+      -3.2,
+      1.12
+     ],
+     [
+      "hip_flexion_l",
+      1.022,
+      3.1,
+      1.05
+     ],
+     [
+      "pelvis_list",
+      1.034,
+      3.2,
+      1.07
+     ]
+    ],
+    "top_movers_at_buckle": [
+     [
+      "pelvis_rotation",
+      35.2
+     ],
+     [
+      "pelvis_tilt",
+      -28.6
+     ],
+     [
+      "hip_flexion_l",
+      17.9
+     ],
+     [
+      "hip_flexion_r",
+      -12.9
+     ],
+     [
+      "pelvis_list",
+      9.4
+     ]
+    ]
+   },
+   "wall_s": 99.8,
+   "alpha_to_mn": 2.0,
+   "alpha_nA": 1.0,
+   "rig_scale": 0.0
+  },
+  {
+   "tag": "desc_0.1",
+   "t_end": 7.998,
+   "fell": true,
+   "feet_pctBW": 100.5,
+   "com_z_mean": -0.733,
+   "com_z_min": -0.773,
+   "sway": 0.874,
+   "tilt_max": 151.8,
+   "act_sum": 59.7,
+   "cocon_act": 5.24,
+   "group_mean": {
+    "hip_abd": 0.557,
+    "knee_flex": 0.957,
+    "hip_flex": 0.641,
+    "hip_add": 0.411,
+    "hip_ext": 0.123,
+    "knee_ext": 0.758,
+    "ankle_pf": 0.921,
+    "ankle_df": 1.0,
+    "trunk_ext": 0.495,
+    "trunk_flex": 0.994
+   },
+   "antag_pairs": {
+    "hip_flex|hip_ext": [
+     0.641,
+     0.123
+    ],
+    "knee_flex|knee_ext": [
+     0.957,
+     0.758
+    ],
+    "ankle_df|ankle_pf": [
+     1.0,
+     0.921
+    ],
+    "trunk_flex|trunk_ext": [
+     0.994,
+     0.495
+    ]
+   },
+   "joints": {
+    "pelvis_tilt": [
+     -128.3,
+     -95.7
+    ],
+    "pelvis_list": [
+     -15.7,
+     47.8
+    ],
+    "pelvis_rotation": [
+     -21.6,
+     21.8
+    ],
+    "hip_flexion_r": [
+     55.0,
+     61.6
+    ],
+    "knee_angle_r": [
+     5.9,
+     10.0
+    ],
+    "ankle_angle_r": [
+     -60.2,
+     -53.0
+    ],
+    "hip_adduction_r": [
+     -8.7,
+     2.7
+    ],
+    "subtalar_angle_r": [
+     10.0,
+     13.8
+    ],
+    "hip_flexion_l": [
+     62.9,
+     70.6
+    ],
+    "knee_angle_l": [
+     6.4,
+     10.0
+    ],
+    "ankle_angle_l": [
+     -59.8,
+     -50.8
+    ],
+    "hip_adduction_l": [
+     -25.8,
+     -10.3
+    ],
+    "subtalar_angle_l": [
+     -0.8,
+     5.8
+    ]
+   },
+   "forensics": {
+    "t_buckle_s": 1.06,
+    "com_z_ref": 0.786,
+    "com_z_at": 0.706,
+    "first_divergences": [
+     [
+      "pelvis_rotation",
+      1.006,
+      3.1,
+      1.02
+     ],
+     [
+      "hip_flexion_r",
+      1.012,
+      -3.2,
+      1.04
+     ],
+     [
+      "pelvis_tilt",
+      1.012,
+      -3.1,
+      1.04
+     ],
+     [
+      "hip_adduction_r",
+      1.016,
+      -3.2,
+      1.13
+     ],
+     [
+      "hip_adduction_l",
+      1.028,
+      3.2,
+      1.18
+     ],
+     [
+      "hip_flexion_l",
+      1.036,
+      3.3,
+      1.06
+     ]
+    ],
+    "top_movers_at_buckle": [
+     [
+      "pelvis_rotation",
+      36.8
+     ],
+     [
+      "pelvis_tilt",
+      -23.4
+     ],
+     [
+      "hip_flexion_r",
+      -14.6
+     ],
+     [
+      "hip_flexion_l",
+      12.5
+     ],
+     [
+      "pelvis_list",
+      8.0
+     ]
+    ]
+   },
+   "wall_s": 99.4,
+   "alpha_to_mn": 2.0,
+   "alpha_nA": 0.5,
+   "rig_scale": 0.0
+  },
+  {
+   "tag": "desc_0.0",
+   "t_end": 7.998,
+   "fell": true,
+   "feet_pctBW": 95.1,
+   "com_z_mean": -0.706,
+   "com_z_min": -0.787,
+   "sway": 0.849,
+   "tilt_max": 272.8,
+   "act_sum": 53.0,
+   "cocon_act": 4.93,
+   "group_mean": {
+    "hip_abd": 0.45,
+    "knee_flex": 0.928,
+    "hip_flex": 0.536,
+    "hip_add": 0.283,
+    "hip_ext": 0.011,
+    "knee_ext": 0.679,
+    "ankle_pf": 0.898,
+    "ankle_df": 0.999,
+    "trunk_ext": 0.671,
+    "trunk_flex": 0.855
+   },
+   "antag_pairs": {
+    "hip_flex|hip_ext": [
+     0.536,
+     0.011
+    ],
+    "knee_flex|knee_ext": [
+     0.928,
+     0.679
+    ],
+    "ankle_df|ankle_pf": [
+     0.999,
+     0.898
+    ],
+    "trunk_flex|trunk_ext": [
+     0.855,
+     0.671
+    ]
+   },
+   "joints": {
+    "pelvis_tilt": [
+     -272.8,
+     -96.8
+    ],
+    "pelvis_list": [
+     9.7,
+     74.8
+    ],
+    "pelvis_rotation": [
+     -9.3,
+     158.8
+    ],
+    "hip_flexion_r": [
+     58.6,
+     73.9
+    ],
+    "knee_angle_r": [
+     0.0,
+     10.1
+    ],
+    "ankle_angle_r": [
+     -61.3,
+     -51.6
+    ],
+    "hip_adduction_r": [
+     -16.3,
+     7.4
+    ],
+    "subtalar_angle_r": [
+     10.9,
+     18.1
+    ],
+    "hip_flexion_l": [
+     59.0,
+     71.6
+    ],
+    "knee_angle_l": [
+     -0.6,
+     10.0
+    ],
+    "ankle_angle_l": [
+     -61.1,
+     -47.0
+    ],
+    "hip_adduction_l": [
+     -31.7,
+     3.5
+    ],
+    "subtalar_angle_l": [
+     -1.1,
+     5.3
+    ]
+   },
+   "forensics": {
+    "t_buckle_s": 1.07,
+    "com_z_ref": 0.77,
+    "com_z_at": 0.689,
+    "first_divergences": [
+     [
+      "pelvis_rotation",
+      1.008,
+      3.2,
+      1.02
+     ],
+     [
+      "hip_adduction_r",
+      1.014,
+      -3.1,
+      1.14
+     ],
+     [
+      "hip_flexion_r",
+      1.014,
+      -3.1,
+      1.05
+     ],
+     [
+      "hip_adduction_l",
+      1.018,
+      3.0,
+      1.12
+     ],
+     [
+      "pelvis_tilt",
+      1.022,
+      -3.2,
+      1.05
+     ],
+     [
+      "hip_flexion_l",
+      1.032,
+      3.3,
+      1.06
+     ]
+    ],
+    "top_movers_at_buckle": [
+     [
+      "pelvis_rotation",
+      29.1
+     ],
+     [
+      "pelvis_tilt",
+      -17.8
+     ],
+     [
+      "hip_flexion_l",
+      14.1
+     ],
+     [
+      "hip_flexion_r",
+      -12.6
+     ],
+     [
+      "pelvis_list",
+      11.8
+     ]
+    ]
+   },
+   "wall_s": 99.2,
+   "alpha_to_mn": 2.0,
+   "alpha_nA": 0.0,
+   "rig_scale": 0.0
+  }
+ ]
+}

@@ -1,0 +1,36 @@
+==== kinematics guards demo (plan Items 5+6), 2026-10-22 03:42:06 ====
+
+[Item 5] hip adduction/abduction coupling envelope, as shipped:
+HIP ENVELOPE UNTRUSTED  coupling table pending Ben
+  control points (9 rows, 9 PENDING-BEN):
+    f= -15.00 deg -> adduction in [-45.0000,  20.0000] deg  (graded box = actuator_map_27.json rom_table_deg (hip_flexion [-15 110] hip_adduction [-45 20]); inside Ben AddMag full-adduction flexion band -25..85 deg (Add_Mag_Mesh_Opt.m:29-45); PENDING-BEN)
+    f=   0.00 deg -> adduction in [-45.0000,  20.0000] deg  (inside Ben AddMag full-adduction flexion band (flexMin -25 flexMax 85 paired with full adduction -45..20); PENDING-BEN)
+    f=  30.00 deg -> adduction in [-45.0000,  20.0000] deg  (inside Ben AddMag full-adduction flexion band; PENDING-BEN)
+    f=  60.00 deg -> adduction in [-45.0000,  20.0000] deg  (inside Ben AddMag full-adduction flexion band; PENDING-BEN)
+    f=  85.00 deg -> adduction in [-45.0000,  20.0000] deg  (band edge = Ben AddMag flexMax=85 deg still paired with the full adduction sweep; PENDING-BEN)
+    f=  92.50 deg -> adduction in [-42.9273,  19.0788] deg  (quarter-ellipse taper sqrt(1-u^2) with u=(f-85)/25 beyond the AddMag band toward the graded flexion limit; PENDING-BEN)
+    f= 100.00 deg -> adduction in [-36.0000,  16.0000] deg  (quarter-ellipse taper sqrt(1-u^2); PENDING-BEN)
+    f= 107.50 deg -> adduction in [-19.6150,   8.7178] deg  (quarter-ellipse taper sqrt(1-u^2); PENDING-BEN)
+    f= 110.00 deg -> adduction in [  0.0000,   0.0000] deg  (graded-box corner; combined full-flexion + full-abduction excluded as impractical per buildRoutingContext.m:26 note; PENDING-BEN)
+trusted = 0 (pending rows: 9 of 9)
+
+--- test_hipAdductionEnvelope_20261022 (9 control points) ---
+PASS (a) interpolated limits equal the table at all 9 control points
+PASS (b) corner masked: W(110,-45)=0.1, W(110,20)=0.1 (== wMin); W(92.5,-45)=0.9079 (partial); W(110,0)=1
+PASS (extra) full adduction range W==1 at f in [-25 -15 0 30 60 85] (AddMag band)
+PASS (extra) taper monotone 85->110 deg and contained in the graded box [-45,20]
+PASS (c) banner rule fires (9/9 rows PENDING-BEN)
+drivers must print: HIP ENVELOPE UNTRUSTED  coupling table pending Ben
+PASS (d) helper lives in the campaign folder; no Ben file on the path
+TEST hipAdductionEnvelope_20261022: ALL PASS
+
+--- test_softCornerWeights_20261022 ---
+PASS identity: W == 1 exactly; W .* S bit-for-bit == S
+PASS floor/mid: interior W == 1 exactly; far corners W == wMin == 0.1 exactly
+PASS polarity: J(corner-only)=-0.275 > J(mid-only)=-0.5; mid failure untouched (== -0.5)
+PASS composition: W(92.5,-45): corners-only=1, hip-only=0.9079, AND=0.9079
+NOTE record rule: consumers must report BOTH worstMarginRaw and worstMarginSoft (never quote a softened number as raw).
+NOTE slack guardrail: slack cells (F_ins zeroed: MonoPam_pulley.m:595, BiPam_pulley.m:671) are EXCLUDED by mask from torque tests and routed to the RoM/slack side; these weights never rescue them.
+TEST softCornerWeights_20261022: ALL PASS
+
+==== kinematics guards demo COMPLETE ====

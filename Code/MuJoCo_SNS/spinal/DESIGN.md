@@ -156,6 +156,21 @@ found).
    point - weight comparisons of fixed-tau SNS nets against
    voltage-dependent-tau literature circuits at high drive
    accordingly.
+8. **ANKLE PF:DF TORQUE IMBALANCE DEFEATS UNIFORM CO-CONTRACTION
+   (2026-10-21 co-contraction stand descent, full record
+   `reports_20261020/balance/COACT_STAND_DESCENT_20261021.md`).**
+   Direct capability test of Ben's struts-first hypothesis: with EVERY
+   MN pool saturated at activation 1.0 (verified act_sum 92.0), the
+   model at rig 0 still falls ~0.4 s after release. Static probe: net
+   ankle torque at full co-activation is -183/-187 N·m PLANTARFLEXOR
+   (PF soleus -118.5 + med_gas -61.0 + lat_gas -28.7 vs DF tib_ant
+   +34.5 + ext_dig +18.8 = 4.4:1); the knee is balanced (-8/+12 N·m).
+   All 7 descent levels (100->0% of lock), all three families, fall;
+   no uniform-drive free-stand exists. Any free-standing mechanism
+   must add joint-specific ankle torque balance (foot geometry, DF
+   reinforcement, or graded PF:DF ratios like the NNLS standing
+   solve's) - more drive or more uniform co-contraction cannot close
+   it. Runner hook: --alpha-stand (default-off, anchor bit-exact).
 
 ## 2026-09-22 (ZCode, EB475WS4): s3k BILATERAL-OBJECTIVE VERDICT +
 **ROOT CAUSE chain complete: the objective, the circuit, and the

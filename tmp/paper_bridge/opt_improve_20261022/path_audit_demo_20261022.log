@@ -1,0 +1,99 @@
+[info] Loaded model 3DGaitModel2392 from file D:\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody\gait2392_simbody.osim
+[warning] Couldn't find file 'treadmill.vtp'.
+[warning] Couldn't find file 'sacrum.vtp'.
+[warning] Couldn't find file 'pelvis.vtp'.
+[warning] Couldn't find file 'l_pelvis.vtp'.
+[warning] Couldn't find file 'femur_r.vtp'.
+[warning] Couldn't find file 'tibia_r.vtp'.
+[warning] Couldn't find file 'fibula.vtp'.
+[warning] Couldn't find file 'talus.vtp'.
+[warning] Couldn't find file 'foot.vtp'.
+[warning] Couldn't find file 'bofoot.vtp'.
+[warning] Couldn't find file 'femur_l.vtp'.
+[warning] Couldn't find file 'tibia_l.vtp'.
+[warning] Couldn't find file 'l_fibula.vtp'.
+[warning] Couldn't find file 'l_talus.vtp'.
+[warning] Couldn't find file 'l_foot.vtp'.
+[warning] Couldn't find file 'l_bofoot.vtp'.
+[warning] Couldn't find file 'hat_spine.vtp'.
+[warning] Couldn't find file 'hat_jaw.vtp'.
+[warning] Couldn't find file 'hat_skull.vtp'.
+[warning] Couldn't find file 'hat_ribs.vtp'.
+model   : D:\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody\gait2392_simbody.osim
+map     : D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27_v2\actuator_map_27.json
+opensim : 4.4.1 (pinned 4.4.1)
+muscles inventoried: 92  (cond points: 26, moving: 8, pathwraps: 0)
+[ 1] Erector Spinae                 lumbar_extension   primary   ok
+[ 1] Erector Spinae                 lumbar_bending     secondary ok
+[ 1] Erector Spinae                 lumbar_rotation    secondary ok
+[ 2] Internal Oblique               lumbar_extension   primary   ok
+[ 2] Internal Oblique               lumbar_bending     secondary ok
+[ 3] External Oblique               lumbar_extension   primary   ok
+[ 3] External Oblique               lumbar_bending     secondary ok
+[ 4] Bicep Femoris, Long Head       knee_angle_r       primary   ok
+[ 4] Bicep Femoris, Long Head       hip_flexion_r      secondary ok
+[ 5] Semimembranosus                knee_angle_r       primary   FLAG
+[ 5] Semimembranosus                hip_flexion_r      secondary ok
+[ 6] Sartorius                      knee_angle_r       primary   ok
+[ 6] Sartorius                      hip_flexion_r      secondary ok
+[ 7] Tensor Fasciae Latae           knee_angle_r       primary   ok
+[ 7] Tensor Fasciae Latae           hip_flexion_r      secondary ok
+[ 7] Tensor Fasciae Latae           hip_adduction_r    secondary ok
+[ 8] Rectus Femoris                 knee_angle_r       primary   FLAG
+[ 8] Rectus Femoris                 hip_flexion_r      secondary ok
+[ 9] Gracilis                       knee_angle_r       primary   FLAG
+[ 9] Gracilis                       hip_flexion_r      secondary ok
+[10] Bicep Femoris, Short Head      knee_angle_r       primary   ok
+[11] Vastus Intermedius             knee_angle_r       primary   FLAG
+[12] Soleus                         ankle_angle_r      primary   ok
+[13] Medial Gastroocnemius          ankle_angle_r      primary   ok
+[13] Medial Gastroocnemius          knee_angle_r       secondary FLAG
+[14] Lateral Gastrocenemius         ankle_angle_r      primary   ok
+[14] Lateral Gastrocenemius         knee_angle_r       secondary FLAG
+[15] Tibialis Posterior             subtalar_angle_r   primary   ok
+[15] Tibialis Posterior             ankle_angle_r      secondary ok
+[16] Tibialis Posterior (duplicate  ankle_angle_r      primary   ok
+[16] Tibialis Posterior (duplicate  subtalar_angle_r   secondary ok
+[17] Peroneus Brevis                subtalar_angle_r   primary   ok
+[17] Peroneus Brevis                ankle_angle_r      secondary ok
+[18] Peroneus Longus                subtalar_angle_r   primary   ok
+[18] Peroneus Longus                ankle_angle_r      secondary ok
+[19] Peroneus Tertius               subtalar_angle_r   primary   ok
+[19] Peroneus Tertius               ankle_angle_r      secondary ok
+[20] Flexor Digitorum Longus        mtp_angle_r        primary   ok
+[20] Flexor Digitorum Longus        ankle_angle_r      secondary ok
+[20] Flexor Digitorum Longus        subtalar_angle_r   secondary ok
+[21] Flexor Hallucis Longus         mtp_angle_r        primary   ok
+[21] Flexor Hallucis Longus         ankle_angle_r      secondary ok
+[21] Flexor Hallucis Longus         subtalar_angle_r   secondary ok
+[22] Extensor Digitorum Longus      mtp_angle_r        primary   ok
+[22] Extensor Digitorum Longus      ankle_angle_r      secondary ok
+[22] Extensor Digitorum Longus      subtalar_angle_r   secondary ok
+[23] Extensor Hallucis Longus       mtp_angle_r        primary   ok
+[23] Extensor Hallucis Longus       ankle_angle_r      secondary ok
+[23] Extensor Hallucis Longus       subtalar_angle_r   secondary ok
+[24] Gluteus Maximus                hip_flexion_r      primary   ok
+[24] Gluteus Maximus                hip_adduction_r    secondary ok
+[24] Gluteus Maximus                hip_rotation_r     secondary ok
+[25] Adductor Magnus                hip_adduction_r    primary   ok
+[25] Adductor Magnus                hip_flexion_r      secondary ok
+[26] Iliacus                        hip_flexion_r      primary   FLAG
+[27] Psoas X                        hip_flexion_r      primary   FLAG
+wrote tmp/paper_bridge/opt_improve_20261022/path_artifact_audit_gait2392_simbody_20261022_034030.csv (92 muscle-DOF rows)
+
+site-DOF muscle rows flagged: 11 of 92
+gate vas_med_r   : flagged=True  [knee_angle_r:flag=1(cond=1,act=2,step=5)]
+gate vas_lat_r   : flagged=True  [knee_angle_r:flag=1(cond=1,act=2,step=9)]
+gate semiten_r   : flagged=True  [knee_angle_r:flag=1(cond=1,act=1,step=0); hip_flexion_r:flag=0(cond=0,act=0,step=0)]
+gate glut_med1_r : flagged=False  [hip_flexion_r:flag=0(cond=0,act=0,step=0); hip_adduction_r:flag=0(cond=0,act=0,step=0); hip_rotation_r:flag=0(cond=0,act=0,step=0)]
+
+recorded requirement-curve step scan (same 2%-of-peak rule):
+  knee extensor requirement of record (OpenSim_Vasti_Results.txt, angle col knee_angle_r):
+    vas_int_r    n=100 peak=  55.1851 max_step= 4.393% steps@[0.15, 1.46, 2.78, 4.09, 5.4, 6.72, 8.03, 9.34] -> FLAG
+    vas_lat_r    n=100 peak=  74.5919 max_step= 4.950% steps@[-16.92, -15.61, -14.29, -12.98, -11.67, -10.35, -9.04, -7.73, 0.15, 1.46, 2.78, 4.09, 5.4, 6.72, 8.03, 9.34] -> FLAG
+    vas_med_r    n=100 peak=  50.3214 max_step= 4.947% steps@[0.15, 1.46, 2.78, 4.09, 5.4, 6.72, 8.03, 9.34] -> FLAG
+  knee flexor requirement of record (OpenSim_Bifem_Results.txt, angle col knee_angle_r):
+    bifemlh_r    n=100 peak=  24.8192 max_step= 1.912% steps@- -> ok
+    bifemsh_r    n=100 peak=  23.1587 max_step= 2.436% steps@[-119.34, -118.03, -116.72, -115.4, -114.09, -112.78, -111.46, -110.15, -108.84, -107.53, -106.21, -104.9, -103.59, -102.27, -100.96, -99.65, -98.33, -97.02, -95.71, -94.39, -11.67, -10.35, -9.04, -7.73, -6.41, -5.1, -3.79, -2.47, -1.16, 0.15, 1.46, 2.78, 4.09, 5.4, 6.72, 8.03, 9.34] -> FLAG
+read-only check: model and map mtimes/sizes unchanged
+AUDIT DONE
