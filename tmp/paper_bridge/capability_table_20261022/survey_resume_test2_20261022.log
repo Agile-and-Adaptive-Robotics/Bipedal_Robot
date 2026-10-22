@@ -1,0 +1,59 @@
+Human curves loaded: 1 actuator curve set(s) from D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\human_torque_curves_20261022.csv
+
+================ BI PULLEY SURVEY (20261022) PLAN ================
+Mode          = SURVEY (all sites, serial)
+Budgets       = 300 evals/muscle TOTAL, 60 evals/rung, 5 rungs max, 10 min wall
+Config ladder = seed (1,1), advisor steps +1 BPA / +1 line part, cap {3,3}
+Pressure      = 620 kPa; sizes [rest; tendon] re-solved per rung
+Sites         = 27 actuators (robot_seed_preference order)
+[13] Medial Gastroocnemius              primary ankle_angle_r      seeds: med_gas_r
+     seed resolved: med_gas_r (3 points, cross [3 3])
+     graded at crossing 2 (modeled coords: {knee_angle_r, ankle_angle_r})
+====================================================================
+Build summary: 1 buildable, 0 cannot-build, 0 grade-unable
+RESUME: 0 actuator(s) already recorded in D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\BiPulley_survey_full_results_20261022.csv
+
+########## SURVEY Medial Gastroocnemius [13] (ankle_angle_r, seed med_gas_r) ##########
+  graded grid: 25 points, -50.0..20.0 deg; |tau_human| peak 74.10 N*m
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 60 evals) =====
+  rung initial: x = [0.0690 0.0500] m, score 0.00
+--- escalation_advisor_20261022: struct | verdict = rom_slack_short | steps (nBPA,G) = (+0,+1) ---
+    torque OK over 0 taut feasible cell(s) (min NaN vs target 74.1)
+    torque test NOT evaluable (no taut feasible cells): cannot justify +BPA on a slack design
+    RoM/slack side: 625 of 625 cells infeasible (travel demand > KMAX*Rest)
+    STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin NaN vs taut margin nan]
+  rung 1 best: rest 0.0690 m, tendon 0.0500 m -> meet 0.0%, active 0.0% (score -0.00), 53 evals
+  rung 1 advisor: rom_slack_short -> steps (+0,+1) | torque OK over 0 taut feasible cell(s) (min NaN vs target 74.1); torque test NOT evaluable (no taut feasible cells): cannot justify +BPA on a slack design; RoM/slack side: 625 of 625 cells infeasible (travel demand > KMAX*Rest); STEP: G 1 -> 2 (travel gain = G shrinks required contraction)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey_med_gas_r_nB1_G1_20261022_140007.mat
+
+  ===== RUNG 2 | nBPA = 1, G = 2 (sizes re-solved, 60 evals) =====
+  rung initial: x = [0.0690 0.0500] m, score 0.00
+--- escalation_advisor_20261022: struct | verdict = rom_slack_short | steps (nBPA,G) = (+0,+1) ---
+    torque OK over 0 taut feasible cell(s) (min NaN vs target 74.1)
+    torque test NOT evaluable (no taut feasible cells): cannot justify +BPA on a slack design
+    RoM/slack side: 625 of 625 cells infeasible (travel demand > KMAX*Rest)
+    STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin NaN vs taut margin nan]
+  rung 2 best: rest 0.0690 m, tendon 0.0500 m -> meet 0.0%, active 0.0% (score -0.00), 53 evals
+  rung 2 advisor: rom_slack_short -> steps (+0,+1) | torque OK over 0 taut feasible cell(s) (min NaN vs target 74.1); torque test NOT evaluable (no taut feasible cells): cannot justify +BPA on a slack design; RoM/slack side: 625 of 625 cells infeasible (travel demand > KMAX*Rest); STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey_med_gas_r_nB1_G2_20261022_140041.mat
+
+  ===== RUNG 3 | nBPA = 1, G = 3 (sizes re-solved, 60 evals) =====
+  rung initial: x = [0.0690 0.0500] m, score 0.00
+--- escalation_advisor_20261022: struct | verdict = rom_slack_short | steps (nBPA,G) = (+0,+0) ---
+    torque OK over 0 taut feasible cell(s) (min NaN vs target 74.1)
+    torque test NOT evaluable (no taut feasible cells): cannot justify +BPA on a slack design
+    RoM/slack side: 625 of 625 cells infeasible (travel demand > KMAX*Rest)
+    RoM/slack-short but G = 3 already at the directive cap 3
+    [raw slack-gamed margin NaN vs taut margin nan]
+  rung 3 best: rest 0.0690 m, tendon 0.0500 m -> meet 0.0%, active 0.0% (score -0.00), 53 evals
+  rung 3 advisor: rom_slack_short -> steps (+0,+0) | torque OK over 0 taut feasible cell(s) (min NaN vs target 74.1); torque test NOT evaluable (no taut feasible cells): cannot justify +BPA on a slack design; RoM/slack side: 625 of 625 cells infeasible (travel demand > KMAX*Rest); RoM/slack-short but G = 3 already at the directive cap 3
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey_med_gas_r_nB1_G3_20261022_140114.mat
+  ladder converged at rung 3 (config (1,3)).
+  SITE RESULT Medial Gastroocnemius: chosen (1,1), rest 0.0690 m, tendon 0.0500 m, meet 0.0%, active 0.0%, 159 evals, 1.7 min (converged)
+
+Survey complete. Driver CSVs:
+  D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\BiPulley_survey_full_results_20261022.csv
+  D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\BiPulley_survey_full_ladder_20261022.csv
