@@ -1,0 +1,77 @@
+
+---- DETERMINISTIC REPLAY GATE (0.000 tolerance) ----
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -1 (d = +0), worstC +10 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -1 (d = +0), worstC +0.4308676606377031 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.99826314768444957 (d = +0), worstC +0 (d = +0)
+  PASS D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results.mat margin -0.99652633302918803 (d = +0), worstC +0 (d = +0)
+  REPLAY GATE PASS: 4 of 4 anchor mat(s) reproduced exactly.
+SMOKE MODE: one site only (med_gas_r, manifest slot 1).
+
+================ BI PULLEY2 (20261022) PLAN ================
+Mode                = SMOKE (escalate path, 1 site, tiny budget, serial)
+Config grid         = nBPA [1 2 3] x G [1 2 3] (9 cells) -- SMOKE sub-grid: (1,1) (2,2)
+Orientation grid    = 5 x 5 angles per muscle
+Stiffness defaults  = Xi0 0.005 m, Xi1 500000 N/m, Xi2 10000 N/m, wraps 6
+Torque target       = fmax * 5 cm nominal arm (documented heuristic)
+Muscles in manifest = 1
+  med_gas_r   opensim pts=3 cross=[3 3] frames=[femur_r tibia_r calcn_r] Fmax= 1558 N mode=moving_via
+    joints: [hinge; hinge]  ranges(deg): [-120 10; -50 20]
+    grid 5x5 angles; fmaxSource: gait2392_robotbody.osim max_isometric_force (1558 N)
+    notes: osim route med_gas_r: 3 points, cross = [3 3]; empty middle frame: duplicate crossing, transforms chained; calcn points shifted by the subtalar offset; crossing 1 = knee_r hinge (axis [0 0 1], pivot [0 0 0]); crossing 2 = ankle_r hinge (axis [-0.105014 -0.174022 0.979126], pivot [0 -0.43 0])
+=============================================================
+
+########## LADDER med_gas_r (opensim): seed (2,2), maxRungs 2 ##########
+
+===== RUNG 1 | med_gas_r | nBPA = 2, G = 2 (sizes re-solved) =====
+Clearance checks (BPA diameter 20 mm, margin 5.0 mm):
+  bundle self-clearance: min member spacing 25.0 mm (need >= 25.0 mm): VIOLATION
+Initial: x = [0.4825 0.0500] m, penalized margin = 31.0000
+
+                                      Max
+  Iter   Func-count       f(x)      Constraint   MeshSize      Method
+    0         1           31            3            1    
+    1        11           31            3        0.001   Increase penalty
+Optimization finished: no feasible point found.
+
+Best: rest = 0.4825 m, tendon = 0.0500 m, margin = -1.0000, worst constraint = +3
+Exit flags: surrogateopt NaN, patternsearch -2
+Active crossing = 1, infeasible cells = 3, slack cells = 10
+Transmission: nPulleyBPA = 2/2, tackleLineParts = 2/1, gain = 2/1, mode = moving_via/moving_via
+Bundle footprint width = 45.0 mm (diameter 20 mm)
+--- escalation_advisor_20261022: BiPam_pulley | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 4.78 N*m < target 77.9 N*m (taut margin -0.9386)
+    RoM/slack side: 10 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    RoM/slack side: 3 of 25 cells infeasible (travel demand > KMAX*Rest)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.938642]
+LADDER CHOICE (rung 1, med_gas_r): verdict = both -> steps (nBPA,G) = (+1,+1) -> next (3,3) | torque-short: min taut-cell |Torque_ins| = 4.78 N*m < target 77.9 N*m (taut margin -0.9386); RoM/slack side: 10 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test); RoM/slack side: 3 of 25 cells infeasible (travel demand > KMAX*Rest); STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G); STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+
+===== RUNG 2 | med_gas_r | nBPA = 3, G = 3 (sizes re-solved) =====
+Clearance checks (BPA diameter 20 mm, margin 5.0 mm):
+  bundle self-clearance: min member spacing 25.0 mm (need >= 25.0 mm): VIOLATION
+Initial: x = [0.4825 0.0500] m, penalized margin = 5.6025
+
+                                      Max
+  Iter   Func-count       f(x)      Constraint   MeshSize      Method
+    0         1      5.60248       0.4602            1    
+    1        63      3.94937       0.2949        0.001   Increase penalty/Infeasible
+Maximum number of function evaluations exceeded: increase options.MaxFunctionEvaluations.
+
+Best: rest = 0.4310 m, tendon = 0.1968 m, margin = -1.0000, worst constraint = +0.294937
+Exit flags: surrogateopt NaN, patternsearch 0
+Active crossing = 1, infeasible cells = 0, slack cells = 5
+Transmission: nPulleyBPA = 3/3, tackleLineParts = 3/1, gain = 3/1, mode = moving_via/moving_via
+Bundle footprint width = 70.0 mm (diameter 20 mm)
+--- escalation_advisor_20261022: BiPam_pulley | verdict = both | steps (nBPA,G) = (+0,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 5.389 N*m < target 77.9 N*m (taut margin -0.9308)
+    RoM/slack side: 5 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    torque-short but nBPA = 3 already at the directive cap 3
+    RoM/slack-short but G = 3 already at the directive cap 3
+    [raw slack-gamed margin -1.0000 vs taut margin -0.930817]
+LADDER CHOICE (rung 2, med_gas_r): verdict = both -> steps (nBPA,G) = (+0,+0) (at directive grid cap) | torque-short: min taut-cell |Torque_ins| = 5.389 N*m < target 77.9 N*m (taut margin -0.9308); RoM/slack side: 5 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test); torque-short but nBPA = 3 already at the directive cap 3; RoM/slack-short but G = 3 already at the directive cap 3
+LADDER med_gas_r: converged at rung 2 (config (3,3)).
+
+Escalation ladders complete. See D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_escalation_ladder_20261022.csv
+
+Opt_run_BiPulley2_20261022 done (mode escalate, smoke 1).

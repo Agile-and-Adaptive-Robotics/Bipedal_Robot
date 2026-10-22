@@ -587,15 +587,15 @@ formatLegend(ax,fontName,legendFontSize)
 % Predicted = cam route of record at 620 kPa (Torque2_adj). NOTE:
 % tendonAdj still carries the approximate 92.49 mm -- replace with the
 % as-measured tendon length when available.
-Load   = [180.2 181.5 168 181 116 100];      %Load in Newtons
-K_deg  = [-26.2 -30 -61 -43 -119 5];         %Knee angle, deg
-LC_deg = -[28 26 23 27 10.5 21];              %Load cell angle, deg
+Load   = [180.2	181.5	168	181	116	100	126	173.4	140];      %Load in Newtons
+K_deg  = [-26.2	-30	-61	-43	-119	5	-1	-22	-86.5];         %Knee angle, deg
+LC_deg = -[28	26	23	27	10.5	21	27	28	22];              %Load cell angle, deg
 K_ang  = K_deg*cdeg;                       %Knee angle
 LC_ang = LC_deg*cdeg;                      %Load cell angle
-Presh  = [437 420 425 435 256 480];          %Measured pressure, kPa
+Presh  = [437	420	425	435	256	480	488	435	350];          %Measured pressure, kPa
 
 
-p_rf = [-0.065, -0.255, 0]';     %point of reaction force
+p_rf = [-0.05, -0.255, 0]';     %point of reaction force
 d = hypot(p_rf(1),p_rf(2));
 ang = atan2(p_rf(2),p_rf(1));
 T_t1_rf = RpToTrans(eye(3),p_rf);   %Transformation matrix from theta 1 to reaction point

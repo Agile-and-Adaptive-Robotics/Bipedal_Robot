@@ -1,0 +1,17 @@
+== test_escalation_advisor_20261022 ==
+(a) PASS: 10 slack + taut cells at 2x target -> rom_slack_short, steps (+0,+1), raw -1.0000 vs taut +1.0000
+(b) PASS: taut cell 60% short -> torque_short, steps (+1,+0)
+(c) PASS: slack + taut shortfall -> both, steps (+1,+1)
+(d) PASS: clean grid -> converged
+(e) PASS: W = 0 on the slack cells -> converged (mask honored)
+--- escalation_advisor_20261022: BiPulley_opensim_med_gas_r_2BPA_G2_20261021_1114.mat | verdict = both | steps (nBPA,G) = (+1,+1) ---
+    torque-short: min taut-cell |Torque_ins| = 7.624 N*m < target 77.9 N*m (taut margin -0.9021)
+    RoM/slack side: 10 of 25 cells slack (Torque_ins = 0 there BY CONSTRUCTION, excluded from the torque test)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    STEP: G 2 -> 3 (travel gain = G shrinks required contraction)
+    [raw slack-gamed margin -1.0000 vs taut margin -0.902133]
+(f) PASS: doctrine med_gas_r (2,[2 1]) -> both (nSlack = 10, raw -1.0000 = the log :1160 artifact vs taut -0.9021 = genuine), steps (+1,+1)
+(f2) PASS: slack cells masked -> torque_short persists (taut-driven, min taut 7.6238 unchanged)
+(g) PASS: deterministic (identical repeat outputs, zero optimizer calls)
+TEST_ESCALATION_ADVISOR_20261022 PASS
+EXIT=0
