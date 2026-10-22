@@ -1,0 +1,10 @@
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (symmetric): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+alpha-stand override: levels (nA) [5.0] into BOTH ALPHA cells, dwell 8.00 s
+standing solve: nnls x in [0.00, 0.75], >0.1: 23 muscles
+  top: tib_ant_r=0.75, tib_ant_l=0.74, ext_dig_l=0.47, ext_dig_r=0.47, glut_max2_l=0.41, glut_med1_l=0.40, glut_max2_r=0.36, glut_med1_r=0.33
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[coact:stock] PROBE sym g=2.0 I=5.0    fell=1 feet=104.9%BW comz=-0.66 sway=0.654 actsum=92.0 pairs={"hip_flex|hip_ext": [1.0, 1.0], "knee_flex|knee_ext": [1.0, 1.0], "ankle_df|ankle_pf": [1.0, 1.0], "trunk_flex|trunk_ext": [1.0, 1.0]}
+    diverge: [["pelvis_tilt", 1.016, 3.2, 1.05], ["hip_flexion_l", 1.03, -3.0, 1.17], ["pelvis_rotation", 1.044, -3.2, 1.09], ["pelvis_list", 1.048, -3.0, 1.11], ["hip_adduction_l", 1.06, 3.1, 1.14], ["hip_adduction_r", 1.076, 3.0, 1.15]]
+    buckle: {"t_buckle_s": 1.04, "com_z_ref": 0.799, "com_z_at": 0.715, "top_movers_at_buckle": [["pelvis_tilt", 7.3], ["hip_flexion_l", -3.6], ["pelvis_rotation", -2.4], ["pelvis_list", -2.1], ["hip_flexion_r", -1.6]]}
+[coact:stock] wrote reports_20261020\balance\coact_stand_stock_20261021.json

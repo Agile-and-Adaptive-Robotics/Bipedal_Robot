@@ -409,6 +409,26 @@ G = dict(
     #     the two documented differences from the s3k reading).
     iain_pf_gate=0.0,
     pf_mixed_recip=0.0,
+    # ---- 2026-10-21 reflex-stand knobs (Ben: balance is REFLEXIVE, not
+    # saturated co-contraction; alpha bias from the static solve + Ia/II/Ib
+    # closing the loop). ALL DEFAULTS 0 = today's behavior bit-identical.
+    #   ii_set_pose: >0 = the II length term references the STANDING-POSE
+    #     length per muscle (L0 = actuator_length at the start pose) instead
+    #     of the converted-RoM midpoint (audit 2026-10-21: at the standing
+    #     pose len_norm vs the RoM midpoint is -0.68 (vas), -0.61 (glut_max),
+    #     -0.72 (ercspn, on a converter-garbage [0.01,1.0] range) - the
+    #     rectified II term has no signal until those muscles stretch past
+    #     mid-RoM, so the static postural holder never engages; SCONE
+    #     Tutorial-3a ControllerReflexBalance sets L0 at the posture,
+    #     KL ~ 1 - goal2_balance_stage.md table row 'proprioceptive').
+    #   gamma_coact: per-muscle spindle sensitivity multiplier
+    #     (1 + gamma_coact * act_stand[i]) on the Ia gain and the II length
+    #     term - alpha-gamma coactivation coupled to the alpha bias
+    #     (Matthews 1972, Mammalian Muscle Receptors and the Stretch
+    #     Reflex; Prochazka 1989 TINS 12:499 - fusimotor set. NOT the
+    #     RG-level GAMMA hand drive of the 2026-10-16 campaign).
+    ii_set_pose=0.0,
+    gamma_coact=0.0,
 )
 
 # Extra gains for the phase-reset pathways (not searched by default; the

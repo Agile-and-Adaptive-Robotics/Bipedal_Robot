@@ -1,0 +1,78 @@
+[Warning: Variable 'XiUsed' not found.] 
+[> In Knee_Extensor_20mm (line 59)] 
+The algorithm will be calculating Torque at 100 different joint positions.
+Initial tendon = 0.040000 m
+Initial geometry-dependent tendon maximum = 0.059648 m
+p5 release: hardcoded -89.80 deg, derived -89.80 deg
+p4 release: hardcoded -55.66 deg, derived -55.66 deg
+p6 release: hardcoded -47.78 deg, derived -47.78 deg
+p7 release: hardcoded -20.20 deg, derived -20.20 deg
+p3 release: hardcoded +6.06 deg, derived +6.06 deg
+p8 release: hardcoded +7.37 deg, derived +7.37 deg
+p7 active anywhere (hardcoded: yes until wall lift-off): 1
+The algorithm will be calculating Torque at 100 different joint positions.
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+
+Loaded optimized extensor design:
+p1     = [0.040000 0.137000 0.000000] m
+pEnd   = [0.034420 -0.197096 0.000000] m
+rest   = 0.827738 m
+tendon = 0.036841 m
+kmax   = 0.616665 m
+minimum torque margin = +0.050249 (+5.02%)
+
+Adjusted route (clip-on tibia part):
+tendon = 0.092490 m (baseline 0.036841 m)
+p6 = [0.11632 0.01504] m, theta 26.566 -> 7.367 deg
+p7 = [0.13132 -0.01897] m
+p8 = [0.12704 -0.04787] m
+p3 clip: none
+p3:p5 unchanged (femur-chain repair did not fire)
+p2: repeats its neighbor from -21.52 deg on
+p3: repeats its neighbor from -54.34 deg on
+p4: repeats its neighbor from -89.80 deg on
+p5: repeats its neighbor from -110.81 deg on
+p6: repeats its neighbor from -18.89 deg on
+p7: active through the full RoM
+p8: active through the full RoM
+adj minimum torque margin = +0.397737 (+39.77%)
+ExtTest20mm_2 Torque actual (adjoint, d = 0.2632 m, ang = -1.82 deg):
+51.7718	52.3667	48.1082	51.7318	32.8354	29.5600	
+GoF, measured vs predicted at the measured angles and pressures:
+  RMSE = 11.0112 N*m   FVU = 11.7686   Max residual = 9.4822 N*m
+GoF, measured vs predicted at the measured angles and pressures:
+  RMSE = 9.5356 N*m   FVU = 21.6045   Max residual = 20.9457 N*m
+GoF, measured vs predicted at the measured angles and pressures:
+  RMSE = 1.3115 N*m   FVU = 1.4981   Max residual = 0.9726 N*m
+GoF, measured vs predicted at the measured angles and pressures:
+  RMSE = 0.9836 N*m   FVU = 5.0488   Max residual = 4.7456 N*m
+GoF, measured vs predicted at the measured angles and pressures:
+  RMSE = 13.5716 N*m   FVU = 14.9438   Max residual = 15.0159 N*m
+GoF, measured vs predicted at the measured angles and pressures:
+  RMSE = 13.8122 N*m   FVU = 27.3842   Max residual = 26.6483 N*m
+
+Pressure back-calculation (optimized extensor, rest = 0.8277 m, Dia = 20 mm; baseline vs adj route):
+angle_deg   target_Nm   kPa_base   kPa_adj   status_base / status_adj
+  -120.0       28.72     229.4     274.5   ok / ok
+  -113.4       30.52     243.7     269.1   ok / ok
+  -106.9       31.92     257.5     279.4   ok / ok
+  -100.3       33.07     271.6     291.7   ok / ok
+   -93.7       35.88     295.3     313.8   ok / ok
+   -87.2       38.43     321.5     336.8   ok / ok
+   -80.6       40.48     345.0     356.1   ok / ok
+   -74.0       41.71     366.2     374.3   ok / ok
+   -67.5       42.58     387.9     394.2   ok / ok
+   -60.9       45.38     424.5     430.1   ok / ok
+   -54.3       47.82     465.1     462.5   ok / ok
+   -47.8       49.51     507.9     469.8   ok / ok
+   -41.2       50.28     535.3     476.9   ok / ok
+   -34.6       50.22     559.7     484.8   ok / ok
+   -28.1       49.50     582.1     494.7   ok / ok
+   -21.5       47.19     592.6     501.0   ok / ok
+   -14.9       43.53     590.0     495.0   ok / ok
+    -8.4       38.76     573.3     487.3   ok / ok
+    -1.8       35.86     578.5     500.9   ok / ok
+     4.7       28.34     532.8     494.9   ok / ok
+max required pressure: baseline 596.6 kPa, adj 507.2 kPa
+Full table: Ext_20mm_pressure_for_human_torque.csv (in cwd)

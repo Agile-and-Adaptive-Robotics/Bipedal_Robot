@@ -1,0 +1,15 @@
+
+===== reflex-stand config J: {'ii_gain': 30.0, 'gamma': 0.5, 'aff': True, 'rig': 0.3} =====
+[J] pf_to_mn=0: PF tonic removed (headroom test)
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+reflex-stand: preload-FREE gravity-only standing solve (alpha bias); II setpoint = standing-pose length; BAL_* surrogate channels OFF; gamma_coact=0.5
+standing solve: nnls x in [0.00, 0.71], >0.1: 25 muscles
+  top: add_long_l=0.71, pect_l=0.34, glut_min1_l=0.34, glut_min2_l=0.31, tib_post_l=0.17, add_mag3_r=0.17, glut_min3_l=0.15, glut_med1_r=0.15
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+trunk-load staircase: [5.0, 10.0, 20.0] %BW steps, dwell 3.00 s from t=3.0 s (BW=769.7 N)
+[J] fell=0 comz_min=0.605 base_comz=0.655
+     5%BW: com_dz=-0.010 sway=0.052 ank_r=-14.3 feet=33.7% d_soleus=+0.000 d_vaslat=+0.003 actsum=43.6
+    10%BW: com_dz=-0.021 sway=0.084 ank_r=-22.1 feet=25.1% d_soleus=+0.000 d_vaslat=+0.003 actsum=43.5
+    20%BW: com_dz=-0.034 sway=0.108 ank_r=-25.9 feet=22.9% d_soleus=+0.000 d_vaslat=+0.003 actsum=43.4
+
+wrote _reflex_stand_results_20261021.json

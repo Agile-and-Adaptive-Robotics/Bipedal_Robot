@@ -1,0 +1,877 @@
+{
+ "S": {
+  "tag": "S",
+  "cfg": {
+   "ii_gain": 1.2,
+   "gamma": 0.0,
+   "aff": true,
+   "rig": 1.0
+  },
+  "wall_s": 45.9,
+  "fell": false,
+  "t_end": 11.998000000000001,
+  "com_z_min": 0.707,
+  "base_act": {
+   "soleus_r": 0.806,
+   "med_gas_r": 0.812,
+   "vas_lat_r": 0.796,
+   "glut_max2_r": 1.0,
+   "ercspn_r": 0.945,
+   "tib_ant_r": 0.466,
+   "rect_fem_r": 0.802,
+   "iliacus_r": 0.114
+  },
+  "base_com_z": 0.776,
+  "load_steps": [
+   {
+    "pctBW": 5.0,
+    "com_dx": 0.0093,
+    "com_dy": 0.0178,
+    "com_dz": -0.0242,
+    "sway_max": 0.0315,
+    "ankle_r_deg": -19.89,
+    "ankle_l_deg": -12.96,
+    "feet_pctBW": 89.8,
+    "act": {
+     "soleus_r": 0.807,
+     "med_gas_r": 0.81,
+     "vas_lat_r": 0.797,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.948,
+     "tib_ant_r": 0.466,
+     "rect_fem_r": 0.803,
+     "iliacus_r": 0.118
+    },
+    "gmean": {
+     "hip_abd": 0.725,
+     "knee_flex": 0.664,
+     "hip_flex": 0.119,
+     "hip_add": 0.203,
+     "hip_ext": 1.0,
+     "knee_ext": 0.8,
+     "ankle_pf": 0.847,
+     "ankle_df": 0.459,
+     "trunk_ext": 0.949,
+     "trunk_flex": 0.157
+    },
+    "act_sum": 58.3
+   },
+   {
+    "pctBW": 10.0,
+    "com_dx": 0.0362,
+    "com_dy": 0.0333,
+    "com_dz": -0.0406,
+    "sway_max": 0.0564,
+    "ankle_r_deg": -23.09,
+    "ankle_l_deg": -16.65,
+    "feet_pctBW": 64.8,
+    "act": {
+     "soleus_r": 0.808,
+     "med_gas_r": 0.811,
+     "vas_lat_r": 0.797,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.948,
+     "tib_ant_r": 0.466,
+     "rect_fem_r": 0.803,
+     "iliacus_r": 0.118
+    },
+    "gmean": {
+     "hip_abd": 0.725,
+     "knee_flex": 0.664,
+     "hip_flex": 0.119,
+     "hip_add": 0.203,
+     "hip_ext": 1.0,
+     "knee_ext": 0.8,
+     "ankle_pf": 0.847,
+     "ankle_df": 0.458,
+     "trunk_ext": 0.949,
+     "trunk_flex": 0.157
+    },
+    "act_sum": 58.3
+   },
+   {
+    "pctBW": 20.0,
+    "com_dx": 0.054,
+    "com_dy": 0.0376,
+    "com_dz": -0.0603,
+    "sway_max": 0.0699,
+    "ankle_r_deg": -23.24,
+    "ankle_l_deg": -18.39,
+    "feet_pctBW": 58.9,
+    "act": {
+     "soleus_r": 0.808,
+     "med_gas_r": 0.811,
+     "vas_lat_r": 0.797,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.948,
+     "tib_ant_r": 0.466,
+     "rect_fem_r": 0.803,
+     "iliacus_r": 0.118
+    },
+    "gmean": {
+     "hip_abd": 0.725,
+     "knee_flex": 0.665,
+     "hip_flex": 0.12,
+     "hip_add": 0.204,
+     "hip_ext": 1.0,
+     "knee_ext": 0.8,
+     "ankle_pf": 0.847,
+     "ankle_df": 0.459,
+     "trunk_ext": 0.949,
+     "trunk_flex": 0.157
+    },
+    "act_sum": 58.3
+   }
+  ]
+ },
+ "A": {
+  "tag": "A",
+  "cfg": {
+   "ii_gain": 1.2,
+   "gamma": 0.0,
+   "aff": true,
+   "rig": 0.0
+  },
+  "wall_s": 4.2,
+  "fell": false,
+  "t_end": 1.234,
+  "com_z_min": 0.599,
+  "base_act": {
+   "soleus_r": 0.8,
+   "med_gas_r": 0.803,
+   "vas_lat_r": 0.783,
+   "glut_max2_r": 1.0,
+   "ercspn_r": 0.937,
+   "tib_ant_r": 0.397,
+   "rect_fem_r": 0.783,
+   "iliacus_r": 0.0
+  },
+  "base_com_z": 0.665,
+  "load_steps": [
+   {
+    "pctBW": 5.0,
+    "com_dx": 0.0,
+    "com_dy": 0.0,
+    "com_dz": 0.0,
+    "sway_max": 0.0,
+    "ankle_r_deg": 0.0,
+    "ankle_l_deg": 0.0,
+    "feet_pctBW": 0.0,
+    "act": {
+     "soleus_r": 0.8,
+     "med_gas_r": 0.803,
+     "vas_lat_r": 0.783,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.937,
+     "tib_ant_r": 0.397,
+     "rect_fem_r": 0.783,
+     "iliacus_r": 0.0
+    },
+    "gmean": {
+     "hip_abd": 0.701,
+     "knee_flex": 0.651,
+     "hip_flex": 0.005,
+     "hip_add": 0.106,
+     "hip_ext": 1.0,
+     "knee_ext": 0.783,
+     "ankle_pf": 0.834,
+     "ankle_df": 0.388,
+     "trunk_ext": 0.939,
+     "trunk_flex": 0.051
+    },
+    "act_sum": 54.6
+   },
+   {
+    "pctBW": 10.0,
+    "com_dx": 0.0,
+    "com_dy": 0.0,
+    "com_dz": 0.0,
+    "sway_max": 0.0,
+    "ankle_r_deg": 0.0,
+    "ankle_l_deg": 0.0,
+    "feet_pctBW": 0.0,
+    "act": {
+     "soleus_r": 0.8,
+     "med_gas_r": 0.803,
+     "vas_lat_r": 0.783,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.937,
+     "tib_ant_r": 0.397,
+     "rect_fem_r": 0.783,
+     "iliacus_r": 0.0
+    },
+    "gmean": {
+     "hip_abd": 0.701,
+     "knee_flex": 0.651,
+     "hip_flex": 0.005,
+     "hip_add": 0.106,
+     "hip_ext": 1.0,
+     "knee_ext": 0.783,
+     "ankle_pf": 0.834,
+     "ankle_df": 0.388,
+     "trunk_ext": 0.939,
+     "trunk_flex": 0.051
+    },
+    "act_sum": 54.6
+   },
+   {
+    "pctBW": 20.0,
+    "com_dx": 0.0,
+    "com_dy": 0.0,
+    "com_dz": 0.0,
+    "sway_max": 0.0,
+    "ankle_r_deg": 0.0,
+    "ankle_l_deg": 0.0,
+    "feet_pctBW": 0.0,
+    "act": {
+     "soleus_r": 0.8,
+     "med_gas_r": 0.803,
+     "vas_lat_r": 0.783,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.937,
+     "tib_ant_r": 0.397,
+     "rect_fem_r": 0.783,
+     "iliacus_r": 0.0
+    },
+    "gmean": {
+     "hip_abd": 0.701,
+     "knee_flex": 0.651,
+     "hip_flex": 0.005,
+     "hip_add": 0.106,
+     "hip_ext": 1.0,
+     "knee_ext": 0.783,
+     "ankle_pf": 0.834,
+     "ankle_df": 0.388,
+     "trunk_ext": 0.939,
+     "trunk_flex": 0.051
+    },
+    "act_sum": 54.6
+   }
+  ]
+ },
+ "B": {
+  "tag": "B",
+  "cfg": {
+   "ii_gain": 1.2,
+   "gamma": 0.0,
+   "aff": true,
+   "rig": 0.0
+  },
+  "wall_s": 46.2,
+  "fell": true,
+  "t_end": 11.998000000000001,
+  "com_z_min": -0.74,
+  "base_act": {
+   "soleus_r": 0.795,
+   "med_gas_r": 0.801,
+   "vas_lat_r": 0.784,
+   "glut_max2_r": 1.0,
+   "ercspn_r": 0.904,
+   "tib_ant_r": 0.418,
+   "rect_fem_r": 0.787,
+   "iliacus_r": 0.052
+  },
+  "base_com_z": -0.609,
+  "load_steps": [
+   {
+    "pctBW": 5.0,
+    "com_dx": -0.0311,
+    "com_dy": 0.1754,
+    "com_dz": -0.0674,
+    "sway_max": 0.2338,
+    "ankle_r_deg": -1.55,
+    "ankle_l_deg": -0.35,
+    "feet_pctBW": 108.5,
+    "act": {
+     "soleus_r": 0.808,
+     "med_gas_r": 0.814,
+     "vas_lat_r": 0.798,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.947,
+     "tib_ant_r": 0.461,
+     "rect_fem_r": 0.802,
+     "iliacus_r": 0.116
+    },
+    "gmean": {
+     "hip_abd": 0.71,
+     "knee_flex": 0.665,
+     "hip_flex": 0.12,
+     "hip_add": 0.2,
+     "hip_ext": 1.0,
+     "knee_ext": 0.799,
+     "ankle_pf": 0.847,
+     "ankle_df": 0.455,
+     "trunk_ext": 0.944,
+     "trunk_flex": 0.153
+    },
+    "act_sum": 58.1
+   },
+   {
+    "pctBW": 10.0,
+    "com_dx": -0.0536,
+    "com_dy": 0.1747,
+    "com_dz": -0.0815,
+    "sway_max": 0.2205,
+    "ankle_r_deg": -3.71,
+    "ankle_l_deg": 1.46,
+    "feet_pctBW": 114.4,
+    "act": {
+     "soleus_r": 0.81,
+     "med_gas_r": 0.815,
+     "vas_lat_r": 0.797,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.949,
+     "tib_ant_r": 0.464,
+     "rect_fem_r": 0.802,
+     "iliacus_r": 0.116
+    },
+    "gmean": {
+     "hip_abd": 0.713,
+     "knee_flex": 0.665,
+     "hip_flex": 0.122,
+     "hip_add": 0.2,
+     "hip_ext": 1.0,
+     "knee_ext": 0.8,
+     "ankle_pf": 0.848,
+     "ankle_df": 0.458,
+     "trunk_ext": 0.947,
+     "trunk_flex": 0.151
+    },
+    "act_sum": 58.2
+   },
+   {
+    "pctBW": 20.0,
+    "com_dx": -0.0548,
+    "com_dy": 0.1615,
+    "com_dz": -0.1056,
+    "sway_max": 0.2182,
+    "ankle_r_deg": -3.5,
+    "ankle_l_deg": 2.96,
+    "feet_pctBW": 124.9,
+    "act": {
+     "soleus_r": 0.81,
+     "med_gas_r": 0.815,
+     "vas_lat_r": 0.797,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.949,
+     "tib_ant_r": 0.464,
+     "rect_fem_r": 0.802,
+     "iliacus_r": 0.116
+    },
+    "gmean": {
+     "hip_abd": 0.714,
+     "knee_flex": 0.665,
+     "hip_flex": 0.122,
+     "hip_add": 0.199,
+     "hip_ext": 1.0,
+     "knee_ext": 0.8,
+     "ankle_pf": 0.849,
+     "ankle_df": 0.458,
+     "trunk_ext": 0.948,
+     "trunk_flex": 0.15
+    },
+    "act_sum": 58.2
+   }
+  ]
+ },
+ "F": {
+  "tag": "F",
+  "cfg": {
+   "ii_gain": 1.2,
+   "gamma": 0.0,
+   "aff": true,
+   "rig": 0.3
+  },
+  "wall_s": 50.4,
+  "fell": false,
+  "t_end": 11.998000000000001,
+  "com_z_min": 0.593,
+  "base_act": {
+   "soleus_r": 0.805,
+   "med_gas_r": 0.81,
+   "vas_lat_r": 0.792,
+   "glut_max2_r": 1.0,
+   "ercspn_r": 0.945,
+   "tib_ant_r": 0.464,
+   "rect_fem_r": 0.797,
+   "iliacus_r": 0.102
+  },
+  "base_com_z": 0.63,
+  "load_steps": [
+   {
+    "pctBW": 5.0,
+    "com_dx": 0.0388,
+    "com_dy": 0.0119,
+    "com_dz": -0.015,
+    "sway_max": 0.0482,
+    "ankle_r_deg": -16.83,
+    "ankle_l_deg": -7.44,
+    "feet_pctBW": 70.9,
+    "act": {
+     "soleus_r": 0.807,
+     "med_gas_r": 0.81,
+     "vas_lat_r": 0.797,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.946,
+     "tib_ant_r": 0.466,
+     "rect_fem_r": 0.802,
+     "iliacus_r": 0.116
+    },
+    "gmean": {
+     "hip_abd": 0.718,
+     "knee_flex": 0.664,
+     "hip_flex": 0.12,
+     "hip_add": 0.198,
+     "hip_ext": 1.0,
+     "knee_ext": 0.799,
+     "ankle_pf": 0.845,
+     "ankle_df": 0.459,
+     "trunk_ext": 0.948,
+     "trunk_flex": 0.158
+    },
+    "act_sum": 58.2
+   },
+   {
+    "pctBW": 10.0,
+    "com_dx": 0.0516,
+    "com_dy": 0.0425,
+    "com_dz": -0.024,
+    "sway_max": 0.0722,
+    "ankle_r_deg": -16.97,
+    "ankle_l_deg": -9.23,
+    "feet_pctBW": 54.6,
+    "act": {
+     "soleus_r": 0.808,
+     "med_gas_r": 0.811,
+     "vas_lat_r": 0.797,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.947,
+     "tib_ant_r": 0.467,
+     "rect_fem_r": 0.803,
+     "iliacus_r": 0.117
+    },
+    "gmean": {
+     "hip_abd": 0.719,
+     "knee_flex": 0.665,
+     "hip_flex": 0.121,
+     "hip_add": 0.199,
+     "hip_ext": 1.0,
+     "knee_ext": 0.8,
+     "ankle_pf": 0.846,
+     "ankle_df": 0.459,
+     "trunk_ext": 0.948,
+     "trunk_flex": 0.157
+    },
+    "act_sum": 58.2
+   },
+   {
+    "pctBW": 20.0,
+    "com_dx": 0.0645,
+    "com_dy": 0.0563,
+    "com_dz": -0.0313,
+    "sway_max": 0.0905,
+    "ankle_r_deg": -16.96,
+    "ankle_l_deg": -10.03,
+    "feet_pctBW": 50.2,
+    "act": {
+     "soleus_r": 0.808,
+     "med_gas_r": 0.812,
+     "vas_lat_r": 0.797,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.947,
+     "tib_ant_r": 0.466,
+     "rect_fem_r": 0.802,
+     "iliacus_r": 0.116
+    },
+    "gmean": {
+     "hip_abd": 0.718,
+     "knee_flex": 0.664,
+     "hip_flex": 0.121,
+     "hip_add": 0.198,
+     "hip_ext": 1.0,
+     "knee_ext": 0.799,
+     "ankle_pf": 0.846,
+     "ankle_df": 0.458,
+     "trunk_ext": 0.948,
+     "trunk_flex": 0.157
+    },
+    "act_sum": 58.2
+   }
+  ]
+ },
+ "G": {
+  "tag": "G",
+  "cfg": {
+   "ii_gain": 30.0,
+   "gamma": 0.0,
+   "aff": true,
+   "rig": 0.3
+  },
+  "wall_s": 53.5,
+  "fell": false,
+  "t_end": 11.998000000000001,
+  "com_z_min": 0.596,
+  "base_act": {
+   "soleus_r": 0.807,
+   "med_gas_r": 0.805,
+   "vas_lat_r": 0.776,
+   "glut_max2_r": 1.0,
+   "ercspn_r": 0.926,
+   "tib_ant_r": 0.656,
+   "rect_fem_r": 0.776,
+   "iliacus_r": 0.413
+  },
+  "base_com_z": 0.635,
+  "load_steps": [
+   {
+    "pctBW": 5.0,
+    "com_dx": 0.0431,
+    "com_dy": 0.0153,
+    "com_dz": -0.0145,
+    "sway_max": 0.0674,
+    "ankle_r_deg": -24.7,
+    "ankle_l_deg": -7.88,
+    "feet_pctBW": 70.7,
+    "act": {
+     "soleus_r": 0.806,
+     "med_gas_r": 0.805,
+     "vas_lat_r": 0.78,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.929,
+     "tib_ant_r": 0.654,
+     "rect_fem_r": 0.78,
+     "iliacus_r": 0.427
+    },
+    "gmean": {
+     "hip_abd": 0.722,
+     "knee_flex": 0.707,
+     "hip_flex": 0.322,
+     "hip_add": 0.279,
+     "hip_ext": 1.0,
+     "knee_ext": 0.797,
+     "ankle_pf": 0.848,
+     "ankle_df": 0.626,
+     "trunk_ext": 0.93,
+     "trunk_flex": 0.256
+    },
+    "act_sum": 62.5
+   },
+   {
+    "pctBW": 10.0,
+    "com_dx": 0.0667,
+    "com_dy": 0.0351,
+    "com_dz": -0.0255,
+    "sway_max": 0.0816,
+    "ankle_r_deg": -31.6,
+    "ankle_l_deg": -9.82,
+    "feet_pctBW": 49.6,
+    "act": {
+     "soleus_r": 0.809,
+     "med_gas_r": 0.808,
+     "vas_lat_r": 0.78,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.929,
+     "tib_ant_r": 0.654,
+     "rect_fem_r": 0.78,
+     "iliacus_r": 0.427
+    },
+    "gmean": {
+     "hip_abd": 0.716,
+     "knee_flex": 0.705,
+     "hip_flex": 0.323,
+     "hip_add": 0.273,
+     "hip_ext": 1.0,
+     "knee_ext": 0.797,
+     "ankle_pf": 0.85,
+     "ankle_df": 0.625,
+     "trunk_ext": 0.931,
+     "trunk_flex": 0.256
+    },
+    "act_sum": 62.4
+   },
+   {
+    "pctBW": 20.0,
+    "com_dx": 0.0788,
+    "com_dy": 0.0565,
+    "com_dz": -0.0342,
+    "sway_max": 0.1032,
+    "ankle_r_deg": -31.5,
+    "ankle_l_deg": -10.62,
+    "feet_pctBW": 44.0,
+    "act": {
+     "soleus_r": 0.809,
+     "med_gas_r": 0.808,
+     "vas_lat_r": 0.779,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.929,
+     "tib_ant_r": 0.653,
+     "rect_fem_r": 0.778,
+     "iliacus_r": 0.426
+    },
+    "gmean": {
+     "hip_abd": 0.711,
+     "knee_flex": 0.703,
+     "hip_flex": 0.323,
+     "hip_add": 0.26,
+     "hip_ext": 1.0,
+     "knee_ext": 0.797,
+     "ankle_pf": 0.85,
+     "ankle_df": 0.625,
+     "trunk_ext": 0.931,
+     "trunk_flex": 0.255
+    },
+    "act_sum": 62.2
+   }
+  ]
+ },
+ "H": {
+  "tag": "H",
+  "cfg": {
+   "ii_gain": 30.0,
+   "gamma": 0.5,
+   "aff": true,
+   "rig": 0.3
+  },
+  "wall_s": 52.2,
+  "fell": false,
+  "t_end": 11.998000000000001,
+  "com_z_min": 0.596,
+  "base_act": {
+   "soleus_r": 0.807,
+   "med_gas_r": 0.805,
+   "vas_lat_r": 0.775,
+   "glut_max2_r": 1.0,
+   "ercspn_r": 0.926,
+   "tib_ant_r": 0.656,
+   "rect_fem_r": 0.775,
+   "iliacus_r": 0.412
+  },
+  "base_com_z": 0.635,
+  "load_steps": [
+   {
+    "pctBW": 5.0,
+    "com_dx": 0.0428,
+    "com_dy": 0.0154,
+    "com_dz": -0.0144,
+    "sway_max": 0.0668,
+    "ankle_r_deg": -24.88,
+    "ankle_l_deg": -7.9,
+    "feet_pctBW": 70.5,
+    "act": {
+     "soleus_r": 0.806,
+     "med_gas_r": 0.805,
+     "vas_lat_r": 0.78,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.929,
+     "tib_ant_r": 0.654,
+     "rect_fem_r": 0.78,
+     "iliacus_r": 0.427
+    },
+    "gmean": {
+     "hip_abd": 0.723,
+     "knee_flex": 0.706,
+     "hip_flex": 0.322,
+     "hip_add": 0.282,
+     "hip_ext": 1.0,
+     "knee_ext": 0.797,
+     "ankle_pf": 0.848,
+     "ankle_df": 0.627,
+     "trunk_ext": 0.93,
+     "trunk_flex": 0.258
+    },
+    "act_sum": 62.6
+   },
+   {
+    "pctBW": 10.0,
+    "com_dx": 0.0661,
+    "com_dy": 0.0353,
+    "com_dz": -0.0255,
+    "sway_max": 0.0809,
+    "ankle_r_deg": -31.72,
+    "ankle_l_deg": -9.88,
+    "feet_pctBW": 49.3,
+    "act": {
+     "soleus_r": 0.809,
+     "med_gas_r": 0.808,
+     "vas_lat_r": 0.78,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.929,
+     "tib_ant_r": 0.654,
+     "rect_fem_r": 0.78,
+     "iliacus_r": 0.427
+    },
+    "gmean": {
+     "hip_abd": 0.716,
+     "knee_flex": 0.705,
+     "hip_flex": 0.323,
+     "hip_add": 0.277,
+     "hip_ext": 1.0,
+     "knee_ext": 0.797,
+     "ankle_pf": 0.85,
+     "ankle_df": 0.626,
+     "trunk_ext": 0.931,
+     "trunk_flex": 0.258
+    },
+    "act_sum": 62.5
+   },
+   {
+    "pctBW": 20.0,
+    "com_dx": 0.0779,
+    "com_dy": 0.0566,
+    "com_dz": -0.0341,
+    "sway_max": 0.1026,
+    "ankle_r_deg": -31.66,
+    "ankle_l_deg": -10.67,
+    "feet_pctBW": 44.0,
+    "act": {
+     "soleus_r": 0.809,
+     "med_gas_r": 0.808,
+     "vas_lat_r": 0.78,
+     "glut_max2_r": 1.0,
+     "ercspn_r": 0.929,
+     "tib_ant_r": 0.654,
+     "rect_fem_r": 0.78,
+     "iliacus_r": 0.427
+    },
+    "gmean": {
+     "hip_abd": 0.712,
+     "knee_flex": 0.704,
+     "hip_flex": 0.323,
+     "hip_add": 0.263,
+     "hip_ext": 1.0,
+     "knee_ext": 0.797,
+     "ankle_pf": 0.849,
+     "ankle_df": 0.626,
+     "trunk_ext": 0.931,
+     "trunk_flex": 0.257
+    },
+    "act_sum": 62.2
+   }
+  ]
+ },
+ "J": {
+  "tag": "J",
+  "cfg": {
+   "ii_gain": 30.0,
+   "gamma": 0.5,
+   "aff": true,
+   "rig": 0.3
+  },
+  "wall_s": 48.5,
+  "fell": false,
+  "t_end": 11.998000000000001,
+  "com_z_min": 0.605,
+  "base_act": {
+   "soleus_r": 0.539,
+   "med_gas_r": 0.512,
+   "vas_lat_r": 0.498,
+   "glut_max2_r": 0.589,
+   "ercspn_r": 0.563,
+   "tib_ant_r": 0.533,
+   "rect_fem_r": 0.499,
+   "iliacus_r": 0.418
+  },
+  "base_com_z": 0.655,
+  "load_steps": [
+   {
+    "pctBW": 5.0,
+    "com_dx": 0.0189,
+    "com_dy": 0.0386,
+    "com_dz": -0.0104,
+    "sway_max": 0.0523,
+    "ankle_r_deg": -14.26,
+    "ankle_l_deg": -10.59,
+    "feet_pctBW": 33.7,
+    "act": {
+     "soleus_r": 0.539,
+     "med_gas_r": 0.512,
+     "vas_lat_r": 0.501,
+     "glut_max2_r": 0.598,
+     "ercspn_r": 0.568,
+     "tib_ant_r": 0.532,
+     "rect_fem_r": 0.501,
+     "iliacus_r": 0.424
+    },
+    "gmean": {
+     "hip_abd": 0.589,
+     "knee_flex": 0.171,
+     "hip_flex": 0.311,
+     "hip_add": 0.332,
+     "hip_ext": 0.615,
+     "knee_ext": 0.531,
+     "ankle_pf": 0.595,
+     "ankle_df": 0.495,
+     "trunk_ext": 0.57,
+     "trunk_flex": 0.26
+    },
+    "act_sum": 43.6
+   },
+   {
+    "pctBW": 10.0,
+    "com_dx": 0.06,
+    "com_dy": 0.0485,
+    "com_dz": -0.0211,
+    "sway_max": 0.0836,
+    "ankle_r_deg": -22.15,
+    "ankle_l_deg": -12.17,
+    "feet_pctBW": 25.1,
+    "act": {
+     "soleus_r": 0.539,
+     "med_gas_r": 0.512,
+     "vas_lat_r": 0.501,
+     "glut_max2_r": 0.597,
+     "ercspn_r": 0.568,
+     "tib_ant_r": 0.531,
+     "rect_fem_r": 0.502,
+     "iliacus_r": 0.413
+    },
+    "gmean": {
+     "hip_abd": 0.59,
+     "knee_flex": 0.177,
+     "hip_flex": 0.312,
+     "hip_add": 0.315,
+     "hip_ext": 0.613,
+     "knee_ext": 0.531,
+     "ankle_pf": 0.595,
+     "ankle_df": 0.494,
+     "trunk_ext": 0.57,
+     "trunk_flex": 0.26
+    },
+    "act_sum": 43.5
+   },
+   {
+    "pctBW": 20.0,
+    "com_dx": 0.0888,
+    "com_dy": 0.0538,
+    "com_dz": -0.0341,
+    "sway_max": 0.1082,
+    "ankle_r_deg": -25.89,
+    "ankle_l_deg": -13.02,
+    "feet_pctBW": 22.9,
+    "act": {
+     "soleus_r": 0.539,
+     "med_gas_r": 0.512,
+     "vas_lat_r": 0.501,
+     "glut_max2_r": 0.622,
+     "ercspn_r": 0.568,
+     "tib_ant_r": 0.53,
+     "rect_fem_r": 0.502,
+     "iliacus_r": 0.399
+    },
+    "gmean": {
+     "hip_abd": 0.59,
+     "knee_flex": 0.184,
+     "hip_flex": 0.31,
+     "hip_add": 0.306,
+     "hip_ext": 0.614,
+     "knee_ext": 0.531,
+     "ankle_pf": 0.595,
+     "ankle_df": 0.494,
+     "trunk_ext": 0.57,
+     "trunk_flex": 0.259
+    },
+    "act_sum": 43.4
+   }
+  ]
+ }
+}

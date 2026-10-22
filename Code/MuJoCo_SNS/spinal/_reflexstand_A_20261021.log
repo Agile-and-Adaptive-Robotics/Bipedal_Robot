@@ -1,0 +1,31 @@
+
+===== reflex-stand config A: {'ii_gain': 1.2, 'gamma': 0.0, 'aff': True, 'rig': 0.0} =====
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+reflex-stand: preload-FREE gravity-only standing solve (alpha bias); II setpoint = standing-pose length; BAL_* surrogate channels OFF; gamma_coact=0.0
+standing solve: nnls x in [0.00, 0.71], >0.1: 25 muscles
+  top: add_long_l=0.71, pect_l=0.34, glut_min1_l=0.34, glut_min2_l=0.31, tib_post_l=0.17, add_mag3_r=0.17, glut_min3_l=0.15, glut_med1_r=0.15
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+trunk-load staircase: [5.0, 10.0, 20.0] %BW steps, dwell 3.00 s from t=3.0 s (BW=769.7 N)
+
+!! qacc/qvel non-finite at t=1.236, dofs: [ 0  1  2  3  4  5  6  7  8  9 10 11]
+   dof 0: joint pelvis_tx
+   dof 1: joint pelvis_ty
+   dof 2: joint pelvis_tz
+   dof 3: joint pelvis_tilt
+   dof 4: joint pelvis_list
+   dof 5: joint pelvis_rotation
+   dof 6: joint hip_flexion_r
+   dof 7: joint hip_adduction_r
+   dof 8: joint hip_rotation_r
+   dof 9: joint knee_r_translation1
+   dof 10: joint knee_r_translation2
+   dof 11: joint knee_angle_r
+   ncon=0
+[A] fell=0 comz_min=0.599 base_comz=0.665
+     5%BW: com_dz=+0.000 sway=0.000 ank_r=+0.0 feet=0.0% d_soleus=+0.000 d_vaslat=+0.000 actsum=54.6
+    10%BW: com_dz=+0.000 sway=0.000 ank_r=+0.0 feet=0.0% d_soleus=+0.000 d_vaslat=+0.000 actsum=54.6
+    20%BW: com_dz=+0.000 sway=0.000 ank_r=+0.0 feet=0.0% d_soleus=+0.000 d_vaslat=+0.000 actsum=54.6
+
+wrote _reflex_stand_results_20261021.json
+WARNING: Inertia matrix is too close to singular at DOF 23. Check model. Time = 0.6360.
+

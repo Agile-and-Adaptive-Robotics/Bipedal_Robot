@@ -182,7 +182,8 @@ def drive_posture(t: float, walk_drive: float) -> tuple[float, float]:
     return 0.0, 1.0
 
 
-def solve_standing_activations(model, data, Fmax: np.ndarray) -> np.ndarray:
+def solve_standing_activations(model, data, Fmax: np.ndarray,
+                               preload: bool = True) -> np.ndarray:
     """Static-optimization standing solution at the keyframe pose.
 
     The torque muscles must supply is what gravity demands MINUS what the
@@ -191,6 +192,12 @@ def solve_standing_activations(model, data, Fmax: np.ndarray) -> np.ndarray:
         ground contact covers pelvis translation). NNLS over non-negative
         activations with a small ridge; muscles with big Fmax and good
         moment arms (soleus, quads) win automatically.
+
+    preload=False (2026-10-21 reflex-stand directive: balance is REFLEXIVE,
+    not saturated co-contraction) drops the tonic co-contraction torque
+    preload so the solve returns the GRAVITY-ONLY per-muscle pattern - the
+    alpha bias the Ia/II/Ib loops close around. Default True = the
+    historical behavior, bit-identical for every existing caller.
     """
     mujoco.mj_forward(model, data)
     A = data.actuator_moment.T.copy()          # [nv, nu]
@@ -205,15 +212,17 @@ def solve_standing_activations(model, data, Fmax: np.ndarray) -> np.ndarray:
     # tonic co-contraction preload: net extension torque at hips/knees,
     # plantarflexion at ankles, extension at lumbar (signs follow the
     # OpenSim conventions of this model) - standing has real muscle tone,
-    # it is not a zero-torque equilibrium
-    def jadr(jn):
-        return model.joint(jn).qposadr[0]
-    for side in ("r", "l"):
-        tau[jadr(f"hip_flexion_{side}")] += -40.0   # hip extension
-        tau[jadr(f"knee_angle_{side}")] += -60.0    # knee extension
-        tau[jadr(f"ankle_angle_{side}")] += 40.0    # plantarflexion
-    for jn in ("lumbar_extension",):
-        tau[jadr(jn)] += -20.0
+    # it is not a zero-torque equilibrium. preload=False (reflex-stand)
+    # leaves it out: the reflex loops must supply that tone.
+    if preload:
+        def jadr(jn):
+            return model.joint(jn).qposadr[0]
+        for side in ("r", "l"):
+            tau[jadr(f"hip_flexion_{side}")] += -40.0   # hip extension
+            tau[jadr(f"knee_angle_{side}")] += -60.0    # knee extension
+            tau[jadr(f"ankle_angle_{side}")] += 40.0    # plantarflexion
+        for jn in ("lumbar_extension",):
+            tau[jadr(jn)] += -20.0
 
     # prior-regularized least squares: fit the torque rows but stay close to
     # a physiological standing pattern (plain NNLS degenerates to one-muscle
@@ -749,6 +758,18 @@ def main(argv):
                             # about world +y = sagittal pitch) - both
                             # fire once at push_time (the event time)
     plat_state = [False]
+    # 2026-10-21 co-contraction stand experiment (Ben's directive:
+    # massively activate antagonists so the torques balance, THEN reduce):
+    # --alpha-stand SPEC = constant or comma-separated STAIRCASE of nA
+    # currents into BOTH per-side ALPHA hand-drive cells (uniform MN-pool
+    # drive, extensors AND flexors alike), overriding the scheduled
+    # drive*alpha_s product. Forces the ALPHA cells to be built. Absent
+    # (None) = the original drive*G path, bit-identical.
+    alpha_stand = None
+    # 2026-10-21 reflex-stand / filling-glass hooks (all default-off)
+    reflex_stand = False
+    trunk_load = None
+    trunk_load_t0 = 3.0   # s: load steps start after the pose settles
     args = list(argv)
     fit_keys = None
     if "--fitted" in args:
@@ -1022,6 +1043,47 @@ def main(argv):
             # 2026-10-20 platform perturbation: sudden sagittal tilt of
             # the ground body (deg about world +y) at the event time
             plat_tilt = float(args.pop(0))
+        elif a == "--alpha-stand":
+            # 2026-10-21 co-contraction stand experiment: SPEC = "I" (one
+            # constant nA level into BOTH ALPHA cells) or "I1,I2,..."
+            # (equal-dwell staircase over the run; descent curves). Value
+            # 0 entries are honored (a descent may end at zero drive).
+            alpha_stand = args.pop(0) if args else "5.0"
+        elif a == "--reflex-stand":
+            # 2026-10-21 reflex-stand directive (Ben: balance is REFLEXIVE,
+            # not saturated co-contraction): per-muscle alpha bias = the
+            # PRELOAD-FREE static-solve activations (gravity-only NNLS, the
+            # bsolve/static-opt pattern), II length setpoint = the standing-
+            # POSE length per muscle (postural setpoint, SCONE T3a
+            # MuscleReflex L0/KL analog), supraspinal BAL_* surrogate
+            # channels (COM PD / trunk IMU PD / lateral) zeroed so ONLY the
+            # Ia/II/Ib spinal loops close the loop, group-level
+            # POSTURE->MN tonic off (the per-muscle POST_ ports carry the
+            # whole bias; the POSTURE cell still biases RG_E so the stance
+            # afferent gate stays open - measured gate 0.91 at DRIVE=0).
+            # gamma coactivation available via G["gamma_coact"] (below).
+            # All default-off knobs; this flag is the single switch.
+            import params as _p
+            reflex_stand = True
+            _p.G["ii_set_pose"] = 1.0
+            _p.G["posture_to_mn"] = 0.0
+        elif a == "--gamma-coact":
+            # 2026-10-21 alpha-gamma coactivation (default 0 = absent):
+            # per-muscle spindle sensitivity multiplier
+            # (1 + gamma_coact * act_stand[i]) on the Ia and II length
+            # terms - gamma drive coupled to the alpha bias (Matthews 1972
+            # Mammalian Muscle Receptors; Prochazka 1989 TINS: fusimotor
+            # bias keeps spindles responsive during shortening; NOT the
+            # RG-level GAMMA hand-drive knob of the 2026-10-16 campaign).
+            import params as _p
+            _p.G["gamma_coact"] = float(args.pop(0)) if args and \
+                args[0].replace(".", "").replace("-", "").isdigit() else 0.5
+        elif a == "--trunk-load":
+            # 2026-10-21 filling-glass test: SPEC = "p1,p2,..." percents of
+            # body weight applied as a DOWNWARD force on the torso body,
+            # stepped at equal dwells starting at trunk_load_t0 (after the
+            # posture settles). 0/absent = off, bit-identical.
+            trunk_load = args.pop(0) if args else "5,10,20"
 
     # state-dump hook (debug): RUNNER_DUMP_STATE=<file> writes every
     # mutable param right after arg parsing - diff two paths to find
@@ -1105,6 +1167,9 @@ def main(argv):
     data = mujoco.MjData(model)
     seed_pose(model, data, key_pose)
     mujoco.mj_forward(model, data)
+    # reflex-stand: capture the per-muscle STANDING-POSE length as the II
+    # setpoint (L0), before any dynamics move it
+    L0_pose = data.actuator_length.copy() if reflex_stand else None
     if contact_damp is not None:
         _apply_contact_damp(model, contact_damp)
         print(f"contact damping variant applied: {contact_damp}", flush=True)
@@ -1117,6 +1182,28 @@ def main(argv):
     # plays the run in slow motion (the sim is faster than real time).
     dur = SCHEDULE["stand2"][1]
     nsteps = int(dur / DT)
+    # --alpha-stand setup (2026-10-21; runs BEFORE bn.build so the ALPHA
+    # cells exist): force alpha_l/alpha_r on (build condition only - the
+    # port current comes from the override below, never the drive*G
+    # product) and parse the level list. Single level = constant; comma
+    # list = equal-dwell staircase (level i on [i*dwell,(i+1)*dwell) s,
+    # dwell = dur/n_levels; the last level holds to the end).
+    if alpha_stand is not None:
+        for _s2 in ("l", "r"):
+            G[f"alpha_{_s2}"] = max(float(G.get(f"alpha_{_s2}", 0.0)), 1.0)
+        _alpha_levels = [float(_x) for _x in alpha_stand.split(",")
+                         if _x.strip()]
+        assert _alpha_levels, "--alpha-stand parsed to no levels"
+        _alpha_dwell = dur / max(len(_alpha_levels), 1)
+
+        def _alpha_lvl(t):
+            return _alpha_levels[min(int(t / _alpha_dwell),
+                                     len(_alpha_levels) - 1)]
+        print(f"alpha-stand override: levels (nA) {_alpha_levels} into "
+              f"BOTH ALPHA cells, dwell {_alpha_dwell:.2f} s", flush=True)
+    else:
+        def _alpha_lvl(t):
+            return 0.0
     t_wall0 = time.perf_counter()
 
     viewer = None
@@ -1170,7 +1257,13 @@ def main(argv):
     Lmid = Lrange.mean(axis=1)
     Lhalf = np.maximum((Lrange[:, 1] - Lrange[:, 0]) / 2, 1e-3)
     Fmax = np.maximum(model.actuator_gainprm[:, 2], 5.0)
-    act_stand = solve_standing_activations(model_solve, data_solve, Fmax)
+    act_stand = solve_standing_activations(model_solve, data_solve, Fmax,
+                                           preload=not reflex_stand)
+    if reflex_stand:
+        print("reflex-stand: preload-FREE gravity-only standing solve "
+              "(alpha bias); II setpoint = standing-pose length; BAL_* "
+              "surrogate channels OFF; gamma_coact="
+              f"{G.get('gamma_coact', 0.0)}", flush=True)
     print(f"standing solve: nnls x in [{act_stand.min():.2f}, "
           f"{act_stand.max():.2f}], >0.1: {(act_stand > 0.1).sum()} muscles")
     top = np.argsort(act_stand)[::-1][:8]
@@ -1283,6 +1376,20 @@ def main(argv):
     # II length loop. Gate flag (not a multiplier-at-0) so the OFF path is
     # the IDENTICAL code path = bit-identical.
     vest_prop_on = G["vest_prop"] > 0.0
+    # filling-glass setup (--trunk-load, 2026-10-21): parse the %BW step
+    # list, dwell = remaining time after t0 split evenly (last step holds);
+    # torso body id for the downward force
+    if trunk_load is not None:
+        trunk_pcts = [float(_x) for _x in trunk_load.split(",") if _x.strip()]
+        assert trunk_pcts, "--trunk-load parsed to no steps"
+        _dur = max(SCHEDULE["stand2"][1] - trunk_load_t0, 1.0)
+        trunk_dwell = _dur / len(trunk_pcts)
+        trunk_body = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY,
+                                       "torso")
+        assert trunk_body >= 0, "torso body not found for --trunk-load"
+        print(f"trunk-load staircase: {trunk_pcts} %BW steps, dwell "
+              f"{trunk_dwell:.2f} s from t={trunk_load_t0} s "
+              f"(BW={BW:.1f} N)", flush=True)
     # unilateral deafferentation set (AARL_DEAFF=l|r|l,r; 2026-09-21):
     # muscle actuators of these sides get ZERO afferent drive; their
     # heel/toe/load channels are also zeroed in the stance_fb block
@@ -1302,9 +1409,20 @@ def main(argv):
             L = data.actuator_length
             Ldot = data.actuator_velocity
             F = np.abs(data.actuator_force)
-            len_norm = np.clip((L - Lmid) / Lhalf, -1.0, 1.0)
+            # II length error reference: the converted-RoM midpoint
+            # (default) or, when G["ii_set_pose"] > 0 (reflex-stand), the
+            # STANDING-POSE length per muscle - the postural setpoint
+            # (audit 2026-10-21: vs the RoM midpoint the antigravity
+            # extensors sit deep in the rectified-off half at the pose)
+            Lref = L0_pose if (L0_pose is not None
+                               and G.get("ii_set_pose", 0.0) > 0.0) else Lmid
+            len_norm = np.clip((L - Lref) / Lhalf, -1.0, 1.0)
             vel_norm = np.clip(Ldot / AFF["ia_vel_ref"], -1.0, 1.0)
             force_norm = np.clip(F / Fmax, 0.0, 1.5)
+            # alpha-gamma coactivation (G["gamma_coact"] > 0, default 0):
+            # per-muscle spindle sensitivity follows that muscle's own
+            # alpha-bias level (Matthews 1972; Prochazka 1989)
+            _gam = 1.0 + G.get("gamma_coact", 0.0) * act_stand
             v = net.compiled.V
             drive_frac = float(np.clip(v[net.idx["DRIVE"]] / E_HI, 0, 1))
             stance = {s: float(np.clip(v[net.idx[f"RG_E_{s}"]] / E_HI, 0, 1))
@@ -1313,12 +1431,12 @@ def main(argv):
             mod_ii = 1.0 + MOD["ii"] * drive_frac
             g_ia = np.where(stance_ext,
                             AFF["ia_gain"] * mod_ia * (0.5 + 0.5 * np.array(
-                                [stance[muscles[a].side] for a in acts])),
-                            AFF["ia_gain"] * mod_ia)
+                                [stance[muscles[a].side] for a in acts])) * _gam,
+                            AFF["ia_gain"] * mod_ia * _gam)
             g_ii = np.where(stance_ext,
                             AFF["ii_gain"] * mod_ii * (0.3 + 0.7 * np.array(
-                                [stance[muscles[a].side] for a in acts])),
-                            0.5 * AFF["ii_gain"] * mod_ii)
+                                [stance[muscles[a].side] for a in acts])) * _gam,
+                            0.5 * AFF["ii_gain"] * mod_ii * _gam)
             g_ib = np.where(stance_ext,
                             AFF["ib_gain"] * (1.0 - 0.7 * np.array(
                                 [stance[muscles[a].side] for a in acts])),
@@ -1414,6 +1532,14 @@ def main(argv):
                     u[iport[f"VEST_c_{s2}"]] = u_vest
         u[iport["DRIVE"]] = drive
         u[iport["POSTURE"]] = posture
+        # reflex-stand: the supraspinal surrogate channels (COM-x ankle
+        # PD, lateral abductor strategy, trunk-lean IMU PD, vestibular
+        # tone) are zeroed AFTER their computation so ONLY the alpha bias
+        # + Ia/II/Ib spinal loops can hold the posture
+        if reflex_stand:
+            for _b in ("BAL_PF", "BAL_DF", "BAL_TRK_FLX", "BAL_TRK_EXT",
+                       "BAL_LAT_R", "BAL_LAT_L"):
+                u[iport[_b]] = 0.0
         # 2026-10-16 per-side alpha/gamma hand-drive ports (each side's
         # cells built ONLY when its params.G knob > 0; port current =
         # the scheduled DRIVE times that side's knob). Ports absent at
@@ -1424,7 +1550,11 @@ def main(argv):
                 u[iport[_port]] = drive * G[f"gamma_{s2}"]
             _port = f"ALPHA_c_{s2}"
             if _port in iport:
-                u[iport[_port]] = drive * G[f"alpha_{s2}"]
+                # --alpha-stand override (2026-10-21): constant/staircase
+                # co-contraction current; absent = the scheduled drive
+                # *alpha_s product (the original bit-identical path).
+                u[iport[_port]] = (_alpha_lvl(t) if alpha_stand is not None
+                                   else drive * G[f"alpha_{s2}"])
         # --- v11 heel/toe contact mechanosensors (audit P1a) ---
         # 2026-09-20: forces computed EVERY step in ground mode (the eval
         # objective and figures consume them); sensor ports fed only when
@@ -1643,6 +1773,14 @@ def main(argv):
             elif push_state[0] and t >= push_time + 0.15:
                 data.xfrc_applied[push_state[1], :] = 0.0
                 push_state[0] = False
+        # filling-glass hook (2026-10-21, --trunk-load "p1,p2,..." %BW):
+        # stepped DOWNWARD force on the torso body, one step per equal
+        # dwell starting at trunk_load_t0. The stretch reflexes must
+        # compensate and hold. Guarded by trunk_load != None.
+        if trunk_load is not None and t >= trunk_load_t0:
+            _idx = min(int((t - trunk_load_t0) / trunk_dwell),
+                       len(trunk_pcts) - 1)
+            data.xfrc_applied[trunk_body, 2] = -trunk_pcts[_idx] / 100.0 * BW
         if (plat_dx != 0.0 or plat_tilt != 0.0) and not plat_state[0] \
                 and t >= push_time:
             # 2026-10-20 platform perturbation (Ben: perturbations are

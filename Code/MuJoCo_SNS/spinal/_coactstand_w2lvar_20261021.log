@@ -1,0 +1,91 @@
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+[coact:w2lvar] incumbent quiet winner rig=1.0 BW=737.4 N; matrix starting
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[coact:w2lvar] REF rig0 no-alpha        fell=1 feet=105.0%BW comz=-0.689 sway=1.331 actsum=48.7 pairs={"hip_flex|hip_ext": [0.0, 0.487], "knee_flex|knee_ext": [0.594, 0.768], "ankle_df|ankle_pf": [0.109, 0.789], "trunk_flex|trunk_ext": [0.555, 0.739]}
+    diverge: [["ankle_angle_r", 1.014, 3.2, 1.06], ["hip_flexion_l", 1.026, -3.0, 1.24], ["hip_adduction_r", 1.046, -3.2, 1.07], ["pelvis_rotation", 1.05, -3.1, 1.11], ["subtalar_angle_r", 1.052, -3.1, 1.1], ["pelvis_tilt", 1.056, 3.1, 1.11]]
+    buckle: {"t_buckle_s": 1.04, "com_z_ref": 0.801, "com_z_at": 0.718, "top_movers_at_buckle": [["ankle_angle_r", 5.8], ["hip_flexion_l", -5.1], ["hip_adduction_r", -2.8], ["pelvis_rotation", -2.6], ["pelvis_tilt", 2.1]]}
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+alpha-stand override: levels (nA) [5.0] into BOTH ALPHA cells, dwell 8.00 s
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[coact:w2lvar] LOCK g=0.5 I=5nA         fell=1 feet=102.0%BW comz=-0.644 sway=1.204 actsum=63.5 pairs={"hip_flex|hip_ext": [0.257, 0.635], "knee_flex|knee_ext": [0.802, 0.869], "ankle_df|ankle_pf": [0.416, 0.886], "trunk_flex|trunk_ext": [0.606, 0.943]}
+    diverge: [["pelvis_rotation", 1.026, -3.3, 1.06], ["ankle_angle_l", 1.03, -4.2, 1.04], ["subtalar_angle_l", 1.036, 3.3, 1.05], ["hip_flexion_r", 1.044, 3.0, 1.09], ["hip_adduction_l", 1.052, 3.1, 1.64], ["pelvis_list", 1.056, 3.1, 1.35]]
+    buckle: {"t_buckle_s": 1.04, "com_z_ref": 0.755, "com_z_at": 0.675, "top_movers_at_buckle": [["ankle_angle_l", -15.1], ["subtalar_angle_l", 6.9], ["pelvis_rotation", -6.9], ["hip_flexion_r", 3.0], ["hip_adduction_r", 2.3]]}
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+alpha-stand override: levels (nA) [5.0] into BOTH ALPHA cells, dwell 8.00 s
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[coact:w2lvar] LOCK g=2.0 I=5nA         fell=1 feet=104.6%BW comz=-0.662 sway=0.893 actsum=87.1 pairs={"hip_flex|hip_ext": [0.843, 0.907], "knee_flex|knee_ext": [1.0, 1.0], "ankle_df|ankle_pf": [0.858, 1.0], "trunk_flex|trunk_ext": [1.0, 1.0]}
+    diverge: [["pelvis_rotation", 1.006, 3.4, 1.02], ["pelvis_tilt", 1.008, -3.9, 1.02], ["hip_flexion_l", 1.012, 3.3, 1.04], ["hip_flexion_r", 1.014, -3.1, 1.12], ["hip_adduction_r", 1.018, 3.1, 1.28], ["pelvis_list", 1.026, -3.1, 1.19]]
+    buckle: {"t_buckle_s": 1.06, "com_z_ref": 0.779, "com_z_at": 0.696, "top_movers_at_buckle": [["pelvis_tilt", -25.7], ["pelvis_rotation", 24.9], ["hip_flexion_l", 15.1], ["hip_adduction_r", 8.9], ["pelvis_list", -5.8]]}
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+alpha-stand override: levels (nA) [5.0] into BOTH ALPHA cells, dwell 8.00 s
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[coact:w2lvar] LOCK g=4.0 I=5nA         fell=1 feet=103.8%BW comz=-0.632 sway=0.904 actsum=92.0 pairs={"hip_flex|hip_ext": [1.0, 1.0], "knee_flex|knee_ext": [1.0, 1.0], "ankle_df|ankle_pf": [1.0, 1.0], "trunk_flex|trunk_ext": [1.0, 1.0]}
+    diverge: [["pelvis_rotation", 1.006, 3.9, 1.02], ["pelvis_tilt", 1.006, -3.1, 1.02], ["hip_flexion_r", 1.01, -3.2, 1.15], ["hip_flexion_l", 1.012, 3.2, 1.04], ["pelvis_list", 1.016, -3.0, 1.2], ["hip_adduction_r", 1.02, 3.0, 1.28]]
+    buckle: {"t_buckle_s": 1.06, "com_z_ref": 0.781, "com_z_at": 0.699, "top_movers_at_buckle": [["pelvis_rotation", 27.8], ["pelvis_tilt", -26.0], ["hip_flexion_l", 15.2], ["pelvis_list", -9.4], ["hip_flexion_r", -8.0]]}
+[coact:w2lvar] lock reached at g=4.0 (min antagonist mean 1.00)
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+alpha-stand override: levels (nA) [5.0] into BOTH ALPHA cells, dwell 8.00 s
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[coact:w2lvar] DESC 100% (I=5.00 nA)    fell=1 feet=103.8%BW comz=-0.632 sway=0.904 actsum=92.0 pairs={"hip_flex|hip_ext": [1.0, 1.0], "knee_flex|knee_ext": [1.0, 1.0], "ankle_df|ankle_pf": [1.0, 1.0], "trunk_flex|trunk_ext": [1.0, 1.0]}
+    diverge: [["pelvis_rotation", 1.006, 3.9, 1.02], ["pelvis_tilt", 1.006, -3.1, 1.02], ["hip_flexion_r", 1.01, -3.2, 1.15], ["hip_flexion_l", 1.012, 3.2, 1.04], ["pelvis_list", 1.016, -3.0, 1.2], ["hip_adduction_r", 1.02, 3.0, 1.28]]
+    buckle: {"t_buckle_s": 1.06, "com_z_ref": 0.781, "com_z_at": 0.699, "top_movers_at_buckle": [["pelvis_rotation", 27.8], ["pelvis_tilt", -26.0], ["hip_flexion_l", 15.2], ["pelvis_list", -9.4], ["hip_flexion_r", -8.0]]}
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+alpha-stand override: levels (nA) [4.0] into BOTH ALPHA cells, dwell 8.00 s
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[coact:w2lvar] DESC 80% (I=4.00 nA)     fell=1 feet=103.8%BW comz=-0.643 sway=0.813 actsum=91.6 pairs={"hip_flex|hip_ext": [0.999, 0.983], "knee_flex|knee_ext": [1.0, 1.0], "ankle_df|ankle_pf": [0.989, 1.0], "trunk_flex|trunk_ext": [1.0, 1.0]}
+    diverge: [["pelvis_rotation", 1.006, 3.8, 1.02], ["pelvis_tilt", 1.008, -4.0, 1.02], ["hip_flexion_r", 1.01, -3.0, 1.14], ["hip_flexion_l", 1.012, 3.4, 1.04], ["pelvis_list", 1.018, -3.1, 1.2], ["hip_adduction_r", 1.02, 3.2, 1.28]]
+    buckle: {"t_buckle_s": 1.06, "com_z_ref": 0.779, "com_z_at": 0.696, "top_movers_at_buckle": [["pelvis_rotation", 26.8], ["pelvis_tilt", -25.8], ["hip_flexion_l", 15.4], ["pelvis_list", -8.7], ["hip_adduction_r", 8.6]]}
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+alpha-stand override: levels (nA) [3.0] into BOTH ALPHA cells, dwell 8.00 s
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[coact:w2lvar] DESC 60% (I=3.00 nA)     fell=1 feet=103.2%BW comz=-0.654 sway=0.841 actsum=89.2 pairs={"hip_flex|hip_ext": [0.924, 0.94], "knee_flex|knee_ext": [1.0, 1.0], "ankle_df|ankle_pf": [0.921, 1.0], "trunk_flex|trunk_ext": [1.0, 1.0]}
+    diverge: [["pelvis_rotation", 1.006, 3.5, 1.02], ["pelvis_tilt", 1.008, -3.9, 1.02], ["hip_flexion_l", 1.012, 3.2, 1.04], ["hip_flexion_r", 1.012, -3.1, 1.13], ["hip_adduction_r", 1.018, 3.1, 1.28], ["pelvis_list", 1.022, -3.3, 1.19]]
+    buckle: {"t_buckle_s": 1.06, "com_z_ref": 0.776, "com_z_at": 0.696, "top_movers_at_buckle": [["pelvis_rotation", 25.8], ["pelvis_tilt", -25.5], ["hip_flexion_l", 14.8], ["hip_adduction_r", 8.8], ["pelvis_list", -7.1]]}
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+alpha-stand override: levels (nA) [2.0] into BOTH ALPHA cells, dwell 8.00 s
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[coact:w2lvar] DESC 40% (I=2.00 nA)     fell=1 feet=103.9%BW comz=-0.666 sway=0.768 actsum=83.7 pairs={"hip_flex|hip_ext": [0.753, 0.851], "knee_flex|knee_ext": [0.979, 0.993], "ankle_df|ankle_pf": [0.79, 0.998], "trunk_flex|trunk_ext": [0.966, 1.0]}
+    diverge: [["pelvis_rotation", 1.006, 3.4, 1.02], ["pelvis_tilt", 1.008, -3.8, 1.02], ["hip_flexion_r", 1.012, -3.4, 1.13], ["hip_flexion_l", 1.014, 3.3, 1.04], ["hip_adduction_r", 1.018, 3.0, 1.07], ["pelvis_list", 1.02, -3.2, 1.2]]
+    buckle: {"t_buckle_s": 1.06, "com_z_ref": 0.787, "com_z_at": 0.707, "top_movers_at_buckle": [["pelvis_rotation", 29.8], ["pelvis_tilt", -27.2], ["hip_flexion_l", 15.5], ["hip_adduction_r", 9.3], ["pelvis_list", -8.0]]}
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+alpha-stand override: levels (nA) [1.0] into BOTH ALPHA cells, dwell 8.00 s
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[coact:w2lvar] DESC 20% (I=1.00 nA)     fell=1 feet=105.1%BW comz=-0.661 sway=0.75 actsum=71.8 pairs={"hip_flex|hip_ext": [0.42, 0.708], "knee_flex|knee_ext": [0.882, 0.917], "ankle_df|ankle_pf": [0.541, 0.936], "trunk_flex|trunk_ext": [0.989, 0.823]}
+    diverge: [["ankle_angle_r", 1.02, -3.1, 1.45], ["hip_adduction_r", 1.024, 3.1, 1.14], ["subtalar_angle_r", 1.028, 3.1, 1.15], ["pelvis_list", 1.03, -3.1, 1.21], ["pelvis_tilt", 1.03, -3.2, 1.12], ["pelvis_rotation", 1.054, -3.1, 1.08]]
+    buckle: {"t_buckle_s": 1.05, "com_z_ref": 0.777, "com_z_at": 0.696, "top_movers_at_buckle": [["hip_adduction_r", 6.8], ["ankle_angle_r", -5.7], ["subtalar_angle_r", 4.7], ["pelvis_list", -4.6], ["pelvis_tilt", -4.1]]}
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+alpha-stand override: levels (nA) [0.5] into BOTH ALPHA cells, dwell 8.00 s
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[coact:w2lvar] DESC 10% (I=0.50 nA)     fell=1 feet=103.7%BW comz=-0.661 sway=1.136 actsum=60.4 pairs={"hip_flex|hip_ext": [0.184, 0.609], "knee_flex|knee_ext": [0.77, 0.851], "ankle_df|ankle_pf": [0.367, 0.868], "trunk_flex|trunk_ext": [0.496, 0.936]}
+    diverge: [["pelvis_rotation", 1.024, -3.0, 1.06], ["ankle_angle_l", 1.04, -3.6, 1.05], ["subtalar_angle_l", 1.046, 3.4, 1.06], ["hip_flexion_r", 1.05, 3.0, 1.08], ["subtalar_angle_r", 1.052, -3.3, null], ["hip_adduction_l", 1.06, 3.0, 1.63]]
+    buckle: {"t_buckle_s": 1.04, "com_z_ref": 0.758, "com_z_at": 0.675, "top_movers_at_buckle": [["pelvis_rotation", -6.5], ["ankle_angle_l", -5.1], ["hip_flexion_l", -2.7], ["subtalar_angle_r", -2.1], ["subtalar_angle_l", 1.9]]}
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.920 m (env override unset); IMU-metric torso lean -0.0 deg (+ = back)
+alpha-stand override: levels (nA) [0.0] into BOTH ALPHA cells, dwell 8.00 s
+standing solve: nnls x in [0.00, 0.70], >0.1: 14 muscles
+  top: add_long_l=0.70, tib_ant_r=0.61, tib_ant_l=0.46, ext_dig_r=0.37, glut_min1_l=0.33, pect_l=0.32, glut_min2_l=0.31, ext_dig_l=0.25
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[coact:w2lvar] DESC 0% (I=0.00 nA)      fell=1 feet=105.7%BW comz=-0.705 sway=1.347 actsum=47.9 pairs={"hip_flex|hip_ext": [0.0, 0.486], "knee_flex|knee_ext": [0.593, 0.769], "ankle_df|ankle_pf": [0.11, 0.789], "trunk_flex|trunk_ext": [0.464, 0.689]}
+    diverge: [["ankle_angle_r", 1.014, 3.2, 1.06], ["hip_flexion_l", 1.026, -3.0, 1.24], ["hip_adduction_r", 1.046, -3.2, 1.07], ["pelvis_rotation", 1.05, -3.1, 1.11], ["subtalar_angle_r", 1.052, -3.1, 1.1], ["pelvis_tilt", 1.056, 3.1, 1.11]]
+    buckle: {"t_buckle_s": 1.04, "com_z_ref": 0.801, "com_z_at": 0.718, "top_movers_at_buckle": [["ankle_angle_r", 5.8], ["hip_flexion_l", -5.1], ["hip_adduction_r", -2.8], ["pelvis_rotation", -2.6], ["pelvis_tilt", 2.1]]}
+[coact:w2lvar] wrote reports_20261020\balance\coact_stand_w2lvar_20261021.json

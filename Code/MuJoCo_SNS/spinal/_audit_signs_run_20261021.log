@@ -1,0 +1,34 @@
+muscle         joint                  dq/dt2  expected  verdict
+soleus_r       ankle_angle_r      13245.5883         +  OK
+tib_ant_r      ankle_angle_r      -3570.7417         -  OK
+med_gas_r      ankle_angle_r       5732.8308         +  OK
+vas_lat_r      knee_angle_r        -730.2530         -  OK
+rect_fem_r     knee_angle_r        -214.5932         -  OK
+bifemsh_r      knee_angle_r         108.5914         +  OK
+semimem_r      knee_angle_r          27.7767         +  OK
+glut_max2_r    hip_flexion_r       -453.6844         -  OK
+iliacus_r      hip_flexion_r        424.1641         +  OK
+psoas_r        hip_flexion_r        437.7323         +  OK
+sar_r          hip_flexion_r         62.8152         +  OK
+add_long_r     hip_adduction_r      138.4992         +  OK
+glut_med1_r    hip_adduction_r     -125.7995         -  OK
+tib_ant_r      subtalar_angle_r   -3296.3944         -  OK
+ercspn_r       lumbar_extension    -880.1652         -  OK
+soleus_l       ankle_angle_l      12429.7426         +  OK
+vas_lat_l      knee_angle_l        -721.4492         -  OK
+iliacus_l      hip_flexion_l        413.6769         +  OK
+glut_max2_l    hip_flexion_l       -478.4341         -  OK
+add_long_l     hip_adduction_l      141.3493         +  OK
+glut_med1_l    hip_adduction_l     -123.0455         -  OK
+
+-- per-joint agreement --
+ankle_angle_r      3/3 anchors agree 
+knee_angle_r       4/4 anchors agree 
+hip_flexion_r      4/4 anchors agree 
+hip_adduction_r    2/2 anchors agree 
+subtalar_angle_r   1/1 anchors agree 
+lumbar_extension   1/1 anchors agree 
+ankle_angle_l      1/1 anchors agree 
+knee_angle_l       1/1 anchors agree 
+hip_flexion_l      2/2 anchors agree 
+hip_adduction_l    2/2 anchors agree 

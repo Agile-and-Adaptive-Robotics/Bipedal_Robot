@@ -578,77 +578,81 @@ ylabel(ax,'Torque Margin, %','FontWeight','bold')
 title(ax,'BPA Torque Margin Relative to Human','FontName',fontName,'FontSize',titleFontSize,'FontWeight','bold')
 formatLegend(ax,fontName,legendFontSize)
 
-%% ExtTest20mm_1: measured torque via the Adjoint transform
-% Reads the 'ExtTest20mm_1' tab of Testing_Data\2026_06_Festo\
-% Results_table_20mm.xlsx (row 6 Load (N), row 7 knee angle, row 8
-% pressure, row 10 load-cell angle (tibia)), then transforms each measured
-% load-cell wrench to the moving knee ICR with the same Adjoint machinery
-% as the 40 mm extensor tests (Knee_Extensor_40mm.m). Extension torque
-% comes out POSITIVE, matching the tab's row-16 formula (no negative).
-% Prints the Torque actual values for paste into row 17 of the tab.
-extXlsx1 = fullfile(root,'Testing_Data','2026_06_Festo','Results_table_20mm.xlsx');
-extSheet1 = 'ExtTest20mm_1';
-% Reaction-point geometry of this test in the tibia (theta1) frame.
-% Defaults are the 40 mm extensor test-1 values -- UPDATE after the 20 mm
-% rig setup is measured.
-dExt1   = 292.9/1000;    % theta1 origin -> load-cell arm, m
-angExt1 = -90.83;         % arm angle in the tibia frame, deg
+%% Compare to results: 2026-10-21 20 mm cam-route sweep (two BPAs)
+% Measured holds from the ExtTest20mm_2 tab of Testing_Data\2026_06_Festo\
+% Results_table_20mm.xlsx. Reaction point from readserialnumbers2:
+% x = -0.065 m, y = -0.255 m  ->  d = hypot(x,y) = 0.2632 m,
+% ang = atan2d(y,x) = -104.3 deg. Same adjoint machinery as the compare
+% section of Knee_Flexor_Data_20mm, one reaction point (no tibia1/tibia2).
+% Predicted = cam route of record at 620 kPa (Torque2_adj). NOTE:
+% tendonAdj still carries the approximate 92.49 mm -- replace with the
+% as-measured tendon length when available.
+Load   = [180.2 181.5 168 181 116 100];      %Load in Newtons
+K_deg  = [-26.2 -30 -61 -43 -119 5];         %Knee angle, deg
+LC_deg = -[28 26 23 27 10.5 21];              %Load cell angle, deg
+K_ang  = K_deg*cdeg;                       %Knee angle
+LC_ang = LC_deg*cdeg;                      %Load cell angle
+Presh  = [437 420 425 435 256 480];          %Measured pressure, kPa
 
-T20e = readcell(extXlsx1,'Sheet',extSheet1);
-keepE1 = false(1, size(T20e,2));
-keepE1(3:end) = cellfun(@(x) isnumeric(x) && isscalar(x) && ~isnan(x), ...
-    T20e(6,3:end));
 
-if ~any(keepE1)
-    fprintf(['%s: no measured Load data yet -- measured-torque ', ...
-        'section skipped.\n'], extSheet1);
-else
-    LoadE1 = cell2mat(T20e(6,keepE1));     % N
-    KEd1   = cell2mat(T20e(7,keepE1));     % knee angle, deg
-    PE1    = cell2mat(T20e(8,keepE1));     % pressure, kPa
-    LCEd1  = cell2mat(T20e(10,keepE1));    % load-cell angle (tibia), deg
-    KE1  = KEd1*cdeg;
-    % LC angle convention (Ben, 2026-10-04): entered FROM THE TIBIA AXIS
-    % (torque about t1 = F*sin(LC+0.83 deg)*d). The Adjoint machinery
-    % wants the force angle from the tibia x-axis: 90 - LC.
-    LCE1 = deg2rad(90 - LCEd1);
+p_rf = [-0.065, -0.255, 0]';     %point of reaction force
+d = hypot(p_rf(1),p_rf(2));
+ang = atan2(p_rf(2),p_rf(1));
+T_t1_rf = RpToTrans(eye(3),p_rf);   %Transformation matrix from theta 1 to reaction point
+Trk = pagemtimes(TransInv(T_t1_rf),T_t1_ICR);
+s1 = squeeze(Trk(1,4,:));
+fcn15 = fit(phi,s1,'cubicspline');
+s2 = squeeze(Trk(2,4,:));
+fcn16 = fit(phi,s2,'cubicspline');
 
-    p_rfE1 = [dExt1*cosd(angExt1), dExt1*sind(angExt1), 0]';
-    T_t1_rfE1 = RpToTrans(eye(3),p_rfE1);
-    TrkE1 = pagemtimes(TransInv(T_t1_rfE1),T_t1_ICR);
-    % phi is 100x1; fit needs column X (the phi' row form errored once
-    % the tab held measured data).
-    fcnE1x = fit(phi, squeeze(TrkE1(1,4,:)),'cubicspline');
-    fcnE1y = fit(phi, squeeze(TrkE1(2,4,:)),'cubicspline');
+Trk = zeros(4,4,length(Load));
+Fr = zeros(6,1,length(Load));
+AdTrk = zeros(6,6,length(Load));
+Fk = zeros(6,1,length(Load));
 
-    FrE1 = zeros(6,1,numel(LoadE1));
-    FkE1 = zeros(6,1,numel(LoadE1));
-    for i = 1:numel(LoadE1)
-        TrkE1i = RpToTrans(eye(3),[fcnE1x(KE1(i)), fcnE1y(KE1(i)), 0]');
-        FrE1(:,:,i) = -[0; 0; 0; LoadE1(i)*cos(pi-LCE1(i)); ...
-            LoadE1(i)*sin(pi-LCE1(i)); 0];
-        FkE1(:,:,i) = Adjoint(TrkE1i)'*FrE1(:,:,i);
-    end
-    TorqueZE1 = squeeze(FkE1(3,1,:));
-
-    fprintf('%s Torque actual (paste into row 17 of the tab):\n', extSheet1);
-    fprintf('%.4f\t', TorqueZE1); fprintf('\n');
-
-    figure('Name','ExtTest20mm_1 measured vs predicted','Color','w')
-    ax = gca;
-    hold(ax,'on')
-    plot(ax,phiD,Torque3,'-','Color',optimizedColor,'LineWidth',2.5, ...
-        'DisplayName','Optimized BPA, 620 kPa')
-    plot(ax,ctx.humanAngleD,ctx.humanTorque,':','Color',humanColor, ...
-        'LineWidth',4,'DisplayName','Human target')
-    scatter(ax,KEd1,TorqueZE1,60*PE1/620,'filled', ...
-        'MarkerFaceColor','#EA5F94','DisplayName','Measured (adjoint)')
-    formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
-    xlabel(ax,'\theta_k, °','Interpreter','tex','FontWeight','bold')
-    ylabel(ax,'Torque, N\cdotm','Interpreter','tex','FontWeight','bold')
-    title(ax,'ExtTest20mm_1: measured vs predicted torque')
-    formatLegend(ax,fontName,legendFontSize)
+for i = 1:length(Load)
+    Trk(:,:,i) = RpToTrans(eye(3),[fcn15(K_ang(i)), fcn16(K_ang(i)), 0]');
+    Fr(:,:,i) = [0; 0; 0; Load(i)*cos(LC_ang(i)); Load(i)*sin(LC_ang(i)); 0];
+    AdTrk(:,:,i) = Adjoint(Trk(:,:,i));
+    Fk(:,:,i) = AdTrk(:,:,i)'*Fr(:,:,i);
 end
+
+TorqueZ = squeeze(Fk(3,1,:));
+
+fprintf('ExtTest20mm_2 Torque actual (adjoint, d = %.4f m, ang = %.2f deg):\n', d, ang);
+fprintf('%.4f\t', TorqueZ); fprintf('\n');
+
+% Predicted torque at the measured angles and pressures (cam adj route)
+predAP = zeros(size(Presh));
+uP = unique(Presh);
+for u = 1:numel(uP)
+    idx = Presh == uP(u);
+    tmpP = MonoPamDataExplicit_balanceX3(Name,LocationAdj,CrossPoint,Dia, ...
+        T_Pam,rest,kmax,tendonAdj,fitting,uP(u),Xi0,Xi1,Xi2,Xi3,wraps, ...
+        phiD,BPAcount,bendMeasureAdj);
+    predAP(idx) = interp1(phiD,tmpP.Torque_p(:,3),K_deg(idx),'pchip');
+end
+
+figure('Name','ExtTest20mm_2 measured vs predicted','Color','w', ...
+    'Units','centimeters','Position',figurePosition)
+ax = gca;
+hold(ax,'on')
+scatter(ax,K_deg,predAP,60*Presh/620,'filled', ...
+    'MarkerFaceColor',c{1},'MarkerEdgeColor','none', ...
+    'DisplayName','Back-calculated')
+plot(ax,ctx.humanAngleD,ctx.humanTorque,':','Color',humanColor,'LineWidth',4, ...
+    'DisplayName','Human target')
+plot(ax,phiD,Torque2_adj,'-','Color',c{4},'LineWidth',2.5, ...
+    'DisplayName','Optimized (620 kPa)')
+scatter(ax,K_deg,TorqueZ,60*Presh/620,'filled', ...
+    'MarkerFaceColor',adjColor,'MarkerFaceAlpha',0.75, ...
+    'MarkerEdgeColor','none','DisplayName','Measured')
+formatAxes(ax,fontName,axesFontSize,tickLength,xLimits)
+xlabel(ax,'\theta_k, °','Interpreter','tex','FontWeight','bold')
+ylabel(ax,'Torque, N\cdotm','Interpreter','tex','FontWeight','bold')
+title(ax,'20 mm extensor, cam route: measured vs predicted')
+formatLegend(ax,fontName,legendFontSize)
+exportgraphics(gcf, fullfile(scriptDir,'Ext20mm_compare_20261022.png'), 'Resolution', 150)
 
 %% Pressure back-calculation: kPa needed at each angle to meet the human
 % vasti torque target with the optimized 20 mm extensor design.
