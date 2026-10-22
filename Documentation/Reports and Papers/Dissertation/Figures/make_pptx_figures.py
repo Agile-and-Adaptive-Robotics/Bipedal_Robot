@@ -1,4 +1,4 @@
-"""PowerPoint figure factory for the dissertation schematics.
+﻿"""PowerPoint figure factory for the dissertation schematics.
 
 Builds every flowchart/schematic as NATIVE editable PowerPoint shapes
 (Ben's directive: no TikZ; PowerPoint is the source of truth), then a
@@ -163,7 +163,7 @@ def band(x, w, title):
     sp.fill.background()
     sp.line.color.rgb = GRAY; sp.line.width = Pt(0.75)
     _ln(sp, 'dash')
-    label(s, x, 0.55, w, title, bold=True)
+    label(s, x, 0.62, w, title, bold=True)
 band(0.15, 4.05, "Model conversion")
 band(4.75, 6.05, "Closed-loop simulation")
 band(11.35, 5.7, "Hardware deployment")
@@ -179,15 +179,15 @@ label(s, 3.55, 3.72, 1.95, "per-muscle\nactivation", align=PP_ALIGN.RIGHT)
 arrow(s, 7.30, 3.20, 7.30, 5.00)
 label(s, 7.40, 3.72, 3.30, "Ia, Ib, and II afferents;\nheel and toe contact",
       align=PP_ALIGN.LEFT)
-box(s, 11.65, 1.65, 4.15, 1.05, "Jetson Orin:\nSNS network evaluation")
-box(s, 11.65, 3.55, 4.15, 1.45, "Teensy-class MCUs:\nper-joint valve, pressure,\nand contact loops")
+box(s, 11.65, 1.65, 4.15, 1.05, "Jetson Orin:\nnetwork evaluation")
+box(s, 11.65, 3.55, 4.15, 1.45, "Teensy-class MCUs:\nvalve, pressure, and\ncontact loops")
 box(s, 11.65, 5.85, 4.15, 1.0, "Treadmill biped")
 arrow(s, 13.7, 2.70, 13.7, 3.50)
 label(s, 13.85, 2.85, 3.3, "commands", align=PP_ALIGN.LEFT)
 arrow(s, 13.7, 5.00, 13.7, 5.80)
 label(s, 13.85, 5.15, 3.3, "valve drive", align=PP_ALIGN.LEFT)
 arrow(s, 12.15, 5.80, 12.15, 5.02)
-label(s, 9.30, 5.15, 2.75, "sensors", align=PP_ALIGN.RIGHT)
+label(s, 8.70, 5.15, 2.30, "sensors", align=PP_ALIGN.RIGHT)
 # cross-phase connectors
 seg(s, 3.90, 5.52, 4.45, 5.52)
 seg(s, 4.45, 5.52, 4.45, 2.48)
@@ -195,7 +195,7 @@ arrow(s, 4.45, 2.48, 5.00, 2.48)
 seg(s, 7.60, 5.62, 10.95, 5.62)
 seg(s, 10.95, 5.62, 10.95, 2.18)
 arrow(s, 10.95, 2.18, 11.60, 2.18)
-label(s, 2.2, 7.30, 12.5, "Computer-in-the-loop: the embedded stack first executes against the simulated body, then against the physical one.")
+label(s, 0.3, 7.30, 16.6, "Computer-in-the-loop: the embedded stack first executes against\nthe simulated body, then against the physical one.")
 prs.save(FIG + r"\60-sns\components\pipeline.pptx")
 
 # --------------------------------------------------------- 3 curriculum

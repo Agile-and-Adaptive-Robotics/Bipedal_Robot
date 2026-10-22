@@ -36,8 +36,8 @@ The citation graph was built over the full audited corpus of 943 papers, which i
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.92\textwidth]{sadb_clusters.pdf}
-\caption[Citation-graph topic clusters of the audited corpus]{The Louvain topic clusters of the audited corpus, one bubble per cluster. Horizontal position is the median publication year of the cluster's retained papers, vertical position the number of retained papers, and bubble area the audited cluster size; darker fill marks a larger retained fraction. The seven clusters with retained papers form the curated core, from the afferent-control classics and spinal-circuit modeling to neuromechanics and robot walking; the gray bubble aggregates the eleven satellite clusters the prune removed in full (58 papers), among them the fish-swimming, flow-and-flight-sensing, and neural-network-method clusters of the prune account. 27 of the 561 retained papers fall outside the citation-graph partition.}
+\includegraphics[width=0.92\textwidth]{sadb_clusters_app.png}
+\caption[The SADb Explorer bubble map view]{The SADb Explorer's bubble map view, the packaged citation graph of the full audited corpus: every paper is drawn as a neuron, its soma sized by citation count, with citation links rendered as excitatory and inhibitory synapses and cluster labels grouping the topic communities. Clicking a bubble focuses its citation neighborhood out to a chosen degree, with direct connections colored by direction. The view shows the curated core clusters, from the afferent-control classics and spinal-circuit modeling to neuromechanics and robot walking, alongside the satellite clusters the prune later removed.}
 \label{fig:sadb_clusters}
 \end{figure}
 
@@ -69,8 +69,8 @@ Cutaneous & skin and foot-pad receptors & contact and perturbation events & flex
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.96\textwidth]{sadb_pivot.pdf}
-\caption[Corpus pivot by afferent class and preparation]{A two-dimension pivot over the retained corpus, of the kind the explorer's pivotable tables produce. Rows are afferent classifications and columns animal preparations; each cell counts the retained papers carrying both tags, so a paper with several preparations or classes counts once in each corresponding cell, and the margins count unique papers. The base is the 86 retained papers that carry an afferent classification, of which 9 have no preparation tag.}
+\includegraphics[width=0.96\textwidth]{sadb_pivot_app.png}
+\caption[The SADb Explorer pivot view]{The SADb Explorer's pivot view, counting the corpus along any two dimensions at once; here rows are the afferent classifications and columns the animal preparations, so each cell counts the papers carrying both tags. The classical cat preparation dominates the Ia, Ib, II, and cutaneous records, and the arthropod records enter through the mechanosensory class; clicking a cell drills through to the underlying papers in the table view.}
 \label{fig:sadb_pivot}
 \end{figure}
 
