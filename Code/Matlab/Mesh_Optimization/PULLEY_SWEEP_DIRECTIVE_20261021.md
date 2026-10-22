@@ -45,6 +45,51 @@ If a bowden cable arrangement is used:
   or CroMoly steel as in bicycles (bicycle brake/shifter cable standards;
   e.g., 6061-T6 aluminum or 4130 chromoly).
 
+## 5. Configuration-selection heuristic (Ben, 2026-10-21, later message)
+
+The solver for multiarticular joints and for single or multiple muscles replaced by
+single or multiple BPAs should operate on a fuzzy escalation logic:
+
+- **Lacking in torque?** → more BPAs in parallel.
+- **Lacking in range of motion?** → more tackle line parts.
+
+That is, the configuration ladder is chosen by which resource the site is short of,
+per site and per pose region, not swept blind.
+
+- **Hip adduction/abduction coupling:** Ben believes limit code already exists that
+  limits hip adduction/abduction based on hip flexion/extension. NOT found in the
+  bi-pulley builder — `biPulleySpecsFromOpenSim.m` pins secondary coordinates
+  (hip adduction/rotation, subtalar, mtp) at zero, and `Add_Mag_Mesh_Opt.m` only
+  sweeps pure adduction/abduction. Locate Ben's coupling code (or write it) before
+  the hip sites' requirement envelopes are trusted.
+- **Extreme-pose corners:** poses like full flexion combined with abduction may be
+  achievable by humans but the solver must NOT be over-penalized for failing to
+  reach them — soft-penalize or cap the requirement envelope at extreme combined
+  poses rather than enforcing full coverage there.
+
+## 6. OpenSim muscle-path artifact audit (before trusting requirement envelopes)
+
+Known issues with the Gait2392-lineage models, to audit per muscle before trusting
+required-torque curves at range extremes (Ben asked to check the OpenSim skill and
+docs; the skill has nothing — these are from the OpenSim docs and forums):
+
+1. Gait2392 represents muscle wrapping over bone / retinacula with CONDITIONAL
+   VIA POINTS (especially at the knee) rather than true wrapping surfaces —
+   paths can jump and moment arms can step at the activation angles.
+   (OpenSim docs: Gait 2392 and 2354 Models page.)
+2. Wrapping-solver artifacts: muscles wrapped on cylinders can flip sides during
+   motion (moment-arm discontinuities), and customized paths can penetrate bone
+   (simtk forum threads 10885, 20467).
+3. GeometryPath results changed across OpenSim versions (post-4.1 changes;
+   opensim-core issue #4330 possible body-force/moment-arm bug) — recompute
+   requirements on the pinned opensim 4.4.1 and record the version.
+
+Audit step for the sweep campaign: for each site, visually verify the OpenSim
+muscle path across the full joint range used for the requirement (no bone
+penetration, no via-point jumps at the graded angles), and flag any site whose
+requirement curve inherits an artifact — the soft extreme-pose penalty of §5
+covers the corners this audit cannot rescue.
+
 ## 4. Deliverables
 
 Per the doctrine round: torque surfaces per muscle/muscle-group, margin

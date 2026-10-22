@@ -1,0 +1,43 @@
+[stock] study curr_s3q_perturb best trial 8 DB value -149.0000
+[stock] params: {"vest_ext": 0.1600329862442028, "vest_flex_inh": 0.06675721198649481, "vest_prop": 0.005366418963322739, "rig_scale": 0.9428207117273268, "stance_width": 4.595669394378453, "knee_bias": 3.641058492464999, "coact": 0.10460936985747618, "pelvis_ty": 0.9211288321520896}
+fitted baseline loaded: e2_pf=0.222 f1_df=0.098 f1_kf=0.148 post_kneext=0.011 post_hipext=0.068 desc_f=1.400 e2_adapt=1.700
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.921 m (env override=0.9211288321520896); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.78], >0.1: 13 muscles
+  top: add_long_l=0.78, tib_ant_r=0.60, tib_ant_l=0.47, ext_dig_r=0.36, pect_l=0.34, glut_min1_l=0.32, glut_min2_l=0.28, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[stock] quiet     fell=False push_sway=0.0 nan=False
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.921 m (env override=0.9211288321520896); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.78], >0.1: 13 muscles
+  top: add_long_l=0.78, tib_ant_r=0.60, tib_ant_l=0.47, ext_dig_r=0.36, pect_l=0.34, glut_min1_l=0.32, glut_min2_l=0.28, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[stock] push_f    fell=False push_sway=0.10212416110795232 nan=False
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.921 m (env override=0.9211288321520896); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.78], >0.1: 13 muscles
+  top: add_long_l=0.78, tib_ant_r=0.60, tib_ant_l=0.47, ext_dig_r=0.36, pect_l=0.34, glut_min1_l=0.32, glut_min2_l=0.28, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[stock] push_b    fell=False push_sway=0.10680766542495675 nan=False
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.921 m (env override=0.9211288321520896); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.78], >0.1: 13 muscles
+  top: add_long_l=0.78, tib_ant_r=0.60, tib_ant_l=0.47, ext_dig_r=0.36, pect_l=0.34, glut_min1_l=0.32, glut_min2_l=0.28, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[stock] push_r    fell=False push_sway=0.10432448500500792 nan=False
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.921 m (env override=0.9211288321520896); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.78], >0.1: 13 muscles
+  top: add_long_l=0.78, tib_ant_r=0.60, tib_ant_l=0.47, ext_dig_r=0.36, pect_l=0.34, glut_min1_l=0.32, glut_min2_l=0.28, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[stock] push_l    fell=False push_sway=0.1047926525171174 nan=False
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.921 m (env override=0.9211288321520896); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.78], >0.1: 13 muscles
+  top: add_long_l=0.78, tib_ant_r=0.60, tib_ant_l=0.47, ext_dig_r=0.36, pect_l=0.34, glut_min1_l=0.32, glut_min2_l=0.28, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[stock] plat_dx   fell=False push_sway=0.10441392995307672 nan=False
+start pose (normal): applied 20 coordinates as given; pelvis ty 0.921 m (env override=0.9211288321520896); IMU-metric torso lean -0.0 deg (+ = back)
+standing solve: nnls x in [0.00, 0.78], >0.1: 13 muscles
+  top: add_long_l=0.78, tib_ant_r=0.60, tib_ant_l=0.47, ext_dig_r=0.36, pect_l=0.34, glut_min1_l=0.32, glut_min2_l=0.28, ext_dig_l=0.26
+Fmax range: 5..3396 N | L range sample: [0.229942 0.326094]
+[stock] plat_tilt fell=False push_sway=0.09837848901087536 nan=False
+
+[stock] FRESH s3q score -149.0000 (DB -149.0000, delta +0.0000) falls 0/7 wall 272s
+[stock] quiet: sway 0.1183 tilt 32.41 effort 0.439 cocon 0.841 contact_sym 0.182
+[stock] SAG CHECK: feet carry 53.9%BW (rig share 46.1%), COM z min 0.753 m (fall threshold 0.55; 2026-10-20 syn6 exploit: 29.8% BW, 0.575 m) -> no rig-sag exploit
+[stock] wrote _s3q_verify_stock_20261021.json

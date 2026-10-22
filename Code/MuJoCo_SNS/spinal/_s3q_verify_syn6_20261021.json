@@ -1,0 +1,76 @@
+{
+ "family": "syn6",
+ "study": "curr_syn6_s3q_perturb",
+ "db": "sqlite:///optuna_syn6.db",
+ "trial": 5,
+ "db_value": -149.0,
+ "params": {
+  "vest_prop": 0.43194501864211576,
+  "rig_scale": 0.32666768318813977,
+  "stance_width": 6.118528947223795,
+  "knee_bias": 2.0924079097806274,
+  "coact": 0.29214464853521815,
+  "pelvis_ty": 0.8729725658964322
+ },
+ "fresh_score": -149.0,
+ "falls": 0,
+ "quiet": {
+  "bal_sway": 0.16033162154703692,
+  "bal_tilt_max": 16.065156287461857,
+  "bal_effort": 0.5108762885931692,
+  "bal_cocon": 0.8741248621006837,
+  "bal_contact_sym": 0.34354550120371535,
+  "bal_fell": false,
+  "bal_foot_load": 2.7859519053858173,
+  "bal_rig_share": -1.7859519053858173,
+  "bal_com_z_min": 0.7975538014064125,
+  "bal_act_sum": 55.55888271452296,
+  "bal_cocon_act": 5.325131691449544
+ },
+ "sag_exploit": false,
+ "per_case": [
+  {
+   "case": "quiet",
+   "fell": false,
+   "nan": false,
+   "push_sway": 0.0
+  },
+  {
+   "case": "push_f",
+   "fell": false,
+   "nan": false,
+   "push_sway": -1.0
+  },
+  {
+   "case": "push_b",
+   "fell": false,
+   "nan": false,
+   "push_sway": -1.0
+  },
+  {
+   "case": "push_r",
+   "fell": false,
+   "nan": false,
+   "push_sway": -1.0
+  },
+  {
+   "case": "push_l",
+   "fell": false,
+   "nan": false,
+   "push_sway": -1.0
+  },
+  {
+   "case": "plat_dx",
+   "fell": false,
+   "nan": false,
+   "push_sway": -1.0
+  },
+  {
+   "case": "plat_tilt",
+   "fell": false,
+   "nan": false,
+   "push_sway": -1.0
+  }
+ ],
+ "wall_s": 78.63408064842224
+}

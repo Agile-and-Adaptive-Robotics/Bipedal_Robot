@@ -370,3 +370,78 @@ to delete.
   the _s3_rigshare_20261021.py convention this session used for the
   verdict table - one convention of record. s3p-era stream CLOSED;
   wave-3 s3q in flight under the live session.
+- 2026-10-21 ~17:15Z BALANCE-OBJECTIVE RERUN, RESULTS (Ben's wave-3
+  order; both studies EXITCODE 0, 60/60 trials each, fresh-verified
+  BIT-EXACT). PLAIN LANGUAGE, numbers first-hand:
+
+  STOCK (main human model, curr_s3q_perturb): the fixed objective is
+  now honest and the answer is negative - NO trial in 60 beat even the
+  clip floor. Distribution: 44 trials clipped at -149.0, 15 hit the
+  new RIG-SAG sentinel -149.5, 1 all-fall, 0 above the clip. Both
+  seeds (incumbent + prior s3p winner) scored the sentinel (feet ~46%
+  BW). Best feet-load seen anywhere: 64.4% BW (t50); the recorded
+  winner is trial 8 (first at the clip): feet 53.9% BW, COM 0.753 m,
+  sway 0.118 m, 0 falls/7, fresh-process score -149.0000 = DB
+  BIT-EXACT. Clean study: 0 degenerate batteries, 0 bounce artifacts.
+  MEANING: with vestibular/stance/knee/coact/pelvis/rig-wean knobs,
+  this model cannot stand above ~2/3 of its weight on its feet; every
+  zero-fall pose needs the rig for ~35-50%. The objective now says so
+  instead of rewarding the lean.
+
+  SYN6 (curr_syn6_s3q_perturb): the fix KILLED the sag exploit (both
+  seeds sentinel -149.5, feet 34%/27%) but exposed that syn6's stands
+  are mostly DEGENERATE: 43/60 trials break (instability) before the
+  4 s measurement window opens - all 6 perturbed evals dead early
+  (push_sway -1.0), and ALL 34 clip trials are such early-breaks. The
+  recorded "winner" (trial 5, fresh BIT-EXACT -149.0000) is one of
+  them: quiet run ends at t=1.15 s, the rig-share term then reads a
+  SINGLE pre-break foot-slam sample (foot "load" 278.6% BW -> negative
+  rig share -> zero penalty; no fall because COM never had time to
+  drop). It is NOT a meaningful pose - the winner slot is a lottery
+  among tied degenerates. The best HONEST syn6 result remains a
+  sentinel rig-hang (-149.5). Third gaming vector for the record:
+  early-break runs garbage every windowed metric.
+
+  OBJECTIVE-TERM VERDICT: rig-share graded term + >50% sentinel work
+  as designed against sagging; metabolic term behaves (act_sum
+  53-57 across trials, small spread); REMAINING HOLES, both fixable
+  runner-side next round: (1) early-break runs need a t_end gate
+  (quiet eval must reach ~7.5 s else sentinel - no stand happened);
+  (2) mean foot force can exceed BW in oscillating runs - use
+  weight-bearing DUTY (fraction of steady samples in 0.8-1.2 BW)
+  instead of the mean, or cap the credit at 1.0.
+
+  BEN'S FALLBACK (logged per his addendum; this is the finding, not a
+  dead end): 60 real-budget trials under the fixed objective did NOT
+  beat the hand-set incumbents - stock cannot exceed ~64% feet-load
+  with the searched mechanisms, syn6 cannot complete the battery
+  un-rigged. NEXT ROUND = deliberate HAND-SET GRID, then reformulate
+  the search around whatever pattern it shows:
+  (a) add the t_end >= 7.5 s gate + duty-based foot-load first
+      (runner-side, ~2 lines, default-off safe);
+  (b) STOCK grid, quiet evals only (~40 s each): rig_scale
+      {0.6,0.7,0.8,0.9,1.0} x stance_width {0,3,6,9} x knee_bias
+      {0,4,8} x pelvis_ty {0.90,0.92}, vest_prop fixed 0.375
+      (120 runs, ~1.5 h) - map the feet-load ceiling surface; look
+      for WHERE (if anywhere) feet-load > 70% BW with sway < 0.15 m;
+  (c) SYN6: first just measure t_end across its stage-3 winner
+      neighborhood at rig 0.9-1.0 (the early-break fragility is the
+      real finding); hand-set only poses that survive 8 s;
+  (d) if the ~65% feet-load plateau is structural everywhere, the
+      honest conclusion for the dissertation is exactly that: these
+      SNS mechanisms rig-assist but do not free-stand, and the next
+      mechanism to add is ankle strategy / foot geometry / trunk
+      bias, not more tuning of the current knobs.
+  M1 GATE (this session, in-session execution - no spawn facility,
+  same deviation as the morning gate): VERDICT SHIP. Checklist
+  re-verified firsthand (record:
+  reports_20261020\balance\M1_GATE_S3Q_20261021.md): no figures/no
+  dissertation/no wiring touched (runner diff in Ben's 45caa365
+  verified metrics-only); anchor BIT-EXACT twice; both s3q winners
+  reproduce DB-vs-fresh +0.0000; failures reported as failures.
+  Advisories: the syn6 winner json mechanically records the degenerate
+  t5 (read the status note, not just the json); t_end gate +
+  duty-based foot load queued for the next round. NOTE: Ben committed
+  mid-flight (45caa365 carries the code edits); still uncommitted for
+  him: the s3q study logs/npzs/dbs, winner+verify jsons, gate record,
+  and this status file.
