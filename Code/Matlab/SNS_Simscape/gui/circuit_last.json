@@ -1,0 +1,83 @@
+{
+  "meta": {
+    "source": "SNSGui canvas circuit",
+    "app": "SNSGui"
+  },
+  "neurons": [
+    {
+      "name": "NonSpikingNeuron_1",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.1,
+      "Cm_nF": 5
+    },
+    {
+      "name": "NonSpikingNeuron_2",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.1,
+      "Cm_nF": 5
+    },
+    {
+      "name": "NonSpikingNeuron_3",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.1,
+      "Cm_nF": 5
+    },
+    {
+      "name": "NonSpikingNeuron_4",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.1,
+      "Cm_nF": 5
+    },
+    {
+      "name": "NonSpikingNeuron_5",
+      "Vrest_mV": -52,
+      "Gm_uS": 0.1,
+      "Cm_nF": 5
+    }
+  ],
+  "synapses": [
+    {
+      "src": "NonSpikingNeuron_3",
+      "dst": "NonSpikingNeuron_1",
+      "g_uS": 1,
+      "Esyn_mV": 0,
+      "ThrPre_mV": -55,
+      "SlopePre_mV": 1
+    },
+    {
+      "src": "NonSpikingNeuron_4",
+      "dst": "NonSpikingNeuron_1",
+      "g_uS": 1,
+      "Esyn_mV": -72,
+      "ThrPre_mV": -55,
+      "SlopePre_mV": 1
+    },
+    {
+      "src": "NonSpikingNeuron_5",
+      "dst": "NonSpikingNeuron_1",
+      "g_uS": 1,
+      "Esyn_mV": -72,
+      "ThrPre_mV": -55,
+      "SlopePre_mV": 1
+    },
+    {
+      "src": "NonSpikingNeuron_3",
+      "dst": "NonSpikingNeuron_2",
+      "g_uS": 1,
+      "Esyn_mV": -72,
+      "ThrPre_mV": -55,
+      "SlopePre_mV": 1
+    }
+  ],
+  "inputs": [
+    {
+      "dst": "NonSpikingNeuron_3"
+    },
+    {
+      "dst": "NonSpikingNeuron_4"
+    },
+    {
+      "dst": "NonSpikingNeuron_5"
+    }
+  ]
+}

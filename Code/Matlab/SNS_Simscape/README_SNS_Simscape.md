@@ -5,6 +5,29 @@ figures added 2026-09-09. Goal: wire the knee SNS circuit to a Simscape model of
 `09_BA_003.SLDASM`, with an Animatlab/SNS-toolbox-style neuron library drawn in
 the journal diagram language Ben specified.
 
+**2026-10-21 LAPTOP PASS (side-view muscle symbols, figure refresh, GUI v1):**
+
+- **Muscle-family icons are SIDE VIEWS now (Ben's ruling, mid-session):**
+  BPA blocks = slightly inflated McKibben muscle — braided barrel sleeve,
+  clamp fittings at both ends; `BioMuscle` = spindle belly with
+  pennation-angle fibers into tapering tendons. The old
+  ellipse-with-cross-striations read as a cross-section. Geometry lives in
+  `sns_icon_geom.m` (shared by the mask-icon emitter `sns_icon_muscle.m`,
+  the GUI canvas, and `snsfig.m`'s journal glyph); block DEFAULT sizes went
+  wide (aspect ~2.7) because mask icons stretch to the block rectangle.
+  `SNS_Library.slx` was patched in place; the builders
+  (`sns_build_library.m`, `sns_build_actuators.m`) regenerate the same look.
+- **Dissertation figure refresh** (`Documentation\...\Notes\
+  export_sns_simscape_figures.m`): `sns_library_overview` is now a composed
+  grid of the REAL masked icons (12 core-library blocks, function summaries
+  typeset at 10-10.5 pt, core vs full-library grouping) replacing the 2026-09-09
+  7-block exports; `simulink_neuron_detail` restyled (18 pt canvas fonts,
+  auto-arranged in memory); `KneeReflex_circuit` redrawn with the McKibben
+  glyph; components gained restyled `simulink_knee_reflex_arranged` and the
+  new `sns_winner_slice_simulink` export plus per-block icon crops and alt
+  text. Source models are never saved by exports.
+- **GUI v1** — see the GUI section below (`gui\SNSGui.m`).
+
 **2026-09-22 LIBRARY REDESIGN (Ben's circuit-language rules, breaking change):**
 `SNS_Library.slx` was rebuilt around ONE-INPUT synapses and INTERNAL neuronal
 summation (details in "Block appearance conventions" and "The blocks" below):
@@ -241,7 +264,7 @@ subnetwork paper), Rybak/Shevtsova CPG diagrams, and Animatlab:
 | spiking LIF neuron | open circle with a **spike-train waveform** |
 | Ia afferent | **spindle-shaped capsule** (fusiform, tapered ends) labeled "Ia" |
 | Ib afferent | capsule with braided collagen strands, labeled "Ib" |
-| muscle / BPA / BioMuscle | light-salmon fusiform **with striations** across the belly |
+| muscle / BPA / BioMuscle | **SIDE VIEW (Ben, 2026-10-21)**: BPA = slightly inflated McKibben muscle, braided barrel + clamp fittings (salmon); BioMuscle = pennate spindle, oblique fibers into tendons (darker red) |
 | MuscleActivation | **pink pentagon** (new mask param `A0` = initial activation) |
 | **EXCITATORY connection** | synapse block: pass-through axon bar terminating in a **WHITE TRIANGLE, black edges** at the output edge (tip points back toward the presynaptic side) |
 | **INHIBITORY connection** | same axon ending in a **SOLID BLACK CIRCLE** at the output edge |
@@ -570,3 +593,62 @@ after the URDF `<robot>`; use the return value.
 ## Winner circuit slice R8 (2026-10-16 overnight campaign)
 
 `demos\SNS_WinnerSlice_R8.slx` - a reduced but faithful Simulink slice of the walk-campaign winner (round8_best3.json, curr_s8b_wean04 t35, drive_scale 0.3807) in the 2026-09-22 redesigned architecture: NaP RG half-centers (local masked NapNeuron, fixed tau_h 842 ms), L/R GAMMA/ALPHA hand-drive knobs on the production drive schedule, one PF layer, heel/toe afferent reset INs on a stylized production-cadence contact script, KINH/IBEXC/LBIN/Renshaw, and a knee MN pair driving a NOMINAL torque-proxy demo load. Built by `demos\sns_build_winner_slice.m` from `spinal\reports_20261016\sns_simulink\slice_export.json` (all values extracted from the real built winner network); verified headless by `demos\sns_run_winner_slice.m` - ALL 4 checks PASS (base rhythm period 1.7285 s = numpy ref to 4 decimals; GAMMA x4 modulates duty 0.32->0.66; ALPHA sets MN level 2.06/2.59 mV = slice ref exactly; heel/toe script entrains 1:1). Solver ode1 @ 2 ms = production Euler semantics. Full story: `spinal\reports_20261016\sns_simulink\SNS_SIMULINK_WINNER_SLICE_20261016.md`.
+
+## GUI v1 — SNSGui (Ben's block-library ask, 2026-10-21)
+
+`gui\SNSGui.m` — a programmatic-uifigure MATLAB app (.m only, version
+controllable, no .mlapp). Run from the SNS_Simscape folder:
+
+```matlab
+app = SNSGui();          % build a circuit from the palette
+app.demoKneeReflex()     % reduced knee-reflex demo circuit
+app.loadJson('..\..\MuJoCo_SNS\spinal\spinal_net_export.json')   % 410-neuron production network
+app.loadJson('..\..\MuJoCo_SNS\spinal\reports_20261016\sns_simulink\slice_export.json')  % winner slice
+```
+
+What works (smoke-verified headless, R2025b laptop):
+
+- **Palette** of all 15 library blocks; pick + click canvas to place.
+- **Canvas in the library's icon language**: graded waveform neurons,
+  spike-train LIFs, Ia/Ib capsules, pentagon activation, and the side-view
+  McKibben / pennate muscle glyphs from `sns_icon_geom.m`.
+- **Connections ARE synapses** (2026-09-22 architecture): Connect mode,
+  click source, click target — the marker (white triangle / black dot)
+  derives from the **Esyn sign**, and editing Esyn in the property panel
+  flips it live. Afferent-sourced edges draw as current injections.
+- **Property panel**: every mask value of the selected block or connection
+  is editable.
+- **Model generation through the existing machinery**: Build runs
+  `sns_build_from_json(json, mdl, slx)` (parameterized 2026-10-21 for this)
+  — no duplicated builder. The demo circuit builds, compiles, and
+  smoke-simulates; the generated model opens in 0.29 s.
+- **JSON round-trip**: saves/loads the `spinal_net_export.json` schema
+  (heterogeneous-field JSONs like the winner slice are normalized);
+  afferent edges export as `inputs[]`, neuron-to-neuron edges as
+  `synapses[]` — the same treatment the production network gives Ia/Ib.
+
+**Measured (this machine, 2026-10-21):** clicks-to-circuit for the
+8-block, 7-connection demo reflex = **33 clicks** (2 per block placement,
+1 toggle + 2 per connection, 1 select + 1 commit for the Esyn edit).
+Production-network JSON loads in **1.2 s** data time (the canvas render of
+410 blocks + 1392 synapses adds ~35 s — the known v1 cost); the winner
+slice (34n/75s) loads + renders in **3.7 s**; Build of the demo circuit,
+including Simulink's compile + 0.1 s smoke sim, takes **21-27 s**. For
+comparison, the documented AnimatLab flow for a comparable 5-neuron +
+4-synapse circuit (right-click add per neuron, per-neuron property
+dialogs with nested tabs, per-synapse dialogs, stimulus setup) tallies
+roughly 60-75 clicks — a workflow-derived estimate, NOT a measurement on
+this machine (AnimatLab is installed on EB475WS4, not the laptop). Take
+both numbers as what they are: one measured, one documented-flow count.
+
+**v1 limits (be honest):** no block drag-move after placement, no
+delete/undo, sensory/muscle canvas blocks are documented in the JSON but
+not carried into the generated model (the builder's vocabulary is the
+neural layer), no zoom/pan beyond the default axes behavior, big-network
+render time above. Next steps: drag + delete, `outputs[]` editing,
+carrying actuator blocks into the builder, faster large-net rendering
+(batched patches).
+
+Screenshots live in
+`Documentation\Reports and Papers\Dissertation\Figures\60-sns\components\`
+(`sns_gui_demo_circuit.png`, `sns_gui_production_network.png` + alt text).

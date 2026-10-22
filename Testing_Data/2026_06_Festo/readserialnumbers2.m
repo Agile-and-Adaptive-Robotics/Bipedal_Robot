@@ -46,8 +46,8 @@ function data = readserialnumbers2()
     savedNumCols = 9;
 
     %% Torque-guard geometry (matches Knee_Extensor_20mm.m dExt1/angExt1)
-    dLC  = 215.05/1000;    % theta1 origin -> load-cell arm, m
-    angLC = -92.41;       % arm angle in the tibia frame, deg
+    dLC  = 260.9/1000;    % theta1 origin -> load-cell arm, m
+    angLC = -102.1715;       % arm angle in the tibia frame, deg
 
     %% Save settings
 

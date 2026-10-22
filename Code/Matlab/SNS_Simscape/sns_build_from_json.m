@@ -1,7 +1,14 @@
-function sns_build_from_json()
+function sns_build_from_json(jsonPath, mdlName, slxDst)
 % Generate the editable Simulink spinal-network model from SNS_Library
 % blocks, driven by Code\MuJoCo_SNS\spinal\spinal_net_export.json
 % (the tuned runner --fitted --best configuration, exported 2026-09-12).
+%
+% sns_build_from_json()                    -- the default tuned export
+% sns_build_from_json(json, mdl, slxDst)   -- GUI/graph caller form:
+%                                           any network JSON of the same
+%                                           schema; inputs/outputs may be
+%                                           absent (the inport/S-mux
+%                                           sections are skipped).
 %
 % Units mapping (verified by sns_units_test_2n, max dev 6e-4 mV):
 %   toolbox NonSpikingNeuron C=tau uF, Gm=1 uS, Vrest=0  ->  Cm=1000*tau nF
@@ -19,14 +26,21 @@ function sns_build_from_json()
 
 here = fileparts(mfilename('fullpath'));
 code = fullfile(here, '..', '..');            % ...\Code
-jtxt = fileread(fullfile(code, 'MuJoCo_SNS', 'spinal', ...
-                         'spinal_net_export.json'));
+if nargin < 1 || isempty(jsonPath)
+    jsonPath = fullfile(code, 'MuJoCo_SNS', 'spinal', ...
+                        'spinal_net_export.json');
+end
+if nargin < 2 || isempty(mdlName), mdlName = 'SNS_SpinalNetwork'; end
+if nargin < 3 || isempty(slxDst)
+    slxDst = fullfile(here, 'results', [mdlName '.slx']);
+end
+jtxt = fileread(jsonPath);
 J = jsondecode(jtxt);
 
 neurons = J.neurons;
 synapses = J.synapses;
-inputs = J.inputs;
-outputs = J.outputs;
+if isfield(J, 'inputs'), inputs = J.inputs; else, inputs = struct([]); end
+if isfield(J, 'outputs'), outputs = J.outputs; else, outputs = struct([]); end
 nN = numel(neurons);
 fprintf('JSON: %d neurons, %d synapses, %d inputs, %d MN outputs\n', ...
         nN, numel(synapses), numel(inputs), numel(outputs));
@@ -54,20 +68,21 @@ colX = [560 720 880 1040 1200 1360];
 yCtr = zeros(ncol, 1);
 Y0 = 60; dY = 96;
 
-mdl = 'SNS_SpinalNetwork';
+mdl = mdlName;
 if bdIsLoaded(mdl), close_system(mdl, 0); end
-slxDst = fullfile(here, 'results', [mdl '.slx']);
 if exist(slxDst, 'file'), delete(slxDst); end
 new_system(mdl);
 set_param(mdl, 'UnconnectedInputMsg', 'none');   % unused syn ports ground
 
-% ---- inport + one 376-way demux (port k of u) -----------------------------
+% ---- inport + one N-way demux (port k of u) -------------------------------
+if ~isempty(inputs)
 add_block('simulink/Sources/In1', [mdl '/u'], 'PortDimensions', ...
           num2str(numel(inputs)), 'Position', [40 40 70 120]);
 add_block('simulink/Signal Routing/Demux', [mdl '/demux_u'], ...
           'Outputs', num2str(numel(inputs)), 'Position', ...
           [150 40 155 40 + 12 * numel(inputs)]);
 add_line(mdl, 'u/1', 'demux_u/1', 'autorouting', 'on');
+end
 for k = 1:numel(inputs)
     d = ipos(inputs(k).dst);
     y = Y0 + (yCtr(cat{d})) * dY; yCtr(cat{d}) = yCtr(cat{d}) + 1;
@@ -194,6 +209,7 @@ for k = 1:numel(synapses)
 end
 
 % ---- MN S outputs -> Mux -> outport (actuator-id order) ------------------
+if ~isempty(outputs)
 [~, ord] = sort([outputs.actuator_id]);
 add_block('simulink/Signal Routing/Mux', [mdl '/S_mux'], ...
           'Inputs', num2str(numel(outputs)), 'Position', ...
@@ -205,25 +221,23 @@ end
 add_block('simulink/Sinks/Out1', [mdl '/S'], 'Position', ...
           [colX(ncol) + 260 60 colX(ncol) + 290 140]);
 add_line(mdl, 'S_mux/1', 'S/1', 'autorouting', 'on');
+end
 
 % ---- model annotation + config -------------------------------------------
 try
+    if isfield(J, 'meta') && isfield(J.meta, 'source'), src = J.meta.source;
+    else, src = jsonPath; end
     a = Simulink.Annotation(mdl, sprintf( ...
-        ['Tuned gait2392 spinal network (SNS_Library blocks, 2026-09-22 ' ...
-         'architecture: synapses one-input onto neuron syn ports, summation ' ...
-         'inside neurons).\nSource: %s\nu [376 x 1] input currents (nA), ' ...
-         'ordering = spinal_net_export.json inputs[] (1:8 DRIVE..BAL_LAT_L, ' ...
-         'then per-muscle POST_/Ia_/II_/Ib_).\nS [92 x 1] MN drives ordered ' ...
-         'by MuJoCo actuator id (ctrl order).\nUnits mapping verified by ' ...
-         'sns_units_test_2n.'], J.meta.source));
+        ['SNS network (SNS_Library blocks, 2026-09-22 architecture: ' ...
+         'synapses one-input onto neuron syn ports, summation inside ' ...
+         'neurons).\nSource: %s'], src));
     a.Position = [40 200; 40 200];
 catch
     % annotation API varies; model is complete without it
 end
 set_param(mdl, 'Description', sprintf( ...
-    ['Tuned gait2392 spinal network generated from ' ...
-     'spinal_net_export.json (%s). u = input currents nA; S = MN drives ' ...
-     'in actuator order.'], J.meta.source));
+    ['SNS network generated from %s. u = input currents nA; S = MN ' ...
+     'drives in actuator order.'], jsonPath));
 set_param(mdl, 'SolverType', 'Fixed-step', 'Solver', 'ode1', ...
           'FixedStep', '0.002');   % production Euler semantics (chaos note)
 

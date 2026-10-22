@@ -62,7 +62,7 @@ for s = 1:size(surf, 1)
     if getSimulinkBlockHandle(blk) > 0
         delete_block(blk);
     end
-    add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 1280+180*(s-1) 160 1400+180*(s-1)]);
+    add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 1280+180*(s-1) 260 1360+180*(s-1)]);
     delete_line(blk, 'In1/1', 'Out1/1');
     delete_block([blk '/In1']);
     delete_block([blk '/Out1']);
@@ -154,7 +154,7 @@ for s = 1:size(surf, 1)
         'Zero force for rel>=1 and F<0 (festo4.m). Fmax = maxBPAforce(Rest,620) ' ...
         'is baked into the internal gain (edit inside the block to override); ' ...
         'Inputs: P [kPa], L [m]. Output: F [N].'], dia);
-    m.Display = bpaIconCode(sprintf('BPA %d', dia));
+    m.Display = sns_icon_muscle(sprintf('BPA %d', dia));
     m.addParameter('Name', 'Rest', 'Type', 'edit', 'Prompt', 'Resting length Rest (m)', 'Value', '0.20');
     m.addParameter('Name', 'Kmax', 'Type', 'edit', 'Prompt', 'Fully-contracted length Kmax (m)', 'Value', '0.165');
     m.addParameter('Name', 'TendonL', 'Type', 'edit', 'Prompt', 'Tendon length (m)', 'Value', '0');
@@ -168,7 +168,7 @@ blk = [lib '/BioMuscle'];
 if getSimulinkBlockHandle(blk) > 0
     delete_block(blk);
 end
-add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 1820 160 1940]);
+add_block('simulink/Ports & Subsystems/Subsystem', blk, 'Position', [40 1820 260 1904]);
 delete_line(blk, 'In1/1', 'Out1/1');
 delete_block([blk '/In1']);
 delete_block([blk '/Out1']);
@@ -328,7 +328,7 @@ m.Description = ['OpenSim Thelen2003-style Hill-type biological muscle, rigid te
     'exp(-(lambda-1)^2/0.45); Hill force-velocity (A=0.25, v_max in l_opt/s); ' ...
     'exponential passive FL (kpe, e_pas); fiber length = (Lmt-l_slack)/cos(alpha). ' ...
     'Inputs: Act [0..1], Lmt [m], Vmt [m/s]. Output: F [N].'];
-m.Display = bpaIconCode('BIO', [0.87 0.62 0.60]);
+m.Display = sns_icon_muscle('BIO');
 m.addParameter('Name', 'Fmax', 'Type', 'edit', 'Prompt', 'Max isometric force Fmax (N)', 'Value', '1000');
 m.addParameter('Name', 'l_opt', 'Type', 'edit', 'Prompt', 'Optimal fiber length l_opt (m)', 'Value', '0.10');
 m.addParameter('Name', 'l_slack', 'Type', 'edit', 'Prompt', 'Tendon slack length (m)', 'Value', '0.05');
@@ -345,21 +345,8 @@ set_param(lib, 'Lock', 'on');   % blocks can only be INSTANCED from a LOCKED lib
 fprintf('SNS_Library.slx: added BPA_10mm/BPA_20mm/BPA_40mm + BioMuscle (11 blocks total).\n');
 
 %% ---------------- local functions ----------------
-function s = bpaIconCode(lbl, fill)
-    % Fusiform actuator with heavy outline AND STRIATIONS across the belly
-    % (Ben 2026-09-22: "muscle blocks should have striations").
-    % BPA = salmon; BIO = darker red.
-    if nargin < 2, fill = [0.94 0.76 0.74]; end
-    s = strjoin({ ...
-        't_ = linspace(0, 2*pi, 73);' ...
-        'patch(0.95*cos(t_), 0.50*sin(t_), [0 0 0]);' ...
-        sprintf('patch(0.84*cos(t_), 0.41*sin(t_), [%.3g %.3g %.3g]);', fill) ...
-        'color(''black'');' ...
-        'plot([-0.45 -0.55], [-0.24 0.24]);' ...
-        'plot([-0.18 -0.28], [-0.30 0.30]);' ...
-        'plot([0.09 -0.01], [-0.30 0.30]);' ...
-        'plot([0.36 0.26], [-0.30 0.30]);' ...
-        'plot([0.55 0.47], [-0.22 0.22]);' ...
-        ['disp(''' lbl ''');'] ...
-        }, newline);
+function s = bpaIconCode(varargin)
+    % Deprecated 2026-10-21: side-view symbols now come from
+    % sns_icon_muscle.m / sns_icon_geom.m (McKibben BPA, pennate BIO).
+    s = sns_icon_muscle(varargin{1});
 end

@@ -5,7 +5,8 @@ function h = snsfig(cmd, varargin)
 % Animatlab conventions, per Ben 2026-09-09; restyled 2026-09-10):
 %   neuron      = open circle, heavy black edge, white fill
 %   afferent    = open circle with Ia/Ib label (light green-gray)
-%   muscle      = fusiform ellipse (salmon red, journal muscle convention)
+%   muscle      = side-view slightly inflated McKibben muscle, braided
+%                 sleeve + clamp fittings (matches the library icons)
 %   EXCITATORY  = white triangle with black edges, tip pointing into target
 %   INHIBITORY  = solid black circle
 % Line weight 1.8 pt (Ben, 2026-09-10: journal-weight strokes).
@@ -50,11 +51,26 @@ switch lower(cmd)
             text(x, y - r - 1.6, sub, 'HorizontalAlignment', 'center', 'FontSize', 9.5, 'FontAngle', 'italic');
         end
     case 'muscle'
+        % Side view of a slightly inflated McKibben muscle (Ben,
+        % 2026-10-21): braided barrel body + clamp fittings, same
+        % geometry as the library mask icons (sns_icon_geom).
         x = varargin{1}; y = varargin{2}; w = varargin{3}; ht = varargin{4};
         lbl = varargin{5};
-        th = linspace(0, 2*pi, 73);
-        h = patch(x + (w/2)*cos(th), y + (ht/2)*sin(th), [0.94 0.76 0.74], ...
+        g = sns_icon_geom('BPA');
+        xmin = -0.92; xmax = 0.92; ymin = -0.335; ymax = 0.335;
+        sx = w / (xmax - xmin); sy = ht / (ymax - ymin);
+        mx = @(xq) x + (xq - (xmin + xmax) / 2) * sx;
+        my = @(yq) y + (yq - (ymin + ymax) / 2) * sy;
+        h = patch(mx(g.bodyX), my(g.bodyY), g.fill, ...
             'EdgeColor', 'k', 'LineWidth', 1.8);
+        for i = 1:size(g.braid, 1)
+            plot(mx(g.braid(i, [1 3])), my(g.braid(i, [2 4])), ...
+                'k-', 'LineWidth', 0.7);
+        end
+        patch(mx(g.capR(:, 1)), my(g.capR(:, 2)), g.cap, ...
+            'EdgeColor', 'k', 'LineWidth', 1.2);
+        patch(mx(g.capL(:, 1)), my(g.capL(:, 2)), g.cap, ...
+            'EdgeColor', 'k', 'LineWidth', 1.2);
         text(x, y, lbl, 'HorizontalAlignment', 'center', 'FontSize', 9.5);
     case 'box'
         x = varargin{1}; y = varargin{2}; w = varargin{3}; ht = varargin{4};
