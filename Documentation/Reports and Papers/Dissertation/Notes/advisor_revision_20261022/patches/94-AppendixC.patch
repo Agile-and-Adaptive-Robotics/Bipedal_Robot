@@ -1,0 +1,31 @@
+diff --git "a/baseline\\chapters\\94-AppendixC.tex" "b/proposals\\94-AppendixC.tex"
+index d604db3..96c735a 100644
+--- "a/baseline\\chapters\\94-AppendixC.tex"
++++ "b/proposals\\94-AppendixC.tex"
+@@ -1,7 +1,7 @@
+ \chapter{Appendix C: Model Geometry, Bracket Frames, and Compliance Parameters}\label{app:model_geometry}
+ \graphicspath{{../Figures/94-AppendixC/}{figs/94-AppendixC/}}
+ 
+-This appendix documents the numeric geometry and compliance parameters behind the force and torque models of Chapters~\ref{ch:muscles} and~\ref{ch:torque} as they exist in the project's MATLAB code, with file names given so that any value can be traced to the code that produced it. Route and bracket coordinates are coded in meters and reported here in millimeters; stiffnesses are coded and reported in newtons per meter. The bracket reference points are interpretation choices for the 3D-printed (Onyx FDM) attachment hardware, set from CAD by the author; moving a reference point changes the identified stiffness values, so the points are recorded here alongside the values they produced.
++This appendix documents the numeric geometry and compliance parameters behind the force and torque models of Chapters~\ref{ch:muscles} and~\ref{ch:torque} as they exist in the project's MATLAB code, with file names given so that any value can be traced to the code that produced it. Route and bracket coordinates are coded in meters and reported here in millimeters; stiffnesses are coded and reported in newtons per meter. The bracket reference points are interpretation choices for the 3D-printed (Onyx FDM) attachment hardware, set from CAD by me; moving a reference point changes the identified stiffness values, so the points are recorded here alongside the values they produced.
+ 
+ \section{Static BPA Pathway Data}
+ 
+@@ -31,7 +31,7 @@ kf(5) & 41\,cm         & 0.410 & 0     & 615.4 & 437.3 & training \\
+ \end{table}
+ 
+ \begin{sidewaystable}
+-\caption{Biomimetic knee, extensor \qty{20}{\mm} BPA route seed (femur frame: p1--p5; tibia frame: p6--p9; \texttt{buildKneeExtContext20mm.m} lines 431--440, the author's fcec-ray construction; the prior SolidWorks seed is kept commented at lines 421--430). Release schedule of the verified elimination, read from the redesign of record (\texttt{Vas\_Pam\_20mm\_Result\_20260925.mat}, \texttt{routeInfo.eliminatedAngleD}): p5 at $-89.8^{\circ}$, p4 at $-55.7^{\circ}$, p6 at $-47.8^{\circ}$, p7 at $-20.2^{\circ}$, p3 at $+6.1^{\circ}$, p8 at $+7.4^{\circ}$.}
++\caption{Biomimetic knee, extensor \qty{20}{\mm} BPA route seed (femur frame: p1--p5; tibia frame: p6--p9; \texttt{buildKneeExtContext20mm.m} lines 431--440, my fcec-ray construction; the prior SolidWorks seed is kept commented at lines 421--430). Release schedule of the verified elimination, read from the redesign of record (\texttt{Vas\_Pam\_20mm\_Result\_20260925.mat}, \texttt{routeInfo.eliminatedAngleD}): p5 at $-89.8^{\circ}$, p4 at $-55.7^{\circ}$, p6 at $-47.8^{\circ}$, p7 at $-20.2^{\circ}$, p3 at $+6.1^{\circ}$, p8 at $+7.4^{\circ}$.}
+ \label{tab:app_ext_seed}
+ \begin{tabular}{@{}lrrrll@{}}
+ \toprule
+@@ -154,7 +154,7 @@ Every configuration models bracket compliance as a diagonal Hooke-law spring in
+ exactly as in Equations~(\ref{eq:bktstiffness})--(\ref{eq:keff}); when an artificial tendon is present its axial spring ($\times2$ cables, effective steel area $1.51\times10^{-6}$~m$^{2}$, $E = 193$~GPa) adds in series, and the force balance $F_{\max}F^{*}(\varepsilon^{*}(\delta), P^{*}) = k_{\text{eff}}\,\delta$ is solved per frame by \texttt{fzero} on the contraction interval [Provenance: stiffness arrays: \texttt{minimizeFlxPin.m} lines 387 and 400; \texttt{minimizeExtX3.m} lines 575--584; \texttt{minimizeExt.m} line 352; \texttt{minimizeFlx.m} line 314. \texttt{fzero} force balance: \texttt{minimizeFlxPin.m} line 438; \texttt{minimizeExtX3.m} line 611; \texttt{minimizeExt.m} line 389; \texttt{minimizeFlx.m} line 352]. The per-configuration stiffness arrays and their series combinations are given in Table~\ref{tab:app_stiffness_arrays}.
+ 
+ \begin{table}[htbp]
+-\caption{Bracket stiffness arrays by configuration ($K = [k_{1}, k_{2}, k_{3}]$ in bracket-frame axes, N/m; optimizer solves $X_{1}, X_{2}$ assigned as shown), as executed by the evaluators of record. The flexor evaluator has no frame switch: both brackets use the pitch-only assembly (see the Bracket Reference Points and Frames section above). The pinned-extensor evaluator carries a \texttt{transMode} argument (default \texttt{2trans}, env \texttt{EXTX3\_TRANS}); its axis assignment was revised by the author, with the previous assignment kept commented in the file.}
++\caption{Bracket stiffness arrays by configuration ($K = [k_{1}, k_{2}, k_{3}]$ in bracket-frame axes, N/m; optimizer solves $X_{1}, X_{2}$ assigned as shown), as executed by the evaluators of record. The flexor evaluator has no frame switch: both brackets use the pitch-only assembly (see the Bracket Reference Points and Frames section above). The pinned-extensor evaluator carries a \texttt{transMode} argument (default \texttt{2trans}, env \texttt{EXTX3\_TRANS}); its axis assignment was revised by me, with the previous assignment kept commented in the file.}
+ \label{tab:app_stiffness_arrays}
+ \begin{tabular}{@{}lll@{}}
+ \toprule

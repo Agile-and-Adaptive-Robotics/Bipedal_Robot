@@ -5,9 +5,13 @@ and embeds everything into ONE self-contained HTML file (double-click to open;
 core browsing works fully offline).
 
 Tabs:
-  Table   search/sort/filters + drill-through with a back-to-pivot bar
-  Pivot   count matrix, labeled topic clusters, count/A-Z sortable rows+cols
-  Map     year×citations + topic landscape; neuron styling; Research-Rabbit-style
+  Table   search/sort/filters + drill-through with a back-to-pivot bar; the
+          FULL pre-prune base (papers + non-paper records) with record-type
+          and archived-vs-live filters
+  Pivot   count matrix over the papers, labeled topic clusters, count/A-Z
+          sortable rows+cols
+  Map     papers-only (citation graph is papers-only); year×citations + topic
+          landscape; neuron styling; Research-Rabbit-style
           FOCUS MODE: click a paper -> BFS neighborhood to 1/2/3 degrees,
           DIRECT connections colored, 2nd-degree grayed; left panel = focus
           paper, right panel = connection list (click to hop)
@@ -15,6 +19,12 @@ Tabs:
           Google Scholar / PubMed / Web of Science (PSU) / doi.org — the app
           itself only fetches OpenAlex (CORS-open, no key); Scholar/WoS open in
           your browser so institutional access + their ToS apply
+
+2026-10-23: payload = the FULL pre-prune base — 943 papers + 450 non-paper
+records (record types review/model/feedback/recorder), archived flags on the
+436 app-only records (382 papers + 54 orphan non-papers from the deletion
+snapshots). Non-paper records appear in the Table view only; Pivot/Map/citation
+graph stay papers-only.
 
 Re-run after any curation batch:
   myo python SADb_audit/export_corpus.py && SADb_audit/build_citation_graph.py && SADb_audit/app/build_app.py
@@ -73,17 +83,31 @@ def _classify(r):
 
 data = []
 for r in records:
-    data.append({
-        "id": r["id"], "t": r["title"], "a": r["primary"], "s": "; ".join(r["secondary"]),
-        "y": r["year"], "d": r["doi"], "an": r["animals"], "fb": r["feedback"],
-        "af": r.get("afferents", []), "ast": r.get("animal_study", ""),
-        "rs": r.get("robot_sim", ""), "pr": r.get("prune", ""),
-        "md": r["models2"], "mr": r["models_ref"], "rv": r["reviews"],
-        "pdf": 1 if r["has_pdf"] else 0, "n": 1 if r["has_notes"] else 0,
-        "ar": 1 if r.get("archived") else 0,
-        "nt": r["notes"], "src": _classify(r), "c": 0, "cl": -1,
-        "lx": 0.0, "ly": 0.0,
-    })
+    rt = r.get("recordType", "paper")
+    if rt == "paper":
+        row = {
+            "id": r["id"], "rt": rt, "t": r["title"], "a": r["primary"], "s": "; ".join(r["secondary"]),
+            "y": r["year"], "d": r["doi"], "an": r["animals"], "fb": r["feedback"],
+            "af": r.get("afferents", []), "ast": r.get("animal_study", ""),
+            "rs": r.get("robot_sim", ""), "pr": r.get("prune", ""),
+            "md": r["models2"], "mr": r["models_ref"], "rv": r["reviews"],
+            "pdf": 1 if r["has_pdf"] else 0, "n": 1 if r["has_notes"] else 0,
+            "ar": 1 if r.get("archived") else 0,
+            "nt": r["notes"], "src": _classify(r), "c": 0, "cl": -1,
+            "lx": 0.0, "ly": 0.0,
+        }
+    else:
+        # non-paper record: Table view only (name + note + attachments presence)
+        row = {
+            "id": r["id"], "rt": rt, "t": r.get("title", ""), "a": "", "s": "",
+            "y": "", "d": "", "an": [], "fb": [], "af": [], "ast": "", "rs": "",
+            "pr": "", "md": [], "mr": [], "rv": [],
+            "pdf": 1 if r.get("has_pdf") else 0, "n": 1 if r.get("has_notes") else 0,
+            "ar": 1 if r.get("archived") else 0,
+            "nt": r.get("notes", ""), "src": "nonpaper", "c": 0, "cl": -1,
+            "lx": 0.0, "ly": 0.0,
+        }
+    data.append(row)
 
 layout_path = os.path.join(SAD, "export", "sadb_layout.json")
 if os.path.exists(layout_path):
@@ -174,7 +198,7 @@ HTML = r"""<!DOCTYPE html>
 <body>
 <header>
   <h1>SADb Explorer — Sensory Afferent Database <span class="sub" id="stats"></span></h1>
-  <div class="sub">Snapshot of the Airtable "Sensory Feedback" corpus. Offline core; the Search tab adds live OpenAlex queries. Rebuild: <code>myo python SADb_audit/export_corpus.py &amp;&amp; SADb_audit/build_citation_graph.py &amp;&amp; SADb_audit/app/build_app.py</code></div>
+  <div class="sub">Snapshot of the Airtable "Sensory Feedback" corpus — the FULL pre-prune base (papers + non-paper records; archived = removed from Airtable, kept app-only). Offline core; the Search tab adds live OpenAlex queries. Rebuild: <code>myo python SADb_audit/export_corpus.py &amp;&amp; SADb_audit/build_citation_graph.py &amp;&amp; SADb_audit/app/build_app.py</code></div>
   <div class="tabs">
     <button id="tab-table" class="on" onclick="show('table')">Table</button>
     <button id="tab-pivot" onclick="show('pivot')">Pivot</button>
@@ -189,6 +213,8 @@ HTML = r"""<!DOCTYPE html>
   <label>Pathway <select id="f-fb"><option value="">(any)</option></select></label>
   <label>Afferent <select id="f-af"><option value="">(any)</option></select></label>
   <label>Source <select id="f-src"><option value="">(any)</option></select></label>
+  <label>Record type <select id="f-rt"><option value="">(any)</option><option value="paper">Paper</option><option value="review">Review</option><option value="model">Model</option><option value="feedback">Feedback pathway</option><option value="recorder">Recorder</option></select></label>
+  <label>Archive <select id="f-ar"><option value="">(live + archived)</option><option value="live">Live</option><option value="archived">Archived (app-only)</option></select></label>
   <label>Year <input type="number" id="f-y0" placeholder="from"> – <input type="number" id="f-y1" placeholder="to"></label>
   <label><input type="checkbox" id="f-notes"> has notes</label>
   <label><input type="checkbox" id="f-pdf"> has PDF</label>
@@ -287,17 +313,19 @@ const CL_LABELS = JSON.parse(document.getElementById('cluster-labels').textConte
 const PAL = ['#FFD700','#FFB14E','#FA8775','#EA5F94','#CD34B5','#9D02D7','#0000FF'];
 const GREY = '#c9c9c9';
 const SRC_LABEL = {originals99:'original 99', demo50:'demo 50', rest383:'rest import 383',
-                   digest20:'RR digest 20', task5import:'task5 import'};
+                   digest20:'RR digest 20', task5import:'task5 import', nonpaper:'non-paper record'};
+const RT_LABEL = {paper:'Paper', review:'Review', model:'Model', feedback:'Feedback pathway', recorder:'Recorder'};
+const PAPERS = DATA.filter(r => r.rt === 'paper');   // non-paper records live in the Table view only
 const byId = {}; DATA.forEach(r => byId[r.id] = r);
 const citedBy = {};
 for (const [p, refs] of Object.entries(CITES)) refs.forEach(t => { (citedBy[t] = citedBy[t] || []).push(p); });
 const neighborsOf = id => [...new Set([...(CITES[id]||[]), ...(citedBy[id]||[])])];
-const ANIMALS = [...new Set(DATA.flatMap(r => r.an))].sort();
-const AFFECTS = [...new Set(DATA.flatMap(r => r.af))].sort();
+const ANIMALS = [...new Set(PAPERS.flatMap(r => r.an))].sort();
+const AFFECTS = [...new Set(PAPERS.flatMap(r => r.af))].sort();
 function clName(cl){ return CL_LABELS[String(cl)] || CL_LABELS[cl] || ('Cluster '+(cl+1)); }
 function clShort(cl){ const s = clName(cl); return s.length>34 ? s.slice(0,32)+'…' : s; }
 
-const state = { q:'', an:'', fb:'', af:'', src:'', y0:null, y1:null, notes:false, pdf:false,
+const state = { q:'', an:'', fb:'', af:'', src:'', rt:'', ar:'', y0:null, y1:null, notes:false, pdf:false,
                 sort:{k:'c', dir:-1}, cell:null };
 const $ = id => document.getElementById(id);
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
@@ -311,12 +339,16 @@ function matches(r){
   if (st.fb && !r.fb.includes(st.fb)) return false;
   if (st.af && !r.af.includes(st.af)) return false;
   if (st.src && r.src !== st.src) return false;
+  if (st.rt && r.rt !== st.rt) return false;
+  if (st.ar === 'live' && r.ar) return false;
+  if (st.ar === 'archived' && !r.ar) return false;
   if (st.y0 && !(r.y >= st.y0)) return false;
   if (st.y1 && !(r.y <= st.y1)) return false;
   if (st.notes && !r.n) return false;
   if (st.pdf && !r.pdf) return false;
   if (st.cell){
     const [rk, rv, ck, cv] = st.cell;
+    if (r.rt !== 'paper') return false;   // pivot cells count papers; drill-through matches exactly
     if (!dimHas(r, rk, rv) || !dimHas(r, ck, cv)) return false;
   }
   return true;
@@ -347,7 +379,7 @@ function dimHas(r, key, val){ return DIMS[key].vals(r).includes(val); }
 
 function renderTable(){
   const rows = filtered();
-  $('count').textContent = rows.length + ' of ' + DATA.length + ' papers' +
+  $('count').textContent = rows.length + ' of ' + DATA.length + ' records' +
     (state.cell ? '  [drill-through active]' : '');
   $('back-pivot').style.display = state.cell ? 'inline-block' : 'none';
   const tb = $('tbody'); tb.innerHTML = '';
@@ -355,6 +387,7 @@ function renderTable(){
   rows.slice(0, 400).forEach(r => {
     const tr = document.createElement('tr'); tr.className = 'row';
     const tags = [];
+    if (r.rt !== 'paper') tags.push('<span class="pill" style="background:#dce9f7">'+RT_LABEL[r.rt]+'</span>');
     if (r.n) tags.push('<span class="pill yes">notes</span>');
     else tags.push('<span class="pill no">no notes</span>');
     if (r.ar) tags.push('<span class="pill" style="background:#eee3f3">app-only (removed from Airtable)</span>');
@@ -377,10 +410,11 @@ document.querySelectorAll('th[data-k]').forEach(th => th.onclick = () => {
   state.sort = {k, dir: state.sort.k===k ? -state.sort.dir : 1};
   renderTable();
 });
-['q','f-an','f-fb','f-af','f-src','f-y0','f-y1','f-notes','f-pdf'].forEach(id => {
+['q','f-an','f-fb','f-af','f-src','f-rt','f-ar','f-y0','f-y1','f-notes','f-pdf'].forEach(id => {
   $(id).addEventListener(id==='q' ? 'input' : 'change', () => {
     state.q = $('q').value; state.an = $('f-an').value; state.fb = $('f-fb').value;
     state.af = $('f-af').value; state.src = $('f-src').value;
+    state.rt = $('f-rt').value; state.ar = $('f-ar').value;
     state.y0 = $('f-y0').value ? +$('f-y0').value : null;
     state.y1 = $('f-y1').value ? +$('f-y1').value : null;
     state.notes = $('f-notes').checked; state.pdf = $('f-pdf').checked;
@@ -400,7 +434,7 @@ function sortEntries(entries, mode){
 function renderPivot(){
   const rk = $('p-row').value, ck = $('p-col').value;
   const rVals = new Map(), cVals = new Map(), matrix = new Map();
-  DATA.forEach(r => {
+  PAPERS.forEach(r => {   // pivot counts papers (citation-graph dims); non-papers are Table-only
     const rvs = DIMS[rk].vals(r), cvs = DIMS[ck].vals(r);
     rvs.forEach(rv => rVals.set(rv,(rVals.get(rv)||0)+1));
     cvs.forEach(cv => cVals.set(cv,(cVals.get(cv)||0)+1));
@@ -435,7 +469,7 @@ function renderPivot(){
 
 // ================= MAP =================
 const cv = $('canvas'), ctx = cv.getContext('2d');
-const MAXC = Math.max(...DATA.map(r=>r.c));
+const MAXC = Math.max(...PAPERS.map(r=>r.c));
 const PAD = {l:62, r:24, t:18, b:40};
 const X0 = 1905, X1 = 2030, Y0 = 0, Y1 = 5.3;   // year, log10(citations+1)
 let view = {k:1, tx:0, ty:0};
@@ -444,7 +478,7 @@ const ms = { mode:'all', focus:null, spot:null };
 
 function hashId(s){ let h = 2166136261; for (let i=0;i<s.length;i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h>>>0; }
 const POS = {}, RAD = {}, LPOS = {};
-DATA.forEach(r => {
+PAPERS.forEach(r => {
   const jh = hashId(r.id);
   POS[r.id] = [
     (r.y || 1970) + ((jh % 1000)/1000 - 0.5) * 1.8,
@@ -479,28 +513,28 @@ const PX = {};
 function recomputePX(){
   if (curLayout === 'land'){
     let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
-    DATA.forEach(r => { const [a,b] = LPOS[r.id];
+    PAPERS.forEach(r => { const [a,b] = LPOS[r.id];
       if(a<x0)x0=a; if(a>x1)x1=a; if(b<y0)y0=b; if(b>y1)y1=b; });
     const sx = (x1-x0)||1, sy = (y1-y0)||1, m = 30;
-    DATA.forEach(r => {
+    PAPERS.forEach(r => {
       PX[r.id] = [ m + (LPOS[r.id][0]-x0)/sx*(cv.width-2*m),
                    cv.height - m - (LPOS[r.id][1]-y0)/sy*(cv.height-2*m) ];
     });
   } else {
-    DATA.forEach(r => { PX[r.id] = [bx(POS[r.id][0]), by(POS[r.id][1])]; });
+    PAPERS.forEach(r => { PX[r.id] = [bx(POS[r.id][0]), by(POS[r.id][1])]; });
   }
 }
 
 function nodesNow(){
   if (ms.spot && degMap){
-    return DATA.filter(r => r.id in degMap);
+    return PAPERS.filter(r => r.id in degMap);
   }
   if ((ms.mode==='refs' || ms.mode==='citedby') && ms.focus){
     const nb = ms.mode==='refs' ? (CITES[ms.focus]||[]) : (citedBy[ms.focus]||[]);
     const set = new Set([ms.focus, ...nb]);
-    return DATA.filter(r => set.has(r.id));
+    return PAPERS.filter(r => set.has(r.id));
   }
-  return DATA;
+  return PAPERS;
 }
 function colorOf(r){
   if (ms.spot && degMap){
@@ -732,11 +766,11 @@ function renderLegend(){
   if (m==='review') items = [['has Review Papers link', PAL[5]], ['not tagged as review', GREY]];
   else if (m==='models') items = [['is a model (Is-the-model-paper link)', PAL[4]], ['paper references models', PAL[1]], ['neither', GREY]];
   else if (m==='animal'){
-    const used = {}; DATA.forEach(r => { if (r.an.length) used[r.an[0]] = (used[r.an[0]]||0)+1; });
+    const used = {}; PAPERS.forEach(r => { if (r.an.length) used[r.an[0]] = (used[r.an[0]]||0)+1; });
     items = Object.entries(used).sort((a,b)=>b[1]-a[1]).slice(0,14)
       .map(([a,n]) => [a+' ('+n+')', PAL[ANIMALS.indexOf(a)%PAL.length]]);
   } else {
-    const used = {}; DATA.forEach(r => { if (r.cl>=0) used[r.cl] = (used[r.cl]||0)+1; });
+    const used = {}; PAPERS.forEach(r => { if (r.cl>=0) used[r.cl] = (used[r.cl]||0)+1; });
     items = Object.keys(used).sort((a,b)=>used[b]-used[a]).slice(0,14)
       .map(c => [clShort(+c)+' ('+used[c]+')', PAL[c%PAL.length]]);
     if (ms.spot && degMap) items.push(['2nd degree (grayed)', GREY]);
@@ -770,6 +804,7 @@ function resetView(){
   recomputePX();
   view = {k:1, tx:0, ty:0};
   const ns = nodesNow();
+  if (!ns.length){ drawMap(); return; }   // nothing drawable (e.g. focus cleared onto an empty set)
   const xs = ns.map(r=>PX[r.id][0]), ys = ns.map(r=>PX[r.id][1]);
   const x0=Math.min(...xs), x1=Math.max(...xs), y0=Math.min(...ys), y1=Math.max(...ys);
   view.k = Math.max(0.4, Math.min(cv.width/(x1-x0+80), cv.height/(y1-y0+80), 4));
@@ -881,14 +916,15 @@ function showDetail(r){
   const nRefs = (CITES[r.id]||[]).length, nBy = (citedBy[r.id]||[]).length;
   dd.innerHTML = '<h2>'+esc(r.t)+'</h2>'+
     '<div class="sub">'+esc(r.a)+(r.s? ' — '+esc(r.s):'')+' · '+(r.y||'n.d.')+' · '+r.c+' citations</div>'+
-    '<dt>DOI</dt><dd>'+(r.d? '<a href="https://doi.org/'+esc(r.d)+'" target="_blank" rel="noopener">'+esc(r.d)+'</a>' : '(none)')+'</dd>'+
+    '<dt>Record type</dt><dd>'+(RT_LABEL[r.rt]||r.rt)+
+    (r.rt==='paper'? ' · import source: '+(SRC_LABEL[r.src]||r.src||'?') : '')+
+    (r.ar? ' · <b>app-only: removed from Airtable (record-cap cut), kept here for its rules/insight</b>':'')+'</dd>'+
+    (r.rt==='paper'? '<dt>DOI</dt><dd>'+(r.d? '<a href="https://doi.org/'+esc(r.d)+'" target="_blank" rel="noopener">'+esc(r.d)+'</a>' : '(none)')+'</dd>'+
     '<dt>In-corpus citations</dt><dd>'+nRefs+' references in corpus · cited by '+nBy+' corpus papers'+
     ' — <a href="#" onclick="focusInMap(\''+r.id+'\');return false;">Focus in map</a> · '+
     '<a href="#" onclick="viewRefs(\''+r.id+'\');return false;">References map</a> · '+
     '<a href="#" onclick="viewCitedBy(\''+r.id+'\');return false;">Cited-by map</a></dd>'+
-    '<dt>Import source</dt><dd>'+(SRC_LABEL[r.src]||r.src||'?')+
-    (r.ar? ' · <b>app-only: removed from Airtable (record-cap cut), kept here for its rules/insight</b>':'')+'</dd>'+
-    '<dt>Topic cluster</dt><dd>'+(r.cl>=0? esc(clName(r.cl)) : '(no citation links)')+'</dd>'+
+    '<dt>Topic cluster</dt><dd>'+(r.cl>=0? esc(clName(r.cl)) : '(no citation links)')+'</dd>' : '')+
     '<dt>Animals</dt><dd>'+(r.an.length? r.an.map(a=>'<span class="pill">'+esc(a)+'</span>').join('') : '(untagged)')+'</dd>'+
     '<dt>Afferent types</dt><dd>'+(r.af.length? r.af.map(a=>'<span class="pill af">'+esc(a)+'</span>').join('') : '(untagged)')+'</dd>'+
     '<dt>Feedback pathways</dt><dd>'+(r.fb.length? r.fb.map(f=>'<span class="pill fb">'+esc(f)+'</span>').join('') : '(none linked)')+'</dd>'+
@@ -906,7 +942,7 @@ function viewRefs(id){ ms.mode='refs'; ms.focus=id; ms.spot=null; degMap=null; $
 function viewCitedBy(id){ ms.mode='citedby'; ms.focus=id; ms.spot=null; degMap=null; $('m-view').value='citedby'; hideDetail(); show('map'); }
 
 // ================= SEARCH (online) =================
-const CORPUS_DOIS = new Set(DATA.map(r => (r.d||'').toLowerCase()).filter(Boolean));
+const CORPUS_DOIS = new Set(PAPERS.map(r => (r.d||'').toLowerCase()).filter(Boolean));
 async function doSearch(){
   const q = $('s-q').value.trim();
   const res = $('s-results');
@@ -990,7 +1026,7 @@ function show(t){
   opts($('f-an'), uniq(r => r.an));
   opts($('f-fb'), uniq(r => r.fb));
   opts($('f-af'), uniq(r => r.af));
-  opts($('f-src'), uniq(r => [SRC_LABEL[r.src]||r.src]));
+  opts($('f-src'), [...new Set(PAPERS.flatMap(r => [SRC_LABEL[r.src]||r.src]))].filter(Boolean).sort());
   $('f-src').addEventListener('change', () => {
     const lbl = $('f-src').value;
     state.src = Object.keys(SRC_LABEL).find(k => (SRC_LABEL[k]||k)===lbl) || lbl || '';
@@ -1002,12 +1038,14 @@ function show(t){
   });
   $('p-row').value = 'cluster'; $('p-col').value = 'decade';
   ['p-row','p-col','p-sr','p-sc'].forEach(id => $(id).addEventListener('change', renderPivot));
-  const withNotes = DATA.filter(r=>r.n).length, withPdf = DATA.filter(r=>r.pdf).length;
-  const appOnly = DATA.filter(r=>r.ar).length;
-  const ys = DATA.map(r=>r.y||9999).filter(v=>v<9999);
-  $('stats').textContent = ' — '+DATA.length+' papers ('+appOnly+' app-only, removed from Airtable) · '+
+  const nPaper = PAPERS.length, nNon = DATA.length - PAPERS.length;
+  const archP = PAPERS.filter(r=>r.ar).length, archN = DATA.filter(r=>r.rt!=='paper'&&r.ar).length;
+  const withNotes = PAPERS.filter(r=>r.n).length, withPdf = PAPERS.filter(r=>r.pdf).length;
+  const ys = PAPERS.map(r=>r.y||9999).filter(v=>v<9999);
+  $('stats').textContent = ' — '+DATA.length+' records = '+nPaper+' papers ('+archP+' app-only) + '+
+    nNon+' non-paper ('+archN+' app-only) · '+
     withNotes+' curated · '+withPdf+' with PDF · '+
-    Math.min(...ys)+'–'+Math.max(...DATA.map(r=>r.y||0));
+    Math.min(...ys)+'–'+Math.max(...PAPERS.map(r=>r.y||0));
   renderTable();
 })();
 </script>
@@ -1021,6 +1059,7 @@ html = (HTML.replace("__DATA__", payload)
 out = os.path.join(HERE, "sadb_app.html")
 with open(out, "w", encoding="utf-8") as fh:
     fh.write(html)
-print("wrote", out, f"({len(html)/1024:.0f} KB, {len(data)} papers, "
-      f"{sum(len(v) for v in cites.values())} directed citation pairs, "
+n_paper = sum(1 for r in data if r["rt"] == "paper")
+print("wrote", out, f"({len(html)/1024:.0f} KB, {len(data)} records = {n_paper} papers + "
+      f"{len(data)-n_paper} non-paper, {sum(len(v) for v in cites.values())} directed citation pairs, "
       f"{len(cl_labels)} named clusters) — built {datetime.date.today().isoformat()}")

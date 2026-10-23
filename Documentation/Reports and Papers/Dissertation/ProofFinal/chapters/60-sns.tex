@@ -113,10 +113,10 @@ The library's fundamental demonstrations are two basic reflex pathways. In the f
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=0.96\textwidth,height=0.42\textheight,keepaspectratio]{sns_library_overview.pdf}
+\includegraphics[width=0.94\textwidth,height=0.42\textheight,keepaspectratio]{sns_library_overview.pdf}
 \par\medskip
-\includegraphics[width=\textwidth]{simulink_neuron_detail.pdf}
-\caption[Simulink SNS library blocks and neuron implementation]{The core blocks of the SNS-Simscape library (top): the graded neuron and synapse, the spiking neuron, the Ia and Ib afferent encoders, and the activation dynamics block, each with its function summarized. The full library adds the synapse-sum junction, the diameter-specific BPA force blocks, and the biological muscle block. Below is a functional schematic of the non-spiking neuron implementation: synaptic, leak, and applied currents feed membrane integration, and a threshold, inverse-slope gain, and saturation produce the bounded drive output. The voltage is fed back to both current calculations. The generic BPA force block remains a placeholder. These implementation views do not establish quantitative knee regulation or a completed CAD-coupled Simscape Multibody model.}
+\includegraphics[width=0.94\textwidth]{simulink_neuron_detail.pdf}
+\caption[Simulink SNS library blocks and neuron implementation]{Core SNS-Simscape blocks (top) and graded-neuron implementation (bottom). Summed currents drive membrane integration; threshold, inverse-slope gain, and saturation bound the output. Voltage feeds both current calculations. The generic BPA block remains a placeholder. These views do not demonstrate quantitative knee regulation or complete CAD coupling.}
 \label{fig:simulink_sns_implementation}
 \end{figure}
 

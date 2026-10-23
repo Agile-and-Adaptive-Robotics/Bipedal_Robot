@@ -22,7 +22,8 @@ EXPORT = os.path.join(HERE, "export")
 MAILTO = "benjamin.bolen@pdx.edu"
 
 records = json.load(open(os.path.join(EXPORT, "sadb_export.json"), encoding="utf-8"))
-print("records:", len(records))
+records = [r for r in records if r.get("recordType", "paper") == "paper"]  # graph stays papers-only
+print("records (papers):", len(records))
 
 
 def norm_doi(d):

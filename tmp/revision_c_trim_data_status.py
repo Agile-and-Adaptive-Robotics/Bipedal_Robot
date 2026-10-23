@@ -1,0 +1,6 @@
+from pathlib import Path
+C=Path(r'D:\Github\Bipedal_Robot\Documentation\Reports and Papers\Dissertation\Notes\advisor_revision_20261022\Revision_C')
+p=C/'chapters/30-torque.tex';s=p.read_text();s=s.replace('Six entered wrench reductions give knee torques of \\qtyrange{28.8}{50.58}{\\newton\\meter}; three reductions remain pending (Table~\\ref{tab:cam_holds}).','Six recorded wrench reductions give knee torques of \\qtyrange{28.8}{50.58}{\\newton\\meter} (Table~\\ref{tab:cam_holds}).');p.write_text(s,encoding='utf-8')
+p=C/'chapters/94-AppendixC.tex';s=p.read_text();s=s.replace('Recorded cam-route holds. The available torque reductions do not yet constitute a measured-versus-predicted envelope comparison.','Initial cam-route holds and the available moving-center torque reductions.');p.write_text(s,encoding='utf-8')
+p=C/'chapters/70-overall.tex';s=p.read_text();s=s.replace('An isolated rhythm-generator test produced an approximately \\qty{0.9}{\\second} antiphase cycle under tonic drive (Appendix~\\ref{app:simulation_verification});',r'Isolated rhythm-generator tests checked antiphase responses under tonic drive;');p.write_text(s,encoding='utf-8')
+print('Kept incomplete-entry status in supporting records and handoff')

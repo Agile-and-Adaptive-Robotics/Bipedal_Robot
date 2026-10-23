@@ -23,9 +23,12 @@ disagree, flag it in the revision report instead of silently rewriting grandfath
 
 ## 2. Person and tense
 
-- "We/our" for work done with collaborators (`40-discussion.tex:9` "We have developed new
-  $F_{620}$ equations…"); "the author" for solo prior work (`10-introduction.tex:14`).
-  Never "I". Never "the researcher" as a first-person dodge.
+- **SUPERSEDED 2026-10-22 (Ben):** first person "I/my/me" replaces "the author"
+  everywhere in the dissertation chapters (the advisor's active-review request).
+  "We/our" remains for work done with collaborators. Never "the researcher" as a
+  first-person dodge. Same date: self-plagiarism gating against Ben's own papers
+  (published or in-preparation) is REMOVED — chapters may follow his own papers
+  closely, and his own paper is cited wherever one exists for the content.
 - Past tense for procedures and data collection (`20-methods.tex:80,131`); present tense
   for model behavior, equations, and interpretation (`20-methods.tex:106`; `40-discussion.tex:15`).
 
@@ -65,8 +68,11 @@ disagree, flag it in the revision report instead of silently rewriting grandfath
 
 - natbib `\citet`/`\citep` as the existing chapters do. Factual claims about others' work
   carry a citation at the claim, not paragraphs later.
-- Text adapted from Ben's own two papers follows the adaptation rules in the rubric
-  (Gate 1) and keeps the publication note at `40-discussion.tex:5` truthful.
+- **SUPERSEDED 2026-10-22 (Ben), replacing the former Gate 1 adaptation rules:** chapters
+  may follow Ben's own papers (published or in preparation) closely — the former
+  self-plagiarism gating is removed. The standing requirements are: cite the own paper
+  wherever one exists for the content (publication notes at chapter heads stay
+  truthful), and keep others' work cited as normal.
 
 ## 7. Banned AI-slop patterns
 
