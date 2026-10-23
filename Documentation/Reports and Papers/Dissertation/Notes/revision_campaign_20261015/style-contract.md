@@ -68,8 +68,11 @@ disagree, flag it in the revision report instead of silently rewriting grandfath
 
 - natbib `\citet`/`\citep` as the existing chapters do. Factual claims about others' work
   carry a citation at the claim, not paragraphs later.
-- Text adapted from Ben's own two papers follows the adaptation rules in the rubric
-  (Gate 1) and keeps the publication note at `40-discussion.tex:5` truthful.
+- **SUPERSEDED 2026-10-22 (Ben), replacing the former Gate 1 adaptation rules:** chapters
+  may follow Ben's own papers (published or in preparation) closely — the former
+  self-plagiarism gating is removed. The standing requirements are: cite the own paper
+  wherever one exists for the content (publication notes at chapter heads stay
+  truthful), and keep others' work cited as normal.
 
 ## 7. Banned AI-slop patterns
 

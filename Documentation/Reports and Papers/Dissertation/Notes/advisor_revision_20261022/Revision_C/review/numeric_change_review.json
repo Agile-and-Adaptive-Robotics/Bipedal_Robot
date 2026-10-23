@@ -1,0 +1,706 @@
+[
+  {
+    "file": "10-introduction.tex",
+    "removed_or_replaced_line": "There are additional gaps concerning the development of more detailed neural control models of locomotion and balance. One lies in the literature itself: the physiological properties of the group Ia, group Ib, and group II afferents that should inform the feedback design are scattered across a primary literature that the database of Chapter~\\ref{ch:database} alone audits at 943 papers and reviews \\citep{van_de_crommert_review_1998, windhorst_muscle_2007, windhorst_spinal_2022}, with no structured resource from which a robot designer or an animal researcher could draw them. The other lies in methods: no simulation pipeline existed for closing the loop between a musculoskeletal robot model of this kind and a biologically grounded neural controller. The neuromechanical modeling literature provides the ingredients, including two-level spinal central pattern generator architectures \\citep{rybak_modelling_2006, mccrea_organization_2008}, neuromechanical simulation frameworks \\citep{markin_afferent_2010}, and synthetic nervous system design tools \\citep{nourse_sns_2023}, but it does not provide their assembly for a BPA-driven bipedal robot with human-like muscle routing: the conversion of the robot's own model into a simulation engine, the wiring of the rhythm and reflex circuits with their afferent feedback, and the closed-loop coupling of controller and mechanics in one runnable environment."
+  },
+  {
+    "file": "10-introduction.tex",
+    "removed_or_replaced_line": "The present work builds directly on a series of studies by me and my collaborators. In my master's project, the kinematics and dynamics of a biomimetic robot leg were matched against the Gait2392 OpenSim model, artificial muscle attachment and wrapping locations were determined for the robot legs, and MATLAB tooling was developed for evaluating muscle lengths, moment arms, and isometric joint torques over the full range of motion \\citep{bolen_bipedal_2019, bolen_determination_2019}. That work showed that simply transplanting human muscle attachment locations onto a BPA-actuated robot does not reproduce human torque profiles; the placement optimization that closes this gap was completed during this dissertation and is summarized in Section~\\ref{sec:foundation}. The rest of the platform advanced in parallel, and this dissertation builds on its hardware and demonstrations: the biomimetic four-bar knee linkage with a migrating instantaneous center of rotation, designed and validated by Steele \\citep{steele_development_2017, steele_biomimetic_2018, steele_biomimetic_2018-1}, is the knee of the robot leg whose torque transmission Chapter~\\ref{ch:torque} measures, and the canine-inspired quadruped platform Muscle Mutt, formerly called DoggyDeux, demonstrated antagonistic BPA pairs under synthetic nervous system control on a physical robot \\citep{scharzenberger_design_2019}, extending an earlier AARL demonstration of central pattern generator control of a pneumatically actuated robot \\citep{hunt_development_2017}. The humanoid leg of this dissertation carries that line forward."
+  },
+  {
+    "file": "10-introduction.tex",
+    "removed_or_replaced_line": "This dissertation addresses the actuator-force and torque-correction gaps experimentally, resolves the afferent-data gap by consolidating the afferent literature into the Sensory Afferent Database \\citep{bolen_sensory_2023, bolen_using_2024}, and closes the simulation-pipeline gap with the tools and framework of the final research chapter. The objectives are:"
+  },
+  {
+    "file": "10-introduction.tex",
+    "removed_or_replaced_line": "Chapter~\\ref{ch:muscles} develops and validates the actuator force models. It presents the isometric force characterization of Festo BPAs with \\qtylist{10;20}{\\mm} uninflated diameters over a wide range of resting lengths, contractions, and pressures; derives improved maximum-force and normalized force--strain--pressure models; and compares them against the manufacturer's tool and published models. Later sections examine the effects of resting length, the implications of the validated models for real-time control and simulation, and the biomimetic analogy between braided pneumatic actuators and skeletal muscle. The chapter's text and figures are adapted from my publication of this work \\citep{bolen_2026}."
+  },
+  {
+    "file": "15-background.tex",
+    "removed_or_replaced_line": "The human knee is the joint where the choice of these definitions matters most. Its instantaneous center of rotation migrates posteriorly with flexion, a behavior captured by four-bar linkage descriptions of the joint \\citep{romero_four-bar_2020, steele_biomimetic_2018}. Locating that moving center is a kinematic problem in its own right, and \\citet{romero_four-bar_2020} solve it with natural coordinates so that the answer stays cheap to evaluate when an optimization must recompute it many times. The difficulty is visible at the repository level: the SimTK repository that distributes OpenSim also hosts multiple projects dedicated specifically to the human knee, and they differ in how they formalize joint torques, centers of rotation, and reaction forces for the same anatomy. A hinge knee, a four-bar knee, and a contact-defined tibiofemoral joint give different moment arms for identical muscle paths, so the modeling choice must be determined carefully. Gait2392 resolves the knee with planar kinematics \\citep{yamaguchi_planar_1989}: the flexion angle prescribes the joint's translation as well as its rotation, rather than fixing a hinge axis or solving a linkage. The ISB joint coordinate system recommendations were written to resolve exactly this definitional freedom, keeping reports of joint motion comparable across laboratories \\citep{wu_isb_2002}. Throughout this dissertation, Gait2392 serves as the reference against which the robot's muscle routing, moment arms, and torque capabilities are designed and judged."
+  },
+  {
+    "file": "15-background.tex",
+    "removed_or_replaced_line": "The mechanics of that study are worth stating precisely, because Chapter~\\ref{ch:torque} builds on them. Moment arms were computed geometrically from attachment points in the body frame, as the cross product of a joint-axis unit vector with the vector from the joint center to the muscle's line of action, as described in Section~\\ref{sec:bg_biomechanics}, and isometric torque was calculated as muscle force multiplied by moment arm, evaluated across each joint's range of motion. The comparison the study made was robot against human: each PAM's origin, via points, and insertion were placed by hand in OpenSim beside the Gait2392 path it imitates, adjusted so that the contraction each actuator must produce over the range of motion stays within the Festo BPA's usable contraction range and so that actuators do not interfere with one another, and the resulting robot model, gait2392\\_robotbody, is the robot model whose torque transmission the later chapters of this dissertation refine \\citep{bolen_bipedal_2019}. The biceps femoris long head shows what the robot-versus-human comparison exposed: its path differs visibly between the two models as the knee flexes, and the robot model's knee- and hip-axis torque surfaces reach only a fraction of the human model's peaks over the hip--knee range. Profiles of this kind, read across the full muscle set, defined the matching problem that the placement optimization later formalized \\citep{morrow_optimization_2020}. Figure~\\ref{fig:masters_routing_and_arms} shows the routing models and the moment-arm construction, and Figure~\\ref{fig:masters_torque_comparison} shows the biceps femoris comparison."
+  },
+  {
+    "file": "15-background.tex",
+    "removed_or_replaced_line": "\\caption[Master's-study routing models and moment-arm construction]{From my master's study. \\textbf{(A)} Muscle-path models: OpenSim Gait2392 paths (left) and the robot leg's PAM routings (right). \\textbf{(B)} Moment arms computed in the body frame as the cross product of the joint-axis unit vector with the vector from the joint center to the muscle's line of action, shown for the tensor fasciae latae about the hip (left) and the knee (right) \\citep[Figs.~4 and~6]{bolen_bipedal_2019}.}"
+  },
+  {
+    "file": "15-background.tex",
+    "removed_or_replaced_line": "The boundary between background and contribution runs through this section as well. The prior AnimatLab walker with which my program first applied these architectures to a biped \\citep{bolen_design_2020} is presented as prior work of this dissertation in Section~\\ref{sec:prior_walker}, the Sensory Afferent Database that organizes the afferent data such networks require \\citep{bolen_sensory_2023} is the subject of Chapter~\\ref{ch:database}, and the simulation pipeline that couples the controller to the robot model is built in Chapter~\\ref{ch:sns}. None of it is repeated as background here."
+  },
+  {
+    "file": "15-background.tex",
+    "removed_or_replaced_line": "For a robot to serve as a replacement subject, however, it must first earn standing as a scientific model. Webb's influential analyses of bio-robotic methodology \\citep{webb_robots_2001, webb_robots_2002} argue that a robot is a good model of biological behavior when the mechanism it implements is tested at the same level of organization as the target phenomenon, matching dynamics, control structure, and sensory ecology rather than surface appearance. The validation chain of this dissertation is constructed to that standard: the actuator force model is validated against bench data (Section~\\ref{sec:results_force}), the joint torque model against isometric measurements and human torque envelopes (Section~\\ref{sec:results_torque}), and the neuromechanical controller is verified against published tonic stimulation and deletion phenomena \\citep{selionov_tonic_2009, rybak_modelling_2006}, the verification step that precedes locomotion tuning in this program. Only then can a robot experiment be read as evidence about the hypothesized biological circuit rather than about the robot."
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "The route redesign built on these values addresses the single-muscle shortfall at high flexion angles documented in Section~\\ref{sec:results_torque}: each configuration now carries two \\qty{20}{\\mm} BPAs per route. The flexor solution meets the flexor torque target with a minimum margin of $+5.01$\\,\\% at $-107^{\\circ}$, under the modeling assumption that both actuators share one attachment route rather than a physically mirrored pair; making the mirrored pair explicit is the next design refinement. The direct extensor route meets or exceeds its human-scaled target with the required 5\\,\\% overshoot as the thinnest margin at every angle, $+5.02$\\,\\% at worst, while respecting the wrap-release schedule and contraction limits of the route-elimination rule (Appendix~\\ref{app:model_geometry}); it was later superseded by the cam redesign of Section~\\ref{sec:route_redesign_results}. These redesign solutions are the model definitions carried into the neuromechanical simulation work of Sections~\\ref{sec:preliminary_sim_methods}--\\ref{sec:preliminary_sim_results} and Chapter~\\ref{ch:futurework}."
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=0.98\\textwidth]{ExtensorRoute_redesigned.pdf}"
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "\\caption[Route geometry of the redesigned extensor route]{Route geometry of the direct extensor route redesign, drawn in the femur frame. Eight pose panels sweep the design range from full flexion ($\\theta_\\text{k} = \\ang{-120}$) through the frame immediately before each of the six contact-elimination events to full extension ($\\theta_\\text{k} = \\ang{10}$); knee angle is negative in flexion. Each panel draws the active route over the femur-cylinder, femur-wall, condyle, and tibia clearance envelopes of the route-elimination rule, with the local bend-radius checks dashed. The square marker is the femur-side origin and the diamond marker is the tibial insertion.}"
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "The extensor route has since been redesigned once more by allowing the tibial-side route points to trace a cam profile, and this cam redesign is the current extensor design. The cam solution converts the razor-thin margin of the direct route into genuine design headroom. On the final geometry, which folds the optimizer winner together with a verified adjustment of the distal route point and tendon length, the minimum torque margin is $+30.83\\,\\%$ with respect to the required envelope, the human target plus the 5\\,\\% overshoot, and $+39.77\\,\\%$ with respect to the plain human target; the optimizer winner before that adjustment carried $+31.30$\\,\\% and $+42.34$\\,\\% at the same checks. The pressure required to meet the envelope spans \\SIrange[range-phrase=--]{269}{507}{\\kPa} across the range of motion, comfortably above the \\qty{150}{\\kPa} regulated floor of the VTUG valve manifold that supplies the hardware. The geometry confirms that the headroom is not bought with routing risk: the tibial wrap follows a bend radius of \\qty{96.9}{\\mm}, the guiding route point clears the femoral-condyle envelope by \\qty{43.1}{\\mm} at \\ang{10} of knee extension, and the moment arm spans \\SIrange[range-phrase=--]{59.4}{102.8}{\\mm} (mean \\qty{72.4}{\\mm}) over the range of motion."
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "The flexor route, built on the same two-BPA arrangement sharing one attachment route, meets the flexor torque target with a minimum margin fraction of 0.0501 against the required 0.05. Its predicted knee-axis torque spans \\qty{-81.23}{\\newton\\cdot\\meter} to \\qty{-3.864}{\\newton\\cdot\\meter} against the human-scaled requirement of \\qty{-23.16}{\\newton\\cdot\\meter} to \\qty{-2.461}{\\newton\\cdot\\meter} (peak magnitude \\qty{23.16}{\\newton\\cdot\\meter}), again exceeding the human envelope at every angle. The flexor redesign applies the adopted correction terms of Table~\\ref{tab:app_xi_values}, including the wrapping factor identified on the extensor configuration."
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=0.98\\textwidth]{PulleyTorqueSurfaces_20261020-eps-converted-to.pdf}\\par\\medskip"
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=0.98\\textwidth]{PulleyMarginSurfaces_20261020-eps-converted-to.pdf}"
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "The Bi-pulley batch applied the same reeving freedom to five muscle sites of the robot-body model's OpenSim leg, and all five runs failed the torque requirement, with the medial-gastrocnemius and biceps-femoris-short-head runs terminating at the infeasibility sentinel (Table~\\ref{tab:bipulley_batch}). For the biceps femoris short head site, whose torque target is \\qty{40.2}{\\newton\\cdot\\meter} at the robot-body model's maximum isometric force of \\qty{804}{\\N}, the pattern search exited with flag $-2$ and returned the sentinel objective of 101 from an initial objective of 1000; Section~\\ref{sec:disc_pulley} reports the per-run objectives and the clearance constraints behind these outcomes."
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "\\caption{Bi-pulley batch on five muscle sites of the robot-body model's OpenSim leg. Objective 101 is the batch's infeasibility sentinel; all five runs closed with a nonpositive torque margin. The soleus and tibialis-anterior runs converged feasibly (pattern-search exit flag 1), and their objectives are the normalized torque shortfalls; the remaining three runs exited with flag $-2$.}"
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "soleus                    & 0.9968                                       & converged (flag 1), nonpositive torque margin \\\\"
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "tibialis anterior         & 0.9288                                       & converged (flag 1), nonpositive torque margin \\\\"
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "rectus femoris            & 3.423 (worst constraint 0.2423)              & nonpositive torque margin \\\\"
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "medial gastrocnemius      & 101, infeasibility sentinel (worst constraint 10) & pattern-search exit flag $-2$ \\\\"
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "biceps femoris short head & 101, infeasibility sentinel (worst constraint 10) & pattern-search exit flag $-2$ \\\\"
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "The robot-body model itself carries one update from this work. The adductor magnus attachment point P2 was restored to its full-precision location $(-0.1357, -0.0929, 0.0591)$~m, displacing a rounded copy that was disqualified for producing a zero-length via point that nullified the flexion torque; the regenerated mirrored model passed its validation with zero non-mirrored pairs. At the restored location, the muscle delivers \\qty{34.28}{\\newton\\cdot\\meter} of flexion torque, $1.12\\times$ the human target of \\qty{30.61}{\\newton\\cdot\\meter}, and \\qty{27.62}{\\newton\\cdot\\meter} of adduction torque, $0.82\\times$ the human target of \\qty{33.60}{\\newton\\cdot\\meter}. These redesigned routes remain optimizer-stage results: the robot-body OpenSim model contains no pulley entities, and no via points or markers were added to it for these routes (its eight pre-existing moving-path-point vias, the rectus-femoris and vastii patella-tracking points, one per muscle per leg, belong to the original muscle paths). The MuJoCo conversion used for the simulation work predates the pulley batch and the adductor-magnus restoration, so it carries one stale path point, the pre-restoration rounded adductor-magnus P2. Physical torque tests of the redesigned routes have begun (Section~\\ref{sec:disc_pulley})."
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "The same redesign pipeline was then extended from the knee to all 27 muscle-actuators of the robot-body model, and this whole-body extension is reported as work in progress rather than a completed result. The first pass reached 19 of the 27 actuators before the run stopped, and its chosen solutions showed that the penalty-based formulation itself was the binding limitation: all but one of the chosen routes violated the feasibility constraints, the sole exception being the biceps femoris long-head pair, whose worst-angle margin of $+0.03\\,\\%$ is indistinguishable from zero. The formulation was then restructured so that the task envelope, the joint-angle window each route must serve, acts as a hard feasible set rather than a penalty. In the restructured pass, twelve of the 27 actuators terminated on a concatenation error in the route builder (the three lumbar-wall actuators, tibialis posterior, the seven distal-foot actuators, and adductor magnus), leaving fifteen finalized routes. Eight of the fifteen were chosen from constraint-feasible configurations: semimembranosus, biceps femoris long head, tensor fasciae latae, soleus, lateral gastrocnemius, tibialis anterior, iliacus, and psoas. Of those eight, six also met the torque requirement at every angle, with worst-angle margins spanning $+0.25\\,\\%$ (biceps femoris long head) to $+250.7\\,\\%$ (tensor fasciae latae); the semimembranosus and soleus routes satisfy the geometry but remain short of their torque targets. The crash set and the two torque-short feasible routes define the remaining engineering: the route builder needs a fix for the concatenation failure, and the short routes need either larger actuators or relaxed corridors."
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "The route redesign of Section~\\ref{sec:ongoing} placed both \\qty{20}{\\mm} actuators on direct attachment routes. The Mono/Bi-pulley algorithms extend that search space by allowing the artificial tendon to be reeved over pulleys before insertion, and the flexor pulley run quantifies what the added routing freedom is worth on the knee-flexor route. The pulley variant converged to a collision-feasible layout with zero bound violations (pattern-search exit flag 1) at an objective of 0.08465 under its own objective function, which differs from the direct route's objective of 74.47, so the two values are not commensurable. The best configuration on file reeves the two actuators over a single tackle-line part at a gain fixed at 1:1, so the pulley acts as a redirect rather than a force multiplier; even so, the redirect alone deepened the peak predicted flexion torque from \\qty{81.23}{\\newton\\cdot\\meter} to \\qty{85.74}{\\newton\\cdot\\meter}, a gain of \\qty{4.51}{\\newton\\cdot\\meter} (\\qty{5.6}{\\percent}), while holding the off-axis torque to at most \\qty{0.803}{\\newton\\cdot\\meter}, under \\qty{1}{\\percent} of the peak on-axis value; the predicted peaks of the direct and pulley routes exceed the human flexor torque scale of \\qty{23.16}{\\newton\\cdot\\meter} by factors of 3.51 and 3.70. The Bi-pulley batch establishes where that freedom runs out on anatomical routes. Across the five OpenSim muscle sites attempted (soleus, tibialis anterior, rectus femoris, medial gastrocnemius, and biceps femoris short head), every run closed with a nonpositive torque margin (objectives of 0.929 for tibialis anterior, 0.997 for soleus, and 3.42 for rectus femoris with a residual worst-constraint value of 0.242), and the medial-gastrocnemius and biceps-femoris-short-head runs terminated at the infeasibility sentinel (objective 101, worst-constraint value 10, exit flag $-2$). For the four runs that report a finite route-to-route clearance, the binding constraint was geometry rather than torque: minimum pair clearances spanned \\qty{4.26}{\\mm} to \\qty{19.14}{\\mm} against the \\qty{25}{\\mm} separation required between adjacent routes (two \\qty{10}{\\mm} actuator radii plus a \\qty{5}{\\mm} bundle margin); the medial-gastrocnemius run records no finite clearance, so its failure rests on the infeasibility sentinel alone. What the two algorithms buy is therefore reach and screening: the mono-pulley converts routing freedom into \\qty{4.51}{\\newton\\cdot\\meter} of additional predicted flexion torque without mechanical advantage and with off-axis torque below \\qty{1}{\\percent} of the peak, and the bi-pulley sweep screens candidate anatomical sites, showing that its reeved routes do not yet fit these corridors and redirecting the design effort toward clearance-relaxed attachment sites. These pulley solutions are optimizer-stage results; they have not yet been propagated into the OpenSim or MuJoCo model trees used for the simulation work of Sections~\\ref{sec:preliminary_sim_methods}--\\ref{sec:preliminary_sim_results}, and the hardware torque tests of the updated compliant system have begun with the extensor route."
+  },
+  {
+    "file": "30-torque.tex",
+    "removed_or_replaced_line": "Physical testing of the redesigned extensor route has begun on the test stand with the $\\diameter$\\qty{20}{\\mm} actuator. In the first test, on the earlier direct route, three isometric points were held near full extension: measured knee torque of \\qty{1.163}{\\newton\\meter} at a knee angle of \\ang{10}, \\qty{7.849}{\\newton\\meter} at \\ang{11}, and \\qty{23.437}{\\newton\\meter} at \\ang{10}, against hung loads of \\qtylist{3.7;25.2;76}{\\newton} at gauge pressures of \\qtylist{388.5;388;592}{\\kPa}, respectively. The first and third points sit at essentially the same knee angle and span a twentyfold range of held torque, so they begin to map the route's response near extension as pressure and load vary. On the rebuilt cam route, a nine-point isometric sweep then held loads of \\qtylist{100;116;126;140;168;173.4;180.2;181;181.5}{\\newton} at knee angles from \\ang{-119} to \\ang{5} and gauge pressures from \\qty{256}{\\kPa} to \\qty{488}{\\kPa}, with the load-cell angle of every hold recorded in the tibia frame and each measured wrench referred to the moving knee center through the adjoint transform already used for the identification data, at the measured reaction-point distance of \\qty{259.9}{\\mm}. The adjoint-reduced torques are entered for the six most recent holds and span \\qty{28.8}{\\newton\\meter} to \\qty{50.6}{\\newton\\meter}, with the reduction of the three earliest holds in progress. The pressures read against the design on their own: the deep-flexion hold at \\ang{-119} was carried at \\qty{256}{\\kPa}, just below the low end of the cam design's predicted \\qtyrange{269}{507}{\\kPa} requirement band, and the extension holds at \\ang{-1} and \\ang{5} at \\qty{488}{\\kPa} and \\qty{480}{\\kPa} against the \\qty{507}{\\kPa} worst case, and the route carried every hold of the sweep without nearing the \\qty{620}{\\kPa} ceiling. The measured-versus-predicted envelope comparison for the sweep, and the corresponding flexor measurements, are pending."
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "\\graphicspath{{../Figures/50-database/}{figs/50-database/}}"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "I built it within the AARL's NeuroNex Communication, Coordination, and Control in Nervous Systems (C3NS) effort and presented it at Neuroscience 2023 \\citep{bolen_sensory_2023}, and later presented the AI-assisted triage study that expanded it at Neuroscience 2024 \\citep{bolen_using_2024}. Its content is organized as five linked tables (Papers, Feedback, Models, Review Papers, and Recorders), with the DOI as the unique identifier wherever a record carries one. The Papers table is the core: each paper carries structured curation notes, one to three sentences of distilled mechanism written from the paper's own text, never from memory, with free-text fields constrained by controlled vocabularies for animal preparations and afferent classes. Each sensory feedback pathway is a record in its own right in the Feedback table, named by a fixed grammar of afferent, action, side, joint, and phase (for example, ``Ib stance to swing''), so that pathway records compose into circuits the way a controller will use them, and each is linked to the papers that established it. The Models table links each computational model of afferent control to its source paper and to the pathway records it implements, and the Review Papers and Recorders tables carry the review literature and the instrumentation papers behind the electrophysiology."
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "The database answers queries that no bibliography can. A designer can filter the corpus by afferent class, animal preparation, or pathway; follow a pathway record to the papers that established it in each species; walk the citation neighborhood of a candidate anchor paper; or count the corpus along any two dimensions at once. The database's primary form is the packaged explorer: a single-file, offline application embedding the full audited corpus, its citation graph, and its named topic clusters, with searchable and pivotable tables, focus-mode citation neighborhoods drawn in the laboratory's own convention of papers as neurons, and a generated knowledge base with cluster, pathway, afferent, and animal pages, running in a browser on any machine with no network connection (an off-the-shelf bibliometric viewer was tried first and retired within weeks: no drill-through from a cluster to its papers, and a handful of mega-cited classics dominating every view). The working Airtable base remains the editable home of curation, but it cannot travel past the laboratory's account, and every build of the explorer embeds the corpus whole, including the papers the prune archived from the working base. Figure~\\ref{fig:sadb_explorer} shows the explorer's table view as packaged, and Figure~\\ref{fig:sadb_clusters} the corpus at the topic-cluster level. Section~\\ref{sec:sadb_corpus} quantifies the corpus: 561 retained papers after curation and pruning, over a full audited corpus of 943 papers that the explorer carries in full."
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=0.92\\textwidth]{sadb_clusters.pdf}"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "\\caption[Citation-graph topic clusters of the audited corpus]{The Louvain topic clusters of the audited corpus, one bubble per cluster. Horizontal position is the median publication year of the cluster's retained papers, vertical position the number of retained papers, and bubble area the audited cluster size; darker fill marks a larger retained fraction. The seven clusters with retained papers form the curated core, from the afferent-control classics and spinal-circuit modeling to neuromechanics and robot walking; the gray bubble aggregates the eleven satellite clusters the prune removed in full (58 papers), among them the fish-swimming, flow-and-flight-sensing, and neural-network-method clusters of the prune account. 27 of the 561 retained papers fall outside the citation-graph partition.}"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "This section records what a reader needs to know to understand how the corpus was assembled and judged: the sources it came from, the rules a record had to satisfy, the role of the AI tools, and who decided. The reviews this dissertation draws on mark the starting point rather than the method: \\citet{van_de_crommert_review_1998} organize the sensory control of the central pattern generator, \\citet{windhorst_muscle_2007} assigns functional roles to muscle proprioceptive feedback, and \\citet{windhorst_spinal_2022} weighs accumulated spinal-circuit model assumptions against the experimental record. Each synthesizes a slice of the literature; none can be filtered by afferent class, animal preparation, or pathway, none carries its demonstrating papers as attached and followable evidence, and each is fixed at its publication date."
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "The corpus was assembled from three sources that did not agree: my personal Zotero collection (538 items), the AARL group library's Biology subtree (911 items across 27 collections), and the Airtable base (99 papers). Matching record by record on DOI and normalized title showed that the personal collection was essentially a subset of the group library and that the Airtable base was a small curated subset rather than a mirror, and the gap was imported in verified batches, each written record re-read and checked after writing. The corpus then grew through citation mining, newly saved references, and a bulk pass that imported 372 papers auto-classified from the laboratory's staged PDF collection, bringing the audited corpus to 943 papers, the full set against which every later decision in this chapter was made."
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "The curation was machine-assisted under a division of labor in which the machine drafts and the human rules; the comparative evaluation of the AI tools that motivated this division is reported in Section~\\ref{sec:sadb_triage} \\citep{bolen_using_2024}. The machine contributed scale: batch drafting from grounded text, automated vocabulary, abstract-paste, and duplicate gates that rejected bad records before anything was written, and per-record verification against the grounding text after the write. I held every decision that required judgment or carried risk: the curation vocabulary and its amendments, the 164 flagged judgment calls, and every single deletion in the prune. Papers for which no text could be found stayed bare by rule rather than guessed, with grounding recovered where the laboratory's own library or a university-authenticated session could provide it."
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "Pruning then removed 436 records, 382 papers plus 54 orphaned review, model, and pathway records, in three stages: off-topic satellites, duplicates, and orphans first; a rule-built cut list of 290 papers next, ranked by a weighted rubric over citation count, age, rating, network isolation, and record thinness, with 351 protected records (foundational authors, feedback-linked papers, highly cited work, and pre-1940 classics) excluded from consideration; and a final sweep of records whose links the earlier cuts had emptied. The prune was deliberate on two grounds: the working base stood at 1,393 records before the prune, the 943 papers of the audited corpus plus 450 linked review, model, pathway, and recorder records, swollen past the laboratory's free-plan record cap; and a curated resource that answers a design question in ten records beats a haystack of a thousand. No record was destroyed; every deletion was snapshotted, and the packaged explorer carries the 382 cut papers under an archived flag, so the audited corpus remains reconstructible in full."
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "At the close of the curation effort the working base held 957 records: 561 papers, 39 feedback-pathway records, 244 model records, 109 review records, and 4 recorder entries. Coverage of the retained papers is concentrated where the laboratory's design and experimental work needs it. Of the 561 retained papers, 523 carry curation notes, 426 carry animal-preparation tags, 240 carry notes assessing each paper's animal-study potential, 118 are linked to named feedback pathways, 86 carry an afferent classification, and 258 carry notes translating the paper's findings toward robot or simulation use; 550 carry DOIs, and 38 remain bare pending a findable text."
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "The citation graph was built over the full audited corpus of 943 papers, which includes the 382 records the prune later removed. Within that corpus, 730 papers are connected by 11,130 directed in-corpus citation pairs, and a Louvain community partition of the graph resolves 18 named topic clusters, from the classics of afferent locomotor control and spinal interneuron circuit modeling through human balance and posture to bioinspired flow sensing and deep-learning methods. The partition earned its keep in the prune: the satellite clusters it exposed, the flow-and-flight sensing, fish swimming, and neural-network method clusters, match the topic groups the first prune stage removed. Within that audited corpus, 833 papers carry curation notes and 318 carry attached PDFs. The corpus, its citation graph, its cluster assignments, and the flat corpus export are distributed together in the packaged explorer."
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "Expanding a curated corpus is dominated by triage: deciding, paper by paper, what a record is about and whether it belongs. I evaluated AI tools for this task in a comparative study presented at Neuroscience 2024 \\citep{bolen_using_2024}. The evaluation found the expected trade: the tools accelerated the population of the database, but their output still required substantial human oversight for accuracy. The curation workflow of Section~\\ref{sec:sadb_methods} is the operational answer to that finding. Its gates earned their place on caught failures, including a record that shipped another paper's abstract under its title until the grounding pass flagged it; the human rulings it reserves are the oversight the evaluation showed was necessary, made concrete."
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "The database exists to feed the sensorium of Chapter~\\ref{ch:sns}. Its pathway records enumerate the signal taxonomy the controller's sensory channels implement: Ia afferents carrying length and velocity, Ib afferents carrying force, II afferents carrying length, and contact receptors marking the stance--swing boundary (Section~\\ref{sec:preliminary_sim_methods}); Table~\\ref{tab:sadb_afferents} summarizes what the corpus establishes for each class. The pathway naming grammar maps directly onto circuit edges, since a record's afferent class fixes the signal encoding, its phase fixes the gating, and its action fixes the sign, so translating a pathway record into a controller connection is a lookup rather than a literature search; Table~\\ref{tab:sadb_pathways} lists the principal pathway records with the papers that demonstrate them. The Models table carries the lineage the controller instantiates, from the two-level rhythm-generator and pattern-formation architecture \\citep{rybak_modelling_2006} through muscle-reflex walking \\citep{geyer_musclereflex_2010} to the two-layer neuromechanical walker the laboratory's controller descends from \\citep{deng_neuromechanical_2019}, and the 258 robot-and-simulation translation notes exist precisely to shorten the step from paper to wiring decision. Figure~\\ref{fig:sadb_pivot} shows the two-dimension count the explorer's pivotable tables produce over the retained corpus, the afferent classes against the animal preparations: the classical cat preparation carries the largest share of the Ia, Ib, II, and cutaneous records, and the arthropod records enter through the mechanosensory class."
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "\\caption{Afferent classes represented in the Sensory Afferent Database, the signal each class carries, and the pathway roles the corpus records for it. Anchor references are corpus papers linked to the corresponding records; the signal summary for the Ia, II, and Ib rows follows the ensemble afferent recordings of \\citet{prochazka_ensemble_1998}.}"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "Ia & muscle spindle primary & muscle length and velocity & homonymous stretch excitation \\citep{eccles_integrative_1958}; reciprocal inhibition of the antagonist pool \\citep{jankowska_effect_1967} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "II & muscle spindle secondary & static muscle length & midlumbar disynaptic relay onto motor nuclei \\citep{edgley_interneuronal_1987}; stance-phase support of extensor activity \\citep{mazzaro_afferent_2006} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "Ib & Golgi tendon organ & whole-muscle force & autogenic inhibition at rest, stance-phase reversal to excitation, and the load gate on swing onset \\citep{dietz_significance_2000, dominguez_candidate_2020} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "III/IV & free nerve endings & metabolic and nociceptive signals, converging with cutaneous and group II--III afferents as flexor-reflex afferents & phase-dependent resetting of the locomotor rhythm \\citep{schomburg_flexor_1998} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "Cutaneous & skin and foot-pad receptors & contact and perturbation events & flexor excitation and phase-modulated stance correction \\citep{sherrington_flexion_1910, forssberg_stumbling_1979} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=0.96\\textwidth]{sadb_pivot.pdf}"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "\\caption[Corpus pivot by afferent class and preparation]{A two-dimension pivot over the retained corpus, of the kind the explorer's pivotable tables produce. Rows are afferent classifications and columns animal preparations; each cell counts the retained papers carrying both tags, so a paper with several preparations or classes counts once in each corresponding cell, and the margins count unique papers. The base is the 86 retained papers that carry an afferent classification, of which 9 have no preparation tag.}"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "\\caption{Principal feedback-pathway records of the database's Feedback table, named by the fixed grammar of afferent, action, and phase. Linked papers are counted over the full audited corpus of 943 papers; for every pathway listed, the count is unchanged under the retained corpus of 561. Demonstrating references are the corpus papers linked to each record, as curated in the database.}"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "\\fontsize{10pt}{12pt}\\selectfont"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "\\begin{tabularx}{\\textheight}{@{}llXrp{0.26\\textheight}@{}}"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "Ia monosynaptic excitation & Ia & stretch excitation of the homonymous motor pool, with the pathway gain modulated over the step cycle & 7 & \\citep{eccles_integrative_1958, capaday_amplitude_1986} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "Ia reciprocal inhibition & Ia & inhibition of the antagonist motor pool through the Ia inhibitory interneurons, rhythmically active in fictive locomotion & 6 & \\citep{jankowska_effect_1967, pratt_ia_1987} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "Ib disynaptic inhibition & Ib & autogenic non-reciprocal group I inhibition of the loaded muscle's own pool, reduced during stance & 5 & \\citep{jankowska_common_1981, stephens_short_1996} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "Ib disynaptic excitation & Ib & the locomotor reversal: group I input excites synergist extensor pools during the extensor phase, replacing the resting inhibition & 6 & \\citep{mccrea_disynaptic_1995, pearson_enhancement_1998} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "Ib stance to swing & Ib & the load gate: Ib input from ankle extensors prolongs stance, so swing is not initiated while the leg is loaded & 17 & \\citep{dietz_significance_2000, dominguez_candidate_2020} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "Ia or II stance to swing & Ia, II & flexor-length gate on stance termination: lengthening of flexor muscles in late stance ends extension and resets the cycle & 10 & \\citep{hiebert_contribution_1996, akay_degradation_2014} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "type II excitatory & II & stance-phase support of ankle-extensor activity through the midlumbar group II relay & 5 & \\citep{edgley_interneuronal_1987, mazzaro_afferent_2006} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "Cutaneous flexor excitation & Cutaneous & flexion withdrawal and the stumbling corrective reaction, phase-modulated over the cycle & 16 & \\citep{sherrington_flexion_1910, forssberg_stumbling_1979} \\\\"
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "The 39 pathway records extend beyond the mammalian core of Table~\\ref{tab:sadb_pathways}: paired excitation and inhibition records cover the chordotonal organs and trochanteral hair plates of insect legs, a load-feedback record covers the campaniform sensilla, and further records hold fictive locomotion without sensory feedback (12 linked papers), group III/IV fatigue, and one paper each for somatosensory, vestibular, and visual contributions to postural control. The controller of Chapter~\\ref{ch:sns} implements the mammalian subset. The corpus also reaches ahead to the sensorium extensions planned in Section~\\ref{sec:fw_senses}: the human balance and posture cluster and the multisensory recalibration cluster are the entry points for that work, already curated and connected to the locomotor core through the citation graph."
+  },
+  {
+    "file": "50-database.tex",
+    "removed_or_replaced_line": "The honest accounting is that the resource is deeper than it is broad in places. The afferent classification covers 86 of 561 retained papers, concentrated in the pathway-rich core rather than spread across the corpus, and the flagged vocabulary gaps (vestibular and visual preparations among them) mark where the classification must grow before the extensions of Section~\\ref{sec:fw_senses} can be wired from the database alone. The growth policy follows from the prune: additions should be substantive records or clearly flagged stub twins, never bare rows. The database and the controller of Chapter~\\ref{ch:sns} are therefore built as one program: the afferent classes that the controller monitors, the signal encoding each channel carries, and the connection rules its circuit implements all trace to records held here, a mapping Chapter~\\ref{ch:sns} documents where the sensory channels are wired."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\graphicspath{{../Figures/60-sns/}{figs/60-sns/}{../Figures/60-sns/AnimatLab_reference/}{figs/60-sns/AnimatLab_reference/}}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The preceding chapters validate the robot's mechanics: a force model for the braided pneumatic actuators (Chapter~\\ref{ch:muscles}) and a corrected model of the joint torque those actuators deliver through the biomimetic knee (Chapter~\\ref{ch:torque}). This chapter builds the other half of the neuromechanical system, the controller, together with the simulation tools required to develop it. The controller is a synthetic nervous system (SNS): a network of conductance-based neuron and synapse models whose organization follows the mammalian spinal cord \\citep{rybak_modelling_2006, mccrea_organization_2008, deng_neuromechanical_2019}. Its parameters are not trained in the machine-learning sense but set from physiological data and tuned against explicit verification tests, which keeps every neuron an identifiable cell class and lets the simulated system support lesion, stimulation, and sensory-deletion experiments that cannot be performed on living subjects (Section~\\ref{sec:bg_ethics}). The neural vocabulary, the two-level central pattern generator, and the afferent channels are defined in Sections~\\ref{sec:bg_neural}--\\ref{sec:bg_sns} and used here without redefinition; the neuron and synapse equations themselves are recorded in Appendix~\\ref{app:neuron_equations}."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "As preliminary work of this dissertation, built before the simulation toolchain of this chapter existed, Morrow and I combined two published designs into a neuromechanical model of a bipedal walker in AnimatLab, a graphical environment for building biomechanical systems actuated by synthetic neural systems \\citep{cofer_animatlab_2010}: the biomechanics came from the suspended bipedal walker of \\citet{li_bipedal_2017}, and the controller from the two-layer CPG organization of \\citet{deng_neuromechanical_2019}. That combination is the direct ancestor of the work reported here: its biomechanics and its controller architecture carry through every model in this chapter, and the limitations of its hand-tuned parameters are the reason the present toolchain emphasizes systematic verification."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The synthetic nervous network was built from non-spiking, leaky-integrator neurons. A rhythm-generator layer set the timing of the system; a pattern-formation layer reshaped the timing signals into phase-appropriate activation of antagonist muscle groups; and a sensorimotor layer containing Renshaw-cell-like recurrent inhibition drove the motor neurons. The sensorimotor layer received Ia (length and velocity) and Ib (tension) afferent feedback from the muscles, but the feedback gains were never systematically tuned, and no ground-contact signals were modeled. Every applied current, synaptic weight, and muscle-tension parameter was set by hand: each was adjusted by trial and error, one at a time, until the three layers oscillated in phase and the motor neurons produced stepping-like activation of the muscle pairs. That hand-tuning consumed the bulk of the project's effort, left no record of the sensitivity of the behavior to individual parameters, and did not generalize when new feedback pathways were added. It produced alternating, stepping-like motion with the walker suspended in the air, presented at the 2021 NIH BRAIN Initiative Investigators Meeting \\citep{bolenTorqueValuesArtificialKnee2021June15-17}, but it never produced walking: no hand-set combination of parameters bore the robot's weight, and the feedback pathways were never exercised under load. Those outcomes directly motivated the verification-first approach of the remainder of this chapter."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "First, no environment coupled neural control to the models this program works on. The two-level controller existed only in AnimatLab projects; it had never been coupled to a full human-scale musculoskeletal model such as the Gait2392 model, nor to the robot-body model with its BPA muscle routing, and AnimatLab carried neither. MuJoCo, SNS-Toolbox, and the conversion tools existed as separate pieces with no assembled path between them \\citep{todorov_mujoco_2012, nourse_sns_2023}."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Third, there was no graphical circuit construction on maintained simulation tools. The circuits of this lineage are block diagrams, and building them by hand in code is slow and hard to inspect; a block-programming environment such as Simulink is the natural medium, and Simscape Multibody additionally accepts CAD-derived bodies. The predecessor SNS block libraries of this laboratory's own lineage \\citep{hunt_development_2017, young_analyzing_2019} did not carry the elements the robot requires, and no current library did."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "None of the infrastructure components is invented here: OpenSim supplies the musculoskeletal modeling side, the robot's source model, and the moment-arm and torque standards the conversions are audited against \\citep{delp_opensim_2007, seth_opensim_2018}; MuJoCo supplies the physics engine \\citep{todorov_mujoco_2012}; MyoConverter performs the base OpenSim-to-MuJoCo conversion \\citep{caggiano_myosuite_2022, wang_myosim_2022}; SNS-Toolbox builds and integrates the spinal networks \\citep{nourse_sns_2023}; AnimatLab hosts the controller lineage's archived reference models; Simulink and Simscape Multibody supply the controls-engineering environment; and SCONE provides the reference point for mature predictive neuromuscular simulation \\citep{geijtenbeek_scone_2019}, whose published balance and gait demonstrations were reproduced headless as a practice baseline and whose balance tutorial anchors the standing stage of the training curriculum (Section~\\ref{sec:sns_curriculum}). The sensory channels that close the loop, and the acceptance phenomena against which the controllers are validated, trace to the curated records of the Sensory Afferent Database of Chapter~\\ref{ch:database} (Section~\\ref{sec:sadb_use})."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\begin{tabularx}{\\textwidth}{@{}>{\\raggedright\\arraybackslash}p{0.28\\textwidth}>{\\raggedright\\arraybackslash}p{0.24\\textwidth}>{\\raggedright\\arraybackslash}X@{}}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "OpenSim-to-MuJoCo pipeline with BPA force interface (complete) & robot model with audited routing in a maintained engine; BPA forces inside the loop & 92 actuators audited; dynamic sign check; 410-neuron network at a \\qty{2}{\\milli\\second} step \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Controller and body ports (complete) & Deng, W2L, and Li circuits across NumPy, Simulink, MuJoCo, Simscape & Deng period \\qty{1.938}{\\second} vs.\\ \\qty{1.94}{\\second} reference; bridge readback bit-exact \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\texttt{gait2392\\_simbody} into Simscape Multibody (partial import) & full-body mechanism for Simulink-side control & 1,446-block mechanism compiles and simulates; muscles re-enter as blocks \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Cross-engine harness and gates (complete) & trust across engines & W2L rhythm core: period and burst counts match exactly \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The SNS block library stands in a direct lineage, and the comparison matters. The SNS formalism descends from the block-based Simulink libraries of this laboratory's own research line, in which \\citet{hunt_development_2017} trained the hindlimb-walking neural controller and with which \\citet{young_analyzing_2019} built and analyzed a full-muscle rat hindlimb model; those libraries drive Hill-type biological muscles on animal-scale models. The library built here is a derivative, not a competitor: it keeps the same neuron and synapse equations so that circuits transfer, and it adds what the predecessors do not carry, Ia and Ib afferent encoders as blocks, diameter-specific BPA force elements implementing the fitted force surfaces of Chapter~\\ref{ch:methods}, coupling to CAD-derived and OpenSim-derived bodies in Simscape Multibody, spiking additions, and regeneration from the tuned production network. A circuit assembled in the predecessor libraries controls a biologically realistic muscle model; a circuit assembled here can command the robot's actual actuators on its imported geometry."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The environment remains in the program because the controller lineage is archived in it: the reference models replicated in Section~\\ref{sec:preliminary_sim_results} live as AnimatLab projects, and new circuit organizations are prototyped in the same format (Figures~\\ref{fig:animatlab_model_architecture}--\\ref{fig:animatlab_working_gui}, with the neuron-level motifs in Figure~\\ref{fig:animatlab_controller_motifs}). The working model was instrumented for a \\qty{10}{\\second} phase-1 run, reported in Section~\\ref{sec:preliminary_sim_results} and distinct from the earlier walker study of Section~\\ref{sec:prior_walker}, and has since been reorganized into a complete bilateral network: the right-side subsystems mirrored from the left, inhibitory commissural pathways added between the two rhythm generators, and four biarticular muscle pathways added per leg with human maximum isometric forces from the Gait2392 data set. The reorganized project opens, exports, and runs headless, but holds a static latch rather than oscillating under the tonic drives tested, so conductance tuning is the active step and no locomotor claim is made beyond verified assembly."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\caption[AnimatLab walker and controller hierarchy]{AnimatLab model and architecture illustrations. Top: the segmented walker and labeled hip, knee, ankle, and toe joints. Bottom: the left/right subsystem organization and an expanded view of the left-side rhythm-generator, hip, and knee--ankle modules. These architectural views describe model organization and are not snapshots of the phase-1 trajectory.}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\begin{minipage}[t]{0.47\\textwidth}\\centering"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=\\linewidth,height=0.20\\textheight,keepaspectratio]{RGnetwork.PNG}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\begin{minipage}[t]{0.47\\textwidth}\\centering"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=\\linewidth,height=0.20\\textheight,keepaspectratio]{PFnetwork.PNG}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=0.76\\textwidth,height=0.39\\textheight,keepaspectratio]{sensoryMotor_Network.PNG}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\caption[AnimatLab controller reference schematics]{Reference schematics of \\textbf{(A)} rhythm generation, \\textbf{(B)} pattern formation, and \\textbf{(C)} sensorimotor organization. Ext and Flx identify antagonist extensor and flexor pathways; IN denotes interneurons, MN motor neurons, and Ia and Ib muscle afferent pathways. Open triangles and filled circles distinguish excitatory and inhibitory synaptic connections. These schematics illustrate controller architecture and are not readouts from the phase-1 run.}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=\\textwidth,height=0.31\\textheight,keepaspectratio]{animatlab_body_gui.png}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=\\textwidth,height=0.31\\textheight,keepaspectratio]{animatlab_network_gui.png}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The first MuJoCo tool moves the robot's musculoskeletal model from OpenSim into MuJoCo \\citep{delp_opensim_2007, todorov_mujoco_2012}; the second makes the converted model's actuators behave as the BPAs of Chapter~\\ref{ch:methods} rather than as generic muscles. MyoConverter performs the base conversion \\citep{caggiano_myosuite_2022, wang_myosim_2022}; because an automatic conversion of a model with custom muscle routing introduces specific defects, among them paths not mirrored between the legs and joint axes of reversed sign, the conversion is followed by repair scripts that correct each defect and re-audit the model against the OpenSim source, and the pipeline runs in a recorded software environment so it can be re-run and reproduced. The force interface implements the quasi-static BPA force model of Chapter~\\ref{ch:methods}, with the correction-factor force balance of Chapter~\\ref{ch:torque}, inside the loop, reading every actuator's length and extension rate each step and returning its force."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The pair is complete and verified. The converted model carries all 92 muscle-tendon actuators with attachment geometry audited against the source, and the joint sign conventions were verified dynamically, each actuator activated alone, a check that must be dynamic because these attachment points move with joint configuration. An SNS-Toolbox network couples to MuJoCo at a \\qty{2}{\\milli\\second} neural step, matching the physics timestep, with muscle force feedback entering as Ib afferent input; on this coupling a 410-neuron two-level spinal network has been assembled, and its rhythm generator has been verified in isolation to oscillate with the two legs in antiphase under tonic drive. The loop's sensory channels, Ia length and velocity, Ib force, group II length, and heel and toe contact marking the stance--swing boundary, follow from the curated records of the SADb (Chapter~\\ref{ch:database}; Tables~\\ref{tab:sadb_afferents} and~\\ref{tab:sadb_pathways}) rather than from ad hoc literature searches at wiring time. Full-body closed-loop co-simulation runs under a simulated support harness that mirrors the laboratory's overhead rig; Section~\\ref{sec:sns_controller_comparison} states exactly what walks and what does not. The pair's fundamental demonstration is a synthetic knee, a minimal SNS with reciprocal inhibition driving antagonistic flexor and extensor BPAs, which establishes the controller--actuator--joint interface and nothing more (Figure~\\ref{fig:mujoco_model_views})."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\begin{minipage}[t]{0.48\\textwidth}\\centering"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=\\linewidth,height=0.53\\textheight,keepaspectratio]{mujoco_converted_robot.png}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\begin{minipage}[t]{0.48\\textwidth}\\centering"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=\\linewidth,height=0.53\\textheight,keepaspectratio]{mujoco_synthetic_knee.png}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\caption[MuJoCo model representations]{Native MuJoCo renders of \\textbf{(A)} the converted Gait2392 robot at its saved reference pose, with muscle paths visible, and \\textbf{(B)} the independent synthetic antagonist-BPA knee at an illustrative static angle of \\ang{-35}. Cyan and gold identify its named flexor and extensor tendon routes; transparency exposes the routes through the view. The models are not shown to the same scale. These views document model construction, not SNS control of the converted robot or validated torque predictions.}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The Simulink tool is a block library, built so that synthetic nervous systems can also be assembled and inspected in a standard controls-engineering environment. Seven core blocks, a graded neuron, a graded chemical synapse, a spiking leaky integrate-and-fire neuron, Ia and Ib afferent encoders, muscle activation dynamics, and a generic BPA force block, implement the same equations as the SNS-Toolbox networks; diameter-specific BPA force elements (\\qtylist{10;20;40}{\\mm}) implementing the fitted force surfaces of Chapter~\\ref{ch:methods} and a Hill-type muscle element complete the library, which runs in base Simulink without additional toolboxes (Figure~\\ref{fig:simulink_sns_implementation})."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Making the controllers and bodies portable is the third tool family. The Deng two-layer CPG was rebuilt as separate editable Simulink files with the published parameter tables carried over \\citep{deng_neuromechanical_2019, nourse_sns_2023}; one cell-level choice proved load-bearing for portability, a burst-termination property of the rhythm-generator cells whose membrane mechanism is recorded in Appendix~\\ref{app:neuron_equations}. In the other direction, a script turns the tuned production network into an editable Simulink model built from the library blocks, one per neuron and one per synapse, regenerating whenever the tuning changes. Two body-import routes bring real geometry into Simscape Multibody: the SolidWorks knee via URDF and Multibody-Link XML, and the OpenSim \\texttt{gait2392\\_simbody} model via MuJoCo and URDF, with the massless muscle path-point slides preserved as links so that actuators attach at the same physical points as in the source; a URDF carries no muscles, so actuation re-enters as SNS library blocks driving the imported joints. A MuJoCo--Simulink bridge block set closes the loop from the Simulink side, muscle activation commands in and joint and actuator sensors out."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The verification harness, a fixed script suite that re-runs and checks the models, is a tool in its own right, and its fundamental demonstration is replication in two forms: the same rhythm core rebuilt in two engines must reproduce the same rhythm, and the lineage's archived models must reproduce their published behavior in their original engine. The harness is defined around the contact-driven rhythm core of the Walker-2-Layer (W2L) bipedal architecture, four rhythm-generator populations, one extensor and one flexor population per leg plus graded pattern-formation and sensory cells, driven by heel-contact mechanosensory feedback \\citep{deng_neuromechanical_2019}. The same core was implemented twice from a common connectivity specification, once as a NumPy reference through the SNS-Toolbox backend and once as native Simulink blocks, and both were driven with an identical protocol scored on burst period, left--right antiphase, burst counts, and full-trace correlation. The archived AnimatLab reference models were additionally re-run headless from their standalone simulators, so that engine-level and network-level agreement could be separated."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The final tool tests an assumption rather than adding a simulation capability. The controllers documented above compute with graded (non-spiking) neurons; to test that the conclusions drawn from them are not artifacts of graded coding, spiking mirrors of all three simulation families were built under one design rule: the motor-neuron layer stays non-spiking, because the musculoskeletal model consumes a continuous activation command, while the afferent encoders, rhythm-generator populations, and interneurons become leaky integrate-and-fire neurons operating at real membrane-potential ranges \\citep{szczecinski_perspective_2023, nourse_sns_2023}. The MuJoCo mirror reproduces the production spinal network population for population, is selected at build time by a single environment-variable switch, and leaves the default build path untouched, proven by re-running its defaults gate and baseline evaluation to bit-exact agreement; because SNS-Toolbox 1.5.2 ships no spiking bursting-neuron class, its rhythm-generator populations are adapting integrate-and-fire cells. The mirrors' synaptic weights are set by a calibration script, not by hand, calibrated by mean conductance onto the motor neurons and by firing-rate transfer between spiking cells, with the full calibration tabulated in Appendix~\\ref{app:neuron_equations}. In the Simulink family, three blocks were added, a \\texttt{SpikingNeuron}, an event-wired \\texttt{SpikingSynapse}, and a \\texttt{HybridSpikingSynapse} carrying the same conductance dynamics onto a non-spiking postsynaptic cell, and spiking twins of the demonstrations replace only the sensory interneuron layer. In the AnimatLab family, a conversion script rewrites spiking copies of the runnable standalone exports, leaving every original untouched. Each mirror is verified against its non-spiking twin by a fixed gate set, topology (identical connection multiset), rhythm within \\qty{20}{\\percent} of the analog period, a basin gate under \\qty{1}{\\percent} multiplicative jitter on every scalar parameter, and regression to the committed artifacts, and carries mapped parameters only, with no new tuning, so its results establish what transfers structurally and what requires re-tuning."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Above the physiologically set values, the free gains of each network are tuned by systematic search rather than by hand: a sequential model-based optimizer (a tree-structured Parzen estimator) proposes gain sets, each proposal is scored by a full simulation, and each stage's winner seeds the next. No hand-tuned parameter enters a production configuration; the failure mode of the prior walker was precisely hand tuning that left no record of sensitivity. Robustness is enforced during tuning rather than inspected afterward: finalist configurations must retain their rhythm under \\qty{1}{\\percent} multiplicative jitter on every scalar parameter, survive stepping of the tonic drive about the tuned value, and, for standing configurations, absorb push perturbations without falling. The requirement exists because the tuned networks sit near bifurcations of their dynamics, as the spiking results of Section~\\ref{sec:spiking_results} make explicit. The reference data for tuning and evaluation are inverse-kinematics cycles from many human subjects of different sizes and speeds rather than a single subject: a 43-cycle locomotion reference library, detailed in Section~\\ref{sec:gait_library_results}. Circuit structure is treated as data under the same methodology: every network's connection multiset is compared programmatically against its intended topology, and the publication schematics are generated from the compiled network with each drawn edge asserted against the compiled connection list."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\subsection{AnimatLab Phase-1 Recordings}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The phase-1 run of Section~\\ref{sec:preliminary_sim_methods} is the AnimatLab tool's fundamental demonstration: it exercises the instrumented model and the recording chain end to end. Expected: synchronized, finite recordings over \\qty{10}{\\second}. Observed: joint, neural, contact-sensory, and body-motion channels recorded at a uniform \\qty{0.2}{\\milli\\second} interval, with bilateral hip, knee, and ankle angles shown in Figure~\\ref{fig:animatlab_phase1_preliminary}. Limit: the contact-sensory channels record membrane voltage rather than contact force, the model included an externally applied horizontal force during the first second, and the run demonstrates signal acquisition and alternating activity, not validated locomotor performance."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\includegraphics[width=\\textwidth,height=0.60\\textheight,keepaspectratio]{animatlab_phase1_joint_angles.pdf}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\caption[AnimatLab phase-1 hip, knee, and ankle recordings]{AnimatLab phase-1 joint motion: \\textbf{(A)} hip, \\textbf{(B)} knee, and \\textbf{(C)} ankle angles in the model's recorded joint conventions. Blue solid and orange dashed traces denote left and right sides. All 50,001 samples within the configured 0--\\qty{10}{\\second} chart window are retained without filtering. The model includes an external horizontal force during the first second. These traces document joint motion in an instrumented run; they do not establish stable walking or effective ground-contact gating.}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\label{fig:animatlab_phase1_preliminary}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The SNS-Simscape library demonstrates the canonical reflex pathways at the scale where their mechanisms are visible: the knee-reflex joint settles at a mean of \\ang{43.5} over its last \\qty{2}{\\second}; the stretch reflex limits the beverage arm's sag to \\ang{2.00} against \\ang{7.85} with the reflex disabled; and a third demonstration closes the loop onto the actuator model itself, a burst-terminating two-population CPG driving the antagonist BPA pair of the one-degree-of-freedom knee through the diameter-specific force blocks. The committed values are tabulated beside their spiking twins in Section~\\ref{sec:spiking_results} (Table~\\ref{tab:spike_knee})."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The controller ports verify at the same standard. The Deng files, driven by a single current pulse, oscillate at a \\qty{1.938}{\\second} period against the \\qty{1.94}{\\second} NumPy reference, with the antagonist populations anticorrelated at $r = -0.86$; the exported full-network model reproduces its NumPy reference to \\qty{4.2e-06}{\\milli\\volt} across all 410 neurons over the early transient, beyond which the network's chaos makes any two integrators diverge in phase. The MuJoCo--Simulink bridge passes single-muscle, two-rate, and sensor-readback tests against an independent Python integration, the readback bit-exact over the scored window; on the bridge, a single-muscle Ia/II/Ib reflex loop on the converted model's vastus medialis bounds a postural collapse from transient muscle forces past \\qty{40}{\\kilo\\newton} down to \\qty{469}{\\newton}, and the full exported network ran as a Simulink block driving all 92 muscle actuators through a \\qty{5}{\\second} closed-loop run, isolating a real property: under tonic drive alone the Simulink realization settles to the tonic fixed point while the NumPy reference oscillates (Section~\\ref{sec:disc_spiking}). The \\texttt{gait2392\\_simbody} model arrives in Simscape Multibody as a 1,446-block, 149-joint mechanism that compiles and simulates, with the muscles re-entering as SNS library blocks driving the imported joints."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Expected: the same rhythm core, implemented twice from a common specification, reproduces the same rhythm. Observed: between the NumPy reference and the native Simulink reimplementation of the W2L rhythm core, both legs' burst periods matched exactly at \\qty{1.000}{\\second}, the left--right antiphase correlation and all ten expected bursts reproduced the reference, and the full voltage traces cross-correlate at $r \\geq 0.99996$ with an RMSE below 0.111~mV (Figure~\\ref{fig:w2l_crossengine}); the residual lag is consistent with the one-step delay of the discrete Simulink solver. The same protocol also runs the chapter's first deletion experiment, and it surfaced an architectural fact rather than a defect: with the heel-contact trains removed, the full network holds a static latch under tonic drive with kickoff alone, in every implementation, so phasic contact feedback is part of the drive architecture of the W2L design, not an optional perturbation, which is why the pathway-removal experiments of Section~\\ref{sec:walker_variant_results} treat the contact channels as a pathway class rather than as a boundary condition."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\caption[W2L rhythm-core traces across engines]{Left and right rhythm-generator extensor population voltages of the W2L contact-driven rhythm core under the shared verification protocol, from the NumPy reference (SNS-Toolbox backend) and the native Simulink reimplementation. Scored metrics (burst period, left--right antiphase correlation, and burst counts) agree exactly, and the full traces cross-correlate at $r \\geq 0.99996$ at a $-\\qty{2}{\\milli\\second}$ lag.}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Expected: the lineage's archived models reproduce their published rhythms and gaits in their original engine. Observed: all eleven targetable rhythm and gait metrics pass their acceptance bands. The bilateral contact-driven model's rhythm generators oscillate at \\qty{0.450}{} and \\qty{0.467}{\\second} with a half-cycle left--right lag; the modern W2L model's joints oscillate at \\qty{2.25}{\\Hz} with clean extensor/flexor antiphase ($r = -0.996$) carried by the graded pathway rather than by flexor spiking; and the Li-model rerun \\citep{li_bipedal_2017} walks at \\qty{0.637}{\\meter\\per\\second} with step periods near \\qty{1.3}{\\second}, reproducing the published behavior of the original model in its original engine. Limit, stated plainly: the recent connectome-level circuit organizations of \\citet{shevtsova_modeling_2016}, \\citet{dirusso_investigating_2023}, and \\citet{shinohara_mechanisms_2025} are specified in this program as circuit-rule translations, connection lists carrying per-edge citations, from which running models would be built; they have not been built or verified, and no replication claim is made for them here."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The library comprises 32 running trials from eight subjects at four speeds, ten walking references (seven at prescribed speeds from \\qty{0.5}{\\metre\\per\\second} to \\qty{2.0}{\\metre\\per\\second}, plus three self-selected), and the predicted-walking cycle of the Falisse predictive-simulation dataset."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Expected: a network tuned to one walking reference transfers, at least partially, to diverse human reference locomotion. Observed: the four production walking configurations, spanning the program's two controller lineages, were scored against the 43-cycle library with the production pipeline's cycle-shape kinematic score, in which 0 denotes perfect agreement and $-25$ is the fixed no-cycle fallback (Table~\\ref{tab:gait_sweep}). The ranking agrees across evaluations, with the W2L-layout variant closest and the six-synergy variant farthest, but every configuration's library scores are one to two orders of magnitude more negative than its tuning-reference score, a distance that is itself the finding: it quantifies how far a network tuned to a single walking reference remains from the library's diverse cycles. All four configurations produce right-leg-only or asymmetric gait in these evaluations (Section~\\ref{sec:sns_controller_comparison})."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\caption{Gait-validation sweep of the four production walking configurations against the 43-cycle locomotion reference library. The score is the production pipeline's cycle-shape kinematic score (0 denotes perfect agreement); the tuning-reference score is each configuration's evaluation on the tuning pipeline's walking reference, and the library mean averages the same score over all 43 references (among genuine gait cycles, higher scores indicate closer agreement).}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": " & \\textbf{score} & \\textbf{score (43 refs)} & \\textbf{(score)} \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\texttt{s3k}        & $-186.4$ & $-8776$ & \\texttt{Case\\_40\\_motion} ($-8841$) \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\texttt{s3kpruned}  & $-176.1$ & $-6924$ & \\texttt{Case\\_40\\_motion} ($-6986$) \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\texttt{syn6}       & $-200.4$ & $-9961$ & \\texttt{Case\\_40\\_motion} ($-10040$) \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\texttt{w2lvar}     & $-144.5$ & $-5808$ & \\texttt{subject08\\_Run\\_20002} ($-5896$) \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The locomotor physiology that this program's circuits imitate was established with deletion and stimulation interventions, among them proprioceptive-deletion degradation of locomotor patterns in mice \\citep{akay_degradation_2014}, regulation of locomotor activity by proprioceptive input \\citep{lam_role_2002}, and tonic stimulation that facilitates involuntary air-stepping in humans \\citep{selionov_tonic_2009}; the assembled tools make the simulator-side analogues inexpensive, removal of an entire pathway class from a fully tuned walker, re-evaluated on the tuning reference, and stepping of the tonic drive about its tuned value. The systematic stimulation series at the pattern-formation and motoneuron levels is defined as future verification work (Chapter~\\ref{ch:futurework}) and has not yet been run."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The pathway-removal sweep (Table~\\ref{tab:walker_ablations}) removes individual pathway classes from each configuration and re-evaluates the tuning-reference score. In the production configuration, removing the Ia afferent pathway freezes the model outright, with no gait cycles detected and the fixed $-25$ fallback returned. Removing the Renshaw cells, the group-II afferents, or all afferent classes at once degrades the score to $-267.3$, $-255.2$, and $-267.8$, respectively, against the full model's $-186.4$, while removing the Ib, contact, or interleg commissural channels individually shifts the score by smaller amounts toward zero. The six-synergy variant behaves differently: with all afferents removed it scores $-190.5$ against its full model's $-200.4$ and still walks bilaterally, with ten cycles on each leg, a knee-flexion minimum of \\ang{-71.2}, and a \\qty{0.684}{\\second} period. The W2L-layout variant depends on both the Ia pathway (removed: $-273.5$) and the weak rhythm-generator mutual excitation (removed: $-279.9$) against its full model's $-144.5$, while removing its Renshaw cells leaves a bilateral gait at $-142.4$."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\caption{Pathway-removal sweep on the tuning-reference evaluation. The score is the production pipeline's cycle-shape kinematic score (0 denotes perfect agreement; $-25$ is the fixed no-cycle fallback, a failed evaluation that scores above every genuine gait in this table). The full-model rows repeat each configuration's unmodified production evaluation.}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\texttt{s3k} (full model) & none & $-186.4$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": " & Ia afferents & $-25$ (no cycles detected) \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": " & all afferent classes & $-267.8$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": " & Renshaw cells & $-267.3$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": " & group-II afferents & $-255.2$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": " & Ib afferents & $-180.3$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": " & contact channels & $-183.9$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": " & interleg commissural pathways & $-174.9$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\texttt{syn6} (full model) & none & $-200.4$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": " & all afferent classes & $-190.5$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\texttt{w2lvar} (full model) & none & $-144.5$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": " & Ia afferents & $-273.5$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": " & weak rhythm-generator mutual excitation & $-279.9$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": " & Renshaw cells & $-142.4$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Read against the reference physiology, deleting all afferent classes from the production configuration degrades its gait without abolishing it, the qualitative outcome of the deafferentation experiments \\citep{akay_degradation_2014}, matched most closely by the six-synergy variant, while the Ia-only removal freezing that network marks its tuning as built around its length feedback, a stronger dependence than the animal experiments show. On the stimulus side, the production configuration never fell in 15 stand-and-push evaluations and survives drive perturbations of $\\pm 0.01$ and $-0.02$, freezing only at $+0.02$, with its pruned derivative surviving the same ladder, while the six-synergy and W2L-layout variants fall under every perturbation tested. The sweep identifies the production configuration and its pruned derivative as the robust pair of the family and locates the fragility of the two variants under drive perturbation."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The non-spiking production baselines were first re-established on the recorded software environment: all three production configurations reproduce their documented evaluation scores exactly, and after the mirror's selector was added, the default build gate and that same baseline score ($-161.57$) reproduce digit for digit. The topology gate passes exactly: under the default, fully tuned, and joint-layer gain configurations, the spiking mirror's directed connection multiset is identical to the non-spiking build's, with identical input lists and motor-neuron maps."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Under constant drive (network alone, \\qty{20}{\\second}), the rhythm gate splits. The spiking mirror self-sustains clean bilateral antiphase, with rhythm-generator extensor and flexor cells firing at \\qty{4.9}{\\hertz} and \\qty{3.2}{\\hertz} per leg, but its envelope period is \\qty{0.621}{\\second} against the analog build's \\qty{0.399}{\\second}, a \\qty{55.6}{\\percent} lengthening that misses the gate's \\qty{20}{\\percent} tolerance (Figure~\\ref{fig:spike_rhythm}). The basin gate passes in full: the rhythm persists under \\qty{1}{\\percent} jitter on every scalar parameter in all 12 seeded trials (final-window swing minimum \\qty{4.58}{\\mV} against the \\qty{5.13}{\\mV} baseline, margin $0.89\\times$). In the deafferented suspended-air preparation the mirror air-steps rhythmically with full-amplitude joint swings (knee range \\ang{106.0} against the twin's \\ang{117.9}), but its cadence is roughly ten times faster than the twin's \\qty{0.47}{\\hertz} regime, so the air-regime gate fails on the cadence clause alone."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\caption[Constant-drive rhythm, non-spiking versus spiking]{Constant-drive rhythm of the right rhythm-generator under network-only simulation. \\textbf{(A)} The non-spiking network's extensor-minus-flexor readout voltage alternates irregularly about a \\qty{4.8}{\\milli\\volt} swing (larger only in the startup transient), with an average period of \\qty{0.399}{\\second}. \\textbf{(B)} The spiking mirror's raw extensor (solid orange) and flexor (dashed indigo) cells fire in alternating bursts whose envelope period is \\qty{0.621}{\\second}, \\qty{55.6}{\\percent} longer than the analog build.}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "One untuned ground-walking evaluation was run as a stretch attempt: the spiking mirror at the non-spiking winner's mapped parameters, with no re-tuning. It scores worse overall (kinematic score $-236.35$ against $-161.57$), as expected for an untuned mapped starting point, but it produces a genuine bilateral gait (eight right-leg and nine left-leg cycles, a cycle-window knee flexion minimum of \\ang{-79.8}, no non-finite states, and the model stays up), whereas the non-spiking winner's left leg is frozen in every recorded run of its study (Figure~\\ref{fig:spike_ground}, Table~\\ref{tab:spike_ground}). This is a single run with no statistics, reported as a lead, not as an established gait result."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\caption{Untuned spiking mirror versus its non-spiking twin at the same winner parameters, ground evaluation (16 s). The cycle knee minimum and stance fractions are computed over detected gait cycles; the kinematic score is the cycle-shape error metric of the production pipeline (0 denotes perfect agreement; higher scores indicate closer agreement). The spiking mirror carries mapped parameters only, with zero re-tuning.}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Kinematic score                & $-161.57$          & $-236.35$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Gait cycles, right / left      & 9 / 0 (left frozen) & 8 / 9 (bilateral) \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Cycle knee minimum             & \\ang{-64.3}         & \\ang{-79.8} \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Contact duty, right / left     & 0.637 / 0.985       & 0.799 / 0.856 \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Maximum pelvis tilt            & \\ang{22.1}          & \\ang{19.2} \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "At the matched operating point, the spiking twin of the knee-reflex demonstration is indistinguishable from the baseline in its transient and within one degree in its settle behavior (Table~\\ref{tab:spike_knee}, Figure~\\ref{fig:spike_knee}): both read \\ang{15.79} at \\qty{0.05}{\\second}, and the twin settles \\ang{0.9} higher, because the rate-coded pathway adds the synaptic filter time constant that graded synapses do not have. The beverage-holding twin likewise holds its reflex modulation within \\ang{0.02} of the baseline, with the reflex-on sag at \\ang{2.02} against the baseline's \\ang{2.00} and the reflex-off sag identical."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\caption{Knee-reflex demonstration, committed baseline versus spiking twin at the matched operating point (5 s runs; settle statistics over the last \\qty{2}{\\second}).}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Knee angle at \\qty{0.05}{\\second}   & \\ang{15.79} & \\ang{15.79} \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Settle mean (last \\qty{2}{\\second}) & \\ang{43.5}  & \\ang{44.4} \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Settle range                        & \\ang{41.6}--\\ang{44.9} & \\ang{41.9}--\\ang{46.7} \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Extensor / flexor activation (window means) & 0.53 / 0.53 & 0.58 / 0.56 \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Antagonist alternation              & \\qty{0.5}{\\hertz}--\\qty{2}{\\hertz} & \\qty{7.4}{\\hertz} (dominant peak) \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Ia interneuron firing at settle     & graded, subthreshold & \\qty{95}{\\hertz}; Ib \\qty{0}{\\hertz} \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\caption[Simulink knee-reflex twin, baseline versus spiking]{Knee angle of the Simulink knee-reflex demonstration: committed non-spiking baseline (solid indigo) versus spiking twin (dashed orange) at the matched operating point. \\textbf{(A)} Full \\qty{5}{\\second} run. \\textbf{(B)} Settle window (last \\qty{2}{\\second}); the spiking twin's alternation band is slightly wider.}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "A representative rhythm-generator-to-motor-pool subnetwork demonstrates the hybrid motif end to end, spiking populations driving a non-spiking motor-neuron pool whose graded voltage tracks the rhythm generator's rate envelope; its burst alternation is partial, reported as is, and the full 410-population Simulink spiking conversion is future work for the same reason."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The AnimatLab family produces the clearest negative result of the spiking comparison. The graded baselines were re-established first: the two-layer walker's rhythm generator oscillates at \\qty{0.443}{\\second}, the bilateral variant at \\qty{0.462}{\\second} with the two legs folded near antiphase ($r = 0.869$), and the already-spiking 2023-lineage model, the family's spiking reference, bursts at \\qty{1.305}{\\second}, reproducing its documented period. No spiking copy of the three graded models preserves the rhythm (Table~\\ref{tab:spike_animatlab}): the two-layer conversions die at every threshold and decay tried; the bilateral variant latches with one side's populations saturated at \\qty{442}{\\hertz}--\\qty{450}{\\hertz}; and the reorganized project's copy converts its latched baseline into strictly synchronous \\qty{11.8}{\\hertz} co-bursting with no alternation. The thresholds-only ablation, which keeps the graded synapses, preserves near-baseline joint oscillations, isolating the synapse conversion as the change that breaks the rhythm: per-spike conductances at the graded amplitude either starve the reciprocal loop of inhibitory charge or saturate it, whereas the graded synapses read the membrane potential continuously and keep oscillating through subthreshold voltages. A spiking version of this family therefore needs its synaptic amplitudes and decays re-tuned as a rate code, which is how the 2023 spiking reference was built in the first place. The conversions are catalogued variant by variant in Appendix~\\ref{app:neuron_equations} (Table~\\ref{tab:app_spk_animatlab_full}), together with the full gate table of the MuJoCo mirror."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "\\caption{AnimatLab spiking conversions versus their graded baselines (5.1 s headless runs; joint ranges in degrees where the rhythm survives). The thresholds-only ablation converts the neurons but keeps the graded synapses.}"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Two-layer walker     & \\qty{0.443}{\\second} rhythm;   & dead (2 spikes; \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "                     & hip $-15$ to $+23$, knee $-1$ to $+60$ & hip pinned near $+6$) \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Bilateral variant    & \\qty{0.462}{\\second}; antiphase $-0.42$ cycle & latched; one side at \\qty{442}{\\hertz}--\\qty{450}{\\hertz} \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Reorganized project  & latched (tonic drives) & synchronous \\qty{11.8}{\\hertz} co-bursting; \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "(standalone export)  &                        & same-leg envelopes $r = 1.000$ at lag 0 \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "Thresholds only      & \\multirow{2}{*}{hip $-15$ to $+23$, knee $-1$ to $+60$} & oscillates: hip $-15.1$ to $+23.2$, \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "(graded synapses)    &                        & knee $-0.8$ to $+47.9$ \\\\"
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "What spiking does not change is the behavior of the controlled model, provided the design rule and the calibration hold: because the motor-neuron layer stays non-spiking and the spikes onto it are calibrated by mean conductance, the continuous activation interface that the actuator and torque models of this dissertation attach to is unchanged by construction. The Simulink twins make the point quantitatively, with the knee-reflex settle band moving by \\ang{0.9} and the beverage-holding reflex modulation by \\ang{0.02}. The actuator-level and joint-level conclusions of Chapters~\\ref{ch:methods}--\\ref{ch:results} therefore do not depend on the neural coding chosen above the motor-neuron layer."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "What spiking changes is timing and robustness. The mirror's self-sustained rhythm runs \\qty{55.6}{\\percent} slower at the same constant drive, and its air-stepping cadence runs roughly ten times faster, deviations in opposite directions, which a single scaling error could not produce; the constant-drive period traces to two identifiable knobs, the threshold-increment magnitude and the adaptation time constant, so a period-matched spiking controller is a short tuning effort away rather than a structural failure. Robustness moves in the mirror's favor: the spiking rhythm-generator populations passed the perturbation basin gate in full where the analog network's rhythm sits close to a bifurcation, and for the hardware-transfer program of Chapter~\\ref{ch:futurework}, where the network will be re-implemented in finite-precision arithmetic, a wide basin is the safer substrate. What spiking does not tolerate is a naive parameter copy at the synapse level: the AnimatLab conversions show that converting graded amplitudes to per-spike increments of the same magnitude breaks the reciprocal rhythm-generator loop, while converting only the thresholds changes nothing; synaptic strength in a spiking network is a rate-code quantity that must be derived from the presynaptic firing rate and the conductance decay, exactly as the calibration script derives it. The one place where the untuned mirror outperforms its tuned twin, a bilateral ground gait where the winner's left leg is frozen, is a single run with no statistics, claimed only as a lead for the closed-loop CPG comparison program of Chapter~\\ref{ch:futurework}."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The tuned configurations of this chapter were not tuned all at once. The training proceeds through five stages (Figure~\\ref{fig:sns_curriculum}), each adding one capability and seeded with the previous stage's winner so that only the newly activated pathway gains are searched: deafferented air stepping first, afferented air stepping second, standing balance third, ground walking fourth, and ground walking with the contact-driven pathway variant fifth. Standing before walking is the design rule: gait tuning begins only after a configuration holds posture, and the failures the curriculum surfaces early are the cheap ones. The scoring is stage-appropriate and gated: rhythm and swing depth for the air stages, with the objective rhythm-gated so a frozen configuration cannot win by holding a pose; posture maintenance under push for the balance stage; and the cycle-shape kinematic score for the walking stages. The walking score is rhythm-gated in the same way for a subtler reason: a run with no detectable gait cycles returns a fixed sentinel ($-25$) rather than a score, because that sentinel sits numerically above every genuine gait score, and reading it as a score would let a frozen model out-score a walker. Scores are never read alone: finalists must pass the perturbation and basin requirements of Section~\\ref{sec:sns_tuning_methods}, because a score achieved on a narrow basin is a property of the solver rather than of the circuit."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The actuator model travels with the controller: inside the MuJoCo loop, actuator force comes from the quasi-static BPA model of Chapter~\\ref{ch:muscles} with the correction-factor force balance of Chapter~\\ref{ch:torque}, and in Simulink the library's diameter-specific force blocks implement the same fitted surfaces, so every closed-loop demonstration in this chapter draws its forces from one validated source. What the integration does not yet carry is actuator dynamics: the pressure--force dynamics under pulse-modulated valve control \\citep{elzein_pressure_2025} enter the program as future work (Chapter~\\ref{ch:futurework})."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The end-to-end demonstration of the MuJoCo chain, conversion pipeline plus force interface plus network builder, is the BPA-actuated robot. The walker geometry of Section~\\ref{sec:prior_walker} was exported to MuJoCo and driven by antagonistic BPA actuator pairs under the split contact-driven network, with actuator forces computed by the BPA model. In the air-stepping preparation, with the harness carrying 70\\% of the \\qty{411}{\\N} body weight, the walker produced clean knee-flexion excursions at a \\qty{1.542}{\\second} period with a knee flexion range of \\ang{63.5}, peak BPA forces of \\qty{880}{\\N} (left) and \\qty{1372}{\\N} (right) at a peak pressure of \\qty{372}{\\kPa} (60\\% of the \\qty{620}{\\kPa} ceiling), and 7 and 5 heel-contact episodes on the left and right: the complete chain from the characterized BPA force model to a multi-joint walker stepping under synthetic neural control."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The same evaluation series reported its failures with equal weight. On the ground, the W2L gate model under its untuned default gains stands (full-support stance) but does not walk: heel duty is zero and forward displacement is $+\\qty{0.001}{\\meter}$ over the run. With the left and right drives separated and the feedback gains re-tuned, the same robot alternates in antiphase (inter-leg phase 0.487) and progresses \\qty{1.72}{\\meter} over a \\qty{30}{\\second} window (\\qty{0.066}{\\metre\\per\\second}) under the harness protocol, with the neural drive weaned to \\qty{60}{\\percent} of its bootstrap value and the result robust under perturbation (12 of 12 basin re-runs); below \\qty{60}{\\percent} drive the gait dies, the harness itself is not weaned, and foot duty remains below the strict walking gate, so the result is supported progression rather than validated walking. The MuJoCo re-implementation of the Li model produced no stance episodes in any of seven drop-protocol variants. Together with the latch result of Section~\\ref{sec:crossengine_results}, these negatives localize the open problem precisely: the contact-driven rhythm architecture itself transfers across engines intact, but translating it to unsupported ground locomotion requires the balance and weight-bearing layers defined in Chapter~\\ref{ch:futurework}, and those layers are not present in these models."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "The walking status deserves a precise statement, because the chapter's records support exactly this and no more. Each tuned configuration was brought through the curriculum's air and balance stages, and on the ground all walking evaluations run under the support harness, where the configurations produce gross walking-like progression with right-leg-only or asymmetric gait patterns. A subsequent drive-weaning study re-tuned the feedback gains while forcing the hand-drive down a ladder of scales: its finalist improves the default build's evaluation score from $-161.57$ to $-145.07$ with a bilateral gait of ten contact cycles per leg (contact duty 0.71 and 0.65), survives a closed-loop basin check in eight of eight perturbed evaluations, and, with its feedback held fixed, keeps bilateral stepping at every drive scale down to zero hand-drive, at which the drive pathway is absent from the network entirely, whereas the un-retuned configuration collapses below \\qty{85}{\\percent} of full drive. The gait remains in-place alternation under the support rig, without forward progression. Unsupported, harness-free walking has not been demonstrated anywhere in this program's records, and whether any configuration walks without the harness is an open question; the balance and weight-bearing layers that would answer it are the first item of the simulation program defined in Chapter~\\ref{ch:futurework}."
+  },
+  {
+    "file": "60-sns.tex",
+    "removed_or_replaced_line": "On the converted robot-body model, the four production walking configurations span the controller lineages, and scored with the same cycle-shape kinematic score against the 43-reference library, the family-level fact is that the robot-walker-lineage configuration, not the human-derived ones, agrees most closely with the library, while the six-synergy configuration, the most strongly human-derived in its pattern formation, agrees least closely; closing that gap is a tuning-program question rather than a tool question. On the physical-model side, the SolidWorks knee assembly is imported into Simscape Multibody with its degree-of-freedom defect documented and its fix defined, and the imported \\texttt{gait2392\\_simbody} mechanism awaits its muscle blocks; neither physical model yet carries a tuned controller."
+  },
+  {
+    "file": "70-overall.tex",
+    "removed_or_replaced_line": "Attachment and routing optimization is the second enabler, and it is tiered. The placement optimization of Morrow, Bolen, and Hunt found artificial muscle attachment locations that reproduce human torque profiles and ranges of motion about the trunk and leg joints \\citep{morrow_optimization_2020}, converting the earlier finding that transplanted human attachment locations do not transfer directly to a BPA-actuated robot \\citep{bolen_bipedal_2019, bolen_determination_2019} into a usable design tool; the route redesigns of Section~\\ref{sec:ongoing} rerun that machinery under the corrected torque model. At the route-selection tier, with two \\qty{20}{\\mm} BPAs per route and routes chosen with the actuators' bending in mind, the redesigned flexor and extensor each meet or exceed the magnitude of their human-scaled torque targets across the full knee range of motion, and the cam-profile extensor converts the direct route's thin margin into genuine design headroom (Section~\\ref{sec:route_redesign_results}). Stated as a design program, the generalization is one or more BPAs replacing one or more human muscles across one or more joints, serving the two degrees of freedom that matter most at each joint, with routes grown outward from positions close to the bone and held to the spatial constraints of the candidate actuators and of the BPAs already mounted; the first whole-body pass over the robot's actuator set, with its successes and its failures, is reported in Section~\\ref{sec:ongoing}. Where the attachments are fixed and only the route and the tendon length can change, the cam-shape solver applies: the tibial-side route points trace a designed cam profile, trading biomimicry for torque-profile optimization and reduced component forces."
+  },
+  {
+    "file": "70-overall.tex",
+    "removed_or_replaced_line": "The fourth enabler is the set of novel neuromechanical simulation tools (Chapter~\\ref{ch:sns}): the audited OpenSim-to-MuJoCo conversion of the robot's musculoskeletal model, the force interface that computes actuator forces inside the loop from the validated BPA model, the two-level spinal networks built in SNS-Toolbox, the Simulink SNS library for assembly in a controls-engineering environment, the cross-engine verification harness, and the spiking-neuron mirrors that test the coding assumption. On these tools the controller program has matured from assembly into use. Production walking configurations have been tuned and evaluated in full-body ground simulations, the first pathway-deletion and drive-stimulus experiments have been run, the gait-validation sweep has measured how far the tuned networks remain from the diversity of human reference locomotion, and the contact-driven rhythm core has been shown to transfer between independent implementations with exact period agreement and trace correlations above 0.9999. In hardware, the companion balance-platform studies demonstrated that a BPA-actuated limb holds itself upright under pseudo-vestibular inertial feedback \\citep{bolen_balance_2024, bolen_selfbalancing_2024, bolen_selfbalancing_srs_2024}. What remains unfinished is equally specific, and it organizes the future work below: the balance and weight-bearing layers that unsupported bilateral walking requires, wider transfer across reference cycles, the supraspinal sensorium, and embedded real-time execution."
+  },
+  {
+    "file": "70-overall.tex",
+    "removed_or_replaced_line": "The simulation laboratory of Chapter~\\ref{ch:sns} is assembled, audited, and in active use. The converted robot model carries all of its muscle-tendon actuators with audited geometry, and the BPA force interface computes actuator forces from the validated model inside the loop; both are documented as complete in the chapter's methods (Section~\\ref{sec:preliminary_sim_methods}). The 410-neuron SNS-Toolbox instantiation of the spinal network, with per-leg rhythm-generator half-centers, phase-shifted pattern-formation groups, motoneuron pools for every actuator, and Ia, Ib, and II afferent populations, couples to the converted model at a \\qty{2}{\\milli\\second} neural step, and production walking configurations have been tuned against a walking reference and evaluated on the ground (Section~\\ref{sec:gait_library_results}). A drive-weaning study has since produced a feedback-sustained bilateral configuration whose stepping persists with the hand-drive withdrawn entirely, still in place under the support rig, and the robot-side model progresses under its harness at weaned drive (Section~\\ref{sec:sns_controller_comparison}). What those same evaluations localize as missing defines the work remaining here: the balance and weight-bearing layers that unsupported, bilateral walking requires; transfer from a single tuning reference to the diversity of the locomotion reference library; and the systematic verification series that follows."
+  },
+  {
+    "file": "70-overall.tex",
+    "removed_or_replaced_line": "The verification series comes first because it is cheap and decisive. The circuits' signs, gains, and phase structure are checked against the experimental literature with the stimulus protocols the physiology itself uses: a tonic stimulus applied at the motoneuron, pattern-formation, and rhythm-generator layers, with the resulting outputs compared against the tonic central and sensory stimulation that facilitates involuntary air-stepping in humans \\citep{selionov_tonic_2009} and the deletion and stimulation phenomena reproduced by the two-level CPG models and their neuromechanical implementations \\citep{rybak_modelling_2006, markin_afferent_2010, shevtsova_modeling_2016}. The first of these tests is complete at the rhythm-generator level, where tonic drive evokes an approximately \\qty{0.9}{\\second} antiphase cycle in the isolated network (Section~\\ref{sec:preliminary_sim_methods}); the motoneuron-level and pattern-formation-level series remain to be run, together with the motoneuron skipping-deletion phenomenon of the reference models."
+  },
+  {
+    "file": "70-overall.tex",
+    "removed_or_replaced_line": "Once stepping is stable, three supraspinal contributions will be added, and a fourth is in line behind them (Figure~\\ref{fig:sensorium_hierarchy}). First, vestibular feedback will be simulated with IMU-like sensing of body orientation and angular velocity, extending the balance-platform work, in which an inverted pendulum with pseudo-vestibular IMU feedback maintained balance on an oscillating platform \\citep{bolen_balance_2024, bolen_selfbalancing_2024, bolen_selfbalancing_srs_2024} and analytic neural networks reproduced human balance dynamics \\citep{hilts_dynamic_2019}. Second, ocular feedback will be modeled to investigate how visual stabilization cues can help reset IMU drift, a well-known practical problem for inertial sensing on robots, by treating visual measurements of the horizon and surroundings as a low-frequency correction to the vestibular estimate. Third, a cerebellar layer will be explored as an adaptive gateway between higher-level locomotion commands and the CPG: a structure that can gate between gaits or movement patterns (e.g., walking, running, and turning) and tune the phase relationships among them, in line with the cerebellum's established role in adaptation and coordination. Multilevel spinal-plus-cerebellar synthetic nervous systems have already been demonstrated for insect-like legs \\citep{grummer_multilevel_2024}, and hierarchical cortico-cerebellar-spinal models have been proposed for adaptive step-length control in bipedal locomotion \\citep{chen_corticocerebellar_2025}. The fourth addition, basal-ganglia circuits realizing the inhibitory and excititory gating that selects among actions and locomotor modes, would give the controller a substrate for choosing between behaviors rather than only executing one. The database already holds the entry points for this program: the human balance and posture cluster and the multisensory recalibration cluster are curated and connected to the locomotor core through the citation graph (Chapter~\\ref{ch:database}), and the proprioceptive--vestibular interaction literature will guide how the signals are weighted \\citep{akay_relative_2021}."
+  },
+  {
+    "file": "80-conclusion.tex",
+    "removed_or_replaced_line": "Beyond the specific models, the dissertation's methodological contribution is the actuator-to-joint design chain itself: characterize the actuator, correct for the compliance and geometry of the transmission, validate against human biomechanics, and only then close the loop with a controller. The neural layer that completes the chain is assembled rather than absent: the converted MuJoCo model, the SNS-Toolbox coupling, and the two-layer spinal network with its verified antiphase rhythm generator are already in place. The portability of these neural primitives was verified directly: the contact-driven rhythm core reproduces with exact period agreement and trace correlations above 0.9999 between independent NumPy and Simulink implementations, the archived AnimatLab reference models reproduce their published rhythms headless, and a BPA-actuated walker in MuJoCo air-steps under synthetic neural control, while the honest negatives of the same evaluation series localize the remaining gap in the balance layer, not in the rhythm, the actuators, or the engines."
+  },
+  {
+    "file": "94-AppendixC.tex",
+    "removed_or_replaced_line": "\\graphicspath{{../Figures/94-AppendixC/}{figs/94-AppendixC/}}"
+  }
+]

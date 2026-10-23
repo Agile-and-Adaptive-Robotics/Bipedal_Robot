@@ -15,13 +15,15 @@ no tracked edits accepted or rejected.
 | 10-introduction | 2,093 | 2,227 | +134 | 84→84 | 0 |
 | 15-background | 5,217 | 5,387 | +170 | 529→500 | 46→46 |
 | 30-torque | 8,993 | 9,154 | +161 | 1,517→1,517 | 459→459 |
-| 50-database | 2,588 | 2,063 | **−20.3%** | 338→338 | 519→519 |
+| 50-database | 2,588 | 2,085 | **−19.4%** | 338→338 | 519→519 |
 | 60-sns | 10,851 | 6,794 | **−37.4%** | 1,069→1,096 | 316→463 |
 | 70/80/94 | — | person sweep only | — | — | — |
 
 SNS total reading matter (narrative + captions + table bodies):
 12,236 → 8,353 (**−31.7%**) — reported this way because the round-1 headline
 narrative number hid the caption/table burden the review flagged.
+SADb final = 2,085 narrative words as measured against the final files
+(the earlier 2,063 predated the added 1,393-record sentence).
 PDF: 294 → **280 pages**. Verification build of record: `tmp/build_live8.log`
 — 0 errors, 0 undefined references/citations, 0 missing figures; overfull-hbox
 multiset vs. baseline: 0 added, 2 removed. Capability-table page fits the text

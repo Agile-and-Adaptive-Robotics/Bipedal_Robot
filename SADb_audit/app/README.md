@@ -21,9 +21,12 @@ extracts the JS for `node --check app\_app_main.js`).
 ## What's inside
 
 - **Table** — search (title/author/year/DOI/notes), column sort, filters
-  (animal, feedback pathway, afferent type, import source, year range,
-  has-notes, has-PDF); click a row for the detail drawer (curation note,
-  afferents, animal-study potential, robot/sim translation, DOI link, tags).
+  (animal, feedback pathway, afferent type, import source, **record type
+  (paper/review/model/feedback pathway/recorder)**, **archive (live vs
+  archived app-only)**, year range, has-notes, has-PDF); click a row for the
+  detail drawer (curation note, afferents, animal-study potential, robot/sim
+  translation, DOI link, tags). Non-paper records appear here only — the
+  Pivot and Bubble map stay papers-only (the citation graph is papers-only).
 - **Pivot** — count papers by any two dimensions. Topic clusters are NAMED
   (18 labels from `export\cluster_labels.json`, e.g. "Afferent control of
   locomotion (classics)"). Rows and columns each sort by count, A→Z, or Z→A
@@ -66,6 +69,15 @@ Ben, 2026-10-22: **the app is now the primary thing** — Airtable is the editab
 working base the app is rebuilt from, not the deliverable. Every build embeds the
 FULL audited corpus (943 papers), including the papers pruned from Airtable, each
 carried under its archived flag, so nothing the prune removed is lost.
+
+Ben, 2026-10-23: the build now embeds the **full pre-prune base — 1,393 records**:
+all 943 papers (382 archived by the prune) **plus the 450 non-paper records**
+(Models 247, Review Papers 157, Feedback pathways 42, Recorders 4). The 54
+archived non-paper orphans (Models 3, Review Papers 48, Feedback 3, Recorders 0)
+are reconstructed from the deletion snapshots (`deletion_manifest.json`,
+`prune_shortlist.csv`, `review_orphans_20261002.json`). `app\check_app.py`
+asserts the exact counts (papers 943 / 382 archived, non-paper 450 / 54 archived,
+total 1,393, archived 436, live 957) on every build.
 
 1. **v1 — OFFLINE (done)**: snapshot browser.
 2. **v2 — ONLINE mode (done 2026-09-28 in-app)**: live OpenAlex search tab;
