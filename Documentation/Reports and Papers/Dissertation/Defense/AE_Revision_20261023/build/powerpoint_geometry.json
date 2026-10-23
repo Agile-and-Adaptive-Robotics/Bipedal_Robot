@@ -1,0 +1,1902 @@
+[
+  {
+    "slide": 1,
+    "text": "DISSERTATION DEFENSE",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 121.0,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 1,
+    "text": "Movement and Control of\rBiomimetic Humanoid Robots",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 407.0899963378906,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 1,
+    "text": "Portland State University \u00b7 Agile & Adaptive Robotics Laboratory",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 352.5050354003906,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 1,
+    "text": "01",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 1,
+    "text": "Ben P. Bolen",
+    "height": 45.0,
+    "boundHeight": 34.20000076293945,
+    "width": 487.5,
+    "boundWidth": 152.72999572753906,
+    "left": 48.75,
+    "top": 195.0
+  },
+  {
+    "slide": 1,
+    "text": "Mechanical Engineering PhD defense\rAdvisor: M. Anthony Hunt, Ph.D.\rNovember 6, 2026",
+    "height": 120.0,
+    "boundHeight": 78.30000305175781,
+    "width": 525.0,
+    "boundWidth": 331.21502685546875,
+    "left": 48.75,
+    "top": 255.0
+  },
+  {
+    "slide": 2,
+    "text": "THE ARGUMENT",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 84.65503692626953,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 2,
+    "text": "Four gaps connect actuator mechanics to neural-control experiments",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 750.0050659179688,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 2,
+    "text": "Revision C \u00b7 Ch. 1, research gaps and objectives",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 259.8750305175781,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 2,
+    "text": "02",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 3,
+    "text": "SCOPE AND ATTRIBUTION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 131.6150360107422,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 3,
+    "text": "This dissertation adds models and tests to an existing robot program",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 919.3250122070312,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 3,
+    "text": "Revision C \u00b7 Ch. 1; Ch. 6, Model Conversion and Actuator Coupling",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 362.23504638671875,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 3,
+    "text": "03",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 3,
+    "text": "Existing anatomy and mechanisms",
+    "height": 30.0,
+    "boundHeight": 22.5,
+    "width": 423.75,
+    "boundWidth": 271.21502685546875,
+    "left": 37.5,
+    "top": 465.75
+  },
+  {
+    "slide": 3,
+    "text": "New route modeling and tests",
+    "height": 30.0,
+    "boundHeight": 22.5,
+    "width": 423.75,
+    "boundWidth": 238.63504028320312,
+    "left": 498.75,
+    "top": 465.75
+  },
+  {
+    "slide": 4,
+    "text": "ACTUATOR CHARACTERIZATION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 160.1150360107422,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 4,
+    "text": "Isometric tests measured force across length, pressure, and contraction",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 798.2450561523438,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 4,
+    "text": "Bolen, Elzein, Pang, and Hunt (2026), Actuators \u00b7 Revision C, Ch. 3",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 360.2099914550781,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 4,
+    "text": "04",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 4,
+    "text": "Braided pneumatic actuators (BPAs): 537 observations",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 442.0650329589844,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 5,
+    "text": "ACTUATOR RESULT",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 95.72000122070312,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 5,
+    "text": "Maximum isometric force decreases as resting length becomes shorter",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 843.3150634765625,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 5,
+    "text": "Bolen et al. (2026), Actuators \u00b7 Revision C, Fig. Fmax_fit",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 304.0799865722656,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 5,
+    "text": "05",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 6,
+    "text": "ACTUATOR RESULT",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 95.72000122070312,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 6,
+    "text": "At 112 mm, the new model reduces force error from 42.1% to 4.5%",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 900.3200073242188,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 6,
+    "text": "Revision C \u00b7 Ch. 3, Effects of Resting Length; 10 mm BPA at 620 kPa",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 365.0650329589844,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 6,
+    "text": "06",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 6,
+    "text": "350.9 N measured",
+    "height": 30.0,
+    "boundHeight": 24.299999237060547,
+    "width": 862.5,
+    "boundWidth": 157.52503967285156,
+    "left": 48.75,
+    "top": 465.0
+  },
+  {
+    "slide": 7,
+    "text": "ACTUATOR MODEL",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 96.71504211425781,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 7,
+    "text": "Normalized force curves describe both tested actuator diameters",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 873.0399780273438,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 7,
+    "text": "Bolen et al. (2026), Actuators \u00b7 Revision C, Fig. GenForceFit",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 322.82000732421875,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 7,
+    "text": "07",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 8,
+    "text": "ACTUATOR EVIDENCE",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 109.33999633789062,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 8,
+    "text": "The new model has the lowest error in the reported model comparisons",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 791.27001953125,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 8,
+    "text": "Bolen et al. (2026), Actuators \u00b7 Revision C, Fig. Comparison and model-comparison table",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 483.5550537109375,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 8,
+    "text": "08",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 9,
+    "text": "JOINT TORQUE: EXPERIMENTAL DESIGN",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 200.1300048828125,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 9,
+    "text": "Pinned and biomimetic knees separate identification from transfer tests",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 894.52001953125,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 9,
+    "text": "Revision C \u00b7 Ch. 4, test stands; four-bar knee credited to Steele et al.",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 373.3800048828125,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 9,
+    "text": "09",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 10,
+    "text": "JOINT TORQUE: DIAGNOSIS",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 139.2950439453125,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 10,
+    "text": "Measured actuator length exposes errors in the rigid-route prediction",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 790.3300170898438,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 10,
+    "text": "Revision C \u00b7 Ch. 4, Fig. FlxPin_preopt; hybrid-method description",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 354.70001220703125,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 10,
+    "text": "10",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 10,
+    "text": "Torque (N\u00b7m)",
+    "height": 26.25,
+    "boundHeight": 21.600000381469727,
+    "width": 165.0,
+    "boundWidth": 102.22503662109375,
+    "left": 33.75,
+    "top": 127.5
+  },
+  {
+    "slide": 11,
+    "text": "JOINT TORQUE: MODEL CONTRIBUTION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 201.35000610351562,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 11,
+    "text": "The corrected model accounts for length offset, compliance, and wrapping",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 866.3450317382812,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 11,
+    "text": "Revision C \u00b7 Ch. 4, Improved Torque Model; Appendix C",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 303.655029296875,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 11,
+    "text": "11",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 11,
+    "text": "Effective system stiffness includes the fixtures and transmission",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 516.7000122070312,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 12,
+    "text": "JOINT TORQUE: IDENTIFICATION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 163.75,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 12,
+    "text": "Identification reserves tests before assessing corrected predictions",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 894.2250366210938,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 12,
+    "text": "Revision C \u00b7 Ch. 4, Tables FlxPinGof and ExtPinGof; Appendix C",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 341.55999755859375,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 12,
+    "text": "12",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 12,
+    "text": "Identify corrections: gamultiobj",
+    "height": 30.0,
+    "boundHeight": 26.100000381469727,
+    "width": 840.0,
+    "boundWidth": 288.6850280761719,
+    "left": 48.75,
+    "top": 393.75
+  },
+  {
+    "slide": 12,
+    "text": "Redesign routes: surrogateopt, then patternsearch",
+    "height": 33.75,
+    "boundHeight": 26.100000381469727,
+    "width": 840.0,
+    "boundWidth": 459.1850280761719,
+    "left": 48.75,
+    "top": 435.0
+  },
+  {
+    "slide": 13,
+    "text": "JOINT TORQUE: REPRESENTATIVE EVIDENCE",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 220.31503295898438,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 13,
+    "text": "The corrected flexor model reproduces the held-out torque trend",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 876.14501953125,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 13,
+    "text": "Revision C \u00b7 Ch. 4, Fig. FlxPin_optimized; Table FlxPinGof",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 309.2799987792969,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 13,
+    "text": "13",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 13,
+    "text": "Held-out root-mean-square error: 7.588 to 1.490 N\u00b7m",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 435.6099853515625,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 13,
+    "text": "Torque (N\u00b7m)",
+    "height": 26.25,
+    "boundHeight": 21.600000381469727,
+    "width": 165.0,
+    "boundWidth": 102.22503662109375,
+    "left": 33.75,
+    "top": 127.5
+  },
+  {
+    "slide": 14,
+    "text": "JOINT TORQUE: VALIDATION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 144.2050323486328,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 14,
+    "text": "Corrections reduce held-out error in both pinned-knee configurations",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 734.135009765625,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 14,
+    "text": "Revision C \u00b7 Ch. 4, Tables FlxPinGof and ExtPinGof",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 272.6850280761719,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 14,
+    "text": "14",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 15,
+    "text": "JOINT TORQUE: REASON TO REDESIGN",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 194.23504638671875,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 15,
+    "text": "The earlier single-actuator flexor falls short of its human target",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 843.8599853515625,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 15,
+    "text": "Revision C \u00b7 Ch. 4, Fig. FlxGrp, panel B",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 207.4499969482422,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 15,
+    "text": "15",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 15,
+    "text": "Earlier geometry: one 20 mm actuator",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 312.36505126953125,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 16,
+    "text": "ROUTE REDESIGN: GEOMETRY AND HARDWARE",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 240.5350341796875,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 16,
+    "text": "The optimized cam route became a two-actuator test assembly",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 847.5900268554688,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 16,
+    "text": "Revision C \u00b7 Ch. 4, Cam route, panel A; assembled hardware photograph",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 395.7900085449219,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 16,
+    "text": "16",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 16,
+    "text": "Route at \u2212120\u00b0; coordinates in m",
+    "height": 30.0,
+    "boundHeight": 22.5,
+    "width": 423.75,
+    "boundWidth": 257.7900085449219,
+    "left": 37.5,
+    "top": 465.75
+  },
+  {
+    "slide": 16,
+    "text": "Assembled cam-extensor hardware",
+    "height": 30.0,
+    "boundHeight": 22.5,
+    "width": 423.75,
+    "boundWidth": 278.47503662109375,
+    "left": 498.75,
+    "top": 465.75
+  },
+  {
+    "slide": 17,
+    "text": "ROUTE REDESIGN: MODEL PREDICTION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 197.9550323486328,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 17,
+    "text": "The cam model predicts at least 30.83% margin over the required envelope",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 877.5450439453125,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 17,
+    "text": "Revision C \u00b7 Ch. 4, redesigned-route results; cam result of record, 14 October 2026",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 452.2050476074219,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 17,
+    "text": "17",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 17,
+    "text": "Prediction at 620 kPa; required envelope includes 5% overshoot",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 519.2250366210938,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 18,
+    "text": "ROUTE REDESIGN: PHYSICAL EVIDENCE",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 196.72000122070312,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 18,
+    "text": "Nine cam-extensor holds test torque across \u2212119\u00b0 to +5\u00b0",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 754.3599853515625,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 18,
+    "text": "Revision C \u00b7 Ch. 4, Fig. extensor_physical_final; MATLAB Ext20mm_compare_20261022.png",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 501.8500061035156,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 18,
+    "text": "18",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 18,
+    "text": "Pressure varied between holds",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 253.1150360107422,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 19,
+    "text": "ROUTE REDESIGN: PHYSICAL EVIDENCE",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 196.72000122070312,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 19,
+    "text": "All 15 flexor holds meet or exceed the human muscle target",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 801.280029296875,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 19,
+    "text": "Knee-torque study \u00b7 Fig. Flx20mm; final MATLAB reduction",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 321.96502685546875,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 19,
+    "text": "19",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 19,
+    "text": "15 holds at 226.5\u2013638 kPa; margins +0.42 to +17.0 N\u00b7m",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 446.8950500488281,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 20,
+    "text": "ROUTE REDESIGN: REMAINING UNCERTAINTY",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 229.7100067138672,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 20,
+    "text": "The corrected 620 kPa prediction still exceeds many measured flexor torques",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 920.5550537109375,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 20,
+    "text": "Knee-torque paper \u00b7 Fig. Flx20mm, panel B; unchanged MATLAB calculation",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 414.8250427246094,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 20,
+    "text": "20",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 20,
+    "text": "Fixed-pressure curves; variable-pressure measurements",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 454.7099914550781,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 21,
+    "text": "SENSORY AFFERENT DATABASE: GAP AND CONTRIBUTION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 289.7799987792969,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 21,
+    "text": "SADb links sensory-feedback literature to inspectable source records",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 919.7750244140625,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 21,
+    "text": "Revision C \u00b7 Ch. 5, The Resource; SADb application snapshot",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 328.989990234375,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 21,
+    "text": "21",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 22,
+    "text": "SENSORY AFFERENT DATABASE: USE AND LIMITS",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 243.43504333496094,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 22,
+    "text": "SADb exposes classification coverage without supplying controller gains",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 886.030029296875,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 22,
+    "text": "Revision C \u00b7 Ch. 5, Fig. sadb_pivot and Use in Neural-Controller Design",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 384.7050476074219,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 22,
+    "text": "22",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 22,
+    "text": "Tagged papers retain their experimental context",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 392.57000732421875,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 23,
+    "text": "NEURAL SIMULATION: MOTIVATING LIMITATION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 242.8300018310547,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 23,
+    "text": "The initial AnimatLab controller used one rhythm generator for suspended stepping",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 847.635009765625,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 23,
+    "text": "Revision C \u00b7 Ch. 6, The AnimatLab Bipedal Walker; Li (2017), Deng (2019), Bolen (2021)",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 474.5450439453125,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 23,
+    "text": "23",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 23,
+    "text": "Historical mechanical model",
+    "height": 30.0,
+    "boundHeight": 22.5,
+    "width": 423.75,
+    "boundWidth": 223.50999450683594,
+    "left": 37.5,
+    "top": 465.75
+  },
+  {
+    "slide": 23,
+    "text": "Original left-joint traces",
+    "height": 30.0,
+    "boundHeight": 22.5,
+    "width": 423.75,
+    "boundWidth": 188.77999877929688,
+    "left": 498.75,
+    "top": 465.75
+  },
+  {
+    "slide": 24,
+    "text": "NEURAL SIMULATION: DISTINCT CONTRIBUTION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 243.0399932861328,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 24,
+    "text": "I later interconnected separate left and right rhythm generators",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 853.1699829101562,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 24,
+    "text": "Revision C \u00b7 Ch. 6, The AnimatLab Bipedal Walker",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 270.1700134277344,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 24,
+    "text": "24",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 24,
+    "text": "Left rhythm generator",
+    "height": 67.5,
+    "boundHeight": 26.100000381469727,
+    "width": 315.0,
+    "boundWidth": 203.5500030517578,
+    "left": 67.5,
+    "top": 157.5
+  },
+  {
+    "slide": 24,
+    "text": "Right rhythm generator",
+    "height": 67.5,
+    "boundHeight": 26.100000381469727,
+    "width": 315.0,
+    "boundWidth": 215.8849639892578,
+    "left": 577.5,
+    "top": 157.5
+  },
+  {
+    "slide": 24,
+    "text": "Left pattern formation",
+    "height": 67.5,
+    "boundHeight": 26.100000381469727,
+    "width": 315.0,
+    "boundWidth": 206.7150421142578,
+    "left": 67.5,
+    "top": 318.75
+  },
+  {
+    "slide": 24,
+    "text": "Right pattern formation",
+    "height": 67.5,
+    "boundHeight": 26.100000381469727,
+    "width": 315.0,
+    "boundWidth": 219.0500030517578,
+    "left": 577.5,
+    "top": 318.75
+  },
+  {
+    "slide": 24,
+    "text": "Commissural pathways",
+    "height": 33.75,
+    "boundHeight": 23.399999618530273,
+    "width": 262.5,
+    "boundWidth": 190.42999267578125,
+    "left": 352.5,
+    "top": 243.75
+  },
+  {
+    "slide": 24,
+    "text": "Conceptual architecture; walking remains unverified",
+    "height": 37.5,
+    "boundHeight": 26.100000381469727,
+    "width": 840.0,
+    "boundWidth": 475.9800109863281,
+    "left": 60.0,
+    "top": 442.5
+  },
+  {
+    "slide": 25,
+    "text": "NEURAL SIMULATION: TOOL CONTRIBUTION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 224.14999389648438,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 25,
+    "text": "My interfaces connect existing mechanics and neural formulations",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 889.8900146484375,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 25,
+    "text": "Revision C \u00b7 Ch. 6, Model Conversion and Graphical Circuit Construction",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 393.0050354003906,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 25,
+    "text": "25",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 25,
+    "text": "Repaired and audited model coupling",
+    "height": 30.0,
+    "boundHeight": 22.5,
+    "width": 423.75,
+    "boundWidth": 295.1950378417969,
+    "left": 37.5,
+    "top": 465.75
+  },
+  {
+    "slide": 25,
+    "text": "Editable implementations of existing equations",
+    "height": 30.0,
+    "boundHeight": 22.5,
+    "width": 423.75,
+    "boundWidth": 370.20001220703125,
+    "left": 498.75,
+    "top": 465.75
+  },
+  {
+    "slide": 26,
+    "text": "NEURAL SIMULATION: REPRESENTATIVE CIRCUIT",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 243.22000122070312,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 26,
+    "text": "The graphical library implements defined Ia and Ib reflex pathways",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 895.4600219726562,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 26,
+    "text": "Revision C \u00b7 Ch. 6, Fig. simulink_reflex_topology",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 263.0650329589844,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 26,
+    "text": "26",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 26,
+    "text": "Spindle (Ia) and tendon-organ (Ib) inputs in a provisional model",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 516.7750244140625,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 27,
+    "text": "NEURAL SIMULATION: MATCHED VERIFICATION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 238.6650390625,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 27,
+    "text": "Matched rhythm-core implementations reproduce the same driven bursts",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 901.7350463867188,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 27,
+    "text": "Revision C \u00b7 Ch. 6, Fig. w2l_crossengine; matched NumPy and Simulink protocol",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 436.30999755859375,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 27,
+    "text": "27",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 27,
+    "text": "1.000 s periods; trace correlation \u2265 0.99996",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 352.95001220703125,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 28,
+    "text": "NEURAL SIMULATION: VERIFICATION BOUNDARY",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 246.6150360107422,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 28,
+    "text": "The bridge exchanges signals while full-network dynamics still disagree",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 832.4650268554688,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 28,
+    "text": "Revision C \u00b7 Ch. 6, Closed-Loop Model Coupling and capability table",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 370.54998779296875,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 28,
+    "text": "28",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 28,
+    "text": "Interface correctness and controller equivalence need separate tests",
+    "height": 41.25,
+    "boundHeight": 24.299999237060547,
+    "width": 877.5,
+    "boundWidth": 579.2350463867188,
+    "left": 41.25,
+    "top": 442.5
+  },
+  {
+    "slide": 29,
+    "text": "CONCLUSIONS",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 74.61503601074219,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 29,
+    "text": "The evidence supports static torque capacity and specific simulation interfaces",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 914.5450439453125,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 29,
+    "text": "Revision C \u00b7 Chs. 3\u20137; final flexor MATLAB reduction, 23 October 2026",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 382.8900146484375,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 29,
+    "text": "29",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 30,
+    "text": "NEXT EXPERIMENTS",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 102.44000244140625,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 30,
+    "text": "Matched-pressure tests and controller reconciliation are the next checks",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 874.77001953125,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 30,
+    "text": "Revision C \u00b7 Ch. 7; Ch. 6, remaining limits",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 224.89503479003906,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 30,
+    "text": "30",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 30,
+    "text": "Close the measured gaps before transferring control to hardware",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 527.2550659179688,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 31,
+    "text": "ACKNOWLEDGMENTS",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 111.65503692626953,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 31,
+    "text": "Questions",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 141.88999938964844,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 31,
+    "text": "Ben P. Bolen \u00b7 Mechanical Engineering \u00b7 Portland State University",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 356.7300109863281,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 31,
+    "text": "31",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 31,
+    "text": "Thank you",
+    "height": 67.5,
+    "boundHeight": 57.599998474121094,
+    "width": 847.5,
+    "boundWidth": 217.48504638671875,
+    "left": 48.75,
+    "top": 180.0
+  },
+  {
+    "slide": 31,
+    "text": "Advisor: M. Anthony Hunt\rCommittee, AARL, and research collaborators",
+    "height": 90.0,
+    "boundHeight": 54.0,
+    "width": 840.0,
+    "boundWidth": 419.0400085449219,
+    "left": 48.75,
+    "top": 277.5
+  },
+  {
+    "slide": 32,
+    "text": "BACKUP: ACTUATOR EQUATION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 159.3450469970703,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 32,
+    "text": "The force model combines normalized force with resting-length scaling",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 852.9000244140625,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 32,
+    "text": "Revision C \u00b7 Ch. 3, force equation; Bolen et al. (2026)",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 289.6400146484375,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 32,
+    "text": "32",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 32,
+    "text": "Separate coefficients apply to each diameter",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 364.1650390625,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 33,
+    "text": "BACKUP: TRANSFER TO BIOMIMETIC KNEE",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 213.39999389648438,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 33,
+    "text": "Earlier biomimetic-extensor measurements retain residual prediction error",
+    "height": 82.5,
+    "boundHeight": 77.4000015258789,
+    "width": 915.0,
+    "boundWidth": 785.0399780273438,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 33,
+    "text": "Revision C \u00b7 Ch. 4, Fig. Ext10mm_52cm; see adopted shared-pair table for final statistics",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 480.8150329589844,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 33,
+    "text": "33",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 33,
+    "text": "Earlier 10 mm configuration",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 228.93504333496094,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 34,
+    "text": "BACKUP: ROUTE EXTENSION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 143.97999572753906,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 34,
+    "text": "Pulley transmission predictions still require physical verification",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 854.530029296875,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 34,
+    "text": "Revision C \u00b7 Ch. 4, Mono- and Bi-Pulley Tendon Routing",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 303.0150451660156,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 34,
+    "text": "34",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 34,
+    "text": "Model predictions; adjacent joint fixed in biarticular planes",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 481.9550476074219,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 35,
+    "text": "BACKUP: SIMULATION SCOPE",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 148.56503295898438,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 35,
+    "text": "Supported actuator-driven motion provides a coupling test",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 791.1650390625,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 35,
+    "text": "Revision C \u00b7 Ch. 6 and Appendix, Simulation Verification",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 305.4200134277344,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 35,
+    "text": "35",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 35,
+    "text": "Mechanical support remains",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 234.2899932861328,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 36,
+    "text": "BACKUP: NEURAL CODING",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 133.8800048828125,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 36,
+    "text": "Spiking and non-spiking realizations can produce different timing",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 872.6199951171875,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 36,
+    "text": "Revision C \u00b7 Appendix, Simulation Verification; knee spiking-twin figure",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 389.239990234375,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 36,
+    "text": "36",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 36,
+    "text": "A matched interface does not ensure matched dynamics",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 458.175048828125,
+    "left": 48.75,
+    "top": 460.5
+  },
+  {
+    "slide": 37,
+    "text": "BACKUP: TARGET DEFINITION",
+    "height": 18.0,
+    "boundHeight": 14.399999618530273,
+    "width": 900.0,
+    "boundWidth": 149.42999267578125,
+    "left": 22.5,
+    "top": 11.25
+  },
+  {
+    "slide": 37,
+    "text": "The human comparison uses one selected muscle reference",
+    "height": 82.5,
+    "boundHeight": 38.70000076293945,
+    "width": 915.0,
+    "boundWidth": 800.9299926757812,
+    "left": 22.5,
+    "top": 36.75
+  },
+  {
+    "slide": 37,
+    "text": "Knee-torque paper \u00b7 Fig. Flx20mm, panel A; OpenSim Gait2392",
+    "height": 26.25,
+    "boundHeight": 16.200000762939453,
+    "width": 870.0,
+    "boundWidth": 346.47503662109375,
+    "left": 26.25,
+    "top": 504.0
+  },
+  {
+    "slide": 37,
+    "text": "37",
+    "height": 18.75,
+    "boundHeight": 14.399999618530273,
+    "width": 30.0,
+    "boundWidth": 15.0,
+    "left": 907.5,
+    "top": 506.25
+  },
+  {
+    "slide": 37,
+    "text": "Biceps femoris short head; maximum isometric model torque",
+    "height": 32.25,
+    "boundHeight": 23.399999618530273,
+    "width": 862.5,
+    "boundWidth": 498.94000244140625,
+    "left": 48.75,
+    "top": 460.5
+  }
+]
