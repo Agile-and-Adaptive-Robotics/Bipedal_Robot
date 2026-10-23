@@ -103,12 +103,13 @@ Data of the maximum force from BPA characterization tests of the \qty{10}{\mm} a
 The length is offset by \qty{0.0075}{\m} and \qty{0.013}{\m} because solid modeling showed that the end caps contact each other at these lengths. At these lengths, the actuator would not be able to contract to produce force.
 
 
-\begin{figure}[H]%[tbp]
+\begin{figure}[p]
+\centering
 %\begin{adjustwidth}{-\extralength}{0cm}
 %\centering
-\subfloat[\centering]{\includegraphics[width=13.8cm]{02a_MaxForce10.eps}}\\
-\subfloat[\centering]{\includegraphics[width=13.8cm]{02b_MaxForce20.eps}}
-%\includegraphics[width=1\textwidth]{02_Fmax_fit.eps}
+\subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{02a_MaxForce10.eps}}\\
+\subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{02b_MaxForce20.eps}}
+%\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{02_Fmax_fit.eps}
 %\end{adjustwidth}
 \caption{Results for finding the relationship between $F_{620}$ and $l_0$. (\textbf{a}) $F_{620_{10}}$ as a function of $l_0$, at $P_{620}$. Dashed line is the $F_{620_{10}}$ data from Festo. Solid line is the fit from Equation (\ref{eq:Fmax10}). (\textbf{b}) $F_{620_{20}}$ as a function of $l_0$ at $P_{620}$. Dashed line is $F_{620_{20}}$ data from Festo. Solid line is the fit from Equation (\ref{eq:Fmax20}).}\label{fig:Fmax_fit}
 \end{figure}
@@ -268,11 +269,12 @@ To build this model, the collected data of force, pressure, and contraction are 
 
 
 
-\begin{figure}[H]%[tbp]
+\begin{figure}[p]
+\centering
 %\begin{adjustwidth}{-\extralength}{0cm}
 %\centering
-\subfloat[\centering]{\includegraphics[width=13.3cm]{03a_MaxForce10_all.eps}}\\
-\subfloat[\centering]{\includegraphics[width=13.8cm]{03b_kmax10.eps}}
+\subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{03a_MaxForce10_all.eps}}\\
+\subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{03b_kmax10.eps}}
 %\end{adjustwidth}
 \caption{Results for finding the relationship between $F_{620}$, $l_0$, $P_{620}$, and $\epsilon_{620_{10}}$. (\textbf{a}) Isoclines of the surface fit for $F_{620_{10}}(l_0,P_{620})$. (\textbf{b}) $\epsilon_{620_{10}}$ versus $l_0$ at $P_{620}$. Although there is a general trend of longer resting lengths producing more contraction, no conclusive relationship between $\epsilon_{620}$ and $l_0$ could be deduced from this experiment. The error bars show the effect of being $\pm$\qty{1}{\mm} in measuring $l_0$ and $l_{620}$.}\label{fig:F-P_contraction}
 \end{figure}
@@ -281,11 +283,12 @@ To build this model, the collected data of force, pressure, and contraction are 
 
 
 
-\begin{figure}[H]%[tbp]
+\begin{figure}[p]
+\centering
 %\begin{adjustwidth}{-\extralength}{0cm}
 %\centering
-\subfloat[\centering]{\includegraphics[width=10.88cm]{04a_FStar10.eps}}\\
-\subfloat[\centering]{\includegraphics[width=10.88cm]{04b_FStar20.eps}}
+\subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.27\textheight,keepaspectratio]{04a_FStar10.eps}}\\
+\subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.27\textheight,keepaspectratio]{04b_FStar20.eps}}
 %\end{adjustwidth}
 \caption{Surface fit for $F^*(\epsilon^*,P^*)$. Solid lines are from our model. Dashed lines from Festo supplied data. In total, 537 data points were collected and used to fit the 3D surfaces (321 data points for $\diameter$\qty{10}{\mm} BPAs and 216 data points for $\diameter$\qty{20}{\mm} BPAs). In total, 80\% of these data were used for training, and 20\% were used for validation. For figure clarity, not all data is included and plotted circles represent collected data at $\pm\qty{10}{\kPa}$ of the stated pressure. (\textbf{a}) Fit data for $\diameter$\qty{10}{\mm} Festo BPAs. (\textbf{b}) Fit data for $\diameter$\qty{20}{\mm} Festo BPAs.}\label{fig:GenForceFit}
 \end{figure}
@@ -337,41 +340,28 @@ For the $\diameter$\qty{20}{\mm} BPA, parameters from \citep{sarosi_new_2012} we
 
 
 
-\begin{table}[H]
-\caption{Goodness-of-fit comparison for the Bolen, Sárosi, and Martens and Boblan models at different resting lengths (in mm) for \qty{10}{\mm} and \qty{20}{\mm} BPAs. RMSE and maximum error are reported in newtons, and FVU denotes the fraction of variance unexplained.}
+\begin{table}[p]
+\centering\small
+\caption{BPA force-model comparison. Diameter and resting length are in mm; RMSE and maximum absolute error are in N. FVU is dimensionless.}
 \label{tab:model_compare}
-\tiny
-\begin{adjustwidth}{-2cm}{0cm}
-%\centering %% If there is a figure in wide page, please release command \centering
-\begin{tabularx}{\textwidth}{@{}lllllllllll@{}}
+\begin{tabular}{@{}rrlrrr@{}}
 \toprule
-\textbf{Diameter} &
-  \textbf{Length} &
-  \textbf{} &
-  \textbf{Bolen} &
-  \textbf{} &
-  \textbf{} &
-  \textbf{Sarosi} &
-  \textbf{} &
-  \textbf{} &
-  \multicolumn{2}{l}{\textbf{Martens and Boblan}} \\ 
-\textbf{} &
-  \textbf{} &
-  \textbf{RMSE} &
-  \textbf{FVU} &
-  \textbf{Max. Error} &
-  \textbf{RMSE} &
-  \textbf{FVU} &
-  \textbf{Max Error} &
-  \textbf{RMSE} &
-  \textbf{FVU} &
-  \textbf{Max. Error} \\ \midrule
-\textbf{10 mm} & 257 & 22.9 & 0.0353 & 46.0  & 143.8 & 1.3903 & 235.8 & 73.8  & 0.3668 & 122.9  \\
-\textbf{}      & 233 & 16.8 & 0.0187 & 30.3  & 132.7 & 1.1655 & 222.6 & 62.6  & 0.2590 & 101.2  \\ \midrule
-\textbf{20 mm} & 300 & 35.6 & 0.0144 & 114.0 & 132.1 & 0.1992 & 313.4 & 72.8  & 0.0605 & 137.8  \\
-\textbf{}      & 450 & 67.6 & 0.0258 & 166.6 & 177.7 & 0.1785 & 294.8 & 862.1 & 4.2022 & 1321.1 \\ \bottomrule
-\end{tabularx}
-\end{adjustwidth}
+Diameter & Length & Model & RMSE & FVU & Max. error\\
+\midrule
+10 mm & 257 & Bolen & 22.9 & 0.0353 & 46.0\\
+10 mm & 257 & S'arosi & 143.8 & 1.3903 & 235.8\\
+10 mm & 257 & Martens and Boblan & 73.8 & 0.3668 & 122.9\\
+10 mm & 233 & Bolen & 16.8 & 0.0187 & 30.3\\
+10 mm & 233 & S'arosi & 132.7 & 1.1655 & 222.6\\
+10 mm & 233 & Martens and Boblan & 62.6 & 0.2590 & 101.2\\
+20 mm & 300 & Bolen & 35.6 & 0.0144 & 114.0\\
+20 mm & 300 & S'arosi & 132.1 & 0.1992 & 313.4\\
+20 mm & 300 & Martens and Boblan & 72.8 & 0.0605 & 137.8\\
+20 mm & 450 & Bolen & 67.6 & 0.0258 & 166.6\\
+20 mm & 450 & S'arosi & 177.7 & 0.1785 & 294.8\\
+20 mm & 450 & Martens and Boblan & 862.1 & 4.2022 & 1321.1\\
+\bottomrule
+\end{tabular}
 \end{table}
 
 While the \citet{sarosi_new_2012} and \citet{sarosi_10mm} models capture general trends in force–contraction behavior, discrepancies were observed when applying parameters derived from different actuator lengths. In particular, the model tends to over-predict force at higher pressures and low amounts of contraction, suggesting sensitivity to geometric scaling effects not explicitly accounted for in the formulation.

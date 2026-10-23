@@ -1,3 +1,5 @@
+> Overleaf review updated 2026-10-23: 40 straightforward threads resolved; 34 substantive advisor threads remain open with replies; no pending tracked edits. The table below records editorial treatment; actual UI actions are in review/overleaf_upload_20261023/review_actions.json.
+
 # Advisor-comment disposition sweep — 2026-10-23
 
 Read the expanded live Overleaf Review Overview and compared it with CHATGPT_REPORT.md. Inventory matches: Introduction 34, Background 49, SADb 26, SNS 15; total **124 advisor items = 73 comment threads + 51 pending tracked edits**. The ledger also retains Ben’s replies separately. No new open advisor items were detected in this sweep. The three Ben-only appendix/main tracked deletions and the general-knee-transform comment were checked separately: obsolete text is absent, and Appendix C gives the angle-dependent transform.

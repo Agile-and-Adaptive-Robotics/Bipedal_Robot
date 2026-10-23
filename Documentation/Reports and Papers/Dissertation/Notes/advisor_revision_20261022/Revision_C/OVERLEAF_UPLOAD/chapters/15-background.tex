@@ -47,15 +47,12 @@ Figure~\ref{fig:actuator_technology_comparison} compares the operating mechanism
 
 In contrast to the technologies above, McKibben-style braided pneumatic actuators (BPAs) combine low mass, high force-to-weight ratio, and intrinsic compliance with a force--length curve that qualitatively resembles that of skeletal muscle \citep{liang_comparative_2020, hunt_modeling_2017}. A BPA consists of an inflatable bladder inside a braided sleeve; pressurizing the bladder expands the bladder radially and contracts the sleeve axially, producing tensile force. As shown by Chou and Hannaford, the force--length relationship of McKibben actuators is governed by geometric constraints imposed by the braided shell, leading to a nonlinear dependence of force on actuator length through the braid angle \citep{chou_measurement_1996}: actuator force is proportional to pressure and to a nonlinear geometric term $(3\cos^2\theta - 1)$, which governs both the maximum contraction limit and the curvature of the force--length relationship. Predicting their force as a function of length and pressure is therefore the first improvement of the torque tools developed in this dissertation, and the state of that prediction is the subject of the next subsection.
 
-Figure~\ref{fig:festo_bpa_cad} shows the commercial actuator assembly used in the laboratory.
+Figure~\ref{fig:festo_bpa_cad} shows the change in actuator shape with inflation.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[height=0.45\textheight,keepaspectratio]{festo_bpa_cad.png}
-% ALT TEXT: A vertical CAD rendering shows a Festo braided pneumatic actuator
-% with its long cylindrical muscle body, end fittings, mounting hardware, and
-% pneumatic connections.
-\caption[Festo braided pneumatic actuator assembly]{CAD representation of a Festo DMSP braided pneumatic actuator with the mounting and pneumatic connections used in the laboratory assembly \citep{festo_2026}. The long cylindrical body contains the bladder and braided sleeve; pressurization through the end fittings converts radial expansion into axial contraction.}
+\includegraphics[width=0.78\textwidth,height=0.54\textheight,angle=-90,origin=c,keepaspectratio]{festo_bpas_inflated_deflated.jpg}
+\caption[Festo BPAs with and without inflation]{Festo BPAs in the test fixture: the inflated actuator is wider and shorter than the deflated actuator beside it.}
 \label{fig:festo_bpa_cad}
 \end{figure}
 
@@ -113,44 +110,36 @@ Steele's biomimetic knee joint supplies the physical knee used in this dissertat
 % ALT TEXT: Two panels reproduced from Steele et al. Figure 6. Panel (a) is a
 % sagittal cutaway of the biomimetic knee at full extension, showing the crossed
 % four-bar linkage. Panel (b) is an exploded view of the knee's mechanical stop.
-\caption[Steele biomimetic knee mechanism]{Biomimetic knee mechanism. \textbf{(a)} Sagittal cutaway at full extension showing the crossed four-bar linkage. \textbf{(b)} Exploded view of the mechanical stop. Reproduced from \citet[Fig.~6]{steele_biomimetic_2018-1} under CC BY 4.0.}
+\caption[Steele biomimetic knee mechanism]{Biomimetic knee mechanism. \textbf{(A)} Sagittal cutaway at full extension showing the crossed four-bar linkage. \textbf{(B)} Exploded view of the mechanical stop. Reproduced from \citet[Fig.~6]{steele_biomimetic_2018-1} under CC BY 4.0.}
 \label{fig:steele_knee}
 \end{figure}
 
-In my master's work, muscle lengths, moment arms, and isometric joint torques were computed over the range of motion for both the Gait2392 model and a PAM-actuated robot leg model, demonstrating that several robot muscle torque profiles could closely match the human model while many fell far short for part of the RoM \citep{bolen_bipedal_2019, bolen_determination_2019}. Hand placement of muscle origins and insertions was a painstaking and iterative task. This resulted in the creation of a placement optimization algorithm \citep{morrow_optimization_2020}, discussed in Chapter~\ref{ch:torque}. Figure~\ref{fig:aarl_opensim_comparison} shows the two sides of that comparison: the laboratory's bipedal skeleton and the OpenSim muscle-routing reference developed for it.
+In my master's work, muscle lengths, moment arms, and isometric joint torques were computed over the range of motion for both the Gait2392 model and a PAM-actuated robot leg model, demonstrating that several robot muscle torque profiles could closely match the human model while many fell far short for part of the RoM \citep{bolen_bipedal_2019, bolen_determination_2019}. Hand placement of muscle origins and insertions was a painstaking and iterative task. This resulted in the creation of a placement optimization algorithm \citep{morrow_optimization_2020}, discussed in Chapter~\ref{ch:torque}. Figure~\ref{fig:aarl_opensim_comparison} places the laboratory skeleton beside the robot PAM routes and human muscle paths used in that comparison.
 
 \begin{figure}[htbp]
 \centering
-\begin{minipage}[c]{0.67\textwidth}
-\centering
-\textbf{(A)}\par\smallskip
-\includegraphics[width=\linewidth,height=0.52\textheight,keepaspectratio]{aarl_bpa_biped.png}
+\begin{minipage}[t]{0.30\textwidth}\vspace{0pt}
+\raggedright\textbf{(A)}\par\smallskip
+\centering\includegraphics[width=\linewidth,height=0.40\textheight,keepaspectratio]{aarl_bpa_biped.png}
 \end{minipage}\hfill
-\begin{minipage}[c]{0.25\textwidth}
-\centering
-\textbf{(B)}\par\smallskip
-\includegraphics[width=\linewidth]{gait2392_27_muscle_model.png}
+\begin{minipage}[t]{0.30\textwidth}\vspace{0pt}
+\raggedright\textbf{(B)}\par\smallskip
+\centering\includegraphics[width=\linewidth,height=0.40\textheight,keepaspectratio]{robot_pam_routes.pdf}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.30\textwidth}\vspace{0pt}
+\raggedright\textbf{(C)}\par\smallskip
+\centering\includegraphics[width=\linewidth,height=0.40\textheight,keepaspectratio]{human_gait2392_paths.pdf}
 \end{minipage}
-% ALT TEXT: (A) The laboratory bipedal skeleton, shown without actuators
-% installed. (B) A Gait2392-derived OpenSim model shows the retained
-% lower-limb muscle paths in red beside the skeletal geometry.
-\caption[Laboratory biped skeleton and OpenSim muscle model]{\textbf{(A)} The laboratory biped skeleton (actuators not installed in this view). \textbf{(B)} The Gait2392-derived OpenSim model used to develop its muscle routing; the view exposes the retained lower-limb musculotendon paths used as biomechanical design references \citep{bolen_determination_2019, morrow_optimization_2020}.}
+\caption[Robot skeleton and robot/human muscle paths]{\textbf{(A)} Laboratory robot skeleton. \textbf{(B)} Robot PAM routes. \textbf{(C)} Human Gait2392 muscle paths used as design references \citep{bolen_bipedal_2019, morrow_optimization_2020}.}
 \label{fig:aarl_opensim_comparison}
 \end{figure}
 
-The comparison evaluated muscle-path lengths, moment arms, and isometric torques across the human and robot models \citep{bolen_bipedal_2019}. I adjusted BPA origins, insertions, and via-point locations to respect usable contraction and avoid interference. The biceps femoris long head illustrates the remaining mismatch: the robot path and its knee- and hip-torque surfaces differ substantially from the human reference. These discrepancies motivated placement optimization \citep{morrow_optimization_2020}. Figures~\ref{fig:masters_routing_and_arms} and~\ref{fig:masters_torque_comparison} show the geometry and the torque comparison.
+The comparison evaluated muscle-path lengths, moment arms, and isometric torques across the human and robot models \citep{bolen_bipedal_2019}. I adjusted BPA origins, insertions, and via-point locations to respect usable contraction and avoid interference. The biceps femoris long head illustrates the remaining mismatch: the robot path and its knee- and hip-torque surfaces differ substantially from the human reference. These discrepancies motivated placement optimization \citep{morrow_optimization_2020}. Figures~\ref{fig:masters_routing_and_arms} and~\ref{fig:masters_torque_comparison} show the moment-arm construction and the torque comparison.
 
 \begin{figure}[htbp]
 \centering
-\textbf{(A)}\par\smallskip
-\includegraphics[width=0.72\textwidth]{masters_leg_model.pdf}\par\medskip
-\textbf{(B)}\par\smallskip
-\includegraphics[width=0.92\textwidth]{masters_moment_arm.pdf}
-% ALT TEXT: (A) Two anterior OpenSim renderings: the human skeleton with
-% Gait2392 muscle paths and the robot leg skeleton with PAM paths. (B) Two
-% model renders with the cross-product construction of a muscle moment arm
-% about hip axes and the knee axis.
-\caption[Master's-study routing models and moment-arm construction]{Master's-study geometry. \textbf{(A)} Human Gait2392 muscle paths and robot PAM routes. \textbf{(B)} Geometric constructions used to evaluate moment arms about the hip and knee \citep[Figs.~4 and~6]{bolen_bipedal_2019}.}
+\includegraphics[width=\textwidth]{moment_arm_methods.pdf}
+\caption[Equivalent geometric constructions of joint torque]{Equivalent fixed-axis constructions. \textbf{(A)} The cross product gives the moment of a force about the joint. \textbf{(B)} Projecting a joint-to-path vector onto the force-path normal gives the signed moment arm used in Equation~\eqref{eq:project_ma}. The joint axis points out of the page.}
 \label{fig:masters_routing_and_arms}
 \end{figure}
 
