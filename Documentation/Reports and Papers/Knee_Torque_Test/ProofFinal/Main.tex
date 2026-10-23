@@ -34,6 +34,7 @@
 \usepackage{float}
 \usepackage{array}
 \usepackage[onehalfspacing]{setspace}
+\usepackage{rotating}
 \renewcommand{\arraystretch}{2}  % Increase row height (default is 1.0)
 \linenumbers
 
@@ -322,70 +323,43 @@ With the actuator force model characterized at the actuator level, we applied th
 
 \subsection{Flexor on Pin Joint}
 
-Figure~\ref{fig:FlxPin_preopt} shows the measured flexor torque on the pinned knee next to the pre-optimization prediction series for the four cross-validation tests. Both pre-optimization force models overpredicted the magnitude of the measured flexor torque, and on the angles where the two predictions are both defined the improved BPA characterization fit the measurements better than the Hunt equation on every test, although it degraded near full extension, where the Hunt-equation prediction is undefined altogether (Table~\ref{tab:FlxPinPreGof}). The Hunt-equation prediction is undefined near full extension, where its modeled strain falls below zero, so the Hunt-equation and improved-characterization columns of the table are scored head-to-head on the measured points at which the Hunt equation is defined (75 of 90, 17 of 20, 14 of 19, and 15 of 22 points, in panel order), while the back-calculated torque is scored on all measured points; the four tests are the cross-validation tests of the adopted two-stage identification. The back-calculated (hybrid) torque reproduced the measurements closely, which localizes the misprediction to the modeled kinematics, the muscle length $l_\text{m}$ and the moment arm $r$, rather than to the force model.
+Figure~\ref{fig:FlxPin} shows the measured flexor torque on the pinned knee next to the pre-optimization prediction series and the corrected prediction at the adopted terms for the four cross-validation tests. Both pre-optimization force models overpredicted the magnitude of the measured flexor torque (Table~\ref{tab:FlxPinGof}); each prediction is scored against all measured points at which it is defined. The Hunt equation attains the lower RMSE of the two on every test, but its score covers only the angles at which it is defined: near full extension, where its modeled strain falls below zero, it offers no prediction at all, while the improved BPA characterization remains defined over those same angles with its largest residuals. The four tests are the cross-validation tests of the adopted two-stage identification. The back-calculated (hybrid) torque reproduced the measurements closely, which localizes the misprediction to the modeled kinematics, the muscle length $l_\text{m}$ and the moment arm $r$, rather than to the force model.
 
-The initial identification, fitted on the $l_{0}=\qty{48.5}{\cm}$ test, yielded a length offset $\chi_{0} = \qty{11.9}{\mm}$ and effective stiffnesses $\chi_{1} = \qty{102}{\kilo\newton\per\meter}$ and $\chi_{2} = \qty{10.6}{\kilo\newton\per\meter}$. The corrected model at these terms followed the measured torque across the range of motion, including the loss of torque near full extension that the rigid-body prediction did not produce, and Figure~\ref{fig:FlxPin_optimized} shows this corrected-family behavior at the adopted two-stage terms. The $l_{0}=\qty{45.7}{\cm}$ actuator, configured to operate over a different joint range of motion, served as the validation test of the initial fit; the corrected prediction reproduced the measured torque there without refitting. At these initial terms, the corrected prediction for the fitting test had a root-mean-square error (RMSE) of \qty{1.616}{\newton\meter}, a fraction of variance unexplained (FVU) of 0.0958, and a maximum absolute residual of \qty{3.2527}{\newton\meter}; validation on the held-out actuator gave \qty{2.1214}{\newton\meter}, 0.0878, and \qty{5.1690}{\newton\meter}, respectively.
-
-\begin{figure}[H]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{Figures/FlxPin_preopt.eps}
-\end{center}
-\caption{Pre-optimization pinned-knee torque versus knee angle for the four cross-validation flexor tests. Knee angle is negative in flexion, and flexion torque is negative. Gold circles are the hybrid calculation; indigo filled circles are experimentally measured torque; the gray dashed line is the Hunt-equation rigid-body prediction; and the light orange dash-dot line is the unoptimized prediction, the improved BPA force characterization applied to the same rigid kinematics. Panel titles give the nominal resting length; the actual resting lengths $l_{0}$ are \textbf{(A)} \qty{48.5}{\cm}, \textbf{(B)} \qty{41.0}{\cm}, \textbf{(C)} \qty{45.7}{\cm}, and \textbf{(D)} \qty{40.6}{\cm} with tendon. Panels \textbf{(A)} and \textbf{(B)} are the training tests and panels \textbf{(C)} and \textbf{(D)} the validation tests of the adopted cross-validation fold.}\label{fig:FlxPin_preopt}
-\end{figure}
-
-\begin{table}[H]
-\caption{Pre-optimization pinned-knee flexor torque-prediction goodness of fit per test, comparing the three pre-optimization torque predictions of Figure~\ref{fig:FlxPin_preopt}: the Hunt-equation rigid-body prediction, the unoptimized prediction of the improved BPA characterization, and the back-calculated (hybrid) torque. RMSE and maximum absolute residual (Max.) are in \unit{\newton\meter}, and FVU denotes the fraction of variance unexplained.}
-\label{tab:FlxPinPreGof}
-\begingroup
-\renewcommand{\arraystretch}{1.4}%
-\fontsize{10pt}{12pt}\selectfont
-\begin{tabular}{@{}cc ccccccccc@{}}
-\toprule
-& & \multicolumn{3}{c}{\textbf{Hunt equation}} & \multicolumn{3}{c}{\textbf{Improved char.\ alone}} & \multicolumn{3}{c}{\textbf{Back-calculated (hybrid)}} \\
-\cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(l){9-11}
-$\boldsymbol{l_{0}}$ (\unit{\cm}) & $\boldsymbol{l_{\text{ten}}}$ (\unit{\mm}) & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} \\
-\midrule
-48.5 & -- & 5.779 & 1.1761 & 9.798 & 4.871 & 0.8354 & 9.865 & 1.635 & 0.0991 & 3.842 \\
-41.0 & -- & 6.633 & 3.2313 & 11.409 & 6.074 & 2.7090 & 9.262 & 2.187 & 0.1184 & 4.243 \\
-45.7 & -- & 5.315 & 0.9408 & 9.991 & 4.465 & 0.6640 & 9.536 & 1.246 & 0.0409 & 2.275 \\
-40.6 & 35 & 3.945 & 0.6750 & 7.527 & 3.226 & 0.4512 & 7.376 & 2.085 & 0.0755 & 3.073 \\
-\bottomrule
-\end{tabular}
-\endgroup
-\end{table}
+The initial identification, fitted on the $l_{0}=\qty{48.5}{\cm}$ test, yielded a length offset $\chi_{0} = \qty{11.9}{\mm}$ and effective stiffnesses $\chi_{1} = \qty{102}{\kilo\newton\per\meter}$ and $\chi_{2} = \qty{10.6}{\kilo\newton\per\meter}$. The corrected model at these terms followed the measured torque across the range of motion, including the loss of torque near full extension that the rigid-body prediction did not produce, and Figure~\ref{fig:FlxPin} shows this corrected-family behavior at the adopted two-stage terms. The $l_{0}=\qty{45.7}{\cm}$ actuator, configured to operate over a different joint range of motion, served as the validation test of the initial fit; the corrected prediction reproduced the measured torque there without refitting. At these initial terms, the corrected prediction for the fitting test had a root-mean-square error (RMSE) of \qty{1.616}{\newton\meter}, a fraction of variance unexplained (FVU) of 0.0958, and a maximum absolute residual of \qty{3.2527}{\newton\meter}; validation on the held-out actuator gave \qty{2.1214}{\newton\meter}, 0.0878, and \qty{5.1690}{\newton\meter}, respectively.
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=0.8\textwidth]{Figures/FlxPin_optimized.eps}
+\includegraphics[width=0.8\textwidth]{Figures/FlxPin_allmodels_20261023.eps}
 \end{center}
-\caption{Optimized pinned-knee torque versus knee angle for the four cross-validation flexor tests, at the adopted correction terms (Table~\ref{tab:AdoptedXi}). Knee angle is negative in flexion, and flexion torque is negative. Blue filled circles are experimentally measured torque; the dashed light orange line is the unoptimized prediction of the improved BPA characterization; the magenta line is the optimized prediction of the corrected model. Panel titles give the nominal resting length; the actual resting lengths $l_{0}$ are \textbf{(A)} \qty{48.5}{\cm}, \textbf{(B)} \qty{41.0}{\cm}, \textbf{(C)} \qty{45.7}{\cm}, and \textbf{(D)} \qty{40.6}{\cm} with tendon. Panels \textbf{(A)} and \textbf{(B)} are the training tests and panels \textbf{(C)} and \textbf{(D)} the validation tests of the adopted cross-validation fold; the goodness-of-fit values are given in Table~\ref{tab:FlxPinGof}.}\label{fig:FlxPin_optimized}
+\caption{Pre-optimization and optimized pinned-knee torque versus knee angle for the four cross-validation flexor tests. Knee angle is negative in flexion, and flexion torque is negative. Gold circles are the hybrid calculation; indigo filled circles are experimentally measured torque; the gray dashed line is the Hunt-equation rigid-body prediction; the light orange dash-dot line is the unoptimized prediction, the improved BPA force characterization applied to the same rigid kinematics; and the magenta line is the corrected prediction at the adopted terms. Panel titles give the nominal resting length; the actual resting lengths $l_{0}$ are \textbf{(A)} \qty{48.5}{\cm}, \textbf{(B)} \qty{41.0}{\cm}, \textbf{(C)} \qty{45.7}{\cm}, and \textbf{(D)} \qty{40.6}{\cm} with tendon. Panels \textbf{(A)} and \textbf{(B)} are the training tests and panels \textbf{(C)} and \textbf{(D)} the validation tests of the adopted cross-validation fold; the goodness-of-fit values are given in Table~\ref{tab:FlxPinGof}.}\label{fig:FlxPin}
 \end{figure}
 
-\begin{table}[H]
-\caption{Pinned-knee flexor torque-prediction goodness of fit: the improved BPA characterization alone (the zero-correction prediction of the text) and the corrected model at the adopted correction terms (Table~\ref{tab:AdoptedXi}); training and validation tests follow the adopted cross-validation fold. RMSE and maximum absolute residual (Max.) are in \unit{\newton\meter}, and FVU denotes the fraction of variance unexplained.}
+\begin{sidewaystable}[H]
+\caption{Pinned-knee flexor torque-prediction goodness of fit per test, before and after optimization: the Hunt-equation rigid-body prediction, the unoptimized prediction of the improved BPA characterization, the back-calculated (hybrid) torque, and the corrected model at the adopted correction terms (Table~\ref{tab:AdoptedXi}); training and validation tests follow the adopted cross-validation fold, and RMSE and maximum absolute residual (Max.) are in \unit{\newton\meter} with FVU the fraction of variance unexplained. Each prediction is scored against all measured points at which it is defined, so the Hunt equation is scored only away from full extension, where its modeled strain is negative and it offers no prediction.}
 \label{tab:FlxPinGof}
+\centering
 \begingroup
 \renewcommand{\arraystretch}{1.4}%
 \fontsize{10pt}{12pt}\selectfont
-\begin{tabular}{@{}cc cccccc@{}}
+\begin{tabular}{@{}cc ccc ccc ccc ccc@{}}
 \toprule
-& & \multicolumn{3}{c}{\textbf{Improved BPA char.\ alone}} & \multicolumn{3}{c}{\textbf{Corrected model}} \\
-\cmidrule(lr){3-5} \cmidrule(l){6-8}
-$\boldsymbol{l_{0}}$ (\unit{\cm}) & $\boldsymbol{l_{\text{ten}}}$ (\unit{\mm}) & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} \\
+& & \multicolumn{3}{c}{\textbf{Hunt equation}} & \multicolumn{3}{c}{\textbf{Improved char.\ alone}} & \multicolumn{3}{c}{\textbf{Back-calculated (hybrid)}} & \multicolumn{3}{c}{\textbf{Corrected model}} \\
+\cmidrule(lr){3-5} \cmidrule(lr){6-8} \cmidrule(lr){9-11} \cmidrule(lr){12-14}
+$\boldsymbol{l_{0}}$ (\unit{\cm}) & $\boldsymbol{l_{\text{ten}}}$ (\unit{\mm}) & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.} \\
 \midrule
-\multicolumn{8}{@{}l}{\textbf{Training}} \\
-48.5 & -- & 7.617 & 2.1278 & 25.531 & 2.165 & 0.1718 & 5.467 \\
-41.0 & -- & 9.694 & 2.1149 & 21.076 & 1.084 & 0.0277 & 1.766 \\
-\multicolumn{2}{@{}l}{\hspace*{1em}Mean} & 8.656 & 2.1213 & 23.303 & 1.624 & 0.0998 & 3.617 \\
+\multicolumn{14}{@{}l}{\textbf{Training}} \\
+48.5 & -- & 5.779 & 1.1761 & 9.798 & 7.617 & 2.1278 & 25.531 & 1.635 & 0.0991 & 3.842 & 2.165 & 0.1718 & 5.467 \\
+41.0 & -- & 6.633 & 3.2313 & 11.409 & 9.694 & 2.1149 & 21.076 & 2.187 & 0.1184 & 4.243 & 1.084 & 0.0277 & 1.766 \\
+\multicolumn{2}{@{}l}{\hspace*{1em}Mean} & 6.206 & 2.2037 & 10.604 & 8.656 & 2.1213 & 23.303 & 1.911 & 0.1088 & 4.043 & 1.624 & 0.0998 & 3.617 \\
 \midrule
-\multicolumn{8}{@{}l}{\textbf{Validation}} \\
-45.7 & -- & 8.803 & 1.9380 & 26.264 & 1.368 & 0.0468 & 3.614 \\
-40.6 & 35 & 6.373 & 0.5935 & 16.859 & 1.611 & 0.0427 & 5.891 \\
-\multicolumn{2}{@{}l}{\hspace*{1em}Mean} & 7.588 & 1.2657 & 21.562 & 1.490 & 0.0447 & 4.752 \\
+\multicolumn{14}{@{}l}{\textbf{Validation}} \\
+45.7 & -- & 5.315 & 0.9408 & 9.991 & 8.803 & 1.9380 & 26.264 & 1.246 & 0.0409 & 2.275 & 1.368 & 0.0468 & 3.614 \\
+40.6 & 35 & 3.945 & 0.6750 & 7.527 & 6.373 & 0.5935 & 16.859 & 2.085 & 0.0755 & 3.073 & 1.611 & 0.0427 & 5.891 \\
+\multicolumn{2}{@{}l}{\hspace*{1em}Mean} & 4.630 & 0.8079 & 8.759 & 7.588 & 1.2657 & 21.562 & 1.666 & 0.0582 & 2.674 & 1.490 & 0.0447 & 4.752 \\
 \bottomrule
 \end{tabular}
 \endgroup
-\end{table}
+\end{sidewaystable}
 
 \subsection{Extensor on Pin Joint}
 

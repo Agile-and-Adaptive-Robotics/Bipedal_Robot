@@ -1,0 +1,16 @@
+Starting parallel pool (parpool) using the 'Processes' profile ...
+Connected to parallel pool with 10 workers.
+{Error using load
+Bifemsh_20mm_Result.mat is not found in the current folder or on the MATLAB path, but exists in:
+    D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results
+
+Change the MATLAB current folder or add its folder to the MATLAB path.
+
+Error in gen_FlxGrp_3panel_20261023 (line 106)
+resultData = load('Bifemsh_20mm_Result.mat', 'xBest', 'routeCtx', 'Xi3', 'XiUsed');
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error in run (line 112)
+evalin('caller', strcat(scriptStem, ';'));
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+} 
+ERROR: MATLAB error Exit Status: 0x00000001
