@@ -1,0 +1,425 @@
+--- before/15-background.tex
++++ chapters/15-background.tex
+@@ -47,15 +47,12 @@
+ 
+ In contrast to the technologies above, McKibben-style braided pneumatic actuators (BPAs) combine low mass, high force-to-weight ratio, and intrinsic compliance with a force--length curve that qualitatively resembles that of skeletal muscle \citep{liang_comparative_2020, hunt_modeling_2017}. A BPA consists of an inflatable bladder inside a braided sleeve; pressurizing the bladder expands the bladder radially and contracts the sleeve axially, producing tensile force. As shown by Chou and Hannaford, the force--length relationship of McKibben actuators is governed by geometric constraints imposed by the braided shell, leading to a nonlinear dependence of force on actuator length through the braid angle \citep{chou_measurement_1996}: actuator force is proportional to pressure and to a nonlinear geometric term $(3\cos^2\theta - 1)$, which governs both the maximum contraction limit and the curvature of the force--length relationship. Predicting their force as a function of length and pressure is therefore the first improvement of the torque tools developed in this dissertation, and the state of that prediction is the subject of the next subsection.
+ 
+-Figure~\ref{fig:festo_bpa_cad} shows the commercial actuator assembly used in the laboratory.
+-
+-\begin{figure}[htbp]
+-\centering
+-\includegraphics[height=0.45\textheight,keepaspectratio]{festo_bpa_cad.png}
+-% ALT TEXT: A vertical CAD rendering shows a Festo braided pneumatic actuator
+-% with its long cylindrical muscle body, end fittings, mounting hardware, and
+-% pneumatic connections.
+-\caption[Festo braided pneumatic actuator assembly]{CAD representation of a Festo DMSP braided pneumatic actuator with the mounting and pneumatic connections used in the laboratory assembly \citep{festo_2026}. The long cylindrical body contains the bladder and braided sleeve; pressurization through the end fittings converts radial expansion into axial contraction.}
++Figure~\ref{fig:festo_bpa_cad} shows the change in actuator shape with inflation.
++
++\begin{figure}[htbp]
++\centering
++\includegraphics[width=0.78\textwidth,height=0.54\textheight,angle=-90,origin=c,keepaspectratio]{festo_bpas_inflated_deflated.jpg}
++\caption[Festo BPAs with and without inflation]{Festo BPAs in the test fixture: the inflated actuator is wider and shorter than the deflated actuator beside it.}
+ \label{fig:festo_bpa_cad}
+ \end{figure}
+ 
+@@ -113,44 +110,36 @@
+ % ALT TEXT: Two panels reproduced from Steele et al. Figure 6. Panel (a) is a
+ % sagittal cutaway of the biomimetic knee at full extension, showing the crossed
+ % four-bar linkage. Panel (b) is an exploded view of the knee's mechanical stop.
+-\caption[Steele biomimetic knee mechanism]{Biomimetic knee mechanism. \textbf{(a)} Sagittal cutaway at full extension showing the crossed four-bar linkage. \textbf{(b)} Exploded view of the mechanical stop. Reproduced from \citet[Fig.~6]{steele_biomimetic_2018-1} under CC BY 4.0.}
++\caption[Steele biomimetic knee mechanism]{Biomimetic knee mechanism. \textbf{(A)} Sagittal cutaway at full extension showing the crossed four-bar linkage. \textbf{(B)} Exploded view of the mechanical stop. Reproduced from \citet[Fig.~6]{steele_biomimetic_2018-1} under CC BY 4.0.}
+ \label{fig:steele_knee}
+ \end{figure}
+ 
+-In my master's work, muscle lengths, moment arms, and isometric joint torques were computed over the range of motion for both the Gait2392 model and a PAM-actuated robot leg model, demonstrating that several robot muscle torque profiles could closely match the human model while many fell far short for part of the RoM \citep{bolen_bipedal_2019, bolen_determination_2019}. Hand placement of muscle origins and insertions was a painstaking and iterative task. This resulted in the creation of a placement optimization algorithm \citep{morrow_optimization_2020}, discussed in Chapter~\ref{ch:torque}. Figure~\ref{fig:aarl_opensim_comparison} shows the two sides of that comparison: the laboratory's bipedal skeleton and the OpenSim muscle-routing reference developed for it.
+-
+-\begin{figure}[htbp]
+-\centering
+-\begin{minipage}[c]{0.67\textwidth}
+-\centering
+-\textbf{(A)}\par\smallskip
+-\includegraphics[width=\linewidth,height=0.52\textheight,keepaspectratio]{aarl_bpa_biped.png}
++In my master's work, muscle lengths, moment arms, and isometric joint torques were computed over the range of motion for both the Gait2392 model and a PAM-actuated robot leg model, demonstrating that several robot muscle torque profiles could closely match the human model while many fell far short for part of the RoM \citep{bolen_bipedal_2019, bolen_determination_2019}. Hand placement of muscle origins and insertions was a painstaking and iterative task. This resulted in the creation of a placement optimization algorithm \citep{morrow_optimization_2020}, discussed in Chapter~\ref{ch:torque}. Figure~\ref{fig:aarl_opensim_comparison} places the laboratory skeleton beside the robot PAM routes and human muscle paths used in that comparison.
++
++\begin{figure}[htbp]
++\centering
++\begin{minipage}[t]{0.30\textwidth}\vspace{0pt}
++\raggedright\textbf{(A)}\par\smallskip
++\centering\includegraphics[width=\linewidth,height=0.40\textheight,keepaspectratio]{aarl_bpa_biped.png}
+ \end{minipage}\hfill
+-\begin{minipage}[c]{0.25\textwidth}
+-\centering
+-\textbf{(B)}\par\smallskip
+-\includegraphics[width=\linewidth]{gait2392_27_muscle_model.png}
++\begin{minipage}[t]{0.30\textwidth}\vspace{0pt}
++\raggedright\textbf{(B)}\par\smallskip
++\centering\includegraphics[width=\linewidth,height=0.40\textheight,keepaspectratio]{robot_pam_routes.pdf}
++\end{minipage}\hfill
++\begin{minipage}[t]{0.30\textwidth}\vspace{0pt}
++\raggedright\textbf{(C)}\par\smallskip
++\centering\includegraphics[width=\linewidth,height=0.40\textheight,keepaspectratio]{human_gait2392_paths.pdf}
+ \end{minipage}
+-% ALT TEXT: (A) The laboratory bipedal skeleton, shown without actuators
+-% installed. (B) A Gait2392-derived OpenSim model shows the retained
+-% lower-limb muscle paths in red beside the skeletal geometry.
+-\caption[Laboratory biped skeleton and OpenSim muscle model]{\textbf{(A)} The laboratory biped skeleton (actuators not installed in this view). \textbf{(B)} The Gait2392-derived OpenSim model used to develop its muscle routing; the view exposes the retained lower-limb musculotendon paths used as biomechanical design references \citep{bolen_determination_2019, morrow_optimization_2020}.}
++\caption[Robot skeleton and robot/human muscle paths]{\textbf{(A)} Laboratory robot skeleton. \textbf{(B)} Robot PAM routes. \textbf{(C)} Human Gait2392 muscle paths used as design references \citep{bolen_bipedal_2019, morrow_optimization_2020}.}
+ \label{fig:aarl_opensim_comparison}
+ \end{figure}
+ 
+-The comparison evaluated muscle-path lengths, moment arms, and isometric torques across the human and robot models \citep{bolen_bipedal_2019}. I adjusted BPA origins, insertions, and via-point locations to respect usable contraction and avoid interference. The biceps femoris long head illustrates the remaining mismatch: the robot path and its knee- and hip-torque surfaces differ substantially from the human reference. These discrepancies motivated placement optimization \citep{morrow_optimization_2020}. Figures~\ref{fig:masters_routing_and_arms} and~\ref{fig:masters_torque_comparison} show the geometry and the torque comparison.
+-
+-\begin{figure}[htbp]
+-\centering
+-\textbf{(A)}\par\smallskip
+-\includegraphics[width=0.72\textwidth]{masters_leg_model.pdf}\par\medskip
+-\textbf{(B)}\par\smallskip
+-\includegraphics[width=0.92\textwidth]{masters_moment_arm.pdf}
+-% ALT TEXT: (A) Two anterior OpenSim renderings: the human skeleton with
+-% Gait2392 muscle paths and the robot leg skeleton with PAM paths. (B) Two
+-% model renders with the cross-product construction of a muscle moment arm
+-% about hip axes and the knee axis.
+-\caption[Master's-study routing models and moment-arm construction]{Master's-study geometry. \textbf{(A)} Human Gait2392 muscle paths and robot PAM routes. \textbf{(B)} Geometric constructions used to evaluate moment arms about the hip and knee \citep[Figs.~4 and~6]{bolen_bipedal_2019}.}
++The comparison evaluated muscle-path lengths, moment arms, and isometric torques across the human and robot models \citep{bolen_bipedal_2019}. I adjusted BPA origins, insertions, and via-point locations to respect usable contraction and avoid interference. The biceps femoris long head illustrates the remaining mismatch: the robot path and its knee- and hip-torque surfaces differ substantially from the human reference. These discrepancies motivated placement optimization \citep{morrow_optimization_2020}. Figures~\ref{fig:masters_routing_and_arms} and~\ref{fig:masters_torque_comparison} show the moment-arm construction and the torque comparison.
++
++\begin{figure}[htbp]
++\centering
++\includegraphics[width=\textwidth]{moment_arm_methods.pdf}
++\caption[Equivalent geometric constructions of joint torque]{Equivalent fixed-axis constructions. \textbf{(A)} The cross product gives the moment of a force about the joint. \textbf{(B)} Projecting a joint-to-path vector onto the force-path normal gives the signed moment arm used in Equation~\eqref{eq:project_ma}. The joint axis points out of the page.}
+ \label{fig:masters_routing_and_arms}
+ \end{figure}
+ 
+
+--- before/20-muscles.tex
++++ chapters/20-muscles.tex
+@@ -103,12 +103,13 @@
+ The length is offset by \qty{0.0075}{\m} and \qty{0.013}{\m} because solid modeling showed that the end caps contact each other at these lengths. At these lengths, the actuator would not be able to contract to produce force.
+ 
+ 
+-\begin{figure}[H]%[tbp]
++\begin{figure}[p]
++\centering
+ %\begin{adjustwidth}{-\extralength}{0cm}
+ %\centering
+-\subfloat[\centering]{\includegraphics[width=13.8cm]{02a_MaxForce10.eps}}\\
+-\subfloat[\centering]{\includegraphics[width=13.8cm]{02b_MaxForce20.eps}}
+-%\includegraphics[width=1\textwidth]{02_Fmax_fit.eps}
++\subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{02a_MaxForce10.eps}}\\
++\subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{02b_MaxForce20.eps}}
++%\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{02_Fmax_fit.eps}
+ %\end{adjustwidth}
+ \caption{Results for finding the relationship between $F_{620}$ and $l_0$. (\textbf{a}) $F_{620_{10}}$ as a function of $l_0$, at $P_{620}$. Dashed line is the $F_{620_{10}}$ data from Festo. Solid line is the fit from Equation (\ref{eq:Fmax10}). (\textbf{b}) $F_{620_{20}}$ as a function of $l_0$ at $P_{620}$. Dashed line is $F_{620_{20}}$ data from Festo. Solid line is the fit from Equation (\ref{eq:Fmax20}).}\label{fig:Fmax_fit}
+ \end{figure}
+@@ -268,11 +269,12 @@
+ 
+ 
+ 
+-\begin{figure}[H]%[tbp]
++\begin{figure}[p]
++\centering
+ %\begin{adjustwidth}{-\extralength}{0cm}
+ %\centering
+-\subfloat[\centering]{\includegraphics[width=13.3cm]{03a_MaxForce10_all.eps}}\\
+-\subfloat[\centering]{\includegraphics[width=13.8cm]{03b_kmax10.eps}}
++\subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{03a_MaxForce10_all.eps}}\\
++\subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.29\textheight,keepaspectratio]{03b_kmax10.eps}}
+ %\end{adjustwidth}
+ \caption{Results for finding the relationship between $F_{620}$, $l_0$, $P_{620}$, and $\epsilon_{620_{10}}$. (\textbf{a}) Isoclines of the surface fit for $F_{620_{10}}(l_0,P_{620})$. (\textbf{b}) $\epsilon_{620_{10}}$ versus $l_0$ at $P_{620}$. Although there is a general trend of longer resting lengths producing more contraction, no conclusive relationship between $\epsilon_{620}$ and $l_0$ could be deduced from this experiment. The error bars show the effect of being $\pm$\qty{1}{\mm} in measuring $l_0$ and $l_{620}$.}\label{fig:F-P_contraction}
+ \end{figure}
+@@ -281,11 +283,12 @@
+ 
+ 
+ 
+-\begin{figure}[H]%[tbp]
++\begin{figure}[p]
++\centering
+ %\begin{adjustwidth}{-\extralength}{0cm}
+ %\centering
+-\subfloat[\centering]{\includegraphics[width=10.88cm]{04a_FStar10.eps}}\\
+-\subfloat[\centering]{\includegraphics[width=10.88cm]{04b_FStar20.eps}}
++\subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.27\textheight,keepaspectratio]{04a_FStar10.eps}}\\
++\subfloat[\centering]{\includegraphics[width=0.94\textwidth,height=0.27\textheight,keepaspectratio]{04b_FStar20.eps}}
+ %\end{adjustwidth}
+ \caption{Surface fit for $F^*(\epsilon^*,P^*)$. Solid lines are from our model. Dashed lines from Festo supplied data. In total, 537 data points were collected and used to fit the 3D surfaces (321 data points for $\diameter$\qty{10}{\mm} BPAs and 216 data points for $\diameter$\qty{20}{\mm} BPAs). In total, 80\% of these data were used for training, and 20\% were used for validation. For figure clarity, not all data is included and plotted circles represent collected data at $\pm\qty{10}{\kPa}$ of the stated pressure. (\textbf{a}) Fit data for $\diameter$\qty{10}{\mm} Festo BPAs. (\textbf{b}) Fit data for $\diameter$\qty{20}{\mm} Festo BPAs.}\label{fig:GenForceFit}
+ \end{figure}
+@@ -337,41 +340,28 @@
+ 
+ 
+ 
+-\begin{table}[H]
+-\caption{Goodness-of-fit comparison for the Bolen, Sárosi, and Martens and Boblan models at different resting lengths (in mm) for \qty{10}{\mm} and \qty{20}{\mm} BPAs. RMSE and maximum error are reported in newtons, and FVU denotes the fraction of variance unexplained.}
++\begin{table}[p]
++\centering\small
++\caption{BPA force-model comparison. Diameter and resting length are in mm; RMSE and maximum absolute error are in N. FVU is dimensionless.}
+ \label{tab:model_compare}
+-\tiny
+-\begin{adjustwidth}{-2cm}{0cm}
+-%\centering %% If there is a figure in wide page, please release command \centering
+-\begin{tabularx}{\textwidth}{@{}lllllllllll@{}}
++\begin{tabular}{@{}rrlrrr@{}}
+ \toprule
+-\textbf{Diameter} &
+-  \textbf{Length} &
+-  \textbf{} &
+-  \textbf{Bolen} &
+-  \textbf{} &
+-  \textbf{} &
+-  \textbf{Sarosi} &
+-  \textbf{} &
+-  \textbf{} &
+-  \multicolumn{2}{l}{\textbf{Martens and Boblan}} \\ 
+-\textbf{} &
+-  \textbf{} &
+-  \textbf{RMSE} &
+-  \textbf{FVU} &
+-  \textbf{Max. Error} &
+-  \textbf{RMSE} &
+-  \textbf{FVU} &
+-  \textbf{Max Error} &
+-  \textbf{RMSE} &
+-  \textbf{FVU} &
+-  \textbf{Max. Error} \\ \midrule
+-\textbf{10 mm} & 257 & 22.9 & 0.0353 & 46.0  & 143.8 & 1.3903 & 235.8 & 73.8  & 0.3668 & 122.9  \\
+-\textbf{}      & 233 & 16.8 & 0.0187 & 30.3  & 132.7 & 1.1655 & 222.6 & 62.6  & 0.2590 & 101.2  \\ \midrule
+-\textbf{20 mm} & 300 & 35.6 & 0.0144 & 114.0 & 132.1 & 0.1992 & 313.4 & 72.8  & 0.0605 & 137.8  \\
+-\textbf{}      & 450 & 67.6 & 0.0258 & 166.6 & 177.7 & 0.1785 & 294.8 & 862.1 & 4.2022 & 1321.1 \\ \bottomrule
+-\end{tabularx}
+-\end{adjustwidth}
++Diameter & Length & Model & RMSE & FVU & Max. error\\
++\midrule
++10 mm & 257 & Bolen & 22.9 & 0.0353 & 46.0\\
++10 mm & 257 & S'arosi & 143.8 & 1.3903 & 235.8\\
++10 mm & 257 & Martens and Boblan & 73.8 & 0.3668 & 122.9\\
++10 mm & 233 & Bolen & 16.8 & 0.0187 & 30.3\\
++10 mm & 233 & S'arosi & 132.7 & 1.1655 & 222.6\\
++10 mm & 233 & Martens and Boblan & 62.6 & 0.2590 & 101.2\\
++20 mm & 300 & Bolen & 35.6 & 0.0144 & 114.0\\
++20 mm & 300 & S'arosi & 132.1 & 0.1992 & 313.4\\
++20 mm & 300 & Martens and Boblan & 72.8 & 0.0605 & 137.8\\
++20 mm & 450 & Bolen & 67.6 & 0.0258 & 166.6\\
++20 mm & 450 & S'arosi & 177.7 & 0.1785 & 294.8\\
++20 mm & 450 & Martens and Boblan & 862.1 & 4.2022 & 1321.1\\
++\bottomrule
++\end{tabular}
+ \end{table}
+ 
+ While the \citet{sarosi_new_2012} and \citet{sarosi_10mm} models capture general trends in force–contraction behavior, discrepancies were observed when applying parameters derived from different actuator lengths. In particular, the model tends to over-predict force at higher pressures and low amounts of contraction, suggesting sensitivity to geometric scaling effects not explicitly accounted for in the formulation.
+
+--- before/30-torque.tex
++++ chapters/30-torque.tex
+@@ -46,7 +46,7 @@
+     r_{k} = \mathbf{p}_{proj,xy} \cdot \frac{\mathbf{p}_{f} \times \hat{\mathbf{z}}_{k}} { \norm{\mathbf{p}_{f} \times \hat{\mathbf{z}}_{k}} } \label{eq:project_ma}
+ \end{equation}
+ 
+-A muscle path may be modeled as a single segment running from origin to insertion, or as a chain of segments joined at via points. The segment that crosses from one reference frame into the other, here from the femur frame to the tibia frame, is the free muscle segment: because its endpoints ride on different bodies, its length and its direction respond directly to joint rotation, whereas a segment contained within one body's frame rotates rigidly with that body and changes neither. In Eq.~\eqref{eq:project_ma}, $\mathbf{p}_{proj,xy}$ is the free muscle segment projected onto the $XY$--plane, which is normal to the joint axis, and $\mathbf{p}_{f}$ is the projected muscle segment vector. Moment arm is calculated in the tibial body frame.
++A muscle path may be modeled as a single segment running from origin to insertion, or as a chain of segments joined at via points. The segment that crosses from one reference frame into the other, here from the femur frame to the tibia frame, is the free muscle segment: because its endpoints ride on different bodies, its length and its direction respond directly to joint rotation, whereas a segment contained within one body's frame rotates rigidly with that body and changes neither. Here $\mathbf{p}_{f}$ is the force-path segment vector, and $\mathbf{p}_{proj,xy}$ locates a point on that line relative to the joint, projected onto the plane normal to the joint axis. The normalized cross product in Equation~\eqref{eq:project_ma} is the in-plane normal to the force path. Its dot product with the projected position gives the signed moment arm (Figure~\ref{fig:masters_routing_and_arms}). Moment arm is calculated in the tibial body frame.
+ 
+ Details of the existing model and the torque calculation methodology in the modeled robot are given by \citet{bolen_determination_2019, morrow_optimization_2020}.
+ 
+@@ -264,8 +264,11 @@
+ 
+ \begin{figure}[htbp]
+ \centering
+-\includegraphics[height=0.72\textheight]{xiProjection.pdf}
+-\caption[Two-bracket deflection and force-path projection]{Two-bracket deflection and projection along the BPA force path. The force vectors at $\{br,1\}$ and $\{br,2\}$ point toward one another and satisfy $\mathbf{F}_2=-\mathbf{F}_1$. The bracket projections $\delta_{br,1}$ and $\delta_{br,2}$ are offset from the corresponding coordinate frames for clarity, and tendon elongation $\delta_{\mathrm{tendon}}$ continues collinearly from $\delta_{br,1}$. Colors follow a color-vision-deficiency-safe palette and are redundant with labels and line weights.}
++\makebox[\textwidth][l]{\textbf{(A)}}
++\includegraphics[height=0.40\textheight]{xiProjection.pdf}\par\smallskip
++\makebox[\textwidth][l]{\textbf{(B)}}
++\includegraphics[width=0.83\textwidth,height=0.20\textheight,keepaspectratio]{bpa_wrapping_loss.pdf}
++\caption[Compliance projections and BPA wrapping geometry]{\textbf{(A)} Bracket displacement and its projection along the force path; tendon elongation acts in series. \textbf{(B)} Wrapping radius $R$ and bend angle $|\theta_{\mathrm{wrap}}-\theta_{\mathrm{k}}|$ in the length-loss correction of Equation~\eqref{eq:deltaL}. The lost usable length is a fitted correction, not the difference between arc and chord lengths.}
+ \label{fig:xiProjection}
+ \end{figure}
+ 
+@@ -275,7 +278,7 @@
+ 
+ \subsubsection{BPA Fictive Contraction}\label{sec:fictive_contraction}
+ 
+-The extensor configuration required one further correction, for a loss with a different physical origin than the compliance terms. As the knee flexes, the extensor BPA bends over the front of the joint and makes contact with it, so part of the actuator follows the joint surface instead of a straight line. Bent over the joint this way, the BPA behaves like a beam: the pressurized wall on the inside of the bend carries less tension than the wall on the outside, which both unbalances the actuator's force and consumes part of the wrapped arc length that would otherwise shorten the path. The wrapped section therefore stops contributing usable contraction length, and the actuator behaves as if it were more contracted than it physically is. This excess is termed fictive strain: the additional contraction the force model must see to reproduce the observed force, beyond the actuator's physical contraction. A wrapping-loss term $\chi_{3}$ was introduced to scale the length that this fictive strain removes, such that
++The extensor configuration required one further correction, for a loss with a different physical origin than the compliance terms. As the knee flexes, the extensor BPA bends over the front of the joint and makes contact with it, so part of the actuator follows the joint surface instead of a straight line. Bent over the joint this way, the BPA behaves like a beam: the pressurized wall on the inside of the bend carries less tension than the wall on the outside, which both unbalances the actuator's force and consumes part of the wrapped arc length that would otherwise shorten the path. The wrapped section therefore stops contributing usable contraction length, and the actuator behaves as if it were more contracted than it physically is. This excess is termed fictive strain: the additional contraction the force model must see to reproduce the observed force, beyond the actuator's physical contraction. Figure~\ref{fig:xiProjection}\textbf{B} shows the wrapping geometry. A wrapping-loss term $\chi_{3}$ was introduced to scale the length that this fictive strain removes, such that
+ \begin{equation}
+     \Delta l = \begin{cases}
+      \chi_{3}\;R\;\abs{ \theta_\text{wrap}-\theta_\text{k}}\;\zeta^2 & \theta_\text{k} \leq      \theta_\text{wrap} \\
+@@ -344,9 +347,11 @@
+ \caption{Pre-optimization pinned-knee torque versus knee angle for the four cross-validation flexor tests. Knee angle is negative in flexion, and flexion torque is negative. Gold circles are the hybrid calculation, which combines the measured muscle length and moment arm with the modeled force; indigo filled circles are experimentally measured torque; the gray dashed line is the rigid-body prediction; and the light orange dash-dot line is the unoptimized prediction, the improved BPA force characterization applied to the same rigid kinematics. Panel titles give the nominal resting length; the actual resting lengths are $l_{0}=\qty{48.5}{\cm}$ \textbf{(A)}, $l_{0}=\qty{41.0}{\cm}$ \textbf{(B)}, $l_{0}=\qty{45.7}{\cm}$ \textbf{(C)}, and $l_{0}=\qty{40.6}{\cm}$ with tendon \textbf{(D)}. Panels \textbf{(A)} and \textbf{(B)} are the training tests and panels \textbf{(C)} and \textbf{(D)} the validation tests of the adopted cross-validation fold.}\label{fig:FlxPin_preopt}
+ \end{figure}
+ 
++For Table~\ref{tab:FlxPinPreGof}, the rigid-body and improved-characterization predictions are scored on the same points where the rigid-body strain is defined: 75 of 90, 17 of 20, 14 of 19, and 15 of 22 points in panels A--D, respectively. The hybrid calculation is scored on all measured points. These pre-optimization scores therefore use a different point set from the full-test corrected-model scores in Table~\ref{tab:FlxPinGof}.
++
+ \begin{sidewaystable}[p]
+ \centering\small\setlength{\tabcolsep}{4pt}
+-\caption{Pre-optimization pinned-knee flexor torque-prediction goodness of fit per test, comparing the three pre-optimization torque predictions of Figure~\ref{fig:FlxPin_preopt}: the rigid-body prediction, the unoptimized prediction of the improved BPA characterization, and the back-calculated (hybrid) torque. The rigid-body prediction is undefined near full extension, where its modeled strain falls below zero, so the rigid-body and improved-characterization columns are scored head-to-head on the measured points of each test at which the rigid-body prediction is defined (75 of 90, 17 of 20, 14 of 19, and 15 of 22 points, in panel order); the back-calculated torque is scored on all measured points. RMSE and maximum absolute residual (Max.) are in $\text{N}\cdot\text{m}$, and FVU denotes the fraction of variance unexplained. Training and validation follow the adopted cross-validation fold.}
++\caption[Pre-optimization pinned-flexor goodness of fit]{Pre-optimization pinned-flexor goodness of fit. RMSE and maximum absolute residual (Max.) are in N\,m; FVU is dimensionless. Scoring-point restrictions are stated in the text.}
+ \label{tab:FlxPinPreGof}
+ \fontsize{10pt}{12pt}\selectfont
+ \begin{tabular}{@{}lccccccccc@{}}
+@@ -379,7 +384,7 @@
+ 
+ \begin{table}[p]
+ \centering\small
+-\caption{Pinned-knee flexor torque-prediction goodness of fit per test. The zero-correction prediction uses the improved BPA force characterization alone (rigid attachments, no length offset, and no wrapping loss); the corrected model adds the adopted correction terms of the two-stage identification (Section~\ref{sec:identification}). RMSE and maximum absolute residual (Max.) are in $\text{N}\cdot\text{m}$. In the adopted cross-validation fold the $l_{0}=\qty{48.5}{\cm}$ and \qty{41.0}{\cm} tests formed the training set and the $l_{0}=\qty{45.7}{\cm}$ and \qty{40.6}{\cm} tendon tests were held out for validation; the $l_{0}=\qty{47.9}{\cm}$ test was not used in the identification and is reported in Appendix~\ref{app:model_geometry}.}
++\caption[Optimized pinned-flexor goodness of fit]{Optimized pinned-flexor goodness of fit at the adopted correction terms. RMSE and maximum absolute residual (Max.) are in N\,m; FVU is dimensionless. The baseline uses the improved BPA characterization without transmission corrections.}
+ \label{tab:FlxPinGof}
+ \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.34\textwidth}*{6}{>{\centering\arraybackslash}X}@{}}
+ \toprule
+@@ -398,7 +403,7 @@
+ \end{tabularx}
+ \end{table}
+ 
+-Table~\ref{tab:FlxPinGof} completes this comparison at the adopted correction terms of the full re-identification (Section~\ref{sec:identification}). Across the four tests of the two-bracket identification, the corrected model reduces the training-mean RMSE, over the $l_{0}=\qty{48.5}{\cm}$ and \qty{41.0}{\cm} training tests, from \qty{8.66}{\newton\cdot\meter} under the zero-correction prediction, the same kinematics and force model with every correction term disabled, to \qty{1.62}{\newton\cdot\meter}, and the validation mean over the held-out $l_{0}=\qty{45.7}{\cm}$ and \qty{40.6}{\cm} tendon tests improves from \qty{7.59}{\newton\cdot\meter} to \qty{1.49}{\newton\cdot\meter}. The behavior of the original rigid-body torque model on these tests is shown graphically in Fig.~\ref{fig:FlxPin_preopt}.
++The \qty{47.9}{\cm} flexor test was not used in identification and is evaluated separately in Appendix~\ref{app:model_geometry}. Table~\ref{tab:FlxPinGof} completes this comparison at the adopted correction terms of the full re-identification (Section~\ref{sec:identification}). Across the four tests of the two-bracket identification, the corrected model reduces the training-mean RMSE, over the $l_{0}=\qty{48.5}{\cm}$ and \qty{41.0}{\cm} training tests, from \qty{8.66}{\newton\cdot\meter} under the zero-correction prediction, the same kinematics and force model with every correction term disabled, to \qty{1.62}{\newton\cdot\meter}, and the validation mean over the held-out $l_{0}=\qty{45.7}{\cm}$ and \qty{40.6}{\cm} tendon tests improves from \qty{7.59}{\newton\cdot\meter} to \qty{1.49}{\newton\cdot\meter}. The behavior of the original rigid-body torque model on these tests is shown graphically in Fig.~\ref{fig:FlxPin_preopt}.
+ 
+ 
+ 
+@@ -421,7 +426,7 @@
+ 
+ \begin{table}[p]
+ \centering\small
+-\caption{Pinned-knee extensor torque-prediction goodness of fit per test, at the adopted correction terms (stiffness pair locked to the flexor-identified values). The zero-correction prediction uses the improved BPA force characterization alone; the corrected model adds the extensor-specific terms $(\chi_{0}, \chi_{3})$. RMSE and maximum absolute residual (Max.) are in $\text{N}\cdot\text{m}$. The extensor terms were trained on the $l_{0}=\qty{43.6}{\cm}$, \qty{43.2}{\cm} tendon, and \qty{45.7}{\cm} tests and validated on the $l_{0}=\qty{40.0}{\cm}$, \qty{40.0}{\cm} tendon, and \qty{46.5}{\cm} tests; the three remaining extensor tests were not used (Appendix~\ref{app:model_geometry}).}
++\caption[Optimized pinned-extensor goodness of fit]{Optimized pinned-extensor goodness of fit at the adopted correction terms. RMSE and maximum absolute residual (Max.) are in N\,m; FVU is dimensionless. The baseline uses the improved BPA characterization without transmission corrections.}
+ \label{tab:ExtPinGof}
+ \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.34\textwidth}*{6}{>{\centering\arraybackslash}X}@{}}
+ \toprule
+@@ -512,13 +517,15 @@
+ \label{tab:AdoptedXi}
+ \begin{tabular}{@{}lrrrr@{}}
+ \toprule
+-Configuration & $\chi_{0}$ (mm) & $\chi_{1}$ (N/m) & $\chi_{2}$ (N/m) & $\chi_{3}$\\
+-\midrule
+-Flexor & $+3.94$ & $3.998\times10^{4}$ & $1.473\times10^{4}$ & $0.158$\\
+-Extensor & $-6.38$ & $3.998\times10^{4}$ & $1.473\times10^{4}$ & $0.158$\\
++Configuration & $\chi_{0}$ (m) & $\chi_{1}$ (N/m) & $\chi_{2}$ (N/m) & $\chi_{3}$\\
++\midrule
++Flexor & $+0.00394$ & $3.998\times10^{4}$ & $1.473\times10^{4}$ & $0.158$\\
++Extensor & $-0.00638$ & $3.998\times10^{4}$ & $1.473\times10^{4}$ & $0.158$\\
+ \bottomrule
+ \end{tabular}
+-\end{table} The pinned-flexor data do not uniquely determine the stiffness pair, because a family of pairs reproduces the training tests nearly equally well, so the adopted pair was selected by a requirement external to the fit: both redesign configurations must meet the required 5\,\% torque-overshoot target simultaneously. What the correction terms do to the prediction is quantified in Tables~\ref{tab:FlxPinGof} and~\ref{tab:ExtPinGof}. The corrected flexor model holds FVU at or below 0.18 on the four tests of the identification, the worst case being the \qty{48.5}{\cm} training test at 0.172, and the post hoc evaluation of the unused \qty{47.9}{\cm} test improves as well (Appendix~\ref{app:model_geometry}). On the extensor identification the corrected model improves the RMSE on every used test, cutting the training-triple mean from \qty{2.50}{\newton\cdot\meter} to \qty{1.00}{\newton\cdot\meter} and the validation-triple mean from \qty{2.55}{\newton\cdot\meter} to \qty{1.10}{\newton\cdot\meter}, and holds FVU below unity on every used test except the \qty{43.2}{\cm} tendon test. On the biomimetic extensor test ($l_{0} = \qty{51.8}{\cm}$) the corrected prediction improves RMSE from \qty{3.03}{\newton\cdot\meter} to \qty{1.17}{\newton\cdot\meter} and FVU from 4.49 to 0.67, so the shared-pair model explains the bulk of that configuration's measured torque variance as well as its level. The genetic multiobjective solver is retained for the identification, where the Pareto front is required for holdout validation, and the surrogate-plus-pattern-search pipeline serves the route redesign (Section~\ref{sec:optimization}).
++\end{table} What the correction terms do to the prediction is quantified in Tables~\ref{tab:FlxPinGof} and~\ref{tab:ExtPinGof}. The corrected flexor model holds FVU at or below 0.18 on the four tests of the identification, the worst case being the \qty{48.5}{\cm} training test at 0.172, and the post hoc evaluation of the unused \qty{47.9}{\cm} test improves as well (Appendix~\ref{app:model_geometry}). On the extensor identification the corrected model improves the RMSE on every used test, cutting the training-triple mean from \qty{2.50}{\newton\cdot\meter} to \qty{1.00}{\newton\cdot\meter} and the validation-triple mean from \qty{2.55}{\newton\cdot\meter} to \qty{1.10}{\newton\cdot\meter}, and holds FVU below unity on every used test except the \qty{43.2}{\cm} tendon test. On the biomimetic extensor test ($l_{0} = \qty{51.8}{\cm}$) the corrected prediction improves RMSE from \qty{3.03}{\newton\cdot\meter} to \qty{1.17}{\newton\cdot\meter} and FVU from 4.49 to 0.67, so the shared-pair model explains the bulk of that configuration's measured torque variance as well as its level. The genetic multiobjective solver is retained for the identification, where the Pareto front is required for holdout validation, and the surrogate-plus-pattern-search pipeline serves the route redesign (Section~\ref{sec:optimization}).
++
++The initial route searches bounded the BPA origins and insertions near the corresponding human muscle attachments to preserve biomimetic routing. Those anatomical bounds had to be relaxed where the available BPA contraction could not cover the knee range of motion. The resulting routes then required a second tradeoff: reducing the actuator forces carried by the attachment hardware after parts failed during testing. The cam redesign changes the moment arm and contact geometry to retain the torque requirement at lower actuator force.
+ 
+ The route redesign built on these values addresses the single-muscle shortfall at high flexion angles documented in Section~\ref{sec:results_torque}: each configuration now carries two \qty{20}{\mm} BPAs per route. The flexor solution meets the flexor torque target with a minimum margin of $+5.01$\,\% at $-107^{\circ}$, with a separately solved route for each actuator. The second insertion mirrors the first across the sagittal plane, while its origin preserves the first route's lateral endpoint offset; its wrapping and clearance are evaluated independently. The direct extensor route meets or exceeds its human-scaled target with the required 5\,\% overshoot as the thinnest margin at every angle, $+5.02$\,\% at worst, while respecting the wrap-release schedule and contraction limits of the route-elimination rule (Appendix~\ref{app:model_geometry}); it was later superseded by the cam redesign of Section~\ref{sec:route_redesign_results}. These are mechanical design predictions. Their complete incorporation into the converted neuromechanical models remains future integration work.
+ 
+@@ -539,12 +546,14 @@
+ \begin{minipage}[t]{0.32\textwidth}\vspace{0pt}\centering
+ \includegraphics[width=\linewidth,trim=292.000bp 0.000bp 0.000bp 437.500bp,clip]{extensor_cam_route.pdf}
+ \end{minipage}
+-\caption[Cam-extensor route geometry]{Cam-extensor route at \ang{-120} flexion (A) and \ang{10} extension (H), with the original clearance and contact legend. Squares mark the femoral origin, diamonds the tibial insertion, and blue lines the actuator route. Panel letters follow the full sequence in Figures~\ref{fig:app_cam_AF} and~\ref{fig:app_cam_GH}.}
++\par\medskip
++\includegraphics[width=0.46\textwidth,height=0.31\textheight,keepaspectratio]{cam_extensor_hardware.jpg}
++\caption[Cam-extensor route geometry and hardware]{Cam-extensor route (top) at \ang{-120} flexion (A) and \ang{10} extension (H), with the original clearance and contact legend. Squares mark the femoral origin, diamonds the tibial insertion, and blue lines the actuator route. The photograph (bottom) shows the assembled two-BPA hardware. Panel letters follow the full sequence in Figures~\ref{fig:app_cam_AF} and~\ref{fig:app_cam_GH}.}
+ \label{fig:ExtensorRoute_redesigned}
+ \end{figure}
+ 
+ 
+-Allowing the tibial-side route points to trace a cam profile produced the current extensor design (Figure~\ref{fig:ExtensorRoute_redesigned}). The cam solution converts the razor-thin margin of the direct route into genuine design headroom. On the final geometry, which folds the optimizer winner together with a verified adjustment of the distal route point and tendon length, the minimum torque margin is $+30.83\,\%$ with respect to the required envelope, the human target plus the 5\,\% overshoot, and $+39.77\,\%$ with respect to the plain human target. The pressure required to meet the envelope spans \SIrange[range-phrase=--]{269}{507}{\kPa} across the range of motion, comfortably above the \qty{150}{\kPa} regulated floor of the VTUG valve manifold that supplies the hardware. The geometry confirms that the headroom is not bought with routing risk: the tibial wrap follows a bend radius of \qty{96.9}{\mm}, the guiding route point clears the femoral-condyle envelope by \qty{43.1}{\mm} at \ang{10} of knee extension, and the moment arm spans \SIrange[range-phrase=--]{59.4}{102.8}{\mm} (mean \qty{72.4}{\mm}) over the range of motion.
++Allowing the tibial-side route points to trace a cam profile produced the current extensor design (Figure~\ref{fig:ExtensorRoute_redesigned}). The final cam geometry includes the optimized route and the verified adjustment of the distal route point and tendon length. Its minimum torque margin is $+30.83\,\%$ with respect to the required envelope, the human target plus the 5\,\% overshoot, and $+39.77\,\%$ with respect to the plain human target. The pressure required to meet the envelope spans \SIrange[range-phrase=--]{269}{507}{\kPa} across the range of motion, comfortably above the \qty{150}{\kPa} regulated floor of the VTUG valve manifold that supplies the hardware. The geometry confirms that the headroom is not bought with routing risk: the tibial wrap follows a bend radius of \qty{96.9}{\mm}, the guiding route point clears the femoral-condyle envelope by \qty{43.1}{\mm} at \ang{10} of knee extension, and the moment arm spans \SIrange[range-phrase=--]{59.4}{102.8}{\mm} (mean \qty{72.4}{\mm}) over the range of motion.
+ 
+ The flexor route, built from two separately evaluated BPA paths, meets the flexor torque target with a minimum margin fraction of 0.0501 against the required 0.05. Its predicted knee-axis torque spans \qty{-81.23}{\newton\cdot\meter} to \qty{-3.864}{\newton\cdot\meter} against the human-scaled requirement of \qty{-23.16}{\newton\cdot\meter} to \qty{-2.461}{\newton\cdot\meter} (peak magnitude \qty{23.16}{\newton\cdot\meter}), again exceeding the human envelope at every angle. The flexor redesign applies the adopted correction terms of Table~\ref{tab:app_xi_values}, including the wrapping factor identified on the extensor configuration.
+ 
+
+--- before/50-database.tex
++++ chapters/50-database.tex
+@@ -5,7 +5,7 @@
+ 
+ The Sensory Afferent Database (SADb) is a curated literature resource for studying sensory feedback in locomotion and posture. It connects papers to afferent classes, experimental preparations, feedback pathways, and computational models. I developed it within the AARL's NeuroNex Communication, Coordination, and Control in Nervous Systems (C3NS) effort and presented the resource at Neuroscience 2023 \citep{bolen_sensory_2023}.
+ 
+-The knowledge gap was the lack of a structured account, available to this project, of which measured afferent properties and feedback pathways could support the robot's controller. Relevant findings were dispersed across species, preparations, tasks, and primary papers. Reviews organized parts of this evidence \citep{van_de_crommert_review_1998, windhorst_muscle_2007, windhorst_spinal_2022}, but selecting a feedback rule still required recovering its experimental conditions and separating measurements from modeling assumptions. I built SADb to connect those findings to their sources, afferent classes, and pathway roles so that controller choices could be traced to the evidence and remaining unknowns could be identified.
++The knowledge gap was the lack of a structured database, available to this project, of which measured afferent properties and feedback pathways could support the robot's controller. Relevant findings were dispersed across species, preparations, tasks, and primary papers. Reviews organized parts of this evidence \citep{van_de_crommert_review_1998, windhorst_muscle_2007, windhorst_spinal_2022}, but selecting a feedback rule still required recovering its experimental conditions and separating measurements from modeling assumptions. I built SADb to connect those findings to their sources, afferent classes, and pathway roles so that controller choices could be traced to the evidence and remaining unknowns could be identified.
+ 
+ The primary deliverable is a browser application for searching paper records, counting them by selected classifications, and exploring citation neighborhoods (Figure~\ref{fig:sadb_clusters}). Its embedded data support offline use; its separate online-search tab requires a network connection. The distributed snapshot contains 1,393 records: 943 papers and 450 linked model, review, feedback-pathway, and recorder records. Archived records remain available alongside the retained collection. The pivot and citation views operate on papers; the table view searches across record types.
+ 
+@@ -20,13 +20,13 @@
+ 
+ \section{Curation Methods}\label{sec:sadb_methods}
+ 
+-The collection began with my Zotero library, the laboratory's Biology library, and the papers already curated in Airtable. Records were reconciled by DOI and title, then expanded through citation searches and the laboratory's PDF collection. Reviews of spinal and proprioceptive feedback supplied an initial organization of the literature \citep{van_de_crommert_review_1998, windhorst_muscle_2007, windhorst_spinal_2022}. This was a curated research collection, rather than a registered systematic review or an exhaustive search of every relevant publication.
++The collection began with the Zotero libraries of the AARL and myself, and papers already curated in Airtable. Records were reconciled by DOI and title, then expanded through citation searches and the laboratory's PDF collection. Reviews of spinal and proprioceptive feedback supplied an initial organization of the literature \citep{van_de_crommert_review_1998, windhorst_muscle_2007, windhorst_spinal_2022}. This was a curated research collection, rather than a registered systematic review or an exhaustive search of every relevant publication.
+ 
+ Records were retained when they reported sensory-afferent measurements, investigated feedback in locomotion or posture, or modeled a relevant sensory pathway. Reviews were retained as sources for organizing and locating that evidence. Duplicate records and material outside this feedback scope were removed from the working base. Classification used controlled vocabularies for preparations and afferent classes. Each mechanism summary was grounded in available source text, using the abstract when full text was unavailable; missing text was flagged rather than supplied from recollection. The retained and archived sets distinguish the working collection from the broader audit.
+ 
+ \subsection{AI-Assisted Triage}\label{sec:sadb_triage}
+ 
+-I evaluated AI-assisted literature triage in work presented at Neuroscience 2024 \citep{bolen_using_2024}. AI tools helped draft and classify records, but their output required checking against the source. I retained responsibility for inclusion, classification, and deletion decisions. The role of these tools was to assist curation, not to establish the correctness of a physiological claim. Their use does not make the corpus complete or remove the need to inspect the underlying papers.
++I evaluated AI-assisted literature identification, summarization, and categorization in work presented at Neuroscience 2024 \citep{bolen_using_2024}. The comparison included ResearchRabbit, Litmaps, txyz, SciSpace, and MirrorThink. Some tools helped identify related papers or summarize straightforward material, but categorization remained inadequate: none received a good rating, and only txyz was rated adequate. Complex models and nuanced physiological findings required substantial human correction. The tools therefore offered limited help with the central curation task of accurately assigning papers to database categories. I retained responsibility for inclusion, classification, and deletion decisions after checking the source.
+ 
+ \section{Coverage and Use}\label{sec:sadb_corpus}
+ 
+
+--- before/60-sns.tex
++++ chapters/60-sns.tex
+@@ -5,13 +5,13 @@
+ 
+ \section{The AnimatLab Bipedal Walker}\label{sec:prior_walker}
+ 
+-Morrow and I combined the bipedal mechanics of \citet{li_bipedal_2017} with the two-level central pattern generator (CPG) of \citet{deng_neuromechanical_2019} in AnimatLab \citep{cofer_animatlab_2010}. The mechanical model had a pelvis and bilateral thigh, shank, foot, and toe segments, with sagittal-plane joints and antagonist Hill-type muscles at the hip, knee, and ankle. I added a passive toe joint. The controller separated rhythm generation from pattern formation and included muscle-length, velocity, and force feedback. Figure~\ref{fig:animatlab_model_architecture} shows the model and controller organization.
++Morrow and I combined the bipedal mechanics of \citet{li_bipedal_2017} with the two-level central pattern generator (CPG) of \citet{deng_neuromechanical_2019} in AnimatLab \citep{cofer_animatlab_2010}. The mechanical model had a pelvis and bilateral thigh, shank, foot, and toe segments, with sagittal-plane joints and antagonist Hill-type muscles at the hip, knee, and ankle. I added a passive toe joint. The initial controller used one rhythm generator (RG) to control both sides, with a separate pattern-formation layer. I added afferent feedback and heel- and toe-contact signals during the subsequent development. Figure~\ref{fig:animatlab_model_architecture} shows the model and controller organization.
+ 
+-I adjusted applied currents, synaptic weights, and muscle parameters by hand. The suspended model developed alternating muscle activity and stepping-like motion, presented at the 2021 NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. It did not achieve weight-bearing walking. The muscle-feedback gains were not systematically tuned, and the combined model did not include the Li walker's ground-contact feedback.
++I adjusted applied currents, synaptic weights, and muscle parameters by hand. The suspended model developed alternating muscle activity and stepping-like motion, presented at the 2021 NIH BRAIN Initiative Investigators Meeting \citep{bolenTorqueValuesArtificialKnee2021June15-17}. It did not achieve weight-bearing walking. This suspended stepping result preceded the later feedback and bilateral-RG extensions; it does not demonstrate walking with those additions.
+ 
+-I subsequently expanded the neural model into left- and right-side circuits with interconnected rhythm generators (RGs). I constructed the right-side subsystems from the left-side organization and linked the two RGs through commissural pathways. Further circuit schematics and implementation records are provided in Appendix~\ref{app:simulation_verification}.
++I subsequently expanded the neural model into left- and right-side circuits with interconnected rhythm generators (RGs). I constructed the right-side subsystems from the left-side organization and linked the two RGs through commissural pathways. This later model is referred to as the Walker Two-Layer (W2L) model. Further circuit schematics and implementation records are provided in Appendix~\ref{app:simulation_verification}.
+ 
+-The missing step was a tested link between spinal neural circuits and the human-scale and BPA-actuated mechanical models needed to study this robot. Air stepping in the combined AnimatLab model did not establish how the same controller would behave with human musculotendon mechanics, robot BPA routing, or ground-contact feedback. I therefore needed models and tests that could separate the effects of the circuit, actuator mechanics, and numerical implementation.
++The missing step was a tested link between spinal neural circuits and the human-scale and BPA-actuated mechanical models needed to study this robot, including the many joint degrees of freedom and 92 musculotendon actuators represented in Gait2392. Air stepping in the combined AnimatLab model did not establish how the same controller would behave with human musculotendon mechanics, robot BPA routing, or ground-contact feedback. I therefore needed models and tests that could separate the effects of the circuit, actuator mechanics, and numerical implementation.
+ 
+ \begin{figure}[p]
+ \centering
+@@ -24,9 +24,9 @@
+ 
+ \section{Knowledge Gaps and the New Tools}\label{sec:sns_gaps}
+ 
+-Within this project, five model combinations were missing: a Gait2392 human model coupled to a CPG in MuJoCo--SNS-Toolbox; its BPA-routed robot counterpart coupled to a CPG; the combined Li walker and Deng controller with foot-contact feedback; graphical neural construction coupled to a maintained mechanical simulator; and the SolidWorks robot assembly coupled to MATLAB BPA models and a neural controller. These missing combinations prevented a controlled comparison of the same neural organization across biological and artificial actuation. I developed the conversion, coupling, graphical-library, and controller-port tools below to build and test those connections. The capability table identifies the connections demonstrated and those still incomplete.
++Within this project, five model combinations were missing: a Gait2392 human model coupled to a CPG in MuJoCo--SNS-Toolbox; its BPA-routed robot counterpart coupled to a CPG; the combined Li walker and Deng controller with foot-contact feedback; graphical neural construction coupled to a maintained mechanical simulator; and the SolidWorks robot assembly coupled to MATLAB BPA models and a neural controller. These missing combinations prevented a controlled comparison of the same neural organization across biological and artificial actuation. I developed the specific converted models, actuator interfaces, graphical-library elements, and circuit implementations below to build and test those connections. The capability table identifies the connections demonstrated and those still incomplete.
+ 
+-Existing software supplied separate parts of the solution. OpenSim supplied musculoskeletal geometry, MyoConverter translated it to MuJoCo, and SNS-Toolbox supplied neuron and synapse models \citep{delp_opensim_2007, caggiano_myosuite_2022, todorov_mujoco_2012, nourse_sns_2023}. The MuJoCo version used here supports scripted simulation and parameter searches but uses rigid tendons; its Python interface does not provide the block-based circuit assembly needed for this workflow. Simulink supplies that graphical construction, while Simscape Multibody imports mechanical geometry, including SolidWorks-derived mechanisms. AnimatLab retains the reference controllers but is no longer maintained. The tools connect these complementary environments and use matched tests to check what transfers between them.
++Existing software supplied separate parts of the solution. OpenSim supplied musculoskeletal geometry, MyoConverter translated it to MuJoCo, and SNS-Toolbox supplied neuron and synapse models \citep{delp_opensim_2007, caggiano_myosuite_2022, todorov_mujoco_2012, nourse_sns_2023}. The MuJoCo version used here supports scripted simulation and parameter searches but uses rigid tendons; its Python interface does not provide the block-based circuit assembly needed for this workflow. Simulink supplies that graphical construction, while Simscape Multibody imports mechanical geometry, including SolidWorks-derived mechanisms. AnimatLab retains the reference controllers but is unsupported, relies on an older physics engine, and ran these simulations slowly. The tools connect these complementary environments and use matched tests to check what transfers between them.
+ 
+ \section{Software Tools}\label{sec:preliminary_sim_methods}
+ 
+@@ -36,14 +36,14 @@
+ \caption[Neuromechanical tools and verification scope]{Implemented tools, representative checks, and limits. A successful interface test does not establish walking performance.}
+ \label{tab:sns_capability}
+ \small
+-\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.23\textwidth}>{\raggedright\arraybackslash}p{0.34\textwidth}>{\raggedright\arraybackslash}X@{}}
++\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.19\textwidth}*{3}{>{\raggedright\arraybackslash}X}@{}}
+ \toprule
+-\textbf{Tool} & \textbf{Implemented capability} & \textbf{Verification and limit} \\
++\textbf{Model/interface} & \textbf{Capability} & \textbf{Verification} & \textbf{Limit} \\
+ \midrule
+-MuJoCo--SNS coupling & Human and BPA-routed robot models, actuator interface, and afferent feedback & Actuator geometry and dynamic signs checked; supported closed-loop evaluations, not unsupported walking \\
+-SNS-Simscape library & Editable neuron, synapse, sensory, and actuator blocks & Reflex demonstrations and controller comparisons; generic BPA demonstration parameters remain provisional \\
+-Controller ports and test scripts & Ports of reference circuits and matched-input evaluations & Rhythm-core agreement across NumPy and Simulink; complete Li--Deng contact-feedback walking remains unverified \\
+-Mechanical imports & OpenSim-derived and SolidWorks-derived mechanisms in Simscape Multibody & Mechanism import achieved; the SolidWorks knee's welded joint and incomplete muscle integration remain limitations \\
++Models in MuJoCo and SNS-Toolbox & Human and BPA-routed robot models, actuator interface, and afferent feedback & Actuator geometry and dynamic signs checked; supported closed-loop evaluations & Unsupported walking not demonstrated \\
++SNS-Simscape library & Editable neuron, synapse, sensory, and actuator blocks & Reflex demonstrations and controller comparisons & Generic BPA demonstration parameters remain provisional \\
++Matched circuit implementations & Ports of reference circuits and matched-input evaluations & Rhythm-core agreement across NumPy and Simulink & Complete Li--Deng contact-feedback walking remains unverified \\
++Mechanical imports & OpenSim-derived and SolidWorks-derived mechanisms in Simscape Multibody & Mechanism import achieved & Standalone reflex demonstrations do not establish control of imported models \\
+ \bottomrule
+ \end{tabularx}
+ \end{table}
+@@ -56,9 +56,9 @@
+ 
+ \subsection{Graphical Circuit Construction}\label{sec:sns_new_tools}
+ 
+-The SNS-Simscape library implements neuron, synapse, afferent-encoder, activation, and muscle-force elements as editable Simulink blocks. Compared with the earlier SNS models of \citet{hunt_development_2017} and \citet{young_analyzing_2019}, the added elements concern BPA actuation, afferent encoding, and mechanical interfaces. The library retains the conductance-based neuron and synapse formulation; it does not introduce a new neuron model. Its verification compares selected implementations and circuits, rather than benchmarking all of the earlier libraries. Figure~\ref{fig:simulink_sns_implementation} shows the core blocks and graded-neuron signal flow.
++The SNS-Simscape library implements neuron, synapse, afferent-encoder, activation, and muscle-force elements as editable Simulink blocks. The library retains the conductance-based neuron and synapse formulation supplied by SNS-Toolbox; it does not introduce a new neuron model. Verification uses selected circuits under matched inputs. Figure~\ref{fig:simulink_sns_implementation} shows the core blocks and graded-neuron signal flow.
+ 
+-Two mechanical import routes were investigated. The OpenSim-derived body imports as a mechanism whose muscles must be connected through actuator blocks. The SolidWorks knee imports with its intended hinge welded because the exporter does not preserve the hinge mates. Consequently, the import is not evidence of a controlled biomimetic knee. These limits are separate from the standalone reflex demonstrations.
++OpenSim-derived and SolidWorks-derived mechanisms were imported into Simscape Multibody. These mechanical imports are separate from the standalone reflex demonstrations.
+ 
+ \begin{figure}[htbp]
+ \centering
+
+--- before/94-AppendixC.tex
++++ chapters/94-AppendixC.tex
+@@ -189,7 +189,7 @@
+ 
+ \section{Adopted Correction-Term Values}
+ 
+-Table~\ref{tab:app_xi_values} records the correction-term values adopted at the time of writing. The initial single-bracket identification reported with the results figures (Section~\ref{sec:results_torque}) was superseded by the two-stage identification described in Section~\ref{sec:ongoing}: a two-bracket flexor identification over the four tests of Table~\ref{tab:app_flxpin_tests} other than the 47\,cm test, cross-validated with two tests held out per fold (the adopted fold trained on the 48\,cm and 41\,cm tests and validated on the 46\,cm and 40\,cm-tendon tests), followed by an extensor refit that locks $(X_{1}, X_{2})$ to a member of the same flexor Pareto front and solves only the extensor-specific terms $(X_{0}, X_{3})$ on its three-test training set with three tests held out for validation. The pinned-flexor data do not uniquely determine $(X_{1}, X_{2})$ (the cross-validation fronts contain a family of stiffness pairs of comparable fit quality), so the adopted flexor row and the locked extensor refit are two operating points tied to one and the same stiffness pair; Table~\ref{tab:app_xi_values} and the paragraph that follows it state the adopted values and their front-row provenance. The adopted pair was chosen because it is the pair for which both redesign configurations meet the required 5\,\% torque-overshoot target simultaneously: in the adoption sweep the flexor redesign reached a minimum margin of $+5.00$\,\% and the locked extensor redesign $+5.043$\,\% at $-20.2^{\circ}$ (\texttt{Dig\_out/frommat\_flx\_20260920.log} and \texttt{Dig\_out/Opt\_flxr77\_20260920.log}); the refined redesigns improve this to $+5.01$\,\% (flexor) and $+5.02$\,\% (extensor).
++Table~\ref{tab:app_xi_values} records the correction-term values adopted at the time of writing. The initial single-bracket identification reported with the results figures (Section~\ref{sec:results_torque}) was superseded by the two-stage identification described in Section~\ref{sec:ongoing}: a two-bracket flexor identification over the four tests of Table~\ref{tab:app_flxpin_tests} other than the 47\,cm test, cross-validated with two tests held out per fold (the adopted fold trained on the 48\,cm and 41\,cm tests and validated on the 46\,cm and 40\,cm-tendon tests), followed by an extensor refit that locks $(X_{1}, X_{2})$ to a member of the same flexor Pareto front and solves only the extensor-specific terms $(X_{0}, X_{3})$ on its three-test training set with three tests held out for validation. The adopted values and their front-row provenance are recorded below.
+ 
+ \begin{table}[htbp]
+ \caption{Adopted correction-term values of record. The flexor fit solves $(\chi_{0}, \chi_{1}, \chi_{2})$; the extensor refit solves $(\chi_{0}, \chi_{3})$ with the stiffness pair locked to the flexor values.}

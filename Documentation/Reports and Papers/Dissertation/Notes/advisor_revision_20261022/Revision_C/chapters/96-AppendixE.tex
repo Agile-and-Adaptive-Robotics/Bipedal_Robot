@@ -5,17 +5,17 @@ This appendix records the curation snapshot and pathway examples supporting Chap
 
 \section{Record Sets and Coverage}
 
-Before pruning, the working base contained 1,393 records across its five tables. Removing 436 records left 957: 561 Papers, 39 Feedback, 244 Models, 109 Review Papers, and 4 Recorders. The removed set comprised 382 paper records and 54 linked non-paper records. The application embeds the 943 audited papers, including the archived papers, but does not yet distribute the 450 non-paper records of the full pre-prune base as complete record sets.
+The application contains 1,393 records from the five-table base: 943 Papers, 247 Models, 157 Review Papers, 42 Feedback pathways, and 4 Recorders. Of these, 436 are archived: 382 papers and 54 non-paper records. The retained working base contains 957 records: 561 Papers, 244 Models, 109 Review Papers, 39 Feedback pathways, and 4 Recorders. The application table includes all record types, while its pivot and citation views use the paper set.
 
 Among the 561 retained papers, 523 carry curation notes, 426 preparation tags, 240 notes assessing animal-study potential, 118 links to named feedback pathways, 86 an afferent classification, and 258 robot/simulation translation notes. There are 550 DOIs; 38 records remain without grounding text. These fields overlap and should not be summed as disjoint categories.
 
-The citation graph was constructed over the 943-paper audit: 730 papers were connected by 11,130 directed in-corpus citation pairs, and the Louvain partition produced 18 named groups. Citation proximity supplies a navigation aid, not evidence that two papers establish the same mechanism. Figure~\ref{fig:sadb_clusters} shows the application's paper-level neighborhood view.
+The citation graph was constructed over the 943-paper audit: 730 papers were connected by 11,130 directed in-corpus citation pairs, and the Louvain partition produced 18 named groups. Citation proximity supplies a navigation aid, not evidence that two papers establish the same mechanism. The citation-neighborhood view is shown in Chapter~\ref{ch:database} (Figure~\ref{fig:sadb_clusters}); Figure~\ref{fig:sadb_explorer} provides the complementary paper-table view.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.94\textwidth]{sadb_clusters_app.png}
-\caption[SADb citation-neighborhood view]{Application citation view focused on Grillner (1985). Soma size represents citation count; axes show year and citation count. Triangles mark 57 in-corpus citers, and circles 13 cited papers. Second-degree papers are gray. The panels identify the selected paper and its connections.}
-\label{fig:sadb_clusters}
+\includegraphics[width=\textwidth]{sadb_explorer.png}
+\caption[The SADb Explorer]{SADb Explorer paper-table view. Searches and filters expose bibliographic information, curation notes, preparation tags, and afferent or pathway links. The embedded corpus is available offline.}
+\label{fig:sadb_explorer}
 \end{figure}
 
 \section{Afferent Classes and Linked Pathways}

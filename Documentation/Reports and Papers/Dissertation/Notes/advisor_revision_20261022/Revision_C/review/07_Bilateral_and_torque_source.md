@@ -1,3 +1,5 @@
+Final-sweep update (2026-10-23): finished physical-test plots are included; the knowledge-gap statement now enumerates all five combinations in Ben's advisor reply. The monthly scraper and new bipulley run remain active. Earlier status below is historical.
+
 # Clarifications from Ben
 
 The main SNS opening now explicitly credits Ben's expansion of the combined walker into left- and right-side neural circuits with interconnected RGs. This follows the earlier Li/Deng construction and 2021 air-stepping account, and leads into the unresolved question of bilateral coordination under load and the need to separate circuit, implementation, and mechanical-interface effects. The later bilateral network is not presented as the source of the earlier air-stepping result. Appendix D retains its detailed assembly/test status.

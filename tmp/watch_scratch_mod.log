@@ -54,14 +54,16 @@ window: 2026-09-01 .. 2026-10-22   corpus papers: 943   corpus DOIs: 892
   Crossref keyword hindlimb locomotion: 207 hits
   Crossref keyword locomotor recovery: 5547 hits
   Crossref keyword sensory feedback: 3358 hits
-  raw candidate records pulled (both sources, before dedupe): 702
-  distinct candidate DOIs merged: 594
-  in-window candidates: 594
+  raw candidate records pulled (both sources, before dedupe): 1279
+  distinct candidate DOIs merged: 1092
+  in-window candidates: 1092
   dropped, already in corpus (943 papers): 0
   dropped, routed in an earlier run/month: 0
-  trigger hits (author/keyword): 21; author hits gated out of scope: 0
-  version twins collapsed: 0 DOI(s) dropped in favor of the published version
-report : tmp\watch_mod\reports\2026-10.md (21 rows)
+  dropped, version twin of an already-routed work: 0
+  trigger hits (author/keyword): 26; author hits gated out of scope: 13
+  version twins collapsed (same title): 1 DOI(s) dropped in favor of the published version
+  twin DOIs dropped: 10.7554/elife.108656.2
+report : tmp\watch_mod\reports\2026-10.md (25 rows)
 shortlist: tmp\watch_mod\reports\2026-10_shortlist.json
 note: OpenAlex unavailable this run (HTTP 429/401 after retries — anonymous per-IP daily budget exhausted; resets midnight UTC) — remaining OpenAlex queries skipped, Crossref carried the sweep
-elapsed: 76.5 s
+elapsed: 106.0 s

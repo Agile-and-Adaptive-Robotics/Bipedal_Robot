@@ -189,7 +189,7 @@ Pinned extensor refit & $X_{0}, X_{3}$ & $X_{0}\in[-20,\,+5]$~mm; $X_{3}\in[0,\,
 
 \section{Adopted Correction-Term Values}
 
-Table~\ref{tab:app_xi_values} records the correction-term values adopted at the time of writing. The initial single-bracket identification reported with the results figures (Section~\ref{sec:results_torque}) was superseded by the two-stage identification described in Section~\ref{sec:ongoing}: a two-bracket flexor identification over the four tests of Table~\ref{tab:app_flxpin_tests} other than the 47\,cm test, cross-validated with two tests held out per fold (the adopted fold trained on the 48\,cm and 41\,cm tests and validated on the 46\,cm and 40\,cm-tendon tests), followed by an extensor refit that locks $(X_{1}, X_{2})$ to a member of the same flexor Pareto front and solves only the extensor-specific terms $(X_{0}, X_{3})$ on its three-test training set with three tests held out for validation. The pinned-flexor data do not uniquely determine $(X_{1}, X_{2})$ (the cross-validation fronts contain a family of stiffness pairs of comparable fit quality), so the adopted flexor row and the locked extensor refit are two operating points tied to one and the same stiffness pair; Table~\ref{tab:app_xi_values} and the paragraph that follows it state the adopted values and their front-row provenance. The adopted pair was chosen because it is the pair for which both redesign configurations meet the required 5\,\% torque-overshoot target simultaneously: in the adoption sweep the flexor redesign reached a minimum margin of $+5.00$\,\% and the locked extensor redesign $+5.043$\,\% at $-20.2^{\circ}$ (\texttt{Dig\_out/frommat\_flx\_20260920.log} and \texttt{Dig\_out/Opt\_flxr77\_20260920.log}); the refined redesigns improve this to $+5.01$\,\% (flexor) and $+5.02$\,\% (extensor).
+Table~\ref{tab:app_xi_values} records the correction-term values adopted at the time of writing. The initial single-bracket identification reported with the results figures (Section~\ref{sec:results_torque}) was superseded by the two-stage identification described in Section~\ref{sec:ongoing}: a two-bracket flexor identification over the four tests of Table~\ref{tab:app_flxpin_tests} other than the 47\,cm test, cross-validated with two tests held out per fold (the adopted fold trained on the 48\,cm and 41\,cm tests and validated on the 46\,cm and 40\,cm-tendon tests), followed by an extensor refit that locks $(X_{1}, X_{2})$ to a member of the same flexor Pareto front and solves only the extensor-specific terms $(X_{0}, X_{3})$ on its three-test training set with three tests held out for validation. The adopted values and their front-row provenance are recorded below.
 
 \begin{table}[htbp]
 \caption{Adopted correction-term values of record. The flexor fit solves $(\chi_{0}, \chi_{1}, \chi_{2})$; the extensor refit solves $(\chi_{0}, \chi_{3})$ with the stiffness pair locked to the flexor values.}
@@ -312,3 +312,30 @@ The unadjusted cam optimizer solution had minimum margins of $+31.30$\,\% agains
 \label{fig:app_cam_GH}
 \end{figure}
 \clearpage
+
+\section{Supporting Torque-Prediction Fit Statistics}\label{sec:app_torque_fit_details}
+
+The earlier cross-configuration fit below is distinct from the adopted two-stage identification. The pre-optimization comparison and the adopted pinned-flexor and pinned-extensor per-test fits appear in Chapter~\ref{ch:torque} (Tables~\ref{tab:FlxPinPreGof}, \ref{tab:FlxPinGof}, and~\ref{tab:ExtPinGof}).
+
+
+
+
+
+
+
+\begin{table}[p]
+\centering\small
+\caption{Goodness of fit for the improved torque model across test configurations. RMSE and maximum absolute residual are in $\text{N}\cdot\text{m}$.}
+\label{tab:TorqueFit}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.55\textwidth}*{3}{>{\centering\arraybackslash}X}@{}}
+\toprule
+\textbf{Configuration} & \textbf{RMSE} & \textbf{FVU} & \textbf{Max.\ residual} \\
+\midrule
+Flexor, pin joint, $l_{0}=\qty{48.5}{\cm}$ (training) & 1.616 & 0.0958 & 3.2527 \\
+Flexor, pin joint, $l_{0}=\qty{45.7}{\cm}$ (validation) & 2.1214 & 0.0878 & 5.1690 \\
+Extensor, biomimetic knee, $l_{0}=\qty{51.8}{\cm}$ & 0.8920 & 0.3396 & 1.4188 \\
+Flexor, biomimetic knee, $\diameter$\qty{10}{\mm}, $l_{0}=\qty{41.5}{\cm}$ & 0.3007 & 0.0102 & 0.4647 \\
+Flexor, biomimetic knee, $\diameter$\qty{20}{\mm}, $l_{0}=\qty{41.5}{\cm}$ (\qty{620}{\kPa}) & 1.8024 & 0.0499 & 3.5678 \\
+\bottomrule
+\end{tabularx}
+\end{table}
