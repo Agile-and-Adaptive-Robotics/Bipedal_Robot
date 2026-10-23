@@ -619,13 +619,13 @@ title('BPA strain definitions')
 % are scratch, NOT the paper numbers). Reaction point measured 2026-10-23;
 % LC entered exactly as in the tab -- the muscle force is pi from this
 % angle (same convention as the readserialnumbers2 flexor guard).
-Load   = [];   % Load (N)
-K_deg  = [];   % Knee angle, deg (flexion negative)
-LC_deg = [];   % Load-cell angle, deg, as entered in the tab
-Presh  = [];   % Measured pressure, kPa
+Load   = [84	51	77.8	69	67.3	79	96	20	11.1	77	60	69.5	28	93.7	106];   % Load (N)
+K_deg  = [-61.5	-83	5	-5	-52	-45	-42	-114	-119	-62	-78	-87	-105	-22.5	-14];   % Knee angle, deg (flexion negative)
+LC_deg = [35	38	30	25	25	25	25	45	45	28.5	34	35	43	17	16];   % Load-cell angle, deg, as entered in the tab
+Presh  = [517	628	226.5	242.5	406.7	410.3	412	634	633	400	489	635	638	275.3	273.7];   % Measured pressure, kPa
 
 if isempty(Load)
-    fprintf(['56 cm flexor compare: no points entered yet -- fill ', ...
+    fprintf(['56 cm flexor compar', ...
         'Load/K_deg/LC_deg/Presh above.\n']);
 else
     K_ang  = K_deg*pi/180;      % NOTE: c is the color cell here
@@ -636,8 +636,8 @@ else
     ang = atan2d(p_rf(2), p_rf(1));
     T_t1_rf = RpToTrans(eye(3), p_rf);
     Trk = pagemtimes(TransInv(T_t1_rf), T_t1_ICR);
-    fcn15 = fit(phi, squeeze(Trk(1,4,:)), 'cubicspline');
-    fcn16 = fit(phi, squeeze(Trk(2,4,:)), 'cubicspline');
+    fcn15 = fit(phi', squeeze(Trk(1,4,:)), 'cubicspline');
+    fcn16 = fit(phi', squeeze(Trk(2,4,:)), 'cubicspline');
 
     Trk = zeros(4,4,length(Load));
     Fr = zeros(6,1,length(Load));
@@ -674,9 +674,9 @@ else
     scatter(K_deg, predAP, 60*Presh/620, 'filled', ...
         'MarkerFaceColor', c1, 'MarkerEdgeColor', 'none')
     plot(humanAngle, TorqueHz, ':', 'Color', c8)
-    plot(phiD, Bifemsh_Pam3.Torque_p(:,3), '--', 'Color', c7)
+    plot(phiD, Bifemsh_Pam3.Torque_p(:,3), '--', 'Color', c4)
     scatter(K_deg, TorqueZ56, 60*Presh/620, 'filled', ...
-        'MarkerFaceColor', c4, 'MarkerEdgeColor', 'none')
+        'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none')
     legend('Back-calculated','Human target','Optimized (620 kPa)', ...
         'Measured','Location','best')
     title('20 mm flexor, 56 cm pair: measured vs predicted')
