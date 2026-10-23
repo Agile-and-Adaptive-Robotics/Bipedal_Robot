@@ -1,0 +1,20 @@
+% capability_table_20261022.tex -- 27-actuator capability table,
+% assembled 2026-10-22 from per_muscle_capability_20261022.csv in this
+% folder. Float placement NOT decided: Ben wraps/places it.
+% Suggested caption: Isometric capability of the hand-tuned and optimized
+% actuator routings against the same-named human muscle torque curves
+% (Gait2392, OpenSim 4.4.1). Each cell is the row average over the 25-point
+% range-of-motion grid at the actuator's primary coordinate, with every
+% non-graded joint the muscle crosses pinned at 0 deg. The hand-tuned row
+% averages all 27 covered actuators; the optimized row averages the 16 of
+% 23 built actuators that could be graded on the survey hinge chain
+% (4 could not be built, 7 built but grade-unable; see
+% CAVEATS_REPORT_20261022.md).
+\begin{tabular}{lcc}
+\toprule
+ & Torque meets or exceeds human (\% of RoM) & Active force (\% of RoM) \\
+\midrule
+Hand-tuned (27 of 27 graded) & 72.89\% & 98.81\% \\
+Optimized (16 of 27 graded; 23 built) & 52.00\% & 82.25\% \\
+\bottomrule
+\end{tabular}

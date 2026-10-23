@@ -18,13 +18,16 @@ function data = readserialnumbers2()
 % Live torque guard: enter the KNEE ANGLE and LOAD-CELL
 % ANGLE in the boxes at the bottom of the window. The live force is
 % converted to knee torque with the same Adjoint transform as the
-% FlxTest20mm_51cm section of Knee_Flexor_Data_20mm.m (robot t1->ICR
-% kinematics, reaction point dLC/angLC), and compared with the OpenSim
-% human biceps femoris short-head torque target at that knee angle. The
-% third plot shows the measured torque against the target line, and the
-% status text reports whether the human torque magnitude is met (>=) and
-% by what margin. Flexion torques are negative: MET means the measured
-% magnitude meets or exceeds the human magnitude.
+% "Compare to results" sections of Knee_Flexor_Data_20mm.m /
+% Knee_Extensor_20mm.m (robot t1->ICR kinematics, per-side reaction
+% point dLC/angLC), and compared with the OpenSim human torque target
+% at that knee angle. FLEXOR = biceps femoris short head (flexion
+% torques negative; MET = measured magnitude >= human magnitude).
+% EXTENSOR = vasti (positive torques; MET = measured >= human).
+% Switch sides with ONE line in the "Test selection" block below
+% (comment/uncomment), then rerun. The third plot shows the measured
+% torque against the target line, and the status text reports whether
+% the human torque is met and by what margin.
 %
 % Saved/returned columns add the guard values per row:
 %   6. Knee angle as entered (deg)
@@ -47,18 +50,30 @@ function data = readserialnumbers2()
     expectedNumCols = 5;
     savedNumCols = 9;
 
-    %% Torque-guard geometry (matches Knee_Flexor_Data_20mm.m d51/ang51)
-    % Defaults are the 42 cm long-tibia values -- UPDATE dLC/angLC after
-    % the 51 cm flexor rig setup is measured.
-    prf = [0.085, -0.296, 0];
-    dLC  = hypot(prf(1),prf(2));    % theta1 origin -> load-cell arm, m
-    angLC = atan2d(prf(2),prf(1));     % arm angle in the tibia frame, deg
-
-    %% Save settings
+    %% Test selection: uncomment ONE line (flexor or extensor rig).
+    % This switches the human torque target (bifemsh vs vasti), the
+    % reaction point, the LC-angle force convention, the MET/BELOW sign
+    % rule, the entry-box defaults, and the save folder.
+    testSide = "flexor";      % flexor: bifem short-head target
+    % testSide = "extensor";  % extensor: vasti target
 
     functionFolder = fileparts(mfilename("fullpath"));
-    saveFolder = fullfile(functionFolder, "Flx_20mm");
-    baseName = "FlxTest_1_";
+
+    if testSide == "flexor"
+        prf = [0.095, -0.325, 0];   % flexor rig reaction point, m (measured 2026-10-23)
+        saveFolder = fullfile(functionFolder, "Flx_20mm");
+        baseName = "FlxTest_1_";
+        defaultKneeDeg = "-80";
+        defaultLCDeg = "10";
+    else
+        prf = [-0.050, -0.255, 0];  % extensor rig reaction point, m (ExtTest20mm_2)
+        saveFolder = fullfile(functionFolder, "Ext_20mm");
+        baseName = "ExtTest_3_";
+        defaultKneeDeg = "-30";
+        defaultLCDeg = "30";
+    end
+    dLC  = hypot(prf(1),prf(2));    % theta1 origin -> load-cell arm, m
+    angLC = atan2d(prf(2),prf(1));     % arm angle in the tibia frame, deg
 
     if ~isfolder(saveFolder)
         mkdir(saveFolder);
@@ -87,9 +102,9 @@ function data = readserialnumbers2()
         addpath(fullfile(root, "Code", "Matlab", "Mesh_Optimization"));
         addpath(fullfile(root, "Testing_Data", "2022_02_Festo"), "-end");
 
-        % buildKneeFlexorContext20mm prints its route-seed geometry (tendon
+        % The context builders print their route-seed geometry (tendon
         % lengths etc.) -- irrelevant here, so capture and discard it.
-        ctx = loadTorqueGuardContext();
+        ctx = loadTorqueGuardContext(testSide);
         pRF = [dLC*cosd(angLC), dLC*sind(angLC), 0];
         phiV = ctx.phi(:);
         txV = squeeze(ctx.T_t1_ICR(1, 4, :)) - pRF(1);
@@ -97,7 +112,8 @@ function data = readserialnumbers2()
         txV = txV(:);
         tyV = tyV(:);
         torqueOK = true;
-        fprintf("Torque guard model loaded (knee kinematics + human bifem short-head target).\n");
+        fprintf("Torque guard model loaded (%s: knee kinematics + human target).\n", ...
+            char(testSide));
     catch torqueModelME
         fprintf("Torque guard unavailable (continuing without it):\n  %s\n", ...
             torqueModelME.message);
@@ -182,7 +198,7 @@ function data = readserialnumbers2()
               max(40, floor((ss(4) - figH)/2)), figW, figH];
 
     fig = figure( ...
-        "Name", "Arduino Live Data", ...
+        "Name", "Arduino Live Data (" + testSide + ")", ...
         "NumberTitle", "off", ...
         "Position", figPos, ...
         "WindowKeyReleaseFcn", @keyReleased, ...
@@ -219,12 +235,12 @@ function data = readserialnumbers2()
     uKneeLabel = uicontrol(fig, "Style", "text", ...
         "String", "Knee angle [deg]", "Units", "normalized", ...
         "Position", [0.01 0.055 0.13 0.030], "HorizontalAlignment", "left"); %#ok<NASGU>
-    uKneeEdit = uicontrol(fig, "Style", "edit", "String", "-80", ...
+    uKneeEdit = uicontrol(fig, "Style", "edit", "String", defaultKneeDeg, ...
         "Units", "normalized", "Position", [0.01 0.010 0.07 0.040]);
     uLCLabel = uicontrol(fig, "Style", "text", ...
-        "String", "LC angle [deg, from tibia axis]", "Units", "normalized", ...
+        "String", "LC angle [deg, as entered in tab]", "Units", "normalized", ...
         "Position", [0.15 0.055 0.22 0.030], "HorizontalAlignment", "left"); %#ok<NASGU>
-    uLCEdit = uicontrol(fig, "Style", "edit", "String", "10", ...
+    uLCEdit = uicontrol(fig, "Style", "edit", "String", defaultLCDeg, ...
         "Units", "normalized", "Position", [0.15 0.010 0.07 0.040]);
     uVerdict = uicontrol(fig, "Style", "text", "String", ...
         "Enter knee + load-cell angles for the torque guard", ...
@@ -492,19 +508,26 @@ function data = readserialnumbers2()
             return;
         end
         Kr = deg2rad(Kdeg);
-        % Ben's angle convention (2026-10-04): the LC angle is measured
-        % FROM THE TIBIA AXIS (flexor mirror of the extensor guard). The
-        % Adjoint machinery wants the force angle from the tibia x-axis,
-        % i.e. 90 - LC. Convert here, same as the FlxTest20mm_51cm
-        % section of Knee_Flexor_Data_20mm.m.
-        Lr = deg2rad(90 - Ldeg);
+        % LC entry: the angle exactly as entered in the test tab.
+        %  - Flexor (Ben, 2026-10-23, measured): the ACTUAL angle of the
+        %    load-cell reaction force in the bracket frame (R_br = eye(3)
+        %    with t1); the muscle force is pi from this angle. Verified
+        %    against the 42 cm measured torques: 80 N at a 10 deg entry
+        %    gives -28.6 N*m (the earlier 90-LC conversion read -12).
+        %  - Extensor: same direct entry; the force vector folds in the
+        %    sign that the extensor tab records as negated LC entries.
+        Lr = deg2rad(Ldeg);
         tx = interp1(phiV, txV, Kr, "pchip");
         ty = interp1(phiV, tyV, Kr, "pchip");
         if ~isfinite(tx) || ~isfinite(ty)
             return;   % knee angle outside the robot kinematics table
         end
         Trk = RpToTrans(eye(3), [tx; ty; 0]);
-        Fr = [0; 0; 0; forceN*cos(Lr + pi); forceN*sin(Lr + pi); 0];
+        if testSide == "flexor"
+            Fr = [0; 0; 0; forceN*cos(Lr + pi); forceN*sin(Lr + pi); 0];
+        else
+            Fr = -[0; 0; 0; forceN*cos(pi - Lr); forceN*sin(pi - Lr); 0];
+        end
         Fk = Adjoint(Trk)' * Fr;
         tz = Fk(3);
     end
@@ -530,19 +553,28 @@ function data = readserialnumbers2()
             uVerdict.ForegroundColor = [0 0 0];
             return;
         end
-        % Flexion torques are negative (human bifem target and measured
-        % flexor torque alike): MET means the measured torque is at or
-        % below the target, i.e. its magnitude meets/exceeds the human's.
+        % Flexor torques are negative (flexion): MET when the measured
+        % magnitude meets or exceeds the human magnitude. Extensor
+        % torques are positive: MET when measured >= human.
         margin = tz - tgt;
-        if margin <= 0
+        if testSide == "flexor"
+            met = margin <= 0;
+            dispTz = abs(tz);
+            dispTgt = abs(tgt);
+        else
+            met = margin >= 0;
+            dispTz = tz;
+            dispTgt = tgt;
+        end
+        if met
             uVerdict.String = sprintf( ...
                 "MET: %.2f N*m vs human %.2f N*m (+%.2f margin)", ...
-                abs(tz), abs(tgt), abs(margin));
+                dispTz, dispTgt, abs(margin));
             uVerdict.ForegroundColor = [0 0.55 0];
         else
             uVerdict.String = sprintf( ...
                 "BELOW: %.2f N*m vs human %.2f N*m (%.2f short)", ...
-                abs(tz), abs(tgt), margin);
+                dispTz, dispTgt, abs(margin));
             uVerdict.ForegroundColor = [0.8 0 0];
         end
     end
@@ -697,10 +729,14 @@ function shutdownSerial(s, fig)
 end
 
 
-function ctx = loadTorqueGuardContext()
-%LOADTORQUEGUARDCONTEXT Build the flexor context with its chatter
-% suppressed (evalc is not allowed in the main function because it
-% contains nested functions, so the call lives here).
+function ctx = loadTorqueGuardContext(testSide)
+%LOADTORQUEGUARDCONTEXT Build the flexor or extensor context with its
+% chatter suppressed (evalc is not allowed in the main function because
+% it contains nested functions, so the call lives here).
 
-    evalc("ctx = buildKneeFlexorContext20mm();");
+    if testSide == "flexor"
+        evalc("ctx = buildKneeFlexorContext20mm();");
+    else
+        evalc("ctx = buildKneeExtContext20mm();");
+    end
 end

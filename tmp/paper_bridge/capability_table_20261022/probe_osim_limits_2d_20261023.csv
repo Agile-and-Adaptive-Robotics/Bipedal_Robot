@@ -1,0 +1,45 @@
+# opensim_version 4.4.1 (pinned 4.4.1)
+# model D:\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody\gait2392_simbody.osim sha1 b89062c763e6d8fa3d7651c0a4fd2820055d807c
+# map D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27_v2\actuator_map_27.json sha1 a97afffeeae85687810986273db6ba0151eba1a2
+# generated 2026-10-23T02:32:18.702757 step_deg 1.0 step_pct 2.0 fine_deg 0.5
+actuator_id,master_name,muscle,primary_dof,secondary_dof,n_grid_points,live_wrap_count,n_cond_pp,n_moving_pp,cond_points_xml,phi0_deg,tsl_m,lo_m,fmax_n,min_lmt_m,min_lmt_at_deg,min_lmt_norm,min_lcen_est,min_lcen_est_at_deg,primary_only_min_lmt_norm,n_act_changes_2d,act_boundaries_deg,act_boundary_span_deg,n_steps_2d,max_step_pct_2d,fine_steps_sec0_deg,fine_max_step_pct_sec0,fine_act_changes_sec0_deg,max_abs_arm_m
+1,Erector Spinae,ercspn_r,lumbar_extension,lumbar_bending,1116,0,0,0,,0.0,0.03,0.12,2500.0,0.12664,15;15,0.8442,0.8053,15;15,0.9182,0,,0.0,0,1.1315,,0.563,,0.04909
+1,Erector Spinae,ercspn_r,lumbar_extension,lumbar_rotation,1116,0,0,0,,0.0,0.03,0.12,2500.0,0.13629,15;15,0.9086,0.8857,15;15,0.9182,0,,0.0,0,1.1824,,0.563,,0.04858
+2,Internal Oblique,intobl_r,lumbar_extension,lumbar_bending,1116,0,0,0,,0.0,0.1,0.1,900.0,0.15316,-20;15,0.7658,0.5316,-20;15,0.9047,0,,0.0,0,0.6952,,0.3013,,0.05768
+3,External Oblique,extobl_r,lumbar_extension,lumbar_bending,1116,0,0,0,,0.0,0.14,0.12,900.0,0.2329,-20;15,0.8958,0.7742,-20;15,0.9574,0,,0.0,0,1.4165,,0.6629,,0.08782
+4,"Bicep Femoris, Long Head",bifemlh_r,knee_angle_r,hip_flexion_r,16506,0,0,0,,0.0,0.326,0.109,896.0,0.35469,-118;-15,0.8154,0.2632,-118;-15,0.8473,0,,0.0,0,1.9791,,0.9619,,0.03496
+5,Semimembranosus,semimem_r,knee_angle_r,hip_flexion_r,16506,0,1,0,knee_angle_r:-32.00..10.00,15.0,0.359,0.08,1288.0,0.33268,-120;-15,0.7578,0.2588,-80;-3,0.7848,126,-32.5,0.0,0,1.922,,0.9358,-32.25,0.04051
+6,Sartorius,sar_r,knee_angle_r,hip_flexion_r,16506,0,0,0,,0.0,0.1,0.52,156.0,0.40457,-120;110,0.6525,0.5857,-120;110,0.8715,0,,0.0,1764,2.5542,,1.2861,,0.02028
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,hip_flexion_r,16506,0,0,0,,3.0,0.425,0.095,233.0,0.39955,10;110,0.7684,0.0523,-106;104,1.0258,0,,0.0,630,2.4247,,1.2242,,0.01397
+7,Tensor Fasciae Latae,tfl_r,knee_angle_r,hip_adduction_r,8646,0,0,0,,3.0,0.425,0.095,233.0,0.48178,10;-45,0.9265,0.6,10;-45,1.0258,0,,0.0,330,2.4247,,1.2242,,0.01397
+8,Rectus Femoris,rect_fem_r,knee_angle_r,hip_flexion_r,16506,0,1,1,knee_angle_r:-150.00..-83.65,5.0,0.31,0.114,1169.0,0.31956,10;110,0.7537,0.121,10;110,0.9496,126,-83.5,0.0,717,3.9674,,1.7818,-83.75,0.05057
+9,Gracilis,grac_r,knee_angle_r,hip_flexion_r,16506,0,1,0,knee_angle_r:-25.00..10.00,3.0,0.126,0.352,162.0,0.37275,-120;2,0.7798,0.7029,-120;2,0.7799,126,-25.5,0.0,100,7.0573,,0.8142,-25.25,0.03943
+10,"Bicep Femoris, Short Head",bifemsh_r,knee_angle_r,(none),131,0,0,0,,23.0,0.089,0.173,804.0,0.19122,-120;0,0.7299,0.7084,-120;0,0.7299,0,,0.0,12,2.1725,,1.0874,,0.03386
+11,Vastus Intermedius,vas_int_r,knee_angle_r,(none),131,0,1,1,knee_angle_r:-150.00..-81.36,3.0,0.136,0.087,1365.0,0.17453,10;0,0.7827,0.446,10;0,0.7827,1,-81.5,0.0,6,3.5475,,1.8372,-81.25,0.04872
+12,Soleus,soleus_r,ankle_angle_r,(none),71,0,0,0,,25.0,0.25,0.05,3549.0,0.25076,-50;0,0.8359,0.4229,-50;0,0.8359,0,,0.0,0,0.9713,,0.4878,,0.04828
+13,Medial Gastroocnemius,med_gas_r,ankle_angle_r,knee_angle_r,9301,0,1,0,knee_angle_r:-45.00..10.00,17.0,0.39,0.06,1558.0,0.37493,-50;-120,0.8332,0.2924,-42;-77,0.9142,0,,0.0,0,1.1348,,0.5703,,0.04762
+14,Lateral Gastrocenemius,lat_gas_r,ankle_angle_r,knee_angle_r,9301,0,1,0,knee_angle_r:-45.00..10.00,8.0,0.38,0.064,683.0,0.37217,-50;-120,0.8382,0.1392,-44;-96,0.9159,0,,0.0,0,1.1069,,0.5565,,0.04874
+15,Tibialis Posterior,tib_post_r,subtalar_angle_r,ankle_angle_r,4331,0,0,0,,12.0,0.31,0.031,1588.0,0.32639,34;-50,0.9571,0.568,34;-50,0.9833,0,,0.0,817,4.2185,,1.26,,0.02196
+16,Tibialis Posterior (duplicate name),tib_ant_r,ankle_angle_r,subtalar_angle_r,4331,0,0,0,,5.0,0.223,0.098,905.0,0.28266,20;35,0.8806,0.6149,20;35,0.8996,0,,0.0,0,0.9085,,0.4487,,0.0435
+17,Peroneus Brevis,per_brev_r,subtalar_angle_r,ankle_angle_r,4331,0,0,0,,5.0,0.161,0.05,435.0,0.19754,-25;-16,0.9362,0.736,-25;-16,0.9383,0,,0.0,356,6.7194,,0.264,,0.03022
+18,Peroneus Longus,per_long_r,subtalar_angle_r,ankle_angle_r,4331,0,0,0,,10.0,0.345,0.049,943.0,0.38011,-25;-34,0.9647,0.7373,-25;-34,0.9735,0,,0.0,297,10.2329,,0.2736,,0.02854
+19,Peroneus Tertius,per_tert_r,subtalar_angle_r,ankle_angle_r,4331,0,0,0,,13.0,0.1,0.079,180.0,0.16594,-25;20,0.927,0.8644,-25;20,0.9505,0,,0.0,125,2.5991,,0.6343,,0.03236
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,ankle_angle_r,5751,0,0,0,,7.0,0.4,0.034,310.0,0.41683,-40;-50,0.9604,0.5097,-40;-50,0.9873,0,,0.0,0,0.886,,0.4437,,0.00704
+20,Flexor Digitorum Longus,flex_dig_r,mtp_angle_r,subtalar_angle_r,4941,0,0,0,,7.0,0.4,0.034,310.0,0.41718,-40;35,0.9612,0.5198,-40;35,0.9873,0,,0.0,0,0.886,,0.4437,,0.00704
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,ankle_angle_r,5751,0,0,0,,10.0,0.38,0.043,322.0,0.40085,-40;-50,0.9476,0.5149,-40;-50,0.9859,0,,0.0,213,2.0646,,1.0356,,0.00611
+21,Flexor Hallucis Longus,flex_hal_r,mtp_angle_r,subtalar_angle_r,4941,0,0,0,,10.0,0.38,0.043,322.0,0.40794,-40;35,0.9644,0.6725,-40;35,0.9859,0,,0.0,183,2.0646,,1.0356,,0.00611
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,ankle_angle_r,5751,0,0,0,,8.0,0.345,0.102,512.0,0.42321,40;20,0.9468,0.7793,40;20,0.9778,0,,0.0,0,1.102,,0.5515,,0.0072
+22,Extensor Digitorum Longus,ext_dig_r,mtp_angle_r,subtalar_angle_r,4941,0,0,0,,8.0,0.345,0.102,512.0,0.43151,40;-25,0.9654,0.8595,40;-25,0.9778,0,,0.0,0,1.102,,0.5515,,0.0072
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,ankle_angle_r,5751,0,0,0,,6.0,0.305,0.111,162.0,0.38976,40;20,0.9369,0.7707,40;20,0.9719,0,,0.0,0,1.3339,,0.6675,,0.00893
+23,Extensor Hallucis Longus,ext_hal_r,mtp_angle_r,subtalar_angle_r,4941,0,0,0,,6.0,0.305,0.111,162.0,0.40063,40;35,0.9631,0.8679,40;35,0.9719,0,,0.0,0,1.3339,,0.6675,,0.00893
+24,Gluteus Maximus,glut_max1_r,hip_flexion_r,hip_adduction_r,8316,0,0,0,,5.0,0.125,0.142,573.0,0.164,-15;-45,0.6142,0.2882,-15;-45,0.703,0,,0.0,6,2.1546,,0.588,,0.0531
+24,Gluteus Maximus,glut_max1_r,hip_flexion_r,hip_rotation_r,10836,0,0,0,,5.0,0.125,0.142,573.0,0.17687,-15;-37,0.6624,0.3755,-15;-37,0.703,0,,0.0,0,1.5706,,0.588,,0.0636
+24,Gluteus Maximus,glut_max2_r,hip_flexion_r,hip_adduction_r,8316,0,0,0,,0.0,0.127,0.147,819.0,0.19285,-15;-36,0.7038,0.448,-15;-36,0.7101,0,,0.0,20,2.2939,,0.5048,,0.0636
+24,Gluteus Maximus,glut_max2_r,hip_flexion_r,hip_rotation_r,10836,0,0,0,,0.0,0.127,0.147,819.0,0.18716,-15;-28,0.6831,0.4093,-15;-28,0.7101,0,,0.0,0,1.1914,,0.5048,,0.06573
+24,Gluteus Maximus,glut_max3_r,hip_flexion_r,hip_adduction_r,8316,0,0,0,,5.0,0.145,0.144,552.0,0.19607,-15;20,0.6785,0.3652,-15;20,0.7491,0,,0.0,0,1.8427,,0.5486,,0.08657
+24,Gluteus Maximus,glut_max3_r,hip_flexion_r,hip_rotation_r,10836,0,0,0,,5.0,0.145,0.144,552.0,0.20128,-15;-45,0.6965,0.4004,-15;-45,0.7491,0,,0.0,0,1.1702,,0.5486,,0.08296
+25,Adductor Magnus,add_mag1_r,hip_adduction_r,hip_flexion_r,8316,0,0,0,,5.0,0.06,0.087,381.0,0.08854,20;-1,0.6023,0.3394,20;-1,0.6023,0,,0.0,0,1.4842,,0.4149,,0.07742
+25,Adductor Magnus,add_mag2_r,hip_adduction_r,hip_flexion_r,8316,0,0,0,,3.0,0.12,0.121,343.0,0.16807,20;-15,0.6974,0.4007,20;-15,0.7069,0,,0.0,0,1.687,,0.8319,,0.07581
+25,Adductor Magnus,add_mag3_r,hip_adduction_r,hip_flexion_r,8316,0,0,0,,5.0,0.249,0.131,488.0,0.32047,20;-15,0.8433,0.5525,20;-15,0.8692,0,,0.0,64,2.0915,,0.9946,,0.06572
+26,Iliacus,iliacus_r,hip_flexion_r,(none),126,0,1,0,hip_flexion_r:-90.00..45.00,7.0,0.1,0.1,1073.0,0.13557,102;0,0.6779,0.376,102;0,0.6779,1,45.5,0.0,25,8.5526,45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75,4.4058,45.25,0.04473
+27,Psoas X,psoas_r,hip_flexion_r,(none),126,0,1,0,hip_flexion_r:-90.00..45.00,8.0,0.16,0.1,1113.0,0.19349,99;0,0.7442,0.3627,99;0,0.7442,1,45.5,0.0,27,8.2083,88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25,4.1096,45.25,0.04369

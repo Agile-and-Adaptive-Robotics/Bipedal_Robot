@@ -1,0 +1,762 @@
+{
+ "generated": "2026-10-22T13:12:30.012483",
+ "purpose": "single grading source (both capability-table rows): human group torque curves for the 27 actuators of actuator_map_27.json (Routing27_v2)",
+ "opensim_version": "4.4.1",
+ "python": "D:\\Anaconda\\envs\\myo\\python.exe",
+ "model": "D:\\GitHub\\Bipedal_Robot\\Solid_Models\\OpenSim\\Gait2392_Robotbody\\gait2392_simbody.osim",
+ "model_sha1": "b89062c763e6d8fa3d7651c0a4fd2820055d807c",
+ "map": "D:\\GitHub\\Bipedal_Robot\\Code\\Matlab\\Mesh_Optimization\\Routing27_v2\\actuator_map_27.json",
+ "map_sha1": "a97afffeeae85687810986273db6ba0151eba1a2",
+ "audit_csv": "D:\\GitHub\\Bipedal_Robot\\tmp\\paper_bridge\\opt_improve_20261022\\path_artifact_audit_gait2392_simbody_20261022_034030.csv",
+ "audit_csv_sha1": "47912eb6c1e858e9e62ceefe36b8a510e052c417",
+ "conventions": {
+  "grid": "25 points, INCLUSIVE endpoints, uniform: theta_i = rom_lo + (rom_hi - rom_lo) * i / 24, i = 0..24",
+  "rom_source": "campaign rom_table_deg of actuator_map_27.json (all 10 DOFs covered by the table)",
+  "torque_definition": "tau_h(theta) = sum over human_group of computeMomentArm(theta) [m, OpenSim native] x max_isometric_force [N] (Fmax from the stock model); signed elementwise group sum, NEVER magnitude-only and never corrected",
+  "moment_arm_sign": "computeMomentArm = -dL/dq (validated live by central differences this run, see fd_check per actuator), so tau_h > 0 acts in the POSITIVE direction of the OpenSim coordinate",
+  "coordinate_signs": "OpenSim gait2392 native: knee flexion NEGATIVE (knee_angle_r rom [-120, 10], so extension is the positive direction: vasti group tau is positive, hamstrings negative); hip flexion POSITIVE (iliopsoas tau positive); ankle dorsiflexion POSITIVE",
+  "secondary_dofs": "held at the model default pose; verified this run: default 0 deg for every DOF in the map (defaults_deg below)",
+  "artifact_caveat": "column carries the primary-DOF artifact flags of path_artifact_audit_...csv (via-point activation jumps / moment-arm steps); CAVEAT ONLY, curves never corrected"
+ },
+ "coordinate_defaults_deg": {
+  "ankle_angle_r": 0.0,
+  "hip_adduction_r": 0.0,
+  "hip_flexion_r": 0.0,
+  "hip_rotation_r": 0.0,
+  "knee_angle_r": 0.0,
+  "lumbar_bending": 0.0,
+  "lumbar_extension": 0.0,
+  "lumbar_rotation": 0.0,
+  "mtp_angle_r": 0.0,
+  "subtalar_angle_r": 0.0
+ },
+ "secondary_only_flagged_muscles_note": "med_gas_r (actuator 13) and lat_gas_r (actuator 14) carry artifact flags on their SECONDARY knee_angle_r sweep in the audit; their shipped PRIMARY ankle_angle_r curves are unflagged, so their caveat column reads none",
+ "fd_settings": {
+  "spots": 8,
+  "h_deg": 0.5,
+  "tol": 0.05,
+  "knee_informational": "knee_angle_r FD is informational only: stock gait2392 knee paths carry condyle wraps/moving points making length nonsmooth (documented gen_gait2392_torque_targets.py:254-264); every other DOF gates hard"
+ },
+ "actuators": [
+  {
+   "id": 1,
+   "master_name": "Erector Spinae",
+   "primary_dof": "lumbar_extension",
+   "human_group": [
+    "ercspn_r"
+   ],
+   "rom_deg": [
+    -20.0,
+    15.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "ercspn_r": 2500.0
+   },
+   "group_fmax_sum_n": 2500.0,
+   "master_mif_n_from_map": 2500,
+   "peak_abs_tau_h_Nm": 121.32871225379132,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "ercspn_r": 7.456732195512585e-06
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 2,
+   "master_name": "Internal Oblique",
+   "primary_dof": "lumbar_extension",
+   "human_group": [
+    "intobl_r"
+   ],
+   "rom_deg": [
+    -20.0,
+    15.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "intobl_r": 900.0
+   },
+   "group_fmax_sum_n": 900.0,
+   "master_mif_n_from_map": 900,
+   "peak_abs_tau_h_Nm": 47.57211928676063,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "intobl_r": 1.659379384495648e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 3,
+   "master_name": "External Oblique",
+   "primary_dof": "lumbar_extension",
+   "human_group": [
+    "extobl_r"
+   ],
+   "rom_deg": [
+    -20.0,
+    15.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "extobl_r": 900.0
+   },
+   "group_fmax_sum_n": 900.0,
+   "master_mif_n_from_map": 900,
+   "peak_abs_tau_h_Nm": 72.51881298393401,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "extobl_r": 5.756811338330086e-06
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 4,
+   "master_name": "Bicep Femoris, Long Head",
+   "primary_dof": "knee_angle_r",
+   "human_group": [
+    "bifemlh_r"
+   ],
+   "rom_deg": [
+    -120.0,
+    10.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "bifemlh_r": 896.0
+   },
+   "group_fmax_sum_n": 896.0,
+   "master_mif_n_from_map": 896,
+   "peak_abs_tau_h_Nm": 31.15036357998098,
+   "tau_h_sign_change": true,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "bifemlh_r": 0.010191668944797377
+   },
+   "fd_status": "informational (knee wrap)"
+  },
+  {
+   "id": 5,
+   "master_name": "Semimembranosus",
+   "primary_dof": "knee_angle_r",
+   "human_group": [
+    "semimem_r",
+    "semiten_r"
+   ],
+   "rom_deg": [
+    -120.0,
+    10.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "semimem_r": 1288.0,
+    "semiten_r": 410.0
+   },
+   "group_fmax_sum_n": 1698.0,
+   "master_mif_n_from_map": 1698,
+   "peak_abs_tau_h_Nm": 71.88114287060725,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "[semimem_r cond_in_range=1 act@-32.25 max_step=0.9358%] | [semiten_r cond_in_range=1 act@-19.25 max_step=0.961%] (caveat only; curve NOT corrected)",
+   "fd_worst_rel": {
+    "semimem_r": 1.1591470184175436,
+    "semiten_r": 1.2622107068174246
+   },
+   "fd_status": "informational (knee wrap)"
+  },
+  {
+   "id": 6,
+   "master_name": "Sartorius",
+   "primary_dof": "knee_angle_r",
+   "human_group": [
+    "sar_r"
+   ],
+   "rom_deg": [
+    -120.0,
+    10.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "sar_r": 156.0
+   },
+   "group_fmax_sum_n": 156.0,
+   "master_mif_n_from_map": 156,
+   "peak_abs_tau_h_Nm": 3.163551750413196,
+   "tau_h_sign_change": true,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "sar_r": 0.0012763761537461546
+   },
+   "fd_status": "informational (knee wrap)"
+  },
+  {
+   "id": 7,
+   "master_name": "Tensor Fasciae Latae",
+   "primary_dof": "knee_angle_r",
+   "human_group": [
+    "tfl_r"
+   ],
+   "rom_deg": [
+    -120.0,
+    10.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "tfl_r": 233.0
+   },
+   "group_fmax_sum_n": 233.0,
+   "master_mif_n_from_map": 233,
+   "peak_abs_tau_h_Nm": 3.251964693654005,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "tfl_r": 0.00010822780319571062
+   },
+   "fd_status": "informational (knee wrap)"
+  },
+  {
+   "id": 8,
+   "master_name": "Rectus Femoris",
+   "primary_dof": "knee_angle_r",
+   "human_group": [
+    "rect_fem_r"
+   ],
+   "rom_deg": [
+    -120.0,
+    10.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "rect_fem_r": 1169.0
+   },
+   "group_fmax_sum_n": 1169.0,
+   "master_mif_n_from_map": 1169,
+   "peak_abs_tau_h_Nm": 58.866753124801015,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "[rect_fem_r cond_in_range=1 act@-83.75 max_step=1.7818%] (caveat only; curve NOT corrected)",
+   "fd_worst_rel": {
+    "rect_fem_r": 0.4107710655342445
+   },
+   "fd_status": "informational (knee wrap)"
+  },
+  {
+   "id": 9,
+   "master_name": "Gracilis",
+   "primary_dof": "knee_angle_r",
+   "human_group": [
+    "grac_r"
+   ],
+   "rom_deg": [
+    -120.0,
+    10.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "grac_r": 162.0
+   },
+   "group_fmax_sum_n": 162.0,
+   "master_mif_n_from_map": 162,
+   "peak_abs_tau_h_Nm": 6.274784147458604,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "[grac_r cond_in_range=1 act@-25.25 max_step=0.8142%] (caveat only; curve NOT corrected)",
+   "fd_worst_rel": {
+    "grac_r": 1.0877134036924985
+   },
+   "fd_status": "informational (knee wrap)"
+  },
+  {
+   "id": 10,
+   "master_name": "Bicep Femoris, Short Head",
+   "primary_dof": "knee_angle_r",
+   "human_group": [
+    "bifemsh_r"
+   ],
+   "rom_deg": [
+    -120.0,
+    10.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "bifemsh_r": 804.0
+   },
+   "group_fmax_sum_n": 804.0,
+   "master_mif_n_from_map": 804,
+   "peak_abs_tau_h_Nm": 27.226620146431568,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "bifemsh_r": 0.0014276116032404733
+   },
+   "fd_status": "informational (knee wrap)"
+  },
+  {
+   "id": 11,
+   "master_name": "Vastus Intermedius",
+   "primary_dof": "knee_angle_r",
+   "human_group": [
+    "vas_int_r",
+    "vas_lat_r",
+    "vas_med_r"
+   ],
+   "rom_deg": [
+    -120.0,
+    10.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "vas_int_r": 1365.0,
+    "vas_lat_r": 1871.0,
+    "vas_med_r": 1294.0
+   },
+   "group_fmax_sum_n": 4530.0,
+   "master_mif_n_from_map": 4530,
+   "peak_abs_tau_h_Nm": 209.23965796715052,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "[vas_int_r cond_in_range=1 act@-81.25 max_step=1.8372%] | [vas_lat_r cond_in_range=1 act@-110.25;-69.25 steps@3.75;4.25;4.75;5.25;5.75;6.25;6.75;7.25 max_step=2.5884%] | [vas_med_r cond_in_range=1 act@-101.75;-69.25 steps@4.25;4.75;5.25;5.75;6.25 max_step=2.3029%] (caveat only; curve NOT corrected)",
+   "fd_worst_rel": {
+    "vas_int_r": 0.39166373539093674,
+    "vas_lat_r": 0.506177529995884,
+    "vas_med_r": 0.3905709065674127
+   },
+   "fd_status": "informational (knee wrap)"
+  },
+  {
+   "id": 12,
+   "master_name": "Soleus",
+   "primary_dof": "ankle_angle_r",
+   "human_group": [
+    "soleus_r"
+   ],
+   "rom_deg": [
+    -50.0,
+    20.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "soleus_r": 3549.0
+   },
+   "group_fmax_sum_n": 3549.0,
+   "master_mif_n_from_map": 3549,
+   "peak_abs_tau_h_Nm": 171.3562171272636,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "soleus_r": 1.6804786982469904e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 13,
+   "master_name": "Medial Gastroocnemius",
+   "primary_dof": "ankle_angle_r",
+   "human_group": [
+    "med_gas_r"
+   ],
+   "rom_deg": [
+    -50.0,
+    20.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "med_gas_r": 1558.0
+   },
+   "group_fmax_sum_n": 1558.0,
+   "master_mif_n_from_map": 1558,
+   "peak_abs_tau_h_Nm": 74.09684380774375,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "med_gas_r": 1.5695137747076127e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 14,
+   "master_name": "Lateral Gastrocenemius",
+   "primary_dof": "ankle_angle_r",
+   "human_group": [
+    "lat_gas_r"
+   ],
+   "rom_deg": [
+    -50.0,
+    20.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "lat_gas_r": 683.0
+   },
+   "group_fmax_sum_n": 683.0,
+   "master_mif_n_from_map": 683,
+   "peak_abs_tau_h_Nm": 33.27949456203556,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "lat_gas_r": 1.5701390799105547e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 15,
+   "master_name": "Tibialis Posterior",
+   "primary_dof": "subtalar_angle_r",
+   "human_group": [
+    "tib_post_r"
+   ],
+   "rom_deg": [
+    -25.0,
+    35.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "tib_post_r": 1588.0
+   },
+   "group_fmax_sum_n": 1588.0,
+   "master_mif_n_from_map": 3549,
+   "peak_abs_tau_h_Nm": 31.923768076189837,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "tib_post_r": 5.858845732289394e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 16,
+   "master_name": "Tibialis Posterior (duplicate name)",
+   "primary_dof": "ankle_angle_r",
+   "human_group": [
+    "tib_ant_r"
+   ],
+   "rom_deg": [
+    -50.0,
+    20.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "tib_ant_r": 905.0
+   },
+   "group_fmax_sum_n": 905.0,
+   "master_mif_n_from_map": 905,
+   "peak_abs_tau_h_Nm": 39.34531015486467,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "tib_ant_r": 1.4721142235845808e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 17,
+   "master_name": "Peroneus Brevis",
+   "primary_dof": "subtalar_angle_r",
+   "human_group": [
+    "per_brev_r"
+   ],
+   "rom_deg": [
+    -25.0,
+    35.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "per_brev_r": 435.0
+   },
+   "group_fmax_sum_n": 435.0,
+   "master_mif_n_from_map": 435,
+   "peak_abs_tau_h_Nm": 13.039321386954034,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "per_brev_r": 7.47993865430423e-06
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 18,
+   "master_name": "Peroneus Longus",
+   "primary_dof": "subtalar_angle_r",
+   "human_group": [
+    "per_long_r"
+   ],
+   "rom_deg": [
+    -25.0,
+    35.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "per_long_r": 943.0
+   },
+   "group_fmax_sum_n": 943.0,
+   "master_mif_n_from_map": 943,
+   "peak_abs_tau_h_Nm": 26.821218774307727,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "per_long_r": 2.2681522029917193e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 19,
+   "master_name": "Peroneus Tertius",
+   "primary_dof": "subtalar_angle_r",
+   "human_group": [
+    "per_tert_r"
+   ],
+   "rom_deg": [
+    -25.0,
+    35.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "per_tert_r": 180.0
+   },
+   "group_fmax_sum_n": 180.0,
+   "master_mif_n_from_map": 180,
+   "peak_abs_tau_h_Nm": 3.5834018833001533,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "per_tert_r": 2.6088620774366723e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 20,
+   "master_name": "Flexor Digitorum Longus",
+   "primary_dof": "mtp_angle_r",
+   "human_group": [
+    "flex_dig_r"
+   ],
+   "rom_deg": [
+    -40.0,
+    40.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "flex_dig_r": 310.0
+   },
+   "group_fmax_sum_n": 310.0,
+   "master_mif_n_from_map": 310,
+   "peak_abs_tau_h_Nm": 2.1821058854071524,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "flex_dig_r": 2.4480940801692894e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 21,
+   "master_name": "Flexor Hallucis Longus",
+   "primary_dof": "mtp_angle_r",
+   "human_group": [
+    "flex_hal_r"
+   ],
+   "rom_deg": [
+    -40.0,
+    40.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "flex_hal_r": 322.0
+   },
+   "group_fmax_sum_n": 322.0,
+   "master_mif_n_from_map": 322,
+   "peak_abs_tau_h_Nm": 1.966839866876955,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "flex_hal_r": 2.7354785666612087e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 22,
+   "master_name": "Extensor Digitorum Longus",
+   "primary_dof": "mtp_angle_r",
+   "human_group": [
+    "ext_dig_r"
+   ],
+   "rom_deg": [
+    -40.0,
+    40.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "ext_dig_r": 512.0
+   },
+   "group_fmax_sum_n": 512.0,
+   "master_mif_n_from_map": 512,
+   "peak_abs_tau_h_Nm": 3.6847877213761753,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "ext_dig_r": 1.0823129351931216e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 23,
+   "master_name": "Extensor Hallucis Longus",
+   "primary_dof": "mtp_angle_r",
+   "human_group": [
+    "ext_hal_r"
+   ],
+   "rom_deg": [
+    -40.0,
+    40.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "ext_hal_r": 162.0
+   },
+   "group_fmax_sum_n": 162.0,
+   "master_mif_n_from_map": 162,
+   "peak_abs_tau_h_Nm": 1.4465303304671893,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "ext_hal_r": 1.1387966888542871e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 24,
+   "master_name": "Gluteus Maximus",
+   "primary_dof": "hip_flexion_r",
+   "human_group": [
+    "glut_max1_r",
+    "glut_max2_r",
+    "glut_max3_r",
+    "glut_med1_r",
+    "glut_med2_r",
+    "glut_med3_r",
+    "glut_min1_r",
+    "glut_min2_r",
+    "glut_min3_r"
+   ],
+   "rom_deg": [
+    -15.0,
+    110.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "glut_max1_r": 573.0,
+    "glut_max2_r": 819.0,
+    "glut_max3_r": 552.0,
+    "glut_med1_r": 819.0,
+    "glut_med2_r": 573.0,
+    "glut_med3_r": 653.0,
+    "glut_min1_r": 270.0,
+    "glut_min2_r": 285.0,
+    "glut_min3_r": 323.0
+   },
+   "group_fmax_sum_n": 4867.0,
+   "master_mif_n_from_map": 5047,
+   "peak_abs_tau_h_Nm": 161.13383535107272,
+   "tau_h_sign_change": true,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "glut_max1_r": 1.2152395007479244e-05,
+    "glut_max2_r": 9.774913923323805e-06,
+    "glut_max3_r": 3.427981297300466e-05,
+    "glut_med1_r": 8.57548784446593e-06,
+    "glut_med2_r": 1.262296993754206e-05,
+    "glut_med3_r": 1.7714543288605445e-05,
+    "glut_min1_r": 1.257335812881042e-05,
+    "glut_min2_r": 1.0480097043218711e-05,
+    "glut_min3_r": 1.15300787984274e-05
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 25,
+   "master_name": "Adductor Magnus",
+   "primary_dof": "hip_adduction_r",
+   "human_group": [
+    "add_mag1_r",
+    "add_mag2_r",
+    "add_mag3_r",
+    "add_long_r",
+    "add_brev_r"
+   ],
+   "rom_deg": [
+    -45.0,
+    20.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "add_mag1_r": 381.0,
+    "add_mag2_r": 343.0,
+    "add_mag3_r": 488.0,
+    "add_long_r": 627.0,
+    "add_brev_r": 429.0
+   },
+   "group_fmax_sum_n": 2268.0,
+   "master_mif_n_from_map": 2268,
+   "peak_abs_tau_h_Nm": 140.6371630722147,
+   "tau_h_sign_change": false,
+   "artifact_flag_caveat": "none",
+   "fd_worst_rel": {
+    "add_mag1_r": 1.813324275552006e-05,
+    "add_mag2_r": 2.869237336217355e-05,
+    "add_mag3_r": 2.040552423066903e-05,
+    "add_long_r": 1.5252535496534867e-05,
+    "add_brev_r": 9.66222836618717e-06
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 26,
+   "master_name": "Iliacus",
+   "primary_dof": "hip_flexion_r",
+   "human_group": [
+    "iliacus_r"
+   ],
+   "rom_deg": [
+    -15.0,
+    110.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "iliacus_r": 1073.0
+   },
+   "group_fmax_sum_n": 1073.0,
+   "master_mif_n_from_map": 1073,
+   "peak_abs_tau_h_Nm": 47.97718239501088,
+   "tau_h_sign_change": true,
+   "artifact_flag_caveat": "[iliacus_r cond_in_range=1 act@45.25 steps@45.25;91.75;92.25;92.75;93.25;93.75;94.25;94.75 max_step=4.4058%] (caveat only; curve NOT corrected)",
+   "fd_worst_rel": {
+    "iliacus_r": 0.0004109566909792912
+   },
+   "fd_status": "PASS"
+  },
+  {
+   "id": 27,
+   "master_name": "Psoas X",
+   "primary_dof": "hip_flexion_r",
+   "human_group": [
+    "psoas_r"
+   ],
+   "rom_deg": [
+    -15.0,
+    110.0
+   ],
+   "n_grid": 25,
+   "per_muscle_fmax_n": {
+    "psoas_r": 1113.0
+   },
+   "group_fmax_sum_n": 1113.0,
+   "master_mif_n_from_map": 1113,
+   "peak_abs_tau_h_Nm": 48.5975370969233,
+   "tau_h_sign_change": true,
+   "artifact_flag_caveat": "[psoas_r cond_in_range=1 act@45.25 steps@88.75;89.25;89.75;90.25;90.75;91.25;91.75;92.25 max_step=4.1096%] (caveat only; curve NOT corrected)",
+   "fd_worst_rel": {
+    "psoas_r": 0.0005388086662140703
+   },
+   "fd_status": "PASS"
+  }
+ ]
+}

@@ -1,0 +1,108 @@
+** WARNING: connection is not using a post-quantum key exchange algorithm.
+** This session may be vulnerable to "store now, decrypt later" attacks.
+** The server may need to be upgraded. See https://openssh.com/pq.html
+HOST EB475WS4 | 2026-10-22 23:02:48 | MATLAB 2025a
+PamData resolves to: D:\Github\Bipedal_Robot\tmp\capability_table_20261022\PamData.m
+PamData_20261022 resolves to: D:\Github\Bipedal_Robot\tmp\capability_table_20261022\PamData_20261022.m
+maxBPAforce resolves to: D:\Github\Bipedal_Robot\Code\Matlab\Functions\maxBPAforce.m
+Human CSV: 27 rows, 25-pt grids.
+Grid/dof verification vs map rom_table_deg: true
+Uni_Hip script stopped (expected PLocation slip): Unrecognized function or variable 'PLocation'.
+
+=== PHASE A: section muscles (Dia/Rest/Long from Connor's scripts) ===
+back    :  Erector Spinae[40mm r=0.3598 L=0.3627]  Internal Oblique[20mm r=0.4323 L=0.2361]  External Oblique[20mm r=0.5673 L=0.302]
+bihip   :  Bicep Femoris, Long Head[20mm r=0.8505 L=0.8475]  Semimembranosus[40mm r=0.848 L=0.8772]  Sartorius[10mm r=0.9422 L=0.9551]  Tensor Fasciae Latae[10mm r=0.8397 L=0.8692]  Rectus Femoris[20mm r=1.471 L=0.6687]  Gracilis[10mm r=0.9916 L=1.018]  Bicep Femoris, Short Head[20mm r=0.3362 L=0.3618]  Vastus Intermedius[40mm r=0.4117 L=0.4176]
+calves  :  Medial Gastroocnemius[40mm r=0.4833 L=0.5084]  Lateral Gastrocenemius[20mm r=0.47 L=0.4966]  Soleus[40mm r=0.3295 L=0.3551]
+foot    :  Tibialis Posterior[40mm r=0.3751 L=0.4059]  Tibialis Posterior[20mm r=0.4213 L=0.4481]  Peroneus Brevis[10mm r=0.3779 L=0.4421]  Peroneus Longus[20mm r=0.4123 L=0.5237]  Peroneus Tertius[10mm r=0.412 L=0.4376]
+toe     :  Flexor Digitorum Longus[10mm r=0.2889 L=0.5611]  Flexor Hallucis Longus[10mm r=0.3709 L=0.5754]  Extensor Digitorum Longus[10mm r=0.5229 L=0.5506]  Extensor Hallucis Longus[10mm r=0.5312 L=0.5588]
+unihip  :  Gluteus Maximus[40mm r=0.6851 L=0.6153]  Adductor Magnus[40mm r=0.5677 L=0.5929]  Iliacus[20mm r=0.5244 L=0.5504]  Psoas X[20mm r=0.5422 L=0.5673]
+
+=== PHASE C: verification vs the scripts' own T / Location ===
+  back T                           max|diff| = 2.22e-16 EXACT (machine noise)
+  bihip T                          max|diff| = 6.66e-16 EXACT (machine noise)
+  calves soleus T (slots 1-2)      max|diff| = 1.67e-16 EXACT (machine noise)
+  calves gastroc T                 max|diff| = 1.67e-16 EXACT (machine noise)
+  foot T (slots 1-2)               max|diff| = 1.67e-16 EXACT (machine noise)
+  toe T                            max|diff| = 4.44e-16 EXACT (machine noise)
+  unihip T                         max|diff| = 6.66e-16 EXACT (machine noise)
+  unihip psoas T                   max|diff| = 6.66e-16 EXACT (machine noise)
+  rect_fem Location rebuild        max|diff| = 0 EXACT (machine noise)
+  vas_int Location rebuild         max|diff| = 0 EXACT (machine noise)
+
+=== PHASE B: grading on the human CSV 25-pt grids (620 kPa) ===
+ 1 Erector Spinae                   lumbar_extension  d40mm r=0.3598 F= 6398.4N strain[+0.073,+0.171] tau[ +318.31, +402.44] meet=100.0% active=100.0% signAgree=100%
+ 2 Internal Oblique                 lumbar_extension  d20mm r=0.4323 F= 1308.7N strain[+0.054,+0.127] tau[  -69.12,  -65.47] meet=100.0% active=100.0% signAgree=100%
+ 3 External Oblique                 lumbar_extension  d20mm r=0.5673 F= 1342.2N strain[+0.023,+0.093] tau[ -108.20,  -63.62] meet=100.0% active=100.0% signAgree=100%
+ 4 Bicep Femoris, Long Head         knee_angle_r      d20mm r=0.8505 F= 1377.8N strain[+0.118,+0.184] tau[  -64.10,  -15.71] meet= 96.0% active=100.0% signAgree=96%
+ 5 Semimembranosus                  knee_angle_r      d40mm r=0.848 F= 6398.4N strain[+0.120,+0.125] tau[ -107.60,  -27.93] meet= 52.0% active=100.0% signAgree=100%
+ 6 Sartorius                        knee_angle_r      d10mm r=0.9422 F=  459.7N strain[+0.015,+0.071] tau[   -7.21,  +18.39] meet= 28.0% active=100.0% signAgree=32%
+ 7 Tensor Fasciae Latae             knee_angle_r      d10mm r=0.8397 F=  457.6N strain[+0.011,+0.029] tau[   -8.46,   +4.63] meet= 40.0% active=100.0% signAgree=82%
+ 8 Rectus Femoris                   knee_angle_r      d20mm r=1.471 F= 1407.9N strain[+0.006,+0.067] tau[  +28.15,  +66.23] meet= 76.0% active=100.0% signAgree=100%
+ 9 Gracilis                         knee_angle_r      d10mm r=0.9916 F=  460.5N strain[+0.000,+0.034] tau[   -7.63,   +9.33] meet= 12.0% active=100.0% signAgree=32%
+10 Bicep Femoris, Short Head        knee_angle_r      d20mm r=0.3362 F= 1268.7N strain[+0.000,+0.171] tau[  -59.42,  -22.94] meet=100.0% active=100.0% signAgree=100%
+11 Vastus Intermedius               knee_angle_r      d40mm r=0.4117 F= 6398.4N strain[-0.000,+0.200] tau[  +59.03, +257.15] meet= 96.0% active= 96.0% signAgree=100%
+12 Soleus                           ankle_angle_r     d40mm r=0.3295 F= 6398.4N strain[+0.000,+0.163] tau[ -316.60, -219.65] meet= 96.0% active= 96.0% signAgree=100%
+13 Medial Gastroocnemius            ankle_angle_r     d40mm r=0.4833 F= 6398.4N strain[+0.008,+0.121] tau[ -317.78, -258.25] meet=100.0% active=100.0% signAgree=100%
+14 Lateral Gastrocenemius           ankle_angle_r     d20mm r=0.47 F= 1320.0N strain[+0.005,+0.124] tau[  -65.61,  -53.89] meet=100.0% active=100.0% signAgree=100%
+15 Tibialis Posterior               subtalar_angle_r  d40mm r=0.3751 F= 6398.4N strain[+0.006,+0.058] tau[  +81.19, +169.70] meet=100.0% active=100.0% signAgree=100%
+16 Tibialis Posterior (duplicate name) ankle_angle_r     d20mm r=0.4213 F= 1305.1N strain[+0.001,+0.112] tau[  +33.49,  +56.69] meet=100.0% active=100.0% signAgree=100%
+17 Peroneus Brevis                  subtalar_angle_r  d10mm r=0.3779 F=  433.9N strain[+0.004,+0.081] tau[  -12.52,   -3.46] meet=  0.0% active=100.0% signAgree=100%
+18 Peroneus Longus                  subtalar_angle_r  d20mm r=0.4123 F= 1301.9N strain[+0.007,+0.074] tau[  -35.95,   -9.28] meet= 40.0% active=100.0% signAgree=100%
+19 Peroneus Tertius                 subtalar_angle_r  d10mm r=0.412 F=  437.5N strain[+0.049,+0.105] tau[  -24.20,   -2.63] meet= 96.0% active=100.0% signAgree=100%
+20 Flexor Digitorum Longus          mtp_angle_r       d10mm r=0.2889 F=  420.7N strain[+0.018,+0.048] tau[   -5.46,   -0.68] meet= 80.0% active=100.0% signAgree=100%
+21 Flexor Hallucis Longus           mtp_angle_r       d10mm r=0.3709 F=  433.1N strain[+0.021,+0.040] tau[   -1.63,   -1.33] meet= 28.0% active=100.0% signAgree=100%
+22 Extensor Digitorum Longus        mtp_angle_r       d10mm r=0.5229 F=  445.9N strain[+0.055,+0.071] tau[   -0.57,   +5.22] meet= 40.0% active=100.0% signAgree=88%
+23 Extensor Hallucis Longus         mtp_angle_r       d10mm r=0.5312 F=  446.4N strain[+0.057,+0.074] tau[   +4.98,   +6.50] meet=100.0% active=100.0% signAgree=100%
+24 Gluteus Maximus                  hip_flexion_r     d40mm r=0.6851 F= 6398.4N strain[+0.008,+0.174] tau[ -444.16, -103.84] meet=100.0% active=100.0% signAgree=100%
+25 Adductor Magnus                  hip_adduction_r   d40mm r=0.5677 F= 6398.4N strain[-0.034,+0.128] tau[ +448.06, +551.17] meet= 76.0% active= 76.0% signAgree=100%
+26 Iliacus                          hip_flexion_r     d20mm r=0.5244 F= 1333.4N strain[+0.005,+0.137] tau[  -14.14,  +63.37] meet= 56.0% active=100.0% signAgree=96%
+27 Psoas X                          hip_flexion_r     d20mm r=0.5422 F= 1337.2N strain[+0.005,+0.132] tau[  -14.18,  +63.55] meet= 56.0% active=100.0% signAgree=100%
+
+=== PHASE D: Connor vs Ben (AttachPoints_Robot.mat) + MIF sanity ===
+ 1 Erector Spinae                   values MATCH Ben; MIF Connor 2500 / map 2500 / Ben 2500
+ 2 Internal Oblique                 values MATCH Ben; MIF Connor 900 / map 900 / Ben 900
+ 3 External Oblique                 values MATCH Ben; MIF Connor 900 / map 900 / Ben 900
+ 4 Bicep Femoris, Long Head         values MATCH Ben; MIF Connor 896 / map 896 / Ben 896
+ 5 Semimembranosus                  values MATCH Ben; MIF Connor 1698 / map 1698 / Ben 1698
+ 6 Sartorius                        MISMATCH col 2 vs Ben sar_wr1: Connor [[0.091 -0.105 0.037]] Ben [[0.091 -0.105 0.038]]
+ 6 Sartorius                        MISMATCH col 7 vs Ben t6: Connor [[0.038 -0.382 -0.004]] Ben [[0.038 -0.382 0.004]]
+ 6 Sartorius                        MIF Connor 156 / map 156 / Ben 156
+ 7 Tensor Fasciae Latae             values MATCH Ben; MIF Connor 233 / map 233 / Ben 233
+ 8 Rectus Femoris                   values MATCH Ben; MIF Connor 1169 / map 1169 / Ben 1169
+ 9 Gracilis                         MISMATCH col 1 vs Ben p8: Connor [[-0.074 0.125 0.079]] Ben [[-0.074 -0.119 0.028]]
+ 9 Gracilis                         MIF Connor 162 / map 162 / Ben 162
+10 Bicep Femoris, Short Head        MISMATCH col 3 vs Ben twr3: Connor [[-0.023 -0.056 0.029]] Ben [[-0.023 -0.056 0.034]]
+10 Bicep Femoris, Short Head        MIF Connor 804 / map 804 / Ben 804
+11 Vastus Intermedius               values MATCH Ben; MIF Connor 4530 / map 4530 / Ben 4530
+12 Soleus                           values MATCH Ben; MIF Connor 3549 / map 3549 / Ben 3549
+13 Medial Gastroocnemius            values MATCH Ben; MIF Connor 1558 / map 1558 / Ben 1558
+14 Lateral Gastrocenemius           values MATCH Ben; MIF Connor 683 / map 683 / Ben 683
+15 Tibialis Posterior               values MATCH Ben; MIF Connor 3549 / map 3549 / Ben 1588
+16 Tibialis Posterior (duplicate name) values MATCH Ben; MIF Connor 905 / map 905 / Ben 905
+17 Peroneus Brevis                  values MATCH Ben; MIF Connor 435 / map 435 / Ben 435
+18 Peroneus Longus                  MISMATCH col 1 vs Ben t2: Connor [[0.005 -0.062 0.047]] Ben [[0.006 -0.062 0.047]]
+18 Peroneus Longus                  MISMATCH col 5 vs Ben per_long_wr4: Connor [[0.048 0.011 0.028]] Ben [[0.068 0.011 0.028]]
+18 Peroneus Longus                  MIF Connor 943 / map 943 / Ben 943
+19 Peroneus Tertius                 MISMATCH col 1 vs Ben t2: Connor [[0.006 -0.062 0.079]] Ben [[0.006 -0.062 0.047]]
+19 Peroneus Tertius                 MISMATCH col 2 vs Ben per_tert_wr1: Connor [[0.023 -0.407 0.022]] Ben [[0.023 -0.407 0.016]]
+19 Peroneus Tertius                 MISMATCH col 3 vs Ben a2: Connor [[0.079 0.016 0.034]] Ben [[0.079 0.022 0.034]]
+19 Peroneus Tertius                 MIF Connor 180 / map 180 / Ben 180
+20 Flexor Digitorum Longus          values MATCH Ben; MIF Connor 310 / map 310 / Ben 310
+21 Flexor Hallucis Longus           values MATCH Ben; MIF Connor 322 / map 322 / Ben 322
+22 Extensor Digitorum Longus        MISMATCH col 5 vs Ben ext_dig_wr4: Connor [[0.005 0.005 0.015]] Ben [[0 0.005 0.015]]
+22 Extensor Digitorum Longus        MIF Connor 512 / map 512 / Ben 512
+23 Extensor Hallucis Longus         values MATCH Ben; MIF Connor 162 / map 162 / Ben 162
+24 Gluteus Maximus                  values MATCH Ben; MIF Connor 5047 / map 5047 / Ben 5047
+25 Adductor Magnus                  MISMATCH col 2 vs Ben add_mag_wr1: Connor [[-0.059 -0.108 -0.03]] Ben [[-0.136 -0.093 0.059]]
+25 Adductor Magnus                  MIF Connor 2268 / map 2268 / Ben 2268
+26 Iliacus                          values MATCH Ben; MIF Connor 1073 / map 1073 / Ben 1073
+27 Psoas X                          values MATCH Ben; MIF Connor 1113 / map 1113 / Ben 1113
+add_mag Location columns 2 and 3 identical: true
+ES: Ben originals carry 9 points (p7, ercspn_wr1..7, b2); Connor keeps 3.
+ES: Ben hand-set ercspn_rest = 0.7428 (bipedal_kinematics_back.m:311); Connor flow uses Size output 0.359761.
+
+WROTE D:\Github\Bipedal_Robot\tmp\capability_table_20261022\hand_tuned_metrics_20261022.csv
+Coverage: 27/27 connor-corrected, 0 ben-original, 0 excluded (Connor's six section scripts define all 27 master actuators).
+Suspects flagged: 9
+Mean meetPct (covered): 72.89 | mean activePct: 98.81
+GRADE DONE
