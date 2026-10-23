@@ -1,0 +1,70 @@
+[info] Loaded model 3DGaitModel2392 from file D:\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody\gait2392_simbody.osim
+[warning] Couldn't find file 'treadmill.vtp'.
+[warning] Couldn't find file 'sacrum.vtp'.
+[warning] Couldn't find file 'pelvis.vtp'.
+[warning] Couldn't find file 'l_pelvis.vtp'.
+[warning] Couldn't find file 'femur_r.vtp'.
+[warning] Couldn't find file 'tibia_r.vtp'.
+[warning] Couldn't find file 'fibula.vtp'.
+[warning] Couldn't find file 'talus.vtp'.
+[warning] Couldn't find file 'foot.vtp'.
+[warning] Couldn't find file 'bofoot.vtp'.
+[warning] Couldn't find file 'femur_l.vtp'.
+[warning] Couldn't find file 'tibia_l.vtp'.
+[warning] Couldn't find file 'l_fibula.vtp'.
+[warning] Couldn't find file 'l_talus.vtp'.
+[warning] Couldn't find file 'l_foot.vtp'.
+[warning] Couldn't find file 'l_bofoot.vtp'.
+[warning] Couldn't find file 'hat_spine.vtp'.
+[warning] Couldn't find file 'hat_jaw.vtp'.
+[warning] Couldn't find file 'hat_skull.vtp'.
+[warning] Couldn't find file 'hat_ribs.vtp'.
+opensim : 4.4.1 (pinned 4.4.1)
+model   : D:\GitHub\Bipedal_Robot\Solid_Models\OpenSim\Gait2392_Robotbody\gait2392_simbody.osim
+  sha1  : b89062c763e6d8fa3d7651c0a4fd2820055d807c
+map     : D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Routing27_v2\actuator_map_27.json
+  sha1  : a97afffeeae85687810986273db6ba0151eba1a2
+[ 1] Erector Spinae             ercspn_r     lumbar_extension x lumbar_bending   n=  1116 steps2d=  0 maxstep= 1.132% actchg=  0 abspan= 0.00 minL=0.1266 minN=0.844 minLceN=0.805
+[ 1] Erector Spinae             ercspn_r     lumbar_extension x lumbar_rotation  n=  1116 steps2d=  0 maxstep= 1.182% actchg=  0 abspan= 0.00 minL=0.1363 minN=0.909 minLceN=0.886
+[ 2] Internal Oblique           intobl_r     lumbar_extension x lumbar_bending   n=  1116 steps2d=  0 maxstep= 0.695% actchg=  0 abspan= 0.00 minL=0.1532 minN=0.766 minLceN=0.532
+[ 3] External Oblique           extobl_r     lumbar_extension x lumbar_bending   n=  1116 steps2d=  0 maxstep= 1.416% actchg=  0 abspan= 0.00 minL=0.2329 minN=0.896 minLceN=0.774
+[ 4] Bicep Femoris, Long Head   bifemlh_r    knee_angle_r     x hip_flexion_r    n= 16506 steps2d=  0 maxstep= 1.979% actchg=  0 abspan= 0.00 minL=0.3547 minN=0.815 minLceN=0.263
+[ 5] Semimembranosus            semimem_r    knee_angle_r     x hip_flexion_r    n= 16506 steps2d=  0 maxstep= 1.922% actchg=126 abspan= 0.00 minL=0.3327 minN=0.758 minLceN=0.259
+[ 6] Sartorius                  sar_r        knee_angle_r     x hip_flexion_r    n= 16506 steps2d=1764 maxstep= 2.554% actchg=  0 abspan= 0.00 minL=0.4046 minN=0.653 minLceN=0.586
+[ 7] Tensor Fasciae Latae       tfl_r        knee_angle_r     x hip_flexion_r    n= 16506 steps2d=630 maxstep= 2.425% actchg=  0 abspan= 0.00 minL=0.3995 minN=0.768 minLceN=0.052
+[ 7] Tensor Fasciae Latae       tfl_r        knee_angle_r     x hip_adduction_r  n=  8646 steps2d=330 maxstep= 2.425% actchg=  0 abspan= 0.00 minL=0.4818 minN=0.926 minLceN=0.600
+[ 8] Rectus Femoris             rect_fem_r   knee_angle_r     x hip_flexion_r    n= 16506 steps2d=717 maxstep= 3.967% actchg=126 abspan= 0.00 minL=0.3196 minN=0.754 minLceN=0.121
+[ 9] Gracilis                   grac_r       knee_angle_r     x hip_flexion_r    n= 16506 steps2d=100 maxstep= 7.057% actchg=126 abspan= 0.00 minL=0.3727 minN=0.780 minLceN=0.703
+[10] Bicep Femoris, Short Head  bifemsh_r    knee_angle_r     x (none)           n=   131 steps2d= 12 maxstep= 2.173% actchg=  0 abspan= 0.00 minL=0.1912 minN=0.730 minLceN=0.708
+[11] Vastus Intermedius         vas_int_r    knee_angle_r     x (none)           n=   131 steps2d=  6 maxstep= 3.548% actchg=  1 abspan= 0.00 minL=0.1745 minN=0.783 minLceN=0.446
+[12] Soleus                     soleus_r     ankle_angle_r    x (none)           n=    71 steps2d=  0 maxstep= 0.971% actchg=  0 abspan= 0.00 minL=0.2508 minN=0.836 minLceN=0.423
+[13] Medial Gastroocnemius      med_gas_r    ankle_angle_r    x knee_angle_r     n=  9301 steps2d=  0 maxstep= 1.135% actchg=  0 abspan= 0.00 minL=0.3749 minN=0.833 minLceN=0.292
+[14] Lateral Gastrocenemius     lat_gas_r    ankle_angle_r    x knee_angle_r     n=  9301 steps2d=  0 maxstep= 1.107% actchg=  0 abspan= 0.00 minL=0.3722 minN=0.838 minLceN=0.139
+[15] Tibialis Posterior         tib_post_r   subtalar_angle_r x ankle_angle_r    n=  4331 steps2d=817 maxstep= 4.219% actchg=  0 abspan= 0.00 minL=0.3264 minN=0.957 minLceN=0.568
+[16] Tibialis Posterior (duplic tib_ant_r    ankle_angle_r    x subtalar_angle_r n=  4331 steps2d=  0 maxstep= 0.908% actchg=  0 abspan= 0.00 minL=0.2827 minN=0.881 minLceN=0.615
+[17] Peroneus Brevis            per_brev_r   subtalar_angle_r x ankle_angle_r    n=  4331 steps2d=356 maxstep= 6.719% actchg=  0 abspan= 0.00 minL=0.1975 minN=0.936 minLceN=0.736
+[18] Peroneus Longus            per_long_r   subtalar_angle_r x ankle_angle_r    n=  4331 steps2d=297 maxstep=10.233% actchg=  0 abspan= 0.00 minL=0.3801 minN=0.965 minLceN=0.737
+[19] Peroneus Tertius           per_tert_r   subtalar_angle_r x ankle_angle_r    n=  4331 steps2d=125 maxstep= 2.599% actchg=  0 abspan= 0.00 minL=0.1659 minN=0.927 minLceN=0.864
+[20] Flexor Digitorum Longus    flex_dig_r   mtp_angle_r      x ankle_angle_r    n=  5751 steps2d=  0 maxstep= 0.886% actchg=  0 abspan= 0.00 minL=0.4168 minN=0.960 minLceN=0.510
+[20] Flexor Digitorum Longus    flex_dig_r   mtp_angle_r      x subtalar_angle_r n=  4941 steps2d=  0 maxstep= 0.886% actchg=  0 abspan= 0.00 minL=0.4172 minN=0.961 minLceN=0.520
+[21] Flexor Hallucis Longus     flex_hal_r   mtp_angle_r      x ankle_angle_r    n=  5751 steps2d=213 maxstep= 2.065% actchg=  0 abspan= 0.00 minL=0.4008 minN=0.948 minLceN=0.515
+[21] Flexor Hallucis Longus     flex_hal_r   mtp_angle_r      x subtalar_angle_r n=  4941 steps2d=183 maxstep= 2.065% actchg=  0 abspan= 0.00 minL=0.4079 minN=0.964 minLceN=0.672
+[22] Extensor Digitorum Longus  ext_dig_r    mtp_angle_r      x ankle_angle_r    n=  5751 steps2d=  0 maxstep= 1.102% actchg=  0 abspan= 0.00 minL=0.4232 minN=0.947 minLceN=0.779
+[22] Extensor Digitorum Longus  ext_dig_r    mtp_angle_r      x subtalar_angle_r n=  4941 steps2d=  0 maxstep= 1.102% actchg=  0 abspan= 0.00 minL=0.4315 minN=0.965 minLceN=0.860
+[23] Extensor Hallucis Longus   ext_hal_r    mtp_angle_r      x ankle_angle_r    n=  5751 steps2d=  0 maxstep= 1.334% actchg=  0 abspan= 0.00 minL=0.3898 minN=0.937 minLceN=0.771
+[23] Extensor Hallucis Longus   ext_hal_r    mtp_angle_r      x subtalar_angle_r n=  4941 steps2d=  0 maxstep= 1.334% actchg=  0 abspan= 0.00 minL=0.4006 minN=0.963 minLceN=0.868
+[24] Gluteus Maximus            glut_max1_r  hip_flexion_r    x hip_adduction_r  n=  8316 steps2d=  6 maxstep= 2.155% actchg=  0 abspan= 0.00 minL=0.1640 minN=0.614 minLceN=0.288
+[24] Gluteus Maximus            glut_max1_r  hip_flexion_r    x hip_rotation_r   n= 10836 steps2d=  0 maxstep= 1.571% actchg=  0 abspan= 0.00 minL=0.1769 minN=0.662 minLceN=0.376
+[24] Gluteus Maximus            glut_max2_r  hip_flexion_r    x hip_adduction_r  n=  8316 steps2d= 20 maxstep= 2.294% actchg=  0 abspan= 0.00 minL=0.1928 minN=0.704 minLceN=0.448
+[24] Gluteus Maximus            glut_max2_r  hip_flexion_r    x hip_rotation_r   n= 10836 steps2d=  0 maxstep= 1.191% actchg=  0 abspan= 0.00 minL=0.1872 minN=0.683 minLceN=0.409
+[24] Gluteus Maximus            glut_max3_r  hip_flexion_r    x hip_adduction_r  n=  8316 steps2d=  0 maxstep= 1.843% actchg=  0 abspan= 0.00 minL=0.1961 minN=0.678 minLceN=0.365
+[24] Gluteus Maximus            glut_max3_r  hip_flexion_r    x hip_rotation_r   n= 10836 steps2d=  0 maxstep= 1.170% actchg=  0 abspan= 0.00 minL=0.2013 minN=0.696 minLceN=0.400
+[25] Adductor Magnus            add_mag1_r   hip_adduction_r  x hip_flexion_r    n=  8316 steps2d=  0 maxstep= 1.484% actchg=  0 abspan= 0.00 minL=0.0885 minN=0.602 minLceN=0.339
+[25] Adductor Magnus            add_mag2_r   hip_adduction_r  x hip_flexion_r    n=  8316 steps2d=  0 maxstep= 1.687% actchg=  0 abspan= 0.00 minL=0.1681 minN=0.697 minLceN=0.401
+[25] Adductor Magnus            add_mag3_r   hip_adduction_r  x hip_flexion_r    n=  8316 steps2d= 64 maxstep= 2.092% actchg=  0 abspan= 0.00 minL=0.3205 minN=0.843 minLceN=0.552
+[26] Iliacus                    iliacus_r    hip_flexion_r    x (none)           n=   126 steps2d= 25 maxstep= 8.553% actchg=  1 abspan= 0.00 minL=0.1356 minN=0.678 minLceN=0.376
+[27] Psoas X                    psoas_r      hip_flexion_r    x (none)           n=   126 steps2d= 27 maxstep= 8.208% actchg=  1 abspan= 0.00 minL=0.1935 minN=0.744 minLceN=0.363
+
+wrote D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\probe_osim_limits_2d_20261023.csv (40 muscle-surface rows)
+read-only check: model and map mtimes/sizes unchanged
+PROBE DONE

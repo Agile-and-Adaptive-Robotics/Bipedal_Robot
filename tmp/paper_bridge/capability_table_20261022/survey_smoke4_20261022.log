@@ -1,0 +1,43 @@
+Human curves loaded: 1 actuator curve set(s) from D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\human_torque_curves_20261022.csv
+
+================ BI PULLEY SURVEY (20261022) PLAN ================
+Mode          = SMOKE (1 site tib_ant_r, serial, tiny budget, end to end)
+Budgets       = 300 evals/muscle TOTAL, 15 evals/rung, 2 rungs max, 10 min wall
+Config ladder = seed (1,1), advisor steps +1 BPA / +1 line part, cap {3,3}
+Pressure      = 620 kPa; sizes [rest; tendon] re-solved per rung
+Sites         = 27 actuators (robot_seed_preference order)
+[16] Tibialis Posterior (duplicate name) primary ankle_angle_r      seeds: tib_ant_r
+     seed resolved: tib_ant_r (4 points, cross [3 4])
+     graded at crossing 1 (modeled coords: {ankle_angle_r, })
+====================================================================
+Build summary: 1 buildable, 0 cannot-build, 0 grade-unable
+
+########## SURVEY Tibialis Posterior (duplicate name) [16] (ankle_angle_r, seed tib_ant_r) ##########
+  graded grid: 25 points, -50.0..20.0 deg; |tau_human| peak 39.35 N*m
+
+  ===== RUNG 1 | nBPA = 1, G = 1 (sizes re-solved, 15 evals) =====
+  rung initial (best of 5 box seeds): x = [0.2819 0.0500] m, score -240.2394
+  sign check (initial x): 22 taut cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 18.88 N*m < target 39.35 N*m (taut margin -0.5200)
+    STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.5200 vs taut margin -0.520039]
+  rung 1 best: rest 0.2819 m, tendon 0.0813 m -> meet 60.0%, active 80.0% (score -600.80), 20 evals
+  rung 1 advisor: torque_short -> steps (+1,+0) | torque-short: min taut-cell |Torque_ins| = 18.88 N*m < target 39.35 N*m (taut margin -0.5200); STEP: nBPA 1 -> 2 (insertion force gain = nBPA/G)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey_tib_ant_r_nB1_G1_20261022_140603.mat
+
+  ===== RUNG 2 | nBPA = 2, G = 1 (sizes re-solved, 15 evals) =====
+  rung initial (best of 5 box seeds): x = [0.4229 0.0200] m, score -481.0000
+  sign check (initial x): 50 taut cells with |tau_h| > 1 N*m, 100% agree with the human sign
+--- escalation_advisor_20261022: struct | verdict = torque_short | steps (nBPA,G) = (+1,+0) ---
+    torque-short: min taut-cell |Torque_ins| = 34.25 N*m < target 39.35 N*m (taut margin -0.1295)
+    STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+    [raw slack-gamed margin -0.1295 vs taut margin -0.129512]
+  rung 2 best: rest 0.3604 m, tendon 0.0200 m -> meet 92.0%, active 100.0% (score -921.00), 20 evals
+  rung 2 advisor: torque_short -> steps (+1,+0) | torque-short: min taut-cell |Torque_ins| = 34.25 N*m < target 39.35 N*m (taut margin -0.1295); STEP: nBPA 2 -> 3 (insertion force gain = nBPA/G)
+  saved D:\GitHub\Bipedal_Robot\Code\Matlab\Mesh_Optimization\Results\BiPulley_survey_tib_ant_r_nB2_G1_20261022_140607.mat
+  SITE RESULT Tibialis Posterior (duplicate name): chosen (2,1), rest 0.3604 m, tendon 0.0200 m, meet 92.0%, active 100.0%, 40 evals, 0.1 min (maxrungs)
+
+Survey complete. Driver CSVs:
+  D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\BiPulley_survey_results_20261022_140559.csv
+  D:\GitHub\Bipedal_Robot\tmp\paper_bridge\capability_table_20261022\BiPulley_survey_ladder_20261022_140559.csv

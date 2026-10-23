@@ -202,8 +202,8 @@ tendon0 = 0.015;
 
 %from optimization:
 rest   =  xBest(7);
-tendon = xBest(8);
-KMAX = 0.255; %maximum contraction percentage
+tendon = xBest(8)-.02;
+KMAX = 0.235; %maximum contraction percentage
 kmax = (1 - KMAX)*rest;  % (1 - KMAX)*rest; Maximum contraction length.
 fitting = 0.021;
 %pres1 = 273.9783;         %average pressure, first test
@@ -612,70 +612,79 @@ xlabel('Knee angle, degrees')
 ylabel('Strain')
 title('BPA strain definitions')
 
-%% FlxTest20mm_51cm: measured torque via the Adjoint transform
-% Reads the 'FlxTest20mm_51cm' tab of Testing_Data\2026_06_Festo\
-% Results_table_20mm.xlsx (same layout as the 42 cm tabs: row 6 Load (N),
-% row 7 knee angle, row 8 pressure, row 10 load-cell angle (tibia)), then
-% transforms each measured load-cell wrench to the moving knee ICR with
-% the same Adjoint machinery used above for the 42 cm tests. Prints the
-% Torque actual values for paste into row 17 of the tab.
-flxXlsx51 = fullfile(root,'Testing_Data','2026_06_Festo','Results_table_20mm.xlsx');
-flxSheet51 = 'FlxTest20mm_51cm';
-% Reaction-point geometry of this test in the tibia (theta1) frame.
-% Defaults are the 42 cm long-tibia values (d, ang above) -- UPDATE after
-% the 51 cm rig setup is measured.
-d51   = 320/1000;     % theta1 origin -> load-cell arm, m
-ang51 = -82.97;       % arm angle in the tibia frame, deg
+%% Compare to results: 56 cm flexor test (two 20 mm BPAs, design of record)
+% Same pattern as the "Compare to results" section of Knee_Extensor_20mm.m:
+% type each test point into the four arrays below (the same primitives
+% recorded in the FlxTest20mm_56cm tab; the tab's row 16/17 torque cells
+% are scratch, NOT the paper numbers). Reaction point measured 2026-10-23;
+% LC entered exactly as in the tab -- the muscle force is pi from this
+% angle (same convention as the readserialnumbers2 flexor guard).
+Load   = [84	51	77.8	69	67.3	79	96	20	11.1	77	60	69.5	28	93.7	106];   % Load (N)
+K_deg  = [-61.5	-83	5	-5	-52	-45	-42	-114	-119	-62	-78	-87	-105	-22.5	-14];   % Knee angle, deg (flexion negative)
+LC_deg = [35	38	30	25	25	25	25	45	45	28.5	34	35	43	17	16];   % Load-cell angle, deg, as entered in the tab
+Presh  = [517	628	226.5	242.5	406.7	410.3	412	634	633	400	489	635	638	275.3	273.7];   % Measured pressure, kPa
 
-T51 = readcell(flxXlsx51,'Sheet',flxSheet51);
-keep51 = false(1, size(T51,2));
-keep51(3:end) = cellfun(@(x) isnumeric(x) && isscalar(x) && ~isnan(x), ...
-    T51(6,3:end));
-
-if ~any(keep51)
-    fprintf(['%s: no measured Load data yet -- measured-torque ', ...
-        'section skipped.\n'], flxSheet51);
+if isempty(Load)
+    fprintf(['56 cm flexor compar', ...
+        'Load/K_deg/LC_deg/Presh above.\n']);
 else
-    Load51 = cell2mat(T51(6,keep51));       % N
-    K51d   = cell2mat(T51(7,keep51));       % knee angle, deg
-    P51    = cell2mat(T51(8,keep51));       % pressure, kPa
-    LC51d  = cell2mat(T51(10,keep51));      % load-cell angle (tibia), deg
-    K51  = K51d*pi/180;                     % NOTE: c is the color cell here
-    % LC angle convention (Ben, 2026-10-04): entered FROM THE TIBIA AXIS
-    % (flexor mirror of torque about t1 = F*sin(LC+0.83 deg)*d). The
-    % Adjoint machinery wants the force angle from the tibia x-axis.
-    LC51 = deg2rad(90 - LC51d);
+    K_ang  = K_deg*pi/180;      % NOTE: c is the color cell here
+    LC_ang = LC_deg*pi/180;     % bracket-frame entry, muscle force +pi
 
-    p_rf51 = [d51*cosd(ang51), d51*sind(ang51), 0]';
-    T_t1_rf51 = RpToTrans(eye(3),p_rf51);
-    Trk51 = pagemtimes(TransInv(T_t1_rf51),T_t1_ICR);
-    fcn51x = fit(phi', squeeze(Trk51(1,4,:)),'cubicspline');
-    fcn51y = fit(phi', squeeze(Trk51(2,4,:)),'cubicspline');
+    p_rf = [0.095, -0.325, 0]'; % reaction force point, m (measured)
+    d = hypot(p_rf(1), p_rf(2));
+    ang = atan2d(p_rf(2), p_rf(1));
+    T_t1_rf = RpToTrans(eye(3), p_rf);
+    Trk = pagemtimes(TransInv(T_t1_rf), T_t1_ICR);
+    fcn15 = fit(phi', squeeze(Trk(1,4,:)), 'cubicspline');
+    fcn16 = fit(phi', squeeze(Trk(2,4,:)), 'cubicspline');
 
-    Fr51 = zeros(6,1,numel(Load51));
-    Fk51 = zeros(6,1,numel(Load51));
-    for i = 1:numel(Load51)
-        Trk51i = RpToTrans(eye(3),[fcn51x(K51(i)), fcn51y(K51(i)), 0]');
-        Fr51(:,:,i) = [0; 0; 0; Load51(i)*cos(LC51(i)+pi); ...
-            Load51(i)*sin(LC51(i)+pi); 0];
-        Fk51(:,:,i) = Adjoint(Trk51i)'*Fr51(:,:,i);
+    Trk = zeros(4,4,length(Load));
+    Fr = zeros(6,1,length(Load));
+    AdTrk = zeros(6,6,length(Load));
+    Fk = zeros(6,1,length(Load));
+
+    for i = 1:length(Load)
+        Trk(:,:,i) = RpToTrans(eye(3), [fcn15(K_ang(i)), fcn16(K_ang(i)), 0]');
+        Fr(:,:,i) = [0; 0; 0; Load(i)*cos(LC_ang(i)+pi); ...
+            Load(i)*sin(LC_ang(i)+pi); 0];
+        AdTrk(:,:,i) = Adjoint(Trk(:,:,i));
+        Fk(:,:,i) = AdTrk(:,:,i)'*Fr(:,:,i);
     end
-    TorqueZ51 = squeeze(Fk51(3,1,:));
 
-    fprintf('%s Torque actual (paste into row 17 of the tab):\n', flxSheet51);
-    fprintf('%.4f\t', TorqueZ51); fprintf('\n');
+    TorqueZ56 = squeeze(Fk(3,1,:));
 
-    figure
+    fprintf('FlxTest20mm_56cm Torque actual (adjoint, d = %.4f m, ang = %.2f deg):\n', d, ang);
+    fprintf('%.4f\t', TorqueZ56); fprintf('\n');
+
+    % Back-calculated: optimized pair evaluated at each measured angle
+    % and pressure (one MonoPam_mult build per unique pressure)
+    predAP = zeros(size(Presh));
+    uP = unique(Presh);
+    for u = 1:numel(uP)
+        idx = Presh == uP(u);
+        tmpP = MonoPam_mult(Name, LocationPair, CrossPoint, Dia, ...
+            T_Pam, rest, kmax, tendon, fitting, uP(u), Xi0, Xi1, Xi2, ...
+            Xi3, wraps, phiD, BPAcount, bendMeasurePair);
+        predAP(idx) = interp1(phiD, tmpP.Torque_p(:,3), K_deg(idx), 'pchip');
+    end
+
+    figure('Name','FlxTest20mm_56cm measured vs predicted','Color','w')
     hold on
-    plot(phiD, Bifemsh_Pam3.Torque_p(:,3),'--','Color',c7)
-    plot(humanAngle, TorqueHz,':','Color',c8)
-    scatter(K51d, TorqueZ51, 60*P51/620, 'filled','MarkerFaceColor',c4)
-    legend('Optimized pair, 620 kPa','Human target','Measured (adjoint)', ...
-        'Location','best')
-    title(sprintf('%s: measured vs predicted torque', flxSheet51))
+    scatter(K_deg, predAP, 60*Presh/620, 'filled', ...
+        'MarkerFaceColor', c1, 'MarkerEdgeColor', 'none')
+    plot(humanAngle, TorqueHz, ':', 'Color', c8)
+    plot(phiD, Bifemsh_Pam3.Torque_p(:,3), '--', 'Color', c4)
+    scatter(K_deg, TorqueZ56, 60*Presh/620, 'filled', ...
+        'MarkerFaceColor', c7, 'MarkerEdgeColor', 'none')
+    legend('Back-calculated','Human target','Optimized (620 kPa)', ...
+        'Measured','Location','best')
+    title('20 mm flexor, 56 cm pair: measured vs predicted')
     xlabel('Knee angle, \circ','Interpreter','tex')
     ylabel('Torque, N \cdot m','Interpreter','tex')
     hold off
+    exportgraphics(gcf, fullfile(scriptDir, 'Flx20mm_compare.png'), ...
+        'Resolution', 150)
 end
 
 %% Pressure back-calculation: kPa needed at each angle to meet the human
