@@ -1,0 +1,1 @@
+The background moment-arm discussion now gives the signed scalar triple product for a fixed-axis joint and distinguishes it from OpenSim joint-coordinate length sensitivities. The earlier anatomical-error percentage aside was omitted; it was a cited literature aside, not project measurement data. All original text remains in before/15-background.tex and the sweep diff.

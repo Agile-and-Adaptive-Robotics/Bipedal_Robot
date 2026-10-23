@@ -1945,3 +1945,14 @@ Use Notes/new_session_prompt_20261022.md. It replaces the stale broad task list 
 | Protect isometric-force/MATLAB figures | All 19 protected Chapter 3 files retain their hashes. |
 
 Start the new ZCode session using the entire prompt file. It is a handoff for work still to do, not a claim that SADb/SNS reduction or torque revision has already been completed.
+
+
+## Final Revision C sweep — 2026-10-23
+
+The expanded live Overleaf Review Overview was checked against this ledger. The inventory remains **73 advisor comment threads and 51 pending advisor tracked edits**: Introduction 34 items, Background 49, SADb 26, SNS 15. Ben’s replies and the four Ben-only appendix/main items remain separate. No new open advisor items were found. No Overleaf source, comment resolution, or tracked-edit disposition was changed.
+
+Every advisor ID now has a local disposition and source-line evidence in `Documentation/Reports and Papers/Dissertation/Notes/advisor_revision_20261022/Revision_C/COMMENT_DISPOSITIONS.md`. The original expanded entries are retained in `review/final_sweep_20261023/recorded_comments.json`. These are editorial dispositions, not claims of advisor approval.
+
+This pass makes the SNS knowledge gap match all five combinations in Ben’s reply, keeps the interconnected bilateral RG construction in the causal opening, adds an early SADb evidence-gap statement, and puts the bubble chart in the SADb main chapter. The current app payload was independently read: it now includes all 1,393 records, so the old paper-only app limitation is superseded. The separate monthly scraper remains under development.
+
+The completed physical-test plots from the latest commits are inserted; no spreadsheet sanity-check torque values are used. Four full fit tables move to Appendix C, with a compact mean-error summary in Chapter 4. The cat caption is shortened, and Figures 2.8 and 2.9 share one page. The active bipulley run is not reported as completed. Original sources and the protected force chapter/figures remain unchanged by this pass.

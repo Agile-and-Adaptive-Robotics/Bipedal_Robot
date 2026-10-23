@@ -11,7 +11,7 @@ I adjusted applied currents, synaptic weights, and muscle parameters by hand. Th
 
 I subsequently expanded the neural model into left- and right-side circuits with interconnected rhythm generators (RGs). I constructed the right-side subsystems from the left-side organization and linked the two RGs through commissural pathways. Further circuit schematics and implementation records are provided in Appendix~\ref{app:simulation_verification}.
 
-Air stepping did not establish whether the bilateral coupling and sensory feedback could coordinate the legs under load. Manual tuning could not separate controller-design limitations from implementation errors or problems in mechanical coupling. Repeatable tests of the circuits, actuator interface, and closed-loop model were needed to resolve those questions.
+The missing step was a tested link between spinal neural circuits and the human-scale and BPA-actuated mechanical models needed to study this robot. Air stepping in the combined AnimatLab model did not establish how the same controller would behave with human musculotendon mechanics, robot BPA routing, or ground-contact feedback. I therefore needed models and tests that could separate the effects of the circuit, actuator mechanics, and numerical implementation.
 
 \begin{figure}[p]
 \centering
@@ -22,11 +22,11 @@ Air stepping did not establish whether the bilateral coupling and sensory feedba
 \label{fig:animatlab_model_architecture}
 \end{figure}
 
-\section{Requirements for the New Tools}\label{sec:sns_gaps}
+\section{Knowledge Gaps and the New Tools}\label{sec:sns_gaps}
 
-The existing workflow lacked four connections needed for the BPA-actuated robot: an SNS coupled to the human-scale and BPA-routed musculoskeletal models; transferable implementations of the archived walker controllers; graphical circuit construction linked to a maintained mechanical simulator; and interfaces joining CAD-derived bodies, BPA forces, and neural commands. These requirements concerned integration for this robot project.
+Within this project, five model combinations were missing: a Gait2392 human model coupled to a CPG in MuJoCo--SNS-Toolbox; its BPA-routed robot counterpart coupled to a CPG; the combined Li walker and Deng controller with foot-contact feedback; graphical neural construction coupled to a maintained mechanical simulator; and the SolidWorks robot assembly coupled to MATLAB BPA models and a neural controller. These missing combinations prevented a controlled comparison of the same neural organization across biological and artificial actuation. I developed the conversion, coupling, graphical-library, and controller-port tools below to build and test those connections. The capability table identifies the connections demonstrated and those still incomplete.
 
-The software reviewed in Chapter~\ref{ch:background} supplied the individual components. OpenSim provided musculoskeletal geometry, MyoConverter translated that geometry to MuJoCo, and SNS-Toolbox provided neuron and synapse models \citep{delp_opensim_2007, caggiano_myosuite_2022, todorov_mujoco_2012, nourse_sns_2023}. Simulink provided graphical circuit construction, and Simscape Multibody provided a route for importing mechanical geometry. My contribution was to connect these components for the models and actuators used here and to establish tests of the resulting implementations. Different environments served different tasks: scripted simulation and parameter search in MuJoCo, graphical model assembly in Simulink, and reference-model evaluation in AnimatLab.
+Existing software supplied separate parts of the solution. OpenSim supplied musculoskeletal geometry, MyoConverter translated it to MuJoCo, and SNS-Toolbox supplied neuron and synapse models \citep{delp_opensim_2007, caggiano_myosuite_2022, todorov_mujoco_2012, nourse_sns_2023}. The MuJoCo version used here supports scripted simulation and parameter searches but uses rigid tendons; its Python interface does not provide the block-based circuit assembly needed for this workflow. Simulink supplies that graphical construction, while Simscape Multibody imports mechanical geometry, including SolidWorks-derived mechanisms. AnimatLab retains the reference controllers but is no longer maintained. The tools connect these complementary environments and use matched tests to check what transfers between them.
 
 \section{Software Tools}\label{sec:preliminary_sim_methods}
 
@@ -40,9 +40,9 @@ The tools connect musculoskeletal geometry, actuator forces, and neural circuits
 \toprule
 \textbf{Tool} & \textbf{Implemented capability} & \textbf{Verification and limit} \\
 \midrule
-MuJoCo--SNS coupling & Converted musculoskeletal model, BPA force interface, and afferent feedback & Actuator geometry and dynamic signs checked; supported closed-loop evaluations, not unsupported walking \\
+MuJoCo--SNS coupling & Human and BPA-routed robot models, actuator interface, and afferent feedback & Actuator geometry and dynamic signs checked; supported closed-loop evaluations, not unsupported walking \\
 SNS-Simscape library & Editable neuron, synapse, sensory, and actuator blocks & Reflex demonstrations and controller comparisons; generic BPA demonstration parameters remain provisional \\
-Controller ports and test scripts & Comparable neural implementations and repeatable evaluations & Rhythm-core agreement across NumPy and Simulink; agreement is specific to the tested network and inputs \\
+Controller ports and test scripts & Ports of reference circuits and matched-input evaluations & Rhythm-core agreement across NumPy and Simulink; complete Li--Deng contact-feedback walking remains unverified \\
 Mechanical imports & OpenSim-derived and SolidWorks-derived mechanisms in Simscape Multibody & Mechanism import achieved; the SolidWorks knee's welded joint and incomplete muscle integration remain limitations \\
 \bottomrule
 \end{tabularx}
@@ -56,7 +56,7 @@ The BPA interface evaluates the quasi-static actuator force model from Chapter~\
 
 \subsection{Graphical Circuit Construction}\label{sec:sns_new_tools}
 
-The SNS-Simscape library implements neuron, synapse, afferent-encoder, activation, and muscle-force elements as editable Simulink blocks. It extends the laboratory's earlier modeling approach \citep{hunt_development_2017, young_analyzing_2019} to the BPA interfaces used here. The added components connect neural signals to the actuator and mechanical interfaces. Figure~\ref{fig:simulink_sns_implementation} shows the core blocks and graded-neuron signal flow.
+The SNS-Simscape library implements neuron, synapse, afferent-encoder, activation, and muscle-force elements as editable Simulink blocks. Compared with the earlier SNS models of \citet{hunt_development_2017} and \citet{young_analyzing_2019}, the added elements concern BPA actuation, afferent encoding, and mechanical interfaces. The library retains the conductance-based neuron and synapse formulation; it does not introduce a new neuron model. Its verification compares selected implementations and circuits, rather than benchmarking all of the earlier libraries. Figure~\ref{fig:simulink_sns_implementation} shows the core blocks and graded-neuron signal flow.
 
 Two mechanical import routes were investigated. The OpenSim-derived body imports as a mechanism whose muscles must be connected through actuator blocks. The SolidWorks knee imports with its intended hinge welded because the exporter does not preserve the hinge mates. Consequently, the import is not evidence of a controlled biomimetic knee. These limits are separate from the standalone reflex demonstrations.
 
