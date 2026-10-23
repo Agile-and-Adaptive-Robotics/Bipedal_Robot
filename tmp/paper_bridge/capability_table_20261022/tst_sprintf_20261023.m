@@ -1,0 +1,9 @@
+% test
+function t = tst()
+note = sprintf([secondary %s not a class hinge: remaining joint  ...
+    pinned at 0, robot surface constant along that axis (same as  ...
+    the hand-tuned row); %d mm old-code BPA], 1.0, 20);
+note2 = sprintf(both surface dofs modeled (slots %d+%d); %d mm  ...
+    old-code BPA, 1, 2, 20);
+t = [note; note2];
+end

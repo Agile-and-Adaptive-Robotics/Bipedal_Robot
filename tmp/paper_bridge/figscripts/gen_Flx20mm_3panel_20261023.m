@@ -1,23 +1,20 @@
 %% gen_Flx20mm_3panel_20261023.m
-% Three separate panels for the knee-torque paper (dissertation reuses the
-% same files), assembled in LaTeX with the subcaption package -- NOT one
-% MATLAB figure.
-%   A  Flx20mm_humanTarget       OpenSim maximum human isometric flexion
-%                                torque (biceps femoris short head)
-%   B  Flx20mm_rigidVsCorrected  original rigid-body prediction vs the
-%                                chi0-chi3 corrected prediction vs measured
-%   C  Flx20mm_meetsHuman        human target + corrected prediction +
-%                                measured (meet-or-exceed story)
+% ONE MATLAB figure, three panels across, panel letters (A)(B)(C) drawn in
+% per Ben's FlxPin_group.fig margin-left convention (constants copied from
+% gen_ExtPin6Panel.m). Counts as ONE figure float against the Frontiers
+% combined figure+table limit; no LaTeX subfigure machinery.
+%   (A) OpenSim maximum human isometric flexion torque (bifemsh short head)
+%   (B) original rigid-body prediction vs chi0-chi3 corrected prediction
+%       vs measured points
+%   (C) human target + corrected prediction + measured (meet-or-exceed)
 % Machinery mirrors Knee_Flexor_Data_20mm.m; the measured points are the
-% 56 cm flexor-test arrays Ben entered there, with the same adjoint
-% transform to the moving knee center (reaction point p_rf measured
-% 2026-10-23; load-cell angle entered in the bracket frame, muscle force
-% pi from that angle).
+% 56 cm flexor-test arrays Ben entered there, same adjoint transform.
 %
 % Style of record: measured = indigo filled circles (size ~ pressure,
-% alpha 0.75); corrected prediction = light magenta dashed; original
-% rigid-body prediction = gray dash-dot; human target = black dotted.
-% Knee angle negative in flexion; flexion torque negative.
+% alpha 0.75); corrected prediction = magenta dashed; original rigid-body
+% prediction = gray dash-dot; human target = black dotted.
+% Output: Knee_Torque_Test/Figures/Flx20mm_56cm.{eps,pdf} (single figure,
+% paper naming convention dia + resting length) + QC png here.
 
 clc; clear; close all;
 
@@ -201,11 +198,11 @@ if any(Presh > 620)
         sum(Presh > 620), max(Presh));
 end
 
-%% Panels
-clrMeas  = '#0000FF';   % indigo      -- measured
+%% One figure, three panels, letters drawn in (FlxPin_group convention)
+clrMeas  = '#0000FF';   % indigo        -- measured
 clrCorr  = '#EA5F94';   % light magenta -- corrected prediction
-clrRigid = '#8C8C8C';   % gray        -- original rigid-body prediction
-clrHuman = '#000000';   % black       -- human target
+clrRigid = '#8C8C8C';   % gray          -- original rigid-body prediction
+clrHuman = '#000000';   % black         -- human target
 
 XL = [-120 10];
 XT = [-120 -90 -60 -30 0];
@@ -220,102 +217,114 @@ fprintf('\nShared XLim [%d %d]; YLim A [%.0f %.0f], B [%.0f %.0f], C [%.0f %.0f]
 
 szM = 60*Presh/620;      % measured marker size ~ pressure
 
-% Audit helper: legend strings, in-figure check, and count of plotted data
-% points falling inside the legend box (axes data coords).
-panels0 = struct();
-function audit_panel(fig, tag)
-    lg = findall(fig, 'Type', 'legend');
-    ax = findall(fig, 'Type', 'axes');
-    ax = ax(~ismember(ax, ancestor(lg, 'axes')));
-    if isempty(lg)
-        fprintf('AUDIT %s: NO LEGEND\n', tag); return
-    end
-    p = lg.Position;   % figure-normalized [x y w h]
-    inside = p(1) >= -0.001 && p(2) >= -0.001 && p(1)+p(3) <= 1.001 && p(2)+p(4) <= 1.001;
-    fprintf('AUDIT %s: legend entries = %s | in-figure = %d | pos = [%.3f %.3f %.3f %.3f]\n', ...
-        tag, strjoin(lg.String, ' / '), inside, p);
-    % map legend box into axes data coords
-    ap = ax.Position;
-    xl = ax.XLim; yl = ax.YLim;
-    x1 = xl(1) + (p(1) - ap(1)) / ap(3) * diff(xl);
-    x2 = xl(1) + (p(1) + p(3) - ap(1)) / ap(3) * diff(xl);
-    y1 = yl(1) + (p(2) - ap(2)) / ap(4) * diff(yl);
-    y2 = yl(1) + (p(2) + p(4) - ap(2)) / ap(4) * diff(yl);
-    nIn = 0;
-    for hh = ax.Children
-        try
-            xd = get(hh, 'XData'); yd = get(hh, 'YData');
-            nIn = nIn + sum(xd >= x1 & xd <= x2 & yd >= y1 & yd <= y2);
-        catch
-        end
-    end
-    fprintf('AUDIT %s: legend data-box [%.1f %.1f %.1f %.1f] deg/Nm, points inside = %d\n', ...
-        tag, x1, x2, y1, y2, nIn);
-end
+fig = figure('Name','Flx20mm_56cm','Color','w', ...
+    'Units','centimeters','Position',[2 2 17.2 5.4]);
+t = tiledlayout(1,3,'TileSpacing','loose','Padding','loose');
+axT = gobjects(1,3);
 
-% ---- Panel A: human target ---------------------------------------------
-figA = figure('Units','centimeters','Position',[2 2 5.6 4.6], ...
-    'Color','w','Name','Flx20mm_humanTarget');
-hold on
+% ---- (A) human target ---------------------------------------------------
+axT(1) = nexttile(1); hold on
 plot(humanAngle, TorqueHz, ':', 'Color', clrHuman)
 xlim(XL); xticks(XT); ylim(YLA);
-xlabel('Knee angle, \circ','Interpreter','tex')
-ylabel('Torque, N \cdot m','Interpreter','tex')
 legend('Human target','Location','northeast')
-box off
-hold off
 
-% ---- Panel B: rigid vs corrected vs measured ---------------------------
-figB = figure('Units','centimeters','Position',[2 2 5.6 4.6], ...
-    'Color','w','Name','Flx20mm_rigidVsCorrected');
-hold on
+% ---- (B) rigid vs corrected vs measured ---------------------------------
+axT(2) = nexttile(2); hold on
 plot(phiD, TqRigid, '-.', 'Color', clrRigid)
 plot(phiD, TqCorr, '--', 'Color', clrCorr)
 scatter(K_deg, TorqueZ56, szM, 'filled', ...
     'MarkerFaceColor', clrMeas, 'MarkerFaceAlpha', 0.75, ...
     'MarkerEdgeColor', 'none')
 xlim(XL); xticks(XT); ylim(YLB);
-xlabel('Knee angle, \circ','Interpreter','tex')
-ylabel('Torque, N \cdot m','Interpreter','tex')
-legend('Rigid-body prediction', ...
-    'Corrected prediction', ...
+legend('Rigid-body prediction', 'Corrected prediction', ...
     'Measured','Location','northeast')
-box off
-hold off
 
-% ---- Panel C: human vs corrected vs measured ---------------------------
-figC = figure('Units','centimeters','Position',[2 2 5.6 4.6], ...
-    'Color','w','Name','Flx20mm_meetsHuman');
-hold on
+% ---- (C) human vs corrected vs measured ---------------------------------
+axT(3) = nexttile(3); hold on
 plot(humanAngle, TorqueHz, ':', 'Color', clrHuman)
 plot(phiD, TqCorr, '--', 'Color', clrCorr)
 scatter(K_deg, TorqueZ56, szM, 'filled', ...
     'MarkerFaceColor', clrMeas, 'MarkerFaceAlpha', 0.75, ...
     'MarkerEdgeColor', 'none')
 xlim(XL); xticks(XT); ylim(YLC);
-xlabel('Knee angle, \circ','Interpreter','tex')
-ylabel('Torque, N \cdot m','Interpreter','tex')
-legend('Human target', ...
-    'Corrected prediction', ...
-    'Measured','Location','northeast')
-box off
-hold off
 
-%% Exports: EPS (paper) + PDF (dissertation) + PNG (preview)
-drawnow
-audit_panel(figA, 'A humanTarget');
-audit_panel(figB, 'B rigidVsCorrected');
-audit_panel(figC, 'C meetsHuman');
-panels = {figA, 'Flx20mm_humanTarget'; ...
-          figB, 'Flx20mm_rigidVsCorrected'; ...
-          figC, 'Flx20mm_meetsHuman'};
-for p = 1:size(panels,1)
-    exportgraphics(panels{p,1}, fullfile(outdir, [panels{p,2} '.eps']), ...
-        'ContentType','vector');
-    exportgraphics(panels{p,1}, fullfile(outdir, [panels{p,2} '.pdf']), ...
-        'ContentType','vector');
-    exportgraphics(panels{p,1}, fullfile(here, [panels{p,2} '_preview.png']), ...
-        'Resolution', 300);
-    fprintf('Wrote %s.{eps,pdf} + preview png\n', panels{p,2});
+ylabel(t, '\bf Torque, N\cdotm');
+xlabel(t, '\bf \theta_{k} , \circ');
+
+% panel letters per Ben's FlxPin_group.fig convention (constants from
+% gen_ExtPin6Panel.m): margin labels LEFT of each tile's outer box,
+% straddling the plot-box top; (A) sits at the opened left margin
+% clear of the rotated y-label band.
+ann = {'(A)','(B)','(C)'};
+drawnow;
+ylL = 0.008; ylR = 0.024;          % rotated y-label band (figure-normalized)
+xL1 = 0.040;                       % (A) target left edge
+if (xL1 < ylR) && (xL1 + 0.032 > ylL)   % open the margin if y-label is in the way
+    S = (xL1 + 0.032 + 0.008) - ylL;
+    tp = t.Position; t.Position = [tp(1) + S, tp(2), tp(3) - S, tp(4)];
+    drawnow;
+    ylL = ylL + S; ylR = ylR + S;
 end
+fprintf('AUDIT margin: yLabel band x[%.4f %.4f]  (A) left=%.4f  gap=%.4f\n', ...
+    ylL, ylR, xL1, xL1 - ylR);
+
+apos = zeros(3,2); outL = zeros(3,1);
+for j = 1:3
+    pos0 = axT(j).Position;
+    outL(j) = axT(j).OuterPosition(1);
+    tcY = pos0(2) + pos0(4);           % plot-box top: letter straddles it
+    if j == 1, xj = xL1; else, xj = outL(j) - 0.037; end
+    a = annotation(fig,'textbox',[xj, tcY - 0.020, 0.032, 0.04], ...
+        'String',['\bf ' ann{j}], 'FontSize',12,'FontName','Arial', ...
+        'FontWeight','bold','EdgeColor','none','HorizontalAlignment','left', ...
+        'VerticalAlignment','top');
+    try
+        drawnow;
+        ae = a.Extent;                 % center the letter on the box top
+        a.Position(2) = a.Position(2) + (tcY - (ae(2) + ae(4)/2));
+    catch
+    end
+    apos(j,:) = a.Position(1:2);
+end
+
+% ---- audit of the drawn state (verify, never assume) --------------------
+lgAll = findall(fig, 'Type', 'legend');
+fprintf('AUDIT legends: count=%d locations=%s\n', numel(lgAll), ...
+    strjoin(arrayfun(@(L) L.Location, lgAll, 'UniformOutput', false), ','));
+for j = 1:3
+    if j == 1
+        anchored = abs(apos(j,1) - xL1) < 1e-9;
+    else
+        anchored = abs(apos(j,1) + 0.032 - (outL(j) - 0.005)) < 5e-3;
+    end
+    fprintf('AUDIT tile %d %s: letter@(%.3f,%.3f) outerL=%.3f anchored=%d\n', ...
+        j, ann{j}, apos(j,1), apos(j,2), outL(j), anchored);
+end
+% letter boxes clear of data (data coords per tile)
+hAx = humanAngle(:).';  hTq = TorqueHz(:).';          % rows throughout
+pR = TqRigid.';  pC = TqCorr.';  mT = TorqueZ56.';
+series = {hAx, hTq; ...
+    [phiD, phiD, K_deg], [pR, pC, mT]; ...
+    [hAx, phiD, K_deg], [hTq, pC, mT]};
+for j = 1:3
+    pos0 = axT(j).Position;
+    bx = axT(j).XLim(1) + ([apos(j,1), apos(j,1)+0.032] - pos0(1)) / pos0(3) * diff(axT(j).XLim);
+    by = axT(j).YLim(1) + ([apos(j,2), apos(j,2)+0.04] - pos0(2)) / pos0(4) * diff(axT(j).YLim);
+    xs = series{j,1}; ys = series{j,2};
+    n_ov = sum(xs > bx(1) & xs < bx(2) & ys > by(1) & ys < by(2));
+    fprintf('AUDIT tile %d letter data-box x[%.0f %.0f] y[%.1f %.1f] points-under-letter=%d\n', ...
+        j, bx(1), bx(2), by(1), by(2), n_ov);
+end
+% legends in-figure and clear of data
+for L = 1:numel(lgAll)
+    p = lgAll(L).Position;
+    inside = p(1) >= -0.001 && p(2) >= -0.001 && p(1)+p(3) <= 1.001 && p(2)+p(4) <= 1.001;
+    fprintf('AUDIT legend %d in-figure=%d pos=[%.3f %.3f %.3f %.3f]\n', L, inside, p);
+end
+
+%% Exports: single figure, EPS (paper) + PDF (dissertation) + QC png
+exportgraphics(fig, fullfile(outdir, 'Flx20mm_56cm.eps'), 'ContentType','vector');
+exportgraphics(fig, fullfile(outdir, 'Flx20mm_56cm.pdf'), 'ContentType','vector');
+exportgraphics(fig, fullfile(here, 'QC_Flx20mm_56cm.png'), 'Resolution', 300);
+fprintf('Wrote Flx20mm_56cm.{eps,pdf} + QC png\n');
 fprintf('\n[DONE gen_Flx20mm_3panel]\n');
